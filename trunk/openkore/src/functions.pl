@@ -3756,6 +3756,7 @@ sub AI {
 			monKilled();
 			$monsters_Killed{$monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}}++;
 
+			# Pickup loot when monster's dead
 			if ($config{'itemsTakeAuto'} && $monsters_old{$ai_v{'ai_attack_ID_old'}}{'dmgFromYou'} > 0 && !$monsters_old{$ai_v{'ai_attack_ID_old'}}{'attackedByPlayer'} && !$monsters_old{$ai_v{'ai_attack_ID_old'}}{'ignore'}) {
 				ai_items_take($monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos'}{'x'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos'}{'y'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos_to'}{'x'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos_to'}{'y'});
 			} elsif (!ai_getAggressives()) {
@@ -4192,7 +4193,7 @@ sub AI {
 					}
 				}
 				if ($ai_v{'temp'}{'foundID'}) {
-					print "Cannot found portal ID - route failed\n" if $config{'debug'};
+					print "A portal is near - route failed\n" if $config{'debug'};
 					$ai_seq_args[0]{'failed'} = 1;
 					last ROUTE;
 				}
