@@ -109,7 +109,6 @@ sub new {
 	} elsif ($key eq 'name' || $key eq 'auto') {
 		$self{id} = $names{lc($value)};
 	}
-	return undef if (!defined $self{id});
 	bless \%self, $class;
 	return \%self;
 }
