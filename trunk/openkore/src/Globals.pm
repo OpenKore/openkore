@@ -29,6 +29,7 @@ our %EXPORT_TAGS = (
 	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
 	state   => [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID %portals @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID)],
 	network => [qw($remote_socket $conState $encryptVal $lastPacketTime)],
+	interface => [qw($interface)],
 	misc    => [qw($buildType $quit %timeout_ex $isOnline $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth)],
 );
 
@@ -37,6 +38,7 @@ our @EXPORT = (
 	@{$EXPORT_TAGS{ai}},
 	@{$EXPORT_TAGS{state}},
 	@{$EXPORT_TAGS{network}},
+	@{$EXPORT_TAGS{interface}},
 	@{$EXPORT_TAGS{misc}},
 );
 
@@ -147,6 +149,9 @@ our $conState;
 our $encryptVal;
 our $lastPacketTime;
 
+# Interface
+our $interface;
+
 # Misc
 our $buildType;
 our $quit;
@@ -165,6 +170,10 @@ if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 	$buildType = 0;
 } else {
 	$buildType = 1;
+}
+
+END {
+	undef $interface if defined $interface;
 }
 
 return 1;

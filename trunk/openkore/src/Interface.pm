@@ -34,19 +34,6 @@ no warnings 'redefine';
 use Exporter;
 use base qw(Exporter);
 
-our $interface;
-our @EXPORT = qw($interface);
-
-
-sub new {
-	# Default interface until we switch to a new one
-	use Interface::Startup;
-	return new Interface::Startup;
-}
-
-END {
-	undef $interface if defined $interface;
-}
 
 ##
 # $interface->switchInterface(new_interface, die)
@@ -123,14 +110,29 @@ sub displayUsage {
 }
 
 ##
-# $interface->errorDialog(message)
+# $interface->errorDialog(message, [fatal = 1])
 # message: The error message to display.
+# fatal: Indicate that this is a fatal error (meaning that the application will
+#        exit after this dialog is closed). If set, the console interfaces
+#        will warn the user that the app is about to exit.
 #
-# Display an error dialog.
+# Display an error dialog. This function blocks until the user has closed the dialog.
+#
+# Consider using Log::error() if your message is not a fatal error, because Log::error()
+# does not require any user interaction.
 sub errorDialog {
 	my $self = shift;
 	my $message = shift;
+	my $fatal = shift;
+	$fatal = 1 unless defined $fatal;
+
 	$self->writeOutput("error", "$message\n");
+	if ($fatal) {
+		$self->writeOutput("message", "Press ENTER to exit this program.\n")
+	} else {
+		$self->writeOutput("message", "Press ENTER to continue...\n")
+	}
+	$self->getInput(-1);
 }
 
 
