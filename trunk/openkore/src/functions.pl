@@ -4709,7 +4709,6 @@ sub AI {
 				&& $chars[$config{'char'}]{'pos_to'}{'y'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}) {
 
 				#we're stuck!
-				debug "Route logic - stuck\n", "route";
 				$ai_v{'temp'}{'index_old'} = $ai_seq_args[0]{'index'};
 				$ai_seq_args[0]{'index'} -= int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'});
 				$ai_seq_args[0]{'index'} = 0 if ($ai_seq_args[0]{'index'} < 0);
@@ -4725,6 +4724,8 @@ sub AI {
 					$ai_v{'temp'}{'index'} = @{$ai_seq_args[0]{'solution'}} - 1 if ($ai_v{'temp'}{'index'} >= @{$ai_seq_args[0]{'solution'}});
 					$ai_v{'temp'}{'done'} = 1 if (int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'}) == 0);
 				} while ($ai_v{'temp'}{'index'} >= $ai_v{'temp'}{'index_old'} && !$ai_v{'temp'}{'done'});
+				debug "Route logic - stuck: skip amount $ai_v{temp}{index_old} -> $ai_v{temp}{index} (divideIndex = $ai_seq_args[0]{divideIndex})\n", "route";
+
 			} else {
 				$ai_seq_args[0]{'divideIndex'} = 1;
 				debug "Route logic - divide index = 1\n", "route";
@@ -4798,7 +4799,12 @@ sub AI {
 			#if the step position doesn't equal our current position, then move there
 			if ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
 			 || $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
-				move($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}, $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}, 1, $ai_seq_args[0]{'attackID'});
+				move(
+					$ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'},
+					$ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'},
+					1,
+					$ai_seq_args[0]{'attackID'}
+				);
 			}
 		}
 	}
@@ -5069,6 +5075,7 @@ sub AI {
 		if (timeOut(\%{$ai_seq_args[0]{'ai_move_giveup'}})) {
 			# We couldn't move within ai_move_giveup seconds.
 			# Abort move commands.
+			debug("Move - give up\n", "ai_move");
 			shift @ai_seq;
 			shift @ai_seq_args;
 
@@ -5078,6 +5085,10 @@ sub AI {
 			stand();
 
 		} elsif ($ai_seq_args[0]{'stage'} eq '') {
+			my $from = $chars[$config{char}]{pos_to}{x} . ", " . $chars[$config{char}]{pos_to}{x};
+			my $to = int($ai_seq_args[0]{move_to}{x}) . ", " . int($ai_seq_args[0]{move_to}{y});
+			debug("Move - sending move from ($from) to ($to)\n", "ai_move");
+
 			sendMove(\$remote_socket, int($ai_seq_args[0]{'move_to'}{'x'}), int($ai_seq_args[0]{'move_to'}{'y'}));
 			$ai_seq_args[0]{'ai_move_giveup'}{'time'} = time;
 			$ai_seq_args[0]{'ai_move_time_last'} = $chars[$config{'char'}]{'time_move'};
@@ -5090,6 +5101,7 @@ sub AI {
 		} elsif ($ai_seq_args[0]{'move_to'}{'x'} eq $chars[$config{'char'}]{'pos_to'}{'x'}
 		      && $ai_seq_args[0]{'move_to'}{'y'} eq $chars[$config{'char'}]{'pos_to'}{'y'}) {
 			# We've arrived at our destination. Remove the move AI sequence.
+			debug("Move - arrived\n", "ai_move");
 			shift @ai_seq;
 			shift @ai_seq_args;
 		}
