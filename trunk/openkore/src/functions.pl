@@ -4659,11 +4659,12 @@ sub AI {
 
 		##### TELEPORT HP #####
 		if (((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))
-			&& $safe 
-			&& timeOut(\%{$timeout{ai_teleport_hp}})) {
+		  && $safe 
+		  && timeOut($timeout{ai_teleport_hp})) {
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_hp}{time} = time;
+			last TELEPORT;
 		}
 
 		##### TELEPORT MONSTER #####
@@ -4673,6 +4674,7 @@ sub AI {
 				if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
 					useTeleport(1);
 					$ai_v{temp}{clear_aiQueue} = 1;
+					$timeout{ai_teleport_search}{time} = time;
 					last TELEPORT;
 				}
 			}
@@ -4707,6 +4709,7 @@ sub AI {
 						useTeleport(1);
 						$timeout{ai_teleport_search}{time} = time;
 						$ai_v{temp}{clear_aiQueue} = 1;
+						$timeout{ai_teleport_search}{time} = time;
 						last TELEPORT;
 					}
 				}
@@ -4732,11 +4735,12 @@ sub AI {
 		}
 
 		if ($config{teleportAuto_portal} && $safe
-			&& ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
-			&& timeOut($timeout{'ai_teleport_portal'})) {
+		  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
+		  && timeOut($timeout{'ai_teleport_portal'})) {
 			if (scalar(@portalsID)) {
 				useTeleport(1);
 				$ai_v{temp}{clear_aiQueue} = 1;
+				$timeout{ai_teleport_portal}{time} = time;
 				last TELEPORT;
 			}
 			$timeout{ai_teleport_portal}{time} = time;
@@ -8352,10 +8356,17 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		# pet
 
 	} elsif ($switch eq "01B0") {
-		# Class change
-		# 01B0 : long ID, byte WhateverThisIs, long class
-		my $ID = unpack("L", substr($msg, 2, 4));
-		my $class = unpack("L", substr($msg, 7, 4));
+		# Class change / monster type change
+		# 01B0 : long ID, byte WhateverThisIs, long type
+		my $ID = substr($msg, 2, 4);
+		my $type = unpack("L", substr($msg, 7, 4));
+
+		if ($monsters{$ID}) {
+			my $name = $monsters_lut{$type}{name};
+			message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) changed to $name\n";
+			$monsters{$ID}{type} = $type;
+			$monsters{$ID}{name} = $name;
+		}
 
 	} elsif ($switch eq "01B3") {
 		# NPC image 
