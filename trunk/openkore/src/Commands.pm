@@ -488,10 +488,7 @@ sub cmdInventory {
 					$display .= " -- Not Identified";
 				}
 
-				message(swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$index, $display]),
-					"list");
+				message(sprintf("%-3d  %s\n", $index, $display), 'list');
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "nu") {

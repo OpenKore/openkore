@@ -6016,91 +6016,60 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00A4") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if $conState != 4 && $config{XKore};
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4) . $newmsg;
-		undef $invIndex;
+		my $invIndex;
 		for (my $i = 4; $i < $msg_size; $i += 20) {
 			$index = unpack("S1", substr($msg, $i, 2));
 			$ID = unpack("S1", substr($msg, $i + 2, 2));
-			$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-			if ($invIndex eq "") {
-				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
+			$invIndex = findIndex(\@{$chars[$config{char}]{inventory}}, "index", $index);
+			$invIndex ||= findIndex(\@{$chars[$config{char}]{inventory}}, "nameID", "");
+
+			my $item = $chars[$config{char}]{inventory}[$invIndex] = {};
+			$item->{index} = $index;
+			$item->{nameID} = $ID;
+			$item->{amount} = 1;
+			$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
+			$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
+			$item->{type_equip} = $itemSlots_lut{$ID};
+			$item->{equipped} = unpack("C1", substr($msg, $i + 8, 1));
+			$item->{enchant} = unpack("C1", substr($msg, $i + 11, 1)); 
+
+			if (my $equipped = unpack("C1", substr($msg, $i + 9, 1))) {
+				$item->{equipped} = $equipped;
+			}
+			$item->{name} = $items_lut{$item->{nameID}} ||
+				"Unknown $item->{nameID}";
+
+			# Resolve item suffix (carded or forged)
+			$item->{suffix} = "";
+			my $cards = ($item->{cards} = []);
+			for (my $j = 1; $j <= 4; $j++) {
+				my $card = unpack("S1", substr($msg, $i + 10 + $j + $j, 2));
+				last unless $card;
+				push(@{$cards}, $card);
+			}
+			if ($cards->[0] == 255) {
+				# Forged item
+				$item->{elementID} = $cards->[1] % 10;
+				$item->{elementName} = $elements_lut{$item->{elementID}};
+				$item->{starCrumbs} = ($cards->[1] >> 8) / 5;
+				$item->{suffix} .= 'V'x$item->{starCrumbs}."S " if $item->{starCrumbs};
+				$item->{suffix} .= $item->{elementName};
+			} elsif (@{$cards}) {
+				# Carded item
+				$item->{suffix} = join(',', map { $cards_lut{$_} || $_ } @{$cards});
 			}
 
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'index'} = $index;
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'} = $ID;
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} = 1;
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = unpack("C1", substr($msg, $i + 4, 1));
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'identified'} = unpack("C1", substr($msg, $i + 5, 1));
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $itemSlots_lut{$ID};
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = unpack("C1", substr($msg, $i + 8, 1));
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = unpack("C1", substr($msg, $i + 11, 1)); 
+			my $display = "";
+			$display .= "+$item->{enchant} " if $item->{enchant};
+			$display .= $item->{name};
+			$display .= " [$item->{suffix}]" if $item->{suffix};
 
-			if (unpack("C1", substr($msg, $i + 9, 1)) > 0) {
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = unpack("C1", substr($msg, $i + 9, 1));
-			}
-			$display = ($items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}} ne "")
-				? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
-				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
-			undef @cnt;
+			$item->{name} = $display;
 
-			$count = 0;
-			for (my $j = 1; $j < 5; $j++) {
-				if (unpack("S1", substr($msg, $i + 10 + $j + $j, 2)) > 0) {
-					$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} = unpack("S1", substr($msg, $i + 10 + $j + $j, 2));
-					for (my $k = 0; $k < 4; $k++) {
-						if (($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "")) {
-							$cnt[$k]{'amount'} += 1;
-							last;
-						} elsif ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "") {
-							$cnt[$k]{'amount'} = 1;
-							$cnt[$k]{'name'} = $cards_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'}};
-							$cnt[$k]{'ID'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'};
-							$count++;
-							last;
-						}
-					}
-				}
-			}
-
-			$display = ""; 
-			$count ++;
-			for (my $j = 0; $j < $count; $j++) {
-				if ($j == 0 && $cnt[$j]{'amount'}) {
-					if ($cnt[$j]{'amount'} > 1) {
-						$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
-					} else {
-						$display .= "$cnt[$j]{'name'}";
-					}
-				} elsif ($cnt[$j]{'amount'}) {
-					if($cnt[$j]{'amount'} > 1) {
-						$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
-					} else {
-						$display .= ",$cnt[$j]{'name'}";
-					}
-				}
-			}
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} = $display;
-			undef @cnt;
-			undef $count;
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'} = unpack("S1",substr($msg, $i + 13, 2));
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} = $elements_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'}};
-
-			$display = $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'};
-			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} > 0) {
-				$display = "+$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} ".$display;
-			}
-			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}) {
-				$display .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}]";
-			}
-			if($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} ne "") {
-				$display .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}]";
-			}
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
-
-			debug "Inventory: +$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}] [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}] ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}} - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n", "parseMsg";
+			debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
 		}
 
 	} elsif ($switch eq "00A5" || $switch eq "01F0") {
