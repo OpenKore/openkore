@@ -6216,6 +6216,7 @@ sub parseMsg {
 			$i++;
 		}
 		undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
+		$char->{spirits} = 0;
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
