@@ -23,6 +23,7 @@ Bug fixes:
   if you were adding more than one of the same type of equipment. The server
   would destroy these excess items! This is now fixed, except when you type a
   lot of "deal add" commands faster than the server responds.
+- 'autosell' command will now work even if sellAuto is set to 0.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
