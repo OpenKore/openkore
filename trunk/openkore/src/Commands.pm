@@ -479,6 +479,11 @@ sub cmdInventory {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
+	if (!$chars[$config{'char'}]{'inventory'}) {
+		error "Inventory is empty\n";
+		return;
+	}
+
 	if ($arg1 eq "" || $arg1 eq "eq" || $arg1 eq "u" || $arg1 eq "nu") {
 		my @useable;
 		my @equipment;
