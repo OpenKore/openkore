@@ -5003,7 +5003,7 @@ sub parseMsg {
 			error("Server connection has been denied\n", "connection");
 		} elsif ($type == 4) {
 			$interface->errorDialog("Critical Error: Your account has been blocked.");
-			$quit = 1;
+			$quit = 1 if (!$config{'XKore'});
 		} elsif ($type == 5) {
 			$masterver = $config{"master_version_$config{'master'}"};
 			error("Version $config{'version'} failed...trying to find version\n", "connection");
@@ -5545,7 +5545,7 @@ sub parseMsg {
 			error("Error: Out of sync with server\n", "connection");
 		} elsif ($type == 6) {
 			$interface->errorDialog("Critical Error: You must pay to play this account!");
-			$quit = 1;
+			$quit = 1 if (!$config{'XKore'});
 		} elsif ($type == 8) {
 			error("Error: The server still recognizes your last connection\n", "connection");
 		} else {
