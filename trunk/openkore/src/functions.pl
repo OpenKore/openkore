@@ -1235,7 +1235,7 @@ sub parseCommand {
 		}
 
 	} elsif ($switch eq "pml") {
-		message("-----------PM LIST-----------\n", "list");
+		message("-----------PM List-----------\n", "list");
 		for (my $i = 1; $i <= @privMsgUsers; $i++) {
 			message(swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<",
@@ -1413,12 +1413,6 @@ sub parseCommand {
 				next if ($storageID[$i] eq "");
 
 				my $display = "$storage{$storageID[$i]}{'name'}";
-				if ($storage{$storageID[$i]}{'enchant'}) {
-					$display = "+$storage{$storageID[$i]}{'enchant'} ".$display;
-				}
-				if ($storage{$storageID[$i]}{'slotName'} ne "") {
-					$display = $display ." [$storage{$storageID[$i]}{'slotName'}]";
-				}
 				$display = $display . " x $storage{$storageID[$i]}{'amount'}";
 
 				message(swrite(
@@ -5985,19 +5979,17 @@ sub parseMsg {
 			my $index = unpack("C1", substr($msg, $i, 1));
 			my $ID = unpack("S1", substr($msg, $i + 2, 2));
 			binAdd(\@storageID, $index);
-			$storage{$index}{'index'} = $index;
-			$storage{$index}{'nameID'} = $ID;
-			$storage{$index}{'amount'} = unpack("L1", substr($msg, $i + 6, 4));
-			$display = ($items_lut{$ID} ne "")
-				? $items_lut{$ID}
-				: "Unknown $ID";
-			$storage{$index}{'name'} = $display;
-			$storage{$index}{'binID'} = binFind(\@storageID, $index);
-			debug "Storage: $display ($storage{$index}{'binID'})\n", "parseMsg";
+			my $item = $storage{$index} = {};
+			$item->{index} = $index;
+			$item->{nameID} = $ID;
+			$item->{amount} = unpack("L1", substr($msg, $i + 6, 4));
+			$item->{name} = itemNameSimple($ID);
+			$item->{binID} = binFind(\@storageID, $index);
+			debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
 		}
 		
 		$ai_v{temp}{storage_opened} = 1;
-		message "Storage Opened\n", "storage";
+		message "Storage opened.\n", "storage";
 		
 	} elsif ($switch eq "00A6") {
 		# Retrieve list of non-stackable (weapons & armor) storage items.
@@ -6011,57 +6003,16 @@ sub parseMsg {
 			my $ID = unpack("S1", substr($msg, $i + 2, 2));
 
 			binAdd(\@storageID, $index);
-			$storage{$index}{'index'} = $index;
-			$storage{$index}{'nameID'} = $ID;
-			$storage{$index}{'amount'} = 1;
-			$storage{$index}{'enchant'} = unpack("C1", substr($msg, $i + 11, 1));
-
-			my @cnt;
-			my $count = 0;
-
-			for (my $j = 1; $j < 5; $j++) {
-				if (unpack("S1", substr($msg, $i + $j + $j + 10, 2)) > 0) {
-					$storage{$index}{'slotID_$j'} = unpack("S1", substr($msg, $i + $j + $j + 10, 2));
-					for (my $k = 0; $k < 4; $k++) {
-						if (($storage{$index}{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($storage{$index}{'slotID_$j'} ne "")) {
-							$cnt[$k]{'amount'} += 1;
-							last;
-						} elsif ($storage{$index}{'slotID_$j'} ne "") {
-							$cnt[$k]{'amount'} = 1;
-							$cnt[$k]{'name'} = $cards_lut{$storage{$index}{'slotID_$j'}};
-							$cnt[$k]{'ID'} = $storage{$index}{'slotID_$j'};
-							$count++;
-							last;
-						}
-					}
-				}
-			}
-			$count ++;
-
-			my $display = "";
-			for (my $j = 0; $j < $count; $j++) {
-				if ($j == 0 && $cnt[$j]{'amount'}) {
-					if ($cnt[$j]{'amount'} > 1) {
-						$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
-					} else {
-						$display .= "$cnt[$j]{'name'}";
-					}
-				} elsif ($cnt[$j]{'amount'}) {
-					if ($cnt[$j]{'amount'} > 1) {
-						$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
-					} else {
-						$display .= ",$cnt[$j]{'name'}"; 
-					}
-				}
-			}
-			$storage{$index}{'slotName'} = $display;
-
-			$display = ($items_lut{$ID} ne "")
-				? $items_lut{$ID}
-				: "Unknown $ID";
-			$storage{$index}{'name'} = $display;
-			$storage{$index}{'binID'} = binFind(\@storageID, $index);
-			debug "Storage: $storage{$index}{'name'} ($storage{$index}{'binID'})\n", "parseMsg";
+			my $item = $storage{$index} = {};
+			$item->{index} = $index;
+			$item->{nameID} = $ID;
+			$item->{amount} = 1;
+			$item->{identified} = unpack("C1", substr($msg, $i + 6, 1));
+			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
+			$item->{cards} = substr($msg, $i + 12, 8);
+			$item->{name} = itemName($item);
+			$item->{binID} = binFind(\@storageID, $index);
+			debug "Storage: $item->{name} ($item->{binID})\n", "parseMsg";
 		}
 	} elsif ($switch eq "00A8") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6709,38 +6660,20 @@ sub parseMsg {
 		$storage{'items'} = unpack("S1", substr($msg, 2, 2));
 		$storage{'items_max'} = unpack("S1", substr($msg, 4, 2));
 
-	} elsif ($switch eq "00F4") {
+	} elsif ($switch eq "00F6") {
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("L1", substr($msg, 4, 4));
-		my $ID = unpack("S1", substr($msg, 8, 2));
-		if (%{$storage{$index}}) {
-			$storage{$index}{'amount'} += $amount;
-		} else {
-			binAdd(\@storageID, $index);
-			$storage{$index}{'index'} = $index;
-			$storage{$index}{'amount'} = $amount;
-			my $display = ($items_lut{$ID} ne "")
-				? $items_lut{$ID}
-				: "Unknown $ID";
-			$storage{$index}{'name'} = $display;
-			$storage{$index}{'binID'} = binFind(\@storageID, $index);
-		}
-		message("Storage Item Added: $storage{$index}{'name'} ($storage{$index}{'binID'}) x $amount\n", "storage", 1);
-
-	} elsif ($switch eq "00F6") {
-		$index = unpack("S1", substr($msg, 2, 2));
-		$amount = unpack("L1", substr($msg, 4, 4));
-		$storage{$index}{'amount'} -= $amount;
-		message "Storage Item Removed: $storage{$index}{'name'} ($storage{$index}{'binID'}) x $amount\n", "storage";
-		if ($storage{$index}{'amount'} <= 0) {
+		$storage{$index}{amount} -= $amount;
+		message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
+		if ($storage{$index}{amount} <= 0) {
 			undef %{$storage{$index}};
 			delete $storage{$index};
 			binRemove(\@storageID, $index);
 		}
 
 	} elsif ($switch eq "00F8") {
-		message "Storage Closed\n", "storage";
-		undef $ai_v{temp}{storage_opened}
+		message "Storage closed.\n", "storage";
+		undef $ai_v{temp}{storage_opened};
 		
 	} elsif ($switch eq "00FA") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -7790,25 +7723,32 @@ sub parseMsg {
 		($guild{'name'})    = substr($msg, 46, 24) =~ /([\s\S]*?)\000/;
 		($guild{'master'})  = substr($msg, 70, 24) =~ /([\s\S]*?)\000/;
 
-	} elsif ($switch eq "01C4") {
+	} elsif ($switch eq "01C4" || $switch eq "00F4") {
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		my $ID = unpack("S1", substr($msg, 8, 2));
-		my $display = ($items_lut{$ID} ne "")
-			? $items_lut{$ID}
-			: "Unknown $ID";
 
-		if (%{$storage{$index}}) {
-			$storage{$index}{'amount'} += $amount;
+		my $item = $storage{$index} ||= {};
+		if ($item->{amount}) {
+			$item->{amount} += $amount;
 		} else {
 			binAdd(\@storageID, $index);
-			$storage{$index}{'nameID'} = $ID;
-			$storage{$index}{'index'} = $index;
-			$storage{$index}{'amount'} = $amount;
-			$storage{$index}{'name'} = $display;
-			$storage{$index}{'binID'} = binFind(\@storageID, $index);
+			$item->{nameID} = $ID;
+			$item->{index} = $index;
+			$item->{amount} = $amount;
+			if ($switch eq "01C4") {
+				$item->{identified} = unpack("C1", substr($msg, 11, 1));
+				$item->{upgrade} = unpack("C1", substr($msg, 13, 1));
+				$item->{cards} = substr($msg, 14, 8);
+			} elsif ($switch eq "00F4") {
+				$item->{identified} = unpack("C1", substr($msg, 10, 1));
+				$item->{upgrade} = unpack("C1", substr($msg, 12, 1));
+				$item->{cards} = substr($msg, 13, 8);
+			}
+			$item->{name} = itemName($item);
+			$item->{binID} = binFind(\@storageID, $index);
 		}
-		message("Storage Item Added: $display ($index) x $amount\n", "storage", 1);
+		message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
 
 	} elsif ($switch eq "01C8") {
 		my $index = unpack("S1",substr($msg, 2, 2));
