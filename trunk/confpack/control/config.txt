@@ -63,6 +63,12 @@ debugPacket_exclude
 
 message_length_max 80
 
+logChat 1
+logPrivateChat 1
+logPartyChat 1
+logGuildChat 1
+logEmoticons
+
 attackAuto 2
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
@@ -170,6 +176,7 @@ followEmotion_distance 4
 followDistanceMax 6
 followDistanceMin 3
 followLostStep 12
+followBot 0
 
 tankMode 0
 tankModeTarget 
