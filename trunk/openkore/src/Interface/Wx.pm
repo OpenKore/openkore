@@ -298,7 +298,7 @@ sub createInterface {
 		my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
 
 		my $label = new Wx::StaticText($infoPanel, -1, "HP: ");
-		$hsizer->Add($label, 0);
+		$hsizer->Add($label, 0, wxLEFT, 3);
 
 		my $hpBar = $self->{hpBar} = new Wx::Gauge($infoPanel, -1, 100,
 			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
