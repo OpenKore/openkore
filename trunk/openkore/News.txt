@@ -66,6 +66,7 @@ New features:
 - Input history support in Linux interface.
 - Spells being cast now show how long they take.
 - Combo skill support.
+- While walking, Kore can teleport until it's near the destination.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -117,6 +118,18 @@ New config options:
   Only auto-attack monsters that are at least (number) blocks away from
   other players. (number) is at least 3; if you enter a lower value, Kore
   will treat it as 3.
+
+- route_teleport (flag)
+  route_teleport_minDistance (number)
+  route_teleport_maxTries (number)
+
+  While walking to other maps, Kore will teleport until it's near a
+  portal, if route_teleport is enabled. It will keep teleporting until
+  it's at least route_teleport_minDistance steps away from the portal.
+  It will attempt to teleport at most route_teleport_maxTries times,
+  before falling back to walking.
+  It's recommended that you set a value between 100 or 200 for
+  route_teleport_minDistance.
 
 New timeouts.txt options:
 - ai_attack_unfail 5
