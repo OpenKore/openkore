@@ -38,6 +38,8 @@ New config options:
 Bug fixes:
 - The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
 - Kore can walk on walkable water now (bug #21).
+- Kore now detects what directory its executable is in, and adds it to
+  its include path (@INC).
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
