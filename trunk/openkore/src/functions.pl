@@ -4165,6 +4165,7 @@ sub AI {
 
 			unless (@{$args->{solution}}) {
 				# No more points to cover; we've arrived at the destination
+				debug "Destination reached.\n", "route";
 				AI::dequeue;
 
 			} elsif ($args->{old_x} == $cur_x && $args->{old_y} == $cur_y && timeOut($args->{time_step}, 3)) {
@@ -4213,7 +4214,7 @@ sub AI {
 					# Remove the last step also if we reached the destination
 					$trimsteps = @{$solution} - 1 if ($trimsteps >= @{$solution});
 					#$trimsteps = @{$solution} if ($trimsteps <= $args->{'index'} && $args->{'new_x'} == $cur_x && $args->{'new_y'} == $cur_y);
-					$trimsteps = @{$solution} if ($cur_x == $args->{dest}{pos}{x} && $cur_y == $args->{dest}{pos}{y});
+					$trimsteps = @{$solution} if ($cur_x == $solution->[$#{$solution}]{x} && $cur_y == $solution->[$#{$solution}]{y});
 					debug "Route - trimming down solution by $trimsteps steps\n", "route";
 					splice(@{$solution}, 0, $trimsteps) if ($trimsteps > 0);
 				}
@@ -4242,7 +4243,7 @@ sub AI {
 					}
 				} else {
 					# No more points to cover
-					message "Destination reached.\n", "ai_route", 2;
+					debug "Destination reached.\n", "route";
 					AI::dequeue;
 				}
 			}
