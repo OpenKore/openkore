@@ -8786,6 +8786,7 @@ sub parseMsg {
 	#	undef %currentDeal;
 	#	message "Deal Cancelled\n", "deal";
 	#}
+	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
 	return $msg;
