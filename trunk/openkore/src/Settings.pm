@@ -93,16 +93,20 @@ sub parseArguments {
 	$plugins_folder = "plugins";
 	$def_field = "fields";
 
-	$config_file = "$control_folder/config.txt";
-	$mon_control_file = "$control_folder/mon_control.txt";
-	$items_control_file = "$control_folder/items_control.txt";
-	$pickupitems_file = "$control_folder/pickupitems.txt";
-	$chat_file = "$logs_folder/chat.txt";
-	$shop_file = "$control_folder/shop.txt";
-	$monster_log = "$logs_folder/monsters.txt";
-	$item_log_file = "$logs_folder/items.txt";
-
-	$default_interface = "Console";
+# Having these here fails, but i'll leave a commented copy of them incase people dont like my solution.
+# Defining variables that include other variables (that may be changed later) is a bad thing.
+# example. Since control_folder == control by default, even if the user sets control_folder == conf as a getopt
+# $config_file will still be control/config.txt since $control_folder was set to control when $config_file was defined.
+#	$config_file = "$control_folder/config.txt";
+#	$mon_control_file = "$control_folder/mon_control.txt";
+#	$items_control_file = "$control_folder/items_control.txt";
+#	$pickupitems_file = "$control_folder/pickupitems.txt";
+#	$chat_file = "$logs_folder/chat.txt";
+#	$shop_file = "$control_folder/shop.txt";
+#	$monster_log = "$logs_folder/monsters.txt";
+#	$item_log_file = "$logs_folder/items.txt";
+#
+#	$default_interface = "Console";
 
 
 	my $help_option;
@@ -129,6 +133,18 @@ sub parseArguments {
 	if ($help_option) {
 		return 2;
 	}
+	
+	# This is where variables depending on other userconfigable variables should be set..
+	# after we see what the user is changing...
+	$config_file = "$control_folder/config.txt" if (!defined $config_file);
+	$mon_control_file = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
+	$items_control_file = "$control_folder/items_control.txt" if (!defined $items_control_file);
+	$pickupitems_file = "$control_folder/pickupitems.txt" if (!defined $pickupitems_file);
+	$chat_file = "$logs_folder/chat.txt" if (!defined $chat_file);
+	$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
+	$monster_log = "$logs_folder/monsters.txt" if (!defined $monster_log);
+	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
+	$default_interface = "Console" if (!defined $default_interface);
 
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
