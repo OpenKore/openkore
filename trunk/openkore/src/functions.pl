@@ -4097,18 +4097,19 @@ sub AI {
 			undef $ai_seq_args[0]{'old_y'};
 			$ai_seq_args[0]{'new_x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
 			$ai_seq_args[0]{'new_y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
+			$ai_seq_args[0]{'time_step'} = time;
 			$ai_seq_args[0]{'stage'} = 'Walk the Route Solution';
 
 		} elsif ( $ai_seq_args[0]{'stage'} eq 'Walk the Route Solution' ) {
 
 			my $cur_x = $chars[$config{'char'}]{'pos'}{'x'};
 			my $cur_y = $chars[$config{'char'}]{'pos'}{'y'};
-			my $dist;
 
 			unless (@{$ai_seq_args[0]{'solution'}}) {
 				#no more points to cover
 				shift @ai_seq;
 				shift @ai_seq_args;
+
 			} elsif ($ai_seq_args[0]{'index'} eq '0' 		#if index eq '0' (but not index == 0)
 			      && $ai_seq_args[0]{'old_x'} == $cur_x		#and we are still on the same
 			      && $ai_seq_args[0]{'old_y'} == $cur_y ) {		#old XY coordinate,
@@ -4117,7 +4118,7 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 
-			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y) {
+			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y && timeOut($ai_seq_args[0]{'time_step'}, 2)) {
 				#we are still on the same spot
 				#decrease step movement
 				debug "Route - not moving, decreasing step size\n", "route";
@@ -4127,10 +4128,9 @@ sub AI {
 					$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
 					$ai_seq_args[0]{'new_x'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'};
 					$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
-					$ai_seq_args[0]{'old_x'} = $cur_x;
-					$ai_seq_args[0]{'old_y'} = $cur_y;
 					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
 				}
+
 			} else {
 				#we're either starting to move or already moving, so send out more
 				#move commands periodically to keep moving and updating our position
@@ -4142,8 +4142,8 @@ sub AI {
 					#never remove the last step (it'll be removed when we arrive there)
 					my $trimsteps = 1;
 					$trimsteps++ while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
-							 && distance($chars[$config{'char'}]{'pos'}, $ai_seq_args[0]{'solution'}[$trimsteps+1])
-							    < distance($chars[$config{'char'}]{'pos'}, $ai_seq_args[0]{'solution'}[$trimsteps])
+							 && distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps+1])
+							    < distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps])
 						);
 					$trimsteps = @{$ai_seq_args[0]{'solution'}} - 1 if ($trimsteps >= @{$ai_seq_args[0]{'solution'}});
 					debug "Route - trimming down solution by $trimsteps steps\n", "route";
@@ -4157,6 +4157,7 @@ sub AI {
 					$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
 					$ai_seq_args[0]{'old_x'} = $cur_x;
 					$ai_seq_args[0]{'old_y'} = $cur_y;
+					$ai_seq_args[0]{'time_step'} = time;
 					debug "Route - next step moving to ($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}), $stepsleft steps left\n", "route";
 					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
 				} else {
@@ -4166,6 +4167,7 @@ sub AI {
 					shift @ai_seq_args;
 				}
 			}
+
 		} else {
 			debug "Unexpected route stage [$ai_seq_args[0]{'stage'}] occured.\n", "route";
 			shift @ai_seq;
@@ -4533,7 +4535,7 @@ sub AI {
 			AI::dequeue();
 
 		# Stop if we've moved
-		} elsif ($ai_seq_args[0]{time_move} != $char->{time_move}) {
+		} elsif (AI::args->{time_move} != $char->{time_move}) {
 			debug "Move - moving\n", "ai_move";
 			AI::dequeue();
 
@@ -4544,7 +4546,7 @@ sub AI {
 
 		} elsif (time > AI::action->{retry}) {
 			# No update yet, send move request again.
-			# We do this every 0.3 secs
+			# We do this every 0.5 secs
 			AI::action->{retry} = time + 0.5;
 			sendMove(\$remote_socket, AI::args->{move_to}{x}, AI::args->{move_to}{y});
 		}
@@ -8932,7 +8934,7 @@ sub move {
 	$dist = distance($char->{pos_to}, $args{move_to});
 	$args{ai_move_giveup}{timeout} = 4 * ($char->{walk_speed} || 0.12) * (1 + $dist);
 	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
-		$char->{pos_to}{x}, $char->{pos_to}{y}, $x, $y, $dist), "ai_move";
+		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
 	AI::queue("move", \%args);
 }
 
