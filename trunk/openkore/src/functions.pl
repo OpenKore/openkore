@@ -3686,7 +3686,9 @@ sub AI {
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
-						$ID);
+						$ID,
+						undef,
+						"attackSkill");
 				} else {
 					ai_skillUse(
 						$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})},
@@ -3694,7 +3696,8 @@ sub AI {
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
 						$monsters{$ID}{'pos_to'}{'x'},
-						$monsters{$ID}{'pos_to'}{'y'});
+						$monsters{$ID}{'pos_to'}{'y'},
+						"attackSkill");
 				}
 				$ai_seq_args[0]{monsterID} = $ai_v{'ai_attack_ID'};
 
@@ -3750,7 +3753,8 @@ sub AI {
 
 	##### AUTO-SKILL USE #####
 
-	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack))) {
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack))
+	|| (AI::action eq "skill_use" && AI::args->{tag} eq "attackSkill")) {
 		my $i = 0;
 		my %self_skill;
 		while (defined($config{"useSelf_skill_$i"})) {
@@ -8469,6 +8473,7 @@ sub ai_skillUse {
 	my $minCastTime = shift;
 	my $target = shift;
 	my $y = shift;
+	my $tag = shift;
 	my %args;
 	$args{ai_skill_use_giveup}{time} = time;
 	$args{ai_skill_use_giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
@@ -8478,13 +8483,14 @@ sub ai_skillUse {
 	$args{skill_use_maxCastTime}{timeout} = $maxCastTime;
 	$args{skill_use_minCastTime}{time} = time;
 	$args{skill_use_minCastTime}{timeout} = $minCastTime;
+	$args{tag} = $tag;
 	if ($y eq "") {
 		$args{skill_use_target} = $target;
 	} else {
 		$args{skill_use_target_x} = $target;
 		$args{skill_use_target_y} = $y;
 	}
-	AI::queue("skill_use",\%args);
+	AI::queue("skill_use", \%args);
 }
 
 #storageAuto for items_control - chobit andy 20030210
