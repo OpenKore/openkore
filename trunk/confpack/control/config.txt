@@ -12,6 +12,7 @@ encrypt 0
 
 secureLogin 0
 secureLogin_type 0
+secureLogin_codeRequest
 secureLogin_account 0
 
 XKore 0
