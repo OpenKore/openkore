@@ -735,7 +735,7 @@ sub onAdvancedConfig {
 
 	my $cfg = new Interface::Wx::ConfigEditor($panel, -1);
 	$cfg->setConfig(\%config);
-	$cfg->addCategory('Attacks', 'Grid', ['attackAuto', 'attackDistance', 'attackMaxDistance']);
+#	$cfg->addCategory('Attacks', 'Grid', ['attackAuto', 'attackDistance', 'attackMaxDistance']);
 	$cfg->addCategory('All', 'Grid');
 	$cfg->onChange(sub {
 		my ($key, $value) = @_;
