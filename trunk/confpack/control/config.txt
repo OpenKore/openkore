@@ -275,6 +275,6 @@ autoResponse 1
 
 ignoreAll 0
 itemHistory 0
-autoTalkCont 1
+autoTalkCont 0
 
 alias_heal sp 9
