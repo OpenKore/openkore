@@ -304,6 +304,8 @@ Bug fixes:
 - route_randomWalk on non-contiguous maps will no longer try to leave the
   map to get to the other section.
 - Don't auto-attack monsters that are behind a wall.
+- Don't walk away after picking up items; immediately attack other
+  monsters on screen.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

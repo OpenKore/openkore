@@ -3189,7 +3189,6 @@ sub AI {
 
 		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
 			message "Target died\n", "ai_attack";
-
 			monKilled();
 			$monsters_Killed{$monsters_old{$ID}{'nameID'}}++;
 
@@ -3488,10 +3487,13 @@ sub AI {
 			# Calculate how long it would take to reach the monster.
 			# Calculate where the monster would be when you've reached its
 			# previous position.
-			#TODO: check which direction the monster is moving to. This is important!
-			#my $time_needed = $monsterDist * $char->{walk_speed} + 1;
-			#message "Time needed: $time_needed\n";
-			my $time_needed = 3;
+			my $time_needed;
+			if (objectIsMovingTowards($monsters{$ID}, $char, 45)) {
+				$time_needed = $monsterDist * $char->{walk_speed};
+			} else {
+				# If monster is not moving towards you, then you need more time to walk
+				$time_needed = $monsterDist * $char->{walk_speed} + 2;
+			}
 			my $pos = calcPosition($monsters{$ID}, $time_needed);
 
 			my $dist = sprintf("%.1f", $monsterDist);
@@ -4131,7 +4133,6 @@ sub AI {
 				}
 			}
 		}
-
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($attackTarget) {
 			ai_setSuspend(0);
@@ -4582,6 +4583,7 @@ sub AI {
 			AI::args->{started} = 1;
 			take($foundID);
 		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
+			$timeout{'ai_attack_auto'}{'time'} = 0;
 			AI::dequeue;
 		}
 	}
@@ -9367,6 +9369,7 @@ sub move {
 	$args{time_move} = $char->{time_move};
 	$dist = distance($char->{pos}, $args{move_to});
 	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
+debug_showSpots('move', [{x => $x, y => $y}]);
 	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
 		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
 	AI::queue("move", \%args);
