@@ -8,6 +8,7 @@ Bug fixes:
 - Fixed shopAuto_open timing problems with sitAuto (also changed ai_shop
   timeout)
 - Added optional teleportAuto_unstuck to use teleport when stucked
+- Fixed command "timeout" not displaying the current timeout
 
 
 ==================
