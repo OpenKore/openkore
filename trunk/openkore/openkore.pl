@@ -5517,7 +5517,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = unpack("S*", substr($msg, 2, 2));
 		$ID = substr($msg, 4, 4);
 		$chat = substr($msg, 8, $msg_size - 8);
-		$chat =~ s/\000$//;
+		$chat =~ s/\000//g;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		$chatMsgUser =~ s/ $//;
 
@@ -5590,7 +5590,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "008E" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S*", substr($msg, 2, 2));
 		$chat = substr($msg, 4, $msg_size - 4);
-		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
+		$chat =~ s/\000//g;
+		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		chatLog("c", $chat."\n");
 		if ($config{'relay'} == "1") {
 			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
@@ -7098,14 +7099,20 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			$targetDisplay = "unknown";
 		}
-		if ($damage != 35536) {
-			$level = $level_real if ($level_real ne "");
-			$damage = "Miss!" if (!$damage);
-			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay - Dmg: $damage\n"; 
-		} else {
+
+		if ($damage == 35536) {
 			$level_real = $level;
 			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level)\n";
+		} else {
+			$damage = "Miss!" if (!$damage);
+			if ($level == 65535) {
+				print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra - Dmg: $damage\n";
+			} else {
+				$level = $level_real if ($level_real ne "");
+				print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
+			}
 		}
+
 		$msg_size = 31;
 
 	} elsif ($switch eq "0115") {
@@ -8252,14 +8259,20 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} else {
 			$targetDisplay = "unknown";
 		}
-		if ($damage != 35536) {
-			$level = $level_real if ($level_real ne "");
-			$damage = "Miss!" if (!$damage);
-			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
-		} else {
+
+		if ($damage == 35536) {
 			$level_real = $level;
 			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level)\n";
+		} else {
+			$damage = "Miss!" if (!$damage);
+			if ($level == 65535) {
+				print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra - Dmg: $damage\n";
+			} else {
+				$level = $level_real if ($level_real ne "");
+				print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
+			}
 		}
+
 		$msg_size = 33;
 #Solos Start
     } elsif ($switch eq "08DC") {
