@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Packet sending
+#  OpenKore - Network
 #  This module contains functions for sending packets to the server.
 #
 #  This software is open source, licensed under the GNU General Public
@@ -13,6 +13,16 @@
 #  $Id$
 #
 #########################################################################
+##
+# MODULE DESCRIPTION: Connection handling
+#
+# The Network module handles connections to the Ragnarok Online server.
+# The submodule Network::Send contains functions for sending all kinds of
+# packets to the RO server.
+#
+# This module only handles connection issues, and nothing else. It doesn't do
+# anything with the actual data. Network data is handled by another module.
+
 package Network;
 
 use strict;
@@ -24,6 +34,17 @@ use Log qw(message error);
 use Network::Send;
 
 
+##
+# Network::connectTo(r_socket, host, port)
+# r_socket: a reference to a socket scalar.
+# host: the host name/IP of the RO server to connect to.
+# port: the port number of the RO server to connect to.
+#
+# Establish a connection to a Ragnarok Online server. You usually pass
+# "\$remote_socket" (without the quotes) for the r_socket argument.
+# An IO::Socket::INET scalar will be assigned to r_socket.
+#
+# This function is used internally by Network::checkConnection() and should not be used directly.
 sub connectTo {
 	my $r_socket = shift;
 	my $host = shift;
@@ -49,6 +70,14 @@ sub connectTo {
 		error("couldn't connect\n", "connection");
 }
 
+##
+# Network::disconnect(r_socket)
+# r_socket: a reference to an IO::Socket::INET scalar.
+#
+# Disconnect from the current Ragnarok Online server.
+# You usually pass "\$remote_socket" (without the quotes) for the r_socket argument.
+#
+# This function is used internally by Network::checkConnection() and should not be used directly.
 sub disconnect {
 	return if ($config{'XKore'});
 	my $r_socket = shift;
@@ -62,6 +91,16 @@ sub disconnect {
 			error("couldn't disconnect\n", "connection");
 	}
 }
+
+##
+# Network::checkConnection()
+#
+# (At this time, the checkConnection() function is in functions.pl. The plan is to eventually move that function to this module.)
+# Handles any connection issues. Based on the current situation, this connect may
+# re-connect to the RO server, disconnect, do nothing, etc.
+# This function is meant to be run in the Kore main loop.
+#
+# See also: $conState (see the comment in <tt>functions.pl</tt>)
 
 
 return 1;

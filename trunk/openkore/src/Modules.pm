@@ -148,7 +148,9 @@ sub checkSyntax {
 ##
 # Modules::doReload()
 #
-# Reload all modules in the reload queue. See also: Modules::reload()
+# Reload all modules in the reload queue. This function is meant to be run in Kore's main loop.
+#
+# See also: Modules::reload()
 sub doReload {
 	foreach my $mod (@queue) {
 		print "Reloading $mod...\n";
