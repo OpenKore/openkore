@@ -10,7 +10,7 @@ CSourceBuilder = Builder(action = "gdk-pixbuf-csource --name=grftool_icon $SOURC
 gtk.Append(BUILDERS = {'CSource' : CSourceBuilder});
 Default(gtk.CSource('grftool-gtk.csource', 'grftool-gtk.png'))
 
-gtktool = gtk.Program('grftool-gtk', ['main.cpp', 'callbacks.cpp', 'utils.cpp', 'window.cpp'],
+gtktool = gtk.Program('grftool-gtk', ['main.cpp', 'callbacks.cpp', 'utils.cpp', 'window.cpp', 'sprite-viewer.cpp'],
 	LIBS=['z', 'static-grf'])
 Clean('grftool-gtk', ['grftool.glade.bak', 'grftool.gladep.bak'])
 Default(gtktool)
