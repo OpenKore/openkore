@@ -163,6 +163,7 @@ New config options:
   will use the Pneuma skill if you are fighting Raydric Archer, and
   there is not already a Pneuma affecting you.
 - New condition _whenIdle for use only when the bot is doing nothing
+- "vl" (vender list) command now displays coordinates
 
 New timeouts.txt options:
 - ai_attack_unfail 5

@@ -713,14 +713,17 @@ sub parseCommand {
 
 	} elsif ($switch eq "vl") {
 		message("-----------Vender List-----------\n" .
-			"#   Title                                Owner\n",
+			"#   Title                                Coords     Owner\n",
 			"list");
 		for (my $i = 0; $i < @venderListsID; $i++) {
 			next if ($venderListsID[$i] eq "");
-			my $owner_string = ($venderListsID[$i] ne $accountID) ? $players{$venderListsID[$i]}{'name'} : $chars[$config{'char'}]{'name'};
-			message(swrite(
-				"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<",
-				[$i, $venderLists{$venderListsID[$i]}{'title'}, $owner_string]),
+			my $player = $venderListsID[$i] eq $accountID ?
+				$char :
+				$players{$venderListsID[$i]};
+			message(sprintf(
+				"%3d %-36s (%3d, %3d) %-20s\n",
+				$i, $venderLists{$venderListsID[$i]}{'title'}, 
+				$player->{pos_to}{x}, $player->{pos_to}{y}, $player->{name}),
 				"list");
 		}
 		message("----------------------------------\n", "list");
