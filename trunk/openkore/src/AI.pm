@@ -23,7 +23,7 @@ sub args {
 }
 
 sub v {
-	return $ai_v;
+	return %ai_v;
 }
 
 sub dequeue {
@@ -42,5 +42,10 @@ sub clear {
 	undef @ai_seq_args;
 }
 
+sub suspend {
+	my $i = (defined $_[0] ? $_[0] : 0);
+	
+	$ai_seq_args[$i]{suspended} = time if ($i < @ai_seq_args);
+}
 
 return 1;
