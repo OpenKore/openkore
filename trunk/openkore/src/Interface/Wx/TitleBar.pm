@@ -65,10 +65,13 @@ sub new {
 
 		my $toolbar = new Wx::ToolBar($self, -1, wxDefaultPosition, [-1, $size],
 			wxTB_HORIZONTAL | wxNO_BORDER | wxTB_3DBUTTONS | wxTB_FLAT);
+		$toolbar->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+		$toolbar->SetToolBitmapSize(new Wx::Size(12, 12));
 		$toolbar->AddTool(1, 'Detach', $detachBitmap, 'Detach tab');
 		$toolbar->AddTool(2, 'Close', $closeBitmap, 'Close tab');
 		$toolbar->Realize;
 		$hsizer->Add($toolbar, 0, wxGROW);
+		$hsizer->SetItemMinSize($toolbar, $toolbar->GetBestSize->GetWidth, $size);
 
 		EVT_TOOL($toolbar, 1, sub {
 			$self->{onDetach}->($self->{onDetachData}) if ($self->{onDetach});
@@ -78,6 +81,7 @@ sub new {
 			$self->{onClose}->($self->{onCloseData}) if ($self->{onClose});
 		});
 
+		
 		$self->{toolbar} = $toolbar;
 		$self->SetSizeHints($toolbar->GetBestSize->GetWidth, $size);
 		$self->SetSizer($sizer);
