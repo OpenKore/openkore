@@ -1,0 +1,16 @@
+libgrf:
+- Support for creating archives and adding files.
+
+libsprite:
+- Support for loading sprite data from memory.
+- Ability to convert a frame to RGB data.
+- Better documentation.
+
+Win32 Delphi frontend:
+- More descriptive type names.
+- Extract on doubleclick.
+- Wildcard searching.
+- Support for previewing JPEG files?
+
+Win32 Delphi and GTK+ frontends:
+- Support for previewing GAT, SPR and WAV.
