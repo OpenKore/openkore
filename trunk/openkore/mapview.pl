@@ -1,8 +1,6 @@
 #!/usr/bin/perl 
 
-#use strict; 
-use warnings; 
-
+#use strict;
 ################ 
 #The origanal MapView was not writen by me, I have made some cosmetic and usability changes, but the core code is not mine. 
 # - VT200 

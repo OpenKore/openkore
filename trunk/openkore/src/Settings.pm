@@ -59,6 +59,7 @@ our $chat_file;
 our $item_log_file;
 our $shop_file;
 our $def_field;
+our $monster_log;
 
 our @parseFiles;
 our $parseFiles;
@@ -107,6 +108,7 @@ sub parseArguments {
 		'chat=s', \$chat_file,
 		'shop=s', \$shop_file,
 		'fields=s',\$def_field,
+		'monsters=s', \$monster_log,
 		'items=s', \$item_log_file);
 	if ($help_option) {
 		print "Usage: openkore.exe [options...]\n\n";
@@ -128,6 +130,7 @@ sub parseArguments {
 	}
 
 	$config_file = "$control_folder/config.txt" if (!defined $config_file);
+	$monster_log = "$logs_folder/monsters.txt" if (!defined $monster_log);
 	$items_control_file = "$control_folder/items_control.txt" if (!defined $items_control_file);
 	$mon_control_file = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
 	$chat_file = "$logs_folder/chat.txt" if (!defined $chat_file);

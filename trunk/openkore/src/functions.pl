@@ -2259,9 +2259,11 @@ sub parseCommand {
 		}
 
 	} else {
-		my $plugin_command_success = 0;
+		our $plugin_command_success = 0;
 		Plugins::callHook('Command_post', $input);
-		error "Command seems to not exist in either the standard OpenKore command set, or in a plugin" if ($plugin_command_success == 0);
+		if ($plugin_command_success == 0) {
+			error "Command seems to not exist in either the standard OpenKore command set, or in a plugin\n";
+		}
 		
 #		We really need a way to allow plugins to retrieve user input, and not return the error message.
 #		possibly a standard input.pl plugin, that everyone requiring user input/commands registers a hook in.
@@ -4125,6 +4127,7 @@ sub AI {
 			while ($monsters_Killed[$i]) {
 				if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}) {
 					$monsters_Killed[$i]{'count'}++;
+					monsterLog($monsters_Killed[$i]{'name'});
 					$found = 1;
 					last;
 				}
@@ -4134,6 +4137,7 @@ sub AI {
 				$monsters_Killed[$i]{'nameID'} = $monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'};
 				$monsters_Killed[$i]{'name'} = $monsters_old{$ai_v{'ai_attack_ID_old'}}{'name'};
 				$monsters_Killed[$i]{'count'} = 1;
+				monsterLog($monsters_Killed[$i]{'name'})
 			}
 			## kokal end
 
@@ -10776,6 +10780,14 @@ sub itemLog {
 	open ITEMLOG, ">> $Settings::item_log_file";
 	print ITEMLOG "[".getFormattedDate(int(time))."] $crud";
 	close ITEMLOG;
+}
+
+sub monsterLog {
+	my $crud = shift;
+	return if (!$config{'monsterLog'});
+	open MONLOG, ">> $Settings::monster_log";
+	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
+	close MONLOG;
 }
 
 sub chatLog_clear { 
