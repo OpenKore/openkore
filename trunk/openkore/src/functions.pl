@@ -6752,7 +6752,7 @@ sub parseMsg {
 			if ($change > 0) {
 				message "You gained $change zeny.\n";
 			} elsif ($change < 0) {
-				message "You lost $change zeny.\n";
+				message "You lost ".-$change." zeny.\n";
 			}
 			$char->{zenny} = $val;
 			debug "Zenny: $val\n", "parseMsg";
