@@ -1442,8 +1442,11 @@ sub parseCommand {
 
 
 		} elsif ($arg1 eq "no") {
-			sendTalkCancel(\$remote_socket, $talk{'ID'});
-
+			if (!%talk) {
+				error "You are not talking to any NPC.\n";
+			} else {
+				sendTalkCancel(\$remote_socket, $talk{'ID'});
+			}
 
 		} else {
 			error	"Syntax Error in function 'talk' (Talk to NPC)\n" .
