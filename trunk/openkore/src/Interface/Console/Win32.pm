@@ -221,9 +221,9 @@ sub readEvents {
 			} elsif ($event[3] == 46) {
 				substr($input_part, $in_pos, 1, '');
 				$out_con->Scroll(
-					$in_pos+1, $in_line, $right, $in_line,
-					$in_pos, $in_line, ord(' '), $main::ATTR_NORMAL, 
-					$in_pos+1, $in_line, $right, $in_line,
+					$in_pos, $in_line, $right, $in_line,
+					$in_pos - 1, $in_line, ord(' '), $main::ATTR_NORMAL, 
+					$in_pos, $in_line, $right, $in_line,
 				);
 			##F1-F12
 #			} elsif ($event[3] >= 112 && $event[3] <= 123) {
