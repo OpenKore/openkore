@@ -25,6 +25,7 @@ useItem blue
 
 skill green 
 
+success green
 system yellow
 pm yellow
 guildchat darkgreen
