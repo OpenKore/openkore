@@ -38,7 +38,7 @@ if ($help_option) {
 	print "--items_control=path/file  Which items_control.txt to use.\n";
 	print "--chat=path/file           Which chat.txt to use.\n";
 	print "--shop=path/file           Which shop.txt to use.\n";
-	print "--rpackets=path/file           Which recvpackets.txt to use.\n";
+	print "--rpackets=path/file       Which recvpackets.txt to use.\n";
 	exit(1);
 }
 
