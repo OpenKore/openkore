@@ -8951,7 +8951,7 @@ sub ai_getAggressives {
 		my $monster = $monsters{$_};
 		if ((($type && $mon_control{lc($monster->{name})}{attack_auto} == 2) || 
 		    $monster->{dmgToYou} || $monster->{missedYou} ||
-			($party && $monster->{dmgToParty} || $monster->{missedToParty}))
+			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})))
 		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 
 			if ($wantArray) {
