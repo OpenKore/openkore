@@ -138,6 +138,17 @@ New config options:
   before falling back to walking.
   It's recommended that you set a value between 100 or 200 for
   route_teleport_minDistance.
+- New conditions _whenGround and _whenNotGround can e.g. cast a skill
+  only if certain conditions are met. For example:
+
+  useSelf_skill Pneuma {
+	  lvl 1
+      monsters Raydric Archer
+	  whenNotGround Pneuma
+  }
+
+  will use the Pneuma skill if you are fighting Raydric Archer, and
+  there is not already a Pneuma affecting you.
 
 New timeouts.txt options:
 - ai_attack_unfail 5
