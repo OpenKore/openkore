@@ -4957,32 +4957,40 @@ sub AI {
 	
 	##### MOVE #####
 
-
 	if ($ai_seq[0] eq "move" && $ai_seq_args[0]{'suspended'}) {
 		$ai_seq_args[0]{'ai_move_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
 		undef $ai_seq_args[0]{'suspended'};
 	}
 	if ($ai_seq[0] eq "move") {
-		if (!$ai_seq_args[0]{'ai_moved'} && $ai_seq_args[0]{'ai_moved_tried'} && $ai_seq_args[0]{'ai_move_time_last'} != $chars[$config{'char'}]{'time_move'}) {
-			$ai_seq_args[0]{'ai_moved'} = 1;
-		}
-		if ($chars[$config{'char'}]{'sitting'}) {
-			ai_setSuspend(0);
-			stand();
-		} elsif (!$ai_seq_args[0]{'ai_moved'} && timeOut(\%{$ai_seq_args[0]{'ai_move_giveup'}})) {
+		if (timeOut(\%{$ai_seq_args[0]{'ai_move_giveup'}})) {
+			# We couldn't move within ai_move_giveup seconds.
+			# Abort move commands.
 			shift @ai_seq;
 			shift @ai_seq_args;
-		} elsif (!$ai_seq_args[0]{'ai_moved_tried'}) {
+
+		} elsif ($chars[$config{'char'}]{'sitting'}) {
+			# Stand if we're sitting
+			ai_setSuspend(0);
+			stand();
+
+		} elsif ($ai_seq_args[0]{'stage'} eq '') {
 			sendMove(\$remote_socket, int($ai_seq_args[0]{'move_to'}{'x'}), int($ai_seq_args[0]{'move_to'}{'y'}));
 			$ai_seq_args[0]{'ai_move_giveup'}{'time'} = time;
 			$ai_seq_args[0]{'ai_move_time_last'} = $chars[$config{'char'}]{'time_move'};
-			$ai_seq_args[0]{'ai_moved_tried'} = 1;
-		} elsif ($ai_seq_args[0]{'ai_moved'} && time - $chars[$config{'char'}]{'time_move'} >= $chars[$config{'char'}]{'time_move_calc'}) {
+			$ai_seq_args[0]{'stage'} = 'Sent Move Request';
+
+		} elsif ($ai_seq_args[0]{'ai_move_time_last'} eq $chars[$config{'char'}]{'time_move'}) {
+			# We haven't moved yet, send move request again
+			sendMove(\$remote_socket, int($ai_seq_args[0]{'move_to'}{'x'}), int($ai_seq_args[0]{'move_to'}{'y'}));
+
+		} elsif ($ai_seq_args[0]{'move_to'}{'x'} eq $chars[$config{'char'}]{'pos_to'}{'x'}
+		      && $ai_seq_args[0]{'move_to'}{'y'} eq $chars[$config{'char'}]{'pos_to'}{'y'}) {
+			# We've arrived at our destination. Remove the move AI sequence.
 			shift @ai_seq;
 			shift @ai_seq_args;
 		}
-	}
 
+	}
 
 
 	##### AUTO-TELEPORT #####
