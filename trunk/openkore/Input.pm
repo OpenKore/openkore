@@ -32,111 +32,60 @@
 package Input;
 
 use strict;
+use warnings; #can comment this out for releases, but If I do my job that will never be needed
 use Exporter;
-use IO::Socket::INET;
+#use IO::Socket::INET;
 use Settings;
 use Log;
 use Utils;
-use POSIX;
+#use POSIX;
 
 our @ISA = "Exporter";
 our @EXPORT_OK = qw(&init &stop &canRead &readLine $enabled);
 
-our $enabled;
-our $input_server;
-our $input_socket;
-our $input_pid;
+our $use_curses = 0; #hasn't been writen yet
 
+##
+# This will load proper OS module at run time
+if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
+	eval <<"	EOW32";
+		use Input::Win32;
+	EOW32
+	die $@ if $@; #rethrow errors
+} else {
+	if ($use_curses) {
+		eval <<"		EOC";
+			use Input::Curses;
+		EOC
+		#if that didn't work it's probably because curses is missing
+		#that's ok, just try to use the IO::Select method instead
+		#we may want to warn, but we may not, but this isn't OpenKore,
+		#so we don't have nice logging
+		warn $@ if $@;
+	}
+	if (!$use_curses || $@) {
+		eval <<"		EOO";
+			use Input::Other;
+		EOO
+		die $@ if $@; #rethrow errors
+	}
+}
 
 ##
 # Input::start()
 #
 # Initializes the input system. You must call this function
 # to be able to use the input system.
-sub start {
-	return undef if ($enabled);
-
-	$input_server = IO::Socket::INET->new(
-			Listen		=> 5,
-			LocalAddr 	=> 'localhost',
-			Proto		=> 'tcp');
-	if (!$input_server) {
-		Log::error("Error creating local input server: $@", "startup");
-		promptAndExit();
-	}
-	print "Local input server started (" . $input_server->sockhost() . ":" . $input_server->sockport() . ")\n";
-	$input_pid = startInputClient();
-	$enabled = 1;
-	return 1;
-}
-
+#
+# Exported from a Input::* module
 
 ##
 # Input::stop()
 #
 # Stops the input system. The input client process
 # will be terminated and sockets will be freed.
-sub stop {
-	return unless ($enabled);
-
-	$enabled = 0;
-	close($input_server);
-	close($input_socket);
-	kill(9, $input_pid);
-}
-
-
-##
-# Input::startInputClient()
 #
-# Starts the input client. You must call this
-# function before you are able to use canRead().
-sub startInputClient {
-	print "Spawning Input Socket...\n";
-	my $host = $input_server->sockhost();
-	my $port = $input_server->sockport();
-
-	my $pid = fork();
-	if ($pid == 0) {
-		# Child; read data from stdin and send to input server
-		my $local_socket = IO::Socket::INET->new(
-			PeerAddr	=> $host,
-			PeerPort	=> $port,
-			Proto		=> 'tcp');
-		($local_socket) || die "Error creating connection to local server: $@";
-		$local_socket->autoflush(0);
-
-		my $input;
-		while (1) {
-			$input = <STDIN>;
-			if (!defined($input)) {
-				$local_socket->send("quit");
-				$local_socket->flush;
-				last;
-			}
-
-			chomp $input;
-			if ($input ne "") {
-				$local_socket->send($input);
-				$local_socket->flush;
-			}
-			#last if ($input eq "quit" || $input eq "dump");
-		}
-		close($local_socket);
-		_exit(0);
-
-	} elsif ($pid) {
-		# Parent; poll input server and read data when available
-		$input_socket = $input_server->accept();
-		(inet_aton($input_socket->peerhost()) eq inet_aton('localhost')) 
-		|| die "Input Socket must be connected from localhost";
-		print "Input Socket connected\n";
-		return $pid;
-
-	} else {
-		die "Unable to fork input server process";
-	}
-}
+# Exported from a Input::* module
 
 
 ##
@@ -150,14 +99,8 @@ sub startInputClient {
 # # The following lines are semantically equal:
 # Input::canRead() && Input::getInput(0);
 # Input::getInput(1);
-sub canRead {
-	return undef unless ($enabled);
-	my $bits = '';
-	vec($bits, $input_socket->fileno, 1) = 1;
-	# The timeout was 0.005
-	return (select($bits, $bits, $bits, 0.00) > 1);
-}
-
+#
+# Exported from a Input::* module
 
 ##
 # Input::getInput(wait)
@@ -166,16 +109,8 @@ sub canRead {
 #          keyboard data available or if the input system hasn't been initialized.
 #
 # Reads keyboard data.
-sub getInput {
-	return undef unless ($enabled);
-
-	my $wait = shift;
-	my $input;
-	if ($wait || canRead()) {
-		$input_socket->recv($input, $Settings::MAX_READ);
-	}
-	return $input;
-}
+#
+# Exported from a Input::* module
 
 
 END {
