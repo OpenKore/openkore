@@ -99,61 +99,63 @@ route_maxWarpFee
 route_step 15
 
 #
-# attackSkillSlot_0 [skill to use, lookup from tables/skills.txt or type 'skills' in console]
-# attackSkillSlot_0_lvl [number]
-# attackSkillSlot_0_dist [number]
-# attackSkillSlot_0_maxCastTime [number, in seconds]
-# attackSkillSlot_0_minCastTime [number, in seconds]
-# attackSkillSlot_0_hp [range, in %]
-# attackSkillSlot_0_sp [range, in %]
-# attackSkillSlot_0_onAction [activate the skill only on current AI action, eg attack, move]
-# attackSkillSlot_0_whenStatusActive [activate the skill only when the listed status/state/ailments/look active]
-# attackSkillSlot_0_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
-# attackSkillSlot_0_whenFollowing [flag]
-# attackSkillSlot_0_spirit [range, number of sprit ball]
-# attackSkillSlot_0_aggressives [range, number of monster attacking]
-# attackSkillSlot_0_stopWhenHit [flag]
-# attackSkillSlot_0_inLockOnly [flag]
-# attackSkillSlot_0_notWhileSitting [flag]
-# attackSkillSlot_0_notInTown [flag]
-# attackSkillSlot_0_timeout [number, in seconds before the skills can be activated again. A small timeout is always good to counter lag]
-# attackSkillSlot_0_disabled [flag, to disable this block temporary]
-# attackSkillSlot_0_monsters [list of monster to use this skill with, coma separated]
-# attackSkillSlot_0_maxUses 0 [number]
-# attackSkillSlot_0_target_whenStatusActive [activate the skill only when the monster have the listed status/state/ailments/look active]
-# attackSkillSlot_0_target_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
-# attackSkillSlot_0_inInventory_name [activate skill only if you have a certain item in inventory]
-# attackSkillSlot_0_inInventory_qty [range, specify how many items you must have in order to activate this skill]
+# attackSkillSlot [skill to use, lookup from tables/skills.txt or type 'skills' in console] {
+# 	lvl [number]
+# 	dist [number]
+# 	maxCastTime [number, in seconds]
+# 	minCastTime [number, in seconds]
+# 	hp [range, in %]
+# 	sp [range, in %]
+# 	onAction [activate the skill only on current AI action, eg attack, move]
+# 	whenStatusActive [activate the skill only when the listed status/state/ailments/look active]
+# 	whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
+# 	whenFollowing [flag]
+# 	spirit [range, number of sprit ball]
+# 	aggressives [range, number of monster attacking]
+# 	stopWhenHit [flag]
+# 	inLockOnly [flag]
+# 	notWhileSitting [flag]
+# 	notInTown [flag]
+# 	timeout [number, in seconds before the skills can be activated again. A small timeout is always good to counter lag]
+# 	disabled [flag, to disable this block temporary]
+# 	monsters [list of monster to use this skill with, coma separated]
+# 	maxUses 0 [number]
+# 	target_whenStatusActive [activate the skill only when the monster have the listed status/state/ailments/look active]
+# 	target_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
+# 	inInventory_name [activate skill only if you have a certain item in inventory]
+# 	inInventory_qty [range, specify how many items you must have in order to activate this skill]
+# }
 #
 # notes:
 #   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
-#   eg: attackSkillSlot_0_hp       <-- don't care
-#   eg: attackSkillSlot_0_sp > 10  <-- only when we have more then 10% sp left
+#   eg: hp       <-- don't care
+#   eg: sp > 10  <-- only when we have more then 10% sp left
 
-attackSkillSlot_0
-attackSkillSlot_0_lvl 10
-attackSkillSlot_0_dist 1.5
-attackSkillSlot_0_maxCastTime 0
-attackSkillSlot_0_minCastTime 0
-attackSkillSlot_0_hp
-attackSkillSlot_0_sp > 10
-attackSkillSlot_0_onAction
-attackSkillSlot_0_whenStatusActive
-attackSkillSlot_0_whenStatusInactive
-attackSkillSlot_0_whenFollowing
-attackSkillSlot_0_spirit
-attackSkillSlot_0_aggressives
-attackSkillSlot_0_stopWhenHit 0
-attackSkillSlot_0_inLockOnly 0
-attackSkillSlot_0_notInTown 0
-attackSkillSlot_0_timeout 0
-attackSkillSlot_0_disabled 0
-attackSkillSlot_0_monsters
-attackSkillSlot_0_maxUses 0
-attackSkillSlot_0_target_whenStatusActive
-attackSkillSlot_0_target_whenStatusInactive
-attackSkillSlot_0_inInventory_name
-attackSkillSlot_0_inInventory_qty
+attackSkillSlot {
+	lvl 10
+	dist 1.5
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp > 10
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	stopWhenHit 0
+	inLockOnly 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	monsters
+	maxUses 0
+	target_whenStatusActive
+	target_whenStatusInactive
+	inInventory_name
+	inInventory_qty
+}
 
 sitAuto_hp_lower 40
 sitAuto_hp_upper 100
@@ -180,94 +182,82 @@ teleportAuto_useSP 0
 teleportAuto_emptyName 1
 teleportAuto_unstuck 0
 
-# Notes:
-#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
-#   eg: useSelf_skill_0_hp       <-- don't care
-#   eg: useSelf_skill_0_sp > 10  <-- only when we have more then 10% sp left
-
-useSelf_skill_0
-useSelf_skill_0_lvl 10
-useSelf_skill_0_maxCastTime 0
-useSelf_skill_0_minCastTime 0
-useSelf_skill_0_hp
-useSelf_skill_0_sp
-useSelf_skill_0_onAction
-useSelf_skill_0_whenStatusActive
-useSelf_skill_0_whenStatusInactive
-useSelf_skill_0_whenFollowing
-useSelf_skill_0_spirit
-useSelf_skill_0_aggressives
-useSelf_skill_0_monsters
-useSelf_skill_0_stopWhenHit 0
-useSelf_skill_0_inLockOnly 0
-useSelf_skill_0_notWhileSitting 0
-useSelf_skill_0_notInTown 0
-useSelf_skill_0_timeout 0
-useSelf_skill_0_disabled 0
-useSelf_skill_0_inInventory_name
-useSelf_skill_0_inInventory_qty
+useSelf_skill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
 
 useSelf_skill_smartHeal 1
 
-# Notes:
-#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
-#   eg: useSelf_item_0_hp < 90  <-- when we have less then 90% hp and
-#   eg: useSelf_item_0_hp < 50  <-- less then 50% sp
+useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
+	hp <= 50
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
 
-useSelf_item_0 Meat,Apple,Carrot,Red Potion
-useSelf_item_0_hp <= 50
-useSelf_item_0_sp
-useSelf_item_0_onAction
-useSelf_item_0_whenStatusActive
-useSelf_item_0_whenStatusInactive
-useSelf_item_0_whenFollowing
-useSelf_item_0_spirit
-useSelf_item_0_aggressives
-useSelf_item_0_monsters
-useSelf_item_0_stopWhenHit 0
-useSelf_item_0_inLockOnly 0
-useSelf_item_0_notWhileSitting 0
-useSelf_item_0_notInTown 0
-useSelf_item_0_timeout
-useSelf_item_0_disabled 0
-useSelf_item_0_inInventory_name
-useSelf_item_0_inInventory_qty
-
-# Notes:
-#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
-#   eg: partySkill_0_hp      <-- don't care
-#   eg: partySkill_0_sp > 10 <-- keep the last 10% for our own use...
-
-partySkill_0
-partySkill_0_lvl 10
-partySkill_0_maxCastTime 0
-partySkill_0_minCastTime 0
-partySkill_0_hp
-partySkill_0_sp
-partySkill_0_onAction
-partySkill_0_whenStatusActive
-partySkill_0_whenStatusInactive
-partySkill_0_whenFollowing
-partySkill_0_spirit
-partySkill_0_aggressives
-partySkill_0_monsters
-partySkill_0_stopWhenHit 0
-partySkill_0_inLockOnly 0
-partySkill_0_notWhileSitting 0
-partySkill_0_notInTown 0
-partySkill_0_timeout 0
-partySkill_0_disabled 0
-partySkill_0_target
-partySkill_0_target_hp
-partySkill_0_target_isJob
-partySkill_0_target_isNotJob
-partySkill_0_target_whenStatusActive
-partySkill_0_target_whenStatusInactive
-partySkill_0_target_aggressives
-partySkill_0_target_monsters
-partySkill_0_target_timeout 0
-partySkill_0_inInventory_name
-partySkill_0_inInventory_qty
+partySkill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	target
+	target_hp
+	target_isJob
+	target_isNotJob
+	target_whenStatusActive
+	target_whenStatusInactive
+	target_aggressives
+	target_monsters
+	target_timeout 0
+	inInventory_name
+	inInventory_qty
+}
 
 itemsTakeAuto 2
 itemsGatherAuto 2
@@ -356,55 +346,31 @@ autoSwitch_0_useWeapon
 #NOTE: In the case of two handed weapons, or no Shield,
 #      duplicate the weapon name for "autoSwitch_shield_new_#
 
-#
-# equipAuto_0
-# equipAuto_0_def
-# equipAuto_0_monster
-# equipAuto_0_skills
-# equipAuto_0_weight 0
-# equipAuto_0_whileSitting 0
-# equipAuto_0_onTeleport 0
-# equipAuto_0_hp [range]
-# equipAuto_0_sp [range]
-# equipAuto_0_onAction
-# equipAuto_0_whenStatusActive
-# equipAuto_0_whenStatusInactive
-# equipAuto_0_whenFollowing [flag]
-# equipAuto_0_spirit [range]
-# equipAuto_0_aggressives [range]
-# equipAuto_0_stopWhenHit 0
-# equipAuto_0_inLockOnly 0
-# equipAuto_0_notWhileSitting 0
-# equipAuto_0_notInTown 0
-# equipAuto_0_timeout 0
-# equipAuto_0_disabled 0
-#
-# notes:
-#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
 
-equipAuto_0
-equipAuto_0_def
-equipAuto_0_monster
-equipAuto_0_skills
-equipAuto_0_weight 0
-equipAuto_0_whileSitting 0
-equipAuto_0_onTeleport 0
-equipAuto_0_hp
-equipAuto_0_sp
-equipAuto_0_onAction
-equipAuto_0_whenStatusActive
-equipAuto_0_whenStatusInactive
-equipAuto_0_whenFollowing
-equipAuto_0_spirit
-equipAuto_0_aggressives
-equipAuto_0_stopWhenHit 0
-equipAuto_0_inLockOnly 0
-equipAuto_0_notWhileSitting 0
-equipAuto_0_notInTown 0
-equipAuto_0_timeout 0
-equipAuto_0_disabled 0
-equipAuto_0_inInventory_name
-equipAuto_0_inInventory_qty
+equipAuto {
+	def
+	monster
+	skills
+	weight 0
+	whileSitting 0
+	onTeleport 0
+	hp
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
 
 autoResponseOnHeal 0
 autoResponse 0
@@ -414,4 +380,4 @@ itemHistory 0
 autoTalkCont 0
 noAutoSkill 0
 
-alias_heal sp 9
+alias_heal sp 28
