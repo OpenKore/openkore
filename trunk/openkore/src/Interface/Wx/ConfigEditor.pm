@@ -130,20 +130,11 @@ package Interface::Wx::ConfigEditor::Grid;
 use Wx ':everything';
 use Wx::Grid;
 use Wx::Event qw(EVT_GRID_CELL_CHANGE EVT_GRID_CELL_LEFT_CLICK);
-use Wx::FS;
 use Wx::Html;
+use LWP::Simple;
 use base qw(Wx::Panel);
 
 our $manual;
-undef $@;
-eval {
-	# WxPerl for Windows doesn't include InternetFSHandler??
-	Wx::FileSystem::AddHandler(new Wx::InternetFSHandler);
-};
-if ($@) {
-	$manual = '';
-	undef $@;
-}
 
 sub new {
 	my $class = shift;
@@ -181,22 +172,19 @@ sub new {
 			close $f;
 
 		} else {
-			my $fs = new Wx::FileSystem;
-			my $file = $fs->OpenFile('http://openkore.sourceforge.net/manual/control.htm');
-			if ($file) {
-				my $stream = $file->GetStream;
-				$manual = '';
-				while (defined(my $line = <$stream>)) {
-					$manual .= $line;
-				}
+			my $dialog = new Wx::Dialog($parent->GetGrandParent, -1, "Downloading");
+			my $sizer = new Wx::BoxSizer(wxVERTICAL);
+			my $label = new Wx::StaticText($dialog, -1, "Downloading manual, please wait...");
+			$sizer->Add($label, 1, wxGROW | wxALL, 8);
+			$dialog->SetSizerAndFit($sizer);
+			$dialog->Show(1);
+			wxTheApp->Yield;
 
-				if ($manualFile && open($f, "> $manualFile")) {
-					print $f $manual;
-					close $f;
-				}
-
-			} else {
-				$manual = '';
+			$manual = get('http://openkore.sourceforge.net/manual/control.htm');
+			$dialog->Close;
+			if ($manual && open($f, "> $manualFile")) {
+				print $f $manual;
+				close $f;
 			}
 		}
 	}
