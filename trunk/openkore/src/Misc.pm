@@ -51,6 +51,7 @@ our @EXPORT = (
 	calcRectArea2
 	checkFieldSnipable
 	checkFieldWalkable
+	checkFieldWater
 	checkLineSnipable
 	checkLineWalkable
 	checkWallLength
@@ -353,6 +354,18 @@ sub checkFieldSnipable {
 sub checkFieldWalkable {
 	my $p = getFieldPoint(@_);
 	return ($p == 0 || $p == 3);
+}
+
+##
+# checkFieldWater(r_field, x, y)
+# r_field: a reference to a field hash.
+# x, y: the coordinate to check.
+# Returns: 1 (true) or 0 (false).
+#
+# Check whether ($x, $y) on field $r_field is (walkable) water.
+sub checkFieldWater {
+	# FIXME: not implemented
+	return 0;
 }
 
 ##

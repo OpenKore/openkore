@@ -39,6 +39,7 @@ Bug fixes:
 - Show weapon name instead of ID in the pl # commands.
 - shop_random has been readded.
 - Win32 console interface: fixed a crash regarding text input.
+- "aggressives 0" and "partyAggressives 0" should work now.
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux

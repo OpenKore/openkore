@@ -10790,14 +10790,14 @@ sub checkSelfCondition {
 		return 0 unless ($char->{sp} >= $skillsSP_lut{$skills_rlut{lc($config{$prefix})}}{$config{$prefix . "_lvl"}})
 	}
 
-	if ($config{$prefix . "_aggressives"}) {
+	if (defined $config{$prefix . "_aggressives"}) {
 		return 0 unless (inRange(scalar ai_getAggressives(), $config{$prefix . "_aggressives"}));
 	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
 		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getAggressives());
 		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
 	}
 
-	if ($config{$prefix . "_partyAggressives"}) {
+	if (defined $config{$prefix . "_partyAggressives"}) {
 		return 0 unless (inRange(scalar ai_getAggressives(undef, 1), $config{$prefix . "_partyAggressives"}));
 	}
 
@@ -10882,6 +10882,10 @@ sub checkSelfCondition {
 		return 0 if $char->{permitSkill} &&
 			$char->{permitSkill}->name eq $config{$prefix."_whenNotPermitSkill"};
 	}
+
+	my $pos = calcPosition($char);
+	return 0 if $config{$prefix."_whenWater"} &&
+		!checkFieldWater(\%field, $pos->{x}, $pos->{y});
 
 	return 1;
 }
