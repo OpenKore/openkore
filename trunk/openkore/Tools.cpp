@@ -129,7 +129,7 @@ static int QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
 
 static inline char CalcPath_getMap(char *map, unsigned long width, unsigned long height, pos *p) {
 	if (p->x >= width || p->y >= height) {
-		return 1;
+		return 0;
 	} else {
 		return map[(p->y*width)+p->x];
 	}
