@@ -324,10 +324,7 @@ Log::message("\n");
 $SIG{__DIE__} = sub {
 	die @_ if (defined($^S) && $^S);
 	if (defined &Carp::longmess) {
-		Log::color("red") if (defined &Log::color);
-		Log::message("Program terminated unexpectedly. Error message:\n");
-		Log::color("reset") if (defined &Log::color);
-
+		$interface->writeOutput("error", "Program terminated unexpectedly. Error message: @_\n");
 		my $msg = Carp::longmess(@_);
 		Log::message("\@ai_seq = @ai_seq\n");
 		if (open(F, "> errors.txt")) {
@@ -395,16 +392,16 @@ while ($quit != 1) {
 			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
 			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
 			if ($retVal != 1) {
-				Log::error("Could not inject DLL", "startup");
-				return 1;
+				Log::error("Could not inject DLL\n", "startup");
+				$timeout{'injectKeepAlive'}{'time'} = time;
+			} else {
+				Log::message("Waiting for InjectDLL to connect...\n");
+				$remote_socket = $injectServer_socket->accept();
+				(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
+				|| die "Inject Socket must be connected from localhost";
+				Log::message("InjectDLL Socket connected - Ready to start botting\n");
+				$timeout{'injectKeepAlive'}{'time'} = time;
 			}
-
-			Log::message("Waiting for InjectDLL to connect...\n");
-			$remote_socket = $injectServer_socket->accept();
-			(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
-			|| die "Inject Socket must be connected from localhost";
-			Log::message("InjectDLL Socket connected - Ready to start botting\n");
-			$timeout{'injectKeepAlive'}{'time'} = time;
 		}
 		if (timeOut(\%{$timeout{'injectSync'}})) {
 			sendSyncInject(\$remote_socket);

@@ -366,27 +366,49 @@ static DWORD WINAPI GetProcessThread(DWORD hProcess)
 
 DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 {
-	if (!isNT) {
-		DWORD hThread = GetProcessThread(ProcID);
-		if (!hThread)
-			return 0;
+	#define TESTING_INJECT9x 0
+	#ifdef TESTING_INJECT9x
+		#define debug(x) MessageBox(0, x, "Debug", 0)
+	#else
+		#define debug(x)
+	#endif
 
-		HMODULE lib = LoadLibrary(dll);
-		if (!lib)
-			return 0;
+	if (TESTING_INJECT9x || !isNT) {
+		HMODULE lib;
+		int i;
+		HWND hwnd;
+		typedef int WINAPI __declspec(dllexport) (*injectSelfFunc) (HWND hwnd);
+		injectSelfFunc injectSelf;
 
-		LRESULT CALLBACK (*HookInject)(HWND hWnd, DWORD hThread);
-		HookInject = (LRESULT CALLBACK (*)(HWND, DWORD)) GetProcAddress(lib, "HookInject");
-		if (!HookInject) {
-			MessageBox(0, "function HookInject not found", "", 0);
+		// The window may not appear immediately so we try for at least 5 seconds
+		for (i = 0; i < 10; i++) {
+			hwnd = FindWindow(NULL, "Ragnarok");
+			if (hwnd)
+				break;
+			else
+				Sleep (500);
+		}
+		if (!hwnd) {
+			debug ("No RO window found.");
+			return 0;
+		}
+
+		lib = LoadLibrary(dll);
+		if (!lib) {
+			debug ("Could not load library.");
+			return 0;
+		}
+
+		injectSelf = (injectSelfFunc) GetProcAddress(lib, "injectSelf");
+		if (!injectSelf) {
+			debug ("No injectSelf() function.");
 			FreeLibrary(lib);
 			return 0;
 		}
 
-		LRESULT result = (*HookInject)((HWND) ProcID, hThread);
+		injectSelf (hwnd);
 		FreeLibrary(lib);
-
-		return (int) result;
+		return 1;
 	}
 
 
@@ -457,30 +479,20 @@ DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 
 DLLEXPORT DWORD WINAPI GetProcByName (char * name)
 {
-	if (isNT) {
-		HANDLE toolhelp;
-		PROCESSENTRY32 pe;
-		pe.dwSize = sizeof(PROCESSENTRY32);
-		toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-		if (Process32First(toolhelp,&pe)) {
-			do {
-				if (!stricmp(name, pe.szExeFile)) {
-					CloseHandle(toolhelp);
-					return pe.th32ProcessID;
-				}
-			} while (Process32Next(toolhelp,&pe));
-		}
-		CloseHandle(toolhelp);
-		return 0;
-	} else {
-		HWND hwnd = FindWindow(NULL, "Ragnarok");
-		if (!hwnd)
-			return 0;
-
-		DWORD hProcess;
-		GetWindowThreadProcessId(hwnd, &hProcess);
-		return hProcess;
+	HANDLE toolhelp;
+	PROCESSENTRY32 pe;
+	pe.dwSize = sizeof(PROCESSENTRY32);
+	toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	if (Process32First(toolhelp,&pe)) {
+		do {
+			if (!stricmp(name, pe.szExeFile)) {
+				CloseHandle(toolhelp);
+				return pe.th32ProcessID;
+			}
+		} while (Process32Next(toolhelp,&pe));
 	}
+	CloseHandle(toolhelp);
+	return 0;
 }
 
 
