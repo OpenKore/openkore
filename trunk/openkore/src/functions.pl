@@ -7056,7 +7056,7 @@ sub parseMsg {
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $fail = unpack("C1", substr($msg, 4, 1));
 		if ($fail) {
-			error "That person is overweight; you cannot trade.", "deal";
+			error "That person is overweight; you cannot trade.\n", "deal";
 		} elsif ($index > 0) {
 			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			$currentDeal{'you'}{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}{'amount'} += $currentDeal{'lastItemAmount'};
@@ -7545,32 +7545,37 @@ sub parseMsg {
 
 	} elsif ($switch eq "011C") {
 		# Warp portal list
-		my $type = unpack("S1",substr($msg, 2, 2));
 
-		my ($memo1) = substr($msg, 4, 16) =~ /([\s\S]*?)\000/;
-		my ($memo2) = substr($msg, 20, 16) =~ /([\s\S]*?)\000/;
-		my ($memo3) = substr($msg, 36, 16) =~ /([\s\S]*?)\000/;
-		my ($memo4) = substr($msg, 52, 16) =~ /([\s\S]*?)\000/;
+		# $type: 26 = Teleport, 27 = Warp Portal
+		my ($type, $memo1, $memo2, $memo3, $memo4) =
+			unpack("x2 S1 a16 a16 a16 a16", $msg);
 
 		($memo1) = $memo1 =~ /([\s\S]*)\.gat/;
 		($memo2) = $memo2 =~ /([\s\S]*)\.gat/;
 		($memo3) = $memo3 =~ /([\s\S]*)\.gat/;
 		($memo4) = $memo4 =~ /([\s\S]*)\.gat/;
 
-		$chars[$config{'char'}]{'warp'}{'type'} = $type;
-		undef @{$chars[$config{'char'}]{'warp'}{'memo'}};
-		push @{$chars[$config{'char'}]{'warp'}{'memo'}}, $memo1 if $memo1 ne "";
-		push @{$chars[$config{'char'}]{'warp'}{'memo'}}, $memo2 if $memo2 ne "";
-		push @{$chars[$config{'char'}]{'warp'}{'memo'}}, $memo3 if $memo3 ne "";
-		push @{$chars[$config{'char'}]{'warp'}{'memo'}}, $memo4 if $memo4 ne "";
+		# Auto-detect saveMap
+		if ($type == 26) {
+			configModify('saveMap', $memo2) if $memo2;
+		} elsif ($type == 27) {
+			configModify('saveMap', $memo1) if $memo1;
+		}
+
+		$char->{warp}{type} = $type;
+		undef @{$char->{warp}{memo}};
+		push @{$char->{warp}{memo}}, $memo1 if $memo1 ne "";
+		push @{$char->{warp}{memo}}, $memo2 if $memo2 ne "";
+		push @{$char->{warp}{memo}}, $memo3 if $memo3 ne "";
+		push @{$char->{warp}{memo}}, $memo4 if $memo4 ne "";
 
 		message("----------------- Warp Portal --------------------\n", "list");
 		message("#  Place                           Map\n", "list");
-		for (my $i = 0; $i < @{$chars[$config{'char'}]{'warp'}{'memo'}}; $i++) {
+		for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
 			message(swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
-				[$i, $maps_lut{$chars[$config{'char'}]{'warp'}{'memo'}[$i].'.rsw'},
-				$chars[$config{'char'}]{'warp'}{'memo'}[$i]]),
+				[$i, $maps_lut{$char->{warp}{memo}[$i].'.rsw'},
+				$char->{warp}{memo}[$i]]),
 				"list");
 		}
 		message("--------------------------------------------------\n", "list");
@@ -8161,24 +8166,18 @@ sub parseMsg {
 		my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
 		my $actor = getActorHash($ID);
 
-		if (defined $actor) {
-			my $name = getActorName($ID);
-			if ($flag) {
-				# Skill activated
-				$actor->{statuses}{$skillName} = 1;
-				message "$name are now: $skillName\n", "parseMsg_statuslook",2;
+		my ($name, $is) = getActorNames($ID, 0, 'are', 'is');
+		if ($flag) {
+			# Skill activated
+			$actor->{statuses}{$skillName} = 1 if $actor;
+			message "$name $is now: $skillName\n", "parseMsg_statuslook",
+				$ID eq $accountID ? 1 : 2;
 
-			} else {
-				# Skill de-activate (expired)
-				delete $actor->{statuses}{$skillName};
-				message "$name are no longer: $skillName\n", "parseMsg_statuslook",2;
-			}
 		} else {
-			if ($flag) {
-				message "Unknown ".getHex($ID)." got status $skillName\n", "parseMsg_statuslook", 2;
-			} else {
-				message "Unknown ".getHex($ID)." lost status status $skillName\n", "parseMsg_statuslook", 2;
-			}
+			# Skill de-activated (expired)
+			delete $actor->{statuses}{$skillName} if $actor;
+			message "$name $is no longer: $skillName\n", "parseMsg_statuslook",
+				$ID eq $accountID ? 1 : 2;
 		}
 
 	} elsif ($switch eq "019B") {

@@ -77,6 +77,11 @@ New features:
   d# - send # to the NPC (useful for buying forging items)
   If you wanted to buy 100 mini furnaces for example:
   c r1 c r0 c d100
+- Auto-detect saveMap when you cast Teleport level 2. (If saveMap is
+  set incorrectly, you'll have to type 'respawn' twice; once to get it
+  to auto-detect the saveMap, and then it'll work the second time.)
+- parseMsg_statuslook verbose 1 displays status effects on you;
+  verbose 2 displays status effects on others.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -218,7 +223,10 @@ Bug fixes:
 - Fix crash in calculating exp gained %.
 - Fixed bug in "cartGet" AI sequence
 - Fixed the location of the AI_post plugin hook
-- Attempt to implement "That person is overweight; you cannot trade"
+- When attempting to "deal add" an item that the other party cannot
+  carry, display the appropriate error message and don't pretend that the
+  item is not in inventory anymore.
+- "Player are now: Blessing" changed to "Player is now: Blessing"
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
