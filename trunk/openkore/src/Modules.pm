@@ -1,18 +1,14 @@
 #########################################################################
-#OpenKore - Module Support Code
+#  OpenKore - Module Support Code
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.  Basically, this means that you're allowed to
 #  modify and distribute this software. However, if you distribute
 #  modified versions, you MUST also distribute the source code.  See
 #  http://www.gnu.org/licenses/gpl.html for the full license.
-#
-#
-#
-#  $Revision$ $Id$
-#
 #########################################################################
-## MODULE DESCRIPTION: Module support system
+##
+# MODULE DESCRIPTION: Module support system
 #
 # The OpenKore source code is split into various files: openkore.pl,
 # functions.pl, and some .pm files. These .pm files are modules: source
