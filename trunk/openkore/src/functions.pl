@@ -4498,7 +4498,8 @@ sub AI {
 		$timeout{'ai_teleport_idle'}{'time'} = time;
 	}
 
-	if ($config{'teleportAuto_portal'} && timeOut(\%{$timeout{'ai_teleport_portal'}}) && $ai_v{'ai_teleport_safe'}) {
+	if ($config{'teleportAuto_portal'} && timeOut($timeout{'ai_teleport_portal'}) && $ai_v{'ai_teleport_safe'}
+	 && ($config{'lockMap'} eq "" || $config{'lockMap'} eq $field{'name'})) {
 		if (binSize(\@portalsID)) {
 			useTeleport(1);
 			$ai_v{'clear_aiQueue'} = 1;
@@ -9903,8 +9904,8 @@ sub getNPCInfo {
 
 # should not happened but just to safeguard
 sub stuckCheck {
-	return if (($config{stuckcheckLimit} eq "") || ($config{stuckcheckLimit} == 0));
-	
+	return if ($config{stuckcheckLimit} eq "" || $config{stuckcheckLimit} == 0);
+
 	my $stuck = shift;
 	if ($stuck) {
 		$ai_v{stuck_count}++;
