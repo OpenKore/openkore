@@ -144,7 +144,7 @@ attackSkillSlot_0_target_whenStatusInactive
 attackSkillSlot_0_inInventory_name
 attackSkillSlot_0_inInventory_qty
 
-sitAuto_hp_lower 35
+sitAuto_hp_lower 40
 sitAuto_hp_upper 100
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0
@@ -238,8 +238,8 @@ useSelf_itemCurePoison 1
 #   eg: useSelf_item_0_hp < 90  <-- when we have less then 90% hp and
 #   eg: useSelf_item_0_hp < 50  <-- less then 50% sp
 
-useSelf_item_0
-useSelf_item_0_hp
+useSelf_item_0 Meat,Apple,Carrot,Red Potion
+useSelf_item_0_hp <= 50
 useSelf_item_0_sp
 useSelf_item_0_currentAI
 useSelf_item_0_whenStatusActive
