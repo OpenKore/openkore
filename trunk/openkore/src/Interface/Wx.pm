@@ -217,6 +217,10 @@ sub errorDialog {
 	$self->{iterating}--;
 }
 
+sub beep {
+	Wx::Bell();
+}
+
 
 ################################
 
