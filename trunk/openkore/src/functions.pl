@@ -6074,7 +6074,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "008A") {
 		$conState = 5 if ($conState != 4 && $xkore);
-		my ($ID1, $ID2, $tick, $src_speed, $dst_speed, $damage, $param2, $type, $param3) = unpack("x2 a4 a4 a4 L1 L1 S1 S1 C1 S1", $msg);
+		my ($ID1, $ID2, $tick, $src_speed, $dst_speed, $damage, $param2, $type, $param3) = unpack("x2 a4 a4 a4 L1 L1 s1 S1 C1 S1", $msg);
 
 		if ($type == 1) {
 			# Take item

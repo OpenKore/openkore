@@ -32,6 +32,7 @@ Bug fixes:
   and causing various bugs such as ghost player images, and
   itemsTakeAuto_party not working.
 - Do not automatically add stats over 99 base stat.
+- Detect negative damage correctly. (unpack 'S1' => 's1')
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
