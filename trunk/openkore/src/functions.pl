@@ -2828,12 +2828,11 @@ sub AI {
 			if ($ai_seq_args[0]{'warpedToSave'} && !$ai_seq_args[0]{'mapChanged'}) {
 				undef $ai_seq_args[0]{'warpedToSave'};
 			}
-#Solos Start
+
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
 				&& !$cities_lut{$field{'name'}.'.rsw'}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
 				useTeleport(2);
-#Solos End
 				$timeout{'ai_storageAuto'}{'time'} = time;
 			} else {
 				print "Calculating auto-storage route to: $maps_lut{$npcs_lut{$config{'storageAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'storageAuto_npc'}}{'map'}): $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}\n";
@@ -5596,18 +5595,18 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n";
 
 				#junq start
+				my $teleported = 0;
 				if ($config{'teleportAuto_maxDmg'} > 0) {
-               				if ($dmgdisplay > $config{'teleportAuto_maxDmg'}) {
-                  				print "Monster hits you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting\n";
-                  				useTeleport(1);
-               				} 
-            			}
-            			if ($config{'teleportAuto_deadly'}) {
-               				if ($damage > $chars[$config{'char'}]{'hp'}) {
-                  				print "Next hit of $damage dmg could kill you. Teleporting\n";
-                  				useTeleport(1);
-               				}
-            			}
+					if ($damage > $config{'teleportAuto_maxDmg'}) {
+						print "Monster hits you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting\n";
+						useTeleport(1);
+						$teleported = 1;
+					}
+				}
+				if (!$teleported && $config{'teleportAuto_deadly'} && $damage > $chars[$config{'char'}]{'hp'}) {
+					print "Next hit of $damage dmg could kill you. Teleporting\n";
+					useTeleport(1);
+				}
 				#junq end
 			}
 			undef $chars[$config{'char'}]{'time_cast'};
