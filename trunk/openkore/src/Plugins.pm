@@ -258,7 +258,7 @@ sub addHook {
 }
 
 ##
-# Plugins::addHooks( (hookname, r_func, user_data)... )
+# Plugins::addHooks( [hookname, r_func, user_data], ... )
 # Returns: a reference to an array. You need it for Plugins::delHooks()
 #
 # A convenience function for adding many hooks with one function.
