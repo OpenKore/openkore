@@ -59,6 +59,9 @@ Bug fixes:
 - 'talk resp' now works correctly with NPCs that present a list of selections
   without saying anything else.
 - Emotions that aren't in the lookup table will be displayed by number.
+- Dual-wielding assassin left hand damage is now displayed.
+- PVP damage is now displayed.
+- Sit/stand and attack messages were getting mixed up.
 
 Internal:
 - Portal compilation is now 30% faster.

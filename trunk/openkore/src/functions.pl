@@ -5518,49 +5518,68 @@ sub parseMsg {
 
 	} elsif ($switch eq "008A") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		my $ID1 = substr($msg, 2, 4);
-		my $ID2 = substr($msg, 6, 4);
-		my $standing = unpack("C1", substr($msg, 26, 2)) - 2;
-		my $damage = unpack("S1", substr($msg, 22, 2));
-		my $type = unpack("C1", substr($msg, 26, 1));
+		my ($ID1, $ID2, $tick, $src_speed, $dst_speed, $damage, $param2, $type, $param3) = unpack("x2 a4 a4 a4 L1 L1 S1 S1 C1 S1", $msg);
 
-		if ($damage == 0) {
-			$dmgdisplay = "Miss!";
-			$dmgdisplay .= "!" if ($type == 11);
+		if ($type == 1) {
+			# Take item
+			my ($source, $verb, $target) = getActorNames($ID1, $ID2, 'pick up', 'picks up');
+			debug "$source $verb $target\n", 'parseMsg';
+			$items{$ID2}{takenBy} = $ID1;
+		} elsif ($type == 2) {
+			# Sit
+			my ($source, $verb) = getActorNames($ID1, 0, 'are', 'is');
+			debug "$source $verb sitting.\n", 'parseMsg';
+			if ($ID1 eq $accountID) {
+				$char->{sitting} = 1;
+			} else {
+				$players{$ID1}{sitting} = 1;
+			}
+		} elsif ($type == 3) {
+			# Stand
+			my ($source, $verb) = getActorNames($ID1, 0, 'are', 'is');
+			debug "$source $verb standing.\n", 'parseMsg';
+			if ($ID1 eq $accountID) {
+				$char->{sitting} = 0;
+			} else {
+				$players{$ID1}{sitting} = 0;
+			}
 		} else {
-			$dmgdisplay = $damage;
-			$dmgdisplay .= "!" if ($type == 10);
-		}
+			# Attack
+			my $dmgdisplay;
+			if ($damage == 0) {
+				$dmgdisplay = "Miss!";
+				$dmgdisplay .= "!" if ($type == 11);
+			} else {
+				$dmgdisplay = $damage;
+				$dmgdisplay .= "!" if ($type == 10);
 
-		updateDamageTables($ID1, $ID2, $damage);
-		if ($ID1 eq $accountID) {
-			if (%{$monsters{$ID2}} || %{$players{$ID2}}) { 
-				message(sprintf("[%3d/%3d]", percent_hp(\%{$chars[$config{'char'}]}), percent_sp(\%{$chars[$config{'char'}]}))
-					. " You attack ".getActorName($ID2)." - Dmg: $dmgdisplay\n",
-					($damage > 0) ? "attackMon" : "attackMonMiss");
+				# FIXME: param3 is only meaningful if this is not an attack
+				# made by a monster. How can you tell if it's a monster?
+				# You could check %monsters but there should be a better
+				# way...?
+				$dmgdisplay .= " + $param3" if $param3;
+			}
 
+			updateDamageTables($ID1, $ID2, $damage);
+
+			my ($source, $verb, $target) = getActorNames($ID1, $ID2, 'attack', 'attacks');
+			my $msg = "$source $verb $target - Dmg: $dmgdisplay";
+
+			my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
+
+			if ($ID1 eq $accountID) {
+				message("$status $msg\n", $damage > 0 ? "attackMon" : "attackMonMiss");
 				if ($startedattack) {
 					$monstarttime = time();
 					$monkilltime = time();
 					$startedattack = 0;
 				}
 				calcStat($damage);
-			} elsif (%{$items{$ID2}}) {
-				debug "You pick up Item: $items{$ID2}{'name'} ($items{$ID2}{'binID'})\n", "parseMsg";
-				$items{$ID2}{'takenBy'} = $accountID;
-			} elsif ($ID2 == 0) {
-				if ($standing) {
-					$chars[$config{'char'}]{'sitting'} = 0;
-					message "You're Standing\n";
-				} else {
-					$chars[$config{'char'}]{'sitting'} = 1;
-					message "You're Sitting\n";
-				}
-			}
-		} elsif ($ID2 eq $accountID) {
-			if (%{$monsters{$ID1}}) {
-				if ($monsters{$ID1}{'name'} eq "") {
+			} elsif ($ID2 eq $accountID) {
+				# Check for monster with empty name
+				if (%{$monsters{$ID1}} && $monsters{$ID1}{'name'} eq "") {
 					if ($config{'teleportAuto_emptyName'} ne '0') {
+						message "Monster with empty name attacking you. Teleporting...\n";
 						useTeleport(1);
 					} else {
 						# Delete monster from hash; monster will be
@@ -5568,35 +5587,14 @@ sub parseMsg {
 						delete $monsters{$ID1};
 					}
 				}
-
-				message(sprintf("[%3d/%3d]", percent_hp(\%{$chars[$config{'char'}]}), percent_sp(\%{$chars[$config{'char'}]}))
-					. " Get Dmg : $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
-					($damage > 0)? "attacked" : "attackedMiss");
+				message("$status $msg\n", $damage > 0 ? "attacked" : "attackedMiss");
+				# FIXME: This assumes that if you're attacked, the spell
+				# you were casting got stopped. But what about Phen card,
+				# Endure, Sacrifice, dodge, etc.?
+				undef $char->{time_cast};
+			} else {
+				debug("$msg\n", 'parseMsg_damage');
 			}
-			undef $chars[$config{'char'}]{'time_cast'};
-
-		} elsif (%{$monsters{$ID1}}) {
-			if (%{$players{$ID2}}) {
-				debug "Monster $monsters{$ID1}{'name'} ($monsters{$ID1}{'binID'}) attacks Player $players{$ID2}{'name'} ($players{$ID2}{'binID'}) - Dmg: $dmgdisplay\n", "parseMsg_damage";
-			}
-
-		} elsif (%{$players{$ID1}}) {
-			if (%{$monsters{$ID2}}) {
-				debug "Player $players{$ID1}{'name'} ($players{$ID1}{'binID'}) attacks Monster $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n", "parseMsg_damage";
-			} elsif (%{$items{$ID2}}) {
-				$items{$ID2}{'takenBy'} = $ID1;
-				debug "Player $players{$ID1}{'name'} ($players{$ID1}{'binID'}) picks up Item $items{$ID2}{'name'} ($items{$ID2}{'binID'})\n", "parseMsg";
-			} elsif ($ID2 == 0) {
-				if ($standing) {
-					$players{$ID1}{'sitting'} = 0;
-					debug "Player is Standing: $players{$ID1}{'name'} ($players{$ID1}{'binID'})\n", "parseMsg";
-				} else {
-					$players{$ID1}{'sitting'} = 1;
-					debug "Player is Sitting: $players{$ID1}{'name'} ($players{$ID1}{'binID'})\n", "parseMsg";
-				}
-			}
-		} else {
-			debug "Unknown ".getHex($ID1)." attacks ".getHex($ID2)." - Dmg: $dmgdisplay\n", "parseMsg_damage";
 		}
 
 	} elsif ($switch eq "008D") {
@@ -9952,6 +9950,8 @@ sub getActorName {
 		return "Player $player->{name} ($player->{binID})";
 	} elsif (my $monster = $monsters{$id}) {
 		return "Monster $monster->{name} ($monster->{binID})";
+	} elsif (my $item = $items{$id}) {
+		return "Item $item->{name} ($item->{binID})";
 	} else {
 		return "Unknown #".unpack("L1", $id);
 	}
