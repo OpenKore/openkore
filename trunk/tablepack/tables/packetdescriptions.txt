@@ -155,7 +155,7 @@
 0182 New Guild Member
 0184 Guild Ally / Enemy Un-Set Status
 0185 Guild Ally / Enemy Set Status
-0187 Ban
+0187 Request Sync Packet
 0188 Upgrade 
 0189 Skill Failed
 018B Exit
