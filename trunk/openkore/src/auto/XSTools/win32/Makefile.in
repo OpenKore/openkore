@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 -mcpu=i686 -mno-cygwin -mdll
+CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 -mno-cygwin -mdll
 CXX=g++
 CXXFLAGS=$(CFLAGS)
 @HEADER@
