@@ -50,6 +50,7 @@ if (!$ARGV[2]) {
 			}
 		}
 		if (($matched_187) == 1) {
+			# try to find function prologue in LINES_BACK_SEARCH_COUNT previous lines
 			$line_counter -= $LINES_BACK_SEARCH_COUNT;
 			seek(F, 0, 0);
 			while (<F>) {
@@ -63,13 +64,9 @@ if (!$ARGV[2]) {
 					last;
 				}
 			}
-			if (!defined($addr)) {
-				print STDERR "Address of packet size function not found using alternate method.\n";
-				close(F);
-				exit(1);
-			}
 		}
-		else {
+		if (!defined($addr)) {
+			print STDERR "Address of packet size function not found using alternate method.\n";
 			close(F);
 			exit(1);
 		}
