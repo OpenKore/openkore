@@ -45,7 +45,7 @@ secureLogin_type
 secureLogin_requestCode
 secureLogin_account
 
-[Philippines - pRO: Loki/Chaos/Iris]
+[Philippines - pRO: Fenrir/Iris/Lydia]
 ip 210.1.70.69
 port 6900
 master_version 15
@@ -55,8 +55,18 @@ secureLogin_type
 secureLogin_requestCode
 secureLogin_account
 
-[Philippines - pRO: Sarah/Fenrir/Odin]
+[Philippines - pRO: Loki/Sarah]
 ip 210.1.70.78
+port 6900
+master_version 15
+version 1
+secureLogin 1
+secureLogin_type
+secureLogin_requestCode
+secureLogin_account
+
+[Philippines - pRO: Odin/Chaos]
+ip 210.1.70.68
 port 6900
 master_version 15
 version 1
