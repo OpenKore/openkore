@@ -38,26 +38,31 @@ sub queue {
 }
 
 sub clear {
-	undef @ai_seq;
-	undef @ai_seq_args;
-}
-
-# TODO: This should be integrated with AI::clear()
-sub remove {
-	return if !defined $_[0];
-	my @arr = split /,/, $_[0];
-	foreach (@arr) {
-		s/\s+//g;
-		while (1) {
-			my $index = binFind(\@ai_seq, $_);
-			last if !defined $index;
-			
-			if ($ai_seq_args[$index]{destroyFunction}) {
-				&{$ai_seq_args[$index]{destroyFunction}}(\%{$ai_seq_args[$index]});
+	if (@_) {
+		my $changed;
+		for (my $i = 0; $i < @ai_seq; $i++) {
+			if (defined binFind(\@_, $ai_seq[$i])) {
+				delete $ai_seq[$i];
+				delete $ai_seq_args[$i];
+				$changed = 1;
 			}
-			binRemoveAndShiftByIndex(\@ai_seq, $index);
-			binRemoveAndShiftByIndex(\@ai_seq_args, $index);
 		}
+
+		if ($changed) {
+			my (@new_seq, @new_args);
+			for (my $i = 0; $i < @ai_seq; $i++) {
+				if (defined $ai_seq[$i]) {
+					push @new_seq, $ai_seq[$i];
+					push @new_args, $ai_seq_args[$i];
+				}
+			}
+			@ai_seq = @new_seq;
+			@ai_seq_args = @new_args;
+		}
+
+	} else {
+		undef @ai_seq;
+		undef @ai_seq_args;
 	}
 }
 
