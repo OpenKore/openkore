@@ -372,5 +372,5 @@
 01EF 0
 01F0 0
 
-# Special packet not found in Ragexe:
 40A1 4
+01A4 11
