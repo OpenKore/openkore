@@ -3,6 +3,7 @@ DevelopersNotes.txt
 
 openkore.pl
 functions.pl
+AI.pm
 Commands.pm
 FileParsers.pm
 Globals.pm
