@@ -25,9 +25,9 @@ sub dequeue {
 	shift @ai_seq_args;
 }
 
-sub enqueue {
-	push @ai_seq, shift;
-	push @ai_seq_args, shift;
+sub queue {
+	unshift @ai_seq, shift;
+	unshift @ai_seq_args, shift;
 }
 
 sub clear {
