@@ -8194,8 +8194,8 @@ sub ai_mapRoute_searchStep {
 	}
 
 	my $parent = (sort {$$r_args{'openlist'}{$a}{'walk'} <=> $$r_args{'openlist'}{$b}{'walk'}} keys %{$$r_args{'openlist'}})[0];
-	# use this if you want minimum MAP count otherwise, use the above for minimum step count
-	foreach my $parent (keys %{$$r_args{'openlist'}})
+	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
+	#foreach my $parent (keys %{$$r_args{'openlist'}})
 	{
 		my ($portal,$dest) = split /=/, $parent;
 		if ($$r_args{'budget'} ne '' && $$r_args{'openlist'}{$parent}{'zenny'} > $$r_args{'budget'}) {
