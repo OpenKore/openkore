@@ -10,3 +10,6 @@ gtktool = gtk.Program('grftool-gtk', 'gtk.c',
 	LIBS=['z', 'static-grf'])
 Clean('grftool-gtk', ['grftool.glade.bak', 'grftool.gladep.bak'])
 Default(gtktool)
+
+env.Install(BINDIR, gtktool)
+env.Install(PKGDATADIR, 'grftool.glade')

@@ -13,8 +13,10 @@ else:
 # Commandline grf utility
 grftool = tools.Program('grftool', 'grftool.c')
 Default(grftool)
+env.Install(BINDIR, grftool)
 
 
 # Commandline sprite utility
 spritetool = tools.Program('spritetool', 'spritetool.c')
 Default(spritetool)
+env.Install(BINDIR, spritetool)
