@@ -6944,6 +6944,8 @@ sub parseMsg {
 		my $ailment = (defined($skillsAilments{$param2})) ? $skillsAilments{$param2} : "Unknown $param2";
 		my $looks = (defined($skillsLooks{$param3})) ? $skillsLooks{$param3} : "Unknown $param3";
 		if ($ID eq $accountID) {
+			warning "my state=$param1 ailment=$param2 look=$param3\n";
+			
 			if ($param1) {
 				$chars[$config{char}]{state}{$state} = 1;
 				message "You have been $state.\n", "parseMsg_statuslook";
@@ -6978,6 +6980,7 @@ sub parseMsg {
 			}
 
 		} elsif (%{$players{$ID}}) {
+			warning "player state=$param1 ailment=$param2 look=$param3\n";
 			if ($param1) {
 				$players{$ID}{state}{$state} = 1;
 				message "Player $players{$ID}{name} ($players{$ID}{binID}) has state: $state\n", "parseMsg_statuslook", 2;
@@ -6998,6 +7001,7 @@ sub parseMsg {
 			}
 
 		} elsif (%{$monsters{$ID}}) {
+			warning "monster state=$param1 ailment=$param2 look=$param3\n";
 			if ($param1) {
 				$monsters{$ID}{state}{$state} = 1;
 				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state\n", "parseMsg_statuslook", 1;
