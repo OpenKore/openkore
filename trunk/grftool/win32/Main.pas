@@ -335,9 +335,6 @@ end;
 procedure TForm1.ExtractBtnClick(Sender: TObject);
 var
   Files: TStringList;
-  Node: PVirtualNode;
-  Data: ^TGrfItem;
-
   Error: TGrfError;
   Info: TBrowseInfo;
   ItemList: PItemIDList;
