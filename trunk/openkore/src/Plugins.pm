@@ -60,7 +60,7 @@ our %hooks;
 # Loads all plugins from the plugins folder, and all plugins that are one subfolder below the plugins folder.
 # Plugins must have the .pl extension.
 sub loadAll {
-	return 0 unless (opendir(DIR, $Settings::plugins_folder));
+	return 1 if (!opendir(DIR, $Settings::plugins_folder));
 	my @items = readdir(DIR);
 	my @plugins = grep { -f "$Settings::plugins_folder/$_" && /\.(pl|lp)$/ } @items;
 	my @subdirs = grep { -d "$Settings::plugins_folder/$_" && !($_ =~ /^(\.|CVS$)/) } @items;
