@@ -3137,8 +3137,11 @@ sub AI {
 					&& checkSelfCondition("partySkill_$i")
 					){
 						$ai_v{"partySkill_$i"."_time"} = time;
-						$ai_v{"partySkill_$i"."_target_time"}{$partyUsersID[$j]} = time;
 						$ai_v{'partySkill'} = $config{"partySkill_$i"};
+
+						my $skillID = $skillsID_rlut{lc($ai_v{partySkill})};
+						$targetTimeout{$partyUsersID[$j]}{$skillID} = $i;
+
 						$ai_v{'partySkill_target'} = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'};
 						$ai_v{'partySkill_targetID'} = $partyUsersID[$j];
 						$ai_v{'partySkill_lvl'} = $config{"partySkill_$i"."_lvl"};
@@ -7041,7 +7044,7 @@ sub parseMsg {
 
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $config{XKore};
-		setSkillUseTimer($skillID) if $sourceID eq $accountID;
+		setSkillUseTimer($skillID, $targetID) if $sourceID eq $accountID;
 		countCastOn($sourceID, $targetID);
 		if ($config{'autoResponseOnHeal'}) {
 			# Handle auto-response on heal
@@ -9806,10 +9809,14 @@ sub useTeleport {
 
 # Keep track of when we last cast a skill
 sub setSkillUseTimer {
-	my $skillID = shift;
+	my ($skillID, $targetID) = @_;
 
 	$chars[$config{char}]{skills}{$skills_rlut{lc($skillsID_lut{$skillID})}}{time_used} = time;
 	undef $chars[$config{char}]{time_cast};
+
+	# set partySkill target_time
+	my $i = $targetTimeout{$targetID}{$skillID};
+	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
 }
 
 # Increment counter for monster being casted on

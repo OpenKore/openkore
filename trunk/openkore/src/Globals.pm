@@ -25,8 +25,8 @@ use base qw(Exporter);
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config  => [qw(%config %consoleColors %equipTypes_lut %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %npcs_lut %portals_lut %sex_lut %shop %skills_lut %skillsDesc_lut %skillsLooks %skillsArea %skillsSP_lut %timeout)],
-	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff)],
+	config  => [qw(%config %consoleColors %equipTypes_lut %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %npcs_lut %portals_lut %sex_lut %shop %skills_lut %skills_rlut %skillsID_lut %skillsID_rlut %skillsDesc_lut %skillsLooks %skillsArea %skillsSP_lut %timeout)],
+	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
 	state   => [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID %portals @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID)],
 	network => [qw($remote_socket $conState $encryptVal)],
 	misc    => [qw($buildType %timeout_ex $isOnline $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth)],
@@ -56,6 +56,9 @@ our %portals_lut;
 our %sex_lut;
 our %shop;
 our %skills_lut;
+our %skills_rlut;
+our %skillsID_lut;
+our %skillsID_rlut;
 our %skillsDesc_lut;
 our %skillsSP_lut;
 our %skillsLooks;
@@ -66,6 +69,7 @@ our %timeout;
 our @ai_seq;
 our @ai_seq_args;
 our %ai_v;
+our %targetTimeout;
 our $AI = 1;
 our $AI_forcedOff;
 

@@ -45,6 +45,7 @@ our @EXPORT = qw(
 	parseSkillsLUT
 	parseSkillsIDLUT
 	parseSkillsReverseLUT_lc
+	parseSkillsReverseIDLUT_lc
 	parseSkillsSPLUT
 	parseTimeouts
 	writeDataFile
@@ -415,6 +416,25 @@ sub parseSkillsIDLUT {
 		$stuff[1] =~ s/_/ /g;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
 			$$r_hash{$i} = $stuff[1];
+		}
+		$i++;
+	}
+	close FILE;
+}
+
+sub parseSkillsReverseIDLUT_lc {
+	my $file = shift;
+	my $r_hash = shift;
+	undef %{$r_hash};
+	my @stuff;
+	my $i;
+	open(FILE, "<$file");
+	$i = 1;
+	foreach (<FILE>) {
+		@stuff = split /#/, $_;
+		$stuff[1] =~ s/_/ /g;
+		if ($stuff[0] ne "" && $stuff[1] ne "") {
+			$$r_hash{lc($stuff[1])} = $i;
 		}
 		$i++;
 	}
