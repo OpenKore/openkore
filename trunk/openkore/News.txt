@@ -6,6 +6,7 @@
 - According to bug reports we can't attack stationary monsters (pupa,
   plants, etc.). The bot will just try forever until it times out.
   This must be fixed.
+  (Though, I can't reproduce this problem myself.)
 
 
 New features:
@@ -41,6 +42,7 @@ Bug fixes:
   in timeout.txt
 - Hopefully fixed bug where typing 'follow a' and then 'follow b' will make
   bot still follow a
+- autoTalkCont bugfix by fov.
 
 Credits:
 - Fenris: Tk interface improvements.

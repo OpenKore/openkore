@@ -2480,6 +2480,11 @@ sub AI {
 			$ai_seq_args[0]{'time'} = time;
 			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 
+			if ($config{autoTalkCont}) {
+				while ($ai_seq_args[0]{'steps'}[0] =~ /c/i) {
+					shift @{$ai_seq_args[0]{'steps'}};
+				}
+			}
 			if ($ai_seq_args[0]{'steps'}[0] =~ /w(\d+)/i) {
 				my $time = $1;
 				$ai_v{'npc_talk'}{'time'} = time + $time;
