@@ -66,6 +66,8 @@ New features:
 - WX Advance Settings now support proxy for download manual.
   You have to add lines 'webproxy' and 'webproxy_port' in config.txt to enable proxy.
 - storageAuto will now check if you have the ability to open storage.
+- Bulk selling has finally been implemented! Kore will always auto-sell this way
+  from now on, no need to set any config options.
 
 tablepack/monsters.txt
 - Kobolds have been renamed from Kobold # to Kobold-#.

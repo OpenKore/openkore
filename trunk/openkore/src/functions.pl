@@ -2668,26 +2668,39 @@ sub AI {
 				last AUTOSELL;
 			}
 			$ai_seq_args[0]{'done'} = 1;
-			for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
-				next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
-				my $sell = $items_control{'all'}{'sell'};
-				$sell = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
-				my $keep = $items_control{'all'}{'keep'};
-				$keep = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
-				if ($sell && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $keep) {
-					if ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $chars[$config{'char'}]{'inventory'}[$i]{'index'}
-						&& timeOut(\%{$timeout{'ai_sellAuto_giveup'}})) {
+
+			# Form list of 8 items to sell
+			my @sellItems;
+			my $sellAmount = 0;
+			for ($i = 0; $i < @{$char->{inventory}};$i++) {
+				my $item = $char->{inventory}[$i];
+				next if (!%{$item} || $item->{equipped});
+				my $sell = $items_control{all}{sell};
+				$sell = $items_control{lc($item->{name})}{sell} if ($items_control{lc($item->{name})});
+				my $keep = $items_control{all}{keep};
+				$keep = $items_control{lc($item->{name})}{keep} if ($items_control{lc($item->{name})});
+
+				if ($sell && $item->{'amount'} > $keep) {
+					if (AI::args->{lastIndex} ne "" && AI::args->{lastIndex} == $item->{index} && timeOut($timeout{'ai_sellAuto_giveup'})) {
 						last AUTOSELL;
-					} elsif ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $chars[$config{'char'}]{'inventory'}[$i]{'index'}) {
-						$timeout{'ai_sellAuto_giveup'}{'time'} = time;
+					} elsif (AI::args->{lastIndex} eq "" || AI::args->{lastIndex} != $item->{index}) {
+						$timeout{ai_sellAuto_giveup}{time} = time;
 					}
-					undef $ai_seq_args[0]{'done'};
-					$ai_seq_args[0]{'lastIndex'} = $chars[$config{'char'}]{'inventory'}[$i]{'index'};
-					sendSell(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $keep);
-					$timeout{'ai_sellAuto'}{'time'} = time;
-					last AUTOSELL;
+					undef AI::args->{done};
+					AI::args->{lastIndex} = $item->{index};
+
+					my %obj;
+					$obj{index} = $item->{index};
+					$obj{amount} = $item->{amount} - $keep;
+					push @sellItems, \%obj;
+
+					$timeout{ai_sellAuto}{time} = time;
+
+					$sellAmount++;
+					last if ($sellAmount == 8);
 				}
 			}
+			sendSellBulk(\$remote_socket, \@sellItems);
 		}
 	}
 

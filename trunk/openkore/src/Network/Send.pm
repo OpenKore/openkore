@@ -111,6 +111,7 @@ our @EXPORT = qw(
 	sendRespawn
 	sendPrivateMsg
 	sendSell
+	sendSellBulk
 	sendSit
 	sendSkillUse
 	sendSkillUseLoc
