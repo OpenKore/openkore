@@ -6951,6 +6951,7 @@ sub parseMsg {
 			7 => 'Red Gem Needed',
 			8 => 'Blue Gem Needed',
 			9 => '90% Overweight',
+			10 => 'Requirement'
 			);
 		message "Skill $skillsID_lut{$skillID} failed ($failtype{$type})\n", "skill";
 
