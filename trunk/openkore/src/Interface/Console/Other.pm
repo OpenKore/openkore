@@ -49,7 +49,8 @@ our ($width, $height);
 
 sub getTerminalSize {
 	my $data = ' ' x 8;
-	if (ioctl (STDOUT, TIOCGWINSZ(), $data) == 0) {
+	my $result = ioctl (STDOUT, TIOCGWINSZ(), $data);
+	if (defined $result && $result == 0) {
 		($width, $height) = unpack("ss", $data);
 	} else {
 		$width = 80;
