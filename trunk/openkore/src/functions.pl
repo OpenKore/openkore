@@ -4338,7 +4338,7 @@ sub AI {
 
 				} else {
 					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-					error "Cammpt reach portal from current position\n", "route";
+					error "Cannot reach portal from current position\n", "route";
 					shift @{$ai_seq_args[0]{'mapSolution'}};
 				}
 			}
