@@ -257,25 +257,20 @@ sub findIndex {
 	return undef if !$r_array;
 	my $key = shift;
 	my $num = shift;
-	my $i = 0;
-	my $max = @{$r_array} - 1;
 
 	if ($num ne "") {
-		for $i (0..$max) {
-			if ($r_array->[$i]{$key} == $num) {
-				return $i;
-			}
+		my $max = @{$r_array};
+		for (my $i = 0; $i < $max; $i++) {
+			return $i if ($r_array->[$i]{$key} == $num);
 		}
+		return undef;
 	} else {
-		for $i (0..$max) {
+		my $max = @{$r_array};
+		my $i;
+		for ($i = 0; $i < $max; $i++) {
 			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
-	}
-
-	if ($num eq "") {
 		return $i;
-	} else {
-		return undef;
 	}
 }
 
@@ -289,25 +284,22 @@ sub findIndexString {
 	return undef if !$r_array;
 	my $key = shift;
 	my $str = shift;
-	my $i = 0;
-	my $max = @{$r_array} - 1;
 
 	if ($str ne "") {
-		for $i (0..$max) {
+		my $max = @{$r_array};
+		for (my $i = 0; $i < $max; $i++) {
 			if ($r_array->[$i]{$key} eq $str) {
 				return $i;
 			}
 		}
+		return undef;
 	} else {
-		for $i (0..$max) {
+		my $max = @{$r_array};
+		my $i;
+		for ($i = 0; $i < $max; $i++) {
 			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
-	}
-
-	if ($str eq "") {
 		return $i;
-	} else {
-		return undef;
 	}
 }
 
@@ -321,26 +313,21 @@ sub findIndexString_lc {
 	return undef if !$r_array;
 	my $key = shift;
 	my $str = shift;
-	my $i = 0;
-	my $max = @{$r_array} - 1;
 
 	if ($str ne "") {
 		$str = lc $str;
-		for $i (0..$max) {
-			if (lc $r_array->[$i]{$key} eq $str) {
-				return $i;
-			}
+		my $max = @{$r_array};
+		for (my $i = 0; $i < $max; $i++) {
+			return $i if (lc $r_array->[$i]{$key} eq $str);
 		}
+		return undef;
 	} else {
-		for $i (0..$max) {
+		my $max = @{$r_array};
+		my $i;
+		for ($i = 0; $i < $max; $i++) {
 			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
-	}
-
-	if ($str eq "") {
 		return $i;
-	} else {
-		return undef;
 	}
 }
 
