@@ -3353,6 +3353,7 @@ sub AI {
 					$args->{attackMethod}{comboSlot} = $i;
 					$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
 					$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_dist"};
+					$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
 					last;
 				}
 				$i++;
@@ -3608,28 +3609,31 @@ sub AI {
 
 			} elsif ($args->{attackMethod}{type} eq "combo") {
 				my $slot = $args->{attackMethod}{comboSlot};
+				my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
 				my $skill = Skills->new(name => $config{"attackComboSlot_$slot"})->handle;
 				delete $args->{attackMethod};
 
 				if (!ai_getSkillUseType($skill)) {
+					my $targetID = ($isSelfSkill) ? $accountID : $ID;
 					ai_skillUse(
 						$skill,
 						$config{"attackComboSlot_${slot}_lvl"},
 						$config{"attackComboSlot_${slot}_maxCastTime"},
 						$config{"attackComboSlot_${slot}_minCastTime"},
-						$ID,
+						$targetID,
 						undef,
 						undef,
 						undef,
 						$config{"attackComboSlot_${slot}_waitBeforeUse"});
 				} else {
+					my $pos = ($isSelfSkill) ? $char->{pos_to} : $monsters{$ID}{pos_to};
 					ai_skillUse(
 						$skill,
 						$config{"attackComboSlot_${slot}_lvl"},
 						$config{"attackComboSlot_${slot}_maxCastTime"},
 						$config{"attackComboSlot_${slot}_minCastTime"},
-						$monsters{$ID}{pos_to}{x},
-						$monsters{$ID}{pos_to}{y},
+						$pos->{x},
+						$pos->{y},
 						undef,
 						undef,
 						$config{"attackComboSlot_${slot}_waitBeforeUse"});

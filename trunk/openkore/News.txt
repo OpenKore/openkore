@@ -20,11 +20,13 @@ New features:
   /* indicates the beginning of a comment, and */ indicates the end.
 - AI sequence will now be cleared when switching characters due to
   autoConfChange.
-- beepOnChat also affects emotions.
 
 New config options:
-- beepOnPM, beepOnChat if set to 1 will print a beep character when you
+- beepOnPM, beepOnChat if set to 1 will generate a beep when you
   hear a PM/public chat message.
+- The attackComboSlot block now has an extra option:
+  isSelfSkill (flag)
+  This specifies whether the combo skill is used on yourself.
 
 Internal:
 - $interface->beep() function for cross-platform beep support.
