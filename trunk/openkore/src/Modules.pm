@@ -54,7 +54,7 @@ our @EXPORT_OK = qw(&register &reload &checkSyntax @modules);
 # A module should only be registered once (at Kore's startup).
 #
 # Example:
-# Modules::register("Log", "Input");  # Registers Log.pm and Input.pm
+# Modules::register("Log", "Interface");  # Registers Log.pm and Input.pm
 sub register {
 	foreach (@_) {
 		my $mod = $_;
