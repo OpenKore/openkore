@@ -78,7 +78,8 @@ static void
 koreConnectionMain ()
 {
 	#define BUF_SIZE 1024 * 32
-	#define TIMEOUT 10000
+	//#define TIMEOUT 10000
+	#define TIMEOUT 600000
 	#define PING_INTERVAL 5000
 	#define RECONNECT_INTERVAL 3000
 
