@@ -1319,6 +1319,10 @@ sub cmdUseSkill {
 		($lv) = split(/ /, $args);
 	} else {
 		($targetNum, $lv) = split(/ /, $args);
+		if ($targetNum !~ /^\d+$/) {
+			error "$targetNum is not a number.";
+			return;
+		}
 	}
 	# Attempt to fill in unspecified skill level
 	$lv ||= $char_skill->{lv};
