@@ -47,6 +47,7 @@ New features:
   the event that no monsters you are searching for exist onscreen.
 - chat.txt uses one line per message, allowing grepping.
 - skillsAddAuto will now print a message when it auto-adds a skill.
+- Display source and destination coordinates in "Recorded new portal" message.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
@@ -88,6 +89,7 @@ Internal:
   It is now more than 100 times faster.
 - makeDistMap() has also been written in C++ and is now more than 100
   times faster.
+- New "refine" message domain.
 
 Credits:
 - jsteng: Pet detection fix.
