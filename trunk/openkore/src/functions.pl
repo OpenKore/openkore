@@ -28,6 +28,14 @@ sub initRandomRestart {
 	}
 }
 
+#ok, added this sub as a cheap nasty kludge, cause nothing can presently trigure config change..
+sub initConfChange {
+	my $changetime = $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'});
+	$nextConfChangeTime = time + $changetime;
+	print "Next Config Change will be in ".timeConvert($changetime).".\n";
+}
+	
+sub initConfigChange {
 # Initialize variables when you start a connection to a map server
 sub initConnectVars {
 	initMapChangeVars();
@@ -247,16 +255,18 @@ sub checkConnection {
 		initRandomRestart();
 	}
 
-	# This stuff is experimental and hasn't been actually tested!
+	# This stuff is experimental
+	# I tested it, and it works for me atleast - xlr82xs
 	if ($config{'autoConfChange'} && $config{'autoConfChange_files'} && $conState == 5
 	 && time >= $nextConfChangeTime && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
 	 	my ($file, @files);
 	 	my ($oldMasterHost, $oldMasterPort, $oldUsername, $oldChar);
 
 		# Choose random config file
-		@files = split(/ *, */, $config{'autoConfChange_files'});
+		#changed this so it splits up a space deliminated list, as per your example
+		@files = split(/ /, $config{'autoConfChange_files'});
 		# ok this is how it was....
-		#	$file = $files[int(rand($#files + 1))];
+		#$file = $files[int(rand($#files + 1))];
 		# this is how it should be ?
 		$file = @files[rand(@files)];
 		#the above can have int() added to it if you want, but it shouldn't need it
@@ -282,8 +292,15 @@ sub checkConnection {
 		 || $oldChar ne $config{'char'}) {
 			relog();
 		}
+		
+		#thaught maybe a relog would be called for in any case
+		#to force the bot to go to a different field etc because as it stands, if the bot is on the way to field x
+		#due to lockmap, and it changes config with a lockmap y, it'll still finish walking to x, then calculate route to y
 
-		$nextConfChangeTime = time + $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'}) if ($config{'autoConfChange'});
+		my $changetime = $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'});
+		$nextConfChangeTime = time + $changetime;
+		print "Next Config Change will be in ".timeConvert($changetime).".\n";
+	}
 	}
 }
 

@@ -237,6 +237,8 @@ $nextConfChangeTime = time + $config{'autoConfChange_min'} + rand($config{'autoC
 
 initStatVars();
 initRandomRestart();
+initConfChange();
+
 print "\n";
 
 while ($quit != 1) {
