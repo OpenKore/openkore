@@ -7112,14 +7112,17 @@ sub parseMsg {
 		# Area effect spell; including traps!
 		my $ID = substr($msg, 2, 4);
 		my $SourceID = substr($msg, 6, 4);
-		my $x = unpack("S1",substr($msg, 10, 2));
-		my $y = unpack("S1",substr($msg, 12, 2));
+		my $x = unpack("S1", substr($msg, 10, 2));
+		my $y = unpack("S1", substr($msg, 12, 2));
+		my $type = unpack("I1", substr($msg, 14, 2));
+		my $fail = unpack("I1", substr($msg, 16, 2));
 
 		$spells{$ID}{'sourceID'} = $SourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
 		$spells{$ID}{'pos'}{'y'} = $y;
 		$binID = binAdd(\@spellsID, $ID);
 		$spells{$ID}{'binID'} = $binID;
+		message "Area-effect spell from ".getActorName($SourceID)." appeared on ($x, $y) (type $type, fail $fail)\n", "skill";
 
 	} elsif ($switch eq "0120") {
 		# The area effect spell with ID dissappears
