@@ -3028,14 +3028,16 @@ sub AI {
 
 				my ($lockX, $lockY);
 				my $i = 500;
-				do {
-					$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
-					$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
-					$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
-				    	$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
-				    	$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
-					$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
-				} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
+				if ($config{lockMap_x} ne '' || $config{lockMap_y} ne '') {
+					do {
+						$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
+						$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
+						$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
+					    	$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
+					    	$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
+						$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
+					} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
+				}
 				if (!$i) {
 					error "Invalid coordinates specified for lockMap, coordinates are unwalkable\n";
 					$config{lockMap} = '';
@@ -4640,7 +4642,7 @@ sub AI {
 		my $safe = 0;
 
 		if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
-		 && ($config{'lockMap'} eq "" || $field{name} ne $config{'lockMap'})
+		 && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
 		 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
