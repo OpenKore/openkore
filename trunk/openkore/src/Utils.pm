@@ -405,9 +405,9 @@ sub dataWaiting {
 
 ##
 # dumpHash(r_hash)
-# r_hash: a reference to a hash.
+# r_hash: a reference to a hash/array.
 #
-# Return a formated output of the contents of hash, for debugging purposes.
+# Return a formated output of the contents of a hash/array, for debugging purposes.
 sub dumpHash {
 	my $out;
 	my $buf = $_[0];
@@ -423,6 +423,14 @@ sub dumpHash {
 		}
 		chop $out;
 		$out .= "}";
+	} elsif (ref($buf) eq "ARRAY") {
+		$out .= "[";
+		for (my $i = 0; $i < @{$buf}; $i++) {
+			s/'/\\'/gs;
+			$out .= "$i=>" . dumpHash($buf->[$i]) . ",";
+		}
+		chop $out;
+		$out .= "]";
 	}
 	$out = '{empty}' if ($out eq '}');
 	return $out;
