@@ -2953,11 +2953,13 @@ sub AI {
 		} else {
 			my %lockField;
 			getField("$Settings::def_field/$config{lockMap}.fld", \%lockField);
-			my $lockX, $lockY, $i = 500;
-			do {
-				$lockX = int($config{lockMap_x}) + ((int(rand(3))-1) * (int(rand($config{lockMap_randX}))+1));
-				$lockY = int($config{lockMap_y}) + ((int(rand(3))-1) * (int(rand($config{lockMap_randY}))+1));
-			} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
+			my $lockX = undef, $lockY = undef, $i = 500;
+			if ($config{lockMap_x} ne '' && $config{lockMap_y} ne '') {
+				do {
+					$lockX = int($config{lockMap_x}) + ((int(rand(3))-1) * (int(rand($config{lockMap_randX}))+1));
+					$lockY = int($config{lockMap_y}) + ((int(rand(3))-1) * (int(rand($config{lockMap_randY}))+1));
+				} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
+			}
 			if (!$i) {
 				error "Invalid coordinates specified for lockMap, coordinates are unwalkable\n";
 				$config{lockMap} = '';
@@ -2965,7 +2967,7 @@ sub AI {
 				my $attackOnRoute = 2;
 				$attackOnRoute = 1 if ($config{attackAuto_inLockOnly} == 1);
 				$attackOnRoute = 0 if ($config{attackAuto_inLockOnly} > 1);
-				if ($lockX > 0 || $lockY > 0) {
+				if (defined $lockX || defined $lockY) {
 					message "Calculating lockMap route to: $maps_lut{$config{lockMap}.'.rsw'}($config{lockMap}): $lockX, $lockY\n", "route";
 				} else {
 					message "Calculating lockMap route to: $maps_lut{$config{lockMap}.'.rsw'}($config{lockMap})\n", "route";
