@@ -981,7 +981,8 @@ sub cmdTestShop {
 
 sub cmdTimeout {
 	my (undef, $args) = @_;
-	my ($arg1, $arg2) = $args =~ /^([\s\S]*) ([\s\S]*?)$/;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+\s+([\s\S]+)\s*$/;
 	if ($arg1 eq "") {
 		error	"Syntax Error in function 'timeout' (set a timeout)\n" .
 			"Usage: timeout <type> [<seconds>]\n";
@@ -989,7 +990,7 @@ sub cmdTimeout {
 		error	"Error in function 'timeout' (set a timeout)\n" .
 			"Timeout $arg1 doesn't exist\n";
 	} elsif ($arg2 eq "") {
-		error "Timeout '$arg1' is $config{$arg1}\n";
+		error "Timeout '$arg1' is $timeout{$arg1}{timeout}\n";
 	} else {
 		setTimeout($arg1, $arg2);
 	}
