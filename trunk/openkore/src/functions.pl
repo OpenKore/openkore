@@ -2927,7 +2927,7 @@ sub AI {
 
 	##### AUTO-CART ADD ####
 
-	if ((AI::isIdle || AI::is(qw/route move autoBuy autoStorage/)) && timeOut($AI::Timeouts::autoCart, 2)) {
+	if ((AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/)) && timeOut($AI::Timeouts::autoCart, 2)) {
 		my $hasCart = 0;
 		if ($char->{statuses}) {
 			foreach (keys %{$char->{statuses}}) {
@@ -2953,7 +2953,7 @@ sub AI {
 					$obj{index} = $i;
 					$obj{amount} = $item->{amount} - $control->{keep};
 					push @items, \%obj;
-					debug "Scheduling $item->{name} ($i) x $obj{amount} for adding to cart\n", "autoCart";
+					debug "Scheduling $item->{name} ($i) x $obj{amount} for adding to cart\n", "ai_autoCart";
 				}
 			}
 			cartAdd(\@items);
