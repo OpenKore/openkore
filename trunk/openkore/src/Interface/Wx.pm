@@ -330,10 +330,19 @@ sub createInterface {
 
 		$splitter->SplitVertically($console, $subSplitter, -150);
 
+
 	### Input field
+	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
+	$vsizer->Add($hsizer, 0, wxGROW);
+
 	my $inputBox = $self->{inputBox} = new Interface::Wx::Input($frame);
 	$inputBox->onEnter($self, \&onInputEnter);
-	$vsizer->Add($inputBox, 0, wxALL | wxGROW);
+	$hsizer->Add($inputBox, 1, wxGROW);
+
+	my $choice = $self->{inputType} = new Wx::Choice($frame, -1, wxDefaultPosition, wxDefaultSize,
+			['Command', 'Public chat', 'Private chat', 'Party chat', 'Guild chat']);
+	$hsizer->Add($choice, 0, wxGROW);
+
 
 	### Status bar
 	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, -1, wxST_SIZEGRIP);
@@ -450,11 +459,30 @@ sub updateMapViewer {
 
 sub onInputEnter {
 	my $self = shift;
-	my $text = $self->{input} = shift;
-	$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
-	$self->{console}->AppendText("$text\n");
-	$self->{console}->SetDefaultStyle($self->{console}{defaultStyle});
-	$self->{inputBox}->Remove(0, -1);
+	my $text = shift;
+	my $command;
+
+	my $n = $self->{inputType}->GetSelection;
+	if ($n == 0 || $text =~ /^\/(.*)/) {
+		my $command = ($n == 0) ? $text : $1;
+		$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
+		$self->{console}->AppendText("$command\n");
+		$self->{console}->SetDefaultStyle($self->{console}{defaultStyle});
+		$self->{inputBox}->Remove(0, -1);
+		$self->{input} = $command;
+		return;
+	}
+
+	return unless $conState == 5;
+	if ($n == 1) { # Public chat
+		main::sendMessage(\$remote_socket, "c", $text);
+	} elsif ($n == 2) { # Private chat
+		$self->{console}->add("error", "This feature is not supported yet. Please use the 'pm' command.\n");
+	} elsif ($n == 3) { # Party chat
+		main::sendMessage(\$remote_socket, "p", $text);
+	} else { # Guild chat
+		main::sendMessage(\$remote_socket, "g", $text);
+	}
 }
 
 sub onLoadFiles {
@@ -515,7 +543,7 @@ sub onItemListDClick {
 	my $self = shift;
 	my $itemList = shift;
 	my $n = $itemList->GetSelection;
-	if ($n >= 0 && (my $ID = $itemList->GetClientData($n))) {
+	if ($Settings::CVS =~ /CVS/ && $n >= 0 && (my $ID = $itemList->GetClientData($n))) {
 		if ($players{$ID}) {
 			Commands::run("pl " . $players{$ID}{binID});
 		}
