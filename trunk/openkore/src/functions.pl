@@ -6627,17 +6627,8 @@ sub parseMsg {
 
 	} elsif ($switch eq "00AF") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$index = unpack("S1",substr($msg, 2, 2));
-		$amount = unpack("S1",substr($msg, 4, 2));
-		undef $invIndex;
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		if (!$chars[$config{'char'}]{'arrow'} || ($chars[$config{'char'}]{'arrow'} && !($chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} =~/arrow/i))) {
-			message "Inventory Item Removed: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "inventory";
-		}
-		$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
-		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
-			delete $chars[$config{'char'}]{'inventory'}[$invIndex];
-		}
+		my ($index, $amount) = unpack("x2 S1 S1", $msg);
+		inventoryItemRemoved($index, $amount);
 
 	} elsif ($switch eq "00B0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
