@@ -10752,6 +10752,13 @@ sub checkSelfCondition {
 		return 0 unless $found;
 	}
 
+	if ($config{$prefix."_whenGround"}) {
+		return 0 unless whenGroundStatus($char, $config{$prefix."_whenGround"});
+	}
+	if ($config{$prefix."_whenNotGround"}) {
+		return 0 if whenGroundStatus($char, $config{$prefix."_whenNotGround"});
+	}
+
 	return 1;
 }
 
@@ -10795,6 +10802,13 @@ sub checkPlayerCondition {
 		}
 		return 0 unless $exists;
 	}
+
+	if ($config{$prefix."_whenGround"}) {
+		return 0 unless whenGroundStatus($players{$id}, $config{$prefix."_whenGround"});
+	}
+	if ($config{$prefix."_whenNotGround"}) {
+		return 0 if whenGroundStatus($players{$id}, $config{$prefix."_whenGround"});
+	}
 	
 	return 1;
 }
@@ -10810,6 +10824,13 @@ sub checkMonsterCondition {
 		return 0 if (whenStatusActiveMon($id, $config{$prefix . "_whenStatusInactive"}));
 	}
 
+	if ($config{$prefix."_whenGround"}) {
+		return 0 unless whenGroundStatus($monsters{$id}, $config{$prefix."_whenGround"});
+	}
+	if ($config{$prefix."_whenNotGround"}) {
+		return 0 if whenGroundStatus($monsters{$id}, $config{$prefix."_whenGround"});
+	}
+	
 	return 1;
 }
 

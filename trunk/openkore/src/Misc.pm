@@ -62,6 +62,7 @@ our @EXPORT = qw(
 	whenStatusActive
 	whenStatusActiveMon
 	whenStatusActivePL
+	whenGroundStatus
 
 	launchURL
 	);
@@ -834,6 +835,27 @@ sub launchURL {
 			}
 		}
 	}
+}
+
+##
+# whenGroundStatus($target, $statuses)
+#
+# $target: $char, $players{$ID} or $monsters{$ID}
+# $statuses: a comma-separated list of ground effects e.g. Safety Wall,Pneuma
+#
+# Returns 1 iff $target is affected by one of $statuses.
+sub whenGroundStatus {
+	my ($target, $statuses) = @_;
+
+	my $pos = calcPosition($target);
+	for my $ID (@spellsID) {
+		next unless my $spell = $spells{$ID};
+		if ($pos->{x} == $spell->{pos}{x} &&
+		    $pos->{y} == $spell->{pos}{y}) {
+			return 1 if existsInList($statuses, getSpellName($spell->{type}));
+		}
+	}
+	return 0;
 }
 
 sub getSpellName {
