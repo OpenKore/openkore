@@ -6,14 +6,26 @@
 #include "algorithm.h"
 typedef CalcPath_session * PathFinding;
 
+
+/* Convenience function for checking whether pv is a reference, and dereference it if necessary */
+static inline SV *
+derefPV (SV *pv)
+{
+	if (SvTYPE (pv) == SVt_RV) {
+		return SvRV (pv);
+	} else
+		return pv;
+}
+
+
 MODULE = Tools		PACKAGE = PathFinding		PREFIX = PathFinding_
 PROTOTYPES: ENABLE
 
 
 PathFinding
-PathFinding_init(map, weights, width, height, startx, starty, destx, desty, time_max)
+PathFinding_init(map, sv_weights, width, height, startx, starty, destx, desty, time_max)
 		char *map
-		unsigned char *weights
+		SV *sv_weights
 		unsigned long width
 		unsigned long height
 		unsigned short startx
@@ -22,14 +34,30 @@ PathFinding_init(map, weights, width, height, startx, starty, destx, desty, time
 		unsigned short desty
 		unsigned int time_max
 	INIT:
-		pos *start = (pos *) malloc (sizeof (pos));
-		pos *dest = (pos *) malloc (sizeof (pos));
-		start->x = startx;
-		start->y = starty;
-		dest->x = destx;
-		dest->y = desty;
+		unsigned char *weights = NULL;
+		pos *start, *dest;
+		int ok = 1;
 	CODE:
-		RETVAL = CalcPath_init (map, weights, width, height, start, dest, time_max);
+		if (sv_weights && SvOK (sv_weights)) {
+			STRLEN len;
+
+			weights = (unsigned char *) SvPV (derefPV (sv_weights), len);
+			if (weights && len < 256) {
+				ok = 0;
+				XSRETURN_UNDEF;
+			}
+		}
+
+		if (ok) {
+			start = (pos *) malloc (sizeof (pos));
+			dest = (pos *) malloc (sizeof (pos));
+			start->x = startx;
+			start->y = starty;
+			dest->x = destx;
+			dest->y = desty;
+
+			RETVAL = CalcPath_init (NULL, map, weights, width, height, start, dest, time_max);
+		}
 	OUTPUT:
 		RETVAL
 
