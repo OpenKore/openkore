@@ -23,7 +23,8 @@ Bug fixes:
 - Typing "aiv" during an auto-deal will no longer crash.
 - The 'timeout' and 'auth' commands now respect the --control parameter.
 - When out of arrows, only ask the user to press ENTER if dcOnEmptyArrow
-  is set.
+  is set (bug #14).
+- The 'follow' command will now work with names that contain symbols (bug #12).
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
