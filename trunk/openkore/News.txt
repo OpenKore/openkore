@@ -58,6 +58,7 @@ New config options:
   if it is in that domain, e.g. "conf squelchDomains skill" if you don't
   want your vendbot to be spammed by people using skills in town
 - dcOnDisconnect : If kore gets disconnected from the server, it will exit.
+- ignoreInvalidLogin : ignore Missing Account Error
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
