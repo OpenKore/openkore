@@ -29,12 +29,6 @@ use Misc;
 use Plugins;
 use Utils;
 
-# PORTAL_PENALTY is used by the map router for calculating the cost of walking through a portal.
-# Best values are:
-# 0 : favors a minimum step count solutions (ie distance to walk)
-# 10000 (or infinity): favors a minimum map count solutions (if you dont like walking through portals)
-use constant PORTAL_PENALTY => 0;
-
 
 #######################################
 #INITIALIZE VARIABLES
@@ -4165,7 +4159,8 @@ sub AI {
 				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
 				if ( ai_route_getRoute(\@{$ai_seq_args[0]{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$portals_lut{$portal}{'source'}{'pos'}}) ) {
 					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
-						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = PORTAL_PENALTY + scalar @{$ai_seq_args[0]{'solution'}};
+						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
+						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$ai_seq_args[0]{'solution'}};
 						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'zenny'} = $portals_lut{$portal}{'dest'}{$dest}{'cost'};
 					}
 				}
@@ -8337,8 +8332,10 @@ sub ai_mapRoute_searchStep {
 			next unless $portals_los{$dest}{$child};
 			foreach my $subchild (keys %{$portals_lut{$child}{'dest'}}) {
 				my $destID = $portals_lut{$child}{'dest'}{$subchild}{'ID'};
+				my $mapName = $portals_lut{$child}{'source'}{'map'};
 				#############################################################
-				my $thisWalk = PORTAL_PENALTY + $$r_args{'closelist'}{$parent}{'walk'} + $portals_los{$dest}{$child};
+				my $penalty = int($routeWeights{lc($mapName)}) + int(($portals_lut{$child}{'dest'}{$subchild}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
+				my $thisWalk = $penalty + $$r_args{'closelist'}{$parent}{'walk'} + $portals_los{$dest}{$child};
 				if (!exists $$r_args{'closelist'}{"$child=$subchild"}) {
 					if ( !exists $$r_args{'openlist'}{"$child=$subchild"} || $$r_args{'openlist'}{"$child=$subchild"}{'walk'} > $thisWalk ) {
 						$$r_args{'openlist'}{"$child=$subchild"}{'parent'} = $parent;
