@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <stdarg.h>
+#include "sprite.h"
 
 #include "window.h"
 #include "main.h"
@@ -184,6 +185,35 @@ MainWindow::preview (char *displayName, char *fname)
 		gtk_image_set_from_file (GTK_IMAGE (W(image_preview)), tmpfile);
 		remove (tmpfile);
 		g_free (tmpfile);
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (W(notebook1)), 1);
+
+	} else if (ext == ".SPR") {
+		uint32_t size;
+		GrfError err;
+		Sprite *sprite;
+		void *data, *pixels;
+
+		gtk_image_set_from_pixbuf (GTK_IMAGE (W(image_preview)), NULL);
+		data = grf_get (document.grf, fname, &size, &err);
+		if (!data) {
+			status (grf_strerror (err));
+			return;
+		}
+
+		sprite = sprite_open_from_data ((const unsigned char *) data,
+				(unsigned int) size, NULL);
+		if (sprite) {
+			GdkPixbuf *buf;
+
+			pixels = sprite_to_rgb (sprite, 0, NULL, NULL);
+			buf = gdk_pixbuf_new_from_data ((const guchar *) pixels,
+				GDK_COLORSPACE_RGB, FALSE, 8,
+				sprite->images[0].width, sprite->images[0].height,
+				sprite->images[0].width * 3, NULL, NULL);
+			sprite_free (sprite);
+			gtk_image_set_from_pixbuf (GTK_IMAGE (W(image_preview)), buf);
+			g_object_unref (G_OBJECT (buf));
+		}
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (W(notebook1)), 1);
 
 	} else
