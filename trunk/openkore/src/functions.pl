@@ -501,6 +501,7 @@ sub parseCommand {
 			for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
 				next if (!%{$cart{'inventory'}[$i]});
 				my $display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
+				$display .= " -- Not Identified" if !$cart{inventory}[$i]{identified};
 				message(sprintf("%-2d %-34s\n", $i, $display), "list");
 			}
 			message("\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n", "list");
@@ -1450,7 +1451,8 @@ sub parseCommand {
 					next if ($storageID[$i] eq "");
 	
 					my $display = "$storage{$storageID[$i]}{'name'}";
-					$display = $display . " x $storage{$storageID[$i]}{'amount'}";
+					$display .= " x $storage{$storageID[$i]}{'amount'}";
+					$display .= " -- Not Identified" if !$storage{$storageID[$i]}{identified};
 	
 					$list .= sprintf("%2d %s\n", $i, $display);
 				}
@@ -1458,7 +1460,7 @@ sub parseCommand {
 				$list .= "-------------------------------\n";
 				message($list, "list");
 			} else {
-				warning "No information about storage, it has not been opened before in this session\n";
+				warning "No information about storage; it has not been opened before in this session\n";
 			}
 
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
@@ -5504,6 +5506,10 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0081") {
+		if ($config{dcOnDisconnect} && $conState == 5) {
+			message "Lost connection; exiting\n";
+			$quit = 1;
+		}
 		$type = unpack("C1", substr($msg, 2, 1));
 		$conState = 1;
 		undef $conState_tries;
@@ -5533,7 +5539,7 @@ sub parseMsg {
 		} elsif ($type == 8) {
 			error("Error: The server still recognizes your last connection\n", "connection");
 		} else {
-			error("Unknown error $type");
+			error("Unknown error $type\n", "connection");
 		}
 
 	} elsif ($switch eq "0087") {
@@ -6022,6 +6028,7 @@ sub parseMsg {
 			$item->{amount} = unpack("L1", substr($msg, $i + 6, 4)) & ~0x80000000;
 			$item->{name} = itemNameSimple($ID);
 			$item->{binID} = binFind(\@storageID, $index);
+			$item->{identified} = 1;
 			debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
 		}
 
@@ -6041,7 +6048,7 @@ sub parseMsg {
 			$item->{index} = $index;
 			$item->{nameID} = $ID;
 			$item->{amount} = 1;
-			$item->{identified} = unpack("C1", substr($msg, $i + 6, 1));
+			$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
 			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
 			$item->{cards} = substr($msg, $i + 12, 8);
 			$item->{name} = itemName($item);
@@ -7291,6 +7298,7 @@ sub parseMsg {
 				$item->{nameID} = $ID;
 				$item->{amount} = $amount;
 				$item->{name} = itemNameSimple($ID);
+				$item->{identified} = 1;
 			}
 			debug "Stackable Cart Item: $item->{name} ($index) x $amount\n", "parseMsg";
 			Plugins::callHook('packet_cart', {index => $index});
@@ -10342,7 +10350,7 @@ sub findCartItemInit {
 }
 
 ##
-# findCartItem($name [, $found])
+# findCartItem($name [, $found [, $nounid]])
 #
 # Returns the integer index into $cart{inventory} for the cart item matching
 # the given name, or undef.
@@ -10350,13 +10358,17 @@ sub findCartItemInit {
 # If an item is found, the "found" value for that item is set to 1. Items
 # cannot be found again until you reset the "found" flags using
 # findCartItemInit(), if $found is true.
+#
+# Unidentified items will not be returned if $nounid is true.
 sub findCartItem {
-	my ($name, $found) = @_;
+	my ($name, $found, $nounid) = @_;
 
 	$name = lc($name);
 	my $index = 0;
 	for (@{$cart{inventory}}) {
-		if (lc($_->{name}) eq $name && !($found && $_->{found})) {
+		if (lc($_->{name}) eq $name &&
+		    !($found && $_->{found}) &&
+			!($nounid && !$_->{identified})) {
 			$_->{found} = 1;
 			return $index;
 		}
@@ -10396,7 +10408,7 @@ sub makeShop {
 	# Iterate through items to be sold
 	findCartItemInit();
 	for my $sale (@{$shop{items}}) {
-		my $index = findCartItem($sale->{name}, 1);
+		my $index = findCartItem($sale->{name}, 1, 1);
 		next unless defined($index);
 
 		# Found item to vend
