@@ -9774,16 +9774,24 @@ sub compilePortals {
 		$map = $portals_lut{$_}{'source'}{'map'};
 		%{$srcPortals{$map}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
 	}
+
+	# Go through all maps
 	foreach $map (keys %srcPortals) {
+		if (! -f "$Settings::def_field/$map.fld") {
+			warning "Cannot find field file for $map\n";
+			next;
+		} elsif ($field{'name'} ne $map) {
+			message "Processing map $map\n", "system";
+			getField("$Settings::def_field/$map.fld", \%field);
+		}
+
+		# Go through all portals within this map
 		foreach my $portal (keys %{$srcPortals{$map}}) {
+			# Look for portal LOS entries that are not linked to each other
 			foreach (keys %{$srcPortals{$map}}) {
 				next if ($_ eq $portal);
 				if ($portals_los{$portal}{$_} eq "" || $portals_los{$_}{$portal} eq "") {
 					my @solution;
-					if ($field{'name'} ne $map) {
-						message "Processing map $map\n", "system";
-						getField("$Settings::def_field/$map.fld", \%field);
-					}
 					message "Calculating portal route $portal -> $_\n", "system";
 					ai_route_getRoute(\@solution, \%field, $srcPortals{$map}{$portal}{'pos'}, $srcPortals{$map}{$_}{'pos'});
 					$portals_los{$portal}{$_} = scalar @solution;
