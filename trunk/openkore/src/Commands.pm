@@ -842,13 +842,13 @@ sub cmdPlayerList {
 		getVector(\%vecYouToPlayer, $pos, $mypos);
 		my $degPlayerToYou = vectorToDegree(\%vecPlayerToYou);
 		my $degYouToPlayer = vectorToDegree(\%vecYouToPlayer);
-		my $tmp = getHex($playersID[$args]);
+		my $hex = getHex($playersID[$args]);
 		my $playerToYou = int(sprintf("%.0f", (360 - $degPlayerToYou) / 45)) % 8;
 		my $youToPlayer = int(sprintf("%.0f", (360 - $degYouToPlayer) / 45)) % 8;
 
 		$msg = "------------------ Player Info ------------------\n";
 		$msg .= "$player->{name} ($player->{binID})\n";
-		$msg .= "Account ID: $player->{nameID}  Account Hex: $tmp\n";
+		$msg .= "Account ID: $player->{nameID} (Hex: $hex)\n";
 		$msg .= "Party: $player->{party}{name}\n" if ($player->{party} && $player->{party}{name} ne '');
 		$msg .= "Guild: $player->{guild}{name}\n" if ($player->{guild});
 		$msg .= "Position: $pos->{x}, $pos->{y} ($directions_lut{$youToPlayer} of you: " . int($degYouToPlayer) . " degrees)\n";
@@ -865,13 +865,13 @@ sub cmdPlayerList {
 		$msg .= "-------------------------------------------------\n";
 		$msg .= swrite(
 			"Body direction: @<<<<<<<<<<<<<<<<<<< Head direction:  @<<<<<<<<<<<<<<<<<<<",
-			[$directions_lut{$body}, $directions_lut{$head}]);
+			["$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)"]);
 		$msg .= swrite(
 			"Upper headgear: @<<<<<<<<<<<<<<<<<<< Middle headgear: @<<<<<<<<<<<<<<<<<<<",
 			[($headTop) ? $headTop : "none", ($headMid) ? $headMid : "none"]);
 		$msg .= swrite(
 			"Lower headgear: @<<<<<<<<<<<<<<<<<<< Hair color:      @<<<<<<<<<<<<<<<<<<<",
-			[($headLow) ? $headLow : "none", $player->{hair_color}]);
+			[($headLow) ? $headLow : "none", "$haircolors{$player->{hair_color}} ($player->{hair_color})"]);
 		
 		$msg .= sprintf("Walk speed: %.2f secs per block\n", $player->{walk_speed});
 		if ($player->{dead}) {

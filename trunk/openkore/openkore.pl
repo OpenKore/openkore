@@ -182,6 +182,7 @@ addConfigFile("$Settings::tables_folder/directions.txt", \%directions_lut, \&par
 addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/haircolors.txt", \%haircolors, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/headgears.txt", \@headgears_lut, \&parseArrayFile);
 addConfigFile("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);

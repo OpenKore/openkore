@@ -440,11 +440,12 @@ sub sendCharCreate {
 	my $slot = shift;
 	my $name = shift;
 	my ($str,$agi,$vit,$int,$dex,$luk) = @_;
+	my $hair_color = 1;
 
 	my $msg = pack("C*", 0x67, 0x00) .
 		pack("a24", $name) .
 		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
-		pack("C*", 0x00, 0x00, 0x01, 0x00);
+		pack("C*", 0x00, 0x00, $hair_color, 0x00);
 	sendMsgToServer($r_socket, $msg);
 }
 
