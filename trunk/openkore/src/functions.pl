@@ -7737,11 +7737,12 @@ sub parseMsg {
 			if ($flag) {
 				# Skill activated
 				$chars[$config{char}]{statuses}{$skillName} = 1;
+				message "You are now: $skillName\n", "parseMsg_statuslook";
 
 			} else {
 				# Skill de-activate (expired)
 				delete $chars[$config{char}]{statuses}{$skillName};
-				message "$skillName deactivated\n", "parseMsg_statuslook", 2;
+				message "You are no longer: $skillName\n", "parseMsg_statuslook";
 			}
 
 		} elsif (%{$players{$ID}}) {
