@@ -12,7 +12,7 @@ DLLNAME=--dllname XSTools.dll
 
 XSTools.$(DLLEXT): sub
 	dlltool --dllname XSTools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
-	$(DLLWRAP) $(DLLNAME) $(OBJ) -o XSTools.$(DLLEXT) $(LIBPERL)
+	$(DLLWRAP) $(DLLNAME) $(OBJ) -o XSTools.$(DLLEXT) $(LIBPERL) -lstdc++
 
 
 sub:
