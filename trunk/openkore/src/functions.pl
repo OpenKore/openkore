@@ -8458,6 +8458,13 @@ sub parseMsg {
 
 		}
 
+	} elsif ($switch eq "01D7") {
+		# Weapon Display (type - 2:hand eq, 9:foot eq)
+		my $sourceID = substr($msg, 2, 4);
+		my $type = unpack("C1",substr($msg, 6, 1));
+		my $ID1 = unpack("S1", substr($msg, 7, 2));
+		my $ID2 = unpack("S1", substr($msg, 9, 2));
+
 	} elsif ($switch eq "01D8") {
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
@@ -9062,16 +9069,23 @@ sub ai_route_searchStep {
 		my $weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
 		$weights .= chr(1) x (256 - length($weights));
 		if (!$buildType) {
-			$$r_args{'session'} = $CalcPath_init->Call($$r_args{'solution'},
-				$$r_args{'field'}{'dstMap'}, $weights, $$r_args{'field'}{'width'}, $$r_args{'field'}{'height'}, 
-				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}), $$r_args{'timeout'});
+			$$r_args{'session'} = $CalcPath_init->Call(
+				$$r_args{'solution'},
+				$$r_args{'field'}{'dstMap'},
+				$weights,
+				$$r_args{'field'}{'width'},
+				$$r_args{'field'}{'height'}, 
+				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}),
+				pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}),
+				$$r_args{'timeout'});
+
 		} elsif ($buildType == 1) {
 			$$r_args{'session'} = Tools::CalcPath_init(
 				$$r_args{'solution'},
 				$$r_args{'field'}{'dstMap'},
 				$weights,
 				$$r_args{'field'}{'width'},
-				$$r_args{'field'}{'height'}, 
+				$$r_args{'field'}{'height'},
 				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), 
 				pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}),
 				$$r_args{'timeout'});
