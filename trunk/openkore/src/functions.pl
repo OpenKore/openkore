@@ -6714,6 +6714,8 @@ sub parseMsg {
 		$talk{'ID'} = $ID;
 		$talk{'nameID'} = unpack("L1", $ID);
 		$talk{'msg'} = $talk;
+		# Remove RO color codes
+		$talk{'msg'} =~ s/\^[a-fA-F0-9]{6}//g;
 		message "$npcs{$ID}{'name'} : $talk{'msg'}\n", "npc";
 
 	} elsif ($switch eq "00B5") {
@@ -6751,6 +6753,9 @@ sub parseMsg {
 		@preTalkResponses = split /:/, $talk;
 		undef @{$talk{'responses'}};
 		foreach (@preTalkResponses) {
+			# Remove RO color codes
+			s/\^[a-fA-F0-9]{6}//g;
+
 			push @{$talk{'responses'}}, $_ if $_ ne "";
 		}
 		$talk{'responses'}[@{$talk{'responses'}}] = "Cancel Chat";
