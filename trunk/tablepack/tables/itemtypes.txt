@@ -12,7 +12,7 @@
 11 Helmet
 12 Unknown_Type_12
 13 Unknown_Type_13
-14 Unknown_Type_14
+14 Headgear
 15 Unknown_Type_15
 16 Unknown_Type_16
 17 Unknown_Type_17
