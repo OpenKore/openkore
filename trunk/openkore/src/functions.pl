@@ -2904,7 +2904,10 @@ sub AI {
 
 	##### LOCKMAP #####
 
-	if (AI::isIdle && $config{lockMap} && $field{name} ne $config{lockMap}) {
+	if (AI::isIdle && $config{lockMap} && ($field{name} ne $config{lockMap}
+		|| ($config{lockMap_x} ne '' && ($char->{pos_to}{x} < $config{lockMap_x} - $config{lockMap_randX} || $char->{pos_to}{x} > $config{lockMap_x} + $config{lockMap_randX}))
+		|| ($config{lockMap_y} ne '' && ($char->{pos_to}{y} < $config{lockMap_y} - $config{lockMap_randY} || $char->{pos_to}{y} > $config{lockMap_y} + $config{lockMap_randY}))
+	)) {
 		if ($maps_lut{$config{lockMap}.'.rsw'} eq '') {
 			error "Invalid map specified for lockMap - map $config{lockMap} doesn't exist\n";
 			$config{lockMap} = '';
@@ -2914,8 +2917,10 @@ sub AI {
 			my $lockX = undef, $lockY = undef, $i = 500;
 			if ($config{lockMap_x} ne '' && $config{lockMap_y} ne '') {
 				do {
-					$lockX = int($config{lockMap_x}) + ((int(rand(3))-1) * (int(rand($config{lockMap_randX}))+1));
-					$lockY = int($config{lockMap_y}) + ((int(rand(3))-1) * (int(rand($config{lockMap_randY}))+1));
+					$lockX = int($config{lockMap_x});
+					$lockX += ((int(rand(3))-1) * (int(rand($config{lockMap_randX}))+1)) if ($config{lockMap_randX} ne '');
+					$lockY = int($config{lockMap_y});
+					$lockY += ((int(rand(3))-1) * (int(rand($config{lockMap_randY}))+1)) if ($config{lockMap_randY} ne '');
 				} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
 			}
 			if (!$i) {
@@ -2942,9 +2947,9 @@ sub AI {
 		my $i = 500;
 		do {
 			$randX = int(rand() * ($field{width} - 1));
-			$randX = $config{lockMap_x} + ((int(rand(3))-1)*(int(rand($config{lockMap_randX}))+1)) if ($config{lockMap_x} ne '' && $config{lockMap_randX} ne '');
+			$randX = $config{lockMap_x} + ((int(rand(3))-1) * (int(rand($config{lockMap_randX}))+1)) if ($config{lockMap_x} ne '' && $config{lockMap_randX} ne '');
 			$randY = int(rand() * ($field{height} - 1));
-			$randY = $config{lockMap_y} + ((int(rand(3))-1)*(int(rand($config{lockMap_randY}))+1)) if ($config{lockMap_y} ne '' && $config{lockMap_randY} ne '');
+			$randY = $config{lockMap_y} + ((int(rand(3))-1) * (int(rand($config{lockMap_randY}))+1)) if ($config{lockMap_y} ne '' && $config{lockMap_randY} ne '');
 		} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
 		if (!$i) {
 			error "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n";
