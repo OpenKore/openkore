@@ -53,8 +53,9 @@ use FileParsers;
 use Network;
 use Network::Send;
 use Commands;
+use Misc;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands));
+	Network Network::Send Commands Misc));
 
 
 Log::message("$Settings::versionText\n");

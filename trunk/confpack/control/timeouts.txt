@@ -15,6 +15,7 @@ reconnect 12
 # Activate AI after x seconds after the map's loaded
 ai 2
 
+ai_move_retry 0.3
 ai_move_giveup 2
 
 # Check for monsters to attack every x seconds

@@ -55,16 +55,20 @@ In each loop, the following things are performed:
 <ol>
 <li>
 	<h4>Re-initialize X-Kore if necessary</h4>
-	TODO: document how X-Kore works.
+	<small>TODO: document how X-Kore works.</small>
 </li>
 <li>
 	<h4>Parse command input</h4>
 	If there is keyboard input available, then Kore will read the keyboard input and
-	process the data with the <code>parseInput()</code> function.
+	process the data.
+	<ul>
+	<li><a href="Interface.html">The Interface module</a> is the module that checks whether there is keyboard input.</li>
+	<li>The main loop retrieves the keyboard input data, and passes that data to the <a href="Commands.html">Commands module</a>, where it is processed.</li>
+	</ul>
 </li>
 <li>
 	<h4>Process and handle data from RO server</h4>
-	TODO
+	<small>TODO</small>
 </li>
 <li>
 	<h4>Process AI</h4>
@@ -75,8 +79,7 @@ In each loop, the following things are performed:
 </li>
 <li>
 	<h4>Handle connection states</h4>
-	<code>checkConnection()</code> is called. This function handles connection issues.
-	It sets relevant connection variables and re-connects to the server if neccessary.
+	See <a href="Network.html"> the Network module</a> for more information.
 </li>
 <li>
 	<h4>Misc other stuff</h4>

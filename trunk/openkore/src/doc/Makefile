@@ -1,11 +1,14 @@
 FILES=\
+	../Interface.pm \
+	../Network.pm \
+	../Commands.pm \
 	../Log.pm \
 	../Settings.pm \
 	../Modules.pm \
 	../Plugins.pm \
 	../IPC.pm \
 	../Utils.pm \
-	../Interface.pm
+	../Misc.pm
 
 .PHONY: all clean upload
 

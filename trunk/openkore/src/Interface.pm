@@ -105,7 +105,8 @@ sub writeOutput {
 # $interface->displayUsage(text)
 # text: The 'usage' text to display.
 #
-# Display a 'usage' text.
+# Display a 'usage' text. This method is only used for displaying the usage text
+# when the user runs the "openkore --help" command in the operating system's commandline.
 sub displayUsage {
 	my $self = shift;
 	my $text = shift;

@@ -25,10 +25,11 @@ use base qw(Exporter);
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config	=> [qw(%config %consoleColors %jobs_lut %maps_lut %npcs_lut %sex_lut %shop %timeout)],
+	config	=> [qw(%config %consoleColors %equipTypes_lut %items_lut %itemsDesc_lut %itemTypes_lut
+			%jobs_lut %maps_lut %npcs_lut %sex_lut %shop %timeout)],
 	ai	=> [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff)],
-	state	=> [qw(@chars %cart @playersID %players @monstersID %monsters @portalsID %portals
-			@itemsID %items @npcsID %npcs %field)],
+	state	=> [qw($accountID @chars %cart @playersID %players @monstersID %monsters @portalsID
+			%portals @itemsID %items @npcsID %npcs %field)],
 	network	=> [qw($remote_socket $conState $encryptVal)],
 	misc	=> [qw($buildType %timeout_ex $isOnline $shopstarted $dmgpsec $totalelasped $elasped $totaldmg)],
 	);
@@ -45,6 +46,10 @@ our @EXPORT = (
 # Configuration variables
 our %config;
 our %consoleColors;
+our %equipTypes_lut;
+our %items_lut;
+our %itemsDesc_lut;
+our %itemTypes_lut;
 our %jobs_lut;
 our %maps_lut;
 our %npcs_lut;
@@ -60,6 +65,7 @@ our $AI = 1;
 our $AI_forcedOff;
 
 # Game state
+our $accountID;
 our @chars;
 our %cart;
 our @playersID;

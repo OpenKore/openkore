@@ -22,6 +22,7 @@ use Interface;
 use Network;
 use Network::Send;
 use Commands;
+use Misc;
 use Plugins;
 use Utils;
 
@@ -600,24 +601,6 @@ sub parseCommand {
 			sendChatRoomChange(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
 		}
 
-	} elsif ($switch eq "chist") { 
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		$arg1 = 5 if ($arg1 eq "");
-
-		if (open(CHAT, $Settings::chat_file)) {
-			my @chat = <CHAT>;
-			close(CHAT);
-			message("------ Chat History --------------------\n", "list");
-			my $i = @chat - $arg1;
-			$i = 0 if ($i < 0);
-			for (; $i < @chat;$i++) {
-				message($chat[$i], "list");
-			}
-			message("----------------------------------------\n", "list");
-		} else {
-			error "Unable to open $Settings::chat_file\n";
-		}
-
 	} elsif ($switch eq "cil") { 
 		itemLog_clear();
 		message("Item log cleared.\n", "success");
@@ -645,7 +628,7 @@ sub parseCommand {
 				val => \$value
 			});
 
-			if (!defined value) {
+			if (!defined $value) {
 				if (!exists $config{$arg1}) {
 					error "Config variable $arg1 doesn't exist\n";
 				} else {
@@ -945,31 +928,6 @@ sub parseCommand {
 	} elsif ($switch eq "dumpnow") {
 		dumpData($msg);
 
-	} elsif ($switch eq "e") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		if ($arg1 eq "" || $arg1 > 33 || $arg1 < 0) {
-			error	"Syntax Error in function 'e' (Emotion)\n" .
-				"Usage: e <emotion # (0-33)>\n";
-		} else {
-			sendEmotion(\$remote_socket, $arg1);
-		}
-
-	} elsif ($switch eq "eq") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\w+)/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'equip' (Equip Inventory Item)\n" .
-				"Usage: equip <item #> [r]\n";
-		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			error	"Error in function 'equip' (Equip Inventory Item)\n" .
-				"Inventory Item $arg1 does not exist.\n";
-		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 0 && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
-			error	"Error in function 'equip' (Equip Inventory Item)\n" .
-				"Inventory Item $arg1 can't be equipped.\n";
-		} else {
-			sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'});
-		}
-
 	} elsif ($switch eq "exp" || $switch eq "count") {
 		# exp report
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
@@ -1099,83 +1057,6 @@ sub parseCommand {
 			sendGuildRequest(\$remote_socket, 1);
 		}
 
-	} elsif ($switch eq "i") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
-		if ($arg1 eq "" || $arg1 eq "eq" || $arg1 eq "u" || $arg1 eq "nu") {
-			my @useable;
-			my @equipment;
-			my @non_useable;
-			for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
-				next if (!%{$chars[$config{'char'}]{'inventory'}[$i]});
-				if ($chars[$config{'char'}]{'inventory'}[$i]{'type_equip'} != 0) {
-					push @equipment, $i;
-				} elsif ($chars[$config{'char'}]{'inventory'}[$i]{'type'} <= 2) {
-					push @useable, $i;
-				} else {
-					push @non_useable, $i;
-				} 
-			}
-
-			message("-----------Inventory-----------\n", "list");
-			if ($arg1 eq "" || $arg1 eq "eq") {
-				message("-- Equipment --\n", "list");
-				for ($i = 0; $i < @equipment; $i++) {
-					$display = $chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'name'};
-					$display .= " ($itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'type'}})";
-
-					if ($chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'equipped'}) {
-						$display .= " -- Eqp: $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'type_equip'}}";
-					}
-
-					if (!$chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'identified'}) {
-						$display .= " -- Not Identified";
-					}
-					$index = $equipment[$i];
-
-					message(swrite(
-						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-						[$index, $display]),
-						"list");
-				}
-			}
-			if ($arg1 eq "" || $arg1 eq "nu") {
-				message("-- Non-Useable --\n", "list");
-				for ($i = 0; $i < @non_useable; $i++) {
-					$display = $chars[$config{'char'}]{'inventory'}[$non_useable[$i]]{'name'};
-					$display .= " x $chars[$config{'char'}]{'inventory'}[$non_useable[$i]]{'amount'}";
-					$index = $non_useable[$i];
-					message(swrite(
-						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-						[$index, $display]),
-						"list");
-				}
-			}
-			if ($arg1 eq "" || $arg1 eq "u") {
-				message("-- Useable --\n", "list");
-				for ($i = 0; $i < @useable; $i++) {
-					$display = $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'name'};
-					$display .= " x $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'amount'}";
-					$index = $useable[$i];
-					message(swrite(
-						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-						[$index, $display]),
-						"list");
-				}
-			}
-			message("-------------------------------\n", "list");
-
-		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
-			error	"Error in function 'i' (Inventory Item Desciption)\n" .
-				"Inventory Item $arg2 does not exist\n";
-		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-			printItemDesc($chars[$config{'char'}]{'inventory'}[$arg2]{'nameID'});
-
-		} else {
-			error	"Syntax Error in function 'i' (Inventory List)\n" .
-				"Usage: i [<u|eq|nu|desc>] [<inventory #>]\n";
-		}
-
 	} elsif ($switch eq "identify") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
@@ -1197,88 +1078,6 @@ sub parseCommand {
 		} else {
 			error	"Syntax Error in function 'identify' (Identify Item)\n" .
 				"Usage: identify [<identify #>]\n";
-		}
-
-
-	} elsif ($switch eq "ignore") {
-		($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
-		if ($arg1 eq "" || $arg2 eq "" || ($arg1 ne "0" && $arg1 ne "1")) {
-			error	"Syntax Error in function 'ignore' (Ignore Player/Everyone)\n" .
-				"Usage: ignore <flag> <name | all>\n";
-		} else {
-			if ($arg2 eq "all") {
-				sendIgnoreAll(\$remote_socket, !$arg1);
-			} else {
-				sendIgnore(\$remote_socket, $arg2, !$arg1);
-			}
-		}
-
-	} elsif ($switch eq "il") {
-		message("-----------Item List-----------\n" .
-			"#    Name                      \n",
-			"list");
-		for (my $i = 0; $i < @itemsID; $i++) {
-			next if ($itemsID[$i] eq "");
-			$display = $items{$itemsID[$i]}{'name'};
-			$display .= " x $items{$itemsID[$i]}{'amount'}";
-			message(swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$i, $display]),
-				"list");
-		}
-		message("-------------------------------\n", "list");
-
-	} elsif ($switch eq "im") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
-		if ($arg1 eq "" || $arg2 eq "") {
-			error	"Syntax Error in function 'im' (Use Item on Monster)\n" .
-				"Usage: im <item #> <monster #>\n";
-		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			error	"Error in function 'im' (Use Item on Monster)\n" .
-				"Inventory Item $arg1 does not exist.\n";
-		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
-			error	"Error in function 'im' (Use Item on Monster)\n" .
-				"Inventory Item $arg1 is not of type Usable.\n";
-		} elsif ($monstersID[$arg2] eq "") {
-			error	"Error in function 'im' (Use Item on Monster)\n" .
-				"Monster $arg2 does not exist.\n";
-		} else {
-			sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $monstersID[$arg2]);
-		}
-
-	} elsif ($switch eq "ip") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
-		if ($arg1 eq "" || $arg2 eq "") {
-			error	"Syntax Error in function 'ip' (Use Item on Player)\n" .
-				"Usage: ip <item #> <player #>\n";
-		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			error	"Error in function 'ip' (Use Item on Player)\n" .
-				"Inventory Item $arg1 does not exist.\n";
-		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
-			error	"Error in function 'ip' (Use Item on Player)\n" .
-				"Inventory Item $arg1 is not of type Usable.\n";
-		} elsif ($playersID[$arg2] eq "") {
-			error	"Error in function 'ip' (Use Item on Player)\n" .
-				"Player $arg2 does not exist.\n";
-		} else {
-			sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $playersID[$arg2]);
-		}
-
-	} elsif ($switch eq "is") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'is' (Use Item on Self)\n" .
-				"Usage: is <item #>\n";
-		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			error	"Error in function 'is' (Use Item on Self)\n" .
-				"Inventory Item $arg1 does not exist.\n";
-		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
-			error	"Error in function 'is' (Use Item on Self)\n" .
-				"Inventory Item $arg1 is not of type Usable.\n";
-		} else {
-			sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $accountID);
 		}
 
 	} elsif ($switch eq "join") {
@@ -1356,9 +1155,6 @@ sub parseCommand {
 				last;
 			}
 		}
-
-	} elsif ($switch eq "memo") {
-		sendMemo(\$remote_socket);
 
 	} elsif ($switch eq "ml") {
 		my ($dmgTo, $dmgFrom, $dist, $pos);
@@ -1686,10 +1482,6 @@ sub parseCommand {
 			}
 		}
 
-	} elsif ($switch eq "reload") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		Settings::parseReload($arg1);
-
 	} elsif ($switch eq "relog") {
 		relog();
 
@@ -1895,36 +1687,6 @@ sub parseCommand {
 		stand();
 		$ai_v{'sitAuto_forceStop'} = 1;
 
-	} elsif ($switch eq "stat_add") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)$/;
-		if ($arg1 ne "str" &&  $arg1 ne "agi" && $arg1 ne "vit" && $arg1 ne "int" 
-		 && $arg1 ne "dex" && $arg1 ne "luk") {
-			error	"Syntax Error in function 'stat_add' (Add Status Point)\n" .
-				"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
-		} else {
-			my $ID;
-			if ($arg1 eq "str") {
-				$ID = 0x0D;
-			} elsif ($arg1 eq "agi") {
-				$ID = 0x0E;
-			} elsif ($arg1 eq "vit") {
-				$ID = 0x0F;
-			} elsif ($arg1 eq "int") {
-				$ID = 0x10;
-			} elsif ($arg1 eq "dex") {
-				$ID = 0x11;
-			} elsif ($arg1 eq "luk") {
-				$ID = 0x12;
-			}
-			if ($chars[$config{'char'}]{"points_$arg1"} > $chars[$config{'char'}]{'points_free'}) {
-				error	"Error in function 'stat_add' (Add Status Point)\n" .
-					"Not enough status points to increase $arg1\n";
-			} else {
-				$chars[$config{'char'}]{$arg1} += 1;
-				sendAddStatusPoint(\$remote_socket, $ID);
-			}
-		}
-
 	} elsif ($switch eq "storage") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,-]+)/;
@@ -2125,67 +1887,10 @@ sub parseCommand {
 			setTimeout($arg1, $arg2);
 		}
 
-
-	} elsif ($switch eq "uneq") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'unequip' (Unequip Inventory Item)\n" .
-				"Usage: unequip <item #>\n";
-		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
-				"Inventory Item $arg1 does not exist.\n";
-		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'equipped'} == 0 && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
-			error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
-				"Inventory Item $arg1 is not equipped.\n";
-		} else {
-			sendUnequip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'});
-		}
-
-	} elsif ($switch eq "warp") {
-		my ($map) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-
-		if (!defined $map) {
-			error "Error in function 'warp' (Open/List Warp Portal)\n" .
-				"Usage: warp <map name|#|list>\n";
-
-		} elsif ($map =~ /^\d$/) {
-			if ($map < 0 || $map > @{$chars[$config{'char'}]{'warp'}{'memo'}}) {
-				error "Invalid map number $map.\n";
-			} else {
-				my $name = $chars[$config{'char'}]{'warp'}{'memo'}[$map];
-				my $rsw = "$name.rsw";
-				message "Attempting to open a warp portal to $maps_lut{$rsw} ($name)\n", "info";
-				sendOpenWarp(\$remote_socket, "$name.gat");
-			}
-
-		} elsif ($map eq 'list') {
-			message("----------------- Warp Portal --------------------\n", "list");
-			message("#  Place                           Map\n", "list");
-			for (my $i = 0; $i < @{$chars[$config{'char'}]{'warp'}{'memo'}}; $i++) {
-				message(swrite(
-					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
-					[$i, $maps_lut{$chars[$config{'char'}]{'warp'}{'memo'}[$i].'.rsw'},
-					$chars[$config{'char'}]{'warp'}{'memo'}[$i]]),
-					"list");
-			}
-			message("--------------------------------------------------\n", "list");
-
-		} elsif (!defined $maps_lut{$map.'.rsw'}) {
-			error "Map '$map' does not exist.\n";
-
-		} else {
-			my $rsw = "$map.rsw";
-			message "Attempting to open a warp portal to $maps_lut{$rsw} ($map)\n", "info";
-			sendOpenWarp(\$remote_socket, "$map.gat");
-		}
-
 	} elsif ($switch eq "where") {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		message("Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n", "info");
 		message("Last destination calculated : (".int($old_x).", ".int($old_y).") from spot (".int($old_pos_x).", ".int($old_pos_y).").\n", "info");
-
-	} elsif ($switch eq "who") {
-		sendWho(\$remote_socket);
 
 	} elsif ($switch eq "v") {
 		if ($config{'verbose'}) {
@@ -4599,7 +4304,7 @@ sub AI {
 				$ai_seq_args[0]{'dest_x'} = $ai_seq_args[0]{'dest_x_original'};
 				$ai_seq_args[0]{'dest_y'} = $ai_seq_args[0]{'dest_y_original'};
 			}
-			debug "Route logic - last pos\n", "route";
+			debug "Route logic - off course; reset route\n", "route";
 			undef @{$ai_seq_args[0]{'solution'}};
 			undef %{$ai_seq_args[0]{'last_pos'}};
 			undef $ai_seq_args[0]{'index'};
@@ -4611,6 +4316,8 @@ sub AI {
 			#We actually skip several steps at a time since the server does its own pathfinding.
 			#Sometimes we may skip too many steps, and the server says "thats too far, i won't move u"
 			#So we decrease the number of steps skipped until the server finally moves us.
+
+			my $prevSolutionIndex = $ai_seq_args[0]{index} || 0;
 
 			#If we've tried to move and our position still isn't at the next step...
 			if ($ai_seq_args[0]{'divideIndex'} &&
@@ -4637,7 +4344,7 @@ sub AI {
 
 			} else {
 				$ai_seq_args[0]{'divideIndex'} = 1;
-				debug "Route logic - divide index = 1\n", "route";
+				#debug "Route logic - divide index = 1\n", "route";
 				$pos_x = int($chars[$config{'char'}]{'pos_to'}{'x'}) if ($chars[$config{'char'}]{'pos_to'}{'x'} ne "");
 				$pos_y = int($chars[$config{'char'}]{'pos_to'}{'y'}) if ($chars[$config{'char'}]{'pos_to'}{'y'} ne "");
 				#if kore is stuck
@@ -4708,6 +4415,7 @@ sub AI {
 			#if the step position doesn't equal our current position, then move there
 			if ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
 			 || $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
+				debug "Route - move from solution index $prevSolutionIndex to $ai_seq_args[0]{index}\n", "route";
 				move(
 					$ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'},
 					$ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'},
@@ -10494,14 +10202,6 @@ sub portalExists {
 	}
 }
 
-sub printItemDesc {
-	my $itemID = shift;
-	message("===============Item Description===============\n", "info");
-	message("Item: $items_lut{$itemID}\n\n", "info");
-	message($itemsDesc_lut{$itemID}, "info");
-	message("==============================================\n", "info");
-}
-
 sub redirectXKoreMessages {
 	my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
 
@@ -10675,8 +10375,8 @@ sub RespawnUnstuck {
 	ai_clientSuspend(0, 5);
 }
 
-sub useTeleport { 
-	my $level = shift; 
+sub useTeleport {
+	my $level = shift;
 	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $level + 600);
 	if (!$config{'teleportAuto_useItem'} || $chars[$config{'char'}]{'skills'}{'AL_TELEPORT'}{'lv'} ) {
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
