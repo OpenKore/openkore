@@ -1,11 +1,40 @@
 ==================
-### 1.5.0 (CVS)
+### 1.5.0 (beta)
 ==================
 
-** NOTE **:
-- Tools.dll is obsolete! You must get XSTools.dll and put it in your 
-  'tools' folder. See the forum for more information:
-  http://openkore.sourceforge.net/forum/viewtopic.php?p=17344#17344
+A new beta version, 1.5.0, has finally been released. A lot of stuff
+has changed, and your old configuration files may not work, so please
+read this document thoroughly. But the easiest way is to delete your
+configuration files and start from scratch using the new default
+configuration files.
+Remember: this is a BETA version. It may not be stable.
+
+Special thanks to the following people; OpenKore would not have been
+possible without them:
+- Joseph: -1 and 2 attack-auto support in mon_control.txt,
+  avoidList_inLockOnly, auto cart get, misc other things
+- aputs: Support for the _monsters option in useSelf_skill, useSelf_item
+  and partySkill.
+- obyarou: Priority attack support for non-aggressive monsters,
+  shop timeout in X-Kore bugfix (bug #49), sitAuto_idle vs
+  shopAuto_open conflict fix (bug #50), other misc bugfixes.
+- fov: writeDataFile*() tweaks, lockMap and randomWalk tweaks,
+  partySkills for certain jobs
+- polokus: idRO Amatsu/Kunlun support
+- Ven`Tatsu: walkable water bugfix (bug #21)
+- sparshong: character creation/deletion packet code.
+- jsteng, littlewens: mute packet support, chat room list clear bugfix.
+- anoxemian: (partial?) kRO/PK server support.
+- doenet: improved mon_control.txt, randomWalk and lockMap
+  fixes/improvements.
+- BotMan: server details for pRO.
+- anu: add storage opening timeout, teleportAuto_dropTarget
+- juifeng: NPC talk timeout fix when using "d#" talk code
+- isieo: attackComboSlot bugfix
+
+
+** INCOMPATIBLE CHANGES **:
+- Tools.dll is obsolete! Delete it!
 - The skill numbers listed in 'skills' have changed! They are now stable,
   so for example 'Heal' will always be skill #28 no matter what character
   you are playing, even if you equip accessories that grant skills.
@@ -63,7 +92,6 @@ New features:
 - kRO/PK servers are now (partially?) supported. In config.txt, set
   pkServer to 1.
 - TAB completion in Wx and Linux interface!!!
-- Wx interface can now be minimized to tray.
 - Input history support in Linux interface.
 - Spells being cast now show how long they take.
 - Combo skill support.
@@ -89,6 +117,8 @@ New features:
 - When you issue a "move" command, this will clear previous move actions.
 - When the amount of zeny you have changes, you will be told.
 - Support for specifying hair color and hair style at character creation.
+- Improvements in the Wx interface: advanced configuration editor, info bar,
+  ability to send PMs.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -327,28 +357,6 @@ Internal:
 - ai_getAggressives() now accepts a second optional argument $party;
   if true, it will return monsters that have fought party members
 - Don't avoid walls when moving to monsters.
-
-Credits:
-- Joseph: -1 and 2 attack-auto support in mon_control.txt,
-  avoidList_inLockOnly, auto cart get, misc other things
-- aputs: Support for the _monsters option in useSelf_skill, useSelf_item
-  and partySkill.
-- obyarou: Priority attack support for non-aggressive monsters,
-  shop timeout in X-Kore bugfix (bug #49), sitAuto_idle vs
-  shopAuto_open conflict fix (bug #50), other misc bugfixes.
-- fov: writeDataFile*() tweaks, lockMap and randomWalk tweaks,
-  partySkills for certain jobs
-- polokus: idRO Amatsu/Kunlun support
-- Ven`Tatsu: walkable water bugfix (bug #21)
-- sparshong: character creation/deletion packet code.
-- jsteng, littlewens: mute packet support, chat room list clear bugfix.
-- anoxemian: (partial?) kRO/PK server support.
-- doenet: improved mon_control.txt, randomWalk and lockMap
-  fixes/improvements.
-- BotMan: server details for pRO.
-- anu: add storage opening timeout, teleportAuto_dropTarget
-- juifeng: NPC talk timeout fix when using "d#" talk code
-- isieo: attackComboSlot bugfix
 
 
 ==================
