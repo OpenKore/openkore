@@ -9,8 +9,8 @@ NOTE:
     tables folder.
   - OR -
   * Delete your portalsLOS.txt and let Kore recompile it.
-- The attack routing behavior has changed a bit. You should lower your
-  attackDistance to 1.5.
+- Shop.txt format has changed! See below.
+
 
 New features:
 - X-Kore works on Windows 98/ME now!
