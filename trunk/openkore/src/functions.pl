@@ -447,15 +447,6 @@ sub parseCommand {
 			aiRemove("attack");
 		}
 
-	} elsif ($switch eq "auth") {
-		($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
-		if ($arg1 eq "" || ($arg2 ne "1" && $arg2 ne "0")) {
-			error	"Syntax Error in function 'auth' (Overall Authorize)\n" .
-				"Usage: auth <username> <flag>\n";
-		} else {
-			auth($arg1, $arg2);
-		}
-
 	} elsif ($switch eq "autobuy") {
 		unshift @ai_seq, "buyAuto";
 		unshift @ai_seq_args, {};
@@ -471,7 +462,7 @@ sub parseCommand {
 	} elsif ($switch eq "itemexchange") {
 		unshift @ai_seq, "itemExchange";
 		unshift @ai_seq_args, {};
-		
+
 	} elsif ($switch eq "bestow") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($currentChatRoom eq "") {
@@ -485,22 +476,6 @@ sub parseCommand {
 				"Chat Room User $arg1 doesn't exist\n";
 		} else {
 			sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg1]);
-		}
-
-	} elsif ($switch eq "buy") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'buy' (Buy Store Item)\n" .
-				"Usage: buy <item #> [<amount>]\n";
-		} elsif ($storeList[$arg1] eq "") {
-			error	"Error in function 'buy' (Buy Store Item)\n" .
-				"Store Item $arg1 does not exist.\n";
-		} else {
-			if ($arg2 <= 0) {
-				$arg2 = 1;
-			}
-			sendBuy(\$remote_socket, $storeList[$arg1]{'nameID'}, $arg2);
 		}
 
 	} elsif ($switch eq "c") {
@@ -1507,10 +1482,6 @@ sub parseCommand {
 			sendSell(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $arg2);
 		}
 
-	} elsif ($switch eq "send") {
-		($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		sendRaw(\$remote_socket, $args);
-
 	} elsif ($switch eq "sit") {
 		$ai_v{'attackAuto_old'} = $config{'attackAuto'};
 		$ai_v{'route_randomWalk_old'} = $config{'route_randomWalk'};
@@ -1653,25 +1624,6 @@ sub parseCommand {
 				ai_skillUse($chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'ID'}, $arg2, 0,0, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 			}
 		}
-
-	} elsif ($switch eq "st") {
-		message("-----------Char Stats-----------\n", "info");
-		my $tilde = "~";
-		message(swrite(
-			"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<",
-			[$chars[$config{'char'}]{'str'}, $chars[$config{'char'}]{'str_bonus'}, $chars[$config{'char'}]{'points_str'}, $chars[$config{'char'}]{'attack'}, $chars[$config{'char'}]{'attack_bonus'}, $chars[$config{'char'}]{'def'}, $chars[$config{'char'}]{'def_bonus'}],
-			"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<",
-			[$chars[$config{'char'}]{'agi'}, $chars[$config{'char'}]{'agi_bonus'}, $chars[$config{'char'}]{'points_agi'}, $chars[$config{'char'}]{'attack_magic_min'}, $tilde, $chars[$config{'char'}]{'attack_magic_max'}, $chars[$config{'char'}]{'def_magic'}, $chars[$config{'char'}]{'def_magic_bonus'}],
-			"Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<",
-			[$chars[$config{'char'}]{'vit'}, $chars[$config{'char'}]{'vit_bonus'}, $chars[$config{'char'}]{'points_vit'}, $chars[$config{'char'}]{'hit'}, $chars[$config{'char'}]{'flee'}, $chars[$config{'char'}]{'flee_bonus'}],
-			"Int: @<<+@<< #@< Critical: @<< Aspd: @<<",
-			[$chars[$config{'char'}]{'int'}, $chars[$config{'char'}]{'int_bonus'}, $chars[$config{'char'}]{'points_int'}, $chars[$config{'char'}]{'critical'}, $chars[$config{'char'}]{'attack_speed'}],
-			"Dex: @<<+@<< #@< Status Points: @<<",
-			[$chars[$config{'char'}]{'dex'}, $chars[$config{'char'}]{'dex_bonus'}, $chars[$config{'char'}]{'points_dex'}, $chars[$config{'char'}]{'points_free'}],
-			"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
-			[$chars[$config{'char'}]{'luk'}, $chars[$config{'char'}]{'luk_bonus'}, $chars[$config{'char'}]{'points_luk'}, $chars[$config{'char'}]{'guild'}{'name'}]),
-			"info");
-		message("--------------------------------\n", "info");
 
 	} elsif ($switch eq "stand") {
 		if ($ai_v{'attackAuto_old'} ne "") {
@@ -1854,50 +1806,13 @@ sub parseCommand {
 				"Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n";
 		}
 
-
-	} elsif ($switch eq "tank") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'tank' (Tank for a Player)\n" .
-				"Usage: tank <player #>\n";
-		} elsif ($arg1 eq "stop") {
-			configModify("tankMode", 0);
-		} elsif ($playersID[$arg1] eq "") {
-			error	"Error in function 'tank' (Tank for a Player)\n" .
-				"Player $arg1 does not exist.\n";
-		} else {
-			configModify("tankMode", 1);
-			configModify("tankModeTarget", $players{$playersID[$arg1]}{'name'});
-		}
-
 	} elsif ($switch eq "tele") {
 		useTeleport(1);
-
-	} elsif ($switch eq "timeout") {
-		($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'timeout' (set a timeout)\n" .
-				"Usage: timeout <type> [<seconds>]\n";
-		} elsif ($timeout{$arg1} eq "") {
-			error	"Error in function 'timeout' (set a timeout)\n" .
-				"Timeout $arg1 doesn't exist\n";
-		} elsif ($arg2 eq "") {
-			error "Timeout '$arg1' is $config{$arg1}\n";
-		} else {
-			setTimeout($arg1, $arg2);
-		}
 
 	} elsif ($switch eq "where") {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		message("Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n", "info");
 		message("Last destination calculated : (".int($old_x).", ".int($old_y).") from spot (".int($old_pos_x).", ".int($old_pos_y).").\n", "info");
-
-	} elsif ($switch eq "v") {
-		if ($config{'verbose'}) {
-			configModify("verbose", 0);
-		} else {
-			configModify("verbose", 1);
-		}
 
 	} else {
 		my $return = 0;
@@ -9569,56 +9484,6 @@ sub positionNearPortal {
 		return 1 if (distance($r_hash, \%{$portals{$portalsID[$i]}{'pos'}}) <= $dist);
 	}
 	return 0;
-}
-
-#######################################
-#######################################
-#CONFIG MODIFIERS
-#######################################
-#######################################
-
-sub auth {
-	my $user = shift;
-	my $flag = shift;
-	if ($flag) {
-		warning "Authorized user '$user' for admin\n";
-	} else {
-		message "Revoked admin privilages for user '$user'\n";
-	}	
-	$overallAuth{$user} = $flag;
-	writeDataFile("control/overallAuth.txt", \%overallAuth);
-}
-
-##
-# configModify(key, val, [silent])
-# key: a key name.
-# val: the new value.
-# silent: if set to 1, do not print a message to the console.
-#
-# Changes the value of the configuration variable $key to $val.
-# %config and config.txt will be updated.
-sub configModify {
-	my $key = shift;
-	my $val = shift;
-	my $silent = shift;
-
-	Plugins::callHook('configModify', {
-		key => $key,
-		val => $val,
-		silent => $silent
-	});
-
-	message("Config '$key' set to $val\n") unless ($silent);
-	$config{$key} = $val;
-	writeDataFileIntact($Settings::config_file, \%config);
-}
-
-sub setTimeout {
-	my $timeout = shift;
-	my $time = shift;
-	$timeout{$timeout}{'timeout'} = $time;
-	message "Timeout '$timeout' set to $time\n";
-	writeDataFileIntact2("control/timeouts.txt", \%timeout);
 }
 
 

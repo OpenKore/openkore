@@ -26,15 +26,81 @@ use Exporter;
 use base qw(Exporter);
 
 use Globals;
-use Log qw(message);
+use Log qw(message warning);
+use Plugins;
+use FileParsers;
+use Settings;
 
 our @EXPORT = qw(
+	auth
+	configModify
+	setTimeout
+
 	printItemDesc
 	whenAffected
 	whenAffectedPL
 	whenStatusActive
 	whenStatusActivePL
 	);
+
+
+
+#######################################
+#######################################
+#CONFIG MODIFIERS
+#######################################
+#######################################
+
+sub auth {
+	my $user = shift;
+	my $flag = shift;
+	if ($flag) {
+		message "Authorized user '$user' for admin\n", "success";
+	} else {
+		message "Revoked admin privilages for user '$user'\n", "success";
+	}	
+	$overallAuth{$user} = $flag;
+	writeDataFile("control/overallAuth.txt", \%overallAuth);
+}
+
+##
+# configModify(key, val, [silent])
+# key: a key name.
+# val: the new value.
+# silent: if set to 1, do not print a message to the console.
+#
+# Changes the value of the configuration variable $key to $val.
+# %config and config.txt will be updated.
+sub configModify {
+	my $key = shift;
+	my $val = shift;
+	my $silent = shift;
+
+	Plugins::callHook('configModify', {
+		key => $key,
+		val => $val,
+		silent => $silent
+	});
+
+	message("Config '$key' set to $val\n") unless ($silent);
+	$config{$key} = $val;
+	writeDataFileIntact($Settings::config_file, \%config);
+}
+
+sub setTimeout {
+	my $timeout = shift;
+	my $time = shift;
+	$timeout{$timeout}{'timeout'} = $time;
+	message "Timeout '$timeout' set to $time\n";
+	writeDataFileIntact2("control/timeouts.txt", \%timeout);
+}
+
+
+#######################################
+#######################################
+# OTHER STUFF
+#######################################
+#######################################
 
 
 ##
