@@ -5561,14 +5561,13 @@ sub parseMsg {
 
 	} elsif ($switch eq "0087") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		makeCoords(\%coordsFrom, substr($msg, 6, 3));
-		makeCoords2(\%coordsTo, substr($msg, 8, 3));
-		%{$chars[$config{'char'}]{'pos'}} = %coordsFrom;
-		%{$chars[$config{'char'}]{'pos_to'}} = %coordsTo;
-		my $dist = sprintf("%.1f", distance(\%coordsFrom, \%coordsTo));
-		debug "You move from ($coordsFrom{x}, $coordsFrom{y}) to ($coordsTo{x}, $coordsTo{y}) - distance $dist\n", "parseMsg_move";
-		$chars[$config{'char'}]{'time_move'} = time;
-		$chars[$config{'char'}]{'time_move_calc'} = distance(\%{$chars[$config{'char'}]{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}) * $config{'seconds_per_block'};
+		my $unknown = unpack("C1", substr($msg, 11, 1));
+		makeCoords($char->{pos}, substr($msg, 6, 3));
+		makeCoords2($char->{pos_to}, substr($msg, 8, 3));
+		my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
+		debug "You move from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist, unknown $unknown\n", "parseMsg_move";
+		$char->{time_move} = time;
+		$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * $config{seconds_per_block};
 
 	} elsif ($switch eq "0088") {
 		# Long distance attack solution
@@ -6122,7 +6121,7 @@ sub parseMsg {
 		my $type = unpack("S1",substr($msg, 2, 2));
 		my $val = unpack("L1",substr($msg, 4, 4));
 		if ($type == 0) {
-			debug "Something1: $val\n", "parseMsg", 2;
+			debug "Speed: $val\n", "parseMsg", 2;
 		} elsif ($type == 3) {
 			debug "Something2: $val\n", "parseMsg", 2;
 		} elsif ($type == 5) {
