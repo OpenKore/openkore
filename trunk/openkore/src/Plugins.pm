@@ -42,16 +42,28 @@ our %hooks;
 ##
 # Plugins::loadAll()
 #
-# Loads all plugins from the plugins folder. Plugins must have the .pl extension.
+# Loads all plugins from the plugins folder, and all plugins that are one subfolder below the plugins folder.
+# Plugins must have the .pl extension.
 sub loadAll {
-	if (!opendir(DIR, $Settings::plugins_folder)) {
-		return 0;
-	}
-	my @plugins = grep { /\.pl$/ } readdir(DIR);
+	return 0 unless (opendir(DIR, $Settings::plugins_folder));
+	my @items = readdir(DIR);
+	my @plugins = grep { -f "$Settings::plugins_folder/$_" && /\.pl$/ } @items;
+	my @subdirs = grep { -d "$Settings::plugins_folder/$_" && !($_ =~ /^(\.|CVS$)/) } @items;
 	closedir(DIR);
 
 	foreach my $plugin (@plugins) {
 		load("$Settings::plugins_folder/$plugin");
+	}
+
+	foreach my $dir (@subdirs) {
+		$dir = "$Settings::plugins_folder/$dir";
+		next unless (opendir(DIR, $dir));
+		@plugins = grep { -f "$dir/$_" && /\.pl$/ } readdir(DIR);
+		closedir(DIR);
+
+		foreach my $plugin (@plugins) {
+			load("$dir/$plugin");
+		}
 	}
 	return 1;
 }
@@ -153,7 +165,7 @@ sub registered {
 
 
 ##
-# Plugins::addHook(hookname, r_func, user_data)
+# Plugins::addHook(hookname, r_func, [user_data])
 # hookname: Name of the hook.
 # r_func: Reference to the function to call.
 # user_data: Additional data to pass to r_func.
@@ -182,7 +194,7 @@ sub delHook {
 
 
 ##
-# Plugins::callHook(hookname, r_param)
+# Plugins::callHook(hookname, [r_param])
 # hookname: Name of the hook.
 # r_param: A reference to a hash that will be passed to the hook functions.
 #
