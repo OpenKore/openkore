@@ -10632,7 +10632,7 @@ sub dumpData {
 sub getField {
 	my $file = shift;
 	my $r_hash = shift;
-	my $i, $data;
+	my ($data, $read);
 	undef %{$r_hash};
 	if (!(-e $file)) {
 		print "\n!!Could not load field - you must install the kore-field pack!!\n\n";
@@ -10645,14 +10645,14 @@ sub getField {
 	open FILE, $file;
 	binmode(FILE);
 	read(FILE, $data, 4);
-	my $width = unpack("S1", substr($data, 0,2));
-	my $height = unpack("S1", substr($data, 2,2));
+	my $width = unpack("S1", substr($data, 0, 2));
+	my $height = unpack("S1", substr($data, 2, 2));
 	$$r_hash{'width'} = $width;
 	$$r_hash{'height'} = $height;
-	while (read(FILE, $data, 1)) {
-		$$r_hash{'field'}[$i] = unpack("C",$data);
-		$$r_hash{'rawMap'} .= $data;
-		$i++;
+	while (($read = read(FILE, $data, 1024 * 32))) {
+		$$r_hash{'rawMap'} .= substr($data, 0, $read);
+		my @blocks = unpack("C*", $data);
+		push @{$$r_hash{'field'}}, @blocks;
 	}
 	close FILE;
 }
