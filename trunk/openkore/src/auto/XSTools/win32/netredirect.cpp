@@ -112,6 +112,8 @@ koreConnectionMain ()
 			isAliveChanged = true;
 			if (!isAlive)
 				debug ("Failed\n");
+			else
+				koreClientTimeout = GetTickCount ();
 			reconnectTimeout = GetTickCount ();
 		}
 
@@ -166,7 +168,8 @@ koreConnectionMain ()
 				int next;
 
 				// Kore is not running; send it to the RO server instead,
-				// if this packet is supposed to go to the RO server
+				// if this packet is supposed to go to the RO server ('S')
+				// Ignore packets that are meant for Kore ('R')
 				EnterCriticalSection (&CS_ro);
 				while ((packet = unpackPacket (xkoreSendBuf.c_str (), xkoreSendBuf.size (), next))) {
 					if (packet->ID == 'S')
@@ -255,7 +258,7 @@ MySend (SOCKET s, char* buf, int len, int flags)
 		isAlive = koreClientIsAlive;
 		LeaveCriticalSection (&CS_koreClientIsAlive);
 
-		if (!isAlive) {
+		if (isAlive) {
 			// Don't send this packet to the RO server; send it to the X-Kore server instead
 			char *newbuf = (char *) malloc (len + 3);
 
