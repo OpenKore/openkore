@@ -93,7 +93,8 @@ our %descriptions = (
 	arrowcraft	=>	'Create Arrows.',
 	auth	=> '(Un)authorize a user for using Kore chat commands.',
 	bestow	=> 'Bestow admin in a chat room',
-	buy	=> 'Buy an item from the current NPC shop.',
+	buy	=> 'Buy an item from the current NPC shop',
+	cart	=> 'Cart management',
 	chatmod	=> 'Modify chat room settings.',
 	chist	=> 'Display last few entries from the chat log.',
 	closeshop => 'Close your vending shop.',
@@ -1278,7 +1279,7 @@ sub cmdArrowCraft {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\w\d]+)/;
 
-	print "-$arg1-\n";
+	#print "-$arg1-\n";
 	if ($arg1 eq "") {
 		if (@arrowCraftID) {
 			message("----------------- Item To Craft -----------------\n", "info");
@@ -1296,7 +1297,8 @@ sub cmdArrowCraft {
 		}
 	} elsif ($arg1 eq "use") {
 		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
-			main::ai_skillUse(\$remote_socket, 'AC_MAKINGARROW', 1, $accountID);
+			#main::ai_skillUse(\$remote_socket, 'AC_MAKINGARROW', 1, $accountID);
+			main::ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
 		} else {
 			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
 				"You dont have Arrow Making Skill.\n";
@@ -1311,4 +1313,6 @@ sub cmdArrowCraft {
 		}
 	}
 }
+
+
 return 1;
