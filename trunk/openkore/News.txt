@@ -14,9 +14,12 @@ Bug fixes:
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
   deltaHp condition added (currently useless to non-developers).
+- Support for the 'charServer_ip', and 'charServer_port' options
+  in servers.txt, which allow you to force connection to a specific
+  map server.
 
 Credits:
-- Squall: some minor fixes.
+- Squall: some minor fixes, charServer support in servers.txt.
 
 ==================
 ### 1.6.0
