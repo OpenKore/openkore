@@ -7,7 +7,21 @@ TYPE=bz2
 # Uncomment the next line if you want a tar.gz archive
 # TYPE=gz
 
-DIRS=(. src src/IPC src/Interface/Console src/Interface/Console/Other src/Interface/Wx) PACKAGEDIR=$PACKAGE-$VERSION
+DIRS=(.
+	src
+	src/IPC
+	src/Interface/Console
+	src/Interface/Console/Other
+	src/Interface/Wx
+	src/Network
+	src/auto/XSTools
+	src/auto/XSTools/build
+	src/auto/XSTools/misc
+	src/auto/XSTools/pathfinding
+	src/auto/XSTools/unix
+	src/auto/XSTools/win32
+)
+PACKAGEDIR=$PACKAGE-$VERSION
 ADDITIONAL=(Distfiles makedist.sh Makefile Makefile.win32 Makefile.in)
 export GZIP=--best
 export BZIP2=-9
