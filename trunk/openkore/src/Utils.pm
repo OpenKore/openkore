@@ -448,12 +448,12 @@ sub minHeapAdd {
 #
 # Example:
 # my $pos;
-# $pos = calcPos($char);
+# $pos = calcPosition($char);
 # print "You are currently at: $pos->{x}, $pos->{y}\n";
 #
-# $pos = calcPos($monsters{$ID});
+# $pos = calcPosition($monsters{$ID});
 # # Calculate where the player will be after 2 seconds
-# $pos = calcPos($players{$ID}, 2);
+# $pos = calcPosition($players{$ID}, 2);
 sub calcPosition {
 	my ($object, $extra_time) = @_;
 	my $time_needed = $object->{time_move_calc};
