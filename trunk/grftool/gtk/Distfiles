@@ -1,3 +1,5 @@
 grftool.glade
 grftool.gladep
 gtk.c
+grftool-gtk.desktop
+grftool-gtk.png

@@ -3,12 +3,12 @@
 # figure out a way to simulate 'make dist' with SCons :(
 
 PACKAGE=grftool
-VERSION=1.0
+VERSION=0.9.0
 TYPE=bz2
 # Uncomment the next line if you want a tar.gz archive
 # TYPE=gz
 
-DIRS=(. lib lib/zlib tools gtk win32 doc)
+DIRS=(. lib lib/zlib tools gtk win32 doc autopackage)
 PACKAGEDIR=$PACKAGE-$VERSION
 ADDITIONAL=(Distfiles makedist.sh SConstruct SConscript README.txt TODO.txt LICENSE.txt)
 export GZIP=--best
