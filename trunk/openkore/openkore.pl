@@ -145,15 +145,13 @@ if ($config{'adminPassword'} eq 'x' x 10) {
 	print "\nAuto-generating Admin Password due to default\n";
 	configModify("adminPassword", vocalString(8));
 }
-
 # This is where we protect the stupid from having a blank admin password
-if ($config{'adminPassword'} eq '') {
+elsif ($config{'adminPassword'} eq '') {
 	print "\nAuto-generating Admin Password due to blank\n";
 	configModify("adminPassword", vocalString(8));
 }
-
 # This is where we induldge the paranoid and let them have session generated admin passwords
-if ($config{'securePassword'} eq '1') {
+elsif ($config{'secureAdminPassword'} eq '1') {
 	print "\nGenerating session Admin Password\n";
 	configModify("adminPassword", vocalString(8));
 }

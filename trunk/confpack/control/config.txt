@@ -22,7 +22,7 @@ password
 char 
 sex 
 
-securePassword 0
+secureAdminPassword 0
 adminPassword 
 callSign 
 
