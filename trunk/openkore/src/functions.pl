@@ -5273,7 +5273,7 @@ sub parseMsg {
 			}
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
-			debug "Player Connected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+			debug "Player Connected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 
 		} else {
 			debug "Unknown Connected: $type - ", "parseMsg";
@@ -5399,7 +5399,7 @@ sub parseMsg {
 				}
 				%{$monsters{$ID}{'pos'}} = %coords;
 				%{$monsters{$ID}{'pos_to'}} = %coords;
-				debug "Monster Spawned: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
+				debug "Monster Spawned: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
 			}
 
 		} else {
@@ -5432,7 +5432,7 @@ sub parseMsg {
 				$monsters_old{$ID}{'disappeared'} = 1;
 
 			} elsif ($type == 1) {
-				debug "Monster Died: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
+				debug "Monster Died: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
 				$monsters_old{$ID}{'dead'} = 1;
 			}
 			binRemove(\@monstersID, $ID);
@@ -5444,16 +5444,16 @@ sub parseMsg {
 				$players{$ID}{'dead'} = 1;
 			} else {
 				if ($type == 0) {
-					debug "Player Disappeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+					debug "Player Disappeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 					$players{$ID}{'disappeared'} = 1;
 				} elsif ($type == 2) {
-					debug "Player Disconnected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+					debug "Player Disconnected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 					$players{$ID}{'disconnected'} = 1;
 				} elsif ($type == 3) {
-					debug "Player Teleported: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+					debug "Player Teleported: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 					$players{$ID}{'teleported'} = 1;
 				} else {
-					debug "Player Disappeared in an unknown way: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+					debug "Player Disappeared in an unknown way: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 					$players{$ID}{'disappeared'} = 1;
 				}
 
@@ -5468,10 +5468,10 @@ sub parseMsg {
 
 		} elsif (%{$players_old{$ID}}) {
 			if ($type == 2) {
-				debug "Player Disconnected: $players_old{$ID}{'name'}\n", "parseMsg";
+				debug "Player Disconnected: $players_old{$ID}{'name'}\n", "parseMsg_presence";
 				$players_old{$ID}{'disconnected'} = 1;
 			} elsif ($type == 3) {
-				debug "Player Teleported: $players_old{$ID}{'name'}\n", "parseMsg";
+				debug "Player Teleported: $players_old{$ID}{'name'}\n", "parseMsg_presence";
 				$players_old{$ID}{'teleported'} = 1;
 			}
 		} elsif (%{$portals{$ID}}) {
