@@ -1,3 +1,20 @@
+#########################################################################
+#  OpenKore - Inter-Process communication framework
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#
+#  $Revision$
+#  $Id$
+#
+#########################################################################
+##
+# MODULE DESCRIPTION: Process messages from the IPC network.
+
 package IPC::Processors;
 
 use strict;
@@ -18,20 +35,20 @@ sub process {
 	my $msg = shift;
 
 	if (defined $handlers{$msg->{ID}}) {
-		debug "Received message '$msg->{ID}' from client $msg->{from}\n";
-		$handlers{$msg->{ID}}->($ipc, $msg->{ID}, $msg->{params}, $msg->{from});
+		debug "Received message '$msg->{ID}' from client $msg->{args}{FROM}\n", "ipc";
+		$handlers{$msg->{ID}}->($ipc, $msg->{ID}, $msg->{args}, $msg->{args}{FROM});
 	} else {
-		debug "Unhandled IPC message '$msg->{ID}' from client $msg->{from}\n", "ipc";
+		debug "Unhandled IPC message '$msg->{ID}' from client $msg->{args}{FROM}\n", "ipc";
 	}
 }
 
 sub ipcMoveTo {
-	my ($ipc, $ID, $params) = @_;
+	my ($ipc, $ID, $args) = @_;
 
 	if ($conState == 5) {
-		my $map = $params->{field};
-		message "On route to: " . $maps_lut{"${map}.rsw"} . "($map): $params->{x}, $params->{y}\n";
-		main::ai_route($params->{field}, $params->{x}, $params->{y},
+		my $map = $args->{field};
+		message "On route to: " . $maps_lut{"${map}.rsw"} . "($map): $args->{x}, $args->{y}\n";
+		main::ai_route($args->{field}, $args->{x}, $args->{y},
 			attackOnRoute => 1);
 	}
 }

@@ -64,15 +64,15 @@ sub process {
 	my $msg = shift;
 	if ($msg->{ID} eq "_LIST-CLIENTS") {
 		print "------- Client list --------\n";
-		for (my $i = 0; $i < $msg->{params}{count}; $i++) {
-			printf "ID = %s\n", $msg->{params}{"client$i"};
+		for (my $i = 0; $i < $msg->{args}{count}; $i++) {
+			printf "%s: %s\n", $msg->{args}{"client$i"}, $msg->{args}{"clientUserAgent$i"};
 		}
 		print "----------------------------\n";
 
 	} else {
 		print "Incoming message from server: " . $msg->{ID} . "\n";
-			foreach (keys %{$msg->{params}}) {
-			print "$_ = " . $msg->{params}{$_} . "\n";
+			foreach (keys %{$msg->{args}}) {
+			print "$_ = " . $msg->{args}{$_} . "\n";
 		}
 		print "--------\n";
 	}

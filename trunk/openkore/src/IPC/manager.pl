@@ -139,34 +139,36 @@ sub process {
 	print "Message: $ID (from client $from)\n";
 
 	# Special messages
-	if ($ID eq "_WELCOME") {
-		$clients{$from}{userAgent} = $msg->{params}{userAgent};
+	if ($ID eq "HELLO") {
+		$clients{$from}{userAgent} = $msg->{args}{userAgent};
 		$clients{$from}{ready} = 1;
 
 	} elsif ($ID eq "_LIST-CLIENTS") {
-		my %params;
+		my %args;
 		my $i = 0;
 		foreach ($server->clients) {
 			if ($_ ne $from && $clients{$_}{ready}) {
-				$params{"client$i"} = $_;
-				$params{"clientUserAgent$i"} = $clients{$_}{userAgent};
+				$args{"client$i"} = $_;
+				$args{"clientUserAgent$i"} = $clients{$_}{userAgent};
 				$i++;
 			}
 		}
-		$params{count} = $i;
-		$server->send($from, "_LIST-CLIENTS", \%params);
+		$args{count} = $i;
+		$server->send($from, "_LIST-CLIENTS", \%args);
 
-	} elsif (exists $msg->{params}{TO}) {
+	} elsif (exists $msg->{args}{TO}) {
 		# Send message only to one client
-		print "Delivering message to client $msg->{params}{TO} only\n";
-		$server->send($msg->{params}{TO}, $ID, $msg->{params});
+		print "Delivering message to client $msg->{args}{TO} only\n";
+		$msg->{args}{FROM} = $msg->{from};
+		$server->send($msg->{args}{TO}, $ID, $msg->{args});
 
 	} else {
-		# Broadcast the message too all clients except the sender,
+		# Broadcast the message to all clients except the sender,
 		# or clients that aren't done with handshaking yet
 		foreach my $clientID ($server->clients) {
 			next if ($clientID eq $from || !$clients{$clientID}{ready});
-			$server->send($clientID, $ID, $msg->{params});
+			$msg->{args}{FROM} = $msg->{from};
+			$server->send($clientID, $ID, $msg->{args});
 		}
 	}
 }
@@ -176,7 +178,7 @@ sub onConnectionActivity {
 
 	if ($context eq "connect") {
 		$clients{$clientID} = {};
-		$server->send($clientID, "_WELCOME", { ID => $clientID });
+		$server->send($clientID, "HELLO", { ID => $clientID });
 
 	} elsif ($context eq "disconnect") {
 		delete $clients{$clientID};

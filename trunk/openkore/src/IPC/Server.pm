@@ -15,38 +15,8 @@
 ##
 # MODULE DESCRIPTION: Inter-process communication server
 #
-# This module implements a system which allows external programs to communicate
-# with Kore (through a socket). Possibilities provided by this system includes:
-# `l
-# - Different Kore instances will be able to communicate with each other,
-#   allowing better cooporation.
-# - External programs can control Kore. You can, for example, write a user
-#   interface for Kore as an external program.
-# `l`
-#
-# <h3>How it works</h3>
-# <img src="ipc.png" width="323" height="365" alt="Overview of the IPC system">
-#
-# The IPC subsystem sets up a server socket. Clients (which could be,
-# for example, another Kore instance) can connect to that server socket
-# to communicate with Kore.
-#
-# This module handles all the connection issues. The core Kore code
-# doesn't have to worry about that.
-#
-# <h3>Usage</h3>
-# The IPC system can be used in two ways:
-# `l
-# - Clients can register for events. Whenever Kore prints a message,
-#   that message will be sent to the client too. This only happens if the
-#   client has explicitly registered itself to receive events (in order to
-#   reduce network traffic; not all clients have the need to receive events).
-#   <br><img src="ipc-events.png" alt="Overview of how events are sent" width="568" height="563">
-# - Clients can explicitly request information from Kore. They can, for example,
-#   request the current HP, the current list of monsters on screen, etc.
-# `l`
-#
-# This module implements the IPC server.
+# This module implements a bare-bones IPC server. It's used by the
+# official IPC manager implementation and should not be used directly.
 
 package IPC::Server;
 
@@ -175,7 +145,7 @@ sub _processClient {
 		push @{$r_messages}, {
 			ID => $msgID,
 			from => $clientID,
-			params => \%copy
+			args => \%copy
 		};
 		undef %hash;
 	}
@@ -203,7 +173,7 @@ sub port {
 # `l
 # - ID : the message ID
 # - clientID : the ID of the client that sent the message
-# - params : the message parameters
+# - args : the message parameters
 # `l`
 #
 # Example:
@@ -211,8 +181,8 @@ sub port {
 # 	foreach my $msg ($ipc->iterate) {
 # 		print "Received message with ID $msg->{ID} from client $msg->{clientID}.\n";
 # 		print "Parameters:\n";
-# 		foreach my $key (keys %{$msg->{params}}) {
-# 			print "$key = $msg->{params}{$key}\n";
+# 		foreach my $key (keys %{$msg->{args}}) {
+# 			print "$key = $msg->{args}{$key}\n";
 # 		}
 # 	}
 # }

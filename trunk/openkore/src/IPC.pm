@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Inter-Process Communication system
+#  OpenKore - Inter-Process communication framework
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -14,6 +14,32 @@
 #########################################################################
 ##
 # MODULE DESCRIPTION: Inter-process communication framework
+#
+# The IPC framework allows different instances of OpenKore to communicate with
+# each other, and allow other programs to communicate with OpenKore.
+#
+# <h3>Network design</h3>
+# All OpenKore instances (and other programs that wish to communicate with OpenKore)
+# form a <em>network</em>, and are the <em>clients</em>. In the center of this network
+# is the <em>IPC manager server</em>, or the <em>manager</em> in short.
+# Clients can send <em>messages</em> (see IPC::Protocol.pm) to each other.
+# The manager acts like a proxy and keeps the network together. All messages
+# must go through the manager, which will deliver the message to the right client(s).
+# All clients are given an ID so clients can identify each other.
+#
+# Although the binary format is the same, there are two kinds of messages:
+# `l
+# - Global messages, that are broadcasted to all clients.
+# - Private messages, that are only delivered to a specific client.
+#   The only difference with global messages is that these messages
+#   have the 'TO' argument, which contains the ID of the recipient client.
+# `l`
+#
+# <h3>Protocol</h3>
+# <div class="note">
+# <b>Important note:</b> message IDs and argument keys can be anything, but should not be
+# all-uppercase. Those names are reserved for the manager and protocol-specific things.
+# </div>
 
 package IPC;
 
@@ -34,10 +60,11 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 ################################
 
 ##
-# IPC->new([userAgent, host, port])
-# userAgent: a name to identify yourself. Default value: 'openkore'.
-# host: host address of the manager server. Default value: localhost.
+# IPC->new([userAgent = 'openkore', host = 'localhost', port, wantGlobals = 1])
+# userAgent: a name to identify yourself.
+# host: host address of the manager server.
 # port: port number of the manager server.
+# wantGlobals: Whether you are interested in receiving global messages.
 # Returns: an IPC object, or undef if unable to connect.
 #
 # Connect to an IPC manager server. This gives you access to the IPC network.
@@ -50,11 +77,12 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 # communication with the manager server. You must call $ipc->iterate() in a loop,
 # until $ipc->ready() returns 1.
 sub new {
-	my ($class, $userAgent, $host, $port) = @_;
+	my ($class, $userAgent, $host, $port, $wantGlobals) = @_;
 	my %self;
 
 	$host = "localhost" if (!defined($host) || $host eq "127.0.0.1");
 	$self{userAgent} = defined($userAgent) ? $userAgent : 'openkore';
+	$self{wantGlobals} = defined($wantGlobals) ? $wantGlobals : 1;
 
 	if ($host eq "localhost" && !$port) {
 		$self{host} = $host;
@@ -136,6 +164,8 @@ sub _checkManager {
 # $ipc->iterate()
 #
 # Call this function in the program's main loop.
+# It makes sure connections are handled correctly,
+# and performs handshaking with the IPC manager when necessary.
 sub iterate {
 	my $self = shift;
 
@@ -214,12 +244,13 @@ sub iterate {
 			return 0;
 		}
 		foreach my $msg (@messages) {
-			if ($msg->{ID} eq "_WELCOME") {
-				$self->{ID} = $msg->{params}{ID};
+			if ($msg->{ID} eq "HELLO") {
+				$self->{ID} = $msg->{args}{ID};
 				$self->{ready} = 1;
-				debug "Received _WELCOME - our client ID: $self->{ID}\n", "ipc";
-				$self->send("_WELCOME",
-					"userAgent" => $self->{userAgent});
+				debug "Received HELLO - our client ID: $self->{ID}\n", "ipc";
+				$self->send("HELLO",
+					"userAgent" => $self->{userAgent},
+					"wantGlobals" => $self->{wantGlobals});
 			}
 		}
 	}
@@ -276,10 +307,13 @@ sub port {
 
 ##
 # $ipc->send(ID, hash | key => value)
+# ID: the ID of the message.
+# hash/key: the message parameters.
+# Returns: 1 on success, 0 on failure, 2 if we aren't done performing the handshaking yet.
 #
-# Send a message to the IPC network. This message will be broadcasted to
-# all clients. If you want to send a message only to a specific client,
-# set the TO key to that client's ID.
+# Send a message to the IPC network. This message will be delivered to all
+# clients on the network. If you want to send this message to a specific client,
+# set the 'TO' argument to the ID of the recipient client.
 sub send {
 	my $self = shift;
 	return 2 if (!$self->{ready});

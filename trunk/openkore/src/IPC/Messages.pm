@@ -1,5 +1,5 @@
 ##########################################################
-#  OpenKore - Inter-Process Communication system
+#  OpenKore - Inter-Process communication framework
 #  IPC protocol message encoder/decoder
 #
 #  This software is open source, licensed under the GNU General Public
@@ -30,7 +30,7 @@
 #
 # `l
 # - A message identifier (ID). This is a string, which can be anything.
-# - A list of parameters. This is a list of key-value pairs.
+# - A list of arguments. This is a list of key-value pairs.
 # `l`
 #
 # A message is very comparable to a function call. Imagine the following C++ function:
@@ -52,7 +52,7 @@
 #     // Header
 #     unsigned short ID_length;
 #     char ID[ID_length];
-#     unsigned short parameter_count;
+#     unsigned short argument_count;
 #  
 #     // Body
 #     struct {
@@ -61,7 +61,7 @@
 #  
 #         unsigned short value_length;
 #         char value[value_length];
-#     } parameters[parameter_count];
+#     } arguments[argument_count];
 # };</pre>
 # (All numbers are 16-bit big-endian.)
 #
@@ -69,11 +69,11 @@
 # `l
 # - The first 2 bytes describe the length the ID sring.
 # - The following bytes are the ID string.
-# - The 2 bytes after the ID string describe the number of parameters.
-# - Now follows a list of parameters.
+# - The 2 bytes after the ID string describe the number of arguments.
+# - Now follows a list of arguments.
 # `l`
 #
-# <h4>Body (parameter structure)</h4>
+# <h4>Body (argument structure)</h4>
 # `l
 # - The first 2 bytes describe the length of the key string.
 # - The following bytes are the key string.
@@ -95,6 +95,12 @@ our @EXPORT_OK = qw(decode encode);
 
 ##
 # IPC::Protocol::decode(data, r_hash, r_rest)
+# data: the message data.
+# r_hash: reference to a hash. The message's arguments will be stored in here.
+# r_rest: reference to a scalar. If $data contains more than 1 message, all data following the first message will be stored here.
+# Returns: the message's ID, or undef if $data is not a complete message.
+#
+# Decode a message into Perl data structures.
 sub decode {
 	my $data = shift;
 	my $r_hash = shift;
@@ -139,6 +145,9 @@ sub decode {
 
 ##
 # IPC::Protocol::encode(ID, hash)
+# Returns: the message.
+#
+# Encode Perl data structures into a message.
 sub encode {
 	my $ID = shift;
 	my $hash = shift;
