@@ -18,6 +18,9 @@
 - XKore: removed the need for the "buffer" file; use pipes instead.
 - Removed the need for the local_port config option.
   You can remove this option now!
+- Implemented a simple form of dynamic code reloading. All functions
+  are now in functions.pl.
+  New command: rc (reload functions.pl)
 
 
 ChangeLog for skore-revamped
