@@ -413,7 +413,6 @@ while ($quit != 1) {
 	# Parse command input
 	if (defined($input = $interface->getInput(0))) {
 		parseInput($input);
-
 	}
 
 	# Receive and handle data from the RO server
