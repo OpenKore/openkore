@@ -3446,11 +3446,12 @@ sub AI {
 			}
 		}
 	}
-	
-	# use party information to find master
-	if (!defined($ai_seq_args[$#ai_seq]{'following'}) && !defined($ai_seq_args[0]{'ai_follow_lost'}) && ($ai_seq[$#ai_seq] eq "follow")) {
+
+	# Use party information to find master
+	if (@ai_seq && $ai_seq[$#ai_seq] eq "follow" && !defined $ai_seq_args[$#ai_seq]{'following'} && !defined($ai_seq_args[0]{'ai_follow_lost'})) {
 		ai_partyfollow();
-	}	
+	}
+
 
 	##### AUTO-SIT/SIT/STAND #####
 
