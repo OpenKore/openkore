@@ -413,27 +413,27 @@ sub minHeapAdd {
 
 ##
 # distance(r_hash1, r_hash2)
-# r_hash1, r_hash2: references to position hash tables.
+# pos1, pos2: references to position hash tables.
 # Returns: the distance as integer, in blocks.
 #
-# Calculates the pythagorean distance between ($r_hash1{x}, $r_hash1{y}) and
-# ($r_hash2{x}, $r_hash2{y}).
+# Calculates the pythagorean (Euclidean) distance between ($pos1{x}, $pos1{y}) and
+# ($pos2{x}, $pos2{y}).
 #
 # Example:
 # # Calculates the distance between you an a monster
 # my $dist = distance($char->{pos_to},
 #                     $monsters{$ID}{pos_to});
 sub distance {
-	my $r_hash1 = shift;
-	my $r_hash2 = shift;
+	my $pos1 = shift;
+	my $pos2 = shift;
 	my %line;
-	if ($r_hash2) {
-		$line{'x'} = abs($$r_hash1{'x'} - $$r_hash2{'x'});
-		$line{'y'} = abs($$r_hash1{'y'} - $$r_hash2{'y'});
+	if ($pos2) {
+		$line{x} = abs($pos1->{x} - $pos2->{x});
+		$line{y} = abs($pos1->{y} - $pos2->{y});
 	} else {
-		%line = %{$r_hash1};
+		%line = %{$pos1};
 	}
-	return sqrt($line{'x'} ** 2 + $line{'y'} ** 2);
+	return sqrt($line{x} ** 2 + $line{y} ** 2);
 }
 
 
@@ -454,7 +454,7 @@ sub distance {
 # If there is, then you can read from r_handle without being blocked.
 sub dataWaiting {
 	my $r_fh = shift;
-	return 0 if (!defined $r_fh);
+	return 0 if (!defined $r_fh || !defined $$r_fh);
 
 	my $bits = '';
 	vec($bits, fileno($$r_fh), 1) = 1;
