@@ -3103,6 +3103,7 @@ sub AI {
 		}
 		if ($config{'useSelf_skill_smartHeal'} && $skills_rlut{lc($ai_v{'useSelf_skill'})} eq "AL_HEAL") {
 			undef $ai_v{'useSelf_skill_smartHeal_lvl'};
+			$ai_v{'useSelf_skill_smartHeal_lvl'} = 1;
 			$ai_v{'useSelf_skill_smartHeal_hp_dif'} = $chars[$config{'char'}]{'hp_max'} - $chars[$config{'char'}]{'hp'};
 			for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'useSelf_skill'})}}{'lv'}; $i++) {
 				$ai_v{'useSelf_skill_smartHeal_lvl'} = $i;
@@ -3878,7 +3879,8 @@ sub AI {
 		my $ai_index_skill_use = binFind(\@ai_seq, "skill_use");
 		my $currentSkill;
 		if (defined $ai_index_skill_use) {
-			$currentSkill = $ai_seq_args[$ai_index_skill_use]{'skill_use_id'};
+			my $skillID = $ai_seq_args[$ai_index_skill_use]{'skill_use_id'};
+			$currentSkill = $skills_lut{$skillID};
 		}
 
 		while ($config{"equipAuto_$i"}) {
@@ -6342,10 +6344,10 @@ sub parseMsg {
 				debug "Something: $val\n", "parseMsg";
 			}
 		}
-		Plugins::callHook('packet_charStats',
+		Plugins::callHook('packet_charStats', {
 			'type'	=> $type,
 			'val'	=> $val,
-			);
+			});
 
 
 	} elsif ($switch eq "00BD") {
@@ -6919,11 +6921,11 @@ sub parseMsg {
 			}
 			$skillsID_lut{$skillID} = $skills_lut{$skillName};
 			binAdd(\@skillsID, $skillName);
-			Plugins::callHook('packet_charSkills',
+			Plugins::callHook('packet_charSkills', {
 				'ID' => $skillID,
 				'skillName' => $skillName,
 				'level' => $level,
-				);
+				});
 		}
 
 	} elsif ($switch eq "0110") {
@@ -9981,7 +9983,7 @@ sub useTeleport {
 		
 		# set a small timeout, will be overrided if related config in equipAuto is set
 		$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'time'} = time;
-		$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'timeout'} = 2;
+		$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'timeout'} = 5;
 		
 	} elsif (defined $ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'} && timeOut(\%{$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}})) {
 		warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
