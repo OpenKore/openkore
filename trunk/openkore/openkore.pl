@@ -189,6 +189,7 @@ addConfigFile("$Settings::control_folder/avoid.txt", \%avoid, \&parseAvoidContro
 addConfigFile("$Settings::control_folder/priority.txt", \%priority, \&parsePriority);
 addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
 addConfigFile("$Settings::control_folder/routeweights.txt", \%routeWeights, \&parseDataFile);
+addConfigFile("$Settings::control_folder/arrowcraft.txt", \%arrowcraft_items, \&parseDataFile_lc);
 
 addConfigFile("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/directions.txt", \%directions_lut, \&parseDataFile2);
