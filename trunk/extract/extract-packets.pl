@@ -1,10 +1,12 @@
 #!/usr/bin/env perl
 # extract-packets.pl by VCL
-# Modified a little bit by SnT2k
+# Modified a little bit by SnT2k and Rasqual
 # Modified to use with W32DSM by Karasu (code commented out; they conflict with the original code)
 
 use strict;
 use warnings;
+
+my $LINES_BACK_SEARCH_COUNT = 100;
 
 if (@ARGV < 2) {
 	print STDERR "No input file given. Usage: extract-packets.pl <ASM> <OUTPUT> [ADDRESS]\n" .
@@ -35,20 +37,54 @@ if (!$ARGV[2]) {
 	}
 
 	if (!defined($addr)) {
-		print STDERR "Address of packet size function not found.\n";
-		close(F);
-		exit(1);
+		print STDERR "Address of packet size function not found, trying alternate method.\n";
+		my ($matched_187) = 0;
+		my ($line_counter) = 0;
+		seek(F, 0, 0);
+		while (<F>) {
+			($line_counter)++;
+			if ($_ =~ /mov dword( ptr )?\[ebp-08\], 00000187/ ) {
+				($found) = $_ =~ /^:([A-Z0-9]{8})/;
+				($matched_187) = 1;
+				last;
+			}
+		}
+		if (($matched_187) == 1) {
+			$line_counter -= $LINES_BACK_SEARCH_COUNT;
+			seek(F, 0, 0);
+			while (<F>) {
+				($line_counter)--;
+				if (($line_counter) <= 0) {
+					if ($_ =~ /push ebp/ ) {
+						($addr) = $_ =~ /^:([A-Z0-9]{8})/;
+					}
+				}
+				if (($line_counter) == -$LINES_BACK_SEARCH_COUNT) {
+					last;
+				}
+			}
+			if (!defined($addr)) {
+				print STDERR "Address of packet size function not found using alternate method.\n";
+				close(F);
+				exit(1);
+			}
+		}
+		else {
+			close(F);
+			exit(1);
+		}
 	}
 
 
-	print "Packet size function: $addr (found at $found)\n";
+	print STDERR "Packet size function: $addr (found at $found)\n";
 } else {
 	$addr = $ARGV[2];
 }
-print "Extracting function...\n";
+print STDERR "Extracting function at $addr...\n";
 
 # Go to that address and get the content of the entire function
 our @function;
+seek(F, 0, 0);
 while ((my $line = <F>)) {
 	my $stop = 0;
 	if ($line =~ /^:$addr /) {
@@ -74,7 +110,7 @@ if (@function == 0) {
 
 # Extract packets
 my (%packets, $ebx, $switch);
-print "Extracting packets...\n";
+print STDERR "Extracting packets...\n";
 
 for (my $i = 0; $i < @function; $i++) {
 	$_ = $function[$i];
@@ -109,4 +145,4 @@ foreach my $key (sort keys %packets) {
 	print F "$key $packets{$key}\n";
 }
 close(F);
-print "Done.\n";
+print STDERR "Done.\n";
