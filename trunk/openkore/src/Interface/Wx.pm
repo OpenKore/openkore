@@ -30,6 +30,7 @@ use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
 		EVT_BUTTON);
 use Time::HiRes qw(time sleep);
 use File::Spec;
+use FindBin qw($RealBin);
 
 
 use Globals;
@@ -38,6 +39,7 @@ use base qw(Wx::App Interface);
 use Modules;
 use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
+use Interface::Wx::LogView;
 use Interface::Wx::Console;
 use Interface::Wx::Input;
 use Interface::Wx::ItemList;
@@ -256,10 +258,6 @@ sub createInterface {
 	### Horizontal panel with HP/SP/Exp box
 	$self->createInfoPanel;
 
-	### Dockable notebook
-#	my $n = new Interface::Wx::DockNotebook($frame, -1);
-#	$vsizer->Add($n, 1, wxGROW);
-
 
 	## Splitter with console and another splitter
 	my $splitter = new Wx::SplitterWindow($frame, 928, wxDefaultPosition, wxDefaultSize,
@@ -346,7 +344,9 @@ sub createMenuBar {
 		'&Clear Console',	\&onClearConsole);
 	$menu->Append($viewMenu, '&View');
 
+	# Settings menu
 	my $settingsMenu = new Wx::Menu;
+	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenu'));
 	$self->addMenu($settingsMenu, '&Advanced...', \&onAdvancedConfig, 'Edit advanced configuration options.');
 	$menu->Append($settingsMenu, '&Settings');
 
@@ -356,6 +356,7 @@ sub createMenuBar {
 	my $helpMenu = new Wx::Menu();
 	$self->addMenu($helpMenu, '&Manual	F1',		\&onManual, 'Read the manual');
 	$self->addMenu($helpMenu, '&Forum	Shift-F1',	\&onForum, 'Visit the forum');
+	$self->createHelpMenu($helpMenu) if ($self->can('createHelpMenu'));
 	$menu->Append($helpMenu, '&Help');
 }
 
@@ -444,13 +445,18 @@ sub createSplitterContent {
 
 	## Dockable notebook with console and chat log
 	my $notebook = $self->{notebook} = new Interface::Wx::DockNotebook($splitter, -1);
+	$notebook->SetName('notebook');
 	my $page = $notebook->newPage(0, 'Console');
 	my $console = $self->{console} = new Interface::Wx::Console($page);
 	$page->set($console);
 
 	$page = $notebook->newPage(1, 'Chat Log', 0);
-	my $chatLog = $self->{chatLog} = new Interface::Wx::Console($page, 1);
+	my $chatLog = $self->{chatLog} = new Interface::Wx::LogView($page);
 	$page->set($chatLog);
+	$chatLog->addColor("selfchat", 0, 118, 0);
+	$chatLog->addColor("pm", 142, 120, 0);
+	$chatLog->addColor("p", 164, 0, 143);
+	$chatLog->addColor("g", 0, 177, 108);
 
 
 	## Parallel to the notebook is another sub-splitter
@@ -461,6 +467,7 @@ sub createSplitterContent {
 
 	my $itemList = $self->{itemList} = new Interface::Wx::ItemList($subSplitter);
 	$itemList->onActivate(\&onItemListActivate, $self);
+	$self->customizeItemList($itemList) if ($self->can('customizeItemList'));
 	$subSplitter->Initialize($itemList);
 
 
@@ -837,26 +844,22 @@ sub onAddPrivMsgUser {
 
 sub onChatAdd {
 	my ($self, $hook, $params) = @_;
-	my $msg;
 
 	return if (!$self->{notebook}->hasPage('Chat Log'));
 	if ($hook eq "ChatQueue::add" && $params->{type} ne "pm") {
-		$msg = '';
+		my $msg = '';
 		if ($params->{type} ne "c") {
-			$msg .= "[$params->{type}] ";
+			$msg = "[$params->{type}] ";
 		}
 		$msg .= "$params->{user} : $params->{msg}\n";
+		$self->{chatLog}->add($msg, $params->{type});
 
 	} elsif ($hook eq "packet_selfChat") {
-		$msg = "$params->{user} : $params->{msg}\n";
+		$self->{chatLog}->add("$params->{user} : $params->{msg}\n", "selfchat");
 	} elsif ($hook eq "packet_privMsg") {
-		$msg = "(From: $params->{privMsgUser}) : $params->{privMsg}\n";
+		$self->{chatLog}->add("(From: $params->{privMsgUser}) : $params->{privMsg}\n", "pm");
 	} elsif ($hook eq "packet_sentPM") {
-		$msg = "(To: $params->{to}) : $params->{msg}\n";
-	}
-
-	if (defined $msg) {
-		$self->{chatLog}->add('message', $msg);
+		$self->{chatLog}->add("(To: $params->{to}) : $params->{msg}\n", "pm");
 	}
 }
 

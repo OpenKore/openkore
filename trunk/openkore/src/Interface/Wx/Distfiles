@@ -7,5 +7,6 @@ Input.pm
 ItemList.pm
 ConfigEditor.pm
 DockNotebook.pm
+Utils.pm
 close.png
 window.png
