@@ -1079,6 +1079,8 @@ sub cmdUseSkill {
 	# Resolve skill level
 	if ($switch eq 'sl') {
 		($x, $y, $lv) = split(/ /, $args);
+	} elsif ($switch eq "ss") {
+		($lv) = split(/ /, $args);
 	} else {
 		($targetNum, $lv) = split(/ /, $args);
 	}
