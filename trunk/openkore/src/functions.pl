@@ -5331,7 +5331,7 @@ sub parseMsg {
 
 			if ($new) {
 				my $message = "Please enter the desired properties for your characters, in this form:\n" .
-						"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk)]\n";
+						"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk) [(hairstyle) [(haircolor)]]]\n";
 				message($message, "input");
 
 				while (1) {
@@ -5370,7 +5370,7 @@ sub parseMsg {
 	} elsif ($switch eq "006D") {
 		my %char;
 		my $ID = unpack("L", substr($msg, 2, 4));
-		$char{name} = unpack("A24", substr($msg, 76, 24));
+		$char{name} = unpack("Z24", substr($msg, 76, 24));
 		$char{zenny} = unpack("L", substr($msg, 10, 4));
 		($char{str}, $char{agi}, $char{vit}, $char{int}, $char{dex}, $char{luk}) = unpack("C*", substr($msg, 100, 6));
 		my $slot = unpack("C", substr($msg, 106, 1));
