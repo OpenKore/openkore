@@ -185,20 +185,28 @@ if (!$config{'XKore'}) {
 		$config{'password'} = $msg;
 		writeDataFileIntact($config_file, \%config);
 	}
-	if ($config{'master'} eq "") {
+    if ($config{'master'} eq "") {
+        $~ = "MASTERS";
+        message("--------- Master Servers ----------\n");
+        message("#         Name\n");
 		$i = 0;
-		$~ = "MASTERS";
-		print "--------- Master Servers ----------\n";
-		print "#         Name\n";
 		while ($config{"master_name_$i"} ne "") {
-			format MASTERS =
-@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$i  $config{"master_name_$i"}
-.
-			write;
+			message(swrite(
+			"@>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+			[$i,   $config{"master_name_$i"}],
+			), "connection");
 			$i++;
 		}
-		print "-------------------------------\n";
+        
+        #        while ($config{"master_name_$i"} ne "") {
+#               format MASTERS =
+#@>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+#$i,  $config{"master_name_$i"}
+#.
+#                write();
+#                $i++;
+#        }
+        print "-------------------------------\n";
 		print "Choose your master server:\n";
 		$msg = Input::readLine;
 		$config{'master'} = $msg;
