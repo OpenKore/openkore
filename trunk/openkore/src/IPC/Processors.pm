@@ -28,7 +28,7 @@ sub ipcWhereAreYou {
 	my $pos = calcPosition($char);
 	$ipc->broadcast("i am here", {
 		clientID => $ipc->ID,
-		charSErver => $charServer,
+		charServer => $charServer,
 		name	=> $char->{name},
 		field	=> $field{name},
 		x	=> $pos->{x},
