@@ -16,6 +16,10 @@ Bug fixes:
   and the skill ID, so if you have more than one attackSkillSlot or
   monsterSkill block that uses the same skill, they will unexpectedly share
   the same maxUses counter)
+- Fix reference to undefined variable $skillID in ai_skillUse2()
+- Make _stopWhenHit condition not count party members, and stop counting a
+  monster as aggressive if it hit you in the past, but then attacked someone
+  else
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux
