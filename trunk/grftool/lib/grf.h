@@ -3,6 +3,7 @@
  *  grf.h - read and manipulate GRF/GPF files
  *  Copyright (C) 2004  Faithful <faithful@users.sf.net>
  *  Copyright (C) 2004  Hongli Lai <h.lai@chello.nl>
+ *  Copyright (C) 2004  Rasqual <rasqualtwilight@users.sf.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -53,8 +54,10 @@ typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpenCallback callback);
 GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *error);
 GRFEXPORT void *grf_get_z (Grf *grf, const char *fname, uint32_t *size, uint32_t *usize, GrfError *error);
+GRFEXPORT void *grf_chunk_get (Grf *grf, const char *fname, char *buf, uint32_t offset, uint32_t *len, GrfError *error);
 GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error);
 GRFEXPORT void *grf_index_get_z(Grf *grf, uint32_t index, uint32_t *size, uint32_t *usize, GrfError *error);
+GRFEXPORT void *grf_index_chunk_get (Grf *grf, uint32_t index, char *buf, uint32_t offset, uint32_t *len, GrfError *error);
 GRFEXPORT int grf_extract (Grf *grf, const char *grfname, const char *file, GrfError *error);
 GRFEXPORT int grf_index_extract (Grf *grf, uint32_t index, const char *file, GrfError *error);
 GRFEXPORT int grf_del(Grf *grf, const char *fname, GrfError *error);
