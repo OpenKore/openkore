@@ -338,7 +338,7 @@ sub color {
 #128 64 32 16
 
 %bgcolors = (
-	''			=> $main::BG_BLACK;
+	''			=> $main::BG_BLACK,
 	'default'	=> $main::BG_BLACK,
 
 	'black'		=> $main::BG_BLACK,
