@@ -15,7 +15,10 @@ exe:
 		--trim Pod::Usage \
 		--trim Term::Cap \
 		--trim POSIX \
-		--force --icon tools\\build\\openkore.ico
+		--force --icon src\\auto\\XSTools\\build\\openkore.ico
+
+start.exe: start.pl
+	perlapp --lib src start.pl --force --icon src\\auto\\XSTools\\build\\openkore.ico
 
 dist:
 	bash makedist.sh
