@@ -63,6 +63,7 @@ Bug fixes:
 - Don't open shop immediately after login in X-Kore mode (bug #49).
 - Re-entering a username/password works correctly now (bug #45).
 - sitAuto_idle doesn't conflict with shopAuto_open's timeout now (bug #50).
+- MO_BODYRELOCATION is now recognized as an area-usage skill.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
