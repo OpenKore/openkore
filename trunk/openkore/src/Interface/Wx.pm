@@ -285,8 +285,15 @@ sub createInterface {
 	$frame->SetIcon(Wx::GetWxPerlIcon);
 	$frame->Show(1);
 	$self->SetTopWindow($frame);
-	$self->{inputBox}->SetFocus;
 	EVT_CLOSE($frame, \&onClose);
+
+	# For some reason the input box doesn't get focus even if
+	# I call SetFocus(), so do it in 100 msec
+	my $timer = new Wx::Timer($self, 73289);
+	EVT_TIMER($self, 73289, sub {
+		$self->{inputBox}->SetFocus;
+	});
+	$timer->Start(100, 1);
 
 	# Hide console on Win32
 	if ($buildType == 0 && !$CVS) {
