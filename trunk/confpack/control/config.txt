@@ -259,6 +259,8 @@ partySkill_0_timeout 0
 partySkill_0_disabled 0
 partySkill_0_target
 partySkill_0_target_hp
+partySkill_0_target_isJob
+partySkill_0_target_isNotJob
 partySkill_0_target_whenStatusActive
 partySkill_0_target_whenStatusInactive
 partySkill_0_target_aggressives

@@ -57,6 +57,7 @@ New features:
 - Weapon upgrades are now detected.
 - Newbie zones are now correctly supported.
 - Delay of attacks is now displayed. 200 - Delay indicates the ASPD.
+- Support for partySkills on certain job classes
 
 New commands:
 - guild join (flag)
@@ -73,6 +74,9 @@ New config options:
   monster attacks.
 - partySkill_#_target_aggressives
   Only activate partySkill if a certain monster attacks a party member.
+- partySkill_#_target_isJob
+  partySkill_#_target_isNotJob
+  Only activate partySkill for certain job classes
 
 Bug fixes:
 - Kore can walk on walkable water now (bug #21).
@@ -109,7 +113,8 @@ Credits:
 - obyarou: Priority attack support for non-aggressive monsters,
   shop timeout in X-Kore bugfix (bug #49), sitAuto_idle vs
   shopAuto_open conflict fix (bug #50).
-- fov: writeDataFile*() tweaks
+- fov: writeDataFile*() tweaks, lockMap and randomWalk tweaks,
+  partySkills for certain jobs
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
 - sparshong: character creation/deletion packet code.

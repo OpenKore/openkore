@@ -10211,6 +10211,10 @@ sub checkPlayerCondition {
 		}
 	}
 
+	# check player job class
+	if ($config{$prefix . "_isJob"}) { return 0 unless (existsInList($config{$prefix . "_isJob"}, $jobs_lut{$players{$id}{jobID}})); }
+	if ($config{$prefix . "_isNotJob"}) { return 0 if (existsInList($config{$prefix . "_isNotJob"}, $jobs_lut{$players{$id}{jobID}})); }
+
 	if ($config{$prefix . "_aggressives"}) {
 		return 0 unless (inRange(scalar ai_getPlayerAggressives($id), $config{$prefix . "_aggressives"}));
 	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
