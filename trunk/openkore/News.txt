@@ -57,6 +57,7 @@ New features:
 - Monster weights. See
   http://openkore.sourceforge.net/forum/viewtopic.php?t=3890
 - autoTalkCont will print a message when it is triggered.
+- Prevent getting skill/chat muted when playing in X-Kore mode.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
@@ -116,6 +117,7 @@ Credits:
 - jsteng: some routing bug fixes.
 - ZetaAlpha: advanced 2-2 class support fixes, guild member ID fixes.
 - blacklady: Monster weights.
+- isieo: Mute prevention.
 
 
 ==================
