@@ -233,7 +233,7 @@ addConfigFile("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&par
 addConfigFile("$Settings::tables_folder/skillsailments.txt", \%skillsAilments, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skillsstate.txt", \%skillsState, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
-addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseList);
+addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skillsencore.txt", \%skillsEncore, \&parseList);
 
 Plugins::callHook('start2');

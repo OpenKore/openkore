@@ -43,7 +43,6 @@ New config options:
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
   beep on your own PMs.
-- skillsarea.txt format changed to be more concise.
 
 Credits:
 - jsteng: Pet detection fix.
