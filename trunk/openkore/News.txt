@@ -51,6 +51,8 @@
   managed console and basic readline support.
 - path finding code modifications, Windows users should get the new Tools.dll
   Linux users should rerun make.
+- OpenKore on Linux will now keep the prompt visible. Keys like Home,
+  End, Ctrl+U etc. are supported.
 
 ==================
 ### OpenKore 1.2.1
