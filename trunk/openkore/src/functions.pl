@@ -1614,14 +1614,6 @@ sub parseCommand {
 	} elsif ($switch eq "southeast") {
 		manualMove(5, -5);
 
-	} elsif ($switch eq "abra") {
-		unless (AI::action eq 'abracadabra') {
-			message "Starting Abracadabra sequence\n";
-			AI::enqueue('abracadabra');
-		} else {
-			error "Abracadabra sequence already started\n";
-		}
-
 	} else {
 		my $return = 0;
 		Plugins::callHook('Command_post', {
