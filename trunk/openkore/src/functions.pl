@@ -4989,7 +4989,7 @@ $num  $servers[$num]{'name'}  $servers[$num]{'users'} $servers[$num]{'ip'} $serv
 		print "Recieved characters from Game Login Server\n";
 		$conState = 3;
 		undef $conState_tries;
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+
 		if ($config{"master_version_$config{'master'}"} ne "" && $config{"master_version_$config{'master'}"} == 0) {
 			$startVal = 24;
 		} else {
@@ -5121,12 +5121,13 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "0078" && length($msg) >= 52) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
-		$type = unpack("S*",substr($msg, 14,  2));
-		$pet = unpack("C*",substr($msg, 16,  1));
-		$sex = unpack("C*",substr($msg, 45,  1));
-		$sitting = unpack("C*",substr($msg, 51,  1));
+		my $type = unpack("S*",substr($msg, 14,  2));
+		my $pet = unpack("C*",substr($msg, 16,  1));
+		my $sex = unpack("C*",substr($msg, 45,  1));
+		my $sitting = unpack("C*",substr($msg, 51,  1));
+
 		if ($type >= 1000) {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
@@ -5208,7 +5209,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$portals{$ID}{'appear_time'} = time;
 				$nameID = unpack("L1", $ID);
 				$exists = portalExists($field{'name'}, \%coords);
-				$display = ($exists ne "") 
+				$display = ($exists ne "")
 					? "$portals_lut{$exists}{'source'}{'map'} -> $portals_lut{$exists}{'dest'}{'map'}"
 					: "Unknown ".$nameID;
 				binAdd(\@portalsID, $ID);
@@ -5235,18 +5236,19 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$npcs{$ID}{'binID'} = binFind(\@npcsID, $ID);
 			}
 			%{$npcs{$ID}{'pos'}} = %coords;
-			print "NPC Exists: $npcs{$ID}{'name'} - ($npcs{$ID}{'binID'})\n";
+			print "NPC Exists: $npcs{$ID}{'name'} (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n";
 
 		} else {
 			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n" if $config{'debug'};
 		}
 
-	} elsif ($switch eq "0079" && length($msg) >= 51) {
+	} elsif ($switch eq "0079") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
-		$type = unpack("S*",substr($msg, 14,  2));
-		$sex = unpack("C*",substr($msg, 45,  1));
+		my $type = unpack("S*",substr($msg, 14,  2));
+		my $sex = unpack("C*",substr($msg, 45,  1));
+
 		if ($jobs_lut{$type}) {
 			if (!%{$players{$ID}}) {
 				$players{$ID}{'appear_time'} = time;
@@ -5265,10 +5267,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Unknown Connected: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
 
-	} elsif ($switch eq "007A" && length($msg) >= 4) {
+	} elsif ($switch eq "007A") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 
-	} elsif ($switch eq "007B" && length($msg) >= 58) {
+	} elsif ($switch eq "007B") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
@@ -5332,7 +5334,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Unknown Moved: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
 
-	} elsif ($switch eq "007C" && length($msg) >= 41) {
+	} elsif ($switch eq "007C") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 36, 3));
@@ -5503,7 +5505,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Error: The server still recognizes your last connection\n";
 		}
 
-	} elsif ($switch eq "0087" && length($msg) >= 12) {
+	} elsif ($switch eq "0087") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		makeCoords(\%coordsFrom, substr($msg, 6, 3));
 		makeCoords2(\%coordsTo, substr($msg, 8, 3));
@@ -5625,8 +5627,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Unknown ".getHex($ID1)." attacks ".getHex($ID2)." - Dmg: $dmgdisplay\n" if $config{'debug'};
 		}
 
-	} elsif ($switch eq "008D" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S*", substr($msg, 2, 2));
+	} elsif ($switch eq "008D") {
 		$ID = substr($msg, 4, 4);
 		$chat = substr($msg, 8, $msg_size - 8);
 		$chat =~ s/\000//g;
@@ -5681,7 +5682,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 #Solos End
 
 	} elsif ($switch eq "008E") {
-		$msg_size = unpack("S*", substr($msg, 2, 2));
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000//g;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
@@ -5808,9 +5808,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "0096") {
 
-	} elsif ($switch eq "0097" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+	} elsif ($switch eq "0097") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$msg_size = unpack("S1",substr($msg,2,2));
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
 		$msg = substr($msg, 0, 28).$newmsg;
 		($privMsgUser) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
@@ -5863,8 +5862,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		shift @lastpm;
 
-	} elsif ($switch eq "009A" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "009A") {
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
 		chatLog("s", $chat."\n") if ($config{'logSystemChat'});
@@ -5914,7 +5912,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$items{$ID}{'pos'}{'y'} = $y;
 		print "Item Exists: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n";
 
-	} elsif ($switch eq "009E" && length($msg) >= 17) {
+	} elsif ($switch eq "009E") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		$type = unpack("S1",substr($msg, 6, 2));
@@ -5936,7 +5934,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$items{$ID}{'pos'}{'y'} = $y;
 		print "Item Appeared: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n";
 
-	} elsif ($switch eq "00A0" && length($msg) >= 23) {
+	} elsif ($switch eq "00A0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$index = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
@@ -6051,7 +6049,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "00A3") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef $invIndex;
@@ -6080,7 +6077,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "00A4") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4) . $newmsg;
 		undef $invIndex;
@@ -6169,7 +6165,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 
 	} elsif ($switch eq "00A5") {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef %storage;
@@ -6191,7 +6186,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Storage opened\n";
 #Solos Start
 	} elsif ($switch eq "00A6") {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 #		undef %storage;
@@ -6411,8 +6405,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "00B3") {
 		$conState = 2;
 
-	} elsif ($switch eq "00B4" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "00B4") {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		$msg = substr($msg, 0, 8).$newmsg;
 		$ID = substr($msg, 4, 4);
@@ -6431,8 +6424,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		undef %talk;
 		print "$npcs{$ID}{'name'} : Done talking\n";
 
-	} elsif ($switch eq "00B7" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "00B7") {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		$msg = substr($msg, 0, 8).$newmsg;
 		$ID = substr($msg, 4, 4);
@@ -6594,8 +6586,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$talk{'ID'} = $ID;
 		print "$npcs{$ID}{'name'} : Type 'store' to start buying, or type 'sell' to start selling\n";
 
-	} elsif ($switch eq "00C6" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1",substr($msg,2,2));
+	} elsif ($switch eq "00C6") {
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef @storeList;
@@ -6618,9 +6609,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		print "$npcs{$talk{'ID'}}{'name'} : Check my store list by typing 'store'\n";
 		
-	} elsif ($switch eq "00C7" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+	} elsif ($switch eq "00C7") {
 		#sell list, similar to buy list
-		$msg_size = unpack("S1",substr($msg,2,2));
 		if (length($msg) > 4) {
 			decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 			$msg = substr($msg, 0, 4).$newmsg;
@@ -6663,8 +6653,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		binAdd(\@currentChatRoomUsers, $chars[$config{'char'}]{'name'});
 		print "Chat Room Created\n";
 
-	} elsif ($switch eq "00D7" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1",substr($msg,2,2));
+	} elsif ($switch eq "00D7") {
 		decrypt(\$newmsg, substr($msg, 17, length($msg)-17));
 		$msg = substr($msg, 0, 17).$newmsg;
 		$ID = substr($msg,8,4);
@@ -6690,8 +6679,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Can't join Chat Room - You're banned\n";
 		}
 
-	} elsif ($switch eq "00DB" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1",substr($msg,2,2));
+	} elsif ($switch eq "00DB") {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		$msg = substr($msg, 0, 8).$newmsg;
 		$ID = substr($msg,4,4);
@@ -6738,8 +6726,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "$leaveUser has left the Chat Room\n";
 		}
 
-	} elsif ($switch eq "00DF" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1",substr($msg,2,2));
+	} elsif ($switch eq "00DF") {
 		decrypt(\$newmsg, substr($msg, 17, length($msg)-17));
 		$msg = substr($msg, 0, 17).$newmsg;
 		$ID = substr($msg,8,4);
@@ -7934,18 +7921,16 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} elsif ($type == 1) {
 			print "Player $name gained a job level!\n";
 		}
-	} elsif ($switch eq "019E") {
-	} elsif ($switch eq "01F4") {
 
 	} elsif ($switch eq "01A2") {
 		#pet
-		($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
+		my ($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		$pets{$ID}{'name_given'} = 1;
 
 	} elsif ($switch eq "01A4") {
-#pet spawn
-		$type = unpack("C1",substr($msg, 2, 1));
-		$ID = substr($msg, 3, 4);
+		#pet spawn
+		my $type = unpack("C1",substr($msg, 2, 1));
+		my $ID = substr($msg, 3, 4);
 		if (!%{$pets{$ID}}) {
 			binAdd(\@petsID, $ID);
 			%{$pets{$ID}} = %{$monsters{$ID}};
@@ -7957,20 +7942,17 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			undef %{$monsters{$ID}};
 		}
 		print "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n" if ($config{'debug'});
-#end of pet spawn code
+		#end of pet spawn code
 		
 	} elsif ($switch eq "01AA") {
 		#pet
 
-	} elsif ($switch eq "01B0") {
-
-#Solos Start
-    } elsif ($switch eq "01B3") {
+	} elsif ($switch eq "01B3") {
 		#NPC image 
-		$npc_image = substr($msg, 2,64); 
+		my $npc_image = substr($msg, 2,64); 
 		($npc_image) = $npc_image =~ /(\S+)/; 
 		print "NPC image: $npc_image\n" if $config{'debug'}; 
-#Solos End
+
 	} elsif ($switch eq "01B6") {
 		#Guild Info 
 		$guild{'ID'}        = substr($msg, 2, 4);
@@ -8119,7 +8101,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 				$npcs{$ID}{'binID'} = binFind(\@npcsID, $ID);
 			}
 			%{$npcs{$ID}{'pos'}} = %coords;
-			print "NPC Exists: $npcs{$ID}{'name'} - ($npcs{$ID}{'binID'})\n";
+			print "NPC Exists: $npcs{$ID}{'name'} (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n";
 
 		} else {
 			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n" if $config{'debug'};
