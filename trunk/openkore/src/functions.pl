@@ -3012,7 +3012,7 @@ sub AI {
 
 	##### AUTO SKILLS #####	
 
-	if (!$skillsChanged && $config{skillsAddAuto}) {
+	if (!$skillChanged && $config{skillsAddAuto}) {
 		# Split list of skills and levels
 		my @list = split / *,+ */, lc($config{skillsAddAuto_list});
 
