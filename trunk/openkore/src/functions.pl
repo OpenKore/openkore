@@ -55,6 +55,7 @@ sub initMapChangeVars {
 	%{$chars_old[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos_to'}};
 	undef $chars[$config{'char'}]{'sitting'};
 	undef $chars[$config{'char'}]{'dead'};
+	undef $chars[$config{'char'}]{'warp'};
 	$timeout{'play'}{'time'} = time;
 	$timeout{'ai_sync'}{'time'} = time;
 	$timeout{'ai_sit_idle'}{'time'} = time;
@@ -1760,12 +1761,12 @@ sub parseInput {
 		$ai_v{'sitAuto_forceStop'} = 0;
 
 	} elsif ($switch eq "sl") {
-		my $input =~ /^[\s\S]*? (\d+) (\d+) (\d+)(?: (\d+))?/;
+		$input =~ /^[\s\S]*? (\d+) (\d+) (\d+)(?: (\d+))?/;
 		my $skill_num = $1;
 		my $x = $2;
 		my $y = $3;
 		my $lvl = $4;
-		if (!$skill_num) {
+		if (!$skill_num || !defined($x) || !defined($y)) {
 			error	"Syntax Error in function 'sl' (Use Skill on Location)\n" .
 				"Usage: ss <skill #> <x> <y> [<skill lvl>]\n";
 		} elsif (!$skillsID[$skill_num]) {
@@ -2064,9 +2065,10 @@ sub parseInput {
 		} elsif ($arg1 =~ /^\d+$/) {
 			sendTalk(\$remote_socket, $npcsID[$arg1]);
 
-		} elsif ($arg1 eq "resp" && !%talk) {
+		} elsif (($arg1 eq "resp" || $arg1 eq "num") && !%talk) {
 			error	"Error in function 'talk resp' (Respond to NPC)\n" .
 				"You are not talking to any NPC.\n";
+
 		} elsif ($arg1 eq "resp" && $arg2 eq "") {
 			my $display = $npcs{$talk{'nameID'}}{'name'};
 			message("----------Responses-----------\n", "list");
@@ -2090,6 +2092,14 @@ sub parseInput {
 			}
 			sendTalkResponse(\$remote_socket, $talk{'ID'}, $arg2);
 
+		} elsif ($arg1 eq "num" && $arg2 eq "") {
+			error "Error in function 'talk num' (Respond to NPC)\n" .
+				"You must specify a number.\n";
+		} elsif ($arg1 eq "num" && !($arg2 =~ /^\d$/)) {
+			error "Error in function 'talk num' (Respond to NPC)\n" .
+				"$num is not a valid number.\n";
+		} elsif ($arg1 eq "num" && $arg2 =~ /^\d$/) {
+			sendTalkNumber(\$remote_socket, $talk{'ID'}, $num);
 
 		} elsif ($arg1 eq "cont" && !%talk) {
 			error	"Error in function 'talk cont' (Continue Talking to NPC)\n" .
@@ -2104,7 +2114,7 @@ sub parseInput {
 
 		} else {
 			error	"Syntax Error in function 'talk' (Talk to NPC)\n" .
-				"Usage: talk <NPC # | cont | resp> [<response #>]\n";
+				"Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n";
 		}
 
 
@@ -2158,8 +2168,41 @@ sub parseInput {
 
 	} elsif ($switch eq "warp") {
 		my ($map) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		message "Attempting to open a warp portal to map '$map'\n";
-		sendOpenWarp(\$remote_socket, $map);
+
+		if (!defined $map) {
+			error "Error in function 'warp' (Open/List Warp Portal)\n" .
+				"Usage: warp <map name|#|list>\n";
+
+		} elsif ($map =~ /^\d$/) {
+			if ($map < 0 || $map > @{$chars[$config{'char'}]{'warp'}{'memo'}}) {
+				error "Invalid map number $map.\n";
+			} else {
+				my $name = $chars[$config{'char'}]{'warp'}{'memo'}[$map];
+				my $rsw = "$name.rsw";
+				message "Attempting to open a warp portal to $maps_lut{$rsw} ($name)\n";
+				sendOpenWarp(\$remote_socket, "$name.gat");
+			}
+
+		} elsif ($map eq 'list') {
+			message("----------------- Warp Portal --------------------\n", "list");
+			message("#  Place                           Map\n", "list");
+			for (my $i = 0; $i < @{$chars[$config{'char'}]{'warp'}{'memo'}}; $i++) {
+				message(swrite(
+					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
+					[$i, $maps_lut{$chars[$config{'char'}]{'warp'}{'memo'}[$i].'.rsw'},
+					$chars[$config{'char'}]{'warp'}{'memo'}[$i]]),
+					"list");
+			}
+			message("--------------------------------------------------\n", "list");
+
+		} elsif (!defined $maps_lut{$map.'.rsw'}) {
+			error "Map '$map' does not exist.\n";
+
+		} else {
+			my $rsw = "$map.rsw";
+			message "Attempting to open a warp portal to $maps_lut{$rsw} ($map)\n";
+			sendOpenWarp(\$remote_socket, "$map.gat");
+		}
 
 	} elsif ($switch eq "where") {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
@@ -5297,12 +5340,14 @@ sub parseMsg {
 		$conState = 3;
 		undef $conState_tries;
 
-		my ($startVal, $num);
-		if ($config{"master_version_$config{'master'}"} ne "" && $config{"master_version_$config{'master'}"} == 0) {
-			$startVal = 24;
-		} else {
-			$startVal = 4;
-		}
+		#my ($startVal, $num);
+		#if ($config{"master_version_$config{'master'}"} ne "" && $config{"master_version_$config{'master'}"} == 0) {
+		#	$startVal = 24;
+		#} else {
+		#	$startVal = 4;
+		#}
+		$startVal = $msg_size % 106;
+
 		for (my $i = $startVal; $i < $msg_size; $i += 106) {
 			#exp display bugfix - chobit andy 20030129
 			$num = unpack("C1", substr($msg, $i + 104, 1));
@@ -5361,7 +5406,6 @@ sub parseMsg {
 		}
 		$firstLoginMap = 1;
 		$sentWelcomeMessage = 1;
-		$msg_size = length($msg);
 
 	} elsif ($switch eq "006C") {
 		error("Error logging into Game Login Server (invalid character specified)...\n", "connection");
@@ -6745,14 +6789,25 @@ sub parseMsg {
 		$msg = substr($msg, 0, 8).$newmsg;
 		$ID = substr($msg, 4, 4);
 		($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
+		$talk = substr($msg, 8) if (!defined $talk);
 		@preTalkResponses = split /:/, $talk;
 		undef @{$talk{'responses'}};
 		foreach (@preTalkResponses) {
 			push @{$talk{'responses'}}, $_ if $_ ne "";
 		}
 		$talk{'responses'}[@{$talk{'responses'}}] = "Cancel Chat";
-		print "$npcs{$ID}{'name'} : Type 'talk resp' and choose a response.\n";
-	
+
+		message("----------Responses-----------\n", "list");
+		message("#  Response\n", "list");
+		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<<",
+				[$i, $talk{'responses'}[$i]]),
+				"list");
+		}
+		message("-------------------------------\n", "list");
+		message("$npcs{$ID}{'name'} : Type 'talk resp' and choose a response.\n", "input");
+
 	} elsif ($switch eq "00BC") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$val = unpack("C1",substr($msg, 5, 1));
@@ -7560,6 +7615,38 @@ sub parseMsg {
 		}
 		#X End
 
+	} elsif ($switch eq "011C") {
+		# Warp portal list
+		my $type = unpack("S1",substr($msg, 2, 2));
+
+		my ($memo1) = substr($msg, 4, 16) =~ /([\s\S]*?)\000/;
+		my ($memo2) = substr($msg, 20, 16) =~ /([\s\S]*?)\000/;
+		my ($memo3) = substr($msg, 36, 16) =~ /([\s\S]*?)\000/;
+		my ($memo4) = substr($msg, 52, 16) =~ /([\s\S]*?)\000/;
+
+		($memo1) = $memo1 =~ /([\s\S]*)\.gat/;
+		($memo2) = $memo2 =~ /([\s\S]*)\.gat/;
+		($memo3) = $memo3 =~ /([\s\S]*)\.gat/;
+		($memo4) = $memo4 =~ /([\s\S]*)\.gat/;
+
+		$chars[$config{'char'}]{'warp'}{'type'} = $type;
+		undef @{$chars[$config{'char'}]{'warp'}{'memo'}};
+		push @{$chars[$config{'char'}]{'warp'}{'memo'}}, $memo1 if $memo1 ne "";
+		push @{$chars[$config{'char'}]{'warp'}{'memo'}}, $memo2 if $memo2 ne "";
+		push @{$chars[$config{'char'}]{'warp'}{'memo'}}, $memo3 if $memo3 ne "";
+		push @{$chars[$config{'char'}]{'warp'}{'memo'}}, $memo4 if $memo4 ne "";
+
+		message("----------------- Warp Portal --------------------\n", "list");
+		message("#  Place                           Map\n", "list");
+		for (my $i = 0; $i < @{$chars[$config{'char'}]{'warp'}{'memo'}}; $i++) {
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
+				[$i, $maps_lut{$chars[$config{'char'}]{'warp'}{'memo'}[$i].'.rsw'},
+				$chars[$config{'char'}]{'warp'}{'memo'}[$i]]),
+				"list");
+		}
+		message("--------------------------------------------------\n", "list");
+
 	} elsif ($switch eq "011E") {
 		my $fail = unpack("C1", substr($msg, 2, 1));
 		if ($fail) {
@@ -7936,6 +8023,10 @@ sub parseMsg {
 			$chars[$config{'char'}]{'luk_bonus'} = $val2;
 			print "Luck: $val + $val2\n" if $config{'debug'};
 		}
+
+	} elsif ($switch eq "0142") {
+		$ID = substr($msg, 2, 4);
+		message("$npcs{$ID}{'name'} : Type 'talk num <numer #>' to input a number.\n", "input");
 
 	} elsif ($switch eq "0147") {
 		my $skillID = unpack("S*",substr($msg, 2, 2));
@@ -10501,6 +10592,16 @@ sub sendTalkResponse {
 	my $msg = pack("C*", 0xB8, 0x00) . $ID. pack("C1",$response);
 	sendMsgToServer($r_socket, $msg);
 	print "Sent talk respond: ".getHex($ID).", $response\n" if ($config{'debug'} >= 2);
+}
+
+sub sendTalkNumber {
+	my $r_socket = shift;
+	my $ID = shift;
+	my $number = shift;
+	my $msg = pack("C*", 0x43, 0x01, 0x4B, 0xE3, 0x8E, 0x06) .
+			pack("L1", $number);
+	sendMsgToServer($r_socket, $msg);
+	print "Sent talk number: ".getHex($ID).", $number\n" if ($config{'debug'} >= 2);
 }
 
 sub sendTeleport {
