@@ -2633,8 +2633,8 @@ sub AI {
 
 	##### DELAYED-TELEPORT #####
 
-	if (AI::v->{temp}{teleport}{lv}) {
-		useTeleport(AI::v->{temp}{teleport}{lv});
+	if ($ai_v{temp}{teleport}{lv}) {
+		useTeleport($ai_v{temp}{teleport}{lv});
 	}
 
 	#storageAuto - chobit aska 20030128
@@ -3804,7 +3804,7 @@ sub AI {
 				my $index = findIndexStringList_lc(\@{$char->{inventory}}, "name", $config{"useSelf_item_$i"});
 				if (defined $index) {
 					sendItemUse(\$remote_socket, $char->{inventory}[$index]{index}, $accountID);
-					AI::v->{"useSelf_item_$i"."_time"} = time;
+					$ai_v{"useSelf_item_$i"."_time"} = time;
 					$timeout{ai_item_use_auto}{time} = time;
 					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
 					last;
@@ -3822,7 +3822,7 @@ sub AI {
 		my %self_skill = ();
 		while (defined($config{"useSelf_skill_$i"})) {
 			if (checkSelfCondition("useSelf_skill_$i")) {
-				AI::v->{"useSelf_skill_$i"."_time"} = time;
+				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$self_skill{ID} = $skills_rlut{lc($config{"useSelf_skill_$i"})};
 				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"};
 				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
@@ -3838,7 +3838,7 @@ sub AI {
 				my $sp_req, $amount;
 				
 				$smartHeal_lv = $i;
-				$sp = 10 + ($i * 3);
+				$sp_req = 10 + ($i * 3);
 				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
 				if ($char->{sp} < $sp_req) {
 					$smartHeal_lv--;
@@ -3872,7 +3872,7 @@ sub AI {
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
 					){
-					AI::v->{"partySkill_$i"."_time"} = time;
+					$ai_v{"partySkill_$i"."_time"} = time;
 					$party_skill{skillID} = $skills_rlut{lc($config{"partySkill_$i"})};
 					$party_skill{skillLvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $char->{party}{users}{$partyUsersID[$j]}{name};
@@ -3894,7 +3894,7 @@ sub AI {
 				my $sp_req, $amount;
 				
 				$smartHeal_lv = $i;
-				$sp = 10 + ($i * 3);
+				$sp_req = 10 + ($i * 3);
 				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
 				if ($char->{sp} < $sp_req) {
 					$smartHeal_lv--;
@@ -3915,7 +3915,7 @@ sub AI {
 	}
 
 	##### AUTO-EQUIP #####
-	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || AI::v->{teleport}{lv})
+	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || $ai_v{temp}{teleport}{lv})
 		&& timeOut($timeout{ai_item_equip_auto})) {
 
 		my $ai_index_attack = AI::find("attack");
@@ -3936,7 +3936,7 @@ sub AI {
 		while ($config{"equipAuto_$i"}) {
 			if (checkSelfCondition("equipAuto_$i")
 			 	&& (!$config{"equipAuto_$i" . "_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
-			 	&& (!$config{"equipAuto_$i" . "_onTeleport"} || AI::v->{teleport}{lv})
+			 	&& (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{temp}{teleport}{lv})
 			 	&& (!$config{"equipAuto_$i" . "_whileSitting"} || ($config{"equipAuto_$i" . "_whileSitting"} && $char->{sitting}))
 				&& (!$config{"equipAuto_$i" . "_monsters"} || (defined $ai_attack_mon && existsInList($config{"equipAuto_$i" . "_monsters"}, $ai_attack_mon)))
 			 	&& (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
@@ -3952,9 +3952,9 @@ sub AI {
 						AI::args($ai_index_skill_use)->{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
 						
 					# this is a teleport equip
-					} elsif (!$config{"equipAuto_$i" . "_onTeleport"} || AI::v->{teleport}{lv}) {
-						AI::v->{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
-						AI::v->{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
+					} elsif (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{temp}{teleport}{lv}) {
+						$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
+						$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
 						warning "set timeout\n";
 					}
 					
@@ -4543,7 +4543,7 @@ sub AI {
 		&& $ai_teleport_safe 
 		&& timeOut(\%{$timeout{ai_teleport_hp}})) {
 		useTeleport(1);
-		AI::v->{clear_aiQueue} = 1;
+		$ai_v{temp}{clear_aiQueue} = 1;
 		$timeout{ai_teleport_hp}{time} = time;
 	}
 
@@ -4552,7 +4552,7 @@ sub AI {
 		foreach (@monstersID) {
 			if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
 				useTeleport(1);
-				AI::v->{clear_aiQueue} = 1;
+				$ai_v{temp}{clear_aiQueue} = 1;
 				last;
 			}
 		}
@@ -4585,7 +4585,7 @@ sub AI {
 			}
 			if (!$found) {
 				useTeleport(1);
-				AI::v->{clear_aiQueue} = 1;
+				$ai_v{temp}{clear_aiQueue} = 1;
 			}
 		
 		}
@@ -4599,7 +4599,7 @@ sub AI {
 
 	if ($config{teleportAuto_idle} && $ai_teleport_safe && timeOut(\%{$timeout{ai_teleport_idle}})){
 		useTeleport(1);
-		AI::v->{clear_aiQueue} = 1;
+		$ai_v{temp}{clear_aiQueue} = 1;
 		$timeout{ai_teleport_idle}{time} = time;
 	}
 
@@ -4608,7 +4608,7 @@ sub AI {
 		&& timeOut($timeout{'ai_teleport_portal'})) {
 		if (scalar(@portalsID)) {
 			useTeleport(1);
-			AI::v->{clear_aiQueue} = 1;
+			$ai_v{temp}{clear_aiQueue} = 1;
 		}
 		$timeout{ai_teleport_portal}{time} = time;
 	}
@@ -4667,8 +4667,8 @@ sub AI {
 	}
 	$ai_v{'AI_last_finished'} = time;
 
-	if (AI::v->{clear_aiQueue}) {
-		delete AI::v->{clear_aiQueue};
+	if ($ai_v{temp}{clear_aiQueue}) {
+		delete $ai_v{temp}{clear_aiQueue};
 		AI::clear;
 	}	
 }
@@ -5723,12 +5723,12 @@ sub parseMsg {
 		# and skills (like Twohand Quicken) disappears when we change map server.
 		my $i = 0;
 		while ($config{"useSelf_item_$i"}) {
-			AI::v->{"useSelf_item_$i"."_time"} = 0;
+			$ai_v{"useSelf_item_$i"."_time"} = 0;
 			$i++;
 		}
 		$i = 0;
 		while ($config{"useSelf_skill_$i"}) {
-			AI::v->{"useSelf_skill_$i"."_time"} = 0;
+			$ai_v{"useSelf_skill_$i"."_time"} = 0;
 			$i++;
 		}
 		undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
@@ -8780,7 +8780,7 @@ sub attack {
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
 					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
-					if(((binFind(\@skillsST,$skillsST_lut{2}) eq "" && binFind(\@skillsST,$skillsST_lut{23}) eq "" && binFind(\@skillsST,$skillsST_lut{68}) eq "") 
+					if(((binFind(\@skillsID,$skillsID_lut{2}) eq "" && binFind(\@skillsID,$skillsID_lut{23}) eq "" && binFind(\@skillsID,$skillsID_lut{68}) eq "") 
 						|| $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]" )
 						&& $Rdef ne ""){
 						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
@@ -9960,34 +9960,31 @@ sub getActorNames {
 
 sub useTeleport {
 	my $level = shift;	
-	my $invIndex = findIndex(\@{$char->{inventory}}, "nameID", $level + 600);
+	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $level + 600);
 	
 	# it is safe to always set this value coz $ai_v{temp} is always cleared after teleport
-	if ($char->{sitting}) {
-		stand();
-
-	} elsif (!AI::v->{teleport}{lv}) {
-		AI::v->{teleport}{lv} = $level;
+	if (!$ai_v{temp}{teleport}{lv}) {
+		$ai_v{temp}{teleport}{lv} = $level;
 		
 		# set a small timeout, will be overrided if related config in equipAuto is set
-		AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}{time} = time;
-		AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
+		$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
+		$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
 		
-	} elsif (defined AI::v->{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut(\%{AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}})) {
+	} elsif (defined $ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut(\%{$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}})) {
 		warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
-		delete AI::v->{teleport}{lv};
+		delete $ai_v{temp}{teleport};
 	}
 	
 	# {'skills'}{'AL_TELEPORT'}{'lv'} is valid even after creamy is unequiped, use @skillsID instead
 	if (!$config{teleportAuto_useItem} && binFind(\@skillsID, 'AL_TELEPORT') ne "") {
-		sendTeleport(\$remote_socket, "Random") if $level == 1;
-		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if $level == 2;
-		delete AI::v->{teleport}{lv};
+		sendTeleport(\$remote_socket, "Random") if ($level == 1);
+		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2);
+		delete $ai_v{temp}{teleport};
 		
-	} elsif ($config{'teleportAuto_useItem'} && $invIndex ne "") {
+	} elsif ($config{teleportAuto_useItem} && $invIndex ne "") {
 		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$invIndex]{'index'}, $accountID);
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
-		delete AI::v->{teleport}{lv};
+		delete $ai_v{temp}{teleport};
 	}
 }
 
@@ -10210,7 +10207,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, AI::action)); }
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
 
-	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut(AI::v->{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
+	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
