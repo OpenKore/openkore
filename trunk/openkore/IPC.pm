@@ -29,6 +29,20 @@
 #
 # This module handles all the connection issues. The core Kore code
 # doesn't have to worry about that.
+#
+# <h3>Usage</h3>
+# The IPC system can be used in two ways:
+# `l
+# - Clients can register for events. Whenever Kore prints a message,
+#   that message will be sent to the client too. This only happens if the
+#   client has explicitly registered itself to receive events (in order to
+#   reduce network traffic; not all clients have the need to receive events).
+#   <br><img src="ipc-events.png" alt="Overview of how events are sent" width="568" height="563">
+# - Clients can explicitly request information from Kore. They can, for example,
+#   request the current HP, the current list of monsters on screen, etc.
+# `l`
+#
+# This module implements the IPC server.
 
 package IPC;
 
@@ -37,6 +51,7 @@ use Exporter;
 use IO::Socket::INET;
 use Settings;
 use Log;
+use Utils;
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(start stop iterate);
@@ -191,18 +206,6 @@ sub addListener {
 	my %listener = ();
 	$listener{'func'} = $r_func;
 	$listener{'user_data'} = $user_data;
-
-	# We copy & past binAdd() here to avoid circular dependancies with Utils.pm
-	sub binAdd {
-		my $r_array = shift;
-		my $ID = shift;
-		for (my $i = 0; $i <= @{$r_array};$i++) {
-			if ($$r_array[$i] eq "") {
-				$$r_array[$i] = $ID;
-				return $i;
-			}
-		}
-	}
 	return binAdd(\@listeners, \%listener);
 }
 
@@ -238,7 +241,6 @@ sub broadcast {
 
 
 END {
-	print "STOP\n";
 	stop();
 }
 
