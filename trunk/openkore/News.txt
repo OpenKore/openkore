@@ -2,7 +2,8 @@
 ### 1.5.1 (CVS)
 ==================
 
-
+Bug fixes:
+- Fix "undefined value as HASH" bug in the Wx item list control.
 
 
 ==================
