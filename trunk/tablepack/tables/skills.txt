@@ -69,7 +69,7 @@ PR_ASPERSIO#Aspersio#
 PR_BENEDICTIO#B.S_Sacramenti#
 PR_SANCTUARY#Santuary#
 PR_SLOWPOISON#Slow_Poison#
-PR_STRECOVERY#Status_Recovery_#
+PR_STRECOVERY#Status_Recovery#
 PR_KYRIE#Kyrie_Eleison#
 PR_MAGNIFICAT#Magnificat#
 PR_GLORIA#Gloria#
