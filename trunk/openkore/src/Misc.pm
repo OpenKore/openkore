@@ -1234,10 +1234,15 @@ sub stripLanguageCode {
 ##
 # switchConf(filename)
 # filename: a configuration file.
+# Returns: 1 on success, 0 if $filename does not exist.
 #
 # Switch to another configuration file.
 sub switchConfigFile {
 	my $filename = shift;
+	if (! -f $filename) {
+		error "$filename does not exist.\n";
+		return 0;
+	}
 
 	foreach (@Settings::configFiles) {
 		if ($_->{file} eq $Settings::config_file) {
@@ -1247,6 +1252,7 @@ sub switchConfigFile {
 	}
 	$Settings::config_file = $filename;
 	parseDataFile2($filename, \%config);
+	return 1;
 }
 
 ##

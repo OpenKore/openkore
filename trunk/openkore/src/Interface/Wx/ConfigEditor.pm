@@ -180,6 +180,7 @@ sub new {
 			$sizer->Add($label, 1, wxGROW | wxALL, 8);
 			$dialog->SetSizerAndFit($sizer);
 			$dialog->Show(1);
+			my $busy = new Wx::BusyCursor;
 			wxTheApp->Yield;
 
 			$manual = get('http://openkore.sourceforge.net/manual/control.htm');
