@@ -322,7 +322,6 @@ sub findIndexString_lc_not_equip {
 	}
 }
 
-
 sub findKey {
 	my $r_hash = shift;
 	my $match = shift;

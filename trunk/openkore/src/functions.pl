@@ -4561,106 +4561,112 @@ sub AI {
 
 
 	##### AUTO-TELEPORT #####
-	
-	($ai_v{'map_name_lu'}) = $map_name =~ /([\s\S]*)\./;
-	$ai_v{'map_name_lu'} .= ".rsw";
-	if ($config{'teleportAuto_onlyWhenSafe'} && binSize(\@playersID)) {
-		undef $ai_v{'ai_teleport_safe'};
-		if (!$cities_lut{$ai_v{'map_name_lu'}} && timeOut(\%{$timeout{'ai_teleport_safe_force'}})) {
-			$ai_v{'ai_teleport_safe'} = 1;
+	TELEPORT: {
+	my $map_name_lu = $field{name}.'.rsw';
+	my $ai_teleport_safe = 0;
+
+	if ($config{teleportAuto_onlyWhenSafe} && scalar(@playersID)) {
+		if (!$cities_lut{$map_name_lu} && timeOut(\%{$timeout{ai_teleport_safe_force}})) {
+			$ai_teleport_safe = 1;
 		}
-	} elsif (!$cities_lut{$ai_v{'map_name_lu'}}) {
-		$ai_v{'ai_teleport_safe'} = 1;
-		$timeout{'ai_teleport_safe_force'}{'time'} = time;
-	} else {
-		undef $ai_v{'ai_teleport_safe'};
+	} elsif (!$cities_lut{$map_name_lu}) {
+		$ai_teleport_safe = 1;
+		$timeout{ai_teleport_safe_force}{time} = time;
 	}
 
-	if (timeOut(\%{$timeout{'ai_teleport_away'}}) && $ai_v{'ai_teleport_safe'}) {
+	##### TELEPORT HP #####
+	if ((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp} && scalar ai_getAggressives())
+		|| ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))
+		&& $ai_teleport_safe 
+		&& timeOut(\%{$timeout{ai_teleport_hp}})) {
+		useTeleport(1);
+		AI::v->{clear_aiQueue} = 1;
+		$timeout{ai_teleport_hp}{time} = time;
+	}
+
+	##### TELEPORT MONSTER #####
+	if (timeOut(\%{$timeout{ai_teleport_away}}) && $ai_teleport_safe) {
 		foreach (@monstersID) {
-			if ($mon_control{lc($monsters{$_}{'name'})}{'teleport_auto'} == 1) {
+			if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
 				useTeleport(1);
-				$ai_v{'temp'}{'search'} = 1;
+				AI::v->{clear_aiQueue} = 1;
 				last;
 			}
 		}
 		$timeout{'ai_teleport_away'}{'time'} = time;
 	}
 
-	if ((($config{'teleportAuto_hp'} && percent_hp(\%{$chars[$config{'char'}]}) <= $config{'teleportAuto_hp'} && ai_getAggressives())
-		|| ($config{'teleportAuto_minAggressives'} && ai_getAggressives() >= $config{'teleportAuto_minAggressives'}))
-		&& $ai_v{'ai_teleport_safe'} && timeOut(\%{$timeout{'ai_teleport_hp'}})) {
-		useTeleport(1);
-		$ai_v{'clear_aiQueue'} = 1;
-		$timeout{'ai_teleport_hp'}{'time'} = time;
-	}
-
-	if ($config{'teleportAuto_idle'} && $ai_seq[0] ne "") {
-		$timeout{'ai_teleport_idle'}{'time'} = time;
-	}
-
-	if ($config{'teleportAuto_idle'} && timeOut(\%{$timeout{'ai_teleport_idle'}}) && $ai_v{'ai_teleport_safe'}) {
-		useTeleport(1);
-		$ai_v{'clear_aiQueue'} = 1;
-		$timeout{'ai_teleport_idle'}{'time'} = time;
-	}
-
-	if ($config{'teleportAuto_portal'} && timeOut($timeout{'ai_teleport_portal'}) && $ai_v{'ai_teleport_safe'}
-	 && ($config{'lockMap'} eq "" || $config{'lockMap'} eq $field{'name'})) {
-		if (binSize(\@portalsID)) {
-			useTeleport(1);
-			$ai_v{'clear_aiQueue'} = 1;
-		}
-		$timeout{'ai_teleport_portal'}{'time'} = time;
-	}
-
 	##### TELEPORT SEARCH #####
-	
-	if ($config{teleportAuto_search}
-		&& !AI::inQueue("attack,items_take,buyAuto,sellAuto,storageAuto")
-		&& ($ai_v{'map_name_lu'} eq $config{lockMap}.'.rsw' || $config{lockMap} eq "")
-	 	&& timeOut(\%{$timeout{ai_teleport_search}})){
-	 	
+	if (($config{teleportAuto_search} &&  AI::inQueue("attack,follow,items_take,buyAuto,skill_use,sellAuto,storageAuto")) || !$config{attackAuto}){
+		$timeout{ai_teleport_search}{time} = time;
+	}
+
+	if ($config{teleportAuto_search} && $ai_teleport_safe
+		&& ($field{name} eq $config{lockMap} || $config{lockMap} eq "")
+		&& timeOut(\%{$timeout{ai_teleport_search}})){
+
 		my $do_search = 0;
 		foreach (keys %mon_control) {
-			if ($mon_control{$_}{'teleport_search'}) {
+			if ($mon_control{$_}{teleport_search}) {
 				$do_search = 1;
 				last;
 			}
 		}
 		if ($do_search) {
+			my $found = 0;
 			foreach (@monstersID) {
-				if ($mon_control{lc($monsters{$_}{name})}{teleport_search} && !$monsters{$_}{attack_failed}) {
-					useTeleport(1);
-					$ai_v{'clear_aiQueue'} = 1;
+				if ($mon_control{lc($monsters{$_}{name})}{teleport_search}  && !$monsters{$_}{attackedByPlayer} && !$monsters{$_}{attack_failed}) {
+					$found = 1;
 					last;
 				}
 			}
+			if (!$found) {
+				useTeleport(1);
+				AI::v->{clear_aiQueue} = 1;
+			}
+		
 		}
 		$timeout{ai_teleport_search}{time} = time;
 	}
 
+	##### TELEPORT IDLE / PORTAL #####
+	if ($config{teleportAuto_idle} && AI::action ne "") {
+		$timeout{ai_teleport_idle}{time} = time;
+	}
+
+	if ($config{teleportAuto_idle} && $ai_teleport_safe && timeOut(\%{$timeout{ai_teleport_idle}})){
+		useTeleport(1);
+		AI::v->{clear_aiQueue} = 1;
+		$timeout{ai_teleport_idle}{time} = time;
+	}
+
+	if ($config{teleportAuto_portal} && $ai_teleport_safe
+		&& ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
+		&& timeOut($timeout{'ai_teleport_portal'})) {
+		if (scalar(@portalsID)) {
+			useTeleport(1);
+			AI::v->{clear_aiQueue} = 1;
+		}
+		$timeout{ai_teleport_portal}{time} = time;
+	}
+	} # end of block teleport
 
 	##### AUTO RESPONSE #####
 
-	if ($ai_seq[0] eq "respAuto" && time >= $nextresptime) {
-		$i = $ai_seq_args[0]{'resp_num'};
-		$num_resp = getListCount($chat_resp{"words_resp_$i"});
+	if (AI::action eq "respAuto" && time >= $nextresptime) {
+		my $i = AI::args->{resp_num};
+		my $num_resp = getListCount($chat_resp{"words_resp_$i"});
 		sendMessage(\$remote_socket, "c", getFromList($chat_resp{"words_resp_$i"}, int(rand() * ($num_resp - 1))));
-		shift @ai_seq;
-		shift @ai_seq_args;
+		AI::dequeue;
 	}
 
-	if ($ai_seq[0] eq "respPMAuto" && time >= $nextrespPMtime) {
-		$i = $ai_seq_args[0]{'resp_num'};
-		$privMsgUser = $ai_seq_args[0]{'resp_user'};
+	if (AI::action eq "respPMAuto" && time >= $nextrespPMtime) {
+		my $i = AI::args->{resp_num};
+		my $privMsgUser = AI::args->{resp_user};
 		$num_resp = getListCount($chat_resp{"words_resp_$i"});
 		sendMessage(\$remote_socket, "pm", getFromList($chat_resp{"words_resp_$i"}, int(rand() * ($num_resp - 1))), $privMsgUser);
-		shift @ai_seq;
-		shift @ai_seq_args;
+		AI::dequeue;
 	}
-
-
 
 	##### AVOID GM OR PLAYERS #####
 
@@ -4674,9 +4680,7 @@ sub AI {
 		$timeout{'ai_avoidcheck'}{'time'} = time;
 	}
 
-
 	##### SEND EMOTICON #####
-
 	SENDEMOTION: {
 		my $index = binFind(\@ai_seq, "sendEmotion");
 		last SENDEMOTION if ($index eq "" || time < $ai_seq_args[$index]{'timeout'});
@@ -4687,8 +4691,7 @@ sub AI {
 
 	##### AUTO SHOP OPEN #####
 
-	if ($config{"shopAuto_open"} && $ai_seq[0] eq "" && $conState == 5 && !$shopstarted && $chars[$config{'char'}]{'sitting'}
-	    && timeOut(\%{$timeout{'ai_shop'}})) {
+	if ($config{shopAuto_open} && AI::action eq "" && $conState == 5 && !$char->{sitting} && timeOut(\%{$timeout{ai_shop}})) {
 		openShop();
 	}
 
@@ -4703,10 +4706,9 @@ sub AI {
 	}
 	$ai_v{'AI_last_finished'} = time;
 
-	if ($ai_v{'clear_aiQueue'}) {
-		undef $ai_v{'clear_aiQueue'};
-		undef @ai_seq;
-		undef @ai_seq_args;
+	if (AI::v->{clear_aiQueue}) {
+		delete AI::v->{clear_aiQueue};
+		AI::clear;
 	}	
 }
 
@@ -8316,17 +8318,6 @@ sub ai_getIDFromChat {
 	}
 }
 
-sub ai_getMonstersWhoHitMe {
-	my @agMonsters;
-	foreach (@monstersID) {
-		next if ($_ eq "");
-		if (($monsters{$_}{'dmgToYou'} > 0 || $monsters{$_}{'missedYou'} > 0) && $monsters{$_}{'attack_failed'} <= 1) {
-			push @agMonsters, $_;
-		}
-	}
-	return @agMonsters;
-}
-
 ##
 # ai_getSkillUseType(name)
 # name: the internal name of the skill (as found in skills.txt), such as
@@ -10247,6 +10238,7 @@ sub checkSelfCondition {
 		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getAggressives());
 		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
 	}
+	if ($config{$prefix . "_stopWhenHit"} > 0) { return 0 if (scalar ai_getAggressives()); }
 
 	if ($config{$prefix . "_whenFollowing"} && $config{follow}) {
 		return 0 if (!checkFollowMode());
@@ -10259,7 +10251,6 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
-	if ($config{$prefix . "_stopWhenHit"} > 0) { return 0 if (ai_getMonstersWhoHitMe()); }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
