@@ -1,26 +1,15 @@
-FILES=\
-	../Interface.pm \
-	../Network.pm \
-	../Commands.pm \
-	../Log.pm \
-	../Settings.pm \
-	../Modules.pm \
-	../Plugins.pm \
-	../Utils.pm \
-	../Skills.pm \
-	../Misc.pm
-
 .PHONY: all clean upload
 
 all:
-	./createdoc.pl $(FILES)
+	perl createdoc.pl
 
 clean:
-	@for F in $(FILES); do \
-		html=`basename "$$F" | sed 's/\.pm$$/.html/'`; \
-		echo rm -f srcdoc/$$html; \
-		rm -f srcdoc/$$html; \
-	done
+	@( while read M; do \
+		M=`echo "$$M" | sed 's/\r//g; s/::/--/g'`; \
+		M="srcdoc/$$M.html"; \
+		echo rm -f $$M; \
+		rm -f "$$M"; \
+	done; ) < modules.txt
 
 upload: all
 	bash mkuploadcommands > upload-script
