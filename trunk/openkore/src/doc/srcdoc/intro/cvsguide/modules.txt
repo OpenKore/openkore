@@ -1,8 +1,8 @@
 The OpenKore CVS repository contains several <i>modules</i>.
 A module is a subfolder on the CVS server. These modules are currently available:
 <p>
-<table border="1">
-<tr>
+<table border="1" cellpadding="4">
+<tr style="color: white; background: black;">
 	<th>Module name</th>
 	<th>Description</th>
 </tr>
