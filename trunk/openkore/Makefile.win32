@@ -14,25 +14,25 @@ DLLTOOL=dlltool
 all: Tools.dll Inject.dll
 
 
-Tools.dll: Tools.o Tools.def
-	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Tools.def Tools.o -o Tools.dll
+Tools.dll: Tools.o Tools.gccdef
+	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Tools.gccdef Tools.o -o Tools.dll
 
-Tools.def:
-	$(DLLTOOL) --dllname Tools.dll --output-def Tools.def --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 Tools.o
+Tools.gccdef:
+	$(DLLTOOL) --dllname Tools.dll --output-def Tools.gccdef --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 Tools.o
 
 Tools.o: Tools.cpp
 	$(CXX) -DWIN32 -mdll -mno-cygwin $(CFLAGS) -c Tools.cpp -o Tools.o
 
 
-Inject.dll: Inject.o Inject.def
-	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Inject.def Inject.o -o Inject.dll -lws2_32
+Inject.dll: Inject.o Inject.gccdef
+	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Inject.gccdef Inject.o -o Inject.dll -lws2_32
 
-Inject.def:
-	$(DLLTOOL) --dllname Inject.dll --output-def Inject.def --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 Inject.o
+Inject.gccdef:
+	$(DLLTOOL) --dllname Inject.dll --output-def Inject.gccdef --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 Inject.o
 
 Inject.o: Inject.cpp
 	$(CXX) -mdll -mno-cygwin $(CFLAGS) -c Inject.cpp -o Inject.o
 
 
 clean:
-	rm -f Tools.dll Tools.o Tools.def Inject.dll Inject.o Inject.def
+	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef
