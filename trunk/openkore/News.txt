@@ -59,6 +59,7 @@ New config options:
   4 - respawn
 - teleportAuto_idle must be true in order for teleportAuto_search to behave as
   expected.
+- New 'previousDamage' condition for attackSkillSlot.
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
@@ -73,6 +74,7 @@ Internal:
 Credits:
 - jsteng: Pet detection fix.
 - mondlicht: misc bug fixes.
+- denni: previousDamage condition.
 
 
 ==================

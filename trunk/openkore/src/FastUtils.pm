@@ -22,13 +22,7 @@ use warnings;
 use Carp;
 use Time::HiRes;
 
-require XSLoader;
-XSLoader::load('XSTools');
-
-require DynaLoader;
-my $sym = DynaLoader::dl_find_symbol_anywhere('boot_' . __PACKAGE__);
-die "Unable to find symbol boot_" . __PACKAGE__ if !$sym;
-DynaLoader::dl_install_xsub(__PACKAGE__ . '::bootstrap', $sym);
-FastUtils::bootstrap();
+use XSTools;
+XSTools::bootModule('FastUtils');
 
 1;

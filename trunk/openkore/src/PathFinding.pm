@@ -30,8 +30,8 @@ use strict;
 use warnings;
 use Carp;
 
-require XSLoader;
-XSLoader::load('XSTools');
+use XSTools;
+XSTools::bootModule("PathFinding");
 
 
 

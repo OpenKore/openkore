@@ -149,6 +149,19 @@ if (-f "$RealBin/Misc.pm") {
 }
 
 
+# Use 'require' here because XSTools.so might not be compiled yet at startup
+require XSTools;
+if (!defined &XSTools::majorVersion) {
+	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.");
+	exit 1;
+} elsif (XSTools::majorVersion != 1) {
+	$interface->errorDialog("Your version of XSTools library is incompatible.\n" .
+		"Please download the correct version.");
+	exit 1;
+} elsif (XSTools::minorVersion < 0) {
+	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.");
+	exit 1;
+}
 require PathFinding;
 require WinUtils if ($^O eq 'MSWin32');
 
