@@ -58,6 +58,7 @@ New features:
   http://openkore.sourceforge.net/forum/viewtopic.php?t=3890
 - autoTalkCont will print a message when it is triggered.
 - Prevent getting skill/chat muted when playing in X-Kore mode.
+- "exp reset" command now prints a confirmation message.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
