@@ -9249,33 +9249,68 @@ sub dumpData {
 	message "Message Dumped into DUMP.txt!\n", undef, 1;
 }
 
+##
+# getField(file, r_field, [dist_only])
+# file: the filename of the .fld file you want to load.
+# r_field: reference to a hash, in which information about the field is stored.
+# dist_only: If set to 1, do not load the field data, and only load the distance map.
+# Returns: 1 on success, 0 on failure.
+#
+# Load a field (.fld) file. This function also loads an associated .dist file
+# (the distance map file), which is used by pathfinding (for wall avoidance support).
+# If the associated .dist file does not exist, it will be created.
+#
+# The r_field hash will contain the following keys:
+# ~l
+# - name: The name of the field, which is basically the base name of the file without the extension.
+# - width: The field's width.
+# - height: The field's height.
+# - rawMap: The raw map data. Contains information about which blocks you can walk on (byte 0),
+#    and which not (byte 1). This key doesn't exist if dist_only is set.
+# - field: The map data unpacked into an array. This key doesn't exist if dist_only is set.
+# - dstMap: The distance map data. Used by pathfinding.
+# ~l~
 sub getField {
 	my $file = shift;
 	my $r_hash = shift;
-	my $result = 1;
-	
+	my $dist_only = shift;
+	my $dist_file = $file;
+
 	undef %{$r_hash};
 	unless (-e $file) {
 		warning "Could not load field $file - you must install the kore-field pack!\n";
-		$result = 0;
+		return 0;
 	}
-	
+
+	$dist_file =~ s/\.fld$/.dist/i;
+
+	# Load the .fld file
 	($$r_hash{'name'}) = $file =~ m{/?([^/.]*)\.};
 	open FILE, "<", $file;
 	binmode(FILE);
 	my $data;
-	{
+	if ($dist_only) {
+		if (-e $dist_file) {
+			read(FILE, $data, 4);
+			@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
+			close FILE;
+		} else {
+			local($/);
+			$data = <FILE>;
+			close FILE;
+			@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
+			$$r_hash{'rawMap'} = $data;
+		}
+	} else {
 		local($/);
 		$data = <FILE>;
+		close FILE;
+		@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
+		$$r_hash{'rawMap'} = $data;
+		$$r_hash{'field'} = [unpack("C*", $data)];
 	}
-	close FILE;
-	@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
-	$$r_hash{'rawMap'} = $data;
-	$$r_hash{'binMap'} = pack('b*', $data);
-	$$r_hash{'field'} = [unpack("C*", $data)];
 
-
-	(my $dist_file = $file) =~ s/\.fld$/.dist/i;
+	# Load the associated .dist file (distance map)
 	if (-e $dist_file) {
 		open FILE, "<", $dist_file;
 		binmode(FILE);
@@ -9290,6 +9325,7 @@ sub getField {
 		if (substr($dist_data, 0, 2) eq "V#") {
 			$dversion = unpack("xx S1", substr($dist_data, 0, 4, ''));
 		}
+
 		my ($dw, $dh) = unpack("S1 S1", substr($dist_data, 0, 4, ''));
 		if (
 			#version 0 files had a bug when height != width, so keep version 0 files not effected by the bug.
@@ -9300,6 +9336,8 @@ sub getField {
 			$$r_hash{'dstMap'} = $dist_data;
 		}
 	}
+
+	# The .dist file is not available; create it
 	unless ($$r_hash{'dstMap'}) {
 		$$r_hash{'dstMap'} = makeDistMap(@$r_hash{'rawMap', 'width', 'height'});
 		open FILE, ">", $dist_file or die "Could not write dist cache file: $!\n";
@@ -9309,10 +9347,21 @@ sub getField {
 		print FILE $$r_hash{'dstMap'};
 		close FILE;
 	}
-	
-	return $result;
+
+	return 1;
 }
 
+##
+# makeDistMap(data, width, height)
+# data: the raw field data.
+# width: the field's width.
+# height: the field's height.
+# Returns: the raw data of the distance map.
+#
+# Create a distance map from raw field data. This distance map data is used by pathfinding
+# for wall avoidance support.
+#
+# This function is used internally by getField(). You shouldn't have to use this directly.
 sub makeDistMap {
 	my $data = shift;
 	my $width = shift;
@@ -9660,30 +9709,33 @@ sub compilePortals {
 		%{$mapPortals{$portals_lut{$portal}{'source'}{'map'}}{$portal}{'pos'}} = %{$portals_lut{$portal}{'source'}{'pos'}};
 	}
 	foreach my $map (sort keys %mapPortals) {
+		message "Processing map $map...\n", "system";
 		my @list = sort keys %{$mapPortals{$map}};
 		foreach my $this (@list) {
 			foreach my $that (@list) {
 				next if $this eq $that;
 				next if $portals_los{$this}{$that} ne '' && $portals_los{$that}{$this} ne '';
-				if ($field{'name'} ne $map) { if (!getField("$Settings::def_field/$map.fld", \%field)) { $missingMap{$map} = 1; }}
+
+				if ($field{'name'} ne $map) {
+					$missingMap{$map} = 1 if (!getField("$Settings::def_field/$map.fld", \%field, 1));
+				}
+
 				ai_route_getRoute(\@solution, \%field, \%{$mapPortals{$map}{$this}{'pos'}}, \%{$mapPortals{$map}{$that}{'pos'}});
 				$portals_los{$this}{$that} = scalar @solution;
 				$portals_los{$that}{$this} = scalar @solution;
-				message sprintf("Path cost: [%4d] $map ($mapPortals{$map}{$this}{'pos'}{'x'},$mapPortals{$map}{$this}{'pos'}{'y'}) ($mapPortals{$map}{$that}{'pos'}{'x'},$mapPortals{$map}{$that}{'pos'}{'y'})\n", $portals_los{$this}{$that}), "system";
 			}
 		}
 	}
-	message "Adding NPC's Destination\n", "system";
+	message "Adding NPC destinations...\n", "system";
 	foreach my $portal (keys %portals_lut) {
 		foreach my $npc (keys %{$portals_lut{$portal}{'dest'}}) {
 			next unless $portals_lut{$portal}{'dest'}{$npc}{'steps'};
 			my $map = $portals_lut{$portal}{'dest'}{$npc}{'map'};
 			foreach my $dest (keys %{$mapPortals{$map}}) {
 				next if $portals_los{$npc}{$dest} ne '';
-				if ($field{'name'} ne $map) { if (!getField("$Settings::def_field/$map.fld", \%field)) { $missingMap{$map} = 1; }}
+				if ($field{'name'} ne $map) { if (!getField("$Settings::def_field/$map.fld", \%field, 1)) { $missingMap{$map} = 1; }}
 				ai_route_getRoute(\@solution, \%field, \%{$portals_lut{$portal}{'dest'}{$npc}{'pos'}}, \%{$mapPortals{$map}{$dest}{'pos'}});
 				$portals_los{$npc}{$dest} = scalar @solution;
-				message sprintf("Path cost: [%4d] $map ($npc) ($dest)\n", $portals_los{$npc}{$dest}), "system";
 			}
 		}
 	}
