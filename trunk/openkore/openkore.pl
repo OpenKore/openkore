@@ -8414,6 +8414,9 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "01DC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "40A1") {
+		# Do not remove this switch!
+		$msg_size = 4;
 	} elsif (!$rpackets{$switch} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		print "Unparsed packet - $switch\n" if ($config{'debugPacket_received'});
 	}
@@ -11414,11 +11417,11 @@ sub avoidGM_near {
 
 		if ($statusGM && $players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
-			chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
-			print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-			$timeout_ex{'master'}{'time'} = time;
-			$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-			killConnection(\$remote_socket);
+			#chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
+			#print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+			#$timeout_ex{'master'}{'time'} = time;
+			#$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
+			#killConnection(\$remote_socket);
 			return 1;
 		}
 	}
