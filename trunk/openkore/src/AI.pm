@@ -77,39 +77,14 @@ sub findAction {
 }
 
 sub inQueue {
-	my $sequences = join("|", @_);
-	my $actions = join("/", @ai_seq);
-	return 1 if $actions =~ /$sequences/;
+	my $sequences = join '|', @_;
+	my $actions = join ' ', @ai_seq;
+	return 1 if $actions =~ /$sequences\b/;
 	return 0;
 }
 
 sub isIdle {
 	return $ai_seq[0] eq "";
 }
-
-##### DON'T put ai_useWhatever() in here yet!
-
-# TODO: move references of ai_skillUse in functions.pl here
-sub skillUse {
-	my ($ID, $lv, $maxCastTime, $minCastTime, $target, $y) = @_;
-	my %args;
-	$args{ai_skill_use_giveup}{time} = time;
-	$args{ai_skill_use_giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
-	$args{skill_use_id} = $ID;
-	$args{skill_use_lv} = $lv;
-	$args{skill_use_maxCastTime}{time} = time;
-	$args{skill_use_maxCastTime}{timeout} = $maxCastTime;
-	$args{skill_use_minCastTime}{time} = time;
-	$args{skill_use_minCastTime}{timeout} = $minCastTime;
-	if ($y eq "") {
-		$args{skill_use_target} = $target;
-	} else {
-		$args{skill_use_target_x} = $target;
-		$args{skill_use_target_y} = $y;
-	}
-	queue("skill_use",\%args);
-}
-
-##### DON'T put ai_useWhatever() in here yet!
 
 return 1;
