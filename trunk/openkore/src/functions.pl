@@ -2997,18 +2997,7 @@ sub AI {
 		$i = 0;
 		while (1) {
 			last if (!$config{"useSelf_item_$i"});
-			if (percent_hp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_item_$i"."_hp_upper"} && percent_hp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_item_$i"."_hp_lower"}
-			 && percent_sp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_item_$i"."_sp_upper"} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_item_$i"."_sp_lower"}
-			 && !($config{"useSelf_item_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
-			 && $config{"useSelf_item_$i"."_minAggressives"} <= ai_getAggressives()
-			 && (!$config{"useSelf_item_$i"."_maxAggressives"} || $config{"useSelf_item_$i"."_maxAggressives"} >= ai_getAggressives()) 
-			 && timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
-			 && (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
-			 && (!$config{"useSelf_item_$i"."_whenStatusActive"} || whenStatusActive($config{"useSelf_item_$i"."_whenStatusActive"}))
-			 && (!$config{"useSelf_item_$i"."_whenStatusInactive"} || !whenStatusActive($config{"useSelf_item_$i"."_whenStatusInactive"}))
-			 && (!$config{"useSelf_item_$i"."_whenAffected"} || whenAffected($config{"useSelf_item_$i"."_whenAffected"}))
-				)
-				{
+			if (checkSelfCondition("useSelf_item_$i")) {
 				undef $ai_v{'temp'}{'invIndex'};
 				$ai_v{'temp'}{'invIndex'} = findIndexStringList_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_$i"});
 				if ($ai_v{'temp'}{'invIndex'} ne "") {
@@ -3035,15 +3024,10 @@ sub AI {
 		my $ai_index_skill_use = binFind(\@ai_seq, "skill_use");
 		while ($config{"equipAuto_$i"}) {
 			#last if (!$config{"equipAuto_$i"});
-			if (percent_hp(\%{$chars[$config{'char'}]}) <= $config{"equipAuto_$i" . "_hp_upper"}
-			 && percent_hp(\%{$chars[$config{'char'}]}) >= $config{"equipAuto_$i" . "_hp_lower"}
-			 && percent_sp(\%{$chars[$config{'char'}]}) <= $config{"equipAuto_$i" . "_sp_upper"}
-			 && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"equipAuto_$i" . "_sp_lower"}
-			 && $config{"equipAuto_$i" . "_minAggressives"} <= ai_getAggressives()
-			 && (!$config{"equipAuto_$i" . "_maxAggressives"} || $config{"equipAuto_$i" . "_maxAggressives"} >= ai_getAggressives())
+			if (checkSelfCondition("equipAuto_$i")
 			 && (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
 			 && (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
-			 && ($config{"equipAuto_$i"."_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
+			 && ($config{"equipAuto_$i" . "_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
 			 && (!$config{"equipAuto_$i" . "_skills"} || $ai_index_skill_use ne "" && existsInList($config{"equipAuto_$i" . "_skills"},$skillsID_lut{$ai_seq_args[$ai_index_skill_use]{'skill_use_id'}}))
 			) {
 				undef $ai_v{'temp'}{'invIndex'};
@@ -3080,21 +3064,7 @@ sub AI {
 		undef $ai_v{'useSelf_skill_lvl'};
 		while (1) {
 			last if (!$config{"useSelf_skill_$i"});
-			if (percent_hp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_skill_$i"."_hp_upper"} && percent_hp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_skill_$i"."_hp_lower"}
-			 && percent_sp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_skill_$i"."_sp_upper"} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_skill_$i"."_sp_lower"}
-			 && $chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc($config{"useSelf_skill_$i"})}}{$config{"useSelf_skill_$i"."_lvl"}}
-			 && timeOut($ai_v{"useSelf_skill_$i"."_time"}, $config{"useSelf_skill_$i"."_timeout"})
-			 && !($config{"useSelf_skill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
-			 && (!$config{"useSelf_skill_$i"."_inLockOnly"} || ($config{"useSelf_skill_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
-			 && $config{"useSelf_skill_$i"."_minAggressives"} <= ai_getAggressives()
-			 && (!$config{"useSelf_skill_$i"."_maxAggressives"} || $config{"useSelf_skill_$i"."_maxAggressives"} >= ai_getAggressives())
-			 && (!$config{"useSelf_skill_$i"."_whenStatusActive"} || whenStatusActive($config{"useSelf_skill_$i"."_whenStatusActive"}))
-			 && (!$config{"useSelf_skill_$i"."_whenStatusInactive"} || !whenStatusActive($config{"useSelf_skill_$i"."_whenStatusInactive"}))
-			 && (!$config{"useSelf_skill_$i"."_whenAffected"} || whenAffected($config{"useSelf_skill_$i"."_whenAffected"}))
-			 && (!$config{"useSelf_skill_$i"."_notWhileSitting"} || !$chars[$config{'char'}]{'sitting'})
-			 && (!$config{"useSelf_skill_$i"."_notInTown"} || !$cities_lut{$field{'name'}.'.rsw'})
-			 && inRange($chars[$config{'char'}]{'spirits'}, $config{"useSelf_skill_$i"."_spirit"})
-			) {
+			if (checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
 				$ai_v{'useSelf_skill_lvl'} = $config{"useSelf_skill_$i"."_lvl"};
@@ -3149,17 +3119,11 @@ sub AI {
 					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) <= 8
 					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) > 0
 					&& (!$config{"partySkill_$i"."_target"} || $config{"partySkill_$i"."_target"} eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'})
-					&& percent_hp(\%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}}) <= $config{"partySkill_$i"."_targetHp_upper"} 
-					&& percent_hp(\%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}}) >= $config{"partySkill_$i"."_targetHp_lower"}
-					&& percent_sp(\%{$chars[$config{'char'}]}) <= $config{"partySkill_$i"."_sp_upper"} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"partySkill_$i"."_sp_lower"}
-					&& $chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc($config{"partySkill_$i"})}}{$config{"partySkill_$i"."_lvl"}}
-					&& !($config{"partySkill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
-					&& (!$config{"partySkill_$i"."_targetWhenStatusActive"} || whenStatusActivePL($partyUsersID[$j], $config{"partySkill_$i"."_targetWhenStatusActive"}))
-					&& (!$config{"partySkill_$i"."_targetWhenStatusInactive"} || !whenStatusActivePL($partyUsersID[$j], $config{"partySkill_$i"."_targetWhenStatusInactive"}))
-					&& (!$config{"partySkill_$i"."_targetWhenAffected"} || whenAffectedPL($partyUsersID[$j], $config{"partySkill_$i"."_targetWhenAffected"}))
-					&& timeOut($ai_v{"partySkill_$i"."_time"},$config{"partySkill_$i"."_timeout"})
+					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
+					&& checkSelfCondition("partySkill_$i")
 					){
 						$ai_v{"partySkill_$i"."_time"} = time;
+						$ai_v{"partySkill_$i"."_target"."_time"}{$partyUsersID[$j]} = time;
 						$ai_v{'partySkill'} = $config{"partySkill_$i"};
 						$ai_v{'partySkill_target'} = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'};
 						$ai_v{'partySkill_targetID'} = $partyUsersID[$j];
@@ -3735,18 +3699,14 @@ sub AI {
 			}
 			$i = 0;
 			while ($config{"attackSkillSlot_$i"} ne "") {
-				if (percent_hp(\%{$chars[$config{'char'}]}) >= $config{"attackSkillSlot_$i"."_hp_lower"} && percent_hp(\%{$chars[$config{'char'}]}) <= $config{"attackSkillSlot_$i"."_hp_upper"}
-					&& percent_sp(\%{$chars[$config{'char'}]}) >= $config{"attackSkillSlot_$i"."_sp_lower"} && percent_sp(\%{$chars[$config{'char'}]}) <= $config{"attackSkillSlot_$i"."_sp_upper"}
-					&& $chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc($config{"attackSkillSlot_$i"})}}{$config{"attackSkillSlot_$i"."_lvl"}}
-					&& !($config{"attackSkillSlot_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
+				if (checkSelfCondition("attackSkillSlot_$i")
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $ai_seq_args[0]{'attackSkillSlot_uses'}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
-					&& $config{"attackSkillSlot_$i"."_minAggressives"} <= ai_getAggressives()
-					&& (!$config{"attackSkillSlot_$i"."_maxAggressives"} || $config{"attackSkillSlot_$i"."_maxAggressives"} >= ai_getAggressives())
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusActive"} || whenStatusActiveMon($ID, $config{"attackSkillSlot_$i"."_targetWhenStatusActive"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusInactive"} || !whenStatusActiveMon($ID, $config{"attackSkillSlot_$i"."_targetWhenStatusInactive"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenAffected"} || whenAffectedMon($ID, $config{"attackSkillSlot_$i"."_targetWhenAffected"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenNotAffected"} || !whenAffectedMon($ID, $config{"attackSkillSlot_$i"."_targetWhenNotAffected"}))
+					&& checkMonsterCondition("attackSkillSlot_$i"."_target", $ID)
+#					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusActive"} || whenStatusActiveMon($ID, $config{"attackSkillSlot_$i"."_targetWhenStatusActive"}))
+#					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusInactive"} || !whenStatusActiveMon($ID, $config{"attackSkillSlot_$i"."_targetWhenStatusInactive"}))
+#					&& (!$config{"attackSkillSlot_$i"."_targetWhenAffected"} || whenAffectedMon($ID, $config{"attackSkillSlot_$i"."_targetWhenAffected"}))
+#					&& (!$config{"attackSkillSlot_$i"."_targetWhenNotAffected"} || !whenAffectedMon($ID, $config{"attackSkillSlot_$i"."_targetWhenNotAffected"}))
 				) {
 					$ai_seq_args[0]{'attackSkillSlot_uses'}{$i}++;
 					$ai_seq_args[0]{'attackMethod'}{'distance'} = $config{"attackSkillSlot_$i"."_dist"};
@@ -9989,6 +9949,82 @@ sub itemName {
 	$display .= " [$numSlots]" if $numSlots;
 
 	return $display;
+}
+
+sub checkSelfCondition {
+	$prefix = shift;
+
+	return 0 if ($config{$prefix . "_disabled"} > 0);
+	
+	if ($config{$prefix . "_hp"}) { 
+		return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]}), $config{$prefix . "_hp"}));
+	} elsif ($config{$prefix . "_hp_upper"}) { # backward compatibility with old config format
+		return 0 unless (percent_hp(\%{$chars[$config{char}]}) <= $config{$prefix . "_hp_upper"} && percent_hp(\%{$chars[$config{char}]}) >= $config{$prefix . "_hp_lower"});
+	}
+		
+	if ($config{$prefix . "_sp"}) { 
+		return 0 unless (inRange(percent_sp(\%{$chars[$config{char}]}), $config{$prefix . "_sp"}));
+	} elsif ($config{$prefix . "_sp_upper"}) { # backward compatibility with old config format
+		return 0 unless (percent_sp(\%{$chars[$config{char}]}) <= $config{$prefix . "_sp_upper"} && percent_sp(\%{$chars[$config{char}]}) >= $config{$prefix . "_sp_lower"});
+	}
+
+	# check skill use SP if this is a 'use skill' condition
+	if ($prefix =~ /skill/i) {
+		return 0 unless ($chars[$config{char}]{sp} >= $skillsSP_lut{$skills_rlut{lc($config{$prefix})}}{$config{$prefix . "_lvl"}})
+	}
+	
+	if ($config{$prefix . "_aggressives"}) {
+		return 0 unless (inRange(ai_getAggressives(), $config{$prefix . "_aggressives"}));
+	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
+		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getAggressives());
+		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
+	}
+
+	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActive($config{$prefix . "_whenStatusActive"}) || whenAffected($config{$prefix . "_whenStatusActive"})); }
+	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActive($config{$prefix . "_whenStatusInactive"}) || whenAffected($config{$prefix . "_whenStatusInactive"})); }
+	if ($config{$prefix . "_whenAffected"}) { return 0 unless (whenAffected($config{$prefix . "_whenAffected"})); } 	# backward compatibility with old config format
+
+	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
+	
+	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
+	if ($config{$prefix . "_stopWhenHit"} > 0) { return 0 if (ai_getMonstersWhoHitMe()); }
+	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }
+	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
+	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
+	
+	return 1;
+}
+
+sub checkPlayerCondition {
+	$prefix = shift;
+	$id = shift;
+
+	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$id}, $config{$prefix . "_timeout"}) }
+	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActivePL($id, $config{$prefix . "_whenStatusActive"}) || whenAffectedPL($id, $config{$prefix . "_whenStatusActive"})); }
+	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActivePL($id, $config{$prefix . "_whenStatusInactive"}) || whenAffectedPL($id, $config{$prefix . "_whenStatusInactive"})); }
+	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($players{$id}{sitting}); }
+
+	# we will have player HP info (only) if we are in the same party
+	if (%{$chars[$config{char}]{party}{users}{$id}}) {
+		if ($config{$prefix . "_hp"}) { 
+			return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}), $config{$prefix . "_hp"}));
+		} elsif ($config{$prefix . "Hp_upper"}) { # backward compatibility with old config format
+			return 0 unless (percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}) <= $config{$prefix . "Hp_upper"});
+			return 0 unless (percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}) >= $config{$prefix . "Hp_lower"});
+		}
+	}
+	
+	return 1;
+}
+
+sub checkMonsterCondition {
+	$prefix = shift;
+	$id = shift;
+
+	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActiveMon($id, $config{$prefix . "_whenStatusActive"}) || whenAffectedMon($id, $config{$prefix . "_whenStatusActive"})); }
+	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActiveMon($id, $config{$prefix . "_whenStatusInactive"}) || whenAffectedMon($id, $config{$prefix . "_whenStatusInactive"})); }
+	
+	return 1;
 }
 
 return 1;
