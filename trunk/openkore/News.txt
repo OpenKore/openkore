@@ -23,6 +23,8 @@ New features:
   teleportAuto_maxDmgInLock is specified.
 - New 'guild request <player>' command to request someone to join a guild.
 - "Press ENTER to exit this program." prompt removed from Linux version.
+- New 'guild leave' command (needs testing, but the server I play is down)
+  added.
 
 New config options:
 - showDomain, if set to 1 will display domains along with messages.
