@@ -69,11 +69,6 @@ sub new {
 	bless $self, $class;
 	$self->initTk;
 
-#	if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
-#		require Win32::Console;	import Win32::Console;
-#		Win32::Console->new(&STD_OUTPUT_HANDLE())->Free or warn "could not free console: $!\n";
-#	}
-
 	Plugins::addHook('mainLoop_pre', \&updateHook, $self);
 	Plugins::addHook('postloadfiles', \&resetColors, $self);
 	return $self;
@@ -84,7 +79,7 @@ sub getInput{
 	my $timeout = shift;
 	my $msg;
 	if ($timeout < 0) {
-		until ($msg) {
+		until (defined $msg) {
 			$self->update();
 			if (@{ $self->{input_que} }) { 
 				$msg = shift @{ $self->{input_que} }; 
@@ -92,7 +87,7 @@ sub getInput{
 		}
 	} elsif ($timeout > 0) {
 		my $end = time + $timeout;
-		until ($end < time || $msg) {
+		until ($end < time || defined $msg) {
 			$self->update();
 			if (@{ $self->{input_que} }) { 
 				$msg = shift @{ $self->{input_que} }; 
@@ -104,6 +99,7 @@ sub getInput{
 		} 
 	}
 	$self->update();
+	$msg =~ s/\n// if defined $msg;
 	return $msg;
 }
 
@@ -544,9 +540,8 @@ sub inputEnter {
 	my $line;
 
 	$line = $self->{input}->get;
-
 	$self->{input}->delete('0', 'end');
-	return unless $line;
+	return unless defined $line;
 
 	$self->{input_list}[0] = $line;
 	unshift(@{$self->{input_list}}, "");
