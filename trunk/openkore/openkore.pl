@@ -83,24 +83,28 @@ if ($buildType == 0) {
 	import Win32::API;
 	if ($@) {
 		Log::error("Unable to load the Win32::API module. Please install this Perl module first.", "startup");
+		Input::stop();
 		promptAndExit();
 	}
 
 	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPNNPPN", "N");
 	if (!$CalcPath_init) {
 		Log::error("Could not locate Tools.dll", "startup");
+		Input::stop();
 		promptAndExit();
 	}
 
 	$CalcPath_pathStep = new Win32::API("Tools", "CalcPath_pathStep", "N", "N");
 	if (!$CalcPath_pathStep) {
 		Log::error("Could not locate Tools.dll", "startup");
+		Input::stop();
 		promptAndExit();
 	}
 
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
 	if (!$CalcPath_destroy) {
 		Log::error("Could not locate Tools.dll", "startup");
+		Input::stop();
 		promptAndExit();
 	}
 } else {
@@ -121,6 +125,7 @@ if ($config{'XKore'}) {
 	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
 	if (!$GetProcByName) {
 		Log::error("Could not locate Tools.dll", "startup");
+		Input::stop();
 		promptAndExit();
 	}
 	undef $cwd;
@@ -159,7 +164,8 @@ our $remote_socket = IO::Socket::INET->new();
 
 ### COMPILE PORTALS ###
 
-print "Checking for new portals...";
+print "Checking for new portals... ";
+STDOUT->flush;
 compilePortals_check(\$found);
 
 if ($found) {
@@ -189,7 +195,7 @@ if ($found) {
 }
 
 
-if (!$config{'XKore'}) {
+if (!$config{'XKore'} && !$Settings::daemon) {
 	if (!$config{'username'}) {
 		print "Enter Username: ";
 		STDOUT->flush;
@@ -226,7 +232,9 @@ if (!$config{'XKore'}) {
 		writeDataFileIntact($Settings::config_file, \%config);
 	}
 
-	$timeout{'injectSync'}{'time'} = time;
+} elsif (!$config{'username'} || !$config{'password'}) {
+	Log::error("No username of password set.\n", "startup");
+	exit;
 }
 
 undef $msg;
@@ -244,6 +252,7 @@ our $self_dead_count = 0;
 initStatVars();
 initRandomRestart();
 initConfChange();
+$timeout{'injectSync'}{'time'} = time;
 
 print "\n";
 

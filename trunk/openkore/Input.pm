@@ -109,7 +109,12 @@ sub startInputClient {
 		my $input;
 		while (1) {
 			$input = <STDIN>;
-			last if (!defined($input));
+			if (!defined($input)) {
+				$local_socket->send("quit");
+				$local_socket->flush;
+				last;
+			}
+
 			chomp $input;
 			if ($input ne "") {
 				$local_socket->send($input);

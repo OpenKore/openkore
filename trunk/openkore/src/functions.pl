@@ -2974,7 +2974,6 @@ sub AI {
 	} elsif ($ai_seq[0] eq "storageAuto" && timeOut(\%{$timeout{'ai_storageAuto'}})) {
 		if (!$config{'storageAuto'} || !%{$npcs_lut{$config{'storageAuto_npc'}}}) {
 			$ai_seq_args[0]{'done'} = 1;
-			print "autostorage aborted: no information known about NPC $config{'storageAuto_npc'}\n";
 			last AUTOSTORAGE;
 		}
 
@@ -5249,6 +5248,7 @@ sub parseMsg {
 				$msg = Input::getInput(1);
 				configModify('username', $msg, 1);
 			}
+			relog();
 		} elsif ($type == 1) {
 			error("Password Error\n", "connection");
 			if (!$config{'XKore'}) {
