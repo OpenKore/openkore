@@ -75,6 +75,7 @@ Bug fixes:
 - sitAuto_idle doesn't conflict with shopAuto_open's timeout now (bug #50).
 - MO_BODYRELOCATION is now recognized as an area-usage skill.
 - Don't display "level 65535" when an area-usage skill is used.
+- Arrow equip is detected correctly.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
@@ -97,6 +98,7 @@ Credits:
 - Ven`Tatsu: walkable water bugfix (bug #21)
 - mfr, Xeno-chan: advanced 2-2 skills support.
 - Steven80s: Umbala maps and portals
+- jsteng: Arrow equip bugfix.
 
 
 ==================
