@@ -36,6 +36,7 @@ use Globals qw(%consoleColors);
 use Utils;
 use base qw(Interface::Console);
 use Log qw(warning error);
+use Commands;
 use UnixUtils;
 
 our %fgcolors;
@@ -103,6 +104,8 @@ sub new {
 	$interface{input} = {};
 	$interface{input}{buf} = '';
 	$interface{input}{pos} = 0;
+	$interface{history} = [];
+	$interface{historyIndex} = -1;
 
 	if ($ENV{OPENKORE_STATIC_INPUT}) {
 		$interface{inputMode} = 'static';
@@ -300,6 +303,57 @@ sub readEvents {
 				$interface->cursorRight(1);
 			}
 
+		# Up arrow key
+		} elsif (index($input{buf}, "\e[A") > -1) {
+			# Remove escape sequence from input buffer
+			strdel($input{buf}, $input{pos} - 3, 3);
+			$input{pos} -= 3;
+
+			if ($interface->{historyIndex} < $#{$interface->{history}}) {
+				# Move cursor to beginning and delete whole line
+				$interface->cursorLeft($input{pos});
+				$interface->delLine;
+
+				# Retrieve buffer from history
+				$interface->{currentInput} = $input{buf} if (!defined $interface->{currentInput});
+				$interface->{historyIndex}++;
+				$input{buf} = $interface->{history}[$interface->{historyIndex}];
+				$input{pos} = length($input{buf});
+
+				# Display line
+				print $input{buf};
+			}
+
+		# Down arrow key
+		} elsif (index($input{buf}, "\e[B") > -1) {
+			# Remove escape sequence from input buffer
+			strdel($input{buf}, $input{pos} - 3, 3);
+			$input{pos} -= 3;
+
+			if ($interface->{historyIndex} > 0) {
+				# Move cursor to beginning and delete whole line
+				$interface->cursorLeft($input{pos});
+				$interface->delLine;
+
+				$interface->{historyIndex}--;
+				$input{buf} = $interface->{history}[$interface->{historyIndex}];
+				print $input{buf};
+
+			} elsif ($interface->{historyIndex} == 0) {
+				# Move cursor to beginning and delete whole line
+				$interface->cursorLeft($input{pos});
+				$interface->delLine;
+
+				# Retrieve buffer from history
+				$interface->{historyIndex} = -1;
+				$input{buf} = $interface->{currentInput};
+				$input{pos} = length($input{buf});
+
+				# Display line
+				print $input{buf};
+				undef $interface->{currentInput};
+			}
+
 		# Ctrl+U - delete entire line
 		} elsif (ord($key) == 21) {
 			# Remove Ctrl+U character from input buffer
@@ -316,9 +370,23 @@ sub readEvents {
 
 		# TAB
 		} elsif (index($input{buf}, "\t") > -1) {
-			# Ignore tabs for now
+			# Remove TAB from input buffer
 			strdel($input{buf}, $input{pos} - 1, 1);
 			$input{pos}--;
+
+			my $pre = substr($input{buf}, 0, $input{pos});
+			my $post = substr($input{buf}, $input{pos});
+			my $completed = Commands::complete($pre);
+
+			# Move cursor to beginning and delete whole line
+			$interface->cursorLeft($input{pos});
+			$interface->delLine;
+
+			# Print buffer
+			$input{buf} = $completed . $post;
+			print $input{buf};
+			$input{pos} = length($completed);
+			$interface->cursorLeft(length($post));
 
 		# F1-F4
 		} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\e(\[\[[A-Z]|O[A-Z])/) {
@@ -343,9 +411,18 @@ sub readEvents {
 			} else {
 				# Enter has been pressed; delete newline character,
 				# return and reset buffer
+
 				strdel($input{buf}, $input{pos} - 1, 1);
 				print "\n";
 				$entered = $input{buf};
+
+				$input{buf} =~ s/\n.*//;
+				if (!@{$interface->{history}} || $input{buf} ne $interface->{history}[0]) {
+					unshift @{$interface->{history}}, $input{buf} if ($input{buf} ne "");
+				}
+				$interface->{historyIndex} = -1;
+				undef $interface->{currentInput};
+
 				undef $input{buf};
 				$input{buf} = '';
 				$input{pos} = 0;
