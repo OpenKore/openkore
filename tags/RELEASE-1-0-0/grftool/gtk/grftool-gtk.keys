@@ -1,0 +1,8 @@
+application/x-grf
+        description=GRF Archive
+        category=Packages
+        icon_filename=gnome-package
+	default_action_type=application
+	short_list_application_ids_for_novice_user_level=grftool-gtk
+	short_list_application_ids_for_intermediate_user_level=grftool-gtk
+	short_list_application_ids_for_advanced_user_level=grftool-gtk

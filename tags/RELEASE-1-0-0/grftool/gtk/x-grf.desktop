@@ -1,0 +1,7 @@
+[Desktop Entry]
+Comment=GRF Archive
+Hidden=false
+Icon=package
+MimeType=application/x-grf
+Patterns=*.grf
+Type=MimeType

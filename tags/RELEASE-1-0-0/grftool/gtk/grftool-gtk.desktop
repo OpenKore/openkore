@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=GRF Tool
+Comment=View and extract GRF archives
+GenericName=GRF Archive Extractor
+Exec=grftool-gtk
+Type=Application
+Encoding=UTF-8
+Terminal=false
+Icon=grftool-gtk
+Categories=Application;Utility;
+StartupNotify=true
+MimeType=application/x-grf
