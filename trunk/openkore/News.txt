@@ -49,6 +49,8 @@ New features:
 - Added 'testshop' command which tells you what your shop would sell
   if you opened it.
 - NPC coordinates are now displayed in the "NPC Exists" message.
+- "-- Not Identified" is now displayed as appropriate in i/cart/storage.
+- Unidentified items will no longer be selected for vending.
 
 New config options:
 - *_inInventory_name : inventory item name
@@ -96,6 +98,8 @@ Bug fixes:
   that you already have some of is added to the cart.
 - Setting a non-existant configuration variable will now produce an error
   message.
+- dcOnDisconnect now handles packet 0081 too. (Why did I have to type
+  $config{dcOnDisconnect} in the code 3 times instead of 1?)
 
 Internal:
 - Portal compilation is now 30% faster.
