@@ -144,6 +144,8 @@ Bug fixes:
 - Guild login/logout and chat messages no longer show blanks all the time.
 - Kore will not attack monsters that are trapped by non-party members, or
   monsters that are being lured.
+- Typing "talk no" while not talking to an NPC would cause disconnection;
+  "talk no" is no longer allowed in that case now.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
