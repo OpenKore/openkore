@@ -150,9 +150,8 @@ use Misc;
 use AI;
 use Skills;
 use Interface;
-use XKore;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Skills Interface XKore));
+	Network Network::Send Commands Misc AI Skills Interface));
 
 Log::message("$Settings::versionText\n");
 Plugins::loadAll();
@@ -235,6 +234,8 @@ Log::message("\n");
 our $xkore;
 our $XKore_dontRedirect = 0;
 if ($config{'XKore'}) {
+	require XKore;
+	Modules::register("XKore");
 	$xkore = new XKore;
 	if (!$xkore) {
 		$interface->errorDialog($@);
