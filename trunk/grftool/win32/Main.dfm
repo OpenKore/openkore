@@ -355,7 +355,9 @@ object Form1: TForm1
       end>
   end
   object OpenDialog1: TOpenDialog
-    Filter = 'GRF Archives (*.grf)|*.grf|All Files (*.*)|*.*'
+    Filter = 
+      'All supported formats (*.grf;*.gpf)|*.grf;*.gpf|GRF Archives (*.' +
+      'grf)|*.grf|GRF Patch Files (*.gpf)|*.gpf|All Files (*.*)|*.*'
     Title = 'Open GRF archive'
     Left = 224
     Top = 88
