@@ -3151,27 +3151,21 @@ sub AI {
 	##### LOCKMAP #####
 	
 
-	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'} 
-		&& ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'})))) {
+	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'}
+	   && ($field{'name'} ne $config{'lockMap'}
+	     || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" && ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) && !positionNearPlayer(\%{$chars[$config{'char'}]{'pos_to'}}, 0))
+	   )
+) {
 		if ($maps_lut{$config{'lockMap'}.'.rsw'} eq "") {
-			if (!$config{'XKore'}) {
-				print "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
-			} else {
-				injectMessage("Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist") if ($config{'verbose'});
-			}
+			print "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
+			injectMessage("Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist") if ($config{'XKore'} && $config{'verbose'});
 		} else {
 			if ($config{'lockMap_x'} ne "") {
-				if (!$config{'XKore'}) {
-					print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}\n";
-				} else {
-					injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}") if ($config{'verbose'});
-				}
+				print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}\n";
+				injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}") if ($config{'XKore'} && $config{'verbose'});
 			} else {
-				if (!$config{'XKore'}) {
-					print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n";
-				} else {
-					injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})") if ($config{'verbose'});
-				}
+				print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n";
+				injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})") if ($config{'XKore'} && $config{'verbose'});
 			}
 			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $config{'lockMap_x'}, $config{'lockMap_y'}, $config{'lockMap'}, 0, 0, 1, 0, 0, 1);
 		}
@@ -5522,7 +5516,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "0088") {
 		undef $level_real;
-# Long distance attack solution
+		# Long distance attack solution
 		$ID = substr($msg, 2, 4);
 		undef %coords;
 		$coords{'x'} = unpack("S1", substr($msg, 6, 2));
@@ -5539,25 +5533,29 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
 		}
-# End of Long Distance attack Solution
+		# End of Long Distance attack Solution
 
 	} elsif ($switch eq "0089") {
 
 	} elsif ($switch eq "008A") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$ID1 = substr($msg, 2, 4);
-		$ID2 = substr($msg, 6, 4);
-		$standing = unpack("C1", substr($msg, 26, 2)) - 2;
-		$damage = unpack("S1", substr($msg, 22, 2));
+		my $ID1 = substr($msg, 2, 4);
+		my $ID2 = substr($msg, 6, 4);
+		my $standing = unpack("C1", substr($msg, 26, 2)) - 2;
+		my $damage = unpack("S1", substr($msg, 22, 2));
+		my $type = unpack("C1", substr($msg, 26, 1));
+
 		if ($damage == 0) {
 			$dmgdisplay = "Miss!";
+			$dmgdisplay .= "!" if ($type == 11);
 		} else {
 			$dmgdisplay = $damage;
+			$dmgdisplay .= "!" if ($type == 10);
 		}
+
 		updateDamageTables($ID1, $ID2, $damage);
 		if ($ID1 eq $accountID) {
 			if (%{$monsters{$ID2}}) { 
-#Solos Start
 				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
 				."%)] "."You attack Monster: $monsters{$ID2}{'name'} $monsters{$ID2}{'nameID'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n";
@@ -5568,7 +5566,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 					$startedattack = 0;
 				}
 				calcStat($damage);
-#Solos End
 			} elsif (%{$items{$ID2}}) {
 				print "You pick up Item: $items{$ID2}{'name'} ($items{$ID2}{'binID'})\n" if $config{'debug'};
 				$items{$ID2}{'takenBy'} = $accountID;
@@ -6086,93 +6083,90 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
+		$msg = substr($msg, 0, 4) . $newmsg;
 		undef $invIndex;
-		for($i = 4; $i < $msg_size; $i+=20) {
+		for (my $i = 4; $i < $msg_size; $i += 20) {
 			$index = unpack("S1", substr($msg, $i, 2));
 			$ID = unpack("S1", substr($msg, $i + 2, 2));
 			$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			if ($invIndex eq "") {
 				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
-#Solos Start
 			}
-#Solos End
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'index'} = $index;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'} = $ID;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} = 1;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = unpack("C1", substr($msg, $i + 4, 1));
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'identified'} = unpack("C1", substr($msg, $i + 5, 1));
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $itemSlots_lut{$ID};
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = unpack("C1", substr($msg, $i + 8, 1));
-#Solos Start
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = unpack("C1", substr($msg, $i + 11, 1)); 
-#Solos End
-				if (unpack("C1", substr($msg, $i + 9, 1)) > 0) {
-					$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = unpack("C1", substr($msg, $i + 9, 1));
+
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'index'} = $index;
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'} = $ID;
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} = 1;
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = unpack("C1", substr($msg, $i + 4, 1));
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'identified'} = unpack("C1", substr($msg, $i + 5, 1));
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $itemSlots_lut{$ID};
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = unpack("C1", substr($msg, $i + 8, 1));
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = unpack("C1", substr($msg, $i + 11, 1)); 
+
+			if (unpack("C1", substr($msg, $i + 9, 1)) > 0) {
+				$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = unpack("C1", substr($msg, $i + 9, 1));
+			}
+			$display = ($items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}} ne "")
+				? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
+				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
+#			print "Inventory: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}} - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n" if $config{'debug'};
+			undef @cnt;
+
+			$count = 0;
+			for (my $j = 1; $j < 5; $j++) {
+				if (unpack("S1", substr($msg, $i + 10 + $j + $j, 2)) > 0) {
+					$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} = unpack("S1", substr($msg, $i + 10 + $j + $j, 2));
+					for (my $k = 0; $k < 4; $k++) {
+						if (($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "")) {
+							$cnt[$k]{'amount'} += 1;
+							last;
+						} elsif ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "") {
+							$cnt[$k]{'amount'} = 1;
+							$cnt[$k]{'name'} = $cards_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'}};
+							$cnt[$k]{'ID'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'};
+							$count++;
+							last;
+						}
+					}
 				}
-				$display = ($items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}} ne "")
-					? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
-					: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
-#Solos Start
-#				print "Inventory: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}} - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n" if $config{'debug'};
-			undef @cnt; 
-            $count = 0; 
-            for($j=1 ;$j < 5;$j++) { 
-            	if(unpack("S1", substr($msg, $i + 10 + $j + $j, 2)) > 0) { 
-                	$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} = unpack("S1", substr($msg, $i + 10 + $j + $j, 2)); 
-                  	for($k = 0;$k < 4;$k++) { 
-                    	if(($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "")) { 
-                        	$cnt[$k]{'amount'} += 1;                         
-                        	last; 
-                     	} elsif ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "") { 
-	                        $cnt[$k]{'amount'} = 1; 
-    	                    $cnt[$k]{'name'} = $cards_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'}}; 
-        	                $cnt[$k]{'ID'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'}; 
-            	            $count++; 
-                	        last;                         
-                    	} 
-                  	} 
-               	} 
-            } 
-            $display = ""; 
-            $count ++; 
-            for($j = 0;$j < $count;$j++) { 
-            	if($j == 0 && $cnt[$j]{'amount'}) { 
-                	if($cnt[$j]{'amount'} > 1) { 
-                    	$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}"; 
-                  	} else { 
-                    	$display .= "$cnt[$j]{'name'}"; 
-                  	} 
-               	} elsif ($cnt[$j]{'amount'}) { 
-                  	if($cnt[$j]{'amount'} > 1) { 
-                    	$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}"; 
-                  	} else { 
-                     	$display .= ",$cnt[$j]{'name'}"; 
-                  	} 
-               	} 
-            } 
-            $chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} = $display; 
-            undef @cnt; 
-            undef $count; 
-            $chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'} = unpack("S1",substr($msg, $i + 13, 2)); 
-            $chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} = $elements_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'}}; 
+			}
+
+			$display = ""; 
+			$count ++;
+			for (my $j = 0; $j < $count; $j++) {
+				if ($j == 0 && $cnt[$j]{'amount'}) {
+					if ($cnt[$j]{'amount'} > 1) {
+						$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
+					} else {
+						$display .= "$cnt[$j]{'name'}";
+					}
+				} elsif ($cnt[$j]{'amount'}) {
+					if($cnt[$j]{'amount'} > 1) {
+						$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
+					} else {
+						$display .= ",$cnt[$j]{'name'}";
+					}
+				}
+			}
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} = $display;
+			undef @cnt;
+			undef $count;
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'} = unpack("S1",substr($msg, $i + 13, 2));
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} = $elements_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'}};
 
 			$display = $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'};
-			if($chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} > 0) { 
-             	$display = "+$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} ".$display; 
-   	       	} 
-			if($chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}) { 
-            	$display .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}]" 
-			}                
-            if($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} ne "") { 
-            	$display .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}]" 
-			} 
+			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} > 0) {
+				$display = "+$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} ".$display;
+			}
+			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}) {
+				$display .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}]";
+			}
+			if($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} ne "") {
+				$display .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}]";
+			}
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
 
-            print "Inventory: +$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}] [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}] ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}} - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n" if $config{'debug'};
-#			} 
-#Solos End
+			print "Inventory: +$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}] [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}] ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}} - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n" if $config{'debug'};
 		}
 
 	} elsif ($switch eq "00A5") {
@@ -8977,7 +8971,7 @@ sub attack {
 
 	$startedattack = 1;
 	if ($config{"monsterCount"}) {	
-		$i = 0;
+		my $i = 0;
 		while ($config{"monsterCount_mon_$i"} ne "") {
 			if ($config{"monsterCount_mon_$i"} eq $monsters{$ID}{'name'}) {
 				$monsters_killed[$i] = $monsters_killed[$i] + 1;
@@ -8987,12 +8981,11 @@ sub attack {
 	}
 
 	if ($config{"autoSwitch"}) {
-		$i = 0;
-		$is_mon = 0;
+		my $i = 0;
+		my $is_mon = 0;
 		while ($config{"autoSwitch_mon_$i"} ne "") {
-#		if ($config{"autoSwitch_weapon_mon_$i"} eq $monsters{$ID}{'name'}) {
-       			if (existsInList($config{"autoSwitch_mon_$i"}, $monsters{$ID}{'name'})) {
-	        		print "Auto-Switching for this monster : ".$monsters{$ID}{'name'}."\n";
+			if (existsInList($config{"autoSwitch_mon_$i"}, $monsters{$ID}{'name'})) {
+				print "Auto-Switching for this monster : ".$monsters{$ID}{'name'}."\n";
 				$eq_weap = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_weapon_new_$i"});
 				$eq_shield = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_shield_new_$i"});
 				$is_mon = 1;
@@ -9015,13 +9008,13 @@ sub attack {
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_weap]{'index'}, $chars[$config{'char'}]{'inventory'}[$eq_weap]{'type_equip'}, 0);
 			}
 		}
-   		if (($is_mon == 0) && ($config{"autoSwitch_shield_def"} ne "")) {
-      			$eq_shield = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_shield_def"});
-      			if (($eq_shield ne "") && !($chars[$config{'char'}]{'inventory'}[$eq_shield]{'equipped'})) {
-         			print "Equiping :".$config{"autoSwitch_shield_def"}."\n";
-         			sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'index'}, 32, 0);
-      			}
-   		}
+		if (($is_mon == 0) && ($config{"autoSwitch_shield_def"} ne "")) {
+			$eq_shield = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_shield_def"});
+			if (($eq_shield ne "") && !($chars[$config{'char'}]{'inventory'}[$eq_shield]{'equipped'})) {
+				print "Equiping :".$config{"autoSwitch_shield_def"}."\n";
+				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'index'}, 32, 0);
+			}
+		}
 	}
 }
 
@@ -10494,9 +10487,9 @@ sub input_client {
 
 sub killConnection {
 	my $r_socket = shift;
+	sendQuit(\$remote_socket) if ($conState == 5 && $remote_socket && $remote_socket->connected());
 	if ($$r_socket && $$r_socket->connected()) {
 		print "Disconnecting (".$$r_socket->peerhost().":".$$r_socket->peerport().")... ";
-		sendQuit($r_socket);
 		close($$r_socket);
 		!$$r_socket->connected() ? print "disconnected\n" : print "couldn't disconnect\n";
 	}
