@@ -299,7 +299,7 @@ sub cmdAI {
 	if ($args eq 'clear') {
 		undef @ai_seq;
 		undef @ai_seq_args;
-		undef %ai_v;
+		delete $ai_v{temp};
 		undef $chars[$config{char}]{dead};
 		message "AI sequences cleared\n", "success";
 
