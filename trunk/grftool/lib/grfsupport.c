@@ -26,9 +26,8 @@
 
 #include <stdlib.h>		/* snprintf, free */
 #include <errno.h>		/* errno */
-#include <string.h>		/* strerror */
+#include <string.h>		/* strerror, strcoll */
 #include <zlib.h>		/* gzerror */
-#include <dirent.h>		/* alphasort */
 
 GRFEXTERN_BEGIN
 
@@ -173,12 +172,7 @@ GRFEXPORT void grf_sort (Grf *grf, int(*compar)(const void *, const void *)) {
  *	g2 should be before g1
  */
 GRFEXPORT int GRF_AlphaSort_Func(const GrfFile *g1, const GrfFile *g2) {
-#ifndef WIN32
-	return alphasort(g1->name, g2->name);
-#else
-	/*! \todo Write win32 code */
-	return 0;
-#endif
+	return strcoll (g1->name, g2->name);
 }
 
 /*! \brief Offset-based sorting callback function
