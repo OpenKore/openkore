@@ -472,6 +472,7 @@ sub mainLoop {
 			 || $oldMaster->{version} ne $master->{version}
 			 || $oldUsername ne $config{'username'}
 			 || $oldChar ne $config{'char'}) {
+				AI::clear;
 				relog();
 			} else {
 				AI::clear("move", "route", "mapRoute");
