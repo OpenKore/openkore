@@ -46,7 +46,7 @@ secureLogin_requestCode
 secureLogin_account 0
 
 [Philippines - pRO: Fenrir/Iris/Lydia]
-ip 210.1.70.69
+ip 202.57.118.232
 port 6900
 master_version 15
 version 1
@@ -56,7 +56,7 @@ secureLogin_requestCode
 secureLogin_account 0
 
 [Philippines - pRO: Loki/Sarah]
-ip 210.1.70.78
+ip 202.57.118.231
 port 6900
 master_version 15
 version 1
@@ -66,7 +66,7 @@ secureLogin_requestCode
 secureLogin_account 0
 
 [Philippines - pRO: Odin/Chaos]
-ip 210.1.70.68
+ip 202.57.118.233
 port 6900
 master_version 15
 version 1
@@ -74,6 +74,16 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+
+[Philippines - pRO: Urdr] 
+ip 202.57.118.231
+port 6900 
+master_version 27
+version 1 
+secureLogin 1 
+secureLogin_type 0 
+secureLogin_requestCode 
+secureLogin_account 0 
 
 [Europe - euRO]
 ip 62.109.138.134
