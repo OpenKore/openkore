@@ -1,3 +1,14 @@
+- Forgot to mention in the last News.txt:
+  followEmotion requires another config option: followEmotion_distance
+  The master must be within this distance to imitate his emoticons.
+
+
+ChangeLog for skore-revamped
+=============================
+
+Another skore-revamped release (for those who complain about support for
+(pre-)comodo):
+
 - Added GPL clause.
 - Improved platform autodetection. Won't attempt to execute 'uname -s'
   on Windows anymore.
@@ -18,12 +29,6 @@
 - New command: guild. Support for listing guild members and info (thanks
   to ModKore).
 
-
-------------------------------------------------------
-
-
-ChangeLog for skore-revamped
-=============================
 
 Based on blueviper22's mod for RO 4.0:
 
