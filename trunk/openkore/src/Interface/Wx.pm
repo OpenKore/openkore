@@ -435,7 +435,7 @@ sub updateStatusBar {
 }
 
 sub launchApp {
-	if ($buildType == 1) {
+	if ($buildType == 0) {
 		my @args = @_;
 		foreach (@args) {
 			$_ = "\"$_\"";
