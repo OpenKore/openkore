@@ -23,41 +23,56 @@ package Interface::Wx::TitleBar;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_BUTTON);
+use Wx::Event qw(EVT_BUTTON EVT_PAINT);
 use base qw(Wx::Panel);
 
+
+our (@brushes, $oldWidth, $font, $dark, $light);
+
+
 sub new {
-	my $class = shift;
-	my $parent = shift;
-	my $title = shift;
+	my ($class, $parent, $title) = @_;
 	my $self = $class->SUPER::new($parent, -1);
 
-	my $sizer = $self->{sizer} = new Wx::BoxSizer(wxHORIZONTAL);
-	$self->SetBackgroundColour(new Wx::Colour(75, 0, 150));
+	my $sizer = $self->{sizer} = new Wx::BoxSizer(wxVERTICAL);
+	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
+	$sizer->Add($hsizer, 1, wxALIGN_RIGHT);
+	$self->SetBackgroundColour(new Wx::Colour(98, 165, 241));
+	EVT_PAINT($self, \&onPaint);
 
-	my $label = $self->{label} = new Wx::StaticText($self, -1, $title);
-	$label->SetFont(new Wx::Font(8, wxDEFAULT, wxNORMAL, wxBOLD, 0, 'Tahoma'));
-	$label->SetForegroundColour(new Wx::Colour(255, 255, 255));
-	$sizer->Add($label, 1, wxGROW | wxLEFT | wxRIGHT | wxADJUST_MINSIZE, 3);
+	if (!$font) {
+		if ($^O eq 'MSWin32') {
+			$font = new Wx::Font(8, wxDEFAULT, wxNORMAL, wxBOLD, 0, 'Tahoma');
+		} else {
+			$font = new Wx::Font(9, wxDEFAULT, wxNORMAL, wxBOLD, 0, 'Nimbus Sans L');
+		}
+	}
+
+	my $size = 20;
 
 	Wx::Image::AddHandler(new Wx::PNGHandler);
 	my $image = Wx::Image->newNameType(f('Interface', 'Wx', 'window.png'), wxBITMAP_TYPE_PNG);
-	my $detachButton = $self->{detachButton} = new Wx::BitmapButton($self, 1024, new Wx::Bitmap($image));
+	my $detachButton = new Wx::BitmapButton($self, 1024, new Wx::Bitmap($image),
+		wxDefaultPosition, [$size, $size]);
+	$self->{detachButton} = $detachButton;
 	$detachButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
-	$sizer->Add($detachButton);
+	$hsizer->Add($detachButton, 0, wxGROW);
+
+	$image = Wx::Image->newNameType(f('Interface', 'Wx', 'close.png'), wxBITMAP_TYPE_PNG);
+	my $closeButton = new Wx::BitmapButton($self, 1025, new Wx::Bitmap($image),
+		wxDefaultPosition, [$size, $size]);
+	$self->{closeButton} = $closeButton;
+	$closeButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+	$hsizer->Add($closeButton, 0, wxGROW);
+
 	$self->EVT_BUTTON(1024, sub {
 		$self->{onDetach}->($self->{onDetachData}) if ($self->{onDetach});
 	});
-
-	$image = Wx::Image->newNameType(f('Interface', 'Wx', 'close.png'), wxBITMAP_TYPE_PNG);
-	my $closeButton = $self->{closeButton} = new Wx::BitmapButton($self, 1025, new Wx::Bitmap($image));
-	$closeButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
-	$sizer->Add($closeButton);
 	$self->EVT_BUTTON(1025, sub {
 		$self->{onClose}->($self->{onCloseData}) if ($self->{onClose});
 	});
 
-	$self->SetSizeHints($closeButton->GetBestSize->GetWidth * 2 + 8, -1);
+	$self->SetSizeHints($closeButton->GetBestSize->GetWidth * 2 + 8, $size);
 	$self->SetSizer($sizer);
 	$self->{title} = $title;
 	return $self;
@@ -68,7 +83,7 @@ sub title {
 	if ($_[0]) {
 		if ($self->{title} ne $_[0]) {
 			$self->{title} = $_[0];
-			$self->{label}->SetLabel($_[0]);
+			$self->Update;
 		}
 	} else {
 		return $self->{title};
@@ -102,6 +117,57 @@ sub f {
 	my $f = File::Spec->catfile('src', @_);
 	$f = File::Spec->catfile(@_) if (! -f $f);
 	return $f;
+}
+
+sub onPaint {
+	my $self = shift;
+	my $dc = new Wx::PaintDC($self);
+
+	my $width = $self->GetSize->GetWidth;
+	if (!defined $oldWidth || $width != $oldWidth) {
+		@brushes = ();
+		my @from = (0, 40, 130);
+		#my @to = (98, 165, 241);
+		my @to = (129, 188, 255);
+		for (my $i = 0; $i < 255; $i++) {
+			my $color = new Wx::Colour(
+				$from[0] + ($to[0] - $from[0]) / 255 * $i,
+				$from[1] + ($to[1] - $from[1]) / 255 * $i,
+				$from[2] + ($to[2] - $from[2]) / 255 * $i
+			);
+			my $brush = new Wx::Brush($color, wxSOLID);
+			push @brushes, $brush;
+		}
+		$oldWidth = $width;
+	}
+
+	my $x = 0;
+	my $block = $width / 255;
+	my $height = $self->GetSize->GetHeight;
+	$dc->SetPen(wxTRANSPARENT_PEN);
+	for (my $i = 0; $i < 255; $i++) {
+		my $x = $block * $i;
+		$dc->SetBrush($brushes[$i]);
+		$dc->DrawRectangle($x, 0, $block + 1, $height);
+	}
+
+	$width -= $self->{detachButton}->GetSize->GetWidth + $self->{closeButton}->GetSize->GetWidth;
+	$dc->SetBrush(wxTRANSPARENT_BRUSH);
+	if (!$dark) {
+		$dark = new Wx::Pen(new Wx::Colour(164, 164, 164), 1, wxSOLID);
+		$light = new Wx::Pen(new Wx::Colour(241, 241, 241), 1, wxSOLID);
+	}
+	$dc->SetPen($light);
+	$dc->DrawLine(0, 0, $width, 0);
+	$dc->DrawLine(0, 0, 0, $height);
+	$dc->SetPen($dark);
+	$dc->DrawLine(0, $height - 1, $width - 1, $height - 1);
+	$dc->DrawLine($width - 1, 0, $width - 1, $height - 1);
+
+	$dc->SetFont($font);
+	$dc->SetTextForeground(wxWHITE);
+	my (undef, $textHeight) = $dc->GetTextExtent($self->{title}, $font);
+	$dc->DrawText($self->{title}, 6, $height / 2 - $textHeight / 2);
 }
 
 1;
