@@ -137,7 +137,7 @@ h2:hover {
 	border: lightgray dotted 1px;
 	background: #fffde8;
 	padding: 6px;
-	//padding-bottom: 0;
+	overflow: auto;
 }
 .example .comment {
 	color: darkblue;
