@@ -8989,10 +8989,12 @@ sub sendMessage {
 
 sub sit {
 	$timeout{ai_sit_wait}{time} = time;
+	aiRemove("standing");
 	AI::queue("sitting");
 }
 
 sub stand {
+	aiRemove("sitting");
 	AI::queue("standing");
 }
 
