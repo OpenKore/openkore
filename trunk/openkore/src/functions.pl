@@ -3425,8 +3425,7 @@ sub AI {
 		if (!$args->{attackMethod}{type}) {
 			if ($config{'attackUseWeapon'}) {
 				$args->{attackMethod}{distance} = $config{'attackDistance'};
-				$args->{attackMethod}{maxDistance} = ($config{'attackDistance'} > $config{'attackMaxDistance'})
-						? $config{'attackDistance'} : $config{'attackMaxDistance'};
+				$args->{attackMethod}{maxDistance} = $config{'attackMaxDistance'};
 				$args->{attackMethod}{type} = "weapon";
 			} else {
 				$args->{attackMethod}{distance} = 30;
@@ -3459,6 +3458,10 @@ sub AI {
 			if ($config{'runFromTarget'} && $config{'runFromTarget_dist'} > $args->{attackMethod}{distance}) {
 				$args->{attackMethod}{distance} = $config{'runFromTarget_dist'};
 			}
+		}
+
+		if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
+			$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 		}
 
 		if ($char->{sitting}) {
