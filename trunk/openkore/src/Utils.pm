@@ -35,7 +35,7 @@ our @EXPORT = (
 	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
 	findKey findKeyString minHeapAdd),
 	# Math
-	qw(calcPosition distance getVector moveAlongVector normalize vectorToDegree),
+	qw(calcPosition checkMovementDirection distance getVector moveAlongVector normalize vectorToDegree),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
@@ -473,6 +473,30 @@ sub calcPosition {
 		$result{y} = int sprintf("%.0f", $result{y});
 		return \%result;
 	}
+}
+
+##
+# checkMovementDirection(pos1, vec, pos2, fuzziness)
+#
+# Check whether an object - which is moving into the direction of vector $vec,
+# and is currently at position $pos1 - is moving towards $pos2.
+#
+# Example:
+# # Get monster movement direction
+# my %vec;
+# getVector(\%vec, $monster->{pos_to}, $monster->{pos});
+# if (checkMovementDirection($monster->{pos}, \%vec, $char->{pos}, 15)) {
+# 	warning "Monster $monster->{name} is moving towards you\n";
+#}
+sub checkMovementDirection {
+	my ($pos1, $vec, $pos2, $fuzziness) = @_;
+	my %objVec;
+	getVector(\%objVec, $pos2, $pos1);
+
+	my $movementDegree = vectorToDegree($vec);
+	my $obj1ToObj2Degree = vectorToDegree(\%objVec);
+	return abs($obj1ToObj2Degree - $movementDegree) <= $fuzziness ||
+		(($obj1ToObj2Degree - $movementDegree) % 360) <= $fuzziness;
 }
 
 ##

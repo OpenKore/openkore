@@ -449,12 +449,12 @@ sub checkFollowMode {
 #
 # Checks whether a monster is "clean" (not being attacked by anyone).
 sub checkMonsterCleanness {
-	my $ID = shift;
-
 	return 1 if (!$config{attackAuto});
+	my $ID = shift;
+	my $monster = $monsters{$ID};
 
 	# If party attacked monster, or if monster attacked/missed party
-	if ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0) {
+	if ($monster->{'dmgFromParty'} > 0 || $monster->{'dmgToParty'} > 0 || $monster->{'missedToParty'} > 0) {
 		return 1;
 	}
 
