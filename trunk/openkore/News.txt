@@ -4,12 +4,16 @@
 
 Bug fixes:
 - Fix bulk selling bug which caused disconnect.
+- Correctly set names for VVVS weapons.
 
 New features:
 - Don't use teleportAuto_minAggressives if the more specific
   teleportAuto_minAggressivesInLock is specified.
 - Don't use teleportAuto_maxDmg if the more specific
   teleportAuto_maxDmgInLock is specified.
+
+Credits:
+- jsteng: VVVS weapon name bugfix.
 
 ==================
 ### 1.5.2 (beta)
