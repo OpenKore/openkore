@@ -10235,8 +10235,14 @@ sub avoidGM_near {
 		}
 
 		if ($statusGM && $players{$playersID[$i]}{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-			my $msg = "GM $players{$playersID[$i]}{'name'} is nearby, ";
+			my %args = (
+				name => $players{$playersID[$i]}{name},
+				ID => $playersID[$i]
+			);
+			Plugins::callHook('avoidGM_near', \%args);
+			return 1 if ($args{return});
 
+			my $msg = "GM $players{$playersID[$i]}{'name'} is nearby, ";
 			if ($config{avoidGM_near} == 1) {
 				# Mode 1: teleport & disconnect
 				useTeleport(1);
