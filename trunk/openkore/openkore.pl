@@ -151,10 +151,11 @@ use Misc;
 use AI;
 use Skills;
 use Interface;
+use ChatQueue;
 use IPC;
 use IPC::Processors;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Skills Interface
+	Network Network::Send Commands Misc AI Skills Interface ChatQueue
 	IPC IPC::Processors/);
 
 Log::message("$Settings::versionText\n");

@@ -7,7 +7,7 @@ TYPE=bz2
 # Uncomment the next line if you want a tar.gz archive
 # TYPE=gz
 
-DIRS=(. Interface Interface/Console Interface/Console/Other Interface/Wx Network) PACKAGEDIR=$PACKAGE-$VERSION
+DIRS=(. src src/IPC src/Interface/Console src/Interface/Console/Other src/Interface/Wx) PACKAGEDIR=$PACKAGE-$VERSION
 ADDITIONAL=(Distfiles makedist.sh Makefile Makefile.win32 Makefile.in)
 export GZIP=--best
 export BZIP2=-9

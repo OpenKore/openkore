@@ -75,6 +75,7 @@ our %handlers = (
 	portals		=> \&cmdPortalList,
 	s		=> \&cmdStatus,
 	send		=> \&cmdSendRaw,
+	sit		=> \&cmdSit,
 	skills		=> \&cmdSkills,
 	spells		=> \&cmdSpells,
 	sl		=> \&cmdUseSkill,
@@ -82,6 +83,7 @@ our %handlers = (
 	sp		=> \&cmdPlayerSkill,
 	ss		=> \&cmdUseSkill,
 	st		=> \&cmdStats,
+	stand		=> \&cmdStand,
 	stat_add	=> \&cmdStatAdd,
 	tank		=> \&cmdTank,
 	testshop	=> \&cmdTestShop,
@@ -136,12 +138,14 @@ our %descriptions = (
 	portals		=> 'List portals that are on screen.',
 	s		=> 'Display character status.',
 	send		=> 'Send a raw packet to the server.',
+	sit		=> 'Sit down.',
 	skills		=> 'Show skills or add skill point.',
 	sl		=> 'Use skill on location.',
 	sm		=> 'Use skill on monster.',
 	sp		=> 'Use skill on player.',
 	ss		=> 'Use skill on self.',
 	st		=> 'Display stats.',
+	stand		=> 'Stand up.',
 	stat_add	=> 'Add status point.',
 	tank		=> 'Tank for a player.',
 	testshop	=> 'Show what your vending shop would well.',
@@ -447,7 +451,7 @@ sub cmdCart {
 			error	"Error in function 'cart desc' (Show Cart Item Description)\n" .
 				"Cart Item $arg2 does not exist.\n";
 		} else {
-			main::printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
+			printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
 		}
 
 	} else {
@@ -845,7 +849,7 @@ sub cmdInventory {
 		error	"Error in function 'i' (Inventory Item Desciption)\n" .
 			"Inventory Item $arg2 does not exist\n";
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-		main::printItemDesc($chars[$config{'char'}]{'inventory'}[$arg2]{'nameID'});
+		printItemDesc($chars[$config{'char'}]{'inventory'}[$arg2]{'nameID'});
 
 	} else {
 		error	"Syntax Error in function 'i' (Inventory List)\n" .
@@ -1117,7 +1121,7 @@ sub cmdPrivateMessage {
 			error	"Error in function 'pm' (Private Message)\n" .
 				"Quick look-up $user does not exist\n";
 		} else {
-			main::sendMessage(\$remote_socket, "pm", $msg, $privMsgUsers[$user - 1]);
+			sendMessage(\$remote_socket, "pm", $msg, $privMsgUsers[$user - 1]);
 			$lastpm{msg} = $msg;
 			$lastpm{user} = $privMsgUsers[$user - 1];
 		}
@@ -1126,7 +1130,7 @@ sub cmdPrivateMessage {
 		if (!defined binFind(\@privMsgUsers, $user)) {
 			push @privMsgUsers, $user;
 		}
-		main::sendMessage(\$remote_socket, "pm", $msg, $user);
+		sendMessage(\$remote_socket, "pm", $msg, $user);
 		$lastpm{msg} = $msg;
 		$lastpm{user} = $user;
 	}
@@ -1161,6 +1165,20 @@ sub cmdReload {
 sub cmdSendRaw {
 	my (undef, $args) = @_;
 	sendRaw(\$remote_socket, $args);
+}
+
+sub cmdSit {
+	$ai_v{attackAuto_old} = $config{attackAuto};
+	$ai_v{route_randomWalk_old} = $config{route_randomWalk};
+	$ai_v{teleportAuto_idle_old} = $config{teleportAuto_idle};
+	$ai_v{itemsGatherAuto_old} = $config{itemsGatherAuto};
+	$config{attackAuto} = 1 if ($config{attackAuto});
+	$config{route_randomWalk} = 0;
+	$config{teleportAuto_idle} = 0;
+	$config{itemsGatherAuto} = 0;
+	AI::clear("move", "route", "mapRoute");
+	main::sit();
+	$ai_v{sitAuto_forceStop} = 0;
 }
 
 sub cmdSpells {
@@ -1345,6 +1363,21 @@ sub cmdUseSkill {
 	} else {
 		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
 	}
+}
+
+sub cmdStand {
+	if (defined $ai_v{attackAuto_old}) {
+		$config{attackAuto} = $ai_v{attackAuto_old};
+		$config{route_randomWalk} = $ai_v{route_randomWalk_old};
+		$config{teleportAuto_idle} = $ai_v{teleportAuto_idle_old};
+		$config{itemsGatherAuto} = $ai_v{itemsGatherAuto_old};
+		delete $ai_v{attackAuto_old};
+		delete $ai_v{route_randomWalk_old};
+		delete $ai_v{teleportAuto_idle_old};
+		delete $ai_v{itemsGatherAuto_old};
+		main::stand();
+	}
+	$ai_v{sitAuto_forceStop} = 1;
 }
 
 sub cmdStatAdd {
@@ -1740,7 +1773,6 @@ sub cmdArrowCraft {
 		}
 	} elsif ($arg1 eq "use") {
 		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
-			#main::ai_skillUse(\$remote_socket, 'AC_MAKINGARROW', 1, $accountID);
 			main::ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
 		} else {
 			error	"Error in function 'arrowcraft' (Create Arrows)\n" .

@@ -31,7 +31,8 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
-use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete sendCharLogin sendMove);
+use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete sendCharLogin sendMove
+		sendChat sendPartyChat sendGuildChat sendPrivateMsg);
 
 our @EXPORT = (
 	# Config modifiers
@@ -59,19 +60,26 @@ our @EXPORT = (
 	qw/launchURL/,
 
 	# Misc
-	qw/center
+	qw/
+	avoidGM_talk
+	avoidList_talk
+	center
 	charSelectScreen
 	checkFollowMode
 	checkMonsterCleanness
 	createCharacter
+	getIDFromChat
 	getPlayer
 	getPortalDestName
+	getResponse
 	getSpellName
 	manualMove
 	objectAdded
 	positionNearPlayer
 	positionNearPortal
 	printItemDesc
+	quit
+	sendMessage
 	stopAttack
 	stripLanguageCode
 	whenGroundStatus
@@ -539,6 +547,50 @@ sub launchURL {
 #######################################
 
 
+sub avoidGM_talk {
+	return 0 if ($xkore || !$config{avoidGM_talk});
+	my ($user, $msg) = @_;
+
+	# Check whether this "GM" is on the ignore list
+	# in order to prevent false matches
+	my $j = 0;
+	while ($config{"avoid_ignore_$j"} ne "") {
+		if ($user eq $config{"avoid_ignore_$j"}) {
+			return 0;
+		}
+		$j++;
+	}
+
+	if ($user =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+		warning "Disconnecting to avoid GM!\n";
+		chatLog("k", "*** The GM $user talked to you, auto disconnected ***\n");
+
+		my $tmp = $config{avoidGM_reconnect};
+		warning "Disconnect for $tmp seconds...\n";
+		$timeout_ex{master}{time} = time;
+		$timeout_ex{master}{timeout} = $tmp;
+		Network::disconnect(\$remote_socket);
+		return 1;
+	}
+	return 0;
+}
+
+sub avoidList_talk {
+	return 0 if ($xkore || !$config{avoidList});
+	my ($user, $msg, $ID) = @_;
+
+	if ($avoid{Players}{lc($user)}{disconnect_on_chat} || $avoid{ID}{$ID}{disconnect_on_chat}) {
+		warning "Disconnecting to avoid $user!\n";
+		chatLog("k", "*** $user talked to you, auto disconnected ***\n");
+		warning "Disconnect for $config{avoidList_reconnect} seconds...\n";
+		$timeout_ex{master}{time} = time;
+		$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
+		Network::disconnect(\$remote_socket);
+		return 1;
+	}
+	return 0;
+}
+
 ##
 # center(string, width, [fill])
 #
@@ -845,6 +897,30 @@ sub createCharacter {
 	}
 }
 
+sub getIDFromChat {
+	my $r_hash = shift;
+	my $msg_user = shift;
+	my $match_text = shift;
+	my $qm;
+	if ($match_text !~ /\w+/ || $match_text eq "me" || $match_text eq "") {
+		foreach (keys %{$r_hash}) {
+			next if ($_ eq "");
+			if ($msg_user eq $r_hash->{$_}{name}) {
+				return $_;
+			}
+		}
+	} else {
+		foreach (keys %{$r_hash}) {
+			next if ($_ eq "");
+			$qm = quotemeta $match_text;
+			if ($r_hash->{$_}{name} =~ /$qm/i) {
+				return $_;
+			}
+		}
+	}
+	return undef;
+}
+
 sub getPortalDestName {
 	my $ID = shift;
 	my %hash; # We only want unique names, so we use a hash
@@ -882,6 +958,21 @@ sub getPlayer {
 		}
 	}
 	return undef;
+}
+
+sub getResponse {
+	my $type = quotemeta shift;
+
+	my @keys;
+	foreach my $key (keys %responses) {
+		if ($key =~ /^$type\_\d+$/) {
+			push @keys, $key;
+		} 
+	}
+
+	my $msg = $responses{$keys[int(rand(@keys))]};
+	$msg =~ s/\%\$(\w+)/$responseVars{$1}/eig;
+	return $msg;
 }
 
 sub getSpellName {
@@ -950,6 +1041,113 @@ sub printItemDesc {
 	message("Item: $items_lut{$itemID}\n\n", "info");
 	message($itemsDesc_lut{$itemID}, "info");
 	message("==============================================\n", "info");
+}
+
+sub quit {
+	$quit = 1;
+	message "Exiting...\n", "system";
+}
+
+sub sendMessage {
+	my $r_socket = shift;
+	my $type = shift;
+	my $msg = shift;
+	my $user = shift;
+	my ($i, $j);
+	my @msg;
+	my @msgs;
+	my $oldmsg;
+	my $amount;
+	my $space;
+	@msgs = split /\\n/,$msg;
+	for ($j = 0; $j < @msgs; $j++) {
+		@msg = split / /, $msgs[$j];
+		undef $msg;
+		for ($i = 0; $i < @msg; $i++) {
+			if (!length($msg[$i])) {
+				$msg[$i] = " ";
+				$space = 1;
+			}
+			if (length($msg[$i]) > $config{'message_length_max'}) {
+				while (length($msg[$i]) >= $config{'message_length_max'}) {
+					$oldmsg = $msg;
+					if (length($msg)) {
+						$amount = $config{'message_length_max'};
+						if ($amount - length($msg) > 0) {
+							$amount = $config{'message_length_max'} - 1;
+							$msg .= " " . substr($msg[$i], 0, $amount - length($msg));
+						}
+					} else {
+						$amount = $config{'message_length_max'};
+						$msg .= substr($msg[$i], 0, $amount);
+					}
+					if ($type eq "c") {
+						sendChat($r_socket, $msg);
+					} elsif ($type eq "g") { 
+						sendGuildChat($r_socket, $msg); 
+					} elsif ($type eq "p") {
+						sendPartyChat($r_socket, $msg);
+					} elsif ($type eq "pm") {
+						sendPrivateMsg($r_socket, $user, $msg);
+						undef %lastpm;
+						$lastpm{'msg'} = $msg;
+						$lastpm{'user'} = $user;
+						push @lastpm, {%lastpm};
+					} elsif ($type eq "k" && $config{'XKore'}) {
+						injectMessage($msg);
+	 				}
+					$msg[$i] = substr($msg[$i], $amount - length($oldmsg), length($msg[$i]) - $amount - length($oldmsg));
+					undef $msg;
+				}
+			}
+			if (length($msg[$i]) && length($msg) + length($msg[$i]) <= $config{'message_length_max'}) {
+				if (length($msg)) {
+					if (!$space) {
+						$msg .= " " . $msg[$i];
+					} else {
+						$space = 0;
+						$msg .= $msg[$i];
+					}
+				} else {
+					$msg .= $msg[$i];
+				}
+			} else {
+				if ($type eq "c") {
+					sendChat($r_socket, $msg);
+				} elsif ($type eq "g") { 
+					sendGuildChat($r_socket, $msg); 
+				} elsif ($type eq "p") {
+					sendPartyChat($r_socket, $msg);
+				} elsif ($type eq "pm") {
+					sendPrivateMsg($r_socket, $user, $msg);
+					undef %lastpm;
+					$lastpm{'msg'} = $msg;
+					$lastpm{'user'} = $user;
+					push @lastpm, {%lastpm};
+				} elsif ($type eq "k" && $config{'XKore'}) {
+					injectMessage($msg);
+				}
+				$msg = $msg[$i];
+			}
+			if (length($msg) && $i == @msg - 1) {
+				if ($type eq "c") {
+					sendChat($r_socket, $msg);
+				} elsif ($type eq "g") { 
+					sendGuildChat($r_socket, $msg); 
+				} elsif ($type eq "p") {
+					sendPartyChat($r_socket, $msg);
+				} elsif ($type eq "pm") {
+					sendPrivateMsg($r_socket, $user, $msg);
+					undef %lastpm;
+					$lastpm{'msg'} = $msg;
+					$lastpm{'user'} = $user;
+					push @lastpm, {%lastpm};
+				} elsif ($type eq "k" && $config{'XKore'}) {
+					injectMessage($msg);
+				}
+			}
+		}
+	}
 }
 
 sub stopAttack {

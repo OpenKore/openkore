@@ -120,7 +120,8 @@ sub initMapChangeVars {
 	$timeout{'ai_storageAuto'}{'time'} = time + 5;
 	$timeout{'ai_buyAuto'}{'time'} = time + 5;
 
-	aiRemove("attack");
+	AI::clear("attack");
+	ChatQueue::clear;
 
 	initOtherVars();
 	Plugins::callHook('packet_mapChange');
@@ -377,7 +378,7 @@ sub mainLoop {
 	# Process AI
 	my $i = 0;
 	do {
-		if ($conState == 5 && timeOut($timeout{'ai'}) && $remote_socket && $remote_socket->connected()) {
+		if ($conState == 5 && timeOut($timeout{ai}) && $remote_socket && $remote_socket->connected) {
 			AI($ai_cmdQue[$i]);
 		}
 		$ai_cmdQue-- if ($ai_cmdQue > 0);
@@ -1360,35 +1361,6 @@ sub parseCommand {
 			sendSell(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $arg2);
 		}
 
-	} elsif ($switch eq "sit") {
-		$ai_v{'attackAuto_old'} = $config{'attackAuto'};
-		$ai_v{'route_randomWalk_old'} = $config{'route_randomWalk'};
-		$ai_v{'teleportAuto_idle_old'} = $config{'teleportAuto_idle'};
-		$ai_v{'itemsGatherAuto_old'} = $config{'itemsGatherAuto'};
-		configModify("attackAuto", 1) if $config{attackAuto};
-		configModify("route_randomWalk", 0);
-		configModify("teleportAuto_idle", 0);
-		configModify("itemsGatherAuto", 0);
-		aiRemove("move");
-		aiRemove("route");
-		aiRemove("mapRoute");
-		sit();
-		$ai_v{'sitAuto_forceStop'} = 0;
-
-	} elsif ($switch eq "stand") {
-		if ($ai_v{'attackAuto_old'} ne "") {
-			configModify("attackAuto", $ai_v{'attackAuto_old'});
-			configModify("route_randomWalk", $ai_v{'route_randomWalk_old'});
-			configModify("teleportAuto_idle", $ai_v{'teleportAuto_idle_old'});
-			configModify("itemsGatherAuto", $ai_v{'itemsGatherAuto_old'});
-			undef $ai_v{'attackAuto_old'};
-			undef $ai_v{'route_randomWalk_old'};
-			undef $ai_v{'teleportAuto_idle_old'};
-			undef $ai_v{'itemsGatherAuto_old'};
-		}
-		stand();
-		$ai_v{'sitAuto_forceStop'} = 1;
-
 	} elsif ($switch eq "storage") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,-]+)/;
@@ -1613,7 +1585,7 @@ sub AI {
 	my %cmd = %{(shift)};
 
 
-	if (timeOut($timeout{'ai_wipe_check'})) {
+	if (timeOut($timeout{ai_wipe_check})) {
 		foreach (keys %players_old) {
 			delete $players_old{$_} if (time - $players_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
 		}
@@ -1644,7 +1616,7 @@ sub AI {
 		debug "Wiped old\n", "ai", 2;
 	}
 
-	if (timeOut($timeout{'ai_getInfo'})) {
+	if (timeOut($timeout{ai_getInfo})) {
 		while (@unknownObjects) {
 			my $ID = $unknownObjects[0];
 			my $object = $players{$ID} || $npcs{$ID};
@@ -1672,8 +1644,8 @@ sub AI {
 		$timeout{'ai_getInfo'}{'time'} = time;
 	}
 
-	if (!$config{'XKore'} && timeOut($timeout{'ai_sync'})) {
-		$timeout{'ai_sync'}{'time'} = time;
+	if (!$xkore && timeOut($timeout{ai_sync})) {
+		$timeout{ai_sync}{time} = time;
 		sendSync(\$remote_socket, getTickCount());
 	}
 
@@ -1723,468 +1695,7 @@ sub AI {
 		return;
 	}
 
-	if (%cmd) {
-		$responseVars{'cmd_user'} = $cmd{'user'};
-		if ($cmd{'user'} eq $chars[$config{'char'}]{'name'}) {
-			return;
-		}
- 		if ($cmd{'type'} eq "pm" || $cmd{'type'} eq "p" || $cmd{'type'} eq "g") {
-			$ai_v{'temp'}{'qm'} = quotemeta $config{'adminPassword'};
-			if ($cmd{msg} =~ /^$ai_v{'temp'}{'qm'}\b/) {
-				if ($overallAuth{$cmd{user}} == 1) {
-					sendMessage(\$remote_socket, "pm", getResponse("authF"), $cmd{'user'});
-				} else {
-					auth($cmd{'user'}, 1);
-					sendMessage(\$remote_socket, "pm", getResponse("authS"),$cmd{'user'});
-				}
-			}
-		}
-
-		if ($cmd{'type'} eq "c" || $cmd{'type'} eq "p" || $cmd{'type'} eq "g"){
-			#check if player is in area
-			if (defined($players{$cmd{ID}})) {
-				my $i = 0;
-				while ($config{"autoEmote_word_$i"} ne "") {
-					my $chat = $cmd{msg};
-					if ($chat =~/.*$config{"autoEmote_word_$i"}+$/i || $chat =~ /.*$config{"autoEmote_word_$i"}+\W/i) {
-						my %args = ();
-						$args{'timeout'} = time + rand (1) + 0.75;
-						$args{'emotion'} = $config{"autoEmote_num_$i"};
-						unshift @ai_seq, "sendEmotion";
-						unshift @ai_seq_args, \%args;
-						last;
-					}
-					$i++;
-				}
-			}
-		}
-
-		if ($config{"autoResponse"}) {
-			if ($cmd{type} eq "pm") {
-				my $i = 0;
-				while ($chat_resp{"words_said_$i"} ne "") {
-					my $privMsg = $cmd{msg};
-					if (($privMsg =~/.*$chat_resp{"words_said_$i"}+$/i || $chat =~ /.*$chat_resp{"words_said_$i"}+\W/i) &&
-						binFind(\@ai_seq, "respPMAuto") eq "") {
-						$args{'resp_num'} = $i;
-						$args{'resp_user'} = $privMsgUser;
-						unshift @ai_seq, "respPMAuto";
-						unshift @ai_seq_args, \%args;
-						$nextrespPMtime = time + 5;
-						last;
-					}
-					$i++;
-				}
-			} elsif (($cmd{type} eq "c" && defined($players{$cmd{ID}})) || $cmd{type} eq "p" || $cmd{type} eq "g") {
-				my $i = 0;
-				while ($chat_resp{"words_said_$i"} ne "") {
-					my $chat = $cmd{msg};
-					if (($chat =~/.*$chat_resp{"words_said_$i"}+$/i || $chat =~ /.*$chat_resp{"words_said_$i"}+\W/i)
-						&& binFind(\@ai_seq, "respAuto") eq "") {
-						$args{'resp_num'} = $i;
-						unshift @ai_seq, "respAuto";			
-						unshift @ai_seq_args, \%args;
-						$nextresptime = time + 5;
-						last;
-					}
-					$i++;
-				}
-			}
-		}
-		avoidGM_talk($cmd{user}, $cmd{msg});
-		avoidList_talk($cmd{user}, $cmd{msg}, unpack("L1",$cmd{ID}));
-
-		$ai_v{'temp'}{'qm'} = quotemeta $config{'callSign'};
-		if ($overallAuth{$cmd{'user'}} >= 1 
-			&& ($cmd{'msg'} =~ /\b$ai_v{'temp'}{'qm'}\b/i || $cmd{'type'} eq "pm")) {
-			if ($cmd{'msg'} =~ /\bsit\b/i) {
-				$ai_v{'sitAuto_forceStop'} = 0;
-				$ai_v{'attackAuto_old'} = $config{'attackAuto'};
-				$ai_v{'route_randomWalk_old'} = $config{'route_randomWalk'};
-				configModify("attackAuto", 1) if $config{attackAuto};
-				configModify("route_randomWalk", 0);
-				aiRemove("move");
-				aiRemove("route");
-				aiRemove("mapRoute");
-				sit();
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("sitS"), $cmd{'user'}) if $config{'verbose'};
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			} elsif ($cmd{'msg'} =~ /\bstand\b/i) {
-				$ai_v{'sitAuto_forceStop'} = 1;
-				if ($ai_v{'attackAuto_old'} ne "") {
-					configModify("attackAuto", $ai_v{'attackAuto_old'});
-					configModify("route_randomWalk", $ai_v{'route_randomWalk_old'});
-				}
-				stand();
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("standS"), $cmd{'user'}) if $config{'verbose'};
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			} elsif ($cmd{'msg'} =~ /\brelog\b/i) {
-				relog();
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("relogS"), $cmd{'user'}) if $config{'verbose'};
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			} elsif ($cmd{'msg'} =~ /\blogout\b/i) {
-				quit();
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("quitS"), $cmd{'user'}) if $config{'verbose'};
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			} elsif ($cmd{'msg'} =~ /\breload\b/i) {
-				Settings::parseReload($');
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("reloadS"), $cmd{'user'}) if $config{'verbose'};
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			} elsif ($cmd{'msg'} =~ /\bstatus\b/i) {
-				$responseVars{'char_sp'} = $chars[$config{'char'}]{'sp'};
-				$responseVars{'char_hp'} = $chars[$config{'char'}]{'hp'};
-				$responseVars{'char_sp_max'} = $chars[$config{'char'}]{'sp_max'};
-				$responseVars{'char_hp_max'} = $chars[$config{'char'}]{'hp_max'};
-				$responseVars{'char_lv'} = $chars[$config{'char'}]{'lv'};
-				$responseVars{'char_lv_job'} = $chars[$config{'char'}]{'lv_job'};
-				$responseVars{'char_exp'} = $chars[$config{'char'}]{'exp'};
-				$responseVars{'char_exp_max'} = $chars[$config{'char'}]{'exp_max'};
-				$responseVars{'char_exp_job'} = $chars[$config{'char'}]{'exp_job'};
-				$responseVars{'char_exp_job_max'} = $chars[$config{'char'}]{'exp_job_max'};
-				$responseVars{'char_weight'} = $chars[$config{'char'}]{'weight'};
-				$responseVars{'char_weight_max'} = $chars[$config{'char'}]{'weight_max'};
-				$responseVars{'zenny'} = $chars[$config{'char'}]{'zenny'};
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("statusS"), $cmd{'user'}) if $config{'verbose'};
-			} elsif ($cmd{'msg'} =~ /\bconf\b/i) {
-				$ai_v{'temp'}{'after'} = $';
-				($ai_v{'temp'}{'arg1'}) = $ai_v{'temp'}{'after'} =~ /^\s*(\w+)/;
-				($ai_v{'temp'}{'arg2'}) = $ai_v{'temp'}{'after'} =~ /^\s*\w+\s+([\s\S]+)\s*$/;
-				@{$ai_v{'temp'}{'conf'}} = keys %config;
-				if ($ai_v{'temp'}{'arg1'} eq "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confF1"), $cmd{'user'}) if $config{'verbose'};
-				} elsif (binFind(\@{$ai_v{'temp'}{'conf'}}, $ai_v{'temp'}{'arg1'}) eq "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confF2"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($ai_v{'temp'}{'arg2'} eq "") {
-					if ($ai_v{'temp'}{'arg1'} =~ /username/i || $ai_v{'temp'}{'arg1'} =~ /password/i) {
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confF3"), $cmd{'user'}) if $config{'verbose'};
-					} else {
-						$responseVars{'key'} = $ai_v{'temp'}{'arg1'};
-						$responseVars{'value'} = $config{$ai_v{'temp'}{'arg1'}};
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confS1"), $cmd{'user'}) if $config{'verbose'};
-						$timeout{'ai_thanks_set'}{'time'} = time;
-					}
-				} else {
-					$ai_v{'temp'}{'arg2'} = undef if ($ai_v{'temp'}{'arg2'} eq "none");
-					configModify($ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'});
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confS2"), $cmd{'user'}) if $config{'verbose'};
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				}
-			} elsif ($cmd{'msg'} =~ /\btimeout\b/i) {
-				$ai_v{'temp'}{'after'} = $';
-				($ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'}) = $ai_v{'temp'}{'after'} =~ /([\s\S]+) (\w+)/;
-				if ($ai_v{'temp'}{'arg1'} eq "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("timeoutF1"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($timeout{$ai_v{'temp'}{'arg1'}} eq "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("timeoutF2"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($ai_v{'temp'}{'arg2'} eq "") {
-					$responseVars{'key'} = $ai_v{'temp'}{'arg1'};
-					$responseVars{'value'} = $timeout{$ai_v{'temp'}{'arg1'}};
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("timeoutS1"), $cmd{'user'}) if $config{'verbose'};
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				} else {
-					setTimeout($ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'});
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("timeoutS2"), $cmd{'user'}) if $config{'verbose'};
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				}
-			} elsif ($cmd{'msg'} =~ /\bshut[\s\S]*up\b/i) {
-				if ($config{'verbose'}) {
-					configModify("verbose", 0);
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("verboseOffS"), $cmd{'user'});
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("verboseOffF"), $cmd{'user'});
-				}
-			} elsif ($cmd{'msg'} =~ /\bspeak\b/i) {
-				if (!$config{'verbose'}) {
-					configModify("verbose", 1);
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("verboseOnS"), $cmd{'user'});
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("verboseOnF"), $cmd{'user'});
-				}
-			} elsif ($cmd{'msg'} =~ /\bdate\b/i) {
-				$responseVars{'date'} = getFormattedDate(int(time));
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("dateS"), $cmd{'user'}) if $config{'verbose'};
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			} elsif ($cmd{'msg'} =~ /\bmove\b/i
-				&& $cmd{'msg'} =~ /\bstop\b/i) {
-				aiRemove("move");
-				aiRemove("route");
-				aiRemove("mapRoute");
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveS"), $cmd{'user'}) if $config{'verbose'};
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			} elsif ($cmd{'msg'} =~ /\bmove\b/i) {
-				$ai_v{'temp'}{'after'} = $';
-				$ai_v{'temp'}{'after'} =~ s/^\s+//;
-				$ai_v{'temp'}{'after'} =~ s/\s+$//;
-				($ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'}, $ai_v{'temp'}{'arg3'}) = $ai_v{'temp'}{'after'} =~ /(\d+)\D+(\d+)(.*?)$/;
-				undef $ai_v{'temp'}{'map'};
-				if ($ai_v{'temp'}{'arg1'} eq "") {
-					($ai_v{'temp'}{'map'}) = $ai_v{'temp'}{'after'} =~ /(.*?)$/;
-				} else {
-					$ai_v{'temp'}{'map'} = $ai_v{'temp'}{'arg3'};
-				}
-				$ai_v{'temp'}{'map'} =~ s/\s//g;
-				if (($ai_v{'temp'}{'arg1'} eq "" || $ai_v{'temp'}{'arg2'} eq "") && !$ai_v{'temp'}{'map'}) {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveF"), $cmd{'user'}) if $config{'verbose'};
-				} else {
-					$ai_v{'temp'}{'map'} = $field{'name'} if ($ai_v{'temp'}{'map'} eq "");
-					if ($maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}) {
-						if ($ai_v{'temp'}{'arg2'} ne "") {
-							message "Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'}): $ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'}\n", "route";
-							$ai_v{'temp'}{'x'} = $ai_v{'temp'}{'arg1'};
-							$ai_v{'temp'}{'y'} = $ai_v{'temp'}{'arg2'};
-						} else {
-							message "Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'})\n", "route";
-							undef $ai_v{'temp'}{'x'};
-							undef $ai_v{'temp'}{'y'};
-						}
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveS"), $cmd{'user'}) if $config{'verbose'};
-						ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'},
-							attackOnRoute => 1);
-						$timeout{'ai_thanks_set'}{'time'} = time;
-					} else {
-						error "Map $ai_v{'temp'}{'map'} does not exist\n";
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveF"), $cmd{'user'}) if $config{'verbose'};
-					}
-				}
-			} elsif ($cmd{'msg'} =~ /\blook\b/i) {
-				($ai_v{'temp'}{'body'}) = $cmd{'msg'} =~ /(\d+)/;
-				($ai_v{'temp'}{'head'}) = $cmd{'msg'} =~ /\d+ (\d+)/;
-				if ($ai_v{'temp'}{'body'} ne "") {
-					look($ai_v{'temp'}{'body'}, $ai_v{'temp'}{'head'});
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("lookS"), $cmd{'user'}) if $config{'verbose'};
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("lookF"), $cmd{'user'}) if $config{'verbose'};
-				}	
-
-			} elsif ($cmd{'msg'} =~ /\bfollow/i
-				&& $cmd{'msg'} =~ /\bstop\b/i) {
-				if ($config{'follow'}) {
-					aiRemove("follow");
-					configModify("follow", 0);
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("followStopS"), $cmd{'user'}) if $config{'verbose'};
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("followStopF"), $cmd{'user'}) if $config{'verbose'};
-				}
-			} elsif ($cmd{'msg'} =~ /\bfollow\b/i) {
-				$ai_v{'temp'}{'after'} = $';
-				$ai_v{'temp'}{'after'} =~ s/^\s+//;
-				$ai_v{'temp'}{'after'} =~ s/\s+$//;
-				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
-				if ($ai_v{'temp'}{'targetID'} ne "") {
-					aiRemove("follow");
-					ai_follow($players{$ai_v{'temp'}{'targetID'}}{'name'});
-					configModify("follow", 1);
-					configModify("followTarget", $players{$ai_v{'temp'}{'targetID'}}{'name'});
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("followS"), $cmd{'user'}) if $config{'verbose'};
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("followF"), $cmd{'user'}) if $config{'verbose'};
-				}
-			} elsif ($cmd{'msg'} =~ /\btank/i
-				&& $cmd{'msg'} =~ /\bstop\b/i) {
-				if (!$config{'tankMode'}) {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("tankStopF"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($config{'tankMode'}) {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("tankStopS"), $cmd{'user'}) if $config{'verbose'};
-					configModify("tankMode", 0);
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				}
-			} elsif ($cmd{'msg'} =~ /\btank/i) {
-				$ai_v{'temp'}{'after'} = $';
-				$ai_v{'temp'}{'after'} =~ s/^\s+//;
-				$ai_v{'temp'}{'after'} =~ s/\s+$//;
-				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
-				if ($ai_v{'temp'}{'targetID'} ne "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("tankS"), $cmd{'user'}) if $config{'verbose'};
-					configModify("tankMode", 1);
-					configModify("tankModeTarget", $players{$ai_v{'temp'}{'targetID'}}{'name'});
-					$timeout{'ai_thanks_set'}{'time'} = time;
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("tankF"), $cmd{'user'}) if $config{'verbose'};
-				}
-			} elsif ($cmd{'msg'} =~ /\btown/i) {
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveS"), $cmd{'user'}) if $config{'verbose'};
-				useTeleport(2);
-				
-			} elsif ($cmd{'msg'} =~ /\bwhere\b/i) {
-				$responseVars{'x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
-				$responseVars{'y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
-				$responseVars{'map'} = qq~$maps_lut{$field{'name'}.'.rsw'} ($field{'name'})~;
-				$timeout{'ai_thanks_set'}{'time'} = time;
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("whereS"), $cmd{'user'}) if $config{'verbose'};
-			}
-
-			#HEAL
-			if ($cmd{'msg'} =~ /\bheal\b/i) {
-				$ai_v{'temp'}{'after'} = $';
-				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
-				$ai_v{'temp'}{'after'} =~ s/\d+//;
-				$ai_v{'temp'}{'after'} =~ s/^\s+//;
-				$ai_v{'temp'}{'after'} =~ s/\s+$//;
-				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
-				if ($ai_v{'temp'}{'targetID'} eq "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'} > 0) {
-					undef $ai_v{'temp'}{'amount_healed'};
-					undef $ai_v{'temp'}{'sp_needed'};
-					undef $ai_v{'temp'}{'sp_used'};
-					undef $ai_v{'temp'}{'failed'};
-					undef @{$ai_v{'temp'}{'skillCasts'}};
-					while ($ai_v{'temp'}{'amount_healed'} < $ai_v{'temp'}{'amount'}) {
-						for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'}; $i++) {
-							$ai_v{'temp'}{'sp'} = 10 + ($i * 3);
-							$ai_v{'temp'}{'amount_this'} = int(($chars[$config{'char'}]{'lv'} + $chars[$config{'char'}]{'int'}) / 8)
-									* (4 + $i * 8);
-							last if ($ai_v{'temp'}{'amount_healed'} + $ai_v{'temp'}{'amount_this'} >= $ai_v{'temp'}{'amount'});
-						}
-						$ai_v{'temp'}{'sp_needed'} += $ai_v{'temp'}{'sp'};
-						$ai_v{'temp'}{'amount_healed'} += $ai_v{'temp'}{'amount_this'};
-					}
-					while ($ai_v{'temp'}{'sp_used'} < $ai_v{'temp'}{'sp_needed'} && !$ai_v{'temp'}{'failed'}) {
-						for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'}; $i++) {
-							$ai_v{'temp'}{'lv'} = $i;
-							$ai_v{'temp'}{'sp'} = 10 + ($i * 3);
-							if ($ai_v{'temp'}{'sp_used'} + $ai_v{'temp'}{'sp'} > $chars[$config{'char'}]{'sp'}) {
-								$ai_v{'temp'}{'lv'}--;
-								$ai_v{'temp'}{'sp'} = 10 + ($ai_v{'temp'}{'lv'} * 3);
-								last;
-							}
-							last if ($ai_v{'temp'}{'sp_used'} + $ai_v{'temp'}{'sp'} >= $ai_v{'temp'}{'sp_needed'});
-						}
-						if ($ai_v{'temp'}{'lv'} > 0) {
-							$ai_v{'temp'}{'sp_used'} += $ai_v{'temp'}{'sp'};
-							$ai_v{'temp'}{'skillCast'}{'skill'} = 'AL_HEAL';
-							$ai_v{'temp'}{'skillCast'}{'lv'} = $ai_v{'temp'}{'lv'};
-							$ai_v{'temp'}{'skillCast'}{'maxCastTime'} = 0;
-							$ai_v{'temp'}{'skillCast'}{'minCastTime'} = 0;
-							$ai_v{'temp'}{'skillCast'}{'ID'} = $ai_v{'temp'}{'targetID'};
-							unshift @{$ai_v{'temp'}{'skillCasts'}}, {%{$ai_v{'temp'}{'skillCast'}}};
-						} else {
-							$responseVars{'char_sp'} = $chars[$config{'char'}]{'sp'} - $ai_v{'temp'}{'sp_used'};
-							sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF2"), $cmd{'user'}) if $config{'verbose'};
-							$ai_v{'temp'}{'failed'} = 1;
-						}
-					}
-					if (!$ai_v{'temp'}{'failed'}) {
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
-					}
-					foreach (@{$ai_v{'temp'}{'skillCasts'}}) {
-						ai_skillUse($$_{'skill'}, $$_{'lv'}, $$_{'maxCastTime'}, $$_{'minCastTime'}, $$_{'ID'});
-					}
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
-				}
-			}
-
-
-			#INC AGI
-			if ($cmd{'msg'} =~ /\bagi\b/i){
-				$ai_v{'temp'}{'after'} = $';
-				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
-				$ai_v{'temp'}{'after'} =~ s/\d+//;
-				$ai_v{'temp'}{'after'} =~ s/^\s+//;
-				$ai_v{'temp'}{'after'} =~ s/\s+$//;
-				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
-				if ($ai_v{'temp'}{'targetID'} eq "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($chars[$config{'char'}]{'skills'}{'AL_INCAGI'}{'lv'} > 0) {
-					undef $ai_v{'temp'}{'failed'};
-					$ai_v{'temp'}{'failed'} = 1;
-					for ($i = $chars[$config{'char'}]{'skills'}{'AL_INCAGI'}{'lv'}; $i >=1; $i--) {
-						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{'AL_INCAGI'}{$i}) {
-							ai_skillUse('AL_INCAGI', $i, 0, 0, $ai_v{'temp'}{'targetID'});
-							$ai_v{'temp'}{'failed'} = 0;
-							last;
-						}
-					}
-					if (!$ai_v{'temp'}{'failed'}) {
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
-					}else{
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF2"), $cmd{'user'}) if $config{'verbose'};
-					}
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
-				}
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			}
-
-
-			#BLESSING
-			if ($cmd{'msg'} =~ /\bbless\b/i || $cmd{'msg'} =~ /\bblessing\b/i){
-				$ai_v{'temp'}{'after'} = $';
-				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
-				$ai_v{'temp'}{'after'} =~ s/\d+//;
-				$ai_v{'temp'}{'after'} =~ s/^\s+//;
-				$ai_v{'temp'}{'after'} =~ s/\s+$//;
-				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
-				if ($ai_v{'temp'}{'targetID'} eq "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($chars[$config{'char'}]{'skills'}{'AL_BLESSING'}{'lv'} > 0) {
-					undef $ai_v{'temp'}{'failed'};
-					$ai_v{'temp'}{'failed'} = 1;
-					for ($i = $chars[$config{'char'}]{'skills'}{'AL_BLESSING'}{'lv'}; $i >=1; $i--) {
-						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{'AL_BLESSING'}{$i}) {
-							ai_skillUse('AL_BLESSING', $i, 0, 0, $ai_v{'temp'}{'targetID'});
-							$ai_v{'temp'}{'failed'} = 0;
-							last;
-						}
-					}
-					if (!$ai_v{'temp'}{'failed'}) {
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
-					}else{
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF2"), $cmd{'user'}) if $config{'verbose'};
-					}
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
-				}
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			}
-
-
-			#Kyrie
-			if ($cmd{'msg'} =~ /\bkyrie\b/i){
-				$ai_v{'temp'}{'after'} = $';
-				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
-				$ai_v{'temp'}{'after'} =~ s/\d+//;
-				$ai_v{'temp'}{'after'} =~ s/^\s+//;
-				$ai_v{'temp'}{'after'} =~ s/\s+$//;
-				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
-				if ($ai_v{'temp'}{'targetID'} eq "") {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($chars[$config{'char'}]{'skills'}{'PR_KYRIE'}{'lv'} > 0) {
-					undef $ai_v{'temp'}{'failed'};
-					$ai_v{'temp'}{'failed'} = 1;
-					for ($i = $chars[$config{'char'}]{'skills'}{'PR_KYRIE'}{'lv'}; $i >=1; $i--) {
-						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{'PR_KYRIE'}{$i}) {
-							ai_skillUse('PR_KYRIE', $i, 0, 0, $ai_v{'temp'}{'targetID'});
-							$ai_v{'temp'}{'failed'} = 0;
-							last;
-						}
-					}
-					if (!$ai_v{'temp'}{'failed'}) {
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
-					}else{
-						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF2"), $cmd{'user'}) if $config{'verbose'};
-					}
-				} else {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
-				}
-				$timeout{'ai_thanks_set'}{'time'} = time;
-			}
-
-
-			if ($cmd{'msg'} =~ /\bthank/i || $cmd{'msg'} =~ /\bthn/i) {
-				if (!timeOut(\%{$timeout{'ai_thanks_set'}})) {
-					$timeout{'ai_thanks_set'}{'time'} -= $timeout{'ai_thanks_set'}{'timeout'};
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("thankS"), $cmd{'user'}) if $config{'verbose'};
-				}
-			}
-		}
-	}
+	ChatQueue::processFirst;
 
 
 	##### MISC #####
@@ -4307,7 +3818,9 @@ sub AI {
 					stopAttack();
 				}
 
-				if ($args->{x} ne "") {
+				if ($skillsArea{$handle} == 2) {
+					sendSkillUse(\$remote_socket, $skillID, $args->{lv}, $accountID);
+				} elsif ($args->{x} ne "") {
 					sendSkillUseLoc(\$remote_socket, $skillID, $args->{lv}, $args->{x}, $args->{y});
 				} else {
 					sendSkillUse(\$remote_socket, $skillID, $args->{lv}, $args->{target});
@@ -6326,18 +5839,10 @@ sub parseMsg {
 		stripLanguageCode(\$chatMsg);
 		$chat = "$chatMsgUser : $chatMsg";
 
-		my %item;
-		$item{type} = "c";
-		$item{ID} = $ID;
-		$item{user} = $chatMsgUser;
-		$item{msg} = $chatMsg;
-		$item{time} = time;
-		binAdd(\@ai_cmdQue, \%item);
-		$ai_cmdQue++;
-
 		chatLog("c", "$chat\n") if ($config{'logChat'});
 		message "$chat\n", "publicchat";
 
+		ChatQueue::add('c', $ID, $chatMsgUser, $chatMsg);
 		Plugins::callHook('packet_pubMsg', { 
 			pubMsgUser => $chatMsgUser, 
 			pubMsg => $chatMsg 
@@ -6480,18 +5985,10 @@ sub parseMsg {
 		}
 
 		stripLanguageCode(\$privMsg);
-
-		my %item;
-		$item{type} = "pm";
-		$item{user} = $privMsgUser;
-		$item{msg} = $privMsg;
-		$item{time} = time;
-		binAdd(\@ai_cmdQue, \%item);
-		$ai_cmdQue++;
-
 		chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
 		message "(From: $privMsgUser) : $privMsg\n", "pm";
 
+		ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
 		Plugins::callHook('packet_privMsg', {
 			privMsgUser => $privMsgUser,
 			privMsg => $privMsg
@@ -6516,15 +6013,9 @@ sub parseMsg {
 		$chat =~ s/\000$//;
 
 		stripLanguageCode(\$chat);
-
-		my %item;
-		$item{type} = "gmchat";
-		$item{msg} = $chat;
-		$item{time} = time;
-		binAdd(\@ai_cmdQue, \%item);
-		$ai_cmdQue++;
 		chatLog("s", "$chat\n") if ($config{'logSystemChat'});
 		message "$chat\n", "schat";
+		ChatQueue::add('gm', undef, undef, $chat);
 
 	} elsif ($switch eq "009C") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -7685,17 +7176,9 @@ sub parseMsg {
 		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		$chatMsgUser =~ s/ $//;
 
-		my %item;
-		$item{type} = "p";
-		$item{ID} = $ID;
-		$item{user} = $chatMsgUser;
-		$item{msg} = $chatMsg;
-		$item{time} = time;
-		binAdd(\@ai_cmdQue, \%item);
-		$ai_cmdQue++;
-
 		message "%$chat\n", "partychat";
-		chatLog("p", $chat."\n") if ($config{'logPartyChat'});
+		chatLog("p", "$chat\n") if ($config{'logPartyChat'});
+		ChatQueue::add('p', $ID, $chatMsgUser, $chatMsg);
 
 	# Hambo Started
 	# 3 Packets About MVP
@@ -8554,17 +8037,9 @@ sub parseMsg {
 		stripLanguageCode(\$chatMsg);
 		$chat = "$chatMsgUser : $chatMsg";
 
-		my %item;
-		$item{type} = "g";
-		$item{ID} = $ID;
-		$item{user} = $chatMsgUser;
-		$item{msg} = $chatMsg;
-		$item{time} = time;
-		binAdd(\@ai_cmdQue, \%item);
-		$ai_cmdQue++;
-
 		chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 		message "[Guild] $chat\n", "guildchat";
+		ChatQueue::add('g', $ID, $chatMsgUser, $chatMsg);
 
 	} elsif ($switch eq "0194") {
 		my $ID = substr($msg, 2, 4);
@@ -8990,29 +8465,6 @@ sub ai_getPlayerAggressives {
 	return @agMonsters;
 }
 
-sub ai_getIDFromChat {
-	my $r_hash = shift;
-	my $msg_user = shift;
-	my $match_text = shift;
-	my $qm;
-	if ($match_text !~ /\w+/ || $match_text eq "me") {
-		foreach (keys %{$r_hash}) {
-			next if ($_ eq "");
-			if ($msg_user eq $$r_hash{$_}{'name'}) {
-				return $_;
-			}
-		}
-	} else {
-		foreach (keys %{$r_hash}) {
-			next if ($_ eq "");
-			$qm = quotemeta $match_text;
-			if ($$r_hash{$_}{'name'} =~ /$qm/i) {
-				return $_;
-			}
-		}
-	}
-}
-
 ##
 # ai_getSkillUseType(name)
 # name: the internal name of the skill (as found in skills.txt), such as
@@ -9025,7 +8477,7 @@ sub ai_getIDFromChat {
 # skill.
 sub ai_getSkillUseType {
 	my $skill = shift;
-	return 1 if $skillsArea{$skill};
+	return 1 if $skillsArea{$skill} == 1;
 	return 0;
 }
 
@@ -9540,11 +8992,6 @@ sub move {
 	AI::queue("move", \%args);
 }
 
-sub quit {
-	$quit = 1;
-	message "Exiting...\n", "system";
-}
-
 sub relog {
 	$conState = 1;
 	undef $conState_tries;
@@ -9552,108 +8999,6 @@ sub relog {
 	$timeout_ex{'master'}{'timeout'} = 5;
 	Network::disconnect(\$remote_socket);
 	message "Relogging in 5 seconds...\n", "connection";
-}
-
-sub sendMessage {
-	my $r_socket = shift;
-	my $type = shift;
-	my $msg = shift;
-	my $user = shift;
-	my $i, $j;
-	my @msg;
-	my @msgs;
-	my $oldmsg;
-	my $amount;
-	my $space;
-	@msgs = split /\\n/,$msg;
-	for ($j = 0; $j < @msgs; $j++) {
-	@msg = split / /, $msgs[$j];
-	undef $msg;
-	for ($i = 0; $i < @msg; $i++) {
-		if (!length($msg[$i])) {
-			$msg[$i] = " ";
-			$space = 1;
-		}
-		if (length($msg[$i]) > $config{'message_length_max'}) {
-			while (length($msg[$i]) >= $config{'message_length_max'}) {
-				$oldmsg = $msg;
-				if (length($msg)) {
-					$amount = $config{'message_length_max'};
-					if ($amount - length($msg) > 0) {
-						$amount = $config{'message_length_max'} - 1;
-						$msg .= " " . substr($msg[$i], 0, $amount - length($msg));
-					}
-				} else {
-					$amount = $config{'message_length_max'};
-					$msg .= substr($msg[$i], 0, $amount);
-				}
-				if ($type eq "c") {
-					sendChat($r_socket, $msg);
-				} elsif ($type eq "g") { 
-					sendGuildChat($r_socket, $msg); 
-				} elsif ($type eq "p") {
-					sendPartyChat($r_socket, $msg);
-				} elsif ($type eq "pm") {
-					sendPrivateMsg($r_socket, $user, $msg);
-					undef %lastpm;
-					$lastpm{'msg'} = $msg;
-					$lastpm{'user'} = $user;
-					push @lastpm, {%lastpm};
-				} elsif ($type eq "k" && $config{'XKore'}) {
-					injectMessage($msg);
- 				}
-				$msg[$i] = substr($msg[$i], $amount - length($oldmsg), length($msg[$i]) - $amount - length($oldmsg));
-				undef $msg;
-			}
-		}
-		if (length($msg[$i]) && length($msg) + length($msg[$i]) <= $config{'message_length_max'}) {
-			if (length($msg)) {
-				if (!$space) {
-					$msg .= " " . $msg[$i];
-				} else {
-					$space = 0;
-					$msg .= $msg[$i];
-				}
-			} else {
-				$msg .= $msg[$i];
-			}
-		} else {
-			if ($type eq "c") {
-				sendChat($r_socket, $msg);
-			} elsif ($type eq "g") { 
-				sendGuildChat($r_socket, $msg); 
-			} elsif ($type eq "p") {
-				sendPartyChat($r_socket, $msg);
-			} elsif ($type eq "pm") {
-				sendPrivateMsg($r_socket, $user, $msg);
-				undef %lastpm;
-				$lastpm{'msg'} = $msg;
-				$lastpm{'user'} = $user;
-				push @lastpm, {%lastpm};
-			} elsif ($type eq "k" && $config{'XKore'}) {
-				injectMessage($msg);
-			}
-			$msg = $msg[$i];
-		}
-		if (length($msg) && $i == @msg - 1) {
-			if ($type eq "c") {
-				sendChat($r_socket, $msg);
-			} elsif ($type eq "g") { 
-				sendGuildChat($r_socket, $msg); 
-			} elsif ($type eq "p") {
-				sendPartyChat($r_socket, $msg);
-			} elsif ($type eq "pm") {
-				sendPrivateMsg($r_socket, $user, $msg);
-				undef %lastpm;
-				$lastpm{'msg'} = $msg;
-				$lastpm{'user'} = $user;
-				push @lastpm, {%lastpm};
-			} elsif ($type eq "k" && $config{'XKore'}) {
-				injectMessage($msg);
-			}
-		}
-	}
-	}
 }
 
 sub sit {
@@ -10004,21 +9349,6 @@ sub getGatField {
 	close FILE;
 }
 
-sub getResponse {
-	my $type = shift;
-	my $key;
-	my @keys;
-	my $msg;
-	foreach $key (keys %responses) {
-		if ($key =~ /^$type\_\d+$/) {
-			push @keys, $key;
-		} 
-	}
-	$msg = $responses{$keys[int(rand(@keys))]};
-	$msg =~ s/\%\$(\w+)/$responseVars{$1}/eig;
-	return $msg;
-}
-
 sub updateDamageTables {
 	my ($ID1, $ID2, $damage) = @_;
 	if ($ID1 eq $accountID) {
@@ -10139,37 +9469,6 @@ sub avoidGM_near {
 	return 0;
 }
 
-sub avoidGM_talk {
-	return if (!$config{'avoidGM_talk'});
-	my ($chatMsgUser, $chatMsg) = @_;
-
-	# Check whether this "GM" is on the ignore list
-	# in order to prevent false matches
-	my $statusGM = 1;
-	my $j = 0;
-	while ($config{"avoid_ignore_$j"} ne "") {
-		if ($chatMsgUser eq $config{"avoid_ignore_$j"}) {
-			$statusGM = 0;
-			last;
-		}
-		$j++;
-	}
-
-	if ($statusGM && $chatMsgUser =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-		warning "Disconnecting to avoid GM!\n";
-		chatLog("k", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n");
-
-		my $tmp = $config{'avoidGM_reconnect'};
-		warning "Disconnect for $tmp seconds...\n";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $tmp;
-		Network::disconnect(\$remote_socket);
-		return 1;
-	}
-	return 0;
-}
-
-
 ##
 # avoidList_near()
 # Returns: 1 if someone was detected, 0 if no one was detected.
@@ -10197,27 +9496,6 @@ sub avoidList_near {
 		}
 	}
 	return 0;
-}
-
-# avoidList_talk(playername, chatmsg, [playerid])
-# playername: Name of the player who chatted/PMed the bot.
-# chatmsg: Contents of the message. (currently not used)
-# playerid: If present, check their player ID as well.
-#
-# Checks if the specified player is on the avoid.txt avoid list for chat messages,
-# and disconnects if they are.
-sub avoidList_talk {
-	return if (!$config{'avoidList'} || $config{'XKore'});
-	my ($chatMsgUser, $chatMsg, $nameID) = @_;
-
-	if ($avoid{'Players'}{lc($chatMsgUser)}{'disconnect_on_chat'} || $avoid{'ID'}{$nameID}{'disconnect_on_chat'}) { 
-		warning "Disconnecting to avoid $chatMsgUser!\n";
-		chatLog("k", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
-		warning "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
-		Network::disconnect(\$remote_socket);
-	}
 }
 
 sub compilePortals {

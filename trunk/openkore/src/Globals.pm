@@ -25,12 +25,12 @@ use base qw(Exporter);
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config  => [qw(%config %consoleColors %directions_lut %equipTypes_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %cities_lut %npcs_lut %portals_lut %sex_lut %shop %skills_lut %skills_rlut %skillsID_lut %skillsID_rlut %skillsDesc_lut %skillsLooks %skillsArea %skillsSP_lut %spells_lut %emotions_lut %timeout $char)],
+	config  => [qw(%avoid %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %npcs_lut %portals_lut %responses %sex_lut %shop %skills_lut %skills_rlut %skillsID_lut %skillsID_rlut %skillsDesc_lut %skillsLooks %skillsArea %skillsSP_lut %spells_lut %emotions_lut %timeout $char)],
 	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
 	state   => [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID %portals @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownObjects)],
 	network => [qw($remote_socket $charServer $conState $encryptVal $ipc $lastPacketTime $xkore)],
 	interface => [qw($interface)],
-	misc    => [qw($buildType $quit %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth)],
+	misc    => [qw($buildType $quit @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars)],
 );
 
 our @EXPORT = (
@@ -44,8 +44,10 @@ our @EXPORT = (
 
 
 # Configuration variables
-our %config;
+our %avoid;
 our $char;
+our %cities_lut;
+our %config;
 our %consoleColors;
 our %equipTypes_lut;
 our %directions_lut;
@@ -58,9 +60,9 @@ our %itemsDesc_lut;
 our %itemTypes_lut;
 our %maps_lut;
 our %masterServers;
-our %cities_lut;
 our %npcs_lut;
 our %portals_lut;
+our %responses;
 our %sex_lut;
 our %shop;
 our %skills_lut;
@@ -173,6 +175,7 @@ our $interface;
 # Misc
 our $buildType;
 our $quit;
+our @lastpm;
 our %lastpm;
 our @privMsgUsers;
 our %timeout_ex;
@@ -182,6 +185,7 @@ our $dmgpsec;
 our $totalelasped;
 our $elasped;
 our $totaldmg;
+our %responseVars;
 
 
 # Detect operating system
