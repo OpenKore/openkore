@@ -7,7 +7,8 @@ libsprite:
 
 Win32 Delphi frontend:
 - Support for previewing JPEG files?
+- Everything the GTK frontend needs, except WAV preview.
 
-Win32 Delphi and GTK+ frontends:
+GTK+ frontend:
 - Drag & drop?
 - Support for previewing GAT, SPR and WAV.
