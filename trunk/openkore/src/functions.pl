@@ -3080,33 +3080,31 @@ sub AI {
 	##### DEAD #####
 
 
-	if ($ai_seq[0] eq "dead" && !$chars[$config{'char'}]{'dead'}) {
+	if (AI::action eq "dead" && !char->{'dead'}) {
 		shift @ai_seq;
 		shift @ai_seq_args;
 
-		if ($chars[$config{'char'}]{'resurrected'}) {
+		if ($char->{'resurrected'}) {
 			# We've been resurrected
-			$chars[$config{'char'}]{'resurrected'} = 0;
+			$char->{'resurrected'} = 0;
 
 		} else {
 			# Force storage after death
-			unshift @ai_seq, "storageAuto";
-			unshift @ai_seq_args, {};
+			AI::queue("storageAuto") if ($config{'storageAuto'});
 		}
 
-	} elsif ($ai_seq[0] ne "dead" && $chars[$config{'char'}]{'dead'}) {
+	} elsif (AI::action ne "dead" && $char->{'dead'}) {
 		undef @ai_seq;
 		undef @ai_seq_args;
-		unshift @ai_seq, "dead";
-		unshift @ai_seq_args, {};
+		AI::queue("dead");
 	}
 
-	if ($ai_seq[0] eq "dead" && $config{'dcOnDeath'} != -1 && time - $chars[$config{'char'}]{'dead_time'} >= $timeout{'ai_dead_respawn'}{'timeout'}) {
+	if (AI::action eq "dead" && $config{'dcOnDeath'} != -1 && time - $char->{'dead_time'} >= $timeout{'ai_dead_respawn'}{'timeout'}) {
 		sendRespawn(\$remote_socket);
-		$chars[$config{'char'}]{'dead_time'} = time;
+		$char->{'dead_time'} = time;
 	}
-	
-	if ($ai_seq[0] eq "dead" && $config{'dcOnDeath'} && $config{'dcOnDeath'} != -1) {
+
+	if (AI::action eq "dead" && $config{'dcOnDeath'} && $config{'dcOnDeath'} != -1) {
 		message "Disconnecting on death!\n";
 		$quit = 1;
 	}
