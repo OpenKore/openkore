@@ -199,6 +199,8 @@ sub complete {
 	my $input = shift;
 	my ($switch, $args) = split(/ +/, $input, 2);
 
+	return if ($input eq '');
+
 	# Resolve command aliases
 	if (my $alias = $config{"alias_$switch"}) {
 		$input = $alias;

@@ -53,7 +53,6 @@ sub iterate {
 			$self->{http}->host($self->{host}) if ($self->{proxy});
 			$self->{realget} = ($self->{proxy}) ? "http://" . $self->{host} . $self->{file} : $self->{file};
 
-			print $self->{realget} . "\n";
 			$self->{http}->write_request(GET => $self->{realget});
 			$self->{stage} = 'Read Headers';
 			$self->{checkStart} = time;

@@ -577,9 +577,8 @@ sub launchURL {
 		WinUtils::ShellExecute(0, undef, $url);
 
 	} else {
-		my $mod = 'POSIX';
-		require $mod;
-		import $mod;
+		my $mod = 'use POSIX;';
+		eval $mod;
 
 		# This is a script I wrote for the autopackage project
 		# It autodetects the current desktop environment
@@ -624,16 +623,16 @@ sub launchURL {
 		}
 
 		if ($desktop eq "gnome" && checkCommand('gnome-open')) {
-			launchApp('gnome-open', $url);
+			launchApp(1, 'gnome-open', $url);
 
 		} elsif ($desktop eq "kde") {
-			launchApp('kfmclient', 'exec', $url);
+			launchApp(1, 'kfmclient', 'exec', $url);
 
 		} else {
 			if (checkCommand('firefox')) {
-				launchApp('firefox', $url);
+				launchApp(1, 'firefox', $url);
 			} elsif (checkCommand('mozillaa')) {
-				launchApp('mozilla', $url);
+				launchApp(1, 'mozilla', $url);
 			} else {
 				$interface->errorDialog("No suitable browser detected. " .
 					"Please launch your favorite browser and go to:\n$url");

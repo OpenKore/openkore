@@ -120,8 +120,8 @@ sub unload {
 	my $name = shift;
 	my $i = 0;
 	foreach my $plugin (@plugins) {
-		if ($plugin->{'name'} eq $name) {
-			$plugin->{'unload_callback'}->() if (defined $plugin->{'unload_callback'});
+		if ($plugin && $plugin->{name} eq $name) {
+			$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
 			delete $plugins[$i];
 			return 1;
 		}
@@ -138,7 +138,8 @@ sub unload {
 sub unloadAll {
 	my $name = shift;
 	foreach my $plugin (@plugins) {
-		$plugin->{'unload_callback'}->() if (defined $plugin->{'unload_callback'});
+		next if (!$plugin);
+		$plugin->{unload_callback}->() if (defined $plugin->{unload_callback});
 		undef %{$plugin};
 	}
 	undef @plugins;
@@ -156,7 +157,7 @@ sub reload {
 	my $name = shift;
 	my $i = 0;
 	foreach my $plugin (@plugins) {
-		if ($plugin && $plugin->{'name'} eq $name) {
+		if ($plugin && $plugin->{name} eq $name) {
 			my $filename = $plugin->{'filename'};
 
 			if (defined $plugin->{'reload_callback'}) {
@@ -189,16 +190,16 @@ sub reload {
 # In the unload/reload callback functions, plugins should delete any hook functions they added.
 # See also: Plugins::addHook(), Plugins::delHook()
 sub register {
-	my %plugin_info = ();
 	my $name = shift;
-
 	return 0 if registered($name);
 
-	$plugin_info{'name'} = $name;
-	$plugin_info{'description'} = shift;
-	$plugin_info{'unload_callback'} = shift;
-	$plugin_info{'reload_callback'} = shift;
-	$plugin_info{'filename'} = $current_plugin;
+	my %plugin_info = (
+		name => $name,
+		description => shift,
+		unload_callback => shift,
+		reload_callback => shift,
+		filename => $current_plugin
+	);
 	binAdd(\@plugins, \%plugin_info);
 	return 1;
 }
@@ -344,6 +345,7 @@ sub callHook {
 	return if (!$hooks{$hookname});
 
 	foreach my $hook (@{$hooks{$hookname}}) {
+		next if (!$hook);
 		$hook->{r_func}->($hookname, $r_param, $hook->{user_data});
 	}
 }
