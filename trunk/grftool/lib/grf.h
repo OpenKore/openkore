@@ -1,4 +1,4 @@
-/*  
+/*
  *  libgrf
  *  grf.h - read and manipulate GRF/GPF files
  *  Copyright (C) 2004  Faithful <faithful@users.sf.net>
@@ -28,6 +28,15 @@
 GRFEXTERN_BEGIN
 
 
+/*! \brief Callback prototype of a function called for each file entry when opening a Grf file.
+ *
+ * It should return -1 if there has been an error.
+ * 0 if processing may continue,
+ * or 1 if further reading should stop (for example, when trying to locate a file quickly)
+ *
+ * \param file Pointer to the read file entry
+ * \param error [out] Pointer to a GrfError variable for error reporting. May be NULL.
+ */
 typedef int (*GrfOpenCallback) (GrfFile *file, GrfError *error);
 typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 
@@ -35,13 +44,13 @@ typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 # define GRF_TYPE_GRF 0x01
 
 /*! \brief Macro to open a file without a callback */
-# define grf_open(fname, error) grf_callback_open(fname, error, NULL)
+# define grf_open(fname, mode, error) grf_callback_open(fname, mode, error, NULL)
 
 /*! \brief Macro to flush a grf file without a callback */
 # define grf_flush(fname, error) grf_callback_flush(fname, error, NULL)
 
 /* Prototypes */
-GRFEXPORT Grf *grf_callback_open (const char *fname, GrfError *error, GrfOpenCallback callback);
+GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpenCallback callback);
 GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *error);
 GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error);
 GRFEXPORT int grf_extract (Grf *grf, const char *grfname, const char *file, GrfError *error);

@@ -145,7 +145,10 @@ typedef enum {
 	GE_ZLIBFILE,
 
 	/*! File has no data (not really an "error") */
-	GE_NODATA
+	GE_NODATA,
+
+	/*! Bad mode: tried to modify in read-only mode */
+	GE_BADMODE
 } GrfErrorType;
 
 /*! \brief Structure which contains error information */
@@ -207,7 +210,7 @@ typedef struct {
 						 * directory entries
 						 */
 	#define GRFFILE_DIR_OFFSET	0x058A	/*!< \brief
-						 * GrfFile::pos value used for 
+						 * GrfFile::pos value used for
 						 * directory entries
 						 */
 
@@ -288,6 +291,10 @@ typedef struct {
 	void **filedatas;	/*!< \brief Internal use only
 				 *
 				 * Data for files (grf_put() or extracted)
+				 */
+	uint8_t allowWrite;	/*!< \brief Internal use only
+				 *
+				 * Can Grf be modified?
 				 */
 } Grf;
 
