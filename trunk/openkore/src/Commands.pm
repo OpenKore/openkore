@@ -1325,7 +1325,7 @@ sub cmdUseSkill {
 	} else {
 		($targetNum, $lv) = split(/ /, $args);
 		if ($targetNum !~ /^\d+$/) {
-			error "$targetNum is not a number.";
+			error "$targetNum is not a number.\n";
 			return;
 		}
 	}
