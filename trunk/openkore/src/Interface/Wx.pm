@@ -34,7 +34,7 @@ use base qw(Wx::App Interface);
 use Settings;
 use Utils;
 
-use constant MAX_CONSOLE_LINES => 2000;
+use constant MAX_CONSOLE_LINES => 30;
 
 our %fgcolors;
 
@@ -136,16 +136,11 @@ sub writeOutput {
 	# Limit the number of lines in the console
 	if ($self->{console}->GetNumberOfLines() > MAX_CONSOLE_LINES) {
 		my $linesToDelete = $self->{console}->GetNumberOfLines() - MAX_CONSOLE_LINES;
-		for (my $i = 0; $i < $linesToDelete; $i++) {
-			my $len = $self->{console}->GetLineLength(0);
-			$self->{console}->Remove(0, $len + 1);
-
-			# If we're on Win32, the line ends with CRLF.
-			# We just deleted the line including CR, now check for the LF
-			$self->{console}->Remove(0, 1) if ($self->{console}->GetRange(0, 1) eq "\n");
-		}
+		my $pos = $self->{console}->XYToPosition(0, $linesToDelete);
+		$self->{console}->Remove(0, $pos);
 	}
 
+	$self->{console}->SetInsertionPointEnd();
 	$self->{console}->Thaw();
 
 	# Make sure we update the GUI. This is to work around the effect
@@ -245,6 +240,11 @@ sub createInterface {
 		$self->{fonts}{bold} = new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxBOLD);
 	}
 
+	$self->{inputStyle} = new Wx::TextAttr(
+		new Wx::Colour(200, 200, 200),
+		wxNullColour
+	);
+
 
 	## Console
 	my $console = $self->{console} = new Wx::TextCtrl($frame, -1, '',
@@ -275,12 +275,19 @@ sub createInterface {
 	$frame->SetStatusBar($statusbar);
 
 
+	#################
+
 	$frame->SetClientSize(600, 400);
 	$frame->SetIcon(Wx::GetWxPerlIcon());
 	$frame->Show(1);
 	$self->SetTopWindow($frame);
 	$inputBox->SetFocus();
 	EVT_CLOSE($frame, \&onClose);
+
+	# Hide console on Win32
+	if ($buildType == 0) {
+		#eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+	}
 }
 
 sub addMenu {
@@ -338,7 +345,6 @@ sub updateStatusBar {
 }
 
 sub onClose {
-	exit;
 	my $self = shift;
 	$self->Show(0);
 	main::quit();
@@ -347,6 +353,9 @@ sub onClose {
 sub onInputEnter {
 	my $self = shift;
 	$self->{input} = $self->{inputBox}->GetValue();
+	#$self->{console}->SetDefaultStyle($self->{inputStyle});
+	#$self->{console}->AppendText("$self->{input}\n");
+	#$self->{console}->SetDefaultStyle($self->{defaultStyle});
 	$self->{inputBox}->Remove(0, -1);
 }
 
