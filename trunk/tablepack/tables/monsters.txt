@@ -121,11 +121,11 @@
 1119 Frilldora
 1120 Ghostring
 1121 Giearth
-1122 Goblin 1
-1123 Goblin 2
-1124 Goblin 3
-1125 Goblin 4
-1126 Goblin 5
+1122 Goblin Knife
+1123 Goblin Mace
+1124 Goblin Axe
+1125 Goblin Hammer
+1126 Goblin Club
 1127 Hode
 1128 Horn
 1129 Horong
