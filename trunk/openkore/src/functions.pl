@@ -1627,15 +1627,10 @@ sub parseCommand {
 		manualMove(5, -5);
 
 	} else {
-		my $return = 0;
-		Plugins::callHook('Command_post', {
-			switch => $switch,
-			input => $input,
-			return => \$return
-		});
-		if (!$return) {
+		my %params = ( switch => $switch, input => $input );
+		Plugins::callHook('Command_post', \%params);
+		if (!$params{return}) {
 			error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
-			#error "Command seems to not exist in either the standard OpenKore command set, or in a plugin\n";
 		}
 	}
 }
