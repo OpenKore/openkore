@@ -5742,6 +5742,9 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
+                my $param1 = unpack("S1", substr($msg, 8, 2));
+                my $param2 = unpack("S1", substr($msg, 10, 2));
+                my $param3 = unpack("S1", substr($msg, 12, 2));
 		my $type = unpack("S*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my $weapon = unpack("S1", substr($msg, 18, 2));
@@ -5786,6 +5789,7 @@ sub parseMsg {
 			$player->{pos} = {%coords};
 			$player->{pos_to} = {%coords};
 			debug "Player Exists: $player->{name} ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence", 1;
+			setStatus($ID,$param1,$param2,$param3);
 
 			objectAdded('player', $ID, $player) if ($added);
 
@@ -5837,17 +5841,8 @@ sub parseMsg {
 
 
 				# Monster state
-				my $param1 = unpack("S*", substr($msg, 8, 2));
 				$param1 = 0 if $param1 == 5; # 5 has got something to do with the monster being undead
-				foreach (keys %skillsState) {
-					if ($param1 == $_) {
-						$monsters{$ID}{statuses}{$skillsState{$_}} = 1;
-						message getActorName($ID) . " in $skillsState{$_} state\n", "parseMsg_statuslook", 1;
-					} elsif (defined $monsters{$ID}{statuses}{$skillsState{$_}}) {
-						delete $monsters{$ID}{statuses}{$skillsState{$_}};
-						message getActorName($ID) . " out of $skillsState{$_} state\n", "parseMsg_statuslook", 1;
-					}
-				}
+				setStatus($ID,$param1,$param2,$param3);
 
 				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
 			}
@@ -5934,6 +5929,7 @@ sub parseMsg {
 			$players{$ID}{pos} = {%coords};
 			$players{$ID}{pos_to} = {%coords};
 			debug "Player Connected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
+                        setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
 
@@ -5994,6 +5990,7 @@ sub parseMsg {
 			$players{$ID}{time_move} = time;
 			$players{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+                        setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
 
@@ -6049,6 +6046,7 @@ sub parseMsg {
 				$monsters{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 				$monsters{$ID}{walk_speed} = $walk_speed;
 				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 2;
+	                        setStatus($ID, $param1, $param2, $param3);
 
 				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
 			}
@@ -8012,45 +8010,7 @@ sub parseMsg {
 		my $param1 = unpack("S1", substr($msg, 6, 2));
 		my $param2 = unpack("S1", substr($msg, 8, 2));
 		my $param3 = unpack("S1", substr($msg, 10, 2));
-		my $actorType;
-		my $actor = getActorHash($ID, \$actorType);
-
-		if (defined $actor) {
-			my $name = getActorName($ID);
-			my $verbosity = ($actorType eq 'self') ? 1 : 2;
-			my $are = ($actorType eq 'self') ? 'are' : 'is';
-			my $have = ($actorType eq 'self') ? 'have' : 'has';
-
-			foreach (keys %skillsState) {
-				if ($param1 == $_) {
-					$actor->{statuses}{$skillsState{$_}} = 1;
-					message "$name $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
-				} elsif ($actor->{statuses}{$skillsState{$_}}) {
-					delete $actor->{statuses}{$skillsState{$_}};
-					message "$name $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
-				}
-			}
-
-			foreach (keys %skillsAilments) {
-				if (($param2 & $_) == $_) {
-					$actor->{statuses}{$skillsAilments{$_}} = 1;
-					message "$name $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
-				} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
-					delete $actor->{statuses}{$skillsAilments{$_}};
-					message "$name $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
-				}
-			}
-
-			foreach (keys %skillsLooks) {
-				if (($param3 & $_) == $_) {
-					$actor->{statuses}{$skillsLooks{$_}} = 1;
-					debug "$name $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
-				} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
-					delete $actor->{statuses}{$skillsLooks{$_}};
-					debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
-				}
-			}
-		}
+		setStatus($ID,$param1,$param2,$param3);
 
 	} elsif ($switch eq "011A") {
 		# Skill used on target, with no damage done
@@ -11100,6 +11060,68 @@ sub checkMonsterCondition {
 	
 	return 1;
 }
+
+##
+# setStatus(ID, param1, param2, param3)
+# ID: ID of a player or monster.
+# param1: the state information of the object.
+# param2: the ailment information of the object.
+# param3: the "look" information of the object.
+#
+# Sets the state, ailment, and "look" statuses of the object.
+# Does not include skillsstatus.txt items.
+sub setStatus {
+	my $ID = shift;
+	my $param1 = shift;
+	my $param2 = shift;
+	my $param3 = shift;
+	my $actorType;
+	my $actor = getActorHash($ID, \$actorType);
+
+	if (defined $actor) {
+		my $name = getActorName($ID);
+		my $verbosity = ($actorType eq 'self') ? 1 : 2;
+		my $are = ($actorType eq 'self') ? 'are' : 'is';
+		my $have = ($actorType eq 'self') ? 'have' : 'has';
+
+		foreach (keys %skillsState) {
+			if ($param1 == $_) {
+				if (!$actor->{statuses}{$skillsState{$_}}) {
+					$actor->{statuses}{$skillsState{$_}} = 1;
+					message "$name $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+				}
+			} elsif ($actor->{statuses}{$skillsState{$_}}) {
+				delete $actor->{statuses}{$skillsState{$_}};
+				message "$name $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+			}
+		}
+
+		foreach (keys %skillsAilments) {
+			if (($param2 & $_) == $_) {
+				if (!$actor->{statuses}{$skillsAilments{$_}}) {
+					$actor->{statuses}{$skillsAilments{$_}} = 1;
+					message "$name $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+				}
+			} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
+				delete $actor->{statuses}{$skillsAilments{$_}};
+				message "$name $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+			}
+		}
+
+		foreach (keys %skillsLooks) {
+			if (($param3 & $_) == $_) {
+				if ($actor->{statuses}{$skillsLooks{$_}}) {
+					$actor->{statuses}{$skillsLooks{$_}} = 1;
+					debug "$name $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+				}
+			} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
+				delete $actor->{statuses}{$skillsLooks{$_}};
+				debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+			}
+		}
+	}
+}
+
 
 ##
 # findCartItemInit()
