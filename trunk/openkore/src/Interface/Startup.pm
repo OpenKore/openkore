@@ -46,14 +46,7 @@ sub writeOutput {
 
 	print $message;
 	$self->addOutHist($type, $message, $domain);
-
 	STDOUT->flush;
-}
-
-
-sub getInput {
-	Log::error("The Interface system is in startup mode, getInput can't be used until a full Interface is created.\n");
-	return undef;
 }
 
 sub addOutHist {
