@@ -4877,7 +4877,7 @@ sub parseSendMsg {
 		my $langCode = quotemeta $config{'chatLangCode'};
 		if ($langCode ne "" && $chat =~ /^$langCode/) {
 			$chat =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chat =~ /^\|(0\d)/) {
+		} elsif ($langCode ne "none" && $chat =~ /^(\|0\d)/) {
 			configModify("chatLangCode", $1);
 			$chat =~ s/^\|0\d//;
 		}
@@ -4901,7 +4901,7 @@ sub parseSendMsg {
 		my $langCode = quotemeta $config{'chatLangCode'};
 		if ($langCode ne "" && $chat =~ /^$langCode/) {
 			$chat =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chat =~ /^\|(0\d)/) {
+		} elsif ($langCode ne "none" && $chat =~ /^(\|0\d)/) {
 			configModify("chatLangCode", $1);
 			$chat =~ s/^\|0\d//;
 		}
@@ -6029,7 +6029,7 @@ sub parseMsg {
 		my $langCode = quotemeta $config{'chatLangCode'};
 		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
 			$chatMsg =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chatMsg =~ /^\|(0\d)/) {
+		} elsif ($langCode ne "none" && $chatMsg =~ /^(\|0\d)/) {
 			configModify("chatLangCode", $1);
 			$chatMsg =~ s/^\|0\d//;
 		}
@@ -6060,7 +6060,7 @@ sub parseMsg {
 		my $langCode = quotemeta $config{'chatLangCode'};
 		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
 			$chatMsg =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chatMsg =~ /^\|(0\d)/) {
+		} elsif ($langCode ne "none" && $chatMsg =~ /^(\|0\d)/) {
 			configModify("chatLangCode", $1);
 			$chatMsg =~ s/^\|0\d//;
 		}
@@ -6193,7 +6193,7 @@ sub parseMsg {
 		my $langCode = quotemeta $config{'chatLangCode'};
 		if ($langCode ne "" && $privMsg =~ /^$langCode/) {
 			$privMsg =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $privMsg =~ /^\|(0\d)/) {
+		} elsif ($langCode ne "none" && $privMsg =~ /^(\|0\d)/) {
 			configModify("chatLangCode", $1);
 			$privMsg =~ s/^\|0\d//;
 		}
@@ -6235,7 +6235,7 @@ sub parseMsg {
 		my $langCode = quotemeta $config{'chatLangCode'};
 		if ($langCode ne "" && $chat =~ /^$langCode/) {
 			$chat =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chat =~ /^\|(0\d)/) {
+		} elsif ($langCode ne "none" && $chat =~ /^(\|0\d)/) {
 			configModify("chatLangCode", $1);
 			$chat =~ s/^\|0\d//;
 		}
@@ -8237,7 +8237,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		my $langCode = quotemeta $config{'chatLangCode'};
 		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
 			$chatMsg =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chatMsg =~ /^\|(0\d)/) {
+		} elsif ($langCode ne "none" && $chatMsg =~ /^(\|0\d)/) {
 			configModify("chatLangCode", $1);
 			$chatMsg =~ s/^\|0\d//;
 		}
@@ -8306,8 +8306,8 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		}
 
 	} elsif ($switch eq "019B") {
-		$ID = substr($msg, 2, 4);
-		$type = unpack("L1",substr($msg, 6, 4));
+		my $ID = substr($msg, 2, 4);
+		my $type = unpack("L1",substr($msg, 6, 4));
 		if (%{$players{$ID}}) {
 			$name = $players{$ID}{'name'};
 		} else {
@@ -8318,9 +8318,9 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		} elsif ($type == 1) {
 			message "Player $name gained a job level!\n";
 		} elsif ($type == 2) {
-			print "$name refined weapon Fail!\n";
+			message "$name failed to refine a weapon!\n";
 		} elsif ($type == 3) {
-			print "$name refined weapon Success!\n";
+			message "$name successfully refined a weapon!\n";
 		}
 
 	} elsif ($switch eq "01A2") {
