@@ -32,12 +32,12 @@ Modules::register(qw(Globals Modules Input Log Utils Settings Plugins FileParser
 
 srand(time());
 Settings::parseArguments();
-print "$Settings::versionText\n";
+Log::message("$Settings::versionText\n");
 
 Plugins::loadAll();
 
 Input::start() unless ($Settings::daemon);
-print "\n";
+Log::message("\n");
 
 Plugins::callHook('start');
 
@@ -141,21 +141,21 @@ if ($config{'XKore'}) {
 }
 
 if ($config{'adminPassword'} eq 'x' x 10) {
-	print "\nAuto-generating Admin Password due to default...\n";
+	Log::message("\nAuto-generating Admin Password due to default...\n");
 	configModify("adminPassword", vocalString(8));
 }
 # This is where we protect the stupid from having a blank admin password
 elsif ($config{'adminPassword'} eq '') {
-	print "\nAuto-generating Admin Password due to blank...\n";
+	Log::message("\nAuto-generating Admin Password due to blank...\n");
 	configModify("adminPassword", vocalString(8));
 }
 # This is where we induldge the paranoid and let them have session generated admin passwords
 elsif ($config{'secureAdminPassword'} eq '1') {
-	print "\nGenerating session Admin Password...\n";
+	Log::message("\nGenerating session Admin Password...\n");
 	configModify("adminPassword", vocalString(8));
 }
 
-print "\n";
+Log::message("\n");
 
 our $injectServer_socket;
 if ($config{'XKore'}) {
@@ -165,7 +165,7 @@ if ($config{'XKore'}) {
 			LocalPort	=> 2350,
 			Proto		=> 'tcp');
 	($injectServer_socket) || die "Error creating local inject server: $@";
-	print "Local inject server started (".$injectServer_socket->sockhost().":2350)\n";
+	Log::message("Local inject server started (".$injectServer_socket->sockhost().":2350)\n");
 }
 
 our $remote_socket = IO::Socket::INET->new();
@@ -173,16 +173,16 @@ our $remote_socket = IO::Socket::INET->new();
 
 ### COMPILE PORTALS ###
 
-print "Checking for new portals... ";
+Log::message("Checking for new portals... ");
 STDOUT->flush;
 compilePortals_check(\$found);
 
 if ($found) {
-	print "found new portals!\n";
+	Log::message("found new portals!\n");
 
 	if ($Input::enabled) {
-		print "Compile portals now? (y/n)\n";
-		print "Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...";
+		Log::message("Compile portals now? (y/n)\n");
+		Log::message("Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...");
 		$timeout{'compilePortals_auto'}{'time'} = time;
 		undef $msg;
 		while (!timeOut(\%{$timeout{'compilePortals_auto'}})) {
@@ -190,17 +190,17 @@ if ($found) {
 			last if $msg;
 		}
 		if ($msg =~ /y/ || $msg eq "") {
-			print "compiling portals\n\n";
+			Log::message("compiling portals\n\n");
 			compilePortals();
 		} else {
-			print "skipping compile\n\n";
+			Log::message("skipping compile\n\n");
 		}
 	} else {
-		print "compiling portals\n\n";
+		Log::message("compiling portals\n\n");
 		compilePortals();
 	}
 } else {
-	print "none found\n\n";
+	Log::message("none found\n\n");
 }
 
 
@@ -208,14 +208,14 @@ if ($found) {
 
 if (!$config{'XKore'} && !$Settings::daemon) {
 	if (!$config{'username'}) {
-		print "Enter Username: ";
+		Log::message("Enter Username: ");
 		STDOUT->flush;
 		$msg = Input::getInput(1);
 		$config{'username'} = $msg;
 		writeDataFileIntact($Settings::config_file, \%config);
 	}
 	if (!$config{'password'}) {
-		print "Enter Password: ";
+		Log::message("Enter Password: ");
 		STDOUT->flush;
 		$msg = Input::getInput(1);
 		$config{'password'} = $msg;
@@ -236,7 +236,7 @@ if (!$config{'XKore'} && !$Settings::daemon) {
 		undef $i;
 		Log::message("-------------------------------\n", "connection");
 
-		print "Choose your master server: ";
+		Log::message("Choose your master server: ");
 		STDOUT->flush;
 		$msg = Input::getInput(1);
 		$config{'master'} = $msg;
@@ -265,7 +265,7 @@ initRandomRestart();
 initConfChange();
 $timeout{'injectSync'}{'time'} = time;
 
-print "\n";
+Log::message("\n");
 
 
 ##### SETUP ERROR HANDLER #####
@@ -275,22 +275,21 @@ sub _errorHandler {
 	no utf8;
 	if (defined &Carp::longmess) {
 		Log::color("red") if (defined &Log::color);
-		print "Program terminated unexpectedly. Error message:\n";
+		Log::message("Program terminated unexpectedly. Error message:\n");
 		Log::color("reset") if (defined &Log::color);
 
 		my $msg = Carp::longmess(@_);
-		print "\@ai_seq = @ai_seq\n";
-		print ;
+		Log::message("\@ai_seq = @ai_seq\n");
 		if (open(F, "> errors.txt")) {
 			print F "\@ai_seq = @ai_seq\n";
 			print F $msg;
 			close F;
 		}
 	} else {
-		print "Program terminated unexpectedly.\n";
+		Log::message("Program terminated unexpectedly.\n");
 	}
 
-	print "Press ENTER to exit this program.\n";
+	Log::message("Press ENTER to exit this program.\n");
 	<STDIN>;
 };
 # $SIG{'__DIE__'} = \&_errorHandler;
@@ -313,8 +312,8 @@ while ($quit != 1) {
 			do {
 				$procID = $GetProcByName->Call($config{'exeName'});
 				if (!$procID && !$printed) {
-					print "Error: Could not locate process $config{'exeName'}.\n";
-					print "Waiting for you to start the process...\n";
+					Log::message("Error: Could not locate process $config{'exeName'}.\n");
+					Log::message("Waiting for you to start the process...\n");
 					$printed = 1;
 				}
 
@@ -323,7 +322,7 @@ while ($quit != 1) {
 						$quit = 1;
 						last;
 					} else {
-						print "Error: You cannot type anything except 'quit' right now.\n";
+						Log::message("Error: You cannot type anything except 'quit' right now.\n");
 					}
 				}
 
@@ -332,7 +331,7 @@ while ($quit != 1) {
 			last if ($quit);
 
 			if ($printed == 1) {
-				print "Process found\n";
+				Log::message("Process found\n");
 			}
 			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
 			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
@@ -341,11 +340,11 @@ while ($quit != 1) {
 				return 1;
 			}
 
-			print "Waiting for InjectDLL to connect...\n";
+			Log::message("Waiting for InjectDLL to connect...\n");
 			$remote_socket = $injectServer_socket->accept();
 			(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
 			|| die "Inject Socket must be connected from localhost";
-			print "InjectDLL Socket connected - Ready to start botting\n";
+			Log::message("InjectDLL Socket connected - Ready to start botting\n");
 			$timeout{'injectKeepAlive'}{'time'} = time;
 		}
 		if (timeOut(\%{$timeout{'injectSync'}})) {
@@ -420,6 +419,6 @@ close($remote_socket);
 unlink('buffer') if ($config{'XKore'} && -f 'buffer');
 killConnection(\$remote_socket);
 
-print "Bye!\n";
-print $Settings::versionText;
+Log::message("Bye!\n");
+Log::message($Settings::versionText);
 exit;
