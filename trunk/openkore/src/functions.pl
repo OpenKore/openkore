@@ -3553,8 +3553,8 @@ sub AI {
 				&& (!$config{"useSelf_item_$i"."_maxAggressives"} || $config{"useSelf_item_$i"."_maxAggressives"} >= ai_getAggressives()) 
 				&& timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
 				&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
-				&& (!$config{"useSelf_item_$i"."_whenStatusActive"} || ($config{"useSelf_item_$i"."_whenStatusActive"} && $chars[$config{char}]{statuses}{$config{"useSelf_item_$i"."_whenStatusActive"}}))
-				&& (!$config{"useSelf_item_$i"."_whenStatusInactive"} || ($config{"useSelf_item_$i"."_whenStatusInactive"} && $chars[$config{char}]{statuses}{$config{"useSelf_item_$i"."_whenStatusInactive"}}))
+				&& (!$config{"useSelf_item_$i"."_whenStatusActive"} || $chars[$config{char}]{statuses}{$config{"useSelf_item_$i"."_whenStatusActive"}})
+				&& (!$config{"useSelf_item_$i"."_whenStatusInactive"} || !$chars[$config{char}]{statuses}{$config{"useSelf_item_$i"."_whenStatusInactive"}})
 				)
 				{
 				undef $ai_v{'temp'}{'invIndex'};
@@ -3636,8 +3636,8 @@ sub AI {
 			 && (!$config{"useSelf_skill_$i"."_inLockOnly"} || ($config{"useSelf_skill_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
 			 && $config{"useSelf_skill_$i"."_minAggressives"} <= ai_getAggressives()
 			 && (!$config{"useSelf_skill_$i"."_maxAggressives"} || $config{"useSelf_skill_$i"."_maxAggressives"} >= ai_getAggressives())
-			 && (!$config{"useSelf_skill_$i"."_whenStatusActive"} || ($config{"useSelf_skill_$i"."_whenStatusActive"} && $chars[$config{char}]{statuses}{$config{"useSelf_skill_$i"."_whenStatusActive"}}))
-			 && (!$config{"useSelf_skill_$i"."_whenStatusInactive"} || ($config{"useSelf_skill_$i"."_whenStatusInactive"} && $chars[$config{char}]{statuses}{$config{"useSelf_skill_$i"."_whenStatusInactive"}}))
+			 && (!$config{"useSelf_skill_$i"."_whenStatusActive"} || $chars[$config{char}]{statuses}{$config{"useSelf_skill_$i"."_whenStatusActive"}})
+			 && (!$config{"useSelf_skill_$i"."_whenStatusInactive"} || !$chars[$config{char}]{statuses}{$config{"useSelf_skill_$i"."_whenStatusInactive"}})
 			) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
@@ -6202,9 +6202,11 @@ sub parseMsg {
 		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
 		$ai_cmdQue++;
 		message "$chat\n", "publicchat";
-#Solos Start
 
-#auto-emote
+
+		# FIXME: the stuff below should be handled by the AI
+
+		# Auto-emote
 		$i = 0;
 		while ($config{"autoEmote_word_$i"} ne "") {
 			if ($chat =~/.*$config{"autoEmote_word_$i"}+$/i || $chat =~ /.*$config{"autoEmote_word_$i"}+\W/i) {
@@ -6217,7 +6219,8 @@ sub parseMsg {
 			}
 			$i++;
 		}
-#auto-response
+
+		# Auto-response
 		if ($config{"autoResponse"}) {
 			$i = 0;
 			while ($chat_resp{"words_said_$i"} ne "") {
@@ -6235,7 +6238,6 @@ sub parseMsg {
 
 		avoidGM_talk($chatMsgUser, $chatMsg);
 		avoidList_talk($chatMsgUser, $chatMsg);
-#Solos End
 
 	} elsif ($switch eq "008E") {
 		# Public messages that you sent yourself
@@ -11368,7 +11370,7 @@ sub updateDamageTables {
 				message "$monsters{$ID1}{'name'} attack you more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
 				$teleport = 1;
 			}
-			useTeleport(1) if ($teleport);
+			useTeleport(1) if ($teleport && $AI);
 		}
 	} elsif (%{$monsters{$ID1}}) {
 		if (%{$players{$ID2}}) {
