@@ -7176,12 +7176,15 @@ sub parseMsg {
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'online'} = 1;
 		debug "Party member location: $chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'} - $x, $y\n", "parseMsg";
 
-	} elsif ($switch eq "0108") {
-		my $type =  unpack("S1",substr($msg, 2, 2));
-		my $index = unpack("S1",substr($msg, 4, 2));
-		my $enchant = unpack("S1",substr($msg, 6, 2));
-		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = $enchant;
+	} elsif ($switch eq "0108" || $switch eq "0188") {
+		my ($type, $index, $upgrade) = unpack("S3", substr($msg, 2));
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
+		if (defined $invIndex) {
+			my $item = $char->{inventory}[$invIndex];
+			$item->{upgrade} = $upgrade ;
+			$item->{name} = itemName($item);
+			message "Item $item->{name} has been upgraded to +$upgrade\n", "parseMsg/upgrade";
+		}
 
 	} elsif ($switch eq "0109") {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
@@ -8058,13 +8061,6 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 
 		chatLog("g", $chat."\n") if ($config{'logGuildChat'});
 		message "[Guild] $chat\n", "guildchat";
-
-	} elsif ($switch eq "0188") {
-		$type =  unpack("S1",substr($msg, 2, 2));
-		$index = unpack("S1",substr($msg, 4, 2));
-		$enchant = unpack("S1",substr($msg, 6, 2));
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = $enchant;
 
 	} elsif ($switch eq "0194") {
 		my $ID = substr($msg, 2, 4);
@@ -9373,8 +9369,23 @@ sub getField {
 
 	undef %{$r_hash};
 	unless (-e $file) {
-		warning "Could not load field $file - you must install the kore-field pack!\n";
-		return 0;
+		my %aliases = (
+			'new_1-1.fld' => 'new_zone01.fld',
+			'new_1-2.fld' => 'new_zone02.fld',
+			'new_1-3.fld' => 'new_zone03.fld',
+			'new_1-4.fld' => 'new_zone04.fld',
+		);
+
+		my ($dir, $base) = $file =~ /^(.*[\\\/])?(.*)$/;
+		if (exists $aliases{$base}) {
+			$file = "${dir}$aliases{$base}";
+			$dist_file = $file;
+		}
+
+		if (! -e $file) {
+			warning "Could not load field $file - you must install the kore-field pack!\n";
+			return 0;
+		}
 	}
 
 	$dist_file =~ s/\.fld$/.dist/i;
@@ -9390,12 +9401,11 @@ sub getField {
 		close FILE;
 		@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
 		$$r_hash{'rawMap'} = $data;
-		#$$r_hash{'field'} = [unpack("C*", $data)];
 	}
 
 	# Load the associated .dist file (distance map)
 	if (-e $dist_file) {
-		open FILE, "<", $dist_file;
+		open FILE, "< $dist_file";
 		binmode(FILE);
 		my $dist_data;
 
@@ -9423,7 +9433,7 @@ sub getField {
 	# The .dist file is not available; create it
 	unless ($$r_hash{'dstMap'}) {
 		$$r_hash{'dstMap'} = makeDistMap(@$r_hash{'rawMap', 'width', 'height'});
-		open FILE, ">", $dist_file or die "Could not write dist cache file: $!\n";
+		open FILE, "> $dist_file" or die "Could not write dist cache file: $!\n";
 		binmode(FILE);
 		print FILE pack("a2 S1", 'V#', 2);
 		print FILE pack("S1 S1", @$r_hash{'width', 'height'});
