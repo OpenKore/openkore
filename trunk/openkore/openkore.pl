@@ -42,7 +42,7 @@ srand(time());
 
 $versionText = "***Kore 0.93.11 - Ragnarok Online Bot - http://kore.sourceforge.net***\n";
 $versionText2 = "***sKore Build 33 - Mod by Solos - http://ro.horoy.com***\n";
-$versionText3 = "***skore-Revamped maintained by dn4cer and blueviper22***\n\n";
+$versionText3 = "***skore-Revamped maintained by dn4cer, FBW, and blueviper22***\n\n";
 print $versionText;
 print $versionText2;
 print $versionText3;
@@ -5438,7 +5438,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		updateDamageTables($ID1, $ID2, $damage);
 		if ($ID1 eq $accountID) {
-			if (%{$monsters{$ID2}}) {
+			if (%{$monsters{$ID2}}) { 
 #Solos Start
 				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
@@ -5466,6 +5466,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 		} elsif ($ID2 eq $accountID) {
 			if (%{$monsters{$ID1}}) {
+				useTeleport(1) if ($monsters{$ID1}{'name'} eq "");
 #Solos Start
 				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
@@ -9346,8 +9347,7 @@ sub auth {
 sub configModify {
 	my $key = shift;
 	my $val = shift;
-	my $quiet = shift;
-	print "Config '$key' set to $val\n" unless ($quiet);
+	print "Config '$key' set to $val\n";
 	$config{$key} = $val;
 	writeDataFileIntact($config_file, \%config);
 }
@@ -11301,7 +11301,19 @@ sub avoidGM_near {
 
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
-		if ($players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) {
+		#Check validity of GM 
+		$statusGM=0; 
+		$j = 0; 
+		while ($avoid{"avoid_$j"} ne "") { 
+			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_ignore_$j"}) 
+			{ 
+			$statusGM=1; 
+			} 
+		$j++; 
+		} 
+		undef $j; 
+		#Check ends 
+		if ($players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i && $statusGM eq 0) {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
 			chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
 			print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
