@@ -10215,7 +10215,7 @@ sub sendOpenShop {
 		$shop{'shop_title'} . chr(0) x (80 - length($shop{'shop_title'})) .  pack("C*", 0x01);
 
 		if ($config{'shop_random'}) {
-			@itemstosellorder = keys %itemstosell;
+			@itemtosellorder = keys %itemstosell;
 		}
 		foreach  (@itemtosellorder) {
 			$msg .= pack("S1",$itemtosell{$_}{'index'}) . pack("S1", $itemtosell{$_}{'amount'}) . pack("L1", $itemtosell{$_}{'price'});
