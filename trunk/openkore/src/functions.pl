@@ -5231,7 +5231,6 @@ sub parseMsg {
 		}
 	}
 
-
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4)) || ($config{'XKore'} && !$accountID && length($msg) == 4)) {
 		$accountID = substr($msg, 0, 4);
 		$AI = 1 if (!$AI_forcedOff);
@@ -5867,7 +5866,6 @@ sub parseMsg {
 		$chars[$config{'char'}]{'time_move_calc'} = distance(\%{$chars[$config{'char'}]{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}) * $config{'seconds_per_block'};
 
 	} elsif ($switch eq "0088") {
-		undef $level_real;
 		# Long distance attack solution
 		$ID = substr($msg, 2, 4);
 		undef %coords;
@@ -7416,89 +7414,50 @@ sub parseMsg {
 	} elsif ($switch eq "0110") {
 		error "Skill has failed\n";
 
-	} elsif ($switch eq "0114") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$skillID = unpack("S1",substr($msg, 2, 2));
-		$sourceID = substr($msg, 4, 4);
-		$targetID = substr($msg, 8, 4);
-		$damage = unpack("S1",substr($msg, 24, 2));
-		$level = unpack("S1",substr($msg, 28, 2));
-
-		undef $sourceDisplay;
-		undef $targetDisplay;
-		undef $extra;
-		if (%{$spells{$sourceID}}) {
-			$sourceID = $spells{$sourceID}{'sourceID'}
+	} elsif ($switch eq "0114" || $switch eq "01DE") {
+		# Skill use
+		my $skillID = unpack("S1", substr($msg, 2, 2));
+		my $sourceID = substr($msg, 4, 4);
+		my $targetID = substr($msg, 8, 4);
+		my $damage_size = $switch eq "0114" ? 2 : 4;
+		my $damage = unpack("S1", substr($msg, 24, $damage_size));
+		my $level = unpack("S1", substr($msg, 28, 2));
+		if (my $spell = $spells{$sourceID}) {
+			# Resolve source of area attack skill
+			$sourceID = $spell->{sourceID};
 		}
 
-		updateDamageTables($sourceID, $targetID, $damage) if ($damage != 35536);
-		if (%{$monsters{$sourceID}}) {
-			$sourceDisplay = "$monsters{$sourceID}{'name'} ($monsters{$sourceID}{'binID'}) uses";
-		} elsif (%{$players{$sourceID}}) {
-			$sourceDisplay = "$players{$sourceID}{'name'} ($players{$sourceID}{'binID'}) uses";
-			
-		} elsif ($sourceID eq $accountID) {
-			$sourceDisplay = "You use";
-			$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$skillID})}}{'time_used'} = time;
-			undef $chars[$config{'char'}]{'time_cast'};
-		} else {
-			$sourceDisplay = "Unknown uses";
-		}
+		# Perform trigger actions
+		$conState = 5 if $conState != 4 && $config{XKore};
+		updateDamageTables($sourceID, $targetID, $damage) if $damage != 35536;
+		setSkillUseTimer($skillID) if $sourceID eq $accountID;
 
-		if (%{$monsters{$targetID}}) {
-			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
-			if ($sourceID eq $accountID) {
-				$monsters{$targetID}{'castOnByYou'}++;
-			} elsif (%{$players{$sourceID}}) {
-				$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
-			} elsif (%{$monsters{$sourceID}}) {
-				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
-			}
-		} elsif (%{$players{$targetID}}) {
-			$targetDisplay = "$players{$targetID}{'name'} ($players{$targetID}{'binID'})";
-		} elsif ($targetID eq $accountID) {
-			if ($sourceID eq $accountID) {
-				$targetDisplay = "yourself";
-			} else {
-				$targetDisplay = "you";
-			}
-		} else {
-			$targetDisplay = "unknown";
-		}
+		# Resolve source and target names
+		my ($source, $uses, $target) = getActorNames($sourceID, $targetID);
 
-		if ($damage == 35536) {
-			$level_real = $level;
-			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level)\n";
-		} else {
-			$damage = "Miss!" if (!$damage);
-			if ($level == 65535) {
-				print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra - Dmg: $damage\n";
-			} else {
-				$level = $level_real if ($level_real ne "");
-				print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
-			}
-		}
+		# Print skill use message
+		$damage ||= "Miss!";
+		print "$source $uses $skillsID_lut{$skillID}";
+		print " (lvl $level)" unless $level == 65535;
+		print " on $target - Dmg: $damage" unless $damage == 35536;
+		print "\n";
 
 	} elsif ($switch eq "0117") {
-		$skillID = unpack("S1",substr($msg, 2, 2));
-		$sourceID = substr($msg, 4, 4);
-		$lv = unpack("S1",substr($msg, 8, 2));
-		$x = unpack("S1",substr($msg, 10, 2));
-		$y = unpack("S1",substr($msg, 12, 2));
+		# Skill used on coordinates
+		my $skillID = unpack("S1", substr($msg, 2, 2));
+		my $sourceID = substr($msg, 4, 4);
+		my $lv = unpack("S1", substr($msg, 8, 2));
+		my $x = unpack("S1", substr($msg, 10, 2));
+		my $y = unpack("S1", substr($msg, 12, 2));
 		
-		undef $sourceDisplay;
-		if (%{$monsters{$sourceID}}) {
-			$sourceDisplay = "$monsters{$sourceID}{'name'} ($monsters{$sourceID}{'binID'}) uses";
-		} elsif (%{$players{$sourceID}}) {
-			$sourceDisplay = "$players{$sourceID}{'name'} ($players{$sourceID}{'binID'}) uses";
-		} elsif ($sourceID eq $accountID) {
-			$sourceDisplay = "You use";
-			$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$skillID})}}{'time_used'} = time;
-			undef $chars[$config{'char'}]{'time_cast'};
-		} else {
-			$sourceDisplay = "Unknown uses";
-		}
-		print "$sourceDisplay $skillsID_lut{$skillID} on location ($x, $y)\n";
+		# Perform trigger actions
+		setSkillUseTimer($skillID) if $sourceID eq $accountID;
+
+		# Resolve source name
+		my ($source, $uses) = getActorNames($sourceID);
+
+		# Print skill use message
+		print "$source $uses $skillsID_lut{$skillID} on location ($x, $y)\n";
 
 	} elsif ($switch eq "0119") {
 		my $ID = substr($msg, 2, 4);
@@ -7553,30 +7512,20 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "011A") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$skillID = unpack("S1",substr($msg, 2, 2));
-		$targetID = substr($msg, 6, 4);
-		$sourceID = substr($msg, 10, 4);
-		$amount = unpack("S1",substr($msg, 4, 2));
-		undef $sourceDisplay;
-		undef $targetDisplay;
-		undef $extra;
-		if (%{$spells{$sourceID}}) {
-			$sourceID = $spells{$sourceID}{'sourceID'}
+		my $skillID = unpack("S1", substr($msg, 2, 2));
+		my $targetID = substr($msg, 6, 4);
+		my $sourceID = substr($msg, 10, 4);
+		my $amount = unpack("S1", substr($msg, 4, 2));
+		if (my $spell = $spells{$sourceID}) {
+			# Resolve source of area attack skill
+			$sourceID = $spell->{sourceID};
 		}
-		if (%{$monsters{$sourceID}}) {
-			$sourceDisplay = "$monsters{$sourceID}{'name'} ($monsters{$sourceID}{'binID'}) uses";
-		} elsif (%{$players{$sourceID}}) {
-			$sourceDisplay = "$players{$sourceID}{'name'} ($players{$sourceID}{'binID'}) uses";
-		} elsif ($sourceID eq $accountID) {
-			$sourceDisplay = "You use";
-			$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$skillID})}}{'time_used'} = time;
-			undef $chars[$config{'char'}]{'time_cast'};
-		} else {
-			$sourceDisplay = "Unknown uses";
-		}
-		if (%{$monsters{$targetID}}) {
-			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
+
+		# Perform trigger actions
+		$conState = 5 if $conState != 4 && $config{XKore};
+		setSkillUseTimer($skillID) if $sourceID eq $accountID;
+		if ($monsters{$targetID}) {
+			# Increment counter for monster being casted on
 			if ($sourceID eq $accountID) {
 				$monsters{$targetID}{'castOnByYou'}++;
 			} elsif (%{$players{$sourceID}}) {
@@ -7584,36 +7533,31 @@ sub parseMsg {
 			} elsif (%{$monsters{$sourceID}}) {
 				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
 			}
-		} elsif (%{$players{$targetID}}) {
-			$targetDisplay = "$players{$targetID}{'name'} ($players{$targetID}{'binID'})";
-		} elsif ($targetID eq $accountID) {
-			if ($sourceID eq $accountID) {
-				$targetDisplay = "yourself";
-			} else {
-				$targetDisplay = "you";
-			}
-		} else {
-			$targetDisplay = "unknown";
 		}
-		if ($skillID == 28) {
-			$extra = ": $amount hp gained";
-		} elsif ($amount != 65535) {
-			$extra = ": Lv $amount";
-		}
-		print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra\n";
-		#X Start
 		if ($config{'autoResponseOnHeal'}) {
+			# Handle auto-response on heal
 			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
-				if ($targetDisplay eq "you") {
+				if ($targetID eq $accountID) {
 					chatLog("k", "***$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra***\n");
 					sendMessage(\$remote_socket, "pm", getResponse("skillgoodM"), $players{$sourceID}{'name'});
-				} elsif ($targetDisplay eq  "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})") {
+				} elsif ($monsters{$targetID}) {
 					chatLog("k", "***$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra***\n");
 					sendMessage(\$remote_socket, "pm", getResponse("skillbadM"), $players{$sourceID}{'name'});
 				}
 			}
 		}
-		#X End
+
+		# Resolve source and target names
+		my ($source, $uses, $target) = getActorNames($sourceID, $targetID);
+
+		# Print skill use message
+		my $extra = "";
+		if ($skillID == 28) {
+			$extra = ": $amount hp gained";
+		} elsif ($amount != 65535) {
+			$extra = ": Lv $amount";
+		}
+		print "$source $uses $skillsID_lut{$skillID} on $target$extra\n";
 
 	} elsif ($switch eq "011C") {
 		# Warp portal list
@@ -7655,7 +7599,7 @@ sub parseMsg {
 			print "Memo Succeeded\n";
 		}
 
-	} elsif ($switch eq "011F") {
+	} elsif ($switch eq "011F" || $switch eq "01C9") {
 		#area effect spell
 		$ID = substr($msg, 2, 4);
 		$SourceID = substr($msg, 6, 4);
@@ -8467,68 +8411,6 @@ sub parseMsg {
 
 	} elsif ($switch eq "01DC") {
 		$secureLoginKey = substr($msg, 4, $msg_size);
-
-	} elsif ($switch eq "01DE") {
-		$skillID = unpack("S1",substr($msg, 2, 2));
-		$sourceID = substr($msg, 4, 4);
-		$targetID = substr($msg, 8, 4);
-		$damage = unpack("S1",substr($msg, 24, 2));
-		$level = unpack("S1",substr($msg, 28, 2));
-
-		undef $sourceDisplay;
-		undef $targetDisplay;
-		undef $extra;
-		if (%{$spells{$sourceID}}) {
-			$sourceID = $spells{$sourceID}{'sourceID'};
-		}
-
-		updateDamageTables($sourceID, $targetID, $damage) if ($damage != 35536);
-		if (%{$monsters{$sourceID}}) {
-			$sourceDisplay = "$monsters{$sourceID}{'name'} ($monsters{$sourceID}{'binID'}) uses";
-		} elsif (%{$players{$sourceID}}) {
-			$sourceDisplay = "$players{$sourceID}{'name'} ($players{$sourceID}{'binID'}) uses";
-			
-		} elsif ($sourceID eq $accountID) {
-			$sourceDisplay = "You use";
-			$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$skillID})}}{'time_used'} = time;
-			undef $chars[$config{'char'}]{'time_cast'};
-		} else {
-			$sourceDisplay = "Unknown uses";
-		}
-
-		if (%{$monsters{$targetID}}) {
-			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
-			if ($sourceID eq $accountID) {
-				$monsters{$targetID}{'castOnByYou'}++;
-			} elsif (%{$players{$sourceID}}) {
-				$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
-			} elsif (%{$monsters{$sourceID}}) {
-				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
-			}
-		} elsif (%{$players{$targetID}}) {
-			$targetDisplay = "$players{$targetID}{'name'} ($players{$targetID}{'binID'})";
-		} elsif ($targetID eq $accountID) {
-			if ($sourceID eq $accountID) {
-				$targetDisplay = "yourself";
-			} else {
-				$targetDisplay = "you";
-			}
-		} else {
-			$targetDisplay = "unknown";
-		}
-
-		if ($damage == 35536) {
-			$level_real = $level;
-			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level)\n";
-		} else {
-			$damage = "Miss!" if (!$damage);
-			if ($level == 65535) {
-				print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra - Dmg: $damage\n";
-			} else {
-				$level = $level_real if ($level_real ne "");
-				print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
-			}
-		}
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
@@ -11927,6 +11809,33 @@ sub getFromList {
 	return undef;
 }
 
+# Resolves a player or monster ID into a name
+sub getActorName {
+	my $id = shift;
+	if (!$id) {
+		return 'Nothing';
+	} elsif ($id eq $accountID) {
+		return 'You';
+	} elsif (my $monster = $monsters{$id}) {
+		return "Monster $monster->{name} ($monster->{binID})";
+	} elsif (my $player = $players{$id}) {
+		return "Player $player->{name} ($player->{binID})";
+	} else {
+		return "Unknown #".unpack("L1", $id);
+	}
+}
+
+# Resolves a pair of player/monster IDs into names
+sub getActorNames {
+	my ($sourceID, $targetID) = @_;
+
+	my $source = getActorName($sourceID);
+	my $uses = $source eq 'You' ? 'use' : 'uses';
+	my $target = $targetID eq $sourceID ? 'self' : getActorName($targetID);
+
+	return ($source, $uses, $target);
+}
+
 sub ClearRouteAI {
 	my $msg = shift;
 	print $msg;
@@ -11999,6 +11908,14 @@ sub useTeleport {
 	} else {
 		print "You don't have wing or skill to teleport or respawn\n";
 	}
+}
+
+# Keep track of when we last cast a skill
+sub setSkillUseTimer {
+	my $skillID = shift;
+
+	$chars[$config{char}]{skills}{$skills_rlut{lc($skillsID_lut{$skillID})}}{time_used} = time;
+	undef $chars[$config{char}]{time_cast};
 }
 
 return 1;
