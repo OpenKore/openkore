@@ -7752,6 +7752,12 @@ sub parseMsg {
 		$disp .= " (delay ".($src_speed/10).")";
 		$disp .= "\n";
 
+		if ($damage != -30000 &&
+		    $sourceID eq $accountID &&
+			$targetID ne $accountID) {
+			calcStat($damage);
+		}
+
 		my $domain = "skill";
 
 		if ($damage == 0) {
@@ -10263,7 +10269,7 @@ sub redirectXKoreMessages {
 
 sub calcStat {
 	my $damage = shift;
-	$totaldmg = $totaldmg + $damage;
+	$totaldmg += $damage;
 }
 
 sub monKilled {
