@@ -72,6 +72,7 @@ New features:
   e.g. Pneuma, Warp Portal
 - Area effect spell appeared/disappeared message added,
   domain skill, debug level 2
+- When displaying exp gained, also display % of base/job gained
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
