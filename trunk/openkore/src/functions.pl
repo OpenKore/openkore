@@ -198,10 +198,19 @@ sub checkConnection {
 		Network::connectTo(\$remote_socket, $master->{ip}, $master->{port});
 
 		if ($master->{secureLogin} >= 1) {
+			my $code;
+
 			message("Secure Login...\n", "connection");
 			undef $secureLoginKey;
+
 			if ($master->{secureLogin_requestCode} ne '') {
-				sendMasterCodeRequest(\$remote_socket, 'code', $master->{secureLogin_requestCode});
+				$code = $master->{secureLogin_requestCode};
+			} elsif ($config{secureLogin_requestCode} ne '') {
+				$code = $config{secureLogin_requestCode};
+			}
+
+			if ($code ne '') {
+				sendMasterCodeRequest(\$remote_socket, 'code', $code);
 			} else {
 				sendMasterCodeRequest(\$remote_socket, 'type', $master->{secureLogin_type});
 			}
