@@ -2986,12 +2986,14 @@ sub AI {
 					# Raise stat
 					sendAddStatusPoint(\$remote_socket, $ID);
 					message "Auto-adding stat $st\n";
-					# Save which stat was raised, so that when we received the "stat changed" packet (00BC?)
-					# we can changed $statChanged back to 0 so that kore will start checking again if stats
+					# Save which stat was raised, so that when we received the
+					# "stat changed" packet (00BC?) we can changed $statChanged
+					# back to 0 so that kore will start checking again if stats
 					# need to be raised.
-					# This basically prevents kore from sending packets to the server super-fast, by only allowing
-					# another packet to be sent when $statChanged is back to 0 (when the server has replied with a
-					# a stat change)
+					# This basically prevents kore from sending packets to the
+					# server super-fast, by only allowing another packet to be
+					# sent when $statChanged is back to 0 (when the server has
+					# replied with a a stat change)
 					$statChanged = $st;
 					# After we raise a stat, exit loop				
 					last;
@@ -3019,9 +3021,11 @@ sub AI {
 			if ($skill->id && $char->{points_skill} > 0 && $char->{skills}{$handle}{lv} < $num) {
 				# raise skill
 				sendAddSkillPoint(\$remote_socket, $skill->id);
+				message "Auto-adding skill ".$skill->name."\n";
 
-				# save which skill was raised, so that when we received the "skill changed" packet (010F?)
-				# we can changed $skillChanged back to 0 so that kore will start checking again if skills
+				# save which skill was raised, so that when we received the
+				# "skill changed" packet (010F?) we can changed $skillChanged
+				# back to 0 so that kore will start checking again if skills
 				# need to be raised.
 				# this basically does what $statChanged does for stats
 				$skillChanged = $handle;
