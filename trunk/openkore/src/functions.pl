@@ -3586,15 +3586,13 @@ sub AI {
 			}
 
 			# Find the block that's farthest to us
-			my ($largestDistSelf, $largestDistMon);
+			my $largestDist;
 			my $bestBlock;
 			foreach (@blocks) {
 				next unless defined $_;
-				my $dist = distance($char->{pos_to}, $_);
-				my $monDist = distance($monsters{$ID}{pos_to}, $_);
-				if (!defined $largestDistSelf || $monDist > $largestDistMon) {
-					$largestDistSelf = $dist;
-					$largestDistMon = $monDist;
+				my $dist = distance($monsters{$ID}{pos_to}, $_);
+				if (!defined $largestDist || $dist > $largestDist) {
+					$largestDist = $dist;
 					$bestBlock = $_;
 				}
 			}
