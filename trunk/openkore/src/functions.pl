@@ -10689,7 +10689,7 @@ sub checkSelfCondition {
 
 	return 0 if ($config{$prefix . "_disabled"} > 0);
 
-	return 0 if $config{$prefix."_whenIdle"} && AI::isIdle;
+	return 0 if $config{$prefix."_whenIdle"} && !AI::isIdle;
 
 	if ($config{$prefix . "_hp"}) { 
 		return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]}), $config{$prefix . "_hp"}));
