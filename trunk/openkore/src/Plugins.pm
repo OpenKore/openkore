@@ -30,6 +30,7 @@ no strict 'refs';
 use warnings;
 use Exporter;
 use base qw(Exporter);
+use Time::HiRes qw(time sleep);
 use Globals;
 use Utils;
 use Log;

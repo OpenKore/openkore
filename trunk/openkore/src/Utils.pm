@@ -20,6 +20,7 @@ package Utils;
 use strict;
 use Time::HiRes qw(time usleep);
 use IO::Socket::INET;
+use Math::Trig;
 use bytes;
 use Exporter;
 use base qw(Exporter);
@@ -31,7 +32,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	calcPosition distance getVector moveAlongVector normalize
+	calcPosition distance getVector moveAlongVector normalize vectorToDegree
 	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP swrite timeConvert timeOut vocalString);
 
@@ -504,6 +505,35 @@ sub normalize {
 	} else {
 		$$r_store{'x'} = 0;
 		$$r_store{'y'} = 0;
+	}
+}
+
+##
+# vectorToDegree(vector)
+# vector: a reference to a vector hash, as created by getVector().
+# Returns: the degree as a number.
+#
+# Converts a vector into a degree number.
+sub vectorToDegree {
+	my $vec = shift;
+	my $x = $vec->{x};
+	my $y = $vec->{y};
+
+	if ($y == 0) {
+		if ($x < 0) {
+			return 270;
+		} elsif ($x > 0) {
+			return 90;
+		} else {
+			return undef;
+		}
+	} else {
+		my $ret = rad2deg(atan2($x, $y));
+		if ($ret < 0) {
+			return 360 + $ret;
+		} else {
+			return $ret;
+		}
 	}
 }
 
