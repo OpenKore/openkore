@@ -36,6 +36,7 @@ dcOnDeath 0
 dcOnDualLogin 0
 dcOnDisconnect 0
 dcOnEmptyArrow 0
+dcOnMute 0
 
 autoRestart 0
 
@@ -180,6 +181,7 @@ teleportAuto_deadly 1
 teleportAuto_useItem 1
 teleportAuto_useSP 0
 teleportAuto_emptyName 1
+teleportAuto_allPlayers 0
 teleportAuto_unstuck 0
 
 useSelf_skill {
