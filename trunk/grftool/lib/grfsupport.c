@@ -151,11 +151,11 @@ GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index) {
 	return NULL;
 }
 
+
+#define CMP_GF(g,a,b) callback(g->files + a, g->files + b)
+
 /*! \brief Implementation of Quick Sort to work with GrfFiles
- *
- * \note Ported from http://www.code-source.org/showcode.php?id=5
- * 	(cleanest version i saw on google, all the c ones were ugly and not
- *	easy to read at all)
+ * \warn Feeding with a particular sequence can lead to stack overflow.
  *
  * \todo Write documentation
  */
@@ -163,40 +163,92 @@ static void GRF_qsort (Grf *grf, uint32_t left, uint32_t right, GrfSortCallback 
 	uint32_t i, j;
 	GrfFile swp;
 	void *swpdata;
-	
-	if (left<right) {
+
+	if ( left < right ) {
+		/* Select a sweeper "randomly" */
+		uint32_t ref=(left+right+1)/2,pivot;
+		memcpy(&swp, &(grf->files[left]), sizeof(GrfFile));
+		memcpy(&(grf->files[left]),&(grf->files[ref]),sizeof(GrfFile));
+		memcpy(&(grf->files[ref]),&swp,sizeof(GrfFile));
+
+		/* Swap the filedatas */
+		swpdata=grf->filedatas[left];
+		grf->filedatas[left]=grf->filedatas[ref];
+		grf->filedatas[ref]=swpdata;
+
 		i=left+1;
-		j=left+1;
-		while (j <= right) {
-			if (callback(&(grf->files[j]),&(grf->files[right]))>0) {
+		j=right;
+		do {
+			while (i<j && CMP_GF(grf,i,left)<0) ++i;
+			while (i<j && CMP_GF(grf,j,left)>0) --j;
+
+			if (i < j) {
 				/* Do the swap on the file info */
 				memcpy(&swp, &(grf->files[j]), sizeof(GrfFile));
 				memcpy(&(grf->files[j]),&(grf->files[i]),sizeof(GrfFile));
 				memcpy(&(grf->files[i]),&swp,sizeof(GrfFile));
-				
+
 				/* Swap the filedatas */
 				swpdata=grf->filedatas[j];
 				grf->filedatas[j]=grf->filedatas[i];
 				grf->filedatas[i]=swpdata;
-				
-				i++;
+				++i; --j;
 			}
-			j++;
+		} while (i < j);
+		/* out:  a[left+1..j-1] is lt a[left]
+		         a[j+1..right] is gt a[left]
+		*/
+		if ( i == j ) {
+			/* [j] not compared yet */
+			if (CMP_GF(grf,left,j)<0) {
+				/* [left] < [j] but [left] > [j-1] */
+				pivot = j - 1;
+			}
+			else
+			{
+				/* [left] >= [j] */
+				pivot = j;
+			}
 		}
-		/* Do the swap on the file info */
-		memcpy(&swp, &(grf->files[left]), sizeof(GrfFile));
-		memcpy(&(grf->files[left]),&(grf->files[i-1]),sizeof(GrfFile));
-		memcpy(&(grf->files[i-1]),&swp,sizeof(GrfFile));
-		
-		/* Swap the filedatas */
-		swpdata=grf->filedatas[left];
-		grf->filedatas[left]=grf->filedatas[i-1];
-		grf->filedatas[i-1]=swpdata;
-		
-		GRF_qsort(grf, left, i, callback);
-		GRF_qsort(grf, i-2, right, callback);
+		else {
+			pivot = j;
+		}
+		if ( left != pivot ) {
+			/* Do the swap on the file info */
+			memcpy(&swp, &(grf->files[pivot]), sizeof(GrfFile));
+			memcpy(&(grf->files[pivot]),&(grf->files[left]),sizeof(GrfFile));
+			memcpy(&(grf->files[left]),&swp,sizeof(GrfFile));
+
+			/* Swap the filedatas */
+			swpdata=grf->filedatas[pivot];
+			grf->filedatas[pivot]=grf->filedatas[left];
+			grf->filedatas[left]=swpdata;
+		}
+#error debug code
+#if 0
+		{uint32_t k;
+		for ( k = left; k < pivot; ++k )
+		{
+			if ( grf->files[k].pos > grf->files[pivot].pos )
+				fprintf(stderr, "LEFT: %4u %4u -%4u\n", k, pivot, grf->files[k].pos - grf->files[pivot].pos);
+		}
+		for ( k = pivot + 1; k < right; ++k )
+		{
+			if ( grf->files[pivot].pos > grf->files[k].pos )
+				fprintf(stderr, "RIGT: %4u %4u -%4u\n", pivot, k, grf->files[pivot].pos - grf->files[k].pos);
+		}
+		fprintf(stderr, "\n");
+		}
+#endif  /* 0 */
+
+		/* recurse on sub-arrays */
+		if ( left < pivot )
+	        GRF_qsort(grf, left, pivot-1, callback);
+		if ( pivot < right )
+			GRF_qsort(grf, pivot+1, right, callback);
 	}
 }
+#undef CMP_GF
 
 /*! \brief Function to sort a Grf::files array
  *
@@ -208,6 +260,18 @@ static void GRF_qsort (Grf *grf, uint32_t left, uint32_t right, GrfSortCallback 
 GRFEXPORT void grf_sort (Grf *grf, GrfSortCallback callback) {
 	/* Run the sort */
 	GRF_qsort(grf, 0, grf->nfiles-1, callback);
+
+#error debug code
+#if 0
+	{
+	uint32_t k;
+	for ( k = 0; k <= grf->nfiles-2; ++k )
+		{
+			if ( grf->files[k].pos > grf->files[k+1].pos )
+				fprintf(stderr, "Error: %4u %4u -%4u\n", k, k+1, grf->files[k].pos - grf->files[k+1].pos);
+		}
+	}
+#endif  /* 0 */
 }
 
 /*! \brief Alphabetical sorting callback function
@@ -303,6 +367,8 @@ static const char *GRF_strerror_type(GrfErrorType error) {
 		return "Error in zlib.";
 	case GE_ZLIBFILE:
 		return "Error in zlib.";
+	case GE_BADMODE:
+		return "Bad mode: tried to modify in read-only mode.";
 	default:
 		return "Unknown error.";
 	};
