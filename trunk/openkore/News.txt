@@ -108,6 +108,10 @@ New config options:
   every day in the week.
 - statsAddAuto_dontUseBonus (flag)
   If set to 1 then statsAddAuto will not factor in the stat bonuses at all.
+- teleportAuto_attackedWhenSitting (flag)
+  Teleport when a monster attacked you while you're auto-sitting. This is useful if
+  you set mon_control.txt to completely ignore the attacks of certain monsters,
+  but you only want to teleport when they hit you while you're sitting.
 
 New timeouts.txt options:
 - ai_teleport 1
@@ -155,6 +159,7 @@ Credits:
 - ZetaAlpha: advanced 2-2 class support fixes, guild member ID fixes.
 - blacklady: Monster weights, autobuy/sell/storage optimizations.
 - isieo: Mute prevention.
+- denni: Teleport if attacked while sitting.
 
 
 ==================
