@@ -287,8 +287,6 @@ sub checkConnection {
 sub mainLoop {
 	Plugins::callHook('mainLoop_pre');
 
-	$interface->iterate();
-
 	if ($xkore && !$xkore->alive) {
 		# (Re-)initialize X-Kore if necessary
 		$conState = 1;

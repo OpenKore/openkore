@@ -77,8 +77,10 @@ sub switchInterface {
 #
 # Enter the interface's main loop.
 sub mainLoop {
+	my $self = shift;
 	while (!$quit) {
 		usleep($config{sleepTime});
+		$self->iterate();
 		main::mainLoop();
 	}
 }
@@ -86,7 +88,9 @@ sub mainLoop {
 ##
 # $interface->iterate()
 #
-# Call this function in the Kore main loop.
+# Process messages in the user interface message queue.
+# In other words: make sure the user interface updates itself
+# (redraw controls when necessary, etc.).
 sub iterate {
 	# Do nothing; this is a dummy parent class
 }
