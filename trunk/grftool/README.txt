@@ -53,3 +53,10 @@ http://openkore.sourceforge.net/misc/scons-cygwin-0.95.tar.bz2
 The source code will now be built.
 
 Note: on Windows, you can extract tar.bz2 archives with WinRAR.
+
+
+Debugging info
+--------------
+You can turn on the debugging code by compiling with these:
+scons -c      <--- Remove all object files in order to recompile everything.
+scons DEBUG=1

@@ -22,6 +22,7 @@
 
 #include "grf.h"
 #include <stdio.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 #include <zlib.h>
@@ -224,6 +225,30 @@ decode_des_etc(BYTE *buf,int len,int type,int cycle)
 }
 
 
+static void
+debug (char *format, ...)
+{
+	#ifdef DEBUG
+	FILE *f;
+	va_list ap;
+
+	f = fopen ("debug.txt", "a");
+	if (!f) return;
+
+	va_start (ap, format);
+	vfprintf (f, format, ap);
+	va_end (ap);
+	fclose (f);
+	#endif /* DEBUG */
+}
+
+
+
+/**********************
+ * PUBLIC FUNCTIONS
+ **********************/
+
+
 GRFEXPORT Grf *
 grf_open (const char *fname, GrfError *error)
 {
@@ -250,6 +275,9 @@ grf_open (const char *fname, GrfError *error)
 		return NULL;
 	}
 
+	debug ("----------------\n"
+		"sprite_load(%s)\n", fname);
+
 	/* Check whether the file has the 'Master of Magic' header */
 	fread (grf_header, 1, 46, f);
 	if (strncmp ((char *) grf_header, "Master of Magic", 15) != 0) {
@@ -261,10 +289,14 @@ grf_open (const char *fname, GrfError *error)
 	}
 
 	grf->version = getlong (grf_header + 42) >> 8;
+	debug ("Version: %d\n", grf->version);
 
 	/* Get the size of the file; we'll need it later */
 	fseek (f, 0, SEEK_END);
 	grf_size = ftell (f);
+	debug ("Size:\t\t\t%ld bytes\n"
+		"File list offset:\t%ld\n",
+		grf_size, 46 + getlong (grf_header + 30));
 
 	/* Now seek to the beginning of the file list header. */
 	if (fseek (f, 46 + getlong (grf_header + 30), SEEK_SET) != 0) {
@@ -303,6 +335,9 @@ grf_open (const char *fname, GrfError *error)
 		fread (size_header, 1, 8, f);
 		compressed_size = getlong (size_header);
 		decompressed_size = getlong (size_header + 4);
+		debug ("File header compressed:\t\t%ld bytes\n"
+			"File header decompressed:\t%ld bytes\n",
+			compressed_size, decompressed_size);
 
 		if (compressed_size > (uLongf) (grf_size - ftell (f))) {
 			fclose (f);
@@ -338,6 +373,11 @@ grf_open (const char *fname, GrfError *error)
 
 		/* Store the entire file list into an array */
 		grf->nfiles = getlong (grf_header + 0x26) - 7;
+		debug ("nfiles: %ld\n"
+			"Allocating %d bytes of memory for file list structure.\n",
+			grf->nfiles,
+			sizeof (GrfFile) * grf->nfiles);
+
 		grf->files = (GrfFile *) calloc (sizeof (GrfFile), grf->nfiles);
 		if (!grf->files) {
 			free (filelist_data);
@@ -346,6 +386,8 @@ grf_open (const char *fname, GrfError *error)
 			if (error) *error = GE_NOMEM;
 			return NULL;
 		}
+
+		debug ("Reading file list...\n");
 
 		for (entry = 0, offset = 0; entry < grf->nfiles; entry++){
 			char *name;	/* This entry's filename */
@@ -393,6 +435,7 @@ grf_open (const char *fname, GrfError *error)
 		}
 
 		free (filelist_data);
+		debug ("Done!\n");
 
 	} else {
 		if (error) *error = GE_NSUP;
