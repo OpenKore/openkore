@@ -37,12 +37,12 @@ dcOnDisconnect 0
 
 autoRestart 0
 
-autoRestartMin 5400
+autoRestartMin 10800
 autoRestartSeed 3600
 
 autoRestartSleep 1
-autoSleepSeed 3585
-autoSleepMin 15
+autoSleepMin 900
+autoSleepSeed 900
 
 autoConfChange 0
 autoConfChange_files
