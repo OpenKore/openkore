@@ -37,7 +37,7 @@ use Tk::BrowseEntry;
 
 #these should go in a config file at some point.
 our $line_limit = 1000;
-our $default_font = "MS_Sans_Serif";
+our $default_font = "Courier";
 
 ################################################################
 # Public Method
@@ -65,6 +65,7 @@ sub new {
 #		Win32::Console->new(&STD_OUTPUT_HANDLE())->Free or warn "could not free console: $!\n";
 #	}
 
+	Plugins::addHook('mainLoop_pre', \&updateHook, $self);
 	Plugins::addHook('postloadfiles', \&resetColors, $self);
 	return $self;
 }
@@ -100,9 +101,9 @@ sub getInput{
 
 sub writeOutput {
 	my $self = shift;
-	my $type = shift;
-	my $message = shift;
-	my $domain = shift;
+	my $type = shift || '';
+	my $message = shift || '';
+	my $domain = shift || '';
 
 	my $scroll = 0;
 	$scroll = 1 if (($self->{console}->yview)[1] == 1);
@@ -127,14 +128,24 @@ sub writeOutput {
 	$self->update();
 }
 
-sub update{
+sub updateHook {
+	my $hookname = shift;
+	my $r_args = shift;
+	my $self = shift;
+	return unless defined $self->{mw};
+	$self->updatePos();
+	$self->{mw}->update();
+}
+
+sub update {
 	my $self = shift;
 	$self->{mw}->update();
 }
 
 sub updatePos {
 	my $self = shift;
-	my ($x,$y) = @_;
+	return unless defined($config{'char'}) && defined($chars[$config{'char'}]) && defined($chars[$config{'char'}]{'pos_to'});
+	my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
 	$self->{status_posx}->configure( -text =>$x);
 	$self->{status_posy}->configure( -text =>$y);
 #	if (Exists $map_mw ) {
@@ -197,57 +208,6 @@ sub initTk {
 	$self->{mw}->protocol('WM_DELETE_WINDOW', [\&OnExit, $self]);
 	#$self->{mw}->Icon(-image=>$self->{mw}->Photo(-file=>"hyb.gif"));
 	$self->{mw}->title("OpenKore Tk Interface");
-#	$self->{mw}->configure(-menu => $self->{mw}->Menu(-menuitems=>
-#	[ map 
-#		['cascade', $_->[0], -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems => $_->[1]],
-#		['~modKore',
-#			[[qw/command E~xit  -accelerator Ctrl+X/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&OnExit]],]
-#		],
-#		['~View',
-#			[
-#				[qw/command Map  -accelerator Ctrl+M/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&OpenMap, $class]],
-#				'',
-#				[qw/command Status -accelerator Alt+D/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "s");}],
-#				[qw/command Skill -accelerator Alt+S/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "skills");}],
-#				[qw/command Equipment -accelerator Alt+Q/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "i eq");}],
-#				[qw/command Stat -accelerator Alt+A/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "st");}],
-#				[qw/command Usable -accelerator Alt+E/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "i u");}],
-#				[qw/command Non-Usable -accelerator Alt+W/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "i nu");}],
-#				[qw/command Exp -accelerator Alt+Z/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "exp");}],
-#				[qw/command Cart -accelerator Alt+C/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "cart");}],
-#				'',
-#				[cascade=>"Guild", -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems =>
-#					[
-#						[qw/command Info -accelerator ALT+F/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "guild i");}],
-#						[qw/command Member -accelerator ALT+G/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "guild m");}],
-#						[qw/command Position -accelerator ALT+H/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "guild p");}],
-#					 ],
-#				],
-#				'',
-#				[cascade=>"Font Weight", -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems => 
-#					[
-#						[Checkbutton  => '~Bold', -variable => \$is_bold,-font=>[-family=>"Tahoma",-size=>8],-command => [\&change_fontWeight]],
-#					]
-#				],
-#			],
-#		],
-#		['~Reload',
-#			[
-#				[qw/command config -accelerator Ctrl+C/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload conf");}],
-#				[qw/command mon_control  -accelerator Ctrl+W/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload mon_");}],
-#				[qw/command item_control  -accelerator Ctrl+Q/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload items_");}],
-#				[qw/command cart_control  -accelerator Ctrl+E/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload cart_");}],
-#				[qw/command ppl_control  -accelerator Ctrl+D/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload ppl_");}],
-#				[qw/command timeouts  -accelerator Ctrl+Z/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload timeouts");}],
-#				[qw/command pickupitems  -accelerator Ctrl+V/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload pick");}],
-#				[qw/command chatAuto  -accelerator Ctrl+A/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload chatAuto");}],
-#				'',
-#				[qw/command All  -accelerator Ctrl+S/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload all");}],
-#			]
-#		],
-#	]
-#	));
-
 	$self->{console} = $self->{mw}->Scrolled('ROText',
 		-bg=>'black',
 		-fg=>'grey',
@@ -367,10 +327,62 @@ sub initTk {
 		-fill => 'x',
 	);
 
+	$self->{mw}->configure(-menu => $self->{mw}->Menu(-menuitems=>
+	[ map 
+		['cascade', $_->[0], -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems => $_->[1]],
+#		['~modKore',
+#			[[qw/command E~xit  -accelerator Ctrl+X/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&OnExit]],]
+#		],
+		['~View',
+			[
+#				[qw/command Map  -accelerator Ctrl+M/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&OpenMap, $class]],
+				[qw/command Map  -accelerator Ctrl+M/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&MapToggle, undef, $self]],
+#				'',
+#				[qw/command Status -accelerator Alt+D/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "s");}],
+#				[qw/command Skill -accelerator Alt+S/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "skills");}],
+#				[qw/command Equipment -accelerator Alt+Q/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "i eq");}],
+#				[qw/command Stat -accelerator Alt+A/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "st");}],
+#				[qw/command Usable -accelerator Alt+E/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "i u");}],
+#				[qw/command Non-Usable -accelerator Alt+W/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "i nu");}],
+#				[qw/command Exp -accelerator Alt+Z/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "exp");}],
+#				[qw/command Cart -accelerator Alt+C/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "cart");}],
+#				'',
+#				[cascade=>"Guild", -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems =>
+#					[
+#						[qw/command Info -accelerator ALT+F/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "guild i");}],
+#						[qw/command Member -accelerator ALT+G/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "guild m");}],
+#						[qw/command Position -accelerator ALT+H/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "guild p");}],
+#					 ],
+#				],
+#				'',
+#				[cascade=>"Font Weight", -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems => 
+#					[
+#						[Checkbutton  => '~Bold', -variable => \$is_bold,-font=>[-family=>"Tahoma",-size=>8],-command => [\&change_fontWeight]],
+#					]
+#				],
+			],
+		],
+#		['~Reload',
+#			[
+#				[qw/command config -accelerator Ctrl+C/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload conf");}],
+#				[qw/command mon_control  -accelerator Ctrl+W/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload mon_");}],
+#				[qw/command item_control  -accelerator Ctrl+Q/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload items_");}],
+#				[qw/command cart_control  -accelerator Ctrl+E/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload cart_");}],
+#				[qw/command ppl_control  -accelerator Ctrl+D/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload ppl_");}],
+#				[qw/command timeouts  -accelerator Ctrl+Z/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload timeouts");}],
+#				[qw/command pickupitems  -accelerator Ctrl+V/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload pick");}],
+#				[qw/command chatAuto  -accelerator Ctrl+A/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload chatAuto");}],
+#				'',
+#				[qw/command All  -accelerator Ctrl+S/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "reload all");}],
+#			]
+#		],
+	]
+	));
+
 	#Binding
 	#FIXME Do I want to quit on cut? ... NO!
 	#$self->{mw}->bind('all','<Control-x>'=>[\&OnExit]);
-	#$self->{mw}->bind('all','<Control-m>'=>[\&OpenMap, $self]);
+	$self->{mw}->bind('all','<Control-m>'=>[\&MapToggle, $self]);
 	#FIXME hey that's copy....
 	#$self->{mw}->bind('all','<Control-c>'=>sub{push(@input_que, "reload conf");});
 	#$self->{mw}->bind('all','<Control-w>'=>sub{push(@input_que, "reload mon_");});
@@ -557,78 +569,86 @@ sub resetColors {
 	}
 }
 
-sub parseColorFile {
-	my $file = shift;
-	my $self = shift;
-	my $r_hash = $self->{colors};
-	my @old_tags = keys %$r_hash;
-	undef %{$r_hash};
-	open FILE, $file;
-	foreach (<FILE>) {
-		next if (/^(?:#|$)/);
-		tr/\r\n//d;
-		s/\s+$//g;
-		my ($key, $fgcolor, $bgcolor) =m!([\S\S]+)\s+([^/]+)?(?:/(.+))?$!;
-		if ($key eq 'default_only') {
-			$r_hash->{$key} = $fgcolor;
-		} elsif ($key ne '') {
-			$r_hash->{$key} = {-foreground => $fgcolor, -background => $bgcolor};
-		} else {
-			warn "Error reading $file at $.\n";
-		}
-	}
-	close FILE;
-	eval {
-		$self->{console}->configure(%{ $r_hash->{default} });
-		$self->{input}->configure(%{ $r_hash->{default} });
-		$self->{pminput}->configure(%{ $r_hash->{default} });
-		$self->{sinput}->configure(%{ $r_hash->{default} });
-	};
-	if ($@) {
-		if ($@ =~ /unknown color name "(.*)" at/) {
-			Log::error("Color '$1' not recognised in tkcolors.txt directive 'default'.\n");
-			return undef if isTrue($r_hash->{default_only}); #don't bother throwing a lot of errors in the next section.
-		} else {
-			die $@;
-		}
-	}
-	if (isTrue($r_hash->{default_only})) {
-		foreach my $tag (@old_tags) {
-			next if $tag eq 'default' || $tag eq 'default_only';
-			#this is not checked like above because it should not run when the above has thrown an error
-			$self->{console}->tagConfigure(
-				$tag,
-				%{ $r_hash->{default} }
-			);
-		}
+sub MapToggle {
+	my (undef, $self) = @_;
+	unless (defined($self->{map_w})) {
+		$self->{map_w} = $self->{mw}->Toplevel();
+		$self->{map_w}->title("Map View : ??");
+		$self->{map_w}->protocol('WM_DELETE_WINDOW', 
+			sub {
+				$self->MapToggle();
+			}
+		);
+		$self->{map_w}->resizable(0,0);
+		$self->{map_canvas} = $self->{map_w}->Canvas(
+			-width => 200,
+			-height => 200,
+			-background => 'white',
+		)->pack(
+			-side => 'top'
+		);
+		$self->loadMap();
+		
 	} else {
-		foreach my $tag (keys %$r_hash) {
-			next if $tag eq 'default' || $tag eq 'default_only';
-			eval {
-				$self->{console}->tagConfigure(
-					$tag,
-					%{ $r_hash->{$tag} }
-				);
-			};
-			if ($@) {
-				if ($@ =~ /unknown color name "(.*)" at/) {
-					Log::error("Color '$1' not recognised in tkcolors.txt directive '$tag'.\n");
-				} else {
-					die $@;
-				}
+		$self->{map_w}->destroy();
+		undef $self->{map_canvas};
+		undef $self->{map_w};
+	}
+}
+
+sub isMapShown {
+	my $self = shift;
+	return Exists($self->{map_w});
+}
+
+sub loadMap {
+	my $self = shift;
+	return if (!$self->isMapShown());
+	$self->{map_canvas}->delete('map');
+	$self->{map_canvas}->createText(50,20,-text =>'Processing..',-tags=>'map');
+	$self->{map_bitmap} = $self->{map_canvas}->Bitmap(
+		-data => ${&xbmmake(\%field)}
+	);
+	$self->{map_canvas}->createImage(2,2,
+		-image => $self->{map_bitmap},
+		-anchor => 'nw',
+		-tags=>'map'
+	);
+	$self->{map_canvas}->configure(
+			-width => $field{'width'},
+			-height => $field{'height'}
+	);
+	$self->{map_canvas}{'x'} = $field{'width'};
+	$self->{map_canvas}{'y'} = $field{'height'};
+}
+
+#should this cache xbm files?
+sub xbmmake {
+	my $r_hash = shift;
+	my ($i,$j,$k,$hx,$hy,$mvw_x,$mvw_y);
+	my $line=0;
+	my $dump=0;
+	my @data=[];
+	$mvw_x=$$r_hash{'width'};
+	$mvw_y=$$r_hash{'height'};
+	if (($mvw_x % 8)==0){
+		$hx=$mvw_x;
+	}else{
+		$hx=$mvw_x+(8-($mvw_x % 8));
+	}
+	for($j=0;$j<$mvw_y;$j++){
+		$hy=($mvw_x*($mvw_y-$j-1));
+		for($k=0;$k<$hx;$k++){
+			$dump+=256 if (defined($$r_hash{'field'}[$hy+$k]) && $$r_hash{'field'}[$hy+$k] >0);
+			$dump=$dump/2;
+			if(($k % 8) ==7){
+				$line.=sprintf("0x%02x\,",$dump);
+				$dump=0;
 			}
 		}
 	}
+	$line="#define data_width $mvw_x\n#define data_height $mvw_y\nstatic unsigned char data_bits[] = {\n".$line."};";
+	return \$line;
 }
-
-sub isTrue {
-	my $value = shift;
-	return 0 unless defined $value;
-	return ($value =~ /^\d+$/) ? #if it's a number
-		($value != 0) : #return true if it's not 0
-		($value eq 'true' || $value eq 'yes' || $value eq 'on'); #if it's not a number return true if it's a synonym for true
-}
-
-
 
 1 #end of module
