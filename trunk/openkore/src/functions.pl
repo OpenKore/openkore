@@ -3629,9 +3629,11 @@ sub AI {
 		undef $ai_seq_args[0]{'suspended'};
 	}
 
-	if ($ai_seq[0] eq "attack" && $ai_seq_args[0]{movedCount} <= 3) {
-		# Make sure we don't immediately timeout when we've moved to the monster
-		$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
+	if ($ai_seq[0] eq "attack" && $ai_seq_args[0]{move_start}) {
+		# We've just finished moving to the monster.
+		# Don't count the time we spent on moving
+		$ai_seq_args[0]{'ai_attack_giveup'}{'time'} += time - $ai_seq_args[0]{move_start};
+		undef $ai_seq_args[0]{move_start};
 
 	} elsif ((($ai_seq[0] eq "route" && $ai_seq[1] eq "attack") || ($ai_seq[0] eq "move" && $ai_seq[2] eq "attack"))
 	   && $ai_seq_args[0]{attackID}) {
@@ -3649,7 +3651,6 @@ sub AI {
 				shift @ai_seq_args;
 			}
 
-			$ai_seq_args[0]{movedCount} -= 0.5;
 			$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
 			debug "Target has moved more than " . $attackSeq->{'attackMethod'}{'distance'} . " blocks; readjusting route\n", "ai_attack";
 		}
@@ -3786,7 +3787,7 @@ sub AI {
 
 		} elsif ($monsterDist > $ai_seq_args[0]{'attackMethod'}{'distance'}) {
 			# Move to target
-			$ai_seq_args[0]{movedCount}++;
+			$ai_seq_args[0]{move_start} = time;
 			%{$ai_seq_args[0]{monsterPos}} = %{$monsters{$ID}{pos_to}};
 
 			my $dist = sprintf("%.1f", $monsterDist);
