@@ -243,14 +243,25 @@ sub checkConnection {
 		Network::disconnect(\$remote_socket);
 		undef $conState_tries;
 
-	} elsif ($conState == 2 && !($remote_socket && $remote_socket->connected()) && $config{'server'} ne "" && !$conState_tries) {
+	} elsif ($conState == 2 && !($remote_socket && $remote_socket->connected())
+	  && ($config{'server'} ne "" || $masterServers{$config{'master'}}{charServer_ip})
+	  && !$conState_tries) {
+		my $master = $masterServers{$config{'master'}};
+
 		message("Connecting to Game Login Server...\n", "connection");
 		$conState_tries++;
-		Network::connectTo(\$remote_socket, $servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
+
+		if ($master->{charServer_ip}) {
+			Network::connectTo(\$remote_socket, $master->{charServer_ip}, $master->{charServer_port});
+		} else {
+			Network::connectTo(\$remote_socket, $servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
+		}
+
 		sendGameLogin(\$remote_socket, $accountID, $sessionID, $sessionID2, $accountSex);
 		$timeout{'gamelogin'}{'time'} = time;
 
-	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'}) && $config{'server'} ne "") {
+	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'})
+	  && ($config{'server'} ne "" || $masterServers{$config{'master'}}{'charServer_ip'})) {
 		error "Timeout on Game Login Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -5511,11 +5522,13 @@ sub parseMsg {
 		if (!$config{'XKore'}) {
 			message("Closing connection to Master Server\n", "connection");
 			Network::disconnect(\$remote_socket);
-			if ($config{'server'} eq "") {
+			if (!$masterServers{$config{'master'}}{'charServer_ip'} && $config{'server'} eq "") {
 				message("Choose your server.  Enter the server number: ", "input");
 				$waitingForInput = 1;
+			} elsif ($masterServers{$config{'master'}}{'charServer_ip'}) {
+				message("Forcing connect to char server $masterServers{$config{'master'}}{charServer_ip}:$masterServers{$config{'master'}}{charServer_port}\n", "connection");
 			} else {
-				message("Server $config{'server'} selected\n", "connection");
+				message("Server $config{server} selected\n", "connection");
 			}
 		}
 
