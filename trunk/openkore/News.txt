@@ -35,6 +35,8 @@ Bug fixes:
 - Advanced 2-2 classes are now correctly identified.
 - Fixed a bug which caused portalsLOS.txt to be generated incorrectly.
 - Fixed route AI problems with mazes and narrow passages
+- Added all prt_maze* portals. If you bot there, please report your
+  experiences at http://openkore.sourceforge.net/forum/viewtopic.php?p=16098
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
