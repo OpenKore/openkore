@@ -21,6 +21,7 @@ use strict;
 no strict 'refs';
 use Time::HiRes qw(time usleep);
 use IO::Socket::INET;
+use bytes;
 use Exporter;
 use base qw(Exporter);
 # Do not use any other Kore modules here. It will create circular dependancies.
