@@ -36,6 +36,7 @@ our @EXPORT = qw(
 	configModify
 	setTimeout
 
+	checkFollowMode
 	getPortalDestName
 	printItemDesc
 	whenAffected
@@ -105,6 +106,19 @@ sub setTimeout {
 #######################################
 #######################################
 
+
+##
+# checkFollowMode()
+# Returns: 1 if in follow mode, 0 if not.
+#
+# Check whether we're current in follow mode.
+sub checkFollowMode {
+	my $followIndex;
+	if ($config{follow} && defined($followIndex = binFind(\@ai_seq, "follow"))) {
+		return 1 if ($ai_seq_args[$followIndex]{following});
+	}
+	return 0;
+}
 
 sub getPortalDestName {
 	my $ID = shift;
