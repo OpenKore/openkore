@@ -2518,7 +2518,7 @@ sub AI {
 		shift @ai_seq_args;
 	}
 
-	if ($ai_seq[0] ne "deal" && %currentDeal) {
+	if ($ai_seq[0] ne "deal" && $ai_seq[0] ne "dealAutoAccept" && %currentDeal) {
 		unshift @ai_seq, "deal";
 		unshift @ai_seq_args, "";
 	} elsif ($ai_seq[0] eq "deal" && !%currentDeal) {
@@ -4500,6 +4500,42 @@ sub AI {
 
 #Solos End
 
+#BCN Start - DealDump
+
+   ##### DEAL AUTO ACCEPT #####
+
+   if ($ai_seq[0] eq "dealAutoAccept" && time >= $ai_seq_args[0]{'time'}) {
+      if ($ai_seq_args[0]{'mode'} eq "engage") {
+         print "[DealDump] Accepted deal request from " . $ai_seq_args[0]{'name'} . "\n" if ($config{'dealAutoAccept_debug'});
+         sendDealAccept(\$remote_socket);
+         
+         my $args = ();
+         $args{'mode'} = "finalize";
+         $args{'time'} = time + 0.2;
+
+         shift @ai_seq;
+         shift @ai_seq_args;
+
+         unshift @ai_seq, "dealAutoAccept";
+         unshift @ai_seq_args, \%args;
+
+      } elsif ($ai_seq_args[0]{'mode'} eq "finalize") {
+         print "[DealDump] Finalized the deal.\n" if ($config{'dealAutoAccept_debug'});
+         sendDealFinalize(\$remote_socket);
+
+         shift @ai_seq;
+         shift @ai_seq_args;         
+
+      } elsif ($ai_seq_args[0]{'mode'} eq "accept") {
+         print "[DealDump] Accepted the final deal.\n" if ($config{'dealAutoAccept_debug'});
+         sendDealTrade(\$remote_socket);
+      
+         shift @ai_seq;
+         shift @ai_seq_args;
+      }
+   }
+
+#BCN End - DealDump
 
 	##### AVOID GM OR PLAYERS #####
 
@@ -6654,7 +6690,18 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$incomingDeal{'name'} = $dealUser;
 		$timeout{'ai_dealAutoCancel'}{'time'} = time;
 		print "$dealUser Requests a Deal\n";
+#BCN Start - DealDump
+		if ($config{'dealAutoAccept'} && $ai_seq[0] ne "dealAutoAccept") {
+			my $args = ();
+         	$args{'mode'} = "engage";
+         	$args{'time'} = time + 0.2;
+         	$args{'name'} = $dealUser;
 
+         	unshift @ai_seq, "dealAutoAccept";
+         	unshift @ai_seq_args, \%args;
+         	}
+#BCN End - DealDump
+		
 	} elsif ($switch eq "00E7") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		
@@ -6705,6 +6752,16 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		if ($type == 1) {
 			$currentDeal{'other_finalize'} = 1;
 			print "$currentDeal{'name'} finalized the Deal\n";
+			#BCN Start - DealDump
+            if ($config{'dealAutoAccept'} && $ai_seq[0] ne "dealAutoAccept") {
+               my $args = ();
+               $args{'mode'} = "accept";
+               $args{'time'} = time + 0.3;
+
+               unshift @ai_seq, "dealAutoAccept";
+               unshift @ai_seq_args, \%args;
+            }
+#BCN End - DealDump
 		} else {
 			$currentDeal{'you_finalize'} = 1;
 			print "You finalized the Deal\n";

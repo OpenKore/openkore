@@ -63,7 +63,7 @@ xlr82xs:
   *  Made a note to make this more readable tommorrow after i've gotten some sleep.
   *  lots of new config.txt options along the lines of itemExchange_item_0, itemExchange_amount_0 itemExchange_minamount_0
 	 and itemExchange_npc aswell as itemExchange_steps
-
+- Shamelessly stole and implemented ebilguy / BCN's autodeal code
 
 
 
