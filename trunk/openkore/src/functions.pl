@@ -6032,6 +6032,7 @@ sub parseMsg {
 		$ai_v{temp}{storage_opened} = 1;
 		$storage{opened} = 1;
 		message "Storage opened.\n", "storage";
+		Plugins::callHook('packet_storage_open');
 
 	} elsif ($switch eq "00A6") {
 		# Retrieve list of non-stackable (weapons & armor) storage items.
@@ -6715,6 +6716,7 @@ sub parseMsg {
 	} elsif ($switch eq "00F8") {
 		message "Storage closed.\n", "storage";
 		undef $ai_v{temp}{storage_opened};
+		Plugins::callHook('packet_storage_close');
 		
 	} elsif ($switch eq "00FA") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -7828,7 +7830,8 @@ sub parseMsg {
 			$item->{binID} = binFind(\@storageID, $index);
 		}
 		message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
-
+		Plugins::callHook('packet_storage_added');
+		
 	} elsif ($switch eq "01C8") {
 		my $index = unpack("S1",substr($msg, 2, 2));
 		my $ID = substr($msg, 6, 4);
