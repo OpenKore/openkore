@@ -8780,9 +8780,7 @@ sub attack {
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
 					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
-					if(((binFind(\@skillsID,$skillsID_lut{2}) eq "" && binFind(\@skillsID,$skillsID_lut{23}) eq "" && binFind(\@skillsID,$skillsID_lut{68}) eq "") 
-						|| $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]" )
-						&& $Rdef ne ""){
+					if((!whenStatusActive("Twohand Quicken, Adrenaline, Spear Quicken") || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") && $Rdef ne ""){
 						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
 					}
 					if ($Req eq $Leq) {
