@@ -5300,7 +5300,7 @@ sub parseMsg {
 
 		if ($ID eq $accountID) {
 			message "You have died\n";
-			sendCloseShop(\$remote_socket);
+			sendCloseShop(\$remote_socket) unless $config{'dcOnDeath'} == -1;
 			$chars[$config{'char'}]{'deathCount'}++;
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
