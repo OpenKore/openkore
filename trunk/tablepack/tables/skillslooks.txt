@@ -3,7 +3,7 @@
 4 Cloak
 8 Level 1 Cart
 16 Falcon
-32 Peco Peco
+32 Pecopeco
 64 GM Perfect Hide
 128 Level 2 Cart
 256 Level 3 Cart

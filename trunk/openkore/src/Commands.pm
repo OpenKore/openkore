@@ -886,25 +886,11 @@ sub cmdStatus {
 		[$weight_string, $zeny_string]),
 		"info");
 
-	my $activeSkills = 'none';
-	my $ailments = 'none';
-	my $looks = 'none';
-	my $state = '';
+	my $statuses = 'none';
 	if (defined $chars[$config{char}]{statuses} && %{$chars[$config{char}]{statuses}}) {
-		$activeSkills = join(", ", keys %{$chars[$config{char}]{statuses}});
+		$statuses = join(", ", keys %{$chars[$config{char}]{statuses}});
 	}
-	if (defined $chars[$config{char}]{ailments} && %{$chars[$config{char}]{ailments}}) {
-		$ailments = join(", ", keys %{$chars[$config{char}]{ailments}});
-	}
-	if (defined $chars[$config{char}]{state} && %{$chars[$config{char}]{state}}) {
-		$state = join(", ", keys %{$chars[$config{char}]{state}});
-	}
-	if (defined $chars[$config{char}]{looks} && %{$chars[$config{char}]{looks}}) {
-		$looks = join(", ", keys %{$chars[$config{char}]{looks}});
-	}
-	message("Active skills: $activeSkills\n", "info");
-	message("Ailments: $ailments $state\n", "info");
-	message("Looks: $looks\n", "info");
+	message("Statuses: $statuses\n", "info");
 	message("Spirits: $chars[$config{char}]{spirits}\n", "info") if (exists $chars[$config{char}]{spirits});
 	message("----------------------------------------\n", "info");
 
