@@ -429,6 +429,9 @@ statsAddAuto_dontUseBonus 0
 skillsAddAuto 0
 skillsAddAuto_list
 
+allowedMaps
+allowedMaps_reaction 1
+
 autoResponse 0
 
 ignoreAll 0
