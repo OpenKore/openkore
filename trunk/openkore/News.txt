@@ -2,7 +2,9 @@
 ### 1.5.2 (beta)
 ==================
 
-
+New config options:
+- ksPlayers is a comma-seperated lists of player names that should be treated
+  as if they were in your party for the purpose of KS checks.
 
 ==================
 ### 1.5.1 (beta)
