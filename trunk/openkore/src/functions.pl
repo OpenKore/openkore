@@ -110,6 +110,7 @@ sub initMapChangeVars {
 	undef %venderLists;
 	undef %guild;
 	undef %incomingGuild;
+	undef @unknownPlayers;
 
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
@@ -1518,6 +1519,8 @@ sub AI {
 	}
 
 	if (timeOut($timeout{'ai_getInfo'})) {
+		# Remove players that are too far away; sometimes they don't get
+		# removed from the list for some reason
 		foreach (keys %players) {
 			next if $_ eq '';
 			if (distance($char->{pos_to}, $players{$_}{pos_to}) > 35) {
@@ -1525,21 +1528,24 @@ sub AI {
 				binRemove(\@playersID, $_);
 				next;
 			}
-			if (!$players{$_}{'gotName'}) {
-				sendGetPlayerInfo(\$remote_socket, $_);
-				last;
-			}
 		}
+
+		while (@unknownObjects) {
+			my $ID = $unknownObjects[0];
+			my $object = $players{$ID} || $npcs{$ID};
+			if (!$object || $object->{gotName}) {
+				shift @unknownObjects;
+				next;
+			}
+			sendGetPlayerInfo(\$remote_socket, $ID);
+			push(@unknownObjects, shift(@unknownObjects));
+			last;
+		}
+
 		foreach (keys %monsters) {
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
 				sendGetPlayerInfo(\$remote_socket, $_);
 				last;
-			}
-		}
-		foreach (keys %npcs) { 
-			if ($npcs{$_}{'name'} =~ /Unknown/) { 
-				sendGetPlayerInfo(\$remote_socket, $_); 
-				last; 
 			}
 		}
 		foreach (keys %pets) { 
@@ -1551,7 +1557,7 @@ sub AI {
 		$timeout{'ai_getInfo'}{'time'} = time;
 	}
 
-	if (!$config{'XKore'} && timeOut(\%{$timeout{'ai_sync'}})) {
+	if (!$config{'XKore'} && timeOut($timeout{'ai_sync'})) {
 		$timeout{'ai_sync'}{'time'} = time;
 		sendSync(\$remote_socket, getTickCount());
 	}
@@ -5479,29 +5485,35 @@ sub parseMsg {
 		my $lv = unpack("S*",substr($msg, 52,  2));
 
 		if ($jobs_lut{$type}) {
-			if (!$players{$ID} && !defined($players{$ID}{binID})) {
-				$players{$ID}{'appear_time'} = time;
+			my $player = $players{$ID};
+			my $added;
+			if (!$player || !defined($player->{binID})) {
+				$player = $players{$ID} ||= {};
 				binAdd(\@playersID, $ID);
-				$players{$ID}{'ID'} = $ID;
-				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'name'} = "Unknown";
-				$players{$ID}{'nameID'} = unpack("L1", $ID);
-				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+				$player->{appear_time} = time;
+				$player->{ID} = $ID;
+				$player->{jobID} = $type;
+				$player->{sex} = $sex;
+				$player->{name} = "Unknown";
+				$player->{nameID} = unpack("L1", $ID);
+				$player->{binID} = binFind(\@playersID, $ID);
+				$added = 1;
 			}
 
-			$players{$ID}{walk_speed} = $walk_speed;
-			$players{$ID}{headgear}{low} = $lowhead;
-			$players{$ID}{headgear}{top} = $tophead;
-			$players{$ID}{headgear}{mid} = $midhead;
-			$players{$ID}{hair_color} = $hair_color;
-			$players{$ID}{look}{body} = $body_dir;
-			$players{$ID}{look}{head} = $head_dir;
-			$players{$ID}{sitting} = $act > 0;
-			$players{$ID}{lv} = $lv;
-			%{$players{$ID}{pos}} = %coords;
-			%{$players{$ID}{pos_to}} = %coords;
-			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence", 1;
+			$player->{walk_speed} = $walk_speed;
+			$player->{headgear}{low} = $lowhead;
+			$player->{headgear}{top} = $tophead;
+			$player->{headgear}{mid} = $midhead;
+			$player->{hair_color} = $hair_color;
+			$player->{look}{body} = $body_dir;
+			$player->{look}{head} = $head_dir;
+			$player->{sitting} = $act > 0;
+			$player->{lv} = $lv;
+			$player->{pos} = {%coords};
+			$player->{pos_to} = {%coords};
+			debug "Player Exists: $player->{name} ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence", 1;
+
+			objectAdded('player', $ID, $player) if ($added);
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
@@ -5571,6 +5583,7 @@ sub parseMsg {
 			message "Portal Exists: $portals{$ID}{'name'} ($coords{x}, $coords{y}) - ($portals{$ID}{'binID'})\n", "portals", 1;
 
 		} elsif ($type < 1000) {
+			my $added;
 			if (!%{$npcs{$ID}}) {
 				$npcs{$ID}{'appear_time'} = time;
 				$nameID = unpack("L1", $ID);
@@ -5582,9 +5595,12 @@ sub parseMsg {
 				$npcs{$ID}{'nameID'} = $nameID;
 				$npcs{$ID}{'name'} = $display;
 				$npcs{$ID}{'binID'} = binFind(\@npcsID, $ID);
+				$added = 1;
 			}
-			%{$npcs{$ID}{'pos'}} = %coords;
+			$npcs{$ID}{'pos'} = {%coords};
 			message "NPC Exists: $npcs{$ID}{'name'} ($npcs{$ID}{pos}->{x}, $npcs{$ID}{pos}->{y}) (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n", undef, 1;
+
+			objectAdded('npc', $ID, $npcs{$ID}) if ($added);
 
 		} else {
 			debug "Unknown Exists: $type - ".unpack("L*",$ID)."\n", "parseMsg";
@@ -5605,7 +5621,8 @@ sub parseMsg {
 		my $lv = unpack("S*", substr($msg, 51,  2));
 
 		if ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
+			my $added;
+			if (!$players{$ID} || !defined($players{$ID}{binID})) {
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'ID'} = $ID;
@@ -5614,6 +5631,7 @@ sub parseMsg {
 				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+				$added = 1;
 			}
 
 			$players{$ID}{walk_speed} = $walk_speed;
@@ -5624,9 +5642,11 @@ sub parseMsg {
 			$players{$ID}{look}{body} = 0;
 			$players{$ID}{look}{head} = 0;
 			$players{$ID}{lv} = $lv;
-			%{$players{$ID}{pos}} = %coords;
-			%{$players{$ID}{pos_to}} = %coords;
+			$players{$ID}{pos} = {%coords};
+			$players{$ID}{pos_to} = {%coords};
 			debug "Player Connected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
+
+			objectAdded('player', $ID, $players{$ID}) if ($added);
 
 		} else {
 			debug "Unknown Connected: $type - ", "parseMsg";
@@ -5656,6 +5676,7 @@ sub parseMsg {
 		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
 
 		if ($jobs_lut{$type}) {
+			my $added;
 			if (!$players{$ID} && !defined($players{$ID}{binID})) {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'appear_time'} = time;
@@ -5666,6 +5687,7 @@ sub parseMsg {
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
+				$added = 1;
 			}
 
 			$players{$ID}{walk_speed} = $walk_speed;
@@ -5681,6 +5703,8 @@ sub parseMsg {
 			$players{$ID}{time_move} = time;
 			$players{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+
+			objectAdded('player', $ID, $players{$ID}) if ($added);
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
@@ -5743,7 +5767,8 @@ sub parseMsg {
 		$sex = unpack("C*",substr($msg, 35,  1));
 
 		if ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
+			my $added;
+			if (!$players{$ID} || !defined($players{$ID}{binID})) {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'sex'} = $sex;
@@ -5752,12 +5777,15 @@ sub parseMsg {
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'appear_time'} = time;
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+				$added = 1;
 			}
 			$players{$ID}{look}{head} = 0;
 			$players{$ID}{look}{body} = 0;
-			%{$players{$ID}{'pos'}} = %coords;
-			%{$players{$ID}{'pos_to'}} = %coords;
+			$players{$ID}{pos} = {%coords};
+			$players{$ID}{pos_to} = {%coords};
 			debug "Player Spawned: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+
+			objectAdded('player', $ID, $players{$ID}) if ($added);
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
@@ -6194,6 +6222,7 @@ sub parseMsg {
 		}
 		if (%{$npcs{$ID}}) {
 			($npcs{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/; 
+			$npcs{$ID}{'gotName'} = 1;
 			if ($config{'debug'} >= 2) { 
 				$binID = binFind(\@npcsID, $ID); 
 				debug "NPC Info: $npcs{$ID}{'name'} ($binID)\n", "parseMsg", 2;
