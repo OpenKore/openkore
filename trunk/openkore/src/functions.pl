@@ -6022,6 +6022,8 @@ sub parseMsg {
 			$quit = 1 if (!$config{'XKore'});
 		} elsif ($type == 8) {
 			error("Error: The server still recognizes your last connection\n", "connection");
+		} elsif ($type == 15) {
+			error("You have been forced to disconnect by a GM\n", "connection");
 		} else {
 			error("Unknown error $type\n", "connection");
 		}
