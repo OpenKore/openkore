@@ -164,10 +164,9 @@ sub cmdAI {
 		undef %ai_v;
 		message "AI sequences cleared\n", "success";
 		return;
-	}
-	
-	# Display detailed info about current AI sequence
-	if ($args eq 'print') {
+
+	} elsif ($args eq 'print') {
+		# Display detailed info about current AI sequence
 		message("------ AI Sequence ---------------------\n", "list");
 		my $index = 0;
 		foreach (@ai_seq) {
@@ -176,11 +175,9 @@ sub cmdAI {
 		}
 
 		message("------ AI Sequences --------------------\n", "list");
-		
 		return;
-	}
-	
-	if ($args eq 'ai_v') {
+
+	} elsif ($args eq 'ai_v') {
 		message dumpHash(\%ai_v) . "\n", "list";
 		return;
 	}
@@ -200,8 +197,6 @@ sub cmdAI {
 sub cmdAIv {
 	# Display current AI sequences
 	message("ai_seq = @ai_seq\n", "list");
-	message("waitingForMapSolution\n", "list") if ($ai_seq_args[0]{'waitingForMapSolution'});
-	message("waitingForSolution\n", "list") if ($ai_seq_args[0]{'waitingForSolution'});
 	message("solution\n", "list") if ($ai_seq_args[0]{'solution'});
 }
 
