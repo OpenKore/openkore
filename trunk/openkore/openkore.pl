@@ -1486,8 +1486,8 @@ $i   $display
 	} elsif ($switch eq "ml") {
 		$~ = "MLIST";
 		print	"-----------Monster List-----------\n"
-			,"#    Name                     DmgTo    DmgFrom     Distance\n";
-		for ($i = 0; $i < @monstersID; $i++) {
+			,"#    Name                     DmgTo    DmgFrom    Distance    Coordinates\n";
+		for (my $i = 0; $i < @monstersID; $i++) {
 			next if ($monstersID[$i] eq "");
 			$dmgTo = ($monsters{$monstersID[$i]}{'dmgTo'} ne "")
 				? $monsters{$monstersID[$i]}{'dmgTo'}
@@ -1495,9 +1495,13 @@ $i   $display
 			$dmgFrom = ($monsters{$monstersID[$i]}{'dmgFrom'} ne "")
 				? $monsters{$monstersID[$i]}{'dmgFrom'}
 				: 0;
+			my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
+			$dist = sprintf ("%.1f", $dist) if (index ($dist, '.') > -1);
+			my $pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
+
 			format MLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<
-$i   $monsters{$monstersID[$i]}{'name'}                 $dmgTo   $dmgFrom
+@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<
+$i   $monsters{$monstersID[$i]}{'name'}                 $dmgTo   $dmgFrom  $dist  $pos
 .
 			write;
 		}
@@ -1734,7 +1738,7 @@ $i   $privMsgUsers[$i - 1]
 	} elsif ($switch eq "pl") {
 		$~ = "PLIST";
 		print	"-----------Player List-----------\n"
-			,"#    Name                                      Sex         Job\n";
+			,"#    Name                                     Sex   Job         Dist  Coord\n";
 		for ($i = 0; $i < @playersID; $i++) {
 			next if ($playersID[$i] eq "");
 			if (%{$players{$playersID[$i]}{'guild'}}) {
@@ -1742,9 +1746,13 @@ $i   $privMsgUsers[$i - 1]
 			} else {
 				$name = $players{$playersID[$i]}{'name'};
 			}
+			my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
+			$dist = sprintf ("%.1f", $dist) if (index ($dist, '.') > -1);
+			my $pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
+
 			format PLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @<<<<<<<<<<
-$i   $name $sex_lut{$players{$playersID[$i]}{'sex'}} $jobs_lut{$players{$playersID[$i]}{'jobID'}}
+@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<
+$i   $name $sex_lut{$players{$playersID[$i]}{'sex'}} $jobs_lut{$players{$playersID[$i]}{'jobID'}} $dist $pos
 .
 			write;
 		}
