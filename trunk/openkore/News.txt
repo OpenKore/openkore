@@ -4,6 +4,9 @@
 
 Hopefully the last beta.
 
+New features:
+- added command 'arrowcraft' - making arrows
+
 Bug fixes:
 - Fixed shopAuto_open timing problems with sitAuto (also changed ai_shop
   timeout).
@@ -22,7 +25,6 @@ Bug fixes:
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
-
 
 ==================
 ### 1.3.3 (beta)

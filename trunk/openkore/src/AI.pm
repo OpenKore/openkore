@@ -76,21 +76,36 @@ sub findAction {
 	return binFind(\@ai_seq, $_[0]);
 }
 
-# TODO: This function should accept an array instead of a string, for
-# performance reasons.
-# AI::inQueue("foo,bar")   becomes  AI::inQueue("foo", "bar")
 sub inQueue {
-	my $action = shift;
-	my $found = 0;
-
-	foreach (split(/,/, $action)) {
-		$found++ if defined binFind(\@ai_seq, $_);
-	}
-	return $found;
+	my $sequences = join("|", @_);
+	my $actions = join("/", @ai_seq);
+	return 1 if $actions =~ /$sequences/;
+	return 0;
 }
 
 sub isIdle {
 	return $ai_seq[0] eq "";
+}
+
+# TODO: move references of ai_skillUse in functions.pl here
+sub skillUse {
+	my ($ID, $lv, $maxCastTime, $minCastTime, $target, $y) = @_;
+	my %args;
+	$args{ai_skill_use_giveup}{time} = time;
+	$args{ai_skill_use_giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
+	$args{skill_use_id} = $ID;
+	$args{skill_use_lv} = $lv;
+	$args{skill_use_maxCastTime}{time} = time;
+	$args{skill_use_maxCastTime}{timeout} = $maxCastTime;
+	$args{skill_use_minCastTime}{time} = time;
+	$args{skill_use_minCastTime}{timeout} = $minCastTime;
+	if ($y eq "") {
+		$args{skill_use_target} = $target;
+	} else {
+		$args{skill_use_target_x} = $target;
+		$args{skill_use_target_y} = $y;
+	}
+	queue("skill_use",\%args);
 }
 
 return 1;
