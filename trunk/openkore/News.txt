@@ -29,6 +29,7 @@ New features:
   New command: talk num (#number)
 - Background colors in consolecolors.txt are now supported.
 - Added optional parameter for chist, "chist 10" will show last 10 lines of chat.txt
+- Better support for secure logins.
 
 
 New commands:
@@ -57,6 +58,13 @@ New configuration options:
   			    (NOTE responce numbering starts at 0 (unlike it does if you
   			    are using sendTalkResponse)) after training everyone to start
   			    counting at 0, i thaught it best to preserve it ;)
+- secureLogin
+  secureLogin_type
+  secureLogin_account
+  These options are used for secure logins.
+- partySkill_#_*
+  Used for party skills.
+  See config.txt in the latest confpack.
 
 
 Bug fixes:

@@ -9,9 +9,9 @@ master_version_0 1
 version 18
 encrypt 0
 
-SecureLogin 0
-SecureLogin_RequestType 0
-SecureLogin_Account 0
+secureLogin 0
+secureLogin_type 0
+secureLogin_account 0
 
 XKore 0
 exeName ragexe.exe
