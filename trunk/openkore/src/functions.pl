@@ -1026,7 +1026,7 @@ sub parseCommand {
 				$total += $monsters_Killed[$i]{'count'};
 			}
 			message("----------------------------------\n" .
-				"Total numer of killed monsters: $total\n" .
+				"Total number of killed monsters: $total\n" .
 				"----------------------------------\n",
 				"list");
 
@@ -5448,9 +5448,10 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "006B") {
-		message("Recieved characters from Game Login Server\n", "connection");
+		message("Received characters from Game Login Server\n", "connection");
 		$conState = 3;
 		undef $conState_tries;
+		undef @chars;
 
 		#my ($startVal, $num);
 		#if ($config{"master_version_$config{'master'}"} ne "" && $config{"master_version_$config{'master'}"} == 0) {
@@ -5472,6 +5473,7 @@ sub parseMsg {
 			$chars[$num]{'sp'} = unpack("S1", substr($msg, $i + 46, 2));
 			$chars[$num]{'sp_max'} = unpack("S1", substr($msg, $i + 48, 2));
 			$chars[$num]{'jobID'} = unpack("C1", substr($msg, $i + 52, 1));
+			$chars[$num]{'ID'} = substr($msg, $i, 4) ;
 			$chars[$num]{'lv'} = unpack("C1", substr($msg, $i + 58, 1));
 			($chars[$num]{'name'}) = substr($msg, $i + 74, 24) =~ /([\s\S]*?)\000/;
 			$chars[$num]{'str'} = unpack("C1", substr($msg, $i + 98, 1));
