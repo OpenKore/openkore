@@ -61,15 +61,16 @@
 
 
 /* Integer types */
-#if defined(WIN32)
-	#if !defined(_INC_WINDOWS)
+#ifdef WIN32
+	#ifndef _INC_WINDOWS
 		#include <windows.h>
-	#endif /* !defined(_INC_WINDOWS) */
+	#endif /* _INC_WINDOWS */
 	typedef UINT32 uint32_t;
+	typedef UINT16 uint16_t;
 	typedef UINT8 uint8_t;
-#else /* !defined(WIN32) */
+#else /* WIN32 */
 	#include <inttypes.h>
-#endif /* !defined(WIN32) */
+#endif /* WIN32 */
 
 
 /* Win32 DLL macros */
@@ -142,7 +143,6 @@ typedef enum {
 	/*! File has no data (not really an "error") */
 	GE_NODATA
 } GrfErrorType;
-
 
 /*! \brief Structure which contains error information */
 typedef struct {
@@ -244,6 +244,16 @@ typedef struct {
 	/* uint32_t cycle; */
 } GrfFile;
 
+/*! \brief Macro to check if a GrfFile is a directory entry
+ *
+ * \param f GrfFile struct to check
+ */
+#define GRFFILE_IS_DIR(f) (((f).type&GRFFILE_FLAG_FILE)==0 || ( \
+	((f).compressed_len_aligned==GRFFILE_DIR_SZFILE) && \
+	((f).compressed_len==GRFFILE_DIR_SZSMALL) && \
+	((f).real_len==GRFFILE_DIR_SZORIG) && \
+	((f).pos==GRFFILE_DIR_OFFSET) \
+	))
 
 /*! \brief Grf structure
  *
@@ -251,10 +261,14 @@ typedef struct {
  */
 typedef struct {
 	char *filename;		/*!< \brief Archive filename */
-	uint32_t len,		/*!< \brief Size of the GRF file */
-		type,		/*!< \brief Archive type (GRF, RGZ, SPR, etc) */
-		version,	/*!< \brief Archive internal version number */
-		nfiles;		/*!< \brief Number of files in the archive */
+	uint32_t len;		/*!< \brief Size of the GRF file */
+	uint32_t type;		/*!< \brief Archive type (GRF, RGZ, etc)
+				 *
+				 * \sa GRF_TYPE_GRF
+				 * \sa GRF_TYPE_RGZ
+				 */
+	uint32_t version;	/*!< \brief Archive internal version number */
+	uint32_t nfiles;	/*!< \brief Number of files in the archive */
 	GrfFile *files;		/*!< \brief File information array
 				 *
 				 * Array which contains
@@ -267,9 +281,12 @@ typedef struct {
 				 * Can files be encrypted or not?
 				 */
 	FILE *f;		/*!< \brief Internal use only */
+	void **filedatas;	/*!< \brief Internal use only
+				 *
+				 * Data for files (grf_put() or extracted)
+				 */
 } Grf;
 
 GRFEXTERN_END
-
 
 #endif /* __GRFTYPES_H__ */
