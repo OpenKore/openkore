@@ -26,7 +26,7 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK EVT_CHOICE);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK EVT_CHOICE EVT_TIMER);
 use Time::HiRes qw(time sleep);
 use File::Spec;
 
@@ -81,24 +81,51 @@ sub DESTROY {
 	Plugins::delHook($self->{postLoadHook});
 }
 
+sub mainLoop {
+	my $self = shift;
+	my $timer = new Wx::Timer($self, 247);
+	my $sleepTime = $config{sleepTime};
+	my $sub = sub {
+		if ($quit) {
+			$self->ExitMainLoop;
+			return;
+		} elsif ($self->{iterating}) {
+			return;
+		}
+
+		if ($sleepTime ne $config{sleepTime}) {
+			$sleepTime = $config{sleepTime};
+			$timer->Start($sleepTime / 1000);
+		}
+		main::mainLoop();
+		main::checkConnection();
+
+		if (timeOut($controlTime, 0.15)) {
+			$self->updateStatusBar;
+			$self->updateMapViewer;
+			$controlTime = time;
+		}
+		if (timeOut($itemListTime, 0.35)) {
+			$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
+			$itemListTime = time;
+		}
+	};
+
+	EVT_TIMER($self, 247, $sub);
+	$timer->Start($config{sleepTime} / 1000);
+	$self->MainLoop;
+}
+
 sub iterate {
 	my $self = shift;
 
-	if (timeOut($controlTime, 0.15)) {
-		$self->updateStatusBar;
-		$self->updateMapViewer;
-		$controlTime = time;
-	}
-	if (timeOut($itemListTime, 0.35)) {
-		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
-		$itemListTime = time;
-	}
-
+	$self->{iterating}++;
 	while ($self->Pending) {
 		$self->Dispatch;
 	}
 	$self->Yield;
 	$iterationTime = time;
+	$self->{iterating}--;
 }
 
 sub getInput {
@@ -106,6 +133,7 @@ sub getInput {
 	my $timeout = shift;
 	my $msg;
 
+	$self->{iterating}++;
 	if ($timeout < 0) {
 		while (!defined $self->{input} && !$quit) {
 			$self->iterate;
@@ -124,6 +152,7 @@ sub getInput {
 		}
 		$msg = $self->{input};
 	}
+	$self->{iterating}--;
 
 	undef $self->{input};
 	undef $msg if (defined($msg) && $msg eq "");
@@ -169,7 +198,9 @@ sub errorDialog {
 	my $fatal = shift;
 
 	my $title = ($fatal) ? "Fatal error" : "Error";
+	$self->{iterating}++;
 	Wx::MessageBox($msg, "$title - $Settings::NAME", wxICON_ERROR, $self->{frame});
+	$self->{iterating}--;
 }
 
 
