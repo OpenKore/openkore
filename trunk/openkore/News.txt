@@ -2,7 +2,8 @@
 ### 1.6.1
 ==================
 
-
+Bug fixes:
+- Logging framework: writing messages to files should work again.
 
 ==================
 ### 1.6.0

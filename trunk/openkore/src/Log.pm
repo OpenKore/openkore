@@ -110,7 +110,7 @@ use base qw(Exporter);
 
 use Globals qw(%config $interface %consoleColors %field %cities_lut);
 use Interface;
-use Utils qw(binAdd existsInList);
+use Utils qw(binAdd existsInList getFormattedDate);
 
 our @EXPORT_OK = qw(message warning error debug);
 
