@@ -578,7 +578,7 @@ sub cmdInventory {
 
 		for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
 			my $item = $chars[$config{'char'}]{'inventory'}[$i];
-			next if !%{$item};
+			next unless $item && %{$item};
 			if ($item->{type} == 3 ||
 			    $item->{type} == 6 ||
 				$item->{type} == 10) {
