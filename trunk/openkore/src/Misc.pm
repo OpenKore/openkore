@@ -54,7 +54,6 @@ our @EXPORT = qw(
 	whenStatusActiveMon
 	whenStatusActivePL
 
-	launchApp
 	launchURL
 	);
 
@@ -434,46 +433,6 @@ sub whenStatusActivePL {
 # ABSTRACTION AROUND OS-SPECIFIC STUFF
 #########################################
 #########################################
-
-
-##
-# launchApp(args...)
-# args: The application's name and arguments.
-# Returns: a PID on Unix; an object created by Win32::Process::Create() on Windows.
-#
-# Asynchronously launch an application.
-sub launchApp {
-	if ($^O eq 'MSWin32') {
-		my @args = @_;
-		foreach (@args) {
-			$_ = "\"$_\"";
-		}
-
-		my ($priority, $obj);
-		eval 'use Win32::Process; use Win32; $priority = NORMAL_PRIORITY_CLASS;';
-		Win32::Process::Create($obj, $_[0], "@args", 0, $priority, '.');
-		return $obj;
-
-	} else {
-		my $mod = 'POSIX';
-		require $mod;
-		import $mod;
-
-		my $pid = fork();
-		if ($pid == 0) {
-			open(STDOUT, "> /dev/null");
-			open(STDERR, "> /dev/null");
-			POSIX::setsid();
-			if (fork() == 0) {
-				exec(@_);
-			}
-			POSIX::_exit(1);
-		} elsif ($pid) {
-			waitpid($pid, 0);
-		}
-		return $pid;
-	}
-}
 
 ##
 # launchURL(url)
