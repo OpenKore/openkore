@@ -1490,7 +1490,7 @@ sub AI {
 	my $i, $j;
 	my %cmd = %{(shift)};
 
-
+foreach (keys %monsters) { if (!$monsters{$_}{name}) { chatLog("k", "Monster without name! ".join(' ', keys %{$monsters{$_}})."\n"); message "Monster without name! ".join(' ', keys %{$monsters{$_}})."\n"; } }
 	if (timeOut(\%{$timeout{'ai_wipe_check'}})) {
 		foreach (keys %players_old) {
 			delete $players_old{$_} if (time - $players_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
@@ -3402,51 +3402,45 @@ sub AI {
 		AI::args->{ai_attack_giveup}{time} = time + $monsters{AI::args->{ID}}{time_move_calc} + 3;
 		undef AI::args->{avoiding};
 
-	} elsif ((($ai_seq[0] eq "route" && $ai_seq[1] eq "attack") || ($ai_seq[0] eq "move" && $ai_seq[2] eq "attack"))
-	   && $ai_seq_args[0]{attackID}) {
+	} elsif (((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
+	   && AI::args->{attackID}) {
 		# We're on route to the monster; check whether the monster has moved
-		my $ID = $ai_seq_args[0]{attackID};
-		my $attackSeq = ($ai_seq[0] eq "route") ? $ai_seq_args[1] : $ai_seq_args[2];
+		my $ID = AI::args->{attackID};
+		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
 
-		if ($monsters{$ID} && %{$monsters{$ID}} && $ai_seq_args[1]{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance($monsters{$ID}{pos_to}, $attackSeq->{monsterPos}) > $attackSeq->{'attackMethod'}{'distance'}) {
+		if ($monsters{$ID} && %{$monsters{$ID}} && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
+		 && distance($monsters{$ID}{pos_to}, $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{distance}) {
 			# Stop moving
-			shift @ai_seq;
-			shift @ai_seq_args;
-			if ($ai_seq[0] eq "move") {
-				shift @ai_seq;
-				shift @ai_seq_args;
-			}
+			AI::dequeue;
+			AI::dequeue if ($ai_seq[0] eq "route");
 
-			$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
-			debug "Target has moved more than " . $attackSeq->{'attackMethod'}{'distance'} . " blocks; readjusting route\n", "ai_attack";
+			$attackSeq->{ai_attack_giveup}{time} = time;
+			debug "Target has moved more than " . $attackSeq->{attackMethod}{distance} . " blocks; readjusting route\n", "ai_attack";
 		}
 	}
 
-	if ($ai_seq[0] eq "attack" && timeOut($ai_seq_args[0]{'ai_attack_giveup'})) {
+	if (AI::action eq "attack" && timeOut(AI::args->{ai_attack_giveup})) {
 		$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
-		shift @ai_seq;
-		shift @ai_seq_args;
+		AI::dequeue;
 		message "Can't reach or damage target, dropping target\n", "ai_attack";
 
-	} elsif ($ai_seq[0] eq "attack" && !$monsters{$ai_seq_args[0]{'ID'}}) {
+	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{'ID'}}) {
 		# Monster died or disappeared
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
-		my $ID = $ai_seq_args[0]{'ID'};
-		shift @ai_seq;
-		shift @ai_seq_args;
+		my $ID = AI::args->{ID};
+		AI::dequeue;
 
-		if ($monsters_old{$ID}{'dead'}) {
+		if ($monsters_old{$ID}{dead}) {
 			message "Target died\n", "ai_attack";
 
 			monKilled();
 			$monsters_Killed{$monsters_old{$ID}{'nameID'}}++;
 
 			# Pickup loot when monster's dead
-			if ($config{'itemsTakeAuto'} && $monsters_old{$ID}{'dmgFromYou'} > 0 && !$monsters_old{$ID}{'ignore'}) {
+			if ($config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
 				AI::clear("items_take");
-				ai_items_take($monsters_old{$ID}{'pos'}{'x'}, $monsters_old{$ID}{'pos'}{'y'},
-					$monsters_old{$ID}{'pos_to'}{'x'}, $monsters_old{$ID}{'pos_to'}{'y'});
+				ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
+					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
 			} elsif (!ai_getAggressives()) {
 				# Cheap way to suspend all movement to make it look real
 				ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
@@ -3477,7 +3471,7 @@ sub AI {
 			message "Target lost\n", "ai_attack";
 		}
 
-	} elsif ($ai_seq[0] eq "attack") {
+	} elsif (AI::action eq "attack") {
 		# The attack sequence hasn't timed out and the monster is on screen
 
 		# Update information about the monster and the current situation
@@ -3845,8 +3839,8 @@ sub AI {
 	}
 
 	##### AUTO-EQUIP #####
-	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || $ai_v{temp}{teleport}{lv})
-		&& timeOut($timeout{ai_item_equip_auto})) {
+	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto skill_use take items_gather items_take attack)) || $ai_v{temp}{teleport}{lv})
+	  && timeOut($timeout{ai_item_equip_auto})) {
 
 		my $ai_index_attack = AI::findAction("attack");
 		my $ai_index_skill_use = AI::findAction("skill_use");
@@ -5237,7 +5231,7 @@ sub parseMsg {
 	} elsif ($switch eq "007B" || $switch eq "01DA") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
-		my $walk_speed = unpack("S", substr($msg, 6, 2));
+		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
 		my $type = unpack("S*",substr($msg, 14,  2));
@@ -5861,7 +5855,7 @@ sub parseMsg {
 		$items{$ID}{'pos'}{'y'} = $y;
 
 		# Take item as fast as possible
-		if ($itemsPickup{lc($items{$ID}{name})} == 2 && distance($items{$ID}{pos}, $char->{pos_to}) <= 5) {
+		if ($AI && $itemsPickup{lc($items{$ID}{name})} == 2 && distance($items{$ID}{pos}, $char->{pos_to}) <= 5) {
 			sendTake(\$remote_socket, $ID);
 		}
 
@@ -5906,10 +5900,12 @@ sub parseMsg {
 			itemLog($disp);
 
 			# Auto-drop item
-			$item = $char->{inventory}[$invIndex];
-			if ($itemsPickup{lc($items_lut{$item->{nameID}})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
-				sendDrop(\$remote_socket, $item->{index}, $amount);
-				message "Auto-dropping item: $item->{name} ($invIndex) x $amount\n", "drop";
+			if ($AI) {
+				$item = $char->{inventory}[$invIndex];
+				if ($itemsPickup{lc($items_lut{$item->{nameID}})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
+					sendDrop(\$remote_socket, $item->{index}, $amount);
+					message "Auto-dropping item: $item->{name} ($invIndex) x $amount\n", "drop";
+				}
 			}
 
 		} elsif ($fail == 6) {
@@ -8340,7 +8336,8 @@ sub ai_route {
 
 sub ai_route_getRoute {
 	my ($returnArray, $r_field, $r_start, $r_dest) = @_;
-	return 1 if (!defined $r_dest->{x} || !defined $r_dest->{'y'});
+	undef @{$returnArray};
+	return 1 if ($r_dest->{x} eq '' || $r_dest->{y} eq '');
 
 	# The exact destination may not be a spot that we can walk on.
 	# So we find a nearby spot that is walkable.
@@ -8365,7 +8362,6 @@ sub ai_route_getRoute {
 	my $ret = $pathfinding->run($returnArray);
 	if (!$ret) {
 		# Failure
-		undef @{$returnArray};
 		return undef;
 	} else {
 		# Success
@@ -8670,7 +8666,6 @@ sub move {
 	$args{attackID} = $attackID;
 	$args{time_move} = $char->{time_move};
 	$dist = distance($char->{pos}, $args{move_to});
-	#$args{ai_move_giveup}{timeout} = 4 * ($char->{walk_speed} || 0.12) * (1 + $dist);
 	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
 	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
 		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
