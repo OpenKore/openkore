@@ -10775,7 +10775,7 @@ sub itemName {
 		my $elementName = $elements_lut{$elementID};
 		my $starCrumbs = ($cards[1] >> 8) / 5;
 		$prefix .= ('V'x$starCrumbs)."S " if $starCrumbs;
-		$prefix .= "$elementName ";
+		$prefix .= "$elementName " if ($elementName ne "");
 	} elsif (@cards) {
 		# Carded item
 		#
