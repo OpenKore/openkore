@@ -738,7 +738,7 @@ sub writeDataFileIntact {
 	my $r_hash = shift;
 	my $no_undef = shift;
 
-	my (@lines, $key, $value, $inBlock, %blocks);
+	my (@lines, $key, $value, $inBlock, $commentBlock, %blocks);
 	open FILE, "< $file";
 	foreach (<FILE>) {
 		s/[\r\n]//g;	# Remove line endings
@@ -749,7 +749,21 @@ sub writeDataFileIntact {
 		s/^[\t\s]*//;	# Remove leading tabs and whitespace
 		s/\s+$//g;	# Remove trailing whitespace
 
-		if (!defined $inBlock && /{$/) {
+		if (!defined $commentBlock && /^\/\*/) {
+			push @lines, "$_";
+			$commentBlock = 1;
+			next;
+
+		} elsif (m/\*\/$/) {
+			push @lines, "$_";
+			undef $commentBlock;
+			next;
+
+		} elsif ($commentBlock) {
+			push @lines, "$_";
+			next;
+
+		} elsif (!defined $inBlock && /{$/) {
 			# Begin of block
 			s/ *{$//;
 			($key, $value) = $_ =~ /^(.*?) (.*)/;
