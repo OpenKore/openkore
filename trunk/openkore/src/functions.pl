@@ -4125,7 +4125,7 @@ sub AI {
 				$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
 				$msg .= "\n";
 				warning $msg, "route";
-				chatLog("k", $msg);
+				#chatLog("k", $msg);
 				useTeleport(1) if $config{teleportAuto_unstuck};
 				shift @ai_seq;
 				shift @ai_seq_args;
@@ -4453,7 +4453,8 @@ sub AI {
 		delete AI::args->{suspended};
 	}
 	if (AI::action eq "items_gather" && !%{$items{AI::args->{ID}}}) {
-		message "Failed to gather $items_old{AI::args->{ID}}{name} ($items_old{AI::args->{ID}}{binID}) : Lost target\n", "drop";
+		my $ID = AI::args->{ID};
+		message "Failed to gather $items_old{$ID}{name} ($items_old{$ID}{binID}) : Lost target\n", "drop";
 		AI::dequeue;
 
 	} elsif (AI::action eq "items_gather") {
