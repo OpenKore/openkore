@@ -173,7 +173,8 @@ Credits:
 - jabskeeterbug: item history command.
 - jsteng: some routing bug fixes.
 - ZetaAlpha: advanced 2-2 class support fixes, guild member ID fixes.
-- blacklady: Monster weights, autobuy/sell/storage optimizations.
+- blacklady: Monster weights, autobuy/sell/storage optimizations, pet
+  taming packets support.
 - isieo: Mute prevention.
 - denni: Teleport if attacked while sitting.
 - brianhj: skillsAddAuto

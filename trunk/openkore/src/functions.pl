@@ -8584,6 +8584,15 @@ sub parseMsg {
 			message "$name successfully refined a weapon!\n";
 		}
 
+	} elsif ($switch eq "01A0") {
+		# Catch pet - result
+		my $success = unpack("C1", substr($msg, 2, 1));
+		if ($success) {
+			message "Pet capture success\n";
+		} else {
+			message "Pet capture failed\n";
+		}
+
 	} elsif ($switch eq "01A2") {
 		#pet
 		my ($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
