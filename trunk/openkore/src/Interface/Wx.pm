@@ -29,8 +29,6 @@ use Wx ':everything';
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_PAINT);
 use Time::HiRes qw(time sleep);
 use File::Spec;
-use IPC::Open2;
-use POSIX;
 require DynaLoader;
 
 use Globals;
@@ -54,12 +52,14 @@ sub OnInit {
 	if ($buildType == 0) {
 		$self->{platform} = 'win32';
 	} else {
+		my $mod = 'use IPC::Open2; use POSIX;';
+		eval $mod;
 		if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
 			# wxGTK is linked to GTK 2
 			$self->{platform} = 'gtk2';
 			# GTK 2 will segfault if we try to use non-UTF 8 characters,
 			# so we need functions to convert them to UTF-8
-			my $mod = 'use utf8; use Encode;';
+			$mod = 'use utf8; use Encode;';
 			eval $mod;
 		} else {
 			$self->{platform} = 'gtk1';
@@ -487,7 +487,7 @@ sub launchURL {
 		EOF
 
 		my ($r, $w, $desktop);
-		my $pid = open2($r, $w, '/bin/bash');
+		my $pid = IPC::Open2::open2($r, $w, '/bin/bash');
 		print $w $detectionScript;
 		close $w;
 		$desktop = <$r>;
