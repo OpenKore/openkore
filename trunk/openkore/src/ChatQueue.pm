@@ -25,7 +25,7 @@ use AI;
 use Commands;
 use Plugins;
 use Log qw(message error);
-use Utils qw(parseArgs getFormattedDate);
+use Utils qw(parseArgs getFormattedDate timeOut);
 use Misc qw(auth configModify sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse);
 
 
