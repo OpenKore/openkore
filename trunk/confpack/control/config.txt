@@ -350,9 +350,9 @@ sleepTime 10000
 
 intervalMapDrt 1
 
-avoidGM_near 1
+avoidGM_near 0
 avoidGM_near_inTown 0
-avoidGM_talk 1
+avoidGM_talk 0
 avoidGM_reconnect 1800
 
 avoid_ignore_0
