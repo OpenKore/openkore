@@ -7,6 +7,7 @@ Modules
 Plugins
 Utils
 Skills
+Match
 Misc
 IPC
 IPC::Protocol
