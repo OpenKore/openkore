@@ -42,6 +42,16 @@
 - Unless sitAuto_over_50 is set to 1 in config.txt, kore wont sit if
   you're overweight.
 
+- Began working on splitting openkore into modules.
+  So far, only the input server and the hash/array management functions
+  are split into seperate modules (Input.pm and Utils.pm).
+  New modules:
+  * Module.pm is a module which manages dynamic reloading of all modules.
+  * Log.pm is a general logging framework. We're supposed to replace all
+    print()s with functions from this module in the future.
+- Added the commandline argument --daemon. This argument allows you to
+  start kore without input server so kore won't read input from console.
+
 
 ==================
 ### OpenKore 1.0.0
