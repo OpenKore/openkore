@@ -106,8 +106,11 @@ sub mainLoop {
 	my $self = shift;
 	my $timer = new Wx::Timer($self, 247);
 	my $sleepTime = $config{sleepTime};
+	my $quitting;
 	my $sub = sub {
+		return if ($quitting);
 		if ($quit) {
+			$quitting = 1;
 			$self->ExitMainLoop;
 			return;
 		} elsif ($self->{iterating}) {
