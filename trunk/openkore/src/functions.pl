@@ -235,16 +235,29 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 5 && !($remote_socket && $remote_socket->connected())) {
-		$conState = 1;
-		undef $conState_tries;
+		error "Disconnected from Map Server, ", "connection";
+		if ($config{dcOnDisconnect}) {
+			error "exiting...\n", "connection";
+			$quit = 1;
+		} else {
+			error "connecting to Master Server...\n", "connection";
+			$conState = 1;
+			undef $conState_tries;
+		}
 
 	} elsif ($conState == 5 && timeOut(\%{$timeout{'play'}})) {
-		error "Timeout on Map Server, connecting to Master Server...\n", "connection";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		Network::disconnect(\$remote_socket);
-		$conState = 1;
-		undef $conState_tries;
+		error "Timeout on Map Server, ", "connection";
+		if ($config{dcOnDisconnect}) {
+			error "exiting...\n", "connection";
+			$quit = 1;
+		} else {
+			error "connecting to Master Server...\n", "connection";
+			$timeout_ex{'master'}{'time'} = time;
+			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+			Network::disconnect(\$remote_socket);
+			$conState = 1;
+			undef $conState_tries;
+		}
 	}
 }
 
@@ -10118,7 +10131,10 @@ sub cardName {
 	my $cardID = shift;
 
 	# If card name is unknown, just return ?number
-	return $cards_lut{$cardID} || "?$cardID";
+	my $card = $items_lut{$cardID};
+	return "?$cardID" if !$card;
+	$card =~ s/ Card$//;
+	return $card;
 }
 
 # Resolve the name of a simple item
