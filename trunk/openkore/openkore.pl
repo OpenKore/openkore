@@ -86,6 +86,7 @@ addConfigFile("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&par
 addConfigFile("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
 addConfigFile("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
+addConfigFile("$Settings::tables_folder/itemslotcounttable.txt", \%itemSlotCount_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
