@@ -70,6 +70,7 @@ our %handlers = (
 	openshop	=> \&cmdOpenShop,
 	pl		=> \&cmdPlayerList,
 	plugin		=> \&cmdPlugin,
+	pm		=> \&cmdPrivateMessage,
 	portals		=> \&cmdPortalList,
 	s		=> \&cmdStatus,
 	send		=> \&cmdSendRaw,
@@ -1077,6 +1078,36 @@ sub cmdPlugin {
 			error "Syntax Error in function 'plugin' (Control Plugins)\n";
 			error($msg);
 		}
+	}
+}
+
+sub cmdPrivateMessage {
+	my ($switch, $args) = @_;
+	my ($user, $msg) = parseArgs($args, 2);
+
+	if ($user eq "" || $msg eq "") {
+		error	"Syntax Error in function 'pm' (Private Message)\n" .
+			"Usage: pm (username) (message)\n" .
+			"       pm (<#>) (message)\n";
+		return;
+
+	} elsif ($user =~ /^\d+$/) {
+		if ($user - 1 >= @privMsgUsers) {
+			error	"Error in function 'pm' (Private Message)\n" .
+				"Quick look-up $user does not exist\n";
+		} else {
+			main::sendMessage(\$remote_socket, "pm", $msg, $privMsgUsers[$user - 1]);
+			$lastpm{msg} = $msg;
+			$lastpm{user} = $privMsgUsers[$user - 1];
+		}
+
+	} else {
+		if (!defined binFind(\@privMsgUsers, $user)) {
+			push @privMsgUsers, $user;
+		}
+		main::sendMessage(\$remote_socket, "pm", $msg, $user);
+		$lastpm{msg} = $msg;
+		$lastpm{user} = $user;
 	}
 }
 

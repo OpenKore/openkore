@@ -611,9 +611,10 @@ sub getPlayer {
 			return $players{$ID};
 		}
 	} elsif ($partial) {
+		$ID = quotemeta $ID;
 		foreach (@playersID) {
 			next if (!$_);
-			return $players{$_} if (index(lc($players{$_}{name}), lc($ID)) != -1);
+			return $players{$_} if ($players{$_}{name} =~ /^$ID/i);
 		}
 	} else {
 		foreach (@playersID) {
