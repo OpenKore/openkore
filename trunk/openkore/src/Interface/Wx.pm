@@ -570,9 +570,14 @@ sub onMapToggle {
 	}
 
 	# Create map window
-	my $mapFrame = $self->{mapFrame} = new Wx::Dialog($self->{frame}, -1, 'Map', wxDefaultPosition, wxDefaultSize,
-		wxRESIZE_BORDER | wxMINIMIZE_BOX | wxCLOSE_BOX);
+	my $mapFrame = $self->{mapFrame} = new Wx::MiniFrame($self->{frame}, -1, 'Map');
+	$mapFrame->SetClientSize(128, 128);
 	EVT_CLOSE($mapFrame, sub {
+		# WxWidgets doesn't destroy this window until the next idle event.
+		# Unfortunately, WxPerl doesn't have a binding for WxApp::SendIdleEvents().
+		# And right now we don't have the ability to properly integrate with WxWidgets's
+		# main loop. This should be fixed in the future.
+		$mapFrame->Show(0);
 		$mapFrame->Destroy();
 		delete $self->{mapViewer};
 		delete $self->{mapFrame};
@@ -603,7 +608,7 @@ sub onMapToggle {
 		});
 
 	$mapViewer->onMapChange(sub {
-			$mapFrame->SetSize($mapViewer->{bitmap}->GetWidth(), $mapViewer->{bitmap}->GetHeight());
+			$mapFrame->SetClientSize($mapViewer->{bitmap}->GetWidth(), $mapViewer->{bitmap}->GetHeight());
 			$mapFrame->SetTitle($maps_lut{$field{name} . '.rsw'} . " ($field{name})");
 		});
 
