@@ -54,6 +54,7 @@ our @EXPORT = qw(
 	parseSkillsReverseIDLUT_lc
 	parseSkillsSPLUT
 	parseTimeouts
+	parseWaypoint
 	writeDataFile
 	writeDataFileIntact
 	writeDataFileIntact2
@@ -680,6 +681,27 @@ sub parseTimeouts {
 		if ($key ne "") {
 			$$r_hash{$key}{'timeout'} = $args[0];
 		}
+	}
+	close FILE;
+}
+
+sub parseWaypoint {
+	my $file = shift;
+	my $r_array = shift;
+	@{$r_array} = ();
+
+	open FILE, "< $file";
+	foreach (<FILE>) {
+		next if (/^#/ || /^$/);
+		s/[\r\n]//g;
+
+		my @items = split / +/, $_;
+		my %point = (
+			map => $items[0],
+			x => $items[1],
+			y => $items[2]
+		);
+		push @{$r_array}, \%point;
 	}
 	close FILE;
 }

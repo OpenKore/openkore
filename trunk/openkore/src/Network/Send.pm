@@ -792,7 +792,22 @@ sub sendMapLogin {
 	my $charID = shift;
 	my $sessionID = shift;
 	my $sex = shift;
-	my $msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
+	my $msg;
+	if (1) {
+		$msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
+	} else {
+		# This is used on the RuRO private server.
+		# A lot of packets are different so I gave up,
+		# but I'll keep this code around in case anyone ever needs it.
+		$msg = pack("C*", 0xF5, 0x00, 0x00) .
+			$accountID .
+			pack("C*", 0x00, 0x2C, 0xFC) .
+			$charID .
+			pack("C*", 0x61, 0x00, 0xFF, 0xFF, 0xFF, 0xFF) .
+			$sessionID .
+			pack("L1", getTickCount()) .
+			pack("C*", $sex);
+	}
 	sendMsgToServer($r_socket, $msg);
 }
 
@@ -831,12 +846,34 @@ sub sendMasterLogin {
 	my $password = shift;
 	my $master_version = shift;
 	my $version = shift;
+	my $loginType = shift;
 	my $msg;
 
-	$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
-		pack("a24", $username) .
-		pack("a24", $password) .
-		pack("C*", $master_version);
+	if ($loginType <= 0) {
+		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
+			pack("a24", $username) .
+			pack("a24", $password) .
+			pack("C*", $master_version);
+	} else {
+		# This is used on the RuRO private server.
+		# A lot of packets are different so I gave up,
+		# but I'll keep this code around in case anyone ever needs it.
+		$username = substr($username, 0, 23) if (length($username) > 23);
+		$password = substr($password, 0, 23) if (length($password) > 23);
+
+		my $tmp = pack("C*", 0x0D, 0xF0, 0xAD, 0xBA) x 6;
+		substr($tmp, 0, length($username) + 1, $username . chr(0));
+		$username = $tmp;
+
+		$tmp = (pack("C*", 0x0D, 0xF0, 0xAD, 0xBA) x 3) .
+			pack("C*", 0x00, 0xD0, 0xC2, 0xCF, 0xA2, 0xF9, 0xCA, 0xDF, 0x0E, 0xA6, 0xF1, 0x41);
+		substr($tmp, 0, length($password) + 1, $password . chr(0));
+		$password = $tmp;
+
+		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
+			$username . $password .
+			pack("C*", $master_version);
+	}
 	sendMsgToServer($r_socket, $msg);
 }
 
