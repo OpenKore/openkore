@@ -20,10 +20,12 @@ type
     Label5: TLabel;
     PopupMenu1: TPopupMenu;
     CopyURL1: TMenuItem;
+    Label6: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure Label3Click(Sender: TObject);
     procedure CopyURL1Click(Sender: TObject);
+    procedure Label6Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,6 +62,15 @@ end;
 procedure TAboutBox.CopyURL1Click(Sender: TObject);
 begin
   Clipboard.AsText := Label3.Caption;
+end;
+
+procedure TAboutBox.Label6Click(Sender: TObject);
+begin
+  MessageBox(Handle,
+      'VCL - Main program.' + #13#10 +
+      'floAt - Help with various components.' + #13#10 +
+      'johnny - Sound preview support.'
+      , 'Credits', MB_ICONINFORMATION);
 end;
 
 end.

@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grf, ComCtrls, ToolWin, ImgList, ExtCtrls, Buttons, Types,
-  ShellAPI, ShlObj, ExtractThread, VirtualTrees, Menus;
+  ShellAPI, ShlObj, ExtractThread, VirtualTrees, Menus, TntStdCtrls,
+  TntComCtrls, mmsystem;
 
 type
   TForm1 = class(TForm)
@@ -13,14 +14,14 @@ type
     ImageList1: TImageList;
     ToolBar1: TToolBar;
     ToolBar2: TToolBar;
-    StatusBar1: TStatusBar;
-    Search: TEdit;
+    StatusBar1: TTntStatusBar;
+    Search: TTntEdit;
     SearchBtn: TToolButton;
     ImageList2: TImageList;
     Splitter1: TSplitter;
     PreviewPane: TPanel;
     Notebook1: TNotebook;
-    RichEdit1: TRichEdit;
+    RichEdit1: TTntRichEdit;
     Panel2: TPanel;
     SpeedButton1: TSpeedButton;
     Timer1: TTimer;
@@ -40,6 +41,8 @@ type
     AboutBtn: TSpeedButton;
     PaintBox1: TPaintBox;
     PaintBox2: TPaintBox;
+    PopupMenu1: TPopupMenu;
+    Copy1: TMenuItem;
     procedure FormResize(Sender: TObject);
     procedure OpenBtnClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -67,6 +70,8 @@ type
     procedure FileListHeaderClick(Sender: TVTHeader; Column: TColumnIndex;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
     procedure PaintBox1Paint(Sender: TObject);
+    procedure Copy1Click(Sender: TObject);
+    procedure PopupMenu1Popup(Sender: TObject);
   private
     Grf: TGrf;
     FSortColumn: Integer;
@@ -86,12 +91,34 @@ type
 var
   Form1: TForm1;
 
+function UnicodeToKorean(Str: WideString): String;
+function KoreanToUnicode(Str: AnsiString): WideString;
+procedure CFree(P: Pointer); cdecl; external 'msvcrt.dll' name 'free';
+
 implementation
 
 uses
-  About, GPattern;
+  About, GPattern, TntSysUtils;
 
 {$R *.dfm}
+
+function KoreanToUnicode(Str: AnsiString): WideString;
+var
+  Size: Integer;
+begin
+  Size := MultiByteToWideChar(51949, MB_PRECOMPOSED, PChar(Str), -1, nil, 0);
+  SetLength(Result, Size);
+  MultiByteToWideChar(51949, MB_PRECOMPOSED, PChar(Str), -1, PWideChar(Result), Size);
+end;
+
+function UnicodeToKorean(Str: WideString): String;
+var
+  Size: Integer;
+begin
+  Size := WideCharToMultiByte(51949, 0, PWideChar(Str), Length(Str), nil, 0, nil, nil);
+  SetLength(Result, Size);
+  WideCharToMultiByte(51949, 0, PWideChar(Str), Length(Str), PChar(Result), Size, nil, nil);
+end;
 
 function TForm1.OpenGRF(FileName: String): Boolean;
 var
@@ -118,7 +145,7 @@ begin
   Result := True;
 end;
 
-function GetTypeName(FileName: String): String;
+function GetTypeName(FileName: String): WideString;
 var
   Ext: String;
 begin
@@ -166,9 +193,9 @@ begin
   // Do a substring search if the search text doesn't contain wildcards
   SearchLen := Length(Search.Text);
   if  (Pos('*', Search.Text) = 0) and (Pos('?', Search.Text) = 0) then
-      SearchFor := PChar(LowerCase('*' + Search.Text + '*'))
+      SearchFor := PChar(UnicodeToKorean(WideLowerCase('*' + Search.Text + '*')))
   else
-      SearchFor := PChar(LowerCase(Search.Text));
+      SearchFor := PChar(UnicodeToKorean(WideLowerCase(Search.Text)));
   Screen.Cursor := crHourGlass;
 
   FileList.BeginUpdate;
@@ -313,7 +340,8 @@ begin
           Exit;
       end;
 
-      RichEdit1.Text := String(Data);
+      RichEdit1.Text := KoreanToUnicode(PChar(Data));
+      CFree(Data);
       NoteBook1.PageIndex := 0;
 
   end else if (FType = '.BMP') then
@@ -335,6 +363,25 @@ begin
       end;
       DeleteFile(FName);
       Notebook1.PageIndex := 1;
+
+  end else if (FType = '.WAV') then
+  begin
+      GetTempPath(SizeOf(TempDir) - 1, @TempDir);
+      GetTempFileName(TempDir, 'grf', 1, @TempFile);
+      FName := TempFile + FType;
+
+      if not grf_extract(Grf, PChar(Grf.files[Item.i].Name), PChar(FName), Error) then
+      begin
+          MessageBox(Handle, grf_strerror (Error), 'Error', MB_ICONERROR);
+          Exit;
+      end;
+
+      try
+          sndPlaySound(PChar(FName), SND_ASYNC);
+      except
+          // Do nothing
+      end;
+      DeleteFile(FName);
 
   end else
   begin
@@ -407,7 +454,7 @@ begin
 
   if Files.Count = 1 then
   begin
-      SaveDialog1.FileName := ExtractFileName(Files[0]);
+      SaveDialog1.FileName := WideExtractFileName(KoreanToUnicode(Files[0]));
       if SaveDialog1.Execute then
       begin
           if not grf_extract(Grf, PChar(Files[0]), PChar(SaveDialog1.FileName), Error) then
@@ -453,12 +500,15 @@ begin
 end;
 
 procedure TForm1.ExtractWatcherTimer(Sender: TObject);
+var
+  FileName: WideString;
 begin
   if not Assigned(Extractor) then Exit;
   ProgressBar1.Position := Extractor.Current;
-  StatusBar1.SimpleText := Format('Extracting (%.1f%%): %s',
+  FileName := KoreanToUnicode(ExtractFileName(Extractor.CurrentFile));
+  StatusBar1.SimpleText := WideFormat('Extracting (%.1f%%): %s',
         [Extractor.Current / Extractor.Max * 100.0,
-        ExtractFileName(Extractor.CurrentFile)]);
+        FileName]);
 end;
 
 procedure TForm1.StopButtonClick(Sender: TObject);
@@ -483,16 +533,10 @@ procedure TForm1.FileListGetText(Sender: TBaseVirtualTree;
   var CellText: WideString);
 var
   Data: ^TGrfItem;
-  Text: array[0..1024] of WideChar;
 begin
   Data := FileList.GetNodeData(Node);
   if Column = 0 then
-  begin
-      if MultiByteToWideChar(51949, MB_PRECOMPOSED, Grf.files[Data.i].Name, -1, Text, SizeOf(Text) - 1) > 0 then
-          CellText := Text
-      else
-          CellText := Grf.files[Data.i].Name;
-  end
+      CellText := KoreanToUnicode(Grf.files[Data.i].Name)
   else if Column = 1 then
       CellText := GetTypeName(Grf.files[Data.i].Name)
   else if Column = 2 then
@@ -516,9 +560,10 @@ begin
   Data2 := FileList.GetNodeData(Node2);
 
   if Column = 0 then         // Name
-      Result := CompareText(Grf.files[Data1.i].Name, Grf.files[Data2.i].Name)
+      Result := WideCompareText(KoreanToUnicode(Grf.files[Data1.i].Name),
+                            KoreanToUnicode(Grf.files[Data2.i].Name))
   else if Column = 1 then    // Type
-      Result := CompareText(GetTypeName(Grf.files[Data1.i].Name),
+      Result := WideCompareText(GetTypeName(Grf.files[Data1.i].Name),
                             GetTypeName(Grf.files[Data2.i].Name))
   else if Column = 2 then    // Size
       Result := Grf.files[Data2.i].RealLen - Grf.files[Data1.i].RealLen
@@ -556,6 +601,16 @@ begin
   P.Canvas.Pen.Color := clBtnShadow;
   P.Canvas.MoveTo(3, 3);
   P.Canvas.LineTo(3, P.Height - 3);
+end;
+
+procedure TForm1.Copy1Click(Sender: TObject);
+begin
+  RichEdit1.CopyToClipboard;
+end;
+
+procedure TForm1.PopupMenu1Popup(Sender: TObject);
+begin
+  Copy1.Enabled := RichEdit1.SelLength > 0;
 end;
 
 end.
