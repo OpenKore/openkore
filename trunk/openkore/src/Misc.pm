@@ -469,9 +469,8 @@ sub launchURL {
 	my $url = shift;
 
 	if ($^O eq 'MSWin32') {
-		eval "use Win32::API;";
-		my $ShellExecute = new Win32::API("shell32", "ShellExecute", "NPPPPN", "V");
-		$ShellExecute->Call(0, '', $url, '', '', 1);
+		require WinUtils;
+		WinUtils::ShellExecute(0, undef, $url);
 
 	} else {
 		my $mod = 'POSIX';
