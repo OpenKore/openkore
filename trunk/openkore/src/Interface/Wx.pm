@@ -90,6 +90,13 @@ sub iterate {
 	$self->updateStatusBar();
 	if ($self->{mapViewer} && %field && $char) {
 		$self->{mapViewer}->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
+		my $i = binFind(\@ai_seq, "route");
+		if (defined $i) {
+			$self->{mapViewer}->setDest($ai_seq_args[$i]{dest}{pos}{x}, $ai_seq_args[$i]{dest}{pos}{y});
+		} else {
+			$self->{mapViewer}->setDest();
+		}
+		$self->{mapViewer}->update();
 	}
 
 	while ($self->Pending()) {
@@ -571,7 +578,12 @@ sub onMapToggle {
 	}
 
 	# Create map window
-	my $mapFrame = $self->{mapFrame} = new Wx::MiniFrame($self->{frame}, -1, 'Map');
+	my $mapFrame;
+	if ($self->{platform} eq 'win32') {
+		$mapFrame = $self->{mapFrame} = new Wx::MiniFrame($self->{frame}, -1, 'Map');
+	} else {
+		$mapFrame = $self->{mapFrame} = new Wx::Dialog($self->{frame}, -1, 'Map');
+	}
 	$mapFrame->SetClientSize(128, 128);
 	EVT_CLOSE($mapFrame, sub {
 		# WxWidgets doesn't destroy this window until the next idle event.
