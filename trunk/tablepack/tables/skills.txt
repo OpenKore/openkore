@@ -139,7 +139,7 @@ AS_ENCHANTPOISON#Enchant_Poison#
 AS_POISONREACT#Poison_React#
 AS_VENOMDUST#Venom_Dust#
 AS_SPLASHER#Venom_Splasher#
-NV_FIRSTAID#First Aid#
+NV_FIRSTAID#First_Aid#
 NV_TRICKDEAD#Play_Dead#
 SM_MOVINGRECOVERY#HP_Recovery_While_Moving#
 SM_FATALBLOW#Fatal_Blow#
@@ -152,7 +152,7 @@ TF_PICKSTONE#Find_Stone#
 TF_THROWSTONE#Stone_Fling#
 MC_CARTREVOLUTION#Cart_Revolution#
 MC_CHANGECART#Change_Cart#
-MC_LOUD#Crazy Uproar#
+MC_LOUD#Crazy_Uproar#
 AL_HOLYLIGHT#Holy_Light#
 MG_ENERGYCOAT#Energy_Coat#
 NPC_PIERCINGATT#Pierce_Attack#
@@ -317,7 +317,7 @@ BA_MUSICALSTRIKE#Musical_Strike#
 BA_DISSONANCE#Dissonance#
 BA_FROSTJOKE#Frost_Joke#
 BA_WHISTLE#Whistle#
-BA_ASSASSINCROSS#Assassin_Cross at_Sunset#
+BA_ASSASSINCROSS#Assassin_Cross_at_Sunset#
 BA_POEMBRAGI#Bragi's_Poem#
 BA_APPLEIDUN#Idun's_Apple#
 DC_DANCINGLESSON#Dancing_Lesson#
@@ -352,62 +352,62 @@ SKILL-UNKNOWN_351#Unknown_Skill_351#
 SKILL-UNKNOWN_352#Unknown_Skill_352#
 SKILL-UNKNOWN_353#Unknown_Skill_353#
 SKILL-UNKNOWN_354#Unknown_Skill_354#
-
-LK_AURABLADE#Aura Blade#
+LK_AURABLADE#Aura_Blade#
 LK_PARRYING#Parrying#
 LK_CONCENTRATION#Concentration#
-LK_TENSIONRELAX#Tension Relax #
+LK_TENSIONRELAX#Tension_Relax#
 LK_BERSERK#Berserk#
-SKILL-UNKNOWN_360#Unknown_Skill_360#
+LK_FURY#Fury#
 HP_ASSUMPTIO#Assumption#
 HP_BASILICA#Basilica#
 HP_MEDITATIO#Meditation#
-HW_SOULDRAIN#Soul Drain#
-HW_MAGICCRASHER#Magic Crasher#
-HW_MAGICPOWER#Magic Power#
+HW_SOULDRAIN#Soul_Drain#
+HW_MAGICCRASHER#Magic_Crasher#
+HW_MAGICPOWER#Magic_Power#
 PA_PRESSURE#Pressure#
 PA_SACRIFICE#Sacrifice#
 PA_GOSPEL#Gospel#
-CH_PALMSTRIKE#Palm Push Strike#
-CH_TIGERFIST#Tiger Knuckle Fist#
-CH_CHAINCRUSH#Chain Crush Combo#
-PF_HPCONVERSION#Health Conversion#
-PF_SOULCHANGE#Soul Change#
-PF_SOULBURN#Soul Burn#
-ASC_KATAR#Advanced Katar Research#
-ASC_EDP#Enchant Deadly Poison#
-ASC_BREAKER#Soul Breaker#
-SN_SIGHT#True Sight#
-SN_FALCONASSAULT#Falcon Assault#
+CH_PALMSTRIKE#Palm_Push_Strike#
+CH_TIGERFIST#Tiger_Knuckle_Fist#
+CH_CHAINCRUSH#Chain_Crush_Combo#
+PF_HPCONVERSION#Health_Conversion#
+PF_SOULCHANGE#Soul_Change#
+PF_SOULBURN#Soul_Burn#
+ASC_KATAR#Advanced_Katar_Research#
+ASC_ENCHANTPOISON#Advance_Enchant#
+ASC_EDP#Enchant_Deadly_Poison#
+ASC_BREAKER#Soul_Breaker#
+SN_SIGHT#True_Sight#
+SN_FALCONASSAULT#Falcon_Assault#
 SN_SHARPSHOOTING#Sharpshooting#
-SN_WINDWALK#Wind Walk#
+SN_WINDWALK#Wind_Walk#
 WS_MELTDOWN#Meltdown#
-WS_CREATECOIN#Coin Create#
-WS_CREATENUGGET#Nugget Create#
-WS_CARTBOOST#Cart Boost#
-WS_SYSTEMCREATE#Auto Attack System Create#
-ST_CHASEWALK#Chase Walk#
-ST_REJECTSWORD#Reject Sword#
-ST_STEALBACKPACK#Steal Backpack#
+WS_CREATECOIN#Coin_Create#
+WS_CREATENUGGET#Nugget_Create#
+WS_CARTBOOST#Cart_Boost#
+WS_SYSTEMCREATE#Auto_Attack_System_Create#
+ST_CHASEWALK#Chase_Walk#
+ST_REJECTSWORD#Reject_Sword#
+ST_STEALBACKPACK#Steal_Backpack#
 CR_ALCHEMY#Alchemy#
-CR_SYNTHESISPOTION#Sythesis Potion#
-CG_ARROWVULCAN#Arrow Vulcan#
-CG_MOONLIT#A Moonlit Water Mill, A Falling Petal#
-CG_MARIONETTE#Marionette Control#
-LK_SPIRALPIERCE#Spiral Pierce #
-LK_HEADCRUSH#Head Crush #
-LK_JOINTBEAT#Joint Beat#
-HW_NAPALMVULCAN#Napalm Vulcan#
-CH_SOULCOLLECT#Dangerous Soul Collect#
-PF_MINDBREAKER#Mind Breaker #
+CR_SYNTHESISPOTION#Sythesis_Potion#
+CG_ARROWVULCAN#Arrow_Vulcan#
+CG_MOONLIT#A_Moonlit_Water_Mill,_A_Falling_Petal#
+CG_MARIONETTE#Marionette_Control#
+LK_SPIRALPIERCE#Spiral_Pierce_#
+LK_HEADCRUSH#Head_Crush_#
+LK_JOINTBEAT#Joint_Beat#
+HW_NAPALMVULCAN#Napalm_Vulcan#
+CH_SOULCOLLECT#Dangerous_Soul_Collect#
+PF_MINDBREAKER#Mind_Breaker_#
 PF_MEMORIZE#Memorize#
-PF_FOGWALL#Wall of Fog #
-PF_SPIDERWEB#Spider Web #
-ASC_METEORASSAULT#Meteor Assault#
-ASC_CDP#Create Deadly Poison #
-WE_BABY#Dad, Mom, I love you#
-WE_CALLPARENT#Come here, baby#
-WE_CALLBABY#Dad, Mom. I miss you#
+PF_FOGWALL#Wall_of_Fog_#
+PF_SPIDERWEB#Spider_Web_#
+ASC_METEORASSAULT#Meteor_Assault#
+ASC_CDP#Create_Deadly_Poison_#
+WE_BABY#Dad,_Mom,_I_love_you#
+WE_CALLPARENT#Come_here,_baby#
+WE_CALLBABY#Dad,_Mom._I_miss_you#
 GD_APPROVAL#Official_Guild_Approval#
 GD_KAFRACONTRACT#Contract_with_Kapra#
 GD_GUARDRESEARCH#Guardian_Research#
