@@ -58,9 +58,9 @@ Hinalle Leaflet 0 1 0
 Panacea 0 1 0
 Pet Food 0 1 0
 
-Concentration Potion 0 1 0
-Awakening Potion 0 1 0
-Berserk Potion 0 1 0
+Concentration Potion 5 1 0
+Awakening Potion 5 1 0
+Berserk Potion 5 1 0
 Anodyne 0 1 0
 
 Magnifier 0 1 0
