@@ -3383,9 +3383,11 @@ sub AI {
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				# Ignore monsters that have a status (such as poisoned), because there's
-				# a high chance they're being attacked by other players
-				next if ($monster->{statuses} && scalar(keys %{$monster->{statuses}}));
+				# Ignore monsters that
+				# - Have a status (such as poisoned), because there's a high chance
+				#   they're being attacked by other players
+				# - Are inside others' area spells (this includes being trapped).
+				next if (($monster->{statuses} && scalar(keys %{$monster->{statuses}})) || objectInsideSpell($monster));
 				# Ignore ignored monsters in mon_control.txt
 				my $monName = lc($monster->{name});
 				my $monCtrl = $mon_control{$monName}{attack_auto};
@@ -3707,7 +3709,7 @@ sub AI {
 		} elsif ($config{'runFromTarget'} && ($monsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 			#my $begin = time;
 			# Get a list of blocks that we can run to
-			my @blocks = calcAvoidArea($myPos->{x}, $myPos->{y},
+			my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
 				# If the monster hit you while you're running, then your recorded
 				# location may be out of date. So we use a smaller distance so we can still move.
 				($hitYou) ? $config{'runFromTarget_dist'} / 2 : $config{'runFromTarget_dist'});
@@ -5436,7 +5438,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0078" || $switch eq "01D8") {
 		# 0078: long ID, word speed, word state, word ailment, word look, word class, word hair,
-		# word weapon, word head_option_bottom, word sheild, word head_option_top, word head_option_mid,
+		# word weapon, word head_option_bottom, word shield, word head_option_top, word head_option_mid,
 		# word hair_color, word ?, word head_dir, long guild, long emblem, word manner, byte karma,
 		# byte sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word level
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -8372,6 +8374,11 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		if ($pets{$ID}) {
 			message "$pets{$ID}{name} : $emote\n", "emotion";
 		}
+
+	} elsif ($switch eq "01AC") {
+		# 01AC: long ID
+		# Indicates that an object is trapped, but ID is not a
+		# valid monster or player ID.
 
 	} elsif ($switch eq "01B0") {
 		# Class change / monster type change
