@@ -505,6 +505,7 @@ sub cmdInventory {
 			} else {
 				my %eqp;
 				$eqp{index} = $item->{index};
+				$eqp{binID} = $i;
 				$eqp{name} = $item->{name};
 				$eqp{type} = $itemTypes_lut{$item->{type}};
 				$eqp{equipped} = $equipTypes_lut{$item->{equipped}};
@@ -517,44 +518,43 @@ sub cmdInventory {
 			} 
 		}
 
-		message("-----------Inventory-----------\n", "list");
+		my $msg = "-----------Inventory-----------\n";
 		if ($arg1 eq "" || $arg1 eq "eq") {
-			message("-- Equipment (Equipped) --\n", "list");
+			$msg .= "-- Equipment (Equipped) --\n";
 			foreach my $item (@equipment) {
-				message(sprintf("%-3d  %s -- %s\n", $item->{index}, $item->{name}, $item->{equipped}), 'list');
+				$msg .= sprintf("%-3d  %s -- %s\n", $item->{binID}, $item->{name}, $item->{equipped});
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "neq") {
-			message("-- Equipment (Not Equipped) --\n", "list");
+			$msg .= "-- Equipment (Not Equipped) --\n";
 			foreach my $item (@uequipment) {
-				message(sprintf("%-3d  %s (%s) %s\n", $item->{index}, $item->{name}, $item->{type}, $item->{identified}), 'list');
+				$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "nu") {
-			message("-- Non-Usable --\n", "list");
+			$msg .= "-- Non-Usable --\n";
 			for ($i = 0; $i < @non_useable; $i++) {
 				$index = $non_useable[$i];
 				$display = $chars[$config{'char'}]{'inventory'}[$index]{'name'};
 				$display .= " x $chars[$config{'char'}]{'inventory'}[$index]{'amount'}";
-				message(swrite(
+				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$index, $display]),
-					"list");
+					[$index, $display]);
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "u") {
-			message("-- Usable --\n", "list");
+			$msg .= "-- Usable --\n";
 			for ($i = 0; $i < @useable; $i++) {
 				$display = $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'name'};
 				$display .= " x $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'amount'}";
 				$index = $useable[$i];
-				message(swrite(
+				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$index, $display]),
-					"list");
+					[$index, $display]);
 			}
 		}
-		message("-------------------------------\n", "list");
+		$msg .= "-------------------------------\n";
+		message($msg, "list");
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
 		error	"Error in function 'i' (Inventory Item Desciption)\n" .
@@ -749,16 +749,16 @@ sub cmdSkills {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 	if ($arg1 eq "") {
-		message("----------Skill List-----------\n", "list");
-		message("#  Skill Name                    Lv     SP\n", "list");
+		my $msg = "----------Skill List-----------\n";
+		$msg .=   "#  Skill Name                    Lv     SP\n";
 		for (my $i = 0; $i < @skillsID; $i++) {
-			message(swrite(
+			$msg .= swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<    @<<<",
-				[$i, $skills_lut{$skillsID[$i]}, $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}, $skillsSP_lut{$skillsID[$i]}{$chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}}]),
-				"list");
+				[$i, $skills_lut{$skillsID[$i]}, $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}, $skillsSP_lut{$skillsID[$i]}{$chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}}]);
 		}
-		message("\nSkill Points: $chars[$config{'char'}]{'points_skill'}\n", "list");
-		message("-------------------------------\n", "list");
+		$msg .= "\nSkill Points: $chars[$config{'char'}]{'points_skill'}\n";
+		$msg .= "-------------------------------\n";
+		message($msg, "list");
 
 	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
 		error	"Error in function 'skills add' (Add Skill Point)\n" .

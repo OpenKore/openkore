@@ -6302,15 +6302,15 @@ sub parseMsg {
 		$ai_v{'npc_talk'}{'talk'} = 'select';
 		$ai_v{'npc_talk'}{'time'} = time;
 
-		message("----------Responses-----------\n", "list");
-		message("#  Response\n", "list");
+		my $list = "----------Responses-----------\n";
+		$list .=   "#  Response\n";
 		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
-			message(swrite(
+			$list .= swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$i, $talk{'responses'}[$i]]),
-				"list");
+				[$i, $talk{'responses'}[$i]]);
 		}
-		message("-------------------------------\n", "list");
+		$list .= "-------------------------------\n";
+		message($list, "list");
 		message("$npcs{$ID}{'name'} : Type 'talk resp #' to choose a response.\n", "npc");
 
 	} elsif ($switch eq "00BC") {
