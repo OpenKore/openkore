@@ -1,0 +1,78 @@
+# TODO: move recvpackets.txt referer to this file too
+# All server-specific stuff should go here.
+
+# eAthena private servers use these options:
+# master_version 1
+# version 20
+
+[International - iRO: Chaos/Loki]
+ip 38.144.194.2
+port 6900
+master_version 1
+version 18
+
+[International - iRO: Sakray]
+ip 38.144.194.2
+port 6900
+master_version 14
+version 18
+
+[Malaysia - mRO: Main Server]
+ip 61.220.63.248
+port 6900
+master_version 16
+version 6
+
+[Malaysia - mRO (English): Iris/Penril]
+ip 61.220.63.129
+port 6900
+master_version 17
+version 6
+
+[Malaysia - mRO: Sakray]
+ip 220.130.113.227
+port 6900
+master_version 16
+version 6
+
+[Indonesia - idRO: Chaos/Loki/Iris/Fenrir]
+ip 202.43.167.66
+port 6900
+master_version 12
+version 2
+secureLogin 1
+secureLogin_type
+secureLogin_requestCode
+secureLogin_account
+
+[Philippines - pRO: Loki/Chaos/Iris]
+ip 210.1.70.69
+port 6900
+master_version 15
+version 1
+secureLogin 1
+secureLogin_type
+secureLogin_requestCode
+secureLogin_account
+
+[Philippines - pRO: Sarah/Fenrir/Odin]
+ip 210.1.70.78
+port 6900
+master_version 15
+version 1
+secureLogin 1
+secureLogin_type
+secureLogin_requestCode
+secureLogin_account
+
+[Europe - euRO]
+ip 62.109.138.134
+port 6900
+master_version 20
+version 1
+
+[Oceania/Australia - oRO]
+ip 202.168.25.133
+port 6900
+master_version 23
+version 2
