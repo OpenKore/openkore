@@ -1,3 +1,11 @@
+- Further modified Log.pm to use colors the way I was intending on implementing them ;)
+  WARNING WARNING WARNING WARNING WARNING this requires the installation of two additional perl modules
+  for it to function under win32, and one additional perl module to function under *nix
+  the modules are
+  win32 requres - Win32::Console::ANSI
+  both require - Term::ANSIScreen
+- Begun implementing config.txt definable colors
+  
 - Don't immediately reconnect if connecting to master server times out.
 - The "sit" command now also sets itemsGatherAuto to 0.
 - The Linux version no longer depends on the buggy C::DynaLib.
