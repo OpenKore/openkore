@@ -176,6 +176,9 @@ Bug fixes:
 - Fix attackAuto_onlyWhenSafe: ignore party members.
 - If itemsGatherAuto is 1, don't gather items while walking towards a
   monster, or when there are aggressive monsters on screen.
+- Casting area-effect skills (e.g. Safety Wall, Warp Portal, Storm Gust)
+  works again now (ai_skillUse() was passing $args{target_x} instead of
+  $args{x}).
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

@@ -9272,7 +9272,7 @@ sub ai_skillUse {
 	$args{giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
 
 	if ($args{y} ne "") {
-		$args{target_x} = $args{target};
+		$args{x} = $args{target};
 		delete $args{target};
 	}
 	AI::queue("skill_use", \%args);
