@@ -799,14 +799,14 @@ sub sendMapLogin {
 		# This is used on the RuRO private server.
 		# A lot of packets are different so I gave up,
 		# but I'll keep this code around in case anyone ever needs it.
-		$msg = pack("C*", 0xF5, 0x00, 0x00) .
-			$accountID .
-			pack("C*", 0x00, 0x2C, 0xFC) .
-			$charID .
-			pack("C*", 0x61, 0x00, 0xFF, 0xFF, 0xFF, 0xFF) .
-			$sessionID .
-			pack("L1", getTickCount()) .
-			pack("C*", $sex);
+		$msg = pack("C*", 0xF5, 0x00, 0xFF, 0xFF, 0xFF) .
+                        $accountID .
+                        pack("C*", 0xFF, 0xFF, 0xFF, 0xFF, 0xFF) .
+                        $charID .
+                        pack("C*", 0xFF, 0xFF) .
+                        $sessionID .
+                        pack("L1", getTickCount()) .
+                        pack("C*", $sex);
 	}
 	sendMsgToServer($r_socket, $msg);
 }
