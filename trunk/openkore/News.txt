@@ -72,7 +72,7 @@ New features:
 - The Linux version now longer needs --daemon.
   So './openkore.pl &' will Just Work(tm).
 - You can now specify a location instead of NPC ID for storage/buy/sell.
-  Format: map x, y
+  Format: map x y
   eg: storageAuto_npc prontera 29 207
   You must also add ai_npcTalk to timeout.txt
 - monk's spirit is now supported, format: useSelf_skill_x_spirit < 5
