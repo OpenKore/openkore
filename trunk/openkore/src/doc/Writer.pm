@@ -59,7 +59,7 @@ sub makeupText {
 	# Functions
 	$text =~ s/([a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
 	# Variables
-	$text =~ s/($|\b)([\$\%\@][a-z0-9_{\'}:]+)/<code>$1<\/code>/gi;
+	$text =~ s/(^| )([\$\%\@][a-z0-9_{\'}:]+)/<code>$1$2<\/code>/gi;
 	# Links to modules
 	$text =~ s/([a-z0-9_:]+\.pm)/&linkModule($1)/gie;
 	return $text;
@@ -103,9 +103,11 @@ sub writeModuleHTML {
 
 	sub writeFunctionIndex {
 		my $module = shift;
+		my $category = shift;
 		my $text = '';
 
-		foreach my $item (sort(values %{$module->{functions}})) {
+		foreach my $itemName (sort(keys %{$module->{categories}{$category}})) {
+			my $item = $module->{categories}{$category}{$itemName};
 			$text .= "<tr onclick=\"location.href='#$item->{name}';\">\n\t<td class=\"func\"><code>" .
 				"<a href=\"#$item->{name}\">$item->{name}</a>" .
 				"</code></td>\n" .
@@ -115,7 +117,8 @@ sub writeModuleHTML {
 		}
 
 		if ($text ne '') {
-			$text = "<p><h2>Functions in this module</h2>\n" .
+			my $title = ($category eq "") ? "Functions in this module" : $category;
+			$text = "<p><h2>$title</h2>\n" .
 				"<table id=\"functionIndex\">\n" .
 				"<tr><th>Name</th><th>Parameters</th></tr>\n" .
 				"$text\n" .
@@ -123,7 +126,15 @@ sub writeModuleHTML {
 		}
 		return $text;
 	}
-	$html =~ s/\@FUNCINDEX\@/&writeFunctionIndex($module)/ge;
+	sub writeFunctionIndices {
+		my $module = shift;
+		my $text = '';
+		foreach my $category (sort(keys %{$module->{categories}})) {
+			$text .= writeFunctionIndex($module, $category);
+		}
+		return $text;
+	}
+	$html =~ s/\@FUNCINDEX\@/&writeFunctionIndices($module)/ge;
 
 
 	sub writeFunctionTable {
@@ -131,7 +142,8 @@ sub writeModuleHTML {
 		my $text = '';
 		my $first = 1;
 
-		foreach my $func (sort(values %{$module->{functions}})) {
+		foreach my $itemName (sort(keys %{$module->{items}})) {
+			my $func = $module->{items}{$itemName};
 			$text .= "<p><hr class=\"function_sep\">" if (!$first);
 			$first = 0;
 

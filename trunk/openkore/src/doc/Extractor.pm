@@ -39,25 +39,29 @@ sub addModule {
 		package => $package,
 		name => '',
 		desc => '',
-		functions => {},
+		items => {},
+		categories => {},
 		file => $file
 		);
 	my %item;
+	my $category = '';
 	initItem(\%item);
 
 	foreach my $line (<F>) {
 		$linenum++;
 		$line =~ s/\r//g;
 
-		if (!($line =~ /^#/)) {
+		if ($line !~ /^#/) {
 			if ($state =~ /^function-/ && $item{name} ne '') {
 				# The end of a function description has been reached
 				my %copy = %item;
 				$copy{desc} =~ s/\n+$//s;
 				$copy{example} =~ s/\n+$//s;
 				$copy{package} = $package;
+				$copy{category} = $category;
 
-				$module{functions}{$copy{name}} = \%copy;
+				$module{items}{$copy{name}} = \%copy;
+				$module{categories}{$category}{$copy{name}} = \%copy;
 				$functions{$copy{name}} = \%copy;
 			}
 
@@ -70,7 +74,12 @@ sub addModule {
 		if ($state eq 'ready') {
 			# Ready to accept the beginning of documentation comments.
 			# Look for lines that start with '##'.
-			$state = 'start' if ($line eq "##\n");
+			if ($line eq "##\n") {
+				$state = 'start';
+			} elsif ($line =~ /^### CATEGORY: (.+)$/) {
+				$category = $1;
+				$state = 'category';
+			}
 
 		} elsif ($state eq 'start') {
 			# Reading first line of a documentation comment.
@@ -78,6 +87,7 @@ sub addModule {
 				# This comment block is a module description
 				$module{name} = $1 if ($1);
 				$state = 'module-description';
+
 			} else {
 				# This is a function description
 				($item{name}, $item{param_declaration}) = $line =~ /^# ([a-z0-9_:\$\->]+) *(\(.*\))?/i;

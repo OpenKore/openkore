@@ -75,6 +75,11 @@ sub init {
 	}
 }
 
+
+##############################
+### CATEGORY: Constructor
+##############################
+
 ##
 # Skills->new(key => value)
 # key: id, handle or name.
@@ -103,6 +108,11 @@ sub new {
 	}
 	return $self;
 }
+
+
+##############################
+### CATEGORY: Methods
+##############################
 
 ##
 # $skill->id()
