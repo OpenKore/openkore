@@ -33,7 +33,8 @@ miss any of the new config options.
 - Began work on Win98 support in Tools.dll and Inject.dll. It currently
   doesn't work so don't try it out!
 - New config options:
-  logChat, logPrivateChat, logPartyChat, logGuildChat, logEmoticons
+  logChat, logPrivateChat, logPartyChat, logGuildChat, logSystemChat,
+  logEmoticons
   Enables/disables logging of certain chats.
   The option logEmoticons is a comma-seperated list of emoticons numbers
   (see tables/emotions.txt), that you want to log.
