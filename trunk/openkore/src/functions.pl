@@ -4636,10 +4636,16 @@ sub AI {
 		my $map_name_lu = $field{name}.'.rsw';
 		my $safe = 0;
 
+		if ($config{teleportAuto_allPlayers} && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
+			useTeleport(1);
+			$ai_v{temp}{clear_aiQueue} = 1;
+			$AI::Temp::Teleport_allPlayers = time;
+		}
+
 		# Check whether it's safe to teleport
 		if ($config{teleportAuto_onlyWhenSafe}) {
 			if (!$cities_lut{$map_name_lu} && timeOut($timeout{ai_teleport_safe_force})) {
-				$safe = 1 if (!scalar(@playersID));
+				$safe = 1 if (!binSize(\@playersID));
 				$timeout{ai_teleport_safe_force}{time} = time;
 			}
 		} elsif (!$cities_lut{$map_name_lu}) {
@@ -4663,7 +4669,7 @@ sub AI {
 				if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
 					useTeleport(1);
 					$ai_v{temp}{clear_aiQueue} = 1;
-					last;
+					last TELEPORT;
 				}
 			}
 			$timeout{'ai_teleport_away'}{'time'} = time;
@@ -4696,6 +4702,7 @@ sub AI {
 					if (!$found) {
 						useTeleport(1);
 						$ai_v{temp}{clear_aiQueue} = 1;
+						last TELEPORT;
 					}
 				}
 
@@ -4716,6 +4723,7 @@ sub AI {
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_idle}{time} = time;
+			last TELEPORT;
 		}
 
 		if ($config{teleportAuto_portal} && $safe
@@ -4724,6 +4732,7 @@ sub AI {
 			if (scalar(@portalsID)) {
 				useTeleport(1);
 				$ai_v{temp}{clear_aiQueue} = 1;
+				last TELEPORT;
 			}
 			$timeout{ai_teleport_portal}{time} = time;
 		}

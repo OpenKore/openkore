@@ -414,7 +414,13 @@ sub updateMapViewer {
 	my $map = $self->{mapViewer};
 	return unless ($map && %field && $char);
 
-	my $myPos = calcPosition($char);
+	my $myPos;
+	if ($CVS) {
+		$myPos = calcPosition($char);
+	} else {
+		$myPos = $char->{pos_to};
+	}
+
 	$map->set($field{name}, $myPos->{x}, $myPos->{y}, \%field);
 	my $i = binFind(\@ai_seq, "route");
 	if (defined $i) {

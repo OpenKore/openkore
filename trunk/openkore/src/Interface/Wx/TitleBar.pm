@@ -99,7 +99,9 @@ sub max {
 }
 
 sub f {
-	return File::Spec->catfile('src', @_);
+	my $f = File::Spec->catfile('src', @_);
+	$f = File::Spec->catfile(@_) if (! -f $f);
+	return $f;
 }
 
 1;
