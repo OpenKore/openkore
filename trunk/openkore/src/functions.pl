@@ -8812,13 +8812,21 @@ sub parseMsg {
 
 		if ($ID eq $accountID) {
 			my $invIndex = findIndex($char->{inventory}, "index", $index);
-			my $amount = $char->{inventory}[$invIndex]{amount} - $amountleft;
-			$char->{inventory}[$invIndex]{amount} -= $amount;
+			my $item = $char->{inventory}[$invIndex];
+			my $amount = $item->{amount} - $amountleft;
+			$item->{amount} -= $amount;
 
-			message("You used Item: $char->{inventory}[$invIndex]{name} ($invIndex) x $amount\n", "useItem", 1);
-			if ($char->{inventory}[$invIndex]{amount} <= 0) {
+			message("You used Item: $item->{name} ($invIndex) x $amount\n", "useItem", 1);
+			if ($item->{amount} <= 0) {
 				delete $char->{inventory}[$invIndex];
 			}
+
+			Plugins::callHook('packet_useitem', {
+				item => $item,
+				invIndex => $invIndex,
+				name => item->{name},
+				amount => $amount
+			});
 
 		} elsif (%{$players{$ID}}) {
 			message("Player $players{$ID}{'name'} ($players{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
