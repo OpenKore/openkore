@@ -103,6 +103,8 @@ Bug fixes:
 - Message domain 'skill' was not properly labeled when other people are
   spamming skills in town.
 - checkConnection() will no longer be called if $quit is true.
+- storageAuto now continues with the next item, if the last item wasn't
+  put into storage (e.g. because storage is full)
 
 Internal:
 - Portal compilation is now 30% faster.
