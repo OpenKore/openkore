@@ -29,13 +29,13 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	download formatNumber getFormattedDate getHex getTickCount swrite timeConvert
-	timeOut vocalString);
+	downloadSmall dataWaiting formatNumber getCoordString getFormattedDate getHex getTickCount
+	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString);
 
 
 #######################################
 #######################################
-#HASH/ARRAY MANAGEMENT
+# HASH/ARRAY MANAGEMENT
 #######################################
 #######################################
 
@@ -325,20 +325,37 @@ sub minHeapAdd {
 
 ################################
 ################################
-#MISC UTILITY FUNCTIONS
+# MISC UTILITY FUNCTIONS
 ################################
 ################################
 
 
 ##
-# download(url)
+# dataWaiting(r_handle)
+# r_handle: A reference to a handle or a socket.
+# Returns: 1 if there's pending incoming data, 0 if not.
+#
+# Checks whether r_handle has pending incoming data.
+# If there is, then you can read from r_handle without being blocked.
+sub dataWaiting {
+	my $r_fh = shift;
+	my $bits = '';
+
+	vec($bits, fileno($$r_fh), 1) = 1;
+	# The timeout was 0.005
+	return (select($bits, undef, undef, 0) > 0);
+	#return select($bits, $bits, $bits, 0) > 1);
+}
+
+##
+# downloadSmall(url)
 # url: the URL to download data from.
 # Returns: the (partial) data of the downloaded file, or undef on failure.
 #
 # Downloads a file from $url. This function is only useful for downloading
 # a *small* file. It will absolutely not work correctly if you try to download
 # anything bigger than a few hundred bytes.
-sub download {
+sub downloadSmall {
 	my $url = shift;
 	my $host;
 	my $port;
@@ -398,6 +415,12 @@ sub formatNumber {
 	}
 }
 
+sub getCoordString {
+	my $x = shift;
+	my $y = shift;
+	return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
+}
+
 sub getFormattedDate {
         my $thetime = shift;
         my $r_date = shift;
@@ -430,6 +453,34 @@ sub getTickCount {
 	} else {
 		return $time;
 	}
+}
+
+sub makeCoords {
+	my $r_hash = shift;
+	my $rawCoords = shift;
+	$$r_hash{'x'} = unpack("C", substr($rawCoords, 0, 1)) * 4 + (unpack("C", substr($rawCoords, 1, 1)) & 0xC0) / 64;
+	$$r_hash{'y'} = (unpack("C",substr($rawCoords, 1, 1)) & 0x3F) * 16 + 
+				(unpack("C",substr($rawCoords, 2, 1)) & 0xF0) / 16;
+}
+
+sub makeCoords2 {
+	my $r_hash = shift;
+	my $rawCoords = shift;
+	$$r_hash{'x'} = (unpack("C",substr($rawCoords, 1, 1)) & 0xFC) / 4 + 
+				(unpack("C",substr($rawCoords, 0, 1)) & 0x0F) * 64;
+	$$r_hash{'y'} = (unpack("C", substr($rawCoords, 1, 1)) & 0x03) * 256 + unpack("C", substr($rawCoords, 2, 1));
+}
+
+sub makeIP {
+	my $raw = shift;
+	my $ret;
+	for (my $i = 0; $i < 4; $i++) {
+		$ret .= hex(getHex(substr($raw, $i, 1)));
+		if ($i + 1 < 4) {
+			$ret .= ".";
+		}
+	}
+	return $ret;
 }
 
 sub swrite {

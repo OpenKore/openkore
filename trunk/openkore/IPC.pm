@@ -133,39 +133,29 @@ sub sendData {
 # Handle client connections input. You should call
 # this function every time in the main loop.
 sub iterate {
-	my $bits = '';
-
 	# Checks whether a new client wants to connect
-	vec($bits, $server->fileno, 1) = 1;
-	if (select($bits, undef, undef, 0)) {
+	if (dataWaiting($server)) {
 		# Accept connection from new client
 		my $client = $server->accept;
 		$client->autoflush(0);
-		push @clients, $client;
+		binAdd(\@clients, $client);
 		debug("New client: " . $client->peerhost . "\n", "ipc");
 	}
 
 	# Check for input from clients
 	my $i = 0;
-	my $recreate = 0;
-
 	foreach my $client (@clients) {
-		if (!defined $client) {
-			$recreate = 1;
-			next;
-		}
-
-		my $disconnected = 0;
-		$bits = '';
-		vec($bits, $client->fileno, 1) = 1;
+		next if (!defined $client);
 
 		# Input available
-		if (select($bits, undef, undef, 0)) {
+		if (dataWaiting($client)) {
 			my $data = undef;
 
 			$data = readData($client);
 			if (!defined $data) {
-				$disconnected = 1;
+				# Client disconnected
+				debug("Client " . $client->peerhost . " disconnected", "ipc");
+				delete $clients[$i];
 
 			} else {
 				foreach my $listener (@listeners) {
@@ -174,23 +164,7 @@ sub iterate {
 				}
 			}
 		}
-
-		# Client disconnected
-		if ($disconnected || select(undef, undef, $bits, 0)) {
-			debug("Client " . $client->peerhost . " disconnected", "ipc");
-			delete $clients[$i];
-		}
 		$i++;
-	}
-
-	# Recreate @clients so we won't have undefined values in it.
-	if ($recreate) {
-		my @newClients = ();
-		foreach my $client (@clients) {
-			push @newClients, $client if (defined $client);
-		}
-		undef @clients;
-		@clients = @newClients;
 	}
 }
 

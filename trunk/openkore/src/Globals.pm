@@ -25,12 +25,12 @@ use base qw(Exporter);
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config	=> [qw(%config %consoleColors %timeout %npcs_lut %maps_lut)],
+	config	=> [qw(%config %consoleColors %maps_lut %npcs_lut %shop %timeout)],
 	ai	=> [qw(@ai_seq @ai_seq_args %ai_v $AI)],
-	state	=> [qw(@chars @playersID %players @monstersID %monsters @portalsID %portals @itemsID %items
-			@npcsID %npcs %field)],
-	network	=> [qw($remote_socket)],
-	misc	=> [qw($buildType %timeout_ex $isOnline)],
+	state	=> [qw(@chars %cart @playersID %players @monstersID %monsters @portalsID %portals
+			@itemsID %items @npcsID %npcs %field)],
+	network	=> [qw($remote_socket $conState $encryptVal)],
+	misc	=> [qw($buildType %timeout_ex $isOnline $shopstarted)],
 	);
 
 our @EXPORT = (
@@ -45,9 +45,10 @@ our @EXPORT = (
 # Configuration variables
 our %config;
 our %consoleColors;
-our %timeout;
-our %npcs_lut;
 our %maps_lut;
+our %npcs_lut;
+our %shop;
+our %timeout;
 
 # AI
 our @ai_seq;
@@ -57,6 +58,7 @@ our $AI = 1;
 
 # Game state
 our @chars;
+our %cart;
 our @playersID;
 our %players;
 our @monstersID;
@@ -71,11 +73,14 @@ our %field;
 
 # Network
 our $remote_socket;
+our $conState;
+our $encryptVal;
 
 # Misc
 our $buildType;
 our %timeout_ex;
 our $isOnline; # for determining whether a guild member logged in or out
+our $shopstarted;
 
 
 # Detect operating system

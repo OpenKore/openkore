@@ -50,7 +50,10 @@ use Log;
 use Utils;
 use Plugins;
 use FileParsers;
-Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers));
+use Network;
+use Network::Send;
+Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
+	Network Network::Send));
 
 
 Log::message("$Settings::versionText\n");
@@ -455,7 +458,7 @@ eval {
 # Shutdown everything else
 close($remote_socket);
 unlink('buffer') if ($config{'XKore'} && -f 'buffer');
-killConnection(\$remote_socket);
+Network::disconnect(\$remote_socket);
 
 Log::message("Bye!\n");
 Log::message($Settings::versionText);
