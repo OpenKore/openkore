@@ -35,7 +35,7 @@ autoRestart 0
 # time = autoRestartMin + rand(autoRestartSeed)
 #
 # The default values means that kore will autorestart between
-# 72 and 142 minutes.
+# 90 and 150 minutes.
 autoRestartMin 5400
 autoRestartSeed 3600
 
