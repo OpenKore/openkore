@@ -18,9 +18,8 @@ use Config;
 #INITIALIZE VARIABLES
 #######################################
 
-# The following sub sets up the random restart times governed by the config variables autoRestartSeed and autoRestartMin
+# Calculate next random restart time.
 # The restart time will be autoRestartMin + rand(autoRestartSeed)
-# Saved to the config file just to make the code slightly cleaner (trust me, the old code was ugly)
 sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
@@ -29,6 +28,7 @@ sub initRandomRestart {
 	}
 }
 
+# Initialize variables when you start a connection to a map server
 sub initConnectVars {
 	initMapChangeVars();
 	undef @{$chars[$config{'char'}]{'inventory'}};
@@ -36,6 +36,7 @@ sub initConnectVars {
 	undef @skillsID;
 }
 
+# Initialize variables when you change map (after a teleport or after you walked into a portal)
 sub initMapChangeVars {
 	@portalsID_old = @portalsID;
 	%portals_old = %portals;
@@ -71,7 +72,6 @@ sub initMapChangeVars {
 	undef $msg;
 	undef %talk;
 	undef $ai_v{'temp'};
-#Cart List bugfix - chobit aska 20030128
 	undef @cartID;
 	undef %{$cart{'inventory'}};
 	undef @venderItemList;
@@ -87,7 +87,7 @@ sub initMapChangeVars {
 	initOtherVars();
 }
 
-#Solos Start
+# Initialize variables when your character logs in
 sub initStatVars {
 	$totaldmg = 0;
 	$dmgpsec = 0;
@@ -99,10 +99,10 @@ sub initStatVars {
 }
 
 sub initOtherVars {
-# chat response stuff
+	# chat response stuff
 	undef $nextresptime;
 	undef $nextrespPMtime;
-# route error check variables
+	# route error check variables
 	undef $old_x;
 	undef $old_y;
 	undef $old_pos_x;
@@ -118,7 +118,6 @@ sub initOtherVars {
 	$route_stuck = 0;
 	$totalStuckCount = 0 if ($totalStuckCount > 10 || $totalStuckCount < 0);
 }
-#Solos End
 
 
 #######################################
@@ -227,10 +226,6 @@ sub checkConnection {
 	}
 
 
-	# This is where saving the random restart time to the config file makes it a little cleaner, only one simple if needed
-	# The local variable $sleeptime is controlled by the same system as used in initRandomRestart() for the restart times
-	# The only thing that may want changing here is the sleep and restart times being printed in minutes rather than seconds
-	# However, as I'm sure we are all used to working in seconds ourselves, this can be changed come release (if at all)
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
 	 && $conState == 5 && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
 		print "\nAuto-restarting!!\n";
@@ -250,6 +245,37 @@ sub checkConnection {
 		$conState = 1;
 		undef $conState_tries;
 		initRandomRestart();
+	}
+
+	# This stuff is experimental and hasn't been actually tested!
+	if ($config{'autoConfChange'} && $config{'autoConfChange_files'} && $conState == 5
+	 && time >= $nextConfChangeTime && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
+	 	my ($file, @files);
+	 	my ($oldMasterHost, $oldMasterPort, $oldUsername, $oldChar);
+
+		# Choose random config file
+		@files = split(/ *, */, $config{'autoConfChange_files'});
+		$file = $files[int(rand($#files + 1))];
+		print "Changing configuration file (from \"$config_file\" to \"$file\")...\n";
+
+		# A relogin is necessary if the host/port, username or char is different
+		$oldMasterHost = $config{"master_host_$config{'master'}"};
+		$oldMasterPort = $config{"master_port_$config{'master'}"};
+		$oldUsername = $config{'username'};
+		$oldChar = $config{'char'};
+
+		$config_file = $file;
+		$parseFiles[0]{'file'} = $file;
+		parseReload($file);
+
+		if ($oldMasterHost ne $config{"master_host_$config{'master'}"}
+		 || $oldMasterPort ne $config{"master_port_$config{'master'}"}
+		 || $oldUsername ne $config{'username'}
+		 || $oldChar ne $config{'char'}) {
+			relog();
+		}
+
+		$nextConfChangeTime = time + $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'}) if ($config{'autoConfChange'});
 	}
 }
 
@@ -5107,9 +5133,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		write;
 		print "Closing connection to Game Login Server\n" if (!$config{'XKore'});
 		killConnection(\$remote_socket) if (!$config{'XKore'});
-#Solos Start
 		initStatVars();
-#Solos End
 
 	} elsif ($switch eq "0073") {
 		$conState = 5;
@@ -5727,8 +5751,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
 			getField("fields/$ai_v{'temp'}{'map'}.fld", \%field);
 		}
-		$map_ip = makeIP(substr($msg, 22, 4));
-		$map_port = unpack("S1", substr($msg, 26, 2));
+
+		my $map_ip = makeIP(substr($msg, 22, 4));
+		my $map_port = unpack("S1", substr($msg, 26, 2));
 		format MAPINFO =
 ---------Map Change Info----------
 MAP Name: @<<<<<<<<<<<<<<<<<<
