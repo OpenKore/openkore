@@ -59,6 +59,12 @@ New features:
   the name in monsters.txt prevails. (Lets us distinguish between monsters
   that the server gives the same name to, but are different)
 
+tablepack/monsters.txt
+- Kobolds have been renamed from Kobold # to Kobold-#.
+  Many people don't know about using tabs in mon_control.txt, and
+  would probably have problems figuring out what to do for Kobolds.
+  Example: Kobold 1 is now Kobold-1
+
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
   as if they were in your party for the purpose of KS checks.
