@@ -54,7 +54,9 @@ New features:
 - Show distance of player when public chat and add more log message of public chat.
   The format is like this.
   [Date Time][C] [Mapname BotsPosition] [TargetPosition] [dist=DistanceFromPlayer] ChatName : ChatMessage
-- Monster weights. See http://openkore.sourceforge.net/forum/viewtopic.php?t=3890
+- Monster weights. See
+  http://openkore.sourceforge.net/forum/viewtopic.php?t=3890
+- autoTalkCont will print a message when it is triggered.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
