@@ -28,13 +28,18 @@ use lib "tools/misc";
 use FastUtils;
 # Do not use any other Kore modules here. It will create circular dependancies.
 
-our @EXPORT = qw(
-	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
+our @EXPORT = (
+	# Hash/array management
+	qw(binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
-	findKey findKeyString minHeapAdd
-	calcPosition distance getVector moveAlongVector normalize vectorToDegree
-	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getRange getTickCount
-	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP swrite timeConvert timeOut vocalString);
+	findKey findKeyString minHeapAdd),
+	# Math
+	qw(calcPosition distance getVector moveAlongVector normalize vectorToDegree),
+	# Other stuff
+	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getRange getTickCount
+	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP parseArgs swrite timeConvert timeOut
+	vocalString)
+	);
 
 
 #######################################
@@ -424,6 +429,23 @@ sub minHeapAdd {
 # MATH
 ################################
 
+
+##
+# calcPosition(object)
+# object: $char (yourself), or a value in %monsters or %players.
+# Returns: reference to a position hash.
+#
+# The position information server that the server sends indicates a motion:
+# it says that an object is walking from A to B, and that it will arrive at B shortly.
+# This function calculates the current position of $object based on the motion information.
+#
+# Example:
+# my $pos;
+# $pos = calcPos($char);
+# print "You are currently at: $pos->{x}, $pos->{y}\n";
+#
+# $pos = calcPos($monsters{$ID});
+# $pos = calcPos($players{$ID});
 sub calcPosition {
 	my $object = shift;
 	my $time_needed = $object->{time_move_calc};
@@ -454,7 +476,7 @@ sub calcPosition {
 # ($pos2{x}, $pos2{y}).
 #
 # Example:
-# # Calculates the distance between you an a monster
+# # Calculates the distance between you and a monster
 # my $dist = distance($char->{pos_to},
 #                     $monsters{$ID}{pos_to});
 sub distance {
@@ -470,6 +492,17 @@ sub distance {
 	return sqrt($line{x} ** 2 + $line{y} ** 2);
 }
 
+##
+# getVector(r_store, to, from)
+# r_store: reference to a hash. The result will be stored here.
+# to, from: reference to position hashes.
+#
+# Create a vector object. For those who don't know: a vector
+# is a mathematical term for describing a movement and its direction.
+# So this function creates a vector object, which describes the direction of the
+# movement %from to %to. You can use this vector object with other math functions.
+#
+# See also: moveAlongVector(), vectorToDegree()
 sub getVector {
 	my $r_store = shift;
 	my $to = shift;
@@ -478,6 +511,28 @@ sub getVector {
 	$r_store->{y} = $to->{y} - $from->{y};
 }
 
+##
+# moveAlongVector(result, r_pos, r_vec, dist)
+# result: reference to a hash, in which the destination position is stored.
+# r_pos: the source position.
+# r_vec: a vector object, as created by getVector()
+# dist: the distance to move from the source position.
+#
+# Calculate where you will end up to, if you walk $dist blocks from %r_pos
+# into the direction specified by %r_vec.
+#
+# See also: getVector()
+#
+# Example:
+# my %from = (x => 100, y => 100);
+# my %to = (x => 120, y => 120);
+# my %vec;
+# getVector(\%vec, \%to, \%from);
+# my %result;
+# moveAlongVector(\%result, \%from, \%vec, 10);
+# print "You are at $from{x},$from{y}.\n";
+# print "If you walk $dist blocks into the direction of $to{x},$to{y}, you will end up at:\n";
+# print "$result{x},$result{y}\n";
 sub moveAlongVector {
 	my $result = shift;
 	my $r_pos = shift;
@@ -514,6 +569,15 @@ sub normalize {
 # Returns: the degree as a number.
 #
 # Converts a vector into a degree number.
+#
+# See also: getVector()
+#
+# Example:
+# my %from = (x => 100, y => 100);
+# my %to = (x => 120, y => 120);
+# my %vec;
+# getVector(\%vec, \%to, \%from);
+# vectorToDegree(\%vec);	# => 45
 sub vectorToDegree {
 	my $vec = shift;
 	my $x = $vec->{x};
@@ -551,8 +615,8 @@ sub vectorToDegree {
 # r_handle: A reference to a handle or a socket.
 # Returns: 1 if there's pending incoming data, 0 if not.
 #
-# Checks whether r_handle has pending incoming data.
-# If there is, then you can read from r_handle without being blocked.
+# Checks whether the socket $r_handle has pending incoming data.
+# If there is, then you can read from $r_handle without being blocked.
 sub dataWaiting {
 	my $r_fh = shift;
 	return 0 if (!defined $r_fh || !defined $$r_fh);
@@ -607,8 +671,6 @@ sub dumpHash {
 #
 # Example:
 # formatNumber(1000000);   # -> 1,000,000
-
-#umm i tweeked it a little, just to make it display as described ;) -xlr82xs
 sub formatNumber {
 	my $num = reverse $_[0];
 	if ($num == 0) {
@@ -861,6 +923,74 @@ sub makeIP {
 		}
 	}
 	return $ret;
+}
+
+##
+# parseArgs(command, max, [delimiters = ' '])
+# command: a command string.
+# max: maximum number of arguments.
+# delimiters: a character array of delimiters for arguments.
+# Returns: an array of arguments.
+#
+# Parse a command string and split it into an array of arguments.
+# Quoted parts inside the command strings are considered one argument.
+# Backslashes can be used to escape a special character (like quotes).
+# Leadingand trailing whitespaces are ignored, unless quoted.
+#
+# Example:
+# parseArgs("guild members");		# => ("guild", "members")
+# parseArgs("c hello there", 2);	# => ("c", "hello there")
+# parseArgs("pm 'My Friend' hey there", 3);	# ("pm", "My Friend", "hey there")
+sub parseArgs {
+	my $command = shift;
+	my $max = shift;
+	my $delimiters = shift;
+	my @args = ();
+
+	if (!defined $delimiters) {
+		$delimiters = qr/ /;
+	} else {
+		$delimiters = quotemeta $delimiters;
+		$delimiters = qr/[$delimiters]/;
+	}
+	$command =~ s/^\s*//;
+	$command =~ s/\s*$//;
+
+	my $len = length $command;
+	my $within_quote;
+	my $quote_char = '';
+	my $i;
+
+	for ($i = 0; $i < $len; $i++) {
+		my $char = substr($command, $i, 1);
+
+		if ($max && @args == $max) {
+			$args[0] = $command;
+			last;
+
+		} elsif ($char eq '\\') {
+			$args[0] .= substr($command, $i + 1, 1);
+			$i++;
+
+		} elsif (($char eq '"' || $char eq "'") && ($quote_char eq '' || $quote_char eq $char)) {
+			$within_quote = !$within_quote;
+			$quote_char = ($within_quote) ? $char : '';
+
+		} elsif ($within_quote) {
+			$args[0] .= $char;
+
+		} elsif ($char =~ /$delimiters/) {
+			unshift @args, '';
+			$command = substr($command, $i + 1);
+			$command =~ s/^$delimiters*//;
+			$len = length $command;
+			$i = -1;
+
+		} else {
+			$args[0] .= $char;
+		}
+	}
+	return reverse @args;
 }
 
 sub swrite {

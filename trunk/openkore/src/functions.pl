@@ -1495,8 +1495,8 @@ sub AI {
 	my $i, $j;
 	my %cmd = %{(shift)};
 
-foreach (keys %monsters) { if (!$monsters{$_}{name}) { chatLog("k", "Monster without name! ".join(' ', keys %{$monsters{$_}})."\n"); message "Monster without name! ".join(' ', keys %{$monsters{$_}})."\n"; } }
-	if (timeOut(\%{$timeout{'ai_wipe_check'}})) {
+
+	if (timeOut($timeout{'ai_wipe_check'})) {
 		foreach (keys %players_old) {
 			delete $players_old{$_} if (time - $players_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
 		}
@@ -1516,7 +1516,7 @@ foreach (keys %monsters) { if (!$monsters{$_}{name}) { chatLog("k", "Monster wit
 		debug "Wiped old\n", "ai", 2;
 	}
 
-	if (timeOut(\%{$timeout{'ai_getInfo'}})) {
+	if (timeOut($timeout{'ai_getInfo'})) {
 		foreach (keys %players) {
 			if (!$players{$ID}{'gotName'} && $players{$_}{'name'} eq "Unknown") {
 				sendGetPlayerInfo(\$remote_socket, $_);
@@ -5114,6 +5114,10 @@ sub parseMsg {
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
 		my $type = unpack("S*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
+		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
+		my $tophead = $headgears_lut[unpack("S1",substr($msg, 24,  2))];
+		my $midhead = $headgears_lut[unpack("S1",substr($msg, 26,  2))];
+		my $hair_color = unpack("S1", substr($msg, 28, 2));
 		my $head_dir = unpack("S", substr($msg, 32, 2)) % 8;
 		my $sex = unpack("C*",substr($msg, 45,  1));
 		my %coords;
@@ -5133,13 +5137,17 @@ sub parseMsg {
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 			}
 
-			$players{$ID}{'walk_speed'} = $walk_speed;
-			$players{$ID}{'look'}{'body'} = $body_dir;
-			$players{$ID}{'look'}{'head'} = $head_dir;
-			$players{$ID}{'sitting'} = $act > 0;
-			$players{$ID}{'lv'} = $lv;
-			%{$players{$ID}{'pos'}} = %coords;
-			%{$players{$ID}{'pos_to'}} = %coords;
+			$players{$ID}{walk_speed} = $walk_speed;
+			$players{$ID}{headgear}{low} = $lowhead;
+			$players{$ID}{headgear}{top} = $tophead;
+			$players{$ID}{headgear}{mid} = $midhead;
+			$players{$ID}{hair_color} = $hair_color;
+			$players{$ID}{look}{body} = $body_dir;
+			$players{$ID}{look}{head} = $head_dir;
+			$players{$ID}{sitting} = $act > 0;
+			$players{$ID}{lv} = $lv;
+			%{$players{$ID}{pos}} = %coords;
+			%{$players{$ID}{pos_to}} = %coords;
 			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence", 1;
 
 		} elsif ($type >= 1000) {
@@ -5234,6 +5242,10 @@ sub parseMsg {
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
 		my $type = unpack("S*", substr($msg, 14,  2));
+		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
+		my $tophead = $headgears_lut[unpack("S1",substr($msg, 24,  2))];
+		my $midhead = $headgears_lut[unpack("S1",substr($msg, 26,  2))];
+		my $hair_color = unpack("S1", substr($msg, 28, 2));
 		my $sex = unpack("C*", substr($msg, 45,  1));
 		my %coords;
 		makeCoords(\%coords, substr($msg, 46, 3));
@@ -5250,12 +5262,16 @@ sub parseMsg {
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 			}
 
-			$players{$ID}{'walk_speed'} = $walk_speed;
-			$players{$ID}{'look'}{'body'} = 0;
-			$players{$ID}{'look'}{'head'} = 0;
-			$players{$ID}{'lv'} = $lv;
-			%{$players{$ID}{'pos'}} = %coords;
-			%{$players{$ID}{'pos_to'}} = %coords;
+			$players{$ID}{walk_speed} = $walk_speed;
+			$players{$ID}{headgear}{low} = $lowhead;
+			$players{$ID}{headgear}{top} = $tophead;
+			$players{$ID}{headgear}{mid} = $midhead;
+			$players{$ID}{hair_color} = $hair_color;
+			$players{$ID}{look}{body} = 0;
+			$players{$ID}{look}{head} = 0;
+			$players{$ID}{lv} = $lv;
+			%{$players{$ID}{pos}} = %coords;
+			%{$players{$ID}{pos_to}} = %coords;
 			debug "Player Connected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 
 		} else {
@@ -5269,12 +5285,16 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
+		my $type = unpack("S*",substr($msg, 14,  2));
+		my $pet = unpack("C*",substr($msg, 16,  1));
+		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
+		my $tophead = $headgears_lut[unpack("S1",substr($msg, 28,  2))];
+		my $midhead = $headgears_lut[unpack("S1",substr($msg, 30,  2))];
+		my $hair_color = unpack("S1",substr($msg, 32,  2));
+		my $sex = unpack("C*",substr($msg, 49,  1));
 		my (%coordsFrom, %coordsTo);
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
-		my $type = unpack("S*",substr($msg, 14,  2));
-		my $pet = unpack("C*",substr($msg, 16,  1));
-		my $sex = unpack("C*",substr($msg, 49,  1));
 		my $lv = unpack("S*",substr($msg, 58,  2));
 
 		my %vec;
@@ -5296,6 +5316,10 @@ sub parseMsg {
 			$players{$ID}{walk_speed} = $walk_speed;
 			$players{$ID}{look}{head} = $direction;
 			$players{$ID}{look}{body} = $direction;
+			$players{$ID}{headgear}{low} = $lowhead;
+			$players{$ID}{headgear}{top} = $tophead;
+			$players{$ID}{headgear}{mid} = $midhead;
+			$players{$ID}{hair_color} = $hair_color;
 			$players{$ID}{lv} = $lv;
 			%{$players{$ID}{pos}} = %coordsFrom;
 			%{$players{$ID}{pos_to}} = %coordsTo;
@@ -6483,8 +6507,41 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00C2") {
-		$users = unpack("L*", substr($msg, 2, 4));
+		my $users = unpack("L*", substr($msg, 2, 4));
 		message "There are currently $users users online\n", "info";
+
+	} elsif ($switch eq "00C3") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		my $ID = substr($msg, 2, 4);
+		my $part = unpack("C1",substr($msg, 6, 1));
+		my $number = unpack("C1",substr($msg, 7, 1));
+
+		my %parts = (
+			0 => 'Body',
+			2 => 'Right Hand',
+			3 => 'Low Head',
+			4 => 'Top Head',
+			5 => 'Middle Head',
+			8 => 'Left Hand'
+		);
+		if ($part == 3) {
+			$part = 'low';
+		} elsif ($part == 4) {
+			$part = 'top';
+		} elsif ($part == 5) {
+			$part = 'mid';
+		}
+
+		my $name = getActorName($ID);
+		if ($part == 3 || $part == 4 || $part == 5) {
+			my $actor = getActorHash($ID);
+			$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
+			my $itemName = $items_lut{$itemID};
+			$itemName = 'nothing' if (!$itemName);
+			debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
+		} else {
+			debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
+		}
 
 	} elsif ($switch eq "00C4") {
 		my $ID = substr($msg, 2, 4);
@@ -7059,7 +7116,7 @@ sub parseMsg {
 
 		# Print skill use message
 		message $disp, 'skill';
-
+warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()");
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
@@ -7163,6 +7220,7 @@ sub parseMsg {
 		}
   
 		message "$source $uses ".skillName($skillID)." on $target$extra\n", "skill";
+warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()");
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
@@ -9485,11 +9543,11 @@ sub getActorName {
 		return 'Nothing';
 	} elsif ($id eq $accountID) {
 		return 'You';
-	} elsif (my $player = $players{$id}) {
+	} elsif (my $player = $players{$id} && scalar(keys %{$player})) {
 		return "Player $player->{name} ($player->{binID})";
-	} elsif (my $monster = $monsters{$id}) {
+	} elsif (my $monster = $monsters{$id} && scalar(keys %{$monster})) {
 		return "Monster $monster->{name} ($monster->{binID})";
-	} elsif (my $item = $items{$id}) {
+	} elsif (my $item = $items{$id} && scalar(keys %{$item})) {
 		return "Item $item->{name} ($item->{binID})";
 	} else {
 		return "Unknown #".unpack("L1", $id);
