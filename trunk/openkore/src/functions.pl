@@ -5670,7 +5670,7 @@ sub parseMsg {
 		if ($type == 1) {
 			# Take item
 			my ($source, $verb, $target) = getActorNames($ID1, $ID2, 'pick up', 'picks up');
-			debug "$source $verb $target\n", 'parseMsg';
+			debug "$source $verb $target\n", 'parseMsg_presence';
 			$items{$ID2}{takenBy} = $ID1 if ($items{$ID2});
 		} elsif ($type == 2) {
 			# Sit
@@ -6063,7 +6063,7 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		if (%{$items{$ID}}) {
-			debug "Item Disappeared: $items{$ID}{'name'} ($items{$ID}{'binID'})\n", "parseMsg";
+			debug "Item Disappeared: $items{$ID}{'name'} ($items{$ID}{'binID'})\n", "parseMsg_presence";
 			%{$items_old{$ID}} = %{$items{$ID}};
 			$items_old{$ID}{'disappeared'} = 1;
 			$items_old{$ID}{'gone_time'} = time;
