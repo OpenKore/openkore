@@ -10,7 +10,7 @@ CXX=g++
 CXXFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
 
 
-.PHONY: all clean
+.PHONY: all clean dist
 
 all: Tools.so
 
@@ -25,3 +25,6 @@ ToolsXS.c: ToolsXS.xs
 
 clean:
 	rm -f Tools.so ToolsXS.o ToolsXS.c
+
+dist:
+	./makedist.sh
