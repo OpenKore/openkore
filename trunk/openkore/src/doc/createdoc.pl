@@ -50,9 +50,16 @@ sub makeupText {
 
 	sub list {
 		my $text = shift;
-		$text =~ s/^- /<\/li>\n<li>/gm;
-		$text =~ s/^[\n\w]<\/li>//s;
-		return "<ul>$text</ul>";
+		#$text =~ s/^- /<\/li>\n<li>/gm;
+		#$text =~ s/^[\n\w]<\/li>//s;
+		#$text =~ s/(^|\n+)- (.*?)($|\n- )/<li>$2<\/li>\n- /gs;
+		my @list = split(/\n+- /, $text);
+		foreach (@list) {
+			$_ = "<li>$_</li>";
+		}
+		$text = join("\n", @list);
+		$text =~ s/<li><\/li>//sg;
+		return "<ul>$text\n</ul>";
 	}
 	sub linkModule {
 		my $module = shift;
