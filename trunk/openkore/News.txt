@@ -43,6 +43,7 @@ New features:
 - "storage [add|get]" commands now support item names,
   e.g. "storage get +5 Sword Mace [Andre]"
   Currently, item names containing commas may not work properly.
+- "version" command tells you what version of openkore you are running.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
