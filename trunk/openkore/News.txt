@@ -1,4 +1,5 @@
 - Don't immediately reconnect if connecting to master server times out.
+- The "sit" command now also sets itemsGatherAuto to 0.
 
 
 ==================

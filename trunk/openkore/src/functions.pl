@@ -1664,9 +1664,11 @@ Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<
 		$ai_v{'attackAuto_old'} = $config{'attackAuto'};
 		$ai_v{'route_randomWalk_old'} = $config{'route_randomWalk'};
 		$ai_v{'teleportAuto_idle_old'} = $config{'teleportAuto_idle'};
+		$ai_v{'itemsGatherAuto_old'} = $config{'itemsGatherAuto'};
 		configModify("attackAuto", 1);
 		configModify("route_randomWalk", 0);
 		configModify("teleportAuto_idle", 0);
+		configModify("itemsGatherAuto", 0);
 		aiRemove("move");
 		aiRemove("route");
 		aiRemove("route_getRoute");
@@ -1809,9 +1811,11 @@ $chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$conf
 			configModify("attackAuto", $ai_v{'attackAuto_old'});
 			configModify("route_randomWalk", $ai_v{'route_randomWalk_old'});
 			configModify("teleportAuto_idle", $ai_v{'teleportAuto_idle_old'});
+			configModify("itemsGatherAuto", $ai_v{'itemsGatherAuto_old'});
 			undef $ai_v{'attackAuto_old'};
 			undef $ai_v{'route_randomWalk_old'};
 			undef $ai_v{'teleportAuto_idle_old'};
+			undef $ai_v{'itemsGatherAuto_old'};
 		}
 		stand();
 		$ai_v{'sitAuto_forceStop'} = 1;
@@ -6976,8 +6980,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	
 	} elsif ($switch eq "0105") {
-		$ID = substr($msg, 2, 4);
-		($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+		my $ID = substr($msg, 2, 4);
+		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 		undef %{$chars[$config{'char'}]{'party'}{'users'}{$ID}};
 		binRemove(\@partyUsersID, $ID);
 		if ($ID eq $accountID) {
@@ -6990,28 +6994,27 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 
 	} elsif ($switch eq "0106") {
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'hp'} = unpack("S1", substr($msg, 6, 2));
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'hp_max'} = unpack("S1", substr($msg, 8, 2));
 
 	} elsif ($switch eq "0107") {
-		$ID = substr($msg, 2, 4);
-		$x = unpack("S1", substr($msg,6, 2));
-		$y = unpack("S1", substr($msg,8, 2));
+		my $ID = substr($msg, 2, 4);
+		my $x = unpack("S1", substr($msg,6, 2));
+		my $y = unpack("S1", substr($msg,8, 2));
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'pos'}{'x'} = $x;
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'pos'}{'y'} = $y;
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'online'} = 1;
 		print "Party member location: $chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'} - $x, $y\n" if ($config{'debug'} >= 2);
 
 	} elsif ($switch eq "0108") {
-		$type =  unpack("S1",substr($msg, 2, 2));
-		$index = unpack("S1",substr($msg, 4, 2));
-		$enchant = unpack("S1",substr($msg, 6, 2));
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		my $type =  unpack("S1",substr($msg, 2, 2));
+		my $index = unpack("S1",substr($msg, 4, 2));
+		my $enchant = unpack("S1",substr($msg, 6, 2));
+		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = $enchant;
 
-	} elsif ($switch eq "0109" && length($msg) >= unpack("S*", substr($msg, 2, 2))) {
-		$msg_size = unpack("S*", substr($msg, 2, 2));
+	} elsif ($switch eq "0109") {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		$msg = substr($msg, 0, 8).$newmsg;
 		$chat = substr($msg, 8, $msg_size - 8);
@@ -7028,21 +7031,21 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	# Hambo Started
 	# 3 Packets About MVP
 	} elsif ($switch eq "010A") {
-		$ID = unpack("S1", substr($msg, 2, 2));
-		$display = ($items_lut{$ID} ne "")
+		my $ID = unpack("S1", substr($msg, 2, 2));
+		my $display = ($items_lut{$ID} ne "")
 		? $items_lut{$ID}
 		: "Unknown" . $ID;
 		print "Get MVP item&#65306;$display\n";
 		chatLog("k", "Get MVP item&#65306;$display\n");
 
 	} elsif ($switch eq "010B") {
-		$expAmout = unpack("L1", substr($msg, 2, 4));
-		print "Congradulations, you are the MVP! Your reward is $expAmout exp!\n";
-		chatLog("k", "Congradulations, you are the MVP! Your reward is $expAmout exp!\n");
+		my $expAmount = unpack("L1", substr($msg, 2, 4));
+		print "Congradulations, you are the MVP! Your reward is $expAmount exp!\n";
+		chatLog("k", "Congradulations, you are the MVP! Your reward is $expAmount exp!\n");
 
 	} elsif ($switch eq "010C") {
-		$ID = substr($msg, 2, 4);
-		$display = "Unknown";
+		my $ID = substr($msg, 2, 4);
+		my $display = "Unknown";
 		if (%{$players{$ID}}) {
 			$display = "Player ". $players{$ID}{'name'} . "(" . $players{$ID}{'binID'} . ") ";
 		} elsif ($ID eq $accountID) {
@@ -7171,12 +7174,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "$sourceDisplay $skillsID_lut{$skillID} on location ($x, $y)\n";
 
 	} elsif ($switch eq "0119") {
-#Solos Start
-		$ID = substr($msg, 2, 4);
-		$param1 = unpack("S1", substr($msg, 6, 2));
-		$param2 = unpack("S1", substr($msg, 8, 2));
-		$param3 = unpack("S1", substr($msg, 10, 2));
-		$frozen = unpack("S1", substr($msg, 6, 2));
+		my $ID = substr($msg, 2, 4);
+		my $param1 = unpack("S1", substr($msg, 6, 2));
+		my $param2 = unpack("S1", substr($msg, 8, 2));
+		my $param3 = unpack("S1", substr($msg, 10, 2));
 
 		# character looks
 		if ($ID eq $accountID) {
@@ -7223,9 +7224,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$monsters{$ID}{'ignore'} = 1;
 			}
 		}
-#Solos End                
 
-	
 	} elsif ($switch eq "011A") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$skillID = unpack("S1",substr($msg, 2, 2));
@@ -7292,7 +7291,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "011C") {
 
 	} elsif ($switch eq "011E") {
-		$fail = unpack("C1", substr($msg, 2, 1));
+		my $fail = unpack("C1", substr($msg, 2, 1));
 		if ($fail) {
 			print "Memo Failed\n";
 		} else {
@@ -7313,11 +7312,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "0120") {
 		#The area effect spell with ID dissappears
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
 		undef %{$spells{$ID}};
 		binRemove(\@spellsID, $ID);
 
-#Cart Parses - chobit andy 20030102
+	#Cart Parses - chobit andy 20030102
 	} elsif ($switch eq "0121") {
 		$cart{'items'} = unpack("S1", substr($msg, 2, 2));
 		$cart{'items_max'} = unpack("S1", substr($msg, 4, 2));
@@ -7325,7 +7324,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$cart{'weight_max'} = int(unpack("L1", substr($msg, 10, 4)) / 10);
 
 	} elsif ($switch eq "0122") {
-#Solos Start
+	#Solos Start
 		$msg_size = unpack("S1",substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
@@ -7442,29 +7441,25 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		if ($items_lut{$ID} ne "") {
 			print "Can't Add Cart Item: $items_lut{$ID}\n";
 		}
-#Solos Start
+
 	} elsif ($switch eq "012D") {
-		#used the shop skill.
-		$number = unpack("S1",substr($msg, 2, 2));
+		# Used the shop skill.
+		my $number = unpack("S1",substr($msg, 2, 2));
 		print "You can sell $number items!\n";
-#Solos End
+
 	} elsif ($switch eq "0131") {
-#Solos Start
-		$ID = substr($msg,2,4);
+		my $ID = substr($msg,2,4);
 		if (!%{$venderLists{$ID}}) {
 			binAdd(\@venderListsID, $ID);
 		}
 		($venderLists{$ID}{'title'}) = substr($msg,6,36) =~ /(.*?)\000/;
 		$venderLists{$ID}{'id'} = $ID;
-#Solos End
 
 	} elsif ($switch eq "0132") {
-#Solos Start
-		$ID = substr($msg,2,4);
+		my $ID = substr($msg,2,4);
 		binRemove(\@venderListsID, $ID);
 		undef %{$venderLists{$ID}};
-#Solos End
-#Solos Start
+
 	} elsif ($switch eq "0133") {
 		if (length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 			$msg_size = unpack("S1",substr($msg,2,2));
@@ -7775,15 +7770,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$c++;
 		}
 
-	} elsif ($switch eq "0156") {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
-	} elsif ($switch eq "015A") {
-	} elsif ($switch eq "015C") {
-	} elsif ($switch eq "0160") {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
-	} elsif ($switch eq "0163") {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
-
 	} elsif ($switch eq "0166") {
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
@@ -7793,7 +7779,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$gtIndex = unpack("L1", substr($msg, $i, 4));
 			($guild{'title'}[$gtIndex]) = substr($msg, $i + 4, 24) =~ /([\s\S]*?)\000/;
 		}
-		$msg_size = unpack("S1", substr($msg, 2, 2));
 
 	} elsif ($switch eq "016A") {
 		# Guild request
@@ -7804,26 +7789,25 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$incomingGuild{'Type'} = 1;
 		$timeout{'ai_guildAutoDeny'}{'time'} = time;
 
-#viper mass addon end
+	#viper mass addon end
 	} elsif ($switch eq "016C") {
 		($chars[$config{'char'}]{'guild'}{'name'}) = substr($msg, 19, 24) =~ /([\s\S]*?)\000/;
 	
 	} elsif ($switch eq "016D") {
-#Solos Start
-		$ID = substr($msg, 2, 4); 
-		$TargetID =  substr($msg, 6, 4); 
-		$type = unpack("L1", substr($msg, 10, 4)); 
+		my $ID = substr($msg, 2, 4); 
+		my $TargetID =  substr($msg, 6, 4); 
+		my $type = unpack("L1", substr($msg, 10, 4)); 
+		my $isOnline;
 		if ($type) { 
 			$isOnline = "Log In"; 
 		} else { 
 			$isOnline = "Log Out"; 
 		} 
 		sendGuildMemberNameRequest(\$remote_socket, $TargetID); 
-#Solos End
 
-	} elsif ($switch eq "016F" && length($msg) >= 182) {
-		($address) = substr($msg, 2, 60) =~ /([\s\S]*?)\000/;
-		($message) = substr($msg, 62, 120) =~ /([\s\S]*?)\000/;
+	} elsif ($switch eq "016F") {
+		my ($address) = substr($msg, 2, 60) =~ /([\s\S]*?)\000/;
+		my ($message) = substr($msg, 62, 120) =~ /([\s\S]*?)\000/;
 		print	"---Guild Notice---\n"
 			,"$address\n\n"
 			,"$message\n"
@@ -7837,18 +7821,15 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$incomingGuild{'Type'} = 2;
 		$timeout{'ai_guildAutoDeny'}{'time'} = time;
 
-	} elsif ($switch eq "0173") {
-	} elsif ($switch eq "0174") {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
-	} elsif ($switch eq "0177" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "0177") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
+		my $msg = substr($msg, 0, 4).$newmsg;
 		undef @identifyID;
 		undef $invIndex;
-		for ($i = 4; $i < $msg_size; $i += 2) {
-			$index = unpack("S1", substr($msg, $i, 2));
-			$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		for (my $i = 4; $i < $msg_size; $i += 2) {
+			my $index = unpack("S1", substr($msg, $i, 2));
+			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			binAdd(\@identifyID, $invIndex);
 		}
 		print "Recieved Possible Identify List - type 'identify'\n";
@@ -7861,11 +7842,8 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $itemSlots_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}};
 		print "Item Identified: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'}\n";
 		undef @identifyID;
-	} elsif ($switch eq "017B") {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
-	} elsif ($switch eq "017D") {
-	} elsif ($switch eq "017F" && length($msg) >= unpack("S1", substr($msg, 2, 2))) { 
-		$msg_size = unpack("S*", substr($msg, 2, 2));
+
+	} elsif ($switch eq "017F") { 
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		$ID = substr($msg, 4, 4);
@@ -7888,15 +7866,13 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = $enchant;
 
-	} elsif ($switch eq "0192") {
-#Solos Start
 	} elsif ($switch eq "0194") { 
-		$ID = substr($msg, 2, 4); 
+		my $ID = substr($msg, 2, 4); 
 		if ($characterID ne $ID) { 
 			($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/; 
 			print "Guild Member $name $isOnline\n"; 
 		} 
-#Solos End
+
 	} elsif ($switch eq "0195") {
 		$ID = substr($msg, 2, 4);
 		if (%{$players{$ID}}) {
@@ -7908,7 +7884,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		}
 
 	} elsif ($switch eq "0196") {
-		#two-hand quicken
+		# Two-hand quicken
 
 	} elsif ($switch eq "019B") {
 		$ID = substr($msg, 2, 4);
@@ -8353,6 +8329,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "01DC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
+
 	} elsif (!$rpackets{$switch} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		print "Unparsed packet - $switch\n" if ($config{'debugPacket_received'});
 	}
