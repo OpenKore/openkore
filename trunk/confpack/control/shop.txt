@@ -1,7 +1,7 @@
 My Shop
 
-Jellopy	3
-Andre Card	200,000	5
+Jellopy		3
+Andre Card	200,000		5
 
 # This file controls which items to put into your shop, when you are
 # vending. To enable vending, set the 'shopAuto' configuration option in
@@ -12,3 +12,5 @@ Andre Card	200,000	5
 # <name>	<price>	[<amount>]
 #
 # If <price> has commas in it, they must appear in the right places.
+# This can be useful for preventing accidentally vending an item
+# for the wrong price.
