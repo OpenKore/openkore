@@ -14,6 +14,8 @@ New features:
   useSelf_skill_6_monsters Raydric Archer
   ...
 - Priority attacks for non-aggressive monsters are now supported.
+- Weighted maprouting to avoid/prefer walking through certain maps
+  (see control/routeweights.txt for configuration).
 
 New config options:
 - useSelfSkill_#_monsters
