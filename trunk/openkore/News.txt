@@ -2,6 +2,12 @@
 ### 1.3.2 (CVS)
 ==================
 
+**** Currently broken stuff ****
+- According to bug reports we can't attack stationary monsters (pupa,
+  plants, etc.). The bot will just try forever until it times out.
+  This must be fixed.
+
+
 New features:
 - X-Kore works on Windows 98/ME now!
 - Properly recognizes advanced seconds classes.
