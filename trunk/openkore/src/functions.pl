@@ -80,6 +80,10 @@ sub initMapChangeVars {
 	undef $venderLists;
 	undef %guild;
 	undef %incomingGuild;
+
+	$shopstarted = 0;
+	$timeout{'ai_shop'}{'time'} = time;
+
 	initOtherVars();
 }
 
@@ -1313,7 +1317,11 @@ $i   $npcs{$npcsID[$i]}{'name'} $ai_v{'temp'}{'pos_string'}   $npcs{$npcsID[$i]}
 		print "---------------------------------\n";
 
 	} elsif ($switch eq "openshop"){
-		sendOpenShop(\$remote_socket);
+		if (!$shopstarted) {
+			sendOpenShop(\$remote_socket);
+		} else {
+			print "Error: a shop has already been opened.\n";
+		}
 
 	} elsif ($switch eq "p") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
@@ -2094,7 +2102,6 @@ $i $talk{'responses'}[$i]
 
 
 sub AI {
-	
 	my $i, $j;
 	my %cmd = %{(shift)};
 
@@ -4442,6 +4449,8 @@ sub AI {
 	}
 
 
+	##### SEND EMOTICON #####
+
 	SENDEMOTION: {
 		my $index = binFind(\@ai_seq, "sendEmotion");
 		last SENDEMOTION if ($index eq "" || time < $ai_seq_args[$index]{'timeout'});
@@ -4450,9 +4459,17 @@ sub AI {
 	}
 
 
+	##### AUTO SHOP OPEN #####
+
+	if ($config{"shopAuto_open"} && $ai_seq[0] eq "" && $conState == 5 && !$shopstarted && $chars[$config{'char'}]{'sitting'}
+	    && timeOut(\%{$timeout{'ai_shop'}})) {
+		sendOpenShop(\$remote_socket);
+	}
+
+
 	##########
 
-	#DEBUG CODE
+	# DEBUG CODE
 	if (time - $ai_v{'time'} > 2 && $config{'debug'} >= 2) {
 		$stuff = @ai_seq_args;
 		print "AI: @ai_seq | $stuff\n";
@@ -4609,12 +4626,6 @@ sub parseSendMsg {
 sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
-
-	if (($config{"shopAuto_open"} == 1) && ($shopstarted == 0) &&
-		($chars[$config{'char'}]{'sitting'})) {
-			sendOpenShop(\$remote_socket);
-	}
-
 
 	# Determine packet switch
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
@@ -4908,9 +4919,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n" if $config{'debug'};
 		print "You are now in the game\n" if (!$config{'XKore'});
 		print "Waiting for map to load...\n" if ($config{'XKore'});
-#Solos Start
-		$shopstarted = 0;
-#Solos End
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'IgnoreAll'});
 		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
@@ -9455,7 +9463,7 @@ sub sendCloseShop {
 	sendMsgToServer($r_socket, $msg);
 	print "Shop Closed: $index x $amount\n" if ($config{'debug'} >= 2);
 	$shopstarted = 0;
-	stand();
+	$timeout{'ai_shop'}{'time'} = time;
 }
 
 sub sendCurrentDealCancel {
@@ -9759,6 +9767,7 @@ sub sendOpenShop {
 	my ($i, $index, $totalitem, $items_selling, $citem, $oldid);
 	my %itemtosell;
 
+	$shopstarted = 0;
 	if ($chars[$config{'char'}]{'skills'}{'MC_VENDING'}{'lv'}) {
 		if ($shop{'shop_title'} eq "") {
 			print "Cannot open shop: you must specify a title for your shop.\n";
@@ -9787,7 +9796,7 @@ sub sendOpenShop {
 						} elsif ($shop{"quantity_$i"} > 0 && $cart{'inventory'}{$cartID[$index]}{'amount'} < $shop{"quantity_$i"}) {
 							$itemtosell{$index}{'amount'} = $cart{'inventory'}{$cartID[$index]}{'amount'};
 						} else {
-							$itemtosell{$index}{'amount'} = 1;
+							$itemtosell{$index}{'amount'} = $cart{'inventory'}{$cartID[$index]}{'amount'};
 						}
 
 						# Calculate price
@@ -9821,7 +9830,8 @@ sub sendOpenShop {
 		}
 		if(length($msg) == $length) {
 			sendMsgToServer($r_socket, $msg);
-			print "Opening shop ($shop{'shop_title'}) with $items_selling items...\n";
+			print "Shop opened ($shop{'shop_title'}) with $items_selling items.\n";
+			$shopstarted = 1;
 			return 1;
 		} else {
 			print "Unknown error while opening shop.\n";
