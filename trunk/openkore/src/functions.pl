@@ -11125,7 +11125,7 @@ sub binSize {
 
 sub existsInList {
 	my ($list, $val) = @_;
-	my @array = split /,/, $list;
+	my @array = split / *, */, $list;
 	return 0 if ($val eq "");
 	$val = lc($val);
 	foreach (@array) {
@@ -11193,7 +11193,7 @@ sub findIndexStringList_lc{
 	my $match = shift;
 	my $ID = shift;
 	my ($i,$j);
-	my @arr = split /,/, $ID;
+	my @arr = split / *, */, $ID;
 	for ($j = 0; $j < @arr; $j++) {
 		for ($i = 0; $i < @{$r_array} ;$i++) {
 			if (%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($arr[$j])) {
@@ -11814,7 +11814,7 @@ sub findIndexString_lc_not_equip {
 sub getListCount {
 	my ($list) = @_;
 	my $i = 0;
-	my @array = split /,/, $list;
+	my @array = split / *, */, $list;
 	foreach (@array) {
 		s/^\s+//;
 		s/\s+$//;
@@ -11828,7 +11828,7 @@ sub getListCount {
 sub getFromList {
 	my ($list, $num) = @_;
 	my $i = 0;
-	my @array = split(/,/, $list);
+	my @array = split(/ *, */, $list);
 	foreach (@array) {
 		s/^\s+//;
 		s/\s+$//;
