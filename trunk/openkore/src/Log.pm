@@ -78,7 +78,7 @@
 # party			Party/follow related
 # plugins		Messages about plugin handling
 # pm			Private chat message
-# publicchat	Public chat message
+# publicchat		Public chat message
 # route			Routing/pathfinding messages
 # sold			Item sold while vending.
 # skill			Skill use unrelated to attack

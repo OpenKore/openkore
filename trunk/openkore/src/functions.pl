@@ -13,11 +13,15 @@ use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Digest::MD5;
 use Config;
+
 use Globals;
+use Modules;
+use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
 use Plugins;
+use Utils;
 
 
 #######################################
@@ -8419,8 +8423,9 @@ sub parseMsg {
                 my $ID = substr($msg, 4, 4);
                 my $flag = unpack("C1", substr($msg, 8, 1));
 
+                my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
+
 		if ($ID eq $accountID) {
-			my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
 			if ($flag) {
 				# Skill activated
 				$chars[$config{char}]{statuses}{$skillName} = 1;
@@ -8429,6 +8434,24 @@ sub parseMsg {
 				# Skill de-activate (expired)
 				delete $chars[$config{char}]{statuses}{$skillName};
 				message "$skillName deactivated\n";
+			}
+
+		} elsif (%{$players{$ID}}) {
+			if ($flag) {
+				$players{$ID}{statuses}{$skillName} = 1;
+				message "Player $players{$ID}{name} got status $skillName", undef, 2;
+			} else {
+				delete $players{$ID}{statuses}{$skillName};
+				message "Player $players{$ID}{name} lost status $skillName", undef, 2;
+			}
+
+		} elsif (%{$monsters{$ID}}) {
+			if ($flag) {
+				$monsters{$ID}{statuses}{$skillName} = 1;
+				message "Monster $monsters{$ID}{name} got status $skillName", undef, 2;
+			} else {
+				delete $monsters{$ID}{statuses}{$skillName};
+				message "Monster $monsters{$ID}{name} lost status $skillName", undef, 2;
 			}
 		}
 
