@@ -11,7 +11,7 @@
 10 Blacksmith
 11 Hunter
 12 Assassin
-13 Knight P
+13 Knight Peco
 14 Crusader
 15 Monk
 16 Sage
@@ -19,7 +19,7 @@
 18 Alchemist
 19 Bard
 20 Dancer
-21 Crusader P
+21 Crusader Peco
 22 Unknown 22
 23 Super Novice
 24 Unknown 24
