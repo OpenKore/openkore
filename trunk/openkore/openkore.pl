@@ -326,6 +326,7 @@ close($input_server_socket);
 close($input_socket);
 close($remote_socket);
 kill 9, $input_pid;
+unlink('buffer') if ($config{'XKore'} && -f 'buffer');
 killConnection(\$remote_socket);
 print "Bye!\n";
 print $versionText;

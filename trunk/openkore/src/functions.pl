@@ -240,18 +240,17 @@ sub checkConnection {
 
 sub parseInput {
 	my $input = shift;
-	my ($printType, $flushState);
+	my $printType;
 	$printType = shift if ($config{'XKore'});
 
 	my ($arg1, $arg2, $switch);
 	print "Echo: $input\n" if ($config{'debug'} >= 2);
 	($switch) = $input =~ /^(\w*)/;
 
-	if ($config{'XKore'}) {
-		$flushState = $|;
-		pipe(BUFREAD, BUFFER);
+	if ($printType) {
+		open(BUFFER, '>buffer');
 		select(BUFFER);
-		$| = 1;
+		BUFFER->autoflush(0);
 	}
 
 #Check if in special state
@@ -1212,7 +1211,7 @@ $i   $display
 		} else {
 			for (my $i = 0; $i < @playersID; $i++) {
 				next if ($players{$playersID[$i]} eq "");
-				lookPos($players{$playersID[$i]}{'pos_to'}, int(rand(3)));
+				lookAtPosition($players{$playersID[$i]}{'pos_to'}, int(rand(3)));
 				last;
 			}
 		}
@@ -2043,8 +2042,9 @@ $i $talk{'responses'}[$i]
 	}
 
 
-	if ($config{'XKore'}) {
+	if ($printType) {
 		close(BUFFER);
+		open(BUFREAD, '<buffer');
 
 		my $msg = '';
 		while (<BUFREAD>) {
@@ -2052,12 +2052,11 @@ $i $talk{'responses'}[$i]
 		}
 		close(BUFREAD);
 
-		$| = $flushState;
 		select(STDOUT);
 		print "$input\n";
 		print $msg;
 
-		if ($printType) {
+		if ($config{'XKore'}) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
 			sendMessage(\$remote_socket, "k", $msg);
@@ -3219,7 +3218,7 @@ sub AI {
 			$ai_seq_args[0]{'last_pos_to'}{'x'} = $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'};
 			$ai_seq_args[0]{'last_pos_to'}{'y'} = $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'};
 			if ($dx != 0 || $dy != 0) {
-				lookPos($players{$ai_seq_args[0]{'ID'}}{'pos_to'}, int(rand(3))) if ($config{'followFaceDirection'});
+				lookAtPosition($players{$ai_seq_args[0]{'ID'}}{'pos_to'}, int(rand(3))) if ($config{'followFaceDirection'});
 			}
 		}
 	}
@@ -3576,7 +3575,6 @@ sub AI {
 		} else {
 			undef $ai_v{'temp'}{'ai_follow_following'};
 		}
-		$ai_v{'ai_attack_monsterDist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}});
 
 		$ai_v{'ai_attack_cleanMonster'} = (
 				  !($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'} == 0 && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFrom'} > 0 || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedFromPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'castOnByPlayer'}}))
@@ -3585,6 +3583,8 @@ sub AI {
 				|| ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'} > 0)
 			);
 		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ai_seq_args[0]{'ID'}}{'attackedByPlayer'});
+
+		$ai_v{'ai_attack_monsterDist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}});
 
 		if ($ai_seq_args[0]{'dmgToYou_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'}
 			|| $ai_seq_args[0]{'missedYou_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'}
@@ -3700,6 +3700,36 @@ sub AI {
 				$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
 			}
 			$ai_seq_args[0]{'dmgTo_last'} = $monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'};
+		}
+	}
+
+	# Check for kill steal while moving
+	if (binFind(\@ai_seq, "attack") ne ""
+	  && (($ai_seq[0] eq "move" || $ai_seq[0] eq "route") && $ai_seq_args[0]{'attackID'})) {
+		$ai_v{'temp'}{'ai_follow_index'} = binFind(\@ai_seq, "follow");
+		if ($ai_v{'temp'}{'ai_follow_index'} ne "") {
+			$ai_v{'temp'}{'ai_follow_following'} = $ai_seq_args[$ai_v{'temp'}{'ai_follow_index'}]{'following'};
+			$ai_v{'temp'}{'ai_follow_ID'} = $ai_seq_args[$ai_v{'temp'}{'ai_follow_index'}]{'ID'};
+		} else {
+			undef $ai_v{'temp'}{'ai_follow_following'};
+		}
+
+		$ai_v{'ai_attack_cleanMonster'} = (
+				  !($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'} == 0 && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFrom'} > 0 || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedFromPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'castOnByPlayer'}}))
+				|| ($config{'attackAuto_party'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromParty'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgToParty'} > 0))
+				|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0))
+				|| ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'} > 0)
+			);
+		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ai_seq_args[0]{'ID'}}{'attackedByPlayer'});
+
+		if (!$ai_v{'ai_attack_cleanMonster'}) {
+			sendAttackStop(\$remote_socket);
+			shift @ai_seq;
+			shift @ai_seq_args;
+			if ($ai_seq[0] eq "route") {
+				shift @ai_seq;
+				shift @ai_seq_args;
+			}
 		}
 	}
 
@@ -4086,7 +4116,10 @@ sub AI {
 	##### ITEMS AUTO-GATHER #####
 
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute") && $config{'itemsGatherAuto'} && !(percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'}) && timeOut(\%{$timeout{'ai_items_gather_auto'}})) {
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute")
+	    && $config{'itemsGatherAuto'}
+	    && !(percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
+	    && timeOut(\%{$timeout{'ai_items_gather_auto'}})) {
 		undef @{$ai_v{'ai_items_gather_foundIDs'}};
 		foreach (@playersID) {
 			next if ($_ eq "");
@@ -4193,15 +4226,14 @@ sub AI {
 	if ($ai_seq[0] eq "take" && !%{$items{$ai_seq_args[0]{'ID'}}}) {
 		shift @ai_seq;
 		shift @ai_seq_args;
+
 	} elsif ($ai_seq[0] eq "take" && timeOut(\%{$ai_seq_args[0]{'ai_take_giveup'}})) {
-		if (!$config{'XKore'}) {
-			print "Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})\n";
-		} else {
-			injectMessage("Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})") if ($config{'verbose'});
-		}
+		print "Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})\n";
+		injectMessage("Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})") if ($config{'XKore'} && $config{'verbose'});
 		$items{$ai_seq_args[0]{'ID'}}{'take_failed'}++;
 		shift @ai_seq;
 		shift @ai_seq_args;
+
 	} elsif ($ai_seq[0] eq "take") {
 
 		$ai_v{'temp'}{'dist'} = distance(\%{$items{$ai_seq_args[0]{'ID'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
@@ -11281,12 +11313,12 @@ sub getTickCount {
 }
 
 ##
-# lookPos $pos [$headdir]
+# lookAtPosition $pos [$headdir]
 # $pos: a reference to a coordinate hash.
 # $headdir: 0 = face directly, 1 = look right, 2 = look left
 #
 # Look at position $pos.
-sub lookPos {
+sub lookAtPosition {
 	my $pos1 = $chars[$config{'char'}]{'pos_to'};
 	my $pos2 = shift;
 	my $headdir = shift;
