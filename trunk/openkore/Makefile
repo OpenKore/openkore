@@ -10,7 +10,7 @@ CXX=g++
 CXXFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
 
 
-.PHONY: all clean dist
+.PHONY: all clean dist exe
 
 all: Tools.so
 
@@ -22,6 +22,9 @@ ToolsXS.o: ToolsXS.c
 
 ToolsXS.c: ToolsXS.xs
 	$(XSUBPP) -typemap "$(TYPEMAP)" ToolsXS.xs > ToolsXS.c
+
+exe:
+	make -f Makefile.win32 exe
 
 clean:
 	rm -f Tools.so ToolsXS.o ToolsXS.c
