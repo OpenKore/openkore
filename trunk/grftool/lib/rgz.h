@@ -21,8 +21,7 @@
 #ifndef __RGZ_H__
 # define __RGZ_H__
 
-# include "grftypes.h"
-# include "grfsupport.h"
+# include "grf.h"
 
 GRFEXTERN_BEGIN
 
