@@ -32,7 +32,7 @@ package Interface::Wx::DockNotebook;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_NOTEBOOK_PAGE_CHANGED EVT_TIMER);
+use Wx::Event qw(EVT_NOTEBOOK_PAGE_CHANGING EVT_TIMER);
 use base qw(Wx::Panel);
 use Interface::Wx::DockNotebook::Page;
 
@@ -56,7 +56,7 @@ sub new {
 	$self->{dialogs} = [];
 	$self->SetSizer($sizer);
 
-	EVT_NOTEBOOK_PAGE_CHANGED($self, $id, \&onPageChange);
+	EVT_NOTEBOOK_PAGE_CHANGING($self, $id, \&onPageChanging);
 
 	return $self;
 }
@@ -251,25 +251,33 @@ sub switchPage {
 ####################
 
 
-sub onPageChange {
+sub onPageChanging {
 	my ($self, $event) = @_;
 	my $focus = Wx::Window::FindFocus;
+	my $sub;
 
 	if (!$focus) {
 		my $page = $self->{notebook}->GetPage($event->GetSelection);
-		$page->{child}->SetFocus if ($page && $page->{child});
+		$sub = sub {
+			$page->{child}->SetFocus;
+		} if ($page && $page->{child});
 
 	} elsif ($focus->isa('Interface::Wx::Input')) {
-		my $timer = new Wx::Timer($self, 1300);
-		EVT_TIMER($self, 1300, sub {
+		$sub = sub {
 			my ($from, $to) = $focus->GetSelection;
 			$focus->SetFocus;
 			$focus->SetSelection($from, $to);
-		});
-		$timer->Start(10, 1);
+		};
 
 	} else {
 		$event->Skip;
+		return;
+	}
+
+	if ($sub) {
+		my $timer = new Wx::Timer($self, 1300);
+		EVT_TIMER($self, 1300, $sub);
+		$timer->Start(10, 1);
 	}
 }
 

@@ -173,12 +173,26 @@ sub onPaint {
 	}
 
 	$dc->SetBrush(wxTRANSPARENT_BRUSH);
-	$dc->SetPen($light);
-	$dc->DrawLine(0, 0, $width, 0);
-	$dc->DrawLine(0, 0, 0, $height);
-	$dc->SetPen($dark);
-	$dc->DrawLine(0, $height - 1, $width - 1, $height - 1);
-	$dc->DrawLine($width - 1, 0, $width - 1, $height - 1);
+	if ($^O eq 'MSWin32') {
+		$dc->SetPen($dark);
+		$dc->DrawLine(0, 0, $width, 0);
+		$dc->DrawLine(0, 0, 0, $height);
+		#$dc->DrawLine(1, $height - 2, $width - 2, $height - 2);
+		#$dc->DrawLine($width - 2, 2, $width - 2, $height - 1);
+
+		$dc->SetPen($light);
+		$dc->DrawLine(0, $height - 1, $width - 1, $height - 1);
+		$dc->DrawLine($width - 1, 1, $width - 1, $height);
+		#$dc->DrawLine(1, 1, $width - 1, 1);
+		#$dc->DrawLine(1, 2, 1, $height - 2);
+	} else {
+		$dc->SetPen($light);
+		$dc->DrawLine(0, 0, $width, 0);
+		$dc->DrawLine(0, 0, 0, $height);
+		$dc->SetPen($dark);
+		$dc->DrawLine(0, $height - 1, $width - 1, $height - 1);
+		$dc->DrawLine($width - 1, 0, $width - 1, $height - 1);
+	}
 
 	$dc->SetFont($font);
 	$dc->SetTextForeground(wxWHITE);
