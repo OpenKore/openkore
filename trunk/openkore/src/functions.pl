@@ -4067,9 +4067,9 @@ sub AI {
 			splice(@{$ai_seq_args[0]{'solution'}},1+$ai_seq_args[0]{'maxRouteDistance'}) if $ai_seq_args[0]{'maxRouteDistance'} && $ai_seq_args[0]{'maxRouteDistance'} < @{$ai_seq_args[0]{'solution'}};
 
 			# Trim down solution tree for distFromGoal
-			if ($ai_seq_args[0]{distFromGoal} && @{$ai_seq_args[0]{'solution'}} >= $ai_seq_args[0]{distFromGoal}) {
-				splice(@{$ai_seq_args[0]{'solution'}}, -$ai_seq_args[0]{distFromGoal});
-			}
+			#if ($ai_seq_args[0]{distFromGoal} && @{$ai_seq_args[0]{'solution'}} >= $ai_seq_args[0]{distFromGoal}) {
+			#	splice(@{$ai_seq_args[0]{'solution'}}, -$ai_seq_args[0]{distFromGoal});
+			#}
 
 			undef $ai_seq_args[0]{'mapChanged'};
 			undef $ai_seq_args[0]{'index'};
@@ -4098,6 +4098,15 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 
+			} elsif ($ai_seq_args[0]{'distFromGoal'} >= @{$ai_seq_args[0]{'solution'}}
+			      || $ai_seq_args[0]{'pyDistFromGoal'} > ($dist = distance($ai_seq_args[0]{'dest'}{'pos'}, $chars[$config{'char'}]{'pos_to'})) ) {
+				# We are near the goal, thats good enough.
+				# Distance is computed based on step counts (distFromGoal) or pythagorean distance (pyDistFromGoal).
+				$dist = sprintf("%.1f", $dist);
+				debug "We are near our goal ($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'}); " .
+					"currently at ($cur_x,$cur_y); distance $dist\n", "route";
+				shift @ai_seq;
+				shift @ai_seq_args;
 			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y) {
 				#we are still on the same spot
 				#decrease step movement
