@@ -2,6 +2,9 @@
 ### 1.4.0
 ==================
 
+New features:
+- "<name> refined weapon <success/failure>" messages from modkore added.
+
 Bug fixes:
 - Fixed login problems with newer eAthena versions (2nd session id, bug #28)
 - If attackAuto is set to 0, Kore will no longer attack all monsters
@@ -12,7 +15,7 @@ Bug fixes:
 - The 'cart add' command now checks whether you have a cart.
 - Fix some memory leaks.
 - Various messages no longer spam the XKore client.
-- "<name> refined weapon <success/failure>" messages from modkore added.
+- partySkill targetTimeout is now honored.
 
 New config options:
 - teleportAuto_useSP - use SP (cast skill) when using teleport without item

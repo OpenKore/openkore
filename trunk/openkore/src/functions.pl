@@ -3842,7 +3842,7 @@ sub AI {
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
 					){
-					$ai_v{"partySkill_$i"."_time"} = time;
+					$ai_v{"partySkill_$i"."_target_time"}{$partyUsersID[$j]} = time;
 					$party_skill{skillID} = $skills_rlut{lc($config{"partySkill_$i"})};
 					$party_skill{skillLvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $char->{party}{users}{$partyUsersID[$j]}{name};
