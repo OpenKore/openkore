@@ -15,7 +15,7 @@ exe:
 		--trim Pod::Usage \
 		--trim Term::Cap \
 		--trim POSIX \
-		--force --icon src\\auto\\XSTools\\build\\openkore.ico
+		--force --icon src\\build\\openkore.ico
 
 dist:
 	bash makedist.sh
@@ -25,7 +25,7 @@ PERLAPP=perlapp --lib src \
 	--add XSTools \
 	--trim Pod::Usage \
 	start.pl --force \
-	--icon src\\auto\\XSTools\\build\\openkore.ico
+	--icon src\\build\\openkore.ico
 
 start.exe:
 	$(PERLAPP)

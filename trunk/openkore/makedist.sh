@@ -9,6 +9,7 @@ TYPE=bz2
 
 DIRS=(.
 	src
+	src/build
 	src/IPC
 	src/Interface
 	src/Interface/Console
