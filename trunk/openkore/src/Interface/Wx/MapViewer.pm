@@ -23,12 +23,11 @@ package Interface::Wx::MapViewer;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION);
+use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
 use File::Spec;
 use base qw(Wx::Panel);
 
 our %addedHandlers;
-our $platform;
 
 sub new {
 	my $class = shift;
@@ -41,20 +40,7 @@ sub new {
 	EVT_PAINT($self, \&_onPaint);
 	EVT_LEFT_DOWN($self, \&_onClick);
 	EVT_MOTION($self, \&_onMotion);
-
-	if (!$platform) {
-		if ($^O eq 'MSWin32') {
-			$platform = 'win32';
-		} else {
-			require DynaLoader;
-			if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
-				$platform = 'gtk2';
-			} else {
-				$platform = 'gtk1';
-			}
-		}
-	}
-
+	EVT_ERASE_BACKGROUND($self, \&_onErase);
 	return $self;
 }
 
@@ -186,7 +172,7 @@ sub mapSize {
 	if ($self->{bitmap}) {
 		return ($self->{bitmap}->GetWidth, $self->{bitmap}->GetHeight);
 	} else {
-		return (25, 25);
+		return (50, 50);
 	}
 }
 
@@ -218,6 +204,16 @@ sub _onMotion {
 		$y = $self->{field}{height} - ($event->GetY * $yscale);
 
 		$self->{mouseMoveCb}->($self->{mouseMoveData}, int $x, int $y);
+	}
+}
+
+sub _onErase {
+	my $self = shift;
+	if ($self->{bitmap}) {
+		# Do nothing; prevent flickering when drawing
+	} else {
+		my $event = shift;
+		$event->Skip;
 	}
 }
 
@@ -307,8 +303,8 @@ sub _loadMapImage {
 sub _posXYToView {
 	my ($self, $x, $y) = @_;
 	my ($xscale, $yscale);
-	$xscale = $self->{bitmap}->GetWidth() / $self->{field}{width};
-	$yscale = $self->{bitmap}->GetHeight() / $self->{field}{height};
+	$xscale = $self->{bitmap}->GetWidth / $self->{field}{width};
+	$yscale = $self->{bitmap}->GetHeight / $self->{field}{height};
 	$x *= $xscale;
 	$y = ($self->{field}{height} - $y) * $yscale;
 	return ($x, $y);
@@ -316,22 +312,8 @@ sub _posXYToView {
 
 sub _onPaint {
 	my $self = shift;
-	my $paintDC = new Wx::PaintDC($self);
+	my $dc = new Wx::PaintDC($self);
 	return unless ($self->{bitmap});
-
-	# We paint stuff to an off-screen DC, and blit it to the paint DC,
-	# to avoid flickering. But don't do this on GTK2 because it already
-	# double buffers stuff for us.
-	my $dc;
-	my ($w, $h);
-	if ($platform eq "gtk2") {
-		$dc = $paintDC;
-	} else {
-		$dc = new Wx::MemoryDC;
-		($w, $h) = ($self->{bitmap}->GetWidth, $self->{bitmap}->GetHeight);
-		$dc->SelectObject(new Wx::Bitmap($w, $h));
-	}
-
 
 	my ($x, $y);
 	$dc->BeginDrawing;
@@ -380,11 +362,6 @@ sub _onPaint {
 	}
 
 	$dc->EndDrawing;
-
-
-	if ($platform ne "gtk2") {
-		$paintDC->Blit(0, 0, $w, $h, $dc, 0, 0);
-	}
 }
 
 return 1;
