@@ -8,6 +8,8 @@ Bug fixes:
 - Correct write to servers.txt for version search.
 - Fix lockMap_randX/Y. lockMap_x/y acting as the top right corner of the
   rectangle. This is now treated as the center of the rectangle.
+- Stopped the annoying "Attempted to use skill you do not have."
+  messages by moving the message from error to debug.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
