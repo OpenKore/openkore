@@ -142,7 +142,7 @@ sub reload {
 	my $name = shift;
 	my $i = 0;
 	foreach my $plugin (@plugins) {
-		if ($plugin->{'name'} eq $name) {
+		if ($plugin && $plugin->{'name'} eq $name) {
 			my $filename = $plugin->{'filename'};
 
 			if (defined $plugin->{'reload_callback'}) {
@@ -199,7 +199,7 @@ sub register {
 sub registered {
 	my $name = shift;
 	foreach (@plugins) {
-		return 1 if ($_->{'name'} eq $name);
+		return 1 if ($_ && $_->{'name'} eq $name);
 	}
 	return 0;
 }
