@@ -186,8 +186,10 @@ partySkill_0_maxCastTime 10
 partySkill_0_minCastTime 0
 partySkill_0_sp_lower 0
 partySkill_0_sp_upper 100
+partySkill_0_targetWhenStatusActive
+partySkill_0_targetWhenStatusInactive
+partySkill_0_targetWhenAffected
 partySkill_0_timeout 0
-partySkill_0_onSit 1
 
 itemsTakeAuto 2
 itemsGatherAuto 2
