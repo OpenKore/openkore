@@ -39,6 +39,8 @@ New config options:
 - verboseDomains is the opposite of squelchDomains.
 - missDamage; any damage you do <= this amount will be counted as a miss.
   (e.g. for monks who have Spirit Spheres)
+- teleportAuto_useSP if set to 2 will only use SP when other players are 
+  present.
 
 Internal:
 - $interface->beep() function for cross-platform beep support.
