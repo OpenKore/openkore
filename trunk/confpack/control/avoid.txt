@@ -60,21 +60,27 @@ avoid_54 MeloColmECA
 avoid_55 Leileil
 avoid_56 Bamboula Angel
 
-
 #GM AIDs extracted from clienttable.xml
 avoid_aid_0 100001
-avoid_aid_1 231656
-avoid_aid_2 100002
-avoid_aid_3 100003
-avoid_aid_4 209560
-avoid_aid_5 483461
-avoid_aid_6 483471
-avoid_aid_7 483486
-avoid_aid_8 483502
-avoid_aid_9 483513
-avoid_aid_10 483527
-avoid_aid_11 527195
-avoid_aid_12 527205
-avoid_aid_13 527197
-avoid_aid_14 527206
-avoid_aid_15 527210
+avoid_aid_1 100002
+avoid_aid_2 100003
+avoid_aid_3 231656
+avoid_aid_4 483461
+avoid_aid_5 483502
+avoid_aid_6 483527
+avoid_aid_7 527195
+avoid_aid_8 527197
+avoid_aid_9 527198
+avoid_aid_10 527199
+avoid_aid_11 527206
+avoid_aid_12 527207
+avoid_aid_13 527210
+avoid_aid_14 543887
+avoid_aid_15 650874
+avoid_aid_16 650882
+avoid_aid_17 650884
+avoid_aid_18 650886
+avoid_aid_19 650887
+avoid_aid_20 527205
+avoid_aid_21 483471
+avoid_aid_22 527211
