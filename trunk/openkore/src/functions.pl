@@ -7019,6 +7019,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "011A") {
+		# Skill used on target
 		my $skillID = unpack("S1", substr($msg, 2, 2));
 		my $targetID = substr($msg, 6, 4);
 		my $sourceID = substr($msg, 10, 4);
