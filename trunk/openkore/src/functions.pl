@@ -5901,6 +5901,9 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
+		my $param1 = unpack("S1", substr($msg, 8, 2));
+		my $param2 = unpack("S1", substr($msg, 10, 2));
+		my $param3 = unpack("S1", substr($msg, 12, 2));
 		my $type = unpack("S*", substr($msg, 14,  2));
 		my $weapon = unpack("S1", substr($msg, 18, 2));
 		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
@@ -5953,6 +5956,9 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
+		my $param1 = unpack("S1", substr($msg, 8, 2));
+		my $param2 = unpack("S1", substr($msg, 10, 2));
+		my $param3 = unpack("S1", substr($msg, 12, 2));
 		my $type = unpack("S*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my $weapon = unpack("S1", substr($msg, 18, 2));
