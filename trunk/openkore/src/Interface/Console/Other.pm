@@ -55,6 +55,16 @@ sub getTerminalSize {
 	}
 }
 
+sub setCBreak {
+	my $lflag = shift;
+	my $term = shift;
+	my $echo = ECHO | ECHOK | ICANON;
+	my $noecho = $lflag & ~$echo;
+	$term->setlflag($noecho);
+	$term->setcc(VTIME, 1);
+	$term->setattr(fileno(STDIN), TCSANOW);
+}
+
 
 # Move cursor to left
 sub cursorLeft {
@@ -119,17 +129,10 @@ sub new {
 			}
 			$interface{term} = $term;
 			$term->getattr(fileno(STDIN));
-			$interface{oterm} = $term->getlflag();
+			my $lflags = $interface{oterm} = $term->getlflag();
 
 			# Set terminal on noecho and CBREAK
-			my $setTerminalMode = sub {
-				my $echo = ECHO | ECHOK | ICANON;
-				my $noecho = $interface{oterm} & ~$echo;
-				$term->setlflag($noecho);
-				$term->setcc(VTIME, 1);
-				$term->setattr(fileno(STDIN), TCSANOW);
-			};
-			$setTerminalMode->();
+			setCBreak($lflags, $term);
 
 			# Setup termcap
 			my $OSPEED = $term->getospeed;
@@ -138,7 +141,7 @@ sub new {
 			$interface{WINCH} = $SIG{WINCH};
 			$interface{CONT} = $SIG{CONT};
 			$SIG{WINCH} = \&getTerminalSize;
-			$SIG{CONT} = $setTerminalMode;
+			$SIG{CONT} = sub { setCBreak($lflags, $term); };
 			getTerminalSize();
 		}
 
@@ -149,13 +152,13 @@ sub new {
 	THE_END: {
 		STDOUT->autoflush(0);
 
-		bless \%interface, __PACKAGE__;
+		bless \%interface;
 		return \%interface;
 	}
 }
 
 sub DESTROY {
-	my $self = $_[0];
+	my $self = shift;
 
 	if ($self->{inputMode} eq 'dynamic') {
 		$self->{term}->setlflag($self->{oterm});
@@ -165,7 +168,6 @@ sub DESTROY {
 		delete $SIG{CONT};
 		$SIG{WINCH} = $self->{WINCH};
 		$SIG{CONT} = $self->{CONT};
-		
 	}
 
 	delete $self->{select};
