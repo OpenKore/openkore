@@ -30,6 +30,10 @@ New features:
 - Background colors in consolecolors.txt are now supported.
 - Added optional parameter for chist, "chist 10" will show last 10 lines of chat.txt
 - Better support for secure logins.
+- Support for party skills.
+- Added ability to activate skills or use items based on current special
+  statuses (such as blessed, poisoned, etc).
+  This is similar to modkore's _inStatus/_outStatus feature.
 
 
 New commands:
@@ -65,6 +69,12 @@ New configuration options:
 - partySkill_#_*
   Used for party skills.
   See config.txt in the latest confpack.
+- useSelf_skill_#_whenStatusActive
+  useSelf_skill_#_whenStatusInactive
+  useSelf_item_#_whenStatusActive
+  useSelf_item_#_whenStatusInctive
+
+  These are the equivalents of modkore's _inStatus and _outStatus options.
 
 
 Bug fixes:

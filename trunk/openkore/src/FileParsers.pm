@@ -381,6 +381,7 @@ sub parseSkillsLUT {
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
+		$stuff[1] =~ s/ *$//;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
 			$$r_hash{$stuff[0]} = $stuff[1];
 		}
@@ -420,6 +421,7 @@ sub parseSkillsReverseLUT_lc {
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
+		$stuff[1] =~ s/ *$//;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
 			$$r_hash{lc($stuff[1])} = $stuff[0];
 		}
