@@ -25,6 +25,7 @@ Bug fixes:
   lot of "deal add" commands faster than the server responds.
 - 'autosell' command will now work even if sellAuto is set to 0.
 - Don't trigger sellAuto after storageAuto if sellAuto is 0.
+- Set $char->{spirits} to 0 upon changing map servers.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
