@@ -74,6 +74,7 @@ sub inject {
 			last;
 		}
 	}
+
 	if (!$dll) {
 		$@ = "Cannot find NetRedirect.dll. Please check your installation.";
 		return 0;
@@ -107,7 +108,7 @@ sub waitForClient {
 #
 # Check whether the connection with the client is still alive.
 sub alive {
-	return defined ($_[0]->{client} && $_[0]->{client}->connected);
+	return defined $_[0]->{client};
 }
 
 ##
@@ -129,6 +130,13 @@ sub recv {
 		return undef;
 	} else {
 		return $msg;
+	}
+}
+
+sub sync {
+	my $client = $_[0]->{client};
+	if (defined $client) {
+		$client->send("K" . pack("S", 0));
 	}
 }
 
