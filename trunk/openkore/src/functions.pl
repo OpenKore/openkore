@@ -944,6 +944,59 @@ sub parseInput {
 			}
 		}
 
+	} elsif ($switch eq "exp") {
+# exp report
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		if($arg1 eq ""){
+			my ($endTime_EXP,$w_sec,$total,$bExpPerHour,$jExpPerHour,$EstB_sec,$EstB_sec,$percentB,$percentJ);
+			$endTime_EXP = time;
+			$w_sec = int($endTime_EXP - $startTime_EXP);
+			if ($w_sec > 0) {
+				$bExpPerHour = int($totalBaseExp / $w_sec * 3600);
+				$jExpPerHour = int($totalJobExp / $w_sec * 3600);
+				if ($chars[$config{'char'}]{'exp_max'} && $bExpPerHour){
+					$percentB = "(".sprintf("%.2f",$totalBaseExp * 100 / $chars[$config{'char'}]{'exp_max'})."%)";
+					$EstB_sec = int(($chars[$config{'char'}]{'exp_max'} - $chars[$config{'char'}]{'exp'})/($bExpPerHour/3600));
+				}
+				 if ($chars[$config{'char'}]{'exp_job_max'} && $jExpPerHour){
+					$percentJ = "(".sprintf("%.2f",$totalJobExp * 100 / $chars[$config{'char'}]{'exp_job_max'})."%)";
+					$EstJ_sec = int(($chars[$config{'char'}]{'exp_job_max'} - $chars[$config{'char'}]{'exp_job'})/($jExpPerHour/3600));
+				 }
+			}
+			message("------------Exp Report------------\n" .
+			"Botting time : ".timeConvert($w_sec)."\n" .
+			"BaseExp      : $totalBaseExp $percentB\n" .
+			"JobExp       : $totalJobExp $percentJ\n" .
+			"BaseExp/Hour : $bExpPerHour\n" .
+			"JobExp/Hour  : $jExpPerHour\n" .
+			"Base Levelup Time Estimation : ".timeConvert($EstB_sec)."\n" .
+			"Job Levelup Time Estimation : ".timeConvert($EstJ_sec)."\n" .
+			"Died : $self_dead_count\n" .
+			"----------------------------------\n" .
+			"#   ID   Name                Count\n",
+			"info");
+			for ($i=0; $i<@monsters_Killed; $i++) {
+				next if ($monsters_Killed[$i] eq "");
+				message(swrite(
+				"@<< @<<<< @<<<<<<<<<<<<<       @<<< ",
+				[$i, $monsters_Killed[$i]{'nameID'}, $monsters_Killed[$i]{'name'}, $monsters_Killed[$i]{'count'}]),
+				"info");
+				$total += $monsters_Killed[$i]{'count'};
+			}
+			message("----------------------------------\n" .
+			"Total : $total\n" .
+			"----------------------------------\n",
+			"info");
+		} elsif($arg1 eq "reset") {
+			($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
+			$startTime_EXP = time;
+			undef @monsters_Killed;
+		} else {
+			message("Error in function 'exp' (Exp Report)\n" .
+			"Usage: exp [reset]\n",
+			"error");
+		}
+		
 	} elsif ($switch eq "follow") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
@@ -5576,6 +5629,7 @@ sub parseMsg {
 		if ($ID eq $accountID) {
 			print "You have died\n";
 			sendCloseShop(\$remote_socket);
+			$self_dead_count ++;
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
 		} elsif (%{$monsters{$ID}}) {
@@ -6548,11 +6602,39 @@ sub parseMsg {
 		if ($type == 1) {
 			$chars[$config{'char'}]{'exp_last'} = $chars[$config{'char'}]{'exp'};
 			$chars[$config{'char'}]{'exp'} = $val;
-			print "Exp: $val\n" if $config{'debug'}; 
+			print "Exp: $val\n" if $config{'debug'};
+			if (!$bExpSwitch) {
+				$bExpSwitch = 1;
+			} else {
+				if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
+					$monsterBaseExp = 0;
+				} else { 
+					$monsterBaseExp = $chars[$config{'char'}]{'exp'} - $chars[$config{'char'}]{'exp_last'}; 
+				} 
+			$totalBaseExp += $monsterBaseExp; 
+				if ($bExpSwitch == 1) { 
+					$totalBaseExp += $monsterBaseExp; 
+					$bExpSwitch = 2; 
+				} 
+			}
 		} elsif ($type == 2) {
 			$chars[$config{'char'}]{'exp_job_last'} = $chars[$config{'char'}]{'exp_job'};
 			$chars[$config{'char'}]{'exp_job'} = $val;
 			print "Job Exp: $val\n" if $config{'debug'};
+			if ($jExpSwitch == 0) { 
+				$jExpSwitch = 1; 
+			} else { 
+				if ($chars[$config{'char'}]{'exp_job_last'} > $chars[$config{'char'}]{'exp_job'}) { 
+					$monsterJobExp = 0; 
+				} else { 
+					$monsterJobExp = $chars[$config{'char'}]{'exp_job'} - $chars[$config{'char'}]{'exp_job_last'}; 
+				} 
+				$totalJobExp += $monsterJobExp; 
+				if ($jExpSwitch == 1) { 
+					$totalJobExp += $monsterJobExp; 
+					$jExpSwitch = 2; 
+				} 
+			} 
 		} elsif ($type == 20) {
 			$chars[$config{'char'}]{'zenny'} = $val;
 			print "Zenny: $val\n" if $config{'debug'};
@@ -6564,6 +6646,7 @@ sub parseMsg {
 			$chars[$config{'char'}]{'exp_job_max_last'} = $chars[$config{'char'}]{'exp_job_max'};
 			$chars[$config{'char'}]{'exp_job_max'} = $val;
 			print "Required Job Exp: $val\n" if $config{'debug'};
+			message("BaseExp:$monsterBaseExp | JobExp:$monsterJobExp\n","info") if ($config{'verbose'} == 2 && $monsterBaseExp);			
 		}
 
 	} elsif ($switch eq "00B3") {

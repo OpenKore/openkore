@@ -227,6 +227,12 @@ our $KoreStartTime = time;
 our $AI = 1;
 our $conState = 1;
 our $nextConfChangeTime;
+our $bExpSwitch = 2;
+our $jExpSwitch = 2;
+our $totalBaseExp = 0;
+our $totalJobExp = 0;
+our $startTime_EXP = time;
+our $self_dead_count = 0;
 
 initStatVars();
 initRandomRestart();
