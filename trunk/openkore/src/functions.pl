@@ -603,9 +603,9 @@ sub parseCommand {
 		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "vender") {
-		($arg1) = $input =~ /^.*? (\d+)/;
-		($arg2) = $input =~ /^.*? \d+ (\d+)/;
-		($arg3) = $input =~ /^.*? \d+ \d+ (\d+)/;
+		 ($arg1) = $input =~ /^.*? ([\d\w]+)/;
+		($arg2) = $input =~ /^.*? [\d\w]+ (\d+)/;
+		($arg3) = $input =~ /^.*? [\d\w]+ \d+ (\d+)/;
 		if ($arg1 eq "") {
 			error	"Error in function 'vender' (Vender Shop)\n" .
 				"Usage: vender <vender # | end> [<item #> <amount>]\n";
@@ -3429,10 +3429,10 @@ sub AI {
 
 
 	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow" 
-		|| $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
-		&& !($config{'itemsTakeAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_take"))
-		&& !($config{'itemsGatherAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"))
-		&& timeOut($timeout{'ai_attack_auto'})) {
+	  || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
+	  && !($config{'itemsTakeAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_take"))
+	  && !($config{'itemsGatherAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"))
+	  && timeOut($timeout{'ai_attack_auto'})) {
 		undef @{$ai_v{'ai_attack_agMonsters'}};
 		undef @{$ai_v{'ai_attack_cleanMonsters'}};
 		undef @{$ai_v{'ai_attack_partyMonsters'}};
