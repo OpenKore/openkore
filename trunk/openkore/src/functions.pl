@@ -76,9 +76,9 @@ sub initMapChangeVars {
 	@portalsID_old = @portalsID;
 	%portals_old = %portals;
 	%{$chars_old[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos_to'}};
-	undef $chars[$config{'char'}]{'sitting'};
-	undef $chars[$config{'char'}]{'dead'};
-	undef $chars[$config{'char'}]{'warp'};
+	delete $chars[$config{'char'}]{'sitting'};
+	delete $chars[$config{'char'}]{'dead'};
+	delete $chars[$config{'char'}]{'warp'};
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
 	$timeout{ai_sit_idle}{time} = time;
@@ -3975,13 +3975,13 @@ sub AI {
 			}
 
 			if (checkSelfCondition("equipAuto_$i")
-				&& checkMonsterCondition("equipAuto_$i", $monster)
-			 	&& (!$config{"equipAuto_$i" . "_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
-			 	&& (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{temp}{teleport}{lv})
-			 	&& (!$config{"equipAuto_$i" . "_whileSitting"} || ($config{"equipAuto_$i" . "_whileSitting"} && $char->{sitting}))
-				&& (!$config{"equipAuto_$i" . "_monsters"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_monsters"}, $monster->{name})))
-			 	&& (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
-				) {
+			 && checkMonsterCondition("equipAuto_$i", $monster)
+			 && (!$config{"equipAuto_${i}_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
+			 && (!$config{"equipAuto_${i}_onTeleport"} || $ai_v{temp}{teleport}{lv})
+			 && (!$config{"equipAuto_${i}_whileSitting"} || ($config{"equipAuto_${i}_whileSitting"} && $char->{sitting}))
+			 && (!$config{"equipAuto_${i}_monsters"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_monsters"}, $monster->{name})))
+			 && (!$config{"equipAuto_${i}_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
+			) {
 				my $index = findIndexString_lc_not_equip(\@{$char->{inventory}}, "name", $config{"equipAuto_$i"});
 				if (defined $index) {
 					sendEquip(\$remote_socket, $char->{inventory}[$index]{index}, $char->{inventory}[$index]{type_equip});
@@ -3993,22 +3993,22 @@ sub AI {
 						AI::args($ai_index_skill_use)->{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
 						
 					# this is a teleport equip
-					} elsif (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{temp}{teleport}{lv}) {
+					} elsif (!$config{"equipAuto_${i}_onTeleport"} || $ai_v{temp}{teleport}{lv}) {
 						$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
 						$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
 						warning "set timeout\n";
 					}
 					
-					debug qq~Auto-equip: $char->{inventory}[$index]{name} ($index)\n~;
+					debug "Auto-equip: $char->{inventory}[$index]{name} ($index)\n", "equipAuto";
 					last;
 				}
 
-			} elsif ($config{"equipAuto_$i" . "_def"} && !$char->{sitting} && !$config{"equipAuto_$i"."_disabled"}) {
-				my $index = findIndexString_lc_not_equip(\@{$char->{inventory}}, "name", $config{"equipAuto_$i" . "_def"});
+			} elsif ($config{"equipAuto_${i}_def"} && !$char->{sitting} && !$config{"equipAuto_${i}_disabled"}) {
+				my $index = findIndexString_lc_not_equip(\@{$char->{inventory}}, "name", $config{"equipAuto_${i}_def"});
 				if (defined $index) {
 					sendEquip(\$remote_socket, $char->{inventory}[$index]{index}, $char->{inventory}[$index]{type_equip});
 					$timeout{ai_item_equip_auto}{time} = time;
-					debug qq~Auto-equip: $char->{inventory}[$index]{name} ($index)\n~;
+					debug "Auto-equip: $char->{inventory}[$index]{name} ($index)\n", "equipAuto";
 				}
 			}
 			$i++;
@@ -7694,7 +7694,7 @@ sub parseMsg {
 		my $display = getActorName($ID);
 		message "$display become MVP!\n";
 		chatLog("k", "$display become MVP!\n");
-	# Hambo Ended
+		# Hambo Ended
 
 	} elsif ($switch eq "010E") {
 		my $ID = unpack("S1",substr($msg, 2, 2));
@@ -7713,6 +7713,7 @@ sub parseMsg {
 		$msg = substr($msg, 0, 4).$newmsg;
 
 		undef @skillsID;
+		delete $char->{skills};
 		for (my $i = 4; $i < $msg_size; $i += 37) {
 			my $skillID = unpack("S1", substr($msg, $i, 2));
 			my $level = unpack("S1", substr($msg, $i + 6, 2));
@@ -10411,11 +10412,14 @@ sub useTeleport {
 			sendSkillUse(\$remote_socket, $skill->id, $level, $accountID);
 			undef $char->{permitSkill};
 		}
+
+		delete $ai_v{temp}{teleport};
+		debug "Sending teleport\n", "useTeleport";
 		if ($level == 1) {
 			sendTeleport(\$remote_socket, "Random");
 			return 1;
 		} elsif ($level == 2 && $config{saveMap} ne "") {
-			sendTeleport(\$remote_socket, $config{'saveMap'}.".gat");
+			sendTeleport(\$remote_socket, "$config{saveMap}.gat");
 			return 1;
 			# If saveMap is not set, attempt to use Butterfly Wing
 		}
@@ -10433,7 +10437,8 @@ sub useTeleport {
 		return 1;
 	}
 
-	# No skill and no wings; try to equip a Tele clip or something, if equipAuto_#_onTeleport is set
+	# No skill and no wings; try to equip a Tele clip or something,
+	# if equipAuto_#_onTeleport is set
 	my $i = 0;
 	while (exists $config{"equipAuto_$i"}) {
 		if (!$config{"equipAuto_$i"}) {
@@ -10444,6 +10449,7 @@ sub useTeleport {
 		if ($config{"equipAuto_${i}_onTeleport"}) {
 			# it is safe to always set this value, because $ai_v{temp} is always cleared after teleport
 			if (!$ai_v{temp}{teleport}{lv}) {
+				debug "Equipping " . $config{"equipAuto_$i"} . " to teleport\n", "useTeleport";
 				$ai_v{temp}{teleport}{lv} = $level;
 
 				# set a small timeout, will be overridden if related config in equipAuto is set
