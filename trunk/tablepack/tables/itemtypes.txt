@@ -11,7 +11,7 @@
 10 Arrows
 11 Helmet
 12 Unknown_Type_12
-13 Unknown_Type_13
+13 Mask
 14 Headgear
 15 Unknown_Type_15
 16 Unknown_Type_16
