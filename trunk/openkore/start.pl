@@ -32,6 +32,7 @@ if (0) {
 	require Config;
 	require warnings;
 	require Exporter;
+	require Fcntl;
 	require Carp;
 	require FindBin;
 	require Math::Trig;
@@ -42,6 +43,7 @@ if (0) {
 	require Getopt::Long;
 	require Digest::MD5;
 	require Win32::Console;
+	require Win32::Process;
 }
 
 if ($0 =~ /\.exe$/i) {
@@ -57,10 +59,10 @@ if ($ARGV[0] eq '!') {
 	while (@ARGV) {
 		if ($ARGV[0] =~ /^-I(.*)/) {
 			unshift @INC, $1;
-			shift;
 		} else {
 			last;
 		}
+		shift;
 	}
 	$file = shift;
 }
