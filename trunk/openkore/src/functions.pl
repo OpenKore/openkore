@@ -3202,8 +3202,8 @@ sub AI {
 		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disappeared'}) {
 			message "Trying to find lost master\n", "follow", 1;
 
-			delete $ai_seq_args[followIndex]{'ai_follow_lost_char_last_pos'};
-			delete $ai_seq_args[followIndex]{'follow_lost_portal_tried'};
+			delete $ai_seq_args[$followIndex]{'ai_follow_lost_char_last_pos'};
+			delete $ai_seq_args[$followIndex]{'follow_lost_portal_tried'};
 			$ai_seq_args[$followIndex]{'ai_follow_lost'} = 1;
 			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
 			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'time'} = time;
@@ -3862,18 +3862,18 @@ sub AI {
 
 	if (%{$char->{party}} && (AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack,move", AI::action))){
 		my $i = 0;
-		my $party_skill = ();
+		my %party_skill;
 		while (defined($config{"partySkill_$i"})) {
 			for (my $j = 0; $j < @partyUsersID; $j++) {
 				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
 				if ($players{$partyUsersID[$j]}
-					&& inRange(distance(\%{$char->{pos_to}}, \%{$$char->{party}{users}{$partyUsersID[$j]}{pos}}), $config{partySkillDistance} || "1..8")
+					&& inRange(distance(\%{$char->{pos_to}}, \%{$char->{party}{users}{$partyUsersID[$j]}{pos}}), $config{partySkillDistance} || "1..8")
 					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $char->{party}{users}{$partyUsersID[$j]}{'name'}))
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
 					){
 					AI::v->{"partySkill_$i"."_time"} = time;
-					$party_skill{skillID} = $skillsID_rlut{lc($ai_v{partySkill})};
+					$party_skill{skillID} = $skills_rlut{lc($config{"partySkill_$i"})};
 					$party_skill{skillLvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $char->{party}{users}{$partyUsersID[$j]}{name};
 					$party_skill{targetID} = $partyUsersID[$j];
@@ -3887,7 +3887,7 @@ sub AI {
 			last if (defined($party_skill{targetID}));
 		}
 
-		if ($config{useSelf_skill_smartHeal} && $party_skil{skillID} eq "AL_HEAL") {
+		if ($config{useSelf_skill_smartHeal} && $party_skill{skillID} eq "AL_HEAL") {
 			my $smartHeal_lv = 1;
 			my $hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
 			for ($i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
