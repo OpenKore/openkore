@@ -6,12 +6,31 @@ New features:
 - You can now configure Kore to never attack certain monsters, even when
   they attack you. In mon_control.txt, set the flag to -1. Example:
   Matyr -1 0 0
+- useSelfSkill, useSelfItem and partySkill now also support the
+  _monsters config option, just like attackSkillSlot.
+  This example uses Pneuma only when Raydric Archer attacks:
+  useSelf_skill_6 Pneuma
+  ...
+  useSelf_skill_6_monsters Raydric Archer
+  ...
+
+New config options:
+- useSelfSkill_#_monsters
+  partySkill_#_monsters
+  partySkill_#_target_monsters
+  useSelf_item_#_monsters
+  Only activate useSelfSkill/partySkill/useSelf_item if a certain 
+  monster attacks.
+- partySkill_#_target_aggressives
+  Only activate partySkill if a certain monster attacks a party member.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
 
 Credits:
 - Joseph: -1 flag support in mon_control.txt
+- aputs: Support for the _monsters option in useSelf_skill, useSelf_item
+  and partySkill.
 
 
 ==================
