@@ -653,14 +653,28 @@ sub parseCommand {
 	} elsif ($switch eq "conf") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		($arg2) = $input =~ /^[\s\S]*? \w+ ([\s\S]+)$/;
-		@{$ai_v{'temp'}{'conf'}} = keys %config;
+
+		my @keys = keys %config;
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'conf' (Config Modify)\n" .
 				"Usage: conf <variable> [<value>]\n";
-		} elsif (binFind(\@{$ai_v{'temp'}{'conf'}}, $arg1) eq "") {
-			error "Config variable $arg1 doesn't exist\n";
+
 		} elsif ($arg2 eq "value") {
-			message("Config '$arg1' is $config{$arg1}\n", "info");
+			my $value = undef;
+			Plugins::callHook('conf_value', {
+				key => $arg1,
+				val => \$value
+			});
+
+			if (!defined value) {
+				if (!exists $config{$arg1}) {
+					error "Config variable $arg1 doesn't exist\n";
+				} else {
+					$value = "$config{$arg1}";
+				}
+			}
+			message("Config '$arg1' is $value\n", "info") if defined $value;
+
 		} else {
 			configModify($arg1, $arg2);
 		}
@@ -5614,7 +5628,7 @@ sub parseMsg {
 				my $j = 0;
 				while ($avoid{"avoid_$j"} ne "") {
 					if ($chars[$num]{'name'} eq $avoid{"avoid_$j"} || $chars[$num]{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-						$interface->displayError("Sanity Checking FAILED: Invalid username detected.");
+						$interface->errorDialog("Sanity Checking FAILED: Invalid username detected.");
 						killConnection(\$remote_socket);
 						quit();
 					}
@@ -6078,7 +6092,7 @@ sub parseMsg {
 		} elsif ($type == 3) {
 			error("Error: Out of sync with server\n", "connection");
 		} elsif ($type == 6) {
-			$interface->displayError("Critical Error: You must pay to play this account!");
+			$interface->errorDialog("Critical Error: You must pay to play this account!");
 			$quit = 1;
 		} elsif ($type == 8) {
 			error("Error: The server still recognizes your last connection\n", "connection");
@@ -6366,8 +6380,6 @@ sub parseMsg {
 			}
 		}
 
-	} elsif ($switch eq "0096") {
-
 	} elsif ($switch eq "0097") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
@@ -6394,8 +6406,8 @@ sub parseMsg {
 		avoidList_talk($privMsgUser, $privMsg);
 
 		Plugins::callHook('packet_privMsg', {
-			'privMsgUser' => $privMsgUser,
-			'privMsg' => $privMsg
+			privMsgUser => $privMsgUser,
+			privMsg => $privMsg
 			});
 
 		# auto-response
@@ -7172,7 +7184,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "00C2") {
 		$users = unpack("L*", substr($msg, 2, 4));
-		message "There are currently $users users online\n";
+		message "There are currently $users users online\n", "info";
 
 	} elsif ($switch eq "00C4") {
 		my $ID = substr($msg, 2, 4);
@@ -8168,7 +8180,7 @@ sub parseMsg {
 	} elsif ($switch eq "013B") {
 		$type = unpack("S1",substr($msg, 2, 2)); 
 		if ($type == 0) { 
-			$interface->displayError("Please equip arrow first.");
+			$interface->errorDialog("Please equip arrow first.");
 			undef $chars[$config{'char'}]{'arrow'};
 			quit() if ($config{'dcOnEmptyArrow'});
 
@@ -9898,8 +9910,15 @@ sub auth {
 sub configModify {
 	my $key = shift;
 	my $val = shift;
-	my $quiet = shift;
-	message("Config '$key' set to $val\n") unless ($quiet);
+	my $silent = shift;
+
+	Plugins::callHook('configModify', {
+		key => $key,
+		val => $val,
+		silent => $silent
+	});
+
+	message("Config '$key' set to $val\n") unless ($silent);
 	$config{$key} = $val;
 	writeDataFileIntact($Settings::config_file, \%config);
 }
@@ -10968,7 +10987,6 @@ sub connection {
 	my $port = shift;
 	my $return = 0;
 
-	message("Connecting ($host:$port)... ", "connection");
 	Plugins::callHook('connection', {
 		socket => $r_socket,
 		return => \$return,
@@ -10977,6 +10995,7 @@ sub connection {
 	});
 	return if ($return);
 
+	message("Connecting ($host:$port)... ", "connection");
 	$$r_socket = IO::Socket::INET->new(
 			PeerAddr	=> $host,
 			PeerPort	=> $port,
