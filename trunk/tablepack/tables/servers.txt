@@ -1,5 +1,4 @@
-# TODO: move recvpackets.txt referer to this file too
-# All server-specific stuff should go here.
+# This file contains information about master servers.
 
 # eAthena private servers use these options:
 # master_version 1
