@@ -34,7 +34,7 @@ New features:
 - isSelfSkill for attackSkillSlot. e.g.
   attackSkillSlot Aspersio { monsters Zombie }
 - _defendMonsters consition, e.g.:
-  partySkill Pneuma { defendMonsters Raydric Archer }
+  partySkill Pneuma { target_defendMonsters Raydric Archer }
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
