@@ -492,7 +492,7 @@ while ($quit != 1) {
 	undef @ai_cmdQue;
 
 	# Handle connection states
-	checkConnection();
+	checkConnection() unless $quit;
 
 	# Other stuff that's run in the main loop
 	mainLoop();
