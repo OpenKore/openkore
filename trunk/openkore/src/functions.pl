@@ -2197,7 +2197,7 @@ sub AI {
 
 
 	if ($config{'XKore'} && !$sentWelcomeMessage && timeOut(\%{$timeout{'welcomeText'}})) {
-		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'});
+		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
 		$sentWelcomeMessage = 1;
 	}
 
@@ -8365,7 +8365,13 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		#end of pet spawn code
 
 	} elsif ($switch eq "01AA") {
-		# pet
+		# 01aa: long ID, long emotion
+		# pet emotion
+		my ($ID, $type) = unpack "x2 a4 L1", $msg;
+		my $emote = $emotions_lut{$type} || "/e$type";
+		if ($pets{$ID}) {
+			message "$pets{$ID}{name} : $emote\n", "emotion";
+		}
 
 	} elsif ($switch eq "01B0") {
 		# Class change / monster type change
@@ -10036,7 +10042,7 @@ sub portalExists {
 sub redirectXKoreMessages {
 	my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
 
-	return if ($type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
+	return if ($config{'XKore_silent'} || $type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
 	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|guildnotice|selfchat|emotion|drop|inventory|deal|storage|input)$/);
 	return if ($domain =~ /^(attack|skill|list|info|partychat|npc|route)/);
 
