@@ -211,7 +211,8 @@ sub downloadManual {
 		$dialog->SetSizerAndFit($sizer);
 
 		my $timer = new Wx::Timer($dialog, 476);
-		my $downloader = new Utils::Downloader('openkore.sourceforge.net', '/manual/control.htm');
+		my $downloader = new Utils::Downloader('openkore.sourceforge.net',
+			'http://openkore.sourceforge.net/manual/control.htm');
 		EVT_TIMER($dialog, 476, sub {
 			#print $downloader->progress();
 			$gauge->SetValue($downloader->progress * 100);
