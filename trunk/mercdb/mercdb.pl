@@ -359,12 +359,14 @@ sub mercDbFill{
 			#
 			# HOT DEAL !!!!!!!!!!!!
 			#
-			print " HOT DEAL !!!!!!!!! \n";	
+			Log::message("HOT DEAL !!!!!!!!!");	
 #			print $avg_price . " - " . $std_price . " = " . $barrier_price . " // price: " . $::venderItemList[$::number]{'price'} ."\n";
 #			print $avg_std_query . "\n";
 			
 			my @shoppinglist = split(/,/, $Settings::config{"merchantDB_shoppinglist"});
 			my $buyitem;
+			my $buyresult = 0;
+			my $onlist = 0;
 			my $itemNameLong;
 			$itemNameLong = ::itemName({nameID => $iid, cards => $cardDB, upgrade => $custom});
 			foreach $buyitem(@shoppinglist){
@@ -373,14 +375,21 @@ sub mercDbFill{
 #				print "bi: " . $buyitem . " / in: " . $itemNameLong . "\n";
 				if (($buyitem eq "all") || ($buyitem eq $itemNameLong)){					
 					# ok, its in our list ...
+					$onlist = -1;
 					if ($chars[$config{'char'}]{'zenny'} >= $::venderItemList[$::number]{'price'}){
 						# ... and we have the money to buy it, let's go shopping
 						::sendBuyVender(\$::remote_socket, $::venderID, $::number, 1);
+						Log::message(" ... buy it!\n");
+						$buyresult = -1;
 					} else {
-						print " ... but no money!\n";
+						Log::message(" ... but no money!\n");
+						$buyresult = -1;
 					}
 				} else {
-					print " ... not on my list!\n";
+					if (!$buyresult && !$onlist){
+						Log::message(" ... not on my list!\n");
+						$buyresult = -1;
+					}
 				}
 			}	
 		}
