@@ -5654,7 +5654,10 @@ sub parseMsg {
 		} else {
 			message("You are now in the game\n", "connection");
 			sendMapLoaded(\$remote_socket);
-			sendSync(\$remote_socket) if ($config{serverType} == 1);
+			if ($config{serverType} != 0) {
+				sendSync(\$remote_socket, 1);
+				debug "Sent initial sync\n", "connection";
+			}
 			$timeout{'ai'}{'time'} = time;
 		}
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
@@ -8633,6 +8636,22 @@ sub parseMsg {
 		message "[Guild] $chat\n", "guildchat";
 		ChatQueue::add('g', $ID, $chatMsgUser, $chatMsg);
 
+	} elsif ($switch eq "0187") {
+		# 0187 - long ID
+		# I'm not sure what this is. In inRO this seems to have something
+		# to do with logging into the game server, while on
+		# oRO it has got something to do with the sync packet.
+		if ($config{serverType} != 0) {
+			my $ID = substr($msg, 2, 4);
+			if ($ID == $accountID) {
+				$timeout{ai_sync}{time} = time;
+				sendSync(\$remote_socket);
+				debug "Sync packet requested\n", "connection";
+			} else {
+				warning "Sync packet requested for wrong ID\n";
+			}
+		}
+
 	} elsif ($switch eq "018F") {
 		my ($flag) = unpack("x2 S1", $msg);
 		if ($flag) {
@@ -8912,12 +8931,6 @@ sub parseMsg {
 			binAdd(\@arrowCraftID, $index);
 		}
 		message "Received Possible Arrow Craft List - type 'arrowcraft'\n";
-
-	} elsif ($switch eq "0187") {
-		# 0187 - long ID
-		# I'm not sure what this is. In inRO this seems to have something
-		# to do with logging into the game server, while on
-		# oRO it has got something to do with the sync packet.
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
