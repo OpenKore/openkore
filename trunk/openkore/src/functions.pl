@@ -10053,7 +10053,9 @@ sub checkSelfCondition {
 		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
 	}
 	
-	if ($config{$prefix . "_whenFollowing"} && $config{follow}) { return 0 if (!getFollowing()); }
+	if ($config{$prefix . "_whenFollowing"} && $config{follow}) {
+		return 0 if (!checkFollowMode());
+	}
 
 	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActive($config{$prefix . "_whenStatusActive"}) || whenAffected($config{$prefix . "_whenStatusActive"})); }
 	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActive($config{$prefix . "_whenStatusInactive"}) || whenAffected($config{$prefix . "_whenStatusInactive"})); }
@@ -10119,15 +10121,6 @@ sub manualMove {
 	$ai_v{'temp'}{'x'} = $chars[$config{'char'}]{'pos_to'}{'x'} + $delta_x;
 	$ai_v{'temp'}{'y'} = $chars[$config{'char'}]{'pos_to'}{'y'} + $delta_y;
 	ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'});
-}
-
-sub getFollowing {
-	my $followIndex;
-	if ($config{follow} && (($followIndex = binFind(\@ai_seq, "follow")) ne "")) {
-		return 1 if ($ai_seq_args[$followIndex]{following});
-	}
-	
-	return 0;
 }
 
 return 1;
