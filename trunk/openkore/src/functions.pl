@@ -2832,28 +2832,6 @@ sub AI {
 					last AUTOSTORAGE;
 				}
 			}
-			### Sraet Modon Start (5/25/2003)  Temp added by xlr82xs untill either someone else does it better, or Sraet doesn't want it in here.
-			$i = 0;
-			while (1) {
-				last if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"});
-				if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne "" && $config{"buyAuto_$i"."_minAmount"} < $config{"buyAuto_$i"."_maxAmount"}) {
-					$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
-					if ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"buyAuto_$i"."_minAmount"}) {
-						$av_i{'temp'}{'storageIndex'} = "";
-						for ($j=0;$j<@storageID;$j++) {
-							next if ($storageID[$j] eq "");
-          if (lc($storage{$storageID[$j]}{'name'}) eq lc($config{"buyAuto_$i"})) {
-	          $ai_v{'temp'}{'storageIndex'} = $j;
-          }
-      }
-      if ($ai_v{'temp'}{'storageIndex'} ne "") { #Found in Storage
-  }
-  sendStorageGet(\$remote_socket, $storage{$storageID[$ai_v{'temp'}{'storageIndex'}]}{'index'}, ($config{"buyAuto_$i"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'}));
-}
-}
-    $i++
-  }
-### Sraet Modon End 
 			sendStorageClose(\$remote_socket);
 		}
 	}
@@ -2963,52 +2941,17 @@ sub AI {
 	) && timeOut(\%{$timeout{'ai_buyAuto'}})) {
 		undef $ai_v{'temp'}{'found'};
 		$i = 0;
-		### Sraet Modon Start (5/25/2003)
-  while (1) {
-    last if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"});
-    if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne "" && $config{"buyAuto_$i"."_minAmount"} < $config{"buyAuto_$i"."_maxAmount"}) {
-      $ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
-      if ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"buyAuto_$i"."_minAmount"}) {
-        $av_i{'temp'}{'cartIndex'} = "";
-        for ($j=0; $j < @cartID; $j++) {
-          next if ($cartID[$j] eq "");
-          if (lc($cart{'inventory'}{$cartID[$j]}{'name'}) eq lc($config{"buyAuto_$i"})) {
-            $ai_v{'temp'}{'cartIndex'} = $j;
-          }
-        }
-        if ($ai_v{'temp'}{'cartIndex'} eq "") { # Cart Empty
-          $av_i{'temp'}{'storageIndex'} = "";
-          for ($j=0;$j<@storageID;$j++) {
-            next if ($storageID[$j] eq "");
-            if (lc($storage{$storageID[$j]}{'name'}) eq lc($config{"buyAuto_$i"})) {
-              $ai_v{'temp'}{'storageIndex'} = $j;
-            }
-          }
-          if ($ai_v{'temp'}{'storageIndex'} eq "") { # Storage Empty
-            $ai_v{'temp'}{'found'} = 1;
-          } else { #Found in Storage
-          print ("AutoBuy: Item found in Storage.\n") if ($config{'verbose'});
-### force autoStorage and mode autoStorage to get items from it as well as store them
-              unshift @ai_seq, "storageAuto";
-              unshift @ai_seq_args, {};
-              last;
-          }
-        } else { #Found in Cart
-          ### Get items from cart cause we got em.
-          print ("AutoBuy: Item found in cart.\n") if ($config{'verbose'});
-          sendCartGet(\$remote_socket,
-            $cart{'inventory'}{$cartID[$ai_v{'temp'}{'cartIndex'}]}{'index'},
-            ((($config{"buyAuto_$i"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'}) <
-                $cart{'inventory'}{$cartID[$ai_v{'temp'}{'cartIndex'}]}{'amount'}) ?
-                ($config{"buyAuto_$i"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'}) :
-                $cart{'inventory'}{$cartID[$ai_v{'temp'}{'cartIndex'}]}{'amount'})
-          );
-        }
-      }
-    }
-    $i++
-  }
-### Sraet Modon End 
+		while (1) {
+			last if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"});
+			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
+			if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne ""
+				&& ($ai_v{'temp'}{'invIndex'} eq ""
+				|| ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"buyAuto_$i"."_minAmount"}
+				&& $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"}))) {
+				$ai_v{'temp'}{'found'} = 1;
+			}
+			$i++;
+		}
 		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
 			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
