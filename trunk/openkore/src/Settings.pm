@@ -256,6 +256,7 @@ sub load {
 			Log::message("Loading $$_{file}...\n", "load");
 		} else {
 			Log::error("Error: Couldn't load $$_{file}\n", "load");
+			return 0;
 		}
 
 		Plugins::callHook('loadfiles', {files => \@array, current => $i});
@@ -263,6 +264,7 @@ sub load {
 		$i++;
 	}
 	Plugins::callHook('postloadfiles', {files => \@array});
+	return 1;
 }
 
 sub parseReload {

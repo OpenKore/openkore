@@ -38,6 +38,7 @@ New config options:
 Internal:
 - $interface->beep() function for cross-platform beep support.
 - OpenKore will exit if a plugin failed to load.
+- OpenKore will exit if a configuration file failed to load.
 
 Credits:
 - asuwannarat, as2765324: tRO server details.
