@@ -83,10 +83,11 @@ New features:
 - parseMsg_statuslook verbose 1 displays status effects on you;
   verbose 2 displays status effects on others.
 - logs/storage.txt will show what is in your storage.
-- "vl" (vender list) command now displays coordinates
+- "vl" (vender list) command now displays coordinates.
 - Automatic disconnection during specified times of the day.
 - If storage opening fails the first time for some reason, Kore will try again.
 - The bot will now look at NPCs when it is talking to them, like a real player.
+- When you issue a "move" command, this will clear previous move actions.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
