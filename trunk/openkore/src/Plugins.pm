@@ -15,11 +15,9 @@
 ##
 # MODULE DESCRIPTION: Plugin system
 #
-# A plugin is a file with executable code. It is not part of Kore, and can
-# be loaded by Kore at runtime. A plugin can add new features to Kore or
-# modify existing behavior (using hooks).
-#
 # This module provides an interface for handling plugins.
+# See the <a href="plugin-tut.html">Plugin Writing Tutorial</a>
+# for more information about plugins.
 #
 # NOTE: Do not confuse plugins with modules! See Modules.pm for more information.
 
@@ -36,12 +34,24 @@ use Utils;
 use Log;
 
 
+### CATEGORY: Variables
+
+##
+# $Plugins::current_plugin
+#
+# When a plugin is being (re)loaded, the filename of the plugin is set in this variable.
 our $current_plugin;
+##
+# $Plugins::current_plugin_folder
+#
+# When a plugin is being (re)loaded, the the plugin's folder is set in this variable.
 our $current_plugin_folder;
 
 our @plugins;
 our %hooks;
 
+
+### CATEGORY: Functions
 
 ##
 # Plugins::loadAll()
