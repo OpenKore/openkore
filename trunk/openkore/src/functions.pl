@@ -8276,7 +8276,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 
 	} elsif ($switch eq "0194") {
 		my $ID = substr($msg, 2, 4);
-		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000*/;
+		my ($name) = unpack("Z*", substr($msg, 6, 24));
 		
 		if ($nameRequest{type} eq "g") {
 			message "Guild Member $name Log ".($nameRequest{online}?"In":"Out")."\n", 'guildchat';
