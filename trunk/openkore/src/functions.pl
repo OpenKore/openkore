@@ -7019,34 +7019,36 @@ sub parseMsg {
 		if (defined $actor) {
 			my $name = getActorName($ID);
 			my $verbosity = ($actorType ne 'self') ? 1 : 2;
+			my $are = ($actorType eq 'self') ? 'are' : 'is';
+			my $have = ($actorType eq 'self') ? 'have' : 'has';
 
 			foreach (keys %skillsState) {
 				if ($param1 == $_) {
 					$actor->{statuses}{$skillsState{$_}} = 1;
-					message "$name are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+					message "$name $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
 				} elsif ($actor->{statuses}{$skillsState{$_}}) {
 					delete $actor->{statuses}{$skillsState{$_}};
-					message "$name are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+					message "$name $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
 				}
 			}
 
 			foreach (keys %skillsAilments) {
 				if (($param2 & $_) == $_) {
 					$actor->{statuses}{$skillsAilments{$_}} = 1;
-					message "$name have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+					message "$name $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
 				} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
 					delete $actor->{statuses}{$skillsAilments{$_}};
-					message "$name are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+					message "$name $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
 				}
 			}
 
 			foreach (keys %skillsLooks) {
 				if (($param3 & $_) == $_) {
 					$actor->{statuses}{$skillsLooks{$_}} = 1;
-					debug "$name have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+					debug "$name $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 				} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
 					delete $actor->{statuses}{$skillsLooks{$_}};
-					debug "$name are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+					debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 				}
 			}
 		}
@@ -10161,9 +10163,13 @@ sub checkMonsterCondition {
 	$prefix = shift;
 	$id = shift;
 
-	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActiveMon($id, $config{$prefix . "_whenStatusActive"})); }
-	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActiveMon($id, $config{$prefix . "_whenStatusInactive"})); }
-	
+	if ($config{$prefix . "_whenStatusActive"}) {
+		return 0 unless (whenStatusActiveMon($id, $config{$prefix . "_whenStatusActive"}));
+	}
+	if ($config{$prefix . "_whenStatusInactive"}) {
+		return 0 if (whenStatusActiveMon($id, $config{$prefix . "_whenStatusInactive"}));
+	}
+
 	return 1;
 }
 

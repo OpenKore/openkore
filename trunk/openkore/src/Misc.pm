@@ -148,7 +148,7 @@ sub whenStatusActiveMon {
 	foreach (@arr) {
 		s/^\s+//g;
 		s/\s+$//g;
-		return if exists($monsters{$ID}{statuses}{$_});
+		return 1 if $monsters{$ID}{statuses}{$_};
 	}
 	return 0;
 }
@@ -160,7 +160,7 @@ sub whenStatusActivePL {
 	foreach (@arr) {
 		s/^\s+//g;
 		s/\s+$//g;
-		return 1 if exists($players{$ID}{statuses}{$_});
+		return 1 if $players{$ID}{statuses}{$_};
 	}
 	return 0;
 }
