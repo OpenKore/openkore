@@ -34,6 +34,8 @@ Bug fixes:
 - Do not automatically add stats over 99 base stat.
 - Detect negative damage correctly. (unpack 'S1' => 's1')
 - 's' command correctly displays Status Points >= 1000 now.
+- Don't trigger autosit while already auto-sitting.
+- Fix maxDistance.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
