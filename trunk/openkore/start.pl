@@ -68,12 +68,7 @@ if ($0 =~ /wxstart\.exe$/i) {
 	$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
 }
 
-my $file;
-if (-f 'visualkore.pl') {
-	$file = 'visualkore.pl';
-} else {
-	$file = 'openkore.pl';
-}
+my $file = 'openkore.pl';
 
 if ($ARGV[0] eq '!') {
 	shift;
