@@ -44,6 +44,15 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 
+[Indonesia - idRO: Sakray]
+ip 202.93.18.250
+port 6900
+version 2
+master_version 13
+secureLogin 1
+secureLogin_type 0
+secureLogin_account 0
+
 [Philippines - pRO: Fenrir/Iris/Lydia]
 ip 202.57.118.232
 port 6900
