@@ -4,6 +4,7 @@
 
 Bug fixes:
 - Logging framework: writing messages to files should work again.
+- Don't wait for casting to finish if user has freecast.
 
 ==================
 ### 1.6.0

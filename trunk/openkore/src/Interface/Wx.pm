@@ -112,6 +112,7 @@ sub mainLoop {
 		if ($quit) {
 			$quitting = 1;
 			$self->ExitMainLoop;
+			$timer->Stop;
 			return;
 		} elsif ($self->{iterating}) {
 			return;

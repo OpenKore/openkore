@@ -94,7 +94,7 @@ our %handlers = (
 	timeout		=> \&cmdTimeout,
 	uneq		=> \&cmdUnequip,
 	verbose		=> \&cmdVerbose,
-	version	=> \&cmdVersion,
+	version		=> \&cmdVersion,
 	warp		=> \&cmdWarp,
 	who		=> \&cmdWho,
 );
