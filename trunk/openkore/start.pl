@@ -24,11 +24,22 @@
 # __start() unless defined $ENV{INTERPRETER};
 use strict;
 
+# PerlApp 6's @INC doesn't contain '.', so add it
+my $hasCurrentDir;
+foreach (@INC) {
+	if ($_ eq ".") {
+		$hasCurrentDir = 1;
+		last;
+	}
+}
+push @INC, "." if (!$hasCurrentDir);
+
 if (0) {
 	# Force PerlApp to include the following modules
 	require base;
 	require bytes;
 	require lib;
+	use integer;
 	require Config;
 	require warnings;
 	require Exporter;
@@ -47,6 +58,7 @@ if (0) {
 	require Win32::Process;
 }
 
+$0 = PerlApp::exe() if ($PerlApp::TOOL eq "PerlApp");
 if ($0 =~ /\.exe$/i) {
 	$ENV{INTERPRETER} = $0;
 }
