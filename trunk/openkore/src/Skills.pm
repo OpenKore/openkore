@@ -13,7 +13,7 @@
 #
 #########################################################################
 ##
-# MODULE DESCRIPTION: Conversion between skill identifiers.
+# MODULE DESCRIPTION: Conversion between skill identifiers
 #
 # Skills have 3 different identifiers:
 # `l

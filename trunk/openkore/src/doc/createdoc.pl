@@ -95,7 +95,7 @@ sub makeupText {
 	# Functions
 	$text =~ s/([a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
 	# Variables
-	$text =~ s/(\$[a-z0-9_{\'}:]+)/<code>$1<\/code>/gi;
+	$text =~ s/($|\b)([\$\%\@][a-z0-9_{\'}:]+)/<code>$1<\/code>/gi;
 	# Links to modules
 	$text =~ s/([a-z0-9_:]+\.pm)/&linkModule($1)/gie;
 	return $text;
