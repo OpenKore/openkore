@@ -358,6 +358,7 @@ followFaceDirection 0
 followDistanceMax 6
 followDistanceMin 3
 followLostStep 12
+followSitAuto 0
 followBot 0
 
 tankMode 0
