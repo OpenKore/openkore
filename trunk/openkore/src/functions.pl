@@ -18,6 +18,17 @@ use Config;
 #INITIALIZE VARIABLES
 #######################################
 
+# The following sub sets up the random restart times governed by the config variables autoRestartSeed and autoRestartMin
+# The restart time will be "autoRestartMin" + "between 0 and autoRestartSeed"
+# Saved to the config file just to make the code slightly cleaner (trust me, the old code was ugly)
+sub initRandomRestart {
+	if ($config{'autoRestart'} ne "0") {
+		my $restart = int(rand $config{"autoRestartSeed"}) + $config{"autoRestartMin"};
+		print "Next restart in ".$restart." seconds\n\n";
+		configModify("autoRestart", $restart);
+	}
+}
+
 sub initConnectVars {
 	initMapChangeVars();
 	undef @{$chars[$config{'char'}]{'inventory'}};
@@ -209,11 +220,29 @@ sub checkConnection {
 		undef $conState_tries;
 	}
 
+# This is where saving the random restart time to the config file makes it a little cleaner, only one simple if needed
+# The local variable $sleeptime is controlled by the same system as used in initRandomRestart() for the restart times
+# The only thing that may want changing here is the sleep and restart times being printed in minutes rather than seconds
+# However, as I'm sure we are all used to working in seconds ourselves, this can be changed come release (if at all)
+#
+# As some people may want the security of the random restart times, withought the dead botting time of random offline times
+# The two if's looking for autoRestartSleep 1 govern if the program pauses, and if it does print information about such.
+# I know the two if statements is cumbersom, but it makes the output look so much nicer.
+# The reason $sleeptime is declared even if sleeping isn't enabled is that by declaring it there outside an if
+# it becomes a sort of "global" local variable
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}) {
+		my $sleeptime = int(rand $config{"autoSleepSeed"}) + $config{"autoSleepMin"};
 		$conState = 1;
 		undef $conState_tries;
+		print "\nThe random restart time has come around again.\n";
+		if ($config{'autoRestartSleep'} eq "1") {
+			print "Sleeping for ".$sleeptime." seconds\n";
+		}
+		initRandomRestart();
+		if ($config{'autoRestartSleep'} eq "1") {
+			sleep $sleeptime;
+		}
 		$KoreStartTime = time;
-		print "\nAuto-restarting!!\n\n";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
