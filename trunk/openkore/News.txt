@@ -5,6 +5,10 @@
 Bug fixes:
 - Fix bulk selling bug which caused disconnect.
 
+New features:
+- Kore will automatically stop stealing from a monster once it has
+  successfully stolen. It will not remember that you have stolen
+  from a monster if it goes off the screen, however.
 
 ==================
 ### 1.5.2 (beta)
