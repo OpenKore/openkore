@@ -64,6 +64,18 @@ After installing scons, it's time build GRF Tool's source code.
 - Type: scons
 
 
+Installation
+------------
+After compilation, you can install the library and header files by using
+the install.sh script. Just type this as root:
+
+  ./install.sh
+
+To remove the installed files, type:
+
+  ./install.sh --uninstall
+
+
 Debugging info
 --------------
 You can turn on the debugging code by compiling with these:
