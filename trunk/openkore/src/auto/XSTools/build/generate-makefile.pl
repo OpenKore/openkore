@@ -69,6 +69,10 @@ sub replaceIfWin32 {
 $lines =~ s/\n#if unix\n(.*?)\n#endif\n/&replaceIfUnix($1)/seg;
 $lines =~ s/\n#if win32\n(.*?)\n#endif\n/&replaceIfWin32($1)/seg;
 
-open(F, "> Makefile.real");
-print F $lines;
-close(F);
+if (open(F, "> Makefile.real")) {
+	print F $lines;
+	close(F);
+} else {
+	print STDERR "Cannot write to Makefile.real\n";
+	exit 1;
+}
