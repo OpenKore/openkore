@@ -7440,6 +7440,7 @@ sub parseMsg {
 		$conState = 5 if $conState != 4 && $config{XKore};
 		updateDamageTables($sourceID, $targetID, $damage) if $damage != 35536;
 		setSkillUseTimer($skillID) if $sourceID eq $accountID;
+		castOn($sourceID, $targetID);
 
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID);
@@ -7533,16 +7534,7 @@ sub parseMsg {
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $config{XKore};
 		setSkillUseTimer($skillID) if $sourceID eq $accountID;
-		if ($monsters{$targetID}) {
-			# Increment counter for monster being casted on
-			if ($sourceID eq $accountID) {
-				$monsters{$targetID}{'castOnByYou'}++;
-			} elsif (%{$players{$sourceID}}) {
-				$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
-			} elsif (%{$monsters{$sourceID}}) {
-				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
-			}
-		}
+		castOn($sourceID, $targetID);
 		if ($config{'autoResponseOnHeal'}) {
 			# Handle auto-response on heal
 			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
@@ -11925,6 +11917,21 @@ sub setSkillUseTimer {
 
 	$chars[$config{char}]{skills}{$skills_rlut{lc($skillsID_lut{$skillID})}}{time_used} = time;
 	undef $chars[$config{char}]{time_cast};
+}
+
+# Increment counter for monster being casted on
+sub castOn {
+	my ($sourceID, $targetID) = @_;
+
+	if ($monsters{$targetID}) {
+		if ($sourceID eq $accountID) {
+			$monsters{$targetID}{'castOnByYou'}++;
+		} elsif (%{$players{$sourceID}}) {
+			$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
+		} elsif (%{$monsters{$sourceID}}) {
+			$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
+		}
+	}
 }
 
 return 1;
