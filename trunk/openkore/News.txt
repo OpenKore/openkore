@@ -217,6 +217,7 @@ Bug fixes:
 - Fix crash in calculating exp gained %.
 - Fixed bug in "cartGet" AI sequence
 - Fixed the location of the AI_post plugin hook
+- Attempt to implement "That person is overweight; you cannot trade"
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
