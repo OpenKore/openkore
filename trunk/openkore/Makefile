@@ -9,6 +9,7 @@ exe:
 		--lib tools\\pathfinding \
 		--lib tools\\win32 \
 		--lib tools\\misc \
+		--add XSTools \
 		--add Interface::Console \
 		--trim Interface::Console::Other \
 		--trim Interface::Console::Other::Gtk \
