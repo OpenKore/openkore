@@ -97,6 +97,11 @@ our @EXPORT = qw(
 	sendPartyLeave
 	sendPartyOrganize
 	sendPartyShareEXP
+	sendPetFeed
+	sendPetGetInfo
+	sendPetPerformance
+	sendPetReturnToEgg
+	sendPetUnequipItem
 	sendQuit
 	sendRaw
 	sendRespawn
@@ -912,6 +917,41 @@ sub sendPartyShareEXP {
 	my $msg = pack("C*", 0x02, 0x01).pack("L", $flag);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Party Share: $flag\n", "sendPacket", 2;
+}
+
+sub sendPetFeed {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0xA1, 0x01, 0x01);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent Pet Feed\n", "sendPacket", 2;
+}
+
+sub sendPetGetInfo {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0xA1, 0x01, 0x00);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent Pet Get Info\n", "sendPacket", 2;
+}
+
+sub sendPetPerformance {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0xA1, 0x01, 0x02);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent Pet Performance\n", "sendPacket", 2;
+}
+
+sub sendPetReturnToEgg {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0xA1, 0x01, 0x03);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent Pet Return to Egg\n", "sendPacket", 2;
+}
+
+sub sendPetUnequipItem {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0xA1, 0x01, 0x04);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent Pet Unequip Item\n", "sendPacket", 2;
 }
 
 sub sendQuit {
