@@ -63,7 +63,7 @@ Internal:
 - OpenKore will exit if a plugin failed to load.
 - OpenKore will exit if a configuration file failed to load.
 - checkMonsterCondition() now takes a monster hash instead of monster ID.
-  (Perhaps other similar functions should be converted too.)
+  (Perhaps other similar functions should be converted too)
 
 Credits:
 - asuwannarat, as2765324: tRO server details.
