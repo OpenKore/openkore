@@ -53,8 +53,7 @@ New config options:
 Credits:
 - jsteng: VVVS weapon name bugfix.
 - arachno: Language code bugfix, chat.txt map name bugfix.
-- Duckieeex: Help with pRO support.
-- Mananabas: Help with pRO support.
+- Duckieeex, Mananabas, gradeA: Help with pRO support.
 
 ==================
 ### 1.5.2 (beta)
