@@ -26,6 +26,9 @@
   alias_sc s
   alias_em e
 
+- teleportAuto_noUnstuck configuration option will make bot not teleport when
+  it's stuck
+
 
 ==================
 ### 1.3.0 (beta)

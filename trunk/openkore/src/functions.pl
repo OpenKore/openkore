@@ -6858,7 +6858,7 @@ sub parseMsg {
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
 		$damage ||= "Miss!";
-		my $disp = "$source $uses $skillsID_lut{$skillID}" .
+		my $disp = "$source $uses ".skillName($skillID).
 			(($level == 65535)? "" : " (lvl $level)") .
 			(($damage == 35536)? "" : " on $target - Dmg: $damage") .
 			"\n";
@@ -6902,7 +6902,7 @@ sub parseMsg {
 		my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
 
 		# Print skill use message
-		message "$source $uses $skillsID_lut{$skillID} on location ($x, $y)\n", "skill";
+		message "$source $uses ".skillName($skillID)." on location ($x, $y)\n", "skill";
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
@@ -7070,7 +7070,7 @@ sub parseMsg {
 			$extra = ": Lv $amount";
 		}
   
-		message "$source $uses $skillsID_lut{$skillID} on $target$extra\n", "skill";
+		message "$source $uses ".skillName($skillID)." on $target$extra\n", "skill";
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
@@ -7415,7 +7415,7 @@ sub parseMsg {
 			}
 		}
 
-		message "$source $verb $skillsID_lut{$skillID} on $target\n", "skill", 1;
+		message "$source $verb ".skillName($skillID)." on $target\n", "skill", 1;
 
 	} elsif ($switch eq "0141") {
 		$type = unpack("S1",substr($msg, 2, 2));
@@ -9886,10 +9886,12 @@ sub stuckCheck {
 	if ($stuck) {
 		if ($ai_v{stuck_count} >= $limit) {
 			# should not happened but just to safeguard
-			my $msg = "Failed to move for $ai_v{stuck_count} times, attempt to unstuck by teleport. ($field{'name'} $chars[$config{char}]{pos}{x},$chars[$config{char}]{pos}{y})\n";
+			my $msg = "Failed to move for $ai_v{stuck_count} times";
+			$msg .= ", attempt to unstuck by teleport. ($field{'name'} $chars[$config{char}]{pos}{x},$chars[$config{char}]{pos}{y})" unless $config{teleportAuto_noUnstuck};
+			$msg .= "\n";
 			warning $msg, "stuck";
 			chatLog("k", $msg);
-			useTeleport(1);
+			useTeleport(1) unless $config{teleportAuto_noUnstuck};
 			delete $ai_v{stuck_count};
 		} else {
 			$ai_v{stuck_count}++;
@@ -9900,6 +9902,13 @@ sub stuckCheck {
 		debug "Unstuck attempt sucessfull\n", "stuck";
 		delete $ai_v{stuck_count};
 	}
+}
+
+# Resolve the name of a skill
+sub skillName {
+	my $skillID = shift;
+
+	return $skillsID_lut{$skillID} || "Unknown $skillID";
 }
 
 # Resolve the name of a card
