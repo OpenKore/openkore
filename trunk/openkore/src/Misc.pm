@@ -862,7 +862,7 @@ sub manualMove {
 
 	# Stop moving if necessary
 	AI::clear(qw/move route mapRoute/);
-	ai_route($field{name}, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
+	main::ai_route($field{name}, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
 sub objectAdded {
