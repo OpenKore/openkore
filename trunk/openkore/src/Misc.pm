@@ -59,6 +59,10 @@ our @EXPORT = (
 	objectIsMovingTowards
 	objectIsMovingTowardsPlayer/,
 
+	# Inventory management
+	qw/inInventory
+	inventoryItemRemoved/,
+
 	# OS specific
 	qw/launchURL/,
 
@@ -77,7 +81,6 @@ our @EXPORT = (
 	getPortalDestName
 	getResponse
 	getSpellName
-	inInventory
 	manualMove
 	objectAdded
 	objectRemoved
@@ -1049,6 +1052,25 @@ sub inInventory {
 	return if $index eq '';
 	return unless $char->{inventory}[$index]{amount} >= $quantity;
 	return $index;
+}
+
+##
+# inventoryItemRemoved($index, $amount)
+#
+# Removes $amount of $index from $char->{inventory}.
+# Also prints a message saying the item was removed (unless it is an arrow you
+# fired).
+sub inventoryItemRemoved {
+	my ($index, $amount) = @_;
+
+	my $invIndex = findIndex(\@{$char->{inventory}}, "index", $index);
+	my $item = $char->{inventory}[$invIndex];
+	if (!$char->{arrow} || $char->{arrow} != $index) {
+		# This item is not an equipped arrow
+		message "Inventory Item Removed: $item->{name} ($invIndex) x $amount\n", "inventory";
+	}
+	$item->{amount} -= $amount;
+	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
 }
 
 ##

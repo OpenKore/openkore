@@ -16,6 +16,8 @@ Bug fixes:
 - Sometimes openkore would stop auto-storing items covered by the 'all'
   setting in items_control.txt, necessitating a reload.
 - Zeny earned is reset when you use "exp reset".
+- "Inventory Item Removed" message was not being displayed when you drop
+  (instead of fire) arrows.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
@@ -74,6 +76,8 @@ Internal:
   (Perhaps other similar functions should be converted too)
 - inInventory($item, $quantity = 1) returns the index of the item if you have
   at least $quantity of it, or undef otherwise.
+- inventoryItemRemoved($index, $amount) function (packet 00AF is not the only
+  way inventory items can be removed).
 
 Credits:
 - asuwannarat, as2765324: tRO server details.
