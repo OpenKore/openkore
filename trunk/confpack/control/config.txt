@@ -4,6 +4,7 @@
 master_name_0 localhost
 master_host_0 127.0.0.1
 master_port_0 6900
+master_version_0 1
 
 version 18
 encrypt 0
