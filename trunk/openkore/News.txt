@@ -35,6 +35,7 @@ Bug fixes:
 - The !include directive in a config file was causing everything above it to
   be clobbered.
 - items_take AI sequence was getting stuck in queue if !itemsTakeAuto.
+- 'guild leave' command actually works now.
 
 New features:
 - Don't use teleportAuto_minAggressives if the more specific

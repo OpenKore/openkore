@@ -694,10 +694,6 @@ sub cmdGuild {
 	} elsif (!defined $char->{guild}) {
 		error "You are not in a guild.\n";
 
-	} elsif ($arg1 eq "leave") {
-		sendGuildLeave($arg2);
-		message "Sending guild leave: $arg2\n";
-
 	} elsif ($arg1 eq "request") {
 		my $player = Match::player($arg2);
 		if (!$player) {
@@ -717,6 +713,10 @@ sub cmdGuild {
 		} else {
 			message	"Type 'guild $args' again to view the information.\n", "info";
 		}
+
+	} elsif ($arg1 eq "leave") {
+		sendGuildLeave($arg2);
+		message "Sending guild leave: $arg2\n";
 
 	} elsif ($arg1 eq "info") {
 		message("---------- Guild Information ----------\n", "info");
