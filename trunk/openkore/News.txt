@@ -36,6 +36,8 @@ Bug fixes:
 - 's' command correctly displays Status Points >= 1000 now.
 - Don't trigger autosit while already auto-sitting.
 - Fix maxDistance.
+- Don't use runFromTarget_dist in attackCheckLOS when !runFromTarget.
+- Don't use Arrow Crafting skill when !autoMakeArrows.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
