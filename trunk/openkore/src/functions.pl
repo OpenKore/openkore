@@ -3705,6 +3705,7 @@ sub AI {
 			|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
 		);
 		$cleanMonster = 0 if ($monsters{$ID}{'attackedByPlayer'} && (!$following || $monsters{$ID}{'lastAttackFrom'} ne $followID));
+		$cleanMonster = 1 if !$config{attackAuto};
 
 
 		# If the damage numbers have changed, update the giveup time so we don't timeout
