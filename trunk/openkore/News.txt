@@ -11,6 +11,8 @@ Bug fixes:
 - Fix typo which cause lockMap_randX/Y to not work.
 - The 'cart add' command now checks whether you have a cart.
 - Fix some memory leaks.
+- Guild Member Log In/Out and Guild Notice are no longer duplicated
+  in XKore mode.
 
 New config options:
 - teleportAuto_useSP - use SP (cast skill) when using teleport without item
