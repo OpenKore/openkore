@@ -3,6 +3,8 @@
 
 bindIp
 encrypt 0
+# 0 = normal server, 1 = oRO, 2 = pRO
+serverType 0
 
 XKore 0
 XKore_silent 1
