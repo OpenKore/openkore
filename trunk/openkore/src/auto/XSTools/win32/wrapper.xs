@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <Tlhelp32.h>
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
@@ -43,3 +44,27 @@ WinUtils_ShellExecute(handle, operation, file)
 		RETVAL = ((int) ShellExecute((HWND) handle, op, file, NULL, NULL, SW_NORMAL)) == 42;
 	OUTPUT:
 		RETVAL
+
+void
+WinUtils_listProcesses()
+	INIT:
+		HANDLE toolhelp;
+		PROCESSENTRY32 pe;
+	PPCODE:
+		pe.dwSize = sizeof(PROCESSENTRY32);
+		toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+		if (Process32First(toolhelp, &pe)) {
+			do {
+				HV *hash;
+
+				hash = (HV *) sv_2mortal ((SV *) newHV ());
+				hv_store (hash, "exe", 3,
+					newSVpv (pe.szExeFile, 0),
+					0);
+				hv_store (hash, "pid", 3,
+					newSVuv (pe.th32ProcessID),
+					0);
+				XPUSHs (newRV ((SV *) hash));
+			} while (Process32Next(toolhelp,&pe));
+		}
+		CloseHandle(toolhelp);

@@ -7318,7 +7318,7 @@ sub parseMsg {
 		# Skill use
 		my $dmg_t = $switch eq "0114" ? "s1" : "l1";
 		my ($skillID, $sourceID, $targetID, $tick, $src_speed, $dst_speed, $damage, $level, $param3, $type) = unpack("x2 S1 a4 a4 L1 L1 L1 $dmg_t S1 S1 C1", $msg);
-			
+
 		if (my $spell = $spells{$sourceID}) {
 			# Resolve source of area attack skill
 			$sourceID = $spell->{sourceID};
