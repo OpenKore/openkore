@@ -104,7 +104,8 @@ sub processMsg {
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
 		# TODO: set console color here
-		# This is a small example (works only on Unix):
+		# This is a small example (works only on Unix).
+		# It should be in a config file rather than hardcoded.
 		if ($^O ne 'MSWin32' && $^O ne 'cygwin') {
 			if ($type eq "error") {
 				# Errors are red
