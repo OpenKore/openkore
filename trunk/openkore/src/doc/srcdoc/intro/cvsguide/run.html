@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>How to run OpenKore (CVS version) from source code</title>
+	<link rel="stylesheet" type="text/css" href="../../openkore.css">
+	<link rel="stylesheet" type="text/css" href="../../links.css">
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div id="title">How to run OpenKore (CVS version) from source code</div>
+
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="../../index.html">Table of contents</a></li>
+	<li><a href="../index.html">Development Introduction Guide</a></li>
+	<li><a href="index.html">CVS Guide</a></li>
+	<li><b>How to run from source</b></li>
+	</ul>
+</div>
+
+<div id="main">
+
+
+<p>
+So you have just downloaded the source code, and you want to run OpenKore.
+To do that, download one of the following files:
+<ul>
+<li><a href="http://openkore.sourceforge.net/misc/start.zip">OpenKore Win32 launcher</a> (670 KB)</li>
+<li><a href="http://openkore.sourceforge.net/misc/wxstart.zip">OpenKore Win32 launcher, with support for Wx interface</a> (2,29 MB)</li>
+</ul>
+Extract the file to the same folder as <tt>openkore.pl</tt>.
+
+<p>
+To run OpenKore, run <tt>start.exe</tt>. To run OpenKore with the Wx interface, run <tt>wxstart.exe</tt>.
+
+
+<h2>Frequently asked questions</h2>
+
+<h3>1. When not to use (wx)start.exe?</h3>
+
+If you are a developer, and you want to work on OpenKore, then it's highly recommended that you
+install Perl. OpenKore is able to reload its source code at runtime, so you don't have to restart it every
+time you made a change. However, this feature is only available if a Perl interpreter is installed.
+See the <a href="../index.html">Development Introduction Guide</a> for more information about how to install Perl.
+
+
+<h3>2. How do I compile OpenKore?</h3>
+
+<b><i>You don't!</i></b> In the past, there were two ways to run OpenKore from source:
+<ol>
+<li>Install Perl (and necessary third-party Perl modules), and run OpenKore using the Perl interpreter.</li>
+<li>Install Perl, <b>and</b> the Perl "compiler" (PerlApp), and compile OpenKore into a .exe file.</li>
+</ol>
+Some people choose option 2 because they want to run OpenKore CVS on another computer, and they don't want or can't install Perl.
+However, both of the above mentioned ways are now obsolete. The only thing you have to do now, is to keep updating the source code.
+You don't have to compile anything. You don't have to install Perl.
+You just doubleclick on <tt>(wx)start.exe</tt>, and that's it.
+
+
+<h3>3. How does this work?</h3>
+
+<tt>(wx)start.exe</tt> is actually a mini-Perl interpreter, which contains all third-party modules that
+are required to run OpenKore. So this means that:
+<ul>
+<li>You don't have to recompile <tt>(wx)start.exe</tt> when the source code changes.</li>
+<li>You must keep the source code around, otherwise things won't work.</li>
+<li>Upgrading is simply a matter of upgrading the source code. This saves many hundreds of kilobytes.</li>
+</ul>
+
+
+</div>
+</body>
+</html>

@@ -120,6 +120,11 @@ change it to <em>"Binary"</em>.
 </ul>
 
 
+<h2>So what now?</h2>
+
+See <a href="../setup.html">Setting up the development environment</a>.
+
+
 </div>
 </body>
 </html>

@@ -27,6 +27,15 @@
 <div id="main">
 
 
+<a name="before"></a>
+<h2>Before you continue...</h2>
+
+Are you only looking for information about how to <i>run</i> OpenKore
+from source code?
+Then you should read <a href="cvsguide/run.html">this guide</a> instead.
+You can skip the rest of this page.
+
+
 <h2>Setting up the development environment</h2>
 
 This section teaches Windows developers how to setup the development environment.
@@ -50,9 +59,8 @@ You should download and install <i>version 5.8</i>. Install it to the default pa
 <h3>1.2 - Installing additional Perl modules</h3>
 
 Once it is installed, you must install additional <i>Perl modules</i> (think of them as third party libraries).
-These modules are not part of the default Perl installation. Kore requires these modules:
+These modules are not part of the default Perl installation. Kore requires this module:
 <ul style="font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;">
-<li>Win32::API</li>
 <li>Time::HiRes</li>
 </ul>
 
@@ -63,7 +71,6 @@ You will now get a big DOS-like black window with a command prompt. Don't be sca
 <p>
 Type in the following 3 commands:
 <pre class="example">
-install Win32-API
 install Time-HiRes
 exit
 </pre>

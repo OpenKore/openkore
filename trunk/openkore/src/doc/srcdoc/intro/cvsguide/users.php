@@ -53,6 +53,12 @@ Rightclick on an empty spot in the module's folder and choose <em>"CVS Update"</
 <br style="clear: right;">
 
 
+<h2>So what now?</h2>
+
+Now you have the source code, and know how to keep it up-to-date. But how do you run OpenKore?
+See <a href="run.html">Running OpenKore from source code</a>.
+
+
 </div>
 </body>
 </html>
