@@ -3346,7 +3346,7 @@ sub AI {
 
 	##### AUTO-ATTACK #####
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow" 
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || $ai_seq[0] eq "follow" 
 	  || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
 	  && !($config{'itemsTakeAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"))
@@ -3560,7 +3560,6 @@ sub AI {
 		shift @ai_seq;
 		shift @ai_seq_args;
 		message "Can't reach or damage target, dropping target\n", "ai_attack";
-		ai_clientSuspend(0, 5);
 
 	} elsif ($ai_seq[0] eq "attack" && !%{$monsters{$ai_seq_args[0]{'ID'}}}) {
 		# Monster died or disappeared

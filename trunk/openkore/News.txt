@@ -14,6 +14,7 @@ Bug fixes:
 - Fixed XKore sending commands before map was loaded completely
   (fixes empty inventory or skilllist with eAthena servers)
 - Made motion not stop 3 steps from goal when crossing maps
+- Fixed bot not reacting to damage during mapRoute calculation
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
