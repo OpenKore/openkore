@@ -4280,6 +4280,7 @@ sub AI {
 						$monsters{$ai_v{'ai_attack_ID'}}{'pos_to'}{'x'},
 						$monsters{$ai_v{'ai_attack_ID'}}{'pos_to'}{'y'});
 				}
+				$ai_seq_args[0]{monsterID} = $ai_v{'ai_attack_ID'};
 
 				debug qq~Auto-skill on monster: $skills_lut{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}} (lvl $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"})\n~, "ai";
 			}
@@ -4340,7 +4341,12 @@ sub AI {
 		undef $ai_seq_args[0]{'suspended'};
 	}
 	if ($ai_seq[0] eq "skill_use") {
-		if ($chars[$config{'char'}]{'sitting'}) {
+		if (defined $ai_seq_args[0]{monsterID} && !%{$monsters{$ai_seq_args[0]{monsterID}}}) {
+			# This skill is supposed to be used for attacking a monster, but that monster has died
+			shift @ai_seq;
+			shift @ai_seq_args;
+
+		} elsif ($chars[$config{'char'}]{'sitting'}) {
 			ai_setSuspend(0);
 			stand();
 		} elsif (!$ai_seq_args[0]{'skill_used'}) {
