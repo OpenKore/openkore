@@ -181,6 +181,8 @@ addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&
 addConfigFile("$Settings::control_folder/routeweights.txt", \%routeWeights, \&parseDataFile);
 
 addConfigFile("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
+addConfigFile("$Settings::tables_folder/directions.txt", \%directions_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
@@ -193,6 +195,7 @@ addConfigFile("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDa
 addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
 addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
 addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
+addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skills.txt", \@Skills::skills, \&parseSkills);
 addConfigFile("$Settings::tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
@@ -206,8 +209,6 @@ addConfigFile("$Settings::tables_folder/skillsailments.txt", \%skillsAilments, \
 addConfigFile("$Settings::tables_folder/skillsstate.txt", \%skillsState, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
-addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
-addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
 
 Plugins::callHook('start2');
 Settings::load();
