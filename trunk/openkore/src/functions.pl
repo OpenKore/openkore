@@ -1753,7 +1753,7 @@ sub AI {
 
 	if (!$accountID) {
 		$AI = 0;
-		injectAdminMessage("Kore does not have enough account information, so AI has been disabled. Relog to enable AI.") if ($config{'verbose'});
+		injectAdminMessage("Please relogin to enable X-${Settings::NAME}.") if ($config{'verbose'});
 		return;
 	}
 
