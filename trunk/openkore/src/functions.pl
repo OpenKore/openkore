@@ -5595,12 +5595,17 @@ sub parseMsg {
 		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
 		%{$chars[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos'}};
 		message("Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", undef, 1);
-		message("You are now in the game\n", "connection") if (!$config{'XKore'});
-		message("Waiting for map to load...\n", "connection") if ($config{'XKore'});
-		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
+
+		if ($xkore) {
+			$conState = 4;
+			message("Waiting for map to load...\n", "connection");
+			ai_clientSuspend(0, 10);
+		} else {
+			message("You are now in the game\n", "connection");
+			sendMapLoaded(\$remote_socket);
+			$timeout{'ai'}{'time'} = time;
+		}
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
-		ai_clientSuspend(0, 10) if ($config{'XKore'});
-		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
 
 	} elsif ($switch eq "0075") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
