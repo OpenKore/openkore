@@ -3760,7 +3760,6 @@ sub AI {
 					# This is used by setSkillUseTimer() to set
 					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
 					# when the skill is actually cast
-					message "Setting targetTimeout for skill $party_skill{skillID} to i $i\n", "skill";
 					$targetTimeout{$partyUsersID[$j]}{$party_skill{skillID}} = $i;
 					last;
 				}
