@@ -8005,6 +8005,7 @@ sub parseMsg {
 		$spells{$ID}{'pos'}{'y'} = $y;
 		$binID = binAdd(\@spellsID, $ID);
 		$spells{$ID}{'binID'} = $binID;
+		$spells{$ID}{'type'} = $type;
 		if ($type == 0x81) {
 			message getActorName($sourceID)." opened Warp Portal on ($x, $y)\n", "skill";
 		}
