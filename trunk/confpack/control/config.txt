@@ -205,8 +205,6 @@ useSelf_skill_0_inInventory_qty
 
 useSelf_skill_smartHeal 1
 
-useSelf_itemCurePoison 1
-
 # Notes:
 #   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
 #   eg: useSelf_item_0_hp < 90  <-- when we have less then 90% hp and
