@@ -21,6 +21,9 @@
 	.term {
 		border-bottom: 1px dotted black;
 	}
+	.cstr {
+		color: #aa0000;
+	}
 	-->
 	</style>
 </head>
@@ -61,15 +64,15 @@ If there are no monsters and Kore isn't doing anything, it will walk to a random
 The following piece of code (within the <code>AI()</code> function makes Kore walk to a random spot if it isn't doing anything:
 <pre class="example">
 1   <span class="comment">##### RANDOM WALK #####</span>
-2   if ($config{'route_randomWalk'} && $ai_seq[0] eq "" && @{$field{'field'}} > 1 && !$cities_lut{$field{'name'}.'.rsw'}) {
+2   <b>if</b> ($config{'route_randomWalk'} && $ai_seq[0] <b>eq</b> "" && @{$field{'field'}} > 1 && !$cities_lut{$field{'name'}.'.rsw'}) {
 3   	<span class="comment"># Find a random block on the map that we can walk on</span>
-4   	do { 
+4   	<b>do</b> { 
 5   		$ai_v{'temp'}{'randX'} = int(rand() * ($field{'width'} - 1));
 6   		$ai_v{'temp'}{'randY'} = int(rand() * ($field{'height'} - 1));
-7   	} while ($field{'field'}[$ai_v{'temp'}{'randY'}*$field{'width'} + $ai_v{'temp'}{'randX'}]);
+7   	} <b>while</b> ($field{'field'}[$ai_v{'temp'}{'randY'}*$field{'width'} + $ai_v{'temp'}{'randX'}]);
 8
 9   	<span class="comment"># Move to that block</span>
-10  	message "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n", "route";
+10  	message <span class="cstr">"Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n"</span>, <span class="cstr">"route"</span>;
 11  	ai_route(\%{$ai_v{'temp'}{'returnHash'}},
 12  		$ai_v{'temp'}{'randX'},
 13  		$ai_v{'temp'}{'randY'},
@@ -107,9 +110,9 @@ So, if <code>@ai_seq</code> is empty, then that means all AI code blocks have fi
 And this is when the random walk AI code block jumps in.
 
 <p>
-(There is also the <code>@ai_seq_args</code> array, used to store temporary variables used by the current AI code block.
+There is also the <code>@ai_seq_args</code> array, used to store temporary variables used by the current AI code block.
 If a value is prepended into <code>@ai_seq</code>, then a value must also be prepended into <code>@ai_seq_args</code>.
-More on this later.)
+More on this later.
 
 
 <h3>Finding a random position to walk to</h3>
@@ -124,6 +127,8 @@ The result coordinate is put into these two variables:
 <li><code>$ai_v{temp}{randX}</code></li>
 <li><code>$ai_v{temp}{randY}</code></li>
 </ul>
+
+<small>(In case you didn't know, <code>$foo{bar}</code> is the same as <code>$foo{'bar'}</code>.)</small>
 
 
 <h3>Moving</h3>
@@ -151,12 +156,101 @@ If <code>@ai_seq</code> is empty, then the random route AI code block is activat
 <h2>Example 2: Attacking monsters while walking to a random spot</h2>
 
 You might want to wonder how Kore is able to determine whether to attack monsters when it's walking.
-TODO: finish this.
+Let's take a look at a small piece of it's source code:
+<pre class="example">
+    <span class="comment">##### AUTO-ATTACK #####</span>
+
+    <b>if</b> (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" 
+      || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
+      ...
+</pre>
+
+As you can see here, the auto-attack AI code block is run if any of the above AI sequences are active.
+So when Kore is walking (<code>$ai_seq_args[0]</code> is "route"), Kore continues to check for monsters to attack.
+
+<p>
+But as you may know, if you manually type "move WhateEverMapName" in the console, Kore will move to that map without attacking
+monsters (yes, this is intentional behavior). Why is that?
+
+<p>
+As seen in example 1, the <code>ai_route()</code> function initializes the route AI sequence.
+That function accepts a parameter called "attackOnRoute". <code>$ai_seq_args[0]{attackOnRoute}</code> is set to the same value as this parameter.
+Kore will only attack monsters while moving, if that parameter is set to 1.
+When you type "move" in the console, that parameter is set to 0. The random walk AI code block however sets that parameter to 1.
+
+<p>
+Inside the auto-attack AI code block, Kore checks whether the argument hash that's associated with the "route" AI sequence has a
+'attackOnRoute' key, and whether the value is 1.
+<pre class="example">
+    ...
+    $ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, <span class="cstr">"route"</span>);
+    <b>if</b> ($ai_v{'temp'}{'ai_route_index'} ne <span class="cstr">""</span>) {
+        $ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
+    }
+    ...
+    <span class="comment"># Somewhere else in the auto-attack AI code block, Kore checks whether
+    # $ai_v{'temp'}{'ai_route_attackOnRoute'} is set to 1.</span>
+</pre>
 
 
 <h2>Timeouts: To wait a while before doing something</h2>
 
-TODO
+In certain cases you may want the program to wait a while before doing anything else.
+For example, you may want to send a "talk to NPC" packet to the server, then send a "choose NPC menu item 2" packet 2 seconds later.
+
+<p>
+The first thing you would think of is probably to use the <code>sleep()</code> function.
+However, that is a bad idea. <code>sleep()</code> blocks the entire program. During the sleep, nothing else can be performed.
+User command input will not work, other AI sequences are not run, network data is not received, etc.
+
+<p>
+The right thing to do is to use the <a href="Utils.html#timeOut"><code>timeOut()</code></a> function.
+The API documentation entry for that function has two examples. Here's another example, demonstrating how
+you can use the timeOut() function in an AI sequence. This example initializes a conversation with NPC 1337 (a Kapra NPC).
+Then two seconds later, it sends a "choose NPC menu item 2" packet.
+<pre class="example">
+<span class="comment"># The AI() function is run in the main loop</span>
+<b>sub</b> AI {
+        ...
+        <b>if</b> ($somethingHappened) {
+                <b>my</b> %args;
+                $args{stage} = <span class="cstr">'Just started'</span>;
+
+                <b>unshift</b> @ai_seq, <span class="cstr">"NpcExample"</span>;
+                <b>unshift</b> @ai_seq_args, \%args;
+
+                $somethingHappened = 0;
+        }
+
+        <b>if</b> ($ai_seq[0] <b>eq</b> <span class="cstr">"NpcExample"</span>) {
+                <b>if</b> ($ai_seq_args[0]{stage} <b>eq</b> <span class="cstr">'Just started'</span>) {
+                        <span class="comment"># This AI sequence just started
+                        # Initialize a conversation with NPC 1337</span>
+                        sendTalk(\$remote_socket, 1337);
+
+                        <span class="comment"># Store the current time in a variable</span>
+                        $ai_seq_args[0]{waitTwoSecs}{time} = <b>time</b>;
+                        <span class="comment"># We want to wait two seconds</span>
+                        $ai_seq_args[0]{waitTwoSecs}{timeout} = 2;
+
+                        $ai_seq_args[0]{stage} = <span class="cstr">'Initialized conversation'</span>;
+
+                } <b>elsif</b> ($ai_seq_args[0]{stage} <b>eq</b> <span class="cstr">'Initialized conversation'</span>
+                      <span class="comment"># This 'if' statement is only true if two seconds have passed
+                      # since $ai_seq_args[0]{waitTwoSecs}{time} is set</span>
+                      && timeOut( $ai_seq_args[0]{waitTwoSecs} )
+                ) {
+                        <span class="comment"># Two seconds have now passed</span>
+                        sendTalkResponse(\$remote_socket, 1337, 2);
+
+                        <span class="comment"># We're done; remove this AI sequence</span>
+                        <b>shift</b> @ai_seq;
+                        <b>shift</b> @ai_seq_args;
+                }
+        }
+        ...
+}
+</pre>
 
 
 <h2>Conclusion &amp; summary</h2>

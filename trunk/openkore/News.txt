@@ -37,6 +37,10 @@ New features:
   This is similar to modkore's _inStatus/_outStatus feature.
 - Added ability to activate skills or use items based on current
   status ailments/looks (like poisoned, hidden, etc.)
+- Added ability to equip items based on the current situation (hp, sp,
+  what skills you're about to use, etc.)
+  This allows you to, for example, equip a teleport clip just before you
+  use teleport.
 - The Linux version now automatically compiles Tools.so for you if it
   doesn't exist.
 
@@ -89,6 +93,7 @@ New configuration options:
   ailment/look, like poisoned, hidden, etc. Take a look at
   skillslooks.txt, skillsstate.txt and skillsailments.txt in the latest
   tablepack for a list of names.
+- equipAuto_*
 
 
 Bug fixes:
