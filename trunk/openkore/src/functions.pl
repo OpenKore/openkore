@@ -6940,29 +6940,35 @@ sub parseMsg {
 		my $param2 = unpack("S1", substr($msg, 8, 2));
 		my $param3 = unpack("S1", substr($msg, 10, 2));
 
-		my $state = (defined($skillsState{$param1})) ? $skillsState{$param1} : "Unknown $param1";
-		my $ailment = (defined($skillsAilments{$param2})) ? $skillsAilments{$param2} : "Unknown $param2";
-		my $looks = (defined($skillsLooks{$param3})) ? $skillsLooks{$param3} : "Unknown $param3";
 		if ($ID eq $accountID) {
-			warning "my state=$param1 ailment=$param2 look=$param3\n";
+			foreach (keys %skillsState) {
+				if ((($param1 & $_) == $_) && (!defined $chars[$config{char}]{state}{$skillsState{$_}})) {
+					$chars[$config{char}]{state}{$skillsState{$_}} = 1;
+					message "You are in $skillsState{$_} state\n", "parseMsg_statuslook", 1;
+				} elsif (defined $chars[$config{char}]{state}{$skillsState{$_}}) {
+					delete $chars[$config{char}]{state}{$skillsState{$_}};
+					message "You are out of $skillsState{$_} state\n", "parseMsg_statuslook", 1;
+				}
+			}
 			
-			if ($param1) {
-				$chars[$config{char}]{state}{$state} = 1;
-				message "You have been $state.\n", "parseMsg_statuslook";
-			} else {
-				delete $chars[$config{char}]{state}{$state};
+			foreach (keys %skillsAilments) {
+				if ((($param2 & $_) == $_) && (!defined $chars[$config{char}]{ailments}{$skillsAilments{$_}})) {
+					$chars[$config{char}]{ailments}{$skillsAilments{$_}} = 1;
+					message "You have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
+				} elsif (defined $chars[$config{char}]{ailments}{$skillsAilments{_}}) {
+					delete $chars[$config{char}]{ailments}{$skillsAilments{_}};
+					message "You are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
+				}
 			}
-			if ($param2 && $param2 != 32) {
-				$chars[$config{char}]{ailments}{$ailment} = 1;
-				message "You have been $ailment.\n", "parseMsg_statuslook";
-			} else {
-				delete $chars[$config{char}]{ailments}{$ailment};
-			}
-			if ($param3) {
-				$chars[$config{char}]{looks}{$looks} = 1;
-				debug "You have look: $looks\n", "parseMsg_statuslook";
-			} else {
-				delete $chars[$config{char}]{looks}{$looks};
+			
+			foreach (keys %skillsLooks) {
+				if ((($param3 & $_) == $_) && (!defined $chars[$config{char}]{looks}{$skillsLooks{$_}})) {
+					$chars[$config{char}]{looks}{$skillsLooks{$_}} = 1;
+					debug "You have look: $skillsLooks{$_}\n", "parseMsg_statuslook";
+				} elsif (defined $chars[$config{char}]{looks}{$skillsLooks{$_}}) {
+					delete $chars[$config{char}]{looks}{$skillsLooks{$_}};
+					debug "You are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook";
+				}
 			}
 
 			# FIXME: move this to the AI
@@ -6980,45 +6986,65 @@ sub parseMsg {
 			}
 
 		} elsif (%{$players{$ID}}) {
-			warning "player state=$param1 ailment=$param2 look=$param3\n";
-			if ($param1) {
-				$players{$ID}{state}{$state} = 1;
-				message "Player $players{$ID}{name} ($players{$ID}{binID}) has state: $state\n", "parseMsg_statuslook", 2;
-			} else {
-				delete $players{$ID}{state}{$state};
+			foreach (keys %skillsState) {
+				if ((($param1 & $_) == $_) && (!defined $players{$ID}{state}{$skillsState{$_}})) {
+					$players{$ID}{state}{$skillsState{$_}} = 1;
+					message getActorName($ID) . " in $skillsState{$_} state\n", "parseMsg_statuslook", 2;
+				} elsif (defined $players{$ID}{state}{$skillsState{$_}}) {
+					delete $players{$ID}{state}{$skillsState{$_}};
+					message getActorName($ID) . " out of $skillsState{$_} state\n", "parseMsg_statuslook", 2;
+				}
 			}
-			if ($param2 && $param2 != 32) {
-				$players{$ID}{ailments}{$ailment} = 1;
-				message "Player $players{$ID}{name} ($players{$ID}{binID}) affected: $ailment\n", "parseMsg_statuslook", 2;
-			} else {
-				delete $players{$ID}{ailments}{$ailment};
+			
+			foreach (keys %skillsAilments) {
+				if ((($param2 & $_) == $_) && (!defined $players{$ID}{ailments}{$skillsAilments{$_}})) {
+					$players{$ID}{ailments}{$skillsAilments{$_}} = 1;
+					message getActorName($ID) . " has ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 2;
+				} elsif (defined $players{$ID}{ailments}{$skillsAilments{_}}) {
+					delete $players{$ID}{ailments}{$skillsAilments{_}};
+					message getActorName($ID) . " out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 2;
+				}
 			}
-			if ($param3) {
-				$players{$ID}{looks}{$looks} = 1;
-				debug "Player $players{$ID}{name} ($players{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook";
-			} else {
-				delete $players{$ID}{looks}{$looks};
+			
+			foreach (keys %skillsLooks) {
+				if ((($param3 & $_) == $_) && (!defined $players{$ID}{looks}{$skillsLooks{$_}})) {
+					$players{$ID}{looks}{$skillsLooks{$_}} = 1;
+					debug getActorName($ID) . " has look: $skillsLooks{$_}\n", "parseMsg_statuslook";
+				} elsif (defined $players{$ID}{looks}{$skillsLooks{$_}}) {
+					$players{$ID}{looks}{$skillsLooks{$_}};
+					debug getActorName($ID) . " out of look: $skillsLooks{$_}\n", "parseMsg_statuslook";
+				}
 			}
 
 		} elsif (%{$monsters{$ID}}) {
-			warning "monster state=$param1 ailment=$param2 look=$param3\n";
-			if ($param1) {
-				$monsters{$ID}{state}{$state} = 1;
-				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state\n", "parseMsg_statuslook", 1;
-			} else {
-				delete $monsters{$ID}{state}{$state};
+			foreach (keys %skillsState) {
+				if ((($param1 & $_) == $_) && (!defined $monsters{$ID}{state}{$skillsState{$_}})) {
+					$monsters{$ID}{state}{$skillsState{$_}} = 1;
+					message getActorName($ID) . " in $skillsState{$_} state\n", "parseMsg_statuslook", 1;
+				} elsif (defined $monsters{$ID}{state}{$skillsState{$_}}) {
+					delete $monsters{$ID}{state}{$skillsState{$_}};
+					message getActorName($ID) . " out of $skillsState{$_} state\n", "parseMsg_statuslook", 1;
+				}
 			}
-			if ($param2 && $param2 != 32) {
-				$monsters{$ID}{ailments}{$ailment} = 1;
-				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $ailment\n", "parseMsg_statuslook", 1;
-			} else {
-				delete $monsters{$ID}{ailments}{$ailment};
+			
+			foreach (keys %skillsAilments) {
+				if ((($param2 & $_) == $_) && (!defined $monsters{$ID}{ailments}{$skillsAilments{$_}})) {
+					$monsters{$ID}{ailments}{$skillsAilments{$_}} = 1;
+					message getActorName($ID) . " has ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
+				} elsif (defined $monsters{$ID}{ailments}{$skillsAilments{_}}) {
+					delete $monsters{$ID}{ailments}{$skillsAilments{_}};
+					message getActorName($ID) . " out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
+				}
 			}
-			if ($param3) {
-				$monsters{$ID}{looks}{$looks} = 1;
-				debug "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook", 0;
-			} else {
-				delete $monsters{$ID}{looks}{$looks};
+			
+			foreach (keys %skillsLooks) {
+				if ((($param3 & $_) == $_) && (!defined $monsters{$ID}{looks}{$skillsLooks{$_}})) {
+					$monsters{$ID}{looks}{$skillsLooks{$_}} = 1;
+					debug getActorName($ID) . " has look: $skillsLooks{$_}\n", "parseMsg_statuslook";
+				} elsif (defined $monsters{$ID}{looks}{$skillsLooks{$_}}) {
+					$monsters{$ID}{looks}{$skillsLooks{$_}};
+					debug getActorName($ID) . " out of look: $skillsLooks{$_}\n", "parseMsg_statuslook";
+				}
 			}
 		}
 
@@ -7628,7 +7654,7 @@ sub parseMsg {
 			} else {
 				# Skill de-activate (expired)
 				delete $chars[$config{char}]{statuses}{$skillName};
-				message "$skillName deactivated\n";
+				message "$skillName deactivated\n", "parseMsg_statuslook", 2;
 			}
 
 		} elsif (%{$players{$ID}}) {
