@@ -61,13 +61,14 @@ sub connectTo {
 
 	message("Connecting ($host:$port)... ", "connection");
 	$$r_socket = new IO::Socket::INET(
+			LocalAddr	=> $config{bindIp} || undef,
 			PeerAddr	=> $host,
 			PeerPort	=> $port,
 			Proto		=> 'tcp',
 			Timeout		=> 4);
 	($$r_socket && inet_aton($$r_socket->peerhost()) eq inet_aton($host)) ?
 		message("connected\n", "connection") :
-		error("couldn't connect\n", "connection");
+		error("couldn't connect: $!\n", "connection");
 }
 
 ##
