@@ -126,7 +126,7 @@ route_step 15
 
 attackSkillSlot_0
 attackSkillSlot_0_lvl 10
-attackSkillSlot_0_dist 3
+attackSkillSlot_0_dist 1.5
 attackSkillSlot_0_maxCastTime 0
 attackSkillSlot_0_minCastTime 0
 attackSkillSlot_0_hp
