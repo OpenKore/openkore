@@ -1,6 +1,8 @@
 - Forgot to mention in the last News.txt:
   followEmotion requires another config option: followEmotion_distance
   The master must be within this distance to imitate his emoticons.
+- Better way to autodetect platform (using $^O).
+- Fixed teleportAuto_search.
 
 
 ChangeLog for skore-revamped
