@@ -86,6 +86,8 @@ New config options:
   if set to 1 will enable shop title or chatroom title length longer than 36 characters.
 - pauseMapServer (seconds)
   Pause for (seconds) before connect to map server (Sometime server slower than bots).
+- autoBreakTime now supports the 'all' time, which makes it take a break
+  every day in the week.
 
 New commands:
 - ihist
@@ -114,7 +116,7 @@ Internal:
 Credits:
 - asuwannarat, as2765324: tRO server details.
 - MindChild: support for the 'all' option in items_control.txt,
-  support for the --storage argument.
+  support for the --storage argument, autoBreakTime 'all'.
 - jabskeeterbug: item history command.
 - jsteng: some routing bug fixes.
 - ZetaAlpha: advanced 2-2 class support fixes, guild member ID fixes.
