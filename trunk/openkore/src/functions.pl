@@ -3228,10 +3228,11 @@ sub AI {
 			AI::dequeue;
 			stand() if (!$config{'sitAuto_idle'} && $char->{sitting});
 
-		} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'})) {
+		} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto") {
 			if ($action eq "" || $action eq "follow"
 			|| ($action eq "route" && !AI::args->{noSitAuto})
-			|| ($action eq "mapRoute") && !AI::args->{noSitAuto}) {
+			|| ($action eq "mapRoute" && !AI::args->{noSitAuto})
+			) {
 				if (!AI::inQueue("attack") && !ai_getAggressives()
 				&& (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
 					AI::queue("sitAuto");
