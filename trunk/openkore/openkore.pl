@@ -14,6 +14,12 @@
 #
 #########################################################################
 
+use Interface;
+use Modules;
+Modules::register(qw(Interface));
+$interface = new Interface;
+
+
 use Time::HiRes qw(time usleep);
 use Getopt::Long;
 use IO::Socket;
@@ -31,13 +37,10 @@ use Utils;
 use Settings;
 use Plugins;
 use FileParsers;
-use Interface;
-Modules::register(qw(Globals Modules Input Log Utils Settings Plugins FileParsers Interface));
+Modules::register(qw(Globals Modules Input Log Utils Settings Plugins FileParsers));
 
 
 ##### PARSE ARGUMENTS, LOAD PLUGINS, AND START INPUT SERVER #####
-
-$interface = new Interface;
 
 srand(time());
 Settings::parseArguments();
