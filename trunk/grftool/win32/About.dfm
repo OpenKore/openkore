@@ -3,7 +3,7 @@ object AboutBox: TAboutBox
   Top = 216
   BorderStyle = bsDialog
   Caption = 'About GRF Tool'
-  ClientHeight = 213
+  ClientHeight = 237
   ClientWidth = 316
   Color = clWhite
   Font.Charset = ANSI_CHARSET
@@ -18,7 +18,7 @@ object AboutBox: TAboutBox
   TextHeight = 16
   object Image1: TImage
     Left = 0
-    Top = 112
+    Top = 144
     Width = 111
     Height = 100
     AutoSize = True
@@ -1096,7 +1096,7 @@ object AboutBox: TAboutBox
   end
   object SpeedButton1: TSpeedButton
     Left = 208
-    Top = 168
+    Top = 192
     Width = 97
     Height = 33
     Cursor = crHandPoint
@@ -1183,7 +1183,7 @@ object AboutBox: TAboutBox
   end
   object Bevel1: TBevel
     Left = 16
-    Top = 149
+    Top = 173
     Width = 289
     Height = 6
     Shape = bsBottomLine
@@ -1201,6 +1201,21 @@ object AboutBox: TAboutBox
     Font.Style = []
     ParentFont = False
     Transparent = True
+  end
+  object Label6: TLabel
+    Left = 238
+    Top = 152
+    Width = 66
+    Height = 13
+    Cursor = crHandPoint
+    Caption = 'View credits...'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clPurple
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsUnderline]
+    ParentFont = False
+    OnClick = Label6Click
   end
   object Panel1: TPanel
     Left = 12
@@ -1242,7 +1257,7 @@ object AboutBox: TAboutBox
         Top = 35
         Width = 113
         Height = 13
-        Caption = 'Version 0.9.0 (beta)'
+        Caption = 'Version 0.9.1 (beta)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
@@ -1254,7 +1269,7 @@ object AboutBox: TAboutBox
   end
   object PopupMenu1: TPopupMenu
     Left = 128
-    Top = 168
+    Top = 192
     object CopyURL1: TMenuItem
       Caption = '&Copy URL'
       OnClick = CopyURL1Click

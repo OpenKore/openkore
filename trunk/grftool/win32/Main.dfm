@@ -438,7 +438,7 @@ object Form1: TForm1
       FocusControl = Search
       Layout = tlCenter
     end
-    object Search: TEdit
+    object Search: TTntEdit
       Left = 43
       Top = 0
       Width = 561
@@ -456,7 +456,7 @@ object Form1: TForm1
       OnClick = SearchBtnClick
     end
   end
-  object StatusBar1: TStatusBar
+  object StatusBar1: TTntStatusBar
     Left = 0
     Top = 378
     Width = 627
@@ -487,7 +487,7 @@ object Form1: TForm1
         Left = 0
         Top = 0
         Caption = 'Image'
-        object RichEdit1: TRichEdit
+        object RichEdit1: TTntRichEdit
           Left = 0
           Top = 0
           Width = 185
@@ -500,6 +500,7 @@ object Form1: TForm1
           Font.Style = []
           ParentFont = False
           PlainText = True
+          PopupMenu = PopupMenu1
           ReadOnly = True
           ScrollBars = ssVertical
           TabOrder = 0
@@ -1277,5 +1278,14 @@ object Form1: TForm1
     OnTimer = ExtractWatcherTimer
     Left = 192
     Top = 120
+  end
+  object PopupMenu1: TPopupMenu
+    OnPopup = PopupMenu1Popup
+    Left = 288
+    Top = 88
+    object Copy1: TMenuItem
+      Caption = '&Copy'
+      OnClick = Copy1Click
+    end
   end
 end

@@ -100,8 +100,10 @@ begin
       // Do not attempt to extract folders
       F := grf_find(Grf, PChar(Files[i]), Index);
       if Assigned(F) and (F.TheType <> 2) then
+      begin
           if not grf_extract(Grf, PChar(Files[i]), PChar(FileName), Error) then
               Inc(Failed);
+      end;
       Current := i + 1;
       CurrentFile := FileName;
   end;
