@@ -5205,6 +5205,17 @@ sub parseMsg {
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	print "Packet Switch: $switch\n" if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch));
 
+	# The user is running in X-Kore mode and wants to switch character.
+	# We're now expecting an accountID.
+	if ($conState == 2.5) {
+		if (length($msg) >= 4) {
+			$conState = 2;
+			$accountID = substr($msg, 0, 4);
+			return substr($msg, 4);
+		} else {
+			return $msg;
+		}
+	}
 
 	$lastswitch = $switch;
 	# Determine packet length using recvpackets.txt.
@@ -5241,7 +5252,8 @@ sub parseMsg {
 		}
 	}
 
-	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4)) || ($config{'XKore'} && !$accountID && length($msg) == 4)) {
+	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
+	 || ($config{'XKore'} && !$accountID && length($msg) == 4)) {
 		$accountID = substr($msg, 0, 4);
 		$AI = 1 if (!$AI_forcedOff);
 		if ($config{'encrypt'} && $conState == 4) {
@@ -5257,6 +5269,7 @@ sub parseMsg {
 		} else {
 			$msg_size = 4;
 		}
+
 	} elsif ($switch eq "0069") {
 		$conState = 2;
 		undef $conState_tries;
@@ -6771,7 +6784,8 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00B3") {
-		$conState = 2;
+		$conState = 2.5;
+		undef $accountID;
 
 	} elsif ($switch eq "00B4") {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
