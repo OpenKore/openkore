@@ -840,7 +840,7 @@ sub onChatAdd {
 	my $msg;
 
 	return if (!$self->{notebook}->hasPage('Chat Log'));
-	if ($hook eq "ChatQueue::add") {
+	if ($hook eq "ChatQueue::add" && $params->{type} ne "pm") {
 		$msg = '';
 		if ($params->{type} ne "c") {
 			$msg .= "[$params->{type}] ";

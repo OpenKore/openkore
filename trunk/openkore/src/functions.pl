@@ -7893,6 +7893,12 @@ sub parseMsg {
 			$domain = "attacked" if (($source ne "You") && ($target eq "You"));
 		}
 
+		if ((($sourceID eq $accountID) && ($targetID ne $accountID)) ||
+		(($sourceID ne $accountID) && ($targetID eq $accountID))) {
+			my $status = sprintf("[%3d/%3d] ", percent_hp($char), percent_sp($char));
+			$disp = $status.$disp;
+		}
+
 		message $disp, $domain, 1;
 
 		Plugins::callHook('packet_skilluse', {
