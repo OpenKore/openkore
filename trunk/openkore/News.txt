@@ -1,3 +1,6 @@
+(Note: before releasing the next version we need to clean up News.txt
+so people can easily see what config options have been added/changed)
+
 - Further modified Log.pm to use colors the way I was intending on implementing them ;)
   WARNING WARNING WARNING WARNING WARNING this requires the installation of two additional perl modules
   for it to function under win32, and one additional perl module to function under *nix
@@ -60,6 +63,9 @@
 - Added the commandline argument --daemon. This argument allows you to
   start kore without input server so kore won't read input from console.
 - Revamped cart inventory handling.
+- The config options "partyAutoDeny" and "dealAutoDeny" have been
+  replaced by "partyAuto" and "dealAuto".
+  0 = disable, 1 = auto-cancel. 2 = auto-accept
 
 
 ==================
