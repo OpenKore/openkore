@@ -118,7 +118,8 @@ New configuration options:
   The maximum amount of money you're willing to spend on a Kapra which
   teleports you to another map.
 - autoTalkCont
-  If set to 1, automatically type 'talk cont' when appropriate.
+  If set to 1, kore will automatically type 'talk cont' for you when
+  you're in a conversation with an NPC.
 
 
 Bug fixes:
