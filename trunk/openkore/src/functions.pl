@@ -5318,6 +5318,7 @@ sub parseMsg {
 				$player->{name} = "Unknown";
 				$player->{nameID} = unpack("L1", $ID);
 				$player->{binID} = binFind(\@playersID, $ID);
+				$player->{weapon} = $weapon;
 				$added = 1;
 			}
 
@@ -5453,6 +5454,7 @@ sub parseMsg {
 				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+				$players{$ID}{weapon} = $weapon;
 				$added = 1;
 			}
 
@@ -5509,6 +5511,7 @@ sub parseMsg {
 				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+				$players{$ID}{weapon} = $weapon;
 				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
 				$added = 1;
 			}
