@@ -1793,7 +1793,7 @@ $i   $privMsgUsers[$i - 1]
 	} elsif ($switch eq "pl") {
 		$~ = "PLIST";
 		print	"-----------Player List-----------\n"
-			,"#    Name                                     Sex   Job         Dist  Coord\n";
+			,"#    Name                                    Sex   Job         Dist  Coord\n";
 		for ($i = 0; $i < @playersID; $i++) {
 			next if ($playersID[$i] eq "");
 			if (%{$players{$playersID[$i]}{'guild'}}) {
@@ -1806,7 +1806,7 @@ $i   $privMsgUsers[$i - 1]
 			my $pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
 
 			format PLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<
+@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<
 $i   $name $sex_lut{$players{$playersID[$i]}{'sex'}} $jobs_lut{$players{$playersID[$i]}{'jobID'}} $dist $pos
 .
 			write;
