@@ -77,6 +77,7 @@ our @EXPORT = (
 	getPortalDestName
 	getResponse
 	getSpellName
+	inInventory
 	manualMove
 	objectAdded
 	objectRemoved
@@ -1032,6 +1033,21 @@ sub getResponse {
 sub getSpellName {
 	my $spell = shift;
 	return $spells_lut{$spell} || "Unknown $spell";
+}
+
+##
+# inInventory($item, $quantity = 1)
+#
+# Returns 1 if you have at least $quantity units of $item in your inventory.
+# Returns 0 otherwise.
+sub inInventory {
+	my ($item, $quantity) = @_;
+	$quantity ||= 1;
+
+	my $index = findIndexString_lc($char->{inventory}, 'name', $item);
+	return 0 if $index eq '';
+	return 0 unless $char->{inventory}[$index]{amount} >= $quantity;
+	return 1;
 }
 
 ##
