@@ -805,7 +805,6 @@ sub cmdStatus {
 	# Display character status
 	my ($baseEXPKill, $jobEXPKill);
 
-	print "Account ID: ".getHex($accountID)."\n";
 	if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
 		$baseEXPKill = $chars[$config{'char'}]{'exp_max_last'} - $chars[$config{'char'}]{'exp_last'} + $chars[$config{'char'}]{'exp'};
 	} elsif ($chars[$config{'char'}]{'exp_last'} == 0 && $chars[$config{'char'}]{'exp_max_last'} == 0) {
