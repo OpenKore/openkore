@@ -29,12 +29,16 @@ GRFEXTERN_BEGIN
 
 
 typedef int (*GrfOpenCallback) (GrfFile *file, GrfError *error);
+typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 
 /*! \brief Value to distinguish a GRF file in  Grf::type */
 # define GRF_TYPE_GRF 0x01
 
 /*! \brief Macro to open a file without a callback */
 # define grf_open(fname, error) grf_callback_open(fname, error, NULL)
+
+/*! \brief Macro to flush a grf file without a callback */
+# define grf_flush(fname, error) grf_callback_flush(fname, error, NULL)
 
 /* Prototypes */
 GRFEXPORT Grf *grf_callback_open (const char *fname, GrfError *error, GrfOpenCallback callback);
@@ -47,7 +51,7 @@ GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error);
 GRFEXPORT int grf_replace(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error);
 GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const void *data, uint32_t len, uint8_t flags, GrfError *error);
 GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error);
-GRFEXPORT int grf_flush(Grf *grf, GrfError *error);
+GRFEXPORT int grf_callback_flush(Grf *grf, GrfError *error, GrfFlushCallback callback);
 GRFEXPORT void grf_close(Grf *grf);
 GRFEXPORT void grf_free(Grf *grf);
 GRFEXPORT int grf_repak(const char *grf, const char *tmpgrf, GrfError *error);
