@@ -10306,11 +10306,11 @@ sub checkMonsterCondition {
 }
 
 ##
-# manualMove($delta_x, $delta_y)
+# manualMove($dx, $dy)
 #
 # Moves the character offset from its current position.
 sub manualMove {
-	my ($delta_x, $delta_y) = @_;
+	my ($dx, $dy) = @_;
 
 	# Stop following if necessary
 	if ($config{'follow'}) {
@@ -10318,10 +10318,12 @@ sub manualMove {
 		aiRemove('follow');
 	}
 
-	$ai_v{'temp'}{'map'} = $field{'name'};
-	$ai_v{'temp'}{'x'} = $chars[$config{'char'}]{'pos_to'}{'x'} + $delta_x;
-	$ai_v{'temp'}{'y'} = $chars[$config{'char'}]{'pos_to'}{'y'} + $delta_y;
-	ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'});
+	# Stop moving if necessary
+	aiRemove("move");
+	aiRemove("route");
+	aiRemove("mapRoute");
+
+	ai_route($field{name}, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
 ##
