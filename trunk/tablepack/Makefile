@@ -2,7 +2,7 @@
 # If you want to run this Makefile in Windows, you need Cygwin:
 # http://sources.redhat.com/cygwin/
 
-VERSION=1.5.12
+VERSION=1.6.0
 FILENAME=tablepack-$(VERSION).zip
 VERSIONFILE=tables/TablepackVersion.txt
 
