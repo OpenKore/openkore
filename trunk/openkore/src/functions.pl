@@ -157,7 +157,7 @@ sub initOtherVars {
 # Special state:
 # 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be the account ID
 sub checkConnection {
-	return if ($Settings::no_connect);
+	return if ($config{'XKore'} || $Settings::no_connect);
 
 	if ($conState == 1 && !($remote_socket && $remote_socket->connected()) && timeOut(\%{$timeout_ex{'master'}}) && !$conState_tries) {
 		message("Connecting to Master Server...\n", "connection");
@@ -263,38 +263,6 @@ sub checkConnection {
 			$conState = 1;
 			undef $conState_tries;
 		}
-	}
-}
-
-sub checkSynchronized {
-	if (timeOut($timeout{'injectKeepAlive'})) {
-		$conState = 1;
-		my $procID = $GetProcByName->Call($config{'exeName'}) or 0;
-		if (!$procID && !$printed) {
-			Log::message("Error: Could not locate process $config{'exeName'}.\n");
-			Log::message("Waiting for you to start the process...\n");
-			$printed = 1;
-		}
-		if ($procID == 1) {
-			Log::message("Process found\n");
-			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
-			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
-			if ($retVal != 1) {
-				Log::error("Could not inject DLL\n", "startup");
-				$timeout{'injectKeepAlive'}{'time'} = time;
-			} else {
-				Log::message("Waiting for InjectDLL to connect...\n");
-				$remote_socket = $injectServer_socket->accept();
-				(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
-				|| die "Inject Socket must be connected from localhost";
-				Log::message("InjectDLL Socket connected - Ready to start botting\n");
-				$timeout{'injectKeepAlive'}{'time'} = time;
-			}
-		}
-	}
-	if (timeOut(\%{$timeout{'injectSync'}})) {
-			sendSyncInject(\$remote_socket);
-			$timeout{'injectSync'}{'time'} = time;
 	}
 }
 
