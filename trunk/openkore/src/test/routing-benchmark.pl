@@ -15,6 +15,7 @@ my %options = (max => 300);
 GetOptions(
 	'classic' => \$options{classic},
 	'ancient' => \$options{ancient},
+	'kura'    => \$options{kura},
 	'short'   => \$options{short},
 	'avoid'   => \$options{avoid},
 	'max=i'   => \$options{max},
@@ -30,6 +31,7 @@ if ($options{help}) {
 		  --classic      Benchmark the non-pure-XS Tools.so/dll.
 		  --ancient      Benchmark AncientTools.so/dll (which is Tools.cpp without
 		                 wall avoidance support). This option conflicts with --classic.
+		  --kura         Benchmark Kura's Tools.dll.
 		  --short        Calculate short distances.
 		  --avoid        Avoid walls.
 		  --max=NUM      Repeat calculation NUM times.
@@ -50,20 +52,45 @@ $options{max} = 1 if ($options{save});
 
 ############################
 
+my ($CalcPath_init, $CalcPath_pathStep, $CalcPath_destroy);
+
 
 if ($options{classic}) {
 	eval "use Tools;";
 } elsif ($options{ancient}) {
 	unshift @INC, $FindBin::Bin;
-	require XSLoader;
-	XSLoader::load('AncientTools');
+	if ($^O eq 'MSWin32') {
+		eval "use Win32::API;";
+		my $name = "AncientTools";
+		$CalcPath_init = new Win32::API($name, "CalcPath_init", "PPNNPPN", "N");
+		$CalcPath_pathStep = new Win32::API($name, "CalcPath_pathStep", "N", "N");
+		$CalcPath_destroy = new Win32::API($name, "CalcPath_destroy", "N", "V");
+		eval	"sub AncientTools::CalcPath_init {\n" .
+			"	\$CalcPath_init->Call(\@_);\n" .
+			"}\n" .
+			"sub AncientTools::CalcPath_pathStep {\n" .
+			"	\$CalcPath_pathStep->Call(\@_);\n" .
+			"}\n" .
+			"sub AncientTools::CalcPath_destroy {\n" .
+			"	\$CalcPath_destroy->Call(\@_);\n" .
+			"}\n";
+	} else {
+		require XSLoader;
+		XSLoader::load('AncientTools');
+	}
+} elsif ($options{kura}) {
+	eval "use Win32::API;";
+	my $name = "KuraTools";
+	$CalcPath_init = new Win32::API($name, "CalcPath_init", "PPNNPPN", "N");
+	$CalcPath_pathStep = new Win32::API($name, "CalcPath_pathStep", "N", "N");
+	$CalcPath_destroy = new Win32::API($name, "CalcPath_destroy", "N", "V");
 } else {
 	unshift @INC, "$FindBin::Bin/..", "$FindBin::Bin/../pathfinding";
 	eval "use PathFinding;";
 }
 
 my %field;
-getField("$FindBin::Bin/../../fields/prontera.fld", \%field, !$options{ancient});
+getField("$FindBin::Bin/../../fields/prontera.fld", \%field);
 my %start;
 if ($options{short}) {
 	%start = ( x => 282, y => 325 );
@@ -84,6 +111,11 @@ if ($options{classic}) {
 } elsif ($options{ancient}) {
 	for (my $i = 0; $i < $options{max}; $i++) {
 		doRouteAncient();
+	}
+
+} elsif ($options{kura}) {
+	for (my $i = 0; $i < $options{max}; $i++) {
+		doRouteKura();
 	}
 
 } else {
@@ -137,6 +169,40 @@ sub doRouteClassic {
 
 	my $ret = Tools::CalcPath_pathStep($session);
 	Tools::CalcPath_destroy($session);
+
+	my $size = unpack("L", substr($solution, 0, 4));
+	my $j = 0;
+	my @returnArray;
+	for (my $i = ($size-1)*4+4; $i >= 4; $i-=4) {
+		$returnArray[$j]{'x'} = unpack("S",substr($solution, $i, 2));
+		$returnArray[$j]{'y'} = unpack("S",substr($solution, $i+2, 2));
+		$j++;
+	}
+
+	if ($options{save}) {
+		open(F, ">", $options{save});
+		for (my $i = 0; $i < @returnArray; $i++) {
+			print F "$returnArray[$i]{x}, $returnArray[$i]{y}\n";
+		}
+		close F;
+	}
+}
+
+sub doRouteKura {
+	my $SOLUTION_MAX = 5000;
+	my $solution = "\0" x ($SOLUTION_MAX*4+4);
+
+	my $session = $CalcPath_init->Call(
+		$solution,
+		$field{'rawMap'},
+		$field{'width'},
+		$field{'height'},
+		pack("S*", $start{x}, $start{y}),
+		pack("S*", $dest{x} , $dest{y}),
+		3000);
+
+	my $ret = $CalcPath_pathStep->Call($session);
+	$CalcPath_destroy->Call($session);
 
 	my $size = unpack("L", substr($solution, 0, 4));
 	my $j = 0;
