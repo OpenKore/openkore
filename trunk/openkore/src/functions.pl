@@ -3474,17 +3474,18 @@ sub AI {
 				# Look for the monster with the highest priority
 				undef $ai_v{'temp'}{'distSmall'};
 				undef $ai_v{'temp'}{'foundID'};
-				$ai_v{'temp'}{'first'} = 1;
+				my $first = 1;
 				foreach (@{$ai_v{'ai_attack_cleanMonsters'}}) {
-					$ai_v{'temp'}{'dist'} = distance($char->{'pos_to'}, $monsters{$_}{'pos_to'});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'} || $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'})
-					 && !$monsters{$_}{'ignore'} && !scalar(keys %{$monsters{$_}{'statuses'}})
-					 && !positionNearPlayer($monsters{$_}{'pos_to'}, 3)
-					 && !positionNearPortal($monsters{$_}{'pos_to'}, 4)) {
-						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
+					my $dist = distance($char->{pos_to}, $monsters{$_}{pos_to});
+					my $smallestDist;
+					if (($first || $dist < $smallestDist || $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'})
+					 && !$monsters{$_}{ignore} && !scalar(keys %{$monsters{$_}{statuses}})
+					 && !positionNearPlayer($monsters{$_}{pos_to}, 3)
+					 && !positionNearPortal($monsters{$_}{pos_to}, 4)) {
+						$smallestDist = $dist;
 						$ai_v{'temp'}{'foundID'} = $_;
 						$ai_v{'temp'}{'highestPri'} = $priority{lc($monsters{$_}{'name'})};
-						undef $ai_v{'temp'}{'first'};
+						$first = 0;
 					}
 				}
 			}
@@ -7485,16 +7486,8 @@ sub parseMsg {
 		if ($sourceID eq $accountID) {
 			$chars[$config{'char'}]{'time_cast'} = time;
 		}
-		if (%{$monsters{$targetID}}) {
-			if ($sourceID eq $accountID) {
-				$monsters{$targetID}{'castOnByYou'}++;
-			} elsif (%{$players{$sourceID}}) {
-				$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
-			} elsif (%{$monsters{$sourceID}}) {
-				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
-			}
-		}
 
+		countCastOn($sourceID, $targetID);
 		message "$source $verb ".skillName($skillID)." on $target\n", "skill", 1;
 
 	} elsif ($switch eq "0141") {
@@ -9863,6 +9856,16 @@ sub setSkillUseTimer {
 # Increment counter for monster being casted on
 sub countCastOn {
 	my ($sourceID, $targetID) = @_;
+
+	if ($monsters{$sourceID}) {
+		if ($targetID eq $accountID) {
+			$monsters{$sourceID}{'castOnToYou'}++;
+		} elsif (%{$players{$targetID}}) {
+			$monsters{$sourceID}{'castOnToPlayer'}{$targetID}++;
+		} elsif (%{$monsters{$targetID}}) {
+			$monsters{$sourceID}{'castOnToMonster'}{$targetID}++;
+		}
+	}
 
 	if ($monsters{$targetID}) {
 		if ($sourceID eq $accountID) {
