@@ -3,18 +3,18 @@ package itemexchange;
 use strict;
 use Plugins;
 use Globals;
-use Settings;
+use Log qw(message);
 
 
 Plugins::register('itemexchange', 'xlr82xs item exchange code.', \&Unload, \&Reload);
-Plugins::addHook('AI_pre', \&Called);
+my $ai_hook = Plugins::addHook('AI_pre', \&Called);
 
 sub Unload {
-	print "Item Exchange code unloaded.\n";
+	Plugins::delHook('AI_pre', $ai_hook);
 }
 
 sub Reload {
-	print "Item Exchange code reloaded (why?)\n";
+	&Unload;
 }
 
 sub Called {
@@ -56,8 +56,7 @@ sub Called {
 		}
 
 		if ($ai_v{'temp'}{'do_route'}) {
-			print "Calculating auto-exchange route to: $maps_lut{$npcs_lut{$config{'itemExchange_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'itemExchange_npc'}}{'map'}): $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}\n";
-			injectMessage("Calculating auto-exchange route to: $maps_lut{$npcs_lut{$config{'itemExchange_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'itemExchange_npc'}}{'map'}): $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}\n") if ($config{'XKore'});
+			message "Calculating auto-exchange route to: $maps_lut{$npcs_lut{$config{'itemExchange_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'itemExchange_npc'}}{'map'}): $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}\n", "route";
 			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'itemExchange_npc'}}{'map'}, 0, 0, 1, 0, 0, 1);
 		}
 
