@@ -98,6 +98,9 @@ If all of the above is true, then Kore will run the code inside the brackets.
 
 <p>
 What is an <em class="term">AI sequence</em>? It is a value within the <code>@ai_seq</code> array.
+This array is a <em>command queue</em>.
+
+<p>
 AI code blocks prepend values into this array so they can know when it's their turn to do something.
 When an AI code block is done with it's task, it will remove that value from the array.
 So, if <code>@ai_seq</code> is empty, then that means all AI code blocks have finished and Kore isn't doing anything else.
@@ -160,7 +163,9 @@ TODO
 
 The entire AI subsystem is kept together by these two variables:
 <ul>
-<li><code>@ai_seq</code> : a list of AI sequence names.</li>
+<li><code>@ai_seq</code> : a queue which contains AI sequence names.
+Usually, AI code blocks are run based on the value of the first item in the queue
+(though this doesn't have to be true; it depends on how the AI code block is programmed).</li>
 <li><code>@ai_seq_args</code> : contains arguments that's associated with current AI sequence.</li>
 </ul>
 
@@ -172,7 +177,7 @@ The <code>AI()</code> function runs only very shortly. So AI code blocks shouldn
 <h3>Glossary</h3>
 <ul>
 <li>An <em class="term">AI code block</em> is an entire block of code which deals with a certain part of the AI.</li>
-<li>An <em class="term">AI sequence</em> is a value within the <code>@ai_seq</code> array.</li>
+<li>An <em class="term">AI sequence</em> is a value within the <code>@ai_seq</code> queue.</li>
 </ul>
 
 
