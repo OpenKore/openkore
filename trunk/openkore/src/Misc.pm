@@ -149,6 +149,7 @@ sub whenStatusActiveMon {
 		s/^\s+//g;
 		s/\s+$//g;
 		return if exists($monsters{$ID}{statuses}{$_});
+	}
 	return 0;
 }
 
