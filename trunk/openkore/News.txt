@@ -59,7 +59,7 @@
   down version of modKore's Vx mode.
 
 Other contributors:
-- jsteng: simplified move AI code.
+- jsteng: simplified move AI code, skill use improvements.
 
 
 ==================
