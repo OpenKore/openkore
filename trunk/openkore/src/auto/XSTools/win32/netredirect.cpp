@@ -24,6 +24,8 @@ MyWSASendToProc		OriginalWSASendToProc	= (MyWSASendToProc) WSASendTo;
 MyWSAAsyncSelectProc	OriginalWSAAsyncSelectProc = (MyWSAAsyncSelectProc) WSAAsyncSelect;
 MyGetProcAddressProc	OriginalGetProcAddressProc = (MyGetProcAddressProc) GetProcAddress;
 
+bool enableDebug = false;
+
 
 // Connection to the X-Kore server that Kore created
 static SOCKET koreClient = INVALID_SOCKET;
@@ -562,6 +564,27 @@ DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
 	switch (dwReason) {
 	case DLL_PROCESS_ATTACH:
 		hDll = hInstance;
+
+		// Check whether debugging should be enabled
+		HKEY key;
+		DWORD type, size;
+		BYTE val[1024];
+
+		size = sizeof (val) - 1;
+		val[0] = '\0';
+		RegOpenKey (HKEY_CURRENT_USER,
+			"Software\\Kore",
+			&key);
+		RegQueryValueEx (key,
+			"DebugNetRedirect",
+			NULL,
+			&type,
+			val,
+			&size);
+		RegCloseKey (key);
+		enableDebug = val[0] == '1';
+
+
 		#ifndef TESTING_INJECT9x
 		OSVERSIONINFO version;
 

@@ -221,21 +221,20 @@ HookImportedFunction (HMODULE hModule,		// Module to intercept calls from
 void
 debugInit ()
 {
-	#ifdef DEBUG
-	AllocConsole ();
-	#endif
+	if (enableDebug)
+		AllocConsole ();
 }
 
 void
 debug (const char *format, ...)
 {
-	#ifdef DEBUG
-	va_list ap;
-	char msg[1024];
+	if (enableDebug) {
+		va_list ap;
+		char msg[1024];
 
-	va_start (ap, format);
-	vsprintf (msg, format, ap);
-	va_end (ap);
-	WriteConsole (GetStdHandle (STD_OUTPUT_HANDLE), msg, strlen (msg), NULL, NULL);
-	#endif
+		va_start (ap, format);
+		vsprintf (msg, format, ap);
+		va_end (ap);
+		WriteConsole (GetStdHandle (STD_OUTPUT_HANDLE), msg, strlen (msg), NULL, NULL);
+	}
 }

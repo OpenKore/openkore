@@ -43,6 +43,8 @@ extern MyWSASendToProc		OriginalWSASendToProc;
 extern MyWSAAsyncSelectProc	OriginalWSAAsyncSelectProc;
 extern MyGetProcAddressProc	OriginalGetProcAddressProc;
 
+extern bool enableDebug;
+
 
 // readSocket() error codes
 #define SF_NODATA 0
