@@ -1770,7 +1770,7 @@ sub cmdArrowCraft {
 					[$i, $char->{inventory}[$arrowCraftID[$i]]{name}]),"list");
 
 			}
-			message("-------------------------------------------------","list")
+			message("-------------------------------------------------\n","list")
 		} else {
 			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
 				"Type 'arrowcraft use' to get list.\n";
