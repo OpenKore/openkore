@@ -52,6 +52,8 @@ New features:
 New commands:
 - guild join (flag)
   Accept or deny a guild join request.
+- pl (number)
+  Show detailed information about a player.
 
 New config options:
 - useSelfSkill_#_monsters
