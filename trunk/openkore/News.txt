@@ -26,6 +26,13 @@
   can't start Kore in X-Kore mode again until you've restarted the RO client.
 - Kore will now correctly continue if it gets resurrected before respawn.
 - avoid_ignore now works properly.
+- Even better support for opening warp portals.
+  New command: warp list (list warp portal maps)
+- The configuration option master_version_# is now obsolete. The correct setting is now
+  autodetected.
+- Support for sending numbers to NPCs. For example, you can now buy phracons in the
+  Prontera upgrade shop.
+
 
 ==================
 ### OpenKore 1.2.1
