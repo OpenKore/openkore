@@ -41,6 +41,7 @@ our @EXPORT = qw(
 	center
 	checkFieldWalkable
 	checkFollowMode
+	checkMonsterCleanness
 	closestWalkableSpot
 	getFieldPoint
 	getPortalDestName
@@ -155,6 +156,70 @@ sub checkFollowMode {
 	if ($config{follow} && defined($followIndex = binFind(\@ai_seq, "follow"))) {
 		return 1 if ($ai_seq_args[$followIndex]{following});
 	}
+	return 0;
+}
+
+##
+# checkMonsterCleanness(ID)
+# ID: the monster's ID.
+#
+# Checks whether a monster is "clean" (not being attacked by anyone).
+sub checkMonsterCleanness {
+	my $ID = shift;
+
+	return 1 if (!$config{attackAuto});
+
+	# If party attacked monster, or if monster attacked/missed party
+	if ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0) {
+		return 1;
+	}
+
+	# If we're in follow mode
+	if (defined(my $followIndex = binFind(\@ai_seq, "follow"))) {
+		my $following = $ai_seq_args[$followIndex]{'following'};
+		my $followID = $ai_seq_args[$followIndex]{'ID'};
+
+		if ($following) {
+			# And master attacked monster, or the monster attacked/missed master
+			if ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0
+			 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0
+			 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0) {
+				return 1;
+			}
+		}
+	}
+
+	# If monster attacked/missed you
+	return 1 if ($monsters{$ID}{'dmgToYou'} || $monsters{$ID}{'missedYou'});
+
+	# It monster hasn't received any damage from other players
+	if (!$monsters{$ID}{'dmgTo'}
+	 && !binSize([keys %{$monsters{$ID}{'missedFromPlayer'}}])
+	 && !binSize([keys %{$monsters{$ID}{'dmgFromPlayer'}}])
+
+	 # and it hasn't attacked any other player
+	 && !$monsters{$ID}{'dmgFrom'}
+	 && !binSize([keys %{$monsters{$ID}{'missedToPlayer'}}])
+	 && !binSize([keys %{$monsters{$ID}{'dmgToPlayer'}}])
+
+	 # and hasn't been casted on by a player
+	 && binSize([keys %{$monsters{$ID}{'castOnByPlayer'}}])
+	 # and hasn't tried to cast on a player
+	 && binSize([keys %{$monsters{$ID}{'castOnToPlayer'}}])
+	) {
+		return 1;
+	}
+
+	# TODO: set clean to 1 if monster's last attack was to you
+
+	# my $cleanMonster = (
+	#	  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
+	#	|| ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0)
+	#	|| ($following && ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0))
+	#	|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
+	# );
+	# $cleanMonster = 0 if ($monsters{$ID}{'attackedByPlayer'} && (!$following || $monsters{$ID}{'lastAttackFrom'} ne $followID));
+
 	return 0;
 }
 
