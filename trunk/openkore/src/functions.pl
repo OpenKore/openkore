@@ -24,7 +24,7 @@ use Config;
 sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
-		print "Next restart in $autoRestart seconds.\n";
+		print "Next restart in ".timeConvert($autoRestart).".\n";
 		configModify("autoRestart", $autoRestart, 1);
 	}
 }
@@ -238,7 +238,7 @@ sub checkConnection {
 			my $sleeptime = $config{'autoSleepMin'} + int(rand $config{'autoSleepSeed'});
 			$timeout_ex{'master'}{'timeout'} = $sleeptime;
 			$sleeptime = $timeout{'reconnect'}{'timeout'} if ($sleeptime < $timeout{'reconnect'}{'timeout'});
-			print "Sleeping for $sleeptime seconds\n";
+			print "Sleeping for ".timeConvert($sleeptime).".\n";
 		} else {
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		}
@@ -11779,6 +11779,19 @@ sub printItemDesc {
 	print "Item: $items_lut{$itemID}\n\n";
 	print $itemsDesc_lut{$itemID};
 	print "==============================================\n";
+}
+
+#this is a small sub to convert the ubiquitus seconds values we have EVERYWHERE into something the average
+#user will/can understand
+sub timeConvert {
+	my $time = shift;
+	my $hours = int($time / 3600);
+	my $time = $time % 3600;
+	my $minutes = int($time / 60);
+	my $time = $time % 60;
+	my $seconds = $time;
+	my $gathered = $hours." hours ".$minutes." minutes ".$seconds." seconds";
+	return $gathered;
 }
 
 sub timeOut {
