@@ -3605,8 +3605,6 @@ sub AI {
 					                       $config{followDistanceMax});
 				}
 			}
-			# FIXME: disable leash range for now; it's broken
-			@leash = ();
 
 			# Calculate squares around monster within shooting range, but not
 			# closer than runFromTarget_dist
@@ -3618,10 +3616,15 @@ sub AI {
 			# are in a valid range around the target to stand on.
 			my @merge = ();
 			if (@leash) {
-				my %union = ();
 				my %isect = ();
-				for my $e (@leash, @stand) { $union{$e}++ && $isect{$e}++ }
-				@merge = keys %isect;
+				for my $e (@leash, @stand) {
+					$isect{$e->{x}}{$e->{y}}++;
+				}
+				for my $x (keys %isect) {
+					for my $y (keys %{$isect->{$x}}) {
+						push(@merge, {x => $x, y => $y}) if $isect{$x}{$y} == 2;
+					}
+				}
 			} else {
 				@merge = @stand;
 			}
