@@ -261,7 +261,7 @@ sub createInterface {
 		# Help menu
 		my $helpMenu = new Wx::Menu();
 		$self->addMenu($helpMenu, '&Manual	F1', \&onManual);
-		$self->addMenu($helpMenu, '&Forum', \&onForum);
+		$self->addMenu($helpMenu, '&Forum	Shift-F1', \&onForum);
 		$menu->Append($helpMenu, '&Help');
 
 
@@ -551,13 +551,14 @@ sub onClose {
 sub onFontChange {
 	my $self = shift;
 
-	my $dialog = new Wx::FontDialog($self->{frame});
-	my $fontData = $dialog->GetFontData;
+	my $fontData = new Wx::FontData();
 	$fontData->SetInitialFont($self->{fonts}{default});
 	$fontData->EnableEffects(0);
 
-	$dialog->ShowModal();
-	$self->changeFont($dialog->GetFontData()->GetChosenFont());
+	my $dialog = new Wx::FontDialog($self->{frame}, $fontData);
+	if ($dialog->ShowModal() == wxID_OK) {
+		$self->changeFont($dialog->GetFontData()->GetChosenFont());
+	}
 	$dialog->Destroy();
 }
 
