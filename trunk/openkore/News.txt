@@ -5,6 +5,12 @@
 Bug fixes:
 - Fix "undefined value as HASH" bug in the Wx item list control.
 
+New features:
+- statsAddAuto will now print a message when it increases a stat.
+
+New config options:
+- beepOnPM, beepOnChat if set to 1 will print a beep character when you
+  hear a PM/public chat message.
 
 ==================
 ### 1.5.0 (beta)
