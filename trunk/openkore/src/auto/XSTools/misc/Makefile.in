@@ -3,13 +3,13 @@ CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 -mcpu=i686 $(CYGW
 @HEADER@
 
 .PHONY: all clean
-SRC=fastutils.o.c
-OBJ=fastutils.o
-%.o: %.xs
-	$(XSUBPP) -typemap "$(TYPEMAP)" $< > $@.c
-	$(CC) -I. $(CFLAGS) $@.c -c $(PERLCFLAGS) -o $@ -I$(COREDIR)
 
-all: $(OBJ)
+fastutils.o: fastutils.c
+	$(CC) -I. $(CFLAGS) fastutils.c -c $(PERLCFLAGS) -o fastutils.o -I$(COREDIR)
+
+fastutils.c: fastutils.xs
+	$(XSUBPP) -typemap "$(TYPEMAP)" fastutils.xs > fastutils.xsc
+	mv fastutils.xsc fastutils.c
 
 clean:
-	rm -f $(SRC) $(OBJ) Makefile.real
+	rm -f fastutils.o fastutils.c fastutils.xsc Makefile.real
