@@ -2279,7 +2279,7 @@ sub AI {
 		$AI::Timeouts::autoArrow = time;
 	}
 
-	if ($useArrowCraft) {
+	if ($config{autoMakeArrows} && $useArrowCraft) {
 		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
 			ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
 		}
@@ -3480,7 +3480,7 @@ sub AI {
 			# closer than runFromTarget_dist
 			my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
 			                          $args->{attackMethod}{distance},
-									  $config{runFromTarget_dist});
+									  $config{runFromTarget} ? $config{runFromTarget_dist} : 0);
 
 			my ($master, $masterPos);
 			if ($config{follow}) {
