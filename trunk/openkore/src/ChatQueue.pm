@@ -95,7 +95,7 @@ sub _processChatCommand {
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "logout") {
-		quit();
+		main::quit();
 		sendMessage(\$remote_socket, $type, getResponse("quitS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
