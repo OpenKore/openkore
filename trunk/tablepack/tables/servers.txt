@@ -27,7 +27,7 @@ version 7
 ip 61.220.63.129
 port 6900
 master_version 17
-version 7
+version 8
 
 [Malaysia - mRO: Sakray]
 ip 220.130.113.227
