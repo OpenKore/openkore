@@ -133,13 +133,13 @@ h2:hover {
 .function .desc {
 	margin-bottom: 12px;
 }
-.function .example {
+.example {
 	border: lightgray dotted 1px;
 	background: #fffde8;
 	padding: 6px;
-	padding-bottom: 0;
+	//padding-bottom: 0;
 }
-.function .example .comment {
+.example .comment {
 	color: darkblue;
 }
 

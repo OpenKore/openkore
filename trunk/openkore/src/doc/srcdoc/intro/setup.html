@@ -1,22 +1,43 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-	<META NAME="Robots" CONTENT="noindex,nofollow">
-	<TITLE>Setting up the development environment - OpenKore Development Introduction Guide</TITLE>
-	<LINK HREF="guide.css" MEDIA="screen" REL="stylesheet" TYPE="text/css">
-	<STYLE TYPE="text/css">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Setting up the development environment - OpenKore Development Introduction Guide</title>
+	<link rel="stylesheet" type="text/css" href="../openkore.css">
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+
+	<style type="text/css">
 	<!--
-	@import url(guide.css);
+	a {
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
 	-->
-	</STYLE>
-</HEAD>
+	</style>
+</head>
 
-<BODY>
+<body>
 
-<DIV ID="head"><A HREF="index.html">&lt;&lt; OpenKore Development Guide</A></DIV>
+<div id="title">OpenKore source code documentation</div>
 
-<H2>Setting up the development environment</H2>
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="../index.html">Table of contents</a></li>
+	<li><a href="index.html">Development Introduction Guide</a></li>
+	<li><b>Setting up the development environment</b></li>
+	</ul>
+</div>
+
+<div id="main">
+
+
+<h2>Setting up the development environment</h2>
 
 This section teaches Windows developers how to setup the development environment.
 If you're a Linux developer you should already have Perl and GCC.
@@ -25,17 +46,42 @@ tools if you prefer other alternative tools, but this guide will only
 teach you how to setup and use these tools.
 
 
-<A NAME="perl"></A>
-<H2>ActiveState ActivePerl - the Win32 Perl interpreter</H2>
+<a name="perl"></a>
+<h2>Step 1: ActiveState ActivePerl - the Win32 Perl interpreter</h2>
+
+<h3>1.1 - Installing the interpreter</h3>
 
 You need a Perl interpreter if you want to work on Kore.
 The best Perl interpreter for Win32 is probably ActivePerl:
-<A HREF="http://www.activestate.com/Products/ActivePerl/">http://www.activestate.com/Products/ActivePerl/</A>
+<a href="http://www.activestate.com/Products/ActivePerl/">http://www.activestate.com/Products/ActivePerl/</a>.
+You should download and install <i>version 5.8</i>. Install it to the default path (<tt>C:\perl</tt>).
 
-<P>
-(TODO: write instructions here about how to install Time::HiRes and 
-Win32::API)
 
+<h3>1.2 - Installing additional Perl modules</h3>
+
+Once it is installed, you must install additional <i>Perl modules</i> (think of them as third party libraries).
+These modules are not part of the default Perl installation. Kore requires these modules:
+<ul style="font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier;">
+<li>Win32::API</li>
+<li>Time::HiRes</li>
+<li>Win32::Console::ANSI</li>
+</ul>
+
+<p>
+Click <i>Start -&gt; Programs -&gt; ActiveState ActivePerl 5.8 &gt; Perl Package Manager</i>.
+You will now get a big DOS-like black window with a command prompt. Don't be scared by it - it isn't that hard to use.
+
+<p>
+Type in the following 4 commands:
+<pre class="example">
+install Win32-API
+install Time-HiRes
+install Win32::Console::ANSI
+exit
+</pre>
+And that's it. If you don't get an error message, then you are done installing. If you do get an error message, you could ask the forum for help. Make sure you copy &amp; paste the entire output of Perl Package Manager.
+
+<!--
 <P>
 Perl is commandline-based. In order to run a Perl script you need to
 type this in the commandline (assuming ActivePerl is installed to 
@@ -45,35 +91,41 @@ C:\Perl):
 So, to run <TT>openkore.pl</TT>, you need to type this:
 <PRE>cd C:\Whever\Your\OpenKore\Folder\Is
 C:\perl\bin\perl openkore.pl</PRE>
+-->
 
 
-<A NAME="gcc"></A>
-<H2>GNU Compiler Collection (GCC) - the C++ compiler</H2>
+<a name="gcc"></a>
+<h2>Step 2: GNU Compiler Collection (GCC) - the C++ compiler</h2>
 
-You only need a C++ compiler if you want to work on Tools.cpp and/or 
-Inject.cpp. If you aren't interested in them, you can skip this step.
+You only need a C++ compiler if you want to work on <tt>Tools.cpp</tt> and/or 
+<tt>Inject.cpp</tt>. If you aren't interested in them, you can skip this step.
 
-<P>
+<p>
 GCC is a suite which contains a C and C++ compiler. It's originally meant 
 for Unix systems (and is the standard compiler for Linux), but Win32 
 ports are available. One of the Win32 ports is called MinGW (Minimalist 
 GNU for Win32): <A HREF="http://www.mingw.org/">http://www.mingw.org/</A>
 
-<P>
-TODO: write instructions here about how to install mingw.
+<p>
+(TODO: write instructions here about how to install mingw. Actually,
+shouldn't I recommend Cygwin instead?)
 
-<P>
-The OpenKore source code contains the file "Makefile.win32", a makefile 
-for Win32 GCC. You can use that to compile Tools.cpp and Inject.cpp.
-The file "Makefile" is for Linux/Unix only.
+<p>
+There are two files in the OpenKore source code which help you compile Tools.cpp and Inject.cpp:
+<ul>
+<li>"Makefile.win32" : This is a makefile for Win32 GCC</li>
+<li>"Makefile" : This file is for Linux/Unix only.</li>
+</ul>
 
 
 <A NAME="editors"></A>
 <H2>Editors</H2>
 
-You can of course edit the source code in any text editor. It is, however, not recommended to use Notepad. Notepad doesn't support CRLF (Unix line endings; at least one of the developers develop OpenKore mainly in Linux) and doesn't support auto-indent.<BR>
-For Windows, I recommend <A HREF="http://www.crimsoneditor.com/">Crimson Editor</A>, a freeware general-purpose code editor which supports syntax highlighting for many languages (including Perl and C++).
+You can of course edit the source code in any text editor. It is, however, not recommended to use Notepad. Notepad doesn't support CRLF (Unix line endings; at least one of the developers develop OpenKore mainly in Linux) and doesn't support auto-indent.<p>
+
+For Windows, I hightly recommend <A HREF="http://www.crimsoneditor.com/">Crimson Editor</A>, a freeware general-purpose code editor which supports syntax highlighting for many languages (including Perl and C++).
 
 
-</BODY>
-</HTML>
+</div>
+</body>
+</html>

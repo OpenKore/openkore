@@ -1,71 +1,100 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-	<META NAME="Robots" CONTENT="noindex,nofollow">
-	<TITLE>Programming Language - OpenKore Development Introduction Guide</TITLE>
-	<LINK HREF="guide.css" MEDIA="screen" REL="stylesheet" TYPE="text/css">
-	<STYLE TYPE="text/css">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Programming languages - OpenKore Development Introduction Guide</title>
+	<link rel="stylesheet" type="text/css" href="../openkore.css">
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+
+	<style type="text/css">
 	<!--
-	@import url(guide.css);
+	a {
+		text-decoration: none;
+	}
+	a:hover {
+		text-decoration: underline;
+	}
+	th {
+		background: black;
+		color: white;
+	}
 	-->
-	</STYLE>
-</HEAD>
+	</style>
+</head>
 
-<BODY>
+<body>
 
-<DIV ID="head"><A HREF="index.html">&lt;&lt; OpenKore Development Guide</A></DIV>
+<div id="title">OpenKore source code documentation</div>
 
-<H2>Programming language</H2>
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="../index.html">Table of contents</a></li>
+	<li><a href="index.html">Development Introduction Guide</a></li>
+	<li><b>Setting up the development environment</b></li>
+	</ul>
+</div>
 
-<A NAME="overview"></A>
+<div id="main">
+
+
+<a name="overview"></a>
+<h2>Overview</h2>
 OpenKore is made of these components:
 
-<TABLE BORDER="1" STYLE="margin: 12px 12px 12px 12px;" CELLPADDING="6">
-<TR>
-	<TH>Component</TH>
-	<TH>Programming language</TH>
-	<TH>Notes</TH>
-</TR>
+<table border="1" style="margin: 12px 12px 12px 12px;" cellpadding="6">
+<tr>
+	<th>Component</th>
+	<th>Programming language</th>
+	<th>Notes</th>
+</tr>
 
-<TR>
-	<TD>Main program
-		<UL>
-		<LI>openkore.pl</LI>
-		<LI>functions.pl</LI>
-		<LI>*.pm</LI>
-		</UL>
-	</TD>
-	<TD>Perl</TD>
-	<TD>-</TD>
-</TR>
+<tr>
+	<td>Main program
+		<ul>
+		<li>openkore.pl</li>
+		<li>functions.pl</li>
+		<li>*.pm</li>
+		</ul>
+	</td>
+	<td>Perl</td>
+	<td>-</td>
+</tr>
 
-<TR>
-	<TD>Pathfinding & DLL injection
-		<UL>
-		<LI>Tools.cpp</LI>
-		<LI>Tools.dll/Tools.so</LI>
-		</UL>
-	</TD>
-	<TD>C++</TD>
-	<TD><I>Pathfinding:</I> calculate how to walk from spot A to spot B.
-	The pathfinding functions are written in C++ for performance reasons.
-	It used to be written in Perl and integrated into the Kore codebase, but that was (literally) 100 times slower.<P>
-	<I>DLL injection (only on Windows NT/2000/XP):</I> Tools.dll contains functions used to inject Inject.dll into Ragexe.exe's process space.</TD>
-</TR>
+<tr>
+	<td>Pathfinding & DLL injection
+		<ul>
+		<li>Tools.cpp</li>
+		<li>Tools.dll/Tools.so</li>
+		</ul>
+	</td>
+	<td>C++</td>
+	<td>
+		Tools.cpp implements a part of Kore's pathfinding algorithm (the system which handles how Kore walks from spot A to B).
+		Because of performance reasons, the most performance-critical parts are written in C++.
+		Pathfinding used to be written 100% in Perl, but that was (literally) 100 times slower.
 
-<TR>
-	<TD>Network data interception
-		<UL>
-		<LI>Inject.cpp</LI>
-		<LI>Inject.dll</LI>
-		</UL>
-	</TD>
-	<TD>C++</TD>
-	<TD>Used by X-Kore mode. This DLL is injected into Ragexe.exe's process space, and intercepts all incoming and outgoing network data. This makes it possible for Kore to control the Ragnarok Online client.<P>
-	Only usable in Windows NT/2000/XP.</TD>
-</TR>
-</TABLE>
+		<p>
+		<i>DLL injection (only on Windows NT/2000/XP):</i> Tools.dll contains functions used to inject Inject.dll into
+		Ragexe.exe's process space.
+	</td>
+</tr>
+
+<tr>
+	<td>Network data interception
+		<ul>
+		<li>Inject.cpp</li>
+		<li>Inject.dll</li>
+		</ul>
+	</td>
+	<td>C++</td>
+	<td>Used by X-Kore mode. This DLL is injected into Ragexe.exe's process space, and intercepts all incoming and outgoing network data. This makes it possible for Kore to control the Ragnarok Online client.<p>
+	Only usable in Windows NT/2000/XP.</td>
+</tr>
+</table>
 
 
 <A NAME="perl"></A>
@@ -79,7 +108,8 @@ Although Perl is an interpreted language, it <I>can</I> be compiled. Kore uses <
 Compilation is only done by developers when they release a version to the public, since you can't expect all Windows users to install a Perl interpreter. There's no reason for developers to compile <TT>openkore.pl</TT> every time they make a change; it's much easier to run <TT>openkore.pl</TT> directly from the Perl interpreter.
 <BR>Linux users can run <TT>openkore.pl</TT> directly. Most Linux distributions come with a Perl interpreter by default.
 
-<P>
+
+<h3>Documentation</h3>
 The official Perl manual can be found here: <A HREF="http://www.perldoc.com/perl5.8.0/pod/perl.html">http://www.perldoc.com/perl5.8.0/pod/perl.html</A><BR>
 Be sure to read <TT>perlintro</TT> first. That page also has a tutorial for beginners.
 
@@ -87,6 +117,7 @@ Be sure to read <TT>perlintro</TT> first. That page also has a tutorial for begi
 Other Perl documentation:
 <UL>
 <LI><A HREF="http://perl.oreilly.com/">Books published by O'Reilly</A></LI>
+<li><a href="http://perl.hamtech.net/index.htm">The Perl CD Bookshelf</a> - here you can download books online.</li>
 <LI><A HREF="http://www.google.com/search?q=perl%20tutorial">Google search for "perl tutorial"</A></LI>
 <LI><A HREF="http://www.cpan.org/">CPAN - API documentation for many Perl modules and builtin functions</A></LI>
 </UL>
@@ -95,16 +126,21 @@ Other Perl documentation:
 If you have and don't know where to get a Perl interpreter/compiler, see <A HREF="setup.html">Setting up the development environment</A>.
 
 
-<A NAME="cpp"></A>
-<H2>About C++</H2>
+<a NAME="cpp"></a>
+<h2>About C++</h2>
 
-If you're a developer then it's unlikely that you haven't heard of C++ already. There are <I>many</I> books about C++, try looking at your local library. And if you don't want to read a book for whatever reason, try <A HREF="http://www.cprogramming.com/">http://www.cprogramming.com/</A>.
+If you're a developer then it's unlikely that you haven't heard of C++ already. There are <I>many</I> books about C++, try looking at your local library. And if you don't want to read a book for whatever reason, try these websites:
+<ul>
+<li><a href="http://www.cplusplus.com/doc/tutorial/">http://www.cplusplus.com/doc/tutorial/</a></li>
+<li><a href="http://www.cprogramming.com/">http://www.cprogramming.com/</a></li>
+</ul>
 
-<P>
+<p>
 Tools.dll and Inject.dll should be compilable by any standards-compliant C++ compiler.
 But the recommended compilers are GCC (Cygwin) or MS Visual C++.
-If you don't want to pay money for MS Visual C++, see <A HREF="setup.html">Setting up the development environment</A> about how to obtain GCC (which is free).
+If you don't want to pay money for MS Visual C++, see <a href="setup.html">Setting up the development environment</a> about how to obtain GCC (which is free).
 
 
-</BODY>
-</HTML>
+</div>
+</body>
+</html>
