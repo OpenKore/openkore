@@ -628,8 +628,8 @@ sub parseCommand {
 		unshift @ai_seq_args, {};
 
 	} elsif ($switch eq "autosell") {
-		unshift @ai_seq, "sellAuto";
-		unshift @ai_seq_args, {};
+		message "Initiating auto-sell sequence.\n";
+		AI::queue("sellAuto");
 
 	} elsif ($switch eq "autostorage") {
 		message "Initiating auto-storage sequence.\n";
@@ -2518,6 +2518,7 @@ sub AI {
 
 	if ($ai_seq[0] eq "sellAuto" && $ai_seq_args[0]{'done'}) {
 		$ai_v{'temp'}{'var'} = $ai_seq_args[0]{'forcedByBuy'};
+		message "Auto-sell sequence completed.\n", "success";
 		shift @ai_seq;
 		shift @ai_seq_args;
 		if (!$ai_v{'temp'}{'var'}) {
@@ -2525,8 +2526,8 @@ sub AI {
 			unshift @ai_seq_args, {forcedBySell => 1};
 		}
 	} elsif ($ai_seq[0] eq "sellAuto" && timeOut(\%{$timeout{'ai_sellAuto'}})) {
-		getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}}) if ($config{'sellAuto'});
-		if (!$config{'sellAuto'} || !defined($ai_seq_args[0]{'npc'}{'ok'})) {
+		getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
+		if (!defined($ai_seq_args[0]{'npc'}{'ok'})) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOSELL;
 		}
@@ -2629,7 +2630,7 @@ sub AI {
 		$ai_v{'temp'}{'var'} = $ai_seq_args[0]{'forcedBySell'};
 		shift @ai_seq;
 		shift @ai_seq_args;
-		if (!$ai_v{'temp'}{'var'} && ai_sellAutoCheck()) {
+		if (!$ai_v{'temp'}{'var'} && ai_sellAutoCheck() && $config{sellAuto}) {
 			unshift @ai_seq, "sellAuto";
 			unshift @ai_seq_args, {forcedByBuy => 1};
 		}
