@@ -3151,16 +3151,15 @@ sub AI {
 	##### LOCKMAP #####
 	
 
-	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'}
-	   && ($field{'name'} ne $config{'lockMap'}
-	     || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" && ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) && !positionNearPlayer(\%{$chars[$config{'char'}]{'pos_to'}}, 0))
-	   )
-) {
+	%{$ai_v{'temp'}{'lockMap_coords'}} = ();
+	$ai_v{'temp'}{'lockMap_coords'}{'x'} = $config{'lockMap_x'};
+	$ai_v{'temp'}{'lockMap_coords'}{'y'} = $config{'lockMap_y'};
+	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'} && ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" && ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) && distance(\%{$ai_v{'temp'}{'lockMap_coords'}}, \%{$chars[$config{'char'}]{'pos_to'}}) > 2))) {
 		if ($maps_lut{$config{'lockMap'}.'.rsw'} eq "") {
 			print "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
 			injectMessage("Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist") if ($config{'XKore'} && $config{'verbose'});
 		} else {
-			if ($config{'lockMap_x'} ne "") {
+			if ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "") {
 				print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}\n";
 				injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}") if ($config{'XKore'} && $config{'verbose'});
 			} else {
@@ -3170,6 +3169,7 @@ sub AI {
 			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $config{'lockMap_x'}, $config{'lockMap_y'}, $config{'lockMap'}, 0, 0, 1, 0, 0, 1);
 		}
 	}
+	undef $ai_v{'temp'}{'lockMap_coords'};
 
 	##### RANDOM WALK #####
 	if ($config{'route_randomWalk'} && $ai_seq[0] eq "" && @{$field{'field'}} > 1 && !$cities_lut{$field{'name'}.'.rsw'}) {
