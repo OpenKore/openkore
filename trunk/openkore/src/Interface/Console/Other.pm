@@ -430,59 +430,66 @@ sub color {
 	print $bgcolors{$bgcolor} if defined($bgcolors{$bgcolor});
 }
 
-
 %fgcolors = (
 	'reset'		=> "\e[0m",
 	'default'	=> "\e[0m",
-	'black'		=> "\e[1;30m",
-	'red'		=> "\e[1;31m",
-	'lightred'	=> "\e[1;31m",
-	'brown'		=> "\e[0;31m",
+
+	'black'		=> "\e[0;30m",
+	'darkgray'	=> "\e[1;30m",
+	'darkgrey'	=> "\e[1;30m",
+
 	'darkred'	=> "\e[0;31m",
-	'green'		=> "\e[1;32m",
-	'lightgreen'	=> "\e[1;32m",
+	'red'		=> "\e[1;31m",
+
 	'darkgreen'	=> "\e[0;32m",
+	'green'		=> "\e[1;32m",
+
+	'brown'		=> "\e[0;33m",
 	'yellow'	=> "\e[1;33m",
-	'blue'		=> "\e[0;34m",
-	'lightblue'	=> "\e[1;34m",
-	'magenta'	=> "\e[0;35m",
-	'lightmagenta'	=> "\e[1;35m",
-	'cyan'		=> "\e[1;36m",
-	'lightcyan'	=> "\e[1;36m",
+	
+	'darkblue'	=> "\e[0;34m",
+	'blue'		=> "\e[1;34m",
+
+	'darkmagenta'	=> "\e[0;35m",
+	'magenta'	=> "\e[1;35m",
+	
 	'darkcyan'	=> "\e[0;36m",
-	'white'		=> "\e[1;37m",
+	'cyan'		=> "\e[1;36m",
+
 	'gray'		=> "\e[0;37m",
-	'grey'		=> "\e[0;37m"
+	'grey'		=> "\e[0;37m",
+	'white'		=> "\e[1;37m",
 );
 
-$bgcolors{"black"} = "\e[40m";
-$bgcolors{""} = "\e[40m";
-$bgcolors{"default"} = "\e[40m";
+%bgcolors = (
+	''			=> "\e[22;40m";
+	'default'	=> "\e[22;40m",
 
-$bgcolors{"red"} = "\e[41m";
-$bgcolors{"lightred"} = "\e[41m";
-$bgcolors{"brown"} = "\e[41m";
-$bgcolors{"darkred"} = "\e[41m";
+	'black'		=> "\e[22;40m",
+	'darkgray'	=> "\e[5;40m",
+	'darkgrey'	=> "\e[5;40m",
 
-$bgcolors{"green"} = "\e[42m";
-$bgcolors{"lightgreen"} = "\e[42m";
-$bgcolors{"darkgreen"} = "\e[42m";
+	'darkred'	=> "\e[22;41m",
+	'red'		=> "\e[5;41m",
 
-$bgcolors{"yellow"} = "\e[43m";
+	'darkgreen'	=> "\e[22;42m",
+	'green'		=> "\e[5;42m",
 
-$bgcolors{"blue"} = "\e[44m";
-$bgcolors{"lightblue"} = "\e[44m";
+	'brown'		=> "\e[22;43m",
+	'yellow'	=> "\e[5;43m",
+	
+	'darkblue'	=> "\e[22;44m",
+	'blue'		=> "\e[5;44m",
 
-$bgcolors{"magenta"} = "\e[45m";
-$bgcolors{"lightmagenta"} = "\e[45m";
+	'darkmagenta'	=> "\e[22;45m",
+	'magenta'	=> "\e[5;45m",
+	
+	'darkcyan'	=> "\e[22;46m",
+	'cyan'		=> "\e[5;46m",
 
-$bgcolors{"cyan"} = "\e[46m";
-$bgcolors{"lightcyan"} = "\e[46m";
-$bgcolors{"darkcyan"} = "\e[46m";
-
-$bgcolors{"white"} = "\e[47m";
-$bgcolors{"gray"} = "\e[47m";
-$bgcolors{"grey"} = "\e[47m";
-
+	'gray'		=> "\e[22;47m",
+	'grey'		=> "\e[22;47m",
+	'white'		=> "\e[5;47m",
+);
 
 1; #end of module
