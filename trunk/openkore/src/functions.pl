@@ -60,6 +60,7 @@ sub initConfChange {
 
 # Initialize variables when you start a connection to a map server
 sub initConnectVars {
+	$char = $chars[$config{char}];
 	initMapChangeVars();
 	undef @{$chars[$config{'char'}]{'inventory'}};
 	undef %{$chars[$config{'char'}]{'skills'}};
@@ -115,6 +116,7 @@ sub initMapChangeVars {
 	$timeout{'ai_shop'}{'time'} = time;
 
 	initOtherVars();
+	Plugins::callHook('packet_mapChange');
 }
 
 # Initialize variables when your character logs in
@@ -5143,7 +5145,6 @@ sub parseMsg {
 	} elsif ($switch eq "0073") {
 		$conState = 5;
 		undef $conState_tries;
-		$char = $chars[$config{char}];
 		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
 		%{$chars[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos'}};
 		message("Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", undef, 1);
@@ -5977,6 +5978,7 @@ sub parseMsg {
 				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
 			debug "Inventory: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}}\n", "parseMsg";
+			Plugins::callHook('packet_inventory', {index => $invIndex});
 		}
 
 	} elsif ($switch eq "00A4") {
@@ -6003,6 +6005,7 @@ sub parseMsg {
 			$item->{name} = itemName($item);
 
 			debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
+			Plugins::callHook('packet_inventory', {index => $invIndex});
 		}
 
 	} elsif ($switch eq "00A5" || $switch eq "01F0") {
@@ -6014,7 +6017,7 @@ sub parseMsg {
 		undef @storageID;
 
 		my $psize = ($switch eq "00A5") ? 10 : 18;
-		for(my $i = 4; $i < $msg_size; $i += $psize) {
+		for (my $i = 4; $i < $msg_size; $i += $psize) {
 			my $index = unpack("C1", substr($msg, $i, 1));
 			my $ID = unpack("S1", substr($msg, $i + 2, 2));
 			binAdd(\@storageID, $index);
@@ -7271,6 +7274,7 @@ sub parseMsg {
 			$item->{name} = itemName($item);
 
 			debug "Non-Stackable Cart Item: $item->{name} ($index) x 1\n", "parseMsg";
+			Plugins::callHook('packet_cart', {index => $index});
 		}
 
 	} elsif ($switch eq "0123" || $switch eq "01EF") {
@@ -7293,6 +7297,7 @@ sub parseMsg {
 				$item->{name} = itemNameSimple($ID);
 			}
 			debug "Stackable Cart Item: $item->{name} ($index) x $amount\n", "parseMsg";
+			Plugins::callHook('packet_cart', {index => $index});
 		}
 
 	} elsif ($switch eq "0124" || $switch eq "01C5") {
