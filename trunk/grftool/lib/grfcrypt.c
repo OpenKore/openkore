@@ -19,7 +19,6 @@
  *
  * Notes:
  * See grfcrypt.h for information about encryption related GRF_FLAG_*s
- *
  */
 
 #include "grftypes.h"		/* for uint[8,16,32]_t */
@@ -28,36 +27,17 @@
 
 GRFEXTERN_BEGIN
 
+
 /* DEFINEs to point to various tables */
-#define DES_IP		tables0x40[0]		/*!< \brief 
-						 * Initial Permutation (IP)
-						 */
-#define DES_IP_INV	tables0x40[1]		/*!< \brief
-						 * Final Permutatioin (IP^-1)
-						 */
-#define DES_S(num)	tables0x40[2+num]	/*!< \brief
-						 * Selection functions (S)
-						 */
-#define DES_PC2		tables0x30[0]		/*!< \brief
-						 * Permuted-choice 2 (PC-2)
-						 */
-#define DES_E		tables0x30[1]		/*!< \brief
-						 * Bit-selection (E)
-						 */
-#define DES_P		tables0x20[0]		/*!< \brief
-						 * (P)
-						 */
-#define DES_PC1_1	tables0x1C[0]		/*!< \brief
-						 * Permuted-choice 1 (PC-1)
-						 * part 1
-						 */
-#define DES_PC1_2	tables0x1C[1]		/*!< \brief 
-						 * Permuted-choice 1 (PC-1)
-						 * part 2
-						 */
-#define DES_LSHIFTS	tables0x10[0]		/*!< \brief
-						 * Left shifts per iteration
-						 */
+#define DES_IP		tables0x40[0]		/** Initial Permutation (IP) */
+#define DES_IP_INV	tables0x40[1]		/** Final Permutatioin (IP^-1) */
+#define DES_S(num)	tables0x40[2 + num]	/** Selection functions (S) */
+#define DES_PC2		tables0x30[0]		/** Permuted-choice 2 (PC-2) */
+#define DES_E		tables0x30[1]		/** Bit-selection (E) */
+#define DES_P		tables0x20[0]		/** (P) */
+#define DES_PC1_1	tables0x1C[0]		/** Permuted-choice 1 (PC-1) part 1 */
+#define DES_PC1_2	tables0x1C[1]		/** Permuted-choice 1 (PC-1) part 2 */
+#define DES_LSHIFTS	tables0x10[0]		/** Left shifts per iteration */
 
 /* Some DES tables */
 static const uint8_t tables0x40[][0x40] = {
@@ -224,20 +204,23 @@ static const uint8_t BitMap[0x08] = {
 	0x80, 0x40, 0x20, 0x10, 0x8, 0x4, 0x2, 0x1	
 };
 
+
 /********************
 * Private Functions *
 ********************/
 
-/*! \brief Private DES function to permutate a block.
+/** Private DES function to permutate a block.
  *
- * \warning block and table aren't checked for length or validity
+ * @warning block and table aren't checked for length or validity
  *
- * \param block A 64-bit block of data to be encrypted/decrypted
- * \param table One of DES_IP or DES_IP_INV, to select initial or final
+ * @param block A 64-bit block of data to be encrypted/decrypted
+ * @param table One of DES_IP or DES_IP_INV, to select initial or final
  *		permutation of the block
- * \return A duplicate pointer to the block parameter
+ * @return A duplicate pointer to the block parameter
  */
-static uint8_t *DES_Permutation(uint8_t *block, const uint8_t *table) {
+static uint8_t *
+DES_Permutation(uint8_t *block, const uint8_t *table)
+{
 	uint8_t tmpblock[8],tmp;
 	uint32_t i;
 
@@ -252,15 +235,18 @@ static uint8_t *DES_Permutation(uint8_t *block, const uint8_t *table) {
 	return block;
 }
 
-/*! \brief Private function to process a block after its been permutated
+
+/** Private function to process a block after its been permutated
  *
- * \warning block and ks aren't checked for length or validity
+ * @warning block and ks aren't checked for length or validity
  *
- * \param block 8-byte block in memory to be DES crypted
- * \param ks 8-byte keyschedule to use (one of 16 in an array)
- * \return A duplicate pointer of block
+ * @param block 8-byte block in memory to be DES crypted
+ * @param ks 8-byte keyschedule to use (one of 16 in an array)
+ * @return A duplicate pointer of block
  */
-static uint8_t *DES_RawProcessBlock(uint8_t *block, const uint8_t *ks) {
+static uint8_t *
+DES_RawProcessBlock(uint8_t *block, const uint8_t *ks)
+{
 	uint32_t i,tmp;
 	uint8_t tmpblock[2][8];
 
@@ -302,21 +288,24 @@ static uint8_t *DES_RawProcessBlock(uint8_t *block, const uint8_t *ks) {
 	return block;
 }
 
-/*! \brief Private DES function to property process a block of data
+
+/** Private DES function to property process a block of data
  *
  * Calls DES_Permutation and DES_RawProcessBlock to
  *	appropriately encrypt or decrypt an 8-byte block of data
  *
- * \warning Memory is not checked to be valid or of proper length
+ * @warning Memory is not checked to be valid or of proper length
  *
- * \param rounds Number of times to process the block (GRF always uses 1)
- * \param dst Location in memory to store the processed block of data
- * \param src Location in memory to retrieve the unprocessed block of data
- * \param ks 0x80-byte key schedule to process the data against
- * \param dir Direction the processing is going, one of GRFCRYPT_DECRYPT
+ * @param rounds Number of times to process the block (GRF always uses 1)
+ * @param dst Location in memory to store the processed block of data
+ * @param src Location in memory to retrieve the unprocessed block of data
+ * @param ks 0x80-byte key schedule to process the data against
+ * @param dir Direction the processing is going, one of GRFCRYPT_DECRYPT
  *		or GRFCRYPT_ENCRYPT
  */
-static uint8_t *DES_ProcessBlock(uint8_t rounds, uint8_t *dst, const uint8_t *src, const char *ks, uint8_t dir) {
+static uint8_t *
+DES_ProcessBlock(uint8_t rounds, uint8_t *dst, const uint8_t *src, const char *ks, uint8_t dir)
+{
 	uint32_t i;
 	uint8_t tmp[4];
 
@@ -347,113 +336,124 @@ static uint8_t *DES_ProcessBlock(uint8_t rounds, uint8_t *dst, const uint8_t *sr
 	return dst;
 }
 
-/*******************
-* Public Functions *
-*******************/
 
-/*! \brief DES function to create a key schedule
+/********************
+ * Public Functions *
+ ********************/
+
+/** DES function to create a key schedule
  *
  * Generates the 16x8 (0x80) byte keyschedule from the provided 8-byte key
  *
- * \warning Parameters are not checked to be of proper length or to be valid
+ * @note GRAVITY's DES implementation is broken in that it uses
+ * a bitwise OR instead of a bitwise AND while creating the keyschedule
+ * causing the keyschedule to always be 0x80 bytes of 0. So this implementation
+ * is also broken.
  *
- * \note Currently a broken implementation to work with GRF files.
- *
- * \todo Watch GRAVITY's GRF handlers to see when they fix their
+ * @warning Parameters are not checked to be of proper length or to be valid
+ * @todo Watch GRAVITY's GRF handlers to see when they fix their
  *		broken implementation of Data Encryption Standard (DES)
  *
- * \param ks Pointer to a 0x80 byte array for storing the key schedule
- * \param key 8-bytes of information to be used when creating the key schedule
- * \return A duplicate pointer to the newly made key schedule
+ * @param ks Pointer to a 0x80 byte array for storing the key schedule
+ * @param key 8-bytes of information to be used when creating the key schedule
+ * @return A duplicate pointer to the newly made key schedule
  */
-char *DES_CreateKeySchedule(char *ks, const char *key) {
-/* If we should be using a correctly working CreateKeySchedule, */
-/* #define GRF_FIXED_KEYSCHEDULE */
+char *
+DES_CreateKeySchedule(char *ks, const char *key)
+{
+	/* If we should be using a correctly working CreateKeySchedule, */
+	/* #define GRF_FIXED_KEYSCHEDULE */
+
 #ifndef GRF_FIXED_KEYSCHEDULE
 	/* Clear the key schedule */
-	memset(ks,0,0x80);
+	memset(ks, 0, 0x80);
+
 #else /* #elif defined(GRF_FIXED_KEYSCHEDULE) */
 	uint32_t i,j,tmp;
 	const uint8_t *table;
 	uint8_t newpc1[8];
 
-	memset(newpc1,0,8);
+	memset(newpc1, 0, 8);
 
 	/* Modify PC-1 */
-	for(i=0;i<0x1C;i++) {
-		tmp=DES_PC1_1[i]-1;
-		if (key[tmp>>3]&BitMap[tmp&7])
-# ifndef GRF_FIXED_KEYSCHEDULE
+	for (i = 0; i < 0x1C; i++) {
+		tmp = DES_PC1_1[i] - 1;
+		if (key[tmp >> 3] & BitMap[tmp & 7])
+		#ifndef GRF_FIXED_KEYSCHEDULE
 			/* THIS WILL NEVER EXIST AFTER PREPROCESSING!
 			 * It is here to show what GRAVITY does in their
 			 * key schedule generation
 			 */
-			newpc1[i>>3]&=BitMap[i&7];
-# else
+			newpc1[i >> 3] &= BitMap[i & 7];
+		#else
 			/* This is the correct way it should be coded */
-			newpc1[i>>3]|=BitMap[i&7];
-# endif /* !defined(GRF_FIXED_KEYSCHEDULE) */
+			newpc1[i >> 3] |= BitMap[i & 7];
+		#endif /* !defined(GRF_FIXED_KEYSCHEDULE) */
 
-		tmp=DES_PC1_2[i]-1;
-		if (key[tmp>>3]&BitMap[tmp&7])
-# ifndef GRF_FIXED_KEYSCHEDULE
+		tmp = DES_PC1_2[i] - 1;
+		if (key[tmp >> 3] & BitMap[tmp & 7])
+		#ifndef GRF_FIXED_KEYSCHEDULE
 			/* THIS WILL NEVER EXIST AFTER PREPROCESSING!
 			 * Again, using &= when it should be |=
 			 * ... Stupid nubs.
 			 */
-			newpc1[i>>7]&=BitMap[i&7];
-# else
-			newpc1[i>>7]|=BitMap[i&7];
-# endif /* !defined(GRF_FIXED_KEYSCHEDULE) */
+			newpc1[i >> 7] &= BitMap[i & 7];
+		#else
+			newpc1[i >> 7] |= BitMap[i & 7];
+		#endif /* !defined(GRF_FIXED_KEYSCHEDULE) */
 	}
 
-	table=DES_LSHIFTS;
-	for(i=0;i<0x80;table++,i+=8) {
+	table = DES_LSHIFTS;
+	for (i = 0; i < 0x80; table++, i += 8) {
 		if (*table) {
-			for (j=*table;j>0;j--) {
+			for (j = *table; j > 0; j--) {
 				/* Rotate the left 28 bits of modified PC1 */
-				tmp=newpc1[0];
-				newpc1[0]=(newpc1[0]<<1)|(newpc1[1]>>7);
-				newpc1[1]=(newpc1[1]<<1)|(newpc1[2]>>7);
-				newpc1[2]=(newpc1[2]<<1)|(newpc1[3]>>7);
-				newpc1[3]=(newpc1[3]<<1)|((tmp>>3)&0x10);
+				tmp = newpc1[0];
+				newpc1[0] = (newpc1[0] << 1) | (newpc1[1] >> 7);
+				newpc1[1] = (newpc1[1] << 1) | (newpc1[2] >> 7);
+				newpc1[2] = (newpc1[2] << 1) | (newpc1[3] >> 7);
+				newpc1[3] = (newpc1[3] << 1) | ((tmp >> 3) & 0x10);
 
 				/* Rotate the right 28bits of modified PC1 */
-				tmp=newpc1[4];
-				newpc1[4]=(newpc1[4]<<1)|(newpc1[5]>>7);
-				newpc1[5]=(newpc1[5]<<1)|(newpc1[6]>>7);
-				newpc1[6]=(newpc1[6]<<1)|(newpc1[7]>>7);
-				newpc1[7]=(newpc1[7]<<1)|((tmp>>3)&0x10);
+				tmp = newpc1[4];
+				newpc1[4] = (newpc1[4] << 1) | (newpc1[5] >> 7);
+				newpc1[5] = (newpc1[5] << 1) | (newpc1[6] >> 7);
+				newpc1[6] = (newpc1[6] << 1) | (newpc1[7] >> 7);
+				newpc1[7] = (newpc1[7] << 1) | ((tmp >> 3) & 0x10);
 			}
 		}
 
 		/* Clear the next 8 bytes of the key schedule */
-		memset(ks+i,0,8);
+		memset(ks + i, 0, 8);
 
 		/* Create the key schedule */
-		for(j=0;j<0x30;j++) {
-			tmp=DES_PC2[j]-1;
-			if (newpc1[(tmp<0x1C)?(tmp>>3):((tmp-0x1C)>>7)]&BitMap[tmp&7]) {
-				ks[i+(tmp/6)]|=BitMap[tmp%6]
+		for(j = 0; j < 0x30; j++) {
+			tmp = DES_PC2[j] - 1;
+			if (newpc1[(tmp < 0x1C) ? (tmp >> 3) : ((tmp - 0x1C) >> 7)] & BitMap[tmp & 7]) {
+				ks[i + (tmp / 6)] |= BitMap[tmp % 6];
 			}
 		}
 	}
+
 #endif /* defined(GRF_FIXED_KEYSCHEDULE) */
 
 	/* Return the key schedule */
 	return ks;
 }
 
-/*! \brief Function to process a set amount of data using DES
+
+/** DES function to process a set amount of data.
  *
- * \param dst Destination of processed data
- * \param src Source of unprocessed data
- * \param len Length of data to be processed
- * \param ks Pointer to the 0x80 byte key schedule
- * \param dir Direction of processing (GRFCRYPT_DECRYPT or GRFCRYPT_ENCRYPT)
- * \return A duplicate pointer to the data of dst
+ * @param dst Destination of processed data
+ * @param src Source of unprocessed data
+ * @param len Length of data to be processed
+ * @param ks Pointer to the 0x80 byte key schedule
+ * @param dir Direction of processing (GRFCRYPT_DECRYPT or GRFCRYPT_ENCRYPT)
+ * @return A duplicate pointer to the data of dst
  */
-char *DES_Process(char *dst, const char *src, uint32_t len, const char *ks, uint8_t dir) {
+char *
+DES_Process(char *dst, const char *src, uint32_t len, const char *ks, uint8_t dir)
+{
 	uint32_t i;
 	char *orig;
 
@@ -464,23 +464,26 @@ char *DES_Process(char *dst, const char *src, uint32_t len, const char *ks, uint
 	return orig;
 }
 
-/*! \brief Function to process GRF data
+
+/** Function to process GRF data
  *
  * Regardless of which flags are set, this'll (hopefully) figure it out
  * and process the data correctly
  *
- * \warning Pointers are not checked to be valid, or lengths checked
+ * @warning Pointers are not checked to be valid, or lengths checked
  *
- * \param dst Pointer to where destination (processed) should be stored
- * \param src Pointer to source (unprocessed) data
- * \param len Length of the data to process
- * \param flags Flags to process the data with
- * \param digitsGen Size of the compressed, but not encrypted, data
- * \param ks Pointer to the 0x80 byte key schedule
- * \param dir Direction of processing (GRFCRYPT_DECRYPT or GRFCRYPT_ENCRYPT)
- * \return Duplicate pointer to the data stored in dst
+ * @param dst Pointer to where destination (processed) should be stored
+ * @param src Pointer to source (unprocessed) data
+ * @param len Length of the data to process
+ * @param flags Flags to process the data with
+ * @param digitsGen Size of the compressed, but not encrypted, data
+ * @param ks Pointer to the 0x80 byte key schedule
+ * @param dir Direction of processing (GRFCRYPT_DECRYPT or GRFCRYPT_ENCRYPT)
+ * @return Duplicate pointer to the data stored in dst
  */
-char *GRF_Process(char *dst, const char *src, uint32_t len, uint8_t flags, uint32_t digitsGen, const char *ks, uint8_t dir) {
+char *
+GRF_Process(char *dst, const char *src, uint32_t len, uint8_t flags, uint32_t digitsGen, const char *ks, uint8_t dir)
+{
 	uint32_t i;
 	uint8_t digits;
 
@@ -511,21 +514,22 @@ char *GRF_Process(char *dst, const char *src, uint32_t len, uint8_t flags, uint3
 	return dst;
 }
 
-/*! \brief Function to process data with GRFFILE_FLAG_MIXCRYPT set
+/** Function to process data with GRFFILE_FLAG_MIXCRYPT set
  *
+ * @warning Pointers aren't checked to be valid and of at least len length
  *
- * \warning Pointers aren't checked to be valid and of at least len length
- *
- * \param dst Pointer to where destination (processed) should be stored
- * \param src Pointer to source (unprocessed) data
- * \param len Length of the data to process
- * \param cycle uint32_t describing how often the data should be run through
+ * @param dst Pointer to where destination (processed) should be stored
+ * @param src Pointer to source (unprocessed) data
+ * @param len Length of the data to process
+ * @param cycle uint32_t describing how often the data should be run through
  *		the DES functions
- * \param ks Pointer to the 0x80 byte key schedule
- * \param dir Direction of processing (GRFCRYPT_DECRYPT or GRFCRYPT_ENCRYPT)
- * \return Duplicate pointer to the data stored in dst
+ * @param ks Pointer to the 0x80 byte key schedule
+ * @param dir Direction of processing (GRFCRYPT_DECRYPT or GRFCRYPT_ENCRYPT)
+ * @return Duplicate pointer to the data stored in dst
  */
-char *GRF_MixedProcess(char *dst, const char *src, uint32_t len, uint8_t cycle, const char *ks, uint8_t dir) {
+char *
+GRF_MixedProcess(char *dst, const char *src, uint32_t len, uint8_t cycle, const char *ks, uint8_t dir)
+{
 	uint32_t i;
 	uint8_t j,tmp;
 	char *orig;
@@ -625,4 +629,3 @@ char *GRF_MixedProcess(char *dst, const char *src, uint32_t len, uint8_t cycle, 
 }
 
 GRFEXTERN_END
-

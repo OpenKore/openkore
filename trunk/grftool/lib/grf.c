@@ -43,15 +43,16 @@ GRFEXTERN_BEGIN
 
 /* Headers */
 #define GRF_HEADER		"Master of Magic"
-#define GRF_HEADER_LEN		(sizeof(GRF_HEADER)-1)	/* -1 to strip
-							 * null terminator
-							 */
-#define GRF_HEADER_MID_LEN	(sizeof(GRF_HEADER)+0xE)	/* -1 + 0xF */
-#define GRF_HEADER_FULL_LEN	(sizeof(GRF_HEADER)+0x1E)	/* -1 + 0x1F */
+#define GRF_HEADER_LEN		(sizeof(GRF_HEADER) - 1)	/* -1 to strip
+								 * null terminator
+								 */
+#define GRF_HEADER_MID_LEN	(sizeof(GRF_HEADER) + 0xE)	/* -1 + 0xF */
+#define GRF_HEADER_FULL_LEN	(sizeof(GRF_HEADER) + 0x1E)	/* -1 + 0x1F */
 
-/*! \brief Special file extensions
+
+/** Special file extensions.
  *
- * Files with these extentions are handled differently in GPFs
+ * Files with these extentions are handled differently in GPFs.
  */
 static const char specialExts[][5] = {
 	".gnd",
@@ -63,56 +64,63 @@ static const char specialExts[][5] = {
 static const char crypt_watermark[] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08,
 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E };
 
+
 /********************
 * Private Functions *
 ********************/
 
-/*! \brief Simplicity Macro
+/** Simplicity Macro.
  *
  * Macro to make it easier to call GRF_CheckExtFunc
  */
-#define GRF_CheckExt(a,b) GRF_CheckExtFunc(a,b,sizeof(b))
+#define GRF_CheckExt(a, b) GRF_CheckExtFunc(a, b, sizeof(b))
 
-/*! \brief Private function to check filename extensions
+/** Private function to check filename extensions.
  *
  * Checks the last 4 characters of a filename for
  * a specific extension
  *
- * \param filename The filename to search for the extension
- * \param extlist A list of each extension to search for
- * \param listsize The number of extensions in the list
- * \return 0 if none of the extensions match, 1 if a match was found
+ * @param filename The filename to search for the extension
+ * @param extlist A list of each extension to search for
+ * @param listsize The number of extensions in the list
+ * @return 0 if none of the extensions match, 1 if a match was found
  */
-static int GRF_CheckExtFunc(const char *filename, const char extlist[][5], size_t listsize) {
+static int
+GRF_CheckExtFunc(const char *filename, const char extlist[][5], size_t listsize)
+{
 	uint32_t i;
 
-	if (listsize<1)
+	if (listsize < 1)
 		return 0;
 
 	/* Find the last X bytes of the filename, where X is extension size */
-	i=strlen(filename);
-	if (i<4) return 0;
-	filename+=(i-4);
+	i = strlen(filename);
+	if (i < 4)
+		return 0;
+	filename += (i - 4);
 
 	/* Check if the file has any of the extensions */
-	for (i=0;i<listsize;i++)
-		if (!strcasecmp(filename,extlist[i]))
+	for (i = 0; i< listsize; i++)
+		if (strcasecmp(filename, extlist[i]) == 0)
 			return 1;
 
 	return 0;
 }
 
+
 #ifdef GRF_FIXED_KEYSCHEDULE
-/*! \brief Private function to convert a int32_t into an ASCII character string
+/** Private function to convert a int32_t into an ASCII character string.
  *
- * \warning dst is not checked for sanity (valid pointer, max length, etc)
+ * @warning dst is not checked for sanity (valid pointer, max length, etc)
  *
- * \param dst A character string to store the data in
- * \param src int32_t to be converted into an ASCII string
- * \param base The base to use while converting
- * \return A duplicate pointer to the data
+ * @param dst A character string to store the data in
+ * @param src int32_t to be converted into an ASCII string
+ * @param base The base to use while converting
+ * @return A duplicate pointer to the data
  */
-static char *GRF_ltoa(char *dst, int32_t src, uint8_t base) {
+static char *
+GRF_ltoa(char *dst, int32_t src, uint8_t base)
+{
 	char *dst2,*orig;
 	uint8_t num;
 
@@ -165,19 +173,21 @@ static char *GRF_ltoa(char *dst, int32_t src, uint8_t base) {
 }
 #endif /* defined(GRF_FIXED_KEYSCHEDULE) */
 
-/*! \brief Private utility function to swap the nibbles of
- *	each byte in a string
+
+/** Private utility function to swap the nibbles of each byte in a string.
  *
- * \warning Pointers are not checked for validity
- * \note dst should be able to hold at least len characters, and
+ * @warning Pointers are not checked for validity
+ * @note dst should be able to hold at least len characters, and
  *		src should hold at least len characters
  *
- * \param dst Pointer to destination (nibble-swapped) data
- * \param src Pointer to source (unswapped) data
- * \param len Length of data to swap
- * \return A duplicate pointer to data stored by dst
+ * @param dst Pointer to destination (nibble-swapped) data
+ * @param src Pointer to source (unswapped) data
+ * @param len Length of data to swap
+ * @return A duplicate pointer to data stored by dst
  */
-static uint8_t *GRF_SwapNibbles(uint8_t *dst, const uint8_t *src, uint32_t len) {
+static uint8_t *
+GRF_SwapNibbles(uint8_t *dst, const uint8_t *src, uint32_t len)
+{
 	uint8_t *orig;
 	orig=dst;
 
@@ -187,16 +197,19 @@ static uint8_t *GRF_SwapNibbles(uint8_t *dst, const uint8_t *src, uint32_t len) 
 	return orig;
 }
 
+
 #ifdef GRF_FIXED_KEYSCHEDULE
-/*! \brief Private function to generate a key for crypting data
+/** Private function to generate a key for crypting data.
  *
- * \warning Pointers aren't checked
+ * @warning Pointers aren't checked
  *
- * \param key Pointer to the 8 bytes in which the key should be stored
- * \param src String to retrieve parts of data for key generation
- * \return Duplicate pointer to data stored at by key
+ * @param key Pointer to the 8 bytes in which the key should be stored
+ * @param src String to retrieve parts of data for key generation
+ * @return Duplicate pointer to data stored at by key
  */
-static char *GRF_GenerateDataKey(char *key, const char *src) {
+static char *
+GRF_GenerateDataKey(char *key, const char *src)
+{
 	uint32_t i,len;
 	const char *nopath;
 
@@ -1259,28 +1272,31 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 
 }
 
-/*******************
-* Public Functions *
-*******************/
 
-/*! \brief Open or create a GRF file and read its contents.
- *	(with callback)
+/********************
+ * Public Functions *
+ ********************/
+
+/** Open or create a GRF file and read its contents.
  *
  * If the file is created, a valid header is produced. It is updated when file is closed
- * using grf_close() or when calling grf_callback_flush().
+ * using grf_close() or when grf_callback_flush() is called.
  *
- * \sa GrfOpenCallback
+ * @see GrfOpenCallback, grf_open
  *
- * \param fname Filename of the GRF file
- * \param mode Character sequence specifying the mode to open the file in, according to fopen(3).
- *		For maximal compatibility, recommended flags are "rb" for read-only mode,
- *		"r+b" for read-write mode (modifying an archive), or "w+b" to create an empty grf file.
- *		Do not use mode "a" (append), or a mode where reading is impossible.
- * \param error [out] Pointer to a GrfError variable for error reporting. May be NULL.
- * \param callback Pointer to a GrfOpenCallback function, called for each read file.
- * \return A pointer to a newly created Grf struct
+ * @param fname Filename of the GRF file
+ * @param mode Character sequence specifying the mode to open the file in, according to fopen(3).
+ *             For maximal compatibility, recommended flags are @b "rb" for read-only mode,
+ *             @b "r+b" for read-write mode (modifying an archive), or @b "w+b" to create a new
+ *             empty grf file. Do not use mode "a" (append), or a mode where reading is impossible.
+ * @param error [out] Pointer to a GrfError variable for error reporting. May be NULL.
+ * @param callback Pointer to a GrfOpenCallback function. This function is called every time a file in
+ *                 the index is read. You can use it to implement a loading progress bar, for example.
+ * @return A pointer to a newly created Grf struct
  */
-GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpenCallback callback) {
+GRFEXPORT Grf *
+grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpenCallback callback)
+{
 	char buf[GRF_HEADER_FULL_LEN];
 	uint32_t i, zero=0, zero_fcount=ToLittleEndian32(7), create_ver=ToLittleEndian32(0x0200);
 	Grf *grf;
@@ -1475,19 +1491,20 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError 
 	return grf;
 }
 
-/*! \brief Extract a file inside a .GRF file into memory
+
+/** Extract a file inside a GRF file into memory.
  *
- * This is basically the same as the one found in original libgrf
- *
- * \param grf Pointer to information about the GRF to extract from
- * \param fname Exact filename of the file to be extracted
- * \param size Pointer to a location in memory where the size of memory
- *	extracted should be stored
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return A pointer to data that has been extracted, NULL if an error
- *	has occurred. The pointer must not be freed manually.
+ * @param grf    Pointer to a Grf structure, as returned by grf_callback_open()
+ * @param fname  Exact filename of the file to be extracted
+ * @param size   Pointer to a location in memory where the size of memory
+ *               extracted should be stored.
+ * @param error  Pointer to a GrfErrorType struct/enum for error reporting
+ * @return       A pointer to data that has been extracted, NULL if an error
+ *               has occurred. The pointer must not be freed manually.
  */
-GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *error) {
+GRFEXPORT void *
+grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *error)
+{
 	uint32_t i;
 
 	/* Make sure we've got valid arguments */
@@ -1508,7 +1525,7 @@ GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *
 
 /*! \brief Extract a file (pointed to by its index) into memory
  *
- * \param grf Pointer to information about the GRF to extract from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param index Index of the file to be extracted
  * \param size Pointer to a location in memory where the size of memory
  *	extracted should be stored
@@ -1612,7 +1629,7 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
  * \sa grf_get_z
  * \sa grf_index_get
  *
- * \param grf Pointer to information about the GRF to retrieve data from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param index Index of the file to be retrieved
  * \param size [out] Pointer to a location in memory where the size of the memory
  *	block should be stored
@@ -1706,7 +1723,7 @@ GRFEXPORT void *grf_index_get_z(Grf *grf, uint32_t index, uint32_t *size, uint32
  * \sa grf_index_get_z
  * \sa grf_get
  *
- * \param grf Pointer to information about the GRF to retrieve data from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param fname Exact filename of the file to be extracted
  * \param size [out] Pointer to a location in memory where the size of the memory
  *	block should be stored
@@ -1737,21 +1754,24 @@ GRFEXPORT void *grf_get_z (Grf *grf, const char *fname, uint32_t *size, uint32_t
 	return grf_index_get_z(grf,i,size,usize,error);
 }
 
-/*! \brief Retrieve an uncompressed block of data from a file
+
+/** Retrieve an uncompressed block of data from a file.
  *
- * \sa grf_get
- * \sa grf_index_chunk_get
+ * @see grf_get
+ * @see grf_index_chunk_get
  *
- * \param grf Pointer to information about the GRF to extract from
- * \param fname Full filename of the GrfFile to read from
- * \param buf Pointer to a buffer to write the chunk into
- * \param offset Offset inside the GrfFile to begin reading
- * \param len [in] Amount of data to read into buf
- *		[out] Amount of data actually read
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return If successful, a duplicate pointer to buf. Otherwise, NULL
+ * @param grf      Pointer to a Grf structure, as returned by grf_callback_open()
+ * @param fname    Full filename of the GrfFile to read from
+ * @param buf      Pointer to a buffer to write the chunk into
+ * @param offset   Offset inside the GrfFile to begin reading
+ * @param len      [in] Amount of data to read into buf
+ *                 [out] Amount of data actually read
+ * @param error    Pointer to a GrfErrorType struct/enum for error reporting
+ * @return If successful, it returns buf. Otherwise, NULL
  */
-GRFEXPORT void *grf_chunk_get (Grf *grf, const char *fname, char *buf, uint32_t offset, uint32_t *len, GrfError *error) {
+GRFEXPORT void *
+grf_chunk_get (Grf *grf, const char *fname, char *buf, uint32_t offset, uint32_t *len, GrfError *error)
+{
 	uint32_t i;
 	
 	/* Check our arguments */
@@ -1769,24 +1789,27 @@ GRFEXPORT void *grf_chunk_get (Grf *grf, const char *fname, char *buf, uint32_t 
 	}
 	
 	/* Use grf_index_chunk_get() */
-	return grf_index_chunk_get(grf,i,buf,offset,len,error);
+	return grf_index_chunk_get(grf, i, buf, offset, len, error);
 }
 
-/*! \brief Retrieve a decompressed block of data from a file
+
+/** Retrieve a decompressed block of data from a file.
  *
- * \sa grf_index_get
- * \sa grf_chunk_get
+ * @see grf_index_get()
+ * @see grf_chunk_get()
  *
- * \param grf Pointer to information about the GRF to extract from
- * \param fname Full filename of the GrfFile to read from
- * \param buf Pointer to a buffer to write the chunk into
- * \param offset Offset inside the GrfFile to begin reading
- * \param len [in] Amount of data to read into buf
- *		[out] Amount of data actually read, 0 if error or no data
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return If successful, a duplicate pointer to buf. Otherwise, NULL
+ * @param grf     Pointer to a Grf structure, as returned by grf_callback_open()
+ * @param index   Index of the Grf::files entry to be deleted
+ * @param buf     Pointer to a buffer to write the chunk into
+ * @param offset  Offset inside the GrfFile to begin reading
+ * @param len     [in] Amount of data to read into buf.
+ *		  [out] Amount of data actually read, 0 if error or no data
+ * @param error   Pointer to a GrfErrorType struct/enum for error reporting
+ * @return If successful, a duplicate pointer to buf. Otherwise, NULL
  */
-GRFEXPORT void *grf_index_chunk_get (Grf *grf, uint32_t index, char *buf, uint32_t offset, uint32_t *len, GrfError *error) {
+GRFEXPORT void *
+grf_index_chunk_get (Grf *grf, uint32_t index, char *buf, uint32_t offset, uint32_t *len, GrfError *error)
+{
 	void *fullbuf;
 	uint32_t fullsize;
 	
@@ -1821,9 +1844,7 @@ GRFEXPORT void *grf_index_chunk_get (Grf *grf, uint32_t index, char *buf, uint32
 
 /*! \brief Extract to a file
  *
- * Basically the same as the one in original libgrf
- *
- * \param grf Pointer to information about the GRF to extract from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param grfname Full filename of the Grf::files file to extract
  * \param file Filename to write the data to
  * \param error Pointer to a GrfErrorType struct/enum for error reporting
@@ -1848,7 +1869,7 @@ GRFEXPORT int grf_extract(Grf *grf, const char *grfname, const char *file, GrfEr
  *
  * Very similar to the original libgrf's grf_index_extract
  *
- * \param grf Pointer to information about the GRF to extract from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param index The Grf::files index number to extract
  * \param file Filename to write the data to
  * \param error Pointer to a GrfErrorType struct/enum for error reporting
@@ -1902,12 +1923,14 @@ GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfE
 
 /*! \brief Delete a file from the file table
  *
- * \param grf Pointer to information about the GRF to delete from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param fname Exact filename of the file to be deleted
  * \param error Pointer to a GrfErrorType struct/enum for error reporting
  * \return The number of files deleted from the GRF archive
  */
-GRFEXPORT int grf_del(Grf *grf, const char *fname, GrfError *error) {
+GRFEXPORT int
+grf_del(Grf *grf, const char *fname, GrfError *error)
+{
 	uint32_t i;
 
 	/* Make sure we've got valid arguments */
@@ -1982,7 +2005,7 @@ GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
 
 /*! \brief Replace the data of a file
  *
- * \param grf Pointer to information about the GRF to delete from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param name Name of the file inside the GRF
  * \param data Pointer to the replacement data
  * \param len Length of the replacement data
@@ -1990,7 +2013,9 @@ GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
  * \param error Pointer to a GrfErrorType struct/enum for error reporting
  * \return The number of files successfully replaced
  */
-GRFEXPORT int grf_replace(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error) {
+GRFEXPORT int
+grf_replace(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error)
+{
 	uint32_t i;
 
 	/* Make sure we've got valid arguments */
@@ -2015,7 +2040,7 @@ GRFEXPORT int grf_replace(Grf *grf, const char *name, const void *data, uint32_t
 
 /*! \brief Replace the data of a file
  *
- * \param grf Pointer to information about the GRF to delete from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param index Index of the Grf::files entry to be replaced
  * \param data Pointer to the replacement data
  * \param len Length of the replacement data
@@ -2090,7 +2115,7 @@ GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const void *data, uint
  *
  * \warning Not testing when file already exists and trying to replace with a different type (is GRFFILE_FLAG_FILE set?). To be carefully debugged.
  *
- * \param grf Pointer to information about the GRF to add to
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param name Name of the destination file inside the GRF
  * \param data Pointer to the file data
  * \param len Length of the data
@@ -2172,7 +2197,7 @@ GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len
  *	inside the GRF that is never used. A planned grf_repak
  *	will deal with this (and will completely restructure the GRF)
  *
- * \param grf Grf pointer to save data from
+ * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
  * \param error Pointer to a struct/enum for error reporting
  * \param callback Function to call for each file being flushed to disk.
  *		The first parameter received by this function is the address of a
@@ -2225,13 +2250,16 @@ GRFEXPORT void grf_close(Grf *grf) {
 	grf_free(grf);
 }
 
-/*! \brief Close a GRF file
+/** Close a GRF file.
  *
- * \warning This will not save any data!
+ * @warning This will not save any data! If you added files to the archive,
+ *          you must call grf_flush() before closing.
  *
- * \param grf Grf pointer to free
+ * @param grf Pointer to a Grf structure, as returned by grf_callback_open()
  */
-GRFEXPORT void grf_free(Grf *grf) {
+GRFEXPORT void
+grf_free(Grf *grf)
+{
 	uint32_t i;
 
 	/* Ensure we don't have access violations when freeing NULLs */
@@ -2258,17 +2286,19 @@ GRFEXPORT void grf_free(Grf *grf) {
 	free(grf);
 }
 
-/*! \brief Completely restructure a GRF archive
+/** Completely restructure a GRF archive.
  *
- * \param grf Filename of the original GRF
- * \param tmpgrf Filename to use temporarily while restructuring
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return 0 if an error occurred, 1 if the repak failed
+ * @param grf    Filename of the original GRF
+ * @param tmpgrf Filename to use temporarily while restructuring
+ * @param error  Pointer to a GrfErrorType struct/enum for error reporting
+ * @return 0 if an error occurred, 1 if repacking failed
  */
-GRFEXPORT int grf_repak(const char *grf, const char *tmpgrf, GrfError *error) {
-	/*! \todo Write this code! */
+GRFEXPORT int
+grf_repak(const char *grf, const char *tmpgrf, GrfError *error)
+{
+	/** @todo Write this code! */
 	return 0;
 }
 
-GRFEXTERN_END
 
+GRFEXTERN_END
