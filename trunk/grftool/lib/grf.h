@@ -86,7 +86,6 @@ typedef enum
 	GE_INVALID,	/* Bad magic header; probably not a valid GRF file */
 	GE_CORRUPTED,	/* Good magic header but bad file list header; probably corrupted */
 	GE_NOMEM,	/* Out of memory */
-	GE_NSUP1,	/* Version 1 GRF archive not supported */
 	GE_NSUP,	/* Unsupported GRF archive version */
 
 	/* grf_get() and grf_extract() errors */
