@@ -240,3 +240,7 @@ November 12th:
 1  - Started to use proper variable initialization in some places. Bot ran fine for the
      last 12h, so I assume it's safe to import it to CVS. Couple of the functions used
      when loading the config files cleaned up, more internal error checking. (junq)
+
+January 6th 2004:
+
+1  - Removed dead monster count sub.
