@@ -226,7 +226,10 @@ addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parse
 addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
 
 Plugins::callHook('start2');
-Settings::load();
+if (!Settings::load()) {
+	$interface->errorDialog('A configuration file failed to load.');
+	exit 1;
+}
 Plugins::callHook('start3');
 
 
