@@ -11324,7 +11324,7 @@ sub updateDamageTables {
 #######################################
 #######################################
 
-sub avoidGM_near() {
+sub avoidGM_near {
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
 
@@ -11341,7 +11341,7 @@ sub avoidGM_near() {
 			$j++;
 		}
 
-		if ($statusGM && $players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) {
+		if ($statusGM && $players{$playersID[$i]}{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
 			chatLog("k", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
 
@@ -11356,7 +11356,7 @@ sub avoidGM_near() {
 	return 0;
 }
 
-sub avoidGM_talk($$) {
+sub avoidGM_talk {
 	return if (!$config{'avoidGM_talk'});
 	my ($chatMsgUser, $chatMsg) = @_;
 
@@ -11373,7 +11373,7 @@ sub avoidGM_talk($$) {
 		$j++;
 	}
 
-	if ($statusGM && $chatMsgUser =~/GM(.*)\d{1,}/i) {
+	if ($statusGM && $chatMsgUser =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
 		print "Disconnecting to avoid GM!\n"; 
 		chatLog("k", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n");
 
