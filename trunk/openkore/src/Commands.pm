@@ -270,7 +270,11 @@ sub cmdCart {
 	my ($arg2) = $input =~ /^\w+ (\d+)/;
 	my ($arg3) = $input =~ /^\w+ \d+ (\d+)/;
 
-	if ($arg1 eq "") {
+	if (!defined $cart{'inventory'}) {
+		error "Cart inventory is not available.\n";
+		return;
+
+	} elsif ($arg1 eq "") {
 		my $msg = "-------------Cart--------------\n" .
 			"#  Name\n";
 		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
