@@ -29,7 +29,7 @@ use Exporter;
 use base qw(Exporter);
 
 use Log qw(message error debug);
-use IPC::Protocol;
+use IPC::Messages qw(encode decode);
 use Utils qw(binAdd dataWaiting);
 
 
@@ -136,7 +136,7 @@ sub _processClient {
 	my ($msgID, %hash);
 	$client->{buffer} .= $data;
 
-	while ( ($msgID = IPC::Protocol::decode($client->{buffer}, \%hash, \$client->{buffer})) ) {
+	while ( ($msgID = decode($client->{buffer}, \%hash, \$client->{buffer})) ) {
 		my %copy = %hash;
 		foreach my $listener (@{$self->{listeners}}) {
 			next if (!defined $listener);
@@ -274,7 +274,7 @@ sub broadcast {
 	my ($ipc, $exclude, $msgID, $hash) = @_;
 	my $msg;
 
-	$msg = IPC::Protocol::encode($msgID, $hash);
+	$msg = encode($msgID, $hash);
 	foreach my $ID (keys %{$ipc->{clients}}) {
 		my $client = $ipc->{clients}{$ID};
 		next if (!defined $client || (defined($exclude) && $client->{ID} eq $exclude));
@@ -297,7 +297,7 @@ sub send {
 	my ($ipc, $clientID, $msgID, $hash) = @_;
 
 	if ( (my $client = $ipc->{clients}{$clientID}) ) {
-		my $msg = IPC::Protocol::encode($msgID, $hash);
+		my $msg = encode($msgID, $hash);
 		if (!_sendData($client->{sock}, $msg)) {
 			foreach my $listener (@{$ipc->{listeners}}) {
 				next if (!defined $listener);

@@ -81,7 +81,7 @@
 # - The following bytes are the value string.
 # `l`
 
-package IPC::Protocol;
+package IPC::Messages;
 
 use strict;
 use warnings;
@@ -94,7 +94,7 @@ our @EXPORT_OK = qw(decode encode);
 
 
 ##
-# IPC::Protocol::decode(data, r_hash, r_rest)
+# IPC::Messages::decode(data, r_hash, r_rest)
 # data: the message data.
 # r_hash: reference to a hash. The message's arguments will be stored in here.
 # r_rest: reference to a scalar. If $data contains more than 1 message, all data following the first message will be stored here.
@@ -144,7 +144,7 @@ sub decode {
 
 
 ##
-# IPC::Protocol::encode(ID, hash)
+# IPC::Messages::encode(ID, hash)
 # Returns: the message.
 #
 # Encode Perl data structures into a message.

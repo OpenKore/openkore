@@ -22,7 +22,7 @@
 # All OpenKore instances (and other programs that wish to communicate with OpenKore)
 # form a <em>network</em>, and are the <em>clients</em>. In the center of this network
 # is the <em>IPC manager server</em>, or the <em>manager</em> in short.
-# Clients can send <em>messages</em> (see IPC::Protocol.pm) to each other.
+# Clients can send <em>messages</em> (see IPC::Messages.pm) to each other.
 # The manager acts like a proxy and keeps the network together. All messages
 # must go through the manager, which will deliver the message to the right client(s).
 # All clients are given an ID so clients can identify each other.
