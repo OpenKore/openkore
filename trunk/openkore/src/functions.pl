@@ -5508,7 +5508,7 @@ sub parseMsg {
 			}
 
 			$players{$ID}{walk_speed} = $walk_speed;
-			$players{$ID}{look}{head} = $direction;
+			$players{$ID}{look}{head} = 0;
 			$players{$ID}{look}{body} = $direction;
 			$players{$ID}{headgear}{low} = $lowhead;
 			$players{$ID}{headgear}{top} = $tophead;
@@ -5534,8 +5534,8 @@ sub parseMsg {
 					$pets{$ID}{'name_given'} = "Unknown";
 					$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
 				}
-				$pets{$ID}{look}{head} = $direction;
-				$pets{$ID}{look}{body} = 0;
+				$pets{$ID}{look}{head} = 0;
+				$pets{$ID}{look}{body} = $direction;
 				%{$pets{$ID}{pos}} = %coordsFrom;
 				%{$pets{$ID}{pos_to}} = %coordsTo;
 				$pets{$ID}{time_move} = time;
@@ -5559,8 +5559,8 @@ sub parseMsg {
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
 					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
 				}
-				$monsters{$ID}{look}{head} = $direction;
-				$monsters{$ID}{look}{body} = 0;
+				$monsters{$ID}{look}{head} = 0;
+				$monsters{$ID}{look}{body} = $direction;
 				%{$monsters{$ID}{pos}} = %coordsFrom;
 				%{$monsters{$ID}{pos_to}} = %coordsTo;
 				$monsters{$ID}{time_move} = time;
@@ -6715,15 +6715,28 @@ sub parseMsg {
 		my $number = unpack("C1",substr($msg, 7, 1));
 
 		if ($part == 0) {
+			# Job change
 			my $msg;
 			if ($ID eq $accountID) {
 				$char->{jobID} = $number;
 				message "You changed job to: $jobs_lut{$number}\n", "parseMsg/job";
 			} elsif ($players{$ID}) {
 				$players{$ID}{jobID} = $number;
-				message "Player $players{$ID}{name} changed job to: $jobs_lut{$number}\n", "parseMsg/job";
+				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed job to: $jobs_lut{$number}\n", "parseMsg/job";
 			} else {
 				debug "Unknown #" . unpack("L", $ID) . " changed job to: $jobs_lut{$number}\n", "parseMsg/job";
+			}
+
+		} elsif ($part == 6) {
+			# Hair color change
+			if ($ID eq $accountID) {
+				$char->{hair_color} = $number;
+				message "Your hair color changed to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
+			} elsif ($players{$ID}) {
+				$players{$ID}{hair_color} = $number;
+				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
+			} else {
+				debug "Unknown #" . unpack("L", $ID) . " changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
 			}
 		}
 

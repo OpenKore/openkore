@@ -32,8 +32,7 @@ die "W32 only, this module should never be called on any other OS\n"
 		unless ($^O eq 'MSWin32' || $^O eq 'cygwin');
 
 use Carp;
-#BEGIN { $SIG{__DIE__} = sub {confess @_}; }
-use Time::HiRes qw/time/;
+use Time::HiRes qw/time sleep/;
 use Text::Wrap;
 use Win32::Console;
 
@@ -89,6 +88,7 @@ sub getInput {
 	if ($timeout < 0) {
 		until (defined $msg) {
 			$self->readEvents();
+			sleep 0.01;
 			if (@{$self->{input_lines}}) {
 				$msg = shift @{$self->{input_lines}};
 			}
@@ -97,6 +97,7 @@ sub getInput {
 		my $end = time + $timeout;
 		until ($end < time || defined $msg) {
 			$self->readEvents();
+			sleep 0.01;
 			if (@{$self->{input_lines}}) {
 				$msg = shift @{$self->{input_lines}};
 			}
