@@ -28,6 +28,7 @@
 
 - teleportAuto_noUnstuck configuration option will make bot not teleport when
   it's stuck
+- hopefully fix zeny display when dealing for real
 
 
 ==================
