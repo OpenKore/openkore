@@ -1330,6 +1330,7 @@ sub parseCommand {
 		my $x = $2;
 		my $y = $3;
 		my $lvl = $4;
+		
 		if (!$skill_num || !defined($x) || !defined($y)) {
 			error	"Syntax Error in function 'sl' (Use Skill on Location)\n" .
 				"Usage: ss <skill #> <x> <y> [<skill lvl>]\n";
@@ -1338,10 +1339,8 @@ sub parseCommand {
 				"Skill $skill_num does not exist.\n";
 		} else {
 			my $skill = $chars[$config{'char'}]{'skills'}{$skillsID[$skill_num]};
-			if (!$lvl || $lvl > $skill->{'lv'}) {
-				$lvl = $skill->{'lv'};
-			}
-			ai_skillUse($skill->{'ID'}, $lvl, 0, 0, $x, $y);
+			$lvl = $skill->{'lv'} if (!$lvl || $lvl > $skill->{'lv'});
+			ai_skillUse($skillsID[$skill_num], $lvl, 0, 0, $x, $y);
 		}
 
 	} elsif ($switch eq "sm") {
@@ -1362,9 +1361,9 @@ sub parseCommand {
 				$arg3 = $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'};
 			}
 			if (!ai_getSkillUseType($skillsID[$arg1])) {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'ID'}, $arg3, 0,0, $monstersID[$arg2]);
+				ai_skillUse($skillsID[$arg1], $arg3, 0,0, $monstersID[$arg2]);
 			} else {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'ID'}, $arg3, 0,0, $monsters{$monstersID[$arg2]}{'pos_to'}{'x'}, $monsters{$monstersID[$arg2]}{'pos_to'}{'y'});
+				ai_skillUse($skillsID[$arg1], $arg3, 0,0, $monsters{$monstersID[$arg2]}{'pos_to'}{'x'}, $monsters{$monstersID[$arg2]}{'pos_to'}{'y'});
 			}
 		}
 
@@ -1386,9 +1385,9 @@ sub parseCommand {
 				$arg3 = $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'};
 			}
 			if (!ai_getSkillUseType($skillsID[$arg1])) {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'ID'}, $arg3, 0,0, $playersID[$arg2]);
+				ai_skillUse($skillsID[$arg1], $arg3, 0,0, $playersID[$arg2]);
 			} else {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'ID'}, $arg3, 0,0, $players{$playersID[$arg2]}{'pos_to'}{'x'}, $players{$playersID[$arg2]}{'pos_to'}{'y'});
+				ai_skillUse($skillsID[$arg1], $arg3, 0,0, $players{$playersID[$arg2]}{'pos_to'}{'x'}, $players{$playersID[$arg2]}{'pos_to'}{'y'});
 			}
 		}
 
@@ -1406,9 +1405,9 @@ sub parseCommand {
 				$arg2 = $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'};
 			}
 			if (!ai_getSkillUseType($skillsID[$arg1])) {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'ID'}, $arg2, 0,0, $accountID);
+				ai_skillUse($skillsID[$arg1], $arg2, 0,0, $accountID);
 			} else {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'ID'}, $arg2, 0,0, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
+				ai_skillUse($skillsID[$arg1], $arg2, 0,0, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 			}
 		}
 
@@ -2023,7 +2022,7 @@ sub AI {
 						}
 						if ($ai_v{'temp'}{'lv'} > 0) {
 							$ai_v{'temp'}{'sp_used'} += $ai_v{'temp'}{'sp'};
-							$ai_v{'temp'}{'skillCast'}{'skill'} = 28;
+							$ai_v{'temp'}{'skillCast'}{'skill'} = 'AL_HEAL';
 							$ai_v{'temp'}{'skillCast'}{'lv'} = $ai_v{'temp'}{'lv'};
 							$ai_v{'temp'}{'skillCast'}{'maxCastTime'} = 0;
 							$ai_v{'temp'}{'skillCast'}{'minCastTime'} = 0;
@@ -2061,8 +2060,8 @@ sub AI {
 					undef $ai_v{'temp'}{'failed'};
 					$ai_v{'temp'}{'failed'} = 1;
 					for ($i = $chars[$config{'char'}]{'skills'}{'AL_INCAGI'}{'lv'}; $i >=1; $i--) {
-						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc("Increase AGI")}}{$i}) {
-							ai_skillUse(29,$i,0,0,$ai_v{'temp'}{'targetID'});
+						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{'AL_INCAGI'}{$i}) {
+							ai_skillUse('AL_INCAGI', $i, 0, 0, $ai_v{'temp'}{'targetID'});
 							$ai_v{'temp'}{'failed'} = 0;
 							last;
 						}
@@ -2093,8 +2092,8 @@ sub AI {
 					undef $ai_v{'temp'}{'failed'};
 					$ai_v{'temp'}{'failed'} = 1;
 					for ($i = $chars[$config{'char'}]{'skills'}{'AL_BLESSING'}{'lv'}; $i >=1; $i--) {
-						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc("Blessing")}}{$i}) {
-							ai_skillUse(34,$i,0,0,$ai_v{'temp'}{'targetID'});
+						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{'AL_BLESSING'}{$i}) {
+							ai_skillUse('AL_BLESSING', $i, 0, 0, $ai_v{'temp'}{'targetID'});
 							$ai_v{'temp'}{'failed'} = 0;
 							last;
 						}
@@ -2125,8 +2124,8 @@ sub AI {
 					undef $ai_v{'temp'}{'failed'};
 					$ai_v{'temp'}{'failed'} = 1;
 					for ($i = $chars[$config{'char'}]{'skills'}{'PR_KYRIE'}{'lv'}; $i >=1; $i--) {
-						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc("Kyrie Eleison")}}{$i}) {
-							ai_skillUse(73,$i,0,0,$ai_v{'temp'}{'targetID'});
+						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{'PR_KYRIE'}{$i}) {
+							ai_skillUse('PR_KYRIE', $i, 0, 0, $ai_v{'temp'}{'targetID'});
 							$ai_v{'temp'}{'failed'} = 0;
 							last;
 						}
@@ -3111,57 +3110,11 @@ sub AI {
 		if ($ai_v{'useSelf_skill_lvl'} > 0) {
 			debug qq~Auto-skill on self: $skills_lut{$skills_rlut{lc($ai_v{'useSelf_skill'})}} (lvl $ai_v{'useSelf_skill_lvl'})\n~, "ai";
 			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'useSelf_skill'})})) {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'useSelf_skill'})}}{'ID'}, $ai_v{'useSelf_skill_lvl'}, $ai_v{'useSelf_skill_maxCastTime'}, $ai_v{'useSelf_skill_minCastTime'}, $accountID);
+				ai_skillUse($skills_rlut{lc($ai_v{'useSelf_skill'})}, $ai_v{'useSelf_skill_lvl'}, $ai_v{'useSelf_skill_maxCastTime'}, $ai_v{'useSelf_skill_minCastTime'}, $accountID);
 			} else {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'useSelf_skill'})}}{'ID'}, $ai_v{'useSelf_skill_lvl'}, $ai_v{'useSelf_skill_maxCastTime'}, $ai_v{'useSelf_skill_minCastTime'}, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
+				ai_skillUse($skills_rlut{lc($ai_v{'useSelf_skill'})}, $ai_v{'useSelf_skill_lvl'}, $ai_v{'useSelf_skill_maxCastTime'}, $ai_v{'useSelf_skill_minCastTime'}, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 			}
 		}		
-	}
-
-	#Auto Equip - Kaldi Update 12/03/2004
-	##### AUTO-EQUIP #####
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || 
-		 $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "skill_use" ||
-		 $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take" || 
-		 $ai_seq[0] eq "attack" || $ai_v{'temp'}{'teleport'}{'lv'}) && timeOut($timeout{'ai_item_equip_auto'})
-	  ) {
-		my $i = 0;
-		my $ai_index_attack = binFind(\@ai_seq, "attack");
-		my $ai_index_skill_use = binFind(\@ai_seq, "skill_use");
-		my $currentSkill;
-		if (defined $ai_index_skill_use) {
-			my $skillID = $ai_seq_args[$ai_index_skill_use]{'skill_use_id'};
-			$currentSkill = $skillsID_lut{$skillID};
-		}
-
-		while ($config{"equipAuto_$i"}) {
-			if (checkSelfCondition("equipAuto_$i")
-			 && (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
-			 && (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
-			 && ($config{"equipAuto_$i" . "_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
-			 && (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{'temp'}{'teleport'}{'lv'})
-			 && (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
-			) {
-				undef $ai_v{'temp'}{'invIndex'};
-				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i"});
-				if ($ai_v{'temp'}{'invIndex'} ne "") {
-					sendEquip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
-					$timeout{'ai_item_equip_auto'}{'time'} = time;
-					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~;
-					last;
-				}
-
-			} elsif ($config{"equipAuto_$i" . "_def"} && !$chars[$config{'char'}]{'sitting'} && !$config{"equipAuto_$i"."_disabled"}) {
-				undef $ai_v{'temp'}{'invIndex'};
-				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i" . "_def"});
-				if ($ai_v{'temp'}{'invIndex'} ne "") {
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
-					$timeout{'ai_item_equip_auto'}{'time'} = time;
-					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~ if $config{'debug'};
-				}
-			}
-			$i++;
-		}
 	}
 	
 	##### PARTY-SKILL USE ##### 
@@ -3221,9 +3174,9 @@ sub AI {
 		if ($ai_v{'partySkill_lvl'} > 0) {
 			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}) Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'partySkill'})}} (lvl $ai_v{'partySkill_lvl'})\n~ if $config{'debug'};
 			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'partySkill'})})) {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $ai_v{'partySkill_targetID'});
+				ai_skillUse($skills_rlut{lc($ai_v{'partySkill'})}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $ai_v{'partySkill_targetID'});
 			} else {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'x'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'y'});
+				ai_skillUse($skills_rlut{lc($ai_v{'partySkill'})}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'x'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'y'});
 			}
 		}
 	}
@@ -3834,17 +3787,16 @@ sub AI {
 				$ai_v{'ai_attack_method_skillSlot'} = $ai_seq_args[0]{'attackMethod'}{'skillSlot'};
 				undef %{$ai_seq_args[0]{'attackMethod'}};
 				ai_setSuspend(0);
-
 				if (!ai_getSkillUseType($skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})})) {
 					ai_skillUse(
-						$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}}{'ID'},
+						$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
 						$ID);
 				} else {
 					ai_skillUse(
-						$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}}{'ID'},
+						$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
@@ -3904,7 +3856,64 @@ sub AI {
 		}
 	}
 
+	#Auto Equip - Kaldi Update 12/03/2004
+	##### AUTO-EQUIP #####
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || 
+		 $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "skill_use" ||
+		 $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take" || 
+		 $ai_seq[0] eq "attack" || $ai_v{'temp'}{'teleport'}{'lv'}) && timeOut($timeout{'ai_item_equip_auto'})
+	  ) {
+		my $i = 0;
+		my $ai_index_attack = binFind(\@ai_seq, "attack");
+		my $ai_index_skill_use = binFind(\@ai_seq, "skill_use");
+		my $currentSkill;
+		if (defined $ai_index_skill_use) {
+			my $skillID = $ai_seq_args[$ai_index_skill_use]{'skill_use_id'};
+			$currentSkill = $skills_lut{$skillID};
+		}
 
+		while ($config{"equipAuto_$i"}) {
+			if (checkSelfCondition("equipAuto_$i")
+			 && (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
+			 && (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
+			 && ($config{"equipAuto_$i" . "_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
+			 && (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{'temp'}{'teleport'}{'lv'})
+			 && (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
+			) {
+				undef $ai_v{'temp'}{'invIndex'};
+				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i"});
+				if ($ai_v{'temp'}{'invIndex'} ne "") {
+					sendEquip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
+					$timeout{'ai_item_equip_auto'}{'time'} = time;
+					
+					# this is a skilluse equip
+					if (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill))) { 
+						$ai_seq_args[$ai_index_skill_use]{'ai_equipAuto_skilluse_giveup'}{'time'} = time;
+						$ai_seq_args[$ai_index_skill_use]{'ai_equipAuto_skilluse_giveup'}{'timeout'} = $timeout{'ai_equipAuto_skilluse_giveup'}{'timeout'};
+						
+					# this is a teleport equip
+					} elsif (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{'temp'}{'teleport'}{'lv'}) {
+						$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'time'} = time;
+						$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'timeout'} = $timeout{'ai_equipAuto_skilluse_giveup'}{'timeout'};
+						warning "set timeout\n";
+					}
+					
+					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~;
+					last;
+				}
+
+			} elsif ($config{"equipAuto_$i" . "_def"} && !$chars[$config{'char'}]{'sitting'} && !$config{"equipAuto_$i"."_disabled"}) {
+				undef $ai_v{'temp'}{'invIndex'};
+				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i" . "_def"});
+				if ($ai_v{'temp'}{'invIndex'} ne "") {
+					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
+					$timeout{'ai_item_equip_auto'}{'time'} = time;
+					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~ if $config{'debug'};
+				}
+			}
+			$i++;
+		}
+	}
 
 	##### SKILL USE #####
 
@@ -3916,30 +3925,41 @@ sub AI {
 		undef $ai_seq_args[0]{'suspended'};
 	}
 	if ($ai_seq[0] eq "skill_use") {
-		if (defined $ai_seq_args[0]{monsterID} && !%{$monsters{$ai_seq_args[0]{monsterID}}}) {
-			# This skill is supposed to be used for attacking a monster, but that monster has died
-			shift @ai_seq;
-			shift @ai_seq_args;
-
-		} elsif ($chars[$config{'char'}]{'sitting'}) {
-			ai_setSuspend(0);
-			stand();
-		} elsif (!$ai_seq_args[0]{'skill_used'}) {
-			$ai_seq_args[0]{'skill_used'} = 1;
-			$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} = time;
-			if ($ai_seq_args[0]{'skill_use_target_x'} ne "") {
-				sendSkillUseLoc(\$remote_socket, $ai_seq_args[0]{'skill_use_id'}, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target_x'}, $ai_seq_args[0]{'skill_use_target_y'});
-			} else {
-				sendSkillUse(\$remote_socket, $ai_seq_args[0]{'skill_use_id'}, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target'});
+		if (exists $ai_seq_args[0]{'ai_equipAuto_skilluse_giveup'} && binFind(\@skillsID, $ai_seq_args[0]{'skill_use_id'}) eq "") {
+			if (timeOut(\%{$ai_seq_args[0]{'ai_equipAuto_skilluse_giveup'}})) {
+				warning "Timeout equiping for skill\n";
+				shift @ai_seq;
+				shift @ai_seq_args;
 			}
-			$ai_seq_args[0]{'skill_use_last'} = $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ai_seq_args[0]{'skill_use_id'}})}}{'time_used'};
-
-		} elsif (($ai_seq_args[0]{'skill_use_last'} != $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ai_seq_args[0]{'skill_use_id'}})}}{'time_used'}
-			|| (timeOut(\%{$ai_seq_args[0]{'ai_skill_use_giveup'}}) && (!$chars[$config{'char'}]{'time_cast'} || !$ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'}))
-			|| ($ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'} && timeOut(\%{$ai_seq_args[0]{'skill_use_maxCastTime'}})))
-			&& timeOut(\%{$ai_seq_args[0]{'skill_use_minCastTime'}})) {
-			shift @ai_seq;
-			shift @ai_seq_args;
+		}
+		else {
+			my $skillIDNumber = $chars[$config{'char'}]{'skills'}{$ai_seq_args[0]{'skill_use_id'}}{'ID'};
+			if (defined $ai_seq_args[0]{monsterID} && !%{$monsters{$ai_seq_args[0]{monsterID}}}) {
+				# This skill is supposed to be used for attacking a monster, but that monster has died
+				shift @ai_seq;
+				shift @ai_seq_args;
+	
+			} elsif ($chars[$config{'char'}]{'sitting'}) {
+				ai_setSuspend(0);
+				stand();
+			} elsif (!$ai_seq_args[0]{'skill_used'}) {
+				$ai_seq_args[0]{'skill_used'} = 1;
+				$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} = time;
+				if ($ai_seq_args[0]{'skill_use_target_x'} ne "") {
+					sendSkillUseLoc(\$remote_socket, $skillIDNumber, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target_x'}, $ai_seq_args[0]{'skill_use_target_y'});
+				} else {
+					sendSkillUse(\$remote_socket, $skillIDNumber, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target'});
+				}
+				$ai_seq_args[0]{'skill_use_last'} = $chars[$config{'char'}]{'skills'}{$ai_seq_args[0]{'skill_use_id'}}{'time_used'};
+	
+			} elsif (
+			  ( $ai_seq_args[0]{'skill_use_last'} != $chars[$config{'char'}]{'skills'}{$ai_seq_args[0]{'skill_use_id'}}{'time_used'}
+				  || (timeOut(\%{$ai_seq_args[0]{'ai_skill_use_giveup'}}) && (!$chars[$config{'char'}]{'time_cast'} || !$ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'}))
+				  || ($ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'} && timeOut(\%{$ai_seq_args[0]{'skill_use_maxCastTime'}})))
+				&& timeOut(\%{$ai_seq_args[0]{'skill_use_minCastTime'}})) {
+				shift @ai_seq;
+				shift @ai_seq_args;
+			}
 		}
 	}
 
@@ -7010,7 +7030,7 @@ sub parseMsg {
 			if ($param2 == 0x0001) {
 				# Poisoned; if you've got detoxify, use it
 				if ($chars[$config{'char'}]{'skills'}{'TF_DETOXIFY'}{'lv'}) {
-					ai_skillUse($chars[$config{'char'}]{'skills'}{'TF_DETOXIFY'}{'ID'}, 1, 0, 0, $accountID);
+					ai_skillUse('TF_DETOXIFY', 1, 0, 0, $accountID);
 				} else {
 					my $index = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_CurePoison"});
 					if ($index ne "") {
@@ -9878,9 +9898,12 @@ sub useTeleport {
 	# it is safe to always set this value coz $ai_v{temp} is always cleared after teleport
 	if (!$ai_v{'temp'}{'teleport'}{'lv'}) {
 		$ai_v{'temp'}{'teleport'}{'lv'} = $level;
-		$timeout{'ai_equipAuto_skilluse_giveup'}{'time'} = time;
 		
-	} elsif (timeOut(\%{$timeout{'ai_equipAuto_skilluse_giveup'}})) {
+		# set a small timeout, will be overrided if related config in equipAuto is set
+		$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'time'} = time;
+		$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'timeout'} = 0.5;
+		
+	} elsif (defined $ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'} && timeOut(\%{$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}})) {
 		warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
 		delete $ai_v{'temp'}{'teleport'};
 	}
