@@ -162,13 +162,6 @@ our $chatTimestamp;
 sub MODINIT {
 	$warningVerbosity = 1;
 	$errorVerbosity = 1;
-
-	%messageConsole = ();
-	%warningConsole = ();
-	%errorConsole = ();
-	%debugConsole = ();
-
-	@hooks = ();
 	$logTimestamp = 0;
 	$chatTimestamp = 1;
 }

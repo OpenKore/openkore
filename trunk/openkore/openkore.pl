@@ -14,17 +14,48 @@ eval "no utf8;"; undef $@;
 use bytes;
 srand(time());
 
-#### INITIALIZE INTERFACE ####
-use Interface;
-use Modules;
-Modules::register(qw(Interface));
-$interface = new Interface;
+##### SETUP WARNING AND ERROR HANDLER #####
 
+$SIG{__DIE__} = sub {
+	return unless (defined $^S && $^S == 0);
+
+	my $err;
+	if (defined $Globals::interface) {
+		my $isStartup = (defined Scalar::Util::blessed) ?
+			(Scalar::Util::blessed($Globals::interface) && Scalar::Util::blessed($Globals::interface) eq "Interface::Startup") :
+			1;
+		$err = sub { $Globals::interface->errorDialog($_[0]); } if (!$isStartup);
+	}
+	$err = sub { print "$_[0]\nPress ENTER to exit this program.\n"; <STDIN>; } if !defined $err;
+
+	my $msg = "Program terminated unexpectedly. Error message:\n@_";
+	my $log = '';
+	$log .= "\@ai_seq = @Globals::ai_seq\n\n" if (defined @Globals::ai_seq);
+	if (defined &Carp::longmess) {
+		$log .= Carp::longmess(@_);
+	} else {
+		$log .= "@_";
+	}
+
+	if (open(F, "> errors.txt")) {
+		print F $log;
+		close F;
+	}
+	$err->($msg);
+	exit 9;
+};
+
+
+#### INITIALIZE STARTUP INTERFACE ####
+
+use Interface::Startup;
+$interface = new Interface::Startup;
 
 use Time::HiRes qw(time usleep);
 use Getopt::Long;
 use IO::Socket;
 use Digest::MD5;
+use Scalar::Util;
 use Carp;
 
 
@@ -57,8 +88,9 @@ use Network::Send;
 use Commands;
 use Misc;
 use AI;
+use Interface;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc));
+	Network Network::Send Commands Misc AI Interface));
 
 
 Log::message("$Settings::versionText\n");
@@ -318,28 +350,6 @@ initConfChange();
 $timeout{'injectSync'}{'time'} = time;
 
 Log::message("\n");
-
-
-##### SETUP WARNING AND ERROR HANDLER #####
-
-$SIG{__DIE__} = sub {
-	return unless (defined $^S && $^S == 0);
-	if (defined &Carp::longmess) {
-		$interface->writeOutput("error", "Program terminated unexpectedly. Error message: @_\n");
-		my $msg = Carp::longmess(@_);
-		Log::message("\@ai_seq = @ai_seq\n");
-		if (open(F, "> errors.txt")) {
-			print F "\@ai_seq = @ai_seq\n";
-			print F $msg;
-			close F;
-		}
-	} else {
-		Log::message("Program terminated unexpectedly.\n");
-	}
-
-	Log::message("Press ENTER to exit this program.\n");
-	$interface->getInput(-1) if defined $interface;
-};
 
 
 ##### MAIN LOOP #####

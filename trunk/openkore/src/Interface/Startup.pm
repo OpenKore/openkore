@@ -29,7 +29,8 @@ package Interface::Startup;
 use strict;
 use warnings;
 no warnings 'redefine';
-
+use IO::Handle;
+use Interface;
 use base qw(Interface);
 
 
@@ -70,4 +71,6 @@ sub getInHist {
 sub getInQue {
 	return ();
 }
-1 #end of module
+
+
+1;
