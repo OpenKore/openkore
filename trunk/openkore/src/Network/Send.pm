@@ -122,6 +122,20 @@ our @EXPORT = qw(
 	);
 
 
+# TODO: move decrypt(); this doesn't belong here
+
+##
+# decrypt(r_msg, themsg)
+# r_msg: a reference to a scalar.
+# themsg: the message to decrypt.
+#
+# Decrypts the packets in $themsg and put the result in the scalar
+# referenced by $r_msg.
+#
+# Example:
+# } elsif ($switch eq "ABCD") {
+# 	my $level;
+# 	decrypt(\$level, substr($msg, 0, 2));
 sub decrypt {
 	my $r_msg = shift;
 	my $themsg = shift;
