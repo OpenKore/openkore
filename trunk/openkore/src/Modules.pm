@@ -38,7 +38,7 @@ use Config;
 use base qw(Exporter);
 
 our @modules;
-our @EXPORT_OK = qw(&register &reload &checkSyntax @modules);
+our @queue;
 
 
 ##
@@ -50,7 +50,7 @@ our @EXPORT_OK = qw(&register &reload &checkSyntax @modules);
 # A module should only be registered once (at Kore's startup).
 #
 # Example:
-# Modules::register("Log", "Interface");  # Registers Log.pm and Input.pm
+# Modules::register("Log", "Interface");  # Registers Log.pm and Interface.pm
 sub register {
 	foreach (@_) {
 		my $mod = $_;
@@ -62,6 +62,7 @@ sub register {
 		#$initFunc->() if (defined(&{$initFunc}));
 		# The above doesn't work in Win32 (??) so maybe this'll work:
 		eval "${_}::MODINIT();";
+		print $@ if ($@ && !($@ =~ /^Undefined subroutine /));
 
 		push @modules, $_;
 	}
@@ -75,6 +76,10 @@ sub register {
 #
 # Similar to the "reload" command you type in the console. The difference
 # is that this function reloads source code, not config files.
+#
+# Note that this function does not reload the module(s) immediately.
+# Instead, it puts the name of the module in a queue.
+# All files in this queue are reloaded when Modules::doReload() is called.
 sub reload {
 	my ($arg, $regex) = @_;
 
@@ -98,11 +103,7 @@ sub reload {
 			if (! -f $mod) {
 				print "Error: file $mod not found\n";
 			} elsif (checkSyntax($mod)) {
-				print "Reloading $mod...\n";
-				if (!do $mod || $@) {
-					print "Unable to reload $mod\n";
-					print "$@\n" if ($@);
-				}
+				push @queue, $mod;
 			}
 		}
 	}
@@ -142,6 +143,21 @@ sub checkSyntax {
 		}
 	}
 	return 2;
+}
+
+##
+# Modules::doReload()
+#
+# Reload all modules in the reload queue. See also: Modules::reload()
+sub doReload {
+	foreach my $mod (@queue) {
+		print "Reloading $mod...\n";
+		if (!do $mod || $@) {
+			print "Unable to reload $mod\n";
+			print "$@\n" if ($@);
+		}
+	}
+	undef @queue;
 }
 
 return 1;

@@ -21,6 +21,7 @@ use FileParsers;
 use Interface;
 use Network;
 use Network::Send;
+use Commands;
 use Plugins;
 use Utils;
 
@@ -354,7 +355,7 @@ sub parseInput {
 		$timeout{'charlogin'}{'time'} = time;
 
 	} else {
-		parseCommand($input);
+		Commands::run($input) || parseCommand($input);
 	}
 
 	if ($printType) {
@@ -400,29 +401,6 @@ sub parseCommand {
 		} else {
 			error	"Syntax Error in function 'a' (Attack Monster)\n" .
 				"Usage: attack <monster # | no | yes >\n";
-		}
-
-	} elsif ($switch eq "ai") {
-		if ($AI) {
-			undef $AI;
-			$AI_forcedOff = 1;
-			message "AI turned off\n", "success";
-		} else {
-			$AI = 1;
-			undef $AI_forcedOff;
-			message "AI turned on\n", "success";
-		}
-
-	} elsif ($switch eq "aiv") {
-		message("ai_seq = @ai_seq\n", "list");
-		if ($ai_seq_args[0]{'waitingForMapSolution'}) {
-			message("waitingForMapSolution\n", "list");
-		}
-		if ($ai_seq_args[0]{'waitingForSolution'}) {
-			message("waitingForSolution\n", "list");
-		}
-		if ($ai_seq_args[0]{'solution'}) {
-			message("solution\n", "list");
 		}
 
 	} elsif ($switch eq "al") {
@@ -1717,80 +1695,6 @@ sub parseCommand {
 
 	} elsif ($switch eq "respawn") {
 		useTeleport(2);
-
-	} elsif ($switch eq "s") {
-		my ($baseEXPKill, $jobEXPKill);
-
-		if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
-			$baseEXPKill = $chars[$config{'char'}]{'exp_max_last'} - $chars[$config{'char'}]{'exp_last'} + $chars[$config{'char'}]{'exp'};
-		} elsif ($chars[$config{'char'}]{'exp_last'} == 0 && $chars[$config{'char'}]{'exp_max_last'} == 0) {
-			$baseEXPKill = 0;
-		} else {
-			$baseEXPKill = $chars[$config{'char'}]{'exp'} - $chars[$config{'char'}]{'exp_last'};
-		}
-		if ($chars[$config{'char'}]{'exp_job_last'} > $chars[$config{'char'}]{'exp_job'}) {
-			$jobEXPKill = $chars[$config{'char'}]{'exp_job_max_last'} - $chars[$config{'char'}]{'exp_job_last'} + $chars[$config{'char'}]{'exp_job'};
-		} elsif ($chars[$config{'char'}]{'exp_job_last'} == 0 && $chars[$config{'char'}]{'exp_job_max_last'} == 0) {
-			$jobEXPKill = 0;
-		} else {
-			$jobEXPKill = $chars[$config{'char'}]{'exp_job'} - $chars[$config{'char'}]{'exp_job_last'};
-		}
-
-		my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
-
-		$hp_string = $chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
-				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
-				."%)" if $chars[$config{'char'}]{'hp_max'};
-		$sp_string = $chars[$config{'char'}]{'sp'}."/".$chars[$config{'char'}]{'sp_max'}." ("
-				.int($chars[$config{'char'}]{'sp'}/$chars[$config{'char'}]{'sp_max'} * 100)
-				."%)" if $chars[$config{'char'}]{'sp_max'};
-		$base_string = $chars[$config{'char'}]{'exp'}."/".$chars[$config{'char'}]{'exp_max'}." /$baseEXPKill ("
-				.sprintf("%.2f",$chars[$config{'char'}]{'exp'}/$chars[$config{'char'}]{'exp_max'} * 100)
-				."%)" if $chars[$config{'char'}]{'exp_max'};
-		$job_string = $chars[$config{'char'}]{'exp_job'}."/".$chars[$config{'char'}]{'exp_job_max'}." /$jobEXPKill ("
-				.sprintf("%.2f",$chars[$config{'char'}]{'exp_job'}/$chars[$config{'char'}]{'exp_job_max'} * 100)
-				."%)" if $chars[$config{'char'}]{'exp_job_max'};
-		$weight_string = $chars[$config{'char'}]{'weight'}."/".$chars[$config{'char'}]{'weight_max'} .
-				" (" . sprintf("%.1f", $chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100)
-				. "%)"
-				if $chars[$config{'char'}]{'weight_max'};
-		$job_name_string = "$jobs_lut{$chars[$config{'char'}]{'jobID'}} $sex_lut{$chars[$config{'char'}]{'sex'}}";
-		$zeny_string = formatNumber($chars[$config{'char'}]{'zenny'}) if (defined($chars[$config{'char'}]{'zenny'}));
-
-		message("-----------------Status-----------------\n", "info");
-		message(swrite(
-			"@<<<<<<<<<<<<<<<<<<<<<<<<<<   HP: @<<<<<<<<<<<<<<<<<<",
-			[$chars[$config{'char'}]{'name'}, $hp_string],
-			"@<<<<<<<<<<<<<<<<<<<<<<<<<<   SP: @<<<<<<<<<<<<<<<<<<",
-			[$job_name_string, $sp_string],
-			"Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-			[$chars[$config{'char'}]{'lv'}, $base_string],
-			"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-			[$chars[$config{'char'}]{'lv_job'}, $job_string],
-			"Weight: @>>>>>>>>>>>>>>>>>>   Zenny: @<<<<<<<<<<<<<<",
-			[$weight_string, $zeny_string]),
-			"info");
-
-		my $activeSkills = 'none';
-		if (defined $chars[$config{char}]{statuses} && %{$chars[$config{char}]{statuses}}) {
-			$activeSkills = join(", ", keys %{$chars[$config{char}]{statuses}});
-		}
-		message("Special status: $activeSkills\n", "info");
-		message("----------------------------------------\n", "info");
-
-		my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
-		my $totalelasped_string = sprintf("%.2f", $totalelasped);
-		my $elasped_string = sprintf("%.2f", $elasped);
-
-		message(swrite(
-			"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<",
-			[$totaldmg, $dmgpsec_string],
-			"Total Time spent (sec): @>>>>>>>>",
-			[$totalelasped_string],
-			"Last Monster took (sec): @>>>>>>>",
-			[$elasped_string]),
-			"info");
-		message("----------------------------------------\n", "info");
 
 	} elsif ($switch eq "sell") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
@@ -6163,9 +6067,9 @@ sub parseMsg {
 		updateDamageTables($ID1, $ID2, $damage);
 		if ($ID1 eq $accountID) {
 			if (%{$monsters{$ID2}}) { 
-				message(sprintf("[%3d|%3d]",percent_hp(\%{$chars[$config{'char'}]}),percent_sp(\%{$chars[$config{'char'}]}))
-					."Attack : $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n",
-					($damage > 0)? "attackMon" : "attackMonMiss");
+				message(sprintf("[%3d/%3d]", percent_hp(\%{$chars[$config{'char'}]}), percent_sp(\%{$chars[$config{'char'}]}))
+					. " You attack $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n",
+					($damage > 0) ? "attackMon" : "attackMonMiss");
 
 				if ($startedattack) {
 					$monstarttime = time();
@@ -6189,8 +6093,8 @@ sub parseMsg {
 			if (%{$monsters{$ID1}}) {
 				useTeleport(1) if ($monsters{$ID1}{'name'} eq "" && $config{'teleportAuto_emptyName'} ne '0');
 
-				message(sprintf("[%3d|%3d]",percent_hp(\%{$chars[$config{'char'}]}),percent_sp(\%{$chars[$config{'char'}]}))
-					."Get Dmg : $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
+				message(sprintf("[%3d/%3d]", percent_hp(\%{$chars[$config{'char'}]}), percent_sp(\%{$chars[$config{'char'}]}))
+					. " Get Dmg : $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
 					($damage > 0)? "attacked" : "attackedMiss");
 			}
 			undef $chars[$config{'char'}]{'time_cast'};

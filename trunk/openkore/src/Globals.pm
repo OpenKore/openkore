@@ -25,12 +25,12 @@ use base qw(Exporter);
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config	=> [qw(%config %consoleColors %maps_lut %npcs_lut %shop %timeout)],
-	ai	=> [qw(@ai_seq @ai_seq_args %ai_v $AI)],
+	config	=> [qw(%config %consoleColors %jobs_lut %maps_lut %npcs_lut %sex_lut %shop %timeout)],
+	ai	=> [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff)],
 	state	=> [qw(@chars %cart @playersID %players @monstersID %monsters @portalsID %portals
 			@itemsID %items @npcsID %npcs %field)],
 	network	=> [qw($remote_socket $conState $encryptVal)],
-	misc	=> [qw($buildType %timeout_ex $isOnline $shopstarted)],
+	misc	=> [qw($buildType %timeout_ex $isOnline $shopstarted $dmgpsec $totalelasped $elasped $totaldmg)],
 	);
 
 our @EXPORT = (
@@ -45,8 +45,10 @@ our @EXPORT = (
 # Configuration variables
 our %config;
 our %consoleColors;
+our %jobs_lut;
 our %maps_lut;
 our %npcs_lut;
+our %sex_lut;
 our %shop;
 our %timeout;
 
@@ -55,6 +57,7 @@ our @ai_seq;
 our @ai_seq_args;
 our %ai_v;
 our $AI = 1;
+our $AI_forcedOff;
 
 # Game state
 our @chars;
@@ -81,6 +84,10 @@ our $buildType;
 our %timeout_ex;
 our $isOnline; # for determining whether a guild member logged in or out
 our $shopstarted;
+our $dmgpsec;
+our $totalelasped;
+our $elasped;
+our $totaldmg;
 
 
 # Detect operating system
