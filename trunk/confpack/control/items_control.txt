@@ -49,6 +49,8 @@ Ice Cream 0 1 0
 Mastela Fruit 0 1 0
 Piece of Cake 0 1 0
 Royal Jelly 0 1 0
+Yggdrasil Seed 0 1 0
+Yggdrasilberry 0 1 0
 Well-baked Cookie 0 1 0
 
 Aloe Leaflet 0 1 0
@@ -67,10 +69,11 @@ Holy Water 0 1 0
 Blue Gemstone 0 1 0
 Red Gemstone 0 1 0
 Yellow Gemstone 0 1 0
+Yggdrasil Leaf 0 1 0
 
 
 ##### ARROWS #####
-# You may want to modify these if you're a archer/hunter
+# You may want to modify these if you're an archer/hunter
 
 Arrow 0 1 0
 Arrow of Counter Evil 0 1 0
@@ -310,9 +313,6 @@ Wheel of the Unknown 0 1 0
 White Dyestuffs 0 1 0
 Woman's Moustache 0 1 0
 Wrath of Valkyrie 0 1 0
-Yggdrasil Leaf 0 1 0
-Yggdrasil Seed 0 1 0
-Yggdrasilberry 0 1 0
 
 
 ##### VALUABLE GEARS #####
