@@ -74,6 +74,8 @@ New features:
 - statAddAuto_list is now case-insensitive.
 - Recognize "Unknown error 15" ("You have been forced to disconnect by a GM").
 - 'conf' command will now display what the old value was.
+- "Received Possible Identify List" message now tells you how many items are
+  in the list.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you

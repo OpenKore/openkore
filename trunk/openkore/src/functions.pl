@@ -8405,7 +8405,8 @@ sub parseMsg {
 			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			binAdd(\@identifyID, $invIndex);
 		}
-		message "Received Possible Identify List - type 'identify'\n", 'info';
+		my $num = @identifyID;
+		message "Received Possible Identify List ($num item(s)) - type 'identify'\n", 'info';
 
 	} elsif ($switch eq "0179") {
 		$index = unpack("S*",substr($msg, 2, 2));
