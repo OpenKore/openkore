@@ -20,8 +20,17 @@ init ()
 	initialized = 1;
 }
 
+static const char *
+basename (const char *filename)
+{
+	const char *base = strrchr (filename, '\\');
+	if (base)
+		return base + 1;
+	else
+		return filename;
+}
 
-DWORD
+DWORD 
 GetProcByName (char *name)
 {
 	HANDLE toolhelp;
@@ -31,7 +40,7 @@ GetProcByName (char *name)
 	toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	if (Process32First(toolhelp,&pe)) {
 		do {
-			if (!stricmp(name, pe.szExeFile)) {
+			if (!stricmp(name, basename (pe.szExeFile))) {
 				CloseHandle(toolhelp);
 				return pe.th32ProcessID;
 			}
@@ -44,29 +53,49 @@ GetProcByName (char *name)
 int
 InjectDLL (DWORD ProcID, LPCTSTR dll)
 {
+	#define TESTING_INJECT9x 0
+	#ifdef TESTING_INJECT9x
+		#define debug(x) MessageBox(0, x, "Debug", 0)
+	#else
+		#define debug(x)
+	#endif
+
 	init ();
-	if (!isNT) {
-		/* DWORD hThread = GetProcessThread(ProcID);
-		if (!hThread)
-			return 0;
+	if (TESTING_INJECT9x || !isNT) {
+		HMODULE lib;
+		int i;
+		HWND hwnd;
+		typedef int WINAPI __declspec(dllexport) (*injectSelfFunc) (HWND hwnd);
+		injectSelfFunc injectSelf;
 
-		HMODULE lib = LoadLibrary(dll);
-		if (!lib)
-			return 0;
-
-		LRESULT CALLBACK (*HookInject)(HWND hWnd, DWORD hThread);
-		HookInject = (LRESULT CALLBACK (*)(HWND, DWORD)) GetProcAddress(lib, "HookInject");
-		if (!HookInject) {
-			MessageBox(0, "function HookInject not found", "", 0);
-			FreeLibrary(lib);
+		// The window may not appear immediately so we try for at least 5 seconds
+		for (i = 0; i < 10; i++) {
+			hwnd = FindWindow (NULL, "Ragnarok");
+			if (hwnd)
+				break;
+			else
+				Sleep (500);
+		}
+		if (!hwnd) {
+			debug ("No RO window found.");
 			return 0;
 		}
 
-		LRESULT result = (*HookInject)((HWND) ProcID, hThread);
-		FreeLibrary(lib);
+		lib = LoadLibrary (dll);
+		if (!lib) {
+			debug ("Could not load library.");
+			return 0;
+		}
 
-		return (int) result; */
-		return 0;
+		injectSelf = (injectSelfFunc) GetProcAddress (lib, "injectSelf");
+		if (!injectSelf) {
+			debug ("No injectSelf() function.");
+			FreeLibrary (lib);
+			return 0;
+		}
+
+		injectSelf (hwnd);
+		return 1;
 	}
 
 
