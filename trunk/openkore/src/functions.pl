@@ -3474,13 +3474,14 @@ sub AI {
 				undef $ai_v{'temp'}{'foundID'};
 				$ai_v{'temp'}{'first'} = 1;
 				foreach (@{$ai_v{'ai_attack_cleanMonsters'}}) {
-					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'})
-					 && !$monsters{$_}{'ignore'} && !%{$monsters{$_}{'statuses'}}
-					 && !positionNearPlayer(\%{$monsters{$_}{'pos_to'}}, 3)
-					 && !positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4)) {
+					$ai_v{'temp'}{'dist'} = distance($char->{'pos_to'}, $monsters{$_}{'pos_to'});
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'} || $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'})
+					 && !$monsters{$_}{'ignore'} && !scalar(keys %{$monsters{$_}{'statuses'}})
+					 && !positionNearPlayer($monsters{$_}{'pos_to'}, 3)
+					 && !positionNearPortal($monsters{$_}{'pos_to'}, 4)) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
+						$ai_v{'temp'}{'highestPri'} = $priority{lc($monsters{$_}{'name'})};
 						undef $ai_v{'temp'}{'first'};
 					}
 				}

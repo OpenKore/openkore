@@ -13,6 +13,7 @@ New features:
   ...
   useSelf_skill_6_monsters Raydric Archer
   ...
+- Priority attacks for non-aggressive monsters are now supported.
 
 New config options:
 - useSelfSkill_#_monsters
@@ -31,6 +32,7 @@ Credits:
 - Joseph: -1 flag support in mon_control.txt
 - aputs: Support for the _monsters option in useSelf_skill, useSelf_item
   and partySkill.
+- obyarou: Priority attack support for non-aggressive monsters.
 
 
 ==================
