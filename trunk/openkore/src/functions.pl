@@ -3343,6 +3343,8 @@ sub AI {
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
 		print "I lost my master\n";
+		print "Trying to get him back\n";
+		sendMessage(\$remote_socket, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		injectMessage("I lost my master") if ($config{'verbose'} && $config{'XKore'});
 
 		undef $ai_seq_args[0]{'following'};
