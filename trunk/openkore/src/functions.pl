@@ -9752,29 +9752,6 @@ sub percent_weight {
 	}
 }
 
-sub positionNearPlayer {
-	my $r_hash = shift;
-	my $dist = shift;
-
-	foreach (@playersID) {
-		next unless defined $_;
-		next if $char->{party}{users}{$_};
-		return 1 if (distance($r_hash, $players{$_}{pos_to}) <= $dist);
-	}
-	return 0;
-}
-
-sub positionNearPortal {
-	my $r_hash = shift;
-	my $dist = shift;
-
-	foreach (@portalsID) {
-		next unless defined $_;
-		return 1 if (distance($r_hash, $portals{$_}{pos}) <= $dist);
-	}
-	return 0;
-}
-
 
 #######################################
 #######################################
@@ -10840,27 +10817,6 @@ sub checkMonsterCondition {
 	}
 	
 	return 1;
-}
-
-##
-# manualMove($dx, $dy)
-#
-# Moves the character offset from its current position.
-sub manualMove {
-	my ($dx, $dy) = @_;
-
-	# Stop following if necessary
-	if ($config{'follow'}) {
-		configModify('follow', 0);
-		aiRemove('follow');
-	}
-
-	# Stop moving if necessary
-	aiRemove("move");
-	aiRemove("route");
-	aiRemove("mapRoute");
-
-	ai_route($field{name}, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
 }
 
 ##

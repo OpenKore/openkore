@@ -33,31 +33,31 @@ use Settings;
 use Utils;
 use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete sendCharLogin sendMove);
 
-our @EXPORT = qw(
+our @EXPORT = (
 	# Config modifiers
-	auth
+	qw/auth
 	configModify
 	setTimeout
-	saveConfigFile
+	saveConfigFile/,
 
 	# Debugging
-	debug_showSpots
+	qw/debug_showSpots/,
 
 	# Field math
-	calcRectArea
+	qw/calcRectArea
 	checkFieldWalkable
 	checkLOS
 	checkWallLength
 	closestWalkableSpot
 	getFieldPoint
 	objectInsideSpell
-	objectIsMovingTowardsPlayer
+	objectIsMovingTowardsPlayer/,
 
 	# OS specific
-	launchURL
+	qw/launchURL/,
 
 	# Misc
-	center
+	qw/center
 	charSelectScreen
 	checkFollowMode
 	checkMonsterCleanness
@@ -65,14 +65,17 @@ our @EXPORT = qw(
 	getPlayer
 	getPortalDestName
 	getSpellName
+	manualMove
 	objectAdded
+	positionNearPlayer
+	positionNearPortal
 	printItemDesc
 	stopAttack
 	stripLanguageCode
 	whenGroundStatus
 	whenStatusActive
 	whenStatusActiveMon
-	whenStatusActivePL
+	whenStatusActivePL/
 	);
 
 
@@ -844,6 +847,24 @@ sub getSpellName {
 	return $spells_lut{$spell} || "Unknown $spell";
 }
 
+##
+# manualMove(dx, dy)
+#
+# Moves the character offset from its current position.
+sub manualMove {
+	my ($dx, $dy) = @_;
+
+	# Stop following if necessary
+	if ($config{'follow'}) {
+		configModify('follow', 0);
+		AI::clear('follow');
+	}
+
+	# Stop moving if necessary
+	AI::clear(qw/move route mapRoute/);
+	ai_route($field{name}, $char->{pos_to}{x} + $dx, $char->{pos_to}{y} + $dy);
+}
+
 sub objectAdded {
 	my $type = shift;
 	my $ID = shift;
@@ -852,6 +873,29 @@ sub objectAdded {
 	if ($type eq 'player' || $type eq 'npc') {
 		push @unknownObjects, $ID;
 	}
+}
+
+sub positionNearPlayer {
+	my $r_hash = shift;
+	my $dist = shift;
+
+	foreach (@playersID) {
+		next unless defined $_;
+		next if $char->{party}{users}{$_};
+		return 1 if (distance($r_hash, $players{$_}{pos_to}) <= $dist);
+	}
+	return 0;
+}
+
+sub positionNearPortal {
+	my $r_hash = shift;
+	my $dist = shift;
+
+	foreach (@portalsID) {
+		next unless defined $_;
+		return 1 if (distance($r_hash, $portals{$_}{pos}) <= $dist);
+	}
+	return 0;
 }
 
 ##
