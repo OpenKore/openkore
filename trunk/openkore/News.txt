@@ -4,6 +4,11 @@
 
 Hopefully the last beta.
 
+*** NOTE ***
+- portalsLOS.txt has changed. Please use the portalsLOS.txt from the
+  latest tablepack, or delete your copy and let Kore recompile it.
+
+
 New features:
 - Added (n)curses text UI console interface for Unix. You can start it with
   the parameter: --interface=Console::Curses
