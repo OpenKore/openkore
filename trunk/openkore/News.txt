@@ -149,6 +149,7 @@ New config options:
 
   will use the Pneuma skill if you are fighting Raydric Archer, and
   there is not already a Pneuma affecting you.
+- New condition _whenIdle for use only when the bot is doing nothing
 
 New timeouts.txt options:
 - ai_attack_unfail 5
@@ -196,6 +197,8 @@ Bug fixes:
   $args{x}).
 - When chatLangCode is autodetected, the configModify will be silent
 - Warp Portal opening message now shows correct person name
+- Warn when user specified a useSelf_skill with an invalid name
+  instead of trying to cast an empty skill ID
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

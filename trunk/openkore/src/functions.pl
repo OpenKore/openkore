@@ -4098,6 +4098,11 @@ sub AI {
 			if (checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$self_skill{ID} = $skills_rlut{lc($config{"useSelf_skill_$i"})};
+				unless ($self_skill{ID}) {
+					error "Unknown skill name '".$config{"useSelf_skill_$i"}."' in useSelf_skill_$i\n";
+					configModify("useSelf_skill_${i}_disabled", 1);
+					next;
+				}
 				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"};
 				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
 				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
@@ -10683,6 +10688,8 @@ sub checkSelfCondition {
 	$prefix = shift;
 
 	return 0 if ($config{$prefix . "_disabled"} > 0);
+
+	return 0 if $config{$prefix."_whenIdle"} && AI::isIdle;
 
 	if ($config{$prefix . "_hp"}) { 
 		return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]}), $config{$prefix . "_hp"}));
