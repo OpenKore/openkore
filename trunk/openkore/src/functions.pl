@@ -911,10 +911,10 @@ $you_string                      $other_string
 	} elsif ($switch eq "dump") {
 		dumpData($msg);
 		quit();
-#Solos Start
+
 	} elsif ($switch eq "dumpnow") {
 		dumpData($msg);
-#Solos End
+
 	} elsif ($switch eq "e") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "" || $arg1 > 33 || $arg1 < 0) {
@@ -1588,40 +1588,43 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 		quit();
 
 	} elsif ($switch eq "rc") {
-		# Check functions.pl for syntax errors
-		# Note: this is $Config, not $config!
-		my $ok = 1;
+		my ($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		if ($args ne "") {
+			Modules::reload($args, 1);
 
-		if (! -f 'functions.pl') {
-			$ok = 0;
-			print "Unable to reload code: functions.pl does not exist";
-		}
-		elsif (-f $Config{'perlpath'}) {
-			$ok = 0;
-			print "Checking functions.pl for errors...\n";
-			system($Config{'perlpath'}, '-c', 'functions.pl');
-			if ($? == -1) {
-				print "Error: failed to execute $Config{'perlpath'}\n";
-			} elsif ($? & 127) {
-				print "Error: $Config{'perlpath'} exited abnormally\n";
-			} elsif (($? >> 8) == 0) {
-				print "functions.pl passed syntax check.\n" if ($printType);
-				$ok = 1;
-			} else {
-				print "Error: functions.pl contains syntax errors.\n";
+		} else {
+			my $ok = 1;
+
+			if (! -f 'functions.pl') {
+				$ok = 0;
+				print "Unable to reload code: functions.pl does not exist";
+			} elsif (-f $Config{'perlpath'}) {
+				$ok = 0;
+				print "Checking functions.pl for errors...\n";
+				system($Config{'perlpath'}, '-c', 'functions.pl');
+				if ($? == -1) {
+					print "Error: failed to execute $Config{'perlpath'}\n";
+				} elsif ($? & 127) {
+					print "Error: $Config{'perlpath'} exited abnormally\n";
+				} elsif (($? >> 8) == 0) {
+					print "functions.pl passed syntax check.\n" if ($printType);
+					$ok = 1;
+				} else {
+					print "Error: functions.pl contains syntax errors.\n";
+				}
 			}
-		}
 
-		if ($ok) {
-			print "Reloading functions.pl...\n";
-			if (!do 'functions.pl' || $@) {
-				print "Unable to reload functions.pl\n";
-				print "$@\n" if ($@);
+			if ($ok) {
+				print "Reloading functions.pl...\n";
+				if (!do 'functions.pl' || $@) {
+					print "Unable to reload functions.pl\n";
+					print "$@\n" if ($@);
+				}
 			}
 		}
 
 	} elsif ($switch eq "reload") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		parseReload($arg1);
 
 	} elsif ($switch eq "relog") {
@@ -4920,11 +4923,10 @@ sub parseMsg {
 			$msg_size = $rpackets{$switch};
 
 		} else {
-			dumpData($last_know_msg.$msg);
+			dumpData($last_known_msg.$msg);
 		}
 
-		$last_know_msg = substr($msg, 0, $msg_size);
-		$last_know_switch = $switch;
+		$last_known_msg = substr($msg, 0, $msg_size);
 	}
 	$lastMsgLength = length($msg);
 
@@ -6343,7 +6345,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "00B0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$type = unpack("S1",substr($msg, 2, 2));
-		$val = unpack("S1",substr($msg, 4, 2));
+		$val = unpack("L1",substr($msg, 4, 4));
 		if ($type == 0) {
 			print "Something1: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 3) {
@@ -10312,45 +10314,7 @@ sub dataWaiting {
 	my $r_fh = shift;
 	my $bits;
 	vec($bits,fileno($$r_fh),1)=1;
-	return (select($bits,$bits,$bits,0.05) > 1);
-}
-
-sub input_client {
-	my ($input, $switch);
-	my $msg;
-	my $local_socket;
-	my ($addrcheck, $portcheck, $hostcheck);
-	my ($host, $port);
-
-	print "Spawning Input Socket...\n";
-	$host = $input_server_socket->sockhost();
-	$port = $input_server_socket->sockport();
-	my $pid = fork();
-	if ($pid == 0) {
-		$local_socket = IO::Socket::INET->new(
-				PeerAddr	=> $host,
-				PeerPort	=> $port,
-				Proto		=> 'tcp');
-		($local_socket) || die "Error creating connection to local server: $!";
-		while (1) {
-			$input = <STDIN>;
-			last if (!defined($input));
-			chomp $input;
-			($switch) = $input =~ /^(\w*)/;
-			if ($input ne "") {
-				$local_socket->send($input);
-			}
-			last if ($input eq "quit" || $input eq "dump");
-		}
-		close($local_socket);
-		exit;
-	} else {
-		$input_socket = $input_server_socket->accept();
-		(inet_aton($input_socket->peerhost()) == inet_aton('localhost')) 
-		|| die "Input Socket must be connected from localhost";
-		print "Input Socket connected\n";
-		return $pid;
-	}
+	return (select($bits,$bits,$bits,0.01) > 1);
 }
 
 sub killConnection {
@@ -10362,7 +10326,6 @@ sub killConnection {
 		!$$r_socket->connected() ? print "disconnected\n" : print "couldn't disconnect\n";
 	}
 }
-
 
 
 
@@ -11031,230 +10994,6 @@ sub updateNPCLUT {
 	print FILE "$ID $map $x $y $name\n"; 
 	close FILE; 
 } 
-
-#######################################
-#######################################
-#HASH/ARRAY MANAGEMENT
-#######################################
-#######################################
-
-
-sub binAdd {
-	my $r_array = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i <= @{$r_array};$i++) {
-		if ($$r_array[$i] eq "") {
-			$$r_array[$i] = $ID;
-			return $i;
-		}
-	}
-}
-
-sub binFind {
-	my $r_array = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if ($$r_array[$i] eq $ID) {
-			return $i;
-		}
-	}
-}
-
-sub binFindReverse {
-	my $r_array = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = @{$r_array} - 1; $i >= 0;$i--) {
-		if ($$r_array[$i] eq $ID) {
-			return $i;
-		}
-	}
-}
-
-sub binRemove {
-	my $r_array = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if ($$r_array[$i] eq $ID) {
-			undef $$r_array[$i];
-			last;
-		}
-	}
-}
-
-sub binRemoveAndShift {
-	my $r_array = shift;
-	my $ID = shift;
-	my $found;
-	my $i;
-	my @newArray;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if ($$r_array[$i] ne $ID || $found ne "") {
-			push @newArray, $$r_array[$i];
-		} else {
-			$found = $i;
-		}
-	}
-	@{$r_array} = @newArray;
-	return $found;
-}
-
-sub binRemoveAndShiftByIndex {
-	my $r_array = shift;
-	my $index = shift;
-	my $found;
-	my $i;
-	my @newArray;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if ($i != $index) {
-			push @newArray, $$r_array[$i];
-		} else {
-			$found = 1;
-		}
-	}
-	@{$r_array} = @newArray;
-	return $found;
-}
-
-sub binSize {
-	my $r_array = shift;
-	my $found = 0;
-	my $i;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if ($$r_array[$i] ne "") {
-			$found++;
-		}
-	}
-	return $found;
-}
-
-sub existsInList {
-	my ($list, $val) = @_;
-	my @array = split / *, */, $list;
-	return 0 if ($val eq "");
-	$val = lc($val);
-	foreach (@array) {
-		s/^\s+//;
-		s/\s+$//;
-		s/\s+/ /g;
-		next if ($_ eq "");
-		return 1 if (lc($_) eq $val);
-	}
-	return 0;
-}
-
-sub findIndex {
-	my $r_array = shift;
-	my $match = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((%{$$r_array[$i]} && $$r_array[$i]{$match} == $ID)
-			|| (!%{$$r_array[$i]} && $ID eq "")) {
-			return $i;
-		}
-	}
-	if ($ID eq "") {
-		return $i;
-	}
-}
-
-
-sub findIndexString {
-	my $r_array = shift;
-	my $match = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((%{$$r_array[$i]} && $$r_array[$i]{$match} eq $ID)
-			|| (!%{$$r_array[$i]} && $ID eq "")) {
-			return $i;
-		}
-	}
-	if ($ID eq "") {
-		return $i;
-	}
-}
-
-
-sub findIndexString_lc {
-	my $r_array = shift;
-	my $match = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($ID))
-			|| (!%{$$r_array[$i]} && $ID eq "")) {
-			return $i;
-		}
-	}
-	if ($ID eq "") {
-		return $i;
-	}
-}
-
-sub findIndexStringList_lc{
-	my $r_array = shift;
-	my $match = shift;
-	my $ID = shift;
-	my ($i,$j);
-	my @arr = split / *, */, $ID;
-	for ($j = 0; $j < @arr; $j++) {
-		for ($i = 0; $i < @{$r_array} ;$i++) {
-			if (%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($arr[$j])) {
-				return $i;
-			}
-		}
-	}
-	if ($ID eq "") {
-		return $i;
-	}
-}
-
-sub findKey {
-	my $r_hash = shift;
-	my $match = shift;
-	my $ID = shift;
-	foreach (keys %{$r_hash}) {
-		if ($$r_hash{$_}{$match} == $ID) {
-			return $_;
-		}
-	}
-}
-
-sub findKeyString {
-	my $r_hash = shift;
-	my $match = shift;
-	my $ID = shift;
-	foreach (keys %{$r_hash}) {
-		if ($$r_hash{$_}{$match} eq $ID) {
-			return $_;
-		}
-	}
-}
-
-sub minHeapAdd {
-	my $r_array = shift;
-	my $r_hash = shift;
-	my $match = shift;
-	my $i;
-	my $found;
-	my @newArray;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if (!$found && $$r_hash{$match} < $$r_array[$i]{$match}) {
-			push @newArray, $r_hash;
-			$found = 1;
-		}
-		push @newArray, $$r_array[$i];
-	}
-	if (!$found) {
-		push @newArray, $r_hash;
-	}
-	@{$r_array} = @newArray;
-}
 
 sub updateDamageTables {
 	my ($ID1, $ID2, $damage) = @_;

@@ -7,12 +7,24 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
+
 use Time::HiRes qw(time usleep);
 use Getopt::Long;
 use IO::Socket;
 use Digest::MD5 qw(md5);
+unshift @INC, '.';
+
+
+require 'functions.pl';
+use Modules;
+use Input;
+use Log;
+use Utils;
+Modules::register(qw(Modules Input Log Utils));
+
 
 our $buildType = 0;
+our $daemon = 0;
 our $config_file = "control/config.txt";
 our $items_control_file = "control/items_control.txt";
 our $mon_control_file = "control/mon_control.txt";
@@ -21,9 +33,8 @@ our $item_log_file = "items.txt";
 our $shop_file = "control/shop.txt";
 our $rpackets_file = 'tables/recvpackets.txt';
 
-require 'functions.pl';
-
 &GetOptions(
+	'daemon', \$daemon,
 	'config=s', \$config_file,
 	'mon_control=s', \$mon_control_file,
 	'items_control=s', \$items_control_file,
@@ -36,6 +47,7 @@ if ($help_option) {
 	print "Usage: skore.exe [options...]\n\n";
 	print "The supported options are:\n\n";
 	print "--help                     Displays this help message.\n";
+	print "--daemon                   Start as daemon; don't listen for keyboard input.\n";
 	print "--config=path/file         Which config.txt to use.\n";
 	print "--mon_control=path/file    Which mon_control.txt to use.\n";
 	print "--items_control=path/file  Which items_control.txt to use.\n";
@@ -47,22 +59,13 @@ if ($help_option) {
 
 srand(time());
 
-$versionText = "*** OpenKore 1.0.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
+our $versionText = "*** OpenKore 1.0.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
 our $welcomeText = "Welcome to X-OpenKore.";
 our $MAX_READ = 30000;
 
-print $versionText;
+print "$versionText\n";
 
-print "\n";
-
-our $input_server_socket = IO::Socket::INET->new(
-				Listen	=> 5,
-				LocalAddr 	=> 'localhost',
-				Proto		=> 'tcp');
-
-($input_server_socket) || die "Error creating local input server: $!";
-print "Local input server started (".$input_server_socket->sockhost().":".$input_server_socket->sockport().")\n";
-our $input_pid = input_client();
+Input::start() unless ($daemon);
 
 print "\n";
 
@@ -120,8 +123,6 @@ if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 } else {
 	eval "use Tools;";
 	die if ($@);
-	eval "use POSIX \":sys_wait_h\";";
-	die if ($@);
 
 	$buildType = 1;
 }
@@ -172,21 +173,27 @@ compilePortals_check(\$found);
 
 if ($found) {
 	print "found new portals!\n";
-	print "Compile portals now? (y/n)\n";
-	print "Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...";
-	$timeout{'compilePortals_auto'}{'time'} = time;
-	undef $msg;
-	while (!timeOut(\%{$timeout{'compilePortals_auto'}})) {
-		if (dataWaiting(\$input_socket)) {
-			$input_socket->recv($msg, $MAX_READ);
+
+	if ($Input::enabled) {
+		print "Compile portals now? (y/n)\n";
+		print "Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...";
+		$timeout{'compilePortals_auto'}{'time'} = time;
+		undef $msg;
+		while (!timeOut(\%{$timeout{'compilePortals_auto'}})) {
+			if (Input::canRead) {
+				$msg = Input::readLine();
+			}
+			last if $msg;
 		}
-		last if $msg;
-	}
-	if ($msg =~ /y/ || $msg eq "") {
+		if ($msg =~ /y/ || $msg eq "") {
+			print "compiling portals\n\n";
+			compilePortals();
+		} else {
+			print "skipping compile\n\n";
+		}
+	} else {
 		print "compiling portals\n\n";
 		compilePortals();
-	} else {
-		print "skipping compile\n\n";
 	}
 } else {
 	print "none found\n\n";
@@ -196,13 +203,13 @@ if ($found) {
 if (!$config{'XKore'}) {
 	if (!$config{'username'}) {
 		print "Enter Username:\n";
-		$input_socket->recv($msg, $MAX_READ);
+		$msg = Input::readLine;
 		$config{'username'} = $msg;
 		writeDataFileIntact($config_file, \%config);
 	}
 	if (!$config{'password'}) {
 		print "Enter Password:\n";
-		$input_socket->recv($msg, $MAX_READ);
+		$msg = Input::readLine;
 		$config{'password'} = $msg;
 		writeDataFileIntact($config_file, \%config);
 	}
@@ -221,7 +228,7 @@ $i  $config{"master_name_$i"}
 		}
 		print "-------------------------------\n";
 		print "Choose your master server:\n";
-		$input_socket->recv($msg, $MAX_READ);
+		$msg = Input::readLine;
 		$config{'master'} = $msg;
 		writeDataFileIntact($config_file, \%config);
 	}
@@ -252,10 +259,11 @@ while ($quit != 1) {
 			do {
 				$procID = $GetProcByName->Call($config{'exeName'});
 				if (!$procID) {
-					print "Error: Could not locate process $config{'exeName'}.\nWaiting for you to start the process...\n" if (!$printed);
+					print "Error: Could not locate process $config{'exeName'}.\n";
+					print "Waiting for you to start the process...\n" if (!$printed);
 					$printed = 1;
 				}
-				sleep 2;
+				sleep 1;
 			} while (!$procID);
 
 			if ($printed == 1) {
@@ -267,7 +275,8 @@ while ($quit != 1) {
 
 			print "Waiting for InjectDLL to connect...\n";
 			$remote_socket = $injectServer_socket->accept();
-			(inet_aton($remote_socket->peerhost()) == inet_aton('localhost')) || die "Inject Socket must be connected from localhost";
+			(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
+			|| die "Inject Socket must be connected from localhost";
 			print "InjectDLL Socket connected - Ready to start botting\n";
 			$timeout{'injectKeepAlive'}{'time'} = time;
 		}
@@ -277,9 +286,10 @@ while ($quit != 1) {
 		}
 	}
 
-	if (dataWaiting(\$input_socket)) {
-		$input_socket->recv($input, $MAX_READ);
+	if (Input::canRead) {
+		$input = Input::readLine();
 		parseInput($input);
+
 	} elsif (!$config{'XKore'} && dataWaiting(\$remote_socket)) {
 		$remote_socket->recv($new, $MAX_READ);
 		$msg .= $new;
@@ -289,6 +299,7 @@ while ($quit != 1) {
 			last if ($msg_length == length($msg));
 			$msg_length = length($msg);
 		}
+
 	} elsif ($config{'XKore'} && dataWaiting(\$remote_socket)) {
 		my $injectMsg;
 		$remote_socket->recv($injectMsg, $MAX_READ);
@@ -325,10 +336,8 @@ while ($quit != 1) {
 	checkConnection();
 }
 
-close($input_server_socket);
-close($input_socket);
+Input::stop();
 close($remote_socket);
-kill 9, $input_pid;
 unlink('buffer') if ($config{'XKore'} && -f 'buffer');
 killConnection(\$remote_socket);
 
