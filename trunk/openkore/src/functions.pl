@@ -2567,23 +2567,38 @@ sub AI {
 		shift @ai_seq_args;
 	}
 
-	if ($ai_seq[0] ne "deal" && $ai_seq[0] ne "dealAutoAccept" && %currentDeal) {
+	if ($ai_seq[0] ne "deal" && %currentDeal) {
 		unshift @ai_seq, "deal";
 		unshift @ai_seq_args, "";
+	} elsif ($ai_seq[0] eq "deal" && %currentDeal && !$currentDeal{'you_finalize'} && timeOut(\%{$timeout{'ai_dealAuto'}}) && $config{'dealAuto'}==2) {
+		sendDealFinalize(\$remote_socket);
+		$timeout{'ai_dealAuto'}{'time'} = time;
+	} elsif ($ai_seq[0] eq "deal" && %currentDeal && $currentDeal{'other_finalize'} && $currentDeal{'you_finalize'} &&timeOut(\%{$timeout{'ai_dealAuto'}}) && $config{'dealAuto'}==2) {
+		sendDealTrade(\$remote_socket);
+		$timeout{'ai_dealAuto'}{'time'} = time;
 	} elsif ($ai_seq[0] eq "deal" && !%currentDeal) {
 		shift @ai_seq;
 		shift @ai_seq_args;
 	}
 
-	if ($config{'dealAutoCancel'} && %incomingDeal && timeOut(\%{$timeout{'ai_dealAutoCancel'}})) {
-		sendDealCancel(\$remote_socket);
-		$timeout{'ai_dealAutoCancel'}{'time'} = time;
+	#dealAuto 1=refuse 2=accept
+	if ($config{'dealAuto'} && %incomingDeal && timeOut(\%{$timeout{'ai_dealAuto'}})) {
+		if ($config{'dealAuto'}==1) {
+			sendDealCancel(\$remote_socket);
+		}elsif ($config{'dealAuto'}==2) {
+			sendDealAccept(\$remote_socket);
+		}
+		$timeout{'ai_dealAuto'}{'time'} = time;
 	}
-	if ($config{'partyAutoDeny'} && %incomingParty && timeOut(\%{$timeout{'ai_partyAutoDeny'}})) {
-		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, 0);
-		$timeout{'ai_partyAutoDeny'}{'time'} = time;
+
+
+	#partyAuto 1=refuse 2=accept
+	if ($config{'partyAuto'} && %incomingParty && timeOut(\%{$timeout{'ai_partyAuto'}})) {
+		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
+		$timeout{'ai_partyAuto'}{'time'} = time;
 		undef %incomingParty;
 	}
+
 	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut(\%{$timeout{'ai_guildAutoDeny'}})) {
 		sendGuildJoin(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
 		sendGuildAlly(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
@@ -4679,40 +4694,6 @@ sub AI {
 	}
 
 
-	#BCN Start - DealDump
-	##### DEAL AUTO ACCEPT #####
-
-	if ($ai_seq[0] eq "dealAutoAccept" && time >= $ai_seq_args[0]{'time'}) {
-		if ($ai_seq_args[0]{'mode'} eq "engage") {
-			print "[DealDump] Accepted deal request from " . $ai_seq_args[0]{'name'} . "\n" if ($config{'dealAutoAccept_debug'});
-			sendDealAccept(\$remote_socket);
-         
-			my $args = ();
-			$args{'mode'} = "finalize";
-			$args{'time'} = time + 0.2;
-
-			shift @ai_seq;
-			shift @ai_seq_args;
-
-			unshift @ai_seq, "dealAutoAccept";
-			unshift @ai_seq_args, \%args;
-
-		} elsif ($ai_seq_args[0]{'mode'} eq "finalize") {
-			print "[DealDump] Finalized the deal.\n" if ($config{'dealAutoAccept_debug'});
-			sendDealFinalize(\$remote_socket);
-
-			shift @ai_seq;
-			shift @ai_seq_args;         
-
-		} elsif ($ai_seq_args[0]{'mode'} eq "accept") {
-			print "[DealDump] Accepted the final deal.\n" if ($config{'dealAutoAccept_debug'});
-			sendDealTrade(\$remote_socket);
-      
-			shift @ai_seq;
-			shift @ai_seq_args;
-		}
-	}
-	#BCN End - DealDump
 
 	##### AVOID GM OR PLAYERS #####
 
@@ -6808,17 +6789,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$timeout{'ai_dealAutoCancel'}{'time'} = time;
 		print "$dealUser Requests a Deal\n";
 
-		#BCN Start - DealDump
-		if ($config{'dealAutoAccept'} && $ai_seq[0] ne "dealAutoAccept") {
-			my $args = ();
-			$args{'mode'} = "engage";
-			$args{'time'} = time + 0.2;
-			$args{'name'} = $dealUser;
-
-			unshift @ai_seq, "dealAutoAccept";
-			unshift @ai_seq_args, \%args;
-		}
-		#BCN End - DealDump
 
 	} elsif ($switch eq "00E7") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -6872,16 +6842,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$currentDeal{'other_finalize'} = 1;
 			print "$currentDeal{'name'} finalized the Deal\n";
 
-			#BCN Start - DealDump
-			if ($config{'dealAutoAccept'} && $ai_seq[0] ne "dealAutoAccept") {
-				my $args = ();
-				$args{'mode'} = "accept";
-				$args{'time'} = time + 0.3;
 
-				unshift @ai_seq, "dealAutoAccept";
-				unshift @ai_seq_args, \%args;
-			}
-			#BCN End - DealDump
 		} else {
 			$currentDeal{'you_finalize'} = 1;
 			print "You finalized the Deal\n";
