@@ -390,7 +390,7 @@ autoSwitch {
 
 equipAuto {
 	def
-	monster
+	monsters
 	skills
 	weight 0
 	whileSitting 0
