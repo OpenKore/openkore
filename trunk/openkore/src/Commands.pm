@@ -470,9 +470,9 @@ sub cmdEmotion {
 	my (undef, $args) = @_;
 	my ($num) = $args =~ /^(\d+)$/;
 
-	if ($num eq "" || $num > 33 || $num < 0) {
+	if (!defined $emotions_lut{$num}) {
 		error	"Syntax Error in function 'e' (Emotion)\n" .
-			"Usage: e <emotion # (0-33)>\n";
+			"Usage: e <emotion #>\n";
 	} else {
 		sendEmotion(\$remote_socket, $num);
 	}
