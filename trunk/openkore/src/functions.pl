@@ -6843,7 +6843,7 @@ sub parseMsg {
 		countCastOn($sourceID, $targetID);
 
 		# Resolve source and target names
-		my ($source, $uses, $target) = getActorNames($sourceID, $targetID);
+		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
 		$damage ||= "Miss!";
 		my $disp = "$source $uses $skillsID_lut{$skillID}" .
 			(($level == 65535)? "" : " (lvl $level)") .
@@ -6886,7 +6886,7 @@ sub parseMsg {
 		setSkillUseTimer($skillID) if $sourceID eq $accountID;
 
 		# Resolve source name
-		my ($source, $uses) = getActorNames($sourceID);
+		my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
 
 		# Print skill use message
 		message "$source $uses $skillsID_lut{$skillID} on location ($x, $y)\n", "skill";
@@ -7046,7 +7046,7 @@ sub parseMsg {
 		}
 
 		# Resolve source and target names
-		my ($source, $uses, $target) = getActorNames($sourceID, $targetID);
+		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
 
 		# Print skill use message
 		my $extra = "";
@@ -7378,21 +7378,18 @@ sub parseMsg {
 		$x = unpack("S1",substr($msg, 10, 2));
 		$y = unpack("S1",substr($msg, 12, 2));
 		$skillID = unpack("S1",substr($msg, 14, 2));
-		undef $sourceDisplay;
-		undef $targetDisplay;
-		if (%{$monsters{$sourceID}}) {
-			$sourceDisplay = "$monsters{$sourceID}{'name'} ($monsters{$sourceID}{'binID'}) is casting";
-		} elsif (%{$players{$sourceID}}) {
-			$sourceDisplay = "$players{$sourceID}{'name'} ($players{$sourceID}{'binID'}) is casting";
-		} elsif ($sourceID eq $accountID) {
-			$sourceDisplay = "You are casting";
-			$chars[$config{'char'}]{'time_cast'} = time;
-		} else {
-			$sourceDisplay = "Unknown is casting";
+
+		# Resolve source and target names
+		my ($source, $verb, $target) = getActorNames($sourceID, $targetID, 'are casting', 'is casting');
+		if ($x != 0 || $y != 0) {
+			$target = "location ($x, $y)";
 		}
 
+		# Perform trigger actions
+		if ($sourceID eq $accountID) {
+			$chars[$config{'char'}]{'time_cast'} = time;
+		}
 		if (%{$monsters{$targetID}}) {
-			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
 			if ($sourceID eq $accountID) {
 				$monsters{$targetID}{'castOnByYou'}++;
 			} elsif (%{$players{$sourceID}}) {
@@ -7400,20 +7397,9 @@ sub parseMsg {
 			} elsif (%{$monsters{$sourceID}}) {
 				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
 			}
-		} elsif (%{$players{$targetID}}) {
-			$targetDisplay = "$players{$targetID}{'name'} ($players{$targetID}{'binID'})";
-		} elsif ($targetID eq $accountID) {
-			if ($sourceID eq $accountID) {
-				$targetDisplay = "yourself";
-			} else {
-				$targetDisplay = "you";
-			}
-		} elsif ($x != 0 || $y != 0) {
-			$targetDisplay = "location ($x, $y)";
-		} else {
-			$targetDisplay = "unknown";
 		}
-		message "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay\n", "skill", 1;
+
+		message "$source $verb $skillsID_lut{$skillID} on $target\n", "skill", 1;
 
 	} elsif ($switch eq "0141") {
 		$type = unpack("S1",substr($msg, 2, 2));
@@ -9764,10 +9750,10 @@ sub getActorName {
 
 # Resolves a pair of player/monster IDs into names
 sub getActorNames {
-	my ($sourceID, $targetID) = @_;
+	my ($sourceID, $targetID, $verb1, $verb2) = @_;
 
 	my $source = getActorName($sourceID);
-	my $uses = $source eq 'You' ? 'use' : 'uses';
+	my $verb = $source eq 'You' ? $verb1 : $verb2;
 	my $target;
 
 	if ($targetID eq $sourceID) {
@@ -9780,7 +9766,7 @@ sub getActorNames {
 		$target = getActorName($targetID);
 	}
 
-	return ($source, $uses, $target);
+	return ($source, $verb, $target);
 }
 
 sub useTeleport {
