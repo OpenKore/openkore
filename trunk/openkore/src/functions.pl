@@ -6256,7 +6256,7 @@ sub parseMsg {
 		$chat = "[dist=${dist}] $chatMsgUser : $chatMsg";
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		chatLog("c", "[$map_string ${$chars[$config{'char'}]{'pos_to'}}{x}, ${$chars[$config{'char'}]{'pos_to'}}{y}] [${$players{$ID}{'pos_to'}}{x}, ${$players{$ID}{'pos_to'}}{y}] $chat\n") if ($config{'logChat'});
-		$interface->beep() if $config{beepOnChat};
+		$interface->beep() if $config{beepOnChat} && !($config{beepOnChat_notInTown} && $cities_lut{$field{name}.'.rsw'});
 
 		message "$chat\n", "publicchat";
 
