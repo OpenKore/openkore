@@ -236,7 +236,7 @@ initStatVars();
 #Solos End
 
 #xlr82xs start 
-initMonstersKilled(); 
+
 #xlr82xs end
 
 while ($quit != 1) {

@@ -18,18 +18,6 @@ use Config;
 #INITIALIZE VARIABLES
 #######################################
 
-#xlr82xs start
-sub initMonstersKilled {
-	if ($config{"monsterCount"} eq "1") {
-		$i = 0;
-		while ($config{"monsterCount_mon_$i"} ne "") {
-			$monsters_killed[$i] = 0;
-			$i++;
-		}
-	}
-}
-#xlr82xs end
-
 sub initConnectVars {
 	initMapChangeVars();
 	undef @{$chars[$config{'char'}]{'inventory'}};
