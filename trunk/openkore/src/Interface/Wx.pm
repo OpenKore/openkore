@@ -61,9 +61,9 @@ sub OnInit {
 	$self->iterate;
 
 	$self->{hooks} = Plugins::addHooks(
-		'loadfiles', sub { $self->onLoadFiles(@_); }, undef,
-		'postloadfiles', sub { $self->onLoadFiles(@_); }, undef,
-		'parseMsg/addPrivMsgUser', sub { $self->onAddPrivMsgUser(@_); }, undef
+		['loadfiles',               sub { $self->onLoadFiles(@_); }],
+		['postloadfiles',           sub { $self->onLoadFiles(@_); }],
+		['parseMsg/addPrivMsgUser', sub { $self->onAddPrivMsgUser(@_); }]
 	);
 
 	$self->{history} = [];
