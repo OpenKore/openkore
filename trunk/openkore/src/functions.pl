@@ -3619,18 +3619,16 @@ sub AI {
 					noMapRoute => 1);
 				if (!$result) {
 					# Unable to calculate a route to target
-					$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
-					shift @ai_seq;
-					shift @ai_seq_args;
+					$monsters{$ID}{'attack_failed'}++ if ($monsters{$ID});
+					AI::dequeue;
 					message "Unable to calculate a route to target, dropping target\n", "ai_attack";
 				}
 
 			} else {
 				# The target is at a spot that's not walkable according to the field file
 				# Ignore the monster.
-				$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
-				shift @ai_seq;
-				shift @ai_seq_args;
+				$monsters{$ID}{'attack_failed'}++ if ($monsters{$ID});
+				AI::dequeue;
 				message "Target is not reachable, dropping target\n", "ai_attack";
 			}
 
