@@ -8,11 +8,14 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-
-# Q: What is a logging framework and why is it needed?
+##
+# MODULE DESCRIPTION: Logging framework
+#
+# <i>What is a logging framework and why is it needed?</i>
 #
 # Kore prints messages to the console using print(). There are several
 # problems though:
+# `l
 # - Messages can only be printed to the console. If you want to print it
 #   to elsewhere you have to resort to all kinds of hacks (take a look
 #   at the code for sending console output to X-Kore, for example).
@@ -23,25 +26,30 @@
 # - Debug messages are all in the form of print "bla\n" if ($config{'verbose'});
 #   You can either enable all debug messages, or nothing at all. For developers,
 #   the huge amount of debug messages can make things look cluttered.
+# `l`
 #
 # The logging framework provides a new way to print messages:
+# `l
 # - You can print messages (of course).
 # - You can classify messages: attaching a context (domain) to a message you print.
 # - You can intercept messages and decide what else to do with it. You can write to
 #   a file, send to X-Kore (based on the message's domain), or whatever you want.
 # - You can attach certain colors to messages of a certain domains.
 # - You can choose what kind of message you do and do not want to see.
+# `l`
 #
 # The most important functions are:
 # message(), warning(), error(), debug()
 #
 # You pass the following arguments to those functions:
-# message: The message you want to print.
-# domain: The message domain (context). This is used to classify a message.
-# level: The message's verbosity level. The message will only be printed if this number
-#        is lower than or equal to $config{'verbose'} (or $config{'debug'} if this is a
-#        debug message). Important messages should have a low verbosity level,
-#        unimportant/redundant messages should have a high verbosity level.
+# `l
+# - message: The message you want to print.
+# - domain: The message domain (context). This is used to classify a message.
+# - level: The message's verbosity level. The message will only be printed if this number
+#          is lower than or equal to $config{'verbose'} (or $config{'debug'} if this is a
+#          debug message). Important messages should have a low verbosity level,
+#          unimportant/redundant messages should have a high verbosity level.
+# `l`
 
 # Known domains:
 # attacked		Monster attacks you
@@ -245,34 +253,77 @@ sub setColor {
 #################################
 
 
-# Prints a normal message.
-# Usage: message(message, [domain], [level])
+##
+# Log::message(message, [domain], [level])
+#
+# Prints a normal message. See the description for Log.pm for more details about the parameters.
 sub message {
-	return processMsg("message", $_[0], $_[1], $_[2], $config{'verbose'},
-		\%messageConsole, \%messageFiles);
+	return processMsg("message",
+		$_[0],
+		$_[1],
+		$_[2],
+		$config{'verbose'},
+		\%messageConsole,
+		\%messageFiles);
 }
 
-# Prints a warning message. It warns the user that a possible error has occured or will occur.
-# Usage: warning(message, [domain], [level])
+
+##
+# Log::warning(message, [domain], [level])
+#
+# Prints a warning message. It warns the user that a possible non-fatal error has occured or will occur.
+# See the description for Log.pm for more details about the parameters.
 sub warning {
-	return processMsg("warning", $_[0], $_[1], $_[2], $warningVerbosity,
-		\%warningConsole, \%warningFiles);
+	return processMsg("warning",
+		$_[0],
+		$_[1],
+		$_[2],
+		$warningVerbosity,
+		\%warningConsole,
+		\%warningFiles);
 }
 
+
+##
+# Log::error(message, [domain], [level])
+#
 # Prints an error message. It tells the user that a non-recoverable error has occured.
-# Usage: error(message, [domain], [level])
+# A "non-recoverable error" could either be a fatal error, or an error that prevents
+# the program from performing an action the user requested.
+#
+# Examples of non-recoverable errors:
+# `l
+# - Kore receives the "You haven't paid for this account"-packet. The error is fatal, so the entire program must exit.
+# - The user typed in an invalid/unrecognized command. Kore cannot perform the command the user requested,
+#   but will not exit because this error is not fatal.
+# `l`
+#
+# See the description for Log.pm for more details about the parameters.
 sub error {
-	return processMsg("error", $_[0], $_[1], $_[2], $errorVerbosity,
-		\%errorConsole, \%errorFiles);
+	return processMsg("error",
+		$_[0],
+		$_[1],
+		$_[2],
+		$errorVerbosity,
+		\%errorConsole,
+		\%errorFiles);
 }
 
-# Prints a debugging message.
-# Usage: debug(message, [domain], [level])
+
+##
+# Log::debug(message, [domain], [level])
+#
+# Prints a debugging message. See the description for Log.pm for more details about the parameters.
 sub debug {
 	my $level = $_[2];
 	$level = 1 if (!defined $level);
-	return processMsg("debug", $_[0], $_[1], $level, $config{'debug'},
-		\%debugConsole, \%debugFiles);
+	return processMsg("debug",
+		$_[0],
+		$_[1],
+		$level,
+		$config{'debug'},
+		\%debugConsole,
+		\%debugFiles);
 }
 
 

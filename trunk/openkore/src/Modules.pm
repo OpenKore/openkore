@@ -8,16 +8,26 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-
-# This file contains a list of other modules that Kore uses (internal modules;
-# not public Perl modules).
-# At startup, Modules::register() is called with a list of modules (see also
-# openkore.pl). This module will save that list so it can be used later for
-# automatic source code reloading.
+##
+# MODULE DESCRIPTION: Module support system
 #
-# Modules::reload() is similar to the "reload" command you type in the
-# console. he difference is that this function reloads the source code,
-# not config files.
+# The OpenKore source code is split into various files: openkore.pl, functions.pl,
+# and some .pm files. These .pm files are modules: source code that's part of OpenKore.
+# Modules implement various subsystems.
+#
+# One of the features of OpenKore is "dynamic code reloading". This means that
+# if you've modified source code, you can reload it at runtime, without restarting
+# Kore.
+#
+# This module, Modules.pm, is what makes it possible. It "glues" all the other modules
+# together. openkore.pl registers all the other modules, and this modules will save that
+# list in memory.
+#
+# Modules must put initialization code in a function called MODINIT(). This function
+# is called at startup. Initialization code must not be put elsewhere, because that code
+# will be called again every time the module is reloaded, and will overwrite existing
+# values of variables. MODINIT() is only called once at startup (during registration),
+# and is never called again.
 
 package Modules;
 
@@ -31,6 +41,8 @@ our @ISA = "Exporter";
 our @EXPORT_OK = qw(&register &reload &checkSyntax @modules);
 
 
+##
+# Modules::register(names...)
 sub register {
 	foreach (@_) {
 		next if (! -f "$_.pm");
@@ -43,6 +55,14 @@ sub register {
 	}
 }
 
+##
+# Modules::reload(name, regex)
+# name: Name of the module to reload.
+# regex: Treat $name as a regular expression. All modules whose name matches
+#        this regexp will be reloaded. The match is case-insensitive.
+#
+# Similar to the "reload" command you type in the console. The difference
+# is that this function reloads source code, not config files.
 sub reload {
 	my ($arg, $regex) = @_;
 
@@ -84,6 +104,12 @@ sub reload {
 	}
 }
 
+##
+# Modules::checkSyntax(file)
+# file: Filename of a Perl source file.
+# Returns: 1 if syntax is correct, 0 if syntax contains errors, -1 if unable to run the Perl interpreter.
+#
+# Checks whether $file's syntax is correct, by running 'perl -c'.
 sub checkSyntax {
 	my $filename = shift;
 
