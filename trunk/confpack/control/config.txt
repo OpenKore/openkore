@@ -90,7 +90,7 @@ attackDistance 1.5
 attackMaxDistance 2.5
 attackMaxRouteDistance 100
 attackMaxRouteTime 4
-attackMinPlayerDistance 3
+attackMinPlayerDistance 2
 attackMinPortalDistance 4
 attackUseWeapon 1
 attackNoGiveup 0
@@ -416,6 +416,9 @@ equipAuto {
 statsAddAuto 0
 statsAddAuto_list
 statsAddAuto_dontUseBonus 0
+
+skillsAddAuto 0
+skillsAddAuto_list
 
 autoResponseOnHeal 0
 autoResponse 0
