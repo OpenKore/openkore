@@ -6,7 +6,6 @@ libsprite:
 - Better documentation.
 
 Win32 Delphi frontend:
-- More descriptive type names.
 - Extract on doubleclick.
 - Wildcard searching.
 - Support for previewing JPEG files?
