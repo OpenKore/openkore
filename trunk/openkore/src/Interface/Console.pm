@@ -29,6 +29,7 @@ package Interface::Console;
 
 use strict;
 use warnings;
+use IO::Socket;
 use Interface;
 use base qw(Interface);
 use Modules;
@@ -73,6 +74,11 @@ sub new {
 			return new Interface::Console::Other;
 		}
 	}
+}
+
+sub beep {
+	print STDOUT "\a";
+	STDOUT->flush;
 }
 
 
