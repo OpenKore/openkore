@@ -5668,6 +5668,7 @@ sub parseMsg {
 			$conState = 4;
 			message("Waiting for map to load...\n", "connection");
 			ai_clientSuspend(0, 10);
+			initMapChangeVars();
 		} else {
 			message("You are now in the game\n", "connection");
 			sendMapLoaded(\$remote_socket);
@@ -6411,9 +6412,12 @@ sub parseMsg {
 		$chars[$config{char}]{pos} = {%coords};
 		$chars[$config{char}]{pos_to} = {%coords};
 		message "Map Change: $map_name ($chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'})\n", "connection";
-		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
-		ai_clientSuspend(0, 10) if ($config{'XKore'});
-		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
+		if ($xkore) {
+			ai_clientSuspend(0, 10);
+		} else {
+			sendMapLoaded(\$remote_socket);
+			$timeout{'ai'}{'time'} = time;
+		}
 
 	} elsif ($switch eq "0092") {
 		$conState = 4;
@@ -6424,7 +6428,6 @@ sub parseMsg {
 			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
 		}
 
-		initMapChangeVars() if ($config{'XKore'});
 		undef $conState_tries;
 		for (my $i = 0; $i < @ai_seq; $i++) {
 			ai_setMapChanged($i);
