@@ -3166,31 +3166,30 @@ sub AI {
 
 	##### SIT AUTO #####
 
-	if ($ai_v{'sitAuto_forceStop'} && percent_hp(\%{$chars[$config{'char'}]}) >= $config{'sitAuto_hp_lower'} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{'sitAuto_sp_lower'}) {
+	if ($ai_v{'sitAuto_forceStop'} && percent_hp($char) >= $config{'sitAuto_hp_lower'} && percent_sp($char) >= $config{'sitAuto_sp_lower'}) {
 		$ai_v{'sitAuto_forceStop'} = 0;
 	}
 	my $percentWeight = 0;
-	$percentWeight = $chars[$config{'char'}]{'weight'} / $chars[$config{'char'}]{'weight_max'} * 100 if ($chars[$config{'char'}]{'weight_max'});
+	$percentWeight = $char->{'weight'} / $char->{'weight_max'} * 100 if ($char->{'weight_max'});
 
 	if (!$ai_v{'sitAuto_forceStop'} && ($ai_seq[0] eq "" || $ai_seq[0] eq "follow" ||
 	      ($ai_seq[0] eq "route" && (!$ai_seq_args[0]{'noSitAuto'} || $percentWeight < 50)) ||
 	      ($ai_seq[0] eq "mapRoute" && (!$ai_seq_args[0]{'noSitAuto'} || $percentWeight < 50))
 	   )
-	 && binFind(\@ai_seq, "attack") eq "" && !ai_getAggressives()
-	 && (percent_hp($chars[$config{'char'}]) < $config{'sitAuto_hp_lower'} || percent_sp($chars[$config{'char'}]) < $config{'sitAuto_sp_lower'})) {
-		unshift @ai_seq, "sitAuto";
-		unshift @ai_seq_args, {};
+	 && !AI::inQueue("attack") && !ai_getAggressives()
+	 && (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
+		AI::queue("sitAuto");
 		debug "Auto-sitting\n", "ai";
 	}
-	if ($ai_seq[0] eq "sitAuto" && !$chars[$config{'char'}]{'sitting'} && $chars[$config{'char'}]{'skills'}{'NV_BASIC'}{'lv'} >= 3 &&
+
+	if (AI::action eq "sitAuto" && !$char->{'sitting'} && $char->{'skills'}{'NV_BASIC'}{'lv'} >= 3 &&
 	  !ai_getAggressives() && ($percentWeight < 50 || $config{'sitAuto_over_50'} eq '1')) {
 		sit();
 	}
-	if ($ai_seq[0] eq "sitAuto" && ($ai_v{'sitAuto_forceStop'}
-		|| (percent_hp(\%{$chars[$config{'char'}]}) >= $config{'sitAuto_hp_upper'} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{'sitAuto_sp_upper'}))) {
-		shift @ai_seq;
-		shift @ai_seq_args;
-		if (!$config{'sitAuto_idle'} && $chars[$config{'char'}]{'sitting'}) {
+	if (AI::action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'}
+	|| (percent_hp($char) >= $config{'sitAuto_hp_upper'} && percent_sp($char) >= $config{'sitAuto_sp_upper'}))) {
+		AI::dequeue;
+		if (!$config{'sitAuto_idle'} && $char->{'sitting'}) {
 			stand();
 		}
 	}
