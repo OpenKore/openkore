@@ -3436,7 +3436,7 @@ sub AI {
 		my $ID = AI::args->{ID};
 		AI::dequeue;
 
-		if ($monsters_old{$ID}{dead}) {
+		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
 			message "Target died\n", "ai_attack";
 
 			monKilled();
@@ -4028,8 +4028,8 @@ sub AI {
 						move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
 					}
 				} else {
-					#we're stuck
-					my $msg = "Stuck at $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'}).";
+					# We're stuck
+					my $msg = "Stuck at $field{'name'} ($char->{pos_to}{x},$char->{pos_to}{y}), while walking from ($cur_x,$cur_y) to ($to{x},$to{y}).";
 					$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
 					$msg .= "\n";
 					warning $msg, "route";
@@ -4458,10 +4458,10 @@ sub AI {
 			debug "Move - timeout\n", "ai_move";
 			AI::dequeue;
 
-		} elsif (time > AI::args->{retry}) {
+		} elsif (timeOut($AI::Timeouts::move_retry, 0.5)) {
 			# No update yet, send move request again.
 			# We do this every 0.5 secs
-			AI::args->{retry} = time + 0.5;
+			$AI::Timeouts::move_retry = time;
 			sendMove(\$remote_socket, AI::args->{move_to}{x}, AI::args->{move_to}{y});
 		}
 	}
