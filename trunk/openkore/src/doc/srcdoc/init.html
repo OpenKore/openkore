@@ -41,46 +41,16 @@ Kore to quit).
 
 <b>openkore.pl</b> is the main source file. The following image
 describes what happens when openkore.pl is run:
-<p><img src="overview.png" width="708" height="615" alt="Overview">
-
-The most important actions that Kore performs during initialization are:
-<ol>
-<li>
-	<b>Parse arguments:</b>
-	Process any arguments passed to openkore.pl (type "openkore --help" to see a list of arguments).
-</li>
-<li>
-	<b>Start input client:</b>
-	Initializes the <a href="Input.html">keyboard input system</a> if the --daemon argument is not given.
-</li>
-<li>
-	<b>Load configuration files/tables:</b>
-	Parse and load config/*.txt and tables/*.txt.
-</li>
-<li>
-	<b>Load Tools.dll/Tools.so</b>
-</li>
-<li>
-	<b>Check for new portals</b>
-	and compile them if necessary.
-</li>
-<li>
-	<b>Ask for username/password</b>
-	if it isn't already set in config.txt.
-</li>
-<li>
-	<b>Initialize variables</b>
-</li>
-</ol>
-
-After this, it will enter the main loop.
+<p><img src="overview.png" alt="Overview" width="496" height="500">
+<p>
+After this, Kore will enter the main loop.
 
 
 <h2>Main loop</h2>
 
-Every loop in the main loop lasts for less than 0.01 seconds 
-(exception: when it's calculating a route it can take a while). In each 
-loop, the following things are performed:
+Every loop in the main loop lasts very shortly (exception: when it's calculating
+a route it can take a while).
+In each loop, the following things are performed:
 
 <ol>
 <li>
@@ -88,26 +58,29 @@ loop, the following things are performed:
 	TODO: document how X-Kore works.
 </li>
 <li>
-	<h4>Read keyboard input</h4>
-	If the <a href="Input.html">keyboard input system</a> is initialized (the --daemon argument is not given),
-	and there is keyboard input available, then Kore will read the keyboard input and
+	<h4>Parse command input</h4>
+	If there is keyboard input available, then Kore will read the keyboard input and
 	process the data with the <code>parseInput()</code> function.
 </li>
 <li>
-	<h4>Process data received from RO server</h4>
+	<h4>Process and handle data from RO server</h4>
 	TODO
 </li>
 <li>
-	<h4>AI</h4>
+	<h4>Process AI</h4>
 
 	The AI ("Artificial Intelligence") function calculates what
 	actions to perform, when, and in what way. See also
 	<a href="artificial-intelligence.html">the page that describes the AI in detail</a>.
 </li>
 <li>
-	<h4>Check connection</h4>
+	<h4>Handle connection states</h4>
 	<code>checkConnection()</code> is called. This function handles connection issues.
-	It sets relevant connection variables and re-connects to the server for you if neccessary.
+	It sets relevant connection variables and re-connects to the server if neccessary.
+</li>
+<li>
+	<h4>Misc other stuff</h4>
+	
 </li>
 </ol>
 
