@@ -26,11 +26,10 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_TEXT_ENTER EVT_KEY_DOWN EVT_PAINT EVT_SPLITTER_DOUBLECLICKED);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK);
 use Time::HiRes qw(time sleep);
 use File::Spec;
 
-use constant MAX_INPUT_HISTORY => 200;
 
 use Globals;
 use Interface;
@@ -39,6 +38,7 @@ use Modules;
 use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
 use Interface::Wx::Console;
+use Interface::Wx::Input;
 use AI;
 use Settings;
 use Plugins;
@@ -47,14 +47,15 @@ use Commands;
 use Utils;
 
 
+our $iterationTime;
+our $controlTime;
+
+
 sub OnInit {
 	my $self = shift;
 
 	$self->createInterface;
 	$self->iterate;
-	$self->{iterationTimeout}{timeout} = 0.05;
-	$self->{aiBarTimeout}{timeout} = 0.1;
-	$self->{mapViewTimeout}{timeout} = 0.15;
 
 	$self->{loadHook} = Plugins::addHook('loadfiles', sub { $self->onLoadFiles(@_); });
 	$self->{postLoadHook} = Plugins::addHook('postloadfiles', sub { $self->onLoadFiles(@_); });
@@ -62,7 +63,10 @@ sub OnInit {
 	$self->{history} = [];
 	$self->{historyIndex} = -1;
 
+	Modules::register("Interface::Wx::Dock");
 	Modules::register("Interface::Wx::MapViewer");
+	Modules::register("Interface::Wx::Console");
+	Modules::register("Interface::Wx::Input");
 	return 1;
 }
 
@@ -72,17 +76,52 @@ sub DESTROY {
 	Plugins::delHook($self->{postLoadHook});
 }
 
+our $itemListTime;
+
 sub iterate {
 	my $self = shift;
 
-	$self->updateStatusBar;
-	$self->updateMapViewer;
+	if (timeOut($controlTime, 0.15)) {
+		$self->updateStatusBar;
+		$self->updateMapViewer;
+
+		my $itemList = $self->{itemList};
+		my $itemCount = $itemList->GetCount;
+		my $size = binSize(\@playersID);
+		my $selection = $itemList->GetStringSelection;
+
+		# Resize the item list
+		if ($itemCount > $size) {
+			for (my $i = $size; $i < $itemCount; $i++) {
+				$itemList->Delete($i);
+			}
+		} elsif ($size > $itemCount) {
+			my @items;
+			for (my $i = $itemCount; $i < $size; $i++) {
+				push @items, '';
+			}
+			$itemList->InsertItems(\@items, $itemCount);
+		}
+
+		# Set list items
+		my $j = 0;
+		for (my $i = 0; $i < @playersID; $i++) {
+			my $ID = $playersID[$i];
+			next if (!$ID);
+			$itemList->SetString($j, $players{$ID}{name});
+			$itemList->SetClientData($j, $ID);
+			$j++;
+		}
+		$itemList->SetStringSelection($selection) unless ($selection eq 'Unknown');
+
+		$controlTime = time;
+	}
 
 	while ($self->Pending) {
 		$self->Dispatch;
 	}
 	$self->Yield;
-	$self->{iterationTimeout}{time} = time;
+	$iterationTime = time;
 }
 
 sub getInput {
@@ -114,7 +153,7 @@ sub getInput {
 
 	# Make sure we update the GUI. This is to work around the effect
 	# of functions that block for a while
-	$self->iterate if (timeOut($self->{iterationTimeout}));
+	$self->iterate if (timeOut($iterationTime, 0.05));
 
 	return $msg;
 }
@@ -124,7 +163,7 @@ sub writeOutput {
 	$self->{console}->add(@_);
 	# Make sure we update the GUI. This is to work around the effect
 	# of functions that block for a while
-	$self->iterate if (timeOut($self->{iterationTimeout}));
+	$self->iterate if (timeOut($iterationTime, 0.05));
 }
 
 sub title {
@@ -217,78 +256,84 @@ sub createInterface {
 	$frame->SetSizer($vsizer);
 
 
-	## Splitter with console, dock and map viewer
+	## Splitter with console and another splitter
 	my $splitter = new Wx::SplitterWindow($frame, 928, wxDefaultPosition, wxDefaultSize,
 		wxSP_LIVE_UPDATE);
 	$splitter->SetMinimumPaneSize(25);
 	$vsizer->Add($splitter, 1, wxGROW);
-	EVT_SPLITTER_DOUBLECLICKED($self, 928, sub { $_[1]->Skip; });
 
 		my $console = $self->{console} = new Interface::Wx::Console($splitter);
+		my $subSplitter = new Wx::SplitterWindow($splitter, 583,
+			wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE);
 
-		my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($splitter, -1, 'Map');
-		$mapDock->Show(0);
-		$mapDock->setHideFunc($self, sub {
-			$splitter->Unsplit($mapDock);
+			## Inside this splitter is a player/monster/item list, and a dock with map viewer
+
+			my $itemList = $self->{itemList} = new Wx::ListBox($subSplitter, 622,
+				wxDefaultPosition, wxDefaultSize, [], wxLB_SINGLE | wxLB_NEEDED_SB);
+			EVT_LISTBOX_DCLICK($self, 622, sub { $self->onItemListDClick($itemList); });
+			$subSplitter->Initialize($itemList);
+
+
+			my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($subSplitter, -1, 'Map');
 			$mapDock->Show(0);
-			$self->{inputBox}->SetFocus;
-		});
-		$mapDock->setShowFunc($self, sub {
-			$splitter->SplitVertically($console, $mapDock, -$mapDock->GetBestSize->GetWidth);
-			$mapDock->Show(1);
-			$self->{inputBox}->SetFocus;
-		});
+			$mapDock->setHideFunc($self, sub {
+				$subSplitter->Unsplit($mapDock);
+				$mapDock->Show(0);
+				$self->{inputBox}->SetFocus;
+			});
+			$mapDock->setShowFunc($self, sub {
+				$subSplitter->SplitVertically($itemList, $mapDock, -$mapDock->GetBestSize->GetWidth);
+				$mapDock->Show(1);
+				$self->{inputBox}->SetFocus;
+			});
 
-		my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
-		$mapDock->setParentFrame($frame);
-		$mapDock->set($mapView);
-		$mapView->onMouseMove(sub {
-			# Mouse moved over the map viewer control
-			my (undef, $x, $y) = @_;
-			my $walkable;
+			my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
+			$mapDock->setParentFrame($frame);
+			$mapDock->set($mapView);
+			$mapView->onMouseMove(sub {
+				# Mouse moved over the map viewer control
+				my (undef, $x, $y) = @_;
+				my $walkable;
 
-			if ($Settings::CVS =~ /CVS/) {
-				$walkable = checkFieldWalkable(\%field, $x, $y);
-			} else {
-				$walkable = !ord(substr($field{rawMap}, $y * $field{width} + $x, 1));
-			}
+				if ($Settings::CVS =~ /CVS/) {
+					$walkable = checkFieldWalkable(\%field, $x, $y);
+				} else {
+					$walkable = !ord(substr($field{rawMap}, $y * $field{width} + $x, 1));
+				}
 
-			if ($x >= 0 && $y >= 0 && $walkable) {
-				$self->{mouseMapText} = "Mouse over: $x, $y";
-			} else {
+				if ($x >= 0 && $y >= 0 && $walkable) {
+					$self->{mouseMapText} = "Mouse over: $x, $y";
+				} else {
+					delete $self->{mouseMapText};
+				}
+				$self->{statusbar}->SetStatusText($self->{mouseMapText}, 0);
+			});
+			$mapView->onClick(sub {
+				# Clicked on map viewer control
+				my (undef, $x, $y) = @_;
 				delete $self->{mouseMapText};
+				$self->writeOutput("message", "Moving to $x, $y\n", "info");
+				#AI::clear("mapRoute", "route", "move");
+				main::aiRemove("mapRoute");
+				main::aiRemove("route");
+				main::aiRemove("move");
+				main::ai_route($field{name}, $x, $y);
+				$self->{inputBox}->SetFocus;
+			});
+			$mapView->onMapChange(sub {
+				$mapDock->title($field{name});
+				$mapDock->Fit;
+			});
+			if (%field && $char) {
+				$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
 			}
-			$self->{statusbar}->SetStatusText($self->{mouseMapText}, 0);
-		});
-		$mapView->onClick(sub {
-			# Clicked on map viewer control
-			my (undef, $x, $y) = @_;
-			delete $self->{mouseMapText};
-			$self->writeOutput("message", "Moving to $x, $y\n", "info");
-			#AI::clear("mapRoute", "route", "move");
-			main::aiRemove("mapRoute");
-			main::aiRemove("route");
-			main::aiRemove("move");
-			main::ai_route($field{name}, $x, $y);
-			$self->{inputBox}->SetFocus;
-		});
-		$mapView->onMapChange(sub {
-			$mapDock->title($field{name});
-			$mapDock->Fit;
-		});
-		if (%field && $char) {
-			$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
-		}
 
-	$splitter->Initialize($console);
+		$splitter->SplitVertically($console, $subSplitter, -150);
 
 	### Input field
-	my $inputBox = $self->{inputBox} = new Wx::TextCtrl($frame, 1, '',
-		wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+	my $inputBox = $self->{inputBox} = new Interface::Wx::Input($frame);
+	$inputBox->onEnter($self, \&onInputEnter);
 	$vsizer->Add($inputBox, 0, wxALL | wxGROW);
-	EVT_TEXT_ENTER($inputBox, 1, sub { $self->onInputEnter(); });
-	EVT_KEY_DOWN($inputBox, sub { $self->onInputUpdown(@_); });
-
 
 	### Status bar
 	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, -1, wxST_SIZEGRIP);
@@ -300,11 +345,11 @@ sub createInterface {
 	#################
 
 	$frame->SetSizeHints(300, 250);
-	$frame->SetClientSize(630, 400);
-	$frame->SetIcon(Wx::GetWxPerlIcon());
+	$frame->SetClientSize(730, 400);
+	$frame->SetIcon(Wx::GetWxPerlIcon);
 	$frame->Show(1);
 	$self->SetTopWindow($frame);
-	$inputBox->SetFocus();
+	$inputBox->SetFocus;
 	EVT_CLOSE($frame, \&onClose);
 
 	# Hide console on Win32
@@ -325,7 +370,6 @@ sub addMenu {
 
 sub updateStatusBar {
 	my $self = shift;
-	return unless (timeOut($self->{aiBarTimeout}));
 
 	my ($statText, $xyText, $aiText) = ('', '', '');
 
@@ -376,13 +420,12 @@ sub updateStatusBar {
 	$setStatus->('statText', $statText);
 	$setStatus->('xyText', $xyText);
 	$setStatus->('aiText', $aiText);
-	$self->{aiBarTimeout}{time} = time;
 }
 
 sub updateMapViewer {
 	my $self = shift;
 	my $map = $self->{mapViewer};
-	return unless ($map && %field && $char && timeOut($self->{mapViewTimeout}));
+	return unless ($map && %field && $char);
 
 	my $myPos = calcPosition($char);
 	$map->set($field{name}, $myPos->{x}, $myPos->{y}, \%field);
@@ -407,46 +450,11 @@ sub updateMapViewer {
 
 sub onInputEnter {
 	my $self = shift;
-	$self->{input} = $self->{inputBox}->GetValue;
+	my $text = $self->{input} = shift;
 	$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
-	$self->{console}->AppendText("$self->{input}\n");
+	$self->{console}->AppendText("$text\n");
 	$self->{console}->SetDefaultStyle($self->{console}{defaultStyle});
 	$self->{inputBox}->Remove(0, -1);
-
-	unshift(@{$self->{history}}, $self->{input}) if ($self->{input} ne "");
-	pop @{$self->{history}} if (@{$self->{history}} > MAX_INPUT_HISTORY);
-	$self->{historyIndex} = -1;
-	undef $self->{currentInput};
-}
-
-sub onInputUpdown {
-	my $self = shift;
-	my $textctrl = shift;
-	my $event = shift;
-
-	if ($event->GetKeyCode == WXK_UP) {
-		if ($self->{historyIndex} < $#{$self->{history}}) {
-			$self->{currentInput} = $textctrl->GetValue if (!defined $self->{currentInput});
-			$self->{historyIndex}++;
-			$textctrl->SetValue($self->{history}[$self->{historyIndex}]);
-			$textctrl->SetInsertionPointEnd;
-		}
-
-	} elsif ($event->GetKeyCode == WXK_DOWN) {
-		if ($self->{historyIndex} > 0) {
-			$self->{historyIndex}--;
-			$textctrl->SetValue($self->{history}[$self->{historyIndex}]);
-			$textctrl->SetInsertionPointEnd;
-		} elsif ($self->{historyIndex} == 0) {
-			$self->{historyIndex} = -1;
-			$textctrl->SetValue($self->{currentInput});
-			undef $self->{currentInput};
-			$textctrl->SetInsertionPointEnd;
-		}
-
-	} else {
-		$event->Skip;
-	}
 }
 
 sub onLoadFiles {
@@ -501,6 +509,18 @@ sub onManual {
 sub onForum {
 	my $self = shift;
 	launchURL('http://openkore.sourceforge.net/forum.php');
+}
+
+sub onItemListDClick {
+	my $self = shift;
+	my $itemList = shift;
+	my $n = $itemList->GetSelection;
+	if ($n >= 0 && (my $ID = $itemList->GetClientData($n))) {
+		if ($players{$ID}) {
+			Commands::run("pl " . $players{$ID}{binID});
+		}
+	}
+	$self->{inputBox}->SetFocus;
 }
 
 1;
