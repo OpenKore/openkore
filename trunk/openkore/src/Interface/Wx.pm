@@ -39,6 +39,7 @@ use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
 use Interface::Wx::Console;
 use Interface::Wx::Input;
+use Interface::Wx::ItemList;
 use AI;
 use Settings;
 use Plugins;
@@ -84,36 +85,7 @@ sub iterate {
 	if (timeOut($controlTime, 0.15)) {
 		$self->updateStatusBar;
 		$self->updateMapViewer;
-
-		my $itemList = $self->{itemList};
-		my $itemCount = $itemList->GetCount;
-		my $size = binSize(\@playersID);
-		my $selection = $itemList->GetStringSelection;
-
-		# Resize the item list
-		if ($itemCount > $size) {
-			for (my $i = $size; $i < $itemCount; $i++) {
-				$itemList->Delete($i);
-			}
-		} elsif ($size > $itemCount) {
-			my @items;
-			for (my $i = $itemCount; $i < $size; $i++) {
-				push @items, '';
-			}
-			$itemList->InsertItems(\@items, $itemCount);
-		}
-
-		# Set list items
-		my $j = 0;
-		for (my $i = 0; $i < @playersID; $i++) {
-			my $ID = $playersID[$i];
-			next if (!$ID);
-			$itemList->SetString($j, $players{$ID}{name});
-			$itemList->SetClientData($j, $ID);
-			$j++;
-		}
-		$itemList->SetStringSelection($selection) unless ($selection eq 'Unknown');
-
+		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
 		$controlTime = time;
 	}
 
@@ -268,9 +240,8 @@ sub createInterface {
 
 			## Inside this splitter is a player/monster/item list, and a dock with map viewer
 
-			my $itemList = $self->{itemList} = new Wx::ListBox($subSplitter, 622,
-				wxDefaultPosition, wxDefaultSize, [], wxLB_SINGLE | wxLB_NEEDED_SB);
-			EVT_LISTBOX_DCLICK($self, 622, sub { $self->onItemListDClick($itemList); });
+			my $itemList = $self->{itemList} = new Interface::Wx::ItemList($subSplitter);
+			$itemList->onActivate(\&onItemListActivate, $self);
 			$subSplitter->Initialize($itemList);
 
 
@@ -541,15 +512,27 @@ sub onForum {
 	launchURL('http://openkore.sourceforge.net/forum.php');
 }
 
-sub onItemListDClick {
+sub onItemListActivate {
 	my $self = shift;
-	my $itemList = shift;
-	my $n = $itemList->GetSelection;
-	if ($Settings::CVS =~ /CVS/ && $n >= 0 && (my $ID = $itemList->GetClientData($n))) {
-		if ($players{$ID}) {
-			Commands::run("pl " . $players{$ID}{binID});
+	my $ID = shift;
+	my $object = shift;
+	my $type = shift;
+
+	if ($type eq 'p') {
+		if ($Settings::CVS =~ /CVS/) {
+			Commands::run("pl " . $players{$ID}{binID}) if ($players{$ID});
+		}
+
+	} elsif ($type eq 'm') {
+		main::attack($ID) if ($monsters{$ID});
+
+	} elsif ($type eq 'i') {
+		if ($items{$ID}) {
+			$self->{console}->add("message", "Taking item $items{$ID}{name} ($items{$ID}{binID})\n", "info");
+			main::take($ID);
 		}
 	}
+
 	$self->{inputBox}->SetFocus;
 }
 
