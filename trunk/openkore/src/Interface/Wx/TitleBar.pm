@@ -26,7 +26,7 @@ use Wx::Event qw(EVT_BUTTON EVT_PAINT);
 use base qw(Wx::Panel);
 
 
-our (@brushes, $oldWidth, $font, $dark, $light);
+our (@brushes, $font, $dark, $light);
 
 
 sub new {
@@ -80,6 +80,13 @@ sub new {
 	}
 
 	$self->{title} = $title;
+
+	createBrushes() if (!@brushes);
+	if (!$dark) {
+		$dark = new Wx::Pen(new Wx::Colour(164, 164, 164), 1, wxSOLID);
+		$light = new Wx::Pen(new Wx::Colour(241, 241, 241), 1, wxSOLID);
+	}
+
 	return $self;
 }
 
@@ -124,6 +131,23 @@ sub f {
 	return $f;
 }
 
+sub createBrushes {
+	my @from = (0, 40, 130);
+	my @to = (129, 188, 255);
+
+	# Create brushes for drawing the gradient
+	@brushes = ();
+	for (my $i = 0; $i < 255; $i++) {
+		my $color = new Wx::Colour(
+			$from[0] + ($to[0] - $from[0]) / 255 * $i,
+			$from[1] + ($to[1] - $from[1]) / 255 * $i,
+			$from[2] + ($to[2] - $from[2]) / 255 * $i
+		);
+		my $brush = new Wx::Brush($color, wxSOLID);
+		push @brushes, $brush;
+	}
+}
+
 sub onPaint {
 	my $self = shift;
 	my $dc = new Wx::PaintDC($self);
@@ -138,23 +162,6 @@ sub onPaint {
 	# Something about "the invocant is not a reference".
 	# This'll do for now, I just hope it doesn't corrupt memory...
 
-	if (!defined $oldWidth || $width != $oldWidth) {
-		@brushes = ();
-		my @from = (0, 40, 130);
-		#my @to = (98, 165, 241);
-		my @to = (129, 188, 255);
-		for (my $i = 0; $i < 255; $i++) {
-			my $color = new Wx::Colour(
-				$from[0] + ($to[0] - $from[0]) / 255 * $i,
-				$from[1] + ($to[1] - $from[1]) / 255 * $i,
-				$from[2] + ($to[2] - $from[2]) / 255 * $i
-			);
-			my $brush = new Wx::Brush($color, wxSOLID);
-			push @brushes, $brush;
-		}
-		$oldWidth = $width;
-	}
-
 	my $x = 0;
 	my $block = $width / 255;
 	my $height = $self->GetSize->GetHeight;
@@ -166,10 +173,6 @@ sub onPaint {
 	}
 
 	$dc->SetBrush(wxTRANSPARENT_BRUSH);
-	if (!$dark) {
-		$dark = new Wx::Pen(new Wx::Colour(164, 164, 164), 1, wxSOLID);
-		$light = new Wx::Pen(new Wx::Colour(241, 241, 241), 1, wxSOLID);
-	}
 	$dc->SetPen($light);
 	$dc->DrawLine(0, 0, $width, 0);
 	$dc->DrawLine(0, 0, 0, $height);
