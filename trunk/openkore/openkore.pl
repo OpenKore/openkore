@@ -158,7 +158,7 @@ if (!defined &XSTools::majorVersion) {
 	$interface->errorDialog("Your version of XSTools library is incompatible.\n" .
 		"Please download the correct version.");
 	exit 1;
-} elsif (XSTools::minorVersion < 0) {
+} elsif (XSTools::minorVersion < 1) {
 	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.");
 	exit 1;
 }

@@ -10000,13 +10000,13 @@ sub getField {
 	}
 
 	# The .dist file is not available; create it
-	unless ($$r_hash{'dstMap'}) {
-		$$r_hash{'dstMap'} = makeDistMap(@$r_hash{'rawMap', 'width', 'height'});
+	unless ($r_hash->{dstMap}) {
+		$r_hash->{dstMap} = makeDistMap($r_hash->{rawMap}, $r_hash->{width}, $r_hash->{height});
 		open FILE, "> $dist_file" or die "Could not write dist cache file: $!\n";
 		binmode(FILE);
 		print FILE pack("a2 S1", 'V#', 2);
 		print FILE pack("S1 S1", @$r_hash{'width', 'height'});
-		print FILE $$r_hash{'dstMap'};
+		print FILE $r_hash->{dstMap};
 		close FILE;
 	}
 
