@@ -51,6 +51,7 @@ our @EXPORT = qw(
 	createCharacter
 	getFieldPoint
 	getPortalDestName
+	getPlayer
 	printItemDesc
 	whenStatusActive
 	whenStatusActiveMon
@@ -595,6 +596,32 @@ sub getPortalDestName {
 
 	my @destinations = sort keys %hash;
 	return join('/', @destinations);
+}
+
+##
+# getPlayer(ID, [partial_match])
+# ID: either a number in the player list, or a player name.
+# Returns: a player hash, or undef if not found.
+sub getPlayer {
+	my $ID = shift;
+	my $partial = shift;
+
+	if ($ID =~ /^\d+$/) {
+		if (defined($ID = $playersID[$ID])) {
+			return $players{$ID};
+		}
+	} elsif ($partial) {
+		foreach (@playersID) {
+			next if (!$_);
+			return $players{$_} if (index(lc($players{$_}{name}), lc($ID)) != -1);
+		}
+	} else {
+		foreach (@playersID) {
+			next if (!$_);
+			return $players{$_} if (lc($players{$_}{name}) eq lc($ID));
+		}
+	}
+	return undef;
 }
 
 ##

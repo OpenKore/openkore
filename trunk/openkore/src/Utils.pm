@@ -1113,10 +1113,11 @@ sub makeIP {
 }
 
 ##
-# parseArgs(command, max, [delimiters = ' '])
+# parseArgs(command, [max], [delimiters = ' '], [last_arg_pos])
 # command: a command string.
 # max: maximum number of arguments.
 # delimiters: a character array of delimiters for arguments.
+# last_arg_pos: reference to a scalar. The position of the start of the last argument is stored here.
 # Returns: an array of arguments.
 #
 # Parse a command string and split it into an array of arguments.
@@ -1132,7 +1133,8 @@ sub parseArgs {
 	my $command = shift;
 	my $max = shift;
 	my $delimiters = shift;
-	my @args = ();
+	my $r_last_arg_pos = shift;
+	my @args;
 
 	if (!defined $delimiters) {
 		$delimiters = qr/ /;
@@ -1140,8 +1142,12 @@ sub parseArgs {
 		$delimiters = quotemeta $delimiters;
 		$delimiters = qr/[$delimiters]/;
 	}
-	$command =~ s/^\s*//;
-	$command =~ s/\s*$//;
+
+	my $last_arg_pos;
+	my $tmp;
+	($tmp, $command) = $command =~ /^( *)(.*)/;
+	$last_arg_pos = length($tmp);
+	$command =~ s/ *$//;
 
 	my $len = length $command;
 	my $within_quote;
@@ -1169,14 +1175,16 @@ sub parseArgs {
 		} elsif ($char =~ /$delimiters/) {
 			unshift @args, '';
 			$command = substr($command, $i + 1);
-			$command =~ s/^$delimiters*//;
+			($tmp, $command) =~ /^(${delimiters}*)(.*)/;
 			$len = length $command;
+			$last_arg_pos += $i + 1;
 			$i = -1;
 
 		} else {
 			$args[0] .= $char;
 		}
 	}
+	$$r_last_arg_pos = $last_arg_pos if ($r_last_arg_pos);
 	return reverse @args;
 }
 
