@@ -1676,6 +1676,121 @@ sub AI {
 		delete $char->{mute_period};
 	}
 
+
+	##### PORTALRECORD #####
+	# Automatically record new unknown portals
+
+	PORTALRECORD: {
+		last PORTALRECORD if (!$ai_v{portalTrace_mapChanged});
+		delete $ai_v{portalTrace_mapChanged};
+		
+		debug "Checking for new portals...\n", "portalRecord";
+		my $first = 1;
+		my ($foundID, $smallDist, $dist);
+
+		if (!$field{name}) {
+			debug "Field name not known - abort\n", "portalRecord";
+			last PORTALRECORD;
+		}
+
+
+		# Find the nearest portal or the only portal on the map
+		# you came from (source portal)
+		foreach (@portalsID_old) {
+			next if (!$_);
+			$dist = distance($chars_old[$config{char}]{pos_to}, $portals_old{$_}{pos});
+			if ($dist <= 7 && ($first || $dist < $smallDist)) {
+				$smallDist = $dist;
+				$foundID = $_;
+				undef $first;
+			}
+		}
+
+		my ($sourceMap, $sourceID, %sourcePos, $sourceIndex);
+		if (defined $foundID) {
+			$sourceMap = $portals_old{$foundID}{source}{map};
+			$sourceID = $portals_old{$foundID}{nameID};
+			%sourcePos = %{$portals_old{$foundID}{pos}};
+			$sourceIndex = $foundID;
+			debug "Source portal: $sourceMap ($sourcePos{x}, $sourcePos{y})\n", "portalRecord";
+		} else {
+			debug "No source portal found.\n", "portalRecord";
+			last PORTALRECORD;
+		}
+
+		if (defined portalExists($sourceMap, \%sourcePos)) {
+			debug "Portal is already in portals.txt - abort\n", "portalRecord";
+			last PORTALRECORD;
+		}
+
+
+		# Find the nearest portal or only portal on the
+		# current map (destination portal)
+		$first = 1;
+		undef $foundID;
+		undef $smallDist;
+
+		foreach (@portalsID) {
+			next if (!$_);
+			$dist = distance($chars[$config{'char'}]{pos_to}, $portals{$_}{pos});
+			if ($first || $dist < $smallDist) {
+				$smallDist = $dist;
+				$foundID = $_;
+				undef $first;
+			}
+		}
+
+		# Sanity checks
+		if (!defined $foundID) {
+			debug "No destination portal found.\n", "portalRecord";
+			last PORTALRECORD;
+		}
+		if (defined portalExists($field{name}, $portals{$foundID}{pos})) {
+			debug "Destination portal is already in portals.txt\n", "portalRecord";
+			last PORTALRECORD;
+		}
+
+		
+		# And finally, record the portal information
+		my ($destMap, $destID, %destPos);
+		$destMap = $field{name};
+		$destID = $portals{$foundID}{nameID};
+		%destPos = %{$portals{$foundID}{pos}};
+		debug "Destination portal: $destMap ($destPos{x}, $destPos{y})\n", "portalRecord";
+
+		$portals{$foundID}{name} = "$field{name} -> $sourceMap";
+		$portals_old{$sourceIndex}{name} = "$sourceMap -> $field{name}";
+
+
+		my ($ID, $destName);
+
+		# Record information about destination portal
+		$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
+		$portals_lut{$ID}{source}{map} = $sourceMap;
+		$portals_lut{$ID}{source}{pos} = {%sourcePos};
+		$destName = "$field{name} $destPos{x} $destPos{y}";
+		$portals_lut{$ID}{dest}{$destName}{map} = $field{name};
+		$portals_lut{$ID}{dest}{$destName}{pos} = {%destPos};
+
+		updatePortalLUT("$Settings::tables_folder/portals.txt",
+			$sourceMap, $sourcePos{x}, $sourcePos{y},
+			$field{name}, $destPos{x}, $destPos{y});
+
+		# Record information about the source portal
+		$ID = "$field{name} $destPos{x} $destPos{y}";
+		$portals_lut{$ID}{source}{map} = $field{name};
+		$portals_lut{$ID}{source}{pos} = {%destPos};
+		$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
+		$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
+		$portals_lut{$ID}{dest}{$destName}{pos} = %sourcePos;
+
+		updatePortalLUT("$Settings::tables_folder/portals.txt",
+			$field{name}, $destPos{x}, $destPos{y},
+			$sourceMap, $sourcePos{x}, $sourcePos{y});
+
+		debug "Portal recording successful\n", "portalRecord";
+	}
+
 	return if (!$AI);
 
 
@@ -1742,84 +1857,6 @@ sub AI {
 		sendGuildAlly(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
 		$timeout{'ai_guildAutoDeny'}{'time'} = time;
 		undef %incomingGuild;
-	}
-
-
-	##### PORTALRECORD #####
-	# Automatically record new unknown portals
-
-	if ($ai_v{'portalTrace_mapChanged'}) {
-		undef $ai_v{'portalTrace_mapChanged'};
-		my $first = 1;
-		my ($foundID, $smallDist, $dist);
-
-		# Find the nearest portal or the only portal on the map you came from (source portal)
-		foreach (@portalsID_old) {
-			$dist = distance($chars_old[$config{'char'}]{'pos_to'}, $portals_old{$_}{'pos'});
-			if ($dist <= 7 && ($first || $dist < $smallDist)) {
-				$smallDist = $dist;
-				$foundID = $_;
-				undef $first;
-			}
-		}
-
-		my ($sourceMap, $sourceID, %sourcePos);
-		if ($foundID) {
-			$sourceMap = $portals_old{$foundID}{'source'}{'map'};
-			$sourceID = $portals_old{$foundID}{'nameID'};
-			%sourcePos = %{$portals_old{$foundID}{'pos'}};
-		}
-
-		# Continue only if the source portal isn't already in portals.txt
-		if ($foundID && portalExists($sourceMap, \%sourcePos) eq "" && $field{'name'}) {
-			$first = 1;
-			undef $foundID;
-			undef $smallDist;
-
-			# Find the nearest portal or only portal on the current map
-			foreach (@portalsID) {
-				$dist = distance($chars[$config{'char'}]{'pos_to'}, $portals{$_}{'pos'});
-				if ($first || $dist < $smallDist) {
-					$smallDist = $dist;
-					$foundID = $_;
-					undef $first;
-				}
-			}
-
-			# Final sanity check
-			if (%{$portals{$foundID}} && portalExists($field{'name'}, $portals{$foundID}{'pos'}) eq ""
-			 && $sourceMap && defined $sourcePos{x} && defined $sourcePos{y}
-			 && defined $portals{$foundID}{'pos'}{'x'} && defined $portals{$foundID}{'pos'}{'y'}) {
-
-				my ($ID, $ID2, $destName);
-				$portals{$foundID}{'name'} = "$field{'name'} -> $sourceMap";
-				$portals{pack("L", $sourceID)}{'name'} = "$sourceMap -> $field{'name'}";
-
-				# Record information about the portal we walked into
-				$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
-				$portals_lut{$ID}{'source'}{'map'} = $sourceMap;
-				%{$portals_lut{$ID}{'source'}{'pos'}} = %sourcePos;
-				$destName = $field{'name'} . " " . $portals{$foundID}{'pos'}{'x'} . " " . $portals{$foundID}{'pos'}{'y'};
-				$portals_lut{$ID}{'dest'}{$destName}{'map'} = $field{'name'};
-				%{$portals_lut{$ID}{'dest'}{$destName}{'pos'}} = %{$portals{$foundID}{'pos'}};
-
-				updatePortalLUT("$Settings::tables_folder/portals.txt",
-					$sourceMap, $sourcePos{x}, $sourcePos{y},
-					$field{'name'}, $portals{$foundID}{'pos'}{'x'}, $portals{$foundID}{'pos'}{'y'});
-
-				# Record information about the portal in which we came out
-				$ID2 = "$field{'name'} $portals{$foundID}{'pos'}{'x'} $portals{$foundID}{'pos'}{'y'}";
-				$portals_lut{$ID2}{'source'}{'map'} = $field{'name'};
-				%{$portals_lut{$ID2}{'source'}{'pos'}} = %{$portals{$foundID}{'pos'}};
-				$destName = $sourceMap . " " . $sourcePos{x} . " " . $sourcePos{y};
-				$portals_lut{$ID2}{'dest'}{$destName}{'map'} = $sourceMap;
-				%{$portals_lut{$ID2}{'dest'}{$destName}{'pos'}} = %sourcePos;
-
-				updatePortalLUT("$Settings::tables_folder/portals.txt",
-					$field{'name'}, $portals{$foundID}{'pos'}{'x'}, $portals{$foundID}{'pos'}{'y'},
-					$sourceMap, $sourcePos{x}, $sourcePos{y});
-			}
-		}
 	}
 
 
@@ -5552,7 +5589,7 @@ sub parseMsg {
 		initStatVars();
 
 	} elsif ($switch eq "0073") {
-		$conState = 5;
+		$conState = 4;
 		undef $conState_tries;
 		$char = $chars[$config{'char'}];
 		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
@@ -6280,7 +6317,7 @@ sub parseMsg {
 		message "$chat\n", "selfchat";
 
 	} elsif ($switch eq "0091") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 4 if ($conState != 4 && $xkore);
 
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
@@ -6296,8 +6333,8 @@ sub parseMsg {
 
 		$coords{'x'} = unpack("S1", substr($msg, 18, 2));
 		$coords{'y'} = unpack("S1", substr($msg, 20, 2));
-		%{$chars[$config{'char'}]{'pos'}} = %coords;
-		%{$chars[$config{'char'}]{'pos_to'}} = %coords;
+		$chars[$config{char}]{pos} = {%coords};
+		$chars[$config{char}]{pos_to} = {%coords};
 		message "Map Change: $map_name ($chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'})\n", "connection";
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		ai_clientSuspend(0, 10) if ($config{'XKore'});
@@ -10253,13 +10290,13 @@ sub lookAtPosition {
 sub portalExists {
 	my ($map, $r_pos) = @_;
 	foreach (keys %portals_lut) {
-		if ($portals_lut{$_}{'source'}{'map'} eq $map
-		 && $portals_lut{$_}{'source'}{'pos'}{'x'} == $$r_pos{'x'}
-		 && $portals_lut{$_}{'source'}{'pos'}{'y'} == $$r_pos{'y'}) {
+		if ($portals_lut{$_}{source}{map} eq $map
+		 && $portals_lut{$_}{source}{pos}{x} == $$r_pos{x}
+		 && $portals_lut{$_}{source}{pos}{y} == $$r_pos{y}) {
 			return $_;
 		}
 	}
-	return 0;
+	return;
 }
 
 sub redirectXKoreMessages {
