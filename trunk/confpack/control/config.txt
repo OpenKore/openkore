@@ -143,6 +143,7 @@ route_step 15
 # 	timeout [number, in seconds before the skills can be activated again. A small timeout is always good to counter lag]
 # 	disabled [flag, to disable this block temporary]
 # 	monsters [list of monster to use this skill with, coma separated]
+# 	notMonsters [list of monster not to use this skill with, coma separated]
 # 	maxUses 0 [number]
 # 	target_whenStatusActive [activate the skill only when the monster have the listed status/state/ailments/look active]
 # 	target_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
@@ -174,6 +175,7 @@ attackSkillSlot {
 	timeout 0
 	disabled 0
 	monsters
+	notMonsters
 	maxUses 0
 	target_whenStatusActive
 	target_whenStatusInactive
