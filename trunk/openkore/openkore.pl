@@ -142,17 +142,17 @@ if ($config{'XKore'}) {
 }
 
 if ($config{'adminPassword'} eq 'x' x 10) {
-	print "\nAuto-generating Admin Password due to default\n";
+	print "\nAuto-generating Admin Password due to default...\n";
 	configModify("adminPassword", vocalString(8));
 }
 # This is where we protect the stupid from having a blank admin password
 elsif ($config{'adminPassword'} eq '') {
-	print "\nAuto-generating Admin Password due to blank\n";
+	print "\nAuto-generating Admin Password due to blank...\n";
 	configModify("adminPassword", vocalString(8));
 }
 # This is where we induldge the paranoid and let them have session generated admin passwords
 elsif ($config{'secureAdminPassword'} eq '1') {
-	print "\nGenerating session Admin Password\n";
+	print "\nGenerating session Admin Password...\n";
 	configModify("adminPassword", vocalString(8));
 }
 
@@ -174,7 +174,7 @@ our $remote_socket = IO::Socket::INET->new();
 
 ###COMPILE PORTALS###
 
-print "\nChecking for new portals...";
+print "Checking for new portals...";
 compilePortals_check(\$found);
 
 if ($found) {
@@ -196,7 +196,7 @@ if ($found) {
 		print "skipping compile\n\n";
 	}
 } else {
-	print "none found\n";
+	print "none found\n\n";
 }
 
 
@@ -243,6 +243,7 @@ our $conState = 1;
 
 initStatVars();
 initRandomRestart();
+print "\n";
 
 while ($quit != 1) {
 	usleep($config{'sleepTime'});

@@ -24,8 +24,8 @@ use Config;
 sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
-		print "Next restart in $restart seconds\n\n";
-		configModify("autoRestart", $restart, 1);
+		print "Next restart in $autoRestart seconds.\n";
+		configModify("autoRestart", $autoRestart, 1);
 	}
 }
 
@@ -230,12 +230,12 @@ sub checkConnection {
 	# The only thing that may want changing here is the sleep and restart times being printed in minutes rather than seconds
 	# However, as I'm sure we are all used to working in seconds ourselves, this can be changed come release (if at all)
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'} && $conState == 5) {
-		print "\nAuto-restarting!!\n\n";
-		initRandomRestart();
+		print "\nAuto-restarting!!\n";
 
 		if ($config{'autoRestartSleep'}) {
 			my $sleeptime = $config{'autoSleepMin'} + int(rand $config{'autoSleepSeed'});
 			$timeout_ex{'master'}{'timeout'} = $sleeptime;
+			$sleeptime = $timeout{'reconnect'}{'timeout'} if ($sleeptime < $timeout{'reconnect'}{'timeout'});
 			print "Sleeping for $sleeptime seconds\n";
 		} else {
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -246,6 +246,7 @@ sub checkConnection {
 		killConnection(\$remote_socket);
 		$conState = 1;
 		undef $conState_tries;
+		initRandomRestart();
 	}
 }
 
