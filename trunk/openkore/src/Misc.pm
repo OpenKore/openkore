@@ -665,6 +665,12 @@ sub avoidGM_talk {
 	}
 
 	if ($user =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+		my %args = (
+			name => $user,
+		);
+		Plugins::callHook('avoidGM_talk', \%args);
+		return 1 if ($args{return});
+
 		warning "Disconnecting to avoid GM!\n";
 		chatLog("k", "*** The GM $user talked to you, auto disconnected ***\n");
 
