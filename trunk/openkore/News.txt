@@ -52,6 +52,10 @@ New features:
   route_randomWalk is set, lockMap_x/y and lockMap_randX/Y specify the area
   in which randomWalk should walk.
 
+New commands:
+- guild join (flag)
+  Accept or deny a guild join request.
+
 New config options:
 - useSelfSkill_#_monsters
   partySkill_#_monsters

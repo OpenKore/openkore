@@ -904,48 +904,6 @@ sub parseCommand {
 			sendMessage(\$remote_socket, "g", $arg1);
 		}
 
-	} elsif ($switch eq "guild") {
-		($arg1) = $input =~ /^.*? (\w+)/;
-		if ($arg1 eq "info") {
-			message("---------- Guild Information ----------\n", "info");
-			message(swrite(
-				"Name    : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{'name'}],
-				"Lv      : @<<",			[$guild{'lvl'}],
-				"Exp     : @>>>>>>>>>/@<<<<<<<<<<",	[$guild{'exp'}, $guild{'next_exp'}],
-				"Master  : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{'master'}],
-				"Connect : @>>/@<<",			[$guild{'conMember'}, $guild{'maxMember'}]),
-				"info");
-			message("---------------------------------------\n", "info");
-
-		} elsif ($arg1 eq "member") {
-			message("------------ Guild  Member ------------\n", "list");
-			message("#  Name                       Job        Lv  Title                       Online\n", "list");
-			my ($i, $name, $job, $lvl, $title, $online);
-
-			my $count = @{$guild{'member'}};
-			for ($i = 0; $i < $count; $i++) {
-				$name  = $guild{'member'}[$i]{'name'};
-				next if ($name eq "");
-				$job   = $jobs_lut{$guild{'member'}[$i]{'jobID'}};
-				$lvl   = $guild{'member'}[$i]{'lvl'};
-				$title = $guild{'member'}[$i]{'title'};
-				$online = $guild{'member'}[$i]{'online'} ? "Yes" : "No";
-
-				message(swrite(
-					"@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<",
-					[$i, $name, $job, $lvl, $title, $online]),
-					"list");
-			}
-			message("---------------------------------------\n", "list");
-
-		} elsif ($arg1 eq "") {
-			message	"Requesting guild information...\n" .
-				"Enter command to view guild information: guild < info | member >\n", "info";
-			sendGuildInfoRequest(\$remote_socket);
-			sendGuildRequest(\$remote_socket, 0);
-			sendGuildRequest(\$remote_socket, 1);
-		}
-
 	} elsif ($switch eq "identify") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {

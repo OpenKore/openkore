@@ -52,6 +52,7 @@ our %handlers = (
 	debug	=> \&cmdDebug,
 	e	=> \&cmdEmotion,
 	eq	=> \&cmdEquip,
+	guild	=> \&cmdGuild,
 	i	=> \&cmdInventory,
 	ignore	=> \&cmdIgnore,
 	il	=> \&cmdItemList,
@@ -103,6 +104,7 @@ our %descriptions = (
 	debug	=> 'Toggle debug on/off.',
 	e	=> 'Show emotion.',
 	eq	=> 'Equip an item.',
+	guild	=> 'Guild management.',
 	i	=> 'Display inventory items.',
 	ignore	=> 'Ignore a user (block his messages).',
 	il	=> 'Display items on the ground.',
@@ -505,6 +507,71 @@ sub cmdEquip {
 
 	} else {
 		sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'});
+	}
+}
+
+sub cmdGuild {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+ (\d+)/;
+
+	if ($arg1 eq "info") {
+		message("---------- Guild Information ----------\n", "info");
+		message(swrite(
+			"Name    : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{name}],
+			"Lv      : @<<",			[$guild{lvl}],
+			"Exp     : @>>>>>>>>>/@<<<<<<<<<<",	[$guild{exp}, $guild{next_exp}],
+			"Master  : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{master}],
+			"Connect : @>>/@<<",			[$guild{conMember}, $guild{maxMember}]),
+			"info");
+		message("---------------------------------------\n", "info");
+
+	} elsif ($arg1 eq "member") {
+		my $msg = "------------ Guild  Member ------------\n";
+		$msg .= "#  Name                       Job        Lv  Title                       Online\n";
+
+		my ($i, $name, $job, $lvl, $title, $online);
+		my $count = @{$guild{member}};
+		for ($i = 0; $i < $count; $i++) {
+			$name  = $guild{member}[$i]{name};
+			next if (!defined $name);
+
+			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
+			$lvl   = $guild{member}[$i]{lvl};
+			$title = $guild{member}[$i]{title};
+			$online = $guild{member}[$i]{online} ? "Yes" : "No";
+
+			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<",
+					[$i, $name, $job, $lvl, $title, $online]);
+		}
+		$msg .= "---------------------------------------\n";
+		message "$msg\n", "list";
+
+	} elsif ($arg1 eq "join") {
+		if ($arg2 ne "1" && $arg2 ne "0") {
+			error	"Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n" .
+				"Usage: guild join <flag>\n";
+			return;
+		} elsif ($incomingGuild{'ID'} eq "") {
+			error	"Error in function 'guild join' (Join/Request to Join Guild)\n" .
+				"Can't accept/deny guild request - no incoming request.\n";
+			return;
+		}
+
+		sendGuildJoin(\$remote_socket, $incomingGuild{ID}, $arg2);
+		undef %incomingGuild;
+		if ($arg2) {
+			message "You accepted the guild join request.\n", "success";
+		} else {
+			message "You denied the guild join request.\n", "info";
+		}
+
+	} elsif ($arg1 eq "") {
+		message	"Requesting guild information...\n" .
+			"Enter command to view guild information: guild < info | member >\n", "info";
+		sendGuildInfoRequest(\$remote_socket);
+		sendGuildRequest(\$remote_socket, 0);
+		sendGuildRequest(\$remote_socket, 1);
 	}
 }
 
