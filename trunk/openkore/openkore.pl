@@ -97,8 +97,9 @@ addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePort
 addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
 addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
-addConfigFile("$Settings::tables_folder/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
 addConfigFile("$Settings::tables_folder/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
+addConfigFile("$Settings::tables_folder/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
+addConfigFile("$Settings::tables_folder/skills.txt", \%skillsID_rlut, \&parseSkillsReverseIDLUT_lc);
 addConfigFile("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
 addConfigFile("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
 addConfigFile("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
