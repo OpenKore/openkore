@@ -92,3 +92,9 @@ ip 200.229.49.10
 port 6900
 master_version 22
 version 1
+
+[India - inRO]
+ip 210.210.26.35
+port 6900
+version 1
+master_version 1
