@@ -1,3 +1,65 @@
+gld_dun04.rsw#Guild Dungeon#
+gld_dun03.rsw#Guild Dungeon#
+gld_dun02.rsw#Guild Dungeon#
+gld_dun01.rsw#Guild Dungeon#
+payg_cas05.rsw#Greenwood Lake Guild#
+payg_cas04.rsw#Greenwood Lake Guild#
+payg_cas03.rsw#Greenwood Lake Guild#
+payg_cas02.rsw#Greenwood Lake Guild#
+payg_cas01.rsw#Greenwood Lake Guild#
+pay_gld.rsw#Greenwood Lake#
+aldeg_cas05.rsw#Luina Guild#
+aldeg_cas04.rsw#Luina Guild#
+aldeg_cas03.rsw#Luina Guild#
+aldeg_cas02.rsw#Luina Guild#
+aldeg_cas01.rsw#Luina Guild#
+alde_gld.rsw#Luina the satellite of Al De Baran#
+gefg_cas05.rsw#Britoniah Guild#
+gefg_cas04.rsw#Britoniah Guild#
+gefg_cas03.rsw#Britoniah Guild#
+gefg_cas02.rsw#Britoniah Guild#
+gefg_cas01.rsw#Britoniah Guild#
+prtg_cas05.rsw#Valkyrie Realm Guild#
+prtg_cas04.rsw#Valkyrie Realm Guild#
+prtg_cas03.rsw#Valkyrie Realm Guild#
+prtg_cas02.rsw#Valkyrie Realm Guild#
+prtg_cas01.rsw#Valkyrie Realm Guild#
+prt_gld.rsw#Valkyrie Realm#
+tur_dun01.rsw#Turtle Island#
+tur_dun02.rsw#Turtle Island Dungeon#
+tur_dun03.rsw#Good Turtles Village#
+tur_dun04.rsw#Turtle Palace#
+tur_dun05.rsw#Underground swamp zone#
+tur_dun06.rsw#Underground swamp zone#
+guild_vs3.rsw#Guild Arena#
+guild_vs2.rsw#Guild Arena#
+guild_vs1.rsw#Guild Arena#
+guild_room.rsw#Guild Arena Waiting Room#
+quiz_00.rsw#Quiz Revolrution#
+quiz_01.rsw#Quiz Revolrutiona#
+gef_fild12.rsw#Kordt Forest#
+gef_fild13.rsw#Britoniah#
+gef_fild14.rsw#West Orc Village#
+cmd_in02.rsw#Inside Comodo#
+cmd_in01.rsw#Inside Comodo#
+comodo.rsw#Beach town,Comodo#
+beach_dun.rsw#Karu,the West cave#
+beach_dun2.rsw#Ruande the northern cave#
+beach_dun3.rsw#Mao,the East Cave#
+cmd_fild01.rsw#Papuchicha Forest#
+cmd_fild02.rsw#Kokomo beach#
+cmd_fild03.rsw#Zenhai Marsh#
+cmd_fild04.rsw#Kokomo beach#
+cmd_fild05.rsw#Border of Papuchica forest#
+cmd_fild06.rsw#Fortress Saint Darmain(West)#
+cmd_fild07.rsw#Beacon Island,Pharos#
+cmd_fild08.rsw#Fortress Saint Darmain(East)#
+cmd_fild09.rsw#Fortress Saint Darmain(South)#
+xmas_in.rsw#Inside Lutie#
+xmas_dun02.rsw#Toy Classifying Room#
+xmas_dun01.rsw#Toy Factory Warehouse#
+xmas_fild01.rsw#Lutie Field#
+xmas.rsw#Lutie,Snow Village#
 mjolnir_01.rsw#Mt.Mjolnir#
 mjolnir_02.rsw#Mt.Mjolnir#
 mjolnir_03.rsw#Mt.Mjolnir#
@@ -67,26 +129,26 @@ pay_fild08.rsw#Payon Forest#
 pay_fild09.rsw#Payon Forest#
 pay_fild10.rsw#Payon Forest#
 pay_fild11.rsw#Payon Forest#
-new_1-1.rsw#Training Ground #
-new_2-1.rsw#Training Ground #
-new_3-1.rsw#Training Ground #
-new_4-1.rsw#Training Ground #
-new_5-1.rsw#Training Ground #
-new_1-2.rsw#Training Ground #
-new_2-2.rsw#Training Ground #
-new_3-2.rsw#Training Ground #
-new_4-2.rsw#Training Ground #
-new_5-2.rsw#Training Ground #
-new_1-3.rsw#Training Ground #
-new_2-3.rsw#Training Ground #
-new_3-3.rsw#Training Ground #
-new_4-3.rsw#Training Ground #
-new_5-3.rsw#Training Ground #
-new_1-4.rsw#Training Ground #
-new_2-4.rsw#Training Ground #
-new_3-4.rsw#Training Ground #
-new_4-4.rsw#Training Ground #
-new_5-4.rsw#Training Ground #
+new_1-1.rsw#Training Ground#
+new_2-1.rsw#Training Ground#
+new_3-1.rsw#Training Ground#
+new_4-1.rsw#Training Ground#
+new_5-1.rsw#Training Ground#
+new_1-2.rsw#Training Ground#
+new_2-2.rsw#Training Ground#
+new_3-2.rsw#Training Ground#
+new_4-2.rsw#Training Ground#
+new_5-2.rsw#Training Ground#
+new_1-3.rsw#Training Ground#
+new_2-3.rsw#Training Ground#
+new_3-3.rsw#Training Ground#
+new_4-3.rsw#Training Ground#
+new_5-3.rsw#Training Ground#
+new_1-4.rsw#Training Ground#
+new_2-4.rsw#Training Ground#
+new_3-4.rsw#Training Ground#
+new_4-4.rsw#Training Ground#
+new_5-4.rsw#Training Ground#
 anthell01.rsw#Ant Hell#
 anthell02.rsw#Ant Hell#
 gef_dun00.rsw#Geffen Dungeon#
@@ -140,10 +202,10 @@ knight_3-1.rsw#the Chivalry#
 priest_1-1.rsw#the Sanctum#
 priest_2-1.rsw#the Sanctum#
 priest_3-1.rsw#the Sanctum#
-sword_1-1.rsw#Swordman Association#
-sword_2-1.rsw#Swordman Association#
-sword_3-1.rsw#Swordman Association#
-job_thief1.rsw#Thief Guild#
+sword_1-1.rsw#Swordman Test Hall#
+sword_2-1.rsw#Swordman Test Hall#
+sword_3-1.rsw#Swordman Test Hall#
+job_thief1.rsw#Mushroom Farm#
 wizard_1-1.rsw#Wizard Academy#
 wizard_2-1.rsw#Wizard Academy#
 wizard_3-1.rsw#Wizard Academy#
@@ -188,7 +250,7 @@ payon_in02.rsw#Inside Payon#
 prontera.rsw#Prontera City#
 prt_in.rsw#Inside Prontera#
 prt_castle.rsw#Prontera Castle#
-prt_church.rsw#the Santuary#
+prt_church.rsw#the Sanctuary#
 izlude.rsw#Izlude Town#
 izlude_in.rsw#Inside Izlude#
 izlu2dun.rsw#Byalan Island#
@@ -198,18 +260,111 @@ arena_room.rsw#Waiting room#
 prt_arena01.rsw#ARENA#
 prt_are01.rsw#ARENA#
 glast_01.rsw#Glast Heim#
-cmd_fild01.rsw#Comodo Field#
-cmd_fild02.rsw#Comodo Field#
-cmd_fild03.rsw#Comodo Field#
-cmd_fild04.rsw#Comodo Field#
-cmd_fild05.rsw#Comodo Field#
-cmd_fild06.rsw#Comodo Field#
-cmd_fild07.rsw#Comodo Field#
-cmd_fild08.rsw#Comodo Field#
-cmd_fild09.rsw#Comodo Field#
-cmd_in01.rsw#Inside Comodo#
-cmd_in02.rsw#Inside Comodo#
-comodo.rsw#Comodo#
-beach_dun.rsw#Comodo Beach Dungeon#
-beach_dun2.rsw#Comodo Beach Dungeon#
-beach_dun3.rsw#Comodo Beach Dungeon#
+alde_dun01.rsw#Clock Tower B1F#
+alde_dun02.rsw#Clock Tower B2F#
+alde_dun03.rsw#Clock Tower B3F#
+alde_dun04.rsw#Clock Tower B4F#
+c_tower1.rsw#Clock Tower 1F#
+c_tower2.rsw#Clock Tower 2F#
+c_tower3.rsw#Clock Tower 3F#
+c_tower4.rsw#Clock Tower 4F#
+gl_cas01.rsw#Glast Heim 1F#
+gl_cas02.rsw#Glast Heim 2F#
+gl_church.rsw#Glast Heim St.Abbey#
+gl_chyard.rsw#Glast Heim Churchyard#
+gl_dun01.rsw#The Lowest Cave in Glast Heim#
+gl_dun02.rsw#The Lowest Cave in Glast Heim#
+gl_in01.rsw#Inside Glast Heim#
+gl_knt01.rsw#Inside Glast Heim Chivalry#
+gl_knt02.rsw#Inside Glast Heim Chivalry#
+gl_prison.rsw#Glast Heim Underprison#
+gl_prison1.rsw#Glast Heim Underprison#
+gl_sew01.rsw#Glast Heim Culvert#
+gl_sew02.rsw#Glast Heim Culvert#
+gl_sew03.rsw#Glast Heim Culvert#
+gl_sew04.rsw#Glast Heim Culvert#
+gl_step.rsw#Glast Heim Staircase Dungeon#
+pvp_y_room.rsw#PvP : Waiting Room#
+pvp_n_room.rsw#PvP : Waiting Room#
+pvp_c_room.rsw#PvP : Waiting Room#
+pvp_n_1-1.rsw#PvP : Room Sandwich#
+pvp_n_2-1.rsw#PvP : Room Sandwich#
+pvp_n_3-1.rsw#PvP : Room Sandwich#
+pvp_n_4-1.rsw#PvP : Room Sandwich#
+pvp_n_5-1.rsw#PvP : Room Sandwich#
+pvp_n_6-1.rsw#PvP : Room Sandwich#
+pvp_n_7-1.rsw#PvP : Room Sandwich#
+pvp_n_8-1.rsw#PvP : Room Sandwich#
+pvp_n_1-2.rsw#PvP : Room Rock On#
+pvp_n_2-2.rsw#PvP : Room Rock On#
+pvp_n_3-2.rsw#PvP : Room Rock On#
+pvp_n_4-2.rsw#PvP : Room Rock On#
+pvp_n_5-2.rsw#PvP : Room Rock On#
+pvp_n_6-2.rsw#PvP : Room Rock On#
+pvp_n_7-2.rsw#PvP : Room Rock On#
+pvp_n_8-2.rsw#PvP : Room Rock On#
+pvp_n_1-3.rsw#PvP : Four Room#
+pvp_n_2-3.rsw#PvP : Four Room#
+pvp_n_3-3.rsw#PvP : Four Room#
+pvp_n_4-3.rsw#PvP : Four Room#
+pvp_n_5-3.rsw#PvP : Four Room#
+pvp_n_6-3.rsw#PvP : Four Room#
+pvp_n_7-3.rsw#PvP : Four Room#
+pvp_n_8-3.rsw#PvP : Four Room#
+pvp_n_1-4.rsw#PvP : Room Undercross#
+pvp_n_2-4.rsw#PvP : Room Undercross#
+pvp_n_3-4.rsw#PvP : Room Undercross#
+pvp_n_4-4.rsw#PvP : Room Undercross#
+pvp_n_5-4.rsw#PvP : Room Undercross#
+pvp_n_6-4.rsw#PvP : Room Undercross#
+pvp_n_7-4.rsw#PvP : Room Undercross#
+pvp_n_8-4.rsw#PvP : Room Undercross#
+pvp_n_1-5.rsw#PvP : Room Copass#
+pvp_n_2-5.rsw#PvP : Room Copass#
+pvp_n_3-5.rsw#PvP : Room Copass#
+pvp_n_4-5.rsw#PvP : Room Copass#
+pvp_n_5-5.rsw#PvP : Room Copass#
+pvp_n_6-5.rsw#PvP : Room Copass#
+pvp_n_7-5.rsw#PvP : Room Copass#
+pvp_n_8-5.rsw#PvP : Room Copass#
+pvp_y_1-1.rsw#PvP : Room Prontera#
+pvp_y_2-1.rsw#PvP : Room Prontera#
+pvp_y_3-1.rsw#PvP : Room Prontera#
+pvp_y_4-1.rsw#PvP : Room Prontera#
+pvp_y_5-1.rsw#PvP : Room Prontera#
+pvp_y_6-1.rsw#PvP : Room Prontera#
+pvp_y_7-1.rsw#PvP : Room Prontera#
+pvp_y_8-1.rsw#PvP : Room Prontera#
+pvp_y_1-2.rsw#PvP : Room Izlude#
+pvp_y_2-2.rsw#PvP : Room Izlude#
+pvp_y_3-2.rsw#PvP : Room Izlude#
+pvp_y_4-2.rsw#PvP : Room Izlude#
+pvp_y_5-2.rsw#PvP : Room Izlude#
+pvp_y_6-2.rsw#PvP : Room Izlude#
+pvp_y_7-2.rsw#PvP : Room Izlude#
+pvp_y_8-2.rsw#PvP : Room Izlude#
+pvp_y_1-3.rsw#PvP : Room Payon#
+pvp_y_2-3.rsw#PvP : Room Payon#
+pvp_y_3-3.rsw#PvP : Room Payon#
+pvp_y_4-3.rsw#PvP : Room Payon#
+pvp_y_5-3.rsw#PvP : Room Payon#
+pvp_y_6-3.rsw#PvP : Room Payon#
+pvp_y_7-3.rsw#PvP : Room Payon#
+pvp_y_8-3.rsw#PvP : Room Payon#
+pvp_y_1-4.rsw#PvP : Room Alberta#
+pvp_y_2-4.rsw#PvP : Room Alberta#
+pvp_y_3-4.rsw#PvP : Room Alberta#
+pvp_y_4-4.rsw#PvP : Room Alberta#
+pvp_y_5-4.rsw#PvP : Room Alberta#
+pvp_y_6-4.rsw#PvP : Room Alberta#
+pvp_y_7-4.rsw#PvP : Room Alberta#
+pvp_y_8-4.rsw#PvP : Room Alberta#
+pvp_y_1-5.rsw#PvP : Room Morroc#
+pvp_y_2-5.rsw#PvP : Room Morroc#
+pvp_y_3-5.rsw#PvP : Room Morroc#
+pvp_y_4-5.rsw#PvP : Room Morroc#
+pvp_y_5-5.rsw#PvP : Room Morroc#
+pvp_y_6-5.rsw#PvP : Room Morroc#
+pvp_y_7-5.rsw#PvP : Room Morroc#
+pvp_y_8-5.rsw#PvP : Room Morroc#
+pvp_2vs2.rsw#PvP : Event Colosseum#
