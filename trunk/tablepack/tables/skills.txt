@@ -320,18 +320,96 @@ BA_WHISTLE#Whistle#
 BA_ASSASSINCROSS#Assassin_Cross at_Sunset#
 BA_POEMBRAGI#Bragi's_Poem#
 BA_APPLEIDUN#Idun's_Apple#
-DC_THROWARROW#Dart_Arrow#
+DC_DANCINGLESSON#Dancing_Lesson#
+DC_THROWARROW#Throw_Arrow#
 DC_UGLYDANCE#Ugly_Dance#
 DC_SCREAM#Scream#
 DC_HUMMING#Humming#
-DC_DONTFORGETME#Don't_Forget_Me#
-DC_FORTUNEKISS#Kiss_of_Fortune#
-DC_SERVICEFORYOU#Service_For_You#
-DC_DANCINGLESSON#Dancing_Lesson#
+DC_DONTFORGETME#Forget_Me_Not#
+DC_FORTUNEKISS#Fortune's_Kiss#
+DC_SERVICEFORYOU#At_Your_Service#
 SA_BARRENZONE#Barren_Zone#
-SKILL-UNKNOWN#Unknown_Skill#
+SKILL-UNKNOWN_332#Unknown_Skill_332#
+SKILL-UNKNOWN_333#Unknown_Skill_333#
+WE_MALE#I'll_save_you#
+WE_FEMALE#I'll_sacrifice_myself_for_you#
+WE_CALLPARTNER#I'm_missing_you#
+SKILL-UNKNOWN_337#Unknown_Skill_337#
+SKILL-UNKNOWN_338#Unknown_Skill_338#
+SKILL-UNKNOWN_339#Unknown_Skill_339#
+SKILL-UNKNOWN_340#Unknown_Skill_340#
+SKILL-UNKNOWN_341#Unknown_Skill_341#
+SKILL-UNKNOWN_342#Unknown_Skill_342#
+SKILL-UNKNOWN_343#Unknown_Skill_343#
+SKILL-UNKNOWN_344#Unknown_Skill_344#
+SKILL-UNKNOWN_345#Unknown_Skill_345#
+SKILL-UNKNOWN_346#Unknown_Skill_346#
+SKILL-UNKNOWN_347#Unknown_Skill_347#
+SKILL-UNKNOWN_348#Unknown_Skill_348#
+SKILL-UNKNOWN_349#Unknown_Skill_349#
+SKILL-UNKNOWN_350#Unknown_Skill_350#
+SKILL-UNKNOWN_351#Unknown_Skill_351#
+SKILL-UNKNOWN_352#Unknown_Skill_352#
+SKILL-UNKNOWN_353#Unknown_Skill_353#
+SKILL-UNKNOWN_354#Unknown_Skill_354#
+
+LK_AURABLADE#Aura Blade#
+LK_PARRYING#Parrying#
+LK_CONCENTRATION#Concentration#
+LK_TENSIONRELAX#Tension Relax #
+LK_BERSERK#Berserk#
+SKILL-UNKNOWN_360#Unknown_Skill_360#
+HP_ASSUMPTIO#Assumption#
+HP_BASILICA#Basilica#
+HP_MEDITATIO#Meditation#
+HW_SOULDRAIN#Soul Drain#
+HW_MAGICCRASHER#Magic Crasher#
+HW_MAGICPOWER#Magic Power#
+PA_PRESSURE#Pressure#
+PA_SACRIFICE#Sacrifice#
+PA_GOSPEL#Gospel#
+CH_PALMSTRIKE#Palm Push Strike#
+CH_TIGERFIST#Tiger Knuckle Fist#
+CH_CHAINCRUSH#Chain Crush Combo#
+PF_HPCONVERSION#Health Conversion#
+PF_SOULCHANGE#Soul Change#
+PF_SOULBURN#Soul Burn#
+ASC_KATAR#Advanced Katar Research#
+ASC_EDP#Enchant Deadly Poison#
+ASC_BREAKER#Soul Breaker#
+SN_SIGHT#True Sight#
+SN_FALCONASSAULT#Falcon Assault#
+SN_SHARPSHOOTING#Sharpshooting#
+SN_WINDWALK#Wind Walk#
+WS_MELTDOWN#Meltdown#
+WS_CREATECOIN#Coin Create#
+WS_CREATENUGGET#Nugget Create#
+WS_CARTBOOST#Cart Boost#
+WS_SYSTEMCREATE#Auto Attack System Create#
+ST_CHASEWALK#Chase Walk#
+ST_REJECTSWORD#Reject Sword#
+ST_STEALBACKPACK#Steal Backpack#
+CR_ALCHEMY#Alchemy#
+CR_SYNTHESISPOTION#Sythesis Potion#
+CG_ARROWVULCAN#Arrow Vulcan#
+CG_MOONLIT#A Moonlit Water Mill, A Falling Petal#
+CG_MARIONETTE#Marionette Control#
+LK_SPIRALPIERCE#Spiral Pierce #
+LK_HEADCRUSH#Head Crush #
+LK_JOINTBEAT#Joint Beat#
+HW_NAPALMVULCAN#Napalm Vulcan#
+CH_SOULCOLLECT#Dangerous Soul Collect#
+PF_MINDBREAKER#Mind Breaker #
+PF_MEMORIZE#Memorize#
+PF_FOGWALL#Wall of Fog #
+PF_SPIDERWEB#Spider Web #
+ASC_METEORASSAULT#Meteor Assault#
+ASC_CDP#Create Deadly Poison #
+WE_BABY#Dad, Mom, I love you#
+WE_CALLPARENT#Come here, baby#
+WE_CALLBABY#Dad, Mom. I miss you#
 GD_APPROVAL#Official_Guild_Approval#
-GD_KAFRACONTRACT#Contract_with_Kafra#
+GD_KAFRACONTRACT#Contract_with_Kapra#
 GD_GUARDRESEARCH#Guardian_Research#
 GD_CHARISMA#Charisma#
 GD_EXTENSION#Guild_Extension#

@@ -23,6 +23,7 @@ New features:
 - Weighted maprouting to avoid/prefer walking through certain maps
   (see control/routeweights.txt for configuration).
 - Some parseMsg messages moved to parseMsg_presence.
+- Support for advanced 2-2 skills.
 
 New config options:
 - useSelfSkill_#_monsters
@@ -58,6 +59,7 @@ Credits:
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
 - obyarou: shop timeout in X-Kore bugfix (bug #49).
+- mfr: advanced 2-2 skills support.
 
 
 ==================
