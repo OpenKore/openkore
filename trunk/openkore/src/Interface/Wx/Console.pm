@@ -34,8 +34,7 @@ our $platform;
 our %fgcolors;
 
 sub new {
-	my $class = shift;
-	my $parent = shift;
+	my ($class, $parent, $noColors) = @_;
 
 	if (!$platform) {
 		if ($^O eq 'MSWin32') {
@@ -60,7 +59,10 @@ sub new {
 		wxDefaultPosition, wxDefaultSize,
 		wxTE_MULTILINE | wxTE_RICH | wxTE_NOHIDESEL);
 	$self->SetEditable(0);
-	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
+	$self->{noColors} = $noColors;
+	if (!$noColors) {
+		$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
+	}
 
 	### Fonts
 	my ($fontName, $fontSize);
@@ -81,17 +83,19 @@ sub new {
 	}
 
 	### Styles
-	$self->{defaultStyle} = new Wx::TextAttr(
-		new Wx::Colour(255, 255, 255),
-		$self->GetBackgroundColour,
-		$self->{font}
-	);
-	$self->SetDefaultStyle($self->{defaultStyle});
+	if (!$noColors) {
+		$self->{defaultStyle} = new Wx::TextAttr(
+			new Wx::Colour(255, 255, 255),
+			$self->GetBackgroundColour,
+			$self->{font}
+		);
+		$self->SetDefaultStyle($self->{defaultStyle});
 
-	$self->{inputStyle} = new Wx::TextAttr(
-		new Wx::Colour(200, 200, 200),
-		wxNullColour
-	);
+		$self->{inputStyle} = new Wx::TextAttr(
+			new Wx::Colour(200, 200, 200),
+			wxNullColour
+		);
+	}
 
 	return $self;
 }
@@ -99,28 +103,36 @@ sub new {
 sub changeFont {
 	my $self = shift;
 	my $font = shift;
-
 	return unless $font->Ok;
+
 	$self->{font} = $font;
-	my $bold = new Wx::Font(
-		$font->GetPointSize(),
-		$font->GetFamily(),
-		$font->GetStyle(),
-		wxBOLD,
-		$font->GetUnderlined(),
-		$font->GetFaceName()
-	);
-	$self->{boldFont} = $bold;
 
-	$self->{defaultStyle} = new Wx::TextAttr(
-		new Wx::Colour(255, 255, 255),
-		$self->GetBackgroundColour,
-		$font
-	);
-	$self->SetDefaultStyle($self->{defaultStyle});
+	if ($self->{noColors}) {
+		#$self->{defaultStyle} = new Wx::TextAttr($self->{defaultStyle}->GetTextColour, wxNullColour, $font);
+		#$self->SetDefaultStyle($self->{defaultStyle});
+		$self->SetFont($font);
 
-	foreach (keys %fgcolors) {
-		delete $fgcolors{$_}[STYLE_SLOT];
+	} else {
+		my $bold = new Wx::Font(
+			$font->GetPointSize(),
+			$font->GetFamily(),
+			$font->GetStyle(),
+			wxBOLD,
+			$font->GetUnderlined(),
+			$font->GetFaceName()
+		);
+		$self->{boldFont} = $bold;
+
+		$self->{defaultStyle} = new Wx::TextAttr(
+			new Wx::Colour(255, 255, 255),
+			$self->GetBackgroundColour,
+			$font
+		);
+		$self->SetDefaultStyle($self->{defaultStyle});
+
+		foreach (keys %fgcolors) {
+			delete $fgcolors{$_}[STYLE_SLOT];
+		}
 	}
 }
 
@@ -149,7 +161,7 @@ sub add {
 
 	# Determine color
 	my $revertStyle;
-	if ($consoleColors{$type}) {
+	if (!$self->{noColors} && $consoleColors{$type}) {
 		$domain = 'default' if (!$consoleColors{$type}{$domain});
 
 		my $colorName = $consoleColors{$type}{$domain};

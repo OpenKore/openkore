@@ -6327,14 +6327,6 @@ sub parseMsg {
 
 		stripLanguageCode(\$chatMsg);
 
-		#foreach (@playersID) {
-		#	next unless $_;
-		#	if (lc($players{$_}{name}) eq lc($chatMsgUser)) {
-		#		$ID = $_;
-		#		last;
-		#	}
-		#}
-
 		my $dist = "unknown";
 		if ($players{$ID}) {
 			$dist = distance($char->{pos_to}, $players{$ID}{pos_to});
@@ -6350,7 +6342,7 @@ sub parseMsg {
 			pubID => $ID,
 			pubMsgUser => $chatMsgUser, 
 			pubMsg => $chatMsg 
-		}); 
+		});
 
 	} elsif ($switch eq "008E") {
 		my $chat = substr($msg, 4, $msg_size - 4);
@@ -6366,6 +6358,12 @@ sub parseMsg {
 
 		chatLog("c", "$chat\n") if ($config{'logChat'});
 		message "$chat\n", "selfchat";
+
+		Plugins::callHook('packet_selfChat', { 
+			user => $chatMsgUser, 
+			msg => $chatMsg 
+		}); 
+
 
 	} elsif ($switch eq "0091") {
 		$conState = 4 if ($conState != 4 && $xkore);
@@ -6517,13 +6515,19 @@ sub parseMsg {
 		Plugins::callHook('packet_privMsg', {
 			privMsgUser => $privMsgUser,
 			privMsg => $privMsg
-			});
+		});
 
 	} elsif ($switch eq "0098") {
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
 			message "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n", "pm/sent";
 			chatLog("pm", "(To: $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n") if ($config{'logPrivateChat'});
+
+			Plugins::callHook('packet_sentPM', {
+				to => $lastpm[0]{user},
+				msg => $lastpm[0]{msg}
+			});
+
 		} elsif ($type == 1) {
 			warning "$lastpm[0]{'user'} is not online\n";
 		} elsif ($type == 2) {
