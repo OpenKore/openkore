@@ -429,6 +429,7 @@ ignoreAll 0
 itemHistory 0
 autoTalkCont 0
 noAutoSkill 0
+portalRecord 0
 
 beepOnPM 0
 beepOnChat 0
