@@ -476,7 +476,7 @@ sub checkMonsterCleanness {
 	# If monster attacked/missed you
 	return 1 if ($monsters{$ID}{'dmgToYou'} || $monsters{$ID}{'missedYou'});
 
-	# It monster hasn't been attacked by other players
+	# If monster hasn't been attacked by other players
 	if (!binSize([keys %{$monsters{$ID}{'missedFromPlayer'}}])
 	 && !binSize([keys %{$monsters{$ID}{'dmgFromPlayer'}}])
 	 && !binSize([keys %{$monsters{$ID}{'castOnByPlayer'}}])
