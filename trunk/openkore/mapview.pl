@@ -57,7 +57,8 @@ my %field;
 sub OnInit {
 	my $self = shift;
 
-	$frame = new Wx::Frame(undef, -1, 'Map viewer');
+	$frame = new Wx::Frame(undef, -1, 'Map viewer', wxDefaultPosition, wxDefaultSize,
+		wxDEFAULT_FRAME_STYLE ^ wxMAXIMIZE_BOX);
 	$frame->SetClientSize(75, 100);
 	$frame->Show(1);
 
@@ -86,6 +87,8 @@ sub OnInit {
 
 sub onMouseMove {
 	my (undef, $x, $y) = @_;
+	$x = 0 if ($x < 0);
+	$y = 0 if ($y < 0);
 	$status->SetStatusText("Mouse over: $x, $y", 1);
 }
 
