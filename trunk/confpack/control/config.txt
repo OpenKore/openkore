@@ -188,6 +188,9 @@ avoidGM_near 1
 avoidGM_near_inTown 0
 avoidGM_talk 1
 avoidGM_reconnect 1800
+
+avoid_ignore_0
+
 avoidList 1
 avoidList_reconnect 1800
 

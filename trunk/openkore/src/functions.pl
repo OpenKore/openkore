@@ -11271,10 +11271,12 @@ sub avoidGM_near() {
 
 		if ($statusGM && $players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
-			chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
-			print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+			chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
+
+			my $tmp = $config{'avoidGM_reconnect'};
+			print "Disconnect for $tmp seconds...\n";
 			$timeout_ex{'master'}{'time'} = time;
-			$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
+			$timeout_ex{'master'}{'timeout'} = $tmp;
 			killConnection(\$remote_socket);
 			return 1;
 		}
@@ -11301,10 +11303,12 @@ sub avoidGM_talk($$) {
 
 	if ($statusGM && $chatMsgUser =~/GM(.*)\d{1,}/i) {
 		print "Disconnecting to avoid GM!\n"; 
-		chatLog("s", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n"); 
-		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+		chatLog("s", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n");
+
+		my $tmp = $config{'avoidGM_reconnect'};
+		print "Disconnect for $tmp seconds...\n";
 		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
+		$timeout_ex{'master'}{'timeout'} = $tmp;
 		killConnection(\$remote_socket);
 		return 1;
 	}
