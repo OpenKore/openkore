@@ -56,7 +56,7 @@
 68 Spear Quicken
 86 Vigor Explosion
 87 Steel Body
-89 Tripple Attack Delay
+89 Triple Attack Delay
 91 Frost Weapon
 92 Lightning Loader
 93 Seismic Weapon
