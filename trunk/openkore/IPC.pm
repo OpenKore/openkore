@@ -132,7 +132,7 @@ sub iterate {
 
 	# Checks whether a new client wants to connect
 	vec($bits, $server->fileno, 1) = 1;
-	if (select($bits, undef, undef, 0.5)) {
+	if (select($bits, undef, undef, 0)) {
 		# Accept connection from new client
 		my $client = $server->accept;
 		$client->autoflush(0);

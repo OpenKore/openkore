@@ -13,7 +13,6 @@ use Getopt::Long;
 use IO::Socket;
 use Digest::MD5 qw(md5);
 use Carp;
-no utf8;
 unshift @INC, '.';
 
 
@@ -358,7 +357,9 @@ while ($quit != 1) {
 	if (defined($input = Input::getInput(0))) {
 		parseInput($input);
 
-	} elsif (!$config{'XKore'} && dataWaiting(\$remote_socket)) {
+	}
+
+	if (!$config{'XKore'} && dataWaiting(\$remote_socket)) {
 		$remote_socket->recv($new, $Settings::MAX_READ);
 		$msg .= $new;
 		$msg_length = length($msg);

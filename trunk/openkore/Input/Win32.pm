@@ -13,7 +13,6 @@ Functions to support asyncronous input on MS Windows computers
 package Input::Win32;
 
 use strict;
-use warnings;
 
 die "W32 only, this module should never be called on any other OS\n"
 		unless ($^O eq 'MSWin32' || $^O eq 'cygwin');
@@ -24,7 +23,7 @@ use Win32::Console;
 
 use base qw/Exporter/;
 
-our @EXPORT = qw(&start &stop &canRead &readLine $enabled);
+our @EXPORT = qw(&start &stop &canRead &getInput $enabled);
 our $in_con;
 our $in_pos;
 our @input_lines;
@@ -104,7 +103,6 @@ keyboard data available or if the input system hasn't been initialized.
 
 sub getInput2 {
 	return undef unless ($enabled);
-	my $class = shift;
 	my $timeout = shift;
 	readEvents();
 	my $msg;
@@ -127,6 +125,11 @@ sub getInput2 {
 		if (@input_lines) { 
 			$msg = shift @input_lines; 
 		} 
+	}
+
+	if (defined $msg && $msg eq '') {
+		undef $msg;
+		print "\n";
 	}
 	return $msg;
 }
