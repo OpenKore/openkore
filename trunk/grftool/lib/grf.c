@@ -583,7 +583,7 @@ static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback
  *	unused space was found, or 0 if none was found
  */
 static uint32_t GRF_find_unused (Grf *grf, uint32_t len) {
-	uint32_t  i,startAt=GRF_HEADER_FULL_LEN,curAmt;
+	/* (compiler warnings) uint32_t  i,startAt=GRF_HEADER_FULL_LEN,curAmt; */
 
 	if ( grf->nfiles == 0 ) {
 		return 0;
@@ -644,6 +644,100 @@ static uint32_t GRF_find_unused (Grf *grf, uint32_t len) {
 	return 0;
 }
 
+/*! \brief Private function to compress and encrypt (if needed), and write one file
+ *
+ * \param grf Pointer to the Grf struct to read from
+ * \param index GrfFile to flush
+ * \param error Pointer to a GrfErrorType struct/enum for error reporting
+ * \return Number of files compressed, encrypted, and written
+ */
+static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
+	Bytef *comp_dat,*enc_dat=0,*write_dat;
+	uLong size_bound;
+	uLongf comp_len;
+	char keyschedule[0x80], key[8];
+	uint32_t write_offset;
+	
+	size_bound = compressBound(grf->files[i].real_len);
+
+	/* using realloc: Minimize reallocations if buffer is large enough */
+	if (0==(comp_dat = (Bytef *)malloc(size_bound))) {
+		GRF_SETERR(error,GE_ERRNO,malloc);
+		return 0;
+	}
+	compress(comp_dat, &comp_len, grf->filedatas[i], grf->files[i].real_len);
+	grf->files[i].compressed_len = comp_len;
+	
+	/* Encrypt the data as well */
+	grf->files[i].compressed_len_aligned = grf->files[i].compressed_len;
+	if ((grf->files[i].type & (GRFFILE_FLAG_MIXCRYPT | GRFFILE_FLAG_0x14_DES))) {
+		/* Ensure our buffer will be a multiple of 8 */
+		grf->files[i].compressed_len_aligned += grf->files[i].compressed_len % 8;
+		
+		/* Allocate the memory */
+		if (0==(enc_dat=(Bytef*)realloc(enc_dat,grf->files[i].compressed_len_aligned))) {
+			free(comp_dat);
+			GRF_SETERR(error,GE_ERRNO,malloc);
+			return 0;
+		}
+		
+		/* Create a key and use it to generate the key schedule */
+		DES_CreateKeySchedule(keyschedule,GRF_GenerateDataKey(key,grf->files[i].name));
+		
+		/* Encrypt the data */
+		GRF_Process(enc_dat,comp_dat,grf->files[i].compressed_len_aligned,grf->files[i].type,grf->files[i].compressed_len,keyschedule,GRFCRYPT_ENCRYPT);
+		
+		write_dat = enc_dat;
+	}
+	else
+	{
+		write_dat = comp_dat;
+	}
+
+	/* Remember the position prior to writing */
+	write_offset = GRF_find_unused(grf, grf->files[i].compressed_len_aligned);
+	if ( write_offset == 0 ) {
+		/* grf_find_unused returned 0 -> append */
+		if (fseek(grf->f, 0, SEEK_END)) {
+			free(comp_dat);
+			free(enc_dat);
+			GRF_SETERR(error,GE_ERRNO,fseek);
+			return 0;
+		}
+		if (ftell(grf->f)==-1) {
+			free(comp_dat);
+			free(enc_dat);
+			GRF_SETERR(error,GE_ERRNO,ftell);
+			return 0;
+		}
+		write_offset = ftell(grf->f);  /* not -1 */
+	}
+	else if (fseek(grf->f, (long)write_offset, SEEK_SET)) {
+		free(comp_dat);
+		free(enc_dat);
+		GRF_SETERR(error,GE_ERRNO,fseek);
+		return 0;
+	}
+	grf->files[i].pos = write_offset;
+
+	/* Write the data to its spot */
+	if (fwrite(write_dat, grf->files[i].compressed_len_aligned, 1U, grf->f) < 1U) {
+		free(comp_dat);
+		free(enc_dat);
+		if (feof(grf->f))
+			GRF_SETERR(error,GE_CORRUPTED,fwrite);  /* !!? Cannot write because of end of file */
+		else
+			GRF_SETERR(error,GE_ERRNO,fwrite);
+		return 0;
+	}
+	
+	/* Clean up */
+	free(comp_dat);
+	free(enc_dat);
+	
+	return 1;
+}
+
 /*! \brief Private function to restructure GRF0x1xx archives
  *
  * Generate the information about files within the archive
@@ -661,12 +755,11 @@ static uint32_t GRF_find_unused (Grf *grf, uint32_t len) {
  *		compressed_len field set to zero and their real_len non-zero.
  *		The function should return 0 if everything is fine, 1 if the file
  *		shall not be written but processing may continue, 2 if any further
- *		compression	shall be stopped, leaving uncompressed files in memory, but
+ *		compression shall be stopped, leaving uncompressed files in memory, but
  *		flushing those already compressed, or -1 if there has been an error
  * \return 0 if an error occurred, 1 if all is good
  */
 static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
-	/*! \todo Write this code! (pseudo-coded) */
 	/* pseudo-code:
 
 	for each GrfFile with pos 0
@@ -683,6 +776,201 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	*/
 	GRF_SETERR(error,GE_NSUP,GRF_flushVer1);
 	return 0;
+	/*! \todo Finish writing this code... */
+#if 0
+	int callbackRet;
+	int processOnlyReady = 0;
+	uLong table_len;
+	uint32_t i,offset,len,table_maxlen;
+	uLongf zlen;
+	uLong zlenmax;
+	uint32_t table_len_le;
+	uint32_t zlen_le;
+	uint32_t write_offset, write_offset_le;
+	uint32_t dummy_seed = 0;
+	uint32_t e_count = 0, e_count_le;
+	char *buf, *zbuf, namebuf[GRF_NAMELEN], keyschedule[0x80];
+
+#ifdef GRF_FIXED_KEYSCHEDULE
+	char key[8];
+
+	/* Numbers used for decryption */
+	uint32_t keynum,	/* Numeric part of the key */
+		keygen101,	/* version 0x101 keygen method */
+		keygen102;	/* version 0x102 keygen method */
+#endif /* defined(GRF_FIXED_KEYSCHEDULE) */
+
+
+	/* compute an upper bound for the table size.
+	 * Actually, it is a little larger because there are extra members.
+	 * However, when reading, the nfiles value found in the grf header
+	 * is relied upon to read only as much as necessary.
+	 */
+	table_maxlen = grf->nfiles * sizeof(GrfFile);
+	zlenmax = compressBound(table_maxlen);
+
+	/* Allocate memory for the table */
+	if ((buf=(char*)malloc(table_maxlen))==NULL) {
+		GRF_SETERR(error,GE_ERRNO,malloc);
+		return 0;
+	}
+	if ((zbuf=(char*)malloc(zlenmax))==NULL) {
+		free(buf);
+		GRF_SETERR(error,GE_ERRNO,malloc);
+		return 0;
+	}
+	
+#ifdef GRF_FIXED_KEYSCHEDULE
+	keygen102=1;
+	keygen101=95001;
+#else /* GRF_FIXED_KEYSCHEDULE */
+	/* Make sure our keyschedule is just like their broken one will be */
+	memset(keyschedule,0,0x80);
+#endif /* GRF_FIXED_KEYSCHEDULE */
+
+	/* compress in-memory files */
+	/* Write information about each file */
+	for (i=offset=0;i<grf->nfiles;++i) {
+		/* Run the callback, if we have one */
+		if (callback && 0!=(callbackRet=callback(&(grf->files[i]),error))) {
+			if (callbackRet<0) {
+				/* Callback function had an error, so we
+				 * have an error
+				 */
+				free(buf);
+				free(zbuf);
+				return 0;
+			}
+			else if (callbackRet==1) {
+				/* skip entry */
+				continue;
+			}
+			else {
+				/* Callback function doesn't want to process in-memory files any further,
+				 * flush remaining, already ready-to-flush data to fall back to a working state.
+				 */
+				processOnlyReady = 1;
+			}
+		}
+
+		/* \todo check if empty files interfere with encryption
+		 *
+		 * -- They shouldn't... 0 % 8 = 0, which makes it a "multiple of 8"
+		 */
+		if ( grf->files[i].compressed_len == 0 &&
+		  grf->files[i].compressed_len_aligned == 0 &&
+		  grf->files[i].pos == 0 &&
+		  grf->files[i].real_len != 0 ) {  /* compress only non-empty files */
+			/* Skip non-ready entries
+			 *
+			 * Faithful: using "continue;" would skip over adding the entry
+			 * information to the table This would effectively "delete"
+			 * any file that was updated but not ready by not writing its
+			 * old file information to the table...
+			 */
+			if ( processOnlyReady != 1 ) {
+				/* Flush the entry to disk. For directories, there is nothing to do,
+				 * since special values are set and available when reading the fileinfo table
+				 */
+				if ((grf->files[i].type & GRFFILE_FLAG_FILE)) {
+					/* Most files in versions 0x01xx use MIXCRYPT, only special ones use 0x14_DES */
+					if (GRF_CheckExt(grf->files[i].name,specialExts)) {
+						grf->files[i].type=(grf->files[i].type & ~GRFFILE_FLAG_MIXCRYPT) | GRFFILE_FLAG_0x14_DES;
+					else
+						grf->files[i].type=(grf->files[i].type & ~GRFFILE_FLAG_0x14_DES) | GRFFILE_FLAG_MIXCRYPT;
+					
+					/* Compress, encrypt, and write the file */
+					if (GRF_flushFile(grf,i,error)) {
+						free(buf);
+						free(zbuf);
+						return 0;
+					}
+				}
+				else {
+					/* File flag isn't set, but special values for directories
+					 * aren't set either?
+					 */
+				}
+			}
+		}
+
+		/* Format for 0x01xx entries
+		 * - uint32_t (4 bytes) = namelen
+		 * - string (namelen bytes) = filename (encrypted various ways
+		 *   depending on minor GRF version)
+		 * - uint32_t = compressed_len + real_len + 0x02CB
+		 * - uint32_t = compressed_len_aligned + 0x92CB
+		 * - uint32_t = real_len
+		 * - uint8_t = type (flags really, was named type for old version compatibility)
+		 * - uint32_t = pos - GRF_HEADER_FULL_LEN
+		 */
+
+		/* Compute the filename length */
+		len=strlen(grf->files[i].name)+1;
+		
+		/* Decide how to encrypt the name */
+		if (grf->version<0x101) {
+			*(uint32_t*)(buf+offset) = len;
+			
+			/* Swap nibbles into the buffer */
+			GRF_SwapNibbles((uint8_t*)(buf+offset+4), (uint8_t*)grf->files[i].name, len);
+			
+			offset+=4+len;
+		}
+		else if (grf->version<0x104) {
+			*(uint32_t*)(buf+offset) = len+6;
+			offset+=4;
+			
+#ifdef GRF_FIXED_KEYSCHEDULE
+			/* Decide how to generate the key */
+			if (grf->version==0x101)
+				keynum=keygen101;
+			else {
+				keynum=0x7BB5-(keygen102>>1);
+				keynum*=3;
+			}
+			
+			/* Make sure the numeric part of the key is 5 digits */
+			if (keynum<10000)
+				keynum+=85000;
+			
+			/* Generate the key */
+			GRF_ltoa((key+2),keynum,0xA);
+			key[0]='P';
+			key[1]='r';
+			key[7]='e';
+			
+			/* Key should now look like: "Pr95007e" for first
+			 * file of a 0x102 file...
+			 * Lets use it! (except GRAVITY can't code)
+			 */
+	
+			/* Generate key schedule */
+			DES_CreateKeySchedule(keyschedule, key);
+#endif /* GRF_FIXED_KEYSCHEDULE */
+			
+			/* Encrypt the name */
+			GRF_MixedProcess(namebuf, grf->files[i].name, len, 1, keyschedule, GRFCRYPT_ENCRYPT);
+			
+			/* Swap the encrypted nibbles into the buffer */
+			GRF_SwapNibbles((uint8_t*)(buf+offset+6), (uint8_t*)namebuf, len);
+			
+			offset+=len+6;
+		}
+		
+		/* Copy the rest of the information */
+		*(uint32_t*)(buf+offset)     = ToLittleEndian32(grf->files[i].compressed_len+grf->files[i].real_len+0x02CB);
+		*(uint32_t*)(buf+offset+4)   = ToLittleEndian32(grf->files[i].compressed_len_aligned+0x92CB);
+		*(uint32_t*)(buf+offset+8)   = ToLittleEndian32(grf->files[i].real_len);
+		/* Encryption method is determined by file extension in 0x01xx, so just write the file flag */
+		*(uint8_t*)(buf+offset+0xC)  = grf->files[i].type & GRFFILE_FLAG_FILE;
+		*(uint32_t*)(buf+offset+0xD) = ToLittleEndian32(grf->files[i].pos-GRF_HEADER_FULL_LEN);
+		
+		/* Advance to the next file */
+		offset+=0x11;
+		++e_count;
+	}
+#endif /* 0 */
 }
 
 /*! \brief Private function to restructure GRF0x2xx archives
@@ -691,7 +979,6 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
  * for archive versions 0x02xx, and updates the file header
  *
  * \todo Find GRF versions other than just 0x200 (do any exist?)
- *		encrypt if encryption is enabled
  *
  * \param grf Pointer to the Grf struct to read from
  * \param error Pointer to a GrfErrorType struct/enum for error reporting
@@ -713,16 +1000,11 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	uint32_t i,offset,len,table_maxlen;
 	uLongf zlen;
 	uLong zlenmax;
-	Bytef *comp_dat = 0;
-	Bytef *enc_dat = 0;
-	uLongf  comp_len;
-	uLong   size_bound;
 	uint32_t table_len_le;
 	uint32_t zlen_le;
 	uint32_t write_offset, write_offset_le;
 	uint32_t dummy_seed = 0;
 	uint32_t e_count = 0, e_count_le;
-
 	char *buf, *zbuf;
 
 	/* compute an upper bound for the table size.
@@ -769,90 +1051,45 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 			}
 		}
 
-		/* \todo check if empty files interfere with encryption */
+		/* \todo check if empty files interfere with encryption
+		 *
+		 * -- They shouldn't... 0 % 8 = 0, which makes it a "multiple of 8"
+		 */
 		if ( grf->files[i].compressed_len == 0 &&
 		  grf->files[i].compressed_len_aligned == 0 &&
 		  grf->files[i].pos == 0 &&
 		  grf->files[i].real_len != 0 ) {  /* compress only non-empty files */
-			/* Skip non-ready entries */
-			if ( processOnlyReady == 1 ) {
-				continue;
-			}
-			/* Flush the entry to disk. For directories, there is nothing to do,
-			 * since special values are set and available when reading the fileinfo table
+			/* Skip non-ready entries
+			 *
+			 * Faithful: using "continue;" would skip over adding the entry
+			 * information to the table This would effectively "delete"
+			 * any file that was updated but not ready by not writing its
+			 * old file information to the table...
 			 */
-			if ((grf->files[i].type & GRFFILE_FLAG_FILE)) {
-				/* compress */
-				/* backup current dynamic buffer address */
-				Bytef *old_compdat = comp_dat;
-				/*Bytef *old_encdat = enc_dat;*/
-				Bytef *write_dat;
-				size_bound = compressBound(grf->files[i].real_len);
-
-				/* using realloc: Minimize reallocations if buffer is large enough */
-				if (0==(comp_dat = (Bytef *)realloc(comp_dat, size_bound))) {
-					free(old_compdat);
-					/* free(enc_dat); enable when enc_dat has its own buffer for encrypting */
-					free(buf);
-					free(zbuf);
-					GRF_SETERR(error,GE_ERRNO,malloc);
-					return 0;
-				}
-				compress(comp_dat, &comp_len, grf->filedatas[i], grf->files[i].real_len);
-				grf->files[i].compressed_len = comp_len;
-
-				/* \todo if enabled, encrypt */
-				if ((grf->files[i].type & (GRFFILE_FLAG_MIXCRYPT | GRFFILE_FLAG_0x14_DES))) {
-					write_dat = enc_dat;
-				}
-				else
-				{
-					grf->files[i].compressed_len_aligned = grf->files[i].compressed_len;
-					write_dat = comp_dat;
-				}
-
-				/* Remember the position prior to writing */
-				write_offset = GRF_find_unused(grf, grf->files[i].compressed_len_aligned);
-				if ( write_offset == 0 ) {
-					/* grf_find_unused returned 0 -> append */
-					if (fseek(grf->f, 0, SEEK_END)) {
-						free(comp_dat);
-						/* free(enc_dat); enable when enc_dat has its own buffer for encrypting */
+			if ( processOnlyReady != 1 ) {
+				/* Flush the entry to disk. For directories, there is nothing to do,
+				 * since special values are set and available when reading the fileinfo table
+				 */
+				if ((grf->files[i].type & GRFFILE_FLAG_FILE)) {
+					/* If the GRF doesn't allow encryption, don't encrypt
+					 *
+					 * (btw, should we reverse this and change the header watermark
+					 *  if we want to add encrypted data?)
+					 */
+					if (!grf->allowCrypt)
+						grf->files[i].type&=~(GRFFILE_FLAG_MIXCRYPT | GRFFILE_FLAG_0x14_DES);
+					
+					/* Compress, encrypt, and write the file */
+					if (GRF_flushFile(grf,i,error)) {
 						free(buf);
 						free(zbuf);
-						GRF_SETERR(error,GE_ERRNO,fseek);
 						return 0;
 					}
-					if (ftell(grf->f)==-1) {
-						free(comp_dat);
-						/* free(enc_dat); enable when enc_dat has its own buffer for encrypting */
-						free(buf);
-						free(zbuf);
-						GRF_SETERR(error,GE_ERRNO,ftell);
-						return 0;
-					}
-					write_offset = ftell(grf->f);  /* not -1 */
 				}
-				else if (fseek(grf->f, (long)write_offset, SEEK_SET)) {
-					free(comp_dat);
-					/* free(enc_dat); enable when enc_dat has its own buffer for encrypting */
-					free(buf);
-					free(zbuf);
-					GRF_SETERR(error,GE_ERRNO,fseek);
-					return 0;
-				}
-				grf->files[i].pos = write_offset;
-
-				if (fwrite(write_dat, grf->files[i].compressed_len_aligned, 1U, grf->f) < 1U) {
-					free(comp_dat);
-					/* free(enc_dat); enable when enc_dat has its own buffer for encrypting */
-					free(buf);
-					free(zbuf);
-					if (feof(grf->f))
-						GRF_SETERR(error,GE_CORRUPTED,fwrite);  /* !!? Cannot write because of end of file */
-					else
-						GRF_SETERR(error,GE_ERRNO,fwrite);
-					return 0;
+				else {
+					/* File flag isn't set, but special values for directories
+					 * aren't set either?
+					 */
 				}
 			}
 		}
@@ -883,10 +1120,6 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 		offset+=0x11;
 		++e_count;
 	}
-
-	free(comp_dat);	comp_dat = 0;
-	/* free(enc_dat); enc_dat = 0; enable when enc_dat has its own buffer for encrypting */
-
 
 	/* this is the table real length - note to optimizers: this is an extra variable,
 	 * equivalent to offset
@@ -1002,6 +1235,11 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError 
 	char buf[GRF_HEADER_FULL_LEN];
 	uint32_t i, zero=0, zero_fcount=ToLittleEndian32(7), create_ver=ToLittleEndian32(0x0200);
 	Grf *grf;
+	uLongf zlen;
+	uLong zlenmax;
+	uint32_t zlen_le;
+	char *zbuf;
+
 
 	if (!fname || !mode) {
 		GRF_SETERR(error,GE_BADARGS,grf_callback_open);
@@ -1035,11 +1273,6 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError 
 
 	/* Create an empty table for new files */
 	if ( strchr(mode, 'w') != NULL ) {
-		uLongf zlen;
-		uLong zlenmax;
-		uint32_t zlen_le;
-
-		char *zbuf;
 		zlenmax = compressBound(0);
 		if ((zbuf=(char*)malloc(zlenmax))==NULL) {
 			GRF_SETERR(error,GE_ERRNO,malloc);
@@ -1242,7 +1475,6 @@ GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *
 GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error) {
 	uLongf zlen;
 	int i;
-	GrfFile *gfile;
 	uint32_t rsiz, zsiz;
 	char *zbuf;
 
