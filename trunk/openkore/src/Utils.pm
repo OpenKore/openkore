@@ -30,7 +30,7 @@ our @EXPORT = qw(
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
 	dataWaiting formatNumber getCoordString getFormattedDate getHex getTickCount
-	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString);
+	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString dumpHash);
 
 
 #######################################
@@ -555,5 +555,26 @@ sub vocalString {
 	return $password;
 }
 
+##
+# dumpHash(\%hash)
+# return a formated output of the contents of hash, for debugging purpose
+sub dumpHash {
+	my $out;
+   if (ref($_[0]) eq "") {
+      $_[0] =~ s/'/\\'/gs;
+      $_[0] =~ s/\W/\./gs;
+      $out .= "'$_[0]'";
+   } elsif (ref($_[0]) eq "HASH") {
+      $out .= "{";
+      foreach (keys %{$_[0]}) {
+         s/'/\\'/gs;
+         $out .= "$_=>" . dumpHash($_[0]->{$_}) . ",";
+      }
+			chop $out;
+      $out .= "}";
+   }
+	 if ($out eq '}') { $out = '{empty}'; }
+	 return $out;
+}
 
 return 1;
