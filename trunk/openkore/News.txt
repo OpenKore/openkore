@@ -55,6 +55,9 @@ New features:
 - route_teleport is now a normal message instead of a debug message (something
   that made my party bot suddenly teleport away from me should not be silent).
 - "Failed to take <item>" message now shows more information.
+- If a monster's name in monsters.txt is different from what the server sends,
+  the name in monsters.txt prevails. (Lets us distinguish between monsters
+  that the server gives the same name to, but are different)
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
