@@ -11071,6 +11071,7 @@ sub getResponse {
 sub load {
 	my $r_array = shift;
 
+	Plugins::callHook('preloadfiles', {files => $r_array});
 	foreach (@{$r_array}) {
 		if (-e $$_{'file'}) {
 			message("Loading $$_{'file'}...\n", "load");
@@ -11079,6 +11080,7 @@ sub load {
 		}
 		&{$$_{'function'}}("$$_{'file'}", $$_{'hash'});
 	}
+	Plugins::callHook('postloadfiles', {files => $r_array});
 }
 
 sub parseReload {

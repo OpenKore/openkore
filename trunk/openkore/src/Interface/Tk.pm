@@ -25,6 +25,8 @@ use warnings;
 
 use Interface;
 use base qw/Interface/;
+use Plugins qw/addHook/;
+use Settings;
 
 use Carp qw/carp croak confess/;
 use Time::HiRes qw/time/;
@@ -63,9 +65,7 @@ sub new {
 #		Win32::Console->new(&STD_OUTPUT_HANDLE())->Free or warn "could not free console: $!\n";
 #	}
 
-#almost working (well actual working but not how I want them to be)
-#	main::addParseFiles("$Settings::control_folder/tkcolors.txt", $self, \&parseColorFile);
-#	main::parseReload("tkcolors");
+	addHook('postloadfiles', \&resetColors, $self);
 	return $self;
 }
 
@@ -113,7 +113,7 @@ sub writeOutput {
 	$self->{console}->insert('end', "\n") if $self->{last_line_end};
 	$self->{last_line_end} = $message =~ s/\n$//;
 
-	$self->{console}->insert('end', $message, $domain);
+	$self->{console}->insert('end', $message, "$type $type.$domain");
 
 	#remove extra lines
 	if ($self->{total_lines} > $line_limit) {
@@ -254,7 +254,7 @@ sub initTk {
 		-scrollbars => 'e',
 		-height => 20,
 		-wrap => 'word',
-		-width => 55,
+		-width => 80,
 		-insertontime => 0,
 		-background => 'black',
 		-foreground => 'grey',
@@ -490,6 +490,73 @@ sub OnExit{
 	push(@{ $self->{input_que} }, 'quit');
 }
 
+sub resetColors {
+	my $hookname = shift;
+	my $r_args = shift;
+	my $self = shift;
+	return if $hookname ne 'postloadfiles';
+	my $colors_loaded = 0;
+	foreach my $filehash (@{ $r_args->{files} }) {
+		if ($filehash->{file} =~ /consolecolors.txt$/) {
+			$colors_loaded = 1;
+			last;
+		}
+	}
+	return unless $colors_loaded;
+	my %gdefault = (-foreground => 'grey', -background => 'black');
+	eval {
+		$self->{console}->configure(%gdefault);
+		$self->{input}->configure(%gdefault);
+		$self->{pminput}->configure(%gdefault);
+		$self->{sinput}->configure(%gdefault);
+	};
+	if ($@) {
+		if ($@ =~ /unknown color name "(.*)" at/) {
+			Log::message("Color '$1' not recognised.\n");
+			return undef if !$consoleColors{''}{'useColors'}; #don't bother throwing a lot of errors in the next section.
+		} else {
+			die $@;
+		}
+	}
+	foreach my $type (keys %consoleColors) {
+		next if $type eq '';
+		my %tdefault =%gdefault;
+		if ($consoleColors{''}{'useColors'} && $consoleColors{$type}{'default'}) {
+			$consoleColors{$type}{'default'} =~ m|([^/]*)(?:/(.*))?|;
+			$tdefault{-foreground} = defined($1) && $1 ne 'default' ? $1 : $gdefault{-foreground};
+			$tdefault{-background} = defined($2) && $2 ne 'default' ? $2 : $gdefault{-background};
+		}
+		eval {
+			$self->{console}->tagConfigure($type, %tdefault);
+		};
+		if ($@) {
+			if ($@ =~ /unknown color name "(.*)" at/) {
+				Log::message("Color '$1' not recognised in consolecolors.txt at [$type]: default.\n");
+			} else {
+				die $@;
+			}
+		}
+		foreach my $domain (keys %{ $consoleColors{$type} }) {
+			my %color = %tdefault;
+			if ($consoleColors{''}{'useColors'} && $consoleColors{$type}{$domain}) {
+				$consoleColors{$type}{$domain} =~ m|([^/]*)(?:/(.*))?|;
+				$color{-foreground} = defined($1) && $1 ne 'default' ? $1 : $tdefault{-foreground};
+				$color{-background} = defined($2) && $2 ne 'default' ? $2 : $tdefault{-background};
+			}
+			eval {
+				$self->{console}->tagConfigure("$type.$domain", %color);
+			};
+			if ($@) {
+				if ($@ =~ /unknown color name "(.*)" at/) {
+					Log::message("Color '$1' not recognised in consolecolors.txt at [$type]: $domain.\n");
+				} else {
+					die $@;
+				}
+			}
+		}
+	}
+}
+
 sub parseColorFile {
 	my $file = shift;
 	my $self = shift;
@@ -502,13 +569,13 @@ sub parseColorFile {
 		tr/\r\n//d;
 		s/\s+$//g;
 		my ($key, $fgcolor, $bgcolor) =m!([\S\S]+)\s+([^/]+)?(?:/(.+))?$!;
-			if ($key eq 'default_only') {
-				$r_hash->{$key} = $fgcolor;
-			} elsif ($key ne '') {
-				$r_hash->{$key} = {-foreground => $fgcolor, -background => $bgcolor};
-			} else {
-				warn "Error reading $file at $.\n";
-			}
+		if ($key eq 'default_only') {
+			$r_hash->{$key} = $fgcolor;
+		} elsif ($key ne '') {
+			$r_hash->{$key} = {-foreground => $fgcolor, -background => $bgcolor};
+		} else {
+			warn "Error reading $file at $.\n";
+		}
 	}
 	close FILE;
 	eval {
