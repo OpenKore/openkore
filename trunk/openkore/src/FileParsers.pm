@@ -247,6 +247,22 @@ sub parsePortalsLOS {
 	close FILE;
 }
 
+sub parsePriority {
+	my $file = shift;
+	my $r_hash = shift;
+	return unless open (FILE, "< $file");
+
+	my @lines = <FILE>;
+	my $pri = $#lines;
+	foreach (@lines) {
+		next if (/^#/);
+		s/[\r\n]//g;
+		$$r_hash{lc($_)} = $pri + 1;
+		$pri--;
+	}
+	close FILE;
+}
+
 sub parseResponses {
 	my $file = shift;
 	my $r_hash = shift;
