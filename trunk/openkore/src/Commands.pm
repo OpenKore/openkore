@@ -38,8 +38,14 @@ our %handlers = (
 	ai	=> \&cmdAI,
 	aiv	=> \&cmdAIv,
 	auth	=> \&cmdAuthorize,
+	bestow	=> \&cmdBestow,
 	buy	=> \&cmdBuy,
+	chatmod	=> \&cmdChatMod,
 	chist	=> \&cmdChist,
+	closeshop => \&cmdCloseShop,
+	conf	=> \&cmdConf,
+	crl	=> \&cmdChatRoomList,
+	debug	=> \&cmdDebug,
 	e	=> \&cmdEmotion,
 	eq	=> \&cmdEquip,
 	i	=> \&cmdInventory,
@@ -48,12 +54,18 @@ our %handlers = (
 	im	=> \&cmdUseItemOnMonster,
 	ip	=> \&cmdUseItemOnPlayer,
 	is	=> \&cmdUseItemOnSelf,
+	leave	=> \&cmdLeaveChatRoom,
 	help	=> \&cmdHelp,
 	reload	=> \&cmdReload,
 	memo	=> \&cmdMemo,
+	ml	=> \&cmdMonsterList,
+	nl	=> \&cmdNPCList,
+	pl	=> \&cmdPlayerList,
 	plugin	=> \&cmdPlugin,
+	portals	=> \&cmdPortalList,
 	s	=> \&cmdStatus,
 	send	=> \&cmdSendRaw,
+	skills	=> \&cmdSkills,
 	st	=> \&cmdStats,
 	stat_add => \&cmdStatAdd,
 	tank	=> \&cmdTank,
@@ -68,8 +80,14 @@ our %descriptions = (
 	ai	=> 'Enable/disable AI.',
 	aiv	=> 'Display current AI sequences.',
 	auth	=> '(Un)authorize a user for using Kore chat commands.',
+	bestow	=> 'Bestow admin in a chat room',
 	buy	=> 'Buy an item from the current NPC shop.',
+	chatmod	=> 'Modify chat room settings.',
 	chist	=> 'Display last few entries from the chat log.',
+	closeshop => 'Close your shop.',
+	conf	=> 'Change a configuration key.',
+	crl	=> 'List chat rooms.',
+	debug	=> 'Toggle debug on/off.',
 	e	=> 'Show emotion.',
 	eq	=> 'Equip an item.',
 	i	=> 'Display inventory items.',
@@ -78,16 +96,22 @@ our %descriptions = (
 	im	=> 'Use item on monster.',
 	ip	=> 'Use item on player.',
 	is	=> 'Use item on yourself.',
+	leave	=> 'Leave chat room.',
 	reload	=> 'Reload configuration files.',
 	memo	=> 'Save current position for warp portal.',
+	ml	=> 'List monsters that are on screen.',
+	nl	=> 'List NPCs that are on screen.',
+	pl	=> 'List players that are on screen.',
 	plugin	=> 'Control plugins.',
+	portals	=> 'List portals that are on screen.',
 	s	=> 'Display character status.',
 	send	=> 'Send a raw packet to the server.',
+	skills	=> 'Show skills or add skill point.',
 	st	=> 'Display stats.',
 	stat_add => 'Add status point.',
 	tank	=> 'Tank for a player.',
 	timeout	=> 'Set a timeout.',
-	verbose	=> 'Toggles verbose on/off.',
+	verbose	=> 'Toggle verbose on/off.',
 	warp	=> 'Open warp portal.',
 	who	=> 'Display the number of people on the current server.',
 );
@@ -173,6 +197,23 @@ sub cmdAuthorize {
 	}
 }
 
+sub cmdBestow {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^([\s\S]*)/;
+	if ($currentChatRoom eq "") {
+		error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
+			"You are not in a Chat Room.\n";
+	} elsif ($arg1 eq "") {
+		error	"Syntax Error in function 'bestow' (Bestow Admin in Chat)\n" .
+			"Usage: bestow <user #>\n";
+	} elsif ($currentChatRoomUsers[$arg1] eq "") {
+		error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
+			"Chat Room User $arg1 doesn't exist; type 'cri' to see the list of users\n";
+	} else {
+		sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg1]);
+	}
+}
+
 sub cmdBuy {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d+)/;
@@ -189,6 +230,43 @@ sub cmdBuy {
 		}
 		sendBuy(\$remote_socket, $storeList[$arg1]{'nameID'}, $arg2);
 	}
+}
+
+sub cmdChatMod {
+	my (undef, $args) = @_;
+	my ($replace, $title) = $args =~ /(^\"([\s\S]*?)\" ?)/;
+	my $qm = quotemeta $replace;
+	my $input =~ s/$qm//;
+	my @arg = split / /, $input;
+	if ($title eq "") {
+		error	"Syntax Error in function 'chatmod' (Modify Chat Room)\n" .
+			"Usage: chatmod \"<title>\" [<limit #> <public flag> <password>]\n";
+	} else {
+		if ($arg[0] eq "") {
+			$arg[0] = 20;
+		}
+		if ($arg[1] eq "") {
+			$arg[1] = 1;
+		}
+		sendChatRoomChange(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
+	}
+}
+
+sub cmdChatRoomList {
+	message("-----------Chat Room List-----------\n" .
+		"#   Title                     Owner                Users   Public/Private\n",
+		"list");
+	for (my $i = 0; $i < @chatRoomsID; $i++) {
+		next if ($chatRoomsID[$i] eq "");
+		my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $chars[$config{'char'}]{'name'};
+		my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
+		my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
+		message(swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<          @<<<<<< @<<<<<<<<<",
+			[$i, $chatRooms{$chatRoomsID[$i]}{'title'}, $owner_string, $limit_string, $public_string]),
+			"list");
+	}
+	message("------------------------------------\n", "list");
 }
 
 sub cmdChist {
@@ -213,6 +291,53 @@ sub cmdChist {
 
 	} else {
 		error "Unable to open $Settings::chat_file\n";
+	}
+}
+
+sub cmdCloseShop {
+	sendCloseShop(\$remote_socket);
+}
+
+sub cmdConf {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+ ([\s\S]+)$/;
+
+	my @keys = keys %config;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'conf' (Change a Configuration Key)\n" .
+			"Usage: conf <variable> [<value>]\n";
+
+	} elsif ($arg2 eq "value") {
+		my $value = undef;
+		Plugins::callHook('Commands::cmdConf', {
+			key => $arg1,
+			val => \$value
+		});
+
+		if (!defined $value) {
+			if (!exists $config{$arg1}) {
+				error "Config variable $arg1 doesn't exist\n";
+			} else {
+				$value = "$config{$arg1}";
+			}
+		}
+		message("Config '$arg1' is $value\n", "info") if defined $value;
+
+	} else {
+		configModify($arg1, $arg2);
+	}
+}
+
+sub cmdDebug {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\d+)/;
+	if ($arg1 eq "0") {
+		configModify("debug", 0);
+	} elsif ($arg1 eq "1") {
+		configModify("debug", 1);
+	} elsif ($arg1 eq "2") {
+		configModify("debug", 2);
 	}
 }
 
@@ -392,8 +517,81 @@ sub cmdInventory {
 	}
 }
 
+sub cmdLeaveChatRoom {
+	if ($currentChatRoom eq "") {
+		error	"Error in function 'leave' (Leave Chat Room)\n" .
+			"You are not in a Chat Room.\n";
+	} else {
+		sendChatRoomLeave(\$remote_socket);
+	}
+}
+
 sub cmdMemo {
 	sendMemo(\$remote_socket);
+}
+
+sub cmdMonsterList {
+	my ($dmgTo, $dmgFrom, $dist, $pos);
+	message("-----------Monster List-----------\n" .
+		"#    Name                     DmgTo    DmgFrom    Distance    Coordinates\n",
+		"list");
+	for (my $i = 0; $i < @monstersID; $i++) {
+		next if ($monstersID[$i] eq "");
+		$dmgTo = ($monsters{$monstersID[$i]}{'dmgTo'} ne "")
+			? $monsters{$monstersID[$i]}{'dmgTo'}
+			: 0;
+		$dmgFrom = ($monsters{$monstersID[$i]}{'dmgFrom'} ne "")
+			? $monsters{$monstersID[$i]}{'dmgFrom'}
+			: 0;
+		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
+		$dist = sprintf ("%.1f", $dist) if (index($dist, '.') > -1);
+		$pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
+
+		message(swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<",
+			[$i, $monsters{$monstersID[$i]}{'name'}, $dmgTo, $dmgFrom, $dist, $pos]),
+			"list");
+	}
+	message("----------------------------------\n", "list");
+}
+
+sub cmdNPCList {
+	message("-----------NPC List-----------\n" .
+		"#    Name                         Coordinates   ID\n",
+		"list");
+	for (my $i = 0; $i < @npcsID; $i++) {
+		next if ($npcsID[$i] eq "");
+		my $pos = "($npcs{$npcsID[$i]}{'pos'}{'x'}, $npcs{$npcsID[$i]}{'pos'}{'y'})";
+		message(swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
+			[$i, $npcs{$npcsID[$i]}{'name'}, $pos, $npcs{$npcsID[$i]}{'nameID'}]),
+			"list");
+	}
+	message("---------------------------------\n", "list");
+}
+
+sub cmdPlayerList {
+	message("-----------Player List-----------\n" .
+		"#    Name                                    Sex   Job         Dist  Coord\n",
+		"list");
+	for (my $i = 0; $i < @playersID; $i++) {
+		next if ($playersID[$i] eq "");
+		my ($name, $dist, $pos);
+		if (%{$players{$playersID[$i]}{'guild'}}) {
+			$name = "$players{$playersID[$i]}{'name'} [$players{$playersID[$i]}{'guild'}{'name'}]";
+		} else {
+			$name = $players{$playersID[$i]}{'name'};
+		}
+		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
+		$dist = sprintf ("%.1f", $dist) if (index ($dist, '.') > -1);
+		$pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
+
+		message(swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+			[$i, $name, $sex_lut{$players{$playersID[$i]}{'sex'}}, $jobs_lut{$players{$playersID[$i]}{'jobID'}}, $dist, $pos]),
+			"list");
+	}
+	message("---------------------------------\n", "list");
 }
 
 sub cmdPlugin {
@@ -464,6 +662,21 @@ sub cmdPlugin {
 	}
 }
 
+sub cmdPortalList {
+	message("-----------Portal List-----------\n" .
+		"#    Name                                Coordinates\n",
+		"list");
+	for (my $i = 0; $i < @portalsID; $i++) {
+		next if ($portalsID[$i] eq "");
+		my $coords = "($portals{$portalsID[$i]}{'pos'}{'x'},$portals{$portalsID[$i]}{'pos'}{'y'})";
+		message(swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
+			[$i, $portals{$portalsID[$i]}{'name'}, $coords]),
+			"list");
+	}
+	message("---------------------------------\n", "list");
+}
+
 sub cmdReload {
 	my (undef, $args) = @_;
 	if ($args eq '') {
@@ -478,6 +691,45 @@ sub cmdReload {
 sub cmdSendRaw {
 	my (undef, $args) = @_;
 	sendRaw(\$remote_socket, $args);
+}
+
+sub cmdSkills {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	if ($arg1 eq "") {
+		message("----------Skill List-----------\n", "list");
+		message("#  Skill Name                    Lv     SP\n", "list");
+		for (my $i = 0; $i < @skillsID; $i++) {
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<    @<<<",
+				[$i, $skills_lut{$skillsID[$i]}, $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}, $skillsSP_lut{$skillsID[$i]}{$chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}}]),
+				"list");
+		}
+		message("\nSkill Points: $chars[$config{'char'}]{'points_skill'}\n", "list");
+		message("-------------------------------\n", "list");
+
+	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
+		error	"Error in function 'skills add' (Add Skill Point)\n" .
+			"Skill $arg2 does not exist.\n";
+	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'points_skill'} < 1) {
+		error	"Error in function 'skills add' (Add Skill Point)\n" .
+			"Not enough skill points to increase $skills_lut{$skillsID[$arg2]}.\n";
+	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
+		sendAddSkillPoint(\$remote_socket, $chars[$config{'char'}]{'skills'}{$skillsID[$arg2]}{'ID'});
+
+	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
+		error	"Error in function 'skills desc' (Skill Description)\n" .
+			"Skill $arg2 does not exist.\n";
+	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
+		message("===============Skill Description===============\n", "info");
+		message("Skill: $skills_lut{$skillsID[$arg2]}\n\n", "info");
+		message($skillsDesc_lut{$skillsID[$arg2]}, "info");
+		message("==============================================\n", "info");
+	} else {
+		error	"Syntax Error in function 'skills' (Skills Functions)\n" .
+			"Usage: skills [<add | desc>] [<skill #>]\n";
+	}
 }
 
 sub cmdStatAdd {

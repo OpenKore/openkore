@@ -463,21 +463,6 @@ sub parseCommand {
 		unshift @ai_seq, "itemExchange";
 		unshift @ai_seq_args, {};
 
-	} elsif ($switch eq "bestow") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		if ($currentChatRoom eq "") {
-			error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
-				"You are not in a Chat Room.\n";
-		} elsif ($arg1 eq "") {
-			error	"Syntax Error in function 'bestow' (Bestow Admin in Chat)\n" .
-				"Usage: bestow <user #>\n";
-		} elsif ($currentChatRoomUsers[$arg1] eq "") {
-			error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
-				"Chat Room User $arg1 doesn't exist\n";
-		} else {
-			sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg1]);
-		}
-
 	} elsif ($switch eq "c") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
@@ -558,24 +543,6 @@ sub parseCommand {
 			$createdChatRoom{'users'}{$chars[$config{'char'}]{'name'}} = 2;
 		}
 
-	} elsif ($switch eq "chatmod") {
-		my ($replace, $title) = $input =~ /(^[\s\S]*? \"([\s\S]*?)\" ?)/;
-		my $qm = quotemeta $replace;
-		my $input =~ s/$qm//;
-		my @arg = split / /, $input;
-		if ($title eq "") {
-			error	"Syntax Error in function 'chatmod' (Modify Chat Room)\n" .
-				"Usage: chatmod \"<title>\" [<limit #> <public flag> <password>]\n";
-		} else {
-			if ($arg[0] eq "") {
-				$arg[0] = 20;
-			}
-			if ($arg[1] eq "") {
-				$arg[1] = 1;
-			}
-			sendChatRoomChange(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
-		}
-
 	} elsif ($switch eq "cil") { 
 		itemLog_clear();
 		message("Item log cleared.\n", "success");
@@ -583,38 +550,6 @@ sub parseCommand {
 	} elsif ($switch eq "cl") { 
 		chatLog_clear();
 		message("Chat log cleared.\n", "success");
-
-	} elsif ($switch eq "closeshop") {
-		sendCloseShop(\$remote_socket);
-
-	} elsif ($switch eq "conf") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ ([\s\S]+)$/;
-
-		my @keys = keys %config;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'conf' (Config Modify)\n" .
-				"Usage: conf <variable> [<value>]\n";
-
-		} elsif ($arg2 eq "value") {
-			my $value = undef;
-			Plugins::callHook('conf_value', {
-				key => $arg1,
-				val => \$value
-			});
-
-			if (!defined $value) {
-				if (!exists $config{$arg1}) {
-					error "Config variable $arg1 doesn't exist\n";
-				} else {
-					$value = "$config{$arg1}";
-				}
-			}
-			message("Config '$arg1' is $value\n", "info") if defined $value;
-
-		} else {
-			configModify($arg1, $arg2);
-		}
 
 	#non-functional item count code
 	} elsif ($switch eq "icount") {
@@ -792,16 +727,6 @@ sub parseCommand {
 		} else {
 			error	"Syntax Error in function 'deal' (Deal a player)\n" .
 				"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n";
-		}
-
-	} elsif ($switch eq "debug") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		if ($arg1 eq "0") {
-			configModify("debug", 0);
-		} elsif ($arg1 eq "1") {
-			configModify("debug", 1);
-		} elsif ($arg1 eq "2") {
-			configModify("debug", 2);
 		}
 
 	} elsif ($switch eq "dl") {
@@ -1108,14 +1033,6 @@ sub parseCommand {
 			sendChatRoomKick(\$remote_socket, $currentChatRoomUsers[$arg1]);
 		}
 
-	} elsif ($switch eq "leave") {
-		if ($currentChatRoom eq "") {
-			error	"Error in function 'leave' (Leave Chat Room)\n" .
-				"You are not in a Chat Room.\n";
-		} else {
-			sendChatRoomLeave(\$remote_socket);
-		}
-
 	} elsif ($switch eq "look") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
@@ -1138,30 +1055,6 @@ sub parseCommand {
 				last;
 			}
 		}
-
-	} elsif ($switch eq "ml") {
-		my ($dmgTo, $dmgFrom, $dist, $pos);
-		message("-----------Monster List-----------\n" .
-			"#    Name                     DmgTo    DmgFrom    Distance    Coordinates\n",
-			"list");
-		for (my $i = 0; $i < @monstersID; $i++) {
-			next if ($monstersID[$i] eq "");
-			$dmgTo = ($monsters{$monstersID[$i]}{'dmgTo'} ne "")
-				? $monsters{$monstersID[$i]}{'dmgTo'}
-				: 0;
-			$dmgFrom = ($monsters{$monstersID[$i]}{'dmgFrom'} ne "")
-				? $monsters{$monstersID[$i]}{'dmgFrom'}
-				: 0;
-			$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
-			$dist = sprintf ("%.1f", $dist) if (index($dist, '.') > -1);
-			$pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
-
-			message(swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<",
-				[$i, $monsters{$monstersID[$i]}{'name'}, $dmgTo, $dmgFrom, $dist, $pos]),
-				"list");
-		}
-		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "move") {
 		($arg1, $arg2, $arg3) = $input =~ /^[\s\S]*? (\d+) (\d+)(.*?)$/;
@@ -1199,20 +1092,6 @@ sub parseCommand {
 				error "Map $ai_v{'temp'}{'map'} does not exist\n";
 			}
 		}
-
-	} elsif ($switch eq "nl") {
-		message("-----------NPC List-----------\n" .
-			"#    Name                         Coordinates   ID\n",
-			"list");
-		for (my $i = 0; $i < @npcsID; $i++) {
-			next if ($npcsID[$i] eq "");
-			my $pos = "($npcs{$npcsID[$i]}{'pos'}{'x'}, $npcs{$npcsID[$i]}{'pos'}{'y'})";
-			message(swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
-				[$i, $npcs{$npcsID[$i]}{'name'}, $pos, $npcs{$npcsID[$i]}{'nameID'}]),
-				"list");
-		}
-		message("---------------------------------\n", "list");
 
 	} elsif ($switch eq "openshop"){
 		if (!$shopstarted) {
@@ -1389,43 +1268,6 @@ sub parseCommand {
 		}
 		message("-----------------------------\n", "list");
 
-	} elsif ($switch eq "pl") {
-		message("-----------Player List-----------\n" .
-			"#    Name                                    Sex   Job         Dist  Coord\n",
-			"list");
-		for (my $i = 0; $i < @playersID; $i++) {
-			next if ($playersID[$i] eq "");
-			my ($name, $dist, $pos);
-			if (%{$players{$playersID[$i]}{'guild'}}) {
-				$name = "$players{$playersID[$i]}{'name'} [$players{$playersID[$i]}{'guild'}{'name'}]";
-			} else {
-				$name = $players{$playersID[$i]}{'name'};
-			}
-			$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
-			$dist = sprintf ("%.1f", $dist) if (index ($dist, '.') > -1);
-			$pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
-
-			message(swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
-				[$i, $name, $sex_lut{$players{$playersID[$i]}{'sex'}}, $jobs_lut{$players{$playersID[$i]}{'jobID'}}, $dist, $pos]),
-				"list");
-		}
-		message("---------------------------------\n", "list");
-
-	} elsif ($switch eq "portals") {
-		message("-----------Portal List-----------\n" .
-			"#    Name                                Coordinates\n",
-			"list");
-		for (my $i = 0; $i < @portalsID; $i++) {
-			next if ($portalsID[$i] eq "");
-			my $coords = "($portals{$portalsID[$i]}{'pos'}{'x'},$portals{$portalsID[$i]}{'pos'}{'y'})";
-			message(swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
-				[$i, $portals{$portalsID[$i]}{'name'}, $coords]),
-				"list");
-		}
-		message("---------------------------------\n", "list");
-
 	} elsif ($switch eq "quit") {
 		quit();
 
@@ -1549,45 +1391,6 @@ sub parseCommand {
 				ai_skillUse($chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'ID'}, $arg3, 0,0, $monsters{$monstersID[$arg2]}{'pos_to'}{'x'}, $monsters{$monstersID[$arg2]}{'pos_to'}{'y'});
 			}
 		}
-
-	} elsif ($switch eq "skills") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
-		if ($arg1 eq "") {
-			message("----------Skill List-----------\n", "list");
-			message("#  Skill Name                    Lv     SP\n", "list");
-			for (my $i = 0; $i < @skillsID; $i++) {
-				message(swrite(
-					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<    @<<<",
-					[$i, $skills_lut{$skillsID[$i]}, $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}, $skillsSP_lut{$skillsID[$i]}{$chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}}]),
-					"list");
-			}
-			message("\nSkill Points: $chars[$config{'char'}]{'points_skill'}\n", "list");
-			message("-------------------------------\n", "list");
-
-
-		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
-			error	"Error in function 'skills add' (Add Skill Point)\n" .
-				"Skill $arg2 does not exist.\n";
-		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'points_skill'} < 1) {
-			error	"Error in function 'skills add' (Add Skill Point)\n" .
-				"Not enough skill points to increase $skills_lut{$skillsID[$arg2]}.\n";
-		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
-			sendAddSkillPoint(\$remote_socket, $chars[$config{'char'}]{'skills'}{$skillsID[$arg2]}{'ID'});
-
-		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
-			error	"Error in function 'skills desc' (Skill Description)\n" .
-				"Skill $arg2 does not exist.\n";
-		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-			message("===============Skill Description===============\n", "info");
-			message("Skill: $skills_lut{$skillsID[$arg2]}\n\n", "info");
-			message($skillsDesc_lut{$skillsID[$arg2]}, "info");
-			message("==============================================\n", "info");
-		} else {
-			error	"Syntax Error in function 'skills' (Skills Functions)\n" .
-				"Usage: skills [<add | desc>] [<skill #>]\n";
-		}
-
 
 	} elsif ($switch eq "sp") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
@@ -8686,6 +8489,14 @@ sub ai_getMonstersWhoHitMe {
 	return @agMonsters;
 }
 
+##
+# ai_getSkillUseType(name)
+# name: the internal name of the skill (as found in skills.txt), such as WZ_FIREPILLAR.
+# Returns: 1 if it's a location skill, 0 if it's an object skill.
+#
+# Determines whether a skill is a skill that's casted on a location, or one that's
+# casted on an object (monster/player/etc).
+# For example, Firewall is a location skill, while Cold Bolt is an object skill.
 sub ai_getSkillUseType {
 	my $skill = shift;
 	if ($skill eq "WZ_FIREPILLAR" || $skill eq "WZ_METEOR" 

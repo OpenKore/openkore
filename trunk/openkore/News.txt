@@ -102,6 +102,8 @@ New configuration options:
   skillslooks.txt, skillsstate.txt and skillsailments.txt in the latest
   tablepack for a list of names.
 - equipAuto_*
+- useSelf_skill_0_notWhileSitting
+  If set to 1, this skill will not be used while sitting.
 
 
 Bug fixes:

@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Logging Framework
+#  OpenKore - Message Logging Framework
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -10,7 +10,7 @@
 #
 #########################################################################
 ##
-# MODULE DESCRIPTION: Logging framework
+# MODULE DESCRIPTION: Message Logging framework
 #
 # <h3>What is a logging framework and why is it needed?</h3>
 #
