@@ -5880,7 +5880,7 @@ sub parseMsg {
 				$item->{index} = $index;
 				$item->{nameID} = unpack("S1", substr($msg, 6, 2));
 				$item->{type} = unpack("C1", substr($msg, 21, 1));
-				$item->{type_equip} = unpack("C1", substr($msg, 19, 2));
+				$item->{type_equip} = unpack("S1", substr($msg, 19, 2));
 				$item->{amount} = $amount;
 				$item->{identified} = unpack("C1", substr($msg, 8, 1));
 				$item->{upgrade} = unpack("C1", substr($msg, 10, 1));
