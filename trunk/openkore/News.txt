@@ -13,8 +13,10 @@ New features:
 - Startup is now *much* faster than before.
   We've gotten rid of the "forking input server".
 - Command prompt improvements:
-  * Your command prompt will now be kept visible even when output is printed to the screen.
-  * You can get the command you previously typed by pressing the Up/Down arrow key.
+  * Your command prompt will now be kept visible even when output is printed
+    to the screen.
+  * You can get the command you previously typed by pressing the Up/Down arrow
+    key.
   * Keys like the Left arrow, Right arrow, Home and End now work.
 
 - Support for priority attacks. Current only works with aggressive monsters.
@@ -32,7 +34,8 @@ New features:
   For example, you can now buy Phracons in the Prontera upgrade shop.
   New command: talk num (#number)
 - Background colors in consolecolors.txt are now supported.
-- Added optional parameter for chist, "chist 10" will show last 10 lines of chat.txt
+- Added optional parameter for chist, "chist 10" will show last 10 lines of
+  chat.txt.
 - Better support for secure logins.
 - Support for party skills.
 - Added ability to activate skills or use items based on current active
@@ -114,11 +117,15 @@ New configuration options:
 - route_maxWarpFee
   The maximum amount of money you're willing to spend on a Kapra which
   teleports you to another map.
+- dontSaveLogin
+  If set to 1, don't save username and password in config.txt.
+- autoTalkCont
+  If set to 1, automatically type 'talk cont' when appropriate.
 
 
 Bug fixes:
 - Fixed comma placement in formatNumber sub (its what puts the commas
-  in your zenny amount.
+  in your zenny amount).
 - When in X-Kore mode, the RO client will still work if you shutdown
   Kore. However, you can't start Kore in X-Kore mode again until you've
   restarted the RO client.
@@ -130,6 +137,9 @@ Bug fixes:
   someone test and report on the forum please?
 - Fixed bug where openkore would say "Unknown uses" instead of the
   correct name of the player who had cast an area attack spell.
+- Carded and forged items should now be displayed correctly everywhere
+  (inventory, deal, cart, storage, vending shops). Post your comments in
+  http://openkore.sourceforge.net/forum/viewtopic.php?t=1491
 - And lots of other misc bug fixes.
 
 
@@ -138,15 +148,16 @@ Internal:
 - Experimental plugin system.
 - Interfaces are closer to completion --interface can now be used on the
   command line to select an interface to use. 'Console' is the default 
-  interface. There is only one alternate interface at this point 'Tk' a stripped
-  down version of modKore's Vx mode.
+  interface. There is only one alternate interface at this point 'Tk' a
+  stripped down version of modKore's Vx mode.
 - Support packet 01D7 (Karasu).
+- New functions itemName() and itemNameSimple() to parse item info.
 
 
 Special thanks:
 - Ven'Tatsu: Interface stuff, A* pathfinding enhancements.
-- pmak: various bug fixes and enhancements, as well as assisting me with maintaining
-  the website.
+- pmak: various bug fixes and enhancements, as well as assisting me with
+  maintaining the website.
 - jsteng: simplified move AI code, skill use improvements, NPC
   interaction improvements.
 - anu: support for new deal packets.
