@@ -1,0 +1,31 @@
+CC=gcc
+CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 -mcpu=i686 -mno-cygwin -mdll
+CXX=g++
+CXXFLAGS=$(CFLAGS)
+@HEADER@
+
+.PHONY: all clean
+
+all: NetRedirect.dll wrapper.o utils.o
+
+
+NetRedirect.dll: netredirect.o netredirect.gccdef
+	dllwrap --driver=$(CXX) --target=i386-mingw -mno-cygwin --def netredirect.gccdef netredirect.o -o NetRedirect.dll -lws2_32
+
+netredirect.o: netredirect.cpp
+	$(CXX) -mdll $(CXXFLAGS) netredirect.cpp -c -o netredirect.o
+
+netredirect.gccdef: netredirect.o
+	dlltool --dllname NetRedirect.dll --output-def netredirect.gccdef --no-export-all-symbols --add-stdcall-alias netredirect.o
+
+
+wrapper.o: wrapper.xs
+	$(XSUBPP) -typemap "$(TYPEMAP)" wrapper.xs > wrapper.c
+	$(CC) -I. $(CFLAGS) wrapper.c -c $(PERLCFLAGS) -o wrapper.o -I$(COREDIR)
+
+utils.o: utils.c
+	$(CC) $(CFLAGS) -c utils.c -o utils.o
+
+
+clean:
+	rm -f netredirect.gccdef netredirect.o NetRedirect.dll wrapper.o wrapper.c Makefile.real

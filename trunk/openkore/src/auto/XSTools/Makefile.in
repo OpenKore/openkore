@@ -1,0 +1,35 @@
+@HEADER@
+.PHONY: sub clean
+
+OBJ=pathfinding/*.o
+#if unix
+OBJ+=unix/*.o
+#endif
+#if win32
+OBJ+=win32/wrapper.o win32/utils.o
+#endif
+
+Tools.$(DLLEXT): sub
+	dlltool --dllname Tools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
+	$(DLLWRAP) $(OBJ) -o Tools.$(DLLEXT) $(LIBPERL)
+
+
+sub:
+	make -C pathfinding
+#if unix
+	make -C unix
+#endif
+#if win32
+	make -C win32
+#endif
+
+
+clean:
+	rm -f Tools.$(DLLEXT) symbols.gccdef Makefile.real
+	make clean -C pathfinding
+#if unix
+	make clean -C unix
+#endif
+#if win32
+	make clean -C win32
+#endif
