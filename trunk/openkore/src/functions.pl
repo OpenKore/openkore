@@ -2761,6 +2761,35 @@ sub AI {
 			unshift @ai_seq, "storageAuto";
 			unshift @ai_seq_args, {};
 		}
+	} elsif (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "attack")
+	      && $config{'storageAuto'} && $config{'storageAuto_npc'} ne "" && timeOut(\%{$timeout{'ai_storageAuto'}})) {
+		undef $ai_v{'temp'}{'found'};
+		$i = 0;
+		while (1) {
+			last if (!$config{"getAuto_$i"});
+			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"getAuto_$i"});
+
+			if ($config{"getAuto_$i"."_minAmount"} ne "" && $config{"getAuto_$i"."_maxAmount"} ne "" && !$stockVoid[$i]
+			   && !$config{"getAuto_$i"."_passive"}
+			   && ($ai_v{'temp'}{'invIndex'} eq ""
+			       || ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"getAuto_$i"."_minAmount"}
+			           && $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"getAuto_$i"."_maxAmount"})
+			      )
+			   ) {
+				$ai_v{'temp'}{'found'} = 1;
+			}
+			$i++;
+		}
+
+		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
+		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
+			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
+		}
+		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && $ai_v{'temp'}{'found'}) {
+			unshift @ai_seq, "storageAuto";
+			unshift @ai_seq_args, {};
+		}
+		$timeout{'ai_storageAuto'}{'time'} = time;
 	}
 
 	if ($ai_seq[0] eq "storageAuto" && $ai_seq_args[0]{'done'}) {
@@ -2814,25 +2843,79 @@ sub AI {
 				$timeout{'ai_storageAuto'}{'time'} = time;
 				last AUTOSTORAGE;
 			}
+
 			$ai_seq_args[0]{'done'} = 1;
-			for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
-				next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
-				if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'}
-					&& $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'}) {
-					if ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $chars[$config{'char'}]{'inventory'}[$i]{'index'}
-						&& timeOut(\%{$timeout{'ai_storageAuto_giveup'}})) {
+			if (!$ai_seq_args[0]{'getStart'}) {
+				for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
+					next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
+					if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'}
+						&& $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'}) {
+						if ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $chars[$config{'char'}]{'inventory'}[$i]{'index'}
+							&& timeOut(\%{$timeout{'ai_storageAuto_giveup'}})) {
+							last AUTOSTORAGE;
+						} elsif ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $chars[$config{'char'}]{'inventory'}[$i]{'index'}) {
+							$timeout{'ai_storageAuto_giveup'}{'time'} = time;
+						}
+						undef $ai_seq_args[0]{'done'};
+						$ai_seq_args[0]{'lastIndex'} = $chars[$config{'char'}]{'inventory'}[$i]{'index'};
+						sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'});
+						$timeout{'ai_storageAuto'}{'time'} = time;
 						last AUTOSTORAGE;
-					} elsif ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $chars[$config{'char'}]{'inventory'}[$i]{'index'}) {
-						$timeout{'ai_storageAuto_giveup'}{'time'} = time;
 					}
-					undef $ai_seq_args[0]{'done'};
-					$ai_seq_args[0]{'lastIndex'} = $chars[$config{'char'}]{'inventory'}[$i]{'index'};
-					sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'});
-					$timeout{'ai_storageAuto'}{'time'} = time;
-					last AUTOSTORAGE;
 				}
 			}
-			sendStorageClose(\$remote_socket);
+
+			if (!$ai_seq_args[0]{'getStart'} && $ai_seq_args[0]{'done'} == 1) {
+				$ai_seq_args[0]{'getStart'} = 1;
+				undef $ai_seq_args[0]{'done'};
+				last AUTOSTORAGE;
+			}
+			$i = 0;
+			undef $ai_seq_args[0]{'index'};
+			while (1) {
+				last if (!$config{"getAuto_$i"});
+				$ai_seq_args[0]{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"getAuto_$i"});
+				if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"getAuto_$i"."_maxAmount"} ne "" && !$stockVoid[$i] && ($ai_seq_args[0]{'invIndex'} eq ""
+				   || $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} < $config{"getAuto_$i"."_maxAmount"})) {
+					$ai_seq_args[0]{'index'} = $i;
+					last;
+				}
+				$i++;
+			}
+			if ($ai_seq_args[0]{'index'} eq ""
+			   || ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $ai_seq_args[0]{'index'}
+			   && timeOut(\%{$timeout{'ai_storageAuto_giveup'}}))) {
+				$ai_seq_args[0]{'done'} = 1;
+				sendStorageClose(\$remote_socket);
+				last AUTOSTORAGE;
+			} elsif ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $ai_seq_args[0]{'index'}) {
+				$timeout{'ai_storageAuto_giveup'}{'time'} = time;
+			}
+
+			undef $ai_seq_args[0]{'done'};
+			undef $ai_seq_args[0]{'storageInvID'};
+			$ai_seq_args[0]{'lastIndex'} = $ai_seq_args[0]{'index'};
+			$ai_seq_args[0]{'storageInvID'} = findKeyString(\%storage, "name", $config{"getAuto_$ai_seq_args[0]{'index'}"});
+			if ($ai_seq_args[0]{'storageInvID'} eq "") {
+				$stockVoid[$ai_seq_args[0]{'index'}] = 1;
+				last AUTOSTORAGE;
+			} elsif ($ai_seq_args[0]{'invIndex'} ne "") {
+				if ($config{"getAuto_$ai_seq_args[0]{'index'}"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} > $storage{$ai_seq_args[0]{'storageInvID'}}{'amount'}) {
+					$getAmount = $storage{$ai_seq_args[0]{'storageInvID'}}{'amount'};
+					$stockVoid[$ai_seq_args[0]{'index'}] = 1;
+				} else {
+					$getAmount = $config{"getAuto_$ai_seq_args[0]{'index'}"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'};
+				}
+			} else {
+				if ($config{"getAuto_$ai_seq_args[0]{'index'}"."_maxAmount"} > $storage{$ai_seq_args[0]{'storageInvID'}}{'amount'}) {
+					$getAmount = $storage{$ai_seq_args[0]{'storageInvID'}}{'amount'};
+					$stockVoid[$ai_seq_args[0]{'index'}] = 1;
+				} else {
+					$getAmount = $config{"getAuto_$ai_seq_args[0]{'index'}"."_maxAmount"};
+				}
+			}
+			sendStorageGet(\$remote_socket, $storage{$ai_seq_args[0]{'storageInvID'}}{'index'}, $getAmount);
+			$timeout{'ai_storageAuto'}{'time'} = time;
 		}
 	}
 
@@ -3210,12 +3293,13 @@ sub AI {
 		while (1) {
 			last if (!$config{"useSelf_skill_$i"});
 			if (percent_hp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_skill_$i"."_hp_upper"} && percent_hp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_skill_$i"."_hp_lower"}
-				&& percent_sp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_skill_$i"."_sp_upper"} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_skill_$i"."_sp_lower"}
-				&& $chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc($config{"useSelf_skill_$i"})}}{$config{"useSelf_skill_$i"."_lvl"}}
-				&& timeOut($config{"useSelf_skill_$i"."_timeout"}, $ai_v{"useSelf_skill_$i"."_time"})
-				&& !($config{"useSelf_skill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
-				&& $config{"useSelf_skill_$i"."_minAggressives"} <= ai_getAggressives()
-				&& (!$config{"useSelf_skill_$i"."_maxAggressives"} || $config{"useSelf_skill_$i"."_maxAggressives"} >= ai_getAggressives())) {
+			 && percent_sp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_skill_$i"."_sp_upper"} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_skill_$i"."_sp_lower"}
+			 && $chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc($config{"useSelf_skill_$i"})}}{$config{"useSelf_skill_$i"."_lvl"}}
+			 && timeOut($ai_v{"useSelf_skill_$i"."_time"}, $config{"useSelf_skill_$i"."_timeout"})
+			 && !($config{"useSelf_skill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
+			 && (!$config{"useSelf_skill_$i"."_inLockOnly"} || ($config{"useSelf_skill_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
+			 && $config{"useSelf_skill_$i"."_minAggressives"} <= ai_getAggressives()
+			 && (!$config{"useSelf_skill_$i"."_maxAggressives"} || $config{"useSelf_skill_$i"."_maxAggressives"} >= ai_getAggressives())) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
 				$ai_v{'useSelf_skill_lvl'} = $config{"useSelf_skill_$i"."_lvl"};
@@ -5472,11 +5556,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
 				."%)] "."You attack Monster: $monsters{$ID2}{'name'} $monsters{$ID2}{'nameID'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n";
 
-				if ($startedattack == 1)
-				{
-				$monstarttime = time();
-				$monkilltime = time();
-				$startedattack = 0;
+				if ($startedattack) {
+					$monstarttime = time();
+					$monkilltime = time();
+					$startedattack = 0;
 				}
 				calcStat($damage);
 #Solos End

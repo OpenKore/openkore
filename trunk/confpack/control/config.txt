@@ -136,6 +136,7 @@ useSelf_skill_0_minCastTime 0
 useSelf_skill_0_sp_lower 0
 useSelf_skill_0_sp_upper 100
 useSelf_skill_0_stopWhenHit 0
+useSelf_skill_0_inLockOnly 0
 useSelf_skill_0_timeout 0
 
 useSelf_skill_smartHeal 1
@@ -167,6 +168,11 @@ sellAuto_npc
 
 storageAuto 0
 storageAuto_npc 
+
+getAuto_0
+getAuto_0_minAmount
+getAuto_0_maxAmount
+getAuto_0_passive
 
 follow 0
 followTarget 
