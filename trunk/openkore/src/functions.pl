@@ -3586,6 +3586,9 @@ sub AI {
 
 			# Look for the closest aggressive monster to attack
 			foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
+				# Don't attack monsters near portals
+				next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+
 				$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
 				if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
 					$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
