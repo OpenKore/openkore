@@ -3220,7 +3220,7 @@ sub AI {
 			$attackSeq->{ai_attack_giveup}{time} = time;
 			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
-		} elsif ($monster && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}
+		} elsif ($monster && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
 		 && distance(calcPosition($monster), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster is within attack range; stop moving
 			AI::dequeue;
@@ -9905,7 +9905,7 @@ sub updateDamageTables {
 
 			if ($AI) {
 				my $teleport = 0;
-				if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
+				if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'} == 2){
 					message "Teleporting due to attack from $monsters{$ID1}{'name'} attack\n";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
@@ -9913,6 +9913,9 @@ sub updateDamageTables {
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination")) {
 					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
+					$teleport = 1;
+				} elsif (AI::inQueue("sitAuto") && $config{'teleportAuto_attackedWhenSitting'} && $damage > 0) {
+					message "$monsters{$ID1}{'name'} attacks you while you are sitting. Teleporting...\n";
 					$teleport = 1;
 				}
 				useTeleport(1) if ($teleport);
