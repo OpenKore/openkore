@@ -36,6 +36,7 @@ New features:
 - Added command 'death <player #>' for use if you get the Death spell from
   Abracadabra.
 - Added command 'kill <player #>' to make the bot attack in PVP.
+- A new, WxWidgets-based interface.
 
 New config options:
 - *_inInventory_name : inventory item name
