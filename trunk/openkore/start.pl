@@ -48,6 +48,10 @@ if ($0 =~ /\.exe$/i) {
 my $file = 'openkore.pl';
 if ($ARGV[0] eq '!') {
 	shift;
+	while ($ARGV[0] =~ /^-I(.*)/) {
+		unshift @INC, $1;
+		shift;
+	}
 	$file = shift;
 }
 

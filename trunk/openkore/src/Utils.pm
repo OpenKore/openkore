@@ -24,6 +24,7 @@ use Math::Trig;
 use bytes;
 use Exporter;
 use base qw(Exporter);
+use Config;
 use FastUtils;
 # Do not use any other Kore modules here. It will create circular dependancies.
 
@@ -34,6 +35,8 @@ our @EXPORT = (
 	findKey findKeyString minHeapAdd),
 	# Math
 	qw(calcPosition distance getVector moveAlongVector normalize vectorToDegree),
+	# OS-specific
+	qw(launchApp launchScript),
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP parseArgs swrite timeConvert timeOut
@@ -597,6 +600,85 @@ sub vectorToDegree {
 		} else {
 			return $ret;
 		}
+	}
+}
+
+
+################################
+################################
+# OS-SPECIFIC STUFF
+################################
+################################
+
+##
+# launchApp(args...)
+# args: The application's name and arguments.
+# Returns: a PID on Unix; an object created by Win32::Process::Create() on Windows.
+#
+# Asynchronously launch an application.
+sub launchApp {
+	if ($^O eq 'MSWin32') {
+		my @args = @_;
+		foreach (@args) {
+			$_ = "\"$_\"";
+		}
+
+		my ($priority, $obj);
+		eval 'use Win32::Process; use Win32; $priority = NORMAL_PRIORITY_CLASS;';
+		Win32::Process::Create($obj, $_[0], "@args", 0, $priority, '.');
+		return $obj;
+
+	} else {
+		require POSIX;
+		import POSIX;
+
+		my $pid = fork();
+		if ($pid == 0) {
+			open(STDOUT, "> /dev/null");
+			open(STDERR, "> /dev/null");
+			POSIX::setsid();
+			if (fork() == 0) {
+				exec(@_);
+			}
+			POSIX::_exit(1);
+		} elsif ($pid) {
+			waitpid($pid, 0);
+		}
+		return $pid;
+	}
+}
+
+##
+# launchScript(async, module_paths, script, [args...])
+# async: 1 if you want to run the script in the background, or 0 if you want to wait until the script has exited.
+# module_paths: reference to an array which contains paths to look for modules, or undef.
+# script: filename of the Perl script.
+# args: parameters to pass to the script.
+#
+# Run a Perl script.
+sub launchScript {
+	my $async = shift;
+	my $module_paths = shift;
+	my $script = shift;
+	my @interp;
+
+	if (-f $Config{perlpath}) {
+		@interp = ($Config{perlpath});
+	} else {
+		@interp = ($ENV{INTERPRETER}, '!');
+	}
+
+	my @paths;
+	if ($module_paths) {
+		foreach (@{$module_paths}) {
+			push @paths, "-I$_";
+		}
+	}
+
+	if ($async) {
+		launchApp(@interp, @paths, $script, @_);
+	} else {
+		system(@interp, @paths, $script, @_);
 	}
 }
 
