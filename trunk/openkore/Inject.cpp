@@ -240,7 +240,7 @@ void falseClientCom() {
 			LeaveCriticalSection(&falseClient_sendSection);
 			falseClient_send_timeout = GetTickCount();
 		}
-		Sleep(15);
+		Sleep(1);
 	}
 }
 

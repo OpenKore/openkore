@@ -10484,7 +10484,7 @@ sub dataWaiting {
 	my $r_fh = shift;
 	my $bits;
 	vec($bits,fileno($$r_fh),1)=1;
-	return (select($bits,$bits,$bits,0.01) > 1);
+	return (select($bits,$bits,$bits,0.005) > 1);
 }
 
 sub killConnection {

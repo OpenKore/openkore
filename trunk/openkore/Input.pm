@@ -105,7 +105,7 @@ sub canRead {
 	return undef unless ($enabled);
 	my $bits = '';
 	vec($bits, $input_socket->fileno, 1) = 1;
-	return (select($bits, $bits, $bits, 0.01) > 1);
+	return (select($bits, $bits, $bits, 0.005) > 1);
 }
 
 sub readLine {
