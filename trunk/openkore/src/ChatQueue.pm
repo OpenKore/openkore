@@ -9,7 +9,7 @@ use AI;
 use Commands;
 use Log qw(message error);
 use Utils qw(parseArgs);
-use Misc qw(configModify sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse);
+use Misc qw(auth configModify sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse);
 
 
 our @queue;
