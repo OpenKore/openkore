@@ -7335,7 +7335,8 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0110") {
-		error "Skill has failed\n", 1;
+		my $skillID = unpack("S1", substr($msg, 2, 2));
+		error ("Skill $skillsID_lut{$skillID} has failed\n", "skill", 1);
 
 	} elsif ($switch eq "0114" || $switch eq "01DE") {
 		# Skill use

@@ -69,12 +69,12 @@
 # syntax		Syntax check files
 # storage		Storage item added/removed
 # xkore			X-Kore system messages
-# system    system messages
-# party     party/follow related
-# drop      monster drop related
-# skill     skill use unrelated to attack
-# pm        private message
-# guildchat guild chat
+# system		System messages
+# party			Party/follow related
+# drop			monster drop related
+# skill			Skill use unrelated to attack
+# pm			Private message
+# guildchat		Guild chat
 
 # Debug domains:
 # parseInput
@@ -169,9 +169,9 @@ sub color {
 	my $color = shift;
 
 	$color =~ s/\/(.*)//;
-  $bgcolor = $1;
+	$bgcolor = $1;
 
-  
+
 	if ($color eq "reset" || $color eq "default") {
 		print "\e[0m";
 
