@@ -3321,7 +3321,7 @@ sub AI {
 				if ($config{"partySkill_$i"."_target"} eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}
 					&& $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'online'}){
 					$partyTargetID = $partyUsersID[$j];
-					$partyTarget_HP_Percent = $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'percent_hp'};
+					$partyTarget_HP_Percent = percent_hp(\%{$chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}}) if ($chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'hp_max'});
 					last if (defined($partyTargetID) && defined($partyTarget_HP_Percent));
 				}
 			}
