@@ -2421,7 +2421,7 @@ sub AI {
 	# We force the user to download an update if this version of kore is too old.
 	# This is to prevent bots from KSing people because of new packets
 	# (like it happened with Comodo and Juno).
-	if (!($Settings::VERSION =~ /CVS/) && !$checkUpdate{checked}) {
+	if (($ENV{OPENKORE_TESTUPDATE} || !($Settings::CVS =~ /CVS/)) && !$checkUpdate{checked}) {
 		if ($checkUpdate{stage} eq '') {
 			# We only want to check at most once a day
 			open(F, "< $Settings::tables_folder/updatecheck.txt");
@@ -2462,6 +2462,7 @@ sub AI {
 			my $data;
 			$checkUpdate{sock}->recv($data, 1024 * 32);
 			if ($data =~ /^HTTP\/.\.. 200/s) {
+				print $data . "\n";
 				$data =~ s/.*?\r\n\r\n.*?\r\n//s;
 				$data =~ s/[\r\n].*[\r\n]//s;
 
