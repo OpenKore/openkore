@@ -3341,32 +3341,31 @@ sub AI {
 
 
 		# Determine what combo skill to use
-		if (!$args->{attackMethod}{type}) {
-			my $lastSkill = Skills->new(id => $char->{last_skill_used})->name;
-			my $i = 0;
-			while (exists $config{"attackComboSlot_$i"}) {
-				if (!$config{"attackComboSlot_$i"}) {
-					$i++;
-					next;
-				}
-
-				if ($config{"attackComboSlot_${i}_afterSkill"} eq $lastSkill
-				 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
-				 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
-				 && checkSelfCondition("attackComboSlot_$i")
-				 && checkMonsterCondition("attackComboSlot_${i}_target", $ID)) {
-
-					$args->{attackComboSlot_uses}{$i}++;
-					delete $char->{last_skill_used};
-					$args->{attackMethod}{type} = "combo";
-					$args->{attackMethod}{comboSlot} = $i;
-					$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
-					$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_dist"};
-					$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
-					last;
-				}
+		delete $args->{attackMethod};
+		my $lastSkill = Skills->new(id => $char->{last_skill_used})->name;
+		my $i = 0;
+		while (exists $config{"attackComboSlot_$i"}) {
+			if (!$config{"attackComboSlot_$i"}) {
 				$i++;
+				next;
 			}
+
+			if ($config{"attackComboSlot_${i}_afterSkill"} eq $lastSkill
+			 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
+			 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
+			 && checkSelfCondition("attackComboSlot_$i")
+			 && checkMonsterCondition("attackComboSlot_${i}_target", $ID)) {
+
+				$args->{attackComboSlot_uses}{$i}++;
+				delete $char->{last_skill_used};
+				$args->{attackMethod}{type} = "combo";
+				$args->{attackMethod}{comboSlot} = $i;
+				$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
+				$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_dist"};
+				$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
+				last;
+			}
+			$i++;
 		}
 
 		# Determine what skill to use to attack
@@ -3382,7 +3381,7 @@ sub AI {
 				undef $args->{attackMethod}{type};
 			}
 
-			my $i = 0;
+			$i = 0;
 			while (exists $config{"attackSkillSlot_$i"}) {
 				if (!$config{"attackSkillSlot_$i"}) {
 					$i++;
