@@ -4,6 +4,7 @@
 
 VERSION=1.3
 FILENAME=confpack-$(VERSION).zip
+VERSIONFILE=control/ConfpackVersion.txt
 
 .PHONY: clean
 
@@ -13,9 +14,14 @@ $(FILENAME): control/*.txt
 	# Passed
 	@echo
 	# Creating zipfile...
+	rm -rf tmp
+	mkdir -p tmp/control
+	cp control/*.txt tmp/control/
+	./unix2dos.pl tmp/control/*.txt
+	echo -n $(VERSION) > tmp/$(VERSIONFILE)
 	rm -f $(FILENAME)
-	./unix2dos.pl control/*.txt
-	zip -9 $(FILENAME) control/*.txt $(VERSIONFILE)
+	cd tmp && zip -9 ../$(FILENAME) control/*.txt
+	rm -rf tmp
 
 clean:
 	rm -f $(FILENAME)
