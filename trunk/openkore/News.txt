@@ -8,6 +8,8 @@
   * Set ai_teleport_idle in timeouts.txt to the same as ai_teleport_search
   * Delete ai_teleport_search in timeouts.txt (it is obsolete)
   * Set route_randomWalk to 0
+- If you have been using "maxUses" to limit the number of times you attempt to
+  cast a skill, you may have to change it to "maxAttempts" instead.
 
 
 Bug fixes:
@@ -48,6 +50,8 @@ New features:
 - chat.txt uses one line per message, allowing grepping.
 - skillsAddAuto will now print a message when it auto-adds a skill.
 - Display source and destination coordinates in "Recorded new portal" message.
+- route_teleport is now a normal message instead of a debug message (something
+  that made my party bot suddenly teleport away from me should not be silent).
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
@@ -77,6 +81,7 @@ New config options:
   Similar to teleportAuto_maxDmg, but only has effect when in lockMap.
 - teleportAuto_minAggressivesInLock (number)
   Similar to teleportAuto_minAggressives, but only has effect when in lockMap.
+- portalRecord; automatic portal recording will only be done if this is true
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
