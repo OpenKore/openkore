@@ -28,15 +28,33 @@ use File::Spec;
 use base qw(Wx::Panel);
 
 our %addedHandlers;
+our $platform;
 
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new(@_);
 	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
+	$self->{destBrush} = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
+	$self->{playerBrush} = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
+	$self->{monsterBrush} = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
 	EVT_PAINT($self, \&_onPaint);
 	EVT_LEFT_DOWN($self, \&_onClick);
 	EVT_MOTION($self, \&_onMotion);
+
+	if (!$platform) {
+		if ($^O eq 'MSWin32') {
+			$platform = 'win32';
+		} else {
+			require DynaLoader;
+			if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
+				$platform = 'gtk2';
+			} else {
+				$platform = 'gtk1';
+			}
+		}
+	}
+
 	return $self;
 }
 
@@ -111,6 +129,50 @@ sub setDest {
 	}
 }
 
+sub setMonsters {
+	my $self = shift;
+	my $monsters = shift;
+	my $old = $self->{monsters};
+
+	if (!$old || @{$monsters} != @{$old}) {
+		$self->{needUpdate} = 1;
+		$self->{monsters} = $monsters;
+		return;
+	}
+
+	for (my $i = 0; $i < @{$monsters}; $i++) {
+		my $pos1 = $monsters->[$i]{pos_to};
+		my $pos2 = $old->[$i]{pos_to};
+		if ($pos1->{x} != $pos2->{x} && $pos1->{y} != $pos2->{y}) {
+			$self->{needUpdate} = 1;
+			$self->{monsters} = $monsters;
+			return;
+		}
+	}
+}
+
+sub setPlayers {
+	my $self = shift;
+	my $players = shift;
+	my $old = $self->{players};
+
+	if (!$old || @{$players} != @{$old}) {
+		$self->{needUpdate} = 1;
+		$self->{players} = $players;
+		return;
+	}
+
+	for (my $i = 0; $i < @{$players}; $i++) {
+		my $pos1 = $players->[$i]{pos_to};
+		my $pos2 = $old->[$i]{pos_to};
+		if ($pos1->{x} != $pos2->{x} && $pos1->{y} != $pos2->{y}) {
+			$self->{needUpdate} = 1;
+			$self->{players} = $players;
+			return;
+		}
+	}
+}
+
 sub update {
 	my $self = shift;
 	if ($self->{needUpdate}) {
@@ -121,7 +183,11 @@ sub update {
 
 sub mapSize {
 	my $self = shift;
-	return ($self->{bitmap}->GetWidth, $self->{bitmap}->GetHeight);
+	if ($self->{bitmap}) {
+		return ($self->{bitmap}->GetWidth, $self->{bitmap}->GetHeight);
+	} else {
+		return (25, 25);
+	}
 }
 
 
@@ -146,8 +212,8 @@ sub _onMotion {
 	my $event = shift;
 	if ($self->{mouseMoveCb} && $self->{field}{width} && $self->{field}{height}) {
 		my ($x, $y, $xscale, $yscale);
-		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth();
-		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight();
+		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth;
+		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight;
 		$x = $event->GetX * $xscale;
 		$y = $self->{field}{height} - ($event->GetY * $yscale);
 
@@ -250,16 +316,48 @@ sub _posXYToView {
 
 sub _onPaint {
 	my $self = shift;
-	my $dc = new Wx::PaintDC($self);
+	my $paintDC = new Wx::PaintDC($self);
 	return unless ($self->{bitmap});
 
+	# We paint stuff to an off-screen DC, and blit it to the paint DC,
+	# to avoid flickering. But don't do this on GTK2 because it already
+	# double buffers stuff for us.
+	my $dc;
+	my ($w, $h);
+	if ($platform eq "gtk2") {
+		$dc = $paintDC;
+	} else {
+		$dc = new Wx::MemoryDC;
+		($w, $h) = ($self->{bitmap}->GetWidth, $self->{bitmap}->GetHeight);
+		$dc->SelectObject(new Wx::Bitmap($w, $h));
+	}
+
+
 	my ($x, $y);
-	$dc->BeginDrawing();
+	$dc->BeginDrawing;
 	$dc->DrawBitmap($self->{bitmap}, 0, 0, 1);
+
+	if ($self->{players} && @{$self->{players}}) {
+		$dc->SetPen(wxBLACK_PEN);
+		$dc->SetBrush($self->{playerBrush});
+		foreach my $pos (@{$self->{players}}) {
+			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
+			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
+		}
+	}
+
+	if ($self->{monsters} && @{$self->{monsters}}) {
+		$dc->SetPen(wxBLACK_PEN);
+		$dc->SetBrush($self->{monsterBrush});
+		foreach my $pos (@{$self->{monsters}}) {
+			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
+			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
+		}
+	}
 
 	if ($self->{dest}) {
 		$dc->SetPen(wxWHITE_PEN);
-		$dc->SetBrush(new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID));
+		$dc->SetBrush($self->{destBrush});
 		($x, $y) = $self->_posXYToView($self->{dest}{x}, $self->{dest}{y});
 		$dc->DrawEllipse($x - 3, $y - 3, 6, 6);
 	}
@@ -281,7 +379,12 @@ sub _onPaint {
 		$dc->DrawEllipse($x - 5, $y - 5, 10, 10);
 	}
 
-	$dc->EndDrawing();
+	$dc->EndDrawing;
+
+
+	if ($platform ne "gtk2") {
+		$paintDC->Blit(0, 0, $w, $h, $dc, 0, 0);
+	}
 }
 
 return 1;
