@@ -3524,6 +3524,8 @@ sub AI {
 					$args->{attackComboSlot_uses}{$i}++;
 					$args->{attackMethod}{type} = "combo";
 					$args->{attackMethod}{comboSlot} = $i;
+					$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
+					$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_dist"};
 					last;
 				}
 				$i++;
@@ -3980,6 +3982,11 @@ sub AI {
 
 	if (AI::action eq "skill_use") {
 		my $args = AI::args;
+
+		if ($args->{monsterID} && $skillsArea{$args->{skillHandle}} == 2) {
+			delete $args->{monsterID};
+		}
+
 		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skillHandle}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
 			warning "Timeout equiping for skill\n";
 			AI::dequeue;
