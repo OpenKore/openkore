@@ -5938,7 +5938,7 @@ sub parseMsg {
 			$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 			$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
 			$item->{type_equip} = unpack("S1", substr($msg, $i + 6, 2));
-			$item->{equipped} = unpack("C1", substr($msg, $i + 8, 1));
+			$item->{equipped} = unpack("S1", substr($msg, $i + 8, 2));
 			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1)); 
 			$item->{cards} = substr($msg, $i + 12, 8);
 			$item->{name} = itemName($item);
@@ -8156,24 +8156,18 @@ sub ai_getMonstersWhoHitMe {
 
 ##
 # ai_getSkillUseType(name)
-# name: the internal name of the skill (as found in skills.txt), such as WZ_FIREPILLAR.
+# name: the internal name of the skill (as found in skills.txt), such as
+# WZ_FIREPILLAR.
 # Returns: 1 if it's a location skill, 0 if it's an object skill.
 #
-# Determines whether a skill is a skill that's casted on a location, or one that's
-# casted on an object (monster/player/etc).
-# For example, Firewall is a location skill, while Cold Bolt is an object skill.
+# Determines whether a skill is a skill that's casted on a location, or one
+# that's casted on an object (monster/player/etc).
+# For example, Firewall is a location skill, while Cold Bolt is an object
+# skill.
 sub ai_getSkillUseType {
 	my $skill = shift;
-	if ($skill eq "WZ_FIREPILLAR" || $skill eq "WZ_METEOR" 
-		|| $skill eq "WZ_VERMILION" || $skill eq "WZ_STORMGUST" 
-		|| $skill eq "WZ_HEAVENDRIVE" || $skill eq "WZ_QUAGMIRE" 
-		|| $skill eq "MG_SAFETYWALL" || $skill eq "MG_FIREWALL" 
-		|| $skill eq "MG_THUNDERSTORM") { 
-		return 1;
-	} else {
-		return 0;
-	}
-
+	return 1 if $skillsArea{$skill};
+	return 0;
 }
 
 sub ai_mapRoute_searchStep {
@@ -9908,7 +9902,8 @@ sub itemName {
 
 	my $name = itemNameSimple($item->{nameID});
 
-	# Resolve item suffix (carded or forged)
+	# Resolve item prefix/suffix (carded or forged)
+	my $prefix = "";
 	my $suffix = "";
 	my @cards;
 	my %cards;
@@ -9925,8 +9920,8 @@ sub itemName {
 		my $elementID = $cards[1] % 10;
 		my $elementName = $elements_lut{$elementID};
 		my $starCrumbs = ($cards[1] >> 8) / 5;
-		$suffix .= ('V'x$starCrumbs)."S " if $starCrumbs;
-		$suffix .= $elementName;
+		$prefix .= ('V'x$starCrumbs)."S " if $starCrumbs;
+		$prefix .= "$elementName ";
 	} elsif (@cards) {
 		# Carded item
 		#
@@ -9942,6 +9937,7 @@ sub itemName {
 
 	my $display = "";
 	$display .= "+$item->{upgrade} " if $item->{upgrade};
+	$display .= $prefix if $prefix;
 	$display .= $name;
 	$display .= " [$suffix]" if $suffix;
 	$display .= " [$numSlots]" if $numSlots;

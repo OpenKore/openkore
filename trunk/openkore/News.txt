@@ -129,6 +129,7 @@ Bug fixes:
   Kore. However, you can't start Kore in X-Kore mode again until you've
   restarted the RO client.
 - Kore will now correctly continue if it gets resurrected before respawn.
+- Even if it was resurrected using the Resurrection skill.
 - avoid_ignore now works properly.
 - Kore now works correctly on eathena servers.
 - Damage numbers above 65535 (e.g. from Guillotine Fist) should be
@@ -139,6 +140,8 @@ Bug fixes:
 - Carded and forged items should now be displayed correctly everywhere
   (inventory, deal, cart, storage, vending shops). Post your comments in
   http://openkore.sourceforge.net/forum/viewtopic.php?t=1491
+- openkore now supports the use of more area effect spells using ss/sp
+  command.
 - And lots of other misc bug fixes.
 
 
