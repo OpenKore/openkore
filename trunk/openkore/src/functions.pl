@@ -6635,7 +6635,9 @@ sub parseMsg {
 	} elsif ($switch eq "00E5" || $switch eq "01F4") {
 		# Recieving deal request
 		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/; 
-		my $dealUserLevel = unpack("S1",substr($msg, 30, 2)); 
+		my $dealUserLevel = $switch eq "01F4" ?
+			unpack("S1",substr($msg, 30, 2)) :
+			'Unknown';
 		$incomingDeal{'name'} = $dealUser; 
 		$timeout{'ai_dealAutoCancel'}{'time'} = time; 
 		message "$dealUser (level $dealUserLevel) Requests a Deal\n", "deal"; 
