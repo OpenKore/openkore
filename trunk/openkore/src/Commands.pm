@@ -1116,26 +1116,26 @@ sub cmdMonster {
 }
 
 sub cmdMonocell {
-	my $num = shift;
+	my (undef, $num) = shift;
 
 	my $id = $monstersID[$num];
 	if ($id eq "") {
 		error "Monster $num does not exist.\n";
 		return;
 	}
-	message "Attempting to monocell ".getActorName($id)."\n";
+	message "Attempting to monocell ".main::getActorName($id)."\n";
 	main::ai_skillUse(291, 10, 0, 0, $id);
 }
 
 sub cmdMVP {
-	my $num = shift;
+	my (undef, $num) = shift;
 
 	my $id = $monstersID[$num];
 	if ($id eq "") {
 		error "Monster $num does not exist.\n";
 		return;
 	}
-	message "Attempting to change into MVP ".getActorName($id)."\n";
+	message "Attempting to change into MVP ".main::getActorName($id)."\n";
 	main::ai_skillUse(292, 10, 0, 0, $id);
 }
 
