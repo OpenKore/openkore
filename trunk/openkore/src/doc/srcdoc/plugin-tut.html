@@ -131,6 +131,15 @@ The above example adds a hook for "AI_pre". Whenever the function <tt>AI()</tt> 
 this plugin's <tt>on_AI()</tt> function is called too. Within this function, you can do whatever
 you want. This is how you extend OpenKore's functionality.
 
+<p>
+Unfortunately there's no list of hook names. The best you you can do is
+to read the source code and look for
+<tt><a href="Plugins.html#Plugins::callHook">Plugins::callHook()</a></tt>
+calls.
+If there's a certain hook you need, but it isn't in the source code, you
+can add it yourself. In that case, please submit a patch, and it might
+be incorporated into the official codebase.
+
 <h3>Unloading</h3>
 <tt><a href="Plugins.html#Plugins::register">Plugins::register()</a></tt> allows you to specify an unload callback.
 Whenever the user tells OpenKore to unload or reload the plugin, or when OpenKore is about to exit, this
