@@ -10,6 +10,17 @@ New features:
   then keep using 'ss' command to cast Abracadabra. If it says that you're
   permitted to use Mono Cell, Summon Monster or Class Change, you can then
   activate those skills using 'monocell <#>', 'monster' or 'mvp <#>'.
+- Ability to only active a skill/use an item, if you have a certain item
+  in inventory.
+  This is useful for skills that require an item in the inventory (Stone
+  Curse, Warp, Aqua Benedicta, etc.)
+  http://openkore.sourceforge.net/forum/viewtopic.php?t=1729
+
+New config options:
+- *_inInventory_name : inventory item name
+  *_inInventory_qty  : check for quantity
+  These are add-ons for the skill usage, item usage and equipAuto config
+  options.
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
@@ -17,6 +28,7 @@ Bug fixes:
 
 Credits:
 - Fenris: Tk interface improvements.
+- aputs: Inventory checking config options.
 
 Internal:
 - Added AI.pm, which is a wrapper for @ai_seq and @ai_seq_args.
