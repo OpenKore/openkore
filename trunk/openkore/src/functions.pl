@@ -10306,7 +10306,9 @@ sub setSkillUseTimer {
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
 
 	# increment monsterSkill maxUses counter
-	$monsters{$targetID}{skillUses}{$skill->handle}++;
+	if ($monsters{$targetID}) {
+		$monsters{$targetID}{skillUses}{$skill->handle}++;
+	}
 }
 
 # Increment counter for monster being casted on
