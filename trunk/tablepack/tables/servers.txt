@@ -4,7 +4,7 @@
 # master_version 1
 # version 20
 
-[International - iRO: Chaos/Loki]
+[International - iRO: Chaos/Loki/Iris]
 ip 38.144.194.2
 port 6900
 master_version 1
