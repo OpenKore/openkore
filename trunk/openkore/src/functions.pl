@@ -944,7 +944,7 @@ sub parseCommand {
 		}
 		
 	} elsif ($switch eq "follow") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg1) = $input =~ /^[\s\S]*? (.+) *$/;
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'follow' (Follow Player)\n" .
 				"Usage: follow <player #>\n";
