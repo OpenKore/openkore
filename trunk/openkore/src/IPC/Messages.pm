@@ -20,6 +20,9 @@
 # This module provides functions for easily encoding Perl data types into
 # a message, and to decode a message into Perl data types.
 #
+# This module is used internally by IPC::Server.pm and IPC::Client.pm.
+# You shouldn't use this module directly unless you know what you're doing.
+#
 # <h3>Protocol description</h3>
 # I call the protocol the "Simple Key-Value Protocol". This protocol is binary.
 #
