@@ -5752,6 +5752,7 @@ sub parseMsg {
 			$i++;
 		}
 		undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
+		undef $chars[$config{char}]{usedTeleportSkill};
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -9950,7 +9951,10 @@ sub useTeleport {
 
 	# {'skills'}{'AL_TELEPORT'}{'lv'} is valid even after creamy is unequiped, use @skillsID instead
 	if (!$config{teleportAuto_useItem} && binFind(\@skillsID, 'AL_TELEPORT') ne "") {
-		sendSkillUse(\$remote_socket, $skillsID_rlut{teleport}, 2, $accountID) if $config{teleportAuto_useSP};
+		if (!$chars[$config{'char'}]{'usedTeleportSkill'}) {
+			$chars[$config{'char'}]{'usedTeleportSkill'} = 1;
+			sendSkillUse(\$remote_socket, $skillsID_rlut{teleport}, 2, $accountID);
+		}
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
 		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2);
 		delete $ai_v{temp}{teleport};
