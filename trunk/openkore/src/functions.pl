@@ -4452,7 +4452,7 @@ sub AI {
 			$items{$ID}{take_failed}++;
 			AI::dequeue;
 		} elsif ($char->{sitting}) {
-			AI::suspend;
+			AI::suspend();
 			stand();
 		} elsif ($found == 0 && $dist > 2) {
 			my %vec, %pos;
