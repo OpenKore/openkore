@@ -32,6 +32,7 @@ our %addedHandlers;
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new(@_);
+	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
 	EVT_PAINT($self, \&_onPaint);
 	EVT_LEFT_DOWN($self, \&_onClick);
@@ -91,6 +92,7 @@ sub _onMotion {
 	}
 }
 
+
 sub _xpmmake {
 	my $field = shift;
 	my $data = "/* XPM */\n" .
@@ -110,10 +112,56 @@ sub _xpmmake {
 	return $data;
 }
 
+sub _loadImage {
+	my $file = shift;
+	my ($ext) = $file =~ /.*(\..*?)$/;
+	my ($handler, $mime);
+
+	# Initialize required image handler
+	if (!$addedHandlers{$ext}) {
+		$ext = lc $ext;
+		if ($ext eq '.png') {
+			$handler = new Wx::PNGHandler();
+		} elsif ($ext eq '.jpg' || $ext eq '.jpeg') {
+			$handler = new Wx::JPEGHandler();
+		} elsif ($ext eq '.bmp') {
+			$handler = new Wx::BMPHandler();
+		} elsif ($ext eq '.xpm') {
+			$handler = new Wx::XPMHandler();
+		}
+
+		return unless $handler;
+		Wx::Image::AddHandler($handler);
+		$addedHandlers{$ext} = 1;
+	}
+
+	my $image = Wx::Image->newNameType($file, wxBITMAP_TYPE_ANY);
+	my $bitmap = new Wx::Bitmap($image);
+	return ($bitmap && $bitmap->Ok()) ? $bitmap : undef;
+}
+
 sub _loadMapImage {
 	my $self = shift;
-	my $name = shift;
-	
+	my $field = shift;
+	my $name = $field->{name};
+
+	if (-f "map/$name.jpg") {
+		return _loadImage("map/$name.jpg");
+	} elsif (-f "map/$name.png") {
+		return _loadImage("map/$name.png");
+	} elsif (-f "map/$name.bmp") {
+		return _loadImage("map/$name.bmp");
+
+	} elsif (-f "map/$name.jpg") {
+		my $file = File::Spec->catfile(File::Spec->tmpdir(), "map.xpm");
+		return unless (open(F, ">", $file));
+		binmode F;
+		print F _xpmmake($field);
+		close F;
+		my $bitmap = _loadImage($file);
+		unlink $file;
+		return $bitmap;
+	}
 }
 
 sub set {
@@ -124,74 +172,61 @@ sub set {
 
 	# We need a dot image to indicate where we are right now
 	if (!$self->{selfDot} && -f "map/kore.png") {
-		Wx::Image::AddHandler(new Wx::PNGHandler()) unless $addedHandlers{png};
-		$addedHandlers{png} = 1;
-		my $image = Wx::Image->newNameMIME("map/kore.png", 'image/png');
-		my $bitmap = new Wx::Bitmap($image);
-		return unless $bitmap->Ok();
-		$self->{selfDot} = $bitmap;
+		$self->{selfDot} = _loadImage("map/kore.png");
 	}
 
 	if ($map && $map ne $self->{field}{name}) {
 		# Map changed
 		undef $self->{bitmap};
-		my ($file, $mime, $delete);
-
-		if (-f "map/$map.jpg") {
-			Wx::Image::AddHandler(new Wx::JPEGHandler()) unless $addedHandlers{jpg};
-			$addedHandlers{jpg} = 1;
-			$file = "map/$map.jpg";
-			$mime = 'image/jpeg';
-		} elsif (-f "map/$map.png") {
-			Wx::Image::AddHandler(new Wx::JPEGHandler()) unless $addedHandlers{png};
-			$addedHandlers{png} = 1;
-			$file = "map/$map.png";
-			$mime = 'image/png';
-		} elsif (-f "map/$map.bmp") {
-			Wx::Image::AddHandler(new Wx::BMPHandler()) unless $addedHandlers{bmp};
-			$addedHandlers{bmp} = 1;
-			$file = "map/$map.bmp";
-			$mime = 'image/x-bmp';
-		} else {
-			Wx::Image::AddHandler(new Wx::XPMHandler()) unless $addedHandlers{xpm};
-			$addedHandlers{xpm} = 1;
-			$file = File::Spec->catfile(File::Spec->tmpdir(), "map.xpm");
-			if (open(F, ">", $file)) {
-				binmode F;
-				print F _xpmmake($field);
-				close F;
-				$mime = 'image/xpm';
-				$delete = 1;
-			} else {
-				undef $file;
-			}
-		}
-		return unless $file;
-
-
 		$self->{field}{name} = $map;
 		$self->{field}{x} = $x;
 		$self->{field}{y} = $y;
 
-		my $image = Wx::Image->newNameMIME($file, $mime);
-		unlink $file if $delete;
-		my $bitmap = new Wx::Bitmap($image);
-		return unless $bitmap->Ok();
-		$self->{bitmap} = $bitmap;
+		my $bitmap = $self->{bitmap} = $self->_loadMapImage($field);
+		return unless $bitmap;
 		$self->SetSizeHints($bitmap->GetWidth(), $bitmap->GetHeight());
-
 		$self->{mapChangeCb}->($self->{mapChangeData}) if ($self->{mapChangeCb});
-		$self->Refresh();
+		$self->{needUpdate} = 1;
 
 	} elsif ($x ne $self->{field}{x} || $y ne $self->{field}{y}) {
 		# Position changed
 		$self->{field}{x} = $x;
 		$self->{field}{y} = $y;
+		$self->{needUpdate} = 1;
+	}
+}
+
+sub setDest {
+	my ($self, $x, $y) = @_;
+	if (defined $x) {
+		if ($self->{dest}{x} ne $x && $self->{dest}{y} ne $y) {
+			$self->{dest}{x} = $x;
+			$self->{dest}{y} = $y;
+			$self->{needUpdate} = 1;
+		}
+	} elsif (defined $self->{dest}) {
+		undef $self->{dest};
+		$self->{needUpdate} = 1;
+	}
+}
+
+sub update {
+	my $self = shift;
+	if ($self->{needUpdate}) {
+		undef $self->{needUpdate};
 		$self->Refresh();
 	}
 }
 
-sub OnPaint {
+
+sub _posXYToView {
+	my ($self, $x, $y) = @_;
+	my ($xscale, $yscale);
+	$xscale = $self->{bitmap}->GetWidth() / $self->{field}{width};
+	$yscale = $self->{bitmap}->GetHeight() / $self->{field}{height};
+	$x *= $xscale;
+	$y = ($self->{field}{height} - $y) * $yscale;
+	return ($x, $y);
 }
 
 sub _onPaint {
@@ -199,13 +234,9 @@ sub _onPaint {
 	my $dc = new Wx::PaintDC($self);
 	return unless ($self->{bitmap});
 
-	my ($x, $y, $xscale, $yscale);
-	$xscale = $self->{bitmap}->GetWidth() / $self->{field}{width};
-	$yscale = $self->{bitmap}->GetHeight() / $self->{field}{height};
-	$x = $self->{field}{x} * $xscale;
-	$y = ($self->{field}{height} - $self->{field}{y}) * $yscale;
-
+	my ($x, $y) = $self->_posXYToView($self->{field}{x}, $self->{field}{y});
 	$dc->BeginDrawing();
+
 	$dc->DrawBitmap($self->{bitmap}, 0, 0, 1);
 	if ($self->{selfDot}) {
 		$dc->DrawBitmap($self->{selfDot},
@@ -213,9 +244,17 @@ sub _onPaint {
 			$y - ($self->{selfDot}->GetHeight() / 2),
 			1);
 	} else {
-		$dc->SetBrush(wxBLUE_BRUSH);
+		$dc->SetBrush(wxCYAN_BRUSH);
 		$dc->DrawEllipse($x - 5, $y - 5, 10, 10);
 	}
+
+	if ($self->{dest}) {
+		$dc->SetPen(wxWHITE_PEN);
+		$dc->SetBrush(new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID));
+		($x, $y) = $self->_posXYToView($self->{dest}{x}, $self->{dest}{y});
+		$dc->DrawEllipse($x - 3, $y - 3, 6, 6);
+	}
+
 	$dc->EndDrawing();
 }
 
