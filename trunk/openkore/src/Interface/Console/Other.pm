@@ -159,125 +159,40 @@ sub readEvents {
 	my %input = %{$interface->{input}};
 	my $entered = undef;
 
-	return undef unless ($interface->{select}->can_read(0));
+	while ($interface->{select}->can_read(0)) {
+		my $key = '';
+		sysread(STDIN, $key, 1);
+		insert($input{buf}, $input{pos}, $key);
+		$input{pos}++;
 
-	my $key = '';
-	sysread(STDIN, $key, 1);
-	insert($input{buf}, $input{pos}, $key);
-	$input{pos}++;
+		# Home
+		if (index($input{buf}, "\e[1~") > -1) {
+			# Remove escape sequence from input buffer
+			strdel($input{buf}, $input{pos} - 4, 4);
+			$input{pos} -= 4;
 
-	# Home
-	if (index($input{buf}, "\e[1~") > -1) {
-		# Remove escape sequence from input buffer
-		strdel($input{buf}, $input{pos} - 4, 4);
-		$input{pos} -= 4;
-
-		# Move cursor to beginning
-		$interface->cursorLeft($input{pos});
-		$input{pos} = 0;
-
-	# End
-	} elsif (index($input{buf}, "\e[4~") > -1) {
-		# Remove escape sequence from input buffer
-		strdel($input{buf}, $input{pos} - 4, 4);
-		$input{pos} -= 4;
-
-		# Move cursor to end
-		$interface->cursorRight(length($input{buf}) - $input{pos});
-		$input{pos} = length($input{buf});
-
-	# Delete
-	} elsif (index($input{buf}, "\e[3~") > -1) {
-		# Remove escape sequence and next character
-		strdel($input{buf}, $input{pos} - 4, 5);
-		$input{pos} -= 4;
-
-		# Move cursor to beginning, delete whole line and print buffer
-		$interface->cursorLeft($input{pos});
-		$interface->delLine;
-		print $input{buf};
-
-		# Move cursor back to where it's supposed to be
-		if ($input{pos} < length($input{buf})) {
-			$interface->cursorLeft(length($input{buf}) - $input{pos});
-		}
-
-	# Backspace
-	} elsif (ord($key) == 127) {
-		# Remove backspace character from input buffer
-		strdel($input{buf}, $input{pos} - 2, 2);
-
-		if ($input{pos} != 1) {
-			# Move cursor to beginning, delete whole line and print buffer
-			$interface->cursorLeft($input{pos} - 1);
-			$interface->delLine;
-			print $input{buf};
-
-			# Move cursor back to where it's supposed to be
-			$input{pos} -= 2;
-			if ($input{pos} < length($input{buf})) {
-				$interface->cursorLeft(length($input{buf}) - $input{pos});
-			}
-
-		} else {
-			# Don't do anything if the cursor is already at the beginning
+			# Move cursor to beginning
+			$interface->cursorLeft($input{pos});
 			$input{pos} = 0;
-		}
 
-	# Left arrow key
-	} elsif (index($input{buf}, "\e[D") > -1) {
-		# Remove escape sequence from input buffer
-		strdel($input{buf}, $input{pos} - 3, 3);
+		# End
+		} elsif (index($input{buf}, "\e[4~") > -1) {
+			# Remove escape sequence from input buffer
+			strdel($input{buf}, $input{pos} - 4, 4);
+			$input{pos} -= 4;
 
-		# Move cursor one left
-		$input{pos} -= 4;
-		$interface->cursorLeft(1) if ($input{pos} >= 0);
+			# Move cursor to end
+			$interface->cursorRight(length($input{buf}) - $input{pos});
+			$input{pos} = length($input{buf});
 
-	# Right arrow key
-	} elsif (index($input{buf}, "\e[C") > -1) {
-		# Remove escape sequence from input buffer
-		strdel($input{buf}, $input{pos} - 3, 3);
-		$input{pos} -= 3;
+		# Delete
+		} elsif (index($input{buf}, "\e[3~") > -1) {
+			# Remove escape sequence and next character
+			strdel($input{buf}, $input{pos} - 4, 5);
+			$input{pos} -= 4;
 
-		# Move cursor one right
-		if ($input{pos} < length($input{buf})) {
-			$input{pos}++;
-			$interface->cursorRight(1);
-		}
-
-	# Ctrl+U - delete entire line
-	} elsif (ord($key) == 21) {
-		# Remove Ctrl+U character from input buffer
-		strdel($input{buf}, $input{pos} - 2, 2);
-
-		# Move cursor to beginning and delete whole line
-		$interface->cursorLeft($input{pos} - 1);
-		$interface->delLine;
-
-		# Reset buffer
-		undef $input{buf};
-		$input{buf} = '';
-		$input{pos} = 0;
-
-	# TAB
-	} elsif (index($input{buf}, "\t") > -1) {
-		# Ignore tabs for now
-		strdel($input{buf}, $input{pos} - 1, 1);
-		$input{pos}--;
-
-	# F1-F12
-	} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\eO[A-Z]/) {
-		$input{pos} -= 3;
-		$input{buf} =~ s/\eO[A-Z]//g;
-		# TODO: this doesn't work!
-
-	# Normal character
-	} elsif (index($input{buf}, "\e") == -1) {
-		if (index($input{buf}, "\n") == -1) {
-			# If Enter has not been pressed,
-			# move cursor to beginning, delete whole line and print buffer
-			$interface->cursorLeft($input{pos} - 1);
-
+			# Move cursor to beginning, delete whole line and print buffer
+			$interface->cursorLeft($input{pos});
 			$interface->delLine;
 			print $input{buf};
 
@@ -286,22 +201,107 @@ sub readEvents {
 				$interface->cursorLeft(length($input{buf}) - $input{pos});
 			}
 
-		} else {
-			# Enter has been pressed; delete newline character,
-			# return and reset buffer
-			strdel($input{buf}, $input{pos} - 1, 1);
-			print "\n";
-			$entered = $input{buf};
+		# Backspace
+		} elsif (ord($key) == 127) {
+			# Remove backspace character from input buffer
+			strdel($input{buf}, $input{pos} - 2, 2);
+
+			if ($input{pos} != 1) {
+				# Move cursor to beginning, delete whole line and print buffer
+				$interface->cursorLeft($input{pos} - 1);
+				$interface->delLine;
+				print $input{buf};
+
+				# Move cursor back to where it's supposed to be
+				$input{pos} -= 2;
+				if ($input{pos} < length($input{buf})) {
+					$interface->cursorLeft(length($input{buf}) - $input{pos});
+				}
+
+			} else {
+				# Don't do anything if the cursor is already at the beginning
+				$input{pos} = 0;
+			}
+
+		# Left arrow key
+		} elsif (index($input{buf}, "\e[D") > -1) {
+			# Remove escape sequence from input buffer
+			strdel($input{buf}, $input{pos} - 3, 3);
+
+			# Move cursor one left
+			$input{pos} -= 4;
+			$interface->cursorLeft(1) if ($input{pos} >= 0);
+
+		# Right arrow key
+		} elsif (index($input{buf}, "\e[C") > -1) {
+			# Remove escape sequence from input buffer
+			strdel($input{buf}, $input{pos} - 3, 3);
+			$input{pos} -= 3;
+
+			# Move cursor one right
+			if ($input{pos} < length($input{buf})) {
+				$input{pos}++;
+				$interface->cursorRight(1);
+			}
+
+		# Ctrl+U - delete entire line
+		} elsif (ord($key) == 21) {
+			# Remove Ctrl+U character from input buffer
+			strdel($input{buf}, $input{pos} - 2, 2);
+
+			# Move cursor to beginning and delete whole line
+			$interface->cursorLeft($input{pos} - 1);
+			$interface->delLine;
+
+			# Reset buffer
 			undef $input{buf};
 			$input{buf} = '';
 			$input{pos} = 0;
-		}
 
-	# Somehow an escape character got into our buffer and is not removed.
-	# Remove it if it's a full escape character (4 bytes)
-	} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\e\[(\d~|[A-Z])/) {
-		$input{pos} -= length($1) + 2;
-		$input{buf} =~ s/\e\[(\d~|[A-Z])//g;
+		# TAB
+		} elsif (index($input{buf}, "\t") > -1) {
+			# Ignore tabs for now
+			strdel($input{buf}, $input{pos} - 1, 1);
+			$input{pos}--;
+
+		# F1-F12
+		} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\eO[A-Z]/) {
+			$input{pos} -= 3;
+			$input{buf} =~ s/\eO[A-Z]//g;
+			# TODO: this doesn't work!
+
+		# Normal character
+		} elsif (index($input{buf}, "\e") == -1) {
+			if (index($input{buf}, "\n") == -1) {
+				# If Enter has not been pressed,
+				# move cursor to beginning, delete whole line and print buffer
+				$interface->cursorLeft($input{pos} - 1);
+
+				$interface->delLine;
+				print $input{buf};
+
+				# Move cursor back to where it's supposed to be
+				if ($input{pos} < length($input{buf})) {
+					$interface->cursorLeft(length($input{buf}) - $input{pos});
+				}
+
+			} else {
+				# Enter has been pressed; delete newline character,
+				# return and reset buffer
+				strdel($input{buf}, $input{pos} - 1, 1);
+				print "\n";
+				$entered = $input{buf};
+				undef $input{buf};
+				$input{buf} = '';
+				$input{pos} = 0;
+			}
+
+		# Somehow an escape character got into our buffer and is not removed.
+		# Remove it if it's a full escape character (4 bytes)
+		} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\e\[(\d~|[A-Z])/) {
+			$input{pos} -= length($1) + 2;
+			$input{buf} =~ s/\e\[(\d~|[A-Z])//g;
+		}
 	}
 
 	#open(F, '>/dev/pts/2'); # Debugging stuff
