@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 -mcpu=i686 $(CYGWIN)
+CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 $(CYGWIN)
 @HEADER@
 
 .PHONY: clean

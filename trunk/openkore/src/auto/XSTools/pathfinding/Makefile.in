@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-Wall -Wno-uninitialized -O2 -funroll-loops -finline-functions -march=i586 -mcpu=i686 $(CYGWIN)
+CFLAGS=-Wall -Wno-uninitialized -O2 -funroll-loops -finline-functions -march=i586 $(CYGWIN)
 CXX=g++
 CXXFLAGS=$(CFLAGS)
 @HEADER@
