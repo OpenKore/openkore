@@ -6,6 +6,7 @@
 - Added comments to some pieces of code.
 - Fixed a typo in the clientSuspend AI sequence.
 - Improved anti-looting.
+- Don't get disconnected when AI's turned off in non-XKore mode.
 - Makefile.win: enable compilation of Inject.dll. It seems the problem
   with gcc is in both Tools.dll *and* Inject.dll. *sigh*
 - Changed avoidGM and avoid player code to an AI sequence.
