@@ -3687,8 +3687,8 @@ sub AI {
 		my $monsterDist = distance($chars[$config{'char'}]{'pos_to'}, $monsters{$ID}{'pos_to'});
 		my $cleanMonster = (
 			  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
-			|| ($config{'attackAuto_party'} && ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0))
-			|| ($config{'attackAuto_followTarget'} && $following && ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0))
+			|| ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0)
+			|| ($following && ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0))
 			|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
 		);
 		$cleanMonster = 0 if ($monsters{$ID}{'attackedByPlayer'} && (!$following || $monsters{$ID}{'lastAttackFrom'} ne $followID));
@@ -5593,8 +5593,7 @@ sub parseMsg {
 		$coords{'y'} = unpack("S1", substr($msg, 20, 2));
 		%{$chars[$config{'char'}]{'pos'}} = %coords;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords;
-		message "Map Change: $map_name\n", "connection";
-		debug "Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", "parseMsg";
+		message "Map Change: $map_name ($chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'})\n", "connection";
 		debug "Sending Map Loaded\n", "parseMsg";
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 
