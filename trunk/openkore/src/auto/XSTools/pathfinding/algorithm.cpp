@@ -21,7 +21,7 @@ extern "C" {
 	GetTickCount ()
 	{
 		struct timeval tv;
-		gettimeofday (&tv, (timezone *) NULL);
+		gettimeofday (&tv, (struct timezone *) NULL);
 		return (tv.tv_sec * 1000) + (tv.tv_usec / 1000);
 	}
 #endif /* WIN32 */
