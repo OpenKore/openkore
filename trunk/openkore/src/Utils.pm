@@ -416,8 +416,8 @@ sub formatNumber {
 }
 
 sub getCoordString {
-	my $x = shift;
-	my $y = shift;
+	my $x = int scalar shift;
+	my $y = int scalar shift;
 	return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
 }
 

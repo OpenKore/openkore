@@ -3412,7 +3412,8 @@ sub AI {
 		}
 		if ($ai_seq_args[0]{'following'} && $players{$ai_seq_args[0]{'ID'}}{'pos_to'}) {
 			$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}});
-			if ($ai_v{'temp'}{'dist'} > $config{'followDistanceMax'}) {
+			if ($ai_v{'temp'}{'dist'} > $config{'followDistanceMax'} && timeOut($ai_seq_args[0]{'move_timeout'}, 0.25)) {
+				$ai_seq_args[0]{'move_timeout'} = time;
 				if ($ai_v{'temp'}{'dist'} > 15) {
 					ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'}, $field{'name'}, 0, 0, 1, 0, $config{'followDistanceMin'});
 				} else {
@@ -3446,7 +3447,7 @@ sub AI {
 		ai_partyfollow();
 	}	
 
-	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || $players_old{$ai_seq_args[0]{'ID'}}{'dead'})) {
+	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || (!$players{$ai_seq_args[0]{'ID'}} && $players_old{$ai_seq_args[0]{'ID'}}{'dead'}))) {
 		message "Master died.  I'll wait here.\n", "party";
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
@@ -3644,14 +3645,18 @@ sub AI {
 			foreach (@monstersID) {
 				next if ($_ eq "");
 				# List monsters that the follow target or party members are attacking
-				if ((($config{'attackAuto_party'}
-					&& $ai_seq[0] ne "take" && $ai_seq[0] ne "items_take"
-					&& ($monsters{$_}{'dmgToParty'} > 0 || $monsters{$_}{'dmgFromParty'} > 0))
-					|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} 
-					&& ($monsters{$_}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$_}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$_}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0)))
-					&& !($ai_v{'temp'}{'ai_route_index'} ne "" && !$ai_v{'temp'}{'ai_route_attackOnRoute'})
-					&& $monsters{$_}{'attack_failed'} == 0 && ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} >= 1 || $mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} eq "")) {
+				if (( ($config{'attackAuto_party'}
+				      && $ai_seq[0] ne "take" && $ai_seq[0] ne "items_take"
+				      && ($monsters{$_}{'dmgToParty'} > 0 || $monsters{$_}{'dmgFromParty'} > 0)
+				      )
+				   || ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} 
+				       && ($monsters{$_}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$_}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$_}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0))
+				    )
+				   && !($ai_v{'temp'}{'ai_route_index'} ne "" && !$ai_v{'temp'}{'ai_route_attackOnRoute'})
+				   && $monsters{$_}{'attack_failed'} == 0 && ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} >= 1 || $mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} eq "")
+				) {
 					push @{$ai_v{'ai_attack_partyMonsters'}}, $_;
+					print "OK: $monsters{$_}{name}\n";
 
 				# Begin the attack only when noone else is on screen, stollen from the skore forums a long time ago.
 				} elsif ($config{'attackAuto_onlyWhenSafe'}
@@ -3697,7 +3702,7 @@ sub AI {
 					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
 
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !%{$monsters{$_}{'state'}}) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						undef $ai_v{'temp'}{'first'};
@@ -3711,7 +3716,7 @@ sub AI {
 					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
 
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !%{$monsters{$_}{'state'}}) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						$ai_v{'temp'}{'priorityAttack'} = 1;
@@ -3727,7 +3732,7 @@ sub AI {
 				$ai_v{'temp'}{'first'} = 1;
 				foreach (@{$ai_v{'ai_attack_partyMonsters'}}) {
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'ignore'} && !$monsters{$_}{'state'}) {
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'ignore'} && !%{$monsters{$_}{'state'}}) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						undef $ai_v{'temp'}{'first'};
@@ -3747,7 +3752,7 @@ sub AI {
 				foreach (@{$ai_v{'ai_attack_cleanMonsters'}}) {
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
 					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'})
-					 && !$monsters{$_}{'ignore'} && !$monsters{$_}{'state'}
+					 && !$monsters{$_}{'ignore'} && !%{$monsters{$_}{'state'}}
 					 && !positionNearPlayer(\%{$monsters{$_}{'pos_to'}}, 3)
 					 && !positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4)) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
@@ -4740,7 +4745,7 @@ sub AI {
 			my $dist = sprintf("%.1f", distance($chars[$config{char}]{pos_to}, $ai_seq_args[0]{move_to}));
 			debug("Move - sending move from ($from) to ($to), distance $dist\n", "ai_move");
 
-			sendMove(\$remote_socket, int($ai_seq_args[0]{'move_to'}{'x'}), int($ai_seq_args[0]{'move_to'}{'y'}));
+			sendMove(\$remote_socket, $ai_seq_args[0]{'move_to'}{'x'}, $ai_seq_args[0]{'move_to'}{'y'});
 			$ai_seq_args[0]{'ai_move_giveup'}{'time'} = time;
 			$ai_seq_args[0]{'ai_move_time_last'} = $chars[$config{'char'}]{'time_move'};
 			$ai_seq_args[0]{'ai_move_started'}{'time'} = time;
@@ -4748,9 +4753,9 @@ sub AI {
 			$ai_seq_args[0]{'stage'} = 'Sent Move Request';
 
 		} elsif ($ai_seq_args[0]{'ai_move_time_last'} eq $chars[$config{'char'}]{'time_move'}
-		     && timeOut($ai_seq_args[0]{'ai_move_started'}, 0.2)) {
+		     && timeOut($ai_seq_args[0]{'ai_move_started'})) {
 			# We haven't moved yet, send move request again
-			$ai_seq_args[0]{'ai_move_started'} = time;
+			$ai_seq_args[0]{'ai_move_started'}{'time'} = time;
 			sendMove(\$remote_socket, int($ai_seq_args[0]{'move_to'}{'x'}), int($ai_seq_args[0]{'move_to'}{'y'}));
 
 		} elsif ($ai_seq_args[0]{'move_to'}{'x'} eq $chars[$config{'char'}]{'pos_to'}{'x'}
@@ -8607,19 +8612,16 @@ sub ai_partyfollow {
 
 			if (defined($ai_v{temp}{master}{x}) && defined($ai_v{temp}{master}{y})) {
 				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'} ($ai_v{temp}{master}{x},$ai_v{temp}{master}{y})\n", "party";
-			} else {
-				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'}\n", "party";
+				aiRemove("move");
+				aiRemove("route");
+				aiRemove("route_getRoute");
+				aiRemove("route_getMapRoute");
+				ai_route(\%{$ai_v{temp}{returnHash}},
+					$ai_v{temp}{master}{x},
+					$ai_v{temp}{master}{y},
+					$ai_v{temp}{master}{map},
+					0, 0, 0, 0, 0, 0);
 			}
-
-			aiRemove("move");
-			aiRemove("route");
-			aiRemove("route_getRoute");
-			aiRemove("route_getMapRoute");
-			ai_route(\%{$ai_v{temp}{returnHash}},
-				$ai_v{temp}{master}{x},
-				$ai_v{temp}{master}{y},
-				$ai_v{temp}{master}{map},
-				0, 0, 0, 0, 0, 0);
 		}                                                     																																																																																																																																																																																																																																																																																								
 	}
 }
