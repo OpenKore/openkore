@@ -3062,11 +3062,11 @@ sub AI {
 	##### RANDOM WALK #####
 	if ($config{route_randomWalk} && AI::isIdle && @{$field{field}} > 1 && !$cities_lut{$field{name}.'.rsw'}) {
 		# Find a random block on the map that we can walk on
-		my $randX, $randY;
+		my ($randX, $randY);
 		do { 
 			$randX = int(rand() * ($field{width} - 1));
 			$randY = int(rand() * ($field{height} - 1));
-		} while ($field{field}[$randY*$field{width} + $randX]);
+		} while (getMapPoint(\%field, $randX, $randY));
 
 		# Move to that block
 		message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";
@@ -3280,11 +3280,12 @@ sub AI {
 		$timeout{'ai_sit'}{'time'} = time;
 	}
 
+
+	##### SIT AUTO #####
+
 	if ($ai_v{'sitAuto_forceStop'} && percent_hp(\%{$chars[$config{'char'}]}) >= $config{'sitAuto_hp_lower'} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{'sitAuto_sp_lower'}) {
 		$ai_v{'sitAuto_forceStop'} = 0;
 	}
-
-
 	my $percentWeight = 0;
 	$percentWeight = $chars[$config{'char'}]{'weight'} / $chars[$config{'char'}]{'weight_max'} * 100 if ($chars[$config{'char'}]{'weight_max'});
 
@@ -8447,83 +8448,43 @@ sub ai_route_getMap {
 	my $r_args = shift;
 	my $x = shift;
 	my $y = shift;
-	if($x < 0 || $x >= $$r_args{'field'}{'width'} || $y < 0 || $y >= $$r_args{'field'}{'height'}) {
+	if ($x < 0 || $x >= $$r_args{'field'}{'width'} || $y < 0 || $y >= $$r_args{'field'}{'height'}) {
 		return 1;	 
 	}
-	return $$r_args{'field'}{'field'}[($y*$$r_args{'field'}{'width'})+$x];
+	return ord(substr($$r_args{field}{rawMap}, ($y*$$r_args{'field'}{'width'})+$x, 1));
+	#return $$r_args{'field'}{'field'}[($y*$$r_args{'field'}{'width'})+$x];
 }
 
 
 sub ai_route_getRoute {
-	my %args;
 	my ($returnArray, $r_field, $r_start, $r_dest) = @_;
-	$args{'returnArray'} = $returnArray;
-	undef @{$args{'returnArray'}};
-	$args{'field'} = $r_field;
-	%{$args{'start'}} = %{$r_start};
-	%{$args{'dest'}} = %{$r_dest};
+	undef @{$returnArray};
+	return 1 if (!defined $r_dest->{x} || !defined $r_dest->{'y'});
 
-	return 1 if $args{'dest'}{'x'} eq '' || $args{'dest'}{'y'} eq '';
+	# The exact destination may not be a spot that we can walk on.
+	# So we find a nearby spot that is walkable.
+	my %start = %{$r_start};
+	my %dest = %{$r_dest};
+	closestWalkableSpot($r_field, \%start);
+	closestWalkableSpot($r_field, \%dest);
 
-	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
-		next if $args{'field'}{'field'}[$args{'start'}{'x'}+$$z[0] + $args{'field'}{'width'}*($args{'start'}{'y'}+$$z[1])];
-		$args{'start'}{'x'} += $$z[0];
-		$args{'start'}{'y'} += $$z[1];
-		last;
-	}
-	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
-		next if $args{'field'}{'field'}[$args{'dest'}{'x'}+$$z[0] + $args{'field'}{'width'}*($args{'dest'}{'y'}+$$z[1])];
-		$args{'dest'}{'x'} += $$z[0];
-		$args{'dest'}{'y'} += $$z[1];
-		last;
-	}
-
-	my $SOLUTION_MAX = 5000;
-	$args{'solution'} = "\0" x ($SOLUTION_MAX*4+4);
+	# Generate map weights (for wall avoidance)
 	my $weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
 	$weights .= chr(1) x (256 - length($weights));
 
-	if (!$buildType) {
-		$args{'session'} = $CalcPath_init->Call(
-			$args{'solution'},
-			$args{'field'}{'dstMap'},
-			$weights,
-			$args{'field'}{'width'},
-			$args{'field'}{'height'}, 
-			pack("S*",$args{'start'}{'x'}, $args{'start'}{'y'}),
-			pack("S*",$args{'dest'}{'x'} , $args{'dest'}{'y'} ),
-			2000);
-	} elsif ($buildType == 1) {
-		$args{'session'} = Tools::CalcPath_init(
-			$args{'solution'},
-			$args{'field'}{'dstMap'},
-			$weights,
-			$args{'field'}{'width'},
-			$args{'field'}{'height'},
-			pack("S*",$args{'start'}{'x'}, $args{'start'}{'y'}),
-			pack("S*",$args{'dest'}{'x'} , $args{'dest'}{'y'} ),
-			2000);
-	}
-	return undef if $args{'session'} < 0;
+	# Calculate path
+	my $pathfinding = new PathFinding(
+		start => \%start,
+		dest => \%dest,
+		field => $r_field,
+		weights => $weights
+	);
+	return undef if !$pathfinding;
 
-	my $ret;
-	if (!$buildType) {
-		$ret = $CalcPath_pathStep->Call($args{'session'});
-		$CalcPath_destroy->Call($args{'session'});
-	} else {
-		$ret = Tools::CalcPath_pathStep($args{'session'});
-		Tools::CalcPath_destroy($args{'session'});
-	}
-	return undef if $ret;
-
-	my $size = unpack("L", substr($args{'solution'}, 0, 4));
-	my $j = 0;
-	for (my $i = ($size-1)*4+4; $i >= 4; $i-=4) {
-		$args{'returnArray'}[$j]{'x'} = unpack("S",substr($args{'solution'}, $i, 2));
-		$args{'returnArray'}[$j]{'y'} = unpack("S",substr($args{'solution'}, $i+2, 2));
-		$j++;
-	}
-	return scalar @{$args{'returnArray'}}; #successful
+	my $ret = $pathfinding->runref();
+	return undef if !$ret; # Failure
+	@{$returnArray} = @{$ret};
+	return scalar @{$ret}; # Success
 }
 
 sub ai_route_getSuccessors {
@@ -9176,9 +9137,7 @@ sub convertGatField {
 	open FILE, "+> $file";
 	binmode(FILE);
 	print FILE pack("S*", $$r_hash{'width'}, $$r_hash{'height'});
-	for ($i = 0; $i < @{$$r_hash{'field'}}; $i++) {
-		print FILE pack("C1", $$r_hash{'field'}[$i]);
-	}
+	print FILE $$r_hash{'rawMap'};
 	close FILE;
 }
 
@@ -9225,10 +9184,9 @@ sub dumpData {
 }
 
 ##
-# getField(file, r_field, [dist_only])
+# getField(file, r_field)
 # file: the filename of the .fld file you want to load.
 # r_field: reference to a hash, in which information about the field is stored.
-# dist_only: If set to 1, do not load the field data, and only load the distance map.
 # Returns: 1 on success, 0 on failure.
 #
 # Load a field (.fld) file. This function also loads an associated .dist file
@@ -9241,14 +9199,12 @@ sub dumpData {
 # - width: The field's width.
 # - height: The field's height.
 # - rawMap: The raw map data. Contains information about which blocks you can walk on (byte 0),
-#    and which not (byte 1). This key doesn't exist if dist_only is set.
-# - field: The map data unpacked into an array. This key doesn't exist if dist_only is set.
+#    and which not (byte 1).
 # - dstMap: The distance map data. Used by pathfinding.
 # ~l~
 sub getField {
 	my $file = shift;
 	my $r_hash = shift;
-	my $dist_only = shift;
 	my $dist_file = $file;
 
 	undef %{$r_hash};
@@ -9264,19 +9220,7 @@ sub getField {
 	open FILE, "<", $file;
 	binmode(FILE);
 	my $data;
-	if ($dist_only) {
-		if (-e $dist_file) {
-			read(FILE, $data, 4);
-			@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
-			close FILE;
-		} else {
-			local($/);
-			$data = <FILE>;
-			close FILE;
-			@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
-			$$r_hash{'rawMap'} = $data;
-		}
-	} else {
+	{
 		local($/);
 		$data = <FILE>;
 		close FILE;
@@ -9443,7 +9387,7 @@ sub getGatField {
 	$$r_hash{'width'} = $width;
 	$$r_hash{'height'} = $height;
 	while (read(FILE, $data, 20)) {
-		$$r_hash{'field'}[$i] = unpack("C1", substr($data, 14,1));
+		$$r_hash{'rawMap'} .= substr($data, 14, 1);
 		$i++;
 	}
 	close FILE;
