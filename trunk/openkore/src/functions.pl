@@ -3154,7 +3154,9 @@ sub AI {
 	%{$ai_v{'temp'}{'lockMap_coords'}} = ();
 	$ai_v{'temp'}{'lockMap_coords'}{'x'} = $config{'lockMap_x'};
 	$ai_v{'temp'}{'lockMap_coords'}{'y'} = $config{'lockMap_y'};
-	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'} && ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" && ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) && distance(\%{$ai_v{'temp'}{'lockMap_coords'}}, \%{$chars[$config{'char'}]{'pos_to'}}) > 2))) {
+	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'}
+	    && ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" && ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) && distance(\%{$ai_v{'temp'}{'lockMap_coords'}}, \%{$chars[$config{'char'}]{'pos_to'}}) > 1.42))
+	) {
 		if ($maps_lut{$config{'lockMap'}.'.rsw'} eq "") {
 			print "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
 			injectMessage("Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist") if ($config{'XKore'} && $config{'verbose'});
@@ -5483,9 +5485,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$type = unpack("C1", substr($msg, 2, 1));
 		$conState = 1;
 		undef $conState_tries;
-		
+
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+		killConnection(\$remote_socket);
 
 		if ($type == 2) {
 			print "Critical Error: Dual login prohibited - Someone trying to login!\n";
@@ -7130,8 +7133,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
 			if ($sourceID eq $accountID) {
 				$monsters{$targetID}{'castOnByYou'}++;
-			} else {
+			} elsif (%{$players{$sourceID}}) {
 				$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
+			} elsif (%{$monsters{$sourceID}}) {
+				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
 			}
 		} elsif (%{$players{$targetID}}) {
 			$targetDisplay = "$players{$targetID}{'name'} ($players{$targetID}{'binID'})";
@@ -7265,8 +7270,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
 			if ($sourceID eq $accountID) {
 				$monsters{$targetID}{'castOnByYou'}++;
-			} else {
+			} elsif (%{$players{$sourceID}}) {
 				$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
+			} elsif (%{$monsters{$sourceID}}) {
+				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
 			}
 		} elsif (%{$players{$targetID}}) {
 			$targetDisplay = "$players{$targetID}{'name'} ($players{$targetID}{'binID'})";
@@ -7681,8 +7688,10 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
 			if ($sourceID eq $accountID) {
 				$monsters{$targetID}{'castOnByYou'}++;
-			} else {
+			} elsif (%{$players{$sourceID}}) {
 				$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
+			} elsif (%{$monsters{$sourceID}}) {
+				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
 			}
 		} elsif (%{$players{$targetID}}) {
 			$targetDisplay = "$players{$targetID}{'name'} ($players{$targetID}{'binID'})";
@@ -8244,8 +8253,10 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
 			if ($sourceID eq $accountID) {
 				$monsters{$targetID}{'castOnByYou'}++;
-			} else {
+			} elsif (%{$players{$sourceID}}) {
 				$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
+			} elsif (%{$monsters{$sourceID}}) {
+				$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
 			}
 		} elsif (%{$players{$targetID}}) {
 			$targetDisplay = "$players{$targetID}{'name'} ($players{$targetID}{'binID'})";
