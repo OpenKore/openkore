@@ -279,6 +279,8 @@ sub _errorHandler {
 ##### MAIN LOOP #####
 
 while ($quit != 1) {
+	my $input;
+
 	usleep($config{'sleepTime'});
 
 	if ($config{'XKore'}) {
@@ -288,13 +290,20 @@ while ($quit != 1) {
 			my $procID = 0;
 			do {
 				$procID = $GetProcByName->Call($config{'exeName'});
-				if (!$procID) {
+				if (!$procID && !$printed) {
 					print "Error: Could not locate process $config{'exeName'}.\n";
-					print "Waiting for you to start the process...\n" if (!$printed);
+					print "Waiting for you to start the process...\n";
 					$printed = 1;
 				}
-				sleep 1;
+
+				if (defined($input = Input::getInput(0)) && $input eq 'quit') {
+					$quit = 1;
+					last;
+				}
+
+				usleep 100000;
 			} while (!$procID && !$quit);
+			last if ($quit);
 
 			if ($printed == 1) {
 				print "Process found\n";

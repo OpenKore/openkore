@@ -7862,7 +7862,6 @@ sub parseMsg {
 			$sourceDisplay = "Unknown is casting";
 		}
 
-			
 		if (%{$monsters{$targetID}}) {
 			$targetDisplay = "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})";
 			if ($sourceID eq $accountID) {
@@ -10547,7 +10546,8 @@ sub dataWaiting {
 	my $r_fh = shift;
 	my $bits;
 	vec($bits,fileno($$r_fh),1)=1;
-	return (select($bits,$bits,$bits,0.005) > 1);
+	# The timeout was 0.005
+	return (select($bits,$bits,$bits,0) > 1);
 }
 
 sub killConnection {
