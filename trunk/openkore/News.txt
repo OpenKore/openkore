@@ -121,6 +121,7 @@ Credits:
 - denni: previousDamage condition, teleportAuto_maxDmgInLock,
   teleportAuto_minAggressivesInLock.
 - jojobail: some work on oRO support, storageAuto ability check.
+- asuwannarat: Niflmheim portals.
 
 
 ==================
