@@ -1,5 +1,5 @@
-# Packet lengths for iRO Amatsu
-# Sep 17 2004
+# Packet lengths for iRO Amatsu / eAthena RC 5
+# Sep 17 2004 / Oct 19 2004
 0064 55
 0065 17
 0066 0
@@ -409,8 +409,16 @@
 01FE 5
 01FF 10
 0200 26
+0201 0
+0202 26
+0203 10
 0204 18
 0205 26
+0206 11
+0207 34
+0208 11
+0209 36
+020A 10
 020D 0
 020E 24
 0212 26
