@@ -310,6 +310,7 @@ itemsMaxWeight_sellOrStore 48
 
 buyAuto {
 	npc
+	standpoint
 	distance 5
 	minAmount 2
 	maxAmount 3
@@ -317,6 +318,7 @@ buyAuto {
 
 sellAuto 0
 sellAuto_npc
+sellAuto_standpoint
 sellAuto_distance 5
 
 storageAuto 0
