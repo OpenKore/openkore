@@ -1481,7 +1481,7 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError 
  *	extracted should be stored
  * \param error Pointer to a GrfErrorType struct/enum for error reporting
  * \return A pointer to data that has been extracted, NULL if an error
- *	has occurred
+ *	has occurred. The pointer must not be freed manually.
  */
 GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *error) {
 	uint32_t i;
@@ -1510,7 +1510,7 @@ GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *
  *	extracted should be stored
  * \param error Pointer to a GrfErrorType struct/enum for error reporting
  * \return A pointer to data that has been extracted, NULL if an error
- *	has occurred
+ *	has occurred. The pointer must not be freed manually.
  */
 GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error) {
 	uLongf zlen;

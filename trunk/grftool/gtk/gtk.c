@@ -451,7 +451,6 @@ preview_file (char *display, char *fname)
 
 		text = str_to_utf8 (data, &strsize);
 		size = strsize;
-		g_free (data);
 
 		gtk_text_buffer_set_text (buf, text, size);
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (W(notebook1)), 0);
