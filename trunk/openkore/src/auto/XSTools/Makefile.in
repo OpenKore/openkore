@@ -1,7 +1,7 @@
 @HEADER@
 .PHONY: sub clean
 
-OBJ=pathfinding/*.o
+OBJ=pathfinding/*.o misc/*.o
 #if unix
 OBJ+=unix/*.o
 #endif
@@ -16,6 +16,7 @@ XSTools.$(DLLEXT): sub
 
 sub:
 	make -C pathfinding
+	make -C misc
 #if unix
 	make -C unix
 #endif
