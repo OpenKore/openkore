@@ -6,6 +6,7 @@ use Wx::Event qw(EVT_LISTBOX);
 use base qw(Wx::Panel);
 use Interface::Wx::ConfigEditor;
 
+
 sub new {
 	my $class = shift;
 	my ($parent, $id) = @_;
@@ -129,12 +130,14 @@ package Interface::Wx::ConfigEditor::Grid;
 
 use Wx ':everything';
 use Wx::Grid;
-use Wx::Event qw(EVT_GRID_CELL_CHANGE EVT_GRID_CELL_LEFT_CLICK);
+use Wx::Event qw(EVT_GRID_CELL_CHANGE EVT_GRID_CELL_LEFT_CLICK EVT_TIMER EVT_BUTTON);
 use Wx::Html;
-use LWP::Simple;
 use base qw(Wx::Panel);
 
+use Utils::Downloader;
+
 our $manual;
+
 
 sub new {
 	my $class = shift;
@@ -162,34 +165,7 @@ sub new {
 	EVT_GRID_CELL_CHANGE($grid, sub { $self->_changed(@_); });
 
 	if (!defined $manual) {
-		my $manualFile;
-		my $f;
-		if (defined $Settings::control_folder) {
-			$manualFile = "$Settings::control_folder/manual.html";
-		}
-
-		if ($manualFile && -f $manualFile && open($f, "< $manualFile")) {
-			local($/);
-			$manual = <$f>;
-			close $f;
-
-		} else {
-			my $dialog = new Wx::Dialog($parent->GetGrandParent, -1, "Downloading");
-			my $sizer = new Wx::BoxSizer(wxVERTICAL);
-			my $label = new Wx::StaticText($dialog, -1, "Downloading manual, please wait...");
-			$sizer->Add($label, 1, wxGROW | wxALL, 8);
-			$dialog->SetSizerAndFit($sizer);
-			$dialog->Show(1);
-			my $busy = new Wx::BusyCursor;
-			wxTheApp->Yield;
-
-			$manual = get('http://openkore.sourceforge.net/manual/control.htm');
-			$dialog->Close;
-			if ($manual && open($f, "> $manualFile")) {
-				print $f $manual;
-				close $f;
-			}
-		}
+		$self->downloadManual($parent);
 	}
 
 	my $html = $self->{html} = new Wx::HtmlWindow($splitter, -1);
@@ -201,6 +177,59 @@ sub new {
 	$splitter->SetSashPosition(-100);
 
 	return $self;
+}
+
+sub downloadManual {
+	my ($self, $parent) = @_;
+	my ($file, $f, $time);
+
+	if (defined $Settings::control_folder) {
+		$file = "$Settings::control_folder/manual.html";
+	}
+
+	$time = (stat($file))[9];
+	# Download manual if it hasn't been downloaded yet,
+	# or if the local copy is more than 3 days old
+	if ($file && time - $time <= 60 * 60 * 24 * 3 && open($f, "< $file")) {
+		local($/);
+		$manual = <$f>;
+		close $f;
+
+	} else {
+		my $dialog = new Wx::Dialog($parent->GetGrandParent, -1, "Downloading");
+		my $sizer = new Wx::BoxSizer(wxVERTICAL);
+		my $label = new Wx::StaticText($dialog, -1, "Downloading manual, please wait...");
+		$sizer->Add($label, 1, wxGROW | wxALL, 8);
+		my $gauge = new Wx::Gauge($dialog, -1, 100, wxDefaultPosition,
+			[0, 16], wxGA_SMOOTH | wxGA_HORIZONTAL | wxGA_PROGRESSBAR);
+		$sizer->Add($gauge, 0, wxGROW | wxLEFT | wxRIGHT, 8);
+		my $button = new Wx::Button($dialog, 475, '&Cancel');
+		$sizer->Add($button, 0, wxALL | wxALIGN_CENTRE_HORIZONTAL, 8);
+		EVT_BUTTON($dialog, 475, sub {
+			$dialog->Close;
+		});
+		$dialog->SetSizerAndFit($sizer);
+
+		my $timer = new Wx::Timer($dialog, 476);
+		my $downloader = new Utils::Downloader('openkore.sourceforge.net', '/manual/control.htm');
+		EVT_TIMER($dialog, 476, sub {
+			#print $downloader->progress();
+			$gauge->SetValue($downloader->progress * 100);
+			if ($downloader->iterate) {
+				$dialog->Close;
+				$manual = $downloader->data;
+				$timer->Destroy;
+				undef $timer;
+			}
+		});
+		$timer->Start(100);
+		$dialog->ShowModal;
+
+		if ($manual && open($f, "> $file")) {
+			print $f $manual;
+			close $f;
+		}
+	}
 }
 
 sub onChange {
