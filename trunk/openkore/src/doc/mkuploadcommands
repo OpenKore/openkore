@@ -15,13 +15,13 @@ examineFolder() {
 	fi
 
 	# Upload files
-	for F in *.html *.css *.png *.js; do
+	for F in *.html *.css *.png *.js *.php *.txt; do
 		[[ -f "$F" ]] && echo "put $F"
 	done
 
 	# Process subfolders
 	for D in *; do
-		[[ -d "$D" ]] && examineFolder "$D"
+		[[ -d "$D" && "$D" != "CVS" ]] && examineFolder "$D"
 	done
 
 	if [[ "$1" != "" ]]; then
