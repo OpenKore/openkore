@@ -7,9 +7,6 @@ CXXFLAGS=$(CFLAGS)
 .PHONY: all clean
 SRC=AncientTools.o.c AncientAlgorithm.cpp
 OBJ=AncientTools.o AncientAlgorithm.o
-%.o: %.xs
-	$(XSUBPP) -typemap "$(TYPEMAP)" $< > $@.c
-	$(CC) -I. $(CFLAGS) $@.c -c $(PERLCFLAGS) -o $@ -I$(COREDIR)
 
 AncientTools.$(DLLEXT): $(OBJ)
 	dlltool --dllname AncientTools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
@@ -18,5 +15,11 @@ AncientTools.$(DLLEXT): $(OBJ)
 AncientAlgorithm.o: AncientAlgorithm.cpp
 	$(CXX) $(CFLAGS) -c AncientAlgorithm.cpp -o AncientAlgorithm.o
 
+AncientTools.c: AncientTools.xs
+	$(XSUBPP) -typemap "$(TYPEMAP)" AncientTools.xs > AncientTools.xsc && mv AncientTools.xsc AncientTools.c
+
+AncientTools.o: AncientTools.c
+	$(CC) -I. $(CFLAGS) AncientTools.c -c $(PERLCFLAGS) -o AncientTools.o -I$(COREDIR)
+
 clean:
-	rm -f *.o.c $(OBJ) AncientTools.$(DLLEXT) Makefile.real
+	rm -f AncientTools.c $(OBJ) AncientTools.$(DLLEXT) Makefile.real
