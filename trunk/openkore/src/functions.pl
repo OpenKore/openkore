@@ -2337,6 +2337,74 @@ sub AI {
 	}
 
 
+	##### CHECK FOR UPDATES #####
+	# We force the user to download an update if this version of kore is too old.
+	# This is to prevent bots from KSing people because of new packets
+	# (like it happened with Comodo and Juno).
+	if (!$checkUpdate{checked}) {
+		if ($checkUpdate{stage} eq '') {
+			# We only want to check at most once a day
+			open(F, "< $Settings::tables_folder/updatecheck.txt");
+			my $time = <F>;
+			close F;
+
+			$time =~ s/[\r\n].*//;
+			if (timeOut($time, 60 * 60 * 24)) {
+				$checkUpdate{stage} = 'Connect';
+			} else {
+				$checkUpdate{checked} = 1;
+				debug "Version up-to-date\n";
+			}
+
+		} elsif ($checkUpdate{stage} eq 'Connect') {
+			my $sock = new IO::Socket::INET(
+				PeerHost	=> 'openkore.sourceforge.net',
+				PeerPort	=> 80,
+				Proto		=> 'tcp',
+				Timeout		=> 4
+			);
+			if (!$sock) {
+				$checkUpdate{checked} = 1;
+			} else {
+				$checkUpdate{sock} = $sock;
+				$checkUpdate{stage} = 'Request';
+			}
+
+		} elsif ($checkUpdate{stage} eq 'Request') {
+			$checkUpdate{sock}->send("GET /misc/leastVersion.txt HTTP/1.1\r\n", 0);
+			$checkUpdate{sock}->send("Host: openkore.sourceforge.net\r\n\r\n", 0);
+			$checkUpdate{sock}->flush;
+			$checkUpdate{stage} = 'Receive';
+
+		} elsif ($checkUpdate{stage} eq 'Receive' && dataWaiting(\$checkUpdate{sock})) {
+			my $data;
+			$checkUpdate{sock}->recv($data, 1024 * 32);
+			if ($data =~ /^HTTP\/.\.. 200/s) {
+				$data =~ s/.*?\r\n\r\n//s;
+				$data =~ s/[\r\n].*//s;
+
+				debug "Update check - least version: $data\n";
+				unless (($Settings::VERSION cmp $data) >= 0) {
+					Network::disconnect(\$remote_socket);
+					$interface->errorDialog("Your version of $Settings::NAME " .
+						"(${Settings::VERSION}${Settings::CVS}) is too old.\n" .
+						"Please upgrade to at least version $data\n");
+					quit();
+
+				} else {
+					# Store the current time in a file
+					open(F, "> $Settings::tables_folder/updatecheck.txt");
+					print F time;
+					close F;
+				}
+			}
+
+			$checkUpdate{sock}->close;
+			undef %checkUpdate;
+			$checkUpdate{checked} = 1;
+		}
+	}
+
 	############## TALK WITH NPC ##############
 	NPCTALK: {
 		last NPCTALK unless ($ai_seq[0] eq "NPC");
