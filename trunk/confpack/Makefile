@@ -2,7 +2,7 @@
 # If you want to run this Makefile in Windows, you need Cygwin:
 # http://sources.redhat.com/cygwin/
 
-VERSION=1.0
+VERSION=1.1
 FILENAME=confpack-$(VERSION).zip
 
 .PHONY: clean
@@ -14,6 +14,7 @@ $(FILENAME): control/*.txt
 	@echo
 	# Creating zipfile...
 	rm -f $(FILENAME)
+	./unix2dos.pl control/*.txt
 	zip -9 $(FILENAME) control/*.txt $(VERSIONFILE)
 
 clean:
