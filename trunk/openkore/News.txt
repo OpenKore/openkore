@@ -60,6 +60,7 @@ New features:
   that the server gives the same name to, but are different)
 - WX Advance Settings now support proxy for download manual.
   You have to add lines 'webproxy' and 'webproxy_port' in config.txt to enable proxy.
+- storageAuto will now check if you have the ability to open storage.
 
 tablepack/monsters.txt
 - Kobolds have been renamed from Kobold # to Kobold-#.
@@ -118,7 +119,7 @@ Credits:
 - mondlicht: misc bug fixes.
 - denni: previousDamage condition, teleportAuto_maxDmgInLock,
   teleportAuto_minAggressivesInLock.
-- jojobail: some work on oRO support.
+- jojobail: some work on oRO support, storageAuto ability check.
 
 
 ==================

@@ -9424,6 +9424,7 @@ sub ai_skillUse2 {
 # Returns 1 if it is time to perform storageAuto sequence.
 # Returns 0 otherwise.
 sub ai_storageAutoCheck {
+	return 0 if ($char->{skills}{NV_BASIC}{lv} < 6);
 	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
 		my $slot = $char->{inventory}[$i];
 		next if (!$slot || $slot->{equipped});
