@@ -26,6 +26,7 @@ use Wx ':everything';
 use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION EVT_ERASE_BACKGROUND);
 use File::Spec;
 use base qw(Wx::Panel);
+use FastUtils;
 
 our %addedHandlers;
 
@@ -251,40 +252,6 @@ sub _onErase {
 	}
 }
 
-
-sub _xpmmake {
-	my $field = shift;
-	my $data = "/* XPM */\n" .
-		"static char * my_xpm[] = {\n" .
-		"\"$field->{width} $field->{height} 4 1\",\n" .
-		"\" \tc #000000\",\n" .
-		"\"A\tc #0029AA\",\n" .
-		"\"B\tc #227022\",\n" .
-		"\".\tc #FFFFFF\",\n";
-	for (my $y = $field->{height} - 1; $y >= 0; $y--) {
-		$data .= "\"";
-		for (my $x = 0; $x < $field->{width}; $x++) {
-			my $char = substr($field->{rawMap}, $y * $field->{width} + $x, 1);
-			if ($char eq "\0") {
-				# Walkable
-				$data .= '.';
-			} elsif ($char eq "\1") {
-				# Not walkable
-				$data .= ' ';
-			} elsif ($char eq "\3") {
-				# Walkable water
-				$data .= 'A';
-			} else {
-				# Everything else
-				$data .= 'B';
-			}
-		}
-		$data .= "\",\n";
-	}
-	$data .= "};\n";
-	return $data;
-}
-
 sub _loadImage {
 	my $file = shift;
 	my ($ext) = $file =~ /.*(\..*?)$/;
@@ -338,7 +305,7 @@ sub _loadMapImage {
 		my $file = _f(File::Spec->tmpdir(), "map.xpm");
 		return unless (open(F, ">", $file));
 		binmode F;
-		print F _xpmmake($field);
+		print F Utils::xpmmake($field->{width}, $field->{height}, $field->{rawMap});
 		close F;
 		my $bitmap = _loadImage($file);
 		unlink $file;

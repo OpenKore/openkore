@@ -1,15 +1,14 @@
 CC=gcc
+CXX=g++
 CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 -mcpu=i686 $(CYGWIN)
+CXXFLAGS=$(CFLAGS)
 @HEADER@
 
 .PHONY: all clean
 
-fastutils.o: fastutils.c
-	$(CC) -I. $(CFLAGS) fastutils.c -c $(PERLCFLAGS) -o fastutils.o -I$(COREDIR)
-
-fastutils.c: fastutils.xs
-	$(XSUBPP) -typemap "$(TYPEMAP)" fastutils.xs > fastutils.xsc
-	mv fastutils.xsc fastutils.c
+fastutils.o: fastutils.xs
+	$(XSUBPP) -C++ -typemap "$(TYPEMAP)" fastutils.xs > fastutils.cpp
+	$(CXX) -I. $(CFLAGS) fastutils.cpp -c $(PERLCFLAGS) -o fastutils.o -I$(COREDIR)
 
 clean:
-	rm -f fastutils.o fastutils.c fastutils.xsc Makefile.real
+	rm -f fastutils.o fastutils.cpp Makefile.real
