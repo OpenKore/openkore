@@ -23,7 +23,7 @@ port 6900
 master_version 16
 version 7
 
-[Malaysia - mRO (English): Iris/Penril/Odin/Thor]
+[Malaysia - mRO (English): Iris/Penril/Odin/Thor/Freyia]
 ip 61.220.63.129
 port 6900
 master_version 17
@@ -33,7 +33,7 @@ version 7
 ip 220.130.113.227
 port 6900
 master_version 16
-version 6
+version 8
 
 [Indonesia - idRO: Chaos/Loki/Iris/Fenrir]
 ip 202.43.167.66
