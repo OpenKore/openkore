@@ -325,6 +325,25 @@ sub getFormattedDate {
         return $$r_date;
 }
 
+##
+# promptAndExit([exitCode], [message])
+# exitCode: The exit code to exit with. Default: 1
+# message: The message to display. Default: "Press ENTER to exit.\n"
+#
+# Prints $message to the console and asks the user to press ENTER.
+# Then exit with exit code $exitCode.
+sub promptAndExit {
+	my $exitCode = shift;
+	my $message = shift;
+	$exitCode = 1 if (!$exitCode);
+	$message = "Press ENTER to exit.\n" if (!defined $message);
+
+	# We use print() here, not Log::message
+	print $message;
+	<STDIN>;
+	exit $exitCode;
+}
+
 sub swrite {
 	my $result = '';
 	for (my $i = 0; $i < @_; $i += 2) {

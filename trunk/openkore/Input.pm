@@ -27,6 +27,8 @@ use strict;
 use Exporter;
 use IO::Socket::INET;
 use Settings;
+use Log;
+use Utils;
 
 our @ISA = "Exporter";
 our @EXPORT_OK = qw(&init &stop &canRead &readLine $enabled);
@@ -44,7 +46,10 @@ sub start {
 			Listen		=> 5,
 			LocalAddr 	=> 'localhost',
 			Proto		=> 'tcp');
-	($input_server) || die "Error creating local input server: $!";
+	if (!$input_server) {
+		Log::error("Error creating local input server: $@", "startup");
+		promptAndExit();
+	}
 	print "Local input server started (" . $input_server->sockhost() . ":" . $input_server->sockport() . ")\n";
 	$input_pid = startInputClient();
 	$enabled = 1;
@@ -73,7 +78,7 @@ sub startInputClient {
 			PeerAddr	=> $host,
 			PeerPort	=> $port,
 			Proto		=> 'tcp');
-		($local_socket) || die "Error creating connection to local server: $!";
+		($local_socket) || die "Error creating connection to local server: $@";
 
 		my $input;
 		while (1) {
