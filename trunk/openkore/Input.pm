@@ -12,6 +12,8 @@
 ##
 # MODULE DESCRIPTION: Keyboard input system
 #
+# FIXME: this description is outdated. Update it.
+#
 # There's no good way to asynchronously read keyboard input.
 # To work around this problem, Kore uses a so-called input server.
 #

@@ -85,7 +85,7 @@ sub getInput2 {
 	} elsif ($timeout > 0) {
 		
 	} else {
-		if ($select->can_read(0.01)) {
+		if ($select->can_read(0.00)) {
 			$msg = <STDIN>;
 		}
 	}
@@ -122,7 +122,7 @@ The following lines are semantically equal:
 
 sub canRead {
 	return undef unless ($enabled);
-	return $select->can_read(0.01);
+	return $select->can_read(0.00);
 }
 
 =item C<Input::getInput($wait)>
@@ -152,9 +152,9 @@ Reads keyboard data.
 
 sub getInput {
 	return undef unless ($enabled);
-	my $timeout = shift;
+	my $block = shift;
 	my $msg;
-	if ($timeout) {
+	if ($block) {
 		$msg = getInput2(-1);
 	} else {
 		$msg = getInput2(0);

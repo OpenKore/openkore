@@ -97,6 +97,7 @@ sub extractFromFile {
 		error "Unable to open $file for reading.\n";
 		return 0;
 	}
+	binmode F;
 
 	push @modulesList, $basename;
 	$modules{$basename}{'name'} = $module_name;
@@ -104,6 +105,8 @@ sub extractFromFile {
 
 	foreach my $line (<F>) {
 		$linenum++;
+		$line =~ s/\r//g;
+
 		if (!($line =~ /^#/)) {
 			if ($state eq 'module-description') {
 				# The end of a module description has been reached
