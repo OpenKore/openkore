@@ -25,37 +25,46 @@ Modules::register(qw(Modules Input Log Utils));
 
 our $buildType = 0;
 our $daemon = 0;
-our $config_file = "control/config.txt";
-our $items_control_file = "control/items_control.txt";
-our $mon_control_file = "control/mon_control.txt";
-our $chat_file = "chat.txt";
-our $item_log_file = "items.txt";
-our $shop_file = "control/shop.txt";
-our $rpackets_file = 'tables/recvpackets.txt';
+our $control_folder = "control";
+our $tables_folder = "tables";
+our $config_file;
+our $items_control_file;
+our $mon_control_file;
+our $chat_file;
+our $item_log_file;
+our $shop_file;
 
 &GetOptions(
 	'daemon', \$daemon,
+	'help', \$help_option,
 	'config=s', \$config_file,
 	'mon_control=s', \$mon_control_file,
 	'items_control=s', \$items_control_file,
 	'chat=s', \$chat_file,
 	'shop=s', \$shop_file,
-	'items=s', \$item_log_file,
-	'rpackets=s', \$rpackets_file,
-	'help', \$help_option);
+	'items=s', \$item_log_file);
 if ($help_option) {
-	print "Usage: skore.exe [options...]\n\n";
+	print "Usage: openkore.exe [options...]\n\n";
 	print "The supported options are:\n\n";
 	print "--help                     Displays this help message.\n";
 	print "--daemon                   Start as daemon; don't listen for keyboard input.\n";
+	print "--control=path             Use a different folder as control folder.\n";
+	print "--tables=path              Use a different folder as tables folder.\n\n";
+
 	print "--config=path/file         Which config.txt to use.\n";
 	print "--mon_control=path/file    Which mon_control.txt to use.\n";
 	print "--items_control=path/file  Which items_control.txt to use.\n";
 	print "--chat=path/file           Which chat.txt to use.\n";
 	print "--shop=path/file           Which shop.txt to use.\n";
-	print "--rpackets=path/file       Which recvpackets.txt to use.\n";
 	exit(1);
 }
+
+$config_file = "$control_folder/config.txt" if (!defined $config_file);
+$items_control_file = "$control_folder/items_control.txt" if (!defined $items_control_file);
+$mon_control_file = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
+$chat_file = "chat.txt" if (!defined $chat_file);
+$item_log_file = "items.txt" if (!defined $item_log_file);
+$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
 
 srand(time());
 
@@ -72,37 +81,37 @@ print "\n";
 addParseFiles($config_file, \%config,\&parseDataFile2);
 addParseFiles($items_control_file, \%items_control,\&parseItemsControl);
 addParseFiles($mon_control_file, \%mon_control,\&parseMonControl);
-addParseFiles("control/overallauth.txt", \%overallAuth, \&parseDataFile);
-addParseFiles("control/pickupitems.txt", \%itemsPickup, \&parseDataFile_lc);
-addParseFiles("control/responses.txt", \%responses, \&parseResponses);
-addParseFiles("control/timeouts.txt", \%timeout, \&parseTimeouts);
+addParseFiles("$control_folder/overallauth.txt", \%overallAuth, \&parseDataFile);
+addParseFiles("$control_folder/pickupitems.txt", \%itemsPickup, \&parseDataFile_lc);
+addParseFiles("$control_folder/responses.txt", \%responses, \&parseResponses);
+addParseFiles("$control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
 addParseFiles($shop_file, \%shop, \&parseDataFile2);
-addParseFiles("control/chat_resp.txt", \%chat_resp, \&parseDataFile2);
-addParseFiles("control/avoid.txt", \%avoid, \&parseDataFile2);
-#addParseFiles("control/chat_ppl.txt", \%chat_resp, \&parseDataFile2);
+addParseFiles("$control_folder/chat_resp.txt", \%chat_resp, \&parseDataFile2);
+addParseFiles("$control_folder/avoid.txt", \%avoid, \&parseDataFile2);
+#addParseFiles("$control_folder/chat_ppl.txt", \%chat_resp, \&parseDataFile2);
 
-addParseFiles("tables/cities.txt", \%cities_lut, \&parseROLUT);
-addParseFiles("tables/emotions.txt", \%emotions_lut, \&parseDataFile2);
-addParseFiles("tables/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
-addParseFiles("tables/items.txt", \%items_lut, \&parseROLUT);
-addParseFiles("tables/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
-addParseFiles("tables/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
-addParseFiles("tables/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
-addParseFiles("tables/jobs.txt", \%jobs_lut, \&parseDataFile2);
-addParseFiles("tables/maps.txt", \%maps_lut, \&parseROLUT);
-addParseFiles("tables/monsters.txt", \%monsters_lut, \&parseDataFile2);
-addParseFiles("tables/npcs.txt", \%npcs_lut, \&parseNPCs);
-addParseFiles("tables/portals.txt", \%portals_lut, \&parsePortals);
-addParseFiles("tables/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
-addParseFiles("tables/sex.txt", \%sex_lut, \&parseDataFile2);
-addParseFiles("tables/skills.txt", \%skills_lut, \&parseSkillsLUT);
-addParseFiles("tables/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
-addParseFiles("tables/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
-addParseFiles("tables/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
-addParseFiles("tables/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
-addParseFiles("tables/cards.txt", \%cards_lut, \&parseROLUT); 
-addParseFiles("tables/elements.txt", \%elements_lut, \&parseROLUT); 
-addParseFiles($rpackets_file, \%rpackets, \&parseDataFile2); 
+addParseFiles("$tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
+addParseFiles("$tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
+addParseFiles("$tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
+addParseFiles("$tables_folder/items.txt", \%items_lut, \&parseROLUT);
+addParseFiles("$tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
+addParseFiles("$tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
+addParseFiles("$tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
+addParseFiles("$tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
+addParseFiles("$tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
+addParseFiles("$tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
+addParseFiles("$tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
+addParseFiles("$tables_folder/portals.txt", \%portals_lut, \&parsePortals);
+addParseFiles("$tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
+addParseFiles("$tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
+addParseFiles("$tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
+addParseFiles("$tables_folder/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
+addParseFiles("$tables_folder/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
+addParseFiles("$tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
+addParseFiles("$tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
+addParseFiles("$tables_folder/cards.txt", \%cards_lut, \&parseROLUT); 
+addParseFiles("$tables_folder/elements.txt", \%elements_lut, \&parseROLUT); 
+addParseFiles("$tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2); 
 
 load(\@parseFiles);
 
@@ -121,6 +130,10 @@ if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 
 	$buildType = 0;
 } else {
+	if (! -f "Tools.so") {
+		print STDERR "Could not locate Tools.so. Type 'make' if you haven't done so.\n";
+		exit 1;
+	}
 	eval "use Tools;";
 	die if ($@);
 
@@ -259,25 +272,25 @@ while ($quit != 1) {
 			do {
 				$procID = $GetProcByName->Call($config{'exeName'});
 				if (!$procID) {
-					Log::error("Error: Could not locate process $config{'exeName'}.\n", "xkore");
-					Log::message("Waiting for you to start the process...\n", "xkore") if (!$printed);
+					print "Error: Could not locate process $config{'exeName'}.\n";
+					print "Waiting for you to start the process...\n" if (!$printed);
 					$printed = 1;
 				}
 				sleep 1;
 			} while (!$procID);
 
 			if ($printed == 1) {
-				Log::message("Process found\n", "xkore");
+				print "Process found\n";
 			}
 			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
 			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
 			die "Could not inject DLL" if ($retVal != 1);
 
-			Log::message("Waiting for InjectDLL to connect...\n", "xkore");
+			print "Waiting for InjectDLL to connect...\n";
 			$remote_socket = $injectServer_socket->accept();
 			(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
 			|| die "Inject Socket must be connected from localhost";
-			print Log::message("InjectDLL Socket connected - Ready to start botting\n", "xkore");
+			print "InjectDLL Socket connected - Ready to start botting\n";
 			$timeout{'injectKeepAlive'}{'time'} = time;
 		}
 		if (timeOut(\%{$timeout{'injectSync'}})) {
