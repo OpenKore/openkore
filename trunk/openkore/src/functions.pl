@@ -5215,7 +5215,7 @@ sub parseMsg {
 				my $param1 = unpack("S*", substr($msg, 8, 2));
 				$param1 = 0 if $param1 == 5; # 5 has got something to do with the monster being undead
 				foreach (keys %skillsState) {
-					if ($param1 == $_ && !defined $monsters{$ID}{statuses}{$skillsState{$_}}) {
+					if ($param1 == $_) {
 						$monsters{$ID}{statuses}{$skillsState{$_}} = 1;
 						message getActorName($ID) . " in $skillsState{$_} state\n", "parseMsg_statuslook", 1;
 					} elsif (defined $monsters{$ID}{statuses}{$skillsState{$_}}) {
