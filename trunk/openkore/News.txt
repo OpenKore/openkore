@@ -4,6 +4,10 @@
 
 Hopefully the last beta.
 
+Bug fixes:
+- Fixed shopAuto_open timing problems with sitAuto (also changed ai_shop
+  timeout)
+
 
 ==================
 ### 1.3.3 (beta)
