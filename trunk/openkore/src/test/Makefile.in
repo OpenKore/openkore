@@ -1,0 +1,22 @@
+CC=gcc
+CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 -mcpu=i686 $(CYGWIN)
+CXX=g++
+CXXFLAGS=$(CFLAGS)
+@HEADER@
+
+.PHONY: all clean
+SRC=AncientTools.o.c AncientAlgorithm.cpp
+OBJ=AncientTools.o AncientAlgorithm.o
+%.o: %.xs
+	$(XSUBPP) -typemap "$(TYPEMAP)" $< > $@.c
+	$(CC) -I. $(CFLAGS) $@.c -c $(PERLCFLAGS) -o $@ -I$(COREDIR)
+
+AncientTools.$(DLLEXT): $(OBJ)
+	dlltool --dllname AncientTools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
+	$(DLLWRAP) $(OBJ) -o AncientTools.$(DLLEXT) $(LIBPERL)
+
+AncientAlgorithm.o: AncientAlgorithm.cpp
+	$(CXX) $(CFLAGS) -c AncientAlgorithm.cpp -o AncientAlgorithm.o
+
+clean:
+	rm -f $(SRC) $(OBJ) AncientTools.$(DLLEXT) Makefile.real
