@@ -13,6 +13,7 @@ use IO::Socket;
 use Digest::MD5 qw(md5);
 use Config;
 use Log qw(message warning error debug);
+eval "no utf8;";
 
 
 #######################################
