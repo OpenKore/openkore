@@ -141,6 +141,7 @@ Bug fixes:
   Implemented in positionNearPlayer().
 - teleportAuto_search no longer spams the server with the teleport packet
   many times per second.
+- Guild login/logout and chat messages no longer show blanks all the time.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
