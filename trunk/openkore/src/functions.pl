@@ -8487,9 +8487,9 @@ sub ai_partyfollow {
 			$ai_v{master}{time} = time; 
 
 			if ($ai_v{master}{map} ne $field{name}) {
-				message "Calculating route to find master: $maps_lut{$ai_v{master}{map}.'.rsw'}\n", "follow";
+				message "Calculating route to find master: $ai_v{master}{map}\n", "follow";
 			} elsif (distance(\%master, $char->{pos_to}) > $config{followDistanceMax} ) {
-				message "Calculating route to find master: $maps_lut{$ai_v{master}{map}.'.rsw'} ($ai_v{master}{x},$ai_v{master}{y})\n", "follow";
+				message "Calculating route to find master: $ai_v{master}{map} ($ai_v{master}{x},$ai_v{master}{y})\n", "follow";
 			} else {
 				return;
 			}
