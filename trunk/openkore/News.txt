@@ -88,6 +88,7 @@ New features:
 - If storage opening fails the first time for some reason, Kore will try again.
 - The bot will now look at NPCs when it is talking to them, like a real player.
 - When you issue a "move" command, this will clear previous move actions.
+- 
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -208,6 +209,12 @@ New config options:
   Teleport if you can't reach a monster.
 - partyAggressives condition works like aggressives, but also counts
   monsters that have fought party members.
+- New attackSkillSlot option: _notMonsters
+  attackSkillSlot Bash {
+    lvl 1
+    dist 1.5
+    notMonsters Green Plant, Poring, Lunatic
+  }
 
 
 New timeouts.txt options:
