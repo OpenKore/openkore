@@ -8820,6 +8820,21 @@ sub ai_getPlayerAggressives {
 }
 
 ##
+# ai_getMonstersAttacking($ID)
+#
+# Get the monsters who are attacking player $ID.
+sub ai_getMonstersAttacking {
+	my $ID = shift;
+	my @agMonsters;
+	foreach (@monstersID) {
+		next unless $_;
+		my $monster = $monsters{$_};
+		push @agMonsters, $_ if $monster->{target} eq $ID;
+	}
+	return @agMonsters;
+}
+
+##
 # ai_getSkillUseType(name)
 # name: the internal name of the skill (as found in skills.txt), such as
 # WZ_FIREPILLAR.
@@ -9798,17 +9813,18 @@ sub updateDamageTables {
 					$monsters{$ID1}{'missedFromPlayer'} ||
 					$monsters{$ID1}{'missedToPlayer'}
 				);
+			$monsters{$ID1}{target} = $ID2;
 
 			if ($AI) {
 				my $teleport = 0;
 				if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
-					message "Teleport due to $monsters{$ID1}{'name'} attack\n";
+					message "Teleporting due to attack from $monsters{$ID1}{'name'} attack\n";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
 					message "Next $damage dmg could kill you. Teleporting...\n";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination")) {
-					message "$monsters{$ID1}{'name'} attack you more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
+					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
 					$teleport = 1;
 				}
 				useTeleport(1) if ($teleport);
@@ -9830,6 +9846,7 @@ sub updateDamageTables {
 				$monsters{$ID1}{'dmgToParty'} += $damage;
 				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
 			}
+			$monsters{$ID1}{target} = $ID2;
 		}
 		
 	} elsif ($players{$ID1}) {
@@ -10454,6 +10471,17 @@ sub checkSelfCondition {
 		return 0 unless $exists;
 	}
 
+	if ($config{$prefix . "_defendMonsters"} && !($prefix =~ /skillSlot/i)) {
+		my $exists;
+		foreach (ai_getMonstersAttacking($accountID)) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
+				$exists = 1;
+				last;
+			}
+		}
+		return 0 unless $exists;
+	}
+
 	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
@@ -10518,6 +10546,17 @@ sub checkPlayerCondition {
 	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
 		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getPlayerAggressives($id));
 		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getPlayerAggressives($id));
+	}
+
+	if ($config{$prefix . "_defendMonsters"}) {
+		my $exists;
+		foreach (ai_getMonstersAttacking($id)) {
+			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
+				$exists = 1;
+				last;
+			}
+		}
+		return 0 unless $exists;
 	}
 
 	if ($config{$prefix . "_monsters"}) {
