@@ -10,6 +10,7 @@ master_version_0 1
 
 version 18
 #encrypt 2
+secure 0
 
 XKore 0
 exeName ragexe.exe
