@@ -54,6 +54,8 @@ New features:
   the dynamic interface (support for left/right arrow keys, etc.) will work
   out-of-the-box on many systems now.
 - Support for creation and deletion of characters.
+- Weapon upgrades are now detected.
+- Newbie zones are now correctly supported.
 - Delay of attacks is now displayed. 200 - Delay indicates the ASPD.
 
 New commands:
@@ -84,6 +86,8 @@ Bug fixes:
 - $item->{type} is now set correctly for equipment in storage.
 - When following players by name, typing 'follow A' then 'follow B' would
   cause you to still be following A instead of B.
+- Fixed a crash when cart inventory is not available (such as during login).
+- Correctly resize the map viewer in Wx interface.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
@@ -92,7 +96,6 @@ Internal:
   C-to-Perl interface.
 - Kore now detects what directory its executable is in, and adds it to
   its include path (@INC).
-- Fixed a crash when cart inventory is not available (such as during login).
 - Some parseMsg messages moved to parseMsg_presence.
 - Improved lockMap and randomWalk settings. Without route_randomWalk,
   lockMap_randX/Y modify the lockMap_x/y position by a random amount. If

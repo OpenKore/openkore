@@ -118,7 +118,9 @@ sub Fit {
 
 			my @timers;
 			my $set = sub {
+				$self->{control}->SetSize($w, $h);
 				$self->{dialog}->SetClientSize($w, $h);
+				$self->{dialog}->Fit;
 				foreach (@timers) {
 					$_->Stop();
 				}
