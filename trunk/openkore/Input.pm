@@ -116,4 +116,8 @@ sub readLine {
 }
 
 
+END {
+	stop();
+}
+
 return 1;

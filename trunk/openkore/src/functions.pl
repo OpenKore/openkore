@@ -14,6 +14,7 @@ use Getopt::Long;
 use Digest::MD5 qw(md5);
 use Config;
 
+
 #######################################
 #INITIALIZE VARIABLES
 #######################################
@@ -287,10 +288,6 @@ sub checkConnection {
 			aiRemove("route_getRoute");
 			aiRemove("route_getMapRoute");
 		}
-		
-		#thaught maybe a relog would be called for in any case
-		#to force the bot to go to a different field etc because as it stands, if the bot is on the way to field x
-		#due to lockmap, and it changes config with a lockmap y, it'll still finish walking to x, then calculate route to y
 
 		initConfChange();
 	}
@@ -317,7 +314,7 @@ sub parseInput {
 		BUFFER->autoflush(0);
 	}
 
-#Check if in special state
+	# Check if in special state
 
 	if (!$config{'XKore'} && $conState == 2 && $waitingForInput) {
 		$config{'server'} = $input;
@@ -331,7 +328,7 @@ sub parseInput {
 		$timeout{'charlogin'}{'time'} = time;
 
 
-#Parse command...ugh
+	# Parse command...ugh
 
 	} elsif ($switch eq "a") {
 		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
@@ -4851,8 +4848,8 @@ sub parseSendMsg {
 
 
 ##
-# parseMsg($msg)
-# $msg: The data to parse, as received from the socket.
+# parseMsg(msg)
+# msg: The data to parse, as received from the socket.
 # Returns: The remaining bytes.
 #
 # When data (packets) from the RO server is received, it will be send to this
@@ -6836,8 +6833,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		undef %incomingDeal;
 
 	} elsif ($switch eq "00E9") {
-		$amount = unpack("L*", substr($msg, 2,4));
-		$ID = unpack("S*", substr($msg, 6,2));
+		my $amount = unpack("L*", substr($msg, 2,4));
+		my $ID = unpack("S*", substr($msg, 6,2));
 		if ($ID > 0) {
 			$currentDeal{'other'}{$ID}{'amount'} += $amount;
 			$display = ($items_lut{$ID} ne "")
@@ -6847,6 +6844,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "$currentDeal{'name'} added Item to Deal: $currentDeal{'other'}{$ID}{'name'} x $amount\n";
 		} elsif ($amount > 0) {
 			$currentDeal{'other_zenny'} += $amount;
+			$amount = formatNumber($amount);
 			print "$currentDeal{'name'} added $amount z to Deal\n";
 		}
 
@@ -8246,11 +8244,11 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 #######################################
 
 ##
-# ai_clientSuspend($type, $initTimeout, @args...)
-# $initTimeout: a number of seconds.
+# ai_clientSuspend(type, initTimeout, args...)
+# initTimeout: a number of seconds.
 #
-# Freeze the AI for $initTimeout seconds. $type and @args are ignored
-# unless XKore mode is turned on, and are only used internally.
+# Freeze the AI for $initTimeout seconds. $type and @args are only
+# used internally and are ignored unless XKore mode is turned on.
 sub ai_clientSuspend {
 	my ($type,$initTimeout,@args) = @_;
 	my %args;
@@ -8330,7 +8328,7 @@ sub ai_getSkillUseType {
 }
 
 ##
-# ai_itemExchangeCheck([$exchange])
+# ai_itemExchangeCheck([exchange])
 #
 # This is where most of the actual calculation for the item exchange is done.
 # If $exchange equals "minimum", we only check that we can do
@@ -11321,8 +11319,8 @@ sub getTickCount {
 }
 
 ##
-# formatNumber($num)
-# $num: An integer number number.
+# formatNumber(num)
+# num: An integer number.
 # Returns: A formatted number with commas.
 #
 # Add commas to $num so large numbers are more readable.
@@ -11356,11 +11354,11 @@ sub formatNumber {
 }
 
 ##
-# lookAtPosition($pos, [$headdir])
-# $pos: a reference to a coordinate hash.
-# $headdir: 0 = face directly, 1 = look right, 2 = look left
+# lookAtPosition(pos, [headdir])
+# pos: a reference to a coordinate hash.
+# headdir: 0 = face directly, 1 = look right, 2 = look left
 #
-# Look at position $pos.
+# Turn face and body direction to position %pos.
 sub lookAtPosition {
 	my $pos1 = $chars[$config{'char'}]{'pos_to'};
 	my $pos2 = shift;
@@ -11463,9 +11461,9 @@ sub timeOut {
 }
 
 ##
-# timeConvert($time)
-# $time: number of seconds.
-# Returns: a string.
+# timeConvert(time)
+# time: number of seconds.
+# Returns: a human-readable version of $time.
 #
 # Converts $time into a string in the form of "x seconds y minutes z seconds".
 sub timeConvert {
