@@ -3272,7 +3272,7 @@ sub AI {
 	}
 
 	# Use party information to find master
-	if (!exists $ai_seq_args[$followIndex]{'following'} && !exists $ai_seq_args[$followIndex]{'ai_follow_lost'}) {
+	if (!exists $ai_seq_args[$followIndex]{following} && !exists $ai_seq_args[$followIndex]{ai_follow_lost}) {
 		ai_partyfollow();
 	}
 	} # end of FOLLOW block
@@ -3919,8 +3919,8 @@ sub AI {
 	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || $ai_v{temp}{teleport}{lv})
 		&& timeOut($timeout{ai_item_equip_auto})) {
 
-		my $ai_index_attack = AI::find("attack");
-		my $ai_index_skill_use = AI::find("skill_use");
+		my $ai_index_attack = AI::findAction("attack");
+		my $ai_index_skill_use = AI::findAction("skill_use");
 
 		my $currentSkill;
 		if (defined $ai_index_skill_use) {
@@ -4651,10 +4651,10 @@ sub AI {
 
 	##### SEND EMOTICON #####
 	SENDEMOTION: {
-	my $ai_sendemotion_index = AI::find("sendEmotion");
+	my $ai_sendemotion_index = AI::findAction("sendEmotion");
 	last SENDEMOTION if (!defined $ai_sendemotion_index || time < AI::args->{timeout});
 	sendEmotion(\$remote_socket, AI::args->{emotion});
-	aiRemove("sendEmotion");
+	AI::remove("sendEmotion");
 	}
 
 
@@ -8220,47 +8220,42 @@ sub ai_partyfollow {
 
 	my %master;
 	$master{id} = findPartyUserID($config{followTarget});
-	if (($master{id} ne "") 
-	 && $ai_seq[0] ne "dead"
-	 && (binFind(\@ai_seq, "storageAuto") eq "")
-	 && (binFind(\@ai_seq, "storageGet") eq "")
-	 && (binFind(\@ai_seq, "sellAuto") eq "")
-	 && (binFind(\@ai_seq, "buyAuto") eq "")) {
+	if ($master{id} ne "" && !AI::inQueue("storageAuto,storageGet,sellAuto,buyAuto")) {
 
-		$master{x} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{x};
-		$master{y} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{y};
-		($master{map}) = $chars[$config{char}]{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
+		$master{x} = $char->{party}{users}{$master{id}}{pos}{x};
+		$master{y} = $char->{party}{users}{$master{id}}{pos}{y};
+		($master{map}) = $char->{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
 
-		if ($master{map} ne $field{'name'} || $master{x} == 0 || $master{y} == 0) {
-			undef $master{x};
-			undef $master{y};
+		if ($master{map} ne $field{name} || $master{x} == 0 || $master{y} == 0) {
+			delete $master{x};
+			delete $master{y};
 		}			
 
-		return unless ($master{map} ne $field{'name'} || defined $master{x});
+		return unless ($master{map} ne $field{name} || exists $master{x});
 		
-		if (distance(\%master, \%{$ai_v{temp}{master}}) > 15 || $master{map} != $ai_v{temp}{master}{map}
-		|| (timeOut($ai_v{temp}{time}, 15) && distance(\%master, $chars[$config{char}]{pos_to}) > $config{followDistanceMax})) {
-			$ai_v{temp}{master}{x} = $master{x};
-			$ai_v{temp}{master}{y} = $master{y};
-			$ai_v{temp}{master}{map} = $master{map};
-			$ai_v{temp}{time} = time; 
+		if ((exists $ai_v{master} && distance(\%master, \%{$ai_v{master}}) > 15)
+			|| $master{map} != $ai_v{master}{map}
+			|| (timeOut($ai_v{master}{time}, 15) && distance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
 
-			if (defined($ai_v{temp}{master}{x}) && defined($ai_v{temp}{master}{y})) {
-				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'} ($ai_v{temp}{master}{x},$ai_v{temp}{master}{y})\n", "follow";
-			} elsif ($ai_v{temp}{master}{x} ne '0' && $ai_v{temp}{master}{y} ne '0') {
-				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'}\n", "follow";
+			$ai_v{master}{x} = $master{x};
+			$ai_v{master}{y} = $master{y};
+			$ai_v{master}{map} = $master{map};
+			$ai_v{master}{time} = time; 
+
+			if ($ai_v{master}{map} ne $field{name}) {
+				message "Calculating route to find master: $maps_lut{$ai_v{master}{map}.'.rsw'}\n", "follow";
+			} elsif (distance(\%master, $char->{pos_to}) > $config{followDistanceMax} ) {
+				message "Calculating route to find master: $maps_lut{$ai_v{master}{map}.'.rsw'} ($ai_v{master}{x},$ai_v{master}{y})\n", "follow";
 			} else {
 				return;
 			}
 
-			aiRemove("move");
-			aiRemove("route");
-			aiRemove("mapRoute");
-			ai_route($ai_v{temp}{master}{map}, $ai_v{temp}{master}{x}, $ai_v{temp}{master}{y}, distFromGoal => $config{'followDistanceMin'});
+			AI::remove("move,route,mapRoute");
+			ai_route($ai_v{master}{map}, $ai_v{master}{x}, $ai_v{master}{y}, distFromGoal => $config{followDistanceMin});
 			
-			my $followIndex;
-			if (($followIndex = binFind(\@ai_seq, "follow")) ne "") {
-				$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
+			my $followIndex = AI::findAction("follow");
+			if (defined $followIndex) {
+				$ai_seq_args[$followIndex]{ai_follow_lost_end}{timeout} = $timeout{ai_follow_lost_end}{timeout};
 			}
 		}		
 	}
