@@ -457,7 +457,6 @@ sub parseCommand {
 		}
 		message(('-'x79)."\n", "list");
 		message("You have earned: " . formatNumber($shopEarned) . "z.\n", "list");
-
 	} elsif ($switch eq "as") {
 		# Stop attacking monster
 		my $index = binFind(\@ai_seq, "attack");
@@ -3798,10 +3797,9 @@ sub AI {
 	##### AUTO-ITEM USE #####
 
 	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack", AI::action))
-	  && timeOut($timeout{ai_item_use_auto})) {
+		&& timeOut(\%{$timeout{ai_item_use_auto}})) {
 		my $i = 0;
-		while (1) {
-			last if (!$config{"useSelf_item_$i"});
+		while (defined($config{"useSelf_item_$i"})) {
 			if (checkSelfCondition("useSelf_item_$i")) {
 				my $index = findIndexStringList_lc(\@{$char->{inventory}}, "name", $config{"useSelf_item_$i"});
 				if (defined $index) {
@@ -3822,8 +3820,7 @@ sub AI {
 	if (AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack", AI::action)) {
 		my $i = 0;
 		my %self_skill = ();
-		while (1) {
-			last if (!$config{"useSelf_skill_$i"});
+		while (defined($config{"useSelf_skill_$i"})) {
 			if (checkSelfCondition("useSelf_skill_$i")) {
 				AI::v->{"useSelf_skill_$i"."_time"} = time;
 				$self_skill{ID} = $skills_rlut{lc($config{"useSelf_skill_$i"})};
@@ -3863,64 +3860,56 @@ sub AI {
 	
 	##### PARTY-SKILL USE ##### 
 
-	#FIXME: need to move closer before using skill, there might be line of sight problem too...
-	
-	if (%{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
-	  || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"
-	  || $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack" || $ai_seq[0] eq "move") ){
+	if (%{$char->{party}} && (AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack,move", AI::action))){
 		my $i = 0;
-		undef $ai_v{'partySkill'};
-		undef $ai_v{'partySkill_lvl'};
-		undef $ai_v{'partySkill_targetID'};
+		my $party_skill = ();
 		while (defined($config{"partySkill_$i"})) {
 			for (my $j = 0; $j < @partyUsersID; $j++) {
 				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
 				if ($players{$partyUsersID[$j]}
-					&& inRange(distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}), $config{partySkillDistance} || "1..8")
-					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}))
+					&& inRange(distance(\%{$char->{pos_to}}, \%{$$char->{party}{users}{$partyUsersID[$j]}{pos}}), $config{partySkillDistance} || "1..8")
+					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $char->{party}{users}{$partyUsersID[$j]}{'name'}))
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
 					){
-						$ai_v{"partySkill_$i"."_time"} = time;
-						$ai_v{'partySkill'} = $config{"partySkill_$i"};
-
-						my $skillID = $skillsID_rlut{lc($ai_v{partySkill})};
-						$targetTimeout{$partyUsersID[$j]}{$skillID} = $i;
-
-						$ai_v{'partySkill_target'} = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'};
-						$ai_v{'partySkill_targetID'} = $partyUsersID[$j];
-						$ai_v{'partySkill_lvl'} = $config{"partySkill_$i"."_lvl"};
-						$ai_v{'partySkill_maxCastTime'} = $config{"partySkill_$i"."_maxCastTime"};
-						$ai_v{'partySkill_minCastTime'} = $config{"partySkill_$i"."_minCastTime"};						
-						last;
-				}
-			}
-			
-			$i++;
-			last if (defined($ai_v{'partySkill_targetID'}));
-		}
-
-		if ($config{'useSelf_skill_smartHeal'} && $skills_rlut{lc($ai_v{'partySkill'})} eq "AL_HEAL") {
-			undef $ai_v{'partySkill_smartHeal_lvl'};
-			$ai_v{'partySkill_smartHeal_hp_dif'} = $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'hp_max'} - $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'hp'};
-			for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'lv'}; $i++) {
-				$ai_v{'partySkill_smartHeal_lvl'} = $i;
-				$ai_v{'partySkill_smartHeal_sp'} = 10 + ($i * 3);
-				$ai_v{'partySkill_smartHeal_amount'} = int(($chars[$config{'char'}]{'lv'} + $chars[$config{'char'}]{'int'}) / 8) * (4 + $i * 8);
-				if ($chars[$config{'char'}]{'sp'} < $ai_v{'partySkill_smartHeal_sp'}) {
-					$ai_v{'partySkill_smartHeal_lvl'}--;
+					AI::v->{"partySkill_$i"."_time"} = time;
+					$party_skill{skillID} = $skillsID_rlut{lc($ai_v{partySkill})};
+					$party_skill{skillLvl} = $config{"partySkill_$i"."_lvl"};
+					$party_skill{target} = $char->{party}{users}{$partyUsersID[$j]}{name};
+					$party_skill{targetID} = $partyUsersID[$j];
+					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
+					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
+					$targetTimeout{$partyUsersID[$j]}{$skillID} = $i;
 					last;
 				}
-				last if ($ai_v{'partySkill_smartHeal_amount'} >= $ai_v{'partySkill_smartHeal_hp_dif'});
 			}
-			$ai_v{'partySkill_lvl'} = $ai_v{'partySkill_smartHeal_lvl'};
+			$i++;
+			last if (defined($party_skill{targetID}));
 		}
-		if ($ai_v{'partySkill_lvl'} > 0) {
+
+		if ($config{useSelf_skill_smartHeal} && $party_skil{skillID} eq "AL_HEAL") {
+			my $smartHeal_lv = 1;
+			my $hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
+			for ($i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
+				my $sp_req, $amount;
+				
+				$smartHeal_lv = $i;
+				$sp = 10 + ($i * 3);
+				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
+				if ($char->{sp} < $sp_req) {
+					$smartHeal_lv--;
+					last;
+				}
+				last if ($amount >= $hp_diff);
+			}
+			$party_skill{skillLvl} = $smartHeal_lv;
+		}
+		if ($party_skill{skillLvl} > 0) {
 			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}) Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'partySkill'})}} (lvl $ai_v{'partySkill_lvl'})\n~ if $config{'debug'};
-			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'partySkill'})})) {
-				ai_skillUse($skills_rlut{lc($ai_v{'partySkill'})}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $ai_v{'partySkill_targetID'});
+			if (!ai_getSkillUseType($party_skill{skillID})) {
+				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $party_skill{targetID});
 			} else {
-				ai_skillUse($skills_rlut{lc($ai_v{'partySkill'})}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'x'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'y'});
+				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $char->{party}{users}{$party_skill{targetID}}{pos}{x}, $char->{party}{users}{$party_skill{targetID}}{pos}{y});
 			}
 		}
 	}
@@ -3986,11 +3975,15 @@ sub AI {
 	}
 
 	##### SKILL USE #####
+	#FIXME: need to move closer before using skill on player,
+	#there might be line of sight problem too or the player
+	#or the player disappers from the area
+	
 	if (AI::action eq "skill_use" && AI::args->{suspended}) {
 		AI::args->{ai_skill_use_giveup}{time} += time - AI::args->{suspended};
 		AI::args->{ai_skill_use_minCastTime}{time} += time - AI::args->{suspended};
 		AI::args->{ai_skill_use_maxCastTime}{time} += time - AI::args->{suspended};
-		undef AI::args->{suspended};
+		delete AI::args->{suspended};
 	}
 
 	if (AI::action eq "skill_use") {
@@ -4125,9 +4118,10 @@ sub AI {
 					while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
 							 && distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps+1])
 							    < distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps])
-						) {
-						$trimsteps++;
-					}
+						) { 
+						$trimsteps++; 
+					} 
+
 					$trimsteps = @{$ai_seq_args[0]{'solution'}} - 1 if ($trimsteps >= @{$ai_seq_args[0]{'solution'}});
 					debug "Route - trimming down solution by $trimsteps steps\n", "route";
 					splice(@{$ai_seq_args[0]{'solution'}}, 0, $trimsteps) if ($trimsteps > 0);
@@ -4343,137 +4337,130 @@ sub AI {
 	##### ITEMS TAKE #####
 	# Look for loot to pickup when your monster died.
 
-	if ($ai_seq[0] eq "items_take" && $ai_seq_args[0]{'suspended'}) {
-		$ai_seq_args[0]{'ai_items_take_start'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		$ai_seq_args[0]{'ai_items_take_end'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		undef $ai_seq_args[0]{'suspended'};
+	if (AI::action eq "items_take" && AI::args->{suspended}) {
+		AI::args->{ai_items_take_start}{time} += time - AI::args->{suspended};
+		AI::args->{ai_items_take_end}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
 	}
-	if ($ai_seq[0] eq "items_take" && (percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})) {
-		shift @ai_seq;
-		shift @ai_seq_args;
-		ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
+	if (AI::action eq "items_take" && (percent_weight($char) >= $config{itemsMaxWeight})) {
+		AI::dequeue;
+		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout});
 	}
-	if ($config{'itemsTakeAuto'} && $ai_seq[0] eq "items_take" && timeOut(\%{$ai_seq_args[0]{'ai_items_take_start'}})) {
-		undef $ai_v{'temp'}{'foundID'};
+	if ($config{itemsTakeAuto} && AI::action eq "items_take" && timeOut(\%{AI::args->{ai_items_take_start}})) {
+		my $foundID;
+		my $dist, $dist_to;
+		
 		foreach (@itemsID) {
-			next if ($_ eq "" || $itemsPickup{lc($items{$_}{'name'})} eq "0" || (!$itemsPickup{'all'} && !$itemsPickup{lc($items{$_}{'name'})}));
-			$ai_v{'temp'}{'dist'} = distance(\%{$items{$_}{'pos'}}, \%{$ai_seq_args[0]{'pos'}});
-			$ai_v{'temp'}{'dist_to'} = distance(\%{$items{$_}{'pos'}}, \%{$ai_seq_args[0]{'pos_to'}});
-			if (($ai_v{'temp'}{'dist'} <= 4 || $ai_v{'temp'}{'dist_to'} <= 4) && $items{$_}{'take_failed'} == 0) {
-				$ai_v{'temp'}{'foundID'} = $_;
+			next if ($_ eq "" || $itemsPickup{lc($items{$_}{name})} eq "0" || (!$itemsPickup{all} && !$itemsPickup{lc($items{$_}{name})}));
+			$dist = distance(\%{$items{$_}{pos}}, \%{AI::args->{pos}});
+			$dist_to = distance(\%{$items{$_}{pos}}, \%{AI::args->{pos_to}});
+			if (($dist <= 4 || $dist_to <= 4) && $items{$_}{take_failed} == 0) {
+				$foundID = $_;
 				last;
 			}
 		}
-		if ($ai_v{'temp'}{'foundID'}) {
-			$ai_seq_args[0]{'ai_items_take_end'}{'time'} = time;
-			$ai_seq_args[0]{'started'} = 1;
-			take($ai_v{'temp'}{'foundID'});
-		} elsif ($ai_seq_args[0]{'started'} || timeOut(\%{$ai_seq_args[0]{'ai_items_take_end'}})) {
-			shift @ai_seq;
-			shift @ai_seq_args;
-			ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
+		if ($foundID) {
+			AI::args->{ai_items_take_end}{time} = time;
+			AI::args->{started} = 1;
+			take($foundID);
+		} elsif (AI::args->{started} || timeOut(\%{AI::args->{ai_items_take_end}})) {
+			AI::dequeue;
+			ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout});
 		}
 	}
-
 
 
 	##### ITEMS AUTO-GATHER #####
 
+	if ((AI::isIdle || existsInList("follow,route,mapRoute", AI::action))
+		&& $config{itemsGatherAuto}
+		&& !(percent_weight($char) >= $config{itemsMaxWeight})
+		&& timeOut(\%{$timeout{ai_items_gather_auto}})) {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute")
-	    && $config{'itemsGatherAuto'}
-	    && !(percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
-	    && timeOut(\%{$timeout{'ai_items_gather_auto'}})) {
-		undef @{$ai_v{'ai_items_gather_foundIDs'}};
+		my @ai_gather_playerID;
 		foreach (@playersID) {
 			next if ($_ eq "");
-			if (!%{$chars[$config{'char'}]{'party'}} || !%{$chars[$config{'char'}]{'party'}{'users'}{$_}}) {
-				push @{$ai_v{'ai_items_gather_foundIDs'}}, $_;
+			if (!%{$$char->{party}} || !%{$$char->{party}{users}{$_}}) {
+				push @ai_gather_playerID, $_;
 			}
 		}
 		foreach $item (@itemsID) {
-			next if ($item eq "" || time - $items{$item}{'appear_time'} < $timeout{'ai_items_gather_start'}{'timeout'}
-				|| $items{$item}{'take_failed'} >= 1
-				|| $itemsPickup{lc($items{$item}{'name'})} eq "0" || (!$itemsPickup{'all'} && !$itemsPickup{lc($items{$item}{'name'})}));
-			undef $ai_v{'temp'}{'dist'};
-			undef $ai_v{'temp'}{'found'};
-			foreach (@{$ai_v{'ai_items_gather_foundIDs'}}) {
-				$ai_v{'temp'}{'dist'} = distance(\%{$items{$item}{'pos'}}, \%{$players{$_}{'pos_to'}});
-				if ($ai_v{'temp'}{'dist'} < 9) {
-					$ai_v{'temp'}{'found'} = 1;
+			next if ($item eq ""
+				|| time - $items{$item}{appear_time} < $timeout{ai_items_gather_start}{timeout}
+				|| $items{$item}{take_failed} >= 1
+				|| $itemsPickup{lc($items{$item}{name})} eq "0" || (!$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})}));
+
+			my $found = 0;
+			foreach (@ai_gather_playerID) {
+				if (distance(\%{$items{$item}{pos}}, \%{$players{$_}{pos_to}}) < 9) {
+					$found = 1;
 					last;
 				}
 			}
-			if ($ai_v{'temp'}{'found'} == 0) {
+			if (!$found) {
 				gather($item);
 				last;
 			}
 		}
-		$timeout{'ai_items_gather_auto'}{'time'} = time;
+		$timeout{ai_items_gather_auto}{time} = time;
 	}
-
 
 
 	##### ITEMS GATHER #####
 
-
-	if ($ai_seq[0] eq "items_gather" && $ai_seq_args[0]{'suspended'}) {
-		$ai_seq_args[0]{'ai_items_gather_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		undef $ai_seq_args[0]{'suspended'};
+	if (AI::action eq "items_gather" && AI::args->{suspended}) {
+		AI::args->{suspended}{ai_items_gather_giveup}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
 	}
-	if ($ai_seq[0] eq "items_gather" && !%{$items{$ai_seq_args[0]{'ID'}}}) {
-    message "Failed to gather $items_old{$ai_seq_args[0]{'ID'}}{'name'} ($items_old{$ai_seq_args[0]{'ID'}}{'binID'}) : Lost target\n", "drop";
-		shift @ai_seq;
-		shift @ai_seq_args;
-	} elsif ($ai_seq[0] eq "items_gather") {
-		undef $ai_v{'temp'}{'dist'};
-		undef @{$ai_v{'ai_items_gather_foundIDs'}};
-		undef $ai_v{'temp'}{'found'};
+	if (AI::action eq "items_gather" && !%{$items{AI::args->{ID}}}) {
+		message "Failed to gather $items_old{AI::args->{ID}}{name} ($items_old{AI::args->{ID}}{binID}) : Lost target\n", "drop";
+		AI::dequeue;
+
+	} elsif (AI::action eq "items_gather") {
+		my $ID = AI::args->{ID};
+		my $found = 0;
+		my @ai_gather_playerID;
+		
 		foreach (@playersID) {
 			next if ($_ eq "");
-			if (%{$chars[$config{'char'}]{'party'}} && !%{$chars[$config{'char'}]{'party'}{'users'}{$_}}) {
-				push @{$ai_v{'ai_items_gather_foundIDs'}}, $_;
+			if (!%{$$char->{party}} || !%{$$char->{party}{users}{$_}}) {
+				push @ai_gather_playerID, $_;
 			}
 		}
-		foreach (@{$ai_v{'ai_items_gather_foundIDs'}}) {
-			$ai_v{'temp'}{'dist'} = distance(\%{$items{$ai_seq_args[0]{'ID'}}{'pos'}}, \%{$players{$_}{'pos'}});
-			if ($ai_v{'temp'}{'dist'} < 9) {
-				$ai_v{'temp'}{'found'}++;
+		foreach (@ai_gather_playerID) {
+			if (distance(\%{$items{$ID}{pos}}, \%{$players{$_}{pos_to}}) < 9) {
+				$found++;
+				last;
 			}
 		}
-		$ai_v{'temp'}{'dist'} = distance(\%{$items{$ai_seq_args[0]{'ID'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-		if (timeOut(\%{$ai_seq_args[0]{'ai_items_gather_giveup'}})) {
-			message "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout\n",,1;
-			$items{$ai_seq_args[0]{'ID'}}{'take_failed'}++;
-			shift @ai_seq;
-			shift @ai_seq_args;
-		} elsif ($chars[$config{'char'}]{'sitting'}) {
-			ai_setSuspend(0);
+		my $dist = distance(\%{$items{$ID}{pos}}, \%{$char->{pos_to}});
+		if (timeOut(\%{AI::args->{ai_items_gather_giveup}})) {
+			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : Timeout\n",,1;
+			$items{$ID}{take_failed}++;
+			AI::dequeue;
+		} elsif ($char->{sitting}) {
+			AI::suspend;
 			stand();
-		} elsif ($ai_v{'temp'}{'found'} == 0 && $ai_v{'temp'}{'dist'} > 2) {
-			getVector(\%{$ai_v{'temp'}{'vec'}}, \%{$items{$ai_seq_args[0]{'ID'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-			moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_v{'temp'}{'vec'}}, $ai_v{'temp'}{'dist'} - 1);
-			move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
-		} elsif ($ai_v{'temp'}{'found'} == 0) {
-			$ai_v{'ai_items_gather_ID'} = $ai_seq_args[0]{'ID'};
-			shift @ai_seq;
-			shift @ai_seq_args;
-			take($ai_v{'ai_items_gather_ID'});
-		} elsif ($ai_v{'temp'}{'found'} > 0) {
-			message "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!\n",,1;
-			shift @ai_seq;
-			shift @ai_seq_args;
+		} elsif ($found == 0 && $dist > 2) {
+			my %vec, %pos;
+			getVector(\%vec, \%{$items{$ID}{pos}}, \%{$$char->{pos_to}});
+			moveAlongVector(\%pos, \%{$char->{pos_to}}, \%vec, $dist - 1);
+			move($pos{x}, $pos{y});
+		} elsif ($found == 0) {
+			AI::dequeue;
+			take($ID);
+		} elsif ($found > 0) {
+			message "Failed to gather $items{$ID}{name} ($items{$ID}}{binID}) : No looting!\n",,1;
+			AI::dequeue;
 		}
 	}
-
 
 
 	##### TAKE #####
 
-
 	if (AI::action eq "take" && AI::args->{suspended}) {
 		AI::args->{ai_take_giveup}{time} += time - AI::args->{suspended};
-		undef AI::args->{suspended};
+		delete AI::args->{suspended};
 	}
 	
 	if (AI::action eq "take" && !%{$items{AI::args->{ID}}}) {
@@ -4487,12 +4474,12 @@ sub AI {
 	} elsif (AI::action eq "take") {
 		my $ID = AI::args->{ID};
 		my $dist = distance(\%{$items{$ID}{pos}}, \%{$char->{pos_to}});
-		my %vec, %pos;
 		
 		if ($char->{sitting}) {
 			stand();
 
 		} elsif ($dist > 2) {
+			my %vec, %pos;
 			getVector(\%vec, \%{$items{$ID}{pos}}, \%{$char->{pos_to}});
 			moveAlongVector(\%pos, \%{$char->{pos_to}}, \%vec, $dist - 1);
 			move($pos{x}, $pos{y});
@@ -5666,11 +5653,11 @@ sub parseMsg {
 
 		chatLog("c", "$chat\n") if ($config{'logChat'});
 		message "$chat\n", "publicchat";
-		
-		Plugins::callHook('packet_pubMsg', {
-			pubMsgUser => $chatMsgUser,
-			pubMsg => $chatMsg
-		});
+
+		Plugins::callHook('packet_pubMsg', { 
+			pubMsgUser => $chatMsgUser, 
+			pubMsg => $chatMsg 
+		}); 
 
 	} elsif ($switch eq "008E") {
 		$chat = substr($msg, 4, $msg_size - 4);
@@ -8164,12 +8151,11 @@ sub parseMsg {
 sub ai_clientSuspend {
 	my ($type,$initTimeout,@args) = @_;
 	my %args;
-	$args{'type'} = $type;
-	$args{'time'} = time;
-	$args{'timeout'} = $initTimeout;
-	@{$args{'args'}} = @args;
-	unshift @ai_seq, "clientSuspend";
-	unshift @ai_seq_args, \%args;
+	$args{type} = $type;
+	$args{time} = time;
+	$args{timeout} = $initTimeout;
+	@{$args{args}} = @args;
+	AI::queue("clientSuspend", \%args);
 }
 
 ##
@@ -8404,16 +8390,15 @@ sub ai_mapRoute_searchStep {
 sub ai_items_take {
 	my ($x1, $y1, $x2, $y2) = @_;
 	my %args;
-	$args{'pos'}{'x'} = $x1;
-	$args{'pos'}{'y'} = $y1;
-	$args{'pos_to'}{'x'} = $x2;
-	$args{'pos_to'}{'y'} = $y2;
-	$args{'ai_items_take_end'}{'time'} = time;
-	$args{'ai_items_take_end'}{'timeout'} = $timeout{'ai_items_take_end'}{'timeout'};
-	$args{'ai_items_take_start'}{'time'} = time;
-	$args{'ai_items_take_start'}{'timeout'} = $timeout{'ai_items_take_start'}{'timeout'};
-	unshift @ai_seq, "items_take";
-	unshift @ai_seq_args, \%args;
+	$args{pos}{x} = $x1;
+	$args{pos}{y} = $y1;
+	$args{pos_to}{x} = $x2;
+	$args{pos_to}{y} = $y2;
+	$args{ai_items_take_end}{time} = time;
+	$args{ai_items_take_end}{timeout} = $timeout{ai_items_take_end}{timeout};
+	$args{ai_items_take_start}{time} = time;
+	$args{ai_items_take_start}{timeout} = $timeout{ai_items_take_start}{timeout};
+	AI::queue("items_take", \%args);
 }
 
 sub ai_route {
@@ -8887,13 +8872,12 @@ sub aiRemove {
 sub gather {
 	my $ID = shift;
 	my %args;
-	$args{'ai_items_gather_giveup'}{'time'} = time;
-	$args{'ai_items_gather_giveup'}{'timeout'} = $timeout{'ai_items_gather_giveup'}{'timeout'};
-	$args{'ID'} = $ID;
-	%{$args{'pos'}} = %{$items{$ID}{'pos'}};
-	unshift @ai_seq, "items_gather";
-	unshift @ai_seq_args, \%args;
-	debug "Targeting for Gather: $items{$ID}{'name'} ($items{$ID}{'binID'})\n";
+	$args{ai_items_gather_giveup}{time} = time;
+	$args{ai_items_gather_giveup}{timeout} = $timeout{ai_items_gather_giveup}{timeout};
+	$args{ID} = $ID;
+	%{$args{pos}} = %{$items{$ID}{pos}};
+	AI::queue("items_gather", \%args);
+	debug "Targeting for Gather: $items{$ID}{name} ($items{$ID}{binID})\n";
 }
 
 
@@ -9042,26 +9026,23 @@ sub sendMessage {
 }
 
 sub sit {
-	$timeout{'ai_sit_wait'}{'time'} = time;
-	unshift @ai_seq, "sitting";
-	unshift @ai_seq_args, {};
+	$timeout{ai_sit_wait}{time} = time;
+	AI::queue("sitting");
 }
 
 sub stand {
-	unshift @ai_seq, "standing";
-	unshift @ai_seq_args, {};
+	AI::queue("standing");
 }
 
 sub take {
 	my $ID = shift;
 	my %args;
-	$args{'ai_take_giveup'}{'time'} = time;
-	$args{'ai_take_giveup'}{'timeout'} = $timeout{'ai_take_giveup'}{'timeout'};
-	$args{'ID'} = $ID;
-	%{$args{'pos'}} = %{$items{$ID}{'pos'}};
-	unshift @ai_seq, "take";
-	unshift @ai_seq_args, \%args;
-	debug "Picking up: $items{$ID}{'name'} ($items{$ID}{'binID'})\n";
+	$args{ai_take_giveup}{time} = time;
+	$args{ai_take_giveup}{timeout} = $timeout{ai_take_giveup}{timeout};
+	$args{ID} = $ID;
+	%{$args{pos}} = %{$items{$ID}{pos}};
+	AI::queue("take", \%args);
+	debug "Picking up: $items{$ID}{name} ($items{$ID}{binID})\n";
 }
 
 #######################################
@@ -10193,13 +10174,13 @@ sub checkSelfCondition {
 	$prefix = shift;
 
 	return 0 if ($config{$prefix . "_disabled"} > 0);
-
+	
 	if ($config{$prefix . "_hp"}) { 
 		return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]}), $config{$prefix . "_hp"}));
 	} elsif ($config{$prefix . "_hp_upper"}) { # backward compatibility with old config format
 		return 0 unless (percent_hp(\%{$chars[$config{char}]}) <= $config{$prefix . "_hp_upper"} && percent_hp(\%{$chars[$config{char}]}) >= $config{$prefix . "_hp_lower"});
 	}
-
+		
 	if ($config{$prefix . "_sp"}) { 
 		return 0 unless (inRange(percent_sp(\%{$chars[$config{char}]}), $config{$prefix . "_sp"}));
 	} elsif ($config{$prefix . "_sp_upper"}) { # backward compatibility with old config format
