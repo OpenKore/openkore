@@ -4,6 +4,7 @@
  *               source files in libgrf.
  *  Copyright (C) 2004  Faithful <faithful@users.sf.net>
  *  Copyright (C) 2004  Hongli Lai <h.lai@chello.nl>
+ *  Copyright (C) 2004  Rasqual <rasqualtwilight@users.sf.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -180,7 +181,7 @@ typedef struct {
  *
  * \note GRAVITY's GrfFile struct is 0x114 bytes, in this order
  */
-typedef struct {
+typedef struct _GrfFile {
 	uint32_t compressed_len_aligned;	/*!< \brief size in file
 						 *
 						 * If using any form
@@ -249,6 +250,10 @@ typedef struct {
 	 * Commented out because it doesn't appear in GRAVITY's struct
 	 */
 	/* uint32_t cycle; */
+	
+	/* Extra data (which is not found in GRAVITY's struct) */
+	char *data;			/*!< \brief Uncompressed file data */
+	struct _GrfFile *next;		/*!< \brief Linked list */
 } GrfFile;
 
 /*! \brief Macro to check if a GrfFile is a directory entry
@@ -288,7 +293,7 @@ typedef struct {
 				 * Can files be encrypted or not?
 				 */
 	FILE *f;		/*!< \brief Internal use only */
-	void **filedatas;	/*!< \brief Internal use only
+	/* void **filedatas;	*/ /*!< \brief Internal use only
 				 *
 				 * Data for files (grf_put() or extracted)
 				 */

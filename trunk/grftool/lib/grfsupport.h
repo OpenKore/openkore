@@ -3,6 +3,7 @@
  *  grfsupport.h - commonly used functions
  *  Copyright (C) 2004  Faithful <faithful@users.sf.net>
  *  Copyright (C) 2004  Hongli Lai <h.lai@chello.nl>
+ *  Copyright (C) 2004  Rasqual <rasqualtwilight@users.sf.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,8 +28,6 @@
 
 GRFEXTERN_BEGIN
 
-typedef int (*GrfSortCallback) (GrfFile *f1, GrfFile *f2);
-
 # ifdef WIN32
 /* Windows function names are so... ugghhhh */
 #  define strcasecmp(a,b) _stricmp(a,b)
@@ -48,9 +47,11 @@ GRFINLINE uint32_t ToLittleEndian32(uint32_t);
 GRFEXPORT char *GRF_normalize_path(char *out, const char *in);
 GRFEXPORT uint32_t GRF_NameHash(const char *name);
 
-GRFEXPORT void grf_sort (Grf *grf, GrfSortCallback callback);
-GRFEXPORT int GRF_AlphaSort(GrfFile *g1, GrfFile *g2);
-GRFEXPORT int GRF_OffsetSort(GrfFile *g1, GrfFile *g2);
+GRFEXPORT void grf_sort (Grf *grf, int(*compar)(const void *, const void *));
+#define GRF_AlphaSort ((int(*)(const void *, const void *))GRF_AlphaSort_Func)
+GRFEXPORT int GRF_AlphaSort_Func(const GrfFile *g1, const GrfFile *g2);
+#define GRF_OffsetSort ((int(*)(const void *, const void *))GRF_OffsetSort_Func)
+GRFEXPORT int GRF_OffsetSort_Func(const GrfFile *g1, const GrfFile *g2);
 
 GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index);
 GRFEXPORT uint32_t grf_find_unused (Grf *grf, uint32_t len);
