@@ -253,7 +253,7 @@ if ($config{'XKore'}) {
 }
 
 our $remote_socket = new IO::Socket::INET;
-$ipc = new IPC;
+$ipc = new IPC if ($config{'ipc'});
 
 
 ### COMPILE PORTALS ###
