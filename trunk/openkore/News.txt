@@ -48,6 +48,22 @@ miss any of the new config options.
   IgnoreAll      -> ignoreAll
   maxDmg         -> teleportAuto_maxDmg
   teleportDeadly -> teleportAuto_deadly
+- Merged Karasu's storageAutoGet code and modified it a bit.
+  Config options:
+  getAuto_0 Red Potion
+  getAuto_0_minAmount 10
+  getAuto_0_maxAmount 50
+  getAuto_0_passive 0
+
+  Kore will go to storage (you need to set storageAuto and storageAuto_npc)
+  to get Red Potions when you have 10 or less Red Potions in your inventory.
+  It will get as many Red Potions as needed so that your inventory will have
+  50 of them.
+  If getAuto_0_passive is set to 1, then Kore will not go to storage when
+  you have less than 10 Red Potions in your inventory. But, next time it
+  goes to storage (because of overweight), it will get the Red Potions.
+- New config option: useSelf_skill_0_inLockOnly
+  Use a skill only when in lockMap.
 
 xlr82xs:
 - Removed dead monster count sub.
