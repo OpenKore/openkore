@@ -37,10 +37,9 @@ New config options:
 
 Bug fixes:
 - Kore can walk on walkable water now (bug #21).
-- getAuto never gets triggered if you're low on a certain item. This has
-  been fixed.
 - Don't open shop immediately after login in X-Kore mode (bug #49).
 - Re-entering a username/password works correctly now (bug #45).
+- sitAuto_idle doesn't conflict with shopAuto_open's timeout now (bug #50).
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
@@ -55,11 +54,12 @@ Credits:
 - Joseph: -1 flag support in mon_control.txt
 - aputs: Support for the _monsters option in useSelf_skill, useSelf_item
   and partySkill.
-- obyarou: Priority attack support for non-aggressive monsters.
+- obyarou: Priority attack support for non-aggressive monsters,
+  shop timeout in X-Kore bugfix (bug #49), sitAuto_idle vs
+  shopAuto_open conflict fix (bug #50).
 - fov: writeDataFile*() tweaks
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
-- obyarou: shop timeout in X-Kore bugfix (bug #49).
 - mfr: advanced 2-2 skills support.
 
 
