@@ -1,0 +1,7 @@
+; Def file for MSVC++
+EXPORTS
+	GetProcByName
+	InjectDLL
+	CalcPath_init
+	CalcPath_pathStep
+	CalcPath_destroy
