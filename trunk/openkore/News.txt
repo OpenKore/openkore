@@ -5,8 +5,9 @@
 Hopefully the last beta.
 
 New features:
-- added Unix (n)curses text UI console interface: --interface=Console::Curses
-- added command 'arrowcraft' - making arrows
+- Added (n)curses text UI console interface for Unix. You can start it with
+  the parameter: --interface=Console::Curses
+- Added command 'arrowcraft' - making arrows
 
 Bug fixes:
 - Fixed shopAuto_open timing problems with sitAuto (also changed ai_shop
@@ -29,6 +30,8 @@ Bug fixes:
 - The 'conf' command won't reveal passwords anymore (bug #18).
 - Fixed teleport using a skill not working on Athena servers (bug #17).
 - Fixed command 'i neq' (show unequipped items) not working.
+- The portalsLOS.txt entry for gef_dun00 -> gef_dun01 is fixed. This means
+  Kore can correctly walk from gef_dun00 to gef_dun01 again.
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
