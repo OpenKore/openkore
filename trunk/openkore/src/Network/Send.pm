@@ -883,21 +883,19 @@ sub sendMapLogin {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
 
-	} elsif ($config{serverType} == 3) { #OpenRO
-		my $key;
-
-		$key = pack("C*", 0x50, 0x92, 0x61, 0x00);
+	} elsif ($config{serverType} == 3) {
+		my $key = pack("C*", 0x50, 0x92, 0x61, 0x00);
 
 		$msg = pack("C*", 0x9b, 0, 0) .
-		$accountID .
-		pack("C*", 0, 0, 0, 0, 0) .
-		$charID .
-		pack("C*", 0x50, 0x92, 0x61, 0x00) . #not sure what this is yet (maybe $key?)
-#		$key .
-		pack("C*", 0xff, 0xff, 0xff) .
-		$sessionID .
-		pack("C*", 07, 69, 49, 00) . #not sure what this is either
-		pack("C*", $sex);
+			$accountID .
+			pack("C*", 0, 0, 0, 0, 0) .
+			$charID .
+			pack("C*", 0x50, 0x92, 0x61, 0x00) . #not sure what this is yet (maybe $key?)
+			#$key .
+			pack("C*", 0xff, 0xff, 0xff) .
+			$sessionID .
+			pack("V", getTickCount()) .
+			pack("C*", $sex);
 
 	} else {
 		my $key;
@@ -1043,9 +1041,11 @@ sub sendMove {
 	my $y = int scalar shift;
 	my $msg;
 
-	if ($config{serverType} == 3) { #OpenRO
-		$msg = pack("C*", 0xa7, 0x00, 0x60, 0x00, 0x00, 0x00) .
-			 pack("C*", 0xc7, 0x00, 0x00, 0x00) . getCoordString($x, $y);
+	if ($config{serverType} == 3) {
+		$msg = pack("C*", 0xA7, 0x00, 0x60, 0x00, 0x00, 0x00) .
+			# pack("C*", 0x0A, 0x01, 0x00, 0x00)
+			pack("C*", 0xC7, 0x00, 0x00, 0x00) .
+			getCoordString($x, $y);
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 	}
@@ -1341,10 +1341,10 @@ sub sendStand {
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
-	} elsif ($config{serverType} == 3) { #OpenRO
+	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-				      0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
-					0x00, 0x00, 0x00, 0x03);
+				  0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+				  0x00, 0x00, 0x00, 0x03);
 	} else {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x03);
@@ -1361,7 +1361,7 @@ sub sendSync {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x7E, 0x00) . pack("L1", getTickCount());
 
-	} elsif ($config{serverType} == 3) { #OpenRo
+	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0x89, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
