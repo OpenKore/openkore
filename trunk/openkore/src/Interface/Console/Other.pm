@@ -133,19 +133,17 @@ sub new {
 			$SIG{WINCH} = \&getTerminalSize;
 			getTerminalSize();
 		}
-		
-		THE_END: {
-			# Do nothing
-		};
 
 	} else {
 		$interface{inputMode} = 'none';
 	}
 
-	STDOUT->autoflush(0);
+	THE_END: {
+		STDOUT->autoflush(0);
 
-	bless \%interface, __PACKAGE__;
-	return \%interface;
+		bless \%interface, __PACKAGE__;
+		return \%interface;
+	}
 }
 
 sub DESTROY {
