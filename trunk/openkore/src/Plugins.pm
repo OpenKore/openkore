@@ -39,7 +39,7 @@ our @plugins;
 #
 # Loads all plugins from the plugins folder. Plugins must have the .pl extension.
 sub loadAll {
-	if (!readdir(DIR, $Settings::plugins_folder)) {
+	if (!opendir(DIR, $Settings::plugins_folder)) {
 		Log::error("Unable to load plugins from folder $Settings::plugins_folder ($!)\n", "plugins");
 		return 0;
 	}
@@ -93,10 +93,12 @@ sub unload {
 
 
 ##
-# Plugins::register(name, description, unload_callback)
+# Plugins::register(name, description, unload_callback, reload_callback)
 # name: The plugin's name.
 # description: A short one-line description of the plugin.
 # unload_callback: Reference to a function that will be called when the plugin is being unloaded.
+# reload_callback: Reference to a function that will be called when the plugin is being reloaded.
+# Returns: 1 if the plugin has been successfully registered, 0 if a plugin with the same name is already registered.
 #
 # Plugins should call this function when they are loaded. This function registers
 # the plugin in the plugin database. Registered plugins can be unloaded by the user.
@@ -109,6 +111,7 @@ sub register {
 	$plugin_info{'name'} = $name;
 	$plugin_info{'description'} = shift;
 	$plugin_info{'unload_callback'} = shift;
+	$plugin_info{'reload_callback'} = shift;
 	push @plugins, \%plugin_info;
 	return 1;
 }
