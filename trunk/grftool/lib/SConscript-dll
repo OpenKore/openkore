@@ -1,12 +1,17 @@
 Import('*')
 
+lib = env.Copy()
+lib['CPPPATH'] += ['zlib']
+lib['CPPDEFINES'] = ['GRF_BUILDING', 'SPR_BUILDING', 'WIN32']
+if DEBUG:
+	lib['CPPDEFINES'] += ['DEBUG']
+
 if platform == "cygwin":
 	# Compile the DLL on Cygwin.
-	env.StaticLibrary(
+	lib.StaticLibrary(
 		'static-grf-dll',
-		['grf.c', 'sprite.c'],
-		CPPDEFINES=['GRF_BUILDING', 'SPR_BUILDING', 'WIN32'],
-		CPPPATH=['$CPPPATH', 'zlib'])
+		['grf.c', 'sprite.c']
+		)
 
 	dllbld = Builder(action = [
 		'dllwrap --driver=gcc --target=i386-mingw32 -mno-cygwin --def lib/dll/grf.gccdef $SOURCE -o $TARGET lib/zlib/libgrfzlib-static.a',
@@ -15,16 +20,15 @@ if platform == "cygwin":
 	defbld = Builder(action = [
 		'dlltool --dllname grf.dll --output-def $TARGET --no-export-all-symbols --add-stdcall-alias $SOURCE'
 		])
-	dll = env.Copy(BUILDERS = { 'Dll' : dllbld, 'Def' : defbld })
+	dll = lib.Copy(BUILDERS = { 'Dll' : dllbld, 'Def' : defbld })
 
-	env.Depends('grf.dll', ['grf.gccdef'])
+	dll.Depends('grf.dll', ['grf.gccdef'])
 	dll.Def('grf.gccdef', 'libstatic-grf-dll.a');
 	Default(dll.Dll('grf.dll', 'libstatic-grf-dll.a'))
 
 else:
 	# Compile the DLL with MS Visual C++ and mingw. Not sure whether this works
-	env.SharedLibrary(
+	lib.SharedLibrary(
 		'static-grf-dll',
-		['grf.c', 'sprite.c'],
-		CPPDEFINES=['GRF_BUILDING', 'SPR_BUILDING', 'WIN32'],
-		CPPPATH=['$CPPPATH', 'zlib'])
+		['grf.c', 'sprite.c']
+		)
