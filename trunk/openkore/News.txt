@@ -6,6 +6,11 @@
 - Tools.dll is obsolete! You must get XSTools.dll and put it in your 
   'tools' folder. See the forum for more information:
   http://openkore.sourceforge.net/forum/viewtopic.php?p=17344#17344
+- The skill numbers listed in 'skills' have changed! They are now stable,
+  so for example 'Heal' will always be skill #28 no matter what character
+  you are playing, even if you equip accessories that grant skills.
+  If you previously made aliases for manually triggering skills, you will
+  have to edit them to use the new skill numbers.
 
 
 New features:
@@ -24,6 +29,22 @@ New features:
   (see control/routeweights.txt for configuration).
 - Some parseMsg messages moved to parseMsg_presence.
 - Support for advanced 2-2 skills.
+- If you are granted use of a temporary skill (e.g. Yggdrasil Leaf,
+  Abracadabra), you can use the sl/sm/sp/ss commands to cast it using the
+  number shown in the "Permitted to use" message. Example:
+
+  > ss 290
+  Permitted to use Defender (257), level 5
+  You use Abracadabra on yourself: Lv 10
+  > ss 257
+  You use Defender on yourself: Lv 5
+- 'monster', 'monocell', 'death' and 'mvp' commands have been removed. If you
+  actually use these, set these aliases in your config.txt:
+
+  alias_monster ss 293
+  alias_monocell sm 293
+  alias_death sp 295
+  alias_mvp sm 292
 
 New config options:
 - useSelfSkill_#_monsters

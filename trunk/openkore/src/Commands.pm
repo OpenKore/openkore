@@ -49,7 +49,6 @@ our %handlers = (
 	closeshop => \&cmdCloseShop,
 	conf	=> \&cmdConf,
 	crl	=> \&cmdChatRoomList,
-	death	=> \&cmdDeath,
 	debug	=> \&cmdDebug,
 	e	=> \&cmdEmotion,
 	eq	=> \&cmdEquip,
@@ -64,10 +63,7 @@ our %handlers = (
 	help	=> \&cmdHelp,
 	reload	=> \&cmdReload,
 	memo	=> \&cmdMemo,
-	monocell	=> \&cmdMonocell,
-	monster	=> \&cmdMonster,
 	ml	=> \&cmdMonsterList,
-	mvp	=> \&cmdMVP,
 	nl	=> \&cmdNPCList,
 	openshop => \&cmdOpenShop,
 	pl	=> \&cmdPlayerList,
@@ -76,6 +72,10 @@ our %handlers = (
 	s	=> \&cmdStatus,
 	send	=> \&cmdSendRaw,
 	skills	=> \&cmdSkills,
+	sl	=> \&cmdUseSkill,
+	sm	=> \&cmdUseSkill,
+	sp	=> \&cmdUseSkill,
+	ss	=> \&cmdUseSkill,
 	st	=> \&cmdStats,
 	stat_add => \&cmdStatAdd,
 	tank	=> \&cmdTank,
@@ -125,6 +125,10 @@ our %descriptions = (
 	s	=> 'Display character status.',
 	send	=> 'Send a raw packet to the server.',
 	skills	=> 'Show skills or add skill point.',
+	sl	=> 'Use skill on location.',
+	sm	=> 'Use skill on monster.',
+	sp	=> 'Use skill on player.',
+	ss	=> 'Use skill on self.',
 	st	=> 'Display stats.',
 	stat_add => 'Add status point.',
 	tank	=> 'Tank for a player.',
@@ -847,36 +851,104 @@ sub cmdSkills {
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 	if ($arg1 eq "") {
 		my $msg = "----------Skill List-----------\n";
-		$msg .=   "#  Skill Name                    Lv     SP\n";
-		for (my $i = 0; $i < @skillsID; $i++) {
+		$msg .=   "  # Skill Name                     Lv      SP\n";
+		for my $handle (@skillsID) {
+			my $skill = Skills->new(handle => $handle);
 			$msg .= swrite(
-				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<    @<<<",
-				[$i, $skills_lut{$skillsID[$i]}, $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}, $skillsSP_lut{$skillsID[$i]}{$chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}}]);
+				"@>> @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @>>    @>>>",
+				[$skill->id, $skill->name, $char->{skills}{$handle}{lv}, $skillsSP_lut{$handle}{$char->{skills}{$handle}{lv}}]);
 		}
-		$msg .= "\nSkill Points: $chars[$config{'char'}]{'points_skill'}\n";
+		$msg .= "\nSkill Points: $char->{points_skill}\n";
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
 
-	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
-		error	"Error in function 'skills add' (Add Skill Point)\n" .
-			"Skill $arg2 does not exist.\n";
-	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'points_skill'} < 1) {
-		error	"Error in function 'skills add' (Add Skill Point)\n" .
-			"Not enough skill points to increase $skills_lut{$skillsID[$arg2]}.\n";
 	} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
-		sendAddSkillPoint(\$remote_socket, $chars[$config{'char'}]{'skills'}{$skillsID[$arg2]}{'ID'});
+		my $skill = Skills->new(id => $arg2);
+		if (!$skill->id || !$char->{skills}{$skill->handle}) {
+			error	"Error in function 'skills add' (Add Skill Point)\n" .
+				"Skill $arg2 does not exist.\n";
+		} elsif ($char->{points_skill} < 1) {
+			error	"Error in function 'skills add' (Add Skill Point)\n" .
+				"Not enough skill points to increase ".$skill->name.".\n";
+		} else {
+			sendAddSkillPoint(\$remote_socket, $skill->id);
+		}
 
-	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
-		error	"Error in function 'skills desc' (Skill Description)\n" .
-			"Skill $arg2 does not exist.\n";
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-		message("===============Skill Description===============\n", "info");
-		message("Skill: $skills_lut{$skillsID[$arg2]}\n\n", "info");
-		message($skillsDesc_lut{$skillsID[$arg2]}, "info");
-		message("==============================================\n", "info");
+		my $skill = Skills->new(id => $arg2);
+		if (!$skill->id) {
+			error	"Error in function 'skills desc' (Skill Description)\n" .
+				"Skill $arg2 does not exist.\n";
+		} else {
+			message("===============Skill Description===============\n", "info");
+			message("Skill: ".$skill->name."\n\n", "info");
+			message($skillsDesc_lut{$skill->handle}, "info");
+			message("==============================================\n", "info");
+		}
 	} else {
 		error	"Syntax Error in function 'skills' (Skills Functions)\n" .
 			"Usage: skills [<add | desc>] [<skill #>]\n";
+	}
+}
+
+sub cmdUseSkill {
+	my ($switch, $args) = @_;
+
+	my ($skillID, $lv, $target, $targetNum, $targetID, $x, $y);
+
+	# Resolve skill ID
+	($skillID, $args) = split(/ /, $args, 2);
+	my $skill = Skills->new(id => $skillID);
+	if (!$skill->id) {
+		error "Skill $skillID does not exist.\n";
+		return;
+	}
+	my $char_skill = $char->{skills}{$skill->handle};
+
+	# Resolve skill level
+	if ($switch eq 'sl') {
+		($x, $y, $lv) = split(/ /, $args);
+	} else {
+		($targetNum, $lv) = split(/ /, $args);
+	}
+	# Attempt to fill in unspecified skill level
+	$lv ||= $char_skill->{lv};
+	$lv ||= 10; # Server should fix excessively high skill level for us
+
+	# Resolve target
+	if ($switch eq 'sl') {
+		if (!defined($x) || !defined($y)) {
+			error "(X, Y) coordinates not specified.\n";
+			return;
+		}
+	} elsif ($switch eq 'ss') {
+		$targetID = $accountID;
+		$target = $char;
+	} elsif ($switch eq 'sm') {
+		$targetID = $monstersID[$targetNum];
+		if (!$targetID) {
+			error "Monster $targetNum does not exist.\n";
+			return;
+		}
+		$target = $monsters{$targetID};
+	} elsif ($switch eq 'sp') {
+		$targetID = $playersID[$targetNum];
+		if (!$targetID) {
+			error "Player $targetNum does not exist.\n";
+			return;
+		}
+		$target = $players{$targetID};
+	}
+
+	# Resolve target location as necessary
+	if (main::ai_getSkillUseType($skill->handle)) {
+		if ($targetID) {
+			$x = $target->{pos_to}{x};
+			$y = $target->{pos_to}{y};
+		}
+		main::ai_skillUse($skill->handle, $lv, 0, 0, $x, $y);
+	} else {
+		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
 	}
 }
 
@@ -1238,47 +1310,6 @@ sub cmdKill {
 	main::attack($target);
 }
 
-sub cmdMonster {
-	message "Attempting to summon monster\n";
-	main::ai_skillUse('SA_SUMMONMONSTER', 10, 0, 0, $accountID);
-}
-
-sub cmdMonocell {
-	my (undef, $num) = @_;
-
-	my $id = $monstersID[$num];
-	if ($id eq "") {
-		error "Monster $num does not exist.\n";
-		return;
-	}
-	message "Attempting to monocell ".main::getActorName($id)."\n";
-	main::ai_skillUse('SA_MONOCELL', 10, 0, 0, $id);
-}
-
-sub cmdDeath {
-	my (undef, $num) = @_;
-
-	my $id = $playersID[$num];
-	if ($id eq "") {
-		error "Player $num does not exist.\n";
-		return;
-	}
-	message "Attempting to death ".main::getActorName($id)."\n";
-	main::ai_skillUse(295, 10, 0, 0, $id);
-}
-
-sub cmdMVP {
-	my (undef, $num) = @_;
-
-	my $id = $monstersID[$num];
-	if ($id eq "") {
-		error "Monster $num does not exist.\n";
-		return;
-	}
-	message "Attempting to change into MVP ".main::getActorName($id)."\n";
-	main::ai_skillUse('SA_CLASSCHANGE', 10, 0, 0, $id);
-}
-
 sub cmdArrowCraft {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\w\d]+)/;
@@ -1305,7 +1336,7 @@ sub cmdArrowCraft {
 			main::ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
 		} else {
 			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
-				"You dont have Arrow Making Skill.\n";
+				"You don't have Arrow Making Skill.\n";
 		}
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {

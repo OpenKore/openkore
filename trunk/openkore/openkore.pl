@@ -155,7 +155,7 @@ use AI;
 use Skills;
 use Interface;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Interface));
+	Network Network::Send Commands Misc AI Skills Interface));
 
 Log::message("$Settings::versionText\n");
 Plugins::loadAll();
@@ -194,7 +194,7 @@ addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
 addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
 addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
 addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
-addConfigFile("$Settings::tables_folder/skills.txt", \@Skills::skill, \&parseSkills);
+addConfigFile("$Settings::tables_folder/skills.txt", \@Skills::skills, \&parseSkills);
 addConfigFile("$Settings::tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
 addConfigFile("$Settings::tables_folder/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
 addConfigFile("$Settings::tables_folder/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
