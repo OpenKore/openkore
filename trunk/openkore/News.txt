@@ -13,6 +13,8 @@ Bug fixes:
 - Various attackComboSlot bug fixes.
 - "You are in Stunned state" message was verbosity 2 instead of 1.
 - 'autostorage' command will now work even if storageAuto is set to 0.
+- Sometimes openkore would stop auto-storing items covered by the 'all'
+  setting in items_control.txt, necessitating a reload.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
