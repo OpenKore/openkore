@@ -1344,20 +1344,9 @@ sub stopAttack {
 
 sub stripLanguageCode {
 	my $r_msg = shift;
-	if ($config{chatLangCode} ne "none" && $config{chatLangCode} ne "0") {
+	if ($config{chatLangCode} && $config{chatLangCode} ne "none") {
 		if ($$r_msg =~ /^\|..(.*)/) {
 			$$r_msg = $1;
-			if ($config{chatLangCode} eq "") {
-				warning "--------------------------\n" .
-					"This server seems to use language codes in chat messages. Kore will now\n" .
-					"use language codes when sending chat messages.\n\n" .
-					"Right now (December 2004), only oRO and euRO use language codes, while all\n" .
-					"the other servers don't. If you are sure that your server does not use language\n" .
-					"codes, type:\n" .
-					"  conf chatLangCode 0\n" .
-					"--------------------------\n";
-				configModify("chatLangCode", 1, 1);
-			}
 			return 1;
 		}
 		return 0;
