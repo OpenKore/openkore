@@ -123,7 +123,9 @@ sitAuto_sp_upper 0
 sitAuto_over_50 0
 
 sitAuto_idle 1
+
 shopAuto_open 0
+shop_random 0
 
 teleportAuto_hp 10
 teleportAuto_idle 0

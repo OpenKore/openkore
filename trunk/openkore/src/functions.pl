@@ -10153,6 +10153,7 @@ sub sendOpenShop {
 	my $r_socket = shift;
 	my ($i, $index, $totalitem, $items_selling, $citem, $oldid);
 	my %itemtosell;
+	my @itemtosellorder;
 
 	$shopstarted = 0;
 	if ($chars[$config{'char'}]{'skills'}{'MC_VENDING'}{'lv'}) {
@@ -10196,6 +10197,7 @@ sub sendOpenShop {
 							$itemtosell{$index}{'price'} = 1;
 						}
 						$items_selling++;
+						$itemtosellorder[$items_selling] = $index;
 						last;
 					}
 				}
@@ -10212,7 +10214,10 @@ sub sendOpenShop {
 		my $msg = pack("C*", 0xB2, 0x01) . pack("S*", $length) . 
 		$shop{'shop_title'} . chr(0) x (80 - length($shop{'shop_title'})) .  pack("C*", 0x01);
 
-		foreach (keys %itemtosell) {
+		if ($config{'shop_random'}) {
+			@itemstosellorder = keys %itemstosell;
+		}
+		foreach  (@itemtosellorder) {
 			$msg .= pack("S1",$itemtosell{$_}{'index'}) . pack("S1", $itemtosell{$_}{'amount'}) . pack("L1", $itemtosell{$_}{'price'});
 		}
 		if(length($msg) == $length) {
