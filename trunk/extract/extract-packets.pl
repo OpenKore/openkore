@@ -15,12 +15,14 @@ if (!open (F, "< $ARGV[0]")) {
 }
 
 # Look for the address of the function that determines packet sizes.
-our $addr;
+our ($found, $addr, $lastLine);
 while ((my $line = <F>)) {
-	if ($line =~ /E8ED030000/) {
-		($addr) = $line =~ /call ([A-Z0-9]+)/;
+	if (index($line, 'mov ecx, dword[ebp-0C]') > -1 && $lastLine =~ /E8ED0[0-9]0000/) {
+		($found) = $lastLine =~ /^:([A-Z0-9]{8})/;
+		($addr) = $lastLine =~ /call ([A-Z0-9]+)/;
 		last;
 	}
+	$lastLine = $line;
 }
 
 if (!defined($addr)) {
@@ -29,7 +31,7 @@ if (!defined($addr)) {
 	exit(1);
 }
 
-print "Packet size function: $addr\n";
+print "Packet size function: $addr (found at $found)\n";
 print "Extracting function...\n";
 
 # Go to that address and get the content of the entire function
