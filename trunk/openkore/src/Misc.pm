@@ -108,10 +108,13 @@ sub setTimeout {
 
 sub getPortalDestName {
 	my $ID = shift;
-	my @destinations;
+	my %hash; # We only want unique names, so we use a hash
 	foreach (keys %{$portals_lut{$ID}{'dest'}}) {
-		push @destinations, $portals_lut{$ID}{'dest'}{$_}{'map'};
+		my $key = $portals_lut{$ID}{'dest'}{$_}{'map'};
+		$hash{$key} = 1;
 	}
+
+	my @destinations = sort keys %hash;
 	return join('/', @destinations);
 }
 
