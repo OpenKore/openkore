@@ -11,6 +11,8 @@
   (now)
   useSelf_item_0 Red Potion, Yellow Potion
   ...
+- dumpData() now also dumps raw data so you can see strings (just like in
+  hex editors).
 
 
 ==================
