@@ -6,8 +6,13 @@ gtk['LINKFLAGS'] = "`pkg-config --libs gtk+-2.0 libglade-2.0 gthread-2.0`"
 gtk['CPPPATH'] += ['../lib']
 gtk['LIBPATH'] += ['../lib/static']
 
-gtktool = gtk.Program('grftool-gtk', 'gtk.c',
+CSourceBuilder = Builder(action = "gdk-pixbuf-csource --name=grftool_icon $SOURCE > $TARGET")
+gtk.Append(BUILDERS = {'CSource' : CSourceBuilder});
+gtk.CSource('grftool-gtk.csource', 'grftool-gtk.png')
+
+gtktool = gtk.Program('grftool-gtk', ['gtk.c'],
 	LIBS=['z', 'static-grf'])
+gtk.Depends('gtk.c', 'grftool-gtk.csource')
 Clean('grftool-gtk', ['grftool.glade.bak', 'grftool.gladep.bak'])
 Default(gtktool)
 
