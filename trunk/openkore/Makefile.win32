@@ -1,17 +1,17 @@
 # This is a Makefile for Cygwin.
 
-.PHONY: all clean dist distdir
+.PHONY: all clean
+
 CXX=g++
 CFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
 DLLWRAP=dllwrap
 DLLTOOL=dlltool
 
-VERSION=1.2.1
-DISTNAME=openkore-$(VERSION)
-DISTFILES=DevelopersNotes.txt Inject.cpp Tools.cpp Makefile Makefile.win32\
-	News.txt Inject.def Tools.def openkore.pl functions.pl\
-	Tools_wrap.c Tools.pm\
-	Input.pm Modules.pm Utils.pm Log.pm Settings.pm Plugins.pm
+PERL=$(shell wperl.exe -e 'use Config; open(STDOUT, "> perlpath.txt"); my $$p = $$Config{perlpath}; $$p =~ s/\\/\//g; print "$$p\n";' && cat perlpath.txt && rm -f perlpath.txt)
+XSUBPP=$(shell $(PERL) -e 'use File::Spec; foreach (File::Spec->path()) { if (-f "$$_\\xsubpp") { my $$p = "$$_\\xsubpp"; $$p =~ s/\\/\\\\/g; print "$(PERL) $$p\n"; exit 0; }; }; exit 1;')
+TYPEMAP=$(shell $(PERL) -e 'foreach (@INC) { if (-f "$$_\\ExtUtils\\typemap") { my $$p = "$$_\\ExtUtils\\typemap\n"; $$p =~ s/\//\\/g; print "$$p\n"; exit 0; }; } exit 1;')
+COREDIR=$(shell $(PERL) -e 'use Config; print $$Config{"installarchlib"} . "\\CORE";')
+
 
 all: Tools.dll Inject.dll
 
@@ -35,15 +35,11 @@ Inject.gccdef: Inject.o
 Inject.o: Inject.cpp
 	$(CXX) -mdll -mno-cygwin $(CFLAGS) -c Inject.cpp -o Inject.o
 
+ToolsXS.o: ToolsXS.c
+	$(CC) $(CFLAGS) -mdll -mno-cygwin -Wno-unused -Wno-implicit ToolsXS.c -c -o ToolsXS.o "-I$(COREDIR)" -D__MINGW32__ -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED -DWIN32
 
-distdir:
-	rm -rf $(DISTNAME)
-	mkdir $(DISTNAME)
-	cp $(DISTFILES) $(DISTNAME)/
-
-dist:
-	zip -9r $(DISTNAME).zip $(DISTNAME)
-	rm -rf $(DISTNAME)
+ToolsXS.c: ToolsXS.xs
+	$(XSUBPP) -typemap "$(TYPEMAP)" ToolsXS.xs > ToolsXS.c
 
 clean:
-	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef $(DISTNAME).zip
+	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef ToolsXS.o ToolsXS.c
