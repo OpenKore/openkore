@@ -61,20 +61,6 @@ our $input_server_socket = IO::Socket::INET->new(
 print "Local input server started (".$input_server_socket->sockhost().":".$input_server_socket->sockport().")\n";
 our $input_pid = input_client();
 
-# Initialize dynamic code reloading
-our $codeReloading = 0;
-our @codeSubs = ();
-if (open(CODE, '<functions.pl')) {
-	print "Initializing dynamic code reloading...\n";
-	my @lines = <CODE>;
-	close(CODE);
-	$codeReloading = 1;
-	foreach (grep(/^[\s\t]*sub ([a-zA-Z0-9])*/, @lines)) {
-		my ($subName) = $_ =~ /^[\s\t]*sub ([a-zA-Z0-9]*)/;
-		push (@codeSubs, $subName);
-	}
-}
-
 print "\n";
 
 addParseFiles($config_file, \%config,\&parseDataFile2);
