@@ -65,13 +65,29 @@ sub MODINIT {
 # Move cursor to left
 sub cursorLeft {
 	return if ($_[1] <= 0);
-	$_[0]->{cap}->Tgoto('LE', undef, $_[1], \*STDOUT);
+	# For some reason the 'linux' terminal doesn't
+	# support LE (or terminfo's 'cub').
+	# So we just print many 'le' commands.
+	if ($ENV{TERM} eq 'xterm') {
+		$_[0]->{cap}->Tgoto('LE', undef, $_[1], \*STDOUT);
+	} else {
+		for (my $i = 0; $i < $_[1]; $i++) {
+			$_[0]->{cap}->Tputs('le', 1, \*STDOUT);
+		}
+	}
 }
 
 # Move cursor to right
 sub cursorRight {
 	return if ($_[1] <= 0);
-	$_[0]->{cap}->Tgoto('RI', undef, $_[1], \*STDOUT);
+	# Same story as bove
+	if ($ENV{TERM} eq 'xterm') {
+		$_[0]->{cap}->Tgoto('RI', undef, $_[1], \*STDOUT);
+	} else {
+		for (my $i = 0; $i < $_[1]; $i++) {
+			$_[0]->{cap}->Tputs('nd', 1, \*STDOUT);
+		}
+	}
 }
 
 sub delLine {
@@ -154,6 +170,7 @@ sub strdel {
 # TODO:
 # * Input history
 # * TAB completion
+# * Handle other Ctrl characters
 sub readEvents {
 	my $interface = shift;
 	my %input = %{$interface->{input}};
@@ -223,6 +240,12 @@ sub readEvents {
 				$input{pos} = 0;
 			}
 
+		# Ctrl+D (end of input)
+		} elsif (ord($key) == 4) {
+			# Ignore this
+			strdel($input{buf}, $input{pos} - 1, 1);
+			$input{pos}--;
+
 		# Left arrow key
 		} elsif (index($input{buf}, "\e[D") > -1) {
 			# Remove escape sequence from input buffer
@@ -264,11 +287,11 @@ sub readEvents {
 			strdel($input{buf}, $input{pos} - 1, 1);
 			$input{pos}--;
 
-		# F1-F12
-		} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\eO[A-Z]/) {
-			$input{pos} -= 3;
-			$input{buf} =~ s/\eO[A-Z]//g;
-			# TODO: this doesn't work!
+		# F1-F4
+		} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\e(\[\[[A-Z]|O[A-Z])/) {
+			# Ignore them
+			$input{pos} -= length($1) + 1;
+			$input{buf} =~ s/\e(\[\[[A-Z]|O[A-Z])//g;
 
 		# Normal character
 		} elsif (index($input{buf}, "\e") == -1) {
@@ -276,7 +299,6 @@ sub readEvents {
 				# If Enter has not been pressed,
 				# move cursor to beginning, delete whole line and print buffer
 				$interface->cursorLeft($input{pos} - 1);
-
 				$interface->delLine;
 				print $input{buf};
 
@@ -298,9 +320,18 @@ sub readEvents {
 
 		# Somehow an escape character got into our buffer and is not removed.
 		# Remove it if it's a full escape character (4 bytes)
-		} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\e\[(\d~|[A-Z])/) {
+		} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\e\[(\d{1,2}~|[A-Z])/) {
 			$input{pos} -= length($1) + 2;
-			$input{buf} =~ s/\e\[(\d~|[A-Z])//g;
+			$input{buf} =~ s/\e\[(\d{1,2}~|[A-Z])//g;
+
+		# There's an escape key in the buffer but the user pressed Enter.
+		# Apparently he pressed Escape on accident.
+		} elsif ($key eq "\n") {
+			# Remove all escape and newline characters.
+			# Restore prompt.
+			my $len = length($input{buf});
+			$input{buf} =~ s/[\e\n]//g;
+			$input{pos} = $len - length($input{buf}) + 1;
 		}
 	}
 
