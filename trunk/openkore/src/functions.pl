@@ -2654,7 +2654,7 @@ sub AI {
 					error "Something is wrong with storageAuto_npc_type in your config.\n";
 				}
 
-				undef $ai_v{temp}{storage_opened};
+				delete $ai_v{temp}{storage_opened};
 				$ai_seq_args[0]{'sentStore'} = 1;
 				
 				if (defined $ai_seq_args[0]{'npc'}{'id'}) { 
@@ -6035,11 +6035,6 @@ sub parseMsg {
 			debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
 		}
 
-		$ai_v{temp}{storage_opened} = 1;
-		$storage{opened} = 1;
-		message "Storage opened.\n", "storage";
-		Plugins::callHook('packet_storage_open');
-
 	} elsif ($switch eq "00A6") {
 		# Retrieve list of non-stackable (weapons & armor) storage items.
 		# This packet is sent immediately after 00A5/01F0.
@@ -6708,6 +6703,11 @@ sub parseMsg {
 		$storage{'items'} = unpack("S1", substr($msg, 2, 2));
 		$storage{'items_max'} = unpack("S1", substr($msg, 4, 2));
 
+		$ai_v{temp}{storage_opened} = 1;
+		$storage{opened} = 1;
+		message "Storage opened.\n", "storage";
+		Plugins::callHook('packet_storage_open');
+
 	} elsif ($switch eq "00F6") {
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("L1", substr($msg, 4, 4));
@@ -6721,9 +6721,9 @@ sub parseMsg {
 
 	} elsif ($switch eq "00F8") {
 		message "Storage closed.\n", "storage";
-		undef $ai_v{temp}{storage_opened};
+		delete $ai_v{temp}{storage_opened};
 		Plugins::callHook('packet_storage_close');
-		
+
 	} elsif ($switch eq "00FA") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
