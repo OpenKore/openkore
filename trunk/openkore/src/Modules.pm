@@ -95,11 +95,7 @@ sub reload {
 
 			$mod .= '.pm';
 			$mod =~ s/::/\//g;
-			if (! -f $mod) {
-				print "Error: file $mod not found\n";
-			} elsif (checkSyntax($mod)) {
-				push @queue, $mod;
-			}
+			push @queue, $mod;
 		}
 	}
 
