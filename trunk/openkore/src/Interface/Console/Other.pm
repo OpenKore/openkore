@@ -24,7 +24,7 @@ package Interface::Console::Other;
 
 use strict;
 use warnings;
-no warnings 'redefine';
+no warnings qw(redefine uninitialized);
 use IO::Socket;
 use IO::Select;
 use Time::HiRes qw(time usleep);
@@ -424,10 +424,10 @@ sub color {
 	my $color = shift;
 
 	$color =~ s/\/(.*)//;
-	my $bgcolor = $1 || "default";
+	my $bgcolor = $1;
 
-	print $fgcolors{$color} if defined($fgcolors{$color});
-	print $bgcolors{$bgcolor} if defined($bgcolors{$bgcolor});
+	print $fgcolors{$color} if defined($color) && defined($fgcolors{$color});
+	print $bgcolors{$bgcolor} if defined($bgcolor) && defined($bgcolors{$bgcolor});
 }
 
 %fgcolors = (
@@ -446,13 +446,13 @@ sub color {
 
 	'brown'		=> "\e[0;33m",
 	'yellow'	=> "\e[1;33m",
-	
+
 	'darkblue'	=> "\e[0;34m",
 	'blue'		=> "\e[1;34m",
 
 	'darkmagenta'	=> "\e[0;35m",
 	'magenta'	=> "\e[1;35m",
-	
+
 	'darkcyan'	=> "\e[0;36m",
 	'cyan'		=> "\e[1;36m",
 
@@ -462,7 +462,6 @@ sub color {
 );
 
 %bgcolors = (
-	''		=> "\e[22;40m",
 	'default'	=> "\e[22;40m",
 
 	'black'		=> "\e[22;40m",
@@ -477,13 +476,13 @@ sub color {
 
 	'brown'		=> "\e[22;43m",
 	'yellow'	=> "\e[5;43m",
-	
+
 	'darkblue'	=> "\e[22;44m",
 	'blue'		=> "\e[5;44m",
 
 	'darkmagenta'	=> "\e[22;45m",
 	'magenta'	=> "\e[5;45m",
-	
+
 	'darkcyan'	=> "\e[22;46m",
 	'cyan'		=> "\e[5;46m",
 
