@@ -59,9 +59,9 @@ sub _onEnter {
 	}
 	$self->Remove(0, -1);
 
-	return if (@{$self->{history}} && $self->{history}[0] eq $text);
-
-	unshift(@{$self->{history}}, $text) if ($text ne "");
+	if (!@{$self->{history}} || $self->{history}[0] ne $text) {
+		unshift(@{$self->{history}}, $text) if ($text ne "");
+	}
 	pop @{$self->{history}} if (@{$self->{history}} > MAX_INPUT_HISTORY);
 	$self->{historyIndex} = -1;
 	undef $self->{currentInput};
