@@ -901,6 +901,14 @@ morocc_in 174 122 morocc_in 174 109
 morocc_in 174 151 morocc_in 174 166
 morocc_in 174 166 morocc_in 174 151
 morocc_in 183 65 morocc 52 259
+nif_in 88 29 nif_in 34 34
+nif_in 34 34 nif_in 88 29
+nif_in 23 11 niflheim 189 210
+nif_fild01 344 322 nif_fild02 22 311
+nif_fild02 373 235 niflheim 19 154
+nif_fild02 22 311 nif_fild01 344 322
+niflheim 189 210 nif_in 23 11
+niflheim 19 154 nif_fild02 378 235
 orcsdun01 32 172 in_orcs01 30 182
 orcsdun01 183 8 orcsdun02 21 188
 orcsdun02 21 188 orcsdun01 183 8
@@ -1531,6 +1539,7 @@ umbala 106 285 um_dun01 42 27
 umbala 107 130 um_in 99 63
 umbala 138 129 um_in 99 111
 umbala 125 157 um_in 155 111
+umbala 140 197 nif_in 68 14
 um_dun01 42 27 umbala 106 285
 um_dun01 149 198 um_dun02 52 22
 um_dun02 52 22 um_dun01 149 198
