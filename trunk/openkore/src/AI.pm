@@ -9,12 +9,15 @@ package AI;
 use strict;
 use Globals;
 
+
 sub action {
-	return $ai_seq[0];
+	my $i = (defined $_[1] ? $_[1] : 0);
+	return $ai_seq[$i];
 }
 
 sub args {
-	return $ai_seq_args[0];
+	my $i = (defined $_[1] ? $_[1] : 0);
+	return $ai_seq_args[$i];
 }
 
 sub dequeue {
@@ -23,8 +26,14 @@ sub dequeue {
 }
 
 sub enqueue {
-	push(@ai_seq, shift);
-	push(@ai_seq_args, shift);
+	push @ai_seq, shift;
+	push @ai_seq_args, shift;
 }
+
+sub clear {
+	undef @ai_seq;
+	undef @ai_seq_args;
+}
+
 
 return 1;
