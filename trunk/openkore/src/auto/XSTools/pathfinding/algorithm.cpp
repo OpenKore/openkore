@@ -29,8 +29,8 @@ extern "C" {
 
 /*******************************************/
 
-static pos static_solution[SOLUTION_MAX * sizeof(pos)];
-static unsigned int static_solution_used = 0;
+
+static unsigned char *default_weight = NULL;
 
 
 static inline int
@@ -50,7 +50,7 @@ QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
 }
 
 static inline char
-CalcPath_getMap(char *map, unsigned long width, unsigned long height, pos *p) {
+CalcPath_getMap(const char *map, unsigned long width, unsigned long height, pos *p) {
 	if (p->x >= width || p->y >= height) {
 		return 0;
 	} else {
@@ -59,21 +59,24 @@ CalcPath_getMap(char *map, unsigned long width, unsigned long height, pos *p) {
 }
 
 
+// Initialize a new pathfinding session, or reset an existing session
+// Currently reset is not implemented yet.
 CalcPath_session *
-CalcPath_init (char* map, unsigned char* weight, unsigned long width, unsigned long height,
+CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* weight,
+	unsigned long width, unsigned long height,
 	pos * start, pos * dest, unsigned long time_max)
 {
-	CalcPath_session * session = (CalcPath_session*)malloc(sizeof(CalcPath_session));
-
+	if (!session)
+		session = (CalcPath_session*)malloc(sizeof(CalcPath_session));
+	
 	pos_list * solution = &session->solution;
 	pos_ai_list * fullList = &session->fullList;
 	index_list * openList = &session->openList;
 	lookups_list * lookup = &session->lookup;
-
+	
 	unsigned long i;
 	int index;
 
-	session->active = 1;
 	session->width = width;
 	session->height = height;
 	session->start = start;
@@ -81,36 +84,36 @@ CalcPath_init (char* map, unsigned char* weight, unsigned long width, unsigned l
 	session->time_max = time_max;
 
 	session->map = map;
-	session->weight = weight;
-
-	// For performance reasons, we want to avoid dynamically allocating the solution array.
-	// So we use a static variable, if possible.
-	if (static_solution_used) {
-		session->static_solution_used = 0;
-		session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
-	} else {
-		static_solution_used = 1;
-		session->static_solution_used = 1;
-		session->solution.array = (pos *) static_solution;
+	if (weight)
+		session->weight = weight;
+	else {
+		if (!default_weight) {
+			default_weight = (unsigned char *) malloc(256);
+			default_weight[0] = 255;
+			memset(default_weight + 1, 1, 255);
+		}
+		session->weight = (const unsigned char *) default_weight;
 	}
 
+	session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
 	session->fullList.array = (pos_ai*) malloc(FULL_LIST_MAX*sizeof(pos_ai));
 	session->openList.array = (QuicksortFloat*) malloc(OPEN_LIST_MAX*sizeof(QuicksortFloat));
 	session->lookup.array = (float*) malloc(LOOKUPS_MAX*sizeof(float));
 
 	solution->size = 0;
-	openList->size = 1;
-	fullList->size = 1;
+	openList->size = 0;
+	fullList->size = 0;
 	fullList->array[0].p = *start;
 	fullList->array[0].g = 0;
 	fullList->array[0].f = (float)abs(start->x - dest->x) + abs(start->y - dest->y);
 	fullList->array[0].parent = -1;
+	fullList->size++;
 	openList->array[0].val = fullList->array[0].f;
 	openList->array[0].index = 0;
-	for (i = 0; i < width * height; i++) {
+	openList->size++;
+	for (i = 0; i < width * height;i++) {
 		lookup->array[i] = 999999;
 	}
-
 	index = fullList->array[0].p.y*width + fullList->array[0].p.x;
 	lookup->array[index] = fullList->array[0].g;
 	lookup->size = width*height;
@@ -137,8 +140,8 @@ CalcPath_pathStep(CalcPath_session * session)
 	pos_ai_list *fullList = &session->fullList;
 	index_list *openList = &session->openList;
 	lookups_list *lookup = &session->lookup;
-	char* map = session->map;
-	unsigned char* weight  = session->weight;
+	const char* map = session->map;
+	const unsigned char* weight  = session->weight;
 	unsigned long width = session->width;
 	unsigned long height = session->height;
 	pos * start = session->start;
@@ -260,15 +263,12 @@ CalcPath_pathStep(CalcPath_session * session)
 void
 CalcPath_destroy (CalcPath_session *session)
 {
-	/* free (session->start);
+	free (session->start);
 	free (session->dest);
-	if (!session->static_solution_used)
-		free (session->solution.array);
-	else
-		static_solution_used = 0;
+	free (session->solution.array);
 	free (session->fullList.array);
 	free (session->openList.array);
-	free (session->lookup.array); */
+	free (session->lookup.array);
 	free (session);
 }
 

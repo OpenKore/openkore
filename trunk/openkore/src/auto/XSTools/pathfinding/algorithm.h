@@ -48,20 +48,18 @@ typedef struct {
 	pos_ai_list fullList;
 	index_list openList;
 	lookups_list lookup;
-	char* map;
-	unsigned char* weight;
+	const char* map;
+	const unsigned char* weight;
 	unsigned long width;
 	unsigned long height;
 	pos * start;
 	pos * dest;
 	unsigned long time_max;
-	int active;
-
-	int static_solution_used;
 } CalcPath_session;
 
 
-CalcPath_session *CalcPath_init (char* map, unsigned char* weight, unsigned long width, unsigned long height,
+CalcPath_session *CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* weight,
+	unsigned long width, unsigned long height,
 	pos * start, pos * dest, unsigned long time_max);
 int CalcPath_pathStep (CalcPath_session *session);
 void CalcPath_destroy (CalcPath_session *session);
