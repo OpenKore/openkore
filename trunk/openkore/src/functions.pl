@@ -4003,7 +4003,7 @@ sub AI {
 			# This variable controls how far monsters must be away from portals and players.
 			my $portalDist = $config{'attackMinPortalDistance'} || 4;
 			my $playerDist = $config{'attackMinPlayerDistance'};
-			$playerDist = 3 if ($playerDist < 3);
+			$playerDist = 1 if ($playerDist < 1);
 
 			# Detect whether we are currently in follow mode
 			my $following;
