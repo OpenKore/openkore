@@ -8851,6 +8851,15 @@ sub parseMsg {
 			message "$pets{$ID}{name} : $emote\n", "emotion";
 		}
 
+	} elsif ($switch eq "01AB") {
+		my ($ID, $duration) = unpack "x2 a4 x2 L1", $msg;
+		if ($duration > 0) {
+			$duration = 0xFFFFFFFF - $duration + 1;
+			message getActorName($ID) . " is muted for $duration minutes\n";
+		} else {
+			message getActorName($ID) . " is no longer muted\n";
+		}
+
 	} elsif ($switch eq "01AC") {
 		# 01AC: long ID
 		# Indicates that an object is trapped, but ID is not a
