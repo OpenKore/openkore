@@ -111,13 +111,6 @@ Make sure the following components will be installed:
 </ul>
 
 
-<!-- <p>
-There are two files in the OpenKore source code which help you compile Tools.cpp and Inject.cpp:
-<ul>
-<li>"Makefile.win32" : This is a makefile for Win32 GCC</li>
-<li>"Makefile" : This file is for Linux/Unix only.</li>
-</ul> -->
-
 
 <a name="editors"></a>
 <h2>Editors</h2>
@@ -129,6 +122,19 @@ and doesn't support auto-indent.
 <p>
 For Windows, I hightly recommend <a href="http://www.crimsoneditor.com/">Crimson Editor</a>, a freeware general-purpose
 code editor which supports syntax highlighting for many languages (including Perl and C++).
+
+
+<a name="xs"></a>
+<h2>The XSTools library</h2>
+
+As explained earlier, parts of OpenKore are written in C++.
+In order to run OpenKore from source using ActivePerl, you must have <tt>XSTools.dll</tt>
+(or <tt>XSTools.so</tt> on Unix).
+
+<p>
+On both Unix and Windows, you can compile XSTools by typing 'make' in the bash shell in the OpenKore
+source folder. If you're a Windows user and you don't want to compile, or can't compile for whatever
+reason, you can also <a href="http://openkore.sourceforge.net/misc/XSTools.zip">download a pre-compiled XSTools.dll</a>.
 
 
 </div>
