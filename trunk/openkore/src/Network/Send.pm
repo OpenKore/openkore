@@ -614,8 +614,9 @@ sub sendGameLogin {
 	my $r_socket = shift;
 	my $accountID = shift;
 	my $sessionID = shift;
+	my $sessionID2 = shift;
 	my $sex = shift;
-	my $msg = pack("C*", 0x65,0) . $accountID . $sessionID . pack("C*", 0,0,0,0,0,0,$sex);
+	my $msg = pack("C*", 0x65,0) . $accountID . $sessionID . $sessionID2 . pack("C*", 0,0,$sex);
 	sendMsgToServer($r_socket, $msg);
 }
 

@@ -4,6 +4,7 @@
 
 - Fixed a rare bug which caused OpenKore to quit with a "version too old"
   error.
+- Fixed login problems with newer eAthena versions (2nd session id, bug #28)
 
 
 ==================
