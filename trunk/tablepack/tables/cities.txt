@@ -30,3 +30,17 @@ prt_are01.rsw#ARENA#
 comodo.rsw#Comodo#
 cmd_in01.rsw#Inside Comodo#
 cmd_in02.rsw#Inside Comodo#
+yuno.rsw#Yuno, the capital of Schwarzwald Republic#
+yuno_in01.rsw#Inside Yuno#
+yuno_in02.rsw#Inside the Sage Castle#
+yuno_in03.rsw#Inside Yuno#
+yuno_in04.rsw#Republic Library#
+yuno_in05.rsw#Power Plant of Ymir's Heart#
+amatsu.rsw#Amatsu, the Land of Destiny#
+ama_in01.rsw#Inside Amatsu#
+ama_in02.rsw#Inside Himezi Castle#
+gonryun.rsw#Gonryun, the Hermit Land#
+gon_in.rsw#Inside Gonryun#
+sec_in01.rsw#Inside Valhalla#
+sec_in02.rsw#Inside Valhalla#
+sec_pri.rsw#Room of Meditation(Valhalla Prison)#
