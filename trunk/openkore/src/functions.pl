@@ -5389,6 +5389,7 @@ sub parseMsg {
 		} else {
 			$msg_size = 4;
 		}
+		debug "Received account ID\n", "parseMsg", 0 if ($config{debugPacket_received});
 
 	} elsif ($switch eq "0069") {
 		$conState = 2;
