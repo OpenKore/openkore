@@ -1008,7 +1008,7 @@
 630#Dew_Laden_Moss#
 631#Deadly_Noxious_Herb#
 632#Fatty_Chubby_Earthworm#
-633#Sweet_Potato#
+633#Baked_Yam#
 634#Tropical_Banana#
 635#Orc_Trophy#
 636#No_Recipient#
