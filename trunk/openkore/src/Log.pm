@@ -251,16 +251,17 @@ sub warning {
 ##
 # Log::error(message, [domain], [level])
 #
-# Prints an error message. It tells the user that a non-recoverable error has occured.
-# A "non-recoverable error" could either be a fatal error, or an error that prevents
-# the program from performing an action the user requested.
+# Prints an error message. It tells the user that a non-recoverable error has
+# occured.  A "non-recoverable error" could either be a fatal error, or an
+# error that prevents the program from performing an action the user requested.
 #
 # Examples of non-recoverable errors:
-# `l
-# - Kore receives the "You haven't paid for this account"-packet. The error is fatal, so the entire program must exit.
-# - The user typed in an invalid/unrecognized command. Kore cannot perform the command the user requested,
-#   but will not exit because this error is not fatal.
-# `l`
+#
+# - Kore receives the "You haven't paid for this account"-packet. The error is
+#   fatal, so the entire program must exit.
+# - The user typed in an invalid/unrecognized command. Kore cannot perform the
+#   command the user requested, but will not exit because this error is not
+#   fatal.
 #
 # See the description for Log.pm for more details about the parameters.
 sub error {

@@ -35,6 +35,7 @@ use strict;
 use warnings;
 use Exporter;
 use Config;
+use Log qw(error message);
 use base qw(Exporter);
 
 our @modules;
@@ -110,46 +111,63 @@ sub reload {
 }
 
 ##
-# Modules::checkSyntax(file)
-# file: Filename of a Perl source file.
-# Returns: 1 if syntax is correct, 0 if syntax contains errors, -1 if unable to run the Perl interpreter.
+# Modules::reloadSafe($filename)
 #
-# Checks whether $file's syntax is correct, by running 'perl -c'.
-sub checkSyntax {
+# Executes "do $filename" iff $filename exists and does not contain syntax
+# errors.
+sub reloadSafe {
 	my $filename = shift;
 
-	if (-f $Config{'perlpath'}) {
-		system($Config{'perlpath'}, '-c', $filename);
-		if ($? == -1) {
-			print "Error: failed to execute $Config{'perlpath'}\n";
-			return -1;
-		} elsif ($? & 127) {
-			print "Error: $Config{'perlpath'} exited abnormally\n";
-			return -1;
-		} elsif (($? >> 8) == 0) {
-			return 1;
-		} else {
-			print "Error: $filename contains syntax errors.\n";
-			return 0;
+	my $found = 0;
+	for my $path (@INC) {
+		if (-f "$path/$filename") {
+			$found = 1;
+			last;
 		}
 	}
-	return 2;
+	if (!$found) {
+		error("Unable to reload code: $filename not found\n");
+		return;
+	}
+	if (!-f $Config{'perlpath'}) {
+		error("Cannot find Perl interpreter $Config{'perlpath'}\n");
+		return;
+	}
+
+	message "Checking $filename for errors...\n", "info";
+	system($Config{'perlpath'}, '-c', $filename);
+	if ($? == -1) {
+		error("Failed to execute $Config{'perlpath'}\n");
+		return;
+	} elsif ($? & 127) {
+		error("$Config{'perlpath'} exited abnormally\n");
+		return;
+	} elsif (($? >> 8) == 0) {
+		message("$filename passed syntax check.\n", "success");
+	} else {
+		error("$filename contains syntax errors.\n");
+		return;
+	}
+
+	message("Reloading $filename...\n", "info");
+	if (!do $filename || $@) {
+		error("Unable to reload $filename\n");
+		error("$@\n", "syntax", 1) if ($@);
+	}
+	message("Reloaded.\n", "info");
 }
 
 ##
 # Modules::doReload()
 #
-# Reload all modules in the reload queue. This function is meant to be run in Kore's main loop.
+# Reload all modules in the reload queue. This function is meant to be run in
+# Kore's main loop.
 # Do not call this function directly in any other places.
 #
 # See also: Modules::reload()
 sub doReload {
 	foreach my $mod (@queue) {
-		print "Reloading $mod...\n";
-		if (!do $mod || $@) {
-			print "Unable to reload $mod\n";
-			print "$@\n" if ($@);
-		}
+		reloadSafe($mod);
 	}
 	undef @queue;
 }

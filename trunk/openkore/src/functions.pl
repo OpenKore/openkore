@@ -1253,11 +1253,7 @@ sub parseCommand {
 			Modules::reload($args, 1);
 
 		} else {
-			message("Reloading functions.pl...\n", "info");
-			if (!do 'functions.pl' || $@) {
-				error "Unable to reload functions.pl\n";
-				error("$@\n", "syntax", 1) if ($@);
-			}
+			Modules::reloadSafe('functions.pl');
 		}
 
 	} elsif ($switch eq "relog") {
@@ -1569,6 +1565,11 @@ sub parseCommand {
 	} elsif ($switch eq "where") {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		message("Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n", "info");
+
+	} elsif ($switch eq "undead") {
+		# FIXME: Remove this after kore correctly detects resurrection
+		print "Assuming character to be not dead\n";
+		$chars[$config{'char'}]{'dead'} = 0;
 
 	} else {
 		my $return = 0;
@@ -7489,8 +7490,8 @@ sub parseMsg {
 			}
 		}
 
-        } elsif ($switch eq "0154") {
-        	my $newmsg;
+	} elsif ($switch eq "0154") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
 		my $msg = substr($msg, 0, 4) . $newmsg;
 		my $c = 0;
