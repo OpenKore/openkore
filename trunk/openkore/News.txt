@@ -34,12 +34,7 @@ New config options:
   Only activate partySkill if a certain monster attacks a party member.
 
 Bug fixes:
-- The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
 - Kore can walk on walkable water now (bug #21).
-- If you type "stand", then type "sit", Kore will sit and then stand.
-  This is fixed.
-- Don't attack monsters that are standing on a spot that's unwalkable
-  according to the field file. This prevents an infinite loop.
 - getAuto never gets triggered if you're low on a certain item. This has
   been fixed.
 
@@ -50,6 +45,7 @@ Internal:
   C-to-Perl interface.
 - Kore now detects what directory its executable is in, and adds it to
   its include path (@INC).
+- Fixed a crash when cart inventory is not available (such as during login).
 
 Credits:
 - Joseph: -1 flag support in mon_control.txt
