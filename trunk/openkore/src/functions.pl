@@ -5617,7 +5617,8 @@ sub parseMsg {
 		}
 
 		avoidGM_talk($chatMsgUser, $chatMsg);
-		avoidList_talk($chatMsgUser, $chatMsg);
+		my $nameID = unpack("L1", $ID);
+		avoidList_talk($chatMsgUser, $chatMsg, $nameID);
 
 	} elsif ($switch eq "008E") {
 		# Public messages that you sent yourself
@@ -9592,17 +9593,18 @@ sub avoidList_near {
 	return 0;
 }
 
-# avoidList_talk(playername, chatmsg)
+# avoidList_talk(playername, chatmsg, [playerid])
 # playername: Name of the player who chatted/PMed the bot.
 # chatmsg: Contents of the message. (currently not used)
+# playerid: If present, check their player ID as well.
 #
 # Checks if the specified player is on the avoid.txt avoid list for chat messages,
 # and disconnects if they are.
 sub avoidList_talk {
-	return if (!$config{'avoidList'});
-	my ($chatMsgUser, $chatMsg) = @_;
+	return if (!$config{'avoidList'} || $config{'XKore'});
+	my ($chatMsgUser, $chatMsg, $nameID) = @_;
 
-	if ($avoid{'Players'}{lc($chatMsgUser)}{'disconnect_on_chat'} && !$config{'XKore'}) { 
+	if ($avoid{'Players'}{lc($chatMsgUser)}{'disconnect_on_chat'} || $avoid{'ID'}{$nameID}{'disconnect_on_chat'}) { 
 		warning "Disconnecting to avoid $chatMsgUser!\n";
 		chatLog("k", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
 		warning "Disconnect for $config{'avoidList_reconnect'} seconds...\n";

@@ -27,6 +27,7 @@ New config options:
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
 - Attacks will now properly time out when failed.
+- Properly support tabs in avoid.txt
 
 Credits:
 - Fenris: Tk interface improvements.
