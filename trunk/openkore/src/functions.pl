@@ -2461,7 +2461,7 @@ sub AI {
 			close F;
 
 			$time =~ s/[\r\n].*//;
-			if (timeOut($time, 1)) {
+			if (timeOut($time, 60 * 60 * 24)) {
 				$checkUpdate{stage} = 'Connect';
 			} else {
 				$checkUpdate{checked} = 1;
@@ -2492,7 +2492,7 @@ sub AI {
 
 		} elsif ($checkUpdate{stage} eq 'Receive' && dataWaiting(\$checkUpdate{sock})) {
 			my $data;
-			$checkUpdate{sock}->recv($data, 1024 * 512);
+			$checkUpdate{sock}->recv($data, 1024 * 32);
 			if ($data =~ /^HTTP\/.\.. 200/s) {
 				$data =~ s/.*?\r\n\r\n.*?\r\n//s;
 				$data =~ s/[\r\n].*[\r\n]//s;
@@ -5106,11 +5106,6 @@ sub parseMsg {
 				"-------------------------------", []),
 				"connection");
 
-			if ($chars[$num]{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-				$interface->errorDialog("Sanity Checking FAILED: Invalid username detected.");
-				Network::disconnect(\$remote_socket);
-				quit();
- 			}
  		}
 
 		if (!$config{'XKore'}) {
