@@ -630,7 +630,16 @@ sub sendDrop {
 	my $r_socket = shift;
 	my $index = shift;
 	my $amount = shift;
-	my $msg = pack("C*", 0xA2, 0x00) . pack("S*", $index, $amount);
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0xA2, 0x00) . pack("S*", $index, $amount);
+	} else {
+		$msg = pack("C*", 0xA2, 0x00) .
+			pack("C*", 0xFF, 0xFF, 0x08, 0x10) .
+			pack("S*", $index) .
+			pack("C*", 0xD2, 0x9B) .
+			pack("S*", $amount);
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
 }
@@ -789,7 +798,12 @@ sub sendItemUse {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $targetID = shift;
-	my $msg = pack("C*", 0xA7, 0x00).pack("S*",$ID).$targetID;
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0xA7, 0x00).pack("S*",$ID).$targetID;
+	} else {
+		$msg = pack("C*", 0xA7, 0x00, 0x9A, 0x12, 0x1C).pack("S*", $ID, 0).$targetID;
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
@@ -1178,7 +1192,15 @@ sub sendSkillUse {
 	my $ID = shift;
 	my $lv = shift;
 	my $targetID = shift;
-	my $msg = pack("C*", 0x13, 0x01).pack("S*",$lv,$ID).$targetID;
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0x13, 0x01).pack("S*",$lv,$ID).$targetID;
+	} else {
+		$msg = pack("S*", 0x0113, 0x0000, $lv) .
+			pack("L", 0) .
+			pack("S*", $ID, 0) .
+			pack("L*", 0, 0) . $targetID;
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
@@ -1189,7 +1211,11 @@ sub sendSkillUseLoc {
 	my $lv = shift;
 	my $x = shift;
 	my $y = shift;
-	my $msg = pack("C*", 0x16, 0x01).pack("S*",$lv,$ID,$x,$y);
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0x16, 0x01).pack("S*",$lv,$ID,$x,$y);
+	} else {
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
@@ -1198,7 +1224,15 @@ sub sendStorageAdd {
 	my $r_socket = shift;
 	my $index = shift;
 	my $amount = shift;
-	my $msg = pack("C*", 0xF3, 0x00) . pack("S*", $index) . pack("L*", $amount);
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0xF3, 0x00) . pack("S*", $index) . pack("L*", $amount);
+	} else {
+		$msg = pack("C*", 0xF3, 0x00) . pack("C*", 0x12, 0x00, 0x40, 0x73) .
+			pack("S", $index) .
+			pack("C", 0xFF) .
+			pack("L", $amount);
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
@@ -1214,7 +1248,12 @@ sub sendStorageGet {
 	my $r_socket = shift;
 	my $index = shift;
 	my $amount = shift;
-	my $msg = pack("C*", 0xF5, 0x00) . pack("S*", $index) . pack("L*", $amount);
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0xF5, 0x00) . pack("S*", $index) . pack("L*", $amount);
+	} else {
+		$msg = pack("S*", 0x00F5, 0, 0, 0, 0, 0, $index, 0, 0) . pack("L*", $amount);
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
