@@ -28,7 +28,7 @@ no warnings qw(redefine uninitialized);
 use Time::HiRes qw(time);
 
 use Globals;
-use Log qw(message error);
+use Log qw(message error warning);
 use Network::Send;
 use Settings;
 use Plugins;
@@ -36,6 +36,7 @@ use Skills;
 use Utils;
 use Misc;
 use AI;
+use Match;
 
 our %handlers = (
 	ai		=> \&cmdAI,
@@ -79,6 +80,7 @@ our %handlers = (
 	sit		=> \&cmdSit,
 	skills		=> \&cmdSkills,
 	spells		=> \&cmdSpells,
+	storage	=> \&cmdStorage,
 	sl		=> \&cmdUseSkill,
 	sm		=> \&cmdUseSkill,
 	sp		=> \&cmdPlayerSkill,
@@ -143,6 +145,7 @@ our %descriptions = (
 	send		=> 'Send a raw packet to the server.',
 	sit		=> 'Sit down.',
 	skills		=> 'Show skills or add skill point.',
+	storage	=> 'Handle items in Kafra storage.',
 	sl		=> 'Use skill on location.',
 	sm		=> 'Use skill on monster.',
 	sp		=> 'Use skill on player.',
@@ -1357,7 +1360,7 @@ sub cmdPlayerSkill {
 	}
 
 	if ($args[1] ne "") {
-		$target = getPlayer($args[1], 1);
+		$target = Match::player($args[1], 1);
 		if (!$target) {
 			error	"Error in function 'sp' (Use Skill on Player)\n" .
 				"Player '$args[1]' does not exist.\n";
@@ -1374,6 +1377,103 @@ sub cmdPlayerSkill {
 			$target->{pos_to}{x}, $target->{pos_to}{y});
 	} else {
 		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
+	}
+}
+
+sub cmdStorage {
+	my (undef, $args) = @_;
+
+	my ($switch, $items) = split(' ', $args, 2);
+	if (!$switch) {
+		cmdStorage_list();
+	} elsif ($switch eq 'add') {
+		cmdStorage_add($items);
+	} elsif ($switch eq 'get') {
+		cmdStorage_get($items);
+	} elsif ($switch eq 'close') {
+		cmdStorage_close();
+	} else {
+		error <<"_";
+Syntax Error in function 'storage' (Storage Functions)
+Usage: storage
+       storage close
+       storage add <inventory_item> [<amount>]
+       storage get <storage_item> [<amount>]
+_
+	}
+}
+
+sub cmdStorage_list {
+	if ($storage{opened}) {
+		my $list = "----------Storage-----------\n";
+		$list .= "#  Name\n";
+		for (my $i = 0; $i < @storageID; $i++) {
+			next if ($storageID[$i] eq "");
+
+			my $display = "$storage{$storageID[$i]}{'name'}";
+			$display .= " x $storage{$storageID[$i]}{'amount'}";
+			$display .= " -- Not Identified" if !$storage{$storageID[$i]}{identified};
+
+			$list .= sprintf("%2d %s\n", $i, $display);
+		}
+		$list .= "\nCapacity: $storage{'items'}/$storage{'items_max'}\n";
+		$list .= "-------------------------------\n";
+		message($list, "list");
+	} else {
+		error "No information about storage; it has not been opened before in this session\n";
+	}
+}
+
+sub cmdStorage_add {
+	my $items = shift;
+
+	if (!$ai_v{temp}{storage_opened}) {
+		error "Storage is not open.\n";
+		return;
+	}
+
+	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
+	my $item = Match::inventoryItem($name);
+	if (!$item) {
+		error "Inventory Item '$name' does not exist.\n";
+		return;
+	}
+
+	if (!defined($amount) || $amount > $item->{amount}) {
+		$amount = $item->{amount};
+	}
+	sendStorageAdd(\$remote_socket, $item->{index}, $amount);
+}
+
+sub cmdStorage_get {
+	my $items = shift;
+
+	if (!$ai_v{temp}{storage_opened}) {
+		error "Storage is not open.\n";
+		return;
+	}
+
+	my ($names, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
+	my @names = split(',', $names);
+	my @items = ();
+
+	for my $name (@names) {
+		my $item = Match::storageItem($name);
+		if (!$item) {
+			error "Storage Item '$name' does not exist.\n";
+			next;
+		}
+		push(@items, $item);
+	}
+
+	storageGet(\@items, $amount) if @items;
+}
+
+sub cmdStorage_close {
+	if ($ai_v{temp}{storage_opened}) { 
+		sendStorageClose(\$remote_socket);
+	} else {
+		warning "Storage is already closed.\n";
 	}
 }
 

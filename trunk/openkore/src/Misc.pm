@@ -33,7 +33,7 @@ use Settings;
 use Utils;
 use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete
 	sendCharLogin sendDrop sendMove sendChat sendPartyChat sendGuildChat
-	sendPrivateMsg injectMessage);
+	sendPrivateMsg sendStorageGet injectMessage);
 
 our @EXPORT = (
 	# Config modifiers
@@ -61,7 +61,8 @@ our @EXPORT = (
 
 	# Inventory management
 	qw/inInventory
-	inventoryItemRemoved/,
+	inventoryItemRemoved
+	storageGet/,
 
 	# OS specific
 	qw/launchURL/,
@@ -77,7 +78,6 @@ our @EXPORT = (
 	createCharacter
 	drop
 	getIDFromChat
-	getPlayer
 	getPortalDestName
 	getResponse
 	getSpellName
@@ -991,33 +991,6 @@ sub getPortalDestName {
 	return join('/', @destinations);
 }
 
-##
-# getPlayer(ID, [partial_match])
-# ID: either a number in the player list, or a player name.
-# Returns: a player hash, or undef if not found.
-sub getPlayer {
-	my $ID = shift;
-	my $partial = shift;
-
-	if ($ID =~ /^\d+$/) {
-		if (defined($ID = $playersID[$ID])) {
-			return $players{$ID};
-		}
-	} elsif ($partial) {
-		$ID = quotemeta $ID;
-		foreach (@playersID) {
-			next if (!$_);
-			return $players{$_} if ($players{$_}{name} =~ /^$ID/i);
-		}
-	} else {
-		foreach (@playersID) {
-			next if (!$_);
-			return $players{$_} if (lc($players{$_}{name}) eq lc($ID));
-		}
-	}
-	return undef;
-}
-
 sub getResponse {
 	my $type = quotemeta shift;
 
@@ -1071,6 +1044,38 @@ sub inventoryItemRemoved {
 	}
 	$item->{amount} -= $amount;
 	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+}
+
+##
+# storageGet(indices, max)
+# indices: reference to an array of storage item hashes.
+# max: the maximum amount to get, for each item, or 0 for unlimited.
+#
+# Get one or more items from storage.
+#
+# Example:
+# # Get items $a and $b from storage.
+# storageGet([$a, $b]);
+# # Get items $a and $b from storage, but at most 30 of each item.
+# storageGet([$a, $b], 30);
+sub storageGet {
+	my $indices = shift;
+	my $max = shift;
+
+	if (@{$indices} == 1) {
+		my ($item) = @{$indices};
+		if (!defined($max) || $max > $item->{amount}) {
+			$max = $item->{amount};
+		}
+		sendStorageGet(\$remote_socket, $item->{index}, $max);
+
+	} else {
+		my %args;
+		$args{items} = $indices;
+		$args{max} = $max;
+		$args{timeout} = 0.15;
+		AI::queue("storageGet", \%args);
+	}
 }
 
 ##
