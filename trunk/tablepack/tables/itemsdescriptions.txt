@@ -8499,3 +8499,14 @@ A shining gold coin that has rumored to have a great value, possible to bring gr
 Weight : ^77777720^000000
 #
 
+//----- pRO Easter Event -----
+574#
+An egg of a bird. Contains lots of mineral and it's good snack for the children.^000088Recover small amounts of HP ^000000 .
+^ffffff_^000000
+Weight : ^7777773^000000
+#
+12019#
+Draw the picture on an egg from a bird as a meaning of rebirth and used for exchage it with other people. Can able to resurrects on dead people.
+^ffffff_^000000
+Weight : ^77777715^000000
+#
