@@ -6781,24 +6781,24 @@ sub parseMsg {
 		$chars[$config{'char'}]{'flee_bonus'} = unpack("S1", substr($msg, 36, 2));
 		$chars[$config{'char'}]{'critical'} = unpack("S1", substr($msg, 38, 2));
 		debug	"Strength: $chars[$config{'char'}]{'str'} #$chars[$config{'char'}]{'points_str'}\n"
-			,"Agility: $chars[$config{'char'}]{'agi'} #$chars[$config{'char'}]{'points_agi'}\n"
-			,"Vitality: $chars[$config{'char'}]{'vit'} #$chars[$config{'char'}]{'points_vit'}\n"
-			,"Intelligence: $chars[$config{'char'}]{'int'} #$chars[$config{'char'}]{'points_int'}\n"
-			,"Dexterity: $chars[$config{'char'}]{'dex'} #$chars[$config{'char'}]{'points_dex'}\n"
-			,"Luck: $chars[$config{'char'}]{'luk'} #$chars[$config{'char'}]{'points_luk'}\n"
-			,"Attack: $chars[$config{'char'}]{'attack'}\n"
-			,"Attack Bonus: $chars[$config{'char'}]{'attack_bonus'}\n"
-			,"Magic Attack Min: $chars[$config{'char'}]{'attack_magic_min'}\n"
-			,"Magic Attack Max: $chars[$config{'char'}]{'attack_magic_max'}\n"
-			,"Defense: $chars[$config{'char'}]{'def'}\n"
-			,"Defense Bonus: $chars[$config{'char'}]{'def_bonus'}\n"
-			,"Magic Defense: $chars[$config{'char'}]{'def_magic'}\n"
-			,"Magic Defense Bonus: $chars[$config{'char'}]{'def_magic_bonus'}\n"
-			,"Hit: $chars[$config{'char'}]{'hit'}\n"
-			,"Flee: $chars[$config{'char'}]{'flee'}\n"
-			,"Flee Bonus: $chars[$config{'char'}]{'flee_bonus'}\n"
-			,"Critical: $chars[$config{'char'}]{'critical'}\n"
-			,"Status Points: $chars[$config{'char'}]{'points_free'}\n";
+			."Agility: $chars[$config{'char'}]{'agi'} #$chars[$config{'char'}]{'points_agi'}\n"
+			."Vitality: $chars[$config{'char'}]{'vit'} #$chars[$config{'char'}]{'points_vit'}\n"
+			."Intelligence: $chars[$config{'char'}]{'int'} #$chars[$config{'char'}]{'points_int'}\n"
+			."Dexterity: $chars[$config{'char'}]{'dex'} #$chars[$config{'char'}]{'points_dex'}\n"
+			."Luck: $chars[$config{'char'}]{'luk'} #$chars[$config{'char'}]{'points_luk'}\n"
+			."Attack: $chars[$config{'char'}]{'attack'}\n"
+			."Attack Bonus: $chars[$config{'char'}]{'attack_bonus'}\n"
+			."Magic Attack Min: $chars[$config{'char'}]{'attack_magic_min'}\n"
+			."Magic Attack Max: $chars[$config{'char'}]{'attack_magic_max'}\n"
+			."Defense: $chars[$config{'char'}]{'def'}\n"
+			."Defense Bonus: $chars[$config{'char'}]{'def_bonus'}\n"
+			."Magic Defense: $chars[$config{'char'}]{'def_magic'}\n"
+			."Magic Defense Bonus: $chars[$config{'char'}]{'def_magic_bonus'}\n"
+			."Hit: $chars[$config{'char'}]{'hit'}\n"
+			."Flee: $chars[$config{'char'}]{'flee'}\n"
+			."Flee Bonus: $chars[$config{'char'}]{'flee_bonus'}\n"
+			."Critical: $chars[$config{'char'}]{'critical'}\n"
+			."Status Points: $chars[$config{'char'}]{'points_free'}\n";
 
 	} elsif ($switch eq "00BE") {
 		$type = unpack("S1",substr($msg, 2, 2));
