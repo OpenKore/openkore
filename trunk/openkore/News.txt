@@ -53,6 +53,10 @@
   Linux users should rerun make.
 - OpenKore on Linux will now keep the prompt visible. Keys like Home,
   End, Ctrl+U etc. are supported.
+- Interfaces are closer to completion --interface can now be used on the
+  command line to select an interface to use. 'Console' is the default 
+  interface. There is only one alternate interface at this point 'Tk' a stripped
+  down version of modKore's Vx mode.
 
 Other contributors:
 - jsteng: simplified move AI code.
