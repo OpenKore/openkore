@@ -25,7 +25,7 @@ use warnings;
 
 use Interface;
 use base qw/Interface/;
-use Plugins qw/addHook/;
+use Plugins;
 use Globals;
 
 use Carp qw/carp croak confess/;
@@ -65,7 +65,7 @@ sub new {
 #		Win32::Console->new(&STD_OUTPUT_HANDLE())->Free or warn "could not free console: $!\n";
 #	}
 
-	addHook('postloadfiles', \&resetColors, $self);
+	Plugins::addHook('postloadfiles', \&resetColors, $self);
 	return $self;
 }
 
