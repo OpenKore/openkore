@@ -57,6 +57,7 @@ our @EXPORT = qw(
 	parseSkillsSPLUT
 	parseTimeouts
 	parseWaypoint
+	processUltimate
 	writeDataFile
 	writeDataFileIntact
 	writeDataFileIntact2
@@ -761,6 +762,174 @@ sub parseWaypoint {
 		push @{$r_array}, \%point;
 	}
 	close FILE;
+}
+
+
+# The ultimate config file format. This function is a parser and writer in one.
+# The config file can be divided in section, example:
+#
+#   foo 1
+#   bar 2
+#
+#   [Options]
+#   username me
+#   password p
+#
+#   [Names]
+#   joe
+#   mike
+#
+# Sections can be treated as hashes or arrays. It's defined by $rules.
+# If you want [Names] to be an array:
+# %rule = (Names => 'list');
+#
+# processUltimate("file", \%hash, \%rule) returns:
+# {
+#   foo => 1,
+#   bar => 2,
+#   Options => {
+#       username => 'me',
+#       password => 'p';
+#   },
+#   Names => [
+#       "joe",
+#       "mike"
+#   ]
+# }
+#
+# When in write mode, this function will automatically add new keys and lines,
+# while preserving comments.
+sub processUltimate {
+	my ($file, $hash, $rules, $writeMode) = @_;
+	my $f;
+	my $secname = '';
+	my ($section, $rule, @lines, %written);
+
+	undef %{$hash} if (!$writeMode);
+	return if (!open($f, "< $file"));
+	foreach (<$f>) {
+		s/[\r\n]//;
+
+		if ($_ eq '' || /^[ \t]*#/) {
+			push @lines, $_ if ($writeMode);
+			next;
+		}
+
+		if (/^\[(.+)\]$/) {
+			# New section
+			if ($writeMode) {
+				# First, finish writing everything in the previous section
+				my $h = (defined $section) ? $section : $hash;
+				my @add;
+
+				if ($rule ne 'list') {
+					foreach my $key (keys %{$h}) {
+						if (!$written{$key} && !ref($h->{$key})) {
+							push @add, "$key $h->{$key}";
+						}
+					}
+
+				} else {
+					foreach my $line (@{$h}) {
+						push @add, $line if (!$written{$line});
+					}
+				}
+
+				# Add after the first non-empty line from the end
+				my $linesFromEnd;
+				for (my $i = @lines - 1; $i >= 0; $i--) {
+					if ($lines[$i] ne '') {
+						$linesFromEnd = @lines - $i - 1;
+						for (my $j = $i + 1; $j < @lines; $j++) {
+							delete $lines[$j];
+						}
+						push @lines, @add;
+						for (my $j = 0; $j < $linesFromEnd; $j++) {
+							push @lines, '';
+						}
+						last;
+					}
+				}
+				undef %written;
+			}
+
+			# Parse the new section
+			$secname = $1;
+			$rule = $rules->{$secname};
+			if ($writeMode) {
+				$section = $hash->{$secname};
+				push @lines, $_;
+
+			} else {
+				if ($rule ne 'list') {
+					$section = {};
+				} else {
+					$section = [];
+				}
+				$hash->{$secname} = $section;
+			}
+
+		} elsif ($rule ne 'list') {
+			# Line is a key-value pair
+			my ($key, $val) = split / /, $_, 2;
+			my $h = (defined $section) ? $section : $hash;
+
+			if ($writeMode) {
+				# Delete line if value doesn't exist
+				if (exists $h->{$key}) {
+					if (!defined $h->{$key}) {
+						push @lines, $key;
+					} else {
+						push @lines, "$key $h->{$key}";
+					}
+					$written{$key} = 1;
+				}
+
+			} else {
+				$h->{$key} = $val;
+			}
+
+		} else {
+			# Line is part of a list
+			if ($writeMode) {
+				# Add line only if it exists in the hash
+				my $exists;
+				foreach my $line (@{$section}) {
+					if ($line eq $_) {
+						$exists = 1;
+						last;
+					}
+				}
+				push @lines, $_ if ($exists);
+				$written{$_} = 1;
+
+			} else {
+				push @{$section}, $_;
+			}
+		}
+	}
+	close $f;
+
+	if ($writeMode) {
+		# Add stuff that hasn't already been added
+		my $h = (defined $section) ? $section : $hash;
+		if ($rule ne 'list') {
+			foreach my $key (keys %{$h}) {
+				if (!$written{$key} && !ref($h->{$key})) {
+					push @lines, "$key $h->{$key}";
+				}
+			}
+
+		} else {
+			foreach my $line (@{$h}) {
+				push @lines, $line if (!$written{$line});
+			}
+		}
+
+		open($f, "> $file");
+		print $f join("\n", @lines) . "\n";
+		close $f;
+	}
 }
 
 
