@@ -971,13 +971,15 @@ sub parseCommand {
 		} elsif ($arg1 eq "stop") {
 			aiRemove("follow");
 			configModify("follow", 0);
-		} elsif ($playersID[$arg1] eq "") {
+		} elsif (($playersID[$arg1] eq "") && (findPartyUserID($arg1) eq "")) {
 			error	"Error in function 'follow' (Follow Player)\n" .
-				"Player $arg1 does not exist.\n";
+				"Player $arg1 either not visible or not online in party.\n";
 		} else {
-			ai_follow($players{$playersID[$arg1]}{'name'});
+			ai_follow($arg1);
 			configModify("follow", 1);
-			configModify("followTarget", $players{$playersID[$arg1]}{'name'});
+			configModify("followTarget", $arg1);
+
+			$ai_seq_args[0]{'following'} = 1;
 		}
 
 	#Guild Chat - chobit andy 20030101
@@ -3289,9 +3291,8 @@ sub AI {
 
 	##### FOLLOW #####
 
-
-	if ($ai_seq[0] eq "" && $config{'follow'}) {
-		ai_follow($config{'followTarget'});
+	if (!defined($ai_seq_args[0]{'following'}) && $config{'follow'} && (($ai_seq[0] eq "") || ($ai_seq[0] eq "follow") || ($ai_seq[0] eq "move") || ($ai_seq[0] eq "attack") || ($ai_seq[0] eq "skill_use") || ($ai_seq[0] eq "sitting"))) {
+			ai_follow($config{'followTarget'});
 	}
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'suspended'}) {
 		if ($ai_seq_args[0]{'ai_follow_lost'}) {
@@ -3343,15 +3344,16 @@ sub AI {
 		message "Master died.  I'll wait here.\n", "party";
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
-		message "I lost my master\n";
+		message "I lost my master\n", "party";
 		if ($config{'followBot'}) {
 			message "Trying to get him back\n", "party";
 			sendMessage(\$remote_socket, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
 
 		undef $ai_seq_args[0]{'following'};
+
 		if ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
-			message "My master disconnected\n";
+			message "My master disconnected\n", "party";
 
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'teleported'}) {
 			message "My master teleported\n", "party", 1;
@@ -3380,7 +3382,7 @@ sub AI {
 			}
 			$ai_seq_args[0]{'follow_lost_portalID'} = $ai_v{'temp'}{'foundID'};
 		} else {
-				message "Don't know what happened to Master\n", "party", 1;
+			message "Don't know what happened to Master\n", "party", 1;
 		}
 	}
 
@@ -7027,7 +7029,7 @@ sub parseMsg {
 		for (my $i = 28; $i < $msg_size; $i += 46) {
 			my $ID = substr($msg, $i, 4);
 			my $num = unpack("C1",substr($msg, $i + 44, 1));
-			if (!%{$chars[$config{'char'}]{'party'}{'users'}{$ID}}) {
+			if (binFind(\@partyUsersID, $ID) eq "") {
 				binAdd(\@partyUsersID, $ID);
 			}
 			($chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'}) = substr($msg, $i + 4, 24) =~ /([\s\S]*?)\000/;
@@ -7074,7 +7076,7 @@ sub parseMsg {
 		($partyUser) = substr($msg, 39, 24) =~ /([\s\S]*?)\000/;
 		($map) = substr($msg, 63, 16) =~ /([\s\S]*?)\000/;
 		if (!%{$chars[$config{'char'}]{'party'}{'users'}{$ID}}) {
-			binAdd(\@partyUsersID, $ID);
+			binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 			if ($ID eq $accountID) {
 				message "You joined party '$name'\n";
 			} else {
@@ -8447,10 +8449,61 @@ sub ai_drop {
 
 sub ai_follow {
 	my $name = shift;
-	my %args;
-	$args{'name'} = $name; 
-	unshift @ai_seq, "follow";
-	unshift @ai_seq_args, \%args;
+	
+	if (binFind(\@ai_seq, "follow") eq "") {
+		my %args;
+		$args{name} = $name; 
+		unshift @ai_seq, "follow";
+		unshift @ai_seq_args, \%args;
+	}
+
+	# we have to enable re-calc of route based on master's possition regulary, even when it is
+	# on route and move, otherwise we have finaly moved to the possition and found that the master
+	# already teleported to another side of the map.
+	
+	# This however will give problem on few seq such as storageAuto as 'move' and 'route' might
+	# be triggered to move to the NPC
+	
+	if (($playersID[$arg1] eq "") 
+		&& (binFind(\@ai_seq, "storageAuto") eq "")
+		&& (binFind(\@ai_seq, "storageGet") eq "")
+		&& (binFind(\@ai_seq, "sellAuto") eq "")
+		&& (binFind(\@ai_seq, "buyAuto") eq "")) {
+			
+		my %master;
+		$master{id} = findPartyUserID($config{followTarget});
+		if ($master{id} ne "") {
+			$master{x} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{x};
+			$master{y} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{y};
+			($master{map}) = $chars[$config{char}]{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
+
+			if ($master{map} ne $field{'name'}) {
+				undef $master{x};
+				undef $master{y};
+			}			
+			
+			if ((distance(\%master, \%{$ai_v{temp}{master}}) > 15) || ($master{map} != $ai_v{temp}{master}{map}) || timeOut($ai_v{temp}{time}, 15)) {
+				$ai_v{temp}{master}{x} = $master{x};
+				$ai_v{temp}{master}{y} = $master{y};
+				$ai_v{temp}{master}{map} = $master{map};
+				$ai_v{temp}{time} = time; 
+
+				if (defined($ai_v{temp}{master}{x}) && defined($ai_v{temp}{master}{y})) {
+					message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'} ($ai_v{temp}{master}{x},$ai_v{temp}{master}{y})\n", "party";
+				} else {
+					message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'}\n", "party";
+				}
+
+				aiRemove("move");
+				aiRemove("route");
+				aiRemove("route_getRoute");
+				aiRemove("route_getMapRoute");
+				ai_route(\%{$ai_v{temp}{returnHash}}, $ai_v{temp}{master}{x}, $ai_v{temp}{master}{y}, $ai_v{temp}{master}{map},0, 0, 0, 0, 0, 0);																											
+
+				$ai_seq_args[0]{'ai_following_lost'} = 1;  	
+			}                                                     																																																																																																																																																																																																																																																																																								
+		}                                                                                                                                																								
+	}
 }
 
 sub ai_getAggressives {
@@ -10327,6 +10380,21 @@ sub countCastOn {
 			$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
 		}
 	}
+}
+ 
+sub findPartyUserID {
+	if (%{$chars[$config{'char'}]{'party'}}) {
+		my $partyUserName = shift; 
+		for (my $j = 0; $j < @partyUsersID; $j++) {
+	        	next if ($partyUsersID[$j] eq "");
+			if ($partyUserName eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}
+				&& $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'online'}) {
+				return $partyUsersID[$j];
+			}
+		}
+	}
+
+	return undef;
 }
 
 return 1;
