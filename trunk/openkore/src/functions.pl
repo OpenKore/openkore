@@ -3049,10 +3049,17 @@ sub AI {
 			} else {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
 			}
+
+			my $attackOnRoute;
+			if ($config{'attackAuto_inLockOnly'} == 1) {
+				$attackOnRoute = 1;
+			} elsif ($config{'attackAuto_inLockOnly'} > 1) {
+				$attackOnRoute = 0;
+			} else {
+				$attackOnRoute = 2;
+			}
 			ai_route($config{'lockMap'}, $config{'lockMap_x'}, $config{'lockMap_y'},
-				attackOnRoute => $config{'attackAuto_inLockOnly'} ?
-					($config{'attackAuto'} ? 1 : 0) :
-					$config{'attackAuto'});
+				attackOnRoute => $attackOnRoute);
 		}
 	}
 	undef $ai_v{'temp'}{'lockMap_coords'};

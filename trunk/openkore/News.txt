@@ -6,6 +6,8 @@ New features:
 - "<name> refined weapon <success/failure>" messages from modkore added.
 - New Amatsu emotions are now supported. You must download the latest
   default table files.
+- If attackAuto_inLockOnly is set to 2, Kore will ignore all aggressive
+  monsters while walking to lockMap.
 
 Bug fixes:
 - Fixed login problems with newer eAthena versions (2nd session id, bug #28)
