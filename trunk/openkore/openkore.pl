@@ -54,7 +54,7 @@ Plugins::callHook('start');
 
 addParseFiles($Settings::config_file, \%config,\&parseDataFile2);
 addParseFiles($Settings::items_control_file, \%items_control,\&parseItemsControl);
-addParseFiles($Settings::mon_control_file, \%mon_control,\&parseMonControl);
+addParseFiles($Settings::mon_control_file, \%mon_control, \&parseMonControl);
 addParseFiles("$Settings::control_folder/overallauth.txt", \%overallAuth, \&parseDataFile);
 addParseFiles($Settings::pickupitems_file, \%itemsPickup, \&parseDataFile_lc);
 addParseFiles("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
@@ -162,14 +162,24 @@ elsif ($config{'secureAdminPassword'} eq '1') {
 Log::message("\n");
 
 our $injectServer_socket;
+our $XKore_dontRedirect = 0;
 if ($config{'XKore'}) {
 	$injectServer_socket = IO::Socket::INET->new(
 			Listen		=> 5,
 			LocalAddr	=> 'localhost',
 			LocalPort	=> 2350,
 			Proto		=> 'tcp');
-	($injectServer_socket) || die "Error creating local inject server: $@";
-	Log::message("Local inject server started (".$injectServer_socket->sockhost().":2350)\n");
+	if (!$injectServer_socket) {
+		Log::error("Unable to start the X-Kore server.\n", "startup");
+		Log::error("You can only run one X-Kore session at the same time.", "startup");
+		exit;
+	}
+	Log::message("Local X-Kore server started (".$injectServer_socket->sockhost().":2350)\n", "startup");
+
+	# Redirect messages to the RO client
+	# I don't use a reference to redirectXKoreMessages here;
+	# otherwise dynamic code reloading won't have any effect
+	Log::addHook(sub { &redirectXKoreMessages; });
 }
 
 our $remote_socket = IO::Socket::INET->new();
