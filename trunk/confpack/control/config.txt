@@ -256,3 +256,20 @@ autoResponse 1
 
 ignoreAll 0
 itemHistory 0
+
+# Here is where you can set the various output colors
+# valid colors are black, red, green, yellow, blue, magenta, cyan, white and default
+
+color_error red
+color_warning yellow
+color_connection green
+color_atk cyan
+color_monatkyou blue
+color_list white
+color_info default
+color_input default
+color_itemuse default
+color_mon_itemuse default
+color_player_itemuse default
+color_success default
+color_storage default
