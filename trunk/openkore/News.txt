@@ -133,6 +133,9 @@ Bug fixes:
 - Autostorage will now walk back to the NPC if it fails to teleport back.
 - Item <x> has been upgraded to <y> now correctly shows the old upgrade
   level for <x>
+- When determining whether not to attack a monster due to it being too
+  close to another player (to avoid KSing), exempt party members.
+  Implemented in positionNearPlayer().
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
