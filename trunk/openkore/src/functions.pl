@@ -4332,7 +4332,7 @@ sub AI {
 			# Initializes the openlist with portals walkable from the starting point
 			foreach my $portal (keys %portals_lut) {
 				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
-				if ( ai_route_getRoute(\@{$ai_seq_args[0]{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$portals_lut{$portal}{'source'}{'pos'}}) ) {
+				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}{'pos'}}) ) {
 					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
 						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
 						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$ai_seq_args[0]{'solution'}};
@@ -4345,7 +4345,7 @@ sub AI {
 		} elsif ( $args->{stage} eq 'Getting Map Solution' ) {
 			$timeout{'ai_route_calcRoute'}{'time'} = time;
 			while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
-				ai_mapRoute_searchStep(\%{$ai_seq_args[0]});
+				ai_mapRoute_searchStep($args);
 			}
 			if ($ai_seq_args[0]{'found'}) {
 				$ai_seq_args[0]{'stage'} = 'Traverse the Map Solution';
@@ -8973,6 +8973,19 @@ sub ai_route {
 	}
 }
 
+##
+# ai_route_getRoute(returnArray, r_field, r_start, r_dest, [noAvoidWalls])
+# returnArray: reference to an array. The solution will be stored in here.
+# r_field: reference to a field hash (usually \%field).
+# r_start: reference to a hash. This is the start coordinate.
+# r_dest: reference to a hash. This is the destination coordinate.
+# noAvoidWalls: 1 if you don't want to avoid walls on route.
+# Returns: 1 if the calculation succeeded, 0 if not.
+#
+# Calculates how to walk from $r_start to $r_dest.
+# The blocks you have to walk on in order to get to $r_dest are stored in
+# $returnArray. This function is a convenience wrapper function for the stuff
+# in PathFinding.pm
 sub ai_route_getRoute {
 	my ($returnArray, $r_field, $r_start, $r_dest, $noAvoidWalls) = @_;
 	undef @{$returnArray};
