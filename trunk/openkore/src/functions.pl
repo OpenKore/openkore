@@ -2336,7 +2336,12 @@ sub AI {
 			if (defined($args->{getStart}) && $args->{done} != 1) {
 
 				my %item;
-				while ($config{"getAuto_$ai_seq_args[0]{index}"}) {
+				while (exists $config{"getAuto_$ai_seq_args[0]{index}"}) {
+					if (!$config{"getAuto_$ai_seq_args[0]{index}"}) {
+						$i++;
+						next;
+					}
+
 					undef %item;
 					$item{name} = $config{"getAuto_$ai_seq_args[0]{index}"};
 					$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
@@ -3326,7 +3331,12 @@ sub AI {
 		if (!$args->{attackMethod}{type}) {
 			my $lastSkill = Skills->new(id => $char->{last_skill_used})->name;
 			my $i = 0;
-			while ($config{"attackComboSlot_$i"} ne "") {
+			while (exists $config{"attackComboSlot_$i"}) {
+				if (!$config{"attackComboSlot_$i"}) {
+					$i++;
+					next;
+				}
+
 				if ($config{"attackComboSlot_${i}_afterSkill"} eq $lastSkill
 				 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
 				 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
@@ -3353,7 +3363,12 @@ sub AI {
 			}
 
 			my $i = 0;
-			while ($config{"attackSkillSlot_$i"} ne "") {
+			while (exists $config{"attackSkillSlot_$i"}) {
+				if (!$config{"attackSkillSlot_$i"}) {
+					$i++;
+					next;
+				}
+
 				if (checkSelfCondition("attackSkillSlot_$i")
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $args->{attackSkillSlot_uses}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
@@ -3729,7 +3744,12 @@ sub AI {
 		}
 
 		my $i = 0;
-		while ($config{"equipAuto_$i"}) {
+		while (exists $config{"equipAuto_$i"}) {
+			if (!$config{"equipAuto_$i"}) {
+				$i++;
+				next;
+			}
+
 			if (checkSelfCondition("equipAuto_$i")
 			 	&& (!$config{"equipAuto_$i" . "_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
 			 	&& (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{temp}{teleport}{lv})
@@ -5919,12 +5939,22 @@ sub parseMsg {
 		# Reset item and skill times. The effect of items (like aspd potions)
 		# and skills (like Twohand Quicken) disappears when we change map server.
 		my $i = 0;
-		while ($config{"useSelf_item_$i"}) {
+		while (exists $config{"useSelf_item_$i"}) {
+			if (!$config{"useSelf_item_$i"}) {
+				$i++;
+				next;
+			}
+
 			$ai_v{"useSelf_item_$i"."_time"} = 0;
 			$i++;
 		}
 		$i = 0;
-		while ($config{"useSelf_skill_$i"}) {
+		while (exists $config{"useSelf_skill_$i"}) {
+			if (!$config{"useSelf_skill_$i"}) {
+				$i++;
+				next;
+			}
+
 			$ai_v{"useSelf_skill_$i"."_time"} = 0;
 			$i++;
 		}
@@ -8838,7 +8868,12 @@ sub attack {
 	$startedattack = 1;
 	if ($config{"monsterCount"}) {	
 		my $i = 0;
-		while ($config{"monsterCount_mon_$i"} ne "") {
+		while (exists $config{"monsterCount_mon_$i"}) {
+			if (!$config{"monsterCount_mon_$i"}) {
+				$i++;
+				next;
+			}
+
 			if ($config{"monsterCount_mon_$i"} eq $monsters{$ID}{'name'}) {
 				$monsters_killed[$i] = $monsters_killed[$i] + 1;
 			}
@@ -8850,7 +8885,12 @@ sub attack {
 	AUTOEQUIP: {
 		my $i = 0;
 		my ($Rdef,$Ldef,$Req,$Leq,$arrow,$j);
-		while ($config{"autoSwitch_$i"} ne "") { 
+		while (exists $config{"autoSwitch_$i"}) {
+			if (!$config{"autoSwitch_$i"}) {
+				$i++;
+				next;
+			}
+
 			if (existsInList($config{"autoSwitch_$i"}, $monsters{$ID}{'name'})) {
 				message "Encounter Monster : ".$monsters{$ID}{'name'}."\n";
 
@@ -9446,7 +9486,12 @@ sub avoidGM_near {
 		# in order to prevent false matches
 		my $statusGM = 1;
 		my $j = 0;
-		while ($config{"avoid_ignore_$j"} ne "") {
+		while (exists $config{"avoid_ignore_$j"}) {
+			if (!$config{"avoid_ignore_$j"}) {
+				$i++;
+				next;
+			}
+
 			if ($players{$playersID[$i]}{'name'} eq $config{"avoid_ignore_$j"}) {
 				$statusGM = 0;
 				last;
@@ -9751,7 +9796,12 @@ sub useTeleport {
 
 	# No skill and no wings; try to equip a Tele clip or something, if equipAuto_#_onTeleport is set
 	my $i = 0;
-	while ($config{"equipAuto_$i"} ne "") {
+	while (exists $config{"equipAuto_$i"}) {
+		if (!$config{"equipAuto_$i"}) {
+			$i++;
+			next;
+		}
+
 		if ($config{"equipAuto_${i}_onTeleport"}) {
 			# it is safe to always set this value, because $ai_v{temp} is always cleared after teleport
 			if (!$ai_v{temp}{teleport}{lv}) {

@@ -101,11 +101,15 @@ sub mainLoop {
 		main::mainLoop();
 		main::checkConnection();
 
+
+		# Update user interface controls
+
 		if (timeOut($controlTime, 0.15)) {
 			$self->updateStatusBar;
 			$self->updateMapViewer;
 			$controlTime = time;
 		}
+
 		if (timeOut($itemListTime, 0.35)) {
 			$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
 			$itemListTime = time;
@@ -225,8 +229,10 @@ sub createInterface {
 		$self->{mPause}  = $self->addMenu($opMenu, '&Pause Botting', \&onDisableAI, 'Pause all automated botting activity');
 		$self->{mResume} = $self->addMenu($opMenu, '&Resume Botting', \&onEnableAI, 'Resume all automated botting activity');
 		$opMenu->AppendSeparator;
-		$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
-		$opMenu->AppendSeparator;
+		if ($^O eq 'MSWin32') {
+			$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
+			$opMenu->AppendSeparator;
+		}
 		$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit, 'Exit this program');
 		$menu->Append($opMenu, 'P&rogram');
 		EVT_MENU_OPEN($opMenu, sub { $self->onMenuOpen; });

@@ -32,6 +32,7 @@ our %addedHandlers;
 sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new(@_);
+	$self->{mapDir} = 'map';
 	$self->{points} = [];
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
 	$self->{destBrush} = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
@@ -176,6 +177,11 @@ sub mapSize {
 	}
 }
 
+sub setMapDir {
+	my $self = shift;
+	$self->{mapDir} = shift;
+}
+
 
 #### Private ####
 
@@ -272,6 +278,11 @@ sub _loadImage {
 	return ($bitmap && $bitmap->Ok()) ? $bitmap : undef;
 }
 
+sub _map {
+	my $self = shift;
+	return File::Spec->catfile($self->{mapDir}, @_);
+}
+
 sub _f {
 	return File::Spec->catfile(@_);
 }
@@ -281,12 +292,12 @@ sub _loadMapImage {
 	my $field = shift;
 	my $name = $field->{name};
 
-	if (-f _f("map", "$name.jpg")) {
-		return _loadImage(_f("map", "$name.jpg"));
-	} elsif (-f _f("map", "$name.png")) {
-		return _loadImage(_f("map", "$name.png"));
-	} elsif (-f _f("map", "$name.bmp")) {
-		return _loadImage(_f("map", "$name.bmp"));
+	if (-f $self->_map("$name.jpg")) {
+		return _loadImage($self->_map("$name.jpg"));
+	} elsif (-f $self->_map("$name.png")) {
+		return _loadImage($self->_map("$name.png"));
+	} elsif (-f $self->_map("$name.bmp")) {
+		return _loadImage($self->_map("$name.bmp"));
 
 	} else {
 		my $file = _f(File::Spec->tmpdir(), "map.xpm");
@@ -346,7 +357,7 @@ sub _onPaint {
 
 
 	if (!$self->{selfDot}) {
-		my $file = _f("map", "kore.png");
+		my $file = $self->_map("kore.png");
 		$self->{selfDot} = _loadImage($file) if (-f $file);
 	}
 
