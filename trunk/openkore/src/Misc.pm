@@ -210,8 +210,6 @@ sub checkMonsterCleanness {
 		return 1;
 	}
 
-	# TODO: set clean to 1 if monster's last attack was to you
-
 	# my $cleanMonster = (
 	#	  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
 	#	|| ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0)
