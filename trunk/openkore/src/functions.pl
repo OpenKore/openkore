@@ -3028,14 +3028,14 @@ sub AI {
 
 				my ($lockX, $lockY);
 				my $i = 500;
-				if ($config{lockMap_x} ne '' && $config{lockMap_y} ne '') {
-					do {
-						$lockX = int($config{lockMap_x});
-						$lockX += ((int(rand(3))-1) * (int(rand($config{lockMap_randX}))+1)) if ($config{lockMap_randX} ne '');
-						$lockY = int($config{lockMap_y});
-						$lockY += ((int(rand(3))-1) * (int(rand($config{lockMap_randY}))+1)) if ($config{lockMap_randY} ne '');
-					} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
-				}
+				do {
+					$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
+					$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
+					$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
+				    	$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
+				    	$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
+					$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
+				} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
 				if (!$i) {
 					error "Invalid coordinates specified for lockMap, coordinates are unwalkable\n";
 					$config{lockMap} = '';
@@ -3060,10 +3060,10 @@ sub AI {
 		my ($randX, $randY);
 		my $i = 500;
 		do {
-			$randX = int(rand() * ($field{width} - 1));
-			$randX = $config{lockMap_x} + ((int(rand(3))-1) * (int(rand($config{lockMap_randX}))+1)) if ($config{lockMap_x} ne '' && $config{lockMap_randX} ne '');
-			$randY = int(rand() * ($field{height} - 1));
-			$randY = $config{lockMap_y} + ((int(rand(3))-1) * (int(rand($config{lockMap_randY}))+1)) if ($config{lockMap_y} ne '' && $config{lockMap_randY} ne '');
+			$randX = int(rand($field{width}) + 1);
+			$randX = $config{'lockMap_x'} + (int(rand($config{'lockMap_randX'}))+1) if ($config{'lockMap_x'} ne '' && $config{'lockMap_randX'} ne '');
+			$randY = int(rand($field{height}) + 1);
+			$randY = $config{'lockMap_y'} + (int(rand($config{'lockMap_randY'}))+1) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
 		} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
 		if (!$i) {
 			error "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n";

@@ -169,7 +169,8 @@ Credits:
 - sparshong: character creation/deletion packet code.
 - jsteng, littlewens: mute packet support.
 - anoxemian: (partial?) kRO/PK server support.
-- doenet: mon_control.txt attack level support.
+- doenet: mon_control.txt attack level support, randomWalk and lockMap
+  fixes/improvements.
 
 
 ==================
