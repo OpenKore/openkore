@@ -359,7 +359,7 @@ sub parseMonControl {
 		if (/\t/) {
 			($key, $args) = split /\t+/, lc($_);
 		} else {
-			($key, $args) = lc($_) =~ /([\s\S]+?) ([\-\d]+[\s\S]*)/;
+			($key, $args) = lc($_) =~ /([\s\S]+?) ([\-\d\.]+[\s\S]*)/;
 		}
 
 		@args = split / /, $args;
@@ -372,6 +372,7 @@ sub parseMonControl {
 			$r_hash->{$key}{attack_jlvl} = $args[5];
 			$r_hash->{$key}{attack_hp} = $args[6];
 			$r_hash->{$key}{attack_sp} = $args[7];
+			$r_hash->{$key}{weight} = $args[8];
 		}
 	}
 	close FILE;
