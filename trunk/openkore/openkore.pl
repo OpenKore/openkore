@@ -110,7 +110,7 @@ if ($buildType == 0) {
 }
 
 if ($config{'XKore'}) {
-	our $cwd = Win32::GetCwd();
+	my $cwd = Win32::GetCwd();
 	our $injectDLL_file = $cwd."\\Inject.dll";
 
 	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
@@ -119,7 +119,6 @@ if ($config{'XKore'}) {
 		exit 1;
 	}
 	undef $cwd;
-	undef $injectDLL_file;
 }
 
 if ($config{'adminPassword'} eq 'x' x 10) {
