@@ -364,6 +364,7 @@ open_grf_file (const char *fname)
 
 		base = g_path_get_basename (fname);
 		set_status ("");
+		gdk_window_set_cursor (W(main)->window, NULL);
 		show_error (_("Error while opening %s:\n%s"),
 			base, grf_strerror (err));
 		g_free (base);
