@@ -971,15 +971,21 @@ sub parseCommand {
 		} elsif ($arg1 eq "stop") {
 			aiRemove("follow");
 			configModify("follow", 0);
-		} elsif (($playersID[$arg1] eq "") && (findPartyUserID($arg1) eq "")) {
-			error	"Error in function 'follow' (Follow Player)\n" .
-				"Player $arg1 either not visible or not online in party.\n";
+
+		} elsif ($arg1 =~ /^\d+$/) {
+			if (!$playersID[$arg1]) {
+				error	"Error in function 'follow' (Follow Player)\n" .
+					"Player $arg1 either not visible or not online in party.\n";
+			} else {
+				ai_follow($players{$playersID[$arg1]}{name});
+				configModify("follow", 1);
+				configModify("followTarget", $players{$playersID[$arg1]}{name});
+			}
+
 		} else {
 			ai_follow($arg1);
 			configModify("follow", 1);
 			configModify("followTarget", $arg1);
-
-			$ai_seq_args[0]{'following'} = 1;
 		}
 
 	#Guild Chat - chobit andy 20030101
@@ -3293,7 +3299,7 @@ sub AI {
 	##### FOLLOW #####
 
 	if (!defined($ai_seq_args[0]{'following'}) && $config{'follow'} && (($ai_seq[0] eq "") || ($ai_seq[0] eq "follow") || ($ai_seq[0] eq "move") || ($ai_seq[0] eq "attack") || ($ai_seq[0] eq "skill_use") || ($ai_seq[0] eq "sitting"))) {
-			ai_follow($config{'followTarget'});
+		ai_follow($config{'followTarget'});
 	}
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'suspended'}) {
 		if ($ai_seq_args[0]{'ai_follow_lost'}) {
@@ -3320,6 +3326,7 @@ sub AI {
 					my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}});
 					my (%vec, %pos);
 
+					stand() if ($chars[$config{char}]{sitting});
 					getVector(\%vec, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 					moveAlongVector(\%pos, \%{$chars[$config{'char'}]{'pos_to'}}, \%vec, $dist - $config{'followDistanceMin'});
 					sendMove(\$remote_socket, $pos{'x'}, $pos{'y'});
@@ -8452,27 +8459,28 @@ sub ai_drop {
 
 sub ai_follow {
 	my $name = shift;
-	
+
 	if (binFind(\@ai_seq, "follow") eq "") {
 		my %args;
 		$args{name} = $name; 
-		unshift @ai_seq, "follow";
-		unshift @ai_seq_args, \%args;
+		push @ai_seq, "follow";
+		push @ai_seq_args, \%args;
+		$ai_seq_args[@ai_seq]{'following'} = 1;
 	}
 
 	# we have to enable re-calc of route based on master's possition regulary, even when it is
 	# on route and move, otherwise we have finaly moved to the possition and found that the master
 	# already teleported to another side of the map.
-	
+
 	# This however will give problem on few seq such as storageAuto as 'move' and 'route' might
 	# be triggered to move to the NPC
-	
+
 	if (($playersID[$arg1] eq "") 
 		&& (binFind(\@ai_seq, "storageAuto") eq "")
 		&& (binFind(\@ai_seq, "storageGet") eq "")
 		&& (binFind(\@ai_seq, "sellAuto") eq "")
 		&& (binFind(\@ai_seq, "buyAuto") eq "")) {
-			
+
 		my %master;
 		$master{id} = findPartyUserID($config{followTarget});
 		if ($master{id} ne "") {
@@ -8484,8 +8492,9 @@ sub ai_follow {
 				undef $master{x};
 				undef $master{y};
 			}			
-			
-			if ((distance(\%master, \%{$ai_v{temp}{master}}) > 15) || ($master{map} != $ai_v{temp}{master}{map}) || timeOut($ai_v{temp}{time}, 15)) {
+
+			if (distance(\%master, \%{$ai_v{temp}{master}}) > 15 || $master{map} != $ai_v{temp}{master}{map}
+			|| (timeOut($ai_v{temp}{time}, 15) && distance(\%master, $chars[$config{char}]{pos_to}) > $config{followDistanceMax})) {
 				$ai_v{temp}{master}{x} = $master{x};
 				$ai_v{temp}{master}{y} = $master{y};
 				$ai_v{temp}{master}{map} = $master{map};
@@ -8501,9 +8510,13 @@ sub ai_follow {
 				aiRemove("route");
 				aiRemove("route_getRoute");
 				aiRemove("route_getMapRoute");
-				ai_route(\%{$ai_v{temp}{returnHash}}, $ai_v{temp}{master}{x}, $ai_v{temp}{master}{y}, $ai_v{temp}{master}{map},0, 0, 0, 0, 0, 0);																											
+				ai_route(\%{$ai_v{temp}{returnHash}},
+					$ai_v{temp}{master}{x},
+					$ai_v{temp}{master}{y},
+					$ai_v{temp}{master}{map},
+					0, 0, 0, 0, 0, 0);
 
-				$ai_seq_args[0]{'ai_following_lost'} = 1;  	
+				$ai_seq_args[@ai_seq]{'ai_following_lost'} = 1;  	
 			}                                                     																																																																																																																																																																																																																																																																																								
 		}                                                                                                                                																								
 	}

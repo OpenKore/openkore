@@ -60,35 +60,15 @@ our @EXPORT = qw(
 sub parseDataFile {
 	my $file = shift;
 	my $r_hash = shift;
-	my $no_undef = shift;
-
-	undef %{$r_hash} unless $no_undef;
-
+	undef %{$r_hash};
 	my ($key,$value);
 	open FILE, "< $file";
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-
 		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
-		if ($key eq "!include") {
-			my $fname = $value;
-			if (!File::Spec->file_name_is_absolute($value) && !($value =~ /^\//)) {
-				if ($file =~ /[\/\\]/) {
-					$fname = $file;
-					$fname =~ s/(.*)[\/\\].*/$1/;
-					$fname = File::Spec->catfile($fname, $value);
-				} else {
-					$fname = $value;
-				}
-			}
-
-			$r_hash->{_INCLUDES}{$file} = [] if (!$r_hash->{_INCLUDES}{$file});
-			parseDataFile($fname, $r_hash, 1);
-			push @{$r_hash->{_INCLUDES}{$file}}, $fname;
-
-		} elsif ($key ne "" && $value ne "") {
+		if ($key ne "" && $value ne "") {
 			$$r_hash{$key} = $value;
 		}
 	}
@@ -116,7 +96,9 @@ sub parseDataFile_lc {
 sub parseDataFile2 {
 	my $file = shift;
 	my $r_hash = shift;
-	undef %{$r_hash};
+	my $no_undef = shift;
+
+	undef %{$r_hash} unless $no_undef;
 	my ($key,$value);
 	open FILE, $file;
 	foreach (<FILE>) {
@@ -125,6 +107,25 @@ sub parseDataFile2 {
 		s/\s+$//g;
 		($key, $value) = $_ =~ /([\s\S]*?) ([\s\S]*)$/;
 		$key =~ s/\s//g;
+
+		if ($key eq "!include") {
+			my $fname = $value;
+			if (!File::Spec->file_name_is_absolute($value) && !($value =~ /^\//)) {
+				if ($file =~ /[\/\\]/) {
+					$fname = $file;
+					$fname =~ s/(.*)[\/\\].*/$1/;
+					$fname = File::Spec->catfile($fname, $value);
+				} else {
+					$fname = $value;
+				}
+			}
+
+			$r_hash->{_INCLUDES}{$file} = [] if (!$r_hash->{_INCLUDES}{$file});
+			parseDataFile($fname, $r_hash, 1);
+			push @{$r_hash->{_INCLUDES}{$file}}, $fname;
+			next;
+		}
+
 		if ($key eq "") {
 			($key) = $_ =~ /([\s\S]*)$/;
 			$key =~ s/\s//g;
