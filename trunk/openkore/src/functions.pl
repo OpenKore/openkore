@@ -6415,7 +6415,7 @@ sub parseMsg {
 				? $items_lut{$ID}
 				: "Unknown $ID";
 			$storage{$index}{'name'} = $display;
-			$storage{$index}{'binID'} = binFind(\@storageID, $ID);
+			$storage{$index}{'binID'} = binFind(\@storageID, $index);
 			print "Storage: $display ($storage{$index}{'binID'})\n" if $config{'debug'};
 		}
 		print "Storage opened\n";
@@ -8080,21 +8080,23 @@ sub parseMsg {
 		($guild{'master'})  = substr($msg, 70, 24) =~ /([\s\S]*?)\000/;
 
 	} elsif ($switch eq "01C4") {
-		# Non-stackable storage item added
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		my $ID = unpack("S1", substr($msg, 8, 2));
-
-		if (!%{$storage{$index}}) {
-			binAdd(\@storageID, $index);
-		}
 		my $display = ($items_lut{$ID} ne "")
 			? $items_lut{$ID}
 			: "Unknown $ID";
-		$storage{$index}{'nameID'} = $ID;
-		$storage{$index}{'index'} = $index;
-		$storage{$index}{'amount'} += $amount;
-		$storage{$index}{'name'} = $display;
+
+		if (%{$storage{$index}}) {
+			$storage{$index}{'amount'} += $amount;
+		} else {
+			binAdd(\@storageID, $index);
+			$storage{$index}{'nameID'} = $ID;
+			$storage{$index}{'index'} = $index;
+			$storage{$index}{'amount'} = $amount;
+			$storage{$index}{'name'} = $display;
+			$storage{$index}{'binID'} = binFind(\@storageID, $index);
+		}
 		message("Storage Item Added: $display ($index) x $amount\n", "storage", 1);
 
 	} elsif ($switch eq "01C8") {
