@@ -1900,8 +1900,8 @@ $chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$conf
 
 	} elsif ($switch eq "storage") {
 		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
-		my ($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,]+)/;
+		my ($arg3) = $input =~ /^[\s\S]*? \w+ [\d,]+ (\d+)/;
 		if ($arg1 eq "") {
 			$~ = "STORAGELIST";
 			print "----------Storage-----------\n";
@@ -1939,11 +1939,17 @@ $i $display
 		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/ && $storageID[$arg2] eq "") {
 			print	"Error in function 'storage get' (Get Item from Storage)\n"
 				,"Storage Item $arg2 does not exist\n";
-		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/) {
+		} elsif ($arg1 eq "get" && $arg2 =~ /[\d,]+/) {
+			if (0) {
 			if (!$arg3 || $arg3 > $storage{$storageID[$arg2]}{'amount'}) {
 				$arg3 = $storage{$storageID[$arg2]}{'amount'};
 			}
 			sendStorageGet(\$remote_socket, $storage{$storageID[$arg2]}{'index'}, $arg3);
+			}
+
+			my @items = split(/ *, */, $arg2);
+			@items = grep(!/^$/, @items); # Remove empty entires
+			ai_storageGetBulk(\@items, $arg3);
 
 		} elsif ($arg1 eq "close") {
 			sendStorageClose(\$remote_socket);
@@ -2732,6 +2738,24 @@ sub AI {
 			}
 		}
 	}
+
+
+	#####STORAGE BULK GET#####
+	# Get many items from storage.
+
+	if ($ai_seq[0] eq "storageGetBulk" && timeOut($ai_seq_args[0])) {
+		my $item = $ai_seq_args[0]{'items'}[0];
+		my $max = $ai_seq_args[0]{'max'};
+print "Bulk getting item $item ($storage{$storageID[$item]}{'name'})\n"; # debug; remove this later
+		sendStorageGet(\$remote_socket, $storage{$storageID[$item]}{'index'}, $max);
+		$ai_seq_args[0]{'time'} = time;
+
+		if (@{$ai_seq_args[0]{'items'}} <= 0) {
+			shift @ai_seq;
+			shift @ai_seq_args;
+		}
+	}
+
 
 	############### START XLR82XS ###################
 	# This is my really really really funky way of dealing with all the red socks with holes that I constantly pick up
@@ -5587,8 +5611,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		# End of Long Distance attack Solution
 
-	} elsif ($switch eq "0089") {
-
 	} elsif ($switch eq "008A") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID1 = substr($msg, 2, 4);
@@ -6682,8 +6704,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 		}
 
-	} elsif ($switch eq "00D3") {
-
 	} elsif ($switch eq "00D6") {
 		$currentChatRoom = "new";
 		%{$chatRooms{'new'}} = %createdChatRoom;
@@ -7176,9 +7196,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
 			}
 		}
-
-
-	} elsif ($switch eq "0115") {
 
 	} elsif ($switch eq "0117") {
 		$skillID = unpack("S1",substr($msg, 2, 2));
@@ -8822,6 +8839,30 @@ sub ai_storageAutoCheck {
 			return 1;
 		}
 	}
+}
+
+##
+# ai_storageGetBulk(items, max)
+# items: reference to an array of storage item numbers.
+# max: the maximum amount to get, for each item, or 0 for unlimited.
+#
+# Get many items from storage.
+#
+# Example:
+# # Get items 2 and 5 from storage.
+# ai_storageGetBulk([2, 5]);
+# # Get items 2 and 5 from storage, but at most 30 of each item.
+# ai_storageGetBulk([2, 5], 30);
+sub ai_storageGetBulk {
+	my $r_items = shift;
+	my $max = shift;
+	my %seq = ();
+
+	$seq{'items'} = \@{$r_items};
+	$seq{'max'} = $max;
+	$seq[0]{'timeout'} = 0.25;
+	unshift @ai_seq, "storageGetBulk";
+	unshift @ai_seq_args, \%seq;
 }
 
 sub attack {
