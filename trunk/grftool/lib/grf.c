@@ -129,6 +129,15 @@ typedef unsigned long DWORD;
 
 
 static void
+NibbleSwap (BYTE *src, int len)
+{
+	for(; 0 < len; len--, src++) {
+		*src = (*src >> 4) | (*src << 4);
+	}
+}
+
+
+static void
 BitConvert (BYTE *Src, char *BitSwapTable)
 {
 	int lop,prm;
@@ -224,6 +233,21 @@ decode_des_etc(BYTE *buf,int len,int type,int cycle)
 	}
 }
 
+/* Decode an encoded filename; only needed for version 1 archives */
+static unsigned char *
+decode_filename (unsigned char *buf, int len)
+{
+	int i;
+
+	for (i = 0; i < len; i += 8) {
+		NibbleSwap (&buf[i], 8);
+		BitConvert (&buf[i], BitSwapTable1);
+		BitConvert4 (&buf[i]);
+		BitConvert (&buf[i], BitSwapTable2);
+	}
+	return buf;
+}
+
 
 static void
 debug (char *format, ...)
@@ -308,12 +332,99 @@ grf_open (const char *fname, GrfError *error)
 	}
 
 
-	/* We only support version 2; who uses version 1 anyway? */
 	if (grf->version == 1) {
-		if (error) *error = GE_NSUP1;
-		free (grf);
-		fclose (f);
-		return NULL;
+		unsigned long filelist_size;
+		unsigned char *filelist_data;
+		unsigned long entry, index, offset;
+		unsigned long filelist_entries;
+		unsigned long directory_index_count;
+
+		filelist_size = grf_size - ftell (f);
+		debug ("File list size: %ld bytes\n", filelist_size);
+
+		filelist_data = (unsigned char *) calloc (1, filelist_size);
+		if (!filelist_data) {
+			fclose (f);
+			if (error) *error = GE_NOMEM;
+			free (grf);
+			return NULL;
+		}
+
+		fread (filelist_data, 1, filelist_size, f);
+
+
+		/* The file list may contain directory indices. We don't want that,
+		   so we first calculate how many directory index entries there are.
+		   Then we calculate how big grf->files has to be. */
+		filelist_entries = getlong (grf_header + 38) - getlong (grf_header + 34) - 7;
+		for (entry = 0, offset = 0, directory_index_count = 0; entry < filelist_entries; entry++) {
+			unsigned long ofs2;
+			int type;
+
+			ofs2 = offset + getlong (filelist_data + offset) + 4;
+			type = filelist_data[ofs2 + 12];
+			if (type == 0)
+				directory_index_count++;
+			offset = ofs2 + 17;
+		}
+
+
+		grf->nfiles = filelist_entries - directory_index_count;
+		debug ("nfiles: %d\n"
+			"Allocating %d bytes of memory for file list structure.\n",
+			grf->nfiles,
+			sizeof (GrfFile) * grf->nfiles);
+		grf->files = (GrfFile *) calloc (sizeof (GrfFile), grf->nfiles);
+
+		for (entry = 0, index = 0, offset = 0; entry < filelist_entries; entry++) {
+			unsigned long ofs2;
+			int type;
+
+			ofs2 = offset + getlong (filelist_data + offset) + 4;
+			type = filelist_data[ofs2 + 12];
+
+			/* Type 0 is a directory index; skip that */
+			if (type != 0) {
+				unsigned char *name;			/* Filename */
+				unsigned long compressed_len;		/* Compressed file size */
+				unsigned long compressed_len_aligned;	/* Not sure what this is but it's used for decoding the data */
+				unsigned long real_len;			/* Real (uncompressed) file size */
+				unsigned long pos;			/* Position of the real file data */
+				long cycle;
+				char *ext;
+
+				name = decode_filename (filelist_data + offset + 6, filelist_data[offset] - 6);
+				compressed_len_aligned = getlong (filelist_data + ofs2 + 4) - 37579;
+				real_len = getlong (filelist_data + ofs2 + 8);
+				pos = getlong (filelist_data + ofs2 + 13) + 46;
+
+				/* Detect the file's "cycle". This contains information about how the file entry's encoded */
+				compressed_len = 0;
+				cycle = 0;
+				/* Only files with an extension are encoded */
+				if ((ext = rindex ((const char *) name, '.')) != NULL) {
+					compressed_len = getlong (filelist_data + ofs2) - getlong (filelist_data + ofs2 + 8) - 715;
+					if (strcasecmp (ext, ".gnd") != 0 && strcasecmp (ext, ".gat") != 0
+					 && strcasecmp (ext, ".act") != 0 && strcasecmp (ext, ".str") != 0) {
+						unsigned long i;
+						for (i = 10, cycle = 1; compressed_len >= i; i *= 10, cycle++);
+					}
+				}
+
+				grf->files[index].name = strdup ((const char *) name);
+				grf->files[index].compressed_len = compressed_len;
+				grf->files[index].compressed_len_aligned = compressed_len_aligned;
+				grf->files[index].real_len = real_len;
+				grf->files[index].pos = pos;
+				grf->files[index].cycle = cycle;
+				grf->files[index].type = type;
+
+				index++;
+			}
+
+			offset = ofs2 + 17;
+		}
+		free (filelist_data);
 
 	} else if (grf->version == 2) {
 		/* The file list header contains two sections:
@@ -410,7 +521,7 @@ grf_open (const char *fname, GrfError *error)
 				real_len = getlong (filelist_data + ofs2 + 8);
 				pos = getlong (filelist_data + ofs2 + 13) + 0x2e;
 
-				/* Detect the file's "cycle". This has got something to do with it's encoding (?) */
+				/* Detect the file's "cycle". This contains information about how the file entry's encoded */
 				if (type == 3) {
 					unsigned long i;
 					for (i = 10, cycle = 1; compressed_len >= i; i *= 10, cycle++);
@@ -584,8 +695,6 @@ grf_strerror (GrfError error)
 		return "The GRF archive appears to be corrupted.";
 	case GE_NOMEM:
 		return "Not enough free memory.";
-	case GE_NSUP1:
-		return "This is a version 1 GRF archive, which is not supported.";
 	case GE_NSUP:
 		return "GRF archives of this version is not supported.";
 	case GE_NOTFOUND:
