@@ -68,7 +68,8 @@ sub parseArguments {
 	undef $chat_file;
 	undef $item_log_file;
 	undef $shop_file;
-
+	MODINIT();
+	
 	GetOptions(
 		'daemon', \$daemon,
 		'help', \$help_option,
