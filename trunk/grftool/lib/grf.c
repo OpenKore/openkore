@@ -457,6 +457,9 @@ static int GRF_readVer1_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 		}
 	}
 
+	/* Calling functions will set success...
+	GRF_SETERR(error,GE_SUCCESS,GRF_readVer1_info);
+	*/
 	return 0;
 }
 
@@ -582,6 +585,9 @@ static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 		}
 	}
 
+	/* Calling functions will set success...
+	GRF_SETERR(error,GE_SUCCESS,GRF_readVer2_info);
+	*/
 	return 0;
 }
 
@@ -598,10 +604,39 @@ static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback
  */
 static uint32_t GRF_find_unused (Grf *grf, uint32_t len) {
 	/* (compiler warnings) uint32_t  i,startAt=GRF_HEADER_FULL_LEN,curAmt; */
+	GrfFile *cur;
+	uint32_t beginEmpty, amtEmpty;
 
 	if ( grf->nfiles == 0 ) {
 		return 0;
 	}
+
+	/* Grab the first file in the linked list */
+	cur=grf->first;
+
+	/* Ignore files that have not been sorted yet */
+	while (cur!=NULL && cur->next!=NULL &&
+		(cur->type & GRFFILE_FLAG_FILE) != 0 &&
+		cur->real_len != 0 &&
+		cur->pos != 0)
+		cur=cur->next;
+
+	/* Loop through, checking each file's pos against the
+	 * end of the data for the previous file
+	 */
+	while (cur!=NULL && cur->next!=NULL) {
+		beginEmpty=cur->pos+cur->compressed_len_aligned;
+		amtEmpty=cur->next->pos-beginEmpty;
+
+		/* Check if we have enough empty space */
+		if (amtEmpty >= len)
+			return beginEmpty;
+
+		cur=cur->next;
+	}
+
+	/* No fitting space found, tell 'em to append it */
+	return 0;
 
 	/* \todo write an acceptable implementation */
 #if 0
@@ -653,9 +688,6 @@ static uint32_t GRF_find_unused (Grf *grf, uint32_t len) {
 		}
 	}
 #endif  /* 0 */
-
-	/* No fitting space found, tell 'em to append it */
-	return 0;
 }
 
 /*! \brief Private function to compress and encrypt (if needed), and write one file
@@ -737,6 +769,22 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 		return 0;
 	}
 	grf->files[i].pos = write_offset;
+
+	/* Move the file in the linked list */
+	if (grf->files[i].prev)
+		grf->files[i].prev->next=grf->files[i].next;
+	if (grf->files[i].next)
+		grf->files[i].next->prev=grf->files[i].prev;
+	GrfFile *cur = grf->first;
+	while (cur!=NULL && cur->pos<write_offset)
+		cur=cur->next;
+	if (cur==NULL)
+	if (cur->next==NULL)
+		grf->files[i].next=NULL;
+	else {
+		grf->files[i].next=cur->next;
+		cur->next->prev=&(grf->files[i]);
+	}
 
 	/* Write the data to its spot */
 	if (fwrite(write_dat, grf->files[i].compressed_len_aligned, 1U, grf->f) < 1U) {
@@ -1488,6 +1536,7 @@ grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpen
 		return NULL;
 	}
 
+	GRF_SETERR(error,GE_SUCCESS,grf_callback_open);
 	return grf;
 }
 
@@ -1587,6 +1636,9 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 
 	/* Make sure uncompress doesn't modify our file information */
 	zlen = rsiz;
+
+	/* Set success first, in case of Z_DATA_ERROR */
+	GRF_SETERR(error,GE_SUCCESS,grf_index_get);
 
 	/* Uncompress the data, and catch any errors */
 	if ((i=uncompress((Bytef*)grf->files[index].data,&zlen,(const Bytef *)zbuf, (uLong)zsiz))!=Z_OK) {
@@ -2000,6 +2052,7 @@ GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
 		return 0;
 	}
 
+	GRF_SETERR(error,GE_SUCCESS,grf_index_del);
 	return 1;
 }
 
@@ -2108,6 +2161,7 @@ GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const void *data, uint
 		gf->pos=GRFFILE_DIR_OFFSET;
 	}
 
+	GRF_SETERR(error,GE_SUCCESS,grf_index_replace);
 	return 1;
 }
 
@@ -2188,6 +2242,7 @@ GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len
 		return 0;
 	}
 
+	GRF_SETERR(error,GE_SUCCESS,grf_put);
 	return 1;
 }
 
@@ -2217,6 +2272,10 @@ GRFEXPORT int grf_callback_flush(Grf *grf, GrfError *error, GrfFlushCallback cal
 	 * bogus information.
 	 */
 	grf_sort(grf,GRF_OffsetSort);
+	
+	/* Fix the linked list */
+	if ((i=GRF_list_from_array(grf,error))==0)
+		return i;
 
 	switch (grf->version&0xFF00) {
 	case 0x0200:
@@ -2229,6 +2288,10 @@ GRFEXPORT int grf_callback_flush(Grf *grf, GrfError *error, GrfFlushCallback cal
 		GRF_SETERR(error,GE_NSUP,grf_callback_flush);
 		i = 0;
 	}
+	
+	if (i)
+		i=GRF_array_from_list(grf,error);
+	
 	return i;
 }
 
