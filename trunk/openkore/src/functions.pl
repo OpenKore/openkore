@@ -1518,7 +1518,7 @@ sub AI {
 
 	if (timeOut($timeout{'ai_getInfo'})) {
 		foreach (keys %players) {
-			if (!$players{$_}{'gotName'}) {
+			if ($_ ne '' && !$players{$_}{'gotName'}) {
 				sendGetPlayerInfo(\$remote_socket, $_);
 				last;
 			}
