@@ -179,7 +179,7 @@ Special thanks:
 - pmak: various bug fixes and enhancements, as well as assisting me with
   maintaining the website.
 - jsteng: simplified move AI code, skill use improvements, NPC
-  interaction improvements.
+  interaction improvements, revamped routing AI.
 - anu: support for new deal packets.
 - aputs: support for status ailments/looks.
 - floAt: support for NPC positions instead of NPC IDs; party follow,
