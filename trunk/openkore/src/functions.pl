@@ -4524,6 +4524,11 @@ sub AI {
 			AI::args->{ai_move_giveup}{time} = 0;
 			stand();
 
+		# Stop if the map changed
+		} elsif (AI::args->{mapChanged}) {
+			debug "Move - map change detected\n", "ai_move";
+			AI::dequeue();
+
 		# Stop if we've moved
 		} elsif ($ai_seq_args[0]{time_move} != $char->{time_move}) {
 			debug "Move - started moving\n", "ai_move";
@@ -6096,7 +6101,7 @@ sub parseMsg {
 		my $type = unpack("S1",substr($msg, 2, 2));
 		my $val = unpack("L1",substr($msg, 4, 4));
 		if ($type == 0) {
-			$char->{'walk_speed'} = $val;
+			$char->{'walk_speed'} = $val / 1000;
 			debug "Walk speed: $val\n", "parseMsg", 2;
 		} elsif ($type == 3) {
 			debug "Something2: $val\n", "parseMsg", 2;
