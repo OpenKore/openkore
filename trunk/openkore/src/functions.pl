@@ -4381,9 +4381,10 @@ sub AI {
 
 
 	####### MAPROUTE #######
-	if ( $ai_seq[0] eq "mapRoute" && $field{'name'} && $chars[$config{'char'}]{'pos_to'}{'x'} ne '' && $chars[$config{'char'}]{'pos_to'}{'y'} ne '' ) {
+	if ( AI::action eq "mapRoute" && $field{name} && $char->{pos_to}{x} ne '' && $char->{pos_to}{y} ne '' ) {
+		my $args = AI::args;
 
-		if ($ai_seq_args[0]{'stage'} eq '') {
+		if ($args->{stage} eq '') {
 			$ai_seq_args[0]{'budget'} = $config{'route_maxWarpFee'} eq '' ?
 				'' :
 				$config{'route_maxWarpFee'} > $chars[$config{'char'}]{'zenny'} ?
@@ -4410,7 +4411,7 @@ sub AI {
 			}
 			$ai_seq_args[0]{'stage'} = 'Getting Map Solution';
 
-		} elsif ( $ai_seq_args[0]{'stage'} eq 'Getting Map Solution' ) {
+		} elsif ( $args->{stage} eq 'Getting Map Solution' ) {
 			$timeout{'ai_route_calcRoute'}{'time'} = time;
 			while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
 				ai_mapRoute_searchStep(\%{$ai_seq_args[0]});
@@ -4424,21 +4425,20 @@ sub AI {
 				debug "Map Solution Ready for traversal.\n", "route";
 			} elsif ($ai_seq_args[0]{'done'}) {
 				warning "Unable to calculate how to walk from [$field{'name'}($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'})] to [$ai_seq_args[0]{'dest'}{'map'}($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'})] (no map solution).\n", "route";
-				shift @ai_seq;
-				shift @ai_seq_args;
+				AI::dequeue;
 			}
-		} elsif ( $ai_seq_args[0]{'stage'} eq 'Traverse the Map Solution' ) {
 
-			my %args;
-			undef @{$args{'solution'}};
+		} elsif ( $args->{stage} eq 'Traverse the Map Solution' ) {
+
+			my @solution;
 			unless (@{$ai_seq_args[0]{'mapSolution'}}) {
-				#mapSolution is now empty
-				shift @ai_seq;
-				shift @ai_seq_args;
+				# mapSolution is now empty
+				AI::dequeue;
 				debug "Map Router is finish traversing the map solution\n", "route";
 
-			} elsif ( $field{'name'} ne $ai_seq_args[0]{'mapSolution'}[0]{'map'} || $ai_seq_args[0]{'mapChanged'} ) {
-				#Solution Map does not match current map
+			} elsif ( $field{'name'} ne $ai_seq_args[0]{'mapSolution'}[0]{'map'}
+				|| ( $args->{mapChanged} && !$args->{teleport} ) ) {
+				# Solution Map does not match current map
 				debug "Current map $field{'name'} does not match solution [ $ai_seq_args[0]{'mapSolution'}[0]{'portal'} ].\n", "route";
 				delete $ai_seq_args[0]{'substage'};
 				delete $ai_seq_args[0]{'timeout'};
@@ -4446,7 +4446,7 @@ sub AI {
 				shift @{$ai_seq_args[0]{'mapSolution'}};
 
 			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'steps'} ) {
-				#If current solution has conversation steps specified
+				# If current solution has conversation steps specified
 				if ( $ai_seq_args[0]{'substage'} eq 'Waiting for Warp' ) {
 					$ai_seq_args[0]{'timeout'} = time unless $ai_seq_args[0]{'timeout'};
 					if (timeOut($ai_seq_args[0]{'timeout'}, 10)) {
@@ -4482,7 +4482,7 @@ sub AI {
 					shift @ai_seq;
 					shift @ai_seq_args;
 
-				} elsif ( ai_route_getRoute( \@{$args{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
+				} elsif ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
 					# NPC is reachable from current position
 					# >> Then "route" to it
 					debug "Walking towards the NPC\n", "route";
@@ -4491,7 +4491,7 @@ sub AI {
 						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
 						distFromGoal => 3,
 						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
-						_solution => $args{'solution'},
+						_solution => \@solution,
 						_internal => 1);
 
 				} else {
@@ -4502,7 +4502,7 @@ sub AI {
 				}
 
 			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'portal'} eq "$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}=$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}" ) {
-				#This solution points to an X,Y coordinate
+				# This solution points to an X,Y coordinate
 				my $distFromGoal = $ai_seq_args[0]{'pyDistFromGoal'} ? $ai_seq_args[0]{'pyDistFromGoal'} : ($ai_seq_args[0]{'distFromGoal'} ? $ai_seq_args[0]{'distFromGoal'} : 0);
 				if ( $distFromGoal + 2 > distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'})) {
 					#We need to specify +2 because sometimes the exact spot is occupied by someone else
@@ -4514,7 +4514,7 @@ sub AI {
 					shift @ai_seq;
 					shift @ai_seq_args;
 
-				} elsif ( ai_route_getRoute( \@{$args{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
+				} elsif ( ai_route_getRoute( \@solution, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
 					# X,Y is reachable from current position
 					# >> Then "route" to it
 					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
@@ -4523,7 +4523,7 @@ sub AI {
 						distFromGoal => $ai_seq_args[0]{'distFromGoal'},
 						pyDistFromGoal => $ai_seq_args[0]{'pyDistFromGoal'},
 						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
-						_solution => $args{'solution'},
+						_solution => \@solution,
 						_internal => 1);
 
 				} else {
@@ -4535,30 +4535,82 @@ sub AI {
 			} elsif ( $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"}{'source'}{'ID'} ) {
 				# This is a portal solution
 
-				if ( 2 > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) ) {
+				if ( 2 > distance($char->{pos_to}, $args->{mapSolution}[0]{pos}) ) {
 					# Portal is within 'Enter Distance'
 					$timeout{'ai_portal_wait'}{'timeout'} = $timeout{'ai_portal_wait'}{'timeout'} || 0.5;
-					if ( timeOut(\%{$timeout{'ai_portal_wait'}}) ) {
+					if ( timeOut($timeout{'ai_portal_wait'}) ) {
 						sendMove( \$remote_socket, int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}), int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) );
 						$timeout{'ai_portal_wait'}{'time'} = time;
 					}
 
-				} elsif ( ai_route_getRoute( \@{$args{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
-					debug "portal within same map\n", "route";
-					# Portal is reachable from current position
-					# >> Then "route" to it
-					debug "Portal route attackOnRoute = $ai_seq_args[0]{'attackOnRoute'}\n", "route";
-					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
-						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
-						_solution => $args{'solution'},
-						_internal => 1);
-
 				} else {
-					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-					error "Cannot reach portal from current position\n", "route";
-					shift @{$ai_seq_args[0]{'mapSolution'}};
+					my $walk = 1;
+
+					# Teleport until we're close enough to the portal
+					$args->{teleport} = $config{route_teleport} if (!defined $args->{teleport});
+
+					if ($args->{teleport} && !$cities_lut{"$field{name}.rsw"}
+					&& ( !$config{route_teleport_maxTries} || $args->{teleportTries} <= $config{route_teleport_maxTries} )) {
+						my $minDist = $config{route_teleport_minDistance};
+
+						if ($args->{mapChanged}) {
+							undef $args->{sentTeleport};
+							undef $args->{mapChanged};
+						}
+
+						if (!$args->{sentTeleport}) {
+							my $dist = new PathFinding(
+								start => $char->{pos_to},
+								dest => $args->{mapSolution}[0]{pos},
+								field => \%field
+							)->runcount;
+							debug "Distance to portal is $dist\n", "route";
+
+							if ($dist <= 0 || $dist > $minDist) {
+								if ($dist > 0 && $config{route_teleport_maxTries} && $args->{teleportTries} >= $config{route_teleport_maxTries}) {
+									debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route";
+								} else {
+									debug "Attempting to teleport near portal, for the " . 
+										($args->{teleportTries} + 1) . "th time.\n", "route";
+									if (!useTeleport(1)) {
+										$args->{teleport} = 0;
+									} else {
+										$walk = 0;
+										$args->{sentTeleport} = 1;
+										$args->{teleportTime} = time;
+										$args->{teleportTries}++;
+									}
+								}
+							}
+
+						} elsif (timeOut($args->{teleportTime}, 4)) {
+							debug "Unable to teleport; falling back to walking.\n", "route";
+							$args->{teleport} = 0;
+						} else {
+							$walk = 0;
+						}
+					}
+
+					if ($walk) {
+						if ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
+							debug "portal within same map\n", "route";
+							# Portal is reachable from current position
+							# >> Then "route" to it
+							debug "Portal route attackOnRoute = $args->{attackOnRoute}\n", "route";
+							$args->{teleportTries} = 0;
+							ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+								attackOnRoute => $args->{attackOnRoute},
+								maxRouteTime => $args->{maxRouteTime},
+								noSitAuto => $args->{noSitAuto},
+								_solution => \@solution,
+								_internal => 1);
+
+						} else {
+							warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+							error "Cannot reach portal from current position\n", "route";
+							shift @{$args->{mapSolution}};
+						}
+					}
 				}
 			}
 		}
@@ -10343,10 +10395,10 @@ sub useTeleport {
 		sendSkillUse(\$remote_socket, $skill->id, $level, $accountID) if ($config{'teleportAuto_useSP'});
 		if ($level == 1) {
 			sendTeleport(\$remote_socket, "Random");
-			return;
+			return 1;
 		} elsif ($level == 2 && $config{saveMap} ne "") {
 			sendTeleport(\$remote_socket, $config{'saveMap'}.".gat");
-			return;
+			return 1;
 			# If saveMap is not set, attempt to use Butterfly Wing
 		}
 	}
@@ -10356,7 +10408,7 @@ sub useTeleport {
 		# We have Fly Wing/Butterfly Wing
 		sendItemUse(\$remote_socket, $char->{inventory}[$invIndex]{index}, $accountID);
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
-		return;
+		return 1;
 	}
 
 	# No skill and no wings; try to equip a Tele clip or something, if equipAuto_#_onTeleport is set
@@ -10370,12 +10422,13 @@ sub useTeleport {
 				# set a small timeout, will be overridden if related config in equipAuto is set
 				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
 				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
+				return 1;
 
 			} elsif (defined $ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut($ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup})) {
 				warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
 				delete $ai_v{temp}{teleport};
+				return 0;
 			}
-			return;
 		}
 		$i++;
 	}
@@ -10385,6 +10438,7 @@ sub useTeleport {
 	} else {
 		warning "You don't have the Teleport skill or a Butterfly Wing\n";
 	}
+	return 0;
 }
 
 # Keep track of when we last cast a skill
