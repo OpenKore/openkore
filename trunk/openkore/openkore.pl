@@ -465,12 +465,15 @@ while ($quit != 1) {
 	}
 
 	# Process AI
-	$ai_cmdQue_shift = 0;
+	my $i = 0;
 	do {
-		AI(\%{$ai_cmdQue[$ai_cmdQue_shift]}) if ($conState == 5 && timeOut(\%{$timeout{'ai'}}) && $remote_socket && $remote_socket->connected());
-		undef %{$ai_cmdQue[$ai_cmdQue_shift++]};
+		if ($conState == 5 && timeOut($timeout{'ai'}) && $remote_socket && $remote_socket->connected()) {
+			AI($ai_cmdQue[$i]);
+		}
 		$ai_cmdQue-- if ($ai_cmdQue > 0);
+		$i++;
 	} while ($ai_cmdQue > 0);
+	undef @ai_cmdQue;
 
 	# Handle connection states
 	checkConnection();
