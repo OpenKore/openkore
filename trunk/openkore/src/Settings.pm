@@ -63,6 +63,7 @@ our $shop_file;
 our $def_field;
 our $monster_log;
 our $default_interface;
+our $no_connect;
 
 # Configuration files and associated file parsers
 our @configFiles;
@@ -89,6 +90,9 @@ The supported options are:
 --items=path/file          Which items.txt to use.
 
 --interface=module         Which interface to use at startup.
+
+Developer options:
+--no-connect               Do not connect to any servers.
 EOF
 
 
@@ -119,6 +123,7 @@ sub parseArguments {
 	undef $monster_log;
 	undef $item_log_file;
 	undef $default_interface;
+	undef $no_connect;
 
 	my $help_option;
 	GetOptions(
@@ -138,7 +143,9 @@ sub parseArguments {
 		'monsters=s',		\$monster_log,
 		'items=s',		\$item_log_file,
 
-		'interface=s',		\$default_interface
+		'interface=s',		\$default_interface,
+
+		'no-connect',	\$no_connect
 	);
 	
 	# This is where variables depending on other userconfigable variables should be set..
