@@ -193,7 +193,7 @@ addConfigFile($Settings::pickupitems_file, \%itemsPickup, \&parseDataFile_lc);
 addConfigFile("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
 addConfigFile("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
 addConfigFile($Settings::shop_file, \%shop, \&parseShopControl);
-addConfigFile("$Settings::control_folder/chat_resp.txt", \%chat_resp, \&parseDataFile2);
+addConfigFile("$Settings::control_folder/chat_resp.txt", \@chatResponses, \&parseChatResp);
 addConfigFile("$Settings::control_folder/avoid.txt", \%avoid, \&parseAvoidControl);
 addConfigFile("$Settings::control_folder/priority.txt", \%priority, \&parsePriority);
 addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);

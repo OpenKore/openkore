@@ -152,8 +152,6 @@ sub initStatVars {
 }
 
 sub initOtherVars {
-	undef $nextresptime;
-	undef $nextrespPMtime;
 	$timeout{ai_shop}{time} = $KoreStartTime;
 	$useArrowCraft = 1;
 }
@@ -5006,19 +5004,19 @@ sub AI {
 
 	##### AUTO RESPONSE #####
 
-	if (AI::action eq "respAuto" && time >= $nextresptime) {
-		my $i = AI::args->{resp_num};
-		my $num_resp = getListCount($chat_resp{"words_resp_$i"});
-		sendMessage(\$remote_socket, "c", getFromList($chat_resp{"words_resp_$i"}, int(rand() * ($num_resp - 1))));
-		AI::dequeue;
-	}
+	if (AI::action eq "autoResponse") {
+		my $args = AI::args;
 
-	if (AI::action eq "respPMAuto" && time >= $nextrespPMtime) {
-		my $i = AI::args->{resp_num};
-		my $privMsgUser = AI::args->{resp_user};
-		$num_resp = getListCount($chat_resp{"words_resp_$i"});
-		sendMessage(\$remote_socket, "pm", getFromList($chat_resp{"words_resp_$i"}, int(rand() * ($num_resp - 1))), $privMsgUser);
-		AI::dequeue;
+		if ($args->{mapChanged} || !$config{autoResponse}) {
+			AI::dequeue;
+		} elsif (timeOut($args)) {
+			if ($args->{type} eq "c") {
+				sendMessage(\$remote_socket, "c", $args->{reply});
+			} elsif ($args->{type} eq "pm") {
+				sendMessage(\$remote_socket, "pm", $args->{reply}, $args->{from});
+			}
+			AI::dequeue;
+		}
 	}
 
 
@@ -10324,35 +10322,6 @@ sub monKilled {
 	} else {
 		$dmgpsec = $totaldmg / $totalelasped;
 	}
-}
-
-sub getListCount {
-	my ($list) = @_;
-	my $i = 0;
-	my @array = split / *, */, $list;
-	foreach (@array) {
-		s/^\s+//;
-		s/\s+$//;
-		s/\s+/ /g;
-		next if ($_ eq "");
-		$i++;
-	}
-	return $i;
-}
-
-sub getFromList {
-	my ($list, $num) = @_;
-	my $i = 0;
-	my @array = split(/ *, */, $list);
-	foreach (@array) {
-		s/^\s+//;
-		s/\s+$//;
-		s/\s+/ /g;
-		next if ($_ eq "");
-		$i++;
-		return $_ if ($i eq $num);
-	}
-	return undef;
 }
 
 # Resolves a player or monster ID into a hash
