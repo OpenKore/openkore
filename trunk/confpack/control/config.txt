@@ -1,5 +1,5 @@
-# See the documentation for what these variables do
-# New variables have comments above them
+/* See the documentation for what these variables do
+ New variables have comments above them */
 
 bindIp
 encrypt 0
