@@ -1063,7 +1063,8 @@ sub parseCommand {
 					undef $ai_v{'temp'}{'y'};
 				}
 				ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'},
-					attackOnRoute => 1);
+					attackOnRoute => 1,
+					noSitAuto => 1);
 			} else {
 				error "Map $ai_v{'temp'}{'map'} does not exist\n";
 			}
@@ -2572,7 +2573,8 @@ sub AI {
 				message "Calculating auto-storage route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n", "route";
 				ai_route($ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'},
 					attackOnRoute => 1,
-					distFromGoal => $config{'storageAuto_distance'});
+					distFromGoal => $config{'storageAuto_distance'},
+					noSitAuto => 1);
 			}
 		} else {
 			if (!defined($ai_seq_args[0]{'sentStore'})) {
@@ -2740,7 +2742,8 @@ sub AI {
 				message "Calculating auto-sell route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n", "route";
 				ai_route($ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'},
 					attackOnRoute => 1,
-					distFromGoal => $config{'sellAuto_distance'});
+					distFromGoal => $config{'sellAuto_distance'},
+					noSitAuto => 1);
 			}
 		} else {
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
@@ -2782,7 +2785,7 @@ sub AI {
 
 	AUTOBUY: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route"  || $ai_seq[0] eq "attack" || $ai_seq[0] eq "follow")
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow")
 	  && timeOut(\%{$timeout{'ai_buyAuto'}})) {
 		undef $ai_v{'temp'}{'found'};
 		$i = 0;
@@ -3204,13 +3207,13 @@ sub AI {
 
 	FOLLOW: {
 	last FOLLOW	if (!$config{follow});
-	
+
 	my $followIndex;
 	if (($followIndex = binFind(\@ai_seq, "follow")) eq "") {
 		# ai_follow will determine if the Target is 'follow-able'
 		last FOLLOW if (!ai_follow($config{followTarget}));
 	}
-	
+
 	# if we are not following now but master is in the screen...
 	if (!defined $ai_seq_args[$followIndex]{'ID'}) {
 		foreach (keys %players) {
@@ -3400,13 +3403,22 @@ sub AI {
 		$ai_v{'sitAuto_forceStop'} = 0;
 	}
 
-	if (!$ai_v{'sitAuto_forceStop'} && ($ai_seq[0] eq "" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute") && binFind(\@ai_seq, "attack") eq "" && !ai_getAggressives()
-		&& (percent_hp(\%{$chars[$config{'char'}]}) < $config{'sitAuto_hp_lower'} || percent_sp(\%{$chars[$config{'char'}]}) < $config{'sitAuto_sp_lower'})) {
+
+	my $percentWeight = 0;
+	$percentWeight = $chars[$config{'char'}]{'weight'} / $chars[$config{'char'}]{'weight_max'} * 100 if ($chars[$config{'char'}]{'weight_max'});
+
+	if (!$ai_v{'sitAuto_forceStop'} && ($ai_seq[0] eq "" || $ai_seq[0] eq "follow" ||
+	      ($ai_seq[0] eq "route" && (!$ai_seq_args[0]{'noSitAuto'} || $percentWeight < 50)) ||
+	      ($ai_seq[0] eq "mapRoute" && (!$ai_seq_args[0]{'noSitAuto'} || $percentWeight < 50))
+	   )
+	 && binFind(\@ai_seq, "attack") eq "" && !ai_getAggressives()
+	 && (percent_hp($chars[$config{'char'}]) < $config{'sitAuto_hp_lower'} || percent_sp($chars[$config{'char'}]) < $config{'sitAuto_sp_lower'})) {
 		unshift @ai_seq, "sitAuto";
 		unshift @ai_seq_args, {};
 		debug "Auto-sitting\n", "ai";
 	}
-	if ($ai_seq[0] eq "sitAuto" && !$chars[$config{'char'}]{'sitting'} && $chars[$config{'char'}]{'skills'}{'NV_BASIC'}{'lv'} >= 3 && !ai_getAggressives() && $chars[$config{'char'}]{'weight_max'} && (int($chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100) < 50 || $config{'sitAuto_over_50'} eq '1')) {
+	if ($ai_seq[0] eq "sitAuto" && !$chars[$config{'char'}]{'sitting'} && $chars[$config{'char'}]{'skills'}{'NV_BASIC'}{'lv'} >= 3 &&
+	  !ai_getAggressives() && ($percentWeight < 50 || $config{'sitAuto_over_50'} eq '1')) {
 		sit();
 	}
 	if ($ai_seq[0] eq "sitAuto" && ($ai_v{'sitAuto_forceStop'}
@@ -4128,25 +4140,13 @@ sub AI {
 					# NPC is reachable from current position
 					# >> Then "route" to it
 					debug "Walking towards the NPC\n", "route";
-					if (0) {
-						$args{'dest'}{'map'} = $ai_seq_args[0]{'mapSolution'}[0]{'map'};
-						$args{'dest'}{'pos'}{'x'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'};
-						$args{'dest'}{'pos'}{'y'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'};
-						$args{'attackOnRoute'} = $ai_seq_args[0]{'attackOnRoute'};
-						$args{'maxRouteTime'} = $ai_seq_args[0]{'maxRouteTime'};
-						$args{'time_start'} = time;
-						$args{'distFromGoal'} = 3;
-						$args{'stage'} = 'Route Solution Ready';
-						unshift @ai_seq, "route";
-						unshift @ai_seq_args, \%args;
-					} else {
-						ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-							attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
-							maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-							distFromGoal => 3,
-							_solution => $args{'solution'},
-							_internal => 1);
-					}
+					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
+						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+						distFromGoal => 3,
+						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
+						_solution => $args{'solution'},
+						_internal => 1);
 
 				} else {
 					#Error, NPC is not reachable from current pos
@@ -4170,25 +4170,13 @@ sub AI {
 				} elsif ( ai_route_getRoute( \@{$args{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
 					# X,Y is reachable from current position
 					# >> Then "route" to it
-					if (0) {
-						$args{'dest'}{'map'} = $ai_seq_args[0]{'mapSolution'}[0]{'map'};
-						$args{'dest'}{'pos'}{'x'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'};
-						$args{'dest'}{'pos'}{'y'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'};
-						$args{'attackOnRoute'} = $ai_seq_args[0]{'attackOnRoute'};
-						$args{'maxRouteTime'} = $ai_seq_args[0]{'maxRouteTime'};
-						$args{'time_start'} = time;
-						$args{'stage'} = 'Route Solution Ready';
-						$args{'distFromGoal'} = 4;
-						unshift @ai_seq, "route";
-						unshift @ai_seq_args, \%args;
-					} else {
-						ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-							attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
-							maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-							distFromGoal => 4,
-							_solution => $args{'solution'},
-							_internal => 1);
-					}
+					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
+						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+						distFromGoal => 4,
+						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
+						_solution => $args{'solution'},
+						_internal => 1);
 
 				} else {
 					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Final Destination at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
@@ -4211,23 +4199,12 @@ sub AI {
 					debug "portal within same map\n", "route";
 					# Portal is reachable from current position
 					# >> Then "route" to it
-					if (0) {
-						$args{'dest'}{'map'} = $ai_seq_args[0]{'mapSolution'}[0]{'map'};
-						$args{'dest'}{'pos'}{'x'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'};
-						$args{'dest'}{'pos'}{'y'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'};
-						$args{'attackOnRoute'} = $ai_seq_args[0]{'attackOnRoute'};
-						$args{'maxRouteTime'} = $ai_seq_args[0]{'maxRouteTime'};
-						$args{'time_start'} = time;
-						$args{'stage'} = 'Route Solution Ready';
-						unshift @ai_seq, "route";
-						unshift @ai_seq_args, \%args;
-					} else {
-						ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-							attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
-							maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-							_solution => $args{'solution'},
-							_internal => 1);
-					}
+					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
+						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
+						_solution => $args{'solution'},
+						_internal => 1);
 
 				} else {
 					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
@@ -4745,6 +4722,7 @@ sub parseSendMsg {
 # long : 4-byte unsigned integer
 # byte : 1-byte character/integer
 # bool : 1-byte boolean (true/false)
+# string: an array of 1-byte characters, not NULL-terminated
 sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
@@ -8314,7 +8292,8 @@ sub ai_route {
 	$args{'distFromGoal'} = $param{distFromGoal} if exists $param{distFromGoal};
 	$args{'pyDistFromGoal'} = $param{pyDistFromGoal} if exists $param{pyDistFromGoal};
 	$args{'attackID'} = $param{attackID} if exists $param{attackID};
-	$args{'param'} = [@_];
+	$args{'noSitAuto'} = $param{noSitAuto} if exists $param{noSitAuto};
+	$args{'params'} = $param{params} if exists $param{params};
 	$args{'time_start'} = time;
 
 	if (!$param{'_internal'}) {
@@ -9873,8 +9852,7 @@ sub getNPCInfo {
 	
 	if (defined($$return_hash{map}) && defined($$return_hash{pos}{x}) && defined($$return_hash{pos}{y})) {
 		$$return_hash{ok} = 1;
-	}
-	else {
+	} else {
 		error "Incomplete NPC info or ID not found in npcs.txt\n";
 	}
 }
