@@ -211,7 +211,7 @@ if ($buildType == 0) {
 		if (!$found) {
 			# Attempt to compile it
 			Log::message("Tools.so does not exist; compiling it...\n", "startup");
-			my $ret = system('make');
+			my $ret = system('gmake');
 			if ($ret != 0) {
 				if (($ret & 127) == 2) {
 					# Ctrl+C pressed
