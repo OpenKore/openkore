@@ -57,6 +57,8 @@ sub processFirst {
 			auth($user, 1);
 			sendMessage(\$remote_socket, "pm", getResponse("authS"), $user);
 		}
+		# We don't notify the user if login failed; people use it
+		# to check whether you're a bot.
 	}
 
 	# If the user is authorized to use chat commands,
@@ -90,7 +92,7 @@ sub _processChatCommand {
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "relog") {
-		main::relog();
+		main::relog($args[0]);
 		sendMessage(\$remote_socket, $type, getResponse("relogS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 

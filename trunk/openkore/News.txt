@@ -85,6 +85,7 @@ New features:
     Tooth of Bat 1
     Red Blood 1
     Garlet 1
+- Automatically raise skill levels.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
@@ -119,6 +120,13 @@ New config options:
   Teleport when a monster attacked you while you're auto-sitting. This is useful if
   you set mon_control.txt to completely ignore the attacks of certain monsters,
   but you only want to teleport when they hit you while you're sitting.
+- skillsAddAuto (flag)
+  skillsAddAuto_list (list of skills and levels, seperated by comma)
+
+  Automatically raise skill levels. Similar to statsAddAuto, but works on skills.
+  Example:
+    skillsAddAuto 1
+    skillsAddAuto_list Basic Skill 9, Increase HP Recovery 10, Sword Mastery 10
 
 New timeouts.txt options:
 - ai_teleport 1
@@ -168,6 +176,7 @@ Credits:
 - blacklady: Monster weights, autobuy/sell/storage optimizations.
 - isieo: Mute prevention.
 - denni: Teleport if attacked while sitting.
+- brianhj: skillsAddAuto
 
 
 ==================
