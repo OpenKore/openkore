@@ -214,7 +214,7 @@ sub parseConfigFile {
 						$f = $value;
 					}
 				}
-				parseDataFile2($f, $r_hash, 1) if (-f $f);
+				parseConfigFile($f, $r_hash, 1) if (-f $f);
 
 			} else {
 				$r_hash->{$key} = $value;
