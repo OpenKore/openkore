@@ -83,6 +83,8 @@ New features:
 - parseMsg_statuslook verbose 1 displays status effects on you;
   verbose 2 displays status effects on others.
 - logs/storage.txt will show what is in your storage.
+- "vl" (vender list) command now displays coordinates
+- Automatic disconnection during specified times of the day.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -171,7 +173,18 @@ New config options:
   will use the Pneuma skill if you are fighting Raydric Archer, and
   there is not already a Pneuma affecting you.
 - New condition _whenIdle for use only when the bot is doing nothing
-- "vl" (vender list) command now displays coordinates
+- Automatic disconnection during certain times of the day. Example:
+
+  autoBreakTime Sun {
+    startTime 21:29
+    stopTime 1:08
+  }
+
+  will disconnect at 9:29 P.M. on Sunday and resume botting at
+  1:08 A.M. on Monday.
+  You can only specify breaks of less than 24 hours.
+  You can add multiple break times by adding additional blocks.
+  Only specify the first three letters of the week day.
 
 New timeouts.txt options:
 - ai_attack_unfail 5
