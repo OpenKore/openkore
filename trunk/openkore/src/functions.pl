@@ -7133,7 +7133,9 @@ sub parseMsg {
 		$spells{$ID}{'pos'}{'y'} = $y;
 		$binID = binAdd(\@spellsID, $ID);
 		$spells{$ID}{'binID'} = $binID;
-		message "Area-effect spell from ".getActorName($SourceID)." appeared on ($x, $y) ".sprintf("(type %d, fail %d)\n", $type, $fail), "skill";
+		if ($type == 0x81) {
+			message getActorName($sourceID)." opened Warp Portal on ($x, $y)\n", "skill";
+		}
 
 	} elsif ($switch eq "0120") {
 		# The area effect spell with ID dissappears
