@@ -3627,17 +3627,43 @@ sub AI {
 		$ai_seq_args[0]{'ai_attack_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
 		undef $ai_seq_args[0]{'suspended'};
 	}
-	if ($ai_seq[0] eq "attack" && timeOut(\%{$ai_seq_args[0]{'ai_attack_giveup'}})) {
+
+	if ($ai_seq[0] eq "attack" && $ai_seq_args[0]{movedCount} <= 3) {
+		# Make sure we don't immediately timeout when we've moved to the monster
+		$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
+
+	} elsif (($ai_seq[0] eq "route" || $ai_seq[0] eq "move") && $ai_seq_args[0]{attackID}) {
+		# We're on route to the monster; check whether the monster has moved
+		my $ID = $ai_seq_args[0]{attackID};
+		my $attackSeq = ($ai_seq[0] eq "route") ? $ai_seq_args[1] : $ai_seq_args[2];
+
+		if ($monsters{$ID} && %{$monsters{$ID}} && $ai_seq_args[1]{monsterPos} && %{$attackSeq->{monsterPos}}
+		 && distance($monsters{$ID}{pos_to}, $attackSeq->{monsterPos}) > $attackSeq->{'attackMethod'}{'distance'}) {
+			shift @ai_seq;
+			shift @ai_seq_args;
+			if ($ai_seq[0] eq "move") {
+				shift @ai_seq;
+				shift @ai_seq_args;
+			}
+			$ai_seq_args[0]{movedCount}--;
+			$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
+		}
+	}
+
+	if ($ai_seq[0] eq "attack" && timeOut($ai_seq_args[0]{'ai_attack_giveup'})) {
 		$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
 		shift @ai_seq;
 		shift @ai_seq_args;
-		message "Can't reach or damage target, dropping target\n",,1;
+		message "Can't reach or damage target, dropping target\n", "ai_attack", 1;
+		ai_clientSuspend(0, 5);
 
 	} elsif ($ai_seq[0] eq "attack" && !%{$monsters{$ai_seq_args[0]{'ID'}}}) {
+		# Monster died or disappeared
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
 		$ai_v{'ai_attack_ID_old'} = $ai_seq_args[0]{'ID'};
 		shift @ai_seq;
 		shift @ai_seq_args;
+
 		if ($monsters_old{$ai_v{'ai_attack_ID_old'}}{'dead'}) {
 			message "Target died\n";
 
@@ -3678,33 +3704,39 @@ sub AI {
 		}
 
 	} elsif ($ai_seq[0] eq "attack") {
-		$ai_v{'temp'}{'ai_follow_index'} = binFind(\@ai_seq, "follow");
-		if ($ai_v{'temp'}{'ai_follow_index'} ne "") {
-			$ai_v{'temp'}{'ai_follow_following'} = $ai_seq_args[$ai_v{'temp'}{'ai_follow_index'}]{'following'};
-			$ai_v{'temp'}{'ai_follow_ID'} = $ai_seq_args[$ai_v{'temp'}{'ai_follow_index'}]{'ID'};
-		} else {
-			undef $ai_v{'temp'}{'ai_follow_following'};
+		# The attack sequence hasn't timed out and the monster is on screen
+
+		# Update information about the monster and the current situation
+		my $followIndex = binFind(\@ai_seq, "follow");
+		my $following;
+		my $followID;
+		if (defined $ai_follow_index) {
+			$following = $ai_seq_args[$followIndex]{'following'};
+			$followID = $ai_seq_args[$followIndex]{'ID'};
 		}
 
-		$ai_v{'ai_attack_cleanMonster'} = (
-				  !($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'} == 0 && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFrom'} > 0 || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedFromPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'castOnByPlayer'}}))
-				|| ($config{'attackAuto_party'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromParty'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgToParty'} > 0))
-				|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0))
-				|| ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'} > 0)
-			);
-		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ai_seq_args[0]{'ID'}}{'attackedByPlayer'});
+		my $ID = $ai_seq_args[0]{'ID'};
+		my $monsterDist = distance($chars[$config{'char'}]{'pos_to'}, $monsters{$ID}{'pos_to'});
+		my $cleanMonster = (
+			  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
+			|| ($config{'attackAuto_party'} && ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0))
+			|| ($config{'attackAuto_followTarget'} && $following && ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0))
+			|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
+		);
+		$cleanMonster = 0 if ($monsters{$ID}{'attackedByPlayer'});
 
-		$ai_v{'ai_attack_monsterDist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}});
 
-		if ($ai_seq_args[0]{'dmgToYou_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'}
-			|| $ai_seq_args[0]{'missedYou_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'}
-			|| $ai_seq_args[0]{'dmgFromYou_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'}) {
-				$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
+		if ($ai_seq_args[0]{'dmgToYou_last'} != $monsters{$ID}{'dmgToYou'}
+		 || $ai_seq_args[0]{'missedYou_last'} != $monsters{$ID}{'missedYou'}
+		 || $ai_seq_args[0]{'dmgFromYou_last'} != $monsters{$ID}{'dmgFromYou'}) {
+			$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
 		}
-		$ai_seq_args[0]{'dmgToYou_last'} = $monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'};
-		$ai_seq_args[0]{'missedYou_last'} = $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'};
-		$ai_seq_args[0]{'dmgFromYou_last'} = $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'};
-		$ai_seq_args[0]{'missedFromYou_last'} = $monsters{$ai_seq_args[0]{'ID'}}{'missedFromYou'};
+		$ai_seq_args[0]{'dmgToYou_last'} = $monsters{$ID}{'dmgToYou'};
+		$ai_seq_args[0]{'missedYou_last'} = $monsters{$ID}{'missedYou'};
+		$ai_seq_args[0]{'dmgFromYou_last'} = $monsters{$ID}{'dmgFromYou'};
+		$ai_seq_args[0]{'missedFromYou_last'} = $monsters{$ID}{'missedFromYou'};
+
+
 		if (!%{$ai_seq_args[0]{'attackMethod'}}) {
 			if ($config{'attackUseWeapon'}) {
 				$ai_seq_args[0]{'attackMethod'}{'distance'} = $config{'attackDistance'};
@@ -3722,11 +3754,11 @@ sub AI {
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $ai_seq_args[0]{'attackSkillSlot_uses'}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& $config{"attackSkillSlot_$i"."_minAggressives"} <= ai_getAggressives()
 					&& (!$config{"attackSkillSlot_$i"."_maxAggressives"} || $config{"attackSkillSlot_$i"."_maxAggressives"} >= ai_getAggressives())
-					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusActive"} || whenStatusActiveMon($monsters{$ai_seq_args[0]{'ID'}}, $config{"attackSkillSlot_$i"."_targetWhenStatusActive"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusInactive"} || !whenStatusActiveMon($monsters{$ai_seq_args[0]{'ID'}}, $config{"attackSkillSlot_$i"."_targetWhenStatusInactive"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenAffected"} || whenAffectedMon($monsters{$ai_seq_args[0]{'ID'}}, $config{"attackSkillSlot_$i"."_targetWhenAffected"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenNotAffected"} || !whenAffectedMon($monsters{$ai_seq_args[0]{'ID'}}, $config{"attackSkillSlot_$i"."_targetWhenNotAffected"}))
+					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusActive"} || whenStatusActiveMon($monsters{$ID}, $config{"attackSkillSlot_$i"."_targetWhenStatusActive"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusInactive"} || !whenStatusActiveMon($monsters{$ID}, $config{"attackSkillSlot_$i"."_targetWhenStatusInactive"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenAffected"} || whenAffectedMon($monsters{$ID}, $config{"attackSkillSlot_$i"."_targetWhenAffected"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenNotAffected"} || !whenAffectedMon($monsters{$ID}, $config{"attackSkillSlot_$i"."_targetWhenNotAffected"}))
 				) {
 					$ai_seq_args[0]{'attackSkillSlot_uses'}{$i}++;
 					$ai_seq_args[0]{'attackMethod'}{'distance'} = $config{"attackSkillSlot_$i"."_dist"};
@@ -3742,66 +3774,38 @@ sub AI {
 			ai_setSuspend(0);
 			stand();
 
-		} elsif (!$ai_v{'ai_attack_cleanMonster'}) {
+		} elsif (!$cleanMonster) {
 			# Drop target if it's already attacked by someone else
-			message "Dropping target - you will not kill steal others\n", 1;
-			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
+			message "Dropping target - you will not kill steal others\n", "ai_attack", 1;
+			$monsters{$ID}{'ignore'} = 1;
 			sendAttackStop(\$remote_socket);
 			shift @ai_seq;
 			shift @ai_seq_args;
 
-		} elsif ($ai_v{'ai_attack_monsterDist'} > $ai_seq_args[0]{'attackMethod'}{'distance'}) {
+		} elsif ($monsterDist > $ai_seq_args[0]{'attackMethod'}{'distance'}) {
 			# Move to target
-			if (%{$ai_seq_args[0]{'char_pos_last'}} && %{$ai_seq_args[0]{'attackMethod_last'}}
-				&& $ai_seq_args[0]{'attackMethod_last'}{'distance'} == $ai_seq_args[0]{'attackMethod'}{'distance'}
-				&& $ai_seq_args[0]{'char_pos_last'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'}
-				&& $ai_seq_args[0]{'char_pos_last'}{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}) {
-				$ai_seq_args[0]{'distanceDivide'}++;
-			} else {
-				$ai_seq_args[0]{'distanceDivide'} = 1;
-			}
-			if (int($ai_seq_args[0]{'attackMethod'}{'distance'} / $ai_seq_args[0]{'distanceDivide'}) == 0
-				|| ($config{'attackMaxRouteDistance'} && $ai_seq_args[0]{'ai_route_returnHash'}{'solutionLength'} > $config{'attackMaxRouteDistance'})
-				|| ($config{'attackMaxRouteTime'} && $ai_seq_args[0]{'ai_route_returnHash'}{'solutionTime'} > $config{'attackMaxRouteTime'})) {
-				$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
-				shift @ai_seq;
-				shift @ai_seq_args;
-				message "Dropping target - couldn't reach target\n",,1;
-			} else {
-				getVector(\%{$ai_v{'temp'}{'vec'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_v{'temp'}{'vec'}},
-				                $ai_v{'ai_attack_monsterDist'} - ($ai_seq_args[0]{'attackMethod'}{'distance'} / $ai_seq_args[0]{'distanceDivide'}) + 1);
+			$ai_seq_args[0]{movedCount}++;
+			%{$ai_seq_args[0]{monsterPos}} = %{$monsters{$ID}{pos_to}};
+			ai_route($field{'name'}, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y},
+				pyDistFromGoal => $ai_seq_args[0]{'attackMethod'}{'distance'},
+				maxRouteTime => $config{'attackMaxRouteTime'},
+				attackID => $ID);
 
-				%{$ai_seq_args[0]{'char_pos_last'}} = %{$chars[$config{'char'}]{'pos_to'}};
-				%{$ai_seq_args[0]{'attackMethod_last'}} = %{$ai_seq_args[0]{'attackMethod'}};
-
-				ai_setSuspend(0);
-				if (@{$field{'field'}} > 1) {
-					ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
-						distFromGoal => $config{'attackMaxRouteDistance'},
-						maxRouteTime => $config{'attackMaxRouteTime'},
-						attackID => $ai_seq_args[0]{'ID'});
-				} else {
-					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}, 0, $ai_seq_args[0]{'ID'});
-				}
-			}
-
-		} elsif ((($config{'tankMode'} && $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'} == 0)
+		} elsif ((($config{'tankMode'} && $monsters{$ID}{'dmgFromYou'} == 0)
 		        || !$config{'tankMode'})) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 
 			if ($ai_seq_args[0]{'attackMethod'}{'type'} eq "weapon" && timeOut(\%{$timeout{'ai_attack'}})) {
 				if ($config{'tankMode'}) {
-					sendAttack(\$remote_socket, $ai_seq_args[0]{'ID'}, 0);
+					sendAttack(\$remote_socket, $ID, 0);
 				} else {
-					sendAttack(\$remote_socket, $ai_seq_args[0]{'ID'}, 7);
+					sendAttack(\$remote_socket, $ID, 7);
 				}
 				$timeout{'ai_attack'}{'time'} = time;
 				undef %{$ai_seq_args[0]{'attackMethod'}};
 
 			} elsif ($ai_seq_args[0]{'attackMethod'}{'type'} eq "skill") {
 				$ai_v{'ai_attack_method_skillSlot'} = $ai_seq_args[0]{'attackMethod'}{'skillSlot'};
-				$ai_v{'ai_attack_ID'} = $ai_seq_args[0]{'ID'};
 				undef %{$ai_seq_args[0]{'attackMethod'}};
 				ai_setSuspend(0);
 
@@ -3811,15 +3815,15 @@ sub AI {
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
-						$ai_v{'ai_attack_ID'});
+						$ID);
 				} else {
 					ai_skillUse(
 						$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}}{'ID'},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
 						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
-						$monsters{$ai_v{'ai_attack_ID'}}{'pos_to'}{'x'},
-						$monsters{$ai_v{'ai_attack_ID'}}{'pos_to'}{'y'});
+						$monsters{$ID}{'pos_to'}{'x'},
+						$monsters{$ID}{'pos_to'}{'y'});
 				}
 				$ai_seq_args[0]{monsterID} = $ai_v{'ai_attack_ID'};
 
@@ -3827,10 +3831,10 @@ sub AI {
 			}
 			
 		} elsif ($config{'tankMode'}) {
-			if ($ai_seq_args[0]{'dmgTo_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'}) {
+			if ($ai_seq_args[0]{'dmgTo_last'} != $monsters{$ID}{'dmgTo'}) {
 				$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
 			}
-			$ai_seq_args[0]{'dmgTo_last'} = $monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'};
+			$ai_seq_args[0]{'dmgTo_last'} = $monsters{$ID}{'dmgTo'};
 		}
 	}
 
@@ -3965,19 +3969,17 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 			} elsif ($ai_seq_args[0]{'index'} eq '0' 		#if index eq '0' (but not index == 0)
-				&& $ai_seq_args[0]{'old_x'} == $cur_x		#and we are still on the same
-				&& $ai_seq_args[0]{'old_y'} == $cur_y ) {	#old XY coordinate,
-				if ($config{'debugRoute'}) {
-					debug "Stuck: $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'})\n", "route";
-					#ShowValue('solution', \@{$ai_seq_args[0]{'solution'}});
-				}
+			      && $ai_seq_args[0]{'old_x'} == $cur_x		#and we are still on the same
+			      && $ai_seq_args[0]{'old_y'} == $cur_y ) {	#old XY coordinate,
+				debug "Stuck: $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'})\n", "route";
+				#ShowValue('solution', \@{$ai_seq_args[0]{'solution'}});
 				shift @ai_seq;
 				shift @ai_seq_args;
 
-			} elsif ( $ai_seq_args[0]{'distFromGoal'} > @{$ai_seq_args[0]{'solution'}} ) {
-				#( $ai_seq_args[0]{'distFromGoal'} > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'dest'}}) )
+			} elsif ($ai_seq_args[0]{'distFromGoal'} >= @{$ai_seq_args[0]{'solution'}}
+			      || $ai_seq_args[0]{'pyDistFromGoal'} > distance($ai_seq_args[0]{'dest'}{'pos'}, $chars[$config{'char'}]{'pos_to'}) ) {
 				# We are near the goal, thats good enough.
-				# Distance is computed based on step counts not pythagorean distance.
+				# Distance is computed based on step counts (distFromGoal) or pythagorean distance (pyDistFromGoal).
 				debug "We are near our goal\n", "route";
 				shift @ai_seq;
 				shift @ai_seq_args;
@@ -8541,11 +8543,12 @@ sub ai_route {
 	$args{'dest'}{'map'} = $map;
 	$args{'dest'}{'pos'}{'x'} = $x;
 	$args{'dest'}{'pos'}{'y'} = $y;
-	$args{'maxRouteDistance'} = $param{maxRouteDistance} if exists $param{'maxRouteDistance'};
-	$args{'maxRouteTime'} = $param{maxRouteTime} if exists $param{'maxRouteTime'};
-	$args{'attackOnRoute'} = $param{attackOnRoute} if exists $param{'attackOnRoute'};
-	$args{'distFromGoal'} = $param{distFromGoal} if exists $param{'distFromGoal'};
-	$args{'attackID'} = $param{attackID} if exists $param{'attackID'};
+	$args{'maxRouteDistance'} = $param{maxRouteDistance} if exists $param{maxRouteDistance};
+	$args{'maxRouteTime'} = $param{maxRouteTime} if exists $param{maxRouteTime};
+	$args{'attackOnRoute'} = $param{attackOnRoute} if exists $param{attackOnRoute};
+	$args{'distFromGoal'} = $param{distFromGoal} if exists $param{distFromGoal};
+	$args{'pyDistFromGoal'} = $param{pyDistFromGoal} if exists $param{pyDistFromGoal};
+	$args{'attackID'} = $param{attackID} if exists $param{attackID};
 	$args{'param'} = [@_];
 	$args{'time_start'} = time;
 
