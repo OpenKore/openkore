@@ -64,7 +64,7 @@ New features:
   all monsters that you are engaging/can engage. Useful for fighting
   multiple opponents at once, e.g. acolyte can offensive-bless
   Khalitzburg even if it's not your current target, or knight can
-  provoke all Sohees and then Brandish Spear them
+  provoke all Sohees and then Brandish Spear them.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
