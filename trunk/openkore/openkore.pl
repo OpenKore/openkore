@@ -2853,12 +2853,18 @@ sub AI {
 
 
 	##### CLIENT SUSPEND #####
+	# The clientSuspend AI sequence is used to freeze all other AI activity
+	# for a certain period of time.
 
 	if ($ai_seq[0] eq "clientSuspend" && timeOut(\%{$ai_seq_args[0]})) {
 		shift @ai_seq;
 		shift @ai_seq_args;
 	} elsif ($ai_seq[0] eq "clientSuspend" && $config{'XKore'}) {
+		# When XKore mode is turned on, clientSuspend will increase it's timeout
+		# every time the user tries to do something manually.
+
 		if ($ai_seq_args[0]{'type'} eq "0089") {
+			# Player's manually attacking
 			if ($ai_seq_args[0]{'args'}[0] == 2) {
 				if ($chars[$config{'char'}]{'sitting'}) {
 					$ai_seq_args[0]{'time'} = time;
@@ -2884,7 +2890,9 @@ sub AI {
 					$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
 				}
 			}
-		} elsif ($switch eq "009F") {
+
+		} elsif ($ai_seq_args[0]{'type'} eq "009F") {
+			# Player's manually picking up an item
 			if (!$ai_seq_args[0]{'forceGiveup'}{'timeout'}) {
 				$ai_seq_args[0]{'forceGiveup'}{'timeout'} = 4;
 				$ai_seq_args[0]{'forceGiveup'}{'time'} = time;
@@ -3802,13 +3810,13 @@ sub AI {
 		shift @ai_seq_args;
 		if ($monsters_old{$ai_v{'ai_attack_ID_old'}}{'dead'}) {
 			print "Target died\n";
-#Solos Start
-		monKilled();
-		$monsters_Killed{$monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}}++;
-#Solos End
-			if ($config{'itemsTakeAuto'} && $monsters_old{$ai_v{'ai_attack_ID_old'}}{'dmgFromYou'} > 0) {
+
+			monKilled();
+			$monsters_Killed{$monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}}++;
+
+			if ($config{'itemsTakeAuto'} && $monsters_old{$ai_v{'ai_attack_ID_old'}}{'dmgFromYou'} > 0 && !$monsters_old{$ai_v{'ai_attack_ID_old'}}{'attackedByPlayer'} && !$monsters_old{$ai_v{'ai_attack_ID_old'}}{'ignore'}) {
 				ai_items_take($monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos'}{'x'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos'}{'y'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos_to'}{'x'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos_to'}{'y'});
-			} else {
+			} elsif (!ai_getAggressives()) {
 				# Cheap way to suspend all movement to make it look real
 				ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
 			}
@@ -4655,25 +4663,35 @@ sub AI {
 
 #######################################
 #######################################
-#Parse RO Client Send Message
+# Parse RO Client Send Message
 #######################################
 #######################################
 
 sub parseSendMsg {
 	my $msg = shift;
+
 	$sendMsg = $msg;
 	if (length($msg) >= 4 && $conState >= 4 && length($msg) >= unpack("S1", substr($msg, 0, 2))) {
 		decrypt(\$msg, $msg);
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	print "Packet Switch SENT_BY_CLIENT: $switch\n" if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch));
+
+	# If the player tries to manually do something in the RO client, disable AI for a small period
+	# of time using ai_clientSuspend().
+
 	if ($switch eq "0066") {
+ 		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
+
 	} elsif ($switch eq "0072") {
+		# Map login
 		if ($config{'sex'} ne "") {
 			$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
 		}
+
 	} elsif ($switch eq "007D") {
+		# Map loaded
 		$conState = 5;
 		$timeout{'ai'}{'time'} = time;
 		if ($firstLoginMap) {
@@ -4684,11 +4702,13 @@ sub parseSendMsg {
 		print "Map loaded\n";
 
 	} elsif ($switch eq "0085") {
+		# Move
 		aiRemove("clientSuspend");
 		makeCoords(\%coords, substr($msg, 2, 3));
 		ai_clientSuspend($switch, (distance(\%{$chars[$config{'char'}]{'pos'}}, \%coords) * $config{'seconds_per_block'}) + 2);
 		
 	} elsif ($switch eq "0089") {
+		# Attack
 		if (!($config{'tankMode'} && binFind(\@ai_seq, "attack") ne "")) {
 			aiRemove("clientSuspend");
 			ai_clientSuspend($switch, 2, unpack("C*",substr($msg,6,1)), substr($msg,2,4));
@@ -4696,6 +4716,7 @@ sub parseSendMsg {
 			undef $sendMsg;
 		}
 	} elsif ($switch eq "008C" || $switch eq "0108" || $switch eq "017E") {
+		# Public, party and guild chat
 		my $length = unpack("S",substr($msg,2,2));
 		my $message = substr($msg, 4, $length - 4);
 		my ($chat) = $message =~ /^[\s\S]*? : ([\s\S]*)\000?/;
@@ -4710,6 +4731,7 @@ sub parseSendMsg {
 		}
 
 	} elsif ($switch eq "0096") {
+		# Private message
 		$length = unpack("S",substr($msg,2,2));
 		($user) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
 		$chat = substr($msg, 28, $length - 29);
@@ -4726,20 +4748,23 @@ sub parseSendMsg {
 			$lastpm{'user'} = $user;
 			push @lastpm, {%lastpm};
 		}
+
 	} elsif ($switch eq "009F") {
+		# Take
 		aiRemove("clientSuspend");
 		ai_clientSuspend($switch, 2, substr($msg,2,4));
 
 	} elsif ($switch eq "00B2") {
-		#trying to exit
+		# Trying to exit (respawn)
 		aiRemove("clientSuspend");
 		ai_clientSuspend($switch, 10);
 
 	} elsif ($switch eq "018A") {
-		#trying to exit
+		# Trying to exit
 		aiRemove("clientSuspend");
 		ai_clientSuspend($switch, 10);
 	}
+
 	if ($sendMsg ne "") {
 		sendToServerByInject(\$remote_socket, $sendMsg);
 	}
@@ -7895,25 +7920,12 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$ai_cmdQue++;
 		print "[Guild] $chat\n";
 
-	} elsif ($switch eq "0180") {
-	} elsif ($switch eq "0181") {
-	} elsif ($switch eq "0182") {
-	} elsif ($switch eq "0183") {
-
-	} elsif ($switch eq "0187") {
-
 	} elsif ($switch eq "0188") {
 		$type =  unpack("S1",substr($msg, 2, 2));
 		$index = unpack("S1",substr($msg, 4, 2));
 		$enchant = unpack("S1",substr($msg, 6, 2));
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = $enchant;
-
-	} elsif ($switch eq "018A") {
-	} elsif ($switch eq "018B") {
-	} elsif ($switch eq "018C") {
-	} elsif ($switch eq "018E") {
-	} elsif ($switch eq "0191") {
 
 	} elsif ($switch eq "0192") {
 #Solos Start
@@ -8419,6 +8431,12 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 #######################################
 #######################################
 
+##
+# ai_clientSuspend($type, $initTimeout, @args...)
+# $initTimeout: a number of seconds.
+#
+# Freeze the AI for $initTimeout seconds. $type and @args are ignored
+# unless XKore mode is turned on, and are only used internally.
 sub ai_clientSuspend {
 	my ($type,$initTimeout,@args) = @_;
 	my %args;

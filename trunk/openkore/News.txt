@@ -3,6 +3,9 @@
   The master must be within this distance to imitate his emoticons.
 - Better way to autodetect platform (using $^O).
 - Fixed teleportAuto_search.
+- Added comments to some pieces of code.
+- Fixed a typo in the clientSuspend AI sequence.
+- Improved anti-looting.
 
 
 ChangeLog for skore-revamped
