@@ -100,6 +100,9 @@ saveMap_warpToBuyOrSell 0
 route_randomWalk 1
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
+route_teleport 0
+route_teleport_minDistance 150
+route_teleport_maxTries 8
 route_step 15
 
 #
@@ -185,6 +188,7 @@ teleportAuto_useItem 1
 teleportAuto_useSP 0
 teleportAuto_emptyName 1
 teleportAuto_allPlayers 0
+teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
 
 useSelf_skill {

@@ -31,18 +31,20 @@ ai_attack_waitAfterKill 0.7
 ai_attack_unstuck 1.5
 
 # When your monster died, start checking for loot after x seconds
-ai_items_take_start 0.5
+ai_items_take_start 0.4
 # Stop checking for loot x seconds after it has begun checking.
-ai_items_take_end 1.5
+ai_items_take_end 1.2
 
 # When standing near an item, send the 'take' packet every x seconds until
 # the item has been taken.
 ai_take .4
 # Give up if unable to pickup item after x seconds
 ai_take_giveup 3
-ai_items_gather_giveup 6
-ai_items_gather_auto .1
-ai_items_gather_start .1
+ai_items_gather_giveup 3
+# Every x seconds, check items for gathering
+ai_items_gather_auto .3
+# Only gather items that have been more than x seconds on screen
+ai_items_gather_start .3
 
 ai_follow_lost_end 10
 ai_getInfo 1
