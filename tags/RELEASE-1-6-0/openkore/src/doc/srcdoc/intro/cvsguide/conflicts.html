@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>OpenKore CVS Guide</title>
+	<link rel="stylesheet" type="text/css" href="../../openkore.css">
+	<link rel="stylesheet" type="text/css" href="../../links.css">
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div id="title">OpenKore CVS Guide for developers</div>
+
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="../../index.html">Table of contents</a></li>
+	<li><a href="../index.html">Development Introduction Guide</a></li>
+	<li><b>CVS Guide</b></li>
+	</ul>
+</div>
+
+<div id="main">
+
+
+<h2>What are conflicts?</h2>
+
+Imagine that you're working on openkore.pl. If someone else was
+simultanously working on openkore.pl too, and also changed some of the lines
+that you've changed too, an <i>overlap</i> occurs.
+If you do a <tt>cvs update</tt>, CVS will warn you about conflicts
+during merging.
+
+
+<h2>Conflicts example</h2>
+
+Suppose that you have downloaded
+<a href="http://www.gnu.org/software/cvs/manual/html_chapter/cvs_3.html#IDX28">revision</a>
+1.4 of <tt>openkore.pl</tt>. The part you're working on is:
+<blockquote><pre class="example">
+sub generateExampleFile {
+    my $err = parse();
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+    return ($nerr == 0 ? 0 : 1);
+}
+</pre></blockquote>
+
+<p>
+You have changed the code to:
+<blockquote><pre class="example">
+sub generateExampleFile {
+    initScanner();
+    my $err = parse();
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+    return ($nerr == 0 ? $SUCCESS : $FAILURE);
+}
+</pre></blockquote>
+
+<p>
+Someone else was also working on that function, and already committed his
+changes to CVS (before you did) as revision 1.5. His code:
+<blockquote><pre class="example">
+sub generateExampleFile {
+    my $err = parse();
+
+    if (@_ &gt; 0) {
+        print "generateExampleFile: No parameters expected.\n";
+        return 0;
+    }
+
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+    return (!!$nerr);
+}
+</pre></blockquote>
+
+<p>
+If you do a <em>CVS update</em> now, it will attempt to merge your changes
+to revision 1.4 with the new revision 1.5. CVS will inform you about conflicts:
+<pre>rcsmerge warning: overlaps during merge
+cvs update: conflicts found in openkore.pl</pre>
+
+<p>
+Your original working file is saved unmodified in ".#openkore.pl.1.4".
+The new version of openkore.pl now contains:
+<blockquote><pre class="example">
+sub generateExampleFile {
+    my $err = parse();
+
+    if (@_ &gt; 0) {
+        print "generateExampleFile: No parameters expected.\n";
+        return 0;
+    }
+
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; openkore.pl
+    return ($nerr == 0 ? $SUCCESS : $FAILURE);
+=======
+    return (!!$nerr);
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.5
+}
+</pre></blockquote>
+
+Obviously, the code between "<<<<<<<" and ">>>>>>>" contains the overlap.
+The code above the "=======" is your original code. The code under that
+is the code from CVS.
+
+<p>
+To solve conflicts, you need to understand what you're trying to do,
+what that other person's trying to do, and then think about how to solve this.
+In this example, the solution is to replace the overlap with your
+code:
+<blockquote><pre class="example">
+sub generateExampleFile {
+    my $err = parse();
+
+    if (@_ &gt; 0) {
+        print "generateExampleFile: No parameters expected.\n";
+        return 0;
+    }
+
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+    return ($nerr == 0 ? $SUCCESS : $FAILURE);
+}
+</pre></blockquote>
+
+After you're done solving the conflict and saved the file, do another
+<em>CVS update</em>. Then you can do a <em>CVS commit</em>.
+
+
+<h2>Further documentation</h2>
+
+See also the <em>"Multiple developers"</em> chapter in the CVS manual:
+<a href="http://www.gnu.org/software/cvs/manual/html_chapter/cvs_7.html#SEC39">http://www.gnu.org/software/cvs/manual/html_chapter/cvs_7.html#SEC39</a>
+
+
+</div>
+</body>
+</html>
