@@ -7,11 +7,6 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#
-#
-#  $Revision$
-#  $Id$
-#
 #########################################################################
 
 use Interface;
@@ -25,7 +20,7 @@ use Getopt::Long;
 use IO::Socket;
 use Digest::MD5;
 use Carp;
-unshift @INC, '.';
+use lib '.';
 
 
 require 'functions.pl';
@@ -256,7 +251,6 @@ our $jExpSwitch = 2;
 our $totalBaseExp = 0;
 our $totalJobExp = 0;
 our $startTime_EXP = time;
-our $self_dead_count = 0;
 
 initStatVars();
 initRandomRestart();
@@ -311,6 +305,8 @@ while ($quit != 1) {
 	usleep($config{'sleepTime'});
 
 	if ($config{'XKore'}) {
+		# (Re-)initialize X-Kore if necessary
+
 		if (timeOut(\%{$timeout{'injectKeepAlive'}})) {
 			$conState = 1;
 			my $printed = 0;
@@ -359,67 +355,76 @@ while ($quit != 1) {
 		}
 	}
 
+	# Parse command input
 	if (defined($input = $interface->getInput(0))) {
 		parseInput($input);
 
 	}
 
-	if (!$config{'XKore'} && dataWaiting(\$remote_socket)) {
-		$remote_socket->recv($new, $Settings::MAX_READ);
-		$msg .= $new;
-		$msg_length = length($msg);
-		while ($msg ne "") {
-			$msg = parseMsg($msg);
-			last if ($msg_length == length($msg));
+	# Receive and handle data from the RO server
+	if (dataWaiting(\$remote_socket)) {
+		if (!$config{'XKore'}) {
+			$remote_socket->recv($new, $Settings::MAX_READ);
+			$msg .= $new;
 			$msg_length = length($msg);
-		}
-
-	} elsif ($config{'XKore'} && dataWaiting(\$remote_socket)) {
-		my $injectMsg;
-		$remote_socket->recv($injectMsg, $Settings::MAX_READ);
-		while ($injectMsg ne "") {
-			if (length($injectMsg) < 3) {
-				undef $injectMsg;
-				break;
-			}
-			my $type = substr($injectMsg, 0, 1);
-			my $len = unpack("S",substr($injectMsg, 1, 2));
-			my $newMsg = substr($injectMsg, 3, $len);
-			$injectMsg = (length($injectMsg) >= $len+3) ? substr($injectMsg, $len+3, length($injectMsg) - $len - 3) : "";
-			if ($type eq "R") {
-				$msg .= $newMsg;
+			while ($msg ne "") {
+				$msg = parseMsg($msg);
+				last if ($msg_length == length($msg));
 				$msg_length = length($msg);
-				while ($msg ne "") {
-					$msg = parseMsg($msg);
-					last if ($msg_length == length($msg));
-					$msg_length = length($msg);
-				}
-			} elsif ($type eq "S") {
-				parseSendMsg($newMsg);
 			}
-			$timeout{'injectKeepAlive'}{'time'} = time;
+
+		} else {
+			my $injectMsg;
+			$remote_socket->recv($injectMsg, $Settings::MAX_READ);
+			while ($injectMsg ne "") {
+				if (length($injectMsg) < 3) {
+					undef $injectMsg;
+					break;
+				}
+				my $type = substr($injectMsg, 0, 1);
+				my $len = unpack("S",substr($injectMsg, 1, 2));
+				my $newMsg = substr($injectMsg, 3, $len);
+				$injectMsg = (length($injectMsg) >= $len+3) ? substr($injectMsg, $len+3, length($injectMsg) - $len - 3) : "";
+				if ($type eq "R") {
+					$msg .= $newMsg;
+					$msg_length = length($msg);
+					while ($msg ne "") {
+						$msg = parseMsg($msg);
+						last if ($msg_length == length($msg));
+						$msg_length = length($msg);
+					}
+				} elsif ($type eq "S") {
+					parseSendMsg($newMsg);
+				}
+				$timeout{'injectKeepAlive'}{'time'} = time;
+			}
 		}
 	}
 
+	# Process AI
 	$ai_cmdQue_shift = 0;
 	do {
 		AI(\%{$ai_cmdQue[$ai_cmdQue_shift]}) if ($conState == 5 && timeOut(\%{$timeout{'ai'}}) && $remote_socket && $remote_socket->connected());
 		undef %{$ai_cmdQue[$ai_cmdQue_shift++]};
 		$ai_cmdQue-- if ($ai_cmdQue > 0);
 	} while ($ai_cmdQue > 0);
+
+	# Handle connection states
 	checkConnection();
 
+	# Other stuff that's run in the main loop
 	mainLoop();
 }
 
 
 Plugins::unloadAll();
 
-# Exit X-Kore
+# Shutdown X-Kore
 eval {
 	$remote_socket->send("Z".pack("S", 0));
 } if ($config{'XKore'} && $remote_socket && $remote_socket->connected());
 
+# Shutdown everything else
 close($remote_socket);
 unlink('buffer') if ($config{'XKore'} && -f 'buffer');
 killConnection(\$remote_socket);
