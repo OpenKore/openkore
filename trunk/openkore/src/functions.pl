@@ -363,11 +363,12 @@ sub parseCommand {
 	my $input = shift;
 
 	my ($switch, $args) = split(' ', $input, 2);
+	my ($arg1, $arg2, $arg3, $arg4);
 
 	# Resolve command aliases
 	if (my $alias = $config{"alias_$switch"}) {
 		$input = $alias;
-		$input .= " $args" if $args;
+		$input .= " $args" if defined $args;
 		($switch, $args) = split(' ', $input, 2);
 	}
 
@@ -7445,7 +7446,7 @@ sub parseMsg {
 		$conState = 5 if $conState != 4 && $config{XKore};
 		updateDamageTables($sourceID, $targetID, $damage) if $damage != 35536;
 		setSkillUseTimer($skillID) if $sourceID eq $accountID;
-		castOn($sourceID, $targetID);
+		countCastOn($sourceID, $targetID);
 
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID);
@@ -7539,7 +7540,7 @@ sub parseMsg {
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $config{XKore};
 		setSkillUseTimer($skillID) if $sourceID eq $accountID;
-		castOn($sourceID, $targetID);
+		countCastOn($sourceID, $targetID);
 		if ($config{'autoResponseOnHeal'}) {
 			# Handle auto-response on heal
 			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
@@ -11925,7 +11926,7 @@ sub setSkillUseTimer {
 }
 
 # Increment counter for monster being casted on
-sub castOn {
+sub countCastOn {
 	my ($sourceID, $targetID) = @_;
 
 	if ($monsters{$targetID}) {
