@@ -21,7 +21,8 @@
 
 ####SELL LIST####
 
-Silver Robe 0 0 1
+Silver Robe [1] 0 0 1
+Buster [2] 0 1 0
 Jack o' Pumpkin 0 0 1
 Fabric 0 0 1
 Stiletto 0 0 1
@@ -59,10 +60,10 @@ Composite Bow 0 0 1
 Conch 0 0 1
 Cotton Shirts 0 0 1
 Cross Bow 0 0 1
-Cutter 0 0 1
+Cutter [4] 0 0 1
 Decayed Nail 0 0 1
 Elder Pixie's Moustache 0 0 1
-Falchion 0 0 1
+Falchion [4] 0 0 1
 Feather of Birds 0 0 1
 Fin 0 0 1
 Flail 1 0 1
@@ -71,6 +72,7 @@ Fluff 0 0 1
 Garlet 0 0 1
 Gill 0 0 1
 Glaive 0 0 1
+Goggles 0 1 0
 Grasshopper's Leg 0 0 1
 Great Bow 0 0 1
 Green Herb 0 0 1
@@ -79,7 +81,7 @@ Guisarme 0 0 1
 Hammer 0 0 1
 Hat 0 0 1
 Heart of Mermaid 0 0 1
-Hood 0 0 1
+Hood [1] 0 0 1
 Horn 0 0 1
 Horseshoe 0 0 1
 Immortal Heart 0 0 1
@@ -87,7 +89,7 @@ Insect Feeler 0 0 1
 Jacket 0 0 1
 Javelin 0 0 1
 Jellopy 0 0 1
-Knife 0 0 1
+Knife [4] 0 0 1
 Lantern 0 0 1
 Long Coat 0 0 1
 Mace 0 0 1
@@ -112,6 +114,7 @@ Reptile Tongue 0 0 1
 Resin 0 0 1
 Rod 0 0 1
 Rotten Bandage 0 0 1
+Sandals [1] 0 0 1
 Scale Shell 0 0 1
 Scell 0 0 1
 Scorpion Tail 0 0 1
@@ -132,7 +135,7 @@ Sticky Mucus 0 0 1
 Sticky Webfoot 0 0 1
 Stinky Scale 0 0 1
 Stone Heart 0 0 1
-Sword 0 0 1
+Sword [4] 0 0 1
 Talon 0 0 1
 Tentacle 0 0 1
 Tooth of Bat 0 0 1
@@ -147,7 +150,7 @@ Worm Peeling 0 0 1
 Yoyo Tail 0 0 1
 Zargon 0 0 1
 Monster's Feed 0 0 1
-Ribbon 0 0 1
+Ribbon [1] 0 0 1
 Wooden Mail 0 0 1
 Poison Spore 0 0 1
 
@@ -158,8 +161,8 @@ Red Potion 0 1 0
 Memento 0 1 0
 Fire Arrow 0 0 1
 Carrot 0 1 0
-Jur 0 1 0
-Katana 0 1 0
+Jur [3] 0 1 0
+Katana [4] 0 1 0
 Apple 0 1 0
 Banana 0 1 0
 Grape 0 1 0
@@ -623,3 +626,4 @@ Bark Shorts 0 1 0
 Monkey Circlet 0 1 0
 Red Muffler 0 1 0
 Pet Food 0 1 0
+Goggles [1] 0 1 0
