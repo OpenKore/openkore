@@ -30,7 +30,7 @@ our %EXPORT_TAGS = (
 	state   => [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID %portals @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild)],
 	network => [qw($remote_socket $conState $encryptVal $ipc $lastPacketTime $xkore)],
 	interface => [qw($interface)],
-	misc    => [qw($buildType $quit %timeout_ex $isOnline $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth)],
+	misc    => [qw($buildType $quit %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth)],
 );
 
 our @EXPORT = (
@@ -169,7 +169,6 @@ our $buildType;
 our $quit;
 our %timeout_ex;
 our %overallAuth;
-our $isOnline; # for determining whether a guild member logged in or out
 our $shopstarted;
 our $dmgpsec;
 our $totalelasped;
