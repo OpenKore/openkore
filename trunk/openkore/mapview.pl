@@ -58,10 +58,10 @@ sub OnInit {
 	my $self = shift;
 
 	$frame = new Wx::Frame(undef, -1, 'Map viewer');
+	$frame->SetClientSize(75, 100);
 	$frame->Show(1);
 
 	$sizer = new Wx::BoxSizer(wxVERTICAL);
-	$frame->SetSizer($sizer);
 
 	$mapview = new Interface::Wx::MapViewer($frame);
 	$mapview->setMapDir($options{maps});
@@ -74,6 +74,8 @@ sub OnInit {
 	$status->SetFieldsCount(2);
 	$status->SetStatusWidths(80, -1);
 	$sizer->Add($status, 0, wxGROW);
+
+	$frame->SetSizer($sizer);
 
 	my $timer = new Wx::Timer($self, 5);
 	EVT_TIMER($self, 5, \&onTimer);
