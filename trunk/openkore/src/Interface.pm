@@ -31,7 +31,7 @@ use strict;
 use warnings;
 use Exporter;
 use base qw(Exporter);
-use Interface::Console;
+use Interface::Startup;
 
 our $interface;
 our @EXPORT = qw($interface);
@@ -39,15 +39,42 @@ our @EXPORT = qw($interface);
 
 sub new {
 	# Default interface until we switch to a new one
-	return new Interface::Console;
+	return new Interface::Startup;
 }
 
 END {
 	undef $interface;
 }
 
-
+##
+#$interface->switchInterface(new_interface)
+# new_interface: The name of the interface to be swiched to.
+# Returns: The newly created interface object on success, or the previous
+#          interface object on failure
+#
+# Changes the interface being used by Kore.
+# The default method may be overridden by an Interface that needs to do special work
+# when changing to another interface.
 sub switchInterface {
+	my $self = shift;
+	my $new_if_name = shift;
+	eval "use Interface::$new_if_name;";
+	if ($@) {
+		Log::error("Failed to load $new_if_name: $@\n");
+		return $self;
+	}
+	my $new_interface = eval "new Interface::$new_if_name;";
+	if (!defined($new_interface)) {
+		Log::error("Failed to create $new_if_name: $@\n");
+		return $self;
+	} elsif ($@) {
+		Log::error("Failed to create $new_if_name: $@\n");
+		return $self;
+	}
+	return $new_interface;
+}
+
+sub switchInterfaceOld {
 	my $class = shift;
 	my $new_interface = shift;
 	eval "use $new_interface;";

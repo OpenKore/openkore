@@ -42,6 +42,8 @@ $interface = new Interface;
 srand(time());
 Settings::parseArguments();
 
+$interface = $interface->switchInterface($Settings::default_interface);
+
 Log::message("$Settings::versionText\n");
 
 Plugins::loadAll();

@@ -38,6 +38,11 @@ use Text::Wrap;
 use Win32::Console;
 
 use Settings;
+use Utils;
+use Interface::Console;
+
+use base qw(Interface::Console);
+
 
 our %fgcolors;
 our %bgcolors;

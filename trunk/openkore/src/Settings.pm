@@ -61,6 +61,7 @@ our $item_log_file;
 our $shop_file;
 our $def_field;
 our $monster_log;
+our $default_interface;
 
 our @parseFiles;
 our $parseFiles;
@@ -111,7 +112,8 @@ sub parseArguments {
 		'shop=s', \$shop_file,
 		'fields=s',\$def_field,
 		'monsters=s', \$monster_log,
-		'items=s', \$item_log_file);
+		'items=s', \$item_log_file,
+		'interface=s', \$default_interface);
 	if ($help_option) {
 		print "Usage: openkore.exe [options...]\n\n";
 		print "The supported options are:\n\n";
@@ -121,7 +123,7 @@ sub parseArguments {
 		print "--tables=path              Use a different folder as tables folder.\n";
 		print "--logs=path                Save log files in a different folder.\n";
 		print "--plugins=path             Look for plugins in specified folder.\n";
-		print "--fields=path\tWhere fields folder to use.\n";
+		print "--fields=path              Where fields folder to use.\n";
 		print "\n";
 		print "--config=path/file         Which config.txt to use.\n";
 		print "--mon_control=path/file    Which mon_control.txt to use.\n";
@@ -129,6 +131,7 @@ sub parseArguments {
 		print "--pickupitems=path/file    Which pickupitems.txt to use.\n";
 		print "--chat=path/file           Which chat.txt to use.\n";
 		print "--shop=path/file           Which shop.txt to use.\n";
+		print "--interface=module         Which interface to use at startup.\n";
 		exit(0);
 	}
 
@@ -143,6 +146,7 @@ sub parseArguments {
 	$def_field = "fields" if (!defined $def_field);
 	$logs_folder = "logs" if (!defined $logs_folder);
 	$plugins_folder = "plugins" if (!defined $plugins_folder);
+	$default_interface = 'Console' if !defined $default_interface;
 
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
