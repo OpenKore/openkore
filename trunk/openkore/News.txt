@@ -6,6 +6,8 @@
 - Added comments to some pieces of code.
 - Fixed a typo in the clientSuspend AI sequence.
 - Improved anti-looting.
+- Makefile.win: enable compilation of Inject.dll. It seems the problem
+  with gcc is in Tools.dll, not Inject.dll.
 
 
 ChangeLog for skore-revamped

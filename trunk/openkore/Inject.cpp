@@ -166,8 +166,8 @@ void falseClientCom() {
 	int index;
 	int ret;
 	int type;
-	DWORD falseClient_timeout;
-	DWORD falseClient_send_timeout;
+	DWORD falseClient_timeout = 0;
+	DWORD falseClient_send_timeout = 0;
 	sockaddr_in addr;
 	DWORD arg = 1;
 	addr.sin_family = AF_INET;

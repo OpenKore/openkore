@@ -1,9 +1,9 @@
 # This is a Makefile for Cygwin.
 #
-# IMPORTANT NOTE: although Inject.dll can be compiled with gcc, it will
-# produce wrong code. For some reason, the RO client crashes when you use
-# X-Kore in combination with a gcc-compiled Inject.dll.
-# If anybody can figure out why, please contact me.
+# IMPORTANT NOTE: although Tools.dll can be compiled with gcc, it will
+# produce wrong code for the X-Kore-related functions. For some reason,
+# the RO client crashes when you use X-Kore in combination with a
+# gcc-compiled Tools.dll. If anybody can figure out why, please contact me.
 
 .PHONY: all clean
 CXX=g++
@@ -11,8 +11,7 @@ CFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
 DLLWRAP=dllwrap
 DLLTOOL=dlltool
 
-# For now, don't compile Inject.dll
-all: Tools.dll
+all: Tools.dll Inject.dll
 
 
 Tools.dll: Tools.o Tools.def
@@ -32,7 +31,7 @@ Inject.def:
 	$(DLLTOOL) --dllname Inject.dll --output-def Inject.def --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 Inject.o
 
 Inject.o: Inject.cpp
-	$(CXX) $(CFLAGS) -c Inject.cpp -o Inject.o
+	$(CXX) -mdll -mno-cygwin $(CFLAGS) -c Inject.cpp -o Inject.o
 
 
 clean:

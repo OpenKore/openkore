@@ -327,8 +327,8 @@ DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 	LPVOID pAttachProcessMemory = NULL;
 	DWORD dwBytesWritten = 0;
 	char * dllRemove;
-	dllRemove = (char*)malloc(strlen(dll));
-	memset((LPVOID)dllRemove, 0, strlen(dll));
+	dllRemove = (char*)malloc(strlen(dll) + 1);
+	memset((LPVOID)dllRemove, 0, strlen(dll) + 1);
 	pAttachProcessMemory = VirtualAllocEx( 
 		hProcessToAttach,      
 		NULL, 
