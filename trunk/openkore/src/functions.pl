@@ -60,7 +60,7 @@ sub initConfChange {
 
 # Initialize variables when you start a connection to a map server
 sub initConnectVars {
-	$char = $chars[$config{char}];
+	$char = $chars[$config{char}] |= {} if ($config{char} ne '');
 	initMapChangeVars();
 	undef %{$chars[$config{'char'}]{'skills'}};
 	undef @skillsID;
@@ -5098,6 +5098,7 @@ sub parseMsg {
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
+		$char = $chars[$config{'char'}] if ($config{'char'} ne '');
 
 	} elsif ($switch eq "006C") {
 		error("Error logging into Game Login Server (invalid character specified)...\n", "connection");
