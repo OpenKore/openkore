@@ -4491,7 +4491,7 @@ sub AI {
 			AI::dequeue;
 			take($ID);
 		} elsif ($found > 0) {
-			message "Failed to gather $items{$ID}{name} ($items{$ID}}{binID}) : No looting!\n",,1;
+			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : No looting!\n",,1;
 			AI::dequeue;
 		}
 	}
