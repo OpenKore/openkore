@@ -10,6 +10,7 @@ Globals.pm
 Interface.pm
 IPC.pm
 Log.pm
+Match.pm
 Misc.pm
 Modules.pm
 Network.pm

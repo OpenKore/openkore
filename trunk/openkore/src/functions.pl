@@ -5718,7 +5718,6 @@ sub parseMsg {
 			message "Portal Exists: $portals{$ID}{'name'} ($coords{x}, $coords{y}) - ($portals{$ID}{'binID'})\n", "portals", 1;
 
 		} elsif ($type < 1000) {
-			my $added;
 			if (!%{$npcs{$ID}}) {
 				$npcs{$ID}{'appear_time'} = time;
 				$nameID = unpack("L1", $ID);
@@ -6079,6 +6078,7 @@ sub parseMsg {
 			$npcs_old{$ID}{'gone_time'} = time;
 			binRemove(\@npcsID, $ID);
 			delete $npcs{$ID};
+			objectRemoved('npc', $ID);
 
 		} elsif (%{$pets{$ID}}) {
 			debug "Pet Disappeared: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
