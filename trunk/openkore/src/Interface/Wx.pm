@@ -87,7 +87,14 @@ sub OnInit {
 
 	$timer = new Wx::Timer($self, 249);
 	EVT_TIMER($self, 249, sub {
-		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
+		if ($conState == 5) {
+			$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
+			$self->{hpBar}->SetValue($char->{hp} / $char->{hp_max} * 100) if ($char->{hp_max});
+			$self->{spBar}->SetValue($char->{sp} / $char->{sp_max} * 100) if ($char->{sp_max});
+			$self->{expBar}->SetValue($char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
+			$self->{jobExpBar}->SetValue($char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
+			$self->{weightBar}->SetValue($char->{weight} / $char->{weight_max} * 100) if ($char->{weight_max});
+		}
 	});
 	$timer->Start(350);
 
@@ -276,6 +283,47 @@ sub createInterface {
 	$frame->SetSizer($vsizer);
 
 
+	### Horizontal sizer with HP/SP/Exp box
+	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
+	$vsizer->Add($hsizer, 0, wxGROW);
+
+	my $label = new Wx::StaticText($frame, -1, "HP: ");
+	$hsizer->Add($label, 0);
+
+	my $hpBar = $self->{hpBar} = new Wx::Gauge($frame, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($hpBar, 1, wxRIGHT, 8);
+
+	$label = new Wx::StaticText($frame, -1, "SP: ");
+	$hsizer->Add($label, 0);
+
+	my $spBar = $self->{spBar} = new Wx::Gauge($frame, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($spBar, 1, wxRIGHT, 8);
+
+	$label = new Wx::StaticText($frame, -1, "Exp: ");
+	$hsizer->Add($label, 0);
+
+	my $expBar = $self->{expBar} = new Wx::Gauge($frame, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($expBar, 1);
+	my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($frame, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
+
+	$label = new Wx::StaticText($frame, -1, "Weight: ");
+	$hsizer->Add($label, 0);
+
+	my $weightBar = $self->{weightBar} = new Wx::Gauge($panel, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($weightBar, 1);
+
+
 	## Splitter with console and another splitter
 	my $splitter = new Wx::SplitterWindow($frame, 928, wxDefaultPosition, wxDefaultSize,
 		wxSP_LIVE_UPDATE);
@@ -332,10 +380,7 @@ sub createInterface {
 				my (undef, $x, $y) = @_;
 				delete $self->{mouseMapText};
 				$self->writeOutput("message", "Moving to $x, $y\n", "info");
-				#AI::clear("mapRoute", "route", "move");
-				main::aiRemove("mapRoute");
-				main::aiRemove("route");
-				main::aiRemove("move");
+				AI::clear("mapRoute", "route", "move");
 				main::ai_route($field{name}, $x, $y, attackOnRoute => 1);
 				$self->{inputBox}->SetFocus;
 			});
@@ -351,7 +396,7 @@ sub createInterface {
 
 
 	### Input field
-	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
+	$hsizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$vsizer->Add($hsizer, 0, wxGROW);
 
 	my $targetBox = $self->{targetBox} = new Wx::ComboBox($frame, -1, "", wxDefaultPosition,
