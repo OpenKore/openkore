@@ -19,6 +19,4 @@ Utils.pm
 Tools.pm
 ToolsXS.xs
 Tools.cpp
-Inject.cpp
 Tools.def
-Inject.def
