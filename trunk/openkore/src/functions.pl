@@ -2510,7 +2510,7 @@ sub AI {
 
 	AUTOSTORAGE: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "follow") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
 	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight_sellOrStore'})
 	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
 	  )) {
@@ -2707,7 +2707,7 @@ sub AI {
 
 	AUTOSELL: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto") && $config{'sellAuto'} && $config{'sellAuto_npc'} ne ""
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "follow") && $config{'sellAuto'} && $config{'sellAuto_npc'} ne ""
 	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight_sellOrStore'})
 	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
 	  )) {
@@ -2801,7 +2801,7 @@ sub AI {
 
 	AUTOBUY: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route"  || $ai_seq[0] eq "attack")
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route"  || $ai_seq[0] eq "attack" || $ai_seq[0] eq "follow")
 	  && timeOut(\%{$timeout{'ai_buyAuto'}})) {
 		undef $ai_v{'temp'}{'found'};
 		$i = 0;
@@ -3172,7 +3172,7 @@ sub AI {
 					&& !($config{"partySkill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
 					&& (!$config{"partySkill_$i"."_targetWhenStatusActive"} || whenStatusActivePL($partyUsersID[$j], $config{"partySkill_$i"."_targetWhenStatusActive"}))
 					&& (!$config{"partySkill_$i"."_targetWhenStatusInactive"} || !whenStatusActivePL($partyUsersID[$j], $config{"partySkill_$i"."_targetWhenStatusInactive"}))
-					&& (!$config{"partySkill_$i"."_targetWhenAffected"} || whenAffectedPL($config{$partyUsersID[$j], "partySkill_$i"."_targetWhenAffected"}))
+					&& (!$config{"partySkill_$i"."_targetWhenAffected"} || whenAffectedPL($partyUsersID[$j], $config{"partySkill_$i"."_targetWhenAffected"}))
 					&& timeOut($ai_v{"partySkill_$i"."_time"},$config{"partySkill_$i"."_timeout"})
 					){
 						$ai_v{"partySkill_$i"."_time"} = time;
@@ -3965,6 +3965,7 @@ sub AI {
 			} elsif ($ai_seq_args[0]{'index'} eq '0' 		#if index eq '0' (but not index == 0)
 			      && $ai_seq_args[0]{'old_x'} == $cur_x		#and we are still on the same
 			      && $ai_seq_args[0]{'old_y'} == $cur_y ) {	#old XY coordinate,
+				
 				debug "Stuck: $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'})\n", "route";
 				#ShowValue('solution', \@{$ai_seq_args[0]{'solution'}});
 				shift @ai_seq;
@@ -4428,6 +4429,7 @@ sub AI {
 		if (timeOut(\%{$ai_seq_args[0]{'ai_move_giveup'}})) {
 			# We couldn't move within ai_move_giveup seconds; abort
 			debug("Move - give up\n", "ai_move");
+			stuckCheck(1);
 			shift @ai_seq;
 			shift @ai_seq_args;
 
@@ -4459,6 +4461,7 @@ sub AI {
 		      && $ai_seq_args[0]{'move_to'}{'y'} eq $chars[$config{'char'}]{'pos_to'}{'y'}) {
 			# We've arrived at our destination. Remove the move AI sequence.
 			debug("Move - arrived\n", "ai_move");
+			stuckCheck(0);
 			shift @ai_seq;
 			shift @ai_seq_args;
 		}
@@ -5081,7 +5084,7 @@ sub parseMsg {
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my $sex = unpack("C*",substr($msg, 45,  1));
 		my $sitting = unpack("C*",substr($msg, 51,  1));
-
+		
 		if ($type >= 1000) {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
@@ -7182,13 +7185,13 @@ sub parseMsg {
 		} elsif (%{$players{$ID}}) {
 			if ($param1) {
 				$players{$ID}{state}{$state} = 1;
-				message "Player $players{$ID}{name} ($players{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
+				message "Player $players{$ID}{name} ($players{$ID}{binID}) has state: $state\n", "parseMsg_statuslook", 2;
 			} else {
 				delete $players{$ID}{state}{$state};
 			}
 			if ($param2 && $param2 != 32) {
 				$players{$ID}{ailments}{$ailment} = 1;
-				message "Player $players{$ID}{name} ($players{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 2;
+				message "Player $players{$ID}{name} ($players{$ID}{binID}) affected: $ailment\n", "parseMsg_statuslook", 2;
 			} else {
 				delete $players{$ID}{ailments}{$ailment};
 			}
@@ -7202,13 +7205,13 @@ sub parseMsg {
 		} elsif (%{$monsters{$ID}}) {
 			if ($param1) {
 				$monsters{$ID}{state}{$state} = 1;
-				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 1;
+				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state\n", "parseMsg_statuslook", 1;
 			} else {
 				delete $monsters{$ID}{state}{$state};
 			}
 			if ($param2 && $param2 != 32) {
 				$monsters{$ID}{ailments}{$ailment} = 1;
-				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 1;
+				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $ailment\n", "parseMsg_statuslook", 1;
 			} else {
 				delete $monsters{$ID}{ailments}{$ailment};
 			}
@@ -10117,5 +10120,26 @@ sub getNPCInfo {
 		error "Incomplete NPC info or ID not found in npcs.txt\n";
 	}
 }
+
+# should not happened but just to safeguard
+sub stuckCheck {
+	return if (($config{stuckcheckLimit} eq "") || ($config{stuckcheckLimit} == 0));
+	
+	my $stuck = shift;
+	if ($stuck) {
+		$ai_v{stuck_count}++;
+		warning "stuckCheck=$ai_v{stuck_count}\n";
+		if ($ai_v{stuck_count} > $config{stuckcheckLimit}) {
+			my $msg = "Failed to move for $ai_v{stuck_count} times, teleport. ($field{'name'} $chars[$config{char}]{pos}{x},$chars[$config{char}]{pos}{y})\n";
+			warning $msg;
+			chatLog("k", $msg);
+			useTeleport(1);
+			delete $ai_v{stuck_count};
+		}
+	} else {
+		delete $ai_v{stuck_count};
+	}
+}
+
 
 return 1;
