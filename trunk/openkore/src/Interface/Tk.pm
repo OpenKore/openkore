@@ -681,8 +681,6 @@ sub mapToggle {
 	}
 	if (!defined($self->{map}) && $chars[$config{'char'}] && %field) {
 		$self->{map}{window} = $self->{mw}->Toplevel();
-		my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
-		$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d)", $field{'name'}, $x, $y);
 		$self->{map}{window}->protocol('WM_DELETE_WINDOW', 
 			sub {
 				$self->mapToggle();
@@ -786,6 +784,8 @@ sub loadMap {
 	$self->{map}{width} = $field{'width'};
 	$self->{map}{height} = $field{'height'};
 	$self->{map}{canvas}->delete('loading');
+	my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
+	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d)", $field{'name'}, $x, $y);
 }
 
 #should this cache xbm files?
