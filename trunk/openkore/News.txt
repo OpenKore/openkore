@@ -25,6 +25,7 @@
 - When in X-Kore mode, the RO client will still work if you shutdown Kore. However, you
   can't start Kore in X-Kore mode again until you've restarted the RO client.
 - Kore will now correctly continue if it gets resurrected before respawn.
+- avoid_ignore now works properly.
 
 ==================
 ### OpenKore 1.2.1
