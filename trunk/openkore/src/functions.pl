@@ -6841,8 +6841,8 @@ sub parseMsg {
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'map'} = $map;
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'} = $partyUser;
 
-		if ($chars[$config{'char'}]{'party'}{'users'}{$accountID}{'admin'} && $chars[$config{'char'}]{'party'}{'share'}) {
-			sendPartyShareEXP(\$remote_socket, 1) if ($config{'partyAutoShare'} && %{$chars[$config{'char'}]{'party'}});
+		if ($config{'partyAutoShare'} && $char->{'party'} && $char->{'party'}{'users'}{$accountID}{'admin'}) {
+			sendPartyShareEXP(\$remote_socket, 1);
 		}
 	
 	} elsif ($switch eq "0105") {
