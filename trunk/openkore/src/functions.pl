@@ -5890,7 +5890,7 @@ sub parseMsg {
 		$amount = unpack("S1",substr($msg, 4, 2));
 		$ID = unpack("S1",substr($msg, 6, 2));
 		$type = unpack("C1",substr($msg, 21, 1));
-		$type_equip = unpack("C1",substr($msg, 19, 1));
+		$type_equip = unpack("C1",substr($msg, 19, 2));
 		makeCoords(\%test, substr($msg, 8, 3));
 		$fail = unpack("C1",substr($msg, 22, 1));
 

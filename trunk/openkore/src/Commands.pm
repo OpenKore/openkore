@@ -459,14 +459,17 @@ sub cmdInventory {
 		my @non_useable;
 		my ($i, $display, $index);
 
-		for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
-			next if (!%{$chars[$config{'char'}]{'inventory'}[$i]});
-			if ($chars[$config{'char'}]{'inventory'}[$i]{'type_equip'} != 0) {
-				push @equipment, $i;
-			} elsif ($chars[$config{'char'}]{'inventory'}[$i]{'type'} <= 2) {
+		for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
+			my $item = $chars[$config{'char'}]{'inventory'}[$i];
+			next if !%{$item};
+			if ($item->{type} == 3 ||
+			    $item->{type} == 6 ||
+				$item->{type} == 10) {
+				push @non_useable, $i;
+			} elsif ($item->{type} <= 2) {
 				push @useable, $i;
 			} else {
-				push @non_useable, $i;
+				push @equipment, $i;
 			} 
 		}
 
@@ -477,8 +480,8 @@ sub cmdInventory {
 				$index = $equipment[$i];
 				$display = $chars[$config{'char'}]{'inventory'}[$index]{'name'};
 				$display .= " ($itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$index]{'type'}})";
-					if ($chars[$config{'char'}]{'inventory'}[$index]{'equipped'}) {
-					$display .= " -- Eqp: $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$index]{'type_equip'}}";
+				if ($chars[$config{'char'}]{'inventory'}[$index]{'equipped'}) {
+					$display .= " -- Eqp: $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'equipped'}}";
 				}
 
 				if (!$chars[$config{'char'}]{'inventory'}[$index]{'identified'}) {
