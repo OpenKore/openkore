@@ -3399,7 +3399,7 @@ sub AI {
 		undef AI::args->{move_start};
 
 	} elsif (AI::action eq "attack" && AI::args->{avoiding}) {
-		AI::args->{ai_attack_giveup}{time} = time;
+		AI::args->{ai_attack_giveup}{time} = time + $monsters{AI::args->{ID}}{time_move_calc} + 3;
 		undef AI::args->{avoiding};
 
 	} elsif ((($ai_seq[0] eq "route" && $ai_seq[1] eq "attack") || ($ai_seq[0] eq "move" && $ai_seq[2] eq "attack"))
@@ -3490,7 +3490,17 @@ sub AI {
 		}
 
 		my $ID = $ai_seq_args[0]{'ID'};
-		my $monsterDist = distance($chars[$config{'char'}]{'pos_to'}, $monsters{$ID}{'pos_to'});
+		my $myPos = $char->{pos_to};
+		my $monsterPos = $monsters{$ID}{pos_to};
+		my $monsterDist = distance($myPos, $monsterPos);
+
+		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
+		if ($config{'runFromTarget'}) {
+			$realMyPos = calcPosition($char);
+			$realMonsterPos = calcPosition($monsters{$ID});
+			$realMonsterDist = distance($realMyPos, $realMonsterPos);
+		}
+
 		my $cleanMonster = checkMonsterCleanness($ID);
 
 
@@ -3501,13 +3511,15 @@ sub AI {
 			$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
 			debug "Update attack giveup time\n", "ai_attack", 2;
 		}
+		$hitYou = (AI::args->{'dmgToYou_last'} != $monsters{$ID}{'dmgToYou'}
+			|| AI::args->{'missedYou_last'} != $monsters{$ID}{'missedYou'});
 		$ai_seq_args[0]{'dmgToYou_last'} = $monsters{$ID}{'dmgToYou'};
 		$ai_seq_args[0]{'missedYou_last'} = $monsters{$ID}{'missedYou'};
 		$ai_seq_args[0]{'dmgFromYou_last'} = $monsters{$ID}{'dmgFromYou'};
 		$ai_seq_args[0]{'missedFromYou_last'} = $monsters{$ID}{'missedFromYou'};
 
 
-		if (!%{$ai_seq_args[0]{'attackMethod'}}) {
+		if (!$ai_seq_args[0]{'attackMethod'}{'type'}) {
 			if ($config{'attackUseWeapon'}) {
 				$ai_seq_args[0]{'attackMethod'}{'distance'} = $config{'attackDistance'};
 				$ai_seq_args[0]{'attackMethod'}{'type'} = "weapon";
@@ -3548,10 +3560,13 @@ sub AI {
 			shift @ai_seq;
 			shift @ai_seq_args;
 
-		} elsif ($config{'runFromTarget'} && $monsterDist < $config{'runFromTarget_dist'}) {
+		} elsif ($config{'runFromTarget'} && ($monsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 			#my $begin = time;
 			# Get a list of blocks that we can run to
-			my @blocks = calcAvoidArea($char->{pos_to}{x}, $char->{pos_to}{y}, $config{'runFromTarget_dist'});
+			my @blocks = calcAvoidArea($myPos->{x}, $myPos->{y},
+				# If the monster hit you while you're running, then your recorded
+				# location may be out of date. So we use a smaller distance so we can still move.
+				($hitYou) ? $config{'runFromTarget_dist'} / 2 : $config{'runFromTarget_dist'});
 
 			# Find the distance value of the block that's farthest away from a wall
 			my $highest;
@@ -3576,7 +3591,7 @@ sub AI {
 
 				$pathfinding->reset(
 					field => \%field,
-					start => $char->{pos_to},
+					start => $myPos,
 					dest => $blocks[$i]);
 				my $ret = $pathfinding->runcount;
 				if ($ret <= 0 || $ret > $config{'runFromTarget_dist'} * 2) {
@@ -3590,7 +3605,7 @@ sub AI {
 			my $bestBlock;
 			foreach (@blocks) {
 				next unless defined $_;
-				my $dist = distance($monsters{$ID}{pos_to}, $_);
+				my $dist = distance($monsterPos, $_);
 				if (!defined $largestDist || $dist > $largestDist) {
 					$largestDist = $dist;
 					$bestBlock = $_;
@@ -3598,21 +3613,21 @@ sub AI {
 			}
 
 			#message "Time spent: " . (time - $begin) . "\n";
-			#debug_showSpots(\@blocks);
+			#debug_showSpots('runFromTarget', \@blocks, $bestBlock);
 			AI::args->{avoiding} = 1;
 			move($bestBlock->{x}, $bestBlock->{y}, $ID);
 
 		} elsif (!$config{'runFromTarget'} && $monsterDist > $ai_seq_args[0]{'attackMethod'}{'distance'}) {
-			if (checkFieldWalkable(\%field, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y})) {
+			if (checkFieldWalkable(\%field, $monsterPos->{x}, $monsterPos->{y})) {
 				# Move to target
 				$ai_seq_args[0]{move_start} = time;
-				%{$ai_seq_args[0]{monsterPos}} = %{$monsters{$ID}{pos_to}};
+				%{$ai_seq_args[0]{monsterPos}} = %{$monsterPos};
 
 				my $dist = sprintf("%.1f", $monsterDist);
 				debug "Target distance $dist is >$ai_seq_args[0]{'attackMethod'}{'distance'}; moving to target: " .
-					"from ($chars[$config{char}]{pos_to}{x},$chars[$config{char}]{pos_to}{y}) to ($monsters{$ID}{pos_to}{x},$monsters{$ID}{pos_to}{y})\n", "ai_attack";
+					"from ($myPos->{x},$myPos->{y}) to ($monsterPos->{x},$monsterPos->{y})\n", "ai_attack";
 
-				my $result = ai_route($field{'name'}, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y},
+				my $result = ai_route($field{'name'}, $monsterPos->{x}, $monsterPos->{y},
 					distFromGoal => $ai_seq_args[0]{'attackMethod'}{'distance'},
 					maxRouteTime => $config{'attackMaxRouteTime'},
 					attackID => $ID,
@@ -3632,12 +3647,13 @@ sub AI {
 				message "Target is not reachable, dropping target\n", "ai_attack";
 			}
 
-		} elsif (!$config{'tankMode'} || !$monsters{$ID}{'dmgFromYou'} == 0) {
+		} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
+		 && (!$config{'tankMode'} || !$monsters{$ID}{'dmgFromYou'})) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
-			if (!$ai_seq_args[0]{'firstAttack'}) {
-				$ai_seq_args[0]{'firstAttack'} = 1;
-				my $dist = sprintf("%.1f", distance($char->{pos_to}, $monsters{$ID}{pos_to}));
-				my $pos = "$char->{pos_to}{x},$char->{pos_to}{y}";
+			if (!AI::args->{firstAttack}) {
+				AI::args->{firstAttack} = 1;
+				my $dist = sprintf("%.1f", $monsterDist);
+				my $pos = "$myPos->{x},$myPos->{y}";
 				debug "Ready to attack target (which is $dist blocks away); we're at ($pos)\n", "ai_attack";
 			}
 
@@ -3648,7 +3664,7 @@ sub AI {
 				# Our recorded position might be out of sync, so try to unstuck
 				$ai_seq_args[0]{'unstuck'}{'time'} = time;
 				debug("Attack - trying to unstuck\n", "ai_attack");
-				move($char->{pos_to}{x}, $char->{pos_to}{y});
+				move($myPos->{x}, $myPos->{y});
 			}
 
 			if ($ai_seq_args[0]{'attackMethod'}{'type'} eq "weapon" && timeOut($timeout{'ai_attack'})) {
@@ -4660,12 +4676,13 @@ sub parseSendMsg {
 
 	} elsif ($switch eq "0089") {
 		# Attack
-		if (!($config{'tankMode'} && binFind(\@ai_seq, "attack") ne "")) {
+		if (!$config{'tankMode'} || AI::inQueue("attack")) {
 			aiRemove("clientSuspend");
 			ai_clientSuspend($switch, 2, unpack("C*",substr($msg,6,1)), substr($msg,2,4));
 		} else {
 			undef $sendMsg;
 		}
+
 	} elsif ($switch eq "008C" || $switch eq "0108" || $switch eq "017E") {
 		# Public, party and guild chat
 		my $length = unpack("S",substr($msg,2,2));
@@ -5217,14 +5234,15 @@ sub parseMsg {
 	} elsif ($switch eq "007A") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 
-	} elsif ($switch eq "007B") {
+	} elsif ($switch eq "007B" || $switch eq "01DA") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
+		my $walk_speed = unpack("S", substr($msg, 6, 2));
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
-		$type = unpack("S*",substr($msg, 14,  2));
-		$pet = unpack("C*",substr($msg, 16,  1));
-		$sex = unpack("C*",substr($msg, 49,  1));
+		my $type = unpack("S*",substr($msg, 14,  2));
+		my $pet = unpack("C*",substr($msg, 16,  1));
+		my $sex = unpack("C*",substr($msg, 49,  1));
 
 		if ($jobs_lut{$type}) {
 			if (!defined($players{$ID}{binID})) {
@@ -5240,6 +5258,9 @@ sub parseMsg {
 			}
 			%{$players{$ID}{'pos'}} = %coordsFrom;
 			%{$players{$ID}{'pos_to'}} = %coordsTo;
+			$players{$ID}{time_move} = time;
+			$players{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
+			$players{$ID}{walk_speed} = $walk_speed;
 			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
 
 		} elsif ($type >= 1000) {
@@ -5257,6 +5278,9 @@ sub parseMsg {
 				}
 				%{$pets{$ID}{'pos'}} = %coords;
 				%{$pets{$ID}{'pos_to'}} = %coords;
+				$pets{$ID}{time_move} = time;
+				$pets{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
+				$pets{$ID}{walk_speed} = $walk_speed;
 				if (%{$monsters{$ID}}) {
 					binRemove(\@monstersID, $ID);
 					delete $monsters{$ID};
@@ -5277,6 +5301,9 @@ sub parseMsg {
 				}
 				%{$monsters{$ID}{'pos'}} = %coordsFrom;
 				%{$monsters{$ID}{'pos_to'}} = %coordsTo;
+				$monsters{$ID}{time_move} = time;
+				$monsters{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
+				$monsters{$ID}{walk_speed} = $walk_speed;
 				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 2;
 			}
 		} else {
@@ -7034,9 +7061,9 @@ sub parseMsg {
 	} elsif ($switch eq "011A") {
 		# Skill used on target
 		my $skillID = unpack("S1", substr($msg, 2, 2));
+		my $amount = unpack("S1", substr($msg, 4, 2));
 		my $targetID = substr($msg, 6, 4);
 		my $sourceID = substr($msg, 10, 4);
-		my $amount = unpack("S1", substr($msg, 4, 2));
 		if (my $spell = $spells{$sourceID}) {
 			# Resolve source of area attack skill
 			$sourceID = $spell->{sourceID};
@@ -7046,7 +7073,13 @@ sub parseMsg {
 		$conState = 5 if $conState != 4 && $config{XKore};
 		setSkillUseTimer($skillID, $targetID) if $sourceID eq $accountID;
 		countCastOn($sourceID, $targetID);
-		if ($config{'autoResponseOnHeal'}) {
+		if ($sourceID eq $accountID) {
+			my $pos = calcPosition($char);
+			$char->{pos_to} = $pos;
+			$char->{time_move} = 0;
+			$char->{time_move_calc} = 0;
+		}
+		if ($AI && $config{'autoResponseOnHeal'}) {
 			# Handle auto-response on heal
 			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
 				if ($targetID eq $accountID) {
@@ -7926,72 +7959,6 @@ sub parseMsg {
 			debug "Unknown Connected: $type - ".getHex($ID)."\n", "parseMsg";
 		}
 
-	} elsif ($switch eq "01DA") {
-		$ID = substr($msg, 2, 4);
-		makeCoords(\%coordsFrom, substr($msg, 50, 3));
-		makeCoords2(\%coordsTo, substr($msg, 52, 3));
-		$type = unpack("S*",substr($msg, 14,  2));
-		$pet = unpack("C*",substr($msg, 16,  1));
-		$sex = unpack("C*",substr($msg, 49,  1));
-
-		if ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
-				binAdd(\@playersID, $ID);
-				$players{$ID}{'appear_time'} = time;
-				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'name'} = "Unknown";
-				$players{$ID}{'nameID'} = unpack("L1", $ID);
-				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-
-				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
-			}
-			%{$players{$ID}{'pos'}} = %coordsFrom;
-			%{$players{$ID}{'pos_to'}} = %coordsTo;
-			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg", 2;
-
-		} elsif ($type >= 1000) {
-			if ($pet) {
-				if (!%{$pets{$ID}}) {
-					$pets{$ID}{'appear_time'} = time;
-					$display = ($monsters_lut{$type} ne "") 
-							? $monsters_lut{$type}
-							: "Unknown ".$type;
-					binAdd(\@petsID, $ID);
-					$pets{$ID}{'nameID'} = $type;
-					$pets{$ID}{'name'} = $display;
-					$pets{$ID}{'name_given'} = "Unknown";
-					$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
-				}
-				%{$pets{$ID}{'pos'}} = %coords;
-				%{$pets{$ID}{'pos_to'}} = %coords;
-				if (%{$monsters{$ID}}) {
-					binRemove(\@monstersID, $ID);
-					delete $monsters{$ID};
-				}
-				debug "Pet Moved: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
-			} else {
-				if (!%{$monsters{$ID}}) {
-					binAdd(\@monstersID, $ID);
-					$monsters{$ID}{'appear_time'} = time;
-					$monsters{$ID}{'nameID'} = $type;
-					$display = ($monsters_lut{$type} ne "") 
-						? $monsters_lut{$type}
-						: "Unknown ".$type;
-					$monsters{$ID}{'nameID'} = $type;
-					$monsters{$ID}{'name'} = $display;
-					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
-					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
-				}
-				%{$monsters{$ID}{'pos'}} = %coordsFrom;
-				%{$monsters{$ID}{'pos_to'}} = %coordsTo;
-				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
-			}
-
-		} else {
-			debug "Unknown Moved: $type - ".getHex($ID)."\n", "parseMsg";
-		}
-
 	} elsif ($switch eq "01DC") {
 		$secureLoginKey = substr($msg, 4, $msg_size);
 
@@ -8854,15 +8821,6 @@ sub take {
 #######################################
 #######################################
 
-
-sub getVector {
-	my $r_store = shift;
-	my $r_head = shift;
-	my $r_tail = shift;
-	$$r_store{'x'} = $$r_head{'x'} - $$r_tail{'x'};
-	$$r_store{'y'} = $$r_head{'y'} - $$r_tail{'y'};
-}
-
 sub lineIntersection {
 	my $r_pos1 = shift;
 	my $r_pos2 = shift;
@@ -8883,37 +8841,6 @@ sub lineIntersection {
 		$result = $result1 / $result2;
 	}
 	return $result;
-}
-
-
-sub moveAlongVector {
-	my $r_store = shift;
-	my $r_pos = shift;
-	my $r_vec = shift;
-	my $amount = shift;
-	my %norm;
-	if ($amount) {
-		normalize(\%norm, $r_vec);
-		$$r_store{'x'} = $$r_pos{'x'} + $norm{'x'} * $amount;
-		$$r_store{'y'} = $$r_pos{'y'} + $norm{'y'} * $amount;
-	} else {
-		$$r_store{'x'} = $$r_pos{'x'} + $$r_vec{'x'};
-		$$r_store{'y'} = $$r_pos{'y'} + $$r_vec{'y'};
-	}
-}
-
-sub normalize {
-	my $r_store = shift;
-	my $r_vec = shift;
-	my $dist;
-	$dist = distance($r_vec);
-	if ($dist > 0) {
-		$$r_store{'x'} = $$r_vec{'x'} / $dist;
-		$$r_store{'y'} = $$r_vec{'y'} / $dist;
-	} else {
-		$$r_store{'x'} = 0;
-		$$r_store{'y'} = 0;
-	}
 }
 
 sub percent_hp {

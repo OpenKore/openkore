@@ -30,7 +30,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	distance
+	calcPosition distance getVector moveAlongVector normalize
 	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getTickCount judgeSkillArea
 	getRange inRange
 	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString);
@@ -423,6 +423,27 @@ sub minHeapAdd {
 # MATH
 ################################
 
+sub calcPosition {
+	my $object = shift;
+	my $time_needed = $object->{time_move_calc};
+	my $elasped = time - $object->{time_move};
+
+	if ($elasped >= $time_needed) {
+		return $object->{pos_to};
+	} else {
+		my (%vec, %result, $dist);
+		my $pos = $object->{pos};
+		my $pos_to = $object->{pos_to};
+
+		getVector(\%vec, $pos_to, $pos);
+		$dist = (distance($pos, $pos_to) - 1) * ($elasped / $time_needed);
+		moveAlongVector(\%result, $pos, \%vec, $dist);
+		$result{x} = int sprintf("%.0f", $result{x});
+		$result{y} = int sprintf("%.0f", $result{y});
+		return \%result;
+	}
+}
+
 ##
 # distance(r_hash1, r_hash2)
 # pos1, pos2: references to position hash tables.
@@ -439,13 +460,51 @@ sub distance {
 	my $pos1 = shift;
 	my $pos2 = shift;
 	my %line;
-	if ($pos2) {
+	if (defined $pos2) {
 		$line{x} = abs($pos1->{x} - $pos2->{x});
 		$line{y} = abs($pos1->{y} - $pos2->{y});
 	} else {
 		%line = %{$pos1};
 	}
 	return sqrt($line{x} ** 2 + $line{y} ** 2);
+}
+
+sub getVector {
+	my $r_store = shift;
+	my $to = shift;
+	my $from = shift;
+	$r_store->{x} = $to->{x} - $from->{x};
+	$r_store->{y} = $to->{y} - $from->{y};
+}
+
+sub moveAlongVector {
+	my $result = shift;
+	my $r_pos = shift;
+	my $r_vec = shift;
+	my $dist = shift;
+	if ($dist) {
+		my %norm;
+		normalize(\%norm, $r_vec);
+		$result->{x} = $$r_pos{'x'} + $norm{'x'} * $dist;
+		$result->{y} = $$r_pos{'y'} + $norm{'y'} * $dist;
+	} else {
+		$result->{x} = $$r_pos{'x'} + $$r_vec{'x'};
+		$result->{y} = $$r_pos{'y'} + $$r_vec{'y'};
+	}
+}
+
+sub normalize {
+	my $r_store = shift;
+	my $r_vec = shift;
+	my $dist;
+	$dist = distance($r_vec);
+	if ($dist > 0) {
+		$$r_store{'x'} = $$r_vec{'x'} / $dist;
+		$$r_store{'y'} = $$r_vec{'y'} / $dist;
+	} else {
+		$$r_store{'x'} = 0;
+		$$r_store{'y'} = 0;
+	}
 }
 
 
