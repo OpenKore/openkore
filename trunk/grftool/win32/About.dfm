@@ -1091,6 +1091,7 @@ object AboutBox: TAboutBox
     Font.Style = [fsUnderline]
     ParentFont = False
     Transparent = True
+    OnClick = Label3Click
   end
   object SpeedButton1: TSpeedButton
     Left = 208
@@ -1100,6 +1101,11 @@ object AboutBox: TAboutBox
     Cursor = crHandPoint
     Caption = '&Ok'
     Flat = True
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
     Glyph.Data = {
       E6040000424DE604000000000000360000002800000014000000140000000100
       180000000000B0040000120B0000120B00000000000000000000FC00FFFC00FF
@@ -1141,16 +1147,17 @@ object AboutBox: TAboutBox
       12100F12100F1210FC00FFFC00FFFC00FFFC00FFFC00FFFC00FFFC00FFFC00FF
       FC00FFFC00FFFC00FFFC00FFFC00FFFC00FFFC00FFFC00FFFC00FFFC00FFFC00
       FFFC00FFFC00FFFC00FF}
+    ParentFont = False
     OnClick = SpeedButton1Click
   end
   object Label4: TLabel
     Left = 217
-    Top = 112
+    Top = 128
     Width = 86
     Height = 13
     Caption = 'Copyright (c) 2004'
     Font.Charset = ANSI_CHARSET
-    Font.Color = clWindowText
+    Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = []
@@ -1159,10 +1166,24 @@ object AboutBox: TAboutBox
   end
   object Bevel1: TBevel
     Left = 16
-    Top = 144
+    Top = 149
     Width = 289
     Height = 6
     Shape = bsBottomLine
+  end
+  object Label5: TLabel
+    Left = 86
+    Top = 112
+    Width = 218
+    Height = 13
+    Caption = 'Open source software licensed under the GPL'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    Transparent = True
   end
   object Panel1: TPanel
     Left = 12
