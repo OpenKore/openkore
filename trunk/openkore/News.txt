@@ -88,6 +88,7 @@ New features:
     Red Blood 1
     Garlet 1
 - Automatically raise skill levels.
+- All teleportAuto code will now print a message saying why it teleported.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you

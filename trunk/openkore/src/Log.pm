@@ -84,6 +84,7 @@
 # success		An operation succeeded
 # syntax		Syntax check files
 # system		System messages
+# teleport		Teleporting
 # xkore			X-Kore system messages
 
 # Debug domains:

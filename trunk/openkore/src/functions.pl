@@ -2396,6 +2396,7 @@ sub AI {
 				$args->{warpedToSave} = 1;
 				# If we still haven't warped after a certain amount of time, fallback to walking
 				$args->{warpStart} = time unless $args->{warpStart};
+				message "Teleporting to auto-storage\n", "teleport";
 				useTeleport(2);
 				$timeout{'ai_storageAuto'}{'time'} = time;
 			} else {
@@ -2590,6 +2591,7 @@ sub AI {
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
+				message "Teleporting to auto-sell\n", "teleport";
 				useTeleport(2);
 				$timeout{'ai_sellAuto'}{'time'} = time;
 			} else {
@@ -2723,6 +2725,7 @@ sub AI {
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
+				message "Teleporting to auto-buy\n", "teleport";
 				useTeleport(2);
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
 			} else {
@@ -4877,6 +4880,7 @@ sub AI {
 		if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
 		 && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
 		 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
+			message "Teleporting to avoid all players\n", "teleport";
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$AI::Temp::Teleport_allPlayers = time;
@@ -4896,7 +4900,7 @@ sub AI {
 		##### TELEPORT HP #####
 		if ($safe && timeOut($timeout{ai_teleport_hp})
 		  && ((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))) {
-			warning "Teleporting due to insufficient HP/SP or too many aggressives\n";
+			message "Teleporting due to insufficient HP/SP or too many aggressives\n", "teleport";
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_hp}{time} = time;
@@ -4908,6 +4912,7 @@ sub AI {
 			foreach (@monstersID) {
 				next unless $_;
 				if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
+					message "Teleporting to avoid $monsters{$_}{name}\n", "teleport";
 					useTeleport(1);
 					$ai_v{temp}{clear_aiQueue} = 1;
 					$AI::Timeouts::teleSearch = time;
@@ -4942,6 +4947,7 @@ sub AI {
 						}
 					}
 					if (!$found) {
+						message "Teleporting to search for monster\n", "teleport";
 						useTeleport(1);
 						$ai_v{temp}{clear_aiQueue} = 1;
 						$AI::Timeouts::teleSearch = time;
@@ -4963,6 +4969,7 @@ sub AI {
 		}
 
 		if ($safe && $config{teleportAuto_idle} && timeOut($timeout{ai_teleport_idle})){
+			message "Teleporting due to idle\n", "teleport";
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_idle}{time} = time;
@@ -4973,6 +4980,7 @@ sub AI {
 		  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
 		  && timeOut($timeout{ai_teleport_portal})) {
 			if (scalar(@portalsID)) {
+				message "Teleporting to avoid portal\n", "teleport";
 				useTeleport(1);
 				$ai_v{temp}{clear_aiQueue} = 1;
 				$timeout{ai_teleport_portal}{time} = time;
@@ -9961,6 +9969,7 @@ sub updateDamageTables {
 			} else {
 				$monsters{$ID2}{'atkMiss'} = 0;
 			}
+			message "Teleporting because of attack miss\n", "teleport";
 			useTeleport(1) if ($config{'teleportAuto_atkMiss'} && $monsters{$ID2}{'atkMiss'} >= $config{'teleportAuto_atkMiss'});
 		}
 	} elsif ($ID2 eq $accountID) {
@@ -10098,7 +10107,7 @@ sub avoidList_near {
 			return 1;
 		}
 		elsif ($avoid{'Players'}{lc($players{$playersID[$i]}{'name'})}{'teleport_on_sight'} || $avoid{'ID'}{$players{$playersID[$i]}{'nameID'}}{'teleport_on_sight'}) {
-			warning "$players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) is nearby, teleporting...\n";
+			message "Teleporting to avoid player $players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'})\n", "teleport";
 			chatLog("k", "*** Found $players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) nearby and teleported ***\n");
 			useTeleport(1);
 			return 1;
@@ -10386,7 +10395,7 @@ sub useTeleport {
 				return 1;
 
 			} elsif (defined $ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut($ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup})) {
-				warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
+				message "You don't have wing or skill to teleport/respawn or timeout elapsed\n", "teleport";
 				delete $ai_v{temp}{teleport};
 				return 0;
 
@@ -10399,9 +10408,9 @@ sub useTeleport {
 	}
 
 	if ($level == 1) {
-		warning "You don't have the Teleport skill or a Fly Wing\n";
+		message "You don't have the Teleport skill or a Fly Wing\n", "teleport";
 	} else {
-		warning "You don't have the Teleport skill or a Butterfly Wing\n";
+		message "You don't have the Teleport skill or a Butterfly Wing\n", "teleport";
 	}
 	return 0;
 }
