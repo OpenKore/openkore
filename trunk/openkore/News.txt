@@ -5,6 +5,7 @@
 Bug fixes:
 - Fix bulk selling bug which caused disconnect.
 - Correctly set names for VVVS weapons.
+- Correct strip language code in public messages.
 
 New features:
 - Don't use teleportAuto_minAggressives if the more specific
@@ -14,6 +15,7 @@ New features:
 
 Credits:
 - jsteng: VVVS weapon name bugfix.
+- arachno: Language code bugfix.
 
 ==================
 ### 1.5.2 (beta)
