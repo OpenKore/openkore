@@ -40,6 +40,7 @@ sub new {
 	my $titleBar = $self->{titleBar} = new Interface::Wx::TitleBar($self, $title);
 	$titleBar->onDetach(\&detach, $self);
 	$titleBar->onClose(\&close, $self);
+	$titleBar->Fit;
 	$sizer->Add($titleBar, 0, wxGROW);
 	$self->SetSizerAndFit($sizer);
 
@@ -55,6 +56,7 @@ sub attach {
 			$self->{dialogSizer}->Remove($self->{control});
 			$self->{sizer}->Add($self->{control}, 1, wxGROW);
 		}
+		$self->{dialog}->Show(0);
 		$self->{dialog}->Destroy;
 		delete $self->{dialog};
 		#$self->SetSizerAndFit($self->{sizer});
@@ -149,6 +151,10 @@ sub title {
 sub set {
 	my $self = shift;
 	my $control = shift;
+	if ($self->{control}) {
+		$self->{sizer}->Remove($self->{control});
+		$self->{control}->Destroy;
+	}
 	$self->{control} = $control;
 	$self->{sizer}->Add($control, 1, wxGROW);
 	#$self->SetSizerAndFit($self->{sizer});
@@ -171,43 +177,6 @@ sub setHideFunc {
 	$self->{hideFuncSelf} = shift;
 	$self->{hideFunc} = shift;
 	$self->{hideFuncData} = shift;
-}
-
-
-#### Private stuff ####
-
-sub onDialogClose {
-	my $self = shift;
-
-	if ($self->{control}) {
-		$self->{control}->Reparent($self);
-		$self->{dialogSizer}->Remove($self->{control});
-		$self->{sizer}->Add($self->{control}, 1, wxGROW);
-		#$self->SetSizerAndFit($self->{sizer});
-	}
-
-	$self->{dialog}->Destroy;
-	undef $self->{dialog};
-	$self->attach;
-	return 0;
-}
-
-sub ShowS {
-	my $self = shift;
-	my $show = shift;
-	if ($show) {
-		if ($self->{showFunc}) {
-			$self->{showFunc}->($self->{showFuncSelf}, $self, $self->{showFuncData});
-		} else {
-			$self->SUPER::Show($show);
-		}
-	} else {
-		if ($self->{hideFunc}) {
-			$self->{hideFunc}->($self->{hideFuncSelf}, $self, $self->{hideFuncData});
-		} else {
-			$self->SUPER::Show($show);
-		}
-	}
 }
 
 1;
