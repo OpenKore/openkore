@@ -270,11 +270,11 @@ equipAuto_0_sp_upper 100
 equipAuto_0_weight 0
 equipAuto_0_whileSitting 0
 
-
 autoResponseOnHeal 0
 autoResponse 1
 
 ignoreAll 0
 itemHistory 0
+autoTalkCont 1
 
 alias_heal sp 9
