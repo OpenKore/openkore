@@ -26,6 +26,7 @@ Bug fixes:
 - 'autosell' command will now work even if sellAuto is set to 0.
 - Don't trigger sellAuto after storageAuto if sellAuto is 0.
 - Set $char->{spirits} to 0 upon changing map servers.
+- Fix teleporting for characters that have Teleport level 0.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
