@@ -435,11 +435,25 @@ sub cmdStatus {
 		[$weight_string, $zeny_string]),
 		"info");
 
-	my $activeStatuses = 'none';
+	my $activeSkills = 'none';
+	my $ailments = 'none';
+	my $looks = 'none';
+	my $state = '';
 	if (defined $chars[$config{char}]{statuses} && %{$chars[$config{char}]{statuses}}) {
-		$activeStatuses = join(", ", keys %{$chars[$config{char}]{statuses}});
+		$activeSkills = join(", ", keys %{$chars[$config{char}]{statuses}});
 	}
-	message("Special status: $activeStatuses\n", "info");
+	if (defined $chars[$config{char}]{ailments} && %{$chars[$config{char}]{ailments}}) {
+		$ailments = join(", ", keys %{$chars[$config{char}]{ailments}});
+	}
+	if (defined $chars[$config{char}]{state} && %{$chars[$config{char}]{state}}) {
+		$state = join(", ", keys %{$chars[$config{char}]{state}});
+	}
+	if (defined $chars[$config{char}]{looks} && %{$chars[$config{char}]{looks}}) {
+		$looks = join(", ", keys %{$chars[$config{char}]{looks}});
+	}
+	message("Active skills: $activeSkills\n", "info");
+	message("Ailments: $ailments $state\n", "info");
+	message("Looks: $looks\n", "info");
 	message("----------------------------------------\n", "info");
 
 

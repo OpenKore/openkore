@@ -156,6 +156,7 @@ useSelf_skill_0_stopWhenHit 0
 useSelf_skill_0_inLockOnly 0
 useSelf_skill_0_whenStatusActive
 useSelf_skill_0_whenStatusInactive
+useSelf_skill_0_whenAffected
 useSelf_skill_0_timeout 0
 
 useSelf_skill_smartHeal 1
@@ -173,6 +174,7 @@ useSelf_item_0_stopWhenHit 0
 useSelf_item_0_inLockOnly 0
 useSelf_item_0_whenStatusActive
 useSelf_item_0_whenStatusInactive
+useSelf_item_0_whenAffected
 useSelf_item_0_timeout 
 
 partySkill_0 

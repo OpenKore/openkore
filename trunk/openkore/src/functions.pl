@@ -3169,14 +3169,15 @@ sub AI {
 		while (1) {
 			last if (!$config{"useSelf_item_$i"});
 			if (percent_hp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_item_$i"."_hp_upper"} && percent_hp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_item_$i"."_hp_lower"}
-				&& percent_sp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_item_$i"."_sp_upper"} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_item_$i"."_sp_lower"}
-				&& !($config{"useSelf_item_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
-				&& $config{"useSelf_item_$i"."_minAggressives"} <= ai_getAggressives()
-				&& (!$config{"useSelf_item_$i"."_maxAggressives"} || $config{"useSelf_item_$i"."_maxAggressives"} >= ai_getAggressives()) 
-				&& timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
-				&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
-				&& (!$config{"useSelf_item_$i"."_whenStatusActive"} || $chars[$config{char}]{statuses}{$config{"useSelf_item_$i"."_whenStatusActive"}})
-				&& (!$config{"useSelf_item_$i"."_whenStatusInactive"} || !$chars[$config{char}]{statuses}{$config{"useSelf_item_$i"."_whenStatusInactive"}})
+			 && percent_sp(\%{$chars[$config{'char'}]}) <= $config{"useSelf_item_$i"."_sp_upper"} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"useSelf_item_$i"."_sp_lower"}
+			 && !($config{"useSelf_item_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
+			 && $config{"useSelf_item_$i"."_minAggressives"} <= ai_getAggressives()
+			 && (!$config{"useSelf_item_$i"."_maxAggressives"} || $config{"useSelf_item_$i"."_maxAggressives"} >= ai_getAggressives()) 
+			 && timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
+			 && (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
+			 && (!$config{"useSelf_item_$i"."_whenStatusActive"} || whenStatusActive($config{"useSelf_item_$i"."_whenStatusActive"}))
+			 && (!$config{"useSelf_item_$i"."_whenStatusInactive"} || !whenStatusActive($config{"useSelf_item_$i"."_whenStatusInactive"}))
+			 && (!$config{"useSelf_item_$i"."_whenAffected"} || whenAffected($config{"useSelf_item_$i"."_whenAffected"}))
 				)
 				{
 				undef $ai_v{'temp'}{'invIndex'};
@@ -3193,7 +3194,7 @@ sub AI {
 		}
 	}
 
-#Auto Equip - Kaldi Update 12/03/2004
+	#Auto Equip - Kaldi Update 12/03/2004
 	##### AUTO-EQUIP #####
 	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || 
 		 $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || 
@@ -3206,15 +3207,15 @@ sub AI {
 		while ($config{"equipAuto_$i"}) {
 			#last if (!$config{"equipAuto_$i"});
 			if (percent_hp(\%{$chars[$config{'char'}]}) <= $config{"equipAuto_$i" . "_hp_upper"}
-				&& percent_hp(\%{$chars[$config{'char'}]}) >= $config{"equipAuto_$i" . "_hp_lower"}
-				&& percent_sp(\%{$chars[$config{'char'}]}) <= $config{"equipAuto_$i" . "_sp_upper"}
-				&& percent_sp(\%{$chars[$config{'char'}]}) >= $config{"equipAuto_$i" . "_sp_lower"}
-				&& $config{"equipAuto_$i" . "_minAggressives"} <= ai_getAggressives()
-				&& (!$config{"equipAuto_$i" . "_maxAggressives"} || $config{"equipAuto_$i" . "_maxAggressives"} >= ai_getAggressives())
-				&& (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
-				&& (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
-				&& ($config{"equipAuto_$i"."_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
-				&& (!$config{"equipAuto_$i" . "_skills"} || $ai_index_skill_use ne "" && existsInList($config{"equipAuto_$i" . "_skills"},$skillsID_lut{$ai_seq_args[$ai_index_skill_use]{'skill_use_id'}}))
+			 && percent_hp(\%{$chars[$config{'char'}]}) >= $config{"equipAuto_$i" . "_hp_lower"}
+			 && percent_sp(\%{$chars[$config{'char'}]}) <= $config{"equipAuto_$i" . "_sp_upper"}
+			 && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"equipAuto_$i" . "_sp_lower"}
+			 && $config{"equipAuto_$i" . "_minAggressives"} <= ai_getAggressives()
+			 && (!$config{"equipAuto_$i" . "_maxAggressives"} || $config{"equipAuto_$i" . "_maxAggressives"} >= ai_getAggressives())
+			 && (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
+			 && (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
+			 && ($config{"equipAuto_$i"."_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
+			 && (!$config{"equipAuto_$i" . "_skills"} || $ai_index_skill_use ne "" && existsInList($config{"equipAuto_$i" . "_skills"},$skillsID_lut{$ai_seq_args[$ai_index_skill_use]{'skill_use_id'}}))
 			) {
 				undef $ai_v{'temp'}{'invIndex'};
 				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i"});
@@ -3258,8 +3259,9 @@ sub AI {
 			 && (!$config{"useSelf_skill_$i"."_inLockOnly"} || ($config{"useSelf_skill_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
 			 && $config{"useSelf_skill_$i"."_minAggressives"} <= ai_getAggressives()
 			 && (!$config{"useSelf_skill_$i"."_maxAggressives"} || $config{"useSelf_skill_$i"."_maxAggressives"} >= ai_getAggressives())
-			 && (!$config{"useSelf_skill_$i"."_whenStatusActive"} || $chars[$config{char}]{statuses}{$config{"useSelf_skill_$i"."_whenStatusActive"}})
-			 && (!$config{"useSelf_skill_$i"."_whenStatusInactive"} || !$chars[$config{char}]{statuses}{$config{"useSelf_skill_$i"."_whenStatusInactive"}})
+			 && (!$config{"useSelf_skill_$i"."_whenStatusActive"} || whenStatusActive($config{"useSelf_skill_$i"."_whenStatusActive"}))
+			 && (!$config{"useSelf_skill_$i"."_whenStatusInactive"} || !whenStatusActive($config{"useSelf_skill_$i"."_whenStatusInactive"}))
+			 && (!$config{"useSelf_skill_$i"."_whenAffected"} || whenAffected($config{"useSelf_skill_$i"."_whenAffected"}))
 			) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
@@ -3297,19 +3299,20 @@ sub AI {
 	}
 
 
-	##### PARTY-SKILL USE ##### 
+	##### PARTY-SKILL USE #####
 
 
 	#will doing this event if set only one config
-	if ( $config{'partySkill_0'} && %{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" 
-		|| $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute"
-		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
-		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack") ){
+	if ($config{'partySkill_0'} && %{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" 
+	 || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute"
+	 || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
+	 || $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack") ){
 		my $i = 0;
 		undef $ai_v{'partySkill'};
 		undef $ai_v{'partySkill_lvl'};
 		my $partyTargetID;
 		my $partyTarget_HP_Percent;
+
 		while (defined($config{"partySkill_$i"})) {
 			undef $partyTargetID;
 			undef $partyTarget_HP_Percent;
@@ -3368,7 +3371,7 @@ sub AI {
 	}
 
 
-	
+
 	##### FOLLOW #####
 
 
@@ -5970,6 +5973,8 @@ sub parseMsg {
 			$i++;
 		}
 		undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
+		undef %{$chars[$config{char}]{ailments}} if ($chars[$config{char}]{ailments});
+		undef %{$chars[$config{char}]{looks}} if ($chars[$config{char}]{looks});
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -7376,16 +7381,37 @@ sub parseMsg {
 
 
 	} elsif ($switch eq "0119") {
+		# Character looks
 		my $ID = substr($msg, 2, 4);
 		my $param1 = unpack("S1", substr($msg, 6, 2));
 		my $param2 = unpack("S1", substr($msg, 8, 2));
 		my $param3 = unpack("S1", substr($msg, 10, 2));
 
-		# character looks
+		my $state = (defined($skillsState{$param1})) ? $skillsState{$param1} : "Unknown $param1";
+		my $ailment = (defined($skillsAilments{$param2})) ? $skillsAilments{$param2} : "Unknown $param2";
+		my $looks = (defined($skillsLooks{$param3})) ? $skillsLooks{$param3} : "Unknown $param3";
 		if ($ID eq $accountID) {
+			if ($param1) {
+				$chars[$config{char}]{state}{$state} = 1;
+				message("You have been $state.\n","info");
+			} else {
+				undef %{$chars[$config{char}]{state}};
+			}
+			if ($param2 && $param2 != 32) {
+				$chars[$config{char}]{ailments}{$ailment} = 1;
+				message("You have been $ailment.\n","info");
+			} else {
+				undef %{$chars[$config{char}]{ailments}};
+			}
+			if ($param3) {
+				$chars[$config{char}]{looks}{$looks} = 1;
+			} else {
+				undef %{$chars[$config{char}]{looks}};
+			}
+
+			# TODO: move this to the AI
 			if ($param2 == 0x0001) {
-				# poison
-				# if you've got detoxify, use it ;)
+				# Poisoned; if you've got detoxify, use it
 				if ($chars[$config{'char'}]{'skills'}{'TF_DETOXIFY'}{'lv'}) {
 					ai_skillUse($chars[$config{'char'}]{'skills'}{'TF_DETOXIFY'}{'ID'}, 1, 0, 0, $accountID);
 				} else {
@@ -7396,12 +7422,31 @@ sub parseMsg {
 					}
 				}
 			}
-				
+
+		} elsif (%{$players{$ID}}) {
+			if ($param1) {
+				$players{$ID}{state}{$state} = 1;
+				message "Player $players{$ID}{name} is affected by $state", undef, 2;
+			} else {
+				undef %{$players{$ID}{state}};
+			}
+			if ($param2 && $param2 != 32) {
+				$players{$ID}{ailments}{$ailment} = 1;
+				message "Player $players{$ID}{name} is affected by $ailment", undef, 2;
+			} else {
+				undef %{$players{$ID}{ailments}};
+			}
+			if ($param3) {
+				$players{$ID}{looks}{$looks} = 1;
+			} else {
+				undef %{$players{$ID}{looks}};
+			}
+
 		} elsif (%{$monsters{$ID}}) {
 			my $prevState = $monsters{$ID}{'state'};
-			$monsters{$ID}{'state'} = unpack("S*", substr($msg, 6, 2)); 
+			$monsters{$ID}{'state'} = $param1; 
 			$monsters{$ID}{'state'} = 0 if ($monsters{$ID}{'state'} == 5); 
-			my $mon = "Monster $monsters{$ID}{name} $monsters{$ID}{nameID} ($monsters{$ID}{binID})"; 
+			my $mon = "Monster $monsters{$ID}{name} $monsters{$ID}{nameID} ($monsters{$ID}{binID})";
 			if (!$monsters{$ID}{'state'}) {
 				message "$mon is free.\n" if ($prevState);
 
