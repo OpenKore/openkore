@@ -2230,8 +2230,7 @@ sub AI {
 	}
 
 	if ($ai_seq[0] ne "deal" && %currentDeal) {
-		unshift @ai_seq, "deal";
-		unshift @ai_seq_args, "";
+		AI::queue('deal');
 	} elsif ($ai_seq[0] eq "deal" && %currentDeal && !$currentDeal{'you_finalize'} && timeOut(\%{$timeout{'ai_dealAuto'}}) && $config{'dealAuto'}==2) {
 		sendDealFinalize(\$remote_socket);
 		$timeout{'ai_dealAuto'}{'time'} = time;
@@ -2239,8 +2238,7 @@ sub AI {
 		sendDealTrade(\$remote_socket);
 		$timeout{'ai_dealAuto'}{'time'} = time;
 	} elsif ($ai_seq[0] eq "deal" && !%currentDeal) {
-		shift @ai_seq;
-		shift @ai_seq_args;
+		AI::dequeue();
 	}
 
 	# dealAuto 1=refuse 2=accept

@@ -16,6 +16,8 @@ Bug fixes:
 - Made motion not stop 3 steps from goal when crossing maps.
 - Fixed bot not reacting to damage during mapRoute calculation.
 - The Linux interface's input mode will be correct restored after a resume.
+- ai_dealAuto added to timeouts.txt.
+- Typing "aiv" during an auto-deal will no longer crash.
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
