@@ -134,7 +134,7 @@ Credits:
 - jojobail: some work on oRO support, storageAuto ability check, some
   bug fixes.
 - asuwannarat: Niflmheim portals.
-- arachno: shop_random.
+- arachno: shop_random, missing euRO item.
 
 
 ==================

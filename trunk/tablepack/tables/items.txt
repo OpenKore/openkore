@@ -573,6 +573,7 @@
 534#Carrot_Juice#
 535#Pumkin#
 536#Ice_Cream#
+569#Novice_Potion#
 601#Fly_Wing#
 602#Butterfly_Wing#
 603#Old_Blue_Box#

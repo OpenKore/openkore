@@ -198,6 +198,11 @@ Sweet and frosty ice cream. It is cold enough to freeze your brain if you have t
 ^ffffff_^000000
 Weight : ^7777778^000000
 #
+569#
+Only for Novice. A potion which restores ^000088some of your HP^000000.
+^ffffff_^000000
+Weight : ^7777771^000000
+#
 601#
 An enchanted fly wing, instantly send one to a random spot when waved.
 ^000088Enable to move its user to the optional spot.^000000
