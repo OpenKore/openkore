@@ -5573,7 +5573,9 @@ sub parseMsg {
 				$chars[$num]{'sex'} = $accountSex2;
 			}
 
-			sendBanCheck(\$remote_socket) if (!$xkore && $config{serverType} == 2);
+			# gradeA says it's supposed to send this packet here, but
+			# it doesn't work...
+			#sendBanCheck(\$remote_socket) if (!$xkore && $config{serverType} == 2);
 			if (charSelectScreen(1) == 1) {
 				$firstLoginMap = 1;
 				$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
