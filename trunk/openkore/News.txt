@@ -108,6 +108,14 @@ Credits:
 
 
 ==================
+### 1.4.6
+==================
+
+- Fixed the judgeSkillArea() error. I forgot to add this function in the
+  last release, which caused Kore to crash.
+
+
+==================
 ### 1.4.5
 ==================
 
