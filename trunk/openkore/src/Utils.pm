@@ -29,7 +29,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	download formatNumber getFormattedDate getHex getTickCount swrite promptAndExit timeConvert
+	download formatNumber getFormattedDate getHex getTickCount swrite timeConvert
 	timeOut vocalString);
 
 
@@ -430,25 +430,6 @@ sub getTickCount {
 	} else {
 		return $time;
 	}
-}
-
-##
-# promptAndExit([exitCode], [message])
-# exitCode: The exit code to exit with. Default: 1
-# message: The message to display. Default: "Press ENTER to exit.\n"
-#
-# Prints $message to the console and asks the user to press ENTER.
-# Then exit with exit code $exitCode.
-sub promptAndExit {
-	my $exitCode = shift;
-	my $message = shift;
-	$exitCode = 1 if (!$exitCode);
-	$message = "Press ENTER to exit.\n" if (!defined $message);
-
-	# We use print() here, not Log::message
-	print $message;
-	<STDIN>;
-	exit $exitCode;
 }
 
 sub swrite {
