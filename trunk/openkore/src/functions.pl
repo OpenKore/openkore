@@ -334,8 +334,9 @@ sub parseInput {
 	} elsif ($switch eq "al") {
 		$~ = "ARTICLESLIST2";
 		print "----------Items being sold in store------------\n";
-		print "#  Name                                     Type        Qty  Price     Sold\n";		       
+		print "#  Name                                     Type         Qty     Price   Sold\n";		       
 
+		my $i = 1;
 		for ($number = 0; $number < @articles; $number++) {
 			next if ($articles[$number] eq "");
 			$display = $articles[$number]{'name'};
@@ -354,14 +355,16 @@ sub parseInput {
 			if ($articles[$number]{'card4'}) {
 				$display = $display."[".$cards_lut{$articles[$number]{'card4'}}."]";
 			}
+
 			format ARTICLESLIST2 =
 @< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>
-$number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quantity'} $articles[$number]{'price'} $articles[$number]{'sold'}
+$i $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quantity'} $articles[$number]{'price'} $articles[$number]{'sold'}
 .
 			write;
+			$i++;
 		}
 		print "----------------------------------------------\n";
-		print "You have earned $shop{'earned'}z.\n";
+		print "You have earned $shopEarned"."z.\n";
 
 	} elsif ($switch eq "as") {
 		# Stop attacking monster
@@ -3343,8 +3346,10 @@ sub AI {
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
 		print "I lost my master\n";
-		print "Trying to get him back\n";
-		sendMessage(\$remote_socket, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
+		if ($config{'followBot'}) {
+			print "Trying to get him back\n";
+			sendMessage(\$remote_socket, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
+		}
 		injectMessage("I lost my master") if ($config{'verbose'} && $config{'XKore'});
 
 		undef $ai_seq_args[0]{'following'};
@@ -4479,8 +4484,6 @@ sub AI {
 		$timeout{'ai_teleport_portal'}{'time'} = time;
 	}
 
-#Solos Start
-
 	##### AUTO RESPONSE #####
 
 	if ($ai_seq[0] eq "respAuto" && time >= $nextresptime) {
@@ -4500,44 +4503,41 @@ sub AI {
 		shift @ai_seq_args;
 	}
 
-#Solos End
 
-#BCN Start - DealDump
+	#BCN Start - DealDump
+	##### DEAL AUTO ACCEPT #####
 
-   ##### DEAL AUTO ACCEPT #####
-
-   if ($ai_seq[0] eq "dealAutoAccept" && time >= $ai_seq_args[0]{'time'}) {
-      if ($ai_seq_args[0]{'mode'} eq "engage") {
-         print "[DealDump] Accepted deal request from " . $ai_seq_args[0]{'name'} . "\n" if ($config{'dealAutoAccept_debug'});
-         sendDealAccept(\$remote_socket);
+	if ($ai_seq[0] eq "dealAutoAccept" && time >= $ai_seq_args[0]{'time'}) {
+		if ($ai_seq_args[0]{'mode'} eq "engage") {
+			print "[DealDump] Accepted deal request from " . $ai_seq_args[0]{'name'} . "\n" if ($config{'dealAutoAccept_debug'});
+			sendDealAccept(\$remote_socket);
          
-         my $args = ();
-         $args{'mode'} = "finalize";
-         $args{'time'} = time + 0.2;
+			my $args = ();
+			$args{'mode'} = "finalize";
+			$args{'time'} = time + 0.2;
 
-         shift @ai_seq;
-         shift @ai_seq_args;
+			shift @ai_seq;
+			shift @ai_seq_args;
 
-         unshift @ai_seq, "dealAutoAccept";
-         unshift @ai_seq_args, \%args;
+			unshift @ai_seq, "dealAutoAccept";
+			unshift @ai_seq_args, \%args;
 
-      } elsif ($ai_seq_args[0]{'mode'} eq "finalize") {
-         print "[DealDump] Finalized the deal.\n" if ($config{'dealAutoAccept_debug'});
-         sendDealFinalize(\$remote_socket);
+		} elsif ($ai_seq_args[0]{'mode'} eq "finalize") {
+			print "[DealDump] Finalized the deal.\n" if ($config{'dealAutoAccept_debug'});
+			sendDealFinalize(\$remote_socket);
 
-         shift @ai_seq;
-         shift @ai_seq_args;         
+			shift @ai_seq;
+			shift @ai_seq_args;         
 
-      } elsif ($ai_seq_args[0]{'mode'} eq "accept") {
-         print "[DealDump] Accepted the final deal.\n" if ($config{'dealAutoAccept_debug'});
-         sendDealTrade(\$remote_socket);
+		} elsif ($ai_seq_args[0]{'mode'} eq "accept") {
+			print "[DealDump] Accepted the final deal.\n" if ($config{'dealAutoAccept_debug'});
+			sendDealTrade(\$remote_socket);
       
-         shift @ai_seq;
-         shift @ai_seq_args;
-      }
-   }
-
-#BCN End - DealDump
+			shift @ai_seq;
+			shift @ai_seq_args;
+		}
+	}
+	#BCN End - DealDump
 
 	##### AVOID GM OR PLAYERS #####
 
@@ -5543,7 +5543,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		$chatMsgUser =~ s/ $//;
 
-		chatLog("c", "$chat\n");
+		chatLog("c", "$chat\n") if ($config{'logChat'});
 		if ($config{'relay'}) {
 			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
 		}
@@ -5595,8 +5595,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000//g;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
-		chatLog("c", $chat."\n");
-		if ($config{'relay'} == "1") {
+		chatLog("c", $chat."\n") if ($config{'logChat'});
+		if ($config{'relay'}) {
 			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
 		}
 		$ai_cmdQue[$ai_cmdQue]{'type'} = "c";
@@ -5729,7 +5729,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$privMsgUsers[@privMsgUsers] = $privMsgUser;
 		}
 
-		chatLog("pm", "(From: $privMsgUser) : $privMsg\n");
+		chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
 		if ($config{'relay'}) {
 			sendMessage(\$remote_socket, "pm", "(From: $privMsgUser) : $privMsg", $config{'relay_user'});
 		}
@@ -5765,7 +5765,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
 			print "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n";
-			chatLog("pm", "(To: $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n");
+			chatLog("pm", "(To: $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n") if ($config{'logPrivateChat'});
 		} elsif ($type == 1) {
 			print "$lastpm[0]{'user'} is not online\n";
 		} elsif ($type == 2) {
@@ -5777,7 +5777,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
-		chatLog("s", $chat."\n");
+		chatLog("s", $chat."\n") if ($config{'logChat'});
 		print "$chat\n";
 		avoidGM_talk(undef, $chat);
 
@@ -6463,8 +6463,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$type = unpack("C*", substr($msg, 6, 1));
 		if ($ID eq $accountID) {
 			print "$chars[$config{'char'}]{'name'} : $emotions_lut{$type}\n";
+			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotions_lut{$type}\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 		} elsif (%{$players{$ID}}) {
 			print "$players{$ID}{'name'} : $emotions_lut{$type}\n";
+			chatLog("e", "$players{$ID}{'name'} : $emotions_lut{$type}\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 
 			my $index = binFind(\@ai_seq, "follow");
 			if ($index ne "") {
@@ -6685,25 +6687,24 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$chatRooms{$currentChatRoom}{'users'}{$chatUser} = 1;
 		}
 
-	} elsif ($switch eq "00E4") {
-
 	} elsif ($switch eq "00E5") {
 		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		$incomingDeal{'name'} = $dealUser;
 		$timeout{'ai_dealAutoCancel'}{'time'} = time;
 		print "$dealUser Requests a Deal\n";
-#BCN Start - DealDump
+
+		#BCN Start - DealDump
 		if ($config{'dealAutoAccept'} && $ai_seq[0] ne "dealAutoAccept") {
 			my $args = ();
-         	$args{'mode'} = "engage";
-         	$args{'time'} = time + 0.2;
-         	$args{'name'} = $dealUser;
+			$args{'mode'} = "engage";
+			$args{'time'} = time + 0.2;
+			$args{'name'} = $dealUser;
 
-         	unshift @ai_seq, "dealAutoAccept";
-         	unshift @ai_seq_args, \%args;
-         	}
-#BCN End - DealDump
-		
+			unshift @ai_seq, "dealAutoAccept";
+			unshift @ai_seq_args, \%args;
+		}
+		#BCN End - DealDump
+
 	} elsif ($switch eq "00E7") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		
@@ -6754,16 +6755,17 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		if ($type == 1) {
 			$currentDeal{'other_finalize'} = 1;
 			print "$currentDeal{'name'} finalized the Deal\n";
-			#BCN Start - DealDump
-            if ($config{'dealAutoAccept'} && $ai_seq[0] ne "dealAutoAccept") {
-               my $args = ();
-               $args{'mode'} = "accept";
-               $args{'time'} = time + 0.3;
 
-               unshift @ai_seq, "dealAutoAccept";
-               unshift @ai_seq_args, \%args;
-            }
-#BCN End - DealDump
+			#BCN Start - DealDump
+			if ($config{'dealAutoAccept'} && $ai_seq[0] ne "dealAutoAccept") {
+				my $args = ();
+				$args{'mode'} = "accept";
+				$args{'time'} = time + 0.3;
+
+				unshift @ai_seq, "dealAutoAccept";
+				unshift @ai_seq_args, \%args;
+			}
+			#BCN End - DealDump
 		} else {
 			$currentDeal{'you_finalize'} = 1;
 			print "You finalized the Deal\n";
@@ -6939,7 +6941,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$chat = substr($msg, 8, $msg_size - 8);
 		$chat =~ s/\000$//;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
-		chatLog("p", $chat."\n");
+		chatLog("p", $chat."\n") if ($config{'logPartyChat'});
 		$ai_cmdQue[$ai_cmdQue]{'type'} = "p";
 		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser;
 		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
@@ -7452,14 +7454,14 @@ $number $display $itemTypes_lut{$venderItemList[$number]{'type'}} $venderItemLis
 		}
 
 	} elsif ($switch eq "0136") {
-		if (length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1",substr($msg,2,2));
+
 		#started a shop.
 		undef @articles;
 		$articles = 0;
 		$~ = "ARTICLESLIST";
 		print "----------Items added to shop ------------------\n";
-		print "#  Name                                         Type           Amount Price\n";				
+		print "#  Name                                         Type        Amount     Price\n";				
 		for ($i = 8; $i < $msg_size; $i+=22) {
 			$price = unpack("L1", substr($msg, $i, 4));
 			$number = unpack("S1", substr($msg, $i + 4, 2));
@@ -7511,20 +7513,20 @@ $number $display $itemTypes_lut{$venderItemList[$number]{'type'}} $venderItemLis
 				$display = $display."[".$cards_lut{$articles[$number]{'card4'}}."]";
 			}
 			format ARTICLESLIST =
-@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>z
+@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>z
 $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quantity'} $articles[$number]{'price'}
 .
 			write;
 		}
 		print "-----------------------------------------\n";
-		undef $shop{'earned'};
-		}
+		$shopEarned = 0 if (!defined($shopEarned));
+
 	} elsif ($switch eq "0137") {
 		#sold something.
 		$number = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
 		$articles[$number]{'sold'} += $amount;
-		$shop{'earned'} += $amount * $articles[$number]{'price'};
+		$shopEarned += $amount * $articles[$number]{'price'};
 		$articles[$number]{'quantity'} -= $amount;
 		print "sold: $amount $articles[$number]{'name'}.\n";
 		if ($articles[$number]{'quantity'} < 1) {
@@ -7785,15 +7787,15 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		$ID = substr($msg, 4, 4);
-		$chat = substr($msg, 4, $msg_size - 4); 
+		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
-		chatLog("g", $chat."\n");
-		$ai_cmdQue[$ai_cmdQue]{'type'} = "g"; 
-		$ai_cmdQue[$ai_cmdQue]{'ID'} = $ID; 
-		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser; 
-		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg; 
-		$ai_cmdQue[$ai_cmdQue]{'time'} = time; 
+		chatLog("g", $chat."\n") if ($config{'logGuildChat'});
+		$ai_cmdQue[$ai_cmdQue]{'type'} = "g";
+		$ai_cmdQue[$ai_cmdQue]{'ID'} = $ID;
+		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser;
+		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
+		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
 		$ai_cmdQue++;
 		print "[Guild] $chat\n";
 
