@@ -695,6 +695,9 @@ sub cmdPlugin {
 		foreach (my $i = 0; $i < @names; $i++) {
 			Plugins::reload($names[$i]);
 		}
+	} elsif ($args[0] eq 'load') {
+		# FIXME: This doesn't work unless you specify the correct path
+		Plugins::load($args[1]);
 
 	} else {
 		my $msg;
