@@ -1977,7 +1977,7 @@ sub AI {
 				next;
 			}
 
-			if (lc($datetimeyear[0]) eq lc($config{"autoBreakTime_$i"})) {
+			if  ( (lc($datetimeyear[0]) eq lc($config{"autoBreakTime_$i"})) || (lc($config{"autoBreakTime_$i"}) eq "all") ) {
 				my $mytime = $datetimeyear[3];
 				my $hormin = substr($mytime, 0, 5);
 				if ($config{"autoBreakTime_${i}_startTime"} eq $hormin) {
