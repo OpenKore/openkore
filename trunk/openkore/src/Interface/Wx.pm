@@ -48,6 +48,7 @@ use Commands;
 use Utils;
 
 
+our $CVS;
 our $iterationTime;
 our $controlTime;
 our $itemListTime;
@@ -56,6 +57,7 @@ our $itemListTime;
 sub OnInit {
 	my $self = shift;
 
+	$CVS = ($Settings::CVS =~ /CVS/);
 	$self->createInterface;
 	$self->iterate;
 
@@ -65,11 +67,11 @@ sub OnInit {
 	$self->{history} = [];
 	$self->{historyIndex} = -1;
 
-	Modules::register("Interface::Wx::Dock");
-	Modules::register("Interface::Wx::MapViewer");
-	Modules::register("Interface::Wx::Console");
-	Modules::register("Interface::Wx::Input");
-	Modules::register("Interface::Wx::ItemList");
+	Modules::register("Interface::Wx::Dock",
+		"Interface::Wx::MapViewer",
+		"Interface::Wx::Console",
+		"Interface::Wx::Input",
+		"Interface::Wx::ItemList");
 	return 1;
 }
 
@@ -78,8 +80,6 @@ sub DESTROY {
 	Plugins::delHook($self->{loadHook});
 	Plugins::delHook($self->{postLoadHook});
 }
-
-our $itemListTime;
 
 sub iterate {
 	my $self = shift;
@@ -271,7 +271,7 @@ sub createInterface {
 				my (undef, $x, $y) = @_;
 				my $walkable;
 
-				if ($Settings::CVS =~ /CVS/) {
+				if ($CVS) {
 					$walkable = checkFieldWalkable(\%field, $x, $y);
 				} else {
 					$walkable = !ord(substr($field{rawMap}, $y * $field{width} + $x, 1));
@@ -340,7 +340,7 @@ sub createInterface {
 	EVT_CLOSE($frame, \&onClose);
 
 	# Hide console on Win32
-	if ($buildType == 0 && !($Settings::CVS =~ /CVS/)) {
+	if ($buildType == 0 && !$CVS) {
 		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 	}
 }
@@ -524,7 +524,7 @@ sub onItemListActivate {
 	my $type = shift;
 
 	if ($type eq 'p') {
-		if ($Settings::CVS =~ /CVS/) {
+		if ($CVS) {
 			Commands::run("pl " . $players{$ID}{binID}) if ($players{$ID});
 		}
 

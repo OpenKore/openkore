@@ -32,113 +32,118 @@ use Log qw(message error);
 use Network::Send;
 use Settings;
 use Plugins;
+use Skills;
 use Utils;
 use Misc;
 use AI;
 
 our %handlers = (
-	ai	=> \&cmdAI,
-	aiv	=> \&cmdAIv,
-	arrowcraft	=>	\&cmdArrowCraft,
-	auth	=> \&cmdAuthorize,
-	bestow	=> \&cmdBestow,
-	buy	=> \&cmdBuy,
-	cart	=> \&cmdCart,
-	chatmod	=> \&cmdChatMod,
-	chist	=> \&cmdChist,
-	closeshop => \&cmdCloseShop,
-	conf	=> \&cmdConf,
-	crl	=> \&cmdChatRoomList,
-	debug	=> \&cmdDebug,
-	e	=> \&cmdEmotion,
-	eq	=> \&cmdEquip,
-	guild	=> \&cmdGuild,
-	i	=> \&cmdInventory,
-	ignore	=> \&cmdIgnore,
-	il	=> \&cmdItemList,
-	im	=> \&cmdUseItemOnMonster,
-	ip	=> \&cmdUseItemOnPlayer,
-	is	=> \&cmdUseItemOnSelf,
-	kill	=> \&cmdKill,
-	leave	=> \&cmdLeaveChatRoom,
-	help	=> \&cmdHelp,
-	reload	=> \&cmdReload,
-	memo	=> \&cmdMemo,
-	ml	=> \&cmdMonsterList,
-	nl	=> \&cmdNPCList,
-	openshop => \&cmdOpenShop,
-	pl	=> \&cmdPlayerList,
-	plugin	=> \&cmdPlugin,
-	portals	=> \&cmdPortalList,
-	s	=> \&cmdStatus,
-	send	=> \&cmdSendRaw,
-	skills	=> \&cmdSkills,
-	sl	=> \&cmdUseSkill,
-	sm	=> \&cmdUseSkill,
-	sp	=> \&cmdUseSkill,
-	ss	=> \&cmdUseSkill,
-	st	=> \&cmdStats,
-	stat_add => \&cmdStatAdd,
-	tank	=> \&cmdTank,
+	ai		=> \&cmdAI,
+	aiv		=> \&cmdAIv,
+	arrowcraft	=> \&cmdArrowCraft,
+	auth		=> \&cmdAuthorize,
+	bestow		=> \&cmdBestow,
+	buy		=> \&cmdBuy,
+	cart		=> \&cmdCart,
+	chatmod		=> \&cmdChatMod,
+	chist		=> \&cmdChist,
+	closeshop	=> \&cmdCloseShop,
+	conf		=> \&cmdConf,
+	crl		=> \&cmdChatRoomList,
+	debug		=> \&cmdDebug,
+	e		=> \&cmdEmotion,
+	eq		=> \&cmdEquip,
+	guild		=> \&cmdGuild,
+	i		=> \&cmdInventory,
+	ignore		=> \&cmdIgnore,
+	il		=> \&cmdItemList,
+	im		=> \&cmdUseItemOnMonster,
+	ip		=> \&cmdUseItemOnPlayer,
+	is		=> \&cmdUseItemOnSelf,
+	kill		=> \&cmdKill,
+	leave		=> \&cmdLeaveChatRoom,
+	help		=> \&cmdHelp,
+	reload		=> \&cmdReload,
+	memo		=> \&cmdMemo,
+	ml		=> \&cmdMonsterList,
+	nl		=> \&cmdNPCList,
+	openshop	=> \&cmdOpenShop,
+	pl		=> \&cmdPlayerList,
+	plugin		=> \&cmdPlugin,
+	portals		=> \&cmdPortalList,
+	s		=> \&cmdStatus,
+	send		=> \&cmdSendRaw,
+	skills		=> \&cmdSkills,
+	sl		=> \&cmdUseSkill,
+	sm		=> \&cmdUseSkill,
+	sp		=> \&cmdPlayerSkill,
+	ss		=> \&cmdUseSkill,
+	st		=> \&cmdStats,
+	stat_add	=> \&cmdStatAdd,
+	tank		=> \&cmdTank,
 	testshop	=> \&cmdTestShop,
-	timeout	=> \&cmdTimeout,
-	uneq	=> \&cmdUnequip,
-	verbose	=> \&cmdVerbose,
-	warp	=> \&cmdWarp,
-	who	=> \&cmdWho,
+	timeout		=> \&cmdTimeout,
+	uneq		=> \&cmdUnequip,
+	verbose		=> \&cmdVerbose,
+	warp		=> \&cmdWarp,
+	who		=> \&cmdWho,
+);
+
+our %completions = (
+	sp		=> \&cmdPlayerSkill,
 );
 
 our %descriptions = (
-	ai	=> 'Enable/disable AI.',
-	aiv	=> 'Display current AI sequences.',
-	arrowcraft	=>	'Create Arrows.',
-	auth	=> '(Un)authorize a user for using Kore chat commands.',
-	bestow	=> 'Bestow admin in a chat room',
-	buy	=> 'Buy an item from the current NPC shop',
-	cart	=> 'Cart management',
-	chatmod	=> 'Modify chat room settings.',
-	chist	=> 'Display last few entries from the chat log.',
-	closeshop => 'Close your vending shop.',
-	conf	=> 'Change a configuration key.',
-	crl	=> 'List chat rooms.',
-	debug	=> 'Toggle debug on/off.',
-	e	=> 'Show emotion.',
-	eq	=> 'Equip an item.',
-	guild	=> 'Guild management.',
-	i	=> 'Display inventory items.',
-	ignore	=> 'Ignore a user (block his messages).',
-	il	=> 'Display items on the ground.',
-	im	=> 'Use item on monster.',
-	ip	=> 'Use item on player.',
-	is	=> 'Use item on yourself.',
-	kill	=> 'Attack another player (PVP/GVG only).',
-	leave	=> 'Leave chat room.',
-	reload	=> 'Reload configuration files.',
-	memo	=> 'Save current position for warp portal.',
+	ai		=> 'Enable/disable AI.',
+	aiv		=> 'Display current AI sequences.',
+	arrowcraft	=> 'Create Arrows.',
+	auth		=> '(Un)authorize a user for using Kore chat commands.',
+	bestow		=> 'Bestow admin in a chat room',
+	buy		=> 'Buy an item from the current NPC shop',
+	cart		=> 'Cart management',
+	chatmod		=> 'Modify chat room settings.',
+	chist		=> 'Display last few entries from the chat log.',
+	closeshop	=> 'Close your vending shop.',
+	conf		=> 'Change a configuration key.',
+	crl		=> 'List chat rooms.',
+	debug		=> 'Toggle debug on/off.',
+	e		=> 'Show emotion.',
+	eq		=> 'Equip an item.',
+	guild		=> 'Guild management.',
+	i		=> 'Display inventory items.',
+	ignore		=> 'Ignore a user (block his messages).',
+	il		=> 'Display items on the ground.',
+	im		=> 'Use item on monster.',
+	ip		=> 'Use item on player.',
+	is		=> 'Use item on yourself.',
+	kill		=> 'Attack another player (PVP/GVG only).',
+	leave		=> 'Leave chat room.',
+	reload		=> 'Reload configuration files.',
+	memo		=> 'Save current position for warp portal.',
 	monocell	=> 'Cast Monocell spell on a monster when granted by Abracadabra.',
-	monster	=> 'Cast Summon Monster spell when granted by Abracadabra.',
-	ml	=> 'List monsters that are on screen.',
-	mvp	=> 'Change a monster into an MVP when granted by Abracadabra.',
-	nl	=> 'List NPCs that are on screen.',
+	monster		=> 'Cast Summon Monster spell when granted by Abracadabra.',
+	ml		=> 'List monsters that are on screen.',
+	mvp		=> 'Change a monster into an MVP when granted by Abracadabra.',
+	nl		=> 'List NPCs that are on screen.',
 	openshop	=> 'Open your vending shop.',
-	pl	=> 'List players that are on screen.',
-	plugin	=> 'Control plugins.',
-	portals	=> 'List portals that are on screen.',
-	s	=> 'Display character status.',
-	send	=> 'Send a raw packet to the server.',
-	skills	=> 'Show skills or add skill point.',
-	sl	=> 'Use skill on location.',
-	sm	=> 'Use skill on monster.',
-	sp	=> 'Use skill on player.',
-	ss	=> 'Use skill on self.',
-	st	=> 'Display stats.',
-	stat_add => 'Add status point.',
-	tank	=> 'Tank for a player.',
+	pl		=> 'List players that are on screen.',
+	plugin		=> 'Control plugins.',
+	portals		=> 'List portals that are on screen.',
+	s		=> 'Display character status.',
+	send		=> 'Send a raw packet to the server.',
+	skills		=> 'Show skills or add skill point.',
+	sl		=> 'Use skill on location.',
+	sm		=> 'Use skill on monster.',
+	sp		=> 'Use skill on player.',
+	ss		=> 'Use skill on self.',
+	st		=> 'Display stats.',
+	stat_add	=> 'Add status point.',
+	tank		=> 'Tank for a player.',
 	testshop	=> 'Show what your vending shop would well.',
-	timeout	=> 'Set a timeout.',
-	verbose	=> 'Toggle verbose on/off.',
-	warp	=> 'Open warp portal.',
-	who	=> 'Display the number of people on the current server.',
+	timeout		=> 'Set a timeout.',
+	verbose		=> 'Toggle verbose on/off.',
+	warp		=> 'Open warp portal.',
+	who		=> 'Display the number of people on the current server.',
 );
 
 
@@ -154,13 +159,13 @@ our %descriptions = (
 # Commands::run("s");
 sub run {
 	my $input = shift;
-	my ($switch, $args) = split(' ', $input, 2);
+	my ($switch, $args) = split(/ +/, $input, 2);
 
 	# Resolve command aliases
 	if (my $alias = $config{"alias_$switch"}) {
 		$input = $alias;
 		$input .= " $args" if defined $args;
-		($switch, $args) = split(' ', $input, 2);
+		($switch, $args) = split(/ +/, $input, 2);
 	}
 
 	if ($handlers{$switch}) {
@@ -170,6 +175,98 @@ sub run {
 		# TODO: print error message here once we've fully migrated this stuff
 		return 0;
 	}
+}
+
+sub complete {
+	my $input = shift;
+	my ($switch, $args) = split(/ +/, $input, 2);
+
+	# Resolve command aliases
+	if (my $alias = $config{"alias_$switch"}) {
+		$input = $alias;
+		$input .= " $args" if defined $args;
+		($switch, $args) = split(/ +/, $input, 2);
+	}
+
+	my $completor;
+	if ($completions{$switch}) {
+		$completor = $completions{$switch};
+	} else {
+		$completor = \&defaultCompletor;
+	}
+
+	my ($last_arg_pos, $matches) = $completor->($switch, $input, 'c');
+	if (@{$matches} == 1) {
+		my $arg = $matches->[0];
+		$arg = "\"$arg\"" if ($arg =~ / /);
+		my $new = substr($input, 0, $last_arg_pos) . $arg;
+		if (length($new) > length($input)) {
+			return "$new ";
+		} elsif (length($new) == length($input)) {
+			return "$input ";
+		}
+
+	} elsif (@{$matches} > 1) {
+		$interface->writeOutput("message", "\n" . join("\t", @{$matches}) . "\n", "info");
+
+		## Find largest common prefix
+
+		# Find item with smallest length
+		my $smallest;
+		foreach (@{$matches}) {
+			if (!defined $smallest || length($_) < $smallest) {
+				$smallest = length($_);
+			}
+		}
+
+		my $commonStr;
+		for (my $len = $smallest; $len >= 0; $len--) {
+			my $first = lc(substr($matches->[0], 0, $len));
+			my $common = 1;
+			foreach (@{$matches}) {
+				if ($first ne lc(substr($_, 0, $len))) {
+					$common = 0;
+					last;
+				}
+			}
+			if ($common) {
+				$commonStr = $first;
+				last;
+			}
+		}
+		
+		my $new = substr($input, 0, $last_arg_pos) . $commonStr;
+		return $new if (length($new) > length($input));
+	}
+	return $input;
+}
+
+
+##################################
+
+
+sub completePlayerName {
+	my $arg = quotemeta shift;
+	my @matches;
+	foreach (@playersID) {
+		next if (!$_);
+		if ($players{$_}{name} =~ /^$arg/i) {
+			push @matches, $players{$_}{name};
+		}
+	}
+	return @matches;
+}
+
+sub defaultCompletor {
+	my $switch = shift;
+	my $last_arg_pos;
+	my @args = parseArgs(shift, undef, undef, \$last_arg_pos);
+	my @matches;
+
+	my $arg = $args[$#args];
+	@matches = completePlayerName($arg);
+	@matches = Skills::complete($arg) if (!@matches);
+	return ($last_arg_pos, \@matches);
 }
 
 
@@ -1060,15 +1157,74 @@ sub cmdSkills {
 	}
 }
 
+sub cmdPlayerSkill {
+	my $switch = shift;
+	my $last_arg_pos;
+	my @args = parseArgs(shift, undef, undef, \$last_arg_pos);
+	my $mode = shift;
+
+	if ($mode eq 'c') {
+		# Completion mode
+		my $arg = $args[$#args];
+		my @matches;
+
+		if (@args == 2) {
+			# Complete skill name
+			@matches = Skills::complete($arg);
+		} elsif (@args == 3) {
+			# Complete player name
+			@matches = completePlayerName($arg);
+		}
+
+		return ($last_arg_pos, \@matches);
+	}
+
+	if (@args < 1) {
+		error	"Syntax Error in function 'sp' (Use Skill on Player)\n" .
+			"Usage: sp (skill # or name) [player # or name] [level]\n";
+		return;
+	}
+
+	my $skill = new Skills(auto => $args[0]);
+	my $target;
+	my $targetID;
+	my $lv = $args[2];
+
+	if (!$skill) {
+		error	"Error in function 'sp' (Use Skill on Player)\n" .
+			"'$args[0]' is not a valid skill.\n";
+		return;
+	}
+
+	if ($args[1] ne "") {
+		$target = getPlayer($args[1], 1);
+		if (!$target) {
+			error	"Error in function 'sp' (Use Skill on Player)\n" .
+				"Player '$args[1]' does not exist.\n";
+			return;
+		}
+		$targetID = $target->{ID};
+	} else {
+		$target = $char;
+		$targetID = $accountID;
+	}
+
+	if (main::ai_getSkillUseType($skill->handle)) {
+		main::ai_skillUse($skill->handle, $lv, 0, 0,
+			$target->{pos_to}{x}, $target->{pos_to}{y});
+	} else {
+		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
+	}
+}
+
 sub cmdUseSkill {
 	my ($switch, $args) = @_;
-
 	my ($skillID, $lv, $target, $targetNum, $targetID, $x, $y);
 
 	# Resolve skill ID
 	($skillID, $args) = split(/ /, $args, 2);
 	my $skill = Skills->new(id => $skillID);
-	if (!$skill->id) {
+	if (!$skill) {
 		error "Skill $skillID does not exist.\n";
 		return;
 	}

@@ -60,6 +60,7 @@ New features:
 - Support for partySkills on certain job classes.
 - kRO/PK servers are now (partially?) supported. In config.txt, set
   pkServer to 1.
+- TAB completion in Wx interface!!!
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:

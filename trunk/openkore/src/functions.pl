@@ -5417,9 +5417,10 @@ sub parseMsg {
 		my $lv = unpack("S*",substr($msg, 52,  2));
 
 		if ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
+			if (!$players{$ID} && !defined($players{$ID}{binID})) {
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
+				$players{$ID}{'ID'} = $ID;
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'sex'} = $sex;
 				$players{$ID}{'name'} = "Unknown";
@@ -5545,6 +5546,7 @@ sub parseMsg {
 			if (!defined($players{$ID}{binID})) {
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
+				$players{$ID}{'ID'} = $ID;
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'sex'} = $sex;
 				$players{$ID}{'name'} = "Unknown";
@@ -5592,10 +5594,11 @@ sub parseMsg {
 		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
 
 		if ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
+			if (!$players{$ID} && !defined($players{$ID}{binID})) {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'appear_time'} = time;
 				$players{$ID}{'sex'} = $sex;
+				$players{$ID}{'ID'} = $ID;
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
@@ -5682,6 +5685,7 @@ sub parseMsg {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'sex'} = $sex;
+				$players{$ID}{'ID'} = $ID;
 				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'appear_time'} = time;

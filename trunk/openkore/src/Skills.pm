@@ -19,7 +19,7 @@
 # `l
 # - The full name ("Increase AGI").
 # - The handle, or internal name ("AL_INCAGI").
-# - By using the skill ID (29).
+# - The skill ID (29).
 # `l`
 #
 # The skill ID is send to the server when sending a skill use packet.
@@ -82,7 +82,7 @@ sub init {
 
 ##
 # Skills->new(key => value)
-# key: id, handle or name.
+# key: id, handle, name or auto.
 #
 # Creates a new Skills object.
 #
@@ -91,22 +91,27 @@ sub init {
 # my $heal = Skills->new(id => 28);
 # my $heal = Skills->new(handle => 'AL_HEAL');
 # my $heal = Skills->new(name => 'heal');
+# my $heal = Skills->new(auto => 'Heal');
+# my $heal = Skills->new(auto => 'AL_HEAL');
+# my $heal = Skills->new(auto => 28);
 #
 # $heal->id;     # returns 28
 # $heal->handle; # returns 'AL_HEAL'
 # $heal->name;   # returns 'Heal'
 sub new {
-	my ($type, $key, $value) = @_;
+	my ($class, $key, $value) = @_;
 
-	my $self = bless({});
-	if ($key eq 'id') {
-		$self->{id} = $value if $skills[$value];
-	} elsif ($key eq 'handle') {
-		$self->{id} = $handles{$value};
-	} elsif ($key eq 'name') {
-		$self->{id} = $names{lc($value)};
+	my %self;
+	if ($key eq 'id' || ($key eq 'auto' && $value =~ /^\d+$/)) {
+		$self{id} = $value if $skills[$value];
+	} elsif ($key eq 'handle' || ($key eq 'auto' && uc($value) eq $value)) {
+		$self{id} = $handles{$value};
+	} elsif ($key eq 'name' || $key eq 'auto') {
+		$self{id} = $names{lc($value)};
 	}
-	return $self;
+	return undef if (!defined $self{id});
+	bless \%self, $class;
+	return \%self;
 }
 
 
@@ -139,6 +144,17 @@ sub handle {
 sub name {
 	my $self = shift;
 	return $skills[$self->{id}][1];
+}
+
+sub complete {
+	my $name = quotemeta(shift);
+	my @matches;
+	foreach my $skill (@skills) {
+		if ($skill->[1] =~ /^$name/i) {
+			push @matches, $skill->[1];
+		}
+	}
+	return @matches;
 }
 
 1;
