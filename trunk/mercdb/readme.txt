@@ -86,8 +86,8 @@ Planned features:
 - check the prices in-game via chat-commands send to the bot
 
 config.txt variables:
-- merchantDB (1 or 0)
-	to switch the usage of the plugin on or off
+- merchantDB (1 or 0) # required
+	to switch the usage of the plugin on or off. if not present the plugin will not work
 - merchantDB_shoppinglist
   items you wanna buy, must be written like in the Vender Store List,
   separated by comma; make it "all" to buy all hot deals
