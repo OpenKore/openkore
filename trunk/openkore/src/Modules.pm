@@ -35,7 +35,7 @@ use strict;
 use warnings;
 use Exporter;
 use Config;
-use Log qw(error message);
+use Log qw(error warning message);
 use base qw(Exporter);
 
 our @modules;
@@ -58,7 +58,7 @@ sub register {
 		$mod =~ s/::/\//g;
 
 		eval "${_}::MODINIT();";
-		print $@ if ($@ && !($@ =~ /^Undefined subroutine /));
+		warning $@ if ($@ && !($@ =~ /^Undefined subroutine /));
 
 		push @modules, $_;
 	}
@@ -111,10 +111,11 @@ sub reload {
 }
 
 ##
-# Modules::reloadFile($filename)
+# Modules::reloadFile(filename)
 #
-# Executes "do $filename" iff $filename exists and does not contain syntax
-# errors.
+# Executes "do $filename" if $filename exists and does not contain syntax
+# errors. This function is used internally by Modules::doReload(), do not
+# use this directly.
 sub reloadFile {
 	my $filename = shift;
 
@@ -150,9 +151,12 @@ sub reloadFile {
 	}
 
 	message("Reloading $filename...\n", "info");
-	if (!do $filename || $@) {
-		error("Unable to reload $filename\n");
-		error("$@\n", "syntax", 1) if ($@);
+	{
+		package main;
+		if (!do $filename || $@) {
+			error("Unable to reload $filename\n");
+			error("$@\n", "syntax", 1) if ($@);
+		}
 	}
 	message("Reloaded.\n", "info");
 }

@@ -218,7 +218,8 @@ sub findIndex {
 	my $match = shift;
 	my $ID = shift;
 	my $i;
-	for ($i = 0; $i < @{$r_array} ;$i++) {
+
+	for ($i = 0; $i < @{$r_array}; $i++) {
 		if ((%{$$r_array[$i]} && $$r_array[$i]{$match} == $ID)
 			|| (!%{$$r_array[$i]} && $ID eq "")) {
 			return $i;
@@ -226,6 +227,8 @@ sub findIndex {
 	}
 	if ($ID eq "") {
 		return $i;
+	} else {
+		return undef;
 	}
 }
 
@@ -243,6 +246,8 @@ sub findIndexString {
 	}
 	if ($ID eq "") {
 		return $i;
+	} else {
+		return undef;
 	}
 }
 
@@ -260,6 +265,8 @@ sub findIndexString_lc {
 	}
 	if ($ID eq "") {
 		return $i;
+	} else {
+		return undef;
 	}
 }
 
@@ -278,6 +285,8 @@ sub findIndexStringList_lc{
 	}
 	if ($ID eq "") {
 		return $i;
+	} else {
+		return undef;
 	}
 }
 
