@@ -1,8 +1,6 @@
 (Note: before releasing the next version we need to clean up News.txt
 so people can easily see what config options have been added/changed)
 
-- Made all the color options in Log.pm user definable and added default values to the config.txt in the confpack
-  Also put in color options for all the message types currently defined (except for xskore)
 - Updated the Master Server list in openkore.pl to use the current output methodology (ie message())
   
 - Further modified Log.pm to use colors the way I was intending on implementing them ;)
@@ -12,7 +10,7 @@ so people can easily see what config options have been added/changed)
   win32 requres - Win32::Console::ANSI
   both require - Term::ANSIScreen
 - Begun implementing config.txt definable colors
-  
+
 - Don't immediately reconnect if connecting to master server times out.
 - The "sit" command now also sets itemsGatherAuto to 0.
 - The Linux version no longer depends on the buggy C::DynaLib.
@@ -75,6 +73,7 @@ so people can easily see what config options have been added/changed)
   drop 3,5          (drops inventory item 3 and 5)
 - New command: cart desc
 - Log files (item log, chat log, walk.dat) are now stored in the logs folder.
+- Color support. Colors are defined in control/consolecolors.txt
 
 
 ==================

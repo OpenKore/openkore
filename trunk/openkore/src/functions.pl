@@ -1086,7 +1086,7 @@ sub parseInput {
 			printItemDesc($chars[$config{'char'}]{'inventory'}[$arg2]{'nameID'});
 
 		} else {
-			error	"Syntax Error in function 'i' (Iventory List)\n"
+			error	"Syntax Error in function 'i' (Iventory List)\n" .
 				"Usage: i [<u|eq|nu|desc>] [<inventory #>]\n";
 		}
 
@@ -1745,25 +1745,25 @@ sub parseInput {
 
 
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
-			print	"Error in function 'skills add' (Add Skill Point)\n"
-				,"Skill $arg2 does not exist.\n";
+			error	"Error in function 'skills add' (Add Skill Point)\n" .
+				"Skill $arg2 does not exist.\n";
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'points_skill'} < 1) {
-			print	"Error in function 'skills add' (Add Skill Point)\n"
-				,"Not enough skill points to increase $skills_lut{$skillsID[$arg2]}.\n";
+			error	"Error in function 'skills add' (Add Skill Point)\n" .
+				"Not enough skill points to increase $skills_lut{$skillsID[$arg2]}.\n";
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
 			sendAddSkillPoint(\$remote_socket, $chars[$config{'char'}]{'skills'}{$skillsID[$arg2]}{'ID'});
 
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
-			print	"Error in function 'skills desc' (Skill Description)\n"
-				,"Skill $arg2 does not exist.\n";
+			error	"Error in function 'skills desc' (Skill Description)\n" .
+				"Skill $arg2 does not exist.\n";
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
 			print "===============Skill Description===============\n";
 			print "Skill: $skills_lut{$skillsID[$arg2]}\n\n";
 			print $skillsDesc_lut{$skillsID[$arg2]};
 			print "==============================================\n";
 		} else {
-			print	"Syntax Error in function 'skills' (Skills Functions)\n"
-				,"Usage: skills [<add | desc>] [<skill #>]\n";
+			error	"Syntax Error in function 'skills' (Skills Functions)\n" .
+				"Usage: skills [<add | desc>] [<skill #>]\n";
 		}
 
 
@@ -5737,7 +5737,7 @@ sub parseMsg {
 				message("[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 					.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
 					."%)] "."You attack Monster: $monsters{$ID2}{'name'} $monsters{$ID2}{'nameID'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n",
-					"atk");
+					"attackMon");
 
 				if ($startedattack) {
 					$monstarttime = time();
@@ -5764,7 +5764,7 @@ sub parseMsg {
 				message("[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 					.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
 					."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
-					"monatkyou");
+					"attacked");
 			}
 			undef $chars[$config{'char'}]{'time_cast'};
 		} elsif (%{$monsters{$ID1}}) {
@@ -8008,19 +8008,19 @@ sub parseMsg {
 			my $amount = $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $amountleft;
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
 
-			message("You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "itemuse", 1);
+			message("You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "useItem", 1);
 			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
 				undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
 			}
 
 		} elsif (%{$players{$ID}}) {
-			message("Player $players{$ID}{'name'} ($players{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "player_itemuse", 2);
+			message("Player $players{$ID}{'name'} ($players{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
 
 		} elsif (%{$monsters{$ID}}) {
-			message("Monster $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "monster_itemuse", 2);
+			message("Monster $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
 
 		} else {
-			message("Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n", "player_itemuse", 2);
+			message("Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
 
 		}
 
@@ -10897,6 +10897,31 @@ sub parseROSlotsLUT {
 		}
 	}
 	close FILE;
+}
+
+sub parseSectionedFile {
+	my $file = shift;
+	my $r_hash = shift;
+	undef %{$r_hash};
+	open(F, $file);
+
+	my $section = "";
+	while (<F>) {
+		next if (/^#/);
+		s/[\r\n]//g;
+		s/\s+$//g;
+		next if ($_ eq "");
+
+		my $line = $_;
+		if (/^\[(.*)\]$/) {
+			$section = $1;
+			next;
+		} else {
+			my ($key, $value) = $line =~ /([\s\S]*?) ([\s\S]*)$/;
+			$r_hash->{$section}{$key} = $value;
+		}
+	}
+	close(F);
 }
 
 sub parseSkillsLUT {
