@@ -51,7 +51,8 @@ New features:
   screen, if the master is in the same party.
 - The Linux version now longer needs --daemon.
   So './openkore.pl &' will Just Work(tm).
-
+- Added optional location based NPC interaction for storage/buy/sell (format: map x, y)
+  eg: storageAuto_npc prontera 29 207
 
 New commands:
 - warp list
