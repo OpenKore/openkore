@@ -12,6 +12,18 @@
 #  $Id$
 #
 #########################################################################
+##
+# MODULE DESCRIPTION: Settings and configuration loading
+#
+# This module:
+# `l
+# - Handles argument parsing.
+# - Keeps a list of configuration files.
+# - Contains functions which are used for loading configuration.
+# `l`
+#
+# The functions for parsing configuration files are in FileParsers.pm.
+# The variables which contain the configuration data are in Globals.pm.
 
 package Settings;
 
@@ -93,20 +105,19 @@ sub parseArguments {
 	$plugins_folder = "plugins";
 	$def_field = "fields";
 
-# Having these here fails, but i'll leave a commented copy of them incase people dont like my solution.
-# Defining variables that include other variables (that may be changed later) is a bad thing.
-# example. Since control_folder == control by default, even if the user sets control_folder == conf as a getopt
-# $config_file will still be control/config.txt since $control_folder was set to control when $config_file was defined.
-#	$config_file = "$control_folder/config.txt";
-#	$mon_control_file = "$control_folder/mon_control.txt";
-#	$items_control_file = "$control_folder/items_control.txt";
-#	$pickupitems_file = "$control_folder/pickupitems.txt";
-#	$chat_file = "$logs_folder/chat.txt";
-#	$shop_file = "$control_folder/shop.txt";
-#	$monster_log = "$logs_folder/monsters.txt";
-#	$item_log_file = "$logs_folder/items.txt";
-#
-#	$default_interface = "Console";
+	# We don't pre-define the values for other variables here.
+	# Defining variables that include other variables (that may be changed later) is a bad thing.
+	# Example: since control_folder == control by default, even if the user sets control_folder == conf as a getopt
+	# $config_file will still be control/config.txt since $control_folder was set to control when $config_file was defined.
+	undef $config_file;
+	undef $mon_control_file;
+	undef $items_control_file;
+	undef $pickupitems_file;
+	undef $chat_file;
+	undef $shop_file;
+	undef $monster_log;
+	undef $item_log_file;
+	undef $default_interface;
 
 
 	my $help_option;
@@ -155,16 +166,58 @@ sub parseArguments {
 }
 
 
+##
+# Settings::addConfigFile(file, r_store, parser_func)
+# file: The configuration file to add.
+# r_store: A reference to a variable (of any type) that's used to store the configuration data.
+# parser_func: A function which parses $file and put the result into r_store.
+# Returns: an ID which you can pass to Settings::delConfigFile() or Settings::load()
+#
+# Adds a configuration file to the internal configuration file list. The configuration file won't be
+# loaded immediately.
+# Configuration files in the list are (re)loaded:
+# `l
+# - At startup
+# - When the user types the 'reload' command.
+# `l`
+# If you want to load this configuration file now, use Settings::load().
+#
+# parser_func is called like this: $parser_func->($file, $r_store);
+#
+# See also: Settings::delConfigFile(), Settings::load(), FileParsers.pm
+#
+# Example:
+# # Configuration file account.txt looks like this:
+# username blabla
+# password 1234
+#
+# # Perl source:
+# use FileParsers; # This is where parseDataFile() is defined
+#
+# # Add configuration file
+# my %account;
+# my $ID = Settings::addConfigFile("account.txt", \%account, \&parseDataFile);
+# # %account is now still empty
+# Settings::load($ID);             # Now account.txt is loaded %account is filled
+# print "$account{username}\n";    # -> "blabla"
+#
+# Settings::delConfigFile($ID);
 sub addConfigFile {
-	my ($file, $hash, $func) = @_;
+	my ($file, $r_store, $func) = @_;
 	my %item;
 
 	$item{file} = $file;
-	$item{hash} = $hash;
+	$item{hash} = $r_store;
 	$item{func} = $func;
 	return binAdd(\@configFiles, \%item);
 }
 
+##
+# Settings::delConfigFile(ID)
+# ID: An ID, as returned by Settings::addConfigFile()
+#
+# Removes a configuration file from the internal configuration file list.
+# See also: Settings::addConfigFile()
 sub delConfigFile {
 	my $ID = shift;
 	delete $configFiles[$ID];
