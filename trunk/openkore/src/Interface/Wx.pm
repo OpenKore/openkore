@@ -50,6 +50,7 @@ use Utils;
 
 our $iterationTime;
 our $controlTime;
+our $itemListTime;
 
 
 sub OnInit {
@@ -68,6 +69,7 @@ sub OnInit {
 	Modules::register("Interface::Wx::MapViewer");
 	Modules::register("Interface::Wx::Console");
 	Modules::register("Interface::Wx::Input");
+	Modules::register("Interface::Wx::ItemList");
 	return 1;
 }
 
@@ -85,8 +87,11 @@ sub iterate {
 	if (timeOut($controlTime, 0.15)) {
 		$self->updateStatusBar;
 		$self->updateMapViewer;
-		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
 		$controlTime = time;
+	}
+	if (timeOut($itemListTime, 0.35)) {
+		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
+		$itemListTime = time;
 	}
 
 	while ($self->Pending) {

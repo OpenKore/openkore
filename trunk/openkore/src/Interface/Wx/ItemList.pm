@@ -27,15 +27,25 @@ use base qw(Wx::ListCtrl);
 use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED);
 
 
+our $monsterColor;
+our $itemColor;
+
+
 sub new {
 	my $class = shift;
 	my $parent = shift;
 	my $self = $class->SUPER::new($parent, 622, wxDefaultPosition, wxDefaultSize,
-		wxLC_REPORT | wxLC_VIRTUAL | wxLC_SINGLE_SEL | wxLC_NO_HEADER);
+		wxLC_REPORT | wxLC_VIRTUAL | wxLC_SINGLE_SEL);
+
+	if (!$monsterColor) {
+		$monsterColor = new Wx::Colour(200, 0, 0);
+		$itemColor = new Wx::Colour(0, 0, 200);
+	}
+
 	$self->{objectsID} = [];
 	$self->{objects} = {};
-	$self->InsertColumn(0, "Objects");
-	$self->SetColumnWidth(0, 200) unless ($^O eq 'MSWin32');
+	$self->InsertColumn(0, "Players, Monsters & Items");
+	$self->SetColumnWidth(0, -2);# unless ($^O eq 'MSWin32');
 	EVT_LIST_ITEM_ACTIVATED($self, 622, \&_onActivate);
 	return $self;
 }
@@ -71,9 +81,9 @@ sub OnGetItemAttr {
 
 	my $attr = new Wx::ListItemAttr;
 	if ($ID && $self->{objects}{$ID}{type} eq 'm') {
-		$attr->SetTextColour(new Wx::Colour(200, 0, 0));
+		$attr->SetTextColour($monsterColor);
 	} elsif ($ID && $self->{objects}{$ID}{type} eq 'i') {
-		$attr->SetTextColour(new Wx::Colour(0, 200, 0));
+		$attr->SetTextColour($itemColor);
 	}
 	return $attr;
 }
