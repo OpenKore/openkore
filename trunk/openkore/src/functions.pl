@@ -1572,7 +1572,7 @@ sub parseCommand {
 			error "Error in function 'talk num' (Respond to NPC)\n" .
 				"$num is not a valid number.\n";
 		} elsif ($arg1 eq "num" && $arg2 =~ /^\d$/) {
-			sendTalkNumber(\$remote_socket, $talk{'ID'}, $num);
+			sendTalkNumber(\$remote_socket, $talk{'ID'}, $arg2);
 
 		} elsif ($arg1 eq "cont" && !%talk) {
 			error	"Error in function 'talk cont' (Continue Talking to NPC)\n" .
