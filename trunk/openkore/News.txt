@@ -5,6 +5,12 @@
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
   as if they were in your party for the purpose of KS checks.
+- beepDomains contains a list of message domains (see Log.pm) for which
+  openkore will beep.
+- beepDomains_notInTown contains a list of message domains that are exempted
+  from beepDomains if you are in a town.
+- beepOnChat and beepOnPM were removed. Use this instead:
+  beepDomains publicchat,emotion,pm
 
 ==================
 ### 1.5.1 (beta)

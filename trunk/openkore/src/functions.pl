@@ -6256,8 +6256,6 @@ sub parseMsg {
 		$chat = "[dist=${dist}] $chatMsgUser : $chatMsg";
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		chatLog("c", "[$map_string ${$chars[$config{'char'}]{'pos_to'}}{x}, ${$chars[$config{'char'}]{'pos_to'}}{y}] [${$players{$ID}{'pos_to'}}{x}, ${$players{$ID}{'pos_to'}}{y}] $chat\n") if ($config{'logChat'});
-		$interface->beep() if $config{beepOnChat} && !($config{beepOnChat_notInTown} && $cities_lut{$field{name}.'.rsw'});
-
 		message "$chat\n", "publicchat";
 
 		ChatQueue::add('c', $ID, $chatMsgUser, $chatMsg);
@@ -6420,7 +6418,6 @@ sub parseMsg {
 
 		stripLanguageCode(\$privMsg);
 		chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
-		$interface->beep() if $config{beepOnPM};
 		message "(From: $privMsgUser) : $privMsg\n", "pm";
 
 		ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
@@ -7103,7 +7100,6 @@ sub parseMsg {
 			message "$chars[$config{'char'}]{'name'} : $emotion\n", "emotion";
 			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 		} elsif (%{$players{$ID}}) {
-			$interface->beep() if $config{beepOnChat};
 			message "$players{$ID}{'name'} : $emotion\n", "emotion";
 			chatLog("e", "$players{$ID}{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 
