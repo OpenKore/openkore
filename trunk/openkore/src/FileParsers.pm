@@ -287,17 +287,18 @@ sub parseItemsControl {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,@args,$args);
-	open FILE, $file;
+	open FILE, "< $file";
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $args) = $_ =~ /([\s\S]+?) (\d+[\s\S]*)/;
+		($key, $args) = lc($_) =~ /([\s\S]+?) (\d+[\s\S]*)/;
 		@args = split / /,$args;
 		if ($key ne "") {
-			$$r_hash{lc($key)}{'keep'} = $args[0];
-			$$r_hash{lc($key)}{'storage'} = $args[1];
-			$$r_hash{lc($key)}{'sell'} = $args[2];
+			$$r_hash{$key}{'keep'} = $args[0];
+			$$r_hash{$key}{'storage'} = $args[1];
+			$$r_hash{$key}{'sell'} = $args[2];
+			$$r_hash{$key}{'cart_add'} = $args[3];
 		}
 	}
 	close FILE;

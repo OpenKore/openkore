@@ -2460,6 +2460,24 @@ sub AI {
 		AI::dequeue if (@{AI::args->{'items'}} <= 0);
 	}
 
+	#### CART ADD ####
+	# Put one or more items in cart.
+	# TODO: check for cart weight & number of items
+
+	if (AI::action eq "cartAdd" && timeOut(AI::args)) {
+		my $item = AI::args->{items}[0];
+		my $i = $item->{index};
+		my $amount = $item->{amount};
+
+		if (!$amount || $amount > $char->{inventory}[$i]{amount}) {
+			$amount = $char->{inventory}[$i]{amount};
+		}
+		sendCartAdd(\$remote_socket, $char->{inventory}[$i]{index}, $amount);
+		shift @{AI::args->{items}};
+		AI::args->{time} = time;
+		AI::dequeue if (@{AI::args->{items}} <= 0);
+	}
+
 	##### DROPPING #####
 	# Drop one or more items from inventory.
 
@@ -2905,6 +2923,43 @@ sub AI {
 	}
 
 	} #END OF BLOCK AUTOBUY
+
+
+	##### AUTO-CART ADD ####
+
+	if ((AI::isIdle || AI::is(qw/route move autoBuy autoStorage/)) && timeOut($AI::Timeouts::autoCart, 2)) {
+		my $hasCart = 0;
+		if ($char->{statuses}) {
+			foreach (keys %{$char->{statuses}}) {
+				if ($_ =~ /^Level \d Cart$/) {
+					$hasCart = 1;
+					last;
+				}
+			}
+		}
+
+		if ($hasCart) {
+			my @items;
+			my $inventory = $char->{inventory};
+			my $max = @{$inventory};
+
+			for (my $i = 0; $i < $max; $i++) {
+				my $item = $inventory->[$i];
+				next unless ($item);
+
+				my $control = $items_control{lc($item->{name})};
+				if ($control->{cart_add} && $item->{amount} > $control->{keep}) {
+					my %obj;
+					$obj{index} = $i;
+					$obj{amount} = $item->{amount} - $control->{keep};
+					push @items, \%obj;
+					debug "Scheduling $item->{name} ($i) x $obj{amount} for adding to cart\n", "autoCart";
+				}
+			}
+			cartAdd(\@items);
+		}
+		$AI::Timeouts::autoCart = time;
+	}
 
 
 	##### LOCKMAP #####
@@ -4514,7 +4569,7 @@ sub AI {
 		##### TELEPORT SEARCH #####
 		if ($config{attackAuto} && $config{teleportAuto_search} && safe
 		&& ($field{name} eq $config{lockMap} || $config{lockMap} eq "")) {
-			if (AI::inQueue("sitAuto", "sitting", "attack", "follow", "items_take", "buyAuto", "skill_use", "sellAuto", "storageAuto")) {
+			if (AI::inQueue("clientSuspend", "sitAuto", "sitting", "attack", "follow", "items_take", "items_gather", "take", "buyAuto", "skill_use", "sellAuto", "storageAuto")) {
 				$timeout{ai_teleport_search}{time} = time;
 			}
 
@@ -5989,8 +6044,9 @@ sub parseMsg {
 			$disp .= " ($map_string)\n";
 			itemLog($disp);
 
-			# Auto-drop item
+			# TODO: move this stuff to AI()
 			if ($AI) {
+				# Auto-drop item
 				$item = $char->{inventory}[$invIndex];
 				if ($itemsPickup{lc($items_lut{$item->{nameID}})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 					sendDrop(\$remote_socket, $item->{index}, $amount);
@@ -8505,8 +8561,8 @@ sub ai_storageAutoCheck {
 }
 
 ##
-# ai_storageGet(items, max)
-# items: reference to an array of storage item numbers.
+# ai_storageGet(indices, max)
+# indices: reference to an array of storage item numbers.
 # max: the maximum amount to get, for each item, or 0 for unlimited.
 #
 # Get one or more items from storage.
@@ -8519,12 +8575,37 @@ sub ai_storageAutoCheck {
 sub ai_storageGet {
 	my $r_items = shift;
 	my $max = shift;
-	my %seq = ();
+	my %args;
 
-	$seq{items} = \@{$r_items};
-	$seq{max} = $max;
-	$seq{timeout} = 0.15;
-	AI::queue("storageGet", \%seq);
+	$args{items} = $r_items;
+	$args{max} = $max;
+	$args{timeout} = 0.15;
+	AI::queue("storageGet", \%args);
+}
+
+##
+# cartAdd(items)
+# items: a reference to an array of hashes.
+#
+# Put one or more items in cart.
+# items is a list of hashes; each has must have an "index" key, and may optionally have an "amount" key.
+# "index" is the index of the inventory item number. If "amount" is given, only the given amount of items will be put in cart.
+#
+# Example:
+# # You want to add 5 Apples (inventory item 2) and all
+# # Fly Wings (inventory item 5) to cart.
+# my @items;
+# push @items, {index => 2, amount => 5};
+# push @items, {index => 5};
+# cartAdd(\@items);
+sub cartAdd {
+	my $items = shift;
+	return unless ($items && @{$items});
+
+	my %args;
+	$args{items} = $items;
+	$args{timeout} = 0.15;
+	AI::queue("cartAdd", \%args);
 }
 
 ##
