@@ -3232,6 +3232,9 @@ sub AI {
 
 		# Generate a list of all monsters that we are allowed to attack.
 		if (!$config{'tankMode'} || ($config{'tankMode'} && $ai_v{'temp'}{'found'})) {
+			# This variable controls how far monsters must be away from portals.
+			my $portalDist = $config{'attackMinPortalDistance'} || 4;
+
 			$ai_v{'temp'}{'ai_follow_index'} = binFind(\@ai_seq, "follow");
 			if ($ai_v{'temp'}{'ai_follow_index'} ne "") {
 				$ai_v{'temp'}{'ai_follow_following'} = $ai_seq_args[$ai_v{'temp'}{'ai_follow_index'}]{'following'};
@@ -3291,7 +3294,7 @@ sub AI {
 			# Look for all aggressive monsters that have the highest priority
 			foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 				# Don't attack monsters near portals
-				next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+				next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, $portalDist));
 				# Don't attack ignored monsters
 				next if ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} == -1);
 
@@ -3306,7 +3309,7 @@ sub AI {
 				# If not found, look for the closest aggressive monster (without priority)
 				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 					# Don't attack monsters near portals
-					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, $portalDist));
 					# Don't attack ignored monsters
 					next if ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} == -1);
 
@@ -3322,7 +3325,7 @@ sub AI {
 				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 					next if ($priority{lc($monsters{$_}{'name'})} != $ai_v{'temp'}{'highestPri'});
 					# Don't attack monsters near portals
-					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, $portalDist));
 					# Don't attack ignored monsters
 					next if ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} == -1);
 
@@ -3366,7 +3369,7 @@ sub AI {
 					if (($first || $dist < $smallestDist || $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'})
 					 && $monsters{$_} && !$monsters{$_}{ignore} && !scalar(keys %{$monsters{$_}{statuses}})
 					 && !positionNearPlayer($monsters{$_}{pos_to}, 3)
-					 && !positionNearPortal($monsters{$_}{pos_to}, 4)) {
+					 && !positionNearPortal($monsters{$_}{pos_to}, $portalDist)) {
 						$smallestDist = $dist;
 						$ai_v{'temp'}{'foundID'} = $_;
 						$ai_v{'temp'}{'highestPri'} = $priority{lc($monsters{$_}{'name'})};
@@ -8932,9 +8935,9 @@ sub positionNearPlayer {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	for (my $i = 0; $i < @playersID; $i++) {
-		next if ($playersID[$i] eq "");
-		return 1 if (distance($r_hash, \%{$players{$playersID[$i]}{'pos_to'}}) <= $dist);
+	foreach (@playersID) {
+		next unless defined $_;
+		return 1 if (distance($r_hash, $players{$_}{pos_to}) <= $dist);
 	}
 	return 0;
 }
@@ -8943,9 +8946,9 @@ sub positionNearPortal {
 	my $r_hash = shift;
 	my $dist = shift;
 
-	for (my $i = 0; $i < @portalsID; $i++) {
-		next if ($portalsID[$i] eq "");
-		return 1 if (distance($r_hash, \%{$portals{$portalsID[$i]}{'pos'}}) <= $dist);
+	foreach (@portalsID) {
+		next unless defined $_;
+		return 1 if (distance($r_hash, $portals{$_}{pos}) <= $dist);
 	}
 	return 0;
 }
