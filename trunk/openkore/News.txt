@@ -17,6 +17,7 @@ New features:
   To use this feature you must put the line 'private 1' in tables/servers.txt.
 - config.txt now supports multi-line comments, like C/C++.
   /* indicates the beginning of a comment, and */ indicates the end.
+- AI sequence will now be cleared when switching characters due to autoConfChange.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will print a beep character when you
