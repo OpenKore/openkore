@@ -6525,8 +6525,12 @@ sub parseMsg {
 					$jExpSwitch = 2; 
 				} 
 			}
-			my $basePercent = $monsterBaseExp / $char->{exp_max} * 100;
-			my $jobPercent = $monsterJobExp / $char->{exp_job_max} * 100;
+			my $basePercent = $char->{exp_max} ?
+				($monsterBaseExp / $char->{exp_max} * 100) :
+				0;
+			my $jobPercent = $char->{exp_job_max} ?
+				($monsterJobExp / $char->{exp_job_max} * 100) :
+				0;
 			message sprintf("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
 
 		} elsif ($type == 20) {

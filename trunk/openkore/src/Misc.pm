@@ -1014,7 +1014,8 @@ sub positionNearPlayer {
 
 	foreach (@playersID) {
 		next unless defined $_;
-		next if $char->{party}{users}{$_};
+		next if $char->{party} && $char->{party}{users} &&
+			$char->{party}{users}{$_};
 		return 1 if (distance($r_hash, $players{$_}{pos_to}) <= $dist);
 	}
 	return 0;
