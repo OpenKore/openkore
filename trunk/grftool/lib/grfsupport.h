@@ -26,6 +26,9 @@
 /* Other includes */
 #include "grftypes.h"
 
+/* Uncomment this before final release */
+#define GRF_DEBUG 1
+
 GRFEXTERN_BEGIN
 
 #ifdef WIN32

@@ -90,9 +90,9 @@ GRFINLINE uint32_t ToLittleEndian32(uint32_t hi) {
 GRFEXPORT char *GRF_normalize_path (char *out, const char *in) {
 	char *orig;
 
-	for (orig=out;*in!=0;out++,in++)
-		*out=(*in=='\\')? '/' : *in;
-	out[1]=0;
+	for (orig = out; *in != 0; out++, in++)
+		*out = (*in == '\\') ? '/' : *in;
+	out[0] = 0;
 
 	return orig;
 }
@@ -309,16 +309,20 @@ GRFEXPORT const char *grf_strerror(GrfError err) {
 	/* Get the error string */
 	switch (err.type) {
 	case GE_ZLIB:
-		tmpbuf=GRF_strerror_zlib((int)err.extra);
+		tmpbuf = GRF_strerror_zlib((int) err.extra);
 		break;
 	case GE_ZLIBFILE:
-		tmpbuf=gzerror((gzFile)err.extra,&dummy);
+		tmpbuf = gzerror((gzFile) err.extra, &dummy);
 		break;
 	default:
-		tmpbuf=GRF_strerror_type(err.type);
+		tmpbuf = GRF_strerror_type(err.type);
 	}
 
-	snprintf(errbuf,0x1000,"%s:%u:%s: %s", err.file, err.line, err.func, tmpbuf);
+	#ifdef GRF_DEBUG
+		snprintf(errbuf, 0x1000, "%s:%u:%s: %s", err.file, err.line, err.func, tmpbuf);
+	#else
+		snprintf(errbuf, 0x1000, "%s: %s", err.func, tmpbuf);
+	#endif
 
 	return errbuf;
 }

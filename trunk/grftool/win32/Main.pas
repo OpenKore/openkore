@@ -93,7 +93,6 @@ var
 
 function UnicodeToKorean(Str: WideString): String;
 function KoreanToUnicode(Str: AnsiString): WideString;
-procedure CFree(P: Pointer); cdecl; external 'msvcrt.dll' name 'free';
 
 implementation
 
@@ -125,7 +124,7 @@ var
   Error: TGrfError;
   NewGrf: TGrf;
 begin
-  NewGrf := grf_open (PChar(FileName), Error);
+  NewGrf := grf_callback_open (PChar(FileName), 'rb', Error, nil);
   if NewGrf = nil then
   begin
       MessageBox(Handle, PChar('Unable to open ' + ExtractFileName(FileName) + ':' + #13#10 +
@@ -213,7 +212,7 @@ begin
   begin
       if (Assigned(Pattern)) and (not g_pattern_match_string(Pattern, PChar(LowerCase(Grf.files[i].Name)))) then
           Continue;
-      if Grf.files[i].TheType = 2 then
+      if GRFFILE_IS_DIR(Grf.files[i]) then
           Continue;    // Do not list folders
 
       Node := FileList.GetNodeData(FileList.AddChild(nil));
@@ -333,7 +332,7 @@ begin
 
   if (FType = '.TXT') or (FType = '.XML') then
   begin
-      Data := grf_get(Grf, PChar(Grf.files[Item.i].Name), Size, Error);
+      Data := grf_get(Grf, Grf.files[Item.i].Name, Size, Error);
       if Data = nil then
       begin
           MessageBox(Handle, grf_strerror(Error), 'Error', MB_ICONERROR);
@@ -341,7 +340,6 @@ begin
       end;
 
       RichEdit1.Text := KoreanToUnicode(PChar(Data));
-      CFree(Data);
       NoteBook1.PageIndex := 0;
 
   end else if (FType = '.BMP') then
@@ -350,7 +348,7 @@ begin
       GetTempFileName(TempDir, 'grf', 1, @TempFile);
       FName := TempFile + FType;
 
-      if not grf_extract(Grf, PChar(Grf.files[Item.i].Name), PChar(FName), Error) then
+      if grf_extract(Grf, Grf.files[Item.i].Name, PChar(FName), Error) <= 0 then
       begin
           MessageBox(Handle, grf_strerror (Error), 'Error', MB_ICONERROR);
           Exit;
@@ -370,7 +368,7 @@ begin
       GetTempFileName(TempDir, 'grf', 1, @TempFile);
       FName := TempFile + FType;
 
-      if not grf_extract(Grf, PChar(Grf.files[Item.i].Name), PChar(FName), Error) then
+      if grf_extract(Grf, Grf.files[Item.i].Name, PChar(FName), Error) <= 0 then
       begin
           MessageBox(Handle, grf_strerror (Error), 'Error', MB_ICONERROR);
           Exit;
@@ -428,7 +426,7 @@ var
 begin
   Files := TStringList(Data);
   NData := FileList.GetNodeData(Node);
-  if Grf.files[NData.i].TheType <> 2 then   // Do not extract folders
+  if not GRFFILE_IS_DIR(Grf.files[NData.i]) then   // Do not extract folders
       Files.Add(Grf.files[NData.i].Name);
   Abort := False;
 end;
@@ -457,7 +455,7 @@ begin
       SaveDialog1.FileName := WideExtractFileName(KoreanToUnicode(Files[0]));
       if SaveDialog1.Execute then
       begin
-          if not grf_extract(Grf, PChar(Files[0]), PChar(SaveDialog1.FileName), Error) then
+          if grf_extract(Grf, PChar(Files[0]), PChar(SaveDialog1.FileName), Error) <= 0 then
               MessageBox(Handle,
                   PChar('Unable to extract ' + ExtractFileName(Files[0]) + ':' + #13#10 + grf_strerror(Error)),
                   'Error', MB_ICONERROR)
