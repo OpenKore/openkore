@@ -670,9 +670,11 @@ sub sendGetPlayerInfo {
 
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x94, 0x00) . $ID;
-		sendMsgToServer($r_socket, $msg);
-		debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
+	} else {
+		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
 	}
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendGetStoreList {
@@ -816,7 +818,10 @@ sub sendMapLogin {
 		$msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
 	} else {
 		$msg = pack("C*", 0x72, 0, 0, 0, 0) . $accountID .
-			pack("C*", 0xFA, 0x12, 0x00, 0xE0, 0x5D, 0x2B, 0xF4, 0x03, 0x00, 0xFF, 0xFF) .
+			pack("C*",0xFC,0x2B,0x8B,0x01,0x00) .
+			#         0xFA,0x12,0x00,0xE0,0x5D
+			$charID .
+			pack("C*",0xFF,0xFF) .
 			$sessionID .
 			pack("L", getTickCount()) .
 			pack("C", $sex);
