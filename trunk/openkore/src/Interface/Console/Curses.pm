@@ -149,9 +149,10 @@ sub writeOutput {
 			$self->printw($self->{winLog}, $self->{winLogHeight} - 1, 0, "{normal}@<<<<<<< $color@*", $time, $s);
 		}
 	}
-	refresh $self->{winFight} if $self->{winFight};
-	refresh $self->{winLog};
-	refresh $self->{winChat} if $self->{winChat};
+	noutrefresh $self->{winFight} if $self->{winFight};
+	noutrefresh $self->{winLog};
+	noutrefresh $self->{winChat} if $self->{winChat};
+	$self->updatePopups;
 	$self->setCursor;
 }
 
@@ -258,7 +259,7 @@ sub readEvents {
 	$pos += 10 while (length($self->{inputBuffer}) - $pos >= $COLS);
 	erase $self->{winInput};
 	addstr $self->{winInput}, 0, 0, substr($self->{inputBuffer}, $pos);
-	refresh $self->{winInput};
+	noutrefresh $self->{winInput};
 	$self->setCursor;
 
 	return ($ret ne "") ? $ret : undef;
@@ -396,7 +397,7 @@ sub updateLayout {
 	hline $LINES-2, 0, 0, $COLS;
 	resize $self->{winInput}, 1, $COLS;
 	mvwin $self->{winInput}, $LINES-1, 0;
-	refresh;
+	noutrefresh;
 
 	$self->{lines} = $LINES;
 	$self->{cols} = $COLS;
@@ -409,11 +410,11 @@ sub updateAll {
 
 	$self->updateStatus;
 	$self->updateObjects;
-	refresh $self->{winFight} if ($self->{winFight});
-	refresh $self->{winLog};
-	refresh $self->{winChat} if ($self->{winChat});
-	refresh $self->{winInput};
-	$self->updateHelp;
+	noutrefresh $self->{winFight} if ($self->{winFight});
+	noutrefresh $self->{winLog};
+	noutrefresh $self->{winChat} if ($self->{winChat});
+	noutrefresh $self->{winInput};
+	$self->updatePopups;
 }
 
 sub updatePeriodic {
@@ -421,6 +422,12 @@ sub updatePeriodic {
 
 	$self->updateStatus;
 	$self->updateObjects;
+	$self->updatePopups;
+}
+
+sub updatePopups {
+	my $self = shift;
+
 	$self->updateHelp;
 }
 
@@ -460,7 +467,7 @@ sub updateStatus {
 	$self->{heartBeat} = !$self->{heartBeat};
 	addstr $self->{winStatus}, 0, 0, $self->{heartBeat} ? ":" : ".";
 
-	refresh $self->{winStatus};
+	noutrefresh $self->{winStatus};
 }
 
 sub updateObjects {
@@ -508,7 +515,7 @@ sub updateObjects {
 		$self->printw($self->{winObjects}, $line++, 0, "{bold|blue}@# {blue}@".("<"x$namelen)." {normal}@#", $i, $name, $dist);
 	}
 
-	refresh $self->{winObjects};
+	noutrefresh $self->{winObjects};
 }
 
 sub updateHelp {
@@ -526,16 +533,17 @@ sub updateHelp {
 	my $center = "@" . ("|" x ($width-7));
 	$self->printw($self->{winHelp}, 1, 1, " {bold|white} $center {normal}",
 		"OpenKore v$Settings::VERSION");
-	$self->printw($self->{winHelp}, 3, 1, " {bold|white}<F1>{normal}     Show/hide this help window");
-	$self->printw($self->{winHelp}, 4, 1, " {bold|white}<F2>{normal}     Show/hide objects (players,monsters,items,NPCs) pane");
-	$self->printw($self->{winHelp}, 5, 1, " {bold|white}<F3>{normal}     Show/hide fight message pane");
-	$self->printw($self->{winHelp}, 6, 1, " {bold|white}<F4>{normal}     Show/hide chat message pane");
-	$self->printw($self->{winHelp}, 8, 1, " {bold|white}<Ctrl-L>{normal} Redraw screen");
-	$self->printw($self->{winHelp}, 9, 1, " {bold|white}<Ctrl-U>{normal} Clear input line");
+	$self->printw($self->{winHelp}, 3, 1, " {bold|white}<F1>{normal}        Show/hide this help window");
+	$self->printw($self->{winHelp}, 4, 1, " {bold|white}<F2>{normal}        Show/hide objects (players,monsters,items,NPCs) pane");
+	$self->printw($self->{winHelp}, 5, 1, " {bold|white}<F3>{normal}        Show/hide fight message pane");
+	$self->printw($self->{winHelp}, 6, 1, " {bold|white}<F4>{normal}        Show/hide chat message pane");
+	$self->printw($self->{winHelp}, 8, 1, " {bold|white}<Ctrl-L>{normal}    Redraw screen");
+	$self->printw($self->{winHelp}, 9, 1, " {bold|white}<Ctrl-U>{normal}    Clear input line");
+	$self->printw($self->{winHelp}, 11, 1, " {bold|white}<Up>{normal}/{bold|white}<Down>{normal} Input history");
 	$self->printw($self->{winHelp}, 13, 1, " {bold|blue} $center {normal}",
 		"Visit http://openkore.sourceforge.net/ for more stuff");
 
-	refresh $self->{winHelp};
+	noutrefresh $self->{winHelp};
 }
 
 sub setCursor {
@@ -544,7 +552,8 @@ sub setCursor {
 	my $pos = $self->{inputPos};
 	$pos -= 10 while ($pos >= $COLS);
 	move $LINES - 1, $pos;
-	refresh;
+	noutrefresh;
+	doupdate;
 }
 
 1;
