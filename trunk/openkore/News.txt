@@ -4,6 +4,9 @@
 
 - Fixed login problems with newer eAthena versions (2nd session id, bug #28)
 
+New config options:
+- teleportAuto_useSP - use SP (cast skill) when using teleport without item
+
 ==================
 ### 1.3.5 (beta)
 ==================
