@@ -772,10 +772,10 @@ sub sendGuildMemberNameRequest {
 
 sub sendGuildLeave {
 	my ($reason) = @_;
-	my $mess = pack("A40", $reason);
+	my $mess = pack("Z40", $reason);
 	my $msg = pack("C*", 0x59, 0x01).$char->{guild}{ID}.$accountID.$charID.$mess;
 	sendMsgToServer(\$remote_socket, $msg);
-	debug "Sent Guild Leave: $reason\n", "sendPacket";
+	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
 }
 
 sub sendGuildRequest {
