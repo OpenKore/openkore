@@ -9955,13 +9955,13 @@ sub itemName {
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}
 
-	my $slots = $itemSlotCount_lut{$item->{nameID}};
+	my $numSlots = $itemSlotCount_lut{$item->{nameID}};
 
 	my $display = "";
 	$display .= "+$item->{upgrade} " if $item->{upgrade};
 	$display .= $name;
 	$display .= " [$suffix]" if $suffix;
-	$display .= " [$slots]" if $slots;
+	$display .= " [$numSlots]" if $numSlots;
 
 	return $display;
 }
