@@ -5,6 +5,7 @@
 Hopefully the last beta.
 
 New features:
+- added Unix (n)curses text UI console interface: --interface=Console::Curses
 - added command 'arrowcraft' - making arrows
 
 Bug fixes:
