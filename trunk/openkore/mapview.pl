@@ -32,6 +32,7 @@ if ($options{help}) {
 		Options:
 		 --fields=path        Path to the folder containing .fld files.
 		 --maps=path          Path to the folder containing map images.
+		 --logs=path          Path to the folder containing log files.
 	EOF
 	$msg =~ s/^\t*//gm;
 	print $msg;
@@ -109,7 +110,7 @@ sub onClick {
 	}
 	if ($ipc && $ipc->ready && $ipc->connected) {
 		$ipc->send("move to",
-			client => $ipcInfo{ID},
+			TO => $ipcInfo{ID},
 			field => $field{name},
 			x => $x,
 			y => $y);

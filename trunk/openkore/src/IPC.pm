@@ -85,39 +85,37 @@ sub DESTROY {
 
 # Check whether the manager server's already started
 sub _checkManager {
-	my $lockFile = File::Spec->catfile(File::Spec->tmpdir(), "KoreServer");
+	my $lockFile = File::Spec->catfile(File::Spec->tmpdir, "KoreServer");
 
-	if (! -f $lockFile) {
-		return 0;
-	} else {
-		my $f;
-		if (open($f, "< $lockFile")) {
-			if (flock($f, LOCK_EX | LOCK_NB)) {
-				# We are able to obtain a lock; this means the
-				# manager server's not locking it (= not running)
-				close $f;
-				return 0;
-			} else {
-				# We can't lock the lockfile; manager server is already
-				# started at the specified port
-				if ($^O eq 'MSWin32') {
-					# We can't read from locked files on Win32, bah
-					close $f;
-					open($f, "< ${lockFile}.port");
-				}
+	return 0 if (! -f $lockFile);
 
-				local ($/);
-				my $port = <$f>;
-				$port =~ s/\n.*//s;
-				close $f;
-				return $port;
-			}
-		} else {
-			# Can't open lockfile; something's wrong, attempt to delete
-			# it and start a manager server anyway
-			unlink $lockFile;
+	my $f;
+	if (open($f, "< $lockFile")) {
+		if (flock($f, LOCK_EX | LOCK_NB)) {
+			# We are able to obtain a lock; this means the
+			# manager server's not locking it (= not running)
+			close $f;
 			return 0;
+		} else {
+			# We can't lock the lockfile; manager server is already
+			# started at the specified port
+			if ($^O eq 'MSWin32') {
+				# We can't read from locked files on Win32, bah
+				close $f;
+				open($f, "< ${lockFile}.port");
+			}
+
+			local ($/);
+			my $port = <$f>;
+			$port =~ s/\n.*//s;
+			close $f;
+			return $port;
 		}
+	} else {
+		# Can't open lockfile; something's wrong, attempt to delete
+		# it and start a manager server anyway
+		unlink $lockFile;
+		return 0;
 	}
 }
 
@@ -225,7 +223,7 @@ sub iterate {
 # been performed. The IPC connection is only usable when handshaking has been
 # performed.
 sub ready {
-	return shift->{ready};
+	return $_[0]->{ready};
 }
 
 ##
@@ -233,7 +231,7 @@ sub ready {
 #
 # Check whether you're still connected to the manager server.
 sub connected {
-	return shift->{connected};
+	return $_[0]->{connected};
 }
 
 ##
@@ -244,7 +242,7 @@ sub connected {
 #
 # See also: $ipc->ready(), $ipc->port()
 sub host {
-	return shift->{host};
+	return $_[0]->{host};
 }
 
 ##
@@ -252,7 +250,7 @@ sub host {
 #
 # Returns the ID of the client. Each client in the IPC network has a unique ID.
 sub ID {
-	return shift->{ID};
+	return $_[0]->{ID};
 }
 
 ##
@@ -263,11 +261,15 @@ sub ID {
 #
 # See also: $ipc->ready(), $ipc->host()
 sub port {
-	return shift->{port};
+	return $_[0]->{port};
 }
 
 ##
 # $ipc->send(ID, hash | key => value)
+#
+# Send a message to the IPC network. This message will be broadcasted to
+# all clients. If you want to send a message only to a specific client,
+# set the TO key to that client's ID.
 sub send {
 	my $self = shift;
 	return 2 if (!$self->{ready});
