@@ -1444,10 +1444,7 @@ sub parseCommand {
 					my $display = "$storage{$storageID[$i]}{'name'}";
 					$display = $display . " x $storage{$storageID[$i]}{'amount'}";
 	
-					message(swrite(
-						"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-						[$i, $display]),
-						"list");
+					message(sprintf("%2d %s\n", $i, $display), "list");
 				}
 				message("\nCapacity: $storage{'items'}/$storage{'items_max'}\n", "list");
 				message("-------------------------------\n", "list");
