@@ -5,7 +5,6 @@ require DynaLoader;
 @ISA = qw(Exporter DynaLoader);
 package Tools;
 bootstrap Tools;
-var_Tools_init();
 package Tools;
 @EXPORT = qw( );
 1;
