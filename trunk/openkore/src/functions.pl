@@ -8645,7 +8645,7 @@ sub ai_partyfollow {
 }
 
 ##
-# ai_getAggressives([check_mon_control])
+# ai_getAggressives([check_mon_control], [party])
 # Returns: an array of monster hashes.
 #
 # Get a list of all aggressive monsters on screen.
@@ -8654,13 +8654,18 @@ sub ai_partyfollow {
 # If $check_mon_control is set, then all monsters in mon_control.txt
 # with the 'attack_auto' flag set to 2, will be considered as aggressive.
 # See also the manual for more information about this.
+#
+# If $party is set, then monsters that have fought with party members
+# (not just you) will be considered as aggressive.
 sub ai_getAggressives {
-	my $type = shift;
+	my ($type, $party) = @_;
 	my @agMonsters;
 	foreach (@monstersID) {
 		next if (!$_);
 		my $monster = $monsters{$_};
-		if ((($type && $mon_control{lc($monster->{'name'})}{'attack_auto'} == 2) || $monster->{dmgToYou} || $monster->{missedYou})
+		if ((($type && $mon_control{lc($monster->{'name'})}{'attack_auto'} == 2) || 
+		    $monster->{dmgToYou} || $monster->{missedYou} ||
+			($party && $monster->{dmgToParty} || $monster->{missedToParty}))
 		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 			push @agMonsters, $_;
 		}
@@ -10247,6 +10252,11 @@ sub checkSelfCondition {
 		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getAggressives());
 		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
 	}
+
+	if ($config{$prefix . "_partyAggressives"}) {
+		return 0 unless (inRange(scalar ai_getAggressives(undef, 1), $config{$prefix . "_partyAggressives"}));
+	}
+
 	if ($config{$prefix . "_stopWhenHit"} > 0) { return 0 if (scalar ai_getAggressives()); }
 
 	if ($config{$prefix . "_whenFollowing"} && $config{follow}) {

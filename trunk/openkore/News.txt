@@ -205,6 +205,8 @@ New config options:
   in the given level or job level range.
 - teleportAuto_dropTarget (flag)
   Teleport if you can't reach a monster.
+- partyAggressives condition works like aggressives, but also counts
+  monsters that have fought party members.
 
 
 New timeouts.txt options:
@@ -286,6 +288,8 @@ Internal:
 - Detect what weapon (later shield) people are using.
 - "Player Info" message domain is now parseMsg_presence instead of parseMsg
 - itemName()/itemNameSimple() function now returns "None" for item #0
+- ai_getAggressives() now accepts a second optional argument $party;
+  if true, it will return monsters that have fought party members
 
 Credits:
 - Joseph: -1 and 2 attack-auto support in mon_control.txt,
