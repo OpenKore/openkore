@@ -11299,22 +11299,17 @@ sub updateDamageTables {
 			                                      || $monsters{$ID1}{'missedToPlayer'} || $monsters{$ID1}{'dmgToPlayer'});
 
 			my $teleported = 0;
-			if ($config{'teleportAuto_maxDmg'}) {
-				if ($damage > $config{'teleportAuto_maxDmg'}) {
-					print "Monster hits you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting\n";
-					useTeleport(1);
-					$teleported = 1;
-				}
-			}
-			if (!$teleported && $config{'teleportAuto_deadly'} && $damage > $chars[$config{'char'}]{'hp'}) {
-				print "Next hit of $damage dmg could kill you. Teleporting\n";
-				useTeleport(1);
+			if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
+				print "[Act] Teleport due to $monsters{$ID1}{'name'} attack\n";
+				$teleported = 1;
+			}elsif($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'}){
+				print "[Act] Next $damage dmg could kill you. Teleporting...\n";
+				$teleported = 1;
+			}elsif($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'}){
+				print "[Act] $monsters{$ID1}{'name'} attack you more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
 				$teleported = 1;
 			}
-			if (!$teleported && $mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'} >= 2) {
-				print "Teleport due to $monsters{$ID1}{'name'} attack\n";
-				useTeleport(1);
-			}
+			useTeleport(1) if ($teleported);
 		}
 	} elsif (%{$monsters{$ID1}}) {
 		if (%{$players{$ID2}}) {
