@@ -164,6 +164,7 @@ attackSkillSlot {
 	whenFollowing
 	spirit
 	aggressives
+	previousDamage
 	stopWhenHit 0
 	inLockOnly 0
 	notInTown 0
@@ -202,8 +203,10 @@ teleportAuto_idle 0
 teleportAuto_portal 0
 teleportAuto_search 0
 teleportAuto_minAggressives 0
+teleportAuto_minAggressivesInLock 0
 teleportAuto_onlyWhenSafe 0
 teleportAuto_maxDmg 500
+teleportAuto_maxDmgInLock 0
 teleportAuto_deadly 1
 teleportAuto_useSP 0
 teleportAuto_emptyName 1
@@ -384,8 +387,8 @@ autoSwitch {
 }
 
 
-#NOTE: In the case of two handed weapons, or no Shield,
-#      duplicate the weapon name for "autoSwitch_shield_new_#
+# NOTE: In the case of two handed weapons, or no Shield,
+#       duplicate the weapon name for 'rightHand'
 
 
 equipAuto {
