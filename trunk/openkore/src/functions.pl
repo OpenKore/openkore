@@ -3905,7 +3905,7 @@ sub AI {
 			$party_skill{skillLvl} = $smartHeal_lv;
 		}
 		if ($party_skill{skillLvl} > 0) {
-			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}) Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'partySkill'})}} (lvl $ai_v{'partySkill_lvl'})\n~ if $config{'debug'};
+			debug qq~Party Skill used ($char->{party}{users}{$partyUsersID[$j]}{name}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~;
 			if (!ai_getSkillUseType($party_skill{skillID})) {
 				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $party_skill{targetID});
 			} else {
@@ -3976,7 +3976,7 @@ sub AI {
 
 	##### SKILL USE #####
 	#FIXME: need to move closer before using skill on player,
-	#there might be line of sight problem too or the player
+	#there might be line of sight problem too
 	#or the player disappers from the area
 	
 	if (AI::action eq "skill_use" && AI::args->{suspended}) {
@@ -4560,7 +4560,7 @@ sub AI {
 	}
 
 	##### TELEPORT SEARCH #####
-	if (($config{teleportAuto_search} &&  AI::inQueue("attack,follow,items_take,buyAuto,skill_use,sellAuto,storageAuto")) || !$config{attackAuto}){
+	if (($config{teleportAuto_search} &&  AI::inQueue("sitAuto,sitting,attack,follow,items_take,buyAuto,skill_use,sellAuto,storageAuto")) || !$config{attackAuto}){
 		$timeout{ai_teleport_search}{time} = time;
 	}
 
