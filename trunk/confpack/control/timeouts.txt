@@ -21,25 +21,25 @@ ai_move_giveup 1.5
 # Send the attack packet every x seconds, if it hasn't been send already
 ai_attack 1
 # Check for monsters to attack every x seconds
-ai_attack_auto 0.7
+ai_attack_auto 0.5
 # Give up attacking a monster if it can't be reached within x seconds
 ai_attack_giveup 12
 # If you've just killed a monster, and there are no aggressives,
 # and you're not picking up any items, wait x seconds before doing
 # anything else.
-ai_attack_waitAfterKill 1
+ai_attack_waitAfterKill 0.7
 ai_attack_unstuck 1.5
 
 # When your monster died, start checking for loot after x seconds
-ai_items_take_start 1
+ai_items_take_start 0.2
 # Stop checking for loot x seconds after it has begun checking.
-ai_items_take_end 2
+ai_items_take_end 1.5
 
 # When standing near an item, send the 'take' packet every x seconds until
 # the item has been taken.
-ai_take .8
+ai_take .4
 # Give up if unable to pickup item after x seconds
-ai_take_giveup 4
+ai_take_giveup 3
 ai_items_gather_giveup 6
 ai_items_gather_auto .1
 ai_items_gather_start .1
@@ -58,7 +58,8 @@ ai_sit 4
 # Sit after having idled for x seconds
 ai_sit_idle 10
 ai_stand_wait 1
-ai_sit_wait 1
+# Sit after x seconds, after having typed the "sit" command
+ai_sit_wait 0.2
 
 ai_skill_use_giveup 1
 ai_item_use_auto 0.5
