@@ -36,6 +36,9 @@ if [[ "$1" == "--help" ]]; then
 	exit 1
 elif [[ "$1" == "--bin" ]]; then
 	BINDIST=1
+	if [[ "$2" == "-o" ]]; then
+		PACKAGEDIR="$3"
+	fi
 fi
 
 ADDITIONAL=(Makefile Makefile.win32 Makefile.in)
