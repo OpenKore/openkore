@@ -28,12 +28,33 @@
 #include <zlib.h>
 
 #ifdef __cplusplus
+	#define  INLINE_FUNC_SPEC inline
+
 	extern "C" {
+#else /* __cplusplus */
+	#ifdef __GNUC__
+		#define  INLINE_FUNC_SPEC inline
+	#else
+		#define  INLINE_FUNC_SPEC
+	#endif /* __GNUC__ */
 #endif /* __cplusplus */
+
+#ifdef WIN32
+	#define strcasecmp(a,b) _stricmp(a,b)
+	#define strdup(__str) xstrdup(__str)
+
+	static char *xstrdup (const char *s)
+	{
+		size_t len = strlen (s);
+		char *c = (char *) malloc (len + 1);
+		if (c) memcpy (c, s, len + 1);
+		return c;
+	}
+#endif /* WIN32 */
 
 
 /* Takes the first 4 bytes of array p and converts it into a 32-bit integer */
-static inline unsigned long
+static INLINE_FUNC_SPEC unsigned long
 getlong (unsigned char *p)
 {
 	return p[0] + p[1] * 256 + (p[2] + p[3] * 256) * 65536;
