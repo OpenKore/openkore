@@ -9,5 +9,8 @@ Default(env.StaticLibrary('grfzlib-static', [
 	'crc32.c',
 	'inffast.c',
 	'trees.c',
-	'compress.c'
+	'compress.c',
+	'gzio.c',
+	'infback.c',
+	'uncompr.c'
 	]))
