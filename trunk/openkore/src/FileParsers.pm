@@ -155,39 +155,61 @@ sub parseDataFile2 {
 	my $no_undef = shift;
 
 	undef %{$r_hash} unless $no_undef;
-	my ($key,$value);
-	open FILE, $file;
+	my ($key, $value, $inBlock, %blocks);
+
+	open FILE, "< $file";
 	foreach (<FILE>) {
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
-		($key, $value) = $_ =~ /([\s\S]*?) ([\s\S]*)$/;
-		$key =~ s/\s//g;
+		next if (/^[\s\t]*#/);
+		s/[\r\n]//g;	# Remove line endings
+		s/^[\t\s]*//;	# Remove leading tabs and whitespace
+		s/\s+$//g;	# Remove trailing whitespace
+		next if ($_ eq "");
 
-		if ($key eq "!include") {
-			my $fname = $value;
-			if (!File::Spec->file_name_is_absolute($value) && !($value =~ /^\//)) {
-				if ($file =~ /[\/\\]/) {
-					$fname = $file;
-					$fname =~ s/(.*)[\/\\].*/$1/;
-					$fname = File::Spec->catfile($fname, $value);
-				} else {
-					$fname = $value;
-				}
+		if (!defined $inBlock && /{$/) {
+			# Begin of block
+			s/ *{$//;
+			($key, $value) = $_ =~ /^(.*?) (.*)/;
+			$key = $_ if ($key eq '');
+
+			if (!exists $blocks{$key}) {
+				$blocks{$key} = 0;
+			} else {
+				$blocks{$key}++;
 			}
+			$inBlock = "${key}_$blocks{$key}";
+			$r_hash->{$inBlock} = $value;
 
-			$r_hash->{_INCLUDES}{$file} = [] if (!$r_hash->{_INCLUDES}{$file});
-			parseDataFile2($fname, $r_hash, 1);
-			push @{$r_hash->{_INCLUDES}{$file}}, $fname;
-			next;
-		}
+		} elsif (defined $inBlock && $_ eq "}") {
+			# End of block
+			undef $inBlock;
 
-		if ($key eq "") {
-			($key) = $_ =~ /([\s\S]*)$/;
-			$key =~ s/\s//g;
-		}
-		if ($key ne "") {
-			$$r_hash{$key} = $value;
+		} else {
+			# Option
+			($key, $value) = $_ =~ /^(.*?) (.*)/;
+			if ($key eq "") {
+				$key = $_;
+				$key =~ s/ *$//;
+			}
+			$key = "${inBlock}_${key}" if (defined $inBlock);
+
+			if ($key eq "!include") {
+				# Process special !include directives
+				# The filename can be relative to the current file
+				my $f = $value;
+				if (!File::Spec->file_name_is_absolute($value) && $value !~ /^\//) {
+					if ($file =~ /[\/\\]/) {
+						$f = $file;
+						$f =~ s/(.*)[\/\\].*/$1/;
+						$f = File::Spec->catfile($f, $value);
+					} else {
+						$f = $value;
+					}
+				}
+				parseDataFile2($f, $r_hash, 1) if (-f $f);
+
+			} else {
+				$r_hash->{$key} = $value;
+			}
 		}
 	}
 	close FILE;
@@ -663,23 +685,64 @@ sub writeDataFile {
 sub writeDataFileIntact {
 	my $file = shift;
 	my $r_hash = shift;
-	my $data;
-	my $key;
+	my $no_undef = shift;
 
-	open(FILE, "< $file");
+	my (@lines, $key, $value, $inBlock, %blocks);
+	open FILE, "< $file";
 	foreach (<FILE>) {
-		if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/ || $_ =~ /^\!include /) {
-			$data .= $_;
+		s/[\r\n]//g;	# Remove line endings
+		if (/^[\s\t]*#/ || /^[\s\t]*$/ || /^\!include( |$)/) {
+			push @lines, $_;
 			next;
 		}
-		($key) = $_ =~ /^(\w+)/;
-		$data .= $key;
-		$data .= " $$r_hash{$key}" if $$r_hash{$key} ne '';
-		$data .= "\n";
+		s/^[\t\s]*//;	# Remove leading tabs and whitespace
+		s/\s+$//g;	# Remove trailing whitespace
+
+		if (!defined $inBlock && /{$/) {
+			# Begin of block
+			s/ *{$//;
+			($key, $value) = $_ =~ /^(.*?) (.*)/;
+			$key = $_ if ($key eq '');
+
+			if (!exists $blocks{$key}) {
+				$blocks{$key} = 0;
+			} else {
+				$blocks{$key}++;
+			}
+			$inBlock = "${key}_$blocks{$key}";
+
+			my $line = $key;
+			$line .= " $r_hash->{$inBlock}" if ($r_hash->{$inBlock} ne '');
+			push @lines, "$line {";
+
+		} elsif (defined $inBlock && $_ eq "}") {
+			# End of block
+			undef $inBlock;
+			push @lines, "}";
+
+		} else {
+			# Option
+			($key, $value) = $_ =~ /^(.*?) (.*)/;
+			if ($key eq "") {
+				$key = $_;
+				$key =~ s/ *$//;
+			}
+			if (defined $inBlock) {
+				my $realKey = "${inBlock}_${key}";
+				my $line = "\t$key";
+				$line .= " $r_hash->{$realKey}" if ($r_hash->{$realKey} ne '');
+				push @lines, $line;
+			} else {
+				my $line = $key;
+				$line .= " $r_hash->{$key}" if ($r_hash->{$key} ne '');
+				push @lines, $line;
+			}
+		}
 	}
 	close FILE;
-	open(FILE, "> $file");
-	print FILE $data;
+
+	open FILE, "> $file";
+	print FILE join("\n", @lines) . "\n";
 	close FILE;
 }
 
