@@ -3787,7 +3787,7 @@ sub AI {
 
 	##### AUTO-ITEM USE #####
 
-	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack)))
+	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack skill_use)))
 	  && timeOut($timeout{ai_item_use_auto})) {
 		my $i = 0;
 		while (defined($config{"useSelf_item_$i"})) {
