@@ -1547,7 +1547,12 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 		# Check functions.pl for syntax errors
 		# Note: this is $Config, not $config!
 		my $ok = 1;
-		if (-f $Config{'perlpath'}) {
+
+		if (! -f 'functions.pl') {
+			$ok = 0;
+			print "Unable to reload code: functions.pl does not exist";
+		}
+		elsif (-f $Config{'perlpath'}) {
 			$ok = 0;
 			print "Checking functions.pl for errors...\n";
 			system($Config{'perlpath'}, '-c', 'functions.pl');
