@@ -1,4 +1,6 @@
+common.h
 netredirect.cpp
+utils-netredirect.cpp
+
 utils.c
-WinUtils.pm
 wrapper.xs
