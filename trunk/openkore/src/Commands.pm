@@ -94,6 +94,7 @@ our %handlers = (
 	timeout		=> \&cmdTimeout,
 	uneq		=> \&cmdUnequip,
 	verbose		=> \&cmdVerbose,
+	version	=> \&cmdVersion,
 	warp		=> \&cmdWarp,
 	who		=> \&cmdWho,
 );
@@ -158,6 +159,7 @@ our %descriptions = (
 	testshop	=> 'Show what your vending shop would well.',
 	timeout		=> 'Set a timeout.',
 	verbose		=> 'Toggle verbose on/off.',
+	version	=> 'Display the version of openkore.',
 	warp		=> 'Open warp portal.',
 	who		=> 'Display the number of people on the current server.',
 );
@@ -1863,6 +1865,10 @@ sub cmdVerbose {
 	} else {
 		configModify("verbose", 1);
 	}
+}
+
+sub cmdVersion {
+	message "$Settings::versionText";
 }
 
 sub cmdWarp {
