@@ -3579,7 +3579,7 @@ sub AI {
 		unshift @ai_seq_args, {};
 		print "Auto-sitting\n" if $config{'debug'};
 	}
-	if ($ai_seq[0] eq "sitAuto" && !$chars[$config{'char'}]{'sitting'} && $chars[$config{'char'}]{'skills'}{'NV_BASIC'}{'lv'} >= 3 && !ai_getAggressives()) {
+	if ($ai_seq[0] eq "sitAuto" && !$chars[$config{'char'}]{'sitting'} && $chars[$config{'char'}]{'skills'}{'NV_BASIC'}{'lv'} >= 3 && !ai_getAggressives() && (int($chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100) < 50 || $config{'sitAuto_over_50'} eq '1')) {
 		sit();
 	}
 	if ($ai_seq[0] eq "sitAuto" && ($ai_v{'sitAuto_forceStop'}
