@@ -148,8 +148,11 @@ sub initOtherVars {
 # 3: Connected to login server		(next step -> connect to character server)
 # 4: Connected to character server	(next step -> connect to map server)
 # 5: Connected to map server; ready and functional.
+#
+# Special state:
+# 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be the account ID
 sub checkConnection {
-	return if ($config{'XKore'});
+	return if ($config{'XKore'} || $Settings::no_connect);
 
 	if ($conState == 1 && !($remote_socket && $remote_socket->connected()) && timeOut(\%{$timeout_ex{'master'}}) && !$conState_tries) {
 		message("Connecting to Master Server...\n", "connection");
