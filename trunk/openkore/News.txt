@@ -13,6 +13,7 @@ Bug fixes:
 - Fixed AI not suspending, when playing manually in XKore mode
 - Fixed XKore sending commands before map was loaded completely
   (fixes empty inventory or skilllist with eAthena servers)
+- Made motion not stop 3 steps from goal when crossing maps
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
