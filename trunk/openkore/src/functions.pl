@@ -8025,7 +8025,7 @@ sub parseMsg {
 		my $param1 = unpack("S1", substr($msg, 6, 2));
 		my $param2 = unpack("S1", substr($msg, 8, 2));
 		my $param3 = unpack("S1", substr($msg, 10, 2));
-		setStatus($ID,$param1,$param2,$param3);
+		setStatus($ID, $param1, $param2, $param3);
 
 	} elsif ($switch eq "011A") {
 		# Skill used on target, with no damage done
@@ -11093,46 +11093,45 @@ sub setStatus {
 	my $actorType;
 	my $actor = getActorHash($ID, \$actorType);
 
-	if (defined $actor) {
-		my $name = getActorName($ID);
-		my $verbosity = ($actorType eq 'self') ? 1 : 2;
-		my $are = ($actorType eq 'self') ? 'are' : 'is';
-		my $have = ($actorType eq 'self') ? 'have' : 'has';
+	return if (!defined $actor);
+	my $name = getActorName($ID);
+	my $verbosity = ($actorType eq 'self') ? 1 : 2;
+	my $are = ($actorType eq 'self') ? 'are' : 'is';
+	my $have = ($actorType eq 'self') ? 'have' : 'has';
 
-		foreach (keys %skillsState) {
-			if ($param1 == $_) {
-				if (!$actor->{statuses}{$skillsState{$_}}) {
-					$actor->{statuses}{$skillsState{$_}} = 1;
-					message "$name $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
-				}
-			} elsif ($actor->{statuses}{$skillsState{$_}}) {
-				delete $actor->{statuses}{$skillsState{$_}};
-				message "$name $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+	foreach (keys %skillsState) {
+		if ($param1 == $_) {
+			if (!$actor->{statuses}{$skillsState{$_}}) {
+				$actor->{statuses}{$skillsState{$_}} = 1;
+				message "$name $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
 			}
+		} elsif ($actor->{statuses}{$skillsState{$_}}) {
+			delete $actor->{statuses}{$skillsState{$_}};
+			message "$name $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
 		}
+	}
 
-		foreach (keys %skillsAilments) {
-			if (($param2 & $_) == $_) {
-				if (!$actor->{statuses}{$skillsAilments{$_}}) {
-					$actor->{statuses}{$skillsAilments{$_}} = 1;
-					message "$name $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
-				}
-			} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
-				delete $actor->{statuses}{$skillsAilments{$_}};
-				message "$name $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+	foreach (keys %skillsAilments) {
+		if (($param2 & $_) == $_) {
+			if (!$actor->{statuses}{$skillsAilments{$_}}) {
+				$actor->{statuses}{$skillsAilments{$_}} = 1;
+				message "$name $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
 			}
+		} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
+			delete $actor->{statuses}{$skillsAilments{$_}};
+			message "$name $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
 		}
+	}
 
-		foreach (keys %skillsLooks) {
-			if (($param3 & $_) == $_) {
-				if ($actor->{statuses}{$skillsLooks{$_}}) {
-					$actor->{statuses}{$skillsLooks{$_}} = 1;
-					debug "$name $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
-				}
-			} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
-				delete $actor->{statuses}{$skillsLooks{$_}};
-				debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+	foreach (keys %skillsLooks) {
+		if (($param3 & $_) == $_) {
+			if (!$actor->{statuses}{$skillsLooks{$_}}) {
+				$actor->{statuses}{$skillsLooks{$_}} = 1;
+				debug "$name $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 			}
+		} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
+			delete $actor->{statuses}{$skillsLooks{$_}};
+			debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 		}
 	}
 }
