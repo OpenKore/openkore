@@ -384,57 +384,6 @@ while ($quit != 1) {
 	usleep($config{'sleepTime'});
 	$interface->iterate();
 
-	if ($config{'XKore'}) {
-		# (Re-)initialize X-Kore if necessary
-
-		if (timeOut($timeout{'injectKeepAlive'})) {
-			$conState = 1;
-			my $printed = 0;
-			my $procID = 0;
-			do {
-				$procID = $GetProcByName->Call($config{'exeName'});
-				if (!$procID && !$printed) {
-					Log::message("Error: Could not locate process $config{'exeName'}.\n");
-					Log::message("Waiting for you to start the process...\n");
-					$printed = 1;
-				}
-
-				if (defined($input = $interface->getInput(0))) {
-				   	if ($input eq 'quit') {
-						$quit = 1;
-						last;
-					} else {
-						Log::message("Error: You cannot type anything except 'quit' right now.\n");
-					}
-				}
-
-				usleep 100000;
-			} while (!$procID && !$quit);
-			last if ($quit);
-
-			if ($printed == 1) {
-				Log::message("Process found\n");
-			}
-			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
-			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
-			if ($retVal != 1) {
-				Log::error("Could not inject DLL\n", "startup");
-				$timeout{'injectKeepAlive'}{'time'} = time;
-			} else {
-				Log::message("Waiting for InjectDLL to connect...\n");
-				$remote_socket = $injectServer_socket->accept();
-				(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
-				|| die "Inject Socket must be connected from localhost";
-				Log::message("InjectDLL Socket connected - Ready to start botting\n");
-				$timeout{'injectKeepAlive'}{'time'} = time;
-			}
-		}
-		if (timeOut(\%{$timeout{'injectSync'}})) {
-			sendSyncInject(\$remote_socket);
-			$timeout{'injectSync'}{'time'} = time;
-		}
-	}
-
 	# Parse command input
 	if (defined($input = $interface->getInput(0))) {
 		parseInput($input);
@@ -491,8 +440,16 @@ while ($quit != 1) {
 	} while ($ai_cmdQue > 0);
 	undef @ai_cmdQue;
 
+
 	# Handle connection states
-	checkConnection() unless $quit;
+	# may it could be place before getInput?
+	if (!$quit) {
+		if (!$config{'XKore'}) {
+			checkConnection();
+		}else{
+			checkSynchronized();
+		}
+	}
 
 	# Other stuff that's run in the main loop
 	mainLoop();
