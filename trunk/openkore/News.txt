@@ -67,6 +67,9 @@ Bug fixes:
 - Sit/stand and attack messages were getting mixed up.
 - Skill failed messages now display the correct reason. (The old code
   decoded the packet incorrectly.)
+- Saving at Kafra no longer prevents you from talking to another NPC
+  until you relog/leave the screen. (Added sendTalkCancel call to
+  00B6 packet handler.)
 
 Internal:
 - Portal compilation is now 30% faster.

@@ -6281,6 +6281,7 @@ sub parseMsg {
 		message "$npcs{$ID}{'name'} : Done talking\n", "npc";
 		$ai_v{'npc_talk'}{'talk'} = 'close';
 		$ai_v{'npc_talk'}{'time'} = time;
+		sendTalkCancel(\$remote_socket, $ID);
 
 	} elsif ($switch eq "00B7") {
 		# 00b7: word len, long ID, string str
