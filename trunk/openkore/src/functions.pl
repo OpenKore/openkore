@@ -9678,6 +9678,7 @@ sub avoidGM_talk {
 # Checks if any of the surrounding players are on the avoid.txt avoid list.
 # Disconnects / teleports if a player is detected.
 sub avoidList_near {
+	return if ($config{'avoidList_inLockOnly'} && $field{'name'} ne $config{'lockMap'});
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
 		if (($avoid{'Players'}{lc($players{$playersID[$i]}{'name'})}{'disconnect_on_sight'} || $avoid{'ID'}{$players{$playersID[$i]}{'nameID'}}{'disconnect_on_sight'}) && !$config{'XKore'}) {
