@@ -1782,7 +1782,23 @@ sub AI {
 		my ($ID, $destName);
 
 		# Record information about destination portal
-		if (!defined portalExists($field{name}, $portals{$foundID}{pos})) {
+		if ($config{portalRecord} > 1 &&
+		    !defined portalExists($field{name}, $portals{$foundID}{pos})) {
+			$ID = "$field{name} $destPos{x} $destPos{y}";
+			$portals_lut{$ID}{source}{map} = $field{name};
+			$portals_lut{$ID}{source}{pos} = {%destPos};
+			$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
+			$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
+			$portals_lut{$ID}{dest}{$destName}{pos} = %sourcePos;
+
+			message "Recorded new portal (destination): $field{name} ($destPos{x}, $destPos{y}) -> $sourceMap ($sourcePos{x}, $sourcePos{y})\n", "portalRecord";
+			updatePortalLUT("$Settings::tables_folder/portals.txt",
+				$field{name}, $destPos{x}, $destPos{y},
+				$sourceMap, $sourcePos{x}, $sourcePos{y});
+		}
+
+		# Record information about the source portal
+		if (!defined portalExists($sourceMap, \%sourcePos)) {
 			$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
 			$portals_lut{$ID}{source}{map} = $sourceMap;
 			$portals_lut{$ID}{source}{pos} = {%sourcePos};
@@ -1790,26 +1806,11 @@ sub AI {
 			$portals_lut{$ID}{dest}{$destName}{map} = $field{name};
 			$portals_lut{$ID}{dest}{$destName}{pos} = {%destPos};
 	
+			message "Recorded new portal (source): $sourceMap ($sourcePos{x}, $sourcePos{y}) -> $field{name} ($char->{pos}{x}, $char->{pos}{y})\n", "portalRecord";
 			updatePortalLUT("$Settings::tables_folder/portals.txt",
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
-				$field{name}, $destPos{x}, $destPos{y});
+				$field{name}, $char->{pos}{x}, $char->{pos}{y});
 		}
-
-		# Record information about the source portal
-		if (!defined portalExists($sourceMap, \%sourcePos)) {
-			$ID = "$field{name} $destPos{x} $destPos{y}";
-			$portals_lut{$ID}{source}{map} = $field{name};
-			$portals_lut{$ID}{source}{pos} = {%destPos};
-			$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
-			$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
-			$portals_lut{$ID}{dest}{$destName}{pos} = %sourcePos;
-	
-			updatePortalLUT("$Settings::tables_folder/portals.txt",
-				$field{name}, $destPos{x}, $destPos{y},
-				$sourceMap, $sourcePos{x}, $sourcePos{y});
-		}
-
-		message "Recorded new portal: $sourceMap ($sourcePos{x}, $sourcePos{y}) -> $field{name} ($destPos{x}, $destPos{y})\n", "portalRecord";
 	}
 
 	return if (!$AI);
@@ -5785,8 +5786,8 @@ sub parseMsg {
 			if (!%{$portals{$ID}}) {
 				$portals{$ID}{'appear_time'} = time;
 				$nameID = unpack("L1", $ID);
-				$exists = portalExists($field{'name'}, \%coords);
-				$display = ($exists ne "")
+				my $exists = portalExists($field{'name'}, \%coords);
+                $display = ($exists ne "")
 					? "$portals_lut{$exists}{'source'}{'map'} -> " . getPortalDestName($exists)
 					: "Unknown ".$nameID;
 				binAdd(\@portalsID, $ID);
@@ -10358,13 +10359,13 @@ sub portalExists {
 	my ($map, $r_pos) = @_;
 	foreach (keys %portals_lut) {
 		if ($portals_lut{$_}{source}{map} eq $map
-		 && $portals_lut{$_}{source}{pos}{x} == $$r_pos{x}
-		 && $portals_lut{$_}{source}{pos}{y} == $$r_pos{y}) {
+		    && $portals_lut{$_}{source}{pos}{x} == $$r_pos{x}
+		    && $portals_lut{$_}{source}{pos}{y} == $$r_pos{y}) {
 			return $_;
-		}
-	}
-	return;
-}
+		}       
+	}       
+	return; 
+}   
 
 sub portalExists2 {
 	my ($src, $src_pos, $dest, $dest_pos) = @_;

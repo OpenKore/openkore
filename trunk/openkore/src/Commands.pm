@@ -1224,11 +1224,12 @@ sub cmdPortalList {
 		"#    Name                                Coordinates\n",
 		"list");
 	for (my $i = 0; $i < @portalsID; $i++) {
-		next if ($portalsID[$i] eq "");
-		my $coords = "($portals{$portalsID[$i]}{'pos'}{'x'},$portals{$portalsID[$i]}{'pos'}{'y'})";
+		next if $portalsID[$i] eq "";
+		my $portal = $portals{$portalsID[$i]};
+		my $coords = "($portal->{pos}{x}, $portal->{pos}{y})";
 		message(swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
-			[$i, $portals{$portalsID[$i]}{'name'}, $coords]),
+			[$i, $portal->{name}, $coords]),
 			"list");
 	}
 	message("---------------------------------\n", "list");
