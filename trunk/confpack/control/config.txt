@@ -1,6 +1,7 @@
 # See the documentation for what these variables do
 # New variables have comments above them
 
+bindIp
 master_name_0 iRO: Main Server
 master_host_0 38.144.194.2
 master_port_0 6900
@@ -30,6 +31,7 @@ callSign
 
 dcOnDeath 0
 dcOnDualLogin 0
+dcOnDisconnect 0
 
 autoRestart 0
 
@@ -53,6 +55,7 @@ debugPacket_ro_sent 0
 debugPacket_sent 0
 debugPacket_exclude 
 debugDomains
+squelchDomains
 
 message_length_max 80
 
