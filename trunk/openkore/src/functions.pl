@@ -157,23 +157,23 @@ sub checkConnection {
 		undef $msg;
 		connection(\$remote_socket, $config{"master_host_$config{'master'}"},$config{"master_port_$config{'master'}"});
 
-		if ($config{'SecureLogin'} >= 1) {
+		if ($config{'secureLogin'} >= 1) {
 			message("Secure Login...\n", "connection");
 			undef $secureLoginKey;
-			sendMasterCodeRequest(\$remote_socket,$config{'SecureLogin_RequestType'});
+			sendMasterCodeRequest(\$remote_socket,$config{'secureLogin_type'});
 		} else {
 			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'});
 		}
 
 		$timeout{'master'}{'time'} = time;
 
-	} elsif ($conState == 1 && $config{'SecureLogin'} >= 1 && $secureLoginKey ne "" && !timeOut(\%{$timeout{'master'}}) 
+	} elsif ($conState == 1 && $config{'secureLogin'} >= 1 && $secureLoginKey ne "" && !timeOut(\%{$timeout{'master'}}) 
 			  && $conState_tries) {
 
 		message("Sending encoded password...\n", "connection");
 		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'},$secureLoginKey,
 											$config{'version'},$config{"master_version_$config{'master'}"},
-											$config{'SecureLogin'},$config{'SecureLogin_Account'});
+											$config{'secureLogin'},$config{'secureLogin_account'});
 		undef $secureLoginKey;
 
 	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
