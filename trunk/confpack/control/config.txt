@@ -2,18 +2,7 @@
 # New variables have comments above them
 
 bindIp
-master_name_0 iRO: Main Server
-master_host_0 38.144.194.2
-master_port_0 6900
-master_version_0 1
-
-version 18
 encrypt 0
-
-secureLogin 0
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
 
 XKore 0
 XKore_silent 1
@@ -409,6 +398,9 @@ equipAuto {
 	inInventory_name
 	inInventory_qty
 }
+
+statsAddAuto 0
+statsAddAuto_list
 
 autoResponseOnHeal 0
 autoResponse 0

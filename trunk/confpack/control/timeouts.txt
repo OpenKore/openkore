@@ -10,7 +10,7 @@ charlogin 12
 maplogin 12
 play 40
 # When disconnected, wait x seconds before reconnecting again
-reconnect 12
+reconnect 30
 
 # Activate AI after x seconds after the map's loaded
 ai 2
