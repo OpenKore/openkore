@@ -36,6 +36,7 @@ require DynaLoader;
 use Globals;
 use Interface;
 use base qw(Wx::App Interface);
+use Modules;
 use Interface::Wx::MapViewer;
 use Settings;
 use Plugins;
@@ -72,6 +73,8 @@ sub OnInit {
 
 	$self->{loadHook} = Plugins::addHook('loadfiles', sub { $self->onLoadFiles(@_); });
 	$self->{postLoadHook} = Plugins::addHook('postloadfiles', sub { $self->onLoadFiles(@_); });
+
+	Modules::register("Interface::Wx::MapViewer");
 	return 1;
 }
 
@@ -85,7 +88,7 @@ sub iterate {
 	my $self = shift;
 
 	$self->updateStatusBar();
-	if (0 && $self->{mapViewer} && %field && $char) {
+	if ($self->{mapViewer} && %field && $char) {
 		$self->{mapViewer}->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
 	}
 
@@ -315,8 +318,8 @@ sub createInterface {
 
 	### Status bar
 	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, -1, wxST_SIZEGRIP);
-	$statusbar->SetFieldsCount(2);
-	$statusbar->SetStatusWidths(-1, 175);
+	$statusbar->SetFieldsCount(3);
+	$statusbar->SetStatusWidths(-1, 65, 175);
 	$frame->SetStatusBar($statusbar);
 
 
@@ -377,7 +380,7 @@ sub updateStatusBar {
 	my $self = shift;
 	return unless (timeOut($self->{aiBarTimeout}));
 
-	my ($statText, $aiText);
+	my ($statText, $xyText, $aiText) = ('', '', '');
 
 	if ($self->{loadingFiles}) {
 		$statText = sprintf("Loading files... %.0f%%", $self->{loadingFiles}{percent} * 100);
@@ -387,13 +390,13 @@ sub updateStatusBar {
 		$statText = "Not connected";
 	} elsif ($conState > 1 && $conState < 5) {
 		$statText = "Connecting...";
-	} elsif ($conState == 5) {
-		if ($char && $char->{pos_to}) {
-			$statText = "$char->{pos_to}{x},$char->{pos_to}{y}";
-		}
+	} elsif ($self->{mouseMapText}) {
+		$statText = $self->{mouseMapText};
 	}
 
 	if ($conState == 5) {
+		$xyText = "$char->{pos_to}{x}, $char->{pos_to}{y}";
+
 		if (@ai_seq) {
 			my @seqs = @ai_seq;
 			foreach (@seqs) {
@@ -411,7 +414,7 @@ sub updateStatusBar {
 	# Only set status bar text if it has changed
 	my $i = 0;
 	my $setStatus = sub {
-		if ($self->{$_[0]} ne $_[1]) {
+		if (defined $_[1] && $self->{$_[0]} ne $_[1]) {
 			$self->{$_[0]} = $_[1];
 			$self->{statusbar}->SetStatusText($_[1], $i);
 		}
@@ -419,6 +422,7 @@ sub updateStatusBar {
 	};
 
 	$setStatus->('statText', $statText);
+	$setStatus->('xyText', $xyText);
 	$setStatus->('aiText', $aiText);
 	$self->{aiBarTimeout}{time} = time;
 }
@@ -559,11 +563,13 @@ sub onFontChange {
 
 sub onMapToggle {
 	my $self = shift;
+	# Raise map window and return if it already exists
 	if ($self->{mapFrame}) {
 		$self->{mapFrame}->Raise();
 		return;
 	}
 
+	# Create map window
 	my $mapFrame = $self->{mapFrame} = new Wx::Dialog($self->{frame}, -1, 'Map', wxDefaultPosition, wxDefaultSize,
 		wxRESIZE_BORDER | wxMINIMIZE_BOX | wxCLOSE_BOX);
 	EVT_CLOSE($mapFrame, sub {
@@ -573,6 +579,34 @@ sub onMapToggle {
 	});
 
 	my $mapViewer = $self->{mapViewer} = new Interface::Wx::MapViewer($mapFrame);
+
+	$mapViewer->onMouseMove(sub {
+			# Mouse moved over the map viewer control
+			my (undef, $x, $y) = @_;
+			if ($x >= 0 && $y >= 0) {
+				$self->{mouseMapText} = "Mouse over: $x, $y";
+			} else {
+				delete $self->{mouseMapText};
+			}
+			$self->{statusbar}->SetStatusText($self->{mouseMapText}, 0);
+		});
+
+	$mapViewer->onClick(sub {
+			# Clicked on map viewer control
+			my (undef, $x, $y) = @_;
+			delete $self->{mouseMapText};
+			$self->writeOutput("message", "Moving to $x, $y\n", "info");
+			main::aiRemove("mapRoute");
+			main::aiRemove("route");
+			main::aiRemove("move");
+			main::ai_route($field{name}, $x, $y);
+		});
+
+	$mapViewer->onMapChange(sub {
+			$mapFrame->SetSize($mapViewer->{bitmap}->GetWidth(), $mapViewer->{bitmap}->GetHeight());
+			$mapFrame->SetTitle($maps_lut{$field{name} . '.rsw'} . " ($field{name})");
+		});
+
 	if (%field && $char) {
 		$mapViewer->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
 	}
