@@ -24,7 +24,7 @@ package Interface::Console::Curses;
 
 use strict;
 use Curses;
-use Time::HiRes qw(time);
+use Time::HiRes qw(time usleep);
 
 use Globals;
 use Utils;
@@ -100,6 +100,86 @@ sub iterate {
 sub getInput {
 	my $self = shift;
 	my $timeout = shift;
+
+	my $msg;
+	if ($timeout < 0) {
+		while (!defined($msg)) {
+			$msg = $self->readEvents;
+			usleep 10000 unless defined $msg;
+		}
+
+	} elsif ($timeout > 0) {
+		my $startTime = time;
+		while (!timeOut($startTime, $timeout)) {
+			$msg = $self->readEvents;
+			last if (defined $msg);
+			usleep 10000;
+		}
+
+	} else {
+		$msg = $self->readEvents;
+	}
+
+	undef $msg if (defined $msg && $msg eq "");
+	return $msg;
+}
+
+sub writeOutput {
+	my $self = shift;
+	my $type = shift;
+	my $msg = shift;
+	my $domain = shift;
+
+	my @localtime = localtime time;
+	my $time = sprintf("%02d:%02d:%02d", $localtime[2], $localtime[1], $localtime[0]);
+	my $color = $consoleColors{$type}{$domain} ne "" ? lc($consoleColors{$type}{$domain}) : lc($consoleColors{$type}{default});
+	$color = "bold|" . $color unless $color eq "" || $color =~ /^dark/;
+	$color =~ s/^dark//g;
+	$color =~ s/gr[ae]y/white/g;
+	$color = "{" . $color . "}" unless $color eq "";
+	foreach my $s (split("\n", $msg)) {
+		if ($self->{winFight} && existsInList("attackMon,attackMonMiss,attacked,attackedMiss,skill,parseMsg_damage", $domain)) {
+			scroll $self->{winFight};
+			$self->printw($self->{winFight}, $self->{winFightHeight} - 2, 0, "{normal}@<<<<<<< $color@*", $time, $s);
+		} elsif ($self->{winChat} && existsInList("emotion,gmchat,guildchat,partychat,pm,publicchat,selfchat", $domain)) {
+			scroll $self->{winChat};
+			$self->printw($self->{winChat}, $self->{winChatHeight} - 2, 0, "{normal}@<<<<<<< $color@*", $time, $s);
+		} else {
+			scroll $self->{winLog};
+			$self->printw($self->{winLog}, $self->{winLogHeight} - 1, 0, "{normal}@<<<<<<< $color@*", $time, $s);
+		}
+	}
+	refresh $self->{winFight} if $self->{winFight};
+	refresh $self->{winLog};
+	refresh $self->{winChat} if $self->{winChat};
+	$self->setCursor;
+}
+
+sub title {
+	my $self = shift;
+	my $title = shift;
+}
+
+sub displayUsage {
+	my $self = shift;
+	my $text = shift;
+
+	print $text;
+}
+
+sub errorDialog {
+	my $self = shift;
+	my $msg = shift;
+	my $fatal = shift;
+
+	# FIXME: Need better error dialog
+	print "ERROR: $msg";
+}
+
+################################
+
+sub readEvents {
+	my $self = shift;
 
 	my $ch = getch();
 	return undef if ($ch eq ERR);
@@ -183,60 +263,6 @@ sub getInput {
 
 	return ($ret ne "") ? $ret : undef;
 }
-
-sub writeOutput {
-	my $self = shift;
-	my $type = shift;
-	my $msg = shift;
-	my $domain = shift;
-
-	my @localtime = localtime time;
-	my $time = sprintf("%02d:%02d:%02d", $localtime[2], $localtime[1], $localtime[0]);
-	my $color = $consoleColors{$type}{$domain} ne "" ? lc($consoleColors{$type}{$domain}) : lc($consoleColors{$type}{default});
-	$color = "bold|" . $color unless $color eq "" || $color =~ /^dark/;
-	$color =~ s/^dark//g;
-	$color =~ s/gr[ae]y/white/g;
-	$color = "{" . $color . "}" unless $color eq "";
-	foreach my $s (split("\n", $msg)) {
-		if ($self->{winFight} && existsInList("attackMon,attackMonMiss,attacked,attackedMiss,skill,parseMsg_damage", $domain)) {
-			scroll $self->{winFight};
-			$self->printw($self->{winFight}, $self->{winFightHeight} - 2, 0, "{normal}@<<<<<<< $color@*", $time, $s);
-		} elsif ($self->{winChat} && existsInList("emotion,gmchat,guildchat,partychat,pm,publicchat,selfchat", $domain)) {
-			scroll $self->{winChat};
-			$self->printw($self->{winChat}, $self->{winChatHeight} - 2, 0, "{normal}@<<<<<<< $color@*", $time, $s);
-		} else {
-			scroll $self->{winLog};
-			$self->printw($self->{winLog}, $self->{winLogHeight} - 1, 0, "{normal}@<<<<<<< $color@*", $time, $s);
-		}
-	}
-	refresh $self->{winFight} if $self->{winFight};
-	refresh $self->{winLog};
-	refresh $self->{winChat} if $self->{winChat};
-	$self->setCursor;
-}
-
-sub title {
-	my $self = shift;
-	my $title = shift;
-}
-
-sub displayUsage {
-	my $self = shift;
-	my $text = shift;
-
-	print $text;
-}
-
-sub errorDialog {
-	my $self = shift;
-	my $msg = shift;
-	my $fatal = shift;
-
-	# FIXME: Need better error dialog
-	print "ERROR: $msg";
-}
-
-################################
 
 sub printw {
 	my $self = shift;
