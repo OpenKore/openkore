@@ -23,6 +23,7 @@ use Time::HiRes qw(time usleep);
 use IO::Socket::INET;
 use Exporter;
 use base qw(Exporter);
+# Do not use any other Kore modules here. It will create circular dependancies.
 
 our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
@@ -43,20 +44,21 @@ our @EXPORT = qw(
 # binAdd(r_array, ID)
 # r_array: a reference to an array.
 # ID: the element to add to @r_array.
+# Returns: the index of the element inside @r_array.
 #
 # Add $ID to the first empty slot in @r_array, or append it to
 # the end of @r_array if there are no empty slots.
 #
 # Example:
 # @list = ("ID1", undef, "ID2");
-# binAdd(\@list, "New");
+# binAdd(\@list, "New");   # --> Returns: 1
 # # Result:
 # # $list[0] eq "ID1"
 # # $list[1] eq "New"
 # # $list[2] eq "ID2"
 #
 # @list = ("ID1", "ID2");
-# binAdd(\@list, "New")
+# binAdd(\@list, "New");   # --> Returns: 2
 # # Result:
 # # $list[0] eq "ID1"
 # # $list[1] eq "ID2"
@@ -77,7 +79,7 @@ sub binAdd {
 # binFind(r_array, ID)
 # r_array: a reference to an array.
 # ID: the element to search for.
-# Returns: the element number of $ID, or undef is $ID
+# Returns: the index of the element for $ID, or undef is $ID
 #          is not an element in @r_array.
 #
 # Look for element $ID in @r_array.

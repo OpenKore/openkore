@@ -37,7 +37,7 @@ use Time::HiRes qw/time/;
 use Text::Wrap;
 use Win32::Console;
 
-use Settings;
+use Globals;
 use base qw(Interface::Console);
 
 our %fgcolors;

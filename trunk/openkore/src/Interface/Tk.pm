@@ -26,7 +26,7 @@ use warnings;
 use Interface;
 use base qw/Interface/;
 use Plugins qw/addHook/;
-use Settings;
+use Globals;
 
 use Carp qw/carp croak confess/;
 use Time::HiRes qw/time/;

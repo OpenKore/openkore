@@ -8,11 +8,6 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#
-#
-#  $Revision$
-#  $Id$
-#
 #########################################################################
 ##
 # MODULE DESCRIPTION: Logging framework
@@ -103,7 +98,7 @@ use Carp;
 use Utils;
 use Exporter;
 use IO::Socket;
-use Settings;
+use Globals;
 use Interface;
 
 our @ISA = qw(Exporter);
@@ -116,7 +111,7 @@ our @EXPORT_OK = qw(
 
 #################################
 #################################
-#VARIABLES
+# VARIABLES
 #################################
 #################################
 
@@ -153,7 +148,7 @@ our $chatTimestamp;
 
 #################################
 #################################
-#PRIVATE FUNCTIONS
+# PRIVATE FUNCTIONS
 #################################
 #################################
 
@@ -213,7 +208,7 @@ sub setColor {
 
 #################################
 #################################
-#PUBLIC METHODS
+# PUBLIC METHODS
 #################################
 #################################
 
