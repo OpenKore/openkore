@@ -1098,13 +1098,6 @@ sub parseCommand {
 			}
 		}
 
-	} elsif ($switch eq "openshop") {
-		if (!$shopstarted) {
-			sendOpenShop(\$remote_socket);
-		} else {
-			error "Error: a shop has already been opened.\n";
-		}
-
 	} elsif ($switch eq "p") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
@@ -4704,7 +4697,7 @@ sub AI {
 
 	if ($config{"shopAuto_open"} && $ai_seq[0] eq "" && $conState == 5 && !$shopstarted && $chars[$config{'char'}]{'sitting'}
 	    && timeOut(\%{$timeout{'ai_shop'}})) {
-		sendOpenShop(\$remote_socket);
+		openShop();
 	}
 
 
@@ -5458,7 +5451,7 @@ sub parseMsg {
 
 		if ($ID eq $accountID) {
 			message "You have died\n";
-			sendCloseShop(\$remote_socket) unless $config{'dcOnDeath'} == -1;
+			closeShop() unless $config{'dcOnDeath'} == -1;
 			$chars[$config{'char'}]{'deathCount'}++;
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
@@ -7334,8 +7327,8 @@ sub parseMsg {
 			$item->{upgrade} = unpack("C1", substr($msg, 12 + $psize, 1));
 			$item->{cards} = substr($msg, 13 + $psize, 8);
 			$item->{name} = itemName($item);
-			message "Cart Item Added: $item->{name} ($index) x $amount\n";
 		}
+		message "Cart Item Added: $item->{name} ($index) x $amount\n";
 
 	} elsif ($switch eq "0125") {
 		my $index = unpack("S1", substr($msg, 2, 2));
@@ -7466,7 +7459,7 @@ sub parseMsg {
 			#$articles[$number] = "";
 			if (!--$articles){
 				message("Items have been sold out.\n", "sold");
-				sendCloseShop(\$remote_socket);
+				closeShop();
 			}
 		}
 
@@ -10339,6 +10332,112 @@ sub manualMove {
 	$ai_v{'temp'}{'x'} = $chars[$config{'char'}]{'pos_to'}{'x'} + $delta_x;
 	$ai_v{'temp'}{'y'} = $chars[$config{'char'}]{'pos_to'}{'y'} + $delta_y;
 	ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'});
+}
+
+##
+# findCartItemInit()
+#
+# Resets all "found" flags in the cart to 0.
+sub findCartItemInit {
+	for (@{$cart{inventory}}) {
+		next unless %{$_};
+		undef $_->{found};
+	}
+}
+
+##
+# findCartItem($name [, $found])
+#
+# Returns the integer index into $cart{inventory} for the cart item matching
+# the given name, or undef.
+#
+# If an item is found, the "found" value for that item is set to 1. Items
+# cannot be found again until you reset the "found" flags using
+# findCartItemInit(), if $found is true.
+sub findCartItem {
+	my ($name, $found) = @_;
+
+	$name = lc($name);
+	my $index = 0;
+	for (@{$cart{inventory}}) {
+		if (lc($_->{name}) eq $name && !($found && $_->{found})) {
+			$_->{found} = 1;
+			return $index;
+		}
+		$index++;
+	}
+	return undef;
+}
+
+##
+# makeShop()
+#
+# Returns an array of items to sell. The array can be no larger than the
+# maximum number of items that the character can vend. Each item is a hash
+# reference containing the keys "index", "amount" and "price".
+sub makeShop {
+	return unless $char->{skills}{MC_VENDING}{lv};
+
+	my @items = ();
+	my $max_items = $char->{skills}{MC_VENDING}{lv} + 2;
+
+	# Iterate through items to be sold
+	findCartItemInit();
+	for my $sale (@{$shop{items}}) {
+		my $index = findCartItem($sale->{name}, 1);
+		next unless defined($index);
+
+		# Found item to vend
+		my $amount = $cart{inventory}[$index]->{amount};
+
+		my %item;
+		$item{index} = $index;
+		$item{price} = $sale->{price};
+		$item{amount} = 
+			$sale->{amount} && $sale->{amount} < $amount ?
+			$sale->{amount} : $amount;
+		push(@items, \%item);
+
+		# We can't vend anymore items
+		last if @items >= $max_items;
+	}
+
+	return @items;
+}
+
+sub openShop {
+	if ($shopstarted) {
+		error "A shop has already been opened.\n";
+		return;
+	}
+
+	if (!$char->{skills}{MC_VENDING}{lv}) {
+		error "You don't have the Vending skill.\n";
+		return;
+	}
+
+	if (!$shop{title}) {
+		error "Your shop does not have a title.\n";
+		return;
+	}
+
+	my @items = makeShop();
+	if (!@items) {
+		error "There are no items to sell.\n";
+		return;
+	}
+
+	sendOpenShop($shop{title}, \@items);
+	message "Shop opened ($shop{title}) with ".@items." selling items.\n", "success";
+	$shopstarted = 1;
+}
+
+sub closeShop {
+	sendCloseShop();
+
+	$shopstarted = 0;
+	$timeout{'ai_shop'}{'time'} = time;
+	message "Shop closed.\n";
 }
 
 return 1;
