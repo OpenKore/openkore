@@ -73,6 +73,10 @@ New features:
 - Area effect spell appeared/disappeared message added,
   domain skill, debug level 2
 - When displaying exp gained, also display % of base/job gained
+- New talk sequence code:
+  d# - send # to the NPC (useful for buying forging items)
+  If you wanted to buy 100 mini furnaces for example:
+  c r1 c r0 c d100
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -90,6 +94,13 @@ mon_control.txt:
   enough. Example:
   Sohee 1 0 0 50
   Only attack Sohee if your are lv 50 or higher.
+
+items_control.txt:
+- items_control.txt now has ability to automatically get items from cart
+  The new syntax is:
+  (item name) (minimum in inventory) (autostore) (autosell) [put in cart] [get from cart]
+  So to automatically keep 10 Meat in inventory from cart:
+  Meat 10 0 0 0 1
 
 New commands:
 - guild join (flag)
@@ -202,6 +213,7 @@ Bug fixes:
   instead of trying to cast an empty skill ID
 - "Monster x changed to y" message no longer displays blank y
 - Check for numeric argument in Commands::cmdUseSkill.
+- Fixed bug in "cartGet" AI sequence
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
