@@ -3784,7 +3784,7 @@ sub AI {
 			$party_skill{skillLvl} = $smartHeal_lv;
 		}
 		if ($party_skill{skillLvl} > 0) {
-			debug qq~Party Skill used ($char->{party}{users}{$partyUsersID[$j]}{name}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~;
+			debug qq~Party Skill used ($char->{party}{users}{$party_skill{targetID}}{name}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~;
 			if (!ai_getSkillUseType($party_skill{skillID})) {
 				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $party_skill{targetID});
 			} else {
