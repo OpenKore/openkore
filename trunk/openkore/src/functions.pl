@@ -4442,8 +4442,11 @@ sub AI {
 	#so the current position solution array is the final solution to be stepped through
 	#
 	#If we have a solution, and our stepping index is at the end of the solution, and the solution ready flag is set,
-	#then we are done
-	if ($ai_seq[0] eq "route" && @{$ai_seq_args[0]{'solution'}} && $ai_seq_args[0]{'index'} == @{$ai_seq_args[0]{'solution'}} - 1 && $ai_seq_args[0]{'solutionReady'}) {
+	#and we really are at the destination, then we are done
+	if ($ai_seq[0] eq "route" && @{$ai_seq_args[0]{'solution'}} && $ai_seq_args[0]{'index'} == @{$ai_seq_args[0]{'solution'}} - 1 && $ai_seq_args[0]{'solutionReady'}
+	 && $ai_seq_args[0]{solution}[$ai_seq_args[0]{'index'}]{x} == $chars[$config{char}]{pos_to}{x}
+	 && $ai_seq_args[0]{solution}[$ai_seq_args[0]{'index'}]{y} == $chars[$config{char}]{pos_to}{y}
+	) {
 		debug "Route success\n", "route";
 		shift @ai_seq;
 		shift @ai_seq_args;
