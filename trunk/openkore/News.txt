@@ -31,6 +31,9 @@ New config options:
 Internal:
 - $interface->beep() function for cross-platform beep support.
 
+Credits:
+- asuwannarat: tRO server details.
+
 
 ==================
 ### 1.5.0 (beta)
