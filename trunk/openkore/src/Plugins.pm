@@ -100,7 +100,7 @@ sub unload {
 
 
 ##
-# Plugins::unloadAll
+# Plugins::unloadAll()
 #
 # Unloads all registered plugins.
 sub unloadAll {
