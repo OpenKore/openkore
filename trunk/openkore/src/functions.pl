@@ -7965,9 +7965,9 @@ sub parseMsg {
 		my ($address) = substr($msg, 2, 60) =~ /([\s\S]*?)\000/;
 		my ($message) = substr($msg, 62, 120) =~ /([\s\S]*?)\000/;
 		message	"---Guild Notice---\n"
-			,"$address\n\n"
-			,"$message\n"
-			,"------------------\n";
+			."$address\n\n"
+			."$message\n"
+			."------------------\n";
 
 	} elsif ($switch eq "0171") {
 		my $ID = substr($msg, 2, 4);
