@@ -11,6 +11,7 @@ USE_GTK = 0
 WIN32 = 0
 
 DEBUG = ARGUMENTS.get('DEBUG', 0);
+CC = ARGUMENTS.get('CC', None);
 
 PREFIX = ARGUMENTS.get('PREFIX', '/usr/local')
 BINDIR = ARGUMENTS.get('BINDIR', PREFIX + '/bin')
@@ -25,6 +26,8 @@ env = Environment(
 	CCFLAGS='-Wall -O2 -g',
 	CPPPATH=['.'],
 	LINKFLAGS='')
+if CC != None:
+	env['CC'] = CC
 
 if platform == "cygwin":
 	env['CCFLAGS'] += ' -mno-cygwin'
