@@ -562,7 +562,7 @@ sub cmdMonsterList {
 
 		message(swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<",
-			[$i, getHex($monstersID[$i])." ".$monsters{$monstersID[$i]}{'name'}, $dmgTo, $dmgFrom, $dist, $pos]),
+			[$i, $monsters{$monstersID[$i]}{'name'}, $dmgTo, $dmgFrom, $dist, $pos]),
 			"list");
 	}
 	message("----------------------------------\n", "list");
