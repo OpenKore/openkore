@@ -72,6 +72,7 @@ Bug fixes:
 - MO_BODYRELOCATION is now recognized as an area-usage skill.
 - Don't display "level 65535" when an area-usage skill is used.
 - Arrow equip is detected correctly.
+- Incoming Request to join Guild message now displays guild name.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
