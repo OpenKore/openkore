@@ -152,12 +152,12 @@ GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index) {
 	return NULL;
 }
 
-/*! \brief Function to sort a Grf::files array
+/** Function to sort a Grf::files array
  *
- * \param grf Pointer to Grf struct which needs its files array sorted
- * \param callback Function to determine which entry should be before the
- *		other. It should return -1 if the first file should be first,
- *		0 if they are equal, or 1 if the first file should be second.
+ * @param grf Pointer to Grf struct which needs its files array sorted
+ * @param compar Callback function to determine which entry should be before the
+ *               other. It should return -1 if the first file should be first,
+ *               0 if they are equal, or 1 if the first file should be second.
  */
 GRFEXPORT void grf_sort (Grf *grf, int(*compar)(const void *, const void *)) {
 	/* Run the sort */
@@ -263,14 +263,17 @@ static const char *GRF_strerror_type(GrfErrorType error) {
 	};
 }
 
-/*! \brief Private function
+
+/** Private function
  *
  * Convert zlib #defines into a string constant
  *
- * \param error zlib error number to grab a name
- * \return Human-readable string explanation of the error number
+ * @param error zlib error number to grab a name
+ * @return Human-readable string explanation of the error number
  */
-static const char *GRF_strerror_zlib(int error) {
+static const char *
+GRF_strerror_zlib(int error)
+{
 	switch (error) {
 	case Z_OK:
 		return "zlib success.";
@@ -293,15 +296,18 @@ static const char *GRF_strerror_zlib(int error) {
 	}
 }
 
-/*! \brief Function to create a string from a GrfError struct or enum
+
+/** Create a human-readable message from a GrfError struct or enum
  *
- * \note A pointer for the err argument isn't used only to keep
+ * @note A pointer for the err argument isn't used only to keep
  *		compatibility with the older libgrf
  *
- * \param err Error struct/enum containing information we need
- * \return A human-readable character string
+ * @param err Error structure containing information we need
+ * @return A human-readable string, which must not be freed.
  */
-GRFEXPORT const char *grf_strerror(GrfError err) {
+GRFEXPORT const char *
+grf_strerror(GrfError err)
+{
 	static char errbuf[0x1000];
 	const char *tmpbuf;
 	int dummy;
@@ -326,5 +332,6 @@ GRFEXPORT const char *grf_strerror(GrfError err) {
 
 	return errbuf;
 }
+
 
 GRFEXTERN_END
