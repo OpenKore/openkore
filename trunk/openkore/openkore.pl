@@ -70,7 +70,7 @@ import Settings qw(addConfigFile);
 addConfigFile($Settings::config_file, \%config,\&parseDataFile2);
 addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
 addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
-addConfigFile("$Settings::control_folder/overallauth.txt", \%overallAuth, \&parseDataFile);
+addConfigFile("$Settings::control_folder/overallAuth.txt", \%overallAuth, \&parseDataFile);
 addConfigFile($Settings::pickupitems_file, \%itemsPickup, \&parseDataFile_lc);
 addConfigFile("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
 addConfigFile("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);

@@ -2,6 +2,12 @@
 ### CVS
 ==================
 
+***** CURRENTLY BROKEN STUFF *****
+- follow (need to check again)
+- routing (fails way too often; sometimes even walks backward)
+- seems to lag out on some priv servers
+
+
 New features:
 - Kore will no longer hug walls!
   NOTE TO LINUX USERS: Tools.cpp has changed. Type 'make' to recompile Tools.so.
@@ -54,6 +60,8 @@ New commands:
   Respond to an NPC with a number.
 - plugin
   Control plugins. Type 'plugin help' for full usage description.
+- ai clear
+  Clears the AI sequence queue.
 
 
 New configuration options:
