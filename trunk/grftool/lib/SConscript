@@ -4,7 +4,7 @@ lib = env.Copy()
 
 lib['CPPDEFINES'] = []
 if DEBUG:
-	lib['CPPDEFINES'] += ['-DDEBUG']
+	lib['CPPDEFINES'] += ['DEBUG']
 if WIN32:
 	lib['CPPDEFINES'] += ['GRF_STATIC', 'SPR_STATIC', 'WIN32']
 
