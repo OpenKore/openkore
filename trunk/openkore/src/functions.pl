@@ -3614,14 +3614,17 @@ sub AI {
 
 		if ($monsters{$ID} && %{$monsters{$ID}} && $ai_seq_args[1]{monsterPos} && %{$attackSeq->{monsterPos}}
 		 && distance($monsters{$ID}{pos_to}, $attackSeq->{monsterPos}) > $attackSeq->{'attackMethod'}{'distance'}) {
+			# Stop moving
 			shift @ai_seq;
 			shift @ai_seq_args;
 			if ($ai_seq[0] eq "move") {
 				shift @ai_seq;
 				shift @ai_seq_args;
 			}
-			$ai_seq_args[0]{movedCount}--;
+
+			$ai_seq_args[0]{movedCount} -= 0.5;
 			$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
+			debug "Target has moved; readjusting route\n", "ai_attack";
 		}
 	}
 
@@ -8780,12 +8783,10 @@ sub look {
 sub move {
 	my $x = shift;
 	my $y = shift;
-	my $triggeredByRoute = shift;
 	my $attackID = shift;
 	my %args;
 	$args{'move_to'}{'x'} = $x;
 	$args{'move_to'}{'y'} = $y;
-	$args{'triggeredByRoute'} = $triggeredByRoute;
 	$args{'attackID'} = $attackID;
 	$args{'ai_move_giveup'}{'time'} = time;
 	$args{'ai_move_giveup'}{'timeout'} = $timeout{'ai_move_giveup'}{'timeout'};
