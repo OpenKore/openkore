@@ -185,7 +185,8 @@ sub checkConnection {
 				sendMasterCodeRequest(\$remote_socket, 'type', $master->{secureLogin_type});
 			}
 		} else {
-			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'}, $master->{master_version});
+			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'},
+				$master->{master_version}, $master->{version});
 		}
 
 		$timeout{'master'}{'time'} = time;
@@ -2350,7 +2351,7 @@ sub AI {
 				my %item;
 				while (exists $config{"getAuto_$ai_seq_args[0]{index}"}) {
 					if (!$config{"getAuto_$ai_seq_args[0]{index}"}) {
-						$i++;
+						$ai_seq_args[0]{index}++;
 						next;
 					}
 
@@ -5005,7 +5006,7 @@ sub parseMsg {
 				$master->{master_version} = 0;
 				$master->{version}++;
 			}
-			relog();
+			relog(2);
 		} elsif ($type == 6) {
 			error("The server is temporarily blocking your connection\n", "connection");
 		}
@@ -6053,11 +6054,16 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
-		my $msg = substr($msg, 0, 28).$newmsg;
+		$msg = substr($msg, 0, 28) . $newmsg;
 		my ($privMsgUser) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
 		my $privMsg = substr($msg, 28, $msg_size - 29);
 		if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
-			$privMsgUsers[@privMsgUsers] = $privMsgUser;
+			push @privMsgUsers, $privMsgUser;
+			Plugins::callHook('parseMsg/addPrivMsgUser', {
+				user => $privMsgUser,
+				msg => $privMsg,
+				userList => \@privMsgUsers
+			});
 		}
 
 		stripLanguageCode(\$privMsg);
@@ -9087,12 +9093,13 @@ sub move {
 }
 
 sub relog {
+	my $timeout = (shift || 5);
 	$conState = 1;
 	undef $conState_tries;
 	$timeout_ex{'master'}{'time'} = time;
-	$timeout_ex{'master'}{'timeout'} = 5;
+	$timeout_ex{'master'}{'timeout'} = $timeout;
 	Network::disconnect(\$remote_socket);
-	message "Relogging in 5 seconds...\n", "connection";
+	message "Relogging in $timeout seconds...\n", "connection";
 }
 
 sub sit {
@@ -9542,7 +9549,7 @@ sub avoidGM_near {
 		my $j = 0;
 		while (exists $config{"avoid_ignore_$j"}) {
 			if (!$config{"avoid_ignore_$j"}) {
-				$i++;
+				$j++;
 				next;
 			}
 

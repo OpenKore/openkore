@@ -27,7 +27,7 @@ package Interface::Wx;
 use strict;
 use Wx ':everything';
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
-		EVT_CHOICE EVT_TIMER EVT_TASKBAR_LEFT_DOWN);
+		EVT_CHOICE EVT_TIMER EVT_TASKBAR_LEFT_DOWN EVT_KEY_DOWN);
 use Time::HiRes qw(time sleep);
 use File::Spec;
 
@@ -51,8 +51,6 @@ use Utils;
 
 our $CVS;
 our $iterationTime;
-our $controlTime;
-our $itemListTime;
 
 
 sub OnInit {
@@ -62,8 +60,11 @@ sub OnInit {
 	$self->createInterface;
 	$self->iterate;
 
-	$self->{loadHook} = Plugins::addHook('loadfiles', sub { $self->onLoadFiles(@_); });
-	$self->{postLoadHook} = Plugins::addHook('postloadfiles', sub { $self->onLoadFiles(@_); });
+	$self->{hooks} = Plugins::addHooks(
+		'loadfiles', sub { $self->onLoadFiles(@_); }, undef,
+		'postloadfiles', sub { $self->onLoadFiles(@_); }, undef,
+		'parseMsg/addPrivMsgUser', sub { $self->onAddPrivMsgUser(@_); }, undef
+	);
 
 	$self->{history} = [];
 	$self->{historyIndex} = -1;
@@ -73,13 +74,29 @@ sub OnInit {
 		"Interface::Wx::Console",
 		"Interface::Wx::Input",
 		"Interface::Wx::ItemList");
+
+
+	# Update user interface controls
+
+	my $timer = new Wx::Timer($self, 248);
+	EVT_TIMER($self, 248, sub {
+		$self->updateStatusBar;
+		$self->updateMapViewer;
+	});
+	$timer->Start(15);
+
+	$timer = new Wx::Timer($self, 249);
+	EVT_TIMER($self, 249, sub {
+		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
+	});
+	$timer->Start(35);
+
 	return 1;
 }
 
 sub DESTROY {
 	my $self = shift;
-	Plugins::delHook($self->{loadHook});
-	Plugins::delHook($self->{postLoadHook});
+	Plugins::delHooks($self->{hooks});
 }
 
 sub mainLoop {
@@ -102,20 +119,6 @@ sub mainLoop {
 		}
 		main::mainLoop();
 		main::checkConnection();
-
-
-		# Update user interface controls
-
-		if (timeOut($controlTime, 0.15)) {
-			$self->updateStatusBar;
-			$self->updateMapViewer;
-			$controlTime = time;
-		}
-
-		if (timeOut($itemListTime, 0.35)) {
-			$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
-			$itemListTime = time;
-		}
 
 		$self->{iterating}--;
 	};
@@ -351,12 +354,18 @@ sub createInterface {
 	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$vsizer->Add($hsizer, 0, wxGROW);
 
+	my $targetBox = $self->{targetBox} = new Wx::ComboBox($frame, -1, "", wxDefaultPosition,
+		[115, 0]);
+	$targetBox->SetName('targetBox');
+	$hsizer->Add($targetBox, 0, wxGROW);
+	EVT_KEY_DOWN($self, \&onTargetBoxKeyDown);
+
 	my $inputBox = $self->{inputBox} = new Interface::Wx::Input($frame);
 	$inputBox->onEnter($self, \&onInputEnter);
 	$hsizer->Add($inputBox, 1, wxGROW);
 
 	my $choice = $self->{inputType} = new Wx::Choice($frame, 456, wxDefaultPosition, wxDefaultSize,
-			['Command', 'Public chat', 'Private chat', 'Party chat', 'Guild chat']);
+			['Command', 'Public chat', 'Party chat', 'Guild chat']);
 	$choice->SetSelection(0);
 	EVT_CHOICE($self, 456, sub { $inputBox->SetFocus; });
 	$hsizer->Add($choice, 0, wxGROW);
@@ -487,7 +496,7 @@ sub onInputEnter {
 	my $command;
 
 	my $n = $self->{inputType}->GetSelection;
-	if ($n == 0 || $text =~ /^\/(.*)/) {
+	if (($n == 0 || $text =~ /^\/(.*)/) && $self->{targetBox}->GetValue eq "") {
 		my $command = ($n == 0) ? $text : $1;
 		$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
 		$self->{console}->AppendText("$command\n");
@@ -498,11 +507,11 @@ sub onInputEnter {
 	}
 
 	return unless $conState == 5;
-	if ($n == 1) { # Public chat
+	if ($self->{targetBox}->GetValue ne "") {
+		main::sendMessage(\$remote_socket, "pm", $text, $self->{targetBox}->GetValue);
+	} elsif ($n == 1) { # Public chat
 		main::sendMessage(\$remote_socket, "c", $text);
-	} elsif ($n == 2) { # Private chat
-		$self->{console}->add("error", "This feature is not supported yet. Please use the 'pm' command.\n");
-	} elsif ($n == 3) { # Party chat
+	} elsif ($n == 2) { # Party chat
 		main::sendMessage(\$remote_socket, "p", $text);
 	} else { # Guild chat
 		main::sendMessage(\$remote_socket, "g", $text);
@@ -598,6 +607,24 @@ sub onItemListActivate {
 	}
 
 	$self->{inputBox}->SetFocus;
+}
+
+sub onTargetBoxKeyDown {
+	my $self = shift;
+	my $event = shift;
+
+	if ($event->GetKeyCode == WXK_TAB && !$event->ShiftDown) {
+		$self->{inputBox}->SetFocus;
+
+	} else {
+		$event->Skip;
+	}
+}
+
+sub onAddPrivMsgUser {
+	my $self = shift;
+	my $param = $_[1];
+	$self->{targetBox}->Append($param->{user});
 }
 
 1;

@@ -91,7 +91,7 @@ sub _onUpdown {
 			$self->SetInsertionPointEnd;
 		}
 
-	} elsif ($event->GetKeyCode == WXK_TAB && $Settings::CVS =~ /CVS/) {
+	} elsif ($event->GetKeyCode == WXK_TAB && !$event->ShiftDown && $Settings::CVS =~ /CVS/) {
 		my $pos = $self->GetInsertionPoint;
 		my $pre = substr($self->GetValue, 0, $pos);
 		my $post = substr($self->GetValue, $pos);
@@ -99,6 +99,12 @@ sub _onUpdown {
 		my $completed = Commands::complete($pre);
 		$self->SetValue($completed . $post);
 		$self->SetInsertionPoint(length($completed));
+
+	} elsif ($event->GetKeyCode == WXK_TAB && $event->ShiftDown) {
+		my $parent = $self->GetParent;
+		my $targetBox;
+		$targetBox = $parent->FindWindow('targetBox') if ($parent);
+		$targetBox->SetFocus if ($targetBox);
 
 	} else {
 		$event->Skip;

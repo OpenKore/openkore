@@ -250,11 +250,43 @@ sub addHook {
 	my $user_data = shift;
 
 	my %hook = (
-		'r_func' => $r_func,
-		'user_data' => $user_data
+		r_func => $r_func,
+		user_data => $user_data
 	);
 	$hooks{$hookname} = [] if (!defined $hooks{$hookname});
 	return binAdd($hooks{$hookname}, \%hook);
+}
+
+##
+# Plugins::addHooks( (hookname, r_func, user_data)... )
+# Returns: a reference to an array. You need it for Plugins::delHooks()
+#
+# A convenience function for adding many hooks with one function.
+#
+# See also: Plugins::addHook(), Plugins::delHooks()
+#
+# Example:
+# $hooks = Plugins::addHooks(
+# 	'AI_pre',       \&onAI_pre, undef,
+# 	'mainLoop_pre', \&onMainLoop_pre, undef
+# );
+# Plugins::delHooks($hooks);
+#
+# # The above is the same as:
+# $hook1 = Plugins::addHook('AI_pre', \&onAI_pre);
+# $hook2 = Plugins::addHook('mainLoop_pre', \&onMainLoop_pre);
+# Plugins::delHook('AI_pre', $hook1);
+# Plugins::delHook('mainLoop_pre', $hook2);
+sub addHooks {
+	my @hooks;
+	for (my $i = 0; $i < @_; $i += 3) {
+		my %hash = (
+			name => $_[$i],
+			ID => addHook($_[$i], $_[$i + 1], $_[$i + 2])
+		);
+		push @hooks, \%hash;
+	}
+	return \@hooks;
 }
 
 ##
@@ -280,6 +312,17 @@ sub delHook {
 	delete $hooks{$hookname}[$ID] if ($hookname && $hooks{$hookname});
 }
 
+##
+# Plugins::delHook($hooks)
+# $hooks: the return value Plugins::addHooks()
+#
+# Removes all hooks that are registered by Plugins::addHook().
+#
+# See also: Plugins::addHooks(), Plugins::delHook()
+sub delHooks {
+	delHook($_->{name}, $_->{ID}) foreach (@{$_[0]});
+}
+
 
 ##
 # Plugins::callHook(hookname, [r_param])
@@ -297,7 +340,7 @@ sub callHook {
 	return if (!$hooks{$hookname});
 
 	foreach my $hook (@{$hooks{$hookname}}) {
-		$hook->{'r_func'}->($hookname, $r_param, $hook->{'user_data'});
+		$hook->{r_func}->($hookname, $r_param, $hook->{user_data});
 	}
 }
 

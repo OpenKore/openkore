@@ -830,8 +830,13 @@ sub sendMasterLogin {
 	my $username = shift;
 	my $password = shift;
 	my $master_version = shift;
-	my $msg = pack("C*", 0x64,0,$config{'version'},0,0,0) . $username . chr(0) x (24 - length($username)) . 
-			$password . chr(0) x (24 - length($password)) . pack("C*", $master_version);
+	my $version = shift;
+	my $msg;
+
+	$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
+		pack("a24", $username) .
+		pack("a24", $password) .
+		pack("C*", $master_version);
 	sendMsgToServer($r_socket, $msg);
 }
 
