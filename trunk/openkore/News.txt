@@ -6,7 +6,6 @@
 - According to bug reports we can't attack stationary monsters (pupa,
   plants, etc.). The bot will just try forever until it times out.
   This must be fixed. (Though, I can't reproduce this problem myself.)
-- Autostorage with NPC IDs doesn't work?
 
 
 NOTE:
