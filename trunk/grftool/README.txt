@@ -45,17 +45,23 @@ You will also need these components:
 
 Compilation
 -----------
-In order to compile this stuff, you will need Scons, a build system written in Python.
-It can be found at http://www.scons.org/
+In order to compile this stuff, you will need:
+- Cygwin, which contains a free C compiler. http://sources.redhat.com/cygwin/
+  Only required if you're using Windows, of course.
+- Scons, a build system written in Python. http://www.scons.org/
 
-If you have Cygwin, you should download this instead:
-http://openkore.sourceforge.net/misc/scons-cygwin-0.95.tar.bz2
-- Extract the whole archive to C:\cygwin (or wherever you installed Cygwin to).
-- Open a bash shell. cd to this folder (which contains the grftool source code).
+First, install Cygwin. Make sure bash, python, gcc and gcc-mingw are installed.
+
+Then install Scons:
+- Extract the scons source code.
+- Open a bash shell. cd into scons's source folder.
+- Type:
+    python setup.py build
+    python setup.py install
+
+After installing scons, it's time build GRF Tool's source code.
+- Open a bash shell. cd into GRF Tool's source folder.
 - Type: scons
-The source code will now be built.
-
-Note: on Windows, you can extract tar.bz2 archives with WinRAR.
 
 
 Debugging info
