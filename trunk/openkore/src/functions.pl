@@ -2895,7 +2895,7 @@ sub AI {
 
 	##### AUTO STATS #####
 
-	if (!$statChanged && $config{'statsAddAuto'}) {
+	if (!$statChanged && $config{statsAddAuto}) {
 		# Split list of stats/values
 		my @list = split(/ *,+ */, $config{"statsAddAuto_list"});
 		my $statAmount;
@@ -2943,6 +2943,34 @@ sub AI {
 				}
 				# If stat needs to be changed but char doesn't have enough stat points to raise it then
 				# don't raise it, exit loop
+				last;
+			}
+		}
+	}
+
+	##### AUTO SKILLS #####	
+
+	if (!$skillsChanged && $config{skillsAddAuto}) {
+		# Split list of skills and levels
+		my @list = split / *,+ */, lc($config{skillsAddAuto_list});
+
+		foreach my $item (@list) {
+			# Split each skill/level pair
+			my ($sk, $num) = $item =~ /(.*) (\d+)/;
+			my $skill = new Skills(auto => $sk);
+			my $handle = $skill->handle;
+
+			# If skill needs to be raised to match desired amount && skill points are available
+			if ($skill->id && $char->{points_skill} > 0 && $char->{skills}{$handle}{lv} < $num) {
+				# raise skill
+				sendAddSkillPoint(\$remote_socket, $skill->id);
+
+				# save which skill was raised, so that when we received the "skill changed" packet (010F?)
+				# we can changed $skillChanged back to 0 so that kore will start checking again if skills
+				# need to be raised.
+				# this basically does what $statChanged does for stats
+				$skillChanged = $handle;
+				# after we raise a skill, exit loop
 				last;
 			}
 		}
@@ -7650,6 +7678,11 @@ sub parseMsg {
 			}
 			$skillsID_lut{$skillID} = $skills_lut{$skillName};
 			binAdd(\@skillsID, $skillName);
+
+			# Reset $skillChanged back to 0 to tell kore that a skill can be auto-raised again
+			if ($skillChanged eq $skillName) {
+				$skillChanged = 0;
+			}
 
 			Plugins::callHook('packet_charSkills', {
 				'ID' => $skillID,
