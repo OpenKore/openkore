@@ -6340,6 +6340,10 @@ sub parseMsg {
 				debug "Something: $val\n", "parseMsg";
 			}
 		}
+		Plugins::callHook('packet_charStats',
+			'type'	=> $type,
+			'val'	=> $val,
+			);
 
 
 	} elsif ($switch eq "00BD") {
@@ -6898,17 +6902,23 @@ sub parseMsg {
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef @skillsID;
 		for($i = 4;$i < $msg_size;$i+=37) {
-			$ID = unpack("S1", substr($msg, $i, 2));
-			($name) = substr($msg, $i + 12, 24) =~ /([\s\S]*?)\000/;
-			if (!$name) {
-				$name = $skills_rlut{lc($skillsID_lut{$ID})};
+			my $skillID = unpack("S1", substr($msg, $i, 2));
+			my $level = unpack("S1", substr($msg, $i + 6, 2));
+			($skillName) = substr($msg, $i + 12, 24) =~ /([\s\S]*?)\000/;
+			if (!$skillName) {
+				$skillName = $skills_rlut{lc($skillsID_lut{$ID})};
 			}
-			$chars[$config{'char'}]{'skills'}{$name}{'ID'} = $ID;
-			if (!$chars[$config{'char'}]{'skills'}{$name}{'lv'}) {
-				$chars[$config{'char'}]{'skills'}{$name}{'lv'} = unpack("S1", substr($msg, $i + 6, 2));
+			$chars[$config{'char'}]{'skills'}{$skillName}{'ID'} = $skillID;
+			if (!$chars[$config{'char'}]{'skills'}{$skillName}{'lv'}) {
+				$chars[$config{'char'}]{'skills'}{$skillName}{'lv'} = $level;
 			}
-			$skillsID_lut{$ID} = $skills_lut{$name};
-			binAdd(\@skillsID, $name);
+			$skillsID_lut{$ID} = $skills_lut{$skillName};
+			binAdd(\@skillsID, $skillName);
+			Plugins::callHook('packet_charSkills',
+				'ID' => $skillID,
+				'skillName' => $skillName,
+				'level' => $level,
+				);
 		}
 
 	} elsif ($switch eq "0110") {
