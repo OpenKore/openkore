@@ -655,6 +655,13 @@ sub sendDrop {
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xA2, 0x00) . pack("S*", $index, $amount);
+	} elsif ($config{serverType} == 3) {
+		$msg = pack("C*", 0x16, 0x01) .
+			pack("C*", 0x00, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00) .
+			pack("C*", 0xc7, 0x00, 0x98, 0xe5, 0x12) .
+			pack("S*", $index) .
+			pack("C*", 0x00) .
+			pack("S*", $amount);
 	} else {
 		$msg = pack("C*", 0xA2, 0x00) .
 			pack("C*", 0xFF, 0xFF, 0x08, 0x10) .
@@ -840,6 +847,13 @@ sub sendItemUse {
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xA7, 0x00).pack("S*",$ID).$targetID;
+	} elsif ($config{serverType} == 3) {
+		$msg = pack("C*", 0x9f, 0x00, 0x12, 0x00) .
+			pack("C*", 0xf8) .
+			pack("S*", $ID) .
+			pack("C*", 0x20) .
+			pack("C*", 0x60, 0xfb, 0x12, 0x00, 0x1c) .
+			$targetID;
 	} else {
 		$msg = pack("C*", 0xA7, 0x00, 0x9A, 0x12, 0x1C).pack("S*", $ID, 0).$targetID;
 	}
