@@ -334,9 +334,7 @@ sub mainLoop {
 		 || $oldChar ne $config{'char'}) {
 			relog();
 		} else {
-			aiRemove("move");
-			aiRemove("route");
-			aiRemove("mapRoute");
+			AI::clear("move", "route", "mapRoute");
 		}
 
 		initConfChange();
@@ -1520,7 +1518,7 @@ foreach (keys %monsters) { if (!$monsters{$_}{name}) { chatLog("k", "Monster wit
 
 	if (timeOut(\%{$timeout{'ai_getInfo'}})) {
 		foreach (keys %players) {
-			if ($players{$_}{'name'} eq "Unknown") {
+			if (!$players{$ID}{'gotName'} && $players{$_}{'name'} eq "Unknown") {
 				sendGetPlayerInfo(\$remote_socket, $_);
 				last;
 			}
@@ -4642,7 +4640,13 @@ sub parseSendMsg {
 		decrypt(\$msg, $msg);
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	debug "Packet Switch SENT_BY_CLIENT: $switch\n", "parseSendMsg", 0 if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch));
+	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
+		if ($packetDescriptions{Send}{$switch}) {
+			debug "Packet Switch SENT_BY_CLIENT: $switch - $packetDescriptions{Send}{$switch}\n", "parseSendMsg", 0;
+		} else {
+			debug "Packet Switch SENT_BY_CLIENT: $switch\n", "parseSendMsg", 0;
+		}
+	}
 
 	# If the player tries to manually do something in the RO client, disable AI for a small period
 	# of time using ai_clientSuspend().
@@ -4789,7 +4793,13 @@ sub parseMsg {
 		decrypt(\$msg, $msg);
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	debug "Packet Switch: $switch\n", "parseMsg", 0 if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch));
+	if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
+		if ($packetDescriptions{Recv}{$switch} ne '') {
+			debug "Packet: $switch - $packetDescriptions{Recv}{$switch}\n", "parseMsg", 0;
+		} else {
+			debug "Packet: $switch\n", "parseMsg", 0;
+		}
+	}
 
 	# The user is running in X-Kore mode and wants to switch character.
 	# We're now expecting an accountID.
@@ -5753,8 +5763,9 @@ sub parseMsg {
 		$ID = substr($msg, 2, 4);
 		if (%{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+			$players{$ID}{'gotName'} = 1;
 			if ($config{'debug'} >= 2) {
-				$binID = binFind(\@playersID, $ID);
+				my $binID = binFind(\@playersID, $ID);
 				debug "Player Info: $players{$ID}{'name'} ($binID)\n", "parseMsg", 2;
 			}
 		}
@@ -7755,6 +7766,7 @@ sub parseMsg {
 		my $ID = substr($msg, 2, 4);
 		if (%{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+			$players{$ID}{'gotName'} = 1;
 			($players{$ID}{'party'}{'name'}) = substr($msg, 30, 24) =~ /([\s\S]*?)\000/;
 			($players{$ID}{'guild'}{'name'}) = substr($msg, 54, 24) =~ /([\s\S]*?)\000/;
 			($players{$ID}{'guild'}{'men'}{$players{$ID}{'name'}}{'title'}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
