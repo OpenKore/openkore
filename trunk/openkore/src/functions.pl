@@ -6464,7 +6464,7 @@ sub parseMsg {
 			debug "Player Info: $players{$ID}{'name'} ($binID)\n", "parseMsg_presence", 2;
 		}
 		if (%{$monsters{$ID}}) {
-			my $name = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+			my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			if ($config{'debug'} >= 2) {
 				$binID = binFind(\@monstersID, $ID);
 				debug "Monster Info: $name ($binID)\n", "parseMsg", 2;
