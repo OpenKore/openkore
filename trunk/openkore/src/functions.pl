@@ -3434,7 +3434,7 @@ sub AI {
 	##### AUTO-ATTACK #####
 
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || $ai_seq[0] eq "follow" 
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow" 
 		|| $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
 		&& !($config{'itemsTakeAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_take"))
 		&& !($config{'itemsGatherAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"))
@@ -3619,7 +3619,8 @@ sub AI {
 		# Make sure we don't immediately timeout when we've moved to the monster
 		$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
 
-	} elsif (($ai_seq[0] eq "route" || $ai_seq[0] eq "move") && $ai_seq_args[0]{attackID}) {
+	} elsif ((($ai_seq[0] eq "route" && $ai_seq[1] eq "attack") || ($ai_seq[0] eq "move" && $ai_seq[2] eq "attack"))
+	   && $ai_seq_args[0]{attackID}) {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = $ai_seq_args[0]{attackID};
 		my $attackSeq = ($ai_seq[0] eq "route") ? $ai_seq_args[1] : $ai_seq_args[2];
@@ -5685,7 +5686,7 @@ sub parseMsg {
 			}
 			if ($monsters_lut{$monsters{$ID}{'nameID'}} eq "") {
 				$monsters_lut{$monsters{$ID}{'nameID'}} = $monsters{$ID}{'name'};
-				updateMonsterLUT("tables/monsters.txt", $monsters{$ID}{'nameID'}, $monsters{$ID}{'name'});
+				updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monsters{$ID}{'nameID'}, $monsters{$ID}{'name'});
 			}
 		}
 		if (%{$npcs{$ID}}) {
@@ -5698,7 +5699,7 @@ sub parseMsg {
 				$npcs_lut{$npcs{$ID}{'nameID'}}{'name'} = $npcs{$ID}{'name'};
 				$npcs_lut{$npcs{$ID}{'nameID'}}{'map'} = $field{'name'};
 				%{$npcs_lut{$npcs{$ID}{'nameID'}}{'pos'}} = %{$npcs{$ID}{'pos'}};
-				updateNPCLUT("tables/npcs.txt", $npcs{$ID}{'nameID'}, $field{'name'}, $npcs{$ID}{'pos'}{'x'}, $npcs{$ID}{'pos'}{'y'}, $npcs{$ID}{'name'}); 
+				updateNPCLUT("$Settings::tables_folder/npcs.txt", $npcs{$ID}{'nameID'}, $field{'name'}, $npcs{$ID}{'pos'}{'x'}, $npcs{$ID}{'pos'}{'y'}, $npcs{$ID}{'name'}); 
 			}
 		}
 		if (%{$pets{$ID}}) {
@@ -5930,7 +5931,7 @@ sub parseMsg {
 			$index = unpack("S1", substr($msg, $i, 2));
 			$ID = unpack("S1", substr($msg, $i + 2, 2));
 			$invIndex = findIndex(\@{$chars[$config{char}]{inventory}}, "index", $index);
-			$invIndex ||= findIndex(\@{$chars[$config{char}]{inventory}}, "nameID", "");
+			$invIndex = findIndex(\@{$chars[$config{char}]{inventory}}, "nameID", "") unless defined $invIndex;
 
 			my $item = $chars[$config{char}]{inventory}[$invIndex] = {};
 			$item->{index} = $index;
@@ -5968,10 +5969,10 @@ sub parseMsg {
 			$item->{binID} = binFind(\@storageID, $index);
 			debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
 		}
-		
+
 		$ai_v{temp}{storage_opened} = 1;
 		message "Storage opened.\n", "storage";
-		
+
 	} elsif ($switch eq "00A6") {
 		# Retrieve list of non-stackable (weapons & armor) storage items.
 		# This packet is sent immediately after 00A5/01F0.
@@ -5995,6 +5996,7 @@ sub parseMsg {
 			$item->{binID} = binFind(\@storageID, $index);
 			debug "Storage: $item->{name} ($item->{binID})\n", "parseMsg";
 		}
+
 	} elsif ($switch eq "00A8") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $index = unpack("S1",substr($msg, 2, 2));
@@ -7797,13 +7799,15 @@ sub parseMsg {
 			message("Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
 
 		}
-#monk Spirits
+
 	} elsif ($switch eq "01D0" || $switch eq "01E1"){
-			my $sourceID = substr($msg, 2, 4);
-			if ($sourceID eq $accountID) {
-				$chars[$config{char}]{spirits} = unpack("S1",substr($msg, 6, 2));
-				message "You have $chars[$config{char}]{spirits} spirit(s) now\n", "parseMsg_statuslook", 1;
-			}
+		# Monk Spirits
+		my $sourceID = substr($msg, 2, 4);
+		if ($sourceID eq $accountID) {
+			$chars[$config{char}]{spirits} = unpack("S1",substr($msg, 6, 2));
+			message "You have $chars[$config{char}]{spirits} spirit(s) now\n", "parseMsg_statuslook", 1;
+		}
+	
 	} elsif ($switch eq "01D7") {
 		# Weapon Display (type - 2:hand eq, 9:foot eq)
 		my $sourceID = substr($msg, 2, 4);
@@ -8025,7 +8029,6 @@ sub parseMsg {
 	#	undef %outgoingDeal;
 	#	undef %currentDeal;
 	#	message "Deal Cancelled\n", "deal";
-	#}
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";

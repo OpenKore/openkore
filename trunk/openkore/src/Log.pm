@@ -256,13 +256,13 @@ sub warning {
 # error that prevents the program from performing an action the user requested.
 #
 # Examples of non-recoverable errors:
-#
+# `l
 # - Kore receives the "You haven't paid for this account"-packet. The error is
 #   fatal, so the entire program must exit.
 # - The user typed in an invalid/unrecognized command. Kore cannot perform the
 #   command the user requested, but will not exit because this error is not
 #   fatal.
-#
+# `l`
 # See the description for Log.pm for more details about the parameters.
 sub error {
 	return processMsg("error",
