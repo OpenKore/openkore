@@ -352,8 +352,10 @@ object Form1: TForm1
     Width = 627
     Height = 19
     Panels = <>
+    ParentFont = True
     SimplePanel = True
     SimpleText = 'Click Open to open a GRF archive.'
+    UseSystemFont = False
   end
   object PreviewPane: TPanel
     Left = 442
