@@ -25,3 +25,5 @@
 # or
 #DEFAULT (echo ""; id; echo %{sVv}; date; cat) >> $CVSROOT/CVSROOT/commitlog
 ALL /usr/bin/perl $CVSROOT/CVSROOT/ciabot_cvs.pl %{,,,s} $USER
+CVSROOT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} hongli@users.sourceforge.net
+DEFAULT /cvsroot/sitedocs/CVSROOT/cvstools/syncmail %{sVv} openkore-commits@lists.sourceforge.net
