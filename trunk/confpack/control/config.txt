@@ -226,7 +226,7 @@ partyAutoShare 0
 guildAutoDeny 1
 
 seconds_per_block 0.12
-sleepTime 0
+sleepTime 10000
 
 intervalMapDrt 1
 
