@@ -10,6 +10,7 @@ TYPE=bz2
 DIRS=(.
 	src
 	src/IPC
+	src/Interface
 	src/Interface/Console
 	src/Interface/Console/Other
 	src/Interface/Wx
