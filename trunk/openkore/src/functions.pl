@@ -2618,14 +2618,14 @@ sub AI {
 	}
 
 	if ($ai_seq[0] eq "sellAuto" && $ai_seq_args[0]{'done'}) {
-		$ai_v{'temp'}{'var'} = $ai_seq_args[0]{'forcedByBuy'};
-		$ai_v{'temp'}{'var2'} = $ai_seq_args[0]{'forcedByStorage'};
+		my $var = $ai_seq_args[0]{'forcedByBuy'};
+		my $var2 = $ai_seq_args[0]{'forcedByStorage'};
 		message "Auto-sell sequence completed.\n", "success";
 		AI::dequeue;
-		if ($ai_v{'temp'}{'var2'}) {
+		if ($var2) {
 			unshift @ai_seq, "buyAuto";
 			unshift @ai_seq_args, {forcedByStorage => 1};
-		} elsif (!$ai_v{'temp'}{'var'}) {
+		} elsif (!$var) {
 			unshift @ai_seq, "buyAuto";
 			unshift @ai_seq_args, {forcedBySell => 1};
 		}
