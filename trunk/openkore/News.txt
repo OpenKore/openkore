@@ -2,8 +2,6 @@
 ### CVS
 ==================
 
-- Implemented the new input system that doesn't fork an input server.
-  This will hopefully be totaly transparent to users.
 - Fixed comma placement in formatNumber sub (its what puts the commas
   in your zenny amount.
 - Implemented the ability to set your own npc storage steps.
@@ -49,6 +47,8 @@
   of chat.txt
 - added a handfull of log message domain, refer to Log.pm
 - background color is now supported
+- major changes to input and output systems, Windows users are getting a
+  managed console and basic readline support.
 
 ==================
 ### OpenKore 1.2.1
