@@ -30,6 +30,8 @@ package Interface::Console;
 use strict;
 use warnings;
 
+use Modules;
+
 our $use_curses = 0; #hasn't been writen yet
 
 # This will load proper OS module at run time
