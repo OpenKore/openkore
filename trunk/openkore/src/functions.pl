@@ -4067,7 +4067,9 @@ sub AI {
 			splice(@{$ai_seq_args[0]{'solution'}},1+$ai_seq_args[0]{'maxRouteDistance'}) if $ai_seq_args[0]{'maxRouteDistance'} && $ai_seq_args[0]{'maxRouteDistance'} < @{$ai_seq_args[0]{'solution'}};
 
 			# Trim down solution tree for distFromGoal
-			splice(@{$ai_seq_args[0]{'solution'}}, -$ai_seq_args[0]{distFromGoal}) if ($ai_seq_args[0]{distFromGoal});
+			if ($ai_seq_args[0]{distFromGoal} && @{$ai_seq_args[0]{'solution'}} >= $ai_seq_args[0]{distFromGoal}) {
+				splice(@{$ai_seq_args[0]{'solution'}}, -$ai_seq_args[0]{distFromGoal});
+			}
 
 			undef $ai_seq_args[0]{'mapChanged'};
 			undef $ai_seq_args[0]{'index'};

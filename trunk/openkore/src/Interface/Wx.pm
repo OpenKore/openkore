@@ -367,7 +367,9 @@ sub updateStatusBar {
 	} elsif ($conState > 1 && $conState < 5) {
 		$statText = "Connecting...";
 	} elsif ($conState == 5) {
-		$statText = '';
+		if ($char && $char->{pos_to}) {
+			$statText = "$char->{pos_to}{x},$char->{pos_to}{y}";
+		}
 	}
 
 	if ($conState == 5) {
