@@ -1808,7 +1808,7 @@ sub AI {
 				$sourceMap, $sourcePos{x}, $sourcePos{y});
 		}
 
-		message "Recorded new portal: $sourceMap -> $field{name}\n", "portalRecord";
+		message "Recorded new portal: $sourceMap ($sourcePos{x}, $sourcePos{y}) -> $field{name} ($destPos{x}, $destPos{y})\n", "portalRecord";
 	}
 
 	return if (!$AI);
@@ -8696,9 +8696,9 @@ sub parseMsg {
 		} elsif ($type == 1) {
 			message "Player $name gained a job level!\n";
 		} elsif ($type == 2) {
-			message "$name failed to refine a weapon!\n";
+			message "$name failed to refine a weapon!\n", "refine";
 		} elsif ($type == 3) {
-			message "$name successfully refined a weapon!\n";
+			message "$name successfully refined a weapon!\n", "refine";
 		}
 
 	} elsif ($switch eq "01A0") {
