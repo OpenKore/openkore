@@ -6931,8 +6931,9 @@ sub parseMsg {
 				}
 			}
 			
+			# ailments is not bitwise
 			foreach (keys %skillsAilments) {
-				if ((($param2 & $_) == $_) && (!defined $chars[$config{char}]{ailments}{$skillsAilments{$_}})) {
+				if (($param2 == $_) && (!defined $chars[$config{char}]{ailments}{$skillsAilments{$_}})) {
 					$chars[$config{char}]{ailments}{$skillsAilments{$_}} = 1;
 					message "You have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
 				} elsif (defined $chars[$config{char}]{ailments}{$skillsAilments{$_}}) {
