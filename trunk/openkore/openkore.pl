@@ -246,27 +246,27 @@ print "\n";
 
 ##### SETUP ERROR HANDLER #####
 
-$SIG{'__DIE__'} = sub {
-	die @_ if $^S;
-	my $msg = Carp::longmess(@_);
-
-	Log::color("red");
-	print "Program terminated unexpectedly. Error message:\n";
-	Log::color("reset");
-
-	print "\@ai_seq = @ai_seq\n";
-	print $msg;
-	if (open(F, "> errors.txt")) {
-		print F "\@ai_seq = @ai_seq\n";
-		print F $msg;
-		close F;
-	}
-
-	print "\nThe above message has been saved to errors.txt.\n";
-	print "Press ENTER to exit this program.\n";
-	<STDIN>;
-	exit 255;
-};
+#$SIG{'__DIE__'} = sub {
+#	die @_ if $^S;
+#	my $msg = Carp::longmess(@_);
+#
+#	Log::color("red");
+#	print "Program terminated unexpectedly. Error message:\n";
+#	Log::color("reset");
+#
+#	print "\@ai_seq = @ai_seq\n";
+#	print $msg;
+#	if (open(F, "> errors.txt")) {
+#		print F "\@ai_seq = @ai_seq\n";
+#		print F $msg;
+#		close F;
+#	}
+#
+#	print "\nThe above message has been saved to errors.txt.\n";
+#	print "Press ENTER to exit this program.\n";
+#	<STDIN>;
+#	exit 255;
+#};
 
 
 ##### MAIN LOOP #####
