@@ -85,6 +85,7 @@ our %handlers = (
 	st		=> \&cmdStats,
 	stand		=> \&cmdStand,
 	stat_add	=> \&cmdStatAdd,
+	switchconf	=> \&cmdSwitchConf,
 	tank		=> \&cmdTank,
 	testshop	=> \&cmdTestShop,
 	timeout		=> \&cmdTimeout,
@@ -147,6 +148,7 @@ our %descriptions = (
 	st		=> 'Display stats.',
 	stand		=> 'Stand up.',
 	stat_add	=> 'Add status point.',
+	switchconf	=> 'Switch configuration file.',
 	tank		=> 'Tank for a player.',
 	testshop	=> 'Show what your vending shop would well.',
 	timeout		=> 'Set a timeout.',
@@ -1528,6 +1530,20 @@ sub cmdStatus {
 		[$elasped_string]);
 	$msg .= "----------------------------------------\n";
 	message($msg, "info");
+}
+
+sub cmdSwitchConf {
+	my (undef, $filename) = @_;
+	if (!defined $filename) {
+		error	"Syntax Error in function 'switchconf' (Switch Configuration File)\n" .
+			"Usage: switchconf <filename>\n";
+	} elsif (! -f $filename) {
+		error	"Syntax Error in function 'switchconf' (Switch Configuration File)\n" .
+			"File $filename does not exist.\n";
+	} else {
+		switchConfigFile($filename);
+		message "Switched to \"$filename\"\n", "system";
+	}
 }
 
 sub cmdTank {

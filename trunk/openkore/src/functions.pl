@@ -460,15 +460,7 @@ sub mainLoop {
 			my $oldUsername = $config{'username'};
 			my $oldChar = $config{'char'};
 
-			# Change config file filename
-			foreach (@Settings::configFiles) {
-				if ($_->{file} eq $Settings::config_file) {
-					$_->{file} = $file;
-					last;
-				}
-			}
-			$Settings::config_file = $file;
-			parseDataFile2($file, \%config);
+			switchConfigFile($file);
 
 			my $master = $masterServers{$config{'master'}};
 			if (!$xkore
