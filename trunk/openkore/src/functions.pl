@@ -604,21 +604,6 @@ sub parseInput {
 			configModify($arg1, $arg2);
 		}
 
-	#kokal monster count code
-	} elsif ($switch eq "count") {
-        	message("-[ Monster Count ]--------------------------------\n", "list");
-        	message("#   ID    Name                       Count\n", "list");
-       		my $i = 0;
-        	while ($monsters_Killed[$i]) {
-			message(swrite(
-				"@<< @<<<< @<<<<<<<<<<<<<<<<<<<       @<<<",
-				[$i, $monsters_Killed[$i]{'nameID'}, $monsters_Killed[$i]{'name'}, $monsters_Killed[$i]{'count'}]),
-				"list");
-            		$i++;
-      		}
-      		message("--------------------------------------------------\n", "list");
-	#end of kokal monster count code
-
 	#non-functional item count code
 	} elsif ($switch eq "icount") {
 		message("-[ Item Count ]--------------------------------\n", "list");
@@ -907,26 +892,26 @@ sub parseInput {
 		dumpData($msg);
 
 	} elsif ($switch eq "e") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "" || $arg1 > 33 || $arg1 < 0) {
-			print	"Syntax Error in function 'e' (Emotion)\n"
-				,"Usage: e <emotion # (0-33)>\n";
+			error	"Syntax Error in function 'e' (Emotion)\n" .
+				"Usage: e <emotion # (0-33)>\n";
 		} else {
 			sendEmotion(\$remote_socket, $arg1);
 		}
 
 	} elsif ($switch eq "eq") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\w+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\w+)/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'equip' (Equip Inventory Item)\n"
-				,"Usage: equip <item #> [r]\n";
+			error	"Syntax Error in function 'equip' (Equip Inventory Item)\n" .
+				"Usage: equip <item #> [r]\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			print	"Error in function 'equip' (Equip Inventory Item)\n"
-				,"Inventory Item $arg1 does not exist.\n";
+			error	"Error in function 'equip' (Equip Inventory Item)\n" .
+				"Inventory Item $arg1 does not exist.\n";
 		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 0) {
-			print	"Error in function 'equip' (Equip Inventory Item)\n"
-				,"Inventory Item $arg1 can't be equipped.\n";
+			error	"Error in function 'equip' (Equip Inventory Item)\n" .
+				"Inventory Item $arg1 can't be equipped.\n";
 		} else {
 			if ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 256
 				|| $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 513) {
@@ -944,10 +929,10 @@ sub parseInput {
 			}
 		}
 
-	} elsif ($switch eq "exp") {
-# exp report
+	} elsif ($switch eq "exp" || $switch eq "count") {
+		# exp report
 		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		if($arg1 eq ""){
+		if ($arg1 eq ""){
 			my ($endTime_EXP,$w_sec,$total,$bExpPerHour,$jExpPerHour,$EstB_sec,$EstB_sec,$percentB,$percentJ);
 			$endTime_EXP = time;
 			$w_sec = int($endTime_EXP - $startTime_EXP);
@@ -958,56 +943,58 @@ sub parseInput {
 					$percentB = "(".sprintf("%.2f",$totalBaseExp * 100 / $chars[$config{'char'}]{'exp_max'})."%)";
 					$EstB_sec = int(($chars[$config{'char'}]{'exp_max'} - $chars[$config{'char'}]{'exp'})/($bExpPerHour/3600));
 				}
-				 if ($chars[$config{'char'}]{'exp_job_max'} && $jExpPerHour){
+				if ($chars[$config{'char'}]{'exp_job_max'} && $jExpPerHour){
 					$percentJ = "(".sprintf("%.2f",$totalJobExp * 100 / $chars[$config{'char'}]{'exp_job_max'})."%)";
 					$EstJ_sec = int(($chars[$config{'char'}]{'exp_job_max'} - $chars[$config{'char'}]{'exp_job'})/($jExpPerHour/3600));
-				 }
+				}
 			}
+			$chars[$config{'char'}]{'deathCount'} = 0 if (!defined $chars[$config{'char'}]{'deathCount'});
 			message("------------Exp Report------------\n" .
-			"Botting time : ".timeConvert($w_sec)."\n" .
-			"BaseExp      : $totalBaseExp $percentB\n" .
-			"JobExp       : $totalJobExp $percentJ\n" .
-			"BaseExp/Hour : $bExpPerHour\n" .
-			"JobExp/Hour  : $jExpPerHour\n" .
-			"Base Levelup Time Estimation : ".timeConvert($EstB_sec)."\n" .
-			"Job Levelup Time Estimation : ".timeConvert($EstJ_sec)."\n" .
-			"Died : $self_dead_count\n" .
-			"----------------------------------\n" .
-			"#   ID   Name                Count\n",
-			"info");
-			for ($i=0; $i<@monsters_Killed; $i++) {
+			"Botting time : " . timeConvert($w_sec) . "\n" .
+			"BaseExp      : " . formatNumber($totalBaseExp) . " $percentB\n" .
+			"JobExp       : " . formatNumber($totalJobExp) . " $percentJ\n" .
+			"BaseExp/Hour : " . formatNumber($bExpPerHour) . "\n" .
+			"JobExp/Hour  : " . formatNumber($jExpPerHour) . "\n" .
+			"Base Levelup Time Estimation : " . timeConvert($EstB_sec) . "\n" .
+			"Job Levelup Time Estimation  : " . timeConvert($EstJ_sec) . "\n" .
+			"Died : $chars[$config{'char'}]{'deathCount'}\n", "info");
+
+			message("-[Monster Killed Count]-----------\n" .
+				"#   ID   Name                Count\n",
+				"list");
+			for (my $i = 0; $i < @monsters_Killed; $i++) {
 				next if ($monsters_Killed[$i] eq "");
 				message(swrite(
-				"@<< @<<<< @<<<<<<<<<<<<<       @<<< ",
-				[$i, $monsters_Killed[$i]{'nameID'}, $monsters_Killed[$i]{'name'}, $monsters_Killed[$i]{'count'}]),
-				"info");
+					"@<< @<<<< @<<<<<<<<<<<<<       @<<< ",
+					[$i, $monsters_Killed[$i]{'nameID'}, $monsters_Killed[$i]{'name'}, $monsters_Killed[$i]{'count'}]),
+					"list");
 				$total += $monsters_Killed[$i]{'count'};
 			}
 			message("----------------------------------\n" .
-			"Total : $total\n" .
-			"----------------------------------\n",
-			"info");
-		} elsif($arg1 eq "reset") {
+				"Total numer of killed monsters: $total\n" .
+				"----------------------------------\n",
+				"list");
+
+		} elsif ($arg1 eq "reset") {
 			($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
 			$startTime_EXP = time;
 			undef @monsters_Killed;
 		} else {
-			message("Error in function 'exp' (Exp Report)\n" .
-			"Usage: exp [reset]\n",
-			"error");
+			error "Error in function 'exp' (Exp Report)\n" .
+				"Usage: exp [reset]\n";
 		}
 		
 	} elsif ($switch eq "follow") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'follow' (Follow Player)\n"
-				,"Usage: follow <player #>\n";
+			error	"Syntax Error in function 'follow' (Follow Player)\n" .
+				"Usage: follow <player #>\n";
 		} elsif ($arg1 eq "stop") {
 			aiRemove("follow");
 			configModify("follow", 0);
 		} elsif ($playersID[$arg1] eq "") {
-			print	"Error in function 'follow' (Follow Player)\n"
-				,"Player $arg1 does not exist.\n";
+			error	"Error in function 'follow' (Follow Player)\n" .
+				"Player $arg1 does not exist.\n";
 		} else {
 			ai_follow($players{$playersID[$arg1]}{'name'});
 			configModify("follow", 1);
@@ -2173,6 +2160,9 @@ sub parseInput {
 		} else {
 			configModify("verbose", 1);
 		}
+
+	} else {
+		error "Unknown command '$switch'\n";
 	}
 
 
@@ -5654,7 +5644,7 @@ sub parseMsg {
 		if ($ID eq $accountID) {
 			print "You have died\n";
 			sendCloseShop(\$remote_socket);
-			$self_dead_count ++;
+			$chars[$config{'char'}]{'deathCount'}++;
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
 		} elsif (%{$monsters{$ID}}) {
@@ -9472,7 +9462,6 @@ sub configModify {
 	my $quiet = shift;
 	message("Config '$key' set to $val\n") unless ($quiet);
 	$config{$key} = $val;
-	$Log::messageVerbosity = $config{'verbose'};
 	writeDataFileIntact($Settings::config_file, \%config);
 }
 
@@ -10764,7 +10753,6 @@ sub parseDataFile2 {
 		}
 	}
 	close FILE;
-	$Log::messageVerbosity = $config{'verbose'} if ($file eq $Settings::config_file);
 }
 
 sub parseItemsControl {
