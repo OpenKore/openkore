@@ -852,6 +852,7 @@ sub cmdStats {
 
 sub cmdStatus {
 	# Display character status
+	my $msg;
 	my ($baseEXPKill, $jobEXPKill);
 
 	if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
@@ -893,8 +894,8 @@ sub cmdStatus {
 	$job_name_string = "$jobs_lut{$chars[$config{'char'}]{'jobID'}} $sex_lut{$chars[$config{'char'}]{'sex'}}";
 	$zeny_string = formatNumber($chars[$config{'char'}]{'zenny'}) if (defined($chars[$config{'char'}]{'zenny'}));
 
-	message("-----------------Status-----------------\n", "info");
-	message(swrite(
+	$msg = "-----------------Status-----------------\n" .
+		swrite(
 		"@<<<<<<<<<<<<<<<<<<<<<<<<<<   HP: @<<<<<<<<<<<<<<<<<<",
 		[$chars[$config{'char'}]{'name'}, $hp_string],
 		"@<<<<<<<<<<<<<<<<<<<<<<<<<<   SP: @<<<<<<<<<<<<<<<<<<",
@@ -904,31 +905,30 @@ sub cmdStatus {
 		"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
 		[$chars[$config{'char'}]{'lv_job'}, $job_string],
 		"Weight: @>>>>>>>>>>>>>>>>>>   Zenny: @<<<<<<<<<<<<<<",
-		[$weight_string, $zeny_string]),
-		"info");
+		[$weight_string, $zeny_string]);
 
 	my $statuses = 'none';
 	if (defined $chars[$config{char}]{statuses} && %{$chars[$config{char}]{statuses}}) {
 		$statuses = join(", ", keys %{$chars[$config{char}]{statuses}});
 	}
-	message("Statuses: $statuses\n", "info");
-	message("Spirits: $chars[$config{char}]{spirits}\n", "info") if (exists $chars[$config{char}]{spirits});
-	message("----------------------------------------\n", "info");
+	$msg .= "Statuses: $statuses\n";
+	$msg .= "Spirits: $chars[$config{char}]{spirits}\n" if (exists $chars[$config{char}]{spirits});
+	$msg .= "----------------------------------------\n";
 
 
 	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
 	my $totalelasped_string = sprintf("%.2f", $totalelasped);
 	my $elasped_string = sprintf("%.2f", $elasped);
 
-	message(swrite(
+	$msg .= swrite(
 		"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<",
 		[$totaldmg, $dmgpsec_string],
 		"Total Time spent (sec): @>>>>>>>>",
 		[$totalelasped_string],
 		"Last Monster took (sec): @>>>>>>>",
-		[$elasped_string]),
-		"info");
-	message("----------------------------------------\n", "info");
+		[$elasped_string]);
+	$msg .= "----------------------------------------\n";
+	message($msg, "info");
 }
 
 sub cmdTank {
