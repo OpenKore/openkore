@@ -4,8 +4,8 @@ Packer: perlapp.exe
 Add: XSTools
 Add: Wx
 Add: Wx::Grid
-Add: Wx::FS
 Add: Wx::Html
+Add: LWP::Simple
 Byref: 0
 Clean: 0
 Cwd: .
@@ -27,12 +27,7 @@ Script: start.pl
 Shared: none
 Singleton: 0
 Tmpdir: 
-Trim: Interface::Console::Other
-Trim: Interface::Console::Other::Gtk
-Trim: Gtk2
 Trim: Pod::Usage
-Trim: Term::Cap
-Trim: POSIX
 Verbose: 0
 Version-Comments: 
 Version-CompanyName: 
