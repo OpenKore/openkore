@@ -68,6 +68,7 @@ sub initConnectVars {
 	undef @skillsID;
 	delete $chars[$config{'char'}]{'mute_period'};
 	delete $chars[$config{'char'}]{'muted'};
+	$useArrowCraft = 1;
 }
 
 # Initialize variables when you change map (after a teleport or after you walked into a portal)
@@ -151,12 +152,10 @@ sub initStatVars {
 }
 
 sub initOtherVars {
-	# chat response stuff
 	undef $nextresptime;
 	undef $nextrespPMtime;
-
-	# shop stuff
-	$timeout{'ai_shop'}{'time'} = $KoreStartTime;
+	$timeout{ai_shop}{time} = $KoreStartTime;
+	$useArrowCraft = 1;
 }
 
 
@@ -2265,31 +2264,26 @@ sub AI {
 
 
 	####### AUTO MAKE ARROW #######
-	if ( (AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/))
-	 && timeOut($AI::Timeouts::autoArrow, 0.2) && defined(binFind(\@skillsID, 'AC_MAKINGARROW')) ) {
-		if (!(@arrowCraftID)) {
-			ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
-		} else {
-			my @changeItems;
-			my $max = @arrowCraftID;
-
-			for (my $i = 0; $i < $max; $i++) {
-				my $item = $char->{inventory}[$arrowCraftID[$i]];
-				next unless ($item);
-				my $change = $arrowcraft_items{lc($item->{name})};
-				if ($change) {
-					sendArrowCraft(\$remote_socket, $item->{nameID});
-					debug "Making Arrow\n", "ai_MakeArrow";
-					last
-				}
-				if ($i == $max) {
-					ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
-					last
-				}
+	if ((AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/))
+	 && timeOut($AI::Timeouts::autoArrow, 0.2) && $config{autoMakeArrows} && defined binFind(\@skillsID, 'AC_MAKINGARROW') ) {
+		my $max = @arrowCraftID;
+		for (my $i = 0; $i < $max; $i++) {
+			my $item = $char->{inventory}[$arrowCraftID[$i]];
+			next if (!$item);
+			if ($arrowcraft_items{lc($item->{name})}) {
+				sendArrowCraft(\$remote_socket, $item->{nameID});
+				debug "Making item\n", "ai_makeItem";
+				last;
 			}
-
 		}
 		$AI::Timeouts::autoArrow = time;
+	}
+
+	if ($useArrowCraft) {
+		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
+			ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
+		}
+		undef $useArrowCraft;
 	}
 
 
@@ -6057,6 +6051,8 @@ sub parseMsg {
 
 				binRemove(\@venderListsID, $ID);
 				delete $venderLists{$ID};
+
+				objectRemoved('player', $ID);
 			}
 
 		} elsif (%{$players_old{$ID}}) {
@@ -6067,6 +6063,7 @@ sub parseMsg {
 				debug "Player Teleported: $players_old{$ID}{'name'}\n", "parseMsg_presence";
 				$players_old{$ID}{'teleported'} = 1;
 			}
+
 		} elsif (%{$portals{$ID}}) {
 			debug "Portal Disappeared: $portals{$ID}{'name'} ($portals{$ID}{'binID'})\n", "parseMsg";
 			%{$portals_old{$ID}} = %{$portals{$ID}};
@@ -6074,6 +6071,7 @@ sub parseMsg {
 			$portals_old{$ID}{'gone_time'} = time;
 			binRemove(\@portalsID, $ID);
 			delete $portals{$ID};
+
 		} elsif (%{$npcs{$ID}}) {
 			debug "NPC Disappeared: $npcs{$ID}{'name'} ($npcs{$ID}{'binID'})\n", "parseMsg";
 			%{$npcs_old{$ID}} = %{$npcs{$ID}};
@@ -6081,6 +6079,7 @@ sub parseMsg {
 			$npcs_old{$ID}{'gone_time'} = time;
 			binRemove(\@npcsID, $ID);
 			delete $npcs{$ID};
+
 		} elsif (%{$pets{$ID}}) {
 			debug "Pet Disappeared: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 			binRemove(\@petsID, $ID);
