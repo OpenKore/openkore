@@ -1,6 +1,5 @@
 grftool.glade
 grftool.gladep
-gtk.c
 grftool-gtk.desktop
 grftool-gtk.png
 grftool.xml
@@ -8,3 +7,12 @@ grftool-gtk.mime
 grftool-gtk.keys
 grftool-gtk.applications
 x-grf.desktop
+
+callbacks.cpp
+callbacks.h
+main.cpp
+main.h
+utils.cpp
+utils.h
+window.cpp
+window.h
