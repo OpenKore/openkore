@@ -51,6 +51,24 @@ GRFEXTERN_BEGIN
  */
 GRFINLINE uint32_t LittleEndian32 (uint8_t *p) { return ((p[3]*256 + p[2])*256 + p[1])*256 + *p; }
 
+
+/*! \brief Endian support function
+ *
+ * Transforms a host uint32_t into a little-endian uint32_t
+ *
+ * \param hi A host uint32_t value
+ * \return A uint32_t in Little Endian order
+ */
+GRFINLINE uint32_t ToLittleEndian32(uint32_t hi) {
+	uint32_t lei;
+	uint8_t *p = (uint8_t*)&lei;
+	p[0] = hi & 0xFF;
+	p[1] = (hi & 0xFF00) >> 8U;
+	p[2] = (hi & 0xFF0000) >> 16U;
+	p[3] = (hi & 0xFF000000) >> 24U;
+	return lei;
+}
+
 /************************
 * GRF Support Functions *
 ************************/
