@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 
 require XSLoader;
-XSLoader::load('Tools');
+XSLoader::load('XSTools');
 
 require DynaLoader;
 my $sym = DynaLoader::dl_find_symbol_anywhere('boot_' . __PACKAGE__);
