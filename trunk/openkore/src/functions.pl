@@ -7439,15 +7439,18 @@ sub parseMsg {
 		$shopEarned ||= 0;
 
 	} elsif ($switch eq "0137") {
-		#sold something.
-		$number = unpack("S1",substr($msg, 2, 2));
-		$amount = unpack("S1",substr($msg, 4, 2));
+		# sold something
+		my $number = unpack("S1", substr($msg, 2, 2));
+		my $amount = unpack("S1", substr($msg, 4, 2));
 		$articles[$number]{sold} += $amount;
-		$shopEarned += $amount * $articles[$number]{price};
+		my $earned = $amount * $articles[$number]{price};
+		$shopEarned += $earned;
 		$articles[$number]{quantity} -= $amount;
-		message("sold: $amount $articles[$number]{name}.\n", "sold");
+		my $msg = "sold: $amount $articles[$number]{name} - $earned z\n";
+		shopLog($msg);
+		message($msg, "sold");
 		if ($articles[$number]{quantity} < 1) {
-			message("sold out: $articles[$number]{name}.\n", "sold");
+			message("sold out: $articles[$number]{name}\n", "sold");
 			#$articles[$number] = "";
 			if (!--$articles){
 				message("Items have been sold out.\n", "sold");
@@ -9205,6 +9208,13 @@ sub chatLog {
 	open CHAT, ">> $Settings::chat_file";
 	print CHAT "[".getFormattedDate(int(time))."][".uc($type)."] $message";
 	close CHAT;
+}
+
+sub shopLog {
+	my $crud = shift;
+	open SHOPLOG, ">> $Settings::shop_log_file";
+	print SHOPLOG "[".getFormattedDate(int(time))."] $crud";
+	close SHOPLOG;
 }
 
 sub itemLog {

@@ -43,6 +43,7 @@ New features:
   at normal verbosity.
 - Show exp percentage gained per hour
 - When failed to connect to server, display why (e.g. "Connection refused")
+- logs/shop.txt will show what was sold when
 
 New config options:
 - *_inInventory_name : inventory item name

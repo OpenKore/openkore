@@ -59,6 +59,7 @@ our $pickupitems_file;
 our $mon_control_file;
 our $chat_file;
 our $item_log_file;
+our $shop_log_file;
 our $shop_file;
 our $def_field;
 our $monster_log;
@@ -158,6 +159,7 @@ sub parseArguments {
 	$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
 	$monster_log = "$logs_folder/monsters.txt" if (!defined $monster_log);
 	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
+	$shop_log_file ||= "$logs_folder/shop.txt";
 	$default_interface = "Console" if (!defined $default_interface);
 
 	return 2 if ($help_option);
