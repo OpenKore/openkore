@@ -12,6 +12,7 @@ WIN32 = 0
 
 DEBUG = ARGUMENTS.get('DEBUG', 0);
 CC = ARGUMENTS.get('CC', None);
+CXX = ARGUMENTS.get('CXX', None);
 
 PREFIX = ARGUMENTS.get('PREFIX', '/usr/local')
 BINDIR = ARGUMENTS.get('BINDIR', PREFIX + '/bin')
@@ -29,6 +30,8 @@ env = Environment(
 	LINKFLAGS='')
 if CC != None:
 	env['CC'] = CC
+if CXX != None:
+	env['CXX'] = CXX
 
 if platform == "cygwin":
 	env['CCFLAGS'] += ' -mno-cygwin'

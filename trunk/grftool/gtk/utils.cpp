@@ -39,7 +39,7 @@ load_glade (gchar *basename)
 	if (realpath ("/proc/self/exe", self)) {
 		String dir = g_path_get_dirname (self);
 		searchDirs.push_back (dir);
-		searchDirs.push_back (dir + "../share/grftool");
+		searchDirs.push_back (dir + "/../share/grftool");
 	}
 
 	searchDirs.push_back (".");
