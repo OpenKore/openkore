@@ -6929,22 +6929,22 @@ sub parseMsg {
 		# skill fail/delay
 		my $skillID = unpack("S1", substr($msg, 2, 2));
 		my $btype = unpack("S1", substr($msg, 4, 2));
-		my $type = unpack("C1", substr($msg, 7, 1));
-		my $fail = unpack("C1", substr($msg, 6, 1));
+		my $fail = unpack("C1", substr($msg, 8, 1));
+		my $type = unpack("C1", substr($msg, 9, 1));
 		
 		my %failtype = (
 			0 => 'Basic',
-			1 => 'SP',
-			2 => 'HP',
-			3 => 'Memo',
-			4 => 'Delay',
-			5 => 'Zeny',
-			6 => 'Weapon',
-			7 => 'Dunno',
-			8 => 'Item',
-			9 => 'Overweight',
+			1 => 'Insufficient SP',
+			2 => 'Insufficient HP',
+			3 => 'No Memo',
+			4 => 'Mid-Delay',
+			5 => 'No Zeny',
+			6 => 'Wrong Weapon Type',
+			7 => 'Red Gem Needed',
+			8 => 'Blue Gem Needed',
+			9 => '90% Overweight',
 			);
-		message "Skill $skillsID_lut{$skillID} failed ($failtype{$fail})\n", "skill", 2;
+		message "Skill $skillsID_lut{$skillID} failed ($failtype{$type})\n", "skill";
 
 	} elsif ($switch eq "01B9") {
 		# cast is cancelled
