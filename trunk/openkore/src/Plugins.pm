@@ -134,6 +134,9 @@ sub unloadAll {
 #
 # Plugins should call this function when they are loaded. This function registers
 # the plugin in the plugin database. Registered plugins can be unloaded by the user.
+#
+# In the unload/reload callback functions, plugins should delete any hook functions they added.
+# See also: Plugins::addHook(), Plugins::delHook()
 sub register {
 	my %plugin_info = ();
 	my $name = shift;
@@ -166,12 +169,33 @@ sub registered {
 
 ##
 # Plugins::addHook(hookname, r_func, [user_data])
-# hookname: Name of the hook.
+# hookname: Name of a hook.
 # r_func: Reference to the function to call.
 # user_data: Additional data to pass to r_func.
 # Returns: An ID which can be used to remove this hook.
 #
-# TODO: Document this
+# Add a hook for $hookname. Whenever Kore calls Plugins::callHook('foo'),
+# r_func is also called.
+#
+# See also Plugins::callHook() for information about how r_func is called.
+#
+# Example:
+# # Somewhere in your plugin:
+# use Plugins;
+# use Log;
+#
+# my $hook = Plugins::addHook('AI_pre', \&ai_called);
+#
+# sub ai_called {
+#     Log::message("Kore's AI() function has been called.\n");
+# }
+#
+# # Somewhere in the Kore source code:
+# sub AI {
+#     ...
+#     Plugins::callHook('AI_pre');   # <-- ai_called() is now also called.
+#     ...
+# }
 sub addHook {
 	my $hookname = shift;
 	my $r_func = shift;
@@ -185,7 +209,23 @@ sub addHook {
 	return binAdd($hooks{$hookname}, \%hook);
 }
 
-
+##
+# Plugins::delHook(hookname, ID)
+# hookname: Name of a hook.
+# ID: The ID of the hook, as returned by Plugins::addHook()
+#
+# Removes a hook. r_func will not be called anymore.
+#
+# See also: Plugins::addHook()
+#
+# Example:
+# Plugins::register('example', 'Example Plugin', \&on_unload, \&on_reload);
+# my $hook = Plugins::addHook('AI_pre', \&ai_called);
+#
+# sub on_unload {
+#     Plugins::delHook('AI_pre', $hook);
+#     Log::message "Example plugin unloaded.\n";
+# }
 sub delHook {
 	my $hookname = shift;
 	my $ID = shift;
@@ -198,7 +238,11 @@ sub delHook {
 # hookname: Name of the hook.
 # r_param: A reference to a hash that will be passed to the hook functions.
 #
-# TODO: Document this
+# Call all functions which are associated with the hook $hookname.
+#
+# r_hook is called as follows: $r_hook->($hookname, $r_param, userdata as passed to addHook);
+#
+# See also: Plugins::addHook()
 sub callHook {
 	my $hookname = shift;
 	my $r_param = shift;
