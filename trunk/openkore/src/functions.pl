@@ -9905,7 +9905,7 @@ sub useTeleport {
 		
 		# set a small timeout, will be overrided if related config in equipAuto is set
 		$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'time'} = time;
-		$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'timeout'} = 0.5;
+		$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}{'timeout'} = 2;
 		
 	} elsif (defined $ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'} && timeOut(\%{$ai_v{'temp'}{'teleport'}{'ai_equipAuto_skilluse_giveup'}})) {
 		warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
