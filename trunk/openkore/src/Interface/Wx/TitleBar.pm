@@ -36,13 +36,14 @@ sub new {
 	$self->SetBackgroundColour(new Wx::Colour(75, 0, 150));
 
 	my $label = $self->{label} = new Wx::StaticText($self, -1, $title);
-	$label->SetFont(new Wx::Font(10, wxDEFAULT, wxNORMAL, wxBOLD));
+	$label->SetFont(new Wx::Font(8, wxDEFAULT, wxNORMAL, wxBOLD, 0, 'Tahoma'));
 	$label->SetForegroundColour(new Wx::Colour(255, 255, 255));
 	$sizer->Add($label, 1, wxGROW | wxLEFT | wxRIGHT | wxADJUST_MINSIZE, 3);
 
 	Wx::Image::AddHandler(new Wx::PNGHandler);
 	my $image = Wx::Image->newNameType(f('Interface', 'Wx', 'window.png'), wxBITMAP_TYPE_PNG);
 	my $detachButton = $self->{detachButton} = new Wx::BitmapButton($self, 1024, new Wx::Bitmap($image));
+	$detachButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 	$sizer->Add($detachButton);
 	$self->EVT_BUTTON(1024, sub {
 		$self->{onDetach}->($self->{onDetachData}) if ($self->{onDetach});
@@ -50,13 +51,14 @@ sub new {
 
 	$image = Wx::Image->newNameType(f('Interface', 'Wx', 'close.png'), wxBITMAP_TYPE_PNG);
 	my $closeButton = $self->{closeButton} = new Wx::BitmapButton($self, 1025, new Wx::Bitmap($image));
+	$closeButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
 	$sizer->Add($closeButton);
 	$self->EVT_BUTTON(1025, sub {
 		$self->{onClose}->($self->{onCloseData}) if ($self->{onClose});
 	});
 
-	$self->SetSizer($sizer);
 	$self->SetSizeHints($closeButton->GetBestSize->GetWidth * 2 + 8, -1);
+	$self->SetSizer($sizer);
 	$self->{title} = $title;
 	return $self;
 }
