@@ -8,6 +8,8 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
+##
+# MODULE DESCRIPTION: Utility functions
 
 package Utils;
 
@@ -20,7 +22,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	getFormattedDate swrite);
+	formatNumber getFormattedDate swrite timeConvert);
 
 
 #######################################
@@ -56,8 +58,8 @@ sub binAdd {
 # binFind(r_array, ID)
 # r_array: a reference to an array.
 # ID: the element to search for.
-# Returns: the element number of $ID, or undef is $ID is not an
-#          element in @r_array.
+# Returns: the element number of $ID, or undef is $ID
+#          is not an element in @r_array.
 #
 # Look for element $ID in @r_array.
 #
@@ -289,6 +291,28 @@ sub minHeapAdd {
 ################################
 
 
+##
+# formatNumber(num)
+# num: An integer number.
+# Returns: A formatted number with commas.
+#
+# Add commas to $num so large numbers are more readable.
+# $num must be an integer, not a floating point number.
+#
+# Example:
+# formatNumber(1000000);   # -> 1,000,000
+
+#umm i tweeked it a little, just to make it display as described ;) -xlr82xs
+sub formatNumber {
+	my $num = reverse $_[0];
+	if ($num == 0) {
+		return 0;
+	}else {
+		$num =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/g;
+		return scalar reverse $num;
+	}
+}
+
 sub getFormattedDate {
         my $thetime = shift;
         my $r_date = shift;
@@ -316,6 +340,29 @@ sub swrite {
 	}
 	$^A = '';
 	return $result;
+}
+
+##
+# timeConvert(time)
+# time: number of seconds.
+# Returns: a human-readable version of $time.
+#
+# Converts $time into a string in the form of "x seconds y minutes z seconds".
+sub timeConvert {
+	my $time = shift;
+	my $hours = int($time / 3600);
+	my $time = $time % 3600;
+	my $minutes = int($time / 60);
+	my $time = $time % 60;
+	my $seconds = $time;
+	my $gathered = '';
+
+	$gathered = "$hours hours " if ($hours);
+	$gathered .= "$minutes minutes " if ($minutes);
+	$gathered .= "$seconds seconds" if ($seconds);
+	$gathered =~ s/ $//;
+	$gathered = '0 seconds' if ($gathered eq '');
+	return $gathered;
 }
 
 

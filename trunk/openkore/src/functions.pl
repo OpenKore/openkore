@@ -11567,28 +11567,6 @@ sub getTickCount {
 }
 
 ##
-# formatNumber(num)
-# num: An integer number.
-# Returns: A formatted number with commas.
-#
-# Add commas to $num so large numbers are more readable.
-# $num must be an integer, not a floating point number.
-#
-# Example:
-# formatNumber(1000000)   # -> 1,000,000
-
-#umm i tweeked it a little, just to make it display as described ;) -xlr82xs
-sub formatNumber {
-	my $num = reverse $_[0];
-	if ($num == 0) {
-		return 0;
-	}else {
-		$num =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/g;
-		return scalar reverse $num;
-	}
-}
-
-##
 # lookAtPosition(pos, [headdir])
 # pos: a reference to a coordinate hash.
 # headdir: 0 = face directly, 1 = look right, 2 = look left
@@ -11684,38 +11662,6 @@ sub printItemDesc {
 	message("Item: $items_lut{$itemID}\n\n", "info");
 	message($itemsDesc_lut{$itemID}, "info");
 	message("==============================================\n", "info");
-}
-
-sub timeOut {
-	my ($r_time, $compare_time) = @_;
-	if ($compare_time ne "") {
-		return (time - $r_time > $compare_time);
-	} else {
-		return (time - $$r_time{'time'} > $$r_time{'timeout'});
-	}
-}
-
-##
-# timeConvert(time)
-# time: number of seconds.
-# Returns: a human-readable version of $time.
-#
-# Converts $time into a string in the form of "x seconds y minutes z seconds".
-sub timeConvert {
-	my $time = shift;
-	my $hours = int($time / 3600);
-	my $time = $time % 3600;
-	my $minutes = int($time / 60);
-	my $time = $time % 60;
-	my $seconds = $time;
-	my $gathered = '';
-
-	$gathered = "$hours hours " if ($hours);
-	$gathered .= "$minutes minutes " if ($minutes);
-	$gathered .= "$seconds seconds" if ($seconds);
-	$gathered =~ s/ $//;
-	$gathered = '0 seconds' if ($gathered eq '');
-	return $gathered;
 }
 
 sub timeOut {
