@@ -5422,7 +5422,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0070") {
 		#my $errno = unpack("C", substr($msg, 2, 1));
-		error "Character cannot be deleted. Your email address probably wrong.\n";
+		error "Character cannot be deleted. Your e-mail address was probably wrong.\n";
 		undef $AI::temp::delIndex;
 		if (charSelectScreen() == 1) {
 			$conState = 3;
@@ -6748,7 +6748,13 @@ sub parseMsg {
 			message sprintf("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
 
 		} elsif ($type == 20) {
-			$chars[$config{'char'}]{'zenny'} = $val;
+			my $change = $val - $char->{zenny};
+			if ($change > 0) {
+				message "You gained $change zeny.\n";
+			} elsif ($change < 0) {
+				message "You lost $change zeny.\n";
+			}
+			$char->{zenny} = $val;
 			debug "Zenny: $val\n", "parseMsg";
 		} elsif ($type == 22) {
 			$chars[$config{'char'}]{'exp_max_last'} = $chars[$config{'char'}]{'exp_max'};
