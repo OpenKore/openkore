@@ -193,7 +193,7 @@ sub add {
 	# Limit the number of lines in the console
 	if ($self->GetNumberOfLines > MAX_LINES) {
 		my $linesToDelete = $self->GetNumberOfLines() - MAX_LINES;
-		my $pos = $self->XYToPosition(0, $linesToDelete);
+		my $pos = $self->XYToPosition(0, $linesToDelete + MAX_LINES / 10);
 		$self->Remove(0, $pos);
 	}
 
