@@ -256,7 +256,7 @@ January 6th 2004 xlr82xs:
 5  - To carry on with the spirit of random restart times, there are another 3 new config.txt
 	 options.
 	 autoRestartSleep which turns on sleeping for a random time when set to 1
-	 autoRestartSleepMin and autoRestartSleepSeed (which act the same as the randomrestart options)
+	 autoSleepMin and autoSleepSeed (which act the same as the randomrestart options)
 6  - Began work on better communication between bots. (Being lazy to start with (for a quick implement)
 	 and simply using a sub to detect known names (ie tank and follow targets, auth list users) that should
 	 be ignored by things such as chat ai so they can send eachother commands via chat (ie move, heal, etc)
