@@ -24,8 +24,8 @@ use Config;
 sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
-		print "Next restart in ".timeConvert($autoRestart).".\n";
 		configModify("autoRestart", $autoRestart, 1);
+		print "Next restart in ".timeConvert($autoRestart).".\n";
 	}
 }
 
@@ -85,6 +85,18 @@ sub initMapChangeVars {
 	$timeout{'ai_shop'}{'time'} = time;
 
 	initOtherVars();
+}
+
+# Reset %timeout based on %realTimeout.
+# Generate random timeout values.
+sub initTimeouts {
+	%timeout = () if (!%timeout);
+	my @keys = keys %realTimeout;
+	foreach my $key (@keys) {
+		$timeout{$key}{'timeout'} = $realTimeout{$key}{'timeout'};
+		$timeout{$key}{'timeout'} += rand($realTimeout{$key}{'variance'}) if ($realTimeout{$key}{'variance'});
+	}
+	$timeout{'ai_resetTimeouts'}{'time'} = time;
 }
 
 #Solos Start
@@ -161,8 +173,6 @@ sub checkConnection {
 
 	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
 		print "Timeout on Master Server, reconnecting...\n";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 		undef $conState_tries;
 
@@ -2197,6 +2207,8 @@ sub AI {
 
 	##### REAL AI STARTS HERE #####
 
+	initTimeouts() if (timeOut(\%{$timeout{'ai_resetTimeouts'}}));
+
 	if (!$accountID) {
 		$AI = 0;
 		injectAdminMessage("Kore does not have enough account information, so AI has been disabled. Relog to enable AI.") if ($config{'verbose'});
@@ -2627,6 +2639,34 @@ sub AI {
 	if ($config{'XKore'} && !$sentWelcomeMessage && timeOut(\%{$timeout{'welcomeText'}})) {
 		injectAdminMessage($welcomeText) if ($config{'verbose'});
 		$sentWelcomeMessage = 1;
+	}
+
+
+
+	##### DISCONNECT ON WHISPER #####
+
+	if ($ai_seq[0] eq "dcWhisper" && timeOut(\%{$ai_seq_args[0]})) {
+		sendMessage(\$remote_socket, 'pm', $ai_seq_args[0]{'msg'}, $ai_seq_args[0]{'user'});
+		print "** Disconnecting ** $ai_seq_args[0]{'user'} whispered you\n";
+		chatLog("s", "** Disconnecting ** $ai_seq_args[0]{'user'} whispered you\n");
+		shift @ai_seq;
+		shift @ai_seq_args;
+
+		my %args = ();
+		$args{'time'} = time;
+		$args{'timeout'} = 2 + rand(3);
+		$args{'dcTime'} = $config{'dc_time_min'} + rand($config{'dc_time_seed'});
+		unshift @ai_seq, "dcWhisperDisconnect";
+		unshift @ai_seq_args, \%args;
+	}
+
+	if ($ai_seq[0] eq "dcWhisperDisconnect" && timeOut(\%{$ai_seq_args[0]})) {
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $ai_seq_args[0]{'dcTime'};
+		print "** Disconnected for ".timeConvert($ai_seq_args[0]{'dcTime'}).".\n";
+		killConnection(\$remote_socket);
+		@ai_seq = ();
+		@ai_seq_args = ();
 	}
 
 
@@ -3602,6 +3642,7 @@ sub AI {
 		undef @{$ai_v{'ai_attack_cleanMonsters'}};
 		undef @{$ai_v{'ai_attack_partyMonsters'}};
 		undef $ai_v{'temp'}{'foundID'};
+		undef $ai_v{'temp'}{'priorityAttack'};
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		if ($config{'tankMode'}) {
@@ -3667,18 +3708,48 @@ sub AI {
 			}
 			undef $ai_v{'temp'}{'distSmall'};
 			undef $ai_v{'temp'}{'foundID'};
-			$ai_v{'temp'}{'first'} = 1;
+			undef $ai_v{'temp'}{'highestPri'};
+			undef $ai_v{'temp'}{'priorityAttack'};
 
-			# Look for the closest aggressive monster to attack
+			# Look for all aggressive monsters that have the highest priority
 			foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 				# Don't attack monsters near portals
 				next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
 
-				$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-				if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
-					$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
-					$ai_v{'temp'}{'foundID'} = $_;
-					undef $ai_v{'temp'}{'first'};
+				if (defined ($priority{lc($monsters{$_}{'name'})}) &&
+				    $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'}) {
+					$ai_v{'temp'}{'highestPri'} = $priority{lc($monsters{$_}{'name'})};
+				}
+			}
+
+			$ai_v{'temp'}{'first'} = 1;
+			if (!$ai_v{'temp'}{'highestPri'}) {
+				# If not found, look for the closest aggressive monster (without priority)
+				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
+					# Don't attack monsters near portals
+					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+
+					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
+						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
+						$ai_v{'temp'}{'foundID'} = $_;
+						undef $ai_v{'temp'}{'first'};
+					}
+				}
+			} else {
+				# If found, look for the closest monster with the highest priority
+				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
+					next if ($priority{lc($monsters{$_}{'name'})} != $ai_v{'temp'}{'highestPri'});
+					# Don't attack monsters near portals
+					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+
+					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
+						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
+						$ai_v{'temp'}{'foundID'} = $_;
+						$ai_v{'temp'}{'priorityAttack'} = 1;
+						undef $ai_v{'temp'}{'first'};
+					}
 				}
 			}
 
@@ -3701,6 +3772,8 @@ sub AI {
 				# No party monsters either; look for the closest, non-aggressive monster that:
 				# 1) nobody's attacking
 				# 2) isn't within 2 blocks distance of someone else
+
+				# Look for the monster with the highest priority
 				undef $ai_v{'temp'}{'distSmall'};
 				undef $ai_v{'temp'}{'foundID'};
 				$ai_v{'temp'}{'first'} = 1;
@@ -3721,7 +3794,7 @@ sub AI {
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($ai_v{'temp'}{'foundID'}) {
 			ai_setSuspend(0);
-			attack($ai_v{'temp'}{'foundID'});
+			attack($ai_v{'temp'}{'foundID'}, $ai_v{'temp'}{'priorityAttack'});
 		} else {
 			$timeout{'ai_attack_auto'}{'time'} = time;
 		}
@@ -3803,6 +3876,7 @@ sub AI {
 				|| ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'} > 0)
 			);
 		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ai_seq_args[0]{'ID'}}{'attackedByPlayer'});
+		$ai_v{'ai_attack_cleanMonster'} = 1 if ($mon_control{lc($monsters{$_}{'name'})}{'kill_steal'});
 
 		$ai_v{'ai_attack_monsterDist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}});
 
@@ -5498,7 +5572,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print "Disconnect immediately!\n";
 				$quit = 1;
 			} elsif ($config{'dcOnDualLogin'} >= 2) {
-				print "Disconnect for $config{'dcOnDualLogin'} seconds...\n";
+				print "Disconnect for ".timeConvert($config{'dcOnDualLogin'})."...\n";
 				$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
 			}
 
@@ -5838,6 +5912,30 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 		avoidGM_talk($privMsgUser, $privMsg);
 		avoidList_talk($privMsgUser, $privMsg);
+
+		if ($config{'dcWhisper'} && binFind(\@ai_seq, "dcWhisper") eq "" && binFind(\@ai_seq, "dcWhisperDisconnect") eq "") {
+			my $i = 0;
+			my $safe = 0;
+
+			while ($config{'safelist_'.$i} ne "") {
+				if ($privMsgUser eq $config{'safelist_'.$i}) {
+					$safe = 1;
+					last;
+ 				}
+				$i++;
+			}
+
+			if (!$safe) {
+				# open responses.txt and add botR r3sp0ns3, repeat for multiple responses on different lines 
+				my %args = ();
+				$args{'time'} = time;
+				$args{'user'} = $privMsgUser;
+				$args{'msg'} = getResponse("botR");
+				$args{'timeout'} = 1 + rand(2.5) + length($args{'msg'}) / 4.5;
+				unshift @ai_seq, "dcWhisper";
+				unshift @ai_seq_args, \%args;
+	 		}
+		}
 
 		# auto-response
 		if ($config{"autoResponse"}) {
@@ -8930,6 +9028,7 @@ sub ai_storageAutoCheck {
 
 sub attack {
 	my $ID = shift;
+	my $priorityAttack = shift;
 	my %args;
 	$args{'ai_attack_giveup'}{'time'} = time;
 	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
@@ -8938,8 +9037,14 @@ sub attack {
 	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
 	unshift @ai_seq, "attack";
 	unshift @ai_seq_args, \%args;
-	print "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
-	injectMessage("Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})") if ($config{'verbose'} && $config{'XKore'});
+
+	if ($priorityAttack) {
+		print "Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
+		injectMessage("Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})") if ($config{'verbose'} && $config{'XKore'});
+	} else {
+		print "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
+		injectMessage("Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})") if ($config{'verbose'} && $config{'XKore'});
+	}
 
 	$startedattack = 1;
 	if ($config{"monsterCount"}) {	
@@ -10745,6 +10850,7 @@ sub parseMonControl {
 			$$r_hash{lc($key)}{'attack_auto'} = $args[0];
 			$$r_hash{lc($key)}{'teleport_auto'} = $args[1];
 			$$r_hash{lc($key)}{'teleport_search'} = $args[2];
+			$$r_hash{lc($key)}{'kill_steal'} = $args[3];
 		}
 	}
 	close FILE;
@@ -10809,6 +10915,22 @@ sub parsePortalsLOS {
 				$$r_hash{"$map $x $y"}{"$args[$i] $args[$i+1] $args[$i+2]"} = $args[$i+3];
 			}
 		}
+	}
+	close FILE;
+}
+
+sub parsePriority {
+	my $file = shift;
+	my $r_hash = shift;
+	open (FILE, "<$file");
+
+	my @lines = <FILE>;
+	my $pri = $#lines;
+	foreach (@lines) {
+		next if (/^#/);
+		s/[\r\n]//g;
+		$$r_hash{lc($_)} = $pri + 1;
+		$pri--;
 	}
 	close FILE;
 }
@@ -11416,8 +11538,8 @@ sub avoidGM_near() {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
 			chatLog("k", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
 
-			my $tmp = $config{'avoidGM_reconnect'};
-			print "Disconnect for $tmp seconds...\n";
+			my $tmp = $config{'avoidGM_reconnect'} + rand($config{'avoidGM_reconnect'});
+			print "Disconnect for ".timeConvert($tmp)."...\n";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $tmp;
 			killConnection(\$remote_socket);
@@ -11435,7 +11557,7 @@ sub avoidGM_talk($$) {
 	# in order to prevent false matches
 	my $statusGM = 1;
 	my $j = 0;
-	while ($avoid{"avoid_$j"} ne "") {
+	while ($avoid{"avoid_ignore_$j"} ne "") {
 		if ($chatMsgUser eq $avoid{"avoid_ignore_$j"})
 		{
 			$statusGM = 0;
@@ -11448,8 +11570,8 @@ sub avoidGM_talk($$) {
 		print "Disconnecting to avoid GM!\n"; 
 		chatLog("k", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n");
 
-		my $tmp = $config{'avoidGM_reconnect'};
-		print "Disconnect for $tmp seconds...\n";
+		my $tmp = $config{'avoidGM_reconnect'} + rand($config{'avoidGM_reconnect'});
+		print "Disconnect for ".timeConvert($tmp)."...\n";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $tmp;
 		killConnection(\$remote_socket);
@@ -11466,7 +11588,7 @@ sub avoidList_near() {
 			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
 				print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
 				chatLog("k", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
-				print "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
+				print "Disconnect for ".timeConvert($config{'avoidList_reconnect'})."...\n";
 				$timeout_ex{'master'}{'time'} = time;
 				$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
 				killConnection(\$remote_socket);
@@ -11487,7 +11609,7 @@ sub avoidList_talk($$) {
 		if ($chatMsgUser eq $avoid{"avoid_$j"}) { 
 			print "Disconnecting to avoid $chatMsgUser!\n"; 
 			chatLog("k", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
-			print "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
+			print "Disconnect for ".timeConvert($config{'avoidList_reconnect'})."...\n";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
 			killConnection(\$remote_socket);
@@ -11763,6 +11885,15 @@ sub printItemDesc {
 	print "==============================================\n";
 }
 
+sub timeOut {
+	my ($r_time, $compare_time) = @_;
+	if ($compare_time ne "") {
+		return (time - $r_time > $compare_time);
+	} else {
+		return (time - $$r_time{'time'} > $$r_time{'timeout'});
+	}
+}
+
 #this is a small sub to convert the ubiquitus seconds values we have EVERYWHERE into something the average
 #user will/can understand
 sub timeConvert {
@@ -11774,15 +11905,6 @@ sub timeConvert {
 	my $seconds = $time;
 	my $gathered = $hours." hours ".$minutes." minutes ".$seconds." seconds";
 	return $gathered;
-}
-
-sub timeOut {
-	my ($r_time, $compare_time) = @_;
-	if ($compare_time ne "") {
-		return (time - $r_time > $compare_time);
-	} else {
-		return (time - $$r_time{'time'} > $$r_time{'timeout'});
-	}
 }
 
 sub vocalString {
