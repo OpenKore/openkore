@@ -9380,7 +9380,7 @@ sub move {
 	$args{time_move} = $char->{time_move};
 	$dist = distance($char->{pos}, $args{move_to});
 	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
-debug_showSpots('move', [{x => $x, y => $y}]);
+
 	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
 		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
 	AI::queue("move", \%args);
