@@ -4134,7 +4134,7 @@ sub AI {
 					$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
 					$ai_seq_args[0]{'old_x'} = $cur_x;
 					$ai_seq_args[0]{'old_y'} = $cur_y;
-					$ai_seq_args[0]{'time_step'} = time if $trimsteps;
+					$ai_seq_args[0]{'time_step'} = time if ($cur_x != $ai_seq_args[0]{'old_x'} || $cur_y != $ai_seq_args[0]{'old_y'});
 					debug "Route - next step moving to ($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}), $stepsleft steps left\n", "route";
 					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
 				} else {
