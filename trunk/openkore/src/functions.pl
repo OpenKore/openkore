@@ -8096,7 +8096,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		my $ID = substr($msg, 2, 4);
 		my $TargetID =  substr($msg, 6, 4);
 		my $online = unpack("L1", substr($msg, 10, 4));
-		undef $nameRequest;
+		undef %nameRequest;
 		$nameRequest{type} = "g";
 		$nameRequest{ID} = $TargetID;
 		$nameRequest{online} = $online;
@@ -8176,7 +8176,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 			$players{$ID}{'gotName'} = 1;
 			($players{$ID}{'party'}{'name'}) = substr($msg, 30, 24) =~ /([\s\S]*?)\000/;
 			($players{$ID}{'guild'}{'name'}) = substr($msg, 54, 24) =~ /([\s\S]*?)\000/;
-			($players{$ID}{'guild'}{'men'}{$players{$ID}{'name'}}{'title'}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
+			($players{$ID}{'guild'}{'title'}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
 			debug "Player Info: $players{$ID}{'name'} ($players{$ID}{'binID'})\n", "parseMsg", 2;
 			Plugins::callHook('charNameUpdate');
 		}
