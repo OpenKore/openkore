@@ -1404,21 +1404,25 @@ sub parseCommand {
 		($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,-]+)/;
 		($arg3) = $input =~ /^[\s\S]*? \w+ [\d,-]+ (\d+)/;
 		if ($arg1 eq "") {
-			message("----------Storage-----------\n", "list");
-			message("#  Name\n", "list");
-			for (my $i = 0; $i < @storageID; $i++) {
-				next if ($storageID[$i] eq "");
-
-				my $display = "$storage{$storageID[$i]}{'name'}";
-				$display = $display . " x $storage{$storageID[$i]}{'amount'}";
-
-				message(swrite(
-					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$i, $display]),
-					"list");
+			if ($storage{opened}) {
+				message("----------Storage-----------\n", "list");
+				message("#  Name\n", "list");
+				for (my $i = 0; $i < @storageID; $i++) {
+					next if ($storageID[$i] eq "");
+	
+					my $display = "$storage{$storageID[$i]}{'name'}";
+					$display = $display . " x $storage{$storageID[$i]}{'amount'}";
+	
+					message(swrite(
+						"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+						[$i, $display]),
+						"list");
+				}
+				message("\nCapacity: $storage{'items'}/$storage{'items_max'}\n", "list");
+				message("-------------------------------\n", "list");
+			} else {
+				warning "No information about storage, it has not been opened before in this session\n";
 			}
-			message("\nCapacity: $storage{'items'}/$storage{'items_max'}\n", "list");
-			message("-------------------------------\n", "list");
 
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
 			error	"Error in function 'storage add' (Add Item to Storage)\n" .
@@ -2511,14 +2515,13 @@ sub AI {
 		while (1) {
 			last if (!$config{"getAuto_$i"});
 			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"getAuto_$i"});
-			
-			if ($config{"getAuto_$i"."_minAmount"} ne "" && $config{"getAuto_$i"."_maxAmount"} ne "" && findKeyString(\%storage, "name", $config{"getAuto_$ai_seq_args[0]{index}"}) ne ""
+			if ($config{"getAuto_$i"."_minAmount"} ne "" && $config{"getAuto_$i"."_maxAmount"} ne ""
 			   && !$config{"getAuto_$i"."_passive"}
-			   && ($ai_v{'temp'}{'invIndex'} eq ""
-			       || ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"getAuto_$i"."_minAmount"}
-			           && $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"getAuto_$i"."_maxAmount"})
-			      )
-			   ) {
+			   && ($ai_v{'temp'}{'invIndex'} eq "" 
+				 	|| ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"getAuto_$i"."_minAmount"} 
+					&& $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"getAuto_$i"."_maxAmount"}))
+			   && (findKeyString(\%storage, "name", $config{"getAuto_$ai_seq_args[0]{index}"}) ne "" || !$storage{opened})
+			) {
 				$ai_v{'temp'}{'found'} = 1;
 			}
 			$i++;
@@ -5933,6 +5936,7 @@ sub parseMsg {
 		}
 
 		$ai_v{temp}{storage_opened} = 1;
+		$storage{opened} = 1;
 		message "Storage opened.\n", "storage";
 
 	} elsif ($switch eq "00A6") {
