@@ -1548,7 +1548,7 @@ um_fild01 31 374 beach_dun2 258 244
 um_fild01 366 277 um_fild02 22 272
 um_fild01 369 277 um_fild02 22 272
 um_fild01 31 274 beach_dun2 258 244
-um_fild02 22 272 um_fild01 366 277
+um_fild02 22 272 um_fild01 369 277
 um_fild02 188 374 um_fild04 182 13
 um_fild02 373 148 um_fild03 32 145
 um_fild02 373 329 um_fild03 19 334
