@@ -177,6 +177,37 @@ Credits:
 
 
 ==================
+### 1.4.10
+==================
+
+For those who are confused about the version number:
+This is 1.4.10, not 1.4.1.0. The version number didn't go backwards. 10
+comes after 9, right?
+
+Bug fixes:
+- When an aggressive monster attacks you while walking to lockMap, Kore
+  will attack all non-aggressive monsters before it continues to walk to
+  lockMap. This has been fixed.
+- oRO and euRO language characters (|00) are now supported.
+- Some teleport_search flooding bugs are fixed.
+- teleportAuto_allPlayers will only teleport when not in lockMap (or
+  when lockMap is not set).
+
+New config options:
+- chatLangCode (code)
+  If your RO server uses language codes in chat messages, you can specify
+  that here. euRO and oRO use "|00" (without quotes) as language code.
+  If you leave this option empty, the language code will be automatically
+  detected whenever Kore sees someone talking. Set to "none" if your
+  server does not use language codes, and you don't want it to (falsely)
+  autodetect the language code.
+
+Credits:
+- doenet: euRO and oRO language character support.
+- jsteng: monster type change packet support.
+
+
+==================
 ### 1.4.9
 ==================
 
