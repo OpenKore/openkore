@@ -1,0 +1,45 @@
+.GAT file format description
+Originally posted by Alkie
+(http://www.odin-project.uni.cc/forums/)
+-----------------------------
+
+Well, over the past couple of days I've been analizing the gat files, and I
+feel confident that I understand them now.
+
+First of all, gat files are used to store information on the height of tiles
+and if you can walk on them or not.
+
+The structure is as follows:
+<'GRAT' heading>.4B
+<513 Heading>.W
+<Width of the map>.L
+<Height of the map>.L
+{
+	Square data:
+	<height of upper left corner>.L
+	<height of upper right corner>.L
+	<height of lower left corner>.L
+	<height of lower right corner>.L
+}.20B
+
+
+Explanation:
+The first six bytes is the header of the file, it contains the word GRAT and
+then the number 513 (type: word/short) (01 02 in hex)
+
+Then next eight bytes contain the size information for the map. The first four
+bytes (type: long) are for the width (or x size). The second four bytes
+(type: long) are for the height (or y sizez)
+
+The rest of the file is the information for each block (20 bytes each). In each
+block there is four height numbers (type: floating point). The first height number
+is the height of the upper left corner of the block. The second number is the height
+of the upper right corner of the block. The third number is the height of the lower
+left corner of the block, and the fourth number is the lower right corner of the block.
+the last number (type: long) is the type of block. I don't know what every type is for,
+but 0 is blocking tiles, and 1 are non-blocking tiles, 5 seems to be 'weird' blocking tiles.
+
+Something else interesting about gat files. When the client loads them it does a
+vertical flip on them (making 0,0 be in the lower left corner instead of the upper left).
+
+Well that pretty much covers it. If you have any more questions you welcome to post them here.
