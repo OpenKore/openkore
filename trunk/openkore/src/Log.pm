@@ -282,6 +282,7 @@ sub debug {
 	my $level = $_[2];
 	$level = 1 if (!defined $level);
 	$level = 0 if (existsInList($config{debugDomains}, $_[1]));
+	$level = 5 if (existsInList($config{squelchDomains}, $_[1]));
 	return processMsg("debug",
 		$_[0],
 		$_[1],
