@@ -1,5 +1,9 @@
-# This package contains functions for matching input typed by the player with
-# an in-game entity (e.g. players, monsters, items).
+##
+# MODULE DESCRIPTION: Entity lookup and matching
+#
+# This module contains functions for matching input typed by the player with
+# an in-game entity (e.g. players, monsters, items). These functions make
+# it easy to match an entity using a number or a name.
 
 package Match;
 
@@ -7,6 +11,7 @@ use strict;
 
 use Globals;
 use Utils;
+
 
 ##
 # player(ID, [partial_match])
@@ -36,9 +41,9 @@ sub player {
 }
 
 ##
-# inventoryItem($name)
-#
-# Returns the hash to the inventory item matching $name, or undef.
+# inventoryItem(name)
+# name: either a number in the inventory list, or an item name.
+# Returns: the hash to the inventory item matching $name, or undef.
 sub inventoryItem {
 	my ($name) = @_;
 
@@ -54,11 +59,11 @@ sub inventoryItem {
 }
 
 ##
-# storageItem($name)
-#
-# Returns the hash to the storage item matching $name, or undef;
+# storageItem(name)
+# name: either a number in the storage list, or an item name.
+# Returns: the hash to the storage item matching $name, or undef.
 sub storageItem {
-	my ($name) = @_;
+	my ($name) = lc shift;
 
 	if ($name =~ /^\d+$/) {
 		# A number was provided
@@ -70,7 +75,7 @@ sub storageItem {
 	my $index;
 	for my $ID (@storageID) {
 		my $item = $storage{$ID};
-		return $item if lc($item->{name}) eq lc($name);
+		return $item if lc($item->{name}) eq $name;
 	}
 	return; # Not found
 }
