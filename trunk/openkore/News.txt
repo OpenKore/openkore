@@ -35,8 +35,8 @@ Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
 - Attacks will now properly time out when failed.
 - Properly support tabs in avoid.txt
-- equipAuto for teleport now works, require ai_equipAuto_skilluse_giveup in
-  timeout.txt
+- equipAuto for teleport/skills now works, require ai_equipAuto_skilluse_giveup
+  in timeout.txt
 
 Credits:
 - Fenris: Tk interface improvements.
@@ -45,7 +45,8 @@ Credits:
 Internal:
 - Added AI.pm, which is a wrapper for @ai_seq and @ai_seq_args.
 - Added $char, an alias for $chars[$config{'char'}].
-
+- ai_skillUse's first parameter is skillID (eg AL_HEAL) rather then the internal
+  ID Number
 
 ==================
 ### 1.3.1 (beta)
