@@ -19,7 +19,7 @@
 typedef unsigned long int DWORD;
 typedef bool BOOL;
 
-DWORD GetTickCount ()
+static DWORD GetTickCount ()
 {
 	struct timeval tv;
 	gettimeofday(&tv, NULL);
@@ -87,13 +87,13 @@ struct CalcPath_session {
 	BOOL active;
 };
 
-CalcPath_session g_sessions[SESSION_MAX];
+static CalcPath_session g_sessions[SESSION_MAX];
 
 #ifdef __cplusplus
-#define CEXTERN extern "C"
-extern "C" {
+	#define CEXTERN extern "C"
+	extern "C" {
 #else
-#define CEXTERN
+	#define CEXTERN
 #endif
 
 extern DLLEXPORT DWORD WINAPI CalcPath_init(pos_list *solution, char* map, unsigned long width,unsigned long height,
@@ -111,7 +111,7 @@ extern DLLEXPORT DWORD WINAPI GetProcByName (char * name);
 #endif
 
 
-int QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
+static int QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
 {
 	int x = (lo+hi)>>1;
 	if (val == a[x].val)
@@ -126,7 +126,7 @@ int QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
 		return x;
 }
 
-inline char CalcPath_getMap(char *map, unsigned long width, unsigned long height, pos *p) {
+static inline char CalcPath_getMap(char *map, unsigned long width, unsigned long height, pos *p) {
 	if (p->x >= width || p->y >= height) {
 		return 1;
 	} else {
@@ -507,15 +507,11 @@ CEXTERN BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserve
 
 #else
 
-void _init() {
-        int i;
-        for (i=0;i<SESSION_MAX;i++) {
-                g_sessions[i].active = 0;
-        }
-}
-
-void _fini()
-{
+__attribute__((constructor)) void _Tools_so_Initialize() {
+	int i;
+	for (i=0;i<SESSION_MAX;i++) {
+		g_sessions[i].active = 0;
+	}
 }
 
 #endif /* WIN32 */
