@@ -22,6 +22,8 @@ Bug fixes:
 - ai_dealAuto added to timeouts.txt.
 - Typing "aiv" during an auto-deal will no longer crash.
 - The 'timeout' and 'auth' commands now respect the --control parameter.
+- When out of arrows, only ask the user to press ENTER if dcOnEmptyArrow
+  is set.
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.

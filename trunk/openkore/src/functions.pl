@@ -7448,9 +7448,13 @@ sub parseMsg {
 	} elsif ($switch eq "013B") {
 		$type = unpack("S1",substr($msg, 2, 2)); 
 		if ($type == 0) { 
-			$interface->errorDialog("Please equip arrow first.");
 			undef $chars[$config{'char'}]{'arrow'};
-			quit() if ($config{'dcOnEmptyArrow'});
+			if ($config{'dcOnEmptyArrow'}) {
+				$interface->errorDialog("Please equip arrow first.");
+				quit();
+			} else {
+				error "Please equip arrow first.\n";
+			}
 
 		} elsif ($type == 3) {
 			message "Arrow equipped\n" if ($config{'debug'}); 
