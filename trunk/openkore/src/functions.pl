@@ -5069,6 +5069,24 @@ sub AI {
 	} # end of block teleport
 
 
+	##### ALLOWED MAPS #####
+	# Disconnect if you're on a map other than the specified list of maps.
+	# This is to mostly useful on pRO, where GMs warp you to a secret room.
+	if ($field{name} && $config{allowedMaps} && !existsInList($config{allowedMaps}, $field{name})) {
+		warning "The current map ($field{name}) is not on the list of allowed maps.\n";
+		chatLog("k", "** The current map ($field{name}) is not on the list of allowed maps.\n");
+		ai_clientSuspend(0, 5);
+		if ($config{allowedMaps_reaction} == 0) {
+			message "Respawning to save point.\n";
+			chatLog("k", "** Respawning to save point.\n");
+			useTeleport(2);
+		} else {
+			chatLog("k", "** Exiting...\n");
+			quit();
+		}
+	}
+
+
 	##### AUTO RESPONSE #####
 
 	if (AI::action eq "autoResponse") {
