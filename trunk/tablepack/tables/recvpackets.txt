@@ -1,6 +1,5 @@
-# Packet lengths for RO 4.0
-# Monster skills without Turtle Island
-# iRO: 16 December 2003
+# Packet lengths for iRO (guild wars)
+# Last update: January 9 2004
 0064 55
 0065 17
 0066 0
@@ -374,3 +373,4 @@
 
 40A1 4
 01A4 11
+019B 10
