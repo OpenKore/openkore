@@ -4088,7 +4088,12 @@ sub AI {
 			      && $ai_seq_args[0]{'old_x'} == $cur_x		#and we are still on the same
 			      && $ai_seq_args[0]{'old_y'} == $cur_y ) {		#old XY coordinate,
 
-				debug "Route - stuck: $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'})\n", "route";
+				my $msg = "Stuck at $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'}).";
+				$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
+				$msg .= "\n";
+				warning $msg, "route";
+				chatLog("k", $msg);
+				useTeleport(1) if $config{teleportAuto_unstuck};
 				shift @ai_seq;
 				shift @ai_seq_args;
 
@@ -10059,32 +10064,6 @@ sub getNPCInfo {
 		$$return_hash{ok} = 1;
 	} else {
 		error "Incomplete NPC info or ID not found in npcs.txt\n";
-	}
-}
-
-sub stuckCheck {
-	my $stuck = shift;
-	my $limit = ($config{stuckcheckLimit} eq "" || $config{stuckcheckLimit} == 0)? 10 : $config{stuckcheckLimit};
-	if ($stuck) {
-		if ($ai_v{stuck_count} >= $limit) {
-			# should not happened but just to safeguard
-			my $msg = "Failed to move for $ai_v{stuck_count} times";
-			$msg .= ", attempt to unstuck by teleport. ($field{'name'} $chars[$config{char}]{pos}{x},$chars[$config{char}]{pos}{y})" unless $config{teleportAuto_noUnstuck};
-			$msg .= "\n";
-			warning $msg, "stuck";
-			chatLog("k", $msg);
-			useTeleport(1) unless $config{teleportAuto_noUnstuck};
-			delete $ai_v{stuck_count};
-
-		} elsif ($ai_v{stuck_count} >= 2) {
-			$ai_v{stuck_count}++;
-			debug "Move failed, attempt ($ai_v{stuck_count}) to unstuck by moving to current recorded pos\n", "stuck";
-			sendMove(\$remote_socket, $chars[$config{char}]{pos_to}{x}, $chars[$config{char}]{pos_to}{y});
-		}
-
-	} elsif (exists $ai_v{stuck_count}) {
-		debug "Unstuck attempt successful\n", "stuck";
-		delete $ai_v{stuck_count};
 	}
 }
 
