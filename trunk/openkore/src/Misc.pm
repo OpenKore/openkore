@@ -284,17 +284,25 @@ sub charSelectScreen {
 			[$chars[$num]{'zenny'}, $chars[$num]{'luk'}],
 			"-------------------------------", []);
 		}
-		$msg .= swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<",
-			[$num, $chars[$num]{name}, "$chars[$num]{lv}/$chars[$num]{lv_job}"]);
+		$msg .= sprintf("%3s %-34s %-15s %2d/%2d\n",
+			$num, $chars[$num]{name},
+			$jobs_lut{$chars[$num]{'jobID'}},
+			$chars[$num]{lv}, $chars[$num]{lv_job});
 	}
-	message "---------------  Character list ---------------\n" .
-		"#       Name                          Lv\n" . $msg .
-		"-----------------------------------------------\n", "connection" if ($msg ne '');
+
+	if ($msg) {
+		message
+			"---------------------- Character List ----------------------\n".
+			sprintf("%3s %-34s %-15s %-6s\n", '#', 'Name', 'Job', 'Lv').
+			$msg.
+			"------------------------------------------------------------\n",
+			"connection";
+	}
 	return 1 if $xkore;
 
 
-	if ($autoLogin && @chars && $chars[$config{'char'}]) {
+	if ($autoLogin && @chars &&
+	    defined($config{'char'}) && $chars[$config{'char'}]) {
 		sendCharLogin(\$remote_socket, $config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 		return 1;
