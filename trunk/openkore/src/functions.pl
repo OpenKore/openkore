@@ -1167,13 +1167,13 @@ sub parseCommand {
 			message("-------------------------------\n", "list");
 
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
-			error	"Error in function 'i' (Iventory Item Desciption)\n" .
+			error	"Error in function 'i' (Inventory Item Desciption)\n" .
 				"Inventory Item $arg2 does not exist\n";
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
 			printItemDesc($chars[$config{'char'}]{'inventory'}[$arg2]{'nameID'});
 
 		} else {
-			error	"Syntax Error in function 'i' (Iventory List)\n" .
+			error	"Syntax Error in function 'i' (Inventory List)\n" .
 				"Usage: i [<u|eq|nu|desc>] [<inventory #>]\n";
 		}
 
