@@ -5,6 +5,7 @@
 Bug fixes:
 - Fix "undefined value as HASH" bug in the Wx item list control.
 - Reset earned money when openshop.
+- Fix crash when using "move" and "date" commands via PM/chat.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
