@@ -1,0 +1,20 @@
+Import('*')
+
+tools = env.Copy()
+tools['LIBPATH'] = ['../lib/static', '../lib/zlib']
+tools['CPPPATH'] = ['../lib']
+tools['CPPDEFINES'] = ['GRF_STATIC', 'SPR_STATIC']
+if WIN32:
+	tools['LIBS'] = ['static-grf', 'grfzlib-static']
+else:
+	tools['LIBS'] = ['static-grf', 'z']
+
+
+# Commandline grf utility
+grftool = tools.Program('grftool', 'grftool.c')
+Default(grftool)
+
+
+# Commandline sprite utility
+spritetool = tools.Program('spritetool', 'spritetool.c')
+Default(spritetool)
