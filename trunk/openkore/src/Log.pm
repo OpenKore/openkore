@@ -9,6 +9,13 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 
+#this is commented out because it requires additional packages, but is included here to give other mods ideas ;)
+#
+#if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
+#	use Win32::Console::ANSI;
+#}
+#use Term::ANSIScreen qw/:color :cursor :screen :keyboard/;
+
 # Known domains:
 # atk			You attack monster
 # connection		Connection messages
@@ -113,15 +120,20 @@ sub processMsg {
 		# This is a small example (works only on Unix).
 		# It should be in a config file rather than hardcoded.
 		if ($^O ne 'MSWin32' && $^O ne 'cygwin') {
+			# above if statement would not be required if the Win32::Console::ANSI package was installed
 			if ($type eq "error") {
 				# Errors are red
 				print "\033[1;31m";
-			} elsif ($domain eq "connection") {
+# above can be replaced by
+#				color 'red'; clline;
+				} elsif ($domain eq "connection") {
 				# Magenta
 				print "\033[1;35m";
+				#color 'magenta'; clline;
 			} elsif ($domain eq "atk") {
 				# Cyan
 				print "\033[1;36m";
+				#color 'cyan'; clline;
 			}
 		}
 
@@ -129,8 +141,11 @@ sub processMsg {
 		print $message if ($consoleVar->{$domain});
 
 		if ($^O ne 'MSWin32' && $^O ne 'cygwin') {
+			#above if not needed if Win32::Console::ANSI installed
 			# Restore normal color
 			print "\033[0m";
+			#can be replaced by 
+			#color 'reset'; clline;
 			STDOUT->flush;
 		}
 	}
