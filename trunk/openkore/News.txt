@@ -54,7 +54,8 @@ Internal:
 
 Credits:
 - asuwannarat, as2765324: tRO server details.
-- MindChild: support for the 'all' option in items_control.txt
+- MindChild: support for the 'all' option in items_control.txt,
+  support for the --storage argument.
 - jabskeeterbug: item history command.
 
 
