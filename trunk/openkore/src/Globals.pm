@@ -26,10 +26,12 @@ use base qw(Exporter);
 
 our %EXPORT_TAGS = (
 	config	=> [qw(%config %consoleColors %equipTypes_lut %items_lut %itemsDesc_lut %itemTypes_lut
-			%jobs_lut %maps_lut %npcs_lut %sex_lut %shop %timeout)],
+			%jobs_lut %maps_lut %npcs_lut %sex_lut %shop %skills_lut %skillsDesc_lut %skillsSP_lut
+			%timeout)],
 	ai	=> [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff)],
-	state	=> [qw($accountID @chars %cart @playersID %players @monstersID %monsters @portalsID
-			%portals @itemsID %items @npcsID %npcs %field @storeList)],
+	state	=> [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs
+			@playersID %players @portalsID %portals @storeList
+			$currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID)],
 	network	=> [qw($remote_socket $conState $encryptVal)],
 	misc	=> [qw($buildType %timeout_ex $isOnline $shopstarted $dmgpsec $totalelasped $elasped $totaldmg
 			%overallAuth)],
@@ -56,6 +58,9 @@ our %maps_lut;
 our %npcs_lut;
 our %sex_lut;
 our %shop;
+our %skills_lut;
+our %skillsDesc_lut;
+our %skillsSP_lut;
 our %timeout;
 
 # AI
@@ -69,18 +74,23 @@ our $AI_forcedOff;
 our $accountID;
 our @chars;
 our %cart;
-our @playersID;
-our %players;
-our @monstersID;
-our %monsters;
-our @portalsID;
-our %portals;
+our %field;
 our @itemsID;
 our %items;
+our @monstersID;
+our %monsters;
 our @npcsID;
 our %npcs;
-our %field;
+our @playersID;
+our %players;
+our @portalsID;
+our %portals;
 our @storeList;
+our $currentChatRoom;
+our @currentChatRoomUsers;
+our @chatRoomsID;
+our %chatRooms;
+our @skillsID;
 
 # Network
 our $remote_socket;
