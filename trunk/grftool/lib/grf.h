@@ -76,8 +76,11 @@ typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 /** The same as grf_callback_flush(), but without a callback parameter. */
 #define grf_flush(fname, error) grf_callback_flush(fname, error, NULL)
 
-/* Prototypes */
+
+/* Opening */
 GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpenCallback callback);
+
+/* Extraction functions */
 GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *error);
 GRFEXPORT void *grf_get_z (Grf *grf, const char *fname, uint32_t *size, uint32_t *usize, GrfError *error);
 GRFEXPORT void *grf_chunk_get (Grf *grf, const char *fname, char *buf, uint32_t offset, uint32_t *len, GrfError *error);
@@ -86,15 +89,23 @@ GRFEXPORT void *grf_index_get_z(Grf *grf, uint32_t index, uint32_t *size, uint32
 GRFEXPORT void *grf_index_chunk_get (Grf *grf, uint32_t index, char *buf, uint32_t offset, uint32_t *len, GrfError *error);
 GRFEXPORT int grf_extract (Grf *grf, const char *grfname, const char *file, GrfError *error);
 GRFEXPORT int grf_index_extract (Grf *grf, uint32_t index, const char *file, GrfError *error);
+
+/* GRF modification functions */
 GRFEXPORT int grf_del(Grf *grf, const char *fname, GrfError *error);
 GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error);
+
 GRFEXPORT int grf_replace(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error);
 GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const void *data, uint32_t len, uint8_t flags, GrfError *error);
+
 GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error);
+
 GRFEXPORT int grf_callback_flush(Grf *grf, GrfError *error, GrfFlushCallback callback);
+GRFEXPORT int grf_repak(const char *grf, const char *tmpgrf, GrfError *error);
+
+/* Closing and freeing */
 GRFEXPORT void grf_close(Grf *grf);
 GRFEXPORT void grf_free(Grf *grf);
-GRFEXPORT int grf_repak(const char *grf, const char *tmpgrf, GrfError *error);
+
 
 /* Useful libgrf functions found in grfsupport:
  *

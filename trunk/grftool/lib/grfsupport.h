@@ -70,6 +70,9 @@ GRFEXPORT int GRF_OffsetSort_Func(const GrfFile *g1, const GrfFile *g2);
 GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index);
 GRFEXPORT uint32_t grf_find_unused (Grf *grf, uint32_t len);
 
+int GRF_list_from_array(Grf *grf, GrfError *error);
+int GRF_array_from_list(Grf *grf, GrfError *error);
+
 GRFEXPORT GrfError *GRF_SetError(GrfError *err, GrfErrorType errtype, uint32_t line, const char *file, const char *func, void *extra);
 GRFEXPORT const char *grf_strerror(GrfError err);
 
