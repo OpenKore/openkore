@@ -91,6 +91,7 @@ Credits:
 - mondlicht: misc bug fixes.
 - denni: previousDamage condition, teleportAuto_maxDmgInLock,
   teleportAuto_minAggressivesInLock.
+- jojobail: some work on oRO support.
 
 
 ==================
