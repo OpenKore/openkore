@@ -231,7 +231,7 @@ sub createInterface {
 
 	## Splitter with console, dock and map viewer
 	my $splitter = new Wx::SplitterWindow($frame, 928, wxDefaultPosition, wxDefaultSize,
-		wxSP_3D | wxSP_LIVE_UPDATE);
+		wxSP_LIVE_UPDATE);
 	$splitter->SetMinimumPaneSize(25);
 	$vsizer->Add($splitter, 1, wxGROW);
 	EVT_SPLITTER_DOUBLECLICKED($self, 928, sub { $_[1]->Skip; });
