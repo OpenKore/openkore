@@ -10,6 +10,10 @@
   * Set route_randomWalk to 0
 - If you have been using "maxUses" to limit the number of times you attempt to
   cast a skill, you may have to change it to "maxAttempts" instead.
+- Kobolds have been renamed from Kobold # to Kobold-#.
+  Many people don't know about using tabs in mon_control.txt, and
+  would probably have problems figuring out what to do for Kobolds.
+  Example: Kobold 1 is now Kobold-1
 
 
 Bug fixes:
@@ -69,12 +73,6 @@ New features:
 - Bulk selling has finally been implemented! Kore will always auto-sell this way
   from now on, no need to set any config options.
 
-tablepack/monsters.txt
-- Kobolds have been renamed from Kobold # to Kobold-#.
-  Many people don't know about using tabs in mon_control.txt, and
-  would probably have problems figuring out what to do for Kobolds.
-  Example: Kobold 1 is now Kobold-1
-
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
   as if they were in your party for the purpose of KS checks.
@@ -109,7 +107,7 @@ New config options:
   2 - record the return portal too (by guessing)
 - webproxy <proxy_addr>
   webproxy_port <port>
-  To enable and specify wether WX will use this proxy for manual downloading.
+  To enable and specify whether WX will use this proxy for downloading the manual.
 - sellAuto_standpoint <map> <x> <y>
   buyAuto {
 	standpoint <map> <x> <y>
