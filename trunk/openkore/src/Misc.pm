@@ -57,6 +57,7 @@ our @EXPORT = qw(
 	objectIsMovingTowardsPlayer
 	printItemDesc
 	stopAttack
+	stripLanguageCode
 	whenStatusActive
 	whenStatusActiveMon
 	whenStatusActivePL
@@ -702,6 +703,17 @@ sub printItemDesc {
 sub stopAttack {
 	my $pos = calcPosition($char);
 	sendMove(\$remote_socket, $pos->{x}, $pos->{y});
+}
+
+sub stripLanguageCode {
+	my $r_msg = shift;
+	if ($config{chatLangCode} ne "none" && $config{chatLangCode} ne "0") {
+		configModify("chatLangCode", 1) if ($config{chatLangCode} eq "");
+		$$r_msg =~ s/^\|..//;
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 sub whenStatusActive {

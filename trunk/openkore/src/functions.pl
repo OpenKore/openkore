@@ -1682,10 +1682,10 @@ sub AI {
 
 		$map_name =~ /([\s\S]*)\.gat/;
 		if ($1) {
+			my $pos = calcPosition($char);
 			open(DATA, ">$Settings::logs_folder/walk.dat");
 			print DATA "$1\n";
-			print DATA $chars[$config{'char'}]{'pos_to'}{'x'}."\n";
-			print DATA $chars[$config{'char'}]{'pos_to'}{'y'}."\n";
+			print DATA "$pos->{x}\n$pos->{y}\n";
 
 			for (my $i = 0; $i < @npcsID; $i++) {
 				next if ($npcsID[$i] eq "");
@@ -5142,16 +5142,11 @@ sub parseSendMsg {
 		my ($chat) = $message =~ /^[\s\S]*? : ([\s\S]*)\000?/;
 		$chat =~ s/^\s*//;
 
-		my $langCode = quotemeta $config{'chatLangCode'};
-		if ($langCode ne "" && $chat =~ /^$langCode/) {
-			$chat =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chat =~ /^(\|0\d)/) {
-			configModify("chatLangCode", $1);
-			$chat =~ s/^\|0\d//;
-		}
+		stripLanguageCode(\$chat);
 
-		if ($chat =~ /^$config{'commandPrefix'}/) {
-			$chat =~ s/^$config{'commandPrefix'}//;
+		my $prefix = quotemeta $config{'commandPrefix'};
+		if ($chat =~ /^$prefix/) {
+			$chat =~ s/^$prefix//;
 			$chat =~ s/^\s*//;
 			$chat =~ s/\s*$//;
 			$chat =~ s/\000*$//;
@@ -5166,16 +5161,11 @@ sub parseSendMsg {
 		my $chat = substr($msg, 28, $length - 29);
 		$chat =~ s/^\s*//;
 
-		my $langCode = quotemeta $config{'chatLangCode'};
-		if ($langCode ne "" && $chat =~ /^$langCode/) {
-			$chat =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chat =~ /^(\|0\d)/) {
-			configModify("chatLangCode", $1);
-			$chat =~ s/^\|0\d//;
-		}
+		stripLanguageCode(\$chat);
 
-		if ($chat =~ /^$config{'commandPrefix'}/) {
-			$chat =~ s/^$config{'commandPrefix'}//;
+		my $prefix = quotemeta $config{'commandPrefix'};
+		if ($chat =~ /^$prefix/) {
+			$chat =~ s/^$prefix//;
 			$chat =~ s/^\s*//;
 			$chat =~ s/\s*$//;
 			parseInput($chat, 1);
@@ -6323,13 +6313,7 @@ sub parseMsg {
 		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		$chatMsgUser =~ s/ $//;
 
-		my $langCode = quotemeta $config{'chatLangCode'};
-		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
-			$chatMsg =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chatMsg =~ /^(\|0\d)/) {
-			configModify("chatLangCode", $1);
-			$chatMsg =~ s/^\|0\d//;
-		}
+		stripLanguageCode(\$chatMsg);
 		$chat = "$chatMsgUser : $chatMsg";
 
 		my %item;
@@ -6357,13 +6341,7 @@ sub parseMsg {
 		# eAthena servers: it uses this packet for non-chat server messages.
 
 		if (defined $chatMsgUser) {
-			my $langCode = quotemeta $config{'chatLangCode'};
-			if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
-				$chatMsg =~ s/^$langCode//;
-			} elsif ($langCode ne "none" && $chatMsg =~ /^(\|0\d)/) {
-				configModify("chatLangCode", $1);
-				$chatMsg =~ s/^\|0\d//;
-			}
+			stripLanguageCode(\$chatMsg);
 			$chat = "$chatMsgUser : $chatMsg";
 		}
 
@@ -6480,6 +6458,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0097") {
+		# Private message
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
@@ -6490,13 +6469,7 @@ sub parseMsg {
 			$privMsgUsers[@privMsgUsers] = $privMsgUser;
 		}
 
-		my $langCode = quotemeta $config{'chatLangCode'};
-		if ($langCode ne "" && $privMsg =~ /^$langCode/) {
-			$privMsg =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $privMsg =~ /^(\|0\d)/) {
-			configModify("chatLangCode", $1);
-			$privMsg =~ s/^\|0\d//;
-		}
+		stripLanguageCode(\$privMsg);
 
 		my %item;
 		$item{type} = "pm";
@@ -6532,13 +6505,7 @@ sub parseMsg {
 		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
 
-		my $langCode = quotemeta $config{'chatLangCode'};
-		if ($langCode ne "" && $chat =~ /^$langCode/) {
-			$chat =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chat =~ /^(\|0\d)/) {
-			configModify("chatLangCode", $1);
-			$chat =~ s/^\|0\d//;
-		}
+		stripLanguageCode(\$chat);
 
 		my %item;
 		$item{type} = "gmchat";
@@ -8561,13 +8528,7 @@ sub parseMsg {
 		my ($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/;
 		$chatMsgUser =~ s/ $//;
 
-		my $langCode = quotemeta $config{'chatLangCode'};
-		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
-			$chatMsg =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chatMsg =~ /^(\|0\d)/) {
-			configModify("chatLangCode", $1);
-			$chatMsg =~ s/^\|0\d//;
-		}
+		stripLanguageCode(\$chatMsg);
 		$chat = "$chatMsgUser : $chatMsg";
 
 		my %item;
