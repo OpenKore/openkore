@@ -1436,18 +1436,19 @@ sub parseCommand {
 		($arg3) = $input =~ /^[\s\S]*? \w+ [\d,-]+ (\d+)/;
 		if ($arg1 eq "") {
 			if ($storage{opened}) {
-				message("----------Storage-----------\n", "list");
-				message("#  Name\n", "list");
+				my $list = "----------Storage-----------\n";
+				$list .= "#  Name\n";
 				for (my $i = 0; $i < @storageID; $i++) {
 					next if ($storageID[$i] eq "");
 	
 					my $display = "$storage{$storageID[$i]}{'name'}";
 					$display = $display . " x $storage{$storageID[$i]}{'amount'}";
 	
-					message(sprintf("%2d %s\n", $i, $display), "list");
+					$list .= sprintf("%2d %s\n", $i, $display);
 				}
-				message("\nCapacity: $storage{'items'}/$storage{'items_max'}\n", "list");
-				message("-------------------------------\n", "list");
+				$list .= "\nCapacity: $storage{'items'}/$storage{'items_max'}\n";
+				$list .= "-------------------------------\n";
+				message($list, "list");
 			} else {
 				warning "No information about storage, it has not been opened before in this session\n";
 			}
