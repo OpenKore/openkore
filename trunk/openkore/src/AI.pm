@@ -77,9 +77,9 @@ sub findAction {
 }
 
 sub inQueue {
-	my $sequences = join '|', @_;
-	my $actions = join ' ', @ai_seq;
-	return 1 if $actions =~ /$sequences\b/;
+	foreach (@_) {
+		return 1 if defined binFind(\@ai_seq, $_);
+	}
 	return 0;
 }
 
