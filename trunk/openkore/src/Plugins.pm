@@ -267,8 +267,8 @@ sub addHook {
 #
 # Example:
 # $hooks = Plugins::addHooks(
-# 	'AI_pre',       \&onAI_pre, undef,
-# 	'mainLoop_pre', \&onMainLoop_pre, undef
+# 	['AI_pre',       \&onAI_pre, undef],
+# 	['mainLoop_pre', \&onMainLoop_pre, undef]
 # );
 # Plugins::delHooks($hooks);
 #
@@ -279,10 +279,10 @@ sub addHook {
 # Plugins::delHook('mainLoop_pre', $hook2);
 sub addHooks {
 	my @hooks;
-	for (my $i = 0; $i < @_; $i += 3) {
+	for my $hook (@_) {
 		my %hash = (
-			name => $_[$i],
-			ID => addHook($_[$i], $_[$i + 1], $_[$i + 2])
+			name => $hook->[0],
+			ID => addHook(@{$hook})
 		);
 		push @hooks, \%hash;
 	}
