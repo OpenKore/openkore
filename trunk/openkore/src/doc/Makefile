@@ -7,6 +7,7 @@ FILES=\
 	../Modules.pm \
 	../Plugins.pm \
 	../Utils.pm \
+	../Skills.pm \
 	../Misc.pm
 
 .PHONY: all clean upload
