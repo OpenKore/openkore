@@ -112,7 +112,7 @@ extern DLLEXPORT DWORD WINAPI GetProcByName (char * name);
 #endif
 
 
-static int QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
+static inline int QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
 {
 	int x = (lo+hi)>>1;
 	if (val == a[x].val)
@@ -194,6 +194,7 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 	int j, cur, successors_start,suc, found,index;
 	BOOL done = 1;
 	DWORD timeout = GetTickCount();
+	unsigned int loop = 0;
 
 	pos_list *solution = g_sessions[session].solution;
 	pos_ai_list *fullList = &g_sessions[session].fullList;
@@ -213,9 +214,13 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 		return 0;
 	}
 	while (1) {
-		if (GetTickCount() - timeout > time_max) {
-			break;
+		loop++;
+		if (loop == 50) {
+			loop = 0;
+			if (GetTickCount() - timeout > time_max)
+				break;
 		}
+
 		//get next from the list
 		if (openList->size == 0) {
 			//failed!
