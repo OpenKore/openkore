@@ -39,8 +39,6 @@ sub new {
 	# Automatically load the correct module for
 	# the current operating system
 
-	my $use_curses = 0; # The curses interface hasn't been written yet
-
 	if ($buildType == 0) {
 		# Win32
 		eval "use Interface::Console::Win32;";
@@ -49,17 +47,10 @@ sub new {
 		return new Interface::Console::Win32;
 	} else {
 		# Linux
-		if ($use_curses) {
-			eval "use Interface::Console::Curses;";
-			die $@ if $@;
-			Modules::register("Interface::Console::Curses");
-			return new Interface::Console::Curses;
-		} else {
-			eval "use Interface::Console::Other;";
-			die $@ if $@;
-			Modules::register("Interface::Console::Other");
-			return new Interface::Console::Other;
-		}
+		eval "use Interface::Console::Other;";
+		die $@ if $@;
+		Modules::register("Interface::Console::Other");
+		return new Interface::Console::Other;
 	}
 }
 
