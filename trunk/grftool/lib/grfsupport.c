@@ -129,7 +129,7 @@ GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index) {
 
 	/* Make sure our arguments are sane */
 	if (!grf || !fname) {
-		/* GRF_SETERR(error,GE_BADARGS,grf_find) */
+		/* GRF_SETERR(error,GE_BADARGS,grf_find); */
 		return NULL;
 	}
 
@@ -149,6 +149,7 @@ GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index) {
 				return &(grf->files[i]);
 			}
 
+	GRF_SETERR(error,GE_SUCCESS,grf_find);
 	return NULL;
 }
 
@@ -172,7 +173,7 @@ GRFEXPORT void grf_sort (Grf *grf, int(*compar)(const void *, const void *)) {
  *	g2 should be before g1
  */
 GRFEXPORT int GRF_AlphaSort_Func(const GrfFile *g1, const GrfFile *g2) {
-	return strcoll (g1->name, g2->name);
+	return strcoll(g1->name, g2->name);
 }
 
 /*! \brief Offset-based sorting callback function
@@ -190,6 +191,70 @@ GRFEXPORT int GRF_OffsetSort_Func(const GrfFile *g1, const GrfFile *g2) {
 		return 0;
 	return -1;
 }
+
+/*! \brief Synchronize the linked list with the array
+ *
+ * \param grf Pointer to the Grf struct
+ * \return 1 on success, 0 on fail
+ */
+int GRF_list_from_array(Grf *grf, GrfError *error) {
+	uint32_t i;
+
+	if (!grf) {
+		GRF_SETERR(error,GE_BADARGS,GRF_list_from_array);
+		return 0;
+	}
+	
+	/* Reset the linked list */
+	for(i=0;i<grf->nfiles,i++) {
+		if (i<grf->files[i]) grf->files[i].next=&(grf->files[i+1]);
+		if (i>0) grf->files[i].prev=&(grf->files[i-1]);
+	}
+	grf->files[0].prev=NULL;
+	grf->files[grf->nfiles-1].next=NULL;
+	grf->first=&(grf->files[0]);
+	grf->last=&(grf->files[grf->nfiles-1]);
+
+	GRF_SETERR(error,GE_SUCCESS,GRF_list_from_array);
+	return 1;
+}
+
+/*! \brief Synchronize the array with the linked list
+ *
+ * \param grf Pointer to the Grf struct
+ * \return 1 on success, 0 on fail
+ */
+int GRF_array_from_list(Grf *grf, GrfError *error) {
+	GrfFile *newfiles, *cur;
+
+	/* Check our arguments */
+	if (!grf) {
+		GRF_SETERR(error,GE_BADARGS,GRF_array_from_list);
+		return 0;
+	}
+
+	/* Allocate memory */
+	if ((newfiles=(GrfFile*)malloc(sizeof(GrfFile)*grf->nfiles))==NULL) {
+		GRF_SETERR(error,GE_ERRNO,malloc);
+		return 0;
+	}
+
+	/* Loop through the linked list, copying info into its position
+	 * in the new array
+	 */
+	for (i=0,cur=grf->first;i<grf->nfiles && cur;i++,cur=cur->next)
+		memcpy(&(newfiles[i]),&(grf->files[i]),sizeof(GrfFile));
+
+	/* Free old arguments */
+	free(grf->files);
+
+	/* Set new files */
+	grf->files=newfiles;
+
+	GRF_SETERR(error,GE_SUCCESS,GRF_array_from_list);
+	return 1;
+}
+
 
 /***************************
 * Error Handling Functions *
@@ -238,6 +303,8 @@ GRFEXPORT GrfError *GRF_SetError(GrfError *err, GrfErrorType errtype, uint32_t l
  */
 static const char *GRF_strerror_type(GrfErrorType error) {
 	switch (error) {
+	case GE_SUCCESS:
+		return "Success."
 	case GE_BADARGS:
 		return "Bad arguments passed to function.";
 	case GE_INVALID:
