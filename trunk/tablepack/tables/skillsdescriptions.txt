@@ -362,16 +362,16 @@ AL_ANGELUS#
 Angelus
 Skill Form : ^777777Supportive^000000
 Contents : ^777777Increase the whole party's Defense (including the caster) for a while.^000000
-[Level 1] : ^777777105% VIT, Lasting for 30 secs, Consumes 23sp^000000
-[Level 2] : ^777777110% VIT, Lasting for 60 secs, Consumes 26sp^000000
-[Level 3] : ^777777115% VIT, Lasting for 90 secs, Consumes 29sp^000000
-[Level 4] : ^777777120% VIT, Lasting for 120 secs, Consumes 32sp^000000
-[Level 5] : ^777777125% VIT, Lasting for 150 secs, Consumes 35sp^000000
-[Level 6] : ^777777130% VIT, Lasting for 180 secs, Consumes 38sp^000000
-[Level 7] : ^777777135% VIT, Lasting for 210 secs, Consumes 41sp^000000
-[Level 8] : ^777777140% VIT, Lasting for 240 secs, Consumes 44sp^000000
-[Level 9] : ^777777145% VIT, Lasting for 270 secs, Consumes 47sp^000000
-[Level 10] : ^777777150% VIT, Lasting for 300 secs, Consumes 50sp^000000
+[Level 1] : ^777777+105% VIT, Lasting for 30 secs, Consumes 23sp^000000
+[Level 2] : ^777777+110% VIT, Lasting for 60 secs, Consumes 26sp^000000
+[Level 3] : ^777777+115% VIT, Lasting for 90 secs, Consumes 29sp^000000
+[Level 4] : ^777777+120% VIT, Lasting for 120 secs, Consumes 32sp^000000
+[Level 5] : ^777777+125% VIT, Lasting for 150 secs, Consumes 35sp^000000
+[Level 6] : ^777777+130% VIT, Lasting for 180 secs, Consumes 38sp^000000
+[Level 7] : ^777777+135% VIT, Lasting for 210 secs, Consumes 41sp^000000
+[Level 8] : ^777777+140% VIT, Lasting for 240 secs, Consumes 44sp^000000
+[Level 9] : ^777777+145% VIT, Lasting for 270 secs, Consumes 47sp^000000
+[Level 10] : ^777777+150% VIT, Lasting for 300 secs, Consumes 50sp^000000
 #
 AL_CRUCIS#
 Signum Crucis
@@ -460,7 +460,7 @@ Contents : ^777777Decrease Moving/Attack Speed of an Enemy for a while.^000000
 [Level 6] : ^777777-8 to AGI, Lasts for 90secs, Consumes 33sp^000000
 [Level 7] : ^777777-9 to AGI, Lasts for 100secs, Consumes 36sp^000000
 [Level 8] : ^777777-10 to AGI, Lasts for 110secs, Consumes 39sp^000000
-[Level 9] : ^777777-11 to AGI, Lasts for 120secs, Consumes 42sp^000000
+[Level 9] : ^777777-11 to AGI, Lasts for 1200secs, Consumes 42sp^000000
 [Level 10] : ^777777-12 to AGI, Lasts for 130secs, Consumes 45sp^000000
 #
 AL_RUWACH#
@@ -1742,7 +1742,7 @@ Skill Form : ^000099Passive^000000
 Contents : ^777777Enable to restore HP even while moving. However only 25% of normal HP recovery can be recovered by this skill and normal HP recovery doesn't affect on it either.^000000
 #
 AC_MAKINGARROW#
-Arrow Craft
+Arrow Crafting
 Skill Form : ^777777Supportive^000000
 Target : ^777777Item^000000
 Contents : ^777777Transform target items into arrows. Class of arrow or the numbers of amount is affected by sort of target items.^000000
@@ -1827,7 +1827,7 @@ GD_APPROVAL#
 Official Guild Approval
 Skill Form : ^777777Passive^000000
 Target : ^777777The Guild^000000
-Contents : ^777777Receive a certification as an official guild of the Rune Midgard Kingdom. Members in the official guild are authorized to attack an emperium of another guild, who owns a guild territory.^000000
+Contents : ^777777Receive a certification as an official guild of the Rune Midgard Kindom. Members in the official guild are authorized to attack an emperium of another guild, who owns a guild territory.^000000
 #
 GD_KAFRACONTRACT#
 Contract With Kafra
@@ -1862,4 +1862,842 @@ Contents : ^777777Increase the maximum capacity of guildsmen.^000000
 [Level 8] : ^777777+16 people^000000
 [Level 9] : ^777777+18 people^000000
 [Level 10] : ^777777+20 people^000000
+#
+RG_SNATCHER#
+Gank
+Skill Form : ^000099Passive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Steal items from target while attacking. Success rate is affected by the level of Thief skill ^00bb00Steal^777777.^000000
+#
+RG_STEALCOIN#
+Mug
+Skill Form : ^777777Supportive^000000
+Target : ^777777Monster^000000
+Contents : ^777777Steal zeny from target monsters. Impossible to steal again from one monster after a success. Skill level affects the success rate and the amount of zeny stolen.^000000
+#
+RG_BACKSTAP#
+Back Stab
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Only usable when the caster is facing the back of an enemy. Always hit the target without failure.^000000
+^777777Usable while hiding, the status will be canceled by casting this skill.^000000
+#
+RG_TUNNELDRIVE#
+Stalk
+Skill Form : ^000099Passive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Allows its caster to move slowly while hiding.^000000
+#
+RG_RAID#
+Sightless Mind
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Only usable while hiding. Curse ^880000Blind^777777 and ^880000Stun^777777 on a target by low chance. Hiding is canceled when used.^000000
+#
+RG_STRIPWEAPON#
+Divest Weapon
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Forcibly strip the weapon off a target. While used in PvP, the target cannot re-equip the weapon for period of time. Decreases Attack of a monster by 10% for a short amount of time.^000000
+^777777DEX difference between the caster and the target affects on the success chance.^000000
+#
+RG_STRIPSHIELD#
+Divest Shield
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Forcibly strip the shield off a target. While used in PvP, the target cannot re-equip the shield for period of time. For monsters, this skill decreases DEF of a monster by 10% for a short amount of time.^000000
+^777777DEX difference between the caster and the target affects on the success chance.^000000
+#
+RG_STRIPARMOR#
+Divest Armor
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Forcibly strip the armor off a target. While used in PvP, the target cannot re-equip the armor for period of time. For monsters, this skill decreases DEF of a monster by 10% for a short amount of time.^000000
+^777777DEX difference between the caster and the target affects on the success chance.^000000
+#
+RG_STRIPHELM#
+Divest Helm
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Forcibly strip the helmet off a target. While used in PvP, the target cannot re-equip the helmet for period of time.  For monsters, this skill decreases DEF of a monster by 10% for a short amount of time.^000000
+^777777DEX difference between the caster and the target affects on the success chance.^000000
+#
+RG_INTIMIDATE#
+Snatch
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Warps both the target and caster to a random location. Not usable on Boss Monsters. As higher level the caster is, as lower level the target is, the success rate will be increased.^000000
+#
+RG_GRAFFITI#
+Scribble
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Paint graffiti around a chosen cell within a limit of 20 characters.^000000
+^777777Impossible to double the skill on the chosen cell before the graffiti's gone. ^0000991 Big Paint Brush^777777 is required. (Not implemented yet)^000000
+#
+RG_FLAGGRAFFITI#
+Piece
+Skill Form : ^777777Supportive^000000
+Target : ^777777Guild Flag^000000
+Contents : ^777777Paint a graffiti piece on a guild flag. The graffiti will be shown on the guild flag instead of the emblem.^000000
+^777777Skill level affects on the amount of graffiti. ^0000991 Paint Brush^777777 is required. (Not implemented yet)^000000
+#
+RG_CLEANER#
+Remover
+Skill Form : ^777777Supportive^000000
+Target : ^777777Guild Flag^000000
+Contents : ^777777Remove graffiti from a guild flag. ^0000991 Wet Duster^777777 is required. (Not implemented yet)^000000
+#
+RG_GANGSTER#
+Slyness
+Skill Form : ^000099Passive^000000
+Contents : ^777777When more than 2 rogues sit beside each other, monsters will not attack them. Not usable on Boss Monsters.^000000
+#
+RG_COMPULSION#
+Haggle
+Skill Form : ^000099Passive^000000
+Contents : ^777777Purchase items from NPC shops at lower prices.^000000
+[Level 1] : ^777777Discount 9%^000000
+[Level 2] : ^777777Discount 13%^000000
+[Level 3] : ^777777Discount 17%^000000
+[Level 4] : ^777777Discount 21%^000000
+[Level 5] : ^777777Discount 25%^000000
+#
+RG_PLAGIARISM#
+Intimidate
+Skill Form : ^000099Passive^000000
+Contents : ^777777Use the last skill from the last enemy dealt with. Skill level affects the level of skill the caster can remember.^000000
+#
+AM_AXEMASTERY#
+Axe Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Axe damage.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+AM_LEARNINGPOTION#
+Potion Research
+Skill Form : ^000099Passive^000000
+Contents : ^777777Improve potion value, aid in manufacturing potions at the same time.^000000
+#
+AM_PHARMACY#
+Prepare Potion
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Manufacture potions or chemicals. ^0000991 Medicine Bowl^777777 is required for a skill use, for creating potions each ^000099Potion Creation Guide^777777 is required.^000000
+#
+AM_DEMONSTRATION#
+Bomb
+Skill Form : ^777777Active^bb0000(Fire)^000000
+Target : ^777777Ground^000000
+Contents : ^777777Set the ground on fire with a bottle grenade. This skill damages the weapon of target by a low chance, ^0000991 Bottle Grenade^777777 is required.^000000
+#
+AM_ACIDTERROR#
+Acid Terror
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Attack a target by throwing an acid bottle. This skill damages the armor of target by a low chance. ^0000991 Acid Bottle^777777 is required.^000000
+^777777Skill level affects the success chance of damaging the armor of a target.^000000
+#
+AM_POTIONPITCHER#
+Aid Potion
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Restore HP by throwing a potion to the character. Skill level affects the value and type of potion the caster can use.^000000
+[Level 1] : ^777777Red Potion Usable^000000
+[Level 2] : ^777777Orange Potion Usable^000000
+[Level 3] : ^777777Yellow Potion Usable^000000
+[Level 4] : ^777777White Potion Usable^000000
+[Level 5] : ^777777Blue Potion Usable^000000
+#
+AM_CANNIBALIZE#
+Summon Flora
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Summon ^000099Flora^777777 on a chosen cell for a skill duration. Skill level affects on the maximum HP of Flora. ^0000991 Maneater Bottle^777777 is required.^000000
+^777777Unable to summon more than 3 Flora at a time.^000000
+#
+AM_SPHEREMINE#
+Summon Marine Sphere
+Skill Form : ^777777Support^000000
+Target : ^777777Ground^000000
+Contents : ^777777Summon ^000099Marine Sphere^777777 on a chosen cell. The Marine Spheres will cast ^000099self-destruct^777777 when being attacked. ^0000991 Marine Sphere Bottle^777777is required.^000000
+#
+AM_CP_WEAPON#
+Alchemical Weapon
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Protect a weapon of a party member from being damaged. ^0000991 Glistening Coat^777777 is required.^000000
+^777777Skill level affects on a skill duration.^000000
+#
+AM_CP_SHIELD#
+Synthesized Shield
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Protect a shield of a party member from being damaged. ^0000991 Glistening Coat^777777 is required.^000000
+^777777Skill level affects on a skill duration.^000000
+#
+AM_CP_ARMOR#
+Synthetic Armor
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Protect an armor of a party member from being damaged. ^0000991 Glistening Coat^777777 is required.^000000
+^777777Skill level affects on a skill duration.^000000
+#
+AM_CP_HELM#
+Biochemical Helm
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Protect a helm of a party member from being damaged. ^0000991 Glistening Coat^777777 is required.^000000
+^777777Skill level affects on a skill duration.^000000
+#
+AM_BIOETHICS#
+Bioethics
+Skill Form : ^000099Passive^000000
+Contents : ^777777Fundamental skill for creating homunculus.^000000
+#
+AM_BIOTECHNOLOGY#
+Biotechnology
+Skill Form : ^000099Passive^000000
+Contents : ^777777Study biotechnology. Increase the success chance of creating homunculus and the maximum HP of homunculus.^000000
+#
+AM_CREATECREATURE#
+Creature Creation
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Create 1 ^000099Embryo^777777. Skill level affects on the success chance.^000000
+#
+AM_CULTIVATION#
+Cultivation
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Develop an embryo into a homunculus. Skill level affects on the success chance. If the caster already has a homunculus, this skill is not usable.^000000
+#
+AM_FLAMECONTROL#
+Flame Control
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase the success chance of Cultivation skill and fire resistance of the caster.^000000
+#
+AM_CALLHOMUN#
+Call Homunculus
+Skill Form : ^777777Support^000000
+Contents : ^777777Summon or cancel summoning homunculus by consuming a certain amount of SP.^000000
+#
+AM_REST#
+Vaporize
+Skill Form : ^777777Support^000000
+Contents : ^777777Kill current homunculus.^000000
+#
+AM_DRILLMASTER#
+Drillmaster
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase homunculus damage.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+AM_HEALHOMUN#
+Heal Homunculus
+Skill Form : ^777777Supportive^000000
+Target : ^777777Homunculus^000000
+Contents : ^777777Restore HP of honumculus.^000000
+#
+AM_RESURRECTHOMUN#
+Homunculus Resurrection
+Skill Form : ^777777Support^000000
+Target : ^777777Homunculus^000000
+Contents : ^777777Resurrect Homunculus.^000000
+#
+CR_TRUST#
+Faith
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase the maximum HP and holy resistance of the caster.^000000
+#
+CR_AUTOGUARD#
+Guard
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Guard physical attacks including long ranged by a low chance. After use, the caster can not move for 0.3 seconds.^000000
+^777777Guard skill requires a shield. Double casting cancels this skill.^000000
+#
+CR_SHIELDCHARGE#
+Smite
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Smite an enemy with a shield. Target will be forced back and be stunned by a low chance.^000000
+^777777Requires a shield.^000000
+#
+CR_SHIELDBOOMERANG#
+Shield Boomerang
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Attack an enemy from a distance by throwing a shield.^000000
+^777777Damage is affected by the upgrade status and the weight of the shield equipped. Requires a shield.^000000
+#
+CR_REFLECTSHIELD#
+Shield Reflect
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Reflect damage taken from an enemy back to the enemy for the skill duration.^000000
+^777777Applicable only for short range attacks, requires a shield.^000000
+#
+CR_HOLYCROSS#
+Holy Cross
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Deliver double blows to an enemy. The enemy will be cursed with ^880000blind^777777 by a low chance.^000000
+#
+CR_GRANDCROSS#
+Grand Cross
+Skill Form : ^777777Active^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground which automatically attacks enemies around the caster. This skill consumes 20% of HP, also continues to drain the caster's HP for the skill duration.^000000
+^777777This skill cannot be interrupted while casting even when hit by an enemy. Undead and Demon class monsters will go ^880000Blind^777777 with exception to Boss Monsters.^000000
+#
+CR_DEVOTION#
+Sacrifice
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 party member^000000
+Contents : ^777777Revive HP of all members of a party, only works for members with a 10 level difference from the caster. Party members must be in range to benefit from this skill.^000000
+^777777Crusader party members cannot receive this skill effect.^000000
+#
+CR_PROVIDENCE#
+Resistant Souls
+Skill Form : ^777777Supportive^000000
+Target : ^777777Party^000000
+Contents : ^777777Increase party members resistance to demon or holy monsters.^000000
+#
+CR_DEFENDER#
+Defending Aura
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Reduce the caster's damage amount taken from long ranged attacks. The amount damage is affected by the skill level, the caster's attack and movement slow down when using this skill.^000000
+^777777Double casting cancels this skill. Requires a shield.^000000
+#
+CR_SPEARQUICKEN#
+Spear Quicken
+Skill Form : ^777777Active^000000
+Contents : ^777777Increase spear attack speed. Skill level affects on the speed and the duration.^000000
+^777777Requires a spear.^000000
+#
+MO_IRONHAND#
+Iron Fists
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase knuckle and bare hand damage.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+MO_SPIRITSRECOVERY#
+Spiritual Cadence
+Skill Form : ^000099Passive^000000
+Contents : ^777777Restore extra HP and SP every 10 seconds when sitting. Extra HP and SP regeneration have a 20 second delay when weight is over 50%.^000000
+#
+MO_CALLSPIRITS#
+Summon Spirit Sphere
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Summon a spirit sphere. The spirit sphere aids the caster by amplifing skill abilities.^000000
+#
+MO_ABSORBSPIRITS#
+Spiritual Sphere Absorption
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Absorb SP from a spirit sphere. 1 spirit sphere restores 10 SP. Spirit sphere's can be stolen in PvP areas.^000000
+#
+MO_TRIPLEATTACK#
+Raging Trifecta Blow
+Skill Form : ^000099Passive^000000
+Contents : ^777777Deliver 3 blows by a low chance. Can be used in conjunction with ^008800Raging Quadruple Blow^777777.^000000
+#
+MO_BODYRELOCATION#
+Snap
+Skill Form : ^777777Support^000000
+Target : ^777777Ground^000000
+Contents : ^777777Instantly teleport to a chosen location if there is no obstacle between the caster and the location.^000000
+^777777Requires 1 spirit sphere.^000000
+#
+MO_DODGE#
+Flee
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase flee rate.^000000
+#
+MO_INVESTIGATE#
+Occult Impaction
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Deliver a massive psychic impact to an enemy. The higher the defense of an enemy, more damage is dealt. The lower the defense of an enemy, less damage is dealt.^000000
+^777777Requires 1 spirit sphere.^000000
+#
+MO_FINGEROFFENSIVE#
+Throw Spirit Sphere
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Attack an enemy in a distance by throwing a spirit sphere. Skill level affects on the number of Spirit Spheres the caster can use at once.^000000
+^777777Requires Spirit Sphere.^000000
+#
+MO_STEELBODY#
+Mental Strength
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Keep the caster's defense and magic defense at a high rate for the skills duration. Movement and speed become slower. The caster can not use any skill during this skills duration.^000000
+^777777Requires 5 Spirit Spheres.^000000
+#
+MO_BLADESTOP#
+Root
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Stop both the enemy and the caster's movement for the skill duration. Both the enemy and caster become paralyzed until either dies. Higher skill level allows the caster to use certain skills for this skills duration. ^000000
+^777777Impossible to use on Boss Monsters. Requires 1 spirit sphere.^000000
+[Level 1] : ^777777Last 20 seconds^000000
+[Level 2] : ^777777Last 30 seconds, ^008800Throw Spirit Sphere^000000
+[Level 3] : ^777777Last 40 seconds, ^008800Occult Impaction^000000
+[Level 4] : ^777777Last 50 seconds, ^008800Raging Quadruple Blow^000000
+[Level 5] : ^777777Last 60 seconds, ^008800Guillotine Fist^000000
+^777777Guillotine Fist is only usable in Fury status with 4 Spirit Spheres.^000000
+#
+MO_EXPLOSIONSPIRITS#
+Fury
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Increase critical attack rate for the skill duration. SP will not be restored during the skill duration.^000000
+^777777Requires 5 Spirit Spheres.^000000
+#
+MO_EXTREMITYFIST#
+Guillotine Fist
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Only usable during Raging Thrust delay time. Deal a devastating amount of damage by consuming all SP of the caster. Remaining SP amount of the caster affects on the amount of damage the enemy receives. Fury status will be automatically canceled after using this skill.^000000
+^777777SP will not be restored for 5 minutes after skill use. Requires 5 Spirit Spheres.^000000
+#
+MO_CHAINCOMBO#
+Raging Quadruple Blow
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Only usable during Raging Trifecta Blow delay time. Spins a target while delivering 4 blows. Can be used in conjunction with ^008800Raging Thrust^777777.^000000
+#
+MO_COMBOFINISH#
+Raging Thrust
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Only usable during Raging Quadruple Blow delay time. Force back a target by delivering a thrusting blow. Can be used in conjunction with ^008800Guillotine Fist^777777.^000000
+#
+SA_ADVANCEDBOOK#
+Study
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Book damage.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+SA_CASTCANCEL#
+Cast Cancel
+Skill Form : ^777777Support^000000
+Contents : ^777777Only usable while casting a magic spell. This skill immediately cancels the spell and allows the caster to take an action without a delay. Skill level affects the SP consumption of the spell casted.^000000
+#
+SA_FREECAST#
+Free Cast
+Skill Form : ^000099Passive^000000
+Contents : ^777777Allow the caster to move or to attack during casting a magic spell. Skill level affects on the movement and attack speed.^000000
+#
+SA_SPELLBREAKER#
+Spell Breaker
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Interrupt an enemy casting a magic spell and receive the SP of the spell that enemy was casting.^000000
+#
+SA_AUTOSPELL#
+Hindsight
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Allows casting of a spell while physically attacking an enemy. Spells consume 2/3 the amount of the required SP.^000000
+[Level 1] : ^777777lvl 3^008800 Napalm Beat ^000000
+[Level 2] : ^777777lvl 1^008800 Cold Bolt^777777,^008800 Fire Bolt^777777, ^008800Lightening Bolt^000000
+[Level 3] : ^777777lvl 2^008800 Cold Bolt^777777,^008800 Fire Bolt^777777, ^008800Lightening Bolt ^000000
+[Level 4] : ^777777lvl 3^008800 Cold Bolt^777777,^008800 Fire Bolt^777777, ^008800Lightening Bolt^000000
+[Level 5] : ^777777lvl 1^008800 Soul Strike^000000
+[Level 6] : ^777777lvl 2^008800 Soul Strike^000000
+[Level 7] : ^777777lvl 3^008800 Soul Strike^000000
+[Level 8] : ^777777lvl 1^008800 Fire Ball^000000
+[Level 9] : ^777777lvl 2^008800 Fire Ball^000000
+[Level 10] : ^777777lvl 1^008800 Frost Diver^000000
+^777777Spell skill levels are used within the limit of the skill level the caster has learned.^000000
+#
+SA_MAGICROD#
+Magic Rod
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Consume the SP amount an enemy uses for their skill instead of damage.^000000
+^777777Countering Break Spell with this skill will decrease the targets SP by 20%.^000000
+#
+SA_VOLCANO#
+Volcano
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground which magnetically amplifies all fire attacks. ^008800Ice Wall^777777 can not be casted in this area, ground skills can not be double casted within the area.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777.^000000
+#
+SA_DELUGE#
+Deluge
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground which magnetically amplifies all the water attacks and increases the maximum HP of water attribute characters. Allows use of ^008800Water Ball^777777 and ^008800Aqua Benedicta^777777. Other ground skills can not be doubled within the area.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777.^000000
+#
+SA_VIOLENTGALE#
+Whirlwind
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground which magnetically amplifies all the wind attacks and increases the flee rate of wind attribute characters.^008800Fire Wall^777777 lasts 1.5 times longer within this area. Other ground skills can not be doubled within the area.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777.^000000
+#
+SA_BARRENZONE#
+Barren Zone
+#
+SA_LANDPROTECTOR#
+Magnetic Earth
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground that blocks all magic spells in which target the ground. Cancels previous ground magic already casted within the targeted area. Other ground skills can not be doubled within the area.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777,^000099 1 Blue Gemstone^777777.^000000
+#
+SA_FLAMELAUNCHER#
+Endow Blaze
+Skill Form : ^777777Supportive^000000
+Property : ^880000Fire^000000
+Target : ^777777Party members^000000
+Contents : ^777777Endow the Fire property on a weapon of a party member. Skill level affects skill failure chance, weapon is destroyed on failure.^000000
+^777777Requires ^0000991 Red Blood^777777.^000000
+#
+SA_FROSTWEAPON#
+Endow Tsunami
+Skill Form : ^777777Supportive^000000
+Property : ^000088Water^000000
+Target : ^777777Party members^000000
+Contents : ^777777Endow the Water property on a weapon of a party member. Skill level affects skill failure chance, weapon is destroyed on failure.^000000
+^777777Requires ^0000991 Crystal Blue^777777.^000000
+#
+SA_LIGHTNINGLOADER#
+Endow Tornado
+Skill Form : ^777777Supportive^000000
+Property : ^00CCCCWind^000000
+Target : ^777777Party members^000000
+Contents : ^777777Endow the Wind property on a weapon of a party member. Skill level affects skill failure chance, weapon is destroyed on failure.^000000
+^777777Requires ^0000991 Wind of Verdure^777777.^000000
+#
+SA_SEISMICWEAPON#
+Endow Quake
+Skill Form : ^777777Supportive^000000
+Property : ^008800Earth^000000
+Target : ^777777Party members^000000
+Contents : ^777777Endow the Earth property on a weapon of a party member. Skill level affects skill failure chance, weapon is destroyed on failure.^000000
+^777777Requires ^0000991 Green Live^777777.^000000
+#
+SA_DRAGONOLOGY#
+Dragonology
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase resistance and damage against Dragon class monsters.^000000
+#
+SA_DISPELL#
+Dispell
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Cancel all magical effects on the caster by a low chance.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777,^000099 1 Red Gemstone^777777.^000000
+#
+SA_ABRACADABRA#
+Hocus-pocus
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Cast a random skill. Skill level affects the number of skills that can be casted.^000000
+^777777Requires^000099 2 Yellow Gemstone^777777.^000000
+#
+SA_MONOCELL#
+Mono Cell
+Skill Form	 : Active
+Target	 : Enemy
+Contents	 : Change an enemy into a Poring for the skill duration.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_CLASSCHANGE#
+Class Change
+Skill Form	 : Active
+Target	 : Enemy 
+Contents	 : Change an enemy into a Boss Monster for the skill duration.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_SUMMONMONSTER#
+Monster Chant
+Skill Form	 : Active
+Target	 : NA
+Contents	 : Same ability as the Dead Branch
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_REVERSEORCISH#
+Grampus Morph
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Change target's face into a Orc for the skill duration.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_DEATH#
+Grim Reaper
+Skill Form	 : Active
+Target	 : Enemy
+Contents	 : Deliver instant death to a target. The target will not give EXP or Items.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_FORTUNE#
+Gold Digger
+Skill Form	 : Active
+Target	 : Enemy 
+Contents	 : Gain as much zeny as a target's lvl.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_TAMINGMONSTER#
+Beastly Hypnosis
+Skill Form	 : Active
+Target	 : Enemy 
+Contents	 : Tame a tamable monster without the required taming item.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_QUESTION#
+Questioning
+Skill Form	 : Active
+Target	 : Enemy 
+Contents	 : Target shows a emotion.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_GRAVITY#
+Gravity
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Gravity logo shows on the head of target. 
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_LEVELUP#
+Leveling
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Allows the caster to level up.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_INSTANTDEATH#
+Suicide
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Kills the caster. EXP will be lost.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_FULLRECOVERY#
+Rejuvenation
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Recover full HP and SP, also recover from all abnormal status.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_COMA#
+Coma
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Drop down the caster's HP and SP as 1.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+BD_ADAPTATION#
+Amp
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Quit dancing or singing when casting. Can not Encore this skill.^000000
+#
+BD_ENCORE#
+Encore
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Recast the last skill casted. Requires half the SP of the recasted skill.^000000
+#
+BD_LULLABY#
+Lullaby
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that curses ^880000Sleep^777777 by a low chance. Boss Monsters can not be cursed by this skill.^000000
+#
+BD_RICHMANKIM#
+Mental Sensing
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that increases the EXP amount the characters receive. Skill level affects on the amount of increased EXP.^000000
+#
+BD_ETERNALCHAOS#
+Down Tempo
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area where the defense of all the characters within the area drop down to 0.^000000
+#
+BD_DRUMBATTLEFIELD#
+Battle Theme
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Create an area where the attack and defense of party members are increased for the skill duration.^000000
+#
+BD_RINGNIBELUNGEN#
+Harmonic Lick
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that amplifies level 4 weapon damage of party members for the skill duration.^000000
+#
+BD_ROKISWEIL#
+Classical Pluck
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area where all skills and magic are not allowed. Boss Monsters can not be effected by this skill.^000000
+#
+BD_INTOABYSS#
+Power Cord
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that allows party members of the caster to use any skills without required items such as gemstones or traps.^000000
+#
+BD_SIEGFRIED#
+Acoustic Rhythm
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that gives Fire and Water resistance to party members.^000000
+[Level 1] : ^880000Fire^777777, ^000088Water^777777 resistance 75%^000000
+[Level 2] : ^880000Fire^777777, ^000088Water^777777 resistance 80%^000000
+[Level 3] : ^880000Fire^777777, ^000088Water^777777 resistance 85%^000000
+[Level 4] : ^880000Fire^777777, ^000088Water^777777 resistance 90%^000000
+[Level 5] : ^880000Fire^777777, ^000088Water^777777 resistance 95%^000000
+#
+BD_RAGNAROK#
+Ragnarok
+#
+BA_MUSICALLESSON#
+Music Lessons
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase the damage of musical instruments and the quality of ^000088Play Skills^777777.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+BA_MUSICALSTRIKE#
+Melody Strike
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Shoot arrows with might. Usable while playing a musical skill.^000000
+^777777Requires a musical instrument, the property of arrow affects the attack property.^000000
+#
+BA_DISSONANCE#
+Unchained Serenade
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that continually damages enemies within it's range.^000000
+#
+BA_FROSTJOKE#
+Unbarring Octave
+Skill Form : ^777777Active^000000
+Range : ^777777Caster's View^000000
+Contents : ^777777Freeze all enemies withen the caster's view, skill level affects on the chance of freezing enemies. Party members of the caster could be frozen by this skill by a low chance.^000000
+#
+BA_WHISTLE#
+Perfect Tablature
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases the flee rate and perfect dodge rate within it's range.^000000
+#
+BA_ASSASSINCROSS#
+Impressive Riff
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases attack speed within it's range. Cannot increase skills Two-hand Quicken, Adrenalin Rush or long range attack.^000000
+#
+BA_POEMBRAGI#
+Magic Strings
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which reduces magic casting time and delay within it's range.^000000
+#
+BA_APPLEIDUN#
+Song of Lutie
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases the maximum HP of party members and regenerates HP overtime within it's area.^000000
+#
+DC_DANCINGLESSON#
+Dance Lessons
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase whip damage and the quality of ^000088dancing skills^777777.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+DC_THROWARROW#
+Slinging Arrow
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Throw arrows using a whip. Usable while playing musical skills.^000000
+^777777Requires a whip, arrow property affects the attack property.^000000
+#
+DC_UGLYDANCE#
+Hip Shaker
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which continually damages SP of enemies within it's range.^000000
+#
+DC_SCREAM#
+Dazzler
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^880000Stun^777777 all enemies in view, skill level affects on the chance of stunning. Party members could be stunned by a even chance.^000000
+#
+DC_HUMMING#
+Focus Ballet
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases accuracy rate within it's range.^000000
+#
+DC_DONTFORGETME#
+Slow Grace
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which decreases movement and attack speed of enemies within it's range. Cancels any skills that increase movement or attack speed.^000000
+#
+DC_FORTUNEKISS#
+Lady Luck
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases the critical attack rate within it's range.^000000
+#
+DC_SERVICEFORYOU#
+Gypsy's Kiss
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases the maximum SP and reduces the SP used for skills of party members.^000000
 #

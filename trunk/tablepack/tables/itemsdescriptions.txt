@@ -2019,7 +2019,7 @@ Required lvl : ^77777733^000000
 Applicable Job : ^777777Swordman Class^000000
 #
 1161#
-Sword used by ^1770255GOD-POING^000000, the Heroine.
+Sword used by ^333366GOD-POING^000000, the Heroine.
 INT + 20 , LUK + 20
 Weapon Class : ^777777Two-handed Sword^000000  Attack Strength : ^777777250^000000
 Weight : ^777777100^000000
@@ -4128,16 +4128,16 @@ Equipped On : ^777777Upper^000000    Weight : ^77777710^000000
 Applicable Job : ^777777Every Job^000000
 #
 2208#
-Hair Pin Made of Satin Strips in Indigo blue.
-It Wards off Harmful Magic. 
+A hair pin made of satin strips in indigo blue.
+It wards off harmful magic. 
 MDEF + 3
 Item Class : ^777777Head Gear^000000    Defence Rate : ^7777771^000000
 Equipped On : ^777777Upper^000000    Weight : ^77777710^000000
 Applicable Job : ^777777Every Job^000000
 #
 2209#
-Hair Pin Made of Satin Strips in Indigo blue.
-It Wards off Harmful Magic. 
+A hair pin made of satin strips in indigo blue.
+It wards off harmful magic. 
 MDEF + 3
 Item Class : ^777777Head Gear^000000    Defence Rate : ^7777771^000000
 Equipped On : ^777777Upper^000000    Weight : ^77777710^000000
@@ -5456,7 +5456,7 @@ Compound on : ^777777Accessory^000000
 Weight : ^7777771^000000
 #
 4023#
-NT + 1
+INT + 1
 Item Class : ^777777Card^000000
 Compound on : ^777777Armor^000000
 Weight : ^7777771^000000
@@ -5826,7 +5826,7 @@ Compound on : ^777777Weaponry^000000
 Weight : ^7777771^000000
 #
 4081#
-Hode Card. Form 30% tolerance against Earth Property Monsters.
+Form 30% tolerance against Earth Property Monsters.
 Flee Rate + 5
 Item Class : ^777777Card^000000
 Compound on : ^777777Garment^000000
@@ -6879,7 +6879,7 @@ Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
 9019#
-An egg that carries a Cute-Pet Dokkaebi within, can be hatched by using a ^33CC33Pet Incubator^000000.
+An egg that carries a Cute-Pet Dokebi within, can be hatched by using a ^33CC33Pet Incubator^000000.
 Class : ^777777Monster Egg^000000
 Weight : ^7777770^000000
 #
@@ -6936,7 +6936,7 @@ Weight : ^7777770^000000
 10005#
 A clown colored wig. 
 Class : ^777777Cute-Pet Armor^000000
-Applicable Pet : ^777777Dokkaebi^000000
+Applicable Pet : ^777777Dokebi^000000
 Weight : ^7777770^000000
 #
 10006#
@@ -8456,10 +8456,8 @@ An authorized ticket which allows its owner to enter a prohibited area.
 Weight : ^7777771^000000
 #
 551#
-An Eastern delicacy, in which various types of raw fish is placed on top of rice.<br>The rice is marinated in vinegar then wrapped in dried seaweed.
-# 
-//------------------end of file
-
+An Eastern delicacy, in which various types of raw fish is placed on top of rice.
+The rice is marinated in vinegar then wrapped in dried seaweed.
 ^ffffff_^000000
 Weight : ^7777771^000000
 #
@@ -8467,10 +8465,32 @@ Weight : ^7777771^000000
 30000#
 #
 
+// ---- Valentine's Day event -----------
+#
+7182#
+It is called a Cocoa which is a nut from cacao tree and the place of origin is from a warm climate.
+If we dry this nut it will become a cacao bean and if we then fry and grind the cacao beans they will became a 
+cacao paste. To make chocolate we need to solidify the cacao paste with milk, but we must also concentrate the cacao paste
+and extract the fat from it then it will become cocoa and the extracted fat will be cacao butter. 
+^ffffff_^000000
+weight : ^7777772^000000
+#
+558#
+Fry and grind cacao and then solidify with milk and cacao paste. Sweat and delicious.
+^ffffff_^000000
+weight : ^7777772^000000
+#
+559#
+A collection of many chocolates that are gathered and arranged to make a beautiful item. This is well used for courtship.
+^ffffff_^000000
+weight : ^7777778^000000
+#
 // ---- iRO event : St. Patrick's Day ----------------
 #
 668#
 A shining gold coin that has rumored to have a great value, possible to bring great wealth and fortune to whom ever finds it.
+#
 ^ffffff_^000000
 Weight : ^77777720^000000
 #
+

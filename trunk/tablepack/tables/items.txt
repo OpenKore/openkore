@@ -42,7 +42,7 @@
 2236#Santa_Hat#
 2237#Bandit_Beard#
 2238#Moustache#
-2239#Monocle#
+2239#Single_Glass#
 2240#Beard#
 2241#Grampa_Beard#
 2242#Purple_Glasses#
@@ -84,7 +84,7 @@
 2280#Sakkat#
 2282#Halo#
 2283#Ear_Muffs#
-2284#Antlers#
+2284#Antler#
 2285#Apple_of_Archer#
 2286#Elven_Ears#
 2287#Pirate_Bandana#
@@ -144,7 +144,7 @@
 2406#Boots#
 2407#Crystal_Pumps#
 2408#Shackles#
-2409#High_Heels#
+2409#Highheels#
 2501#Hood#
 2502#Hood#
 2503#Muffler#
@@ -165,7 +165,7 @@
 2611#Silver_Ring#
 2612#Flower_Ring#
 2613#Diamond_Ring#
-2614#Eye_of_Dullahan#
+2614#Dullahan's_Eye#
 2615#Safety_Ring#
 2616#Critical_Ring#
 2617#Celebrant's_Mitten#
@@ -258,8 +258,8 @@
 1462#Trident#
 1463#Hallberd#
 1464#Hallberd#
-1465#Hallberd#
-1466#Crescent_Scythe#
+1465#Halberd#
+1466#Cresent_Scythe#
 1410#Lance#
 1411#Lance#
 1412#Lance#
@@ -281,7 +281,7 @@
 1704#Composite_Bow#
 1705#Composite_Bow#
 1706#Composite_Bow#
-1716#Gakkung_Bow#
+1716#Gakkung#
 1707#Great_Bow#
 1708#Great_Bow#
 1709#Great_Bow#
@@ -290,9 +290,9 @@
 1711#Cross_Bow#
 1712#Cross_Bow#
 1719#Roguemaster's_Bow#
-1713#Arbalest_Bow#
-1714#Gakkung_Bow#
-1720#Rudra_Bow#
+1713#Arbalest#
+1714#Gakkung#
+1720#Rudra's_Bow#
 701#Ora_Ora#
 702#Animal_Gore#
 703#Hinalle#
@@ -322,9 +322,9 @@
 727#Opal#
 728#Topaz#
 729#Zircon#
-730#1carat_Diamond#
-731#2carat_Diamond#
-732#3carat_Diamond#
+730#1_Carat_Diamond#
+731#2_Carat_Diamond#
+732#3_Carat_Diamond#
 733#Cracked_Diamond#
 734#Red_Frame#
 735#Chung_Jah#
@@ -346,7 +346,7 @@
 751#Osiris_Doll#
 752#Rocker_Doll#
 753#Yoyo_Doll#
-754#Racoon_Doll#
+754#Raccoon_Doll#
 756#Rough_Oridecon#
 757#Rough_Elunium#
 901#Daenggie#
@@ -410,7 +410,7 @@
 961#Conch#
 962#Tentacle#
 963#Sharp_scale#
-964#Crab_Shell#
+964#Crap_Shell#
 965#Clam_Shell#
 966#Clam_Flesh#
 967#Turtle_Shell#
@@ -506,7 +506,7 @@
 1058#Moth_Wings#
 1059#Fabric#
 1060#Golden_Hair#
-1061#Witch_Starsand#
+1061#Witched_Starsand#
 1062#Jack_o'_Pumpkin#
 1063#Fang#
 1064#Reins#
@@ -516,8 +516,8 @@
 1068#Barren_Trunk#
 1069#Orange_Net_Mushroom#
 1070#Orange_Gooey_Mushroom_#
-1071#Unknown_Test_Tube#
-1072#Delivery_Message#
+1071#Unknown_Testtube#
+1072#DEL_Message#
 1073#Voucher#
 1074#Voucher#
 1075#Voucher#
@@ -526,18 +526,18 @@
 1078#Voucher#
 1079#Voucher#
 1080#Voucher#
-1081#Delivery_Box#
-1082#Delivery_Box_#
-1083#Delivery_Box__#
+1081#DEL_Box#
+1082#DEL_Box_#
+1083#DEL_Box__#
 1084#Kafra_Pass#
-1085#Unknown_Test_Tube#
-1086#Unknown_Test_Tube#
-1087#Unknown_Test_Tube#
+1085#Unknown_Testtube#
+1086#Unknown_Testtube#
+1087#Unknown_Testtube#
 1088#Morroc_Solution#
 1089#Payon_Solution#
-1090#Unknown_Test_Tube#
-1091#Delivery_Box#
-1092#Empty_Test_Tube#
+1090#Unknown_Testtube#
+1091#DEL_Box#
+1092#Empty_Testtube#
 1093#Empty_Potion_Bottle#
 501#Red_Potion#
 502#Orange_Potion#
@@ -571,7 +571,7 @@
 532#Banana_Juice#
 533#Grape_Juice#
 534#Carrot_Juice#
-535#Pumkin#
+535#Pumpkin#
 536#Ice_Cream#
 601#Fly_Wing#
 602#Butterfly_Wing#
@@ -622,8 +622,8 @@
 1135#Cutlus#
 1136#Solar_Sword#
 1137#Excalibur#
-1138#Mysteltainn#
-1139#Tirfing#
+1138#Mysteltain#
+1139#Talefing#
 1140#Byeollungum#
 1141#Immaterial_Sword#
 1201#Knife#
@@ -649,17 +649,17 @@
 1221#Gladius#
 1222#Damascus#
 1223#Fortune_Sword#
-1224#Swordbreaker#
-1225#Mailbreaker#
+1224#Sword_Breaker#
+1225#Mail_Breaker#
 1226#Damascus#
 1227#Weeder_Knife#
 1228#Combat_Knife#
-1229#Kitchen_Knife#
-1230#Ice_pick#
+1229#Mama's_Knife#
+1230#House_Auger#
 1231#Bazerald#
 1232#Assassin_Dagger#
-1233#Exorciser#
-1234#Moonlight_Dagger#
+1233#Excorcise#
+1234#Walgwanggum#
 1235#Azoth#
 1236#Sucsamad#
 1237#Grimtooth#
@@ -729,10 +729,10 @@
 1615#Evil_Bone_Wand#
 1801#Waghnak#
 1802#Waghnak#
-1803#Knuckle_Dusters#
-1804#Knuckle_Dusters#
-1805#Studded_Knuckles#
-1806#Studded_Knuckles#
+1803#Knuckle_Duster#
+1804#Knuckle_Duster#
+1805#Hora#
+1806#Hora#
 1807#Fist#
 1808#Fist#
 1809#Claw#
@@ -755,19 +755,19 @@
 1912#Gumoongoh#
 1950#Rope#
 1951#Rope#
-1952#Whip#
-1953#Whip#
-1954#Wire_Whip#
-1955#Wire_Whip#
-1956#Rante_Whip#
-1957#Rante_Whip#
-1958#Tail_Whip#
-1959#Tail_Whip#
+1952#Line#
+1953#Line#
+1954#Wire#
+1955#Wire#
+1956#Rante#
+1957#Rante#
+1958#Tail#
+1959#Tail#
 1960#Whip#
 1961#Whip#
-1962#Lariat_Whip#
+1962#Lariat#
 1963#Rapture_Rose#
-1964#Chemeti_Whip#
+1964#Chemeti#
 4001#Poring_Card#
 4002#Fabre_Card#
 4003#Pupa_Card#
@@ -821,7 +821,7 @@
 4051#Yoyo_Card#
 4052#Elder_Willow_Card#
 4053#Vitata_Card#
-4054#Angelring_Card#
+4054#Angeling_Card#
 4055#Marina_Card#
 4056#Dustiness_Card#
 4057#Metaller_Card#
@@ -833,7 +833,7 @@
 4063#Caramel_Card#
 4064#Zerom_Card#
 4065#Kaho_Card#
-4066#Orc_Warrier_Card#
+4066#Orc_Warrior_Card#
 4067#Megalodon_Card#
 4068#Scorpion_Card#
 4069#Drainliar_Card#
@@ -865,7 +865,7 @@
 4095#Marse_Card#
 4096#Zenorc_Card#
 4097#Matyr_Card#
-4098#Dokebi_Card#
+4098#Dokkaebi_Card#
 4099#Pasana_Card#
 4100#Sohee_Card#
 4101#Sandman_Card#
@@ -916,18 +916,18 @@
 4146#Maya_Card#
 4147#Baphomet_Card#
 4148#Pharaoh_Card#
-//-------Episode 1.5
+//-------Episode1.5
 1753#Steel_Arrow#
 1754#Crystal_Arrow#
 1755#Arrow_of_Wind#
 1756#Stone_Arrow#
 1094#Short_Daenggie#
-1095#Clock_Hand#
+1095#Needle_of_Alarm#
 1096#Round_Shell#
 1097#Worn_Out_Page#
 1098#Manacles#
 1099#Worn-out_Prison_Uniform#
-7001#Mold_Powder#
+7001#Mould_Powder#
 7002#Ogre_Tooth#
 7003#Anolian_Skin#
 7004#Mud_Lump#
@@ -941,19 +941,19 @@
 7012#Tough_Scalelike_Stem#
 7013#Coral_Reef#
 7014#Old_Portrait#
-7015#Memory_Bookmark#
-7016#Bent_Spoon#
-7017#Executioner's_Glove#
+7015#Bookclip_in_Memory#
+7016#Spoon_Stub#
+7017#Executioner's_Mitten#
 7018#Young_Twig#
 7019#Loki's_Whispers#
 7020#Mother's_Nightmare#
 7021#Foolishness_of_the_Blind#
-7022#Broken_Sword_Handle#
-7023#Blade_of_Darkness#
+7022#Old_Hilt#
+7023#Blade_Lost_in_Darkness#
 7024#Bloody_Edge#
 7025#Lucifer's_Lament#
-7026#Clock_Tower_Key#
-7027#Key_of_the_Underground#
+7026#Key_of_Clock_Tower#
+7027#Key_of_Underground#
 616#Old_Card_Album#
 617#Old_Purple_Box#
 618#Worn_Out_Scroll#
@@ -965,12 +965,12 @@
 1558#Girl's_Diary#
 
 
-//---- PvP Items ------
+//----PvPItems------
 
 7028#Invite_for_Duel#
 7029#Admission_for_Duel#
 
-// ---- EP 2.0 Pet System Items -----------
+//----EP2.0PetSystemItems-----------
 
 2621#Ring#
 2622#Earring#
@@ -982,7 +982,7 @@
 2628#Novice_Armlet#
 1256#Katar_of_Frozen_Icicle#
 1257#Katar_of_Quaking#
-1258#Katar_of_ Raging_Blaze#
+1258#Katar_of_Raging_Blaze#
 1259#Katar_of_Piercing_Wind#
 1260#Sharpened_Legbone_of_Ghoul#
 1261#Infiltrator#
@@ -990,9 +990,9 @@
 7031#Old_Frying_Pan#
 7032#Piece_of_Egg_Shell#
 7033#Poison_Spore#
-7034#Red_Stocking#
+7034#Red_Socks_with_Holes#
 7035#Matchstick#
-7036#Fang_of_Hatii#
+7036#Fang_of_Garm#
 7037#Coupon#
 619#Unripe_Apple#
 620#Orange_Juice#
@@ -1010,14 +1010,14 @@
 632#Fatty_Chubby_Earthworm#
 633#Sweet_Potato#
 634#Tropical_Banana#
-635#Orc_Trophy#
+635#Horror_of_Tribe#
 636#No_Recipient#
 637#Old_Broom#
 638#Silver_Knife_of_Chastity#
 639#Armlet_of_Obedience#
 640#Shining_Stone#
-641#Contract_in_Shadow#
-642#Book_of_the_Devil#
+641#Contracts_in_Shadow#
+642#Book_of_Devil#
 643#Pet_Incubator#
 645#Gift_Box#
 9001#Poring_Egg#
@@ -1029,7 +1029,7 @@
 9007#Steel_Chonchon_Egg#
 9008#Hunter_Fly_Egg#
 9009#Savage_Bebe_Egg#
-9010#Baby_Desert_Wolf_Egg#
+9010#Desert_Wolf_Puppy_Egg#
 9011#Rocker_Egg#
 9012#Spore_Egg#
 9013#Poison_Spore_Egg#
@@ -1046,7 +1046,7 @@
 9024#Bapho_Jr._Egg#
 10001#Skull_Helm#
 10002#Monster_Oxygen_Mask#
-10003#Transparent_Head_Protector#
+10003#Transparent_Helmet#
 10004#Pacifier#
 10005#Wig#
 10006#Queen's_Hair_Ornament#
@@ -1066,7 +1066,7 @@
 537#Pet_Food#
 538#Well-baked_Cookie#
 539#Piece_of_Cake#
-// ---- Ep 3.0 Comodo ----------------
+//----Ep3.0Comodo----------------
 7038#Yarn#
 7039#Newbie_Tag#
 7040#Megaphone#
@@ -1081,17 +1081,17 @@
 7049#Stone#
 7050#Cotton_Mat#
 7051#Silk_Mat#
-7052#Old_Papers#
+7052#Wasted_Magazine#
 7053#Cyfar#
 7054#Brigan#
 7055#Animal_Poop#
-540#Falcon_Food#
-541#PecoPeco_Food#
+540#Feed_for_Falcon#
+541#Feed_for_PecoPeco#
 1757#Immaterial_Arrow#
 1758#Stun_Arrow#
-1759#Frozen_Arrow#
+1759#Freezing_Arrow#
 1760#Flash_Arrow#
-1761#Cursed_Arrow#
+1761#Curse_Arrow#
 1762#Rusty_Arrow#
 1763#Poison_Arrow#
 1764#Sharp_Arrow#
@@ -1100,18 +1100,18 @@
 1767#Arrow_of_Shadow#
 1768#Sleep_Arrow#
 1769#Mute_Arrow#
-1770#Iron_Arrow#
+1770#Steel_Arrow#
 645#Concentration_Potion#
 656#Awakening_Potion#
 657#Berserk_Potion#
 
 
-// ---- For Japan Event ----------------
+//----ForJapanEvent----------------
 
 542#Festive_Cookie#
 543#Festive_Rainbow_Cake#
 
-// ---- Ep 4.0 Turtle Island ----------------
+//----Ep4.0TurtleIsland----------------
 
 544#Raw_Fish#
 658#Tribal_Solidarity#
@@ -1119,23 +1119,23 @@
 1142#Jeweled_Sword#
 1143#Gaia_Sword#
 1144#Sashimi#
-1238#Zeny_Knife#
+1238#Zenny_Knife#
 1239#Poison_Knife#
 1240#Princess_Knife#
 1306#War_Axe#
 1417#Poll_Axe#
-1472#Soul_Staff#
+1472#Staff_of_Soul#
 1473#Wizardry_Staff#
 1529#Iron_Driver#
 1530#Mjollnir#
 1531#Wrench#
-1599#Angra_manyu#
+1599#Angra_Mainyu#
 2109#Memory_Book#
 2410#Sleipnir#
 2629#Megingjard#
 2630#Brisingamen#
 5020#Kafra_Band#
-5021#Grief_for_Greed#
+5021#Money_Loser's_Grief#
 5022#Hat_of_the_Sun_God#
 5023#Parcel_Hat#
 5024#Cake_Hat#
@@ -1147,7 +1147,7 @@
 7059#Free_Ticket_for_Kafra_Storage#
 7060#Free_Ticket_for_Kafra_Transportation#
 7061#Free_Ticket_for_the_Cart_Service#
-7062#Broken_Turtle_Shell#
+7062#Turtle_Shell#
 7063#Soft_Feather#
 7064#Wing_of_Dragonfly#
 7065#Sea-otter_Fur#
@@ -1159,19 +1159,19 @@
 7071#Tattered_Clothes#
 7072#Old_Shuriken#
 7073#Freyja's_Jewel#
-7074#Thor's_Gauntlets#
+7074#Thor's_Gauntlet#
 7075#Iron_Maiden#
 7076#Wheel_of_the_Unknown#
 7077#Silver_Ornament#
 7078#Wrath_of_Valkyrie#
 7079#Feather_of_Angel_Wing#
-7080#Cat_Tread#
+7080#Tread_of_Cat#
 7081#Woman's_Moustache#
 7082#Root_of_Stone#
 7083#Spirit_of_Fish#
 7084#Sputum_of_Bird#
 7085#Sinew_of_Bear#
-7086#Amblem_of_the_Sun_God#
+7086#Emblem_of_the_Sun_God#
 7087#Breath_of_Spirit#
 7088#Snow_Crystal#
 7089#Omen_of_Tempest#
@@ -1179,7 +1179,7 @@
 7091#Billow#
 7092#Drifting_Air#
 9025#Bongun_Egg#
-10020#Grave_Keeper's_Sword#
+10020#Sword_of_Chinese_Exorcist#
 2199#Ahura_Mazdah#
 5027#Mage_Hat#
 5028#Candle#
@@ -1192,20 +1192,20 @@
 5035#Poring_Hat#
 5036#Cross_Hat#
 5037#Nut_Shell#
-5038#Deviruchi_Hat#
-5039#Rainbow_Eggshell#
+5038#Hat_of_Petite_Diablo#
+5039#Ranbow_Eggshell#
 5040#Blush#
 5041#Heart_Hairpin#
-5042#Bao_Bao#
-5043#Opera_Phantom_Mask#
+5042#Dumpling_Decoration#
+5043#Phantom_of_Opera#
 5044#Wing_of_Diablo#
 5045#Magician_Hat#
 5046#Bongun_Hat#
 5047#Fashionable_Glasses#
-5048#Cresent_Hairpin#
-5049#Striped_Hairband#
+5048#Crescent_Hairpin#
+5049#Stripe_Hairband#
 5050#Wonder_Nutshell#
-5051#Pussy_Cat_Bell#
+5051#Bell_of_Pussycat#
 5052#Blue_Hairband#
 5053#Sphinx_Hat#
 
@@ -1277,7 +1277,7 @@
 7141#Morning_Dew_of_Yggdrasil#
 7142#Embryo#
 7143#Glass_Tube#
-7144#Potion_Creation_Gude#
+7144#Potion_Creation_Guide#
 545#Condensed_Red_Potion#
 546#Condensed_Yellow_Potion#
 547#Condensed_White_Potion#
@@ -1326,3 +1326,9 @@
 551#Sushi#
 // --------iRO event : St. Patrick's Day--------------------------
 668#Gold_Coin#
+//=====Valentine's day event==============
+
+7182#Cacao#
+558#Chocolate#
+559#Hand-made_Chocolate#
+
