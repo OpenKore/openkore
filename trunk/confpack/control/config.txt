@@ -51,6 +51,18 @@ autoRestartSleep 1
 autoSleepSeed 3585
 autoSleepMin 15
 
+# If enabled, change configuration file after an amount of time.
+# autoConfChange_files is a comma-seperated list of filenames. A random
+# file from that list will be chosen as the new config file to load.
+# time = autoConfChange_min + rand(autoConfChange_seed)
+#
+# Think of this feature as a more flexible version of timed lockMaps.
+# With this feature you can not only set different lockMaps, but also
+# different Kapras.
+autoConfChange 0
+autoConfChange_files
+autoConfChange_min 25200
+autoConfChange_seed 7200
 
 verbose 1
 debug 0

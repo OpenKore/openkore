@@ -30,6 +30,19 @@
   1 = teleport when monster's on screen
   2 = teleport when monster hits you
   Thanks to floAt.
+- New feature: automatically change configuration file after an amount of time.
+
+  New config options:
+  autoConfChange, autoConfChange_files, autoConfChange_min, autoConfChange_seed
+  If autoConfChange is set to 1, change configuration file after an amount
+  of time.
+  autoConfChange_files is a comma-seperated list of filenames. A random
+  file from that list will be chosen as the new config file to load.
+  time = autoConfChange_min + rand(autoConfChange_seed)
+
+  Think of this feature as a more flexible version of timed lockMaps.
+  With this feature you can not only set different lockMaps, but also
+  different Kapras.
 
 
 ==================
