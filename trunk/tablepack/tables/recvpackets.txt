@@ -1,5 +1,5 @@
-# Packet lengths for iRO Gonryun / eAthena RC 5
-# Oct 29 2004
+# Packet lengths for iRO Umbala
+# Nov 19 2004
 0064 55
 0065 17
 0066 0
@@ -424,3 +424,12 @@
 0212 26
 0213 26
 0214 42
+0215 6
+0216 6
+0217 2
+0218 2
+0219 282
+021A 282
+021B 10
+021C 10
+021D 6
