@@ -50,6 +50,9 @@ New features:
   Useful for e.g. 'alias_heal sp 28'.
 - 'Item Appeared' message and 'il' command now display the item's
   coordinates.
+- The Linux version no longer depends on sys/ioctl.ph. This means 
+  the dynamic interface (support for left/right arrow keys, etc.) will work
+  out-of-the-box on many systems now.
 
 New commands:
 - guild join (flag)

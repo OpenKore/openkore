@@ -32,10 +32,11 @@ use Term::Cap;
 use POSIX;
 import POSIX qw(:termios_h);
 
-use Globals;
+use Globals qw(%consoleColors);
 use Utils;
 use base qw(Interface::Console);
 use Log qw(warning error);
+use UnixUtils;
 
 our %fgcolors;
 our %bgcolors;
@@ -45,14 +46,7 @@ our ($width, $height);
 ##### TERMINAL FUNCTIONS #####
 
 sub getTerminalSize {
-	my $data = ' ' x 8;
-	my $result = ioctl(STDOUT, TIOCGWINSZ(), $data);
-	if (defined $result && $result == 0) {
-		($width, $height) = unpack("ss", $data);
-	} else {
-		$width = 80;
-		$height = 24;
-	}
+	($width, $height) = UnixUtils::getTerminalSize();
 }
 
 sub setCBreak {
@@ -102,7 +96,8 @@ sub delLine {
 ###### METHODS #####
 
 sub new {
-	my %interface = ();
+	my $class = shift;
+	my %interface;
 
 	$interface{title} = '';
 	$interface{input} = {};
@@ -115,35 +110,28 @@ sub new {
 	} elsif (POSIX::ttyname(0) && POSIX::tcgetpgrp(0) == POSIX::getpgrp()) {
 		$interface{select} = IO::Select->new(\*STDIN);
 
-		eval 'require "sys/ioctl.ph";';
-		if ($@) {
+		$interface{inputMode} = 'dynamic';
+		my $term = new POSIX::Termios;
+		if (!$term) {
 			$interface{inputMode} = 'static';
-
-		} else {
-			$interface{inputMode} = 'dynamic';
-
-			my $term = new POSIX::Termios;
-			if (!$term) {
-				$interface{inputMode} = 'static';
-				goto THE_END;
-			}
-			$interface{term} = $term;
-			$term->getattr(fileno(STDIN));
-			my $lflags = $interface{oterm} = $term->getlflag();
-
-			# Set terminal on noecho and CBREAK
-			setCBreak($lflags, $term);
-
-			# Setup termcap
-			my $OSPEED = $term->getospeed;
-			$interface{cap} = Term::Cap->Tgetent({ OSPEED => $OSPEED });
-
-			$interface{WINCH} = $SIG{WINCH};
-			$interface{CONT} = $SIG{CONT};
-			$SIG{WINCH} = \&getTerminalSize;
-			$SIG{CONT} = sub { setCBreak($lflags, $term); };
-			getTerminalSize();
+			goto THE_END;
 		}
+		$interface{term} = $term;
+		$term->getattr(fileno(STDIN));
+		my $lflags = $interface{oterm} = $term->getlflag();
+
+		# Set terminal on noecho and CBREAK
+		setCBreak($lflags, $term);
+
+		# Setup termcap
+		my $OSPEED = $term->getospeed;
+		$interface{cap} = Term::Cap->Tgetent({ OSPEED => $OSPEED });
+
+		$interface{WINCH} = $SIG{WINCH};
+		$interface{CONT} = $SIG{CONT};
+		$SIG{WINCH} = \&getTerminalSize;
+		$SIG{CONT} = sub { setCBreak($lflags, $term); };
+		getTerminalSize();
 
 	} else {
 		$interface{inputMode} = 'none';
@@ -152,7 +140,7 @@ sub new {
 	THE_END: {
 		STDOUT->autoflush(0);
 
-		bless \%interface;
+		bless \%interface, $class;
 		return \%interface;
 	}
 }
