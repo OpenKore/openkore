@@ -135,8 +135,13 @@ sub startInputClient {
 # Input::canRead()
 # Returns: 1 if there is keyboard data, 0 if not or if the input system hasn't been initialized.
 #
-# Checks whether there is keyboard data available.
-# If available, you can call readLine().
+# Checks whether there is keyboard data available. You don't have to use this function.
+# Just call getInput(0) instead.
+#
+# Example:
+# # The following lines are semantically equal:
+# Input::canRead() && Input::getInput(0);
+# Input::getInput(1);
 sub canRead {
 	return undef unless ($enabled);
 	my $bits = '';
@@ -146,15 +151,20 @@ sub canRead {
 
 
 ##
-# Input::readLine()
-# Returns: the keyboard data (including newline) as a string, or undef if the input system hasn't been initialized.
+# Input::getInput(wait)
+# wait: Whether to wait until keyboard data is available.
+# Returns: The keyboard data (including newline) as a string, or undef if there's no
+#          keyboard data available or if the input system hasn't been initialized.
 #
 # Reads keyboard data.
-sub readLine {
+sub getInput {
 	return undef unless ($enabled);
 
+	my $wait = shift;
 	my $input;
-	$input_socket->recv($input, $Settings::MAX_READ);
+	if ($wait || canRead()) {
+		$input_socket->recv($input, $Settings::MAX_READ);
+	}
 	return $input;
 }
 
