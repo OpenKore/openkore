@@ -33,6 +33,7 @@ use warnings;
 no warnings 'redefine';
 use Exporter;
 use base qw(Exporter);
+use Modules;
 
 
 ##
@@ -63,8 +64,17 @@ sub switchInterface {
 		Log::error("Failed to create $new_if_name: $@\n");
 		return $self;
 	}
+	Modules::register("Interface::$new_if_name");
 	undef $self;
 	return $new_interface;
+}
+
+##
+# $interface->iterate()
+#
+# Call this function in the Kore main loop.
+sub iterate {
+	# Do nothing; this is a dummy parent class
 }
 
 ##
