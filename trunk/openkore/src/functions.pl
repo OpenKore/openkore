@@ -3405,6 +3405,8 @@ sub AI {
 			foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 				# Don't attack monsters near portals
 				next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+				# Don't attack ignored monsters
+				next if ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} == -1);
 
 				if (defined ($priority{lc($monsters{$_}{'name'})}) &&
 				    $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'}) {
@@ -3418,6 +3420,8 @@ sub AI {
 				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 					# Don't attack monsters near portals
 					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+					# Don't attack ignored monsters
+					next if ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} == -1);
 
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
 					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !%{$monsters{$_}{'statuses'}}) {
@@ -3432,6 +3436,8 @@ sub AI {
 					next if ($priority{lc($monsters{$_}{'name'})} != $ai_v{'temp'}{'highestPri'});
 					# Don't attack monsters near portals
 					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+					# Don't attack ignored monsters
+					next if ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} == -1);
 
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
 					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !%{$monsters{$_}{'statuses'}}) {

@@ -297,7 +297,7 @@ sub parseMonControl {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $args) = $_ =~ /([\s\S]+?) (\d+[\s\S]*)/;
+		($key, $args) = $_ =~ /([\s\S]+?) ([\-\d]+[\s\S]*)/;
 		@args = split / /,$args;
 		if ($key ne "") {
 			$$r_hash{lc($key)}{'attack_auto'} = $args[0];
