@@ -518,6 +518,9 @@ sub parseInput {
 		} elsif ($arg1 eq "get" && $arg2 eq "") {
 			error	"Syntax Error in function 'cart get' (Get Item from Cart)\n" .
 				"Usage: cart get <cart item #>\n";
+
+		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
+			printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
 		}
 
 	} elsif ($switch eq "chat") {
@@ -1077,14 +1080,14 @@ sub parseInput {
 			message("-------------------------------\n", "list");
 
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
-			print	"Error in function 'i' (Iventory Item Desciption)\n"
-				,"Inventory Item $arg2 does not exist\n";
+			error	"Error in function 'i' (Iventory Item Desciption)\n" .
+				"Inventory Item $arg2 does not exist\n";
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
 			printItemDesc($chars[$config{'char'}]{'inventory'}[$arg2]{'nameID'});
 
 		} else {
-			print	"Syntax Error in function 'i' (Iventory List)\n"
-				,"Usage: i [<u|eq|nu|desc>] [<inventory #>]\n";
+			error	"Syntax Error in function 'i' (Iventory List)\n"
+				"Usage: i [<u|eq|nu|desc>] [<inventory #>]\n";
 		}
 
 	} elsif ($switch eq "identify") {
@@ -2192,7 +2195,7 @@ sub AI {
 
 		$map_name =~ /([\s\S]*)\.gat/;
 		if ($1) {
-			open(DATA, ">walk.dat");
+			open(DATA, ">$Settings::logs_folder/walk.dat");
 			print DATA "$1\n";
 			print DATA $chars[$config{'char'}]{'pos_to'}{'x'}."\n";
 			print DATA $chars[$config{'char'}]{'pos_to'}{'y'}."\n";

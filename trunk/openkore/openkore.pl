@@ -82,17 +82,26 @@ if ($buildType == 0) {
 	die if ($@);
 
 	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPNNPPN", "N");
-	die "Could not locate Tools.dll" if (!$CalcPath_init);
+	if (!$CalcPath_init) {
+		Log::error("Could not locate Tools.dll", "startup");
+		exit 1;
+	}
 
 	$CalcPath_pathStep = new Win32::API("Tools", "CalcPath_pathStep", "N", "N");
-	die "Could not locate Tools.dll" if (!$CalcPath_pathStep);
+	if (!$CalcPath_pathStep) {
+		Log::error("Could not locate Tools.dll", "startup");
+		exit 1;
+	}
 
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
-	die "Could not locate Tools.dll" if (!$CalcPath_destroy);
+	if (!$CalcPath_destroy) {
+		Log::error("Could not locate Tools.dll", "startup");
+		exit 1;
+	}
 } else {
 	# Linux
 	if (! -f "Tools.so") {
-		print STDERR "Could not locate Tools.so. Type 'make' if you haven't done so.\n";
+		Log::error("Could not locate Tools.so. Type 'make' if you haven't done so.\n", "startup");
 		exit 1;
 	}
 	require Tools;
@@ -104,7 +113,12 @@ if ($config{'XKore'}) {
 	our $injectDLL_file = $cwd."\\Inject.dll";
 
 	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
-	die "Could not locate Tools.dll" if (!$GetProcByName);
+	if (!$GetProcByName) {
+		Log::error("Could not locate Tools.dll", "startup");
+		exit 1;
+	}
+	undef $cwd;
+	undef $injectDLL_file;
 }
 
 if ($config{'adminPassword'} eq 'x' x 10) {
@@ -185,19 +199,20 @@ if (!$config{'XKore'}) {
 		$config{'password'} = $msg;
 		writeDataFileIntact($config_file, \%config);
 	}
-    if ($config{'master'} eq "") {
-        $~ = "MASTERS";
-        message("------- Master Servers --------\n", "connection");
-        message("#         Name\n", "connection");
-		$i = 0;
+	if ($config{'master'} eq "") {
+		Log::message("------- Master Servers --------\n", "connection");
+		Log::message("#         Name\n", "connection");
+		my $i = 0;
 		while ($config{"master_name_$i"} ne "") {
-			message(swrite(
-			"@<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-			[$i,   $config{"master_name_$i"}],
-			), "connection");
+			Log::message(swrite(
+				"@<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$i,   $config{"master_name_$i"}],
+				), "connection");
 			$i++;
 		}
-        message("-------------------------------\n", "connection");
+		undef $i;
+		Log::message("-------------------------------\n", "connection");
+
 		print "Choose your master server:\n";
 		$msg = Input::readLine;
 		$config{'master'} = $msg;
