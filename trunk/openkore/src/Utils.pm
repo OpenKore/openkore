@@ -200,6 +200,18 @@ sub binSize {
 	return $found;
 }
 
+##
+# existsInList(list, val)
+# list: a string containing a list of comma-seperated items.
+# val: the value to check for.
+#
+# Check whether $val exists in $list. This function is case-insensitive.
+#
+# Example:
+# my $list = "Apple,Orange Juice";
+# existsInList($list, "apple");		# => 1
+# existsInList($list, "Orange Juice");	# => 1
+# existsInList($list, "juice");		# => 0
 sub existsInList {
 	my ($list, $val) = @_;
 	my @array = split / *, */, $list;
