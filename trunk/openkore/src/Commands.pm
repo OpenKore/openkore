@@ -34,11 +34,12 @@ use Settings;
 use Plugins;
 use Utils;
 use Misc;
-
+use AI;
 
 our %handlers = (
 	ai	=> \&cmdAI,
 	aiv	=> \&cmdAIv,
+	arrowcraft	=>	\&cmdArrowCraft,
 	auth	=> \&cmdAuthorize,
 	bestow	=> \&cmdBestow,
 	buy	=> \&cmdBuy,
@@ -88,6 +89,7 @@ our %handlers = (
 our %descriptions = (
 	ai	=> 'Enable/disable AI.',
 	aiv	=> 'Display current AI sequences.',
+	arrowcraft	=>	'Create Arrows.',
 	auth	=> '(Un)authorize a user for using Kore chat commands.',
 	bestow	=> 'Bestow admin in a chat room',
 	buy	=> 'Buy an item from the current NPC shop.',
@@ -1189,4 +1191,41 @@ sub cmdMVP {
 	main::ai_skillUse('SA_CLASSCHANGE', 10, 0, 0, $id);
 }
 
+sub cmdArrowCraft {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^([\w\d]+)/;
+
+	print "-$arg1-\n";
+	if ($arg1 eq "") {
+		if (@arrowCraftID) {
+			message("----------------- Item To Craft -----------------\n", "info");
+			for (my $i = 0; $i < @arrowCraftID; $i++) {
+				next if ($arrowCraftID[$i] eq "");
+				message(swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$i, $char->{inventory}[$arrowCraftID[$i]]{name}]),"list");
+
+			}
+			message("-------------------------------------------------","list")
+		} else {
+			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
+				"Type 'arrowcraft use' to get list.\n";
+		}
+	} elsif ($arg1 eq "use") {
+		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
+			AI::skillUse(\$remote_socket, 'AC_MAKINGARROW', 1, $accountID);
+		} else {
+			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
+				"You dont have Arrow Making Skill.\n";
+		}
+	} else {
+		if ($arrowCraftID[$arg1] ne "") {
+			sendIdentify(\$remote_socket, $char->{inventory}[$arrowCraftID[$arg1]]{index});
+		} else {
+			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
+				"Usage: arrowcraft [<identify #>]",
+				"Type 'arrowcraft use' to get list.\n";
+		}
+	}
+}
 return 1;

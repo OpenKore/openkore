@@ -93,6 +93,7 @@ sub initMapChangeVars {
 	undef @identifyID;
 	undef @spellsID;
 	undef @petsID;
+	undef @arrowCraftID;
 	undef %players;
 	undef %monsters;
 	undef %portals;
@@ -4601,7 +4602,7 @@ sub AI {
 	}
 
 	##### TELEPORT SEARCH #####
-	if (($config{teleportAuto_search} &&  AI::inQueue("sitAuto,sitting,attack,follow,items_take,buyAuto,skill_use,sellAuto,storageAuto")) || !$config{attackAuto}){
+	if (($config{teleportAuto_search} &&  AI::inQueue("sitAuto","sitting","attack","follow","items_take","buyAuto","skill_use","sellAuto","storageAuto")) || !$config{attackAuto}){
 		$timeout{ai_teleport_search}{time} = time;
 	}
 
@@ -8168,6 +8169,17 @@ sub parseMsg {
 		undef %outgoingDeal;
 		undef %incomingDeal;
 
+	} elsif ($switch eq "01AD") {
+		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+		$msg = substr($msg, 0, 4).$newmsg;
+		undef @arrowCraftID;
+		for ($i = 4; $i < $msg_size; $i += 2) {
+			$ID = unpack("S1", substr($msg, $i, 2));
+			my $index = findIndex(\@{char->{inventory}}, "nameID", $ID);
+			binAdd(\@arrowCraftID, $index);
+		}
+		print "Recieved Possible Arrow Craft List - type 'arrowcraft'\n";
+
 	#} elsif ($switch eq "0187") {
 		# 0187 - ID: long
 		# Deal canceled
@@ -8253,7 +8265,7 @@ sub ai_partyfollow {
 
 	my %master;
 	$master{id} = findPartyUserID($config{followTarget});
-	if ($master{id} ne "" && !AI::inQueue("storageAuto,storageGet,sellAuto,buyAuto")) {
+	if ($master{id} ne "" && !AI::inQueue("storageAuto","storageGet","sellAuto","buyAuto")) {
 
 		$master{x} = $char->{party}{users}{$master{id}}{pos}{x};
 		$master{y} = $char->{party}{users}{$master{id}}{pos}{y};
