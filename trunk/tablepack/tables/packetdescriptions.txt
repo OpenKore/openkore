@@ -176,7 +176,7 @@
 01A4 Pet Event
 01A6 Pet's Egg List
 01AA Pet Talk / Emo
-01AB Ban Counter
+01AB Mute Counter
 01AC Stop or Snare
 01AD Arrow Craft
 01B0 Monster Transform
