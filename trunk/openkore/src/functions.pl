@@ -5430,7 +5430,7 @@ sub parseMsg {
 			%{$monsters_old{$ID}} = %{$monsters{$ID}};
 			$monsters_old{$ID}{'gone_time'} = time;
 			if ($type == 0) {
-				debug "Monster Disappeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
+				debug "Monster Disappeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
 				$monsters_old{$ID}{'disappeared'} = 1;
 
 			} elsif ($type == 1) {
