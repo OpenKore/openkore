@@ -3127,6 +3127,7 @@ sub AI {
 			 && (!$config{"useSelf_skill_$i"."_whenStatusInactive"} || !whenStatusActive($config{"useSelf_skill_$i"."_whenStatusInactive"}))
 			 && (!$config{"useSelf_skill_$i"."_whenAffected"} || whenAffected($config{"useSelf_skill_$i"."_whenAffected"}))
 			 && (!$config{"useSelf_skill_$i"."_notWhileSitting"} || !$chars[$config{'char'}]{'sitting'})
+			 && (!$config{"useSelf_skill_$i"."_notInTown"} || !$cities_lut{$field{'name'}.'.rsw'})
 			) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
@@ -3169,8 +3170,8 @@ sub AI {
 	#FIXME: need to move closer before using skill, there might be light of sight problem too...
 	
 	if (%{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
-		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
-		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack") ){
+	  || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"
+	  || $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack" || $ai_seq[0] eq "move") ){
 		my $i = 0;
 		undef $ai_v{'partySkill'};
 		undef $ai_v{'partySkill_lvl'};
@@ -3237,11 +3238,11 @@ sub AI {
 
 	# failsafe needed as ai_seq is cleared after teleport. 
 	# $ai_seq[0] will never be "" if randomWalk (and a few other flag) is enable, hence removed
-	
+
 	if ($config{'follow'} && $ai_seq[$#ai_seq] ne "follow") {
 		ai_follow($config{'followTarget'});
 	}
-	
+
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'suspended'}) {
 		if ($ai_seq_args[0]{'ai_follow_lost'}) {
 			$ai_seq_args[0]{'ai_follow_lost_end'}{'time'} += time - $ai_seq_args[0]{'suspended'};
@@ -3718,11 +3719,11 @@ sub AI {
 		my $monsterDist = distance($chars[$config{'char'}]{'pos_to'}, $monsters{$ID}{'pos_to'});
 		my $cleanMonster = (
 			  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
-			|| ($config{'attackAuto_party'} && ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0))
+			|| ($config{'attackAuto_party'} && ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0))
 			|| ($config{'attackAuto_followTarget'} && $following && ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0))
 			|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
 		);
-		$cleanMonster = 0 if ($monsters{$ID}{'attackedByPlayer'});
+		$cleanMonster = 0 if ($monsters{$ID}{'attackedByPlayer'} && (!$following || $monsters{$ID}{'lastAttackFrom'} ne $followID));
 
 
 		if ($ai_seq_args[0]{'dmgToYou_last'} != $monsters{$ID}{'dmgToYou'}
@@ -5122,12 +5123,13 @@ sub parseMsg {
 
 
 				# Monster state
-				my $param1 = unpack("S*", substr($msg, 8, 2)); 
+				my $param1 = unpack("S*", substr($msg, 8, 2));
+				$param1 = 0 if $param1 == 5; # 5 has got something to do with the monster being undead
 				if ($param1) {
 					my $state = (defined $skillsState{$param1}) ? $skillsState{$param1} : "Unknown $param1";
 					$monsters{$ID}{state}{$state} = 1;
 					message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state ($param1)\n", "parseMsg_statuslook", 1;
-				} else {
+				} elsif ($monsters{$ID}{state}) {
 					undef %{$monsters{$ID}{state}};
 				}
 			}
@@ -7204,25 +7206,21 @@ sub parseMsg {
 			}
 
 		} elsif (%{$monsters{$ID}}) {
-			# TODO: figure out what to do with the ignore stuff
 			if ($param1) {
 				$monsters{$ID}{state}{$state} = 1;
-				#$monsters{$ID}{ignore} = 1;
-				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
+				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 1;
 			} else {
 				delete $monsters{$ID}{state}{$state};
 			}
 			if ($param2 && $param2 != 32) {
 				$monsters{$ID}{ailments}{$ailment} = 1;
-				#$monsters{$ID}{ignore} = 1;
-				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 2;
+				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 1;
 			} else {
 				delete $monsters{$ID}{ailments}{$ailment};
 			}
 			if ($param3) {
 				$monsters{$ID}{looks}{$looks} = 1;
-				#$monsters{$ID}{ignore} = 1;
-				debug "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook";
+				debug "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook", 0;
 			} else {
 				delete $monsters{$ID}{looks}{$looks};
 			}
@@ -9631,7 +9629,9 @@ sub updateDamageTables {
 				$players{$ID2}{'missedFromMonster'}{$ID1}++;
 			}
 			if (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}}) {
+				# Monster attacks party member
 				$monsters{$ID1}{'dmgToParty'} += $damage;
+				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
 				$monsters{$ID1}{'attackedByPlayer'} = 0 if ($config{'attackAuto_party'} || ( 
 						$config{'attackAuto_followTarget'} &&
 						$ai_v{'temp'}{'ai_follow_following'} &&
@@ -9650,7 +9650,9 @@ sub updateDamageTables {
 			# Player attacks monster
 			$monsters{$ID2}{'dmgTo'} += $damage;
 			$monsters{$ID2}{'dmgFromPlayer'}{$ID1} += $damage;
+			$monsters{$ID2}{'lastAttackFrom'} = $ID1;
 			$players{$ID1}{'dmgToMonster'}{$ID2} += $damage;
+			
 			if ($damage == 0) {
 				$monsters{$ID2}{'missedFromPlayer'}{$ID1}++;
 				$players{$ID1}{'missedToMonster'}{$ID2}++;
