@@ -867,8 +867,8 @@ sub sendMapLogin {
 	my $sex = shift;
 	my $msg;
 
+	$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 	if ($config{serverType} == 0) {
-		$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 		$msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
 
 	} else {

@@ -61,6 +61,7 @@ Credits:
 - jsteng: VVVS weapon name bugfix, packet 01AB support.
 - arachno: Language code bugfix, chat.txt map name bugfix.
 - Duckieeex, Mananabas, gradeA: Help with pRO support.
+- jojobaoil: Minor bug fixes.
 
 ==================
 ### 1.5.2 (beta)
