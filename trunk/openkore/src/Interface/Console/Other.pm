@@ -166,6 +166,10 @@ sub DESTROY {
 	STDOUT->autoflush(1);
 }
 
+sub errorDialog {
+	my ($self, $message) = @_;
+	$self->writeOutput("error", "$message\n");
+}
 
 # insert(str, pos, substr)
 # Insert a substring into a string.
