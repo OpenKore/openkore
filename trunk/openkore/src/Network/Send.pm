@@ -824,8 +824,8 @@ sub sendMemo {
 
 sub sendMove {
 	my $r_socket = shift;
-	my $x = shift;
-	my $y = shift;
+	my $x = int scalar shift;
+	my $y = int scalar shift;
 	my $msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
