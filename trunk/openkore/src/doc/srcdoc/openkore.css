@@ -5,6 +5,9 @@ body {
 img, .img {
 	border: 0;
 }
+h1 {
+	font-size: x-large;
+}
 h2 {
 	color: darkgray;
 	border-bottom: 1px dashed darkgray;
