@@ -45,6 +45,8 @@ New features:
   alias_monocell sm 293
   alias_death sp 295
   alias_mvp sm 292
+- If 'sp' command is called without a player target, it will target yourself.
+  Useful for e.g. 'alias_heal sp 28'.
 
 New config options:
 - useSelfSkill_#_monsters
