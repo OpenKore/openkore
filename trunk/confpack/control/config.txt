@@ -80,6 +80,9 @@ attackMaxRouteDistance 100
 attackMaxRouteTime 4
 attackUseWeapon 1
 
+runFromTarget 0
+runFromTarget_dist 6
+
 lockMap
 lockMap_x
 lockMap_y
