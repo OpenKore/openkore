@@ -8416,7 +8416,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "40A1") {
 		# Do not remove this switch!
-		$msg_size = 4;
+		$msg_size = 4 if (!$msg_size);
 	} elsif (!$rpackets{$switch} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		print "Unparsed packet - $switch\n" if ($config{'debugPacket_received'});
 	}
