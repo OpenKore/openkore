@@ -255,7 +255,12 @@ sub checkConnection {
 
 		# Choose random config file
 		@files = split(/ *, */, $config{'autoConfChange_files'});
-		$file = $files[int(rand($#files + 1))];
+		# ok this is how it was....
+		#	$file = $files[int(rand($#files + 1))];
+		# this is how it should be ?
+		$file = @files[rand(@files)];
+		#the above can have int() added to it if you want, but it shouldn't need it
+		#as rand on an array chooses a random array item.. (in most cases)
 		print "Changing configuration file (from \"$config_file\" to \"$file\")...\n";
 
 		# A relogin is necessary if the host/port, username or char is different
@@ -266,7 +271,10 @@ sub checkConnection {
 
 		$config_file = $file;
 		$parseFiles[0]{'file'} = $file;
-		parseReload($file);
+		#parseReload($file);
+		#ok, i'm not sure if the above is going to go, i mean dont forget parseReload() accepts "config" as a valid input
+		#redone below to how it should work given the current valid inputs 70% sure the case is even correct.
+		parseReload('config');
 
 		if ($oldMasterHost ne $config{"master_host_$config{'master'}"}
 		 || $oldMasterPort ne $config{"master_port_$config{'master'}"}
