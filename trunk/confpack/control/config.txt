@@ -83,7 +83,7 @@ saveMap
 saveMap_warpToBuyOrSell 0
 
 route_randomWalk 1
-route_randomWalk_maxRouteTime 15
+route_randomWalk_maxRouteTime 75
 route_maxWarpFee
 route_step 15
 
