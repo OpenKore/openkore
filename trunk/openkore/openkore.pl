@@ -4557,7 +4557,9 @@ sub AI {
 	}
 
 	if ($config{'teleportAuto_search'} && timeOut(\%{$timeout{'ai_teleport_search'}}) && binFind(\@ai_seq, "attack") eq "" && binFind(\@ai_seq, "items_take") eq ""
-		&& $ai_v{'ai_teleport_safe'} && binFind(\@ai_seq, "sitAuto") eq "") {
+	 && $ai_v{'ai_teleport_safe'} && binFind(\@ai_seq, "sitAuto") eq "" 
+	 && binFind(\@ai_seq, "buyAuto") eq "" && binFind(\@ai_seq, "sellAuto") eq "" && binFind(\@ai_seq, "storageAuto") eq "" 
+	 && ($ai_v{'map_name_lu'} eq $config{'lockMap'}.'.rsw' || $config{'lockMap'} eq "")) {
 		undef $ai_v{'temp'}{'search'};
 		foreach (keys %mon_control) {
 			if ($mon_control{$_}{'teleport_search'}) {
