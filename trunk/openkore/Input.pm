@@ -34,40 +34,42 @@ package Input;
 use strict;
 use warnings; #can comment this out for releases, but If I do my job that will never be needed
 use Exporter;
-#use IO::Socket::INET;
 use Settings;
 use Log;
 use Utils;
-#use POSIX;
 
 our @ISA = "Exporter";
 our @EXPORT_OK = qw(&init &stop &canRead &readLine $enabled);
 
 our $use_curses = 0; #hasn't been writen yet
 
-##
 # This will load proper OS module at run time
-if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
-	eval <<"	EOW32";
-		use Input::Win32;
-	EOW32
-	die $@ if $@; #rethrow errors
-} else {
-	if ($use_curses) {
-		eval <<"		EOC";
-			use Input::Curses;
-		EOC
-		#if that didn't work it's probably because curses is missing
-		#that's ok, just try to use the IO::Select method instead
-		#we may want to warn, but we may not, but this isn't OpenKore,
-		#so we don't have nice logging
-		warn $@ if $@;
-	}
-	if (!$use_curses || $@) {
-		eval <<"		EOO";
-			use Input::Other;
-		EOO
+sub MODINIT {
+	if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
+		eval "use Input::Win32;";
 		die $@ if $@; #rethrow errors
+	} else {
+		if ($use_curses) {
+			eval "use Input::Curses;";
+			#if that didn't work it's probably because curses is missing
+			#that's ok, just try to use the IO::Select method instead
+			#we may want to warn, but we may not, but this isn't OpenKore,
+			#so we don't have nice logging
+			if ($@) {
+				warn $@;
+			} else {
+				Modules::register("Input::Curses");
+			}
+		}
+		if (!$use_curses || $@) {
+			eval "use Input::Other;";
+			if ($@) {
+				#rethrow errors
+				die $@;
+			} else {
+				Modules::register("Input::Other");
+			}
+		}
 	}
 }
 

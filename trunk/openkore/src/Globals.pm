@@ -21,6 +21,7 @@ use Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
 	@ai_seq @ai_seq_args
+	@chars @playersID %players @monstersID %monsters @portalsID %portals @itemsID %items @npcsID %npcs
 	$remote_socket
 	%timeout_ex
 	);
@@ -29,6 +30,19 @@ our @EXPORT = qw(
 # AI
 our @ai_seq;
 our @ai_seq_args;
+
+# Game state
+our @chars;
+our @playersID;
+our %players;
+our @monstersID;
+our %monsters;
+our @portalsID;
+our %portals;
+our @itemsID;
+our %items;
+our @npcsID;
+our %npcs;
 
 # Connection
 our $remote_socket;

@@ -18,8 +18,9 @@ use base qw/Exporter/;
 
 use IO::Select;
 
-our @EXPORT = qw(&start &stop &canRead &readLine $enabled);
+our @EXPORT = qw(&start &stop &canRead &getInput $enabled);
 our $select;
+our $enabled;
 
 =head1 FUNCTIONS
 
@@ -77,7 +78,6 @@ keyboard data available or if the input system hasn't been initialized.
 =cut
 
 sub getInput2 {
-	my $class = shift;
 	my $timeout = shift;
 	my $msg;
 	if ($timeout < 0) {
@@ -90,6 +90,7 @@ sub getInput2 {
 		}
 	}
 	$msg =~ y/\r\n//d if defined $msg;
+	undef $msg if (defined $msg && $msg eq "");
 	return $msg;
 }
 
