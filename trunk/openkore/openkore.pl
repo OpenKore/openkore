@@ -103,7 +103,7 @@ if ($buildType == 0) {
 		promptAndExit();
 	}
 
-	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPNNPPN", "N");
+	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPPNNPPN", "N");
 	if (!$CalcPath_init) {
 		Log::error("Could not locate Tools.dll", "startup");
 		Input::stop();

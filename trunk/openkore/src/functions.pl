@@ -9015,14 +9015,17 @@ sub ai_route_searchStep {
 		my $SOLUTION_MAX = 5000;
 		$$r_args{'solution'} = "\0" x ($SOLUTION_MAX*4+4);
 		#####
+		my $weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
+		$weights .= chr(1) x (256 - length($weights));
 		if (!$buildType) {
 			$$r_args{'session'} = $CalcPath_init->Call($$r_args{'solution'},
-				$$r_args{'field'}{'rawMap'}, $$r_args{'field'}{'width'}, $$r_args{'field'}{'height'}, 
+				$$r_args{'field'}{'dstMap'}, $weights, $$r_args{'field'}{'width'}, $$r_args{'field'}{'height'}, 
 				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}), $$r_args{'timeout'});
 		} elsif ($buildType == 1) {
 			$$r_args{'session'} = Tools::CalcPath_init(
 				$$r_args{'solution'},
-				$$r_args{'field'}{'rawMap'},
+				$$r_args{'field'}{'dstMap'},
+				$weights,
 				$$r_args{'field'}{'width'},
 				$$r_args{'field'}{'height'}, 
 				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), 
@@ -10892,29 +10895,141 @@ sub dumpData {
 sub getField {
 	my $file = shift;
 	my $r_hash = shift;
-	my ($data, $read);
 	undef %{$r_hash};
-	if (!(-e $file)) {
-		error "\n!!Could not load field - you must install the kore-field pack!!\n\n";
+	unless (-e $file) {
+		warn "\n!!Could not load field - you must install the kore-field pack!!\n\n";
 	}
-	if ($file =~ /\//) {
-		($$r_hash{'name'}) = $file =~ /^.*\/([\s\S]*)\./;
-	} else {
-		($$r_hash{'name'}) = $file =~ /([\s\S]*)\./;
-	}
-	open FILE, $file;
+	($$r_hash{'name'}) = $file =~ m{/?([^/.]*)\.};
+	open FILE, "<", $file;
 	binmode(FILE);
-	read(FILE, $data, 4);
-	my $width = unpack("S1", substr($data, 0, 2));
-	my $height = unpack("S1", substr($data, 2, 2));
-	$$r_hash{'width'} = $width;
-	$$r_hash{'height'} = $height;
-	while (($read = read(FILE, $data, 1024 * 32))) {
-		$$r_hash{'rawMap'} .= substr($data, 0, $read);
-		my @blocks = unpack("C*", $data);
-		push @{$$r_hash{'field'}}, @blocks;
+	my $data;
+	{
+		local($/);
+		$data = <FILE>;
 	}
 	close FILE;
+	@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
+	$$r_hash{'rawMap'} = $data;
+	$$r_hash{'binMap'} = pack('b*', $data);
+	$$r_hash{'field'} = [unpack("C*", $data)];
+	(my $dist_file = $file) =~ s/\.fld$/.dist/i;
+	if (-e $dist_file) {
+		open FILE, "<", $dist_file;
+		binmode(FILE);
+		my $dist_data;
+
+		{
+			local($/);
+			$dist_data = <FILE>;
+		}
+		close FILE;
+		my ($dw, $dh) = unpack("S1 S1", substr($dist_data, 0, 4, ''));
+		if ($$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh) {
+			$$r_hash{'dstMap'} = $dist_data;
+		}
+	}
+	unless ($$r_hash{'dstMap'}) {
+		message("Building distance map for $$r_hash{'name'}.\nThis may take a while, but will only be done once for this map.\n");
+		$$r_hash{'dstMap'} = makeDistMap(@$r_hash{'rawMap', 'width', 'height'});
+		message("Done.\n");
+		open FILE, ">", $dist_file or die "Could not write dist cache file: $!\n";
+		binmode(FILE);
+		print FILE pack("S1 S1", @$r_hash{'width', 'height'});
+		print FILE $$r_hash{'dstMap'};
+		close FILE;
+	}
+}
+
+sub makeDistMap {
+	my $data = shift;
+	my $height = shift;
+	my $width = shift;
+	for (my $i = 0; $i < length($data); $i++) {
+		substr($data, $i, 1, (ord(substr($data, $i, 1)) ? chr(0) : chr(255)));
+	}
+	my $done = 0;
+	until ($done) {
+		$done = 1;
+		#'push' wall distance right and up
+		for (my $y = 0; $y < $height; $y++) {
+			for (my $x = 0; $x < $width; $x++) {
+				my $i = $y * $width + $x;
+				my $dist = ord(substr($data, $i, 1));
+				if ($x != $width - 1) {
+					my $ir = $y * $width + $x + 1;
+					my $distr = ord(substr($data, $ir, 1));
+					my $comp = $dist - $distr;
+					if ($comp > 1) {
+						my $val = $distr + 1;
+						$val = 255 if $val > 255;
+						substr($data, $i, 1, chr($val));
+						$done = 0;
+					} elsif ($comp < -1) {
+						my $val = $dist + 1;
+						$val = 255 if $val > 255;
+						substr($data, $ir, 1, chr($val));
+						$done = 0;
+					}
+				}
+				if ($y != $height - 1) {
+					my $iu = ($y + 1) * $width + $x;
+					my $distu = ord(substr($data, $iu, 1));
+					my $comp = $dist - $distu;
+					if ($comp > 1) {
+						my $val = $distu + 1;
+						$val = 255 if $val > 255;
+						substr($data, $i, 1, chr($val));
+						$done = 0;
+					} elsif ($comp < -1) {
+						my $val = $dist + 1;
+						$val = 255 if $val > 255;
+						substr($data, $iu, 1, chr($val));
+						$done = 0;
+					}
+				}
+			}
+		}
+		#'push' wall distance left and down
+		for (my $y = $height - 1; $y >= 0; $y--) {
+			for (my $x = $width - 1; $x >= 0 ; $x--) {
+				my $i = $y * $width + $x;
+				my $dist = ord(substr($data, $i, 1));
+				if ($x != 0) {
+					my $il = $y * $width + $x - 1;
+					my $distl = ord(substr($data, $il, 1));
+					my $comp = $dist - $distl;
+					if ($comp > 1) {
+						my $val = $distl + 1;
+						$val = 255 if $val > 255;
+						substr($data, $i, 1, chr($val));
+						$done = 0;
+					} elsif ($comp < -1) {
+						my $val = $dist + 1;
+						$val = 255 if $val > 255;
+						substr($data, $il, 1, chr($val));
+						$done = 0;
+					}
+				}
+				if ($y != 0) {
+					my $id = ($y - 1) * $width + $x;
+					my $distd = ord(substr($data, $id, 1));
+					my $comp = $dist - $distd;
+					if ($comp > 1) {
+						my $val = $distd + 1;
+						$val = 255 if $val > 255;
+						substr($data, $i, 1, chr($val));
+						$done = 0;
+					} elsif ($comp < -1) {
+						my $val = $dist + 1;
+						$val = 255 if $val > 255;
+						substr($data, $id, 1, chr($val));
+						$done = 0;
+					}
+				}
+			}
+		}
+	}
+	return $data;
 }
 
 sub getGatField {
