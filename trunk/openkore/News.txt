@@ -13,6 +13,10 @@
   ...
 - dumpData() now also dumps raw data so you can see strings (just like in
   hex editors).
+- Support packet 01EE (thanks to Digital Anomaly)
+- Don't drop target when a monster has already attacked you, but switches
+  target later. This fixes a lot of "kore walks away when being kill
+  stealed" complaints.
 
 
 ==================
