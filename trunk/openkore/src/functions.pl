@@ -303,7 +303,7 @@ sub parseInput {
 	my $printType;
 	$printType = shift if ($config{'XKore'});
 
-	my ($arg1, $arg2, $switch);
+	my ($arg1, $arg2, $arg4, $switch);
 	debug("Input: $input\n", "parseInput", 2);
 	($switch) = $input =~ /^(\w*)/;
 
@@ -328,8 +328,8 @@ sub parseInput {
 	# Parse command...ugh
 
 	} elsif ($switch eq "a") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
 		if ($arg1 =~ /^\d+$/ && $monstersID[$arg1] eq "") {
 			error	"Error in function 'a' (Attack Monster)\n" .
 				"Monster $arg1 does not exist.\n";
@@ -415,7 +415,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "auth") {
-		my ($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
+		($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
 		if ($arg1 eq "" || ($arg2 ne "1" && $arg2 ne "0")) {
 			error	"Syntax Error in function 'auth' (Overall Authorize)\n" .
 				"Usage: auth <username> <flag>\n";
@@ -440,7 +440,7 @@ sub parseInput {
 		unshift @ai_seq_args, {};
 		
 	} elsif ($switch eq "bestow") {
-		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($currentChatRoom eq "") {
 			error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
 				"You are not in a Chat Room.\n";
@@ -455,8 +455,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "buy") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'buy' (Buy Store Item)\n" .
 				"Usage: buy <item #> [<amount>]\n";
@@ -471,7 +471,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "c") {
-		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'c' (Chat)\n" .
 				"Usage: c <message>\n";
@@ -481,9 +481,9 @@ sub parseInput {
 
 	#Cart command - chobit andy 20030101
 	} elsif ($switch eq "cart") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
-		my ($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
+		($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
 		if ($arg1 eq "") {
 			message("-------------Cart--------------\n" .
 				"#  Name\n", "list");
@@ -569,29 +569,34 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "chist") { 
-		(open(CHAT, $Settings::chat_file)) or print("Unable to open chat.txt\n");
-		@chat = <CHAT>;
-		close(CHAT);
-		print "------ Chat History --------------------\n";
-		for ($i = @chat - 5; $i < @chat;$i++) {
-			print $chat[$i];
+		if (open(CHAT, $Settings::chat_file)) {
+			my @chat = <CHAT>;
+			close(CHAT);
+			message("------ Chat History --------------------\n", "list");
+			my $i = @chat - 5;
+			$i = 0 if ($i < 0);
+			for (; $i < @chat;$i++) {
+				message($chat[$i], "list");
+			}
+			message("----------------------------------------\n", "list");
+		} else {
+			error "Unable to open $Settings::chat_file\n";
 		}
-		print "----------------------------------------\n";
 
 	} elsif ($switch eq "cil") { 
 		itemLog_clear();
-		print qq~Item log cleared.\n~; 
+		message("Item log cleared.\n", "success");
 
 	} elsif ($switch eq "cl") { 
 		chatLog_clear();
-		print qq~Chat log cleared.\n~; 
+		message("Chat log cleared.\n", "success");
 
 	} elsif ($switch eq "closeshop") {
 		sendCloseShop(\$remote_socket);
 
 	} elsif ($switch eq "conf") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \w+ ([\s\S]+)$/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg2) = $input =~ /^[\s\S]*? \w+ ([\s\S]+)$/;
 		@{$ai_v{'temp'}{'conf'}} = keys %config;
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'conf' (Config Modify)\n" .
@@ -678,9 +683,9 @@ sub parseInput {
 		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "vender") {
-		my ($arg1) = $input =~ /^.*? (\d+)/;
-		my ($arg2) = $input =~ /^.*? \d+ (\d+)/;
-		my ($arg3) = $input =~ /^.*? \d+ \d+ (\d+)/;
+		($arg1) = $input =~ /^.*? (\d+)/;
+		($arg2) = $input =~ /^.*? \d+ (\d+)/;
+		($arg3) = $input =~ /^.*? \d+ \d+ (\d+)/;
 		if ($arg1 eq "") {
 			error	"Error in function 'vender' (Vender Shop)\n" .
 				"Usage: vender <vender # | end> [<item #> <amount>]\n";
@@ -862,11 +867,11 @@ sub parseInput {
 		($arg1) = $input =~ /^[\s\S]*? ([\d,-]+)/;
 		($arg2) = $input =~ /^[\s\S]*? [\d,-]+ (\d+)$/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'drop' (Drop Inventory Item)\n"
-				,"Usage: drop <item #> [<amount>]\n";
+			error	"Syntax Error in function 'drop' (Drop Inventory Item)\n" .
+				"Usage: drop <item #> [<amount>]\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			print	"Error in function 'drop' (Drop Inventory Item)\n"
-				,"Inventory Item $arg1 does not exist.\n";
+			error	"Error in function 'drop' (Drop Inventory Item)\n" .
+				"Inventory Item $arg1 does not exist.\n";
 		} else {
 			my @temp = split(/,/, $arg1);
 			@temp = grep(!/^$/, @temp); # Remove empty entries
@@ -892,7 +897,7 @@ sub parseInput {
 		dumpData($msg);
 
 	} elsif ($switch eq "e") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "" || $arg1 > 33 || $arg1 < 0) {
 			error	"Syntax Error in function 'e' (Emotion)\n" .
 				"Usage: e <emotion # (0-33)>\n";
@@ -901,8 +906,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "eq") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\w+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\w+)/;
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'equip' (Equip Inventory Item)\n" .
 				"Usage: equip <item #> [r]\n";
@@ -931,7 +936,7 @@ sub parseInput {
 
 	} elsif ($switch eq "exp" || $switch eq "count") {
 		# exp report
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq ""){
 			my ($endTime_EXP,$w_sec,$total,$bExpPerHour,$jExpPerHour,$EstB_sec,$EstB_sec,$percentB,$percentJ);
 			$endTime_EXP = time;
@@ -985,7 +990,7 @@ sub parseInput {
 		}
 		
 	} elsif ($switch eq "follow") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'follow' (Follow Player)\n" .
 				"Usage: follow <player #>\n";
@@ -1003,7 +1008,7 @@ sub parseInput {
 
 	#Guild Chat - chobit andy 20030101
 	} elsif ($switch eq "g") {
-		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
 			print "Syntax Error in function 'g' (Guild Chat)\n"
 				,"Usage: g <message>\n";
@@ -1012,7 +1017,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "guild") {
-		my ($arg1) = $input =~ /^.*? (\w+)/;
+		($arg1) = $input =~ /^.*? (\w+)/;
 		if ($arg1 eq "info") {
 			message("---------- Guild Information ----------\n", "info");
 			message(swrite(
@@ -1131,7 +1136,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "identify") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
 			message("---------Identify List--------\n", "list");
 			for (my $i = 0; $i < @identifyID; $i++) {
@@ -1155,7 +1160,7 @@ sub parseInput {
 
 
 	} elsif ($switch eq "ignore") {
-		my ($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
+		($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
 		if ($arg1 eq "" || $arg2 eq "" || ($arg1 ne "0" && $arg1 ne "1")) {
 			print	"Syntax Error in function 'ignore' (Ignore Player/Everyone)\n"
 				,"Usage: ignore <flag> <name | all>\n";
@@ -1183,8 +1188,8 @@ sub parseInput {
 		message("-------------------------------\n", "list");
 
 	} elsif ($switch eq "im") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
 			print	"Syntax Error in function 'im' (Use Item on Monster)\n"
 				,"Usage: im <item #> <monster #>\n";
@@ -1202,8 +1207,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "ip") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
 			print	"Syntax Error in function 'ip' (Use Item on Player)\n"
 				,"Usage: ip <item #> <player #>\n";
@@ -1221,7 +1226,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "is") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'is' (Use Item on Self)\n"
 				,"Usage: is <item #>\n";
@@ -1236,8 +1241,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "join") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ ([\s\S]*)$/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ ([\s\S]*)$/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'join' (Join Chat Room)\n"
 				,"Usage: join <chat room #> [<password>]\n";
@@ -1252,8 +1257,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "judge") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
 			print	"Syntax Error in function 'judge' (Give an alignment point to Player)\n"
 				,"Usage: judge <player #> <0 (good) | 1 (bad)>\n";
@@ -1266,7 +1271,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "kick") {
-		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($currentChatRoom eq "") {
 			print	"Error in function 'kick' (Kick from Chat)\n"
 				,"You are not in a Chat Room.\n";
@@ -1289,8 +1294,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "look") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'look' (Look a Direction)\n"
 				,"Usage: look <body dir> [<head dir>]\n";
@@ -1299,7 +1304,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "lookp") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "") {
 			print "Syntax Error in function 'lookp' (Look at Player)\n" .
 					"Usage: lookp <player #>\n";
@@ -1339,7 +1344,7 @@ sub parseInput {
 		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "move") {
-		my ($arg1, $arg2, $arg3) = $input =~ /^[\s\S]*? (\d+) (\d+)(.*?)$/;
+		($arg1, $arg2, $arg3) = $input =~ /^[\s\S]*? (\d+) (\d+)(.*?)$/;
 		
 		undef $ai_v{'temp'}{'map'};
 		if ($arg1 eq "") {
@@ -1406,8 +1411,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "party") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w*)/;
-		my ($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)\b/;
+		($arg1) = $input =~ /^[\s\S]*? (\w*)/;
+		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)\b/;
 		if ($arg1 eq "" && !%{$chars[$config{'char'}]{'party'}}) {
 			print	"Error in function 'party' (Party Functions)\n"
 				,"Can't list party - you're not in a party.\n";
@@ -1523,7 +1528,7 @@ sub parseInput {
 		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "pm") {
-		my ($arg1, $arg2) = $input =~ /^[\s\S]*? "([\s\S]*?)" ([\s\S]*)/;
+		($arg1, $arg2) = $input =~ /^[\s\S]*? "([\s\S]*?)" ([\s\S]*)/;
 		my $type = 0;
 		if (!$arg1) {
 			($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
@@ -1605,7 +1610,7 @@ sub parseInput {
 		quit();
 
 	} elsif ($switch eq "rc") {
-		my ($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($args ne "") {
 			Modules::reload($args, 1);
 
@@ -1641,7 +1646,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "reload") {
-		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		parseReload($arg1);
 
 	} elsif ($switch eq "relog") {
@@ -1706,8 +1711,8 @@ sub parseInput {
 		printStat();
 
 	} elsif ($switch eq "sell") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
 		if ($arg1 eq "" && $talk{'buyOrSell'}) {
 			sendGetSellList(\$remote_socket, $talk{'ID'});
 
@@ -1725,7 +1730,7 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "send") {
-		my ($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		sendRaw(\$remote_socket, $args);
 
 	} elsif ($switch eq "sit") {
@@ -1765,9 +1770,9 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "sm") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
-		my ($arg3) = $input =~ /^[\s\S]*? \d+ \d+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		($arg3) = $input =~ /^[\s\S]*? \d+ \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
 			print	"Syntax Error in function 'sm' (Use Skill on Monster)\n"
 				,"Usage: sm <skill #> <monster #> [<skill lvl>]\n";
@@ -1789,8 +1794,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "skills") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
 		if ($arg1 eq "") {
 			message("----------Skill List-----------\n", "list");
 			message("#  Skill Name                    Lv     SP\n", "list");
@@ -1832,14 +1837,14 @@ sub parseInput {
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		($arg3) = $input =~ /^[\s\S]*? \d+ \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
-			print	"Syntax Error in function 'sp' (Use Skill on Player)\n"
-				,"Usage: sp <skill #> <player #> [<skill lvl>]\n";
+			error	"Syntax Error in function 'sp' (Use Skill on Player)\n" .
+				"Usage: sp <skill #> <player #> [<skill lvl>]\n";
 		} elsif ($playersID[$arg2] eq "") {
-			print	"Error in function 'sp' (Use Skill on Player)\n"
-				,"Player $arg2 does not exist.\n";	
+			error	"Error in function 'sp' (Use Skill on Player)\n" .
+				"Player $arg2 does not exist.\n";	
 		} elsif ($skillsID[$arg1] eq "") {
-			print	"Error in function 'sp' (Use Skill on Player)\n"
-				,"Skill $arg1 does not exist.\n";
+			error	"Error in function 'sp' (Use Skill on Player)\n" .
+				"Skill $arg1 does not exist.\n";
 		} else {
 			if (!$arg3 || $arg3 > $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'}) {
 				$arg3 = $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'};
@@ -1852,14 +1857,14 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "ss") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'ss' (Use Skill on Self)\n"
-				,"Usage: ss <skill #> [<skill lvl>]\n";
+			error	"Syntax Error in function 'ss' (Use Skill on Self)\n" .
+				"Usage: ss <skill #> [<skill lvl>]\n";
 		} elsif ($skillsID[$arg1] eq "") {
-			print	"Error in function 'ss' (Use Skill on Self)\n"
-				,"Skill $arg1 does not exist.\n";
+			error	"Error in function 'ss' (Use Skill on Self)\n" .
+				"Skill $arg1 does not exist.\n";
 		} else {
 			if (!$arg2 || $arg2 > $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'}) {
 				$arg2 = $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'};
@@ -1905,11 +1910,11 @@ sub parseInput {
 		$ai_v{'sitAuto_forceStop'} = 1;
 
 	} elsif ($switch eq "stat_add") {
-		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)$/;
+		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)$/;
 		if ($arg1 ne "str" &&  $arg1 ne "agi" && $arg1 ne "vit" && $arg1 ne "int" 
 		 && $arg1 ne "dex" && $arg1 ne "luk") {
-			print	"Syntax Error in function 'stat_add' (Add Status Point)\n"
-			,"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
+			error	"Syntax Error in function 'stat_add' (Add Status Point)\n" .
+				"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
 		} else {
 			my $ID;
 			if ($arg1 eq "str") {
@@ -1926,8 +1931,8 @@ sub parseInput {
 				$ID = 0x12;
 			}
 			if ($chars[$config{'char'}]{"points_$arg1"} > $chars[$config{'char'}]{'points_free'}) {
-				print	"Error in function 'stat_add' (Add Status Point)\n"
-					,"Not enough status points to increase $arg1\n";
+				error	"Error in function 'stat_add' (Add Status Point)\n" .
+					"Not enough status points to increase $arg1\n";
 			} else {
 				$chars[$config{'char'}]{$arg1} += 1;
 				sendAddStatusPoint(\$remote_socket, $ID);
@@ -1935,9 +1940,9 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "storage") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,-]+)/;
-		my ($arg3) = $input =~ /^[\s\S]*? \w+ [\d,-]+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,-]+)/;
+		($arg3) = $input =~ /^[\s\S]*? \w+ [\d,-]+ (\d+)/;
 		if ($arg1 eq "") {
 			message("----------Storage-----------\n", "list");
 			message("#  Name\n", "list");
@@ -1971,8 +1976,8 @@ sub parseInput {
 			sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg2]{'index'}, $arg3);
 
 		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/ && $storageID[$arg2] eq "") {
-			print	"Error in function 'storage get' (Get Item from Storage)\n"
-				,"Storage Item $arg2 does not exist\n";
+			error	"Error in function 'storage get' (Get Item from Storage)\n" .
+				"Storage Item $arg2 does not exist\n";
 		} elsif ($arg1 eq "get" && $arg2 =~ /[\d,-]+/) {
 			my @temp = split(/,/, $arg2);
 			@temp = grep(!/^$/, @temp); # Remove empty entries
@@ -1993,13 +1998,13 @@ sub parseInput {
 			sendStorageClose(\$remote_socket);
 
 		} else {
-			print	"Syntax Error in function 'storage' (Storage Functions)\n"
-				,"Usage: storage [<add | get | close>] [<inventory # | storage #>] [<amount>]\n";
+			error	"Syntax Error in function 'storage' (Storage Functions)\n" .
+				"Usage: storage [<add | get | close>] [<inventory # | storage #>] [<amount>]\n";
 		}
 
 	} elsif ($switch eq "store") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
 		if ($arg1 eq "" && !$talk{'buyOrSell'}) {
 			message("----------Store List-----------\n", "list");
 			message("#  Name                    Type           Price\n", "list");
@@ -2010,38 +2015,38 @@ sub parseInput {
 					[$i, $display, $itemTypes_lut{$storeList[$i]{'type'}}, $storeList[$i]{'price'}]),
 					"list");
 			}
-			print "-------------------------------\n";
+			message("-------------------------------\n", "list");
 		} elsif ($arg1 eq "" && $talk{'buyOrSell'}) {
 			sendGetStoreList(\$remote_socket, $talk{'ID'});
 
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $storeList[$arg2] eq "") {
-			print	"Error in function 'store desc' (Store Item Description)\n"
-				,"Usage: Store item $arg2 does not exist\n";
+			error	"Error in function 'store desc' (Store Item Description)\n" .
+				"Usage: Store item $arg2 does not exist\n";
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
 			printItemDesc($storeList[$arg2]);
 
 		} else {
-			print	"Syntax Error in function 'store' (Store Functions)\n"
-				,"Usage: store [<desc>] [<store item #>]\n";
+			error	"Syntax Error in function 'store' (Store Functions)\n" .
+				"Usage: store [<desc>] [<store item #>]\n";
 
 		}
 
 	} elsif ($switch eq "take") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)$/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)$/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'take' (Take Item)\n"
-				,"Usage: take <item #>\n";
+			error	"Syntax Error in function 'take' (Take Item)\n" .
+				"Usage: take <item #>\n";
 		} elsif ($itemsID[$arg1] eq "") {
-			print	"Error in function 'take' (Take Item)\n"
-				,"Item $arg1 does not exist.\n";
+			error	"Error in function 'take' (Take Item)\n" .
+				"Item $arg1 does not exist.\n";
 		} else {
 			take($itemsID[$arg1]);
 		}
 
 
 	} elsif ($switch eq "talk") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
 
 		if ($arg1 =~ /^\d+$/ && $npcsID[$arg1] eq "") {
 			error	"Error in function 'talk' (Talk to NPC)\n" .
@@ -2077,8 +2082,8 @@ sub parseInput {
 
 
 		} elsif ($arg1 eq "cont" && !%talk) {
-			error	"Error in function 'talk cont' (Continue Talking to NPC)\n"
-				,"You are not talking to any NPC.\n";
+			error	"Error in function 'talk cont' (Continue Talking to NPC)\n" .
+				"You are not talking to any NPC.\n";
 		} elsif ($arg1 eq "cont") {
 			sendTalkContinue(\$remote_socket, $talk{'ID'});
 
@@ -2088,21 +2093,21 @@ sub parseInput {
 
 
 		} else {
-			error	"Syntax Error in function 'talk' (Talk to NPC)\n"
-				,"Usage: talk <NPC # | cont | resp> [<response #>]\n";
+			error	"Syntax Error in function 'talk' (Talk to NPC)\n" .
+				"Usage: talk <NPC # | cont | resp> [<response #>]\n";
 		}
 
 
 	} elsif ($switch eq "tank") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
-			error	"Syntax Error in function 'tank' (Tank for a Player)\n"
-				,"Usage: tank <player #>\n";
+			error	"Syntax Error in function 'tank' (Tank for a Player)\n" .
+				"Usage: tank <player #>\n";
 		} elsif ($arg1 eq "stop") {
 			configModify("tankMode", 0);
 		} elsif ($playersID[$arg1] eq "") {
-			error	"Error in function 'tank' (Tank for a Player)\n"
-				,"Player $arg1 does not exist.\n";
+			error	"Error in function 'tank' (Tank for a Player)\n" .
+				"Player $arg1 does not exist.\n";
 		} else {
 			configModify("tankMode", 1);
 			configModify("tankModeTarget", $players{$playersID[$arg1]}{'name'});
@@ -2112,13 +2117,13 @@ sub parseInput {
 		useTeleport(1);
 
 	} elsif ($switch eq "timeout") {
-		my ($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
+		($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
 		if ($arg1 eq "") {
-			error	"Syntax Error in function 'timeout' (set a timeout)\n"
-				,"Usage: timeout <type> [<seconds>]\n";
+			error	"Syntax Error in function 'timeout' (set a timeout)\n" .
+				"Usage: timeout <type> [<seconds>]\n";
 		} elsif ($timeout{$arg1} eq "") {
-			error	"Error in function 'timeout' (set a timeout)\n"
-				,"Timeout $arg1 doesn't exist\n";
+			error	"Error in function 'timeout' (set a timeout)\n" .
+				"Timeout $arg1 doesn't exist\n";
 		} elsif ($arg2 eq "") {
 			error "Timeout '$arg1' is $config{$arg1}\n";
 		} else {
@@ -2127,7 +2132,7 @@ sub parseInput {
 
 
 	} elsif ($switch eq "uneq") {
-		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'unequip' (Unequip Inventory Item)\n" .
 				"Usage: unequip <item #>\n";
@@ -2187,7 +2192,6 @@ sub parseInput {
 		}
 	}
 }
-
 
 
 
