@@ -3974,12 +3974,16 @@ sub AI {
 			sendAttackStop(\$remote_socket);
 			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
 
+			# Remove "move"
 			shift @ai_seq;
 			shift @ai_seq_args;
+			# Remove "route"
 			if ($ai_seq[0] eq "route") {
+				$ai_seq_args[0]{'destroyFunction'}->($ai_seq_args[$index]) if ($ai_seq_args[0]{'destroyFunction'});
 				shift @ai_seq;
 				shift @ai_seq_args;
 			}
+			# Remove "attack"
 			shift @ai_seq;
 			shift @ai_seq_args;
 		}
