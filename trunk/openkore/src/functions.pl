@@ -6288,6 +6288,7 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		$msg = substr($msg, 0, 8).$newmsg;
 		$ID = substr($msg, 4, 4);
+		$talk{'ID'} = $ID;
 		($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
 		$talk = substr($msg, 8) if (!defined $talk);
 		@preTalkResponses = split /:/, $talk;
@@ -6417,12 +6418,13 @@ sub parseMsg {
 	} elsif ($switch eq "00C0") {
 		$ID = substr($msg, 2, 4);
 		$type = unpack("C*", substr($msg, 6, 1));
+		my $emotion = $emotions_lut{$type} || "<emotion #$type>";
 		if ($ID eq $accountID) {
-			message "$chars[$config{'char'}]{'name'} : $emotions_lut{$type}\n", "emotion";
-			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotions_lut{$type}\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
+			message "$chars[$config{'char'}]{'name'} : $emotion\n", "emotion";
+			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 		} elsif (%{$players{$ID}}) {
-			message "$players{$ID}{'name'} : $emotions_lut{$type}\n", "emotion";
-			chatLog("e", "$players{$ID}{'name'} : $emotions_lut{$type}\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
+			message "$players{$ID}{'name'} : $emotion\n", "emotion";
+			chatLog("e", "$players{$ID}{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 
 			my $index = binFind(\@ai_seq, "follow");
 			if ($index ne "") {
@@ -10095,7 +10097,7 @@ sub stuckCheck {
 		}
 
 	} elsif (exists $ai_v{stuck_count}) {
-		debug "Unstuck attempt sucessfull\n", "stuck";
+		debug "Unstuck attempt successful\n", "stuck";
 		delete $ai_v{stuck_count};
 	}
 }
