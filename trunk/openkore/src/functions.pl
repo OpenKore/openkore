@@ -3890,7 +3890,7 @@ sub AI {
 		if ($config{useSelf_skill_smartHeal} && $party_skill{skillID} eq "AL_HEAL") {
 			my $smartHeal_lv = 1;
 			my $hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
-			for ($i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
+			for ($i = 1; $i <= $char->{skills}{$party_skill{skillID}}{lv}; $i++) {
 				my $sp_req, $amount;
 				
 				$smartHeal_lv = $i;
