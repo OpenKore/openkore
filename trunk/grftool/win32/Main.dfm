@@ -102,16 +102,26 @@ object Form1: TForm1
     Images = ImageList2
     Indent = 3
     TabOrder = 1
-    object Search: TEdit
+    object Label1: TLabel
       Left = 3
       Top = 0
-      Width = 574
+      Width = 40
       Height = 22
+      Caption = '&Search: '
+      FocusControl = Search
+      Layout = tlCenter
+    end
+    object Search: TEdit
+      Left = 43
+      Top = 0
+      Width = 561
+      Height = 22
+      Hint = 'Enter the filename to search for (wildcards are supported).'
       TabOrder = 0
       OnKeyDown = SearchKeyDown
     end
     object SearchBtn: TToolButton
-      Left = 577
+      Left = 604
       Top = 0
       Hint = 'Search'
       Caption = 'SearchBtn'
@@ -154,7 +164,7 @@ object Form1: TForm1
           Width = 185
           Height = 274
           Align = alClient
-          Font.Charset = ANSI_CHARSET
+          Font.Charset = HANGEUL_CHARSET
           Font.Color = clWindowText
           Font.Height = -12
           Font.Name = 'Courier New'
@@ -337,6 +347,7 @@ object Form1: TForm1
     TreeOptions.PaintOptions = [toHotTrack, toShowButtons, toShowDropmark, toThemeAware, toUseBlendedImages, toUseBlendedSelection]
     TreeOptions.SelectionOptions = [toExtendedFocus, toFullRowSelect, toMultiSelect]
     OnClick = FileListClick
+    OnDblClick = FileListDblClick
     OnGetText = FileListGetText
     OnKeyDown = FileListKeyDown
     Columns = <

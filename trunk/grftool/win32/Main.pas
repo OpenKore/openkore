@@ -39,6 +39,7 @@ type
     StopButton: TSpeedButton;
     ProgressBar1: TProgressBar;
     FileList: TVirtualStringTree;
+    Label1: TLabel;
     procedure FormResize(Sender: TObject);
     procedure OpenBtnClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -61,6 +62,7 @@ type
     procedure FileListGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Column: TColumnIndex; TextType: TVSTTextType;
       var CellText: WideString);
+    procedure FileListDblClick(Sender: TObject);
   private
     Grf: TGrf;
     function OpenGRF(FileName: String): Boolean;
@@ -81,7 +83,7 @@ var
 implementation
 
 uses
-  About;
+  About, GPattern;
 
 {$R *.dfm}
 
@@ -149,12 +151,17 @@ end;
 procedure TForm1.FillFileList;
 var
   i: Cardinal;
-  SearchFor: String;
+  SearchFor: PChar;
   SearchLen: Integer;
+  Pattern: PGPatternSpec;
   Node: ^TGrfItem;
 begin
-  SearchFor := LowerCase(Search.Text);
-  SearchLen := Length(SearchFor);
+  // Do a substring search if the search text doesn't contain wildcards
+  SearchLen := Length(Search.Text);
+  if  (Pos('*', Search.Text) = 0) and (Pos('?', Search.Text) = 0) then
+      SearchFor := PChar(LowerCase('*' + Search.Text + '*'))
+  else
+      SearchFor := PChar(LowerCase(Search.Text));
   Screen.Cursor := crHourGlass;
 
   FileList.BeginUpdate;
@@ -162,10 +169,15 @@ begin
   FileList.EndUpdate;
   Application.ProcessMessages;
 
+  if SearchLen > 0 then
+      Pattern := g_pattern_spec_new(SearchFor)
+  else
+      Pattern := nil;
+
   FileList.BeginUpdate;
   for i := 0 to Grf.nfiles - 1 do
   begin
-      if (SearchLen <> 0) and (Pos(SearchFor, LowerCase(Grf.files[i].Name)) <= 0) then
+      if (Assigned(Pattern)) and (not g_pattern_match_string(Pattern, PChar(LowerCase(Grf.files[i].Name)))) then
           Continue;
       if Grf.files[i].TheType = 2 then
           Continue;    // Do not list folders
@@ -174,12 +186,15 @@ begin
       Node.i := i;
   end;
   FileList.EndUpdate;
+
+  if Assigned(Pattern) then
+      g_pattern_spec_free(Pattern);
   Screen.Cursor := crDefault;
 end;
 
 procedure TForm1.FormResize(Sender: TObject);
 begin
-  Search.Width := Width - SearchBtn.Width - ToolBar2.Indent - 8;
+  Search.Width := Width - SearchBtn.Width - Label1.Width - ToolBar2.Indent - 8;
 end;
 
 procedure TForm1.OpenBtnClick(Sender: TObject);
@@ -241,11 +256,11 @@ begin
   if not Assigned(Grf) then Exit;
 
   if FileList.SelectedCount = 0 then
-      StatusBar1.SimpleText := IntToStr(Grf.nFiles) + ' files in archive'
+      StatusBar1.SimpleText := IntToStr(FileList.RootNode.ChildCount) + ' files'
   else if FileList.SelectedCount = 1 then
   begin
       Data := FileList.GetNodeData(FileList.GetNextSelected(nil));
-      StatusBar1.SimpleText := IntToStr(Grf.nFiles) + ' files in archive - file #' +
+      StatusBar1.SimpleText := IntToStr(Grf.nFiles) + ' files - file #' +
           IntToStr(Data.i + 1) + ' selected';
   end else
   begin
@@ -290,6 +305,7 @@ begin
           MessageBox(Handle, grf_strerror(Error), 'Error', MB_ICONERROR);
           Exit;
       end;
+
       RichEdit1.Text := String(Data);
       NoteBook1.PageIndex := 0;
 
@@ -481,6 +497,12 @@ begin
       CellText := FriendlySizeName(Grf.files[Data.i].RealLen)
   else
       CellText := '';
+end;
+
+procedure TForm1.FileListDblClick(Sender: TObject);
+begin
+  if ExtractBtn.Enabled then
+      ExtractBtnClick(Sender);
 end;
 
 end.
