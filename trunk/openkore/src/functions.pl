@@ -11829,7 +11829,17 @@ sub getActorNames {
 
 	my $source = getActorName($sourceID);
 	my $uses = $source eq 'You' ? 'use' : 'uses';
-	my $target = $targetID eq $sourceID ? 'yourself' : getActorName($targetID);
+	my $target;
+
+	if ($targetID eq $sourceID) {
+		if ($targetID eq $accountID) {
+			$target = 'yourself';
+		} else {
+			$target = 'himself';
+		}
+	} else {
+		$target = getActorName($targetID);
+	}
 
 	return ($source, $uses, $target);
 }

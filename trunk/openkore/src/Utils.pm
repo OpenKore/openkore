@@ -7,12 +7,6 @@
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
-#
-#
-#
-#  $Revision$
-#  $Id$
-#
 #########################################################################
 ##
 # MODULE DESCRIPTION: Utility functions
@@ -25,15 +19,17 @@ package Utils;
 
 use strict;
 no strict 'refs';
-use Exporter;
 use Time::HiRes qw(time usleep);
-our @ISA = "Exporter";
+use IO::Socket::INET;
+use Exporter;
+use base qw(Exporter);
+
 our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	formatNumber getFormattedDate getHex getTickCount swrite promptAndExit timeConvert timeOut
-	vocalString);
+	download formatNumber getFormattedDate getHex getTickCount swrite promptAndExit timeConvert
+	timeOut vocalString);
 
 
 #######################################
@@ -331,6 +327,52 @@ sub minHeapAdd {
 ################################
 ################################
 
+
+##
+# download(url)
+# url: the URL to download data from.
+# Returns: the (partial) data of the downloaded file, or undef on failure.
+#
+# Downloads a file from $url. This function is only useful for downloading
+# a *small* file. It will absolutely not work correctly if you try to download
+# anything bigger than a few hundred bytes.
+sub download {
+	my $url = shift;
+	my $host;
+	my $port;
+	my $sock;
+
+	$host = $url;
+	$host =~ s/^.*?:\/\///;
+	$host =~ s/\/.*//;
+	($port) = $host =~ /:(\d+)$/;
+	$port ||= 80;
+
+	$sock = new IO::Socket::INET(
+		PeerHost	=> $host,
+		PeerPort	=> $port,
+		Proto		=> 'tcp',
+		ReuseAddr	=> 1,
+		Timeout		=> 10
+		);
+	return undef if (!$sock);
+
+	$sock->autoflush(0);
+	$sock->timeout(10);
+
+	$sock->send("GET $url HTTP/1.1\r\n", 0);
+	$sock->send("Host: $host\r\n", 0);
+	$sock->send("\r\n", 0);
+	$sock->flush();
+
+	my ($header, $data);
+	$sock->recv($data, 1024 * 32);
+	undef $sock;
+
+	($header, $data) = $data =~ /(.*?)\r\n\r\n(.*)/s;
+	return undef unless ($header =~ /^HTTP\/1\.\d 200 ?/s);
+	return $data;
+}
 
 ##
 # formatNumber(num)
