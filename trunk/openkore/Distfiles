@@ -7,7 +7,6 @@ Commands.pm
 FileParsers.pm
 Globals.pm
 Interface.pm
-IPC.pm
 Log.pm
 Misc.pm
 Modules.pm

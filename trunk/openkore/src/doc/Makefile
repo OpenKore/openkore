@@ -6,7 +6,6 @@ FILES=\
 	../Settings.pm \
 	../Modules.pm \
 	../Plugins.pm \
-	../IPC.pm \
 	../Utils.pm \
 	../Misc.pm
 
