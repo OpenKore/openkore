@@ -26,7 +26,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	formatNumber getFormattedDate swrite timeConvert);
+	formatNumber getFormattedDate swrite promptAndExit timeConvert);
 
 
 #######################################
