@@ -8778,13 +8778,14 @@ sub parseMsg {
 		undef %outgoingDeal;
 		undef %incomingDeal;
 
-	} elsif ($switch eq "0187") {
+	#} elsif ($switch eq "0187") {
+		# 0187 - ID: long
 		# Deal canceled
-		undef %incomingDeal;
-		undef %outgoingDeal;
-		undef %currentDeal;
-		message "Deal Cancelled\n", "deal";
-	}
+	#	undef %incomingDeal;
+	#	undef %outgoingDeal;
+	#	undef %currentDeal;
+	#	message "Deal Cancelled\n", "deal";
+	#}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
 	return $msg;
