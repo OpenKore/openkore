@@ -49,7 +49,6 @@ our %items_lut;
 our %itemSlotCount_lut;
 our %itemsDesc_lut;
 our %itemTypes_lut;
-our %jobs_lut;
 our %maps_lut;
 our %npcs_lut;
 our %portals_lut;
@@ -64,6 +63,52 @@ our %skillsSP_lut;
 our %skillsLooks;
 our %skillsArea;
 our %timeout;
+our %jobs_lut = (
+	0=>'Novice',
+	1=>'Swordsman',
+	2=>'Mage',
+	3=>'Archer',
+	4=>'Acolyte',
+	5=>'Merchant',
+	6=>'Thief',
+	7=>'Knight',
+	8=>'Priest',
+	9=>'Wizard',
+	10=>'Blacksmith',
+	11=>'Hunter',
+	12=>'Assassin',
+	13=>'Knight P',
+	14=>'Crusader',
+	15=>'Monk',
+	16=>'Sage',
+	17=>'Rogue',
+	18=>'Alchemist',
+	19=>'Bard',
+	20=>'Dancer',
+	21=>'Crusader P',
+	22=>'Wedding Suit',
+	23=>'Super Novice',
+	4001=>'Novice High',
+	4002=>'Swordsman High',
+	4003=>'Magician High',
+	4004=>'Archer High',
+	4005=>'Acolyte High',
+	4006=>'Merchant High',
+	4007=>'Thief High',
+	4008=>'Lord Knight',
+	4009=>'High Priest',
+	4010=>'High Wizard',
+	4011=>'Whitesmith',
+	4012=>'Sniper',
+	4013=>'Assassin Cross',
+	4015=>'Paladin',
+	4016=>'Champion',
+	4017=>'Professor',
+	4018=>'Stalker',
+	4019=>'Creator',
+	4020=>'Clown / Gypsy',
+);
+
 
 # AI
 our @ai_seq;
