@@ -2019,7 +2019,7 @@ sub AI {
 				next;
 			}
 
-			if ($datetimeyear[0] eq $config{"autoBreakTime_$i"}) {
+			if (lc($datetimeyear[0]) eq lc($config{"autoBreakTime_$i"})) {
 				my $mytime = $datetimeyear[3];
 				my $hormin = substr($mytime, 0, 5);
 				if ($config{"autoBreakTime_${i}_startTime"} eq $hormin) {
