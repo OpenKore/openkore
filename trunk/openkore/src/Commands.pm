@@ -899,17 +899,21 @@ sub cmdPlayerList {
 
 	if ($args ne "") {
 		my $player;
+		my $ID;
 		if ($args =~ /^\d+$/) {
 			if (!$playersID[$args]) {
 				error "Player #$args does not exist.\n";
 				return;
 			}
 			$player = $players{$playersID[$args]};
+			$ID = $playersID[$args];
 		} else {
+			$args =~ s/ *$//;
 			foreach (@playersID) {
 				next unless $_;
 				if (lc($players{$_}{name}) eq lc($args)) {
 					$player = $players{$_};
+					$ID = $_;
 					last;
 				}
 			}
@@ -940,7 +944,7 @@ sub cmdPlayerList {
 		getVector(\%vecYouToPlayer, $pos, $mypos);
 		my $degPlayerToYou = vectorToDegree(\%vecPlayerToYou);
 		my $degYouToPlayer = vectorToDegree(\%vecYouToPlayer);
-		my $hex = getHex($playersID[$args]);
+		my $hex = getHex($ID);
 		my $playerToYou = int(sprintf("%.0f", (360 - $degPlayerToYou) / 45)) % 8;
 		my $youToPlayer = int(sprintf("%.0f", (360 - $degYouToPlayer) / 45)) % 8;
 
