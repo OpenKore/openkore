@@ -45,7 +45,7 @@ sub new {
 }
 
 END {
-	undef $interface;
+	undef $interface if defined $interface;
 }
 
 ##

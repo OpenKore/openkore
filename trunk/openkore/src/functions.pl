@@ -2290,22 +2290,16 @@ sub parseCommand {
 		}
 
 	} else {
-		our $plugin_command_success = 0;
-		Plugins::callHook('Command_post', $input);
-		if ($plugin_command_success == 0) {
-			error "Command seems to not exist in either the standard OpenKore command set, or in a plugin\n";
+		my $return = 0;
+		Plugins::callHook('Command_post', {
+			switch => $switch,
+			input => $input,
+			return => \$return
+		});
+		if (!$return) {
+			error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
+			#error "Command seems to not exist in either the standard OpenKore command set, or in a plugin\n";
 		}
-		
-#		We really need a way to allow plugins to retrieve user input, and not return the error message.
-#		possibly a standard input.pl plugin, that everyone requiring user input/commands registers a hook in.
-#               and if it fails to match a hook there, then the error is displayed.
-#               either that, or we move all commands to the plugin system
-#		i added this as a command post rather than pre, so a plugin cant override an existing command.
-
-#		ok, this appears to do the trick, but it means that plugin authors adding commands have to change a variable when their plugin accepts the command
-#		$main::plugin_command_success = 1;
-#		should feature somewhere in their plugin hooked sub.
-#		error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
 	}
 }
 
