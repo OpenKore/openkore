@@ -394,8 +394,10 @@ sub sendAttackStop {
 	# Apparently this packet is wrong. The server disconnects us if we do this.
 	# Sending a move command to the current position seems to be able to emulate
 	# what this function is supposed to do.
-	sendMove ($r_socket, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
-	debug "Sent stop attack\n", "sendPacket";
+
+	# Don't use this function, use Misc::stopAttack() instead!
+	#sendMove ($r_socket, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
+	#debug "Sent stop attack\n", "sendPacket";
 }
 
 sub sendBuy {

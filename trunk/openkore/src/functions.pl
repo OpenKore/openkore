@@ -472,7 +472,7 @@ sub parseCommand {
 		my $index = binFind(\@ai_seq, "attack");
 		if ($index ne "") {
 			$monsters{$ai_seq_args[$index]{'ID'}}{'ignore'} = 1;
-			sendAttackStop(\$remote_socket);
+			stopAttack();
 			message "Stopped attacking $monsters{$ai_seq_args[$index]{'ID'}}{'name'} ($monsters{$ai_seq_args[$index]{'ID'}}{'binID'})\n", "success";
 			aiRemove("attack");
 		}
@@ -3685,7 +3685,8 @@ sub AI {
 		# If the damage numbers have changed, update the giveup time so we don't timeout
 		if ($args->{dmgToYou_last}   != $monsters{$ID}{dmgToYou}
 		 || $args->{missedYou_last}  != $monsters{$ID}{missedYou}
-		 || $args->{dmgFromYou_last} != $monsters{$ID}{dmgFromYou}) {
+		 || $args->{dmgFromYou_last} != $monsters{$ID}{dmgFromYou}
+		 || $args->{lastSkillTime} != $char->{last_skill_time}) {
 			$args->{ai_attack_giveup}{time} = time;
 			debug "Update attack giveup time\n", "ai_attack", 2;
 		}
@@ -3695,8 +3696,30 @@ sub AI {
 		$args->{missedYou_last} = $monsters{$ID}{missedYou};
 		$args->{dmgFromYou_last} = $monsters{$ID}{dmgFromYou};
 		$args->{missedFromYou_last} = $monsters{$ID}{missedFromYou};
+		$args->{lastSkillTime} = $char->{last_skill_time};
 
 
+		# Determine what combo skill to use
+		if (!$args->{attackMethod}{type}) {
+			my $lastSkill = Skills->new(id => $char->{last_skill_used})->name;
+			my $i = 0;
+			while ($config{"attackComboSlot_$i"} ne "") {
+				if ($config{"attackComboSlot_${i}_afterSkill"} eq $lastSkill
+				 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
+				 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
+				 && checkSelfCondition("attackComboSlot_$i")
+				 && checkMonsterCondition("attackComboSlot_${i}_target", $ID)) {
+
+					$args->{attackComboSlot_uses}{$i}++;
+					$args->{attackMethod}{type} = "combo";
+					$args->{attackMethod}{comboSlot} = $i;
+					last;
+				}
+				$i++;
+			}
+		}
+
+		# Determine what skill to use to attack
 		if (!$args->{attackMethod}{type}) {
 			if ($config{'attackUseWeapon'}) {
 				$args->{attackMethod}{distance} = $config{'attackDistance'};
@@ -3711,7 +3734,7 @@ sub AI {
 				if (checkSelfCondition("attackSkillSlot_$i")
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $args->{attackSkillSlot_uses}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
-					&& checkMonsterCondition("attackSkillSlot_$i"."_target", $ID)
+					&& checkMonsterCondition("attackSkillSlot_${i}_target", $ID)
 				) {
 					$args->{attackSkillSlot_uses}{$i}++;
 					$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
@@ -3846,40 +3869,71 @@ sub AI {
 				move($myPos->{x}, $myPos->{y});
 			}
 
-			if ($ai_seq_args[0]{'attackMethod'}{'type'} eq "weapon" && timeOut($timeout{'ai_attack'})) {
+			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
 				sendAttack(\$remote_socket, $ID,
 					($config{'tankMode'}) ? 0 : 7);
-				$timeout{'ai_attack'}{'time'} = time;
-				undef %{$ai_seq_args[0]{'attackMethod'}};
+				$timeout{ai_attack}{time} = time;
+				delete $args->{attackMethod};
 
-			} elsif ($ai_seq_args[0]{'attackMethod'}{'type'} eq "skill") {
-				$ai_v{'ai_attack_method_skillSlot'} = $ai_seq_args[0]{'attackMethod'}{'skillSlot'};
-				undef %{$ai_seq_args[0]{'attackMethod'}};
+			} elsif ($args->{attackMethod}{type} eq "skill") {
+				my $slot = $args->{attackMethod}{skillSlot};
+				delete $args->{attackMethod};
+
 				ai_setSuspend(0);
-				if (!ai_getSkillUseType($skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})})) {
+				if (!ai_getSkillUseType($skills_rlut{lc($config{"attackSkillSlot_$slot"})})) {
 					ai_skillUse(
-						$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})},
-						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
-						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
-						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
+						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
+						$config{"attackSkillSlot_${slot}_lvl"},
+						$config{"attackSkillSlot_${slot}_maxCastTime"},
+						$config{"attackSkillSlot_${slot}_minCastTime"},
 						$ID,
 						undef,
 						"attackSkill");
 				} else {
 					ai_skillUse(
-						$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})},
-						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
-						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
-						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
-						$monsters{$ID}{'pos_to'}{'x'},
-						$monsters{$ID}{'pos_to'}{'y'},
+						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
+						$config{"attackSkillSlot_${slot}_lvl"},
+						$config{"attackSkillSlot_${slot}_maxCastTime"},
+						$config{"attackSkillSlot_${slot}_minCastTime"},
+						$monsters{$ID}{pos_to}{x},
+						$monsters{$ID}{pos_to}{y},
 						"attackSkill");
 				}
-				$ai_seq_args[0]{monsterID} = $ai_v{'ai_attack_ID'};
+				$args->{monsterID} = $ID;
 
-				debug qq~Auto-skill on monster: $skills_lut{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}} (lvl $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"})\n~, "ai_attack";
+				debug qq~Auto-skill on monster: $config{"attackSkillSlot_$slot"} (lvl $config{"attackSkillSlot_${slot}_lvl"})\n~, "ai_attack";
+
+			} elsif ($args->{attackMethod}{type} eq "combo") {
+				my $slot = $args->{attackMethod}{comboSlot};
+				my $skill = Skills->new(name => $config{"attackComboSlot_$slot"})->handle;
+				delete $args->{attackMethod};
+
+				if (!ai_getSkillUseType($skill)) {
+					ai_skillUse(
+						$skill,
+						$config{"attackComboSlot_${slot}_lvl"},
+						$config{"attackComboSlot_${slot}_maxCastTime"},
+						$config{"attackComboSlot_${slot}_minCastTime"},
+						$ID,
+						undef,
+						undef,
+						undef,
+						$config{"attackComboSlot_${slot}_waitBeforeUse"});
+				} else {
+					ai_skillUse(
+						$skill,
+						$config{"attackComboSlot_${slot}_lvl"},
+						$config{"attackComboSlot_${slot}_maxCastTime"},
+						$config{"attackComboSlot_${slot}_minCastTime"},
+						$monsters{$ID}{pos_to}{x},
+						$monsters{$ID}{pos_to}{y},
+						undef,
+						undef,
+						$config{"attackComboSlot_${slot}_waitBeforeUse"});
+				}
+				$args->{monsterID} = $ID;
 			}
-			
+
 		} elsif ($config{'tankMode'}) {
 			if ($ai_seq_args[0]{'dmgTo_last'} != $monsters{$ID}{'dmgTo'}) {
 				$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
@@ -3893,7 +3947,7 @@ sub AI {
 		my $ID = AI::args->{attackID};
 		if ($monsters{$ID} && !checkMonsterCleanness($ID)) {
 			message "Dropping target - you will not kill steal others\n";
-			sendAttackStop(\$remote_socket);
+			stopAttack();
 			$monsters{$ID}{ignore} = 1;
 
 			# Right now, the queue is either
@@ -4094,24 +4148,24 @@ sub AI {
 	#or the player disappers from the area
 
 	if (AI::action eq "skill_use" && AI::args->{suspended}) {
-		AI::args->{ai_skill_use_giveup}{time} += time - AI::args->{suspended};
-		AI::args->{ai_skill_use_minCastTime}{time} += time - AI::args->{suspended};
-		AI::args->{ai_skill_use_maxCastTime}{time} += time - AI::args->{suspended};
+		AI::args->{giveup}{time} += time - AI::args->{suspended};
+		AI::args->{minCastTime}{time} += time - AI::args->{suspended};
+		AI::args->{maxCastTime}{time} += time - AI::args->{suspended};
 		delete AI::args->{suspended};
 	}
 
 	if (AI::action eq "skill_use") {
 		my $args = AI::args;
-		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skill_use_id}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
+		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skillHandle}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
 			warning "Timeout equiping for skill\n";
 			AI::dequeue;
-			${$args->ret} = 'equip timeout' if ($args->ret);
+			${$args->{ret}} = 'equip timeout' if ($args->{ret});
 
-		} else {
+		} elsif (timeOut($args->{waitBeforeUse})) {
 			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
 				# This skill is supposed to be used for attacking a monster, but that monster has died
 				AI::dequeue;
-				${$args->ret} = 'target gone' if ($args->ret);
+				${$args->{ret}} = 'target gone' if ($args->{ret});
 
 			} elsif ($char->{sitting}) {
 				AI::suspend;
@@ -4119,41 +4173,47 @@ sub AI {
 
 			# Use skill if we haven't done so yet
 			} elsif (!$args->{skill_used}) {
-				my $handle = $args->{skill_use_id};
+				my $handle = $args->{skillHandle};
 				if (!defined $args->{skillID}) {
 					my $skill = new Skills(handle => $handle);
 					$args->{skillID} = $skill->id;
 				}
 				my $skillID = $args->{skillID};
-				
+
 
 				$args->{skill_used} = 1;
-				$args->{ai_skill_use_giveup}{time} = time;
+				$args->{giveup}{time} = time;
 
-				if ($args->{skill_use_target_x} ne "") {
-					sendSkillUseLoc(\$remote_socket, $skillID, $args->{skill_use_lv}, $args->{skill_use_target_x}, $args->{skill_use_target_y});
+				# Stop attacking, otherwise skill use might fail
+				my $attackIndex = AI::findAction("attack");
+				if (defined($attackIndex) && AI::args($attackIndex)->{attackMethod}{type} eq "weapon") {
+					stopAttack();
+				}
+
+				if ($args->{x} ne "") {
+					sendSkillUseLoc(\$remote_socket, $skillID, $args->{lv}, $args->{x}, $args->{y});
 				} else {
-					sendSkillUse(\$remote_socket, $skillID, $args->{skill_use_lv}, $args->{skill_use_target});
+					sendSkillUse(\$remote_socket, $skillID, $args->{lv}, $args->{target});
 				}
 				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
 
-				delete $char->{time_cast_cancelled};
+				delete $char->{cast_cancelled};
 
-			} elsif (timeOut($args->{skill_use_minCastTime})) {
-				if ($args->{skill_use_last} != $char->{skills}{$args->{skill_use_id}}{time_used}) {
+			} elsif (timeOut($args->{minCastTime})) {
+				if ($args->{skill_use_last} != $char->{skills}{$args->{skillHandle}}{time_used}) {
 					AI::dequeue;
-					${$args->ret} = 'ok' if ($args->ret);
+					${$args->{ret}} = 'ok' if ($args->{ret});
 
-				} elsif ($char->{time_cast_cancelled} > $char->{time_cast}) {
+				} elsif ($char->{cast_cancelled} > $char->{time_cast}) {
 					AI::dequeue;
-					${$args->ret} = 'cancelled' if ($args->ret);
+					${$args->{ret}} = 'cancelled' if ($args->{ret});
 
 				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
-				  && ( (timeOut($args->{ai_skill_use_giveup}) && (!$char->{time_cast} || !$args->{skill_use_maxCastTime}{timeout}) )
-				      || ( $args->{skill_use_maxCastTime}{timeout} && timeOut($args->{skill_use_maxCastTime})) )
+				  && ( (timeOut($args->{giveup}) && (!$char->{time_cast} || !$args->{maxCastTime}{timeout}) )
+				      || ( $args->{maxCastTime}{timeout} && timeOut($args->{maxCastTime})) )
 				) {
 					AI::dequeue;
-					${$args->ret} = 'timeout' if ($args->ret);
+					${$args->{ret}} = 'timeout' if ($args->{ret});
 				}
 			}
 		}
@@ -7315,8 +7375,8 @@ sub parseMsg {
 		message "Deal Complete\n", "deal";
 
 	} elsif ($switch eq "00F2") {
-		$storage{'items'} = unpack("S1", substr($msg, 2, 2));
-		$storage{'items_max'} = unpack("S1", substr($msg, 4, 2));
+		$storage{items} = unpack("S1", substr($msg, 2, 2));
+		$storage{items_max} = unpack("S1", substr($msg, 4, 2));
 
 		$ai_v{temp}{storage_opened} = 1;
 		if (!$storage{opened}) {
@@ -7325,13 +7385,29 @@ sub parseMsg {
 			Plugins::callHook('packet_storage_open');
 		}
 
+		# Storage log
+		my $f;
+		if (open($f, ">> $Settings::logs_folder/storage.txt")) {
+			print $f "---------- Storage ". getFormattedDate(int(time)) ." -----------\n";
+			for (my $i = 0; $i < @storageID; $i++) {
+				next if (!$storageID[$i]);
+				my $item = $storage{$storageID[$i]};
+
+				my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
+				$display .= " -- Not Identified" if !$item->{identified};
+				print $f "$display\n";
+			}
+			print $f "\nCapacity: $storage{items}/$storage{items_max}\n";
+			print $f "-------------------------------\n";
+			close $f;
+		}
+
 	} elsif ($switch eq "00F6") {
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		$storage{$index}{amount} -= $amount;
 		message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
 		if ($storage{$index}{amount} <= 0) {
-			delete $storage{$index};
 			delete $storage{$index};
 			binRemove(\@storageID, $index);
 		}
@@ -7564,14 +7640,14 @@ sub parseMsg {
 			9 => '90% Overweight',
 			10 => 'Requirement'
 			);
-		message "Skill $skillsID_lut{$skillID} failed ($failtype{$type})\n", "skill";
+		warning "Skill $skillsID_lut{$skillID} failed ($failtype{$type})\n", "skill";
 
 	} elsif ($switch eq "01B9") {
 		# Cast is cancelled
 		my $skillID = unpack("S1", substr($msg, 2, 2));
 		my $skill = new Skills(id => $skillID);
 		my $name = $skill->name;
-		$char->{time_cast_cancelled} = time;
+		$char->{cast_cancelled} = time;
 		debug "Casting of skill $name has been cancelled.\n", "parseMsg";
 
 	} elsif ($switch eq "0114" || $switch eq "01DE") {
@@ -7587,7 +7663,7 @@ sub parseMsg {
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $config{XKore};
 		updateDamageTables($sourceID, $targetID, $damage) if ($damage != -30000);
-		setSkillUseTimer($skillID) if ($sourceID eq $accountID);
+		setSkillUseTimer($skillID, $targetID) if ($sourceID eq $accountID);
 		countCastOn($sourceID, $targetID, $skillID);
 
 		# Resolve source and target names
@@ -7701,7 +7777,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "011A") {
-		# Skill used on target
+		# Skill used on target, with no damage done
 		my $skillID = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("S1", substr($msg, 4, 2));
 		my $targetID = substr($msg, 6, 4);
@@ -8126,7 +8202,7 @@ sub parseMsg {
 		if ($sourceID eq $accountID) {
 			$char->{time_cast} = time;
 			$char->{time_cast_wait} = $wait / 1000;
-			delete $char->{time_cast_cancelled};
+			delete $char->{cast_cancelled};
 		}
 
 		countCastOn($sourceID, $targetID, $skillID, $x, $y);
@@ -8136,7 +8212,7 @@ sub parseMsg {
 		if ($AI && %{$monsters{$sourceID}} && $mon_control{lc($monsters{$sourceID}{'name'})}{'skillcancel_auto'}) {
 			if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 				message "Monster Skill - switch Target to : $monsters{$sourceID}{name} ($monsters{$sourceID}{binID})\n";
-				sendAttackStop(\$remote_socket);
+				stopAttack();
 				AI::dequeue;
 				attack($sourceID);
 			}
@@ -9032,30 +9108,23 @@ sub ai_setSuspend {
 
 sub ai_skillUse {
 	return if ($char->{muted});
-	my $ID = shift;
-	my $lv = shift;
-	my $maxCastTime = shift;
-	my $minCastTime = shift;
-	my $target = shift;
-	my $y = shift;
-	my $tag = shift;
-	my $ret = shift;
-	my %args;
-	$args{ai_skill_use_giveup}{time} = time;
-	$args{ai_skill_use_giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
-	$args{skill_use_id} = $ID;
-	$args{skill_use_lv} = $lv;
-	$args{skill_use_maxCastTime}{time} = time;
-	$args{skill_use_maxCastTime}{timeout} = $maxCastTime;
-	$args{skill_use_minCastTime}{time} = time;
-	$args{skill_use_minCastTime}{timeout} = $minCastTime;
-	$args{tag} = $tag;
-	$args{ret} = $ret;
-	if ($y eq "") {
-		$args{skill_use_target} = $target;
-	} else {
-		$args{skill_use_target_x} = $target;
-		$args{skill_use_target_y} = $y;
+	my %args = (
+		skillHandle => shift,
+		lv => shift,
+		maxCastTime => { time => time, timeout => shift },
+		minCastTime => { time => time, timeout => shift },
+		target => shift,
+		y => shift,
+		tag => shift,
+		ret => shift,
+		waitBeforeUse => { time => time, timeout => shift }
+	);
+	$args{giveup}{time} = time;
+	$args{giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
+
+	if ($args{y} ne "") {
+		$args{target_x} = $args{target};
+		delete $args{target};
 	}
 	AI::queue("skill_use", \%args);
 }
@@ -10317,7 +10386,10 @@ sub setSkillUseTimer {
 
 	$char->{skills}{$handle}{time_used} = time;
 	delete $char->{time_cast};
-	delete $char->{time_cast_cancelled};
+	delete $char->{cast_cancelled};
+	$char->{last_skill_time} = time;
+	$char->{last_skill_used} = $skillID;
+	$char->{last_skill_target} = $targetID;
 
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$skillID};

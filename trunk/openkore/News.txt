@@ -65,6 +65,7 @@ New features:
 - TAB completion in Wx and Linux interface!!!
 - Input history support in Linux interface.
 - Spells being cast now show how long they take.
+- Combo skill support.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -90,17 +91,20 @@ New commands:
   Show detailed information about a player.
 
 New config options:
-- useSelfSkill_#_monsters
-  partySkill_#_monsters
-  partySkill_#_target_monsters
-  useSelf_item_#_monsters
-  Only activate useSelfSkill/partySkill/useSelf_item if a certain 
-  monster attacks.
-- partySkill_#_target_aggressives
-  Only activate partySkill if a certain monster attacks a party member.
-- partySkill_#_target_isJob
-  partySkill_#_target_isNotJob
-  Only activate partySkill for certain job classes
+- useSelf_skill, partySkill and useSelf_item now also support the 'monsters' option.
+- New partySkill options:
+  * target_aggressives
+    Only activate partySkill if a certain monster attacks a party member.
+  * target_isJob
+  * target_isNotJob
+    Only activate partySkill for certain job classes
+
+- attackComboSlot {
+     ...everything that attackSkillSlot supports is also supported here...
+     afterSkill (skill name)
+     waitBeforeUse (number of seconds)
+  }
+  Use a certain attack skill, after another attack skill was last used.
 
 - avoidList_inLockOnly (flag)
   Set to 1, if you want to avoid people on your avoid list when they
