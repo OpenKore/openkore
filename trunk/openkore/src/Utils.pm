@@ -24,7 +24,6 @@ use Math::Trig;
 use bytes;
 use Exporter;
 use base qw(Exporter);
-use lib "tools/misc";
 use FastUtils;
 # Do not use any other Kore modules here. It will create circular dependancies.
 
