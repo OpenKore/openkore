@@ -3751,14 +3751,17 @@ sub AI {
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
 					){
-					$ai_v{"partySkill_$i"."_target_time"}{$partyUsersID[$j]} = time;
 					$party_skill{skillID} = $skills_rlut{lc($config{"partySkill_$i"})};
 					$party_skill{skillLvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $char->{party}{users}{$partyUsersID[$j]}{name};
 					$party_skill{targetID} = $partyUsersID[$j];
 					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
 					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
-					$targetTimeout{$partyUsersID[$j]}{$skillID} = $i;
+					# This is used by setSkillUseTimer() to set
+					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
+					# when the skill is actually cast
+					message "Setting targetTimeout for skill $party_skill{skillID} to i $i\n", "skill";
+					$targetTimeout{$partyUsersID[$j]}{$party_skill{skillID}} = $i;
 					last;
 				}
 			}
@@ -3784,7 +3787,7 @@ sub AI {
 			$party_skill{skillLvl} = $smartHeal_lv;
 		}
 		if ($party_skill{skillLvl} > 0) {
-			debug qq~Party Skill used ($char->{party}{users}{$party_skill{targetID}}{name}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~;
+			debug qq~Party Skill used ($char->{party}{users}{$party_skill{targetID}}{name}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~, "skill";
 			if (!ai_getSkillUseType($party_skill{skillID})) {
 				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $party_skill{targetID});
 			} else {
@@ -10197,7 +10200,7 @@ sub setSkillUseTimer {
 	$char->{last_skill_target} = $targetID;
 
 	# set partySkill target_time
-	my $i = $targetTimeout{$targetID}{$skillID};
+	my $i = $targetTimeout{$targetID}{$skill->handle};
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
 }
 
