@@ -197,14 +197,12 @@ if ($config{'XKore'}) {
 if ($config{'adminPassword'} eq 'x' x 10) {
 	Log::message("\nAuto-generating Admin Password due to default...\n");
 	configModify("adminPassword", vocalString(8));
-}
-# This is where we protect the stupid from having a blank admin password
-elsif ($config{'adminPassword'} eq '') {
+} elsif ($config{'adminPassword'} eq '') {
+	# This is where we protect the stupid from having a blank admin password
 	Log::message("\nAuto-generating Admin Password due to blank...\n");
 	configModify("adminPassword", vocalString(8));
-}
-# This is where we induldge the paranoid and let them have session generated admin passwords
-elsif ($config{'secureAdminPassword'} eq '1') {
+} elsif ($config{'secureAdminPassword'} eq '1') {
+	# This is where we induldge the paranoid and let them have session generated admin passwords
 	Log::message("\nGenerating session Admin Password...\n");
 	configModify("adminPassword", vocalString(8));
 }
@@ -241,23 +239,20 @@ our $remote_socket = IO::Socket::INET->new();
 ### COMPILE PORTALS ###
 
 Log::message("Checking for new portals... ");
-compilePortals_check(\$found);
-
-if ($found) {
+if (compilePortals_check()) {
 	Log::message("found new portals!\n");
-
-	Log::message("Compile portals now? (Y/n)\n");
-	Log::message("Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...");
+	Log::message("Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...\n");
+	Log::message("Compile portals now? (Y/n) ");
 	$timeout{'compilePortals_auto'}{'time'} = time;
-	undef $msg;
-	
-	$msg = $interface->getInput($timeout{'compilePortals_auto'});
+
+	my $msg = $interface->getInput($timeout{'compilePortals_auto'}{'timeout'});
 	if ($msg =~ /y/ || $msg eq "") {
 		Log::message("compiling portals\n\n");
 		compilePortals();
 	} else {
 		Log::message("skipping compile\n\n");
 	}
+	undef $msg;
 } else {
 	Log::message("none found\n\n");
 }
@@ -269,14 +264,12 @@ if (!$config{'XKore'}) {
 	if (!$config{'username'}) {
 		Log::message("Enter Username: ");
 		$msg = $interface->getInput(-1);
-		$config{'username'} = $msg;
-		writeDataFileIntact($Settings::config_file, \%config);
+		configModify('username', $msg, 1);
 	}
 	if (!$config{'password'}) {
 		Log::message("Enter Password: ");
 		$msg = $interface->getInput(-1);
-		$config{'password'} = $msg;
-		writeDataFileIntact($Settings::config_file, \%config);
+		configModify('password', $msg, 1);
 	}
 
 	if ($config{'master'} eq "") {
@@ -294,10 +287,8 @@ if (!$config{'XKore'}) {
 		Log::message("-------------------------------\n", "connection");
 
 		Log::message("Choose your master server: ");
-		STDOUT->flush;
 		$msg = $interface->getInput(-1);
-		$config{'master'} = $msg;
-		writeDataFileIntact($Settings::config_file, \%config);
+		configModify('master', $msg, 1);
 	}
 
 } elsif (!$config{'XKore'} && (!$config{'username'} || !$config{'password'})) {

@@ -36,6 +36,7 @@ our @EXPORT = qw(
 	configModify
 	setTimeout
 
+	getPortalDestName
 	printItemDesc
 	whenAffected
 	whenAffectedMon
@@ -104,6 +105,15 @@ sub setTimeout {
 #######################################
 #######################################
 
+
+sub getPortalDestName {
+	my $ID = shift;
+	my @destinations;
+	foreach (keys %{$portals_lut{$ID}{'dest'}}) {
+		push @destinations, $portals_lut{$ID}{'dest'}{$_}{'map'};
+	}
+	return join('/', @destinations);
+}
 
 ##
 # printItemDesc(itemID)

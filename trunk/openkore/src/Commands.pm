@@ -562,8 +562,8 @@ sub cmdMonsterList {
 		$dmgFrom = ($monsters{$monstersID[$i]}{'dmgFrom'} ne "")
 			? $monsters{$monstersID[$i]}{'dmgFrom'}
 			: 0;
-		$dist = main::distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
-		$dist = sprintf ("%.1f", $dist) if (index($dist, '.') > -1);
+		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
+		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
 		$pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
 
 		message(swrite(
@@ -596,13 +596,13 @@ sub cmdPlayerList {
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if ($playersID[$i] eq "");
 		my ($name, $dist, $pos);
-		if (%{$players{$playersID[$i]}{'guild'}}) {
+		if ($players{$playersID[$i]}{'guild'} && %{$players{$playersID[$i]}{'guild'}}) {
 			$name = "$players{$playersID[$i]}{'name'} [$players{$playersID[$i]}{'guild'}{'name'}]";
 		} else {
 			$name = $players{$playersID[$i]}{'name'};
 		}
 		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
-		$dist = sprintf ("%.1f", $dist) if (index ($dist, '.') > -1);
+		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
 		$pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
 
 		message(swrite(

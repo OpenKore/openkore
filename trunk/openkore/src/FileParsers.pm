@@ -210,37 +210,27 @@ sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,$value);
-	my %IDs;
-	my $i;
-	my $j = 0;
-	open FILE, $file;
-	foreach (<FILE>) {
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+/ /g;
-		s/\s+$//g;
-		my @args = split /\s/, $_;
+	open FILE, "< $file";
+	while (my $line = <FILE>) {
+		next if $line =~ /^#/;
+		$line =~ s/\cM|\cJ//g;
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
+		my @args = split /\s/, $line, 8;
 		if (@args > 5) {
-			$IDs{$args[0]}{$args[1]}{$args[2]} = "$args[0] $args[1] $args[2]";
-			$$r_hash{"$args[0] $args[1] $args[2]"}{'source'}{'ID'} = "$args[0] $args[1] $args[2]";
-			$$r_hash{"$args[0] $args[1] $args[2]"}{'source'}{'map'} = $args[0];
-			$$r_hash{"$args[0] $args[1] $args[2]"}{'source'}{'pos'}{'x'} = $args[1];
-			$$r_hash{"$args[0] $args[1] $args[2]"}{'source'}{'pos'}{'y'} = $args[2];
-			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'map'} = $args[3];
-			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'pos'}{'x'} = $args[4];
-			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'pos'}{'y'} = $args[5];
-			if ($args[6] ne "") {
-				$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'ID'} = $args[6];
-				for ($i = 7; $i < @args; $i++) {
-					$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'steps'}[@{$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'steps'}}] = $args[$i];
-				}
-			}
+			my $portal = "$args[0] $args[1] $args[2]";
+			my $dest = "$args[3] $args[4] $args[5]";
+			$$r_hash{$portal}{'source'}{'ID'} = $portal;
+			$$r_hash{$portal}{'source'}{'map'} = $args[0];
+			$$r_hash{$portal}{'source'}{'pos'}{'x'} = $args[1];
+			$$r_hash{$portal}{'source'}{'pos'}{'y'} = $args[2];
+			$$r_hash{$portal}{'dest'}{$dest}{'ID'} = $dest;
+			$$r_hash{$portal}{'dest'}{$dest}{'map'} = $args[3];
+			$$r_hash{$portal}{'dest'}{$dest}{'pos'}{'x'} = $args[4];
+			$$r_hash{$portal}{'dest'}{$dest}{'pos'}{'y'} = $args[5];
+			$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $args[6];
+			$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $args[7];
 		}
-		$j++;
-	}
-	foreach (keys %{$r_hash}) {
-		$$r_hash{$_}{'dest'}{'ID'} = $IDs{$$r_hash{$_}{'dest'}{'map'}}{$$r_hash{$_}{'dest'}{'pos'}{'x'}}{$$r_hash{$_}{'dest'}{'pos'}{'y'}};
 	}
 	close FILE;
 }
@@ -548,8 +538,8 @@ sub writePortalsLOS {
 	my $file = shift;
 	my $r_hash = shift;
 	open(FILE, "+> $file");
-	foreach my $key (keys %{$r_hash}) {
-		next if (!(keys %{$$r_hash{$key}}));
+	foreach my $key (sort keys %{$r_hash}) {
+		next if (!$$r_hash{$key} || !(keys %{$$r_hash{$key}}));
 		print FILE $key;
 		foreach (keys %{$$r_hash{$key}}) {
 			print FILE " $_ $$r_hash{$key}{$_}";

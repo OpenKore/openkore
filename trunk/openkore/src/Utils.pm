@@ -29,6 +29,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
+	distance
 	dataWaiting formatNumber getCoordString getFormattedDate getHex getTickCount
 	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString dumpHash);
 
@@ -323,6 +324,38 @@ sub minHeapAdd {
 }
 
 
+################################
+################################
+# MATH
+################################
+
+##
+# distance(r_hash1, r_hash2)
+# r_hash1, r_hash2: references to position hash tables.
+# Returns: the distance as integer, in blocks.
+#
+# Calculates the pythagorean distance between ($r_hash1{x}, $r_hash1{y}) and
+# ($r_hash2{x}, $r_hash2{y}).
+#
+# Example:
+# # Calculates the distance between you an a monster
+# my $dist = distance($chars[$config{char}]{pos_to},
+#                     $monsters{$ID}{pos_to});
+sub distance {
+	my $r_hash1 = shift;
+	my $r_hash2 = shift;
+	my %line;
+	if ($r_hash2) {
+		$line{'x'} = abs($$r_hash1{'x'} - $$r_hash2{'x'});
+		$line{'y'} = abs($$r_hash1{'y'} - $$r_hash2{'y'});
+	} else {
+		%line = %{$r_hash1};
+	}
+	return sqrt($line{'x'} ** 2 + $line{'y'} ** 2);
+}
+
+
+################################
 ################################
 ################################
 # MISC UTILITY FUNCTIONS

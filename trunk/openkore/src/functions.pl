@@ -1,5 +1,8 @@
 # To run kore, execute openkore.pl instead.
 
+# ****** CURRENTLY BROKEN ******:
+# - portal auto-record
+
 #########################################################################
 # This software is open source, licensed under the GNU General Public
 # License, version 2.
@@ -25,6 +28,12 @@ use Commands;
 use Misc;
 use Plugins;
 use Utils;
+
+# PORTAL_PENALTY is used by the map router for calculating the cost of walking through a portal.
+# Best values are:
+# 0 : favors a minimum step count solutions (ie distance to walk)
+# 10000 (or infinity): favors a minimum map count solutions (if you dont like walking through portals)
+use constant PORTAL_PENALTY => 0;
 
 
 #######################################
@@ -123,21 +132,6 @@ sub initOtherVars {
 	# chat response stuff
 	undef $nextresptime;
 	undef $nextrespPMtime;
-	# route error check variables
-	undef $old_x;
-	undef $old_y;
-	undef $old_pos_x;
-	undef $old_pos_y;
-	undef $move_x;
-	undef $move_y;
-	undef $move_pos_x;
-	undef $move_pos_y;
-	$calcFrom_SameSpot = 0;
-	$calcTo_SameSpot = 0;
-	$moveFrom_SameSpot = 0;
-	$moveTo_SameSpot = 0;
-	$route_stuck = 0;
-	$totalStuckCount = 0 if ($totalStuckCount > 10 || $totalStuckCount < 0);
 }
 
 
@@ -310,8 +304,7 @@ sub mainLoop {
 		} else {
 			aiRemove("move");
 			aiRemove("route");
-			aiRemove("route_getRoute");
-			aiRemove("route_getMapRoute");
+			aiRemove("mapRoute");
 		}
 
 		initConfChange();
@@ -1072,8 +1065,7 @@ sub parseCommand {
 		} elsif ($ai_v{'temp'}{'map'} eq "stop") {
 			aiRemove("move");
 			aiRemove("route");
-			aiRemove("route_getRoute");
-			aiRemove("route_getMapRoute");
+			aiRemove("mapRoute");
 			message "Stopped all movement\n", "success";
 		} else {
 			$ai_v{'temp'}{'map'} = $field{'name'} if ($ai_v{'temp'}{'map'} eq "");
@@ -1087,7 +1079,8 @@ sub parseCommand {
 					undef $ai_v{'temp'}{'x'};
 					undef $ai_v{'temp'}{'y'};
 				}
-				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'}, $ai_v{'temp'}{'map'}, 0, 0, 1, 0, 0, 1);
+				ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'},
+					attackOnRoute => 1);
 			} else {
 				error "Map $ai_v{'temp'}{'map'} does not exist\n";
 			}
@@ -1343,8 +1336,7 @@ sub parseCommand {
 		configModify("itemsGatherAuto", 0);
 		aiRemove("move");
 		aiRemove("route");
-		aiRemove("route_getRoute");
-		aiRemove("route_getMapRoute");
+		aiRemove("mapRoute");
 		sit();
 		$ai_v{'sitAuto_forceStop'} = 0;
 
@@ -1623,7 +1615,6 @@ sub parseCommand {
 	} elsif ($switch eq "where") {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		message("Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n", "info");
-		message("Last destination calculated : (".int($old_x).", ".int($old_y).") from spot (".int($old_pos_x).", ".int($old_pos_y).").\n", "info");
 
 	} else {
 		my $return = 0;
@@ -1774,8 +1765,7 @@ sub AI {
 				configModify("route_randomWalk", 0);
 				aiRemove("move");
 				aiRemove("route");
-				aiRemove("route_getRoute");
-				aiRemove("route_getMapRoute");
+				aiRemove("mapRoute");
 				sit();
 				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("sitS"), $cmd{'user'}) if $config{'verbose'};
 				$timeout{'ai_thanks_set'}{'time'} = time;
@@ -1878,8 +1868,7 @@ sub AI {
 				&& $cmd{'msg'} =~ /\bstop\b/i) {
 				aiRemove("move");
 				aiRemove("route");
-				aiRemove("route_getRoute");
-				aiRemove("route_getMapRoute");
+				aiRemove("mapRoute");
 				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveS"), $cmd{'user'}) if $config{'verbose'};
 				$timeout{'ai_thanks_set'}{'time'} = time;
 			} elsif ($cmd{'msg'} =~ /\bmove\b/i) {
@@ -1909,7 +1898,8 @@ sub AI {
 							undef $ai_v{'temp'}{'y'};
 						}
 						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveS"), $cmd{'user'}) if $config{'verbose'};
-						ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'}, $ai_v{'temp'}{'map'}, 0, 0, 1, 0, 0, 1);
+						ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'},
+							attackOnRoute => 1);
 						$timeout{'ai_thanks_set'}{'time'} = time;
 					} else {
 						error "Map $ai_v{'temp'}{'map'} does not exist\n";
@@ -2178,7 +2168,7 @@ sub AI {
 		shift @ai_seq_args;
 	}
 
-	#dealAuto 1=refuse 2=accept
+	# dealAuto 1=refuse 2=accept
 	if ($config{'dealAuto'} && %incomingDeal && timeOut(\%{$timeout{'ai_dealAuto'}})) {
 		if ($config{'dealAuto'}==1) {
 			sendDealCancel(\$remote_socket);
@@ -2189,7 +2179,7 @@ sub AI {
 	}
 
 
-	#partyAuto 1=refuse 2=accept
+	# partyAuto 1=refuse 2=accept
 	if ($config{'partyAuto'} && %incomingParty && timeOut(\%{$timeout{'ai_partyAuto'}})) {
 		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
 		$timeout{'ai_partyAuto'}{'time'} = time;
@@ -2203,6 +2193,7 @@ sub AI {
 		undef %incomingGuild;
 	}
 
+	# Record new unknown portals
 	if ($ai_v{'portalTrace_mapChanged'}) {
 		undef $ai_v{'portalTrace_mapChanged'};
 		$ai_v{'temp'}{'first'} = 1;
@@ -2224,49 +2215,54 @@ sub AI {
 		}
 	}
 
-	if (%{$ai_v{'portalTrace'}} && portalExists($ai_v{'portalTrace'}{'source'}{'map'}, \%{$ai_v{'portalTrace'}{'source'}{'pos'}}) ne "") {
+	if (%{$ai_v{'portalTrace'}} && portalExists($ai_v{'portalTrace'}{'source'}{'map'}, $ai_v{'portalTrace'}{'source'}{'pos'}) ne "") {
 		undef %{$ai_v{'portalTrace'}};
 	} elsif (%{$ai_v{'portalTrace'}} && $field{'name'}) {
-		$ai_v{'temp'}{'first'} = 1;
-		undef $ai_v{'temp'}{'foundID'};
-		undef $ai_v{'temp'}{'smallDist'};
-		
+		my $first = 1;
+		my $foundID;
+		my $smallDist;
+
 		foreach (@portalsID) {
 			$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$portals{$_}{'pos'}});
-			if ($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'smallDist'}) {
-				$ai_v{'temp'}{'smallDist'} = $ai_v{'temp'}{'dist'};
-				$ai_v{'temp'}{'foundID'} = $_;
-				undef $ai_v{'temp'}{'first'};
+			if ($first || $ai_v{'temp'}{'dist'} < $smallDist) {
+				$smallDist = $ai_v{'temp'}{'dist'};
+				$foundID = $_;
+				undef $first;
 			}
 		}
-		
-		if (%{$portals{$ai_v{'temp'}{'foundID'}}}) {
-			if (portalExists($field{'name'}, \%{$portals{$ai_v{'temp'}{'foundID'}}{'pos'}}) eq ""
-				&& $ai_v{'portalTrace'}{'source'}{'map'} && $ai_v{'portalTrace'}{'source'}{'pos'}{'x'} ne "" && $ai_v{'portalTrace'}{'source'}{'pos'}{'y'} ne ""
-				&& $field{'name'} && $portals{$ai_v{'temp'}{'foundID'}}{'pos'}{'x'} ne "" && $portals{$ai_v{'temp'}{'foundID'}}{'pos'}{'y'} ne "") {
 
-				
-				$portals{$ai_v{'temp'}{'foundID'}}{'name'} = "$field{'name'} -> $ai_v{'portalTrace'}{'source'}{'map'}";
+		if (%{$portals{$foundID}}) {
+			if (portalExists($field{'name'}, \%{$portals{$foundID}{'pos'}}) eq ""
+			 && $ai_v{'portalTrace'}{'source'}{'map'} && $ai_v{'portalTrace'}{'source'}{'pos'}{'x'} ne "" && $ai_v{'portalTrace'}{'source'}{'pos'}{'y'} ne ""
+			 && $field{'name'} && $portals{$foundID}{'pos'}{'x'} ne "" && $portals{$foundID}{'pos'}{'y'} ne "") {
+
+				$portals{$foundID}{'name'} = "$field{'name'} -> $ai_v{'portalTrace'}{'source'}{'map'}";
 				$portals{pack("L",$ai_v{'portalTrace'}{'source'}{'ID'})}{'name'} = "$ai_v{'portalTrace'}{'source'}{'map'} -> $field{'name'}";
 
+				# Record information about the portal we walked into
 				$ai_v{'temp'}{'ID'} = "$ai_v{'portalTrace'}{'source'}{'map'} $ai_v{'portalTrace'}{'source'}{'pos'}{'x'} $ai_v{'portalTrace'}{'source'}{'pos'}{'y'}";
 				$portals_lut{$ai_v{'temp'}{'ID'}}{'source'}{'map'} = $ai_v{'portalTrace'}{'source'}{'map'};
 				%{$portals_lut{$ai_v{'temp'}{'ID'}}{'source'}{'pos'}} = %{$ai_v{'portalTrace'}{'source'}{'pos'}};
-				$portals_lut{$ai_v{'temp'}{'ID'}}{'dest'}{'map'} = $field{'name'};
-				%{$portals_lut{$ai_v{'temp'}{'ID'}}{'dest'}{'pos'}} = %{$portals{$ai_v{'temp'}{'foundID'}}{'pos'}};
+				my $destName = $field{'name'} . " " . $portals{$foundID}{'pos'}{'x'} . " " . $portals{$foundID}{'pos'}{'y'};
+				print "$destName\n";
+				$portals_lut{$ai_v{'temp'}{'ID'}}{'dest'}{$destName}{'map'} = $field{'name'};
+				%{$portals_lut{$ai_v{'temp'}{'ID'}}{'dest'}{$destName}{'pos'}} = %{$portals{$foundID}{'pos'}};
 
-				updatePortalLUT("tables/portals.txt",
+				updatePortalLUT("$Settings::tables_folder/portals.txt",
 					$ai_v{'portalTrace'}{'source'}{'map'}, $ai_v{'portalTrace'}{'source'}{'pos'}{'x'}, $ai_v{'portalTrace'}{'source'}{'pos'}{'y'},
-					$field{'name'}, $portals{$ai_v{'temp'}{'foundID'}}{'pos'}{'x'}, $portals{$ai_v{'temp'}{'foundID'}}{'pos'}{'y'});
+					$field{'name'}, $portals{$foundID}{'pos'}{'x'}, $portals{$foundID}{'pos'}{'y'});
 
-				$ai_v{'temp'}{'ID2'} = "$field{'name'} $portals{$ai_v{'temp'}{'foundID'}}{'pos'}{'x'} $portals{$ai_v{'temp'}{'foundID'}}{'pos'}{'y'}";
+				# Record information about the portal in which we came out
+				$ai_v{'temp'}{'ID2'} = "$field{'name'} $portals{$foundID}{'pos'}{'x'} $portals{$foundID}{'pos'}{'y'}";
 				$portals_lut{$ai_v{'temp'}{'ID2'}}{'source'}{'map'} = $field{'name'};
-				%{$portals_lut{$ai_v{'temp'}{'ID2'}}{'source'}{'pos'}} = %{$portals{$ai_v{'temp'}{'foundID'}}{'pos'}};
-				$portals_lut{$ai_v{'temp'}{'ID2'}}{'dest'}{'map'} = $ai_v{'portalTrace'}{'source'}{'map'};
-				%{$portals_lut{$ai_v{'temp'}{'ID2'}}{'dest'}{'pos'}} = %{$ai_v{'portalTrace'}{'source'}{'pos'}};
+				%{$portals_lut{$ai_v{'temp'}{'ID2'}}{'source'}{'pos'}} = %{$portals{$foundID}{'pos'}};
+				$destName = $ai_v{'portalTrace'}{'source'}{'map'} . " " . $ai_v{'portalTrace'}{'source'}{'pos'}{'x'} . " " . $ai_v{'portalTrace'}{'source'}{'pos'}{'y'};
+				print "$destName\n";
+				$portals_lut{$ai_v{'temp'}{'ID2'}}{'dest'}{$destName}{'map'} = $ai_v{'portalTrace'}{'source'}{'map'};
+				%{$portals_lut{$ai_v{'temp'}{'ID2'}}{'dest'}{$destName}{'pos'}} = %{$ai_v{'portalTrace'}{'source'}{'pos'}};
 
-				updatePortalLUT("tables/portals.txt",
-					$field{'name'}, $portals{$ai_v{'temp'}{'foundID'}}{'pos'}{'x'}, $portals{$ai_v{'temp'}{'foundID'}}{'pos'}{'y'},
+				updatePortalLUT("$Settings::tables_folder/portals.txt",
+					$field{'name'}, $portals{$foundID}{'pos'}{'x'}, $portals{$foundID}{'pos'}{'y'},
 					$ai_v{'portalTrace'}{'source'}{'map'}, $ai_v{'portalTrace'}{'source'}{'pos'}{'x'}, $ai_v{'portalTrace'}{'source'}{'pos'}{'y'});
 			}
 			undef %{$ai_v{'portalTrace'}};
@@ -2341,7 +2337,7 @@ sub AI {
 	# We force the user to download an update if this version of kore is too old.
 	# This is to prevent bots from KSing people because of new packets
 	# (like it happened with Comodo and Juno).
-	if (!$checkUpdate{checked}) {
+	if (!($Settings::VERSION =~ /CVS/) && !$checkUpdate{checked}) {
 		if ($checkUpdate{stage} eq '') {
 			# We only want to check at most once a day
 			open(F, "< $Settings::tables_folder/updatecheck.txt");
@@ -2612,7 +2608,9 @@ sub AI {
 				$timeout{'ai_storageAuto'}{'time'} = time;
 			} else {
 				message "Calculating auto-storage route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n", "route";
-				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, $ai_seq_args[0]{'npc'}{'map'}, 0, 0, 1, 0, $config{'storageAuto_distance'}, 1);
+				ai_route($ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'},
+					attackOnRoute => 1,
+					distFromGoal => $config{'storageAuto_distance'});
 			}
 		} else {
 			if (!defined($ai_seq_args[0]{'sentStore'})) {
@@ -2770,16 +2768,17 @@ sub AI {
 			if ($ai_seq_args[0]{'warpedToSave'} && !$ai_seq_args[0]{'mapChanged'}) {
 				undef $ai_seq_args[0]{'warpedToSave'};
 			}
-#Solos Start
+
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
 				&& !$cities_lut{$field{'name'}.'.rsw'}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
 				useTeleport(2);
-#Solos End
 				$timeout{'ai_sellAuto'}{'time'} = time;
 			} else {
 				message "Calculating auto-sell route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n", "route";
-				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, $ai_seq_args[0]{'npc'}{'map'}, 0, 0, 1, 0, $config{'sellAuto_distance'}, 1);
+				ai_route($ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'},
+					attackOnRoute => 1,
+					distFromGoal => $config{'sellAuto_distance'});
 			}
 		} else {
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
@@ -2821,11 +2820,8 @@ sub AI {
 
 	AUTOBUY: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" 
-#Solos Start
-	|| $ai_seq[0] eq "attack"
-#Solos End
-	) && timeOut(\%{$timeout{'ai_buyAuto'}})) {
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route"  || $ai_seq[0] eq "attack")
+	  && timeOut(\%{$timeout{'ai_buyAuto'}})) {
 		undef $ai_v{'temp'}{'found'};
 		$i = 0;
 		while (1) {
@@ -2895,16 +2891,17 @@ sub AI {
 			if ($ai_seq_args[0]{'warpedToSave'} && !$ai_seq_args[0]{'mapChanged'}) {
 				undef $ai_seq_args[0]{'warpedToSave'};
 			}
-#Solos Start
+
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
 				&& !$cities_lut{$field{'name'}.'.rsw'}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
 				useTeleport(2);
-#Solos End
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
 			} else {
 				message qq~Calculating auto-buy route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n~, "route";
-				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, $ai_seq_args[0]{'npc'}{'map'}, 0, 0, 1, 0, $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}, 1);
+				ai_route($ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'},
+					attackOnRoute => 1,
+					distFromGoal => $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"});
 			}
 		} else {
 			if ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $ai_seq_args[0]{'index'}) {
@@ -2949,8 +2946,8 @@ sub AI {
 
 	} #END OF BLOCK AUTOBUY
 
+
 	##### LOCKMAP #####
-	
 
 	%{$ai_v{'temp'}{'lockMap_coords'}} = ();
 	$ai_v{'temp'}{'lockMap_coords'}{'x'} = $config{'lockMap_x'} + ((int(rand(3))-1)*(int(rand($config{'lockMap__randX'}))+1));
@@ -2958,7 +2955,7 @@ sub AI {
 	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'}
 		&& ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" 
 		&& ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) 
-		&& distance(\%{$ai_v{'temp'}{'lockMap_coords'}}, \%{$chars[$config{'char'}]{'pos_to'}}) > 1.42))
+		&& distance($ai_v{'temp'}{'lockMap_coords'}, $chars[$config{'char'}]{'pos_to'}) > 1.42))
 	) {
 		if ($maps_lut{$config{'lockMap'}.'.rsw'} eq "") {
 			error "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
@@ -2968,7 +2965,8 @@ sub AI {
 			} else {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
 			}
-			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $config{'lockMap_x'}, $config{'lockMap_y'}, $config{'lockMap'}, 0, 0, !$config{'attackAuto_inLockOnly'}, 0, 0, 1);
+			ai_route($config{'lockMap'}, $config{'lockMap_x'}, $config{'lockMap_y'},
+				attackOnRoute => !$config{'attackAuto_inLockOnly'});
 		}
 	}
 	undef $ai_v{'temp'}{'lockMap_coords'};
@@ -2984,16 +2982,9 @@ sub AI {
 
 		# Move to that block
 		message "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n", "route";
-		ai_route(\%{$ai_v{'temp'}{'returnHash'}},
-			$ai_v{'temp'}{'randX'},
-			$ai_v{'temp'}{'randY'},
-			$field{'name'},
-			0,
-			$config{'route_randomWalk_maxRouteTime'},
-			2,
-			undef,
-			undef,
-			1);
+		ai_route($field{'name'}, $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'},
+			maxRouteTime => $config{'route_randomWalk_maxRouteTime'},
+			attackOnRoute => 2);
 	}
 
 	##### DEAD #####
@@ -3014,7 +3005,6 @@ sub AI {
 		}
 
 	} elsif ($ai_seq[0] ne "dead" && $chars[$config{'char'}]{'dead'}) {
-		aiRemove("route_getRoute");	# Run the destructor for route_getRoute to prevent memory leaks
 		undef @ai_seq;
 		undef @ai_seq_args;
 		unshift @ai_seq, "dead";
@@ -3035,7 +3025,7 @@ sub AI {
 	##### AUTO-ITEM USE #####
 
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute"
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
 		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"
 		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack"
 	    ) && timeOut(\%{$timeout{'ai_item_use_auto'}}))
@@ -3071,8 +3061,8 @@ sub AI {
 
 	#Auto Equip - Kaldi Update 12/03/2004
 	##### AUTO-EQUIP #####
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || 
-		 $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || 
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || 
+		 $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || 
 		 $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take" || 
 		 $ai_seq[0] eq "attack")&& timeOut(\%{$timeout{'ai_equip_auto'}}) 
 		){
@@ -3117,7 +3107,7 @@ sub AI {
 	##### AUTO-SKILL USE #####
 
 
-	if ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute" 
+	if ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
 		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
 		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack"
 	) {
@@ -3179,8 +3169,7 @@ sub AI {
 
 	#FIXME: need to move closer before using skill, there might be light of sight problem too...
 	
-	if (%{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" 
-		|| $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute"
+	if (%{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
 		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
 		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack") ){
 		my $i = 0;
@@ -3275,7 +3264,9 @@ sub AI {
 			if ($ai_v{'temp'}{'dist'} > $config{'followDistanceMax'} && timeOut($ai_seq_args[0]{'move_timeout'}, 0.25)) {
 				$ai_seq_args[0]{'move_timeout'} = time;
 				if ($ai_v{'temp'}{'dist'} > 15) {
-					ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'}, $field{'name'}, 0, 0, 1, 0, $config{'followDistanceMin'});
+					ai_route($field{'name'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'},
+						attackOnRoute => 1,
+						distFromGoal => $config{'followDistanceMin'});
 				} else {
 					my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}});
 					my (%vec, %pos);
@@ -3331,25 +3322,24 @@ sub AI {
 			getVector(\%{$ai_seq_args[0]{'ai_follow_lost_vec'}}, \%{$players_old{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 
 			#check if player went through portal
-			$ai_v{'temp'}{'first'} = 1;
-			undef $ai_v{'temp'}{'foundID'};
-			undef $ai_v{'temp'}{'smallDist'};
+			my $first = 1;
+			my $foundID;
+			my $smallDist;
 			foreach (@portalsID) {
 				$ai_v{'temp'}{'dist'} = distance(\%{$players_old{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$portals{$_}{'pos'}});
-				if ($ai_v{'temp'}{'dist'} <= 7 && ($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'smallDist'})) {
-					$ai_v{'temp'}{'smallDist'} = $ai_v{'temp'}{'dist'};
-					$ai_v{'temp'}{'foundID'} = $_;
-					undef $ai_v{'temp'}{'first'};
+				if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
+					$smallDist = $ai_v{'temp'}{'dist'};
+					$foundID = $_;
+					undef $first;
 				}
 			}
-			$ai_seq_args[0]{'follow_lost_portalID'} = $ai_v{'temp'}{'foundID'};
+			$ai_seq_args[0]{'follow_lost_portalID'} = $foundID;
 		} else {
 			message "Don't know what happened to Master\n", "follow", 1;
 		}
 	}
 
 	##### FOLLOW-LOST #####
-
 
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'ai_follow_lost'}) {
 		if ($ai_seq_args[0]{'ai_follow_lost_char_last_pos'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'} && $ai_seq_args[0]{'ai_follow_lost_char_last_pos'}{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}) {
@@ -3386,7 +3376,8 @@ sub AI {
 				if (%{$portals{$ai_seq_args[0]{'follow_lost_portalID'}}} && !$ai_seq_args[0]{'follow_lost_portal_tried'}) {
 					$ai_seq_args[0]{'follow_lost_portal_tried'} = 1;
 					%{$ai_v{'temp'}{'pos'}} = %{$portals{$ai_seq_args[0]{'follow_lost_portalID'}}{'pos'}};
-					ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}, $field{'name'}, 0, 0, 1);
+					ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
+						attackOnRoute => 1);
 				}
 			} else {
 				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'ai_follow_lost_vec'}}, $config{'followLostStep'});
@@ -3434,7 +3425,7 @@ sub AI {
 		$ai_v{'sitAuto_forceStop'} = 0;
 	}
 
-	if (!$ai_v{'sitAuto_forceStop'} && ($ai_seq[0] eq "" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute") && binFind(\@ai_seq, "attack") eq "" && !ai_getAggressives()
+	if (!$ai_v{'sitAuto_forceStop'} && ($ai_seq[0] eq "" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute") && binFind(\@ai_seq, "attack") eq "" && !ai_getAggressives()
 		&& (percent_hp(\%{$chars[$config{'char'}]}) < $config{'sitAuto_hp_lower'} || percent_sp(\%{$chars[$config{'char'}]}) < $config{'sitAuto_sp_lower'})) {
 		unshift @ai_seq, "sitAuto";
 		unshift @ai_seq_args, {};
@@ -3456,7 +3447,7 @@ sub AI {
 	##### AUTO-ATTACK #####
 
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" 
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || $ai_seq[0] eq "follow" 
 		|| $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
 		&& !($config{'itemsTakeAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_take"))
 		&& !($config{'itemsGatherAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"))
@@ -3786,7 +3777,10 @@ sub AI {
 
 				ai_setSuspend(0);
 				if (@{$field{'field'}} > 1) {
-					ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}, $field{'name'}, $config{'attackMaxRouteDistance'}, $config{'attackMaxRouteTime'}, 0, 0, 0, 0, $ai_seq_args[0]{'ID'});
+					ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
+						distFromGoal => $config{'attackMaxRouteDistance'},
+						maxRouteTime => $config{'attackMaxRouteTime'},
+						attackID => $ai_seq_args[0]{'ID'});
 				} else {
 					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}, 0, $ai_seq_args[0]{'ID'});
 				}
@@ -3921,505 +3915,350 @@ sub AI {
 
 
 
-	##### ROUTE #####
-	#There are three important things that need to be done here:
-	#
-	#First, calculate the map route to the desired map using the map router (a Perl function that uses 
-	#A* pathfinding on the portals), and step through the map solution to get to the map.  The map router returns
-	#just an array of portals, so that alone won't do the job.
-	#
-	#Second, for each portal step we need to use the position router (a C function that uses 
-	#A* on the map XY data) to get the position solution to the next portal, then step through that
-	#
-	#Third, if we are in the desired map and the way is clear, calculate the final route using the position router
-	#and step through it.
-	#
-	#Sometimes we may be in the desired map, but the way to the desired position is blocked by water.
-	#If we're in the desired map and the position routing fails, kore calculates a map route to an entrance
-	#that can reach the desired location - the map routing function makes sure chosen portals are reachable
-	#from our current and desired positions.
-	#
-	#See also: http://www.gamedev.net/reference/programming/features/motionplanning/
+	####### ROUTE #######
 
-	ROUTE: {
+	if ( $ai_seq[0] eq "route" && $field{'name'} && $chars[$config{'char'}]{'pos_to'}{'x'} ne '' && $chars[$config{'char'}]{'pos_to'}{'y'} ne '' ) {
 
-	#The position solution array is an array of XY positions from the current position to the desired position.
-	#It's filled by the position router
-	#
-	#The solution ready flag indicates that we are on the desired map, and the way to the desired position is clear,
-	#so the current position solution array is the final solution to be stepped through
-	#
-	#If we have a solution, and our stepping index is at the end of the solution, and the solution ready flag is set,
-	#and we really are at the destination, then we are done
-	if ($ai_seq[0] eq "route" && @{$ai_seq_args[0]{'solution'}} && $ai_seq_args[0]{'index'} == @{$ai_seq_args[0]{'solution'}} - 1 && $ai_seq_args[0]{'solutionReady'}
-	 && $ai_seq_args[0]{solution}[$ai_seq_args[0]{'index'}]{x} == $chars[$config{char}]{pos_to}{x}
-	 && $ai_seq_args[0]{solution}[$ai_seq_args[0]{'index'}]{y} == $chars[$config{char}]{pos_to}{y}
-	) {
-		debug "Route success\n", "route";
-		shift @ai_seq;
-		shift @ai_seq_args;
-	} elsif ($ai_seq[0] eq "route" && $ai_seq_args[0]{'failed'}) {
-		debug "Route failed\n", "route";
-		shift @ai_seq;
-		shift @ai_seq_args;
-		aiRemove("move");
-		aiRemove("route");
-		aiRemove("route_getRoute");
-		aiRemove("route_getMapRoute");
+		if ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
+			# we spent too much time
+			debug "We spent too much time; bailing out.\n", "route";
+			shift @ai_seq;
+			shift @ai_seq_args;
 
-	#We're about to enter the main function, but first we gotta check a timeout.
-	#If we're talking to an NPC, we do one NPC talk-step each time this function runs, then wait a second or so.
-	#Its not safe to flood the NPC with requests.  Here we check that npc talk timeout, if all is good, then enter
-	} elsif ($ai_seq[0] eq "route" && timeOut(\%{$timeout{'ai_route_npcTalk'}})) {
-		#if we don't know the current map name, bail out and try again later.
-		last ROUTE if (!$field{'name'});
-		#When we request a map solution, we give a reference to our array to the map router, exit the function
-		#and by the time we get back the map solution should be ready (due to the AI queue).
-		#
-		#If we requested a map solution and the solution came back empty, we've failed.
-		#That "NPC talk - route failed" is a mistake I think, it should just be "route failed"
-		if ($ai_seq_args[0]{'waitingForMapSolution'}) {
-			undef $ai_seq_args[0]{'waitingForMapSolution'};
-			if (!@{$ai_seq_args[0]{'mapSolution'}}) {
-				debug "NPC talk - route failed\n", "route";
-				$ai_seq_args[0]{'failed'} = 1;
-				last ROUTE;
-			}
-			$ai_seq_args[0]{'mapIndex'} = -1;
-		}
-		#If we were waiting for a position solution (not map solution) last time we exited the function...
-		if ($ai_seq_args[0]{'waitingForSolution'}) {
-			undef $ai_seq_args[0]{'waitingForSolution'};
+		} elsif ( ($field{'name'} ne $ai_seq_args[0]{'dest'}{'map'} || $ai_seq_args[0]{'mapChanged'}) ) {
+			debug "Map changed: <$field{'name'}> <$ai_seq_args[0]{'dest'}{'map'}>\n", "route";
+			shift @ai_seq;
+			shift @ai_seq_args;
 
-			#The distFromGoal is a feature so that Kore will stay a certain distance from the
-			#desired position.  If you set Kore to follow, you don't want Kore to follow directly behind you
-			#but rather stay a certain distance back
-
-			#Here we are checking if the current position solution is the final solution, we don't want to
-			#"follow behind" when the position solution is to get from portal A to portal B (from a map
-			#solution)
-			#
-			#We are at a final solution if the current map name is the destination map, and there is either no
-			#map solution or we're at the last step of the map solution.
-			if ($ai_seq_args[0]{'distFromGoal'} && $field{'name'} && $ai_seq_args[0]{'dest_map'} eq $field{'name'} 
-			    && (!@{$ai_seq_args[0]{'mapSolution'}} || $ai_seq_args[0]{'mapIndex'} == @{$ai_seq_args[0]{'mapSolution'}} - 1)) {
-				#We achieve this follow behind thing by popping off the last steps from the position solution
-				for ($i = 0; $i < $ai_seq_args[0]{'distFromGoal'}; $i++) {
-					pop @{$ai_seq_args[0]{'solution'}};
-				}
-
-				#Store the REAL desired position values, and replace them with the "follow behind" desired
-				#position.  This is to satisfy some "are we done?" checks
-				if (@{$ai_seq_args[0]{'solution'}}) {
-					$ai_seq_args[0]{'dest_x_original'} = $ai_seq_args[0]{'dest_x'};
-					$ai_seq_args[0]{'dest_y_original'} = $ai_seq_args[0]{'dest_y'};
-					$ai_seq_args[0]{'dest_x'} = $ai_seq_args[0]{'solution'}[@{$ai_seq_args[0]{'solution'}}-1]{'x'};
-					$ai_seq_args[0]{'dest_y'} = $ai_seq_args[0]{'solution'}[@{$ai_seq_args[0]{'solution'}}-1]{'y'};
-				}
-			}
-
-			#Get length and time it took to get this position solution.  This is stored in a return hash,
-			#and returned to functions that call ai_route.  This should really be a += not =, cuz there can
-			#be multiple position solutions calculated before we come to the final solution.
-			$ai_seq_args[0]{'returnHash'}{'solutionLength'} = @{$ai_seq_args[0]{'solution'}};
-			$ai_seq_args[0]{'returnHash'}{'solutionTime'} = time - $ai_seq_args[0]{'time_getRoute'};
-
-			#check if the solution length exceeds some user set length
-			if ($ai_seq_args[0]{'maxRouteDistance'} && @{$ai_seq_args[0]{'solution'}} > $ai_seq_args[0]{'maxRouteDistance'}) {
-				debug "Solution length - route failed\n", "route";
-				$ai_seq_args[0]{'failed'} = 1;
-				last ROUTE;
-			}
-
-			#If we're on the desired map, and the solution failed, there may be water or a wall blocking the
-			#way.  So we may have to either use portals in this map to get to the position (ie. prontera
-			#sewers), or take some long route from map to map to get there. We need to do a more extensive
-			#search.
-			#
-			#This extensive search "checkInnerPortals" means "consult the map router", it should actually
-			#be the only type of search, but at the time of writing (before the DLL) it was slow, so it's 
-			#a variable set by the caller.
-			#
-			#So, if we require a more extensive search, and we haven't already tried....
-			if (!@{$ai_seq_args[0]{'solution'}} && !@{$ai_seq_args[0]{'mapSolution'}} && $ai_seq_args[0]{'dest_map'} eq $field{'name'} && $ai_seq_args[0]{'checkInnerPortals'} && !$ai_seq_args[0]{'checkInnerPortals_done'}) {
-				$ai_seq_args[0]{'checkInnerPortals_done'} = 1;
-				debug "Route Logic - check inner portals done\n", "route";
-				undef $ai_seq_args[0]{'solutionReady'};
-
-				#Fill some vars, call the map router, and exit the function. We are now waiting for a
-				#map solution
-				$ai_seq_args[0]{'temp'}{'pos'}{'x'} = $ai_seq_args[0]{'dest_x'};
-				$ai_seq_args[0]{'temp'}{'pos'}{'y'} = $ai_seq_args[0]{'dest_y'};
-				$ai_seq_args[0]{'waitingForMapSolution'} = 1;
-				ai_mapRoute_getRoute(\@{$ai_seq_args[0]{'mapSolution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%field, \%{$ai_seq_args[0]{'temp'}{'pos'}}, $ai_seq_args[0]{'maxRouteTime'});
-				last ROUTE;
-
-			#If we already did an extensive search, and there's no solution, then we've failed
-			} elsif (!@{$ai_seq_args[0]{'solution'}}) {
-				debug "No solution - route failed\n", "route";
-				$ai_seq_args[0]{'failed'} = 1;
-				last ROUTE;
-			}
-		}
-
-		#If we have a map solution, and the map changed to correct next map, then clear the position solution
-		#so we can calculate the next position solution (ie. from portal A to portal B) of the map solution
-		#We increase the map
-		if (@{$ai_seq_args[0]{'mapSolution'}} && $ai_seq_args[0]{'mapChanged'} && $field{'name'} eq $ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'dest'}{'map'}) {
-			debug "Route logic - map changed\n", "route";
-			undef $ai_seq_args[0]{'mapChanged'};
+		} elsif ($ai_seq_args[0]{'stage'} eq '') {
 			undef @{$ai_seq_args[0]{'solution'}};
-			undef %{$ai_seq_args[0]{'last_pos'}};
-			undef $ai_seq_args[0]{'index'};
-			undef $ai_seq_args[0]{'npc'};
-			undef $ai_seq_args[0]{'divideIndex'};
-		}
-
-		#If there's no position solution currently calculated...
-		if (!@{$ai_seq_args[0]{'solution'}}) {
-			#Check if we are on the final position solution - we're on the desired map, and there is either 
-			#no map solution, or we're at the last step of the map solution.
-			#
-			#This sets the solution ready flag, which is checked at the beginning of the function
-			if ($ai_seq_args[0]{'dest_map'} eq $field{'name'}
-				&& (!@{$ai_seq_args[0]{'mapSolution'}} || $ai_seq_args[0]{'mapIndex'} == @{$ai_seq_args[0]{'mapSolution'}} - 1)) {
-				$ai_seq_args[0]{'temp'}{'dest'}{'x'} = $ai_seq_args[0]{'dest_x'};
-				$ai_seq_args[0]{'temp'}{'dest'}{'y'} = $ai_seq_args[0]{'dest_y'};
-				$ai_seq_args[0]{'solutionReady'} = 1;
-				undef @{$ai_seq_args[0]{'mapSolution'}};
-				undef $ai_seq_args[0]{'mapIndex'};
-				debug "Route logic - solution ready\n", "route";
+			if (ai_route_getRoute( \@{$ai_seq_args[0]{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'dest'}{'pos'}}) ) {
+				$ai_seq_args[0]{'stage'} = 'Route Solution Ready';
+				debug "Route Solution Ready\n", "route";
 			} else {
-				#We're not on the final solution, that means we need a map solution to step through.
-				#If we don't have a map solution...
-				if (!(@{$ai_seq_args[0]{'mapSolution'}})) {
-					#Get the field data if we don't have it
-					if (!%{$ai_seq_args[0]{'dest_field'}}) {
-						getField("$Settings::def_field/$ai_seq_args[0]{'dest_map'}.fld", \%{$ai_seq_args[0]{'dest_field'}});
-					}
-					#Fill some vars, call the map router, and exit this function
-					$ai_seq_args[0]{'temp'}{'pos'}{'x'} = $ai_seq_args[0]{'dest_x'};
-					$ai_seq_args[0]{'temp'}{'pos'}{'y'} = $ai_seq_args[0]{'dest_y'};
-					$ai_seq_args[0]{'waitingForMapSolution'} = 1;
-					debug "Route logic - waiting for map solution\n", "route";
-					ai_mapRoute_getRoute(\@{$ai_seq_args[0]{'mapSolution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'dest_field'}}, \%{$ai_seq_args[0]{'temp'}{'pos'}}, $ai_seq_args[0]{'maxRouteTime'});
-					last ROUTE;
-				}
-
-				#If we're here then we have a map solution ready.  The position solution is clear, that
-				#usually means the map changed.
-				#
-				#If the current map is the next map in the map solution...
-				if ($field{'name'} eq $ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'} + 1]{'source'}{'map'}) {
-					#Take a step in the map solution
-					$ai_seq_args[0]{'mapIndex'}++;
-					#Fill our destination position for the position router
-					%{$ai_seq_args[0]{'temp'}{'dest'}} = %{$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'source'}{'pos'}};
-				} else {
-					#We're not at the next map, so don't take a step in the map solution.
-					#This should only happen the first time we get the map solution.
-					#Fill our destination for the position router
-					%{$ai_seq_args[0]{'temp'}{'dest'}} = %{$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'source'}{'pos'}};
-				}
+				debug "Something's wrong; there is no path to $field{'name'}($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'}).\n", "debug";
+				shift @ai_seq;
+				shift @ai_seq_args;
 			}
 
-			#Safety check, something is screwed up?
-			if ($ai_seq_args[0]{'temp'}{'dest'}{'x'} eq "") {
-				debug "No destination - route failed\n", "route";
-				$ai_seq_args[0]{'failed'} = 1;
-				last ROUTE;
+		} elsif ( $ai_seq_args[0]{'stage'} eq 'Route Solution Ready' ) {
+			if ($ai_seq_args[0]{'maxRouteDistance'} > 0 && $ai_seq_args[0]{'maxRouteDistance'} < 1) {
+				#fractional route motion
+				$ai_seq_args[0]{'maxRouteDistance'} = int($ai_seq_args[0]{'maxRouteDistance'} * scalar @{$ai_seq_args[0]{'solution'}});
 			}
-
-			#Call the position router, exit the function.  We're now waiting for a position solution
-			$ai_seq_args[0]{'waitingForSolution'} = 1;
-			$ai_seq_args[0]{'time_getRoute'} = time;
-			debug "Route logic - waiting for solution\n", "route";
-			ai_route_getRoute(\@{$ai_seq_args[0]{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'temp'}{'dest'}}, $ai_seq_args[0]{'maxRouteTime'});
-			last ROUTE;
-		}
-
-		#If we have a map solution, are currently at the end of a position solution, and an NPC is specified
-		#in the map step...
-		#
-		#Note that when we've completed the NPC talk steps, we do nothing until the map changes,
-		#that clears the position solution, and thus we can move on to the next map step.
-		if (@{$ai_seq_args[0]{'mapSolution'}} && @{$ai_seq_args[0]{'solution'}} && $ai_seq_args[0]{'index'} == @{$ai_seq_args[0]{'solution'}} - 1
-		    && %{$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}}) {
-			#safety check
-			if ($ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] ne "") {
-				#Do one of the following, increase the talk step, exit the function and wait a few seconds
-				#We'll come right back to this block after those seconds are up.
-				#
-				#Talk to the NPC if we haven't already
-				if (!$ai_seq_args[0]{'npc'}{'sentTalk'}) {
-					sendTalk(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}));
-					$ai_seq_args[0]{'npc'}{'sentTalk'} = 1;
-				#If the next step is a "continue" command, execute it
-				} elsif ($ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /c/i) {
-					sendTalkContinue(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}));
-					$ai_seq_args[0]{'npc'}{'step'}++;
-				#If the next step is a "cancel" command, execute it
-				} elsif ($ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /n/i) {
-					sendTalkCancel(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}));
-					$ai_seq_args[0]{'npc'}{'step'}++;
-				#If the next step is a "response" command, execute it
-				} else {
-					($ai_v{'temp'}{'arg'}) = $ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /r(\d+)/i;
-					if ($ai_v{'temp'}{'arg'} ne "") {
-						$ai_v{'temp'}{'arg'}++;
-						sendTalkResponse(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}), $ai_v{'temp'}{'arg'});
-					}
-					$ai_seq_args[0]{'npc'}{'step'}++;
-				}
-				$timeout{'ai_route_npcTalk'}{'time'} = time;
-				last ROUTE;
-			}
-		}
-
-		#If the map has changed, and the event wasn't caught (and cleared) by any of the preceeding functions,
-		#then the map change was a bad thing.  Just give up.
-		if ($ai_seq_args[0]{'mapChanged'}) {
-			debug "Map changed - route failed\n", "route";
-			$ai_seq_args[0]{'failed'} = 1;
-			last ROUTE;
-
-		#Here we check if we've changed positions, and we're off course
-		#
-		#If we've tried to move (almost always yes)...
-		} elsif (%{$ai_seq_args[0]{'last_pos'}}
-			#and our current position is not the required position by the step
-			&& $chars[$config{'char'}]{'pos_to'}{'x'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}
-			&& $chars[$config{'char'}]{'pos_to'}{'y'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}
-			#and our current position has changed from the last time we were here
-			&& $ai_seq_args[0]{'last_pos'}{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
-			&& $ai_seq_args[0]{'last_pos'}{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
-
-			#Then something has taken us off course, the solution is no good anymore.
-			#Reset the solution, it will be recalculated next time we enter the function
-			#
-			#The "follow behind" feature may have altered our destination, if it did, get back the original
-			if ($ai_seq_args[0]{'dest_x_original'} ne "") {
-				$ai_seq_args[0]{'dest_x'} = $ai_seq_args[0]{'dest_x_original'};
-				$ai_seq_args[0]{'dest_y'} = $ai_seq_args[0]{'dest_y_original'};
-			}
-			debug "Route logic - off course; reset route\n", "route";
-			undef @{$ai_seq_args[0]{'solution'}};
-			undef %{$ai_seq_args[0]{'last_pos'}};
+			splice(@{$ai_seq_args[0]{'solution'}},1+$ai_seq_args[0]{'maxRouteDistance'}) if $ai_seq_args[0]{'maxRouteDistance'} && $ai_seq_args[0]{'maxRouteDistance'} < @{$ai_seq_args[0]{'solution'}};
+			undef $ai_seq_args[0]{'mapChanged'};
 			undef $ai_seq_args[0]{'index'};
-			undef $ai_seq_args[0]{'npc'};
-			undef $ai_seq_args[0]{'divideIndex'};
-	
+			undef $ai_seq_args[0]{'old_x'};
+			undef $ai_seq_args[0]{'old_y'};
+			$ai_seq_args[0]{'new_x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
+			$ai_seq_args[0]{'new_y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
+			$ai_seq_args[0]{'stage'} = 'Walk the Route Solution';
+
+		} elsif ( $ai_seq_args[0]{'stage'} eq 'Walk the Route Solution' ) {
+
+			my $cur_x = $chars[$config{'char'}]{'pos_to'}{'x'};
+			my $cur_y = $chars[$config{'char'}]{'pos_to'}{'y'};
+
+			unless (@{$ai_seq_args[0]{'solution'}}) {
+				#no more points to cover
+				shift @ai_seq;
+				shift @ai_seq_args;
+			} elsif ($ai_seq_args[0]{'index'} eq '0' 		#if index eq '0' (but not index == 0)
+				&& $ai_seq_args[0]{'old_x'} == $cur_x		#and we are still on the same
+				&& $ai_seq_args[0]{'old_y'} == $cur_y ) {	#old XY coordinate,
+				if ($config{'debugRoute'}) {
+					debug "Stuck: $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'})\n", "route";
+					#ShowValue('solution', \@{$ai_seq_args[0]{'solution'}});
+				}
+				shift @ai_seq;
+				shift @ai_seq_args;
+
+			} elsif ( $ai_seq_args[0]{'distFromGoal'} > @{$ai_seq_args[0]{'solution'}} ) {
+				#( $ai_seq_args[0]{'distFromGoal'} > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'dest'}}) )
+				# We are near the goal, thats good enough.
+				# Distance is computed based on step counts not pythagorean distance.
+				debug "We are near our goal\n", "route";
+				shift @ai_seq;
+				shift @ai_seq_args;
+			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y) {
+				#we are still on the same spot
+				#decrease step movement
+				$ai_seq_args[0]{'index'} = int($ai_seq_args[0]{'index'}*0.85);
+				if (@{$ai_seq_args[0]{'solution'}}) {
+					#if we still have more points to cover, walk to next point
+					$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
+					$ai_seq_args[0]{'new_x'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'};
+					$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
+					$ai_seq_args[0]{'old_x'} = $cur_x;
+					$ai_seq_args[0]{'old_y'} = $cur_y;
+					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
+				}
+			} elsif ($ai_seq_args[0]{'new_x'} == $cur_x && $ai_seq_args[0]{'new_y'} == $cur_y) {
+				#we arrived there
+				#trim down the solution tree
+				splice(@{$ai_seq_args[0]{'solution'}}, 0, $ai_seq_args[0]{'index'}+1) if $ai_seq_args[0]{'index'} ne '' && @{$ai_seq_args[0]{'solution'}} > $ai_seq_args[0]{'index'};
+				$ai_seq_args[0]{'index'} = $config{'route_step'} unless $ai_seq_args[0]{'index'};
+				$ai_seq_args[0]{'index'}++ if $ai_seq_args[0]{'index'} < $config{'route_step'};
+				if (@{$ai_seq_args[0]{'solution'}}) {
+					#if we still have more points to cover, walk to next point
+					$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
+					$ai_seq_args[0]{'new_x'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'};
+					$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
+					$ai_seq_args[0]{'old_x'} = $cur_x;
+					$ai_seq_args[0]{'old_y'} = $cur_y;
+					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
+				} else {
+					#no more points to cover
+					shift @ai_seq;
+					shift @ai_seq_args;
+				}
+			} else {
+				#since we are not on the same old-position, then we have moved
+				#let us check if we moved to the new position or somewhere in between
+				$ai_seq_args[0]{'index'} = 0;
+				while ( $ai_seq_args[0]{'index'} < @{$ai_seq_args[0]{'solution'}} && 
+					($cur_x != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} || 
+					 $cur_y != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}) ) {
+					$ai_seq_args[0]{'index'}++;
+				}
+				if ($ai_seq_args[0]{'index'} < @{$ai_seq_args[0]{'solution'}}) {
+					splice @{$ai_seq_args[0]{'solution'}}, 0, $ai_seq_args[0]{'index'}+1;
+					if (@{$ai_seq_args[0]{'solution'}}) {
+						$ai_seq_args[0]{'index'} = $config{'route_step'} if $ai_seq_args[0]{'index'} eq '' || $ai_seq_args[0]{'index'} > $config{'route_step'};
+						$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
+						$ai_seq_args[0]{'new_x'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'};
+						$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
+						$ai_seq_args[0]{'old_x'} = $cur_x;
+						$ai_seq_args[0]{'old_y'} = $cur_y;
+						move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
+					}
+				} else {
+					debug "Something disturbed our walk.\n", "route";
+					$ai_seq_args[0]{'stage'} = '';
+				}
+			}
 		} else {
-			#We're set to take a step in the current position solution
-			#We actually skip several steps at a time since the server does its own pathfinding.
-			#Sometimes we may skip too many steps, and the server says "thats too far, i won't move u"
-			#So we decrease the number of steps skipped until the server finally moves us.
+			debug "Unexpected route stage [$ai_seq_args[0]{'stage'}] occured.\n", "route";
+			shift @ai_seq;
+			shift @ai_seq_args;
+		}
+	}
 
-			my $prevSolutionIndex = $ai_seq_args[0]{index} || 0;
 
-			#If we've tried to move and our position still isn't at the next step...
-			if ($ai_seq_args[0]{'divideIndex'} &&
-			   ($chars[$config{'char'}]{'pos_to'}{'x'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}
-			 || $chars[$config{'char'}]{'pos_to'}{'y'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'})) {
+	####### MAPROUTE #######
 
-				#we're stuck!
-				$ai_v{'temp'}{'index_old'} = $ai_seq_args[0]{'index'};
-				$ai_seq_args[0]{'index'} -= int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'});
-				$ai_seq_args[0]{'index'} = 0 if ($ai_seq_args[0]{'index'} < 0);
-				$ai_v{'temp'}{'index'} = $ai_seq_args[0]{'index'};
-				undef $ai_v{'temp'}{'done'};
+	if ( $ai_seq[0] eq "mapRoute" && $field{'name'} && $chars[$config{'char'}]{'pos_to'}{'x'} ne '' && $chars[$config{'char'}]{'pos_to'}{'y'} ne '' ) {
 
-				#decrease the skip amount by a factor, make sure the new skip amount isn't the same as the
-				#skip amount that didn't work
-				do {
-					$ai_seq_args[0]{'divideIndex'}++;
-					$ai_v{'temp'}{'index'} = $ai_seq_args[0]{'index'};
-					$ai_v{'temp'}{'index'} += int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'});
-					$ai_v{'temp'}{'index'} = @{$ai_seq_args[0]{'solution'}} - 1 if ($ai_v{'temp'}{'index'} >= @{$ai_seq_args[0]{'solution'}});
-					$ai_v{'temp'}{'done'} = 1 if (int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'}) == 0);
-				} while ($ai_v{'temp'}{'index'} >= $ai_v{'temp'}{'index_old'} && !$ai_v{'temp'}{'done'});
-				debug "Route logic - stuck: decrease solution index from $ai_v{temp}{index_old} to $ai_v{temp}{index} (divideIndex = $ai_seq_args[0]{divideIndex})\n", "route";
+		if ($ai_seq_args[0]{'stage'} eq '') {
+			$ai_seq_args[0]{'budget'} = $config{'route_maxWarpFee'} eq '' ?
+				'' :
+				$config{'route_maxWarpFee'} > $chars[$config{'char'}]{'zenny'} ?
+					$chars[$config{'char'}]{'zenny'} :
+					$config{'route_maxWarpFee'};
+			delete $ai_seq_args[0]{'done'};
+			delete $ai_seq_args[0]{'found'};
+			delete $ai_seq_args[0]{'mapChanged'};
+			delete $ai_seq_args[0]{'openlist'};
+			delete $ai_seq_args[0]{'closelist'};
+			undef @{$ai_seq_args[0]{'mapSolution'}};
+			getField("$Settings::def_field/$ai_seq_args[0]{'dest'}{'map'}.fld", \%{$ai_seq_args[0]{'dest'}{'field'}});
 
-			} elsif ($chars[$config{'char'}]{'pos_to'}{'x'} && $chars[$config{'char'}]{'pos_to'}{'y'}) {
-				$ai_seq_args[0]{'divideIndex'} = 1;
+			# Initializes the openlist with portals walkable from the starting point
+			foreach my $portal (keys %portals_lut) {
+				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
+				if ( ai_route_getRoute(\@{$ai_seq_args[0]{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$portals_lut{$portal}{'source'}{'pos'}}) ) {
+					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
+						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = PORTAL_PENALTY + scalar @{$ai_seq_args[0]{'solution'}};
+						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'zenny'} = $portals_lut{$portal}{'dest'}{$dest}{'cost'};
+					}
+				}
+			}
+			$ai_seq_args[0]{'stage'} = 'Getting Map Solution';
 
-				if ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
-			         && $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
-					$pos_x = int($chars[$config{'char'}]{'pos_to'}{'x'}) if ($chars[$config{'char'}]{'pos_to'}{'x'} ne "");
-					$pos_y = int($chars[$config{'char'}]{'pos_to'}{'y'}) if ($chars[$config{'char'}]{'pos_to'}{'y'} ne "");
-					#if kore is stuck
-					if (($old_pos_x == $pos_x) && ($old_pos_y == $pos_y)) {
-						$route_stuck++;
+		} elsif ( $ai_seq_args[0]{'stage'} eq 'Getting Map Solution' ) {
+			$timeout{'ai_route_calcRoute'}{'time'} = time;
+			while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
+				ai_mapRoute_searchStep(\%{$ai_seq_args[0]});
+			}
+			if ($ai_seq_args[0]{'found'}) {
+				$ai_seq_args[0]{'stage'} = 'Traverse the Map Solution';
+				delete $ai_seq_args[0]{'openlist'};
+				delete $ai_seq_args[0]{'solution'};
+				delete $ai_seq_args[0]{'closelist'};
+				delete $ai_seq_args[0]{'dest'}{'field'};
+				debug "Map Solution Ready for traversal.\n", "route";
+			} elsif ($ai_seq_args[0]{'done'}) {
+				debug "No map solution was found from [$field{'name'}($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'})] to [$ai_seq_args[0]{'dest'}{'map'}($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'})].\n", "route";
+				shift @ai_seq;
+				shift @ai_seq_args;
+			}
+		} elsif ( $ai_seq_args[0]{'stage'} eq 'Traverse the Map Solution' ) {
+
+			my %args;
+			undef @{$args{'solution'}};
+			unless (@{$ai_seq_args[0]{'mapSolution'}}) {
+				#mapSolution is now empty
+				shift @ai_seq;
+				shift @ai_seq_args;
+				debug "Map Router is finish traversing the map solution\n", "route";
+
+			} elsif ( $field{'name'} ne $ai_seq_args[0]{'mapSolution'}[0]{'map'} || $ai_seq_args[0]{'mapChanged'} ) {
+				#Solution Map does not match current map
+				debug "Current map $field{'name'} does not match solution [ $ai_seq_args[0]{'mapSolution'}[0]{'portal'} ].\n", "route";
+				delete $ai_seq_args[0]{'substage'};
+				delete $ai_seq_args[0]{'timeout'};
+				delete $ai_seq_args[0]{'mapChanged'};
+				shift @{$ai_seq_args[0]{'mapSolution'}};
+
+			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'steps'} ) {
+				#If current solution has conversation steps specified
+				if ( $ai_seq_args[0]{'substage'} eq 'Waiting for Warp' ) {
+					$ai_seq_args[0]{'timeout'} = time unless $ai_seq_args[0]{'timeout'};
+					if (time - $ai_seq_args[0]{'timeout'} > 10) {
+						#We waited for 10 seconds and got nothing
+						#NPC sequence is a failure
+						#We delete that portal and try again
+						delete $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"};
+						delete $ai_seq_args[0]{'substage'};
+						delete $ai_seq_args[0]{'timeout'};
+						debug "CRITICAL ERROR: NPC Sequence was a failure at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "debug";
+						$ai_seq_args[0]{'stage'} = '';	#redo MAP router
+					}
+
+				} elsif ( 4 > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) ) {
+					my ($from,$to) = split /=/, $ai_seq_args[0]{'mapSolution'}[0]{'portal'};
+					if ($chars[$config{'char'}]{'zenny'} >= $portals_lut{$from}{'dest'}{$to}{'cost'}) {
+						#we have enough money for this service
+						$ai_seq_args[0]{'substage'} = 'Waiting for Warp';
+						$ai_seq_args[0]{'old_x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
+						$ai_seq_args[0]{'old_y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
+						$ai_seq_args[0]{'old_map'} = $field{'name'};
+						ai_talkNPC($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}, $ai_seq_args[0]{'mapSolution'}[0]{'steps'} );
 					} else {
-						$route_stuck = 0;
-						$old_pos_x = $pos_x;
-						$old_pos_y = $pos_y;
+						error "Insufficient zenny to pay for service at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+						$ai_seq_args[0]{'stage'} = ''; #redo MAP router
 					}
-					if ($route_stuck >= 50) {
-						ClearRouteAI("Route failed, clearing route AI to unstuck ...\n");
-						last ROUTE;
+
+				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
+					# we spent too long a time
+					debug "We spent too much time; bailing out.\n", "route";
+					shift @ai_seq;
+					shift @ai_seq_args;
+
+				} elsif ( ai_route_getRoute( \@{$args{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
+					# NPC is reachable from current position
+					# >> Then "route" to it
+					debug "Walking towards the NPC\n", "route";
+					if (0) {
+						$args{'dest'}{'map'} = $ai_seq_args[0]{'mapSolution'}[0]{'map'};
+						$args{'dest'}{'pos'}{'x'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'};
+						$args{'dest'}{'pos'}{'y'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'};
+						$args{'attackOnRoute'} = $ai_seq_args[0]{'attackOnRoute'};
+						$args{'maxRouteTime'} = $ai_seq_args[0]{'maxRouteTime'};
+						$args{'time_start'} = time;
+						$args{'distFromGoal'} = 3;
+						$args{'stage'} = 'Route Solution Ready';
+						unshift @ai_seq, "route";
+						unshift @ai_seq_args, \%args;
+					} else {
+						ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+							attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
+							maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+							distFromGoal => 3,
+							_solution => $args{'solution'},
+							_internal => 1);
 					}
-					if ($route_stuck >= 80) {
-						$route_stuck = 0;
-						Unstuck("Route failed, trying to unstuck ...\n");
-						last ROUTE;
-					}	
-					if ($totalStuckCount >= 10) {
-						RespawnUnstuck();
-						last ROUTE;
-					}		
+
+				} else {
+					#Error, NPC is not reachable from current pos
+					debug "CRTICAL ERROR: NPC is not reachable from current location.\n", "route";
+					error "Unable to walk from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to NPC at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+					shift @{$ai_seq_args[0]{'mapSolution'}};
 				}
-			}
 
-			#We've tried all possible skip amounts, and the server won't move us.  Fail.
-			if (int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'}) == 0) {
-				debug "Route step - route failed\n", "route";
-				$ai_seq_args[0]{'failed'} = 1;
-				last ROUTE;
-			}
+			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'portal'} eq "$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}=$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}" ) {
+				#This solution points to an X,Y coordinate
+				if ( 4 > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}})) {
+					#We need to specify 4 because sometimes the exact spot is occupied by someone else
+					shift @{$ai_seq_args[0]{'mapSolution'}};
 
-			#Save current position for the next time we enter this function
-			%{$ai_seq_args[0]{'last_pos'}} = %{$chars[$config{'char'}]{'pos_to'}};
+				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
+					#we spent too long a time
+					debug "We spent too much time; bailing out.\n", "route";
+					shift @ai_seq;
+					shift @ai_seq_args;
 
-			#Increase the step by the skip amount, and make sure that the position at the step is
-			#different from our current position (should never happen really)
-			do {
-				$ai_seq_args[0]{'index'} += int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'});
-				$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}} - 1 if ($ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}});
-			} while ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'}
-				&& $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}
-				&& $ai_seq_args[0]{'index'} != @{$ai_seq_args[0]{'solution'}} - 1);
-
-			#If the avoid portals flag is set, don't move to any position that is within a distance of a portal
-			#If a portal is within distance, the route will fail.
-			#This is an ugly hack.  The map data should be dynamic and have an array of portals "painted" out
-			#BEFORE doing A*
-			if ($ai_seq_args[0]{'avoidPortals'}) {
-				$ai_v{'temp'}{'first'} = 1;
-				undef $ai_v{'temp'}{'foundID'};
-				undef $ai_v{'temp'}{'smallDist'};
-				foreach (@portalsID) {
-					$ai_v{'temp'}{'dist'} = distance(\%{$ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]}, \%{$portals{$_}{'pos'}});
-					if ($ai_v{'temp'}{'dist'} <= 7 && ($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'smallDist'})) {
-						$ai_v{'temp'}{'smallDist'} = $ai_v{'temp'}{'dist'};
-						$ai_v{'temp'}{'foundID'} = $_;
-						undef $ai_v{'temp'}{'first'};
-						debug "Route logic - portal found\n", "route";
+				} elsif ( ai_route_getRoute( \@{$args{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
+					# X,Y is reachable from current position
+					# >> Then "route" to it
+					if (0) {
+						$args{'dest'}{'map'} = $ai_seq_args[0]{'mapSolution'}[0]{'map'};
+						$args{'dest'}{'pos'}{'x'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'};
+						$args{'dest'}{'pos'}{'y'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'};
+						$args{'attackOnRoute'} = $ai_seq_args[0]{'attackOnRoute'};
+						$args{'maxRouteTime'} = $ai_seq_args[0]{'maxRouteTime'};
+						$args{'time_start'} = time;
+						$args{'stage'} = 'Route Solution Ready';
+						$args{'distFromGoal'} = 4;
+						unshift @ai_seq, "route";
+						unshift @ai_seq_args, \%args;
+					} else {
+						ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+							attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
+							maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+							distFromGoal => 4,
+							_solution => $args{'solution'},
+							_internal => 1);
 					}
+
+				} else {
+					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Final Destination at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+					error "Cannot reach ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) from current position.\n", "route";
+					shift @{$ai_seq_args[0]{'mapSolution'}};
 				}
-				if ($ai_v{'temp'}{'foundID'}) {
-					debug "A portal is near - route failed\n", "route";
-					$ai_seq_args[0]{'failed'} = 1;
-					last ROUTE;
-				}
-			}
-			#if the step position doesn't equal our current position, then move there
-			if ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
-			 || $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
-				debug "Route - move from solution index $prevSolutionIndex to $ai_seq_args[0]{index}\n", "route";
-				move(
-					$ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'},
-					$ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'},
-					1,
-					$ai_seq_args[0]{'attackID'}
-				);
-			}
-		}
-	}
-	} #END OF ROUTE BLOCK
 
+			} elsif ( $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"}{'source'}{'ID'} ) {
+				# This is a portal solution
 
-	##### ROUTE_GETROUTE #####
+				if ( 2 > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) ) {
+					# Portal is within 'Enter Distance'
+					$timeout{'ai_portal_wait'}{'timeout'} = $timeout{'ai_portal_wait'}{'timeout'} || 0.5;
+					if ( timeOut(\%{$timeout{'ai_portal_wait'}}) ) {
+						sendMove( \$remote_socket, int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}), int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) );
+						$timeout{'ai_portal_wait'}{'time'} = time;
+					}
 
-	if ($ai_seq[0] eq "route_getRoute" && $ai_seq_args[0]{'suspended'}) {
-		$ai_seq_args[0]{'time_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		undef $ai_seq_args[0]{'suspended'};
-	}
-	if ($ai_seq[0] eq "route_getRoute" && ($ai_seq_args[0]{'done'} || $ai_seq_args[0]{'mapChanged'}
-		|| ($ai_seq_args[0]{'time_giveup'}{'timeout'} && timeOut(\%{$ai_seq_args[0]{'time_giveup'}})))) {
-		$timeout{'ai_route_calcRoute_cont'}{'time'} -= $timeout{'ai_route_calcRoute_cont'}{'timeout'};
-		ai_route_getRoute_destroy(\%{$ai_seq_args[0]});
-		shift @ai_seq;
-		shift @ai_seq_args;
+				} elsif ( ai_route_getRoute( \@{$args{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
+					debug "portal within same map\n", "route";
+					# Portal is reachable from current position
+					# >> Then "route" to it
+					if (0) {
+						$args{'dest'}{'map'} = $ai_seq_args[0]{'mapSolution'}[0]{'map'};
+						$args{'dest'}{'pos'}{'x'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'};
+						$args{'dest'}{'pos'}{'y'} = $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'};
+						$args{'attackOnRoute'} = $ai_seq_args[0]{'attackOnRoute'};
+						$args{'maxRouteTime'} = $ai_seq_args[0]{'maxRouteTime'};
+						$args{'time_start'} = time;
+						$args{'stage'} = 'Route Solution Ready';
+						unshift @ai_seq, "route";
+						unshift @ai_seq_args, \%args;
+					} else {
+						ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+							attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
+							maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+							_solution => $args{'solution'},
+							_internal => 1);
+					}
 
-	} elsif ($ai_seq[0] eq "route_getRoute" && timeOut(\%{$timeout{'ai_route_calcRoute_cont'}})) {
-		if (!$ai_seq_args[0]{'init'}) {
-			undef @{$ai_v{'temp'}{'subSuc'}};
-			undef @{$ai_v{'temp'}{'subSuc2'}};
-			if (ai_route_getMap(\%{$ai_seq_args[0]}, $ai_seq_args[0]{'start'}{'x'}, $ai_seq_args[0]{'start'}{'y'})) {
-				ai_route_getSuccessors(\%{$ai_seq_args[0]}, \%{$ai_seq_args[0]{'start'}}, \@{$ai_v{'temp'}{'subSuc'}},0);
-				ai_route_getDiagSuccessors(\%{$ai_seq_args[0]}, \%{$ai_seq_args[0]{'start'}}, \@{$ai_v{'temp'}{'subSuc'}},0);
-				foreach (@{$ai_v{'temp'}{'subSuc'}}) {
-					ai_route_getSuccessors(\%{$ai_seq_args[0]}, \%{$_}, \@{$ai_v{'temp'}{'subSuc2'}},0);
-					ai_route_getDiagSuccessors(\%{$ai_seq_args[0]}, \%{$_}, \@{$ai_v{'temp'}{'subSuc2'}},0);
-				}
-				if (@{$ai_v{'temp'}{'subSuc'}}) {
-					%{$ai_seq_args[0]{'start'}} = %{$ai_v{'temp'}{'subSuc'}[0]};
-				} elsif (@{$ai_v{'temp'}{'subSuc2'}}) {
-					%{$ai_seq_args[0]{'start'}} = %{$ai_v{'temp'}{'subSuc2'}[0]};
+				} else {
+					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+					error "Cammpt reach portal from current position\n", "route";
+					shift @{$ai_seq_args[0]{'mapSolution'}};
 				}
 			}
-			undef @{$ai_v{'temp'}{'subSuc'}};
-			undef @{$ai_v{'temp'}{'subSuc2'}};
-			if (ai_route_getMap(\%{$ai_seq_args[0]}, $ai_seq_args[0]{'dest'}{'x'}, $ai_seq_args[0]{'dest'}{'y'})) {
-				ai_route_getSuccessors(\%{$ai_seq_args[0]}, \%{$ai_seq_args[0]{'dest'}}, \@{$ai_v{'temp'}{'subSuc'}},0);
-				ai_route_getDiagSuccessors(\%{$ai_seq_args[0]}, \%{$ai_seq_args[0]{'dest'}}, \@{$ai_v{'temp'}{'subSuc'}},0);
-				foreach (@{$ai_v{'temp'}{'subSuc'}}) {
-					ai_route_getSuccessors(\%{$ai_seq_args[0]}, \%{$_}, \@{$ai_v{'temp'}{'subSuc2'}},0);
-					ai_route_getDiagSuccessors(\%{$ai_seq_args[0]}, \%{$_}, \@{$ai_v{'temp'}{'subSuc2'}},0);
-				}
-				if (@{$ai_v{'temp'}{'subSuc'}}) {
-					%{$ai_seq_args[0]{'dest'}} = %{$ai_v{'temp'}{'subSuc'}[0]};
-				} elsif (@{$ai_v{'temp'}{'subSuc2'}}) {
-					%{$ai_seq_args[0]{'dest'}} = %{$ai_v{'temp'}{'subSuc2'}[0]};
-				}
-			}
-			$ai_seq_args[0]{'timeout'} = $timeout{'ai_route_calcRoute'}{'timeout'}*1000;
 		}
-		$ai_seq_args[0]{'init'} = 1;
-		ai_route_searchStep(\%{$ai_seq_args[0]});
-		$timeout{'ai_route_calcRoute_cont'}{'time'} = time;
-		ai_setSuspend(0);
 	}
-
-	##### ROUTE_GETMAPROUTE #####
-
-	ROUTE_GETMAPROUTE: {
-
-	if ($ai_seq[0] eq "route_getMapRoute" && $ai_seq_args[0]{'suspended'}) {
-		$ai_seq_args[0]{'time_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		undef $ai_seq_args[0]{'suspended'};
-	}
-	if ($ai_seq[0] eq "route_getMapRoute" && ($ai_seq_args[0]{'done'} || $ai_seq_args[0]{'mapChanged'}
-		|| ($ai_seq_args[0]{'time_giveup'}{'timeout'} && timeOut(\%{$ai_seq_args[0]{'time_giveup'}})))) {
-		$timeout{'ai_route_calcRoute_cont'}{'time'} -= $timeout{'ai_route_calcRoute_cont'}{'timeout'};
-		shift @ai_seq;
-		shift @ai_seq_args;
-
-	} elsif ($ai_seq[0] eq "route_getMapRoute" && timeOut(\%{$timeout{'ai_route_calcRoute_cont'}})) {
-		if (!%{$ai_seq_args[0]{'start'}}) {
-			%{$ai_seq_args[0]{'start'}{'dest'}{'pos'}} = %{$ai_seq_args[0]{'r_start_pos'}};
-			$ai_seq_args[0]{'start'}{'dest'}{'map'} = $ai_seq_args[0]{'r_start_field'}{'name'};
-			$ai_seq_args[0]{'start'}{'dest'}{'field'} = $ai_seq_args[0]{'r_start_field'};
-			%{$ai_seq_args[0]{'dest'}{'source'}{'pos'}} = %{$ai_seq_args[0]{'r_dest_pos'}};
-			$ai_seq_args[0]{'dest'}{'source'}{'map'} = $ai_seq_args[0]{'r_dest_field'}{'name'};
-			$ai_seq_args[0]{'dest'}{'source'}{'field'} = $ai_seq_args[0]{'r_dest_field'};
-			push @{$ai_seq_args[0]{'openList'}}, \%{$ai_seq_args[0]{'start'}};
-		}
-		$timeout{'ai_route_calcRoute'}{'time'} = time;
-		while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
-			ai_mapRoute_searchStep(\%{$ai_seq_args[0]});
-			last ROUTE_GETMAPROUTE if ($ai_seq[0] ne "route_getMapRoute");
-		}
-
-		if ($ai_seq_args[0]{'done'}) {
-			@{$ai_seq_args[0]{'returnArray'}} = @{$ai_seq_args[0]{'solutionList'}};
-		}
-		$timeout{'ai_route_calcRoute_cont'}{'time'} = time;
-		ai_setSuspend(0);
-	}
-
-	} #End of block ROUTE_GETMAPROUTE
 
 
 	##### ITEMS TAKE #####
@@ -4462,7 +4301,7 @@ sub AI {
 	##### ITEMS AUTO-GATHER #####
 
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute")
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute")
 	    && $config{'itemsGatherAuto'}
 	    && !(percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
 	    && timeOut(\%{$timeout{'ai_items_gather_auto'}})) {
@@ -4773,7 +4612,6 @@ sub AI {
 	}
 
 	if ($ai_v{'clear_aiQueue'}) {
-		aiRemove("route_getRoute");	# Run the destructor for route_getRoute to prevent memory leaks
 		undef $ai_v{'clear_aiQueue'};
 		undef @ai_seq;
 		undef @ai_seq_args;
@@ -5086,6 +4924,7 @@ sub parseMsg {
 				$config{'version'} = 0;
 				$versionSearch = 1;
 			}
+			relog();
 		} elsif ($type == 6) {
 			error("The server is temporarily blocking your connection\n", "connection");
 		}
@@ -5236,6 +5075,10 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 
 	} elsif ($switch eq "0078") {
+		# 0078: long ID, word speed, word opt1, word opt2, word option, word class, word hair,
+		# word weapon, word head_option_bottom, word sheild, word head_option_top, word head_option_mid,
+		# word hair_color, word ?, word head_dir, long guild, long emblem, word manner, byte karma,
+		# byte sex, 3byte X_Y_dir, byte ?, byte ?, byte sit, byte level
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
@@ -5309,7 +5152,7 @@ sub parseMsg {
 				$nameID = unpack("L1", $ID);
 				$exists = portalExists($field{'name'}, \%coords);
 				$display = ($exists ne "")
-					? "$portals_lut{$exists}{'source'}{'map'} -> $portals_lut{$exists}{'dest'}{'map'}"
+					? "$portals_lut{$exists}{'source'}{'map'} -> " . getPortalDestName($exists)
 					: "Unknown ".$nameID;
 				binAdd(\@portalsID, $ID);
 				$portals{$ID}{'source'}{'map'} = $field{'name'};
@@ -5339,7 +5182,6 @@ sub parseMsg {
 
 		} else {
 			debug "Unknown Exists: $type - ".unpack("L*",$ID)."\n", "parseMsg";
-			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n";
 		}
 
 	} elsif ($switch eq "0079") {
@@ -6543,13 +6385,13 @@ sub parseMsg {
 		$talk{'ID'} = $ID;
 		$talk{'nameID'} = unpack("L1", $ID);
 		$talk{'msg'} = $talk;
-		message "$npcs{$ID}{'name'} : $talk{'msg'}\n";
+		message "$npcs{$ID}{'name'} : $talk{'msg'}\n", "npc";
 
 	} elsif ($switch eq "00B5") {
 		# 00b5: long ID
 		# "Next" button appeared on the NPC message dialog
 		my $ID = substr($msg, 2, 4);
-		message "$npcs{$ID}{'name'} : Type 'talk cont' to continue talking\n";
+		message "$npcs{$ID}{'name'} : Type 'talk cont' to continue talking\n", "npc";
 		$ai_v{'npc_talk'}{'talk'} = 'next';
 		$ai_v{'npc_talk'}{'time'} = time;
 
@@ -6558,7 +6400,7 @@ sub parseMsg {
 		# "Close" icon appreared on the NPC message dialog
 		my $ID = substr($msg, 2, 4);
 		undef %talk;
-		message "$npcs{$ID}{'name'} : Done talking\n";
+		message "$npcs{$ID}{'name'} : Done talking\n", "npc";
 		$ai_v{'npc_talk'}{'talk'} = 'close';
 		$ai_v{'npc_talk'}{'time'} = time;
 
@@ -6590,7 +6432,7 @@ sub parseMsg {
 				"list");
 		}
 		message("-------------------------------\n", "list");
-		message("$npcs{$ID}{'name'} : Type 'talk resp' and choose a response.\n", "input");
+		message("$npcs{$ID}{'name'} : Type 'talk resp #' to choose a response.\n", "npc");
 
 	} elsif ($switch eq "00BC") {
 		$type = unpack("S1",substr($msg, 2, 2));
@@ -6735,7 +6577,7 @@ sub parseMsg {
 		$talk{'ID'} = $ID;
 		$ai_v{'npc_talk'}{'talk'} = 'buy';
 		$ai_v{'npc_talk'}{'time'} = time;
-		message "$npcs{$ID}{'name'} : Type 'store' to start buying, or type 'sell' to start selling\n";
+		message "$npcs{$ID}{'name'} : Type 'store' to start buying, or type 'sell' to start selling\n", "npc";
 
 	} elsif ($switch eq "00C6") {
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
@@ -7081,9 +6923,9 @@ sub parseMsg {
 		if (!%{$chars[$config{'char'}]{'party'}{'users'}{$ID}}) {
 			binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 			if ($ID eq $accountID) {
-				message "You joined party '$name'\n";
+				message "You joined party '$name'\n", undef, 1;
 			} else {
-				message "$partyUser joined your party '$name'\n";
+				message "$partyUser joined your party '$name'\n", undef, 1;
 			}
 		}
 		if ($type == 0) {
@@ -7140,7 +6982,7 @@ sub parseMsg {
 		$chat =~ s/\000$//;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
 		chatLog("p", $chat."\n") if ($config{'logPartyChat'});
-		message "%$chat\n";
+		message "%$chat\n", "partychat";
 
 		my %item;
 		$item{type} = "p";
@@ -8246,7 +8088,7 @@ sub parseMsg {
 				$nameID = unpack("L1", $ID);
 				$exists = portalExists($field{'name'}, \%coords);
 				$display = ($exists ne "") 
-					? "$portals_lut{$exists}{'source'}{'map'} -> $portals_lut{$exists}{'dest'}{'map'}"
+					? "$portals_lut{$exists}{'source'}{'map'} -> " . getPortalDestName($exists)
 					: "Unknown ".$nameID;
 				binAdd(\@portalsID, $ID);
 				$portals{$ID}{'source'}{'map'} = $field{'name'};
@@ -8256,7 +8098,7 @@ sub parseMsg {
 				$portals{$ID}{'binID'} = binFind(\@portalsID, $ID);
 			}
 			%{$portals{$ID}{'pos'}} = %coords;
-			message "Portal Exists: $portals{$ID}{'name'} - ($portals{$ID}{'binID'})\n", undef, 1;
+			message "Portal Exists: $portals{$ID}{'name'} - ($portals{$ID}{'binID'})\n", "portals", 1;
 
 		} elsif ($type < 1000) {
 			if (!%{$npcs{$ID}}) {
@@ -8511,14 +8353,9 @@ sub ai_partyfollow {
 
 			aiRemove("move");
 			aiRemove("route");
-			aiRemove("route_getRoute");
-			aiRemove("route_getMapRoute");
-			ai_route(\%{$ai_v{temp}{returnHash}},
-				$ai_v{temp}{master}{x},
-				$ai_v{temp}{master}{y},
-				$ai_v{temp}{master}{map},
-				0, 0, 0, 0, 0, 0);
-		}                                                     																																																																																																																																																																																																																																																																																								
+			aiRemove("mapRoute");
+			ai_route($ai_v{temp}{master}{map}, $ai_v{temp}{master}{x}, $ai_v{temp}{master}{y});
+		}
 	}
 }
 
@@ -8589,149 +8426,91 @@ sub ai_getSkillUseType {
 
 }
 
-sub ai_mapRoute_getRoute {
-
-	my %args;
-
-	##VARS
-
-	$args{'g_normal'} = 1;
-
-	###
-	
-	my ($returnArray, $r_start_field, $r_start_pos, $r_dest_field, $r_dest_pos, $time_giveup) = @_;
-	$args{'returnArray'} = $returnArray;
-	$args{'r_start_field'} = $r_start_field;
-	$args{'r_start_pos'} = $r_start_pos;
-	$args{'r_dest_field'} = $r_dest_field;
-	$args{'r_dest_pos'} = $r_dest_pos;
-	$args{'time_giveup'}{'timeout'} = $time_giveup;
-	$args{'time_giveup'}{'time'} = time;
-	unshift @ai_seq, "route_getMapRoute";
-	unshift @ai_seq_args, \%args;
-}
-
-sub ai_mapRoute_getSuccessors {
-	my ($r_args, $r_array, $r_cur) = @_;
-	my $ok;
-	foreach (keys %portals_lut) {
-		if ($portals_lut{$_}{'source'}{'map'} eq $$r_cur{'dest'}{'map'}
-
-			&& !($$r_cur{'source'}{'map'} eq $portals_lut{$_}{'dest'}{'map'}
-			&& $$r_cur{'source'}{'pos'}{'x'} == $portals_lut{$_}{'dest'}{'pos'}{'x'}
-			&& $$r_cur{'source'}{'pos'}{'y'} == $portals_lut{$_}{'dest'}{'pos'}{'y'})
-
-			&& !(%{$$r_cur{'parent'}} && $$r_cur{'parent'}{'source'}{'map'} eq $portals_lut{$_}{'dest'}{'map'}
-			&& $$r_cur{'parent'}{'source'}{'pos'}{'x'} == $portals_lut{$_}{'dest'}{'pos'}{'x'}
-			&& $$r_cur{'parent'}{'source'}{'pos'}{'y'} == $portals_lut{$_}{'dest'}{'pos'}{'y'})) {
-			undef $ok;
-			if (!%{$$r_cur{'parent'}}) {
-				if (!$$r_args{'solutions'}{$$r_args{'start'}{'dest'}{'field'}.\%{$$r_args{'start'}{'dest'}{'pos'}}.\%{$portals_lut{$_}{'source'}{'pos'}}}{'solutionTried'}) {
-					$$r_args{'solutions'}{$$r_args{'start'}{'dest'}{'field'}.\%{$$r_args{'start'}{'dest'}{'pos'}}.\%{$portals_lut{$_}{'source'}{'pos'}}}{'solutionTried'} = 1;
-					$timeout{'ai_route_calcRoute'}{'time'} -= $timeout{'ai_route_calcRoute'}{'timeout'};
-					$$r_args{'waitingForSolution'} = 1;
-					ai_route_getRoute(\@{$$r_args{'solutions'}{$$r_args{'start'}{'dest'}{'field'}.\%{$$r_args{'start'}{'dest'}{'pos'}}.\%{$portals_lut{$_}{'source'}{'pos'}}}{'solution'}}, 
-							$$r_args{'start'}{'dest'}{'field'}, \%{$$r_args{'start'}{'dest'}{'pos'}}, \%{$portals_lut{$_}{'source'}{'pos'}});
-					last;
-				}
-				$ok = 1 if (@{$$r_args{'solutions'}{$$r_args{'start'}{'dest'}{'field'}.\%{$$r_args{'start'}{'dest'}{'pos'}}.\%{$portals_lut{$_}{'source'}{'pos'}}}{'solution'}});
-			} elsif ($portals_los{$$r_cur{'dest'}{'ID'}}{$portals_lut{$_}{'source'}{'ID'}} ne "0"
-				&& $portals_los{$portals_lut{$_}{'source'}{'ID'}}{$$r_cur{'dest'}{'ID'}} ne "0") {
-				$ok = 1;
-			}
-			if ($$r_args{'dest'}{'source'}{'pos'}{'x'} ne "" && $portals_lut{$_}{'dest'}{'map'} eq $$r_args{'dest'}{'source'}{'map'}) {
-				if (!$$r_args{'solutions'}{$$r_args{'dest'}{'source'}{'field'}.\%{$portals_lut{$_}{'dest'}{'pos'}}.\%{$$r_args{'dest'}{'source'}{'pos'}}}{'solutionTried'}) {
-					$$r_args{'solutions'}{$$r_args{'dest'}{'source'}{'field'}.\%{$portals_lut{$_}{'dest'}{'pos'}}.\%{$$r_args{'dest'}{'source'}{'pos'}}}{'solutionTried'} = 1;
-					$timeout{'ai_route_calcRoute'}{'time'} -= $timeout{'ai_route_calcRoute'}{'timeout'};
-					$$r_args{'waitingForSolution'} = 1;
-					ai_route_getRoute(\@{$$r_args{'solutions'}{$$r_args{'dest'}{'source'}{'field'}.\%{$portals_lut{$_}{'dest'}{'pos'}}.\%{$$r_args{'dest'}{'source'}{'pos'}}}{'solution'}}, 
-							$$r_args{'dest'}{'source'}{'field'}, \%{$portals_lut{$_}{'dest'}{'pos'}}, \%{$$r_args{'dest'}{'source'}{'pos'}});
-					last;
-				}
-			}
-			push @{$r_array}, \%{$portals_lut{$_}} if $ok;
-		}
-	}
-}
-
 sub ai_mapRoute_searchStep {
 	my $r_args = shift;
-	my @successors;
-	my $r_cur, $r_suc;
-	my $i;
 
-	###check if failed
-	if (!@{$$r_args{'openList'}}) {
-		#failed!
+	unless (%{$$r_args{'openlist'}}) {
 		$$r_args{'done'} = 1;
-		return;
-	}
-	
-	$r_cur = shift @{$$r_args{'openList'}};
-
-	###check if finished
-	if ($$r_args{'dest'}{'source'}{'map'} eq $$r_cur{'dest'}{'map'}
-		&& (@{$$r_args{'solutions'}{$$r_args{'dest'}{'source'}{'field'}.\%{$$r_cur{'dest'}{'pos'}}.\%{$$r_args{'dest'}{'source'}{'pos'}}}{'solution'}}
-		|| $$r_args{'dest'}{'source'}{'pos'}{'x'} eq "")) {
-		do {
-			unshift @{$$r_args{'solutionList'}}, {%{$r_cur}};
-			$r_cur = $$r_cur{'parent'} if (%{$$r_cur{'parent'}});
-		} while ($r_cur != \%{$$r_args{'start'}});
-		$$r_args{'done'} = 1;
-		return;
+		$$r_args{'found'} = '';
+		return 0;
 	}
 
-	ai_mapRoute_getSuccessors($r_args, \@successors, $r_cur);
-	if ($$r_args{'waitingForSolution'}) {
-		undef $$r_args{'waitingForSolution'};
-		unshift @{$$r_args{'openList'}}, $r_cur;
-		return;
-	}
-
-	$newg = $$r_cur{'g'} + $$r_args{'g_normal'};
-	foreach $r_suc (@successors) {
-		undef $found;
-		undef $openFound;
-		undef $closedFound;
-		for($i = 0; $i < @{$$r_args{'openList'}}; $i++) {
-			if ($$r_suc{'dest'}{'map'} eq $$r_args{'openList'}[$i]{'dest'}{'map'}
-				&& $$r_suc{'dest'}{'pos'}{'x'} == $$r_args{'openList'}[$i]{'dest'}{'pos'}{'x'}
-				&& $$r_suc{'dest'}{'pos'}{'y'} == $$r_args{'openList'}[$i]{'dest'}{'pos'}{'y'}) {
-				if ($newg >= $$r_args{'openList'}[$i]{'g'}) {
-					$found = 1;
-					}
-				$openFound = $i;
-				last;
-			}
+	my $parent = (sort {$$r_args{'openlist'}{$a}{'walk'} <=> $$r_args{'openlist'}{$b}{'walk'}} keys %{$$r_args{'openlist'}})[0];
+	# use this if you want minimum MAP count otherwise, use the above for minimum step count
+	foreach my $parent (keys %{$$r_args{'openlist'}})
+	{
+		my ($portal,$dest) = split /=/, $parent;
+		if ($$r_args{'budget'} ne '' && $$r_args{'openlist'}{$parent}{'zenny'} > $$r_args{'budget'}) {
+			#This link is too expensive
+			delete $$r_args{'openlist'}{$parent};
+			next;
+		} else {
+			#MOVE this entry into the CLOSELIST
+			$$r_args{'closelist'}{$parent}{'walk'}   = $$r_args{'openlist'}{$parent}{'walk'};
+			$$r_args{'closelist'}{$parent}{'zenny'}  = $$r_args{'openlist'}{$parent}{'zenny'};
+			$$r_args{'closelist'}{$parent}{'parent'} = $$r_args{'openlist'}{$parent}{'parent'};
+			#Then delete in from OPENLIST
+			delete $$r_args{'openlist'}{$parent};
 		}
-		next if ($found);
-		
-		undef $found;
-		for($i = 0; $i < @{$$r_args{'closedList'}}; $i++) {
-			if ($$r_suc{'dest'}{'map'} eq $$r_args{'closedList'}[$i]{'dest'}{'map'}
-				&& $$r_suc{'dest'}{'pos'}{'x'} == $$r_args{'closedList'}[$i]{'dest'}{'pos'}{'x'}
-				&& $$r_suc{'dest'}{'pos'}{'y'} == $$r_args{'closedList'}[$i]{'dest'}{'pos'}{'y'}) {
-				if ($newg >= $$r_args{'closedList'}[$i]{'g'}) {
-					$found = 1;
+
+		if ($portals_lut{$portal}{'dest'}{$dest}{'map'} eq $$r_args{'dest'}{'map'}) {
+			if ($$r_args{'dest'}{'pos'}{'x'} eq '' && $$r_args{'dest'}{'pos'}{'y'} eq '') {
+				$$r_args{'found'} = $parent;
+				$$r_args{'done'} = 1;
+				undef @{$$r_args{'mapSolution'}};
+				my $this = $$r_args{'found'};
+				while ($this) {
+					my %arg;
+					$arg{'portal'} = $this;
+					my ($from,$to) = split /=/, $this;
+					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
+					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
+					$arg{'zenny'} = $$r_args{'closelist'}{$this}{'zenny'};
+					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
+					unshift @{$$r_args{'mapSolution'}},\%arg;
+					$this = $$r_args{'closelist'}{$this}{'parent'};
 				}
-				$closedFound = $i;
-				last;
+				return;
+			} elsif ( ai_route_getRoute(\@{$$r_args{'solution'}}, \%{$$r_args{'dest'}{'field'}}, \%{$portals_lut{$portal}{'dest'}{$dest}{'pos'}}, \%{$$r_args{'dest'}{'pos'}}) ) {
+				my $walk = "$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}=$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}";
+				$$r_args{'closelist'}{$walk}{'walk'} = scalar @{$$r_args{'solution'}} + $$r_args{'closelist'}{$parent}{$dest}{'walk'};
+				$$r_args{'closelist'}{$walk}{'parent'} = $parent;
+				$$r_args{'closelist'}{$walk}{'zenny'} = $$r_args{'closelist'}{$parent}{'zenny'};
+				$$r_args{'found'} = $walk;
+				$$r_args{'done'} = 1;
+				undef @{$$r_args{'mapSolution'}};
+				my $this = $$r_args{'found'};
+				while ($this) {
+					my %arg;
+					$arg{'portal'} = $this;
+					my ($from,$to) = split /=/, $this;
+					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
+					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
+					$arg{'zenny'} = $$r_args{'closelist'}{$this}{'zenny'};
+					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
+					unshift @{$$r_args{'mapSolution'}},\%arg;
+					$this = $$r_args{'closelist'}{$this}{'parent'};
+				}
+				return;
 			}
 		}
-		next if ($found);
-		if ($openFound ne "") {
-			binRemoveAndShiftByIndex(\@{$$r_args{'openList'}}, $openFound);
+		#get all children of each openlist
+		foreach my $child (keys %{$portals_los{$dest}}) {
+			next unless $portals_los{$dest}{$child};
+			foreach my $subchild (keys %{$portals_lut{$child}{'dest'}}) {
+				my $destID = $portals_lut{$child}{'dest'}{$subchild}{'ID'};
+				#############################################################
+				my $thisWalk = PORTAL_PENALTY + $$r_args{'closelist'}{$parent}{'walk'} + $portals_los{$dest}{$child};
+				if (!exists $$r_args{'closelist'}{"$child=$subchild"}) {
+					if ( !exists $$r_args{'openlist'}{"$child=$subchild"} || $$r_args{'openlist'}{"$child=$subchild"}{'walk'} > $thisWalk ) {
+						$$r_args{'openlist'}{"$child=$subchild"}{'parent'} = $parent;
+						$$r_args{'openlist'}{"$child=$subchild"}{'walk'} = $thisWalk;
+						$$r_args{'openlist'}{"$child=$subchild"}{'zenny'} = $$r_args{'closelist'}{$parent}{'zenny'} + $portals_lut{$child}{'dest'}{$subchild}{'cost'};
+					}
+				}
+			}
 		}
-		if ($closedFound ne "") {
-			binRemoveAndShiftByIndex(\@{$$r_args{'closedList'}}, $closedFound);
-		}
-		$$r_suc{'g'} = $newg;
-		$$r_suc{'h'} = 0;
-		$$r_suc{'f'} = $$r_suc{'g'} + $$r_suc{'h'};
-		$$r_suc{'parent'} = $r_cur;
-		minHeapAdd(\@{$$r_args{'openList'}}, $r_suc, "f");
 	}
-	push @{$$r_args{'closedList'}}, $r_cur;
 }
 
 sub ai_items_take {
@@ -8750,61 +8529,45 @@ sub ai_items_take {
 }
 
 sub ai_route {
-	my ($r_ret, $x, $y, $map, $maxRouteDistance, $maxRouteTime, $attackOnRoute, $avoidPortals, $distFromGoal, $checkInnerPortals, $attackID) = @_;
+	my $map = shift;
+	my $x = shift;
+	my $y = shift;
+	my %param = @_;
+	debug "On route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
+
 	my %args;
-#Solos Start
-	my $pos_x;
-	my $pos_y;
-	$pos_x = int($chars[$config{'char'}]{'pos_to'}{'x'}) if ($chars[$config{'char'}]{'pos_to'}{'x'} ne "");
-	$pos_y = int($chars[$config{'char'}]{'pos_to'}{'y'}) if ($chars[$config{'char'}]{'pos_to'}{'y'} ne "");
-#Solos End
 	$x = int($x) if ($x ne "");
 	$y = int($y) if ($y ne "");
-	$args{'returnHash'} = $r_ret;
-	$args{'dest_x'} = $x;
-	$args{'dest_y'} = $y;
-	$args{'dest_map'} = $map;
-	$args{'maxRouteDistance'} = $maxRouteDistance;
-	$args{'maxRouteTime'} = $maxRouteTime;
-	$args{'attackOnRoute'} = $attackOnRoute;
-	$args{'avoidPortals'} = $avoidPortals;
-	$args{'distFromGoal'} = $distFromGoal;
-	$args{'checkInnerPortals'} = $checkInnerPortals;
-	$args{'attackID'} = $attackID;
-	undef %{$args{'returnHash'}};
-	unshift @ai_seq, "route";
-	unshift @ai_seq_args, \%args;
-	debug "On route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
-#Solos Start
-#if kore is stuck
-	if (($old_x == $x) && ($old_y == $y)) {
-		$calcTo_SameSpot++;
-	} else {
-		$calcTo_SameSpot = 0;
-		$old_x = $x;
-		$old_y = $y;
-	}
-	if ($calcTo_SameSpot >= 10) {
-		$calcTo_SameSpot = 0;
-		Unstuck("Cannot find destination, trying to unstuck ...\n");
+	$args{'dest'}{'map'} = $map;
+	$args{'dest'}{'pos'}{'x'} = $x;
+	$args{'dest'}{'pos'}{'y'} = $y;
+	$args{'maxRouteDistance'} = $param{maxRouteDistance} if exists $param{'maxRouteDistance'};
+	$args{'maxRouteTime'} = $param{maxRouteTime} if exists $param{'maxRouteTime'};
+	$args{'attackOnRoute'} = $param{attackOnRoute} if exists $param{'attackOnRoute'};
+	$args{'distFromGoal'} = $param{distFromGoal} if exists $param{'distFromGoal'};
+	$args{'attackID'} = $param{attackID} if exists $param{'attackID'};
+	$args{'param'} = [@_];
+	$args{'time_start'} = time;
+
+	if (!$param{'_internal'}) {
+		undef @{$args{'solution'}};
+		undef @{$args{'mapSolution'}};
+	} elsif (exists $param{'_solution'}) {
+		$args{'solution'} = $param{'_solution'};
 	}
 
-	if (($old_pos_x == $pos_x) && ($old_pos_y == $pos_y)) {
-		$calcFrom_SameSpot++;
+	# Destination is same map and isn't blocked by walls/water/whatever
+	if ($param{'_internal'} || ($field{'name'} eq $args{'dest'}{'map'} && ai_route_getRoute(\@{$args{'solution'}}, \%field, $chars[$config{'char'}]{'pos_to'}, $args{'dest'}{'pos'}))) {
+		# Since the solution array is here, we can start in "Route Solution Ready"
+		$args{'stage'} = 'Route Solution Ready';
+		debug "Route Solution Ready\n", "route";
+		unshift @ai_seq, "route";
+		unshift @ai_seq_args, \%args;
 	} else {
-		$calcFrom_SameSpot = 0;
-		$old_pos_x = $pos_x;
-		$old_pos_y = $pos_y;
+		# Nothing is initialized so we start scratch
+		unshift @ai_seq, "mapRoute";
+		unshift @ai_seq_args, \%args;
 	}
-	if ($calcFrom_SameSpot >= 10) {
-		$calcFrom_SameSpot = 0;
-		Unstuck("Invalid original position, trying to unstuck ...\n");
-	}	
-
-	if ($totalStuckCount >= 10) {
-		RespawnUnstuck();
-	}	
-#Solos End
 }
 
 sub ai_route_getDiagSuccessors {
@@ -8854,85 +8617,77 @@ sub ai_route_getMap {
 	return $$r_args{'field'}{'field'}[($y*$$r_args{'field'}{'width'})+$x];
 }
 
+
 sub ai_route_getRoute {
 	my %args;
-	my ($returnArray, $r_field, $r_start, $r_dest, $time_giveup) = @_;
+	my ($returnArray, $r_field, $r_start, $r_dest) = @_;
 	$args{'returnArray'} = $returnArray;
+	undef @{$args{'returnArray'}};
 	$args{'field'} = $r_field;
 	%{$args{'start'}} = %{$r_start};
 	%{$args{'dest'}} = %{$r_dest};
-	$args{'time_giveup'}{'timeout'} = $time_giveup;
-	$args{'time_giveup'}{'time'} = time;
-	$args{'destroyFunction'} = \&ai_route_getRoute_destroy;
-	undef @{$args{'returnArray'}};
-	unshift @ai_seq, "route_getRoute";
-	unshift @ai_seq_args, \%args;
-}
 
-sub ai_route_getRoute_destroy {
-	my $r_args = shift;
-	if (!$buildType) {
-		$CalcPath_destroy->Call($$r_args{'session'}) if ($$r_args{'session'} ne "");;
-	} elsif ($buildType == 1) {
-		Tools::CalcPath_destroy($$r_args{'session'}) if ($$r_args{'session'} ne "");;
+	return 1 if $args{'dest'}{'x'} eq '' || $args{'dest'}{'y'} eq '';
+
+	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1] ) {
+		next if $args{'field'}{'field'}[$args{'start'}{'x'}+$$z[0] + $args{'field'}{'width'}*($args{'start'}{'y'}+$$z[1])];
+		$args{'start'}{'x'} += $$z[0];
+		$args{'start'}{'y'} += $$z[1];
+		last;
 	}
-}
+	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1] ) {
+		next if $args{'field'}{'field'}[$args{'dest'}{'x'}+$$z[0] + $args{'field'}{'width'}*($args{'dest'}{'y'}+$$z[1])];
+		$args{'dest'}{'x'} += $$z[0];
+		$args{'dest'}{'y'} += $$z[1];
+		last;
+	}
 
-sub ai_route_searchStep {
-	my $r_args = shift;
+	my $SOLUTION_MAX = 5000;
+	$args{'solution'} = "\0" x ($SOLUTION_MAX*4+4);
+	my $weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
+	$weights .= chr(1) x (256 - length($weights));
+
+	if (!$buildType) {
+		$args{'session'} = $CalcPath_init->Call(
+			$args{'solution'},
+			$args{'field'}{'dstMap'},
+			$weights,
+			$args{'field'}{'width'},
+			$args{'field'}{'height'}, 
+			pack("S*",$args{'start'}{'x'}, $args{'start'}{'y'}),
+			pack("S*",$args{'dest'}{'x'} , $args{'dest'}{'y'} ),
+			2000);
+	} elsif ($buildType == 1) {
+		$args{'session'} = Tools::CalcPath_init(
+			$args{'solution'},
+			$args{'field'}{'dstMap'},
+			$weights,
+			$args{'field'}{'width'},
+			$args{'field'}{'height'},
+			pack("S*",$args{'start'}{'x'}, $args{'start'}{'y'}),
+			pack("S*",$args{'dest'}{'x'} , $args{'dest'}{'y'} ),
+			2000);
+	}
+	return undef if $args{'session'} < 0;
+
 	my $ret;
-
-	if (!$$r_args{'initialized'}) {
-		#####
-		my $SOLUTION_MAX = 5000;
-		$$r_args{'solution'} = "\0" x ($SOLUTION_MAX*4+4);
-		#####
-		my $weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
-		$weights .= chr(1) x (256 - length($weights));
-		if (!$buildType) {
-			$$r_args{'session'} = $CalcPath_init->Call(
-				$$r_args{'solution'},
-				$$r_args{'field'}{'dstMap'},
-				$weights,
-				$$r_args{'field'}{'width'},
-				$$r_args{'field'}{'height'}, 
-				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}),
-				pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}),
-				$$r_args{'timeout'});
-
-		} elsif ($buildType == 1) {
-			$$r_args{'session'} = Tools::CalcPath_init(
-				$$r_args{'solution'},
-				$$r_args{'field'}{'dstMap'},
-				$weights,
-				$$r_args{'field'}{'width'},
-				$$r_args{'field'}{'height'},
-				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), 
-				pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}),
-				$$r_args{'timeout'});
-		}
-	}
-	if ($$r_args{'session'} < 0) {
-		$$r_args{'done'} = 1;
-		return;
-	}
-	$$r_args{'initialized'} = 1;
 	if (!$buildType) {
-		$ret = $CalcPath_pathStep->Call($$r_args{'session'});
-	} elsif ($buildType == 1) {
-		$ret = Tools::CalcPath_pathStep($$r_args{'session'});
+		$ret = $CalcPath_pathStep->Call($args{'session'});
+		$CalcPath_destroy->Call($args{'session'});
+	} else {
+		$ret = Tools::CalcPath_pathStep($args{'session'});
+		Tools::CalcPath_destroy($args{'session'});
 	}
-	if (!$ret) {
-		my $size = unpack("L",substr($$r_args{'solution'},0,4));
-		my $j = 0;
-		my $i;
-		for ($i = ($size-1)*4+4; $i >= 4;$i-=4) {
-			$$r_args{'returnArray'}[$j]{'x'} = unpack("S",substr($$r_args{'solution'}, $i, 2));
-			$$r_args{'returnArray'}[$j]{'y'} = unpack("S",substr($$r_args{'solution'}, $i+2, 2));
-			$j++;
-		}
-		$$r_args{'done'} = 1;
+	return undef if $ret;
+
+	my $size = unpack("L", substr($args{'solution'}, 0, 4));
+	my $j = 0;
+	for (my $i = ($size-1)*4+4; $i >= 4; $i-=4) {
+		$args{'returnArray'}[$j]{'x'} = unpack("S",substr($args{'solution'}, $i, 2));
+		$args{'returnArray'}[$j]{'y'} = unpack("S",substr($args{'solution'}, $i+2, 2));
+		$j++;
 	}
+	return scalar @{$args{'returnArray'}}; #successful
 }
 
 sub ai_route_getSuccessors {
@@ -9136,46 +8891,46 @@ sub attack {
 			if (existsInList($config{"autoSwitch_$i"}, $monsters{$ID}{'name'})) {
 				message "Encounter Monster : ".$monsters{$ID}{'name'}."\n";
 
-				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_RightHand"}) if ($config{"autoSwitch_$i"."_RightHand"});
-				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_LeftHand"}) if ($config{"autoSwitch_$i"."_LeftHand"});
-				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_Arrow"}) if ($config{"autoSwitch_$i"."_Arrow"});
+				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_rightHand"}) if ($config{"autoSwitch_$i"."_rightHand"});
+				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_leftHand"}) if ($config{"autoSwitch_$i"."_leftHand"});
+				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
 
 				if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) { 
 					$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
 					sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "");
-					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_LeftHand"}." ($Leq)\n", "equip";
+					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_leftHand"}." ($Leq)\n", "equip";
 					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'}); 
 				}
-				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_RightHand"} eq "[NONE]") {
+				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") {
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
 					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
 					if(((binFind(\@skillsST,$skillsST_lut{2}) eq "" && binFind(\@skillsST,$skillsST_lut{23}) eq "" && binFind(\@skillsST,$skillsST_lut{68}) eq "") 
-						|| $config{"autoSwitch_$i"."_RightHand"} eq "[NONE]" )
+						|| $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]" )
 						&& $Rdef ne ""){
 						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
 					}
 					if ($Req eq $Leq) {
 						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
 							next if (!%{$chars[$config{'char'}]{'inventory'}[$j]});
-							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_$i"."_RightHand"} && $j != $Leq) {
+							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_$i"."_rightHand"} && $j != $Leq) {
 								$Req = $j;
 								last;
 							}
 						}
 					}
-					if ($config{"autoSwitch_$i"."_RightHand"} ne "[NONE]") {
-						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_RightHand"}."($Req)\n", "equip"; 
+					if ($config{"autoSwitch_$i"."_rightHand"} ne "[NONE]") {
+						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_rightHand"}."($Req)\n", "equip"; 
 						sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
 					}
 				}
 				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) { 
-					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_Arrow"}."\n", "equip";
+					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_arrow"}."\n", "equip";
 					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0); 
 				}
-				if ($config{"autoSwitch_$i"."_Distance"} && $config{"autoSwitch_$i"."_Distance"} != $config{'attackDistance'}) { 
+				if ($config{"autoSwitch_$i"."_distance"} && $config{"autoSwitch_$i"."_distance"} != $config{'attackDistance'}) { 
 					$ai_v{'attackDistance'} = $config{'attackDistance'};
-					$config{'attackDistance'} = $config{"autoSwitch_$i"."_Distance"};
+					$config{'attackDistance'} = $config{"autoSwitch_$i"."_distance"};
 					message "Change Attack Distance to : ".$config{'attackDistance'}."\n", "equip";
 				}
 				if ($config{"autoSwitch_$i"."_useWeapon"} ne "") { 
@@ -9187,26 +8942,26 @@ sub attack {
 			}
 			$i++;
 		}
-		if ($config{'autoSwitch_default_LeftHand'}) { 
-			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_LeftHand'});
+		if ($config{'autoSwitch_default_leftHand'}) { 
+			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_leftHand'});
 			if($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
 				$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
 				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'});
-				message "Auto equiping default [L] :".$config{'autoSwitch_default_LeftHand'}."\n", "equip";
+				message "Auto equiping default [L] :".$config{'autoSwitch_default_leftHand'}."\n", "equip";
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'});
 			}
 		}
-		if ($config{'autoSwitch_default_RightHand'}) { 
-			$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_RightHand'}); 
+		if ($config{'autoSwitch_default_rightHand'}) { 
+			$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'}); 
 			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
-				message "Auto equiping default [R] :".$config{'autoSwitch_default_RightHand'}."\n", "equip"; 
+				message "Auto equiping default [R] :".$config{'autoSwitch_default_rightHand'}."\n", "equip"; 
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
 			}
 		}
-		if ($config{'autoSwitch_default_Arrow'}) { 
-			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_Arrow'}); 
+		if ($config{'autoSwitch_default_arrow'}) { 
+			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_arrow'}); 
 			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
-				message "Auto equiping default [A] :".$config{'autoSwitch_default_Arrow'}."\n", "equip"; 
+				message "Auto equiping default [A] :".$config{'autoSwitch_default_arrow'}."\n", "equip"; 
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0);
 			}
 		}
@@ -9268,12 +9023,6 @@ sub move {
 	my $triggeredByRoute = shift;
 	my $attackID = shift;
 	my %args;
-#Solos Start
-	my $pos_x;
-	my $pos_y;
-	$pos_x = int($chars[$config{'char'}]{'pos_to'}{'x'}) if ($chars[$config{'char'}]{'pos_to'}{'x'} ne "");
-	$pos_y = int($chars[$config{'char'}]{'pos_to'}{'y'}) if ($chars[$config{'char'}]{'pos_to'}{'y'} ne "");
-#Solos End
 	$args{'move_to'}{'x'} = $x;
 	$args{'move_to'}{'y'} = $y;
 	$args{'triggeredByRoute'} = $triggeredByRoute;
@@ -9282,42 +9031,6 @@ sub move {
 	$args{'ai_move_giveup'}{'timeout'} = $timeout{'ai_move_giveup'}{'timeout'};
 	unshift @ai_seq, "move";
 	unshift @ai_seq_args, \%args;
-#Solos Start
-#if kore is stuck
-	if (($move_x == $x) && ($move_y == $y)) {
-		$moveTo_SameSpot++;
-	} else {
-		$moveTo_SameSpot = 0;
-		$move_x = $x;
-		$move_y = $y;
-	}
-	if ($moveTo_SameSpot == 20) {
-		ClearRouteAI("Keep trying to move to same spot, clearing route AI to unstuck ...\n");
-	}
-	if ($moveTo_SameSpot >= 50) {
-		$moveTo_SameSpot = 0;
-		Unstuck("Keep trying to move to same spot, teleporting to unstuck ...\n");
-	}
-
-	if (($move_pos_x == $pos_x) && ($move_pos_y == $pos_y)) {
-		$moveFrom_SameSpot++;
-	} else {
-		$moveFrom_SameSpot = 0;
-		$move_pos_x = $pos_x;
-		$move_pos_y = $pos_y;
-	}
-	if ($moveFrom_SameSpot == 20) {
-		ClearRouteAI("Keep trying to move from same spot, clearing route AI to unstuck ...\n");
-	}
-	if ($moveFrom_SameSpot >= 50) {
-		$moveFrom_SameSpot = 0;
-		Unstuck("Keep trying to move from same spot, teleport to unstuck ...\n");
-	}											    
-
-	if ($totalStuckCount >= 10) {
-		RespawnUnstuck();
-	}	
-#Solos End
 }
 
 sub quit {
@@ -9465,31 +9178,6 @@ sub take {
 #######################################
 #######################################
 
-
-##
-# distance(r_hash1, r_hash2)
-# r_hash1, r_hash2: references to position hash tables.
-# Returns: the distance as integer.
-#
-# Calculates the distance between r_hash1 and r_hash2.
-# Both hash tables must have an 'x' and a 'y' key.
-#
-# Example:
-# # Calculates the distance between you an a monster
-# my $dist = distance($chars[$config{char}]{pos_to},
-#                     $monsters{$ID}{pos_to});
-sub distance {
-	my $r_hash1 = shift;
-	my $r_hash2 = shift;
-	my %line;
-	if ($r_hash2) {
-		$line{'x'} = abs($$r_hash1{'x'} - $$r_hash2{'x'});
-		$line{'y'} = abs($$r_hash1{'y'} - $$r_hash2{'y'});
-	} else {
-		%line = %{$r_hash1};
-	}
-	return sqrt($line{'x'} ** 2 + $line{'y'} ** 2);
-}
 
 sub getVector {
 	my $r_store = shift;
@@ -9985,8 +9673,7 @@ sub avoidGM_near {
 		my $statusGM = 1;
 		my $j = 0;
 		while ($config{"avoid_ignore_$j"} ne "") {
-			if ($players{$playersID[$i]}{'name'} eq $config{"avoid_ignore_$j"})
-			{
+			if ($players{$playersID[$i]}{'name'} eq $config{"avoid_ignore_$j"}) {
 				$statusGM = 0;
 				last;
 			}
@@ -10017,8 +9704,7 @@ sub avoidGM_talk {
 	my $statusGM = 1;
 	my $j = 0;
 	while ($config{"avoid_ignore_$j"} ne "") {
-		if ($chatMsgUser eq $config{"avoid_ignore_$j"})
-		{
+		if ($chatMsgUser eq $config{"avoid_ignore_$j"}) {
 			$statusGM = 0;
 			last;
 		}
@@ -10039,7 +9725,7 @@ sub avoidGM_talk {
 	return 0;
 }
 
-sub avoidList_near() {
+sub avoidList_near {
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
 		my $j = 0;
@@ -10059,7 +9745,7 @@ sub avoidList_near() {
 	return 0;
 }
 
-sub avoidList_talk($$) {
+sub avoidList_talk {
 	return if (!$config{'avoidList'});
 	my ($chatMsgUser, $chatMsg) = @_;
 
@@ -10077,97 +9763,54 @@ sub avoidList_talk($$) {
 	}
 }
 
+
 sub compilePortals {
-	undef %mapPortals;
+	my %srcPortals;
+	my $map;
 	foreach (keys %portals_lut) {
-		%{$mapPortals{$portals_lut{$_}{'source'}{'map'}}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
+		$map = $portals_lut{$_}{'source'}{'map'};
+		%{$srcPortals{$map}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
 	}
-	my $l = 0;
-	foreach my $map (keys %mapPortals) {
-		foreach my $portal (keys %{$mapPortals{$map}}) {
-			foreach (keys %{$mapPortals{$map}}) {
+	foreach $map (keys %srcPortals) {
+		foreach my $portal (keys %{$srcPortals{$map}}) {
+			foreach (keys %{$srcPortals{$map}}) {
 				next if ($_ eq $portal);
-				if ($portals_los{$portal}{$_} eq "" && $portals_los{$_}{$portal} eq "") {
+				if ($portals_los{$portal}{$_} eq "" || $portals_los{$_}{$portal} eq "") {
+					my @solution;
 					if ($field{'name'} ne $map) {
 						message "Processing map $map\n", "system";
 						getField("$Settings::def_field/$map.fld", \%field);
 					}
 					message "Calculating portal route $portal -> $_\n", "system";
-					ai_route_getRoute(\@solution, \%field, \%{$mapPortals{$map}{$portal}{'pos'}}, \%{$mapPortals{$map}{$_}{'pos'}});
-					compilePortals_getRoute();
-					$portals_los{$portal}{$_} = (@solution) ? 1 : 0;
+					ai_route_getRoute(\@solution, \%field, $srcPortals{$map}{$portal}{'pos'}, $srcPortals{$map}{$_}{'pos'});
+					$portals_los{$portal}{$_} = scalar @solution;
 				}
 			}
 		}
 	}
 
-	writePortalsLOS("tables/portalsLOS.txt", \%portals_los);
-
-	message "Wrote portals Line of Sight table to 'tables/portalsLOS.txt'\n", "system";
-
+	writePortalsLOS("$Settings::tables_folder/portalsLOS.txt", \%portals_los);
+	message "Wrote portals Line of Sight table to '$Settings::tables_folder/portalsLOS.txt'\n", "system";
 }
 
 sub compilePortals_check {
-	my $r_return = shift;
-	my %mapPortals;
-	undef $$r_return;
+	my %srcPortals;
+	my $map;
 	foreach (keys %portals_lut) {
-		%{$mapPortals{$portals_lut{$_}{'source'}{'map'}}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
+		$map = $portals_lut{$_}{'source'}{'map'};
+		%{$srcPortals{$map}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
 	}
-	foreach my $map (keys %mapPortals) {
-		foreach my $portal (keys %{$mapPortals{$map}}) {
-			foreach (keys %{$mapPortals{$map}}) {
-				next if ($_ eq $portal);
-				if ($portals_los{$portal}{$_} eq "" && $portals_los{$_}{$portal} eq "") {
-					$$r_return = 1;
-					return;
+	foreach $map (keys %srcPortals) {
+		foreach my $portal (keys %{$srcPortals{$map}}) {
+			foreach my $portal2 (keys %{$srcPortals{$map}}) {
+				next if ($portal2 eq $portal);
+				if ($portals_los{$portal}{$portal2} eq "" || $portals_los{$portal2}{$portal} eq "") {
+					return 1;
 				}
 			}
 		}
 	}
-}
-
-sub compilePortals_getRoute {	
-	if ($ai_seq[0] eq "route_getRoute") {
-		if (!$ai_seq_args[0]{'init'}) {
-			undef @{$ai_v{'temp'}{'subSuc'}};
-			undef @{$ai_v{'temp'}{'subSuc2'}};
-			if (ai_route_getMap(\%{$ai_seq_args[0]}, $ai_seq_args[0]{'start'}{'x'}, $ai_seq_args[0]{'start'}{'y'})) {
-				ai_route_getSuccessors(\%{$ai_seq_args[0]}, \%{$ai_seq_args[0]{'start'}}, \@{$ai_v{'temp'}{'subSuc'}},0);
-				ai_route_getDiagSuccessors(\%{$ai_seq_args[0]}, \%{$ai_seq_args[0]{'start'}}, \@{$ai_v{'temp'}{'subSuc'}},0);
-				foreach (@{$ai_v{'temp'}{'subSuc'}}) {
-					ai_route_getSuccessors(\%{$ai_seq_args[0]}, \%{$_}, \@{$ai_v{'temp'}{'subSuc2'}},0);
-					ai_route_getDiagSuccessors(\%{$ai_seq_args[0]}, \%{$_}, \@{$ai_v{'temp'}{'subSuc2'}},0);
-				}
-				if (@{$ai_v{'temp'}{'subSuc'}}) {
-					%{$ai_seq_args[0]{'start'}} = %{$ai_v{'temp'}{'subSuc'}[0]};
-				} elsif (@{$ai_v{'temp'}{'subSuc2'}}) {
-					%{$ai_seq_args[0]{'start'}} = %{$ai_v{'temp'}{'subSuc2'}[0]};
-				}
-			}
-			undef @{$ai_v{'temp'}{'subSuc'}};
-			undef @{$ai_v{'temp'}{'subSuc2'}};
-			if (ai_route_getMap(\%{$ai_seq_args[0]}, $ai_seq_args[0]{'dest'}{'x'}, $ai_seq_args[0]{'dest'}{'y'})) {
-				ai_route_getSuccessors(\%{$ai_seq_args[0]}, \%{$ai_seq_args[0]{'dest'}}, \@{$ai_v{'temp'}{'subSuc'}},0);
-				ai_route_getDiagSuccessors(\%{$ai_seq_args[0]}, \%{$ai_seq_args[0]{'dest'}}, \@{$ai_v{'temp'}{'subSuc'}},0);
-				foreach (@{$ai_v{'temp'}{'subSuc'}}) {
-					ai_route_getSuccessors(\%{$ai_seq_args[0]}, \%{$_}, \@{$ai_v{'temp'}{'subSuc2'}},0);
-					ai_route_getDiagSuccessors(\%{$ai_seq_args[0]}, \%{$_}, \@{$ai_v{'temp'}{'subSuc2'}},0);
-				}
-				if (@{$ai_v{'temp'}{'subSuc'}}) {
-					%{$ai_seq_args[0]{'dest'}} = %{$ai_v{'temp'}{'subSuc'}[0]};
-				} elsif (@{$ai_v{'temp'}{'subSuc2'}}) {
-					%{$ai_seq_args[0]{'dest'}} = %{$ai_v{'temp'}{'subSuc2'}[0]};
-				}
-			}
-			$ai_seq_args[0]{'timeout'} = 90000;
-		}
-		$ai_seq_args[0]{'init'} = 1;
-		ai_route_searchStep(\%{$ai_seq_args[0]});
-		ai_route_getRoute_destroy(\%{$ai_seq_args[0]});
-		shift @ai_seq;
-		shift @ai_seq_args;
-	}
+	return 0;
 }
 
 ##
@@ -10226,7 +9869,7 @@ sub portalExists {
 	my ($map, $r_pos) = @_;
 	foreach (keys %portals_lut) {
 		if ($portals_lut{$_}{'source'}{'map'} eq $map && $portals_lut{$_}{'source'}{'pos'}{'x'} == $$r_pos{'x'}
-			&& $portals_lut{$_}{'source'}{'pos'}{'y'} == $$r_pos{'y'}) {
+		 && $portals_lut{$_}{'source'}{'pos'}{'y'} == $$r_pos{'y'}) {
 			return $_;
 		}
 	}
@@ -10237,7 +9880,7 @@ sub redirectXKoreMessages {
 
 	return if ($type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
 	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|selfchat|emotion|drop|inventory|deal)$/);
-	return if ($domain =~ /^(attack|skill|list|info)/);
+	return if ($domain =~ /^(attack|skill|list|info|partychat|npc)/);
 
 	$message =~ s/\n*$//s;
 	$message =~ s/\n/\\n/g;
@@ -10345,64 +9988,6 @@ sub getActorNames {
 	}
 
 	return ($source, $uses, $target);
-}
-
-sub ClearRouteAI {
-	my $msg = shift;
-	message $msg;
-	chatLog("k", $msg);
-	aiRemove("move");
-	aiRemove("route");
-	aiRemove("route_getRoute");
-	aiRemove("route_getMapRoute");
-	ai_clientSuspend(0, 5);
-}
-
-sub Unstuck {
-	my $msg = shift;
-
-	$totalStuckCount++;
-	$old_x = 0;
-	$old_y = 0;
-	$old_pos_x = 0;
-	$old_pos_y = 0;
-	$move_x = 0;
-	$move_y = 0;
-	$move_pos_x = 0;
-	$move_pos_y = 0;
-	message $msg;
-	chatLog("k", $msg);
-	aiRemove("move");
-	aiRemove("route");
-	aiRemove("route_getRoute");
-	aiRemove("route_getMapRoute");
-	useTeleport(1);
-	ai_clientSuspend(0, 5);
-}
-
-sub RespawnUnstuck {
-	$totalStuckCount = 0;
-	$calcTo_SameSpot = 0;
-	$calcFrom_SameSpot = 0;
-	$moveTo_SameSpot = 0;
-	$moveFrom_SameSpot = 0;
-	$route_stuck = 0;
-	$old_x = 0;
-	$old_y = 0;
-	$old_pos_x = 0;
-	$old_pos_y = 0;
-	$move_x = 0;
-	$move_y = 0;
-	$move_pos_x = 0;
-	$move_pos_y = 0;
-	warning "Cannot calculate route, respawning to saveMap ...\n";
-	chatLog("k", "Cannot calculate route, respawning to saveMap ...\n"); 
-	aiRemove("move");
-	aiRemove("route");
-	aiRemove("route_getRoute");
-	aiRemove("route_getMapRoute");
-	useTeleport(2);
-	ai_clientSuspend(0, 5);
 }
 
 sub useTeleport {

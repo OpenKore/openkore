@@ -2,14 +2,18 @@
 ### CVS
 ==================
 
-***** CURRENTLY BROKEN STUFF *****
-- routing (fails way too often; sometimes even walks backwards?)
+**** CURRENTLY BROKEN STUFF ****
+- Auto-recording of unknown portals.
+
+
+** Important notices:
+- The format of portals.txt and portalsLOS.txt have been changed. You must
+  upgrade to the latest tablepack.
+- Tools.cpp has changed. Linux users must recompile Tools.so.
 
 
 New features:
-- Kore will no longer hug walls!
-  NOTE TO LINUX USERS: Tools.cpp has changed. Type 'make' to recompile Tools.so.
-
+- Kore will no longer hug walls. Walking should be smoother now.
 - Startup is now *much* faster than before.
   We've gotten rid of the "forking input server".
 - Command prompt improvements:
@@ -51,9 +55,10 @@ New features:
   screen, if the master is in the same party.
 - The Linux version now longer needs --daemon.
   So './openkore.pl &' will Just Work(tm).
-- Added optional location based NPC interaction for storage/buy/sell (format: map x, y)
+- You can now specify a location instead of NPC ID for storage/buy/sell.
+  Format: map x, y
   eg: storageAuto_npc prontera 29 207
-	As this uses the new ai_talkNPC, ai_npcTalk & ai_npcResponse will be needed in timeout.txt
+  You must also add ai_npcTalk to timeout.txt
 
 New commands:
 - warp list
@@ -108,6 +113,9 @@ New configuration options:
 - equipAuto_*
 - useSelf_skill_0_notWhileSitting
   If set to 1, this skill will not be used while sitting.
+- route_maxWarpFee
+  The maximum amount of money you're willing to spend on a Kapra which
+  teleports you to another map.
 
 
 Bug fixes:
