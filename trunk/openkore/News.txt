@@ -2,6 +2,9 @@
 ### 1.5.2 (beta)
 ==================
 
+Bug fixes:
+- Mask password input display '*' instead of your real password (Only on linux console)
+
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
   as if they were in your party for the purpose of KS checks.
