@@ -25,6 +25,8 @@ password
 char 
 sex 
 
+ignoreInvalidLogin 0
+
 secureAdminPassword 0
 adminPassword 
 callSign 
@@ -452,7 +454,7 @@ equipAuto_0_inInventory_name
 equipAuto_0_inInventory_qty
 
 autoResponseOnHeal 0
-autoResponse 1
+autoResponse 0
 
 ignoreAll 0
 itemHistory 0

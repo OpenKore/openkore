@@ -4985,7 +4985,7 @@ sub parseMsg {
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
 			error("Account name doesn't exist\n", "connection");
-			if (!$config{'XKore'}) {
+			if (!$config{'XKore'} && !$config{ignoreInvalidLogin}) {
 				message("Enter Username Again: ", "input");
 				$msg = $interface->getInput(-1);
 				configModify('username', $msg, 1);
