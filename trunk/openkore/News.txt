@@ -90,6 +90,9 @@ New features:
 - When you issue a "move" command, this will clear previous move actions.
 - When the amount of zeny you have changes, you will be told.
 - Support for specifying hair color and hair style at character creation.
+- Config option attackNoGiveup will make bot not stop attacking enemy
+  even if it can't damage it. Useful if your attackSkillSlot is e.g.
+  Spell Breaker.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
