@@ -6361,7 +6361,7 @@ sub parseMsg {
 			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 		}
 
-		$chat = "chatMsgUser : $chatMsg";
+		$chat = "$chatMsgUser : $chatMsg";
 		chatLog("c", "[$map_string $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}{x}, $players{$ID}{pos_to}{y}] [dist=$dist] " .
 			"$chat\n") if ($config{logChat});
 		message "[dist=$dist] $chat\n", "publicchat";
