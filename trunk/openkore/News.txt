@@ -17,6 +17,8 @@
 	avoidList_reconnect
 - Removed the need for the local_port config option.
   You can remove this option now!
+- Input client child process will now exit correctly if parent process
+  exits abnormally.
 - Implemented a simple form of dynamic code reloading. All functions
   are now in functions.pl.
   New command: rc (reloads functions.pl)

@@ -2135,6 +2135,33 @@ sub AI {
 		sendSync(\$remote_socket, getTickCount());
 	}
 
+	if (timeOut($mapdrt, $config{'intervalMapDrt'})) {
+		$mapdrt = time;
+
+		$map_name =~ /([\s\S]*)\.gat/;
+		if ($1) {
+			open(DATA, ">walk.dat");
+			print DATA "$1\n";
+			print DATA $chars[$config{'char'}]{'pos_to'}{'x'}."\n";
+			print DATA $chars[$config{'char'}]{'pos_to'}{'y'}."\n";
+
+			for (my $i = 0; $i < @npcsID; $i++) {
+				next if ($npcsID[$i] eq "");
+				print DATA "NL " . $npcs{$npcsID[$i]}{'pos'}{'x'} . " " . $npcs{$npcsID[$i]}{'pos'}{'y'} . "\n";
+			}
+			for (my $i = 0; $i < @playersID; $i++) {
+				next if ($playersID[$i] eq "");
+				print DATA "PL " . $players{$playersID[$i]}{'pos'}{'x'} . " " . $players{$playersID[$i]}{'pos'}{'y'} . "\n";
+			}
+			for (my $i = 0; $i < @monstersID; $i++) {
+				next if ($monstersID[$i] eq "");
+				print DATA "ML " . $monsters{$monstersID[$i]}{'pos'}{'x'} . " " . $monsters{$monstersID[$i]}{'pos'}{'y'} . "\n";
+			}
+
+			close(DATA);
+		}
+	}
+
 	return if (!$AI);
 
 
@@ -3714,13 +3741,14 @@ sub AI {
 			undef $ai_v{'temp'}{'ai_follow_following'};
 		}
 
+		my $ID = $ai_seq_args[0]{'attackID'};
 		$ai_v{'ai_attack_cleanMonster'} = (
-				  !($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'} == 0 && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFrom'} > 0 || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedFromPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'castOnByPlayer'}}))
-				|| ($config{'attackAuto_party'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromParty'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgToParty'} > 0))
-				|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0))
-				|| ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'} > 0)
+				  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
+				|| ($config{'attackAuto_party'} && ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0))
+				|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && ($monsters{$ID}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ID}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0))
+				|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
 			);
-		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ai_seq_args[0]{'ID'}}{'attackedByPlayer'});
+		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ID}{'attackedByPlayer'});
 
 		if (!$ai_v{'ai_attack_cleanMonster'}) {
 			sendAttackStop(\$remote_socket);
@@ -4564,30 +4592,6 @@ sub parseSendMsg {
 sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
-
- 	$mapdrt = time;
- 	if ($mapdrt > $oldmapdrt) {
- 		$oldmapdrt=$mapdrt+10;	
- 		open (DATA,">walk.dat");
- 		$map_name =~ /([\s\S]*)\.gat/;print DATA "$1\n";
- 		print DATA $chars[$config{'char'}]{'pos_to'}{'x'}."\n";
- 		print DATA $chars[$config{'char'}]{'pos_to'}{'y'}."\n";
-
-		for ($i = 0; $i < @npcsID; $i++) { 
-			next if ($npcsID[$i] eq ""); 
-			print DATA "NL " . $npcs{$npcsID[$i]}{'pos'}{'x'} . " " . $npcs{$npcsID[$i]}{'pos'}{'y'} . "\n"; 
-		} 
-		for ($i = 0; $i < @playersID; $i++) { 
-			next if ($playersID[$i] eq ""); 
-			print DATA "PL " . $players{$playersID[$i]}{'pos'}{'x'} . " " . $players{$playersID[$i]}{'pos'}{'y'} . "\n"; 
-		} 
-		for ($i = 0; $i < @monstersID; $i++) { 
-			next if ($monstersID[$i] eq ""); 
-			print DATA "ML " . $monsters{$monstersID[$i]}{'pos'}{'x'} . " " . $monsters{$monstersID[$i]}{'pos'}{'y'} . "\n"; 
-		} 
-
- 		close(DATA);
- 	}
 
 	if (($config{"shopAuto_open"} == 1) && ($shopstarted == 0) &&
 		($chars[$config{'char'}]{'sitting'})) {
@@ -11138,7 +11142,6 @@ sub avoidList_near() {
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
 		$j = 0;
-		print "Check $players{$playersID[$i]}{'name'}\n";
 		while ($avoid{"avoid_$j"} ne "") {
 			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
 				print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
@@ -11168,9 +11171,6 @@ sub avoidList_talk($$) {
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
 			killConnection(\$remote_socket);
-		} else {
-			print "$chatMsgUser talked to you!\n"; 
-			chatLog("s", "*** $chatMsgUser talked to you ***\n"); 
 		}
 		$j++;
 	}

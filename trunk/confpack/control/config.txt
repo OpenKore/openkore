@@ -11,15 +11,15 @@ master_version_0 1
 version 18
 #encrypt 2
 
-XKore 1
+XKore 0
 exeName ragexe.exe
 commandPrefix ;
 
-master 0
-server 0
-username cira1
-password asdf
-char 1
+master 
+server 
+username 
+password 
+char 
 sex 
 
 adminPassword 
@@ -81,14 +81,10 @@ sitAuto_sp_upper 0
 sitAuto_idle 1
 shopAuto_open 0
 
-#use fly wing when someone tries to warp you
 avoidWarpByTeleport 0
-#try to walk away when someone tries to teleport you
 avoidWarpByWalk 1
 
-#if a monster hits you for higher than this Dmg, teleport
 maxDmg 500
-#if the next hit by a monster of the same or higher Hit could kill you, teleport away. 
 teleportDeadly 1
 
 teleportAuto_hp 10
@@ -124,9 +120,7 @@ useSelf_item_0_minAggressives 0
 useSelf_item_0_sp_lower 0
 useSelf_item_0_sp_upper 100
 useSelf_item_0_stopWhenHit 0
-#use item only once you reach your locked map
 useSelf_item_0_inLockOnly 0
-#use item every ### seconds
 useSelf_item_0_timeout 
 
 itemsTakeAuto 2
@@ -158,17 +152,19 @@ tankModeTarget
 dealAutoCancel 1
 partyAutoDeny 1
 partyAutoShare 0
+guildAutoDeny 1
 
 seconds_per_block 0.12
 sleepTime 50000
 
-intervalMapDrt 2
+intervalMapDrt 1
 
 avoidGM_near 1
 avoidGM_near_inTown 0
 avoidGM_talk 1
 avoidGM_reconnect 1800
 avoidList 1
+avoidList_reconnect 1800
 
 autoEmote_word_0 
 autoEmote_num_0 
