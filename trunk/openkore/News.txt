@@ -8,12 +8,13 @@
   It is based loosly off a combination of modKore and my old itemexchange code.
   Two new config.txt variables.
   autoStorage_npc_type and autoStorage_npc_steps
-  if autoStorage_npc_type is blank it will use the current steps (and display a warning)
+  if autoStorage_npc_type is blank it will use the current steps (and
+  display a warning)
   			     1 it will use the current steps (c r1 n)
   			     2 it will use the steps for the comodo npcs (c c r1 n)
   			     3 it will use the steps defined in autoStorage_npc_steps
-  autoStorage_npc_steps is a (any number of) space(s) seperated list of commands to send
-  while attempting to store.
+  autoStorage_npc_steps is a (any number of) space(s) seperated list of
+  commands to send while attempting to store.
   These commands consist of n which will send the cancel command
   			    c which will send the continue command
   			    r* which will send a responce where the responce number is *
@@ -22,17 +23,26 @@
   			    counting at 0, i thaught it best to preserve it ;)
 - New config option: shop_random.
   When set to 1, the item order in the shop will be randomized.
-- When in X-Kore mode, the RO client will still work if you shutdown Kore. However, you
-  can't start Kore in X-Kore mode again until you've restarted the RO client.
+- When in X-Kore mode, the RO client will still work if you shutdown
+  Kore. However, you can't start Kore in X-Kore mode again until you've
+  restarted the RO client.
 - Kore will now correctly continue if it gets resurrected before respawn.
 - avoid_ignore now works properly.
 - Even better support for opening warp portals.
   New command: warp list (list warp portal maps)
-- The configuration option master_version_# is now obsolete. The correct setting is now
-  autodetected.
-- Support for sending numbers to NPCs. For example, you can now buy phracons in the
-  Prontera upgrade shop.
-
+- The configuration option master_version_# is now obsolete. The correct
+  setting is now autodetected.
+- Support for sending numbers to NPCs. For example, you can now buy
+  Phracons in the Prontera upgrade shop.
+- Support command aliases. For example, you can write in config.txt:
+      alias_heal sp 9
+  and then if you type "heal 0", it will behave as if you typed
+  "sp 9 0", so if spell #9 is Heal it will cast Heal on player #0.
+- Fixed bug where openkore would say "Unknown uses" instead of the
+  correct name of the player who had cast an area attack spell.
+- Damage numbers above 65535 (e.g. from Guillotine Fist) should be
+  displayed correctly now, but my monk can't do that much damage; can
+  someone test and report on the forum please?
 
 ==================
 ### OpenKore 1.2.1
