@@ -12,6 +12,7 @@
 use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Config;
+use bytes;
 
 use Globals;
 use Modules;
