@@ -847,8 +847,9 @@ sub sendMapLogin {
 		$msg = pack("C*", 0x72, 0, 0, 0, 0) . $accountID .
 			pack("C*",0xFC,0x2B,0x8B,0x01,0x00) .
 			#         0xFA,0x12,0x00,0xE0,0x5D
+			#         0xFA,0x12,0x00,0xD0,0x7B
 			$charID .
-			pack("C*",0xFF,0xFF) .
+			pack("C*", 0xFF, 0xFF) .
 			$sessionID .
 			pack("L", getTickCount()) .
 			pack("C", $sex);
@@ -1273,18 +1274,17 @@ sub sendStand {
 
 sub sendSync {
 	my $r_socket = shift;
+	my $initialSync = shift;
 	my $msg;
 
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x7E, 0x00) . pack("L1", getTickCount());
 
 	} else {
-		my $time = int(time / 12 * 3075000) - 284089912922934;
-		my $unknown = 0x00;	# is sometimes 0x30
-		$msg = pack("C*", 0x7E, 0x00, $unknown, 0x00) .
-			pack("L", $time) .
-			chr(0);
-		main::dumpData($msg);
+		$msg = pack("C*", 0x7E, 0x00);
+		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
+		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
+		$msg .= pack("L", getTickCount());
 	}
 
 	sendMsgToServer($r_socket, $msg);
