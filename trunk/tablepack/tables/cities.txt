@@ -47,3 +47,5 @@ sec_pri.rsw#Room of Meditation (Valhalla Prison)#
 payo1.rsw#Neo Payon Town#
 umbala.rsw#Utan Tribe Umbala#
 louyang.rsw#Castle of Dragon#
+lou_in02.rsw#Inside Castle of Dragon#
+lou_in01.rsw#Inside Castle of Dragon#
