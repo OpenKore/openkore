@@ -231,7 +231,8 @@ sub checkConnection {
 	# The local variable $sleeptime is controlled by the same system as used in initRandomRestart() for the restart times
 	# The only thing that may want changing here is the sleep and restart times being printed in minutes rather than seconds
 	# However, as I'm sure we are all used to working in seconds ourselves, this can be changed come release (if at all)
-	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'} && $conState == 5 && $ai_seq[0] ne "attack") {
+	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
+	 && $conState == 5 && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
 		print "\nAuto-restarting!!\n";
 
 		if ($config{'autoRestartSleep'}) {
@@ -3202,17 +3203,14 @@ sub AI {
 		unshift @ai_seq_args, {};
 	}
 	
-	if ($ai_seq[0] eq "dead" && time - $chars[$config{'char'}]{'dead_time'} >= $timeout{'ai_dead_respawn'}{'timeout'}) {
+	if ($ai_seq[0] eq "dead" && $config{'dcOnDeath'} != -1 && time - $chars[$config{'char'}]{'dead_time'} >= $timeout{'ai_dead_respawn'}{'timeout'}) {
 		sendRespawn(\$remote_socket);
 		$chars[$config{'char'}]{'dead_time'} = time;
 	}
 	
-	if ($ai_seq[0] eq "dead" && $config{'dcOnDeath'}) {
-		if (!$config{'XKore'}) {
-			print "Disconnecting on death!\n";
-		} else {
-			injectMessage("Disconnecting on death!") if ($config{'verbose'});
-		}
+	if ($ai_seq[0] eq "dead" && $config{'dcOnDeath'} && $config{'dcOnDeath'} != -1) {
+		print "Disconnecting on death!\n";
+		injectMessage("Disconnecting on death!") if ($config{'verbose'} && $config{'XKore'});
 		$quit = 1;
 	}
 
@@ -5414,7 +5412,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 		if ($ID eq $accountID) {
 			print "You have died\n";
-			sendCloseShop();
+			sendCloseShop(\$remote_socket);
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
 		} elsif (%{$monsters{$ID}}) {
@@ -7148,6 +7146,22 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			} else {
 				$level = $level_real if ($level_real ne "");
 				print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
+			}
+
+			if (%{$monsters{$sourceID}} && $targetID eq $accountID) {
+				# Monster attacks you
+				my $teleported = 0;
+				if ($config{'teleportAuto_maxDmg'} > 0) {
+					if ($damage > $config{'teleportAuto_maxDmg'}) {
+						print "Monster hits you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting\n";
+						useTeleport(1);
+						$teleported = 1;
+					}
+				}
+				if (!$teleported && $config{'teleportAuto_deadly'} && $damage > $chars[$config{'char'}]{'hp'}) {
+					print "Next hit of $damage dmg could kill you. Teleporting\n";
+					useTeleport(1);
+				}
 			}
 		}
 

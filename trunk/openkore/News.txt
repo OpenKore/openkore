@@ -23,6 +23,9 @@
   stealed" complaints.
 - New regular expression for detecting GM names. This will get rid of many
   false matches. Names like "LaGMaster" don't match anymore.
+- If dcOnDisconnect is set to -1, kore will not respawn nor disconnect on
+  death.
+- Don't autorestart while taking items.
 
 
 ==================
