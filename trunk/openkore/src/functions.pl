@@ -4380,7 +4380,7 @@ sub AI {
 		my @ai_gather_playerID;
 		foreach (@playersID) {
 			next if ($_ eq "");
-			if (!%{$$char->{party}} || !%{$$char->{party}{users}{$_}}) {
+			if (!%{$char->{party}} || !%{$char->{party}{users}{$_}}) {
 				push @ai_gather_playerID, $_;
 			}
 		}
@@ -4423,7 +4423,7 @@ sub AI {
 		
 		foreach (@playersID) {
 			next if ($_ eq "");
-			if (!%{$$char->{party}} || !%{$$char->{party}{users}{$_}}) {
+			if (!%{$char->{party}} || !%{$char->{party}{users}{$_}}) {
 				push @ai_gather_playerID, $_;
 			}
 		}
@@ -4443,7 +4443,7 @@ sub AI {
 			stand();
 		} elsif ($found == 0 && $dist > 2) {
 			my %vec, %pos;
-			getVector(\%vec, \%{$items{$ID}{pos}}, \%{$$char->{pos_to}});
+			getVector(\%vec, \%{$items{$ID}{pos}}, \%{$char->{pos_to}});
 			moveAlongVector(\%pos, \%{$char->{pos_to}}, \%vec, $dist - 1);
 			move($pos{x}, $pos{y});
 		} elsif ($found == 0) {
