@@ -3813,10 +3813,10 @@ sub AI {
 			$currentSkill = $skills_lut{$skillHandle};
 		}
 
-		my $ai_attack_mon;
+		my $monster;
 		if (defined $ai_index_attack) {
 			my $ID = AI::args($ai_index_attack)->{ID};
-			$ai_attack_mon = $monsters{$ID}{name} if ($monsters{$ID});
+			$monster = $monsters{$ID};
 		}
 
 		my $i = 0;
@@ -3830,9 +3830,9 @@ sub AI {
 			 	&& (!$config{"equipAuto_$i" . "_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
 			 	&& (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{temp}{teleport}{lv})
 			 	&& (!$config{"equipAuto_$i" . "_whileSitting"} || ($config{"equipAuto_$i" . "_whileSitting"} && $char->{sitting}))
-				&& (!$config{"equipAuto_$i" . "_monsters"} || (defined $ai_attack_mon && existsInList($config{"equipAuto_$i" . "_monsters"}, $ai_attack_mon)))
+				&& (!$config{"equipAuto_$i" . "_monsters"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_monsters"}, $monster->{name})))
 			 	&& (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
-				){
+				) {
 				my $index = findIndexString_lc_not_equip(\@{$char->{inventory}}, "name", $config{"equipAuto_$i"});
 				if (defined $index) {
 					sendEquip(\$remote_socket, $char->{inventory}[$index]{index}, $char->{inventory}[$index]{type_equip});
@@ -4798,6 +4798,7 @@ sub AI {
 		##### TELEPORT HP #####
 		if ($safe && timeOut($timeout{ai_teleport_hp})
 		  && ((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))) {
+			warning "Teleporting due to insufficient HP/SP or too many aggressives\n";
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_hp}{time} = time;
@@ -9755,8 +9756,9 @@ sub updateDamageTables {
 			# You attack monster
 			$monsters{$ID2}{'dmgTo'} += $damage;
 			$monsters{$ID2}{'dmgFromYou'} += $damage;
-			if ($damage == 0) {
+			if ($damage <= ($config{missDamage} || 0)) {
 				$monsters{$ID2}{'missedFromYou'}++;
+				debug "Incremented missedFromYou count to $monsters{$ID2}{'missedFromYou'}\n", "attackMonMiss";
 				$monsters{$ID2}{'atkMiss'}++;
 			} else {
 				$monsters{$ID2}{'atkMiss'} = 0;
