@@ -9994,7 +9994,7 @@ sub getActorNames {
 		if ($targetID eq $accountID) {
 			$target = 'yourself';
 		} else {
-			$target = 'himself';
+			$target = 'self';
 		}
 	} else {
 		$target = getActorName($targetID);
