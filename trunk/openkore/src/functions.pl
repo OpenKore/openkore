@@ -6982,8 +6982,7 @@ sub parseMsg {
 		$disp .= " - Dmg: $damage" unless $damage == -30000;
 		$disp .= "\n";
 
-		my $domain;
-		$domain = "skill" if (($source eq "You") || ($target eq "You"));
+		my $domain = "skill";
 
 		if ($damage == 0) {
 			$domain = "attackMonMiss" if (($source eq "You") && ($target ne "yourself"));
