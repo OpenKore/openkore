@@ -20,6 +20,7 @@ Bug fixes:
 - Make _stopWhenHit condition not count party members, and stop counting a
   monster as aggressive if it hit you in the past, but then attacked someone
   else
+- "Total Damage" display in 's' command now includes damage from skills
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux
