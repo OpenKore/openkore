@@ -341,7 +341,9 @@ sub cmdConf {
 		error "Config variable $arg1 doesn't exist\n";
 
 	} elsif ($arg2 eq "") {
-		message "Config '$arg1' is $config{$arg1}\n", "info";
+		my $value = $config{$arg1};
+		$value = "-not-displayed-" if ($arg1 =~ /password/i);
+		message "Config '$arg1' is $value\n", "info";
 
 	} else {
 		undef $arg2 if ($arg2 eq "none");

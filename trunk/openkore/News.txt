@@ -26,6 +26,7 @@ Bug fixes:
 - When out of arrows, only ask the user to press ENTER if dcOnEmptyArrow
   is set (bug #14).
 - The 'follow' command will now work with names that contain symbols (bug #12).
+- The 'conf' command won't reveal passwords anymore (bug #18).
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
