@@ -4306,11 +4306,8 @@ sub AI {
 		}
 		$ai_v{'temp'}{'dist'} = distance(\%{$items{$ai_seq_args[0]{'ID'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 		if (timeOut(\%{$ai_seq_args[0]{'ai_items_gather_giveup'}})) {
-			if (!$config{'XKore'}) {
-				print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout\n";
-			} else {
-				injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout") if ($config{'verbose'});
-			}
+			print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout\n";
+			injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout") if ($config{'XKore'} && $config{'verbose'});
 			$items{$ai_seq_args[0]{'ID'}}{'take_failed'}++;
 			shift @ai_seq;
 			shift @ai_seq_args;
@@ -4329,7 +4326,6 @@ sub AI {
 		} elsif ($ai_v{'temp'}{'found'} > 0) {
 			print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!\n";
 			injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!") if ($config{'XKore'} && $config{'verbose'});
-			}
 			shift @ai_seq;
 			shift @ai_seq_args;
 		}
