@@ -52,6 +52,7 @@ our @EXPORT = qw(
 	getFieldPoint
 	getPortalDestName
 	getPlayer
+	objectAdded
 	objectInsideSpell
 	printItemDesc
 	whenStatusActive
@@ -623,6 +624,16 @@ sub getPlayer {
 		}
 	}
 	return undef;
+}
+
+sub objectAdded {
+	my $type = shift;
+	my $ID = shift;
+	my $obj = shift;
+
+	if ($type eq 'player' || $type eq 'npc') {
+		push @unknownObjects, $ID;
+	}
 }
 
 ##
