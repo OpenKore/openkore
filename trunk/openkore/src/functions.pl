@@ -8703,7 +8703,7 @@ sub parseMsg {
 			my $ID = substr($msg, 2, 4);
 			if ($ID == $accountID) {
 				$timeout{ai_sync}{time} = time;
-				sendSync(\$remote_socket);
+				sendSync(\$remote_socket) if (!$xkore);
 				debug "Sync packet requested\n", "connection";
 			} else {
 				warning "Sync packet requested for wrong ID\n";
