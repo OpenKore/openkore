@@ -5584,7 +5584,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
-				."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: - Dmg: $dmgdisplay\n";
+				."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n";
 
 				#junq start
 				if ($config{'teleportAuto_maxDmg'} > 0) {
@@ -10516,27 +10516,27 @@ sub addParseFiles {
 }
 
 sub chatLog {
-	$type = shift;
-	$message = shift;
+	my $type = shift;
+	my $message = shift;
 	open CHAT, ">> $chat_file";
 	print CHAT "[".getFormattedDate(int(time))."][".uc($type)."] $message";
 	close CHAT;
 }
 
 sub itemLog {
-	$crud = shift;
+	my $crud = shift;
 	return if (!$config{'itemHistory'});
 	open ITEMLOG, ">> $item_log_file";
 	print ITEMLOG "[".getFormattedDate(int(time))."] $crud";
 	close ITEMLOG;
 }
 
-sub itemLog_clear { 
-	if (-e $item_log_file) { unlink($item_log_file); } 
+sub chatLog_clear { 
+	if (-f $chat_file) { unlink($chat_file); } 
 }
 
-sub chatLog_clear { 
-	if (-e $chat_file) { unlink($chat_file); } 
+sub itemLog_clear { 
+	if (-f $item_log_file) { unlink($item_log_file); } 
 }
 
 sub convertGatField {
@@ -10828,12 +10828,12 @@ sub parsePortalsLOS {
 		s/[\r\n]//g;
 		s/\s+/ /g;
 		s/\s+$//g;
-		@args = split /\s/, $_;
+		my @args = split /\s/, $_;
 		if (@args) {
-			$map = shift @args;
-			$x = shift @args;
-			$y = shift @args;
-			for ($i = 0; $i < @args; $i += 4) {
+			my $map = shift @args;
+			my $x = shift @args;
+			my $y = shift @args;
+			for (my $i = 0; $i < @args; $i += 4) {
 				$$r_hash{"$map $x $y"}{"$args[$i] $args[$i+1] $args[$i+2]"} = $args[$i+3];
 			}
 		}
@@ -10962,7 +10962,7 @@ sub parseSkillsLUT {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file;
+	open(FILE, "<$file");
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -10982,7 +10982,7 @@ sub parseSkillsIDLUT {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file;
+	open(FILE, "<$file");
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -11001,7 +11001,7 @@ sub parseSkillsReverseLUT_lc {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file;
+	open(FILE, "< $file");
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -11021,7 +11021,7 @@ sub parseSkillsSPLUT {
 	my $ID;
 	my $i;
 	$i = 1;
-	open FILE, $file;
+	open(FILE, "< $file");
 	foreach (<FILE>) {
 		if (/^\@/) {
 			undef $ID;
@@ -11038,8 +11038,8 @@ sub parseSkillsSPLUT {
 sub parseTimeouts {
 	my $file = shift;
 	my $r_hash = shift;
-	my ($key,$value);
-	open (FILE, "<$file");
+	my ($key, $value);
+	open(FILE, "< $file");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -11055,7 +11055,7 @@ sub writeDataFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my ($key,$value);
-	open (FILE, "+> $file");
+	open(FILE, "+> $file");
 	foreach (keys %{$r_hash}) {
 		if ($_ ne "") {
 			print FILE "$_ $$r_hash{$_}\n";
@@ -11069,7 +11069,7 @@ sub writeDataFileIntact {
 	my $r_hash = shift;
 	my $data;
 	my $key;
-	open FILE, $file;
+	open(FILE, "< $file");
 	foreach (<FILE>) {
                 if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/) {
                         $data .= $_;
@@ -11079,7 +11079,7 @@ sub writeDataFileIntact {
                 $data .= "$key $$r_hash{$key}\n";
         }
 	close FILE;
-	open FILE, "+> $file";
+	open(FILE, "> $file");
 	print FILE $data;
 	close FILE;
 }
@@ -11089,7 +11089,7 @@ sub writeDataFileIntact2 {
 	my $r_hash = shift;
 	my $data;
 	my $key;
-	open FILE, $file;
+	open(FILE, "< $file");
 	foreach (<FILE>) {
                 if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/) {
                         $data .= $_;
@@ -11099,7 +11099,7 @@ sub writeDataFileIntact2 {
                 $data .= "$key $$r_hash{$key}{'timeout'}\n";
         }
 	close FILE;
-	open FILE, "+> $file";
+	open(FILE, "> $file");
 	print FILE $data;
 	close FILE;
 }
@@ -11107,8 +11107,8 @@ sub writeDataFileIntact2 {
 sub writePortalsLOS {
 	my $file = shift;
 	my $r_hash = shift;
-	open FILE, "+> $file";
-	foreach $key (keys %{$r_hash}) {
+	open(FILE, "+> $file");
+	foreach my $key (keys %{$r_hash}) {
 		next if (!(keys %{$$r_hash{$key}}));
 		print FILE $key;
 		foreach (keys %{$$r_hash{$key}}) {
@@ -11243,7 +11243,7 @@ sub binSize {
 
 sub existsInList {
 	my ($list, $val) = @_;
-	@array = split /,/, $list;
+	my @array = split /,/, $list;
 	return 0 if ($val eq "");
 	$val = lc($val);
 	foreach (@array) {
@@ -11528,9 +11528,9 @@ sub compilePortals {
 	foreach (keys %portals_lut) {
 		%{$mapPortals{$portals_lut{$_}{'source'}{'map'}}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
 	}
-	$l = 0;
-	foreach $map (keys %mapPortals) {
-		foreach $portal (keys %{$mapPortals{$map}}) {
+	my $l = 0;
+	foreach my $map (keys %mapPortals) {
+		foreach my $portal (keys %{$mapPortals{$map}}) {
 			foreach (keys %{$mapPortals{$map}}) {
 				next if ($_ eq $portal);
 				if ($portals_los{$portal}{$_} eq "" && $portals_los{$_}{$portal} eq "") {
@@ -11560,8 +11560,8 @@ sub compilePortals_check {
 	foreach (keys %portals_lut) {
 		%{$mapPortals{$portals_lut{$_}{'source'}{'map'}}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
 	}
-	foreach $map (keys %mapPortals) {
-		foreach $portal (keys %{$mapPortals{$map}}) {
+	foreach my $map (keys %mapPortals) {
+		foreach my $portal (keys %{$mapPortals{$map}}) {
 			foreach (keys %{$mapPortals{$map}}) {
 				next if ($_ eq $portal);
 				if ($portals_los{$portal}{$_} eq "" && $portals_los{$_}{$portal} eq "") {
@@ -11627,7 +11627,7 @@ sub getFormattedDate {
         my $thetime = shift;
         my $r_date = shift;
         my @localtime = localtime $thetime;
-        my $themonth = (Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec)[$localtime[4]];
+        my $themonth = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)[$localtime[4]];
         $localtime[2] = "0" . $localtime[2] if ($localtime[2] < 10);
         $localtime[1] = "0" . $localtime[1] if ($localtime[1] < 10);
         $localtime[0] = "0" . $localtime[0] if ($localtime[0] < 10);
@@ -11718,6 +11718,7 @@ sub makeCoords {
 	$$r_hash{'y'} = (unpack("C",substr($rawCoords, 1, 1)) & 0x3F) * 16 + 
 				(unpack("C",substr($rawCoords, 2, 1)) & 0xF0) / 16;
 }
+
 sub makeCoords2 {
 	my $r_hash = shift;
 	my $rawCoords = shift;
@@ -11725,11 +11726,11 @@ sub makeCoords2 {
 				(unpack("C",substr($rawCoords, 0, 1)) & 0x0F) * 64;
 	$$r_hash{'y'} = (unpack("C", substr($rawCoords, 1, 1)) & 0x03) * 256 + unpack("C", substr($rawCoords, 2, 1));
 }
+
 sub makeIP {
 	my $raw = shift;
 	my $ret;
-	my $i;
-	for ($i=0;$i < 4;$i++) {
+	for (my $i = 0; $i < 4; $i++) {
 		$ret .= hex(getHex(substr($raw, $i, 1)));
 		if ($i + 1 < 4) {
 			$ret .= ".";
@@ -11795,7 +11796,7 @@ sub calcStat {
 
 sub monKilled {
 	$monkilltime = time();
-# if someone kills it
+	# if someone kills it
 	if (($monstarttime == 0) || ($monkilltime < $monstarttime)) { 
 		$monstarttime = 0;
 		$monkilltime = 0; 
@@ -11823,9 +11824,8 @@ Total Time spent (sec): @>>>>>>>>
 Last Monster took (sec): @>>>>>>>
  			$elasped_string
 .
-		write;
-		print	"----------------------------\n";
-
+	write;
+	print	"----------------------------\n";
 }
 
 sub findIndexString_lc_not_equip {
@@ -11847,7 +11847,7 @@ sub findIndexString_lc_not_equip {
 sub getListCount {
 	my ($list) = @_;
 	my $i = 0;
-	@array = split /,/, $list;
+	my @array = split /,/, $list;
 	foreach (@array) {
 		s/^\s+//;
 		s/\s+$//;
@@ -11861,7 +11861,7 @@ sub getListCount {
 sub getFromList {
 	my ($list, $num) = @_;
 	my $i = 0;
-	@array = split /,/, $list;
+	my @array = split(/,/, $list);
 	foreach (@array) {
 		s/^\s+//;
 		s/\s+$//;
@@ -11870,7 +11870,7 @@ sub getFromList {
 		$i++;
 		return $_ if ($i eq $num);
 	}
-	return "";
+	return undef;
 }
 
 sub ClearRouteAI {
@@ -11933,18 +11933,18 @@ sub RespawnUnstuck {
 
 sub useTeleport { 
 	my $level = shift; 
-	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $level + 600); 
-	if (!$config{'teleportAuto_useItem'} || $chars[$config{'char'}]{'skills'}{'AL_TELEPORT'}{'lv'} ) { 
-		sendTeleport(\$remote_socket, "Random") if ($level == 1); 
-		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2); 
-	} elsif ($config{'teleportAuto_useItem'} && $invIndex ne "") { 
-		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$invIndex]{'index'}, $accountID); 
-		if ($level == 1) { 
+	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $level + 600);
+	if (!$config{'teleportAuto_useItem'} || $chars[$config{'char'}]{'skills'}{'AL_TELEPORT'}{'lv'} ) {
+		sendTeleport(\$remote_socket, "Random") if ($level == 1);
+		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2);
+	} elsif ($config{'teleportAuto_useItem'} && $invIndex ne "") {
+		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$invIndex]{'index'}, $accountID);
+		if ($level == 1) {
 			sendTeleport(\$remote_socket, "Random");
 		}
-	} else { 
-		print "You don't have wing or skill to teleport or respawn\n"; 
-	} 
+	} else {
+		print "You don't have wing or skill to teleport or respawn\n";
+	}
 }
 
 return 1;
