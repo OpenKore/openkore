@@ -1,0 +1,67 @@
+#config target
+OUTDIR=.
+
+# command processor programs
+RM=erase
+
+# common compiler and linker executables/options/libraries
+CPP=cl
+CPP_FLAGS=/nologo /TC /MD /FD /W3 /Wp64 /GS /O2 /Oitb2 /Zi /DSTRICT /DWIN32 /D_CRT_SECURE_NO_DEPRECATE /D_CONSOLE /D_MBCS /DNDEBUG
+LINK32=link
+LINK32_FLAGS=/nologo /nodefaultlib /incremental:no /machine:X86 /subsystem:console
+LINK32_LIBS=kernel32.lib user32.lib gdi32.lib shell32.lib advapi32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib comdlg32.lib comctl32.lib
+RC=rc.exe
+
+# project specific
+CPP_FLAGS=$(CPP_FLAGS) /I.\zlib /I.\libgrf /DGRF_STATIC
+OR_CPP_FLAGS = $(CPP_FLAGS) /DEXTRACT_AS_UNICODE
+LINK32_FLAGS=$(LINK32_FLAGS) /LIBPATH:. /LIBPATH:.\zlib /OPT:REF,NOWIN98
+LINK32_LIBS=$(LINK32_LIBS) msvcrt.lib zlib.lib
+
+################################################################################################
+#           list of object files
+
+LINK32_OBJS=grfcrypt.obj grfsupport.obj grf.obj
+LINK32_OBJS1=gx.obj
+LINK32_OBJS2=gxu.obj
+################################################################################################
+# build target
+ALL : "$(OUTDIR)\gx.exe" "$(OUTDIR)\gxu.exe"
+	
+
+# for cleaning up
+
+CLEAN :
+	-$(RM) $(LINK32_OBJS) $(LINK32_OBJS1) $(LINK32_OBJS2) *.idb *.pdb *.ilk 2> NUL
+
+RELINK : REMOVEEXE ALL
+
+REMOVEEXE :
+	-$(RM) "$(OUTDIR)\gryff.exe" 2> NUL
+
+
+
+# source/target file dependencies
+grfcrypt.obj : libgrf/grfcrypt.c
+   $(CPP) $(CPP_FLAGS) /c libgrf/grfcrypt.c
+
+grfsupport.obj : libgrf/grfsupport.c
+   $(CPP) $(CPP_FLAGS) /c libgrf/grfsupport.c
+
+grf.obj : libgrf/grf.c
+   $(CPP) $(CPP_FLAGS) /c libgrf/grf.c
+
+gx.obj : gx.c
+   $(CPP) $(CPP_FLAGS) /c gx.c
+
+gxu.obj : gx.c
+   $(CPP) $(OR_CPP_FLAGS) /c gx.c /Fogxu.obj
+
+# linkage
+
+"$(OUTDIR)\gx.exe" : $(LINK32_OBJS) $(LINK32_OBJS1)
+    $(LINK32) $(LINK32_FLAGS) /out:$@ $** $(LINK32_LIBS)
+
+"$(OUTDIR)\gxu.exe" : $(LINK32_OBJS) $(LINK32_OBJS2)
+    $(LINK32) $(LINK32_FLAGS) /out:$@ $** $(LINK32_LIBS)
+
