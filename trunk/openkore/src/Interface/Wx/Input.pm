@@ -26,6 +26,7 @@ use Wx ':everything';
 use base qw(Wx::TextCtrl);
 use Wx::Event qw(EVT_TEXT_ENTER EVT_KEY_DOWN);
 
+use Settings;
 use Commands;
 
 use constant MAX_INPUT_HISTORY => 150;
@@ -90,7 +91,7 @@ sub _onUpdown {
 			$self->SetInsertionPointEnd;
 		}
 
-	} elsif ($event->GetKeyCode == WXK_TAB) {
+	} elsif ($event->GetKeyCode == WXK_TAB && $Settings::CVS =~ /CVS/) {
 		my $pos = $self->GetInsertionPoint;
 		my $pre = substr($self->GetValue, 0, $pos);
 		my $post = substr($self->GetValue, $pos);
