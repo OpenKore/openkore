@@ -5220,7 +5220,7 @@ sub parseMsg {
 				%{$pets{$ID}{'pos_to'}} = %coords;
 				if (%{$monsters{$ID}}) {
 					binRemove(\@monstersID, $ID);
-					undef %{$monsters{$ID}};
+					delete $monsters{$ID};
 				}
 				debug "Pet Moved: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 			} else {
@@ -5344,7 +5344,6 @@ sub parseMsg {
 				$monsters_old{$ID}{'dead'} = 1;
 			}
 			binRemove(\@monstersID, $ID);
-			undef %{$monsters{$ID}};
 			delete $monsters{$ID};
 
 		} elsif (%{$players{$ID}}) {
@@ -5369,11 +5368,9 @@ sub parseMsg {
 				%{$players_old{$ID}} = %{$players{$ID}};
 				$players_old{$ID}{'gone_time'} = time;
 				binRemove(\@playersID, $ID);
-				undef %{$players{$ID}};
 				delete $players{$ID};
 
 				binRemove(\@venderListsID, $ID);
-				undef %{$venderLists{$ID}};
 				delete $venderLists{$ID};
 			}
 
@@ -5391,7 +5388,6 @@ sub parseMsg {
 			$portals_old{$ID}{'disappeared'} = 1;
 			$portals_old{$ID}{'gone_time'} = time;
 			binRemove(\@portalsID, $ID);
-			undef %{$portals{$ID}};
 			delete $portals{$ID};
 		} elsif (%{$npcs{$ID}}) {
 			debug "NPC Disappeared: $npcs{$ID}{'name'} ($npcs{$ID}{'binID'})\n", "parseMsg";
@@ -5399,12 +5395,10 @@ sub parseMsg {
 			$npcs_old{$ID}{'disappeared'} = 1;
 			$npcs_old{$ID}{'gone_time'} = time;
 			binRemove(\@npcsID, $ID);
-			undef %{$npcs{$ID}};
 			delete $npcs{$ID};
 		} elsif (%{$pets{$ID}}) {
 			debug "Pet Disappeared: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 			binRemove(\@petsID, $ID);
-			undef %{$pets{$ID}};
 			delete $pets{$ID};
 		} else {
 			debug "Unknown Disappeared: ".getHex($ID)."\n", "parseMsg";
@@ -5515,18 +5509,27 @@ sub parseMsg {
 			}
 		} elsif ($ID2 eq $accountID) {
 			if (%{$monsters{$ID1}}) {
-				useTeleport(1) if ($monsters{$ID1}{'name'} eq "" && $config{'teleportAuto_emptyName'} ne '0');
+				if ($monsters{$ID1}{'name'} eq "") {
+					if ($config{'teleportAuto_emptyName'} ne '0') {
+						useTeleport(1);
+					} else {
+						# Delete monster from hash; monster will be
+						# re-added to the hash next time it moves.
+						delete $monsters{$ID1};
+					}
+				}
 
 				message(sprintf("[%3d/%3d]", percent_hp(\%{$chars[$config{'char'}]}), percent_sp(\%{$chars[$config{'char'}]}))
 					. " Get Dmg : $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
 					($damage > 0)? "attacked" : "attackedMiss");
 			}
 			undef $chars[$config{'char'}]{'time_cast'};
+
 		} elsif (%{$monsters{$ID1}}) {
 			if (%{$players{$ID2}}) {
 				debug "Monster $monsters{$ID1}{'name'} ($monsters{$ID1}{'binID'}) attacks Player $players{$ID2}{'name'} ($players{$ID2}{'binID'}) - Dmg: $dmgdisplay\n", "parseMsg";
 			}
-			
+
 		} elsif (%{$players{$ID1}}) {
 			if (%{$monsters{$ID2}}) {
 				debug "Player $players{$ID1}{'name'} ($players{$ID1}{'binID'}) attacks Monster $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n", "parseMsg";
@@ -7379,7 +7382,7 @@ sub parseMsg {
 		$coords1{'y'} = unpack("S1",substr($msg, 8, 2));
 		$coords2{'x'} = unpack("S1",substr($msg, 10, 2));
 		$coords2{'y'} = unpack("S1",substr($msg, 12, 2));
-		%{$monsters{$ID}{'pos_attack_info'}} = %coords1;
+		%{$monsters{$ID}{'pos_attack_info'}} = %coords1 if ($monsters{$ID} && %{$monsters{$ID}});
 		%{$chars[$config{'char'}]{'pos'}} = %coords2;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords2;
 		debug "Received attack location - monster: $coords1{'x'},$coords1{'y'} - " .
@@ -7728,11 +7731,11 @@ sub parseMsg {
 		}
 		if (%{$monsters{$ID}}) {
 			binRemove(\@monstersID, $ID);
-			undef %{$monsters{$ID}};
+			delete $monsters{$ID};
 		}
 		debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 		#end of pet spawn code
-		
+
 	} elsif ($switch eq "01AA") {
 		# pet
 
@@ -7972,7 +7975,7 @@ sub parseMsg {
 				%{$pets{$ID}{'pos_to'}} = %coords;
 				if (%{$monsters{$ID}}) {
 					binRemove(\@monstersID, $ID);
-					undef %{$monsters{$ID}};
+					delete $monsters{$ID};
 				}
 				debug "Pet Moved: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 			} else {
