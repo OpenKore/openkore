@@ -341,8 +341,8 @@ sub createInterface {
 	EVT_CLOSE($frame, \&onClose);
 
 	# Hide console on Win32
-	if ($buildType == 0) {
-		#eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+	if ($buildType == 0 && !($Settings::CVS =~ /CVS/)) {
+		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 	}
 }
 
