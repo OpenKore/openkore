@@ -179,6 +179,11 @@ sub cmdAI {
 		
 		return;
 	}
+	
+	if ($args eq 'ai_v') {
+		message dumpHash(\%ai_v) . "\n", "list";
+		return;
+	}
 
 	# Toggle AI
 	if ($AI) {
