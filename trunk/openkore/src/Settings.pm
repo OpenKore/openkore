@@ -155,11 +155,21 @@ sub delConfigFile {
 }
 
 sub load {
-	my $r_array = shift;
-	$r_array = \@configFiles if (!$r_array);
+	my $items = $_[0];
+	my @array;
 
-	Plugins::callHook('preloadfiles', {files => $r_array});
-	foreach (@{$r_array}) {
+	if (!defined $items) {
+		@array = @configFiles;
+	} elsif (!ref($items)) {
+		foreach (@_) {
+			push @array, $configFiles[$_];
+		}
+	} elsif (ref($items) eq 'ARRAY') {
+		@array = @{$items};
+	}
+
+	Plugins::callHook('preloadfiles', {files => \@array});
+	foreach (@array) {
 		if (-f $$_{file}) {
 			Log::message("Loading $$_{file}...\n", "load");
 		} else {
@@ -167,7 +177,7 @@ sub load {
 		}
 		$_->{func}->($_->{file}, $_->{hash});
 	}
-	Plugins::callHook('postloadfiles', {files => $r_array});
+	Plugins::callHook('postloadfiles', {files => \@array});
 }
 
 sub parseReload {

@@ -290,8 +290,13 @@ sub mainLoop {
 		$oldUsername = $config{'username'};
 		$oldChar = $config{'char'};
 
+		foreach (@Settings::configFiles) {
+			if ($_->{file} eq $Settings::config_file) {
+				$_->{file} = $file;
+				last;
+			}
+		}
 		$Settings::config_file = $file;
-		$Settings::configFiles[0]{'file'} = $file;
 		parseDataFile2($file, \%config);
 
 		if ($oldMasterHost ne $config{"master_host_$config{'master'}"}

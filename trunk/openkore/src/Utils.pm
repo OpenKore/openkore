@@ -492,13 +492,13 @@ sub timeConvert {
 }
 
 ##
-# timeOut(r_time, [compare_time])
+# timeOut(r_time, [timeout])
 # r_time: a time value, or a hash.
-# compare_time: the time to compare to if $r_time is a time value.
+# timeout: the timeout value to use if $r_time is a time value.
 # Returns: a boolean.
 #
 # If r_time is a time value:
-# Check whether $compare_time seconds have passed since $r_time.
+# Check whether $timeout seconds have passed since $r_time.
 #
 # If r_time is a hash:
 # Check whether $r_time->{timeout} seconds have passed since $r_time->{time}.
