@@ -143,7 +143,7 @@ sub parseArguments {
 		'pickupitems=s',	\$pickupitems_file,
 		'chat=s',		\$chat_file,
 		'shop=s',		\$shop_file,
-		'storage=s',	\$storage_file;
+		'storage=s',	\$storage_file,
 		'monsters=s',		\$monster_log,
 		'items=s',		\$item_log_file,
 
