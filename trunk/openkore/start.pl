@@ -39,7 +39,7 @@ if (0) {
 	require base;
 	require bytes;
 	require lib;
-	use integer;
+	require integer;
 	require Config;
 	require warnings;
 	require Exporter;

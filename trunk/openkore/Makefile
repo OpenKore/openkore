@@ -22,6 +22,7 @@ dist:
 
 
 PERLAPP=perlapp --lib src \
+	--add XSTools \
 	--trim Pod::Usage \
 	start.pl --force \
 	--icon src\\auto\\XSTools\\build\\openkore.ico
@@ -30,4 +31,4 @@ start.exe:
 	$(PERLAPP)
 
 wxstart.exe:
-	$(PERLAPP) --add Wx -o wxstart.exe
+	$(PERLAPP) --add Wx --add Wx::Grid --add Wx::Html --add LWP::Simple -o wxstart.exe
