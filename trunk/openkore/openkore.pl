@@ -3178,12 +3178,9 @@ sub AI {
 			$ai_v{'temp'}{'randX'} = int(rand() * ($field{'width'} - 1));
 			$ai_v{'temp'}{'randY'} = int(rand() * ($field{'height'} - 1));
 		} while ($field{'field'}[$ai_v{'temp'}{'randY'}*$field{'width'} + $ai_v{'temp'}{'randX'}]);
-		if (!$config{'XKore'}) {
-			print "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n";
-		} else {
-			injectMessage("Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}") if ($config{'verbose'});
-		}
-		ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}, $field{'name'}, 0, $config{'route_randomWalk_maxRouteTime'}, 2);
+		print "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n";
+		injectMessage("Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}") if ($config{'verbose'} && $config{'XKore'});
+		ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}, $field{'name'}, 0, $config{'route_randomWalk_maxRouteTime'}, 2, undef, undef, 1);
 	}
 
 	##### DEAD #####
@@ -3400,7 +3397,16 @@ sub AI {
 		if ($ai_seq_args[0]{'following'} && $players{$ai_seq_args[0]{'ID'}}{'pos_to'}) {
 			$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}});
 			if ($ai_v{'temp'}{'dist'} > $config{'followDistanceMax'}) {
-				ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'}, $field{'name'}, 0, 0, 1, 0, $config{'followDistanceMin'});
+				if ($ai_v{'temp'}{'dist'} > 15) {
+					ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'}, $field{'name'}, 0, 0, 1, 0, $config{'followDistanceMin'});
+				} else {
+					my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}});
+					my (%vec, %pos);
+
+					getVector(\%vec, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+					moveAlongVector(\%pos, \%{$chars[$config{'char'}]{'pos_to'}}, \%vec, $dist - $config{'followDistanceMin'});
+					move($pos{'x'}, $pos{'y'});
+				}
 			}
 		}
 		if ($ai_seq_args[0]{'following'} && %{$players{$ai_seq_args[0]{'ID'}}}) {
@@ -3419,11 +3425,8 @@ sub AI {
 	}
 
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || $players_old{$ai_seq_args[0]{'ID'}}{'dead'})) {
-		if (!$config{'XKore'}) {
-			print "Master died.  I'll wait here.\n";
-		} else {
-			injectMessage("Master died.  I'll wait here.") if ($config{'verbose'});
-		}
+		print "Master died.  I'll wait here.\n";
+		injectMessage("Master died.  I'll wait here.") if ($config{'verbose'} && $config{'XKore'});
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
 		print "I lost my master\n";
@@ -3919,12 +3922,10 @@ sub AI {
 		print "Route failed\n" if $config{'debug'};
 		shift @ai_seq;
 		shift @ai_seq_args;
-#Solos Start
 		aiRemove("move");
 		aiRemove("route");
 		aiRemove("route_getRoute");
 		aiRemove("route_getMapRoute");
-#Solos End
 	} elsif ($ai_seq[0] eq "route" && timeOut(\%{$timeout{'ai_route_npcTalk'}})) {
 		last ROUTE if (!$field{'name'});
 		if ($ai_seq_args[0]{'waitingForMapSolution'}) {
@@ -5294,7 +5295,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		$type = unpack("C1",substr($msg, 6, 1));
-$config{'debug'} = 1;
+
 		if ($ID eq $accountID) {
 			print "You have died\n";
 			sendCloseShop();
@@ -5372,7 +5373,7 @@ $config{'debug'} = 1;
 			print "Unknown Disappeared: ".getHex($ID)."\n" if $config{'debug'};
 		}
 		$msg_size = 7;
-$config{'debug'} = 0;
+
 	} elsif ($switch eq "0081") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		$conState = 1;
@@ -8660,7 +8661,7 @@ sub ai_items_take {
 
 sub ai_route {
 	my ($r_ret, $x, $y, $map, $maxRouteDistance, $maxRouteTime, $attackOnRoute, $avoidPortals, $distFromGoal, $checkInnerPortals) = @_;
-	my %args;	
+	my %args;
 #Solos Start
 	my $pos_x;
 	my $pos_y;
@@ -8696,7 +8697,7 @@ sub ai_route {
 		$calcTo_SameSpot = 0;
 		Unstuck("Cannot find destination, trying to unstuck ...\n");
 	}
-	
+
 	if (($old_pos_x == $pos_x) && ($old_pos_y == $pos_y)) {
 		$calcFrom_SameSpot++;
 	} else {
