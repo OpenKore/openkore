@@ -38,6 +38,7 @@
 37 Concent
 38 Awaken
 39 Berserk
+42 Speed Up
 50 Strip Weapon
 51 Strip Shield
 52 Strip Armor
