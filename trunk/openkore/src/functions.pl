@@ -2141,7 +2141,7 @@ sub AI {
 		if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
 			$amount = $cart{inventory}[$i]{amount};
 		}
-		sendCartGet(\$remote_socket, $cart{inventory}[$i]{index}, $amount);
+		sendCartGet(\$remote_socket, $i, $amount);
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{items}} <= 0);
@@ -2616,7 +2616,7 @@ sub AI {
 	} #END OF BLOCK AUTOBUY
 
 
-	##### AUTO-CART ADD ####
+	##### AUTO-CART ADD/GET ####
 
 	if ((AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/)) && timeOut($AI::Timeouts::autoCart, 2)) {
 		my $hasCart = 0;
@@ -2630,10 +2630,13 @@ sub AI {
 		}
 
 		if ($hasCart) {
-			my @items;
+			my @addItems;
+			my @getItems;
 			my $inventory = $char->{inventory};
-			my $max = @{$inventory};
+			my $cartInventory = $cart{inventory};
+			my $max;
 
+			$max = @{$inventory};
 			for (my $i = 0; $i < $max; $i++) {
 				my $item = $inventory->[$i];
 				next unless ($item);
@@ -2643,11 +2646,38 @@ sub AI {
 					my %obj;
 					$obj{index} = $i;
 					$obj{amount} = $item->{amount} - $control->{keep};
-					push @items, \%obj;
+					push @addItems, \%obj;
 					debug "Scheduling $item->{name} ($i) x $obj{amount} for adding to cart\n", "ai_autoCart";
 				}
 			}
-			cartAdd(\@items);
+			cartAdd(\@addItems);
+
+			$max = @{$cartInventory};
+			for (my $i = 0; $i < $max; $i++) {
+				my $cartItem = $cartInventory->[$i];
+				next unless ($cartItem);
+				my $control = $items_control{lc($cartItem->{name})};
+				next unless ($control->{cart_get});
+
+				my $invIndex = findIndexString_lc($inventory, "name", $cartItem->{name});
+				my $amount;
+				if ($invIndex eq '') {
+					$amount = $control->{keep};
+				} elsif ($inventory->[$invIndex]{'amount'} < $control->{keep}) {
+					$amount = $control->{keep} - $inventory->[$invIndex]{'amount'};
+				}
+				if ($amount > $cartItem->{amount}) {
+					$amount = $cartItem->{amount};
+				}
+				if ($amount > 0) {
+					my %obj;
+					$obj{index} = $i;
+					$obj{amount} = $amount;
+					push @getItems, \%obj;
+					debug "Scheduling $cartItem->{name} ($i) x $obj{amount} for getting from cart\n", "ai_autoCart";
+				}
+			}
+			cartGet(\@getItems);
 		}
 		$AI::Timeouts::autoCart = time;
 	}

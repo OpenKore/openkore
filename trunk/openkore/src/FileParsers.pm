@@ -299,6 +299,7 @@ sub parseItemsControl {
 			$$r_hash{$key}{'storage'} = $args[1];
 			$$r_hash{$key}{'sell'} = $args[2];
 			$$r_hash{$key}{'cart_add'} = $args[3];
+			$$r_hash{$key}{'cart_get'} = $args[4];
 		}
 	}
 	close FILE;
