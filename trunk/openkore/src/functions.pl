@@ -7566,10 +7566,12 @@ sub parseMsg {
 
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID);
-
 		$damage ||= "Miss!";
     my $disp = "$source $uses $skillsID_lut{$skillID}" . (($level == 65535)? "" : " (lvl $level)") . (($damage == 35536)? "" : " on $target - Dmg: $damage") . "\n";
-    my $domain = "skill";
+
+    my $domain;
+    $domain = "skill" if (($source eq "You") || ($target eq "You"));
+    
     if ($damage == 0) {
       $domain = "attackMonMiss" if (($source eq "You") && ($target ne "Self"));
       $domain = "attackedMiss" if (($source ne "You") && ($target eq "You"));
@@ -7578,7 +7580,18 @@ sub parseMsg {
       $domain = "attackMon" if (($source eq "You") && ($target ne "Self"));
       $domain = "attacked" if (($source ne "You") && ($target eq "You"));
     }
+    
     message $disp, $domain;
+    
+		Plugins::callHook('packet_skilluse', {
+			'skillID' => $skillID,
+			'sourceID' => $sourceID,
+      'targetID' => $targetID,
+      'damage' => $damage,
+      'amount' => 0,
+      'x' => 0,
+      'y' => 0
+			});
 
 	} elsif ($switch eq "0117") {
 		# Skill used on coordinates
@@ -7596,6 +7609,17 @@ sub parseMsg {
 
 		# Print skill use message
 		message "$source $uses $skillsID_lut{$skillID} on location ($x, $y)\n", "skill";
+
+		Plugins::callHook('packet_skilluse', {
+			'skillID' => $skillID,
+			'sourceID' => $sourceID,
+      'targetID' => '',
+      'damage' => 0,
+      'amount' => $lv,
+      'x' => $x,
+      'y' => $y
+			});
+
 
 	} elsif ($switch eq "0119") {
 		my $ID = substr($msg, 2, 4);
@@ -7686,7 +7710,17 @@ sub parseMsg {
 		} elsif ($amount != 65535) {
 			$extra = ": Lv $amount";
 		}
+  
 		message "$source $uses $skillsID_lut{$skillID} on $target$extra\n", (($source eq "You") || ($target eq "You"))? "skill" : "";
+		Plugins::callHook('packet_skilluse', {
+			'skillID' => $skillID,
+			'sourceID' => $sourceID,
+      'targetID' => $targetID,
+      'damage' => 0,
+      'amount' => $amount,
+      'x' => 0,
+      'y' => 0
+			});
 
 	} elsif ($switch eq "011C") {
 		# Warp portal list
