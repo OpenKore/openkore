@@ -211,7 +211,7 @@ sub parseShopControl {
 		chomp;
 		next if /^$/ || /^#/;
 
-		my ($name, $price, $amount) = split(/\t/);
+		my ($name, $price, $amount) = split(/\t+/);
 		my $real_price = $price;
 		$real_price =~ s/,//g;
 
