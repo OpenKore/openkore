@@ -33,6 +33,7 @@ Bug fixes:
   itemsTakeAuto_party not working.
 - Do not automatically add stats over 99 base stat.
 - Detect negative damage correctly. (unpack 'S1' => 's1')
+- 's' command correctly displays Status Points >= 1000 now.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
