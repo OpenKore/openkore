@@ -677,9 +677,9 @@ sub parseCommand {
 			error	"Error in function 'deal' (Deal a Player)\n" .
 				"Player $arg[0] does not exist\n";
 		} elsif ($arg[0] =~ /\d+/) {
+			message "Attempting to deal ".getActorName($playersID[$arg[0]])."\n";
 			$outgoingDeal{'ID'} = $playersID[$arg[0]];
 			sendDeal(\$remote_socket, $playersID[$arg[0]]);
-
 
 		} elsif ($arg[0] eq "no" && !%incomingDeal && !%outgoingDeal && !%currentDeal) {
 			error	"Error in function 'deal' (Deal a Player)\n" .
