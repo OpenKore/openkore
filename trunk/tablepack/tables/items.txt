@@ -1467,3 +1467,7 @@
 572#Lucky Cookie#
 12018#Fire Cracker#
 573#Chocolate_Drink#
+
+// ---- pRO Easter Event ---------
+574#Egg#
+12019#Holy_Egg#
