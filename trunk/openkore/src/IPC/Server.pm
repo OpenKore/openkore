@@ -126,6 +126,61 @@ sub _sendData {
 	return 1;
 }
 
+sub _newClient {
+	my $self = shift;
+	my %client;
+
+	# Accept connection from new client
+	$client{sock} = $self->{server}->accept;
+	$client{sock}->autoflush(0);
+	$client{host} = $client{sock}->peerhost;
+	$client{buffer} = '';
+	$client{ID} = $self->{maxID};
+	$self->{maxID}++;
+
+	$self->{clients}{$client{ID}} = \%client;
+	debug("New client: $client{host} ($client{ID})\n", "ipc");
+
+	foreach my $listener (@{$self->{listeners}}) {
+		next if (!defined $listener);
+		$listener->{func}->("connect", $client{ID}, undef, undef, $listener->{user_data});
+	}
+}
+
+sub _processClient {
+	my ($self, $clientID, $client, $r_messages) = @_;
+
+	my $data = _readData($client->{sock});
+	if (!defined $data) {
+		# Client disconnected
+		foreach my $listener (@{$self->{listeners}}) {
+			next if (!defined $listener);
+			$listener->{func}->("disconnect", $clientID, undef, undef, $listener->{user_data});
+		}
+
+		debug("Client $client->{host} ($clientID) disconnected\n", "ipc");
+		delete $self->{clients}{$clientID};
+		return;
+	}
+
+	my ($msgID, %hash);
+	$client->{buffer} .= $data;
+
+	while ( ($msgID = IPC::Protocol::decode($client->{buffer}, \%hash, \$client->{buffer})) ) {
+		my %copy = %hash;
+		foreach my $listener (@{$self->{listeners}}) {
+			next if (!defined $listener);
+			$listener->{func}->("msg", $clientID, $msgID, \%copy, $listener->{user_data});
+		}
+		push @{$r_messages}, {
+			ID => $msgID,
+			from => $clientID,
+			params => \%copy
+		};
+		undef %hash;
+	}
+}
+
 
 ##
 # $ipc->port()
@@ -166,57 +221,16 @@ sub iterate {
 
 	# Checks whether a new client wants to connect
 	if (dataWaiting($self->{server})) {
-		# Accept connection from new client
-		my %client;
-		$client{sock} = $self->{server}->accept;
-		$client{sock}->autoflush(0);
-		$client{buffer} = '';
-		$client{ID} = $self->{maxID};
-		$self->{maxID}++;
-
-		$self->{clients}{$client{ID}} = \%client;
-		debug("New client: " . $client{sock}->peerhost . " ($client{ID})\n", "ipc");
-
-		foreach my $listener (@{$self->{listeners}}) {
-			next if (!defined $listener);
-			$listener->{func}->("connect", $client{ID}, undef, undef, $listener->{user_data});
-		}
+		$self->_newClient();
 	}
 
 	# Check for input from clients
 	my @messages;
 
-	foreach my $ID (keys %{$self->{clients}}) {
-		my $client = $self->{clients}{$ID};
-		next if (!defined $client);
-
-		# Input available
+	foreach my $clientID (keys %{$self->{clients}}) {
+		my $client = $self->{clients}{$clientID};
 		if (dataWaiting(\$client->{sock})) {
-			my $data = _readData($client->{sock});
-			if (!defined $data) {
-				# Client disconnected
-				foreach my $listener (@{$self->{listeners}}) {
-					next if (!defined $listener);
-					$listener->{func}->("disconnect", $client->{ID}, undef, undef, $listener->{user_data});
-				}
-
-				debug("Client " . $client->{sock}->peerhost . " ($ID) disconnected\n", "ipc");
-				delete $self->{clients}{$ID};
-				next;
-			}
-
-			my ($msgID, %hash);
-			$client->{buffer} .= $data;
-
-			while (($msgID = IPC::Protocol::decode($client->{buffer}, \%hash, \$client->{buffer}))) {
-				my %copy = %hash;
-				foreach my $listener (@{$self->{listeners}}) {
-					next if (!defined $listener);
-					$listener->{func}->("msg", $ID, $msgID, \%copy, $listener->{user_data});
-				}
-				push @messages, { ID => $msgID, params => \%copy, clientID => $ID };
-				undef %hash;
-			}
+			$self->_processClient($clientID, $client, \@messages);
 		}
 	}
 
@@ -301,15 +315,18 @@ sub broadcast {
 				$listener->{func}->("disconnect", $ID, undef, undef, $listener->{user_data});
 			}
 
-			debug("Client " . $client->{sock}->peerhost . " ($ID) disconnected\n", "ipc");
+			debug("Client $client->{host} ($ID) disconnected\n", "ipc");
 			delete $ipc->{clients}{$ID};
 		}
 	}
 }
 
+##
+# $ipc->send(clientID, msgID, hash)
 sub send {
 	my ($ipc, $clientID, $msgID, $hash) = @_;
-	if ((my $client = $ipc->{clients}{$clientID})) {
+
+	if ( (my $client = $ipc->{clients}{$clientID}) ) {
 		my $msg = IPC::Protocol::encode($msgID, $hash);
 		if (!_sendData($client->{sock}, $msg)) {
 			foreach my $listener (@{$ipc->{listeners}}) {
@@ -317,7 +334,7 @@ sub send {
 				$listener->{func}->("disconnect", $client->{ID}, undef, undef, $listener->{user_data});
 			}
 
-			debug("Client " . $client->{sock}->peerhost . " ($client->{ID}) disconnected\n", "ipc");
+			debug("Client $client->{host} ($client->{ID}) disconnected\n", "ipc");
 			delete $ipc->{clients}{$client->{ID}};
 		}
 	}

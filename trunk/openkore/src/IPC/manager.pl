@@ -8,7 +8,6 @@
 
 use strict;
 use FindBin qw($RealBin);
-use lib "$RealBin/src";
 use lib "$RealBin/..";
 use Time::HiRes qw(sleep);
 use File::Spec;
@@ -129,30 +128,36 @@ sub __start {
 sub process {
 	my $msg = shift;
 	my $ID = $msg->{ID};
-	my $clientID = $msg->{clientID};
-	print "Message: $ID (from client $clientID)\n";
+	my $from = $msg->{from};
+	print "Message: $ID (from client $from)\n";
 
+	# Special messages
 	if ($ID eq "_WELCOME") {
-		$clients{$clientID}{ready} = 1;
+		$clients{$from}{ready} = 1;
 
 	} elsif ($ID eq "_LIST-CLIENTS") {
 		my %params;
 		my $i = 0;
 		foreach ($server->clients) {
-			if ($_ ne $clientID && $clients{$clientID}{ready}) {
+			if ($_ ne $from && $clients{$from}{ready}) {
 				$params{"client$i"} = $_;
 				$i++;
 			}
 		}
 		$params{count} = $i;
-		$server->send($clientID, "_LIST-CLIENTS", \%params);
+		$server->send($from, "_LIST-CLIENTS", \%params);
+
+	} elsif (exists $msg->{params}{TO}) {
+		# Send message only to one client
+		print "Delivering message to client $msg->{params}{TO} only\n";
+		$server->send($msg->{params}{TO}, $ID, $msg->{params});
 
 	} else {
 		# Broadcast the message too all clients except the sender,
 		# or clients that aren't done with handshaking yet
-		foreach ($server->clients) {
-			next if ($_ eq $clientID || !$clients{$_}{ready});
-			$server->send($_, $ID, $msg->{params});
+		foreach my $clientID ($server->clients) {
+			next if ($clientID eq $from || !$clients{$clientID}{ready});
+			$server->send($clientID, $ID, $msg->{params});
 		}
 	}
 }
