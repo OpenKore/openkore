@@ -107,10 +107,18 @@ sub Fit {
 	my $self = shift;
 	if ($self->{dialog}) {
 		if ($self->{control}) {
-			my $size = $self->{control}->GetBestSize;
+			my ($w, $h);
+			if ($self->{control}->can('mapSize')) {
+				($w, $h) = $self->{control}->mapSize;
+			} else {
+				my $size = $self->{control}->GetBestSize;
+				$w = $size->GetWidth;
+				$h = $size->GetHeight;
+			}
+
 			my @timers;
 			my $set = sub {
-				$self->{dialog}->SetClientSize($size->GetWidth, $size->GetHeight);
+				$self->{dialog}->SetClientSize($w, $h);
 				foreach (@timers) {
 					$_->Stop();
 				}

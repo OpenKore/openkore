@@ -199,13 +199,16 @@ sub createInterface {
 		$menu->Append($opMenu, 'P&rogram');
 
 		my $infoMenu = new Wx::Menu();
-		$self->addMenu($infoMenu, '&Status	Alt-S', sub { Commands::run("s"); });
-		$self->addMenu($infoMenu, 'S&tatistics', sub { Commands::run("st"); });
-		$self->addMenu($infoMenu, '&Inventory	Alt-I', sub { Commands::run("i"); });
-		$self->addMenu($infoMenu, 'S&kills', sub { Commands::run("skills"); });
+		$self->addMenu($infoMenu, '&Status	Alt-S',	sub { Commands::run("s"); });
+		$self->addMenu($infoMenu, 'S&tatistics',	sub { Commands::run("st"); });
+		$self->addMenu($infoMenu, '&Inventory	Alt-I',	sub { Commands::run("i"); });
+		$self->addMenu($infoMenu, 'S&kills',		sub { Commands::run("skills"); });
 		$infoMenu->AppendSeparator();
-		$self->addMenu($infoMenu, '&Players	Alt-P', sub { Commands::run("pl"); });
-		$self->addMenu($infoMenu, '&Monsters	Alt-M', sub { Commands::run("ml"); });
+		$self->addMenu($infoMenu, '&Players	Alt-P',	sub { Commands::run("pl"); });
+		$self->addMenu($infoMenu, '&Monsters	Alt-M',	sub { Commands::run("ml"); });
+		$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
+		$infoMenu->AppendSeparator();
+		$self->addMenu($infoMenu, '&Experience Report	Alt+E',	sub { main::parseInput("exp"); });
 		$menu->Append($infoMenu, 'I&nfo');
 
 		# View menu

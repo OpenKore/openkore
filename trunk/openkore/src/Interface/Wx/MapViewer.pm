@@ -119,6 +119,11 @@ sub update {
 	}
 }
 
+sub mapSize {
+	my $self = shift;
+	return ($self->{bitmap}->GetWidth, $self->{bitmap}->GetHeight);
+}
+
 
 #### Private ####
 
