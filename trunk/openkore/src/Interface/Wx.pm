@@ -1,8 +1,9 @@
 #########################################################################
 #  OpenKore - WxWidgets Interface
 #  You need:
-#  * WxWidgets - http://www.wxwidgets.org/
 #  * WxPerl (the Perl bindings for WxWidgets) - http://wxperl.sourceforge.net/
+#
+#  More information about WxWidgets here: http://www.wxwidgets.org/
 #
 #  Copyright (c) 2004 OpenKore development team 
 #
@@ -25,13 +26,15 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_COMMAND);
 use Time::HiRes qw(time sleep);
+require DynaLoader;
 
 use Globals;
 use Interface;
 use base qw(Wx::App Interface);
 use Settings;
+use Plugins;
 use Utils;
 
 use constant MAX_CONSOLE_LINES => 2000;
@@ -41,11 +44,33 @@ our %fgcolors;
 
 sub OnInit {
 	my $self = shift;
+
+	# Determine platform
+	if ($buildType == 0) {
+		$self->{platform} = 'win32';
+	} else {
+		if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
+			# wxGTK is linked to GTK 2
+			$self->{platform} = 'gtk2';
+		} else {
+			$self->{platform} = 'gtk1';
+		}
+	}
+
 	$self->createInterface();
 	$self->iterate();
 	$self->{iterationTimeout}{timeout} = 0.05;
 	$self->{aiBarTimeout}{timeout} = 0.1;
+
+	$self->{loadHook} = Plugins::addHook('loadfiles', sub { $self->onLoadFiles(@_); });
+	$self->{postLoadHook} = Plugins::addHook('postloadfiles', sub { $self->onLoadFiles(@_); });
 	return 1;
+}
+
+sub DESTROY {
+	my $self = shift;
+	Plugins::delHook($self->{loadHook});
+	Plugins::delHook($self->{postLoadHook});
 }
 
 sub iterate {
@@ -198,6 +223,11 @@ sub createInterface {
 		$self->addMenu($opMenu, 'E&xit', \&main::quit);
 		$menu->Append($opMenu, '&Program');
 
+		# View menu
+		my $viewMenu = new Wx::Menu();
+		$self->addMenu($viewMenu, '&Font...', \&onFontChange);
+		$menu->Append($viewMenu, '&View');
+
 		if (0) {
 		# Test menu
 		my $testMenu = new Wx::Menu();
@@ -219,25 +249,20 @@ sub createInterface {
 
 	### Fonts
 	my ($fontName, $fontSize);
-	if ($buildType == 0) {
+	if ($self->{platform} eq 'win32') {
 		$fontSize = 10;
 		$fontName = 'Courier New';
+	} elsif ($self->{platform} eq 'gtk2') {
+		$fontSize = 10;
+		$fontName = 'MiscFixed';
 	} else {
-		require DynaLoader;
-		if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
-			# wxGTK is linked to GTK 2
-			$fontSize = 10;
-			$fontName = 'MiscFixed';
-		} else {
-			$fontSize = 12;
-		}
+		$fontSize = 12;
 	}
+
 	if ($fontName) {
-		$self->{fonts}{default} = new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxNORMAL, 0, $fontName);
-		$self->{fonts}{bold} = new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxBOLD, 0, $fontName);
+		$self->changeFont(new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxNORMAL, 0, $fontName));
 	} else {
-		$self->{fonts}{default} = new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxNORMAL);
-		$self->{fonts}{bold} = new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxBOLD);
+		$self->changeFont(new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxNORMAL));
 	}
 
 	$self->{inputStyle} = new Wx::TextAttr(
@@ -298,13 +323,44 @@ sub addMenu {
 	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self) });
 }
 
+sub changeFont {
+	my $self = shift;
+	my $font = shift;
+
+	$self->{fonts}{default} = $font;
+	my $bold = new Wx::Font(
+		$font->GetPointSize(),
+		$font->GetFamily(),
+		$font->GetStyle(),
+		wxBOLD,
+		$font->GetUnderlined(),
+		$font->GetFaceName()
+	);
+	$self->{fonts}{bold} = $bold;
+
+	if ($self->{console}) {
+		$self->{defaultStyle} = new Wx::TextAttr(
+			new Wx::Colour(255, 255, 255),
+			$self->{console}->GetBackgroundColour(),
+			$font
+		);
+		$self->{console}->SetDefaultStyle($self->{defaultStyle});
+	}
+
+	foreach (keys %fgcolors) {
+		delete $fgcolors{$_}[9];
+	}
+}
+
 sub updateStatusBar {
 	my $self = shift;
 	return unless (timeOut($self->{aiBarTimeout}));
 
 	my ($statText, $aiText);
 
-	if (!$conState) {
+	if ($self->{loadingFiles}) {
+		$statText = sprintf("Loading files... %.0f%%", $self->{loadingFiles}{percent} * 100);
+	} elsif (!$conState) {
 		$statText = "Initializing...";
 	} elsif ($conState == 1) {
 		$statText = "Not connected";
@@ -344,11 +400,8 @@ sub updateStatusBar {
 	$self->{aiBarTimeout}{time} = time;
 }
 
-sub onClose {
-	my $self = shift;
-	$self->Show(0);
-	main::quit();
-}
+
+################## Callbacks ##################
 
 sub onInputEnter {
 	my $self = shift;
@@ -357,6 +410,34 @@ sub onInputEnter {
 	$self->{console}->AppendText("$self->{input}\n");
 	$self->{console}->SetDefaultStyle($self->{defaultStyle});
 	$self->{inputBox}->Remove(0, -1);
+}
+
+sub onLoadFiles {
+	my ($self, $hook, $param) = @_;
+	if ($hook eq 'loadfiles') {
+		$self->{loadingFiles}{percent} = $param->{current} / scalar(@{$param->{files}});
+	} else {
+		delete $self->{loadingFiles};
+	}
+}
+
+sub onClose {
+	my $self = shift;
+	$self->Show(0);
+	main::quit();
+}
+
+sub onFontChange {
+	my $self = shift;
+
+	my $dialog = new Wx::FontDialog($self->{frame});
+	my $fontData = $dialog->GetFontData;
+	$fontData->SetInitialFont($self->{fonts}{default});
+	$fontData->EnableEffects(0);
+
+	$dialog->ShowModal();
+	$self->changeFont($dialog->GetFontData()->GetChosenFont());
+	$dialog->Destroy();
 }
 
 sub onManual {

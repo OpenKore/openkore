@@ -228,7 +228,7 @@ sub delConfigFile {
 }
 
 sub load {
-	my $items = $_[0];
+	my $items = shift;
 	my @array;
 
 	if (!defined $items) {
@@ -242,13 +242,17 @@ sub load {
 	}
 
 	Plugins::callHook('preloadfiles', {files => \@array});
+	my $i = 1;
 	foreach (@array) {
 		if (-f $$_{file}) {
 			Log::message("Loading $$_{file}...\n", "load");
 		} else {
 			Log::error("Error: Couldn't load $$_{file}\n", "load");
 		}
+
+		Plugins::callHook('loadfiles', {files => \@array, current => $i});
 		$_->{func}->($_->{file}, $_->{hash});
+		$i++;
 	}
 	Plugins::callHook('postloadfiles', {files => \@array});
 }
