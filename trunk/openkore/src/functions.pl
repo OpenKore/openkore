@@ -8129,6 +8129,14 @@ sub parseMsg {
 		countCastOn($sourceID, $targetID, $skillID, $x, $y);
 		message "$source $verb ".skillName($skillID)." on $target (time ${wait}ms)\n", "skill", 1;
 
+		Plugins::callHook('is_casting', {
+			sourceID => $sourceID,
+			targetID => $targetID,
+			skillID => $skillID,
+			x => $x,
+			y => $y
+		});
+
 		# Skill Cancel
 		if ($AI && %{$monsters{$sourceID}} && $mon_control{lc($monsters{$sourceID}{'name'})}{'skillcancel_auto'}) {
 			if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
