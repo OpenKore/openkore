@@ -4519,7 +4519,7 @@ sub AI {
 
 	if (timeOut(\%{$timeout{'ai_teleport_away'}}) && $ai_v{'ai_teleport_safe'}) {
 		foreach (@monstersID) {
-			if ($mon_control{lc($monsters{$_}{'name'})}{'teleport_auto'}) {
+			if ($mon_control{lc($monsters{$_}{'name'})}{'teleport_auto'} == 1) {
 				useTeleport(1);
 				$ai_v{'temp'}{'search'} = 1;
 				last;
@@ -5596,21 +5596,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
 				."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n";
-
-				#junq start
-				my $teleported = 0;
-				if ($config{'teleportAuto_maxDmg'} > 0) {
-					if ($damage > $config{'teleportAuto_maxDmg'}) {
-						print "Monster hits you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting\n";
-						useTeleport(1);
-						$teleported = 1;
-					}
-				}
-				if (!$teleported && $config{'teleportAuto_deadly'} && $damage > $chars[$config{'char'}]{'hp'}) {
-					print "Next hit of $damage dmg could kill you. Teleporting\n";
-					useTeleport(1);
-				}
-				#junq end
 			}
 			undef $chars[$config{'char'}]{'time_cast'};
 		} elsif (%{$monsters{$ID1}}) {
@@ -7146,22 +7131,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			} else {
 				$level = $level_real if ($level_real ne "");
 				print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
-			}
-
-			if (%{$monsters{$sourceID}} && $targetID eq $accountID) {
-				# Monster attacks you
-				my $teleported = 0;
-				if ($config{'teleportAuto_maxDmg'} > 0) {
-					if ($damage > $config{'teleportAuto_maxDmg'}) {
-						print "Monster hits you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting\n";
-						useTeleport(1);
-						$teleported = 1;
-					}
-				}
-				if (!$teleported && $config{'teleportAuto_deadly'} && $damage > $chars[$config{'char'}]{'hp'}) {
-					print "Next hit of $damage dmg could kill you. Teleporting\n";
-					useTeleport(1);
-				}
 			}
 		}
 
@@ -11278,6 +11247,7 @@ sub updateDamageTables {
 		}
 	} elsif ($ID2 eq $accountID) {
 		if (%{$monsters{$ID1}}) {
+			# Monster attacks you
 			$monsters{$ID1}{'dmgFrom'} += $damage;
 			$monsters{$ID1}{'dmgToYou'} += $damage;
 			if ($damage == 0) {
@@ -11286,6 +11256,24 @@ sub updateDamageTables {
 			$monsters{$ID1}{'attackedByPlayer'} = 0;
 			$monsters{$ID1}{'attackedYou'}++ unless ($monsters{$ID1}{'dmgFromPlayer'} || $monsters{$ID1}{'missedFromPlayer'}
 			                                      || $monsters{$ID1}{'missedToPlayer'} || $monsters{$ID1}{'dmgToPlayer'});
+
+			my $teleported = 0;
+			if ($config{'teleportAuto_maxDmg'}) {
+				if ($damage > $config{'teleportAuto_maxDmg'}) {
+					print "Monster hits you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting\n";
+					useTeleport(1);
+					$teleported = 1;
+				}
+			}
+			if (!$teleported && $config{'teleportAuto_deadly'} && $damage > $chars[$config{'char'}]{'hp'}) {
+				print "Next hit of $damage dmg could kill you. Teleporting\n";
+				useTeleport(1);
+				$teleported = 1;
+			}
+			if (!$teleported && $mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'} >= 2) {
+				print "Teleport due to $monsters{$ID1}{'name'} attack\n";
+				useTeleport(1);
+			}
 		}
 	} elsif (%{$monsters{$ID1}}) {
 		if (%{$players{$ID2}}) {
