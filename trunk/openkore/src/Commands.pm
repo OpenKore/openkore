@@ -405,7 +405,7 @@ sub cmdEquip {
 		error	"Error in function 'equip' (Equip Inventory Item)\n" .
 			"Inventory Item $arg1 does not exist.\n";
 
-	} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 0 && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
+	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
 		error	"Error in function 'equip' (Equip Inventory Item)\n" .
 			"Inventory Item $arg1 can't be equipped.\n";
 
@@ -986,7 +986,7 @@ sub cmdUnequip {
 		error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
 			"Inventory Item $arg1 does not exist.\n";
 
-	} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'equipped'} == 0 && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
+	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1]{'equipped'} && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
 		error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
 			"Inventory Item $arg1 is not equipped.\n";
 
