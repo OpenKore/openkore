@@ -2,7 +2,7 @@
 #  OpenKore - WxWidgets Interface
 #  Title bar control
 #
-#  Copyright (c) 2004 OpenKore development team 
+#  Copyright (c) 2004,2005 OpenKore development team 
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
