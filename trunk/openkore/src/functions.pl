@@ -7702,7 +7702,7 @@ sub parseMsg {
 
 		if (defined $actor) {
 			my $name = getActorName($ID);
-			my $verbosity = ($actorType ne 'self') ? 1 : 2;
+			my $verbosity = ($actorType eq 'self') ? 1 : 2;
 			my $are = ($actorType eq 'self') ? 'are' : 'is';
 			my $have = ($actorType eq 'self') ? 'have' : 'has';
 
