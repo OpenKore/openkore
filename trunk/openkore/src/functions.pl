@@ -3060,13 +3060,13 @@ sub AI {
 
 
 	##### RANDOM WALK #####
-	if ($config{route_randomWalk} && AI::isIdle && @{$field{field}} > 1 && !$cities_lut{$field{name}.'.rsw'}) {
+	if ($config{route_randomWalk} && AI::isIdle && !$cities_lut{$field{name}.'.rsw'}) {
 		# Find a random block on the map that we can walk on
 		my ($randX, $randY);
 		do { 
 			$randX = int(rand() * ($field{width} - 1));
 			$randY = int(rand() * ($field{height} - 1));
-		} while (getMapPoint(\%field, $randX, $randY));
+		} while (checkFieldWalkable(\%field, $randX, $randY));
 
 		# Move to that block
 		message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";
@@ -4633,10 +4633,10 @@ sub AI {
 
 	##### SEND EMOTICON #####
 	SENDEMOTION: {
-	my $ai_sendemotion_index = AI::findAction("sendEmotion");
-	last SENDEMOTION if (!defined $ai_sendemotion_index || time < AI::args->{timeout});
-	sendEmotion(\$remote_socket, AI::args->{emotion});
-	AI::remove("sendEmotion");
+		my $ai_sendemotion_index = AI::findAction("sendEmotion");
+		last SENDEMOTION if (!defined $ai_sendemotion_index || time < AI::args->{timeout});
+		sendEmotion(\$remote_socket, AI::args->{emotion});
+		AI::clear("sendEmotion");
 	}
 
 
@@ -8186,7 +8186,7 @@ sub ai_partyfollow {
 				return;
 			}
 
-			AI::remove("move,route,mapRoute");
+			AI::clear("move", "route", "mapRoute");
 			ai_route($ai_v{master}{map}, $ai_v{master}{x}, $ai_v{master}{y}, distFromGoal => $config{followDistanceMin});
 			
 			my $followIndex = AI::findAction("follow");
@@ -8407,55 +8407,6 @@ sub ai_route {
 	}
 }
 
-sub ai_route_getDiagSuccessors {
-	my $r_args = shift;
-	my $r_pos = shift;
-	my $r_array = shift;
-	my $type = shift;
-	my %pos;
-
-	if (ai_route_getMap($r_args, $$r_pos{'x'}-1, $$r_pos{'y'}-1) == $type
-		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'}-1 && $$r_pos{'parent'}{'y'} == $$r_pos{'y'}-1)) {
-		$pos{'x'} = $$r_pos{'x'}-1;
-		$pos{'y'} = $$r_pos{'y'}-1;
-		push @{$r_array}, {%pos};
-	}
-
-	if (ai_route_getMap($r_args, $$r_pos{'x'}+1, $$r_pos{'y'}-1) == $type
-		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'}+1 && $$r_pos{'parent'}{'y'} == $$r_pos{'y'}-1)) {
-		$pos{'x'} = $$r_pos{'x'}+1;
-		$pos{'y'} = $$r_pos{'y'}-1;
-		push @{$r_array}, {%pos};
-	}	
-
-	if (ai_route_getMap($r_args, $$r_pos{'x'}+1, $$r_pos{'y'}+1) == $type
-		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'}+1 && $$r_pos{'parent'}{'y'} == $$r_pos{'y'}+1)) {
-		$pos{'x'} = $$r_pos{'x'}+1;
-		$pos{'y'} = $$r_pos{'y'}+1;
-		push @{$r_array}, {%pos};
-	}	
-
-		
-	if (ai_route_getMap($r_args, $$r_pos{'x'}-1, $$r_pos{'y'}+1) == $type
-		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'}-1 && $$r_pos{'parent'}{'y'} == $$r_pos{'y'}+1)) {
-		$pos{'x'} = $$r_pos{'x'}-1;
-		$pos{'y'} = $$r_pos{'y'}+1;
-		push @{$r_array}, {%pos};
-	}	
-}
-
-sub ai_route_getMap {
-	my $r_args = shift;
-	my $x = shift;
-	my $y = shift;
-	if ($x < 0 || $x >= $$r_args{'field'}{'width'} || $y < 0 || $y >= $$r_args{'field'}{'height'}) {
-		return 1;	 
-	}
-	return ord(substr($$r_args{field}{rawMap}, ($y*$$r_args{'field'}{'width'})+$x, 1));
-	#return $$r_args{'field'}{'field'}[($y*$$r_args{'field'}{'width'})+$x];
-}
-
-
 sub ai_route_getRoute {
 	my ($returnArray, $r_field, $r_start, $r_dest) = @_;
 	undef @{$returnArray};
@@ -8485,43 +8436,6 @@ sub ai_route_getRoute {
 	return undef if !$ret; # Failure
 	@{$returnArray} = @{$ret};
 	return scalar @{$ret}; # Success
-}
-
-sub ai_route_getSuccessors {
-	my $r_args = shift;
-	my $r_pos = shift;
-	my $r_array = shift;
-	my $type = shift;
-	my %pos;
-
-	if (ai_route_getMap($r_args, $$r_pos{'x'}-1, $$r_pos{'y'}) == $type
-		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'}-1 && $$r_pos{'parent'}{'y'} == $$r_pos{'y'})) {
-		$pos{'x'} = $$r_pos{'x'}-1;
-		$pos{'y'} = $$r_pos{'y'};
-		push @{$r_array}, {%pos};
-	}
-
-	if (ai_route_getMap($r_args, $$r_pos{'x'}, $$r_pos{'y'}-1) == $type
-		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'} && $$r_pos{'parent'}{'y'} == $$r_pos{'y'}-1)) {
-		$pos{'x'} = $$r_pos{'x'};
-		$pos{'y'} = $$r_pos{'y'}-1;
-		push @{$r_array}, {%pos};
-	}	
-
-	if (ai_route_getMap($r_args, $$r_pos{'x'}+1, $$r_pos{'y'}) == $type
-		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'}+1 && $$r_pos{'parent'}{'y'} == $$r_pos{'y'})) {
-		$pos{'x'} = $$r_pos{'x'}+1;
-		$pos{'y'} = $$r_pos{'y'};
-		push @{$r_array}, {%pos};
-	}	
-
-		
-	if (ai_route_getMap($r_args, $$r_pos{'x'}, $$r_pos{'y'}+1) == $type
-		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'} && $$r_pos{'parent'}{'y'} == $$r_pos{'y'}+1)) {
-		$pos{'x'} = $$r_pos{'x'};
-		$pos{'y'} = $$r_pos{'y'}+1;
-		push @{$r_array}, {%pos};
-	}	
 }
 
 #sellAuto for items_control - chobit andy 20030210
@@ -9226,7 +9140,7 @@ sub getField {
 		close FILE;
 		@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
 		$$r_hash{'rawMap'} = $data;
-		$$r_hash{'field'} = [unpack("C*", $data)];
+		#$$r_hash{'field'} = [unpack("C*", $data)];
 	}
 
 	# Load the associated .dist file (distance map)
