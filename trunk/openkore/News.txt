@@ -96,6 +96,8 @@ Bugfixes:
 - *Really* fixed the bug which causes an infinite loop if the target
   monster is not reachable.
 - Don't stand still for so long after having killed a mob.
+- Fix teleportAuto_search. It totally ignored other AI sequences, like
+  autoBuy.
 
 
 ==================

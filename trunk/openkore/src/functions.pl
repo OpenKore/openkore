@@ -4425,92 +4425,91 @@ sub AI {
 
 	##### AUTO-TELEPORT #####
 	TELEPORT: {
-	my $map_name_lu = $field{name}.'.rsw';
-	my $ai_teleport_safe = 0;
+		my $map_name_lu = $field{name}.'.rsw';
+		my $safe = 0;
 
-	if ($config{teleportAuto_onlyWhenSafe} && scalar(@playersID)) {
-		if (!$cities_lut{$map_name_lu} && timeOut(\%{$timeout{ai_teleport_safe_force}})) {
-			$ai_teleport_safe = 1;
-		}
-	} elsif (!$cities_lut{$map_name_lu}) {
-		$ai_teleport_safe = 1;
-		$timeout{ai_teleport_safe_force}{time} = time;
-	}
-
-	##### TELEPORT HP #####
-	if (((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))
-		&& $ai_teleport_safe 
-		&& timeOut(\%{$timeout{ai_teleport_hp}})) {
-		useTeleport(1);
-		$ai_v{temp}{clear_aiQueue} = 1;
-		$timeout{ai_teleport_hp}{time} = time;
-	}
-
-	##### TELEPORT MONSTER #####
-	if (timeOut(\%{$timeout{ai_teleport_away}}) && $ai_teleport_safe) {
-		foreach (@monstersID) {
-			if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
-				useTeleport(1);
-				$ai_v{temp}{clear_aiQueue} = 1;
-				last;
+		# Check whether it's safe to teleport
+		if ($config{teleportAuto_onlyWhenSafe}) {
+			if (!$cities_lut{$map_name_lu} && timeOut($timeout{ai_teleport_safe_force})) {
+				$safe = 1 if (!binSize(\@playersID));
+				$timeout{ai_teleport_safe_force}{time} = time;
 			}
+		} elsif (!$cities_lut{$map_name_lu}) {
+			$safe = 1;
+			$timeout{ai_teleport_safe_force}{time} = time;
 		}
-		$timeout{'ai_teleport_away'}{'time'} = time;
-	}
 
-	##### TELEPORT SEARCH #####
-	if (($config{teleportAuto_search} && AI::inQueue("sitAuto","sitting","attack","follow","items_take","buyAuto","skill_use","sellAuto","storageAuto")) || !$config{attackAuto}){
-		$timeout{ai_teleport_search}{time} = time;
-	}
-
-	if ($config{teleportAuto_search} && $ai_teleport_safe
-		&& ($field{name} eq $config{lockMap} || $config{lockMap} eq "")
-		&& timeOut(\%{$timeout{ai_teleport_search}})){
-
-		my $do_search = 0;
-		foreach (keys %mon_control) {
-			if ($mon_control{$_}{teleport_search}) {
-				$do_search = 1;
-				last;
-			}
+		##### TELEPORT HP #####
+		if (((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))
+			&& $safe 
+			&& timeOut(\%{$timeout{ai_teleport_hp}})) {
+			useTeleport(1);
+			$ai_v{temp}{clear_aiQueue} = 1;
+			$timeout{ai_teleport_hp}{time} = time;
 		}
-		if ($do_search) {
-			my $found = 0;
+
+		##### TELEPORT MONSTER #####
+		if (timeOut(\%{$timeout{ai_teleport_away}}) && $safe) {
 			foreach (@monstersID) {
-				if ($mon_control{lc($monsters{$_}{name})}{teleport_search}  && !$monsters{$_}{attackedByPlayer} && !$monsters{$_}{attack_failed}) {
-					$found = 1;
+				if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
+					useTeleport(1);
+					$ai_v{temp}{clear_aiQueue} = 1;
 					last;
 				}
 			}
-			if (!$found) {
+			$timeout{'ai_teleport_away'}{'time'} = time;
+		}
+
+		##### TELEPORT SEARCH #####
+		if ($config{attackAuto} && $config{teleportAuto_search} && safe
+		 && !AI::inQueue("sitAuto", "sitting", "attack", "follow", "items_take", "buyAuto", "skill_use", "sellAuto", "storageAuto")
+		 && ($field{name} eq $config{lockMap} || $config{lockMap} eq "")
+		 && timeOut($timeout{ai_teleport_search})) {
+			my $do_search = 0;
+			foreach (keys %mon_control) {
+				if ($mon_control{$_}{teleport_search}) {
+					$do_search = 1;
+					last;
+				}
+			}
+
+			if ($do_search) {
+				my $found = 0;
+				foreach (@monstersID) {
+					if ($mon_control{lc($monsters{$_}{name})}{teleport_search}  && !$monsters{$_}{attackedByPlayer} && !$monsters{$_}{attack_failed}) {
+						$found = 1;
+						last;
+					}
+				}
+				if (!$found) {
+					useTeleport(1);
+					$ai_v{temp}{clear_aiQueue} = 1;
+				}
+			}
+
+			$timeout{ai_teleport_search}{time} = time;
+		}
+
+		##### TELEPORT IDLE / PORTAL #####
+		if ($config{teleportAuto_idle} && AI::action ne "") {
+			$timeout{ai_teleport_idle}{time} = time;
+		}
+
+		if ($config{teleportAuto_idle} && $safe && timeOut(\%{$timeout{ai_teleport_idle}})){
+			useTeleport(1);
+			$ai_v{temp}{clear_aiQueue} = 1;
+			$timeout{ai_teleport_idle}{time} = time;
+		}
+
+		if ($config{teleportAuto_portal} && $safe
+			&& ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
+			&& timeOut($timeout{'ai_teleport_portal'})) {
+			if (scalar(@portalsID)) {
 				useTeleport(1);
 				$ai_v{temp}{clear_aiQueue} = 1;
 			}
-		
+			$timeout{ai_teleport_portal}{time} = time;
 		}
-		$timeout{ai_teleport_search}{time} = time;
-	}
-
-	##### TELEPORT IDLE / PORTAL #####
-	if ($config{teleportAuto_idle} && AI::action ne "") {
-		$timeout{ai_teleport_idle}{time} = time;
-	}
-
-	if ($config{teleportAuto_idle} && $ai_teleport_safe && timeOut(\%{$timeout{ai_teleport_idle}})){
-		useTeleport(1);
-		$ai_v{temp}{clear_aiQueue} = 1;
-		$timeout{ai_teleport_idle}{time} = time;
-	}
-
-	if ($config{teleportAuto_portal} && $ai_teleport_safe
-		&& ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
-		&& timeOut($timeout{'ai_teleport_portal'})) {
-		if (scalar(@portalsID)) {
-			useTeleport(1);
-			$ai_v{temp}{clear_aiQueue} = 1;
-		}
-		$timeout{ai_teleport_portal}{time} = time;
-	}
 	} # end of block teleport
 
 
