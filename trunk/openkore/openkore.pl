@@ -9,15 +9,16 @@
 #########################################################################
 use Time::HiRes qw(time usleep);
 use IO::Socket;
-
-#Solos Start
 use Getopt::Long;
-$config_file = "control/config.txt";
-$items_control_file = "control/items_control.txt";
-$mon_control_file = "control/mon_control.txt";
-$chat_file = "chat.txt";
-$item_log_file = "items.txt";
-$shop_file = "control/shop.txt";
+use Digest::MD5 qw(md5);
+
+our $config_file = "control/config.txt";
+our $items_control_file = "control/items_control.txt";
+our $mon_control_file = "control/mon_control.txt";
+our $chat_file = "chat.txt";
+our $item_log_file = "items.txt";
+our $shop_file = "control/shop.txt";
+our $rpackets_file = 'tables/recvpackets.txt';
 
 &GetOptions('config=s', \$config_file, 
 			'mon_control=s', \$mon_control_file, 
@@ -25,39 +26,38 @@ $shop_file = "control/shop.txt";
 			'chat=s', \$chat_file,
 			'shop=s', \$shop_file,
 			'items=s', \$item_log_file,
+			'rpackets=s', \$rpackets_file,
 			'help', \$help_option);
-if ($help_option) { 
+if ($help_option) {
 	print "Usage: skore.exe [options...]\n\n";
 	print "The supported options are:\n\n";
 	print "--help                     Displays this help message.\n";
 	print "--config=path/file         Which config.txt to use.\n";
 	print "--mon_control=path/file    Which mon_control.txt to use.\n";
-	print "--items_control=path/file  Which items_control.txt to use.\n"; 
+	print "--items_control=path/file  Which items_control.txt to use.\n";
 	print "--chat=path/file           Which chat.txt to use.\n";
 	print "--shop=path/file           Which shop.txt to use.\n";
-	exit();
+	print "--rpackets=path/file           Which recvpackets.txt to use.\n";
+	exit(1);
 }
-#Solos End
-srand(time());
 
-$versionText = "***Kore 0.93.11 - Ragnarok Online Bot - http://kore.sourceforge.net***\n";
-$versionText2 = "***sKore Build 33 - Mod by Solos - http://ro.horoy.com***\n";
-$versionText3 = "***skore-Revamped maintained by dn4cer, FBW, and blueviper22***\n\n";
+srand(time());
+$versionText = "*** OpenKore 1.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
 print $versionText;
-print $versionText2;
-print $versionText3;
 
 our $welcomeText = "Welcome to X-sKore.";
 
-#Solos Start
 addParseFiles($config_file, \%config,\&parseDataFile2);
 addParseFiles($items_control_file, \%items_control,\&parseItemsControl);
 addParseFiles($mon_control_file, \%mon_control,\&parseMonControl);
-#Solos End
 addParseFiles("control/overallauth.txt", \%overallAuth, \&parseDataFile);
 addParseFiles("control/pickupitems.txt", \%itemsPickup, \&parseDataFile_lc);
 addParseFiles("control/responses.txt", \%responses, \&parseResponses);
 addParseFiles("control/timeouts.txt", \%timeout, \&parseTimeouts);
+addParseFiles($shop_file, \%shop, \&parseDataFile2);
+addParseFiles("control/chat_resp.txt", \%chat_resp, \&parseDataFile2);
+addParseFiles("control/avoid.txt", \%avoid, \&parseDataFile2);
+#addParseFiles("control/chat_ppl.txt", \%chat_resp, \&parseDataFile2);
 
 addParseFiles("tables/cities.txt", \%cities_lut, \&parseROLUT);
 addParseFiles("tables/emotions.txt", \%emotions_lut, \&parseDataFile2);
@@ -78,30 +78,13 @@ addParseFiles("tables/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
 addParseFiles("tables/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
 addParseFiles("tables/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
 addParseFiles("tables/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
-#Solos Start
-addParseFiles($shop_file, \%shop, \&parseDataFile2);
 addParseFiles("tables/cards.txt", \%cards_lut, \&parseROLUT); 
 addParseFiles("tables/elements.txt", \%elements_lut, \&parseROLUT); 
-addParseFiles("control/chat_resp.txt", \%chat_resp, \&parseDataFile2);
-addParseFiles("control/avoid.txt", \%avoid, \&parseDataFile2);
-#addParseFiles("control/chat_ppl.txt", \%chat_resp, \&parseDataFile2);
-#Solos End
+addParseFiles($rpackets_file, \%rpackets, \&parseDataFile2); 
 
 load(\@parseFiles);
 
-# Autodetect platform
-if ($ENV{'PATH'} =~ /^[a-z]:\\/i) {
-	configModify("buildType", 0, 1);
-} else {
-	my $platform = `uname -s`;
-	if (!$platform || $platform =~ /win/i) {
-		configModify("buildType", 0, 1);
-	} else {
-		configModify("buildType", 1, 1);
-	}
-}
-
-if ($config{'buildType'} eq '0') {
+if ($^O eq 'MSWin32') {
 	eval "use Win32::API;";
 	die if ($@);
 
@@ -113,6 +96,8 @@ if ($config{'buildType'} eq '0') {
 
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
 	die "Could not locate Tools.dll" if (!$CalcPath_destroy);
+
+	configModify('buildType', 0, 1);
 } else {
 	eval "use C::DynaLib;";
 	eval "use POSIX \":sys_wait_h\";";
@@ -128,6 +113,8 @@ if ($config{'buildType'} eq '0') {
 
 	$CalcPath_destroy = $ToolsLib->DeclareSub("CalcPath_destroy", "", "L");
 	die "Could not locate Tools.so" if (!$CalcPath_destroy);
+
+	configModify('buildType', 1, 1);
 }
 
 if ($config{'adminPassword'} eq 'x' x 10) {
@@ -345,8 +332,6 @@ kill 9, $input_pid;
 killConnection(\$remote_socket);
 print "Bye!\n";
 print $versionText;
-print $versionText2;
-print $versionText3;
 exit;
 
 #######################################
@@ -460,20 +445,36 @@ sub initOtherVars {
 #######################################
 
 
-
+# $conState contains the connection state:
+# 1: Not connected to anything		(next step -> connect to master server).
+# 2: Connected to master server		(next step -> connect to login server)
+# 3: Connected to login server		(next step -> connect to character server)
+# 4: Connected to character server	(next step -> connect to map server)
+# 5: Connected to map server; ready and functional.
 sub checkConnection {
 	return if ($config{'XKore'});
 
 	if ($conState == 1 && !($remote_socket && $remote_socket->connected()) && timeOut(\%{$timeout_ex{'master'}}) && !$conState_tries) {
 		print "Connecting to Master Server...\n";
-#Solos Start
 		$shopstarted = 1;
-#Solos End
 		$conState_tries++;
 		undef $msg;
 		connection(\$remote_socket, $config{"master_host_$config{'master'}"},$config{"master_port_$config{'master'}"});
-		sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'});
+
+		if ($config{'secure'} >= 1) {
+			print "Secure Login...\n";
+			undef $secureLoginKey;
+			sendMasterCodeRequest(\$remote_socket);
+                } else {
+			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'});
+		}
+
 		$timeout{'master'}{'time'} = time;
+
+	} elsif ($conState == 1 && $config{'secure'} >= 1 && $secureLoginKey ne "" && !timeOut(\%{$timeout{'master'}}) && $conState_tries) {
+		print "Sending encoded password...\n";
+		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'}, $secureLoginKey);
+		undef $secureLoginKey;
 
 	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
 		print "Timeout on Master Server, reconnecting...\n";
@@ -496,14 +497,14 @@ sub checkConnection {
 		$conState = 1;
 
 	} elsif ($conState == 3 && !($remote_socket && $remote_socket->connected()) && $config{'char'} ne "" && !$conState_tries) {
-		print "Connecting to Game Login Server...\n";
+		print "Connecting to Character Select Server...\n";
 		$conState_tries++;
 		connection(\$remote_socket, $servers[$config{'server'}]{'ip'},$servers[$config{'server'}]{'port'});
 		sendCharLogin(\$remote_socket, $config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 
 	} elsif ($conState == 3 && timeOut(\%{$timeout{'charlogin'}}) && $config{'char'} ne "") {
-		print "Timeout on Game Login Server, reconnecting...\n";
+		print "Timeout on Character Select Server, reconnecting...\n";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -4691,10 +4692,30 @@ sub parseSendMsg {
 
 
 
+##
+# parseMsg($msg)
+# $msg: The data to parse, as received from the socket.
+# Returns: The remaining bytes.
+#
+# When data (packets) from the RO server is received, it will be send to this
+# function. It will determine what kind of packet this data is and process it.
+# The length of the packets are gotten from recvpackets.txt.
+#
+# The received data does not always contain a complete packet, or may contain a
+# piece of the next packet.
+# If it contains a piece of the next packet too, parseMsg will delete the bytes
+# of the first packet that's processed, and return the remaining bytes.
+# If the data doesn't contain a complete packet, parseMsg will return "". $msg
+# will be remembered by the main loop.
+# Next time data from the RO server is received, the remaining bytes as returned
+# by paseMsg, or the incomplete packet that the main loop remembered, will be
+# prepended to the fresh data received from the RO server and then passed to
+# parseMsg again.
+# See also the main loop about how parseMsg's return value is treated.
 sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
-#Solos Start
+
  	$mapdrt = time;
  	if ($mapdrt > $oldmapdrt) {
  		$oldmapdrt=$mapdrt+10;	
@@ -4702,7 +4723,7 @@ sub parseMsg {
  		$map_name =~ /([\s\S]*)\.gat/;print DATA "$1\n";
  		print DATA $chars[$config{'char'}]{'pos_to'}{'x'}."\n";
  		print DATA $chars[$config{'char'}]{'pos_to'}{'y'}."\n";
-### Addon Start ### 
+
 		for ($i = 0; $i < @npcsID; $i++) { 
 			next if ($npcsID[$i] eq ""); 
 			print DATA "NL " . $npcs{$npcsID[$i]}{'pos'}{'x'} . " " . $npcs{$npcsID[$i]}{'pos'}{'y'} . "\n"; 
@@ -4715,24 +4736,27 @@ sub parseMsg {
 			next if ($monstersID[$i] eq ""); 
 			print DATA "ML " . $monsters{$monstersID[$i]}{'pos'}{'x'} . " " . $monsters{$monstersID[$i]}{'pos'}{'y'} . "\n"; 
 		} 
-### Addon End ###
+
  		close(DATA);
  	}
-#auto open shop when sitting
+
 	if (($config{"shopAuto_open"} == 1) && ($shopstarted == 0) &&
 		($chars[$config{'char'}]{'sitting'})) {
 			sendOpenShop(\$remote_socket);
 	}
-#Solos End
 
+
+	# Determine packet switch
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $conState >= 4 && $lastswitch ne $switch
-		&& length($msg) >= unpack("S1", substr($msg, 0, 2))) {
+	 && length($msg) >= unpack("S1", substr($msg, 0, 2))) {
 		decrypt(\$msg, $msg);
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	print "Packet Switch: $switch\n" if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch));
 
+
+	# Handle unparsed packets
 	if ($lastswitch eq $switch && length($msg) > $lastMsgLength) {
 		$errorCount++;
 	} else {
@@ -4746,7 +4770,40 @@ sub parseMsg {
 	}
 
 	$lastswitch = $switch;
+	# Determine packet length using recvpackets.txt.
+	if (substr($msg,0,4) ne $accountID || ($conState != 2 && $conState != 4)) {
+		if ($rpackets{$switch} eq "-") {
+			# Complete packet; the size of this packet is equal
+			# to the size of the entire data
+			$msg_size = length($msg);
+
+		} elsif ($rpackets{$switch} eq "0") {
+			# Variable length packet
+			if (length($msg) < 4) {
+				return $msg;
+			}
+			$msg_size = unpack("S1", substr($msg, 2, 2));
+			if (length($msg) < $msg_size) {
+				return $msg;
+			}
+
+		} elsif ($rpackets{$switch} > 1) {
+			# Static length packet
+			if (length($msg) < $rpackets{$switch}) {
+				return $msg;
+			}
+			$msg_size = $rpackets{$switch};
+
+		} else {
+			dumpData($last_know_msg.$msg);
+		}
+
+		$last_know_msg = substr($msg, 0, $msg_size);
+		$last_know_switch = $switch;
+	}
 	$lastMsgLength = length($msg);
+
+
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4)) || ($config{'XKore'} && !$accountID && length($msg) == 4)) {
 		$accountID = substr($msg, 0, 4);
 		$AI = 1 if (!$AI_forcedOff);
@@ -4818,6 +4875,7 @@ $num  $servers[$num]{'name'}  $servers[$num]{'users'} $servers[$num]{'ip'} $serv
 				print "Server $config{'server'} selected\n";
 			}
 		}
+
 	} elsif ($switch eq "006A") {
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
@@ -4855,7 +4913,6 @@ $num  $servers[$num]{'name'}  $servers[$num]{'users'} $servers[$num]{'ip'} $serv
 			$versionSearch = 0;
 			writeDataFileIntact($config_file, \%config);
 		}
-		$msg_size = 23;
 
 	} elsif ($switch eq "006B") {
 		print "Recieved characters from Game Login Server\n";
@@ -4936,10 +4993,8 @@ $chars[$num]{'zenny'} $chars[$num]{'luk'}
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
-		$msg_size = 3;
 
 	} elsif ($switch eq "006E") {
-	 	$msg_size = 2;
 
 	} elsif ($switch eq "0071") {
 		print "Recieved character ID and Map IP from Game Login Server\n";
@@ -4971,7 +5026,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		write;
 		print "Closing connection to Game Login Server\n" if (!$config{'XKore'});
 		killConnection(\$remote_socket) if (!$config{'XKore'});
-		$msg_size = 28;
 #Solos Start
 		initStatVars();
 #Solos End
@@ -4990,15 +5044,12 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'IgnoreAll'});
 		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
-		$msg_size = 11;
 
 	} elsif ($switch eq "0075") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$msg_size = 11;
 
 	} elsif ($switch eq "0077") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$msg_size = 4;
 
 	} elsif ($switch eq "0078" && length($msg) >= 52) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5121,7 +5172,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 54;
 
 	} elsif ($switch eq "0079" && length($msg) >= 51) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5146,11 +5196,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Unknown Connected: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 53;
 
 	} elsif ($switch eq "007A" && length($msg) >= 4) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$msg_size = 4;
 
 	} elsif ($switch eq "007B" && length($msg) >= 58) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5233,7 +5281,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Unknown Moved: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 60;
 
 	} elsif ($switch eq "007C" && length($msg) >= 41) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5289,14 +5336,12 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Unknown Spawned: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 41;
 		
 	} elsif ($switch eq "007F") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$time = unpack("L1",substr($msg, 2, 4));
 		print "Recieved Sync\n" if ($config{'debug'} >= 2);
 		$timeout{'play'}{'time'} = time;
-		$msg_size = 6;
 
 	
 	} elsif ($switch eq "0080") {
@@ -5380,7 +5425,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Unknown Disappeared: ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 7;
 
 	} elsif ($switch eq "0081") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -5408,7 +5452,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} elsif ($type == 8) {
 			print "Error: The server still recognizes your last connection\n";
 		}
-		$msg_size = 3;
 
 	} elsif ($switch eq "0087" && length($msg) >= 12) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5419,7 +5462,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "You move to: $coordsTo{'x'}, $coordsTo{'y'}\n" if $config{'debug'};
 		$chars[$config{'char'}]{'time_move'} = time;
 		$chars[$config{'char'}]{'time_move_calc'} = distance(\%{$chars[$config{'char'}]{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}) * $config{'seconds_per_block'};
-		$msg_size = 12;
 
 	} elsif ($switch eq "0088") {
 		undef $level_real;
@@ -5440,11 +5482,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
 		}
-		$msg_size = 10;
 # End of Long Distance attack Solution
 
 	} elsif ($switch eq "0089") {
-		$msg_size = 2;
 
 	} elsif ($switch eq "008A") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5532,7 +5572,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Unknown ".getHex($ID1)." attacks ".getHex($ID2)." - Dmg: $dmgdisplay\n" if $config{'debug'};
 		}
-		$msg_size = 29;
 
 	} elsif ($switch eq "008D" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S*", substr($msg, 2, 2));
@@ -5627,7 +5666,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 # this is self talk portion
 #Solos End
 	} elsif ($switch eq "008F") {
-		$msg_size = 4;
 
 	} elsif ($switch eq "0091") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5648,7 +5686,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n" if $config{'debug'};
 		print "Sending Map Loaded\n" if ($config{'debug'} && !$config{'XKore'});
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
-		$msg_size = 22;
 
 	} elsif ($switch eq "0092" && length($msg) >= 28) {
 		$conState = 4;
@@ -5678,10 +5715,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		write;
 		print "Closing connection to Map Server\n";
 		killConnection(\$remote_socket) if (!$config{'XKore'});
-		$msg_size = 28;
 		
 	} elsif ($switch eq "0093") {
-		$msg_size = 2;
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5724,10 +5759,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print "Pet Info: $pets{$ID}{'name_given'} ($binID)\n";
 			}
 		}
-		$msg_size = 30;
 
 	} elsif ($switch eq "0096") {
-		$msg_size = 43;
 
 	} elsif ($switch eq "0097" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5799,7 +5832,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Player can't hear you - you are ignored\n";
 		}
 		shift @lastpm;
-		$msg_size = 3;
 
 	} elsif ($switch eq "009A" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
@@ -5829,7 +5861,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$monsters{$ID}{'look'}{'body'} = $body;
 			print "Monster $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) looks at $monsters{$ID}{'look'}{'body'}, $monsters{$ID}{'look'}{'head'}\n" if ($config{'debug'} >= 2);
 		}
-		$msg_size = 9;
 
 	} elsif ($switch eq "009D") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5852,7 +5883,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$items{$ID}{'pos'}{'x'} = $x;
 		$items{$ID}{'pos'}{'y'} = $y;
 		print "Item Exists: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n";
-		$msg_size = 17;
 
 	} elsif ($switch eq "009E" && length($msg) >= 17) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5875,7 +5905,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$items{$ID}{'pos'}{'x'} = $x;
 		$items{$ID}{'pos'}{'y'} = $y;
 		print "Item Appeared: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n";
-		$msg_size = 17;
 
 	} elsif ($switch eq "00A0" && length($msg) >= 23) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5977,7 +6006,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} elsif ($fail == 6) {
 			print "Can't loot item...wait...\n";
 		}
-		$msg_size = 23;
 
 	} elsif ($switch eq "00A1") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5990,7 +6018,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			undef %{$items{$ID}};
 			binRemove(\@itemsID, $ID);
 		}
-		$msg_size = 6;
 
 	} elsif ($switch eq "00A3") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6209,7 +6236,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
 			undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
 		}
-		$msg_size = 7;
 
 	} elsif ($switch eq "00AA") {
 		$index = unpack("S1",substr($msg, 2, 2));
@@ -6223,7 +6249,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'};
 			print "You equip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n";
 		}
-		$msg_size = 7;
 
 	} elsif ($switch eq "00AC") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6233,7 +6258,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = "";
 		print "You unequip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n";
-		$msg_size = 7;
 
 	} elsif ($switch eq "00AF") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6246,7 +6270,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
 			undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
 		}
-		$msg_size = 6;
 
 	} elsif ($switch eq "00B0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6332,7 +6355,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Something: $val\n" if $config{'debug'};
 		}
-		$msg_size = 8;
 
 	} elsif ($switch eq "00B1") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6358,11 +6380,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$chars[$config{'char'}]{'exp_job_max'} = $val;
 			print "Required Job Exp: $val\n" if $config{'debug'};
 		}
-		$msg_size = 8;
 
 	} elsif ($switch eq "00B3") {
 		$conState = 2;
-		$msg_size = 3;
 
 	} elsif ($switch eq "00B4" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
@@ -6378,13 +6398,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "00B5") {
 		$ID = substr($msg, 2, 4);
 		print "$npcs{$ID}{'name'} : Type 'talk cont' to continue talking\n";
-		$msg_size = 6;
 
 	} elsif ($switch eq "00B6") {
 		$ID = substr($msg, 2, 4);
 		undef %talk;
 		print "$npcs{$ID}{'name'} : Done talking\n";
-		$msg_size = 6;
 
 	} elsif ($switch eq "00B7" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
@@ -6428,7 +6446,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print "Something: $val\n";
 			}
 		}
-		$msg_size = 6;
 
 
 	} elsif ($switch eq "00BD") {
@@ -6477,7 +6494,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			,"Critical: $chars[$config{'char'}]{'critical'}\n"
 			,"Status Points: $chars[$config{'char'}]{'points_free'}\n"
 			if $config{'debug'};
-		$msg_size = 44;
 
 	} elsif ($switch eq "00BE") {
 		$type = unpack("S1",substr($msg, 2, 2));
@@ -6501,7 +6517,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$chars[$config{'char'}]{'points_luk'} = $val;
 			print "Points needed for Luck: $val\n" if $config{'debug'};
 		}
-		$msg_size = 5;
 		
 	} elsif ($switch eq "00C0") {
 		$ID = substr($msg, 2, 4);
@@ -6534,18 +6549,14 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 		}
 
-		$msg_size = 7;
 
 	} elsif ($switch eq "00C1") {
-		$msg_size = 4;
 		
 	} elsif ($switch eq "00C2") {
 		$users = unpack("L*", substr($msg, 2, 4));
 		print "There are currently $users users online\n";
-		$msg_size = 6;
 
 	} elsif ($switch eq "00C3") {
-		$msg_size = 8;
 
 	} elsif ($switch eq "00C4") {
 		$ID = substr($msg, 2, 4);
@@ -6553,7 +6564,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$talk{'buyOrSell'} = 1;
 		$talk{'ID'} = $ID;
 		print "$npcs{$ID}{'name'} : Type 'store' to start buying, or type 'sell' to start selling\n";
-		$msg_size = 6;
 
 	} elsif ($switch eq "00C6" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1",substr($msg,2,2));
@@ -6590,10 +6600,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Ready to start selling items\n";
 		
 	} elsif ($switch eq "00CA") {
-		$msg_size = 3;
 
 	} elsif ($switch eq "00CB") {
-		$msg_size = 3;
 
 	} elsif ($switch eq "00D1") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -6605,7 +6613,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print "Player unignored\n";
 			}
 		}
-		$msg_size = 4;
 
 	} elsif ($switch eq "00D2") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -6617,10 +6624,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print "All players unignored\n";
 			}
 		}
-		$msg_size = 4;
 
 	} elsif ($switch eq "00D3") {
-		$msg_size = 2;
 
 	} elsif ($switch eq "00D6") {
 		$currentChatRoom = "new";
@@ -6628,7 +6633,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		binAdd(\@chatRoomsID, "new");
 		binAdd(\@currentChatRoomUsers, $chars[$config{'char'}]{'name'});
 		print "Chat Room Created\n";
-		$msg_size = 3;
 
 	} elsif ($switch eq "00D7" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1",substr($msg,2,2));
@@ -6648,7 +6652,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$ID = substr($msg,2,4);
 		binRemove(\@chatRoomsID, $ID);
 		undef %{$chatRooms{$ID}};
-		$msg_size = 6;
 
 	} elsif ($switch eq "00DA") {
 		$type = unpack("C1",substr($msg, 2, 1));
@@ -6657,7 +6660,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} elsif ($type == 2) {
 			print "Can't join Chat Room - You're banned\n";
 		}
-		$msg_size = 3;
 
 	} elsif ($switch eq "00DB" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1",substr($msg,2,2));
@@ -6690,7 +6692,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$chatRooms{$currentChatRoom}{'num_users'} = $num_users;
 			print "$joinedUser has joined the Chat Room\n";
 		}
-		$msg_size = 28;
 	
 	} elsif ($switch eq "00DD") {
 		$num_users = unpack("S1", substr($msg,2,2));
@@ -6707,7 +6708,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "$leaveUser has left the Chat Room\n";
 		}
-		$msg_size = 29;
 
 	} elsif ($switch eq "00DF" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1",substr($msg,2,2));
@@ -6744,17 +6744,14 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			$chatRooms{$currentChatRoom}{'users'}{$chatUser} = 1;
 		}
-		$msg_size = 30;
 
 	} elsif ($switch eq "00E4") {
-		$msg_size = 34;
 
 	} elsif ($switch eq "00E5") {
 		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		$incomingDeal{'name'} = $dealUser;
 		$timeout{'ai_dealAutoCancel'}{'time'} = time;
 		print "$dealUser Requests a Deal\n";
-		$msg_size = 26;
 
 	} elsif ($switch eq "00E7") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -6770,7 +6767,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		undef %outgoingDeal;
 		undef %incomingDeal;
-		$msg_size = 3;
 
 	} elsif ($switch eq "00E9") {
 		$amount = unpack("L*", substr($msg, 2,4));
@@ -6786,7 +6782,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$currentDeal{'other_zenny'} += $amount;
 			print "$currentDeal{'name'} added $amount z to Deal\n";
 		}
-		$msg_size = 19;
 
 	} elsif ($switch eq "00EA") {
 		$index = unpack("S1", substr($msg, 2, 2));
@@ -6802,7 +6797,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} elsif ($currentDeal{'lastItemAmount'} > 0) {
 			$chars[$config{'char'}]{'zenny'} -= $currentDeal{'you_zenny'};
 		}
-		$msg_size = 5;
 
 	} elsif ($switch eq "00EC") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -6813,24 +6807,20 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$currentDeal{'you_finalize'} = 1;
 			print "You finalized the Deal\n";
 		}
-		$msg_size = 3;
 
 	} elsif ($switch eq "00EE") {
 		undef %incomingDeal;
 		undef %outgoingDeal;
 		undef %currentDeal;
 		print "Deal Cancelled\n";
-		$msg_size = 2;
 
 	} elsif ($switch eq "00F0") {
 		print "Deal Complete\n";
 		undef %currentDeal;
-		$msg_size = 3;
 
 	} elsif ($switch eq "00F2") {
 		$storage{'items'} = unpack("S1", substr($msg, 2, 2));
 		$storage{'items_max'} = unpack("S1", substr($msg, 4, 2));
-		$msg_size = 6;
 
 	} elsif ($switch eq "00F4") {
 		$index = unpack("S1", substr($msg, 2, 2));
@@ -6849,7 +6839,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$storage{$ID}{'binID'} = binFind(\@storageID, $ID);
 		}
 		print "Storage Item Added: $storage{$ID}{'name'} ($storage{$ID}{'binID'}) x $amount\n";
-		$msg_size = 21;
 
 	} elsif ($switch eq "00F6") {
 		$index = unpack("S1", substr($msg, 2, 2));
@@ -6861,18 +6850,15 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			undef %{$storage{$ID}};
 			binRemove(\@storageID, $ID);
 		}
-		$msg_size = 8;
 
 	} elsif ($switch eq "00F8") {
 		print "Storage Closed\n";
-		$msg_size = 2;
 
 	} elsif ($switch eq "00FA") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
 			print "Can't organize party - party name exists\n";
 		} 
-		$msg_size = 3;
 
 	} elsif ($switch eq "00FB" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
@@ -6902,7 +6888,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} elsif ($type == 2) {
 			print "$name accepted your request\n";
 		}
-		$msg_size = 27;
 
 	} elsif ($switch eq "00FE") {
 		$ID = substr($msg, 2, 4);
@@ -6910,10 +6895,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Incoming Request to join party '$name'\n";
 		$incomingParty{'ID'} = $ID;
 		$timeout{'ai_partyAutoDeny'}{'time'} = time;
-		$msg_size = 30;
 
 	} elsif ($switch eq "0100") {
-		$msg_size = 4;
 
 	} elsif ($switch eq "0101") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -6924,7 +6907,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Error setting party option\n";
 		}
-		$msg_size = 6;
 		
 	} elsif ($switch eq "0104") {
 		$ID = substr($msg, 2, 4);
@@ -6952,8 +6934,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'pos'}{'y'} = $y;
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'map'} = $map;
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'} = $partyUser;
-		
-		$msg_size = 79;
+
 	
 	} elsif ($switch eq "0105") {
 		$ID = substr($msg, 2, 4);
@@ -6968,13 +6949,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "$name left the party\n";
 		}
-		$msg_size = 31;
 
 	} elsif ($switch eq "0106") {
 		$ID = substr($msg, 2, 4);
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'hp'} = unpack("S1", substr($msg, 6, 2));
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'hp_max'} = unpack("S1", substr($msg, 8, 2));
-		$msg_size = 10;
 
 	} elsif ($switch eq "0107") {
 		$ID = substr($msg, 2, 4);
@@ -6984,7 +6963,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'pos'}{'y'} = $y;
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'online'} = 1;
 		print "Party member location: $chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'} - $x, $y\n" if ($config{'debug'} >= 2);
-		$msg_size = 10;
 
 	} elsif ($switch eq "0108") {
 		$type =  unpack("S1",substr($msg, 2, 2));
@@ -6992,7 +6970,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$enchant = unpack("S1",substr($msg, 6, 2));
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = $enchant;
-		$msg_size = 8;
 
 	} elsif ($switch eq "0109" && length($msg) >= unpack("S*", substr($msg, 2, 2))) {
 		$msg_size = unpack("S*", substr($msg, 2, 2));
@@ -7018,13 +6995,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		: "Unknown" . $ID;
 		print "Get MVP item&#65306;$display\n";
 		chatLog("S", "Get MVP item&#65306;$display\n");
-		$msg_size = 4;
 
 	} elsif ($switch eq "010B" && length($msg) >= 6) {
 		$expAmout = unpack("L1", substr($msg, 2, 4));
 		print "Your become MVP, Get $expAmout Exp!\n";
 		chatLog("S", "Your become MVP, Get $expAmout Exp!\n");
-		$msg_size = 6;
 
 	} elsif ($switch eq "010C" && length($msg) >= 6) {
 		$ID = substr($msg, 2, 4);
@@ -7036,7 +7011,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		print "$displaybecome MVP!\n";
 		chatLog("S", $display . "become MVP!\n");
-		$msg_size = 6;
 # Hambo Ended 
 
 	} elsif ($switch eq "010E") {
@@ -7044,7 +7018,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$lv = unpack("S1",substr($msg, 4, 2));
 		$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ID})}}{'lv'} = $lv;
 		print "Skill $skillsID_lut{$ID}: $lv\n" if $config{'debug'};
-		$msg_size = 11;
 
 	} elsif ($switch eq "010F" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -7068,10 +7041,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "0110") {
 		#Parse this: warp portal
-		$msg_size = 10;
 
 	} elsif ($switch eq "0111") {
-		$msg_size = 39;
 
 	} elsif ($switch eq "0114") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -7134,10 +7105,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 		}
 
-		$msg_size = 31;
 
 	} elsif ($switch eq "0115") {
-		$msg_size = 16;
 
 	} elsif ($switch eq "0117") {
 		$skillID = unpack("S1",substr($msg, 2, 2));
@@ -7159,7 +7128,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$sourceDisplay = "Unknown uses";
 		}
 		print "$sourceDisplay $skillsID_lut{$skillID} on location ($x, $y)\n";
-		$msg_size = 18;
 
 	} elsif ($switch eq "0119") {
 #Solos Start
@@ -7209,7 +7177,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 		}
 #Solos End                
-		$msg_size = 13;
 
 	
 	} elsif ($switch eq "011A") {
@@ -7272,10 +7239,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
       			} 
       		} 
 #X End
-		$msg_size = 15;
 
 	} elsif ($switch eq "011C") {
-		$msg_size = 4;
 
 	} elsif ($switch eq "011E") {
 		$fail = unpack("C1", substr($msg, 2, 1));
@@ -7284,7 +7249,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Memo Succeeded\n";
 		}
-		$msg_size = 3;
 
 	} elsif ($switch eq "011F") {
 		#area effect spell
@@ -7297,14 +7261,12 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$spells{$ID}{'pos'}{'y'} = $y;
 		$binID = binAdd(\@spellsID, $ID);
 		$spells{$ID}{'binID'} = $binID;
-		$msg_size = 16;
 
 	} elsif ($switch eq "0120") {
 		#The area effect spell with ID dissappears
 		$ID = substr($msg, 2, 4);
 		undef %{$spells{$ID}};
 		binRemove(\@spellsID, $ID);
-		$msg_size = 6;
 
 #Cart Parses - chobit andy 20030102
 	} elsif ($switch eq "0121") {
@@ -7312,7 +7274,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$cart{'items_max'} = unpack("S1", substr($msg, 4, 2));
 		$cart{'weight'} = int(unpack("L1", substr($msg, 6, 4)) / 10);
 		$cart{'weight_max'} = int(unpack("L1", substr($msg, 10, 4)) / 10);
-		$msg_size = 14;
 
 	} elsif ($switch eq "0122") {
 #Solos Start
@@ -7411,7 +7372,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$cart{'inventory'}{$ID}{'binID'} = binFind(\@cartID, $ID);
 		}
 		print "Cart Item Added: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x $amount\n";
-		$msg_size = 21;
 
 	} elsif ($switch eq "0125") {
 		$index = unpack("S1", substr($msg, 2, 2));
@@ -7426,7 +7386,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			undef %{$cart{'inventory'}{$ID}};
 			binRemove(\@cartID, $ID);
 		}
-		$msg_size = 8;
 
 	} elsif ($switch eq "012C") {
 		$index = unpack("S1", substr($msg, 3, 2));
@@ -7435,13 +7394,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		if ($items_lut{$ID} ne "") {
 			print "Can't Add Cart Item: $items_lut{$ID}\n";
 		}
-	  	$msg_size = 26;
 #Solos Start
 	} elsif ($switch eq "012D") {
 		#used the shop skill.
 		$number = unpack("S1",substr($msg, 2, 2));
 		print "You can sell $number items!\n";
-		$msg_size = 4;
 #Solos End
 	} elsif ($switch eq "0131") {
 #Solos Start
@@ -7452,7 +7409,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		($venderLists{$ID}{'title'}) = substr($msg,6,36) =~ /(.*?)\000/;
 		$venderLists{$ID}{'id'} = $ID;
 #Solos End
-		$msg_size = 86;
 
 	} elsif ($switch eq "0132") {
 #Solos Start
@@ -7460,7 +7416,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		binRemove(\@venderListsID, $ID);
 		undef %{$venderLists{$ID}};
 #Solos End
-		$msg_size = 6;
 #Solos Start
 	} elsif ($switch eq "0133") {
 		if (length($msg) >= unpack("S1", substr($msg, 2, 2))) {
@@ -7614,7 +7569,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 				sendCloseShop(\$remote_socket);
 			}
 		}
-		$msg_size = 6;
 #Solos End
 
 	} elsif ($switch eq "0139") {
@@ -7628,15 +7582,11 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		%{$chars[$config{'char'}]{'pos'}} = %coords2;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords2;
 		print "Recieved attack location - $monsters{$ID}{'pos_attack_info'}{'x'}, $monsters{$ID}{'pos_attack_info'}{'y'} - ".getHex($ID)."\n" if ($config{'debug'} >= 2);
-		$msg_size = 16;
 
 	} elsif ($switch eq "013A") {
 		$type = unpack("S1",substr($msg, 2, 2));
-		$msg_size = 4;
 	} elsif ($switch eq "013B") {
-            $msg_size = 4;
 	} elsif ($switch eq "013C") {  
-		$msg_size = 4;
 	} elsif ($switch eq "013D") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
@@ -7647,7 +7597,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$chars[$config{'char'}]{'sp'} += $amount;
 			$chars[$config{'char'}]{'sp'} = $chars[$config{'char'}]{'sp_max'} if ($chars[$config{'char'}]{'sp'} > $chars[$config{'char'}]{'sp_max'});
 		}
-		$msg_size = 6;
 
 	} elsif ($switch eq "013E") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -7691,7 +7640,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$targetDisplay = "unknown";
 		}
 		print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay\n";
-		$msg_size = 24;
 #Solos Start
 #Check if GM is casting warp on you
 		if ($skillID == 27) {
@@ -7744,10 +7692,8 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$chars[$config{'char'}]{'luk_bonus'} = $val2;
 			print "Luck: $val + $val2\n" if $config{'debug'};
 		}
-		$msg_size = 14;
 
 	} elsif ($switch eq "0145") {
-		$msg_size = 19;
 
 	} elsif ($switch eq "0147") {
 		$skillID = unpack("S*",substr($msg, 2, 2));
@@ -7756,16 +7702,12 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
       		print "Now use $skillsID_lut{$skillID}, level $skillLv\n"; 
       		sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
 #Solos End
-		$msg_size = 39;
 #viper mass addon begin
 	} elsif ($switch eq "014B") {
-		$msg_size = 27;
 	} elsif ($switch eq "014C") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "014E") {
-		$msg_size = 6;
 	} elsif ($switch eq "0150") {
-		$msg_size = 110;
 	} elsif ($switch eq "0152" && length($msg) >= unpack("S1", substr($msg, 2, 2))) { 
 		$msg_size = unpack("S*", substr($msg, 2, 2));
         } elsif ($switch eq "0154") {
@@ -7773,9 +7715,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 	} elsif ($switch eq "0156") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "015A") {
-		$msg_size = 66;
 	} elsif ($switch eq "015C") {
-		$msg_size = 90;
 	} elsif ($switch eq "0160") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "0163") {
@@ -7783,15 +7723,11 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 	} elsif ($switch eq "0166") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "0167") {
-		$msg_size = 3;
 	} elsif ($switch eq "0169") {
-		$msg_size = 3;
 	} elsif ($switch eq "016A") {
-		$msg_size = 30;
 #viper mass addon end
 	} elsif ($switch eq "016C") {
 		($chars[$config{'char'}]{'guild'}{'name'}) = substr($msg, 19, 24) =~ /([\s\S]*?)\000/;
-		$msg_size = 43;
 	
 	} elsif ($switch eq "016D") {
 #Solos Start
@@ -7805,7 +7741,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} 
 		sendGuildMemberNameRequest(\$remote_socket, $TargetID); 
 #Solos End
-		$msg_size = 14;
 
 	} elsif ($switch eq "016F" && length($msg) >= 182) {
 		($address) = substr($msg, 2, 60) =~ /([\s\S]*?)\000/;
@@ -7814,11 +7749,8 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			,"$address\n\n"
 			,"$message\n"
 			,"------------------\n";
-		$msg_size = 182;
 	} elsif ($switch eq "0171") {
-		$msg_size = 30;
 	} elsif ($switch eq "0173") {
-		$msg_size = 3;
 	} elsif ($switch eq "0174") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "0177" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
@@ -7842,11 +7774,9 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $itemSlots_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}};
 		print "Item Identified: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'}\n";
 		undef @identifyID;
-		$msg_size = 5;
 	} elsif ($switch eq "017B") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "017D") {
-		$msg_size = 7;
 	} elsif ($switch eq "017F" && length($msg) >= unpack("S1", substr($msg, 2, 2))) { 
 		$msg_size = unpack("S*", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
@@ -7865,16 +7795,11 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		print "[Guild] $chat\n";
 
 	} elsif ($switch eq "0180") {
-		$msg_size = 11;
 	} elsif ($switch eq "0181") {
-		$msg_size = 3;
 	} elsif ($switch eq "0182") {
-		$msg_size = 106;
 	} elsif ($switch eq "0183") {
-		$msg_size = 15;
 
 	} elsif ($switch eq "0187") {
-		$msg_size = 6;
 
 	} elsif ($switch eq "0188") {
 		$type =  unpack("S1",substr($msg, 2, 2));
@@ -7882,21 +7807,14 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$enchant = unpack("S1",substr($msg, 6, 2));
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = $enchant;
-		$msg_size = 8;
 
 	} elsif ($switch eq "018A") {
-		$msg_size = 3;
 	} elsif ($switch eq "018B") {
-		$msg_size = 4;
 	} elsif ($switch eq "018C") {
-		$msg_size = 29
 	} elsif ($switch eq "018E") {
-		$msg_size = 97;
 	} elsif ($switch eq "0191") {
-		$msg_size = 86;
 
 	} elsif ($switch eq "0192") {
-		$msg_size = 24;
 #Solos Start
 	} elsif ($switch eq "0194") { 
 		$ID = substr($msg, 2, 4); 
@@ -7904,7 +7822,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/; 
 			print "Guild Member $name $isOnline\n"; 
 		} 
-		$msg_size = 30; 
 #Solos End
 	} elsif ($switch eq "0195") {
 		$ID = substr($msg, 2, 4);
@@ -7915,11 +7832,9 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			($players{$ID}{'guild'}{'men'}{$players{$ID}{'name'}}{'title'}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
 			print "Player Info: $players{$ID}{'name'} ($players{$ID}{'binID'})\n" if ($config{'debug'} >= 2);
 		}
-		$msg_size = 102;
 
 	} elsif ($switch eq "0196") {
 		#two-hand quicken
-		$msg_size = 9
 
 	} elsif ($switch eq "019B") {
 		$ID = substr($msg, 2, 4);
@@ -7934,17 +7849,13 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} elsif ($type == 1) {
 			print "Player $name gained a job level!\n";
 		}
-		$msg_size = 10;
 	} elsif ($switch eq "019E") {
-		$msg_size = 9;
 	} elsif ($switch eq "01F4") {
-		$msg_size = 7;
 
 	} elsif ($switch eq "01A2") {
 		#pet
 		($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		$pets{$ID}{'name_given'} = 1;
-		$msg_size = 35;
 
 	} elsif ($switch eq "01A4") {
 #pet spawn
@@ -7961,15 +7872,12 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			undef %{$monsters{$ID}};
 		}
 		print "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n" if ($config{'debug'});
-		$msg_size = 11;
 #end of pet spawn code
 		
 	} elsif ($switch eq "01AA") {
 		#pet
-		$msg_size = 10;
 
 	} elsif ($switch eq "01B0") {
-		$msg_size = 11;
 
 #Solos Start
     } elsif ($switch eq "01B3") {
@@ -7977,10 +7885,8 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$npc_image = substr($msg, 2,64); 
 		($npc_image) = $npc_image =~ /(\S+)/; 
 		print "NPC image: $npc_image\n" if $config{'debug'}; 
-		$msg_size = 67;
 #Solos End
 	} elsif ($switch eq "01B5") {
-		$msg_size = 18;	
 			
 	} elsif ($switch eq "01C4") { 
       		$index = unpack("S1", substr($msg, 2, 2)); 
@@ -7997,7 +7903,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
          		$storage{'inventory'}[$index]{'name'} = $display; 
       		} 
       		print "Storage Item Added: $storage{'inventory'}[$index]{'name'} ($index) x $amount\n"; 
-		$msg_size = 22; 
 
 	} elsif ($switch eq "01C8") {
 		my $index = unpack("S1",substr($msg, 2, 2));
@@ -8029,10 +7934,8 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 
 		}
 
-		$msg_size = 13;
 
 	} elsif ($switch eq "01D7") {
-		$msg_size = 11;
 
 	} elsif ($switch eq "01D8" && length($msg) >= 52) {
 		$ID = substr($msg, 2, 4);
@@ -8125,7 +8028,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} else {
 			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 54;
       		
       		} elsif ($switch eq "01D9" && length($msg) >= 51) {
 		$ID = substr($msg, 2, 4);
@@ -8149,7 +8051,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} else {
 			print "Unknown Connected: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 53;
 
 	} elsif ($switch eq "01DA" && length($msg) >= 58) {
 		$ID = substr($msg, 2, 4);
@@ -8232,8 +8133,11 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} else {
 			print "Unknown Moved: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 60;
-		
+
+	} elsif ($switch eq "01DC") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+		$secureLoginKey = substr($msg, 4, $msg_size);
+
 	} elsif ($switch eq "01DE" && length($msg) >= 33) {
 		$skillID = unpack("S1",substr($msg, 2, 2));
 		$sourceID = substr($msg, 4, 4);
@@ -8294,7 +8198,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			}
 		}
 
-		$msg_size = 33;
 #Solos Start
     } elsif ($switch eq "08DC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
@@ -8384,35 +8287,25 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 #viper mass add begin
     } elsif ($switch eq "01A0") {
-		$msg_size = 3;
     } elsif ($switch eq "01A3") {
-		$msg_size = 5;
     } elsif ($switch eq "01A6") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
     } elsif ($switch eq "01AC") {
-		$msg_size = 6;
     } elsif ($switch eq "01AD") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
     } elsif ($switch eq "01B1") {
-		$msg_size = 15;
     } elsif ($switch eq "01B6") {
-		$msg_size = 114;
     } elsif ($switch eq "01B9") {
-		$msg_size = 6;
     } elsif ($switch eq "01C9") {
-		$msg_size = 97;
     } elsif ($switch eq "01D2") {
-		$msg_size = 10;
     } elsif ($switch eq "01D6") {
-		$msg_size = 12;
     } elsif ($switch eq "01DC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 #viper mass add end
 	} elsif ($switch eq "40A1") {
-		$msg_size = 4;
 #Solos End
 
-	} elsif (!existsInList($config{'debugPacket_exclude'}, $switch)) {
+	} elsif (!$rpackets{$switch} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		print "Unparsed packet - $switch\n" if ($config{'debugPacket_received'});
 	}
 
@@ -9956,12 +9849,34 @@ sub sendMapLogin {
 	sendMsgToServer($r_socket, $msg);
 }
 
+sub sendMasterCodeRequest {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0xDB, 0x01);
+	sendMsgToServer($r_socket, $msg);
+}
+
 sub sendMasterLogin {
 	my $r_socket = shift;
 	my $username = shift;
 	my $password = shift;
 	my $msg = pack("C*", 0x64,0,$config{'version'},0,0,0) . $username . chr(0) x (24 - length($username)) . 
 			$password . chr(0) x (24 - length($password)) . pack("C*", $config{"master_version_$config{'master'}"});
+	sendMsgToServer($r_socket, $msg);
+}
+
+sub sendMasterSecureLogin {
+	my $r_socket = shift;
+	my $username = shift;
+	my $password = shift;
+	my $salt = shift;
+
+	if ($config{'secure'} == 1) {
+		$salt = $salt . $password;
+	} else {
+		$salt = $password . $salt;
+	}
+	my $msg = pack("C*", 0xDD, 0x01) . pack("L1", $config{'version'}) . $username . chr(0) x (24 - length($username)) .
+	md5($salt) . pack("C*", $config{"master_version_$config{'master'}"});
 	sendMsgToServer($r_socket, $msg);
 }
 

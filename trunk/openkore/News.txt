@@ -8,6 +8,11 @@
 - New option: followFaceDirection. When set to 1, always look at master.
 - Faster autofollow.
 - "pl" and "ml" show more information now.
+- Added support for recvpackets.txt (code taken from ModKore).
+- Support secure login. New config option: secure
+  0 = no secure login (iRO)
+  1 = secure login method 1
+  2 = secure login method 2
 
 
 ------------------------------------------------------
