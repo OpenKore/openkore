@@ -36,6 +36,7 @@ our @EXPORT = qw(
 	parseDataFile_lc
 	parseDataFile2
 	parseItemsControl
+	parseList
 	parseNPCs
 	parseMonControl
 	parsePortals
@@ -223,6 +224,20 @@ sub parseDataFile2 {
 				$r_hash->{$key} = $value;
 			}
 		}
+	}
+	close FILE;
+}
+
+sub parseList {
+	my $file = shift;
+	my $r_hash = shift;
+
+	undef %{$r_hash};
+
+	open FILE, "< $file";
+	foreach (<FILE>) {
+		chomp;
+		$r_hash->{$_} = 1;
 	}
 	close FILE;
 }

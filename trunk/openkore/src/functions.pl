@@ -3797,6 +3797,12 @@ sub AI {
 			}
 			$self_skill{lvl} = $smartHeal_lv;
 		}
+		if ($config{"useSelf_skill_$i"."_smartEncore"} &&
+			$char->{encoreSkill} &&
+			$char->{encoreSkill}->handle eq $self_skill{ID}) {
+			# Use Encore skill instead if applicable
+			$self_skill{ID} = 'BD_ENCORE';
+		}
 		if ($self_skill{lvl} > 0) {
 			debug qq~Auto-skill on self: $skills_lut{$self_skill{ID}} (lvl $self_skill{lvl})\n~, "ai";
 			if (!ai_getSkillUseType($self_skill{ID})) {
@@ -6388,6 +6394,7 @@ sub parseMsg {
 		undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
 		$char->{spirits} = 0;
 		undef $char->{permitSkill};
+		undef $char->{encoreSkill};
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -10482,6 +10489,9 @@ sub setSkillUseTimer {
 	if ($monsters{$targetID}) {
 		$monsters{$targetID}{skillUses}{$skill->handle}++;
 	}
+
+	# Set encore skill if applicable
+	$char->{encoreSkill} = $skill if $targetID eq $accountID && $skillsEncore{$skill->handle};
 }
 
 # Increment counter for monster being casted on
