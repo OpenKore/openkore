@@ -454,5 +454,6 @@ autoResponse 1
 ignoreAll 0
 itemHistory 0
 autoTalkCont 0
+noAutoSkill 0
 
 alias_heal sp 9
