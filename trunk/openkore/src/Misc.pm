@@ -498,7 +498,7 @@ sub checkMonsterCleanness {
 		if ($monster->{'dmgFromYou'} || $monster->{'missedFromYou'}) {
 			return 1;
 		} else {
-			return objectIsMovingTowardsPlayer($monster);
+			return !objectIsMovingTowardsPlayer($monster);
 		}
 	}
 
