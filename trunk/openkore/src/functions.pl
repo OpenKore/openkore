@@ -5021,12 +5021,13 @@ sub parseMsg {
 				"-------------------------------", []),
 				"connection");
 
-				if (defined $avoid{'Players'}{lc($chars[$num]{'name'})} || $chars[$num]{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-					$interface->errorDialog("Sanity Checking FAILED: Invalid username detected.");
-					Network::disconnect(\$remote_socket);
-					quit();
-				}
-			}
+			if ($chars[$num]{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+				$interface->errorDialog("Sanity Checking FAILED: Invalid username detected.");
+				Network::disconnect(\$remote_socket);
+				quit();
+ 			}
+ 		}
+
 		if (!$config{'XKore'}) {
 			if ($config{'char'} eq "") {
 				message("Choose your character.  Enter the character number:\n", "input");
