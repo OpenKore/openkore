@@ -111,33 +111,37 @@ if ($buildType == 0) {
 	require Win32::API;
 	import Win32::API;
 	if ($@) {
-		Log::error("Unable to load the Win32::API module. Please install this Perl module first.", "startup");
-		promptAndExit();
+		$interface->errorDialog("Unable to load the Win32::API Perl module. Please install this module first.");
+		exit 1;
 	}
 
 	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPPNNPPN", "N");
 	if (!$CalcPath_init) {
-		Log::error("Could not locate Tools.dll", "startup");
-		promptAndExit();
+		$interface->errorDialog("Could not locate Tools.dll");
+		exit 1;
 	}
 
 	$CalcPath_pathStep = new Win32::API("Tools", "CalcPath_pathStep", "N", "N");
 	if (!$CalcPath_pathStep) {
-		Log::error("Could not locate Tools.dll", "startup");
-		promptAndExit();
+		$interface->errorDialog("Could not locate Tools.dll");
+		exit 1;
 	}
 
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
 	if (!$CalcPath_destroy) {
-		Log::error("Could not locate Tools.dll", "startup");
-		promptAndExit();
+		$interface->errorDialog("Could not locate Tools.dll");
+		exit 1;
 	}
 } else {
 	# Linux
 	if (! -f "Tools.so") {
-		# Linux users invoke kore from the console anyway so there's no point in using promptAndExit() here
-		Log::error("Could not locate Tools.so. Type 'make' if you haven't done so.\n", "startup");
-		exit 1;
+		# Tools.so doesn't exist; attempt to compile it
+		Log::message("Tools.so does not exist; compiling it...\n", "startup");
+		if (system('make') != 0) {
+			$interface->errorDialog("Unable to compile Tools.so. Please check the " .
+				"terminal for the error message, and report this bug at our forums.");
+			exit 1;
+		}
 	}
 	require Tools;
 	import Tools;
@@ -172,6 +176,9 @@ elsif ($config{'secureAdminPassword'} eq '1') {
 
 Log::message("\n");
 
+
+##### INITIALIZE X-KORE SERVER ######
+
 our $injectServer_socket;
 our $XKore_dontRedirect = 0;
 if ($config{'XKore'}) {
@@ -181,9 +188,9 @@ if ($config{'XKore'}) {
 			LocalPort	=> 2350,
 			Proto		=> 'tcp');
 	if (!$injectServer_socket) {
-		Log::error("Unable to start the X-Kore server.\n", "startup");
-		Log::error("You can only run one X-Kore session at the same time.", "startup");
-		exit;
+		$interface->errorDialog("Unable to start the X-Kore server.\n" .
+				"You can only run one X-Kore session at the same time.");
+		exit 1;
 	}
 	Log::message("Local X-Kore server started (".$injectServer_socket->sockhost().":2350)\n", "startup");
 
@@ -223,7 +230,7 @@ if ($found) {
 
 ### PROMPT USERNAME AND PASSWORD IF NECESSARY ###
 
-if (!$config{'XKore'} && !$Settings::daemon) {
+if (!$config{'XKore'}) {
 	if (!$config{'username'}) {
 		Log::message("Enter Username: ");
 		$msg = $interface->getInput(-1);
@@ -259,8 +266,8 @@ if (!$config{'XKore'} && !$Settings::daemon) {
 	}
 
 } elsif (!$config{'XKore'} && (!$config{'username'} || !$config{'password'})) {
-	Log::error("No username of password set.\n", "startup");
-	exit;
+	$interface->errorDialog("No username of password set.");
+	exit 1;
 }
 
 undef $msg;

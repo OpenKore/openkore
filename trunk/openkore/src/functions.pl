@@ -5541,7 +5541,7 @@ sub parseMsg {
 		} elsif ($type == 3) {
 			error("Server connection has been denied\n", "connection");
 		} elsif ($type == 4) {
-			error("Critical Error: Account has been disabled by evil Gravity\n", "connection");
+			$interface->errorDialog("Critical Error: Your account has been blocked.");
 			$quit = 1;
 		} elsif ($type == 5) {
 			error("Version $config{'version'} failed...trying to find version\n", "connection");
@@ -6074,13 +6074,16 @@ sub parseMsg {
 		killConnection(\$remote_socket);
 
 		if ($type == 2) {
-			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
 			if ($config{'dcOnDualLogin'} == 1) {
-				message "Disconnect immediately!\n", "connection";
+				$interface->errorDialog("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
+					"$Settings::NAME will now immediately disconnect.");
 				$quit = 1;
 			} elsif ($config{'dcOnDualLogin'} >= 2) {
+				error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
 				message "Disconnect for $config{'dcOnDualLogin'} seconds...\n", "connection";
 				$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
+			} else {
+				error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
 			}
 
 		} elsif ($type == 3) {
