@@ -86,24 +86,54 @@ route_randomWalk_maxRouteTime 15
 route_maxWarpFee
 route_step 15
 
-attackSkillSlot_0 
-attackSkillSlot_0_dist 3
-attackSkillSlot_0_hp_lower 0
-attackSkillSlot_0_hp_upper 100
+#
+# attackSkillSlot_0 [skill to use, lookup from tables/skills.txt or type 'skills' in console]
+# attackSkillSlot_0_lvl [number]
+# attackSkillSlot_0_dist [number] 
+# attackSkillSlot_0_maxCastTime [number, in seconds]
+# attackSkillSlot_0_minCastTime [number, in seconds]
+# attackSkillSlot_0_hp [range, in %]
+# attackSkillSlot_0_sp [range, in %]
+# attackSkillSlot_0_whenStatusActive [activate the skill only when the listed status/state/ailments/look active] 
+# attackSkillSlot_0_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
+# attackSkillSlot_0_spirit [range, number of sprit ball]
+# attackSkillSlot_0_aggressives [range, number of monster attacking]
+# attackSkillSlot_0_stopWhenHit [flag]
+# attackSkillSlot_0_inLockOnly [flag]
+# attackSkillSlot_0_notWhileSitting [flag]
+# attackSkillSlot_0_notInTown [flag]
+# attackSkillSlot_0_timeout [number, in seconds before the skills can be activated again. A small timeout is always good to counter lag]
+# attackSkillSlot_0_disabled [flag, to disable this block temporary]
+# attackSkillSlot_0_monsters [list of monster to use this skill with, coma separated]
+# attackSkillSlot_0_maxUses 0 [number]
+# attackSkillSlot_0_target_whenStatusActive [activate the skill only when the monster have the listed status/state/ailments/look active]
+# attackSkillSlot_0_target_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
+#
+# notes:
+#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
+#   eg: attackSkillSlot_0_hp       <-- don't care
+#   eg: attackSkillSlot_0_sp > 10  <-- only when we have more then 10% sp left
+
+attackSkillSlot_0
 attackSkillSlot_0_lvl 10
-attackSkillSlot_0_maxAggressives 0
-attackSkillSlot_0_minAggressives 0
-attackSkillSlot_0_maxCastTime 8
+attackSkillSlot_0_dist 3
+attackSkillSlot_0_maxCastTime 0
 attackSkillSlot_0_minCastTime 0
-attackSkillSlot_0_maxUses 0
-attackSkillSlot_0_monsters 
-attackSkillSlot_0_sp_lower 10
-attackSkillSlot_0_sp_upper 100
-attackSkillSlot_0_targetWhenStatusActive
-attackSkillSlot_0_targetWhenStatusInactive
-attackSkillSlot_0_targetWhenAffected
-attackSkillSlot_0_targetWhenNotAffected
+attackSkillSlot_0_hp
+attackSkillSlot_0_sp > 10
+attackSkillSlot_0_whenStatusActive 
+attackSkillSlot_0_whenStatusInactive
+attackSkillSlot_0_spirit
+attackSkillSlot_0_aggressives
 attackSkillSlot_0_stopWhenHit 0
+attackSkillSlot_0_inLockOnly 0
+attackSkillSlot_0_notInTown 0
+attackSkillSlot_0_timeout 0
+attackSkillSlot_0_disabled 0
+attackSkillSlot_0_monsters
+attackSkillSlot_0_maxUses 0
+attackSkillSlot_0_target_whenStatusActive
+attackSkillSlot_0_target_whenStatusInactive
 
 sitAuto_hp_lower 35
 sitAuto_hp_upper 100
@@ -126,61 +156,145 @@ teleportAuto_maxDmg 500
 teleportAuto_deadly 1
 teleportAuto_useItem 1
 
-useSelf_skill_0 
-useSelf_skill_0_hp_lower 0
-useSelf_skill_0_hp_upper 100
-useSelf_skill_0_lvl 1
-useSelf_skill_0_maxAggressives 0
-useSelf_skill_0_minAggressives 0
-useSelf_skill_0_maxCastTime 1
+#
+# useSelf_skill_0 Heal
+# useSelf_skill_0_lvl 10
+# useSelf_skill_0_maxCastTime 0
+# useSelf_skill_0_minCastTime 0
+# useSelf_skill_0_hp < 80 [range]
+# useSelf_skill_0_sp > 0 [range]
+# useSelf_skill_0_whenStatusActive 
+# useSelf_skill_0_whenStatusInactive
+# useSelf_skill_0_spirit [range]
+# useSelf_skill_0_aggressives [range]
+# useSelf_skill_0_stopWhenHit 0
+# useSelf_skill_0_inLockOnly 0
+# useSelf_skill_0_notWhileSitting 0
+# useSelf_skill_0_notInTown 0
+# useSelf_skill_0_timeout 0
+# useSelf_skill_0_disabled 0
+#
+# notes:
+#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
+#   eg: useSelf_skill_0_hp       <-- don't care
+#   eg: useSelf_skill_0_sp > 10  <-- only when we have more then 10% sp left
+
+useSelf_skill_0
+useSelf_skill_0_lvl 10
+useSelf_skill_0_maxCastTime 0
 useSelf_skill_0_minCastTime 0
-useSelf_skill_0_sp_lower 0
-useSelf_skill_0_sp_upper 100
+useSelf_skill_0_hp
+useSelf_skill_0_sp
+useSelf_skill_0_whenStatusActive 
+useSelf_skill_0_whenStatusInactive
+useSelf_skill_0_spirit
+useSelf_skill_0_aggressives
 useSelf_skill_0_stopWhenHit 0
 useSelf_skill_0_inLockOnly 0
-useSelf_skill_0_whenStatusActive
-useSelf_skill_0_whenStatusInactive
-useSelf_skill_0_whenAffected
 useSelf_skill_0_notWhileSitting 0
 useSelf_skill_0_notInTown 0
 useSelf_skill_0_timeout 0
+useSelf_skill_0_disabled 0
 
 useSelf_skill_smartHeal 1
 
 useSelf_itemCurePoison 1
 
-useSelf_item_0 
-useSelf_item_0_hp_lower 0
-useSelf_item_0_hp_upper 50
-useSelf_item_0_maxAggressives 0
-useSelf_item_0_minAggressives 0
-useSelf_item_0_sp_lower 0
-useSelf_item_0_sp_upper 100
-useSelf_item_0_stopWhenHit 0
-useSelf_item_0_inLockOnly 0
+#
+# useSelf_item_0 Meat,Apple,Carrot,Sweet Potato,Banana,Monster's Feed,Red Potion,Orange Potion,Yellow Potion,White Potion
+# useSelf_item_0_hp < 90 [range]
+# useSelf_item_0_sp < 50 [range]
+# useSelf_item_0_whenStatusActive
+# useSelf_item_0_whenStatusInactive
+# useSelf_item_0_spirit [range]
+# useSelf_item_0_aggressives [range]
+# useSelf_item_0_stopWhenHit 0
+# useSelf_item_0_inLockOnly 0
+# useSelf_item_0_notWhileSitting 0
+# useSelf_item_0_notInTown 0
+# useSelf_item_0_timeout 1
+# useSelf_item_0_disabled 0
+#
+# notes:
+#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
+#   eg: useSelf_item_0_hp < 90  <-- when we have less then 90% hp and
+#   eg: useSelf_item_0_hp < 50  <-- less then 50% sp
+
+useSelf_item_0
+useSelf_item_0_hp
+useSelf_item_0_sp
 useSelf_item_0_whenStatusActive
 useSelf_item_0_whenStatusInactive
-useSelf_item_0_whenAffected
-useSelf_item_0_timeout 
+useSelf_item_0_spirit
+useSelf_item_0_aggressives
+useSelf_item_0_stopWhenHit 0
+useSelf_item_0_inLockOnly 0
+useSelf_item_0_notWhileSitting 0
+useSelf_item_0_notInTown 0
+useSelf_item_0_timeout
+useSelf_item_0_disabled 0
 
-partySkill_0 
-partySkill_0_lvl 1
-partySkill_0_target 
-partySkill_0_targetHp_lower 0
-partySkill_0_targetHp_upper 60
-partySkill_0_maxCastTime 10
+#
+# partySkill_0 Heal
+# partySkill_0_lvl 10
+# partySkill_0_maxCastTime 0
+# partySkill_0_minCastTime 0
+# partySkill_0_hp [range]
+# partySkill_0_sp > 10 [range]
+# partySkill_0_whenStatusActive
+# partySkill_0_whenStatusInactive
+# partySkill_0_spirit [range]
+# partySkill_0_aggressives [range]
+# partySkill_0_stopWhenHit 0
+# partySkill_0_inLockOnly 0
+# partySkill_0_notWhileSitting 0
+# partySkill_0_notInTown 0
+# partySkill_0_timeout 0
+# partySkill_0_disabled 0
+# partySkill_0_target
+# partySkill_0_target_hp < 98 [range]
+# partySkill_0_target_whenStatusActive
+# partySkill_0_target_whenStatusInactive 
+# partySkill_0_target_timeout 0
+#
+# notes:
+#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
+#   eg: partySkill_0_hp      <-- don't care
+#   eg: partySkill_0_sp > 10 <-- keep the last 10% for our own use...
+
+partySkill_0
+partySkill_0_lvl 10
+partySkill_0_maxCastTime 0
 partySkill_0_minCastTime 0
-partySkill_0_sp_lower 0
-partySkill_0_sp_upper 100
-partySkill_0_targetWhenStatusActive
-partySkill_0_targetWhenStatusInactive
-partySkill_0_targetWhenAffected
+partySkill_0_hp
+partySkill_0_sp
+partySkill_0_whenStatusActive
+partySkill_0_whenStatusInactive
+partySkill_0_spirit
+partySkill_0_aggressives
+partySkill_0_stopWhenHit 0
+partySkill_0_inLockOnly 0
+partySkill_0_notWhileSitting 0
+partySkill_0_notInTown 0
 partySkill_0_timeout 0
+partySkill_0_disabled 0
+partySkill_0_target
+partySkill_0_target_hp
+partySkill_0_target_whenStatusActive
+partySkill_0_target_whenStatusInactive 
+partySkill_0_target_timeout 0
 
 itemsTakeAuto 2
 itemsGatherAuto 2
 itemsMaxWeight 89
 itemsMaxWeight_sellOrStore 48
+
+#
+# note:
+#   location based NPC format is supported, format: map x y
+#   where map is the map where the NPC is standing, while x y is the _EXACT_ coordition where the NPC is standing
+#   eg: storageAuto_npc alberta 113 60
+#
 
 buyAuto_0 
 buyAuto_0_npc 
@@ -256,18 +370,47 @@ autoSwitch_0_useWeapon
 #NOTE: In the case of two handed weapons, or no Shield, 
 #      duplicate the weapon name for "autoSwitch_shield_new_#
 
+#
+# equipAuto_0 
+# equipAuto_0_def
+# equipAuto_0_monster 
+# equipAuto_0_skills 
+# equipAuto_0_weight 0
+# equipAuto_0_whileSitting 0
+# equipAuto_0_hp [range]
+# equipAuto_0_sp [range]
+# equipAuto_0_whenStatusActive
+# equipAuto_0_whenStatusInactive
+# equipAuto_0_spirit [range]
+# equipAuto_0_aggressives [range]
+# equipAuto_0_stopWhenHit 0
+# equipAuto_0_inLockOnly 0
+# equipAuto_0_notWhileSitting 0
+# equipAuto_0_notInTown 0
+# equipAuto_0_timeout 0
+# equipAuto_0_disabled 0
+#
+# notes:
+#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
+
 equipAuto_0 
 equipAuto_0_def
-equipAuto_0_hp_lower 0
-equipAuto_0_hp_upper 100
-equipAuto_0_maxAggressives 0
-equipAuto_0_minAggressives 0
 equipAuto_0_monster 
 equipAuto_0_skills 
-equipAuto_0_sp_lower 0
-equipAuto_0_sp_upper 100
 equipAuto_0_weight 0
 equipAuto_0_whileSitting 0
+equipAuto_0_hp
+equipAuto_0_sp
+equipAuto_0_whenStatusActive
+equipAuto_0_whenStatusInactive
+equipAuto_0_spirit
+equipAuto_0_aggressives
+equipAuto_0_stopWhenHit 0
+equipAuto_0_inLockOnly 0
+equipAuto_0_notWhileSitting 0
+equipAuto_0_notInTown 0
+equipAuto_0_timeout 0
+equipAuto_0_disabled 0
 
 autoResponseOnHeal 0
 autoResponse 1
