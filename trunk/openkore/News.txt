@@ -5,6 +5,7 @@
 Bug fixes:
 - Fixed useSelf_skill. It didn't work in the previous beta because of a typo.
 - Fixed party skills; they weren't working because of typos.
+- Fixed shopAuto_open flooding console with "A shop has already been opened.".
 
 New features:
 - 'al', 'testshop' and 'openshop' commands now display the shop title
