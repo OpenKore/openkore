@@ -119,6 +119,10 @@ attackSkillSlot_0_maxUses 3
 attackSkillSlot_0_monsters 
 attackSkillSlot_0_sp_lower 10
 attackSkillSlot_0_sp_upper 100
+attackSkillSlot_0_targetWhenStatusActive
+attackSkillSlot_0_targetWhenStatusInactive
+attackSkillSlot_0_targetWhenAffected
+attackSkillSlot_0_targetWhenNotAffected
 attackSkillSlot_0_stopWhenHit 0
 
 sitAuto_hp_lower 0
@@ -157,6 +161,7 @@ useSelf_skill_0_inLockOnly 0
 useSelf_skill_0_whenStatusActive
 useSelf_skill_0_whenStatusInactive
 useSelf_skill_0_whenAffected
+useSelf_skill_0_notWhileSitting 0
 useSelf_skill_0_timeout 0
 
 useSelf_skill_smartHeal 1
@@ -283,15 +288,6 @@ equipAuto_0_sp_lower 0
 equipAuto_0_sp_upper 100
 equipAuto_0_weight 0
 equipAuto_0_whileSitting 0
-
-
-itemExchange 0
-itemExchange_npc
-itemExchange_steps
-
-itemExchange_item_0
-itemExchange_amount_0
-itemExchange_minAmount_0
 
 
 autoResponseOnHeal 0
