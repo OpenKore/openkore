@@ -12,6 +12,10 @@ New config options:
 - beepOnChat and beepOnPM were removed. Use this instead:
   beepDomains publicchat,emotion,pm
 
+Changes:
+- Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
+  beep on your own PMs.
+
 ==================
 ### 1.5.1 (beta)
 ==================

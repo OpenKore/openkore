@@ -6429,7 +6429,7 @@ sub parseMsg {
 	} elsif ($switch eq "0098") {
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
-			message "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n", "pm";
+			message "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n", "pm/sent";
 			chatLog("pm", "(To: $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n") if ($config{'logPrivateChat'});
 		} elsif ($type == 1) {
 			warning "$lastpm[0]{'user'} is not online\n";
