@@ -35,6 +35,7 @@ Bug fixes:
 - Portal recording has been fixed.
 - Fix teleport using clip.
 - Portal recording has been fixed more.
+- Moved some messages to "teleport" domain.
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux
@@ -53,6 +54,7 @@ New features:
 - Display source and destination coordinates in "Recorded new portal" message.
 - route_teleport is now a normal message instead of a debug message (something
   that made my party bot suddenly teleport away from me should not be silent).
+- "Failed to take <item>" message now shows more information.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
