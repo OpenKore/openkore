@@ -17,8 +17,10 @@ type
     Label4: TLabel;
     Bevel1: TBevel;
     Image1: TImage;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure Label3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -29,6 +31,9 @@ var
   AboutBox: TAboutBox;
 
 implementation
+
+uses
+  ShellAPI;
 
 {$R *.dfm}
 
@@ -41,6 +46,12 @@ end;
 procedure TAboutBox.SpeedButton1Click(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TAboutBox.Label3Click(Sender: TObject);
+begin
+  ShellExecute(Handle, nil, 'http://openkore.sourceforge.net/grftool/',
+      nil, nil, SW_NORMAL);
 end;
 
 end.
