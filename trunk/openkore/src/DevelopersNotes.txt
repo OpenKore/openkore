@@ -1,6 +1,8 @@
 OpenKore Developers Notes
-     July 30, 2004
+    February 9, 2005
 =========================
+
+NOTE: Please also read http://openkore.sourceforge.net/srcdoc/
 
 
 1. Introduction
