@@ -96,7 +96,8 @@ sub disconnect {
 # Network::checkConnection()
 #
 # (At this time, the checkConnection() function is in functions.pl. The plan is to eventually move that function to this module.)
-# Handles any connection issues. Based on the current situation, this connect may
+#
+# Handles any connection issues. Based on the current situation, this function may
 # re-connect to the RO server, disconnect, do nothing, etc.
 # This function is meant to be run in the Kore main loop.
 #
