@@ -439,7 +439,7 @@ sub whenStatusActivePL {
 ##
 # launchApp(args...)
 # args: The application's name and arguments.
-# Returns: a PID on Unix, a object created by Win32::Process::Create() on Windows.
+# Returns: a PID on Unix; an object created by Win32::Process::Create() on Windows.
 #
 # Asynchronously launch an application.
 sub launchApp {
@@ -552,6 +552,5 @@ sub launchURL {
 		}
 	}
 }
-
 
 return 1;
