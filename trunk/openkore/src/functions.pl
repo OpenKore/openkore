@@ -5362,6 +5362,7 @@ sub parseMsg {
 			$chars[$config{'char'}]{'deathCount'}++;
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
+
 		} elsif (%{$monsters{$ID}}) {
 			%{$monsters_old{$ID}} = %{$monsters{$ID}};
 			$monsters_old{$ID}{'gone_time'} = time;
@@ -6377,7 +6378,7 @@ sub parseMsg {
 					$jExpSwitch = 2; 
 				} 
 			}
-			message "Exp gained: $monsterBaseExp/$monsterJobExp\n","exp", 1;
+			message "Exp gained: $monsterBaseExp/$monsterJobExp\n","exp";
 			
 		} elsif ($type == 20) {
 			$chars[$config{'char'}]{'zenny'} = $val;
@@ -7737,7 +7738,7 @@ sub parseMsg {
       		sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
 
 	} elsif ($switch eq "0148") {
-		# 0148 ID:l type:w
+		# 0148 long ID, word type
 		my $targetID = substr($msg, 2, 4);
 		my $type = unpack("S1",substr($msg, 6, 2));
 

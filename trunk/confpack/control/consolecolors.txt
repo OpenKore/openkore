@@ -21,12 +21,12 @@ attackedMiss magenta
 
 connection darkgreen
 drop blue
-useItem blue/darkblue
+useItem blue
 
 skill green 
 
 system white
-pm red/yellow
+pm yellow
 guildchat blue/yellow
 list white 
 info white 
