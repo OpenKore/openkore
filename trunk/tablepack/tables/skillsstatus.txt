@@ -32,7 +32,7 @@
 31 Energy Coat
 32 Armor Damaged
 33 Weapon Damaged
-34 Party Invite
+34 Hallucination
 35 Owg 50%
 36 Owg 90%
 37 Concent
