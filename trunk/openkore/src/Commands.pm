@@ -638,7 +638,7 @@ sub cmdItemList {
 		next if ($itemsID[$i] eq "");
 		my $item = $items{$itemsID[$i]};
 		my $display = "$item->{name} x $item->{amount}";
-		message(sprintf("%4d %36s (%3d, %3d)",
+		message(sprintf("%4d %-30s (%3d, %3d)\n",
 			$i, $display, $item->{pos}{x}, $item->{pos}{y}),
 			"list");
 	}
