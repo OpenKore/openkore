@@ -23,14 +23,15 @@ our $rpackets_file = 'tables/recvpackets.txt';
 
 require 'functions.pl';
 
-&GetOptions('config=s', \$config_file, 
-			'mon_control=s', \$mon_control_file, 
-			'items_control=s', \$items_control_file, 
-			'chat=s', \$chat_file,
-			'shop=s', \$shop_file,
-			'items=s', \$item_log_file,
-			'rpackets=s', \$rpackets_file,
-			'help', \$help_option);
+&GetOptions(
+	'config=s', \$config_file,
+	'mon_control=s', \$mon_control_file,
+	'items_control=s', \$items_control_file,
+	'chat=s', \$chat_file,
+	'shop=s', \$shop_file,
+	'items=s', \$item_log_file,
+	'rpackets=s', \$rpackets_file,
+	'help', \$help_option);
 if ($help_option) {
 	print "Usage: skore.exe [options...]\n\n";
 	print "The supported options are:\n\n";
