@@ -2,8 +2,10 @@
  *
  * This interface file was used to generate the XS wrapper for Tools.cpp.
  * I included this file in CVS in case anyone needs it for whatever
- * reason.
- * This file is not needed for compilation of Tools.so.
+ * reason. This file is not needed for compilation of Tools.so.
+ *
+ * Yes I know, the types in the function declarations are not the same
+ * as those in Tools.cpp, but that's intended.
  */
 %module Tools
 
