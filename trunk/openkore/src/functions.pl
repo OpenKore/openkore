@@ -2570,6 +2570,7 @@ sub AI {
 	}
 
 	##### DEAD #####
+
 	if (AI::action eq "dead" && !$char->{dead}) {
 		AI::dequeue;
 
@@ -2599,6 +2600,7 @@ sub AI {
 
 	##### STORAGE GET #####
 	# Get one or more items from storage.
+
 	if (AI::action eq "storageGet" && timeOut(AI::args) && $storage{opened}) {
 		my $item = AI::args->{items}[0];
 		my $amount = AI::args->{max};
@@ -2614,6 +2616,7 @@ sub AI {
 
 	##### DROPPING #####
 	# Drop one or more items from inventory.
+
 	if (AI::action eq "drop" && timeOut(AI::args)) {
 		my $item = AI::args->{'items'}[0];
 		my $amount = AI::args->{max};
@@ -2628,6 +2631,7 @@ sub AI {
 	}
 
 	##### DELAYED-TELEPORT #####
+
 	if (AI::v->{temp}{teleport}{lv}) {
 		useTeleport(AI::v->{temp}{teleport}{lv});
 	}
@@ -3076,7 +3080,7 @@ sub AI {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
 			}
 			ai_route($config{'lockMap'}, $config{'lockMap_x'}, $config{'lockMap_y'},
-				attackOnRoute => $config{'attackAuto_inLockOnly'} ? 0 : 1);
+				attackOnRoute => $config{'attackAuto_inLockOnly'} ? 1 : 2);
 		}
 	}
 	undef $ai_v{'temp'}{'lockMap_coords'};
@@ -3097,146 +3101,6 @@ sub AI {
 			maxRouteTime => $config{route_randomWalk_maxRouteTime},
 			attackOnRoute => 2);
 	}
-
-	##### AUTO-ITEM USE #####
-
-
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
-		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"
-		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack"
-	    ) && timeOut(\%{$timeout{'ai_item_use_auto'}}))
-	{
-		$i = 0;
-		while (1) {
-			last if (!$config{"useSelf_item_$i"});
-			if (checkSelfCondition("useSelf_item_$i")) {
-				undef $ai_v{'temp'}{'invIndex'};
-				$ai_v{'temp'}{'invIndex'} = findIndexStringList_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_$i"});
-				if ($ai_v{'temp'}{'invIndex'} ne "") {
-					sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'}, $accountID);
-					$ai_v{"useSelf_item_$i"."_time"} = time;
-					$timeout{'ai_item_use_auto'}{'time'} = time;
-					debug qq~Auto-item use: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~, "npc";
-					last;
-				}
-			}
-			$i++;
-		}
-	}
-
-
-	##### AUTO-SKILL USE #####
-
-	if ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
-		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
-		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack"
-	) {
-		$i = 0;
-		undef $ai_v{'useSelf_skill'};
-		undef $ai_v{'useSelf_skill_lvl'};
-		while (1) {
-			last if (!$config{"useSelf_skill_$i"});
-			if (checkSelfCondition("useSelf_skill_$i")) {
-				$ai_v{"useSelf_skill_$i"."_time"} = time;
-				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
-				$ai_v{'useSelf_skill_lvl'} = $config{"useSelf_skill_$i"."_lvl"};
-				$ai_v{'useSelf_skill_maxCastTime'} = $config{"useSelf_skill_$i"."_maxCastTime"};
-				$ai_v{'useSelf_skill_minCastTime'} = $config{"useSelf_skill_$i"."_minCastTime"};
-				last;
-			}
-			$i++;
-		}
-		if ($config{'useSelf_skill_smartHeal'} && $skills_rlut{lc($ai_v{'useSelf_skill'})} eq "AL_HEAL") {
-			undef $ai_v{'useSelf_skill_smartHeal_lvl'};
-			$ai_v{'useSelf_skill_smartHeal_lvl'} = 1;
-			$ai_v{'useSelf_skill_smartHeal_hp_dif'} = $chars[$config{'char'}]{'hp_max'} - $chars[$config{'char'}]{'hp'};
-			for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'useSelf_skill'})}}{'lv'}; $i++) {
-				$ai_v{'useSelf_skill_smartHeal_lvl'} = $i;
-				$ai_v{'useSelf_skill_smartHeal_sp'} = 10 + ($i * 3);
-				$ai_v{'useSelf_skill_smartHeal_amount'} = int(($chars[$config{'char'}]{'lv'} + $chars[$config{'char'}]{'int'}) / 8)
-						* (4 + $i * 8);
-				if ($chars[$config{'char'}]{'sp'} < $ai_v{'useSelf_skill_smartHeal_sp'}) {
-					$ai_v{'useSelf_skill_smartHeal_lvl'}--;
-					last;
-				}
-				last if ($ai_v{'useSelf_skill_smartHeal_amount'} >= $ai_v{'useSelf_skill_smartHeal_hp_dif'});
-			}
-			$ai_v{'useSelf_skill_lvl'} = $ai_v{'useSelf_skill_smartHeal_lvl'};
-		}
-		if ($ai_v{'useSelf_skill_lvl'} > 0) {
-			debug qq~Auto-skill on self: $skills_lut{$skills_rlut{lc($ai_v{'useSelf_skill'})}} (lvl $ai_v{'useSelf_skill_lvl'})\n~, "ai";
-			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'useSelf_skill'})})) {
-				ai_skillUse($skills_rlut{lc($ai_v{'useSelf_skill'})}, $ai_v{'useSelf_skill_lvl'}, $ai_v{'useSelf_skill_maxCastTime'}, $ai_v{'useSelf_skill_minCastTime'}, $accountID);
-			} else {
-				ai_skillUse($skills_rlut{lc($ai_v{'useSelf_skill'})}, $ai_v{'useSelf_skill_lvl'}, $ai_v{'useSelf_skill_maxCastTime'}, $ai_v{'useSelf_skill_minCastTime'}, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
-			}
-		}		
-	}
-	
-	##### PARTY-SKILL USE ##### 
-
-	#FIXME: need to move closer before using skill, there might be line of sight problem too...
-	
-	if (%{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
-	  || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"
-	  || $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack" || $ai_seq[0] eq "move") ){
-		my $i = 0;
-		undef $ai_v{'partySkill'};
-		undef $ai_v{'partySkill_lvl'};
-		undef $ai_v{'partySkill_targetID'};
-		while (defined($config{"partySkill_$i"})) {
-			for (my $j = 0; $j < @partyUsersID; $j++) {
-				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
-				if ($players{$partyUsersID[$j]}
-					&& inRange(distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}), $config{partySkillDistance} || "1..8")
-					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}))
-					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
-					&& checkSelfCondition("partySkill_$i")
-					){
-						$ai_v{"partySkill_$i"."_time"} = time;
-						$ai_v{'partySkill'} = $config{"partySkill_$i"};
-
-						my $skillID = $skillsID_rlut{lc($ai_v{partySkill})};
-						$targetTimeout{$partyUsersID[$j]}{$skillID} = $i;
-
-						$ai_v{'partySkill_target'} = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'};
-						$ai_v{'partySkill_targetID'} = $partyUsersID[$j];
-						$ai_v{'partySkill_lvl'} = $config{"partySkill_$i"."_lvl"};
-						$ai_v{'partySkill_maxCastTime'} = $config{"partySkill_$i"."_maxCastTime"};
-						$ai_v{'partySkill_minCastTime'} = $config{"partySkill_$i"."_minCastTime"};						
-						last;
-				}
-			}
-			
-			$i++;
-			last if (defined($ai_v{'partySkill_targetID'}));
-		}
-
-		if ($config{'useSelf_skill_smartHeal'} && $skills_rlut{lc($ai_v{'partySkill'})} eq "AL_HEAL") {
-			undef $ai_v{'partySkill_smartHeal_lvl'};
-			$ai_v{'partySkill_smartHeal_hp_dif'} = $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'hp_max'} - $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'hp'};
-			for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'lv'}; $i++) {
-				$ai_v{'partySkill_smartHeal_lvl'} = $i;
-				$ai_v{'partySkill_smartHeal_sp'} = 10 + ($i * 3);
-				$ai_v{'partySkill_smartHeal_amount'} = int(($chars[$config{'char'}]{'lv'} + $chars[$config{'char'}]{'int'}) / 8) * (4 + $i * 8);
-				if ($chars[$config{'char'}]{'sp'} < $ai_v{'partySkill_smartHeal_sp'}) {
-					$ai_v{'partySkill_smartHeal_lvl'}--;
-					last;
-				}
-				last if ($ai_v{'partySkill_smartHeal_amount'} >= $ai_v{'partySkill_smartHeal_hp_dif'});
-			}
-			$ai_v{'partySkill_lvl'} = $ai_v{'partySkill_smartHeal_lvl'};
-		}
-		if ($ai_v{'partySkill_lvl'} > 0) {
-			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}) Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'partySkill'})}} (lvl $ai_v{'partySkill_lvl'})\n~ if $config{'debug'};
-			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'partySkill'})})) {
-				ai_skillUse($skills_rlut{lc($ai_v{'partySkill'})}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $ai_v{'partySkill_targetID'});
-			} else {
-				ai_skillUse($skills_rlut{lc($ai_v{'partySkill'})}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'x'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'y'});
-			}
-		}
-	}
-
 
 	##### FOLLOW #####
 	
@@ -3410,6 +3274,7 @@ sub AI {
 	}
 	} # end of FOLLOW block
 	
+
 	##### AUTO-SIT/SIT/STAND #####
 
 	if ($config{'sitAuto_idle'} && ($ai_seq[0] ne "" && $ai_seq[0] ne "follow")) {
@@ -3475,7 +3340,6 @@ sub AI {
 
 
 	##### AUTO-ATTACK #####
-
 
 	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow" 
 	  || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
@@ -3929,8 +3793,138 @@ sub AI {
 		}
 	}
 
-	##### AUTO-EQUIP #####
+	##### AUTO-ITEM USE #####
 
+	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack", AI::action))
+		&& timeOut(\%{$timeout{ai_item_use_auto}})) {
+		my $i = 0;
+		while (1) {
+			last if (!$config{"useSelf_item_$i"});
+			if (checkSelfCondition("useSelf_item_$i")) {
+				my $index = findIndexStringList_lc(\@{$char->{inventory}}, "name", $config{"useSelf_item_$i"});
+				if (defined $index) {
+					sendItemUse(\$remote_socket, $char->{inventory}[$index]{index}, $accountID);
+					AI::v->{"useSelf_item_$i"."_time"} = time;
+					$timeout{ai_item_use_auto}{time} = time;
+					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
+					last;
+				}
+			}
+			$i++;
+		}
+	}
+
+
+	##### AUTO-SKILL USE #####
+
+	if (AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack")
+		) {
+		my $i = 0;
+		my %self_skill = ();
+		while (1) {
+			last if (!$config{"useSelf_skill_$i"});
+			if (checkSelfCondition("useSelf_skill_$i")) {
+				AI::v->{"useSelf_skill_$i"."_time"} = time;
+				$self_skill{ID} = $skills_rlut{lc($config{"useSelf_skill_$i"})};
+				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"};
+				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
+				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
+				last;
+			}
+			$i++;
+		}
+		if ($config{useSelf_skill_smartHeal} && $self_skill{ID} eq "AL_HEAL") {
+			my $smartHeal_lv = 1;
+			my $hp_diff = $char->{hp_max} - $char->{hp};
+			for ($i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
+				my $sp_req, $amount;
+				
+				$smartHeal_lv = $i;
+				$sp = 10 + ($i * 3);
+				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
+				if ($char->{sp} < $sp_req) {
+					$smartHeal_lv--;
+					last;
+				}
+				last if ($amount >= $hp_diff);
+			}
+			$self_skill{lvl} = $smartHeal_lv;
+		}
+		if ($self_skill{lvl} > 0) {
+			debug qq~Auto-skill on self: $skills_lut{$self_skill{ID}} (lvl $self_skill{lvl})\n~, "ai";
+			if (!ai_getSkillUseType($self_skill{ID})) {
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID);
+			} else {
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y});
+			}
+		}		
+	}
+	
+	##### PARTY-SKILL USE ##### 
+
+	#FIXME: need to move closer before using skill, there might be line of sight problem too...
+	
+	if (%{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
+	  || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"
+	  || $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack" || $ai_seq[0] eq "move") ){
+		my $i = 0;
+		undef $ai_v{'partySkill'};
+		undef $ai_v{'partySkill_lvl'};
+		undef $ai_v{'partySkill_targetID'};
+		while (defined($config{"partySkill_$i"})) {
+			for (my $j = 0; $j < @partyUsersID; $j++) {
+				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
+				if ($players{$partyUsersID[$j]}
+					&& inRange(distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}), $config{partySkillDistance} || "1..8")
+					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}))
+					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
+					&& checkSelfCondition("partySkill_$i")
+					){
+						$ai_v{"partySkill_$i"."_time"} = time;
+						$ai_v{'partySkill'} = $config{"partySkill_$i"};
+
+						my $skillID = $skillsID_rlut{lc($ai_v{partySkill})};
+						$targetTimeout{$partyUsersID[$j]}{$skillID} = $i;
+
+						$ai_v{'partySkill_target'} = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'};
+						$ai_v{'partySkill_targetID'} = $partyUsersID[$j];
+						$ai_v{'partySkill_lvl'} = $config{"partySkill_$i"."_lvl"};
+						$ai_v{'partySkill_maxCastTime'} = $config{"partySkill_$i"."_maxCastTime"};
+						$ai_v{'partySkill_minCastTime'} = $config{"partySkill_$i"."_minCastTime"};						
+						last;
+				}
+			}
+			
+			$i++;
+			last if (defined($ai_v{'partySkill_targetID'}));
+		}
+
+		if ($config{'useSelf_skill_smartHeal'} && $skills_rlut{lc($ai_v{'partySkill'})} eq "AL_HEAL") {
+			undef $ai_v{'partySkill_smartHeal_lvl'};
+			$ai_v{'partySkill_smartHeal_hp_dif'} = $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'hp_max'} - $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'hp'};
+			for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'lv'}; $i++) {
+				$ai_v{'partySkill_smartHeal_lvl'} = $i;
+				$ai_v{'partySkill_smartHeal_sp'} = 10 + ($i * 3);
+				$ai_v{'partySkill_smartHeal_amount'} = int(($chars[$config{'char'}]{'lv'} + $chars[$config{'char'}]{'int'}) / 8) * (4 + $i * 8);
+				if ($chars[$config{'char'}]{'sp'} < $ai_v{'partySkill_smartHeal_sp'}) {
+					$ai_v{'partySkill_smartHeal_lvl'}--;
+					last;
+				}
+				last if ($ai_v{'partySkill_smartHeal_amount'} >= $ai_v{'partySkill_smartHeal_hp_dif'});
+			}
+			$ai_v{'partySkill_lvl'} = $ai_v{'partySkill_smartHeal_lvl'};
+		}
+		if ($ai_v{'partySkill_lvl'} > 0) {
+			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}) Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'partySkill'})}} (lvl $ai_v{'partySkill_lvl'})\n~ if $config{'debug'};
+			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'partySkill'})})) {
+				ai_skillUse($skills_rlut{lc($ai_v{'partySkill'})}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $ai_v{'partySkill_targetID'});
+			} else {
+				ai_skillUse($skills_rlut{lc($ai_v{'partySkill'})}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'x'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'y'});
+			}
+		}
+	}
+
+	##### AUTO-EQUIP #####
 	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || $AI::v->{teleport}{lv})
 		&& timeOut($timeout{ai_item_equip_auto})) {
 
@@ -3991,7 +3985,6 @@ sub AI {
 	}
 
 	##### SKILL USE #####
-
 	if (AI::action eq "skill_use" && AI::args->{suspended}) {
 		AI::args->{ai_skill_use_giveup}{time} += time - AI::args->{suspended};
 		AI::args->{ai_skill_use_minCastTime}{time} += time - AI::args->{suspended};
@@ -4032,7 +4025,6 @@ sub AI {
 	}
 
 	####### ROUTE #######
-
 	if ( $ai_seq[0] eq "route" && $field{'name'} && $chars[$config{'char'}]{'pos_to'}{'x'} ne '' && $chars[$config{'char'}]{'pos_to'}{'y'} ne '' ) {
 
 		if ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
@@ -4165,7 +4157,6 @@ sub AI {
 
 
 	####### MAPROUTE #######
-
 	if ( $ai_seq[0] eq "mapRoute" && $field{'name'} && $chars[$config{'char'}]{'pos_to'}{'x'} ne '' && $chars[$config{'char'}]{'pos_to'}{'y'} ne '' ) {
 
 		if ($ai_seq_args[0]{'stage'} eq '') {
@@ -5737,12 +5728,12 @@ sub parseMsg {
 		# and skills (like Twohand Quicken) disappears when we change map server.
 		my $i = 0;
 		while ($config{"useSelf_item_$i"}) {
-			$ai_v{"useSelf_item_$i"."_time"} = 0;
+			AI::v->{"useSelf_item_$i"."_time"} = 0;
 			$i++;
 		}
 		$i = 0;
 		while ($config{"useSelf_skill_$i"}) {
-			$ai_v{"useSelf_skill_$i"."_time"} = 0;
+			AI::v->{"useSelf_skill_$i"."_time"} = 0;
 			$i++;
 		}
 		undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
@@ -10228,7 +10219,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, AI::action)); }
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
 
-	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
+	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut(AI::v->{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
