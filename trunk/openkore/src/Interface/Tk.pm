@@ -472,6 +472,7 @@ if (0) {
 	$self->{input}->bind('<Up>' => [\&inputUp, $self]);
 	$self->{input}->bind('<Down>' => [\&inputDown, $self]);
 	$self->{input}->bind('<Return>' => [\&inputEnter, $self]);
+	$self->{input}->focus();
 
 
 	if ($buildType == 0) {
