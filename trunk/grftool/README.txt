@@ -36,8 +36,11 @@ Delphi is commercial software. But you can download Delphi 6 Personal Edition (f
 ftp://193.219.76.7/pub/Windows/lang/delfi/BorlandDelphiPersonalEdition.exe
 
 
-You will also need the Virtual TreeView component:
-http://www.soft-gems.net/VirtualTreeview/VT.php
+You will also need these components:
+- Virtual TreeView:
+  http://www.soft-gems.net/VirtualTreeview/VT.php
+- Unicode controls:
+  http://tnt.ccci.org/delphi_unicode_controls/
 
 
 Compilation

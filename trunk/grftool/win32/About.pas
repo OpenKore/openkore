@@ -69,7 +69,7 @@ begin
   MessageBox(Handle,
       'VCL - Main program.' + #13#10 +
       'floAt - Help with various components.' + #13#10 +
-      'johnny - Sound preview support.'
+      'mrdiablo - Sound preview support.'
       , 'Credits', MB_ICONINFORMATION);
 end;
 
