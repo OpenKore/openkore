@@ -90,7 +90,7 @@ addConfigFile("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut,
 addConfigFile("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
 addConfigFile("$Settings::tables_folder/itemslotcounttable.txt", \%itemSlotCount_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
-addConfigFile("$Settings::tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
+#addConfigFile("$Settings::tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
