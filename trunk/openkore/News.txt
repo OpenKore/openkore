@@ -74,7 +74,7 @@ New features:
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
-  (monster name) (attack-auto) (teleport) (search) (level)
+  (monster name) (attack) (teleport) (search) (skillcancel) (lv) (joblv) (hp) (sp)
 
 - (attack-auto):
   You can now mark a monster as "always aggressive". This means that, 
@@ -232,7 +232,7 @@ Credits:
 - sparshong: character creation/deletion packet code.
 - jsteng, littlewens: mute packet support, chat room list clear bugfix.
 - anoxemian: (partial?) kRO/PK server support.
-- doenet: mon_control.txt attack level support, randomWalk and lockMap
+- doenet: improved mon_control.txt, randomWalk and lockMap
   fixes/improvements.
 
 

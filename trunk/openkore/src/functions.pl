@@ -3506,9 +3506,13 @@ sub AI {
 				my $monster = $monsters{$_};
 				# Ignore ignored monsters in mon_control.txt
 				my $monName = lc($monster->{name});
-				my $monCtrl = $mon_control{$monName}{attack_auto};
-				next if ($monCtrl ne "" && $monCtrl <= 0);
-				next if ($mon_control{$monName}{attack_lvl} ne "" && $mon_control{$monName}{attack_lvl} > $char->{lv});
+				if ((my $monCtrl = $mon_control{$monName})) {
+					next if ( ($monCtrl->{attack_auto} ne "" && $monCtrl->{attack_auto} <= 0)
+						|| ($monCtrl->{attack_lvl} ne "" && $monCtrl->{attack_lvl} > $char->{lv})
+						|| ($monCtrl->{attack_hp}  ne "" && $monCtrl->{attack_hp} > $char->{hp})
+						|| ($monCtrl->{attack_sp}  ne "" && $monCtrl->{attack_sp} > $char->{sp})
+						);
+				}
 
 
 				my $pos = calcPosition($monster);

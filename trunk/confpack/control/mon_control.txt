@@ -1,25 +1,37 @@
 # This file allows specific AI control for certain monsters
 # Syntax:
-# <monster> <auto-attack> <auto-teleport> <auto-search>
+# <monster> <attack> <teleport> <search> <skillcancel> <lv> <joblv> <hp> <sp>
 #
 # <monster>:  Name of monster as found in monsters.txt (not case sensitive)
 #
-# <auto-attack>:
+# <attack>:
 #  1 means to always auto-attack this monster.
 #  0 means to leave the monster alone, unless it attacks you.
 # -1 means to leave the monster alone, even if it attacks you.
 #
-# <auto-teleport>: Put a 1 to teleport if the monster is on the screen,
+# <teleport>: Put a 1 to teleport if the monster is on the screen,
 # or 2 to teleport if the monster attacks you.
 # This is only used in auto-attack mode.
 #
-# <auto-search>: Put a 1 to teleport if the monster is NOT on the screen.
+# <search>: Put a 1 to teleport if the monster is NOT on the screen.
 # This is only used in auto-attack mode.
 #
+# <skillcancel>: Set to 1 if you want to avoid spells casted by this monster.
+#
+# <lv>: Only auto-attack this monster if your level is higher than the
+# specified level.
+#
+# <joblv>: Only auto-attack this monster if your job level is higher than
+# the specified level.
+#
+# <hp>: Only auto-attack this monster if your HP is higher than the
+# specified amount. The HP is not specified in percentage.
+#
+# <sp>: Only auto-attack this monster if your SP is higher than the
+# specified amount. The SP is not specified in percentage.
+#
 # Monsters not found in this file, or flags not specified will default to:
-# <auto-attack> = 1
-# <auto-teleport> = 0
-# <auto-search> = 0
+# <attack> = 1
 
 # Don't attack ant eggs
 Ant's Egg 0 0 0
