@@ -292,7 +292,7 @@ if (!$config{'XKore'}) {
 	}
 
 } elsif (!$config{'XKore'} && (!$config{'username'} || !$config{'password'})) {
-	$interface->errorDialog("No username of password set.");
+	$interface->errorDialog("No username or password set.");
 	exit 1;
 }
 
