@@ -205,13 +205,13 @@ teleportAuto_minAggressives 0
 teleportAuto_onlyWhenSafe 0
 teleportAuto_maxDmg 500
 teleportAuto_deadly 1
-teleportAuto_useItem 1
 teleportAuto_useSP 0
 teleportAuto_emptyName 1
 teleportAuto_allPlayers 0
 teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
 teleportAuto_dropTarget 0
+teleportAuto_attackedWhenSitting 0
 
 useSelf_skill {
 	lvl 10
