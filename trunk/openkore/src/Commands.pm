@@ -137,6 +137,7 @@ sub cmdAI {
 		main::aiRemove("route_getRoute");
 		undef @ai_seq;
 		undef @ai_seq_args;
+		message "AI sequences cleared\n", "success";
 		return;
 	}
 
