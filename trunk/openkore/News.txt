@@ -24,6 +24,7 @@ New features:
   default table files.
 - If attackAuto_inLockOnly is set to 2, Kore will ignore all aggressive
   monsters while walking to lockMap.
+- "<name> refined weapon <success/failure>" messages from modkore added.
 
 Bug fixes:
 - Fixed login problems with newer eAthena versions (2nd session id, bug #28)
@@ -35,10 +36,6 @@ Bug fixes:
 - The 'cart add' command now checks whether you have a cart.
 - Fix some memory leaks.
 - Various messages no longer spam X-Kore.
-
-New features:
-- "<name> refined weapon <success/failure>" messages from modkore added.
-- Various messages no longer spam the XKore client.
 - partySkill targetTimeout is now honored.
 - 'talk num' command bugs fixed.
 
