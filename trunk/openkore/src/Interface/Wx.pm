@@ -327,7 +327,7 @@ sub createInterface {
 				main::aiRemove("mapRoute");
 				main::aiRemove("route");
 				main::aiRemove("move");
-				main::ai_route($field{name}, $x, $y);
+				main::ai_route($field{name}, $x, $y, attackOnRoute => 1);
 				$self->{inputBox}->SetFocus;
 			});
 			$mapView->onMapChange(sub {
