@@ -7136,7 +7136,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "0119") {
 #Solos Start
 		$ID = substr($msg, 2, 4);
-		$param1 = unpack("S1", substr($msg, 6, 2))
+		$param1 = unpack("S1", substr($msg, 6, 2));
 		$param2 = unpack("S1", substr($msg, 8, 2));
 		$param3 = unpack("S1", substr($msg, 10, 2));
 		$frozen = unpack("S1", substr($msg, 6, 2));
