@@ -4657,6 +4657,8 @@ sub AI {
 		delete $ai_v{temp}{clear_aiQueue};
 		AI::clear;
 	}
+
+	Plugins::callHook('AI_post');
 }
 
 
@@ -4783,9 +4785,6 @@ sub parseSendMsg {
 	if ($sendMsg ne "") {
 		sendToServerByInject(\$remote_socket, $sendMsg);
 	}
-
-	# What's this doing here?
-	Plugins::callHook('AI_post');
 }
 
 
