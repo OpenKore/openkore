@@ -5699,6 +5699,7 @@ sub parseMsg {
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
 			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
+			undef $chars[$config{char}]{usedTeleportSkill};
 		}
 		$coords{'x'} = unpack("S1", substr($msg, 18, 2));
 		$coords{'y'} = unpack("S1", substr($msg, 20, 2));
