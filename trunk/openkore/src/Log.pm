@@ -218,6 +218,7 @@ sub processMsg {
 sub message {
 	my ($message, $domain, $level) = @_;
 	$level = 5 if existsInList($config{squelchDomains}, $domain);
+	$level = 0 if existsInList($config{verboseDomains}, $domain);
 	return processMsg("message",	# type
 		$message,
 		$domain,
