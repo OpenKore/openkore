@@ -230,6 +230,8 @@ Bug fixes:
   carry, display the appropriate error message and don't pretend that the
   item is not in inventory anymore.
 - "Player are now: Blessing" changed to "Player is now: Blessing"
+- When creating a character using openkore, there will no longer be
+  garbage trailing the character name.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

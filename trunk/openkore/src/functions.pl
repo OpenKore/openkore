@@ -5159,12 +5159,11 @@ sub parseMsg {
 	} elsif ($switch eq "006D") {
 		my %char;
 		my $ID = unpack("L", substr($msg, 2, 4));
-		$char{name} = substr($msg, 76, 24);
+		$char{name} = unpack("A24", substr($msg, 76, 24));
 		$char{zenny} = unpack("L", substr($msg, 10, 4));
 		($char{str}, $char{agi}, $char{vit}, $char{int}, $char{dex}, $char{luk}) = unpack("C*", substr($msg, 100, 6));
 		my $slot = unpack("C", substr($msg, 106, 1));
 
-		$char{name} =~ s/\000*$//g;
 		$char{lv} = 1;
 		$char{lv_job} = 1;
 		$char{sex} = $accountSex2;
