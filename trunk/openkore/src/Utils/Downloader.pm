@@ -2,7 +2,7 @@ package Utils::Downloader;
 
 use strict;
 use Time::HiRes qw(time);
-use Net::HTTP;
+use Net::HTTP::NB;
 use Utils qw(dataWaiting);
 use constant MAX_RETRIES => 3;
 
@@ -28,7 +28,7 @@ sub iterate {
 		return 1;
 
 	} if ($self->{stage} eq 'Connect') {
-		$self->{http} = new Net::HTTP(
+		$self->{http} = new Net::HTTP::NB(
 			Host => $self->{host},
 			KeepAlive => 1
 		);
@@ -53,33 +53,42 @@ sub iterate {
 			$self->{stage} = 'Connect';
 		}
 
-	} elsif ($self->{stage} eq 'Read Headers' && dataWaiting(\$self->{http})) {
-		undef $@;
-		eval {
-			my ($code, $mess, %headers) = $self->{http}->read_response_headers;
-			$self->{headers} = \%headers;
-			if ($code == 200 && $mess eq 'OK') {
-				$self->{stage} = 'Receive';
-			} else {
-				# HTTP error
+	} elsif ($self->{stage} eq 'Read Headers') {
+		if (dataWaiting(\$self->{http})) {
+			undef $@;
+			eval {
+				my ($code, $mess, %headers) = $self->{http}->read_response_headers;
+				$self->{headers} = \%headers;
+				if ($code == 200 && $mess eq 'OK') {
+					$self->{stage} = 'Receive';
+					$self->{checkStart} = time;
+				} else {
+					# HTTP error
+					$self->{retry} = MAX_RETRIES;
+					return 1;
+				}
+			};
+			if ($@) {
+				# Server does not speak HTTP properly
+				undef $@;
 				$self->{retry} = MAX_RETRIES;
 				return 1;
 			}
-		};
-		if ($@) {
-			# Server does not speak HTTP properly
-			undef $@;
-			$self->{retry} = MAX_RETRIES;
-			return 1;
+
+		} elsif (time - $self->{checkStart} > 60) {
+			$self->{retry}++;
+			$self->{stage} = 'Connect';
 		}
 
-	} elsif ($self->{stage} eq 'Receive' && dataWaiting(\$self->{http})) {
+	} elsif ($self->{stage} eq 'Receive') {
 		my $buf;
 		my $n;
 
 		$n = $self->{http}->read_entity_body($buf, 1024 * 4);
 		if ($n > 0) {
+			# We have data
 			$self->{buf} .= $buf;
+			$self->{checkStart} = time;
 
 		} elsif ($n == 0) {
 			# EOF
@@ -91,12 +100,12 @@ sub iterate {
 			# Error
 			$self->{retry}++;
 			$self->{stage} = 'Connect';
-		}
 
-	} elsif (($self->{stage} eq 'Receive' || $self->{stage} eq 'Read Headers')
-	   && time - $self->{checkStart} > 60) {
-		$self->{retry}++;
-		$self->{stage} = 'Connect';
+		} elsif (time - $self->{checkStart} > 60) {
+			# Timeout
+			$self->{retry}++;
+			$self->{stage} = 'Connect';
+		}
 	}
 
 	return 0;
