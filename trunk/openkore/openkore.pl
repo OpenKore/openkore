@@ -9,12 +9,17 @@
 #
 #########################################################################
 
-use lib '.';
-use lib 'tools';
-use lib 'tools/pathfinding';
-use lib 'tools/unix';
-use lib 'tools/win32';
-use lib 'tools/misc';
+BEGIN {
+	use FindBin;
+	my $dir = $FindBin::Bin;
+	push(@INC, "$dir",
+		"$dir/tools",
+		"$dir/tools/pathfinding",
+		"$dir/tools/unix",
+		"$dir/tools/win32",
+		"$dir/tools/misc");
+}
+
 eval "no utf8;"; undef $@;
 use bytes;
 srand();
