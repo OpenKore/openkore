@@ -632,7 +632,7 @@ sub cmdIgnore {
 
 sub cmdItemList {
 	message("-----------Item List-----------\n" .
-		"   # Name                      \n",
+		"   # Name                           Coord\n",
 		"list");
 	for (my $i = 0; $i < @itemsID; $i++) {
 		next if ($itemsID[$i] eq "");
