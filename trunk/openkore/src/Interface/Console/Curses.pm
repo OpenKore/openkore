@@ -198,7 +198,7 @@ sub writeOutput {
 	$color =~ s/gr[ae]y/white/g;
 	$color = "{" . $color . "}" unless $color eq "";
 	foreach my $s (split("\n", $msg)) {
-		if ($self->{winFight} && existsInList("attackMon,attackMonMiss,attacked,attackedMiss,skill", $domain)) {
+		if ($self->{winFight} && existsInList("attackMon,attackMonMiss,attacked,attackedMiss,skill,parseMsg_damage", $domain)) {
 			scroll $self->{winFight};
 			$self->printw($self->{winFight}, $self->{winFightHeight} - 2, 0, "{normal}@<<<<<<< $color@*", $time, $s);
 		} elsif ($self->{winChat} && existsInList("emotion,gmchat,guildchat,partychat,pm,publicchat,selfchat", $domain)) {
