@@ -16,18 +16,18 @@ use Config;
 eval "no utf8;";
 use bytes;
 
-#use Globals;
-#use Modules;
-#use Settings;
-#use Log;
-#use FileParsers;
-#use Interface;
-#use Network;
-#use Network::Send;
-#use Commands;
-#use Misc;
-#use Plugins;
-#use Utils;
+use Globals;
+use Modules;
+use Settings;
+use Log qw(message warning error debug);
+use FileParsers;
+use Interface;
+use Network;
+use Network::Send;
+use Commands;
+use Misc;
+use Plugins;
+use Utils;
 
 # PORTAL_PENALTY is used by the map router for calculating the cost of walking through a portal.
 # Best values are:
@@ -46,6 +46,7 @@ sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
 		message "Next restart in ".timeConvert($autoRestart).".\n", "system";
+
 		configModify("autoRestart", $autoRestart, 1);
 	}
 }
@@ -60,7 +61,6 @@ sub initConfChange {
 
 # Initialize variables when you start a connection to a map server
 sub initConnectVars {
-#	$char = $chars[$config{char}] |= {} if ($config{char} ne '');
 	initMapChangeVars();
 	undef %{$chars[$config{'char'}]{'skills'}};
 	undef @skillsID;
@@ -3084,7 +3084,7 @@ sub AI {
 	##### DEAD #####
 
 
-	if (AI::action eq "dead" && !char->{dead}) {
+	if (AI::action eq "dead" && !$char->{dead}) {
 		AI::dequeue;
 
 		if ($char->{resurrected}) {
@@ -3676,6 +3676,7 @@ sub AI {
 		# We've just finished moving to the monster.
 		# Don't count the time we spent on moving
 		$ai_seq_args[0]{'ai_attack_giveup'}{'time'} += time - $ai_seq_args[0]{move_start};
+		undef $ai_seq_args[0]{'unstuck'}{'time'};
 		undef $ai_seq_args[0]{move_start};
 
 	} elsif ((($ai_seq[0] eq "route" && $ai_seq[1] eq "attack") || ($ai_seq[0] eq "move" && $ai_seq[2] eq "attack"))
@@ -3846,6 +3847,14 @@ sub AI {
 		      || !$config{'tankMode'}) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 
+			if (!$ai_seq_args[0]{'firstAttack'}) {
+				$ai_seq_args[0]{'firstAttack'} = 1;
+				my $dist = sprintf("%.1f", distance($char->{pos_to}, $monsters{$ID}{pos_to}));
+				my $pos = "$char->{pos_to}{x},$char->{pos_to}{y}";
+				debug "Ready to attack target (which is $dist blocks away); we're at ($pos)\n", "ai_attack";
+			}
+
+			$ai_seq_args[0]{'unstuck'}{'time'} = time if (!$ai_seq_args[0]{'unstuck'}{'time'});
 			if (!$monsters{$ID}{'dmgFromYou'} && timeOut($ai_seq_args[0]{'unstuck'})) {
 				# We are close enough to the target, and we're trying to attack it,
 				# but some time has passed and we still haven't dealed any damage.
@@ -5103,7 +5112,6 @@ sub parseMsg {
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
-		$char = $chars[$config{'char'}] if ($config{'char'} ne '');
 
 	} elsif ($switch eq "006C") {
 		error("Error logging into Game Login Server (invalid character specified)...\n", "connection");
@@ -8769,7 +8777,6 @@ sub attack {
 	$args{'ai_attack_giveup'}{'time'} = time;
 	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
 	$args{'ID'} = $ID;
-	$args{'unstuck'}{'time'} = time;
 	$args{'unstuck'}{'timeout'} = ($timeout{'ai_attack_unstuck'}{'timeout'} || 1.5);
 	%{$args{'pos_to'}} = %{$monsters{$ID}{'pos_to'}};
 	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
@@ -8939,7 +8946,8 @@ sub move {
 	$args{attackID} = $attackID;
 	$args{time_move} = $char->{time_move};
 	$dist = distance($char->{pos}, $args{move_to});
-	$args{ai_move_giveup}{timeout} = 4 * ($char->{walk_speed} || 0.12) * (1 + $dist);
+	#$args{ai_move_giveup}{timeout} = 4 * ($char->{walk_speed} || 0.12) * (1 + $dist);
+	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
 	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
 		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
 	AI::queue("move", \%args);
