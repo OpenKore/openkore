@@ -69,6 +69,8 @@ New features:
 - While walking, Kore can teleport until it's near the destination.
 - New command "spells" will display what area effects are currently active,
   e.g. Pneuma, Warp Portal
+- Area effect spell appeared/disappeared message added,
+  domain skill, debug level 2
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -181,6 +183,8 @@ Bug fixes:
 - Casting area-effect skills (e.g. Safety Wall, Warp Portal, Storm Gust)
   works again now (ai_skillUse() was passing $args{target_x} instead of
   $args{x}).
+- When chatLangCode is autodetected, the configModify will be silent
+- Warp Portal opening message now shows correct person name
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
