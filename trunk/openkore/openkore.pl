@@ -1,6 +1,5 @@
 #!/usr/bin/env perl
 #########################################################################
-#  OpenKore - custom Ragnarok Online client
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
 #  Basically, this means that you're allowed to modify and distribute
@@ -8,31 +7,27 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
-
 use Time::HiRes qw(time usleep);
 use IO::Socket;
-use Win32::API;
+
 #Solos Start
 use Getopt::Long;
-my $config_file = "control/config.txt";
-my $items_control_file = "control/items_control.txt";
-my $mon_control_file = "control/mon_control.txt";
-my $chat_file = "chat.txt";
-my $item_log_file = "items.txt";
-my $shop_file = "control/shop.txt";
+$config_file = "control/config.txt";
+$items_control_file = "control/items_control.txt";
+$mon_control_file = "control/mon_control.txt";
+$chat_file = "chat.txt";
+$item_log_file = "items.txt";
+$shop_file = "control/shop.txt";
 
-
-my $help_option='';	# false per default
 &GetOptions('config=s', \$config_file, 
 			'mon_control=s', \$mon_control_file, 
 			'items_control=s', \$items_control_file, 
 			'chat=s', \$chat_file,
-	    		'shop=s', \$shop_file,
-            		'items=s', \$item_log_file,
-            		'help', \$help_option
-            		);
+	    	'shop=s', \$shop_file,
+	    	'items=s', \$item_log_file,
+            'help', \$help_option);
 if ($help_option) { 
-	print "Usage: openkore.exe [options...]\n\n";
+	print "Usage: skore.exe [options...]\n\n";
 	print "The supported options are:\n\n";
 	print "--help                     Displays this help message.\n";
 	print "--config=path/file         Which config.txt to use.\n";
@@ -45,21 +40,14 @@ if ($help_option) {
 #Solos End
 srand(time());
 
-
-my $versionText = "***OpenKore version 1.0 - http://openkore.sourceforge.net/***\n\n";
+$versionText = "***Kore 0.93.11 - Ragnarok Online Bot - http://kore.sourceforge.net***\n";
+$versionText2 = "***sKore Build 33 - Mod by Solos - http://ro.horoy.com***\n";
+$versionText3 = "***skore-Revamped maintained by dn4cer and blueviper22***\n\n";
 print $versionText;
+print $versionText2;
+print $versionText3;
 
-##
-## variables used in addParseFile
-my (@parseFiles,%config,%items_control,%mon_control,%overallAuth,%itemsPickup,
-    %response,%timeout,%cities_lut,%emotions_lut,%equipTypes_lut,%items_lut,
-    %itemsDesc_lut,%responses,%itemSlots_lut,%jobs_lut,%maps_lut,%monsters_lut,
-    %npcs_lut,%portals_lut,%portals_los,%sex_lut,%skills_lut,%skillsID_lut,
-    %skills_rlut,%skillsDesc_lut,%skillsSP_lut,%shop,%cards_lut,%elements_lut,
-    %itemTypes_lut,%chat_resp,%avoid);
-
-
-my $parseFiles=0;
+our $welcomeText = "Welcome to X-sKore.";
 
 #Solos Start
 addParseFiles($config_file, \%config,\&parseDataFile2);
@@ -101,7 +89,22 @@ addParseFiles("control/avoid.txt", \%avoid, \&parseDataFile2);
 
 load(\@parseFiles);
 
-if (!$config{'buildType'}) {
+# Autodetect platform
+if ($ENV{'PATH'} =~ /^[a-z]:\\/i) {
+	configModify("buildType", 0, 1);
+} else {
+	my $platform = `uname -s`;
+	if (!$platform || $platform =~ /win/i) {
+		configModify("buildType", 0, 1);
+	} else {
+		configModify("buildType", 1, 1);
+	}
+}
+
+if ($config{'buildType'} eq '0') {
+	eval "use Win32::API;";
+	die if ($@);
+
 	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPNNPPN", "N");
 	die "Could not locate Tools.dll" if (!$CalcPath_init);
 
@@ -110,7 +113,11 @@ if (!$config{'buildType'}) {
 
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
 	die "Could not locate Tools.dll" if (!$CalcPath_destroy);
-} elsif ($config{'buildType'} == 1) {
+} else {
+	eval "use C::DynaLib;";
+	eval "use POSIX \":sys_wait_h\";";
+	die if ($@);
+
 	$ToolsLib = new C::DynaLib("./Tools.so");
 
 	$CalcPath_init = $ToolsLib->DeclareSub("CalcPath_init", "L", "p","p","L","L","p","p","L");
@@ -131,10 +138,11 @@ if ($config{'adminPassword'} eq 'x' x 10) {
 print "\n";
 
 $proto = getprotobyname('tcp');
-$MAX_READ = 30000;
+our $MAX_READ = 30000;
 
-$remote_socket = IO::Socket::INET->new();
-$server_socket = IO::Socket::INET->new(
+our $injectServer_socket;
+our $remote_socket = IO::Socket::INET->new();
+our $input_server_socket = IO::Socket::INET->new(
 				Listen		=> 5,
 				LocalAddr	=> $config{'local_host'},
 				LocalPort	=> $config{'local_port'},
@@ -142,12 +150,32 @@ $server_socket = IO::Socket::INET->new(
 				Timeout		=> 2,
 				Reuse		=> 1);
 
-($server_socket) || die "Error creating local server: $!";
+($input_server_socket) || die "Error creating local input server: $!";
+print "Local input server started ($config{'local_host'}:$config{'local_port'})\n";
 
-print "Local server started ($config{'local_host'}:$config{'local_port'})\n";
+if ($config{'XKore'}) {
+	$injectServer_socket = IO::Socket::INET->new(
+			Listen		=> 5,
+			LocalAddr	=> $config{'local_host'},
+			LocalPort	=> 2350,
+			Proto		=> 'tcp',
+			Timeout		=> 999,
+			Reuse		=> 1);
+	($injectServer_socket) || die "Error creating local inject server: $!";
+	print "Local inject server started ($config{'local_host'}:2350)\n";
+}
 
-$input_pid = input_client();
+our $input_pid = input_client();
 $conState = 1;
+
+
+if ($config{'XKore'}) {
+	our $cwd = Win32::GetCwd();
+	our $injectDLL_file = $cwd."\\Inject.dll";
+
+	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
+	die "Could not locate Tools.dll" if (!$GetProcByName);
+}
 
 
 ###COMPILE PORTALS###
@@ -178,40 +206,46 @@ if ($found) {
 }
 
 
-if (!$config{'username'}) {
-	print "Enter Username:\n";
-	$input_socket->recv($msg, $MAX_READ);
-	$config{'username'} = $msg;
-	writeDataFileIntact($config_file, \%config);
-	
-}
-if (!$config{'password'}) {
-	print "Enter Password:\n";
-	$input_socket->recv($msg, $MAX_READ);
-	$config{'password'} = $msg;
-	writeDataFileIntact($config_file, \%config);
-}
-if ($config{'master'} eq "") {
-	$i = 0;
-	$~ = "MASTERS";
-	print "--------- Master Servers ----------\n";
-	print "#         Name\n";
-	while ($config{"master_name_$i"} ne "") {
-		format MASTERS =
+if (!$config{'XKore'}) {
+	if (!$config{'username'}) {
+		print "Enter Username:\n";
+		$input_socket->recv($msg, $MAX_READ);
+		$config{'username'} = $msg;
+		writeDataFileIntact($config_file, \%config);
+	}
+	if (!$config{'password'}) {
+		print "Enter Password:\n";
+		$input_socket->recv($msg, $MAX_READ);
+		$config{'password'} = $msg;
+		writeDataFileIntact($config_file, \%config);
+	}
+	if ($config{'master'} eq "") {
+		$i = 0;
+		$~ = "MASTERS";
+		print "--------- Master Servers ----------\n";
+		print "#         Name\n";
+		while ($config{"master_name_$i"} ne "") {
+			format MASTERS =
 @<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $i  $config{"master_name_$i"}
 .
-		write;
-		$i++;
+			write;
+			$i++;
+		}
+		print "-------------------------------\n";
+		print "Choose your master server:\n";
+		$input_socket->recv($msg, $MAX_READ);
+		$config{'master'} = $msg;
+		writeDataFileIntact($config_file, \%config);
 	}
-	print "-------------------------------\n";
-	print "Choose your master server:\n";
-	$input_socket->recv($msg, $MAX_READ);
-	$config{'master'} = $msg;
-	writeDataFileIntact($config_file, \%config);
+
+	$timeout{'injectSync'}{'time'} = time;
 }
+
 undef $msg;
-$KoreStartTime = time;
+our $KoreStartTime = time;
+our $AI = 1;
+our $conState = 1;
 
 #Solos Start
 initStatVars();
@@ -223,11 +257,44 @@ initMonstersKilled();
 
 while ($quit != 1) {
 	usleep($config{'sleepTime'});
+
+	if ($config{'XKore'}) {
+		if (timeOut(\%{$timeout{'injectKeepAlive'}})) {
+			$conState = 1;
+			my $printed = 0;
+			my $procID = 0;
+			do {
+				$procID = $GetProcByName->Call($config{'exeName'});
+				if (!$procID) {
+					print "Error: Could not locate process $config{'exeName'}.\nWaiting for you to start the process...\n" if (!$printed);
+					$printed = 1;
+				}
+				sleep 2;
+			} while (!$procID);
+
+			if ($printed == 1) {
+				print "Process found\n";
+			}
+			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
+			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
+			die "Could not inject DLL" if ($retVal != 1);
+
+			print "Waiting for InjectDLL to connect...\n";
+			$remote_socket = $injectServer_socket->accept();
+			(inet_aton($remote_socket->peerhost()) == inet_aton($config{'local_host'})) || die "Inject Socket must be connected from localhost";
+			print "InjectDLL Socket connected - Ready to start botting\n";
+			$timeout{'injectKeepAlive'}{'time'} = time;
+		}
+		if (timeOut(\%{$timeout{'injectSync'}})) {
+			sendSyncInject(\$remote_socket);
+			$timeout{'injectSync'}{'time'} = time;
+		}
+	}
+
 	if (dataWaiting(\$input_socket)) {
-		$stop = 1;
 		$input_socket->recv($input, $MAX_READ);
 		parseInput($input);
-	} elsif (dataWaiting(\$remote_socket)) {
+	} elsif (!$config{'XKore'} && dataWaiting(\$remote_socket)) {
 		$remote_socket->recv($new, $MAX_READ);
 		$msg .= $new;
 		$msg_length = length($msg);
@@ -236,21 +303,50 @@ while ($quit != 1) {
 			last if ($msg_length == length($msg));
 			$msg_length = length($msg);
 		}
+	} elsif ($config{'XKore'} && dataWaiting(\$remote_socket)) {
+		my $injectMsg;
+		$remote_socket->recv($injectMsg, $MAX_READ);
+		while ($injectMsg ne "") {
+			if (length($injectMsg) < 3) {
+				undef $injectMsg;
+				break;
+			}
+			my $type = substr($injectMsg, 0, 1);
+			my $len = unpack("S",substr($injectMsg, 1, 2));
+			my $newMsg = substr($injectMsg, 3, $len);
+			$injectMsg = (length($injectMsg) >= $len+3) ? substr($injectMsg, $len+3, length($injectMsg) - $len - 3) : "";
+			if ($type eq "R") {
+				$msg .= $newMsg;
+				$msg_length = length($msg);
+				while ($msg ne "") {
+					$msg = parseMsg($msg);
+					last if ($msg_length == length($msg));
+					$msg_length = length($msg);
+				}
+			} elsif ($type eq "S") {
+				parseSendMsg($newMsg);
+			}
+			$timeout{'injectKeepAlive'}{'time'} = time;
+		}
 	}
+
 	$ai_cmdQue_shift = 0;
 	do {
-		AI(\%{$ai_cmdQue[$ai_cmdQue_shift]}) if ($conState == 5 && timeOut(\%{$timeout{'ai'}}) && $remote_socket && $remote_socket->connected());
+		AI(\%{$ai_cmdQue[$ai_cmdQue_shift]}) if ($AI && $conState == 5 && timeOut(\%{$timeout{'ai'}}) && $remote_socket && $remote_socket->connected());
 		undef %{$ai_cmdQue[$ai_cmdQue_shift++]};
 		$ai_cmdQue-- if ($ai_cmdQue > 0);
 	} while ($ai_cmdQue > 0);
 	checkConnection();
 }
-close($server_socket);
+close($input_server_socket);
 close($input_socket);
+close($remote_socket);
 kill 9, $input_pid;
 killConnection(\$remote_socket);
 print "Bye!\n";
 print $versionText;
+print $versionText2;
+print $versionText3;
 exit;
 
 #######################################
@@ -366,7 +462,8 @@ sub initOtherVars {
 
 
 sub checkConnection {
-	
+	return if ($config{'XKore'});
+
 	if ($conState == 1 && !($remote_socket && $remote_socket->connected()) && timeOut(\%{$timeout_ex{'master'}}) && !$conState_tries) {
 		print "Connecting to Master Server...\n";
 #Solos Start
@@ -392,6 +489,8 @@ sub checkConnection {
 
 	} elsif ($conState == 2 && timeOut(\%{$timeout{'gamelogin'}}) && $config{'server'} ne "") {
 		print "Timeout on Game Login Server, reconnecting...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 		undef $conState_tries;
 		$conState = 1;
@@ -405,6 +504,8 @@ sub checkConnection {
 
 	} elsif ($conState == 3 && timeOut(\%{$timeout{'charlogin'}}) && $config{'char'} ne "") {
 		print "Timeout on Game Login Server, reconnecting...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 		$conState = 1;
 		undef $conState_tries;
@@ -419,6 +520,8 @@ sub checkConnection {
 
 	} elsif ($conState == 4 && timeOut(\%{$timeout{'maplogin'}})) {
 		print "Timeout on Map Server, connecting to Master Server...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 		$conState = 1;
 		undef $conState_tries;
@@ -429,6 +532,8 @@ sub checkConnection {
 
 	} elsif ($conState == 5 && timeOut(\%{$timeout{'play'}})) {
 		print "Timeout on Map Server, connecting to Master Server...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 		$conState = 1;
 		undef $conState_tries;
@@ -438,6 +543,8 @@ sub checkConnection {
 		undef $conState_tries;
 		$KoreStartTime = time;
 		print "\nAuto-restarting!!\n\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 	}
 }
@@ -450,17 +557,25 @@ sub checkConnection {
 
 sub parseInput {
 	my $input = shift;
+	my $printType;
+	$printType = shift if ($config{'XKore'});
+
 	my ($arg1, $arg2, $switch);
 	print "Echo: $input\n" if ($config{'debug'} >= 2);
 	($switch) = $input =~ /^(\w*)/;
 
+	if ($config{'XKore'}) {
+		open BUFFER, "> buffer";
+		select(BUFFER);
+	}
+
 #Check if in special state
 
-	if ($conState == 2 && $waitingForInput) {
+	if (!$config{'XKore'} && $conState == 2 && $waitingForInput) {
 		$config{'server'} = $input;
 		$waitingForInput = 0;
 		writeDataFileIntact($config_file, \%config);
-	} elsif ($conState == 3 && $waitingForInput) {
+	} elsif (!$config{'XKore'} && $conState == 3 && $waitingForInput) {
 		$config{'char'} = $input;
 		$waitingForInput = 0;
 		writeDataFileIntact($config_file, \%config);
@@ -477,6 +592,7 @@ sub parseInput {
 			print	"Error in function 'a' (Attack Monster)\n"
 				,"Monster $arg1 does not exist.\n";
 		} elsif ($arg1 =~ /^\d+$/) {
+			$monsters{$monstersID[$arg1]}{'attackedByPlayer'} = 0;
 			attack($monstersID[$arg1]);
 
 		} elsif ($arg1 eq "no") {
@@ -490,8 +606,73 @@ sub parseInput {
 				,"Usage: attack <monster # | no | yes >\n";
 		}
 
+	} elsif ($switch eq "ai") {
+		if ($AI) {
+			undef $AI;
+			$AI_forcedOff = 1;
+			print "AI turned off\n";
+		} else {
+			$AI = 1;
+			undef $AI_forcedOff;
+			print "AI turned on\n";
+		}
+
+	} elsif ($switch eq "aiv") {
+		print "ai_seq = @ai_seq\n";
+		if ($ai_seq_args[0]{'waitingForMapSolution'}) {
+			print "waitingForMapSolution\n";
+		}
+		if ($ai_seq_args[0]{'waitingForSolution'}) {
+			print "waitingForSolution\n";
+		}
+		if ($ai_seq_args[0]{'solution'}) {
+			print "solution\n";
+		}
+
+	} elsif ($switch eq "al") {
+		$~ = "ARTICLESLIST2";
+		print "----------Items being sold in store------------\n";
+		print "#  Name                                     Type        Qty  Price     Sold\n";		       
+
+		for ($number = 0; $number < @articles; $number++) {
+			next if ($articles[$number] eq "");
+			$display = $articles[$number]{'name'};
+			if (!($articles[$number]{'identified'})) {
+				$display = $display."[NI]";
+			}
+			if ($articles[$number]{'card1'}) {
+				$display = $display."[".$cards_lut{$articles[$number]{'card1'}}."]";
+			}
+			if ($articles[$number]{'card2'}) {
+				$display = $display."[".$cards_lut{$articles[$number]{'card2'}}."]";
+			}
+			if ($articles[$number]{'card3'}) {
+				$display = $display."[".$cards_lut{$articles[$number]{'card3'}}."]";
+			}
+			if ($articles[$number]{'card4'}) {
+				$display = $display."[".$cards_lut{$articles[$number]{'card4'}}."]";
+			}
+			format ARTICLESLIST2 =
+@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>
+$number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quantity'} $articles[$number]{'price'} $articles[$number]{'sold'}
+.
+			write;
+		}
+		print "----------------------------------------------\n";
+		print "You have earned $shop{'earned'}z.\n";
+
+	} elsif ($switch eq "as") {
+		# Stop attacking monster
+		my $index = binFind(\@ai_seq, "attack");
+		if ($index ne "") {
+			$monsters{$ai_seq_args[$index]{'ID'}}{'ignore'} = 1;
+			sendAttackStop(\$remote_socket);
+			print "Stopped attacking $monsters{$ai_seq_args[$index]{'ID'}}{'name'} ($monsters{$ai_seq_args[$index]{'ID'}}{'binID'})\n";
+			aiRemove("attack");
+		}
+
 	} elsif ($switch eq "auth") {
-		($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
+		my ($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
 		if ($arg1 eq "" || ($arg2 ne "1" && $arg2 ne "0")) {
 			print	"Syntax Error in function 'auth' (Overall Authorize)\n"
 				,"Usage: auth <username> <flag>\n";
@@ -499,8 +680,20 @@ sub parseInput {
 			auth($arg1, $arg2);
 		}
 
+	} elsif ($switch eq "autobuy") {
+		unshift @ai_seq, "buyAuto";
+		unshift @ai_seq_args, {};
+
+	} elsif ($switch eq "autosell") {
+		unshift @ai_seq, "sellAuto";
+		unshift @ai_seq_args, {};
+
+	} elsif ($switch eq "autostorage") {
+		unshift @ai_seq, "storageAuto";
+		unshift @ai_seq_args, {};
+
 	} elsif ($switch eq "bestow") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($currentChatRoom eq "") {
 			print	"Error in function 'bestow' (Bestow Admin in Chat)\n"
 				,"You are not in a Chat Room.\n";
@@ -515,8 +708,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "buy") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'buy' (Buy Store Item)\n"
 				,"Usage: buy <item #> [<amount>]\n";
@@ -541,9 +734,9 @@ sub parseInput {
 
 	#Cart command - chobit andy 20030101
 	} elsif ($switch eq "cart") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
-		($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
+		my ($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
 		if ($arg1 eq "") {
 			$~ = "CARTLIST";
 			print "-------------Cart--------------\n";
@@ -585,12 +778,11 @@ $i $display
 				,"Usage: cart get <cart item #>\n";
 		}
 
-
 	} elsif ($switch eq "chat") {
-		($replace, $title) = $input =~ /(^[\s\S]*? \"([\s\S]*?)\" ?)/;
-		$qm = quotemeta $replace;
-		$input =~ s/$qm//;
-		@arg = split / /, $input;
+		my ($replace, $title) = $input =~ /(^[\s\S]*? \"([\s\S]*?)\" ?)/;
+		my $qm = quotemeta $replace;
+		my $input =~ s/$qm//;
+		my @arg = split / /, $input;
 		if ($title eq "") {
 			print	"Syntax Error in function 'chat' (Create Chat Room)\n"
 				,qq~Usage: chat "<title>" [<limit #> <public flag> <password>]\n~;
@@ -613,12 +805,11 @@ $i $display
 			$createdChatRoom{'users'}{$chars[$config{'char'}]{'name'}} = 2;
 		}
 
-
 	} elsif ($switch eq "chatmod") {
-		($replace, $title) = $input =~ /(^[\s\S]*? \"([\s\S]*?)\" ?)/;
-		$qm = quotemeta $replace;
-		$input =~ s/$qm//;
-		@arg = split / /, $input;
+		my ($replace, $title) = $input =~ /(^[\s\S]*? \"([\s\S]*?)\" ?)/;
+		my $qm = quotemeta $replace;
+		my $input =~ s/$qm//;
+		my @arg = split / /, $input;
 		if ($title eq "") {
 			print	"Syntax Error in function 'chatmod' (Modify Chat Room)\n"
 				,qq~Usage: chatmod "<title>" [<limit #> <public flag> <password>]\n~;
@@ -632,6 +823,16 @@ $i $display
 			sendChatRoomChange(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
 		}
 
+	} elsif ($switch eq "chist") { 
+		(open(CHAT, $chat_file)) or print("Unable to open chat.txt\n");
+		@chat = <CHAT>;
+		close(CHAT);
+		print "------ Chat History --------------------\n";
+		for ($i = @chat - 5; $i < @chat;$i++) {
+			print $chat[$i];
+		}
+		print "----------------------------------------\n";
+
 	} elsif ($switch eq "cil") { 
 		itemLog_clear();
 		print qq~Item log cleared.\n~; 
@@ -640,9 +841,12 @@ $i $display
 		chatLog_clear();
 		print qq~Chat log cleared.\n~; 
 
+	} elsif ($switch eq "closeshop") {
+		sendCloseShop(\$remote_socket);
+
 	} elsif ($switch eq "conf") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ ([\s\S]+)$/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \w+ ([\s\S]+)$/;
 		@{$ai_v{'temp'}{'conf'}} = keys %config;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'conf' (Config Modify)\n"
@@ -660,7 +864,7 @@ $i $display
        		$~ = "MONKILLED"; 
         	print "-[ Monster Count ]--------------------------------\n"; 
         	print "#   ID   Name                Count\n"; 
-       		$i = 0; 
+       		my $i = 0; 
         	while ($monsters_Killed[$i]) { 
 			format MONKILLED = 
 @<< @<<<< @<<<<<<<<<<<<<       @<<< 
@@ -677,7 +881,7 @@ $i $monsters_Killed[$i]{'nameID'} $monsters_Killed[$i]{'name'} $monsters_Killed[
 		$~ = "IPICKED";
 		print "-[ Item Count ]--------------------------------\n";
 		print "#   ID   Name                Count\n";
-		$i = 0;
+		my $i = 0;
 		while ($pickup_count[$i]) {
 			format IPICKED =
 @<< @<<<< @<<<<<<<<<<<<<       @<<<
@@ -696,8 +900,8 @@ $i $pickup_count[$i]{'nameID'} $pickup_count[$i]{'name'} $pickup_count[$i]{'coun
 			$~ = "CRI";
 			print	"-----------Chat Room Info-----------\n"
 				,"Title                     Users   Public/Private\n";
-			$public_string = ($chatRooms{$currentChatRoom}{'public'}) ? "Public" : "Private";
-			$limit_string = $chatRooms{$currentChatRoom}{'num_users'}."/".$chatRooms{$currentChatRoom}{'limit'};
+			my $public_string = ($chatRooms{$currentChatRoom}{'public'}) ? "Public" : "Private";
+			my $limit_string = $chatRooms{$currentChatRoom}{'num_users'}."/".$chatRooms{$currentChatRoom}{'limit'};
 			format CRI =
 @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<
 $chatRooms{$currentChatRoom}{'title'} $limit_string $public_string
@@ -707,8 +911,8 @@ $chatRooms{$currentChatRoom}{'title'} $limit_string $public_string
 			print	"-- Users --\n";
 			for ($i = 0; $i < @currentChatRoomUsers; $i++) {
 				next if ($currentChatRoomUsers[$i] eq "");
-				$user_string = $currentChatRoomUsers[$i];
-				$admin_string = ($chatRooms{$currentChatRoom}{'users'}{$currentChatRoomUsers[$i]} > 1) ? "(Admin)" : "";
+				my $user_string = $currentChatRoomUsers[$i];
+				my $admin_string = ($chatRooms{$currentChatRoom}{'users'}{$currentChatRoomUsers[$i]} > 1) ? "(Admin)" : "";
 				format CRIUSERS =
 @<< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<
 $i  $user_string               $admin_string
@@ -854,6 +1058,16 @@ $i  $venderLists{$venderListsID[$i]}{'title'} $owner_string
 		} else {
 			print	"Syntax Error in function 'deal' (Deal a player)\n"
 				,"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n";
+		}
+
+	} elsif ($switch eq "debug") {
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		if ($arg1 eq "0") {
+			configModify("debug", 0);
+		} elsif ($arg1 eq "1") {
+			configModify("debug", 1);
+		} elsif ($arg1 eq "2") {
+			configModify("debug", 2);
 		}
 
 	} elsif ($switch eq "dl") {
@@ -1256,12 +1470,10 @@ $i   $display
 	} elsif ($switch eq "memo") {
 		sendMemo(\$remote_socket);
 
-	
-
 	} elsif ($switch eq "ml") {
 		$~ = "MLIST";
 		print	"-----------Monster List-----------\n"
-			,"#    Name                     DmgTo    DmgFrom\n";
+			,"#    Name                     DmgTo    DmgFrom     Distance\n";
 		for ($i = 0; $i < @monstersID; $i++) {
 			next if ($monstersID[$i] eq "");
 			$dmgTo = ($monsters{$monstersID[$i]}{'dmgTo'} ne "")
@@ -1318,17 +1530,20 @@ $i   $monsters{$monstersID[$i]}{'name'}                 $dmgTo   $dmgFrom
 	} elsif ($switch eq "nl") {
 		$~ = "NLIST";
 		print	"-----------NPC List-----------\n"
-			,"#    Name                         Coordinates\n";
+			,"#    Name                         Coordinates   ID\n";
 		for ($i = 0; $i < @npcsID; $i++) {
 			next if ($npcsID[$i] eq "");
 			$ai_v{'temp'}{'pos_string'} = "($npcs{$npcsID[$i]}{'pos'}{'x'}, $npcs{$npcsID[$i]}{'pos'}{'y'})";
 			format NLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<
-$i   $npcs{$npcsID[$i]}{'name'} $ai_v{'temp'}{'pos_string'}
+@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<
+$i   $npcs{$npcsID[$i]}{'name'} $ai_v{'temp'}{'pos_string'}   $npcs{$npcsID[$i]}{'nameID'}
 .
 			write;
 		}
 		print "---------------------------------\n";
+
+	} elsif ($switch eq "openshop"){
+		sendOpenShop(\$remote_socket);
 
 	} elsif ($switch eq "p") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
@@ -1383,7 +1598,7 @@ $i $admin_string $name_string $map_string  $coord_string $online_string $hp_stri
 			}
 			print "--------------------------\n";
 			
-	} elsif ($arg1 eq "create") {
+		} elsif ($arg1 eq "create") {
 			($arg2) = $input =~ /^[\s\S]*? [\s\S]*? \"([\s\S]*?)\"/;
 			if ($arg2 eq "") {
 				print	"Syntax Error in function 'party create' (Organize Party)\n"
@@ -1443,6 +1658,7 @@ $i $admin_string $name_string $map_string  $coord_string $online_string $hp_stri
 					,$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
 
 		}
+
 	} elsif ($switch eq "petl") {
 		$~ = "PETLIST";
 		print	"-----------Pet List-----------\n"
@@ -1547,10 +1763,7 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 		relog();
 
 	} elsif ($switch eq "respawn") {
-#Solos Start
-#		sendTeleport(\$remote_socket,$config{'saveMap'}.".gat");
 		useTeleport(2);
-#Solos End
 
 	} elsif ($switch eq "s") {
 		if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
@@ -1632,8 +1845,10 @@ Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<
 	} elsif ($switch eq "sit") {
 		$ai_v{'attackAuto_old'} = $config{'attackAuto'};
 		$ai_v{'route_randomWalk_old'} = $config{'route_randomWalk'};
+		$ai_v{'teleportAuto_idle_old'} = $config{'teleportAuto_idle'};
 		configModify("attackAuto", 1);
 		configModify("route_randomWalk", 0);
+		configModify("teleportAuto_idle", 0);
 		aiRemove("move");
 		aiRemove("route");
 		aiRemove("route_getRoute");
@@ -1691,7 +1906,6 @@ $i $skills_lut{$skillsID[$i]} $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'
 				,"Not enough skill points to increase $skills_lut{$skillsID[$arg2]}.\n";
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
 			sendAddSkillPoint(\$remote_socket, $chars[$config{'char'}]{'skills'}{$skillsID[$arg2]}{'ID'});
-
 
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
 			print	"Error in function 'skills desc' (Skill Description)\n"
@@ -1776,6 +1990,10 @@ $chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$conf
 		if ($ai_v{'attackAuto_old'} ne "") {
 			configModify("attackAuto", $ai_v{'attackAuto_old'});
 			configModify("route_randomWalk", $ai_v{'route_randomWalk_old'});
+			configModify("teleportAuto_idle", $ai_v{'teleportAuto_idle_old'});
+			undef $ai_v{'attackAuto_old'};
+			undef $ai_v{'route_randomWalk_old'};
+			undef $ai_v{'teleportAuto_idle_old'};
 		}
 		stand();
 		$ai_v{'sitAuto_forceStop'} = 1;
@@ -1983,10 +2201,7 @@ $i $talk{'responses'}[$i]
 		}
 
 	} elsif ($switch eq "tele") {
-#Solos Start
-#		sendTeleport(\$remote_socket, "Random");
 		useTeleport(1);
-#Solos End
 
 	} elsif ($switch eq "timeout") {
 		($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
@@ -2032,106 +2247,31 @@ $i $talk{'responses'}[$i]
 		sendWho(\$remote_socket);
 
 #Solos Start
-	} elsif ($switch eq "closeshop") {
-		closeShop(\$remote_socket);
-	} elsif ($switch eq "openshop"){
-		openShop(\$remote_socket);
-	} elsif ($switch eq "al") {
-		$~ = "ARTICLESLIST2";
-		print "----------Items being sold in store------------\n";
-		print "#  Name                                     Type        Qty  Price     Sold\n";		       
 
-		for ($number = 0; $number < @articles; $number++) {
-			next if ($articles[$number] eq "");
-			$display = $articles[$number]{'name'};
-			if (!($articles[$number]{'identified'})) {
-				$display = $display."[NI]";
-			}
-			if ($articles[$number]{'card1'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card1'}}."]";
-			}
-			if ($articles[$number]{'card2'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card2'}}."]";
-			}
-			if ($articles[$number]{'card3'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card3'}}."]";
-			}
-			if ($articles[$number]{'card4'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card4'}}."]";
-			}
-			format ARTICLESLIST2 =
-@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>
-$number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quantity'} $articles[$number]{'price'} $articles[$number]{'sold'}
-.
-			write;
+	} elsif ($switch eq "v") {
+		if ($config{'verbose'}) {
+			configModify("verbose", 0);
+		} else {
+			configModify("verbose", 1);
 		}
-		print "----------------------------------------------\n";
-		print "You have earned $shop{'earned'}z.\n";
-	} elsif ($switch eq "ai") {
-		print "ai_seq[0] = ".$ai_seq[0]."\n";
-		if ($ai_seq_args[0]{'waitingForMapSolution'}) {
-			print "waitingForMapSolution\n";
+	}
+
+
+	if ($config{'XKore'}) {
+		my $msg = '';
+		open (BUFFER, "buffer");
+		while (<BUFFER>) {
+			$msg .= $_;
 		}
-		if ($ai_seq_args[0]{'waitingForSolution'}) {
-			print "waitingForSolution\n";
+		select(STDOUT);
+		print $msg;
+		if ($printType) {
+			$msg =~ s/\n*$//s;
+			$msg =~ s/\n/\\n/g;
+			sendMessage(\$remote_socket, "k", $msg);
 		}
-		if ($ai_seq_args[0]{'solution'}) {
-			print "solution\n";
-		}
-	} elsif ($switch eq "debug") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		if ($arg1 eq "0") {
-			configModify("debug", 0);
-		} elsif ($arg1 eq "1") {
-			configModify("debug", 1);
-		} elsif ($arg1 eq "2") {
-			configModify("debug", 2);
-		}
-	} elsif ($switch eq "avoidGM") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		if ($arg1 eq "0") {
-			configModify("avoidGM", 0);
-		} elsif ($arg1 eq "1") {
-			configModify("avoidGM", 1);
-		} elsif ($arg1 eq "2") {
-			configModify("avoidGM", 2);
-		}
-	} elsif ($switch eq "autostorage") {
-		unshift @ai_seq, "storageAuto";
-		unshift @ai_seq_args, {};
-	} elsif ($switch eq "autobuy") {
-		unshift @ai_seq, "buyAuto";
-		unshift @ai_seq_args, {};
-	} elsif ($switch eq "autosell") {
-		unshift @ai_seq, "sellAuto";
-		unshift @ai_seq_args, {};
-#Sraet Addon Start 
-   	} elsif ($switch eq "chist") { 
-#junq Modification Start 
-      		(open(CHAT, $chat_file)) or print("Unable to open chat.txt\n");
-         	@chat = <CHAT>; 
-         	close(CHAT); 
-         	print "------ Chat History --------------------\n"; 
-         	for ($i = @chat - 5; $i < @chat;$i++) { 
-            		print $chat[$i]; 
-         	} 
-         	print "----------------------------------------\n"; 
-      		
-#junq Modification End 
-#Sraet Addon End 
-#dn4cer add
-	} elsif ($switch eq "ihist") 	{
-		open(ITEMLOG, $item_log_file) or print("Unable to open items.txt\n");
-		@ITEMLOG = <ITEMLOG>;
-		close(ITEMLOG);
-		print "------ Item History --------------------\n";
-		for ($i = @ITEMLOG - 5; $i < @ITEMLOG;$i++) {
-			print $ITEMLOG[$i]; 
-		} 
-		print "----------------------------------------\n";
-	} 
-#end xlr82xs addon
-#Solos End
+		close BUFFER;
+	}
 }
 
 
@@ -2150,6 +2290,13 @@ sub AI {
 	
 	my $i, $j;
 	my %cmd = %{(shift)};
+
+	if (!$accountID) {
+		$AI = 0;
+		injectAdminMessage("Kore does not have enough account information, so AI has been disabled. Relog to enable AI.") if ($config{'verbose'});
+		return;
+	}
+
 	if (%cmd) {
 		$responseVars{'cmd_user'} = $cmd{'user'};
 		if ($cmd{'user'} eq $chars[$config{'char'}]{'name'}) {
@@ -2304,10 +2451,12 @@ sub AI {
 					if ($maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}) {
 						if ($ai_v{'temp'}{'arg2'} ne "") {
 							print "Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'}): $ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'}\n";
+							injectMessage("Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'}): $ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'}\n") if ($config{'verbose'} && $config{'XKore'});
 							$ai_v{'temp'}{'x'} = $ai_v{'temp'}{'arg1'};
 							$ai_v{'temp'}{'y'} = $ai_v{'temp'}{'arg2'};
 						} else {
 							print "Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'})\n";
+							injectMessage("Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'})\n") if ($config{'verbose'} && $config{'XKore'});
 							undef $ai_v{'temp'}{'x'};
 							undef $ai_v{'temp'}{'y'};
 						}
@@ -2316,6 +2465,7 @@ sub AI {
 						$timeout{'ai_thanks_set'}{'time'} = time;
 					} else {
 						print "Map $ai_v{'temp'}{'map'} does not exist\n";
+						injectMessage("Map $ai_v{'temp'}{'map'} does not exist\n") if ($config{'verbose'} && $config{'XKore'});
 						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveF"), $cmd{'user'}) if $config{'verbose'};
 					}
 				}
@@ -2379,10 +2529,7 @@ sub AI {
 				}
 			} elsif ($cmd{'msg'} =~ /\btown/i) {
 				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveS"), $cmd{'user'}) if $config{'verbose'};
-#Solos Start
-#				sendTeleport(\$remote_socket,$config{'saveMap'}.".gat");
 				useTeleport(2);
-#Solos End
 				
 			} elsif ($cmd{'msg'} =~ /\bwhere\b/i) {
 				$responseVars{'x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
@@ -2517,7 +2664,7 @@ sub AI {
 		$timeout{'ai_getInfo'}{'time'} = time;
 	}
 
-	if (timeOut(\%{$timeout{'ai_sync'}})) {
+	if (!$config{'XKore'} && timeOut(\%{$timeout{'ai_sync'}})) {
 		$timeout{'ai_sync'}{'time'} = time;
 		sendSync(\$remote_socket, getTickCount());
 	}
@@ -2616,95 +2763,62 @@ sub AI {
 		}
 	}
 
+
+	if ($config{'XKore'} && !$sentWelcomeMessage && timeOut(\%{$timeout{'welcomeText'}})) {
+		injectAdminMessage($welcomeText) if ($config{'verbose'});
+		$sentWelcomeMessage = 1;
+	}
+
+
 	##### CLIENT SUSPEND #####
 
 	if ($ai_seq[0] eq "clientSuspend" && timeOut(\%{$ai_seq_args[0]})) {
 		shift @ai_seq;
 		shift @ai_seq_args;
-	} elsif ($ai_seq[0] eq "clientSuspend") {
-		#this section is used in X-Kore
+	} elsif ($ai_seq[0] eq "clientSuspend" && $config{'XKore'}) {
+		if ($ai_seq_args[0]{'type'} eq "0089") {
+			if ($ai_seq_args[0]{'args'}[0] == 2) {
+				if ($chars[$config{'char'}]{'sitting'}) {
+					$ai_seq_args[0]{'time'} = time;
+				}
+			} elsif ($ai_seq_args[0]{'args'}[0] == 3) {
+				$ai_seq_args[0]{'timeout'} = 6;
+			} else {
+				if (!$ai_seq_args[0]{'forceGiveup'}{'timeout'}) {
+					$ai_seq_args[0]{'forceGiveup'}{'timeout'} = 6;
+					$ai_seq_args[0]{'forceGiveup'}{'time'} = time;
+				}
+				if ($ai_seq_args[0]{'dmgFromYou_last'} != $monsters{$ai_seq_args[0]{'args'}[1]}{'dmgFromYou'}) {
+					$ai_seq_args[0]{'forceGiveup'}{'time'} = time;
+				}
+				$ai_seq_args[0]{'dmgFromYou_last'} = $monsters{$ai_seq_args[0]{'args'}[1]}{'dmgFromYou'};
+				$ai_seq_args[0]{'missedFromYou_last'} = $monsters{$ai_seq_args[0]{'args'}[1]}{'missedFromYou'};
+				if (%{$monsters{$ai_seq_args[0]{'args'}[1]}}) {
+					$ai_seq_args[0]{'time'} = time;
+				} else {
+					$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
+				}
+				if (timeOut(\%{$ai_seq_args[0]{'forceGiveup'}})) {
+					$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
+				}
+			}
+		} elsif ($switch eq "009F") {
+			if (!$ai_seq_args[0]{'forceGiveup'}{'timeout'}) {
+				$ai_seq_args[0]{'forceGiveup'}{'timeout'} = 4;
+				$ai_seq_args[0]{'forceGiveup'}{'time'} = time;
+			}
+			if (%{$items{$ai_seq_args[0]{'args'}[0]}}) {
+				$ai_seq_args[0]{'time'} = time;
+			} else {
+				$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
+			}
+			if (timeOut(\%{$ai_seq_args[0]{'forceGiveup'}})) {
+				$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
+			}
+		}
 	}
 
 	#storageAuto - chobit aska 20030128
-
-	#####AUTO HEAL##### 
-
-	AUTOHEAL: { 
-
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto") && $config{'healAuto'} && $config{'healAuto_npc'} ne "" && percent_hp(\%{$chars[$config{'char'}]}) <= $config{'healAuto_hp'} && percent_sp(\%{$chars[$config{'char'}]}) <= $config{'healAuto_sp'}) { 
-		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route"); 
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") { 
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'}; 
-		} 
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1)) { 
-			unshift @ai_seq, "healAuto"; 
-			unshift @ai_seq_args, {}; 
-		} 
-	} 
-
-	if ($ai_seq[0] eq "healAuto" && $ai_seq_args[0]{'done'}) { 
-		undef %{$ai_v{'temp'}{'ai'}}; 
-		%{$ai_v{'temp'}{'ai'}{'completedAI'}} = %{$ai_seq_args[0]{'completedAI'}}; 
-		shift @ai_seq; 
-		shift @ai_seq_args; 
-		if (!$ai_v{'temp'}{'ai'}{'completedAI'}{'storageAuto'}) { 
-			$ai_v{'temp'}{'ai'}{'completedAI'}{'healAuto'} = 1; 
-			unshift @ai_seq, "storageAuto"; 
-			unshift @ai_seq_args, {%{$ai_v{'temp'}{'ai'}}}; 
-		} 
-	} elsif ($ai_seq[0] eq "healAuto" && timeOut(\%{$timeout{'ai_healAuto'}})) { 
-		if (!$config{'healAuto'} || !%{$npcs_lut{$config{'healAuto_npc'}}}) { 
-			$ai_seq_args[0]{'done'} = 1; 
-			last AUTOHEAL; 
-		} 
-
-		undef $ai_v{'temp'}{'do_route'}; 
-		if ($field{'name'} ne $npcs_lut{$config{'healAuto_npc'}}{'map'}) { 
-			$ai_v{'temp'}{'do_route'} = 1; 
-		} else { 
-			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{'healAuto_npc'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}); 
-			if ($ai_v{'temp'}{'distance'} > 14) { 
-				$ai_v{'temp'}{'do_route'} = 1; 
-			} 
-		} 
-		if ($ai_v{'temp'}{'do_route'}) { 
-			if ($ai_seq_args[0]{'warpedToSave'} && !$ai_seq_args[0]{'mapChanged'}) { 
-				undef $ai_seq_args[0]{'warpedToSave'}; 
-			} 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} && !$cities_lut{$field{'name'}.'.rsw'}) { 
-				$ai_seq_args[0]{'warpedToSave'} = 1; 
-				useTeleport(2); 
-				$timeout{'ai_healAuto'}{'time'} = time; 
-			} else { 
-				print "Calculating auto-heal route to: $maps_lut{$npcs_lut{$config{'healAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'healAuto_npc'}}{'map'}): $npcs_lut{$config{'healAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'healAuto_npc'}}{'pos'}{'y'}\n"; 
-				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'healAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'healAuto_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'healAuto_npc'}}{'map'}, 0, 0, 1, 0, 0, 1); 
-			} 
-		} else { 
-			if (!$ai_seq_args[0]{'npc'}{'sentTalk'}) { 
-				sendTalk(\$remote_socket, pack("L1",$config{'healAuto_npc'})); 
-				@{$ai_seq_args[0]{'npc'}{'steps'}} = split(/ /, $config{'healAuto_npc_steps'}); 
-				$ai_seq_args[0]{'npc'}{'sentTalk'} = 1; 
-			} elsif ($ai_seq_args[0]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /c/i) { 
-				sendTalkContinue(\$remote_socket, pack("L1",$config{'healAuto_npc'})); 
-				$ai_seq_args[0]{'npc'}{'step'}++; 
-			} elsif ($ai_seq_args[0]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /n/i) { 
-				sendTalkCancel(\$remote_socket, pack("L1",$config{'healAuto_npc'})); 
-				$ai_seq_args[0]{'npc'}{'step'}++; 
-			} else { 
-				($ai_v{'temp'}{'arg'}) = $ai_seq_args[0]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /r(\d+)/i; 
-				if ($ai_v{'temp'}{'arg'} ne "") { 
-					$ai_v{'temp'}{'arg'}++; 
-					sendTalkResponse(\$remote_socket, pack("L1",$config{'healAuto_npc'}), $ai_v{'temp'}{'arg'}); 
-				} 
-				$ai_seq_args[0]{'npc'}{'step'}++; 
-			} 
-			$ai_seq_args[0]{'done'} = 1 if ($ai_seq_args[0]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] eq ""); 
-			$timeout{'ai_healAuto'}{'time'} = time; 
-		} 
-	} 
-
-	} #END OF BLOCK AUTOHEAL
-
 	#####AUTO STORAGE#####
 
 	AUTOSTORAGE: {
@@ -2751,12 +2865,15 @@ sub AI {
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
 				&& !$cities_lut{$field{'name'}.'.rsw'}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
-#				sendTeleport(\$remote_socket, $config{'saveMap'}.".gat");
 				useTeleport(2);
 #Solos End
 				$timeout{'ai_storageAuto'}{'time'} = time;
 			} else {
-				print "Calculating auto-storage route to: $maps_lut{$npcs_lut{$config{'storageAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'storageAuto_npc'}}{'map'}): $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}\n";
+				if (!$config{'XKore'}) {
+					print "Calculating auto-storage route to: $maps_lut{$npcs_lut{$config{'storageAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'storageAuto_npc'}}{'map'}): $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}\n";
+				} else {
+					injectMessage("Calculating auto-storage route to: $maps_lut{$npcs_lut{$config{'storageAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'storageAuto_npc'}}{'map'}): $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}\n");
+				}
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'storageAuto_npc'}}{'map'}, 0, 0, 1, 0, 0, 1);
 			}
 		} else {
@@ -2840,12 +2957,15 @@ sub AI {
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
 				&& !$cities_lut{$field{'name'}.'.rsw'}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
-#				sendTeleport(\$remote_socket, $config{'saveMap'}.".gat");
 				useTeleport(2);
 #Solos End
 				$timeout{'ai_sellAuto'}{'time'} = time;
 			} else {
-				print "Calculating auto-sell route to: $maps_lut{$npcs_lut{$config{'sellAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'sellAuto_npc'}}{'map'}): $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}\n";
+				if (!$config{'XKore'}) {
+					print "Calculating auto-sell route to: $maps_lut{$npcs_lut{$config{'sellAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'sellAuto_npc'}}{'map'}): $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}\n";
+				} else {
+					injectMessage("Calculating auto-sell route to: $maps_lut{$npcs_lut{$config{'sellAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'sellAuto_npc'}}{'map'}): $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}\n");
+				}
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'sellAuto_npc'}}{'map'}, 0, 0, 1, 0, 0, 1);
 			}
 		} else {
@@ -2959,12 +3079,15 @@ sub AI {
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
 				&& !$cities_lut{$field{'name'}.'.rsw'}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
-#				sendTeleport(\$remote_socket, $config{'saveMap'}.".gat");
 				useTeleport(2);
 #Solos End
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
 			} else {
-				print qq~Calculating auto-buy route to: $maps_lut{$npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}.'.rsw'}($npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}): $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}\n~;
+				if (!$config{'XKore'}) {
+					print qq~Calculating auto-buy route to: $maps_lut{$npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}.'.rsw'}($npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}): $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}\n~;
+				} else {
+					injectMessage(qq~Calculating auto-buy route to: $maps_lut{$npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}.'.rsw'}($npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}): $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}~) if ($config{'verbose'});
+				}
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}, 0, 0, 1, 0, 0, 1);
 			}
 		} else {
@@ -3013,12 +3136,24 @@ sub AI {
 	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'} 
 		&& ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'})))) {
 		if ($maps_lut{$config{'lockMap'}.'.rsw'} eq "") {
-			print "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
+			if (!$config{'XKore'}) {
+				print "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
+			} else {
+				injectMessage("Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist") if ($config{'verbose'});
+			}
 		} else {
 			if ($config{'lockMap_x'} ne "") {
-				print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}\n";
+				if (!$config{'XKore'}) {
+					print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}\n";
+				} else {
+					injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}") if ($config{'verbose'});
+				}
 			} else {
-				print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n";
+				if (!$config{'XKore'}) {
+					print "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n";
+				} else {
+					injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})") if ($config{'verbose'});
+				}
 			}
 			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $config{'lockMap_x'}, $config{'lockMap_y'}, $config{'lockMap'}, 0, 0, 1, 0, 0, 1);
 		}
@@ -3030,7 +3165,11 @@ sub AI {
 			$ai_v{'temp'}{'randX'} = int(rand() * ($field{'width'} - 1));
 			$ai_v{'temp'}{'randY'} = int(rand() * ($field{'height'} - 1));
 		} while ($field{'field'}[$ai_v{'temp'}{'randY'}*$field{'width'} + $ai_v{'temp'}{'randX'}]);
-		print "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n";
+		if (!$config{'XKore'}) {
+			print "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n";
+		} else {
+			injectMessage("Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}") if ($config{'verbose'});
+		}
 		ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}, $field{'name'}, 0, $config{'route_randomWalk_maxRouteTime'}, 2);
 	}
 
@@ -3057,7 +3196,11 @@ sub AI {
 	}
 	
 	if ($ai_seq[0] eq "dead" && $config{'dcOnDeath'}) {
-		print "Disconnecting on death!\n";
+		if (!$config{'XKore'}) {
+			print "Disconnecting on death!\n";
+		} else {
+			injectMessage("Disconnecting on death!") if ($config{'verbose'});
+		}
 		$quit = 1;
 	}
 
@@ -3253,16 +3396,32 @@ sub AI {
 	}
 
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || $players_old{$ai_seq_args[0]{'ID'}}{'dead'})) {
-		print "Master died.  I'll wait here.\n";
+		if (!$config{'XKore'}) {
+			print "Master died.  I'll wait here.\n";
+		} else {
+			injectMessage("Master died.  I'll wait here.") if ($config{'verbose'});
+		}
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
-		print "I lost my master\n";
+		if (!$config{'XKore'}) {
+			print "I lost my master\n";
+		} else {
+			injectMessage("I lost my master") if ($config{'verbose'});
+		}
 		undef $ai_seq_args[0]{'following'};
 		if ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
-			print "My master disconnected\n";
+			if (!$config{'XKore'}) {
+				print "My master disconnected\n";
+			} else {
+				injectMessage("My master disconnected") if ($config{'verbose'});
+			}
 			
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disappeared'}) {
-			print "Trying to find lost master\n";
+			if (!$config{'XKore'}) {
+				print "Trying to find lost master\n";
+			} else {
+				injectMessage("Trying to find lost master") if ($config{'verbose'});
+			}
 			undef $ai_seq_args[0]{'ai_follow_lost_char_last_pos'};
 			undef $ai_seq_args[0]{'follow_lost_portal_tried'};
 			$ai_seq_args[0]{'ai_follow_lost'} = 1;
@@ -3284,7 +3443,11 @@ sub AI {
 			}
 			$ai_seq_args[0]{'follow_lost_portalID'} = $ai_v{'temp'}{'foundID'};
 		} else {
-			print "Don't know what happened to Master\n";
+			if (!$config{'XKore'}) {
+				print "Don't know what happened to Master\n";
+			} else {
+				injectMessage("Don't know what happened to Master") if ($config{'verbose'});
+			}
 		}
 	}
 
@@ -3304,16 +3467,28 @@ sub AI {
 
 		if (timeOut(\%{$ai_seq_args[0]{'ai_follow_lost_end'}})) {
 			undef $ai_seq_args[0]{'ai_follow_lost'};
-			print "Couldn't find master, giving up\n";
+			if (!$config{'XKore'}) {
+				print "Couldn't find master, giving up\n";
+			} else {
+				injectMessage("Couldn't find master, giving up") if ($config{'verbose'});
+			}
 
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
 			undef $ai_seq_args[0]{'ai_follow_lost'};
-			print "My master disconnected\n";
+			if (!$config{'XKore'}) {
+				print "My master disconnected\n";
+			} else {
+				injectMessage("My master disconnected") if ($config{'verbose'});
+			}
 
 		} elsif (%{$players{$ai_seq_args[0]{'ID'}}}) {
 			$ai_seq_args[0]{'following'} = 1;
 			undef $ai_seq_args[0]{'ai_follow_lost'};
-			print "Found my master!\n";
+			if (!$config{'XKore'}) {
+				print "Found my master!\n";
+			} else {
+				injectMessage("Found my master!") if ($config{'verbose'});
+			}
 
 		} elsif ($ai_seq_args[0]{'lost_stuck'}) {
 			if ($ai_seq_args[0]{'follow_lost_portalID'} eq "") {
@@ -3398,6 +3573,8 @@ sub AI {
 		undef @{$ai_v{'ai_attack_cleanMonsters'}};
 		undef @{$ai_v{'ai_attack_partyMonsters'}};
 		undef $ai_v{'temp'}{'foundID'};
+
+		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		if ($config{'tankMode'}) {
 			undef $ai_v{'temp'}{'found'};
 			foreach (@playersID) {	
@@ -3408,6 +3585,8 @@ sub AI {
 				}
 			}
 		}
+
+		# Generate a list of all monsters that we are allowed to attack.
 		if (!$config{'tankMode'} || ($config{'tankMode'} && $ai_v{'temp'}{'found'})) {
 			$ai_v{'temp'}{'ai_follow_index'} = binFind(\@ai_seq, "follow");
 			if ($ai_v{'temp'}{'ai_follow_index'} ne "") {
@@ -3420,22 +3599,28 @@ sub AI {
 			if ($ai_v{'temp'}{'ai_route_index'} ne "") {
 				$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
 			}
+
+			# List aggressive monsters
 			@{$ai_v{'ai_attack_agMonsters'}} = ai_getAggressives() if ($config{'attackAuto'} && !($ai_v{'temp'}{'ai_route_index'} ne "" && !$ai_v{'temp'}{'ai_route_attackOnRoute'}));
+
+			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {
 				next if ($_ eq "");
+				# List monsters that the follow target or party members are attacking
 				if ((($config{'attackAuto_party'}
 					&& $ai_seq[0] ne "take" && $ai_seq[0] ne "items_take"
 					&& ($monsters{$_}{'dmgToParty'} > 0 || $monsters{$_}{'dmgFromParty'} > 0))
 					|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} 
-					&& ($monsters{$_}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$_}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0)))
+					&& ($monsters{$_}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$_}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$_}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0)))
 					&& !($ai_v{'temp'}{'ai_route_index'} ne "" && !$ai_v{'temp'}{'ai_route_attackOnRoute'})
 					&& $monsters{$_}{'attack_failed'} == 0 && ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} >= 1 || $mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} eq "")) {
 					push @{$ai_v{'ai_attack_partyMonsters'}}, $_;
 
+				# List monsters that nobody's attacking
 				} elsif ($config{'attackAuto'} >= 2
 					&& $ai_seq[0] ne "sitAuto" && $ai_seq[0] ne "take" && $ai_seq[0] ne "items_gather" && $ai_seq[0] ne "items_take"
 					&& !($monsters{$_}{'dmgFromYou'} == 0 && ($monsters{$_}{'dmgTo'} > 0 || $monsters{$_}{'dmgFrom'} > 0 || %{$monsters{$_}{'missedFromPlayer'}} || %{$monsters{$_}{'missedToPlayer'}} || %{$monsters{$_}{'castOnByPlayer'}})) && $monsters{$_}{'attack_failed'} == 0
-					&& !$monsters{$_}{'frozen'} && !($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1)
+					&& !($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1)
 					&& ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} >= 1 || $mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} eq "")) {
 					push @{$ai_v{'ai_attack_cleanMonsters'}}, $_;
 				}
@@ -3443,41 +3628,52 @@ sub AI {
 			undef $ai_v{'temp'}{'distSmall'};
 			undef $ai_v{'temp'}{'foundID'};
 			$ai_v{'temp'}{'first'} = 1;
+
+			# Look for the closest aggressive monster to attack
 			foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 				$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-				if ($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) {
+				if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
 					$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 					$ai_v{'temp'}{'foundID'} = $_;
 					undef $ai_v{'temp'}{'first'};
 				}
 			}
+
 			if (!$ai_v{'temp'}{'foundID'}) {
+				# There are no aggressive monsters; look for the closest monster that a party member is attacking
 				undef $ai_v{'temp'}{'distSmall'};
 				undef $ai_v{'temp'}{'foundID'};
 				$ai_v{'temp'}{'first'} = 1;
 				foreach (@{$ai_v{'ai_attack_partyMonsters'}}) {
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if ($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) {
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'ignore'} && !$monsters{$_}{'state'}) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						undef $ai_v{'temp'}{'first'};
 					}
 				}
 			}
+
 			if (!$ai_v{'temp'}{'foundID'}) {
+				# No party monsters either; look for the closest, non-aggressive monster that:
+				# 1) nobody's attacking
+				# 2) isn't within 2 blocks distance of someone else
 				undef $ai_v{'temp'}{'distSmall'};
 				undef $ai_v{'temp'}{'foundID'};
 				$ai_v{'temp'}{'first'} = 1;
 				foreach (@{$ai_v{'ai_attack_cleanMonsters'}}) {
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'noKS'}) {
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'})
+					 && !$monsters{$_}{'ignore'} && !$monsters{$_}{'state'} && !posNearPlayer (\%{$monsters{$_}{'pos_to'}}, 3)) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						undef $ai_v{'temp'}{'first'};
 					}
 				}
 			}
-		}	
+		}
+
+		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($ai_v{'temp'}{'foundID'}) {
 			ai_setSuspend(0);
 			attack($ai_v{'temp'}{'foundID'});
@@ -3500,7 +3696,12 @@ sub AI {
 		$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
 		shift @ai_seq;
 		shift @ai_seq_args;
-		print "Can't reach or damage target, dropping target\n";
+		if (!$config{'XKore'}) {
+			print "Can't reach or damage target, dropping target\n";
+		} else {
+			injectMessage("Can't reach or damage target, dropping target") if ($config{'verbose'});
+		}
+
 	} elsif ($ai_seq[0] eq "attack" && !%{$monsters{$ai_seq_args[0]{'ID'}}}) {
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
 		$ai_v{'ai_attack_ID_old'} = $ai_seq_args[0]{'ID'};
@@ -3509,37 +3710,43 @@ sub AI {
 		if ($monsters_old{$ai_v{'ai_attack_ID_old'}}{'dead'}) {
 			print "Target died\n";
 #Solos Start
-      monKilled();
-      $monsters_Killed{$monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}}++;
+		monKilled();
+		$monsters_Killed{$monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}}++;
 #Solos End
 			if ($config{'itemsTakeAuto'} && $monsters_old{$ai_v{'ai_attack_ID_old'}}{'dmgFromYou'} > 0) {
 				ai_items_take($monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos'}{'x'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos'}{'y'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos_to'}{'x'}, $monsters_old{$ai_v{'ai_attack_ID_old'}}{'pos_to'}{'y'});
 			} else {
+				# Cheap way to suspend all movement to make it look real
 				ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
 			}
-				
+
 ## kokal start 
 ## mosters counting 
-			$i = 0; 
-			$found = 0; 
-			while ($monsters_Killed[$i]) { 
-				if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}) { 
-					$monsters_Killed[$i]{'count'}++; 
-					$found = 1; 
-					last; 
-				} 
-				$i++; 
-			} 
-			if (!$found) { 
-				$monsters_Killed[$i]{'nameID'} = $monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}; 
-				$monsters_Killed[$i]{'name'} = $monsters_old{$ai_v{'ai_attack_ID_old'}}{'name'}; 
-				$monsters_Killed[$i]{'count'} = 1; 
-			} 
+			$i = 0;
+			$found = 0;
+			while ($monsters_Killed[$i]) {
+				if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}) {
+					$monsters_Killed[$i]{'count'}++;
+					$found = 1;
+					last;
+				}
+				$i++;
+			}
+			if (!$found) {
+				$monsters_Killed[$i]{'nameID'} = $monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'};
+				$monsters_Killed[$i]{'name'} = $monsters_old{$ai_v{'ai_attack_ID_old'}}{'name'};
+				$monsters_Killed[$i]{'count'} = 1;
+			}
 ## kokal end
-		
+
 		} else {
-			print "Target lost\n";
+			if (!$config{'XKore'}) {
+				print "Target lost\n";
+			} else {
+				injectMessage("Target lost") if ($config{'verbose'});
+			}
 		}
+
 	} elsif ($ai_seq[0] eq "attack") {
 		$ai_v{'temp'}{'ai_follow_index'} = binFind(\@ai_seq, "follow");
 		if ($ai_v{'temp'}{'ai_follow_index'} ne "") {
@@ -3549,11 +3756,15 @@ sub AI {
 			undef $ai_v{'temp'}{'ai_follow_following'};
 		}
 		$ai_v{'ai_attack_monsterDist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}});
-		$ai_v{'ai_attack_cleanMonster'} = (!($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'} == 0 && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFrom'} > 0 || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedFromPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'castOnByPlayer'}}))
-				|| ($config{'attackAuto_party'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromParty'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgToParty'} > 0) && (!$monsters{$ai_seq_args[0]{'ID'}}{'frozen'})) 
-				|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0) && (!$monsters{$ai_seq_args[0]{'ID'}}{'frozen'})) 
-				|| ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'} > 0) && (!$monsters{$ai_seq_args[0]{'ID'}}{'frozen'})); 
+
+		$ai_v{'ai_attack_cleanMonster'} = (
+				  !($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'} == 0 && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgTo'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFrom'} > 0 || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedFromPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}} || %{$monsters{$ai_seq_args[0]{'ID'}}{'castOnByPlayer'}}))
+				|| ($config{'attackAuto_party'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgFromParty'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgToParty'} > 0))
+				|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0))
+				|| ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'} > 0)
+			);
 		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ai_seq_args[0]{'ID'}}{'attackedByPlayer'});
+
 		if ($ai_seq_args[0]{'dmgToYou_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'}
 			|| $ai_seq_args[0]{'missedYou_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'}
 			|| $ai_seq_args[0]{'dmgFromYou_last'} != $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'}) {
@@ -3590,19 +3801,25 @@ sub AI {
 				$i++;
 			}
 		}
+
 		if ($chars[$config{'char'}]{'sitting'}) {
 			ai_setSuspend(0);
 			stand();
+
 		} elsif (!$ai_v{'ai_attack_cleanMonster'}) {
-			print "Dropping target - no kill steal\n"; 
-			$monsters{$ai_seq_args[0]{'ID'}}{'noKS'}++; 
-			if ($monsters{$ai_seq_args[0]{'ID'}}{'noKS'} > 2) { 
-				$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++; 
-				$monsters{$ai_seq_args[0]{'ID'}}{'noKS'} = 0; 
+			# Drop target if it's already attacked by someone else
+			if (!$config{'XKore'}) {
+				print "Dropping target - no kill steal\n"; 
+			} else {
+				injectMessage("Dropping target - no kill steal") if ($config{'verbose'});
 			}
+			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
+			sendAttackStop(\$remote_socket);
 			shift @ai_seq;
 			shift @ai_seq_args;
+
 		} elsif ($ai_v{'ai_attack_monsterDist'} > $ai_seq_args[0]{'attackMethod'}{'distance'}) {
+			# Move to target
 			if (%{$ai_seq_args[0]{'char_pos_last'}} && %{$ai_seq_args[0]{'attackMethod_last'}}
 				&& $ai_seq_args[0]{'attackMethod_last'}{'distance'} == $ai_seq_args[0]{'attackMethod'}{'distance'}
 				&& $ai_seq_args[0]{'char_pos_last'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'}
@@ -3618,13 +3835,15 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 				print "Dropping target - couldn't reach target\n";
+				injectMessage("Dropping target - couldn't reach target") if ($config{'verbose'} && $config{'XKore'});
 			} else {
 				getVector(\%{$ai_v{'temp'}{'vec'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_v{'temp'}{'vec'}}, $ai_v{'ai_attack_monsterDist'} - ($ai_seq_args[0]{'attackMethod'}{'distance'} / $ai_seq_args[0]{'distanceDivide'}) + 1);
+				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_v{'temp'}{'vec'}},
+				                $ai_v{'ai_attack_monsterDist'} - ($ai_seq_args[0]{'attackMethod'}{'distance'} / $ai_seq_args[0]{'distanceDivide'}) + 1);
 
 				%{$ai_seq_args[0]{'char_pos_last'}} = %{$chars[$config{'char'}]{'pos_to'}};
 				%{$ai_seq_args[0]{'attackMethod_last'}} = %{$ai_seq_args[0]{'attackMethod'}};
-			
+
 				ai_setSuspend(0);
 				if (@{$field{'field'}} > 1) {
 					ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}, $field{'name'}, $config{'attackMaxRouteDistance'}, $config{'attackMaxRouteTime'}, 0, 0);
@@ -3632,8 +3851,10 @@ sub AI {
 					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
 				}
 			}
+
 		} elsif ((($config{'tankMode'} && $monsters{$ai_seq_args[0]{'ID'}}{'dmgFromYou'} == 0)
-			|| !$config{'tankMode'})) {
+		        || !$config{'tankMode'})) {
+			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 
 			if ($ai_seq_args[0]{'attackMethod'}{'type'} eq "weapon" && timeOut(\%{$timeout{'ai_attack'}})) {
 				if ($config{'tankMode'}) {
@@ -3786,6 +4007,9 @@ sub AI {
 					$ai_seq_args[0]{'npc'}{'sentTalk'} = 1;
 				} elsif ($ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /c/i) {
 					sendTalkContinue(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}));
+					$ai_seq_args[0]{'npc'}{'step'}++;
+				} elsif ($ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /n/i) {
+					sendTalkCancel(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}));
 					$ai_seq_args[0]{'npc'}{'step'}++;
 				} else {
 					($ai_v{'temp'}{'arg'}) = $ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /r(\d+)/i;
@@ -4085,7 +4309,11 @@ sub AI {
 		undef $ai_seq_args[0]{'suspended'};
 	}
 	if ($ai_seq[0] eq "items_gather" && !%{$items{$ai_seq_args[0]{'ID'}}}) {
-		print "Failed to gather $items_old{$ai_seq_args[0]{'ID'}}{'name'} ($items_old{$ai_seq_args[0]{'ID'}}{'binID'}) : Lost target\n";
+		if (!$config{'XKore'}) {
+			print "Failed to gather $items_old{$ai_seq_args[0]{'ID'}}{'name'} ($items_old{$ai_seq_args[0]{'ID'}}{'binID'}) : Lost target\n";
+		} else {
+			injectMessage("Failed to gather $items_old{$ai_seq_args[0]{'ID'}}{'name'} ($items_old{$ai_seq_args[0]{'ID'}}{'binID'}) : Lost target") if ($config{'verbose'});
+		}
 		shift @ai_seq;
 		shift @ai_seq_args;
 	} elsif ($ai_seq[0] eq "items_gather") {
@@ -4106,7 +4334,11 @@ sub AI {
 		}
 		$ai_v{'temp'}{'dist'} = distance(\%{$items{$ai_seq_args[0]{'ID'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 		if (timeOut(\%{$ai_seq_args[0]{'ai_items_gather_giveup'}})) {
-			print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout\n";
+			if (!$config{'XKore'}) {
+				print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout\n";
+			} else {
+				injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout") if ($config{'verbose'});
+			}
 			$items{$ai_seq_args[0]{'ID'}}{'take_failed'}++;
 			shift @ai_seq;
 			shift @ai_seq_args;
@@ -4123,7 +4355,11 @@ sub AI {
 			shift @ai_seq_args;
 			take($ai_v{'ai_items_gather_ID'});
 		} elsif ($ai_v{'temp'}{'found'} > 0) {
-			print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!\n";
+			if ($config{'XKore'}) {
+				print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!\n";
+			} else {
+				injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!") if ($config{'verbose'});
+			}
 			shift @ai_seq;
 			shift @ai_seq_args;
 		}
@@ -4142,7 +4378,11 @@ sub AI {
 		shift @ai_seq;
 		shift @ai_seq_args;
 	} elsif ($ai_seq[0] eq "take" && timeOut(\%{$ai_seq_args[0]{'ai_take_giveup'}})) {
-		print "Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})\n";
+		if (!$config{'XKore'}) {
+			print "Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})\n";
+		} else {
+			injectMessage("Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})") if ($config{'verbose'});
+		}
 		$items{$ai_seq_args[0]{'ID'}}{'take_failed'}++;
 		shift @ai_seq;
 		shift @ai_seq_args;
@@ -4211,10 +4451,7 @@ sub AI {
 	if (timeOut(\%{$timeout{'ai_teleport_away'}}) && $ai_v{'ai_teleport_safe'}) {
 		foreach (@monstersID) {
 			if ($mon_control{lc($monsters{$_}{'name'})}{'teleport_auto'}) {
-#Solos Start
-#				sendTeleport(\$remote_socket, "Random");
 				useTeleport(1);
-#Solos End
 				$ai_v{'temp'}{'search'} = 1;
 				last;
 			}
@@ -4225,10 +4462,7 @@ sub AI {
 	if ((($config{'teleportAuto_hp'} && percent_hp(\%{$chars[$config{'char'}]}) <= $config{'teleportAuto_hp'} && ai_getAggressives())
 		|| ($config{'teleportAuto_minAggressives'} && ai_getAggressives() >= $config{'teleportAuto_minAggressives'}))
 		&& $ai_v{'ai_teleport_safe'} && timeOut(\%{$timeout{'ai_teleport_hp'}})) {
-#Solos Start
-#		sendTeleport(\$remote_socket, "Random");
 		useTeleport(1);
-#Solos End
 		$ai_v{'clear_aiQueue'} = 1;
 		$timeout{'ai_teleport_hp'}{'time'} = time;
 	}
@@ -4251,10 +4485,7 @@ sub AI {
 				}
 			}
 			if (!$ai_v{'temp'}{'found'}) {
-#Solos Start
-#				sendTeleport(\$remote_socket, "Random");
 				useTeleport(1);
-#Solos End
 				$ai_v{'clear_aiQueue'} = 1;
 			}
 		}
@@ -4266,20 +4497,14 @@ sub AI {
 	}
 
 	if ($config{'teleportAuto_idle'} && timeOut(\%{$timeout{'ai_teleport_idle'}}) && $ai_v{'ai_teleport_safe'}) {
-#Solos Start
-#		sendTeleport(\$remote_socket, "Random");
 		useTeleport(1);
-#Solos End
 		$ai_v{'clear_aiQueue'} = 1;
 		$timeout{'ai_teleport_idle'}{'time'} = time;
 	}
 
 	if ($config{'teleportAuto_portal'} && timeOut(\%{$timeout{'ai_teleport_portal'}}) && $ai_v{'ai_teleport_safe'}) {
 		if (binSize(\@portalsID)) {
-#Solos Start
-#			sendTeleport(\$remote_socket, "Random");
 			useTeleport(1);
-#Solos End
 			$ai_v{'clear_aiQueue'} = 1;
 		}
 		$timeout{'ai_teleport_portal'}{'time'} = time;
@@ -4301,14 +4526,21 @@ sub AI {
 		$i = $ai_seq_args[0]{'resp_num'};
 		$privMsgUser = $ai_seq_args[0]{'resp_user'};
 		$num_resp = getListCount($chat_resp{"words_resp_$i"});
-#		sendMessage(\$remote_socket, "c", getFromList($chat_resp{"words_resp_$i"}, int(rand() * ($num_resp - 1))));
 		sendMessage(\$remote_socket, "pm", getFromList($chat_resp{"words_resp_$i"}, int(rand() * ($num_resp - 1))), $privMsgUser);
 		shift @ai_seq;
 		shift @ai_seq_args;
 	}
 
 #Solos End
-	
+
+
+	SENDEMOTION: {
+		my $index = binFind(\@ai_seq, "sendEmotion");
+		last SENDEMOTION if ($index eq "" || time < $ai_seq_args[$index]{'timeout'});
+		sendEmotion(\$remote_socket, $ai_seq_args[$index]{'emotion'});
+		aiRemove ("sendEmotion");
+	}
+
 
 	##########
 
@@ -4328,6 +4560,97 @@ sub AI {
 }
 
 
+#######################################
+#######################################
+#Parse RO Client Send Message
+#######################################
+#######################################
+
+sub parseSendMsg {
+	my $msg = shift;
+	$sendMsg = $msg;
+	if (length($msg) >= 4 && $conState >= 4 && length($msg) >= unpack("S1", substr($msg, 0, 2))) {
+		decrypt(\$msg, $msg);
+	}
+	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	print "Packet Switch SENT_BY_CLIENT: $switch\n" if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch));
+	if ($switch eq "0066") {
+		configModify("char", unpack("C*",substr($msg, 2, 1)));
+	} elsif ($switch eq "0072") {
+		if ($config{'sex'} ne "") {
+			$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
+		}
+	} elsif ($switch eq "007D") {
+		$conState = 5;
+		$timeout{'ai'}{'time'} = time;
+		if ($firstLoginMap) {
+			undef $sentWelcomeMessage;
+			undef $firstLoginMap;
+		}
+		$timeout{'welcomeText'}{'time'} = time;
+		print "Map loaded\n";
+
+	} elsif ($switch eq "0085") {
+		aiRemove("clientSuspend");
+		makeCoords(\%coords, substr($msg, 2, 3));
+		ai_clientSuspend($switch, (distance(\%{$chars[$config{'char'}]{'pos'}}, \%coords) * $config{'seconds_per_block'}) + 2);
+		
+	} elsif ($switch eq "0089") {
+		if (!($config{'tankMode'} && binFind(\@ai_seq, "attack") ne "")) {
+			aiRemove("clientSuspend");
+			ai_clientSuspend($switch, 2, unpack("C*",substr($msg,6,1)), substr($msg,2,4));
+		} else {
+			undef $sendMsg;
+		}
+	} elsif ($switch eq "008C" || $switch eq "0108" || $switch eq "017E") {
+		my $length = unpack("S",substr($msg,2,2));
+		my $message = substr($msg, 4, $length - 4);
+		my ($chat) = $message =~ /^[\s\S]*? : ([\s\S]*)\000?/;
+		$chat =~ s/^\s*//;
+		if ($chat =~ /^$config{'commandPrefix'}/) {
+			$chat =~ s/^$config{'commandPrefix'}//;
+			$chat =~ s/^\s*//;
+			$chat =~ s/\s*$//;
+			$chat =~ s/\000*$//;
+			parseInput($chat, 1);
+			undef $sendMsg;
+		}
+
+	} elsif ($switch eq "0096") {
+		$length = unpack("S",substr($msg,2,2));
+		($user) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
+		$chat = substr($msg, 28, $length - 29);
+		$chat =~ s/^\s*//;
+		if ($chat =~ /^$config{'commandPrefix'}/) {
+			$chat =~ s/^$config{'commandPrefix'}//;
+			$chat =~ s/^\s*//;
+			$chat =~ s/\s*$//;
+			parseInput($chat, 1);
+			undef $sendMsg;
+		} else {
+			undef %lastpm;
+			$lastpm{'msg'} = $chat;
+			$lastpm{'user'} = $user;
+			push @lastpm, {%lastpm};
+		}
+	} elsif ($switch eq "009F") {
+		aiRemove("clientSuspend");
+		ai_clientSuspend($switch, 2, substr($msg,2,4));
+
+	} elsif ($switch eq "00B2") {
+		#trying to exit
+		aiRemove("clientSuspend");
+		ai_clientSuspend($switch, 10);
+
+	} elsif ($switch eq "018A") {
+		#trying to exit
+		aiRemove("clientSuspend");
+		ai_clientSuspend($switch, 10);
+	}
+	if ($sendMsg ne "") {
+		sendToServerByInject(\$remote_socket, $sendMsg);
+	}
+}
 
 
 #######################################
@@ -4363,63 +4686,40 @@ sub parseMsg {
 			print DATA "ML " . $monsters{$monstersID[$i]}{'pos'}{'x'} . " " . $monsters{$monstersID[$i]}{'pos'}{'y'} . "\n"; 
 		} 
 ### Addon End ###
-
-		$hp_string = $chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." (" 
-			.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100) 
-			."%)" if $chars[$config{'char'}]{'hp_max'}; 
-		$sp_string = $chars[$config{'char'}]{'sp'}."/".$chars[$config{'char'}]{'sp_max'}." (" 
-			.int($chars[$config{'char'}]{'sp'}/$chars[$config{'char'}]{'sp_max'} * 100) 
-			."%)" if $chars[$config{'char'}]{'sp_max'}; 
-		$base_string = $chars[$config{'char'}]{'exp'}."/".$chars[$config{'char'}]{'exp_max'}." /$baseEXPKill (" 
-			.sprintf("%.2f",$chars[$config{'char'}]{'exp'}/$chars[$config{'char'}]{'exp_max'} * 100) 
-			."%)" if $chars[$config{'char'}]{'exp_max'}; 
-		$job_string = $chars[$config{'char'}]{'exp_job'}."/".$chars[$config{'char'}]{'exp_job_max'}." /$jobEXPKill (" 
-			.sprintf("%.2f",$chars[$config{'char'}]{'exp_job'}/$chars[$config{'char'}]{'exp_job_max'} * 100) 
-			."%)" if $chars[$config{'char'}]{'exp_job_max'}; 
-		$weight_string = $chars[$config{'char'}]{'weight'}."/".$chars[$config{'char'}]{'weight_max'}." (" 
-			.int($chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100) 
-			."%)" if $chars[$config{'char'}]{'weight_max'}; 
-             
-		print DATA "HP ".$hp_string."\n"; 
-		print DATA "SP ".$sp_string."\n"; 
-		print DATA "NAME ".$chars[$config{'char'}]{'name'}."\n"; 
-		print DATA "BS ".$chars[$config{'char'}]{'lv'}."\n"; 
-		print DATA "JL ".$chars[$config{'char'}]{'lv_job'}."\n"; 
-
  		close(DATA);
  	}
 #auto open shop when sitting
 	if (($config{"shopAuto_open"} == 1) && ($shopstarted == 0) &&
 		($chars[$config{'char'}]{'sitting'})) {
-			openShop(\$remote_socket);
+			sendOpenShop(\$remote_socket);
 	}
 #Solos End
+
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $conState >= 4 && $lastswitch ne $switch
 		&& length($msg) >= unpack("S1", substr($msg, 0, 2))) {
 		decrypt(\$msg, $msg);
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	print "Packet Switch: $switch\n" if ($config{'debug'} >= 2 || $config{'dispSwitch'} || $config{'debug_packet'} >= 3);
-	
+	print "Packet Switch: $switch\n" if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch));
+
 	if ($lastswitch eq $switch && length($msg) > $lastMsgLength) {
 		$errorCount++;
 	} else {
 		$errorCount = 0;
 	}
 	if ($errorCount > 3) {
-#		dumpData($msg);
-		print "Caught unparsed packet error, potential loss of data.\n"; 
-      		dumpData($lastPacket) if ($config{'debug_packet'} >= 2 && $lastPacket ne ""); 
-      		dumpData($msg) if ($config{'debug'} || $config{'debug_packet'}); 
-      		undef $lastPacket if ($config{'debug_packet'} >= 2); 
-      		$errorCount = 0;
+		print "Caught unparsed packet error, potential loss of data.\n";
+		dumpData($msg) if ($config{'debugPacket_unparsed'} && !existsInList($config{'debugPacket_exclude'}, $switch));
+		$errorCount = 0;
 		$msg_size = length($msg);
 	}
-	
+
 	$lastswitch = $switch;
 	$lastMsgLength = length($msg);
-	if (substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4)) {
+	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4)) || ($config{'XKore'} && !$accountID && length($msg) == 4)) {
+		$accountID = substr($msg, 0, 4);
+		$AI = 1 if (!$AI_forcedOff);
 		if ($config{'encrypt'} && $conState == 4) {
 			$encryptKey1 = unpack("L1", substr($msg, 6, 4));
 			$encryptKey2 = unpack("L1", substr($msg, 10, 4));
@@ -4477,28 +4777,35 @@ $num  $servers[$num]{'name'}  $servers[$num]{'users'} $servers[$num]{'ip'} $serv
 			write;
 		}
 		print "-------------------------------\n";
-		print "Closing connection to Master Server\n";
-		killConnection(\$remote_socket);
-		if ($config{'server'} eq "") {
-			print "Choose your server.  Enter the server number:\n";
-			$waitingForInput = 1;
-		} else {
-			print "Server $config{'server'} selected\n";
+
+		if (!$config{'XKore'}) {
+			print "Closing connection to Master Server\n";
+			killConnection(\$remote_socket);
+			if ($config{'server'} eq "") {
+				print "Choose your server.  Enter the server number:\n";
+				$waitingForInput = 1;
+			} else {
+				print "Server $config{'server'} selected\n";
+			}
 		}
-	} elsif ($switch eq "006A" && length($msg) >= 23) {
+	} elsif ($switch eq "006A") {
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
 			print "Account name doesn't exist\n";
-			print "Enter Username Again:\n";
-			$input_socket->recv($msg, $MAX_READ);
-			$config{'username'} = $msg;
-			writeDataFileIntact($config_file, \%config);
+			if (!$config{'XKore'}) {
+				print "Enter Username Again:\n";
+				$input_socket->recv($msg, $MAX_READ);
+				$config{'username'} = $msg;
+				writeDataFileIntact($config_file, \%config);
+			}
 		} elsif ($type == 1) {
 			print "Password Error\n";
-			print "Enter Password Again:\n";
-			$input_socket->recv($msg, $MAX_READ);
-			$config{'password'} = $msg;
-			writeDataFileIntact($config_file, \%config);
+			if (!$config{'XKore'}) {
+				print "Enter Password Again:\n";
+				$input_socket->recv($msg, $MAX_READ);
+				$config{'password'} = $msg;
+				writeDataFileIntact($config_file, \%config);
+			}
 		} elsif ($type == 3) {
 			print "Server connection has been denied\n";
 		} elsif ($type == 4) {
@@ -4520,12 +4827,12 @@ $num  $servers[$num]{'name'}  $servers[$num]{'users'} $servers[$num]{'ip'} $serv
 		}
 		$msg_size = 23;
 
-	} elsif ($switch eq "006B" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+	} elsif ($switch eq "006B") {
 		print "Recieved characters from Game Login Server\n";
 		$conState = 3;
 		undef $conState_tries;
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-		if ($config{"master_version_$config{'master'}"} == 0) {
+		if ($config{"master_version_$config{'master'}"} ne "" && $config{"master_version_$config{'master'}"} == 0) {
 			$startVal = 24;
 		} else {
 			$startVal = 4;
@@ -4578,23 +4885,33 @@ $chars[$num]{'zenny'} $chars[$num]{'luk'}
 .
 			write;
 		}
-		if ($config{'char'} eq "") {
-			print "Choose your character.  Enter the character number:\n";
-			$waitingForInput = 1;
-		} else {
-			print "Character $config{'char'} selected\n";
-			sendCharLogin(\$remote_socket, $config{'char'});
-			$timeout{'charlogin'}{'time'} = time;
+		if (!$config{'XKore'}) {
+			if ($config{'char'} eq "") {
+				print "Choose your character.  Enter the character number:\n";
+				$waitingForInput = 1;
+			} else {
+				print "Character $config{'char'} selected\n";
+				sendCharLogin(\$remote_socket, $config{'char'});
+				$timeout{'charlogin'}{'time'} = time;
+			}
 		}
+		$firstLoginMap = 1;
+		$sentWelcomeMessage = 1;
 		$msg_size = length($msg);
 
-	} elsif ($switch eq "006C" && length($msg) >= 3) {
+	} elsif ($switch eq "006C") {
 		print "Error logging into Game Login Server (invalid character specified)...\n";
 		$conState = 1;
 		undef $conState_tries;
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+		killConnection(\$remote_socket);
 		$msg_size = 3;
 
-	} elsif ($switch eq "0071" && length($msg) >= 28) {
+	} elsif ($switch eq "006E") {
+	 	$msg_size = 2;
+
+	} elsif ($switch eq "0071") {
 		print "Recieved character ID and Map IP from Game Login Server\n";
 		$conState = 4;
 		undef $conState_tries;
@@ -4622,35 +4939,39 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 .
 		$~ = "CHARINFO";
 		write;
-		print "Closing connection to Game Login Server\n";
-		killConnection(\$remote_socket);
+		print "Closing connection to Game Login Server\n" if (!$config{'XKore'});
+		killConnection(\$remote_socket) if (!$config{'XKore'});
 		$msg_size = 28;
 #Solos Start
 		initStatVars();
 #Solos End
 
-	} elsif ($switch eq "0073" && length($msg) >= 11) {
+	} elsif ($switch eq "0073") {
 		$conState = 5;
 		undef $conState_tries;
 		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
 		%{$chars[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos'}};
 		print "Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n" if $config{'debug'};
-		print "You are now in the game\n";
+		print "You are now in the game\n" if (!$config{'XKore'});
+		print "Waiting for map to load...\n" if ($config{'XKore'});
 #Solos Start
 		$shopstarted = 0;
 #Solos End
-		sendMapLoaded(\$remote_socket);
+		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'IgnoreAll'});
-		$timeout{'ai'}{'time'} = time;
+		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
 		$msg_size = 11;
 
-	} elsif ($switch eq "0075" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "0075") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$msg_size = 11;
 
-	} elsif ($switch eq "0077" && length($msg) >= 5) {
-		$msg_size = 5;
+	} elsif ($switch eq "0077") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$msg_size = 4;
 
 	} elsif ($switch eq "0078" && length($msg) >= 52) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
 		$type = unpack("S*",substr($msg, 14,  2));
@@ -4686,29 +5007,35 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				}
 				%{$monsters{$ID}{'pos'}} = %coords;
 				%{$monsters{$ID}{'pos_to'}} = %coords;
-				
-				my $prevFrozen = $monsters{$ID}{'frozen'}; 
-				$monsters{$ID}{'frozen'} = unpack("S*", substr($msg, 8, 2)); 
-				$monsters{$ID}{'frozen'} = 0 if ($monsters{$ID}{'frozen'} == 5); 
+
 				print "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n" if ($config{'debug'});
+
+				my $prevState = $monsters{$ID}{'state'};
+				$monsters{$ID}{'state'} = unpack("S*", substr($msg, 8, 2)); 
+				$monsters{$ID}{'state'} = 0 if ($monsters{$ID}{'state'} == 5); 
 				my $mon = "Monster $monsters{$ID}{name} $monsters{$ID}{nameID} ($monsters{$ID}{binID})"; 
-				if (!$monsters{$ID}{'frozen'}) { 
-					print "$mon is free.\n" if ($prevFrozen); 
-				} elsif ($monsters{$ID}{'frozen'} == 1) { 
-					print "$mon is stoned.\n"; 
-					$monsters{$ID}{'attackedByPlayer'} = 1; 
-				} elsif ($monsters{$ID}{'frozen'} == 2) { 
-					print "$mon is frozen.\n"; 
-					$monsters{$ID}{'attackedByPlayer'} = 1; 
-				} elsif ($monsters{$ID}{'frozen'} == 3) { 
-					print "$mon is stunned.\n"; 
-					$monsters{$ID}{'attackedByPlayer'} = 1; 
-				} elsif ($monsters{$ID}{'frozen'} == 4) { 
-					print "$mon is asleep.\n"; 
-					$monsters{$ID}{'attackedByPlayer'} = 1; 
-				} else { 
-					print "$mon is disabled.\n"; 
-					$monsters{$ID}{'attackedByPlayer'} = 1; 
+				if (!$monsters{$ID}{'state'}) {
+					print "$mon is free.\n" if ($prevState);
+
+				} elsif ($monsters{$ID}{'state'} == 1) {
+					print "$mon is stoned.\n";
+					$monsters{$ID}{'ignore'} = 1;
+
+				} elsif ($monsters{$ID}{'state'} == 2) {
+					print "$mon is frozen.\n";
+					$monsters{$ID}{'ignore'} = 1;
+
+				} elsif ($monsters{$ID}{'state'} == 3) {
+					print "$mon is stunned.\n";
+					$monsters{$ID}{'ignore'} = 1;
+
+				} elsif ($monsters{$ID}{'state'} == 4) {
+					print "$mon is asleep.\n";
+					$monsters{$ID}{'ignore'} = 1;
+
+				} else {
+					print "$mon is disabled.\n";
+					$monsters{$ID}{'ignore'} = 1;
 				}
 			}
 
@@ -4725,7 +5052,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$players{$ID}{'sitting'} = $sitting > 0;
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
-			$players{$ID}{'frozen'} = unpack("S*", substr($msg, 8, 2));
 			print "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'});
 
 		} elsif ($type == 45) {
@@ -4765,9 +5091,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 52;
+		$msg_size = 54;
 
 	} elsif ($switch eq "0079" && length($msg) >= 51) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
 		$type = unpack("S*",substr($msg, 14,  2));
@@ -4789,12 +5116,14 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			print "Unknown Connected: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 51;
+		$msg_size = 53;
 
-	} elsif ($switch eq "007A" && length($msg) >= 56) {
-		$msg_size = 56;
+	} elsif ($switch eq "007A" && length($msg) >= 4) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$msg_size = 4;
 
 	} elsif ($switch eq "007B" && length($msg) >= 58) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
@@ -4853,47 +5182,31 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			%{$players{$ID}{'pos'}} = %coordsFrom;
 			%{$players{$ID}{'pos_to'}} = %coordsTo;
 			print "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'} >= 2);
-#Solos Start			
+
+			avoidGM_near();
 			for ($i=0;$i<@playersID;$i++) { 
    				next if($playersID[$i] eq ""); 
-   				if ($players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) { 
-					if (($config{'avoidGM'} eq "2") || !($cities_lut{$field{'name'}.'.rsw'})) {
-      						print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";  
-                                		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-						$timeout_ex{'master'}{'time'} = time;
-						$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};  
- #                               		sendTeleport(\$remote_socket, "Random");  
-                               			killConnection(\$remote_socket); 
-      						last; 
-					} else {
-      						print "GM $players{$playersID[$i]}{'name'} is nearby...\n"; 
-      						chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby ***\n"); 
-					}
-				}
-#avoid list
 				$j = 0;
 				while ($avoid{"avoid_$j"} ne "") {
-#					if ($players{$playersID[$i]}{'name'} =~/.*$avoid{'avoid_$j'}+$/i || $players{$playersID[$i]}{'name'} =~ /.*$avoid{'avoid_$j'}+\W/i) {
 					if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) { 
 						print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";  
-                                		chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
-                                		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+						chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
+						print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
 						$timeout_ex{'master'}{'time'} = time;
 						$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
- #                               		sendTeleport(\$remote_socket, "Random");  
-                               			killConnection(\$remote_socket);
+						killConnection(\$remote_socket);
 					}
 					$j++;
 				}
 				undef $j;
 			} 
-#Solos End
 		} else {
 			print "Unknown Moved: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 58;
+		$msg_size = 60;
 
 	} elsif ($switch eq "007C" && length($msg) >= 41) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 36, 3));
 		$type = unpack("S*",substr($msg, 20,  2));
@@ -4948,21 +5261,23 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 41;
 		
-	} elsif ($switch eq "007F" && length($msg) >= 6) {
+	} elsif ($switch eq "007F") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$time = unpack("L1",substr($msg, 2, 4));
 		print "Recieved Sync\n" if ($config{'debug'} >= 2);
 		$timeout{'play'}{'time'} = time;
 		$msg_size = 6;
 
 	
-	} elsif ($switch eq "0080" && length($msg) >= 7) {
+	} elsif ($switch eq "0080") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		$type = unpack("C1",substr($msg, 6, 1));
-		
+
 		if ($ID eq $accountID) {
 			print "You have died\n";
 #Solos Start
-			closeShop();
+			sendCloseShop();
 #Solos End
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
@@ -4987,13 +5302,14 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$players_old{$ID}{'gone_time'} = time;
 				binRemove(\@playersID, $ID);
 				undef %{$players{$ID}};
-#Solos Start
+
 				binRemove(\@venderListsID, $ID);
 				undef %{$venderLists{$ID}};
-#Solos End
+
 			} elsif ($type == 1) {
 				print "Player Died: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
 				$players{$ID}{'dead'} = 1;
+
 			} elsif ($type == 2) {
 				print "Player Disconnected: $players{$ID}{'name'}\n" if $config{'debug'};
 				%{$players_old{$ID}} = %{$players{$ID}};
@@ -5001,11 +5317,22 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$players_old{$ID}{'gone_time'} = time;
 				binRemove(\@playersID, $ID);
 				undef %{$players{$ID}};
-#Solos Start
+
 				binRemove(\@venderListsID, $ID);
 				undef %{$venderLists{$ID}};
-#Solos End
+
+			} elsif ($type == 3) {
+				print "Player Teleported: $players{$ID}{'name'}\n" if $config{'debug'};
+				%{$players_old{$ID}} = %{$players{$ID}};
+				$players_old{$ID}{'disconnected'} = 1;
+				$players_old{$ID}{'gone_time'} = time;
+				binRemove(\@playersID, $ID);
+				undef %{$players{$ID}};
+
+				binRemove(\@venderListsID, $ID);
+				undef %{$venderLists{$ID}};
 			}
+
 		} elsif (%{$players_old{$ID}}) {
 			if ($type == 2) {
 				print "Player Disconnected: $players_old{$ID}{'name'}\n" if $config{'debug'};
@@ -5034,10 +5361,14 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 7;
 		
-	} elsif ($switch eq "0081" && length($msg) >= 3) {
+	} elsif ($switch eq "0081") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		$conState = 1;
 		undef $conState_tries;
+		
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+
 		if ($type == 2) {
 			print "Critical Error: Dual login prohibited - Someone trying to login!\n";
 			if ($config{'dcOnDualLogin'} == 1) {
@@ -5045,7 +5376,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$quit = 1;
 			} elsif ($config{'dcOnDualLogin'} >= 2) {
 				print "Disconnect for $config{'dcOnDualLogin'} seconds...\n";
-				$timeout_ex{'master'}{'time'} = time;
 				$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
 			}
 
@@ -5060,6 +5390,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = 3;
 
 	} elsif ($switch eq "0087" && length($msg) >= 12) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		makeCoords(\%coordsFrom, substr($msg, 6, 3));
 		makeCoords2(\%coordsTo, substr($msg, 8, 3));
 		%{$chars[$config{'char'}]{'pos'}} = %coordsFrom;
@@ -5069,34 +5400,33 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$chars[$config{'char'}]{'time_move_calc'} = distance(\%{$chars[$config{'char'}]{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}) * $config{'seconds_per_block'};
 		$msg_size = 12;
 
-	} elsif ($switch eq "0088" && length($msg) >= 10) { 
-		undef $level_real; 
-# Long distance attack solution 
-		$ID = substr($msg, 2, 4); 
-		undef %coords; 
-		$coords{'x'} = unpack("S1", substr($msg, 6, 2)); 
-		$coords{'y'} = unpack("S1", substr($msg, 8, 2)); 
-		if ($ID eq $accountID) { 
-			%{$chars[$config{'char'}]{'pos'}} = %coords; 
-			%{$chars[$config{'char'}]{'pos_to'}} = %coords; 
-			print "Movement interrupted, your coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n" if $config{'debug'}; 
-			aiRemove("move"); 
-		} elsif (%{$monsters{$ID}}) { 
-			%{$monsters{$ID}{'pos'}} = %coords; 
-			%{$monsters{$ID}{'pos_to'}} = %coords; 
-		} elsif (%{$players{$ID}}) { 
-			%{$players{$ID}{'pos'}} = %coords; 
-			%{$players{$ID}{'pos_to'}} = %coords; 
-		} else { 
-			dumpData(substr($msg, 0, 10)) if ($config{'debug_packet'} >= 2); 
-		} 
+	} elsif ($switch eq "0088") {
+		undef $level_real;
+# Long distance attack solution
+		$ID = substr($msg, 2, 4);
+		undef %coords;
+		$coords{'x'} = unpack("S1", substr($msg, 6, 2));
+		$coords{'y'} = unpack("S1", substr($msg, 8, 2));
+		if ($ID eq $accountID) {
+			%{$chars[$config{'char'}]{'pos'}} = %coords;
+			%{$chars[$config{'char'}]{'pos_to'}} = %coords;
+			print "Movement interrupted, your coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n" if $config{'debug'};
+			aiRemove("move");
+		} elsif (%{$monsters{$ID}}) {
+			%{$monsters{$ID}{'pos'}} = %coords;
+			%{$monsters{$ID}{'pos_to'}} = %coords;
+		} elsif (%{$players{$ID}}) {
+			%{$players{$ID}{'pos'}} = %coords;
+			%{$players{$ID}{'pos_to'}} = %coords;
+		}
 		$msg_size = 10;
 # End of Long Distance attack Solution
 
-	} elsif ($switch eq "0089" && length($msg) >= 7) {
-		$msg_size = 7;
+	} elsif ($switch eq "0089") {
+		$msg_size = 2;
 
-	} elsif ($switch eq "008A" && length($msg) >= 29) {
+	} elsif ($switch eq "008A") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID1 = substr($msg, 2, 4);
 		$ID2 = substr($msg, 6, 4);
 		$standing = unpack("C1", substr($msg, 26, 2)) - 2;
@@ -5137,10 +5467,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} elsif ($ID2 eq $accountID) {
 			if (%{$monsters{$ID1}}) {
 #Solos Start
-				useTeleport(1) if ($monsters{$ID1}{'name'} eq "");
 				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
-				."%)] "."Monster attacks You: $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) - Dmg: $dmgdisplay\n";
+				."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: - Dmg: $dmgdisplay\n";
 #Solos End
 #junq start
 				if ($config{'maxDmg'} > 0) { 
@@ -5187,8 +5516,15 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = unpack("S*", substr($msg, 2, 2));
 		$ID = substr($msg, 4, 4);
 		$chat = substr($msg, 8, $msg_size - 8);
-		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
+		$chat =~ s/\000$//;
+		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
+		$chatMsgUser =~ s/ $//;
+
 		chatLog("c", $chat."\n");
+		if ($config{'relay'}) {
+			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
+		}
+
 		$ai_cmdQue[$ai_cmdQue]{'type'} = "c";
 		$ai_cmdQue[$ai_cmdQue]{'ID'} = $ID;
 		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser;
@@ -5202,7 +5538,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$i = 0;
 		while ($config{"autoEmote_word_$i"} ne "") {
 			if ($chat =~/.*$config{"autoEmote_word_$i"}+$/i || $chat =~ /.*$config{"autoEmote_word_$i"}+\W/i) {
-				sendEmotion(\$remote_socket, $config{"autoEmote_num_$i"});
+				my %args = ();
+				$args{'timeout'} = time + rand (1) + 0.75;
+				$args{'emotion'} = $config{"autoEmote_num_$i"};
+				unshift @ai_seq, "sendEmotion";
+				unshift @ai_seq_args, \%args;
 				last;
 			}
 			$i++;
@@ -5223,24 +5563,12 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 		}
 
-		if ($chatMsgUser =~/GM(.*)\d{1,}/i) { 
-			if ($config{'avoidGM'}) {
-   				print "Disconnecting to avoid GM!\n"; 
-   				chatLog("s", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n"); 
-				print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-				$timeout_ex{'master'}{'time'} = time;
-				$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-				killConnection(\$remote_socket);
-			} else {
-   				print "GM $chatMsgUser talked to you!\n"; 
-   				chatLog("s", "*** The GM $chatMsgUser talked to you ***\n"); 
-			}
-		} 
+		avoidGM_talk($chatMsgUser, $chatMsg);
 #avoid list
 		$j = 0;
 		while ($avoid{"avoid_$j"} ne "") {
 			if ($chatMsgUser eq $avoid{"avoid_$j"}) { 
-				if ($config{'avoidGM'}) {
+				if ($config{'avoidGM_talk'}) {
 	   				print "Disconnecting to avoid $chatMsgUser!\n"; 
    					chatLog("s", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
 					print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
@@ -5263,6 +5591,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$chat = substr($msg, 4, $msg_size - 4);
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
 		chatLog("c", $chat."\n");
+		if ($config{'relay'} == "1") {
+			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
+		}
 		$ai_cmdQue[$ai_cmdQue]{'type'} = "c";
 		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser;
 		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
@@ -5272,10 +5603,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 #Solos Start
 # this is self talk portion
 #Solos End
-	} elsif ($switch eq "008F" && length($msg) >= 4) {
+	} elsif ($switch eq "008F") {
 		$msg_size = 4;
 
-	} elsif ($switch eq "0091" && length($msg) >= 22) {
+	} elsif ($switch eq "0091") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		initMapChangeVars();
 		for ($i = 0; $i < @ai_seq; $i++) {
 			ai_setMapChanged($i);
@@ -5291,12 +5623,13 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords;
 		print "Map Change: $map_name\n";
 		print "Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n" if $config{'debug'};
-		print "Sending Map Loaded\n" if $config{'debug'};
-		sendMapLoaded(\$remote_socket);
+		print "Sending Map Loaded\n" if ($config{'debug'} && !$config{'XKore'});
+		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		$msg_size = 22;
 
 	} elsif ($switch eq "0092" && length($msg) >= 28) {
 		$conState = 4;
+		initMapChangeVars() if ($config{'XKore'});
 		undef $conState_tries;
 		for ($i = 0; $i < @ai_seq; $i++) {
 			ai_setMapChanged($i);
@@ -5321,13 +5654,14 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$~ = "MAPINFO";
 		write;
 		print "Closing connection to Map Server\n";
-		killConnection(\$remote_socket);
+		killConnection(\$remote_socket) if (!$config{'XKore'});
 		$msg_size = 28;
 		
-	} elsif ($switch eq "0093" && length($msg) >= 2) {
+	} elsif ($switch eq "0093") {
 		$msg_size = 2;
-		
-	} elsif ($switch eq "0095" && length($msg) >= 30) {
+
+	} elsif ($switch eq "0095") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		if (%{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
@@ -5369,10 +5703,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 30;
 
-	} elsif ($switch eq "0096" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "0096") {
+		$msg_size = 43;
 
 	} elsif ($switch eq "0097" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$msg_size = unpack("S1",substr($msg,2,2));
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
 		$msg = substr($msg, 0, 28).$newmsg;
@@ -5382,32 +5717,22 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$privMsgUsers[@privMsgUsers] = $privMsgUser;
 		}
 		chatLog("pm", "(From: $privMsgUser) : $privMsg\n");
+            if ($config{'relay'} == "1") {
+                sendMessage(\$remote_socket, "pm", "(From: $privMsgUser) : $privMsg", $config{'relay_user'}); }
 		$ai_cmdQue[$ai_cmdQue]{'type'} = "pm";
 		$ai_cmdQue[$ai_cmdQue]{'user'} = $privMsgUser;
 		$ai_cmdQue[$ai_cmdQue]{'msg'} = $privMsg;
 		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
 		$ai_cmdQue++;
 		print "(From: $privMsgUser) : $privMsg\n";
-#Solos Start
-		if ($privMsgUser =~/GM(.*)\d{1,}/i) {  
-			if ($config{'avoidGM'}) {
-	   			print "Disconnecting on avoid GM!\n"; 
-   				chatLog("s", "*** The GM $privMsgUser talked to you, auto disconnected ***\n"); 
-#  				quit(); 
-				print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-				$timeout_ex{'master'}{'time'} = time;
-				$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-				killConnection(\$remote_socket);
-			} else {
-	   			print "GM $privMsgUser talked to you!\n"; 
-   				chatLog("s", "*** The GM $privMsgUser talked to you ***\n"); 
-			}
-		} 
+
+		avoidGM_talk($privMsgUser, $privMsg);
+
 #avoid list
 		$j = 0;
 		while ($avoid{"avoid_$j"} ne "") {
 			if ($privMsgUser eq $avoid{"avoid_$j"}) { 
-				if ($config{'avoidGM'}) {
+				if ($config{'avoidGM_talk'}) {
 	   				print "Disconnecting to avoid $privMsgUser!\n"; 
    					chatLog("s", "*** $privMsgUser talked to you, auto disconnected ***\n"); 
 					print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
@@ -5439,10 +5764,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$i++;
 			}
 		}
-#Solos End		
 
-
-	} elsif ($switch eq "0098" && length($msg) >= 3) {
+	} elsif ($switch eq "0098") {
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
 			print "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n";
@@ -5458,27 +5781,13 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "009A" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		$chat = substr($msg, 4, $msg_size - 4);
+		$chat =~ s/\000$//;
 		chatLog("s", $chat."\n");
 		print "$chat\n";
-#Solos Start
-		if ($chat =~/GM(.*)\d{1,}/i) {  
-			if ($config{'avoidGM'}) {
-#	   			print "Disconnecting on avoid GM!\n"; 
-#   				chatLog("s", "*** GM talked to you on S channel, auto disconnected ***\n"); 
-#				print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-#				$timeout_ex{'master'}{'time'} = time;
-#				$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-#				killConnection(\$remote_socket);
-				print "GM talked to you on S channel!\n"; 
-   				chatLog("s", "*** GM talked to you on S channel ***\n");
-			} else {
-	   			print "GM talked to you on S channel!\n"; 
-   				chatLog("s", "*** GM talked to you on S channel ***\n"); 
-			}
-		} 
-#Solos End				
+		avoidGM_talk(undef, $chat);
 
-	} elsif ($switch eq "009C" && length($msg) >= 9) {
+	} elsif ($switch eq "009C") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		$body = unpack("C1",substr($msg, 8, 1));
 		$head = unpack("C1",substr($msg, 6, 1));
@@ -5499,7 +5808,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 9;
 
-	} elsif ($switch eq "009D" && length($msg) >= 17) {
+	} elsif ($switch eq "009D") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		$type = unpack("S1",substr($msg, 6, 2));
 		$x = unpack("S1", substr($msg, 9, 2));
@@ -5522,6 +5832,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = 17;
 
 	} elsif ($switch eq "009E" && length($msg) >= 17) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		$type = unpack("S1",substr($msg, 6, 2));
 		$x = unpack("S1", substr($msg, 9, 2));
@@ -5544,6 +5855,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = 17;
 
 	} elsif ($switch eq "00A0" && length($msg) >= 23) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$index = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
 		$ID = unpack("S1",substr($msg, 6, 2));
@@ -5644,7 +5956,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 23;
 
-	} elsif ($switch eq "00A1" && length($msg) >= 6) {
+	} elsif ($switch eq "00A1") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		if (%{$items{$ID}}) {
 			print "Item Disappeared: $items{$ID}{'name'} ($items{$ID}{'binID'})\n" if $config{'debug'};
@@ -5656,7 +5969,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 6;
 
-	} elsif ($switch eq "00A3" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+	} elsif ($switch eq "00A3") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
@@ -5684,7 +5998,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 #Solos End
 		}
 
-	} elsif ($switch eq "00A4" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+	} elsif ($switch eq "00A4") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
@@ -5776,7 +6091,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 #Solos End
 		}
 
-	} elsif ($switch eq "00A5" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+	} elsif ($switch eq "00A5") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
@@ -5798,7 +6113,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		print "Storage opened\n";
 #Solos Start
-	} elsif ($switch eq "00A6" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+	} elsif ($switch eq "00A6") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
@@ -5860,7 +6175,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		print "Storage opened\n";
 #Solos End
-	} elsif ($switch eq "00A8" && length($msg) >= 7) {
+	} elsif ($switch eq "00A8") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$index = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("C1",substr($msg, 6, 1));
 		undef $invIndex;
@@ -5872,7 +6188,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 7;
 
-	} elsif ($switch eq "00AA" && length($msg) >= 7) {
+	} elsif ($switch eq "00AA") {
 		$index = unpack("S1",substr($msg, 2, 2));
 		$type = unpack("S1",substr($msg, 4, 2));
 		$fail = unpack("C1",substr($msg, 6, 1));
@@ -5886,7 +6202,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 7;
 
-	} elsif ($switch eq "00AC" && length($msg) >= 7) {
+	} elsif ($switch eq "00AC") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$index = unpack("S1",substr($msg, 2, 2));
 		$type = unpack("S1",substr($msg, 4, 2));
 		undef $invIndex;
@@ -5895,7 +6212,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "You unequip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n";
 		$msg_size = 7;
 
-	} elsif ($switch eq "00AF" && length($msg) >= 6) {
+	} elsif ($switch eq "00AF") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$index = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
 		undef $invIndex;
@@ -5907,9 +6225,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 6;
 
-	} elsif ($switch eq "00B0" && length($msg) >= 8) {
+	} elsif ($switch eq "00B0") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$type = unpack("S1",substr($msg, 2, 2));
-		$val = unpack("L1",substr($msg, 4, 4));
+		$val = unpack("S1",substr($msg, 4, 2));
 		if ($type == 0) {
 			print "Something1: $val\n" if $config{'debug'};
 		} elsif ($type == 3) {
@@ -5940,7 +6259,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Weight: $chars[$config{'char'}]{'weight'}\n" if $config{'debug'};
 		} elsif ($type == 25) {
 			$chars[$config{'char'}]{'weight_max'} = int($val / 10);
- 			print "Max Weight: $chars[$config{'char'}]{'weight_max'}\n" if $config{'debug'};
+			print "Max Weight: $chars[$config{'char'}]{'weight_max'}\n" if $config{'debug'};
 		} elsif ($type == 41) {
 			$chars[$config{'char'}]{'attack'} = $val;
 			print "Attack: $val\n" if $config{'debug'};
@@ -5992,7 +6311,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 8;
 
-	} elsif ($switch eq "00B1" && length($msg) >= 8) {
+	} elsif ($switch eq "00B1") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$type = unpack("S1",substr($msg, 2, 2));
 		$val = unpack("L1",substr($msg, 4, 4));
 		if ($type == 1) {
@@ -6017,6 +6337,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 8;
 
+	} elsif ($switch eq "00B3") {
+		$conState = 2;
+		$msg_size = 3;
+
 	} elsif ($switch eq "00B4" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
@@ -6028,12 +6352,12 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$talk{'msg'} = $talk;
 		print "$npcs{$ID}{'name'} : $talk{'msg'}\n";
 
-	} elsif ($switch eq "00B5" && length($msg) >= 6) {
+	} elsif ($switch eq "00B5") {
 		$ID = substr($msg, 2, 4);
 		print "$npcs{$ID}{'name'} : Type 'talk cont' to continue talking\n";
 		$msg_size = 6;
 
-	} elsif ($switch eq "00B6" && length($msg) >= 6) {
+	} elsif ($switch eq "00B6") {
 		$ID = substr($msg, 2, 4);
 		undef %talk;
 		print "$npcs{$ID}{'name'} : Done talking\n";
@@ -6053,7 +6377,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$talk{'responses'}[@{$talk{'responses'}}] = "Cancel Chat";
 		print "$npcs{$ID}{'name'} : Type 'talk resp' and choose a response.\n";
 	
-	} elsif ($switch eq "00BC" && length($msg) >= 6) {
+	} elsif ($switch eq "00BC") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$val = unpack("C1",substr($msg, 5, 1));
 		if ($val == 207) {
@@ -6084,7 +6408,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = 6;
 
 
-	} elsif ($switch eq "00BD" && length($msg) >= 44) {
+	} elsif ($switch eq "00BD") {
 		$chars[$config{'char'}]{'points_free'} = unpack("S1", substr($msg, 2, 2));
 		$chars[$config{'char'}]{'str'} = unpack("C1", substr($msg, 4, 1));
 		$chars[$config{'char'}]{'points_str'} = unpack("C1", substr($msg, 5, 1));
@@ -6132,7 +6456,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			if $config{'debug'};
 		$msg_size = 44;
 
-	} elsif ($switch eq "00BE" && length($msg) >= 5) {
+	} elsif ($switch eq "00BE") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$val = unpack("C1",substr($msg, 4, 1));
 		if ($type == 32) {
@@ -6156,28 +6480,51 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 5;
 		
-	} elsif ($switch eq "00C0" && length($msg) >= 7) {
+	} elsif ($switch eq "00C0") {
 		$ID = substr($msg, 2, 4);
 		$type = unpack("C*", substr($msg, 6, 1));
 		if ($ID eq $accountID) {
 			print "$chars[$config{'char'}]{'name'} : $emotions_lut{$type}\n";
 		} elsif (%{$players{$ID}}) {
 			print "$players{$ID}{'name'} : $emotions_lut{$type}\n";
+
+			my $index = binFind(\@ai_seq, "follow");
+			if ($index ne "") {
+				my $masterID = $ai_seq_args[$index]{'ID'};
+				if ($config{'followEmotion'} && $masterID eq $ID &&
+			 	       distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$masterID}{'pos_to'}}) <= $config{'followEmotion_distance'})
+				{
+					my %args = ();
+					$args{'timeout'} = time + rand (1) + 0.75;
+
+					if ($type == 30) {
+						$args{'emotion'} = 31;
+					} elsif ($type == 31) {
+						$args{'emotion'} = 30;
+					} else {
+						$args{'emotion'} = $type;
+					}
+
+					unshift @ai_seq, "sendEmotion";
+					unshift @ai_seq_args, \%args;
+				}
+			}
 		}
+
 		$msg_size = 7;
 
-	} elsif ($switch eq "00C1" && length($msg) >= 2) {
-		$msg_size = 2;
+	} elsif ($switch eq "00C1") {
+		$msg_size = 4;
 		
-	} elsif ($switch eq "00C2" && length($msg) >= 6) {
+	} elsif ($switch eq "00C2") {
 		$users = unpack("L*", substr($msg, 2, 4));
 		print "There are currently $users users online\n";
 		$msg_size = 6;
 
-	} elsif ($switch eq "00C3" && length($msg) >= 8) {
+	} elsif ($switch eq "00C3") {
 		$msg_size = 8;
 
-	} elsif ($switch eq "00C4" && length($msg) >= 6) {
+	} elsif ($switch eq "00C4") {
 		$ID = substr($msg, 2, 4);
 		undef %talk;
 		$talk{'buyOrSell'} = 1;
@@ -6219,13 +6566,13 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		undef $talk{'buyOrSell'};
 		print "Ready to start selling items\n";
 		
-	} elsif ($switch eq "00CA" && length($msg) >= 3) {
+	} elsif ($switch eq "00CA") {
 		$msg_size = 3;
 
-	} elsif ($switch eq "00CB" && length($msg) >= 3) {
+	} elsif ($switch eq "00CB") {
 		$msg_size = 3;
 
-	} elsif ($switch eq "00D1" && length($msg) >= 4) {
+	} elsif ($switch eq "00D1") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		$error = unpack("C1", substr($msg, 3, 1));
 		if ($type == 0) {
@@ -6237,7 +6584,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 4;
 
-	} elsif ($switch eq "00D2" && length($msg) >= 4) {
+	} elsif ($switch eq "00D2") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		$error = unpack("C1", substr($msg, 3, 1));
 		if ($type == 0) {
@@ -6249,10 +6596,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 4;
 
-	} elsif ($switch eq "00D3" && length($msg) >= 2) {
+	} elsif ($switch eq "00D3") {
 		$msg_size = 2;
 
-	} elsif ($switch eq "00D6" && length($msg) >= 3) {
+	} elsif ($switch eq "00D6") {
 		$currentChatRoom = "new";
 		%{$chatRooms{'new'}} = %createdChatRoom;
 		binAdd(\@chatRoomsID, "new");
@@ -6274,13 +6621,13 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$chatRooms{$ID}{'public'} = unpack("C1",substr($msg,16,1));
 		$chatRooms{$ID}{'num_users'} = unpack("S1",substr($msg,14,2));
 		
-	} elsif ($switch eq "00D8" && length($msg) >= 6) {
+	} elsif ($switch eq "00D8") {
 		$ID = substr($msg,2,4);
 		binRemove(\@chatRoomsID, $ID);
 		undef %{$chatRooms{$ID}};
 		$msg_size = 6;
 
-	} elsif ($switch eq "00DA" && length($msg) >= 3) {
+	} elsif ($switch eq "00DA") {
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 1) {
 			print "Can't join Chat Room - Incorrect Password\n";
@@ -6311,7 +6658,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		print qq~You have joined the Chat Room "$chatRooms{$currentChatRoom}{'title'}"\n~;
 
-	} elsif ($switch eq "00DC" && length($msg) >= 28) {
+	} elsif ($switch eq "00DC") {
 		if ($currentChatRoom ne "") {
 			$num_users = unpack("S1", substr($msg,2,2));
 			($joinedUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
@@ -6322,7 +6669,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 28;
 	
-	} elsif ($switch eq "00DD" && length($msg) >= 29) {
+	} elsif ($switch eq "00DD") {
 		$num_users = unpack("S1", substr($msg,2,2));
 		($leaveUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
 		$chatRooms{$currentChatRoom}{'users'}{$leaveUser} = "";
@@ -6360,7 +6707,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		print "Chat Room Properties Modified\n";
 		
-	} elsif ($switch eq "00E1" && length($msg) >= 30) {
+	} elsif ($switch eq "00E1") {
 		$type = unpack("C1",substr($msg, 2, 1));
 		($chatUser) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 		if ($type == 0) {
@@ -6376,17 +6723,17 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 30;
 
-	} elsif ($switch eq "00E4" && length($msg) >= 6) {
-		$msg_size = 6;
+	} elsif ($switch eq "00E4") {
+		$msg_size = 34;
 
-	} elsif ($switch eq "00E5" && length($msg) >= 26) {
+	} elsif ($switch eq "00E5") {
 		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		$incomingDeal{'name'} = $dealUser;
 		$timeout{'ai_dealAutoCancel'}{'time'} = time;
 		print "$dealUser Requests a Deal\n";
 		$msg_size = 26;
 
-	} elsif ($switch eq "00E7" && length($msg) >= 3) {
+	} elsif ($switch eq "00E7") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		
 		if ($type == 3) {
@@ -6402,7 +6749,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		undef %incomingDeal;
 		$msg_size = 3;
 
-	} elsif ($switch eq "00E9" && length($msg) >= 19) {
+	} elsif ($switch eq "00E9") {
 		$amount = unpack("L*", substr($msg, 2,4));
 		$ID = unpack("S*", substr($msg, 6,2));
 		if ($ID > 0) {
@@ -6418,7 +6765,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 19;
 
-	} elsif ($switch eq "00EA" && length($msg) >= 5) {
+	} elsif ($switch eq "00EA") {
 		$index = unpack("S1", substr($msg, 2, 2));
 		undef $invIndex;
 		if ($index > 0) {
@@ -6434,7 +6781,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 5;
 
-	} elsif ($switch eq "00EC" && length($msg) >= 3) {
+	} elsif ($switch eq "00EC") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
 			$currentDeal{'other_finalize'} = 1;
@@ -6445,24 +6792,24 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 3;
 
-	} elsif ($switch eq "00EE" && length($msg) >= 2) {
+	} elsif ($switch eq "00EE") {
 		undef %incomingDeal;
 		undef %outgoingDeal;
 		undef %currentDeal;
 		print "Deal Cancelled\n";
 		$msg_size = 2;
 
-	} elsif ($switch eq "00F0" && length($msg) >= 3) {
+	} elsif ($switch eq "00F0") {
 		print "Deal Complete\n";
 		undef %currentDeal;
 		$msg_size = 3;
 
-	} elsif ($switch eq "00F2" && length($msg) >= 6) {
+	} elsif ($switch eq "00F2") {
 		$storage{'items'} = unpack("S1", substr($msg, 2, 2));
 		$storage{'items_max'} = unpack("S1", substr($msg, 4, 2));
 		$msg_size = 6;
 
-	} elsif ($switch eq "00F4" && length($msg) >= 21) {
+	} elsif ($switch eq "00F4") {
 		$index = unpack("S1", substr($msg, 2, 2));
 		$amount = unpack("L1", substr($msg, 4, 4));
 		$ID = unpack("S1", substr($msg, 8, 2));
@@ -6481,7 +6828,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Storage Item Added: $storage{$ID}{'name'} ($storage{$ID}{'binID'}) x $amount\n";
 		$msg_size = 21;
 
-	} elsif ($switch eq "00F6" && length($msg) >= 8) {
+	} elsif ($switch eq "00F6") {
 		$index = unpack("S1", substr($msg, 2, 2));
 		$amount = unpack("L1", substr($msg, 4, 4));
 		$ID = findKey(\%storage, "index", $index);
@@ -6493,11 +6840,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 8;
 
-	} elsif ($switch eq "00F8" && length($msg) >= 2) {
+	} elsif ($switch eq "00F8") {
 		print "Storage Closed\n";
 		$msg_size = 2;
 
-	} elsif ($switch eq "00FA" && length($msg) >= 3) {
+	} elsif ($switch eq "00FA") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
 			print "Can't organize party - party name exists\n";
@@ -6522,7 +6869,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		sendPartyShareEXP(\$remote_socket, 1) if ($config{'partyAutoShare'} && %{$chars[$config{'char'}]{'party'}});
 
-	} elsif ($switch eq "00FD" && length($msg) >= 27) {
+	} elsif ($switch eq "00FD") {
 		($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		$type = unpack("C1", substr($msg, 26, 1));
 		if ($type == 0) {
@@ -6534,7 +6881,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 27;
 
-	} elsif ($switch eq "00FE" && length($msg) >= 30) {
+	} elsif ($switch eq "00FE") {
 		$ID = substr($msg, 2, 4);
 		($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 		print "Incoming Request to join party '$name'\n";
@@ -6542,10 +6889,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$timeout{'ai_partyAutoDeny'}{'time'} = time;
 		$msg_size = 30;
 
-	} elsif ($switch eq "0100" && length($msg) >= 2) {
-		$msg_size = 2;
+	} elsif ($switch eq "0100") {
+		$msg_size = 4;
 
-	} elsif ($switch eq "0101" && length($msg) >= 6) {
+	} elsif ($switch eq "0101") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 0) {
 			print "Party EXP set to Individual Take\n";
@@ -6556,7 +6903,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 6;
 		
-	} elsif ($switch eq "0104" && length($msg) >= 79) {
+	} elsif ($switch eq "0104") {
 		$ID = substr($msg, 2, 4);
 		$x = unpack("S1", substr($msg,10, 2));
 		$y = unpack("S1", substr($msg,12, 2));
@@ -6585,7 +6932,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		
 		$msg_size = 79;
 	
-	} elsif ($switch eq "0105" && length($msg) >= 31) {
+	} elsif ($switch eq "0105") {
 		$ID = substr($msg, 2, 4);
 		($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 		undef %{$chars[$config{'char'}]{'party'}{'users'}{$ID}};
@@ -6600,13 +6947,13 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 31;
 
-	} elsif ($switch eq "0106" && length($msg) >= 10) {
+	} elsif ($switch eq "0106") {
 		$ID = substr($msg, 2, 4);
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'hp'} = unpack("S1", substr($msg, 6, 2));
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'hp_max'} = unpack("S1", substr($msg, 8, 2));
 		$msg_size = 10;
 
-	} elsif ($switch eq "0107" && length($msg) >= 10) {
+	} elsif ($switch eq "0107") {
 		$ID = substr($msg, 2, 4);
 		$x = unpack("S1", substr($msg,6, 2));
 		$y = unpack("S1", substr($msg,8, 2));
@@ -6616,7 +6963,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Party member location: $chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'} - $x, $y\n" if ($config{'debug'} >= 2);
 		$msg_size = 10;
 
-	} elsif ($switch eq "0108" && length($msg) >= 8) {
+	} elsif ($switch eq "0108") {
 		$type =  unpack("S1",substr($msg, 2, 2));
 		$index = unpack("S1",substr($msg, 4, 2));
 		$enchant = unpack("S1",substr($msg, 6, 2));
@@ -6629,6 +6976,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		$msg = substr($msg, 0, 8).$newmsg;
 		$chat = substr($msg, 8, $msg_size - 8);
+		$chat =~ s/\000$//;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
 		chatLog("p", $chat."\n");
 		$ai_cmdQue[$ai_cmdQue]{'type'} = "p";
@@ -6668,7 +7016,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = 6;
 # Hambo Ended 
 
-	} elsif ($switch eq "010E" && length($msg) >= 11) {
+	} elsif ($switch eq "010E") {
 		$ID = unpack("S1",substr($msg, 2, 2));
 		$lv = unpack("S1",substr($msg, 4, 2));
 		$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ID})}}{'lv'} = $lv;
@@ -6676,6 +7024,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = 11;
 
 	} elsif ($switch eq "010F" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
@@ -6694,19 +7043,21 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			binAdd(\@skillsID, $name);
 		}
 
-	} elsif ($switch eq "0110" && length($msg) >= 10) {
+	} elsif ($switch eq "0110") {
 		#Parse this: warp portal
 		$msg_size = 10;
 
-	} elsif ($switch eq "0111" && length($msg) >= 39) {
+	} elsif ($switch eq "0111") {
 		$msg_size = 39;
 
-	} elsif ($switch eq "0114" && length($msg) >= 31) {
+	} elsif ($switch eq "0114") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$skillID = unpack("S1",substr($msg, 2, 2));
 		$sourceID = substr($msg, 4, 4);
 		$targetID = substr($msg, 8, 4);
 		$damage = unpack("S1",substr($msg, 24, 2));
-		$level = unpack("S1",substr($msg, 26, 2));
+		$level = unpack("S1",substr($msg, 28, 2));
+
 		undef $sourceDisplay;
 		undef $targetDisplay;
 		undef $extra;
@@ -6746,21 +7097,20 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} else {
 			$targetDisplay = "unknown";
 		}
-		if ($damage != 35536) { 
-                	if ($level_real ne "") { 
-                     		$level = $level_real; 
-                	} 
-                	print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n"; 
-           	} else { 
-                	$level_real = $level; 
-               	 	print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level)\n"; 
-           	} 
+		if ($damage != 35536) {
+			$level = $level_real if ($level_real ne "");
+			$damage = "Miss!" if (!$damage);
+			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay - Dmg: $damage\n"; 
+		} else {
+			$level_real = $level;
+			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level)\n";
+		}
 		$msg_size = 31;
 
-	} elsif ($switch eq "0115" && length($msg) >= 35) {
-		$msg_size = 35;
+	} elsif ($switch eq "0115") {
+		$msg_size = 16;
 
-	} elsif ($switch eq "0117" && length($msg) >= 18) {
+	} elsif ($switch eq "0117") {
 		$skillID = unpack("S1",substr($msg, 2, 2));
 		$sourceID = substr($msg, 4, 4);
 		$lv = unpack("S1",substr($msg, 8, 2));
@@ -6782,7 +7132,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "$sourceDisplay $skillsID_lut{$skillID} on location ($x, $y)\n";
 		$msg_size = 18;
 
-	} elsif ($switch eq "0119" && length($msg) >= 13) {
+	} elsif ($switch eq "0119") {
 #Solos Start
 		$ID = substr($msg, 2, 4); 
 		$param1 = unpack("S1", substr($msg, 6, 2)); 
@@ -6797,37 +7147,44 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$index = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_CurePoison"});
 				if ($index ne "") { 
 					print "Auto cure poison\n"; 
-                    			sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$index]{'index'}, $accountID); 
+					sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$index]{'index'}, $accountID); 
 				} 
 			}
-		} elsif (%{$monsters{$ID}}) { 
-			my $prevFrozen = $monsters{$ID}{'frozen'}; 
-			$monsters{$ID}{'frozen'} = unpack("S1", substr($msg, 6, 2)); 
+		} elsif (%{$monsters{$ID}}) {
+			my $prevState = $monsters{$ID}{'state'};
+			$monsters{$ID}{'state'} = unpack("S*", substr($msg, 6, 2)); 
+			$monsters{$ID}{'state'} = 0 if ($monsters{$ID}{'state'} == 5); 
 			my $mon = "Monster $monsters{$ID}{name} $monsters{$ID}{nameID} ($monsters{$ID}{binID})"; 
-			if (!$monsters{$ID}{'frozen'}) { 
-				print "$mon is free.\n" if ($prevFrozen); 
-			} elsif ($monsters{$ID}{'frozen'} == 1) { 
-				print "$mon is stoned.\n"; 
-				$monsters{$ID}{'attackedByPlayer'} = 1; 
-			} elsif ($monsters{$ID}{'frozen'} == 2) { 
-				print "$mon is frozen.\n"; 
-				$monsters{$ID}{'attackedByPlayer'} = 1; 
-			} elsif ($monsters{$ID}{'frozen'} == 3) { 
-				print "$mon is stunned.\n"; 
-				$monsters{$ID}{'attackedByPlayer'} = 1; 
-			} elsif ($monsters{$ID}{'frozen'} == 4) { 
+			if (!$monsters{$ID}{'state'}) {
+				print "$mon is free.\n" if ($prevState);
+
+			} elsif ($monsters{$ID}{'state'} == 1) {
+				print "$mon is stoned.\n";
+				$monsters{$ID}{'ignore'} = 1;
+
+			} elsif ($monsters{$ID}{'state'} == 2) {
+				print "$mon is frozen.\n";
+				$monsters{$ID}{'ignore'} = 1;
+
+			} elsif ($monsters{$ID}{'state'} == 3) {
+				print "$mon is stunned.\n";
+				$monsters{$ID}{'ignore'} = 1;
+
+			} elsif ($monsters{$ID}{'state'} == 4) {
 				print "$mon is asleep.\n";
-				$monsters{$ID}{'attackedByPlayer'} = 1; 
-			} else { 
-				print "$mon is disabled.\n"; 
-				$monsters{$ID}{'attackedByPlayer'} = 1; 
+				$monsters{$ID}{'ignore'} = 1;
+
+			} else {
+				print "$mon is disabled.\n";
+				$monsters{$ID}{'ignore'} = 1;
 			}
-		} 
+		}
 #Solos End                
 		$msg_size = 13;
 
 	
-	} elsif ($switch eq "011A" && length($msg) >= 15) {
+	} elsif ($switch eq "011A") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$skillID = unpack("S1",substr($msg, 2, 2));
 		$targetID = substr($msg, 6, 4);
 		$sourceID = substr($msg, 10, 4);
@@ -6888,10 +7245,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 #X End
 		$msg_size = 15;
 
-	} elsif ($switch eq "011C" && length($msg) >= 68) {
-		$msg_size = 68;
+	} elsif ($switch eq "011C") {
+		$msg_size = 4;
 
-	} elsif ($switch eq "011E" && length($msg) >= 3) {
+	} elsif ($switch eq "011E") {
 		$fail = unpack("C1", substr($msg, 2, 1));
 		if ($fail) {
 			print "Memo Failed\n";
@@ -6900,7 +7257,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 3;
 
-	} elsif ($switch eq "011F" && length($msg) >= 16) {
+	} elsif ($switch eq "011F") {
 		#area effect spell
 		$ID = substr($msg, 2, 4);
 		$SourceID = substr($msg, 6, 4);
@@ -6913,7 +7270,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$spells{$ID}{'binID'} = $binID;
 		$msg_size = 16;
 
-	} elsif ($switch eq "0120" && length($msg) >= 6) {
+	} elsif ($switch eq "0120") {
 		#The area effect spell with ID dissappears
 		$ID = substr($msg, 2, 4);
 		undef %{$spells{$ID}};
@@ -6921,14 +7278,14 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = 6;
 
 #Cart Parses - chobit andy 20030102
-	} elsif ($switch eq "0121" && length($msg) >= 14) {
+	} elsif ($switch eq "0121") {
 		$cart{'items'} = unpack("S1", substr($msg, 2, 2));
 		$cart{'items_max'} = unpack("S1", substr($msg, 4, 2));
 		$cart{'weight'} = int(unpack("L1", substr($msg, 6, 4)) / 10);
 		$cart{'weight_max'} = int(unpack("L1", substr($msg, 10, 4)) / 10);
 		$msg_size = 14;
 
-	} elsif ($switch eq "0122" && length($msg) >= unpack("S1",substr($msg, 2, 2))) {
+	} elsif ($switch eq "0122") {
 #Solos Start
 		$msg_size = unpack("S1",substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
@@ -6965,7 +7322,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Non-Stackable Cart Item: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x 1\n" if ($config{'debug'} >= 1);
 		}
 #Solos End
-	} elsif ($switch eq "0123" && length($msg) >= unpack("S1",substr($msg, 2, 2))) {
+	} elsif ($switch eq "0123") {
 		$msg_size = unpack("S1",substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
@@ -6988,7 +7345,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Cart Item: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x $amount\n" if ($config{'debug'} >= 1);
 		}
 
-	} elsif ($switch eq "0124" && length($msg) >= 21) {
+	} elsif ($switch eq "0124") {
 		$index = unpack("S1", substr($msg, 2, 2));
 		$amount = unpack("L1", substr($msg, 4, 4));
 		$ID = unpack("S1", substr($msg, 8, 2));
@@ -7027,7 +7384,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Cart Item Added: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x $amount\n";
 		$msg_size = 21;
 
-	} elsif ($switch eq "0125" && length($msg) >= 8) {
+	} elsif ($switch eq "0125") {
 		$index = unpack("S1", substr($msg, 2, 2));
 		$amount = unpack("L1", substr($msg, 4, 4));
 #Solos Start
@@ -7042,25 +7399,22 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		$msg_size = 8;
 
-	} elsif ($switch eq "0128" && length($msg) >= 8) {
-		$msg_size = 8;
-
-	} elsif ($switch eq "012C" && length($msg) >= 3) {
+	} elsif ($switch eq "012C") {
 		$index = unpack("S1", substr($msg, 3, 2));
 		$amount = unpack("L1", substr($msg, 7, 2));
 		$ID = unpack("S1", substr($msg, 9, 2));
 		if ($items_lut{$ID} ne "") {
 			print "Can't Add Cart Item: $items_lut{$ID}\n";
 		}
-	  	$msg_size = 3;
+	  	$msg_size = 26;
 #Solos Start
-	} elsif ($switch eq "012D" && length($msg) >= 4) {
+	} elsif ($switch eq "012D") {
 		#used the shop skill.
 		$number = unpack("S1",substr($msg, 2, 2));
 		print "You can sell $number items!\n";
 		$msg_size = 4;
 #Solos End
-	} elsif ($switch eq "0131" && length($msg) >= 86) {
+	} elsif ($switch eq "0131") {
 #Solos Start
 		$ID = substr($msg,2,4);
 		if (!%{$venderLists{$ID}}) {
@@ -7071,7 +7425,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 #Solos End
 		$msg_size = 86;
 
-	} elsif ($switch eq "0132" && length($msg) >= 6) {
+	} elsif ($switch eq "0132") {
 #Solos Start
 		$ID = substr($msg,2,4);
 		binRemove(\@venderListsID, $ID);
@@ -7079,7 +7433,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 #Solos End
 		$msg_size = 6;
 #Solos Start
-	} elsif ($switch eq "0133" && length($msg) >= unpack("S1",substr($msg,2,2))) {
+	} elsif ($switch eq "0133") {
 		if (length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 			$msg_size = unpack("S1",substr($msg,2,2));
 			undef @venderItemList;
@@ -7147,7 +7501,7 @@ $number $display $itemTypes_lut{$venderItemList[$number]{'type'}} $venderItemLis
 			print "--------------------------------------\n";
 		}
 
-	} elsif ($switch eq "0136" && length($msg) >= unpack("S1",substr($msg,2,2))) {
+	} elsif ($switch eq "0136") {
 		if (length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1",substr($msg,2,2));
 		#started a shop.
@@ -7215,7 +7569,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		print "-----------------------------------------\n";
 		undef $shop{'earned'};
 		}
-	} elsif ($switch eq "0137" && length($msg) >= 6) {
+	} elsif ($switch eq "0137") {
 		#sold something.
 		$number = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
@@ -7228,13 +7582,13 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			#$articles[$number] = "";
 			if (!--$articles){
 				print "sold all out.^^\n";
-				closeShop(\$remote_socket);
+				sendCloseShop(\$remote_socket);
 			}
 		}
 		$msg_size = 6;
 #Solos End
 
-	} elsif ($switch eq "0139" && length($msg) >= 16) {
+	} elsif ($switch eq "0139") {
 		$ID = substr($msg, 2, 4);
 		$type = unpack("C1",substr($msg, 14, 1));
 		$coords1{'x'} = unpack("S1",substr($msg, 6, 2));
@@ -7247,14 +7601,14 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		print "Recieved attack location - $monsters{$ID}{'pos_attack_info'}{'x'}, $monsters{$ID}{'pos_attack_info'}{'y'} - ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 		$msg_size = 16;
 
-	} elsif ($switch eq "013A" && length($msg) >= 4) {
+	} elsif ($switch eq "013A") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$msg_size = 4;
-
-	} elsif ($switch eq "013B" && length($msg) >= 4) {
+	} elsif ($switch eq "013B") {
+            $msg_size = 4;
+	} elsif ($switch eq "013C") {  
 		$msg_size = 4;
-
-	} elsif ($switch eq "013D" && length($msg) >= 6) {
+	} elsif ($switch eq "013D") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
 		if ($type == 5) {
@@ -7266,10 +7620,8 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		}
 		$msg_size = 6;
 
-	} elsif ($switch eq "013C" && length($msg) >= 4) {  
-		$msg_size = 4;
-
-	} elsif ($switch eq "013E" && length($msg) >= 24) {
+	} elsif ($switch eq "013E") {
+		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$sourceID = substr($msg, 2, 4);
 		$targetID = substr($msg, 6, 4);
 		$x = unpack("S1",substr($msg, 10, 2));
@@ -7330,15 +7682,11 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			} 
 #avoid code end 
 			$chatMsgUser = $players{$sourceID}{'name'}; 
-          		if (($config{'avoidGM'}) && ($chatMsgUser =~/GM(.*)\d{1,}/i)) {
-				print "*** Found GM $chatMsgUser casting Warp Portal nearby and teleported ***\n";
-				chatLog("s", "*** Found GM $chatMsgUser casting Warp Portal nearby and teleported ***\n"); 
-				useTeleport(2); 
-	        	}		
+			avoidGM_near($chatMsgUser);
 		}
 #Solos End
 
-	} elsif ($switch eq "0141" && length($msg) >= 14) {
+	} elsif ($switch eq "0141") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$val = unpack("S1",substr($msg, 6, 2));
 		$val2 = unpack("S1",substr($msg, 10, 2));
@@ -7369,10 +7717,10 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		}
 		$msg_size = 14;
 
-	} elsif ($switch eq "0145" && length($msg) >= 19) {
+	} elsif ($switch eq "0145") {
 		$msg_size = 19;
 
-	} elsif ($switch eq "0147" && length($msg) >= 39) {
+	} elsif ($switch eq "0147") {
 		$skillID = unpack("S*",substr($msg, 2, 2));
 #Solos Start
 		$skillLv = unpack("S*",substr($msg, 8, 2)); 
@@ -7380,27 +7728,43 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
       		sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
 #Solos End
 		$msg_size = 39;
-		
-		} elsif ($switch eq "0148" && length($msg) >= 19) {
-		$msg_size = 19;
-
-	} elsif ($switch eq "014B" && length($msg) >= 27) {
+#viper mass addon begin
+	} elsif ($switch eq "014B") {
 		$msg_size = 27;
-
+	} elsif ($switch eq "014C") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "014E") {
+		$msg_size = 6;
+	} elsif ($switch eq "0150") {
+		$msg_size = 110;
 	} elsif ($switch eq "0152" && length($msg) >= unpack("S1", substr($msg, 2, 2))) { 
 		$msg_size = unpack("S*", substr($msg, 2, 2));
-
-	} elsif ($switch eq "0157" && length($msg) >= 6) {
-		$msg_size = 6;
-
-	} elsif ($switch eq "016A" && length($msg) >= 30) {
+        } elsif ($switch eq "0154") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "0156") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "015A") {
+		$msg_size = 66;
+	} elsif ($switch eq "015C") {
+		$msg_size = 90;
+	} elsif ($switch eq "0160") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "0163") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "0166") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "0167") {
+		$msg_size = 3;
+	} elsif ($switch eq "0169") {
+		$msg_size = 3;
+	} elsif ($switch eq "016A") {
 		$msg_size = 30;
-
-	} elsif ($switch eq "016C" && length($msg) >= 43) {
+#viper mass addon end
+	} elsif ($switch eq "016C") {
 		($chars[$config{'char'}]{'guild'}{'name'}) = substr($msg, 19, 24) =~ /([\s\S]*?)\000/;
 		$msg_size = 43;
 	
-	} elsif ($switch eq "016D" && length($msg) >= 14) {
+	} elsif ($switch eq "016D") {
 #Solos Start
 		$ID = substr($msg, 2, 4); 
 		$TargetID =  substr($msg, 6, 4); 
@@ -7410,7 +7774,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} else { 
 			$isOnline = "Log Out"; 
 		} 
-		sendGMNameRequest(\$remote_socket, $TargetID); 
+		sendGuildMemberNameRequest(\$remote_socket, $TargetID); 
 #Solos End
 		$msg_size = 14;
 
@@ -7422,7 +7786,12 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			,"$message\n"
 			,"------------------\n";
 		$msg_size = 182;
-
+	} elsif ($switch eq "0171") {
+		$msg_size = 30;
+	} elsif ($switch eq "0173") {
+		$msg_size = 3;
+	} elsif ($switch eq "0174") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "0177" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
@@ -7436,7 +7805,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		}
 		print "Recieved Possible Identify List - type 'identify'\n";
 
-	} elsif ($switch eq "0179" && length($msg) >= 5) {
+	} elsif ($switch eq "0179") {
 		$index = unpack("S*",substr($msg, 2, 2));
 		undef $invIndex;
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
@@ -7445,13 +7814,17 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		print "Item Identified: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'}\n";
 		undef @identifyID;
 		$msg_size = 5;
-
+	} elsif ($switch eq "017B") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "017D") {
+		$msg_size = 7;
 	} elsif ($switch eq "017F" && length($msg) >= unpack("S1", substr($msg, 2, 2))) { 
 		$msg_size = unpack("S*", substr($msg, 2, 2));
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		$ID = substr($msg, 4, 4);
 		$chat = substr($msg, 4, $msg_size - 4); 
+		$chat =~ s/\000$//;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
 		chatLog("g", $chat."\n");
 		$ai_cmdQue[$ai_cmdQue]{'type'} = "g"; 
@@ -7462,19 +7835,19 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$ai_cmdQue++;
 		print "[Guild] $chat\n";
 
-	} elsif ($switch eq "0180" && length($msg) >= 6) {
-		$msg_size = 6;
-
-	} elsif ($switch eq "0182" && length($msg) >= 106) {
+	} elsif ($switch eq "0180") {
+		$msg_size = 11;
+	} elsif ($switch eq "0181") {
+		$msg_size = 3;
+	} elsif ($switch eq "0182") {
 		$msg_size = 106;
+	} elsif ($switch eq "0183") {
+		$msg_size = 15;
 
-	} elsif ($switch eq "0183" && length($msg) >= 10) {
-		$msg_size = 10;
-
-	} elsif ($switch eq "0187" && length($msg) >= 6) {
+	} elsif ($switch eq "0187") {
 		$msg_size = 6;
 
-	} elsif ($switch eq "0188" && length($msg) >= 8) {
+	} elsif ($switch eq "0188") {
 		$type =  unpack("S1",substr($msg, 2, 2));
 		$index = unpack("S1",substr($msg, 4, 2));
 		$enchant = unpack("S1",substr($msg, 6, 2));
@@ -7482,19 +7855,21 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = $enchant;
 		$msg_size = 8;
 
-	} elsif ($switch eq "018A" && length($msg) >= 4) {
+	} elsif ($switch eq "018A") {
+		$msg_size = 3;
+	} elsif ($switch eq "018B") {
 		$msg_size = 4;
-
-	} elsif ($switch eq "018C" && length($msg) >=29) {
-		$msg_size = 29;
-
-	} elsif ($switch eq "0191" && length($msg) >= 86) {
+	} elsif ($switch eq "018C") {
+		$msg_size = 29
+	} elsif ($switch eq "018E") {
+		$msg_size = 97;
+	} elsif ($switch eq "0191") {
 		$msg_size = 86;
 
-	} elsif ($switch eq "0192" && length($msg) >= 24) {
+	} elsif ($switch eq "0192") {
 		$msg_size = 24;
 #Solos Start
-	} elsif ($switch eq "0194" && length($msg) >= 30) { 
+	} elsif ($switch eq "0194") { 
 		$ID = substr($msg, 2, 4); 
 		if ($characterID ne $ID) { 
 			($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/; 
@@ -7502,7 +7877,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} 
 		$msg_size = 30; 
 #Solos End
-	} elsif ($switch eq "0195" && length($msg) >= 102) {
+	} elsif ($switch eq "0195") {
 		$ID = substr($msg, 2, 4);
 		if (%{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
@@ -7513,11 +7888,11 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		}
 		$msg_size = 102;
 
-	} elsif ($switch eq "0196" && length($msg) >= 9) {
+	} elsif ($switch eq "0196") {
 		#two-hand quicken
 		$msg_size = 9
 
-	} elsif ($switch eq "019B" && length($msg) >= 10) {
+	} elsif ($switch eq "019B") {
 		$ID = substr($msg, 2, 4);
 		$type = unpack("L1",substr($msg, 6, 4));
 		if (%{$players{$ID}}) {
@@ -7531,17 +7906,18 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			print "Player $name gained a job level!\n";
 		}
 		$msg_size = 10;
-
-	} elsif ($switch eq "01F4" && length($msg) >= 7) {
+	} elsif ($switch eq "019E") {
+		$msg_size = 9;
+	} elsif ($switch eq "01F4") {
 		$msg_size = 7;
 
-	} elsif ($switch eq "01A2" && length($msg) >= 35) {
+	} elsif ($switch eq "01A2") {
 		#pet
 		($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		$pets{$ID}{'name_given'} = 1;
 		$msg_size = 35;
 
-	} elsif ($switch eq "01A4" && length($msg) >= 11) {
+	} elsif ($switch eq "01A4") {
 #pet spawn
 		$type = unpack("C1",substr($msg, 2, 1));
 		$ID = substr($msg, 3, 4);
@@ -7559,34 +7935,25 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$msg_size = 11;
 #end of pet spawn code
 		
-	} elsif ($switch eq "01AA" && length($msg) >= 10) {
+	} elsif ($switch eq "01AA") {
 		#pet
 		$msg_size = 10;
 
-	} elsif ($switch eq "01AC" && length($msg) >= 6) {
-		$msg_size = 6;
-
-	} elsif ($switch eq "01AD" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-      		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "01B0") {
+		$msg_size = 11;
 
 #Solos Start
-    } elsif ($switch eq "01B3" && length($msg) >= 67) {
+    } elsif ($switch eq "01B3") {
 		#NPC image 
 		$npc_image = substr($msg, 2,64); 
 		($npc_image) = $npc_image =~ /(\S+)/; 
 		print "NPC image: $npc_image\n" if $config{'debug'}; 
 		$msg_size = 67;
 #Solos End
-	} elsif ($switch eq "01B5" && length($msg) >= 18) {
-		$msg_size = 18;
-		
-	} elsif ($switch eq "01B6" && length($msg) >= 114) {
-		$msg_size = 114;		
-
-	} elsif ($switch eq "01BF" && length($msg) >= 3) {
-		$msg_size = 3;
+	} elsif ($switch eq "01B5") {
+		$msg_size = 18;	
 			
-	} elsif ($switch eq "01C4" && length($msg) >= 22) { 
+	} elsif ($switch eq "01C4") { 
       		$index = unpack("S1", substr($msg, 2, 2)); 
       		$amount = unpack("L1", substr($msg, 4, 4)); 
       		$ID = unpack("S1", substr($msg, 8, 2)); 
@@ -7602,29 +7969,43 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
       		} 
       		print "Storage Item Added: $storage{'inventory'}[$index]{'name'} ($index) x $amount\n"; 
 		$msg_size = 22; 
-	
-	} elsif ($switch eq "01C8" && length($msg) >= 13) { 
-	      	$index = unpack("S1",substr($msg, 2, 2)); 
-	      	$ID = unpack("S1", substr($msg, 4, 2)); 
-	      	$time = unpack("L1", substr($msg, 6, 4)); 
-	      	$amountleft = unpack("S1",substr($msg, 10, 2));
-	      	undef $invIndex; 
-	      	$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		$amount = $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $amountleft;
-		$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount; 
-	      	print "You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n"; 
-	      	if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) { 
-        		undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]}; 
-      		} 
-      		$msg_size = 13;
-      	
-      	} elsif ($switch eq "01CB" && length($msg) >= 9) {
-      		$msg_size = 9;
-      	
-      	} elsif ($switch eq "01D7" && length($msg) >= 11) {
-      		$msg_size = 11;
-      		
-      		} elsif ($switch eq "01D8" && length($msg) >= 52) {
+
+	} elsif ($switch eq "01C8") {
+		my $index = unpack("S1",substr($msg, 2, 2));
+		my $ID = substr($msg, 6, 4);
+		my $itemType = unpack("S1", substr($msg, 4, 2));
+		my $amountleft = unpack("S1",substr($msg, 10, 2));
+		my $itemDisplay = ($items_lut{$itemType} ne "") 
+			? $items_lut{$itemType}
+			: "Unknown";
+
+		if ($ID eq $accountID) {
+			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+			my $amount = $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $amountleft;
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
+
+			print "You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n";
+			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
+				undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
+			}
+
+		} elsif (%{$players{$ID}}) {
+			print "Player $players{$ID}{'name'} ($players{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n";
+
+		} elsif (%{$monsters{$ID}}) {
+			print "Monster $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n";
+
+		} else {
+			print "Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n";
+
+		}
+
+		$msg_size = 13;
+
+	} elsif ($switch eq "01D7") {
+		$msg_size = 11;
+
+	} elsif ($switch eq "01D8" && length($msg) >= 52) {
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
 		$type = unpack("S*",substr($msg, 14,  2));
@@ -7715,7 +8096,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} else {
 			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 52;
+		$msg_size = 54;
       		
       		} elsif ($switch eq "01D9" && length($msg) >= 51) {
 		$ID = substr($msg, 2, 4);
@@ -7739,7 +8120,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} else {
 			print "Unknown Connected: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 51;
+		$msg_size = 53;
 
 	} elsif ($switch eq "01DA" && length($msg) >= 58) {
 		$ID = substr($msg, 2, 4);
@@ -7800,47 +8181,29 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			%{$players{$ID}{'pos'}} = %coordsFrom;
 			%{$players{$ID}{'pos_to'}} = %coordsTo;
 			print "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'} >= 2);
-#Solos Start			
+
+			avoidGM_near();
 			for ($i=0;$i<@playersID;$i++) { 
    				next if($playersID[$i] eq ""); 
-   				if ($players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) { 
-					if (($config{'avoidGM'} eq "2") || !($cities_lut{$field{'name'}.'.rsw'})) {
-      						print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";  
-                                		chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
-                                		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-						$timeout_ex{'master'}{'time'} = time;
-						$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
- #                               		sendTeleport(\$remote_socket, "Random");  
-                               			killConnection(\$remote_socket);
-      						last; 
-					} else {
-      					print "GM $players{$playersID[$i]}{'name'} is nearby...\n"; 
-      					chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby ***\n"); 
-					}
-				}
-#avoid list
 				$j = 0;
 				while ($avoid{"avoid_$j"} ne "") {
-#					if ($players{$playersID[$i]}{'name'} =~/.*$avoid{'avoid_$j'}+$/i || $players{$playersID[$i]}{'name'} =~ /.*$avoid{'avoid_$j'}+\W/i) {
 					if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) { 
 						print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";  
-                                		chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
-                                		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+						chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
+						print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
 						$timeout_ex{'master'}{'time'} = time;
 						$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
- #                               		sendTeleport(\$remote_socket, "Random");  
-                               			killConnection(\$remote_socket);
-                               			last;
+						killConnection(\$remote_socket);
+						last;
 					}
 					$j++;
 				}
 				undef $j;
-			} 
-#Solos End
+			}
 		} else {
 			print "Unknown Moved: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
-		$msg_size = 58;
+		$msg_size = 60;
 		
 	} elsif ($switch eq "01DE" && length($msg) >= 33) {
 		$skillID = unpack("S1",substr($msg, 2, 2));
@@ -7848,6 +8211,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$targetID = substr($msg, 8, 4);
 		$damage = unpack("S1",substr($msg, 24, 2));
 		$level = unpack("S1",substr($msg, 28, 2));
+
 		undef $sourceDisplay;
 		undef $targetDisplay;
 		undef $extra;
@@ -7887,19 +8251,15 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		} else {
 			$targetDisplay = "unknown";
 		}
-		if ($damage != 35536) { 
-                	if ($level_real ne "") { 
-                     		$level = $level_real; 
-                	} 
-                	print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n"; 
-           	} else { 
-                	$level_real = $level; 
-               	 	print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level)\n"; 
-           	} 
+		if ($damage != 35536) {
+			$level = $level_real if ($level_real ne "");
+			$damage = "Miss!" if (!$damage);
+			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
+		} else {
+			$level_real = $level;
+			print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level)\n";
+		}
 		$msg_size = 33;
-		
-	} elsif ($switch eq "01E0" && length($msg) >= 30) {
-		$msg_size = 30;
 #Solos Start
     } elsif ($switch eq "08DC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
@@ -7987,18 +8347,41 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$msg_size = unpack("S1", substr($msg, 2, 2));
     } elsif ($switch eq "00CF") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
+#viper mass add begin
+    } elsif ($switch eq "01A0") {
+		$msg_size = 3;
+    } elsif ($switch eq "01A3") {
+		$msg_size = 5;
+    } elsif ($switch eq "01A6") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+    } elsif ($switch eq "01AC") {
+		$msg_size = 6;
+    } elsif ($switch eq "01AD") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+    } elsif ($switch eq "01B1") {
+		$msg_size = 15;
+    } elsif ($switch eq "01B6") {
+		$msg_size = 114;
+    } elsif ($switch eq "01B9") {
+		$msg_size = 6;
+    } elsif ($switch eq "01C9") {
+		$msg_size = 97;
+    } elsif ($switch eq "01D2") {
+		$msg_size = 10;
+    } elsif ($switch eq "01D6") {
+		$msg_size = 12;
+    } elsif ($switch eq "01DC") {
+		$msg_size = unpack("S1", substr($msg, 2, 2));
+#viper mass add end
+	} elsif ($switch eq "40A1") {
+		$msg_size = 4;
 #Solos End
-	} else { 
-      		print "Unparsed packet - $switch\n" if $config{'debug'}; 
-#packet debugger
-      		if ($config{'debug_filter'}) { 
-         		dumpData(substr($msg, 0, $msg_size)) if ($config{'debug_packet'} >= 3); 
-      		} else { 
-         		undef $msg_size; 
-      		} 
-   	} 
-   	$lastPacket = substr($msg, 0, $msg_size) if ($config{'debug_packet'} >= 2 && $msg_size); 
-   	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
+
+	} elsif (!existsInList($config{'debugPacket_exclude'}, $switch)) {
+		print "Unparsed packet - $switch\n" if ($config{'debugPacket_received'});
+	}
+
+	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
 	return $msg;
 }
 
@@ -8371,11 +8754,12 @@ sub ai_route_getRoute {
 sub ai_route_getRoute_destroy {
 	my $r_args = shift;
 	if (!$config{'buildType'}) {
-		$CalcPath_destroy->Call($$r_args{'session'});
+		$CalcPath_destroy->Call($$r_args{'session'}) if ($$r_args{'session'} ne "");;
 	} elsif ($config{'buildType'} == 1) {
-		&{$CalcPath_destroy}($$r_args{'session'});
+		&{$CalcPath_destroy}($$r_args{'session'}) if ($$r_args{'session'} ne "");;
 	}
 }
+
 sub ai_route_searchStep {
 	my $r_args = shift;
 	my $ret;
@@ -8532,6 +8916,7 @@ sub attack {
 	unshift @ai_seq, "attack";
 	unshift @ai_seq_args, \%args;
 	print "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
+	injectMessage("Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})") if ($config{'verbose'} && $config{'XKore'});
 #Solos Start
 	$startedattack = 1;
 #xlr82xs start
@@ -8563,7 +8948,7 @@ sub attack {
 				}
          			if (($eq_shield ne "") && !($chars[$config{'char'}]{'inventory'}[$eq_shield]{'equipped'})) {
             				print "Equiping :".$config{"autoSwitch_shield_new_$i"}."\n";
-            				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'index'}, 32, 0);
+            				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'index'}, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'type_equip'}, 32, 0);
          			}
 				last;
 			}
@@ -8690,7 +9075,10 @@ sub quit {
 sub relog {
 	$conState = 1;
 	undef $conState_tries;
-	print "Relogging\n";
+	$timeout_ex{'master'}{'time'} = time;
+	$timeout_ex{'master'}{'timeout'} = 5;
+	killConnection(\$remote_socket);
+	print "Relogging in 5 seconds...\n";
 }
 
 sub sendMessage {
@@ -8738,7 +9126,9 @@ sub sendMessage {
 					$lastpm{'msg'} = $msg;
 					$lastpm{'user'} = $user;
 					push @lastpm, {%lastpm};
-				}
+				} elsif ($type eq "k" && $config{'XKore'}) {
+					injectMessage($msg);
+ 				}
 				$msg[$i] = substr($msg[$i], $amount - length($oldmsg), length($msg[$i]) - $amount - length($oldmsg));
 				undef $msg;
 			}
@@ -8767,6 +9157,8 @@ sub sendMessage {
 				$lastpm{'msg'} = $msg;
 				$lastpm{'user'} = $user;
 				push @lastpm, {%lastpm};
+			} elsif ($type eq "k" && $config{'XKore'}) {
+				injectMessage($msg);
 			}
 			$msg = $msg[$i];
 		}
@@ -8783,6 +9175,8 @@ sub sendMessage {
 				$lastpm{'msg'} = $msg;
 				$lastpm{'user'} = $user;
 				push @lastpm, {%lastpm};
+			} elsif ($type eq "k" && $config{'XKore'}) {
+				injectMessage($msg);
 			}
 		}
 	}
@@ -8920,6 +9314,17 @@ sub percent_weight {
 	}
 }
 
+sub posNearPlayer {
+	my $r_hash = shift;
+	my $dist = shift;
+
+	for (my $i = 0; $i < @playersID; $i++) {
+		next if ($playersID[$i] eq "");
+		return 1 if (distance($r_hash, \%{$players{$playersID[$i]}{'pos_to'}}) <= $dist);
+	}
+	return 0;
+}
+
 #######################################
 #######################################
 #CONFIG MODIFIERS
@@ -8941,7 +9346,8 @@ sub auth {
 sub configModify {
 	my $key = shift;
 	my $val = shift;
-	print "Config '$key' set to $val\n";
+	my $quiet = shift;
+	print "Config '$key' set to $val\n" unless ($quiet);
 	$config{$key} = $val;
 	writeDataFileIntact($config_file, \%config);
 }
@@ -9039,7 +9445,7 @@ sub decrypt {
 }
 
 sub encrypt {
-	my $r_socket = shift;
+	my $r_msg = shift;
 	my $themsg = shift;
 	my @mask;
 	my $newmsg;
@@ -9113,21 +9519,39 @@ sub encrypt {
 	} else {
 		$newmsg = $themsg;
 	}
-	$$r_socket->send($newmsg) if $$r_socket && $$r_socket->connected();
+
+	$$r_msg = $newmsg;
+}
+
+sub injectMessage {
+	my $message = shift;
+	my $name = "|";
+	my $msg .= $name . " : " . $message . chr(0);
+	encrypt(\$msg, $msg);
+	$msg = pack("C*",0x09, 0x01) . pack("S*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
+	encrypt(\$msg, $msg);
+	sendToClientByInject(\$remote_socket, $msg);
+}
+
+sub injectAdminMessage {
+	my $message = shift;
+	$msg = pack("C*",0x9A, 0x00) . pack("S*", length($message)+5) . $message .chr(0);
+	encrypt(\$msg, $msg);
+	sendToClientByInject(\$remote_socket, $msg);
 }
 
 sub sendAddSkillPoint {
 	my $r_socket = shift;
 	my $skillID = shift;
 	my $msg = pack("C*", 0x12, 0x01) . pack("S*", $skillID);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendAddStatusPoint {
 	my $r_socket = shift;
 	my $statusID = shift;
 	my $msg = pack("C*", 0xBB, 0) . pack("S*", $statusID) . pack("C*", 0x01);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendAlignment {
@@ -9135,7 +9559,7 @@ sub sendAlignment {
 	my $ID = shift;
 	my $alignment = shift;
 	my $msg = pack("C*", 0x49, 0x01) . $ID . pack("C*", $alignment);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Alignment: ".getHex($ID).", $alignment\n" if ($config{'debug'} >= 2);
 }
 
@@ -9143,15 +9567,18 @@ sub sendAttack {
 	my $r_socket = shift;
 	my $monID = shift;
 	my $flag = shift;
-        my $msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag);
-	encrypt($r_socket, $msg);
+	my $msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent attack: ".getHex($monID)."\n" if ($config{'debug'} >= 2);
 }
 
 sub sendAttackStop {
 	my $r_socket = shift;
-        my $msg = pack("C*", 0x18, 0x01);
-	encrypt($r_socket, $msg);
+	#my $msg = pack("C*", 0x18, 0x01);
+	# Apparently this packet is wrong. The server disconnects us if we do this.
+	# Sending a move command to the current position seems to be able to emulate
+	# what this function is supposed to do.
+	sendMove ($r_socket, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 	print "Sent stop attack\n" if $config{'debug'};
 }
 
@@ -9160,8 +9587,17 @@ sub sendBuy {
 	my $ID = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xC8, 0x00, 0x08, 0x00) . pack("S*", $amount, $ID);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent buy: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
+}
+
+sub sendBuyVender {
+	my $r_socket = shift;
+	my $ID = shift;
+	my $amount = shift;
+	my $msg = pack("C*", 0x34, 0x01, 0x0C, 0x00) . $venderID . pack("S*", $amount, $ID);
+	sendMsgToServer($r_socket, $msg);
+	print "Sent Vender Buy: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
 sub sendCartAdd {  
@@ -9169,7 +9605,7 @@ sub sendCartAdd {
 	my $index = shift;  
 	my $amount = shift;
 	my $msg = pack("C*", 0x26, 0x01) . pack("S*", $index) . pack("L*", $amount); 
-	encrypt($r_socket, $msg);  
+	sendMsgToServer($r_socket, $msg);  
 	print "Sent Cart Add: $index x $amount\n" if ($config{'debug'} >= 2);
 }
 
@@ -9178,7 +9614,7 @@ sub sendCartGet {
 	my $index = shift;  
 	my $amount = shift;
 	my $msg = pack("C*", 0x27, 0x01) . pack("S*", $index) . pack("L*", $amount); 
-	encrypt($r_socket, $msg);  
+	sendMsgToServer($r_socket, $msg);  
 	print "Sent Cart Get: $index x $amount\n" if ($config{'debug'} >= 2);
 }
 
@@ -9186,7 +9622,7 @@ sub sendCharLogin {
 	my $r_socket = shift;
 	my $char = shift;
 	my $msg = pack("C*", 0x66,0) . pack("C*",$char);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendChat {
@@ -9194,7 +9630,7 @@ sub sendChat {
 	my $message = shift;
 	my $msg = pack("C*",0x8C, 0x00) . pack("S*", length($chars[$config{'char'}]{'name'}) + length($message) + 8) . 
 		$chars[$config{'char'}]{'name'} . " : " . $message . chr(0);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendChatRoomBestow {
@@ -9203,7 +9639,7 @@ sub sendChatRoomBestow {
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00).$name;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Chat Room Bestow: $name\n" if ($config{'debug'} >= 2);
 }
 
@@ -9216,7 +9652,7 @@ sub sendChatRoomChange {
 	$password = substr($password, 0, 8) if (length($password) > 8);
 	$password = $password . chr(0) x (8 - length($password));
 	my $msg = pack("C*", 0xDE, 0x00).pack("S*", length($title) + 15, $limit).pack("C*",$public).$password.$title;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Change Chat Room: $title, $limit, $public, $password\n" if ($config{'debug'} >= 2);
 }
 
@@ -9229,7 +9665,7 @@ sub sendChatRoomCreate {
 	$password = substr($password, 0, 8) if (length($password) > 8);
 	$password = $password . chr(0) x (8 - length($password));
 	my $msg = pack("C*", 0xD5, 0x00).pack("S*", length($title) + 15, $limit).pack("C*",$public).$password.$title;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Create Chat Room: $title, $limit, $public, $password\n" if ($config{'debug'} >= 2);
 }
 
@@ -9240,7 +9676,7 @@ sub sendChatRoomJoin {
 	$password = substr($password, 0, 8) if (length($password) > 8);
 	$password = $password . chr(0) x (8 - length($password));
 	my $msg = pack("C*", 0xD9, 0x00).$ID.$password;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Join Chat Room: ".getHex($ID)." $password\n" if ($config{'debug'} >= 2);
 }
 
@@ -9250,21 +9686,30 @@ sub sendChatRoomKick {
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0xE2, 0x00).$name;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Chat Room Kick: $name\n" if ($config{'debug'} >= 2);
 }
 
 sub sendChatRoomLeave {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xE3, 0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Leave Chat Room\n" if ($config{'debug'} >= 2);
+}
+
+sub sendCloseShop {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0x2E, 0x01);
+	sendMsgToServer($r_socket, $msg);
+	print "Shop Closed: $index x $amount\n" if ($config{'debug'} >= 2);
+	$shopstarted = 0;
+	stand();
 }
 
 sub sendCurrentDealCancel {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xED, 0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Cancel Current Deal\n" if ($config{'debug'} >= 2);
 }
 
@@ -9272,14 +9717,14 @@ sub sendDeal {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xE4, 0x00) . $ID;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Initiate Deal: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
 sub sendDealAccept {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xE6, 0x00, 0x03);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Accept Deal\n" if ($config{'debug'} >= 2);
 }
 
@@ -9288,35 +9733,35 @@ sub sendDealAddItem {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xE8, 0x00) . pack("S*", $index) . pack("L*",$amount);	
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Deal Add Item: $index, $amount\n" if ($config{'debug'} >= 2);
 }
 
 sub sendDealCancel {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xE6, 0x00, 0x04);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Cancel Deal\n" if ($config{'debug'} >= 2);
 }
 
 sub sendDealFinalize {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xEB, 0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Deal OK\n" if ($config{'debug'} >= 2);
 }
 
 sub sendDealOK {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xEB, 0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Deal OK\n" if ($config{'debug'} >= 2);
 }
 
 sub sendDealTrade {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xEF, 0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Deal Trade\n" if ($config{'debug'} >= 2);
 }
 
@@ -9325,7 +9770,7 @@ sub sendDrop {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xA2, 0x00) . pack("S*", $index, $amount);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent drop: $index x $amount\n" if ($config{'debug'} >= 2);
 }
 
@@ -9333,8 +9778,16 @@ sub sendEmotion {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xBF, 0x00).pack("C1",$ID);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Emotion\n" if ($config{'debug'} >= 2);
+}
+
+sub sendEnteringVender {
+	my $r_socket = shift;
+	my $ID = shift;
+	my $msg = pack("C*", 0x30, 0x01) . $ID;
+	sendMsgToServer($r_socket, $msg);
+	print "Sent Entering Vender: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
 sub sendEquip{
@@ -9343,7 +9796,7 @@ sub sendEquip{
 	my $type = shift;
 	my $masktype = shift;
 	my $msg = pack("C*", 0xA9, 0x00) . pack("S*", $index) .  pack("C*", $type, $masktype);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Equip: $index\n" if ($config{'debug'} >= 2);
 }
 
@@ -9353,14 +9806,14 @@ sub sendGameLogin {
 	my $sessionID = shift;
 	my $sex = shift;
 	my $msg = pack("C*", 0x65,0) . $accountID . $sessionID . pack("C*", 0,0,0,0,0,0,$sex);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendGetPlayerInfo {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0x94, 0x00) . $ID;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent get player info: ID - ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
@@ -9368,7 +9821,7 @@ sub sendGetStoreList {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xC5, 0x00) . $ID . pack("C*",0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent get store list: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
@@ -9376,23 +9829,31 @@ sub sendGetSellList {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xC5, 0x00) . $ID . pack("C*",0x01);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent sell to NPC: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
-sub sendGuildChat { 
-	my $r_socket = shift; 
-	my $message = shift; 
-	my $msg = pack("C*",0x7E, 0x01) . pack("S*",length($chars[$config{'char'}]{'name'}) + length($message) + 8) . 
-	$chars[$config{'char'}]{'name'} . " : " . $message . chr(0); 
-	encrypt($r_socket, $msg); 
-} 
+sub sendGuildMemberNameRequest {
+	my $r_socket = shift;
+	my $ID = shift;
+	my $msg = pack("C*", 0x93, 0x01) . $ID;
+	sendMsgToServer($r_socket, $msg);
+	print "Sent Guild Member Name Request : ".getHex($ID)."\n" if ($config{'debug'} >= 2);
+}
+
+sub sendGuildChat {
+	my $r_socket = shift;
+	my $message = shift;
+	my $msg = pack("C*",0x7E, 0x01) . pack("S*",length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
+	$chars[$config{'char'}]{'name'} . " : " . $message . chr(0);
+	sendMsgToServer($r_socket, $msg);
+}
 
 sub sendIdentify {
 	my $r_socket = shift;
 	my $index = shift;
 	my $msg = pack("C*", 0x78, 0x01) . pack("S*", $index);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Identify: $index\n" if ($config{'debug'} >= 2);
 }
 
@@ -9403,7 +9864,7 @@ sub sendIgnore {
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0xCF, 0x00).$name.pack("C*", $flag);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Ignore: $name, $flag\n" if ($config{'debug'} >= 2);
 }
 
@@ -9411,7 +9872,7 @@ sub sendIgnoreAll {
 	my $r_socket = shift; 
 	my $flag = shift; 
 	my $msg = pack("C*", 0xD0, 0x00).pack("C*", $flag); 
-	encrypt($r_socket, $msg); 
+	sendMsgToServer($r_socket, $msg); 
 	print "Sent Ignore All: $flag\n" if ($config{'debug'} >= 2); 
 }
 
@@ -9420,7 +9881,7 @@ sub sendIgnoreListGet {
 	my $r_socket = shift;  
 	my $flag = shift;  
 	my $msg = pack("C*", 0xD3, 0x00);  
-	encrypt($r_socket, $msg); 
+	sendMsgToServer($r_socket, $msg); 
 	print "Sent get Ignore List: $flag\n" if ($config{'debug'} >= 2);
 }
 
@@ -9429,17 +9890,16 @@ sub sendItemUse {
 	my $ID = shift;
 	my $targetID = shift;
 	my $msg = pack("C*", 0xA7, 0x00).pack("S*",$ID).$targetID;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Item Use: $ID\n" if ($config{'debug'} >= 2);
 }
-
 
 sub sendLook {
 	my $r_socket = shift;
 	my $body = shift;
 	my $head = shift;
 	my $msg = pack("C*", 0x9B, 0x00, $head, 0x00, $body);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent look: $body $head\n" if ($config{'debug'} >= 2);
 	$chars[$config{'char'}]{'look'}{'head'} = $head;
 	$chars[$config{'char'}]{'look'}{'body'} = $body;
@@ -9449,7 +9909,7 @@ sub sendMapLoaded {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0x7D,0x00);
 	print "Sending Map Loaded\n" if $config{'debug'};
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendMapLogin {
@@ -9459,7 +9919,7 @@ sub sendMapLogin {
 	my $sessionID = shift;
 	my $sex = shift;
 	my $msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendMasterLogin {
@@ -9468,13 +9928,13 @@ sub sendMasterLogin {
 	my $password = shift;
 	my $msg = pack("C*", 0x64,0,$config{'version'},0,0,0) . $username . chr(0) x (24 - length($username)) . 
 			$password . chr(0) x (24 - length($password)) . pack("C*", $config{"master_version_$config{'master'}"});
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendMemo {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0x1D, 0x01);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Memo\n" if ($config{'debug'} >= 2);
 }
 
@@ -9483,8 +9943,80 @@ sub sendMove {
 	my $x = shift;
 	my $y = shift;
 	my $msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent move to: $x, $y\n" if ($config{'debug'} >= 2);
+}
+
+sub sendOpenShop {
+	my $r_socket = shift;
+
+	$i = 0;
+	while ($shop{"name_$i"} ne "") {
+		$i++;
+	}
+	$totalitem = $i;
+
+	$items_selling = 0;
+	for( $i=0; $i < $totalitem; $i++) {
+		$citem = -1;
+		for ( $j=0; $j < $cart{'items'}; $j++) {
+			if ($cart{'inventory'}{$cartID[$j]}{'name'} eq $shop{"name_$i"}) {
+				$items_selling++;
+				last;
+			}
+		}
+	}
+
+	if ($items_selling > 12) { 
+		$items_selling = 12; 
+	}
+
+	my $length = 0x54 + 0x08 * $items_selling;
+
+	my $msg = pack("C*", 0x2F, 0x01) . pack("S*", $length) . 
+	$shop{'shop_title'} . chr(0) x (36 - length($shop{'shop_title'})) . chr(0) x 44;
+
+	$items_selling = 0;
+
+	for( $i=0; $i < $totalitem; $i++) {
+		$citem = -1;
+		for ( $j=0; $j < $cart{'items'}; $j++) {
+			if ($cart{'inventory'}{$cartID[$j]}{'name'} eq $shop{"name_$i"}) {
+				$index = $cart{'inventory'}{$cartID[$j]}{'index'};
+				$citem = $j;
+				$items_selling++;
+				last;
+			}
+		}
+		next if ($citem == -1);
+		next if ($items_selling > 12);
+		if ($shop{"quantity_$i"} > 0) {
+			if ($shop{"quantity_$i"} > $cart{'inventory'}{$cartID[$citem]}{'amount'}) { 
+				$amount = $cart{'inventory'}{$cartID[$citem]}{'amount'};
+			} else {
+				$amount = $shop{"quantity_$i"};
+			}
+		} else {
+			$amount = $cart{'inventory'}{$cartID[$citem]}{'amount'};
+		}
+
+		if ($shop{"price_$i"} > 0) {
+			$price = $shop{"price_$i"};
+		} else {
+			print "You have provided an invalid price.\n";
+			last;
+		}
+
+		$msg .= pack("S*", $index) . pack("S*", $amount) . pack("L*", $price);
+	}
+
+	if (length($msg) == $length) {
+		sendMsgToServer($r_socket, $msg);
+		print "Shop Opened.\n";
+		$shopstarted = 1;
+	} else {
+		print "Error opening shop...\n";
+	}
 }
 
 sub sendPartyChat {
@@ -9492,7 +10024,7 @@ sub sendPartyChat {
 	my $message = shift;
 	my $msg = pack("C*",0x08, 0x01) . pack("S*",length($chars[$config{'char'}]{'name'}) + length($message) + 8) . 
 		$chars[$config{'char'}]{'name'} . " : " . $message . chr(0);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendPartyJoin {
@@ -9500,7 +10032,7 @@ sub sendPartyJoin {
 	my $ID = shift;
 	my $flag = shift;
 	my $msg = pack("C*", 0xFF, 0x00).$ID.pack("L", $flag);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Join Party: ".getHex($ID).", $flag\n" if ($config{'debug'} >= 2);
 }
 
@@ -9508,7 +10040,7 @@ sub sendPartyJoinRequest {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xFC, 0x00).$ID;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Request Join Party: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
@@ -9519,14 +10051,14 @@ sub sendPartyKick {
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0x03, 0x01).$ID.$name;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Kick Party: ".getHex($ID).", $name\n" if ($config{'debug'} >= 2);
 }
 
 sub sendPartyLeave {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0x00, 0x01);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Leave Party: $name\n" if ($config{'debug'} >= 2);
 }
 
@@ -9536,7 +10068,7 @@ sub sendPartyOrganize {
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0xF9, 0x00).$name;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Organize Party: $name\n" if ($config{'debug'} >= 2);
 }
 
@@ -9544,7 +10076,7 @@ sub sendPartyShareEXP {
 	my $r_socket = shift;
 	my $flag = shift;
 	my $msg = pack("C*", 0x02, 0x01).pack("L", $flag);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Party Share: $flag\n" if ($config{'debug'} >= 2);
 }
 
@@ -9557,14 +10089,14 @@ sub sendRaw {
 	foreach (@raw) {
 		$msg .= pack("C", hex($_));
 	}
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Raw Packet: @raw\n" if ($config{'debug'} >= 2);
 }
 
 sub sendRespawn {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xB2, 0x00, 0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Respawn\n" if ($config{'debug'} >= 2);
 }
 
@@ -9574,7 +10106,7 @@ sub sendPrivateMsg {
 	my $message = shift;
 	my $msg = pack("C*",0x96, 0x00) . pack("S*",length($message) + 29) . $user . chr(0) x (24 - length($user)) .
 			$message . chr(0);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendSell {
@@ -9582,7 +10114,7 @@ sub sendSell {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xC9, 0x00, 0x08, 0x00) . pack("S*", $index, $amount);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent sell: $index x $amount\n" if ($config{'debug'} >= 2);
 	
 }
@@ -9590,7 +10122,7 @@ sub sendSell {
 sub sendSit {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0x89,0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sitting\n" if ($config{'debug'} >= 2);
 }
 
@@ -9600,7 +10132,7 @@ sub sendSkillUse {
 	my $lv = shift;
 	my $targetID = shift;
 	my $msg = pack("C*", 0x13, 0x01).pack("S*",$lv,$ID).$targetID;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Skill Use: $ID\n" if ($config{'debug'} >= 2);
 }
 
@@ -9611,7 +10143,7 @@ sub sendSkillUseLoc {
 	my $x = shift;
 	my $y = shift;
 	my $msg = pack("C*", 0x16, 0x01).pack("S*",$lv,$ID,$x,$y);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Skill Use Loc: $ID\n" if ($config{'debug'} >= 2);
 }
 
@@ -9620,14 +10152,14 @@ sub sendStorageAdd {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xF3, 0x00) . pack("S*", $index) . pack("L*", $amount);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Storage Add: $index x $amount\n" if ($config{'debug'} >= 2);	
 }
 
 sub sendStorageClose {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xF7, 0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Storage Done\n" if ($config{'debug'} >= 2);
 }
 
@@ -9636,14 +10168,14 @@ sub sendStorageGet {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xF5, 0x00) . pack("S*", $index) . pack("L*", $amount);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Storage Get: $index x $amount\n" if ($config{'debug'} >= 2);	
 }
 
 sub sendStand {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0x89,0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Standing\n" if ($config{'debug'} >= 2);
 }
 
@@ -9651,15 +10183,20 @@ sub sendSync {
 	my $r_socket = shift;
 	my $time = shift;
 	my $msg = pack("C*", 0x7E, 0x00) . pack("L1", $time);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Sync: $time\n" if ($config{'debug'} >= 2);
+}
+
+sub sendSyncInject {
+	my $r_socket = shift;
+	$$r_socket->send("K".pack("S", 0)) if $$r_socket && $$r_socket->connected();
 }
 
 sub sendTake {
 	my $r_socket = shift;
 	my $itemID = shift;
 	my $msg = pack("C*", 0x9F, 0x00) . $itemID;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent take\n" if ($config{'debug'} >= 2);
 }
 
@@ -9667,7 +10204,7 @@ sub sendTalk {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0x90, 0x00) . $ID . pack("C*",0x01);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent talk: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
@@ -9675,7 +10212,7 @@ sub sendTalkCancel {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0x46, 0x01) . $ID;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent talk cancel: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
@@ -9683,7 +10220,7 @@ sub sendTalkContinue {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xB9, 0x00) . $ID;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent talk continue: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
@@ -9692,7 +10229,7 @@ sub sendTalkResponse {
 	my $ID = shift;
 	my $response = shift;
 	my $msg = pack("C*", 0xB8, 0x00) . $ID. pack("C1",$response);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent talk respond: ".getHex($ID).", $response\n" if ($config{'debug'} >= 2);
 }
 
@@ -9702,22 +10239,48 @@ sub sendTeleport {
 	$location = substr($location, 0, 16) if (length($location) > 16);
 	$location .= chr(0) x (16 - length($location));
 	my $msg = pack("C*", 0x1B, 0x01, 0x1A, 0x00) . $location;
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Teleport: $location\n" if ($config{'debug'} >= 2);
+}
+
+sub sendToClientByInject {
+	my $r_socket = shift;
+	my $msg = shift;
+	$$r_socket->send("R".pack("S", length($msg)).$msg) if $$r_socket && $$r_socket->connected();
+}
+
+sub sendToServerByInject {
+	my $r_socket = shift;
+	my $msg = shift;
+	$$r_socket->send("S".pack("S", length($msg)).$msg) if $$r_socket && $$r_socket->connected();
+}
+
+sub sendMsgToServer {
+	my $r_socket = shift;
+	my $msg = shift;
+	encrypt(\$msg, $msg);
+	if ($config{'XKore'}) {
+		sendToServerByInject(\$remote_socket, $msg);
+	} else {
+		$$r_socket->send($msg) if ($$r_socket && $$r_socket->connected());
+	}
+
+	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	print "Packet Switch SENT: $switch\n" if ($config{'debugPacket_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch));
 }
 
 sub sendUnequip{
 	my $r_socket = shift;
 	my $index = shift;
 	my $msg = pack("C*", 0xAB, 0x00) . pack("S*", $index);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Unequip: $index\n" if ($config{'debug'} >= 2);
 }
 
 sub sendWho {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xC1, 0x00);
-	encrypt($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Who\n" if ($config{'debug'} >= 2);
 }
 
@@ -9777,7 +10340,7 @@ sub input_client {
 		close($local_socket);
 		exit;
 	} else {
-		$input_socket = $server_socket->accept();
+		$input_socket = $input_server_socket->accept();
 		(inet_aton($input_socket->peerhost()) == inet_aton($config{'local_host'})) 
 		|| die "Input Socket must be connected from localhost";
 		print "Input Socket connected\n";
@@ -9824,9 +10387,10 @@ sub chatLog {
 
 sub itemLog {
 	$crud = shift;
+	return if (!$config{'itemHistory'});
 	open ITEMLOG, ">> $item_log_file";
 	print ITEMLOG "[".getFormattedDate(int(time))."] $crud";
-	close ITEMLOG;     
+	close ITEMLOG;
 }
 
 sub itemLog_clear { 
@@ -9952,20 +10516,15 @@ sub parseDataFile {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,$value);
-	open FILE, $file or die("unable to open $file\n");
+	my $key,$value;
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		
-		if ($_ =~ /([\s\S]*) ([\s\S]*?)$/)
-		{
-			$key = $1;
-			$value = $2;
-			if ($key ne "" && $value ne "") {
-				$$r_hash{$key} = $value;
-			}
+		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
+		if ($key ne "" && $value ne "") {
+			$$r_hash{$key} = $value;
 		}
 	}
 	close FILE;
@@ -9975,19 +10534,15 @@ sub parseDataFile_lc {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,$value);
-	open FILE, $file or die("unable to open $file\n");
+	my $key,$value;
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		if ($_ =~ /([\s\S]*) ([\s\S]*?)$/)
-		{
-			$key = $1;
-			$value = $2;
-			if ($key ne "" && $value ne "") {
-				$$r_hash{lc($key)} = $value;
-			}
+		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
+		if ($key ne "" && $value ne "") {
+			$$r_hash{lc($key)} = $value;
 		}
 	}
 	close FILE;
@@ -9997,24 +10552,20 @@ sub parseDataFile2 {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,$value);
-	open FILE, $file or die("unable to open $file\n");
+	my $key,$value;
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		if ($_ =~ /([\s\S]*?) ([\s\S]*)$/)
-		{
-			$key = $1;
-			$value = $2;
+		($key, $value) = $_ =~ /([\s\S]*?) ([\s\S]*)$/;
+		$key =~ s/\s//g;
+		if ($key eq "") {
+			($key) = $_ =~ /([\s\S]*)$/;
 			$key =~ s/\s//g;
-			if ($key eq "") {
-				($key) = $_ =~ /([\s\S]*)$/;
-				$key =~ s/\s//g;
-			}
-			if ($key ne "") {
-				$$r_hash{$key} = $value;
-			}
+		}
+		if ($key ne "") {
+			$$r_hash{$key} = $value;
 		}
 	}
 	close FILE;
@@ -10024,23 +10575,18 @@ sub parseItemsControl {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,@args,$args);
-	open FILE, $file or die("unable to open $file\n");
+	my $key,@args;
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		if ($_ =~ /([\s\S]+?) (\d+[\s\S]*)/)
-		{
-			$key = $1;
-			$args = $2;
-
-			@args = split / /,$args;
-			if ($key ne "") {
-				$$r_hash{lc($key)}{'keep'} = $args[0];
-				$$r_hash{lc($key)}{'storage'} = $args[1];
-				$$r_hash{lc($key)}{'sell'} = $args[2];
-			}
+		($key, $args) = $_ =~ /([\s\S]+?) (\d+[\s\S]*)/;
+		@args = split / /,$args;
+		if ($key ne "") {
+			$$r_hash{lc($key)}{'keep'} = $args[0];
+			$$r_hash{lc($key)}{'storage'} = $args[1];
+			$$r_hash{lc($key)}{'sell'} = $args[2];
 		}
 	}
 	close FILE;
@@ -10049,21 +10595,22 @@ sub parseItemsControl {
 sub parseNPCs {
 	my $file = shift;
 	my $r_hash = shift;
+	my $i, $string;
 	undef %{$r_hash};
-	my ($key,$value,$string);
-	open FILE, $file or die("unable to open $file\n");
+	my $key,$value;
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+/ /g;
 		s/\s+$//g;
-		my @args = split /\s/, $_;
+		@args = split /\s/, $_;
 		if (@args > 4) {
 			$$r_hash{$args[0]}{'map'} = $args[1];
 			$$r_hash{$args[0]}{'pos'}{'x'} = $args[2];
 			$$r_hash{$args[0]}{'pos'}{'y'} = $args[3];
 			$string = $args[4];
-			for (my $i = 5; $i < @args; $i++) {
+			for ($i = 5; $i < @args; $i++) {
 				$string .= " $args[$i]";
 			}
 			$$r_hash{$args[0]}{'name'} = $string;
@@ -10076,22 +10623,18 @@ sub parseMonControl {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,@args,$args);;
-	open FILE, $file or die("unable to open $file\n");
+	my $key,@args;
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		if ($_ =~ /([\s\S]+?) (\d+[\s\S]*)/)
-		{
-			$key = $1;
-			$args = $2;
-			@args = split / /,$args;
-			if ($key ne "") {
-				$$r_hash{lc($key)}{'attack_auto'} = $args[0];
-				$$r_hash{lc($key)}{'teleport_auto'} = $args[1];
-				$$r_hash{lc($key)}{'teleport_search'} = $args[2];
-			}
+		($key, $args) = $_ =~ /([\s\S]+?) (\d+[\s\S]*)/;
+		@args = split / /,$args;
+		if ($key ne "") {
+			$$r_hash{lc($key)}{'attack_auto'} = $args[0];
+			$$r_hash{lc($key)}{'teleport_auto'} = $args[1];
+			$$r_hash{lc($key)}{'teleport_search'} = $args[2];
 		}
 	}
 	close FILE;
@@ -10101,11 +10644,11 @@ sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,$value,@args);
+	my $key,$value;
 	my %IDs;
 	my $i;
 	my $j = 0;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -10121,7 +10664,7 @@ sub parsePortals {
 			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'map'} = $args[3];
 			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'pos'}{'x'} = $args[4];
 			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'pos'}{'y'} = $args[5];
-			if ($args[6] && $args[6] ne "") {
+			if ($args[6] ne "") {
 				$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'ID'} = $args[6];
 				for ($i = 7; $i < @args; $i++) {
 					$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'steps'}[@{$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'steps'}}] = $args[$i];
@@ -10141,18 +10684,18 @@ sub parsePortalsLOS {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my $key;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+/ /g;
 		s/\s+$//g;
-		my @args = split /\s/, $_;
+		@args = split /\s/, $_;
 		if (@args) {
-			my $map = shift @args;
-			my $x = shift @args;
-			my $y = shift @args;
-			for (my $i = 0; $i < @args; $i += 4) {
+			$map = shift @args;
+			$x = shift @args;
+			$y = shift @args;
+			for ($i = 0; $i < @args; $i += 4) {
 				$$r_hash{"$map $x $y"}{"$args[$i] $args[$i+1] $args[$i+2]"} = $args[$i+3];
 			}
 		}
@@ -10197,32 +10740,20 @@ sub parseReload {
 sub parseResponses {
 	my $file = shift;
 	my $r_hash = shift;
-	print Dumper %{$r_hash};
 	undef %{$r_hash};
-	my ($key,$value);
-	my $i=0;
-	open FILE, $file or die("unable to open $file\n");
+	my $key,$value;
+	my $i;
+	open FILE, $file;
 	foreach (<FILE>) {
-		next if $_ =~ (/^#/);
-		$_ =~ s/[\r\n]//g;
-		if($_ =~ /([\s\S]*?) ([\s\S]*)$/)
-		{
-			my $prevkey = $key;
-			$key = $1;
-			$value =$2;
-			if ($key ne "" && $value ne "") 
-			{
-				if ($prevkey)
-				{
-					if ($key eq $prevkey )
-					{
-						$i++;
-					} else {
-						$i=0;	
-					}
-				}
-				$$r_hash{"$key\_$i"} = $value;
+		next if (/^#/);
+		s/[\r\n]//g;
+		($key, $value) = $_ =~ /([\s\S]*?) ([\s\S]*)$/;
+		if ($key ne "" && $value ne "") {
+			$i = 0;
+			while ($$r_hash{"$key\_$i"} ne "") {
+				$i++;
 			}
+			$$r_hash{"$key\_$i"} = $value;
 		}
 	}
 	close FILE;
@@ -10233,12 +10764,11 @@ sub parseROLUT {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my @stuff;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	foreach (<FILE>) {
 		s/\r//g;
 		next if /^\/\//;
 		@stuff = split /#/, $_;
-		next if (scalar(@stuff)<2);
 		$stuff[1] =~ s/_/ /g;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
 			$$r_hash{$stuff[0]} = $stuff[1];
@@ -10253,11 +10783,11 @@ sub parseRODescLUT {
 	undef %{$r_hash};
 	my $ID;
 	my $IDdesc;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	foreach (<FILE>) {
-		$_ =~ s/\r//g;
+		s/\r//g;
 		if (/^#/) {
-			$$r_hash{$ID} = $IDdesc if ($IDdesc);
+			$$r_hash{$ID} = $IDdesc;
 			undef $ID;
 			undef $IDdesc;
 		} elsif (!$ID) {
@@ -10276,7 +10806,7 @@ sub parseROSlotsLUT {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my $ID;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	foreach (<FILE>) {
 		if (!$ID) {
 			($ID) = /(\d+)#/;
@@ -10294,7 +10824,7 @@ sub parseSkillsLUT {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -10314,7 +10844,7 @@ sub parseSkillsIDLUT {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -10333,7 +10863,7 @@ sub parseSkillsReverseLUT_lc {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -10353,7 +10883,7 @@ sub parseSkillsSPLUT {
 	my $ID;
 	my $i;
 	$i = 1;
-	open FILE, $file or die("unable to open $file\n");
+	open FILE, $file;
 	foreach (<FILE>) {
 		if (/^\@/) {
 			undef $ID;
@@ -10370,19 +10900,14 @@ sub parseSkillsSPLUT {
 sub parseTimeouts {
 	my $file = shift;
 	my $r_hash = shift;
-	my ($key,$value);
-	open FILE, $file or die("unable to open $file\n");
+	my $key,$value;
+	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
-		if ($_ =~ /([\s\S]*) ([\s\S]*?)$/)
-		{
-			$key = $1;
-			$value = $2;
-			
-			if ($key ne "" && $value ne "") {
-				$$r_hash{$key}{'timeout'} = $value;
-			}
+		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
+		if ($key ne "" && $value ne "") {
+			$$r_hash{$key}{'timeout'} = $value;
 		}
 	}
 	close FILE;
@@ -10703,7 +11228,8 @@ sub updateDamageTables {
 				$monsters{$ID1}{'missedYou'}++;
 			}
 			$monsters{$ID1}{'attackedByPlayer'} = 0;
-			$monsters{$ID1}{'attackedYou'}++ unless ($monsters{$ID1}{'dmgFromPlayer'} || $monsters{$ID1}{'missedFromPlayer'} || $monsters{$ID1}{'missedToPlayer'} || $monsters{$ID1}{'dmgToPlayer'});
+			$monsters{$ID1}{'attackedYou'}++ unless ($monsters{$ID1}{'dmgFromPlayer'} || $monsters{$ID1}{'missedFromPlayer'}
+			                                      || $monsters{$ID1}{'missedToPlayer'} || $monsters{$ID1}{'dmgToPlayer'});
 		}
 	} elsif (%{$monsters{$ID1}}) {
 		if (%{$players{$ID2}}) {
@@ -10717,11 +11243,13 @@ sub updateDamageTables {
 			if (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}}) {
 				$monsters{$ID1}{'dmgToParty'} += $damage;
 				$monsters{$ID1}{'attackedByPlayer'} = 0 if ($config{'attackAuto_party'} || ( 
-				$config{'attackAuto_followTarget'} && 
-				$config{'follow'} && $players{$ID2}{'name'} eq $config{'followTarget'})); 
-			} else { 
-				$monsters{$ID1}{'attackedByPlayer'} = 1 unless ($config{'attackAuto_followTarget'} && 
-				$config{'follow'} && $players{$ID2}{'name'} eq $config{'followTarget'});
+						$config{'attackAuto_followTarget'} &&
+						$ai_v{'temp'}{'ai_follow_following'} &&
+						$ID2 eq $ai_v{'temp'}{'ai_follow_ID'}
+					)); 
+			} else {
+				$monsters{$ID1}{'attackedByPlayer'} = 1 unless ($config{'attackAuto_followTarget'}
+					&& $ai_v{'temp'}{'ai_follow_following'} && $ID2 eq $ai_v{'temp'}{'ai_follow_ID'});
 			}
 		}
 		
@@ -10739,10 +11267,11 @@ sub updateDamageTables {
 				$monsters{$ID2}{'attackedByPlayer'} = 0 if ($config{'attackAuto_party'} || ( 
 				$config{'attackAuto_followTarget'} && 
 				$config{'follow'} && $players{$ID1}{'name'} eq $config{'followTarget'})); 
-			} else { 
-				$monsters{$ID2}{'attackedByPlayer'} = 1 unless ( 
-               			($config{'attackAuto_followTarget'} && $config{'follow'} && $players{$ID1}{'name'} eq $config{'followTarget'}) 
-               			|| $monsters{$ID2}{'attackedYou'} );
+			} else {
+				$monsters{$ID2}{'attackedByPlayer'} = 1 unless (
+							($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && $ID1 eq $ai_v{'temp'}{'ai_follow_ID'})
+							|| $monsters{$ID2}{'attackedYou'}
+					);
 			}
 		}
 	}
@@ -10754,6 +11283,52 @@ sub updateDamageTables {
 #MISC FUNCTIONS
 #######################################
 #######################################
+
+sub avoidGM_near {
+	return if (!$config{'avoidGM_near'});
+	return if ($cities_lut{$field{'name'}.'.rsw'} && !$config{'avoidGM_near_inTown'});
+
+	my $user = $_[0];
+	if ($user) {
+		print "GM $user is nearby, disconnecting...\n";
+		chatLog("s", "*** Found GM $user nearby and disconnected ***\n");  
+		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
+		killConnection(\$remote_socket);
+		return 1;
+	}
+
+	for (my $i = 0; $i < @playersID; $i++) {
+		next if($playersID[$i] eq "");
+		if ($players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) {
+			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
+			chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
+			print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+			$timeout_ex{'master'}{'time'} = time;
+			$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
+			killConnection(\$remote_socket);
+			return 1;
+		}
+	}
+	return 0;
+}
+
+sub avoidGM_talk($$) {
+	return if (!$config{'avoidGM_talk'});
+	my ($chatMsgUser, $chatMsg) = @_;
+
+	if ($chatMsgUser =~/GM(.*)\d{1,}/i) {
+		print "Disconnecting to avoid GM!\n"; 
+		chatLog("s", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n"); 
+		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
+		killConnection(\$remote_socket);
+		return 1;
+	}
+	return 0;
+}
 
 sub compilePortals {
 	undef %mapPortals;
@@ -10962,11 +11537,10 @@ sub vocalString {
                 }
                 $password = substr($password, 0, $letter_length);
                 ($test) = ($password =~ /(..)\z/);
-                last if (!$badend{$test});
+                last if ($badend{$test} != 1);
         }
         $$r_string = $password;
-         return $$r_string;
-        
+        return $$r_string;
 }
 
 #Solos Start
@@ -11008,109 +11582,6 @@ Last Monster took (sec): @>>>>>>>
 		write;
 		print	"----------------------------\n";
 
-}
-
-sub sendEnteringVender {
-	my $r_socket = shift;
-	my $ID = shift;
-	my $msg = pack("C*", 0x30, 0x01) . $ID;
-	encrypt($r_socket, $msg);
-	print "Sent Entering Vender: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
-}
-
-sub sendBuyVender {
-	my $r_socket = shift;
-	my $ID = shift;
-	my $amount = shift;
-	my $msg = pack("C*", 0x34, 0x01, 0x0C, 0x00) . $venderID . pack("S*", $amount, $ID);
-	encrypt($r_socket, $msg);
-	print "Sent Vender Buy: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
-}
-
-sub openShop {
-	my $r_socket = shift;
-
-	$i = 0;
-	while ($shop{"name_$i"} ne "") {
-#		print "#name:".$shop{"name_$i"}."\n";
-		$i++;
-	}
-	$totalitem = $i;
-#	print "#totalitem:".int($totalitem)."\n";
-	$items_selling = 0;
-	for( $i=0; $i < $totalitem; $i++) {
-		$citem = -1;
-		for ( $j=0; $j < $cart{'items'}; $j++) {
-			if ($cart{'inventory'}{$cartID[$j]}{'name'} eq $shop{"name_$i"}) {
-				$items_selling++;
-				last;
-			}
-		}
-	}
-#	print "#items_selling:".int($items_selling)."\n";
-	if ($items_selling > 12) { 
-		$items_selling = 12; 
-	}
-
-	my $length = 0x54 + 0x08 * $items_selling;
-
-	my $msg = pack("C*", 0x2F, 0x01) . pack("S*", $length) . 
-	$shop{'shop_title'} . chr(0) x (36 - length($shop{'shop_title'})) . chr(0) x 44;
-
-	$items_selling = 0;
-#	print "#items:".int($cart{'items'})."\n";
-	for( $i=0; $i < $totalitem; $i++) {
-		$citem = -1;
-		for ( $j=0; $j < $cart{'items'}; $j++) {
-			if ($cart{'inventory'}{$cartID[$j]}{'name'} eq $shop{"name_$i"}) {
-#				print "#inv name:".$cart{'inventory'}{$cartID[$j]}{'name'}."\n";
-#				print "#index:".$cart{'inventory'}{$cartID[$j]}{'index'}."\n";
-				$index = $cart{'inventory'}{$cartID[$j]}{'index'};
-				$citem = $j;
-				$items_selling++;
-				last;
-			}
-		}
-		next if ($citem == -1);
-		next if ($items_selling > 12);
-		if ($shop{"quantity_$i"} > 0) {
-			if ($shop{"quantity_$i"} > $cart{'inventory'}{$cartID[$citem]}{'amount'}) { 
-				$amount = $cart{'inventory'}{$cartID[$citem]}{'amount'};
-			} else {
-				$amount = $shop{"quantity_$i"};
-			}
-		} else {
-			$amount = $cart{'inventory'}{$cartID[$citem]}{'amount'};
-		}
-#		print "#amount:".int($amount)."\n";
-
-		if ($shop{"price_$i"} > 0) {
-			$price = $shop{"price_$i"};
-		} else {
-			print "You have provided an invalid price.\n";
-			last;
-		}
-#		print "#price:".int($price)."\n";
-
-		$msg .= pack("S*", $index) . pack("S*", $amount) . pack("L*", $price);
-	}
-
-	if( length($msg) == $length ) {
-		encrypt($r_socket, $msg);
-		print "Shop Opened.\n" ;#if ($config{'debug'} >= 2);
-		$shopstarted = 1;
-	}else{
-		print "Error opening shop...\n";
-	}
-}
-
-sub closeShop {
-	my $r_socket = shift;
-	my $msg = pack("C*", 0x2E, 0x01);
-	encrypt($r_socket, $msg);
-	print "Shop Closed: $index x $amount\n" if ($config{'debug'} >= 2);	
-	$shopstarted = 0;
-	stand();
 }
 
 sub findIndexString_lc_not_equip {
@@ -11158,26 +11629,10 @@ sub getFromList {
 	return "";
 }
 
-sub sendGMNameRequest { 
-	my $r_socket = shift; 
-	my $ID = shift; 
-	my $msg = pack("C*", 0x93, 0x01) . $ID; 
-	encrypt($r_socket, $msg); 
-	print "Sent Guild Member Name Request : ".getHex($ID)."\n" if ($config{'debug'} >= 2); 
-} 
-
 sub ClearRouteAI {
 	my $msg = shift;
-#	$old_x = 0;
-#	$old_y = 0;
-#	$old_pos_x = 0;
-#	$old_pos_y = 0;
-#	$move_x = 0;
-#	$move_y = 0;
-#	$move_pos_x = 0;
-#	$move_pos_y = 0;
 	print $msg;
-	chatLog("s", $msg); 
+	chatLog("s", $msg);
 	aiRemove("move");
 	aiRemove("route");
 	aiRemove("route_getRoute");
@@ -11198,7 +11653,7 @@ sub Unstuck {
 	$move_pos_x = 0;
 	$move_pos_y = 0;
 	print $msg;
-	chatLog("s", $msg); 
+	chatLog("s", $msg);
 	aiRemove("move");
 	aiRemove("route");
 	aiRemove("route_getRoute");
@@ -11248,4 +11703,3 @@ sub useTeleport {
 	} 
 }
 #Solos End
-

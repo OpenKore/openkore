@@ -1,12 +1,77 @@
-November 12, 2003:
-* OpenKore 1.0 released.
-
-
------------ November 10, 2003: Renamed to OpenKore ------------
-
-
 ChangeLog for skore-revamped
 =============================
+
+Based on blueviper22's mod for RO 4.0:
+
+- Merged X-Kore with skore-revamped. You can switch between "normal"
+  (console) Kore and X-Kore by setting the config option "XKore"
+  to 0 or 1. Add these to your config.txt:
+  XKore 1
+  exeName ragexe.exe
+  commandPrefix ;
+
+(Why didn't Kura do this in the first place? Maintaining one codebase is
+easier than maintaining two.)
+
+
+- More flexible packet debugger.
+  * Removed option debug_packet
+  * New options:
+    debugPacket_unparsed: Dump unparsed packets
+    debugPacket_received: Display all received packet switches
+    debugPacket_ro_sent:  Display packet switches sent by the
+                          RO client (only in X-Kore mode)
+    debugPacket_sent:     Display packet switches sent by Kore
+    debugPacket_exclude:  All packets switches that you want
+                          to ignore, seperated by a comma.
+
+- New config options:
+  * followEmotion
+  * followEmotion_distance
+  When follow and followEmotion are on, imitate the master's
+  emoticons if he's within followEmotion_distance blocks distance.
+
+- Servers will now be hammered less if Kore gets disconnected.
+  * New option in timeouts.txt: reconnect x
+    (x is the number of seconds to wait before relogging in.)
+
+- Improved anti-kill steal routines.
+  * Bug fixes.
+  * sendAttackStop() now actually works.
+  * Doesn't walk away anymore when KS'ed.
+  * The stun bug *should* be fixed by now but is untested.
+
+- Code cleanups
+  * Added comments to some parts of the code.
+  * Indentication fixes (use Tabs, not spaces!).
+
+- Renamed command "ai" to "aiv"
+  Shows content of @ai_seq
+- Command "ai" now toggles AI on and off.
+
+- Respect itemHistory config option.
+
+- New packets: 40A1, 01B0
+
+- Automatically detect platform. No more need to change buildType if
+  you're running Kore in Linux.
+
+- Check valid $$r_args{'session'} before calling $CalcPath_destroy().
+  This partially fixes a rare crash on teleport.
+
+- "nl" now also shows NPC ID.
+
+- Do not automatically attack monsters that are within than 4 blocks
+  distance of another player. This makes you less suspicious.
+
+- When a player teleports, he won't get removed from the player list.
+  This has been fixed.
+
+- Fixed attackAuto_followTarget. Attack the monster even if it misses
+  the follow target.
+
+
+----------------------------------------
 
 
 skore-revamped was based on the latest skore build (http://ro.horoy.com/download.html)
