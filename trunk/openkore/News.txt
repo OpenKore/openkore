@@ -69,6 +69,8 @@ New config options:
 - shopTitleOversize (flag)
   chatTitleOversize (flag)
   if set to 1 will enable shop title or chatroom title length longer than 36 characters.
+- pauseMapServer (seconds)
+  Pause for (seconds) before connect to map server (Sometime server slower than bots).
 
 New commands:
 - ihist
