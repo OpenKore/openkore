@@ -1,10 +1,10 @@
 FILES=\
-	../Input.pm \
 	../Log.pm \
 	../Modules.pm \
 	../Plugins.pm \
 	../IPC.pm \
-	../Utils.pm
+	../Utils.pm \
+	../Interface.pm
 
 .PHONY: all clean upload
 

@@ -21,9 +21,10 @@
 ##
 # MODULE DESCRIPTION: Interface System Front End
 #
-# Provides the public methods to the interface system. All other parts of
-# Kore should stick to these methods and ignore the methods of each
-# interface implementation
+# This module provides the public methods to the interface system.
+#
+# The interface system has several implementations for different platforms.
+# This module glues them all together under one interface.
 
 package Interface;
 
@@ -50,7 +51,7 @@ END {
 # $interface->switchInterface(new_interface)
 # new_interface: The name of the interface to be swiched to.
 # Returns: The newly created interface object on success, or the previous
-#          interface object on failure
+#          interface object on failure.
 #
 # Changes the interface being used by Kore.
 # The default method may be overridden by an Interface that needs to do special work
@@ -118,7 +119,7 @@ sub stop {
 
 
 ##
-# Interface::getInput(timeout)
+# $interface->getInput(timeout)
 # timeout: Number of second to wait until keyboard data is available. 
 #          Negative numbers will wait forever, 0 will not wait at all.
 # Returns: The keyboard data (including newline) as a string, or undef if there's no
@@ -131,7 +132,7 @@ sub getInput {
 
 
 ##
-# Interface::writeOutput(type, message, domain)
+# $interface->writeOutput(type, message, domain)
 # 
 # Writes a message to the interface's console.
 # This method should not be used directly, use Log::message() instead.

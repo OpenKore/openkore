@@ -150,7 +150,7 @@ sub extractFromFile {
 				$state = 'module-description';
 			} else {
 				# This is a function description
-				($funcname, $funcparam_declaration) = $line =~ /^# ([a-z0-9_:]+) *(\(.*\))?/i;
+				($funcname, $funcparam_declaration) = $line =~ /^# ([a-z0-9_:\$\->]+) *(\(.*\))?/i;
 				$funcparam_declaration = '' if (!defined $funcparam_declaration);
 				$state = 'function-params';
 			}
