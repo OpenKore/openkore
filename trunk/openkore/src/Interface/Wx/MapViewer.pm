@@ -91,6 +91,11 @@ sub set {
 		my $bitmap = $self->{bitmap} = $self->_loadMapImage($field);
 		return unless $bitmap;
 		$self->SetSizeHints($bitmap->GetWidth, $bitmap->GetHeight);
+		if ($self->GetParent && $self->GetParent->GetSizer) {
+			my $sizer = $self->GetParent->GetSizer;
+			$sizer->SetItemMinSize($self, $bitmap->GetWidth, $bitmap->GetHeight);
+		}
+
 		$self->{mapChangeCb}->($self->{mapChangeData}) if ($self->{mapChangeCb});
 		$self->{needUpdate} = 1;
 
@@ -328,10 +333,19 @@ sub _onPaint {
 
 	my ($x, $y);
 	$dc->BeginDrawing;
+
+	$dc->SetPen(wxBLACK_PEN);
+	$dc->SetBrush(wxBLACK_BRUSH);
+
+	my ($h, $w) = ($self->{bitmap}->GetHeight, $self->{bitmap}->GetWidth);
+	$dc->DrawRectangle($w, 0,
+		$self->GetSize->GetWidth - $w,
+		$self->GetSize->GetHeight);
+	$dc->DrawRectangle(0, $h,
+		$w, $self->GetSize->GetHeight - $h);
 	$dc->DrawBitmap($self->{bitmap}, 0, 0, 1);
 
 	if ($self->{players} && @{$self->{players}}) {
-		$dc->SetPen(wxBLACK_PEN);
 		$dc->SetBrush($self->{playerBrush});
 		foreach my $pos (@{$self->{players}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
@@ -340,7 +354,6 @@ sub _onPaint {
 	}
 
 	if ($self->{monsters} && @{$self->{monsters}}) {
-		$dc->SetPen(wxBLACK_PEN);
 		$dc->SetBrush($self->{monsterBrush});
 		foreach my $pos (@{$self->{monsters}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
