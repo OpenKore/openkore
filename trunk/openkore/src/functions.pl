@@ -3066,7 +3066,7 @@ sub AI {
 		do { 
 			$randX = int(rand() * ($field{width} - 1));
 			$randY = int(rand() * ($field{height} - 1));
-		} while (checkFieldWalkable(\%field, $randX, $randY));
+		} while (!checkFieldWalkable(\%field, $randX, $randY));
 
 		# Move to that block
 		message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";

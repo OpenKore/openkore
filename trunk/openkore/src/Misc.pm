@@ -142,7 +142,8 @@ sub center {
 # Check whether ($x, $y) on field $r_field is walkable.
 sub checkFieldWalkable {
 	my $p = getFieldPoint(@_);
-	return ($p == 0 || $p == 3);
+	#return ($p == 0 || $p == 3);
+	return ($p == 0);
 }
 
 ##
@@ -162,6 +163,7 @@ sub checkFollowMode {
 # closestWalkableSpot(r_field, pos)
 # r_field: a reference to a field hash.
 # pos: reference to a position hash (which contains 'x' and 'y' keys).
+# Returns: 1 if %pos has been modified, 0 of not.
 #
 # If the position specified in $pos is walkable, this function will do nothing.
 # If it's not walkable, this function will find the closest position that is walkable (up to 2 blocks away),
@@ -171,11 +173,12 @@ sub closestWalkableSpot {
 	my $pos = shift;
 
 	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
-		next unless checkFieldWalkable($r_field, $pos->{'x'} + $z->[0], $pos->{'y'} + $z->[1]);
+		next if !checkFieldWalkable($r_field, $pos->{'x'} + $z->[0], $pos->{'y'} + $z->[1]);
 		$pos->{'x'} += $z->[0];
 		$pos->{'y'} += $z->[1];
-		last;
+		return 1;
 	}
+	return 0;
 }
 
 ##
