@@ -32,7 +32,7 @@ use FileParsers;
 use Settings;
 use Utils;
 use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete
-	sendCharLogin sendMove sendChat sendPartyChat sendGuildChat
+	sendCharLogin sendDrop sendMove sendChat sendPartyChat sendGuildChat
 	sendPrivateMsg injectMessage);
 
 our @EXPORT = (
@@ -71,6 +71,7 @@ our @EXPORT = (
 	checkFollowMode
 	checkMonsterCleanness
 	createCharacter
+	drop
 	getIDFromChat
 	getPlayer
 	getPortalDestName
@@ -1326,5 +1327,18 @@ sub whenStatusActivePL {
 	return 0;
 }
 
+##
+# drop($item, $amount)
+#
+# Drops $amount of $item. If $amount is not specified or too large, it defaults
+# to the number of $item you have.
+sub drop {
+	my ($item, $amount) = @_;
+
+	if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
+		$amount = $char->{inventory}[$item]{amount};
+	}
+	sendDrop(\$remote_socket, $char->{inventory}[$item]{index}, $amount);
+}
 
 return 1;

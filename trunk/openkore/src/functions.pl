@@ -2292,10 +2292,7 @@ sub AI {
 		my $item = AI::args->{'items'}[0];
 		my $amount = AI::args->{max};
 
-		if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
-			$amount = $char->{inventory}[$item]{amount};
-		}
-		sendDrop(\$remote_socket, $char->{inventory}[$item]{index}, $amount);
+		drop($item, $amount);
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{'items'}} <= 0);
@@ -8703,10 +8700,16 @@ sub ai_drop {
 	my $max = shift;
 	my %seq = ();
 
-	$seq{items} = \@{$r_items};
-	$seq{max} = $max;
-	$seq{timeout} = 1;
-	AI::queue("drop", \%seq);
+	if (@{$r_items} == 1) {
+		# Dropping one item; do it immediately
+		drop($r_items->[0], $max);
+	} else {
+		# Dropping multiple items; queue an AI sequence
+		$seq{items} = \@{$r_items};
+		$seq{max} = $max;
+		$seq{timeout} = 1;
+		AI::queue("drop", \%seq);
+	}
 }
 
 sub ai_follow {
