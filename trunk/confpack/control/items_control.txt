@@ -1,8 +1,9 @@
-# This file allows specific items to be store or sell or leave
-# Syntax: <item name> <minimum keep amount in inventory> <storage-auto flag> <sell-auto flag>
+# In this file you can control which items to put in storage,
+# to sell, or to leave in the inventory.
+# Syntax:
+# <item name> <minimum keep amount in inventory> <storage-auto flag> <sell-auto flag>
 #
-# The example below will sell all jellopies, and store all knifes
-#
+# The example below will sell all jellopies, and store all knifes:
 # Jellopy 0 0 1
 # Knife 0 1 0
 #
@@ -16,17 +17,16 @@
 # a knife and you have a line to auto-sell all knives, kore will sell any
 # extras it picks up, not the knife it's using.
 #
+# Don't forget to set the storageAuto, sellAuto and related configuration
+# options in config.txt, or this file won't have any effect.
+#
 # An auto-sell list and auto-storage list is provided by default, modify it
-# as you see fit
+# as you see fit.
 
-####SELL LIST####
+#### NORMAL LOOT ####
 
-Silver Robe [1] 0 0 1
-Buster [2] 0 1 0
 Jack o' Pumpkin 0 0 1
 Fabric 0 0 1
-Stiletto 0 0 1
-Dagger 0 0 1
 Squid Ink 0 0 1
 Heart of Mermaid 0 0 1
 Rainbow Shell 0 0 1
@@ -37,18 +37,14 @@ Honey 0 0 1
 Sweet Potato 0 0 1
 Meat 0 0 1
 Mane 0 0 1
-Slayer 0 0 1
 Acorn 0 0 1
 Adventurer's Suit 0 0 1
 Animal Skin 0 0 1
-Axe 0 0 1
-Battle Axe 1 0 1
 Bear's Footskin 0 0 1
 Bee Sting 0 0 1
 Bill of Birds 0 0 1
 Black Hair 0 0 1
 Blade 0 0 1
-Bow 0 0 1
 Bug Leg 0 0 1
 Cactus Needle 0 0 1
 Chrysalis 0 0 1
@@ -56,32 +52,19 @@ Cleaver 0 0 1
 Clover 0 0 1
 Club 0 0 1
 Cobweb 0 0 1
-Composite Bow 0 0 1
 Conch 0 0 1
 Cotton Shirts 0 0 1
-Cross Bow 0 0 1
-Cutter [4] 0 0 1
 Decayed Nail 0 0 1
 Elder Pixie's Moustache 0 0 1
-Falchion [4] 0 0 1
 Feather of Birds 0 0 1
 Fin 0 0 1
-Flail 1 0 1
 Flower 0 0 1
 Fluff 0 0 1
 Garlet 0 0 1
 Gill 0 0 1
-Glaive 0 0 1
-Goggles 0 1 0
 Grasshopper's Leg 0 0 1
-Great Bow 0 0 1
 Green Herb 0 0 1
-Guard 0 0 1
-Guisarme 0 0 1
-Hammer 0 0 1
-Hat 0 0 1
 Heart of Mermaid 0 0 1
-Hood [1] 0 0 1
 Horn 0 0 1
 Horseshoe 0 0 1
 Immortal Heart 0 0 1
@@ -89,10 +72,7 @@ Insect Feeler 0 0 1
 Jacket 0 0 1
 Javelin 0 0 1
 Jellopy 0 0 1
-Knife [4] 0 0 1
 Lantern 0 0 1
-Long Coat 0 0 1
-Mace 0 0 1
 Mantle 0 0 1
 Main Gauche 0 0 1
 Mole Claw 0 0 1
@@ -104,7 +84,6 @@ Nipper 0 0 1
 Orc Claw 0 0 1
 Orcish Voucher 0 0 1
 Orc's Fang 0 0 1
-Pike 0 0 1
 Pointed Scale 0 0 1
 Poison Spore 0 0 1
 Porcupine Quill 0 0 1
@@ -112,9 +91,7 @@ Raccoon Leaf 0 0 1
 Rat Tail 0 0 1
 Reptile Tongue 0 0 1
 Resin 0 0 1
-Rod 0 0 1
 Rotten Bandage 0 0 1
-Sandals [1] 0 0 1
 Scale Shell 0 0 1
 Scell 0 0 1
 Scorpion Tail 0 0 1
@@ -123,19 +100,16 @@ Shining Scale 0 0 1
 Shoot 0 0 1
 Silk Robe 0 0 1
 Skel-Bone 0 0 1
-Smasher 0 0 1
 Snail's Shell 0 0 1
 Snake Scale 0 0 1
 Solid Shell 0 0 1
 Spawn 0 0 1
-Spear 0 0 1
 Staff 0 0 1
 Stem 0 0 1
 Sticky Mucus 0 0 1
 Sticky Webfoot 0 0 1
 Stinky Scale 0 0 1
 Stone Heart 0 0 1
-Sword [4] 0 0 1
 Talon 0 0 1
 Tentacle 0 0 1
 Tooth of Bat 0 0 1
@@ -150,19 +124,56 @@ Worm Peeling 0 0 1
 Yoyo Tail 0 0 1
 Zargon 0 0 1
 Monster's Feed 0 0 1
-Ribbon [1] 0 0 1
 Wooden Mail 0 0 1
 Poison Spore 0 0 1
 
+
+#### EQUIPMENT ####
+
+Axe 0 0 1
+Battle Axe 1 0 1
+Bow 0 0 1
+Buster [2] 0 1 0
+Composite Bow 0 0 1
+Cross Bow 0 0 1
+Cutter [4] 0 0 1
+Dagger 0 0 1
+Falchion [4] 0 0 1
+Flail 1 0 1
+Hood [1] 0 0 1
+Glaive 0 0 1
+# There are both slotted and unslotted Goggles
+Goggles 0 1 0
+Goggles [1] 0 1 0
+Great Bow 0 0 1
+Guard 0 0 1
+Guisarme 0 0 1
+Hammer 0 0 1
+Hat 0 0 1
+Jur [3] 0 1 0
+Katana [4] 0 1 0
+Knife [4] 0 0 1
+Long Coat 0 0 1
+Mace 0 0 1
+Pike 0 0 1
+Ribbon [1] 0 0 1
+Rod 0 0 1
+Sandals [1] 0 0 1
+Silver Robe [1] 0 0 1
+Slayer 0 0 1
+Smasher 0 0 1
+Spear 0 0 1
+Stiletto 0 0 1
+Sword [4] 0 0 1
+Tights 0 1 0
+
+
 ####STORAGE LIST####
 
-Tights 0 1 0
 Red Potion 0 1 0
 Memento 0 1 0
 Fire Arrow 0 0 1
 Carrot 0 1 0
-Jur [3] 0 1 0
-Katana [4] 0 1 0
 Apple 0 1 0
 Banana 0 1 0
 Grape 0 1 0
@@ -626,4 +637,3 @@ Bark Shorts 0 1 0
 Monkey Circlet 0 1 0
 Red Muffler 0 1 0
 Pet Food 0 1 0
-Goggles [1] 0 1 0
