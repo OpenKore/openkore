@@ -94,7 +94,7 @@ if [[ "$BINDIST" == "1" ]]; then
 	unix2dos "$PACKAGEDIR/News.txt"
 	echo
 	echo "====================="
-	echo "Directory '$PACKAGEDIR' created. Please add (wx)start.exe."
+	echo "Directory '$PACKAGEDIR' created. Please add (wx)start.exe and NetRedirect.dll."
 	exit
 fi
 
