@@ -36,6 +36,7 @@ Bug fixes:
   The teleportAuto_noUnstuck configuration option will make bot not 
   teleport when it's stuck.
 - Hopefully fix zeny display when dealing for real.
+- "respawn" command now works when dead.
 
 Minor tweaks:
 - Show (x, y) position after teleporting.

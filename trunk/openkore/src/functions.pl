@@ -1262,7 +1262,11 @@ sub parseCommand {
 		relog();
 
 	} elsif ($switch eq "respawn") {
-		useTeleport(2);
+		if ($chars[$config{'char'}]{'dead'}) {
+			sendRespawn(\$remote_socket);
+		} else {
+			useTeleport(2);
+		}
 
 	} elsif ($switch eq "sell") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
