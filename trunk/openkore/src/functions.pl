@@ -5661,9 +5661,6 @@ sub parseMsg {
 		$conState = 5;
 		undef $conState_tries;
 		$char = $chars[$config{'char'}];
-		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
-		%{$chars[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos'}};
-		message("Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", undef, 1);
 
 		if ($xkore) {
 			$conState = 4;
@@ -5679,6 +5676,12 @@ sub parseMsg {
 			}
 			$timeout{'ai'}{'time'} = time;
 		}
+
+		$char->{pos} = {};
+		makeCoords($char->{pos}, substr($msg, 6, 3));
+		$char->{pos_to} = {%{$char->{pos}}};
+		message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
+
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
 
 	} elsif ($switch eq "0075") {
