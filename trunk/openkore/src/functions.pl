@@ -3595,7 +3595,7 @@ sub AI {
 						$config{"attackSkillSlot_${slot}_lvl"},
 						$config{"attackSkillSlot_${slot}_maxCastTime"},
 						$config{"attackSkillSlot_${slot}_minCastTime"},
-						$ID,
+						$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $accountID : $ID,
 						undef,
 						"attackSkill");
 				} else {
