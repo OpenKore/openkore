@@ -1,8 +1,10 @@
-##
 # Helper functions for managing @ai_seq.
 #
 # Eventually, @ai_seq should never be referenced directly, and then it can be
 # moved into this package.
+#
+# TODO:
+# Move ai_setMapChanged() and ai_setSuspend() to this module.
 
 package AI;
 
