@@ -3839,6 +3839,7 @@ sub AI {
 				|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
 			);
 		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ID}{'attackedByPlayer'});
+		$ai_v{'ai_attack_cleanMonster'} = 1 if !$config{attackAuto};
 
 		if (!$ai_v{'ai_attack_cleanMonster'}) {
 			message "Dropping target - you will not kill steal others\n";
@@ -6785,9 +6786,8 @@ sub parseMsg {
 	# Hambo Started
 	# 3 Packets About MVP
 	} elsif ($switch eq "010A") {
-		my %item;
-		$item{ID} = unpack("S1", substr($msg, 2, 2));
-		my $display = itemName(\%item);
+		my $ID = unpack("S1", substr($msg, 2, 2));
+		my $display = itemNameSimple($ID);
 		message "Get MVP item $display\n";
 		chatLog("k", "Get MVP item $display\n");
 
