@@ -148,19 +148,17 @@ sub updatePos {
 	my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
 	$self->{status_posx}->configure( -text =>$x);
 	$self->{status_posy}->configure( -text =>$y);
-#	if (Exists $map_mw ) {
-#		$map_mw{'canvas'}->delete($map_mw{'player'}) if($map_mw{'player'});
-#		$map_mw{'canvas'}->delete($map_mw{'range'}) if ($map_mw{'range'});
-#		$map_mw{'player'} = $map_mw{'canvas'}->createOval(
-#			$x-2,$map_mw{'map'}{'y'} - $y-2,
-#			$x+2,$map_mw{'map'}{'y'} - $y+2,
-#			,-fill => '#ffcccc', -outline=>'#ff0000');
-#		my $dis = $main::config{'attackDistance'};
-#		$map_mw{'range'} = $map_mw{'canvas'}->createOval(
-#			$x-$dis,$map_mw{'map'}{'y'} - $y-$dis,
-#			$x+$dis,$map_mw{'map'}{'y'} - $y+$dis,
-#			,-outline=>'#ff0000');
-#	}
+	if ($self->mapIsShown()) {
+		$self->{map}{canvas}->coords($self->{map}{ind}{player},
+			$x - 2, $self->{map}{height} - $y - 2,
+			$x + 2, $self->{map}{height} - $y + 2,
+		);
+		my $dis = $config{'attackDistance'};
+		$self->{map}{canvas}->coords($self->{map}{ind}{range},
+			$x - $dis, $self->{map}{height} - $y - $dis,
+			$x + $dis, $self->{map}{height} - $y + $dis,
+		);
+	}
 }
 
 sub updateStatus {
@@ -336,7 +334,7 @@ sub initTk {
 		['~View',
 			[
 #				[qw/command Map  -accelerator Ctrl+M/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&OpenMap, $class]],
-				[qw/command Map  -accelerator Ctrl+M/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&MapToggle, undef, $self]],
+				[qw/command Map  -accelerator Ctrl+M/, -font=>[-family=>"Tahoma",-size=>8], -command=>[\&mapToggle, undef, $self]],
 #				'',
 #				[qw/command Status -accelerator Alt+D/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "s");}],
 #				[qw/command Skill -accelerator Alt+S/, -font=>[-family=>"Tahoma",-size=>8], -command=>sub{push(@input_que, "skills");}],
@@ -382,7 +380,7 @@ sub initTk {
 	#Binding
 	#FIXME Do I want to quit on cut? ... NO!
 	#$self->{mw}->bind('all','<Control-x>'=>[\&OnExit]);
-	$self->{mw}->bind('all','<Control-m>'=>[\&MapToggle, $self]);
+	$self->{mw}->bind('all','<Control-m>'=>[\&mapToggle, $self]);
 	#FIXME hey that's copy....
 	#$self->{mw}->bind('all','<Control-c>'=>sub{push(@input_que, "reload conf");});
 	#$self->{mw}->bind('all','<Control-w>'=>sub{push(@input_que, "reload mon_");});
@@ -569,18 +567,26 @@ sub resetColors {
 	}
 }
 
-sub MapToggle {
-	my (undef, $self) = @_;
-	unless (defined($self->{map_w})) {
-		$self->{map_w} = $self->{mw}->Toplevel();
-		$self->{map_w}->title("Map View : ??");
-		$self->{map_w}->protocol('WM_DELETE_WINDOW', 
+sub mapToggle {
+	my ($self);
+	if (@_ == 1) {
+		$self = $_[0];
+	} elsif (@_ == 2) {
+		$self = $_[1];
+	} else {
+		die "wrong number of args to mapToggle\n";
+	}
+	unless (defined($self->{map})) {
+		$self->{map}{window} = $self->{mw}->Toplevel();
+		my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
+		$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d)", $field{'name'}, $x, $y);
+		$self->{map}{window}->protocol('WM_DELETE_WINDOW', 
 			sub {
-				$self->MapToggle();
+				$self->mapToggle();
 			}
 		);
-		$self->{map_w}->resizable(0,0);
-		$self->{map_canvas} = $self->{map_w}->Canvas(
+		$self->{map}{window}->resizable(0,0);
+		$self->{map}{canvas} = $self->{map}{window}->Canvas(
 			-width => 200,
 			-height => 200,
 			-background => 'white',
@@ -589,37 +595,73 @@ sub MapToggle {
 		);
 		$self->loadMap();
 		
+			
+		my $dis = $config{'attackDistance'};
+		print "dis: $dis\n";
+		$self->{map}{range} = $self->{map}{canvas}->createOval(
+			-$dis, $self->{map}{height} - $dis,
+			 $dis, $self->{map}{height} + $dis,
+			-outline => '#0000ff',
+		);
+		$self->{map}{ind}{player} = $self->{map}{canvas}->createOval(
+			-2, $self->{map}{height} - 2,
+			 2, $self->{map}{height} + 2,
+			-fill => '#ffcccc',
+			-outline => '#ff0000',
+		);
+		
+#		if ($main::sys{'enableMoveClick'}) {
+#			$map_mw->bind('<Double-1>', [\&dblchk , Ev('x') , Ev('y')]);
+#		}
+		$self->{map}{window}->bind('<Motion>', [\&pointchk, $self, Ev('x') , Ev('y')]); 
+		$self->updatePos();
 	} else {
-		$self->{map_w}->destroy();
-		undef $self->{map_canvas};
-		undef $self->{map_w};
+		$self->{map}{window}->destroy();
+		undef $self->{map}{canvas};
+		undef $self->{map}{window};
+		undef $self->{map};
 	}
 }
 
-sub isMapShown {
+sub pointchk {
+	my (undef, $self, $mvcpx, $mvcpy) = @_;
+	if (@_ == 3) {
+		($self, $mvcpx, $mvcpy) = @_;
+	} elsif (@_ == 4) {
+		(undef, $self, $mvcpx, $mvcpy) = @_;
+	} else {
+		die "wrong number of args to pointchk\n";
+	}
+	$mvcpy = $self->{map}{height} - $mvcpy;
+	my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
+	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d) m:(%3d, %3d)", $field{'name'}, $x, $y, $mvcpx, $mvcpy);
+	$self->{map}{window}->update; 
+}
+
+sub mapIsShown {
 	my $self = shift;
-	return Exists($self->{map_w});
+	return defined($self->{map});
 }
 
 sub loadMap {
 	my $self = shift;
-	return if (!$self->isMapShown());
-	$self->{map_canvas}->delete('map');
-	$self->{map_canvas}->createText(50,20,-text =>'Processing..',-tags=>'map');
-	$self->{map_bitmap} = $self->{map_canvas}->Bitmap(
+	return if (!$self->mapIsShown());
+	$self->{map}{canvas}->delete('map');
+	$self->{map}{canvas}->createText(50,20,-text =>'Processing..',-tags=>'map');
+	$self->{map_bitmap} = $self->{map}{canvas}->Bitmap(
 		-data => ${&xbmmake(\%field)}
 	);
-	$self->{map_canvas}->createImage(2,2,
+	$self->{map}{canvas}->createImage(2,2,
 		-image => $self->{map_bitmap},
 		-anchor => 'nw',
 		-tags=>'map'
 	);
-	$self->{map_canvas}->configure(
+	$self->{map}{canvas}->configure(
 			-width => $field{'width'},
 			-height => $field{'height'}
 	);
-	$self->{map_canvas}{'x'} = $field{'width'};
-	$self->{map_canvas}{'y'} = $field{'height'};
+	$self->{map}{width} = $field{'width'};
+	$self->{map}{height} = $field{'height'};
 }
 
 #should this cache xbm files?
