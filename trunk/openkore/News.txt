@@ -2,8 +2,8 @@
 ### CVS
 ==================
 
-**** CURRENTLY BROKEN STUFF ****
-- Auto-recording of unknown portals.
+**** CURRENTLY (PARTIALLY) BROKEN STUFF ****
+- Compilation of portalsLOS.txt.
 
 
 ** Important notices:

@@ -1,8 +1,5 @@
 # To run kore, execute openkore.pl instead.
 
-# ****** CURRENTLY BROKEN ******:
-# - portal auto-record
-
 #########################################################################
 # This software is open source, licensed under the GNU General Public
 # License, version 2.
@@ -2193,79 +2190,81 @@ sub AI {
 		undef %incomingGuild;
 	}
 
-	# Record new unknown portals
+
+	##### PORTALRECORD #####
+	# Automatically record new unknown portals
+
 	if ($ai_v{'portalTrace_mapChanged'}) {
 		undef $ai_v{'portalTrace_mapChanged'};
-		$ai_v{'temp'}{'first'} = 1;
-		undef $ai_v{'temp'}{'foundID'};
-		undef $ai_v{'temp'}{'smallDist'};
-		
-		foreach (@portalsID_old) {
-			$ai_v{'temp'}{'dist'} = distance(\%{$chars_old[$config{'char'}]{'pos_to'}}, \%{$portals_old{$_}{'pos'}});
-			if ($ai_v{'temp'}{'dist'} <= 7 && ($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'smallDist'})) {
-				$ai_v{'temp'}{'smallDist'} = $ai_v{'temp'}{'dist'};
-				$ai_v{'temp'}{'foundID'} = $_;
-				undef $ai_v{'temp'}{'first'};
-			}
-		}
-		if ($ai_v{'temp'}{'foundID'}) {
-			$ai_v{'portalTrace'}{'source'}{'map'} = $portals_old{$ai_v{'temp'}{'foundID'}}{'source'}{'map'};
-			$ai_v{'portalTrace'}{'source'}{'ID'} = $portals_old{$ai_v{'temp'}{'foundID'}}{'nameID'};
-			%{$ai_v{'portalTrace'}{'source'}{'pos'}} = %{$portals_old{$ai_v{'temp'}{'foundID'}}{'pos'}};
-		}
-	}
-
-	if (%{$ai_v{'portalTrace'}} && portalExists($ai_v{'portalTrace'}{'source'}{'map'}, $ai_v{'portalTrace'}{'source'}{'pos'}) ne "") {
-		undef %{$ai_v{'portalTrace'}};
-	} elsif (%{$ai_v{'portalTrace'}} && $field{'name'}) {
 		my $first = 1;
-		my $foundID;
-		my $smallDist;
+		my ($foundID, $smallDist, $dist);
 
-		foreach (@portalsID) {
-			$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$portals{$_}{'pos'}});
-			if ($first || $ai_v{'temp'}{'dist'} < $smallDist) {
-				$smallDist = $ai_v{'temp'}{'dist'};
+		# Find the nearest portal or the only portal on the map you came from (source portal)
+		foreach (@portalsID_old) {
+			$dist = distance($chars_old[$config{'char'}]{'pos_to'}, $portals_old{$_}{'pos'});
+			if ($dist <= 7 && ($first || $dist < $smallDist)) {
+				$smallDist = $dist;
 				$foundID = $_;
 				undef $first;
 			}
 		}
 
-		if (%{$portals{$foundID}}) {
-			if (portalExists($field{'name'}, \%{$portals{$foundID}{'pos'}}) eq ""
-			 && $ai_v{'portalTrace'}{'source'}{'map'} && $ai_v{'portalTrace'}{'source'}{'pos'}{'x'} ne "" && $ai_v{'portalTrace'}{'source'}{'pos'}{'y'} ne ""
-			 && $field{'name'} && $portals{$foundID}{'pos'}{'x'} ne "" && $portals{$foundID}{'pos'}{'y'} ne "") {
+		my ($sourceMap, $sourceID, %sourcePos);
+		if ($foundID) {
+			$sourceMap = $portals_old{$foundID}{'source'}{'map'};
+			$sourceID = $portals_old{$foundID}{'nameID'};
+			%sourcePos = %{$portals_old{$foundID}{'pos'}};
+		}
 
-				$portals{$foundID}{'name'} = "$field{'name'} -> $ai_v{'portalTrace'}{'source'}{'map'}";
-				$portals{pack("L",$ai_v{'portalTrace'}{'source'}{'ID'})}{'name'} = "$ai_v{'portalTrace'}{'source'}{'map'} -> $field{'name'}";
+		# Continue only if the source portal isn't already in portals.txt
+		if ($foundID && portalExists($sourceMap, \%sourcePos) eq "" && $field{'name'}) {
+			$first = 1;
+			undef $foundID;
+			undef $smallDist;
+
+			# Find the nearest portal or only portal on the current map
+			foreach (@portalsID) {
+				$dist = distance($chars[$config{'char'}]{'pos_to'}, $portals{$_}{'pos'});
+				if ($first || $dist < $smallDist) {
+					$smallDist = $dist;
+					$foundID = $_;
+					undef $first;
+				}
+			}
+
+			# Final sanity check
+			if (%{$portals{$foundID}} && portalExists($field{'name'}, $portals{$foundID}{'pos'}) eq ""
+			 && $sourceMap && defined $sourcePos{x} && defined $sourcePos{y}
+			 && defined $portals{$foundID}{'pos'}{'x'} && defined $portals{$foundID}{'pos'}{'y'}) {
+
+				my ($ID, $ID2, $destName);
+				$portals{$foundID}{'name'} = "$field{'name'} -> $sourceMap";
+				$portals{pack("L", $sourceID)}{'name'} = "$sourceMap -> $field{'name'}";
 
 				# Record information about the portal we walked into
-				$ai_v{'temp'}{'ID'} = "$ai_v{'portalTrace'}{'source'}{'map'} $ai_v{'portalTrace'}{'source'}{'pos'}{'x'} $ai_v{'portalTrace'}{'source'}{'pos'}{'y'}";
-				$portals_lut{$ai_v{'temp'}{'ID'}}{'source'}{'map'} = $ai_v{'portalTrace'}{'source'}{'map'};
-				%{$portals_lut{$ai_v{'temp'}{'ID'}}{'source'}{'pos'}} = %{$ai_v{'portalTrace'}{'source'}{'pos'}};
-				my $destName = $field{'name'} . " " . $portals{$foundID}{'pos'}{'x'} . " " . $portals{$foundID}{'pos'}{'y'};
-				print "$destName\n";
-				$portals_lut{$ai_v{'temp'}{'ID'}}{'dest'}{$destName}{'map'} = $field{'name'};
-				%{$portals_lut{$ai_v{'temp'}{'ID'}}{'dest'}{$destName}{'pos'}} = %{$portals{$foundID}{'pos'}};
+				$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
+				$portals_lut{$ID}{'source'}{'map'} = $sourceMap;
+				%{$portals_lut{$ID}{'source'}{'pos'}} = %sourcePos;
+				$destName = $field{'name'} . " " . $portals{$foundID}{'pos'}{'x'} . " " . $portals{$foundID}{'pos'}{'y'};
+				$portals_lut{$ID}{'dest'}{$destName}{'map'} = $field{'name'};
+				%{$portals_lut{$ID}{'dest'}{$destName}{'pos'}} = %{$portals{$foundID}{'pos'}};
 
 				updatePortalLUT("$Settings::tables_folder/portals.txt",
-					$ai_v{'portalTrace'}{'source'}{'map'}, $ai_v{'portalTrace'}{'source'}{'pos'}{'x'}, $ai_v{'portalTrace'}{'source'}{'pos'}{'y'},
+					$sourceMap, $sourcePos{x}, $sourcePos{y},
 					$field{'name'}, $portals{$foundID}{'pos'}{'x'}, $portals{$foundID}{'pos'}{'y'});
 
 				# Record information about the portal in which we came out
-				$ai_v{'temp'}{'ID2'} = "$field{'name'} $portals{$foundID}{'pos'}{'x'} $portals{$foundID}{'pos'}{'y'}";
-				$portals_lut{$ai_v{'temp'}{'ID2'}}{'source'}{'map'} = $field{'name'};
-				%{$portals_lut{$ai_v{'temp'}{'ID2'}}{'source'}{'pos'}} = %{$portals{$foundID}{'pos'}};
-				$destName = $ai_v{'portalTrace'}{'source'}{'map'} . " " . $ai_v{'portalTrace'}{'source'}{'pos'}{'x'} . " " . $ai_v{'portalTrace'}{'source'}{'pos'}{'y'};
-				print "$destName\n";
-				$portals_lut{$ai_v{'temp'}{'ID2'}}{'dest'}{$destName}{'map'} = $ai_v{'portalTrace'}{'source'}{'map'};
-				%{$portals_lut{$ai_v{'temp'}{'ID2'}}{'dest'}{$destName}{'pos'}} = %{$ai_v{'portalTrace'}{'source'}{'pos'}};
+				$ID2 = "$field{'name'} $portals{$foundID}{'pos'}{'x'} $portals{$foundID}{'pos'}{'y'}";
+				$portals_lut{$ID2}{'source'}{'map'} = $field{'name'};
+				%{$portals_lut{$ID2}{'source'}{'pos'}} = %{$portals{$foundID}{'pos'}};
+				$destName = $sourceMap . " " . $sourcePos{x} . " " . $sourcePos{y};
+				$portals_lut{$ID2}{'dest'}{$destName}{'map'} = $sourceMap;
+				%{$portals_lut{$ID2}{'dest'}{$destName}{'pos'}} = %sourcePos;
 
 				updatePortalLUT("$Settings::tables_folder/portals.txt",
 					$field{'name'}, $portals{$foundID}{'pos'}{'x'}, $portals{$foundID}{'pos'}{'y'},
-					$ai_v{'portalTrace'}{'source'}{'map'}, $ai_v{'portalTrace'}{'source'}{'pos'}{'x'}, $ai_v{'portalTrace'}{'source'}{'pos'}{'y'});
+					$sourceMap, $sourcePos{x}, $sourcePos{y});
 			}
-			undef %{$ai_v{'portalTrace'}};
 		}
 	}
 
@@ -5648,6 +5647,8 @@ sub parseMsg {
 		for ($i = 0; $i < @ai_seq; $i++) {
 			ai_setMapChanged($i);
 		}
+		$ai_v{'portalTrace_mapChanged'} = 1;
+
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
@@ -5669,6 +5670,8 @@ sub parseMsg {
 		for (my $i = 0; $i < @ai_seq; $i++) {
 			ai_setMapChanged($i);
 		}
+		$ai_v{'portalTrace_mapChanged'} = 1;
+
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
@@ -8747,7 +8750,6 @@ sub ai_setMapChanged {
 	if ($index < @ai_seq_args) {
 		$ai_seq_args[$index]{'mapChanged'} = time;
 	}
-	$ai_v{'portalTrace_mapChanged'} = 1;
 }
 
 sub ai_setSuspend {
