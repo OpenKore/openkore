@@ -1,16 +1,23 @@
 # In this file you can control which items to put in storage,
 # to sell, or to leave in the inventory.
-# Syntax:
-# <item name> <minimum keep amount in inventory> <storage-auto flag> <sell-auto flag>
 #
-# The example below will sell all jellopies, and store all knifes:
-# Jellopy 0 0 1
-# Knife 0 1 0
+# Syntax:
+# (item name) (minimum) (auto-store) (auto-sell) [put in cart]
+# item name	: Name of the item.
+# miminum	: The minimum amount of this item that you want to keep in inventory.
+# autostore	: Set to 1 to walk back to a Kapra NPC to put in storage.
+# autosell	: Set to 1 to sell item at a buy/sell NPC.
+# put in cart	: Set to 1 to automatically this item in cart.
+#
+# The example below will sell all jellopies, store all knifes, and puts all flowers in cart:
+#	Jellopy 0 0 1
+#	Knife 0 1 0
+#	Flower 0 0 0 1
 #
 # The item name isn't case sensitive. Only items found in this file will
 # be stored or sold.
 #
-# If storage and sell flags are 1, Kore will do storage first (unless
+# If auto-store and auto-sell are 1, Kore will do storage first (unless
 # storage is full) then sell.
 #
 # Kore will not sell or store equipped items. For example, if you're using
