@@ -115,20 +115,10 @@ if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 
 	configModify('buildType', 0, 1);
 } else {
-	eval "use C::DynaLib;";
+	eval "use Tools;";
+	die if ($@);
 	eval "use POSIX \":sys_wait_h\";";
 	die if ($@);
-
-	$ToolsLib = new C::DynaLib("./Tools.so");
-
-	$CalcPath_init = $ToolsLib->DeclareSub("CalcPath_init", "L", "p","p","L","L","p","p","L");
-	die "Could not locate Tools.so" if (!$CalcPath_init);
-
-	$CalcPath_pathStep = $ToolsLib->DeclareSub("CalcPath_pathStep", "L", "L");
-	die "Could not locate Tools.so" if (!$CalcPath_pathStep);
-
-	$CalcPath_destroy = $ToolsLib->DeclareSub("CalcPath_destroy", "", "L");
-	die "Could not locate Tools.so" if (!$CalcPath_destroy);
 
 	configModify('buildType', 1, 1);
 }

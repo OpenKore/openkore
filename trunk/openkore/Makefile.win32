@@ -9,7 +9,7 @@ DLLTOOL=dlltool
 VERSION=1.0.0
 DISTNAME=openkore-$(VERSION)
 DISTFILES=DevelopersNotes.txt Inject.cpp Tools.cpp Makefile Makefile.win32\
-	Inject.def Tools.def openkore.pl functions.pl
+	Inject.def Tools.def openkore.pl functions.pl Tools_wrap.c Tools.pm
 
 all: Tools.dll Inject.dll
 

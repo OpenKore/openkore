@@ -8775,7 +8775,7 @@ sub ai_route_getRoute_destroy {
 	if (!$config{'buildType'}) {
 		$CalcPath_destroy->Call($$r_args{'session'}) if ($$r_args{'session'} ne "");;
 	} elsif ($config{'buildType'} == 1) {
-		&{$CalcPath_destroy}($$r_args{'session'}) if ($$r_args{'session'} ne "");;
+		Tools::CalcPath_destroy($$r_args{'session'}) if ($$r_args{'session'} ne "");;
 	}
 }
 
@@ -8793,10 +8793,14 @@ sub ai_route_searchStep {
 				$$r_args{'field'}{'rawMap'}, $$r_args{'field'}{'width'}, $$r_args{'field'}{'height'}, 
 				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}), $$r_args{'timeout'});
 		} elsif ($config{'buildType'} == 1) {
-			$$r_args{'session'} = &{$CalcPath_init}($$r_args{'solution'},
-				$$r_args{'field'}{'rawMap'}, $$r_args{'field'}{'width'}, $$r_args{'field'}{'height'}, 
-				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}), $$r_args{'timeout'});
-
+			$$r_args{'session'} = Tools::CalcPath_init(
+				$$r_args{'solution'},
+				$$r_args{'field'}{'rawMap'},
+				$$r_args{'field'}{'width'},
+				$$r_args{'field'}{'height'}, 
+				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), 
+				pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}),
+				$$r_args{'timeout'});
 		}
 	}
 	if ($$r_args{'session'} < 0) {
@@ -8807,7 +8811,7 @@ sub ai_route_searchStep {
 	if (!$config{'buildType'}) {
 		$ret = $CalcPath_pathStep->Call($$r_args{'session'});
 	} elsif ($config{'buildType'} == 1) {
-		$ret = &{$CalcPath_pathStep}($$r_args{'session'});
+		$ret = Tools::CalcPath_pathStep($$r_args{'session'});
 	}
 	if (!$ret) {
 		my $size = unpack("L",substr($$r_args{'solution'},0,4));
@@ -11006,14 +11010,15 @@ sub parseSkillsSPLUT {
 sub parseTimeouts {
 	my $file = shift;
 	my $r_hash = shift;
-	my ($key, $value);
 	open(FILE, "< $file");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
-		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
-		if ($key ne "" && $value ne "") {
-			$$r_hash{$key}{'timeout'} = $value;
+
+		my ($key, $value) = $_ =~ /([\s\S]+?) ([\s\S]*?)$/;
+		my @args = split (/ /, $value);
+		if ($key ne "") {
+			$$r_hash{$key}{'timeout'} = $args[0];
 		}
 	}
 	close FILE;
