@@ -26,7 +26,7 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_KEY_DOWN EVT_PAINT EVT_SPLITTER_DOUBLECLICKED);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_TEXT_ENTER EVT_KEY_DOWN EVT_PAINT EVT_SPLITTER_DOUBLECLICKED);
 use Time::HiRes qw(time sleep);
 use File::Spec;
 
@@ -46,6 +46,7 @@ use Misc;
 use Commands;
 use Utils;
 
+
 sub OnInit {
 	my $self = shift;
 
@@ -53,6 +54,7 @@ sub OnInit {
 	$self->iterate;
 	$self->{iterationTimeout}{timeout} = 0.05;
 	$self->{aiBarTimeout}{timeout} = 0.1;
+	$self->{mapViewTimeout}{timeout} = 0.15;
 
 	$self->{loadHook} = Plugins::addHook('loadfiles', sub { $self->onLoadFiles(@_); });
 	$self->{postLoadHook} = Plugins::addHook('postloadfiles', sub { $self->onLoadFiles(@_); });
@@ -73,22 +75,13 @@ sub DESTROY {
 sub iterate {
 	my $self = shift;
 
-	$self->updateStatusBar();
-	if ($self->{mapViewer} && %field && $char) {
-		$self->{mapViewer}->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
-		my $i = binFind(\@ai_seq, "route");
-		if (defined $i) {
-			$self->{mapViewer}->setDest($ai_seq_args[$i]{dest}{pos}{x}, $ai_seq_args[$i]{dest}{pos}{y});
-		} else {
-			$self->{mapViewer}->setDest;
-		}
-		$self->{mapViewer}->update;
-	}
+	$self->updateStatusBar;
+	$self->updateMapViewer;
 
 	while ($self->Pending) {
 		$self->Dispatch;
 	}
-	$self->Yield();
+	$self->Yield;
 	$self->{iterationTimeout}{time} = time;
 }
 
@@ -180,36 +173,42 @@ sub createInterface {
 	$frame->SetMenuBar($menu);
 
 		# Program menu
-		my $opMenu = new Wx::Menu();
-		$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit);
+		my $opMenu = new Wx::Menu;
+		$self->{mPause}  = $self->addMenu($opMenu, '&Pause Botting', \&onDisableAI, 'Pause all automated botting activity');
+		$self->{mResume} = $self->addMenu($opMenu, '&Resume Botting', \&onEnableAI, 'Resume all automated botting activity');
+		$opMenu->AppendSeparator;
+		$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit, 'Exit this program');
 		$menu->Append($opMenu, 'P&rogram');
+		EVT_MENU_OPEN($opMenu, sub { $self->onMenuOpen; });
 
-		my $infoMenu = new Wx::Menu();
+		my $infoMenu = new Wx::Menu;
 		$self->addMenu($infoMenu, '&Status	Alt-S',	sub { Commands::run("s"); });
 		$self->addMenu($infoMenu, 'S&tatistics',	sub { Commands::run("st"); });
 		$self->addMenu($infoMenu, '&Inventory	Alt-I',	sub { Commands::run("i"); });
 		$self->addMenu($infoMenu, 'S&kills',		sub { Commands::run("skills"); });
-		$infoMenu->AppendSeparator();
+		$infoMenu->AppendSeparator;
 		$self->addMenu($infoMenu, '&Players	Alt-P',	sub { Commands::run("pl"); });
 		$self->addMenu($infoMenu, '&Monsters	Alt-M',	sub { Commands::run("ml"); });
 		$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
-		$infoMenu->AppendSeparator();
+		$infoMenu->AppendSeparator;
 		$self->addMenu($infoMenu, '&Experience Report	Alt+E',	sub { main::parseInput("exp"); });
 		$menu->Append($infoMenu, 'I&nfo');
 
 		# View menu
-		my $viewMenu = new Wx::Menu();
-		$self->addMenu($viewMenu, '&Map	Ctrl-M', \&onMapToggle);
-		$viewMenu->AppendSeparator();
-		$self->addMenu($viewMenu, '&Font...', \&onFontChange);
+		my $viewMenu = new Wx::Menu;
+		$self->addMenu($viewMenu, '&Map	Ctrl-M',	\&onMapToggle, 'Show where you are on the current map');
+		$viewMenu->AppendSeparator;
+		$self->addMenu($viewMenu, '&Font...',		\&onFontChange, 'Change console font');
+		$viewMenu->AppendSeparator;
+		$self->addMenu($viewMenu, '&Clear Console',	\&onClearConsole);
 		$menu->Append($viewMenu, '&View');
 
 		$self->createCustomMenus() if $self->can('createCustomMenus');
-		
+
 		# Help menu
 		my $helpMenu = new Wx::Menu();
-		$self->addMenu($helpMenu, '&Manual	F1', \&onManual);
-		$self->addMenu($helpMenu, '&Forum	Shift-F1', \&onForum);
+		$self->addMenu($helpMenu, '&Manual	F1',		\&onManual, 'Read the manual');
+		$self->addMenu($helpMenu, '&Forum	Shift-F1',	\&onForum, 'Visit the forum');
 		$menu->Append($helpMenu, '&Help');
 
 
@@ -232,10 +231,12 @@ sub createInterface {
 		$mapDock->setHideFunc($self, sub {
 			$splitter->Unsplit($mapDock);
 			$mapDock->Show(0);
+			$self->{inputBox}->SetFocus;
 		});
 		$mapDock->setShowFunc($self, sub {
 			$splitter->SplitVertically($console, $mapDock, -$mapDock->GetBestSize->GetWidth);
 			$mapDock->Show(1);
+			$self->{inputBox}->SetFocus;
 		});
 
 		my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
@@ -316,8 +317,10 @@ sub addMenu {
 	my ($self, $menu, $label, $callback, $help) = @_;
 
 	$self->{menuIDs}++;
-	$menu->Append($self->{menuIDs}, $label, $help);
-	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self) });
+	my $item = new Wx::MenuItem(undef, $self->{menuIDs}, $label, $help);
+	$menu->Append($item);
+	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self); });
+	return $item;
 }
 
 sub updateStatusBar {
@@ -341,18 +344,22 @@ sub updateStatusBar {
 	if ($conState == 5) {
 		$xyText = "$char->{pos_to}{x}, $char->{pos_to}{y}";
 
-		if (@ai_seq) {
-			my @seqs = @ai_seq;
-			foreach (@seqs) {
-				s/^route_//;
-				s/_/ /g;
-				s/([a-z])([A-Z])/$1 $2/g;
-				$_ = lc $_;
+		if ($AI) {
+			if (@ai_seq) {
+				my @seqs = @ai_seq;
+				foreach (@seqs) {
+					s/^route_//;
+					s/_/ /g;
+					s/([a-z])([A-Z])/$1 $2/g;
+					$_ = lc $_;
+				}
+				substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
+				$aiText = join(', ', @seqs);
+			} else {
+				$aiText = "";
 			}
-			substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
-			$aiText = join(', ', @seqs);
 		} else {
-			$aiText = "";
+			$aiText = "Paused";
 		}
 	}
 
@@ -370,6 +377,29 @@ sub updateStatusBar {
 	$setStatus->('xyText', $xyText);
 	$setStatus->('aiText', $aiText);
 	$self->{aiBarTimeout}{time} = time;
+}
+
+sub updateMapViewer {
+	my $self = shift;
+	my $map = $self->{mapViewer};
+	return unless ($map && %field && $char && timeOut($self->{mapViewTimeout}));
+
+	my $myPos = calcPosition($char);
+	$map->set($field{name}, $myPos->{x}, $myPos->{y}, \%field);
+	my $i = binFind(\@ai_seq, "route");
+	if (defined $i) {
+		$map->setDest($ai_seq_args[$i]{dest}{pos}{x}, $ai_seq_args[$i]{dest}{pos}{y});
+	} else {
+		$map->setDest;
+	}
+
+	my @players = values %players;
+	$map->setPlayers(\@players);
+	my @monsters = values %monsters;
+	$map->setMonsters(\@monsters);
+
+	$map->update;
+	$self->{mapViewTimeout}{time} = time;
 }
 
 
@@ -428,6 +458,20 @@ sub onLoadFiles {
 	}
 }
 
+sub onMenuOpen {
+	my $self = shift;
+	$self->{mPause}->Enable($AI);
+	$self->{mResume}->Enable(!$AI);
+}
+
+sub onEnableAI {
+	$AI = 1;
+}
+
+sub onDisableAI {
+	$AI = 0;
+}
+
 sub onClose {
 	my $self = shift;
 	$self->Show(0);
@@ -437,6 +481,11 @@ sub onClose {
 sub onFontChange {
 	my $self = shift;
 	$self->{console}->selectFont($self->{frame});
+}
+
+sub onClearConsole {
+	my $self = shift;
+	$self->{console}->Remove(0, -1);
 }
 
 sub onMapToggle {

@@ -58,6 +58,8 @@ sub initConnectVars {
 	initMapChangeVars();
 	undef %{$chars[$config{'char'}]{'skills'}};
 	undef @skillsID;
+	delete $chars[$config{'char'}]{'mute_period'};
+	delete $chars[$config{'char'}]{'muted'};
 }
 
 # Initialize variables when you change map (after a teleport or after you walked into a portal)
@@ -1515,7 +1517,13 @@ sub AI {
 
 	if (timeOut($timeout{'ai_getInfo'})) {
 		foreach (keys %players) {
-			if ($_ ne '' && !$players{$_}{'gotName'}) {
+			next if $_ eq '';
+			if (distance($char->{pos_to}, $players{$_}{pos_to}) > 35) {
+				delete $players{$_};
+				binRemove(\@playersID, $_);
+				next;
+			}
+			if (!$players{$_}{'gotName'}) {
 				sendGetPlayerInfo(\$remote_socket, $_);
 				last;
 			}
@@ -1571,6 +1579,11 @@ sub AI {
 
 			close(DATA);
 		}
+	}
+
+	if (timeOut($char->{muted}, $char->{mute_period})) {
+		delete $char->{muted};
+		delete $char->{mute_period};
 	}
 
 	return if (!$AI);
@@ -6445,9 +6458,16 @@ sub parseMsg {
 		} elsif ($type == 3) {
 			debug "Something2: $val\n", "parseMsg", 2;
 		} elsif ($type == 4) {
-			$val = (0xFFFFFFFF - $val)+1;
+			$val = (0xFFFFFFFF - $val) + 1;
 			$char->{'mute_period'} = $val;
-			message "You've been muted for " . timeConvert($val) . "\n";
+			$char->{'muted'} = time;
+			if ($config{'dcOnMute'}) {
+				message "You've been muted for " . timeConvert($val) . ", auto disconnect!\n";
+				chatLog("k", "*** You have been muted for " . timeConvert($val) . ", auto disconnect! ***\n");
+				quit();
+			} else {
+				message "You've been muted for " . timeConvert($val) . " minutes\n";
+			}
 		} elsif ($type == 5) {
 			$chars[$config{'char'}]{'hp'} = $val;
 			debug "Hp: $val\n", "parseMsg", 2;
@@ -8782,6 +8802,7 @@ sub ai_setSuspend {
 }
 
 sub ai_skillUse {
+	return if ($char->{muted});
 	my $ID = shift;
 	my $lv = shift;
 	my $maxCastTime = shift;
@@ -10005,6 +10026,7 @@ sub getActorNames {
 sub useTeleport {
 	my $level = shift;
 
+	return if ($char->{muted});
 	if (defined binFind(\@skillsID, 'AL_TELEPORT')) {
 		# We have the teleport skill
 		my $skill = new Skills(handle => 'AL_TELEPORT');

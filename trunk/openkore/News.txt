@@ -80,11 +80,13 @@ New config options:
   partySkill_#_target_isNotJob
   Only activate partySkill for certain job classes
 
-- avoidList_inLockOnly
+- avoidList_inLockOnly (flag)
   Set to 1, if you want to avoid people on your avoid list when they
   are on screen, but only when you are in lockMap.
-- pkServer
+- pkServer (flag)
   To to 1 if you're playing kRO or on a PK server.
+- dcOnMute (flag)
+  Disconnect when you have been muted by a GM.
 
 New timeouts.txt options:
 - ai_attack_unfail 5
@@ -119,6 +121,8 @@ Internal:
   lockMap_randX/Y modify the lockMap_x/y position by a random amount. If
   route_randomWalk is set, lockMap_x/y and lockMap_randX/Y specify the area
   in which randomWalk should walk.
+- Automatically remove player entries, when that player is more than 35 blocks
+  away. Sometimes players don't get removed from the list for some reason.
 
 Credits:
 - Joseph: -1 flag support in mon_control.txt, avoidList_inLockOnly
@@ -132,8 +136,40 @@ Credits:
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
 - sparshong: character creation/deletion packet code.
-- jsteng: mute packet.
+- jsteng, littlewens: mute packet support.
 - anoxemian: (partial?) kRO/PK server support.
+
+
+==================
+### 1.4.8
+==================
+
+New features:
+- A new config.txt parser!
+  Do you also hate config options like this?
+  useSelf_item_0 Apple
+  useSelf_item_0_hp < 50
+  useSelf_item_0_whenStatusActive Inc AGI
+  useSelf_item_1 White Potion
+  useSelf_item_1_hp < 10
+  useSelf_item_1_whenStatusActive Blessing
+
+  Instead of the above, you can now write this:
+  useSelf_item Apple {
+      hp < 50
+      whenStatusActive Inc AGI
+  }
+  useSelf_item White Potion {
+      hp < 10
+      whenStatusActive Blessing
+  }
+
+  As you can see, no more messing with numbers, or typing long lines!
+
+Bug fixes:
+- Remove the "Inventory:" debug message that I forgot to remove.
+- Correctly resize the map viewer in Wx interface.
+- Hopefully fixed the autostorage-vs-sitauto bug.
 
 
 ==================
