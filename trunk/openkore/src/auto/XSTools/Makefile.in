@@ -8,11 +8,12 @@ OBJ+=unix/*.o
 #if win32
 OBJ+=win32/wrapper.o win32/utils.o
 DLLNAME=--dllname XSTools.dll
+LIBS=-lwinmm
 #endif
 
 XSTools.$(DLLEXT): sub
 	dlltool --dllname XSTools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
-	$(DLLWRAP) $(DLLNAME) $(OBJ) -o XSTools.$(DLLEXT) $(LIBPERL) -lstdc++
+	$(DLLWRAP) $(DLLNAME) $(OBJ) -o XSTools.$(DLLEXT) $(LIBPERL) -lstdc++ $(LIBS)
 
 
 sub:

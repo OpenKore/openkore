@@ -356,8 +356,7 @@ sub createMenuBar {
 	$self->createSettingsMenu($settingsMenu) if ($self->can('createSettingsMenu'));
 	$self->addMenu($settingsMenu, '&Advanced...', \&onAdvancedConfig, 'Edit advanced configuration options.');
 	$menu->Append($settingsMenu, '&Settings');
-
-	$self->createCustomMenus() if $self->can('createCustomMenus');
+	$self->createSettingsMenu2($settingsMenu) if ($self->can('createSettingsMenu2'));
 
 	# Help menu
 	my $helpMenu = new Wx::Menu();
@@ -460,7 +459,7 @@ sub createSplitterContent {
 	$page = $notebook->newPage(1, 'Chat Log', 0);
 	my $chatLog = $self->{chatLog} = new Interface::Wx::LogView($page);
 	$page->set($chatLog);
-	$chatLog->addColor("selfchat", 0, 118, 0);
+	$chatLog->addColor("selfchat", 0, 148, 0);
 	$chatLog->addColor("pm", 142, 120, 0);
 	$chatLog->addColor("p", 164, 0, 143);
 	$chatLog->addColor("g", 0, 177, 108);
@@ -523,7 +522,7 @@ sub addCheckMenu {
 	$self->{menuIDs}++;
 	my $item = new Wx::MenuItem(undef, $self->{menuIDs}, $label, $help, wxITEM_CHECK);
 	$menu->Append($item);
-	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self); });
+	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self); }) if ($callback);
 	return $item;
 }
 
