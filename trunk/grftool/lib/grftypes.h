@@ -71,6 +71,9 @@ GRFEXTERN_BEGIN
 		#ifndef _INC_WINDOWS
 			#include <windows.h>
 		#endif /* _INC_WINDOWS */
+		typedef UINT32 uint32_t;
+		typedef UINT16 uint16_t;
+		typedef UINT8 uint8_t;
 	#endif /* __MINGW32__ */
 	
 #else /* WIN32 */
@@ -80,6 +83,8 @@ GRFEXTERN_BEGIN
 
 /* Win32 DLL macros */
 #ifdef WIN32
+
+
 	/* Pack to 1 byte boundaries */
 	#include <pshpack1.h>
 
@@ -93,6 +98,9 @@ GRFEXTERN_BEGIN
 		#define GRFEXPORT
 	#endif /* GRF_STATIC */
 #else /* WIN32 */
+	/* Integer types */
+	#include <inttypes.h>
+	
 	/* Pack to 1 byte boundaries */
 	#pragma pack(1)
 
