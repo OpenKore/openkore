@@ -29,3 +29,17 @@ WinUtils_InjectDLL(ProcID, dll)
 		RETVAL = InjectDLL((DWORD) ProcID, dll);
 	OUTPUT:
 		RETVAL
+
+int
+WinUtils_ShellExecute(handle, operation, file)
+		unsigned int handle
+		SV *operation
+		char *file
+	INIT:
+		char *op = NULL;
+	CODE:
+		if (operation && SvOK (operation))
+			op = SvPV_nolen (operation);
+		RETVAL = ((int) ShellExecute((HWND) handle, op, file, NULL, NULL, SW_NORMAL)) == 42;
+	OUTPUT:
+		RETVAL

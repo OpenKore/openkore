@@ -26,7 +26,8 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK EVT_CHOICE EVT_TIMER);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
+		EVT_CHOICE EVT_TIMER EVT_TASKBAR_LEFT_DOWN);
 use Time::HiRes qw(time sleep);
 use File::Spec;
 
@@ -223,6 +224,8 @@ sub createInterface {
 		my $opMenu = new Wx::Menu;
 		$self->{mPause}  = $self->addMenu($opMenu, '&Pause Botting', \&onDisableAI, 'Pause all automated botting activity');
 		$self->{mResume} = $self->addMenu($opMenu, '&Resume Botting', \&onEnableAI, 'Resume all automated botting activity');
+		$opMenu->AppendSeparator;
+		$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
 		$opMenu->AppendSeparator;
 		$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit, 'Exit this program');
 		$menu->Append($opMenu, 'P&rogram');
@@ -521,6 +524,19 @@ sub onEnableAI {
 
 sub onDisableAI {
 	$AI = 0;
+}
+
+sub onMinimizeToTray {
+	my $self = shift;
+	my $tray = new Wx::TaskBarIcon;
+	my $title = ($char) ? "$char->{name} - $Settings::NAME" : "$Settings::NAME";
+	$tray->SetIcon(Wx::GetWxPerlIcon, $title);
+	EVT_TASKBAR_LEFT_DOWN($tray, sub {
+		$tray->RemoveIcon;
+		undef $tray;
+		$self->{frame}->Show(1);
+	});
+	$self->{frame}->Show(0);
 }
 
 sub onClose {
