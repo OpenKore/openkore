@@ -77,7 +77,7 @@ secureLogin_requestCode
 secureLogin_account 0
 serverType 2
 
-[Philippines - pRO: Urdr] 
+[Philippines - pRO: Urdr]
 ip 202.57.118.231
 port 6900
 master_version 27
