@@ -22,6 +22,8 @@
   			    counting at 0, i thaught it best to preserve it ;)
 - New config option: shop_random.
   When set to 1, the item order in the shop will be randomized.
+- When in X-Kore mode, the RO client will still work if you shutdown Kore. However, you
+  can't start Kore in X-Kore mode again until you've restarted the RO client.
 
 ==================
 ### OpenKore 1.2.1

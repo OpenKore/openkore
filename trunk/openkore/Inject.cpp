@@ -141,6 +141,7 @@ MyWSAAsyncSelectProc  OriginalWSAAsyncSelectProc;
 ULONG falseClientComId;
 SOCKET falseClient;
 SOCKET currentServer;
+BOOL koreConnected = 0;
 
 WSADATA WSAData;
 char* falseClient_send;
@@ -195,6 +196,7 @@ void falseClientCom() {
 			falseClient_timeout = GetTickCount();
 			falseClient_send_timeout = GetTickCount();
 			falseClient_sendLength = 0;
+			koreConnected = 1;
 		}
 		ret = OriginalRecvProc(falseClient,falseClient_recv,MAX_BUFFER_LENGTH,0);
 		if (ret != SOCKET_ERROR && ret >= 3) {
@@ -212,11 +214,18 @@ void falseClientCom() {
 				} else if (*(falseClient_recv+index) == 'K') {
 					//Keep alive
 					type = 2;
+				} else if (*(falseClient_recv+index) == 'Z') {
+					//Kore exited
+					type = 3;
 				} else {
 					type = -1;
 				}
-			
-				if (!type && currentServer && IsConnected(currentServer)) {
+
+				if (type == 3) {
+					koreConnected = 0;
+					closesocket(falseClient);
+					return;
+				} else if (!type && currentServer && IsConnected(currentServer)) {
 					OriginalSendProc(currentServer,falseClient_recv+index+3,falseClient_recvLength,0);
 				} else if (type == 1) {
 					EnterCriticalSection(&falseClient_recvInjectSection);
@@ -419,8 +428,11 @@ int WINAPI MySend (
 	
 	int ret;
 	currentServer = s;
-	
-	ret = OriginalSendProc(s, buf, 0, flags);
+
+	if (koreConnected)
+		ret = OriginalSendProc(s, buf, 0, flags);
+	else
+		return OriginalSendProc(s, buf, len, flags);
 
 	if (ret != SOCKET_ERROR & len > 0 && falseClient_sendLength + len + 3 < MAX_BUFFER_LENGTH) {
 		char* newbuf = (char*)malloc(len+3);
@@ -459,6 +471,10 @@ int WINAPI MyRecv (
   ) {
 	int ret = 0;
 	int ret2 = 0;
+
+	if (!koreConnected)
+		return OriginalRecvProc(s, buf, len, flags);
+
 	currentServer = s;
 	if (falseClient_recvInjectLength) {
 		EnterCriticalSection(&falseClient_recvInjectSection);
