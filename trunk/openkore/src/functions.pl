@@ -4193,6 +4193,7 @@ sub AI {
 			my $portalDist = $config{'attackMinPortalDistance'} || 4;
 			my $playerDist = $config{'attackMinPlayerDistance'};
 			$playerDist = 1 if ($playerDist < 1);
+			eval $OpenKoreMod::autoAttack if defined($OpenKoreMod::autoAttack);
 
 			# Detect whether we are currently in follow mode
 			my $following;
