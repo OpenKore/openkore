@@ -21,6 +21,9 @@ New features:
   /* indicates the beginning of a comment, and */ indicates the end.
 - AI sequence will now be cleared when switching characters due to
   autoConfChange.
+- beepOnChat also affects emotions.
+- teleportAuto_[hp|sp|minAggressives] will now print a message when it is
+  triggered.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
@@ -28,6 +31,8 @@ New config options:
 - The attackComboSlot block now has an extra option:
   isSelfSkill (flag)
   This specifies whether the combo skill is used on yourself.
+- missDamage; any damage you do <= this amount will be counted as a miss.
+  (e.g. for monks who have Spirit Spheres)
 
 Internal:
 - $interface->beep() function for cross-platform beep support.
