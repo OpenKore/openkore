@@ -49,6 +49,8 @@ New features:
   doesn't exist.
 - The "follow" feature can now follow the master even if he's off
   screen, if the master is in the same party.
+- The Linux version now longer needs --daemon.
+  So './openkore.pl &' will Just Work(tm).
 
 
 New commands:

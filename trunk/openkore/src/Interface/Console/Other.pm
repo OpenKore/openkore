@@ -98,7 +98,7 @@ sub new {
 	$interface{input}{buf} = '';
 	$interface{input}{pos} = 0;
 
-	if (POSIX::ttyname(0)) {
+	if (-t STDIN && POSIX::tcgetpgrp(0) == POSIX::getpid()) {
 		$interface{select} = IO::Select->new(\*STDIN);
 
 		eval 'require "sys/ioctl.ph";';
