@@ -99,13 +99,15 @@ sub new {
 	$interface{input}{buf} = '';
 	$interface{input}{pos} = 0;
 
-	if (POSIX::ttyname(0) && POSIX::tcgetpgrp(0) == POSIX::getpgrp()) {
+	if ($ENV{OPENKORE_STATIC_INPUT}) {
+		$interface{inputMode} = 'static';
+
+	} elsif (POSIX::ttyname(0) && POSIX::tcgetpgrp(0) == POSIX::getpgrp()) {
 		$interface{select} = IO::Select->new(\*STDIN);
 
 		eval 'require "sys/ioctl.ph";';
 		if ($@) {
 			$interface{inputMode} = 'static';
-			warning("Could not load dynamic interface: $@\n");
 
 		} else {
 			$interface{inputMode} = 'dynamic';
@@ -120,18 +122,23 @@ sub new {
 			$interface{oterm} = $term->getlflag();
 
 			# Set terminal on noecho and CBREAK
-			my $echo = ECHO | ECHOK | ICANON;
-			my $noecho = $interface{oterm} & ~$echo;
-			$term->setlflag($noecho);
-			$term->setcc(VTIME, 1);
-			$term->setattr(fileno(STDIN), TCSANOW);
+			my $setTerminalMode = sub {
+				my $echo = ECHO | ECHOK | ICANON;
+				my $noecho = $interface{oterm} & ~$echo;
+				$term->setlflag($noecho);
+				$term->setcc(VTIME, 1);
+				$term->setattr(fileno(STDIN), TCSANOW);
+			};
+			$setTerminalMode->();
 
 			# Setup termcap
 			my $OSPEED = $term->getospeed;
 			$interface{cap} = Term::Cap->Tgetent({ OSPEED => $OSPEED });
 
 			$interface{WINCH} = $SIG{WINCH};
+			$interface{CONT} = $SIG{CONT};
 			$SIG{WINCH} = \&getTerminalSize;
+			$SIG{CONT} = $setTerminalMode;
 			getTerminalSize();
 		}
 
@@ -155,7 +162,10 @@ sub DESTROY {
 		$self->{term}->setcc(VTIME, 0);
 		$self->{term}->setattr(fileno(STDIN), TCSANOW);
 		delete $SIG{WINCH};
+		delete $SIG{CONT};
 		$SIG{WINCH} = $self->{WINCH};
+		$SIG{CONT} = $self->{CONT};
+		
 	}
 
 	delete $self->{select};
@@ -251,8 +261,8 @@ sub readEvents {
 				$interface->cursorLeft(length($input{buf}) - $input{pos});
 			}
 
-		# Backspace
-		} elsif (ord($key) == 127) {
+		# Backspace (8 = ^H)
+		} elsif (ord($key) == 127 || ord($key) == 8) {
 			# Remove backspace character from input buffer
 			strdel($input{buf}, $input{pos} - 2, 2);
 
