@@ -18,21 +18,28 @@ unshift @INC, '.';
 
 
 require 'functions.pl';
+use Globals;
 use Modules;
 use Input;
 use Log;
 use Utils;
 use Settings;
-Modules::register(qw(Modules Input Log Utils Settings));
+use Plugins;
+Modules::register(qw(Globals Modules Input Log Utils Settings Plugins));
 
 
-##### PARSE ARGUMENTS AND START INPUT SERVER #####
+##### PARSE ARGUMENTS, LOAD PLUGINS, AND START INPUT SERVER #####
 
 srand(time());
 Settings::parseArguments();
 print "$Settings::versionText\n";
+
+Plugins::loadAll();
+
 Input::start() unless ($Settings::daemon);
 print "\n";
+
+Plugins::callHook('start');
 
 
 ##### PARSE CONFIGURATION AND DATA FILES #####
@@ -72,7 +79,9 @@ addParseFiles("$Settings::tables_folder/cards.txt", \%cards_lut, \&parseROLUT);
 addParseFiles("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
 addParseFiles("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
 
+Plugins::callHook('start2');
 load(\@parseFiles);
+Plugins::callHook('start3');
 
 
 ##### INITIALIZE USAGE OF TOOLS.DLL/TOOLS.SO #####
@@ -287,6 +296,8 @@ sub _errorHandler {
 
 ##### MAIN LOOP #####
 
+Plugins::callHook('initialized');
+
 while ($quit != 1) {
 	my $input;
 
@@ -388,6 +399,8 @@ while ($quit != 1) {
 	mainLoop();
 }
 
+
+Plugins::unloadAll();
 
 # Exit X-Kore
 eval {
