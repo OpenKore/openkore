@@ -5849,7 +5849,7 @@ sub parseMsg {
 			updateDamageTables($ID1, $ID2, $damage);
 
 			my ($source, $verb, $target) = getActorNames($ID1, $ID2, 'attack', 'attacks');
-			my $msg = "$source $verb $target - Dmg: $dmgdisplay";
+			my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($src_speed/10).")";
 
 			my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
 
@@ -7314,6 +7314,7 @@ sub parseMsg {
 		$disp .= " (lvl $level)" unless $level == 65535;
 		$disp .= " on $target";
 		$disp .= " - Dmg: $damage" unless $damage == -30000;
+		$disp .= " (delay ".($src_speed/10).")";
 		$disp .= "\n";
 
 		my $domain = "skill";

@@ -54,6 +54,7 @@ New features:
   the dynamic interface (support for left/right arrow keys, etc.) will work
   out-of-the-box on many systems now.
 - Support for creation and deletion of characters.
+- Delay of attacks is now displayed. 200 - Delay indicates the ASPD.
 
 New commands:
 - guild join (flag)
