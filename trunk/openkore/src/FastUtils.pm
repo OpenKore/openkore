@@ -4,6 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 use Carp;
+use Time::HiRes;
 
 use FindBin qw($RealBin);
 use lib 'tools';

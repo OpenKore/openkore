@@ -23,6 +23,7 @@ use IO::Socket::INET;
 use bytes;
 use Exporter;
 use base qw(Exporter);
+use lib "tools/misc";
 use FastUtils;
 # Do not use any other Kore modules here. It will create circular dependancies.
 
@@ -31,9 +32,8 @@ our @EXPORT = qw(
 	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
 	findKey findKeyString minHeapAdd
 	calcPosition distance getVector moveAlongVector normalize
-	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getTickCount judgeSkillArea
-	getRange inRange
-	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString);
+	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getRange getTickCount
+	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP swrite timeConvert timeOut vocalString);
 
 
 #######################################
@@ -620,6 +620,25 @@ sub getHex {
 	return $return;
 }
 
+sub getRange {
+	my $param = shift;
+	return if (!defined $param);
+
+	if (($param =~ /(\d+)\s*-\s*(\d+)/) || ($param =~ /(\d+)\s*\.\.\s*(\d+)/)) {
+		return ($1, $2);
+	} elsif ($param =~ />\s*(\d+)/) {
+		return ($1+1, undef);
+	} elsif ($param =~ />=\s*(\d+)/) {
+		return ($1, undef);
+	} elsif ($param =~ /<\s*(\d+)/) {
+		return (undef, $1-1);
+	} elsif ($param =~ /<=\s*(\d+)/) {
+		return (undef, $1);
+	} elsif ($param =~/^(\d+)/) {
+		return ($1, $1);
+	}
+}
+
 sub getTickCount {
 	my $time = int(time()*1000);
 	if (length($time) > 9) {
@@ -627,6 +646,24 @@ sub getTickCount {
 	} else {
 		return $time;
 	}
+}
+
+sub inRange {
+	my $value = shift;
+	my $param = shift;
+
+	return 1 if (!defined $param);
+	my ($min, $max) = getRange($param);
+
+	if (defined $min && defined $max) {
+		return 1 if ($value >= $min && $value <= $max);
+	} elsif (defined $min) {
+		return 1 if ($value >= $min);
+	} elsif (defined $max) {
+		return 1 if ($value <= $max);
+	}
+	
+	return 0;
 }
 
 ##
@@ -667,6 +704,121 @@ sub makeCoords2 {
 	$$r_hash{'x'} = (unpack("C",substr($rawCoords, 1, 1)) & 0xFC) / 4 + 
 				(unpack("C",substr($rawCoords, 0, 1)) & 0x0F) * 64;
 	$$r_hash{'y'} = (unpack("C", substr($rawCoords, 1, 1)) & 0x03) * 256 + unpack("C", substr($rawCoords, 2, 1));
+}
+
+##
+# makeDistMap(data, width, height)
+# data: the raw field data.
+# width: the field's width.
+# height: the field's height.
+# Returns: the raw data of the distance map.
+#
+# Create a distance map from raw field data. This distance map data is used by pathfinding
+# for wall avoidance support.
+#
+# This function is used internally by getField(). You shouldn't have to use this directly.
+sub makeDistMap {
+	my $data = shift;
+	my $width = shift;
+	my $height = shift;
+
+	# Simplify the raw map data. Each byte in the raw map data
+	# represents a block on the field, but only some bytes are
+	# interesting to pathfinding.
+	for (my $i = 0; $i < length($data); $i++) {
+		my $v = ord(substr($data, $i, 1));
+		# 0 is open, 3 is walkable water
+		if ($v == 0 || $v == 3) {
+			$v = 255;
+		} else {
+			$v = 0;
+		}
+		substr($data, $i, 1, chr($v));
+	}
+
+	my $done = 0;
+	until ($done) {
+		$done = 1;
+		#'push' wall distance right and up
+		for (my $y = 0; $y < $height; $y++) {
+			for (my $x = 0; $x < $width; $x++) {
+				my $i = $y * $width + $x;
+				my $dist = ord(substr($data, $i, 1));
+				if ($x != $width - 1) {
+					my $ir = $y * $width + $x + 1;
+					my $distr = ord(substr($data, $ir, 1));
+					my $comp = $dist - $distr;
+					if ($comp > 1) {
+						my $val = $distr + 1;
+						$val = 255 if $val > 255;
+						substr($data, $i, 1, chr($val));
+						$done = 0;
+					} elsif ($comp < -1) {
+						my $val = $dist + 1;
+						$val = 255 if $val > 255;
+						substr($data, $ir, 1, chr($val));
+						$done = 0;
+					}
+				}
+				if ($y != $height - 1) {
+					my $iu = ($y + 1) * $width + $x;
+					my $distu = ord(substr($data, $iu, 1));
+					my $comp = $dist - $distu;
+					if ($comp > 1) {
+						my $val = $distu + 1;
+						$val = 255 if $val > 255;
+						substr($data, $i, 1, chr($val));
+						$done = 0;
+					} elsif ($comp < -1) {
+						my $val = $dist + 1;
+						$val = 255 if $val > 255;
+						substr($data, $iu, 1, chr($val));
+						$done = 0;
+					}
+				}
+			}
+		}
+		#'push' wall distance left and down
+		for (my $y = $height - 1; $y >= 0; $y--) {
+			for (my $x = $width - 1; $x >= 0 ; $x--) {
+				my $i = $y * $width + $x;
+				my $dist = ord(substr($data, $i, 1));
+				if ($x != 0) {
+					my $il = $y * $width + $x - 1;
+					my $distl = ord(substr($data, $il, 1));
+					my $comp = $dist - $distl;
+					if ($comp > 1) {
+						my $val = $distl + 1;
+						$val = 255 if $val > 255;
+						substr($data, $i, 1, chr($val));
+						$done = 0;
+					} elsif ($comp < -1) {
+						my $val = $dist + 1;
+						$val = 255 if $val > 255;
+						substr($data, $il, 1, chr($val));
+						$done = 0;
+					}
+				}
+				if ($y != 0) {
+					my $id = ($y - 1) * $width + $x;
+					my $distd = ord(substr($data, $id, 1));
+					my $comp = $dist - $distd;
+					if ($comp > 1) {
+						my $val = $distd + 1;
+						$val = 255 if $val > 255;
+						substr($data, $i, 1, chr($val));
+						$done = 0;
+					} elsif ($comp < -1) {
+						my $val = $dist + 1;
+						$val = 255 if $val > 255;
+						substr($data, $id, 1, chr($val));
+						$done = 0;
+					}
+				}
+			}
+		}
+	}
+	return $data;
 }
 
 sub makeIP {
@@ -754,13 +906,8 @@ sub timeConvert {
 #         last;
 #     }
 # }
-sub timeOut {
-	if (defined $_[1]) {
-		return (time - $_[0] > $_[1]);
-	} else {
-		return (time - $_[0]{time} > $_[0]{timeout});
-	}
-}
+
+# timeOut() is implemented in tools/misc/fastutils.xs
 
 ##
 # vocalString(letter_length, [r_string])
@@ -796,43 +943,6 @@ sub vocalString {
 	}
 	$$r_string = $password if ($r_string);
 	return $password;
-}
-
-sub inRange {
-	my $value = shift;
-	my $param = shift;
-
-	return 1 if (!defined $param);
-	my ($min, $max) = getRange($param);
-
-	if (defined $min && defined $max) {
-		return 1 if ($value >= $min && $value <= $max);
-	} elsif (defined $min) {
-		return 1 if ($value >= $min);
-	} elsif (defined $max) {
-		return 1 if ($value <= $max);
-	}
-	
-	return 0;
-}
-
-sub getRange {
-	my $param = shift;
-	return if (!defined $param);
-
-	if (($param =~ /(\d+)\s*-\s*(\d+)/) || ($param =~ /(\d+)\s*\.\.\s*(\d+)/)) {
-		return ($1, $2);
-	} elsif ($param =~ />\s*(\d+)/) {
-		return ($1+1, undef);
-	} elsif ($param =~ />=\s*(\d+)/) {
-		return ($1, undef);
-	} elsif ($param =~ /<\s*(\d+)/) {
-		return (undef, $1-1);
-	} elsif ($param =~ /<=\s*(\d+)/) {
-		return (undef, $1);
-	} elsif ($param =~/^(\d+)/) {
-		return ($1, $1);
-	}
 }
 
 return 1;
