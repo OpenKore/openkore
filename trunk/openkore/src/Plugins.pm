@@ -25,6 +25,7 @@ use strict;
 no strict 'refs';
 use warnings;
 use Exporter;
+use Settings;
 use Log;
 
 our @ISA = qw(Exporter);
@@ -36,8 +37,19 @@ our @plugins;
 ##
 # Plugins::loadAll()
 #
-# Loads all plugins from the plugins folder.
+# Loads all plugins from the plugins folder. Plugins must have the .pl extension.
 sub loadAll {
+	if (!readdir(DIR, $Settings::plugins_folder)) {
+		Log::error("Unable to load plugins from folder $Settings::plugins_folder ($!)\n", "plugins");
+		return 0;
+	}
+	my @plugins = grep { /\.pl$/ } readdir(DIR);
+	closedir(DIR);
+
+	foreach my $plugin (@plugins) {
+		load("$Settings::plugins_folder/$plugin");
+	}
+	return 1;
 }
 
 
@@ -49,6 +61,7 @@ sub loadAll {
 # Loads a plugin.
 sub load {
 	my $file = shift;
+	Log::message("Loading plugin $file...\n", "plugins");
 	if (! do $file) {
 		Log::error("Unable to load plugin $file: $@\n", "plugins");
 		return 0;
