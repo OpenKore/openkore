@@ -416,5 +416,8 @@ um_fild03.rsw#Carara Jungle#
 um_fild04.rsw#Hooka Fores#
 um_dun01.rsw#Wooden Mill of Umbala Jungle#
 um_dun02.rsw#Passage to Astral Plane of Umbala Jungle#
-yggdrasil01.rsw#?Island of Herbet Camlet(Trunk of Yggdrasil Tree)#
+yggdrasil01.rsw#?Island of Herbet Camlet (Trunk of Yggdrasil Tree)#
 nif_fild01.rsw#The far village of Nifheim#
+payo1.rsw#Neo Payon Town#
+payo1_in01.rsw#Inside Neo Payon#
+payo1_in03.rsw#Inside Neo Payon#
