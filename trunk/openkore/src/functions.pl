@@ -596,6 +596,7 @@ sub parseCommand {
 		message(center(" $shop{title} ", 79, '-')."\n", "list");
 		message("#  Name                                     Type         Qty     Price   Sold\n", "list");
 
+		my $priceAfterSale=0;
 		my $i = 1;
 		for my $item (@articles) {
 			next unless $item;
@@ -603,9 +604,13 @@ sub parseCommand {
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>",
 				[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, $item->{price}, $item->{sold}]),
 				"list");
+			$priceAfterSale += ($item->{quantity} * $item->{price});
 		}
 		message(('-'x79)."\n", "list");
 		message("You have earned: " . formatNumber($shopEarned) . "z.\n", "list");
+		message("Current zeny:    " . formatNumber($chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
+		message("Maximum earned:  " . formatNumber($priceAfterSale) . "z.\n", "list");
+		message("Maximum zeny:   " . formatNumber($priceAfterSale + $chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
 	} elsif ($switch eq "as") {
 		# Stop attacking monster
 		my $index = binFind(\@ai_seq, "attack");
@@ -10604,6 +10609,7 @@ sub openShop {
 	sendOpenShop($shop{title}, \@items);
 	message "Shop opened ($shop{title}) with ".@items." selling items.\n", "success";
 	$shopstarted = 1;
+	$shopEarned = 0;
 }
 
 sub closeShop {
