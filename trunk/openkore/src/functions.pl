@@ -6879,6 +6879,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0101") {
 		$type = unpack("C1", substr($msg, 2, 1));
+		$chars[$config{'char'}]{'party'}{'share'} = $type;
 		if ($type == 0) {
 			message "Party EXP set to Individual Take\n";
 		} elsif ($type == 1) {
@@ -6914,6 +6915,10 @@ sub parseMsg {
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'map'} = $map;
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'} = $partyUser;
 
+		if ($chars[$config{'char'}]{'party'}{'users'}{$accountID}{'admin'} && $chars[$config{'char'}]{'party'}{'share'}) {
+			sendPartyShareEXP(\$remote_socket, 0) if ($config{'partyAutoShare'} && %{$chars[$config{'char'}]{'party'}});
+			sendPartyShareEXP(\$remote_socket, 1) if ($config{'partyAutoShare'} && %{$chars[$config{'char'}]{'party'}});
+		}
 	
 	} elsif ($switch eq "0105") {
 		my $ID = substr($msg, 2, 4);
@@ -6928,6 +6933,7 @@ sub parseMsg {
 		} else {
 			message "$name left the party\n";
 		}
+
 
 	} elsif ($switch eq "0106") {
 		my $ID = substr($msg, 2, 4);
