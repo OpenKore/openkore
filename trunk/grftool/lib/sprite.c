@@ -21,6 +21,10 @@
 #include <string.h>
 #include "sprite.h"
 
+#ifdef __cplusplus
+	extern "C" {
+#endif /* __cplusplus */
+
 
 /***********************
  * UTILITY FUNCTIONS
@@ -38,8 +42,8 @@ strbuf_new ()
 {
 	StrBuf *buf;
 
-	buf = calloc (sizeof (StrBuf), 1);
-	buf->str = strdup ("");
+	buf = (StrBuf *) calloc (sizeof (StrBuf), 1);
+	buf->str = (unsigned char *) strdup ("");
 	return buf;
 }
 
@@ -50,10 +54,10 @@ strbuf_append (StrBuf *buf, unsigned char *data, int len)
 	int offset;
 
 	if (len <= -1)
-		len = strlen (data);
+		len = strlen ((char *) data);
 	offset = buf->len;
 	buf->len += len;
-	buf->str = realloc (buf->str, buf->len + 1);
+	buf->str = (unsigned char *) realloc (buf->str, buf->len + 1);
 	memcpy (buf->str + offset, data, len);
 	buf->str[buf->len] = '\0';
 }
@@ -62,11 +66,11 @@ strbuf_append (StrBuf *buf, unsigned char *data, int len)
 static void
 strbuf_prepend (StrBuf *buf, unsigned char *data, int len)
 {
-	char *str;
+	unsigned char *str;
 
 	if (len <= -1)
-		len = strlen (data);
-	str = calloc (1, buf->len + len + 1);
+		len = strlen ((char *) data);
+	str = (unsigned char *) calloc (1, buf->len + len + 1);
 	memcpy (str, data, len);
 	memcpy (str + len, buf->str, buf->len);
 	free (buf->str);
@@ -96,7 +100,7 @@ strrepeat (char *str, int len, int num)
 
 	if (len <= -1)
 		len = strlen (str);
-	ret = calloc (1, len * num + 1);
+	ret = (char *) calloc (1, len * num + 1);
 	for (i = 0; i < num; i++) {
 		memcpy (ret + len * num, str, len);
 	}
@@ -104,11 +108,11 @@ strrepeat (char *str, int len, int num)
 }
 
 
-static char *
-rle_decode(char *data, int datalen, int width, int *decoded_size)
+static unsigned char *
+rle_decode(unsigned char *data, int datalen, int width, int *decoded_size)
 {
 	StrBuf *buf, *retbuf;
-	char *ret, *tmp;
+	unsigned char *ret, *tmp;
 	int extra, x;
 
 	buf = strbuf_new ();
@@ -120,7 +124,7 @@ rle_decode(char *data, int datalen, int width, int *decoded_size)
 	for (x = 0; x < datalen; x++) {
 		if (data[x] == 0) {
 			x++;
-			tmp = strrepeat ("", 1, (int) data[x]);
+			tmp = (unsigned char *) strrepeat ("", 1, (int) data[x]);
 			strbuf_append (buf, tmp, data[x]);
 			free (tmp);
 		} else
@@ -129,7 +133,7 @@ rle_decode(char *data, int datalen, int width, int *decoded_size)
 
 	for (x = 0; x < buf->len; x += width) {
 		if (extra > 0) {
-			tmp = strrepeat ("", 1, extra);
+			tmp = (unsigned char *) strrepeat ("", 1, extra);
 			strbuf_prepend (retbuf, tmp, extra);
 			free (tmp);
 		}
@@ -144,16 +148,16 @@ rle_decode(char *data, int datalen, int width, int *decoded_size)
 }
 
 
-static char *
-reverse_palette (char *palette, int palettelen, int *returnsize)
+static unsigned char *
+reverse_palette (unsigned char *palette, int palettelen, int *returnsize)
 {
 	StrBuf *retbuf;
-	char *ret;
+	unsigned char *ret;
 	int x;
 
 	retbuf = strbuf_new ();
 	for (x = 0; x < palettelen; x += 4) {
-		char tmp[4];
+		unsigned char tmp[4];
 
 		tmp[0] = palette[x + 2];
 		tmp[1] = palette[x + 1];
@@ -198,7 +202,7 @@ sprite_load (const char *fname, SpriteError *error)
 	/* Check file's "magic header" */
 	magic[4] = '\0';
 	fread (magic, 4, 1, f);
-	if (strcmp (magic, "SP\001\002") != 0) {
+	if (strcmp ((char *) magic, "SP\001\002") != 0) {
 		if (error) *error = SE_INVALID;
 		fclose (f);
 		return NULL;
@@ -230,7 +234,7 @@ sprite_load (const char *fname, SpriteError *error)
 		fread (buf, 2, 1, f);
 		compressed_len = (buf[1] << 8) + buf[0];
 
-		data = calloc (compressed_len, 1);
+		data = (unsigned char *) calloc (compressed_len, 1);
 		fread (data, compressed_len, 1, f);
 		ddata = rle_decode (data, compressed_len, width, &size);
 		free (data);
@@ -294,9 +298,9 @@ sprite_to_bmp (Sprite *sprite, int i, int *size, SpriteError *error)
 	/* Bitmap file header */
 	offset = 54 + sprite->palette_size;
 	file_size = offset + sprite->images[i].len;
-	strbuf_append (buf, "BM", 2);				/* Magic */
+	strbuf_append (buf, (unsigned char *) "BM", 2);		/* Magic */
 	strbuf_append (buf, (unsigned char *) &file_size, 4);	/* File size */
-	strbuf_append (buf, "\0\0\0\0", 4);			/* Reserved */
+	strbuf_append (buf, (unsigned char *) "\0\0\0\0", 4);	/* Reserved */
 	strbuf_append (buf, (unsigned char *) &offset, 4);	/* Offset to image data */
 
 	/* Bitmap info header */
@@ -379,7 +383,7 @@ sprite_to_rgb (Sprite *sprite, int i, int *size, SpriteError *error)
 
 
 	rowstride = sprite->images[i].len / sprite->images[i].height;
-	pixels = calloc (3, sprite->images[i].height * rowstride);
+	pixels = (unsigned char *) calloc (3, sprite->images[i].height * rowstride);
 	if (size) *size = sprite->images[i].height * rowstride * 3;
 
 	j = 0;
@@ -400,3 +404,8 @@ sprite_to_rgb (Sprite *sprite, int i, int *size, SpriteError *error)
 
 	return pixels;
 }
+
+
+#ifdef __cplusplus
+	}
+#endif /* __cplusplus */
