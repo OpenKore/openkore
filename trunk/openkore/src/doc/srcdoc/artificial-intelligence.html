@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Initialization and main loop : OpenKore source code documentation</title>
+	<title>Artificial intelligence : OpenKore source code documentation</title>
 	<link rel="stylesheet" type="text/css" href="openkore.css">
 	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
 	<!--[if gte IE 5.5000]>
@@ -11,6 +11,10 @@
 	
 	<style type="text/css">
 	<!--
+	.example {
+		margin: 0.3cm;
+		margin-left: 0.5cm;
+	}
 	.comment {
 		font-style: italic;
 	}
@@ -29,7 +33,7 @@
 	<ul>
 	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
 	<li><a href="index.html">Table of contents</a></li>
-	<li><b>Initialization &amp; main loop</b></li>
+	<li><b>Artificial intelligence</b></li>
 	</ul>
 </div>
 
@@ -122,8 +126,9 @@ The result coordinate is put into these two variables:
 <h3>Moving</h3>
 
 Line 11-20 is the code which tells Kore to move to the random position.
-The function <code>ai_route()</code> prepends a <code>"route"</code> AI sequence in <code>@ai_seq</code> and
-immediately returns.
+It tells <code>ai_route()</code> where it wants to go to.
+<code>ai_route()</code> prepends a <code>"route"</code> AI sequence in <code>@ai_seq</code>, and arguments in a hash
+(which is then prepended into <code>@ai_seq_args</code> and immediately returns.
 Shortly after this, the entire <code>AI()</code> function returns.
 The point is, <code>ai_route()</code> is <em>not synchronous</em>.
 
@@ -153,7 +158,22 @@ TODO
 
 <h2>Conclusion &amp; summary</h2>
 
-TODO
+The entire AI subsystem is kept together by these two variables:
+<ul>
+<li><code>@ai_seq</code> : a list of AI sequence names.</li>
+<li><code>@ai_seq_args</code> : contains arguments that's associated with current AI sequence.</li>
+</ul>
+
+The design is pretty simple. This allows the system to be very flexible: you can do pretty much anything you want. There aren't many real limitations.
+
+<p>
+The <code>AI()</code> function runs only very shortly. So AI code blocks shouldn't do anything that can block the function for a long time.
+
+<h3>Glossary</h3>
+<ul>
+<li>An <em class="term">AI code block</em> is an entire block of code which deals with a certain part of the AI.</li>
+<li>An <em class="term">AI sequence</em> is a value within the <code>@ai_seq</code> array.</li>
+</ul>
 
 
 <p><hr><p>
