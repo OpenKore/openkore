@@ -6769,7 +6769,6 @@ sub parseMsg {
 		$chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'} = $partyUser;
 
 		if ($chars[$config{'char'}]{'party'}{'users'}{$accountID}{'admin'} && $chars[$config{'char'}]{'party'}{'share'}) {
-			sendPartyShareEXP(\$remote_socket, 0) if ($config{'partyAutoShare'} && %{$chars[$config{'char'}]{'party'}});
 			sendPartyShareEXP(\$remote_socket, 1) if ($config{'partyAutoShare'} && %{$chars[$config{'char'}]{'party'}});
 		}
 	
