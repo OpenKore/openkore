@@ -29,7 +29,8 @@ sub dequeue {
 
 sub queue {
 	unshift @ai_seq, shift;
-	unshift @ai_seq_args, shift;
+	my $args = shift;
+	unshift @ai_seq_args, ((defined $args) ? $args : {});
 }
 
 sub clear {
