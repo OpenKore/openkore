@@ -43,6 +43,8 @@ New features:
   use teleport.
 - The Linux version now automatically compiles Tools.so for you if it
   doesn't exist.
+- The "follow" feature can now follow the master even if he's off
+  screen, if the master is in the same party.
 
 
 New commands:

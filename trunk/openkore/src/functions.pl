@@ -3057,6 +3057,7 @@ sub AI {
 			unshift @ai_seq_args, {};
 		}
 	} elsif ($ai_seq[0] ne "dead" && $chars[$config{'char'}]{'dead'}) {
+		aiRemove("route_getRoute");	# Run the destructor for route_getRoute to prevent memory leaks
 		undef @ai_seq;
 		undef @ai_seq_args;
 		unshift @ai_seq, "dead";
@@ -4796,6 +4797,7 @@ sub AI {
 	}
 
 	if ($ai_v{'clear_aiQueue'}) {
+		aiRemove("route_getRoute");	# Run the destructor for route_getRoute to prevent memory leaks
 		undef $ai_v{'clear_aiQueue'};
 		undef @ai_seq;
 		undef @ai_seq_args;
@@ -7349,23 +7351,24 @@ sub parseMsg {
 			}
 
 		} elsif (%{$monsters{$ID}}) {
+			# TODO: figure out what to do with the ignore stuff
 			if ($param1) {
 				$monsters{$ID}{state}{$state} = 1;
-				$monsters{$ID}{ignore} = 1;
+				#$monsters{$ID}{ignore} = 1;
 				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
 			} else {
 				undef %{$monsters{$ID}{state}};
 			}
 			if ($param2 && $param2 != 32) {
 				$monsters{$ID}{ailments}{$ailment} = 1;
-				$monsters{$ID}{ignore} = 1;
+				#$monsters{$ID}{ignore} = 1;
 				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 2;
 			} else {
 				undef %{$monsters{$ID}{ailments}};
 			}
 			if ($param3) {
 				$monsters{$ID}{looks}{$looks} = 1;
-				$monsters{$ID}{ignore} = 1;
+				#$monsters{$ID}{ignore} = 1;
 				debug "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook";
 			} else {
 				undef %{$monsters{$ID}{looks}};
