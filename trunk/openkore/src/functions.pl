@@ -4534,7 +4534,7 @@ sub AI {
 				$AI::Timeouts::teleSearch = time;
 			}
 
-			if (timeOut($AI::Timeouts::teleSearch, $timeout{ai_teleport_search}{time})) {
+			if (timeOut($AI::Timeouts::teleSearch, $timeout{ai_teleport_search}{timeout})) {
 				my $do_search;
 				foreach (values %mon_control) {
 					if ($_->{teleport_search}) {
