@@ -59,15 +59,18 @@ CalcPath_getMap(const char *map, unsigned long width, unsigned long height, pos 
 }
 
 
-// Initialize a new pathfinding session, or reset an existing session
-// Currently reset is not implemented yet.
+// Create a new pathfinding session, or reset an existing session.
+// Resetting is preferred over destroying and creating, because it saves
+// unnecessary memory allocations, thus improving performance.
 CalcPath_session *
 CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* weight,
 	unsigned long width, unsigned long height,
 	pos * start, pos * dest, unsigned long time_max)
 {
-	if (!session)
+	if (!session) {
 		session = (CalcPath_session*)malloc(sizeof(CalcPath_session));
+		session->first_time = 1;
+	}
 	
 	pos_list * solution = &session->solution;
 	pos_ai_list * fullList = &session->fullList;
@@ -79,6 +82,10 @@ CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* 
 
 	session->width = width;
 	session->height = height;
+	if (!session->first_time) {
+		free (session->start);
+		free (session->dest);
+	}
 	session->start = start;
 	session->dest = dest;
 	session->time_max = time_max;
@@ -95,28 +102,30 @@ CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* 
 		session->weight = (const unsigned char *) default_weight;
 	}
 
-	session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
-	session->fullList.array = (pos_ai*) malloc(FULL_LIST_MAX*sizeof(pos_ai));
-	session->openList.array = (QuicksortFloat*) malloc(OPEN_LIST_MAX*sizeof(QuicksortFloat));
-	session->lookup.array = (float*) malloc(LOOKUPS_MAX*sizeof(float));
+	if (session->first_time) {
+		session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
+		session->fullList.array = (pos_ai*) malloc(FULL_LIST_MAX*sizeof(pos_ai));
+		session->openList.array = (QuicksortFloat*) malloc(OPEN_LIST_MAX*sizeof(QuicksortFloat));
+		session->lookup.array = (float*) malloc(LOOKUPS_MAX*sizeof(float));
+	}
 
 	solution->size = 0;
-	openList->size = 0;
-	fullList->size = 0;
+	openList->size = 1;
+	fullList->size = 1;
 	fullList->array[0].p = *start;
 	fullList->array[0].g = 0;
 	fullList->array[0].f = (float)abs(start->x - dest->x) + abs(start->y - dest->y);
 	fullList->array[0].parent = -1;
-	fullList->size++;
 	openList->array[0].val = fullList->array[0].f;
 	openList->array[0].index = 0;
-	openList->size++;
 	for (i = 0; i < width * height;i++) {
 		lookup->array[i] = 999999;
 	}
 	index = fullList->array[0].p.y*width + fullList->array[0].p.x;
-	lookup->array[index] = fullList->array[0].g;
+	lookup->array[index] = 0;
 	lookup->size = width*height;
+
+	session->first_time = 0;
 	return session;
 }
 

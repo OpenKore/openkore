@@ -61,6 +61,44 @@ PathFinding_init(map, sv_weights, width, height, startx, starty, destx, desty, t
 	OUTPUT:
 		RETVAL
 
+void
+PathFinding__reset(session, map, sv_weights, width, height, startx, starty, destx, desty, time_max)
+		PathFinding session
+		char *map
+		SV *sv_weights
+		unsigned long width
+		unsigned long height
+		unsigned short startx
+		unsigned short starty
+		unsigned short destx
+		unsigned short desty
+		unsigned int time_max
+	INIT:
+		unsigned char *weights = NULL;
+		pos *start, *dest;
+		int ok = 1;
+	CODE:
+		if (sv_weights && SvOK (sv_weights)) {
+			STRLEN len;
+
+			weights = (unsigned char *) SvPV (derefPV (sv_weights), len);
+			if (weights && len < 256) {
+				ok = 0;
+				XSRETURN_UNDEF;
+			}
+		}
+
+		if (ok) {
+			start = (pos *) malloc (sizeof (pos));
+			dest = (pos *) malloc (sizeof (pos));
+			start->x = startx;
+			start->y = starty;
+			dest->x = destx;
+			dest->y = desty;
+
+			CalcPath_init (session, map, weights, width, height, start, dest, time_max);
+		}
+
 SV *
 PathFinding_runref(session)
 		PathFinding session
