@@ -103,7 +103,7 @@ sub onClick {
 	my (undef, $x, $y) = @_;
 
 	if ($ipcInfo{host} && (!$ipc || $ipc->host ne $ipcInfo{host})) {
-		$ipc = new IPC($ipcInfo{host}, $ipcInfo{port});
+		$ipc = new IPC("Map Viewer", $ipcInfo{host}, $ipcInfo{port});
 		while ($ipc && $ipc->connected && !$ipc->ready) {
 			$ipc->iterate;
 		}
