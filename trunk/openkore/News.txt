@@ -23,6 +23,7 @@ Bug fixes:
 - "Total Damage" display in 's' command now includes damage from skills
 - "exp reset" command now resets damage statistics in 's' command
 - Portal recording has been fixed.
+- Fix teleport using clip.
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux

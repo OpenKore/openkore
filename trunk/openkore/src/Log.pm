@@ -95,10 +95,12 @@
 # parseMsg
 # parseMsg_damage
 # parseMsg_presence
+# portalRecord
 # sendPacket
 # ai
 # npc
 # route
+# useTeleport
 
 package Log;
 
