@@ -94,6 +94,7 @@ ip 62.109.138.134
 port 6900
 master_version 20
 version 1
+chatLangCode 1
 
 [Oceania/Australia - oRO]
 ip 202.168.25.133
@@ -101,6 +102,7 @@ port 6900
 master_version 23
 version 2
 serverType 1
+chatLangCode 1
 
 [Brazil - bRO]
 ip 200.229.49.10
