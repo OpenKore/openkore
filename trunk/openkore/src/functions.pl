@@ -5897,21 +5897,26 @@ sub parseMsg {
 		undef $invIndex;
 
 		for($i = 4; $i < $msg_size; $i += $psize) {
-			$index = unpack("S1", substr($msg, $i, 2));
-			$ID = unpack("S1", substr($msg, $i + 2, 2));
-			$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+			my $index = unpack("S1", substr($msg, $i, 2));
+			my $ID = unpack("S1", substr($msg, $i + 2, 2));
+			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			if ($invIndex eq "") {
 				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
 			}
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'index'} = $index;
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'} = $ID;
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} = unpack("S1", substr($msg, $i + 6, 2));
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = unpack("C1", substr($msg, $i + 4, 1));
-			$display = ($items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}} ne "")
-				? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
-				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
-			debug "Inventory: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}}\n", "parseMsg";
+
+			$char->{inventory}[$invIndex]{index} = $index;
+			$char->{inventory}[$invIndex]{nameID} = $ID;
+			$char->{inventory}[$invIndex]{amount} = unpack("S1", substr($msg, $i + 6, 2));
+			$char->{inventory}[$invIndex]{type} = unpack("C1", substr($msg, $i + 4, 1));
+			$char->{inventory}[$invIndex]{identified} = 1;
+			$char->{inventory}[$invIndex]{equipped} = 32768 if (defined $char->{arrow} && $index == $char->{arrow});
+
+			$display = ($items_lut{$char->{inventory}[$invIndex]{nameID}} ne "")
+				? $items_lut{$char->{inventory}[$invIndex]{nameID}}
+				: "Unknown ".$char->{inventory}[$invIndex]{nameID};
+			$char->{inventory}[$invIndex]{name} = $display;
+			message "Inventory: $char->{inventory}[$invIndex]{name} ($invIndex) x $char->{inventory}[$invIndex]{amount} - " .
+				"$itemTypes_lut{$char->{inventory}[$invIndex]{type}}\n", "parseMsg";
 			Plugins::callHook('packet_inventory', {index => $invIndex});
 		}
 
@@ -7371,12 +7376,13 @@ sub parseMsg {
 		} 
 
 	} elsif ($switch eq "013C") {
-		$index = unpack("S1", substr($msg, 2, 2)); 
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index); 
+		my $index = unpack("S1", substr($msg, 2, 2)); 
+		$char->{arrow} = $index;
+
+		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index); 
 		if ($invIndex ne "") { 
-			$chars[$config{'char'}]{'arrow'}=1 if (!defined($chars[$config{'char'}]{'arrow'}));
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = 32768; 
-			message "Arrow equipped: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex)\n";
+			$char->{inventory}[$invIndex]{equipped} = 32768;
+			message "Arrow equipped: $char->{inventory}[$invIndex]{name} ($invIndex)\n";
 		} 
 
 	} elsif ($switch eq "013D") {
