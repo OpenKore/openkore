@@ -309,6 +309,26 @@ sub mainLoop {
 		initConfChange();
 	}
 
+	# Set interface title
+	my $charName = $chars[$config{'char'}]{'name'};
+	$charName .= ': ' if defined $charName;
+	if ($conState == 5) {
+		my ($title, $basePercent, $jobPercent, $weight, $pos);
+
+		$basePercent = sprintf("%.2f", $chars[$config{'char'}]{'exp'} / $chars[$config{'char'}]{'exp_max'} * 100) if $chars[$config{'char'}]{'exp_max'};
+		$jobPercent = sprintf("%.2f", $chars[$config{'char'}]{'exp_job'} /$ chars[$config{'char'}]{'exp_job_max'} * 100) if $chars[$config{'char'}]{'exp_job_max'};
+		$weight = int($chars[$config{'char'}]{'weight'} / $chars[$config{'char'}]{'weight_max'} * 100) . "%" if $chars[$config{'char'}]{'weight_max'};
+		$pos = " : $chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'} $field{'name'}" if ($chars[$config{'char'}]{'pos_to'} && $field{'name'});
+
+		$title = "${charName} B$chars[$config{'char'}]{'lv'} ($basePercent%), J$chars[$config{'char'}]{'lv_job'}($jobPercent%) : w$weight${pos} - $Settings::NAME";
+		$interface->title($title);
+
+	} elsif ($conState == 1) {
+		$interface->title("${charName}not connected - $Settings::NAME");
+	} else {
+		$interface->title("${charName}connecting - $Settings::NAME");
+	}
+
 	Plugins::callHook('mainLoop_post');
 }
 

@@ -301,6 +301,20 @@ sub color {
 	$self->{out_con}->Attr($fgcode | $bgcode);
 }
 
+sub title {
+	my $self = shift;
+	my $title = shift;
+
+	if (defined $title) {
+		if (!defined $self->{currentTitle} || $self->{currentTitle} ne $title) {
+			$self->{out_con}->Title($title);
+			$self->{currentTitle} = $title;
+		}
+	} else {
+		return $self->{out_con}->Title();
+	}
+}
+
 #IRGB
 #8421
 

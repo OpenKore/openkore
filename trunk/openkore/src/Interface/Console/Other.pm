@@ -94,6 +94,7 @@ sub delLine {
 sub new {
 	my %interface = ();
 
+	$interface{title} = '';
 	$interface{input} = {};
 	$interface{input}{buf} = '';
 	$interface{input}{pos} = 0;
@@ -463,6 +464,21 @@ sub color {
 
 	print $fgcolors{$color} if defined($color) && defined($fgcolors{$color});
 	print $bgcolors{$bgcolor} if defined($bgcolor) && defined($bgcolors{$bgcolor});
+}
+
+sub title {
+	my $self = shift;
+	my $title = shift;
+
+	if ($title) {
+		$self->{title} = $title;
+		if ($ENV{TERM} eq 'xterm') {
+			print "\e]2;$title\a";
+			STDOUT->flush;
+		}
+	} else {
+		return $self->{title};
+	}
 }
 
 %fgcolors = (
