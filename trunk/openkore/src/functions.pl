@@ -10151,7 +10151,11 @@ sub useTeleport {
 	if (defined binFind(\@skillsID, 'AL_TELEPORT')) {
 		# We have the teleport skill
 		my $skill = new Skills(handle => 'AL_TELEPORT');
-		sendSkillUse(\$remote_socket, $skill->id, $level, $accountID) if ($config{'teleportAuto_useSP'});
+		if ($config{teleportAuto_useSP} == 1 || 
+		    ($config{teleportAuto_useSP} == 2 && binSize(\@playersID))) {
+			# Send skill use packet to appear legitimate
+			sendSkillUse(\$remote_socket, $skill->id, $level, $accountID);
+		}
 		if ($level == 1) {
 			sendTeleport(\$remote_socket, "Random");
 			return 1;
