@@ -1548,9 +1548,9 @@ sub cmdStatus {
 		[$chars[$config{'char'}]{'name'}, $hp_string],
 		"@<<<<<<<<<<<<<<<<<<<<<<<<<<   SP: @<<<<<<<<<<<<<<<<<<",
 		[$job_name_string, $sp_string],
-		"Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+		"Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
 		[$chars[$config{'char'}]{'lv'}, $base_string],
-		"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+		"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
 		[$chars[$config{'char'}]{'lv_job'}, $job_string],
 		"Weight: @>>>>>>>>>>>>>>>>>>   Zenny: @<<<<<<<<<<<<<<",
 		[$weight_string, $zeny_string]);
