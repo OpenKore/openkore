@@ -17,7 +17,7 @@
 use Time::HiRes qw(time usleep);
 use Getopt::Long;
 use IO::Socket;
-use Digest::MD5 qw(md5);
+use Digest::MD5;
 use Carp;
 unshift @INC, '.';
 
