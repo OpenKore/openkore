@@ -2415,6 +2415,12 @@ sub AI {
 		}
 	}
 
+	##### DELAYED-TELEPORORT #####
+
+	if ($ai_v{'temp'}{'teleport'}{'lv'}) {
+		useTeleport($ai_v{'temp'}{'teleport'}{'lv'});
+	}
+
 	##### TALK WITH NPC ######
 	NPCTALK: {
 		last NPCTALK if ($ai_seq[0] ne "NPC");
@@ -3109,16 +3115,15 @@ sub AI {
 			} else {
 				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'useSelf_skill'})}}{'ID'}, $ai_v{'useSelf_skill_lvl'}, $ai_v{'useSelf_skill_maxCastTime'}, $ai_v{'useSelf_skill_minCastTime'}, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 			}
-		}
+		}		
 	}
-
 
 	#Auto Equip - Kaldi Update 12/03/2004
 	##### AUTO-EQUIP #####
 	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || 
 		 $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "skill_use" ||
 		 $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take" || 
-		 $ai_seq[0] eq "attack") && timeOut($timeout{'ai_item_equip_auto'})
+		 $ai_seq[0] eq "attack" || $ai_v{'temp'}{'teleport'}{'lv'}) && timeOut($timeout{'ai_item_equip_auto'})
 	  ) {
 		my $i = 0;
 		my $ai_index_attack = binFind(\@ai_seq, "attack");
@@ -3134,6 +3139,7 @@ sub AI {
 			 && (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
 			 && (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
 			 && ($config{"equipAuto_$i" . "_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
+			 && (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{'temp'}{'teleport'}{'lv'})
 			 && (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
 			) {
 				undef $ai_v{'temp'}{'invIndex'};
@@ -3145,7 +3151,7 @@ sub AI {
 					last;
 				}
 
-			} elsif ($config{"equipAuto_$i" . "_def"} && !$chars[$config{'char'}]{'sitting'}) {
+			} elsif ($config{"equipAuto_$i" . "_def"} && !$chars[$config{'char'}]{'sitting'} && !$config{"equipAuto_$i"."_disabled"}) {
 				undef $ai_v{'temp'}{'invIndex'};
 				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i" . "_def"});
 				if ($ai_v{'temp'}{'invIndex'} ne "") {
@@ -3157,11 +3163,10 @@ sub AI {
 			$i++;
 		}
 	}
-
-
+	
 	##### PARTY-SKILL USE ##### 
 
-	#FIXME: need to move closer before using skill, there might be light of sight problem too...
+	#FIXME: need to move closer before using skill, there might be line of sight problem too...
 	
 	if (%{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
 	  || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"
@@ -4610,8 +4615,7 @@ sub AI {
 		undef $ai_v{'clear_aiQueue'};
 		undef @ai_seq;
 		undef @ai_seq_args;
-	}
-	
+	}	
 }
 
 
@@ -6737,9 +6741,9 @@ sub parseMsg {
 		$type = unpack("C1", substr($msg, 2, 1));
 		$chars[$config{'char'}]{'party'}{'share'} = $type;
 		if ($type == 0) {
-			message "Party EXP set to Individual Take\n";
+			message "Party EXP set to Individual Take\n", "party", 1;
 		} elsif ($type == 1) {
-			message "Party EXP set to Even Share\n";
+			message "Party EXP set to Even Share\n", "party", 1;
 		} else {
 			error "Error setting party option\n";
 		}
@@ -9868,18 +9872,31 @@ sub getActorNames {
 }
 
 sub useTeleport {
-	my $level = shift;
+	my $level = shift;	
 	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $level + 600);
-	if (!$config{'teleportAuto_useItem'} || $chars[$config{'char'}]{'skills'}{'AL_TELEPORT'}{'lv'} ) {
+	
+	# it is safe to always set this value coz $ai_v{temp} is always cleared after teleport
+	if (!$ai_v{'temp'}{'teleport'}{'lv'}) {
+		$ai_v{'temp'}{'teleport'}{'lv'} = $level;
+		$timeout{'ai_equipAuto_skilluse_giveup'}{'time'} = time;
+		
+	} elsif (timeOut(\%{$timeout{'ai_equipAuto_skilluse_giveup'}})) {
+		warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
+		delete $ai_v{'temp'}{'teleport'};
+	}
+	
+	# {'skills'}{'AL_TELEPORT'}{'lv'} is valid even after creamy is unequiped, use @skillsID instead
+	if (!$config{'teleportAuto_useItem'} && binFind(\@skillsID, 'AL_TELEPORT') ne "") {
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
 		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2);
+		
+		delete $ai_v{'temp'}{'teleport'};
+		
 	} elsif ($config{'teleportAuto_useItem'} && $invIndex ne "") {
 		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$invIndex]{'index'}, $accountID);
 		if ($level == 1) {
 			sendTeleport(\$remote_socket, "Random");
 		}
-	} else {
-		warning "You don't have wing or skill to teleport or respawn\n";
 	}
 }
 
@@ -10096,6 +10113,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActive($config{$prefix . "_whenStatusInactive"}) || whenAffected($config{$prefix . "_whenStatusInactive"})); }
 	if ($config{$prefix . "_whenAffected"}) { return 0 unless (whenAffected($config{$prefix . "_whenAffected"})); } 	# backward compatibility with old config format
 
+	if ($config{$prefix . "_currentAI"}) { return 0 unless (existsInList($config{$prefix . "_currentAI"}, $ai_seq[0])); }
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
