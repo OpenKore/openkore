@@ -18,10 +18,6 @@
 #  $Id$
 #
 #########################################################################
-##
-# MODULE DESCRIPTION: Tk Interface
-#
-# An interface using the Tk tool kit.
 
 package Interface::Tk;
 use strict;
@@ -36,13 +32,6 @@ use Tk;
 use Tk::ROText;
 use Tk::BrowseEntry;
 
-#oh my god, that is way to many globals
-#use vars qw($input $input_offset @input_list $input_pm $input_type @input_que $mw 
-#			$status_posx $status_posy $status_gen $status_ai $console 
-#			$total_lines $last_line_end $line_limit
-#			$pminput $sinput $default_font $is_bold @pm_list
-#			%color $map_mw %map_mw %obj $id
-#);
 
 #these should go in a config file at some point.
 our $line_limit = 1000;
@@ -64,6 +53,7 @@ sub new {
 		input_pm => undef,
 		total_lines => 0,
 		last_line_end => 0,
+		colors => {},
 	};
 	bless $self, $class;
 	$self->initTk;
@@ -73,8 +63,9 @@ sub new {
 #		Win32::Console->new(&STD_OUTPUT_HANDLE())->Free or warn "could not free console: $!\n";
 #	}
 
-#	addParseFiles(\@main::parseFiles,"$main::def_config/colors.txt", \%color, \&parseColorFile);
-#	parseReload(\@main::parseFiles,"color");
+#almost working (well actual working but not how I want them to be)
+#	main::addParseFiles("$Settings::control_folder/tkcolors.txt", $self, \&parseColorFile);
+#	main::parseReload("tkcolors");
 	return $self;
 }
 
@@ -205,7 +196,7 @@ sub initTk {
 	$self->{mw} = MainWindow->new();
 	$self->{mw}->protocol('WM_DELETE_WINDOW', [\&OnExit, $self]);
 	#$self->{mw}->Icon(-image=>$self->{mw}->Photo(-file=>"hyb.gif"));
-	$self->{mw}->title("modKore-Hybrid <Vx Module>");
+	$self->{mw}->title("OpenKore Tk Interface");
 #	$self->{mw}->configure(-menu => $self->{mw}->Menu(-menuitems=>
 #	[ map 
 #		['cascade', $_->[0], -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems => $_->[1]],
@@ -408,9 +399,13 @@ sub initTk {
 	$self->{input}->bind('<Up>' => [\&inputUp, $self]);
 	$self->{input}->bind('<Down>' => [\&inputDown, $self]);
 	$self->{input}->bind('<Return>' => [\&inputEnter, $self]);
-	$self->{input}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k')]);
 
-	$self->{console}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k')]);
+	if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
+		$self->{input}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k')]);
+		$self->{console}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k')]);
+	} else {
+		#I forgot the X code. will insert later
+	}
 
 }
 
@@ -496,32 +491,44 @@ sub OnExit{
 }
 
 sub parseColorFile {
-	my $self = 'magicly aquired';
 	my $file = shift;
-	my $r_hash = shift;
+	my $self = shift;
+	my $r_hash = $self->{colors};
 	my @old_tags = keys %$r_hash;
 	undef %{$r_hash};
 	open FILE, $file;
 	foreach (<FILE>) {
-		next if (/^#/);
-		s/[\r\n]//g;
+		next if (/^(?:#|$)/);
+		tr/\r\n//d;
 		s/\s+$//g;
 		my ($key, $fgcolor, $bgcolor) =m!([\S\S]+)\s+([^/]+)?(?:/(.+))?$!;
-		if ($key eq 'default_only') {
-			$r_hash->{$key} = $fgcolor;
-		} elsif ($key ne '') {
-			$r_hash->{$key} = {-foreground => $fgcolor, -background => $bgcolor};
+			if ($key eq 'default_only') {
+				$r_hash->{$key} = $fgcolor;
+			} elsif ($key ne '') {
+				$r_hash->{$key} = {-foreground => $fgcolor, -background => $bgcolor};
+			} else {
+				warn "Error reading $file at $.\n";
+			}
+	}
+	close FILE;
+	eval {
+		$self->{console}->configure(%{ $r_hash->{default} });
+		$self->{input}->configure(%{ $r_hash->{default} });
+		$self->{pminput}->configure(%{ $r_hash->{default} });
+		$self->{sinput}->configure(%{ $r_hash->{default} });
+	};
+	if ($@) {
+		if ($@ =~ /unknown color name "(.*)" at/) {
+			Log::error("Color '$1' not recognised in tkcolors.txt directive 'default'.\n");
+			return undef if isTrue($r_hash->{default_only}); #don't bother throwing a lot of errors in the next section.
 		} else {
-			warn "Error reading $file at $.\n";
+			die $@;
 		}
 	}
-	$self->{console}->configure(%{ $r_hash->{default} });
-	$self->{input}->configure(%{ $r_hash->{default} });
-	$self->{pminput}->configure(%{ $r_hash->{default} });
-	$self->{sinput}->configure(%{ $r_hash->{default} });
 	if (isTrue($r_hash->{default_only})) {
 		foreach my $tag (@old_tags) {
 			next if $tag eq 'default' || $tag eq 'default_only';
+			#this is not checked like above because it should not run when the above has thrown an error
 			$self->{console}->tagConfigure(
 				$tag,
 				%{ $r_hash->{default} }
@@ -530,13 +537,21 @@ sub parseColorFile {
 	} else {
 		foreach my $tag (keys %$r_hash) {
 			next if $tag eq 'default' || $tag eq 'default_only';
-			$self->{console}->tagConfigure(
-				$tag,
-				%{ $r_hash->{$tag} }
-			);
+			eval {
+				$self->{console}->tagConfigure(
+					$tag,
+					%{ $r_hash->{$tag} }
+				);
+			};
+			if ($@) {
+				if ($@ =~ /unknown color name "(.*)" at/) {
+					Log::error("Color '$1' not recognised in tkcolors.txt directive '$tag'.\n");
+				} else {
+					die $@;
+				}
+			}
 		}
 	}
-	close FILE;
 }
 
 sub isTrue {

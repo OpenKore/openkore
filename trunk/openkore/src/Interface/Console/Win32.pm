@@ -32,17 +32,13 @@ die "W32 only, this module should never be called on any other OS\n"
 		unless ($^O eq 'MSWin32' || $^O eq 'cygwin');
 
 use Carp;
-BEGIN { $SIG{__DIE__} = sub {confess @_}; }
+#BEGIN { $SIG{__DIE__} = sub {confess @_}; }
 use Time::HiRes qw/time/;
 use Text::Wrap;
 use Win32::Console;
 
 use Settings;
-use Utils;
-use Interface::Console;
-
 use base qw(Interface::Console);
-
 
 our %fgcolors;
 our %bgcolors;
@@ -304,84 +300,72 @@ sub color {
 	$self->{out_con}->Attr($fgcode | $bgcode);
 }
 
-$fgcolors{"reset"}		= $main::FG_GRAY;
-$fgcolors{"default"}	= $main::FG_GRAY;
+#IRGB
+#8421
 
-$fgcolors{"black"}		= $main::FG_BLACK;
+%fgcolors = (
+	'reset'		=> $main::FG_GRAY,
+	'default'	=> $main::FG_GRAY,
 
-$fgcolors{"red"}		= $main::FG_RED;
-$fgcolors{"darkred"}	= $main::FG_RED;
+	'black'		=> $main::FG_BLACK,
+	'darkgray'	=> FOREGROUND_INTENSITY(),
+	'darkgrey'	=> FOREGROUND_INTENSITY(),
 
-$fgcolors{"lightred"}	= $main::FG_LIGHTRED;
+	'darkred'	=> $main::FG_RED,
+	'red'		=> $main::FG_LIGHTRED,
 
-$fgcolors{"brown"}		= $main::FG_BROWN;
+	'darkgreen'	=> $main::FG_GREEN,
+	'green'		=> $main::FG_LIGHTGREEN,
 
-$fgcolors{"green"}		= $main::FG_GREEN;
-$fgcolors{"lightgreen"}	= $main::FG_LIGHTGREEN;
+	'brown'		=> $main::FG_BROWN,
+	'yellow'	=> $main::FG_YELLOW,
+	
+	'darkblue'	=> $main::FG_BLUE,
+	'blue'		=> $main::FG_LIGHTBLUE,
 
-$fgcolors{"darkgreen"}	= $main::FG_GREEN;
+	'darkmagenta'	=> $main::FG_MAGENTA,
+	'magenta'	=> $main::FG_LIGHTMAGENTA,
+	
+	'darkcyan'	=> $main::FG_CYAN,
+	'cyan'		=> $main::FG_LIGHTCYAN,
 
-$fgcolors{"yellow"}		= $main::FG_YELLOW;
+	'gray'		=> $main::FG_GRAY,
+	'grey'		=> $main::FG_GRAY,
+	'white'		=> $main::FG_WHITE,
+);
 
-$fgcolors{"blue"}		= $main::FG_BLUE;
+#  I  R  G  B
+#128 64 32 16
 
-$fgcolors{"lightblue"}	= $main::FG_LIGHTBLUE;
+%bgcolors = (
+	''			=> $main::BG_BLACK;
+	'default'	=> $main::BG_BLACK,
 
-$fgcolors{"magenta"}	= $main::FG_MAGENTA;
+	'black'		=> $main::BG_BLACK,
+	'darkgray'	=> BACKGROUND_INTENSITY(),
+	'darkgrey'	=> BACKGROUND_INTENSITY(),
 
-$fgcolors{"lightmagenta"}	= $main::FG_LIGHTMAGENTA;
+	'darkred'	=> $main::BG_RED,
+	'red'		=> $main::BG_LIGHTRED,
 
-$fgcolors{"cyan"}		= $main::FG_CYAN;
-$fgcolors{"lightcyan"}	= $main::FG_LIGHTCYAN;
+	'darkgreen'	=> $main::BG_GREEN,
+	'green'		=> $main::BG_LIGHTGREEN,
 
-$fgcolors{"darkcyan"}	= $main::FG_CYAN;
+	'brown'		=> $main::BG_BROWN,
+	'yellow'	=> $main::BG_YELLOW,
+	
+	'darkblue'	=> $main::BG_BLUE,
+	'blue'		=> $main::BG_LIGHTBLUE,
 
-$fgcolors{"white"}		= $main::FG_WHITE;
+	'darkmagenta'	=> $main::BG_MAGENTA,
+	'magenta'	=> $main::BG_LIGHTMAGENTA,
+	
+	'darkcyan'	=> $main::BG_CYAN,
+	'cyan'		=> $main::BG_LIGHTCYAN,
 
-$fgcolors{"gray"}		= $main::FG_GRAY;
-$fgcolors{"grey"}		= $main::FG_GRAY;
-
-$fgcolors{"darkgray"}	= FOREGROUND_INTENSITY();
-$fgcolors{"darkgrey"}   = FOREGROUND_INTENSITY();
-
-
-
-$bgcolors{"black"}		= $main::BG_BLACK;
-$bgcolors{""}			= $main::BG_BLACK;
-$bgcolors{"default"}	= $main::BG_BLACK;
-
-$bgcolors{"red"}		= $main::BG_RED;
-$bgcolors{"lightred"}	= $main::BG_LIGHTRED;
-
-$bgcolors{"brown"}		= $main::BG_BROWN;
-$bgcolors{"darkred"}	= $main::BG_BROWN;
-
-$bgcolors{"green"}		= $main::BG_GREEN;
-$bgcolors{"lightgreen"}	= $main::BG_LIGHTGREEN;
-
-$bgcolors{"darkgreen"}	= $main::BG_GREEN;
-
-$bgcolors{"yellow"}		= $main::BG_YELLOW;
-
-$bgcolors{"blue"}		= $main::BG_BLUE;
-
-$bgcolors{"lightblue"}	= $main::BG_LIGHTBLUE;
-
-$bgcolors{"magenta"}	= $main::BG_MAGENTA;
-
-$bgcolors{"lightmagenta"}	= $main::BG_LIGHTMAGENTA;
-
-$bgcolors{"cyan"}		= $main::BG_CYAN;
-$bgcolors{"lightcyan"}	= $main::BG_LIGHTCYAN;
-
-$bgcolors{"darkcyan"}	= $main::BG_CYAN;
-
-$bgcolors{"white"}		= $main::BG_WHITE;
-
-$bgcolors{"gray"}		= $main::BG_GRAY;
-$bgcolors{"grey"}		= $main::BG_GRAY;
-
-$bgcolors{"darkgray"}	= BACKGROUND_INTENSITY();
-$bgcolors{"darkgrey"}   = BACKGROUND_INTENSITY();
+	'gray'		=> $main::BG_GRAY,
+	'grey'		=> $main::BG_GRAY,
+	'white'		=> $main::BG_WHITE,
+);
 
 1 #end of module
