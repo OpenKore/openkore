@@ -709,7 +709,7 @@ sub stopAttack {
 sub stripLanguageCode {
 	my $r_msg = shift;
 	if ($config{chatLangCode} ne "none" && $config{chatLangCode} ne "0") {
-		configModify("chatLangCode", 1) if ($config{chatLangCode} eq "");
+		configModify("chatLangCode", 1, 1) if ($config{chatLangCode} eq "");
 		$$r_msg =~ s/^\|..//;
 		return 1;
 	} else {

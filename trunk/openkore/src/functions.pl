@@ -7994,13 +7994,13 @@ sub parseMsg {
 	} elsif ($switch eq "011F" || $switch eq "01C9") {
 		# Area effect spell; including traps!
 		my $ID = substr($msg, 2, 4);
-		my $SourceID = substr($msg, 6, 4);
+		my $sourceID = substr($msg, 6, 4);
 		my $x = unpack("S1", substr($msg, 10, 2));
 		my $y = unpack("S1", substr($msg, 12, 2));
 		my $type = unpack("C1", substr($msg, 14, 1));
 		my $fail = unpack("C1", substr($msg, 15, 1));
 
-		$spells{$ID}{'sourceID'} = $SourceID;
+		$spells{$ID}{'sourceID'} = $sourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
 		$spells{$ID}{'pos'}{'y'} = $y;
 		$binID = binAdd(\@spellsID, $ID);
@@ -8009,10 +8009,11 @@ sub parseMsg {
 		if ($type == 0x81) {
 			message getActorName($sourceID)." opened Warp Portal on ($x, $y)\n", "skill";
 		}
+		debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
 
 		Plugins::callHook('packet_areaSpell', {
 			fail => $fail,
-			sourceID => $SourceID,
+			sourceID => $sourceID,
 			type => $type,
 			x => $x,
 			y => $y
@@ -8021,6 +8022,8 @@ sub parseMsg {
 	} elsif ($switch eq "0120") {
 		# The area effect spell with ID dissappears
 		my $ID = substr($msg, 2, 4);
+		my $spell = $spells{$ID};
+		debug "Area effect ".getSpellName($spell->{type})." ($spell->{binID}) from ".getActorName($spell->{sourceID})." disappeared from ($spell->{pos}{x}, $spell->{pos}{y})\n", "skill", 2;
 		delete $spells{$ID};
 		binRemove(\@spellsID, $ID);
 
