@@ -198,7 +198,7 @@ undef $@;
 ##### PARSE CONFIGURATION AND DATA FILES #####
 
 import Settings qw(addConfigFile);
-addConfigFile($Settings::config_file, \%config,\&parseDataFile2);
+addConfigFile($Settings::config_file, \%config,\&parseConfigFile);
 addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
 addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
 addConfigFile("$Settings::control_folder/overallAuth.txt", \%overallAuth, \&parseDataFile);

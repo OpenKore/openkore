@@ -33,6 +33,7 @@ our @EXPORT = qw(
 	parseArrayFile
 	parseAvoidControl
 	parseChatResp
+	parseConfigFile
 	parseDataFile
 	parseDataFile_lc
 	parseDataFile2
@@ -146,43 +147,7 @@ sub parseChatResp {
 	close FILE;
 }
 
-sub parseDataFile {
-	my $file = shift;
-	my $r_hash = shift;
-	undef %{$r_hash};
-	my ($key,$value);
-	open FILE, "< $file";
-	foreach (<FILE>) {
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
-		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
-		if ($key ne "" && $value ne "") {
-			$$r_hash{$key} = $value;
-		}
-	}
-	close FILE;
-}
-
-sub parseDataFile_lc {
-	my $file = shift;
-	my $r_hash = shift;
-	undef %{$r_hash};
-	my ($key,$value);
-	open FILE, $file;
-	foreach (<FILE>) {
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+$//g;
-		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
-		if ($key ne "" && $value ne "") {
-			$$r_hash{lc($key)} = $value;
-		}
-	}
-	close FILE;
-}
-
-sub parseDataFile2 {
+sub parseConfigFile {
 	my $file = shift;
 	my $r_hash = shift;
 	my $no_undef = shift;
@@ -255,6 +220,58 @@ sub parseDataFile2 {
 				$r_hash->{$key} = $value;
 			}
 		}
+	}
+	close FILE;
+}
+
+sub parseDataFile {
+	my $file = shift;
+	my $r_hash = shift;
+	undef %{$r_hash};
+	my ($key,$value);
+	open FILE, "< $file";
+	foreach (<FILE>) {
+		next if (/^#/);
+		s/[\r\n]//g;
+		s/\s+$//g;
+		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
+		if ($key ne "" && $value ne "") {
+			$$r_hash{$key} = $value;
+		}
+	}
+	close FILE;
+}
+
+sub parseDataFile_lc {
+	my $file = shift;
+	my $r_hash = shift;
+	undef %{$r_hash};
+	my ($key,$value);
+	open FILE, $file;
+	foreach (<FILE>) {
+		next if (/^#/);
+		s/[\r\n]//g;
+		s/\s+$//g;
+		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
+		if ($key ne "" && $value ne "") {
+			$$r_hash{lc($key)} = $value;
+		}
+	}
+	close FILE;
+}
+
+sub parseDataFile2 {
+	my ($file, $r_hash) = @_;
+
+	%{$r_hash} = ();
+	open FILE, "< $file";
+	foreach (<FILE>) {
+		next if (/^#/);
+		s/[\r\n]//;
+		next if (length($_) == 0);
+
+		my ($key, $value) = split / /, $_, 2;
+		$r_hash->{$key} = $value;
 	}
 	close FILE;
 }
@@ -516,18 +533,18 @@ sub parseResponses {
 }
 
 sub parseROLUT {
-	my $file = shift;
-	my $r_hash = shift;
+	my ($file, $r_hash) = @_;
+
 	undef %{$r_hash};
-	my @stuff;
-	open FILE, $file;
+	open FILE, "< $file";
 	foreach (<FILE>) {
-		s/\r//g;
-		next if /^\/\//;
-		@stuff = split /#/, $_;
-		$stuff[1] =~ s/_/ /g;
-		if ($stuff[0] ne "" && $stuff[1] ne "") {
-			$$r_hash{$stuff[0]} = $stuff[1];
+		s/[\r\n]//g;
+		next if (length($_) == 0 || /^\/\//);
+
+		my ($id, $name) = split /#/, $_, 3;
+		if ($id ne "" && $name ne "") {
+			$name =~ s/_/ /g;
+			$r_hash->{$id} = $name;
 		}
 	}
 	close FILE;
