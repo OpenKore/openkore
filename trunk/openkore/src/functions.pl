@@ -6542,9 +6542,9 @@ sub parseMsg {
 					chatLog("k", "*** You have been muted for $val minutes, auto disconnect! ***\n");
 					quit();
 				} else {
-					message "max = " . 0xFFFFFFFF . "\n";
-					message "1   = " . $a . "\n";
-					message "2   = " . abs($a) . "\n";
+					#message "max = " . 0xFFFFFFFF . "\n";
+					#message "1   = " . $a . "\n";
+					#message "2   = " . abs($a) . "\n";
 					message "You've been muted for $val minutes\n";
 				}
 			}
