@@ -608,7 +608,9 @@ sub writeDataFile {
 	open(FILE, "+> $file");
 	foreach (keys %{$r_hash}) {
 		if ($_ ne "") {
-			print FILE "$_ $$r_hash{$_}\n";
+			print FILE $_;
+			print FILE " $$r_hash{$_}" if $$r_hash{$_} ne '';
+			print FILE "\n";
 		}
 	}
 	close FILE;
@@ -627,7 +629,9 @@ sub writeDataFileIntact {
 			next;
 		}
 		($key) = $_ =~ /^(\w+)/;
-		$data .= "$key $$r_hash{$key}\n";
+		$data .= $key;
+		$data .= " $$r_hash{$key}" if $$r_hash{$key} ne '';
+		$data .= "\n";
 	}
 	close FILE;
 	open(FILE, "> $file");
@@ -648,7 +652,9 @@ sub writeDataFileIntact2 {
 			next;
 		}
 		($key) = $_ =~ /^(\w+)/;
-		$data .= "$key $$r_hash{$key}{'timeout'}\n";
+		$data .= $key;
+		$data .= " $$r_hash{$key}{'timeout'}" if $$r_hash{$key}{'timeout'} ne '';
+		$data .= "\n";
 	}
 	close FILE;
 	open(FILE, "> $file");

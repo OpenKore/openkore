@@ -18,18 +18,18 @@ XKore 0
 exeName ragexe.exe
 commandPrefix ;
 
-master 
-server 
-username 
-password 
-char 
-sex 
+master
+server
+username
+password
+char
+sex
 
 ignoreInvalidLogin 0
 
 secureAdminPassword 0
-adminPassword 
-callSign 
+adminPassword
+callSign
 
 dcOnDeath 0
 dcOnDualLogin 0
@@ -55,7 +55,7 @@ debugPacket_unparsed 1
 debugPacket_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
-debugPacket_exclude 
+debugPacket_exclude
 debugDomains
 squelchDomains
 
@@ -78,13 +78,13 @@ attackMaxRouteDistance 100
 attackMaxRouteTime 4
 attackUseWeapon 1
 
-lockMap 
-lockMap_x 
-lockMap_y 
-lockMap_randX 
-lockMap_randY 
+lockMap
+lockMap_x
+lockMap_y
+lockMap_randX
+lockMap_randY
 
-saveMap 
+saveMap
 saveMap_warpToBuyOrSell 0
 
 route_randomWalk 1
@@ -95,13 +95,13 @@ route_step 15
 #
 # attackSkillSlot_0 [skill to use, lookup from tables/skills.txt or type 'skills' in console]
 # attackSkillSlot_0_lvl [number]
-# attackSkillSlot_0_dist [number] 
+# attackSkillSlot_0_dist [number]
 # attackSkillSlot_0_maxCastTime [number, in seconds]
 # attackSkillSlot_0_minCastTime [number, in seconds]
 # attackSkillSlot_0_hp [range, in %]
 # attackSkillSlot_0_sp [range, in %]
-# attackSkillSlot_0_onAction [activate the skill only on current AI action, eg attack, move] 
-# attackSkillSlot_0_whenStatusActive [activate the skill only when the listed status/state/ailments/look active] 
+# attackSkillSlot_0_onAction [activate the skill only on current AI action, eg attack, move]
+# attackSkillSlot_0_whenStatusActive [activate the skill only when the listed status/state/ailments/look active]
 # attackSkillSlot_0_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
 # attackSkillSlot_0_whenFollowing [flag]
 # attackSkillSlot_0_spirit [range, number of sprit ball]
@@ -131,8 +131,8 @@ attackSkillSlot_0_maxCastTime 0
 attackSkillSlot_0_minCastTime 0
 attackSkillSlot_0_hp
 attackSkillSlot_0_sp > 10
-attackSkillSlot_0_onAction 
-attackSkillSlot_0_whenStatusActive 
+attackSkillSlot_0_onAction
+attackSkillSlot_0_whenStatusActive
 attackSkillSlot_0_whenStatusInactive
 attackSkillSlot_0_whenFollowing
 attackSkillSlot_0_spirit
@@ -185,7 +185,7 @@ useSelf_skill_0_minCastTime 0
 useSelf_skill_0_hp
 useSelf_skill_0_sp
 useSelf_skill_0_onAction
-useSelf_skill_0_whenStatusActive 
+useSelf_skill_0_whenStatusActive
 useSelf_skill_0_whenStatusInactive
 useSelf_skill_0_whenFollowing
 useSelf_skill_0_spirit
@@ -255,7 +255,7 @@ partySkill_0_disabled 0
 partySkill_0_target
 partySkill_0_target_hp
 partySkill_0_target_whenStatusActive
-partySkill_0_target_whenStatusInactive 
+partySkill_0_target_whenStatusInactive
 partySkill_0_target_aggressives
 partySkill_0_target_monsters
 partySkill_0_target_timeout 0
@@ -274,18 +274,18 @@ itemsMaxWeight_sellOrStore 48
 #   eg: storageAuto_npc alberta 113 60
 #
 
-buyAuto_0 
-buyAuto_0_npc 
+buyAuto_0
+buyAuto_0_npc
 buyAuto_0_distance 5
 buyAuto_0_minAmount 2
 buyAuto_0_maxAmount 3
 
 sellAuto 0
-sellAuto_npc 
+sellAuto_npc
 sellAuto_distance 5
 
 storageAuto 0
-storageAuto_npc 
+storageAuto_npc
 storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
@@ -296,7 +296,7 @@ getAuto_0_maxAmount
 getAuto_0_passive
 
 follow 0
-followTarget 
+followTarget
 followEmotion 1
 followEmotion_distance 4
 followFaceDirection 0
@@ -307,7 +307,7 @@ followSitAuto 0
 followBot 0
 
 tankMode 0
-tankModeTarget 
+tankModeTarget
 
 dealAuto 1
 partyAuto 1
@@ -329,31 +329,31 @@ avoid_ignore_0
 avoidList 1
 avoidList_reconnect 1800
 
-autoEmote_word_0 
-autoEmote_num_0 
+autoEmote_word_0
+autoEmote_num_0
 
 # To attack with bare hands, specify "[NONE]" (without the quotes) for rightHand
 
-autoSwitch_default_rightHand 
-autoSwitch_default_leftHand 
-autoSwitch_default_arrow 
+autoSwitch_default_rightHand
+autoSwitch_default_leftHand
+autoSwitch_default_arrow
 
-autoSwitch_0 
-autoSwitch_0_rightHand 
-autoSwitch_0_leftHand 
-autoSwitch_0_arrow 
-autoSwitch_0_distance 
-autoSwitch_0_useWeapon 
+autoSwitch_0
+autoSwitch_0_rightHand
+autoSwitch_0_leftHand
+autoSwitch_0_arrow
+autoSwitch_0_distance
+autoSwitch_0_useWeapon
 
 
-#NOTE: In the case of two handed weapons, or no Shield, 
+#NOTE: In the case of two handed weapons, or no Shield,
 #      duplicate the weapon name for "autoSwitch_shield_new_#
 
 #
-# equipAuto_0 
+# equipAuto_0
 # equipAuto_0_def
-# equipAuto_0_monster 
-# equipAuto_0_skills 
+# equipAuto_0_monster
+# equipAuto_0_skills
 # equipAuto_0_weight 0
 # equipAuto_0_whileSitting 0
 # equipAuto_0_onTeleport 0
@@ -375,10 +375,10 @@ autoSwitch_0_useWeapon
 # notes:
 #   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
 
-equipAuto_0 
+equipAuto_0
 equipAuto_0_def
-equipAuto_0_monster 
-equipAuto_0_skills 
+equipAuto_0_monster
+equipAuto_0_skills
 equipAuto_0_weight 0
 equipAuto_0_whileSitting 0
 equipAuto_0_onTeleport 0
