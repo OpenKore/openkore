@@ -54,6 +54,7 @@ our @EXPORT = qw(
 	getPlayer
 	objectAdded
 	objectInsideSpell
+	objectIsMovingTowardsPlayer
 	printItemDesc
 	stopAttack
 	whenStatusActive
@@ -462,42 +463,49 @@ sub checkMonsterCleanness {
 
 	# If we're in follow mode
 	if (defined(my $followIndex = binFind(\@ai_seq, "follow"))) {
-		my $following = $ai_seq_args[$followIndex]{'following'};
-		my $followID = $ai_seq_args[$followIndex]{'ID'};
+		my $following = $ai_seq_args[$followIndex]{following};
+		my $followID = $ai_seq_args[$followIndex]{ID};
 
 		if ($following) {
 			# And master attacked monster, or the monster attacked/missed master
-			if ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0
-			 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0
-			 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0) {
+			if ($monster->{dmgToPlayer}{$followID} > 0
+			 || $monster->{missedToPlayer}{$followID} > 0
+			 || $monster->{dmgFromPlayer}{$followID} > 0) {
 				return 1;
 			}
 		}
 	}
 
 	# If monster attacked/missed you
-	return 1 if ($monsters{$ID}{'dmgToYou'} || $monsters{$ID}{'missedYou'});
+	return 1 if ($monster->{'dmgToYou'} || $monster->{'missedYou'});
 
 	# If monster hasn't been attacked by other players
-	if (!binSize([keys %{$monsters{$ID}{'missedFromPlayer'}}])
-	 && !binSize([keys %{$monsters{$ID}{'dmgFromPlayer'}}])
-	 && !binSize([keys %{$monsters{$ID}{'castOnByPlayer'}}])
+	if (!binSize([keys %{$monster->{'missedFromPlayer'}}])
+	 && !binSize([keys %{$monster->{'dmgFromPlayer'}}])
+	 && !binSize([keys %{$monster->{'castOnByPlayer'}}])
 
 	 # and it hasn't attacked any other player
-	 && !binSize([keys %{$monsters{$ID}{'missedToPlayer'}}])
-	 && !binSize([keys %{$monsters{$ID}{'dmgToPlayer'}}])
-	 && !binSize([keys %{$monsters{$ID}{'castOnToPlayer'}}])
+	 && !binSize([keys %{$monster->{'missedToPlayer'}}])
+	 && !binSize([keys %{$monster->{'dmgToPlayer'}}])
+	 && !binSize([keys %{$monster->{'castOnToPlayer'}}])
 	) {
-		return 1;
+		# The monster might be getting lured by another player.
+		# So we check whether it's walking towards any other player, but only
+		# if we haven't already attacked the monster.
+		if ($monster->{'dmgFromYou'} || $monster->{'missedFromYou'}) {
+			return 1;
+		} else {
+			return objectIsMovingTowardsPlayer($monster);
+		}
 	}
 
-	# my $cleanMonster = (
-	#	  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
-	#	|| ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0)
-	#	|| ($following && ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0))
-	#	|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
-	# );
-	# $cleanMonster = 0 if ($monsters{$ID}{'attackedByPlayer'} && (!$following || $monsters{$ID}{'lastAttackFrom'} ne $followID));
+	# The monster didn't attack you.
+	# Other players attacked it, or it attacked other players.
+	if ($monster->{'dmgFromYou'} || $monster->{'missedFromYou'}) {
+		# If you have already attacked the monster before, then consider it clean
+		return 1;
+	}
+	# If you haven't attacked the monster yet, it's unclean.
 
 	return 0;
 }
@@ -650,6 +658,30 @@ sub objectInsideSpell {
 		my $spell = $spells{$_};
 		if ($spell->{sourceID} ne $accountID && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
 			return 1;
+		}
+	}
+	return 0;
+}
+
+##
+# objectIsMovingTowardsPlayer(object, [ignore_party_members = 1])
+#
+# Check whether an object is moving towards a player.
+sub objectIsMovingTowardsPlayer {
+	my $obj = shift;
+	my $ignore_party_members = shift;
+	$ignore_party_members = 1 if (!defined $ignore_party_members);
+
+	if (!timeOut($obj->{time_move}, $obj->{time_move_calc}) && @playersID) {
+		# Monster is still moving, and there are players on screen
+		my %vec;
+		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
+
+		foreach (@playersID) {
+			next if (!$_ || ( $ignore_party_members && $char->{party}{users}{$_} ));
+			if (checkMovementDirection($obj->{pos}, \%vec, $players{$_}{pos}, 15)) {
+				return 1;
+			}
 		}
 	}
 	return 0;

@@ -3423,22 +3423,10 @@ sub AI {
 				# - Have a status (such as poisoned), because there's a high chance
 				#   they're being attacked by other players
 				# - Are inside others' area spells (this includes being trapped).
-				next if (($monster->{statuses} && scalar(keys %{$monster->{statuses}})) || objectInsideSpell($monster));
-
-				# Ignore monsters that are moving towards other players
-				if (!timeOut($monster->{time_move}, $monster->{time_move_calc})) {
-					my $stop;
-					my %vec;
-					getVector(\%vec, $monster->{pos_to}, $monster->{pos});
-					foreach (@playersID) {
-						next unless $_;
-						if (checkMovementDirection($monster->{pos}, \%vec, $players{$_}{pos}, 15)) {
-							$stop = 1;
-							last;
-						}
-					}
-					next if $stop;
-				}
+				# - Are moving towards other players.
+				next if (( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) )
+					|| objectInsideSpell($monster)
+					|| objectIsMovingTowardsPlayer($monster));
 
 				my $safe = 1;
 				if ($config{'attackAuto_onlyWhenSafe'}) {
@@ -4664,8 +4652,11 @@ sub AI {
 
 	##### ITEMS AUTO-GATHER #####
 
-	if ( ( AI::isIdle || AI::is(qw/follow route mapRoute/) )
-	  && $config{'itemsGatherAuto'} && percent_weight($char) < $config{'itemsMaxWeight'}
+	if ( (AI::isIdle || AI::action eq "follow"
+		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
+	  && $config{'itemsGatherAuto'}
+	  && ($config{'itemsGatherAuto'} >= 2 || !ai_getAggressives())
+	  && percent_weight($char) < $config{'itemsMaxWeight'}
 	  && timeOut($timeout{ai_items_gather_auto}) ) {
 
 		foreach my $item (@itemsID) {
@@ -4697,11 +4688,7 @@ sub AI {
 
 	} elsif (AI::action eq "items_gather") {
 		my $ID = AI::args->{ID};
-
-		if (AI::args->{walk_start}) {
-			undef AI::args->{walk_start};
-			AI::args->{ai_items_gather_giveup}{time} = time;
-		}
+		my ($dist, $myPos);
 
 		if (positionNearPlayer($items{$ID}{pos}, 12)) {
 			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : No looting!\n", undef, 1;
@@ -4716,11 +4703,11 @@ sub AI {
 			AI::suspend();
 			stand();
 
-		} elsif (distance($items{$ID}{pos}, calcPosition($char)) > 2) {
-			AI::args->{walk_start} = 1;
-			ai_route($field{name}, $items{$ID}{pos}{x}, $items{$ID}{pos}{y},
-				attackOnRoute => ($config{'itemsGatherAuto'} >= 2) ? 0 : 1,
-				distFromGoal => 1);
+		} elsif (( $dist = distance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
+			my %vec, %pos;
+			getVector(\%vec, $items{$ID}{pos}, $myPos);
+			moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
+			move($pos{x}, $pos{y});
 
 		} else {
 			AI::dequeue;
