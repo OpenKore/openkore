@@ -436,4 +436,6 @@ portalRecord 2
 beepOnPM 0
 beepOnChat 0
 
+ksPlayers
+
 #alias_heal sp 28
