@@ -296,6 +296,8 @@ Bug fixes:
 - Fix auto cart bug for equipped items.
 - Fix corrupted character name displayed upon creation.
 - Maybe fix "Incoming Request to Ally Guild '1'" message.
+- route_randomWalk on non-contiguous maps will no longer try to leave the
+  map to get to the other section.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

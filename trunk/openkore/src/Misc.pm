@@ -275,7 +275,7 @@ sub calcRectArea2 {
 
 	my @rectangle;
 	for (my $x = $cx - $r; $x <= $cx + $r; $x++) {
-		for (my $y = $cx - $r; $y <= $cx + $r; $y++) {
+		for (my $y = $cy - $r; $y <= $cy + $r; $y++) {
 			next if distance({x => $cx, y => $cy}, {x => $x, y => $y}) < $min;
 			push(@rectangle, {x => $x, y => $y});
 		}

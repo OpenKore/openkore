@@ -2887,7 +2887,8 @@ sub AI {
 			message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";
 			ai_route($field{name}, $randX, $randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
-				attackOnRoute => 2);
+				attackOnRoute => 2,
+				noMapRoute => 1);
 		}
 	}
 
