@@ -42,6 +42,7 @@ New features:
 - Failed skill usage (e.g. insufficient SP, overweight) is now displayed
   at normal verbosity.
 - Show exp percentage gained per hour
+- When failed to connect to server, display why (e.g. "Connection refused")
 
 New config options:
 - *_inInventory_name : inventory item name
@@ -50,6 +51,8 @@ New config options:
   options.
 - *_onAction : check for current active AI sequence (eg attack, move...)
 - partySkill_target: comma seperated targets
+- bindIp : if your host has multiple IP addresses, you can select which
+  one to use
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
