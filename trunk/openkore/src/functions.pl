@@ -161,6 +161,8 @@ sub checkConnection {
 
 	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
 		print "Timeout on Master Server, reconnecting...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 		undef $conState_tries;
 
