@@ -59,6 +59,14 @@
     print()s with functions from this module in the future.
 - Added the commandline argument --daemon. This argument allows you to
   start kore without input server so kore won't read input from console.
+- Revamped cart inventory handling.
+
+
+==================
+### OpenKore 1.0.2
+==================
+
+- Fix vending.
 
 
 ==================
