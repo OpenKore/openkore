@@ -1114,7 +1114,7 @@ sub sendTalkNumber {
 	my $r_socket = shift;
 	my $ID = shift;
 	my $number = shift;
-	my $msg = pack("C*", 0x43, 0x01, 0x4B, 0xE3, 0x8E, 0x06) .
+	my $msg = pack("C*", 0x43, 0x01) . $ID .
 			pack("L1", $number);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent talk number: ".getHex($ID).", $number\n", "sendPacket", 2;

@@ -16,6 +16,7 @@ Bug fixes:
 - Fix some memory leaks.
 - Various messages no longer spam the XKore client.
 - partySkill targetTimeout is now honored.
+- 'talk num' command bugs fixed.
 
 New config options:
 - teleportAuto_useSP - use SP (cast skill) when using teleport without item
