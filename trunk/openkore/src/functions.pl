@@ -236,13 +236,13 @@ sub checkConnection {
 
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
 	 && $conState == 5 && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
-		print "\nAuto-restarting!!\n";
+		message "\nAuto-restarting!!\n";
 
 		if ($config{'autoRestartSleep'}) {
 			my $sleeptime = $config{'autoSleepMin'} + int(rand $config{'autoSleepSeed'});
 			$timeout_ex{'master'}{'timeout'} = $sleeptime;
 			$sleeptime = $timeout{'reconnect'}{'timeout'} if ($sleeptime < $timeout{'reconnect'}{'timeout'});
-			print "Sleeping for ".timeConvert($sleeptime).".\n";
+			message "Sleeping for ".timeConvert($sleeptime).".\n";
 		} else {
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		}
@@ -264,7 +264,7 @@ sub checkConnection {
 		# Choose random config file
 		@files = split(/ /, $config{'autoConfChange_files'});
 		$file = @files[rand(@files)];
-		print "Changing configuration file (from \"$Settings::config_file\" to \"$file\")...\n";
+		message "Changing configuration file (from \"$Settings::config_file\" to \"$file\")...\n";
 
 		# A relogin is necessary if the host/port, username or char is different
 		$oldMasterHost = $config{"master_host_$config{'master'}"};
@@ -304,7 +304,7 @@ sub parseInput {
 	$printType = shift if ($config{'XKore'});
 
 	my ($arg1, $arg2, $switch);
-	print "Echo: $input\n" if ($config{'debug'} >= 2);
+	debug("Input: $input\n", "parseInput", 2);
 	($switch) = $input =~ /^(\w*)/;
 
 	if ($printType) {
@@ -331,8 +331,8 @@ sub parseInput {
 		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		my ($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
 		if ($arg1 =~ /^\d+$/ && $monstersID[$arg1] eq "") {
-			print	"Error in function 'a' (Attack Monster)\n"
-				,"Monster $arg1 does not exist.\n";
+			error	"Error in function 'a' (Attack Monster)\n" .
+				"Monster $arg1 does not exist.\n";
 		} elsif ($arg1 =~ /^\d+$/) {
 			$monsters{$monstersID[$arg1]}{'attackedByPlayer'} = 0;
 			attack($monstersID[$arg1]);
@@ -344,31 +344,31 @@ sub parseInput {
 			configModify("attackAuto", 2);
 
 		} else {
-			print	"Syntax Error in function 'a' (Attack Monster)\n"
-				,"Usage: attack <monster # | no | yes >\n";
+			error	"Syntax Error in function 'a' (Attack Monster)\n" .
+				"Usage: attack <monster # | no | yes >\n";
 		}
 
 	} elsif ($switch eq "ai") {
 		if ($AI) {
 			undef $AI;
 			$AI_forcedOff = 1;
-			print "AI turned off\n";
+			message "AI turned off\n";
 		} else {
 			$AI = 1;
 			undef $AI_forcedOff;
-			print "AI turned on\n";
+			message "AI turned on\n";
 		}
 
 	} elsif ($switch eq "aiv") {
-		print "ai_seq = @ai_seq\n";
+		message("ai_seq = @ai_seq\n", "list");
 		if ($ai_seq_args[0]{'waitingForMapSolution'}) {
-			print "waitingForMapSolution\n";
+			message("waitingForMapSolution\n", "list");
 		}
 		if ($ai_seq_args[0]{'waitingForSolution'}) {
-			print "waitingForSolution\n";
+			message("waitingForSolution\n", "list");
 		}
 		if ($ai_seq_args[0]{'solution'}) {
-			print "solution\n";
+			message("solution\n", "list");
 		}
 
 	} elsif ($switch eq "al") {
@@ -410,15 +410,15 @@ sub parseInput {
 		if ($index ne "") {
 			$monsters{$ai_seq_args[$index]{'ID'}}{'ignore'} = 1;
 			sendAttackStop(\$remote_socket);
-			print "Stopped attacking $monsters{$ai_seq_args[$index]{'ID'}}{'name'} ($monsters{$ai_seq_args[$index]{'ID'}}{'binID'})\n";
+			message "Stopped attacking $monsters{$ai_seq_args[$index]{'ID'}}{'name'} ($monsters{$ai_seq_args[$index]{'ID'}}{'binID'})\n";
 			aiRemove("attack");
 		}
 
 	} elsif ($switch eq "auth") {
 		my ($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
 		if ($arg1 eq "" || ($arg2 ne "1" && $arg2 ne "0")) {
-			print	"Syntax Error in function 'auth' (Overall Authorize)\n"
-				,"Usage: auth <username> <flag>\n";
+			error	"Syntax Error in function 'auth' (Overall Authorize)\n" .
+				"Usage: auth <username> <flag>\n";
 		} else {
 			auth($arg1, $arg2);
 		}
@@ -442,14 +442,14 @@ sub parseInput {
 	} elsif ($switch eq "bestow") {
 		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($currentChatRoom eq "") {
-			print	"Error in function 'bestow' (Bestow Admin in Chat)\n"
-				,"You are not in a Chat Room.\n";
+			error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
+				"You are not in a Chat Room.\n";
 		} elsif ($arg1 eq "") {
-			print	"Syntax Error in function 'bestow' (Bestow Admin in Chat)\n"
-				,"Usage: bestow <user #>\n";
+			error	"Syntax Error in function 'bestow' (Bestow Admin in Chat)\n" .
+				"Usage: bestow <user #>\n";
 		} elsif ($currentChatRoomUsers[$arg1] eq "") {
-			print	"Error in function 'bestow' (Bestow Admin in Chat)\n"
-				,"Chat Room User $arg1 doesn't exist\n";
+			error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
+				"Chat Room User $arg1 doesn't exist\n";
 		} else {
 			sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg1]);
 		}
@@ -458,11 +458,11 @@ sub parseInput {
 		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'buy' (Buy Store Item)\n"
-				,"Usage: buy <item #> [<amount>]\n";
+			error	"Syntax Error in function 'buy' (Buy Store Item)\n" .
+				"Usage: buy <item #> [<amount>]\n";
 		} elsif ($storeList[$arg1] eq "") {
-			print	"Error in function 'buy' (Buy Store Item)\n"
-				,"Store Item $arg1 does not exist.\n";
+			error	"Error in function 'buy' (Buy Store Item)\n" .
+				"Store Item $arg1 does not exist.\n";
 		} else {
 			if ($arg2 <= 0) {
 				$arg2 = 1;
@@ -594,12 +594,12 @@ sub parseInput {
 		my ($arg2) = $input =~ /^[\s\S]*? \w+ ([\s\S]+)$/;
 		@{$ai_v{'temp'}{'conf'}} = keys %config;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'conf' (Config Modify)\n"
-				,"Usage: conf <variable> [<value>]\n";
+			error	"Syntax Error in function 'conf' (Config Modify)\n" .
+				"Usage: conf <variable> [<value>]\n";
 		} elsif (binFind(\@{$ai_v{'temp'}{'conf'}}, $arg1) eq "") {
-			print "Config variable $arg1 doesn't exist\n";
+			error "Config variable $arg1 doesn't exist\n";
 		} elsif ($arg2 eq "value") {
-			print "Config '$arg1' is $config{$arg1}\n";
+			error "Config '$arg1' is $config{$arg1}\n";
 		} else {
 			configModify($arg1, $arg2);
 		}
@@ -721,22 +721,22 @@ sub parseInput {
 		@arg = split / /, $input;
 		shift @arg;
 		if (%currentDeal && $arg[0] =~ /\d+/) {
-			print	"Error in function 'deal' (Deal a Player)\n"
-				,"You are already in a deal\n";
+			error	"Error in function 'deal' (Deal a Player)\n" .
+				"You are already in a deal\n";
 		} elsif (%incomingDeal && $arg[0] =~ /\d+/) {
-			print	"Error in function 'deal' (Deal a Player)\n"
-				,"You must first cancel the incoming deal\n";
+			error	"Error in function 'deal' (Deal a Player)\n" .
+				"You must first cancel the incoming deal\n";
 		} elsif ($arg[0] =~ /\d+/ && !$playersID[$arg[0]]) {
-			print	"Error in function 'deal' (Deal a Player)\n"
-				,"Player $arg[0] does not exist\n";
+			error	"Error in function 'deal' (Deal a Player)\n" .
+				"Player $arg[0] does not exist\n";
 		} elsif ($arg[0] =~ /\d+/) {
 			$outgoingDeal{'ID'} = $playersID[$arg[0]];
 			sendDeal(\$remote_socket, $playersID[$arg[0]]);
 
 
 		} elsif ($arg[0] eq "no" && !%incomingDeal && !%outgoingDeal && !%currentDeal) {
-			print	"Error in function 'deal' (Deal a Player)\n"
-				,"There is no incoming/current deal to cancel\n";
+			error	"Error in function 'deal' (Deal a Player)\n" .
+				"There is no incoming/current deal to cancel\n";
 		} elsif ($arg[0] eq "no" && (%incomingDeal || %outgoingDeal)) {
 			sendDealCancel(\$remote_socket);
 		} elsif ($arg[0] eq "no" && %currentDeal) {
@@ -1757,10 +1757,10 @@ sub parseInput {
 			error	"Error in function 'skills desc' (Skill Description)\n" .
 				"Skill $arg2 does not exist.\n";
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-			print "===============Skill Description===============\n";
-			print "Skill: $skills_lut{$skillsID[$arg2]}\n\n";
-			print $skillsDesc_lut{$skillsID[$arg2]};
-			print "==============================================\n";
+			message("===============Skill Description===============\n", "info");
+			message("Skill: $skills_lut{$skillsID[$arg2]}\n\n", "info");
+			message($skillsDesc_lut{$skillsID[$arg2]}, "info");
+			message("==============================================\n", "info");
 		} else {
 			error	"Syntax Error in function 'skills' (Skills Functions)\n" .
 				"Usage: skills [<add | desc>] [<skill #>]\n";
@@ -2069,22 +2069,22 @@ sub parseInput {
 	} elsif ($switch eq "uneq") {
 		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'unequip' (Unequip Inventory Item)\n"
-				,"Usage: unequip <item #>\n";
+			error	"Syntax Error in function 'unequip' (Unequip Inventory Item)\n" .
+				"Usage: unequip <item #>\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			print	"Error in function 'unequip' (Unequip Inventory Item)\n"
-				,"Inventory Item $arg1 does not exist.\n";
+			error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
+				"Inventory Item $arg1 does not exist.\n";
 		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'equipped'} == 0) {
-			print	"Error in function 'unequip' (Unequip Inventory Item)\n"
-				,"Inventory Item $arg1 is not equipped.\n";
+			error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
+				"Inventory Item $arg1 is not equipped.\n";
 		} else {
 			sendUnequip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'});
 		}
 		
 	} elsif ($switch eq "where") {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
-		print "Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n";
-		print "Last destination calculated : (".int($old_x).", ".int($old_y).") from spot (".int($old_pos_x).", ".int($old_pos_y).").\n";
+		message("Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n", "info");
+		message("Last destination calculated : (".int($old_x).", ".int($old_y).") from spot (".int($old_pos_x).", ".int($old_pos_y).").\n", "info");
 
 	} elsif ($switch eq "who") {
 		sendWho(\$remote_socket);
@@ -5279,7 +5279,7 @@ sub parseMsg {
 		undef $conState_tries;
 		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
 		%{$chars[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos'}};
-		message("Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", "console", 1);
+		message("Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", undef, 1);
 		message("You are now in the game\n", "connection") if (!$config{'XKore'});
 		message("Waiting for map to load...\n", "connection") if ($config{'XKore'});
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
@@ -7662,7 +7662,7 @@ sub parseMsg {
 
 			message(swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>z",
-				[$articles + 1, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}]),
+				[$articles, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}]),
 				"list");
 		}
 		message("-----------------------------------------\n", "list");
@@ -9362,7 +9362,7 @@ sub configModify {
 	my $key = shift;
 	my $val = shift;
 	my $quiet = shift;
-	print "Config '$key' set to $val\n" unless ($quiet);
+	message("Config '$key' set to $val\n") unless ($quiet);
 	$config{$key} = $val;
 	$Log::messageVerbosity = $config{'verbose'};
 	writeDataFileIntact($Settings::config_file, \%config);
@@ -9372,7 +9372,7 @@ sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
 	$timeout{$timeout}{'timeout'} = $time;
-	print "Timeout '$timeout' set to $time\n";
+	message "Timeout '$timeout' set to $time\n";
 	writeDataFileIntact2("control/timeouts.txt", \%timeout);
 }
 
@@ -10579,12 +10579,12 @@ sub getResponse {
 
 sub load {
 	my $r_array = shift;
-	
+
 	foreach (@{$r_array}) {
 		if (-e $$_{'file'}) {
-			print "Loading $$_{'file'}...\n";
+			message("Loading $$_{'file'}...\n", "load");
 		} else {
-			print "Error: Couldn't load $$_{'file'}\n";
+			error("Error: Couldn't load $$_{'file'}\n", "load");
 		}
 		&{$$_{'function'}}("$$_{'file'}", $$_{'hash'});
 	}
@@ -10903,10 +10903,10 @@ sub parseSectionedFile {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	open(F, $file);
+	open(FILE, "< $file");
 
 	my $section = "";
-	while (<F>) {
+	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
@@ -10918,10 +10918,10 @@ sub parseSectionedFile {
 			next;
 		} else {
 			my ($key, $value) = $line =~ /([\s\S]*?) ([\s\S]*)$/;
-			$r_hash->{$section}{$key} = $value;
+			$$r_hash{$section}{$key} = $value;
 		}
 	}
-	close(F);
+	close FILE;
 }
 
 sub parseSkillsLUT {
@@ -11556,10 +11556,10 @@ sub portalExists {
 
 sub printItemDesc {
 	my $itemID = shift;
-	print "===============Item Description===============\n";
-	print "Item: $items_lut{$itemID}\n\n";
-	print $itemsDesc_lut{$itemID};
-	print "==============================================\n";
+	message("===============Item Description===============\n", "info");
+	message("Item: $items_lut{$itemID}\n\n", "info");
+	message($itemsDesc_lut{$itemID}, "info");
+	message("==============================================\n", "info");
 }
 
 sub timeOut {

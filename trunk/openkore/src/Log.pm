@@ -13,15 +13,19 @@
 # attacked		Monster attacks you
 # attackMon		You attack monster
 # connection		Connection messages
-# info			View info (status, guild info, etc.)
+# info			View info that's requested by the user (status, guild info, etc.)
 # input			Waiting for user input
 # useItem		You used item
 # list			List of information (monster list, player list, item list, etc.)
+# load			Loading config files.
 # startup		Messages that are printed during startup.
 # success		An operation succeeded
 # syntax		Syntax check files
 # storage		Storage item added/removed
 # xkore			X-Kore system messages
+
+# Debug domains:
+# parseInput
 
 package Log;
 
@@ -111,26 +115,44 @@ sub color {
 	my $color = shift;
 	$color =~ s/\/.*//; # no support for background colors for now
 
-	if ($color eq "reset") {
+	if ($color eq "reset" || $color eq "default") {
 		print "\e[0m";
+
 	} elsif ($color eq "black") {
 		print "\e[1;30m";
-	} elsif ($color eq "red") {
+
+	} elsif ($color eq "red" || $color eq "lightred") {
 		print "\e[1;31m";
-	} elsif ($color eq "green") {
+	} elsif ($color eq "brown" || $color eq "darkred") {
+		print "\e[0;31m";
+
+	} elsif ($color eq "green" || $color eq "lightgreen") {
 		print "\e[1;32m";
+	} elsif ($color eq "darkgreen") {
+		print "\e[0;32m";
+
 	} elsif ($color eq "yellow") {
 		print "\e[1;33m";
+
 	} elsif ($color eq "blue") {
+		print "\e[0;34m";
+	} elsif ($color eq "lightblue") {
 		print "\e[1;34m";
+
 	} elsif ($color eq "magenta") {
+		print "\e[0;35m";
+	} elsif ($color eq "lightmagenta") {
 		print "\e[1;35m";
-	} elsif ($color eq "cyan") {
+
+	} elsif ($color eq "cyan" || $color eq "lightcyan") {
 		print "\e[1;36m";
+	} elsif ($color eq "darkcyan") {
+		print "\e[0;36m";
+
 	} elsif ($color eq "white") {
 		print "\e[1;37m";
-	} elsif ($color eq "default") {
-		print "\e[0m";
+	} elsif ($color eq "gray" || $color eq "grey") {
+		print "\e[0;37m";
 	}
 }
 
@@ -176,6 +198,7 @@ sub processMsg {
 }
 
 sub setColor {
+	return if ($config{'XKore'}); # Don't print colors in X-Kore mode; this is a temporary hack!
 	return if (!$consoleColors{''}{'useColors'});
 	my ($type, $domain) = @_;
 	my $color = $consoleColors{$type}{$domain};
