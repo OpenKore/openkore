@@ -109,6 +109,7 @@ Special thanks:
 - Ven'Tatsu: Interface stuff, A* pathfinding enhancements.
 - pmak: various bug fixes and enhancements, as well as assisting me with maintaining the website.
 - jsteng: simplified move AI code, skill use improvements.
+- anu: support for new deal packets.
 
 
 ==================

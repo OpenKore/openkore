@@ -5377,9 +5377,10 @@ sub parseSendMsg {
 # See also the main loop about how parseMsg's return value is treated.
 
 # Types:
-# w -> word (2-byte unsigned integer)
-# l -> long (4-byte unsigned integer)
-# b -> byte (1-byte character)
+# word : 2-byte unsigned integer
+# long : 4-byte unsigned integer
+# byte : 1-byte character/integer
+# bool : 1-byte boolean (true/false)
 sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
@@ -7347,7 +7348,7 @@ sub parseMsg {
 		$incomingDeal{'name'} = $dealUser;
 		$timeout{'ai_dealAutoCancel'}{'time'} = time;
 		message "$dealUser Requests a Deal\n", "deal";
-
+		message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal";
 
 	} elsif ($switch eq "00E7") {
 		$type = unpack("C1", substr($msg, 2, 1));
@@ -8750,6 +8751,37 @@ sub parseMsg {
 
 	} elsif ($switch eq "01DC") {
 		$secureLoginKey = substr($msg, 4, $msg_size);
+
+	} elsif ($switch eq "01F4") {
+		# Recieving deal request
+		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
+		my $dealUserLevel = unpack("S1",substr($msg, 30, 2));
+		$incomingDeal{'name'} = $dealUser;
+		$timeout{'ai_dealAutoCancel'}{'time'} = time;
+		message "$dealUser (level $dealUserLevel) Requests a Deal\n", "deal";
+		message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal";
+
+	} elsif ($switch eq "01F5") {
+		# The deal you request has been accepted
+		my $type = unpack("C1", substr($msg, 2, 1));
+		if ($type == 3) {
+			if (%incomingDeal) {
+				$currentDeal{'name'} = $incomingDeal{'name'};
+			} else {
+				$currentDeal{'ID'} = $outgoingDeal{'ID'};
+				$currentDeal{'name'} = $players{$outgoingDeal{'ID'}}{'name'};
+			}
+			message "Engaged Deal with $currentDeal{'name'}\n", "deal";
+		}
+		undef %outgoingDeal;
+		undef %incomingDeal;
+
+	} elsif ($switch eq "0187") {
+		# Deal canceled
+		undef %incomingDeal;
+		undef %outgoingDeal;
+		undef %currentDeal;
+		message "Deal Cancelled\n", "deal";
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
@@ -11697,7 +11729,7 @@ sub redirectXKoreMessages {
 	my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
 
 	return if ($type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
-	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|selfchat|emotion|drop|inventory)$/);
+	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|selfchat|emotion|drop|inventory|deal)$/);
 	return if ($domain =~ /^(attack|skill)/);
 
 	$message =~ s/\n*$//s;
