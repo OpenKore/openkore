@@ -2631,7 +2631,7 @@ sub AI {
 			   && ($ai_v{'temp'}{'invIndex'} eq "" 
 				 	|| ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"getAuto_$i"."_minAmount"} 
 					&& $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"getAuto_$i"."_maxAmount"}))
-			   && (findKeyString(\%storage, "name", $config{"getAuto_$ai_seq_args[0]{index}"}) ne "" || !$storage{opened})
+			   && (findKeyString(\%storage, "name", $config{"getAuto_$i"}) ne "" || !$storage{opened})
 			) {
 				$ai_v{'temp'}{'found'} = 1;
 			}
@@ -2763,7 +2763,7 @@ sub AI {
 					undef %item;
 					$item{name} = $config{"getAuto_$ai_seq_args[0]{index}"};
 					$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
-					$item{inventory}{amount} = ($item{inventory}{index} ne "")? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount}: 0;
+					$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount} : 0;
 					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
 					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
 					$item{max_amount} = $config{"getAuto_$ai_seq_args[0]{index}"."_maxAmount"};
