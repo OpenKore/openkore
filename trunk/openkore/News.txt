@@ -145,11 +145,14 @@ Internal:
 
 Special thanks:
 - Ven'Tatsu: Interface stuff, A* pathfinding enhancements.
-- pmak: various bug fixes and enhancements, as well as assisting me with maintaining the website.
+- pmak: various bug fixes and enhancements, as well as assisting me with maintaining
+  the website.
 - jsteng: simplified move AI code, skill use improvements, NPC
   interaction improvements.
 - anu: support for new deal packets.
 - aputs: support for status ailments/looks.
+- floAt: support for NPC positions instead of NPC IDs; portal compilation
+  fix.
 
 
 ==================
