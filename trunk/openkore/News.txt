@@ -47,6 +47,10 @@ New features:
   alias_mvp sm 292
 - If 'sp' command is called without a player target, it will target yourself.
   Useful for e.g. 'alias_heal sp 28'.
+- Improved lockMap and randomWalk settings. Without route_randomWalk,
+  lockMap_randX/Y modify the lockMap_x/y position by a random amount. If
+  route_randomWalk is set, lockMap_x/y and lockMap_randX/Y specify the area
+  in which randomWalk should walk.
 
 New config options:
 - useSelfSkill_#_monsters
