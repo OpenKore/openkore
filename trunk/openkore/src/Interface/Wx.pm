@@ -21,7 +21,6 @@
 #  $Id$
 #
 #########################################################################
-
 package Interface::Wx;
 
 use strict;
@@ -63,10 +62,15 @@ sub OnInit {
 	$self->createInterface;
 	$self->iterate;
 
+	my $onChat = sub { $self->onChatAdd(@_); };
 	$self->{hooks} = Plugins::addHooks(
 		['loadfiles',               sub { $self->onLoadFiles(@_); }],
 		['postloadfiles',           sub { $self->onLoadFiles(@_); }],
-		['parseMsg/addPrivMsgUser', sub { $self->onAddPrivMsgUser(@_); }]
+		['parseMsg/addPrivMsgUser', sub { $self->onAddPrivMsgUser(@_); }],
+		['ChatQueue::add',          $onChat],
+		['packet_selfChat',         $onChat],
+		['packet_privMsg',          $onChat],
+		['packet_sentPM',           $onChat]
 	);
 
 	$self->{history} = [];
@@ -332,6 +336,8 @@ sub createMenuBar {
 		'&Map	Ctrl-M',	\&onMapToggle, 'Show where you are on the current map');
 	$self->{infoBarToggle} = $self->addCheckMenu($viewMenu,
 		'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
+	$self->{chatLogToggle} = $self->addCheckMenu($viewMenu,
+		'Chat &Log',		\&onChatLogToggle, 'Show or hide the chat log.');
 	$viewMenu->AppendSeparator;
 	$self->addMenu($viewMenu,
 		'&Font...',		\&onFontChange, 'Change console font');
@@ -436,13 +442,18 @@ sub createSplitterContent {
 	my $splitter = $self->{splitter};
 	my $frame = $self->{frame};
 
-	## Console
+	## Dockable notebook with console and chat log
 	my $notebook = $self->{notebook} = new Interface::Wx::DockNotebook($splitter, -1);
 	my $page = $notebook->newPage(0, 'Console');
 	my $console = $self->{console} = new Interface::Wx::Console($page);
 	$page->set($console);
 
-	## Parallel to the console is a sub-splitter
+	$page = $notebook->newPage(1, 'Chat Log', 0);
+	my $chatLog = $self->{chatLog} = new Interface::Wx::Console($page, 1);
+	$page->set($chatLog);
+
+
+	## Parallel to the notebook is another sub-splitter
 	my $subSplitter = new Wx::SplitterWindow($splitter, 583,
 		wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE);
 
@@ -646,6 +657,7 @@ sub onMenuOpen {
 	$self->{mPause}->Enable($AI);
 	$self->{mResume}->Enable(!$AI);
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
+	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage('Chat Log') ? 1 : 0);
 }
 
 sub onLoadFiles {
@@ -717,6 +729,7 @@ sub onAdvancedConfig {
 	});
 	$vsizer->Add($cfg, 1, wxGROW | wxALL, 8);
 
+
 	my $sizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$vsizer->Add($sizer, 0, wxGROW | wxLEFT | wxRIGHT | wxBOTTOM, 8);
 
@@ -754,6 +767,21 @@ sub onInfoBarToggle {
 	my $self = shift;
 	$self->{vsizer}->Show($self->{infoPanel}, $self->{infoBarToggle}->IsChecked);
 	$self->{frame}->Layout;
+}
+
+sub onChatLogToggle {
+	my $self = shift;
+	if (!$self->{chatLogToggle}->IsChecked) {
+		$self->{notebook}->closePage('Chat Log');
+
+	} elsif (!$self->{notebook}->hasPage('Chat Log')) {
+		my $page = $self->{notebook}->newPage(1, 'Chat Log', 0);
+		my $chatLog = $self->{chatLog} = new Interface::Wx::Console($page, 1);
+		$page->set($chatLog);
+
+	} else {
+		$self->{notebook}->switchPage('Chat Log');
+	}
 }
 
 sub onManual {
@@ -805,6 +833,31 @@ sub onAddPrivMsgUser {
 	my $self = shift;
 	my $param = $_[1];
 	$self->{targetBox}->Append($param->{user});
+}
+
+sub onChatAdd {
+	my ($self, $hook, $params) = @_;
+	my $msg;
+
+	return if (!$self->{notebook}->hasPage('Chat Log'));
+	if ($hook eq "ChatQueue::add") {
+		$msg = '';
+		if ($params->{type} ne "c") {
+			$msg .= "[$params->{type}] ";
+		}
+		$msg .= "$params->{user} : $params->{msg}\n";
+
+	} elsif ($hook eq "packet_selfChat") {
+		$msg = "$params->{user} : $params->{msg}\n";
+	} elsif ($hook eq "packet_privMsg") {
+		$msg = "(From: $params->{privMsgUser}) : $params->{privMsg}\n";
+	} elsif ($hook eq "packet_sentPM") {
+		$msg = "(To: $params->{to}) : $params->{msg}\n";
+	}
+
+	if (defined $msg) {
+		$self->{chatLog}->add('message', $msg);
+	}
 }
 
 sub onMapMouseMove {

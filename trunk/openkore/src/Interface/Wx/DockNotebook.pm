@@ -63,7 +63,7 @@ sub new {
 ##############################
 
 ##
-# $docknotebook->newPage(show_buttons, title)
+# $docknotebook->newPage(show_buttons, title, [select = 1])
 # show_buttons: Whether this page should have detach/close buttons.
 # title: a title for this tab.
 # Returns: a Interface::Wx::DockNotebook::Page control.
@@ -81,8 +81,10 @@ sub new {
 # $page = $docknotebook->newPage(1, "Tab 2");
 # $page->set(new Wx::Button($page, -1, "Hello World"));
 sub newPage {
-	my ($self, $show_buttons, $title) = @_;
+	my ($self, $show_buttons, $title, $select) = @_;
 	my $page;
+	$select = 1 if (!defined $select);
+
 	if (!$self->{page} && !$self->{notebook}) {
 		# This is the first child
 		$page = new Interface::Wx::DockNotebook::Page($self, $show_buttons, $title);
@@ -100,13 +102,12 @@ sub newPage {
 			$self->{sizer}->Remove($self->{page});
 			$self->{page}->Reparent($self->{notebook});
 			$self->{notebook}->AddPage($self->{page}, $self->{page}{title});
-			$self->{page}{child}->SetFocus;
 			$self->Layout;
 		}
 
 		# Finally, add the new page
 		$page = new Interface::Wx::DockNotebook::Page($self->{notebook}, $show_buttons, $title);
-		$self->{notebook}->AddPage($page, $title, 1);
+		$self->{notebook}->AddPage($page, $title, $select);
 
 		delete $self->{page};
 	}
