@@ -2389,6 +2389,7 @@ sub AI {
 					shift @{$ai_seq_args[0]{'steps'}};
 				}
 			}
+
 			if ($ai_seq_args[0]{'steps'}[0] =~ /w(\d+)/i) {
 				my $time = $1;
 				$ai_v{'npc_talk'}{'time'} = time + $time;
@@ -9385,10 +9386,28 @@ sub getField {
 	unless (-e $file) {
 		my %aliases = (
 			'new_1-1.fld' => 'new_zone01.fld',
+			'new_2-1.fld' => 'new_zone01.fld',
+			'new_3-1.fld' => 'new_zone01.fld',
+			'new_4-1.fld' => 'new_zone01.fld',
+			'new_5-1.fld' => 'new_zone01.fld',
+
 			'new_1-2.fld' => 'new_zone02.fld',
+			'new_2-2.fld' => 'new_zone02.fld',
+			'new_3-2.fld' => 'new_zone02.fld',
+			'new_4-2.fld' => 'new_zone02.fld',
+			'new_5-2.fld' => 'new_zone02.fld',
+
 			'new_1-3.fld' => 'new_zone03.fld',
+			'new_2-3.fld' => 'new_zone03.fld',
+			'new_3-3.fld' => 'new_zone03.fld',
+			'new_4-3.fld' => 'new_zone03.fld',
+			'new_5-3.fld' => 'new_zone03.fld',
+
 			'new_1-4.fld' => 'new_zone04.fld',
-			'new_4-1.fld' => 'new_zone04.fld',
+			'new_2-4.fld' => 'new_zone04.fld',
+			'new_3-4.fld' => 'new_zone04.fld',
+			'new_4-4.fld' => 'new_zone04.fld',
+			'new_5-4.fld' => 'new_zone04.fld',
 		);
 
 		my ($dir, $base) = $file =~ /^(.*[\\\/])?(.*)$/;
