@@ -22,7 +22,7 @@ our @EXPORT = qw($buildType %config %consoleColors);
 
 
 # Constants
-our $versionText = "*** OpenKore 1.1.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
+our $versionText = "*** OpenKore 1.2.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
 our $welcomeText = "Welcome to X-OpenKore.";
 our $MAX_READ = 30000;
 
