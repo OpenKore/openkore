@@ -20,7 +20,7 @@ version 18
 ip 61.220.63.248
 port 6900
 master_version 16
-version 7
+version 8
 
 [Malaysia - mRO (English): Iris/Penril/Odin/Thor/Freyia]
 ip 61.220.63.129
