@@ -4636,7 +4636,8 @@ sub AI {
 		my $map_name_lu = $field{name}.'.rsw';
 		my $safe = 0;
 
-		if ($config{teleportAuto_allPlayers} && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
+		if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
+		 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$AI::Temp::Teleport_allPlayers = time;
@@ -5774,6 +5775,14 @@ sub parseMsg {
 			} elsif ($type == 1) {
 				debug "Monster Died: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_damage";
 				$monsters_old{$ID}{'dead'} = 1;
+
+			} elsif ($type == 2) { # What's this?
+				debug "Monster Disappeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
+				$monsters_old{$ID}{'disappeared'} = 1;
+
+			} elsif ($type == 3) {
+				debug "Monster Teleported: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
+				$monsters_old{$ID}{'teleported'} = 1;
 			}
 			binRemove(\@monstersID, $ID);
 			delete $monsters{$ID};

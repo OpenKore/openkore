@@ -171,6 +171,25 @@ Credits:
 
 
 ==================
+### 1.4.9
+==================
+
+Wx interface:
+- Improvements to the map viewer:
+  * Monsters and players are now also displayed.
+  * Drawing is now double buffered. This means no more flickering on Windows.
+- There's now a listbox showing the current players on screen.
+- You can select between "command mode" and "chat mode". In command mode,
+  the text you enter in the input box are recognized as commands. In chat
+  mode, the text you enter will become chat messages, just like when you
+  enter text in the real RO cient.
+
+New config options:
+- teleportAuto_allPlayers (flag)
+  If set to 1, teleport when anybody is on screen.
+
+
+==================
 ### 1.4.8
 ==================
 
