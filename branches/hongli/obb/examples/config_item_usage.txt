@@ -1,0 +1,19 @@
+####################################
+# Item usage
+####################################
+useSelf_item Meat,Apple,Carrot,Banana,Sweet Potato,Red Potion {
+	hp <= 50
+}
+
+useSelf_item Orange Potion {
+	hp <= 40
+}
+
+useSelf_item Yellow Potion {
+	hp <= 30
+}
+
+useSelf_item White Potion {
+	hp <= 20
+}
+

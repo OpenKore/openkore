@@ -1,0 +1,9 @@
+####################################
+# Aliases
+####################################
+# Skills
+alias_bas sm 5
+alias_pro sm 6
+alias_mag sm 7
+alias_end ss 8
+
