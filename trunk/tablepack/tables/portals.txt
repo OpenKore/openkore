@@ -12,7 +12,6 @@ izlu2dun 108 27 izlude 176 182 0 c r0
 prt_fild05 270 212 prt_sewb1 135 248 0 c r0
 aldebaran 223 222 xmas_fild01 78 68 0 c r1 c c n
 moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
-prontera 165 194 prtg_cas05 52 41 0 r0
 
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
