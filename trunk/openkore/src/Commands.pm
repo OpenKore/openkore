@@ -1190,7 +1190,7 @@ sub cmdPlayerSkill {
 	my $targetID;
 	my $lv = $args[2];
 
-	if (!$skill) {
+	if (!defined $skill->id) {
 		error	"Error in function 'sp' (Use Skill on Player)\n" .
 			"'$args[0]' is not a valid skill.\n";
 		return;
@@ -1224,7 +1224,7 @@ sub cmdUseSkill {
 	# Resolve skill ID
 	($skillID, $args) = split(/ /, $args, 2);
 	my $skill = Skills->new(id => $skillID);
-	if (!$skill) {
+	if (!defined $skill->id) {
 		error "Skill $skillID does not exist.\n";
 		return;
 	}
