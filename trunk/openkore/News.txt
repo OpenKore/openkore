@@ -152,6 +152,7 @@ Bug fixes:
 - The skill_use AI sequence will now wait until the skill has finished casting.
 - Typing "talk no" while not talking to an NPC would cause disconnection;
   "talk no" is no longer allowed in that case now.
+- "storage get" no longer requires AI to be enabled.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

@@ -1329,7 +1329,7 @@ sub parseCommand {
 					push @items, $_;
 				}
 			}
-			ai_storageGet(\@items, $arg3);
+			storageGet(\@items, $arg3);
 
 		} elsif ($arg1 eq "close") {
 			sendStorageClose(\$remote_socket);
@@ -9142,29 +9142,6 @@ sub ai_storageAutoCheck {
 }
 
 ##
-# ai_storageGet(indices, max)
-# indices: reference to an array of storage item numbers.
-# max: the maximum amount to get, for each item, or 0 for unlimited.
-#
-# Get one or more items from storage.
-#
-# Example:
-# # Get items 2 and 5 from storage.
-# ai_storageGet([2, 5]);
-# # Get items 2 and 5 from storage, but at most 30 of each item.
-# ai_storageGet([2, 5], 30);
-sub ai_storageGet {
-	my $r_items = shift;
-	my $max = shift;
-	my %args;
-
-	$args{items} = $r_items;
-	$args{max} = $max;
-	$args{timeout} = 0.15;
-	AI::queue("storageGet", \%args);
-}
-
-##
 # cartGet(items)
 # items: a reference to an array of indices.
 #
@@ -9557,6 +9534,38 @@ sub sit {
 sub stand {
 	aiRemove("sitting");
 	AI::queue("standing");
+}
+
+##
+# storageGet(indices, max)
+# indices: reference to an array of storage item numbers.
+# max: the maximum amount to get, for each item, or 0 for unlimited.
+#
+# Get one or more items from storage.
+#
+# Example:
+# # Get items 2 and 5 from storage.
+# storageGet([2, 5]);
+# # Get items 2 and 5 from storage, but at most 30 of each item.
+# storageGet([2, 5], 30);
+sub storageGet {
+	my $indices = shift;
+	my $max = shift;
+
+	if (@{$indices} == 1) {
+		my $index = $indices->[0];
+		if (!$max || $max > $storage{$storageID[$index]}{amount}) {
+			$max = $storage{$storageID[$index]}{amount};
+		}
+		sendStorageGet(\$remote_socket, $storage{$storageID[$index]}{index}, $max);
+
+	} else {
+		my %args;
+		$args{items} = $indices;
+		$args{max} = $max;
+		$args{timeout} = 0.15;
+		AI::queue("storageGet", \%args);
+	}
 }
 
 sub take {
