@@ -144,6 +144,7 @@ sub checkSyntax {
 # Modules::doReload()
 #
 # Reload all modules in the reload queue. This function is meant to be run in Kore's main loop.
+# Do not call this function directly in any other places.
 #
 # See also: Modules::reload()
 sub doReload {
