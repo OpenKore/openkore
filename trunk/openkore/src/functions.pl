@@ -4284,8 +4284,9 @@ sub AI {
 
 			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'portal'} eq "$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}=$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}" ) {
 				#This solution points to an X,Y coordinate
-				if ( 2 > distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'})) {
-					#We need to specify 2 because sometimes the exact spot is occupied by someone else
+				my $distFromGoal = $ai_seq_args[0]{'pyDistFromGoal'} ? $ai_seq_args[0]{'pyDistFromGoal'} : ($ai_seq_args[0]{'distFromGoal'} ? $ai_seq_args[0]{'distFromGoal'} : 0);
+				if ( $distFromGoal + 2 > distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'})) {
+					#We need to specify +2 because sometimes the exact spot is occupied by someone else
 					shift @{$ai_seq_args[0]{'mapSolution'}};
 
 				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
@@ -4300,6 +4301,8 @@ sub AI {
 					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
 						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
 						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+						distFromGoal => $ai_seq_args[0]{'distFromGoal'},
+						pyDistFromGoal => $ai_seq_args[0]{'pyDistFromGoal'},
 						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
 						_solution => $args{'solution'},
 						_internal => 1);
