@@ -70,4 +70,13 @@ sub W {
 	return $_[0]->FindWindow($_[1]);
 }
 
+sub WS {
+	my $self = shift;
+	my @ret;
+	foreach (@_) {
+		push @ret, $self->FindWindow($_);
+	}
+	return @ret;
+}
+
 1;

@@ -659,8 +659,9 @@ sub vectorToDegree {
 #################################################
 
 ##
-# checkLaunchApp(pid)
+# checkLaunchApp(pid, [retval])
 # pid: the return value of launchApp() or launchScript()
+# retval: a reference to a scalar. If the app exited, the return value will be stored in here.
 # Returns: 1 if the app is still running, 0 if it has exited.
 #
 # If you ran a script or an app asynchronously, you can use this function to check
@@ -668,9 +669,15 @@ sub vectorToDegree {
 #
 # See also: launchApp(), launchScript()
 sub checkLaunchedApp {
-	my $pid = shift;
+	my ($pid, $retval) = @_;
 	if ($^O eq 'MSWin32') {
-		return ($pid->Wait(0) == 0);
+		my $result = ($pid->Wait(0) == 0);
+		if ($result == 0 && $retval) {
+			my $code;
+			$pid->GetExitCode($code);
+			$$retval = $code;
+		}
+		return $result;
 	} else {
 		import POSIX ':sys_wait_h';
 		my $wnohang = eval "WNOHANG";

@@ -823,7 +823,8 @@ sub processUltimate {
 	my ($section, $rule, @lines, %written, %sectionsWritten);
 
 	undef %{$hash} if (!$writeMode);
-	return if (!open($f, "< $file"));
+	if (open($f, "< $file")) {
+
 	foreach (<$f>) {
 		s/[\r\n]//g;
 
@@ -920,6 +921,8 @@ sub processUltimate {
 		}
 	}
 	close $f;
+
+	} # open
 
 	if ($writeMode) {
 		# Add stuff that haven't already been added
