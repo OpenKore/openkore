@@ -41,7 +41,7 @@ our @EXPORT = qw(
 
 	debug_showSpots
 
-	calcAvoidArea
+	calcRectArea
 	center
 	charSelectScreen
 	checkFieldWalkable
@@ -52,6 +52,7 @@ our @EXPORT = qw(
 	getFieldPoint
 	getPortalDestName
 	getPlayer
+	objectInsideSpell
 	printItemDesc
 	whenStatusActive
 	whenStatusActiveMon
@@ -176,13 +177,12 @@ sub debug_showSpots {
 
 
 ##
-# calcAvoidArea($x, $y, $radius)
+# calcRectArea($x, $y, $radius)
 # Returns: an array with position hashes. Each has contains an x and a y key.
 #
-# You want to avoid the area with center ($x,$y) and radius $radius.
-# This function returns a list of blocks that you can possibly walk to,
-# in order to avoid that area.
-sub calcAvoidArea {
+# Creates a rectangle with center ($x,$y) and radius $radius,
+# and returns a list of positions of the border of the rectangle.
+sub calcRectArea {
 	my ($x, $y, $radius) = @_;
 	my (%topLeft, %topRight, %bottomLeft, %bottomRight);
 		
@@ -623,6 +623,24 @@ sub getPlayer {
 		}
 	}
 	return undef;
+}
+
+##
+# objectInsideSpell(object)
+# object: reference to a player or monster hash.
+#
+# Checks whether an object is inside someone else's spell area.
+# (Traps are also "area spells").
+sub objectInsideSpell {
+	my $object = shift;
+	my ($x, $y) = ($object->{pos_to}{x}, $object->{pos_to}{y});
+	foreach (@spellsID) {
+		my $spell = $spells{$_};
+		if ($spell->{sourceID} ne $accountID && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
+			return 1;
+		}
+	}
+	return 0;
 }
 
 ##

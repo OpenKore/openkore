@@ -1280,8 +1280,12 @@ sub cmdUseSkill {
 	# Resolve target
 	if ($switch eq 'sl') {
 		if (!defined($x) || !defined($y)) {
-			error "(X, Y) coordinates not specified.\n";
-			return;
+			#error "(X, Y) coordinates not specified.\n";
+			#return;
+			my $pos = calcPosition($char);
+			my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2);
+			$pos = $positions[rand(@positions)];
+			($x, $y) = ($pos->{x}, $pos->{y});
 		}
 	} elsif ($switch eq 'ss' || ($switch eq 'sp' && !defined($targetNum))) {
 		$targetID = $accountID;
