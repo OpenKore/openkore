@@ -22,6 +22,8 @@ New features:
 - Priority attacks for non-aggressive monsters are now supported.
 - Weighted maprouting to avoid/prefer walking through certain maps
   (see control/routeweights.txt for configuration).
+- idRO Amatsu/Kunlun is now supported. You must set secureLogin_type
+  to 4 or 5, depending on your server.
 
 New config options:
 - useSelfSkill_#_monsters
@@ -48,6 +50,7 @@ Credits:
   and partySkill.
 - obyarou: Priority attack support for non-aggressive monsters.
 - fov: writeDataFile*() tweaks
+- polokus: idRO Amatsu/Kunlun support
 
 
 ==================
