@@ -4931,14 +4931,10 @@ sub parseMsg {
 				"-------------------------------", []),
 				"connection");
 
-				my $j = 0;
-				while ($avoid{"avoid_$j"} ne "") {
-					if ($chars[$num]{'name'} eq $avoid{"avoid_$j"} || $chars[$num]{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-						$interface->errorDialog("Sanity Checking FAILED: Invalid username detected.");
-						Network::disconnect(\$remote_socket);
-						quit();
-					}
-					$j++;
+				if (defined $avoid{'Players'}{lc($chars[$num]{'name'})} || $chars[$num]{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+					$interface->errorDialog("Sanity Checking FAILED: Invalid username detected.");
+					Network::disconnect(\$remote_socket);
+					quit();
 				}
 			}
 		if (!$config{'XKore'}) {
@@ -9495,41 +9491,52 @@ sub avoidGM_talk {
 	return 0;
 }
 
+
+##
+# avoidList_near()
+# Returns: 1 if someone was detected, 0 if no one was detected.
+#
+# Checks if any of the surrounding players are on the avoid.txt avoid list.
+# Disconnects / teleports if a player is detected.
 sub avoidList_near {
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
-		my $j = 0;
-		while ($avoid{"avoid_$j"} ne "") {
-			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
-				warning "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
-				chatLog("k", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
-				warning "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
-				$timeout_ex{'master'}{'time'} = time;
-				$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
-				Network::disconnect(\$remote_socket);
-				return 1;
-			}
-			$j++;
+		if (($avoid{'Players'}{lc($players{$playersID[$i]}{'name'})}{'disconnect_on_sight'} || $avoid{'ID'}{$players{$playersID[$i]}{'nameID'}}{'disconnect_on_sight'}) && !$config{'XKore'}) {
+			warning "$players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) is nearby, disconnecting...\n";
+			chatLog("k", "*** Found $players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) nearby and disconnected ***\n");
+			warning "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
+			$timeout_ex{'master'}{'time'} = time;
+			$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
+			Network::disconnect(\$remote_socket);
+			return 1;
+		}
+		elsif ($avoid{'Players'}{lc($players{$playersID[$i]}{'name'})}{'teleport_on_sight'} || $avoid{'ID'}{$players{$playersID[$i]}{'nameID'}}{'teleport_on_sight'}) {
+			warning "$players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) is nearby, teleporting...\n";
+			chatLog("k", "*** Found $players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) nearby and teleported ***\n");
+			useTeleport(1);
+			return 1;
 		}
 	}
 	return 0;
 }
 
+# avoidList_talk(playername, chatmsg)
+# playername: Name of the player who chatted/PMed the bot.
+# chatmsg: Contents of the message. (currently not used)
+#
+# Checks if the specified player is on the avoid.txt avoid list for chat messages,
+# and disconnects if they are.
 sub avoidList_talk {
 	return if (!$config{'avoidList'});
 	my ($chatMsgUser, $chatMsg) = @_;
 
-	my $j = 0;
-	while ($avoid{"avoid_$j"} ne "") {
-		if ($chatMsgUser eq $avoid{"avoid_$j"}) { 
-			warning "Disconnecting to avoid $chatMsgUser!\n";
-			chatLog("k", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
-			warning "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
-			$timeout_ex{'master'}{'time'} = time;
-			$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
-			Network::disconnect(\$remote_socket);
-		}
-		$j++;
+	if ($avoid{'Players'}{lc($chatMsgUser)}{'disconnect_on_chat'} && !$config{'XKore'}) { 
+		warning "Disconnecting to avoid $chatMsgUser!\n";
+		chatLog("k", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
+		warning "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
+		Network::disconnect(\$remote_socket);
 	}
 }
 

@@ -28,6 +28,7 @@ use Carp;
 
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
+	parseAvoidControl
 	parseDataFile
 	parseDataFile_lc
 	parseDataFile2
@@ -57,6 +58,37 @@ our @EXPORT = qw(
 	updateNPCLUT
 	);
 
+sub parseAvoidControl {
+	my $file = shift;
+	my $r_hash = shift;
+	undef %{$r_hash};
+	my ($key,@args,$args);
+	open FILE, $file;
+
+	my $section = "";
+	foreach (<FILE>) {
+		next if (/^#/);
+		s/[\r\n]//g;
+		s/\s+$//g;
+
+		next if ($_ eq "");
+
+		if (/^\[(.*)\]$/) {
+			$section = $1;
+			next;
+
+		} else {
+			($key, $args) = $_ =~ /([\s\S]+?) (\d+[\s\S]*)/;
+			@args = split / /,$args;
+			if ($key ne "") {
+				$$r_hash{$section}{lc($key)}{'disconnect_on_sight'} = $args[0];
+				$$r_hash{$section}{lc($key)}{'teleport_on_sight'} = $args[1];
+				$$r_hash{$section}{lc($key)}{'disconnect_on_chat'} = $args[2];
+			}
+		}
+	}
+	close FILE;
+}
 
 sub parseDataFile {
 	my $file = shift;
