@@ -4,6 +4,7 @@
 
 New features:
 - X-Kore works on Windows 98/ME now!
+- Properly recognizes advanced seconds classes.
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
