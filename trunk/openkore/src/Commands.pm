@@ -1545,9 +1545,9 @@ sub cmdStand {
 		delete $ai_v{route_randomWalk_old};
 		delete $ai_v{teleportAuto_idle_old};
 		delete $ai_v{itemsGatherAuto_old};
-		main::stand();
 	}
 	$ai_v{sitAuto_forceStop} = 1;
+	main::stand();
 }
 
 sub cmdStatAdd {
