@@ -3343,7 +3343,7 @@ sub AI {
 
 		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 		my $realMyPos = calcPosition($char);
-		my $realMonsterPos = calcPosition($monsters{$ID}, 1.5);
+		my $realMonsterPos = calcPosition($monsters{$ID}, 3);
 		my $realMonsterDist = distance($realMyPos, $realMonsterPos);
 		if (!$config{'runFromTarget'}) {
 			$myPos = $realMyPos;
@@ -3399,9 +3399,12 @@ sub AI {
 		if (!$args->{attackMethod}{type}) {
 			if ($config{'attackUseWeapon'}) {
 				$args->{attackMethod}{distance} = $config{'attackDistance'};
+				$args->{attackMethod}{maxDistance} = ($config{'attackDistance'} > $config{'attackMaxDistance'})
+						? $config{'attackDistance'} : $config{'attackMaxDistance'};
 				$args->{attackMethod}{type} = "weapon";
 			} else {
 				$args->{attackMethod}{distance} = 30;
+				$args->{attackMethod}{maxDistance} = 30;
 				undef $args->{attackMethod}{type};
 			}
 
@@ -3498,36 +3501,26 @@ sub AI {
 			AI::args->{avoiding} = 1;
 			move($bestBlock->{x}, $bestBlock->{y}, $ID);
 
-		} elsif (!$config{'runFromTarget'} && $monsterDist > $args->{attackMethod}{distance}
+		} elsif (!$config{'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
 		  && timeOut($args->{ai_attack_giveup}, 0.5)) {
-			# The target monster moved
-			if (checkFieldWalkable(\%field, $monsterPos->{x}, $monsterPos->{y})) {
-				# Move to target
-				$args->{move_start} = time;
-				%{$args->{monsterPos}} = %{$monsterPos};
+			# The target monster moved; move to target
+			$args->{move_start} = time;
+			$args->{monsterPos} = {%{$monsterPos}};
 
-				my $dist = sprintf("%.1f", $monsterDist);
-				debug "Target distance $dist is >$args->{attackMethod}{distance}; moving to target: " .
-					"from ($myPos->{x},$myPos->{y}) to ($monsterPos->{x},$monsterPos->{y})\n", "ai_attack";
+			my $dist = sprintf("%.1f", $monsterDist);
+			debug "Target distance $dist is >$args->{attackMethod}{distance}; moving to target: " .
+				"from ($myPos->{x},$myPos->{y}) to ($monsterPos->{x},$monsterPos->{y})\n", "ai_attack";
 
-				my $result = ai_route($field{'name'}, $monsterPos->{x}, $monsterPos->{y},
-					distFromGoal => $args->{attackMethod}{distance},
-					maxRouteTime => $config{'attackMaxRouteTime'},
-					attackID => $ID,
-					noMapRoute => 1);
-				if (!$result) {
-					# Unable to calculate a route to target
-					$monsters{$ID}{attack_failed} = time if ($monsters{$ID});
-					AI::dequeue;
-					message "Unable to calculate a route to target, dropping target\n", "ai_attack";
-				}
-
-			} else {
-				# The target is at a spot that's not walkable according to the field file.
-				# Ignore the monster.
+			my $result = ai_route($field{'name'}, $monsterPos->{x}, $monsterPos->{y},
+				distFromGoal => $args->{attackMethod}{distance},
+				maxRouteTime => $config{'attackMaxRouteTime'},
+				attackID => $ID,
+				noMapRoute => 1);
+			if (!$result) {
+				# Unable to calculate a route to target
 				$monsters{$ID}{attack_failed} = time if ($monsters{$ID});
 				AI::dequeue;
-				message "Target is not reachable, dropping target\n", "ai_attack";
+				message "Unable to calculate a route to target, dropping target\n", "ai_attack";
 			}
 
 		} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
@@ -3983,8 +3976,6 @@ sub AI {
 
 			my $pos = calcPosition($char);
 			my ($cur_x, $cur_y) = ($pos->{x}, $pos->{y});
-			#my $cur_x = $char->{pos}{x};
-			#my $cur_y = $char->{pos}{y};
 
 			unless (@{$args->{solution}}) {
 				# No more points to cover; we've arrived at the destination

@@ -7,6 +7,7 @@ use Globals qw($remote_socket %config %players $char %ai_v %timeout
 		%responseVars %field %overallAuth %maps_lut %skillsSP_lut);
 use AI;
 use Commands;
+use Plugins;
 use Log qw(message error);
 use Utils qw(parseArgs);
 use Misc qw(auth configModify sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse);
@@ -25,6 +26,7 @@ sub add {
 		time => time
 	);
 	push @queue, \%item;
+	Plugins::callHook('ChatQueue::add', \%item);
 }
 
 ##

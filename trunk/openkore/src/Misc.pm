@@ -271,7 +271,7 @@ sub calcRectArea {
 # Check whether you can snipe through ($x,$y) on field $r_field.
 sub checkFieldSnipable {
 	my $p = getFieldPoint(@_);
-	return ($p == 0 || $p == 3 || $p == 7);
+	return ($p == 0 || $p == 3 || $p == 5);
 }
 
 ##
