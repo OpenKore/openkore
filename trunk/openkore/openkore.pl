@@ -128,6 +128,8 @@ use Carp;
 
 use Settings;
 
+eval "use OpenKoreMod;";
+undef $@;
 my $parseArgResult = Settings::parseArguments();
 $interface = $interface->switchInterface($Settings::default_interface, 1);
 
