@@ -29,7 +29,8 @@
 - teleportAuto_noUnstuck configuration option will make bot not teleport when
   it's stuck
 - hopefully fix zeny display when dealing for real
-
+- automatically display coordinates of portal when encountering it
+- show number of slots on items on the floor
 
 ==================
 ### 1.3.0 (beta)
