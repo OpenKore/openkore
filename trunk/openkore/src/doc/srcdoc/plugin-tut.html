@@ -131,6 +131,14 @@ The above example adds a hook for "AI_pre". Whenever the function <tt>AI()</tt> 
 this plugin's <tt>on_AI()</tt> function is called too. Within this function, you can do whatever
 you want. This is how you extend OpenKore's functionality.
 
+	<div class="tip">
+	<h4>Tip</h4>
+	If you want to add many hooks, you should use use
+	<tt><a href="Plugins.html#Plugins::addHooks">Plugins::addHook<b>s</b>()</a></tt>
+	(notice the 's').
+	This way you don't have to manually delete every single hook you added.
+	</div>
+
 <p>
 Unfortunately there's no list of hook names. The best you you can do is
 to read the source code and look for
