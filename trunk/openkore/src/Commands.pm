@@ -989,6 +989,7 @@ sub cmdPlayerList {
 		$msg .= swrite(
 			"Body direction: @<<<<<<<<<<<<<<<<<<< Head direction:  @<<<<<<<<<<<<<<<<<<<",
 			["$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)"]);
+$msg .= "Weapon: $player->{weapon}\n";
 		$msg .= swrite(
 			"Upper headgear: @<<<<<<<<<<<<<<<<<<< Middle headgear: @<<<<<<<<<<<<<<<<<<<",
 			[$headTop, $headMid]);
