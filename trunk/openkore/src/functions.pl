@@ -5415,7 +5415,7 @@ sub parseMsg {
 		%{$chars[$config{'char'}]{'pos'}} = %coordsFrom;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coordsTo;
 		my $dist = sprintf("%.1f", distance(\%coordsFrom, \%coordsTo));
-		debug "You move from ($coordsFrom{x}, $coordsFrom{y}) to ($coordsTo{x}, $coordsTo{y}) - distance $dist\n", "parseMsg";
+		debug "You move from ($coordsFrom{x}, $coordsFrom{y}) to ($coordsTo{x}, $coordsTo{y}) - distance $dist\n", "parseMsg_move";
 		$chars[$config{'char'}]{'time_move'} = time;
 		$chars[$config{'char'}]{'time_move_calc'} = distance(\%{$chars[$config{'char'}]{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}) * $config{'seconds_per_block'};
 
@@ -5428,7 +5428,7 @@ sub parseMsg {
 		if ($ID eq $accountID) {
 			%{$chars[$config{'char'}]{'pos'}} = %coords;
 			%{$chars[$config{'char'}]{'pos_to'}} = %coords;
-			debug "Movement interrupted, your coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", "parseMsg";
+			debug "Movement interrupted, your coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", "parseMsg_move";
 			aiRemove("move");
 		} elsif (%{$monsters{$ID}}) {
 			%{$monsters{$ID}{'pos'}} = %coords;
@@ -7357,7 +7357,8 @@ sub parseMsg {
 		%{$monsters{$ID}{'pos_attack_info'}} = %coords1;
 		%{$chars[$config{'char'}]{'pos'}} = %coords2;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords2;
-		debug "Received attack location - $monsters{$ID}{'pos_attack_info'}{'x'}, $monsters{$ID}{'pos_attack_info'}{'y'} - ".getHex($ID)."\n", "parseMsg", 2;
+		debug "Received attack location - monster: $coords1{'x'},$coords1{'y'} - " .
+			"you: $coords2{'x'},$coords2{'y'}\n", "parseMsg_move", 2;
 
 	} elsif ($switch eq "013A") {
 		$type = unpack("S1",substr($msg, 2, 2));
