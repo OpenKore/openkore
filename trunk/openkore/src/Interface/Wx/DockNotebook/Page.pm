@@ -27,7 +27,7 @@ package Interface::Wx::DockNotebook::Page;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE);
+use Wx::Event qw(EVT_CLOSE EVT_SET_FOCUS);
 use base qw(Wx::Panel);
 use Interface::Wx::TitleBar;
 
@@ -46,6 +46,10 @@ sub new {
 	$vbox->Add($titlebar, 0, wxGROW);
 	$vbox->SetItemMinSize($titlebar, -1, $titlebar->{size});
 	$self->SetSizer($vbox);
+
+	my $sub = sub { $self->onFocus(@_); };
+	EVT_SET_FOCUS($self, $sub);
+	EVT_SET_FOCUS($titlebar, $sub);
 	return $self;
 }
 
@@ -115,6 +119,15 @@ sub onDialogClose {
 sub onClose {
 	my $self = shift;
 	$self->getDock->closePage($self);
+}
+
+sub onFocus {
+	my ($self, undef, $event) = @_;
+	if ($self->{child}) {
+		$self->{child}->SetFocus;
+	} else {
+		$event->Skip;
+	}
 }
 
 1;
