@@ -221,6 +221,7 @@ follow 0
 followTarget 
 followEmotion 1
 followEmotion_distance 4
+followFaceDirection 0
 followDistanceMax 6
 followDistanceMin 3
 followLostStep 12
