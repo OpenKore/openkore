@@ -28,7 +28,7 @@ our %EXPORT_TAGS = (
 	config  => [qw(%config %consoleColors %directions_lut %equipTypes_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %cities_lut %npcs_lut %portals_lut %sex_lut %shop %skills_lut %skills_rlut %skillsID_lut %skillsID_rlut %skillsDesc_lut %skillsLooks %skillsArea %skillsSP_lut %emotions_lut %timeout $char)],
 	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
 	state   => [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID %portals @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownObjects)],
-	network => [qw($remote_socket $conState $encryptVal $ipc $lastPacketTime $xkore)],
+	network => [qw($remote_socket $charServer $conState $encryptVal $ipc $lastPacketTime $xkore)],
 	interface => [qw($interface)],
 	misc    => [qw($buildType $quit %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth)],
 );
@@ -159,6 +159,7 @@ our @unknownObjects;
 
 # Network
 our $remote_socket;
+our $charServer;
 our $conState;
 our $encryptVal;
 our $ipc;

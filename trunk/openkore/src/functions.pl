@@ -5352,6 +5352,14 @@ sub parseMsg {
 		undef $conState_tries;
 		undef @chars;
 
+		my %options;
+		Plugins::callHook('parseMsg/recvChars', \%options);
+		if (exists $options{charServer}) {
+			$charServer = $options{charServer};
+		} else {
+			$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
+		}
+
 		#my ($startVal, $num);
 		#if ($config{"master_version_$config{'master'}"} ne "" && $config{"master_version_$config{'master'}"} == 0) {
 		#	$startVal = 24;

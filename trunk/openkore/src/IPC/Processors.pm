@@ -1,7 +1,7 @@
 package IPC::Processors;
 
 use strict;
-use Globals qw($conState %field $char);
+use Globals qw($conState %field $char $charServer);
 use IPC;
 use Log qw(message debug);
 use Utils qw(calcPosition);
@@ -28,6 +28,7 @@ sub ipcWhereAreYou {
 	my $pos = calcPosition($char);
 	$ipc->broadcast("i am here", {
 		clientID => $ipc->ID,
+		charSErver => $charServer,
 		name	=> $char->{name},
 		field	=> $field{name},
 		x	=> $pos->{x},
