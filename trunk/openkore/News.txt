@@ -35,6 +35,7 @@ New features:
   added.
 - Nearly complete oRO and pRO support. Thanks to jojobaoil and duckieeex!
 - Display a warning if Kore is attempting to use a skill it doesn't have.
+- Using the Teleport skill will now correctly make Kore teleport.
 
 New config options:
 - showDomain (flag)

@@ -4077,7 +4077,8 @@ sub AI {
 		delete AI::args->{suspended};
 	}
 
-	if (AI::action eq "skill_use") {
+	SKILL_USE: {
+		last SKILL_USE if (AI::action ne "skill_use");
 		my $args = AI::args;
 
 		if ($args->{monsterID} && $skillsArea{$args->{skillHandle}} == 2) {
@@ -4108,6 +4109,12 @@ sub AI {
 				}
 				my $skillID = $args->{skillID};
 
+				if ($handle eq 'AL_TELEPORT') {
+					${$args->{ret}} = 'ok' if ($args->{ret});
+					AI::dequeue;
+					useTeleport(1);
+					last SKILL_USE;
+				}
 
 				$args->{skill_used} = 1;
 				$args->{giveup}{time} = time;
