@@ -58,6 +58,8 @@ New features:
 - If a monster's name in monsters.txt is different from what the server sends,
   the name in monsters.txt prevails. (Lets us distinguish between monsters
   that the server gives the same name to, but are different)
+- WX Advance Settings now support proxy for download manual.
+  You have to add lines 'webproxy' and 'webproxy_port' in config.txt to enable proxy.
 
 tablepack/monsters.txt
 - Kobolds have been renamed from Kobold # to Kobold-#.
