@@ -171,6 +171,7 @@ Bug fixes:
   "talk no" is no longer allowed in that case now.
 - "storage get" no longer requires AI to be enabled.
 - Fixed PM list synchronization bug.
+- Fix attackAuto_onlyWhenSafe: ignore party members.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
