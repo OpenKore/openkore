@@ -107,7 +107,6 @@ sub unload {
 	foreach my $plugin (@plugins) {
 		if ($plugin->{'name'} eq $name) {
 			$plugin->{'unload_callback'}->() if (defined $plugin->{'unload_callback'});
-			undef %{$plugin};
 			delete $plugins[$i];
 			return 1;
 		}
@@ -128,7 +127,6 @@ sub unloadAll {
 		undef %{$plugin};
 	}
 	undef @plugins;
-	@plugins = ();
 	return 0;
 }
 
