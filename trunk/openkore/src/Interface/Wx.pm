@@ -789,7 +789,12 @@ sub onChatLogToggle {
 
 	} elsif (!$self->{notebook}->hasPage('Chat Log')) {
 		my $page = $self->{notebook}->newPage(1, 'Chat Log', 0);
-		my $chatLog = $self->{chatLog} = new Interface::Wx::Console($page, 1);
+		my $chatLog = $self->{chatLog} = new Interface::Wx::LogView($page);
+		$page->set($chatLog);
+		$chatLog->addColor("selfchat", 0, 148, 0);
+		$chatLog->addColor("pm", 142, 120, 0);
+		$chatLog->addColor("p", 164, 0, 143);
+		$chatLog->addColor("g", 0, 177, 108);
 		$page->set($chatLog);
 
 	} else {
