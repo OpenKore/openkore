@@ -1490,6 +1490,10 @@ tur_dun02 167 19 tur_dun03 132 193
 tur_dun03 217 71 tur_dun04 100 196
 tur_dun04 100 196 tur_dun03 217 71
 umbala 130 79 um_fild04 215 339
+um_dun01 42 27 umbala 106 285
+um_dun01 149 198 um_dun02 52 22
+um_dun02 52 22 um_dun01 149 198
+um_dun02 126 162 yggdrasil01 38 63
 um_fild01 31 374 beach_dun2 258 244
 um_fild01 366 277 um_fild02 22 272
 um_fild02 22 272 um_fild01 366 277
@@ -1501,6 +1505,8 @@ um_fild03 32 145 um_fild02 373 148
 um_fild03 114 50 cmd_fild01 77 366
 um_fild04 182 13 um_fild02 188 374
 um_fild04 215 339 umbala 130 79
+yggdrasil01 270 52 yggdrasil01 27 195
+yggdrasil01 248 259 nif_fild01 316 67
 yuno 48 105 yuno_in01 40 176
 yuno 48 151 yuno_in01 34 100
 yuno 87 321 yuno_in02 172 61

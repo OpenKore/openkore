@@ -414,3 +414,7 @@ um_fild01.rws#RuRuKa Jungle#
 um_fild02.rws#HooKa Jungle#
 um_fild03.rsw#Carara Jungle#
 um_fild04.rws#Hooka Fores#
+um_dun01.rws#Wooden Mill of Umbala Jungle#
+um_dun02.rws#Passage to Astral Plane of Umbala Jungle#
+yggdrasil01.rws#?Island of Herbet Camlet(Trunk of Yggdrasil Tree)#
+nif_fild01.rws#The far village of Nifheim#
