@@ -6115,7 +6115,7 @@ sub parseMsg {
 		if ($type == 0) {
 			debug "Something1: $val\n", "parseMsg", 2;
 		} elsif ($type == 3) {
-			print "Something2: $val\n", "parseMsg", 2;
+			debug "Something2: $val\n", "parseMsg", 2;
 		} elsif ($type == 5) {
 			$chars[$config{'char'}]{'hp'} = $val;
 			debug "Hp: $val\n", "parseMsg", 2;
