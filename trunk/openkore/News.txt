@@ -26,6 +26,7 @@ Bug fixes:
 - Don't autoreply in town.
 - The !include directive in a config file was causing everything above it to
   be clobbered.
+- items_take AI sequence was getting stuck in queue if !itemsTakeAuto.
 
 New features:
 - Don't use teleportAuto_minAggressives if the more specific

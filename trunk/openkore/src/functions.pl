@@ -4836,7 +4836,7 @@ sub AI {
 		AI::dequeue;
 		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout}) unless (ai_getAggressives());
 	}
-	if ($config{'itemsTakeAuto'} && AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
+	if (AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
 		my $foundID;
 		my ($dist, $dist_to);
 
@@ -6180,10 +6180,10 @@ sub parseMsg {
 				$monsters_old{$ID}{'dead'} = 1;
 
 				if ($config{itemsTakeAuto_party} &&
-				    $monsters_old{$ID}{dmgFromParty} > 0) {
+				    $monsters{$ID}{dmgFromParty} > 0) {
 					AI::clear("items_take");
-					ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
-						$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
+					ai_items_take($monsters{$ID}{pos}{x}, $monsters{$ID}{pos}{y},
+						$monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y});
 				}
 
 			} elsif ($type == 2) { # What's this?
