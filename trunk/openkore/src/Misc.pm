@@ -24,7 +24,6 @@ package Misc;
 use strict;
 use Exporter;
 use base qw(Exporter);
-use POSIX;
 
 use Globals;
 use Log qw(message warning);
@@ -346,6 +345,10 @@ sub launchApp {
 		return $obj;
 
 	} else {
+		my $mod = 'POSIX';
+		require $mod;
+		import $mod;
+
 		my $pid = fork();
 		if ($pid == 0) {
 			open(STDOUT, "> /dev/null");
@@ -375,6 +378,10 @@ sub launchURL {
 		$ShellExecute->Call(0, '', $url, '', '', 1);
 
 	} else {
+		my $mod = 'POSIX';
+		require $mod;
+		import $mod;
+
 		# This is a script I wrote for the autopackage project
 		# It autodetects the current desktop environment
 		my $detectionScript = <<"		EOF";
