@@ -1,13 +1,16 @@
 #See the documentation for what these variables do
 #New variables have comments above them
 
-master_name_0 iRO: Master I
-master_host_0 38.144.194.2
+master_name_0 localhost
+master_host_0 127.0.0.1
 master_port_0 6900
 
 version 18
-#encrypt 2
-secure 0
+encrypt 0
+
+SecureLogin 0
+SecureLogin_RequestType 0
+SecureLogin_Account 0
 
 XKore 0
 exeName ragexe.exe
@@ -92,6 +95,8 @@ attackUseWeapon 1
 lockMap 
 lockMap_x 
 lockMap_y 
+lockMap_randX 
+lockMap_randY 
 
 saveMap 
 saveMap_warpToBuyOrSell 0
@@ -165,6 +170,18 @@ useSelf_item_0_stopWhenHit 0
 useSelf_item_0_inLockOnly 0
 useSelf_item_0_timeout 
 
+partySkill_0 
+partySkill_0_lvl 1
+partySkill_0_target 
+partySkill_0_targetHp_lower 0
+partySkill_0_targetHp_upper 60
+partySkill_0_maxCastTime 10
+partySkill_0_minCastTime 0
+partySkill_0_sp_lower 0
+partySkill_0_sp_upper 100
+partySkill_0_timeout 0
+partySkill_0_onSit 1
+
 itemsTakeAuto 2
 itemsGatherAuto 2
 itemsMaxWeight 89
@@ -226,23 +243,36 @@ avoidList_reconnect 1800
 autoEmote_word_0 
 autoEmote_num_0 
 
-#turn on or off autoSwitch command
-autoSwitch 0
+# get weapon's name by type "i eq"
+# To used Bare Hand set with "[NONE]" (only in double quotes) on Right Hand
 
-autoSwitch_weapon_def 
-autoSwitch_shield_def 
- 
-autoSwitch_mon_0 
-autoSwitch_weapon_new_0 
-autoSwitch_shield_new_0 
+autoSwitch_default_RightHand 
+autoSwitch_default_LeftHand 
+autoSwitch_default_Arrow 
+
+autoSwitch_0 
+autoSwitch_0_RightHand 
+autoSwitch_0_LeftHand 
+autoSwitch_0_Arrow 
+autoSwitch_0_Distance 
+autoSwitch_0_useWeapon 
+
 
 #NOTE: In the case of two handed weapons, or no Shield, 
 #      duplicate the weapon name for "autoSwitch_shield_new_#
 
-autoEquip_item_card_new 
-autoEquip_item_card_def 
-autoEquip_item_hp 0
-autoEquip_item_sp 0
+equipAuto_0 
+equipAuto_0_def
+equipAuto_0_hp_lower 0
+equipAuto_0_hp_upper 100
+equipAuto_0_maxAggressives 0
+equipAuto_0_minAggressives 0
+equipAuto_0_monster 
+equipAuto_0_skills 
+equipAuto_0_sp_lower 0
+equipAuto_0_sp_upper 100
+equipAuto_0_weight 0
+equipAuto_0_whileSitting 0
 
 
 itemExchange 0
