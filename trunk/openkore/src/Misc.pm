@@ -64,7 +64,7 @@ sub auth {
 		message "Revoked admin privilages for user '$user'\n", "success";
 	}	
 	$overallAuth{$user} = $flag;
-	writeDataFile("control/overallAuth.txt", \%overallAuth);
+	writeDataFile("$Settings::control_folder/overallAuth.txt", \%overallAuth);
 }
 
 ##
@@ -96,7 +96,7 @@ sub setTimeout {
 	my $time = shift;
 	$timeout{$timeout}{'timeout'} = $time;
 	message "Timeout '$timeout' set to $time\n", "info";
-	writeDataFileIntact2("control/timeouts.txt", \%timeout);
+	writeDataFileIntact2("$Settings::control_folder/timeouts.txt", \%timeout);
 }
 
 
