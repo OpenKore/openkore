@@ -1191,17 +1191,17 @@ sub parseInput {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
-			print	"Syntax Error in function 'im' (Use Item on Monster)\n"
-				,"Usage: im <item #> <monster #>\n";
+			error	"Syntax Error in function 'im' (Use Item on Monster)\n" .
+				"Usage: im <item #> <monster #>\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			print	"Error in function 'im' (Use Item on Monster)\n"
-				,"Inventory Item $arg1 does not exist.\n";
+			error	"Error in function 'im' (Use Item on Monster)\n" .
+				"Inventory Item $arg1 does not exist.\n";
 		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
-			print	"Error in function 'im' (Use Item on Monster)\n"
-				,"Inventory Item $arg1 is not of type Usable.\n";
+			error	"Error in function 'im' (Use Item on Monster)\n" .
+				"Inventory Item $arg1 is not of type Usable.\n";
 		} elsif ($monstersID[$arg2] eq "") {
-			print	"Error in function 'im' (Use Item on Monster)\n"
-				,"Monster $arg2 does not exist.\n";
+			error	"Error in function 'im' (Use Item on Monster)\n" .
+				"Monster $arg2 does not exist.\n";
 		} else {
 			sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $monstersID[$arg2]);
 		}
@@ -1210,17 +1210,17 @@ sub parseInput {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
-			print	"Syntax Error in function 'ip' (Use Item on Player)\n"
-				,"Usage: ip <item #> <player #>\n";
+			error	"Syntax Error in function 'ip' (Use Item on Player)\n" .
+				"Usage: ip <item #> <player #>\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			print	"Error in function 'ip' (Use Item on Player)\n"
-				,"Inventory Item $arg1 does not exist.\n";
+			error	"Error in function 'ip' (Use Item on Player)\n" .
+				"Inventory Item $arg1 does not exist.\n";
 		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
-			print	"Error in function 'ip' (Use Item on Player)\n"
-				,"Inventory Item $arg1 is not of type Usable.\n";
+			error	"Error in function 'ip' (Use Item on Player)\n" .
+				"Inventory Item $arg1 is not of type Usable.\n";
 		} elsif ($playersID[$arg2] eq "") {
-			print	"Error in function 'ip' (Use Item on Player)\n"
-				,"Player $arg2 does not exist.\n";
+			error	"Error in function 'ip' (Use Item on Player)\n" .
+				"Player $arg2 does not exist.\n";
 		} else {
 			sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $playersID[$arg2]);
 		}
@@ -1228,14 +1228,14 @@ sub parseInput {
 	} elsif ($switch eq "is") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'is' (Use Item on Self)\n"
-				,"Usage: is <item #>\n";
+			error	"Syntax Error in function 'is' (Use Item on Self)\n" .
+				"Usage: is <item #>\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			print	"Error in function 'is' (Use Item on Self)\n"
-				,"Inventory Item $arg1 does not exist.\n";
+			error	"Error in function 'is' (Use Item on Self)\n" .
+				"Inventory Item $arg1 does not exist.\n";
 		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
-			print	"Error in function 'is' (Use Item on Self)\n"
-				,"Inventory Item $arg1 is not of type Usable.\n";
+			error	"Error in function 'is' (Use Item on Self)\n" .
+				"Inventory Item $arg1 is not of type Usable.\n";
 		} else {
 			sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $accountID);
 		}
@@ -1244,14 +1244,14 @@ sub parseInput {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ ([\s\S]*)$/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'join' (Join Chat Room)\n"
-				,"Usage: join <chat room #> [<password>]\n";
+			error	"Syntax Error in function 'join' (Join Chat Room)\n" .
+				"Usage: join <chat room #> [<password>]\n";
 		} elsif ($currentChatRoom ne "") {
-			print	"Error in function 'join' (Join Chat Room)\n"
-				,"You are already in a chat room.\n";
+			error	"Error in function 'join' (Join Chat Room)\n" .
+				"You are already in a chat room.\n";
 		} elsif ($chatRoomsID[$arg1] eq "") {
-			print	"Error in function 'join' (Join Chat Room)\n"
-				,"Chat Room $arg1 does not exist.\n";
+			error	"Error in function 'join' (Join Chat Room)\n" .
+				"Chat Room $arg1 does not exist.\n";
 		} else {
 			sendChatRoomJoin(\$remote_socket, $chatRoomsID[$arg1], $arg2);
 		}
@@ -1260,11 +1260,11 @@ sub parseInput {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
-			print	"Syntax Error in function 'judge' (Give an alignment point to Player)\n"
-				,"Usage: judge <player #> <0 (good) | 1 (bad)>\n";
+			error	"Syntax Error in function 'judge' (Give an alignment point to Player)\n" .
+				"Usage: judge <player #> <0 (good) | 1 (bad)>\n";
 		} elsif ($playersID[$arg1] eq "") {
-			print	"Error in function 'judge' (Give an alignment point to Player)\n"
-				,"Player $arg1 does not exist.\n";
+			error	"Error in function 'judge' (Give an alignment point to Player)\n" .
+				"Player $arg1 does not exist.\n";
 		} else {
 			$arg2 = ($arg2 >= 1);
 			sendAlignment(\$remote_socket, $playersID[$arg1], $arg2);
@@ -1345,7 +1345,7 @@ sub parseInput {
 
 	} elsif ($switch eq "move") {
 		($arg1, $arg2, $arg3) = $input =~ /^[\s\S]*? (\d+) (\d+)(.*?)$/;
-		
+
 		undef $ai_v{'temp'}{'map'};
 		if ($arg1 eq "") {
 			($ai_v{'temp'}{'map'}) = $input =~ /^[\s\S]*? (.*?)$/;
@@ -1354,8 +1354,8 @@ sub parseInput {
 		}
 		$ai_v{'temp'}{'map'} =~ s/\s//g;
 		if (($arg1 eq "" || $arg2 eq "") && !$ai_v{'temp'}{'map'}) {
-			print	"Syntax Error in function 'move' (Move Player)\n"
-				,"Usage: move <x> <y> &| <map>\n";
+			error	"Syntax Error in function 'move' (Move Player)\n" .
+				"Usage: move <x> <y> &| <map>\n";
 		} elsif ($ai_v{'temp'}{'map'} eq "stop") {
 			aiRemove("move");
 			aiRemove("route");
@@ -1404,8 +1404,8 @@ sub parseInput {
 	} elsif ($switch eq "p") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'p' (Party Chat)\n"
-				,"Usage: p <message>\n";
+			error	"Syntax Error in function 'p' (Party Chat)\n" .
+				"Usage: p <message>\n";
 		} else {
 			sendMessage(\$remote_socket, "p", $arg1);
 		}
@@ -1414,8 +1414,8 @@ sub parseInput {
 		($arg1) = $input =~ /^[\s\S]*? (\w*)/;
 		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)\b/;
 		if ($arg1 eq "" && !%{$chars[$config{'char'}]{'party'}}) {
-			print	"Error in function 'party' (Party Functions)\n"
-				,"Can't list party - you're not in a party.\n";
+			error	"Error in function 'party' (Party Functions)\n" .
+				"Can't list party - you're not in a party.\n";
 		} elsif ($arg1 eq "") {
 			message("----------Party-----------\n", "list");
 			message($chars[$config{'char'}]{'party'}{'name'}."\n", "list");
@@ -1456,8 +1456,8 @@ sub parseInput {
 		} elsif ($arg1 eq "create") {
 			($arg2) = $input =~ /^[\s\S]*? [\s\S]*? \"([\s\S]*?)\"/;
 			if ($arg2 eq "") {
-				print	"Syntax Error in function 'party create' (Organize Party)\n"
-				,qq~Usage: party create "<party name>"\n~;
+				error	"Syntax Error in function 'party create' (Organize Party)\n" .
+					"Usage: party create \"<party name>\"\n";
 			} else {
 				sendPartyOrganize(\$remote_socket, $arg2);
 			}
@@ -1774,14 +1774,14 @@ sub parseInput {
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		($arg3) = $input =~ /^[\s\S]*? \d+ \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
-			print	"Syntax Error in function 'sm' (Use Skill on Monster)\n"
-				,"Usage: sm <skill #> <monster #> [<skill lvl>]\n";
+			error	"Syntax Error in function 'sm' (Use Skill on Monster)\n" .
+				"Usage: sm <skill #> <monster #> [<skill lvl>]\n";
 		} elsif ($monstersID[$arg2] eq "") {
-			print	"Error in function 'sm' (Use Skill on Monster)\n"
-				,"Monster $arg2 does not exist.\n";	
+			error	"Error in function 'sm' (Use Skill on Monster)\n" .
+				"Monster $arg2 does not exist.\n";	
 		} elsif ($skillsID[$arg1] eq "") {
-			print	"Error in function 'sm' (Use Skill on Monster)\n"
-				,"Skill $arg1 does not exist.\n";
+			error	"Error in function 'sm' (Use Skill on Monster)\n" .
+				"Skill $arg1 does not exist.\n";
 		} else {
 			if (!$arg3 || $arg3 > $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'}) {
 				$arg3 = $chars[$config{'char'}]{'skills'}{$skillsID[$arg1]}{'lv'};
@@ -6178,12 +6178,8 @@ sub parseMsg {
 		$type_equip = unpack("C1",substr($msg, 19, 1));
 		makeCoords(\%test, substr($msg, 8, 3));
 		$fail = unpack("C1",substr($msg, 22, 1));
-		undef $invIndex;
-#Solos Start
-#Search with index, not name! Otherwise non-stackable item will screw it up!
-#		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $ID);
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-#Solos End
+
+		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		if ($fail == 0) {
 			if ($invIndex eq "" || $itemSlots_lut{$ID} != 0) {
 				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
@@ -6193,50 +6189,51 @@ sub parseMsg {
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = $type;
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $itemSlots_lut{$ID};
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'identified'} = unpack("C1",substr($msg, 8, 1));
-#Solos Start
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = unpack("C1",substr($msg, 10, 1)); 
-            	$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'} = unpack("S1",substr($msg, 12, 2)); 
-            	$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} = $elements_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'}}; 
-            	undef @cnt; 
-            	$count = 0; 
-            	for($j=1 ;$j < 5;$j++) { 
-               		if(unpack("S1", substr($msg, 9 + $j + $j, 2)) > 0) { 
-	                  	$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} = unpack("S1", substr($msg, 9 + $j + $j, 2)); 
-    	              	for($k = 0;$k < 4;$k++) { 
-        	             	if(($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "")) { 
-            	            	$cnt[$k]{'amount'} += 1;                         
-                	        	last; 
-                    		} elsif ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "") { 
-	                        	$cnt[$k]{'amount'} = 1; 
-    	                    	$cnt[$k]{'name'} = $cards_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'}}; 
-        	                	$cnt[$k]{'ID'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'}; 
-            	            	$count++; 
-                	        	last;                         
-                    	 	} 
-                  		} 
-               		} 
-            	} 
-            	$display = ""; 
-            	$count ++; 
-            	for($j = 0;$j < $count;$j++) { 
-               		if($j == 0 && $cnt[$j]{'amount'}) { 
-                  		if($cnt[$j]{'amount'} > 1) { 
-                     		$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}"; 
-                  		} else { 
-                     		$display .= "$cnt[$j]{'name'}"; 
-                  		} 
-               		} elsif ($cnt[$j]{'amount'}) { 
-                  		if($cnt[$j]{'amount'} > 1) { 
-                     		$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}"; 
-                  	} else { 
-                     	$display .= ",$cnt[$j]{'name'}"; 
-                  	} 
-               	} 
-            } 
-            $chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} = $display; 
-            undef @cnt; 
-            undef $count; 
-#Solos End
+				$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = unpack("C1",substr($msg, 10, 1));
+				$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'} = unpack("S1",substr($msg, 12, 2));
+				$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} = $elements_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'}};
+				undef @cnt;
+				$count = 0;
+
+				my $j;
+				for ($j = 1 ; $j < 5; $j++) {
+					if (unpack("S1", substr($msg, 9 + $j + $j, 2)) > 0) {
+						$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} = unpack("S1", substr($msg, 9 + $j + $j, 2));
+						for (my $k = 0;$k < 4;$k++) {
+							if (($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "")) {
+								$cnt[$k]{'amount'} += 1;
+								last;
+							} elsif ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "") {
+								$cnt[$k]{'amount'} = 1;
+								$cnt[$k]{'name'} = $cards_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'}};
+								$cnt[$k]{'ID'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'};
+								$count++;
+								last;
+							}
+						}
+					}
+				}
+				$display = "";
+				$count ++;
+				for ($j = 0; $j < $count; $j++) {
+					if ($j == 0 && $cnt[$j]{'amount'}) {
+						if ($cnt[$j]{'amount'} > 1) {
+							$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
+                  				} else {
+							$display .= "$cnt[$j]{'name'}"; 
+						}
+					} elsif ($cnt[$j]{'amount'}) {
+						if ($cnt[$j]{'amount'} > 1) {
+							$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
+						} else {
+							$display .= ",$cnt[$j]{'name'}";
+						}
+					}
+				}
+				$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} = $display;
+				undef @cnt;
+				undef $count;
+
 			} else {
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} += $amount;
 			}
@@ -6244,28 +6241,23 @@ sub parseMsg {
 				? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
 				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
-#Solos Start
-#			print "Item added to inventory: $display ($invIndex) x $amount - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}}\n";
-			$disp = "Item added to inventory: $display"; 
-         	if($chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} > 0) { 
-	            $disp = "+$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} ".$disp; 
-    	     } 
-        	 if($chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} ne "") { 
-            	$disp .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}]"; 
-         	} 
-         	if($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} ne "") { 
-            	$disp .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}]"; 
-         	} 
-         	$disp .= " ($invIndex) x $amount - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}}"; #junq modded 
-            	print "$disp\n"; #junq modded 
-#Solos End
-#junq start 
-		($map_string) = $map_name =~ /([\s\S]*)\.gat/; 
-		$disp .= " ($map_string)\n"; 
-# junq end
-#xlr82xs start
-		itemLog($disp);
-#xlr82xs end
+
+			my $disp = "Item added to inventory: $display";
+			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} > 0) {
+				$disp = "+$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} $disp";
+			}
+			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} ne "") {
+				$disp .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}]";
+			}
+			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} ne "") {
+				$disp .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}]";
+			}
+			$disp .= " ($invIndex) x $amount - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}}";
+			print "$disp\n";
+			($map_string) = $map_name =~ /([\s\S]*)\.gat/;
+			$disp .= " ($map_string)\n";
+			itemLog($disp);
+
 		} elsif ($fail == 6) {
 			print "Can't loot item...wait...\n";
 		}
@@ -6497,11 +6489,10 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00AA") {
-		$index = unpack("S1",substr($msg, 2, 2));
-		$type = unpack("S1",substr($msg, 4, 2));
-		$fail = unpack("C1",substr($msg, 6, 1));
-		undef $invIndex;
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		my $index = unpack("S1",substr($msg, 2, 2));
+		my $type = unpack("S1",substr($msg, 4, 2));
+		my $fail = unpack("C1",substr($msg, 6, 1));
+		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		if ($fail == 0) {
 			print "You can't put on $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex)\n";
 		} else {
@@ -7308,7 +7299,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0110") {
-		# warp portal
+		error "Skill has failed\n";
 
 	} elsif ($switch eq "0114") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});

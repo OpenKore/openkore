@@ -45,7 +45,7 @@ if ($Settings::buildType == 0) {
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
-	$messageVerbosity $warningVerbosity $errorVerbosity
+	$warningVerbosity $errorVerbosity
 	%messageConsole %warningConsole %errorConsole %debugConsole
 	message warning error debug
 	$fileTampstamp $chatTimestamp);
@@ -61,10 +61,8 @@ our @EXPORT_OK = qw(
 # The verbosity level for messages. Messages that have a higher verbosity than this will not be printed.
 # Low level = important messages. High level = less important messages.
 # If you set the current verbosity higher, you will see more messages.
-our $messageVerbosity;
 our $warningVerbosity;
 our $errorVerbosity;
-our $debugLevel;
 
 # Enable/disable printing certain domains to console.
 # Usage: $messageConsole{$domain} = $enabled
@@ -98,10 +96,8 @@ our $chatTimestamp;
 
 
 sub MODINIT {
-	$messageVerbosity = 1;
 	$warningVerbosity = 1;
 	$errorVerbosity = 1;
-	$debugLevel = 0;
 
 	%messageConsole = ();
 	%warningConsole = ();
@@ -216,7 +212,7 @@ sub setColor {
 
 
 sub message {
-	return processMsg("message", $_[0], $_[1], $_[2], $messageVerbosity,
+	return processMsg("message", $_[0], $_[1], $_[2], $config{'verbose'},
 		\%messageConsole, \%messageFiles);
 }
 
@@ -233,7 +229,7 @@ sub error {
 sub debug {
 	my $level = $_[2];
 	$level = 1 if (!defined $level);
-	return processMsg("debug", $_[0], $_[1], $level, $debugLevel,
+	return processMsg("debug", $_[0], $_[1], $level, $config{'debug'},
 		\%debugConsole, \%debugFiles);
 }
 
