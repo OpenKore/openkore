@@ -250,7 +250,7 @@ sub center {
 
 # Returns: 0 if user chose to quit, 1 if user chose a character, 2 if user created or deleted a character
 sub charSelectScreen {
-	my $autoLogin = shift;
+	my %plugin_args = (autoLogin => shift);
 	my $msg;
 	my $mode;
 	my $input2;
@@ -300,9 +300,10 @@ sub charSelectScreen {
 	}
 	return 1 if $xkore;
 
+	Plugins::callHook('charSelectScreen', \%plugin_args);
+	return $plugin_args{return} if ($plugin_args{return});
 
-	if ($autoLogin && @chars &&
-	    defined($config{'char'}) && $chars[$config{'char'}]) {
+	if ($plugin_args{autoLogin} && @chars && $config{'char'} ne "" && $chars[$config{'char'}]) {
 		sendCharLogin(\$remote_socket, $config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 		return 1;
