@@ -110,8 +110,30 @@ begin
 end;
 
 function GetTypeName(FileName: String): String;
+var
+  Ext: String;
 begin
-  Result := UpperCase(ExtractFileExt(FileName));
+  Ext := UpperCase(ExtractFileExt(FileName));
+  if Ext = '.BMP' then
+      Result := 'Bitmap Image'
+  else if Ext = '.JPG' then
+      Result := 'JPEG Image'
+  else if Ext = '.GIF' then
+      Result := 'GIF Image'
+  else if Ext = '.PNG' then
+      Result := 'PNG Image'
+  else if Ext = '.TXT' then
+      Result := 'Text File'
+  else if Ext = '.WAV' then
+      Result := 'Wave Sound'
+  else if Ext = '.MP3' then
+      Result := 'MP3 Music'
+  else if Ext = '.SPR' then
+      Result := 'Sprite Data'
+  else if Ext = '.XML' then
+      Result := 'XML Document'
+  else
+      Result := Ext;
 end;
 
 function FriendlySizeName(Size: Cardinal): String;
@@ -145,6 +167,8 @@ begin
   begin
       if (SearchLen <> 0) and (Pos(SearchFor, LowerCase(Grf.files[i].Name)) <= 0) then
           Continue;
+      if Grf.files[i].TheType = 2 then
+          Continue;    // Do not list folders
 
       Node := FileList.GetNodeData(FileList.AddChild(nil));
       Node.i := i;
@@ -218,7 +242,12 @@ begin
 
   if FileList.SelectedCount = 0 then
       StatusBar1.SimpleText := IntToStr(Grf.nFiles) + ' files in archive'
-  else
+  else if FileList.SelectedCount = 1 then
+  begin
+      Data := FileList.GetNodeData(FileList.GetNextSelected(nil));
+      StatusBar1.SimpleText := IntToStr(Grf.nFiles) + ' files in archive - file #' +
+          IntToStr(Data.i + 1) + ' selected';
+  end else
   begin
       Size := 0;
       Node := FileList.RootNode;
@@ -278,9 +307,10 @@ begin
 
       try
           Image1.Picture.LoadFromFile(FName);
-      finally
-          DeleteFile(FName);
+      except
+          // Do nothing
       end;
+      DeleteFile(FName);
       Notebook1.PageIndex := 1;
 
   end else
@@ -328,7 +358,8 @@ var
 begin
   Files := TStringList(Data);
   NData := FileList.GetNodeData(Node);
-  Files.Add(Grf.files[NData.i].Name);
+  if Grf.files[NData.i].TheType <> 2 then   // Do not extract folders
+      Files.Add(Grf.files[NData.i].Name);
   Abort := False;
 end;
 
@@ -421,10 +452,6 @@ begin
       Extractor.WaitFor;
       Extractor.Free;
   end;
-
-  FileList.BeginUpdate;
-  FileList.Clear;
-  FileList.EndUpdate;
   Application.ProcessMessages;
 end;
 

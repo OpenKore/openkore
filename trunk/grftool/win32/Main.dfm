@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 192
   Top = 107
-  Width = 607
+  Width = 635
   Height = 424
   Caption = 'GRF Tool'
   Color = clBtnFace
@@ -19,7 +19,7 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object Splitter1: TSplitter
-    Left = 410
+    Left = 438
     Top = 56
     Width = 4
     Height = 299
@@ -29,7 +29,7 @@ object Form1: TForm1
   object ToolBar1: TToolBar
     Left = 0
     Top = 0
-    Width = 599
+    Width = 627
     AutoSize = True
     ButtonHeight = 30
     ButtonWidth = 31
@@ -94,7 +94,7 @@ object Form1: TForm1
   object ToolBar2: TToolBar
     Left = 0
     Top = 32
-    Width = 599
+    Width = 627
     Height = 24
     AutoSize = True
     Caption = 'ToolBar2'
@@ -122,20 +122,20 @@ object Form1: TForm1
   object StatusBar1: TStatusBar
     Left = 0
     Top = 378
-    Width = 599
+    Width = 627
     Height = 19
     Panels = <>
     SimplePanel = True
     SimpleText = 'Click Open to open a GRF archive.'
   end
   object PreviewPane: TPanel
-    Left = 414
+    Left = 442
     Top = 56
     Width = 185
     Height = 299
     Align = alRight
     BevelOuter = bvNone
-    TabOrder = 2
+    TabOrder = 3
     OnResize = PreviewPaneResize
     object Notebook1: TNotebook
       Left = 0
@@ -250,14 +250,14 @@ object Form1: TForm1
   object ExtractorPanel: TPanel
     Left = 0
     Top = 355
-    Width = 599
+    Width = 627
     Height = 23
     Align = alBottom
     BevelOuter = bvNone
     TabOrder = 4
     Visible = False
     object Panel3: TPanel
-      Left = 542
+      Left = 570
       Top = 0
       Width = 57
       Height = 23
@@ -305,7 +305,7 @@ object Form1: TForm1
     object ProgressBar1: TProgressBar
       Left = 0
       Top = 0
-      Width = 542
+      Width = 570
       Height = 23
       Align = alClient
       Min = 0
@@ -317,7 +317,7 @@ object Form1: TForm1
   object FileList: TVirtualStringTree
     Left = 0
     Top = 56
-    Width = 410
+    Width = 438
     Height = 299
     Align = alClient
     Colors.SelectionRectangleBlendColor = 16767423
@@ -333,7 +333,7 @@ object Form1: TForm1
     Header.Style = hsFlatButtons
     IncrementalSearch = isAll
     ParentCtl3D = False
-    TabOrder = 5
+    TabOrder = 2
     TreeOptions.PaintOptions = [toHotTrack, toShowButtons, toShowDropmark, toThemeAware, toUseBlendedImages, toUseBlendedSelection]
     TreeOptions.SelectionOptions = [toExtendedFocus, toFullRowSelect, toMultiSelect]
     OnClick = FileListClick
@@ -342,15 +342,17 @@ object Form1: TForm1
     Columns = <
       item
         Position = 0
-        Width = 306
+        Width = 294
         WideText = 'Filename'
       end
       item
         Position = 1
+        Width = 80
         WideText = 'Type'
       end
       item
         Position = 2
+        Width = 60
         WideText = 'Size'
       end>
   end
