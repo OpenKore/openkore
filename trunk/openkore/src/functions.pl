@@ -3407,51 +3407,33 @@ sub AI {
 		         !checkLineSnipable($realMyPos, $realMonsterPos)) {
 			# We are a ranged attacker without LOS
 
-			# Calculate leash range around master
-			my @leash = ();
-			if ($config{follow}) {
-				my $master;
-				foreach (keys %players) {
-					if ($players{$_}{name} eq $config{followTarget}) {
-						$master = $players{$_};
-						last;
-					}
-				}
-				if ($master) {
-					my $masterPos = calcPosition($master);
-					@leash = calcRectArea2($masterPos->{x}, $masterPos->{y},
-					                       $config{followDistanceMax});
-				}
-			}
-
 			# Calculate squares around monster within shooting range, but not
 			# closer than runFromTarget_dist
 			my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
 			                          $args->{attackMethod}{distance},
 									  $config{runFromTarget_dist});
 
-			# Calculate squares that are both in the leash range, and
-			# are in a valid range around the target to stand on.
-			my @merge;
-			if (@leash) {
-				my %isect;
-				for my $e (@leash, @stand) {
-					$isect{$e->{x}}{$e->{y}}++;
-				}
-				for my $x (keys %isect) {
-					for my $y (keys %{$isect->{$x}}) {
-						push(@merge, {x => $x, y => $y}) if $isect{$x}{$y} == 2;
+			my ($master, $masterPos);
+			if ($config{follow}) {
+				foreach (keys %players) {
+					if ($players{$_}{name} eq $config{followTarget}) {
+						$master = $players{$_};
+						last;
 					}
 				}
-			} else {
-				@merge = @stand;
+				$masterPos = calcPosition($master) if $master;
 			}
 
 			# Determine which of these spots are snipable
 			my $best_spot;
 			my $best_dist;
-			for my $spot (@merge) {
-				if (checkLineSnipable($spot, $realMonsterPos)) {
+			for my $spot (@stand) {
+				# Is this spot acceptable?
+				# 1. It must have LOS to the target ($realMonsterPos).
+				# 2. It must be within $config{followDistanceMax} of
+				#    $masterPos, if we have a master.
+				if (checkLineSnipable($spot, $realMonsterPos) &&
+				    (!$master || distance($spot, $masterPos) <= $config{followDistanceMax})) {
 					# FIXME: use route distance, not pythagorean distance
 					my $dist = distance($realMyPos, $spot);
 					if (!defined($best_dist) || $dist < $best_dist) {
