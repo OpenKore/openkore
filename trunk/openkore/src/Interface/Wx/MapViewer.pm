@@ -110,14 +110,20 @@ sub _xpmmake {
 	return $data;
 }
 
+sub _loadMapImage {
+	my $self = shift;
+	my $name = shift;
+	
+}
+
 sub set {
 	my ($self, $map, $x, $y, $field) = @_;
 
 	$self->{field}{width} = $field->{width} if ($field && $field->{width});
 	$self->{field}{height} = $field->{height} if ($field && $field->{height});
 
-	if (!$self->{selfDot}) {
-		return unless (-f "map/kore.png");
+	# We need a dot image to indicate where we are right now
+	if (!$self->{selfDot} && -f "map/kore.png") {
 		Wx::Image::AddHandler(new Wx::PNGHandler()) unless $addedHandlers{png};
 		$addedHandlers{png} = 1;
 		my $image = Wx::Image->newNameMIME("map/kore.png", 'image/png');
@@ -149,7 +155,7 @@ sub set {
 		} else {
 			Wx::Image::AddHandler(new Wx::XPMHandler()) unless $addedHandlers{xpm};
 			$addedHandlers{xpm} = 1;
-			$file = File::Spec->tmpdir() . "/map.xpm";
+			$file = File::Spec->catfile(File::Spec->tmpdir(), "map.xpm");
 			if (open(F, ">", $file)) {
 				binmode F;
 				print F _xpmmake($field);
@@ -185,20 +191,32 @@ sub set {
 	}
 }
 
+sub OnPaint {
+}
+
 sub _onPaint {
 	my $self = shift;
 	my $dc = new Wx::PaintDC($self);
-	return unless ($self->{bitmap} && $self->{selfDot});
+	return unless ($self->{bitmap});
 
 	my ($x, $y, $xscale, $yscale);
 	$xscale = $self->{bitmap}->GetWidth() / $self->{field}{width};
 	$yscale = $self->{bitmap}->GetHeight() / $self->{field}{height};
+	$x = $self->{field}{x} * $xscale;
+	$y = ($self->{field}{height} - $self->{field}{y}) * $yscale;
 
+	$dc->BeginDrawing();
 	$dc->DrawBitmap($self->{bitmap}, 0, 0, 1);
-	$dc->DrawBitmap($self->{selfDot},
-		$self->{field}{x} * $xscale - ($self->{selfDot}->GetHeight() / 2),
-		($self->{field}{height} - $self->{field}{y}) * $yscale - ($self->{selfDot}->GetHeight() / 2),
-		1);
+	if ($self->{selfDot}) {
+		$dc->DrawBitmap($self->{selfDot},
+			$x - ($self->{selfDot}->GetHeight() / 2),
+			$y - ($self->{selfDot}->GetHeight() / 2),
+			1);
+	} else {
+		$dc->SetBrush(wxBLUE_BRUSH);
+		$dc->DrawEllipse($x - 5, $y - 5, 10, 10);
+	}
+	$dc->EndDrawing();
 }
 
 return 1;
