@@ -438,16 +438,16 @@ sub sendCartGet {
 }
 
 sub sendCharCreate {
-	my $r_socket = shift;
-	my $slot = shift;
-	my $name = shift;
-	my ($str,$agi,$vit,$int,$dex,$luk) = @_;
-	my $hair_color = 1;
+	my ($r_socket, $slot, $name,
+	    $str, $agi, $vit, $int, $dex, $luk,
+		$hair_style, $hair_color) = @_;
+	$hair_color ||= 1;
+	$hair_style ||= 0;
 
 	my $msg = pack("C*", 0x67, 0x00) .
 		pack("a24", $name) .
 		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
-		pack("C*", 0x00, 0x00, $hair_color, 0x00);
+		pack("S*", $hair_style, $hair_color);
 	sendMsgToServer($r_socket, $msg);
 }
 

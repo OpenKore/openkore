@@ -727,7 +727,7 @@ sub charSelectScreen {
 
 	if ($mode eq "create") {
 		my $message = "Please enter the desired properties for your characters, in this form:\n" .
-				"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk)]\n";
+				"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk) [(hairstyle) [(haircolor)]]]\n";
 		message($message, "input") if ($input2 eq "");
 
 		while (!$quit) {
@@ -755,7 +755,7 @@ sub charSelectScreen {
 	} elsif ($mode eq "delete") {
 		my $message = "Enter the number of the character you want to delete, and your email,\n" .
 				"in this form: (slot) (email address)\n";
-		message $message, "input" unless($input2 eq "");
+		message $message, "input";
 
 		while (!$quit) {
 			my $input;
@@ -882,7 +882,7 @@ sub checkMonsterCleanness {
 sub createCharacter {
 	my $slot = shift;
 	my $name = shift;
-	my ($str,$agi,$vit,$int,$dex,$luk) = @_;
+	my ($str,$agi,$vit,$int,$dex,$luk, $hair_style, $hair_color) = @_;
 
 	if (!@_) {
 		($str,$agi,$vit,$int,$dex,$luk) = (5,5,5,5,5,5);
@@ -913,7 +913,9 @@ sub createCharacter {
 			}
 		}
 
-		sendCharCreate(\$remote_socket, $slot, $name, $str, $agi, $vit, $int, $dex, $luk);
+		sendCharCreate(\$remote_socket, $slot, $name,
+			$str, $agi, $vit, $int, $dex, $luk,
+			$hair_style, $hair_color);
 		return 1;
 	}
 }

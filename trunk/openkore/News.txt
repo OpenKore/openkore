@@ -89,6 +89,7 @@ New features:
 - The bot will now look at NPCs when it is talking to them, like a real player.
 - When you issue a "move" command, this will clear previous move actions.
 - When the amount of zeny you have changes, you will be told.
+- Support for specifying hair color and hair style at character creation.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -293,6 +294,7 @@ Bug fixes:
 - When using a teleport NPC, get 10 spaces away instead of 3 spaces away.
   Lets you use e.g. the guild castle flags on the unwalkable water in Payon.
 - Fix auto cart bug for equipped items.
+- Fix corrupted character name displayed upon creation.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
