@@ -59,8 +59,6 @@ New config options:
   4 - respawn
 - teleportAuto_idle must be true in order for teleportAuto_search to behave as
   expected.
-- _maxAttempts condition for attackSkillSlot works like the old _maxUses did
-  (counts attempts to use a skill even if they failed)
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
@@ -69,6 +67,8 @@ Internal:
   objectAdded() has), and moved the objectRemoved() calls to just before the
   object was deleted so that $obj still exists when it is called.
 - %mon_control added to Globals.pm.
+- The Wx map viewer's xpmmake() has been rewritten in C++ for speed.
+  It is now more than 100 times faster.
 
 Credits:
 - jsteng: Pet detection fix.

@@ -10364,8 +10364,7 @@ sub useTeleport {
 	my $level = shift;
 
 	return if ($char->{muted});
-	if ($char->{skills}{AL_TELEPORT} &&
-	    $char->{skills}{AL_TELEPORT}{lv} > 0) {
+	if ($char->{skills}{AL_TELEPORT} && $char->{skills}{AL_TELEPORT}{lv} > 0) {
 		# We have the teleport skill
 		my $skill = new Skills(handle => 'AL_TELEPORT');
 		if ($config{teleportAuto_useSP} == 1 || 
