@@ -265,12 +265,6 @@ sub parseReload {
 				$temp{$_->{file}} = $_;
 			}
 
-		# FIXME: This belongs somewhere else
-		} elsif ($temp2 eq "plugins") {
-			message("Reloading all plugins...\n", "load");
-			Plugins::unloadAll();
-			Plugins::loadAll();
-
 		} elsif ($temp2 =~ /\bexcept\b/i || $temp2 =~ /\bbut\b/i) {
 			$except = 1;
 

@@ -105,7 +105,7 @@ sub unload {
 	my $i = 0;
 	foreach my $plugin (@plugins) {
 		if ($plugin->{'name'} eq $name) {
-			$plugin->{'unload_callback'}->();
+			$plugin->{'unload_callback'}->() if (defined $plugin->{'unload_callback'});
 			undef %{$plugin};
 			delete $plugins[$i];
 			return 1;
@@ -123,7 +123,7 @@ sub unload {
 sub unloadAll {
 	my $name = shift;
 	foreach my $plugin (@plugins) {
-		$plugin->{'unload_callback'}->();
+		$plugin->{'unload_callback'}->() if (defined $plugin->{'unload_callback'});
 		undef %{$plugin};
 	}
 	undef @plugins;
@@ -133,7 +133,36 @@ sub unloadAll {
 
 
 ##
-# Plugins::register(name, description, unload_callback, reload_callback)
+# Plugins::reload(name)
+# name: The name of the plugin to reload.
+# Returns: 1 on success, 0 if the plugin isn't registered, -1 if the plugin failed to load.
+#
+# Reload a plugin.
+sub reload {
+	my $name = shift;
+	my $i = 0;
+	foreach my $plugin (@plugins) {
+		if ($plugin->{'name'} eq $name) {
+			my $filename = $plugin->{'filename'};
+
+			if (defined $plugin->{'reload_callback'}) {
+				$plugin->{'reload_callback'}->()
+			} elsif (defined $plugin->{'unload_callback'}) {
+				$plugin->{'unload_callback'}->();
+			}
+
+			undef %{$plugin};
+			delete $plugins[$i];
+			return load($filename) ? 1 : -1;
+		}
+		$i++;
+	}
+	return 0;
+}
+
+
+##
+# Plugins::register(name, description, [unload_callback, reload_callback])
 # name: The plugin's name.
 # description: A short one-line description of the plugin.
 # unload_callback: Reference to a function that will be called when the plugin is being unloaded.
@@ -155,7 +184,8 @@ sub register {
 	$plugin_info{'description'} = shift;
 	$plugin_info{'unload_callback'} = shift;
 	$plugin_info{'reload_callback'} = shift;
-	push @plugins, \%plugin_info;
+	$plugin_info{'filename'} = $current_plugin;
+	binAdd(\@plugins, \%plugin_info);
 	return 1;
 }
 

@@ -5377,32 +5377,15 @@ sub parseMsg {
 
 				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 1;
 
-				my $prevState = $monsters{$ID}{'state'};
-				$monsters{$ID}{'state'} = unpack("S*", substr($msg, 8, 2)); 
-				$monsters{$ID}{'state'} = 0 if ($monsters{$ID}{'state'} == 5); 
-				my $mon = "Monster $monsters{$ID}{name} $monsters{$ID}{nameID} ($monsters{$ID}{binID})"; 
-				if (!$monsters{$ID}{'state'}) {
-					message "$mon is free.\n" if ($prevState);
 
-				} elsif ($monsters{$ID}{'state'} == 1) {
-					message "$mon is stoned.\n";
-					$monsters{$ID}{'ignore'} = 1;
-
-				} elsif ($monsters{$ID}{'state'} == 2) {
-					message "$mon is frozen.\n";
-					$monsters{$ID}{'ignore'} = 1;
-
-				} elsif ($monsters{$ID}{'state'} == 3) {
-					message "$mon is stunned.\n";
-					$monsters{$ID}{'ignore'} = 1;
-
-				} elsif ($monsters{$ID}{'state'} == 4) {
-					message "$mon is asleep.\n";
-					$monsters{$ID}{'ignore'} = 1;
-
+				# Monster state
+				my $state = unpack("S*", substr($msg, 8, 2)); 
+				if ($state) {
+					$monsters{$ID}{state}{$state} = 1;
+					$monsters{$ID}{ignore} = 1;
+					message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
 				} else {
-					message "$mon is disabled.\n";
-					$monsters{$ID}{'ignore'} = 1;
+					undef %{$monsters{$ID}{state}};
 				}
 			}
 
@@ -7393,23 +7376,24 @@ sub parseMsg {
 		if ($ID eq $accountID) {
 			if ($param1) {
 				$chars[$config{char}]{state}{$state} = 1;
-				message("You have been $state.\n","info");
+				message "You have been $state.\n", "parseMsg_statuslook";
 			} else {
 				undef %{$chars[$config{char}]{state}};
 			}
 			if ($param2 && $param2 != 32) {
 				$chars[$config{char}]{ailments}{$ailment} = 1;
-				message("You have been $ailment.\n","info");
+				message "You have been $ailment.\n", "parseMsg_statuslook";
 			} else {
 				undef %{$chars[$config{char}]{ailments}};
 			}
 			if ($param3) {
 				$chars[$config{char}]{looks}{$looks} = 1;
+				debug "You have look: $looks\n", "parseMsg_statuslook";
 			} else {
 				undef %{$chars[$config{char}]{looks}};
 			}
 
-			# TODO: move this to the AI
+			# FIXME: move this to the AI
 			if ($param2 == 0x0001) {
 				# Poisoned; if you've got detoxify, use it
 				if ($chars[$config{'char'}]{'skills'}{'TF_DETOXIFY'}{'lv'}) {
@@ -7426,49 +7410,44 @@ sub parseMsg {
 		} elsif (%{$players{$ID}}) {
 			if ($param1) {
 				$players{$ID}{state}{$state} = 1;
-				message "Player $players{$ID}{name} is affected by $state", undef, 2;
+				message "Player $players{$ID}{name} ($players{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
 			} else {
 				undef %{$players{$ID}{state}};
 			}
 			if ($param2 && $param2 != 32) {
 				$players{$ID}{ailments}{$ailment} = 1;
-				message "Player $players{$ID}{name} is affected by $ailment", undef, 2;
+				message "Player $players{$ID}{name} ($players{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 2;
 			} else {
 				undef %{$players{$ID}{ailments}};
 			}
 			if ($param3) {
 				$players{$ID}{looks}{$looks} = 1;
+				debug "Player $players{$ID}{name} ($players{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook";
 			} else {
 				undef %{$players{$ID}{looks}};
 			}
 
 		} elsif (%{$monsters{$ID}}) {
-			my $prevState = $monsters{$ID}{'state'};
-			$monsters{$ID}{'state'} = $param1; 
-			$monsters{$ID}{'state'} = 0 if ($monsters{$ID}{'state'} == 5); 
-			my $mon = "Monster $monsters{$ID}{name} $monsters{$ID}{nameID} ($monsters{$ID}{binID})";
-			if (!$monsters{$ID}{'state'}) {
-				message "$mon is free.\n" if ($prevState);
-
-			} elsif ($monsters{$ID}{'state'} == 1) {
-				message "$mon is stoned.\n";
-				$monsters{$ID}{'ignore'} = 1;
-
-			} elsif ($monsters{$ID}{'state'} == 2) {
-				message "$mon is frozen.\n";
-				$monsters{$ID}{'ignore'} = 1;
-
-			} elsif ($monsters{$ID}{'state'} == 3) {
-				message "$mon is stunned.\n";
-				$monsters{$ID}{'ignore'} = 1;
-
-			} elsif ($monsters{$ID}{'state'} == 4) {
-				message "$mon is asleep.\n";
-				$monsters{$ID}{'ignore'} = 1;
-
+			if ($param1) {
+				$monsters{$ID}{state}{$state} = 1;
+				$monsters{$ID}{ignore} = 1;
+				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
 			} else {
-				message "$mon is disabled.\n";
-				$monsters{$ID}{'ignore'} = 1;
+				undef %{$monsters{$ID}{state}};
+			}
+			if ($param2 && $param2 != 32) {
+				$monsters{$ID}{ailments}{$ailment} = 1;
+				$monsters{$ID}{ignore} = 1;
+				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 2;
+			} else {
+				undef %{$monsters{$ID}{ailments}};
+			}
+			if ($param3) {
+				$monsters{$ID}{looks}{$looks} = 1;
+				$monsters{$ID}{ignore} = 1;
+				debug "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook";
+			} else {
+				undef %{$monsters{$ID}{looks}};
 			}
 		}
 
