@@ -801,11 +801,26 @@ sub cmdPlayerList {
 	my (undef, $args) = @_;
 	my $msg;
 
-	if ($args ne "" && $args =~ /^\d+$/) {
-		my $player = $players{$playersID[$args]};
-		if (!$player) {
-			error "Player #$args does not exist.\n";
-			return;
+	if ($args ne "") {
+		my $player;
+		if ($args =~ /^\d+$/) {
+			if (!$playersID[$args]) {
+				error "Player #$args does not exist.\n";
+				return;
+			}
+			$player = $players{$playersID[$args]};
+		} else {
+			foreach (@playersID) {
+				next unless $_;
+				if (lc($players{$_}{name}) eq lc($args)) {
+					$player = $players{$_};
+					last;
+				}
+			}
+			if (!$player) {
+				error "Player \"$args\" does not exist.\n";
+				return;
+			}
 		}
 
 		my $body = $player->{look}{body} % 8;
@@ -820,6 +835,8 @@ sub cmdPlayerList {
 
 		my $pos = calcPosition($player);
 		my $mypos = calcPosition($char);
+		my $dist = sprintf("%.1f", distance($pos, $mypos));
+		$dist =~ s/\.0$//;
 
 		my %vecPlayerToYou;
 		my %vecYouToPlayer;
@@ -827,23 +844,37 @@ sub cmdPlayerList {
 		getVector(\%vecYouToPlayer, $pos, $mypos);
 		my $degPlayerToYou = vectorToDegree(\%vecPlayerToYou);
 		my $degYouToPlayer = vectorToDegree(\%vecYouToPlayer);
-		my $playerToYou = int(sprintf("%.0f", $degPlayerToYou / 45)) % 8;
-		my $youToPlayer = int(sprintf("%.0f", $degYouToPlayer / 45)) % 8;
+		my $playerToYou = int(sprintf("%.0f", (360 - $degPlayerToYou) / 45)) % 8;
+		my $youToPlayer = int(sprintf("%.0f", (360 - $degYouToPlayer) / 45)) % 8;
 
-		$msg = "------------- Player Info -------------\n";
-		$msg .= "$player->{name}\n";
+		$msg = "------------------ Player Info ------------------\n";
+		$msg .= "$player->{name} ($player->{binID})\n";
 		$msg .= "Account ID: $player->{nameID}\n";
 		$msg .= "Party: $player->{party}{name}\n" if ($player->{party} && $player->{party}{name} ne '');
-		$msg .= "Guild: $player->{guild}{name} (" . scalar(keys %{$player->{guild}{men}}) . " members)\n" if ($player->{guild});
+		$msg .= "Guild: $player->{guild}{name}\n" if ($player->{guild});
+		$msg .= "Position: $pos->{x}, $pos->{y} ($directions_lut{$youToPlayer} of you: " . int($degYouToPlayer) . " degrees)\n";
 		$msg .= swrite(
-			"Level: @<<                   Position: @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-			[$player->{lv}, "$pos->{x}, $pos->{y} ($directions_lut{$youToPlayer} of you: " . int($degYouToPlayer) . " degrees)"]);
+			"Level: @<<      Distance: @<<<<<<<<<<<<<<<<<",
+			[$player->{lv}, $dist]);
 		$msg .= swrite(
-			"Sex: @<<<<<<                 Class: @<<<<<<<<<<<",
-			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}],
-			"Body direction: @<<<<<<<<<<< Head direction: @<<<<<<<<<<<",
-			[$directions_lut{$body} . "($body)", $directions_lut{$head}. "($head)"]);
-		$msg .= sprintf("Walk speed: %.2f seconds per block\n", $player->{walk_speed});
+			"Sex: @<<<<<<    Class: @<<<<<<<<<<<",
+			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}]);
+
+		my $headTop = $items_lut{$player->{headgear}{top}};
+		my $headMid = $items_lut{$player->{headgear}{mid}};
+		my $headLow = $items_lut{$player->{headgear}{low}};
+		$msg .= "-------------------------------------------------\n";
+		$msg .= swrite(
+			"Body direction: @<<<<<<<<<<<<<<<<<<< Head direction:  @<<<<<<<<<<<<<<<<<<<",
+			[$directions_lut{$body}, $directions_lut{$head}]);
+		$msg .= swrite(
+			"Upper headgear: @<<<<<<<<<<<<<<<<<<< Middle headgear: @<<<<<<<<<<<<<<<<<<<",
+			[($headTop) ? $headTop : "none", ($headMid) ? $headMid : "none"]);
+		$msg .= swrite(
+			"Lower headgear: @<<<<<<<<<<<<<<<<<<< Hair color:      @<<<<<<<<<<<<<<<<<<<",
+			[($headLow) ? $headLow : "none", $player->{hair_color}]);
+		
+		$msg .= sprintf("Walk speed: %.2f secs per block\n", $player->{walk_speed});
 		if ($player->{dead}) {
 			$msg .= "Player is dead.\n";
 		} elsif ($player->{sitting}) {
@@ -854,12 +885,8 @@ sub cmdPlayerList {
 			$msg .= "Player is facing towards you.\n";
 		}
 
-		$msg .= "--------------------------------------\n";
+		$msg .= "-------------------------------------------------\n";
 		message $msg, "info";
-		return;
-
-	} elsif ($args ne "") {
-		error "'$args' is not a valid player number.\n";
 		return;
 	}
 

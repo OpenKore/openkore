@@ -31,6 +31,7 @@ use Log qw(warning error);
 
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
+	parseArrayFile
 	parseAvoidControl
 	parseDataFile
 	parseDataFile_lc
@@ -63,12 +64,29 @@ our @EXPORT = qw(
 	updateNPCLUT
 	);
 
+sub parseArrayFile {
+	my $file = shift;
+	my $r_array = shift;
+	undef @{$r_array};
+
+	open FILE, "< $file";
+	my @lines = <FILE>;
+	@{$r_array} = scalar(@lines) + 1;
+	my $i = 1;
+	foreach (@lines) {
+		s/[\r\n]//g;
+		$r_array->[$i] = $_;
+		$i++;
+	}
+	close FILE;
+}
+
 sub parseAvoidControl {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,@args,$args);
-	open FILE, $file;
+	open FILE, "< $file";
 
 	my $section = "";
 	foreach (<FILE>) {
