@@ -433,7 +433,7 @@ sub minHeapAdd {
 
 
 ##
-# calcPosition(object)
+# calcPosition(object, [extra_time])
 # object: $char (yourself), or a value in %monsters or %players.
 # Returns: reference to a position hash.
 #
@@ -441,17 +441,21 @@ sub minHeapAdd {
 # it says that an object is walking from A to B, and that it will arrive at B shortly.
 # This function calculates the current position of $object based on the motion information.
 #
+# If $extra_time is given, this function will calculate where $object will be
+# after $extra_time seconds.
+#
 # Example:
 # my $pos;
 # $pos = calcPos($char);
 # print "You are currently at: $pos->{x}, $pos->{y}\n";
 #
 # $pos = calcPos($monsters{$ID});
-# $pos = calcPos($players{$ID});
+# # Calculate where the player will be after 2 seconds
+# $pos = calcPos($players{$ID}, 2);
 sub calcPosition {
-	my $object = shift;
+	my ($object, $extra_time) = @_;
 	my $time_needed = $object->{time_move_calc};
-	my $elasped = time - $object->{time_move};
+	my $elasped = time - $object->{time_move} + $extra_time;
 
 	if ($elasped >= $time_needed) {
 		return $object->{pos_to};
