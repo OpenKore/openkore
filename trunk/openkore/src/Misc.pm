@@ -1050,8 +1050,8 @@ sub inventoryItemRemoved {
 }
 
 ##
-# storageGet(indices, max)
-# indices: reference to an array of storage item hashes.
+# storageGet(items, max)
+# items: reference to an array of storage item hashes.
 # max: the maximum amount to get, for each item, or 0 for unlimited.
 #
 # Get one or more items from storage.

@@ -80,7 +80,7 @@ our %handlers = (
 	sit		=> \&cmdSit,
 	skills		=> \&cmdSkills,
 	spells		=> \&cmdSpells,
-	storage	=> \&cmdStorage,
+	storage		=> \&cmdStorage,
 	sl		=> \&cmdUseSkill,
 	sm		=> \&cmdUseSkill,
 	sp		=> \&cmdPlayerSkill,
@@ -146,7 +146,7 @@ our %descriptions = (
 	send		=> 'Send a raw packet to the server.',
 	sit		=> 'Sit down.',
 	skills		=> 'Show skills or add skill point.',
-	storage	=> 'Handle items in Kafra storage.',
+	storage		=> 'Handle items in Kafra storage.',
 	sl		=> 'Use skill on location.',
 	sm		=> 'Use skill on monster.',
 	sp		=> 'Use skill on player.',
@@ -1447,15 +1447,22 @@ sub cmdStorage_get {
 
 	my ($names, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
 	my @names = split(',', $names);
-	my @items = ();
+	my @items;
 
 	for my $name (@names) {
-		my $item = Match::storageItem($name);
-		if (!$item) {
-			error "Storage Item '$name' does not exist.\n";
-			next;
+		if ($name =~ /^(\d+)\-(\d+)$/) {
+			for my $i ($1..$2) {
+				push @items, $storage{$storageID[$i]} if ($storage{$storageID[$i]});
+			}
+
+		} else {
+			my $item = Match::storageItem($name);
+			if (!$item) {
+				error "Storage Item '$name' does not exist.\n";
+				next;
+			}
+			push @items, $item;
 		}
-		push(@items, $item);
 	}
 
 	storageGet(\@items, $amount) if @items;
