@@ -838,8 +838,10 @@ sub parseCommand {
 			$endTime_EXP = time;
 			$w_sec = int($endTime_EXP - $startTime_EXP);
 			if ($w_sec > 0) {
+				$zennyMade = $chars[$config{'char'}]{'zenny'} - $startingZenny;
 				$bExpPerHour = int($totalBaseExp / $w_sec * 3600);
 				$jExpPerHour = int($totalJobExp / $w_sec * 3600);
+				$zennyPerHour = int($zennyMade / $w_sec * 3600);
 				if ($chars[$config{'char'}]{'exp_max'} && $bExpPerHour){
 					$percentB = "(".sprintf("%.2f",$totalBaseExp * 100 / $chars[$config{'char'}]{'exp_max'})."%)";
 					$percentBhr = "(".sprintf("%.2f",$bExpPerHour * 100 / $chars[$config{'char'}]{'exp_max'})."%)";
@@ -858,6 +860,8 @@ sub parseCommand {
 			"JobExp       : " . formatNumber($totalJobExp) . " $percentJ\n" .
 			"BaseExp/Hour : " . formatNumber($bExpPerHour) . " $percentBhr\n" .
 			"JobExp/Hour  : " . formatNumber($jExpPerHour) . " $percentJhr\n" .
+			"Zenny        : " . formatNumber($zennyMade) . "\n" .
+			"Zenny/Hour   : " . formatNumber($zennyPerHour) . "\n" .
 			"Base Levelup Time Estimation : " . timeConvert($EstB_sec) . "\n" .
 			"Job Levelup Time Estimation  : " . timeConvert($EstJ_sec) . "\n" .
 			"Died : $chars[$config{'char'}]{'deathCount'}\n", "info");
@@ -874,7 +878,7 @@ sub parseCommand {
 				$total += $monsters_Killed[$i]{'count'};
 			}
 			message("----------------------------------\n" .
-				"Total numer of killed monsters: $total\n" .
+				"Total number of killed monsters: $total\n" .
 				"----------------------------------\n",
 				"list");
 
