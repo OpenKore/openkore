@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grf, ComCtrls, ToolWin, ImgList, ExtCtrls, Buttons, Types,
   ShellAPI, ShlObj, ExtractThread, VirtualTrees, Menus, TntStdCtrls,
-  TntComCtrls, mmsystem, TntDialogs;
+  TntComCtrls, mmsystem, TntDialogs, jpeg;
 
 type
   TForm1 = class(TForm)
@@ -369,7 +369,7 @@ begin
       NoteBook1.PageIndex := 0;
       FreeMem(Data);
 
-  end else if (FType = '.BMP') then
+  end else if (FType = '.BMP') or (FType = '.JPG') then
   begin
       GetTempPath(SizeOf(TempDir) - 1, @TempDir);
       GetTempFileName(TempDir, 'grf', 1, @TempFile);
