@@ -90,7 +90,7 @@ timeOut(r_time,compare_time = NULL)
 				SvREFCNT_inc (sub_time);
 			}
 			PUSHMARK(SP);
-			ret = call_sv (sub_time, G_SCALAR | G_NOARGS);
+			ret = call_sv (sub_time, G_SCALAR);
 			SPAGAIN;
 			if (ret != 1)
 				croak ("Time::HiRes::time() didn't return 1 value.\n");
@@ -117,7 +117,7 @@ timeOut(r_time,compare_time = NULL)
 				SvREFCNT_inc (sub_time);
 			}
 			PUSHMARK(SP);
-			ret = call_sv (sub_time, G_SCALAR | G_NOARGS);
+			ret = call_sv (sub_time, G_SCALAR);
 			SPAGAIN;
 			if (ret != 1)
 				croak ("Time::HiRes::time() didn't return 1 value.\n");
