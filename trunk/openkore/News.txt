@@ -3,6 +3,7 @@
 ==================
 
 Bug fixes:
+- Fixed a memory problem in the pathfinding code which makes Kore crash.
 - Fix bulk selling bug which caused disconnect.
 - Correctly set names for VVVS weapons.
 - Correct strip language code in public messages.

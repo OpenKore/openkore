@@ -86,7 +86,7 @@ sub reset {
 	$args{height} = $args{field}{height} unless $args{height};
 	$args{timeout} = 1500 unless $args{timeout};
 
-	return $class->_reset(${$args{distance_map}}, $args{weights}, $args{width}, $args{height},
+	return $class->_reset($args{distance_map}, $args{weights}, $args{width}, $args{height},
 		$args{start}{x}, $args{start}{y},
 		$args{dest}{x}, $args{dest}{y},
 		$args{timeout});

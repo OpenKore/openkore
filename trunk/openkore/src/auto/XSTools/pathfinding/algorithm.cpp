@@ -68,6 +68,8 @@ CalcPath_new ()
 
 	session = (CalcPath_session*) malloc (sizeof (CalcPath_session));
 	session->first_time = 1;
+	session->map_sv = NULL;
+	session->weight_sv = NULL;
 	return session;
 }
 

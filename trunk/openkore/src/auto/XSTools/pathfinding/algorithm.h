@@ -56,6 +56,9 @@ typedef struct {
 	pos * dest;
 	unsigned long time_max;
 	int first_time;
+
+	void *map_sv;
+	void *weight_sv;
 } CalcPath_session;
 
 
