@@ -41,8 +41,8 @@ while (1) {
 
 	foreach my $msg (@messages) {
 		print "Incoming message from client $msg->{clientID}: $msg->{ID}\n";
-		foreach (keys %{$msg->{params}}) {
-			print "$_ = $msg->{params}{$_}\n";
+		foreach (keys %{$msg->{args}}) {
+			print "$_ = $msg->{args}{$_}\n";
 		}
 		print "--------\n";
 	}

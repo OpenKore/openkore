@@ -12,6 +12,11 @@
 #  $Id$
 #
 #########################################################################
+##
+# MODULE DESCRIPTION: Low-level IPC client implementation
+#
+# This module is a bare-bones implementation of an IPC client.
+# It's used by IPC.pm and should not be used directly.
 
 package IPC::Client;
 
@@ -28,6 +33,10 @@ use Utils qw(dataWaiting);
 
 ##
 # IPC::Client->new(host, port)
+# host: host address of the IPC manager.
+# port: port number of the IPC manager.
+#
+# Create a new IPC::Client object.
 sub new {
 	my ($class, $host, $port) = @_;
 	my %client;
@@ -53,9 +62,12 @@ sub DESTROY {
 
 ##
 # $ipc_client->send(ID, hash | key => value)
+#
+# Send a message to the IPC manager.
 sub send {
-	my $client = shift;
+	my $self = shift;
 	my $ID = shift;
+
 	my $r_hash;
 	if (ref($_[0]) && ref($_[0]) eq "HASH") {
 		$r_hash = shift;
@@ -67,8 +79,8 @@ sub send {
 	my $msg = IPC::Protocol::encode($ID, $r_hash);
 	undef $@;
 	eval {
-		$client->{sock}->send($msg, 0);
-		$client->{sock}->flush;
+		$self->{sock}->send($msg, 0);
+		$self->{sock}->flush;
 	};
 	return (defined $@) ? 0 : 1;
 }
@@ -81,8 +93,8 @@ sub send {
 # Receive messages from the server. This function returns immediately
 # if there are no messages.
 #
-# The returned array contains hashes. Each hash has an "ID" and "params" key.
-# "ID" is the ID of the message, and "params" is a hash containing the message's parameters.
+# The returned array contains hashes. Each hash has an "ID" and "args" key.
+# "ID" is the ID of the message, and "args" is a hash containing the message's arguments.
 sub recv {
 	my ($client, $r_msgs) = @_;
 	my $msg;
@@ -102,7 +114,7 @@ sub recv {
 	my (@messages, $ID, %hash);
 	while (($ID = IPC::Protocol::decode($client->{buffer}, \%hash, \$client->{buffer}))) {
 		my %copy = %hash;
-		push @messages, {ID => $ID, params => \%copy};
+		push @messages, {ID => $ID, args => \%copy};
 		undef %hash;
 	}
 	@{$r_msgs} = @messages;
