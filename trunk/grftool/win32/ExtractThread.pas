@@ -3,7 +3,7 @@ unit ExtractThread;
 interface
 
 uses
-  Classes, SysUtils, Grf;
+  Classes, SysUtils, Grf, Windows;
 
 type
   TExtractor = class(TThread)
@@ -24,11 +24,12 @@ type
 implementation
 
 uses
-  main, Windows;
+  Main, SettingsForms, TntSysUtils;
 
 procedure MkDirs(Dir: String);
 var
   S: String;
+  WS: WideString;
   i, j: Integer;
   DirNames: TStringList;
 begin
@@ -51,8 +52,16 @@ begin
       S := '';
       for j := 0 to i do
           S := S + DirNames[j];
-      if not DirectoryExists(S) then
-          MkDir(S);
+      if Settings.Unicode then
+      begin
+          WS := KoreanToUnicode(S);
+          if not WideDirectoryExists(WS) then
+              CreateDirectoryW(PWideChar(WS), nil);
+      end else
+      begin
+          if not DirectoryExists(S) then
+              MkDir(S);
+      end;
   end;
   DirNames.Free;
 end;
@@ -71,6 +80,7 @@ begin
       StopButton.Enabled := True;
       OpenBtn.Enabled := True;
       ExtractBtn.Enabled := True;
+      ExtractWatcher.Enabled := False;
       Files.Free;
       Extractor := nil;
   end;
@@ -83,6 +93,7 @@ var
   CurrentDir, FileName: String;
   Error: TGrfError;
   F: PGrfFile;
+  Result: Boolean;
 begin
   Failed := 0;
   Max := Files.Count;
@@ -101,7 +112,12 @@ begin
       F := grf_find(Grf, PChar(Files[i]), Index);
       if Assigned(F) and (not GRFFILE_IS_DIR(F)) then
       begin
-          if grf_extract(Grf, PChar(Files[i]), PChar(FileName), Error) <= 0 then
+          if Settings.Unicode then
+              Result := grf_extractW(Grf, PChar(Files[i]), KoreanToUnicode(FileName), Error) <= 0
+          else
+              Result := grf_extract(Grf, PChar(Files[i]), PChar(FileName), Error) <= 0;
+
+          if Result then
               Inc(Failed);
       end;
       Current := i + 1;
