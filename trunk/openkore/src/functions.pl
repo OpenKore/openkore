@@ -4092,11 +4092,11 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 
-			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y && timeOut($ai_seq_args[0]{'time_step'}, 2)) {
+			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y && timeOut($ai_seq_args[0]{'time_step'}, 3)) {
 				#we are still on the same spot
 				#decrease step movement
-				debug "Route - not moving, decreasing step size\n", "route";
 				$ai_seq_args[0]{'index'} = int($ai_seq_args[0]{'index'}*0.85);
+				debug "Route - not moving, decreasing step size to $ai_seq_args[0]{'index'}\n", "route";
 				if (@{$ai_seq_args[0]{'solution'}}) {
 					#if we still have more points to cover, walk to next point
 					$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
@@ -4134,7 +4134,7 @@ sub AI {
 					$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
 					$ai_seq_args[0]{'old_x'} = $cur_x;
 					$ai_seq_args[0]{'old_y'} = $cur_y;
-					$ai_seq_args[0]{'time_step'} = time;
+					$ai_seq_args[0]{'time_step'} = time if $trimsteps;
 					debug "Route - next step moving to ($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}), $stepsleft steps left\n", "route";
 					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
 				} else {
