@@ -318,7 +318,7 @@ sub mainLoop {
 			usleep 20000;
 			last if $quit;
 		}
-		last if $quit;
+		return if $quit;
 
 		# Inject DLL
 		message("Ragnarok Online client found\n", "startup");
@@ -347,7 +347,7 @@ sub mainLoop {
 		while ($injectMsg ne "") {
 			if (length($injectMsg) < 3) {
 				undef $injectMsg;
-				last;
+				return;
 			}
 
 			my $type = substr($injectMsg, 0, 1);
@@ -379,7 +379,7 @@ sub mainLoop {
 		$msg_length = length($msg);
 		while ($msg ne "") {
 			$msg = parseMsg($msg);
-			last if ($msg_length == length($msg));
+			return if ($msg_length == length($msg));
 			$msg_length = length($msg);
 		}
 	}
@@ -3135,238 +3135,6 @@ sub AI {
 	}
 
 
-	##### AUTO-ATTACK #####
-	# The auto-attack logic is as follows:
-	# 1. Generate a list of monsters that we are allowed to attack.
-	# 2. Pick the "best" monster out of that list, and attack it.
-
-	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
-	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
-	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
-	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
-	  && timeOut($timeout{'ai_attack_auto'})) {
-
-		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
-		my $foundTankee;
-		if ($config{'tankMode'}) {
-			foreach (@playersID) {	
-				next if (!$_);
-				if ($config{'tankModeTarget'} eq $players{$_}{'name'}) {
-					$foundTankee = 1;
-					last;
-				}
-			}
-		}
-
-		my $attackTarget;
-		my $priorityAttack;
-
-		if (!$config{'tankMode'} || $foundTankee) {
-			# This variable controls how far monsters must be away from portals and players.
-			my $portalDist = $config{'attackMinPortalDistance'} || 4;
-			my $playerDist = $config{'attackMinPlayerDistance'};
-			$playerDist = 3 if ($playerDist < 3);
-
-			# Detect whether we are currently in follow mode
-			my $following;
-			my $followID;
-			if (defined(my $followIndex = AI::findAction("follow"))) {
-				$following = AI::args($followIndex)->{following};
-				$followID = AI::args($followIndex)->{ID};
-			}
-
-			my $routeIndex = AI::findAction("route");
-			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
-			my $attackOnRoute;
-			if (defined $routeIndex) {
-				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
-			} else {
-				$attackOnRoute = 2;
-			}
-
-
-			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
-			my @aggressives;
-			my @partyMonsters;
-			my @cleanMonsters;
-
-			# List aggressive monsters
-			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
-
-			# There are two types of non-aggressive monsters. We generate two lists:
-			foreach (@monstersID) {
-				next if (!$_ || !checkMonsterCleanness($_));
-				my $monster = $monsters{$_};
-				# Ignore ignored monsters in mon_control.txt
-				my $monName = lc($monster->{name});
-				if ((my $monCtrl = $mon_control{$monName})) {
-					next if ( ($monCtrl->{attack_auto} ne "" && $monCtrl->{attack_auto} <= 0)
-						|| ($monCtrl->{attack_lvl} ne "" && $monCtrl->{attack_lvl} > $char->{lv})
-						|| ($monCtrl->{attack_hp}  ne "" && $monCtrl->{attack_hp} > $char->{hp})
-						|| ($monCtrl->{attack_sp}  ne "" && $monCtrl->{attack_sp} > $char->{sp})
-						);
-				}
-
-
-				my $pos = calcPosition($monster);
-
-				# List monsters that party members are attacking
-				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
-				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
-				     $monster->{dmgToParty} || $monster->{missedToParty})
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-					push @partyMonsters, $_;
-					next;
-				}
-
-				# List monsters that the master is attacking
-				if ($following && $config{'attackAuto_followTarget'} && $attackOnRoute && !AI::is("take", "items_take")
-				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID})
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-					push @partyMonsters, $_;
-					next;
-				}
-
-
-				### List normal, non-aggressive monsters. ###
-
-				# Ignore monsters that
-				# - Have a status (such as poisoned), because there's a high chance
-				#   they're being attacked by other players
-				# - Are inside others' area spells (this includes being trapped).
-				# - Are moving towards other players.
-				next if (( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) )
-					|| objectInsideSpell($monster)
-					|| objectIsMovingTowardsPlayer($monster));
-
-				my $safe = 1;
-				if ($config{'attackAuto_onlyWhenSafe'}) {
-					foreach (@playersID) {
-						if ($_ && !$char->{party}{users}{$_}) {
-							$safe = 0;
-							last;
-						}
-					}
-				}
-
-				if (!AI::is(qw/sitAuto take items_gather items_take/) && $config{'attackAuto'} >= 2
-				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
-				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
-				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-					push @cleanMonsters, $_;
-				}
-			}
-
-
-			### Step 2: Pick out the "best" monster ###
-
-			my $myPos = calcPosition($char);
-			my $highestPri;
-
-			# Look for the aggressive monster that has the highest priority
-			foreach (@aggressives) {
-				my $monster = $monsters{$_};
-				my $pos = calcPosition($monster);
-				# Don't attack monsters near portals
-				next if (positionNearPortal($pos, $portalDist));
-
-				# Don't attack ignored monsters
-				my $name = lc $monster->{name};
-				next if ($mon_control{$name}{attack_auto} == -1);
-				next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
-
-				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
-					$highestPri = $priority{$name};
-				}
-			}
-
-			my $smallestDist;
-			if (!defined $highestPri) {
-				# If not found, look for the closest aggressive monster (without priority)
-				foreach (@aggressives) {
-					my $monster = $monsters{$_};
-					my $pos = calcPosition($monster);
-					# Don't attack monsters near portals
-					next if (positionNearPortal($pos, $portalDist));
-
-					# Don't attack ignored monsters
-					my $name = lc $monster->{name};
-					next if ($mon_control{$name}{attack_auto} == -1);
-					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
-
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-					}
-				}
-			} else {
-				# If found, look for the closest aggressive monster with the highest priority
-				foreach (@aggressives) {
-					my $monster = $monsters{$_};
-					my $pos = calcPosition($monster);
-					# Don't attack monsters near portals
-					next if (positionNearPortal($pos, $portalDist));
-
-					# Don't attack ignored monsters
-					my $name = lc $monster->{name};
-					next if ($mon_control{$name}{attack_auto} == -1);
-					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
-
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-						$priorityAttack = 1;
-					}
-				}
-			}
-
-			if (!$attackTarget) {
-				undef $smallestDist;
-				# There are no aggressive monsters; look for the closest monster that a party member/master is attacking
-				foreach (@partyMonsters) {
-					my $monster = $monsters{$_};
-					my $pos = calcPosition($monster);
-					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-					}
-				}
-			}
-
-			if (!$attackTarget) {
-				# No party monsters either; look for the closest, non-aggressive monster that:
-				# 1) nobody's attacking
-				# 2) has the highest priority
-
-				undef $smallestDist;
-				foreach (@cleanMonsters) {
-					my $monster = $monsters{$_};
-					next unless $monster;
-					my $pos = calcPosition($monster);
-					my $dist = distance($myPos, $pos);
-					my $name = lc $monster->{name};
-
-					if (!defined($smallestDist) || $priority{$name} > $highestPri
-					  || ( $priority{$name} == $highestPri && $dist < $smallestDist )) {
-						$smallestDist = $dist;
-						$attackTarget = $_;
-						$highestPri = $priority{$monster};
-					}
-				}
-			}
-		}
-
-		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
-		if ($attackTarget) {
-			ai_setSuspend(0);
-			attack($attackTarget, $priorityAttack);
-		} else {
-			$timeout{'ai_attack_auto'}{'time'} = time;
-		}
-	}
-
-
-
 
 	##### ATTACK #####
 
@@ -3480,7 +3248,7 @@ sub AI {
 
 		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 		my $realMyPos = calcPosition($char);
-		my $realMonsterPos = calcPosition($monsters{$ID}, 3);
+		my $realMonsterPos = calcPosition($monsters{$ID});
 		my $realMonsterDist = distance($realMyPos, $realMonsterPos);
 		if (!$config{'runFromTarget'}) {
 			$myPos = $realMyPos;
@@ -3615,9 +3383,9 @@ sub AI {
 
 			# Calculate squares that are both in the leash range, and
 			# are in a valid range around the target to stand on.
-			my @merge = ();
+			my @merge;
 			if (@leash) {
-				my %isect = ();
+				my %isect;
 				for my $e (@leash, @stand) {
 					$isect{$e->{x}}{$e->{y}}++;
 				}
@@ -3717,15 +3485,25 @@ sub AI {
 			$args->{move_start} = time;
 			$args->{monsterPos} = {%{$monsterPos}};
 
+			# Calculate how long it would take to reach the monster.
+			# Calculate where the monster would be when you've reached its
+			# previous position.
+			#TODO: check which direction the monster is moving to. This is important!
+			#my $time_needed = $monsterDist * $char->{walk_speed} + 1;
+			#message "Time needed: $time_needed\n";
+			my $time_needed = 3;
+			my $pos = calcPosition($monsters{$ID}, $time_needed);
+
 			my $dist = sprintf("%.1f", $monsterDist);
 			debug "Target distance $dist is >$args->{attackMethod}{distance}; moving to target: " .
-				"from ($myPos->{x},$myPos->{y}) to ($monsterPos->{x},$monsterPos->{y})\n", "ai_attack";
+				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
-			my $result = ai_route($field{'name'}, $monsterPos->{x}, $monsterPos->{y},
+			my $result = ai_route($field{'name'}, $pos->{x}, $pos->{y},
 				distFromGoal => $args->{attackMethod}{distance},
 				maxRouteTime => $config{'attackMaxRouteTime'},
 				attackID => $ID,
-				noMapRoute => 1);
+				noMapRoute => 1,
+				noAvoidWalls => 1);
 			if (!$result) {
 				# Unable to calculate a route to target
 				$monsters{$ID}{attack_failed} = time if ($monsters{$ID});
@@ -4125,7 +3903,247 @@ sub AI {
 		}
 	}
 
+
+
+	##### AUTO-ATTACK #####
+	# The auto-attack logic is as follows:
+	# 1. Generate a list of monsters that we are allowed to attack.
+	# 2. Pick the "best" monster out of that list, and attack it.
+
+	if ((AI::isIdle || AI::is(qw/route follow sitAuto take items_gather items_take/) || (AI::action eq "mapRoute" && AI::args->{stage} eq 'Getting Map Solution'))
+	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
+	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
+	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
+	  && timeOut($timeout{ai_attack_auto})) {
+
+		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
+		my $foundTankee;
+		if ($config{'tankMode'}) {
+			foreach (@playersID) {	
+				next if (!$_);
+				if ($config{'tankModeTarget'} eq $players{$_}{'name'}) {
+					$foundTankee = 1;
+					last;
+				}
+			}
+		}
+
+		my $attackTarget;
+		my $priorityAttack;
+
+		if (!$config{'tankMode'} || $foundTankee) {
+			# This variable controls how far monsters must be away from portals and players.
+			my $portalDist = $config{'attackMinPortalDistance'} || 4;
+			my $playerDist = $config{'attackMinPlayerDistance'};
+			$playerDist = 3 if ($playerDist < 3);
+
+			# Detect whether we are currently in follow mode
+			my $following;
+			my $followID;
+			if (defined(my $followIndex = AI::findAction("follow"))) {
+				$following = AI::args($followIndex)->{following};
+				$followID = AI::args($followIndex)->{ID};
+			}
+
+			my $routeIndex = AI::findAction("route");
+			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
+			my $attackOnRoute;
+			if (defined $routeIndex) {
+				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};
+			} else {
+				$attackOnRoute = 2;
+			}
+
+
+			### Step 1: Generate a list of all monsters that we are allowed to attack. ###
+			my @aggressives;
+			my @partyMonsters;
+			my @cleanMonsters;
+
+			# List aggressive monsters
+			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
+
+			# There are two types of non-aggressive monsters. We generate two lists:
+			foreach (@monstersID) {
+				next if (!$_ || !checkMonsterCleanness($_));
+				my $monster = $monsters{$_};
+				# Ignore ignored monsters in mon_control.txt
+				my $monName = lc($monster->{name});
+				if ((my $monCtrl = $mon_control{$monName})) {
+					next if ( ($monCtrl->{attack_auto} ne "" && $monCtrl->{attack_auto} <= 0)
+						|| ($monCtrl->{attack_lvl} ne "" && $monCtrl->{attack_lvl} > $char->{lv})
+						|| ($monCtrl->{attack_hp}  ne "" && $monCtrl->{attack_hp} > $char->{hp})
+						|| ($monCtrl->{attack_sp}  ne "" && $monCtrl->{attack_sp} > $char->{sp})
+						);
+				}
+
+
+				my $pos = calcPosition($monster);
+
+				# List monsters that party members are attacking
+				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
+				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
+				     $monster->{dmgToParty} || $monster->{missedToParty})
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					push @partyMonsters, $_;
+					next;
+				}
+
+				# List monsters that the master is attacking
+				if ($following && $config{'attackAuto_followTarget'} && $attackOnRoute && !AI::is("take", "items_take")
+				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID})
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					push @partyMonsters, $_;
+					next;
+				}
+
+
+				### List normal, non-aggressive monsters. ###
+
+				# Ignore monsters that
+				# - Have a status (such as poisoned), because there's a high chance
+				#   they're being attacked by other players
+				# - Are inside others' area spells (this includes being trapped).
+				# - Are moving towards other players.
+				# - Are behind a wall
+				next if (( $monster->{statuses} && scalar(keys %{$monster->{statuses}}) )
+					|| objectInsideSpell($monster)
+					|| objectIsMovingTowardsPlayer($monster));
+				if ($config{'attackCanSnipe'}) {
+					next if (!checkLineSnipable($char->{pos_to}, $pos));
+				} else {
+					next if (!checkLineWalkable($char->{pos_to}, $pos));
+				}
+
+				my $safe = 1;
+				if ($config{'attackAuto_onlyWhenSafe'}) {
+					foreach (@playersID) {
+						if ($_ && !$char->{party}{users}{$_}) {
+							$safe = 0;
+							last;
+						}
+					}
+				}
+
+				if (!AI::is(qw/sitAuto take items_gather items_take/) && $config{'attackAuto'} >= 2
+				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
+				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
+					push @cleanMonsters, $_;
+				}
+			}
+
+
+			### Step 2: Pick out the "best" monster ###
+
+			my $myPos = calcPosition($char);
+			my $highestPri;
+
+			# Look for the aggressive monster that has the highest priority
+			foreach (@aggressives) {
+				my $monster = $monsters{$_};
+				my $pos = calcPosition($monster);
+				# Don't attack monsters near portals
+				next if (positionNearPortal($pos, $portalDist));
+
+				# Don't attack ignored monsters
+				my $name = lc $monster->{name};
+				next if ($mon_control{$name}{attack_auto} == -1);
+				next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
+
+				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
+					$highestPri = $priority{$name};
+				}
+			}
+
+			my $smallestDist;
+			if (!defined $highestPri) {
+				# If not found, look for the closest aggressive monster (without priority)
+				foreach (@aggressives) {
+					my $monster = $monsters{$_};
+					my $pos = calcPosition($monster);
+					# Don't attack monsters near portals
+					next if (positionNearPortal($pos, $portalDist));
+
+					# Don't attack ignored monsters
+					my $name = lc $monster->{name};
+					next if ($mon_control{$name}{attack_auto} == -1);
+					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
+
+					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
+						$smallestDist = $dist;
+						$attackTarget = $_;
+					}
+				}
+			} else {
+				# If found, look for the closest aggressive monster with the highest priority
+				foreach (@aggressives) {
+					my $monster = $monsters{$_};
+					my $pos = calcPosition($monster);
+					# Don't attack monsters near portals
+					next if (positionNearPortal($pos, $portalDist));
+
+					# Don't attack ignored monsters
+					my $name = lc $monster->{name};
+					next if ($mon_control{$name}{attack_auto} == -1);
+					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
+
+					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
+						$smallestDist = $dist;
+						$attackTarget = $_;
+						$priorityAttack = 1;
+					}
+				}
+			}
+
+			if (!$attackTarget) {
+				undef $smallestDist;
+				# There are no aggressive monsters; look for the closest monster that a party member/master is attacking
+				foreach (@partyMonsters) {
+					my $monster = $monsters{$_};
+					my $pos = calcPosition($monster);
+					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
+						$smallestDist = $dist;
+						$attackTarget = $_;
+					}
+				}
+			}
+
+			if (!$attackTarget) {
+				# No party monsters either; look for the closest, non-aggressive monster that:
+				# 1) nobody's attacking
+				# 2) has the highest priority
+
+				undef $smallestDist;
+				foreach (@cleanMonsters) {
+					my $monster = $monsters{$_};
+					next unless $monster;
+					my $pos = calcPosition($monster);
+					my $dist = distance($myPos, $pos);
+					my $name = lc $monster->{name};
+
+					if (!defined($smallestDist) || $priority{$name} > $highestPri
+					  || ( $priority{$name} == $highestPri && $dist < $smallestDist )) {
+						$smallestDist = $dist;
+						$attackTarget = $_;
+						$highestPri = $priority{$monster};
+					}
+				}
+			}
+		}
+
+		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
+		if ($attackTarget) {
+			ai_setSuspend(0);
+			attack($attackTarget, $priorityAttack);
+		} else {
+			$timeout{'ai_attack_auto'}{'time'} = time;
+		}
+	}
+
+
 	####### ROUTE #######
+
 	if (AI::action eq "route" && AI::args->{suspended}) {
 		AI::args->{time_start} += time - AI::args->{suspended};
 		AI::args->{time_step} += time - AI::args->{suspended};
@@ -4198,8 +4216,14 @@ sub AI {
 				AI::dequeue;
 
 			} elsif ($args->{old_x} == $cur_x && $args->{old_y} == $cur_y && timeOut($args->{time_step}, 3)) {
-				# We are still on the same spot, decrease step size
-				$args->{index} = int($args->{index} * 0.85);
+				# We tried to move for 3 seconds, but we are still on the same spot,
+				# decrease step size.
+				# However, if $args->{index} was already 0, then that means
+				# we were almost at the destination (only 1 more step is needed).
+				# But we got interrupted (by auto-attack for example). Don't count that
+				# as stuck.
+				my $wasZero = $args->{index} == 0;
+				$args->{index} = int($args->{index} * 0.8);
 				if ($args->{index}) {
 					debug "Route - not moving, decreasing step size to $args->{index}\n", "route";
 					if (@{$args->{solution}}) {
@@ -4209,7 +4233,7 @@ sub AI {
 						$args->{new_y} = $args->{solution}[$args->{index}]{y};
 						move($args->{new_x}, $args->{new_y}, $args->{attackID});
 					}
-				} else {
+				} elsif (!$wasZero) {
 					# We're stuck
 					my $msg = "Stuck at $field{name} ($char->{pos_to}{x},$char->{pos_to}{y}), while walking from ($cur_x,$cur_y) to ($args->{dest}{pos}{x},$args->{dest}{pos}{y}).";
 					$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
@@ -4217,6 +4241,8 @@ sub AI {
 					warning $msg, "route";
 					useTeleport(1) if $config{teleportAuto_unstuck};
 					AI::dequeue;
+				} else {
+					$args->{time_step} = time;
 				}
 
 			} else {
@@ -4244,7 +4270,7 @@ sub AI {
 					$trimsteps = @{$solution} - 1 if ($trimsteps >= @{$solution});
 					#$trimsteps = @{$solution} if ($trimsteps <= $args->{'index'} && $args->{'new_x'} == $cur_x && $args->{'new_y'} == $cur_y);
 					$trimsteps = @{$solution} if ($cur_x == $solution->[$#{$solution}]{x} && $cur_y == $solution->[$#{$solution}]{y});
-					debug "Route - trimming down solution by $trimsteps steps\n", "route";
+					debug "Route - trimming down solution (" . @{$solution} . ") by $trimsteps steps\n", "route";
 					splice(@{$solution}, 0, $trimsteps) if ($trimsteps > 0);
 				}
 
@@ -8918,6 +8944,7 @@ sub ai_route {
 	$args{'pyDistFromGoal'} = $param{pyDistFromGoal} if exists $param{pyDistFromGoal};
 	$args{'attackID'} = $param{attackID} if exists $param{attackID};
 	$args{'noSitAuto'} = $param{noSitAuto} if exists $param{noSitAuto};
+	$args{'noAvoidWalls'} = $param{noAvoidWalls} if exists $param{noAvoidWalls};
 	$args{'tags'} = $param{tags} if exists $param{tags};
 	$args{'time_start'} = time;
 
@@ -8929,7 +8956,8 @@ sub ai_route {
 	}
 
 	# Destination is same map and isn't blocked by walls/water/whatever
-	if ($param{'_internal'} || ($field{'name'} eq $args{'dest'}{'map'} && ai_route_getRoute(\@{$args{'solution'}}, \%field, $chars[$config{'char'}]{'pos_to'}, $args{'dest'}{'pos'}))) {
+	my $pos = calcPosition($char);
+	if ($param{'_internal'} || ($field{'name'} eq $args{'dest'}{'map'} && ai_route_getRoute(\@{$args{solution}}, \%field, $pos, $args{dest}{pos}, $args{noAvoidWalls}))) {
 		# Since the solution array is here, we can start in "Route Solution Ready"
 		$args{'stage'} = 'Route Solution Ready';
 		debug "Route Solution Ready\n", "route";
@@ -8944,7 +8972,7 @@ sub ai_route {
 }
 
 sub ai_route_getRoute {
-	my ($returnArray, $r_field, $r_start, $r_dest) = @_;
+	my ($returnArray, $r_field, $r_start, $r_dest, $noAvoidWalls) = @_;
 	undef @{$returnArray};
 	return 1 if ($r_dest->{x} eq '' || $r_dest->{y} eq '');
 
@@ -8956,8 +8984,13 @@ sub ai_route_getRoute {
 	closestWalkableSpot($r_field, \%dest);
 
 	# Generate map weights (for wall avoidance)
-	my $weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
-	$weights .= chr(1) x (256 - length($weights));
+	my $weights;
+	if ($noAvoidWalls) {
+		$weights = chr(255) . (chr(1) x 255);
+	} else {
+		$weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
+		$weights .= chr(1) x (256 - length($weights));
+	}
 
 	# Calculate path
 	my $pathfinding = new PathFinding(

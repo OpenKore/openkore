@@ -232,6 +232,8 @@ New config options:
 - Config option attackNoGiveup will make bot not stop attacking enemy
   even if it can't damage it. Useful if your attackSkillSlot is e.g.
   Spell Breaker.
+- attackCanSnipe (flag)
+  Set to 1 if your character can snipe (archers/mages).
 
 
 New timeouts.txt options:
@@ -302,6 +304,7 @@ Bug fixes:
 - Maybe fix "Incoming Request to Ally Guild '1'" message.
 - route_randomWalk on non-contiguous maps will no longer try to leave the
   map to get to the other section.
+- Don't auto-attack monsters that are behind a wall.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
@@ -322,6 +325,7 @@ Internal:
 - itemName()/itemNameSimple() function now returns "None" for item #0
 - ai_getAggressives() now accepts a second optional argument $party;
   if true, it will return monsters that have fought party members
+- Don't avoid walls when moving to monsters.
 
 Credits:
 - Joseph: -1 and 2 attack-auto support in mon_control.txt,

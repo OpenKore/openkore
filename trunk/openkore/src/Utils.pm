@@ -459,7 +459,7 @@ sub calcPosition {
 	my $time_needed = $object->{time_move_calc};
 	my $elasped = time - $object->{time_move} + $extra_time;
 
-	if ($elasped >= $time_needed) {
+	if ($elasped >= $time_needed || !$time_needed) {
 		return $object->{pos_to};
 	} else {
 		my (%vec, %result, $dist);
