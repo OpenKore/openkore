@@ -191,7 +191,7 @@ sub checkConnection {
 		my $master = $masterServers{$config{'master'}};
 		message("Sending encoded password...\n", "connection");
 		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'}, $secureLoginKey,
-				$config{'version'}, $master->{master_version},
+				$master->{version}, $master->{master_version},
 				$master->{secureLogin}, $master->{secureLogin_account});
 		undef $secureLoginKey;
 

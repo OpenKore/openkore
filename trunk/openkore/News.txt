@@ -142,6 +142,7 @@ Bug fixes:
 - teleportAuto_search no longer spams the server with the teleport packet
   many times per second.
 - Guild login/logout and chat messages no longer show blanks all the time.
+- Trapped monsters are now ignored.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
@@ -175,6 +176,26 @@ Credits:
 - anoxemian: (partial?) kRO/PK server support.
 - doenet: mon_control.txt attack level support, randomWalk and lockMap
   fixes/improvements.
+
+
+==================
+### 1.4.11
+==================
+
+New config options:
+- XKore_silent (flag)
+  Set to 1 if you're in X-Kore mode, and you don't want Kore messages to
+  show up in the RO client.
+
+Bug fixes:
+- teleportAuto_allPlayers will only teleport when in lockMap (as 
+  opposed to *not* in lockMap from the previous release).
+- Guild chat messages and eAthena server messages are displayed
+  correctly again.
+- Color codes are now stripped from NPC messages.
+
+Credits:
+- Joseph: NPC color code stripping.
 
 
 ==================
