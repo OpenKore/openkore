@@ -257,11 +257,7 @@ sub checkConnection {
 		$conState_tries++;
 		initConnectVars();
 		Network::connectTo(\$remote_socket, $map_ip, $map_port);
-		if ($config{'pkServer'}) {
-			sendPkMapLogin(\$remote_socket, $accountID, $sessionID, $accountSex2);
-		} else {
-			sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
-		}
+		sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		$timeout{'maplogin'}{'time'} = time;
 
@@ -1652,7 +1648,7 @@ sub AI {
 
 	if (!$xkore && timeOut($timeout{ai_sync})) {
 		$timeout{ai_sync}{time} = time;
-		sendSync(\$remote_socket, getTickCount());
+		sendSync(\$remote_socket);
 	}
 
 	if (timeOut($mapdrt, $config{'intervalMapDrt'})) {
@@ -1733,10 +1729,10 @@ sub AI {
 			last PORTALRECORD;
 		}
 
-		if (defined portalExists($sourceMap, \%sourcePos)) {
-			debug "Portal is already in portals.txt - abort\n", "portalRecord";
-			last PORTALRECORD;
-		}
+		#if (defined portalExists($sourceMap, \%sourcePos)) {
+		#	debug "Source portal is already in portals.txt - abort\n", "portalRecord";
+		#	last PORTALRECORD;
+		#}
 
 
 		# Find the nearest portal or only portal on the
@@ -1760,12 +1756,16 @@ sub AI {
 			debug "No destination portal found.\n", "portalRecord";
 			last PORTALRECORD;
 		}
-		if (defined portalExists($field{name}, $portals{$foundID}{pos})) {
-			debug "Destination portal is already in portals.txt\n", "portalRecord";
+		#if (defined portalExists($field{name}, $portals{$foundID}{pos})) {
+		#	debug "Destination portal is already in portals.txt\n", "portalRecord";
+		#	last PORTALRECORD;
+		#}
+		if (defined portalExists2($sourceMap, \%sourcePos, $field{name}, $portals{$foundID}{pos})) {
+			debug "This portal is already in portals.txt\n", "portalRecord";
 			last PORTALRECORD;
 		}
 
-		
+
 		# And finally, record the portal information
 		my ($destMap, $destID, %destPos);
 		$destMap = $field{name};
@@ -1780,28 +1780,32 @@ sub AI {
 		my ($ID, $destName);
 
 		# Record information about destination portal
-		$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
-		$portals_lut{$ID}{source}{map} = $sourceMap;
-		$portals_lut{$ID}{source}{pos} = {%sourcePos};
-		$destName = "$field{name} $destPos{x} $destPos{y}";
-		$portals_lut{$ID}{dest}{$destName}{map} = $field{name};
-		$portals_lut{$ID}{dest}{$destName}{pos} = {%destPos};
-
-		updatePortalLUT("$Settings::tables_folder/portals.txt",
-			$sourceMap, $sourcePos{x}, $sourcePos{y},
-			$field{name}, $destPos{x}, $destPos{y});
+		if (!defined portalExists($field{name}, $portals{$foundID}{pos})) {
+			$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
+			$portals_lut{$ID}{source}{map} = $sourceMap;
+			$portals_lut{$ID}{source}{pos} = {%sourcePos};
+			$destName = "$field{name} $destPos{x} $destPos{y}";
+			$portals_lut{$ID}{dest}{$destName}{map} = $field{name};
+			$portals_lut{$ID}{dest}{$destName}{pos} = {%destPos};
+	
+			updatePortalLUT("$Settings::tables_folder/portals.txt",
+				$sourceMap, $sourcePos{x}, $sourcePos{y},
+				$field{name}, $destPos{x}, $destPos{y});
+		}
 
 		# Record information about the source portal
-		$ID = "$field{name} $destPos{x} $destPos{y}";
-		$portals_lut{$ID}{source}{map} = $field{name};
-		$portals_lut{$ID}{source}{pos} = {%destPos};
-		$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
-		$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
-		$portals_lut{$ID}{dest}{$destName}{pos} = %sourcePos;
-
-		updatePortalLUT("$Settings::tables_folder/portals.txt",
-			$field{name}, $destPos{x}, $destPos{y},
-			$sourceMap, $sourcePos{x}, $sourcePos{y});
+		if (!defined portalExists($sourceMap, \%sourcePos)) {
+			$ID = "$field{name} $destPos{x} $destPos{y}";
+			$portals_lut{$ID}{source}{map} = $field{name};
+			$portals_lut{$ID}{source}{pos} = {%destPos};
+			$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
+			$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
+			$portals_lut{$ID}{dest}{$destName}{pos} = %sourcePos;
+	
+			updatePortalLUT("$Settings::tables_folder/portals.txt",
+				$field{name}, $destPos{x}, $destPos{y},
+				$sourceMap, $sourcePos{x}, $sourcePos{y});
+		}
 
 		message "Recorded new portal: $sourceMap -> $field{name}\n", "portalRecord";
 	}
@@ -5115,9 +5119,9 @@ sub parseSendMsg {
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		if ($packetDescriptions{Send}{$switch}) {
-			debug "Packet Switch SENT_BY_CLIENT: $switch - $packetDescriptions{Send}{$switch}\n", "parseSendMsg", 0;
+			debug "Packet SENT_BY_CLIENT: $switch - $packetDescriptions{Send}{$switch}\n", "parseSendMsg", 0;
 		} else {
-			debug "Packet Switch SENT_BY_CLIENT: $switch\n", "parseSendMsg", 0;
+			debug "Packet SENT_BY_CLIENT: $switch\n", "parseSendMsg", 0;
 		}
 	}
 
@@ -5222,6 +5226,17 @@ sub parseSendMsg {
 		# Chat/skill mute
 		undef $sendMsg;
 	}
+	#elsif ($switch eq "007E") {
+	#	my $a = unpack("L", substr($msg, 4, 4));
+	#	my $b = int(time / 12 * 3075000) - 284089912922934;
+	#	open(F, ">> DUMP.txt");
+	#	print F "\n\n";
+	#	print F "$a\n";
+	#	print F "$b\n";
+	#	print(F ($b - $a) . "\n");
+	#	close F;
+	#	dumpData($msg);
+	#}
 
 	if ($sendMsg ne "") {
 		sendToServerByInject(\$remote_socket, $sendMsg);
@@ -5633,6 +5648,7 @@ sub parseMsg {
 		} else {
 			message("You are now in the game\n", "connection");
 			sendMapLoaded(\$remote_socket);
+			sendSync(\$remote_socket) if ($config{serverType} == 1);
 			$timeout{'ai'}{'time'} = time;
 		}
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
@@ -9862,6 +9878,7 @@ sub convertGatField {
 
 sub dumpData {
 	my $msg = shift;
+	my $silent = shift;
 	my $dump;
 	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
 
@@ -9897,9 +9914,9 @@ sub dumpData {
 	open DUMP, ">> DUMP.txt";
 	print DUMP $dump;
 	close DUMP;
- 
+
 	debug "$dump\n", "parseMsg", 2;
-	message "Message Dumped into DUMP.txt!\n", undef, 1;
+	message "Message Dumped into DUMP.txt!\n", undef, 1 unless ($silent);
 }
 
 ##
@@ -10329,6 +10346,26 @@ sub portalExists {
 		if ($portals_lut{$_}{source}{map} eq $map
 		 && $portals_lut{$_}{source}{pos}{x} == $$r_pos{x}
 		 && $portals_lut{$_}{source}{pos}{y} == $$r_pos{y}) {
+			return $_;
+		}
+	}
+	return;
+}
+
+sub portalExists2 {
+	my ($src, $src_pos, $dest, $dest_pos) = @_;
+	my $srcx = $src_pos->{x};
+	my $srcy = $src_pos->{y};
+	my $destx = $dest_pos->{x};
+	my $desty = $dest_pos->{y};
+	my $destID = "$dest $destx $desty";
+
+	foreach (keys %portals_lut) {
+		my $entry = $portals_lut{$_};
+		if ($entry->{source}{map} eq $src
+		 && $entry->{source}{pos}{x} == $srcx
+		 && $entry->{source}{pos}{y} == $srcy
+		 && $entry->{dest}{$destID}) {
 			return $_;
 		}
 	}

@@ -43,7 +43,8 @@ our @EXPORT = (
 	saveConfigFile/,
 
 	# Debugging
-	qw/debug_showSpots/,
+	qw/debug_showSpots
+	visualDump/,
 
 	# Field math
 	qw/calcRectArea
@@ -203,6 +204,46 @@ sub debug_showSpots {
 		sendToClientByInject(\$remote_socket, $msg);
 		push @{$debug_showSpots_list{$ID}}, 1553;
 	}
+}
+
+##
+# visualDump(data)
+#
+# Show the bytes in $data on screen as hexadecimal.
+sub visualDump {
+	my $msg = shift;
+	my $dump;
+	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
+
+	$dump = "================================================\n" .
+		getFormattedDate(int(time)) . "\n\n" . 
+		length($msg) . " bytes\n\n";
+
+	for (my $i = 0; $i < length($msg); $i += 16) {
+		my $line;
+		my $data = substr($msg, $i, 16);
+		my $rawData = '';
+
+		for (my $j = 0; $j < length($data); $j++) {
+			my $char = substr($data, $j, 1);
+
+			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
+			    || ($char eq chr(10) || $char eq chr(13) || $char eq "\t")) {
+				$rawData .= '.';
+			} else {
+				$rawData .= substr($data, $j, 1);
+			}
+		}
+
+		$line = getHex(substr($data, 0, 8));
+		$line .= '    ' . getHex(substr($data, 8)) if (length($data) > 8);
+
+		$line .= ' ' x (50 - length($line)) if (length($line) < 54);
+		$line .= "    $rawData\n";
+		$line = sprintf("%3d>  ", $i) . $line;
+		$dump .= $line;
+	}
+	message $dump;
 }
 
 
