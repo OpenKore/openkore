@@ -4718,6 +4718,7 @@ sub parseSendMsg {
 	} elsif ($switch eq "007D") {
 		# Map loaded
 		$conState = 5;
+		aiRemove("clientSuspend");
 		$timeout{'ai'}{'time'} = time;
 		if ($firstLoginMap) {
 			undef $sentWelcomeMessage;
@@ -5698,8 +5699,8 @@ sub parseMsg {
 		%{$chars[$config{'char'}]{'pos'}} = %coords;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords;
 		message "Map Change: $map_name ($chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'})\n", "connection";
-		debug "Sending Map Loaded\n", "parseMsg";
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
+		ai_clientSuspend(0, 10) if ($config{'XKore'});
 
 	} elsif ($switch eq "0092") {
 		$conState = 4;
