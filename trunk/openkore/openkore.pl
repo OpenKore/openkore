@@ -95,7 +95,8 @@ $SIG{__DIE__} = sub {
 		close F;
 
 		my $msg;
-		$msg =  "  $lines[$line-2]" if ($line - 2 >= 0);
+		$msg = "OpenKore version $Settings::VERSION\n\n" if (defined $Settings::VERSION);
+		$msg .=  "  $lines[$line-2]" if ($line - 2 >= 0);
 		$msg .= "* $lines[$line-1]";
 		$msg .= "  $lines[$line]" if (@lines > $line);
 		$msg .= "\n" unless $msg =~ /\n$/s;
