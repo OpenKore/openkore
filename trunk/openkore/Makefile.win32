@@ -13,7 +13,7 @@ TYPEMAP=$(shell $(PERL) -e 'foreach (@INC) { if (-f "$$_\\ExtUtils\\typemap") { 
 COREDIR=$(shell $(PERL) -e 'use Config; print $$Config{"installarchlib"} . "\\CORE";')
 
 
-all: Tools.dll Inject.dll
+all: Tools.dll
 
 
 Tools.dll: Tools.o Tools.gccdef
@@ -25,15 +25,6 @@ Tools.gccdef: Tools.o
 Tools.o: Tools.cpp
 	$(CXX) -DWIN32 -mdll -mno-cygwin $(CFLAGS) -c Tools.cpp -o Tools.o
 
-
-Inject.dll: Inject.o Inject.gccdef
-	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Inject.gccdef Inject.o -o Inject.dll -lws2_32
-
-Inject.gccdef: Inject.o
-	$(DLLTOOL) --dllname Inject.dll --output-def Inject.gccdef --no-export-all-symbols --add-stdcall-alias Inject.o
-
-Inject.o: Inject.cpp
-	$(CXX) -mdll -mno-cygwin $(CFLAGS) -c Inject.cpp -o Inject.o
 
 ToolsXS.o: ToolsXS.c
 	$(CC) $(CFLAGS) -mdll -mno-cygwin -Wno-unused -Wno-implicit ToolsXS.c -c -o ToolsXS.o "-I$(COREDIR)" -D__MINGW32__ -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED -DWIN32
@@ -54,7 +45,7 @@ exe:
 		--force --icon tools\\build\\openkore.ico
 
 clean:
-	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef ToolsXS.o ToolsXS.c openkore.exe
+	rm -f Tools.dll Tools.o Tools.gccdef ToolsXS.o ToolsXS.c openkore.exe
 
 dist:
 	./makedist.sh
