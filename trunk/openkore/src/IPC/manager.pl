@@ -87,6 +87,14 @@ sub __start {
 	flock($lockHandle, LOCK_EX);
 	print $lockHandle $server->port;
 	$lockHandle->flush;
+	if ($^O eq 'MSWin32') {
+		# We can't read from locked files on Win32, bah
+		my $f;
+		open($f, "> ${lockFile}.port");
+		print $f $server->port;
+		close $f;
+	}
+
 	$SIG{INT} = sub { cleanup(); exit 10; };
 	$SIG{TERM} = sub { cleanup(); exit 10; };
 
@@ -154,6 +162,7 @@ sub cleanup {
 	if ($lockHandle) {
 		close $lockHandle;
 		unlink $lockFile;
+		unlink "${lockFile}.port";
 	}
 }
 

@@ -107,6 +107,12 @@ sub _checkManager {
 			} else {
 				# We can't lock the lockfile; manager server is already
 				# started at the specified port
+				if ($^O eq 'MSWin32') {
+					# We can't read from locked files on Win32, bah
+					close $f;
+					open($f, "< ${lockFile}.port");
+				}
+
 				local ($/);
 				my $port = <$f>;
 				$port =~ s/\n.*//s;
@@ -144,7 +150,7 @@ sub _startManager {
 			if ($data =~ /^\d+$/) {
 				return $data;
 			} else {
-				$@ = $data;
+				$@ = "Server returned error: $data";
 				return 0;
 			}
 		}
