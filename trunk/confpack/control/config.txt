@@ -102,6 +102,7 @@ attackMinPlayerDistance 3
 attackMinPortalDistance 4
 attackUseWeapon 1
 attackNoGiveup 0
+attackCanSnipe 0
 
 runFromTarget 0
 runFromTarget_dist 6
