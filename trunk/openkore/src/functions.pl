@@ -6094,10 +6094,23 @@ sub parseMsg {
 		$chatMsgUser =~ s/ $//;
 
 		stripLanguageCode(\$chatMsg);
-		$chat = "$chatMsgUser : $chatMsg";
 
-		chatLog("c", "$chat\n") if ($config{'logChat'});
+		foreach (@playersID) {
+			next unless $_;
+			if (lc($players{$_}{name}) eq lc($chatMsgUser)) {
+				$ID = $_;
+				last;
+			}
+		}
+
+		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ID}{'pos_to'}});
+		$dist = sprintf("%.2f",$dist);
+
+		$chat = "[dist=${dist}] $chatMsgUser : $chatMsg";
+		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
+		chatLog("c", "[$map_string ${$chars[$config{'char'}]{'pos_to'}}{x}, ${$chars[$config{'char'}]{'pos_to'}}{y}] [${$players{$ID}{'pos_to'}}{x}, ${$players{$ID}{'pos_to'}}{y}] $chat\n") if ($config{'logChat'});
 		$interface->beep() if $config{beepOnChat};
+
 		message "$chat\n", "publicchat";
 
 		ChatQueue::add('c', $ID, $chatMsgUser, $chatMsg);
