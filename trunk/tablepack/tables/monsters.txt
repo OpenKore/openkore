@@ -193,7 +193,7 @@
 1191 Mimic
 1193 Alarm
 1194 Arclouse
-1195 Riding word
+1195 Riding Word
 1196 Skeleton Prisoner
 1197 Zombie Prisoner
 1198 Dark Priest
