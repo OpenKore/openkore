@@ -2856,7 +2856,8 @@ sub AI {
 
 		foreach my $item (@list) {
 			# Split each stat/value pair
-			($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/;
+			($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/i;
+			$st = lc $st;
 			# If stat needs to be raised to match desired amount
                         $statAmount = $char->{$st};
 			$statAmount += $char->{"${st}_bonus"} if ($config{statsAddAuto_dontUseBonus});

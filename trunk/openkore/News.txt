@@ -71,6 +71,7 @@ New features:
   multiple opponents at once, e.g. acolyte can offensive-bless
   Khalitzburg even if it's not your current target, or knight can
   provoke all Sohees and then Brandish Spear them.
+- statAddAuto_list is now case-insensitive.
 - Recognize "Unknown error 15" ("You have been forced to disconnect by a GM").
 - 'conf' command will now display what the old value was.
 
