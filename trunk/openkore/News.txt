@@ -34,6 +34,7 @@ Bug fixes:
   Kore can correctly walk from gef_dun00 to gef_dun01 again.
 - Advanced 2-2 classes are now correctly identified.
 - Fixed a bug which caused portalsLOS.txt to be generated incorrectly.
+- Fixed route AI problems with mazes and narrow passages
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
