@@ -435,8 +435,9 @@ sub minHeapAdd {
 
 
 ##
-# calcPosition(object, [extra_time])
+# calcPosition(object, [extra_time, float])
 # object: $char (yourself), or a value in %monsters or %players.
+# float: If set to 1, return coordinates as floating point.
 # Returns: reference to a position hash.
 #
 # The position information server that the server sends indicates a motion:
@@ -455,7 +456,7 @@ sub minHeapAdd {
 # # Calculate where the player will be after 2 seconds
 # $pos = calcPosition($players{$ID}, 2);
 sub calcPosition {
-	my ($object, $extra_time) = @_;
+	my ($object, $extra_time, $float) = @_;
 	my $time_needed = $object->{time_move_calc};
 	my $elasped = time - $object->{time_move} + $extra_time;
 
@@ -469,8 +470,8 @@ sub calcPosition {
 		getVector(\%vec, $pos_to, $pos);
 		$dist = (distance($pos, $pos_to) - 1) * ($elasped / $time_needed);
 		moveAlongVector(\%result, $pos, \%vec, $dist);
-		$result{x} = int sprintf("%.0f", $result{x});
-		$result{y} = int sprintf("%.0f", $result{y});
+		$result{x} = int sprintf("%.0f", $result{x}) if (!$float);
+		$result{y} = int sprintf("%.0f", $result{y}) if (!$float);
 		return \%result;
 	}
 }

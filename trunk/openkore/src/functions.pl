@@ -5493,10 +5493,10 @@ sub parseMsg {
 		my $body_dir = unpack("C", substr($msg, 48, 1)) % 8;
 		my $act = unpack("C*",substr($msg, 51,  1));
 		my $lv = unpack("S*",substr($msg, 52,  2));
+		my $added;
 
 		if ($jobs_lut{$type}) {
 			my $player = $players{$ID};
-			my $added;
 			if (!$player || !defined($player->{binID})) {
 				$player = $players{$ID} ||= {};
 				binAdd(\@playersID, $ID);
@@ -5538,11 +5538,15 @@ sub parseMsg {
 					$pets{$ID}{'name'} = $display;
 					$pets{$ID}{'name_given'} = "Unknown";
 					$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
+					$added = 1;
 				}
 				$pets{$ID}{'walk_speed'} = $walk_speed;
 				%{$pets{$ID}{'pos'}} = %coords;
 				%{$pets{$ID}{'pos_to'}} = %coords;
 				debug "Pet Exists: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
+
+				objectAdded('pet', $ID, $pets{$ID}) if ($added);
+
 			} else {
 				if (!%{$monsters{$ID}}) {
 					$monsters{$ID}{'appear_time'} = time;
@@ -5553,6 +5557,7 @@ sub parseMsg {
 					$monsters{$ID}{'nameID'} = $type;
 					$monsters{$ID}{'name'} = $display;
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
+					$added = 1;
 				}
 				$monsters{$ID}{'walk_speed'} = $walk_speed;
 				%{$monsters{$ID}{'pos'}} = %coords;
@@ -5573,6 +5578,8 @@ sub parseMsg {
 						message getActorName($ID) . " out of $skillsState{$_} state\n", "parseMsg_statuslook", 1;
 					}
 				}
+
+				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
 			}
 
 		} elsif ($type == 45) {
@@ -5685,12 +5692,12 @@ sub parseMsg {
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
 		my $lv = unpack("S*",substr($msg, 58,  2));
 
+		my $added;
 		my %vec;
 		getVector(\%vec, \%coordsTo, \%coordsFrom);
 		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
 
 		if ($jobs_lut{$type}) {
-			my $added;
 			if (!$players{$ID} && !defined($players{$ID}{binID})) {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'appear_time'} = time;
@@ -5744,8 +5751,10 @@ sub parseMsg {
 				if ($monsters{$ID}) {
 					binRemove(\@monstersID, $ID);
 					delete $monsters{$ID};
+					objectRemoved('monster', $ID);
 				}
 				debug "Pet Moved: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
+
 			} else {
 				if (!%{$monsters{$ID}}) {
 					binAdd(\@monstersID, $ID);
@@ -5758,6 +5767,7 @@ sub parseMsg {
 					$monsters{$ID}{'name'} = $display;
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
 					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
+					$added = 1;
 				}
 				$monsters{$ID}{look}{head} = 0;
 				$monsters{$ID}{look}{body} = $direction;
@@ -5767,6 +5777,8 @@ sub parseMsg {
 				$monsters{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 				$monsters{$ID}{walk_speed} = $walk_speed;
 				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 2;
+
+				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
 			}
 		} else {
 			debug "Unknown Moved: $type - ".getHex($ID)."\n", "parseMsg";
@@ -5774,15 +5786,15 @@ sub parseMsg {
 
 	} elsif ($switch eq "007C") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
 		my %coords;
 		makeCoords(\%coords, substr($msg, 36, 3));
-		$type = unpack("S*",substr($msg, 20,  2));
-		$pet = unpack("C*",substr($msg, 22,  1));
-		$sex = unpack("C*",substr($msg, 35,  1));
+		my $type = unpack("S*",substr($msg, 20,  2));
+		my $pet = unpack("C*",substr($msg, 22,  1));
+		my $sex = unpack("C*",substr($msg, 35,  1));
+		my $added;
 
 		if ($jobs_lut{$type}) {
-			my $added;
 			if (!$players{$ID} || !defined($players{$ID}{binID})) {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
@@ -5820,6 +5832,7 @@ sub parseMsg {
 				%{$pets{$ID}{'pos'}} = %coords; 
 				%{$pets{$ID}{'pos_to'}} = %coords; 
 				debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
+
 			} else {
 				if (!%{$monsters{$ID}}) {
 					binAdd(\@monstersID, $ID);
@@ -5830,12 +5843,15 @@ sub parseMsg {
 							: "Unknown ".$monsters{$ID}{'nameID'};
 					$monsters{$ID}{'name'} = $display;
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
+					$added = 1;
 				}
 				$monsters{$ID}{look}{head} = 0;
 				$monsters{$ID}{look}{body} = 0;
 				%{$monsters{$ID}{'pos'}} = %coords;
 				%{$monsters{$ID}{'pos_to'}} = %coords;
 				debug "Monster Spawned: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
+
+				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
 			}
 
 		} else {
@@ -5888,6 +5904,7 @@ sub parseMsg {
 			}
 			binRemove(\@monstersID, $ID);
 			delete $monsters{$ID};
+			objectRemoved('monster', $ID);
 
 		} elsif (%{$players{$ID}}) {
 			if ($type == 1) {
@@ -8431,6 +8448,7 @@ sub parseMsg {
 		if (%{$monsters{$ID}}) {
 			binRemove(\@monstersID, $ID);
 			delete $monsters{$ID};
+			objectRemoved('monster', $ID);
 		}
 		debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 		#end of pet spawn code
