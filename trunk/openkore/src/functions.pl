@@ -9976,7 +9976,7 @@ sub checkSelfCondition {
 	}
 	
 	if ($config{$prefix . "_aggressives"}) {
-		return 0 unless (inRange(ai_getAggressives(), $config{$prefix . "_aggressives"}));
+		return 0 unless (inRange(scalar ai_getAggressives(), $config{$prefix . "_aggressives"}));
 	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
 		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getAggressives());
 		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
