@@ -3,3 +3,8 @@ grftool.gladep
 gtk.c
 grftool-gtk.desktop
 grftool-gtk.png
+grftool.xml
+grftool-gtk.mime
+grftool-gtk.keys
+grftool-gtk.applications
+x-grf.desktop

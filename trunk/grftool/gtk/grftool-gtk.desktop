@@ -10,4 +10,3 @@ Icon=grftool-gtk
 Categories=Application;Utility;
 StartupNotify=true
 MimeType=application/x-grf
-Patterns=*.grf
