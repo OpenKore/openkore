@@ -9688,7 +9688,7 @@ sub compilePortals {
 				next if $portals_los{$this}{$that} ne '' && $portals_los{$that}{$this} ne '';
 
 				if ($field{'name'} ne $map) {
-					$missingMap{$map} = 1 if (!getField("$Settings::def_field/$map.fld", \%field, 1));
+					$missingMap{$map} = 1 if (!getField("$Settings::def_field/$map.fld", \%field));
 				}
 
 				ai_route_getRoute(\@solution, \%field, \%{$mapPortals{$map}{$this}{'pos'}}, \%{$mapPortals{$map}{$that}{'pos'}});
