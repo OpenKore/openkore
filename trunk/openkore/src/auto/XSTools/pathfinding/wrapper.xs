@@ -31,10 +31,10 @@ PathFinding_create()
 		RETVAL
 
 void
-PathFinding__reset(session, map, sv_weights, width, height, startx, starty, destx, desty, time_max)
+PathFinding__reset(session, map, weights, width, height, startx, starty, destx, desty, time_max)
 		PathFinding session
-		char *map
-		SV *sv_weights
+		SV *map
+		SV *weights
 		unsigned long width
 		unsigned long height
 		unsigned short startx
@@ -43,17 +43,31 @@ PathFinding__reset(session, map, sv_weights, width, height, startx, starty, dest
 		unsigned short desty
 		unsigned int time_max
 	PREINIT:
-		unsigned char *weights = NULL;
+		unsigned char *real_weights = NULL;
+		char *real_map = NULL;
 		pos *start, *dest;
 		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
-		if (sv_weights && SvOK (sv_weights)) {
+		if (session->map_sv)
+			SvREFCNT_dec (session->map_sv);
+		if (session->weight_sv) {
+			SvREFCNT_dec (session->weight_sv);
+			session->weight_sv = NULL;
+		}
+
+		/* Sanity check the map parameter and get the map data */
+		if (map && SvOK (map))
+			real_map = (char *) SvPV_nolen (derefPV (map));
+		if (!real_map)
+			croak("The 'map' parameter must be a valid scalar.\n");
+
+		if (weights && SvOK (weights)) {
+			/* Don't use default weights if weights are explictly given */
 			STRLEN len;
 
-			weights = (unsigned char *) SvPV (derefPV (sv_weights), len);
-			if (weights && len < 256) {
-				XSRETURN_UNDEF;
-			}
+			real_weights = (unsigned char *) SvPV (derefPV (weights), len);
+			if (real_weights && len < 256)
+				croak("The 'weight' parameter must be a scalar of 256 bytes, or undef.\n");
 		}
 
 		start = (pos *) malloc (sizeof (pos));
@@ -63,7 +77,16 @@ PathFinding__reset(session, map, sv_weights, width, height, startx, starty, dest
 		dest->x = destx;
 		dest->y = desty;
 
-		CalcPath_init (session, map, weights, width, height, start, dest, time_max);
+		CalcPath_init (session, real_map, real_weights, width, height, start, dest, time_max);
+
+		/* Increase SV reference counts so the data
+		   won't be destroyed while we're calculating. */
+		session->map_sv = derefPV (map);
+		SvREFCNT_inc (session->map_sv);
+		if (real_weights != NULL) {
+			session->weight_sv = weights;
+			SvREFCNT_inc (weights);
+		}
 
 int
 PathFinding_run(session, r_array)
@@ -176,4 +199,8 @@ PathFinding_DESTROY(session)
 	PREINIT:
 		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
+		if (session->map_sv)
+			SvREFCNT_dec (session->map_sv);
+		if (session->weight_sv)
+			SvREFCNT_dec (session->weight_sv);
 		CalcPath_destroy (session);

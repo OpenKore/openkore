@@ -14,7 +14,7 @@ wrapper.o: wrapper.xs
 	$(XSUBPP) -typemap "$(TYPEMAP)" -typemap typemap wrapper.xs > wrapper.c
 	$(CC) -I. $(CFLAGS) wrapper.c -c $(PERLCFLAGS) -o wrapper.o -I$(COREDIR)
 
-algorithm.o: algorithm.cpp
+algorithm.o: algorithm.cpp algorithm.h
 	$(CXX) $(SOCFLAGS) $(CXXFLAGS) $< -c -o $@
 
 clean:

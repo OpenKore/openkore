@@ -10079,7 +10079,7 @@ sub getField {
 		$data = <FILE>;
 		close FILE;
 		@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
-		$$r_hash{'rawMap'} = $data;
+		$r_hash->{rawMap} = $data;
 	}
 
 	# Load the associated .dist file (distance map)
@@ -10105,7 +10105,7 @@ sub getField {
 			#version 2 and greater have no know bugs, so just do a minimum validity check.
 			$dversion >= 2 && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
 		) {
-			$$r_hash{'dstMap'} = $dist_data;
+			$r_hash->{dstMap} = $dist_data;
 		}
 	}
 
