@@ -26,6 +26,7 @@ use base qw/Exporter/;
 our @EXPORT = qw(&start &stop &canRead &getInput $enabled);
 our $in_con;
 our $in_pos;
+our $out_con;
 our @input_lines;
 our $input_part = '';
 our $enabled;
@@ -43,8 +44,8 @@ to use the input system.
 
 sub start {
 	return undef if ($enabled);
-#	$out_con = new Win32::Console(STD_OUTPUT_HANDLE()) 
-#			or die "Could not init output Console: $!\n";
+	$out_con = new Win32::Console(STD_OUTPUT_HANDLE()) 
+			or die "Could not init output Console: $!\n";
 	$in_con = new Win32::Console(STD_INPUT_HANDLE()) 
 			or die "Could not init input Console: $!\n";
 
@@ -109,28 +110,25 @@ sub getInput2 {
 	if ($timeout < 0) {
 		until ($msg) {
 			readEvents();
-			if (@input_lines) { 
-				$msg = shift @input_lines; 
-			} 
+			if (@input_lines) {
+				$msg = shift @input_lines;
+			}
 		}
 	} elsif ($timeout > 0) {
 		my $end = time + $timeout;
 		until ($end < time || $msg) {
 			readEvents();
-			if (@input_lines) { 
-				$msg = shift @input_lines; 
-			} 
+			if (@input_lines) {
+				$msg = shift @input_lines;
+			}
 		}
 	} else {
-		if (@input_lines) { 
-			$msg = shift @input_lines; 
-		} 
+		if (@input_lines) {
+			$msg = shift @input_lines;
+		}
 	}
+	undef $msg if (defined $msg && $msg eq '');
 
-	if (defined $msg && $msg eq '') {
-		undef $msg;
-		print "\n";
-	}
 	return $msg;
 }
 
@@ -243,7 +241,7 @@ sub readEvents {
 				$in_pos = 0;
 				push @input_lines, $input_part;
 				$input_part = '';
-				print chr $event[5];
+				print "\n";
 			#Other ASCII (+ ISO Latin-*)
 			} elsif ($event[5] >= 32 && $event[5] != 127 && $event[5] <= 255) {
 #				if ($in_pos < length($input_part)) {
@@ -257,7 +255,7 @@ sub readEvents {
 #				$out_con->Write(chr($event[5]));
 				substr($input_part, $in_pos, 0, chr($event[5]));
 				$in_pos++;
-				print chr $event[5];
+				$out_con->Write(chr $event[5]);
 #			} elsif ($event[3] == 33) {
 #				__PACKAGE__->print("pgup\n");
 #			} elsif ($event[3] == 34) {
