@@ -2,17 +2,23 @@
 # to sell, or to leave in the inventory.
 #
 # Syntax:
-# (item name) (minimum) (auto-store) (auto-sell) [put in cart]
+# (item name) (minimum) (auto-store) (auto-sell) [put in cart] [get from cart]
 # item name	: Name of the item.
 # miminum	: The minimum amount of this item that you want to keep in inventory.
 # autostore	: Set to 1 to walk back to a Kapra NPC to put in storage.
 # autosell	: Set to 1 to sell item at a buy/sell NPC.
-# put in cart	: Set to 1 to automatically this item in cart.
+# put in cart	: Set to 1 to automatically put this item in cart.
+# get from cart : Set to 1 to automatically get this item from cart.
 #
-# The example below will sell all jellopies, store all knifes, and puts all flowers in cart:
+# The example below will sell all jellopies, store all knifes and puts
+# all flowers in cart:
 #	Jellopy 0 0 1
 #	Knife 0 1 0
 #	Flower 0 0 0 1
+#
+# This example will get Red Potions from cart if you have less than 25
+# of them in your inventory:
+# 	Red Potion 25 0 0 0 0 1
 #
 # The item name isn't case sensitive. Only items found in this file will
 # be stored or sold.
