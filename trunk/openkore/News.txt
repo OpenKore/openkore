@@ -9,13 +9,13 @@
 - Implemented the ability to set your own npc storage steps.
   It is based loosly off a combination of modKore and my old itemexchange code.
   Two new config.txt variables.
-  autoStorage_npc_type and autoStorage_npc_steps
-  if autoStorage_npc_type is blank it will use the current steps (and
+  storageAuto_npc_type and storageAuto_npc_steps
+  if storageAuto_npc_type is blank it will use the current steps (and
   display a warning)
   			     1 it will use the current steps (c r1 n)
   			     2 it will use the steps for the comodo npcs (c c r1 n)
   			     3 it will use the steps defined in autoStorage_npc_steps
-  autoStorage_npc_steps is a (any number of) space(s) seperated list of
+  storageAuto_npc_steps is a (any number of) space(s) seperated list of
   commands to send while attempting to store.
   These commands consist of n which will send the cancel command
   			    c which will send the continue command
@@ -45,6 +45,9 @@
 - Damage numbers above 65535 (e.g. from Guillotine Fist) should be
   displayed correctly now, but my monk can't do that much damage; can
   someone test and report on the forum please?
+- added optional parameter for chist, "chist 10" will show last 10 lines
+  of chat.txt
+- added a handfull of log message domain, refer to Log.pm
 
 ==================
 ### OpenKore 1.2.1

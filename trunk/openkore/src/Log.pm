@@ -69,9 +69,16 @@
 # syntax		Syntax check files
 # storage		Storage item added/removed
 # xkore			X-Kore system messages
+# system    system messages
+# party     party/follow related
+# drop      monster drop related
+# skill     skill use unrelated to attack
+# pm        private message
+# guildchat guild chat
 
 # Debug domains:
 # parseInput
+# ai
 
 package Log;
 
