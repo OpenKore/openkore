@@ -427,7 +427,6 @@ sub parseCommand {
 			error	"Error in function 'a' (Attack Monster)\n" .
 				"Monster $arg1 does not exist.\n";
 		} elsif ($arg1 =~ /^\d+$/) {
-			$monsters{$monstersID[$arg1]}{'attackedByPlayer'} = 0;
 			attack($monstersID[$arg1]);
 
 		} elsif ($arg1 eq "no") {
@@ -3472,8 +3471,7 @@ sub AI {
 			$monsters_Killed{$monsters_old{$ID}{'nameID'}}++;
 
 			# Pickup loot when monster's dead
-			if ($config{'itemsTakeAuto'} && $monsters_old{$ID}{'dmgFromYou'} > 0 && !$monsters_old{$ID}{'attackedByPlayer'}
-			&& !$monsters_old{$ID}{'ignore'}) {
+			if ($config{'itemsTakeAuto'} && $monsters_old{$ID}{'dmgFromYou'} > 0 && !$monsters_old{$ID}{'ignore'}) {
 				ai_items_take($monsters_old{$ID}{'pos'}{'x'}, $monsters_old{$ID}{'pos'}{'y'},
 					$monsters_old{$ID}{'pos_to'}{'x'}, $monsters_old{$ID}{'pos_to'}{'y'});
 			} elsif (!ai_getAggressives()) {
@@ -3520,14 +3518,7 @@ sub AI {
 
 		my $ID = $ai_seq_args[0]{'ID'};
 		my $monsterDist = distance($chars[$config{'char'}]{'pos_to'}, $monsters{$ID}{'pos_to'});
-		my $cleanMonster = (
-			  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
-			|| ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0 || $monsters{$ID}{'missedToParty'} > 0)
-			|| ($following && ($monsters{$ID}{'dmgToPlayer'}{$followID} > 0 || $monsters{$ID}{'missedToPlayer'}{$followID} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$followID} > 0))
-			|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
-		);
-		$cleanMonster = 0 if ($monsters{$ID}{'attackedByPlayer'} && (!$following || $monsters{$ID}{'lastAttackFrom'} ne $followID));
-		$cleanMonster = 1 if !$config{attackAuto};
+		my $cleanMonster = checkMonsterCleanness($ID);
 
 
 		# If the damage numbers have changed, update the giveup time so we don't timeout
@@ -3673,42 +3664,20 @@ sub AI {
 	}
 
 	# Check for kill steal while moving
-	if (binFind(\@ai_seq, "attack") ne ""
-	  && (($ai_seq[0] eq "move" || $ai_seq[0] eq "route") && $ai_seq_args[0]{'attackID'})) {
-		$ai_v{'temp'}{'ai_follow_index'} = binFind(\@ai_seq, "follow");
-		if ($ai_v{'temp'}{'ai_follow_index'} ne "") {
-			$ai_v{'temp'}{'ai_follow_following'} = $ai_seq_args[$ai_v{'temp'}{'ai_follow_index'}]{'following'};
-			$ai_v{'temp'}{'ai_follow_ID'} = $ai_seq_args[$ai_v{'temp'}{'ai_follow_index'}]{'ID'};
-		} else {
-			undef $ai_v{'temp'}{'ai_follow_following'};
-		}
-
-		my $ID = $ai_seq_args[0]{'attackID'};
-		$ai_v{'ai_attack_cleanMonster'} = (
-				  !($monsters{$ID}{'dmgFromYou'} == 0 && ($monsters{$ID}{'dmgTo'} > 0 || $monsters{$ID}{'dmgFrom'} > 0 || %{$monsters{$ID}{'missedFromPlayer'}} || %{$monsters{$ID}{'missedToPlayer'}} || %{$monsters{$ID}{'castOnByPlayer'}}))
-				|| ($config{'attackAuto_party'} && ($monsters{$ID}{'dmgFromParty'} > 0 || $monsters{$ID}{'dmgToParty'} > 0))
-				|| ($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && ($monsters{$ID}{'dmgToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ID}{'missedToPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0 || $monsters{$ID}{'dmgFromPlayer'}{$ai_v{'temp'}{'ai_follow_ID'}} > 0))
-				|| ($monsters{$ID}{'dmgToYou'} > 0 || $monsters{$ID}{'missedYou'} > 0)
-			);
-		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ID}{'attackedByPlayer'});
-		$ai_v{'ai_attack_cleanMonster'} = 1 if !$config{attackAuto};
-
-		if (!$ai_v{'ai_attack_cleanMonster'}) {
+	if (AI::is("move", "route") && AI::action->{attackID} && AI::inQueue("attack")) {
+		my $ID = AI::action->{attackID};
+		if (!checkMonsterCleanness($ID)) {
 			message "Dropping target - you will not kill steal others\n";
 			sendAttackStop(\$remote_socket);
-			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
+			$monsters{$ID}{ignore} = 1;
 
-			# Remove "move"
-			shift @ai_seq;
-			shift @ai_seq_args;
-			# Remove "route"
-			if ($ai_seq[0] eq "route") {
-				shift @ai_seq;
-				shift @ai_seq_args;
-			}
-			# Remove "attack"
-			shift @ai_seq;
-			shift @ai_seq_args;
+			# Right now, the queue is either
+			#   move, route, attack
+			# -or-
+			#   route, attack
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
 		}
 	}
 
@@ -9291,7 +9260,6 @@ sub updateDamageTables {
 			if ($damage == 0) {
 				$monsters{$ID1}{'missedYou'}++;
 			}
-			$monsters{$ID1}{'attackedByPlayer'} = 0;
 			$monsters{$ID1}{'attackedYou'}++ unless (
 					binSize([keys %{$monsters{$ID1}{'dmgFromPlayer'}}]) ||
 					binSize([keys %{$monsters{$ID1}{'dmgToPlayer'}}]) ||
@@ -9326,16 +9294,6 @@ sub updateDamageTables {
 				# Monster attacks party member
 				$monsters{$ID1}{'dmgToParty'} += $damage;
 				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
-				$monsters{$ID1}{'attackedByPlayer'} = 0 if ($config{'attackAuto_party'} || ( 
-						$config{'attackAuto_followTarget'} &&
-						$ai_v{'temp'}{'ai_follow_following'} &&
-						$ID2 eq $ai_v{'temp'}{'ai_follow_ID'}
-					)); 
-			} else {
-				$monsters{$ID1}{'attackedByPlayer'} = 1 unless (
-					($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && $ID2 eq $ai_v{'temp'}{'ai_follow_ID'})
-					|| $monsters{$ID1}{'attackedYou'}
-				);
 			}
 		}
 		
@@ -9353,14 +9311,6 @@ sub updateDamageTables {
 			}
 			if (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}}) {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
-				$monsters{$ID2}{'attackedByPlayer'} = 0 if ($config{'attackAuto_party'} || ( 
-				$config{'attackAuto_followTarget'} && 
-				$config{'follow'} && $players{$ID1}{'name'} eq $config{'followTarget'})); 
-			} else {
-				$monsters{$ID2}{'attackedByPlayer'} = 1 unless (
-							($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && $ID1 eq $ai_v{'temp'}{'ai_follow_ID'})
-							|| $monsters{$ID2}{'attackedYou'}
-					);
 			}
 		}
 	}
