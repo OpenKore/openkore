@@ -5,6 +5,25 @@
 - Support for idRO: secureLogin_type 3
 - Possibly fixed the "utf8.pm not found" error.
 - Fix monster status/ailment detection.
+- Show (x, y) position after teleporting.
+- Attacking party or followTarget's monster is never considered KS.
+- Added north/east/south/west/northeast/southeast/southwest/northwest
+  commands to manually move the bot in that direction. If you want
+  abbreviations for these commands like in a MUD, put this in your config.txt:
+
+  # short movement commands
+  alias_n north
+  alias_e east
+  alias_w west
+  alias_s south
+  alias_ne northeast
+  alias_se southeast
+  alias_sw southwest
+  alias_nw northwest
+
+  # new names for existing commands
+  alias_sc s
+  alias_em e
 
 
 ==================
