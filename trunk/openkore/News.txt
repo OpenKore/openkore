@@ -7,6 +7,9 @@ New features:
   they attack you. In mon_control.txt, set the flag to -1. Example:
   Matyr -1 0 0
 
+Internal:
+- findIndex() and related functions are now much faster (bug #16).
+
 Credits:
 - Joseph: -1 flag support in mon_control.txt
 

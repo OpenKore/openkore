@@ -227,19 +227,51 @@ sub existsInList {
 	return 0;
 }
 
+
+##
+# findIndex(r_array, key, [num])
+# r_array: A reference to an array, which contains a hash in each element.
+# key: The name of the key to lookup.
+# num: The number to compare with.
+# Returns: The index in r_array of the found item, or undef if not found. Or, if not found and $num is not given: returns the index of first undefined array element, or the index of the last array element + 1.
+#
+# This function loops through the entire array, looking for a hash item whose
+# value equals $num.
+#
+# Example:
+# my @inventory;
+# $inventory[0]{amount} = 50;
+# $inventory[1]{amount} = 100;
+# $inventory[2] = undef;
+# $inventory[3]{amount} = 200;
+# findIndex(\@inventory, "amount", 100);    # 1
+# findIndex(\@inventory, "amount", 99);     # undef
+# findIndex(\@inventory, "amount");         # 2
+#
+# @inventory = ();
+# $inventory[0]{amount} = 50;
+# findIndex(\@inventory, "amount");         # 1
 sub findIndex {
 	my $r_array = shift;
-	my $match = shift;
-	my $ID = shift;
-	my $i;
+	return undef if !$r_array;
+	my $key = shift;
+	my $num = shift;
+	my $i = 0;
+	my $max = @{$r_array};
 
-	for ($i = 0; $i < @{$r_array}; $i++) {
-		if ((%{$$r_array[$i]} && $$r_array[$i]{$match} == $ID)
-			|| (!%{$$r_array[$i]} && $ID eq "")) {
-			return $i;
+	if ($num ne "") {
+		for ($i = 0; $i < $max; $i++) {
+			if ($r_array->[$i]{$key} == $num) {
+				return $i;
+			}
+		}
+	} else {
+		for ($i = 0; $i < $max; $i++) {
+			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
 	}
-	if ($ID eq "") {
+
+	if ($num eq "") {
 		return $i;
 	} else {
 		return undef;
@@ -247,18 +279,31 @@ sub findIndex {
 }
 
 
+##
+# findIndexString(r_array, key, [str])
+#
+# Same as findIndex(), except this function compares strings, not numbers.
 sub findIndexString {
 	my $r_array = shift;
-	my $match = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((%{$$r_array[$i]} && $$r_array[$i]{$match} eq $ID)
-			|| (!%{$$r_array[$i]} && $ID eq "")) {
-			return $i;
+	return undef if !$r_array;
+	my $key = shift;
+	my $str = shift;
+	my $i = 0;
+	my $max = @{$r_array};
+
+	if ($str ne "") {
+		for ($i = 0; $i < $max; $i++) {
+			if ($r_array->[$i]{$key} eq $str) {
+				return $i;
+			}
+		}
+	} else {
+		for ($i = 0; $i < $max; $i++) {
+			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
 	}
-	if ($ID eq "") {
+
+	if ($str eq "") {
 		return $i;
 	} else {
 		return undef;
@@ -266,18 +311,32 @@ sub findIndexString {
 }
 
 
+##
+# findIndexString_lc(r_array, key, [str])
+#
+# Same has findIndexString(), except this function does case-insensitive string comparisons.
 sub findIndexString_lc {
 	my $r_array = shift;
-	my $match = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($ID))
-			|| (!%{$$r_array[$i]} && $ID eq "")) {
-			return $i;
+	return undef if !$r_array;
+	my $key = shift;
+	my $str = shift;
+	my $i = 0;
+	my $max = @{$r_array};
+
+	if ($str ne "") {
+		$str = lc $str;
+		for ($i = 0; $i < $max; $i++) {
+			if (lc $r_array->[$i]{$key} eq $str) {
+				return $i;
+			}
+		}
+	} else {
+		for ($i = 0; $i < $max; $i++) {
+			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
 	}
-	if ($ID eq "") {
+
+	if ($str eq "") {
 		return $i;
 	} else {
 		return undef;
