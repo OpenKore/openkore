@@ -2405,92 +2405,81 @@ sub AI {
 		}
 	}
 
-	############## TALK WITH NPC ##############
+	##### TALK WITH NPC ######
 	NPCTALK: {
-		last NPCTALK unless ($ai_seq[0] eq "NPC");
+		last NPCTALK if ($ai_seq[0] ne "NPC");
 		$ai_seq_args[0]{'time'} = time unless $ai_seq_args[0]{'time'};
 
-		unless (@{$ai_seq_args[0]{'steps'}}) {
-			my $name = $npcs{$ai_seq_args[0]{'NPCID'}}{'name'};
-			debug "Done talking with NPC $name ($ai_seq_args[0]{'nameID'}).\n", "ai_talkNPC";
-			undef $ai_v{'npc_talk'};
+		if ($ai_seq_args[0]{'stage'} eq '') {
+			if (timeOut($ai_seq_args[0]{'time'}, $timeout{'ai_npcTalk'}{'timeout'})) {
+				error "Could not find the NPC at the designated location.\n", "ai_npcTalk";
+				shift @ai_seq;
+				shift @ai_seq_args;
+
+			} elsif ($ai_seq_args[0]{'nameID'}) {
+				# An NPC ID has been passed
+				my $npc = pack("L1", $ai_seq_args[0]{'nameID'});
+				last if (!$npcs{$npc} || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i);
+				$ai_seq_args[0]{'ID'} = $npc;
+				$ai_seq_args[0]{'name'} = $npcs{$npc}{'name'};
+				$ai_seq_args[0]{'stage'} = 'Talking to NPC';
+				@{$ai_seq_args[0]{'steps'}} = split /\s+/, "w3 x $ai_seq_args[0]{'sequence'}";
+				undef $ai_seq_args[0]{'time'};
+				undef $ai_v{'npc_talk'}{'time'};
+
+			} else {
+				# An x,y position has been passed
+				foreach my $npc (@npcsID) {
+					next if !$npc || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i;
+					if ( $npcs{$npc}{'pos'}{'x'} eq $ai_seq_args[0]{'pos'}{'x'} &&
+					     $npcs{$npc}{'pos'}{'y'} eq $ai_seq_args[0]{'pos'}{'y'} ) {
+						debug "Target NPC $npcs{$npc}{'name'} at ($ai_seq_args[0]{'pos'}{'x'},$ai_seq_args[0]{'pos'}{'y'}) found.\n", "ai_npcTalk";
+					     	$ai_seq_args[0]{'nameID'} = $npcs{$npc}{'nameID'};
+				     		$ai_seq_args[0]{'ID'} = $npc;
+					     	$ai_seq_args[0]{'name'} = $npcs{$npc}{'name'};
+						$ai_seq_args[0]{'stage'} = 'Talking to NPC';
+						@{$ai_seq_args[0]{'steps'}} = split /\s+/, "w3 x $ai_seq_args[0]{'sequence'}";
+						undef $ai_seq_args[0]{'time'};
+						undef $ai_v{'npc_talk'}{'time'};
+						last;
+					}
+				}
+			}
+
+
+		} elsif ($ai_seq_args[0]{'mapChanged'} || @{$ai_seq_args[0]{'steps'}} == 0) {
+			message "Done talking with $ai_seq_args[0]{'name'}.\n", "ai_npcTalk";
+			sendTalkCancel(\$remote_socket, $ai_seq_args[0]{'ID'});
 			shift @ai_seq;
 			shift @ai_seq_args;
 
 		} elsif (timeOut($ai_seq_args[0]{'time'}, $timeout{'ai_npcTalk'}{'timeout'})) {
-			debug "We spent too much time with this NPC.\n", "ai_talkNPC";
-			error $ai_seq_args[0]{'error'}, "ai_talkNPC" if ($ai_seq_args[0]{'error'});
-			sendTalkCancel(\$remote_socket, pack("L1",$ai_seq_args[0]{'nameID'}));
-			undef $ai_v{'npc_talk'};
+			# If NPC does not respond before timing out, then by default, it's a failure
+			error "NPC did not respond.\n", "ai_npcTalk";
+			sendTalkCancel(\$remote_socket, $ai_seq_args[0]{'ID'});
 			shift @ai_seq;
 			shift @ai_seq_args;
 
-		} elsif ($ai_seq_args[0]{'stage'} eq '') {
-			my $ID = $ai_seq_args[0]{'ID'};
+		} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
+			$ai_seq_args[0]{'time'} = time;
+			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 
-			if ($ID =~ /^\d+$/) {
-				# ID is an NPC ID
-				foreach my $npc (@npcsID) {
-					next if !defined $npcs{$npc}{'nameID'};
-
-					if ($npcs{$npc}{'nameID'} == $ID) {
-						$ai_seq_args[0]{'nameID'} = $ID;
-						$ai_seq_args[0]{'NPCID'} = $npc;
-						last;
-					}
-				}
-				$ai_seq_args[0]{'error'} = "NPC $ID not found\n" if (!$ai_seq_args[0]{'nameID'} && !$ai_seq_args[0]{'error'});
-
-			} else {
-				# ID is an X,Y position
-				my ($x, $y) = split(/ +/, $ID, 2);
-
-				# Scan all NPCs around and see which NPC is located on the X, Y position specified
-				foreach my $npc (@npcsID) {
-					next if !defined $npcs{$npc}{'nameID'};
-
-					if ($npcs{$npc}{'pos'}{'x'} eq $x &&
-					    $npcs{$npc}{'pos'}{'y'} eq $y) {
-						debug "Target NPC $npcs{$npc}{'name'} at ($x,$y) found.\n", "ai_talkNPC";
-						$ai_seq_args[0]{'nameID'} = $npcs{$npc}{'nameID'};
-			     			$ai_seq_args[0]{'NPCID'} = $npc;
-						last;
-					}
-				}
-				$ai_seq_args[0]{'error'} = "No NPC found at position ($x, $y)\n" if (!$ai_seq_args[0]{'nameID'} && !$ai_seq_args[0]{'error'});
-			}
-
-			if ($ai_seq_args[0]{'nameID'}) {
-				undef $ai_v{'npc_talk'};
-				sendTalk(\$remote_socket, $ai_seq_args[0]{'NPCID'});
-				$ai_seq_args[0]{'stage'} = 'Talking with NPC';
-			}
-
-			# We haven't found our NPC; maybe the server hasn't
-			# send any information yet; try again next loop
-
-		} elsif ($ai_seq_args[0]{'stage'} eq 'Talking with NPC' && $ai_v{'npc_talk'}
-		      && timeOut($ai_v{'npc_talk'}, $timeout{'ai_npcResponse'}{'timeout'})
-		) {
-			debug "NPC step: $ai_seq_args[0]{'steps'}[0]\n", "ai_talkNPC";
-			if ($ai_seq_args[0]{'steps'}[0] =~ /^w(\d+)/i) {
-				$ai_seq_args[0]{'time'} += $1;
-				$ai_v{'npc_talk'} = time + $1;
-
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^c/i ) {
-				undef $ai_v{'npc_talk'};	# Reset NPC's response time
-				sendTalkContinue(\$remote_socket, pack("L1", $ai_seq_args[0]{'nameID'}));
-
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^r(\d+)/i ) {
-				undef $ai_v{'npc_talk'};	# Reset NPC's response time
-				sendTalkResponse(\$remote_socket, pack("L1", $ai_seq_args[0]{'nameID'}), $1+1);
-
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^n/i ) {
-				undef $ai_v{'npc_talk'};	# Reset NPC's response time
-				sendTalkCancel  (\$remote_socket, pack("L1", $ai_seq_args[0]{'nameID'}));
-
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^b/i ) {
-				sendGetStoreList(\$remote_socket, pack("L1", $ai_seq_args[0]{'nameID'}));
+			if ($ai_seq_args[0]{'steps'}[0] =~ /w(\d+)/i) {
+				my $time = $1;
+				$ai_v{'npc_talk'}{'time'} = time + $time;
+				$ai_seq_args[0]{'time'}   = time + $time;
+			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /x/i ) {
+				sendTalk(\$remote_socket, $ai_seq_args[0]{'ID'});
+			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /c/i ) {
+				sendTalkContinue(\$remote_socket, $ai_seq_args[0]{'ID'});
+			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /r(\d+)/i ) {
+				sendTalkResponse(\$remote_socket, $ai_seq_args[0]{'ID'}, $1+1);
+			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /n/i ) {
+				sendTalkCancel(\$remote_socket, $ai_seq_args[0]{'ID'});
+				$ai_v{'npc_talk'}{'time'} = time;
+				$ai_seq_args[0]{'time'}   = time;
+			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /b/i ) {
+				sendGetStoreList(\$remote_socket, $ai_seq_args[0]{'ID'});
 			}
 			shift @{$ai_seq_args[0]{'steps'}};
 		}
@@ -5749,14 +5738,16 @@ sub parseMsg {
 		if ($config{'relay'}) {
 			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
 		}
-
-		$ai_cmdQue[$ai_cmdQue]{'type'} = "c";
-		$ai_cmdQue[$ai_cmdQue]{'ID'} = $ID;
-		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser;
-		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
-		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
-		$ai_cmdQue++;
 		message "$chat\n", "publicchat";
+
+		my %item;
+		$item{type} = "c";
+		$item{ID} = $ID;
+		$item{user} = $chatMsgUser;
+		$item{msg} = $chatMsg;
+		$item{time} = time;
+		binAdd(\@ai_cmdQue, \%item);
+		$ai_cmdQue++;
 
 
 		# FIXME: the stuff below should be handled by the AI
@@ -5804,12 +5795,15 @@ sub parseMsg {
 		if ($config{'relay'}) {
 			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
 		}
-		$ai_cmdQue[$ai_cmdQue]{'type'} = "c";
-		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser;
-		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
-		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
-		$ai_cmdQue++;
 		message "$chat\n", "selfchat";
+
+		my %item;
+		$item{type} = "c";
+		$item{user} = $chatMsgUser;
+		$item{msg} = $chatMsg;
+		$item{time} = time;
+		binAdd(\@ai_cmdQue, \%item);
+		$ai_cmdQue++;
 
 	} elsif ($switch eq "0091") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5932,13 +5926,15 @@ sub parseMsg {
 		if ($config{'relay'}) {
 			sendMessage(\$remote_socket, "pm", "(From: $privMsgUser) : $privMsg", $config{'relay_user'});
 		}
-
-		$ai_cmdQue[$ai_cmdQue]{'type'} = "pm";
-		$ai_cmdQue[$ai_cmdQue]{'user'} = $privMsgUser;
-		$ai_cmdQue[$ai_cmdQue]{'msg'} = $privMsg;
-		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
-		$ai_cmdQue++;
 		message "(From: $privMsgUser) : $privMsg\n", "pm";
+
+		my %item;
+		$item{type} = "pm";
+		$item{user} = $privMsgUser;
+		$item{msg} = $privMsg;
+		$item{time} = time;
+		binAdd(\@ai_cmdQue, \%item);
+		$ai_cmdQue++;
 
 		avoidGM_talk($privMsgUser, $privMsg);
 		avoidList_talk($privMsgUser, $privMsg);
@@ -6556,17 +6552,26 @@ sub parseMsg {
 		message "$npcs{$ID}{'name'} : $talk{'msg'}\n";
 
 	} elsif ($switch eq "00B5") {
-		$ID = substr($msg, 2, 4);
-		$ai_v{'npc_talk'} = time;
+		# 00b5: long ID
+		# "Next" button appeared on the NPC message dialog
+		my $ID = substr($msg, 2, 4);
 		message "$npcs{$ID}{'name'} : Type 'talk cont' to continue talking\n";
+		$ai_v{'npc_talk'}{'talk'} = 'next';
+		$ai_v{'npc_talk'}{'time'} = time;
 
 	} elsif ($switch eq "00B6") {
-		$ID = substr($msg, 2, 4);
+		# 00b6: long ID
+		# "Close" icon appreared on the NPC message dialog
+		my $ID = substr($msg, 2, 4);
 		undef %talk;
-		$ai_v{'npc_talk'} = time;
 		message "$npcs{$ID}{'name'} : Done talking\n";
+		$ai_v{'npc_talk'}{'talk'} = 'close';
+		$ai_v{'npc_talk'}{'time'} = time;
 
 	} elsif ($switch eq "00B7") {
+		# 00b7: word len, long ID, string str
+		# A list of selections appeared on the NPC message dialog.
+		# Each item is divided with ':'
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		$msg = substr($msg, 0, 8).$newmsg;
 		$ID = substr($msg, 4, 4);
@@ -6578,7 +6583,9 @@ sub parseMsg {
 			push @{$talk{'responses'}}, $_ if $_ ne "";
 		}
 		$talk{'responses'}[@{$talk{'responses'}}] = "Cancel Chat";
-		$ai_v{'npc_talk'} = time;
+
+		$ai_v{'npc_talk'}{'talk'} = 'select';
+		$ai_v{'npc_talk'}{'time'} = time;
 
 		message("----------Responses-----------\n", "list");
 		message("#  Response\n", "list");
@@ -6732,6 +6739,8 @@ sub parseMsg {
 		undef %talk;
 		$talk{'buyOrSell'} = 1;
 		$talk{'ID'} = $ID;
+		$ai_v{'npc_talk'}{'talk'} = 'buy';
+		$ai_v{'npc_talk'}{'time'} = time;
 		message "$npcs{$ID}{'name'} : Type 'store' to start buying, or type 'sell' to start selling\n";
 
 	} elsif ($switch eq "00C6") {
@@ -7136,12 +7145,15 @@ sub parseMsg {
 		$chat =~ s/\000$//;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
 		chatLog("p", $chat."\n") if ($config{'logPartyChat'});
-		$ai_cmdQue[$ai_cmdQue]{'type'} = "p";
-		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser;
-		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
-		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
-		$ai_cmdQue++;
 		message "%$chat\n";
+
+		my %item;
+		$item{type} = "p";
+		$item{user} = $chatMsgUser;
+		$item{msg} = $catMsg;
+		$item{time} = time;
+		binAdd(\@ai_cmdQue, \%item);
+		$ai_cmdQue++;
 
 	# Hambo Started
 	# 3 Packets About MVP
@@ -7984,13 +7996,16 @@ sub parseMsg {
 		$chat =~ s/\000$//;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
 		chatLog("g", $chat."\n") if ($config{'logGuildChat'});
-		$ai_cmdQue[$ai_cmdQue]{'type'} = "g";
-		$ai_cmdQue[$ai_cmdQue]{'ID'} = $ID;
-		$ai_cmdQue[$ai_cmdQue]{'user'} = $chatMsgUser;
-		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
-		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
-		$ai_cmdQue++;
 		message "[Guild] $chat\n", "guildchat";
+
+		my %item;
+		$item{type} = "g";
+		$item{ID} = $ID;
+		$item{user} = $chatMsgUser;
+		$item{msg} = $chatMsg;
+		$item{time} = time;
+		binAdd(\@ai_cmdQue, \%item);
+		$ai_cmdQue++;
 
 	} elsif ($switch eq "0188") {
 		$type =  unpack("S1",substr($msg, 2, 2));
@@ -9051,12 +9066,40 @@ sub ai_storageGet {
 	unshift @ai_seq_args, \%seq;
 }
 
+##
+# ai_talkNPC( (x, y | ID => number), sequence)
+# x, y: the position of the NPC to talk to.
+# ID: the ID of the NPC to talk to.
+# sequence: A string containing the NPC talk sequences.
+#
+# Talks to an NPC. You can specify an NPC position, or an NPC ID.
+#
+# $sequence is a list of whitespace-separated commands:
+# ~l
+# c  : Continue
+# r# : Select option # from menu.
+# n  : Stop talking to NPC.
+# b  : Send the "Show shop item list" (Buy) packet.
+# w# : Wait # seconds.
+# x  : Initialize conversation with NPC. Useful to perform multiple transaction with a single NPC.
+# ~l~
+#
+# Example:
+# # Sends "Continue", "Select option 0" to the NPC at (102, 300)
+# ai_talkNPC(102, 300, "c r0");
+# # Do the same thing with the NPC whose ID is 1337
+# ai_talkNPC(ID => 1337, "c r0");
 sub ai_talkNPC {
 	my %args;
-	$args{'ID'} = shift;
-	my $talk = shift;
-	$talk =~ s/^ +| +$//g;
-	@{$args{'steps'}} = split /\s+/,$talk;
+	if ($_[0] eq 'ID') {
+		shift;
+		$args{'nameID'} = shift;
+	} else {
+		$args{'pos'}{'x'} = shift;
+		$args{'pos'}{'y'} = shift;
+	}
+	$args{'sequence'} = shift;
+	$args{'sequence'} =~ s/^ +| +$//g;
 	unshift @ai_seq, "NPC";
 	unshift @ai_seq_args,\%args;
 }
