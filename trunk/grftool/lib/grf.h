@@ -52,10 +52,10 @@ typedef struct {
 	char *name;	/* Filename */
 
 	/* Type values:
-	 * 1, 2: Probably means that these are regular, unencoded files.
+	 * 1, 5: Probably means that these are regular, unencoded files.
+	 * 2: Folder.
 	 * 3: Entry is encoded and needs to be decoded before decompression.
 	 * 4: There doesn't seem to be any entries with this type value.
-	 * 5: Entry is a folder.
 	 */
 	int type;
 
