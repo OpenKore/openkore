@@ -195,7 +195,6 @@ Bug fixes:
 - Casting area-effect skills (e.g. Safety Wall, Warp Portal, Storm Gust)
   works again now (ai_skillUse() was passing $args{target_x} instead of
   $args{x}).
-- When chatLangCode is autodetected, the configModify will be silent
 - Warp Portal opening message now shows correct person name
 - Warn when user specified a useSelf_skill with an invalid name
   instead of trying to cast an empty skill ID
