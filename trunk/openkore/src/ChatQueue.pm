@@ -20,7 +20,7 @@ use Time::HiRes qw(time);
 
 use Globals qw($remote_socket %config %players $char %ai_v %timeout
 		%responseVars %field %overallAuth %maps_lut %skillsSP_lut
-		@chatResponses $AI);
+		@chatResponses $AI %cities_lut);
 use AI;
 use Commands;
 use Plugins;
@@ -492,6 +492,7 @@ sub processChatCommand {
 }
 
 
+# Automatically reply to a chat message
 sub processChatResponse {
 	return unless ($AI);
 	my $cmd = shift;
@@ -511,7 +512,7 @@ sub processChatResponse {
 	if (defined $cmd->{reply}) {
 		$reply = $cmd->{reply};
 
-	} elsif (!$repeating && ($cmd->{type} eq "c" || $cmd->{type} eq "pm")) {
+	} elsif (!$repeating && ($cmd->{type} eq "c" || $cmd->{type} eq "pm") && !$cities_lut{$field{name}.'.rsw'}) {
 		foreach my $item (@chatResponses) {
 			if ($msg =~ /${wordSplitters}$item->{word}${wordSplitters}/) {
 				my $max = @{$item->{responses}};
