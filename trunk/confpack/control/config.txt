@@ -53,6 +53,21 @@ autoConfChange_files
 autoConfChange_min 25200
 autoConfChange_seed 7200
 
+#
+# autoBreakTime [week day, first three letters only] {
+# 	startTime [start time]
+# 	stopTime [stop time]
+# }
+#
+# Note:
+# Time must be given in 24 hour format,
+# 9:30 P.M. would be specified as 21:30
+
+autoBreakTime {
+	startTime
+	stopTime
+}
+
 verbose 1
 debug 0
 debugPacket_unparsed 1

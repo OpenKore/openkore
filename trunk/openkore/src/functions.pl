@@ -426,6 +426,44 @@ sub mainLoop {
 		initRandomRestart();
 	}
 
+	# Break time: automatically disconnect at certain times of the day
+	if ($conState == 5) {
+		my @datetimeyear = split / /, localtime;
+		my $i = 0;
+		while ($config{"autoBreakTime_$i"} ne "") {
+			if ($datetimeyear[0] eq $config{"autoBreakTime_$i"}) {
+				my $mytime = $datetimeyear[3];
+				my $hormin = substr($mytime, 0, 5);
+				if ($config{"autoBreakTime_$i"."_startTime"} eq $hormin) {
+					my ($hr1,$min1) = split /:/, $config{"autoBreakTime_$i"."_startTime"};
+					my ($hr2,$min2) = split /:/, $config{"autoBreakTime_$i"."_stopTime"};
+					my $halt_sec = 0;
+					my $hr = $hr2-$hr1;
+					my $min = $min2-$min1;
+					if ($hr < 0) {
+						$hr = $hr+24;
+					} elsif ($min < 0) {
+						$hr = 24;
+					}
+					my $reconnect_time = $hr*3600+$min*60;
+
+					message("\nDisconnecting due to break time: ".$config{"autoBreakTime_$i"."_startTime"}." to ".$config{"autoBreakTime_$i"."_stopTime"}."\n\n", "system");
+					chatLog("k", "*** Disconnected due to Break Time: ".$config{"autoBreakTime_$i"."_startTime"}." to ".$config{"autoBreakTime_$i"."_stopTime"}." ***\n");
+
+					$timeout_ex{'master'}{'timeout'} = $reconnect_time;
+					$timeout_ex{'master'}{'time'} = time;
+					$KoreStartTime = time;
+					Network::disconnect(\$remote_socket);
+					AI::clear();
+					undef %ai_v;
+					$conState = 1;
+					undef $conState_tries;
+				}
+			}
+			$i++;
+		}
+	}
+
 	# Automatically switch to a different config file after a while
 	if ($config{'autoConfChange'} && $config{'autoConfChange_files'} && $conState == 5
 	 && time >= $nextConfChangeTime && !AI::inQueue(qw/attack take items_take/)) {
