@@ -52,7 +52,9 @@ typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 /* Prototypes */
 GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpenCallback callback);
 GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *error);
+GRFEXPORT void *grf_get_z (Grf *grf, const char *fname, uint32_t *size, uint32_t *usize, GrfError *error);
 GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error);
+GRFEXPORT void *grf_index_get_z(Grf *grf, uint32_t index, uint32_t *size, uint32_t *usize, GrfError *error);
 GRFEXPORT int grf_extract (Grf *grf, const char *grfname, const char *file, GrfError *error);
 GRFEXPORT int grf_index_extract (Grf *grf, uint32_t index, const char *file, GrfError *error);
 GRFEXPORT int grf_del(Grf *grf, const char *fname, GrfError *error);

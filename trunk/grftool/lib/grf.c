@@ -1243,7 +1243,8 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 	uLongf zlen;
 	int i;
 	GrfFile *gfile;
-	char keyschedule[0x80], key[8], *outbuf, *buf, *zbuf;
+	uint32_t rsiz, zsiz;
+	char *zbuf;
 
 	/* Make sure we've got valid arguments */
 	if (!grf || grf->type!=GRF_TYPE_GRF) {
@@ -1270,12 +1271,105 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 	if (grf->filedatas[index])
 		return grf->filedatas[index];
 
+	/* Return NULL if there is no data */
+	if (!grf->files[index].real_len) {
+		GRF_SETERR(error,GE_NODATA,grf_index_get);
+		return NULL;
+	}
+
+	/* Retrieve the unencrypted block */
+	if ((zbuf = grf_index_get_z(grf, index, &zsiz, &rsiz, error))==NULL) {
+		return NULL;
+	}
+
+	/* Allocate memory to write into */
+	/* grf->filedatas */
+	if ((grf->filedatas[index]=(char*)malloc(rsiz+1))==NULL) {
+		GRF_SETERR(error,GE_ERRNO,malloc);
+		return NULL;
+	}
+
+	/* Make sure uncompress doesn't modify our file information */
+	zlen=rsiz;
+
+	/* Uncompress the data, and catch any errors */
+	if ((i=uncompress((Bytef*)grf->filedatas[index],&zlen,(const Bytef *)zbuf, (uLong)zsiz))!=Z_OK) {
+		/* Ignore Z_DATA_ERROR */
+		if (i==Z_DATA_ERROR) {
+			/* Set an error, just don't crash out */
+			GRF_SETERR_2(error,GE_ZLIB,uncompress,i);
+		}
+		else {
+			free(grf->filedatas[index]);
+			grf->filedatas[index] = NULL;
+			GRF_SETERR_2(error,GE_ZLIB,uncompress,i);
+			return NULL;
+		}
+	}
+	*size=zlen;
+
+#undef NEVER_DEFINED
+#ifdef NEVER_DEFINED
+	/* Check for different sizes */
+	if (zlen!=gfile->real_len) {
+		/* Something might be wrong, but I've never
+		 * seen this happen
+		 */
+	}
+#endif /* defined(NEVER_DEFINED) */
+
+	/* Throw a nul-terminator on the extra byte we allocated */
+	*((char*)grf->filedatas[index] + *size)=0;
+
+	/* Return our decrypted, uncompressed data */
+	return grf->filedatas[index];
+}
+
+
+/*! \brief Retrieve the compressed block of a file (pointed to by its index)
+ *
+ * \sa grf_get_z
+ * \sa grf_index_get
+ *
+ * \param grf Pointer to information about the GRF to retrieve data from
+ * \param index Index of the file to be retrieved
+ * \param size [out] Pointer to a location in memory where the size of the memory
+ *	block should be stored
+ * \param usize [out] Pointer to a location in memory where the size of data
+ *	once uncompressed should be stored
+ * \param error [out] Pointer to a GrfError variable for error reporting. May be NULL.
+ * \return A pointer to a memory block corresponding to the requested file, NULL if an error
+ *	has occurred. This block shall not be free()'d, the user should make a separate copy instead.
+ *	If the requested file is a directory, the special value GRFFILE_DIR_OFFSET is returned,
+ *	cast to void* and *size is set to GRFFILE_DIR_SZFILE, *usize to GRFFILE_DIR_SZORIG.
+ */
+GRFEXPORT void *grf_index_get_z(Grf *grf, uint32_t index, uint32_t *size, uint32_t *usize, GrfError *error) {
+	GrfFile *gfile;
+	char keyschedule[0x80], key[8], *buf, *zbuf;
+
+	/* Make sure we've got valid arguments */
+	if (!grf || grf->type!=GRF_TYPE_GRF) {
+		GRF_SETERR(error,GE_BADARGS,grf_index_get_z);
+		return NULL;
+	}
+	if (index>=grf->nfiles) {
+		GRF_SETERR(error,GE_INDEX,grf_index_get_z);
+		return NULL;
+	}
+
+	/* Check to see if the file is actually a directory entry */
+	if (GRFFILE_IS_DIR(grf->files[index])) {
+		*size=GRFFILE_DIR_SZFILE;
+		*usize=GRFFILE_DIR_SZORIG;
+		return (void *)GRFFILE_DIR_OFFSET;
+	}
+
 	/* Grab the file information */
 	gfile=&(grf->files[index]);
 
 	/* Return NULL if there is no data */
 	if (!gfile->real_len) {
-		GRF_SETERR(error,GE_NODATA,grf_index_get);
+		GRF_SETERR(error,GE_NODATA,grf_index_get_z);
 		return NULL;
 	}
 
@@ -1317,56 +1411,49 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 	/* Decrypt the data (if its encrypted) */
 	GRF_Process(zbuf,buf,gfile->compressed_len_aligned,gfile->type,gfile->compressed_len,keyschedule,GRFCRYPT_DECRYPT);
 
-	/* Free some memory */
 	free(buf);
 
-	/* Allocate memory to write into */
-	if ((outbuf=(char*)malloc(gfile->real_len+1))==NULL) {
-		free(zbuf);
-		GRF_SETERR(error,GE_ERRNO,malloc);
+	*size=gfile->compressed_len_aligned;
+	*usize=gfile->real_len;
+	free(grf->zbuf);
+	grf->zbuf = zbuf;
+	return (void *)zbuf;
+}
+
+/*! \brief Retrieve the compressed block of a file
+ *
+ * \sa grf_index_get_z
+ * \sa grf_get
+ *
+ * \param grf Pointer to information about the GRF to retrieve data from
+ * \param fname Exact filename of the file to be extracted
+ * \param size [out] Pointer to a location in memory where the size of the memory
+ *	block should be stored
+ * \param error [out] Pointer to a GrfError variable for error reporting. May be NULL.
+ * \param usize [out] Pointer to a location in memory where the size of data
+ *	once uncompressed should be stored
+ * \return A pointer to a memory block corresponding to the requested file, NULL if an error
+ *	has occurred. This block shall not be free()'d, the user should make a separate copy instead.
+ *	If the requested file is a directory, the special value GRFFILE_DIR_OFFSET is returned,
+ *	cast to void* and *size is set to GRFFILE_DIR_SZFILE, *usize to GRFFILE_DIR_SZORIG.
+ */
+GRFEXPORT void *grf_get_z (Grf *grf, const char *fname, uint32_t *size, uint32_t *usize, GrfError *error) {
+	uint32_t i;
+
+	/* Make sure we've got valid arguments */
+	if (!grf || !fname) {
+		GRF_SETERR(error,GE_BADARGS,grf_get);
 		return NULL;
 	}
 
-	/* Set the pointer in grf->filedatas */
-	grf->filedatas[index]=outbuf;
-
-	/* Make sure uncompress doesn't modify our file information */
-	zlen=gfile->real_len;
-
-	/* Uncompress the data, and catch any errors */
-	if ((i=uncompress((Bytef*)outbuf,&zlen,(const Bytef *)zbuf, (uLong)gfile->compressed_len))!=Z_OK) {
-		/* Ignore Z_DATA_ERROR */
-		if (i==Z_DATA_ERROR) {
-			/* Set an error, just don't crash out */
-			GRF_SETERR_2(error,GE_ZLIB,uncompress,i);
-		}
-		else {
-			free(outbuf);
-			free(zbuf);
-			GRF_SETERR_2(error,GE_ZLIB,uncompress,i);
-			return NULL;
-		}
+	/* Find the file inside the GRF */
+	if (!grf_find(grf,fname,&i)) {
+		GRF_SETERR(error,GE_NOTFOUND,grf_get);
+		return NULL;
 	}
-	*size=zlen;
 
-#undef NEVER_DEFINED
-#ifdef NEVER_DEFINED
-	/* Check for different sizes */
-	if (zlen!=gfile->real_len) {
-		/* Something might be wrong, but I've never
-		 * seen this happen
-		 */
-	}
-#endif /* defined(NEVER_DEFINED) */
-
-	/* Free memory */
-	free(zbuf);
-
-	/* Throw a nul-terminator on the extra byte we allocated */
-	outbuf[*size]=0;
-
-	/* Return our decrypted, uncompressed data */
-	return outbuf;
+	/* Get the file from its index */
+	return grf_index_get_z(grf,i,size,usize,error);
 }
 
 /*! \brief Extract to a file
@@ -1807,6 +1894,8 @@ GRFEXPORT void grf_free(Grf *grf) {
 	for(i=0;i<grf->nfiles;i++)
 		free(grf->filedatas[i]);
 	free(grf->filedatas);
+
+	free(grf->zbuf);
 
 	/* Close the file */
 	if (grf->f)
