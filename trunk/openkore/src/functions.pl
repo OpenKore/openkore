@@ -6952,17 +6952,9 @@ sub parseMsg {
 
 	} elsif ($switch eq "0114" || $switch eq "01DE") {
 		# Skill use
-		my $skillID = unpack("S1", substr($msg, 2, 2));
-		my $sourceID = substr($msg, 4, 4);
-		my $targetID = substr($msg, 8, 4);
-		my $damage = $switch eq "0114" ?
-			unpack("S1", substr($msg, 24, 2)) :
-			unpack("L1", substr($msg, 24, 4));
-		my $level = ($switch eq "0114") ?
-			unpack("S1", substr($msg, 26, 2)) :
-		   	unpack("S1", substr($msg, 28, 2));
+		my $dmg_t = $switch eq "0114" ? "s1" : "l1";
+		my ($skillID, $sourceID, $targetID, $tick, $src_speed, $dst_speed, $damage, $level, $param3, $type) = unpack("x2 S1 a4 a4 L1 L1 L1 $dmg_t S1 S1 C1", $msg);
 			
-		my $level = unpack("S1", substr($msg, 28, 2));
 		if (my $spell = $spells{$sourceID}) {
 			# Resolve source of area attack skill
 			$sourceID = $spell->{sourceID};
@@ -6970,17 +6962,16 @@ sub parseMsg {
 
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $config{XKore};
-		updateDamageTables($sourceID, $targetID, $damage) if $damage != 35536;
+		updateDamageTables($sourceID, $targetID, $damage) if $damage != -30000;
 		setSkillUseTimer($skillID) if $sourceID eq $accountID;
 		countCastOn($sourceID, $targetID);
 
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
 		$damage ||= "Miss!";
-		my $disp = "$source $uses ".skillName($skillID).
-			(($level == 65535)? "" : " (lvl $level)") .
-			(($damage == 35536)? "" : " on $target - Dmg: $damage") .
-			"\n";
+		my $disp = "$source $uses ".skillName($skillID)." (lvl $level) on $target";
+		$disp .= " - Dmg: $damage" unless $damage == -30000;
+		$disp .= "\n";
 
 		my $domain;
 		$domain = "skill" if (($source eq "You") || ($target eq "You"));
@@ -6989,7 +6980,7 @@ sub parseMsg {
 			$domain = "attackMonMiss" if (($source eq "You") && ($target ne "yourself"));
 			$domain = "attackedMiss" if (($source ne "You") && ($target eq "You"));
 
-		} elsif ($damage != 35536) {
+		} elsif ($damage != -30000) {
 			$domain = "attackMon" if (($source eq "You") && ($target ne "yourself"));
 			$domain = "attacked" if (($source ne "You") && ($target eq "You"));
 		}
