@@ -3524,6 +3524,7 @@ sub AI {
 				 && checkMonsterCondition("attackComboSlot_${i}_target", $ID)) {
 
 					$args->{attackComboSlot_uses}{$i}++;
+					delete $char->{last_skill_used};
 					$args->{attackMethod}{type} = "combo";
 					$args->{attackMethod}{comboSlot} = $i;
 					$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
