@@ -70,6 +70,7 @@ Internal:
 
 Credits:
 - jsteng: Pet detection fix.
+- mondlicht: misc bug fixes.
 
 
 ==================
