@@ -246,9 +246,7 @@ sub load {
 	if (!defined $items) {
 		@array = @configFiles;
 	} elsif (!ref($items)) {
-		foreach (@_) {
-			push @array, $configFiles[$_];
-		}
+		push @array, $configFiles[$items];
 	} elsif (ref($items) eq 'ARRAY') {
 		@array = @{$items};
 	}
