@@ -359,7 +359,7 @@ if (!$config{'XKore'}) {
 			if (defined $err) {
 				Log::error("'$err' is not a valid server.\n");
 			}
-			Log::message("Choose your master server: ");
+			Log::message("Enter the number of your master server: ");
 			$msg = $interface->getInput(-1);
 
 			my $serverName;
