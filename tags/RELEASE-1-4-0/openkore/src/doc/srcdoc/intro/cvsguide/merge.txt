@@ -1,0 +1,12 @@
+<img src="update.png" width="197" height="104" alt="Menu for CVS update" style="float: right;">
+By the time you're done modifying the code, another developer may have already uploaded his changes to CVS.
+This is why you should do a <em>CVS update</em>. It does the following things:
+<ul>
+<li>Downloads the latest source code from CVS. Only new or changed files are downloaded.</li>
+<li>Automatically merges your changes with possible new changes by others.</li>
+</ul>
+
+<p>
+Rightclick on an empty spot in the module's folder and choose <em>"CVS Update"</em>.<br>
+<b>Note:</b> sometimes CVS may report conflicts during merging. For more information,
+read <a href="conflicts.html">"How to resolve merging conflicts"</a>.
