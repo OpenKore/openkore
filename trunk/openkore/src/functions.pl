@@ -467,7 +467,7 @@ sub mainLoop {
 		$basePercent = sprintf("%.2f", $chars[$config{'char'}]{'exp'} / $chars[$config{'char'}]{'exp_max'} * 100) if $chars[$config{'char'}]{'exp_max'};
 		$jobPercent = sprintf("%.2f", $chars[$config{'char'}]{'exp_job'} /$ chars[$config{'char'}]{'exp_job_max'} * 100) if $chars[$config{'char'}]{'exp_job_max'};
 		$weight = int($chars[$config{'char'}]{'weight'} / $chars[$config{'char'}]{'weight_max'} * 100) . "%" if $chars[$config{'char'}]{'weight_max'};
-		$pos = " : $chars[$config{'char'}]{'pos'}{'x'},$chars[$config{'char'}]{'pos'}{'y'} $field{'name'}" if ($chars[$config{'char'}]{'pos'} && $field{'name'});
+		$pos = " : $char->{pos_to}{x},$char->{pos_to}{y} $field{'name'}" if ($char->{pos_to} && $field{'name'});
 
 		$title = "${charName} B$chars[$config{'char'}]{'lv'} ($basePercent%), J$chars[$config{'char'}]{'lv_job'}($jobPercent%) : w$weight${pos} - $Settings::NAME";
 		$interface->title($title);
@@ -6821,15 +6821,24 @@ sub parseMsg {
 		} elsif ($type == 3) {
 			debug "Something2: $val\n", "parseMsg", 2;
 		} elsif ($type == 4) {
-			$val = (0xFFFFFFFF - $val) + 1;
-			$char->{'mute_period'} = $val;
-			$char->{'muted'} = time;
-			if ($config{'dcOnMute'}) {
-				message "You've been muted for " . timeConvert($val) . ", auto disconnect!\n";
-				chatLog("k", "*** You have been muted for " . timeConvert($val) . ", auto disconnect! ***\n");
-				quit();
+			if ($val == 0) {
+				delete $char->{'muted'};
+				delete $char->{'mute_period'};
+				message "Mute period expired.\n";
 			} else {
-				message "You've been muted for " . timeConvert($val) . " minutes\n";
+				$val = (0xFFFFFFFF - $val) + 1;
+				$char->{'mute_period'} = $val * 60;
+				$char->{'muted'} = time;
+				if ($config{'dcOnMute'}) {
+					message "You've been muted for $val minutes, auto disconnect!\n";
+					chatLog("k", "*** You have been muted for $val minutes, auto disconnect! ***\n");
+					quit();
+				} else {
+					message "max = " . 0xFFFFFFFF . "\n";
+					message "1   = " . $a . "\n";
+					message "2   = " . abs($a) . "\n";
+					message "You've been muted for $val minutes\n";
+				}
 			}
 		} elsif ($type == 5) {
 			$chars[$config{'char'}]{'hp'} = $val;
