@@ -119,6 +119,7 @@ if ($options{classic}) {
 	}
 
 } else {
+	$pathfinding = new PathFinding;
 	for (my $i = 0; $i < $options{max}; $i++) {
 		doRouteXS();
 	}
@@ -257,25 +258,17 @@ sub doRouteAncient {
 }
 
 sub doRouteXS {
-	if (!$pathfinding) {
-		$pathfinding = new PathFinding(
-			start => \%start,
-			dest => \%dest,
-			field => \%field,
-			weights => \$weights
-		);
-	} else {
-		$pathfinding->reset(
-			start => \%start,
-			dest => \%dest,
-			field => \%field,
-			weights => \$weights
-		);
-	}
-	my $ref = $pathfinding->runref();
+	$pathfinding->reset(
+		start => \%start,
+		dest => \%dest,
+		field => \%field,
+		weights => \$weights
+	);
+	my @array;
+	$pathfinding->run(\@array);
 	if ($options{save}) {
 		open(F, ">", $options{save});
-		foreach (@{$ref}) {
+		foreach (@array) {
 			print F "$_->{x}, $_->{y}\n";
 		}
 		close F;
