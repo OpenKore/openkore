@@ -233,7 +233,6 @@ our $KoreStartTime = time;
 our $AI = 1;
 our $conState = 1;
 our $nextConfChangeTime;
-$nextConfChangeTime = time + $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'}) if ($config{'autoConfChange'});
 
 initStatVars();
 initRandomRestart();

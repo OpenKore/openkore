@@ -28,14 +28,14 @@ sub initRandomRestart {
 	}
 }
 
-#ok, added this sub as a cheap nasty kludge, cause nothing can presently trigure config change..
+# Initialize random configuration switching time
 sub initConfChange {
 	my $changetime = $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'});
+	return if (!$config{'autoChangeConfig'});
 	$nextConfChangeTime = time + $changetime;
 	print "Next Config Change will be in ".timeConvert($changetime).".\n";
 }
-	
-sub initConfigChange {
+
 # Initialize variables when you start a connection to a map server
 sub initConnectVars {
 	initMapChangeVars();
@@ -255,22 +255,15 @@ sub checkConnection {
 		initRandomRestart();
 	}
 
-	# This stuff is experimental
-	# I tested it, and it works for me atleast - xlr82xs
+	# Automatically switch to a different config file after a while
 	if ($config{'autoConfChange'} && $config{'autoConfChange_files'} && $conState == 5
 	 && time >= $nextConfChangeTime && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
 	 	my ($file, @files);
 	 	my ($oldMasterHost, $oldMasterPort, $oldUsername, $oldChar);
 
 		# Choose random config file
-		#changed this so it splits up a space deliminated list, as per your example
 		@files = split(/ /, $config{'autoConfChange_files'});
-		# ok this is how it was....
-		#$file = $files[int(rand($#files + 1))];
-		# this is how it should be ?
 		$file = @files[rand(@files)];
-		#the above can have int() added to it if you want, but it shouldn't need it
-		#as rand on an array chooses a random array item.. (in most cases)
 		print "Changing configuration file (from \"$config_file\" to \"$file\")...\n";
 
 		# A relogin is necessary if the host/port, username or char is different
@@ -281,26 +274,25 @@ sub checkConnection {
 
 		$config_file = $file;
 		$parseFiles[0]{'file'} = $file;
-		#parseReload($file);
-		#ok, i'm not sure if the above is going to go, i mean dont forget parseReload() accepts "config" as a valid input
-		#redone below to how it should work given the current valid inputs 70% sure the case is even correct.
-		parseReload('config');
+		parseDataFile2($file, \%config);
 
 		if ($oldMasterHost ne $config{"master_host_$config{'master'}"}
 		 || $oldMasterPort ne $config{"master_port_$config{'master'}"}
 		 || $oldUsername ne $config{'username'}
 		 || $oldChar ne $config{'char'}) {
 			relog();
+		} else {
+			aiRemove("move");
+			aiRemove("route");
+			aiRemove("route_getRoute");
+			aiRemove("route_getMapRoute");
 		}
 		
 		#thaught maybe a relog would be called for in any case
 		#to force the bot to go to a different field etc because as it stands, if the bot is on the way to field x
 		#due to lockmap, and it changes config with a lockmap y, it'll still finish walking to x, then calculate route to y
 
-		my $changetime = $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'});
-		$nextConfChangeTime = time + $changetime;
-		print "Next Config Change will be in ".timeConvert($changetime).".\n";
-	}
+		initConfChange();
 	}
 }
 
@@ -10786,8 +10778,8 @@ sub parseReload {
 			}
 		}
 	}
-	foreach $temp (keys %temp) {
-		$temp[@temp] = $temp{$temp};
+	foreach my $f (keys %temp) {
+		$temp[@temp] = $temp{$f};
 	}
 	load(\@temp);
 }
