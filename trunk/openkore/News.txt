@@ -30,6 +30,8 @@ New features:
 - teleportAuto_[hp|sp|minAggressives] will now print a message when it is
   triggered.
 - 'drop' command now works when AI is off, if you are only dropping one item.
+- isSelfSkill for attackSkillSlot. e.g.
+  attackSkillSlot Aspersio { monsters Zombie }
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
