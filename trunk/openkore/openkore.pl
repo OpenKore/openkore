@@ -3403,7 +3403,7 @@ sub AI {
 				ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'}, $field{'name'}, 0, 0, 1, 0, $config{'followDistanceMin'});
 			}
 		}
-		if ($ai_seq_args[0]{'following'}) {
+		if ($ai_seq_args[0]{'following'} && %{$players{$ai_seq_args[0]{'ID'}}}) {
 			if ($config{'followSitAuto'} && $players{$ai_seq_args[0]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
 				sit();
 			}
@@ -3426,19 +3426,18 @@ sub AI {
 		}
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
-		if (!$config{'XKore'}) {
-			print "I lost my master\n";
-		} else {
-			injectMessage("I lost my master") if ($config{'verbose'});
-		}
+		print "I lost my master\n";
+		injectMessage("I lost my master") if ($config{'verbose'} && $config{'XKore'});
+
 		undef $ai_seq_args[0]{'following'};
 		if ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
-			if (!$config{'XKore'}) {
-				print "My master disconnected\n";
-			} else {
-				injectMessage("My master disconnected") if ($config{'verbose'});
-			}
-			
+			print "My master disconnected\n";
+			injectMessage("My master disconnected") if ($config{'verbose'} && $config{'XKore'});
+		
+		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'teleported'}) {
+			print "My master teleported\n";
+			injectMessage("My master teleported") if ($config{'verbose'} && $config{'XKore'});
+
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disappeared'}) {
 			print "Trying to find lost master\n";
 			injectMessage("Trying to find lost master") if ($config{'verbose'} && $config{'XKore'});
@@ -3495,11 +3494,13 @@ sub AI {
 
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
 			undef $ai_seq_args[0]{'ai_follow_lost'};
-			if (!$config{'XKore'}) {
-				print "My master disconnected\n";
-			} else {
-				injectMessage("My master disconnected") if ($config{'verbose'});
-			}
+			print "My master disconnected\n";
+			injectMessage("My master disconnected") if ($config{'verbose'} && $config{'XKore'});
+
+		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'teleported'}) {
+			undef $ai_seq_args[0]{'ai_follow_lost'};
+			print "My master teleported\n";
+			injectMessage("My master teleported") if ($config{'verbose'} && $config{'XKore'});
 
 		} elsif (%{$players{$ai_seq_args[0]{'ID'}}}) {
 			$ai_seq_args[0]{'following'} = 1;
@@ -5293,7 +5294,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
 		$type = unpack("C1",substr($msg, 6, 1));
-
+$config{'debug'} = 1;
 		if ($ID eq $accountID) {
 			print "You have died\n";
 			sendCloseShop();
@@ -5318,20 +5319,18 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print "Player Died: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
 				$players{$ID}{'dead'} = 1;
 			} else {
-				if ($config{'debug'}) {
-					if ($type == 0) {
-						print "Player Disappeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
-						$players{$ID}{'disappeared'} = 1;
-					} elsif ($type == 2) {
-						print "Player Disconnected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
-						$players{$ID}{'disconnected'} = 1;
-					} elsif ($type == 3) {
-						print "Player Teleported: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
-						$players{$ID}{'disconnected'} = 1;
-					} else {
-						print "Player Disappeared in an unknown way: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
-						$players{$ID}{'disappeared'} = 1;
-					}
+				if ($type == 0) {
+					print "Player Disappeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'});
+					$players{$ID}{'disappeared'} = 1;
+				} elsif ($type == 2) {
+					print "Player Disconnected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'});
+					$players{$ID}{'disconnected'} = 1;
+				} elsif ($type == 3) {
+					print "Player Teleported: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'});
+					$players{$ID}{'teleported'} = 1;
+				} else {
+					print "Player Disappeared in an unknown way: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'});
+					$players{$ID}{'disappeared'} = 1;
 				}
 
 				%{$players_old{$ID}} = %{$players{$ID}};
@@ -5347,6 +5346,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			if ($type == 2) {
 				print "Player Disconnected: $players_old{$ID}{'name'}\n" if $config{'debug'};
 				$players_old{$ID}{'disconnected'} = 1;
+			} elsif ($type == 3) {
+				print "Player Teleported: $players_old{$ID}{'name'}\n" if $config{'debug'};
+				$players_old{$ID}{'teleported'} = 1;
 			}
 		} elsif (%{$portals{$ID}}) {
 			print "Portal Disappeared: $portals{$ID}{'name'} ($portals{$ID}{'binID'})\n" if ($config{'debug'});
@@ -5370,7 +5372,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Unknown Disappeared: ".getHex($ID)."\n" if $config{'debug'};
 		}
 		$msg_size = 7;
-		
+$config{'debug'} = 0;
 	} elsif ($switch eq "0081") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		$conState = 1;
