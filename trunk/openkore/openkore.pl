@@ -25,17 +25,17 @@ srand();
 ##### CHECK FOR THE XSTOOL LIBRARY #####
 
 BEGIN {
-	if ($^O ne 'MSWin32') {
-		# If we're on Unix, attempt to compile XSTools.so if it isn't available
-		my $found = 0;
-		foreach (@INC) {
-			if (-f "$_/XSTools.so") {
-				$found = 1;
-				last;
-			}
+	my $libName = $^O eq 'MSWin32' ? 'XSTools.dll' : 'XSTools.so';
+	my $libFound = 0;
+	foreach (@INC) {
+		if (-f "$_/$libName") {
+			$found = 1;
+			last;
 		}
-
-		if (!$found) {
+	}
+	if (!$found) {
+		if ($^O ne 'MSWin32') {
+			# If we're on Unix, attempt to compile XSTools.so if it isn't available
 			my $ret = system('gmake', '-C', 'tools');
 			if ($ret != 0) {
 				if (($ret & 127) == 2) {
@@ -46,11 +46,11 @@ BEGIN {
 					exit 1;
 				}
 			}
+		} else {
+			print STDERR "Error: XSTools.dll is not found. Please check your installation.\n";
+			<STDIN>;
+			exit 1;
 		}
-	} elsif (! -f "tools\\XSTools.dll") {
-		print STDERR "Error: XSTools.dll is not found. Please check your installation.\n";
-		<STDIN>;
-		exit 1;
 	}
 }
 
