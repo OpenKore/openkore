@@ -8,8 +8,6 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#
-#
 #  $Revision$
 #  $Id$
 #
@@ -31,12 +29,11 @@ use strict;
 no strict 'refs';
 use warnings;
 use Exporter;
-use Settings;
+use base qw(Exporter);
+use Globals;
 use Utils;
 use Log;
 
-our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(loadAll load unload register registered addHook delHook callHook);
 
 our @plugins;
 our %hooks;

@@ -32,7 +32,7 @@ use warnings;
 use Interface;
 use base qw(Interface);
 use Modules;
-use Settings;
+use Globals;
 
 
 sub new {

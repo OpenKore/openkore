@@ -54,13 +54,11 @@ package IPC;
 
 use strict;
 use Exporter;
+use base qw(Exporter);
 use IO::Socket::INET;
-use Settings;
-use Log;
+use Globals;
+use Log qw(message error debug);
 use Utils;
-
-our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(start stop iterate);
 
 our $server;
 our @clients;
@@ -83,7 +81,7 @@ sub start {
 		Proto		=> 'tcp',
 		ReuseAddr	=> 1);
 	if (!$server) {
-		Log::error("Unable to create IPC socket at port $port: $@\n");
+		error("Unable to create IPC socket at port $port: $@\n", "ipc", 1);
 		return 0;
 	}
 	return 1;
@@ -144,7 +142,7 @@ sub iterate {
 		my $client = $server->accept;
 		$client->autoflush(0);
 		push @clients, $client;
-		Log::debug("New client: " . $client->peerhost . "\n", "ipc");
+		debug("New client: " . $client->peerhost . "\n", "ipc");
 	}
 
 	# Check for input from clients
@@ -179,7 +177,7 @@ sub iterate {
 
 		# Client disconnected
 		if ($disconnected || select(undef, undef, $bits, 0)) {
-			Log::debug("Client " . $client->peerhost . " disconnected", "ipc");
+			debug("Client " . $client->peerhost . " disconnected", "ipc");
 			delete $clients[$i];
 		}
 		$i++;
@@ -239,7 +237,7 @@ sub broadcast {
 	foreach my $client (@clients) {
 		next if (!defined $client);
 		if (!sendData($client, $data)) {
-			Log::debug("Client " . $client->peerhost . " disconnected", "ipc");
+			debug("Client " . $client->peerhost . " disconnected", "ipc");
 			delete $clients[$i];
 		}
 		$i++;

@@ -29,19 +29,16 @@ use IO::Socket;
 use IO::Select;
 use Time::HiRes qw(time usleep);
 use Term::Cap;
-use POSIX qw(:termios_h);
-require 'sys/ioctl.ph';
+use POSIX;
+import POSIX qw(:termios_h);
 
-use Settings;
+use Globals;
 use Utils;
-use Interface::Console;
-
 use base qw(Interface::Console);
 
 
 our %fgcolors;
 our %bgcolors;
-
 our ($width, $height);
 
 
@@ -49,7 +46,7 @@ our ($width, $height);
 
 sub getTerminalSize {
 	my $data = ' ' x 8;
-	my $result = ioctl (STDOUT, TIOCGWINSZ(), $data);
+	my $result = ioctl(STDOUT, TIOCGWINSZ(), $data);
 	if (defined $result && $result == 0) {
 		($width, $height) = unpack("ss", $data);
 	} else {
@@ -58,10 +55,6 @@ sub getTerminalSize {
 	}
 }
 
-sub MODINIT {
-	$SIG{WINCH} = \&getTerminalSize;
-	getTerminalSize();
-}
 
 # Move cursor to left
 sub cursorLeft {
@@ -100,30 +93,55 @@ sub delLine {
 
 sub new {
 	my %interface = ();
-	my $term;
 
-	$interface{select} = IO::Select->new(\*STDIN);
 	$interface{input} = {};
 	$interface{input}{buf} = '';
 	$interface{input}{pos} = 0;
 
-	$term = new POSIX::Termios;
-	$interface{term} = $term;
-	$term->getattr(fileno(STDIN));
-	$interface{oterm} = $term->getlflag();
+	if (POSIX::ttyname(0)) {
+		$interface{select} = IO::Select->new(\*STDIN);
 
-	# Set terminal on noecho and CBREAK
-	my $echo = ECHO | ECHOK | ICANON;
-	my $noecho = $interface{oterm} & ~$echo;
-	$term->setlflag($noecho);
-	$term->setcc(VTIME, 1);
-	$term->setattr(fileno(STDIN), TCSANOW);
+		eval 'require "sys/ioctl.ph";';
+		if ($@) {
+		print "$@\n";
+			$interface{inputMode} = 'static';
 
-	# Setup termcap
-	my $OSPEED = $term->getospeed;
-	$interface{cap} = Term::Cap->Tgetent({ OSPEED => $OSPEED });
+		} else {
+			$interface{inputMode} = 'dynamic';
 
-	getTerminalSize();
+			my $term = new POSIX::Termios;
+			if (!$term) {
+				$interface{inputMode} = 'static';
+				goto THE_END;
+			}
+			$interface{term} = $term;
+			$term->getattr(fileno(STDIN));
+			$interface{oterm} = $term->getlflag();
+
+			# Set terminal on noecho and CBREAK
+			my $echo = ECHO | ECHOK | ICANON;
+			my $noecho = $interface{oterm} & ~$echo;
+			$term->setlflag($noecho);
+			$term->setcc(VTIME, 1);
+			$term->setattr(fileno(STDIN), TCSANOW);
+
+			# Setup termcap
+			my $OSPEED = $term->getospeed;
+			$interface{cap} = Term::Cap->Tgetent({ OSPEED => $OSPEED });
+
+			$interface{WINCH} = $SIG{WINCH};
+			$SIG{WINCH} = \&getTerminalSize;
+			getTerminalSize();
+		}
+		
+		THE_END: {
+			# Do nothing
+		};
+
+	} else {
+		$interface{inputMode} = 'none';
+	}
+
 	STDOUT->autoflush(0);
 
 	bless \%interface, __PACKAGE__;
@@ -133,18 +151,22 @@ sub new {
 sub DESTROY {
 	my $self = $_[0];
 
-	$self->{term}->setlflag($self->{oterm});
-	$self->{term}->setcc(VTIME, 0);
-	$self->{term}->setattr(fileno(STDIN), TCSANOW);
+	if ($self->{inputMode} eq 'dynamic') {
+		$self->{term}->setlflag($self->{oterm});
+		$self->{term}->setcc(VTIME, 0);
+		$self->{term}->setattr(fileno(STDIN), TCSANOW);
+		delete $SIG{WINCH};
+		$SIG{WINCH} = $self->{WINCH};
+	}
 
+	delete $self->{select};
 	$self->color('reset');
-	delete $SIG{WINCH};
 	STDOUT->autoflush(1);
 }
 
 
-# Insert a substring into a string.
 # insert(str, pos, substr)
+# Insert a substring into a string.
 sub insert {
 	my $i = $_[1];
 	$i = 0 if ($i < 0);
@@ -152,8 +174,8 @@ sub insert {
 	$_[0] = substr($_[0], 0, $i) . $_[2] . substr($_[0], $i);
 }
 
-# Delete a substring from a string.
 # strdel(str, pos, length)
+# Delete a substring from a string.
 sub strdel {
 	return if ($_[1] > length($_[0]) || $_[2] <= 0);
 	my $p = $_[1];
@@ -176,6 +198,15 @@ sub readEvents {
 	my $interface = shift;
 	my %input = %{$interface->{input}};
 	my $entered = undef;
+
+	if ($interface->{inputMode} eq 'static') {
+		if ($interface->{select}->can_read(0)) {
+			return <STDIN>;
+		} else {
+			return undef;
+		}
+	}
+
 
 	while ($interface->{select}->can_read(0)) {
 		my $key = '';
@@ -354,6 +385,8 @@ sub getInput {
 	my $timeout = shift;
 	my $msg;
 
+	return undef if ($class->{inputMode} eq 'none');
+
 	if ($timeout < 0) {
 		$msg = $class->readEvents until defined($msg);
 
@@ -384,7 +417,7 @@ sub writeOutput {
 	my $domain = shift;
 
 	# This code keeps the input prompt visible even on output
-	if (length $class->{input}{buf} == 0) {
+	if ($class->{inputMode} eq 'static' || length $class->{input}{buf} == 0) {
 		# Just print our message if there is no input buffer
 		setColor($type, $domain);
 		print $message;

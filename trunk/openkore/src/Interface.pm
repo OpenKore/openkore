@@ -48,8 +48,9 @@ END {
 }
 
 ##
-# $interface->switchInterface(new_interface)
+# $interface->switchInterface(new_interface, die)
 # new_interface: The name of the interface to be swiched to.
+# die: Whether to die if we fail to load the new interface.
 # Returns: The newly created interface object on success, or the previous
 #          interface object on failure.
 #
@@ -59,16 +60,18 @@ END {
 sub switchInterface {
 	my $self = shift;
 	my $new_if_name = shift;
+	my $die = shift;
+
 	eval "use Interface::$new_if_name;";
 	if ($@) {
+		die $@ if ($die);
 		Log::error("Failed to load $new_if_name: $@\n");
 		return $self;
 	}
+
 	my $new_interface = eval "new Interface::$new_if_name;";
-	if (!defined($new_interface)) {
-		Log::error("Failed to create $new_if_name: $@\n");
-		return $self;
-	} elsif ($@) {
+	if (!defined($new_interface) || $@) {
+		die $@ if ($die);
 		Log::error("Failed to create $new_if_name: $@\n");
 		return $self;
 	}

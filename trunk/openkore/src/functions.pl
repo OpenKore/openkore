@@ -291,7 +291,7 @@ sub mainLoop {
 		$oldChar = $config{'char'};
 
 		$Settings::config_file = $file;
-		$parseFiles[0]{'file'} = $file;
+		$Settings::configFiles[0]{'file'} = $file;
 		parseDataFile2($file, \%config);
 
 		if ($oldMasterHost ne $config{"master_host_$config{'master'}"}
@@ -337,7 +337,6 @@ sub parseInput {
 	$XKore_dontRedirect = 1 if ($config{XKore});
 
 	# Check if in special state
-
 	if (!$config{'XKore'} && $conState == 2 && $waitingForInput) {
 		configModify('server', $input, 1);
 		$waitingForInput = 0;
@@ -1691,7 +1690,7 @@ sub parseCommand {
 
 	} elsif ($switch eq "reload") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		parseReload($arg1);
+		Settings::parseReload($arg1);
 
 	} elsif ($switch eq "relog") {
 		relog();
@@ -2449,7 +2448,7 @@ sub AI {
 				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("quitS"), $cmd{'user'}) if $config{'verbose'};
 				$timeout{'ai_thanks_set'}{'time'} = time;
 			} elsif ($cmd{'msg'} =~ /\breload\b/i) {
-				parseReload($');
+				Settings::parseReload($');
 				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("reloadS"), $cmd{'user'}) if $config{'verbose'};
 				$timeout{'ai_thanks_set'}{'time'} = time;
 			} elsif ($cmd{'msg'} =~ /\bstatus\b/i) {
@@ -11001,16 +11000,6 @@ sub killConnection {
 #######################################
 #######################################
 
-sub addParseFiles {
-	my $file = shift;
-	my $hash = shift;
-	my $function = shift;
-	$parseFiles[$parseFiles]{'file'} = $file;
-	$parseFiles[$parseFiles]{'hash'} = $hash;
-	$parseFiles[$parseFiles]{'function'} = $function;
-	$parseFiles++;
-}
-
 sub chatLog {
 	my $type = shift;
 	my $message = shift;
@@ -11118,6 +11107,8 @@ sub getField {
 	$$r_hash{'rawMap'} = $data;
 	$$r_hash{'binMap'} = pack('b*', $data);
 	$$r_hash{'field'} = [unpack("C*", $data)];
+
+
 	(my $dist_file = $file) =~ s/\.fld$/.dist/i;
 	if (-e $dist_file) {
 		open FILE, "<", $dist_file;
@@ -11279,60 +11270,6 @@ sub getResponse {
 	$msg = $responses{$keys[int(rand(@keys))]};
 	$msg =~ s/\%\$(\w+)/$responseVars{$1}/eig;
 	return $msg;
-}
-
-sub load {
-	my $r_array = shift;
-
-	Plugins::callHook('preloadfiles', {files => $r_array});
-	foreach (@{$r_array}) {
-		if (-e $$_{'file'}) {
-			message("Loading $$_{'file'}...\n", "load");
-		} else {
-			error("Error: Couldn't load $$_{'file'}\n", "load");
-		}
-		&{$$_{'function'}}("$$_{'file'}", $$_{'hash'});
-	}
-	Plugins::callHook('postloadfiles', {files => $r_array});
-}
-
-sub parseReload {
-	my $temp = shift;
-	my @temp;
-	my %temp;
-	my $temp2;
-	my $qm;
-	my $except;
-	my $found;
-	while ($temp =~ /(\w+)/g) {
-		$temp2 = $1;
-		$qm = quotemeta $temp2;
-		if ($temp2 eq "all") {
-			foreach (@parseFiles) {
-				$temp{$$_{'file'}} = $_;
-			}
-		} elsif ($temp2 eq "plugins") {
-			message("Reloading all plugins...\n", "load");
-			Plugins::unloadAll();
-			Plugins::loadAll();
-		} elsif ($temp2 =~ /\bexcept\b/i || $temp2 =~ /\bbut\b/i) {
-			$except = 1;
-		} else {
-			if ($except) {
-				foreach (@parseFiles) {
-					delete $temp{$$_{'file'}} if $$_{'file'} =~ /$qm/i;
-				}
-			} else {
-				foreach (@parseFiles) {
-					$temp{$$_{'file'}} = $_ if $$_{'file'} =~ /$qm/i;
-				}
-			}
-		}
-	}
-	foreach my $f (keys %temp) {
-		$temp[@temp] = $temp{$f};
-	}
-	load(\@temp);
 }
 
 sub updateDamageTables {

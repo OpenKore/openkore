@@ -1,6 +1,5 @@
 #########################################################################
 #  OpenKore - Settings
-#  This module defines configuration variables and filenames of data files.
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -8,8 +7,6 @@
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
-#
-#
 #
 #  $Revision$
 #  $Id$
@@ -20,14 +17,14 @@ package Settings;
 
 use strict;
 use Exporter;
+use base qw(Exporter);
 use Getopt::Long;
-# NOTE: do not use any other Kore modules here. It will create circular dependancies.
+use Globals;
+use Plugins;
+use Utils;
+use Log;
 
-our @ISA = ("Exporter");
-our @EXPORT_OK = qw(parseArguments);
-our @EXPORT = qw($buildType
-	%config %consoleColors %timeout %npcs_lut %maps_lut
-	@parseFiles $parseFiles);
+our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile);
 
 
 # Constants
@@ -38,16 +35,8 @@ our $versionText = "*** $NAME $VERSION - Custom Ragnarok Online client ***\n*** 
 our $welcomeText = "Welcome to X-$NAME.";
 our $MAX_READ = 30000;
 
-# Configuration variables
-our $buildType;
+# Commandline arguments
 our $daemon;
-our %config;
-our %consoleColors;
-our %timeout;
-our %npcs_lut;
-our %maps_lut;
-
-# Data files and folders
 our $control_folder;
 our $tables_folder;
 our $logs_folder;
@@ -63,21 +52,12 @@ our $def_field;
 our $monster_log;
 our $default_interface;
 
-our @parseFiles;
-our $parseFiles;
+# Configuration files and associated file parsers
+our @configFiles;
 
-
-BEGIN {
-	if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
-		$buildType = 0;
-	} else {
-		$buildType = 1;
-	}
-}
 
 sub MODINIT {
 	$daemon = 0;
-	$parseFiles = 0;
 	$control_folder = "control";
 	$tables_folder = "tables";
 	$logs_folder = "logs";
@@ -151,10 +131,87 @@ sub parseArguments {
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
 			print "Error: unable to create folder $logs_folder ($!)\n";
-			<STDIN> if ($buildType == 0);
+			<STDIN>;
 			exit 1;
 		}
 	}
+}
+
+
+sub addConfigFile {
+	my ($file, $hash, $func) = @_;
+	my %item;
+
+	$item{file} = $file;
+	$item{hash} = $hash;
+	$item{func} = $func;
+	return binAdd(\@configFiles, \%item);
+}
+
+sub delConfigFile {
+	my $ID = shift;
+	delete $configFiles[$ID];
+}
+
+sub load {
+	my $r_array = shift;
+	$r_array = \@configFiles if (!$r_array);
+
+	Plugins::callHook('preloadfiles', {files => $r_array});
+	foreach (@{$r_array}) {
+		if (-f $$_{file}) {
+			Log::message("Loading $$_{file}...\n", "load");
+		} else {
+			Log::error("Error: Couldn't load $$_{file}\n", "load");
+		}
+		$_->{func}->($_->{file}, $_->{hash});
+	}
+	Plugins::callHook('postloadfiles', {files => $r_array});
+}
+
+sub parseReload {
+	my $temp = shift;
+	my @temp;
+	my %temp;
+	my $temp2;
+	my $qm;
+	my $except;
+	my $found;
+
+	while ($temp =~ /(\w+)/g) {
+		$temp2 = $1;
+		$qm = quotemeta $temp2;
+		if ($temp2 eq "all") {
+			foreach (@configFiles) {
+				$temp{$_->{file}} = $_;
+			}
+
+		# FIXME: This belongs somewhere else
+		} elsif ($temp2 eq "plugins") {
+			message("Reloading all plugins...\n", "load");
+			Plugins::unloadAll();
+			Plugins::loadAll();
+
+		} elsif ($temp2 =~ /\bexcept\b/i || $temp2 =~ /\bbut\b/i) {
+			$except = 1;
+
+		} else {
+			if ($except) {
+				foreach (@configFiles) {
+					delete $temp{$_->{file}} if $_->{file} =~ /$qm/i;
+				}
+			} else {
+				foreach (@configFiles) {
+					$temp{$_->{file}} = $_ if $_->{file} =~ /$qm/i;
+				}
+			}
+		}
+	}
+
+	foreach my $f (keys %temp) {
+		$temp[@temp] = $temp{$f};
+	}
+	load(\@temp);
 }
 
 

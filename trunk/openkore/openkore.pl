@@ -39,7 +39,7 @@ Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers));
 srand(time());
 Settings::parseArguments();
 
-$interface = $interface->switchInterface($Settings::default_interface);
+$interface = $interface->switchInterface($Settings::default_interface, 1);
 
 Log::message("$Settings::versionText\n");
 
@@ -52,45 +52,46 @@ Plugins::callHook('start');
 
 ##### PARSE CONFIGURATION AND DATA FILES #####
 
-addParseFiles($Settings::config_file, \%config,\&parseDataFile2);
-addParseFiles($Settings::items_control_file, \%items_control,\&parseItemsControl);
-addParseFiles($Settings::mon_control_file, \%mon_control, \&parseMonControl);
-addParseFiles("$Settings::control_folder/overallauth.txt", \%overallAuth, \&parseDataFile);
-addParseFiles($Settings::pickupitems_file, \%itemsPickup, \&parseDataFile_lc);
-addParseFiles("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
-addParseFiles("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
-addParseFiles($Settings::shop_file, \%shop, \&parseDataFile2);
-addParseFiles("$Settings::control_folder/chat_resp.txt", \%chat_resp, \&parseDataFile2);
-addParseFiles("$Settings::control_folder/avoid.txt", \%avoid, \&parseDataFile2);
-addParseFiles("$Settings::control_folder/priority.txt", \%priority, \&parsePriority);
-addParseFiles("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
+import Settings qw(addConfigFile);
+addConfigFile($Settings::config_file, \%config,\&parseDataFile2);
+addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
+addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
+addConfigFile("$Settings::control_folder/overallauth.txt", \%overallAuth, \&parseDataFile);
+addConfigFile($Settings::pickupitems_file, \%itemsPickup, \&parseDataFile_lc);
+addConfigFile("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
+addConfigFile("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
+addConfigFile($Settings::shop_file, \%shop, \&parseDataFile2);
+addConfigFile("$Settings::control_folder/chat_resp.txt", \%chat_resp, \&parseDataFile2);
+addConfigFile("$Settings::control_folder/avoid.txt", \%avoid, \&parseDataFile2);
+addConfigFile("$Settings::control_folder/priority.txt", \%priority, \&parsePriority);
+addConfigFile("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
 
-addParseFiles("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
-addParseFiles("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
-addParseFiles("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
-addParseFiles("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
-addParseFiles("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
-addParseFiles("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
-addParseFiles("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
-addParseFiles("$Settings::tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
-addParseFiles("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
-addParseFiles("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
-addParseFiles("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
-addParseFiles("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
-addParseFiles("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
-addParseFiles("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
-addParseFiles("$Settings::tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
-addParseFiles("$Settings::tables_folder/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
-addParseFiles("$Settings::tables_folder/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
-addParseFiles("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
-addParseFiles("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
-addParseFiles("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
-addParseFiles("$Settings::tables_folder/cards.txt", \%cards_lut, \&parseROLUT);
-addParseFiles("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
-addParseFiles("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
+addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
+addConfigFile("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
+addConfigFile("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
+addConfigFile("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
+addConfigFile("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
+addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
+addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
+addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
+addConfigFile("$Settings::tables_folder/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
+addConfigFile("$Settings::tables_folder/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
+addConfigFile("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
+addConfigFile("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
+addConfigFile("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/cards.txt", \%cards_lut, \&parseROLUT);
+addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
+addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
 
 Plugins::callHook('start2');
-load(\@parseFiles);
+Settings::load();
 Plugins::callHook('start3');
 
 
