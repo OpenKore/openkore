@@ -31,7 +31,7 @@ ai_attack_waitAfterKill 0.7
 ai_attack_unstuck 1.5
 
 # When your monster died, start checking for loot after x seconds
-ai_items_take_start 0.2
+ai_items_take_start 0.5
 # Stop checking for loot x seconds after it has begun checking.
 ai_items_take_end 1.5
 
