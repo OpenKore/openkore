@@ -1727,28 +1727,47 @@ sub parseCommand {
 		$job_string = $chars[$config{'char'}]{'exp_job'}."/".$chars[$config{'char'}]{'exp_job_max'}." /$jobEXPKill ("
 				.sprintf("%.2f",$chars[$config{'char'}]{'exp_job'}/$chars[$config{'char'}]{'exp_job_max'} * 100)
 				."%)" if $chars[$config{'char'}]{'exp_job_max'};
-		$weight_string = $chars[$config{'char'}]{'weight'}."/".$chars[$config{'char'}]{'weight_max'}." ("
-				.int($chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100)
-				."%)" if $chars[$config{'char'}]{'weight_max'};
+		$weight_string = $chars[$config{'char'}]{'weight'}."/".$chars[$config{'char'}]{'weight_max'} .
+				" (" . sprintf("%.1f", $chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100)
+				. "%)"
+				if $chars[$config{'char'}]{'weight_max'};
 		$job_name_string = "$jobs_lut{$chars[$config{'char'}]{'jobID'}} $sex_lut{$chars[$config{'char'}]{'sex'}}";
 		$zeny_string = formatNumber($chars[$config{'char'}]{'zenny'}) if (defined($chars[$config{'char'}]{'zenny'}));
 
-		message("-----------Status-----------\n", "info");
+		message("-----------------Status-----------------\n", "info");
 		message(swrite(
-			"@<<<<<<<<<<<<<<<<<<<<<<<< HP: @<<<<<<<<<<<<<<<<<<",
+			"@<<<<<<<<<<<<<<<<<<<<<<<<<<   HP: @<<<<<<<<<<<<<<<<<<",
 			[$chars[$config{'char'}]{'name'}, $hp_string],
-			"@<<<<<<<<<<<<<<<<<<<<<<<< SP: @<<<<<<<<<<<<<<<<<<",
+			"@<<<<<<<<<<<<<<<<<<<<<<<<<<   SP: @<<<<<<<<<<<<<<<<<<",
 			[$job_name_string, $sp_string],
 			"Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
 			[$chars[$config{'char'}]{'lv'}, $base_string],
 			"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
 			[$chars[$config{'char'}]{'lv_job'}, $job_string],
-			"Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<",
+			"Weight: @>>>>>>>>>>>>>>>>>>   Zenny: @<<<<<<<<<<<<<<",
 			[$weight_string, $zeny_string]),
 			"info");
 
-		message("----------------------------\n", "info");
-		printStat();
+		my $activeSkills = 'none';
+		if (defined $chars[$config{char}]{statuses} && %{$chars[$config{char}]{statuses}}) {
+			$activeSkills = join(", ", keys %{$chars[$config{char}]{statuses}});
+		}
+		message("Special status: $activeSkills\n", "info");
+		message("----------------------------------------\n", "info");
+
+		my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
+		my $totalelasped_string = sprintf("%.2f", $totalelasped);
+		my $elasped_string = sprintf("%.2f", $elasped);
+
+		message(swrite(
+			"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<",
+			[$totaldmg, $dmgpsec_string],
+			"Total Time spent (sec): @>>>>>>>>",
+			[$totalelasped_string],
+			"Last Monster took (sec): @>>>>>>>",
+			[$elasped_string]),
+			"info");
+		message("----------------------------------------\n", "info");
 
 	} elsif ($switch eq "sell") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
@@ -3529,7 +3548,10 @@ sub AI {
 				&& $config{"useSelf_item_$i"."_minAggressives"} <= ai_getAggressives()
 				&& (!$config{"useSelf_item_$i"."_maxAggressives"} || $config{"useSelf_item_$i"."_maxAggressives"} >= ai_getAggressives()) 
 				&& timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
-				&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'})))
+				&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
+				&& (!$config{"useSelf_item_$i"."_whenStatusActive"} || ($config{"useSelf_item_$i"."_whenStatusActive"} && $chars[$config{char}]{statuses}{$config{"useSelf_item_$i"."_whenStatusActive"}}))
+				&& (!$config{"useSelf_item_$i"."_whenStatusInactive"} || ($config{"useSelf_item_$i"."_whenStatusInactive"} && $chars[$config{char}]{statuses}{$config{"useSelf_item_$i"."_whenStatusInactive"}}))
+				)
 				{
 				undef $ai_v{'temp'}{'invIndex'};
 				$ai_v{'temp'}{'invIndex'} = findIndexStringList_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_$i"});
@@ -3609,7 +3631,10 @@ sub AI {
 			 && !($config{"useSelf_skill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
 			 && (!$config{"useSelf_skill_$i"."_inLockOnly"} || ($config{"useSelf_skill_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))
 			 && $config{"useSelf_skill_$i"."_minAggressives"} <= ai_getAggressives()
-			 && (!$config{"useSelf_skill_$i"."_maxAggressives"} || $config{"useSelf_skill_$i"."_maxAggressives"} >= ai_getAggressives())) {
+			 && (!$config{"useSelf_skill_$i"."_maxAggressives"} || $config{"useSelf_skill_$i"."_maxAggressives"} >= ai_getAggressives())
+			 && (!$config{"useSelf_skill_$i"."_whenStatusActive"} || ($config{"useSelf_skill_$i"."_whenStatusActive"} && $chars[$config{char}]{statuses}{$config{"useSelf_skill_$i"."_whenStatusActive"}}))
+			 && (!$config{"useSelf_skill_$i"."_whenStatusInactive"} || ($config{"useSelf_skill_$i"."_whenStatusInactive"} && $chars[$config{char}]{statuses}{$config{"useSelf_skill_$i"."_whenStatusInactive"}}))
+			) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
 				$ai_v{'useSelf_skill_lvl'} = $config{"useSelf_skill_$i"."_lvl"};
@@ -5346,6 +5371,11 @@ sub parseSendMsg {
 # prepended to the fresh data received from the RO server and then passed to
 # parseMsg again.
 # See also the main loop about how parseMsg's return value is treated.
+
+# Types:
+# w -> word (2-byte unsigned integer)
+# l -> long (4-byte unsigned integer)
+# b -> byte (1-byte character)
 sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
@@ -6280,6 +6310,7 @@ sub parseMsg {
 			$ai_v{"useSelf_skill_$i"."_time"} = 0;
 			$i++;
 		}
+		undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -7639,11 +7670,11 @@ sub parseMsg {
 		$domain = "skill" if (($source eq "You") || ($target eq "You"));
 
 		if ($damage == 0) {
-			$domain = "attackMonMiss" if (($source eq "You") && ($target ne "Self"));
+			$domain = "attackMonMiss" if (($source eq "You") && ($target ne "yourself"));
 			$domain = "attackedMiss" if (($source ne "You") && ($target eq "You"));
 
 		} elsif ($damage != 35536) {
-			$domain = "attackMon" if (($source eq "You") && ($target ne "Self"));
+			$domain = "attackMon" if (($source eq "You") && ($target ne "yourself"));
 			$domain = "attacked" if (($source ne "You") && ($target eq "You"));
 		}
 
@@ -8379,6 +8410,26 @@ sub parseMsg {
 			($players{$ID}{'guild'}{'name'}) = substr($msg, 54, 24) =~ /([\s\S]*?)\000/;
 			($players{$ID}{'guild'}{'men'}{$players{$ID}{'name'}}{'title'}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
 			debug "Player Info: $players{$ID}{'name'} ($players{$ID}{'binID'})\n", "parseMsg", 2;
+		}
+
+	} elsif ($switch eq "0196") {
+		# 0196 - type: word, ID: long, flag: bool
+		# This packet tells you about character statuses (such as when blessing or poison is (de)activated)
+                my $type = unpack("S1", substr($msg, 2, 2));
+                my $ID = substr($msg, 4, 4);
+                my $flag = unpack("C1", substr($msg, 8, 1));
+
+		if ($ID eq $accountID) {
+			my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
+			if ($flag) {
+				# Skill activated
+				$chars[$config{char}]{statuses}{$skillName} = 1;
+
+			} else {
+				# Skill de-activate (expired)
+				delete $chars[$config{char}]{statuses}{$skillName};
+				message "$skillName deactivated\n";
+			}
 		}
 
 	} elsif ($switch eq "019B") {
@@ -11675,22 +11726,6 @@ sub monKilled {
 	}
 }
 
-sub printStat {
-	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
-	my $totalelasped_string = sprintf("%.2f", $totalelasped);
-	my $elasped_string = sprintf("%.2f", $elasped);
-
-	message(swrite(
-		"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<",
-		[$totaldmg, $dmgpsec_string],
-		"Total Time spent (sec): @>>>>>>>>",
-		[$totalelasped_string],
-		"Last Monster took (sec): @>>>>>>>",
-		[$elasped_string]),
-		"info");
-	message("----------------------------\n", "info");
-}
-
 sub findIndexString_lc_not_equip {
 	my $r_array = shift;
 	my $match = shift;
@@ -11758,7 +11793,7 @@ sub getActorNames {
 
 	my $source = getActorName($sourceID);
 	my $uses = $source eq 'You' ? 'use' : 'uses';
-	my $target = $targetID eq $sourceID ? 'self' : getActorName($targetID);
+	my $target = $targetID eq $sourceID ? 'yourself' : getActorName($targetID);
 
 	return ($source, $uses, $target);
 }

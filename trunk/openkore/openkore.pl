@@ -84,6 +84,7 @@ addParseFiles("$Settings::tables_folder/skills.txt", \%skillsID_lut, \&parseSkil
 addParseFiles("$Settings::tables_folder/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
 addParseFiles("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
 addParseFiles("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
+addParseFiles("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
 addParseFiles("$Settings::tables_folder/cards.txt", \%cards_lut, \&parseROLUT);
 addParseFiles("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
 addParseFiles("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
