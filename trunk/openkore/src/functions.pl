@@ -8918,7 +8918,7 @@ sub parseMsg {
 			my $amount = $item->{amount} - $amountleft;
 			$item->{amount} -= $amount;
 
-			message("You used Item: $item->{name} ($invIndex) x $amount\n", "useItem", 1);
+			message("You used Item: $item->{name} ($invIndex) x $amount - $amountleft left\n", "useItem", 1);
 			if ($item->{amount} <= 0) {
 				delete $char->{inventory}[$invIndex];
 			}
