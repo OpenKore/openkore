@@ -11,6 +11,7 @@
 
 use Time::HiRes qw(time usleep);
 use IO::Socket;
+use Text::ParseWords;
 use Config;
 eval "no utf8;";
 use bytes;
@@ -1538,7 +1539,7 @@ sub parseCommand {
 		} elsif ($arg1 =~ /^\d+$/) {
 			sendTalk(\$remote_socket, $npcsID[$arg1]);
 
-		} elsif (($arg1 eq "resp" || $arg1 eq "num") && !%talk) {
+		} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
 			error	"Error in function 'talk resp' (Respond to NPC)\n" .
 				"You are not talking to any NPC.\n";
 
@@ -1574,6 +1575,15 @@ sub parseCommand {
 		} elsif ($arg1 eq "num" && $arg2 =~ /^\d$/) {
 			sendTalkNumber(\$remote_socket, $talk{'ID'}, $arg2);
 
+		} elsif ($arg1 eq "text") {
+			($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (.*)/;
+			if ($arg2 eq "") {
+				error "Error in function 'talk text' (Respond to NPC)\n" .
+					"You must specify a string.\n";
+			} else {
+				sendTalkText(\$remote_socket, $talk{'ID'}, $arg2);
+			}
+			
 		} elsif ($arg1 eq "cont" && !%talk) {
 			error	"Error in function 'talk cont' (Continue Talking to NPC)\n" .
 				"You are not talking to any NPC.\n";
@@ -2423,7 +2433,7 @@ sub AI {
 				$ai_seq_args[0]{'ID'} = $npc;
 				$ai_seq_args[0]{'name'} = $npcs{$npc}{'name'};
 				$ai_seq_args[0]{'stage'} = 'Talking to NPC';
-				@{$ai_seq_args[0]{'steps'}} = split /\s+/, "w3 x $ai_seq_args[0]{'sequence'}";
+				@{$ai_seq_args[0]{'steps'}} = parse_line('\s+', 0, "w3 x $ai_seq_args[0]{'sequence'}");
 				undef $ai_seq_args[0]{'time'};
 				undef $ai_v{'npc_talk'}{'time'};
 
@@ -2438,7 +2448,7 @@ sub AI {
 				     		$ai_seq_args[0]{'ID'} = $npc;
 					     	$ai_seq_args[0]{'name'} = $npcs{$npc}{'name'};
 						$ai_seq_args[0]{'stage'} = 'Talking to NPC';
-						@{$ai_seq_args[0]{'steps'}} = split /\s+/, "w3 x $ai_seq_args[0]{'sequence'}";
+						@{$ai_seq_args[0]{'steps'}} = parse_line('\s+', 0, "w3 x $ai_seq_args[0]{'sequence'}");
 						undef $ai_seq_args[0]{'time'};
 						undef $ai_v{'npc_talk'}{'time'};
 						last;
@@ -2468,6 +2478,8 @@ sub AI {
 				my $time = $1;
 				$ai_v{'npc_talk'}{'time'} = time + $time;
 				$ai_seq_args[0]{'time'}   = time + $time;
+			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^t=(.*)/i ) {
+				sendTalkText(\$remote_socket, $ai_seq_args[0]{'ID'}, $1);
 			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /x/i ) {
 				sendTalk(\$remote_socket, $ai_seq_args[0]{'ID'});
 			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /c/i ) {
@@ -7828,7 +7840,13 @@ sub parseMsg {
 			$chars[$config{char}]{spirits} = unpack("S1",substr($msg, 6, 2));
 			message "You have $chars[$config{char}]{spirits} spirit(s) now\n", "parseMsg_statuslook", 1;
 		}
-	
+	} elsif ($switch eq "01D4") {
+		# NPC requested a text string reply
+		my $ID = substr($msg, 2, 4);
+		message "$npcs{$ID}{'name'} : Type 'talk text' (Respond to NPC)\n", "npc";
+		$ai_v{'npc_talk'}{'talk'} = 'text';
+		$ai_v{'npc_talk'}{'time'} = time;
+
 	} elsif ($switch eq "01D7") {
 		# Weapon Display (type - 2:hand eq, 9:foot eq)
 		my $sourceID = substr($msg, 2, 4);
@@ -8637,12 +8655,13 @@ sub ai_storageGet {
 #
 # $sequence is a list of whitespace-separated commands:
 # ~l
-# c  : Continue
-# r# : Select option # from menu.
-# n  : Stop talking to NPC.
-# b  : Send the "Show shop item list" (Buy) packet.
-# w# : Wait # seconds.
-# x  : Initialize conversation with NPC. Useful to perform multiple transaction with a single NPC.
+# c       : Continue
+# r#      : Select option # from menu.
+# n       : Stop talking to NPC.
+# b       : Send the "Show shop item list" (Buy) packet.
+# w#      : Wait # seconds.
+# x       : Initialize conversation with NPC. Useful to perform multiple transaction with a single NPC.
+# t="str" : send the text str to NPC, double quote is needed only if the string contains space 
 # ~l~
 #
 # Example:

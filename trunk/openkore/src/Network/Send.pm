@@ -116,6 +116,7 @@ our @EXPORT = qw(
 	sendTalkContinue
 	sendTalkResponse
 	sendTalkNumber
+	sendTalkText
 	sendTeleport
 	sendUnequip
 	sendWho
@@ -1158,6 +1159,15 @@ sub sendTalkNumber {
 			pack("L1", $number);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent talk number: ".getHex($ID).", $number\n", "sendPacket", 2;
+}
+
+sub sendTalkText {
+	my $r_socket = shift;
+	my $ID = shift;
+	my $input = shift;
+	my $msg = pack("C*", 0xD5, 0x01) . pack("S*", length($input)+length($ID)+5) . $ID . $input . chr(0);
+	sendMsgToServer($r_socket, $msg);
+	warning "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
 }
 
 sub sendTeleport {
