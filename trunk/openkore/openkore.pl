@@ -11380,19 +11380,21 @@ sub avoidGM_near {
 
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
-		#Check validity of GM 
-		$statusGM=0; 
-		$j = 0; 
-		while ($avoid{"avoid_$j"} ne "") { 
-			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_ignore_$j"}) 
-			{ 
-			$statusGM=1; 
-			} 
-		$j++; 
-		} 
-		undef $j; 
-		#Check ends 
-		if ($players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i && $statusGM eq 0) {
+
+		#Check validity of GM
+		my $statusGM = 1;
+		my $j = 0;
+		while ($avoid{"avoid_$j"} ne "") {
+			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_ignore_$j"})
+			{
+				$statusGM = 0;
+				last;
+			}
+			$j++;
+		}
+		#Check ends
+
+		if ($statusGM && $players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
 			chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
 			print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
@@ -11409,7 +11411,20 @@ sub avoidGM_talk($$) {
 	return if (!$config{'avoidGM_talk'});
 	my ($chatMsgUser, $chatMsg) = @_;
 
-	if ($chatMsgUser =~/GM(.*)\d{1,}/i) {
+	#Check validity of GM
+	my $statusGM = 1;
+	my $j = 0;
+	while ($avoid{"avoid_$j"} ne "") {
+		if ($chatMsgUser eq $avoid{"avoid_ignore_$j"})
+		{
+			$statusGM = 0;
+			last;
+		}
+		$j++;
+	}
+	#Check ends
+
+	if ($statusGM && $chatMsgUser =~/GM(.*)\d{1,}/i) {
 		print "Disconnecting to avoid GM!\n"; 
 		chatLog("s", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n"); 
 		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
