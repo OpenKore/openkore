@@ -31,6 +31,7 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
+use Network::Send;
 
 our @EXPORT = qw(
 	auth
@@ -38,6 +39,9 @@ our @EXPORT = qw(
 	setTimeout
 	saveConfigFile
 
+	debug_showSpots
+
+	calcAvoidArea
 	center
 	checkFieldWalkable
 	checkFollowMode
@@ -117,10 +121,92 @@ sub setTimeout {
 
 #######################################
 #######################################
+#DEBUGGING FUNCTIONS
+#######################################
+#######################################
+
+sub debug_showSpots {
+	return unless $config{XKore};
+	my $spots = shift;
+	my $i = 1554;
+	foreach (@{$spots}) {
+		next if !defined $_;
+		my $msg = pack("C*", 0x1F, 0x01)
+			. pack("L*", $i, $i)
+			. pack("S*", $_->{x}, $_->{y})
+			. pack("C*", 0x93, 0);
+		sendToClientByInject(\$remote_socket, $msg);
+		sendToClientByInject(\$remote_socket, $msg);
+		$i++;
+	}
+}
+
+
+#######################################
+#######################################
 # OTHER STUFF
 #######################################
 #######################################
 
+
+##
+# calcAvoidArea($x, $y, $radius)
+# Returns: an array with position hashes. Each has contains an x and a y key.
+#
+# You want to avoid the area with center ($x,$y) and radius $radius.
+# This function returns a list of blocks that you can possibly walk to,
+# in order to avoid that area.
+sub calcAvoidArea {
+	my ($x, $y, $radius) = @_;
+	my (%topLeft, %topRight, %bottomLeft, %bottomRight);
+		
+	sub capX {
+		return 0 if ($_[0] < 0);
+		return $field{width} - 1 if ($_[0] >= $field{width});
+		return int $_[0];
+	}
+	sub capY {
+		return 0 if ($_[0] < 0);
+		return $field{height} - 1 if ($_[0] >= $field{height});
+		return int $_[0];
+	}
+
+	# Get the avoid area as a rectangle
+	$topLeft{x} = capX($x - $radius);
+	$topLeft{y} = capY($y + $radius);
+	$topRight{x} = capX($x + $radius);
+	$topRight{y} = capY($y + $radius);
+	$bottomLeft{x} = capX($x - $radius);
+	$bottomLeft{y} = capY($y - $radius);
+	$bottomRight{x} = capX($x + $radius);
+	$bottomRight{y} = capY($y - $radius);
+
+	# Walk through the border of the rectangle
+	# Record the blocks that are walkable
+	my @walkableBlocks;
+	for (my $x = $topLeft{x}; $x <= $topRight{x}; $x++) {
+		if (checkFieldWalkable(\%field, $x, $topLeft{y})) {
+			push @walkableBlocks, {x => $x, y => $topLeft{y}};
+		}
+	}
+	for (my $x = $bottomLeft{x}; $x <= $bottomRight{x}; $x++) {
+		if (checkFieldWalkable(\%field, $x, $bottomLeft{y})) {
+			push @walkableBlocks, {x => $x, y => $bottomLeft{y}};
+		}
+	}
+	for (my $y = $bottomLeft{y} + 1; $y < $topLeft{y}; $y++) {
+		if (checkFieldWalkable(\%field, $topLeft{x}, $y)) {
+			push @walkableBlocks, {x => $topLeft{x}, y => $y};
+		}
+	}
+	for (my $y = $bottomRight{y} + 1; $y < $topRight{y}; $y++) {
+		if (checkFieldWalkable(\%field, $topLeft{x}, $y)) {
+			push @walkableBlocks, {x => $topRight{x}, y => $y};
+		}
+	}
+
+	return @walkableBlocks;
+}
 
 ##
 # center(string, width, [fill])
