@@ -4707,25 +4707,25 @@ sub AI {
 		}
 
 		##### TELEPORT SEARCH #####
-		if ($config{attackAuto} && $config{teleportAuto_search} && safe
-		&& ($field{name} eq $config{lockMap} || $config{lockMap} eq "")) {
+		if ($config{'attackAuto'} && $config{'teleportAuto_search'} && safe
+		&& ($field{name} eq $config{'lockMap'} || $config{'lockMap'} eq "")) {
 			if (AI::inQueue(qw/clientSuspend sitAuto sitting attack follow items_take items_gather take buyAuto skill_use sellAuto storageAuto/)) {
 				$timeout{ai_teleport_search}{time} = time;
 			}
 
 			if (timeOut($timeout{ai_teleport_search})) {
-				my $do_search = 0;
-				foreach (keys %mon_control) {
-					if ($mon_control{$_}{teleport_search}) {
+				my $do_search;
+				foreach (values %mon_control) {
+					if ($_->{teleport_search}) {
 						$do_search = 1;
 						last;
 					}
 				}
 				if ($do_search) {
-					my $found = 0;
+					my $found;
 					foreach (@monstersID) {
 						next unless $_;
-						if ($mon_control{lc($monsters{$_}{name})}{teleport_search}  && !$monsters{$_}{attack_failed}) {
+						if ($mon_control{lc($monsters{$_}{name})}{teleport_search} && !$monsters{$_}{attack_failed}) {
 							$found = 1;
 							last;
 						}
@@ -4752,7 +4752,7 @@ sub AI {
 			$timeout{ai_teleport_idle}{time} = time;
 		}
 
-		if ($config{teleportAuto_idle} && $safe && timeOut(\%{$timeout{ai_teleport_idle}})){
+		if ($config{teleportAuto_idle} && $safe && timeOut($timeout{ai_teleport_idle})){
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_idle}{time} = time;
@@ -4792,9 +4792,9 @@ sub AI {
 
 
 	##### AVOID GM OR PLAYERS #####
-	if (timeOut(\%{$timeout{ai_avoidcheck}})) {
-		avoidGM_near() if ($config{avoidGM_near} && (!$config{avoidGM_near_inTown} || !$cities_lut{$field{name}.'.rsw'}));
-		avoidList_near() if $config{avoidList};
+	if (timeOut($timeout{ai_avoidcheck})) {
+		avoidGM_near() if ($config{'avoidGM_near'} && (!$config{'avoidGM_near_inTown'} || !$cities_lut{$field{name}.'.rsw'}));
+		avoidList_near() if $config{'avoidList'};
 		$timeout{ai_avoidcheck}{time} = time;
 	}
 
@@ -4810,10 +4810,10 @@ sub AI {
 
 	##### AUTO SHOP OPEN #####
 
-	if ($config{shopAuto_open} && !AI::isIdle) {
+	if ($config{'shopAuto_open'} && !AI::isIdle) {
 		$timeout{ai_shop}{time} = time;
 	}
-	if ($config{shopAuto_open} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut(\%{$timeout{ai_shop}}) && !$shopstarted) {
+	if ($config{'shopAuto_open'} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut($timeout{ai_shop}) && !$shopstarted) {
 		openShop();
 	}
 
@@ -4821,10 +4821,10 @@ sub AI {
 	##########
 
 	# DEBUG CODE
-	if (time - $ai_v{'time'} > 2 && $config{'debug'} >= 2) {
+	if (timeOut($ai_v{time}, 2) && $config{'debug'} >= 2) {
 		my $len = @ai_seq_args;
 		debug "AI: @ai_seq | $len\n", "ai", 2;
-		$ai_v{'time'} = time;
+		$ai_v{time} = time;
 	}
 	$ai_v{'AI_last_finished'} = time;
 
@@ -5676,8 +5676,8 @@ sub parseMsg {
 			$players{$ID}{headgear}{mid} = $midhead;
 			$players{$ID}{hair_color} = $hair_color;
 			$players{$ID}{lv} = $lv;
-			%{$players{$ID}{pos}} = %coordsFrom;
-			%{$players{$ID}{pos_to}} = %coordsTo;
+			$players{$ID}{pos} = {%coordsFrom};
+			$players{$ID}{pos_to} = {%coordsTo};
 			$players{$ID}{time_move} = time;
 			$players{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
@@ -5697,12 +5697,12 @@ sub parseMsg {
 				}
 				$pets{$ID}{look}{head} = 0;
 				$pets{$ID}{look}{body} = $direction;
-				%{$pets{$ID}{pos}} = %coordsFrom;
-				%{$pets{$ID}{pos_to}} = %coordsTo;
+				$pets{$ID}{pos} = {%coordsFrom};
+				$pets{$ID}{pos_to} = {%coordsTo};
 				$pets{$ID}{time_move} = time;
 				$pets{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 				$pets{$ID}{walk_speed} = $walk_speed;
-				if (%{$monsters{$ID}}) {
+				if ($monsters{$ID}) {
 					binRemove(\@monstersID, $ID);
 					delete $monsters{$ID};
 				}
@@ -5722,8 +5722,8 @@ sub parseMsg {
 				}
 				$monsters{$ID}{look}{head} = 0;
 				$monsters{$ID}{look}{body} = $direction;
-				%{$monsters{$ID}{pos}} = %coordsFrom;
-				%{$monsters{$ID}{pos_to}} = %coordsTo;
+				$monsters{$ID}{pos} = {%coordsFrom};
+				$monsters{$ID}{pos_to} = {%coordsTo};
 				$monsters{$ID}{time_move} = time;
 				$monsters{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 				$monsters{$ID}{walk_speed} = $walk_speed;
