@@ -229,7 +229,7 @@ sub checkConnection {
 	# The local variable $sleeptime is controlled by the same system as used in initRandomRestart() for the restart times
 	# The only thing that may want changing here is the sleep and restart times being printed in minutes rather than seconds
 	# However, as I'm sure we are all used to working in seconds ourselves, this can be changed come release (if at all)
-	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'} && $conState == 5) {
+	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'} && $conState == 5 && $ai_seq[0] ne "attack") {
 		print "\nAuto-restarting!!\n";
 
 		if ($config{'autoRestartSleep'}) {
@@ -2045,19 +2045,12 @@ $i $talk{'responses'}[$i]
 		}
 		
 	} elsif ($switch eq "where") {
-#Solos Start
-		$oldmapdrt=0;
-#Solos End
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		print "Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n";
-#Solos Start
 		print "Last destination calculated : (".int($old_x).", ".int($old_y).") from spot (".int($old_pos_x).", ".int($old_pos_y).").\n";
-#Solos End
 
 	} elsif ($switch eq "who") {
 		sendWho(\$remote_socket);
-
-#Solos Start
 
 	} elsif ($switch eq "v") {
 		if ($config{'verbose'}) {
@@ -2682,52 +2675,51 @@ sub AI {
 		}
 	}
 
-############### START XLR82XS ###################
-# This is my really really really funky way of dealing with all the red socks with holes that I constantly pick up
-# However, it can just as easily be used to have your bot convert any * herb + empty bottles that it picks up into a potion
-# Not much of the real meat is done here (strangly enough) basically, if itemExchange is turned on in config.txt
-# and ai_itemExchangeCheck returns true, it'll move to the npc designated by itemExchange_npc in config.txt and talk to them
-# The sequence it sends the npc is controlled by itemExchange_steps in config.txt so its easy to set it up to do juice, or potions
-# or red socks, or whatever.
-#  accepts only one input, "minimum"
-# more about that near the sub ;)
+	############### START XLR82XS ###################
+	# This is my really really really funky way of dealing with all the red socks with holes that I constantly pick up
+	# However, it can just as easily be used to have your bot convert any * herb + empty bottles that it picks up into a potion
+	# Not much of the real meat is done here (strangly enough) basically, if itemExchange is turned on in config.txt
+	# and ai_itemExchangeCheck returns true, it'll move to the npc designated by itemExchange_npc in config.txt and talk to them
+	# The sequence it sends the npc is controlled by itemExchange_steps in config.txt so its easy to set it up to do juice, or potions
+	# or red socks, or whatever.
+	#  accepts only one input, "minimum"
+	# more about that near the sub ;)
 
-ITEMEXCHANGE: {
+	ITEMEXCHANGE: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route") && $config{'itemExchange'} && $config{'itemExchange_npc'} ne "" && ai_itemExchangeCheck()) {
-		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
-		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1)) {
-			unshift @ai_seq, "itemExchange";
-			unshift @ai_seq_args, {};
-		}
-	}
-
-	if ($ai_seq[0] eq "itemExchange" && timeOut(\%{$timeout{'ai_itemExchange'}})) {
-		if (!$config{'itemExchange'} || !%{$npcs_lut{$config{'itemExchange_npc'}}}) {
-			$ai_seq_args[0]{'done'} = 1;
-			last ITEMEXCHANGE;
-		}
-
-		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $npcs_lut{$config{'itemExchange_npc'}}{'map'}) {
-			$ai_v{'temp'}{'do_route'} = 1;
-		} else {
-			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{'itemExchange_npc'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-			if ($ai_v{'temp'}{'distance'} > 14) {
-				$ai_v{'temp'}{'do_route'} = 1;
+		if (($ai_seq[0] eq "" || $ai_seq[0] eq "route") && $config{'itemExchange'} && $config{'itemExchange_npc'} ne "" && ai_itemExchangeCheck()) {
+			$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
+			if ($ai_v{'temp'}{'ai_route_index'} ne "") {
+				$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
+			}
+			if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1)) {
+				unshift @ai_seq, "itemExchange";
+				unshift @ai_seq_args, {};
 			}
 		}
-		if ($ai_v{'temp'}{'do_route'}) {
-				if (!$config{'XKore'}) {
-					print "Calculating auto-exchange route to: $maps_lut{$npcs_lut{$config{'itemExchange_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'itemExchange_npc'}}{'map'}): $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}\n";
-				} else {
-					injectMessage("Calculating auto-exchange route to: $maps_lut{$npcs_lut{$config{'itemExchange_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'itemExchange_npc'}}{'map'}): $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}\n");
+
+		if ($ai_seq[0] eq "itemExchange" && timeOut(\%{$timeout{'ai_itemExchange'}})) {
+			if (!$config{'itemExchange'} || !%{$npcs_lut{$config{'itemExchange_npc'}}}) {
+				$ai_seq_args[0]{'done'} = 1;
+				last ITEMEXCHANGE;
+			}
+
+			undef $ai_v{'temp'}{'do_route'};
+			if ($field{'name'} ne $npcs_lut{$config{'itemExchange_npc'}}{'map'}) {
+				$ai_v{'temp'}{'do_route'} = 1;
+			} else {
+				$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{'itemExchange_npc'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+				if ($ai_v{'temp'}{'distance'} > 14) {
+					$ai_v{'temp'}{'do_route'} = 1;
 				}
+			}
+
+			if ($ai_v{'temp'}{'do_route'}) {
+				print "Calculating auto-exchange route to: $maps_lut{$npcs_lut{$config{'itemExchange_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'itemExchange_npc'}}{'map'}): $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}\n";
+				injectMessage("Calculating auto-exchange route to: $maps_lut{$npcs_lut{$config{'itemExchange_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'itemExchange_npc'}}{'map'}): $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}\n") if ($config{'XKore'});
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'itemExchange_npc'}}{'map'}, 0, 0, 1, 0, 0, 1);
 			}
+
 		} else {
 			my $temp = "minimum";
 			while (ai_itemExchangeCheck($temp)) {
@@ -2741,16 +2733,17 @@ ITEMEXCHANGE: {
 				} else {
 					($ai_v{'temp'}{'arg'}) = $ai_seq_args[0]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /r(\d+)/i;
 					if ($ai_v{'temp'}{'arg'} ne "") {
-					$ai_v{'temp'}{'arg'}++;
-					sendTalkResponse(\$remote_socket, pack("L1",$config{'itemExchange_npc'}), $ai_v{'temp'}{'arg'});
+						$ai_v{'temp'}{'arg'}++;
+						sendTalkResponse(\$remote_socket, pack("L1",$config{'itemExchange_npc'}), $ai_v{'temp'}{'arg'});
+					}
 				}
 				$ai_seq_args[0]{'npc'}{'step'}++;
 			} last ITEMEXCHANGE;
 		}
 	}
-}
-######### END XLR82XS ##############
-	
+	######### END XLR82XS ##############
+
+
 	#storageAuto - chobit aska 20030128
 	#####AUTO STORAGE#####
 
@@ -3152,7 +3145,7 @@ ITEMEXCHANGE: {
 				&& !($config{"useSelf_item_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
 				&& $config{"useSelf_item_$i"."_minAggressives"} <= ai_getAggressives()
 				&& (!$config{"useSelf_item_$i"."_maxAggressives"} || $config{"useSelf_item_$i"."_maxAggressives"} >= ai_getAggressives()) 
-            			&& timeOut($config{"useSelf_item_$i"."_timeout"}, $ai_v{"useSelf_item_$i"."_time"}) 
+            			&& timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
             			&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))) {
 				undef $ai_v{'temp'}{'invIndex'};
 				$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_$i"});
@@ -3560,8 +3553,8 @@ ITEMEXCHANGE: {
 					&& $monsters{$_}{'attack_failed'} == 0 && ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} >= 1 || $mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} eq "")) {
 					push @{$ai_v{'ai_attack_partyMonsters'}}, $_;
 
-					# Begin the attack only when noone else is on screen, stollen from the skore forums a long time ago.
-				} elsif ($config{'attackAuto_onlyWhenSafe'} eq "1"
+				# Begin the attack only when noone else is on screen, stollen from the skore forums a long time ago.
+				} elsif ($config{'attackAuto_onlyWhenSafe'}
 					&& $config{'attackAuto'} >= 1
 					&& binSize(\@playersID) == 0
 					&& $ai_seq[0] ne "sitAuto" && $ai_seq[0] ne "take" && $ai_seq[0] ne "items_gather" && $ai_seq[0] ne "items_take"
@@ -4114,7 +4107,7 @@ ITEMEXCHANGE: {
 		}
 	}
 	} #END OF ROUTE BLOCK
-	
+
 
 	##### ROUTE_GETROUTE #####
 
@@ -5521,7 +5514,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		$chatMsgUser =~ s/ $//;
 
-		chatLog("c", $chat."\n");
+		chatLog("c", "$chat\n");
 		if ($config{'relay'}) {
 			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
 		}
@@ -8313,52 +8306,64 @@ sub ai_getSkillUseType {
 	}
 
 }
-#ok, this is where most of the actual calculation for the item exchange is done
-# Basically, what happens is something calls ai_itemExchangeCheck, if it tells it "minimum" we only check that we can do
-# one exchange (specified by itemExchange_minamount_x in the config) ie
-# say we're making something that requires 3 pearls, 2 apples, and 8 empty bottles
-# and we only want to go and make this item when we have atleast 30 pearls, 20 apples, and 80 empty bottles
-# what we would put into config.txt would be
-# itemExchange_item_0 pearl
+
+##
+# ai_itemExchangeCheck($exchange)
+#
+# This is where most of the actual calculation for the item exchange is done.
+# If $exchange equals "minimum", we only check that we can do
+# one exchange (specified by itemExchange_minAmount_x in the config).
+# Say we're making something that requires 3 pearls, 2 apples, and 8 empty bottles
+# and we only want to go and make this item when we have at least 30 pearls, 20 apples, and 80 empty bottles
+# what we would put into config.txt would be:
+#
+# itemExchange_item_0 Pearl
 # itemExchange_amount_0 30
-# itemExchange_minamount_0 3
-# itemExchange_item_1 apple
+# itemExchange_minAmount_0 3
+#
+# itemExchange_item_1 Apple
 # itemExchange_amount_1 20
-# itemExchange_minamount_1 2
-# itemExchange_item_2 empty bottle
+# itemExchange_minAmount_1 2
+#
+# itemExchange_item_2 Empty bottle
 # itemExchange_   etc etc etc
-# Then if we call ai_itemExchangeCheck (withought specifying minimum) it will look to see if we have atleast 30 pearls,
-# 20 apples, and 80 empty bottles (done very inelligantly by cycling through your inventory, seeing if item names match
+#
+# If $exchange is not "minimum" it will look to see if we have at least 30 pearls,
+# 20 apples, and 80 empty bottles (done very inelligently by cycling through your inventory, seeing if item names match
 # what is in your config.txt, and if it does, seeing if the amount is greater than amount)
 # if on the other hand you do a ai_itemExchangeCheck("minimum"), it does the same thing, except it compares the amounts
 # to the minamount specified in config.txt
 # maybe at some stage i'll modify it so you can make more than one item, but for now, meh
 sub ai_itemExchangeCheck {
+	my $exchange = $_[0];
 	my $failed = 0;
-	my $exchange = @_[0];
 	my $j = 0;
+
 	while ($config{"itemExchange_item_$j"}) {
-		last if ($failed eq '1');
-		last if (!$config{"itemExchange_item_$j"} || !$config{"itemExchange_amount_$j"} || !config{"itemExchange_minamount_$j"});
+		last if ($failed);
+		last if (!$config{"itemExchange_item_$j"} || !$config{"itemExchange_amount_$j"} || !config{"itemExchange_minAmount_$j"});
+		my $amount;
+
 		my $item = $config{"itemExchange_item_$j"};
 		if ($exchange eq "minimum") {
-			my $amount = $config{"itemExchange_minamount_$j"};
+			$amount = $config{"itemExchange_minAmount_$j"};
 		} else {
-			my $amount = $config{"itemExchange_amount_$j"};
+			$amount = $config{"itemExchange_amount_$j"};
 		}
-		for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
+
+		for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
 			next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
-			if ($chars[$config{'char'}]{'inventory'}[$i]{'name'} eq $item && !$chars[$config{'char'}]{'inventory'}[$i]{'amount'} eq $amount) {
+
+			if (lc($chars[$config{'char'}]{'inventory'}[$i]{'name'}) eq lc($item)
+			    && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} ne $amount) {
 				$failed = 1;
+				last;
 			}
 		}
-	$j++;
+		$j++;
 	}
-	if ($failed eq '1') {
-		return 0;
-	} else {
-		return 1;
-	}
+
+	return !$failed;
 }
 
 sub ai_mapRoute_getRoute {
