@@ -47,6 +47,7 @@ our @EXPORT = qw(
 	parseROSlotsLUT
 	parseSectionedFile
 	parseShopControl
+	parseSkills
 	parseSkillsLUT
 	parseSkillsIDLUT
 	parseSkillsReverseLUT_lc
@@ -483,6 +484,28 @@ sub parseSectionedFile {
 		}
 	}
 	close FILE;
+}
+
+sub parseSkills {
+	my ($file, $r_array) = @_;
+
+	# skill ID is numbered starting from 1, not 0
+	@{$r_array} = ([undef, undef]);
+
+	open(FILE, "<$file");
+	foreach (<FILE>) {
+		my ($handle, $name) = split(/#/);
+		$name =~ s/_/ /g;
+		$name =~ s/ *$//;
+		if ($handle ne "" && $name ne "") {
+			push(@{$r_array}, [$handle, $name]);
+		}
+	}
+	close(FILE);
+
+	# FIXME: global variable abuse; this assumes that $r_array is
+	# \@Skills::skills
+	Skills->init();
 }
 
 sub parseSkillsLUT {
