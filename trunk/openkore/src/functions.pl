@@ -3433,6 +3433,10 @@ sub AI {
 	} elsif ($ai_seq[0] eq "sitting" && !$chars[$config{'char'}]{'sitting'} && timeOut(\%{$timeout{'ai_sit'}}) && timeOut(\%{$timeout{'ai_sit_wait'}})) {
 		sendSit(\$remote_socket);
 		$timeout{'ai_sit'}{'time'} = time;
+
+		if ($config{'sitAuto_look'}) {
+			look($config{'sitAuto_look'});
+		}
 	}
 	if ($ai_seq[0] eq "standing" && !$chars[$config{'char'}]{'sitting'} && !$timeout{'ai_stand_wait'}{'time'}) {
 		$timeout{'ai_stand_wait'}{'time'} = time;
@@ -7397,6 +7401,11 @@ sub parseMsg {
 			}
 			message("--------------------------------------\n", "list");
 
+			Plugins::callHook('packet_vender_store2', {
+				venderID => $venderID,
+				itemList => \@venderItemList
+			});
+
 	} elsif ($switch eq "0136") {
 		$msg_size = unpack("S1",substr($msg,2,2));
 
@@ -9761,7 +9770,9 @@ sub compilePortals {
 			my $map = $portals_lut{$portal}{'dest'}{$npc}{'map'};
 			foreach my $dest (keys %{$mapPortals{$map}}) {
 				next if $portals_los{$npc}{$dest} ne '';
-				if ($field{'name'} ne $map) { if (!getField("$Settings::def_field/$map.fld", \%field, 1)) { $missingMap{$map} = 1; }}
+				message "Processing map $map...\n";
+				if ($field{'name'} ne $map) { if (!getField("$Settings::def_field/$map.fld", \%field, 1)) { $missingMap{$map} = 1;}}
+#				message "($portals_lut{$portal}{'dest'}{$npc}{pos}{x} $portals_lut{$portal}{'dest'}{$npc}{pos}{y} -> ($mapPortals{$map}{$dest}{pos}{x} $mapPortals{$map}{$dest}{pos}{y})\n"; #\%{$portals_lut{$portal}{'dest'}{$npc}{'pos'}}, \%{$mapPortals{$map}{$dest}{'pos'}});
 				ai_route_getRoute(\@solution, \%field, \%{$portals_lut{$portal}{'dest'}{$npc}{'pos'}}, \%{$mapPortals{$map}{$dest}{'pos'}});
 				$portals_los{$npc}{$dest} = scalar @solution;
 			}
@@ -10228,7 +10239,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActive($config{$prefix . "_whenStatusActive"})); }
 	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActive($config{$prefix . "_whenStatusInactive"})); }
 
-	if ($config{$prefix . "_currentAI"}) { return 0 unless (existsInList($config{$prefix . "_currentAI"}, $ai_seq[0])); }
+	if ($config{$prefix . "_onAction"}) { return 0 unless (existsInList($config{$prefix . "_onAction"}, $ai_seq[0])); }
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
