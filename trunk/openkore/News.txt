@@ -78,6 +78,10 @@ New config options:
   partySkill_#_target_isNotJob
   Only activate partySkill for certain job classes
 
+- avoidList_inLockOnly
+  Set to 1, if you want to avoid people on your avoid list when they
+  are on screen, but only when you are in lockMap.
+
 Bug fixes:
 - Kore can walk on walkable water now (bug #21).
 - Don't open shop immediately after login in X-Kore mode (bug #49).
@@ -108,7 +112,7 @@ Internal:
   in which randomWalk should walk.
 
 Credits:
-- Joseph: -1 flag support in mon_control.txt
+- Joseph: -1 flag support in mon_control.txt, avoidList_inLockOnly
 - aputs: Support for the _monsters option in useSelf_skill, useSelf_item
   and partySkill.
 - obyarou: Priority attack support for non-aggressive monsters,
