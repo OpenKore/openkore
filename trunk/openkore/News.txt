@@ -73,6 +73,8 @@ so people can easily see what config options have been added/changed)
 - "drop" and "storage get" can now drop/get more than 1 item. Example:
   storage get 4,7   (gets storage item 4 and 7)
   drop 3,5          (drops inventory item 3 and 5)
+- New command: cart desc
+- Log files (item log, chat log, walk.dat) are now stored in the logs folder.
 
 
 ==================

@@ -181,7 +181,7 @@ sub windowwrite{
     $canvas->delete($_); 
   } 
 ### 
-     unless (open (DATA,'<walk.dat')) { 
+     unless (open (DATA,'<logs/walk.dat')) { 
       $status_gen->configure( -text => "error opening walk.dat: $!" ); 
       warn "error opening walk.dat: $!"; 
       return; 

@@ -19,6 +19,7 @@
 # monatkyou		Monster attacks you
 # player_itemuse	Player used item
 # list			List of information (monster list, player list, item list, etc.)
+# startup		Messages that are printed during startup.
 # success		An operation succeeded
 # storage		Storage item added/removed
 # xkore			X-Kore system messages
