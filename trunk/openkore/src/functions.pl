@@ -6988,7 +6988,9 @@ sub parseMsg {
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
 		$damage ||= "Miss!";
-		my $disp = "$source $uses ".skillName($skillID)." (lvl $level) on $target";
+		my $disp = "$source $uses ".skillName($skillID);
+		$disp .= " (lvl $level)" unless $level == 65535;
+		$disp .= " on $target";
 		$disp .= " - Dmg: $damage" unless $damage == -30000;
 		$disp .= "\n";
 
@@ -7031,7 +7033,7 @@ sub parseMsg {
 		my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
 
 		# Print skill use message
-		message "$source $uses ".skillName($skillID)." on location ($x, $y)\n", "skill";
+		message "$source $uses ".skillName($skillID)." (level $lv) on location ($x, $y)\n", "skill";
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
