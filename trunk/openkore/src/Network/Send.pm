@@ -470,7 +470,7 @@ sub sendCharLogin {
 sub sendChat {
 	my $r_socket = shift;
 	my $message = shift;
-	$message = $config{chatLangCode} . $message if ($config{'chatLangCode'} ne "" && $config{'chatLangCode'} ne "none");
+	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
 	my $msg = pack("C*", 0x8C, 0x00) .
 		pack("S*", length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
 		$chars[$config{'char'}]{'name'} . " : $message" . chr(0);
@@ -686,7 +686,7 @@ sub sendGuildAlly {
 sub sendGuildChat {
 	my $r_socket = shift;
 	my $message = shift;
-	$message = $config{chatLangCode} . $message if ($config{'chatLangCode'} ne "" && $config{'chatLangCode'} ne "none");
+	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
 	my $msg = pack("C*",0x7E, 0x01) . pack("S*",length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
 	$chars[$config{'char'}]{'name'} . " : " . $message . chr(0);
 	sendMsgToServer($r_socket, $msg);
@@ -915,7 +915,7 @@ sub sendOpenWarp {
 sub sendPartyChat {
 	my $r_socket = shift;
 	my $message = shift;
-	$message = $config{chatLangCode} . $message if ($config{'chatLangCode'} ne "" && $config{'chatLangCode'} ne "none");
+	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
 	my $msg = pack("C*",0x08, 0x01) . pack("S*",length($chars[$config{'char'}]{'name'}) + length($message) + 8) . 
 		$chars[$config{'char'}]{'name'} . " : " . $message . chr(0);
 	sendMsgToServer($r_socket, $msg);
@@ -1051,7 +1051,7 @@ sub sendPrivateMsg {
 	my $r_socket = shift;
 	my $user = shift;
 	my $message = shift;
-	$message = $config{chatLangCode} . $message if ($config{'chatLangCode'} ne "" && $config{'chatLangCode'} ne "none");
+	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
 	my $msg = pack("C*",0x96, 0x00) . pack("S*",length($message) + 29) . $user . chr(0) x (24 - length($user)) .
 			$message . chr(0);
 	sendMsgToServer($r_socket, $msg);
