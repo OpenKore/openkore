@@ -233,8 +233,10 @@ sub checkConnection {
 		$conState = 1;
 		undef $conState_tries;
 	}
+}
 
-
+# Misc. main loop code
+sub mainLoop {
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
 	 && $conState == 5 && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
 		message "\nAuto-restarting!!\n";
@@ -319,6 +321,7 @@ sub parseInput {
 	if (!$config{'XKore'} && $conState == 2 && $waitingForInput) {
 		configModify('server', $input, 1);
 		$waitingForInput = 0;
+
 	} elsif (!$config{'XKore'} && $conState == 3 && $waitingForInput) {
 		configModify('char', $input, 1);
 		$waitingForInput = 0;
@@ -5230,7 +5233,7 @@ sub parseMsg {
 			message("Closing connection to Master Server\n", "connection");
 			killConnection(\$remote_socket);
 			if ($config{'server'} eq "") {
-				message("Choose your server.  Enter the server number:\n", "input");
+				message("Choose your server.  Enter the server number: ", "input");
 				$waitingForInput = 1;
 			} else {
 				message("Server $config{'server'} selected\n", "connection");
@@ -5242,15 +5245,15 @@ sub parseMsg {
 		if ($type == 0) {
 			error("Account name doesn't exist\n", "connection");
 			if (!$config{'XKore'}) {
-				message("Enter Username Again:\n", "input");
-				$input_socket->recv($msg, $Settings::MAX_READ);
+				message("Enter Username Again: ", "input");
+				$msg = Input::getInput(1);
 				configModify('username', $msg, 1);
 			}
 		} elsif ($type == 1) {
 			error("Password Error\n", "connection");
 			if (!$config{'XKore'}) {
-				message("Enter Password Again:\n", "input");
-				$input_socket->recv($msg, $Settings::MAX_READ);
+				message("Enter Password Again: ", "input");
+				$msg = Input::getInput(1);
 				configModify('password', $msg, 1);
 			}
 		} elsif ($type == 3) {
