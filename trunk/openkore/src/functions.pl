@@ -6467,10 +6467,11 @@ sub parseMsg {
 				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
 
-			my $disp = "Item added to inventory: $display";
+			my $disp = "Item added to inventory: ";
 			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} > 0) {
-				$disp = "+$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} $disp";
+				$disp .= "+$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} ";
 			}
+			$disp .= $display;
 			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} ne "") {
 				$disp .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}]";
 			}
