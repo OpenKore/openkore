@@ -1109,8 +1109,34 @@ sub cmdPlugin {
 			Plugins::reload($names[$i]);
 		}
 	} elsif ($args[0] eq 'load') {
-		# FIXME: This doesn't work unless you specify the correct path
-		Plugins::load($args[1]);
+		if ($args[1] eq '') {
+			error   "Syntax Error in function 'plugin load' (Load Plugin)\n" .
+				"Usage: plugin load <filename|\"all\">\n";
+			return;
+		} elsif ($args[1] eq 'all') {
+			Plugins::loadAll();
+		} else {
+			Plugins::load("$Settings::plugins_folder/$args[1]");
+		}
+	} elsif ($args[0] eq 'unload') {
+		if ($args[1] =~ /^\d+$/) {
+			Plugins::unload($Plugins::plugins[$args[1]]{name});
+
+		} elsif ($args[1] eq '') {
+			error	"Syntax Error in function 'plugin unload' (Unload Plugin)\n" .
+				"Usage: plugin unload <plugin name|plugin number#|\"all\">\n";
+			return;
+
+		} elsif ($args[1] eq 'all') {
+			Plugins::unloadAll();
+
+		} else {
+			foreach my $plugin (@Plugins::plugins) {
+				if ($plugin->{name} =~ /$args[1]/i) {
+					Plugins::unload($plugin->{name});
+				}
+			}
+		}
 
 	} else {
 		my $msg;
