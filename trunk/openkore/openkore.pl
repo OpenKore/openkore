@@ -21,13 +21,11 @@ $SIG{__DIE__} = sub {
 
 	# Determine what function to use to print the error
 	my $err;
-	if (defined $Globals::interface) {
-		my $isStartup = (defined Scalar::Util::blessed) ?
-			(Scalar::Util::blessed($Globals::interface) && Scalar::Util::blessed($Globals::interface) eq "Interface::Startup") :
-			1;
-		$err = sub { $Globals::interface->errorDialog($_[0]); } if (!$isStartup);
+	if (!$Globals::interface || UNIVERSAL::isa($Globals::interface, "Interface::Startup")) {
+		$err = sub { print "$_[0]\nPress ENTER to exit this program.\n"; <STDIN>; }
+	} else {
+		$err = sub { $Globals::interface->errorDialog($_[0]); };
 	}
-	$err = sub { print "$_[0]\nPress ENTER to exit this program.\n"; <STDIN>; } if !defined $err;
 
 	# Extract file and line number from the die message 
 	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/; 
@@ -78,7 +76,6 @@ use Time::HiRes qw(time usleep);
 use Getopt::Long;
 use IO::Socket;
 use Digest::MD5;
-use Scalar::Util;
 use Carp;
 
 
