@@ -36,6 +36,13 @@ New config options:
   0 = normal server
   1 = oRO (Oceania)
   2 = pRO (Philippines)
+- allowedMaps (list of maps)
+  Exit or respawn of Kore is on a map other than the ones specified
+  in (list of maps). This is useful on pRO where GMs warp you to
+  secret rooms.
+- allowedMap_reaction (number)
+  0 = respawn
+  1 = exit
 
 Credits:
 - jsteng: VVVS weapon name bugfix.
