@@ -2720,7 +2720,7 @@ sub AI {
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'itemExchange_npc'}}{'map'}, 0, 0, 1, 0, 0, 1);
 			}
 
-		} else {
+		} elsif ($config{'itemExchange'}) {
 			my $temp = "minimum";
 			while (ai_itemExchangeCheck($temp)) {
 				@{$ai_seq_args[0]{'npc'}{'steps'}} = split(/ /, $config{'itemExchange_steps'});
@@ -3644,11 +3644,8 @@ sub AI {
 		$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
 		shift @ai_seq;
 		shift @ai_seq_args;
-		if (!$config{'XKore'}) {
-			print "Can't reach or damage target, dropping target\n";
-		} else {
-			injectMessage("Can't reach or damage target, dropping target") if ($config{'verbose'});
-		}
+		print "Can't reach or damage target, dropping target\n";
+		injectMessage("Can't reach or damage target, dropping target") if ($config{'XKore'} && $config{'verbose'});
 
 	} elsif ($ai_seq[0] eq "attack" && !%{$monsters{$ai_seq_args[0]{'ID'}}}) {
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
@@ -4330,10 +4327,8 @@ sub AI {
 			shift @ai_seq_args;
 			take($ai_v{'ai_items_gather_ID'});
 		} elsif ($ai_v{'temp'}{'found'} > 0) {
-			if ($config{'XKore'}) {
-				print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!\n";
-			} else {
-				injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!") if ($config{'verbose'});
+			print "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!\n";
+			injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!") if ($config{'XKore'} && $config{'verbose'});
 			}
 			shift @ai_seq;
 			shift @ai_seq_args;
