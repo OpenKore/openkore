@@ -70,7 +70,8 @@ begin
       'VCL - Main program.' + #13#10 +
       'floAt - Help with various components.' + #13#10 +
       'mrdiablo - Sound preview support.' + #13#10 +
-      'jojobail & Rasqual - many improvements in libgrf.'
+      'jojobail & Rasqual - many improvements in libgrf.' + #13#10 +
+      'AdamN - bugfix for extraction of multiple files.'
       , 'Credits', MB_ICONINFORMATION);
 end;
 

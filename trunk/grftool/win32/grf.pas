@@ -116,10 +116,17 @@ var
   Index, Size, Handle, Written: Cardinal;
 begin
   GrfFile := grf_find(Grf, grfname, Index);
-  Data := VirtualAlloc(nil, GrfFile.RealLen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+  if not Assigned(GrfFile) then
+  begin
+      Result := 0;
+      Exit;
+  end;
+
+  Size := GrfFile.RealLen;
+  Data := VirtualAlloc(nil, Size, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
   if grf_index_chunk_get(Grf, Index, Data, 0, Size, Error) = nil then
   begin
-      VirtualFree(Data, GrfFile.RealLen, MEM_RELEASE);
+      VirtualFree(Data, 0, MEM_RELEASE);
       Result := 0;
       Exit;
   end;
@@ -128,7 +135,7 @@ begin
       CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
   WriteFile(Handle, Data^, Size, Written, nil);
   CloseHandle(Handle);
-  VirtualFree(Data, GrfFile.RealLen, MEM_RELEASE);
+  VirtualFree(Data, 0, MEM_RELEASE);
   Result := 1;
 end;
 
