@@ -2,12 +2,13 @@
 ### CVS
 ==================
 
+New features:
+- Easier and more flexible avoid.txt format by joseph.
+  You should download the new avoid.txt from the latest confpack! The
+  old format is not supported anymore.
+  See also http://openkore.sourceforge.net/forum/viewtopic.php?t=1633
+
 - Support for idRO: secureLogin_type 3
-- Possibly fixed the "utf8.pm not found" error.
-- Fix monster status/ailment detection.
-- Fix getAuto.
-- Show (x, y) position after teleporting.
-- Attacking party or followTarget's monster is never considered KS.
 - Added north/east/south/west/northeast/southeast/southwest/northwest
   commands to manually move the bot in that direction. If you want
   abbreviations for these commands like in a MUD, put this in your config.txt:
@@ -26,11 +27,20 @@
   alias_sc s
   alias_em e
 
-- teleportAuto_noUnstuck configuration option will make bot not teleport when
-  it's stuck
-- hopefully fix zeny display when dealing for real
-- automatically display coordinates of portal when encountering it
-- show number of slots on items on the floor
+Bug fixes:
+- Possibly fixed the "utf8.pm not found" error.
+- Fix monster status/ailment detection.
+- Fix getAuto.
+- Attacking party or followTarget's monster is never considered KS.
+- Added some unstucking routines.
+  The teleportAuto_noUnstuck configuration option will make bot not 
+  teleport when it's stuck.
+- Hopefully fix zeny display when dealing for real.
+
+Minor tweaks:
+- Show (x, y) position after teleporting.
+- Automatically display coordinates of portal when encountering it.
+- Show number of slots on items on the floor.
 
 ==================
 ### 1.3.0 (beta)
