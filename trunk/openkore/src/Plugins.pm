@@ -55,6 +55,7 @@ our %hooks;
 
 ##
 # Plugins::loadAll()
+# Returns: 1 if all plugins are successfully loaded, 0 if one of them failed to load.
 #
 # Loads all plugins from the plugins folder, and all plugins that are one subfolder below the plugins folder.
 # Plugins must have the .pl extension.
@@ -65,8 +66,10 @@ sub loadAll {
 	my @subdirs = grep { -d "$Settings::plugins_folder/$_" && !($_ =~ /^(\.|CVS$)/) } @items;
 	closedir(DIR);
 
+	my $result = 1;
+
 	foreach my $plugin (@plugins) {
-		load("$Settings::plugins_folder/$plugin");
+		$result = 0 if (!load("$Settings::plugins_folder/$plugin"));
 	}
 
 	foreach my $dir (@subdirs) {
@@ -76,10 +79,10 @@ sub loadAll {
 		closedir(DIR);
 
 		foreach my $plugin (@plugins) {
-			load("$dir/$plugin");
+			$result = 0 if (!load("$dir/$plugin"));
 		}
 	}
-	return 1;
+	return $result;
 }
 
 
@@ -98,7 +101,8 @@ sub load {
 	$current_plugin_folder = $file;
 	$current_plugin_folder =~ s/(.*)[\/\\].*/$1/;
 
-	if (! do $file) {
+	undef $@;
+	if (!do $file) {
 		Log::error("Unable to load plugin $file: $@\n", "plugins");
 		return 0;
 	}
