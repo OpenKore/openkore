@@ -57,7 +57,9 @@ New features:
 - Weapon upgrades are now detected.
 - Newbie zones are now correctly supported.
 - Delay of attacks is now displayed. 200 - Delay indicates the ASPD.
-- Support for partySkills on certain job classes
+- Support for partySkills on certain job classes.
+- kRO/PK servers are now (partially?) supported. In config.txt, set
+  pkServer to 1.
 
 New commands:
 - guild join (flag)
@@ -81,6 +83,8 @@ New config options:
 - avoidList_inLockOnly
   Set to 1, if you want to avoid people on your avoid list when they
   are on screen, but only when you are in lockMap.
+- pkServer
+  To to 1 if you're playing kRO or on a PK server.
 
 New timeouts.txt options:
 - ai_attack_unfail 5
@@ -129,6 +133,7 @@ Credits:
 - Ven`Tatsu: walkable water bugfix (bug #21)
 - sparshong: character creation/deletion packet code.
 - jsteng: mute packet.
+- anoxemian: (partial?) kRO/PK server support.
 
 
 ==================
