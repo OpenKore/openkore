@@ -73,6 +73,8 @@ PathFinding__reset(session, map, sv_weights, width, height, startx, starty, dest
 		unsigned short destx
 		unsigned short desty
 		unsigned int time_max
+	PREINIT:
+		session = (PathFinding) 0; /* shut up compiler warning */
 	INIT:
 		unsigned char *weights = NULL;
 		pos *start, *dest;
