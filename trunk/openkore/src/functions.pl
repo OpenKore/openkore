@@ -3915,7 +3915,7 @@ sub AI {
 	}
 
 	##### AUTO-EQUIP #####
-	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || $AI::v->{teleport}{lv})
+	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || AI::v->{teleport}{lv})
 		&& timeOut($timeout{ai_item_equip_auto})) {
 
 		my $ai_index_attack = AI::find("attack");
@@ -3936,7 +3936,7 @@ sub AI {
 		while ($config{"equipAuto_$i"}) {
 			if (checkSelfCondition("equipAuto_$i")
 			 	&& (!$config{"equipAuto_$i" . "_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
-			 	&& (!$config{"equipAuto_$i" . "_onTeleport"} || $AI::v->{teleport}{lv})
+			 	&& (!$config{"equipAuto_$i" . "_onTeleport"} || AI::v->{teleport}{lv})
 			 	&& (!$config{"equipAuto_$i" . "_whileSitting"} || ($config{"equipAuto_$i" . "_whileSitting"} && $char->{sitting}))
 				&& (!$config{"equipAuto_$i" . "_monsters"} || (defined $ai_attack_mon && existsInList($config{"equipAuto_$i" . "_monsters"}, $ai_attack_mon)))
 			 	&& (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
@@ -3952,7 +3952,7 @@ sub AI {
 						AI::args($ai_index_skill_use)->{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
 						
 					# this is a teleport equip
-					} elsif (!$config{"equipAuto_$i" . "_onTeleport"} || $AI::v->{teleport}{lv}) {
+					} elsif (!$config{"equipAuto_$i" . "_onTeleport"} || AI::v->{teleport}{lv}) {
 						AI::v->{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
 						AI::v->{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
 						warning "set timeout\n";
@@ -9966,28 +9966,28 @@ sub useTeleport {
 	if ($char->{sitting}) {
 		stand();
 
-	} elsif (!$AI::v->{teleport}{lv}) {
-		$AI::v->{teleport}{lv} = $level;
+	} elsif (!AI::v->{teleport}{lv}) {
+		AI::v->{teleport}{lv} = $level;
 		
 		# set a small timeout, will be overrided if related config in equipAuto is set
-		$AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}{time} = time;
-		$AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
+		AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}{time} = time;
+		AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
 		
-	} elsif (defined AI::v->{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut(\%{$AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}})) {
+	} elsif (defined AI::v->{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut(\%{AI::v->{teleport}{lv}{ai_equipAuto_skilluse_giveup}})) {
 		warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
-		delete $AI::v->{teleport}{lv};
+		delete AI::v->{teleport}{lv};
 	}
 	
 	# {'skills'}{'AL_TELEPORT'}{'lv'} is valid even after creamy is unequiped, use @skillsID instead
 	if (!$config{teleportAuto_useItem} && binFind(\@skillsID, 'AL_TELEPORT') ne "") {
 		sendTeleport(\$remote_socket, "Random") if $level == 1;
 		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if $level == 2;
-		delete $AI::v->{teleport}{lv};
+		delete AI::v->{teleport}{lv};
 		
 	} elsif ($config{'teleportAuto_useItem'} && $invIndex ne "") {
 		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$invIndex]{'index'}, $accountID);
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
-		delete $AI::v->{teleport}{lv};
+		delete AI::v->{teleport}{lv};
 	}
 }
 
