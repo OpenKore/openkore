@@ -13,6 +13,10 @@
   0 = no secure login (iRO)
   1 = secure login method 1
   2 = secure login method 2
+- New config option: guildAutoDeny
+  Automatically deny guild join request.
+- New command: guild. Support for listing guild members and info (thanks
+  to ModKore).
 
 
 ------------------------------------------------------
