@@ -23,6 +23,8 @@
 #########################################################################
 package Interface::Wx;
 
+# Note: don't use wxTimer for anything important. It's known to cause reentrancy issues!
+
 use strict;
 use Wx ':everything';
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
@@ -54,7 +56,7 @@ use Utils;
 
 
 our $CVS;
-our $iterationTime;
+our ($iterationTime, $updateUITime, $updateUITime2);
 
 
 sub OnInit {
@@ -72,7 +74,8 @@ sub OnInit {
 		['ChatQueue::add',          $onChat],
 		['packet_selfChat',         $onChat],
 		['packet_privMsg',          $onChat],
-		['packet_sentPM',           $onChat]
+		['packet_sentPM',           $onChat],
+		['mainLoop_pre',            sub { $self->onUpdateUI(); }]
 	);
 
 	$self->{history} = [];
@@ -84,22 +87,6 @@ sub OnInit {
 		"Interface::Wx::Input",
 		"Interface::Wx::ItemList",
 		"Interface::Wx::ConfigEditor");
-
-
-	# Update user interface controls
-
-	my $timer = new Wx::Timer($self, 248);
-	EVT_TIMER($self, 248, sub {
-		$self->updateStatusBar;
-		$self->updateMapViewer;
-	});
-	$timer->Start(150);
-
-	$timer = new Wx::Timer($self, 249);
-	EVT_TIMER($self, 249, sub {
-		$self->updateItemList;
-	});
-	$timer->Start(350);
 
 	return 1;
 }
@@ -531,6 +518,20 @@ sub addCheckMenu {
 ## INTERFACE UPDATING
 ##########################
 
+
+sub onUpdateUI {
+	my $self = shift;
+
+	if (timeOut($updateUITime, 0.15)) {
+		$self->updateStatusBar;
+		$self->updateMapViewer;
+		$updateUITime = time;
+	}
+	if (timeOut($updateUITime2, 0.35)) {
+		$self->updateItemList;
+		$updateUITime2 = time;
+	}
+}
 
 sub updateStatusBar {
 	my $self = shift;
