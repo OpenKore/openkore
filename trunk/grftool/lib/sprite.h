@@ -52,11 +52,19 @@ typedef struct {
 
 
 typedef struct {
+	unsigned char b;
+	unsigned char g;
+	unsigned char r;
+	unsigned char unused;
+} SpritePalette;
+
+
+typedef struct {
 	char *filename;
 	int nimages;
 	SpriteImage *images;
 	int palette_size;
-	unsigned char *palette;
+	SpritePalette *palette;
 } Sprite;
 
 
@@ -68,7 +76,7 @@ typedef enum {
 	SE_CANTOPEN,
 	SE_INVALID,
 
-	/* sprite_to_bmp() and sprite_to_bmp_file() errors */
+	/* sprite_to_bmp(), sprite_to_bmp_file() and sprite_to_rgb() errors */
 	SE_INDEX,
 
 	/* sprite_to_bmp_file() errors */
@@ -76,9 +84,19 @@ typedef enum {
 } SpriteError;
 
 
+/* Load sprite file */
 SPREXPORT Sprite *sprite_load (const char *fname, SpriteError *error);
+
+/* Converts a sprite to bitmap file in memory */
 SPREXPORT void *sprite_to_bmp (Sprite *sprite, int i, int *size, SpriteError *error);
+
+/* Like sprite_to_bmp(), but saves the result to a file */
 SPREXPORT int sprite_to_bmp_file (Sprite *sprite, int i, const char *writeToFile, SpriteError *error);
+
+/* Converts a sprite to raw RGB data. The rowstride/pitch is 3*width. */
+SPREXPORT void *sprite_to_rgb (Sprite *sprite, int i, int *size, SpriteError *error);
+
+/* Frees a Sprite* pointer */
 SPREXPORT void sprite_free (Sprite *sprite);
 
 
