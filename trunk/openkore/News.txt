@@ -23,6 +23,7 @@ Bug fixes:
 - skillsAddAuto was waiting a long time to add the next skill point.
 - Auto-drop will look at full item name now.
 - Shop auto open delay will now work correctly after reconnecting.
+- Don't autoreply in town.
 
 New features:
 - Don't use teleportAuto_minAggressives if the more specific
