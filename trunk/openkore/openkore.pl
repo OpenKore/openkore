@@ -354,15 +354,15 @@ exit;
 #######################################
 
 #xlr82xs start 
-sub initMonstersKilled { 
-	if ($config{"monsterCount"} eq "1") {    
-		$i = 0; 
-		while ($config{"monsterCount_mon_$i"} ne "") { 
-			$monsters_killed[$i] = 0; 
-			$i++; 
+sub initMonstersKilled {
+	if ($config{"monsterCount"} eq "1") {
+		$i = 0;
+		while ($config{"monsterCount_mon_$i"} ne "") {
+			$monsters_killed[$i] = 0;
+			$i++;
 		}
 	}
-} 
+}
 #xlr82xs end
 
 sub initConnectVars {
@@ -5188,9 +5188,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
    				next if($playersID[$i] eq ""); 
 				$j = 0;
 				while ($avoid{"avoid_$j"} ne "") {
-					if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) { 
-						print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";  
-						chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
+					if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
+						print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
+						chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
 						print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
 						$timeout_ex{'master'}{'time'} = time;
 						$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
@@ -7135,21 +7135,21 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "0119") {
 #Solos Start
-		$ID = substr($msg, 2, 4); 
-		$param1 = unpack("S1", substr($msg, 6, 2)); 
-		$param2 = unpack("S1", substr($msg, 8, 2)); 
+		$ID = substr($msg, 2, 4);
+		$param1 = unpack("S1", substr($msg, 6, 2))
+		$param2 = unpack("S1", substr($msg, 8, 2));
 		$param3 = unpack("S1", substr($msg, 10, 2));
-		$frozen = unpack("S1", substr($msg, 6, 2)); 
+		$frozen = unpack("S1", substr($msg, 6, 2));
 
-		# character looks 
-		if ($ID eq $accountID) { 
-			if ($param2 == 0x0001) { 
-				# poison 
-				$index = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_CurePoison"});
-				if ($index ne "") { 
-					print "Auto cure poison\n"; 
-					sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$index]{'index'}, $accountID); 
-				} 
+		# character looks
+		if ($ID eq $accountID) {
+			if ($param2 == 0x0001) {
+				# poison
+				my $index = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_CurePoison"});
+				if ($index ne "") {
+					print "Auto cure poison\n";
+					sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$index]{'index'}, $accountID);
+				}
 			}
 		} elsif (%{$monsters{$ID}}) {
 			my $prevState = $monsters{$ID}{'state'};

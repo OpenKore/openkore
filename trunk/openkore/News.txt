@@ -1,3 +1,11 @@
+- Added GPL clause.
+- Improved platform autodetection. Won't attempt to execute 'uname -s'
+  on Windows anymore.
+
+
+------------------------------------------------------
+
+
 ChangeLog for skore-revamped
 =============================
 
