@@ -87,7 +87,7 @@ sub getInput {
 	$self->readEvents();
 	my $msg;
 	if ($timeout < 0) {
-		until ($msg) {
+		until (defined $msg) {
 			$self->readEvents();
 			if (@{$self->{input_lines}}) {
 				$msg = shift @{$self->{input_lines}};
@@ -95,7 +95,7 @@ sub getInput {
 		}
 	} elsif ($timeout > 0) {
 		my $end = time + $timeout;
-		until ($end < time || $msg) {
+		until ($end < time || defined $msg) {
 			$self->readEvents();
 			if (@{$self->{input_lines}}) {
 				$msg = shift @{$self->{input_lines}};
@@ -151,6 +151,7 @@ sub readEvents {
 				unshift(@{ $self->{input_list} }, "");
 				$self->{input_offset} = 0;
 				push @{ $self->{input_lines} }, $self->{input_part};
+				$self->{out_col} = 0;
 				$self->{input_part} = '';
 #				print "\n";
 			#Other ASCII (+ ISO Latin-*)
