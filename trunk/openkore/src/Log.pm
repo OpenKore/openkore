@@ -112,6 +112,7 @@ sub MODINIT {
 }
 
 sub color {
+	return if ($config{'XKore'}); # Don't print colors in X-Kore mode; this is a temporary hack!
 	my $color = shift;
 	$color =~ s/\/.*//; # no support for background colors for now
 
@@ -198,7 +199,6 @@ sub processMsg {
 }
 
 sub setColor {
-	return if ($config{'XKore'}); # Don't print colors in X-Kore mode; this is a temporary hack!
 	return if (!$consoleColors{''}{'useColors'});
 	my ($type, $domain) = @_;
 	my $color = $consoleColors{$type}{$domain};
