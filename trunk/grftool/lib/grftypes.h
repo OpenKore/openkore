@@ -125,7 +125,7 @@ GRFEXTERN_BEGIN
 #else /* WIN32 */
 	/* Integer types */
 	#include <inttypes.h>
-	
+
 	/* Pack to 1 byte boundaries */
 	#pragma pack(1)
 
@@ -197,9 +197,12 @@ typedef struct {
 	uint32_t	line;		/**<  Line number in the soure code where the error took place */
 	const char	*file;		/**<  Filename of source code where the error took place. */
 	const char	*func;		/**<  Function that produced the error */
-	void		*extra;		/**< Extra information.
-					 * Stored as a void pointer, but
-					 * could be anything (not even a pointer)
+	uintptr_t	*extra;		/**< Extra information.
+					 * Stored as a uintptr_t pointer (type
+					 * which can hold any pointer), but
+					 * could be anything (not even a ptr)
+					 * In most (all?) programming models
+					 * sizeof(pointer) >= sizeof(size_t)
 					 */
 } GrfError;
 
@@ -261,7 +264,7 @@ typedef struct _GrfFile {
 	 * Commented out because it doesn't appear in GRAVITY's struct
 	 */
 	/* uint32_t cycle; */
-	
+
 	/* Extra data (which is not found in GRAVITY's struct) */
 	char *data;			/**<  Uncompressed file data */
 	struct _GrfFile *next;		/**<  Linked list */

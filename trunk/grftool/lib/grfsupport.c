@@ -382,7 +382,7 @@ grf_strerror(GrfError err)
 	/* Get the error string */
 	switch (err.type) {
 	case GE_ZLIB:
-		tmpbuf = GRF_strerror_zlib((int) err.extra);
+		tmpbuf = GRF_strerror_zlib((int) (ssize_t)err.extra);    /* NOTE: ptr => ssize_t /-signed-/ => int conversion */
 		break;
 	case GE_ZLIBFILE:
 		tmpbuf = gzerror((gzFile) err.extra, &dummy);
