@@ -45,4 +45,3 @@ sec_in01.rsw#Inside Valhalla#
 sec_in02.rsw#Inside Valhalla#
 sec_pri.rsw#Room of Meditation (Valhalla Prison)#
 payo1.rsw#Neo Payon Town#
-niflheim.rsw#Nifflheim, the land of dead#
