@@ -5,6 +5,12 @@
 Bug fixes:
 - Fix bulk selling bug which caused disconnect.
 
+New features:
+- Don't use teleportAuto_minAggressives if the more specific
+  teleportAuto_minAggressivesInLock is specified.
+- Don't use teleportAuto_maxDmg if the more specific
+  teleportAuto_maxDmgInLock is specified.
+
 ==================
 ### 1.5.2 (beta)
 ==================

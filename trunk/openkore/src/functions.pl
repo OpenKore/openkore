@@ -5007,6 +5007,7 @@ sub AI {
 			|| (
 				$config{teleportAuto_minAggressives}
 				&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}
+				&& !($config{teleportAuto_minAggressivesInLock} && $field{name} eq $config{'lockMap'})
 		 	) || (
 				$config{teleportAuto_minAggressivesInLock}
 				&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressivesInLock}
@@ -10165,7 +10166,7 @@ sub updateDamageTables {
 				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
 					message "Next $damage dmg could kill you. Teleporting...\n", "teleport";
 					$teleport = 1;
-				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination")) {
+				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination") && !($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'})) {
 					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n", "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $damage >= $config{'teleportAuto_maxDmgInLock'} && !whenStatusActive("Hallucination")) {
