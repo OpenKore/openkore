@@ -844,12 +844,13 @@ sub cmdPlayerList {
 		getVector(\%vecYouToPlayer, $pos, $mypos);
 		my $degPlayerToYou = vectorToDegree(\%vecPlayerToYou);
 		my $degYouToPlayer = vectorToDegree(\%vecYouToPlayer);
+		my $tmp = getHex($playersID[$args]);
 		my $playerToYou = int(sprintf("%.0f", (360 - $degPlayerToYou) / 45)) % 8;
 		my $youToPlayer = int(sprintf("%.0f", (360 - $degYouToPlayer) / 45)) % 8;
 
 		$msg = "------------------ Player Info ------------------\n";
 		$msg .= "$player->{name} ($player->{binID})\n";
-		$msg .= "Account ID: $player->{nameID}\n";
+		$msg .= "Account ID: $player->{nameID}  Account Hex: $tmp\n";
 		$msg .= "Party: $player->{party}{name}\n" if ($player->{party} && $player->{party}{name} ne '');
 		$msg .= "Guild: $player->{guild}{name}\n" if ($player->{guild});
 		$msg .= "Position: $pos->{x}, $pos->{y} ($directions_lut{$youToPlayer} of you: " . int($degYouToPlayer) . " degrees)\n";

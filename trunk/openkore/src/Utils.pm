@@ -36,7 +36,7 @@ our @EXPORT = (
 	# Math
 	qw(calcPosition distance getVector moveAlongVector normalize vectorToDegree),
 	# Other stuff
-	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getRange getTickCount
+	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP parseArgs swrite timeConvert timeOut
 	vocalString)
 	);
@@ -711,6 +711,19 @@ sub getHex {
 	}
 	return $return;
 }
+
+sub giveHex {
+	my $data = shift;
+	my @words = split(/ /, $data);
+	my $i = 0;
+	my $return;
+	while ($words[$i]) {
+		$return .= pack("H2",$words[$i]);
+		$i++;
+	}
+	return $return;
+}
+
 
 sub getRange {
 	my $param = shift;
