@@ -1542,10 +1542,10 @@ sub parseCommand {
 		} elsif ($arg1 eq "num" && $arg2 eq "") {
 			error "Error in function 'talk num' (Respond to NPC)\n" .
 				"You must specify a number.\n";
-		} elsif ($arg1 eq "num" && !($arg2 =~ /^\d$/)) {
+		} elsif ($arg1 eq "num" && !($arg2 =~ /^\d+$/)) {
 			error "Error in function 'talk num' (Respond to NPC)\n" .
-				"$num is not a valid number.\n";
-		} elsif ($arg1 eq "num" && $arg2 =~ /^\d$/) {
+				"$arg2 is not a valid number.\n";
+		} elsif ($arg1 eq "num" && $arg2 =~ /^\d+$/) {
 			sendTalkNumber(\$remote_socket, $talk{'ID'}, $arg2);
 
 		} elsif ($arg1 eq "text") {
