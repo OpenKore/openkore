@@ -12,6 +12,7 @@ Bug fixes:
   Eleison on <target>". It now recognizes the former when setting timeouts)
 - The Wx interface can now correctly launch a browser on Linux.
 - Fix display of map name in config.txt chat entries.
+- Restore advanced 2-2 class support from version 1.5.0.
 - Sell all items at once instead of just 8 at a time.
 - skillsAddAuto was waiting a long time to add the next skill point.
 
