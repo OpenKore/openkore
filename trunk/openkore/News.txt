@@ -267,6 +267,7 @@ Bug fixes:
 - When creating a character using openkore, there will no longer be
   garbage trailing the character name.
 - Command "ai" returns error if invalid parameters are given.
+- Bot will no longer incorrectly timeout when using d# talk sequence code.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
@@ -305,6 +306,7 @@ Credits:
   fixes/improvements.
 - BotMan: server details for pRO.
 - anu: add storage opening timeout, teleportAuto_dropTarget
+- juifeng: NPC talk timeout fix when using "d#" talk code
 
 
 ==================

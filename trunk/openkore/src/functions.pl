@@ -8121,6 +8121,8 @@ sub parseMsg {
 	} elsif ($switch eq "0142") {
 		$ID = substr($msg, 2, 4);
 		message("$npcs{$ID}{'name'} : Type 'talk num <number #>' to input a number.\n", "input");
+		$ai_v{'npc_talk'}{'talk'} = 'num';
+		$ai_v{'npc_talk'}{'time'} = time;
 
 	} elsif ($switch eq "0147") {
 		my $skillID = unpack("S*",substr($msg, 2, 2));
