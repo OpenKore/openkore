@@ -56,6 +56,7 @@ our @EXPORT = (
 	closestWalkableSpot
 	getFieldPoint
 	objectInsideSpell
+	objectIsMovingTowards
 	objectIsMovingTowardsPlayer/,
 
 	# OS specific
@@ -447,6 +448,24 @@ sub objectInsideSpell {
 		if ($spell->{sourceID} ne $accountID && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
 			return 1;
 		}
+	}
+	return 0;
+}
+
+##
+# objectIsMovingTowards(object1, object2, [max_variance])
+#
+# Check whether $object1 is moving towards $object2.
+sub objectIsMovingTowards {
+	my $obj = shift;
+	my $obj2 = shift;
+	my $max_variance = (shift || 15);
+
+	if (!timeOut($obj->{time_move}, $obj->{time_move_calc})) {
+		# $obj is still moving
+		my %vec;
+		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
+		return checkMovementDirection($obj->{pos}, \%vec, $obj2->{pos_to}, $max_variance);
 	}
 	return 0;
 }
