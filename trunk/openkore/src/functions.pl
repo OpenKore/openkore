@@ -5719,7 +5719,6 @@ sub parseMsg {
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		ai_clientSuspend(0, 10) if ($config{'XKore'});
 		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
-		undef $chars[$config{char}]{usedTeleportSkill};
 
 	} elsif ($switch eq "0092") {
 		$conState = 4;
