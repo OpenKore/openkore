@@ -186,6 +186,21 @@ New config options:
   You can only specify breaks of less than 24 hours.
   You can add multiple break times by adding additional blocks.
   Only specify the first three letters of the week day.
+- The autoConfChanged syntax has changed, and is now more powerful.
+  autoConfChange (filenames...) {
+    minTime (number)
+    varTime (number)
+    lvl (range)
+    joblvl (range)
+  }
+
+  (filenames...) is a list of filenames, seperated by comma. A
+  random file out of this list will be selected.
+  Kore will wait at least minTime seconds, and at most minTime + varTime
+  seconds before switching config file.
+  If lvl and joblvl are given, Kore will only switch config file if you're
+  in the given level or job level range.
+
 
 New timeouts.txt options:
 - ai_attack_unfail 5

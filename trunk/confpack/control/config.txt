@@ -48,12 +48,13 @@ autoRestartSleep 1
 autoSleepMin 900
 autoSleepSeed 900
 
-autoConfChange 0
-autoConfChange_files
-autoConfChange_min 25200
-autoConfChange_seed 7200
+autoConfChange {
+	minTime
+	varTime
+	lvl
+	joblvl
+}
 
-#
 # autoBreakTime [week day, first three letters only] {
 # 	startTime [start time]
 # 	stopTime [stop time]
