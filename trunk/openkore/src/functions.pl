@@ -3033,48 +3033,8 @@ sub AI {
 		}
 	}
 
-	#Auto Equip - Kaldi Update 12/03/2004
-	##### AUTO-EQUIP #####
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || 
-		 $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || 
-		 $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take" || 
-		 $ai_seq[0] eq "attack")&& timeOut(\%{$timeout{'ai_equip_auto'}}) 
-		){
-		my $i = 0;
-		my $ai_index_attack = binFind(\@ai_seq, "attack");
-		my $ai_index_skill_use = binFind(\@ai_seq, "skill_use");
-		while ($config{"equipAuto_$i"}) {
-			#last if (!$config{"equipAuto_$i"});
-			if (checkSelfCondition("equipAuto_$i")
-			 && (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
-			 && (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
-			 && ($config{"equipAuto_$i" . "_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
-			 && (!$config{"equipAuto_$i" . "_skills"} || $ai_index_skill_use ne "" && existsInList($config{"equipAuto_$i" . "_skills"},$skillsID_lut{$ai_seq_args[$ai_index_skill_use]{'skill_use_id'}}))
-			) {
-				undef $ai_v{'temp'}{'invIndex'};
-				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i"});
-				if ($ai_v{'temp'}{'invIndex'} ne "") {
-					sendEquip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
-					$timeout{'ai_item_equip_auto'}{'time'} = time;
-					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~ if $config{'debug'};
-					last;
-				}
-			} elsif ($config{"equipAuto_$i" . "_def"} && !$chars[$config{'char'}]{'sitting'}) {
-				undef $ai_v{'temp'}{'invIndex'};
-				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i" . "_def"});
-				if ($ai_v{'temp'}{'invIndex'} ne "") {
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
-					$timeout{'ai_item_equip_auto'}{'time'} = time;
-					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~ if $config{'debug'};
-				}
-			}
-			$i++;
-		}
-	}
-
 
 	##### AUTO-SKILL USE #####
-
 
 	if ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute"
 		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
@@ -3118,6 +3078,52 @@ sub AI {
 			} else {
 				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'useSelf_skill'})}}{'ID'}, $ai_v{'useSelf_skill_lvl'}, $ai_v{'useSelf_skill_maxCastTime'}, $ai_v{'useSelf_skill_minCastTime'}, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 			}
+		}
+	}
+
+
+	#Auto Equip - Kaldi Update 12/03/2004
+	##### AUTO-EQUIP #####
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || 
+		 $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "skill_use" ||
+		 $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take" || 
+		 $ai_seq[0] eq "attack") && timeOut($timeout{'ai_item_equip_auto'})
+	  ) {
+		my $i = 0;
+		my $ai_index_attack = binFind(\@ai_seq, "attack");
+		my $ai_index_skill_use = binFind(\@ai_seq, "skill_use");
+		my $currentSkill;
+		if (defined $ai_index_skill_use) {
+			my $skillID = $ai_seq_args[$ai_index_skill_use]{'skill_use_id'};
+			$currentSkill = $skillsID_lut{$skillID};
+		}
+
+		while ($config{"equipAuto_$i"}) {
+			if (checkSelfCondition("equipAuto_$i")
+			 && (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
+			 && (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
+			 && ($config{"equipAuto_$i" . "_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
+			 && (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
+			) {
+				undef $ai_v{'temp'}{'invIndex'};
+				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i"});
+				if ($ai_v{'temp'}{'invIndex'} ne "") {
+					sendEquip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
+					$timeout{'ai_item_equip_auto'}{'time'} = time;
+					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~;
+					last;
+				}
+
+			} elsif ($config{"equipAuto_$i" . "_def"} && !$chars[$config{'char'}]{'sitting'}) {
+				undef $ai_v{'temp'}{'invIndex'};
+				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i" . "_def"});
+				if ($ai_v{'temp'}{'invIndex'} ne "") {
+					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
+					$timeout{'ai_item_equip_auto'}{'time'} = time;
+					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~ if $config{'debug'};
+				}
+			}
+			$i++;
 		}
 	}
 
