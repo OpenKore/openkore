@@ -5868,7 +5868,7 @@ sub parseMsg {
 			}
 		} elsif ($ID2 eq $accountID) {
 			if (%{$monsters{$ID1}}) {
-				useTeleport(1) if ($monsters{$ID1}{'name'} eq "");
+				useTeleport(1) if ($monsters{$ID1}{'name'} eq "" && $config{'teleportAuto_emptyName'} ne '0');
 
 				message("[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 					.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
