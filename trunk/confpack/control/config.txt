@@ -1,7 +1,6 @@
 #See the documentation for what these variables do
 #New variables have comments above them
 
-local_port 2341
 local_host localhost
 buildType 0
 
@@ -168,7 +167,7 @@ intervalMapDrt 2
 
 avoidGM_near 1
 avoidGM_near_inTown 0
-avoidGM_talk 0
+avoidGM_talk 1
 avoidGM_reconnect 1800
 avoidList 1
 
