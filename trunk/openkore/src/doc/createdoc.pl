@@ -68,8 +68,25 @@ sub makeupText {
 	$text =~ s/^`l`$/<\/ul>/gm;
 	$text =~ s/<ul>(.*?)<\/ul>/&list($1)/gse;
 
+
+	sub createFuncLink {
+		my $func = $_[0];
+		return '' if (!defined $func);
+
+		my $name = $func;
+		$name =~ s/\(\)$//;
+
+		foreach my $mod (@modulesList) {
+			if ($modules{$mod}{functions}{$name}) {
+				my ($file) = $mod =~ /(.*?)(\.pm)?$/;
+				return "<a href=\"$file.html#$name\"><code>$func</code></a>";
+			}
+		}
+		return "<code>$func<\/code>";
+	}
+
 	# Functions
-	$text =~ s/([a-z0-9_:]+\(\))/<code>$1<\/code>/gi;
+	$text =~ s/([a-z0-9_:]+\(\))/&createFuncLink($1)/gie;
 	# Variables
 	$text =~ s/(\$[a-z0-9_{\'}:]+)/<code>$1<\/code>/gi;
 	# Links to modules

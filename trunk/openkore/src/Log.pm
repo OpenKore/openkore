@@ -14,7 +14,7 @@
 #
 # <h3>What is a logging framework and why is it needed?</h3>
 #
-# Kore prints messages to the console using print(). There are several
+# Kore used to print messages to the console using print(). There are several
 # problems though:
 # `l
 # - Messages can only be printed to the console. If you want to print it
@@ -40,7 +40,7 @@
 # `l`
 #
 # The most important functions are:
-# message(), warning(), error(), debug()
+# Log::message(), Log::warning(), Log::error(), Log::debug()
 #
 # You pass the following arguments to those functions:
 # `l
@@ -288,12 +288,12 @@ sub debug {
 
 
 ##
-# Log::addHook(r_func, user_data)
+# Log::addHook(r_func, [user_data])
 # r_func: A reference to the function to call.
 # user_data: Additional data to pass to r_func.
 # Returns: An ID which you can use to remove this hook.
 #
-# Adds a hook. Every time message(), warning(), error() or debug() is called,
+# Adds a hook. Every time Log::message(), Log::warning(), Log::error() or Log::debug() is called,
 # r_func is also called, in the following way:
 # <pre>
 # r_func->($type, $domain, $level, $globalVerbosity, $message, $user_data);
@@ -305,7 +305,7 @@ sub debug {
 # $user_data : The value of user_data, as passed to addHook.
 # </pre>
 #
-# See also: delHook()
+# See also: Log::delHook()
 #
 # Example:
 # sub hook {

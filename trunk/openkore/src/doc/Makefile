@@ -1,5 +1,6 @@
 FILES=\
 	../Log.pm \
+	../Settings.pm \
 	../Modules.pm \
 	../Plugins.pm \
 	../IPC.pm \
