@@ -53,6 +53,29 @@ sub new {
 }
 
 
+sub reset {
+	my $class = shift;
+	my %args = @_;
+
+	# Check arguments
+	croak "Required arguments missing, specify 'field' or 'distance_map' and 'width' and 'height'\n"
+		unless $args{field} || ($args{distance_map} && $args{width} && $args{height});
+	croak "Required argument 'start' missing\n" unless $args{start};
+	croak "Required argument 'dest' missing\n" unless $args{dest};
+
+	# Default optional arguments
+	$args{distance_map} = \$args{field}{dstMap} unless $args{distance_map};
+	$args{width} = $args{field}{width} unless $args{width};
+	$args{height} = $args{field}{height} unless $args{height};
+	$args{timeout} = 1500 unless $args{timeout};
+
+	return $class->_reset(${$args{distance_map}}, $args{weights}, $args{width}, $args{height},
+		$args{start}{x}, $args{start}{y},
+		$args{dest}{x}, $args{dest}{y},
+		$args{timeout});
+}
+
+
 1;
 __END__
 
