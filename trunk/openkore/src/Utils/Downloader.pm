@@ -8,11 +8,13 @@ use constant MAX_RETRIES => 3;
 
 
 sub new {
-	my ($class, $host, $file) = @_;
+	my ($class, $host, $file,$proxy,$proxy_port) = @_;
 	my %self;
 
 	$self{host} = $host;
 	$self{file} = $file;
+	$self{proxy} = $proxy;
+	$self{proxy_port} = $proxy_port;
 	$self{stage} = 'Connect';
 	$self{retry} = 0;
 
@@ -28,8 +30,13 @@ sub iterate {
 		return 1;
 
 	} if ($self->{stage} eq 'Connect') {
+
+		$self->{realhost} = ($self->{proxy}) ? $self->{proxy} : $self->{host};
+		$self->{peerport} = ($self->{proxy_port}) ? $self->{proxy_port} : 80;
+
 		$self->{http} = new Net::HTTP::NB(
-			Host => $self->{host},
+			Host => $self->{realhost},
+			PeerPort => $self->{peerport},
 			KeepAlive => 1
 		);
 		if (!$self->{http}) {
@@ -43,7 +50,11 @@ sub iterate {
 	} elsif ($self->{stage} eq 'Request') {
 		undef $@;
 		eval {
-			$self->{http}->write_request(GET => $self->{file});
+			$self->{http}->host($self->{host}) if ($self->{proxy});
+			$self->{realget} = ($self->{proxy}) ? "http://" . $self->{host} . $self->{file} : $self->{file};
+
+			print $self->{realget} . "\n";
+			$self->{http}->write_request(GET => $self->{realget});
 			$self->{stage} = 'Read Headers';
 			$self->{checkStart} = time;
 		};
