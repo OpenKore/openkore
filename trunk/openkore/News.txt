@@ -98,9 +98,10 @@ Internal:
 
 Credits:
 - Fenris: Tk interface improvements.
-- aputs: Inventory checking config options.
+- aputs: Inventory checking config options, vending improvements.
 - fov: Storage access bugfix, conf command bugfix, routing improvements.
 - brianhj: 010F packet typo fix.
+- pmak, float: All kinds of stuff.
 
 
 ==================
