@@ -1113,7 +1113,7 @@ sub cmdWho {
 
 sub cmdMonster {
 	message "Attempting to summon monster\n";
-	main::ai_skillUse(293, 10, 0, 0, $accountID);
+	main::ai_skillUse('SA_SUMMONMONSTER', 10, 0, 0, $accountID);
 }
 
 sub cmdMonocell {
@@ -1125,7 +1125,7 @@ sub cmdMonocell {
 		return;
 	}
 	message "Attempting to monocell ".main::getActorName($id)."\n";
-	main::ai_skillUse(291, 10, 0, 0, $id);
+	main::ai_skillUse('SA_MONOCELL', 10, 0, 0, $id);
 }
 
 sub cmdDeath {
@@ -1149,7 +1149,7 @@ sub cmdMVP {
 		return;
 	}
 	message "Attempting to change into MVP ".main::getActorName($id)."\n";
-	main::ai_skillUse(292, 10, 0, 0, $id);
+	main::ai_skillUse('SA_CLASSCHANGE', 10, 0, 0, $id);
 }
 
 return 1;

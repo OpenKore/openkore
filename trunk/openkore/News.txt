@@ -43,6 +43,8 @@ Bug fixes:
 - Hopefully fixed bug where typing 'follow a' and then 'follow b' will make
   bot still follow a
 - autoTalkCont bugfix by fov.
+- Fixed new ai_skillUse to support temporary skills.
+- Fixed 'monster', 'mvp' and 'death' commands to work with new ai_skillUse.
 
 Credits:
 - Fenris: Tk interface improvements.
@@ -51,8 +53,8 @@ Credits:
 Internal:
 - Added AI.pm, which is a wrapper for @ai_seq and @ai_seq_args.
 - Added $char, an alias for $chars[$config{'char'}].
-- ai_skillUse's first parameter is skillID (eg AL_HEAL) rather then the internal
-  ID Number
+- ai_skillUse's first parameter is skillID (eg AL_HEAL) rather then the
+  internal ID Number
 
 ==================
 ### 1.3.1 (beta)
