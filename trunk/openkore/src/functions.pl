@@ -1267,33 +1267,10 @@ sub parseCommand {
 			Modules::reload($args, 1);
 
 		} else {
-			my $ok = 1;
-
-			if (! -f 'functions.pl') {
-				$ok = 0;
-				error "Unable to reload code: functions.pl does not exist";
-			} elsif (-f $Config{'perlpath'}) {
-				$ok = 0;
-				message "Checking functions.pl for errors...\n", "info";
-				system($Config{'perlpath'}, '-c', 'functions.pl');
-				if ($? == -1) {
-					error "Error: failed to execute $Config{'perlpath'}\n";
-				} elsif ($? & 127) {
-					error "Error: $Config{'perlpath'} exited abnormally\n";
-				} elsif (($? >> 8) == 0) {
-					message("functions.pl passed syntax check.\n", "success");
-					$ok = 1;
-				} else {
-					error "Error: functions.pl contains syntax errors.\n";
-				}
-			}
-
-			if ($ok) {
-				message("Reloading functions.pl...\n", "info");
-				if (!do 'functions.pl' || $@) {
-					error "Unable to reload functions.pl\n";
-					error("$@\n", "syntax", 1) if ($@);
-				}
+			message("Reloading functions.pl...\n", "info");
+			if (!do 'functions.pl' || $@) {
+				error "Unable to reload functions.pl\n";
+				error("$@\n", "syntax", 1) if ($@);
 			}
 		}
 
@@ -2178,6 +2155,11 @@ sub AI {
 
 	# partyAuto 1=refuse 2=accept
 	if ($config{'partyAuto'} && %incomingParty && timeOut(\%{$timeout{'ai_partyAuto'}})) {
+		if ($config{partyAuto} == 1) {
+			message "Auto-denying party request\n";
+		} else {
+			message "Auto-accepting party request\n";
+		}
 		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
 		$timeout{'ai_partyAuto'}{'time'} = time;
 		undef %incomingParty;
@@ -5917,7 +5899,7 @@ sub parseMsg {
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'} = $ID;
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} = $amount;
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = $type;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $itemSlots_lut{$ID};
+				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $type_equip;
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'identified'} = unpack("C1",substr($msg, 8, 1));
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = unpack("C1",substr($msg, 10, 1));
 				$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'} = unpack("S1",substr($msg, 12, 2));
