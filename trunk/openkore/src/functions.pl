@@ -6687,6 +6687,7 @@ sub parseMsg {
 
 		} else {
 			$currentDeal{'you_finalize'} = 1;
+			$chars[$config{'char'}]{'zenny'} -= $currentDeal{'you_zenny'};
 			message "You finalized the Deal\n", "deal";
 		}
 
