@@ -18,6 +18,7 @@ use bytes;
 srand;
 
 
+sub __start {
 ##### CHECK FOR THE XSTOOL LIBRARY #####
 
 BEGIN {
@@ -229,7 +230,7 @@ if ($config{'adminPassword'} eq 'x' x 10) {
 Log::message("\n");
 
 
-##### INITIALIZE X-KORE SERVER ######
+##### INITIALIZE X-KORE ######
 
 our $xkore;
 our $XKore_dontRedirect = 0;
@@ -450,8 +451,10 @@ Plugins::unloadAll();
 
 # Shutdown everything else
 close($remote_socket);
-unlink('buffer') if ($config{'XKore'} && -f 'buffer');
 Network::disconnect(\$remote_socket);
 
 Log::message("Bye!\n");
 Log::message($Settings::versionText);
+}
+
+__start() unless defined $ENV{INTERPRETER};
