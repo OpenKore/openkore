@@ -372,6 +372,7 @@ while ($quit != 1) {
 		# Wait until the RO client has connected to us
 		$remote_socket = $xkore->waitForClient;
 		Log::message("You can login with the Ragnarok Online client now.\n", "startup");
+		$timeout{'injectSync'}{'time'} = time;
 	}
 
 	# Parse command input
@@ -404,6 +405,11 @@ while ($quit != 1) {
 			} elsif ($type eq "S") {
 				parseSendMsg($newMsg);
 			}
+		}
+		
+		if (timeOut($timeout{'injectSync'})) {
+			$xkore->sync;
+			$timeout{'injectSync'}{'time'} = time;
 		}
 
 	} elsif (dataWaiting(\$remote_socket)) {
