@@ -26,10 +26,11 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_PAINT EVT_SPLITTER_DOUBLECLICKED);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_KEY_DOWN EVT_PAINT EVT_SPLITTER_DOUBLECLICKED);
 use Time::HiRes qw(time sleep);
 use File::Spec;
-require DynaLoader;
+
+use constant MAX_INPUT_HISTORY => 200;
 
 use Globals;
 use Interface;
@@ -48,31 +49,16 @@ use Utils;
 sub OnInit {
 	my $self = shift;
 
-	# Determine platform
-	if ($buildType == 0) {
-		$self->{platform} = 'win32';
-	} else {
-		my $mod = 'use IPC::Open2; use POSIX;';
-		eval $mod;
-		if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
-			# wxGTK is linked to GTK 2
-			$self->{platform} = 'gtk2';
-			# GTK 2 will segfault if we try to use non-UTF 8 characters,
-			# so we need functions to convert them to UTF-8
-			$mod = 'use utf8; use Encode;';
-			eval $mod;
-		} else {
-			$self->{platform} = 'gtk1';
-		}
-	}
-
-	$self->createInterface();
-	$self->iterate();
+	$self->createInterface;
+	$self->iterate;
 	$self->{iterationTimeout}{timeout} = 0.05;
 	$self->{aiBarTimeout}{timeout} = 0.1;
 
 	$self->{loadHook} = Plugins::addHook('loadfiles', sub { $self->onLoadFiles(@_); });
 	$self->{postLoadHook} = Plugins::addHook('postloadfiles', sub { $self->onLoadFiles(@_); });
+
+	$self->{history} = [];
+	$self->{historyIndex} = -1;
 
 	Modules::register("Interface::Wx::MapViewer");
 	return 1;
@@ -94,13 +80,13 @@ sub iterate {
 		if (defined $i) {
 			$self->{mapViewer}->setDest($ai_seq_args[$i]{dest}{pos}{x}, $ai_seq_args[$i]{dest}{pos}{y});
 		} else {
-			$self->{mapViewer}->setDest();
+			$self->{mapViewer}->setDest;
 		}
-		$self->{mapViewer}->update();
+		$self->{mapViewer}->update;
 	}
 
-	while ($self->Pending()) {
-		$self->Dispatch();
+	while ($self->Pending) {
+		$self->Dispatch;
 	}
 	$self->Yield();
 	$self->{iterationTimeout}{time} = time;
@@ -113,7 +99,7 @@ sub getInput {
 
 	if ($timeout < 0) {
 		while (!defined $self->{input} && !$quit) {
-			$self->iterate();
+			$self->iterate;
 			sleep 0.01;
 		}
 		$msg = $self->{input};
@@ -124,7 +110,7 @@ sub getInput {
 	} else {
 		my $begin = time;
 		until (defined $self->{input} || time - $begin > $timeout || $quit) {
-			$self->iterate();
+			$self->iterate;
 			sleep 0.01;
 		}
 		$msg = $self->{input};
@@ -135,7 +121,7 @@ sub getInput {
 
 	# Make sure we update the GUI. This is to work around the effect
 	# of functions that block for a while
-	$self->iterate() if (timeOut($self->{iterationTimeout}));
+	$self->iterate if (timeOut($self->{iterationTimeout}));
 
 	return $msg;
 }
@@ -145,7 +131,7 @@ sub writeOutput {
 	$self->{console}->add(@_);
 	# Make sure we update the GUI. This is to work around the effect
 	# of functions that block for a while
-	$self->iterate() if (timeOut($self->{iterationTimeout}));
+	$self->iterate if (timeOut($self->{iterationTimeout}));
 }
 
 sub title {
@@ -300,6 +286,7 @@ sub createInterface {
 		wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	$vsizer->Add($inputBox, 0, wxALL | wxGROW);
 	EVT_TEXT_ENTER($inputBox, 1, sub { $self->onInputEnter(); });
+	EVT_KEY_DOWN($inputBox, sub { $self->onInputUpdown(@_); });
 
 
 	### Status bar
@@ -390,11 +377,46 @@ sub updateStatusBar {
 
 sub onInputEnter {
 	my $self = shift;
-	$self->{input} = $self->{inputBox}->GetValue();
+	$self->{input} = $self->{inputBox}->GetValue;
 	$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
 	$self->{console}->AppendText("$self->{input}\n");
 	$self->{console}->SetDefaultStyle($self->{console}{defaultStyle});
 	$self->{inputBox}->Remove(0, -1);
+
+	unshift(@{$self->{history}}, $self->{input}) if ($self->{input} ne "");
+	pop @{$self->{history}} if (@{$self->{history}} > MAX_INPUT_HISTORY);
+	$self->{historyIndex} = -1;
+	undef $self->{currentInput};
+}
+
+sub onInputUpdown {
+	my $self = shift;
+	my $textctrl = shift;
+	my $event = shift;
+
+	if ($event->GetKeyCode == WXK_UP) {
+		if ($self->{historyIndex} < $#{$self->{history}}) {
+			$self->{currentInput} = $textctrl->GetValue if (!defined $self->{currentInput});
+			$self->{historyIndex}++;
+			$textctrl->SetValue($self->{history}[$self->{historyIndex}]);
+			$textctrl->SetInsertionPointEnd;
+		}
+
+	} elsif ($event->GetKeyCode == WXK_DOWN) {
+		if ($self->{historyIndex} > 0) {
+			$self->{historyIndex}--;
+			$textctrl->SetValue($self->{history}[$self->{historyIndex}]);
+			$textctrl->SetInsertionPointEnd;
+		} elsif ($self->{historyIndex} == 0) {
+			$self->{historyIndex} = -1;
+			$textctrl->SetValue($self->{currentInput});
+			undef $self->{currentInput};
+			$textctrl->SetInsertionPointEnd;
+		}
+
+	} else {
+		$event->Skip;
+	}
 }
 
 sub onLoadFiles {
