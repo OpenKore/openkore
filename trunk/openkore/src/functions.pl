@@ -4703,10 +4703,11 @@ sub AI {
 			#We actually skip several steps at a time since the server does its own pathfinding.
 			#Sometimes we may skip too many steps, and the server says "thats too far, i won't move u"
 			#So we decrease the number of steps skipped until the server finally moves us.
-			#
-			#If we've tried to move and our position still isn't at the next step
-			if ($ai_seq_args[0]{'divideIndex'} && $chars[$config{'char'}]{'pos_to'}{'x'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}
-				&& $chars[$config{'char'}]{'pos_to'}{'y'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}) {
+
+			#If we've tried to move and our position still isn't at the next step...
+			if ($ai_seq_args[0]{'divideIndex'} &&
+			   ($chars[$config{'char'}]{'pos_to'}{'x'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}
+			 || $chars[$config{'char'}]{'pos_to'}{'y'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'})) {
 
 				#we're stuck!
 				$ai_v{'temp'}{'index_old'} = $ai_seq_args[0]{'index'};
@@ -4724,7 +4725,7 @@ sub AI {
 					$ai_v{'temp'}{'index'} = @{$ai_seq_args[0]{'solution'}} - 1 if ($ai_v{'temp'}{'index'} >= @{$ai_seq_args[0]{'solution'}});
 					$ai_v{'temp'}{'done'} = 1 if (int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'}) == 0);
 				} while ($ai_v{'temp'}{'index'} >= $ai_v{'temp'}{'index_old'} && !$ai_v{'temp'}{'done'});
-				debug "Route logic - stuck: skip amount $ai_v{temp}{index_old} -> $ai_v{temp}{index} (divideIndex = $ai_seq_args[0]{divideIndex})\n", "route";
+				debug "Route logic - stuck: decrease solution index from $ai_v{temp}{index_old} to $ai_v{temp}{index} (divideIndex = $ai_seq_args[0]{divideIndex})\n", "route";
 
 			} else {
 				$ai_seq_args[0]{'divideIndex'} = 1;
@@ -5085,9 +5086,10 @@ sub AI {
 			stand();
 
 		} elsif ($ai_seq_args[0]{'stage'} eq '') {
-			my $from = $chars[$config{char}]{pos_to}{x} . ", " . $chars[$config{char}]{pos_to}{x};
+			my $from = "$chars[$config{char}]{pos_to}{x}, $chars[$config{char}]{pos_to}{y}";
 			my $to = int($ai_seq_args[0]{move_to}{x}) . ", " . int($ai_seq_args[0]{move_to}{y});
-			debug("Move - sending move from ($from) to ($to)\n", "ai_move");
+			my $dist = sprintf("%.1f", distance($chars[$config{char}]{pos_to}, $ai_seq_args[0]{move_to}));
+			debug("Move - sending move from ($from) to ($to), distance $dist\n", "ai_move");
 
 			sendMove(\$remote_socket, int($ai_seq_args[0]{'move_to'}{'x'}), int($ai_seq_args[0]{'move_to'}{'y'}));
 			$ai_seq_args[0]{'ai_move_giveup'}{'time'} = time;
