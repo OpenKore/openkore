@@ -16,7 +16,8 @@
 # <search>: Put a 1 to teleport if the monster is NOT on the screen.
 # This is only used in auto-attack mode.
 #
-# <skillcancel>: Set to 1 if you want to avoid spells casted by this monster.
+# <skillcancel>: Set to 1 if you want to interrupt spells casted by this
+# monster.
 #
 # <lv>: Only auto-attack this monster if your level is higher than the
 # specified level.
