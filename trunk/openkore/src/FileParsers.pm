@@ -158,7 +158,7 @@ sub parseDataFile2 {
 			}
 
 			$r_hash->{_INCLUDES}{$file} = [] if (!$r_hash->{_INCLUDES}{$file});
-			parseDataFile($fname, $r_hash, 1);
+			parseDataFile2($fname, $r_hash, 1);
 			push @{$r_hash->{_INCLUDES}{$file}}, $fname;
 			next;
 		}
