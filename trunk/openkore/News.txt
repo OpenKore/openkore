@@ -31,9 +31,12 @@ New features:
 - Added optional parameter for chist, "chist 10" will show last 10 lines of chat.txt
 - Better support for secure logins.
 - Support for party skills.
-- Added ability to activate skills or use items based on current special
-  statuses (such as blessed, poisoned, etc).
+- Added ability to activate skills or use items based on current active
+  skills (such as blessed, agi upped, etc). This allows you to re-activate
+  skills that have been deactivated without using timeouts.
   This is similar to modkore's _inStatus/_outStatus feature.
+- Added ability to activate skills or use items based on current
+  status ailments/looks (like poisoned, hidden, etc.)
 - The Linux version now automatically compiles Tools.so for you if it
   doesn't exist.
 
@@ -77,6 +80,13 @@ New configuration options:
   useSelf_item_#_whenStatusInctive
 
   These are the equivalents of modkore's _inStatus and _outStatus options.
+- useSelf_skill_#_whenAffected
+  useSelf_item_#_whenAffected
+
+  Activate skill/use item only if your character have a certain status
+  ailment/look, like poisoned, hidden, etc. Take a look at
+  skillslooks.txt, skillsstate.txt and skillsailments.txt in the latest
+  tablepack for a list of names.
 
 
 Bug fixes:
@@ -107,11 +117,11 @@ Internal:
 
 
 Special thanks:
-  I'd like to give special thanks to:
 - Ven'Tatsu: Interface stuff, A* pathfinding enhancements.
 - pmak: various bug fixes and enhancements, as well as assisting me with maintaining the website.
 - jsteng: simplified move AI code, skill use improvements.
 - anu: support for new deal packets.
+- aputs: support for status ailments/looks.
 
 
 ==================

@@ -100,6 +100,9 @@ addConfigFile("$Settings::tables_folder/skills.txt", \%skills_rlut, \&parseSkill
 addConfigFile("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
 addConfigFile("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
 addConfigFile("$Settings::tables_folder/skillsstatus.txt", \%skillsStatus, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/skillsailments.txt", \%skillsAilments, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/skillsstate.txt", \%skillsState, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/cards.txt", \%cards_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
