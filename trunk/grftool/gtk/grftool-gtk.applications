@@ -1,0 +1,8 @@
+grftool-gtk
+	command=grftool-gtk
+	name=GRF Tool
+	can_open_multiple_files=false
+	expects_uris=false
+	requires_terminal=false
+	startup_notify=true
+	mime_types=application/x-grf

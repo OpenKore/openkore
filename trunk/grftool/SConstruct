@@ -15,7 +15,8 @@ CC = ARGUMENTS.get('CC', None);
 
 PREFIX = ARGUMENTS.get('PREFIX', '/usr/local')
 BINDIR = ARGUMENTS.get('BINDIR', PREFIX + '/bin')
-PKGDATADIR = ARGUMENTS.get('PKGDATADIR', PREFIX + '/share/grftool')
+DATADIR = ARGUMENTS.get('DATADIR', PREFIX + '/share')
+PKGDATADIR = ARGUMENTS.get('PKGDATADIR', DATADIR + '/grftool')
 
 platform = str(ARGUMENTS.get('OS', Platform()))
 if platform == "cygwin" or platform == "windows":
@@ -69,7 +70,7 @@ if platform != "cygwin":
 
 # Run sub SConscripts
 
-Export('env WIN32 platform PREFIX BINDIR PKGDATADIR DEBUG')
+Export('env WIN32 platform PREFIX BINDIR DATADIR PKGDATADIR DEBUG')
 SConscript('lib/SConscript', build_dir='lib/static', duplicate=False)
 
 # We only build the DLL if we're on Win32
@@ -83,4 +84,4 @@ if USE_GTK:
 	SConscript('gtk/SConscript')
 
 
-env.Alias('install', [BINDIR, PKGDATADIR])
+env.Alias('install', [BINDIR, DATADIR + '/applications', PKGDATADIR])

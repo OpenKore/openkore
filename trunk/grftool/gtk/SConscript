@@ -12,4 +12,5 @@ Clean('grftool-gtk', ['grftool.glade.bak', 'grftool.gladep.bak'])
 Default(gtktool)
 
 env.Install(BINDIR, gtktool)
+env.Install(DATADIR + '/applications', 'grftool-gtk.desktop')
 env.Install(PKGDATADIR, 'grftool.glade')
