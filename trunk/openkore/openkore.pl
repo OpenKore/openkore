@@ -9,16 +9,13 @@
 #
 #########################################################################
 
-BEGIN {
-	use FindBin;
-	my $dir = $FindBin::Bin;
-	push(@INC, "$dir",
-		"$dir/tools",
-		"$dir/tools/pathfinding",
-		"$dir/tools/unix",
-		"$dir/tools/win32",
-		"$dir/tools/misc");
-}
+use FindBin qw($RealBin);
+use lib "$RealBin";
+use lib "$RealBin/tools";
+use lib "$RealBin/tools/pathfinding";
+use lib "$RealBin/tools/unix";
+use lib "$RealBin/tools/win32";
+use lib "$RealBin/tools/misc";
 
 eval "no utf8;"; undef $@;
 use bytes;
