@@ -27,7 +27,6 @@ prt_are_in.rsw#Waiting room#
 arena_room.rsw#Waiting room#
 prt_arena01.rsw#ARENA#
 prt_are01.rsw#ARENA#
-glast_01.rsw#Glast Heim#
 comodo.rsw#Comodo#
 cmd_in01.rsw#Inside Comodo#
 cmd_in02.rsw#Inside Comodo#
