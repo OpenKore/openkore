@@ -128,8 +128,18 @@ sub readEvents {
 	while ($self->{in_con}->GetEvents()) {
 		my @event = $self->{in_con}->Input();
 		if (defined($event[0]) && $event[0] == 1 && $event[1]) {
+			##Ctrl+U (erases entire line)
+			if ($event[6] == 40 && $event[5] == 21) {
+				$self->{in_pos} = 0;
+				$self->{out_con}->Scroll(
+					0, $self->{in_line}, $self->{right}, $self->{in_line},
+					-$self->{right}, $self->{in_line}, ord(' '), $main::ATTR_NORMAL, 
+					0, $self->{in_line}, $self->{right}, $self->{in_line},
+				);
+				$self->{out_con}->Cursor(0, $self->{in_line});
+				$self->{input_part} = '';
 			##Backspace
-			if ($event[5] == 8) {
+			} elsif ($event[5] == 8) {
 				$self->{in_pos}-- if $self->{in_pos} > 0;
 				substr($self->{input_part}, $self->{in_pos}, 1, '');
 				$self->{out_con}->Scroll(
@@ -149,9 +159,12 @@ sub readEvents {
 				$self->{out_con}->Cursor(0, $self->{in_line});
 				$self->{in_pos} = 0;
 				$self->{input_list}[0] = $self->{input_part};
-				unshift(@{ $self->{input_list} }, "");
-				$self->{input_offset} = 0;
-				push @{ $self->{input_lines} }, $self->{input_part};
+				if ($self->{input_part} ne ""
+				 && ( @{$self->{input_list}} < 2 || $self->{input_list}[1] ne $self->{input_part} )) {
+					unshift(@{ $self->{input_list} }, "");
+					$self->{input_offset} = 0;
+					push @{ $self->{input_lines} }, $self->{input_part};
+				}
 				$self->{out_col} = 0;
 				$self->{input_part} = '';
 #				print "\n";
@@ -188,7 +201,8 @@ sub readEvents {
 					$self->{input_list}[$self->{input_offset}] = $self->{input_part};
 				}
 				$self->{input_offset}++;
-				$self->{input_offset} -= $#{ $self->{input_list} } + 1 while $self->{input_offset} > $#{ $self->{input_list} };
+				$self->{input_offset} = $#{$self->{input_list}} if ($self->{input_offset} > $#{$self->{input_list}});
+				#$self->{input_offset} -= $#{ $self->{input_list} } + 1 while $self->{input_offset} > $#{ $self->{input_list} };
 
 				$self->{out_con}->Cursor(0, $self->{in_line});
 				$self->{out_con}->Write(' ' x length($self->{input_part}));
@@ -208,7 +222,8 @@ sub readEvents {
 					$self->{input_list}[$self->{input_offset}] = $self->{input_part};
 				}
 				$self->{input_offset}--;
-				$self->{input_offset} += $#{ $self->{input_list} } + 1 while $self->{input_offset} < 0;
+				$self->{input_offset} = 0 if ($self->{input_offset} < 0);
+				#$self->{input_offset} += $#{ $self->{input_list} } + 1 while $self->{input_offset} < 0;
 
 				$self->{out_con}->Cursor(0, $self->{in_line});
 				$self->{out_con}->Write(' ' x length($self->{input_part}));
