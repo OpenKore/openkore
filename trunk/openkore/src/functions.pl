@@ -144,6 +144,8 @@ sub initStatVars {
 	$monkilltime = 0;
 	$elasped = 0;
 	$totalelasped = 0;
+	$statChanged = 0;
+	$skillChanged = 0;
 }
 
 sub initOtherVars {
@@ -2741,7 +2743,7 @@ sub AI {
 					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b"); 
 				}
 				last AUTOBUY;
-			}	
+			}
 			if ($ai_seq_args[0]{'invIndex'} ne "") {
 				sendBuy(\$remote_socket, $ai_seq_args[0]{'itemID'}, $config{"buyAuto_$ai_seq_args[0]{'index'}"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'});
 			} else {
@@ -2864,6 +2866,55 @@ sub AI {
 					}
 					ai_route($config{lockMap}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
 				}
+			}
+		}
+	}
+
+
+	##### AUTO STATS #####
+
+	if (!$statChanged && $config{'statsAddAuto'}) {
+		# Split list of stats/values
+		my @list = split(/ *,+ */, $config{"statsAddAuto_list"});
+
+		foreach my $item (@list) {
+			# Split each stat/value pair
+			my ($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/;
+			# If stat needs to be raised to match desired amount
+			if ( ($char->{$st} + $char->{"${st}_bonus"}) < $num ) {
+				# If char has enough stat points free to raise stat
+				if ($char->{points_free} >= $char->{"points_$st"}) {
+					my $ID;
+					if ($st eq "str") {
+						$ID = 0x0D;
+					} elsif ($st eq "agi") {
+						$ID = 0x0E;
+					} elsif ($st eq "vit") {
+						$ID = 0x0F;
+					} elsif ($st eq "int") {
+						$ID = 0x10;
+					} elsif ($st eq "dex") {
+						$ID = 0x11;
+					} elsif ($st eq "luk") {
+						$ID = 0x12;
+					}
+
+					$char->{$st} += 1;
+					# Raise stat
+					sendAddStatusPoint(\$remote_socket, $ID);
+					# Save which stat was raised, so that when we received the "stat changed" packet (00BC?)
+					# we can changed $statChanged back to 0 so that kore will start checking again if stats
+					# need to be raised.
+					# This basically prevents kore from sending packets to the server super-fast, by only allowing
+					# another packet to be sent when $statChanged is back to 0 (when the server has replied with a
+					# a stat change)
+					$statChanged = $st;
+					# After we raise a stat, exit loop				
+					last;
+				}
+				# If stat needs to be changed but char doesn't have enough stat points to raise it then
+				# don't raise it, exit loop
+				last;
 			}
 		}
 	}
@@ -3690,7 +3741,7 @@ sub AI {
 			} else {
 				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y});
 			}
-		}		
+		}
 	}
 
 	##### PARTY-SKILL USE ##### 
@@ -6798,29 +6849,42 @@ sub parseMsg {
 			if ($type == 13) {
 				$chars[$config{'char'}]{'str'} = $val;
 				debug "Strength: $val\n", "parseMsg";
+				# Reset $statChanged back to 0 to tell kore that a stat can be raised again
+				$statChanged = 0 if ($statChanged eq "str");
+
 			} elsif ($type == 14) {
 				$chars[$config{'char'}]{'agi'} = $val;
 				debug "Agility: $val\n", "parseMsg";
+				$statChanged = 0 if ($statChanged eq "agi");
+
 			} elsif ($type == 15) {
 				$chars[$config{'char'}]{'vit'} = $val;
 				debug "Vitality: $val\n", "parseMsg";
+				$statChanged = 0 if ($statChanged eq "vit");
+
 			} elsif ($type == 16) {
 				$chars[$config{'char'}]{'int'} = $val;
 				debug "Intelligence: $val\n", "parseMsg";
+				$statChanged = 0 if ($statChanged eq "int");
+
 			} elsif ($type == 17) {
 				$chars[$config{'char'}]{'dex'} = $val;
 				debug "Dexterity: $val\n", "parseMsg";
+				$statChanged = 0 if ($statChanged eq "dex");
+
 			} elsif ($type == 18) {
 				$chars[$config{'char'}]{'luk'} = $val;
 				debug "Luck: $val\n", "parseMsg";
+				$statChanged = 0 if ($statChanged eq "luk");
+
 			} else {
 				debug "Something: $val\n", "parseMsg";
 			}
 		}
 		Plugins::callHook('packet_charStats', {
-			'type'	=> $type,
-			'val'	=> $val,
-			});
+			type	=> $type,
+			val	=> $val,
+		});
 
 
 	} elsif ($switch eq "00BD") {
@@ -8649,7 +8713,7 @@ sub ai_partyfollow {
 		if ($master{map} ne $field{name} || $master{x} == 0 || $master{y} == 0) {
 			delete $master{x};
 			delete $master{y};
-		}			
+		}
 
 		return unless ($master{map} ne $field{name} || exists $master{x});
 		
@@ -8677,7 +8741,7 @@ sub ai_partyfollow {
 			if (defined $followIndex) {
 				$ai_seq_args[$followIndex]{ai_follow_lost_end}{timeout} = $timeout{ai_follow_lost_end}{timeout};
 			}
-		}		
+		}
 	}
 }
 
@@ -9880,7 +9944,7 @@ sub compilePortals {
 		warning "Note: LOS information for the above listed map(s) will be inaccurate;\n";
 		warning "      however it is safe to ignore if those map(s) are not used\n";
 		warning "----------------------------Error Summary----------------------------\n";
-	}	
+	}
 }
 
 sub compilePortals_check {

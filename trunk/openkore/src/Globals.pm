@@ -27,7 +27,7 @@ use base qw(Exporter);
 our %EXPORT_TAGS = (
 	config  => [qw(%avoid %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %npcs_lut %portals_lut %responses %sex_lut %shop %skills_lut %skills_rlut %skillsID_lut %skillsID_rlut %skillsDesc_lut %skillsLooks %skillsArea %skillsSP_lut %spells_lut %emotions_lut %timeout $char)],
 	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
-	state   => [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID %portals @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownObjects)],
+	state   => [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID %portals @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownObjects $statChanged $skillChanged)],
 	network => [qw($remote_socket $charServer $conState $encryptVal $ipc $lastPacketTime $xkore)],
 	interface => [qw($interface)],
 	misc    => [qw($buildType $quit @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars)],
@@ -159,6 +159,8 @@ our %incomingGuild;
 our @spellsID;
 our %spells;
 our @unknownObjects;
+our $statChanged;
+our $skillChanged;
 
 # Network
 our $remote_socket;

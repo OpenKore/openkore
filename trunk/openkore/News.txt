@@ -31,6 +31,7 @@ possible without them:
 - anu: add storage opening timeout, teleportAuto_dropTarget
 - juifeng: NPC talk timeout fix when using "d#" talk code
 - isieo: attackComboSlot bugfix
+- brianhj: auto stat-add
 
 
 ** INCOMPATIBLE CHANGES **:
@@ -119,6 +120,7 @@ New features:
 - Support for specifying hair color and hair style at character creation.
 - Improvements in the Wx interface: advanced configuration editor, info bar,
   ability to send PMs.
+- Automatically raise stats.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -263,6 +265,12 @@ New config options:
   Spell Breaker.
 - attackCanSnipe (flag)
   Set to 1 if your character can snipe (archers/mages).
+- statsAddAuto (flag)
+  Automatically increase stats.
+
+  statsAddAuto_list (stats)
+  Example:
+  statsAuddAuto_list 10 vit, 20 str, 25dex, 30 vit, 30 str, 50 vit, 40 str
 
 
 New timeouts.txt options:
