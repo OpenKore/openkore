@@ -10,6 +10,7 @@ Bug fixes:
 - Option to teleport when stuck.
 - Fix crash when you trying to (un)equip a nonexistant item.
 - Fixed command "timeout" not displaying the current timeout
+- Fixed AI not suspending, when playing manually in XKore mode
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.
