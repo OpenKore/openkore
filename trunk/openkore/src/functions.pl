@@ -3223,55 +3223,53 @@ sub AI {
 	}
 
 
-	##### PARTY-SKILL USE #####
+	##### PARTY-SKILL USE ##### 
 
-
-	#will doing this event if set only one config
-	if ($config{'partySkill_0'} && %{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" 
-	 || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute"
-	 || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
-	 || $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack") ){
+	#FIXME: need to move closer before using skill, there might be light of sight problem too...
+	
+	if (%{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" 
+		|| $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute"
+		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
+		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack") ){
 		my $i = 0;
 		undef $ai_v{'partySkill'};
 		undef $ai_v{'partySkill_lvl'};
-		my $partyTargetID;
-		my $partyTarget_HP_Percent;
-
+		undef $ai_v{'partySkill_targetID'};
 		while (defined($config{"partySkill_$i"})) {
-			undef $partyTargetID;
-			undef $partyTarget_HP_Percent;
 			for (my $j = 0; $j < @partyUsersID; $j++) {
-				next if ($partyUsersID[$j] eq "");
-				if ($config{"partySkill_$i"."_target"} eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}
-					&& $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'online'}){
-					$partyTargetID = $partyUsersID[$j];
-					$partyTarget_HP_Percent = percent_hp(\%{$chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}}) if ($chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'hp_max'});
-					last if (defined($partyTargetID) && defined($partyTarget_HP_Percent));
+				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
+				if ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'online'}
+					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) <= 8
+					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) > 0
+					&& (!$config{"partySkill_$i"."_target"} || $config{"partySkill_$i"."_target"} eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'})
+					&& percent_hp(\%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}}) <= $config{"partySkill_$i"."_targetHp_upper"} 
+					&& percent_hp(\%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}}) >= $config{"partySkill_$i"."_targetHp_lower"}
+					&& percent_sp(\%{$chars[$config{'char'}]}) <= $config{"partySkill_$i"."_sp_upper"} && percent_sp(\%{$chars[$config{'char'}]}) >= $config{"partySkill_$i"."_sp_lower"}
+					&& $chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc($config{"partySkill_$i"})}}{$config{"partySkill_$i"."_lvl"}}
+					&& !($config{"partySkill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
+					&& (!$config{"partySkill_$i"."_targetWhenStatusActive"} || whenStatusActivePL($partyUsersID[$j], $config{"partySkill_$i"."_targetWhenStatusActive"}))
+					&& (!$config{"partySkill_$i"."_targetWhenStatusInactive"} || !whenStatusActivePL($partyUsersID[$j], $config{"partySkill_$i"."_targetWhenStatusInactive"}))
+					&& (!$config{"partySkill_$i"."_targetWhenAffected"} || whenAffectedPL($config{$partyUsersID[$j], "partySkill_$i"."_targetWhenAffected"}))
+					&& timeOut($ai_v{"partySkill_$i"."_time"},$config{"partySkill_$i"."_timeout"})
+					){
+						$ai_v{"partySkill_$i"."_time"} = time;
+						$ai_v{'partySkill'} = $config{"partySkill_$i"};
+						$ai_v{'partySkill_target'} = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'};
+						$ai_v{'partySkill_targetID'} = $partyUsersID[$j];
+						$ai_v{'partySkill_lvl'} = $config{"partySkill_$i"."_lvl"};
+						$ai_v{'partySkill_maxCastTime'} = $config{"partySkill_$i"."_maxCastTime"};
+						$ai_v{'partySkill_minCastTime'} = $config{"partySkill_$i"."_minCastTime"};						
+						last;
 				}
 			}
-			#if defined $partyTarget_HP_Percent mean that player is in the screen. else skip to  do think.
-			if (defined($partyTargetID) && defined($partyTarget_HP_Percent) 
-			&& $partyTarget_HP_Percent <= $config{"partySkill_$i"."_targetHp_upper"} 
-			&& $partyTarget_HP_Percent >= $config{"partySkill_$i"."_targetHp_lower"}
-			&& percent_sp(\%{$chars[$config{'char'}]}) <= $config{"partySkill_$i"."_sp_upper"} 
-			&& percent_sp(\%{$chars[$config{'char'}]}) >= $config{"partySkill_$i"."_sp_lower"}
-			&& $chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc($config{"partySkill_$i"})}}{$config{"partySkill_$i"."_lvl"}}
-			&& timeOut($ai_v{"partySkill_$i"."_time"},$config{"partySkill_$i"."_timeout"})
-			&& !($config{"partySkill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
-			&& (!$config{"partySkill_$i"."_onSit"} || ($config{"partySkill_$i"."_onSit"} && $ai_seq[0] eq "sitAuto"))) {
-				$ai_v{"partySkill_$i"."_time"} = time;
-				$ai_v{'partySkill'} = $config{"partySkill_$i"};
-				$ai_v{'partySkill_target'} = $config{"partySkill_$i"."_target"};
-				$ai_v{'partySkill_lvl'} = $config{"partySkill_$i"."_lvl"};
-				$ai_v{'partySkill_maxCastTime'} = $config{"partySkill_$i"."_maxCastTime"};
-				$ai_v{'partySkill_minCastTime'} = $config{"partySkill_$i"."_minCastTime"};
-				last; 
-			}
+			
 			$i++;
+			last if (defined($ai_v{'partySkill_targetID'}));
 		}
-		if ($partyTargetID && $config{'useSelf_skill_smartHeal'} && $skills_rlut{lc($ai_v{'partySkill'})} eq "AL_HEAL") {
+
+		if ($config{'useSelf_skill_smartHeal'} && $skills_rlut{lc($ai_v{'partySkill'})} eq "AL_HEAL") {
 			undef $ai_v{'partySkill_smartHeal_lvl'};
-			$ai_v{'partySkill_smartHeal_hp_dif'} = $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'hp_max'} - $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'hp'};
+			$ai_v{'partySkill_smartHeal_hp_dif'} = $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'hp_max'} - $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'hp'};
 			for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'lv'}; $i++) {
 				$ai_v{'partySkill_smartHeal_lvl'} = $i;
 				$ai_v{'partySkill_smartHeal_sp'} = 10 + ($i * 3);
@@ -3284,23 +3282,26 @@ sub AI {
 			}
 			$ai_v{'partySkill_lvl'} = $ai_v{'partySkill_smartHeal_lvl'};
 		}
-		if ($ai_v{'partySkill_lvl'} > 0 && $partyTargetID) {
-			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'name'})Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'follow_skill'})}} (lvl $ai_v{'follow_skill_lvl'})\n~ if $config{'debug'};
+		if ($ai_v{'partySkill_lvl'} > 0) {
+			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}) Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'follow_skill'})}} (lvl $ai_v{'follow_skill_lvl'})\n~ if $config{'debug'};
 			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'partySkill'})})) {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $partyTargetID);
+				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $ai_v{'partySkill_targetID'});
 			} else {
-				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'pos'}{'x'}, $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'pos'}{'y'});
+				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'x'}, $chars[$config{'char'}]{'party'}{'users'}{$ai_v{'partySkill_targetID'}}{'pos'}{'y'});
 			}
 		}
 	}
 
 
-
 	##### FOLLOW #####
 
-	if (!defined($ai_seq_args[0]{'following'}) && $config{'follow'} && (($ai_seq[0] eq "") || ($ai_seq[0] eq "follow") || ($ai_seq[0] eq "move") || ($ai_seq[0] eq "attack") || ($ai_seq[0] eq "skill_use") || ($ai_seq[0] eq "sitting"))) {
+	# failsafe needed as ai_seq is cleared after teleport. 
+	# $ai_seq[0] will never be "" if randomWalk (and a few other flag) is enable, hence removed
+	
+	if ($config{'follow'} && $ai_seq[$#ai_seq] ne "follow") {
 		ai_follow($config{'followTarget'});
 	}
+	
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'suspended'}) {
 		if ($ai_seq_args[0]{'ai_follow_lost'}) {
 			$ai_seq_args[0]{'ai_follow_lost_end'}{'time'} += time - $ai_seq_args[0]{'suspended'};
@@ -3348,6 +3349,11 @@ sub AI {
 		}
 	}
 
+	# use party information to find master (higher priority if follow=2)
+	if (($config{follow} eq 2) && !defined($ai_seq_args[$#ai_seq]{'following'}) && ($ai_seq[$#ai_seq] eq "follow")) {
+		ai_partyfollow();
+	}	
+
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || $players_old{$ai_seq_args[0]{'ID'}}{'dead'})) {
 		message "Master died.  I'll wait here.\n", "party";
 		undef $ai_seq_args[0]{'following'};
@@ -3393,8 +3399,6 @@ sub AI {
 			message "Don't know what happened to Master\n", "party", 1;
 		}
 	}
-
-
 
 	##### FOLLOW-LOST #####
 
@@ -3442,6 +3446,11 @@ sub AI {
 			}
 		}
 	}
+	
+	# use party information to find master
+	if (!defined($ai_seq_args[$#ai_seq]{'following'}) && !defined($ai_seq_args[0]{'ai_follow_lost'}) && ($ai_seq[$#ai_seq] eq "follow")) {
+		ai_partyfollow();
+	}	
 
 	##### AUTO-SIT/SIT/STAND #####
 
@@ -8465,9 +8474,10 @@ sub ai_follow {
 		$args{name} = $name; 
 		push @ai_seq, "follow";
 		push @ai_seq_args, \%args;
-		$ai_seq_args[@ai_seq]{'following'} = 1;
 	}
+}
 
+sub ai_partyfollow {
 	# we have to enable re-calc of route based on master's possition regulary, even when it is
 	# on route and move, otherwise we have finaly moved to the possition and found that the master
 	# already teleported to another side of the map.
@@ -8475,50 +8485,46 @@ sub ai_follow {
 	# This however will give problem on few seq such as storageAuto as 'move' and 'route' might
 	# be triggered to move to the NPC
 
-	if (($playersID[$arg1] eq "") 
+	my %master;
+	$master{id} = findPartyUserID($config{followTarget});
+	if (($master{id} ne "") 
 		&& (binFind(\@ai_seq, "storageAuto") eq "")
 		&& (binFind(\@ai_seq, "storageGet") eq "")
 		&& (binFind(\@ai_seq, "sellAuto") eq "")
 		&& (binFind(\@ai_seq, "buyAuto") eq "")) {
 
-		my %master;
-		$master{id} = findPartyUserID($config{followTarget});
-		if ($master{id} ne "") {
-			$master{x} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{x};
-			$master{y} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{y};
-			($master{map}) = $chars[$config{char}]{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
+		$master{x} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{x};
+		$master{y} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{y};
+		($master{map}) = $chars[$config{char}]{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
 
-			if ($master{map} ne $field{'name'}) {
-				undef $master{x};
-				undef $master{y};
-			}			
+		if ($master{map} ne $field{'name'}) {
+			undef $master{x};
+			undef $master{y};
+		}			
 
-			if (distance(\%master, \%{$ai_v{temp}{master}}) > 15 || $master{map} != $ai_v{temp}{master}{map}
-			|| (timeOut($ai_v{temp}{time}, 15) && distance(\%master, $chars[$config{char}]{pos_to}) > $config{followDistanceMax})) {
-				$ai_v{temp}{master}{x} = $master{x};
-				$ai_v{temp}{master}{y} = $master{y};
-				$ai_v{temp}{master}{map} = $master{map};
-				$ai_v{temp}{time} = time; 
+		if (distance(\%master, \%{$ai_v{temp}{master}}) > 15 || $master{map} != $ai_v{temp}{master}{map}
+		|| (timeOut($ai_v{temp}{time}, 15) && distance(\%master, $chars[$config{char}]{pos_to}) > $config{followDistanceMax})) {
+			$ai_v{temp}{master}{x} = $master{x};
+			$ai_v{temp}{master}{y} = $master{y};
+			$ai_v{temp}{master}{map} = $master{map};
+			$ai_v{temp}{time} = time; 
 
-				if (defined($ai_v{temp}{master}{x}) && defined($ai_v{temp}{master}{y})) {
-					message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'} ($ai_v{temp}{master}{x},$ai_v{temp}{master}{y})\n", "party";
-				} else {
-					message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'}\n", "party";
-				}
+			if (defined($ai_v{temp}{master}{x}) && defined($ai_v{temp}{master}{y})) {
+				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'} ($ai_v{temp}{master}{x},$ai_v{temp}{master}{y})\n", "party";
+			} else {
+				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'}\n", "party";
+			}
 
-				aiRemove("move");
-				aiRemove("route");
-				aiRemove("route_getRoute");
-				aiRemove("route_getMapRoute");
-				ai_route(\%{$ai_v{temp}{returnHash}},
-					$ai_v{temp}{master}{x},
-					$ai_v{temp}{master}{y},
-					$ai_v{temp}{master}{map},
-					0, 0, 0, 0, 0, 0);
-
-				$ai_seq_args[@ai_seq]{'ai_following_lost'} = 1;  	
-			}                                                     																																																																																																																																																																																																																																																																																								
-		}                                                                                                                                																								
+			aiRemove("move");
+			aiRemove("route");
+			aiRemove("route_getRoute");
+			aiRemove("route_getMapRoute");
+			ai_route(\%{$ai_v{temp}{returnHash}},
+				$ai_v{temp}{master}{x},
+				$ai_v{temp}{master}{y},
+				$ai_v{temp}{master}{map},
+				0, 0, 0, 0, 0, 0);
+		}                                                     																																																																																																																																																																																																																																																																																								
 	}
 }
 
