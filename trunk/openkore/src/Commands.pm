@@ -900,18 +900,37 @@ sub cmdMonsterList {
 }
 
 sub cmdNPCList {
-	message("-----------NPC List-----------\n" .
-		"#    Name                         Coordinates   ID\n",
-		"list");
+	my (undef, $args) = @_;
+	my @arg = parseArgs($args);
+	my $msg = "-----------NPC List-----------\n" .
+		"#    Name                         Coordinates   ID\n";
+
+	if ($arg[0] =~ /^\d+$/) {
+		my $i = $arg[0];
+		if ($npcsID[$i]) {
+			my $pos = "($npcs{$npcsID[$i]}{pos}{x}, $npcs{$npcsID[$i]}{pos}{y})";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
+				[$i, $npcs{$npcsID[$i]}{name}, $pos, $npcs{$npcsID[$i]}{nameID}]);
+			$msg .= "---------------------------------\n";
+			message $msg, "info";
+
+		} else {
+			error	"Syntax Error in function 'nl' (List NPCs)\n" .
+				"Usage: nl [<npc #>]\n";
+		}
+		return;
+	}
+
 	for (my $i = 0; $i < @npcsID; $i++) {
 		next if ($npcsID[$i] eq "");
-		my $pos = "($npcs{$npcsID[$i]}{'pos'}{'x'}, $npcs{$npcsID[$i]}{'pos'}{'y'})";
-		message(swrite(
+		my $pos = "($npcs{$npcsID[$i]}{pos}{x}, $npcs{$npcsID[$i]}{pos}{y})";
+		$msg .= swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
-			[$i, $npcs{$npcsID[$i]}{'name'}, $pos, $npcs{$npcsID[$i]}{'nameID'}]),
-			"list");
+			[$i, $npcs{$npcsID[$i]}{name}, $pos, $npcs{$npcsID[$i]}{nameID}]);
 	}
-	message("---------------------------------\n", "list");
+	$msg .= "---------------------------------\n";
+	message $msg, "list";
 }
 
 sub cmdOpenShop {

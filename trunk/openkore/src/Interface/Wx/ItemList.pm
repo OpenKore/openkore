@@ -29,6 +29,7 @@ use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED);
 
 our $monsterColor;
 our $itemColor;
+our $npcColor;
 
 
 sub new {
@@ -40,6 +41,7 @@ sub new {
 	if (!$monsterColor) {
 		$monsterColor = new Wx::Colour(200, 0, 0);
 		$itemColor = new Wx::Colour(0, 0, 200);
+		$npcColor = new Wx::Colour(103, 0, 162);
 	}
 
 	$self->{objectsID} = [];
@@ -84,6 +86,8 @@ sub OnGetItemAttr {
 		$attr->SetTextColour($monsterColor);
 	} elsif ($ID && $self->{objects}{$ID}{type} eq 'i') {
 		$attr->SetTextColour($itemColor);
+	} elsif ($ID && $self->{objects}{$ID}{type} eq 'n') {
+		$attr->SetTextColour($npcColor);
 	}
 	return $attr;
 }
@@ -123,6 +127,15 @@ sub set {
 		push @objectsID, $_;
 		$objects{$_} = {%{$items->{$_}}};
 		$objects{$_}{type} = 'i';
+	}
+
+	my $r_npcsID = shift;
+	my $npcs = shift;
+	foreach (@{$r_npcsID}) {
+		next if !$_;
+		push @objectsID, $_;
+		$objects{$_} = {%{$npcs->{$_}}};
+		$objects{$_}{type} = 'n';
 	}
 
 	$self->{objectsID} = \@objectsID;

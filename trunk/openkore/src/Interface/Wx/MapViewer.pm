@@ -38,6 +38,7 @@ sub new {
 	$self->{destBrush} = new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID);
 	$self->{playerBrush} = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
 	$self->{monsterBrush} = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
+	$self->{npcBrush} = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
 	EVT_PAINT($self, \&_onPaint);
 	EVT_LEFT_DOWN($self, \&_onClick);
 	EVT_MOTION($self, \&_onMotion);
@@ -160,6 +161,28 @@ sub setPlayers {
 		if ($pos1->{x} != $pos2->{x} && $pos1->{y} != $pos2->{y}) {
 			$self->{needUpdate} = 1;
 			$self->{players} = $players;
+			return;
+		}
+	}
+}
+
+sub setNPCs {
+	my $self = shift;
+	my $npcs = shift;
+	my $old = $self->{npcs};
+
+	if (!$old || @{$npcs} != @{$old}) {
+		$self->{needUpdate} = 1;
+		$self->{npcs} = $npcs;
+		return;
+	}
+
+	for (my $i = 0; $i < @{$npcs}; $i++) {
+		my $pos1 = $npcs->[$i]{pos};
+		my $pos2 = $old->[$i]{pos};
+		if ($pos1->{x} != $pos2->{x} && $pos1->{y} != $pos2->{y}) {
+			$self->{needUpdate} = 1;
+			$self->{npcs} = $npcs;
 			return;
 		}
 	}
@@ -364,6 +387,14 @@ sub _onPaint {
 		$dc->SetBrush($self->{monsterBrush});
 		foreach my $pos (@{$self->{monsters}}) {
 			($x, $y) = $self->_posXYToView($pos->{pos_to}{x}, $pos->{pos_to}{y});
+			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
+		}
+	}
+
+	if ($self->{npcs} && @{$self->{npcs}}) {
+		$dc->SetBrush($self->{npcBrush});
+		foreach my $pos (@{$self->{npcs}}) {
+			($x, $y) = $self->_posXYToView($pos->{pos}{x}, $pos->{pos}{y});
 			$dc->DrawEllipse($x - 2, $y - 2, 4, 4);
 		}
 	}
