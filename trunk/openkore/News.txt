@@ -7,8 +7,7 @@ Bug fixes:
 - If attackAuto is set to 0, Kore will no longer attack all monsters
   while moving to lockMap.
 - When in X-Kore mode, do not quit on payment/banned error (fix by anu).
-- When monster changes state (like, Frozen), the message was not displayed.
-  This has been fixed.
+- State changes (like Frozen) are now correctly detected again.
 - Fix typo which cause lockMap_randX/Y to not work.
 - The 'cart add' command now checks whether you have a cart.
 - Fix some memory leaks.
