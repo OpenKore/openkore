@@ -173,13 +173,17 @@ sub setColor {
 	my ($type, $domain) = @_;
 
 	if ($type eq "error") {
-		color 'red';
+		color('red');
 	} elsif ($type eq "warning") {
-		color 'yellow';
+		color('yellow');
 	} elsif ($domain eq "connection") {
-		color 'green';
+		color('green');
 	} elsif ($domain eq "atk") {
-		color 'cyan';
+		color('cyan');
+	} elsif ($domain eq "monatkyou") {
+		color('blue');
+	} elsif ($domain eq "list") {
+		color('white');
 	}
 }
 
