@@ -42,7 +42,7 @@ if ($help_option) {
 }
 
 srand(time());
-$versionText = "*** OpenKore 1.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
+$versionText = "*** OpenKore 1.0.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
 print $versionText;
 
 our $welcomeText = "Welcome to X-sKore.";
