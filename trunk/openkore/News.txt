@@ -64,6 +64,10 @@ miss any of the new config options.
   goes to storage (because of overweight), it will get the Red Potions.
 - New config option: useSelf_skill_0_inLockOnly
   Use a skill only when in lockMap.
+- New config option: maxWeight_sellOrStore.
+  Kore will sell or go to storage if weight equals or is bigger than
+  itemsMaxWeight_sellOrStore. While walking to the sell/storage NPC,
+  Kore will pick up loot as long as your weight is under itemsMaxWeight.
 
 xlr82xs:
 - Removed dead monster count sub.
