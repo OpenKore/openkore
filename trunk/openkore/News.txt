@@ -6,6 +6,7 @@
 - Tools.dll is obsolete! You must get XSTools.dll and put it in your 
   'tools' folder. See the forum for more information:
   http://openkore.sourceforge.net/forum/viewtopic.php?p=17344#17344
+- secureLogin_type is no longer supported; use secureLogin_codeRequest instead.
 
 
 New features:
@@ -22,8 +23,6 @@ New features:
 - Priority attacks for non-aggressive monsters are now supported.
 - Weighted maprouting to avoid/prefer walking through certain maps
   (see control/routeweights.txt for configuration).
-- idRO Amatsu/Kunlun is now supported. You must set secureLogin_type
-  to 4 or 5, depending on your server.
 
 New config options:
 - useSelfSkill_#_monsters
@@ -34,6 +33,13 @@ New config options:
   monster attacks.
 - partySkill_#_target_aggressives
   Only activate partySkill if a certain monster attacks a party member.
+- secureLogin_codeRequest
+  If your server uses secure login, you have to put the server's
+  "code request string" here.
+
+Removed config options:
+- secureLogin_type
+  Obsolete by secureLogin_codeRequest
 
 Bug fixes:
 - The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
@@ -42,6 +48,8 @@ Bug fixes:
   This is fixed.
 - Don't attack monsters that are standing on a spot that's unwalkable
   according to the field file. This prevents an infinite loop.
+- getAuto never gets triggered if you're low on a certain item. This has
+  been fixed.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
