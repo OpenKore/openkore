@@ -16,7 +16,6 @@ use Globals;
 use Log qw(message warning error debug);
 use FileParsers;
 use Plugins;
-no utf8;
 
 
 #######################################
