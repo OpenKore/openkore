@@ -1,6 +1,0 @@
-PRE { background-color: #EEEEEE; }
-A, A:visited { text-decoration: none; }
-A:hover { text-decoration: underline; }
-
-#head { background-color: #8888FF; padding: 5px; border: 1px solid #7777FF; color: white; font-weight: bold; }
-#head A:visited { color: white; }

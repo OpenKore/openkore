@@ -1,144 +1,162 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-	<META NAME="Robots" CONTENT="noindex,nofollow">
-	<TITLE>OpenKore CVS Guide</TITLE>
-	<LINK HREF="cvs.css" MEDIA="screen" REL="stylesheet" TYPE="text/css">
-	<STYLE TYPE="text/css">
-	<!--
-	@import url(cvs.css);
-	-->
-	</STYLE>
-</HEAD>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>OpenKore CVS Guide</title>
+	<link rel="stylesheet" type="text/css" href="../../openkore.css">
+	<link rel="stylesheet" type="text/css" href="../../links.css">
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+</head>
 
-<BODY>
+<body>
 
-<DIV ID="head"><A HREF="index.html">&lt;&lt; OpenKore CVS Guide</A></DIV>
+<div id="title">OpenKore CVS Guide for developers</div>
 
-<H2>What are conflicts?</H2>
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="../../index.html">Table of contents</a></li>
+	<li><a href="../index.html">Development Introduction Guide</a></li>
+	<li><b>CVS Guide</b></li>
+	</ul>
+</div>
+
+<div id="main">
+
+
+<h2>What are conflicts?</h2>
 
 Imagine that you're working on openkore.pl. If someone else was
 simultanously working on openkore.pl too, and also changed some of the lines
-that you've changed too, an <I>overlap</I> occurs.
-If you do a <TT>cvs update</TT>, CVS will warn you about conflicts
+that you've changed too, an <i>overlap</i> occurs.
+If you do a <tt>cvs update</tt>, CVS will warn you about conflicts
 during merging.
 
 
-<H2>Conflicts example</H2>
+<h2>Conflicts example</h2>
 
 Suppose that you have downloaded
-<A HREF="http://www.gnu.org/software/cvs/manual/html_chapter/cvs_3.html#IDX28">revision</A>
-1.4 of <TT>openkore.pl</TT>. The part you're working on is:
-<BLOCKQUOTE><PRE>
+<a href="http://www.gnu.org/software/cvs/manual/html_chapter/cvs_3.html#IDX28">revision</a>
+1.4 of <tt>openkore.pl</tt>. The part you're working on is:
+<blockquote><pre class="example">
 sub generateExampleFile {
-	my $err = parse();
-	if ($err == 0) {
-		generate("control/example.txt");
-	} else {
-		print "No file generated.\n";
-	}
-	return ($nerr == 0 ? 0 : 1);
+    my $err = parse();
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+    return ($nerr == 0 ? 0 : 1);
 }
-</PRE></BLOCKQUOTE>
+</pre></blockquote>
 
-You've changed the code to:
-<BLOCKQUOTE><PRE>
+<p>
+You have changed the code to:
+<blockquote><pre class="example">
 sub generateExampleFile {
-	initScanner();
-	my $err = parse();
-	if ($err == 0) {
-		generate("control/example.txt");
-	} else {
-		print "No file generated.\n";
-	}
-	return ($nerr == 0 ? $SUCCESS : $FAILURE);
+    initScanner();
+    my $err = parse();
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+    return ($nerr == 0 ? $SUCCESS : $FAILURE);
 }
-</PRE></BLOCKQUOTE>
+</pre></blockquote>
 
+<p>
 Someone else was also working on that function, and already committed his
 changes to CVS (before you did) as revision 1.5. His code:
-<BLOCKQUOTE><PRE>
+<blockquote><pre class="example">
 sub generateExampleFile {
-	my $err = parse();
+    my $err = parse();
 
-	if (@_ &gt; 0) {
-		print "generateExampleFile: No parameters expected.\n";
-		return 0;
-	}
+    if (@_ &gt; 0) {
+        print "generateExampleFile: No parameters expected.\n";
+        return 0;
+    }
 
-	if ($err == 0) {
-		generate("control/example.txt");
-	} else {
-		print "No file generated.\n";
-	}
-	return (!!$nerr);
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+    return (!!$nerr);
 }
-</PRE></BLOCKQUOTE>
+</pre></blockquote>
 
-If you do a <TT>CVS update</TT> now, it will attempt to merge your changes
-to revision 1.4 with revision 1.5. CVS will inform you about conflicts:
-<PRE>rcsmerge warning: overlaps during merge
-cvs update: conflicts found in openkore.pl</PRE>
+<p>
+If you do a <em>CVS update</em> now, it will attempt to merge your changes
+to revision 1.4 with the new revision 1.5. CVS will inform you about conflicts:
+<pre>rcsmerge warning: overlaps during merge
+cvs update: conflicts found in openkore.pl</pre>
+
+<p>
 Your original working file is saved unmodified in ".#openkore.pl.1.4".
 The new version of openkore.pl now contains:
-<BLOCKQUOTE><PRE>
+<blockquote><pre class="example">
 sub generateExampleFile {
-	my $err = parse();
+    my $err = parse();
 
-	if (@_ &gt; 0) {
-		print "generateExampleFile: No parameters expected.\n";
-		return 0;
-	}
+    if (@_ &gt; 0) {
+        print "generateExampleFile: No parameters expected.\n";
+        return 0;
+    }
 
-	if ($err == 0) {
-		generate("control/example.txt");
-	} else {
-		print "No file generated.\n";
-	}
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
 &lt;&lt;&lt;&lt;&lt;&lt;&lt; openkore.pl
-	return ($nerr == 0 ? $SUCCESS : $FAILURE);
+    return ($nerr == 0 ? $SUCCESS : $FAILURE);
 =======
-	return (!!$nerr);
+    return (!!$nerr);
 &gt;&gt;&gt;&gt;&gt;&gt;&gt; 1.5
 }
-</PRE></BLOCKQUOTE>
+</pre></blockquote>
 
 Obviously, the code between "<<<<<<<" and ">>>>>>>" contains the overlap.
 The code above the "=======" is your original code. The code under that
 is the code from CVS.
-<P>
 
+<p>
 To solve conflicts, you need to understand what you're trying to do,
 what that other person's trying to do, and then think about how to solve this.
 In this example, the solution is to replace the overlap with your
 code:
-<BLOCKQUOTE><PRE>
+<blockquote><pre class="example">
 sub generateExampleFile {
-	my $err = parse();
+    my $err = parse();
 
-	if (@_ &gt; 0) {
-		print "generateExampleFile: No parameters expected.\n";
-		return 0;
-	}
+    if (@_ &gt; 0) {
+        print "generateExampleFile: No parameters expected.\n";
+        return 0;
+    }
 
-	if ($err == 0) {
-		generate("control/example.txt");
-	} else {
-		print "No file generated.\n";
-	}
-	return ($nerr == 0 ? $SUCCESS : $FAILURE);
+    if ($err == 0) {
+        generate("control/example.txt");
+    } else {
+        print "No file generated.\n";
+    }
+    return ($nerr == 0 ? $SUCCESS : $FAILURE);
 }
-</PRE></BLOCKQUOTE>
+</pre></blockquote>
 
 After you're done solving the conflict and saved the file, do another
-<TT>CVS update</TT>. Then you can do a <TT>CVS commit</TT>.
+<em>CVS update</em>. Then you can do a <em>CVS commit</em>.
 
 
-<H2>Further documentation</H2>
+<h2>Further documentation</h2>
 
-See also the "Multiple developers" chapter in the CVS manual:
-<A HREF="http://www.gnu.org/software/cvs/manual/html_chapter/cvs_7.html#SEC39">http://www.gnu.org/software/cvs/manual/html_chapter/cvs_7.html#SEC39</A>
+See also the <em>"Multiple developers"</em> chapter in the CVS manual:
+<a href="http://www.gnu.org/software/cvs/manual/html_chapter/cvs_7.html#SEC39">http://www.gnu.org/software/cvs/manual/html_chapter/cvs_7.html#SEC39</a>
 
-</BODY>
-</HTML>
+
+</div>
+</body>
+</html>
