@@ -20,6 +20,9 @@ New config options:
 - beepOnPM, beepOnChat if set to 1 will print a beep character when you
   hear a PM/public chat message.
 
+Internal:
+- $interface->beep() function for cross-platform beep support.
+
 
 ==================
 ### 1.5.0 (beta)
