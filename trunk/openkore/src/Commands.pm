@@ -487,6 +487,7 @@ sub cmdInventory {
 	if ($arg1 eq "" || $arg1 eq "eq" || $arg1 eq "u" || $arg1 eq "nu") {
 		my @useable;
 		my @equipment;
+		my @uequipment;
 		my @non_useable;
 		my ($i, $display, $index);
 
@@ -500,26 +501,31 @@ sub cmdInventory {
 			} elsif ($item->{type} <= 2) {
 				push @useable, $i;
 			} else {
-				push @equipment, $i;
+				my %eqp;
+				$eqp{index} = $item->{index};
+				$eqp{name} = $item->{name};
+				$eqp{type} = $itemTypes_lut{$item->{type}};
+				$eqp{equipped} = $equipTypes_lut{$item->{equipped}};
+				$eqp{identified} = " -- Not Identified" if !$item->{identified};
+				if ($item->{equipped}) {
+					push @equipment, \%eqp;
+				} else {
+					push @uequipment, \%eqp;
+				}
 			} 
 		}
 
 		message("-----------Inventory-----------\n", "list");
 		if ($arg1 eq "" || $arg1 eq "eq") {
-			message("-- Equipment --\n", "list");
-			for ($i = 0; $i < @equipment; $i++) {
-				$index = $equipment[$i];
-				$display = $chars[$config{'char'}]{'inventory'}[$index]{'name'};
-				$display .= " ($itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$index]{'type'}})";
-				if ($chars[$config{'char'}]{'inventory'}[$index]{'equipped'}) {
-					$display .= " -- Eqp: $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'equipped'}}";
-				}
-
-				if (!$chars[$config{'char'}]{'inventory'}[$index]{'identified'}) {
-					$display .= " -- Not Identified";
-				}
-
-				message(sprintf("%-3d  %s\n", $index, $display), 'list');
+			message("-- Equipment (Equipped) --\n", "list");
+			foreach my $item (@equipment) {
+				message(sprintf("%-3d  %s -- %s\n", $item->{index}, $item->{name}, $item->{equipped}), 'list');
+			}
+		}
+		if ($arg1 eq "" || $arg1 eq "neq") {
+			message("-- Equipment (Not Equipped) --\n", "list");
+			foreach my $item (@uequipment) {
+				message(sprintf("%-3d  %s (%s) %s\n", $item->{index}, $item->{name}, $item->{type}, $item->{identified}), 'list');
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "nu") {
