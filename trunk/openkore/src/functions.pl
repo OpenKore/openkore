@@ -3440,9 +3440,18 @@ sub AI {
 					next if $stop;
 				}
 
+				my $safe = 1;
+				if ($config{'attackAuto_onlyWhenSafe'}) {
+					foreach (@playersID) {
+						if ($_ && !$char->{party}{users}{$_}) {
+							$safe = 0;
+							last;
+						}
+					}
+				}
+
 				if (!AI::is(qw/sitAuto take items_gather items_take/) && $config{'attackAuto'} >= 2
-				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou}
-				 && (!$config{'attackAuto_onlyWhenSafe'} || binSize(\@playersID) == 0)
+				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
 				 && timeOut($monster->{attack_failed}, $timeouts{ai_attack_unfail}{timeout})) {
 					push @cleanMonsters, $_;
@@ -4710,7 +4719,8 @@ sub AI {
 		} elsif (distance($items{$ID}{pos}, calcPosition($char)) > 2) {
 			AI::args->{walk_start} = 1;
 			ai_route($field{name}, $items{$ID}{pos}{x}, $items{$ID}{pos}{y},
-				attackOnRoute => ($config{'itemsGatherAuto'} >= 2) ? 0 : 1);
+				attackOnRoute => ($config{'itemsGatherAuto'} >= 2) ? 0 : 1,
+				distFromGoal => 1);
 
 		} else {
 			AI::dequeue;
