@@ -3267,7 +3267,7 @@ sub AI {
 					&& !($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1)
 					&& ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} >= 1 || $mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} eq "")) {
 						push @{$ai_v{'ai_attack_cleanMonsters'}}, $_;
-					
+
 				# List monsters that nobody's attacking
 				} elsif ($config{'attackAuto'} >= 2
 					&& !$config{'attackAuto_onlyWhenSafe'}
@@ -3359,7 +3359,7 @@ sub AI {
 					my $dist = distance($char->{pos_to}, $monsters{$_}{pos_to});
 					my $smallestDist;
 					if (($first || $dist < $smallestDist || $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'})
-					 && !$monsters{$_}{ignore} && !scalar(keys %{$monsters{$_}{statuses}})
+					 && $monsters{$_} && !$monsters{$_}{ignore} && !scalar(keys %{$monsters{$_}{statuses}})
 					 && !positionNearPlayer($monsters{$_}{pos_to}, 3)
 					 && !positionNearPortal($monsters{$_}{pos_to}, 4)) {
 						$smallestDist = $dist;
@@ -3499,7 +3499,7 @@ sub AI {
 		 || $ai_seq_args[0]{'missedYou_last'} != $monsters{$ID}{'missedYou'}
 		 || $ai_seq_args[0]{'dmgFromYou_last'} != $monsters{$ID}{'dmgFromYou'}) {
 			$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
-			debug "Update attack giveup time\n", "ai_attack";
+			debug "Update attack giveup time\n", "ai_attack", 2;
 		}
 		$ai_seq_args[0]{'dmgToYou_last'} = $monsters{$ID}{'dmgToYou'};
 		$ai_seq_args[0]{'missedYou_last'} = $monsters{$ID}{'missedYou'};
@@ -3622,7 +3622,7 @@ sub AI {
 					$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
 					shift @ai_seq;
 					shift @ai_seq_args;
-					message "Can't reach or damage target, dropping target\n", "ai_attack";
+					message "Unable to calculate a route to target, dropping target\n", "ai_attack";
 				}
 
 			} else {
@@ -3631,7 +3631,7 @@ sub AI {
 				$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
 				shift @ai_seq;
 				shift @ai_seq_args;
-				message "Can't reach or damage target, dropping target\n", "ai_attack";
+				message "Target is not reachable, dropping target\n", "ai_attack";
 			}
 
 		} elsif (!$config{'tankMode'} || !$monsters{$ID}{'dmgFromYou'} == 0) {
@@ -3693,9 +3693,9 @@ sub AI {
 	}
 
 	# Check for kill steal while moving
-	if (AI::is("move", "route") && AI::action->{attackID} && AI::inQueue("attack")) {
-		my $ID = AI::action->{attackID};
-		if (!checkMonsterCleanness($ID)) {
+	if (AI::is("move", "route") && AI::args->{attackID} && AI::inQueue("attack")) {
+		my $ID = AI::args->{attackID};
+		if ($monsters{$ID} && !checkMonsterCleanness($ID)) {
 			message "Dropping target - you will not kill steal others\n";
 			sendAttackStop(\$remote_socket);
 			$monsters{$ID}{ignore} = 1;
@@ -3712,12 +3712,12 @@ sub AI {
 
 	##### AUTO-ITEM USE #####
 
-	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack", AI::action))
-		&& timeOut(\%{$timeout{ai_item_use_auto}})) {
+	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack)))
+	  && timeOut($timeout{ai_item_use_auto})) {
 		my $i = 0;
 		while (defined($config{"useSelf_item_$i"})) {
 			if (checkSelfCondition("useSelf_item_$i")) {
-				my $index = findIndexStringList_lc(\@{$char->{inventory}}, "name", $config{"useSelf_item_$i"});
+				my $index = findIndexStringList_lc($char->{inventory}, "name", $config{"useSelf_item_$i"});
 				if (defined $index) {
 					sendItemUse(\$remote_socket, $char->{inventory}[$index]{index}, $accountID);
 					$ai_v{"useSelf_item_$i"."_time"} = time;
@@ -3733,9 +3733,9 @@ sub AI {
 
 	##### AUTO-SKILL USE #####
 
-	if (AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack", AI::action)) {
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack))) {
 		my $i = 0;
-		my %self_skill = ();
+		my %self_skill;
 		while (defined($config{"useSelf_skill_$i"})) {
 			if (checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
@@ -3773,10 +3773,10 @@ sub AI {
 			}
 		}		
 	}
-	
+
 	##### PARTY-SKILL USE ##### 
 
-	if (%{$char->{party}} && (AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack,move", AI::action))){
+	if ($char->{party} && (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move)))){
 		my $i = 0;
 		my %party_skill;
 		while (defined($config{"partySkill_$i"})) {
@@ -3845,7 +3845,8 @@ sub AI {
 
 		my $ai_attack_mon;
 		if (defined $ai_index_attack) {
-			$ai_attack_mon = $monsters{AI::args($ai_index_attack)->{ID}}{name};
+			my $ID = AI::args($ai_index_attack)->{ID};
+			$ai_attack_mon = $monsters{$ID}{name} if ($monsters{$ID});
 		}
 
 		my $i = 0;
@@ -3894,7 +3895,7 @@ sub AI {
 	#FIXME: need to move closer before using skill on player,
 	#there might be line of sight problem too
 	#or the player disappers from the area
-	
+
 	if (AI::action eq "skill_use" && AI::args->{suspended}) {
 		AI::args->{ai_skill_use_giveup}{time} += time - AI::args->{suspended};
 		AI::args->{ai_skill_use_minCastTime}{time} += time - AI::args->{suspended};
@@ -4443,10 +4444,10 @@ sub AI {
 			debug "Move - timeout\n", "ai_move";
 			AI::dequeue;
 
-		} elsif (time > AI::action->{retry}) {
+		} elsif (time > AI::args->{retry}) {
 			# No update yet, send move request again.
 			# We do this every 0.5 secs
-			AI::action->{retry} = time + 0.5;
+			AI::args->{retry} = time + 0.5;
 			sendMove(\$remote_socket, AI::args->{move_to}{x}, AI::args->{move_to}{y});
 		}
 	}
@@ -4459,7 +4460,7 @@ sub AI {
 		# Check whether it's safe to teleport
 		if ($config{teleportAuto_onlyWhenSafe}) {
 			if (!$cities_lut{$map_name_lu} && timeOut($timeout{ai_teleport_safe_force})) {
-				$safe = 1 if (!binSize(\@playersID));
+				$safe = 1 if (!scalar(@playersID));
 				$timeout{ai_teleport_safe_force}{time} = time;
 			}
 		} elsif (!$cities_lut{$map_name_lu}) {
@@ -4479,6 +4480,7 @@ sub AI {
 		##### TELEPORT MONSTER #####
 		if (timeOut(\%{$timeout{ai_teleport_away}}) && $safe) {
 			foreach (@monstersID) {
+				next unless $_;
 				if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
 					useTeleport(1);
 					$ai_v{temp}{clear_aiQueue} = 1;
@@ -4506,6 +4508,7 @@ sub AI {
 				if ($do_search) {
 					my $found = 0;
 					foreach (@monstersID) {
+						next unless $_;
 						if ($mon_control{lc($monsters{$_}{name})}{teleport_search}  && !$monsters{$_}{attackedByPlayer} && !$monsters{$_}{attack_failed}) {
 							$found = 1;
 							last;
@@ -4606,7 +4609,7 @@ sub AI {
 	if ($ai_v{temp}{clear_aiQueue}) {
 		delete $ai_v{temp}{clear_aiQueue};
 		AI::clear;
-	}	
+	}
 }
 
 
@@ -5505,7 +5508,7 @@ sub parseMsg {
 			# Take item
 			my ($source, $verb, $target) = getActorNames($ID1, $ID2, 'pick up', 'picks up');
 			debug "$source $verb $target\n", 'parseMsg';
-			$items{$ID2}{takenBy} = $ID1;
+			$items{$ID2}{takenBy} = $ID1 if ($items{$ID2});
 		} elsif ($type == 2) {
 			# Sit
 			my ($source, $verb) = getActorNames($ID1, 0, 'are', 'is');
@@ -5514,7 +5517,7 @@ sub parseMsg {
 				$char->{sitting} = 1;
 			} else {
 				debug getActorName($ID1)." is sitting.\n", 'parseMsg';
-				$players{$ID1}{sitting} = 1;
+				$players{$ID1}{sitting} = 1 if ($players{$ID1});
 			}
 		} elsif ($type == 3) {
 			# Stand
@@ -5524,7 +5527,7 @@ sub parseMsg {
 				$char->{sitting} = 0;
 			} else {
 				debug getActorName($ID1)." is standing.\n", 'parseMsg';
-				$players{$ID1}{sitting} = 0;
+				$players{$ID1}{sitting} = 0 if ($players{$ID});
 			}
 		} else {
 			# Attack
@@ -8528,8 +8531,7 @@ sub attack {
 	$args{'unstuck'}{'timeout'} = ($timeout{'ai_attack_unstuck'}{'timeout'} || 1.5);
 	%{$args{'pos_to'}} = %{$monsters{$ID}{'pos_to'}};
 	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
-	unshift @ai_seq, "attack";
-	unshift @ai_seq_args, \%args;
+	AI::queue("attack", \%args);
 
 	if ($priorityAttack) {
 		message "Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
@@ -9605,11 +9607,13 @@ sub lookAtPosition {
 sub portalExists {
 	my ($map, $r_pos) = @_;
 	foreach (keys %portals_lut) {
-		if ($portals_lut{$_}{'source'}{'map'} eq $map && $portals_lut{$_}{'source'}{'pos'}{'x'} == $$r_pos{'x'}
+		if ($portals_lut{$_}{'source'}{'map'} eq $map
+		 && $portals_lut{$_}{'source'}{'pos'}{'x'} == $$r_pos{'x'}
 		 && $portals_lut{$_}{'source'}{'pos'}{'y'} == $$r_pos{'y'}) {
 			return $_;
 		}
 	}
+	return 0;
 }
 
 sub redirectXKoreMessages {
@@ -9933,13 +9937,13 @@ sub checkSelfCondition {
 	$prefix = shift;
 
 	return 0 if ($config{$prefix . "_disabled"} > 0);
-	
+
 	if ($config{$prefix . "_hp"}) { 
 		return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]}), $config{$prefix . "_hp"}));
 	} elsif ($config{$prefix . "_hp_upper"}) { # backward compatibility with old config format
 		return 0 unless (percent_hp(\%{$chars[$config{char}]}) <= $config{$prefix . "_hp_upper"} && percent_hp(\%{$chars[$config{char}]}) >= $config{$prefix . "_hp_lower"});
 	}
-		
+
 	if ($config{$prefix . "_sp"}) { 
 		return 0 unless (inRange(percent_sp(\%{$chars[$config{char}]}), $config{$prefix . "_sp"}));
 	} elsif ($config{$prefix . "_sp_upper"}) { # backward compatibility with old config format
@@ -9948,7 +9952,7 @@ sub checkSelfCondition {
 
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
-		return 0 unless ($chars[$config{char}]{sp} >= $skillsSP_lut{$skills_rlut{lc($config{$prefix})}}{$config{$prefix . "_lvl"}})
+		return 0 unless ($char->{sp} >= $skillsSP_lut{$skills_rlut{lc($config{$prefix})}}{$config{$prefix . "_lvl"}})
 	}
 
 	if ($config{$prefix . "_aggressives"}) {
