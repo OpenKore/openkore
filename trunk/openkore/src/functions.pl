@@ -3533,7 +3533,6 @@ sub AI {
 					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $monsters{$ID}{'name'}))
 					&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($monsters{$ID}{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
 					&& checkMonsterCondition("attackSkillSlot_${i}_target", $monsters{$ID})
-					&& ("attackSkillSlot_$i" ne "Steal" || !$monsters{$ID}{stolen})
 				) {
 					$args->{attackSkillSlot_attempts}{$i}++;
 					$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
@@ -7866,9 +7865,6 @@ sub parseMsg {
 		updateDamageTables($sourceID, $targetID, $damage) if ($damage != -30000);
 		setSkillUseTimer($skillID, $targetID) if ($sourceID eq $accountID);
 		countCastOn($sourceID, $targetID, $skillID);
-		if ($sourceID eq $accountID && $skillID == 50) {
-			$monsters{$targetID}{stolen} = 1 if ($monsters{$targetID});
-		}
 
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
