@@ -1449,4 +1449,6 @@ sub drop {
 	sendDrop(\$remote_socket, $char->{inventory}[$item]{index}, $amount);
 }
 
+OpenKoreMod::initMisc() if defined(&OpenKoreMod::initMisc);
+
 return 1;
