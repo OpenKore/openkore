@@ -153,8 +153,8 @@ if ($config{'XKore'}) {
 
 	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
 	if (!$GetProcByName) {
-		Log::error("Could not locate Tools.dll", "startup");
-		promptAndExit();
+		$interface->errorDialog("Could not locate Tools.dll");
+		exit 1;
 	}
 	undef $cwd;
 }
