@@ -907,6 +907,7 @@ sub parseCommand {
 			}
 
 		} else {
+			aiRemove("follow");
 			ai_follow($arg1);
 			configModify("follow", 1);
 			configModify("followTarget", $arg1);
