@@ -108,6 +108,11 @@ New config options:
 - statsAddAuto_dontUseBonus (flag)
   If set to 1 then statsAddAuto will not factor in the stat bonuses at all.
 
+New timeouts.txt options:
+- ai_teleport 1
+  Specifies the timeout for using Fly Wing when teleporting. This prevents Kore
+  from using tons of Fly Wings when trying to teleport.
+
 New commands:
 - ihist
   Display last few entries of the item log.
