@@ -237,7 +237,7 @@ sub findKey {
 	my $match = shift;
 	my $ID = shift;
 	foreach (keys %{$r_hash}) {
-		if ($r_hash{$_}->{$match} == $ID) {
+		if ($r_hash->{$_}{$match} == $ID) {
 			return $_;
 		}
 	}
