@@ -88,6 +88,7 @@
 
 # Debug domains:
 # ai_attack
+# ai_autoCart
 # ai_move
 # parseInput
 # parseMsg
