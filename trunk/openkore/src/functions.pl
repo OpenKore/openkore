@@ -78,12 +78,14 @@ sub initMapChangeVars {
 	undef $chars[$config{'char'}]{'sitting'};
 	undef $chars[$config{'char'}]{'dead'};
 	undef $chars[$config{'char'}]{'warp'};
-	$timeout{'play'}{'time'} = time;
-	$timeout{'ai_sync'}{'time'} = time;
-	$timeout{'ai_sit_idle'}{'time'} = time;
-	$timeout{'ai_teleport_idle'}{'time'} = time;
+	$timeout{play}{time} = time;
+	$timeout{ai_sync}{time} = time;
+	$timeout{ai_sit_idle}{time} = time;
+	$timeout{ai_teleport}{time} = time;
+	$timeout{ai_teleport_idle}{time} = time;
 	$AI::Timeouts::teleSearch = time;
-	$timeout{'ai_teleport_safe_force'}{'time'} = time;
+	$timeout{ai_teleport_safe_force}{time} = time;
+
 	undef %incomingDeal;
 	undef %outgoingDeal;
 	undef %currentDeal;
@@ -10260,9 +10262,13 @@ sub useTeleport {
 
 	my $invIndex = findIndex($char->{inventory}, "nameID", $level + 600);
 	if (defined $invIndex) {
-		# We have Fly Wing/Butterfly Wing
-		sendItemUse(\$remote_socket, $char->{inventory}[$invIndex]{index}, $accountID);
-		sendTeleport(\$remote_socket, "Random") if ($level == 1);
+		# We have Fly Wing/Butterfly Wing.
+		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
+		if (timeOut($timeout{ai_teleport})) {
+			sendItemUse(\$remote_socket, $char->{inventory}[$invIndex]{index}, $accountID);
+			sendTeleport(\$remote_socket, "Random") if ($level == 1);
+			$timeout{ai_teleport}{time} = time;
+		}
 		return 1;
 	}
 
