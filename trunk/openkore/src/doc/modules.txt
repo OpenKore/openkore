@@ -11,6 +11,6 @@ Skills
 Match
 Misc
 IPC
-IPC::Protocol
+IPC::Messages
 Interface::Wx::DockNotebook
 Interface::Wx::DockNotebook::Page

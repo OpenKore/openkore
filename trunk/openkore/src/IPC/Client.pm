@@ -27,7 +27,7 @@ use Exporter;
 use base qw(Exporter);
 use IO::Socket::INET;
 
-use IPC::Protocol;
+use IPC::Messages qw(encode decode);
 use Utils qw(dataWaiting);
 
 
@@ -76,7 +76,7 @@ sub send {
 		$r_hash = \%hash;
 	}
 
-	my $msg = IPC::Protocol::encode($ID, $r_hash);
+	my $msg = encode($ID, $r_hash);
 	undef $@;
 	eval {
 		$self->{sock}->send($msg, 0);
@@ -112,7 +112,7 @@ sub recv {
 	$client->{buffer} .= $msg;
 
 	my (@messages, $ID, %hash);
-	while (($ID = IPC::Protocol::decode($client->{buffer}, \%hash, \$client->{buffer}))) {
+	while (($ID = decode($client->{buffer}, \%hash, \$client->{buffer}))) {
 		my %copy = %hash;
 		push @messages, {ID => $ID, args => \%copy};
 		undef %hash;
