@@ -163,6 +163,7 @@ shopAuto_open 0
 shop_random 0
 
 teleportAuto_hp 10
+teleportAuto_sp 0
 teleportAuto_idle 0
 teleportAuto_portal 0
 teleportAuto_search 0
