@@ -2692,7 +2692,7 @@ sub AI {
 
 
 	if ($config{'XKore'} && !$sentWelcomeMessage && timeOut(\%{$timeout{'welcomeText'}})) {
-		injectAdminMessage($welcomeText) if ($config{'verbose'});
+		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'});
 		$sentWelcomeMessage = 1;
 	}
 
@@ -5064,7 +5064,7 @@ sub parseMsg {
 			error("Account name doesn't exist\n", "connection");
 			if (!$config{'XKore'}) {
 				message("Enter Username Again:\n", "input");
-				$input_socket->recv($msg, $MAX_READ);
+				$input_socket->recv($msg, $Settings::MAX_READ);
 				$config{'username'} = $msg;
 				writeDataFileIntact($config_file, \%config);
 			}
@@ -5072,7 +5072,7 @@ sub parseMsg {
 			error("Password Error\n", "connection");
 			if (!$config{'XKore'}) {
 				message("Enter Password Again:\n", "input");
-				$input_socket->recv($msg, $MAX_READ);
+				$input_socket->recv($msg, $Settings::MAX_READ);
 				$config{'password'} = $msg;
 				writeDataFileIntact($config_file, \%config);
 			}

@@ -26,6 +26,7 @@ package Input;
 use strict;
 use Exporter;
 use IO::Socket::INET;
+use Settings;
 
 our @ISA = "Exporter";
 our @EXPORT_OK = qw(&init &stop &canRead &readLine $enabled);
@@ -111,7 +112,7 @@ sub readLine {
 	return undef unless ($enabled);
 
 	my $input;
-	$input_socket->recv($input, 30000);
+	$input_socket->recv($input, $Settings::MAX_READ);
 	return $input;
 }
 

@@ -20,103 +20,65 @@ use Modules;
 use Input;
 use Log;
 use Utils;
-Modules::register(qw(Modules Input Log Utils));
+use Settings;
+Modules::register(qw(Modules Input Log Utils Settings));
 
 
-our $buildType = 0;
-our $daemon = 0;
-our $control_folder = "control";
-our $tables_folder = "tables";
-our $config_file;
-our $items_control_file;
-our $mon_control_file;
-our $chat_file;
-our $item_log_file;
-our $shop_file;
-
-&GetOptions(
-	'daemon', \$daemon,
-	'help', \$help_option,
-	'config=s', \$config_file,
-	'mon_control=s', \$mon_control_file,
-	'items_control=s', \$items_control_file,
-	'chat=s', \$chat_file,
-	'shop=s', \$shop_file,
-	'items=s', \$item_log_file);
-if ($help_option) {
-	print "Usage: openkore.exe [options...]\n\n";
-	print "The supported options are:\n\n";
-	print "--help                     Displays this help message.\n";
-	print "--daemon                   Start as daemon; don't listen for keyboard input.\n";
-	print "--control=path             Use a different folder as control folder.\n";
-	print "--tables=path              Use a different folder as tables folder.\n\n";
-
-	print "--config=path/file         Which config.txt to use.\n";
-	print "--mon_control=path/file    Which mon_control.txt to use.\n";
-	print "--items_control=path/file  Which items_control.txt to use.\n";
-	print "--chat=path/file           Which chat.txt to use.\n";
-	print "--shop=path/file           Which shop.txt to use.\n";
-	exit(1);
-}
-
-$config_file = "$control_folder/config.txt" if (!defined $config_file);
-$items_control_file = "$control_folder/items_control.txt" if (!defined $items_control_file);
-$mon_control_file = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
-$chat_file = "chat.txt" if (!defined $chat_file);
-$item_log_file = "items.txt" if (!defined $item_log_file);
-$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
+##### PARSE ARGUMENTS AND START INPUT SERVER #####
 
 srand(time());
-
-our $versionText = "*** OpenKore 1.0.0b - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
-our $welcomeText = "Welcome to X-OpenKore.";
-our $MAX_READ = 30000;
-
-print "$versionText\n";
-
-Input::start() unless ($daemon);
-
+Settings::parseArguments();
+print "$Settings::versionText\n";
+Input::start() unless ($Settings::daemon);
 print "\n";
 
-addParseFiles($config_file, \%config,\&parseDataFile2);
-addParseFiles($items_control_file, \%items_control,\&parseItemsControl);
-addParseFiles($mon_control_file, \%mon_control,\&parseMonControl);
-addParseFiles("$control_folder/overallauth.txt", \%overallAuth, \&parseDataFile);
-addParseFiles("$control_folder/pickupitems.txt", \%itemsPickup, \&parseDataFile_lc);
-addParseFiles("$control_folder/responses.txt", \%responses, \&parseResponses);
-addParseFiles("$control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
-addParseFiles($shop_file, \%shop, \&parseDataFile2);
-addParseFiles("$control_folder/chat_resp.txt", \%chat_resp, \&parseDataFile2);
-addParseFiles("$control_folder/avoid.txt", \%avoid, \&parseDataFile2);
-#addParseFiles("$control_folder/chat_ppl.txt", \%chat_resp, \&parseDataFile2);
 
-addParseFiles("$tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
-addParseFiles("$tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
-addParseFiles("$tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
-addParseFiles("$tables_folder/items.txt", \%items_lut, \&parseROLUT);
-addParseFiles("$tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
-addParseFiles("$tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
-addParseFiles("$tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
-addParseFiles("$tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
-addParseFiles("$tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
-addParseFiles("$tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
-addParseFiles("$tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
-addParseFiles("$tables_folder/portals.txt", \%portals_lut, \&parsePortals);
-addParseFiles("$tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
-addParseFiles("$tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
-addParseFiles("$tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
-addParseFiles("$tables_folder/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
-addParseFiles("$tables_folder/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
-addParseFiles("$tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
-addParseFiles("$tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
-addParseFiles("$tables_folder/cards.txt", \%cards_lut, \&parseROLUT); 
-addParseFiles("$tables_folder/elements.txt", \%elements_lut, \&parseROLUT); 
-addParseFiles("$tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2); 
+##### PARSE CONFIGURATION AND DATA FILES #####
+
+addParseFiles($Settings::config_file, \%config,\&parseDataFile2);
+addParseFiles($Settings::items_control_file, \%items_control,\&parseItemsControl);
+addParseFiles($Settings::mon_control_file, \%mon_control,\&parseMonControl);
+addParseFiles("$Settings::control_folder/overallauth.txt", \%overallAuth, \&parseDataFile);
+addParseFiles("$Settings::control_folder/pickupitems.txt", \%itemsPickup, \&parseDataFile_lc);
+addParseFiles("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
+addParseFiles("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
+addParseFiles($Settings::shop_file, \%shop, \&parseDataFile2);
+addParseFiles("$Settings::control_folder/chat_resp.txt", \%chat_resp, \&parseDataFile2);
+addParseFiles("$Settings::control_folder/avoid.txt", \%avoid, \&parseDataFile2);
+
+addParseFiles("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
+addParseFiles("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
+addParseFiles("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
+addParseFiles("$Settings::tables_folder/items.txt", \%items_lut, \&parseROLUT);
+addParseFiles("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut, \&parseRODescLUT);
+addParseFiles("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
+addParseFiles("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
+addParseFiles("$Settings::tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
+addParseFiles("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
+addParseFiles("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
+addParseFiles("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
+addParseFiles("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
+addParseFiles("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
+addParseFiles("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
+addParseFiles("$Settings::tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
+addParseFiles("$Settings::tables_folder/skills.txt", \%skillsID_lut, \&parseSkillsIDLUT);
+addParseFiles("$Settings::tables_folder/skills.txt", \%skills_rlut, \&parseSkillsReverseLUT_lc);
+addParseFiles("$Settings::tables_folder/skillsdescriptions.txt", \%skillsDesc_lut, \&parseRODescLUT);
+addParseFiles("$Settings::tables_folder/skillssp.txt", \%skillsSP_lut, \&parseSkillsSPLUT);
+addParseFiles("$Settings::tables_folder/cards.txt", \%cards_lut, \&parseROLUT);
+addParseFiles("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
+addParseFiles("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
 
 load(\@parseFiles);
 
-if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
+
+##### INITIALIZE USAGE OF TOOLS.DLL/TOOLS.SO #####
+
+if ($buildType == 0) {
+	# MS Windows
 	eval "use Win32::API;";
+	require Win32::API;
+	import Win32::API;
 	die if ($@);
 
 	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPNNPPN", "N");
@@ -127,17 +89,14 @@ if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
 	die "Could not locate Tools.dll" if (!$CalcPath_destroy);
-
-	$buildType = 0;
 } else {
+	# Linux
 	if (! -f "Tools.so") {
 		print STDERR "Could not locate Tools.so. Type 'make' if you haven't done so.\n";
 		exit 1;
 	}
-	eval "use Tools;";
-	die if ($@);
-
-	$buildType = 1;
+	require Tools;
+	import Tools;
 }
 
 if ($config{'XKore'}) {
@@ -179,7 +138,7 @@ if ($config{'XKore'}) {
 our $remote_socket = IO::Socket::INET->new();
 
 
-###COMPILE PORTALS###
+### COMPILE PORTALS ###
 
 print "Checking for new portals...";
 compilePortals_check(\$found);
@@ -261,6 +220,9 @@ initConfChange();
 
 print "\n";
 
+
+##### MAIN LOOP #####
+
 while ($quit != 1) {
 	usleep($config{'sleepTime'});
 
@@ -277,7 +239,7 @@ while ($quit != 1) {
 					$printed = 1;
 				}
 				sleep 1;
-			} while (!$procID);
+			} while (!$procID && !$quit);
 
 			if ($printed == 1) {
 				print "Process found\n";
@@ -304,7 +266,7 @@ while ($quit != 1) {
 		parseInput($input);
 
 	} elsif (!$config{'XKore'} && dataWaiting(\$remote_socket)) {
-		$remote_socket->recv($new, $MAX_READ);
+		$remote_socket->recv($new, $Settings::MAX_READ);
 		$msg .= $new;
 		$msg_length = length($msg);
 		while ($msg ne "") {
@@ -315,7 +277,7 @@ while ($quit != 1) {
 
 	} elsif ($config{'XKore'} && dataWaiting(\$remote_socket)) {
 		my $injectMsg;
-		$remote_socket->recv($injectMsg, $MAX_READ);
+		$remote_socket->recv($injectMsg, $Settings::MAX_READ);
 		while ($injectMsg ne "") {
 			if (length($injectMsg) < 3) {
 				undef $injectMsg;
@@ -349,11 +311,12 @@ while ($quit != 1) {
 	checkConnection();
 }
 
+
 Input::stop();
 close($remote_socket);
 unlink('buffer') if ($config{'XKore'} && -f 'buffer');
 killConnection(\$remote_socket);
 
 print "Bye!\n";
-print $versionText;
+print $Settings::versionText;
 exit;
