@@ -46,6 +46,7 @@ New features:
 - teleportAuto_search will now prevent attackAuto from attacking monsters in
   the event that no monsters you are searching for exist onscreen.
 - chat.txt uses one line per message, allowing grepping.
+- skillsAddAuto will now print a message when it auto-adds a skill.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
