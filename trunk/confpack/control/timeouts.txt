@@ -69,6 +69,7 @@ ai_item_use_auto 0.5
 ai_item_equip_auto 2
 ai_equipAuto_skilluse_giveup 5
 
+ai_teleport 1
 ai_teleport_away 3
 ai_teleport_search 4
 ai_teleport_idle 12
