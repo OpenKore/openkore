@@ -3403,6 +3403,7 @@ sub AI {
 		$monsters{$ID}{attack_failed} = time if ($monsters{$ID});
 		AI::dequeue;
 		message "Can't reach or damage target, dropping target\n", "ai_attack";
+		useTeleport(1) if ($config{'teleportAuto_dropTarget'});
 
 	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{'ID'}}) {
 		# Monster died or disappeared

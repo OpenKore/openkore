@@ -202,6 +202,8 @@ New config options:
   seconds before switching config file.
   If lvl and joblvl are given, Kore will only switch config file if you're
   in the given level or job level range.
+- teleportAuto_dropTarget (flag)
+  Teleport if you can't reach a monster.
 
 
 New timeouts.txt options:
@@ -301,7 +303,7 @@ Credits:
 - doenet: improved mon_control.txt, randomWalk and lockMap
   fixes/improvements.
 - BotMan: server details for pRO.
-- anu: add storage opening timeout
+- anu: add storage opening timeout, teleportAuto_dropTarget
 
 
 ==================
