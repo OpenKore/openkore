@@ -3832,6 +3832,7 @@ sub AI {
 			}
 
 			if (checkSelfCondition("equipAuto_$i")
+				&& checkMonsterCondition("equipAuto_$i", $monster)
 			 	&& (!$config{"equipAuto_$i" . "_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
 			 	&& (!$config{"equipAuto_$i" . "_onTeleport"} || $ai_v{temp}{teleport}{lv})
 			 	&& (!$config{"equipAuto_$i" . "_whileSitting"} || ($config{"equipAuto_$i" . "_whileSitting"} && $char->{sitting}))
@@ -10541,21 +10542,28 @@ sub checkPlayerCondition {
 }
 
 sub checkMonsterCondition {
-	$prefix = shift;
-	$id = shift;
+	my ($prefix, $monster) = @_;
+
+	if (my $misses = $config{$prefix . "_misses"}) {
+		return 0 unless inRange($monster->{atkMiss}, $misses);
+	}
+
+	if (my $misses = $config{$prefix . "_totalMisses"}) {
+		return 0 unless inRange($monster->{missedFromYou}, $misses);
+	}
 
 	if ($config{$prefix . "_whenStatusActive"}) {
-		return 0 unless (whenStatusActiveMon($id, $config{$prefix . "_whenStatusActive"}));
+		return 0 unless (whenStatusActiveMon($monster, $config{$prefix . "_whenStatusActive"}));
 	}
 	if ($config{$prefix . "_whenStatusInactive"}) {
-		return 0 if (whenStatusActiveMon($id, $config{$prefix . "_whenStatusInactive"}));
+		return 0 if (whenStatusActiveMon($monster, $config{$prefix . "_whenStatusInactive"}));
 	}
 
 	if ($config{$prefix."_whenGround"}) {
-		return 0 unless whenGroundStatus($monsters{$id}, $config{$prefix."_whenGround"});
+		return 0 unless whenGroundStatus($monster, $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus($monsters{$id}, $config{$prefix."_whenNotGround"});
+		return 0 if whenGroundStatus($monster, $config{$prefix."_whenNotGround"});
 	}
 	
 	return 1;

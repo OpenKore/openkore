@@ -44,6 +44,9 @@ New config options:
   (e.g. for monks who have Spirit Spheres)
 - teleportAuto_useSP if set to 2 will only use SP when other players are 
   present.
+- EXPERIMENTAL _misses and _totalMisses conditions, e.g. to switch elemental
+  weapons using equipAuto when you are missing a monster that changed
+  elements.
 
 New commands:
 - ihist
@@ -53,6 +56,8 @@ Internal:
 - $interface->beep() function for cross-platform beep support.
 - OpenKore will exit if a plugin failed to load.
 - OpenKore will exit if a configuration file failed to load.
+- checkMonsterCondition() now takes a monster hash instead of monster ID.
+  (Perhaps other similar functions should be converted too.)
 
 Credits:
 - asuwannarat, as2765324: tRO server details.
