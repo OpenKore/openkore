@@ -118,6 +118,8 @@ sub initMapChangeVars {
 	$timeout{'ai_storageAuto'}{'time'} = time + 5;
 	$timeout{'ai_buyAuto'}{'time'} = time + 5;
 
+	aiRemove("attack");
+
 	initOtherVars();
 	Plugins::callHook('packet_mapChange');
 }
@@ -5530,7 +5532,7 @@ sub parseMsg {
 			if ($config{'dcOnDualLogin'} == 1) {
 				$interface->errorDialog("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
 					"$Settings::NAME will now immediately disconnect.");
-				$quit = 1;
+				$quit = 1 if ($config{'XKore'});
 			} elsif ($config{'dcOnDualLogin'} >= 2) {
 				error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
 				message "Disconnect for $config{'dcOnDualLogin'} seconds...\n", "connection";
