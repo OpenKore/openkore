@@ -423,3 +423,10 @@ niflheim.rsw#Nifflheim, the land of dead#
 payo1.rsw#Neo Payon Town#
 payo1_in01.rsw#Inside Neo Payon#
 payo1_in03.rsw#Inside Neo Payon#
+lou_in02.rsw#Inside Castle of Dragon#
+lou_in01.rsw#Inside Castle of Dragon#
+lou_dun03.rsw#ShenYang Palace#
+lou_dun02.rsw#Inside Royal Tomb#
+lou_dun01.rsw#Royal Tomb#
+lou_fild01.rsw#Castle of Dragon Field#
+louyang.rsw#Castle of Dragon#
