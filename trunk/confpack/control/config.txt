@@ -23,6 +23,7 @@ username
 password 
 char 
 sex 
+dontSaveLogin 0
 
 secureAdminPassword 0
 adminPassword 
