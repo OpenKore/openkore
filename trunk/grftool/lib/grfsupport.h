@@ -45,6 +45,9 @@ GRFEXTERN_BEGIN
 		#define dup(handle) _dup(handle)
 		#define fileno(stream) _fileno(stream)
 	#endif /* !defined(__MINGW32__) && !defined(_INC_IO) */
+	#ifdef _MSC_VER
+		#define ssize_t SSIZE_T
+	#endif /* defined(_MSC_VER) */
 #endif /* defined(WIN32) */
 
 /* #define GRF_AlphaSort ((int(*)(const void *, const void *))GRF_AlphaSort_Func) */
@@ -75,7 +78,7 @@ GRFEXPORT const char *grf_strerror(GrfError err);
  * \sa GRF_SETERR
  * \sa GRF_SETERR_2
  */
-#define GRF_SETERR_ADD(a,b,e,f) GRF_SetError(a,b,__LINE__,__FILE__,#e,(void*)f)
+#define GRF_SETERR_ADD(a,b,e,f) GRF_SetError(a,b,__LINE__,__FILE__,#e,(uintptr_t*)f)    /* NOTE: ? => uintptr_t* conversion */
 /*! \brief Simplification Macro
  *
  * Simplifies setting an error to a GrfError pointer
