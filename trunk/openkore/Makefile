@@ -1,6 +1,6 @@
 PERL=perl
 CC=gcc
-CFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
+CFLAGS=-Wall -Wno-unused -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
 
 CXX=g++
 CXXFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
@@ -20,8 +20,8 @@ Tools.so: Tools.cpp Tools_wrap.o
 Tools_wrap.o: Tools_wrap.c
 	@# Autodetect Perl header directory
 	@PERLDIR=`$(PERL) -e 'use Config; print "-I" . $$Config{"installarchlib"};'`; \
-	echo $(CC) -Wall -Wno-unused $(CFLAGS) "$$PERLDIR/CORE" -c Tools_wrap.c -o Tools_wrap.o; \
-	$(CC) -Wall -Wno-unused $(CFLAGS) "$$PERLDIR/CORE" -c Tools_wrap.c -o Tools_wrap.o
+	echo $(CC) -D_LARGEFILE64_SOURCE $(CFLAGS) "$$PERLDIR/CORE" -c Tools_wrap.c -o Tools_wrap.o; \
+	$(CC) -D_LARGEFILE64_SOURCE $(CFLAGS) "$$PERLDIR/CORE" -c Tools_wrap.c -o Tools_wrap.o
 
 distdir:
 	rm -rf $(DISTNAME)
