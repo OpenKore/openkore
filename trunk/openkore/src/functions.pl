@@ -6009,7 +6009,7 @@ sub parseMsg {
 			if (%{$monsters{$ID2}}) { 
 				message(sprintf("[%3d|%3d]",percent_hp(\%{$chars[$config{'char'}]}),percent_sp(\%{$chars[$config{'char'}]}))
 					."Attack : $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n",
-					"attackMon");
+					($damage > 0)? "attackMon" : "attackMonMiss");
 
 				if ($startedattack) {
 					$monstarttime = time();
@@ -6035,7 +6035,7 @@ sub parseMsg {
 
 				message(sprintf("[%3d|%3d]",percent_hp(\%{$chars[$config{'char'}]}),percent_sp(\%{$chars[$config{'char'}]}))
 					."Get Dmg : $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
-					"attacked");
+					($damage > 0)? "attacked" : "attackedMiss");
 			}
 			undef $chars[$config{'char'}]{'time_cast'};
 		} elsif (%{$monsters{$ID1}}) {
@@ -7548,7 +7548,11 @@ sub parseMsg {
 		$damage ||= "Miss!";
     my $disp = "$source $uses $skillsID_lut{$skillID}" . (($level == 65535)? "" : " (lvl $level)") . (($damage == 35536)? "" : " on $target - Dmg: $damage") . "\n";
     my $domain = "skill";
-    if ($damage != 35536) {
+    if ($damage == 0) {
+      $domain = "attackMonMiss" if (($source eq "You") && ($target ne "Self"));
+      $domain = "attackedMiss" if (($source ne "You") && ($target eq "You"));
+    }
+    elsif ($damage != 35536) {
       $domain = "attackMon" if (($source eq "You") && ($target ne "Self"));
       $domain = "attacked" if (($source ne "You") && ($target eq "You"));
     }
@@ -9157,7 +9161,7 @@ sub attack {
 				if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) { 
 					$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
 					sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "");
-					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_LeftHand"}." ($Leq)\n";
+					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_LeftHand"}." ($Leq)\n", "equip";
 					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'}); 
 				}
 				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_RightHand"} eq "[NONE]") {
@@ -9179,23 +9183,23 @@ sub attack {
 						}
 					}
 					if ($config{"autoSwitch_$i"."_RightHand"} ne "[NONE]") {
-						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_RightHand"}."($Req)\n"; 
+						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_RightHand"}."($Req)\n", "equip"; 
 						sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
 					}
 				}
 				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) { 
-					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_Arrow"}."\n";
+					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_Arrow"}."\n", "equip";
 					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0); 
 				}
 				if ($config{"autoSwitch_$i"."_Distance"} && $config{"autoSwitch_$i"."_Distance"} != $config{'attackDistance'}) { 
 					$ai_v{'attackDistance'} = $config{'attackDistance'};
 					$config{'attackDistance'} = $config{"autoSwitch_$i"."_Distance"};
-					message "Change Attack Distance to : ".$config{'attackDistance'}."\n";
+					message "Change Attack Distance to : ".$config{'attackDistance'}."\n", "equip";
 				}
 				if ($config{"autoSwitch_$i"."_useWeapon"} ne "") { 
 					$ai_v{'attackUseWeapon'} = $config{'attackUseWeapon'};
 					$config{'attackUseWeapon'} = $config{"autoSwitch_$i"."_useWeapon"};
-					message "Change Attack useWeapon to : ".$config{'attackUseWeapon'}."\n";
+					message "Change Attack useWeapon to : ".$config{'attackUseWeapon'}."\n", "equip";
 				}
 				last AUTOEQUIP; 
 			}
@@ -9206,31 +9210,31 @@ sub attack {
 			if($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
 				$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
 				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'});
-				message "Auto equiping default [L] :".$config{'autoSwitch_default_LeftHand'}."\n";
+				message "Auto equiping default [L] :".$config{'autoSwitch_default_LeftHand'}."\n", "equip";
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'});
 			}
 		}
 		if ($config{'autoSwitch_default_RightHand'}) { 
 			$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_RightHand'}); 
 			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
-				message "Auto equiping default [R] :".$config{'autoSwitch_default_RightHand'}."\n"; 
+				message "Auto equiping default [R] :".$config{'autoSwitch_default_RightHand'}."\n", "equip"; 
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
 			}
 		}
 		if ($config{'autoSwitch_default_Arrow'}) { 
 			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_Arrow'}); 
 			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
-				message "Auto equiping default [A] :".$config{'autoSwitch_default_Arrow'}."\n"; 
+				message "Auto equiping default [A] :".$config{'autoSwitch_default_Arrow'}."\n", "equip"; 
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0);
 			}
 		}
 		if ($ai_v{'attackDistance'} && $config{'attackDistance'} != $ai_v{'attackDistance'}) { 
 			$config{'attackDistance'} = $ai_v{'attackDistance'};
-			message "Change Attack Distance to Default : ".$config{'attackDistance'}."\n";
+			message "Change Attack Distance to Default : ".$config{'attackDistance'}."\n", "equip";
 		}
 		if ($ai_v{'attackUseWeapon'} ne "" && $config{'attackUseWeapon'} != $ai_v{'attackUseWeapon'}) { 
 			$config{'attackUseWeapon'} = $ai_v{'attackUseWeapon'};
-			message "Change Attack useWeapon to default : ".$config{'attackUseWeapon'}."\n";
+			message "Change Attack useWeapon to default : ".$config{'attackUseWeapon'}."\n", "equip";
 		}
 	} #END OF BLOCK AUTOEQUIP 
 }
