@@ -137,7 +137,7 @@ sub configModify {
 		silent => $silent
 	});
 
-	message("Config '$key' set to $val\n", "info") unless ($silent);
+	message("Config '$key' set to $val (was $config{$key})\n", "info") unless ($silent);
 	$config{$key} = $val;
 	saveConfigFile();
 }
