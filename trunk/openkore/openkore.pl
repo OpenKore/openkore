@@ -318,9 +318,13 @@ while ($quit != 1) {
 					$printed = 1;
 				}
 
-				if (defined($input = Input::getInput(0)) && $input eq 'quit') {
-					$quit = 1;
-					last;
+				if (defined($input = Input::getInput(0))) {
+				   	if ($input eq 'quit') {
+						$quit = 1;
+						last;
+					} else {
+						print "Error: You cannot type anything except 'quit' right now.\n";
+					}
 				}
 
 				usleep 100000;
