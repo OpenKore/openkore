@@ -29,7 +29,6 @@ use Carp;
 use Utils;
 use Log qw(warning error);
 
-our @ISA = qw(Exporter);
 our @EXPORT = qw(
 	parseArrayFile
 	parseAvoidControl
