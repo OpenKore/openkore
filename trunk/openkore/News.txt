@@ -1,6 +1,11 @@
 - Added GPL clause.
 - Improved platform autodetection. Won't attempt to execute 'uname -s'
   on Windows anymore.
+- New function: lookpos(). Face a specified position.
+- New command: lookp. Face a person.
+- Resurrect the followSitAuto config option. Somehow it was in the manual
+  but not implemented.
+- New option: followFaceDirection. When set to 1, always look at master.
 
 
 ------------------------------------------------------

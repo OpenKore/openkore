@@ -1458,13 +1458,26 @@ $i   $display
 		}
 
 	} elsif ($switch eq "look") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'look' (Look a Direction)\n"
 				,"Usage: look <body dir> [<head dir>]\n";
 		} else {
 			look($arg1, $arg2);
+		}
+
+	} elsif ($switch eq "lookp") {
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		if ($arg1 eq "") {
+			print "Syntax Error in function 'lookp' (Look at Player)\n" .
+					"Usage: lookp <player #>\n";
+		} else {
+			for (my $i = 0; $i < @playersID; $i++) {
+				next if ($players{$playersID[$i]} eq "");
+				lookPos($players{$playersID[$i]}{'pos_to'}, int(rand(3)));
+				last;
+			}
 		}
 
 	} elsif ($switch eq "memo") {
@@ -3390,8 +3403,18 @@ sub AI {
 				ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'}, $field{'name'}, 0, 0, 1, 0, $config{'followDistanceMin'});
 			}
 		}
-		if ($ai_seq_args[0]{'following'} && $players{$ai_seq_args[0]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
-			sit();
+		if ($ai_seq_args[0]{'following'}) {
+			if ($config{'followSitAuto'} && $players{$ai_seq_args[0]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
+				sit();
+			}
+
+			my $dx = $ai_seq_args[0]{'last_pos_to'}{'x'} - $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'};
+			my $dy = $ai_seq_args[0]{'last_pos_to'}{'y'} - $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'};
+			$ai_seq_args[0]{'last_pos_to'}{'x'} = $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'};
+			$ai_seq_args[0]{'last_pos_to'}{'y'} = $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'};
+			if ($dx != 0 || $dy != 0) {
+				lookPos($players{$ai_seq_args[0]{'ID'}}{'pos_to'}, int(rand(3))) if ($config{'followFaceDirection'});
+			}
 		}
 	}
 
@@ -3417,11 +3440,9 @@ sub AI {
 			}
 			
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disappeared'}) {
-			if (!$config{'XKore'}) {
-				print "Trying to find lost master\n";
-			} else {
-				injectMessage("Trying to find lost master") if ($config{'verbose'});
-			}
+			print "Trying to find lost master\n";
+			injectMessage("Trying to find lost master") if ($config{'verbose'} && $config{'XKore'});
+
 			undef $ai_seq_args[0]{'ai_follow_lost_char_last_pos'};
 			undef $ai_seq_args[0]{'follow_lost_portal_tried'};
 			$ai_seq_args[0]{'ai_follow_lost'} = 1;
@@ -3450,7 +3471,6 @@ sub AI {
 			}
 		}
 	}
-
 
 
 
@@ -5276,9 +5296,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 		if ($ID eq $accountID) {
 			print "You have died\n";
-#Solos Start
 			sendCloseShop();
-#Solos End
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
 		} elsif (%{$monsters{$ID}}) {
@@ -5294,37 +5312,29 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 			binRemove(\@monstersID, $ID);
 			undef %{$monsters{$ID}};
+
 		} elsif (%{$players{$ID}}) {
-			if ($type == 0) {
-				print "Player Disappeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if $config{'debug'};
-				%{$players_old{$ID}} = %{$players{$ID}};
-				$players_old{$ID}{'disappeared'} = 1;
-				$players_old{$ID}{'gone_time'} = time;
-				binRemove(\@playersID, $ID);
-				undef %{$players{$ID}};
-
-				binRemove(\@venderListsID, $ID);
-				undef %{$venderLists{$ID}};
-
-			} elsif ($type == 1) {
+			if ($type == 1) {
 				print "Player Died: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
 				$players{$ID}{'dead'} = 1;
+			} else {
+				if ($config{'debug'}) {
+					if ($type == 0) {
+						print "Player Disappeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
+						$players{$ID}{'disappeared'} = 1;
+					} elsif ($type == 2) {
+						print "Player Disconnected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
+						$players{$ID}{'disconnected'} = 1;
+					} elsif ($type == 3) {
+						print "Player Teleported: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
+						$players{$ID}{'disconnected'} = 1;
+					} else {
+						print "Player Disappeared in an unknown way: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
+						$players{$ID}{'disappeared'} = 1;
+					}
+				}
 
-			} elsif ($type == 2) {
-				print "Player Disconnected: $players{$ID}{'name'}\n" if $config{'debug'};
 				%{$players_old{$ID}} = %{$players{$ID}};
-				$players_old{$ID}{'disconnected'} = 1;
-				$players_old{$ID}{'gone_time'} = time;
-				binRemove(\@playersID, $ID);
-				undef %{$players{$ID}};
-
-				binRemove(\@venderListsID, $ID);
-				undef %{$venderLists{$ID}};
-
-			} elsif ($type == 3) {
-				print "Player Teleported: $players{$ID}{'name'}\n" if $config{'debug'};
-				%{$players_old{$ID}} = %{$players{$ID}};
-				$players_old{$ID}{'disconnected'} = 1;
 				$players_old{$ID}{'gone_time'} = time;
 				binRemove(\@playersID, $ID);
 				undef %{$players{$ID}};
@@ -11488,6 +11498,58 @@ sub getTickCount {
 		return substr($time, length($time) - 8, length($time));
 	} else {
 		return $time;
+	}
+}
+
+##
+# lookPos $pos [$headdir]
+# $pos: a reference to a coordinate hash.
+# $headdir: 0 = face directly, 1 = look right, 2 = look left
+#
+# Look at position $pos.
+sub lookPos {
+	my $pos1 = $chars[$config{'char'}]{'pos_to'};
+	my $pos2 = shift;
+	my $headdir = shift;
+	my $dx = $pos2->{'x'} - $pos1->{'x'};
+	my $dy = $pos2->{'y'} - $pos1->{'y'};
+	my $bodydir = undef;
+
+	if ($dx == 0) {
+		if ($dy > 0) {
+			$bodydir = 0;
+		} elsif ($dy < 0) {
+			$bodydir = 4;
+		}
+	} elsif ($dx < 0) {
+		if ($dy > 0) {
+			$bodydir = 1;
+		} elsif ($dy < 0) {
+			$bodydir = 3;
+		} else {
+			$bodydir = 2;
+		}
+	} else {
+		if ($dy > 0) {
+			$bodydir = 7;
+		} elsif ($dy < 0) {
+			$bodydir = 5;
+		} else {
+			$bodydir = 6;
+		}
+	}
+
+	return unless (defined($bodydir));
+	if ($headdir == 1) {
+		$bodydir++;
+		$bodydir -= 8 if ($bodydir > 7);
+		look($bodydir, 1);
+	} elsif ($headdir == 2) {
+		$bodydir--;
+		$bodydir += 8 if ($bodydir < 0);
+		look($bodydir, 2);
+	} else {
+		look($bodydir);
 	}
 }
 
