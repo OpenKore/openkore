@@ -5161,8 +5161,23 @@ sub parseMsg {
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my $sex = unpack("C*",substr($msg, 45,  1));
 		my $sitting = unpack("C*",substr($msg, 51,  1));
-		
-		if ($type >= 1000) {
+
+		if ($jobs_lut{$type}) {
+			if (!defined($players{$ID}{binID})) {
+				$players{$ID}{'appear_time'} = time;
+				binAdd(\@playersID, $ID);
+				$players{$ID}{'jobID'} = $type;
+				$players{$ID}{'sex'} = $sex;
+				$players{$ID}{'name'} = "Unknown";
+				$players{$ID}{'nameID'} = unpack("L1", $ID);
+				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+			}
+			$players{$ID}{'sitting'} = $sitting > 0;
+			%{$players{$ID}{'pos'}} = %coords;
+			%{$players{$ID}{'pos_to'}} = %coords;
+			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence", 1;
+
+		} elsif ($type >= 1000) {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
@@ -5208,21 +5223,6 @@ sub parseMsg {
 					}
 				}
 			}
-
-		} elsif ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
-				$players{$ID}{'appear_time'} = time;
-				binAdd(\@playersID, $ID);
-				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'name'} = "Unknown";
-				$players{$ID}{'nameID'} = unpack("L1", $ID);
-				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-			}
-			$players{$ID}{'sitting'} = $sitting > 0;
-			%{$players{$ID}{'pos'}} = %coords;
-			%{$players{$ID}{'pos_to'}} = %coords;
-			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence", 1;
 
 		} elsif ($type == 45) {
 			if (!%{$portals{$ID}}) {
@@ -5298,7 +5298,24 @@ sub parseMsg {
 		$type = unpack("S*",substr($msg, 14,  2));
 		$pet = unpack("C*",substr($msg, 16,  1));
 		$sex = unpack("C*",substr($msg, 49,  1));
-		if ($type >= 1000) {
+
+		if ($jobs_lut{$type}) {
+			if (!defined($players{$ID}{binID})) {
+				binAdd(\@playersID, $ID);
+				$players{$ID}{'appear_time'} = time;
+				$players{$ID}{'sex'} = $sex;
+				$players{$ID}{'jobID'} = $type;
+				$players{$ID}{'name'} = "Unknown";
+				$players{$ID}{'nameID'} = unpack("L1", $ID);
+				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+				
+				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
+			}
+			%{$players{$ID}{'pos'}} = %coordsFrom;
+			%{$players{$ID}{'pos_to'}} = %coordsTo;
+			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+
+		} elsif ($type >= 1000) {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
@@ -5335,21 +5352,6 @@ sub parseMsg {
 				%{$monsters{$ID}{'pos_to'}} = %coordsTo;
 				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 2;
 			}
-		} elsif ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
-				binAdd(\@playersID, $ID);
-				$players{$ID}{'appear_time'} = time;
-				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'name'} = "Unknown";
-				$players{$ID}{'nameID'} = unpack("L1", $ID);
-				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-				
-				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
-			}
-			%{$players{$ID}{'pos'}} = %coordsFrom;
-			%{$players{$ID}{'pos_to'}} = %coordsTo;
-			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
 		} else {
 			debug "Unknown Moved: $type - ".getHex($ID)."\n", "parseMsg";
 		}
@@ -5361,7 +5363,22 @@ sub parseMsg {
 		$type = unpack("S*",substr($msg, 20,  2));
 		$pet = unpack("C*",substr($msg, 22,  1));
 		$sex = unpack("C*",substr($msg, 35,  1));
-		if ($type >= 1000) {
+
+		if ($jobs_lut{$type}) {
+			if (!defined($players{$ID}{binID})) {
+				binAdd(\@playersID, $ID);
+				$players{$ID}{'jobID'} = $type;
+				$players{$ID}{'sex'} = $sex;
+				$players{$ID}{'name'} = "Unknown";
+				$players{$ID}{'nameID'} = unpack("L1", $ID);
+				$players{$ID}{'appear_time'} = time;
+				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+			}
+			%{$players{$ID}{'pos'}} = %coords;
+			%{$players{$ID}{'pos_to'}} = %coords;
+			debug "Player Spawned: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+
+		} elsif ($type >= 1000) {
 			if ($pet) {
 				if (!%{$pets{$ID}}) { 
 					binAdd(\@petsID, $ID); 
@@ -5392,19 +5409,7 @@ sub parseMsg {
 				%{$monsters{$ID}{'pos_to'}} = %coords;
 				debug "Monster Spawned: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
 			}
-		} elsif ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
-				binAdd(\@playersID, $ID);
-				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'name'} = "Unknown";
-				$players{$ID}{'nameID'} = unpack("L1", $ID);
-				$players{$ID}{'appear_time'} = time;
-				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-			}
-			%{$players{$ID}{'pos'}} = %coords;
-			%{$players{$ID}{'pos_to'}} = %coords;
-			debug "Player Spawned: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+
 		} else {
 			debug "Unknown Spawned: $type - ".getHex($ID)."\n", "parseMsg";
 		}
@@ -7863,7 +7868,23 @@ sub parseMsg {
 		$pet = unpack("C*",substr($msg, 16,  1));
 		$sex = unpack("C*",substr($msg, 45,  1));
 		$sitting = unpack("C*",substr($msg, 51,  1));
-		if ($type >= 1000) {
+
+		if ($jobs_lut{$type}) {
+			if (!defined($players{$ID}{binID})) {
+				$players{$ID}{'appear_time'} = time;
+				binAdd(\@playersID, $ID);
+				$players{$ID}{'jobID'} = $type;
+				$players{$ID}{'sex'} = $sex;
+				$players{$ID}{'name'} = "Unknown";
+				$players{$ID}{'nameID'} = unpack("L1", $ID);
+				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+			}
+			$players{$ID}{'sitting'} = $sitting > 0;
+			%{$players{$ID}{'pos'}} = %coords;
+			%{$players{$ID}{'pos_to'}} = %coords;
+			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence", 1;
+
+		} elsif ($type >= 1000) {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
@@ -7894,21 +7915,6 @@ sub parseMsg {
 				%{$monsters{$ID}{'pos_to'}} = %coords;
 				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence", 1;
 			}
-
-		} elsif ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
-				$players{$ID}{'appear_time'} = time;
-				binAdd(\@playersID, $ID);
-				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'name'} = "Unknown";
-				$players{$ID}{'nameID'} = unpack("L1", $ID);
-				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-			}
-			$players{$ID}{'sitting'} = $sitting > 0;
-			%{$players{$ID}{'pos'}} = %coords;
-			%{$players{$ID}{'pos_to'}} = %coords;
-			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence", 1;
 
 		} elsif ($type == 45) {
 			if (!%{$portals{$ID}}) {
@@ -7978,7 +7984,24 @@ sub parseMsg {
 		$type = unpack("S*",substr($msg, 14,  2));
 		$pet = unpack("C*",substr($msg, 16,  1));
 		$sex = unpack("C*",substr($msg, 49,  1));
-		if ($type >= 1000) {
+
+		if ($jobs_lut{$type}) {
+			if (!defined($players{$ID}{binID})) {
+				binAdd(\@playersID, $ID);
+				$players{$ID}{'appear_time'} = time;
+				$players{$ID}{'sex'} = $sex;
+				$players{$ID}{'jobID'} = $type;
+				$players{$ID}{'name'} = "Unknown";
+				$players{$ID}{'nameID'} = unpack("L1", $ID);
+				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+
+				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
+			}
+			%{$players{$ID}{'pos'}} = %coordsFrom;
+			%{$players{$ID}{'pos_to'}} = %coordsTo;
+			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg", 2;
+
+		} elsif ($type >= 1000) {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
@@ -8015,21 +8038,7 @@ sub parseMsg {
 				%{$monsters{$ID}{'pos_to'}} = %coordsTo;
 				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
 			}
-		} elsif ($jobs_lut{$type}) {
-			if (!defined($players{$ID}{binID})) {
-				binAdd(\@playersID, $ID);
-				$players{$ID}{'appear_time'} = time;
-				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'name'} = "Unknown";
-				$players{$ID}{'nameID'} = unpack("L1", $ID);
-				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 
-				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
-			}
-			%{$players{$ID}{'pos'}} = %coordsFrom;
-			%{$players{$ID}{'pos_to'}} = %coordsTo;
-			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg", 2;
 		} else {
 			debug "Unknown Moved: $type - ".getHex($ID)."\n", "parseMsg";
 		}
