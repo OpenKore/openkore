@@ -1,8 +1,6 @@
 #See the documentation for what these variables do
 #New variables have comments above them
 
-buildType 0
-
 master_name_0 iRO: Master I
 master_host_0 38.144.194.2
 master_port_0 6900
