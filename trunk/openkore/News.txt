@@ -1,6 +1,10 @@
 (Note: before releasing the next version we need to clean up News.txt
 so people can easily see what config options have been added/changed)
 
+- Made all the color options in Log.pm user definable and added default values to the config.txt in the confpack
+  Also put in color options for all the message types currently defined (except for xskore)
+- Updated the Master Server list in openkore.pl to use the current output methodology (ie message())
+  
 - Further modified Log.pm to use colors the way I was intending on implementing them ;)
   WARNING WARNING WARNING WARNING WARNING this requires the installation of two additional perl modules
   for it to function under win32, and one additional perl module to function under *nix
