@@ -21,7 +21,7 @@ use Digest::MD5;
 use Exporter;
 use base qw(Exporter);
 
-use Globals qw(%config $conState $encryptVal $remote_socket @chars);
+use Globals qw(%config $conState $encryptVal $remote_socket @chars %packetDescriptions);
 use Log qw(message warning error debug);
 use Utils;
 
@@ -106,7 +106,6 @@ our @EXPORT = qw(
 	sendPetPerformance
 	sendPetReturnToEgg
 	sendPetUnequipItem
-	sendPkMapLogin
 	sendQuit
 	sendRaw
 	sendRespawn
@@ -352,7 +351,11 @@ sub sendMsgToServer {
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{'debugPacket_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
-		debug("Packet Switch SENT: $switch\n", "sendPacket", 0);
+		if ($packetDescriptions{Send}{$switch}) {
+			debug("Packet Switch SENT: $switch - $packetDescriptions{Send}{$switch}\n", "sendPacket", 0);
+		} else {
+			debug("Packet Switch SENT: $switch\n", "sendPacket", 0);
+		}
 	}
 }
 
@@ -663,9 +666,13 @@ sub sendGameLogin {
 sub sendGetPlayerInfo {
 	my $r_socket = shift;
 	my $ID = shift;
-	my $msg = pack("C*", 0x94, 0x00) . $ID;
-	sendMsgToServer($r_socket, $msg);
-	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
+	my $msg;
+
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0x94, 0x00) . $ID;
+		sendMsgToServer($r_socket, $msg);
+		debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
+	}
 }
 
 sub sendGetStoreList {
@@ -803,10 +810,19 @@ sub sendMapLogin {
 	my $sessionID = shift;
 	my $sex = shift;
 	my $msg;
-	if (1) {
+
+	if ($config{serverType} == 0) {
 		$sex = 0 if ($sex > 1 || $sex < 0); # Sex can only be 0 (female) or 1 (male)
 		$msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
 	} else {
+		$msg = pack("C*", 0x72, 0, 0, 0, 0) . $accountID .
+			pack("C*", 0xFA, 0x12, 0x00, 0xE0, 0x5D, 0x2B, 0xF4, 0x03, 0x00, 0xFF, 0xFF) .
+			$sessionID .
+			pack("L", getTickCount()) .
+			pack("C", $sex);
+	}
+
+	if (0) {
 		# This is used on the RuRO private server.
 		# A lot of packets are different so I gave up,
 		# but I'll keep this code around in case anyone ever needs it.
@@ -930,11 +946,7 @@ sub sendMove {
 	my $y = int scalar shift;
 	my $msg;
 
-	if ($config{'pkServer'}) {
-		$msg = pack("C*", 0xbc, 0x00) . getCoordString($x, $y) . chr(173);
-	} else {
-		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
-	}
+	$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
@@ -1070,17 +1082,6 @@ sub sendPetUnequipItem {
 	debug "Sent Pet Unequip Item\n", "sendPacket", 2;
 }
 
-sub sendPkMapLogin {
-	my $r_socket = shift;
-	my $accountID = shift;
-	my $sessionID = shift;
-	my $sex = shift;
-	my $msg = pack("C*", 0x72,0,0) . $accountID .
-		pack("C*",0x00,0x2C,0xFC,0x2B,0x8B,0x01,0x00,0x60,0x00,0xFF,0xFF,0xFF,0xFF) .
-		$sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
-	sendMsgToServer($r_socket, $msg);
-}
-
 sub sendQuit {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0x8A, 0x01, 0x00, 0x00);
@@ -1144,10 +1145,10 @@ sub sendSellBulk {
 sub sendSit {
 	my $r_socket = shift;
 	my $msg;
-	if ($config{'pkServer'}) {
-		$msg = pack("C*", 0x89, 0x00, 0x9c, 0x22, 0xfa, 0x83, 0x02);
-	} else {
+	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
+	} else {
+		$msg = pack("C*", 0x89, 0x00, 0x9c, 0x22, 0xfa, 0x83, 0x02);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sitting\n", "sendPacket", 2;
@@ -1202,10 +1203,10 @@ sub sendStorageGet {
 sub sendStand {
 	my $r_socket = shift;
 	my $msg;
-	if ($config{'pkServer'}) {
-		$msg = pack("C*", 0x89, 0x00, 0x9c, 0x22, 0xfa, 0x83, 0x03);
-	} else {
+	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
+	} else {
+		$msg = pack("C*", 0x89, 0x00, 0x9c, 0x22, 0xfa, 0x83, 0x03);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Standing\n", "sendPacket", 2;
@@ -1213,10 +1214,22 @@ sub sendStand {
 
 sub sendSync {
 	my $r_socket = shift;
-	my $time = shift;
-	my $msg = pack("C*", 0x7E, 0x00) . pack("L1", $time);
+	my $msg;
+
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0x7E, 0x00) . pack("L1", getTickCount());
+
+	} else {
+		my $time = int(time / 12 * 3075000) - 284089912922934;
+		my $unknown = 0x00;	# is sometimes 0x30
+		$msg = pack("C*", 0x7E, 0x00, $unknown, 0x00) .
+			pack("L", $time) .
+			chr(0);
+		main::dumpData($msg);
+	}
+
 	sendMsgToServer($r_socket, $msg);
-	debug "Sent Sync: $time\n", "sendPacket", 2;
+	debug "Sent Sync\n", "sendPacket", 2;
 }
 
 sub sendTake {

@@ -879,7 +879,7 @@ sub _find_x_top {
 sub getCoordString {
 	my $x = int(shift);
 	my $y = int(shift);
-	if ($config{'pkServer'}) {
+	if ($config{serverType} == 1) {
 		return pack("C*", _find_x($x, $y),
 			(64 * (($x + $y) % 4) + 31 - int($y / 16)),
 			(($y - int(($y - 8 ) / 16) * 16 - 8 ) *16));
