@@ -167,8 +167,11 @@ sub MODINIT {
 sub color {
 	return if ($config{'XKore'}); # Don't print colors in X-Kore mode; this is a temporary hack!
 	my $color = shift;
-	$color =~ s/\/.*//; # no support for background colors for now
 
+	$color =~ s/\/(.*)//;
+  $bgcolor = $1;
+
+  
 	if ($color eq "reset" || $color eq "default") {
 		print "\e[0m";
 
@@ -207,6 +210,32 @@ sub color {
 		print "\e[1;37m";
 	} elsif ($color eq "gray" || $color eq "grey") {
 		print "\e[0;37m";
+	}
+
+	if ($bgcolor eq "black" || $bgcolor eq "" || $bgcolor eq "default") {
+		print "\e[40m";
+
+	} elsif ($bgcolor eq "red" || $bgcolor eq "lightred" || $bgcolor eq "brown" || $bgcolor eq "darkred") {
+		print "\e[41m";
+
+	} elsif ($bgcolor eq "green" || $bgcolor eq "lightgreen" || $bgcolor eq "darkgreen") {
+		print "\e[42m";
+
+	} elsif ($bgcolor eq "yellow") {
+		print "\e[43m";
+
+	} elsif ($bgcolor eq "blue" || $bgcolor eq "lightblue") {
+		print "\e[44m";
+
+	} elsif ($bgcolor eq "magenta" || $bgcolor eq "lightmagenta") {
+		print "\e[45m";
+
+	} elsif ($bgcolor eq "cyan" || $bgcolor eq "lightcyan" || $bgcolor eq "darkcyan") {
+		print "\e[46m";
+
+	} elsif ($bgcolor eq "white" || $bgcolor eq "gray" || $bgcolor eq "grey") {
+		print "\e[47m";
+  
 	}
 }
 
