@@ -387,15 +387,16 @@ sub dataWaiting {
 # Return a formated output of the contents of hash, for debugging purposes.
 sub dumpHash {
 	my $out;
-	if (ref($_[0]) eq "") {
-		$_[0] =~ s/'/\\'/gs;
-		$_[0] =~ s/\W/\./gs;
-		$out .= "'$_[0]'";
-	} elsif (ref($_[0]) eq "HASH") {
+	my $buf = $_[0];
+	if (ref($buf) eq "") {
+		$buf =~ s/'/\\'/gs;
+		$buf =~ s/\W/\./gs;
+		$out .= "'$buf'";
+	} elsif (ref($buf) eq "HASH") {
 		$out .= "{";
-		foreach (keys %{$_[0]}) {
+		foreach (keys %{$buf}) {
 			s/'/\\'/gs;
-			$out .= "$_=>" . dumpHash($_[0]->{$_}) . ",";
+			$out .= "$_=>" . dumpHash($buf->{$_}) . ",";
 		}
 		chop $out;
 		$out .= "}";
