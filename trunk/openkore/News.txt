@@ -11,8 +11,7 @@ Bug fixes:
 - Fix typo which cause lockMap_randX/Y to not work.
 - The 'cart add' command now checks whether you have a cart.
 - Fix some memory leaks.
-- Guild Member Log In/Out, Guild Notice, storage messages are no longer
-  displayed in the XKore client.
+- Various messages no longer spam the XKore client.
 - "<name> refined weapon <success/failure>" messages from modkore added.
 
 New config options:
