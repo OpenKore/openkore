@@ -33,6 +33,8 @@ New features:
 - 'drop' command now works when AI is off, if you are only dropping one item.
 - isSelfSkill for attackSkillSlot. e.g.
   attackSkillSlot Aspersio { monsters Zombie }
+- _defendMonsters consition, e.g.:
+  partySkill Pneuma { defendMonsters Raydric Archer }
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
