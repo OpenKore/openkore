@@ -3949,6 +3949,8 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 			}
+			shift @ai_seq;
+			shift @ai_seq_args;
 		}
 	}
 
