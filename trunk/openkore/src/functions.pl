@@ -5915,7 +5915,7 @@ sub parseMsg {
 				? $items_lut{$char->{inventory}[$invIndex]{nameID}}
 				: "Unknown ".$char->{inventory}[$invIndex]{nameID};
 			$char->{inventory}[$invIndex]{name} = $display;
-			message "Inventory: $char->{inventory}[$invIndex]{name} ($invIndex) x $char->{inventory}[$invIndex]{amount} - " .
+			debug "Inventory: $char->{inventory}[$invIndex]{name} ($invIndex) x $char->{inventory}[$invIndex]{amount} - " .
 				"$itemTypes_lut{$char->{inventory}[$invIndex]{type}}\n", "parseMsg";
 			Plugins::callHook('packet_inventory', {index => $invIndex});
 		}
