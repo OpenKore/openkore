@@ -163,7 +163,7 @@ sub checkConnection {
 		if ($config{'SecureLogin'} >= 1) {
 			message("Secure Login...\n", "connection");
 			undef $secureLoginKey;
-			sendMasterEncryptKeyRequest(\$remote_socket,$config{'SecureLogin_RequestType'});
+			sendMasterCodeRequest(\$remote_socket,$config{'SecureLogin_RequestType'});
 		} else {
 			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'});
 		}
@@ -6002,9 +6002,8 @@ sub parseMsg {
 		updateDamageTables($ID1, $ID2, $damage);
 		if ($ID1 eq $accountID) {
 			if (%{$monsters{$ID2}}) { 
-				message("[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
-					.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
-					."%)] "."You attack Monster: $monsters{$ID2}{'name'} $monsters{$ID2}{'nameID'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n",
+				message(sprintf("[%3d|%3d]",percent_hp(\%{$chars[$config{'char'}]}),percent_sp(\%{$chars[$config{'char'}]}))
+					."Attack : $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n",
 					"attackMon");
 
 				if ($startedattack) {
@@ -6029,9 +6028,8 @@ sub parseMsg {
 			if (%{$monsters{$ID1}}) {
 				useTeleport(1) if ($monsters{$ID1}{'name'} eq "" && $config{'teleportAuto_emptyName'} ne '0');
 
-				message("[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
-					.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
-					."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
+				message(sprintf("[%3d|%3d]",percent_hp(\%{$chars[$config{'char'}]}),percent_sp(\%{$chars[$config{'char'}]}))
+					."Get Dmg : $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
 					"attacked");
 			}
 			undef $chars[$config{'char'}]{'time_cast'};
@@ -9126,7 +9124,7 @@ sub attack {
 	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
 	unshift @ai_seq, "attack";
 	unshift @ai_seq_args, \%args;
-	message "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
+	message "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
 
 	$startedattack = 1;
 	if ($config{"monsterCount"}) {	
