@@ -234,6 +234,7 @@ Credits:
 - anoxemian: (partial?) kRO/PK server support.
 - doenet: improved mon_control.txt, randomWalk and lockMap
   fixes/improvements.
+- BotMan: server details for pRO.
 
 
 ==================
