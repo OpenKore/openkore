@@ -3093,6 +3093,7 @@ sub AI {
 			 && (!$config{"useSelf_skill_$i"."_whenAffected"} || whenAffected($config{"useSelf_skill_$i"."_whenAffected"}))
 			 && (!$config{"useSelf_skill_$i"."_notWhileSitting"} || !$chars[$config{'char'}]{'sitting'})
 			 && (!$config{"useSelf_skill_$i"."_notInTown"} || !$cities_lut{$field{'name'}.'.rsw'})
+			 && inRange($chars[$config{'char'}]{'spirits'}, $config{"useSelf_skill_$i"."_spirit"})
 			) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
@@ -7796,7 +7797,13 @@ sub parseMsg {
 			message("Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
 
 		}
-
+#monk Spirits
+	} elsif ($switch eq "01D0" || $switch eq "01E1"){
+			my $sourceID = substr($msg, 2, 4);
+			if ($sourceID eq $accountID) {
+				$chars[$config{char}]{spirits} = unpack("S1",substr($msg, 6, 2));
+				message "You have $chars[$config{char}]{spirits} spirit(s) now\n", "parseMsg_statuslook", 1;
+			}
 	} elsif ($switch eq "01D7") {
 		# Weapon Display (type - 2:hand eq, 9:foot eq)
 		my $sourceID = substr($msg, 2, 4);
