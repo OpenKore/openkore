@@ -21,13 +21,13 @@ version 18
 ip 61.220.63.248
 port 6900
 master_version 16
-version 6
+version 7
 
-[Malaysia - mRO (English): Iris/Penril]
+[Malaysia - mRO (English): Iris/Penril/Odin/Thor]
 ip 61.220.63.129
 port 6900
 master_version 17
-version 6
+version 7
 
 [Malaysia - mRO: Sakray]
 ip 220.130.113.227
@@ -41,9 +41,9 @@ port 6900
 master_version 12
 version 2
 secureLogin 1
-secureLogin_type
+secureLogin_type 0
 secureLogin_requestCode
-secureLogin_account
+secureLogin_account 0
 
 [Philippines - pRO: Fenrir/Iris/Lydia]
 ip 210.1.70.69
@@ -51,9 +51,9 @@ port 6900
 master_version 15
 version 1
 secureLogin 1
-secureLogin_type
+secureLogin_type 0
 secureLogin_requestCode
-secureLogin_account
+secureLogin_account 0
 
 [Philippines - pRO: Loki/Sarah]
 ip 210.1.70.78
@@ -61,9 +61,9 @@ port 6900
 master_version 15
 version 1
 secureLogin 1
-secureLogin_type
+secureLogin_type 0
 secureLogin_requestCode
-secureLogin_account
+secureLogin_account 0
 
 [Philippines - pRO: Odin/Chaos]
 ip 210.1.70.68
@@ -71,9 +71,9 @@ port 6900
 master_version 15
 version 1
 secureLogin 1
-secureLogin_type
+secureLogin_type 0
 secureLogin_requestCode
-secureLogin_account
+secureLogin_account 0
 
 [Europe - euRO]
 ip 62.109.138.134
@@ -97,4 +97,14 @@ version 1
 ip 210.210.26.35
 port 6900
 version 1
+master_version 21
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
+[mobRO Private Server]
+ip 67.19.17.196
+port 6900
+version 18
 master_version 1
