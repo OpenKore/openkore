@@ -188,6 +188,7 @@
 01C5 Cart Added 
 01C8 Inventory Used
 01C9 Skill Area : 011F
+01CD Available Autocast Spells
 01D0 Vigor condensation
 01D2 Combo Attack
 01D7 Weapon / Shield Display
@@ -300,6 +301,7 @@
 01A7 Pet Incubator
 01A9 Pet Talk / Emo
 01B2 Shop Open
+01CE Autocast Skill
 01DB Login Code Request
 01DD Login
 01FA Login
