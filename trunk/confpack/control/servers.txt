@@ -108,3 +108,9 @@ ip 67.19.17.196
 port 6900
 version 18
 master_version 1
+
+[qRO Private Server]
+ip 70.85.26.148
+port 6822
+master_version 18
+version 20
