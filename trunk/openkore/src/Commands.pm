@@ -848,10 +848,10 @@ sub cmdStatus {
 		."%)" if $chars[$config{'char'}]{'sp_max'};
 	$base_string = $chars[$config{'char'}]{'exp'}."/".$chars[$config{'char'}]{'exp_max'}." /$baseEXPKill ("
 			.sprintf("%.2f",$chars[$config{'char'}]{'exp'}/$chars[$config{'char'}]{'exp_max'} * 100)
-			."%)" if $chars[$config{'char'}]{'exp_max'};
+			.'%)' if $chars[$config{'char'}]{'exp_max'};
 	$job_string = $chars[$config{'char'}]{'exp_job'}."/".$chars[$config{'char'}]{'exp_job_max'}." /$jobEXPKill ("
 			.sprintf("%.2f",$chars[$config{'char'}]{'exp_job'}/$chars[$config{'char'}]{'exp_job_max'} * 100)
-			."%)" if $chars[$config{'char'}]{'exp_job_max'};
+			.'%)' if $chars[$config{'char'}]{'exp_job_max'};
 	$weight_string = $chars[$config{'char'}]{'weight'}."/".$chars[$config{'char'}]{'weight_max'} .
 			" (" . sprintf("%.1f", $chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100)
 			. "%)"
