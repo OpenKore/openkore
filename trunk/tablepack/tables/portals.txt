@@ -2,8 +2,10 @@
 alberta 195 151 alb2trea 62 69 0 c c r0
 alb2trea 39 50 alberta 192 169 0 r0
 alberta 247 122 tur_dun01 157 39 10000 c r1 c r0 c c c 
+alberta 245 45 lou_fild01 190 101 10000 c r1 c c r0
+lou_fild01 190 100 alberta 235 45 0 c r0
 tur_dun01 165 29 alberta 241 115 0 c r0 c c
-alberta 245 93 amatsu 197 83 0 c r1 c c c r0 n
+alberta 245 93 amatsu 197 83 10000 c r1 c c c r0 n
 amatsu 194 79 alberta 243 91 0 c r0 n
 alberta 245 69 gon_fild01 258 82 0 c r1 c c r0 n
 gon_fild01 255 79 alberta 243 67 0 c r0 n
@@ -1629,3 +1631,15 @@ xmas_in 153 32 xmas 174 131
 xmas_in 163 93 xmas 173 160
 xmas_in 168 160 xmas 189 278
 xmas_in 179 109 xmas 181 169
+louyang 218 19 lou_fild01 233 356
+lou_fild01 233 356 louyang 218 22
+lou_in02 72 28 louyang 130 63
+louyang 130 63 lou_in02 72 31
+lou_dun01 221 195 louyang 37 271
+louyang 37 271 lou_dun01 218 195
+lou_in02 249 173 louyang 136 97
+louyang 136 97 lou_in02 247 171
+lou_in02 126 165 louyang 145 174
+louyang 145 174 lou_in02 126 168
+lou_in01 101 119 louyang 218 255
+louyang 218 255 lou_in01 101 122
