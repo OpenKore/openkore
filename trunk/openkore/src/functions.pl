@@ -156,7 +156,7 @@ sub initStatVars {
 }
 
 sub initOtherVars {
-	$timeout{ai_shop}{time} = $KoreStartTime;
+	$timeout{ai_shop}{time} = time;
 	$useArrowCraft = 1;
 }
 
