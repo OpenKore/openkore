@@ -83,6 +83,7 @@ our @EXPORT = (
 	sendMessage
 	stopAttack
 	stripLanguageCode
+	switchConfigFile
 	whenGroundStatus
 	whenStatusActive
 	whenStatusActiveMon
@@ -1177,6 +1178,24 @@ sub stripLanguageCode {
 	} else {
 		return 0;
 	}
+}
+
+##
+# switchConf(filename)
+# filename: a configuration file.
+#
+# Switch to another configuration file.
+sub switchConfigFile {
+	my $filename = shift;
+
+	foreach (@Settings::configFiles) {
+		if ($_->{file} eq $Settings::config_file) {
+			$_->{file} = $filename;
+			last;
+		}
+	}
+	$Settings::config_file = $filename;
+	parseDataFile2($filename, \%config);
 }
 
 ##

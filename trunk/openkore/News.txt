@@ -116,6 +116,8 @@ New commands:
   Accept or deny a guild join request.
 - pl (number)
   Show detailed information about a player.
+- switchconf (file)
+  Switch to another configuration file.
 
 New config options:
 - attackMaxDistance (number)
