@@ -17,7 +17,7 @@ all: Tools.dll Inject.dll
 Tools.dll: Tools.o Tools.gccdef
 	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Tools.gccdef Tools.o -o Tools.dll
 
-Tools.gccdef:
+Tools.gccdef: Tools.o
 	$(DLLTOOL) --dllname Tools.dll --output-def Tools.gccdef --no-export-all-symbols --add-stdcall-alias Tools.o
 
 Tools.o: Tools.cpp
@@ -27,7 +27,7 @@ Tools.o: Tools.cpp
 Inject.dll: Inject.o Inject.gccdef
 	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Inject.gccdef Inject.o -o Inject.dll -lws2_32
 
-Inject.gccdef:
+Inject.gccdef: Inject.o
 	$(DLLTOOL) --dllname Inject.dll --output-def Inject.gccdef --no-export-all-symbols --add-stdcall-alias Inject.o
 
 Inject.o: Inject.cpp
