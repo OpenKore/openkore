@@ -4577,9 +4577,6 @@ sub AI {
 		$timeout{'ai_teleport_away'}{'time'} = time;
 	}
 
-	$AI::v->{aggresives} = ai_getAggressives();
-	error "$AI::v->{ai_teleport_safe}";
-	
 	if ((($config{'teleportAuto_hp'} && percent_hp(\%{$chars[$config{'char'}]}) <= $config{'teleportAuto_hp'} && ai_getAggressives())
 		|| ($config{'teleportAuto_minAggressives'} && ai_getAggressives() >= $config{'teleportAuto_minAggressives'}))
 		&& $ai_v{'ai_teleport_safe'} && timeOut(\%{$timeout{'ai_teleport_hp'}})) {
