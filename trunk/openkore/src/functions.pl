@@ -3119,31 +3119,34 @@ sub AI {
 			}
 			delete $ai_seq_args[0]{'suspended'};
 		}
-	
+
 		# if we are not doing anything else now...
-		if (!$ai_seq_args[$followIndex]{'ai_follow_lost'}) {
-			if ($ai_seq_args[$followIndex]{'following'} && $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}) {
-				$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}});
-				if ($ai_v{'temp'}{'dist'} > $config{'followDistanceMax'} && timeOut($ai_seq_args[$followIndex]{'move_timeout'}, 0.25)) {
-					$ai_seq_args[$followIndex]{'move_timeout'} = time;
-					if ($ai_v{'temp'}{'dist'} > 15 || !checkLineWalkable($char->{pos_to}, $players{$ai_seq_args[$followIndex]{ID}{pos_to}})) {
-						ai_route($field{'name'}, $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'},
+		my $args = AI::args($followIndex);
+		if (!$args->{ai_follow_lost}) {
+			my $ID = $args->{ID};
+			my $player = $players{$ID};
+
+			if ($args->{following} && $player->{pos_to}) {
+				my $dist = distance($char->{pos_to}, $player->{pos_to});
+				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
+					$args->{move_timeout} = time;
+					if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
+						ai_route($field{name}, $player->{pos_to}{x}, $player->{pos_to}{y},
 							attackOnRoute => 1,
-							distFromGoal => $config{'followDistanceMin'});
+							distFromGoal => $config{followDistanceMin});
 					} else {
-						my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}});
 						my (%vec, %pos);
 	
-						stand() if ($chars[$config{char}]{sitting});
-						getVector(\%vec, \%{$players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-						moveAlongVector(\%pos, \%{$chars[$config{'char'}]{'pos_to'}}, \%vec, $dist - $config{'followDistanceMin'});
-						$timeout{'ai_sit_idle'}{'time'} = time;
-						sendMove(\$remote_socket, $pos{'x'}, $pos{'y'});
+						stand() if ($char->{sitting});
+						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
+						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
+						$timeout{ai_sit_idle}{time} = time;
+						sendMove(\$remote_socket, $pos{x}, $pos{y});
 					}
 				}
 			}
 			
-			if ($ai_seq_args[$followIndex]{'following'} && %{$players{$ai_seq_args[$followIndex]{'ID'}}}) {
+			if ($args->{following} && %{$player}) {
 				if ($config{'followSitAuto'} && $players{$ai_seq_args[$followIndex]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
 					sit();
 				}
