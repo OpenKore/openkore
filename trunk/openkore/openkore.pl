@@ -168,7 +168,6 @@ undef $@;
 
 import Settings qw(addConfigFile);
 addConfigFile($Settings::config_file, \%config,\&parseDataFile2);
-addConfigFile("$Settings::control_folder/servers.txt", \%masterServers, \&parseSectionedFile);
 addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
 addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
 addConfigFile("$Settings::control_folder/overallAuth.txt", \%overallAuth, \&parseDataFile);
@@ -201,6 +200,7 @@ addConfigFile("$Settings::tables_folder/packetdescriptions.txt", \%packetDescrip
 addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
 addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
 addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/servers.txt", \%masterServers, \&parseSectionedFile);
 addConfigFile("$Settings::tables_folder/sex.txt", \%sex_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skills.txt", \@Skills::skills, \&parseSkills);
 addConfigFile("$Settings::tables_folder/skills.txt", \%skills_lut, \&parseSkillsLUT);
