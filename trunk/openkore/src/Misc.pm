@@ -36,15 +36,17 @@ our @EXPORT = qw(
 	auth
 	configModify
 	setTimeout
+	saveConfigFile
 
+	center
 	checkFollowMode
+	closestWalkableSpot
+	getMapPoint
 	getPortalDestName
 	printItemDesc
 	whenStatusActive
 	whenStatusActiveMon
 	whenStatusActivePL
-
-	center
 	);
 
 
@@ -91,6 +93,14 @@ sub configModify {
 	saveConfigFile();
 }
 
+##
+# saveConfigFile()
+#
+# Writes %config to config.txt.
+sub saveConfigFile {
+	writeDataFileIntact($Settings::config_file, \%config);
+}
+
 sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
@@ -106,6 +116,74 @@ sub setTimeout {
 #######################################
 #######################################
 
+
+##
+# center(string, width, [fill])
+#
+# This function will center $string within a field $width characters wide,
+# using $fill characters for padding on either end of the string for
+# centering. If $fill is not specified, a space will be used.
+sub center {
+	my ($string, $width, $fill) = @_;
+
+	$fill ||= ' ';
+	my $left = int(($width - length($string)) / 2);
+	my $right = ($width - length($string)) - $left;
+	return $fill x $left . $string . $fill x $right;
+}
+
+##
+# checkFollowMode()
+# Returns: 1 if in follow mode, 0 if not.
+#
+# Check whether we're current in follow mode.
+sub checkFollowMode { 	 
+	my $followIndex;
+	if ($config{follow} && defined($followIndex = binFind(\@ai_seq, "follow"))) {
+		return 1 if ($ai_seq_args[$followIndex]{following});
+	}
+	return 0;
+}
+
+##
+# closestWalkableSpot(r_field, pos)
+# r_field: a reference to a field hash.
+# pos: reference to a position hash (which contains 'x' and 'y' keys).
+#
+# If the position specified in $pos is walkable, this function will do nothing.
+# If it's not walkable, this function will find the closest position that is walkable (up to 2 blocks away),
+# and modify the x and y values in $pos.
+sub closestWalkableSpot {
+	my $r_field = shift;
+	my $pos = shift;
+
+	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
+		next if getMapPoint($r_field,
+				$pos->{'x'} + $z->[0],
+				$pos->{'y'} + $z->[1]);
+		$pos->{'x'} += $z->[0];
+		$pos->{'y'} += $z->[1];
+		last;
+	}
+}
+
+##
+# getMapPoint(r_field, x, y)
+# r_field: a reference to a field hash.
+# x, y: the coordinate on the map to check.
+# Returns: 0 = walkable, 1 = not walkable, 5 = cliff (not walkable, but you can snipe)
+#
+# Check whether the coordinate specified by ($x, $y) is walkable.
+sub getMapPoint {
+	my $r_field = shift;
+	my $x = shift;
+	my $y = shift;
+
+	if ($x < 0 || $x >= $r_field->{'width'} || $y < 0 || $y >= $r_field->{'height'}) {
+		return 1;
+	}
+	return ord(substr($r_field->{rawMap}, ($y * $r_field->{'width'}) + $x, 1));
+}
 
 sub getPortalDestName {
 	my $ID = shift;
@@ -165,40 +243,5 @@ sub whenStatusActivePL {
 	return 0;
 }
 
-##
-# saveConfigFile()
-#
-# Writes %config to config.txt.
-sub saveConfigFile {
-	writeDataFileIntact($Settings::config_file, \%config);
-}
-
-##
-# center(string, width, [fill])
-#
-# This function will center $string within a field $width characters wide,
-# using $fill characters for padding on either end of the string for
-# centering. If $fill is not specified, a space will be used.
-sub center {
-	my ($string, $width, $fill) = @_;
-
-	$fill ||= ' ';
-	my $left = int(($width - length($string)) / 2);
-	my $right = ($width - length($string)) - $left;
-	return $fill x $left . $string . $fill x $right;
-}
-
-##
-# checkFollowMode()
-# Returns: 1 if in follow mode, 0 if not.
-#
-# Check whether we're current in follow mode.
-sub checkFollowMode { 	 
-	my $followIndex;
-	if ($config{follow} && defined($followIndex = binFind(\@ai_seq, "follow"))) {
-		return 1 if ($ai_seq_args[$followIndex]{following});
-	}
-	return 0;
-}
 
 return 1;

@@ -10,9 +10,48 @@
 #########################################################################
 
 use lib '.';
+use lib 'tools';
+use lib 'tools/pathfinding';
+use lib 'tools/unix';
+use lib 'tools/win32';
+use lib 'tools/misc';
 eval "no utf8;"; undef $@;
 use bytes;
 srand();
+
+
+##### CHECK FOR THE XSTOOL LIBRARY #####
+
+BEGIN {
+	if ($^O ne 'MSWin32') {
+		# If we're on Unix, attempt to compile XSTools.so if it isn't available
+		my $found = 0;
+		foreach (@INC) {
+			if (-f "$_/XSTools.so") {
+				$found = 1;
+				last;
+			}
+		}
+
+		if (!$found) {
+			my $ret = system('gmake', '-C', 'tools');
+			if ($ret != 0) {
+				if (($ret & 127) == 2) {
+					# Ctrl+C pressed
+					exit 1;
+				} else {
+					print STDERR "Unable to compile XSTools.so. Please report this error at our forums.\n";
+					exit 1;
+				}
+			}
+		}
+	} elsif (! -f "tools\\XSTools.dll") {
+		print STDERR "Error: XSTools.dll is not found. Please check your installation.\n";
+		<STDIN>;
+		exit 1;
+	}
+}
+
 
 ##### SETUP WARNING AND ERROR HANDLER #####
 
@@ -96,8 +135,10 @@ if ($parseArgResult eq '2') {
 }
 
 
-require 'functions.pl';
+require PathFinding;
+require WinUtils if ($^O eq 'MSWin32');
 
+require 'functions.pl';
 use Globals;
 use Modules;
 use Log;
@@ -169,86 +210,8 @@ Settings::load();
 Plugins::callHook('start3');
 
 
-##### INITIALIZE USAGE OF TOOLS.DLL/TOOLS.SO #####
-
-if ($buildType == 0) {
-	# MS Windows
-	require Win32::API;
-	import Win32::API;
-	if ($@) {
-		$interface->errorDialog("Unable to load the Win32::API Perl module. Please install this module first.");
-		exit 1;
-	}
-
-	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPPNNPPN", "N");
-	if (!$CalcPath_init) {
-		$interface->errorDialog("Could not locate Tools.dll");
-		exit 1;
-	}
-
-	$CalcPath_pathStep = new Win32::API("Tools", "CalcPath_pathStep", "N", "N");
-	if (!$CalcPath_pathStep) {
-		$interface->errorDialog("Could not locate Tools.dll");
-		exit 1;
-	}
-
-	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
-	if (!$CalcPath_destroy) {
-		$interface->errorDialog("Could not locate Tools.dll");
-		exit 1;
-	}
-} else {
-	# Linux
-	if (! -f "Tools.so") {
-		# Tools.so doesn't exist; maybe it's somewhere else in @INC?
-		my $found;
-		foreach (@INC) {
-			if (-f "$_/Tools.so") {
-				$found = 1;
-				last;
-			}
-		}
-
-		if (!$found) {
-			# Attempt to compile it
-			Log::message("Tools.so does not exist; compiling it...\n", "startup");
-			my $ret = system('gmake');
-			if ($ret != 0) {
-				if (($ret & 127) == 2) {
-					# Ctrl+C pressed
-					exit 1;
-				} else {
-					$interface->errorDialog("Unable to compile Tools.so. Please check the " .
-						"terminal for the error message, and report this bug at our forums.");
-					exit 1;
-				}
-			}
-		}
-	}
-
-	eval "use Tools;";
-	if ($@) {
-		my $msg;
-		if ($@ =~ /^Can't locate /s) {
-			$msg = 'The file Tools.pm is not found. Please check your installation.';
-		} else {
-			$msg = $@;
-		}
-		$interface->errorDialog("Unable to load Tools.so:\n$msg");
-		exit 1;
-	}
-}
-
 if ($config{'XKore'}) {
-	my $cwd = Win32::GetCwd();
-	our $injectDLL_file = $cwd."\\Inject.dll";
-
-	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
-	if (!$GetProcByName) {
-		$interface->errorDialog("Could not locate Tools.dll");
-		exit 1;
-	}
-	undef $cwd;
+	our $injectDLL_file = Win32::GetCwd() . "\\Inject.dll";
 }
 
 if ($config{'adminPassword'} eq 'x' x 10) {
@@ -390,7 +353,7 @@ while ($quit != 1) {
 			my $printed = 0;
 			my $procID = 0;
 			do {
-				$procID = $GetProcByName->Call($config{'exeName'});
+				$procID = WinUtils::GetProcByName($config{'exeName'});
 				if (!$procID && !$printed) {
 					Log::message("Error: Could not locate process $config{'exeName'}.\n");
 					Log::message("Waiting for you to start the process...\n");
@@ -413,8 +376,7 @@ while ($quit != 1) {
 			if ($printed == 1) {
 				Log::message("Process found\n");
 			}
-			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
-			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
+			my $retVal = WinUtils::InjectDLL($procID, $injectDLL_file);
 			if ($retVal != 1) {
 				Log::error("Could not inject DLL\n", "startup");
 				$timeout{'injectKeepAlive'}{'time'} = time;
@@ -509,5 +471,3 @@ Network::disconnect(\$remote_socket);
 
 Log::message("Bye!\n");
 Log::message($Settings::versionText);
-
-undef $interface;

@@ -23,6 +23,7 @@ use IO::Socket::INET;
 use bytes;
 use Exporter;
 use base qw(Exporter);
+use FastUtils;
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our @EXPORT = qw(
@@ -90,17 +91,8 @@ sub binAdd {
 # our @array = ("hello", "world", "!");
 # binFind(\@array, "world");   # => 1
 # binFind(\@array, "?");       # => undef
-sub binFind {
-	my $r_array = shift;
-	my $ID = shift;
-	my $i;
-	for ($i = 0; $i < @{$r_array};$i++) {
-		if ($$r_array[$i] eq $ID) {
-			return $i;
-		}
-	}
-	return undef;
-}
+
+# This function is written in tools/misc/fastutils.xs
 
 ##
 # binFindReverse(r_array, ID)

@@ -15,8 +15,3 @@ Network.pm
 Plugins.pm
 Settings.pm
 Utils.pm
-
-Tools.pm
-ToolsXS.xs
-Tools.cpp
-Tools.def
