@@ -47,7 +47,7 @@ New config options:
   Exit or respawn of Kore is on a map other than the ones specified
   in (list of maps). This is useful on pRO where GMs warp you to
   secret rooms.
-- allowedMap_reaction (number)
+- allowedMaps_reaction (number)
   0 = respawn
   1 = exit
 
