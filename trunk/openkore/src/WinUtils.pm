@@ -5,6 +5,10 @@ use strict;
 use warnings;
 use Carp;
 
+use FindBin qw($RealBin);
+use lib 'tools';
+use lib "$RealBin/tools";
+
 require XSLoader;
 XSLoader::load('XSTools');
 
