@@ -4118,7 +4118,7 @@ sub AI {
 				}
 
 				# Give an error if we don't actually possess this skill
-				if ($char->{skills}{$handle}{lv} <= 0) {
+				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->handle ne $handle)) {
 					my $skill = new Skills(handle => $handle) if (!$skill); 
 					error "Attempted to use skill (".$skill->name.") which you do not have.\n";
 				}
