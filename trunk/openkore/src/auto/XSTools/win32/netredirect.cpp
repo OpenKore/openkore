@@ -524,6 +524,9 @@ hookProc (int code, WPARAM wParam, LPARAM lParam)
 		if (LoadLibrary (lib))
 			UnhookWindowsHookEx (hookID);
 
+		// For some reason RO crashes if I call init() here.
+		// Calling it in a thread seems to fix the problem.
+		// (but won't we get race conditions??)
 		CreateThread (NULL, 0, (LPTHREAD_START_ROUTINE) start, NULL, 0, &threadID);
 	}
 	return CallNextHookEx (hookID, code, wParam, lParam);
@@ -566,7 +569,8 @@ DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
 		isNT = version.dwPlatformId == VER_PLATFORM_WIN32_NT;
 
 		// If we're injected on Win9x, then init() must
-		// be called from a different function
+		// be called from a different function (see above).
+		// This is because Kore LoadLibrary() this dll when on Win9x.
 		if (isNT)
 			init ();
 		#endif
