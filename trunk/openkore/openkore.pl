@@ -19,6 +19,7 @@ srand(time());
 $SIG{__DIE__} = sub {
 	return unless (defined $^S && $^S == 0);
 
+	# Determine what function to use to print the error
 	my $err;
 	if (defined $Globals::interface) {
 		my $isStartup = (defined Scalar::Util::blessed) ?
@@ -28,13 +29,35 @@ $SIG{__DIE__} = sub {
 	}
 	$err = sub { print "$_[0]\nPress ENTER to exit this program.\n"; <STDIN>; } if !defined $err;
 
-	my $msg = "Program terminated unexpectedly. Error message:\n@_";
+	# Extract file and line number from the die message
+	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
+
+	# Get rid of the annoying "@INC contains:"
+	my $dieMsg = $_[0];
+	$dieMsg =~ s/ \(\@INC contains: .*\)//;
+
+	# Create error message and display it
+	my $msg = "Program terminated unexpectedly. Error message:\n" .
+		"$dieMsg\nA more detailed error report is saved to errors.txt";
 	my $log = '';
 	$log .= "\@ai_seq = @Globals::ai_seq\n\n" if (defined @Globals::ai_seq);
 	if (defined &Carp::longmess) {
 		$log .= Carp::longmess(@_);
 	} else {
-		$log .= "@_";
+		$log .= $dieMsg;
+	}
+
+	# Find out which line died
+	if (-f $file && open(F, "< $file")) {
+		my @lines = <F>;
+		close F;
+
+		my $msg;
+		$msg =  "*   $lines[$line-2]" if ($line - 2 >= 0);
+		$msg .= "*>> $lines[$line-1]";
+		$msg .= "*   $lines[$line]" if (@lines > $line);
+		$msg .= "\n" unless $msg =~ /\n$/s;
+		$log .= "\n\nDied at this line:\n$msg\n";
 	}
 
 	if (open(F, "> errors.txt")) {
