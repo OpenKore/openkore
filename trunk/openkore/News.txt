@@ -83,6 +83,7 @@ Internal:
   command line to select an interface to use. 'Console' is the default 
   interface. There is only one alternate interface at this point 'Tk' a stripped
   down version of modKore's Vx mode.
+- Support packet 01D7 (Karasu).
 
 
 Special thanks:
