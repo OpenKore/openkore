@@ -130,6 +130,10 @@ sub initMapChangeVars {
 	undef %chatRooms;
 	undef @lastpm;
 
+	delete $char->{time_cast};
+	delete $char->{cast_cancelled};
+	delete $char->{cast_skill};
+
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
 	$timeout{'ai_storageAuto'}{'time'} = time + 5;
@@ -4090,6 +4094,13 @@ sub AI {
 		last SKILL_USE if (AI::action ne "skill_use");
 		my $args = AI::args;
 
+		if ($char->{skills}{SA_FREECAST} && $char->{skills}{SA_FREECAST}{lv} > 0
+		 && !timeOut($char->{time_cast}, $char->{time_cast_wait})) {
+			# User has freecast and is still casting a skill; don't cast
+			# anything in the mean time
+			AI::dequeue;
+		}
+
 		if ($args->{monsterID} && $skillsArea{$args->{skillHandle}} == 2) {
 			delete $args->{monsterID};
 		}
@@ -4156,7 +4167,12 @@ sub AI {
 				delete $char->{cast_cancelled};
 
 			} elsif (timeOut($args->{minCastTime})) {
-				if ($args->{skill_use_last} != $char->{skills}{$args->{skillHandle}}{time_used}) {
+				if ($char->{cast_skill} == $args->{skillID}
+				 && $char->{skills}{SA_FREECAST} && $char->{skills}{SA_FREECAST}{lv} > 0) {
+					# User has freecast; we don't have to wait for the casting to finish
+					AI::dequeue;
+
+				} elsif ($args->{skill_use_last} != $char->{skills}{$args->{skillHandle}}{time_used}) {
 					AI::dequeue;
 					${$args->{ret}} = 'ok' if ($args->{ret});
 
@@ -4164,7 +4180,7 @@ sub AI {
 					AI::dequeue;
 					${$args->{ret}} = 'cancelled' if ($args->{ret});
 
-				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
+				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait})
 				  && ( (timeOut($args->{giveup}) && (!$char->{time_cast} || !$args->{maxCastTime}{timeout}) )
 				      || ( $args->{maxCastTime}{timeout} && timeOut($args->{maxCastTime})) )
 				) {
@@ -8464,6 +8480,7 @@ sub parseMsg {
 		if ($sourceID eq $accountID) {
 			$char->{time_cast} = time;
 			$char->{time_cast_wait} = $wait / 1000;
+			$char->{cast_skill} = $skillID;
 			delete $char->{cast_cancelled};
 		}
 
@@ -10672,7 +10689,7 @@ sub useTeleport {
 	return 0;
 }
 
-# Keep track of when we last cast a skill
+# Keep track of when we last finish casting a skill
 sub setSkillUseTimer {
 	my ($skillID, $targetID, $wait) = @_;
 	my $skill = new Skills(id => $skillID);
@@ -10681,6 +10698,7 @@ sub setSkillUseTimer {
 	$char->{skills}{$handle}{time_used} = time;
 	delete $char->{time_cast};
 	delete $char->{cast_cancelled};
+	delete $char->{cast_skill};
 	$char->{last_skill_time} = time;
 	$char->{last_skill_used} = $skillID;
 	$char->{last_skill_target} = $targetID;
