@@ -198,6 +198,7 @@ sub strdel {
 # * Handle other Ctrl characters
 sub readEvents {
 	my $interface = shift;
+	my $passwordMask = shift;
 	my %input = %{$interface->{input}};
 	my $entered = undef;
 
@@ -401,7 +402,15 @@ sub readEvents {
 				# move cursor to beginning, delete whole line and print buffer
 				$interface->cursorLeft($input{pos} - 1);
 				$interface->delLine;
-				print $input{buf};
+
+				# If 'passwordMask' parameter is parsed to function, mask text input
+				if ($passwordMask) {
+					# Show * instead of real password
+					print "*" x length($input{buf});
+				} else {
+					# Display normal input
+					print $input{buf};
+				}
 
 				# Move cursor back to where it's supposed to be
 				if ($input{pos} < length($input{buf})) {
@@ -467,7 +476,13 @@ sub getInput {
 
 	if ($timeout < 0) {
 		while (!defined($msg)) {
-			$msg = $class->readEvents;
+			# Set -9 on getInput timeout field mean this is password field
+			if ($timeout == -9) {
+				# Send signal to readEvents() to mask input password
+				$msg = $class->readEvents(1);
+			} else {
+				$msg = $class->readEvents;
+			}
 			usleep 10000 unless defined $msg;
 		}
 

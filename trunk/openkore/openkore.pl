@@ -311,7 +311,8 @@ if (!$config{'XKore'}) {
 	}
 	if (!$config{'password'}) {
 		Log::message("Enter Password: ");
-		$msg = $interface->getInput(-1);
+		# Set -9 on getInput timeout field mean this is password field
+		$msg = $interface->getInput(-9);
 		configModify('password', $msg, 1);
 	}
 
