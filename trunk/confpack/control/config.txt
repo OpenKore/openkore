@@ -52,6 +52,7 @@ debugPacket_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
 debugPacket_exclude 
+debugDomains
 
 message_length_max 80
 

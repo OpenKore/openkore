@@ -18,9 +18,9 @@ ai 2
 ai_move_retry 0.25
 ai_move_giveup 1.5
 
-# Check for monsters to attack every x seconds
+# Send the attack packet every x seconds, if it hasn't been send already
 ai_attack 1
-# Send the attack packet every x seconds, if it hasn't been sent already
+# Check for monsters to attack every x seconds
 ai_attack_auto 0.7
 # Give up attacking a monster if it can't be reached within x seconds
 ai_attack_giveup 12
