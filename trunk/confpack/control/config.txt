@@ -173,27 +173,7 @@ teleportAuto_useSP 0
 teleportAuto_emptyName 1
 teleportAuto_unstuck 0
 
-#
-# useSelf_skill_0 Heal
-# useSelf_skill_0_lvl 10
-# useSelf_skill_0_maxCastTime 0
-# useSelf_skill_0_minCastTime 0
-# useSelf_skill_0_hp < 80 [range]
-# useSelf_skill_0_sp > 0 [range]
-# useSelf_skill_0_onAction
-# useSelf_skill_0_whenStatusActive 
-# useSelf_skill_0_whenStatusInactive
-# useSelf_skill_0_whenFollowing [flag]
-# useSelf_skill_0_spirit [range]
-# useSelf_skill_0_aggressives [range]
-# useSelf_skill_0_stopWhenHit 0
-# useSelf_skill_0_inLockOnly 0
-# useSelf_skill_0_notWhileSitting 0
-# useSelf_skill_0_notInTown 0
-# useSelf_skill_0_timeout 0
-# useSelf_skill_0_disabled 0
-#
-# notes:
+# Notes:
 #   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
 #   eg: useSelf_skill_0_hp       <-- don't care
 #   eg: useSelf_skill_0_sp > 10  <-- only when we have more then 10% sp left
@@ -210,6 +190,7 @@ useSelf_skill_0_whenStatusInactive
 useSelf_skill_0_whenFollowing
 useSelf_skill_0_spirit
 useSelf_skill_0_aggressives
+useSelf_skill_0_monsters
 useSelf_skill_0_stopWhenHit 0
 useSelf_skill_0_inLockOnly 0
 useSelf_skill_0_notWhileSitting 0
@@ -223,24 +204,7 @@ useSelf_skill_smartHeal 1
 
 useSelf_itemCurePoison 1
 
-#
-# useSelf_item_0 Meat,Apple,Carrot,Sweet Potato,Banana,Monster's Feed,Red Potion,Orange Potion,Yellow Potion,White Potion
-# useSelf_item_0_hp < 90 [range]
-# useSelf_item_0_sp < 50 [range]
-# useSelf_item_0_onAction
-# useSelf_item_0_whenStatusActive
-# useSelf_item_0_whenStatusInactive
-# useSelf_item_0_whenFollowing [flag]
-# useSelf_item_0_spirit [range]
-# useSelf_item_0_aggressives [range]
-# useSelf_item_0_stopWhenHit 0
-# useSelf_item_0_inLockOnly 0
-# useSelf_item_0_notWhileSitting 0
-# useSelf_item_0_notInTown 0
-# useSelf_item_0_timeout 1
-# useSelf_item_0_disabled 0
-#
-# notes:
+# Notes:
 #   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
 #   eg: useSelf_item_0_hp < 90  <-- when we have less then 90% hp and
 #   eg: useSelf_item_0_hp < 50  <-- less then 50% sp
@@ -254,6 +218,7 @@ useSelf_item_0_whenStatusInactive
 useSelf_item_0_whenFollowing
 useSelf_item_0_spirit
 useSelf_item_0_aggressives
+useSelf_item_0_monsters
 useSelf_item_0_stopWhenHit 0
 useSelf_item_0_inLockOnly 0
 useSelf_item_0_notWhileSitting 0
@@ -263,32 +228,7 @@ useSelf_item_0_disabled 0
 useSelf_item_0_inInventory_name
 useSelf_item_0_inInventory_qty
 
-#
-# partySkill_0 Heal
-# partySkill_0_lvl 10
-# partySkill_0_maxCastTime 0
-# partySkill_0_minCastTime 0
-# partySkill_0_hp [range]
-# partySkill_0_sp > 10 [range]
-# partySkill_0_onAction
-# partySkill_0_whenStatusActive
-# partySkill_0_whenStatusInactive
-# partySkill_0_whenFollowing [flag]
-# partySkill_0_spirit [range]
-# partySkill_0_aggressives [range]
-# partySkill_0_stopWhenHit 0
-# partySkill_0_inLockOnly 0
-# partySkill_0_notWhileSitting 0
-# partySkill_0_notInTown 0
-# partySkill_0_timeout 0
-# partySkill_0_disabled 0
-# partySkill_0_target
-# partySkill_0_target_hp < 98 [range]
-# partySkill_0_target_whenStatusActive
-# partySkill_0_target_whenStatusInactive 
-# partySkill_0_target_timeout 0
-#
-# notes:
+# Notes:
 #   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
 #   eg: partySkill_0_hp      <-- don't care
 #   eg: partySkill_0_sp > 10 <-- keep the last 10% for our own use...
@@ -305,6 +245,7 @@ partySkill_0_whenStatusInactive
 partySkill_0_whenFollowing
 partySkill_0_spirit
 partySkill_0_aggressives
+partySkill_0_monsters
 partySkill_0_stopWhenHit 0
 partySkill_0_inLockOnly 0
 partySkill_0_notWhileSitting 0
@@ -315,6 +256,8 @@ partySkill_0_target
 partySkill_0_target_hp
 partySkill_0_target_whenStatusActive
 partySkill_0_target_whenStatusInactive 
+partySkill_0_target_aggressives
+partySkill_0_target_monsters
 partySkill_0_target_timeout 0
 partySkill_0_inInventory_name
 partySkill_0_inInventory_qty

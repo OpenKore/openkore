@@ -8211,6 +8211,19 @@ sub ai_getAggressives {
 	return @agMonsters;
 }
 
+sub ai_getPlayerAggressives {
+	my $ID = shift;
+	my @agMonsters;
+
+	foreach (@monstersID) {
+		next if ($_ eq "");
+		if ($monsters{$_}{dmgToPlayer}{$ID} > 0 || $monsters{$_}{missedToPlayer}{$ID} > 0 || $monsters{$_}{dmgFromPlayer}{$ID} > 0 || $monsters{$_}{missFromPlayer}{$ID} > 0) {
+			push @agMonsters, $_;
+		}
+	}
+	return @agMonsters;
+}
+
 sub ai_getIDFromChat {
 	my $r_hash = shift;
 	my $msg_user = shift;
@@ -10130,6 +10143,17 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
 
+	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i)) {
+		my $exists;
+		foreach (ai_getAggressives()) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name})) {
+				$exists = 1;
+				last;
+			}
+		}
+		return 0 unless $exists;
+	}
+
 	if ($config{$prefix . "_inInventory_name"}) {
 		my @arrN = split / *, */, $config{$prefix . "_inInventory_name"};
 		my @arrQ = split / *, */, $config{$prefix . "_inInventory_qty"};
@@ -10160,13 +10184,31 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($players{$id}{sitting}); }
 
 	# we will have player HP info (only) if we are in the same party
-	if (%{$chars[$config{char}]{party}{users}{$id}}) {
+	if ($chars[$config{char}]{party}{users}{$id}) {
 		if ($config{$prefix . "_hp"}) { 
 			return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}), $config{$prefix . "_hp"}));
 		} elsif ($config{$prefix . "Hp_upper"}) { # backward compatibility with old config format
 			return 0 unless (percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}) <= $config{$prefix . "Hp_upper"});
 			return 0 unless (percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}) >= $config{$prefix . "Hp_lower"});
 		}
+	}
+
+	if ($config{$prefix . "_aggressives"}) {
+		return 0 unless (inRange(scalar ai_getPlayerAggressives($id), $config{$prefix . "_aggressives"}));
+	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
+		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getPlayerAggressives($id));
+		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getPlayerAggressives($id));
+	}
+
+	if ($config{$prefix . "_monsters"}) {
+		my $exists;
+		foreach (ai_getPlayerAggressives($id)) {
+			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name})) {
+				$exists = 1;
+				last;
+			}
+		}
+		return 0 unless $exists;
 	}
 	
 	return 1;
