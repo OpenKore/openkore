@@ -2,6 +2,11 @@
 ### 1.6.0
 ==================
 
+** INCOMPATIBLE CHANGES **:
+- Fixed spelling of two monsters.
+  Bon Gun is now Bongun.
+  Requim is now Requiem.
+
 Bug fixes:
 - Fixed a memory problem in the pathfinding code which makes Kore crash.
 - Fix bulk selling bug which caused disconnect.
