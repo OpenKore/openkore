@@ -6902,18 +6902,18 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef @skillsID;
-		for($i = 4;$i < $msg_size;$i+=37) {
+		for ($i = 4;$i < $msg_size;$i+=37) {
 			my $skillID = unpack("S1", substr($msg, $i, 2));
 			my $level = unpack("S1", substr($msg, $i + 6, 2));
 			($skillName) = substr($msg, $i + 12, 24) =~ /([\s\S]*?)\000/;
 			if (!$skillName) {
-				$skillName = $skills_rlut{lc($skillsID_lut{$ID})};
+				$skillName = $skills_rlut{lc($skillsID_lut{$skillID})};
 			}
 			$chars[$config{'char'}]{'skills'}{$skillName}{'ID'} = $skillID;
 			if (!$chars[$config{'char'}]{'skills'}{$skillName}{'lv'}) {
 				$chars[$config{'char'}]{'skills'}{$skillName}{'lv'} = $level;
 			}
-			$skillsID_lut{$ID} = $skills_lut{$skillName};
+			$skillsID_lut{$skillID} = $skills_lut{$skillName};
 			binAdd(\@skillsID, $skillName);
 			Plugins::callHook('packet_charSkills',
 				'ID' => $skillID,
