@@ -10378,7 +10378,7 @@ sub parseTimeouts {
 		if ($_ =~ /([\s\S]*) ([\s\S]*?)$/)
 		{
 			$key = $1;
-			$value = $1;
+			$value = $2;
 			
 			if ($key ne "" && $value ne "") {
 				$$r_hash{$key}{'timeout'} = $value;
