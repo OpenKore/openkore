@@ -2319,8 +2319,11 @@ sub AI {
 	if (AI::action eq "storageAuto" && AI::args->{done}) {
 		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
 		my $forcedBySell = AI::args->{forcedBySell};
+		my $forcedByBuy = AI::args->{forcedByBuy};
 		AI::dequeue;
-		if (!$forcedBySell && $config{sellAuto}) {
+		if ($forcedByBuy) {
+			AI::queue("sellAuto", {forcedByBuy => 1});
+		} elsif (!$forcedBySell && ai_sellAutoCheck() && $config{sellAuto}) {
 			AI::queue("sellAuto", {forcedByStorage => 1});
 		}
 
@@ -2519,10 +2522,13 @@ sub AI {
 
 	if ($ai_seq[0] eq "sellAuto" && $ai_seq_args[0]{'done'}) {
 		$ai_v{'temp'}{'var'} = $ai_seq_args[0]{'forcedByBuy'};
+		$ai_v{'temp'}{'var2'} = $ai_seq_args[0]{'forcedByStorage'};
 		message "Auto-sell sequence completed.\n", "success";
-		shift @ai_seq;
-		shift @ai_seq_args;
-		if (!$ai_v{'temp'}{'var'}) {
+		AI::dequeue;
+		if ($ai_v{'temp'}{'var2'}) {
+			unshift @ai_seq, "buyAuto";
+			unshift @ai_seq_args, {forcedByStorage => 1};
+		} elsif (!$ai_v{'temp'}{'var'}) {
 			unshift @ai_seq, "buyAuto";
 			unshift @ai_seq_args, {forcedBySell => 1};
 		}
@@ -2629,10 +2635,14 @@ sub AI {
 
 	if ($ai_seq[0] eq "buyAuto" && $ai_seq_args[0]{'done'}) {
 		$ai_v{'temp'}{'var'} = $ai_seq_args[0]{'forcedBySell'};
+		$ai_v{'temp'}{'var2'} = $ai_seq_args[0]{'forcedByStorage'};
 		shift @ai_seq;
 		shift @ai_seq_args;
-		if (!$ai_v{'temp'}{'var'} && ai_sellAutoCheck() && $config{sellAuto}) {
-			unshift @ai_seq, "sellAuto";
+		if ($ai_v{'temp'}{'var'}) {
+			unshift @ai_seq, "storageAuto";
+			unshift @ai_seq_args, {forcedBySell => 1};
+		} elsif (!$ai_v{'temp'}{'var2'}) {
+			unshift @ai_seq, "storageAuto";
 			unshift @ai_seq_args, {forcedByBuy => 1};
 		}
 	} elsif ($ai_seq[0] eq "buyAuto" && timeOut(\%{$timeout{'ai_buyAuto_wait'}}) && timeOut(\%{$timeout{'ai_buyAuto_wait_buy'}})) {
