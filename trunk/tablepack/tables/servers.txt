@@ -174,3 +174,9 @@ ip 70.85.26.148
 port 6822
 master_version 18
 version 20
+
+[ProjectRO Private Server]
+ip 66.118.163.40
+port 6900
+master_version 0
+version 1
