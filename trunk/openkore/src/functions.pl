@@ -5781,7 +5781,7 @@ sub parseMsg {
 		$msg = substr($msg, 0, 28).$newmsg;
 		($privMsgUser) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
 		$privMsg = substr($msg, 28, $msg_size - 29);
-		if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
+		if ($privMsgUser ne "" && !defined binFind(\@privMsgUsers, $privMsgUser)) {
 			$privMsgUsers[@privMsgUsers] = $privMsgUser;
 		}
 
@@ -10014,7 +10014,7 @@ sub stuckCheck {
 			useTeleport(1) unless $config{teleportAuto_noUnstuck};
 			delete $ai_v{stuck_count};
 
-		} elsif ($ai_v{stuck_count} > $limit / 2) {
+		} elsif ($ai_v{stuck_count} >= 2) {
 			$ai_v{stuck_count}++;
 			debug "Move failed, attempt ($ai_v{stuck_count}) to unstuck by moving to current recorded pos\n", "stuck";
 			sendMove(\$remote_socket, $chars[$config{char}]{pos_to}{x}, $chars[$config{char}]{pos_to}{y});
