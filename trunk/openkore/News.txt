@@ -34,6 +34,7 @@ Bug fixes:
 - "exp reset" command now resets damage statistics in 's' command
 - Portal recording has been fixed.
 - Fix teleport using clip.
+- Portal recording has been fixed more.
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux
@@ -81,7 +82,10 @@ New config options:
   Similar to teleportAuto_maxDmg, but only has effect when in lockMap.
 - teleportAuto_minAggressivesInLock (number)
   Similar to teleportAuto_minAggressives, but only has effect when in lockMap.
-- portalRecord; automatic portal recording will only be done if this is true
+- portalRecord:
+  0 - don't automatically record portals
+  1 - record portals you walk through
+  2 - record the return portal too (by guessing)
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
