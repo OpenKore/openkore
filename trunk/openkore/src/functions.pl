@@ -230,7 +230,11 @@ sub checkConnection {
 		$conState_tries++;
 		initConnectVars();
 		Network::connectTo(\$remote_socket, $map_ip, $map_port);
-		sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
+		if ($config{'pkLogin'}) {
+			sendPkMapLogin(\$remote_socket, $accountID, $sessionID, $accountSex2);
+		} else {
+			sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
+		}
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		$timeout{'maplogin'}{'time'} = time;
 
