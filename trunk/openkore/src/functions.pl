@@ -2526,7 +2526,7 @@ sub AI {
 	  ) && !AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
 		# Initiate autostorage when the weight limit has been reached
 		my $routeIndex = AI::findAction("route");
-		my $attackOnRoute;
+		my $attackOnRoute = 2;
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
 		# Only autostorage when we're on an attack route, or not moving
 		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
@@ -2579,6 +2579,7 @@ sub AI {
 		my $args = AI::args;
 
 		# Stop if storageAuto is not enabled, or if the specified NPC is invalid
+		$args->{npc} = {};
 		getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
 		if (!$config{'storageAuto'} || !defined($args->{npc}{ok})) {
 			$args->{done} = 1;
@@ -2597,18 +2598,21 @@ sub AI {
 		}
 
 		if ($do_route) {
-			if ($args->{warpedToSave} && !$args->{mapChanged}) {
+			if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
 				undef $args->{warpedToSave};
 			}
 
 			# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
+			message "$args->{warpedToSave}\n";
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$args->{warpedToSave} = 1;
+				# If we still haven't warped after a certain amount of time, fallback to walking
+				$args->{warpStart} = time unless $args->{warpStart};
 				useTeleport(2);
 				$timeout{'ai_storageAuto'}{'time'} = time;
 			} else {
-				# warpToBuyOrSell is not set, or we've already warped. Walk to the NPC
+				# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
 				message "Calculating auto-storage route to: $maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
 				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 					attackOnRoute => 1,
@@ -4071,6 +4075,12 @@ sub AI {
 	}
 
 	####### ROUTE #######
+	if (AI::action eq "route" && AI::args->{suspended}) {
+		AI::args->{time_start} += time - AI::args->{suspended};
+		AI::args->{time_step} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+
 	if (AI::action eq "route" && $field{'name'} && $char->{pos_to}{x} ne '' && $char->{pos_to}{y} ne '') {
 		my $args = AI::args;
 
@@ -8800,13 +8810,14 @@ sub ai_skillUse {
 
 #storageAuto for items_control - chobit andy 20030210
 sub ai_storageAutoCheck {
-	for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
-		next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
-		if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'}
-			&& $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'}) {
+	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
+		my $slot = $char->{inventory}[$i];
+		next if (!$slot || $slot->{equipped});
+		if ($items_control{lc($slot->{name})}{storage} && $slot->{amount} > $items_control{lc($slot->{name})}{keep}) {
 			return 1;
 		}
 	}
+	return 0;
 }
 
 ##
