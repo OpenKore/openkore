@@ -58,6 +58,7 @@ our $mon_control_file;
 our $chat_file;
 our $item_log_file;
 our $shop_file;
+our $def_field;
 
 our @parseFiles;
 our $parseFiles;
