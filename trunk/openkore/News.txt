@@ -10,6 +10,7 @@ NOTES:
   - OR -
   * Delete your portalsLOS.txt and let Kore recompile it.
 - Shop.txt format has changed! See below.
+- Syntax of the console command "conf" has changed! See below.
 - The attack routing behavior has changed. It's recommended that you
   lower your attackDistance to 1.5.
 
@@ -34,6 +35,8 @@ New features:
 - Added command 'death <player #>' for use if you get the Death spell from
   Abracadabra.
 - Added command 'kill <player #>' to make the bot attack in PVP.
+- Command "conf <var>" now shows the value of var. To set var to nothing,
+  use "conf <var> none".
 - A new, WxWidgets-based interface.
 - Failed skill usage (e.g. insufficient SP, overweight) is now displayed
   at normal verbosity.
@@ -102,11 +105,14 @@ Internal:
   internal ID Number
 - cards.txt is no longer used. Card names are taken from items.txt
   s/ Card$// instead.
+- Inventory is now cleared on mapchange (fixes problems with eAthena)
 
 Credits:
 - Fenris: Tk interface improvements.
 - aputs: Inventory checking config options, vending improvements.
-- fov: Storage access bugfix, conf command bugfix, routing improvements.
+- fov: Storage access bugfix, conf command bugfix, routing improvements,
+  console improvement in unix screen sessions, some improvements related
+  to eAthena servers.
 - brianhj: 010F packet typo fix.
 - pmak, float: All kinds of stuff.
 
