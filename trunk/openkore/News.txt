@@ -75,6 +75,7 @@ New features:
   Format: map x, y
   eg: storageAuto_npc prontera 29 207
   You must also add ai_npcTalk to timeout.txt
+- monk's spirit is now supported, format: useSelf_skill_x_spirit < 5
 
 New commands:
 - warp list
@@ -139,7 +140,16 @@ New configuration options:
   you're in a conversation with an NPC.
 - attackAuto_inLockOnly
   When walking to lockmap, only attack monsters if this option is set to 0.
-
+- Generalized useSelf_skill, useSelf_item, attackSkill, partySkill, equipAuto,
+  all those option supports a common set of 'Self Condition'. Refer to confpack
+	for more info
+- A few 'range' based config option are now simplified, 
+  eg: useSelf_skill_x_hp < 20
+	old format are still supported for backward compatibility sake. Refer to
+	confpack for more info
+- removed whenAffected, state/ailments/look are now merged into whenStatusActive
+  and whenStatusInactive
+	eg: partySkill_x_whenStatusActive Frozen
 
 Bug fixes:
 - Fixed comma placement in formatNumber sub (its what puts the commas
