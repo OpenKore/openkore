@@ -2619,10 +2619,9 @@ sub AI {
 				$responseVars{'map'} = qq~$maps_lut{$field{'name'}.'.rsw'} ($field{'name'})~;
 				$timeout{'ai_thanks_set'}{'time'} = time;
 				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("whereS"), $cmd{'user'}) if $config{'verbose'};
-
-
 			}
 
+			#HEAL
 			if ($cmd{'msg'} =~ /\bheal\b/i) {
 				$ai_v{'temp'}{'after'} = $';
 				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
@@ -2685,6 +2684,7 @@ sub AI {
 			}
 
 
+			#INC AGI
 			if ($cmd{'msg'} =~ /\bagi\b/i){
 				$ai_v{'temp'}{'after'} = $';
 				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
@@ -2716,6 +2716,7 @@ sub AI {
 			}
 
 
+			#BLESSING
 			if ($cmd{'msg'} =~ /\bbless\b/i || $cmd{'msg'} =~ /\bblessing\b/i){
 				$ai_v{'temp'}{'after'} = $';
 				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
@@ -2747,6 +2748,7 @@ sub AI {
 			}
 
 
+			#Kyrie
 			if ($cmd{'msg'} =~ /\bkyrie\b/i){
 				$ai_v{'temp'}{'after'} = $';
 				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
@@ -3079,7 +3081,7 @@ sub AI {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
 			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{'storageAuto_npc'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-			if ($ai_v{'temp'}{'distance'} > 14) {
+			if ($ai_v{'temp'}{'distance'} > $config{'storageAuto_distance'}) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
 		}
@@ -3258,7 +3260,7 @@ sub AI {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
 			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{'sellAuto_npc'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-			if ($ai_v{'temp'}{'distance'} > 14) {
+			if ($ai_v{'temp'}{'distance'} > $config{'sellAuto_distance'}) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
 		}
@@ -3376,7 +3378,7 @@ sub AI {
 			$ai_v{'temp'}{'do_route'} = 1;			
 		} else {
 			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-			if ($ai_v{'temp'}{'distance'} > 14) {
+			if ($ai_v{'temp'}{'distance'} > $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
 		}
@@ -3517,9 +3519,9 @@ sub AI {
 				&& !($config{"useSelf_item_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
 				&& $config{"useSelf_item_$i"."_minAggressives"} <= ai_getAggressives()
 				&& (!$config{"useSelf_item_$i"."_maxAggressives"} || $config{"useSelf_item_$i"."_maxAggressives"} >= ai_getAggressives()) 
-            			&& timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
-            			&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'})))
-            		{
+				&& timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
+				&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'})))
+				{
 				undef $ai_v{'temp'}{'invIndex'};
 				$ai_v{'temp'}{'invIndex'} = findIndexStringList_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_$i"});
 				if ($ai_v{'temp'}{'invIndex'} ne "") {
@@ -4394,7 +4396,7 @@ sub AI {
 				if (!(@{$ai_seq_args[0]{'mapSolution'}})) {
 					#Get the field data if we don't have it
 					if (!%{$ai_seq_args[0]{'dest_field'}}) {
-						getField("fields/$ai_seq_args[0]{'dest_map'}.fld", \%{$ai_seq_args[0]{'dest_field'}});
+						getField("$Settings::def_field/$ai_seq_args[0]{'dest_map'}.fld", \%{$ai_seq_args[0]{'dest_field'}});
 					}
 					#Fill some vars, call the map router, and exit this function
 					$ai_seq_args[0]{'temp'}{'pos'}{'x'} = $ai_seq_args[0]{'dest_x'};
@@ -5443,7 +5445,7 @@ sub parseMsg {
 
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
-			getField("fields/$ai_v{'temp'}{'map'}.fld", \%field);
+			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
 		}
 
 		$map_ip = makeIP(substr($msg, 22, 4));
@@ -6063,7 +6065,7 @@ sub parseMsg {
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
-			getField("fields/$ai_v{'temp'}{'map'}.fld", \%field);
+			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
 		}
 		$coords{'x'} = unpack("S1", substr($msg, 18, 2));
 		$coords{'y'} = unpack("S1", substr($msg, 20, 2));
@@ -6084,7 +6086,7 @@ sub parseMsg {
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
-			getField("fields/$ai_v{'temp'}{'map'}.fld", \%field);
+			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
 		}
 
 		$map_ip = makeIP(substr($msg, 22, 4));
@@ -10653,7 +10655,7 @@ sub getField {
 		error "\n!!Could not load field - you must install the kore-field pack!!\n\n";
 	}
 	if ($file =~ /\//) {
-		($$r_hash{'name'}) = $file =~ /\/([\s\S]*)\./;
+		($$r_hash{'name'}) = $file =~ /^.*\/([\s\S]*)\./;
 	} else {
 		($$r_hash{'name'}) = $file =~ /([\s\S]*)\./;
 	}
@@ -10965,7 +10967,7 @@ sub compilePortals {
 				if ($portals_los{$portal}{$_} eq "" && $portals_los{$_}{$portal} eq "") {
 					if ($field{'name'} ne $map) {
 						message "Processing map $map\n", "system";
-						getField("fields/$map.fld", \%field);
+						getField("$Settings::def_field/$map.fld", \%field);
 					}
 					message "Calculating portal route $portal -> $_\n", "system";
 					ai_route_getRoute(\@solution, \%field, \%{$mapPortals{$map}{$portal}{'pos'}}, \%{$mapPortals{$map}{$_}{'pos'}});

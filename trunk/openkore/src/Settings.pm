@@ -105,6 +105,7 @@ sub parseArguments {
 		'items_control=s', \$items_control_file,
 		'chat=s', \$chat_file,
 		'shop=s', \$shop_file,
+		'fields=s',\$def_field,
 		'items=s', \$item_log_file);
 	if ($help_option) {
 		print "Usage: openkore.exe [options...]\n\n";
@@ -115,7 +116,7 @@ sub parseArguments {
 		print "--tables=path              Use a different folder as tables folder.\n";
 		print "--logs=path                Save log files in a different folder.\n";
 		print "--plugins=path             Look for plugins in specified folder.\n";
-
+		print "--fields=path\tWhere fields folder to use.\n";
 		print "\n";
 		print "--config=path/file         Which config.txt to use.\n";
 		print "--mon_control=path/file    Which mon_control.txt to use.\n";
@@ -131,6 +132,7 @@ sub parseArguments {
 	$chat_file = "$logs_folder/chat.txt" if (!defined $chat_file);
 	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
 	$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
+	$def_field = "fields" if (!defined $def_field);
 	$logs_folder = "logs" if (!defined $logs_folder);
 	$plugins_folder = "plugins" if (!defined $plugins_folder);
 
