@@ -7702,6 +7702,10 @@ sub parseMsg {
 			message "Player $name gained a level!\n";
 		} elsif ($type == 1) {
 			message "Player $name gained a job level!\n";
+		} elsif ($type == 2) {
+			print "$name refined weapon Fail!\n";
+		} elsif ($type == 3) {
+			print "$name refined weapon Success!\n";
 		}
 
 	} elsif ($switch eq "01A2") {
@@ -9763,7 +9767,7 @@ sub redirectXKoreMessages {
 	my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
 
 	return if ($type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
-	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|guildnotice|selfchat|emotion|drop|inventory|deal)$/);
+	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|guildnotice|selfchat|emotion|drop|inventory|deal|storage)$/);
 	return if ($domain =~ /^(attack|skill|list|info|partychat|npc|route)/);
 
 	$message =~ s/\n*$//s;
