@@ -26,6 +26,10 @@
 - If dcOnDisconnect is set to -1, kore will not respawn nor disconnect on
   death.
 - Don't autorestart while taking items.
+- mon_control.txt's auto-teleport flag can now have two values:
+  1 = teleport when monster's on screen
+  2 = teleport when monster hits you
+  Thanks to floAt.
 
 
 ==================
