@@ -4954,7 +4954,22 @@ sub AI {
 
 		##### TELEPORT HP #####
 		if ($safe && timeOut($timeout{ai_teleport_hp})
-		  && ((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))) {
+		  && (
+			(
+				($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp})
+				|| ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})
+			)
+			&& scalar(ai_getAggressives())
+			|| (
+				$config{teleportAuto_minAggressives}
+				&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}
+		 	) || (
+				$config{teleportAuto_minAggressivesInLock}
+				&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressivesInLock}
+				&& $field{name} eq $config{'lockMap'}
+			)
+		  )
+		) {
 			message "Teleporting due to insufficient HP/SP or too many aggressives\n", "teleport";
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
@@ -10063,6 +10078,9 @@ sub updateDamageTables {
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination")) {
 					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $damage >= $config{'teleportAuto_maxDmgInLock'} && !whenStatusActive("Hallucination")) {
+					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmgInLock'} dmg in lockMap. Teleporting...\n";
 					$teleport = 1;
 				} elsif (AI::inQueue("sitAuto") && $config{'teleportAuto_attackedWhenSitting'} && $damage > 0) {
 					message "$monsters{$ID1}{'name'} attacks you while you are sitting. Teleporting...\n";

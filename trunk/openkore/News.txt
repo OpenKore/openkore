@@ -8,6 +8,7 @@
   * Set ai_teleport_idle in timeouts.txt to the same as ai_teleport_search
   * Delete ai_teleport_search in timeouts.txt (it is obsolete)
 
+
 Bug fixes:
 - Correctly detect pets.
 - Fix all kinds of troubles regarding sitting and standing.
@@ -65,11 +66,13 @@ New config options:
   2 - disconnect
   3 - teleport
   4 - respawn
-- teleportAuto_idle must be true in order for teleportAuto_search to behave as
-  expected.
 - New 'previousDamage (range)' condition for attackSkillSlot.
   Use this skill only when your damage to the monster is between the
   specified range.
+- teleportAuto_maxDmgInLock (number)
+  Similar to teleportAuto_maxDmg, but only has effect when in lockMap.
+- teleportAuto_minAggressivesInLock (number)
+  Similar to teleportAuto_minAggressives, but only has effect when in lockMap.
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
@@ -84,7 +87,8 @@ Internal:
 Credits:
 - jsteng: Pet detection fix.
 - mondlicht: misc bug fixes.
-- denni: previousDamage condition.
+- denni: previousDamage condition, teleportAuto_maxDmgInLock,
+  teleportAuto_minAggressivesInLock.
 
 
 ==================
