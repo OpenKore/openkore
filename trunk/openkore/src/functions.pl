@@ -662,6 +662,7 @@ sub parseCommand {
 			if ($arg[1] eq "") {
 				$arg[1] = 1;
 			}
+			$title = ($config{chatTitleOversize}) ? $title : substr($title,0,36);
 			sendChatRoomCreate(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
 			$createdChatRoom{'title'} = $title;
 			$createdChatRoom{'ownerID'} = $accountID;
@@ -10653,7 +10654,7 @@ sub makeShop {
 sub openShop {
 	my @items = makeShop();
 	return unless @items;
-
+	$shop{title} = ($config{shopTitleOversize}) ? $shop{title} : substr($shop{title},0,36);
 	sendOpenShop($shop{title}, \@items);
 	message "Shop opened ($shop{title}) with ".@items." selling items.\n", "success";
 	$shopstarted = 1;

@@ -18,6 +18,7 @@ Bug fixes:
 - Zeny earned is reset when you use "exp reset".
 - "Inventory Item Removed" message was not being displayed when you drop
   (instead of fire) arrows.
+- Your shop title and chatroom title will not longer than 36 characters.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
@@ -65,6 +66,9 @@ New config options:
 - EXPERIMENTAL _misses and _totalMisses conditions, e.g. to switch elemental
   weapons using equipAuto when you are missing a monster that changed
   elements.
+- shopTitleOversize (flag)
+  chatTitleOversize (flag)
+  if set to 1 will enable shop title or chatroom title length longer than 36 characters.
 
 New commands:
 - ihist

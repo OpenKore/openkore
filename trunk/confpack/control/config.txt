@@ -344,6 +344,9 @@ partyAuto 1
 partyAutoShare 0
 guildAutoDeny 1
 
+chatTitleOversize 0
+shopTitleOversize 0
+
 seconds_per_block 0.12
 sleepTime 10000
 
