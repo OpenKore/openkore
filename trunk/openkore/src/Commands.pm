@@ -753,6 +753,10 @@ sub cmdStatAdd {
 		error	"Syntax Error in function 'stat_add' (Add Status Point)\n" .
 			"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
 
+	} elsif ($chars[$config{'char'}]{'$arg'} >= 99) {
+		error	"Error in function 'stat_add' (Add Status Point)\n" .
+			"You cannot add more stat points than 99\n";
+
 	} elsif ($chars[$config{'char'}]{"points_$arg"} > $chars[$config{'char'}]{'points_free'}) {
 			error	"Error in function 'stat_add' (Add Status Point)\n" .
 				"Not enough status points to increase $arg\n";

@@ -157,6 +157,8 @@ Internal:
 - Support packet 01D7 (Karasu).
 - New functions itemName() and itemNameSimple() to parse item info.
 - teleportAuto_portal bugfix by joseph.
+- stat_add limit bugfix by joseph. Do not allow the user to add more
+  than 99 points.
 
 
 Special thanks:
