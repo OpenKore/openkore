@@ -1,0 +1,11 @@
+**** Version 1.1.0
+
+- Sprite preview support in the Linux/GTK frontend.
+- Some bug fixes in the Win32 frontend. This probably solves the
+  error messages that some people get while extracting files.
+- Improved GRF file adding support in libgrf.
+- Added a pkg-config entry for Linux, so applications can easily
+  use libgrf.
+
+Credits:
+- AdamN: Win32 frontend bug fixes.
