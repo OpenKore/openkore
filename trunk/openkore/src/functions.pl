@@ -3452,6 +3452,7 @@ sub AI {
 					&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
 					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $monsters{$ID}{'name'}))
+					&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($monsters{$ID}{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
 					&& checkMonsterCondition("attackSkillSlot_${i}_target", $monsters{$ID})
 				) {
 					$args->{attackSkillSlot_attempts}{$i}++;
