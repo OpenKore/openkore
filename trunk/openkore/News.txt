@@ -67,6 +67,11 @@ miss any of the new config options.
   Kore will sell or go to storage if weight equals or is bigger than
   itemsMaxWeight_sellOrStore. While walking to the sell/storage NPC,
   Kore will pick up loot as long as your weight is under itemsMaxWeight.
+- New config options:
+  storageAuto_distance
+  buyAuto_0_distance
+  sellAuto_distance
+  Set a distance so Kore won't walk into an NPC.
 
 xlr82xs:
 - Removed dead monster count sub.
