@@ -8933,7 +8933,7 @@ sub move {
 	$args{move_to}{y} = $y;
 	$args{attackID} = $attackID;
 	$args{time_move} = $char->{time_move};
-	$dist = distance($char->{pos_to}, $args{move_to});
+	$dist = distance($char->{pos}, $args{move_to});
 	$args{ai_move_giveup}{timeout} = 4 * ($char->{walk_speed} || 0.12) * (1 + $dist);
 	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
 		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
