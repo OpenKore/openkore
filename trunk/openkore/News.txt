@@ -117,3 +117,9 @@ November 7th:
 
 1  - Updated mapview to display HP/SP/Name/etc - from junq
 2  - Added Auto-Heal NPC code
+
+November 12th:
+
+1  - Started to use proper variable initialization in some places. Bot ran fine for the
+     last 12h, so I assume it's safe to import it to CVS. Couple of the functions used
+     when loading the config files cleaned up, more internal error checking. (junq)

@@ -14,20 +14,23 @@ use IO::Socket;
 use Win32::API;
 #Solos Start
 use Getopt::Long;
-$config_file = "control/config.txt";
-$items_control_file = "control/items_control.txt";
-$mon_control_file = "control/mon_control.txt";
-$chat_file = "chat.txt";
-$item_log_file = "items.txt";
-$shop_file = "control/shop.txt";
+my $config_file = "control/config.txt";
+my $items_control_file = "control/items_control.txt";
+my $mon_control_file = "control/mon_control.txt";
+my $chat_file = "chat.txt";
+my $item_log_file = "items.txt";
+my $shop_file = "control/shop.txt";
 
+
+my $help_option='';	# false per default
 &GetOptions('config=s', \$config_file, 
 			'mon_control=s', \$mon_control_file, 
 			'items_control=s', \$items_control_file, 
 			'chat=s', \$chat_file,
-	    	'shop=s', \$shop_file,
-	    	'items=s', \$item_log_file,
-            'help', \$help_option);
+	    		'shop=s', \$shop_file,
+            		'items=s', \$item_log_file,
+            		'help', \$help_option
+            		);
 if ($help_option) { 
 	print "Usage: openkore.exe [options...]\n\n";
 	print "The supported options are:\n\n";
@@ -42,8 +45,21 @@ if ($help_option) {
 #Solos End
 srand(time());
 
-$versionText = "***OpenKore version 1.0 - http://openkore.sourceforge.net/***\n\n";
+
+my $versionText = "***OpenKore version 1.0 - http://openkore.sourceforge.net/***\n\n";
 print $versionText;
+
+##
+## variables used in addParseFile
+my (@parseFiles,%config,%items_control,%mon_control,%overallAuth,%itemsPickup,
+    %response,%timeout,%cities_lut,%emotions_lut,%equipTypes_lut,%items_lut,
+    %itemsDesc_lut,%responses,%itemSlots_lut,%jobs_lut,%maps_lut,%monsters_lut,
+    %npcs_lut,%portals_lut,%portals_los,%sex_lut,%skills_lut,%skillsID_lut,
+    %skills_rlut,%skillsDesc_lut,%skillsSP_lut,%shop,%cards_lut,%elements_lut,
+    %itemTypes_lut,%chat_resp,%avoid);
+
+
+my $parseFiles=0;
 
 #Solos Start
 addParseFiles($config_file, \%config,\&parseDataFile2);
@@ -9936,15 +9952,20 @@ sub parseDataFile {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,$value;
-	open FILE, $file;
+	my ($key,$value);
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
-		if ($key ne "" && $value ne "") {
-			$$r_hash{$key} = $value;
+		
+		if ($_ =~ /([\s\S]*) ([\s\S]*?)$/)
+		{
+			$key = $1;
+			$value = $2;
+			if ($key ne "" && $value ne "") {
+				$$r_hash{$key} = $value;
+			}
 		}
 	}
 	close FILE;
@@ -9954,15 +9975,19 @@ sub parseDataFile_lc {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,$value;
-	open FILE, $file;
+	my ($key,$value);
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
-		if ($key ne "" && $value ne "") {
-			$$r_hash{lc($key)} = $value;
+		if ($_ =~ /([\s\S]*) ([\s\S]*?)$/)
+		{
+			$key = $1;
+			$value = $2;
+			if ($key ne "" && $value ne "") {
+				$$r_hash{lc($key)} = $value;
+			}
 		}
 	}
 	close FILE;
@@ -9972,20 +9997,24 @@ sub parseDataFile2 {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,$value;
-	open FILE, $file;
+	my ($key,$value);
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $value) = $_ =~ /([\s\S]*?) ([\s\S]*)$/;
-		$key =~ s/\s//g;
-		if ($key eq "") {
-			($key) = $_ =~ /([\s\S]*)$/;
+		if ($_ =~ /([\s\S]*?) ([\s\S]*)$/)
+		{
+			$key = $1;
+			$value = $2;
 			$key =~ s/\s//g;
-		}
-		if ($key ne "") {
-			$$r_hash{$key} = $value;
+			if ($key eq "") {
+				($key) = $_ =~ /([\s\S]*)$/;
+				$key =~ s/\s//g;
+			}
+			if ($key ne "") {
+				$$r_hash{$key} = $value;
+			}
 		}
 	}
 	close FILE;
@@ -9995,18 +10024,23 @@ sub parseItemsControl {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,@args;
-	open FILE, $file;
+	my ($key,@args,$args);
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $args) = $_ =~ /([\s\S]+?) (\d+[\s\S]*)/;
-		@args = split / /,$args;
-		if ($key ne "") {
-			$$r_hash{lc($key)}{'keep'} = $args[0];
-			$$r_hash{lc($key)}{'storage'} = $args[1];
-			$$r_hash{lc($key)}{'sell'} = $args[2];
+		if ($_ =~ /([\s\S]+?) (\d+[\s\S]*)/)
+		{
+			$key = $1;
+			$args = $2;
+
+			@args = split / /,$args;
+			if ($key ne "") {
+				$$r_hash{lc($key)}{'keep'} = $args[0];
+				$$r_hash{lc($key)}{'storage'} = $args[1];
+				$$r_hash{lc($key)}{'sell'} = $args[2];
+			}
 		}
 	}
 	close FILE;
@@ -10015,22 +10049,21 @@ sub parseItemsControl {
 sub parseNPCs {
 	my $file = shift;
 	my $r_hash = shift;
-	my $i, $string;
 	undef %{$r_hash};
-	my $key,$value;
-	open FILE, $file;
+	my ($key,$value,$string);
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+/ /g;
 		s/\s+$//g;
-		@args = split /\s/, $_;
+		my @args = split /\s/, $_;
 		if (@args > 4) {
 			$$r_hash{$args[0]}{'map'} = $args[1];
 			$$r_hash{$args[0]}{'pos'}{'x'} = $args[2];
 			$$r_hash{$args[0]}{'pos'}{'y'} = $args[3];
 			$string = $args[4];
-			for ($i = 5; $i < @args; $i++) {
+			for (my $i = 5; $i < @args; $i++) {
 				$string .= " $args[$i]";
 			}
 			$$r_hash{$args[0]}{'name'} = $string;
@@ -10043,18 +10076,22 @@ sub parseMonControl {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,@args;
-	open FILE, $file;
+	my ($key,@args,$args);;
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $args) = $_ =~ /([\s\S]+?) (\d+[\s\S]*)/;
-		@args = split / /,$args;
-		if ($key ne "") {
-			$$r_hash{lc($key)}{'attack_auto'} = $args[0];
-			$$r_hash{lc($key)}{'teleport_auto'} = $args[1];
-			$$r_hash{lc($key)}{'teleport_search'} = $args[2];
+		if ($_ =~ /([\s\S]+?) (\d+[\s\S]*)/)
+		{
+			$key = $1;
+			$args = $2;
+			@args = split / /,$args;
+			if ($key ne "") {
+				$$r_hash{lc($key)}{'attack_auto'} = $args[0];
+				$$r_hash{lc($key)}{'teleport_auto'} = $args[1];
+				$$r_hash{lc($key)}{'teleport_search'} = $args[2];
+			}
 		}
 	}
 	close FILE;
@@ -10064,11 +10101,11 @@ sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,$value;
+	my ($key,$value,@args);
 	my %IDs;
 	my $i;
 	my $j = 0;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -10084,7 +10121,7 @@ sub parsePortals {
 			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'map'} = $args[3];
 			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'pos'}{'x'} = $args[4];
 			$$r_hash{"$args[0] $args[1] $args[2]"}{'dest'}{'pos'}{'y'} = $args[5];
-			if ($args[6] ne "") {
+			if ($args[6] && $args[6] ne "") {
 				$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'ID'} = $args[6];
 				for ($i = 7; $i < @args; $i++) {
 					$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'steps'}[@{$$r_hash{"$args[0] $args[1] $args[2]"}{'npc'}{'steps'}}] = $args[$i];
@@ -10104,18 +10141,18 @@ sub parsePortalsLOS {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my $key;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+/ /g;
 		s/\s+$//g;
-		@args = split /\s/, $_;
+		my @args = split /\s/, $_;
 		if (@args) {
-			$map = shift @args;
-			$x = shift @args;
-			$y = shift @args;
-			for ($i = 0; $i < @args; $i += 4) {
+			my $map = shift @args;
+			my $x = shift @args;
+			my $y = shift @args;
+			for (my $i = 0; $i < @args; $i += 4) {
 				$$r_hash{"$map $x $y"}{"$args[$i] $args[$i+1] $args[$i+2]"} = $args[$i+3];
 			}
 		}
@@ -10160,20 +10197,32 @@ sub parseReload {
 sub parseResponses {
 	my $file = shift;
 	my $r_hash = shift;
+	print Dumper %{$r_hash};
 	undef %{$r_hash};
-	my $key,$value;
-	my $i;
-	open FILE, $file;
+	my ($key,$value);
+	my $i=0;
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
-		next if (/^#/);
-		s/[\r\n]//g;
-		($key, $value) = $_ =~ /([\s\S]*?) ([\s\S]*)$/;
-		if ($key ne "" && $value ne "") {
-			$i = 0;
-			while ($$r_hash{"$key\_$i"} ne "") {
-				$i++;
+		next if $_ =~ (/^#/);
+		$_ =~ s/[\r\n]//g;
+		if($_ =~ /([\s\S]*?) ([\s\S]*)$/)
+		{
+			my $prevkey = $key;
+			$key = $1;
+			$value =$2;
+			if ($key ne "" && $value ne "") 
+			{
+				if ($prevkey)
+				{
+					if ($key eq $prevkey )
+					{
+						$i++;
+					} else {
+						$i=0;	
+					}
+				}
+				$$r_hash{"$key\_$i"} = $value;
 			}
-			$$r_hash{"$key\_$i"} = $value;
 		}
 	}
 	close FILE;
@@ -10184,11 +10233,12 @@ sub parseROLUT {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my @stuff;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		s/\r//g;
 		next if /^\/\//;
 		@stuff = split /#/, $_;
+		next if (scalar(@stuff)<2);
 		$stuff[1] =~ s/_/ /g;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
 			$$r_hash{$stuff[0]} = $stuff[1];
@@ -10203,11 +10253,11 @@ sub parseRODescLUT {
 	undef %{$r_hash};
 	my $ID;
 	my $IDdesc;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
-		s/\r//g;
+		$_ =~ s/\r//g;
 		if (/^#/) {
-			$$r_hash{$ID} = $IDdesc;
+			$$r_hash{$ID} = $IDdesc if ($IDdesc);
 			undef $ID;
 			undef $IDdesc;
 		} elsif (!$ID) {
@@ -10226,7 +10276,7 @@ sub parseROSlotsLUT {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my $ID;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		if (!$ID) {
 			($ID) = /(\d+)#/;
@@ -10244,7 +10294,7 @@ sub parseSkillsLUT {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -10264,7 +10314,7 @@ sub parseSkillsIDLUT {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -10283,7 +10333,7 @@ sub parseSkillsReverseLUT_lc {
 	undef %{$r_hash};
 	my @stuff;
 	my $i;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	$i = 1;
 	foreach (<FILE>) {
 		@stuff = split /#/, $_;
@@ -10303,7 +10353,7 @@ sub parseSkillsSPLUT {
 	my $ID;
 	my $i;
 	$i = 1;
-	open FILE, $file;
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		if (/^\@/) {
 			undef $ID;
@@ -10320,14 +10370,19 @@ sub parseSkillsSPLUT {
 sub parseTimeouts {
 	my $file = shift;
 	my $r_hash = shift;
-	my $key,$value;
-	open FILE, $file;
+	my ($key,$value);
+	open FILE, $file or die("unable to open $file\n");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
-		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
-		if ($key ne "" && $value ne "") {
-			$$r_hash{$key}{'timeout'} = $value;
+		if ($_ =~ /([\s\S]*) ([\s\S]*?)$/)
+		{
+			$key = $1;
+			$value = $1;
+			
+			if ($key ne "" && $value ne "") {
+				$$r_hash{$key}{'timeout'} = $value;
+			}
 		}
 	}
 	close FILE;
@@ -10907,10 +10962,11 @@ sub vocalString {
                 }
                 $password = substr($password, 0, $letter_length);
                 ($test) = ($password =~ /(..)\z/);
-                last if ($badend{$test} != 1);
+                last if (!$badend{$test});
         }
         $$r_string = $password;
-        return $$r_string;
+         return $$r_string;
+        
 }
 
 #Solos Start
