@@ -5143,6 +5143,7 @@ sub parseMsg {
 		message("Waiting for map to load...\n", "connection") if ($config{'XKore'});
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
+		ai_clientSuspend(0, 10) if ($config{'XKore'});
 		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
 
 	} elsif ($switch eq "0075") {
@@ -5703,6 +5704,7 @@ sub parseMsg {
 		message "Map Change: $map_name ($chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'})\n", "connection";
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		ai_clientSuspend(0, 10) if ($config{'XKore'});
+		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
 
 	} elsif ($switch eq "0092") {
 		$conState = 4;
