@@ -32,7 +32,8 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	formatNumber getFormattedDate getHex getTickCount swrite promptAndExit timeConvert timeOut);
+	formatNumber getFormattedDate getHex getTickCount swrite promptAndExit timeConvert timeOut
+	vocalString);
 
 
 #######################################
@@ -446,7 +447,6 @@ sub timeConvert {
 	return $gathered;
 }
 
-
 ##
 # timeOut(r_time, [compare_time])
 # r_time: a time value, or a hash.
@@ -485,6 +485,42 @@ sub timeOut {
 	} else {
 		return (time - $$r_time{'time'} > $$r_time{'timeout'});
 	}
+}
+
+##
+# vocalString(letter_length, [r_string])
+# letter_length: the requested length of the result.
+# r_string: a reference to a scalar. If given, the result will be stored here.
+# Returns: the resulting string.
+#
+# Creates a random string of $letter_length long. The resulting string is pronouncable.
+# This function can be used to generate a random password.
+#
+# Example:
+# for (my $i = 0; $i < 5; $i++) {
+#     printf("%s\n", vocalString(10));
+# }
+sub vocalString {
+	my $letter_length = shift;
+	return if ($letter_length <= 0);
+	my $r_string = shift;
+	my $test;
+	my $i;
+	my $password;
+	my @cons = ("b", "c", "d", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "y", "z", "tr", "cl", "cr", "br", "fr", "th", "dr", "ch", "st", "sp", "sw", "pr", "sh", "gr", "tw", "wr", "ck");
+	my @vowels = ("a", "e", "i", "o", "u" , "a", "e" ,"i","o","u","a","e","i","o", "ea" , "ou" , "ie" , "ai" , "ee" ,"au", "oo");
+	my %badend = ( "tr" => 1, "cr" => 1, "br" => 1, "fr" => 1, "dr" => 1, "sp" => 1, "sw" => 1, "pr" =>1, "gr" => 1, "tw" => 1, "wr" => 1, "cl" => 1);
+	for (;;) {
+		$password = "";
+		for($i = 0; $i < $letter_length; $i++){
+			$password .= $cons[rand(@cons - 1)] . $vowels[rand(@vowels - 1)];
+		}
+		$password = substr($password, 0, $letter_length);
+		($test) = ($password =~ /(..)\z/);
+		last if ($badend{$test} != 1);
+	}
+	$$r_string = $password if ($r_string);
+	return $password;
 }
 
 
