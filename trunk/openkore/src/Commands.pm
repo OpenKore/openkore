@@ -990,7 +990,7 @@ sub cmdTimeout {
 		error	"Error in function 'timeout' (set a timeout)\n" .
 			"Timeout $arg1 doesn't exist\n";
 	} elsif ($arg2 eq "") {
-		error "Timeout '$arg1' is $timeout{$arg1}{timeout}\n";
+		message "Timeout '$arg1' is $timeout{$arg1}{timeout}\n", "info";
 	} else {
 		setTimeout($arg1, $arg2);
 	}
