@@ -921,16 +921,9 @@ sub cmdUseSkill {
 			error "(X, Y) coordinates not specified.\n";
 			return;
 		}
-	} elsif ($switch eq 'ss') {
+	} elsif ($switch eq 'ss' || ($switch eq 'sp' && !defined($targetNum))) {
 		$targetID = $accountID;
 		$target = $char;
-	} elsif ($switch eq 'sm') {
-		$targetID = $monstersID[$targetNum];
-		if (!$targetID) {
-			error "Monster $targetNum does not exist.\n";
-			return;
-		}
-		$target = $monsters{$targetID};
 	} elsif ($switch eq 'sp') {
 		$targetID = $playersID[$targetNum];
 		if (!$targetID) {
@@ -938,6 +931,13 @@ sub cmdUseSkill {
 			return;
 		}
 		$target = $players{$targetID};
+	} elsif ($switch eq 'sm') {
+		$targetID = $monstersID[$targetNum];
+		if (!$targetID) {
+			error "Monster $targetNum does not exist.\n";
+			return;
+		}
+		$target = $monsters{$targetID};
 	}
 
 	# Resolve target location as necessary
