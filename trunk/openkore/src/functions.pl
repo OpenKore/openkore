@@ -984,12 +984,14 @@ sub parseCommand {
 		# exp report
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq ""){
-			my ($endTime_EXP,$w_sec,$total,$bExpPerHour,$jExpPerHour,$EstB_sec,$EstB_sec,$percentB,$percentJ);
+			my ($endTime_EXP,$w_sec,$total,$bExpPerHour,$jExpPerHour,$EstB_sec,$EstB_sec,$percentB,$percentJ,$zennyMade,$zennyPerHour);
 			$endTime_EXP = time;
 			$w_sec = int($endTime_EXP - $startTime_EXP);
 			if ($w_sec > 0) {
+				$zennyMade = $chars[$config{'char'}]{'zenny'} - $startingZenny;
 				$bExpPerHour = int($totalBaseExp / $w_sec * 3600);
 				$jExpPerHour = int($totalJobExp / $w_sec * 3600);
+				$zennyPerHour = int($zennyMade / $w_sec * 3600);
 				if ($chars[$config{'char'}]{'exp_max'} && $bExpPerHour){
 					$percentB = "(".sprintf("%.2f",$totalBaseExp * 100 / $chars[$config{'char'}]{'exp_max'})."%)";
 					$EstB_sec = int(($chars[$config{'char'}]{'exp_max'} - $chars[$config{'char'}]{'exp'})/($bExpPerHour/3600));
@@ -1006,6 +1008,8 @@ sub parseCommand {
 			"JobExp       : " . formatNumber($totalJobExp) . " $percentJ\n" .
 			"BaseExp/Hour : " . formatNumber($bExpPerHour) . "\n" .
 			"JobExp/Hour  : " . formatNumber($jExpPerHour) . "\n" .
+			"Zenny        : " . formatNumber($zennyMade) . "\n" .
+			"Zenny/Hour   : " . formatNumber($zennyPerHour) . "\n" .
 			"Base Levelup Time Estimation : " . timeConvert($EstB_sec) . "\n" .
 			"Job Levelup Time Estimation  : " . timeConvert($EstJ_sec) . "\n" .
 			"Died : $chars[$config{'char'}]{'deathCount'}\n", "info");
@@ -2194,7 +2198,7 @@ sub parseCommand {
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
 			error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
 				"Inventory Item $arg1 does not exist.\n";
-		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'equipped'} == 0) {
+		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'equipped'} == 0 && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
 			error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
 				"Inventory Item $arg1 is not equipped.\n";
 		} else {
@@ -5502,6 +5506,7 @@ sub parseMsg {
 			}
 		}
 		$firstLoginMap = 1;
+		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
 
 	} elsif ($switch eq "006C") {
