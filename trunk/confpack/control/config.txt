@@ -100,7 +100,7 @@ route_step 15
 # attackSkillSlot_0_minCastTime [number, in seconds]
 # attackSkillSlot_0_hp [range, in %]
 # attackSkillSlot_0_sp [range, in %]
-# attackSkillSlot_0_currentAI [activate the skill only current ai_seq is defined, eg attack, move] 
+# attackSkillSlot_0_onAction [activate the skill only on current AI action, eg attack, move] 
 # attackSkillSlot_0_whenStatusActive [activate the skill only when the listed status/state/ailments/look active] 
 # attackSkillSlot_0_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
 # attackSkillSlot_0_whenFollowing [flag]
@@ -131,7 +131,7 @@ attackSkillSlot_0_maxCastTime 0
 attackSkillSlot_0_minCastTime 0
 attackSkillSlot_0_hp
 attackSkillSlot_0_sp > 10
-attackSkillSlot_0_currentAI 
+attackSkillSlot_0_onAction 
 attackSkillSlot_0_whenStatusActive 
 attackSkillSlot_0_whenStatusInactive
 attackSkillSlot_0_whenFollowing
@@ -178,7 +178,7 @@ teleportAuto_emptyName 1
 # useSelf_skill_0_minCastTime 0
 # useSelf_skill_0_hp < 80 [range]
 # useSelf_skill_0_sp > 0 [range]
-# useSelf_skill_0_currentAI
+# useSelf_skill_0_onAction
 # useSelf_skill_0_whenStatusActive 
 # useSelf_skill_0_whenStatusInactive
 # useSelf_skill_0_whenFollowing [flag]
@@ -202,7 +202,7 @@ useSelf_skill_0_maxCastTime 0
 useSelf_skill_0_minCastTime 0
 useSelf_skill_0_hp
 useSelf_skill_0_sp
-useSelf_skill_0_currentAI
+useSelf_skill_0_onAction
 useSelf_skill_0_whenStatusActive 
 useSelf_skill_0_whenStatusInactive
 useSelf_skill_0_whenFollowing
@@ -225,7 +225,7 @@ useSelf_itemCurePoison 1
 # useSelf_item_0 Meat,Apple,Carrot,Sweet Potato,Banana,Monster's Feed,Red Potion,Orange Potion,Yellow Potion,White Potion
 # useSelf_item_0_hp < 90 [range]
 # useSelf_item_0_sp < 50 [range]
-# useSelf_item_0_currentAI
+# useSelf_item_0_onAction
 # useSelf_item_0_whenStatusActive
 # useSelf_item_0_whenStatusInactive
 # useSelf_item_0_whenFollowing [flag]
@@ -246,7 +246,7 @@ useSelf_itemCurePoison 1
 useSelf_item_0 Meat,Apple,Carrot,Red Potion
 useSelf_item_0_hp <= 50
 useSelf_item_0_sp
-useSelf_item_0_currentAI
+useSelf_item_0_onAction
 useSelf_item_0_whenStatusActive
 useSelf_item_0_whenStatusInactive
 useSelf_item_0_whenFollowing
@@ -268,7 +268,7 @@ useSelf_item_0_inInventory_qty
 # partySkill_0_minCastTime 0
 # partySkill_0_hp [range]
 # partySkill_0_sp > 10 [range]
-# partySkill_0_currentAI
+# partySkill_0_onAction
 # partySkill_0_whenStatusActive
 # partySkill_0_whenStatusInactive
 # partySkill_0_whenFollowing [flag]
@@ -297,7 +297,7 @@ partySkill_0_maxCastTime 0
 partySkill_0_minCastTime 0
 partySkill_0_hp
 partySkill_0_sp
-partySkill_0_currentAI
+partySkill_0_onAction
 partySkill_0_whenStatusActive
 partySkill_0_whenStatusInactive
 partySkill_0_whenFollowing
@@ -413,7 +413,7 @@ autoSwitch_0_useWeapon
 # equipAuto_0_onTeleport 0
 # equipAuto_0_hp [range]
 # equipAuto_0_sp [range]
-# equipAuto_0_currentAI
+# equipAuto_0_onAction
 # equipAuto_0_whenStatusActive
 # equipAuto_0_whenStatusInactive
 # equipAuto_0_whenFollowing [flag]
@@ -438,7 +438,7 @@ equipAuto_0_whileSitting 0
 equipAuto_0_onTeleport 0
 equipAuto_0_hp
 equipAuto_0_sp
-equipAuto_0_currentAI
+equipAuto_0_onAction
 equipAuto_0_whenStatusActive
 equipAuto_0_whenStatusInactive
 equipAuto_0_whenFollowing
