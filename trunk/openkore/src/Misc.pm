@@ -491,7 +491,9 @@ sub objectIsMovingTowardsPlayer {
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
 
 		foreach (@playersID) {
-			next if (!$_ || ($ignore_party_members && $char->{party} && $char->{party}{users}{$_}));
+			next if (!$_ || ($ignore_party_members &&
+			                 ($char->{party} && $char->{party}{users}{$_}) ||
+							 existsInList($config{ksPlayers}, $players{$_}{name})));
 			if (checkMovementDirection($obj->{pos}, \%vec, $players{$_}{pos}, 15)) {
 				return 1;
 			}
@@ -1128,6 +1130,7 @@ sub positionNearPlayer {
 		next unless defined $_;
 		next if $char->{party} && $char->{party}{users} &&
 			$char->{party}{users}{$_};
+		next if existsInList($config{ksPlayers}, $players{$_}{name});
 		return 1 if (distance($r_hash, $players{$_}{pos_to}) <= $dist);
 	}
 	return 0;
