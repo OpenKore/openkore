@@ -321,44 +321,54 @@ DLLEXPORT void WINAPI CalcPath_destroy(DWORD session) {
 
 DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 {
+	/* Attach to ragexe */
 	HANDLE hProcessToAttach = OpenProcess(PROCESS_ALL_ACCESS, FALSE, ProcID);
 	if (!hProcessToAttach)
 		return 0;
+
 	LPVOID pAttachProcessMemory = NULL;
 	DWORD dwBytesWritten = 0;
 	char * dllRemove;
-	dllRemove = (char*)malloc(strlen(dll) + 1);
-	memset((LPVOID)dllRemove, 0, strlen(dll) + 1);
-	pAttachProcessMemory = VirtualAllocEx( 
-		hProcessToAttach,      
-		NULL, 
-		strlen(dll), 
-		MEM_COMMIT,   
-		PAGE_EXECUTE_READWRITE );
-	if (!pAttachProcessMemory)
-		return 0;
 
+	/* Allocate a piece of memory in ragexe. */
+	dllRemove = (char*)calloc(strlen(dll) + 1, 1);
+	pAttachProcessMemory = VirtualAllocEx( 
+		hProcessToAttach,
+		NULL, 
+		strlen(dll) + 1, 
+		MEM_COMMIT,
+		PAGE_EXECUTE_READWRITE );
+	if (!pAttachProcessMemory) {
+		CloseHandle(hProcessToAttach);
+		return 0;
+	}
+
+	/* Write our DLL filename to that allocated piece of memory. */
 	WriteProcessMemory( 
 		hProcessToAttach, 
 		pAttachProcessMemory, 
-		(LPVOID)dll, strlen(dll), 
+		(LPVOID)dll, strlen(dll) + 1,
 		&dwBytesWritten );
 
 	if (!dwBytesWritten)
 		return 0;
 
+
+	/* Create a remote thread in the ragexe.exe process, which
+	   calls LoadLibraryA(our DLL filename) */
 	HANDLE hThread = CreateRemoteThread( hProcessToAttach, NULL, 0, 
 		(LPTHREAD_START_ROUTINE)LoadLibraryA, (LPVOID)pAttachProcessMemory, 0,   
 		NULL);
 	if (!hThread)
 		return 0;
-	
+
 	WaitForSingleObject(hThread, INFINITE);
-	
+
+	/* Free the string we created */
 	WriteProcessMemory( 
 		hProcessToAttach, 
 		pAttachProcessMemory, 
-		(LPVOID)dllRemove, strlen(dll), 
+		(LPVOID)dllRemove, strlen(dll) + 1, 
 		&dwBytesWritten );
 
 	if (!dwBytesWritten)
@@ -366,7 +376,7 @@ DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 	VirtualFreeEx( 
 		hProcessToAttach,      
 		pAttachProcessMemory, 
-		strlen(dll), 
+		strlen(dll) + 1, 
 		MEM_RELEASE);
 
 	if(hThread) CloseHandle(hThread);
