@@ -91,6 +91,7 @@ Bug fixes:
 - When following players by name, typing 'follow A' then 'follow B' would
   cause you to still be following A instead of B.
 - Fixed a crash when cart inventory is not available (such as during login).
+- Fixed chat room creation with non-default usercount, private-flag and passwd
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

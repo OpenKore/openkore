@@ -498,8 +498,8 @@ sub parseCommand {
 	} elsif ($switch eq "chat") {
 		my ($replace, $title) = $input =~ /(^[\s\S]*? \"([\s\S]*?)\" ?)/;
 		my $qm = quotemeta $replace;
-		my $input =~ s/$qm//;
-		my @arg = split / /, $input;
+		my $args = $input =~ s/$qm//;
+		my @arg = split / /, $args;
 		if ($title eq "") {
 			error	"Syntax Error in function 'chat' (Create Chat Room)\n" .
 				"Usage: chat \"<title>\" [<limit #> <public flag> <password>]\n";
