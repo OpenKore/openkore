@@ -1165,7 +1165,7 @@ sub stripLanguageCode {
 				warning "--------------------------\n" .
 					"This server seems to use language codes in chat messages. Kore will now\n" .
 					"use language codes when sending chat messages.\n\n" .
-					"Right now (December 2004), only oRO and euRO use language codes, why all the other\n" .
+					"Right now (December 2004), only oRO and euRO use language codes, while all the other\n" .
 					"servers don't. If you are sure that your server does not use language codes, type:\n" .
 					"  conf chatLangCode 0\n" .
 					"--------------------------\n";
