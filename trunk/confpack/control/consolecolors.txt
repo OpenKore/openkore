@@ -25,12 +25,13 @@ useItem blue
 
 skill green 
 
-system white
+system yellow
 pm yellow
-guildchat blue/yellow
-list white 
-info white 
-equip grey/cyan
+guildchat darkgreen
+selfchat green
+list white
+info white
+equip grey
 
 [error]
 default red
