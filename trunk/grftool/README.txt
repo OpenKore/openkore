@@ -40,7 +40,7 @@ You will also need these components:
 - Virtual TreeView:
   http://www.soft-gems.net/VirtualTreeview/VT.php
 - Unicode controls:
-  http://tnt.ccci.org/delphi_unicode_controls/
+  http://www.tntware.com/delphicontrols/unicode/
 
 
 Compilation

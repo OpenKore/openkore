@@ -734,7 +734,8 @@ object Form1: TForm1
     Width = 438
     Height = 297
     Align = alClient
-    Colors.SelectionRectangleBlendColor = 16767423
+    Colors.HotColor = 11993175
+    Colors.SelectionRectangleBlendColor = 16087391
     Ctl3D = True
     DrawSelectionMode = smBlendedRectangle
     Header.AutoSizeIndex = 0
