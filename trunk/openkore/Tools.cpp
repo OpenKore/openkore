@@ -477,6 +477,16 @@ DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 }
 
 
+static const char *
+basename (const char *filename)
+{
+	const char *base = strrchr (filename, '\\');
+	if (base)
+		return base + 1;
+	else
+		return filename;
+}
+
 DLLEXPORT DWORD WINAPI GetProcByName (char * name)
 {
 	HANDLE toolhelp;
@@ -485,7 +495,7 @@ DLLEXPORT DWORD WINAPI GetProcByName (char * name)
 	toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
 	if (Process32First(toolhelp,&pe)) {
 		do {
-			if (!stricmp(name, pe.szExeFile)) {
+			if (!stricmp(name, basename (pe.szExeFile))) {
 				CloseHandle(toolhelp);
 				return pe.th32ProcessID;
 			}
