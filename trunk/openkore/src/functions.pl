@@ -2700,7 +2700,7 @@ sub AI {
 					last if ($sellAmount == 8);
 				}
 			}
-			sendSellBulk(\$remote_socket, \@sellItems);
+			if ($sellAmount > 0) sendSellBulk(\$remote_socket, \@sellItems);
 		}
 	}
 
