@@ -2869,6 +2869,7 @@ sub AI {
 	} elsif ($ai_seq[0] eq "storageAuto" && timeOut(\%{$timeout{'ai_storageAuto'}})) {
 		if (!$config{'storageAuto'} || !%{$npcs_lut{$config{'storageAuto_npc'}}}) {
 			$ai_seq_args[0]{'done'} = 1;
+			print "autostorage aborted: no information known about NPC $config{'storageAuto_npc'}\n";
 			last AUTOSTORAGE;
 		}
 
@@ -7322,8 +7323,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 		}
 		#X End
-
-	} elsif ($switch eq "011C") {
 
 	} elsif ($switch eq "011E") {
 		my $fail = unpack("C1", substr($msg, 2, 1));
