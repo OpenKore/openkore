@@ -201,6 +201,7 @@ Bug fixes:
 - Warn when user specified a useSelf_skill with an invalid name
   instead of trying to cast an empty skill ID
 - "Monster x changed to y" message no longer displays blank y
+- Check for numeric argument in Commands::cmdUseSkill.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
