@@ -23,7 +23,7 @@ package Interface::Wx::MapViewer;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_PAINT);
+use Wx::Event qw(EVT_PAINT EVT_LEFT_DOWN EVT_MOTION);
 use File::Spec;
 use base qw(Wx::Panel);
 
@@ -33,11 +33,65 @@ sub new {
 	my $class = shift;
 	my $self = $class->SUPER::new(@_);
 	$self->SetBackgroundColour(new Wx::Colour(0, 0, 0));
-	EVT_PAINT($self, sub { $self->onPaint(); });
+	EVT_PAINT($self, \&_onPaint);
+	EVT_LEFT_DOWN($self, \&_onClick);
+	EVT_MOTION($self, \&_onMotion);
 	return $self;
 }
 
-sub xpmmake {
+sub onClick {
+	my $self = shift;
+	my $callback = shift;
+	my $user_data = shift;
+	$self->{clickCb} = $callback;
+	$self->{clickData} = $user_data;
+}
+
+sub onMouseMove {
+	my $self = shift;
+	my $callback = shift;
+	my $user_data = shift;
+	$self->{mouseMoveCb} = $callback;
+	$self->{mouseMoveData} = $user_data;
+}
+
+sub onMapChange {
+	my $self = shift;
+	my $callback = shift;
+	my $user_data = shift;
+	$self->{mapChangeCb} = $callback;
+	$self->{mapChangeData} = $user_data;
+}
+
+sub _onClick {
+	my $self = shift;
+	my $event = shift;
+	if ($self->{clickCb} && $self->{field}{width} && $self->{field}{height}) {
+		my ($x, $y, $xscale, $yscale);
+		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth();
+		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight();
+		$x = $event->GetX * $xscale;
+		$y = $self->{field}{height} - ($event->GetY * $yscale);
+
+		$self->{clickCb}->($self->{clickData}, int $x, int $y);
+	}
+}
+
+sub _onMotion {
+	my $self = shift;
+	my $event = shift;
+	if ($self->{mouseMoveCb} && $self->{field}{width} && $self->{field}{height}) {
+		my ($x, $y, $xscale, $yscale);
+		$xscale = $self->{field}{width} / $self->{bitmap}->GetWidth();
+		$yscale = $self->{field}{height} / $self->{bitmap}->GetHeight();
+		$x = $event->GetX * $xscale;
+		$y = $self->{field}{height} - ($event->GetY * $yscale);
+
+		$self->{mouseMoveCb}->($self->{mouseMoveData}, int $x, int $y);
+	}
+}
+
+sub _xpmmake {
 	my $field = shift;
 	my $data = "/* XPM */\n" .
 		"static char * my_xpm[] = {\n" .
@@ -87,13 +141,18 @@ sub set {
 			$addedHandlers{png} = 1;
 			$file = "map/$map.png";
 			$mime = 'image/png';
+		} elsif (-f "map/$map.bmp") {
+			Wx::Image::AddHandler(new Wx::BMPHandler()) unless $addedHandlers{bmp};
+			$addedHandlers{bmp} = 1;
+			$file = "map/$map.bmp";
+			$mime = 'image/x-bmp';
 		} else {
 			Wx::Image::AddHandler(new Wx::XPMHandler()) unless $addedHandlers{xpm};
 			$addedHandlers{xpm} = 1;
 			$file = File::Spec->tmpdir() . "/map.xpm";
 			if (open(F, ">", $file)) {
 				binmode F;
-				print F xpmmake($field);
+				print F _xpmmake($field);
 				close F;
 				$mime = 'image/xpm';
 				$delete = 1;
@@ -114,6 +173,8 @@ sub set {
 		return unless $bitmap->Ok();
 		$self->{bitmap} = $bitmap;
 		$self->SetSizeHints($bitmap->GetWidth(), $bitmap->GetHeight());
+
+		$self->{mapChangeCb}->($self->{mapChangeData}) if ($self->{mapChangeCb});
 		$self->Refresh();
 
 	} elsif ($x ne $self->{field}{x} || $y ne $self->{field}{y}) {
@@ -124,7 +185,7 @@ sub set {
 	}
 }
 
-sub onPaint {
+sub _onPaint {
 	my $self = shift;
 	my $dc = new Wx::PaintDC($self);
 	return unless ($self->{bitmap} && $self->{selfDot});
