@@ -2063,17 +2063,15 @@ sub AI {
 	# Break time: automatically disconnect at certain times of the day
 
 	if (timeOut($AI::Timeouts::autoBreakTime, 1)) {
-		my @datetimeyear = split / /, localtime;
-		my $i = 0;
-		while (exists $config{"autoBreakTime_$i"}) {
+		my @datetimeyear = split / /, getFormattedDate(int(time));
+		my $mytime = $datetimeyear[2];
+		my $hormin = substr($mytime, 0, 5);		
+		for (my $i = 0; exists $config{"autoBreakTime_$i"}; $i++) {
 			if (!$config{"autoBreakTime_$i"}) {
-				$i++;
 				next;
 			}
 
 			if  ( (lc($datetimeyear[0]) eq lc($config{"autoBreakTime_$i"})) || (lc($config{"autoBreakTime_$i"}) eq "all") ) {
-				my $mytime = $datetimeyear[3];
-				my $hormin = substr($mytime, 0, 5);
 				if ($config{"autoBreakTime_${i}_startTime"} eq $hormin) {
 					my ($hr1, $min1) = split /:/, $config{"autoBreakTime_${i}_startTime"};
 					my ($hr2, $min2) = split /:/, $config{"autoBreakTime_${i}_stopTime"};
@@ -2101,7 +2099,6 @@ sub AI {
 					last;
 				}
 			}
-			$i++;
 		}
 		$AI::Timeouts::autoBreakTime = time;
 	}
