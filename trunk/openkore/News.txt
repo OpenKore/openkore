@@ -86,6 +86,7 @@ Internal:
   player with an in-game entity (e.g. players, monsters, items).
 - Better support for advanced 2-2 classes.
 - Guild member job ID format is now the same as char job ID format.
+- IPC protocol's numbers are now in big endian format.
 
 
 Credits:

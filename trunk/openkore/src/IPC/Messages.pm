@@ -63,7 +63,7 @@
 #         char value[value_length];
 #     } parameters[parameter_count];
 # };</pre>
-# (All numbers are 16-bit little-endian.)
+# (All numbers are 16-bit big-endian.)
 #
 # <h4>Header</h4>
 # `l
@@ -106,25 +106,25 @@ sub decode {
 	return undef if (!defined $data || $dlen < 4);
 
 	# Header with ID
-	$hlen = unpack("v", substr($data, 0, 2));
+	$hlen = unpack("n", substr($data, 0, 2));
 	return undef if ($dlen < $hlen + 4);
 	$ID = substr($data, 2, $hlen);
 
 	# Number of arguments
-	$alen = unpack("v", substr($data, 2 + $hlen, 2));
+	$alen = unpack("n", substr($data, 2 + $hlen, 2));
 
 	my $offset = 4 + $hlen;
 	for (my $i = 0; $i < $alen; $i++) {
 		my ($key, $val);
 
 		# Key
-		$len = unpack("v", substr($data, $offset, 2));
+		$len = unpack("n", substr($data, $offset, 2));
 		return undef if ($dlen < $offset + 2 + $len);
 		$key = substr($data, $offset + 2, $len);
 		$offset += $len + 2;
 
 		# Value
-		$len = unpack("v", substr($data, $offset, 2));
+		$len = unpack("n", substr($data, $offset, 2));
 		$val = substr($data, $offset + 2, $len);
 		return undef if ($dlen < $offset + 2 + $len);
 		$offset += $len + 2;
@@ -146,17 +146,17 @@ sub encode {
 	my @keys;
 
 	# Header: ID length + ID
-	$msg = pack("v", length $ID) . $ID;
+	$msg = pack("n", length $ID) . $ID;
 
 	# Number of arguments
 	@keys = keys %{$hash};
-	$msg .= pack("v", scalar @keys);
+	$msg .= pack("n", scalar @keys);
 
 	foreach (@keys) {
 		# Key length + data
-		$msg .= pack("v", length $_) . $_;
+		$msg .= pack("n", length $_) . $_;
 		# Value length + data
-		$msg .= pack("v", length $hash->{$_}) . $hash->{$_};
+		$msg .= pack("n", length $hash->{$_}) . $hash->{$_};
 	}
 	return $msg;
 }
