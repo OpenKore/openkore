@@ -480,7 +480,7 @@ sub updateObjects {
 	erase $self->{winObjects};
 
 	# Players
-	for (my $i = 0; $i < @playersID && $line < $self->{winObjectsHeight} - 1; $i++) {
+	for (my $i = 0; $i < @playersID && $line < $self->{winObjectsHeight}; $i++) {
 		my $id = $playersID[$i];
 		next if ($id eq "");
 		my $name = $players{$id}{name};
@@ -489,7 +489,7 @@ sub updateObjects {
 	}
 
 	# Monsters
-	for (my $i = 0; $i < @monstersID && $line < $self->{winObjectsHeight} - 1; $i++) {
+	for (my $i = 0; $i < @monstersID && $line < $self->{winObjectsHeight}; $i++) {
 		my $id = $monstersID[$i];
 		next if ($id eq "");
 		my $name = $monsters{$id}{name};
@@ -498,7 +498,7 @@ sub updateObjects {
 	}
 
 	# Items
-	for (my $i = 0; $i < @itemsID && $line < $self->{winObjectsHeight} - 1; $i++) {
+	for (my $i = 0; $i < @itemsID && $line < $self->{winObjectsHeight}; $i++) {
 		my $id = $itemsID[$i];
 		next if ($id eq "");
 		my $name = $items{$id}{name};
@@ -507,7 +507,7 @@ sub updateObjects {
 	}
 
 	# NPCs
-	for (my $i = 0; $i < @npcsID && $line < $self->{winObjectsHeight} - 1; $i++) {
+	for (my $i = 0; $i < @npcsID && $line < $self->{winObjectsHeight}; $i++) {
 		my $id = $npcsID[$i];
 		next if ($id eq "");
 		my $name = $npcs{$id}{name};
