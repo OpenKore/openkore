@@ -4895,7 +4895,8 @@ sub AI {
 		AI::dequeue;
 
 	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
-		message "Failed to take $items{AI::args->{ID}}{name} ($items{AI::args->{ID}}{binID})\n",,1;
+		my $item = $items{AI::args->{ID}};
+		message "Failed to take $item->{name} ($item->{binID}) from ($char->{pos}{x}, $char->{pos}{y}) to ($item->{pos}{x}, $item->{pos}{y})\n";
 		$items{AI::args->{ID}}{take_failed}++;
 		AI::dequeue;
 		
@@ -10115,19 +10116,19 @@ sub updateDamageTables {
 			if ($AI) {
 				my $teleport = 0;
 				if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'} == 2){
-					message "Teleporting due to attack from $monsters{$ID1}{'name'}\n";
+					message "Teleporting due to attack from $monsters{$ID1}{'name'}\n", "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
-					message "Next $damage dmg could kill you. Teleporting...\n";
+					message "Next $damage dmg could kill you. Teleporting...\n", "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination")) {
-					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
+					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n", "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $damage >= $config{'teleportAuto_maxDmgInLock'} && !whenStatusActive("Hallucination")) {
-					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmgInLock'} dmg in lockMap. Teleporting...\n";
+					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmgInLock'} dmg in lockMap. Teleporting...\n", "teleport";
 					$teleport = 1;
 				} elsif (AI::inQueue("sitAuto") && $config{'teleportAuto_attackedWhenSitting'} && $damage > 0) {
-					message "$monsters{$ID1}{'name'} attacks you while you are sitting. Teleporting...\n";
+					message "$monsters{$ID1}{'name'} attacks you while you are sitting. Teleporting...\n", "teleport";
 					$teleport = 1;
 				}
 				useTeleport(1) if ($teleport);
