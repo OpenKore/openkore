@@ -96,6 +96,7 @@ route_step 15
 # attackSkillSlot_0_sp [range, in %]
 # attackSkillSlot_0_whenStatusActive [activate the skill only when the listed status/state/ailments/look active] 
 # attackSkillSlot_0_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
+# attackSkillSlot_0_whenFollowing [flag]
 # attackSkillSlot_0_spirit [range, number of sprit ball]
 # attackSkillSlot_0_aggressives [range, number of monster attacking]
 # attackSkillSlot_0_stopWhenHit [flag]
@@ -123,6 +124,7 @@ attackSkillSlot_0_hp
 attackSkillSlot_0_sp > 10
 attackSkillSlot_0_whenStatusActive 
 attackSkillSlot_0_whenStatusInactive
+attackSkillSlot_0_whenFollowing
 attackSkillSlot_0_spirit
 attackSkillSlot_0_aggressives
 attackSkillSlot_0_stopWhenHit 0
@@ -166,6 +168,7 @@ teleportAuto_emptyName 1
 # useSelf_skill_0_sp > 0 [range]
 # useSelf_skill_0_whenStatusActive 
 # useSelf_skill_0_whenStatusInactive
+# useSelf_skill_0_whenFollowing [flag]
 # useSelf_skill_0_spirit [range]
 # useSelf_skill_0_aggressives [range]
 # useSelf_skill_0_stopWhenHit 0
@@ -188,6 +191,7 @@ useSelf_skill_0_hp
 useSelf_skill_0_sp
 useSelf_skill_0_whenStatusActive 
 useSelf_skill_0_whenStatusInactive
+useSelf_skill_0_whenFollowing
 useSelf_skill_0_spirit
 useSelf_skill_0_aggressives
 useSelf_skill_0_stopWhenHit 0
@@ -207,6 +211,7 @@ useSelf_itemCurePoison 1
 # useSelf_item_0_sp < 50 [range]
 # useSelf_item_0_whenStatusActive
 # useSelf_item_0_whenStatusInactive
+# useSelf_item_0_whenFollowing [flag]
 # useSelf_item_0_spirit [range]
 # useSelf_item_0_aggressives [range]
 # useSelf_item_0_stopWhenHit 0
@@ -226,6 +231,7 @@ useSelf_item_0_hp
 useSelf_item_0_sp
 useSelf_item_0_whenStatusActive
 useSelf_item_0_whenStatusInactive
+useSelf_item_0_whenFollowing
 useSelf_item_0_spirit
 useSelf_item_0_aggressives
 useSelf_item_0_stopWhenHit 0
@@ -244,6 +250,7 @@ useSelf_item_0_disabled 0
 # partySkill_0_sp > 10 [range]
 # partySkill_0_whenStatusActive
 # partySkill_0_whenStatusInactive
+# partySkill_0_whenFollowing [flag]
 # partySkill_0_spirit [range]
 # partySkill_0_aggressives [range]
 # partySkill_0_stopWhenHit 0
@@ -271,6 +278,7 @@ partySkill_0_hp
 partySkill_0_sp
 partySkill_0_whenStatusActive
 partySkill_0_whenStatusInactive
+partySkill_0_whenFollowing
 partySkill_0_spirit
 partySkill_0_aggressives
 partySkill_0_stopWhenHit 0
@@ -382,6 +390,7 @@ autoSwitch_0_useWeapon
 # equipAuto_0_sp [range]
 # equipAuto_0_whenStatusActive
 # equipAuto_0_whenStatusInactive
+# equipAuto_0_whenFollowing [flag]
 # equipAuto_0_spirit [range]
 # equipAuto_0_aggressives [range]
 # equipAuto_0_stopWhenHit 0
@@ -404,6 +413,7 @@ equipAuto_0_hp
 equipAuto_0_sp
 equipAuto_0_whenStatusActive
 equipAuto_0_whenStatusInactive
+equipAuto_0_whenFollowing
 equipAuto_0_spirit
 equipAuto_0_aggressives
 equipAuto_0_stopWhenHit 0
