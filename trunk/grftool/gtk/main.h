@@ -5,6 +5,7 @@
 #include <glade/glade.h>
 #include "grf.h"
 #include "window.h"
+#include "utils.h"
 
 
 /* The currently opened GRF file */
@@ -47,7 +48,7 @@ extern GStaticMutex extractProgressM;
 
 typedef struct {
 	Grf *grf;
-	string filename;
+	String filename;
 } Document;
 
 extern Document document;
