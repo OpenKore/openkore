@@ -20,6 +20,7 @@ use Config;
 use Globals;
 use Log qw(message warning error debug);
 use FileParsers;
+use Interface;
 use Plugins;
 
 
@@ -320,14 +321,18 @@ sub mainLoop {
 sub parseInput {
 	my $input = shift;
 	my $printType;
+	my ($hook, $msg);
 	$printType = shift if ($config{'XKore'});
 
 	debug("Input: $input\n", "parseInput", 2);
 
 	if ($printType) {
-		open(BUFFER, '>buffer');
-		select(BUFFER);
-		BUFFER->autoflush(0);
+		my $hookOutput = sub {
+			my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
+			$msg .= $message;
+		};
+		$hook = Log::addHook($hookOutput);
+		$interface->writeOutput("console", "$input\n");
 	}
 
 	# Check if in special state
@@ -347,20 +352,8 @@ sub parseInput {
 	}
 
 	if ($printType) {
-		close(BUFFER);
-		open(BUFREAD, '<buffer');
-
-		my $msg = '';
-		while (<BUFREAD>) {
-			$msg .= $_;
-		}
-		close(BUFREAD);
-
-		select(STDOUT);
-		print "$input\n";
-		print $msg;
-
-		if ($config{'XKore'}) {
+		Log::delHook($hook);
+		if ($config{'XKore'} && defined $msg) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
 			sendMessage(\$remote_socket, "k", $msg);

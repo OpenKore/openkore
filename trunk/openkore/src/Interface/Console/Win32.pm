@@ -286,20 +286,20 @@ sub writeOutput {
 sub setColor {
 	return if (!$consoleColors{''}{'useColors'});
 	my ($type, $domain) = @_;
-	my $color = $consoleColors{$type}{$domain};
-	$color = $consoleColors{$type}{'default'} if (!defined $color);
+	my $color;
+	$color = $consoleColors{$type}{$domain} if (defined $type && defined $domain && defined $consoleColors{$type});
+	$color = $consoleColors{$type}{'default'} if (!defined $color && defined $type);
 	color($color) if (defined $color);
 }
 
 sub color {
-	return if ($config{'XKore'}); # Don't print colors in X-Kore mode; this is a temporary hack!
 	my $color = shift;
-	
+	my ($bgcolor, $fgcode, $bgcode);
 	$color =~ s/\/(.*)//;
-	my $bgcolor = $1 || "default";
-	
-	my $fgcode = $fgcolors{$color} || $fgcolors{'default'};
-	my $bgcode = $bgcolors{$bgcolor} || $bgcolors{'default'};
+	$bgcolor = $1 || "default";
+
+	$fgcode = $fgcolors{$color} || $fgcolors{'default'};
+	$bgcode = $bgcolors{$bgcolor} || $bgcolors{'default'};
 	$out_con->Attr($fgcode | $bgcode);
 }
 
