@@ -10618,7 +10618,7 @@ sub parseDataFile2 {
 		}
 	}
 	close FILE;
-	${\$Log::messageVerbosity} = $config{'verbose'} if ($file eq $config_file);
+	$Log::messageVerbosity = $config{'verbose'} if ($file eq $config_file);
 }
 
 sub parseItemsControl {
