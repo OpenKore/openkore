@@ -15,7 +15,7 @@ PROTOTYPES: ENABLE
 
 
 unsigned long
-WinUtils_GetProcByName(name)
+GetProcByName(name)
 		char *name
 	CODE:
 		RETVAL = (unsigned long) GetProcByName(name);
@@ -23,7 +23,7 @@ WinUtils_GetProcByName(name)
 		RETVAL
 
 int
-WinUtils_InjectDLL(ProcID, dll)
+InjectDLL(ProcID, dll)
 		unsigned long ProcID
 		char *dll
 	CODE:
@@ -32,7 +32,7 @@ WinUtils_InjectDLL(ProcID, dll)
 		RETVAL
 
 int
-WinUtils_ShellExecute(handle, operation, file)
+ShellExecute(handle, operation, file)
 		unsigned int handle
 		SV *operation
 		char *file
@@ -46,7 +46,7 @@ WinUtils_ShellExecute(handle, operation, file)
 		RETVAL
 
 void
-WinUtils_listProcesses()
+listProcesses()
 	INIT:
 		HANDLE toolhelp;
 		PROCESSENTRY32 pe;
@@ -68,3 +68,17 @@ WinUtils_listProcesses()
 			} while (Process32Next(toolhelp,&pe));
 		}
 		CloseHandle(toolhelp);
+
+void
+playSound(file)
+	char *file
+CODE:
+	sndPlaySound(NULL, SND_ASYNC);
+	sndPlaySound(file, SND_ASYNC | SND_NODEFAULT);
+
+void
+FlashWindow(handle)
+	IV handle
+CODE:
+	if (GetActiveWindow() != (HWND) handle)
+		FlashWindow((HWND) handle, TRUE);
