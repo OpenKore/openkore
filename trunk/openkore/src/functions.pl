@@ -4030,6 +4030,7 @@ sub AI {
 				} else {
 					sendSkillUse(\$remote_socket, $skillID, $args->{lv}, $args->{target});
 				}
+				undef $char->{permitSkill};
 				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
 
 				delete $char->{cast_cancelled};
@@ -6385,6 +6386,7 @@ sub parseMsg {
 		}
 		undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
 		$char->{spirits} = 0;
+		undef $char->{permitSkill};
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -8410,9 +8412,13 @@ sub parseMsg {
 		my $skillName = unpack("A*", substr($msg, 14, 24));
 
 		message "Permitted to use $skillsID_lut{$skillID} ($skillID), level $skillLv\n";
+		my $skill = Skills->new(id => $skillID);
 
 		unless ($config{noAutoSkill}) {
 			sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
+			undef $char->{permitSkill};
+		} else {
+			$char->{permitSkill} = $skill;
 		}
 
 		Plugins::callHook('item_skill', {
@@ -10391,6 +10397,7 @@ sub useTeleport {
 		    ($config{teleportAuto_useSP} == 2 && binSize(\@playersID))) {
 			# Send skill use packet to appear legitimate
 			sendSkillUse(\$remote_socket, $skill->id, $level, $accountID);
+			undef $char->{permitSkill};
 		}
 		if ($level == 1) {
 			sendTeleport(\$remote_socket, "Random");
@@ -10737,6 +10744,16 @@ sub checkSelfCondition {
 	}
 	if ($config{$prefix."_whenNotGround"}) {
 		return 0 if whenGroundStatus($char, $config{$prefix."_whenNotGround"});
+	}
+
+	if ($config{$prefix."_whenPermitSkill"}) {
+		return 0 unless $char->{permitSkill} &&
+			$char->{permitSkill}->name eq $config{$prefix."_whenPermitSkill"};
+	}
+
+	if ($config{$prefix."_whenNotPermitSkill"}) {
+		return 0 if $char->{permitSkill} &&
+			$char->{permitSkill}->name eq $config{$prefix."_whenNotPermitSkill"};
 	}
 
 	return 1;

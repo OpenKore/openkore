@@ -7,17 +7,20 @@ Bug fixes:
 - Fix all kinds of troubles regarding sitting and standing.
 - Set maxDistance = distance (instead of defaulting to 30) in attackSkillSlot.
 - The 'conf' chat command now works.
-
-New features:
-- Mask password input display '*' instead of your real password (Only on linux
-  console)
 - partyAggressives now counts monsters your party attacked
 - Fixed some cases of ksPlayers not working
 - When following master around a corner, fallback to routing algorithm instead
   of trying to walk through the corner
+
+New features:
+- Mask password input display '*' instead of your real password (Only on linux
+  console)
 - If old files (from before the CVS cleanup) are found, warn the user
   and bail out. Too many people are reporting "bugs" that are a result
   of conflicts with old files.
+- New selfCondition _whenPermitSkill _whenNotPermitSkill for use in auto-skill
+  usage blocks; they are true/false respectively when you have been granted
+  use of that temporary skill.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
@@ -139,7 +142,7 @@ New config options:
   This specifies whether the combo skill is used on yourself.
 - _defendMonsters consition, e.g.:
   partySkill Pneuma {
-	  lvl 1
+      lvl 1
       target_defendMonsters Raydric Archer
   }
   will only cast this skill if a Raydric Archer's last attack hit the person.
