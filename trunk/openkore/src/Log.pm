@@ -218,10 +218,12 @@ sub setColor {
 #
 # Prints a normal message. See the description for Log.pm for more details about the parameters.
 sub message {
+	my ($message, $domain, $level) = @_;
+	$level = 1 if !$level && existsInList($config{squelchDomains}, $domain);
 	return processMsg("message",	# type
-		$_[0],						# message
-		$_[1],						# domain
-		$_[2],						# level
+		$message,
+		$domain,
+		$level,
 		$config{'verbose'},			# currentVerbosity
 		\%messageConsole,
 		\%messageFiles);

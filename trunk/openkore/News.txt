@@ -53,6 +53,9 @@ New config options:
 - partySkill_target: comma seperated targets
 - bindIp : if your host has multiple IP addresses, you can select which
   one to use
+- squelchDomains : Increases verbosity of a message from 0 to 1
+  if it is in that domain, e.g. "conf squelchDomains skill" if you don't
+  want your vendbot to be spammed by people using skills in town
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
