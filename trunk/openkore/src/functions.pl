@@ -4040,9 +4040,35 @@ sub AI {
 
 	
 	##### ROUTE #####
+	#There are three important things that need to be done here:
+	#
+	#First, calculate the map route to the desired map using the map router (a Perl function that uses 
+	#A* pathfinding on the portals), and step through the map solution to get to the map.  The map router returns
+	#just an array of portals, so that alone won't do the job.
+	#
+	#Second, for each portal step we need to use the position router (a C function that uses 
+	#A* on the map XY data) to get the position solution to the next portal, then step through that
+	#
+	#Third, if we are in the desired map and the way is clear, calculate the final route using the position router
+	#and step through it.
+	#
+	#Sometimes we may be in the desired map, but the way to the desired position is blocked by water.
+	#If we're in the desired map and the position routing fails, kore calculates a map route to an entrance
+	#that can reach the desired location - the map routing function makes sure chosen portals are reachable
+	#from our current and desired positions.
+	#
+	#See also: http://www.gamedev.net/reference/programming/features/motionplanning/
 
 	ROUTE: {
 
+	#The position solution array is an array of XY positions from the current position to the desired position.
+	#It's filled by the position router
+	#
+	#The solution ready flag indicates that we are on the desired map, and the way to the desired position is clear,
+	#so the current position solution array is the final solution to be stepped through
+	#
+	#If we have a solution, and our stepping index is at the end of the solution, and the solution ready flag is set,
+	#then we are done
 	if ($ai_seq[0] eq "route" && @{$ai_seq_args[0]{'solution'}} && $ai_seq_args[0]{'index'} == @{$ai_seq_args[0]{'solution'}} - 1 && $ai_seq_args[0]{'solutionReady'}) {
 		print "Route success\n" if $config{'debug'};
 		shift @ai_seq;
@@ -4055,8 +4081,18 @@ sub AI {
 		aiRemove("route");
 		aiRemove("route_getRoute");
 		aiRemove("route_getMapRoute");
+
+	#We're about to enter the main function, but first we gotta check a timeout.
+	#If we're talking to an NPC, we do one NPC talk-step each time this function runs, then wait a second or so.
+	#Its not safe to flood the NPC with requests.  Here we check that npc talk timeout, if all is good, then enter
 	} elsif ($ai_seq[0] eq "route" && timeOut(\%{$timeout{'ai_route_npcTalk'}})) {
+		#if we don't know the current map name, bail out and try again later.
 		last ROUTE if (!$field{'name'});
+		#When we request a map solution, we give a reference to our array to the map router, exit the function
+		#and by the time we get back the map solution should be ready (due to the AI queue).
+		#
+		#If we requested a map solution and the solution came back empty, we've failed.
+		#That "NPC talk - route failed" is a mistake I think, it should just be "route failed"
 		if ($ai_seq_args[0]{'waitingForMapSolution'}) {
 			undef $ai_seq_args[0]{'waitingForMapSolution'};
 			if (!@{$ai_seq_args[0]{'mapSolution'}}) {
@@ -4066,13 +4102,29 @@ sub AI {
 			}
 			$ai_seq_args[0]{'mapIndex'} = -1;
 		}
+		#If we were waiting for a position solution (not map solution) last time we exited the function...
 		if ($ai_seq_args[0]{'waitingForSolution'}) {
 			undef $ai_seq_args[0]{'waitingForSolution'};
+
+			#The distFromGoal is a feature so that Kore will stay a certain distance from the
+			#desired position.  If you set Kore to follow, you don't want Kore to follow directly behind you
+			#but rather stay a certain distance back
+
+			#Here we are checking if the current position solution is the final solution, we don't want to
+			#"follow behind" when the position solution is to get from portal A to portal B (from a map
+			#solution)
+			#
+			#We are at a final solution if the current map name is the destination map, and there is either no
+			#map solution or we're at the last step of the map solution.
 			if ($ai_seq_args[0]{'distFromGoal'} && $field{'name'} && $ai_seq_args[0]{'dest_map'} eq $field{'name'} 
-				&& (!@{$ai_seq_args[0]{'mapSolution'}} || $ai_seq_args[0]{'mapIndex'} == @{$ai_seq_args[0]{'mapSolution'}} - 1)) {
+			    && (!@{$ai_seq_args[0]{'mapSolution'}} || $ai_seq_args[0]{'mapIndex'} == @{$ai_seq_args[0]{'mapSolution'}} - 1)) {
+				#We achieve this follow behind thing by popping off the last steps from the position solution
 				for ($i = 0; $i < $ai_seq_args[0]{'distFromGoal'}; $i++) {
 					pop @{$ai_seq_args[0]{'solution'}};
 				}
+
+				#Store the REAL desired position values, and replace them with the "follow behind" desired
+				#position.  This is to satisfy some "are we done?" checks
 				if (@{$ai_seq_args[0]{'solution'}}) {
 					$ai_seq_args[0]{'dest_x_original'} = $ai_seq_args[0]{'dest_x'};
 					$ai_seq_args[0]{'dest_y_original'} = $ai_seq_args[0]{'dest_y'};
@@ -4080,28 +4132,54 @@ sub AI {
 					$ai_seq_args[0]{'dest_y'} = $ai_seq_args[0]{'solution'}[@{$ai_seq_args[0]{'solution'}}-1]{'y'};
 				}
 			}
+
+			#Get length and time it took to get this position solution.  This is stored in a return hash,
+			#and returned to functions that call ai_route.  This should really be a += not =, cuz there can
+			#be multiple position solutions calculated before we come to the final solution.
 			$ai_seq_args[0]{'returnHash'}{'solutionLength'} = @{$ai_seq_args[0]{'solution'}};
 			$ai_seq_args[0]{'returnHash'}{'solutionTime'} = time - $ai_seq_args[0]{'time_getRoute'};
+
+			#check if the solution length exceeds some user set length
 			if ($ai_seq_args[0]{'maxRouteDistance'} && @{$ai_seq_args[0]{'solution'}} > $ai_seq_args[0]{'maxRouteDistance'}) {
 				print "Solution length - route failed\n" if $config{'debug'};
 				$ai_seq_args[0]{'failed'} = 1;
 				last ROUTE;
 			}
+
+			#If we're on the desired map, and the solution failed, there may be water or a wall blocking the
+			#way.  So we may have to either use portals in this map to get to the position (ie. prontera
+			#sewers), or take some long route from map to map to get there. We need to do a more extensive
+			#search.
+			#
+			#This extensive search "checkInnerPortals" means "consult the map router", it should actually
+			#be the only type of search, but at the time of writing (before the DLL) it was slow, so it's 
+			#a variable set by the caller.
+			#
+			#So, if we require a more extensive search, and we haven't already tried....
 			if (!@{$ai_seq_args[0]{'solution'}} && !@{$ai_seq_args[0]{'mapSolution'}} && $ai_seq_args[0]{'dest_map'} eq $field{'name'} && $ai_seq_args[0]{'checkInnerPortals'} && !$ai_seq_args[0]{'checkInnerPortals_done'}) {
 				$ai_seq_args[0]{'checkInnerPortals_done'} = 1;
 				print "Route Logic - check inner portals done\n" if $config{'debug'};
 				undef $ai_seq_args[0]{'solutionReady'};
+
+				#Fill some vars, call the map router, and exit the function. We are now waiting for a
+				#map solution
 				$ai_seq_args[0]{'temp'}{'pos'}{'x'} = $ai_seq_args[0]{'dest_x'};
 				$ai_seq_args[0]{'temp'}{'pos'}{'y'} = $ai_seq_args[0]{'dest_y'};
 				$ai_seq_args[0]{'waitingForMapSolution'} = 1;
 				ai_mapRoute_getRoute(\@{$ai_seq_args[0]{'mapSolution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%field, \%{$ai_seq_args[0]{'temp'}{'pos'}}, $ai_seq_args[0]{'maxRouteTime'});
 				last ROUTE;
+
+			#If we already did an extensive search, and there's no solution, then we've failed
 			} elsif (!@{$ai_seq_args[0]{'solution'}}) {
 				print "No solution - route failed\n" if $config{'debug'};
 				$ai_seq_args[0]{'failed'} = 1;
 				last ROUTE;
 			}
 		}
+
+		#If we have a map solution, and the map changed to correct next map, then clear the position solution
+		#so we can calculate the next position solution (ie. from portal A to portal B) of the map solution
+		#We increase the map
 		if (@{$ai_seq_args[0]{'mapSolution'}} && $ai_seq_args[0]{'mapChanged'} && $field{'name'} eq $ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'dest'}{'map'}) {
 			print "Route logic - map changed\n" if $config{'debug'};
 			undef $ai_seq_args[0]{'mapChanged'};
@@ -4111,7 +4189,13 @@ sub AI {
 			undef $ai_seq_args[0]{'npc'};
 			undef $ai_seq_args[0]{'divideIndex'};
 		}
+
+		#If there's no position solution currently calculated...
 		if (!@{$ai_seq_args[0]{'solution'}}) {
+			#Check if we are on the final position solution - we're on the desired map, and there is either 
+			#no map solution, or we're at the last step of the map solution.
+			#
+			#This sets the solution ready flag, which is checked at the beginning of the function
 			if ($ai_seq_args[0]{'dest_map'} eq $field{'name'}
 				&& (!@{$ai_seq_args[0]{'mapSolution'}} || $ai_seq_args[0]{'mapIndex'} == @{$ai_seq_args[0]{'mapSolution'}} - 1)) {
 				$ai_seq_args[0]{'temp'}{'dest'}{'x'} = $ai_seq_args[0]{'dest_x'};
@@ -4121,10 +4205,14 @@ sub AI {
 				undef $ai_seq_args[0]{'mapIndex'};
 				print "Route logic - solution ready\n" if $config{'debug'};
 			} else {
+				#We're not on the final solution, that means we need a map solution to step through.
+				#If we don't have a map solution...
 				if (!(@{$ai_seq_args[0]{'mapSolution'}})) {
+					#Get the field data if we don't have it
 					if (!%{$ai_seq_args[0]{'dest_field'}}) {
 						getField("fields/$ai_seq_args[0]{'dest_map'}.fld", \%{$ai_seq_args[0]{'dest_field'}});
 					}
+					#Fill some vars, call the map router, and exit this function
 					$ai_seq_args[0]{'temp'}{'pos'}{'x'} = $ai_seq_args[0]{'dest_x'};
 					$ai_seq_args[0]{'temp'}{'pos'}{'y'} = $ai_seq_args[0]{'dest_y'};
 					$ai_seq_args[0]{'waitingForMapSolution'} = 1;
@@ -4132,36 +4220,64 @@ sub AI {
 					ai_mapRoute_getRoute(\@{$ai_seq_args[0]{'mapSolution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'dest_field'}}, \%{$ai_seq_args[0]{'temp'}{'pos'}}, $ai_seq_args[0]{'maxRouteTime'});
 					last ROUTE;
 				}
+
+				#If we're here then we have a map solution ready.  The position solution is clear, that
+				#usually means the map changed.
+				#
+				#If the current map is the next map in the map solution...
 				if ($field{'name'} eq $ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'} + 1]{'source'}{'map'}) {
+					#Take a step in the map solution
 					$ai_seq_args[0]{'mapIndex'}++;
+					#Fill our destination position for the position router
 					%{$ai_seq_args[0]{'temp'}{'dest'}} = %{$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'source'}{'pos'}};
 				} else {
+					#We're not at the next map, so don't take a step in the map solution.
+					#This should only happen the first time we get the map solution.
+					#Fill our destination for the position router
 					%{$ai_seq_args[0]{'temp'}{'dest'}} = %{$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'source'}{'pos'}};
 				}
 			}
+
+			#Safety check, something is screwed up?
 			if ($ai_seq_args[0]{'temp'}{'dest'}{'x'} eq "") {
 				print "No destination - route failed\n" if $config{'debug'};
 				$ai_seq_args[0]{'failed'} = 1;
 				last ROUTE;
 			}
+
+			#Call the position router, exit the function.  We're now waiting for a position solution
 			$ai_seq_args[0]{'waitingForSolution'} = 1;
 			$ai_seq_args[0]{'time_getRoute'} = time;
 			print "Route logic - waiting for solution\n" if $config{'debug'};
 			ai_route_getRoute(\@{$ai_seq_args[0]{'solution'}}, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'temp'}{'dest'}}, $ai_seq_args[0]{'maxRouteTime'});
 			last ROUTE;
 		}
+
+		#If we have a map solution, are currently at the end of a position solution, and an NPC is specified
+		#in the map step...
+		#
+		#Note that when we've completed the NPC talk steps, we do nothing until the map changes,
+		#that clears the position solution, and thus we can move on to the next map step.
 		if (@{$ai_seq_args[0]{'mapSolution'}} && @{$ai_seq_args[0]{'solution'}} && $ai_seq_args[0]{'index'} == @{$ai_seq_args[0]{'solution'}} - 1
-			&& %{$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}}) {
+		    && %{$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}}) {
+			#safety check
 			if ($ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] ne "") {
+				#Do one of the following, increase the talk step, exit the function and wait a few seconds
+				#We'll come right back to this block after those seconds are up.
+				#
+				#Talk to the NPC if we haven't already
 				if (!$ai_seq_args[0]{'npc'}{'sentTalk'}) {
 					sendTalk(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}));
 					$ai_seq_args[0]{'npc'}{'sentTalk'} = 1;
+				#If the next step is a "continue" command, execute it
 				} elsif ($ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /c/i) {
 					sendTalkContinue(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}));
 					$ai_seq_args[0]{'npc'}{'step'}++;
+				#If the next step is a "cancel" command, execute it
 				} elsif ($ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /n/i) {
 					sendTalkCancel(\$remote_socket, pack("L1",$ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'ID'}));
 					$ai_seq_args[0]{'npc'}{'step'}++;
+				#If the next step is a "response" command, execute it
 				} else {
 					($ai_v{'temp'}{'arg'}) = $ai_seq_args[0]{'mapSolution'}[$ai_seq_args[0]{'mapIndex'}]{'npc'}{'steps'}[$ai_seq_args[0]{'npc'}{'step'}] =~ /r(\d+)/i;
 					if ($ai_v{'temp'}{'arg'} ne "") {
@@ -4174,17 +4290,29 @@ sub AI {
 				last ROUTE;
 			}
 		}
+
+		#If the map has changed, and the event wasn't caught (and cleared) by any of the preceeding functions,
+		#then the map change was a bad thing.  Just give up.
 		if ($ai_seq_args[0]{'mapChanged'}) {
 			print "Map changed - route failed\n" if $config{'debug'};
 			$ai_seq_args[0]{'failed'} = 1;
 			last ROUTE;
 
+		#Here we check if we've changed positions, and we're off course
+		#
+		#If we've tried to move (almost always yes)...
 		} elsif (%{$ai_seq_args[0]{'last_pos'}}
+			#and our current position is not the required position by the step
 			&& $chars[$config{'char'}]{'pos_to'}{'x'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}
 			&& $chars[$config{'char'}]{'pos_to'}{'y'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}
+			#and our current position has changed from the last time we were here
 			&& $ai_seq_args[0]{'last_pos'}{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
 			&& $ai_seq_args[0]{'last_pos'}{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
 
+			#Then something has taken us off course, the solution is no good anymore.
+			#Reset the solution, it will be recalculated next time we enter the function
+			#
+			#The "follow behind" feature may have altered our destination, if it did, get back the original
 			if ($ai_seq_args[0]{'dest_x_original'} ne "") {
 				$ai_seq_args[0]{'dest_x'} = $ai_seq_args[0]{'dest_x_original'};
 				$ai_seq_args[0]{'dest_y'} = $ai_seq_args[0]{'dest_y_original'};
@@ -4197,6 +4325,12 @@ sub AI {
 			undef $ai_seq_args[0]{'divideIndex'};
 	
 		} else {
+			#We're set to take a step in the current position solution
+			#We actually skip several steps at a time since the server does its own pathfinding.
+			#Sometimes we may skip too many steps, and the server says "thats too far, i won't move u"
+			#So we decrease the number of steps skipped until the server finally moves us.
+			#
+			#If we've tried to move and our position still isn't at the next step
 			if ($ai_seq_args[0]{'divideIndex'} && $chars[$config{'char'}]{'pos_to'}{'x'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}
 				&& $chars[$config{'char'}]{'pos_to'}{'y'} != $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}) {
 
@@ -4207,6 +4341,9 @@ sub AI {
 				$ai_seq_args[0]{'index'} = 0 if ($ai_seq_args[0]{'index'} < 0);
 				$ai_v{'temp'}{'index'} = $ai_seq_args[0]{'index'};
 				undef $ai_v{'temp'}{'done'};
+
+				#decrease the skip amount by a factor, make sure the new skip amount isn't the same as the
+				#skip amount that didn't work
 				do {
 					$ai_seq_args[0]{'divideIndex'}++;
 					$ai_v{'temp'}{'index'} = $ai_seq_args[0]{'index'};
@@ -4217,10 +4354,9 @@ sub AI {
 			} else {
 				$ai_seq_args[0]{'divideIndex'} = 1;
 				print "Route logic - divide index = 1\n" if $config{'debug'};
-#Solos Start
 				$pos_x = int($chars[$config{'char'}]{'pos_to'}{'x'}) if ($chars[$config{'char'}]{'pos_to'}{'x'} ne "");
 				$pos_y = int($chars[$config{'char'}]{'pos_to'}{'y'}) if ($chars[$config{'char'}]{'pos_to'}{'y'} ne "");
-#if kore is stuck
+				#if kore is stuck
 				if (($old_pos_x == $pos_x) && ($old_pos_y == $pos_y)) {
 					$route_stuck++;
 				} else {
@@ -4241,25 +4377,31 @@ sub AI {
 					RespawnUnstuck();
 					last ROUTE;
 				}		
-#Solos End
 			}
 
-				
+			#We've tried all possible skip amounts, and the server won't move us.  Fail.
 			if (int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'}) == 0) {
 				print "Route step - route failed\n" if $config{'debug'};
 				$ai_seq_args[0]{'failed'} = 1;
 				last ROUTE;
 			}
 
+			#Save current position for the next time we enter this function
 			%{$ai_seq_args[0]{'last_pos'}} = %{$chars[$config{'char'}]{'pos_to'}};
-			
+
+			#Increase the step by the skip amount, and make sure that the position at the step is
+			#different from our current position (should never happen really)
 			do {
 				$ai_seq_args[0]{'index'} += int($config{'route_step'} / $ai_seq_args[0]{'divideIndex'});
 				$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}} - 1 if ($ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}});
 			} while ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'}
 				&& $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}
 				&& $ai_seq_args[0]{'index'} != @{$ai_seq_args[0]{'solution'}} - 1);
-			
+
+			#If the avoid portals flag is set, don't move to any position that is within a distance of a portal
+			#If a portal is within distance, the route will fail.
+			#This is an ugly hack.  The map data should be dynamic and have an array of portals "painted" out
+			#BEFORE doing A*
 			if ($ai_seq_args[0]{'avoidPortals'}) {
 				$ai_v{'temp'}{'first'} = 1;
 				undef $ai_v{'temp'}{'foundID'};
@@ -4279,8 +4421,9 @@ sub AI {
 					last ROUTE;
 				}
 			}
+			#if the step position doesn't equal our current position, then move there
 			if ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
-				|| $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
+			 || $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
 				move($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}, $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}, 1, $ai_seq_args[0]{'attackID'});
 			}
 		}
