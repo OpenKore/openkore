@@ -1,6 +1,6 @@
 # This is a Makefile for Cygwin.
 
-.PHONY: all clean dist
+.PHONY: all clean dist exe
 
 CXX=g++
 CFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
@@ -41,8 +41,20 @@ ToolsXS.o: ToolsXS.c
 ToolsXS.c: ToolsXS.xs
 	$(XSUBPP) -typemap "$(TYPEMAP)" ToolsXS.xs > ToolsXS.c
 
+exe:
+	perlapp openkore.pl \
+		--add Interface::Console \
+		--trim Interface::Console::Other \
+		--trim Interface::Console::Other::Gtk \
+		--trim Gtk2 \
+		--trim Pod::Usage \
+		--trim Term::Cap \
+		--trim POSIX \
+		--trim Tools \
+		--force
+
 clean:
-	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef ToolsXS.o ToolsXS.c
+	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef ToolsXS.o ToolsXS.c openkore.exe
 
 dist:
 	./makedist.sh

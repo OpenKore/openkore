@@ -319,7 +319,6 @@ Log::message("\n");
 
 sub _errorHandler {
 	die @_ if (defined($^S) && $^S);
-	no utf8;
 	if (defined &Carp::longmess) {
 		Log::color("red") if (defined &Log::color);
 		Log::message("Program terminated unexpectedly. Error message:\n");
