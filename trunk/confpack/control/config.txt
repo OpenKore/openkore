@@ -73,7 +73,8 @@ squelchDomains
 verboseDomains
 
 message_length_max 80
-chatLangCode
+# If you play oRO or euRO, you should set chatLangCode to 1
+chatLangCode 0
 
 logChat 1
 logPrivateChat 1
