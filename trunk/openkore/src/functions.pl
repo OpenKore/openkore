@@ -5020,18 +5020,14 @@ sub parseMsg {
 		$accountID = substr($msg, 8, 4);
 		$accountSex = unpack("C1",substr($msg, 46, 1));
 		$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
-		format ACCOUNT =
----------Account Info----------
-Account ID: @<<<<<<<<<<<<<<<<<<
-            getHex($accountID)
-Sex:        @<<<<<<<<<<<<<<<<<<
-            $sex_lut{$accountSex}
-Session ID: @<<<<<<<<<<<<<<<<<<
-            getHex($sessionID)
--------------------------------
-.
-		$~ = "ACCOUNT";
-		write;
+		message(swrite(
+			"---------Account Info----------", [undef],
+			"Account ID: @<<<<<<<<<<<<<<<<<<", [getHex($accountID)],
+			"Sex:        @<<<<<<<<<<<<<<<<<<", [$sex_lut{$accountSex}],
+			"Session ID: @<<<<<<<<<<<<<<<<<<", [getHex($sessionID)],
+			"-------------------------------", [undef],
+		), "connection");
+
 		$num = 0;
 		undef @servers;
 		for($i = 47; $i < $msg_size; $i+=32) {
@@ -5045,10 +5041,10 @@ Session ID: @<<<<<<<<<<<<<<<<<<
 		message("--------- Servers ----------\n", "connection");
 		message("#         Name            Users  IP              Port\n", "connection");
 		for ($num = 0; $num < @servers; $num++) {
-			message(swrite(<<'.'), "connection");
-@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<
-$num  $servers[$num]{'name'}  $servers[$num]{'users'} $servers[$num]{'ip'} $servers[$num]{'port'}
-.
+			message(swrite(
+				"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
+				[$num, $servers[$num]{'name'}, $servers[$num]{'users'}, $servers[$num]{'ip'}, $servers[$num]{'port'}]
+			), "connection");
 		}
 		message("-------------------------------\n", "connection");
 
@@ -5161,10 +5157,10 @@ $chars[$num]{'zenny'} $chars[$num]{'luk'}
 		}
 		if (!$config{'XKore'}) {
 			if ($config{'char'} eq "") {
-				print "Choose your character.  Enter the character number:\n";
+				message("Choose your character.  Enter the character number:\n", "input");
 				$waitingForInput = 1;
 			} else {
-				print "Character $config{'char'} selected\n";
+				message("Character $config{'char'} selected\n", "connection");
 				sendCharLogin(\$remote_socket, $config{'char'});
 				$timeout{'charlogin'}{'time'} = time;
 			}
@@ -5174,7 +5170,7 @@ $chars[$num]{'zenny'} $chars[$num]{'luk'}
 		$msg_size = length($msg);
 
 	} elsif ($switch eq "006C") {
-		print "Error logging into Game Login Server (invalid character specified)...\n";
+		error("Error logging into Game Login Server (invalid character specified)...\n", "connection");
 		$conState = 1;
 		undef $conState_tries;
 		$timeout_ex{'master'}{'time'} = time;
