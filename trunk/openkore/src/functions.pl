@@ -9485,10 +9485,11 @@ sub updateDamageTables {
 			}
 			$monsters{$ID1}{'attackedByPlayer'} = 0;
 			$monsters{$ID1}{'attackedYou'}++ unless (
-								binSize(keys %{$monsters{$ID1}{'dmgFromPlayer'}}) ||
-								binSize(keys %{$monsters{$ID1}{'dmgToPlayer'}}) ||
-								$monsters{$ID1}{'missedFromPlayer'} ||
-								$monsters{$ID1}{'missedToPlayer'});
+					binSize(scalar(keys %{$monsters{$ID1}{'dmgFromPlayer'}})) ||
+					binSize(scalar(keys %{$monsters{$ID1}{'dmgToPlayer'}})) ||
+					$monsters{$ID1}{'missedFromPlayer'} ||
+					$monsters{$ID1}{'missedToPlayer'}
+				);
 
 			my $teleport = 0;
 			if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
