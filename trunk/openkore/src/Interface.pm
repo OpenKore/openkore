@@ -30,9 +30,9 @@ package Interface;
 
 use strict;
 use warnings;
+no warnings 'redefine';
 use Exporter;
 use base qw(Exporter);
-use Interface::Startup;
 
 our $interface;
 our @EXPORT = qw($interface);
@@ -40,6 +40,7 @@ our @EXPORT = qw($interface);
 
 sub new {
 	# Default interface until we switch to a new one
+	use Interface::Startup;
 	return new Interface::Startup;
 }
 
@@ -79,48 +80,6 @@ sub switchInterface {
 	return $new_interface;
 }
 
-sub switchInterfaceOld {
-	my $class = shift;
-	my $new_interface = shift;
-	eval "use $new_interface;";
-	if ($@) {
-		if ($interface) {
-			$interface->printt('error', "Failed to load $new_interface: $@\n") if $interface->can('printt') or die "Failed to load $new_interface: $@\n";
-			return undef;
-		} else {
-			die $@; #we can't fall back to the old interface
-		}
-	}
-	unless ($new_interface->can('start')) { #checks if the class name and file name match case
-		$interface->print("'start' method not found for $new_interface. Check to make sure you typed the package name correctly.\n");
-		return undef;
-	}
-	$interface->stop() if $interface->can('stop');
-	if (eval {$new_interface->start($class)}) { #$class should be the old interface
-		$interface->free() if $interface->can('free');
-	} else {
-		my $err_str = "$new_interface failed to start" . ( $@ ? ": $@" :  ', ') . "trying to restart $interface...";
-		print STDERR $err_str;
-		eval { $interface->start($class) } or die " but it also failed; $@\n";
-		$interface->print("$err_str ok\n");
-		print STDERR " ok\n";
-		return undef;
-	}
-	$interface = $new_interface;
-	return 1;
-}
-
-
-sub start {
-	# Do nothing; this is a dummy parent class
-}
-
-
-sub stop {
-	# Do nothing; this is a dummy parent class
-}
-
-
 ##
 # $interface->getInput(timeout)
 # timeout: Number of second to wait until keyboard data is available. 
@@ -133,7 +92,6 @@ sub getInput {
 	# Do nothing; this is a dummy parent class
 }
 
-
 ##
 # $interface->writeOutput(type, message, domain)
 # 
@@ -141,6 +99,28 @@ sub getInput {
 # This method should not be used directly, use Log::message() instead.
 sub writeOutput {
 	# Do nothing; this is a dummy parent class
+}
+
+##
+# $interface->displayUsage(text)
+# text: The 'usage' text to display.
+#
+# Display a 'usage' text.
+sub displayUsage {
+	my $self = shift;
+	my $text = shift;
+	$self->writeOutput("message", $text, "usage");
+}
+
+##
+# $interface->errorDialog(message)
+# message: The error message to display.
+#
+# Display an error dialog.
+sub errorDialog {
+	my $self = shift;
+	my $message = shift;
+	$self->writeOutput("error", "$message\n");
 }
 
 

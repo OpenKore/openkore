@@ -9,6 +9,10 @@
 #
 #########################################################################
 
+use lib '.';
+srand(time());
+
+#### INITIALIZE INTERFACE ####
 use Interface;
 use Modules;
 Modules::register(qw(Interface));
@@ -20,7 +24,23 @@ use Getopt::Long;
 use IO::Socket;
 use Digest::MD5;
 use Carp;
-use lib '.';
+
+
+##### PARSE ARGUMENTS, FURTHER INITIALIZE INTERFACE & LOAD PLUGINS #####
+
+use Settings;
+
+my $parseArgResult = Settings::parseArguments();
+$interface = $interface->switchInterface($Settings::default_interface, 1);
+
+if ($parseArgResult eq '2') {
+	$interface->displayUsage($Settings::usageText);
+	exit 1;
+
+} elsif ($parseArgResult ne '1') {
+	$interface->errorDialog($parseArgResult);
+	exit 1;
+}
 
 
 require 'functions.pl';
@@ -28,25 +48,14 @@ use Globals;
 use Modules;
 use Log;
 use Utils;
-use Settings;
 use Plugins;
 use FileParsers;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers));
 
 
-##### PARSE ARGUMENTS, LOAD PLUGINS, AND START INPUT SERVER #####
-
-srand(time());
-Settings::parseArguments();
-
-$interface = $interface->switchInterface($Settings::default_interface, 1);
-
 Log::message("$Settings::versionText\n");
-
 Plugins::loadAll();
-
 Log::message("\n");
-
 Plugins::callHook('start');
 
 

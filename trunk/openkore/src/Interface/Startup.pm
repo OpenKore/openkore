@@ -28,8 +28,10 @@ package Interface::Startup;
 
 use strict;
 use warnings;
+no warnings 'redefine';
 
-use base qw/Interface/;
+use base qw(Interface);
+
 
 my $output_limit = 50; #should be more than enough for any start up.
 

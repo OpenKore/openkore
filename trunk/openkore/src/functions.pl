@@ -5605,10 +5605,11 @@ sub parseMsg {
 				[$chars[$num]{'zenny'}, $chars[$num]{'luk'}],
 				"-------------------------------", []),
 				"connection");
+
 				my $j = 0;
 				while ($avoid{"avoid_$j"} ne "") {
 					if ($chars[$num]{'name'} eq $avoid{"avoid_$j"} || $chars[$num]{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-						error "Sanity Checking FAILED: Invalid username detected.\n";
+						$interface->displayError("Sanity Checking FAILED: Invalid username detected.");
 						killConnection(\$remote_socket);
 						quit();
 					}
@@ -6072,7 +6073,7 @@ sub parseMsg {
 		} elsif ($type == 3) {
 			error("Error: Out of sync with server\n", "connection");
 		} elsif ($type == 6) {
-			error("Critical Error: You must pay to play this account!\n", "connection");
+			$interface->displayError("Critical Error: You must pay to play this account!");
 			$quit = 1;
 		} elsif ($type == 8) {
 			error("Error: The server still recognizes your last connection\n", "connection");
@@ -8158,15 +8159,16 @@ sub parseMsg {
 	} elsif ($switch eq "013A") {
 		$type = unpack("S1",substr($msg, 2, 2));
 
-# Hambo Arrow Equip
+	# Hambo Arrow Equip
 	} elsif ($switch eq "013B") {
 		$type = unpack("S1",substr($msg, 2, 2)); 
 		if ($type == 0) { 
-			message "Please equip arrow first\n";
+			$interface->displayError("Please equip arrow first.");
 			undef $chars[$config{'char'}]{'arrow'};
 			quit() if ($config{'dcOnEmptyArrow'});
+
 		} elsif ($type == 3) {
-			print "Arrow equipped\n" if ($config{'debug'}); 
+			message "Arrow equipped\n" if ($config{'debug'}); 
 		} 
 
 	} elsif ($switch eq "013C") {
