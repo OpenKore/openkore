@@ -97,14 +97,21 @@ sub _xpmmake {
 	my $field = shift;
 	my $data = "/* XPM */\n" .
 		"static char * my_xpm[] = {\n" .
-		"\"$field->{width} $field->{height} 2 1\",\n" .
+		"\"$field->{width} $field->{height} 3 1\",\n" .
 		"\" \tc #000000\",\n" .
+		"\"A\tc #6666FF\",\n" .
 		"\".\tc #FFFFFF\",\n";
 	for (my $y = $field->{height} - 1; $y >= 0; $y--) {
 		$data .= "\"";
 		for (my $x = 0; $x < $field->{width}; $x++) {
-			$data .= (substr($field->{rawMap}, $y * $field->{width} + $x, 1) eq "\0") ?
-				'.' : ' ';
+			my $char = substr($field->{rawMap}, $y * $field->{width} + $x, 1);
+			if ($char eq "\0") {
+				$data .= '.';
+			} elsif ($char eq "\1") {
+				$data .= ' ';
+			} else {
+				$data .= 'A';
+			}
 		}
 		$data .= "\",\n";
 	}
@@ -140,20 +147,24 @@ sub _loadImage {
 	return ($bitmap && $bitmap->Ok()) ? $bitmap : undef;
 }
 
+sub _f {
+	return File::Spec->catfile(@_);
+}
+
 sub _loadMapImage {
 	my $self = shift;
 	my $field = shift;
 	my $name = $field->{name};
 
-	if (-f "map/$name.jpg") {
-		return _loadImage("map/$name.jpg");
-	} elsif (-f "map/$name.png") {
-		return _loadImage("map/$name.png");
-	} elsif (-f "map/$name.bmp") {
-		return _loadImage("map/$name.bmp");
+	if (-f _f("map", "$name.jpg")) {
+		return _loadImage(_f("map", "$name.jpg"));
+	} elsif (-f _f("map", "$name.png")) {
+		return _loadImage(_f("map", "$name.png"));
+	} elsif (-f _f("map", "$name.bmp")) {
+		return _loadImage(_f("map", "$name.bmp"));
 
-	} elsif (-f "map/$name.jpg") {
-		my $file = File::Spec->catfile(File::Spec->tmpdir(), "map.xpm");
+	} else {
+		my $file = _f(File::Spec->tmpdir(), "map.xpm");
 		return unless (open(F, ">", $file));
 		binmode F;
 		print F _xpmmake($field);
@@ -169,11 +180,6 @@ sub set {
 
 	$self->{field}{width} = $field->{width} if ($field && $field->{width});
 	$self->{field}{height} = $field->{height} if ($field && $field->{height});
-
-	# We need a dot image to indicate where we are right now
-	if (!$self->{selfDot} && -f "map/kore.png") {
-		$self->{selfDot} = _loadImage("map/kore.png");
-	}
 
 	if ($map && $map ne $self->{field}{name}) {
 		# Map changed
@@ -234,10 +240,24 @@ sub _onPaint {
 	my $dc = new Wx::PaintDC($self);
 	return unless ($self->{bitmap});
 
-	my ($x, $y) = $self->_posXYToView($self->{field}{x}, $self->{field}{y});
+	my ($x, $y);
 	$dc->BeginDrawing();
-
 	$dc->DrawBitmap($self->{bitmap}, 0, 0, 1);
+
+	if ($self->{dest}) {
+		$dc->SetPen(wxWHITE_PEN);
+		$dc->SetBrush(new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID));
+		($x, $y) = $self->_posXYToView($self->{dest}{x}, $self->{dest}{y});
+		$dc->DrawEllipse($x - 3, $y - 3, 6, 6);
+	}
+
+
+	if (!$self->{selfDot}) {
+		my $file = _f("map", "kore.png");
+		$self->{selfDot} = _loadImage($file) if (-f $file);
+	}
+
+	($x, $y) = $self->_posXYToView($self->{field}{x}, $self->{field}{y});
 	if ($self->{selfDot}) {
 		$dc->DrawBitmap($self->{selfDot},
 			$x - ($self->{selfDot}->GetHeight() / 2),
@@ -246,13 +266,6 @@ sub _onPaint {
 	} else {
 		$dc->SetBrush(wxCYAN_BRUSH);
 		$dc->DrawEllipse($x - 5, $y - 5, 10, 10);
-	}
-
-	if ($self->{dest}) {
-		$dc->SetPen(wxWHITE_PEN);
-		$dc->SetBrush(new Wx::Brush(new Wx::Colour(255, 110, 245), wxSOLID));
-		($x, $y) = $self->_posXYToView($self->{dest}{x}, $self->{dest}{y});
-		$dc->DrawEllipse($x - 3, $y - 3, 6, 6);
 	}
 
 	$dc->EndDrawing();
