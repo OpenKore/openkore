@@ -5169,7 +5169,7 @@ sub parseMsg {
 		}
 		}
 
-		if (charSelectScreen() == 1) {
+		if (charSelectScreen(1) == 1) {
 			$firstLoginMap = 1;
 			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 			$sentWelcomeMessage = 1;

@@ -250,6 +250,7 @@ sub center {
 
 # Returns: 0 if user chose to quit, 1 if user chose a character, 2 if user created or deleted a character
 sub charSelectScreen {
+	my $autoLogin = shift;
 	my $msg;
 	my $mode;
 	my $input2;
@@ -291,6 +292,14 @@ sub charSelectScreen {
 		"#       Name                          Lv\n" . $msg .
 		"-----------------------------------------------\n", "connection" if ($msg ne '');
 	return 1 if $xkore;
+
+
+	if ($autoLogin && @chars && $chars[$config{'char'}]) {
+		sendCharLogin(\$remote_socket, $config{'char'});
+		$timeout{'charlogin'}{'time'} = time;
+		return 1;
+	}
+
 
 	if (@chars) {
 		message("Type 'c' to create a new character, or type 'd' to delete a character.\n" .
