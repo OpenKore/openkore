@@ -35,6 +35,9 @@ use Utils;
 use Log;
 
 
+our $current_plugin;
+our $current_plugin_folder;
+
 our @plugins;
 our %hooks;
 
@@ -78,6 +81,11 @@ sub loadAll {
 sub load {
 	my $file = shift;
 	Log::message("Loading plugin $file...\n", "plugins");
+
+	$current_plugin = $file;
+	$current_plugin_folder = $file;
+	$current_plugin_folder =~ s/(.*)[\/\\].*/$1/;
+
 	if (! do $file) {
 		Log::error("Unable to load plugin $file: $@\n", "plugins");
 		return 0;
