@@ -8377,10 +8377,10 @@ sub parseMsg {
 		undef @arrowCraftID;
 		for ($i = 4; $i < $msg_size; $i += 2) {
 			$ID = unpack("S1", substr($msg, $i, 2));
-			my $index = findIndex(\@{char->{inventory}}, "nameID", $ID);
+			my $index = findIndex($char->{inventory}, "nameID", $ID);
 			binAdd(\@arrowCraftID, $index);
 		}
-		message "Recieved Possible Arrow Craft List - type 'arrowcraft'\n";
+		message "Received Possible Arrow Craft List - type 'arrowcraft'\n";
 
 	#} elsif ($switch eq "0187") {
 		# 0187 - ID: long
