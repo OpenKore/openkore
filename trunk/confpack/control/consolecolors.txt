@@ -28,6 +28,7 @@ skill green
 success green
 system yellow
 pm yellow
+pm/sent yellow
 guildchat darkgreen
 selfchat green
 list white
