@@ -24,7 +24,7 @@ package Interface::Wx::ItemList;
 use strict;
 use Wx ':everything';
 use base qw(Wx::ListCtrl);
-use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED);
+use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED EVT_LIST_ITEM_RIGHT_CLICK);
 
 
 our $monsterColor;
@@ -49,6 +49,7 @@ sub new {
 	$self->InsertColumn(0, "Players, Monsters & Items");
 	$self->SetColumnWidth(0, -2);# unless ($^O eq 'MSWin32');
 	EVT_LIST_ITEM_ACTIVATED($self, 622, \&_onActivate);
+	EVT_LIST_ITEM_RIGHT_CLICK($self, 622, \&_onRightClick);
 	return $self;
 }
 
@@ -62,9 +63,24 @@ sub _onActivate {
 	}
 }
 
+sub _onRightClick {
+	my ($self, $event) = @_;
+	my $ID = $self->{objectsID}[$event->GetIndex];
+
+	if ($ID && $self->{rightClick}) {
+		my $obj = $self->{objects}{$ID};
+		$self->{rightClick}->($self->{rightClickClass}, $ID, $obj, $obj->{type}, $self, $event);
+	}
+}
+
 sub onActivate {
 	my $self = shift;
 	($self->{activate}, $self->{class}) = @_;
+}
+
+sub onRightClick {
+	my $self = shift;
+	($self->{rightClick}, $self->{rightClickClass}) = @_;
 }
 
 sub OnGetItemText {

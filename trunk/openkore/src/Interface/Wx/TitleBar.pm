@@ -25,6 +25,8 @@ use Wx ':everything';
 use Wx::Event qw(EVT_PAINT EVT_TOOL);
 use base qw(Wx::Panel);
 
+use Interface::Wx::Utils qw(dataFile);
+
 
 our (@brushes, $font, $dark, $light);
 our ($detachBitmap, $closeBitmap);
@@ -55,9 +57,9 @@ sub new {
 		if (!$detachBitmap) {
 			my $image;
 			Wx::Image::AddHandler(new Wx::PNGHandler);
-			$image = Wx::Image->newNameType(f('Interface', 'Wx', 'window.png'), wxBITMAP_TYPE_PNG);
+			$image = Wx::Image->newNameType(dataFile('window.png'), wxBITMAP_TYPE_PNG);
 			$detachBitmap = new Wx::Bitmap($image);
-			$image = Wx::Image->newNameType(f('Interface', 'Wx', 'close.png'), wxBITMAP_TYPE_PNG);
+			$image = Wx::Image->newNameType(dataFile('close.png'), wxBITMAP_TYPE_PNG);
 			$closeBitmap = new Wx::Bitmap($image);
 		}
 
@@ -127,12 +129,6 @@ sub onClose {
 
 sub max {
 	return ($_[0] > $_[1]) ? $_[0] : $_[1];
-}
-
-sub f {
-	my $f = File::Spec->catfile('src', @_);
-	$f = File::Spec->catfile(@_) if (! -f $f);
-	return $f;
 }
 
 sub createBrushes {
