@@ -24,8 +24,8 @@ use Config;
 sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
-		configModify("autoRestart", $autoRestart, 1);
 		print "Next restart in ".timeConvert($autoRestart).".\n";
+		configModify("autoRestart", $autoRestart, 1);
 	}
 }
 
@@ -85,18 +85,6 @@ sub initMapChangeVars {
 	$timeout{'ai_shop'}{'time'} = time;
 
 	initOtherVars();
-}
-
-# Reset %timeout based on %realTimeout.
-# Generate random timeout values.
-sub initTimeouts {
-	%timeout = () if (!%timeout);
-	my @keys = keys %realTimeout;
-	foreach my $key (@keys) {
-		$timeout{$key}{'timeout'} = $realTimeout{$key}{'timeout'};
-		$timeout{$key}{'timeout'} += rand($realTimeout{$key}{'variance'}) if ($realTimeout{$key}{'variance'});
-	}
-	$timeout{'ai_resetTimeouts'}{'time'} = time;
 }
 
 #Solos Start
@@ -173,6 +161,8 @@ sub checkConnection {
 
 	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
 		print "Timeout on Master Server, reconnecting...\n";
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 		undef $conState_tries;
 
@@ -1860,26 +1850,25 @@ $chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$conf
 		}
 
 	} elsif ($switch eq "storage") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
-		($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
+		my ($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
 		if ($arg1 eq "") {
 			$~ = "STORAGELIST";
 			print "----------Storage-----------\n";
 			print "#  Name\n";
-			for ($i=0; $i < @storageID;$i++) {
+			for (my $i=0; $i < @storageID; $i++) {
 				next if ($storageID[$i] eq "");
-#Solos Start
-#				$display = "$storage{$storageID[$i]}{'name'} x $storage{$storageID[$i]}{'amount'}";		
-				$display = "$storage{$storageID[$i]}{'name'}";
+
+				my $display = "$storage{$storageID[$i]}{'name'}";
 				if ($storage{$storageID[$i]}{'enchant'}) {
 					$display = "+$storage{$storageID[$i]}{'enchant'} ".$display;
 				}
-				if ($storage{$storageID[$i]}{'slotName'} ne "") { 
-                  	$display = $display ." [$storage{$storageID[$i]}{'slotName'}]";
-               	} 
+				if ($storage{$storageID[$i]}{'slotName'} ne "") {
+					$display = $display ." [$storage{$storageID[$i]}{'slotName'}]";
+				}
 				$display = $display . " x $storage{$storageID[$i]}{'amount'}";
-#Solos End
+
 				format STORAGELIST =
 @< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 $i $display                
@@ -1888,7 +1877,6 @@ $i $display
 			}
 			print "\nCapacity: $storage{'items'}/$storage{'items_max'}\n";
 			print "-------------------------------\n";
-
 
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
 			print	"Error in function 'storage add' (Add Item to Storage)\n"
@@ -2206,8 +2194,6 @@ sub AI {
 
 
 	##### REAL AI STARTS HERE #####
-
-	initTimeouts() if (timeOut(\%{$timeout{'ai_resetTimeouts'}}));
 
 	if (!$accountID) {
 		$AI = 0;
@@ -2639,34 +2625,6 @@ sub AI {
 	if ($config{'XKore'} && !$sentWelcomeMessage && timeOut(\%{$timeout{'welcomeText'}})) {
 		injectAdminMessage($welcomeText) if ($config{'verbose'});
 		$sentWelcomeMessage = 1;
-	}
-
-
-
-	##### DISCONNECT ON WHISPER #####
-
-	if ($ai_seq[0] eq "dcWhisper" && timeOut(\%{$ai_seq_args[0]})) {
-		sendMessage(\$remote_socket, 'pm', $ai_seq_args[0]{'msg'}, $ai_seq_args[0]{'user'});
-		print "** Disconnecting ** $ai_seq_args[0]{'user'} whispered you\n";
-		chatLog("s", "** Disconnecting ** $ai_seq_args[0]{'user'} whispered you\n");
-		shift @ai_seq;
-		shift @ai_seq_args;
-
-		my %args = ();
-		$args{'time'} = time;
-		$args{'timeout'} = 2 + rand(3);
-		$args{'dcTime'} = $config{'dc_time_min'} + rand($config{'dc_time_seed'});
-		unshift @ai_seq, "dcWhisperDisconnect";
-		unshift @ai_seq_args, \%args;
-	}
-
-	if ($ai_seq[0] eq "dcWhisperDisconnect" && timeOut(\%{$ai_seq_args[0]})) {
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $ai_seq_args[0]{'dcTime'};
-		print "** Disconnected for ".timeConvert($ai_seq_args[0]{'dcTime'}).".\n";
-		killConnection(\$remote_socket);
-		@ai_seq = ();
-		@ai_seq_args = ();
 	}
 
 
@@ -3642,7 +3600,6 @@ sub AI {
 		undef @{$ai_v{'ai_attack_cleanMonsters'}};
 		undef @{$ai_v{'ai_attack_partyMonsters'}};
 		undef $ai_v{'temp'}{'foundID'};
-		undef $ai_v{'temp'}{'priorityAttack'};
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		if ($config{'tankMode'}) {
@@ -3708,48 +3665,18 @@ sub AI {
 			}
 			undef $ai_v{'temp'}{'distSmall'};
 			undef $ai_v{'temp'}{'foundID'};
-			undef $ai_v{'temp'}{'highestPri'};
-			undef $ai_v{'temp'}{'priorityAttack'};
+			$ai_v{'temp'}{'first'} = 1;
 
-			# Look for all aggressive monsters that have the highest priority
+			# Look for the closest aggressive monster to attack
 			foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 				# Don't attack monsters near portals
 				next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
 
-				if (defined ($priority{lc($monsters{$_}{'name'})}) &&
-				    $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'}) {
-					$ai_v{'temp'}{'highestPri'} = $priority{lc($monsters{$_}{'name'})};
-				}
-			}
-
-			$ai_v{'temp'}{'first'} = 1;
-			if (!$ai_v{'temp'}{'highestPri'}) {
-				# If not found, look for the closest aggressive monster (without priority)
-				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
-					# Don't attack monsters near portals
-					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
-
-					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
-						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
-						$ai_v{'temp'}{'foundID'} = $_;
-						undef $ai_v{'temp'}{'first'};
-					}
-				}
-			} else {
-				# If found, look for the closest monster with the highest priority
-				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
-					next if ($priority{lc($monsters{$_}{'name'})} != $ai_v{'temp'}{'highestPri'});
-					# Don't attack monsters near portals
-					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
-
-					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
-						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
-						$ai_v{'temp'}{'foundID'} = $_;
-						$ai_v{'temp'}{'priorityAttack'} = 1;
-						undef $ai_v{'temp'}{'first'};
-					}
+				$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
+				if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
+					$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
+					$ai_v{'temp'}{'foundID'} = $_;
+					undef $ai_v{'temp'}{'first'};
 				}
 			}
 
@@ -3772,8 +3699,6 @@ sub AI {
 				# No party monsters either; look for the closest, non-aggressive monster that:
 				# 1) nobody's attacking
 				# 2) isn't within 2 blocks distance of someone else
-
-				# Look for the monster with the highest priority
 				undef $ai_v{'temp'}{'distSmall'};
 				undef $ai_v{'temp'}{'foundID'};
 				$ai_v{'temp'}{'first'} = 1;
@@ -3794,7 +3719,7 @@ sub AI {
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($ai_v{'temp'}{'foundID'}) {
 			ai_setSuspend(0);
-			attack($ai_v{'temp'}{'foundID'}, $ai_v{'temp'}{'priorityAttack'});
+			attack($ai_v{'temp'}{'foundID'});
 		} else {
 			$timeout{'ai_attack_auto'}{'time'} = time;
 		}
@@ -3876,7 +3801,6 @@ sub AI {
 				|| ($monsters{$ai_seq_args[0]{'ID'}}{'dmgToYou'} > 0 || $monsters{$ai_seq_args[0]{'ID'}}{'missedYou'} > 0)
 			);
 		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ai_seq_args[0]{'ID'}}{'attackedByPlayer'});
-		$ai_v{'ai_attack_cleanMonster'} = 1 if ($mon_control{lc($monsters{$_}{'name'})}{'kill_steal'});
 
 		$ai_v{'ai_attack_monsterDist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}});
 
@@ -5572,7 +5496,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				print "Disconnect immediately!\n";
 				$quit = 1;
 			} elsif ($config{'dcOnDualLogin'} >= 2) {
-				print "Disconnect for ".timeConvert($config{'dcOnDualLogin'})."...\n";
+				print "Disconnect for $config{'dcOnDualLogin'} seconds...\n";
 				$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
 			}
 
@@ -5913,30 +5837,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		avoidGM_talk($privMsgUser, $privMsg);
 		avoidList_talk($privMsgUser, $privMsg);
 
-		if ($config{'dcWhisper'} && binFind(\@ai_seq, "dcWhisper") eq "" && binFind(\@ai_seq, "dcWhisperDisconnect") eq "") {
-			my $i = 0;
-			my $safe = 0;
-
-			while ($config{'safelist_'.$i} ne "") {
-				if ($privMsgUser eq $config{'safelist_'.$i}) {
-					$safe = 1;
-					last;
- 				}
-				$i++;
-			}
-
-			if (!$safe) {
-				# open responses.txt and add botR r3sp0ns3, repeat for multiple responses on different lines 
-				my %args = ();
-				$args{'time'} = time;
-				$args{'user'} = $privMsgUser;
-				$args{'msg'} = getResponse("botR");
-				$args{'timeout'} = 1 + rand(2.5) + length($args{'msg'}) / 4.5;
-				unshift @ai_seq, "dcWhisper";
-				unshift @ai_seq_args, \%args;
-	 		}
-		}
-
 		# auto-response
 		if ($config{"autoResponse"}) {
 			$i = 0;
@@ -6269,11 +6169,13 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 
 	} elsif ($switch eq "00A5") {
+		# Retrieve list of stackable storage items
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef %storage;
 		undef @storageID;
-		for($i = 4; $i < $msg_size; $i+=10) {
+		for(my $i = 4; $i < $msg_size; $i+=10) {
 			$index = unpack("C1", substr($msg, $i, 1));
 			$ID = unpack("S1", substr($msg, $i + 2, 2));
 			binAdd(\@storageID, $ID);
@@ -6288,58 +6190,64 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Storage: $storage{$ID}{'name'} ($storage{$ID}{'binID'})\n" if $config{'debug'};
 		}
 		print "Storage opened\n";
-#Solos Start
+
 	} elsif ($switch eq "00A6") {
+		# Retrieve list of non-stackable (weapons & armor) storage items.
+		# This packet is sent immediately after 00A5.
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
-#		undef %storage;
-#		undef @storageID;
-		for($i = 4; $i < $msg_size; $i+=20) {
-			$index = unpack("C1", substr($msg, $i, 1));
-			$ID = unpack("S1", substr($msg, $i + 2, 2));
+
+		for (my $i = 4; $i < $msg_size; $i += 20) {
+			my $index = unpack("C1", substr($msg, $i, 1));
+			my $ID = unpack("S1", substr($msg, $i + 2, 2));
+
 			binAdd(\@storageID, $index);
 			$storage{$index}{'index'} = $index;
 			$storage{$index}{'nameID'} = $ID;
-#			$storage{$index}{'amount'} = unpack("L1", substr($msg, $i + 6, 4));
+			#$storage{$index}{'amount'} = unpack("L1", substr($msg, $i + 6, 4));
 			$storage{$index}{'amount'} = 1;
 			$storage{$index}{'enchant'} = unpack("C1", substr($msg, $i + 11, 1));
-           	undef @cnt; 
-           	$count = 0; 
-           	for($j=1 ;$j < 5;$j++) { 
-           		if(unpack("S1", substr($msg, $i + $j + $j + 10, 2)) > 0) { 
-	            	$storage{$index}{'slotID_$j'} = unpack("S1", substr($msg, $i + $j + $j + 10, 2)); 
-    	            for($k = 0;$k < 4;$k++) { 
-        	           	if(($storage{$index}{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($storage{$index}{'slotID_$j'} ne "")) { 
-            	           	$cnt[$k]{'amount'} += 1;                         
-                	       	last; 
-                    	} elsif ($storage{$index}{'slotID_$j'} ne "") { 
-	                        $cnt[$k]{'amount'} = 1; 
-    	                    $cnt[$k]{'name'} = $cards_lut{$storage{$index}{'slotID_$j'}}; 
-        	                $cnt[$k]{'ID'} = $storage{$index}{'slotID_$j'}; 
-            	            $count++; 
-                	        last;                         
-                    	} 
-                  	} 
-               	} 
-            } 
-            $display = ""; 
-            $count ++; 
-            for($j = 0;$j < $count;$j++) { 
-				if($j == 0 && $cnt[$j]{'amount'}) { 
-                	if($cnt[$j]{'amount'} > 1) { 
-                		$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}"; 
-                		} else { 
-		                	$display .= "$cnt[$j]{'name'}"; 
-    		            } 
-        			} elsif ($cnt[$j]{'amount'}) { 
-            	    	if($cnt[$j]{'amount'} > 1) { 
-                	    	$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}"; 
-					} else { 
-                		$display .= ",$cnt[$j]{'name'}"; 
-					} 
-				} 
-			} 
-			$storage{$index}{'slotName'} = $display; 
+
+			my @cnt;
+			my $count = 0;
+
+			for (my $j = 1; $j < 5; $j++) {
+				if (unpack("S1", substr($msg, $i + $j + $j + 10, 2)) > 0) {
+					$storage{$index}{'slotID_$j'} = unpack("S1", substr($msg, $i + $j + $j + 10, 2));
+					for (my $k = 0; $k < 4; $k++) {
+						if (($storage{$index}{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($storage{$index}{'slotID_$j'} ne "")) {
+							$cnt[$k]{'amount'} += 1;
+							last;
+						} elsif ($storage{$index}{'slotID_$j'} ne "") {
+							$cnt[$k]{'amount'} = 1;
+							$cnt[$k]{'name'} = $cards_lut{$storage{$index}{'slotID_$j'}};
+							$cnt[$k]{'ID'} = $storage{$index}{'slotID_$j'};
+							$count++;
+							last;
+						}
+					}
+				}
+			}
+			$count ++;
+
+			my $display = "";
+			for (my $j = 0; $j < $count; $j++) {
+				if ($j == 0 && $cnt[$j]{'amount'}) {
+					if ($cnt[$j]{'amount'} > 1) {
+						$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
+					} else {
+						$display .= "$cnt[$j]{'name'}";
+					}
+				} elsif ($cnt[$j]{'amount'}) {
+					if ($cnt[$j]{'amount'} > 1) {
+						$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
+					} else {
+						$display .= ",$cnt[$j]{'name'}"; 
+					}
+				}
+			}
+			$storage{$index}{'slotName'} = $display;
 
 			$display = ($items_lut{$ID} ne "")
 				? $items_lut{$ID}
@@ -6349,7 +6257,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Storage: $storage{$index}{'name'} ($storage{$index}{'binID'})\n" if $config{'debug'};
 		}
 		print "Storage opened\n";
-#Solos End
+
 	} elsif ($switch eq "00A8") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$index = unpack("S1",substr($msg, 2, 2));
@@ -8042,21 +7950,21 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		($guild{'name'})    = substr($msg, 46, 24) =~ /([\s\S]*?)\000/;
 		($guild{'master'})  = substr($msg, 70, 24) =~ /([\s\S]*?)\000/;
 
-	} elsif ($switch eq "01C4") { 
-      		$index = unpack("S1", substr($msg, 2, 2)); 
-      		$amount = unpack("L1", substr($msg, 4, 4)); 
-      		$ID = unpack("S1", substr($msg, 8, 2)); 
-      		if (%{$storage{'inventory'}[$index]}) { 
-         		$storage{'inventory'}[$index]{'amount'} += $amount; 
-     	 	} else { 
-         	$storage{'inventory'}[$index]{'nameID'} = $ID; 
-         	$storage{'inventory'}[$index]{'amount'} = $amount; 
-         	$display = ($items_lut{$ID} ne "") 
-            		? $items_lut{$ID} 
-            		: "Unknown ".$ID; 
-         		$storage{'inventory'}[$index]{'name'} = $display; 
-      		} 
-      		print "Storage Item Added: $storage{'inventory'}[$index]{'name'} ($index) x $amount\n"; 
+	} elsif ($switch eq "01C4") {
+		my $index = unpack("S1", substr($msg, 2, 2));
+		my $amount = unpack("L1", substr($msg, 4, 4));
+		my $ID = unpack("S1", substr($msg, 8, 2));
+		if (%{$storage{'inventory'}[$index]}) {
+			$storage{'inventory'}[$index]{'amount'} += $amount;
+		} else {
+			$storage{'inventory'}[$index]{'nameID'} = $ID;
+			$storage{'inventory'}[$index]{'amount'} = $amount;
+			my $display = ($items_lut{$ID} ne "")
+				? $items_lut{$ID}
+				: "Unknown ".$ID;
+			$storage{'inventory'}[$index]{'name'} = $display;
+		}
+		print "Storage Item Added: $storage{'inventory'}[$index]{'name'} ($index) x $amount\n";
 
 	} elsif ($switch eq "01C8") {
 		my $index = unpack("S1",substr($msg, 2, 2));
@@ -9028,7 +8936,6 @@ sub ai_storageAutoCheck {
 
 sub attack {
 	my $ID = shift;
-	my $priorityAttack = shift;
 	my %args;
 	$args{'ai_attack_giveup'}{'time'} = time;
 	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
@@ -9037,14 +8944,8 @@ sub attack {
 	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
 	unshift @ai_seq, "attack";
 	unshift @ai_seq_args, \%args;
-
-	if ($priorityAttack) {
-		print "Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
-		injectMessage("Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})") if ($config{'verbose'} && $config{'XKore'});
-	} else {
-		print "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
-		injectMessage("Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})") if ($config{'verbose'} && $config{'XKore'});
-	}
+	print "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
+	injectMessage("Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})") if ($config{'verbose'} && $config{'XKore'});
 
 	$startedattack = 1;
 	if ($config{"monsterCount"}) {	
@@ -10850,7 +10751,6 @@ sub parseMonControl {
 			$$r_hash{lc($key)}{'attack_auto'} = $args[0];
 			$$r_hash{lc($key)}{'teleport_auto'} = $args[1];
 			$$r_hash{lc($key)}{'teleport_search'} = $args[2];
-			$$r_hash{lc($key)}{'kill_steal'} = $args[3];
 		}
 	}
 	close FILE;
@@ -10915,22 +10815,6 @@ sub parsePortalsLOS {
 				$$r_hash{"$map $x $y"}{"$args[$i] $args[$i+1] $args[$i+2]"} = $args[$i+3];
 			}
 		}
-	}
-	close FILE;
-}
-
-sub parsePriority {
-	my $file = shift;
-	my $r_hash = shift;
-	open (FILE, "<$file");
-
-	my @lines = <FILE>;
-	my $pri = $#lines;
-	foreach (@lines) {
-		next if (/^#/);
-		s/[\r\n]//g;
-		$$r_hash{lc($_)} = $pri + 1;
-		$pri--;
 	}
 	close FILE;
 }
@@ -11538,8 +11422,8 @@ sub avoidGM_near() {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
 			chatLog("k", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
 
-			my $tmp = $config{'avoidGM_reconnect'} + rand($config{'avoidGM_reconnect'});
-			print "Disconnect for ".timeConvert($tmp)."...\n";
+			my $tmp = $config{'avoidGM_reconnect'};
+			print "Disconnect for $tmp seconds...\n";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $tmp;
 			killConnection(\$remote_socket);
@@ -11557,7 +11441,7 @@ sub avoidGM_talk($$) {
 	# in order to prevent false matches
 	my $statusGM = 1;
 	my $j = 0;
-	while ($avoid{"avoid_ignore_$j"} ne "") {
+	while ($avoid{"avoid_$j"} ne "") {
 		if ($chatMsgUser eq $avoid{"avoid_ignore_$j"})
 		{
 			$statusGM = 0;
@@ -11570,8 +11454,8 @@ sub avoidGM_talk($$) {
 		print "Disconnecting to avoid GM!\n"; 
 		chatLog("k", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n");
 
-		my $tmp = $config{'avoidGM_reconnect'} + rand($config{'avoidGM_reconnect'});
-		print "Disconnect for ".timeConvert($tmp)."...\n";
+		my $tmp = $config{'avoidGM_reconnect'};
+		print "Disconnect for $tmp seconds...\n";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $tmp;
 		killConnection(\$remote_socket);
@@ -11588,7 +11472,7 @@ sub avoidList_near() {
 			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
 				print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
 				chatLog("k", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
-				print "Disconnect for ".timeConvert($config{'avoidList_reconnect'})."...\n";
+				print "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
 				$timeout_ex{'master'}{'time'} = time;
 				$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
 				killConnection(\$remote_socket);
@@ -11609,7 +11493,7 @@ sub avoidList_talk($$) {
 		if ($chatMsgUser eq $avoid{"avoid_$j"}) { 
 			print "Disconnecting to avoid $chatMsgUser!\n"; 
 			chatLog("k", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
-			print "Disconnect for ".timeConvert($config{'avoidList_reconnect'})."...\n";
+			print "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
 			killConnection(\$remote_socket);
@@ -11894,8 +11778,12 @@ sub timeOut {
 	}
 }
 
-#this is a small sub to convert the ubiquitus seconds values we have EVERYWHERE into something the average
-#user will/can understand
+##
+# timeConvert($time)
+# $time: number of seconds.
+# Returns: a string.
+#
+# Converts $time into a string in the form of "x seconds y minutes z seconds".
 sub timeConvert {
 	my $time = shift;
 	my $hours = int($time / 3600);
@@ -11903,8 +11791,23 @@ sub timeConvert {
 	my $minutes = int($time / 60);
 	my $time = $time % 60;
 	my $seconds = $time;
-	my $gathered = $hours." hours ".$minutes." minutes ".$seconds." seconds";
+	my $gathered = '';
+
+	$gathered = '$hours hours ' if ($hours);
+	$gathered .= '$minutes minutes ' if ($minutes);
+	$gathered .= '$seconds seconds' if ($seconds);
+	$gathered =~ s/ $//;
+	$gathered = '0 seconds' if ($gathered eq '');
 	return $gathered;
+}
+
+sub timeOut {
+	my ($r_time, $compare_time) = @_;
+	if ($compare_time ne "") {
+		return (time - $r_time > $compare_time);
+	} else {
+		return (time - $$r_time{'time'} > $$r_time{'timeout'});
+	}
 }
 
 sub vocalString {
