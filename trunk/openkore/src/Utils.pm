@@ -18,7 +18,8 @@ our @ISA = "Exporter";
 our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
-	findKey findKeyString minHeapAdd);
+	findKey findKeyString minHeapAdd
+	getFormattedDate swrite);
 
 
 #######################################
@@ -272,6 +273,41 @@ sub minHeapAdd {
 		push @newArray, $r_hash;
 	}
 	@{$r_array} = @newArray;
+}
+
+
+################################
+################################
+#MISC UTILITY FUNCTIONS
+################################
+################################
+
+
+sub getFormattedDate {
+        my $thetime = shift;
+        my $r_date = shift;
+        my @localtime = localtime $thetime;
+        my $themonth = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)[$localtime[4]];
+        $localtime[2] = "0" . $localtime[2] if ($localtime[2] < 10);
+        $localtime[1] = "0" . $localtime[1] if ($localtime[1] < 10);
+        $localtime[0] = "0" . $localtime[0] if ($localtime[0] < 10);
+        $$r_date = "$themonth $localtime[3] $localtime[2]:$localtime[1]:$localtime[0] " . ($localtime[5] + 1900);
+        return $$r_date;
+}
+
+sub swrite {
+	my @format = split(/\n/, shift);
+	my $result = '';
+	for (my $i = 0; $i < @format; $i += 2) {
+		my $args = $format[$i + 1];
+		$args =~ s/(\$[a-z0-9_]+)/$1,/ig;
+		$args =~ s/, *$//;
+
+		$^A = '';
+		eval "formline(\$format[\$i], $args);\n";
+		$result .= "$^A\n";
+	}
+	return $result;
 }
 
 
