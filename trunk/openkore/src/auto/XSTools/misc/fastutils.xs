@@ -5,7 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
-static SV *sub_time = (SV *) 0;
+typedef double (*NVtime_t) ();
+static void *NVtime = NULL;
 
 
 MODULE = FastUtils	PACKAGE = Utils
@@ -85,17 +86,15 @@ timeOut(r_time,compare_time = NULL)
 			if (!(v_timeout = SvNV (compare_time)))
 				XSRETURN_YES;
 
-			if (!sub_time) {
-				sub_time = eval_pv ("\\&Time::HiRes::time", TRUE);
-				SvREFCNT_inc (sub_time);
+			if (!NVtime) {
+				SV **svp = hv_fetch (PL_modglobal, "Time::NVtime", 12, 0);
+				if (!svp)
+					croak("Time::HiRes is required");
+				if (!SvIOK (*svp))
+					croak("Time::NVtime isn't a function pointer");
+				NVtime = INT2PTR (void *, SvIV (*svp));
 			}
-			PUSHMARK(SP);
-			ret = call_sv (sub_time, G_SCALAR);
-			SPAGAIN;
-			if (ret != 1)
-				croak ("Time::HiRes::time() didn't return 1 value.\n");
-			current_time = POPn;
-			PUTBACK;
+			current_time = ((NVtime_t) NVtime) ();
 
 		} else {
 			/* r_time is a hash */
@@ -112,17 +111,15 @@ timeOut(r_time,compare_time = NULL)
 			if (!(sv_timeout = hv_fetch (hash, "timeout", 7, 0)) || !(v_timeout = SvNV (*sv_timeout)))
 				XSRETURN_YES;
 
-			if (!sub_time) {
-				sub_time = eval_pv ("\\&Time::HiRes::time", TRUE);
-				SvREFCNT_inc (sub_time);
+			if (!NVtime) {
+				SV **svp = hv_fetch (PL_modglobal, "Time::NVtime", 12, 0);
+				if (!svp)
+					croak("Time::HiRes is required");
+				if (!SvIOK (*svp))
+					croak("Time::NVtime isn't a function pointer");
+				NVtime = INT2PTR (void *, SvIV (*svp));
 			}
-			PUSHMARK(SP);
-			ret = call_sv (sub_time, G_SCALAR);
-			SPAGAIN;
-			if (ret != 1)
-				croak ("Time::HiRes::time() didn't return 1 value.\n");
-			current_time = POPn;
-			PUTBACK;
+			current_time = ((NVtime_t) NVtime) ();
 		}
 
 		RETVAL = (current_time - v_time > v_timeout);
