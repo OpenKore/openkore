@@ -9942,15 +9942,15 @@ sub useTeleport {
 		# set a small timeout, will be overridden if related config in equipAuto is set
 		$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
 		$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
-		
+
 	} elsif (defined $ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut(\%{$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}})) {
 		warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
 		delete $ai_v{temp}{teleport};
 	}
-	
+
 	# {'skills'}{'AL_TELEPORT'}{'lv'} is valid even after creamy is unequiped, use @skillsID instead
 	if (!$config{teleportAuto_useItem} && binFind(\@skillsID, 'AL_TELEPORT') ne "") {
-		sendSkillUse(\$remote_socket, $skillsID_rlut{lc('Teleport')}, 2, $accountID);
+		sendSkillUse(\$remote_socket, $skillsID_rlut{teleport}, 2, $accountID) if $config{teleportAuto_useSP};
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
 		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2);
 		delete $ai_v{temp}{teleport};
