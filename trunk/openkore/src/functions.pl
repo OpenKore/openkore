@@ -1302,7 +1302,7 @@ sub parseCommand {
 		
 		if (!$skill_num || !defined($x) || !defined($y)) {
 			error	"Syntax Error in function 'sl' (Use Skill on Location)\n" .
-				"Usage: ss <skill #> <x> <y> [<skill lvl>]\n";
+				"Usage: sl <skill #> <x> <y> [<skill lvl>]\n";
 		} elsif (!$skillsID[$skill_num]) {
 			error	"Error in function 'sl' (Use Skill on Location)\n" .
 				"Skill $skill_num does not exist.\n";
