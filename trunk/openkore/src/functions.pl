@@ -2860,7 +2860,7 @@ sub AI {
 			# If stat needs to be raised to match desired amount
                         $statAmount = $char->{$st};
 			$statAmount += $char->{"${st}_bonus"} if ($config{statsAddAuto_dontUseBonus});
-			if ($statAmount < $num ) {
+			if ($statAmount < $num && $char->{$st} < 99) {
 				# If char has enough stat points free to raise stat
 				if ($char->{points_free} >= $char->{"points_$st"}) {
 					my $ID;
