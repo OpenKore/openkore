@@ -31,6 +31,7 @@ our @EXPORT = qw(
 	findKey findKeyString minHeapAdd
 	distance
 	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getTickCount
+	getRange inRange
 	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString);
 
 
@@ -620,6 +621,43 @@ sub vocalString {
 	}
 	$$r_string = $password if ($r_string);
 	return $password;
+}
+
+sub inRange {
+	my $value = shift;
+	my $param = shift;
+
+	return 1 if (!defined $param);
+	my ($min, $max) = getRange($param);
+
+	if (defined $min && defined $max) {
+		return 1 if ($value >= $min && $value <= $max);
+	} elsif (defined $min) {
+		return 1 if ($value >= $min);
+	} elsif (defined $max) {
+		return 1 if ($value <= $max);
+	}
+	
+	return 0;
+}
+
+sub getRange {
+	my $param = shift;
+	return if (!defined $param);
+
+	if (($param =~ /(\d+)\s*-\s*(\d+)/) || ($param =~ /(\d+)\s*\.\.\s*(\d+)/)) {
+		return ($1, $2);
+	} elsif ($param =~ />\s*(\d+)/) {
+		return ($1+1, undef);
+	} elsif ($param =~ />=\s*(\d+)/) {
+		return ($1, undef);
+	} elsif ($param =~ /<\s*(\d+)/) {
+		return (undef, $1-1);
+	} elsif ($param =~ /<=\s*(\d+)/) {
+		return (undef, $1);
+	} elsif ($param =~/^(\d+)/) {
+		return ($1, $1);
+	}
 }
 
 return 1;

@@ -871,6 +871,7 @@ sub cmdStatus {
 	message("Active skills: $activeSkills\n", "info");
 	message("Ailments: $ailments $state\n", "info");
 	message("Looks: $looks\n", "info");
+	message("Spirits: $chars[$config{char}]{spirits}\n", "info") if (exists $chars[$config{char}]{spirits});
 	message("----------------------------------------\n", "info");
 
 
