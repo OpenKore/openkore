@@ -187,6 +187,7 @@ sub processMsg {
 		$consoleVar->{$domain} = 1 if (!defined($consoleVar->{$domain}));
 		if ($consoleVar->{$domain}) {
 			if ($interface) {
+				$message = "[$domain] " . $message if ($config{showDomain});
 				$interface->writeOutput($type, $message, $domain);
 			} else {
 				print $message;

@@ -19,6 +19,9 @@ New features:
 - Don't use teleportAuto_maxDmg if the more specific
   teleportAuto_maxDmgInLock is specified.
 
+New config options:
+- showDomain, if set to 1 will display domains along with messages.
+
 Credits:
 - jsteng: VVVS weapon name bugfix.
 - arachno: Language code bugfix, chat.txt map name bugfix.
