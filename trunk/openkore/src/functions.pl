@@ -4150,7 +4150,7 @@ sub AI {
 					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
 				} else {
 					#no more points to cover
-					message "Destination reached.\n", "success";
+					message "Destination reached.\n", "success", 2;
 					shift @ai_seq;
 					shift @ai_seq_args;
 				}
