@@ -2946,53 +2946,56 @@ sub AI {
 
 	##### LOCKMAP #####
 
-	%{$ai_v{'temp'}{'lockMap_coords'}} = ();
-	$ai_v{'temp'}{'lockMap_coords'}{'x'} = $config{'lockMap_x'} + ((int(rand(3))-1)*(int(rand($config{'lockMap_randX'}))+1));
-	$ai_v{'temp'}{'lockMap_coords'}{'y'} = $config{'lockMap_y'} + ((int(rand(3))-1)*(int(rand($config{'lockMap_randY'}))+1));
-	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'}
-		&& ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" 
-		&& ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) 
-		&& distance($ai_v{'temp'}{'lockMap_coords'}, $chars[$config{'char'}]{'pos_to'}) > 1.42))
-	) {
-		if ($maps_lut{$config{'lockMap'}.'.rsw'} eq "") {
-			error "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
+	if (AI::isIdle && $config{lockMap} && $field{name} ne $config{lockMap}) {
+		if ($maps_lut{$config{lockMap}.'.rsw'} eq '') {
+			error "Invalid map specified for lockMap - map $config{lockMap} doesn't exist\n";
+			$config{lockMap} = '';
 		} else {
-			if ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "") {
-				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}\n", "route";
+			my %lockField;
+			getField("$Settings::def_field/$config{lockMap}.fld", \%lockField);
+			my $lockX, $lockY, $i = 500;
+			do {
+				$lockX = int($config{lockMap_x}) + ((int(rand(3))-1) * (int(rand($config{lockMap_randX}))+1));
+				$lockY = int($config{lockMap_y}) + ((int(rand(3))-1) * (int(rand($config{lockMap_randY}))+1));
+			} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
+			if (!$i) {
+				error "Invalid coordinates specified for lockMap, coordinates are unwalkable\n";
+				$config{lockMap} = '';
 			} else {
-				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
+				my $attackOnRoute = 2;
+				$attackOnRoute = 1 if ($config{attackAuto_inLockOnly} == 1);
+				$attackOnRoute = 0 if ($config{attackAuto_inLockOnly} > 1);
+				if ($lockX > 0 || $lockY > 0) {
+					message "Calculating lockMap route to: $maps_lut{$config{lockMap}.'.rsw'}($config{lockMap}): $lockX, $lockY\n", "route";
+				} else {
+					message "Calculating lockMap route to: $maps_lut{$config{lockMap}.'.rsw'}($config{lockMap})\n", "route";
+				}
+				ai_route($config{lockMap}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
 			}
-
-			my $attackOnRoute;
-			if ($config{'attackAuto_inLockOnly'} == 1) {
-				$attackOnRoute = 1;
-			} elsif ($config{'attackAuto_inLockOnly'} > 1) {
-				$attackOnRoute = 0;
-			} else {
-				$attackOnRoute = 2;
-			}
-			ai_route($config{'lockMap'}, $config{'lockMap_x'}, $config{'lockMap_y'},
-				attackOnRoute => $attackOnRoute);
 		}
 	}
-	undef $ai_v{'temp'}{'lockMap_coords'};
 
 
 	##### RANDOM WALK #####
-	if ($config{route_randomWalk} && AI::isIdle && !$cities_lut{$field{name}.'.rsw'}) {
-		# Find a random block on the map that we can walk on
-		my ($randX, $randY);
-		do { 
+	if (AI::isIdle && $config{route_randomWalk} && !$cities_lut{$field{name}.'.rsw'}) {
+		my $randX, $randY, $i = 500;
+		do {
 			$randX = int(rand() * ($field{width} - 1));
+			$randX = $config{lockMap_x} + ((int(rand(3))-1)*(int(rand($config{lockMap_randX}))+1)) if ($config{lockMap_x} ne '' && $config{lockMap_randX} ne '');
 			$randY = int(rand() * ($field{height} - 1));
-		} while (!checkFieldWalkable(\%field, $randX, $randY));
-
-		# Move to that block
-		message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";
-		ai_route($field{name}, $randX, $randY,
-			maxRouteTime => $config{route_randomWalk_maxRouteTime},
-			attackOnRoute => 2);
+			$randY = $config{lockMap_y} + ((int(rand(3))-1)*(int(rand($config{lockMap_randY}))+1)) if ($config{lockMap_y} ne '' && $config{lockMap_randY} ne '');
+		} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
+		if (!$i) {
+			error "Invalid coordinates specified for randomWalk, coordinates are unwalkable\n";
+			$config{route_randomWalk} = 0;
+		} else {
+			message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";
+			ai_route($field{name}, $randX, $randY,
+				maxRouteTime => $config{route_randomWalk_maxRouteTime},
+				attackOnRoute => 2);
+		}
 	}
+
 
 	##### FOLLOW #####
 	
