@@ -3993,52 +3993,44 @@ sub AI {
 
 	##### SKILL USE #####
 
-	if ($ai_seq[0] eq "skill_use" && $ai_seq_args[0]{'suspended'}) {
-		$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		$ai_seq_args[0]{'ai_skill_use_minCastTime'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		$ai_seq_args[0]{'ai_skill_use_maxCastTime'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		undef $ai_seq_args[0]{'suspended'};
+	if (AI::action eq "skill_use" && AI::args->{suspended}) {
+		AI::v->{ai_skill_use_giveup}{time} += time - AI::args->{suspended};
+		AI::v->{ai_skill_use_minCastTime}{time} += time - AI::args->{suspended};
+		AI::v->{ai_skill_use_maxCastTime}{time} += time - AI::args->{suspended};
+		undef AI::v->{suspended};
 	}
-	if ($ai_seq[0] eq "skill_use") {
-		if (exists $ai_seq_args[0]{'ai_equipAuto_skilluse_giveup'} && binFind(\@skillsID, $ai_seq_args[0]{'skill_use_id'}) eq "") {
-			if (timeOut(\%{$ai_seq_args[0]{'ai_equipAuto_skilluse_giveup'}})) {
-				warning "Timeout equiping for skill\n";
-				shift @ai_seq;
-				shift @ai_seq_args;
-			}
-		}
-		else {
+
+	if (AI::action eq "skill_use") {
+		if (exists AI::args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, AI::args->{skill_use_id}) eq "" && timeOut(\%{AI::args->{ai_equipAuto_skilluse_giveup}})) {
+			warning "Timeout equiping for skill\n";
+			AI::dequeue();
+
+		} else {
 			my $skillIDNumber = $skillsID_rlut{lc($skills_lut{AI::args->{skill_use_id}})};
-			if (defined $ai_seq_args[0]{monsterID} && !%{$monsters{$ai_seq_args[0]{monsterID}}}) {
+			if (defined AI::args->{monsterID} && !defined $monsters{AI::args->{monsterID}}) {
 				# This skill is supposed to be used for attacking a monster, but that monster has died
-				shift @ai_seq;
-				shift @ai_seq_args;
+				AI::dequeue();
 	
-			} elsif ($chars[$config{'char'}]{'sitting'}) {
-				ai_setSuspend(0);
+			} elsif ($char->{sitting}) {
+				AI::suspend();
 				stand();
-			} elsif (!$ai_seq_args[0]{'skill_used'}) {
-				$ai_seq_args[0]{'skill_used'} = 1;
-				$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} = time;
-				if ($ai_seq_args[0]{'skill_use_target_x'} ne "") {
-					sendSkillUseLoc(\$remote_socket, $skillIDNumber, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target_x'}, $ai_seq_args[0]{'skill_use_target_y'});
+
+			} elsif (!AI::args->{skill_used}) {
+				AI::args->{skill_used} = 1;
+				AI::args->{ai_skill_use_giveup}{time} = time;
+				if (AI::args->{skill_use_target_x} ne "") {
+					sendSkillUseLoc(\$remote_socket, $skillIDNumber, AI::args->{skill_use_lv}, AI::args->{skill_use_target_x}, AI::args->{skill_use_target_y});
 				} else {
-					sendSkillUse(\$remote_socket, $skillIDNumber, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target'});
+					sendSkillUse(\$remote_socket, $skillIDNumber, AI::args->{skill_use_lv}, AI::args->{skill_use_target});
 				}
-				$ai_seq_args[0]{'skill_use_last'} = $chars[$config{'char'}]{'skills'}{$ai_seq_args[0]{'skill_use_id'}}{'time_used'};
+				AI::args->{skill_use_last} = $char->{skills}{AI::args->{skill_use_id}}{time_used};
 	
-			} elsif (
-			  ( $ai_seq_args[0]{'skill_use_last'} != $chars[$config{'char'}]{'skills'}{$ai_seq_args[0]{'skill_use_id'}}{'time_used'}
-				  || (timeOut(\%{$ai_seq_args[0]{'ai_skill_use_giveup'}}) && (!$chars[$config{'char'}]{'time_cast'} || !$ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'}))
-				  || ($ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'} && timeOut(\%{$ai_seq_args[0]{'skill_use_maxCastTime'}})))
-				&& timeOut(\%{$ai_seq_args[0]{'skill_use_minCastTime'}})) {
-				shift @ai_seq;
-				shift @ai_seq_args;
+			} elsif ((AI::args->{skill_use_last} != $char->{skills}{AI::args->{skill_use_id}}{time_used} || (timeOut(\%{AI::args->{ai_skill_use_giveup}}) && (!$char->{time_cast} || !AI::args->{skill_use_maxCastTime}{timeout})) || (AI::args->{skill_use_maxCastTime}{timeout} && timeOut(\%{AI::args->{skill_use_maxCastTime}})))
+				&& timeOut(\%{AI::args->{skill_use_minCastTime}})) {
+				AI::dequeue();
 			}
 		}
 	}
-
-
 
 	####### ROUTE #######
 
@@ -7659,7 +7651,7 @@ sub parseMsg {
 		message	"---Guild Notice---\n"
 			."$address\n\n"
 			."$message\n"
-			."------------------\n";
+			."------------------\n","guildnotice";
 
 	} elsif ($switch eq "0171") {
 		my $ID = substr($msg, 2, 4);
