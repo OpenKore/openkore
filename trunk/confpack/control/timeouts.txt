@@ -89,6 +89,9 @@ ai_itemExchange 2
 ai_avoidcheck 0.5
 ai_shop 10
 
+ai_npcResponse 1
+ai_npcTalk 10
+
 
 # Don't change the following timeouts!
 ai_sync 12
