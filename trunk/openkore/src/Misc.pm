@@ -443,7 +443,7 @@ sub whenStatusActivePL {
 #
 # Asynchronously launch an application.
 sub launchApp {
-	if ($^ eq 'MSWin32') {
+	if ($^O eq 'MSWin32') {
 		my @args = @_;
 		foreach (@args) {
 			$_ = "\"$_\"";
@@ -482,7 +482,7 @@ sub launchApp {
 sub launchURL {
 	my $url = shift;
 
-	if ($^ eq 'MSWin32') {
+	if ($^O eq 'MSWin32') {
 		eval "use Win32::API;";
 		my $ShellExecute = new Win32::API("shell32", "ShellExecute", "NPPPPN", "V");
 		$ShellExecute->Call(0, '', $url, '', '', 1);

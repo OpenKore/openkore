@@ -20,7 +20,6 @@ use base qw(Exporter);
 use Win32;
 use Time::HiRes qw(time usleep);
 
-use Globals;
 use Log qw(message);
 use WinUtils;
 use Utils qw(dataWaiting);
@@ -29,49 +28,46 @@ use Utils qw(dataWaiting);
 ##
 # XKore->new()
 #
-# Initialize X-Kore mode.
+# Initialize X-Kore mode. If an error occurs, this function will return undef,
+# and set the error message in $@.
 sub new {
 	my $class = shift;
 	my $port = 2350;
 	my %self;
 
+	undef $@;
 	$self{server} = new IO::Socket::INET->new(
 		Listen		=> 5,
 		LocalAddr	=> 'localhost',
 		LocalPort	=> $port,
 		Proto		=> 'tcp');
 	if (!$self{server}) {
-		$interface->errorDialog("Unable to start the X-Kore server.\n" .
-				"You can only run one X-Kore session at the same time.\n\n" .
-				"And make sure no other servers are running on port $port.");
+		$@ = "Unable to start the X-Kore server.\n" .
+			"You can only run one X-Kore session at the same time.\n\n" .
+			"And make sure no other servers are running on port $port.";
 		return undef;
 	}
 
 	message "X-Kore mode intialized.\n", "startup";
-	$self{msgHook} = Log::addHook(\&redirectMessages, \%self);
 
 	bless \%self, $class;
 	return \%self;
 }
 
-sub DESTROY {
-	my $self = shift;
-	Log::delHook($self->{msgHook});
-}
-
 ##
-# $xkore->inject(exeName)
-# exeName: base name of the process.
+# $xkore->inject(pid)
+# pid: a process ID.
 # error: reference to a scalar. The error message will be stored here, if this function fails (returns 0).
-# Returns: 1 on success, 0 on failure, -1 if process not found.
+# Returns: 1 on success, 0 on failure.
 #
-# Inject NetRedirect.dll into an external process.
+# Inject NetRedirect.dll into an external process. On failure, $@ is set.
 sub inject {
 	my $self = shift;
-	my $exeName = shift;
+	my $pid = shift;
 	my $cwd = Win32::GetCwd();
 	my $dll;
 
+	undef $@;
 	foreach ("$cwd\\src\\auto\\XSTools\\win32\\NetRedirect.dll", "$cwd\\NetRedirect.dll", "$cwd\\Inject.dll") {
 		if (-f $_) {
 			$dll = $_;
@@ -79,13 +75,16 @@ sub inject {
 		}
 	}
 	if (!$dll) {
-		$interface->errorDialog("Cannot find NetRedirect.dll. Please check your installation.");
+		$@ = "Cannot find NetRedirect.dll. Please check your installation.";
 		return 0;
 	}
 
-	my $pid = WinUtils::GetProcByName($exeName);
-	return -1 if (!$pid);
-	return (WinUtils::InjectDLL($pid, $dll) == 1);
+	if (WinUtils::InjectDLL($pid, $dll)) {
+		return 1;
+	} else {
+		$@ = 'Unable to inject NetRedirect.dll';
+		return undef;
+	}
 }
 
 ##
@@ -108,7 +107,7 @@ sub waitForClient {
 #
 # Check whether the connection with the client is still alive.
 sub alive {
-	return defined $_[0]->{client};
+	return defined ($_[0]->{client} && $_[0]->{client}->connected);
 }
 
 ##
@@ -116,7 +115,7 @@ sub alive {
 # Returns: the messages as a scalar, or undef if there are no pending messages.
 #
 # Receive messages from the client. This function immediately returns if there are no pending messages.
-sub iterate {
+sub recv {
 	my $self = shift;
 	my $client = $self->{client};
 	my $msg;
@@ -125,7 +124,7 @@ sub iterate {
 	eval {
 		$client->recv($msg, 32 * 1024);
 	};
-	if (!defined $msg || $@) {
+	if (!defined $msg || length($msg) == 0 || $@) {
 		delete $self->{client};
 		return undef;
 	} else {

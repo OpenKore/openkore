@@ -150,8 +150,9 @@ use Misc;
 use AI;
 use Skills;
 use Interface;
+use XKore;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Skills Interface));
+	Network Network::Send Commands Misc AI Skills Interface XKore));
 
 Log::message("$Settings::versionText\n");
 Plugins::loadAll();
@@ -213,10 +214,6 @@ Settings::load();
 Plugins::callHook('start3');
 
 
-if ($config{'XKore'}) {
-	our $injectDLL_file = Win32::GetCwd() . "\\Inject.dll";
-}
-
 if ($config{'adminPassword'} eq 'x' x 10) {
 	Log::message("\nAuto-generating Admin Password due to default...\n");
 	configModify("adminPassword", vocalString(8));
@@ -235,21 +232,14 @@ Log::message("\n");
 
 ##### INITIALIZE X-KORE SERVER ######
 
-our $injectServer_socket;
+our $xkore;
 our $XKore_dontRedirect = 0;
 if ($config{'XKore'}) {
-	$injectServer_socket = IO::Socket::INET->new(
-			Listen		=> 5,
-			LocalAddr	=> 'localhost',
-			LocalPort	=> 2350,
-			Proto		=> 'tcp');
-	if (!$injectServer_socket) {
-		$interface->errorDialog("Unable to start the X-Kore server.\n" .
-				"You can only run one X-Kore session at the same time.\n\n" .
-				"And make sure no other servers are running on port 2350.");
+	$xkore = new XKore;
+	if (!$xkore) {
+		$interface->errorDialog($@);
 		exit 1;
 	}
-	Log::message("Local X-Kore server started (".$injectServer_socket->sockhost().":2350)\n", "startup");
 
 	# Redirect messages to the RO client
 	# I don't use a reference to redirectXKoreMessages here;
@@ -348,54 +338,40 @@ while ($quit != 1) {
 	usleep($config{'sleepTime'});
 	$interface->iterate();
 
-	if ($config{'XKore'}) {
+	if ($xkore && !$xkore->alive) {
 		# (Re-)initialize X-Kore if necessary
-
-		if (timeOut($timeout{'injectKeepAlive'})) {
-			$conState = 1;
-			my $printed = 0;
-			my $procID = 0;
-			do {
-				$procID = WinUtils::GetProcByName($config{'exeName'});
-				if (!$procID && !$printed) {
-					Log::message("Error: Could not locate process $config{'exeName'}.\n");
-					Log::message("Waiting for you to start the process...\n");
-					$printed = 1;
+		my $printed;
+		my $pid;
+		# Wait until the RO client has started
+		while (!($pid = WinUtils::GetProcByName($config{exeName}))) {
+			Log::message("Please start the Ragnarok Online client ($config{exeName})\n", "startup") unless $printed;
+			$printed = 1;
+			$interface->iterate;
+			if (defined($input = $interface->getInput(0))) {
+				if ($input eq "quit") {
+					$quit = 1;
+					last;
+				} else {
+					Log::message("Error: You cannot type anything except 'quit' right now.\n");
 				}
-
-				if (defined($input = $interface->getInput(0))) {
-				   	if ($input eq 'quit') {
-						$quit = 1;
-						last;
-					} else {
-						Log::message("Error: You cannot type anything except 'quit' right now.\n");
-					}
-				}
-
-				usleep 100000;
-			} while (!$procID && !$quit);
-			last if ($quit);
-
-			if ($printed == 1) {
-				Log::message("Process found\n");
 			}
-			my $retVal = WinUtils::InjectDLL($procID, $injectDLL_file);
-			if ($retVal != 1) {
-				Log::error("Could not inject DLL\n", "startup");
-				$timeout{'injectKeepAlive'}{'time'} = time;
-			} else {
-				Log::message("Waiting for InjectDLL to connect...\n");
-				$remote_socket = $injectServer_socket->accept();
-				(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
-				|| die "Inject Socket must be connected from localhost";
-				Log::message("InjectDLL Socket connected - Ready to start botting\n");
-				$timeout{'injectKeepAlive'}{'time'} = time;
-			}
+			usleep 10000;
+			last if $quit;
 		}
-		if (timeOut(\%{$timeout{'injectSync'}})) {
-			sendSyncInject(\$remote_socket);
-			$timeout{'injectSync'}{'time'} = time;
+		last if $quit;
+
+		# Inject DLL
+		Log::message("Ragnarok Online client found\n", "startup");
+		sleep 1 if $printed;
+		if (!$xkore->inject($pid)) {
+			# Failed to inject
+			$interface->errorDialog($@);
+			exit 1;
 		}
+
+		# Wait until the RO client has connected to us
+		$remote_socket = $xkore->waitForClient;
+		Log::message("You can login with the Ragnarok Online client now.\n", "startup");
 	}
 
 	# Parse command input
@@ -404,42 +380,40 @@ while ($quit != 1) {
 	}
 
 	# Receive and handle data from the RO server
-	if (dataWaiting(\$remote_socket)) {
-		if (!$config{'XKore'}) {
-			$remote_socket->recv($new, $Settings::MAX_READ);
-			$msg .= $new;
-			$msg_length = length($msg);
-			while ($msg ne "") {
-				$msg = parseMsg($msg);
-				last if ($msg_length == length($msg));
-				$msg_length = length($msg);
+	if ($xkore) {
+		my $injectMsg = $xkore->recv;
+		while ($injectMsg ne "") {
+			if (length($injectMsg) < 3) {
+				undef $injectMsg;
+				last;
 			}
 
-		} else {
-			my $injectMsg;
-			$remote_socket->recv($injectMsg, $Settings::MAX_READ);
-			while ($injectMsg ne "") {
-				if (length($injectMsg) < 3) {
-					undef $injectMsg;
-					break;
-				}
-				my $type = substr($injectMsg, 0, 1);
-				my $len = unpack("S",substr($injectMsg, 1, 2));
-				my $newMsg = substr($injectMsg, 3, $len);
-				$injectMsg = (length($injectMsg) >= $len+3) ? substr($injectMsg, $len+3, length($injectMsg) - $len - 3) : "";
-				if ($type eq "R") {
-					$msg .= $newMsg;
+			my $type = substr($injectMsg, 0, 1);
+			my $len = unpack("S",substr($injectMsg, 1, 2));
+			my $newMsg = substr($injectMsg, 3, $len);
+			$injectMsg = (length($injectMsg) >= $len+3) ? substr($injectMsg, $len+3, length($injectMsg) - $len - 3) : "";
+
+			if ($type eq "R") {
+				$msg .= $newMsg;
+				$msg_length = length($msg);
+				while ($msg ne "") {
+					$msg = parseMsg($msg);
+					last if ($msg_length == length($msg));
 					$msg_length = length($msg);
-					while ($msg ne "") {
-						$msg = parseMsg($msg);
-						last if ($msg_length == length($msg));
-						$msg_length = length($msg);
-					}
-				} elsif ($type eq "S") {
-					parseSendMsg($newMsg);
 				}
-				$timeout{'injectKeepAlive'}{'time'} = time;
+			} elsif ($type eq "S") {
+				parseSendMsg($newMsg);
 			}
+		}
+
+	} elsif (dataWaiting(\$remote_socket)) {
+		$remote_socket->recv($new, $Settings::MAX_READ);
+		$msg .= $new;
+		$msg_length = length($msg);
+		while ($msg ne "") {
+			$msg = parseMsg($msg);
+			last if ($msg_length == length($msg));
+			$msg_length = length($msg);
 		}
 	}
 
