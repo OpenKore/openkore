@@ -395,13 +395,13 @@ sub initMapChangeVars {
 #Cart List bugfix - chobit aska 20030128
 	undef @cartID;
 	undef %{$cart{'inventory'}};
-#Solos Start
 	undef @venderItemList;
 	undef $venderID;
 	undef @venderListsID;
 	undef $venderLists;
+	undef %guild;
+	undef %incomingGuild;
 	initOtherVars();
-#Solos End
 }
 
 #Solos Start
@@ -1217,14 +1217,66 @@ $you_string                      $other_string
 		}
 
 	#Guild Chat - chobit andy 20030101
-	} elsif ($switch eq "g") { 
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/; 
-		if ($arg1 eq "") { 
-			print "Syntax Error in function 'g' (Guild Chat)\n" 
-				,"Usage: g <message>\n"; 
-		} else { 
-			sendMessage(\$remote_socket, "g", $arg1); 
-		} 
+	} elsif ($switch eq "g") {
+		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		if ($arg1 eq "") {
+			print "Syntax Error in function 'g' (Guild Chat)\n"
+				,"Usage: g <message>\n";
+		} else {
+			sendMessage(\$remote_socket, "g", $arg1);
+		}
+
+	} elsif ($switch eq "guild") {
+		my ($arg1) = $input =~ /^.*? (\w+)/;
+		if ($arg1 eq "info") {
+			print "---------- Guild Information ----------\n";
+			$~ = "GUILD";
+			format GUILD =
+Name    : @<<<<<<<<<<<<<<<<<<<<<<<<
+$guild{'name'}
+Lv      : @<<
+$guild{'lvl'}
+Exp     : @>>>>>>>>>/@<<<<<<<<<<
+$guild{'exp'} $guild{'next_exp'}
+Master  : @<<<<<<<<<<<<<<<<<<<<<<<<
+$guild{'master'}
+Connect : @>>/@<<
+$guild{'conMember'} $guild{'maxMember'}
+.
+			write;
+			print "---------------------------------------\n";
+
+		} elsif ($arg1 eq "member") {
+			print "------------ Guild  Member ------------\n";
+			print "#  Name                       Job        Lv  Title                       Online\n";
+			my ($i, $name, $job, $lvl, $title, $online);
+
+			$~ = "GM";
+			format GM = 
+@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<
+$i  $name                    $job       $lvl $title                   $online
+.
+
+			my $count = @{$guild{'member'}};
+			for ($i = 0; $i < $count; $i++) {
+				$name  = $guild{'member'}[$i]{'name'};
+				next if ($name eq "");
+				$job   = $jobs_lut{$guild{'member'}[$i]{'jobID'}};
+				$lvl   = $guild{'member'}[$i]{'lvl'};
+				$title = $guild{'member'}[$i]{'title'};
+				$online = $guild{'member'}[$i]{'online'} ? "Yes" : "No";
+				write;
+			}
+			print "---------------------------------------\n";
+
+		} elsif ($arg1 eq "") {
+			print "Requesting guild information...\n",
+				"Enter command to view guild information: guild < info | member >\n";
+			sendGuildInfoRequest(\$remote_socket);
+			sendGuildRequest(\$remote_socket, 0);
+			sendGuildRequest(\$remote_socket, 1);
+		}
+
 	} elsif ($switch eq "i") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
@@ -2713,6 +2765,12 @@ sub AI {
 		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, 0);
 		$timeout{'ai_partyAutoDeny'}{'time'} = time;
 		undef %incomingParty;
+	}
+	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut(\%{$timeout{'ai_guildAutoDeny'}})) {
+		sendGuildJoin(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
+		sendGuildAlly(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
+		$timeout{'ai_guildAutoDeny'}{'time'} = time;
+		undef %incomingGuild;
 	}
 
 	if ($ai_v{'portalTrace_mapChanged'}) {
@@ -7697,11 +7755,10 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 
 	} elsif ($switch eq "0147") {
 		$skillID = unpack("S*",substr($msg, 2, 2));
-#Solos Start
 		$skillLv = unpack("S*",substr($msg, 8, 2)); 
       		print "Now use $skillsID_lut{$skillID}, level $skillLv\n"; 
       		sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
-#Solos End
+
 #viper mass addon begin
 	} elsif ($switch eq "014B") {
 	} elsif ($switch eq "014C") {
@@ -7710,8 +7767,24 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 	} elsif ($switch eq "0150") {
 	} elsif ($switch eq "0152" && length($msg) >= unpack("S1", substr($msg, 2, 2))) { 
 		$msg_size = unpack("S*", substr($msg, 2, 2));
+
         } elsif ($switch eq "0154") {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+        	my $newmsg;
+		decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
+		my $msg = substr($msg, 0, 4) . $newmsg;
+		my $c = 0;
+		for (my $i = 4; $i < $msg_size; $i+=104){
+			$guild{'member'}[$c]{'ID'}    = substr($msg, $i, 4);
+			$guild{'member'}[$c]{'jobID'} = unpack("S1", substr($msg, $i + 14, 2));
+			$guild{'member'}[$c]{'lvl'}   = unpack("S1", substr($msg, $i + 16, 2));
+			$guild{'member'}[$c]{'contribution'} = unpack("L1", substr($msg, $i + 18, 4));
+			$guild{'member'}[$c]{'online'} = unpack("S1", substr($msg, $i + 22, 2));
+			my $gtIndex = unpack("L1", substr($msg, $i + 26, 4));
+			$guild{'member'}[$c]{'title'} = $guild{'title'}[$gtIndex];
+			($guild{'member'}[$c]{'name'}) = substr($msg, $i + 80, 24) =~ /([\s\S]*?)\000/;
+			$c++;
+		}
+
 	} elsif ($switch eq "0156") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "015A") {
@@ -7720,11 +7793,27 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "0163") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
+
 	} elsif ($switch eq "0166") {
+		my $newmsg;
+		decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
+		my $msg = substr($msg, 0, 4) . $newmsg;
+		my $gtIndex;
+		for (my $i = 4; $i < $msg_size; $i+=28) {
+			$gtIndex = unpack("L1", substr($msg, $i, 4));
+			($guild{'title'}[$gtIndex]) = substr($msg, $i + 4, 24) =~ /([\s\S]*?)\000/;
+		}
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-	} elsif ($switch eq "0167") {
-	} elsif ($switch eq "0169") {
+
 	} elsif ($switch eq "016A") {
+		# Guild request
+		my $ID = substr($msg, 2, 4);
+		my ($name) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
+		print "Incoming Request to join Guild '$name'\n";
+		$incomingGuild{'ID'} = $ID;
+		$incomingGuild{'Type'} = 1;
+		$timeout{'ai_guildAutoDeny'}{'time'} = time;
+
 #viper mass addon end
 	} elsif ($switch eq "016C") {
 		($chars[$config{'char'}]{'guild'}{'name'}) = substr($msg, 19, 24) =~ /([\s\S]*?)\000/;
@@ -7749,7 +7838,15 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			,"$address\n\n"
 			,"$message\n"
 			,"------------------\n";
+
 	} elsif ($switch eq "0171") {
+		my $ID = substr($msg, 2, 4);
+		my ($name) = substr($msg, 6, 24) =~ /[\s\S]*?\000/;
+		print "Incoming Request to Ally Guild '$name'\n";
+		$incomingGuild{'ID'} = $ID;
+		$incomingGuild{'Type'} = 2;
+		$timeout{'ai_guildAutoDeny'}{'time'} = time;
+
 	} elsif ($switch eq "0173") {
 	} elsif ($switch eq "0174") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
@@ -7886,8 +7983,19 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		($npc_image) = $npc_image =~ /(\S+)/; 
 		print "NPC image: $npc_image\n" if $config{'debug'}; 
 #Solos End
-	} elsif ($switch eq "01B5") {
-			
+	} elsif ($switch eq "01B6") {
+		#Guild Info 
+		$guild{'ID'}        = substr($msg, 2, 4);
+		$guild{'lvl'}       = unpack("L1", substr($msg,  6, 4));
+		$guild{'conMember'} = unpack("L1", substr($msg, 10, 4));
+		$guild{'maxMember'} = unpack("L1", substr($msg, 14, 4));
+		$guild{'average'}   = unpack("L1", substr($msg, 18, 4));
+		$guild{'exp'}       = unpack("L1", substr($msg, 22, 4));
+		$guild{'next_exp'}  = unpack("L1", substr($msg, 26, 4));
+		$guild{'members'}   = unpack("L1", substr($msg, 42, 4)) + 1;
+		($guild{'name'})    = substr($msg, 46, 24) =~ /([\s\S]*?)\000/;
+		($guild{'master'})  = substr($msg, 70, 24) =~ /([\s\S]*?)\000/;
+
 	} elsif ($switch eq "01C4") { 
       		$index = unpack("S1", substr($msg, 2, 2)); 
       		$amount = unpack("L1", substr($msg, 4, 4)); 
@@ -8198,113 +8306,98 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			}
 		}
 
-#Solos Start
-    } elsif ($switch eq "08DC") {
+	} elsif ($switch eq "08DC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "0AEB") {
+	} elsif ($switch eq "0AEB") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "1009") {
+	} elsif ($switch eq "1009") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "1401") {
+	} elsif ($switch eq "1401") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "15DF") {
+	} elsif ($switch eq "15DF") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "15F7") {
+	} elsif ($switch eq "15F7") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "1641") {
+	} elsif ($switch eq "1641") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "16C1") {
+	} elsif ($switch eq "16C1") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "1694") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "1700") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "1C00") {
+	} elsif ($switch eq "1C00") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "3A00") {
+	} elsif ($switch eq "3A00") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "4394") {
+	} elsif ($switch eq "4394") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "5900") {
+	} elsif ($switch eq "5900") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "5901") {
+	} elsif ($switch eq "5901") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "6EF3") {
+	} elsif ($switch eq "6EF3") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "7800") {
+	} elsif ($switch eq "7800") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "7801") {
+	} elsif ($switch eq "7801") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "7B01") {
+	} elsif ($switch eq "7B01") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "7F01") {
+	} elsif ($switch eq "7F01") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "8A01") {
+	} elsif ($switch eq "8A01") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "9600") {
+	} elsif ($switch eq "9600") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "9601") {
+	} elsif ($switch eq "9601") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "A000") {
+	} elsif ($switch eq "A000") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "B000") {
+	} elsif ($switch eq "B000") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "B001") {
+	} elsif ($switch eq "B001") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "B103") {
+	} elsif ($switch eq "B103") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "B292") {
+	} elsif ($switch eq "B292") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "CA00") {
+	} elsif ($switch eq "CA00") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "CA44") {
+	} elsif ($switch eq "CA44") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "CAC0") {
+	} elsif ($switch eq "CAC0") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "CACC") {
+	} elsif ($switch eq "CACC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "CAE1") {
+	} elsif ($switch eq "CAE1") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "D900") {
+	} elsif ($switch eq "D900") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "F776") {
+	} elsif ($switch eq "F776") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "0000") {
+	} elsif ($switch eq "0000") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "0001") {
+	} elsif ($switch eq "0001") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "0005") {
+	} elsif ($switch eq "0005") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "000E") {
+	} elsif ($switch eq "000E") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "0014") {
+	} elsif ($switch eq "0014") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "001C") {
+	} elsif ($switch eq "001C") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "002A") {
+	} elsif ($switch eq "002A") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "00CF") {
+	} elsif ($switch eq "00CF") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-#viper mass add begin
-    } elsif ($switch eq "01A0") {
-    } elsif ($switch eq "01A3") {
-    } elsif ($switch eq "01A6") {
+	} elsif ($switch eq "01A6") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "01AC") {
-    } elsif ($switch eq "01AD") {
+	} elsif ($switch eq "01AD") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-    } elsif ($switch eq "01B1") {
-    } elsif ($switch eq "01B6") {
-    } elsif ($switch eq "01B9") {
-    } elsif ($switch eq "01C9") {
-    } elsif ($switch eq "01D2") {
-    } elsif ($switch eq "01D6") {
-    } elsif ($switch eq "01DC") {
+	} elsif ($switch eq "01DC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-#viper mass add end
-	} elsif ($switch eq "40A1") {
-#Solos End
-
 	} elsif (!$rpackets{$switch} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		print "Unparsed packet - $switch\n" if ($config{'debugPacket_received'});
 	}
@@ -9760,12 +9853,13 @@ sub sendGetSellList {
 	print "Sent sell to NPC: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
-sub sendGuildMemberNameRequest {
+sub sendGuildAlly{
 	my $r_socket = shift;
 	my $ID = shift;
-	my $msg = pack("C*", 0x93, 0x01) . $ID;
+	my $flag = shift;
+	my $msg = pack("C*", 0x72, 0x01).$ID.pack("L1", $flag);
 	sendMsgToServer($r_socket, $msg);
-	print "Sent Guild Member Name Request : ".getHex($ID)."\n" if ($config{'debug'} >= 2);
+	print "Sent Ally Guild : ".getHex($ID).", $flag\n" if ($config{'debug'});
 }
 
 sub sendGuildChat {
@@ -9774,6 +9868,38 @@ sub sendGuildChat {
 	my $msg = pack("C*",0x7E, 0x01) . pack("S*",length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
 	$chars[$config{'char'}]{'name'} . " : " . $message . chr(0);
 	sendMsgToServer($r_socket, $msg);
+}
+
+sub sendGuildInfoRequest {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0x4d, 0x01);
+	sendMsgToServer($r_socket, $msg);
+	print "Sent Guild Information Request\n" if ($config{'debug'});
+}
+
+sub sendGuildJoin{
+	my $r_socket = shift;
+	my $ID = shift;
+	my $flag = shift;
+	my $msg = pack("C*", 0x6B, 0x01).$ID.pack("L1", $flag);
+	sendMsgToServer($r_socket, $msg);
+	print "Sent Join Guild : ".getHex($ID).", $flag\n" if ($config{'debug'});
+}
+
+sub sendGuildMemberNameRequest {
+	my $r_socket = shift;
+	my $ID = shift;
+	my $msg = pack("C*", 0x93, 0x01) . $ID;
+	sendMsgToServer($r_socket, $msg);
+	print "Sent Guild Member Name Request : ".getHex($ID)."\n" if ($config{'debug'} >= 2);
+}
+
+sub sendGuildRequest {
+	my $r_socket = shift;
+	my $page = shift;
+	my $msg = pack("C*", 0x4f, 0x01).pack("L1", $page);
+	sendMsgToServer($r_socket, $msg);
+	print "Sent Guild Request Page : ".$page."\n" if ($config{'debug'});
 }
 
 sub sendIdentify {
