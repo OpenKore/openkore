@@ -612,11 +612,9 @@ sub parseCommand {
 		}
 
 	} elsif ($switch eq "chist") { 
-    ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-    if ($arg1 eq "") {
-      $arg1 = 5;
-    }
-    
+		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		$arg1 = 5 if ($arg1 eq "");
+
 		if (open(CHAT, $Settings::chat_file)) {
 			my @chat = <CHAT>;
 			close(CHAT);
@@ -1023,6 +1021,7 @@ sub parseCommand {
 			($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
 			$startTime_EXP = time;
 			undef @monsters_Killed;
+
 		} else {
 			error "Error in function 'exp' (Exp Report)\n" .
 				"Usage: exp [reset]\n";
@@ -1502,51 +1501,51 @@ sub parseCommand {
 			}
 
 		} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
-			error	"Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n"
-				,"Usage: party join <flag>\n";
+			error	"Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
+				"Usage: party join <flag>\n";
 		} elsif ($arg1 eq "join" && $incomingParty{'ID'} eq "") {
-			error	"Error in function 'party join' (Join/Request to Join Party)\n"
-				,"Can't accept/deny party request - no incoming request.\n";
+			error	"Error in function 'party join' (Join/Request to Join Party)\n" .
+				"Can't accept/deny party request - no incoming request.\n";
 		} elsif ($arg1 eq "join") {
 			sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $arg2);
 			undef %incomingParty;
 
 		} elsif ($arg1 eq "request" && !%{$chars[$config{'char'}]{'party'}}) {
-			error	"Error in function 'party request' (Request to Join Party)\n"
-				,"Can't request a join - you're not in a party.\n";
+			error	"Error in function 'party request' (Request to Join Party)\n" .
+				"Can't request a join - you're not in a party.\n";
 		} elsif ($arg1 eq "request" && $playersID[$arg2] eq "") {
-			error	"Error in function 'party request' (Request to Join Party)\n"
-				,"Can't request to join party - player $arg2 does not exist.\n";
+			error	"Error in function 'party request' (Request to Join Party)\n" .
+				"Can't request to join party - player $arg2 does not exist.\n";
 		} elsif ($arg1 eq "request") {
 			sendPartyJoinRequest(\$remote_socket, $playersID[$arg2]);
 
 
 		} elsif ($arg1 eq "leave" && !%{$chars[$config{'char'}]{'party'}}) {
-			error	"Error in function 'party leave' (Leave Party)\n"
-				,"Can't leave party - you're not in a party.\n";
+			error	"Error in function 'party leave' (Leave Party)\n" .
+				"Can't leave party - you're not in a party.\n";
 		} elsif ($arg1 eq "leave") {
 			sendPartyLeave(\$remote_socket);
 
 
 		} elsif ($arg1 eq "share" && !%{$chars[$config{'char'}]{'party'}}) {
-			error	"Error in function 'party share' (Set Party Share EXP)\n"
-				,"Can't set share - you're not in a party.\n";
+			error	"Error in function 'party share' (Set Party Share EXP)\n" .
+				"Can't set share - you're not in a party.\n";
 		} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
-			error	"Syntax Error in function 'party share' (Set Party Share EXP)\n"
-				,"Usage: party share <flag>\n";
+			error	"Syntax Error in function 'party share' (Set Party Share EXP)\n" .
+				"Usage: party share <flag>\n";
 		} elsif ($arg1 eq "share") {
 			sendPartyShareEXP(\$remote_socket, $arg2);
 
 
 		} elsif ($arg1 eq "kick" && !%{$chars[$config{'char'}]{'party'}}) {
-			error	"Error in function 'party kick' (Kick Party Member)\n"
-				,"Can't kick member - you're not in a party.\n";
+			error	"Error in function 'party kick' (Kick Party Member)\n" .
+				"Can't kick member - you're not in a party.\n";
 		} elsif ($arg1 eq "kick" && $arg2 eq "") {
-			error	"Syntax Error in function 'party kick' (Kick Party Member)\n"
-				,"Usage: party kick <party member #>\n";
+			error	"Syntax Error in function 'party kick' (Kick Party Member)\n" .
+				"Usage: party kick <party member #>\n";
 		} elsif ($arg1 eq "kick" && $partyUsersID[$arg2] eq "") {
-			error	"Error in function 'party kick' (Kick Party Member)\n"
-				,"Can't kick member - member $arg2 doesn't exist.\n";
+			error	"Error in function 'party kick' (Kick Party Member)\n" .
+				"Can't kick member - member $arg2 doesn't exist.\n";
 		} elsif ($arg1 eq "kick") {
 			sendPartyKick(\$remote_socket, $partyUsersID[$arg2]
 					,$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
@@ -4258,16 +4257,30 @@ sub AI {
 				}
 				$timeout{'ai_attack'}{'time'} = time;
 				undef %{$ai_seq_args[0]{'attackMethod'}};
+
 			} elsif ($ai_seq_args[0]{'attackMethod'}{'type'} eq "skill") {
 				$ai_v{'ai_attack_method_skillSlot'} = $ai_seq_args[0]{'attackMethod'}{'skillSlot'};
 				$ai_v{'ai_attack_ID'} = $ai_seq_args[0]{'ID'};
 				undef %{$ai_seq_args[0]{'attackMethod'}};
 				ai_setSuspend(0);
+
 				if (!ai_getSkillUseType($skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})})) {
-					ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}}{'ID'}, $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"}, $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"}, $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"}, $ai_v{'ai_attack_ID'});
+					ai_skillUse(
+						$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}}{'ID'},
+						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
+						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
+						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
+						$ai_v{'ai_attack_ID'});
 				} else {
-					ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}}{'ID'}, $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"}, $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"}, $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"}, $monsters{$ai_v{'ai_attack_ID'}}{'pos_to'}{'x'}, $monsters{$ai_v{'ai_attack_ID'}}{'pos_to'}{'y'});
+					ai_skillUse(
+						$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}}{'ID'},
+						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"},
+						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_maxCastTime"},
+						$config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_minCastTime"},
+						$monsters{$ai_v{'ai_attack_ID'}}{'pos_to'}{'x'},
+						$monsters{$ai_v{'ai_attack_ID'}}{'pos_to'}{'y'});
 				}
+
 				debug qq~Auto-skill on monster: $skills_lut{$skills_rlut{lc($config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"})}} (lvl $config{"attackSkillSlot_$ai_v{'ai_attack_method_skillSlot'}"."_lvl"})\n~, "ai";
 			}
 			
@@ -8642,7 +8655,7 @@ sub parseMsg {
 				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-				
+
 				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg";
 			}
 			%{$players{$ID}{'pos'}} = %coordsFrom;
@@ -9129,7 +9142,7 @@ sub ai_route_getSuccessors {
 	my $r_array = shift;
 	my $type = shift;
 	my %pos;
-	
+
 	if (ai_route_getMap($r_args, $$r_pos{'x'}-1, $$r_pos{'y'}) == $type
 		&& !($$r_pos{'parent'} && $$r_pos{'parent'}{'x'} == $$r_pos{'x'}-1 && $$r_pos{'parent'}{'y'} == $$r_pos{'y'})) {
 		$pos{'x'} = $$r_pos{'x'}-1;
@@ -10971,7 +10984,7 @@ sub getField {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	unless (-e $file) {
-		warn "\n!!Could not load field - you must install the kore-field pack!!\n\n";
+		warning "\n!!Could not load field - you must install the kore-field pack!!\n\n";
 	}
 	($$r_hash{'name'}) = $file =~ m{/?([^/.]*)\.};
 	open FILE, "<", $file;
