@@ -57,7 +57,7 @@ addParseFiles($Settings::config_file, \%config,\&parseDataFile2);
 addParseFiles($Settings::items_control_file, \%items_control,\&parseItemsControl);
 addParseFiles($Settings::mon_control_file, \%mon_control,\&parseMonControl);
 addParseFiles("$Settings::control_folder/overallauth.txt", \%overallAuth, \&parseDataFile);
-addParseFiles("$Settings::control_folder/pickupitems.txt", \%itemsPickup, \&parseDataFile_lc);
+addParseFiles($Settings::pickupitems_file, \%itemsPickup, \&parseDataFile_lc);
 addParseFiles("$Settings::control_folder/responses.txt", \%responses, \&parseResponses);
 addParseFiles("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeouts);
 addParseFiles($Settings::shop_file, \%shop, \&parseDataFile2);

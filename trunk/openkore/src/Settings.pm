@@ -54,6 +54,7 @@ our $logs_folder;
 our $plugins_folder;
 our $config_file;
 our $items_control_file;
+our $pickupitems_file;
 our $mon_control_file;
 our $chat_file;
 our $item_log_file;
@@ -105,6 +106,7 @@ sub parseArguments {
 		'config=s', \$config_file,
 		'mon_control=s', \$mon_control_file,
 		'items_control=s', \$items_control_file,
+		'pickupitems=s', \$pickupitems_file,
 		'chat=s', \$chat_file,
 		'shop=s', \$shop_file,
 		'fields=s',\$def_field,
@@ -124,6 +126,7 @@ sub parseArguments {
 		print "--config=path/file         Which config.txt to use.\n";
 		print "--mon_control=path/file    Which mon_control.txt to use.\n";
 		print "--items_control=path/file  Which items_control.txt to use.\n";
+		print "--pickupitems=path/file    Which pickupitems.txt to use.\n";
 		print "--chat=path/file           Which chat.txt to use.\n";
 		print "--shop=path/file           Which shop.txt to use.\n";
 		exit(0);
@@ -132,6 +135,7 @@ sub parseArguments {
 	$config_file = "$control_folder/config.txt" if (!defined $config_file);
 	$monster_log = "$logs_folder/monsters.txt" if (!defined $monster_log);
 	$items_control_file = "$control_folder/items_control.txt" if (!defined $items_control_file);
+	$pickupitems_file = "$control_folder/pickupitems.txt" if (!defined $pickupitems_file);
 	$mon_control_file = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
 	$chat_file = "$logs_folder/chat.txt" if (!defined $chat_file);
 	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
