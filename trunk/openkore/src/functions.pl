@@ -7355,7 +7355,7 @@ sub parseMsg {
 
 		# Storage log
 		my $f;
-		if (open($f, "> $Settings::logs_folder/storage.txt")) {
+		if (open($f, "> $Settings::storage_file")) {
 			print $f "---------- Storage ". getFormattedDate(int(time)) ." -----------\n";
 			for (my $i = 0; $i < @storageID; $i++) {
 				next if (!$storageID[$i]);

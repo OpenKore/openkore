@@ -43,6 +43,10 @@ New config options:
 - teleportAuto_useSP if set to 2 will only use SP when other players are 
   present.
 
+New commands:
+- ihist
+  Display last few entries of the item log.
+
 Internal:
 - $interface->beep() function for cross-platform beep support.
 - OpenKore will exit if a plugin failed to load.
@@ -51,6 +55,7 @@ Internal:
 Credits:
 - asuwannarat, as2765324: tRO server details.
 - MindChild: support for the 'all' option in items_control.txt
+- jabskeeterbug: item history command.
 
 
 ==================
