@@ -4873,6 +4873,15 @@ sub parseSendMsg {
 		my $message = substr($msg, 4, $length - 4);
 		my ($chat) = $message =~ /^[\s\S]*? : ([\s\S]*)\000?/;
 		$chat =~ s/^\s*//;
+
+		my $langCode = quotemeta $config{'chatLangCode'};
+		if ($langCode ne "" && $chat =~ /^$langCode/) {
+			$chat =~ s/^$langCode//;
+		} elsif ($langCode ne "none" && $chat =~ /^\|(0\d)/) {
+			configModify("chatLangCode", $1);
+			$chat =~ s/^\|0\d//;
+		}
+
 		if ($chat =~ /^$config{'commandPrefix'}/) {
 			$chat =~ s/^$config{'commandPrefix'}//;
 			$chat =~ s/^\s*//;
@@ -4884,10 +4893,19 @@ sub parseSendMsg {
 
 	} elsif ($switch eq "0096") {
 		# Private message
-		$length = unpack("S",substr($msg,2,2));
-		($user) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
-		$chat = substr($msg, 28, $length - 29);
+		my $length = unpack("S",substr($msg,2,2));
+		my ($user) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
+		my $chat = substr($msg, 28, $length - 29);
 		$chat =~ s/^\s*//;
+
+		my $langCode = quotemeta $config{'chatLangCode'};
+		if ($langCode ne "" && $chat =~ /^$langCode/) {
+			$chat =~ s/^$langCode//;
+		} elsif ($langCode ne "none" && $chat =~ /^\|(0\d)/) {
+			configModify("chatLangCode", $1);
+			$chat =~ s/^\|0\d//;
+		}
+
 		if ($chat =~ /^$config{'commandPrefix'}/) {
 			$chat =~ s/^$config{'commandPrefix'}//;
 			$chat =~ s/^\s*//;
@@ -6008,6 +6026,15 @@ sub parseMsg {
 		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		$chatMsgUser =~ s/ $//;
 
+		my $langCode = quotemeta $config{'chatLangCode'};
+		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
+			$chatMsg =~ s/^$langCode//;
+		} elsif ($langCode ne "none" && $chatMsg =~ /^\|(0\d)/) {
+			configModify("chatLangCode", $1);
+			$chatMsg =~ s/^\|0\d//;
+		}
+		$chat = "$chatMsgUser : $chatMsg";
+
 		my %item;
 		$item{type} = "c";
 		$item{ID} = $ID;
@@ -6026,11 +6053,20 @@ sub parseMsg {
 		}); 
 
 	} elsif ($switch eq "008E") {
-		$chat = substr($msg, 4, $msg_size - 4);
+		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000//g;
-		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
+		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 
-		chatLog("c", $chat."\n") if ($config{'logChat'});
+		my $langCode = quotemeta $config{'chatLangCode'};
+		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
+			$chatMsg =~ s/^$langCode//;
+		} elsif ($langCode ne "none" && $chatMsg =~ /^\|(0\d)/) {
+			configModify("chatLangCode", $1);
+			$chatMsg =~ s/^\|0\d//;
+		}
+
+		$chat = "$chatMsgUser : $chatMsg";
+		chatLog("c", "$chat\n") if ($config{'logChat'});
 		message "$chat\n", "selfchat";
 
 	} elsif ($switch eq "0091") {
@@ -6145,12 +6181,21 @@ sub parseMsg {
 
 	} elsif ($switch eq "0097") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
-		$msg = substr($msg, 0, 28).$newmsg;
+		my $msg = substr($msg, 0, 28).$newmsg;
 		my ($privMsgUser) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
 		my $privMsg = substr($msg, 28, $msg_size - 29);
 		if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
 			$privMsgUsers[@privMsgUsers] = $privMsgUser;
+		}
+
+		my $langCode = quotemeta $config{'chatLangCode'};
+		if ($langCode ne "" && $privMsg =~ /^$langCode/) {
+			$privMsg =~ s/^$langCode//;
+		} elsif ($langCode ne "none" && $privMsg =~ /^\|(0\d)/) {
+			configModify("chatLangCode", $1);
+			$privMsg =~ s/^\|0\d//;
 		}
 
 		my %item;
@@ -6187,13 +6232,21 @@ sub parseMsg {
 		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
 
+		my $langCode = quotemeta $config{'chatLangCode'};
+		if ($langCode ne "" && $chat =~ /^$langCode/) {
+			$chat =~ s/^$langCode//;
+		} elsif ($langCode ne "none" && $chat =~ /^\|(0\d)/) {
+			configModify("chatLangCode", $1);
+			$chat =~ s/^\|0\d//;
+		}
+
 		my %item;
 		$item{type} = "gmchat";
-		$item{msg} = $chatMsg;
+		$item{msg} = $chat;
 		$item{time} = time;
 		binAdd(\@ai_cmdQue, \%item);
 		$ai_cmdQue++;
-		chatLog("s", $chat."\n") if ($config{'logSystemChat'});
+		chatLog("s", "$chat\n") if ($config{'logSystemChat'});
 		message "$chat\n", "schat";
 
 	} elsif ($switch eq "009C") {
@@ -8181,6 +8234,15 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
 		$chatMsgUser =~ s/ $//;
 
+		my $langCode = quotemeta $config{'chatLangCode'};
+		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
+			$chatMsg =~ s/^$langCode//;
+		} elsif ($langCode ne "none" && $chatMsg =~ /^\|(0\d)/) {
+			configModify("chatLangCode", $1);
+			$chatMsg =~ s/^\|0\d//;
+		}
+		$chat = "$chatMsgUser : $chatMsg";
+
 		my %item;
 		$item{type} = "g";
 		$item{ID} = $ID;
@@ -8190,7 +8252,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		binAdd(\@ai_cmdQue, \%item);
 		$ai_cmdQue++;
 
-		chatLog("g", $chat."\n") if ($config{'logGuildChat'});
+		chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 		message "[Guild] $chat\n", "guildchat";
 
 	} elsif ($switch eq "0194") {
