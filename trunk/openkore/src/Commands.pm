@@ -165,6 +165,20 @@ sub cmdAI {
 		message "AI sequences cleared\n", "success";
 		return;
 	}
+	
+	# Display detailed info about current AI sequence
+	if ($args eq 'print') {
+		message("------ AI Sequence ---------------------\n", "list");
+		my $index = 0;
+		foreach (@ai_seq) {
+			message("$index: $_ " . dumpHash(\%{$ai_seq_args[$index]}) . "\n\n", "list");
+			$index++;
+		}
+
+		message("------ AI Sequences --------------------\n", "list");
+		
+		return;
+	}
 
 	# Toggle AI
 	if ($AI) {
