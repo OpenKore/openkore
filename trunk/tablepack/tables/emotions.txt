@@ -11,7 +11,7 @@
 10 *Peace*
 11 *Fist*
 12 *Wave*
-13 *Flag*
+13 *Flag 1*
 14 *Love*
 15 *Thanks*
 16 *Wah*
@@ -32,3 +32,17 @@
 31 *Kiss 2*
 32 *Pfft*
 33 *Ok*
+35 *Flag 2*
+36 *Angry*
+37 *Drool*
+38 *2 Hearts*
+39 *Bleks*
+40 *Na-ah*
+41 *Pat Pat*
+42 *SP*
+43 *Horny*
+44 *Come Here*
+45 *Yawn*
+46 *Congratulations*
+47 *HP*
+48 *Flag 3*
