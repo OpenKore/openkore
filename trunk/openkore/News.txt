@@ -119,14 +119,10 @@ New configuration options:
   useSelf_item_#_whenStatusActive
   useSelf_item_#_whenStatusInctive
 
-  These are the equivalents of modkore's _inStatus and _outStatus options.
-- useSelf_skill_#_whenAffected
-  useSelf_item_#_whenAffected
-
   Activate skill/use item only if your character have a certain status
   ailment/look, like poisoned, hidden, etc. Take a look at
-  skillslooks.txt, skillsstate.txt and skillsailments.txt in the latest
-  tablepack for a list of names.
+  skillslooks.txt, skillsstate.txt, skillsstatus.txt and skillsailments.txt in the
+  latest tablepack for a list of names.
 - equipAuto_*
 - useSelf_skill_#_notWhileSitting
   If set to 1, this skill will not be used while sitting.
@@ -140,16 +136,6 @@ New configuration options:
   you're in a conversation with an NPC.
 - attackAuto_inLockOnly
   When walking to lockmap, only attack monsters if this option is set to 0.
-- Generalized useSelf_skill, useSelf_item, attackSkill, partySkill, equipAuto,
-  all those option supports a common set of 'Self Condition'. Refer to confpack
-	for more info
-- A few 'range' based config option are now simplified, 
-  eg: useSelf_skill_x_hp < 20
-	old format are still supported for backward compatibility sake. Refer to
-	confpack for more info
-- removed whenAffected, state/ailments/look are now merged into whenStatusActive
-  and whenStatusInactive
-	eg: partySkill_x_whenStatusActive Frozen
 
 Bug fixes:
 - Fixed comma placement in formatNumber sub (its what puts the commas
