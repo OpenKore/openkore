@@ -117,6 +117,18 @@ sub binFindReverse {
 	}
 }
 
+##
+# binRemove(r_array, ID)
+# r_array: a reference to an array
+# ID: the element to remove.
+#
+# Find a value in @r_array which has the same value as $ID,
+# and remove it.
+#
+# Example:
+# our @array = ("hello", "world", "!");
+# # Same as: delete $array[1];
+# binRemove(\@array, "world");
 sub binRemove {
 	my $r_array = shift;
 	my $ID = shift;
@@ -127,11 +139,6 @@ sub binRemove {
 			last;
 		}
 	}
-
-	#my $last = @{$r_array} - 1;
-	#if ($last >= 0 && !defined($$r_array[$last])) {
-	#	delete $$r_array[$last];
-	#}
 }
 
 sub binRemoveAndShift {
@@ -168,6 +175,17 @@ sub binRemoveAndShiftByIndex {
 	return $found;
 }
 
+##
+# binSize(r_array)
+# r_array: a reference to an array.
+# Returns: a number.
+#
+# Calculates the size of @r_array, excluding undefined values.
+#
+# Example:
+# our @array = ("hello", undef, "world");
+# scalar @array;        # -> 3
+# binSize(\@array);     # -> 2
 sub binSize {
 	my $r_array = shift;
 	my $found = 0;
@@ -428,6 +446,38 @@ sub timeConvert {
 	return $gathered;
 }
 
+
+##
+# timeOut(r_time, [compare_time])
+# r_time: a time value, or a hash.
+# compare_time: the time to compare to if $r_time is a time value.
+# Returns: a boolean.
+#
+# If r_time is a time value:
+# Check whether $compare_time seconds have passed since $r_time.
+#
+# If r_time is a hash:
+# Check whether $r_time->{timeout} seconds have passed since $r_time->{time}.
+#
+# Example:
+# my %time;
+# $time{time} = time;
+# $time{timeout} = 10;
+#
+# while (1) {
+#     if (timeOut(\%time)) {
+#         print "10 seconds have passed since this loop was started.\n";
+#         last;
+#     }
+# }
+#
+# my $startTime = time;
+# while (1) {
+#     if (timeOut($startTime, 6)) {
+#         print "6 seconds have passed since this loop was started.\n";
+#         last;
+#     }
+# }
 sub timeOut {
 	my ($r_time, $compare_time) = @_;
 	if ($compare_time ne "") {
