@@ -163,3 +163,14 @@ h2:hover {
 	padding: 0;
 	margin: 0;
 }
+
+.tip {
+	padding: 0.35cm;
+	border: solid 2px #ffdeab;
+	background: #fff9ec;
+	margin: 0.3cm;
+}
+.tip h4 {
+	padding: 0;
+	margin: 0;
+}
