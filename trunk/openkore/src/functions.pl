@@ -288,8 +288,8 @@ sub parseInput {
 #Parse command...ugh
 
 	} elsif ($switch eq "a") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
 		if ($arg1 =~ /^\d+$/ && $monstersID[$arg1] eq "") {
 			print	"Error in function 'a' (Attack Monster)\n"
 				,"Monster $arg1 does not exist.\n";
@@ -339,7 +339,7 @@ sub parseInput {
 		my $i = 1;
 		for ($number = 0; $number < @articles; $number++) {
 			next if ($articles[$number] eq "");
-			$display = $articles[$number]{'name'};
+			my $display = $articles[$number]{'name'};
 			if (!($articles[$number]{'identified'})) {
 				$display = $display." -- Not Identified";
 			}
@@ -364,7 +364,7 @@ $i $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quant
 			$i++;
 		}
 		print "----------------------------------------------\n";
-		print "You have earned $shopEarned"."z.\n";
+		print "You have earned " . formatNumber($shopEarned) . "z.\n";
 
 	} elsif ($switch eq "as") {
 		# Stop attacking monster
@@ -433,7 +433,7 @@ $i $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quant
 		}
 
 	} elsif ($switch eq "c") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'c' (Chat)\n"
 				,"Usage: c <message>\n";
@@ -1580,6 +1580,8 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 		useTeleport(2);
 
 	} elsif ($switch eq "s") {
+		my ($baseEXPKill, $jobEXPKill);
+
 		if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
 			$baseEXPKill = $chars[$config{'char'}]{'exp_max_last'} - $chars[$config{'char'}]{'exp_last'} + $chars[$config{'char'}]{'exp'};
 		} elsif ($chars[$config{'char'}]{'exp_last'} == 0 && $chars[$config{'char'}]{'exp_max_last'} == 0) {
@@ -1594,7 +1596,9 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 		} else {
 			$jobEXPKill = $chars[$config{'char'}]{'exp_job'} - $chars[$config{'char'}]{'exp_job_last'};
 		}
-		$lastBase =
+
+		my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
+
 		$hp_string = $chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
 				."%)" if $chars[$config{'char'}]{'hp_max'};
@@ -1611,6 +1615,8 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 				.int($chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100)
 				."%)" if $chars[$config{'char'}]{'weight_max'};
 		$job_name_string = "$jobs_lut{$chars[$config{'char'}]{'jobID'}} $sex_lut{$chars[$config{'char'}]{'sex'}}";
+		$zeny_string = formatNumber($chars[$config{'char'}]{'zenny'}) if (defined($chars[$config{'char'}]{'zenny'}));
+
 		print	"-----------Status-----------\n";
 		$~ = "STATUS";
 		format STATUS =
@@ -1623,19 +1629,15 @@ Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
       $chars[$config{'char'}]{'lv_job'} $job_string
 Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<
-        $weight_string           $chars[$config{'char'}]{'zenny'}
+        $weight_string           $zeny_string
 .
 		write;
 		print	"----------------------------\n";
-#Solos Start
 		printStat();
-#Solos End
-
-	
 
 	} elsif ($switch eq "sell") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
 		if ($arg1 eq "" && $talk{'buyOrSell'}) {
 			sendGetSellList(\$remote_socket, $talk{'ID'});
 
@@ -1653,7 +1655,7 @@ Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<
 		}
 
 	} elsif ($switch eq "send") {
-		($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		my ($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		sendRaw(\$remote_socket, $args);
 
 	} elsif ($switch eq "sit") {
@@ -1671,9 +1673,9 @@ Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<
 		$ai_v{'sitAuto_forceStop'} = 0;
 
 	} elsif ($switch eq "sm") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
-		($arg3) = $input =~ /^[\s\S]*? \d+ \d+ (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		my ($arg3) = $input =~ /^[\s\S]*? \d+ \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
 			print	"Syntax Error in function 'sm' (Use Skill on Monster)\n"
 				,"Usage: sm <skill #> <monster #> [<skill lvl>]\n";
@@ -1695,8 +1697,8 @@ Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<
 		}
 
 	} elsif ($switch eq "skills") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
 		if ($arg1 eq "") {
 			$~ = "SKILLS";
 			print "----------Skill List-----------\n";
@@ -9303,7 +9305,7 @@ sub lineIntersection {
 	my $r_pos2 = shift;
 	my $r_pos3 = shift;
 	my $r_pos4 = shift;
-	my $x1, $x2, $x3, $x4, $y1, $y2, $y3, $y4, $result, $result1, $result2;
+	my ($x1, $x2, $x3, $x4, $y1, $y2, $y3, $y4, $result, $result1, $result2);
 	$x1 = $$r_pos1{'x'};
 	$y1 = $$r_pos1{'y'};
 	$x2 = $$r_pos2{'x'};
@@ -11662,14 +11664,47 @@ sub getHex {
 	return $return;
 }
 
-
-
 sub getTickCount {
 	my $time = int(time()*1000);
 	if (length($time) > 9) {
 		return substr($time, length($time) - 8, length($time));
 	} else {
 		return $time;
+	}
+}
+
+##
+# formatNumber($num)
+# $num: An integer number number.
+# Returns: A formatted number with commas.
+#
+# Add commas to $num so large numbers are more readable.
+# $num must be an integer, not a floating point number.
+#
+# Example:
+# formatNumber(1000000)   # -> 1,000,000
+sub formatNumber {
+	my $num = shift;
+	if (!$num) {
+		return 0;
+	} else {
+		$num = reverse $num;
+		my $len = length($num);
+		my $count = 0;
+		my $tmp = '';
+		my @array = ();
+
+		for (my $i = 0; $i < $len; $i++) {
+			$tmp .= substr($num, $i, 1);
+			$count++;
+			if ($count == 3) {
+				$count = 0;
+				push @array, $tmp;
+				$tmp = '';
+			}
+		}
+		push @array, $tmp if ($tmp ne '');
+		return reverse join(',', @array);
 	}
 }
 
