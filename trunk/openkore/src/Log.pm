@@ -94,6 +94,7 @@
 
 package Log;
 
+use strict;
 use Carp;
 use Utils;
 use Exporter;
@@ -194,7 +195,7 @@ sub processMsg {
 	# Call hooks
 	foreach (@hooks) {
 		next if (!defined($_));
-		$_->{'func'}->($type, $domain, $level, $globalVerbosity, $message, $_->{'user_data'});
+		$_->{'func'}->($type, $domain, $level, $currentVerbosity, $message, $_->{'user_data'});
 	}
 }
 

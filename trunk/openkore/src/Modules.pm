@@ -32,7 +32,7 @@
 package Modules;
 
 use strict;
-no strict 'refs';
+use warnings;
 use Exporter;
 use Config;
 use base qw(Exporter);
