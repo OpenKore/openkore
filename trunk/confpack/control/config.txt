@@ -211,7 +211,7 @@ teleportAuto_emptyName 1
 teleportAuto_allPlayers 0
 teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
-teleportAuto_dropTarget 1
+teleportAuto_dropTarget 0
 
 useSelf_skill {
 	lvl 10
