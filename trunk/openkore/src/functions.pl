@@ -626,15 +626,15 @@ sub parseCommand {
 		}
 
 	} elsif ($switch eq "autobuy") {
-		unshift @ai_seq, "buyAuto";
-		unshift @ai_seq_args, {};
+		message "Initiating auto-buy.\n";
+		AI::queue("buyAuto");
 
 	} elsif ($switch eq "autosell") {
-		message "Initiating auto-sell sequence.\n";
+		message "Initiating auto-sell.\n";
 		AI::queue("sellAuto");
 
 	} elsif ($switch eq "autostorage") {
-		message "Initiating auto-storage sequence.\n";
+		message "Initiating auto-storage.\n";
 		AI::queue("storageAuto");
 
 	} elsif ($switch eq "c") {
@@ -2275,6 +2275,7 @@ sub AI {
 		 (!$config{'itemsMaxWeight_sellOrStore'} &&
 		  percent_weight($char) >= $config{'itemsMaxWeight'})) &&
 		!AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
+
 		# Initiate autostorage when the weight limit has been reached
 		my $routeIndex = AI::findAction("route");
 		my $attackOnRoute = 2;
@@ -2286,8 +2287,9 @@ sub AI {
 
 	} elsif (AI::is("", "route", "attack") &&
 	         $config{'storageAuto'} && $config{'storageAuto_npc'} ne "" &&
-			 !AI::inQueue("storageAuto") &&
-			 timeOut($timeout{'ai_storageAuto'})) {
+		 !AI::inQueue("storageAuto") &&
+		 timeOut($timeout{'ai_storageAuto'})) {
+
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found;
 		my $i = 0;
@@ -2636,17 +2638,20 @@ sub AI {
 	}
 
 	if ($ai_seq[0] eq "buyAuto" && $ai_seq_args[0]{'done'}) {
+		# buyAuto finished
 		$ai_v{'temp'}{'var'} = $ai_seq_args[0]{'forcedBySell'};
 		$ai_v{'temp'}{'var2'} = $ai_seq_args[0]{'forcedByStorage'};
 		shift @ai_seq;
 		shift @ai_seq_args;
-		if ($ai_v{'temp'}{'var'}) {
+
+		if ($ai_v{'temp'}{'var'} && $config{storageAuto}) {
 			unshift @ai_seq, "storageAuto";
 			unshift @ai_seq_args, {forcedBySell => 1};
-		} elsif (!$ai_v{'temp'}{'var2'}) {
+		} elsif (!$ai_v{'temp'}{'var2'} && $config{storageAuto}) {
 			unshift @ai_seq, "storageAuto";
 			unshift @ai_seq_args, {forcedByBuy => 1};
 		}
+
 	} elsif ($ai_seq[0] eq "buyAuto" && timeOut(\%{$timeout{'ai_buyAuto_wait'}}) && timeOut(\%{$timeout{'ai_buyAuto_wait_buy'}})) {
 		$i = 0;
 		undef $ai_seq_args[0]{'index'};
@@ -3204,15 +3209,26 @@ sub AI {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = AI::args->{attackID};
 		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
+		my $monster = $monsters{$ID};
 
-		if ($monsters{$ID} && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($monsters{$ID}), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{distance}) {
-			# Stop moving
+		if ($monster && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
+		 && distance(calcPosition($monster), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
+			# Monster has moved; stop moving and let the attack AI readjust route
 			AI::dequeue;
-			AI::dequeue if ($ai_seq[0] eq "route");
+			AI::dequeue if (AI::action eq "route");
 
 			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Target has moved more than " . $attackSeq->{attackMethod}{distance} . " blocks; readjusting route\n", "ai_attack";
+			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
+
+		} elsif ($monster && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}
+		 && distance(calcPosition($monster), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
+			# Monster is within attack range; stop moving
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "route");
+
+			$attackSeq->{ai_attack_giveup}{time} = time;
+			debug "Target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
+				"$attackSeq->{attackMethod}{maxDistance} blocks; stop moving\n", "ai_attack";
 		}
 		$AI::Temp::attack_route_adjust = time;
 	}
@@ -3523,7 +3539,7 @@ sub AI {
 			my $pos = calcPosition($monsters{$ID}, $time_needed);
 
 			my $dist = sprintf("%.1f", $monsterDist);
-			debug "Target distance $dist is >$args->{attackMethod}{distance}; moving to target: " .
+			debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
 				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
 
 			my $result = ai_route($field{'name'}, $pos->{x}, $pos->{y},
