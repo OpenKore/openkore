@@ -141,7 +141,7 @@ set_status (const char *msg)
 }
 
 
-static void
+static gboolean
 mkdirs (const char *dir)
 {
 	gchar **paths;
@@ -159,13 +159,20 @@ mkdirs (const char *dir)
 		if (i > 0)
 			g_string_append_c (str, G_DIR_SEPARATOR);
 		g_string_append (str, paths[i]);
-		if (!g_file_test (str->str, G_FILE_TEST_IS_DIR))
-			mkdir (str->str, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+		if (!g_file_test (str->str, G_FILE_TEST_IS_DIR)) {
+			if (mkdir (str->str, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) != 0)
+			{
+				g_string_free (str, TRUE);
+				g_strfreev (paths);
+				return FALSE;
+			}
+		}
 		i++;
 	}
 
 	g_string_free (str, TRUE);
 	g_strfreev (paths);
+	return TRUE;
 }
 
 
@@ -864,7 +871,7 @@ extract_cb ()
 			goto end;
 
 		if (!g_file_test (savedir, G_FILE_TEST_IS_DIR)) {
-			if (mkdir (savedir, S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH) != 0) {
+			if (!mkdirs (savedir)) {
 				show_error (_("Unable to create a new folder: %s"),
 					g_strerror (errno));
 				goto end;
@@ -1141,6 +1148,7 @@ main (int argc, char *argv[])
 	pixbuf = gdk_pixbuf_new_from_inline (sizeof (grftool_icon), grftool_icon,
 		FALSE, NULL);
 	gtk_window_set_icon (GTK_WINDOW (W(main)), pixbuf);
+	gtk_widget_grab_focus (W(searchentry));
 
 	if (argv[1])
 		gtk_idle_add (idle_open, argv[1]);
