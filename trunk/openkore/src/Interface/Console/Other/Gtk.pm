@@ -55,8 +55,9 @@ sub errorDialog {
 	my $message = shift;
 
 	my $dialog;
-	my $name = $chars[$config{user}]{name};
+	my $name;
 	_initGtk();
+	$name = $char->{name} if ($char);
 	$dialog = new Gtk2::MessageDialog(undef, 'modal', 'error', 'close',
 		"%s", $message);
 	if ($name) {
