@@ -1,3 +1,7 @@
+- Unless sitAuto_over_50 is set to 1 in config.txt the bot wont sit unless
+  int($chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100) < 50
+  ie, it wont sit due to low hp or sp if it can't regain hp or sp by sitting ;)
+
 - Don't immediately reconnect if connecting to master server times out.
 - The "sit" command now also sets itemsGatherAuto to 0.
 - The Linux version no longer depends on the buggy C::DynaLib.
