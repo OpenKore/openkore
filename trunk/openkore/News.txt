@@ -29,11 +29,14 @@ New config options:
   *_inInventory_qty  : check for quantity
   These are add-ons for the skill usage, item usage and equipAuto config
   options.
+- *_currentAI : check for current active AI sequence (eg attack, move...)
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
 - Attacks will now properly time out when failed.
 - Properly support tabs in avoid.txt
+- equipAuto for teleport now works, require ai_equipAuto_skilluse_giveup in
+  timeout.txt
 
 Credits:
 - Fenris: Tk interface improvements.
