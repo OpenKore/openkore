@@ -3,9 +3,12 @@
 ==================
 
 Bug fixes:
+- Correctly detect pets.
+
+New features:
 - Mask password input display '*' instead of your real password (Only on linux
   console)
-- partyAggressives now counts monsters your party attacked
+- partyAggressives now counts monsters your party attacked.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
@@ -17,9 +20,13 @@ New config options:
 - beepOnChat and beepOnPM were removed. Use this instead:
   beepDomains publicchat,emotion,pm
 
-Changes:
+Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
   beep on your own PMs.
+
+Credits:
+- jsteng: Pet detection fix.
+
 
 ==================
 ### 1.5.1 (beta)

@@ -5662,6 +5662,12 @@ sub parseMsg {
 				%{$pets{$ID}{'pos_to'}} = %coords;
 				debug "Pet Exists: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 
+				if ($monsters{$ID}) {
+					binRemove(\@monstersID, $ID);
+					delete $monsters{$ID};
+					objectRemoved('monster', $ID);
+				}
+
 				objectAdded('pet', $ID, $pets{$ID}) if ($added);
 
 			} else {
@@ -5865,11 +5871,13 @@ sub parseMsg {
 				$pets{$ID}{time_move} = time;
 				$pets{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 				$pets{$ID}{walk_speed} = $walk_speed;
+
 				if ($monsters{$ID}) {
 					binRemove(\@monstersID, $ID);
 					delete $monsters{$ID};
 					objectRemoved('monster', $ID);
 				}
+
 				debug "Pet Moved: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 
 			} else {
@@ -5950,6 +5958,12 @@ sub parseMsg {
 				%{$pets{$ID}{'pos'}} = %coords; 
 				%{$pets{$ID}{'pos_to'}} = %coords; 
 				debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
+
+				if ($monsters{$ID}) {
+					binRemove(\@monstersID, $ID);
+					delete $monsters{$ID};
+					objectRemoved('monster', $ID);
+				}
 
 			} else {
 				if (!%{$monsters{$ID}}) {
