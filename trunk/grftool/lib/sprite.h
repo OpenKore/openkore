@@ -92,6 +92,8 @@ typedef enum {
 /* Open sprite file */
 SPREXPORT Sprite *sprite_open (const char *fname, SpriteError *error);
 
+SPREXPORT Sprite *sprite_open_from_data (const unsigned char *data, unsigned int size, SpriteError *error);
+
 /* Converts a sprite to bitmap file in memory */
 SPREXPORT void *sprite_to_bmp (Sprite *sprite, int i, int *size, SpriteError *error);
 

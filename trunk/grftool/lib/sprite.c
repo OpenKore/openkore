@@ -181,11 +181,10 @@ reverse_palette (unsigned char *palette, int palettelen, int *returnsize)
 SPREXPORT Sprite *
 sprite_open (const char *fname, SpriteError *error)
 {
-	Sprite *sprite;
 	FILE *f;
-	unsigned char palette[1024], magic[5], buf[4];
-	int i, size;
-
+	long size;
+	unsigned char *data;
+	Sprite *sprite;
 
 	if (!fname) {
 		if (error) *error = SE_BADARGS;
@@ -198,55 +197,86 @@ sprite_open (const char *fname, SpriteError *error)
 		return NULL;
 	}
 
+	fseek (f, 0, SEEK_END);
+	size = ftell (f);
+	fseek (f, 0, SEEK_SET);
+	data = malloc (size);
+	fread (data, size, 1, f);
+	fclose (f);
 
-	/* Check file's "magic header" */
-	magic[4] = '\0';
-	fread (magic, 4, 1, f);
-	if (strcmp ((char *) magic, "SP\001\002") != 0) {
+	sprite = sprite_open_from_data (data, size, error);
+	if (sprite)
+		sprite->filename = strdup (fname);
+	return sprite;
+}
+
+
+SPREXPORT Sprite *
+sprite_open_from_data (const unsigned char *data, unsigned int size, SpriteError *error)
+{
+	Sprite *sprite;
+	unsigned char palette[1024], buf[4];
+	int i, pos, palette_size;
+
+
+	/* Check buffer size; a valid sprite file is at least:
+	   Magic header       4 bytes
+           Number of frames   2 bytes
+           Palette            1024 bytes
+           --------------------------
+           Total              1030 bytes
+         */
+	if (size < 1030) {
 		if (error) *error = SE_INVALID;
-		fclose (f);
+		return NULL;
+	}
+
+	/* Check file's "magic header", which is 4 bytes */
+	if (memcmp (data, "SP\001\002", 4) != 0) {
+		if (error) *error = SE_INVALID;
 		return NULL;
 	}
 
 	/* Read the number of sprites */
-	fread (buf, 2, 1, f);
 	sprite = (Sprite *) calloc (sizeof (Sprite), 1);
-	sprite->nimages = (buf[1] << 8) + buf[0];
+	sprite->nimages = (data[5] << 8) + data[4];
 
 	/* Read palette */
-	memset (&palette, 0, sizeof (palette));
-	fseek (f, -1024, SEEK_END);
-	fread (&palette, 1, 1024, f);
-	sprite->palette = (SpritePalette *) reverse_palette (palette, 1024, &size);
-	sprite->palette_size = size;
+	memcpy (&palette, data + size - 1024, 1024);
+	sprite->palette = (SpritePalette *) reverse_palette (palette, 1024, &palette_size);
+	sprite->palette_size = palette_size;
 
 	/* Now read the actual sprite data */
 	sprite->images = (SpriteImage *) calloc (sizeof (SpriteImage), sprite->nimages);
-	fseek (f, 8, SEEK_SET);
+	pos = 8;
 	for (i = 0; i < sprite->nimages; i++) {
-		int width, height, compressed_len;
-		unsigned char *data, *ddata;
+		int width, height, compressed_len, pixels_size;
+		unsigned char *pixels;
 
-		fread (buf, 2, 1, f);
+		buf[0] = data[pos];
+		buf[1] = data[pos + 1];
+		pos += 2;
 		width = (buf[1] << 8) + buf[0];
-		fread (buf, 2, 1, f);
+
+		buf[0] = data[pos];
+		buf[1] = data[pos + 1];
+		pos += 2;
 		height = (buf[1] << 8) + buf[0];
-		fread (buf, 2, 1, f);
+
+		buf[0] = data[pos];
+		buf[1] = data[pos + 1];
+		pos += 2;
 		compressed_len = (buf[1] << 8) + buf[0];
 
-		data = (unsigned char *) calloc (compressed_len, 1);
-		fread (data, compressed_len, 1, f);
-		ddata = rle_decode (data, compressed_len, width, &size);
-		free (data);
+		pixels = rle_decode ((unsigned char *) data + pos, compressed_len, width, &pixels_size);
+		pos += compressed_len;
 
-		sprite->images[i].data = ddata;
-		sprite->images[i].len = size;
+		sprite->images[i].data = pixels;
+		sprite->images[i].len = pixels_size;
 		sprite->images[i].width = width;
 		sprite->images[i].height = height;
 	}
 
-
-	sprite->filename = strdup (fname);
 	return sprite;
 }
 
