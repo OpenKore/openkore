@@ -580,20 +580,38 @@ grf_find (Grf *grf, char *fname, unsigned long *index)
 GRFEXPORT void *
 grf_get (Grf *grf, char *fname, unsigned long *size, GrfError *error)
 {
-	GrfFile *file;
-	unsigned char *buf, *decbuf;
+	unsigned long index;
 
 	if (!grf || !fname) {
 		if (error) *error = GE_BADARGS;
 		return NULL;
 	}
 
-	file = grf_find (grf, fname, NULL);
-	if (!file) {
+	if (!grf_find (grf, fname, &index)) {
 		if (error) *error = GE_NOTFOUND;
 		return NULL;
 	}
+	return grf_index_get (grf, index, size, error);
+}
 
+
+GRFEXPORT void *
+grf_index_get (Grf *grf, unsigned long index, unsigned long *size, GrfError *error)
+{
+	GrfFile *file;
+	unsigned char *buf, *decbuf;
+
+	if (!grf) {
+		if (error) *error = GE_BADARGS;
+		return NULL;
+	}
+
+	if (index < 0 || index >= grf->nfiles) {
+		if (error) *error = GE_INDEX;
+		return NULL;
+	}
+
+	file = &(grf->files[index]);
 	buf = (unsigned char *) calloc (file->compressed_len_aligned + 1024, 1);
 	if (!buf) {
 		if (error) *error = GE_NOMEM;
@@ -632,7 +650,25 @@ grf_get (Grf *grf, char *fname, unsigned long *size, GrfError *error)
 
 
 GRFEXPORT int
-grf_extract (Grf *grf, char *fname, char *writeToFile, GrfError *error)
+grf_extract (Grf *grf, char *fname, const char *writeToFile, GrfError *error)
+{
+	unsigned long index;
+
+	if (!grf || !fname) {
+		if (error) *error = GE_BADARGS;
+		return 0;
+	}
+
+	if (!grf_find (grf, fname, &index)) {
+		if (error) *error = GE_NOTFOUND;
+		return 0;
+	}
+	return grf_index_extract (grf, index, writeToFile, error);
+}
+
+
+GRFEXPORT int
+grf_index_extract (Grf *grf, unsigned long index, const char *writeToFile, GrfError *error)
 {
 	void *buf;
 	unsigned long size;
@@ -643,7 +679,7 @@ grf_extract (Grf *grf, char *fname, char *writeToFile, GrfError *error)
 		return 0;
 	}
 
-	buf = grf_get (grf, fname, &size, error);
+	buf = grf_index_get (grf, index, &size, error);
 	if (!buf) return 0;
 
 	f = fopen (writeToFile, "wb");
@@ -699,6 +735,8 @@ grf_strerror (GrfError error)
 		return "GRF archives of this version is not supported.";
 	case GE_NOTFOUND:
 		return "File not found inside GRF file.";
+	case GE_INDEX:
+		return "Invalid index.";
 	case GE_WRITE:
 		return "Cannot write to destination file.";
 	default:
