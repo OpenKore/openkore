@@ -390,10 +390,13 @@ sub mainLoop {
 	checkConnection() unless $quit;
 
 	# Process messages from the IPC network
-	my @ipcMessages;
-	if ($ipc && $ipc->recv(\@ipcMessages)) {
-		foreach (@ipcMessages) {
-			IPC::Processors::process($ipc, $_);
+	if ($ipc && $ipc->connected) {
+		my @ipcMessages;
+		$ipc->iterate;
+		if ($ipc->ready && $ipc->recv(\@ipcMessages) > 0) {
+			foreach (@ipcMessages) {
+				IPC::Processors::process($ipc, $_);
+			}
 		}
 	}
 
@@ -1656,20 +1659,24 @@ sub AI {
 		if ($1) {
 			my $pos = calcPosition($char);
 			open(DATA, ">$Settings::logs_folder/walk.dat");
-			print DATA "$1\n";
-			print DATA "$pos->{x}\n$pos->{y}\n";
+			print DATA "$1\n$pos->{x}\n$pos->{y}\n";
+			if ($ipc && $ipc->connected && $ipc->ready) {
+				print DATA $ipc->host . " " . $ipc->port . " " . $ipc->ID . "\n";
+			} else {
+				print DATA "\n";
+			}
 
 			for (my $i = 0; $i < @npcsID; $i++) {
 				next if ($npcsID[$i] eq "");
-				print DATA "NL " . $npcs{$npcsID[$i]}{'pos'}{'x'} . " " . $npcs{$npcsID[$i]}{'pos'}{'y'} . "\n";
+				print DATA "NL " . $npcs{$npcsID[$i]}{pos_to}{x} . " " . $npcs{$npcsID[$i]}{pos_to}{y} . "\n";
 			}
 			for (my $i = 0; $i < @playersID; $i++) {
 				next if ($playersID[$i] eq "");
-				print DATA "PL " . $players{$playersID[$i]}{'pos'}{'x'} . " " . $players{$playersID[$i]}{'pos'}{'y'} . "\n";
+				print DATA "PL " . $players{$playersID[$i]}{pos_to}{x} . " " . $players{$playersID[$i]}{pos_to}{y} . "\n";
 			}
 			for (my $i = 0; $i < @monstersID; $i++) {
 				next if ($monstersID[$i] eq "");
-				print DATA "ML " . $monsters{$monstersID[$i]}{'pos'}{'x'} . " " . $monsters{$monstersID[$i]}{'pos'}{'y'} . "\n";
+				print DATA "ML " . $monsters{$monstersID[$i]}{pos_to}{x} . " " . $monsters{$monstersID[$i]}{pos_to}{y} . "\n";
 			}
 
 			close(DATA);

@@ -76,37 +76,37 @@ h2:hover {
 	display: inline;
 }
 
-#functionIndex, #moduleIndex {
+.functionIndex, #moduleIndex {
 	width: 98%;
 	background: #eeeeee;
 	border: 1px lightgray solid;
 }
-#functionIndex th, #moduleIndex th {
+.functionIndex th, #moduleIndex th {
 	color: white;
 	background: black;
 	padding-left: 6px;
 	padding-right: 6px;
 	text-align: left;
 }
-#functionIndex tr:hover, #moduleIndex tr:hover {
+.functionIndex tr:hover, #moduleIndex tr:hover {
 	background: #e0e0ff;
 }
 
-#functionIndex td, #moduleIndex td {
+.functionIndex td, #moduleIndex td {
 	padding: 3px;
 }
-#functionIndex a, #moduleIndex a {
+.functionIndex a, #moduleIndex a {
 	text-decoration: none;
 	color: blue;
 }
-#functionIndex a:visited, #moduleIndex a:visited {
+.functionIndex a:visited, #moduleIndex a:visited {
 	color: darkblue;
 }
-#functionIndex a:hover, #moduleIndex a:hover {
+.functionIndex a:hover, #moduleIndex a:hover {
 	text-decoration: underline;
 	color: red;
 }
-#functionIndex .decl, #moduleIndex .decl {
+.functionIndex .decl, #moduleIndex .decl {
 	width: 100%;
 }
 
