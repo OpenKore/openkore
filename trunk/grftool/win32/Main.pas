@@ -66,6 +66,7 @@ type
     function OpenGRF(FileName: String): Boolean;
     procedure FillFileList;
     procedure UpdateSelectionStatus;
+    procedure IterateList(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer; var Abort: Boolean);
   public
     Extractor: TExtractor;
   end;
@@ -320,6 +321,17 @@ begin
   AboutBox.Free;
 end;
 
+procedure TForm1.IterateList(Sender: TBaseVirtualTree; Node: PVirtualNode; Data: Pointer; var Abort: Boolean);
+var
+  Files: TStringList;
+  NData: ^TGrfItem;
+begin
+  Files := TStringList(Data);
+  NData := FileList.GetNodeData(Node);
+  Files.Add(Grf.files[NData.i].Name);
+  Abort := False;
+end;
+
 procedure TForm1.ExtractBtnClick(Sender: TObject);
 var
   Files: TStringList;
@@ -335,33 +347,10 @@ const
 begin
   Files := TStringList.Create;
   Files.BeginUpdate;
-
   if FileList.SelectedCount = 0 then
-  begin
-      Node := FileList.GetFirst;
-      repeat
-          Node := FileList.GetNextVisible(Node);
-          if not Assigned(Node) then Break;
-
-          Data := FileList.GetNodeData(Node);
-          Files.Add(Grf.files[Data.i].Name);
-      until not Assigned(Node);
-      ShowMessage('TODO: extract all files when nothing''s selected');
-      Files.EndUpdate;
-      Files.Free;
-      Exit;
-  end else
-  begin
-      Node := FileList.RootNode;
-      repeat
-          Node := FileList.GetNextSelected(Node);
-          if not Assigned(Node) then Break;
-
-          Data := FileList.GetNodeData(Node);
-          Files.Add(Grf.files[Data.i].Name);
-      until not Assigned(Node);
-  end;
-
+      FileList.IterateSubtree(nil, IterateList, Files, [])
+  else
+      FileList.IterateSubtree(nil, IterateList, Files, [vsSelected]);
   Files.EndUpdate;
 
 
@@ -452,10 +441,16 @@ procedure TForm1.FileListGetText(Sender: TBaseVirtualTree;
   var CellText: WideString);
 var
   Data: ^TGrfItem;
+  Text: array[0..1024] of WideChar;
 begin
   Data := FileList.GetNodeData(Node);
   if Column = 0 then
-      CellText := Grf.files[Data.i].Name
+  begin
+      if MultiByteToWideChar(51949, MB_PRECOMPOSED, Grf.files[Data.i].Name, -1, Text, SizeOf(Text) - 1) > 0 then
+          CellText := Text
+      else
+          CellText := Grf.files[Data.i].Name;
+  end
   else if Column = 1 then
       CellText := GetTypeName(Grf.files[Data.i].Name)
   else if Column = 2 then
