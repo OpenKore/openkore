@@ -8972,6 +8972,15 @@ sub parseMsg {
 			binAdd(\@arrowCraftID, $index);
 		}
 		message "Received Possible Arrow Craft List - type 'arrowcraft'\n";
+	} elsif ($switch eq "0169") {
+		my $type = unpack("C1", substr($msg, 2, 1));
+		my %types = (
+			0 => 'Target is already in a guild.',
+			1 => 'Target has denied.',
+			2 => 'Target has accepted.',
+			3 => 'Your guild is full.'
+		);
+		message "Guild join request: ".($types{$type} || "Unknown $type")."\n";
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";

@@ -670,8 +670,7 @@ sub cmdEval {
 
 sub cmdGuild {
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	my ($arg1, $arg2) = split(' ', $args);
 
 	if ($arg1 eq "join") {
 		if ($arg2 ne "1" && $arg2 ne "0") {
@@ -694,6 +693,15 @@ sub cmdGuild {
 
 	} elsif (!defined $char->{guild}) {
 		error "You are not in a guild.\n";
+
+	} elsif ($arg1 eq "request") {
+		my $player = Match::player($arg2);
+		if (!$player) {
+			error "Player $arg2 does not exist.\n";
+		} else {
+			sendGuildJoinRequest($player->{ID});
+			message "Sent guild join request to $player->{name}\n";
+		}
 
 	} elsif ($arg1 eq "" || !%guild) {
 		message	"Requesting guild information...\n", "info";

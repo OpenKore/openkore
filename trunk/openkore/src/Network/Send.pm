@@ -21,7 +21,7 @@ use Digest::MD5;
 use Exporter;
 use base qw(Exporter);
 
-use Globals qw(%config $conState $encryptVal $remote_socket @chars %packetDescriptions);
+use Globals qw($accountID $charID %config $conState $encryptVal $remote_socket @chars %packetDescriptions);
 use Log qw(message warning error debug);
 use Utils;
 
@@ -76,6 +76,7 @@ our @EXPORT = qw(
 	sendGuildChat
 	sendGuildInfoRequest
 	sendGuildJoin
+	sendGuildJoinRequest
 	sendGuildMemberNameRequest
 	sendGuildRequest
 	sendIdentify
@@ -742,6 +743,13 @@ sub sendGuildJoin {
 	my $msg = pack("C*", 0x6B, 0x01).$ID.pack("L1", $flag);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Join Guild : ".getHex($ID).", $flag\n", "sendPacket";
+}
+
+sub sendGuildJoinRequest {
+	my $ID = shift;
+	my $msg = pack("C*", 0x68, 0x01).$ID.$accountID.$charID;
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
 }
 
 sub sendGuildMemberNameRequest {
