@@ -407,7 +407,6 @@ DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 		}
 
 		injectSelf (hwnd);
-		FreeLibrary(lib);
 		return 1;
 	}
 
