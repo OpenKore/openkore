@@ -133,39 +133,35 @@ sub printItemDesc {
 
 sub whenStatusActive {
 	my $statuses = shift;
-	my $active = 0;
 	my @arr = split /,/, $statuses;
-	for (my $j = 0; $j < @arr; $j++) {
+	foreach (@arr) {
 		s/^\s+//g;
 		s/\s+$//g;
-		$active += $chars[$config{char}]{statuses}{$arr[$j]};
+		return 1 if exists($char->{statuses}{$_});
 	}
-	return $active;
+	return 0;
 }
 
 sub whenStatusActiveMon {
 	my ($ID, $statuses) = @_;
-	my $active = 0;
 	my @arr = split /,/, $statuses;
-	for (my $j = 0; $j < @arr; $j++) {
+	foreach (@arr) {
 		s/^\s+//g;
 		s/\s+$//g;
-		$active += $monsters{$ID}{statuses}{$arr[$j]};
-	}
-	return $active;
+		return if exists($monsters{$ID}{statuses}{$_});
+	return 0;
 }
 
 sub whenStatusActivePL {
 	my ($ID, $statuses) = @_;
 	if ($ID eq $accountID) { return whenStatusActive($statuses) }
-	my $active = 0;
 	my @arr = split /,/, $statuses;
-	for (my $j = 0; $j < @arr; $j++) {
+	foreach (@arr) {
 		s/^\s+//g;
 		s/\s+$//g;
-		$active += $players{$ID}{statuses}{$arr[$j]};
+		return 1 if exists($players{$ID}{statuses}{$_});
 	}
-	return $active;
+	return 0;
 }
 
 ##
