@@ -1578,10 +1578,10 @@ sub parseCommand {
 		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "pm") {
-		($arg1, $arg2) = $input =~ /^[\s\S]*? "([\s\S]*?)" ([\s\S]*)/;
+		($arg1, $arg2) = $input =~ /^[\S]*? "(.*?)" (.*)/;
 		my $type = 0;
 		if (!$arg1) {
-			($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
+			($arg1, $arg2) = $input =~ /^[\S]*? (\d+) (.*)/;
 			$type = 1;
 		}
 		if ($arg1 eq "" || $arg2 eq "") {
