@@ -124,9 +124,6 @@ sitAuto_sp_upper 0
 sitAuto_idle 1
 shopAuto_open 0
 
-avoidWarpByTeleport 0
-avoidWarpByWalk 1
-
 teleportAuto_hp 10
 teleportAuto_idle 0
 teleportAuto_portal 0
