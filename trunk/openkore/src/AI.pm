@@ -22,6 +22,10 @@ sub args {
 	return $ai_seq_args[$i];
 }
 
+sub v {
+	return $ai_v;
+}
+
 sub dequeue {
 	shift @ai_seq;
 	shift @ai_seq_args;

@@ -3993,7 +3993,6 @@ sub AI {
 
 	##### SKILL USE #####
 
-
 	if ($ai_seq[0] eq "skill_use" && $ai_seq_args[0]{'suspended'}) {
 		$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
 		$ai_seq_args[0]{'ai_skill_use_minCastTime'}{'time'} += time - $ai_seq_args[0]{'suspended'};
@@ -4578,6 +4577,9 @@ sub AI {
 		$timeout{'ai_teleport_away'}{'time'} = time;
 	}
 
+	$AI::v->{aggresives} = ai_getAggressives();
+	error "$AI::v->{ai_teleport_safe}";
+	
 	if ((($config{'teleportAuto_hp'} && percent_hp(\%{$chars[$config{'char'}]}) <= $config{'teleportAuto_hp'} && ai_getAggressives())
 		|| ($config{'teleportAuto_minAggressives'} && ai_getAggressives() >= $config{'teleportAuto_minAggressives'}))
 		&& $ai_v{'ai_teleport_safe'} && timeOut(\%{$timeout{'ai_teleport_hp'}})) {
@@ -7647,12 +7649,11 @@ sub parseMsg {
 	} elsif ($switch eq "016D") {
 		my $ID = substr($msg, 2, 4);
 		my $TargetID =  substr($msg, 6, 4);
-		my $type = unpack("L1", substr($msg, 10, 4));
-		if ($type) {
-			$isOnline = "Log In";
-		} else {
-			$isOnline = "Log Out";
-		}
+		my $online = unpack("L1", substr($msg, 10, 4));
+		undef $nameRequest;
+		$nameRequest{type} = "g";
+		$nameRequest{ID} = $TargetID;
+		$nameRequest{online} = $online;
 		sendGuildMemberNameRequest(\$remote_socket, $TargetID);
 
 	} elsif ($switch eq "016F") {
@@ -7723,9 +7724,10 @@ sub parseMsg {
 
 	} elsif ($switch eq "0194") {
 		my $ID = substr($msg, 2, 4);
-		if ($characterID ne $ID) {
-			my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
-			message "Guild Member $name $isOnline\n";
+		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+		
+		if ($nameRequest{type} eq "g") {
+			message "Guild Member $name Log ".($nameRequest{online}?"In":"Out")."\n";
 		}
 
 	} elsif ($switch eq "0195") {
