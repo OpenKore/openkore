@@ -11398,8 +11398,8 @@ sub avoidGM_near {
 		# in order to prevent false matches
 		my $statusGM = 1;
 		my $j = 0;
-		while ($avoid{"avoid_ignore_$j"} ne "") {
-			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_ignore_$j"})
+		while ($config{"avoid_ignore_$j"} ne "") {
+			if ($players{$playersID[$i]}{'name'} eq $config{"avoid_ignore_$j"})
 			{
 				$statusGM = 0;
 				last;
@@ -11430,8 +11430,8 @@ sub avoidGM_talk {
 	# in order to prevent false matches
 	my $statusGM = 1;
 	my $j = 0;
-	while ($avoid{"avoid_ignore_$j"} ne "") {
-		if ($chatMsgUser eq $avoid{"avoid_ignore_$j"})
+	while ($config{"avoid_ignore_$j"} ne "") {
+		if ($chatMsgUser eq $config{"avoid_ignore_$j"})
 		{
 			$statusGM = 0;
 			last;
