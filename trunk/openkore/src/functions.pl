@@ -6591,8 +6591,6 @@ sub parseMsg {
 			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
 				undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
 			}
-		} elsif ($currentDeal{'lastItemAmount'} > 0) {
-			$chars[$config{'char'}]{'zenny'} -= $currentDeal{'you_zenny'};
 		}
 
 	} elsif ($switch eq "00EC") {
