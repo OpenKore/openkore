@@ -61,7 +61,6 @@ New config options:
 Bug fixes:
 - Kore can walk on walkable water now (bug #21).
 - Don't open shop immediately after login in X-Kore mode (bug #49).
-- Re-entering a username/password works correctly now (bug #45).
 - sitAuto_idle doesn't conflict with shopAuto_open's timeout now (bug #50).
 - MO_BODYRELOCATION is now recognized as an area-usage skill.
 
@@ -85,6 +84,18 @@ Credits:
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
 - mfr, Xeno-chan: advanced 2-2 skills support.
+
+
+==================
+### 1.4.2
+==================
+
+Bugfixes:
+- Re-entering a username/password works correctly now (bug #45).
+- Wx/MapViewer.pm is now added to the source distribution.
+- *Really* fixed the bug which causes an infinite loop if the target
+  monster is not reachable.
+- Don't stand still for so long after having killed a mob.
 
 
 ==================
