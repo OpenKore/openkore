@@ -65,10 +65,9 @@ sub processFirst {
 	# check whether his message is a chat command, and execute it.
 	my $callSign = quotemeta $config{callSign};
 	if ($overallAuth{$user} && ( $type eq "pm" || $msg =~ /^\b*$callSign\b*/i )) {
-		my $msg2 = lc $msg;
-		$msg2 =~ s/^\b*$callSign\b*//;
-		$msg2 =~ s/ *$//;
-		return if _processChatCommand($type, $user, $msg2);
+		$msg =~ s/^\b*$callSign\b*//i;
+		$msg =~ s/ *$//;
+		return if _processChatCommand($type, $user, $msg);
 	}
 }
 
@@ -131,7 +130,7 @@ sub _processChatCommand {
 
 		} elsif ($args[1] eq "") {
 			if (lc($args[0]) eq "username" || lc($args[0] eq "password")) {
-				sendMessage(\$remote_socket, $type, getResponse("confF3"), $user) if $config{verbosr};
+				sendMessage(\$remote_socket, $type, getResponse("confF3"), $user) if $config{verbose};
 			} else {
 				$vars->{key} = $args[0];
 				$vars->{value} = $config{$args[0]};
