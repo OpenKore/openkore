@@ -11,15 +11,11 @@
 
 use FindBin qw($RealBin);
 use lib "$RealBin";
-use lib "$RealBin/tools";
-use lib "$RealBin/tools/pathfinding";
-use lib "$RealBin/tools/unix";
-use lib "$RealBin/tools/win32";
-use lib "$RealBin/tools/misc";
+use lib "$RealBin/src";
 
 eval "no utf8;"; undef $@;
 use bytes;
-srand();
+srand;
 
 
 ##### CHECK FOR THE XSTOOL LIBRARY #####
@@ -28,7 +24,7 @@ BEGIN {
 	my $libName = $^O eq 'MSWin32' ? 'XSTools.dll' : 'XSTools.so';
 	my $libFound = 0;
 	foreach (@INC) {
-		if (-f "$_/$libName") {
+		if (-f "$_/$libName" || -f "$_/auto/XSTools/$libName") {
 			$found = 1;
 			last;
 		}

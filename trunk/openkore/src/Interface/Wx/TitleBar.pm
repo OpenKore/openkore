@@ -97,7 +97,7 @@ sub max {
 }
 
 sub f {
-	return File::Spec->catfile(@_);
+	return File::Spec->catfile('src', @_);
 }
 
 1;

@@ -57,7 +57,7 @@ sub attach {
 		}
 		$self->{dialog}->Destroy;
 		delete $self->{dialog};
-		$self->SetSizerAndFit($self->{sizer});
+		#$self->SetSizerAndFit($self->{sizer});
 		$self->Layout;
 	}
 
@@ -80,7 +80,7 @@ sub detach {
 		my $sizer = $self->{dialogSizer} = new Wx::BoxSizer(wxVERTICAL);
 		$self->{control}->Reparent($dialog);
 		$self->{sizer}->Remove($self->{control});
-		$self->SetSizerAndFit($self->{sizer});
+		#$self->SetSizerAndFit($self->{sizer});
 		$self->Layout;
 		$sizer->Add($self->{control}, 0, wxGROW);
 		$dialog->SetSizer($sizer);
@@ -151,7 +151,7 @@ sub set {
 	my $control = shift;
 	$self->{control} = $control;
 	$self->{sizer}->Add($control, 1, wxGROW);
-	$self->SetSizerAndFit($self->{sizer});
+	#$self->SetSizerAndFit($self->{sizer});
 }
 
 sub setParentFrame {
@@ -183,7 +183,7 @@ sub onDialogClose {
 		$self->{control}->Reparent($self);
 		$self->{dialogSizer}->Remove($self->{control});
 		$self->{sizer}->Add($self->{control}, 1, wxGROW);
-		$self->SetSizerAndFit($self->{sizer});
+		#$self->SetSizerAndFit($self->{sizer});
 	}
 
 	$self->{dialog}->Destroy;
