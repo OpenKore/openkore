@@ -3603,8 +3603,8 @@ sub AI {
 	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack skill_use)))
 	  && timeOut($timeout{ai_item_use_auto})) {
 		my $i = 0;
-		while (defined($config{"useSelf_item_$i"})) {
-			if (checkSelfCondition("useSelf_item_$i")) {
+		while (exists $config{"useSelf_item_$i"}) {
+			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
 				my $index = findIndexStringList_lc($char->{inventory}, "name", $config{"useSelf_item_$i"});
 				if (defined $index) {
 					sendItemUse(\$remote_socket, $char->{inventory}[$index]{index}, $accountID);
@@ -3625,8 +3625,8 @@ sub AI {
 	|| (AI::action eq "skill_use" && AI::args->{tag} eq "attackSkill")) {
 		my $i = 0;
 		my %self_skill;
-		while (defined($config{"useSelf_skill_$i"})) {
-			if (checkSelfCondition("useSelf_skill_$i")) {
+		while (exists $config{"useSelf_skill_$i"}) {
+			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$self_skill{ID} = $skills_rlut{lc($config{"useSelf_skill_$i"})};
 				unless ($self_skill{ID}) {
@@ -3673,7 +3673,12 @@ sub AI {
 	if ($char->{party} && (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move)))){
 		my $i = 0;
 		my %party_skill;
-		while (defined($config{"partySkill_$i"})) {
+		while ($config{"partySkill_$i"}) {
+			if (!$config{"partySkill_$i"}) {
+				$i++;
+				next;
+			}
+
 			for (my $j = 0; $j < @partyUsersID; $j++) {
 				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
 				if ($players{$partyUsersID[$j]}
