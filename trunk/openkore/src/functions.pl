@@ -1230,6 +1230,7 @@ sub parseCommand {
 				my $name_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'name'};
 				my $admin_string = ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "(A)" : "";
 				my $online_string;
+				my $map_string;
 
 				if ($partyUsersID[$i] eq $accountID) {
 					$online_string = "Yes";
@@ -1533,7 +1534,7 @@ sub parseCommand {
 		useTeleport(1);
 
 	} elsif ($switch eq "where") {
-		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
+		my ($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		my $pos = calcPosition($char);
 		message("Location $maps_lut{$map_string.'.rsw'} ($map_string) : $pos->{x}, $pos->{y}\n", "info");
 
@@ -6365,6 +6366,7 @@ sub parseMsg {
 		}
 
 		$chat = "$chatMsgUser : $chatMsg";
+		my ($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		chatLog("c", "[$map_string $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}{x}, $players{$ID}{pos_to}{y}] [dist=$dist] " .
 			"$chat\n") if ($config{logChat});
 		message "[dist=$dist] $chat\n", "publicchat";
@@ -6681,7 +6683,7 @@ sub parseMsg {
 			$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
 			message "$disp\n", "drop";
 
-			($map_string) = $map_name =~ /([\s\S]*)\.gat/;
+			my ($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 			$disp .= " ($map_string)\n";
 			itemLog($disp);
 

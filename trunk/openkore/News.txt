@@ -11,6 +11,7 @@ Bug fixes:
   was it says "<target> uses Kyrie Eleison on self", instead of "You use Kyrie
   Eleison on <target>". It now recognizes the former when setting timeouts)
 - The Wx interface can now correctly launch a browser on Linux.
+- Fix display of map name in config.txt chat entries.
 
 New features:
 - Don't use teleportAuto_minAggressives if the more specific
@@ -20,7 +21,7 @@ New features:
 
 Credits:
 - jsteng: VVVS weapon name bugfix.
-- arachno: Language code bugfix.
+- arachno: Language code bugfix, chat.txt map name bugfix.
 
 ==================
 ### 1.5.2 (beta)
