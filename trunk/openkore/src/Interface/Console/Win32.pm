@@ -39,72 +39,70 @@ use Win32::Console;
 
 use Settings;
 
-our ($out_con, $out_top, $out_bot, $out_line, $out_col);
-our $last_line_end = 1;
-our ($left, $right);
-our ($in_con, $in_line, $in_pos);
-our @input_list;
-our $input_offset = 0;
-our @input_lines;
-our $input_part = '';
-
-our $enabled;
-
 our %fgcolors;
 our %bgcolors;
 
-sub start {
-	return undef if ($enabled);
-	$out_con = new Win32::Console(STD_OUTPUT_HANDLE()) 
+sub new {
+	my $class = shift;
+	my $self = {
+		input_list => [],
+		last_line_end => 1,
+		input_lines => [],
+		input_offset => 0,
+		input_part => '',
+	};
+	bless $self, $class;
+	$self->{out_con} = new Win32::Console(STD_OUTPUT_HANDLE()) 
 			or die "Could not init output Console: $!\n";
-	$in_con = new Win32::Console(STD_INPUT_HANDLE()) 
+	$self->{in_con} = new Win32::Console(STD_INPUT_HANDLE()) 
 			or die "Could not init input Console: $!\n";
-
-	#get some window and buffer information
-	my($wLeft, $wTop, $wRight, $wBottom) = $out_con->Window() or die "Can't find initial dimentions for the output window\n";
-	my($bCol, $bRow) = $out_con->Size() or die "Can't find dimentions for the output buffer\n";
-	$out_con->Window(1, $wLeft, $bRow - $wBottom - 1, $wRight, $bRow - 1);# or die "Can't set dimentions for the output window\n";
-	($left, $out_top, $right, $in_line) = $out_con->Window() or die "Can't find new dimentions for the output window\n";
-	$out_bot = $in_line - 1; #one line above the input line
-	$out_line = $in_line;
-	$out_col = $in_pos = $left;
-
-	$out_con->Cursor(0, $in_line);
-	$enabled = 1;
-	return 1;
+	$self->setWinDim();
+	
+	$self->{out_con}->Cursor(0, $self->{in_line});
+	return $self;
 }
 
-sub stop {
-	undef @input_list;
-	undef @input_lines;
-#	$out_con->Free();
-#	$in_con->Free();
+sub DESTROY {
+	my $self = shift;
+
+	$self->color('reset');
+}
+
+sub setWinDim {
+	my $self = shift;
+	my($wLeft, $wTop, $wRight, $wBottom) = $self->{out_con}->Window() or die "Can't find initial dimentions for the output window\n";
+	my($bCol, $bRow) = $self->{out_con}->Size() or die "Can't find dimentions for the output buffer\n";
+	$self->{out_con}->Window(1, $wLeft, $bRow - $wBottom - 1, $wRight, $bRow - 1);# or die "Can't set dimentions for the output window\n";
+	@{$self}{qw(left out_top right in_line)} = $self->{out_con}->Window() or die "Can't find new dimentions for the output window\n";
+	$self->{out_bot} = $self->{in_line} - 1; #one line above the input line
+	$self->{out_line} = $self->{in_line};
+	$self->{out_col} = $self->{in_pos} = $self->{left};
 }
 
 sub getInput {
-	return undef unless ($enabled);
-	my $class = shift;
+#	return undef unless ($enabled);
+	my $self = shift;
 	my $timeout = shift;
-	readEvents();
+	$self->readEvents();
 	my $msg;
 	if ($timeout < 0) {
 		until ($msg) {
-			readEvents();
-			if (@input_lines) {
-				$msg = shift @input_lines;
+			$self->readEvents();
+			if (@{$self->{input_lines}}) {
+				$msg = shift @{$self->{input_lines}};
 			}
 		}
 	} elsif ($timeout > 0) {
 		my $end = time + $timeout;
 		until ($end < time || $msg) {
-			readEvents();
-			if (@input_lines) {
-				$msg = shift @input_lines;
+			$self->readEvents();
+			if (@{$self->{input_lines}}) {
+				$msg = shift @{$self->{input_lines}};
 			}
 		}
 	} else {
-		if (@input_lines) {
-			$msg = shift @input_lines;
+		if (@{$self->{input_lines}}) {
+			$msg = shift @{$self->{input_lines}};
 		}
 	}
 	undef $msg if (defined $msg && $msg eq '');
@@ -123,107 +121,108 @@ sub getInput {
 # system to use the separate input line (meaning output does not
 # over write your input line)
 sub readEvents {
-	local($|) = 1;
-	while ($in_con->GetEvents()) {
-		my @event = $in_con->Input();
+	my $self = shift;
+#	local($|) = 1;
+	while ($self->{in_con}->GetEvents()) {
+		my @event = $self->{in_con}->Input();
 		if (defined($event[0]) && $event[0] == 1 && $event[1]) {
 			##Backspace
 			if ($event[5] == 8) {
-				$in_pos-- if $in_pos > 0;
-				substr($input_part, $in_pos, 1, '');
-				$out_con->Scroll(
-					$in_pos, $in_line, $right, $in_line,
-					$in_pos-1, $in_line, ord(' '), $main::ATTR_NORMAL, 
-					$in_pos, $in_line, $right, $in_line,
+				$self->{in_pos}-- if $self->{in_pos} > 0;
+				substr($self->{input_part}, $self->{in_pos}, 1, '');
+				$self->{out_con}->Scroll(
+					$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
+					$self->{in_pos}-1, $self->{in_line}, ord(' '), $main::ATTR_NORMAL, 
+					$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
 				);
-				$out_con->Cursor($in_pos, $in_line);
+				$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
 #				print "\010 \010";
 			##Enter
 			} elsif ($event[5] == 13) {
-				my $ret = $out_con->Scroll(
-					$left, 0, $right, $in_line,
+				my $ret = $self->{out_con}->Scroll(
+					$self->{left}, 0, $self->{right}, $self->{in_line},
 					0, -1, ord(' '), $main::ATTR_NORMAL, 
-					$left, 0, $right, $in_line
+					$self->{left}, 0, $self->{right}, $self->{in_line}
 				);
-				$out_con->Cursor(0, $in_line);
-				$in_pos = 0;
-				$input_list[0] = $input_part;
-				unshift(@input_list, "");
-				$input_offset = 0;
-				push @input_lines, $input_part;
-				$input_part = '';
+				$self->{out_con}->Cursor(0, $self->{in_line});
+				$self->{in_pos} = 0;
+				$self->{input_list}[0] = $self->{input_part};
+				unshift(@{ $self->{input_list} }, "");
+				$self->{input_offset} = 0;
+				push @{ $self->{input_lines} }, $self->{input_part};
+				$self->{input_part} = '';
 #				print "\n";
 			#Other ASCII (+ ISO Latin-*)
 			} elsif ($event[5] >= 32 && $event[5] != 127 && $event[5] <= 255) {
-				if ($in_pos < length($input_part)) {
-					$out_con->Scroll(
-						$in_pos, $in_line, $right, $in_line,
-						$in_pos+1, $in_line, ord(' '), $main::ATTR_NORMAL, 
-						$in_pos, $in_line, $right, $in_line,
+				if ($self->{in_pos} < length($self->{input_part})) {
+					$self->{out_con}->Scroll(
+						$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
+						$self->{in_pos}+1, $self->{in_line}, ord(' '), $main::ATTR_NORMAL, 
+						$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
 					);
 				}
-				$out_con->Cursor($in_pos, $in_line);
-				$out_con->Write(chr($event[5]));
-				substr($input_part, $in_pos, 0, chr($event[5]));
-				$in_pos++;
+				$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
+				$self->{out_con}->Write(chr($event[5]));
+				substr($self->{input_part}, $self->{in_pos}, 0, chr($event[5]));
+				$self->{in_pos}++;
 #			} elsif ($event[3] == 33) {
 #				__PACKAGE__->writeOutput("pgup\n");
 #			} elsif ($event[3] == 34) {
 #				__PACKAGE__->writeOutput("pgdn\n");
 			##End
 			} elsif ($event[3] == 35) {
-				$out_con->Cursor($in_pos = length($input_part), $in_line);
+				$self->{out_con}->Cursor($self->{in_pos} = length($self->{input_part}), $self->{in_line});
 			##Home
 			} elsif ($event[3] == 36) {
-				$out_con->Cursor($in_pos = 0, $in_line);
+				$self->{out_con}->Cursor($self->{in_pos} = 0, $self->{in_line});
 			##Left Arrow
 			} elsif ($event[3] == 37) {
-				$in_pos--;
-				$out_con->Cursor($in_pos, $in_line);
+				$self->{in_pos}--;
+				$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
 			##Up Arrow
 			} elsif ($event[3] == 38) {
-				unless ($input_offset) {
-					$input_list[$input_offset] = $input_part;
+				unless ($self->{input_offset}) {
+					$self->{input_list}[$self->{input_offset}] = $self->{input_part};
 				}
-				$input_offset++;
-				$input_offset -= $#input_list + 1 while $input_offset > $#input_list;
+				$self->{input_offset}++;
+				$self->{input_offset} -= $#{ $self->{input_list} } + 1 while $self->{input_offset} > $#{ $self->{input_list} };
 
-				$out_con->Cursor(0, $in_line);
-				$out_con->Write(' ' x length($input_part));
-				$out_con->Cursor(0, $in_line);
-				$input_part = $input_list[$input_offset];
-				$out_con->Write($input_part);
-				$in_pos = length($input_part);
+				$self->{out_con}->Cursor(0, $self->{in_line});
+				$self->{out_con}->Write(' ' x length($self->{input_part}));
+				$self->{out_con}->Cursor(0, $self->{in_line});
+				$self->{input_part} = $self->{input_list}[$self->{input_offset}];
+				$self->{out_con}->Write($self->{input_part});
+				$self->{in_pos} = length($self->{input_part});
 			##Right Arrow
 			} elsif ($event[3] == 39) {
-				if ($in_pos + 1 <= length($input_part)) {
-					$in_pos++;
-					$out_con->Cursor($in_pos, $in_line);
+				if ($self->{in_pos} + 1 <= length($self->{input_part})) {
+					$self->{in_pos}++;
+					$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
 				}
 			##Down Arrow
 			} elsif ($event[3] == 40) {
-				unless ($input_offset) {
-					$input_list[$input_offset] = $input_part;
+				unless ($self->{input_offset}) {
+					$self->{input_list}[$self->{input_offset}] = $self->{input_part};
 				}
-				$input_offset--;
-				$input_offset += $#input_list + 1 while $input_offset < 0;
+				$self->{input_offset}--;
+				$self->{input_offset} += $#{ $self->{input_list} } + 1 while $self->{input_offset} < 0;
 
-				$out_con->Cursor(0, $in_line);
-				$out_con->Write(' ' x length($input_part));
-				$out_con->Cursor(0, $in_line);
-				$input_part = $input_list[$input_offset];
-				$out_con->Write($input_part);
-				$in_pos = length($input_part);
+				$self->{out_con}->Cursor(0, $self->{in_line});
+				$self->{out_con}->Write(' ' x length($self->{input_part}));
+				$self->{out_con}->Cursor(0, $self->{in_line});
+				$self->{input_part} = $self->{input_list}[$self->{input_offset}];
+				$self->{out_con}->Write($self->{input_part});
+				$self->{in_pos} = length($self->{input_part});
 			##Insert
 #			} elsif ($event[3] == 45) {
 #				__PACKAGE__->writeOutput("insert\n");
 			##Delete
 			} elsif ($event[3] == 46) {
-				substr($input_part, $in_pos, 1, '');
-				$out_con->Scroll(
-					$in_pos, $in_line, $right, $in_line,
-					$in_pos - 1, $in_line, ord(' '), $main::ATTR_NORMAL, 
-					$in_pos, $in_line, $right, $in_line,
+				substr($self->{input_part}, $self->{in_pos}, 1, '');
+				$self->{out_con}->Scroll(
+					$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
+					$self->{in_pos} - 1, $self->{in_line}, ord(' '), $main::ATTR_NORMAL, 
+					$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
 				);
 			##F1-F12
 #			} elsif ($event[3] >= 112 && $event[3] <= 123) {
@@ -239,18 +238,13 @@ sub readEvents {
 
 
 sub writeOutput {
-	unless ($enabled) {
-		cluck("called before being start()ed\n");
-		return undef;
-	}
-
-	my $class = shift;
+	my $self = shift;
 	my $type = shift;
 	my $message = shift;
 	my $domain = shift;
 	
 	#wrap the text
-	local($Text::Wrap::columns) = $right - $left + 1;
+	local($Text::Wrap::columns) = $self->{right} - $self->{left} + 1;
 	my ($endspace) = $message =~ /(\s*)$/; #Save trailing whitespace: wrap kills spaces near wraps, especialy at the end of stings, so "\n" becomes "", not what we want
 	$message = wrap('', '', $message);
 	$message =~ s/\s*$/$endspace/; #restore the whitespace
@@ -258,41 +252,43 @@ sub writeOutput {
 	my $lines = $message =~ s/\r?\n/\n/g; #fastest? way to count newlines
 	
 	#this paragraph is all about handleing lines that don't end in a newline. I have no clue how it works, even though I wrote it, but it does. =)
-	$lines++ if (!$lines && $last_line_end);
-	if ($lines && !$last_line_end) {
+	$lines++ if (!$lines && $self->{last_line_end});
+	if ($lines && !$self->{last_line_end}) {
 		$lines--;
-		$out_line--;
-	} elsif (!$last_line_end) {
-		$out_line--;
+		$self->{out_line}--;
+	} elsif (!$self->{last_line_end}) {
+		$self->{out_line}--;
 	}
-	$last_line_end = ($message =~ /\n$/) ? 1 : 0;
+	$self->{last_line_end} = ($message =~ /\n$/) ? 1 : 0;
 
-	my $ret = $out_con->Scroll(
-		$left, 0, $right, $out_bot,
+	my $ret = $self->{out_con}->Scroll(
+		$self->{left}, 0, $self->{right}, $self->{out_bot},
 		0, 0-$lines, ord(' '), $main::ATTR_NORMAL, 
-		$left, 0, $right, $out_bot
+		$self->{left}, 0, $self->{right}, $self->{out_bot}
 	);
 
-	my ($ocx, $ocy) = $out_con->Cursor();
-	$out_con->Cursor($out_col, $out_line - $lines);
-	setColor($type, $domain);
-	$out_con->Write($message);
-	color('reset');
-	($out_col, $out_line) = $out_con->Cursor();
-	$out_line -= $last_line_end - 1;
-	$out_con->Cursor($ocx, $ocy);
+	my ($ocx, $ocy) = $self->{out_con}->Cursor();
+	$self->{out_con}->Cursor($self->{out_col}, $self->{out_line} - $lines);
+	$self->setColor($type, $domain);
+	$self->{out_con}->Write($message);
+	$self->color('reset');
+	($self->{out_col}, $self->{out_line}) = $self->{out_con}->Cursor();
+	$self->{out_line} -= $self->{last_line_end} - 1;
+	$self->{out_con}->Cursor($ocx, $ocy);
 }
 
 sub setColor {
 	return if (!$consoleColors{''}{'useColors'});
+	my $self = shift;
 	my ($type, $domain) = @_;
 	my $color;
 	$color = $consoleColors{$type}{$domain} if (defined $type && defined $domain && defined $consoleColors{$type});
 	$color = $consoleColors{$type}{'default'} if (!defined $color && defined $type);
-	color($color) if (defined $color);
+	$self->color($color) if (defined $color);
 }
 
 sub color {
+	my $self = shift;
 	my $color = shift;
 	my ($bgcolor, $fgcode, $bgcode);
 	$color =~ s/\/(.*)//;
@@ -300,7 +296,7 @@ sub color {
 
 	$fgcode = $fgcolors{$color} || $fgcolors{'default'};
 	$bgcode = $bgcolors{$bgcolor} || $bgcolors{'default'};
-	$out_con->Attr($fgcode | $bgcode);
+	$self->{out_con}->Attr($fgcode | $bgcode);
 }
 
 $fgcolors{"reset"}		= $main::FG_GRAY;
