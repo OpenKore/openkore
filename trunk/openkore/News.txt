@@ -48,6 +48,9 @@ New features:
   alias_mvp sm 292
 - If 'sp' command is called without a player target, it will target yourself.
   Useful for e.g. 'alias_heal sp 28'.
+- Ability to avoid area spells.
+- Switch target if a monster attacks you, while you are on the way to
+  another monster, but haven't attacked anything yet.
 
 New commands:
 - guild join (flag)
@@ -88,7 +91,7 @@ Internal:
   in which randomWalk should walk.
 
 Credits:
-- Joseph: -1 flag support in mon_control.txt
+- Joseph: -1 flag support in mon_control.txt, spell avoiding, target switching
 - aputs: Support for the _monsters option in useSelf_skill, useSelf_item
   and partySkill.
 - obyarou: Priority attack support for non-aggressive monsters,

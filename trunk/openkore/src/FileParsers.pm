@@ -306,6 +306,7 @@ sub parseMonControl {
 			$$r_hash{lc($key)}{'attack_auto'} = $args[0];
 			$$r_hash{lc($key)}{'teleport_auto'} = $args[1];
 			$$r_hash{lc($key)}{'teleport_search'} = $args[2];
+			$$r_hash{lc($key)}{'skillcancel_auto'} = $args[3];
 		}
 	}
 	close FILE;
