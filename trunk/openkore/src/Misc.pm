@@ -197,19 +197,17 @@ sub checkMonsterCleanness {
 	return 1 if ($monsters{$ID}{'dmgToYou'} || $monsters{$ID}{'missedYou'});
 
 	# It monster hasn't received any damage from other players
-	if (!$monsters{$ID}{'dmgTo'}
-	 && !binSize([keys %{$monsters{$ID}{'missedFromPlayer'}}])
+	if (!binSize([keys %{$monsters{$ID}{'missedFromPlayer'}}])
 	 && !binSize([keys %{$monsters{$ID}{'dmgFromPlayer'}}])
 
 	 # and it hasn't attacked any other player
-	 && !$monsters{$ID}{'dmgFrom'}
 	 && !binSize([keys %{$monsters{$ID}{'missedToPlayer'}}])
 	 && !binSize([keys %{$monsters{$ID}{'dmgToPlayer'}}])
 
 	 # and hasn't been casted on by a player
-	 && binSize([keys %{$monsters{$ID}{'castOnByPlayer'}}])
+	 && !binSize([keys %{$monsters{$ID}{'castOnByPlayer'}}])
 	 # and hasn't tried to cast on a player
-	 && binSize([keys %{$monsters{$ID}{'castOnToPlayer'}}])
+	 && !binSize([keys %{$monsters{$ID}{'castOnToPlayer'}}])
 	) {
 		return 1;
 	}
