@@ -17,11 +17,11 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#
 #  $Revision$
 #  $Id$
 #
 #########################################################################
+
 package Interface::Wx;
 
 use strict;
@@ -43,6 +43,7 @@ use Interface::Wx::Console;
 use Interface::Wx::Input;
 use Interface::Wx::ItemList;
 use Interface::Wx::ConfigEditor;
+use Interface::Wx::DockNotebook;
 use AI;
 use Settings;
 use Plugins;
@@ -101,6 +102,12 @@ sub DESTROY {
 	my $self = shift;
 	Plugins::delHooks($self->{hooks});
 }
+
+
+######################
+## METHODS
+######################
+
 
 sub mainLoop {
 	my $self = shift;
@@ -222,7 +229,9 @@ sub beep {
 }
 
 
-################################
+#########################
+## INTERFACE CREATION
+#########################
 
 
 sub createInterface {
@@ -234,181 +243,175 @@ sub createInterface {
 
 
 	### Menu bar
-	my $menu = $self->{menu} = new Wx::MenuBar();
-	$frame->SetMenuBar($menu);
-	EVT_MENU_OPEN($self->{frame}, sub { $self->onMenuOpen; });
-
-		# Program menu
-		my $opMenu = new Wx::Menu;
-		$self->{mPause}  = $self->addMenu($opMenu, '&Pause Botting', \&onDisableAI, 'Pause all automated botting activity');
-		$self->{mResume} = $self->addMenu($opMenu, '&Resume Botting', \&onEnableAI, 'Resume all automated botting activity');
-		$opMenu->AppendSeparator;
-		if ($^O eq 'MSWin32') {
-			$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
-			$opMenu->AppendSeparator;
-		}
-		$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit, 'Exit this program');
-		$menu->Append($opMenu, 'P&rogram');
-
-		# Info menu
-		my $infoMenu = new Wx::Menu;
-		$self->addMenu($infoMenu, '&Status	Alt-S',	sub { Commands::run("s"); });
-		$self->addMenu($infoMenu, 'S&tatistics',	sub { Commands::run("st"); });
-		$self->addMenu($infoMenu, '&Inventory	Alt-I',	sub { Commands::run("i"); });
-		$self->addMenu($infoMenu, 'S&kills',		sub { Commands::run("skills"); });
-		$infoMenu->AppendSeparator;
-		$self->addMenu($infoMenu, '&Players	Alt-P',	sub { Commands::run("pl"); });
-		$self->addMenu($infoMenu, '&Monsters	Alt-M',	sub { Commands::run("ml"); });
-		$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
-		$infoMenu->AppendSeparator;
-		$self->addMenu($infoMenu, '&Experience Report	Alt+E',	sub { main::parseInput("exp"); });
-		$menu->Append($infoMenu, 'I&nfo');
-
-		# View menu
-		my $viewMenu = $self->{viewMenu} = new Wx::Menu;
-		$self->addMenu($viewMenu,
-			'&Map	Ctrl-M',	\&onMapToggle, 'Show where you are on the current map');
-		$self->{infoBarToggle} = $self->addCheckMenu($viewMenu,
-			'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
-		$viewMenu->AppendSeparator;
-		$self->addMenu($viewMenu,
-			'&Font...',		\&onFontChange, 'Change console font');
-		$viewMenu->AppendSeparator;
-		$self->addMenu($viewMenu,
-			'&Clear Console',	\&onClearConsole);
-		$menu->Append($viewMenu, '&View');
-
-		my $settingsMenu = new Wx::Menu;
-		$self->addMenu($settingsMenu, '&Advanced...', \&onAdvancedConfig, 'Edit advanced configuration options.');
-		$menu->Append($settingsMenu, '&Settings');
-
-		$self->createCustomMenus() if $self->can('createCustomMenus');
-
-		# Help menu
-		my $helpMenu = new Wx::Menu();
-		$self->addMenu($helpMenu, '&Manual	F1',		\&onManual, 'Read the manual');
-		$self->addMenu($helpMenu, '&Forum	Shift-F1',	\&onForum, 'Visit the forum');
-		$menu->Append($helpMenu, '&Help');
-
+	$self->createMenuBar;
 
 	### Vertical box sizer
 	my $vsizer = $self->{vsizer} = new Wx::BoxSizer(wxVERTICAL);
 	$frame->SetSizer($vsizer);
 
-
 	### Horizontal panel with HP/SP/Exp box
-	my $infoPanel = $self->{infoPanel} = new Wx::Panel($frame, -1);
+	$self->createInfoPanel;
 
-		my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
-
-		my $label = new Wx::StaticText($infoPanel, -1, "HP: ");
-		$hsizer->Add($label, 0, wxLEFT, 3);
-
-		my $hpBar = $self->{hpBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-			wxGA_HORIZONTAL | wxGA_SMOOTH);
-		$hsizer->Add($hpBar, 1, wxRIGHT, 8);
-
-		$label = new Wx::StaticText($infoPanel, -1, "SP: ");
-		$hsizer->Add($label, 0);
-
-		my $spBar = $self->{spBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-			wxGA_HORIZONTAL | wxGA_SMOOTH);
-		$hsizer->Add($spBar, 1, wxRIGHT, 8);
-
-		$label = new Wx::StaticText($infoPanel, -1, "Exp: ");
-		$hsizer->Add($label, 0);
-
-		my $expBar = $self->{expBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-			wxGA_HORIZONTAL | wxGA_SMOOTH);
-		$hsizer->Add($expBar, 1);
-		my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-			wxGA_HORIZONTAL | wxGA_SMOOTH);
-		$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
-
-		$label = new Wx::StaticText($infoPanel, -1, "Weight: ");
-		$hsizer->Add($label, 0);
-
-		my $weightBar = $self->{weightBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
-			wxGA_HORIZONTAL | wxGA_SMOOTH);
-		$hsizer->Add($weightBar, 1);
-
-	$infoPanel->SetSizerAndFit($hsizer);
-	$vsizer->Add($infoPanel, 0, wxGROW);
+	### Dockable notebook
+#	my $n = new Interface::Wx::DockNotebook($frame, -1);
+#	$vsizer->Add($n, 1, wxGROW);
 
 
 	## Splitter with console and another splitter
 	my $splitter = new Wx::SplitterWindow($frame, 928, wxDefaultPosition, wxDefaultSize,
 		wxSP_LIVE_UPDATE);
+	$self->{splitter} = $splitter;
 	$splitter->SetMinimumPaneSize(25);
 	$vsizer->Add($splitter, 1, wxGROW);
-
-		my $console = $self->{console} = new Interface::Wx::Console($splitter);
-		my $subSplitter = new Wx::SplitterWindow($splitter, 583,
-			wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE);
-
-			## Inside this splitter is a player/monster/item list, and a dock with map viewer
-
-			my $itemList = $self->{itemList} = new Interface::Wx::ItemList($subSplitter);
-			$itemList->onActivate(\&onItemListActivate, $self);
-			$subSplitter->Initialize($itemList);
-
-
-			my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($subSplitter, -1, 'Map');
-			$mapDock->Show(0);
-			$mapDock->setHideFunc($self, sub {
-				$subSplitter->Unsplit($mapDock);
-				$mapDock->Show(0);
-				$self->{inputBox}->SetFocus;
-			});
-			$mapDock->setShowFunc($self, sub {
-				$subSplitter->SplitVertically($itemList, $mapDock, -$mapDock->GetBestSize->GetWidth);
-				$mapDock->Show(1);
-				$self->{inputBox}->SetFocus;
-			});
-
-			my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
-			$mapDock->setParentFrame($frame);
-			$mapDock->set($mapView);
-			$mapView->onMouseMove(sub {
-				# Mouse moved over the map viewer control
-				my (undef, $x, $y) = @_;
-				my $walkable;
-
-				$walkable = checkFieldWalkable(\%field, $x, $y);
-				if ($x >= 0 && $y >= 0 && $walkable) {
-					$self->{mouseMapText} = "Mouse over: $x, $y";
-				} else {
-					delete $self->{mouseMapText};
-				}
-				$self->{statusbar}->SetStatusText($self->{mouseMapText}, 0);
-			});
-			$mapView->onClick(sub {
-				# Clicked on map viewer control
-				my (undef, $x, $y) = @_;
-				delete $self->{mouseMapText};
-				$self->writeOutput("message", "Moving to $x, $y\n", "info");
-				AI::clear("mapRoute", "route", "move");
-				main::ai_route($field{name}, $x, $y, attackOnRoute => 1);
-				$self->{inputBox}->SetFocus;
-			});
-			$mapView->onMapChange(sub {
-				$mapDock->title($field{name});
-				$mapDock->Fit;
-			});
-			if (%field && $char) {
-				$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
-			}
-
-		$splitter->SplitVertically($console, $subSplitter, -150);
+	$self->createSplitterContent;
 
 
 	### Input field
-	$hsizer = new Wx::BoxSizer(wxHORIZONTAL);
+	$self->createInputField;
+
+	### Status bar
+	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, -1, wxST_SIZEGRIP);
+	$statusbar->SetFieldsCount(3);
+	$statusbar->SetStatusWidths(-1, 65, 175);
+	$frame->SetStatusBar($statusbar);
+
+
+	#################
+
+	$frame->SetSizeHints(300, 250);
+	$frame->SetClientSize(730, 400);
+	$frame->SetIcon(Wx::GetWxPerlIcon);
+	$frame->Show(1);
+	$self->SetTopWindow($frame);
+	$self->{inputBox}->SetFocus;
+	EVT_CLOSE($frame, \&onClose);
+
+	# Hide console on Win32
+	if ($buildType == 0 && !$CVS) {
+		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
+	}
+}
+
+
+sub createMenuBar {
+	my $self = shift;
+	my $menu = $self->{menu} = new Wx::MenuBar;
+	my $frame = $self->{frame};
+	$frame->SetMenuBar($menu);
+	EVT_MENU_OPEN($self->{frame}, sub { $self->onMenuOpen; });
+
+	# Program menu
+	my $opMenu = new Wx::Menu;
+	$self->{mPause}  = $self->addMenu($opMenu, '&Pause Botting', \&onDisableAI, 'Pause all automated botting activity');
+	$self->{mResume} = $self->addMenu($opMenu, '&Resume Botting', \&onEnableAI, 'Resume all automated botting activity');
+	$opMenu->AppendSeparator;
+	if ($^O eq 'MSWin32') {
+		$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
+		$opMenu->AppendSeparator;
+	}
+	$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit, 'Exit this program');
+	$menu->Append($opMenu, 'P&rogram');
+
+	# Info menu
+	my $infoMenu = new Wx::Menu;
+	$self->addMenu($infoMenu, '&Status	Alt-S',	sub { Commands::run("s"); });
+	$self->addMenu($infoMenu, 'S&tatistics',	sub { Commands::run("st"); });
+	$self->addMenu($infoMenu, '&Inventory	Alt-I',	sub { Commands::run("i"); });
+	$self->addMenu($infoMenu, 'S&kills',		sub { Commands::run("skills"); });
+	$infoMenu->AppendSeparator;
+	$self->addMenu($infoMenu, '&Players	Alt-P',	sub { Commands::run("pl"); });
+	$self->addMenu($infoMenu, '&Monsters	Alt-M',	sub { Commands::run("ml"); });
+	$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
+	$infoMenu->AppendSeparator;
+	$self->addMenu($infoMenu, '&Experience Report	Alt+E',	sub { main::parseInput("exp"); });
+	$menu->Append($infoMenu, 'I&nfo');
+
+	# View menu
+	my $viewMenu = $self->{viewMenu} = new Wx::Menu;
+	$self->addMenu($viewMenu,
+		'&Map	Ctrl-M',	\&onMapToggle, 'Show where you are on the current map');
+	$self->{infoBarToggle} = $self->addCheckMenu($viewMenu,
+		'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
+	$viewMenu->AppendSeparator;
+	$self->addMenu($viewMenu,
+		'&Font...',		\&onFontChange, 'Change console font');
+	$viewMenu->AppendSeparator;
+	$self->addMenu($viewMenu,
+		'&Clear Console',	\&onClearConsole);
+	$menu->Append($viewMenu, '&View');
+
+	my $settingsMenu = new Wx::Menu;
+	$self->addMenu($settingsMenu, '&Advanced...', \&onAdvancedConfig, 'Edit advanced configuration options.');
+	$menu->Append($settingsMenu, '&Settings');
+
+	$self->createCustomMenus() if $self->can('createCustomMenus');
+
+	# Help menu
+	my $helpMenu = new Wx::Menu();
+	$self->addMenu($helpMenu, '&Manual	F1',		\&onManual, 'Read the manual');
+	$self->addMenu($helpMenu, '&Forum	Shift-F1',	\&onForum, 'Visit the forum');
+	$menu->Append($helpMenu, '&Help');
+}
+
+sub createInfoPanel {
+	my $self = shift;
+	my $frame = $self->{frame};
+	my $vsizer = $self->{vsizer};
+	my $infoPanel = $self->{infoPanel} = new Wx::Panel($frame, -1);
+
+	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
+	my $label = new Wx::StaticText($infoPanel, -1, "HP: ");
+	$hsizer->Add($label, 0, wxLEFT, 3);
+
+
+	## HP
+	my $hpBar = $self->{hpBar} = new Wx::Gauge($infoPanel, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($hpBar, 1, wxRIGHT, 8);
+
+	$label = new Wx::StaticText($infoPanel, -1, "SP: ");
+	$hsizer->Add($label, 0);
+
+	## SP
+	my $spBar = $self->{spBar} = new Wx::Gauge($infoPanel, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($spBar, 1, wxRIGHT, 8);
+
+	$label = new Wx::StaticText($infoPanel, -1, "Exp: ");
+	$hsizer->Add($label, 0);
+
+	## Exp and job exp
+	my $expBar = $self->{expBar} = new Wx::Gauge($infoPanel, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($expBar, 1);
+	my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($infoPanel, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
+
+	$label = new Wx::StaticText($infoPanel, -1, "Weight: ");
+	$hsizer->Add($label, 0);
+
+	## Weight
+	my $weightBar = $self->{weightBar} = new Wx::Gauge($infoPanel, -1, 100,
+		wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
+		wxGA_HORIZONTAL | wxGA_SMOOTH);
+	$hsizer->Add($weightBar, 1);
+
+
+	$infoPanel->SetSizerAndFit($hsizer);
+	$vsizer->Add($infoPanel, 0, wxGROW);
+}
+
+sub createInputField {
+	my $self = shift;
+	my $vsizer = $self->{vsizer};
+	my $frame = $self->{frame};
+
+	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
 	$vsizer->Add($hsizer, 0, wxGROW);
 
 	my $targetBox = $self->{targetBox} = new Wx::ComboBox($frame, -1, "", wxDefaultPosition,
@@ -426,30 +429,58 @@ sub createInterface {
 	$choice->SetSelection(0);
 	EVT_CHOICE($self, 456, sub { $inputBox->SetFocus; });
 	$hsizer->Add($choice, 0, wxGROW);
-
-
-	### Status bar
-	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, -1, wxST_SIZEGRIP);
-	$statusbar->SetFieldsCount(3);
-	$statusbar->SetStatusWidths(-1, 65, 175);
-	$frame->SetStatusBar($statusbar);
-
-
-	#################
-
-	$frame->SetSizeHints(300, 250);
-	$frame->SetClientSize(730, 400);
-	$frame->SetIcon(Wx::GetWxPerlIcon);
-	$frame->Show(1);
-	$self->SetTopWindow($frame);
-	$inputBox->SetFocus;
-	EVT_CLOSE($frame, \&onClose);
-
-	# Hide console on Win32
-	if ($buildType == 0 && !$CVS) {
-		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
-	}
 }
+
+sub createSplitterContent {
+	my $self = shift;
+	my $splitter = $self->{splitter};
+	my $frame = $self->{frame};
+
+	## Console
+	my $notebook = $self->{notebook} = new Interface::Wx::DockNotebook($splitter, -1);
+	my $page = $notebook->newPage(0, 'Console');
+	my $console = $self->{console} = new Interface::Wx::Console($page);
+	$page->set($console);
+
+	## Parallel to the console is a sub-splitter
+	my $subSplitter = new Wx::SplitterWindow($splitter, 583,
+		wxDefaultPosition, wxDefaultSize, wxSP_LIVE_UPDATE);
+
+	## Inside this splitter is a player/monster/item list, and a dock with map viewer
+
+	my $itemList = $self->{itemList} = new Interface::Wx::ItemList($subSplitter);
+	$itemList->onActivate(\&onItemListActivate, $self);
+	$subSplitter->Initialize($itemList);
+
+
+	# Dock
+	my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($subSplitter, -1, 'Map');
+	$mapDock->Show(0);
+	$mapDock->setHideFunc($self, sub {
+		$subSplitter->Unsplit($mapDock);
+		$mapDock->Show(0);
+		$self->{inputBox}->SetFocus;
+	});
+	$mapDock->setShowFunc($self, sub {
+		$subSplitter->SplitVertically($itemList, $mapDock, -$mapDock->GetBestSize->GetWidth);
+		$mapDock->Show(1);
+		$self->{inputBox}->SetFocus;
+	});
+
+	# Map viewer
+	my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
+	$mapDock->setParentFrame($frame);
+	$mapDock->set($mapView);
+	$mapView->onMouseMove(\&onMapMouseMove, $self);
+	$mapView->onClick(\&onMapClick, $self);
+	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
+	if (%field && $char) {
+		$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
+	}
+
+	$splitter->SplitVertically($notebook, $subSplitter, -150);
+}
+
 
 sub addMenu {
 	my ($self, $menu, $label, $callback, $help) = @_;
@@ -470,6 +501,12 @@ sub addCheckMenu {
 	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self); });
 	return $item;
 }
+
+
+##########################
+## INTERFACE UPDATING
+##########################
+
 
 sub updateStatusBar {
 	my $self = shift;
@@ -567,7 +604,10 @@ sub updateItemList {
 }
 
 
-################## Callbacks ##################
+##################
+## Callbacks
+##################
+
 
 sub onInputEnter {
 	my $self = shift;
@@ -656,59 +696,53 @@ sub onClearConsole {
 
 sub onAdvancedConfig {
 	my $self = shift;
-	my $dialog = $self->{advancedDialog};
-
-	if (!$dialog) {
-		$dialog = $self->{advancedDialog} = new Wx::Dialog($self->{frame},
-			-1, "Advanced Configuration", wxDefaultPosition, wxDefaultSize,
-			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
-		EVT_CLOSE($dialog, sub {
-			$_[1]->Skip;
-			delete $self->{advancedDialog};
-		});
-
-		my $vsizer = new Wx::BoxSizer(wxVERTICAL);
-		$dialog->SetSizer($vsizer);
-
-		my $cfg = new Interface::Wx::ConfigEditor($dialog, -1);
-		$cfg->setConfig(\%config);
-		$cfg->addCategory('Attacks', 'Grid', ['attackAuto', 'attackDistance', 'attackMaxDistance']);
-		$cfg->addCategory('All', 'Grid');
-		$cfg->onChange(sub {
-			my ($key, $value) = @_;
-			configModify($key, $value) if ($value ne $config{$key});
-		});
-		$vsizer->Add($cfg, 1, wxGROW | wxALL, 8);
-
-		my $sizer = new Wx::BoxSizer(wxHORIZONTAL);
-		$vsizer->Add($sizer, 0, wxGROW | wxLEFT | wxRIGHT | wxBOTTOM, 8);
-
-		my $revert = new Wx::Button($dialog, 46, '&Revert');
-		$revert->SetToolTip('Revert settings to before you opened the selected category');
-		$sizer->Add($revert, 0);
-		EVT_BUTTON($revert, 46, sub {
-			$cfg->revert;
-		});
-		$revert->Enable(0);
-		$cfg->onRevertEnable(sub {
-			$revert->Enable($_[0]);
-		});
-
-		my $pad = new Wx::Window($dialog, -1);
-		$sizer->Add($pad, 1);
-
-		my $close = new Wx::Button($dialog, 47, '&Close');
-		$close->SetToolTip('Close this dialog');
-		$close->SetDefault;
-		$sizer->Add($close, 0);
-		EVT_BUTTON($close, 47, sub {
-			$dialog->Close;
-		});
-
-		$dialog->SetClientSize(600, 360);
+	if ($self->{notebook}->hasPage('Advanced Configuration')) {
+		$self->{notebook}->switchPage('Advanced Configuration');
+		return;
 	}
-	$dialog->Show(1);
-	$dialog->Raise;
+
+	my $page = $self->{notebook}->newPage(1, 'Advanced Configuration');
+	my $panel = new Wx::Panel($page, -1);
+
+	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
+	$panel->SetSizer($vsizer);
+
+	my $cfg = new Interface::Wx::ConfigEditor($panel, -1);
+	$cfg->setConfig(\%config);
+	$cfg->addCategory('Attacks', 'Grid', ['attackAuto', 'attackDistance', 'attackMaxDistance']);
+	$cfg->addCategory('All', 'Grid');
+	$cfg->onChange(sub {
+		my ($key, $value) = @_;
+		configModify($key, $value) if ($value ne $config{$key});
+	});
+	$vsizer->Add($cfg, 1, wxGROW | wxALL, 8);
+
+	my $sizer = new Wx::BoxSizer(wxHORIZONTAL);
+	$vsizer->Add($sizer, 0, wxGROW | wxLEFT | wxRIGHT | wxBOTTOM, 8);
+
+	my $revert = new Wx::Button($panel, 46, '&Revert');
+	$revert->SetToolTip('Revert settings to before you opened the selected category');
+	$sizer->Add($revert, 0);
+	EVT_BUTTON($revert, 46, sub {
+		$cfg->revert;
+	});
+	$revert->Enable(0);
+	$cfg->onRevertEnable(sub {
+		$revert->Enable($_[0]);
+	});
+
+	my $pad = new Wx::Window($panel, -1);
+	$sizer->Add($pad, 1);
+
+	my $close = new Wx::Button($panel, 47, '&Close');
+	$close->SetToolTip('Close this panel/dialog');
+	$close->SetDefault;
+	$sizer->Add($close, 0);
+	EVT_BUTTON($close, 47, sub {
+		$self->{notebook}->closePage('Advanced Configuration');
+	});
+
+	$page->set($panel);
 }
 
 sub onMapToggle {
@@ -771,6 +805,36 @@ sub onAddPrivMsgUser {
 	my $self = shift;
 	my $param = $_[1];
 	$self->{targetBox}->Append($param->{user});
+}
+
+sub onMapMouseMove {
+	# Mouse moved over the map viewer control
+	my ($self, $x, $y) = @_;
+	my $walkable;
+
+	$walkable = checkFieldWalkable(\%field, $x, $y);
+	if ($x >= 0 && $y >= 0 && $walkable) {
+		$self->{mouseMapText} = "Mouse over: $x, $y";
+	} else {
+		delete $self->{mouseMapText};
+	}
+	$self->{statusbar}->SetStatusText($self->{mouseMapText}, 0);
+}
+
+sub onMapClick {
+	# Clicked on map viewer control
+	my ($self, $x, $y) = @_;
+	delete $self->{mouseMapText};
+	$self->writeOutput("message", "Moving to $x, $y\n", "info");
+	AI::clear("mapRoute", "route", "move");
+	main::ai_route($field{name}, $x, $y, attackOnRoute => 1);
+	$self->{inputBox}->SetFocus;
+}
+
+sub onMap_MapChange {
+	my ($mapDock) = @_;
+	$mapDock->title($field{name});
+	$mapDock->Fit;
 }
 
 1;

@@ -14,7 +14,6 @@
 #  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #  GNU General Public License for more details.
 #
-#
 #  $Revision$
 #  $Id$
 #
@@ -31,12 +30,9 @@ our (@brushes, $oldWidth, $font, $dark, $light);
 
 
 sub new {
-	my ($class, $parent, $title) = @_;
+	my ($class, $parent, $title, $no_buttons) = @_;
 	my $self = $class->SUPER::new($parent, -1);
 
-	my $sizer = $self->{sizer} = new Wx::BoxSizer(wxVERTICAL);
-	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
-	$sizer->Add($hsizer, 1, wxALIGN_RIGHT);
 	$self->SetBackgroundColour(new Wx::Colour(98, 165, 241));
 	EVT_PAINT($self, \&onPaint);
 
@@ -50,30 +46,39 @@ sub new {
 
 	my $size = 20;
 
-	Wx::Image::AddHandler(new Wx::PNGHandler);
-	my $image = Wx::Image->newNameType(f('Interface', 'Wx', 'window.png'), wxBITMAP_TYPE_PNG);
-	my $detachButton = new Wx::BitmapButton($self, 1024, new Wx::Bitmap($image),
-		wxDefaultPosition, [$size, $size]);
-	$self->{detachButton} = $detachButton;
-	$detachButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
-	$hsizer->Add($detachButton, 0, wxGROW);
+	if (!$no_buttons) {
+		my $sizer = $self->{sizer} = new Wx::BoxSizer(wxVERTICAL);
+		my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
+		$sizer->Add($hsizer, 1, wxALIGN_RIGHT);
 
-	$image = Wx::Image->newNameType(f('Interface', 'Wx', 'close.png'), wxBITMAP_TYPE_PNG);
-	my $closeButton = new Wx::BitmapButton($self, 1025, new Wx::Bitmap($image),
-		wxDefaultPosition, [$size, $size]);
-	$self->{closeButton} = $closeButton;
-	$closeButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
-	$hsizer->Add($closeButton, 0, wxGROW);
+		Wx::Image::AddHandler(new Wx::PNGHandler);
+		my $image = Wx::Image->newNameType(f('Interface', 'Wx', 'window.png'), wxBITMAP_TYPE_PNG);
+		my $detachButton = new Wx::BitmapButton($self, 1024, new Wx::Bitmap($image),
+			wxDefaultPosition, [$size, $size]);
+		$self->{detachButton} = $detachButton;
+		$detachButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+		$hsizer->Add($detachButton, 0, wxGROW);
 
-	$self->EVT_BUTTON(1024, sub {
-		$self->{onDetach}->($self->{onDetachData}) if ($self->{onDetach});
-	});
-	$self->EVT_BUTTON(1025, sub {
-		$self->{onClose}->($self->{onCloseData}) if ($self->{onClose});
-	});
+		$image = Wx::Image->newNameType(f('Interface', 'Wx', 'close.png'), wxBITMAP_TYPE_PNG);
+		my $closeButton = new Wx::BitmapButton($self, 1025, new Wx::Bitmap($image),
+			wxDefaultPosition, [$size, $size]);
+		$self->{closeButton} = $closeButton;
+		$closeButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
+		$hsizer->Add($closeButton, 0, wxGROW);
 
-	$self->SetSizeHints($closeButton->GetBestSize->GetWidth * 2 + 8, $size);
-	$self->SetSizer($sizer);
+		$self->EVT_BUTTON(1024, sub {
+			$self->{onDetach}->($self->{onDetachData}) if ($self->{onDetach});
+		});
+		$self->EVT_BUTTON(1025, sub {
+			$self->{onClose}->($self->{onCloseData}) if ($self->{onClose});
+		});
+
+		$self->SetSizeHints($closeButton->GetBestSize->GetWidth * 2 + 8, $size);
+		$self->SetSizer($sizer);
+	} else {
+		$self->SetSizeHints(8, $size);
+	}
+
 	$self->{title} = $title;
 	return $self;
 }
@@ -151,7 +156,9 @@ sub onPaint {
 		$dc->DrawRectangle($x, 0, $block + 1, $height);
 	}
 
-	$width -= $self->{detachButton}->GetSize->GetWidth + $self->{closeButton}->GetSize->GetWidth;
+	if ($self->{detachButton}) {
+		$width -= $self->{detachButton}->GetSize->GetWidth + $self->{closeButton}->GetSize->GetWidth;
+	}
 	$dc->SetBrush(wxTRANSPARENT_BRUSH);
 	if (!$dark) {
 		$dark = new Wx::Pen(new Wx::Colour(164, 164, 164), 1, wxSOLID);
