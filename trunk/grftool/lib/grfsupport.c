@@ -1,0 +1,334 @@
+/*
+ *  libgrf
+ *  grfsupport.c - provide commonly used functions to the library
+ *  Copyright (C) 2004  Faithful <faithful@users.sf.net>
+ *  Copyright (C) 2004  Hongli Lai <h.lai@chello.nl>
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ */
+
+#include "grftypes.h"
+#include "grfsupport.h"
+
+#include <stdlib.h>		/* snprintf, free */
+#include <errno.h>		/* errno */
+#include <string.h>		/* strerror */
+#include <zlib.h>		/* gzerror */
+
+GRFEXTERN_BEGIN
+
+/***************************
+* Endian support functions *
+***************************/
+/* Pointless:
+ * GRFINLINE uint8_t LittleEndian8 (uint8_t *p) { return *p; }
+ */
+/* Unused:
+ * GRFINLINE uint16_t LittleEndian16 (uint8_t *p) { return p[1]*256 + *p; }
+ */
+/*! \brief Endian support function
+ *
+ * Grabs a uint32_t from a 4byte (or more) character array
+ *
+ * \warning If the character array is less than 4 bytes long, this function
+ *		will access memory outside of the array
+ *
+ * \param p A uint8_t (char) array holding the bytes
+ * \return A uint32_t in Little Endian order
+ */
+GRFINLINE uint32_t LittleEndian32 (uint8_t *p) { return ((p[3]*256 + p[2])*256 + p[1])*256 + *p; }
+
+/************************
+* GRF Support Functions *
+************************/
+
+/*! \brief Function to hash a filename
+ *
+ * \note This function hashes the exact same way that GRAVITY's GRF openers
+ *		do. Enjoy ;-)
+ *
+ * \param name Filename to be hashed
+ * \return The value of the hashed filename
+ */
+GRFEXPORT uint32_t GRF_NameHash(const char *name) {
+	size_t i;
+	uint32_t tmp;
+
+	i=strlen(name);
+	tmp=0x1505;
+	for (i=strlen(name);i>0;i--,name++)
+		tmp=tmp*0x21+*name;
+
+	return tmp;
+}
+
+/*! \brief Finds a file inside an archive
+ *
+ * \param grf Pointer to a Grf struct to search for the file
+ * \param fname Full filename to search for
+ * \param index Pointer to a uint32_t which will hold the index of the
+ *		file in the Grf::files array.
+ */
+GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index) {
+	uint32_t i,j;
+
+	/* Make sure our arguments are sane */
+	if (!grf || !fname) {
+		/* GRF_SETERR(error,GE_BADARGS,grf_find) */
+		return NULL;
+	}
+
+	/* For speed, grab the filename hash */
+	j=GRF_NameHash(fname);
+	for (i=0;i<grf->nfiles;i++)
+		/* Check 4 bytes against each other instead of
+		 * a multi-character name
+		 */
+		if (grf->files[i].hash==j)
+			/* Just to double check that we have the right file,
+			 * compare the names
+			 */
+			if (!strncmp(fname,grf->files[i].name,GRF_NAMELEN)) {
+				/* Return the information */
+				if (index) *index=i;
+				return &(grf->files[i]);
+			}
+
+	return NULL;
+}
+
+/*! \brief Function to sort a Grf::files array
+ *
+ * \param grf Pointer to Grf struct which needs its files array sorted
+ * \param callback Function to determine which entry should be before the
+ *		other. It should return -1 if the first file should be first,
+ *		0 if they are equal, or 1 if the first file should be second.
+ */
+GRFEXPORT void grf_sort (Grf *grf, int (*callback)(GrfFile*,GrfFile*)) {
+	/*! \todo Write this code! */
+}
+
+/*! \brief Alphabetical sorting callback function
+ *
+ * \param g1 Pointer to the 1st GrfFile to evaluate
+ * \param g2 Pointer to the 2nd GrfFile to evaluate
+ * \return -1 if g1 should be first, 0 if g1 and g2 are equal, or 1 if
+ *	g2 should be before g1
+ */
+GRFEXPORT int GRF_AlphaSort(GrfFile *g1, GrfFile *g2) {
+	/*! \todo Write this code! (it should be extremely easy) */
+	return 0;
+}
+
+/*! \brief Offset-based sorting callback function
+ *
+ * \param g1 Pointer to the 1st GrfFile to evaluate
+ * \param g2 Pointer to the 2nd GrfFile to evaluate
+ * \return -1 if g1 should be first, 0 if g1 and g2 are equal, or 1 if
+ *	g2 should be before g1
+ */
+GRFEXPORT int GRF_OffsetSort(GrfFile *g1, GrfFile *g2) {
+	/* Check their offsets */
+	if (g1->pos>g2->pos)
+		return 1;
+	else if (g1->pos==g2->pos)
+		return 0;
+	return -1;
+}
+
+/*! \brief Function to find unused space in a GRF file
+ *
+ * \warning This function assumes the files have been sorted with
+ *	grf_sort() using GRF_OffsetSort();
+ *
+ * \param grf GRF file to search for the unused space in
+ * \param len Amount of contiguous unused space we need to find before we
+ *	return
+ * \return The first offset in the GRF in which at least len amount of
+ *	unused space was found, or 0 if none was found
+ */
+GRFEXPORT uint32_t grf_find_unused (Grf *grf, uint32_t len) {
+	/*! \todo Write this code! */
+	return 0;
+}
+
+/*! \brief Close a GRF file
+ *
+ * \warning This will not save any data!
+ *
+ * \param grf Grf pointer to free
+ */
+GRFEXPORT void grf_free(Grf *grf) {
+	/* Ensure we don't have access violations when freeing NULLs */
+	if (!grf)
+		return;
+
+	/* Free the grf name */
+	free(grf->filename);
+
+	/* Free the array of files */
+	free(grf->files);
+
+	/* Close the file */
+	if (grf->f)
+		fclose(grf->f);
+
+	/* And finally, free the pointer itself */
+	free(grf);
+}
+
+/***************************
+* Error Handling Functions *
+***************************/
+
+/*! \brief Set information in a GrfError struct
+ *
+ * \sa GRF_SETERR
+ * \sa GRF_SETERR_2
+ *
+ * \warning This function assumes that file and func point to constants
+ *		or statics, and just directly copies the pointer
+ *
+ * \param err Pointer to the error struct/enum to set the information
+ *		into
+ * \param errtype The error type to set
+ * \param line Line number (hopefully) close to where the error occurred
+ * \param file File in which the error occurred
+ * \param func Function in which the error occurred
+ * \param extra Information needed for finding various odd errors, such as
+ *		ones spit out by zlib's gzip functions
+ * \return A duplicate of the err pointer
+ */
+GRFEXPORT GrfError *GRF_SetError(GrfError *err, GrfErrorType errtype, uint32_t line, const char *file, const char *func, void *extra) {
+	if (err) {
+		/* Set the error informations */
+		err->type=errtype;
+		err->line=line;
+		err->file=file;
+		err->func=func;
+		err->extra=extra;
+	}
+
+	return err;
+}
+
+/*! \brief Private function
+ *
+ * Enum -> string constant
+ *
+ * \note This is pretty much the same as the one found in original libgrf
+ *
+ * \param error The error type we need a string for
+ * \return A string constant giving a human-readable (we hope) version
+ *		of the error type.
+ */
+static const char *GRF_strerror_type(GrfErrorType error) {
+	switch (error) {
+	case GE_BADARGS:
+		return "Bad arguments passed to function.";
+	case GE_INVALID:
+		return "Not a valid archive.";
+	case GE_CORRUPTED:
+		return "The archive appears to be corrupted.";
+	case GE_NSUP:
+		return "Archives of this version is not supported.";
+	case GE_NOTFOUND:
+		return "File not found inside archive.";
+	case GE_INDEX:
+		return "Invalid index.";
+	case GE_ERRNO:
+		return strerror(errno);
+	case GE_ZLIB:
+		return "Error in zlib.";
+	case GE_ZLIBFILE:
+		return "Error in zlib.";
+	default:
+		return "Unknown error.";
+	};
+}
+
+/*! \brief Private function
+ *
+ * Convert zlib #defines into a string constant
+ *
+ * \param error zlib error number to grab a name
+ * \return Human-readable string explanation of the error number
+ */
+static const char *GRF_strerror_zlib(int error) {
+	switch (error) {
+	case Z_OK:
+		return "zlib success.";
+	case Z_STREAM_END:
+		return "zlib end of stream.";
+	case Z_ERRNO:
+		return strerror(errno);
+	case Z_STREAM_ERROR:
+		return "zlib stream error.";
+	case Z_DATA_ERROR:
+		return "zlib data error.";
+	case Z_MEM_ERROR:
+		return "zlib memory error.";
+	case Z_BUF_ERROR:
+		return "zlib buffer error.";
+	case Z_VERSION_ERROR:
+		return "zlib version error.";
+	default:
+		return "zlib unknown error.";
+	}
+}
+
+/*! \brief Function to create a string from a GrfError struct or enum
+ *
+ * \note A pointer for the err argument isn't used only to keep
+ *		compatibility with the older libgrf
+ *
+ * \param err Error struct/enum containing information we need
+ * \return A human-readable character string
+ */
+GRFEXPORT const char *grf_strerror(GrfError err) {
+	static char errbuf[0x1000];
+	const char *tmpbuf;
+	int dummy;
+
+	/* Get the error string */
+	switch (err.type) {
+	case GE_ZLIB:
+		tmpbuf=GRF_strerror_zlib((int)err.extra);
+		break;
+	case GE_ZLIBFILE:
+		tmpbuf=gzerror((gzFile)err.extra,&dummy);
+		break;
+	default:
+		tmpbuf=GRF_strerror_type(err.type);
+	}
+
+	snprintf(errbuf,0x1000,"%s:%u:%s: %s", err.file, err.line, err.func, tmpbuf);
+
+	return errbuf;
+}
+
+/*! \brief Frees memory allocated with grf_get() or grf_index_get()
+ *
+ * Extension added for dll support, where clients may not have the free()
+ * function, or are using a different C Runtime (...bad)
+ *
+ * \param buf Pointer to memory area to be freed
+ */
+GRFEXPORT void __grf_free_memory__(void *buf) {
+	free(buf);
+}
+
+GRFEXTERN_END
