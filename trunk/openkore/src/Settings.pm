@@ -36,7 +36,6 @@ our $welcomeText = "Welcome to X-$NAME.";
 our $MAX_READ = 30000;
 
 # Commandline arguments
-our $daemon;
 our $control_folder;
 our $tables_folder;
 our $logs_folder;
@@ -55,86 +54,88 @@ our $default_interface;
 # Configuration files and associated file parsers
 our @configFiles;
 
+# Other stuff
+our $usageText = <<EOF;
+Usage: openkore.exe [options...]
 
-sub MODINIT {
-	$daemon = 0;
+The supported options are:
+--help                     Displays this help message.
+--control=path             Use a different folder as control folder.
+--tables=path              Use a different folder as tables folder.
+--logs=path                Save log files in a different folder.
+--plugins=path             Look for plugins in specified folder.
+--fields=path              Where fields folder to use.
+
+--config=path/file         Which config.txt to use.
+--mon_control=path/file    Which mon_control.txt to use.
+--items_control=path/file  Which items_control.txt to use.
+--pickupitems=path/file    Which pickupitems.txt to use.
+--chat=path/file           Which chat.txt to use.
+--shop=path/file           Which shop.txt to use.
+--monsters=path/file       Which monsters.txt to use.
+--items=path/file          Which items.txt to use.
+
+--interface=module         Which interface to use at startup.
+EOF
+
+
+##
+# Settings::parseArguments()
+# Returns: 1 on success, 2 if a 'usage' text should be displayed.
+#          If an error occured, the return value is an error message string.
+#
+# Parse commandline arguments. Various variables within the Settings.pm
+# module will be filled with values.
+sub parseArguments {
 	$control_folder = "control";
 	$tables_folder = "tables";
 	$logs_folder = "logs";
 	$plugins_folder = "plugins";
-}
+	$def_field = "fields";
+
+	$config_file = "$control_folder/config.txt";
+	$mon_control_file = "$control_folder/mon_control.txt";
+	$items_control_file = "$control_folder/items_control.txt";
+	$pickupitems_file = "$control_folder/pickupitems.txt";
+	$chat_file = "$logs_folder/chat.txt";
+	$shop_file = "$control_folder/shop.txt";
+	$monster_log = "$logs_folder/monsters.txt";
+	$item_log_file = "$logs_folder/items.txt";
+
+	$default_interface = "Console";
 
 
-sub parseArguments {
 	my $help_option;
-	undef $config_file;
-	undef $items_control_file;
-	undef $mon_control_file;
-	undef $chat_file;
-	undef $item_log_file;
-	undef $shop_file;
-	# For some reason MODINIT() is not called on Win32 (when running as compiled executable)
-	# FIXME: find out why and fix it.
-	MODINIT();
-	
 	GetOptions(
-		'daemon', \$daemon,
-		'help', \$help_option,
-		'control=s', \$control_folder,
-		'tables=s', \$tables_folder,
-		'logs=s', \$logs_folder,
-		'plugins=s', \$plugins_folder,
-		'config=s', \$config_file,
-		'mon_control=s', \$mon_control_file,
-		'items_control=s', \$items_control_file,
-		'pickupitems=s', \$pickupitems_file,
-		'chat=s', \$chat_file,
-		'shop=s', \$shop_file,
-		'fields=s',\$def_field,
-		'monsters=s', \$monster_log,
-		'items=s', \$item_log_file,
-		'interface=s', \$default_interface);
-	if ($help_option) {
-		print "Usage: openkore.exe [options...]\n\n";
-		print "The supported options are:\n\n";
-		print "--help                     Displays this help message.\n";
-		print "--daemon                   Start as daemon; don't listen for keyboard input.\n";
-		print "--control=path             Use a different folder as control folder.\n";
-		print "--tables=path              Use a different folder as tables folder.\n";
-		print "--logs=path                Save log files in a different folder.\n";
-		print "--plugins=path             Look for plugins in specified folder.\n";
-		print "--fields=path              Where fields folder to use.\n";
-		print "\n";
-		print "--config=path/file         Which config.txt to use.\n";
-		print "--mon_control=path/file    Which mon_control.txt to use.\n";
-		print "--items_control=path/file  Which items_control.txt to use.\n";
-		print "--pickupitems=path/file    Which pickupitems.txt to use.\n";
-		print "--chat=path/file           Which chat.txt to use.\n";
-		print "--shop=path/file           Which shop.txt to use.\n";
-		print "--interface=module         Which interface to use at startup.\n";
-		exit(0);
-	}
+		'help',		\$help_option,
+		'control=s',	\$control_folder,
+		'tables=s',	\$tables_folder,
+		'logs=s',	\$logs_folder,
+		'plugins=s',	\$plugins_folder,
+		'fields=s',	\$def_field,
 
-	$config_file = "$control_folder/config.txt" if (!defined $config_file);
-	$monster_log = "$logs_folder/monsters.txt" if (!defined $monster_log);
-	$items_control_file = "$control_folder/items_control.txt" if (!defined $items_control_file);
-	$pickupitems_file = "$control_folder/pickupitems.txt" if (!defined $pickupitems_file);
-	$mon_control_file = "$control_folder/mon_control.txt" if (!defined $mon_control_file);
-	$chat_file = "$logs_folder/chat.txt" if (!defined $chat_file);
-	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
-	$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
-	$def_field = "fields" if (!defined $def_field);
-	$logs_folder = "logs" if (!defined $logs_folder);
-	$plugins_folder = "plugins" if (!defined $plugins_folder);
-	$default_interface = 'Console' if !defined $default_interface;
+		'config=s',		\$config_file,
+		'mon_control=s',	\$mon_control_file,
+		'items_control=s',	\$items_control_file,
+		'pickupitems=s',	\$pickupitems_file,
+		'chat=s',		\$chat_file,
+		'shop=s',		\$shop_file,
+		'monsters=s',		\$monster_log,
+		'items=s',		\$item_log_file,
+
+		'interface=s',		\$default_interface
+	);
+
+	if ($help_option) {
+		return 2;
+	}
 
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
-			print "Error: unable to create folder $logs_folder ($!)\n";
-			<STDIN>;
-			exit 1;
+			return "Unable to create folder $logs_folder ($!)";
 		}
 	}
+	return 1;
 }
 
 
