@@ -106,6 +106,19 @@ sub _onUpdown {
 		$targetBox = $parent->FindWindow('targetBox') if ($parent);
 		$targetBox->SetFocus if ($targetBox);
 
+	} elsif ($event->GetKeyCode == WXK_NEXT && $event->ControlDown) {
+		my $parent = $self->GetParent;
+		my $notebook;
+		$notebook = $parent->FindWindow('notebook') if ($parent);
+		$notebook->nextPage if ($notebook);
+
+	} elsif ($event->GetKeyCode == WXK_PRIOR && $event->ControlDown) {
+		my $parent = $self->GetParent;
+		my $notebook;
+		$notebook = $parent->FindWindow('notebook') if ($parent);
+		$notebook->prevPage if ($notebook);
+
+
 	} else {
 		$event->Skip;
 	}

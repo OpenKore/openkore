@@ -245,6 +245,20 @@ sub switchPage {
 	return 0;
 }
 
+sub nextPage {
+	my ($self) = @_;
+	return unless ($self->{notebook});
+	my $i = $self->{notebook}->GetSelection;
+	$self->{notebook}->SetSelection($i + 1) if ($i < $self->{notebook}->GetPageCount);
+}
+
+sub prevPage {
+	my ($self) = @_;
+	return unless ($self->{notebook});
+	my $i = $self->{notebook}->GetSelection;
+	$self->{notebook}->SetSelection($i - 1) if ($i > 0);
+}
+
 
 ####################
 # Private
