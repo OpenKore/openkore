@@ -81,6 +81,8 @@ Bug fixes:
 - Alchemist potions aren't called [?254] anymore.
 - Cards in equipment in storage weren't being displayed.
 - $item->{type} is now set correctly for equipment in storage.
+- When following players by name, typing 'follow A' then 'follow B' would
+  cause you to still be following A instead of B.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

@@ -882,6 +882,7 @@ sub parseCommand {
 				error	"Error in function 'follow' (Follow Player)\n" .
 					"Player $arg1 either not visible or not online in party.\n";
 			} else {
+				aiRemove("follow");
 				ai_follow($players{$playersID[$arg1]}{name});
 				configModify("follow", 1);
 				configModify("followTarget", $players{$playersID[$arg1]}{name});
