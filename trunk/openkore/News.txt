@@ -29,6 +29,8 @@ New features:
   This is useful for skills that require an item in the inventory (Stone
   Curse, Warp, Aqua Benedicta, etc.)
   http://openkore.sourceforge.net/forum/viewtopic.php?t=1729
+- Dual-wielding assassin left hand damage is now displayed.
+- PVP damage is now displayed.
 - Added command 'talk text blablabla' and the ability to specify text reply
   in portals' NPC steps (t="some text")
 - Added command 'death <player #>' for use if you get the Death spell from
@@ -59,12 +61,14 @@ Bug fixes:
 - 'talk resp' now works correctly with NPCs that present a list of selections
   without saying anything else.
 - Emotions that aren't in the lookup table will be displayed by number.
-- Dual-wielding assassin left hand damage is now displayed.
-- PVP damage is now displayed.
 - Sit/stand and attack messages were getting mixed up.
 
 Internal:
 - Portal compilation is now 30% faster.
+- Added AI.pm, which is a wrapper for @ai_seq and @ai_seq_args.
+- Added $char, an alias for $chars[$config{'char'}].
+- ai_skillUse's first parameter is skillID (eg AL_HEAL) rather then the
+  internal ID Number
 
 Credits:
 - Fenris: Tk interface improvements.
@@ -72,11 +76,6 @@ Credits:
 - fov: Storage access bugfix.
 - brianhj: 010F packet typo fix.
 
-Internal:
-- Added AI.pm, which is a wrapper for @ai_seq and @ai_seq_args.
-- Added $char, an alias for $chars[$config{'char'}].
-- ai_skillUse's first parameter is skillID (eg AL_HEAL) rather then the
-  internal ID Number
 
 ==================
 ### 1.3.1 (beta)
