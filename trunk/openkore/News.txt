@@ -40,6 +40,7 @@ Bug fixes:
 - getAuto never gets triggered if you're low on a certain item. This has
   been fixed.
 - Don't open shop immediately after login in X-Kore mode (bug #49).
+- Re-entering a username/password works correctly now (bug #45).
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

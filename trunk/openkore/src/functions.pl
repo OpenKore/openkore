@@ -4977,20 +4977,24 @@ sub parseMsg {
 
 	} elsif ($switch eq "006A") {
 		$type = unpack("C1",substr($msg, 2, 1));
+		Network::disconnect(\$remote_socket);
 		if ($type == 0) {
 			error("Account name doesn't exist\n", "connection");
 			if (!$config{'XKore'} && !$config{ignoreInvalidLogin}) {
 				message("Enter Username Again: ", "input");
 				$msg = $interface->getInput(-1);
 				configModify('username', $msg, 1);
+				$timeout_ex{'master'}{'time'} = 0;
+				$conState_tries = 0;
 			}
-			relog();
 		} elsif ($type == 1) {
 			error("Password Error\n", "connection");
 			if (!$config{'XKore'}) {
 				message("Enter Password Again: ", "input");
 				$msg = $interface->getInput(-1);
 				configModify('password', $msg, 1);
+				$timeout_ex{'master'}{'time'} = 0;
+				$conState_tries = 0;
 			}
 		} elsif ($type == 3) {
 			error("Server connection has been denied\n", "connection");
