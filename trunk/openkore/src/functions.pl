@@ -2740,7 +2740,8 @@ sub AI {
 			
 			if (!$ai_seq_args[0]{'getStart'}) {
 				$ai_seq_args[0]{'done'} = 1;
-				for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
+				$ai_seq_args[0]{'nextItem'} = 0 unless $ai_seq_args[0]{'nextItem'};
+				for (my $i = $ai_seq_args[0]{'nextItem'}; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
 					next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
 					if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'}
 						&& $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'}) {
@@ -2754,6 +2755,7 @@ sub AI {
 						$ai_seq_args[0]{'lastIndex'} = $chars[$config{'char'}]{'inventory'}[$i]{'index'};
 						sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'});
 						$timeout{'ai_storageAuto'}{'time'} = time;
+						$ai_seq_args[0]{'nextItem'} = $i + 1;
 						last AUTOSTORAGE;
 					}
 				}
