@@ -6481,7 +6481,9 @@ sub parseMsg {
 					$jExpSwitch = 2; 
 				} 
 			}
-			message "Exp gained: $monsterBaseExp/$monsterJobExp\n","exp";
+			my $basePercent = $monsterBaseExp / $char->{exp_max} * 100;
+			my $jobPercent = $monsterJobExp / $char->{exp_job_max} * 100;
+			message sprintf("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
 
 		} elsif ($type == 20) {
 			$chars[$config{'char'}]{'zenny'} = $val;
