@@ -4532,7 +4532,7 @@ sub AI {
 
 		# Stop if we've moved
 		} elsif ($ai_seq_args[0]{time_move} != $char->{time_move}) {
-			debug "Move - started moving\n", "ai_move";
+			debug "Move - moving\n", "ai_move";
 			AI::dequeue();
 
 		# Stop if we've timed out
@@ -4543,7 +4543,7 @@ sub AI {
 		} elsif (time > AI::action->{retry}) {
 			# No update yet, send move request again.
 			# We do this every 0.3 secs
-			AI::action->{retry} = time + 0.3;
+			AI::action->{retry} = time + 0.5;
 			sendMove(\$remote_socket, AI::args->{move_to}{x}, AI::args->{move_to}{y});
 		}
 	}
@@ -8919,12 +8919,15 @@ sub move {
 	my $y = shift;
 	my $attackID = shift;
 	my %args;
+	my $dist;
 	$args{move_to}{x} = $x;
 	$args{move_to}{y} = $y;
 	$args{attackID} = $attackID;
 	$args{time_move} = $char->{time_move};
-	$args{ai_move_giveup}{timeout} = 4 * ($char->{walk_speed} || 0.12)
-		* (1 + distance($char->{pos_to}, $args{move_to}));
+	$dist = distance($char->{pos_to}, $args{move_to});
+	$args{ai_move_giveup}{timeout} = 4 * ($char->{walk_speed} || 0.12) * (1 + $dist);
+	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
+		$char->{pos_to}{x}, $char->{pos_to}{y}, $x, $y, $dist), "ai_move";
 	AI::queue("move", \%args);
 }
 
@@ -9884,7 +9887,7 @@ sub redirectXKoreMessages {
 
 	return if ($type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
 	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|selfchat|emotion|drop|inventory|deal)$/);
-	return if ($domain =~ /^(attack|skill|list|info|partychat|npc)/);
+	return if ($domain =~ /^(attack|skill|list|info|partychat|npc|route)/);
 
 	$message =~ s/\n*$//s;
 	$message =~ s/\n/\\n/g;
