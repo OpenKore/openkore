@@ -1,24 +1,30 @@
 package ExamplePlugin3;
 
-use Plugins;
 use strict;
+use Plugins;
+use Log;
 
-Plugins::register('example3', 'Example Plugin number 3', \&Unload, \&Reload);
-Plugins::addHook('Command_post', \&Called);
 
-sub Unload {
-	print "I have just been unloaded\n";
+my $command_hook;
+
+Plugins::register('example3', 'Example Plugin #3', \&on_unload, \&on_reload);
+$command_hook = Plugins::addHook('Command_post', \&command_called);
+
+
+sub on_unload {
+	Plugins::delHook('Command_post', $command_hook);
+	Log::message "Example Plugin #3 unloaded\n";
 }
 
-sub Reload {
-	print "I (#3) have just been reloaded\n";
+sub on_reload {
+	&on_unload;
 }
 
-sub Called {
+sub command_called {
 	my $temp = shift;
 	my $input = shift;
 	my ($switch, $args) = split(' ', $input, 2);
-	
+
 	my %input_hash = (command => $switch, args => $args);
 	print "A command ".$input_hash{command}." with the arguments ".$input_hash{args}." failed to meet any inbuilt command.\n";
 }
