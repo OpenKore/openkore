@@ -121,7 +121,7 @@ fill_filelist ()
 			continue;
 
 		/* Do not display folders */
-		if (document.grf->files[i].type == 2)
+		if (GRFFILE_IS_DIR(document.grf->files[i]))
 			continue;
 
 		/* Attempt to convert the filename to UTF-8 */

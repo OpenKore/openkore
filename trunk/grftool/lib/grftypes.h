@@ -63,8 +63,9 @@
 /* Make use of C++ safety right away :) */
 GRFEXTERN_BEGIN
 
-/* Integer types */
+/* Win32 DLL macros */
 #ifdef WIN32
+	/* Integer types */
 	#ifdef __MINGW32__
 		#include <stdint.h>
 	#else
@@ -75,15 +76,6 @@ GRFEXTERN_BEGIN
 		typedef UINT16 uint16_t;
 		typedef UINT8 uint8_t;
 	#endif /* __MINGW32__ */
-	
-#else /* WIN32 */
-	#include <inttypes.h>
-#endif /* WIN32 */
-
-
-/* Win32 DLL macros */
-#ifdef WIN32
-
 
 	/* Pack to 1 byte boundaries */
 	#include <pshpack1.h>
@@ -128,6 +120,9 @@ GRFEXTERN_BEGIN
 
 /*! Error codes return by libgrf functions */
 typedef enum {
+	/*! No error, everything went well */
+	GE_SUCCESS,
+	
 	/*! Bad arguments passed to function */
 	GE_BADARGS,
 
@@ -203,7 +198,7 @@ typedef struct _GrfFile {
 	uint32_t real_len;			/*!< \brief original file
 						 * size
 						 */
-	uint32_t pos;				/*!< \brief location in file */
+	uint32_t pos;				/*!< \brief location in GRF */
 
 	/* Directories have specific sizes and offsets, even though
 	 * no data is stored inside the GRF file
@@ -225,11 +220,10 @@ typedef struct _GrfFile {
 						 * directory entries
 						 */
 
-	uint8_t type;			/*!< \brief "type" of file
+	uint8_t flags;			/*!< \brief Flags of file
 					 *
-					 * Named type for
-					 * compatibility, more correctly
-					 * should be named "flags"
+					 * Such as whether its a file or not,
+					 * and what encryption methods it uses
 					 */
 
 	/* Known flags for GRF/GPF files */
@@ -264,13 +258,14 @@ typedef struct _GrfFile {
 	/* Extra data (which is not found in GRAVITY's struct) */
 	char *data;			/*!< \brief Uncompressed file data */
 	struct _GrfFile *next;		/*!< \brief Linked list */
+	struct _GrfFile *prev;		/*!< \brief Reverse linked list */
 } GrfFile;
 
 /*! \brief Macro to check if a GrfFile is a directory entry
  *
  * \param f GrfFile struct to check
  */
-#define GRFFILE_IS_DIR(f) (((f).type&GRFFILE_FLAG_FILE)==0 || ( \
+#define GRFFILE_IS_DIR(f) (((f).flags&GRFFILE_FLAG_FILE)==0 || ( \
 	((f).compressed_len_aligned==GRFFILE_DIR_SZFILE) && \
 	((f).compressed_len==GRFFILE_DIR_SZSMALL) && \
 	((f).real_len==GRFFILE_DIR_SZORIG) && \
@@ -296,6 +291,8 @@ typedef struct {
 				 * Array which contains
 				 * information for items inside the GRF file
 				 */
+	GrfFile *first;		/*!< \brief Beginning of the linked list of files */
+	GrfFile *last;		/*!< \brief Beginning of the reverse linked list */
 
 	/* Private fields */
 	uint8_t allowCrypt;	/*!< \brief Internal use only
@@ -303,15 +300,11 @@ typedef struct {
 				 * Can files be encrypted or not?
 				 */
 	FILE *f;		/*!< \brief Internal use only */
-	/* void **filedatas;	*/ /*!< \brief Internal use only
-				 *
-				 * Data for files (grf_put() or extracted)
-				 */
 	uint8_t allowWrite;	/*!< \brief Internal use only
 				 *
 				 * Can Grf be modified?
 				 */
-	void *zbuf; /*!< \brief Internal use only - temporary buffer space */
+	void *zbuf;		/*!< \brief Internal use only - temporary buffer space */
 
 } Grf;
 
