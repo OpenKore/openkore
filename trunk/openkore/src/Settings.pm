@@ -18,7 +18,7 @@ use Getopt::Long;
 
 our @ISA = ("Exporter");
 our @EXPORT_OK = qw(parseArguments);
-our @EXPORT = qw($buildType %config);
+our @EXPORT = qw($buildType %config %consoleColors);
 
 
 # Constants
@@ -30,6 +30,7 @@ our $MAX_READ = 30000;
 our $buildType;
 our $daemon;
 our %config;
+our %consoleColors;
 
 # Data files
 our $control_folder;

@@ -10,17 +10,16 @@
 #########################################################################
 
 # Known domains:
-# atk			You attack monster
+# attacked		Monster attacks you
+# attackMon		You attack monster
 # connection		Connection messages
 # info			View info (status, guild info, etc.)
 # input			Waiting for user input
-# itemuse		You used item
-# mon_itemuse		Monster used item
-# monatkyou		Monster attacks you
-# player_itemuse	Player used item
+# useItem		You used item
 # list			List of information (monster list, player list, item list, etc.)
 # startup		Messages that are printed during startup.
 # success		An operation succeeded
+# syntax		Syntax check files
 # storage		Storage item added/removed
 # xkore			X-Kore system messages
 
@@ -34,6 +33,8 @@ use Settings;
 if ($Settings::buildType == 0) {
 	require Win32::Console::ANSI;
 	import Win32::Console::ANSI;
+	require Win32::Console;
+	import Win32::Console;
 }
 
 our @ISA = qw(Exporter);
@@ -108,6 +109,8 @@ sub MODINIT {
 
 sub color {
 	my $color = shift;
+	$color =~ s/\/.*//; # no support for background colors for now
+
 	if ($color eq "reset") {
 		print "\e[0m";
 	} elsif ($color eq "black") {
@@ -173,35 +176,11 @@ sub processMsg {
 }
 
 sub setColor {
+	return if (!$consoleColors{''}{'useColors'});
 	my ($type, $domain) = @_;
-
-	if ($type eq "error") {
-		color($config{"color_error"});
-	} elsif ($type eq "warning") {
-		color($config{"color_warning"});
-	} elsif ($domain eq "connection") {
-		color($config{"color_connection"});
-	} elsif ($domain eq "atk") {
-		color($config{"color_atk"});
-	} elsif ($domain eq "monatkyou") {
-		color($config{"color_monatkyou"});
-	} elsif ($domain eq "list") {
-		color($config{"color_list"});
-	} elsif ($domain eq "info") {
-		color($config{"color_info"});
-	} elsif ($domain eq "input") {
-		color($config{"color_input"});
-	} elsif ($domain eq "itemuse") {
-		color($config{"color_itemuse"});
-	} elsif ($domain eq "mon_itemuse") {
-		color($config{"color_mon_itemuse"});
-	} elsif ($domain eq "player_itemuse") {
-		color($config{"color_player_itemuse"});
-	} elsif ($domain eq "success") {
-		color($config{"color_success"});
-	} elsif ($domain eq "storage") {
-		color($config{"color_storage"});
-	}
+	my $color = $consoleColors{$type}{$domain};
+	$color = $consoleColors{$type}{'default'} if (!defined $color);
+	color($color) if (defined $color);
 }
 
 #################################
@@ -245,6 +224,7 @@ sub addHook {
 sub delHook {
 	my $ID = shift;
 	undef $hooks[$ID];
+	delete $hooks[$ID] if (@hooks - 1 == $ID);
 }
 
 
