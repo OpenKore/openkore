@@ -10014,7 +10014,10 @@ sub useTeleport {
 	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $level + 600);
 	
 	# it is safe to always set this value coz $ai_v{temp} is always cleared after teleport
-	if (!$ai_v{'temp'}{'teleport'}{'lv'}) {
+	if ($char->{sitting}) {
+		stand();
+
+	} elsif (!$ai_v{'temp'}{'teleport'}{'lv'}) {
 		$ai_v{'temp'}{'teleport'}{'lv'} = $level;
 		
 		# set a small timeout, will be overrided if related config in equipAuto is set
