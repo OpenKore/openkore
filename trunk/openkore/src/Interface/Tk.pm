@@ -102,6 +102,7 @@ sub getInput{
 			$msg = shift @{ $self->{input_que} }; 
 		} 
 	}
+	$self->update();
 	return $msg;
 }
 
@@ -298,7 +299,7 @@ sub initTk {
 		-state =>'normal',
 		-relief => 'flat',
 	)->pack(
-		expand=>0,
+		-expand=>0,
 		-fill => 'x',
 		-side => 'left',
 	);
@@ -324,7 +325,7 @@ sub initTk {
 		-state =>'readonly',
 		-relief => 'flat',
 	)->pack	(
-		expand=>0,
+		-expand=>0,
 		-fill => 'x',
 		-side => 'left',
 	);

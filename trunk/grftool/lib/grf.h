@@ -76,8 +76,7 @@ typedef struct {
 	FILE *f;
 } Grf;
 
-typedef enum
-{
+typedef enum {
 	/* Developer errors */
 	GE_BADARGS,	/* Bad arguments passed to function */
 
