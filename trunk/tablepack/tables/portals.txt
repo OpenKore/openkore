@@ -229,11 +229,6 @@ comodo 265 74 cmd_in01 123 186
 comodo 271 271 cmd_in01 109 125
 comodo 333 175 beach_dun3 17 265
 gef_dun00 104 103 gef_tower 153 28
-
-# This entry here is fake; but the field data says (107,169) is unwalkable,
-# so this fake entry must exist in order for the map router to work
-gef_dun00 107 168 gef_dun01 115 240
-
 gef_dun00 107 169 gef_dun01 115 240
 gef_dun01 115 240 gef_dun00 107 169
 gef_dun01 197 38 gef_dun02 106 134
