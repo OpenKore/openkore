@@ -32,6 +32,8 @@ DWORD GetTickCount ()
 #include <Tlhelp32.h>
 #define DLLEXPORT __declspec(dllexport)
 
+static int isNT = 0;
+
 #endif /* WIN32 */
 
 struct pos {
@@ -322,8 +324,65 @@ DLLEXPORT void WINAPI CalcPath_destroy(DWORD session) {
 
 #ifdef WIN32
 
+typedef struct {
+	DWORD hProcess;
+	DWORD hThread;
+} GetProcInfo;
+
+static BOOL WINAPI GetProcessThread_Enum(HWND hwnd, LPARAM linfo)
+{
+	GetProcInfo *info = (GetProcInfo *) linfo;
+	DWORD hProcess, hThread;
+
+	hThread = GetWindowThreadProcessId(hwnd, &hProcess);
+	if (!hProcess)
+		return TRUE;
+
+	if (info->hProcess != hProcess)
+		return TRUE;
+	else {
+		info->hThread = hThread;
+		return FALSE;
+	}
+}
+
+static DWORD WINAPI GetProcessThread(DWORD hProcess)
+{
+	GetProcInfo info;
+
+	ZeroMemory(&info, sizeof(GetProcInfo));
+	info.hProcess = hProcess;
+	EnumWindows((WNDENUMPROC) GetProcessThread_Enum, (LPARAM) &info);
+	return info.hThread;
+}
+
+
 DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 {
+	if (!isNT) {
+		DWORD hThread = GetProcessThread(ProcID);
+		if (!hThread)
+			return 0;
+
+		HMODULE lib = LoadLibrary(dll);
+		if (!lib)
+			return 0;
+
+		LRESULT CALLBACK (*HookInject)(HWND hWnd, DWORD hThread);
+		HookInject = (LRESULT CALLBACK (*)(HWND, DWORD)) GetProcAddress(lib, "HookInject");
+		if (!HookInject) {
+			MessageBox(0, "function HookInject not found", "", 0);
+			FreeLibrary(lib);
+			return 0;
+		}
+
+		LRESULT result = (*HookInject)((HWND) ProcID, hThread);
+		FreeLibrary(lib);
+
+		return (int) result;
+	}
+
+
 	/* Attach to ragexe */
 	HANDLE hProcessToAttach = OpenProcess(PROCESS_ALL_ACCESS, FALSE, ProcID);
 	if (!hProcessToAttach)
@@ -389,21 +448,32 @@ DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 }
 
 
-DLLEXPORT DWORD WINAPI GetProcByName (char * name) {
-	HANDLE toolhelp;
-	PROCESSENTRY32 pe;
-	pe.dwSize = sizeof(PROCESSENTRY32);
-	toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-	if (Process32First(toolhelp,&pe)) {
-		do {
-			if (!stricmp(name, pe.szExeFile)) {
-				CloseHandle(toolhelp);
-				return pe.th32ProcessID;
-			}
-		} while (Process32Next(toolhelp,&pe));
+DLLEXPORT DWORD WINAPI GetProcByName (char * name)
+{
+	if (isNT) {
+		HANDLE toolhelp;
+		PROCESSENTRY32 pe;
+		pe.dwSize = sizeof(PROCESSENTRY32);
+		toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+		if (Process32First(toolhelp,&pe)) {
+			do {
+				if (!stricmp(name, pe.szExeFile)) {
+					CloseHandle(toolhelp);
+					return pe.th32ProcessID;
+				}
+			} while (Process32Next(toolhelp,&pe));
+		}
+		CloseHandle(toolhelp);
+		return 0;
+	} else {
+		HWND hwnd = FindWindow(NULL, "Ragnarok");
+		if (!hwnd)
+			return 0;
+
+		DWORD hProcess;
+		GetWindowThreadProcessId(hwnd, &hProcess);
+		return hProcess;
 	}
-	CloseHandle(toolhelp);
-	return 0;
 }
 
 
@@ -416,6 +486,11 @@ CEXTERN BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserve
 		for (i=0;i<SESSION_MAX;i++) {
 			g_sessions[i].active = 0;
 		}
+
+		OSVERSIONINFO version;
+		version.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+		GetVersionEx(&version);
+		isNT = version.dwPlatformId == VER_PLATFORM_WIN32_NT;
 		break;
 
 	case DLL_THREAD_ATTACH:

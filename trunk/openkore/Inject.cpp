@@ -240,7 +240,7 @@ void falseClientCom() {
 			LeaveCriticalSection(&falseClient_sendSection);
 			falseClient_send_timeout = GetTickCount();
 		}
-		Sleep(100);
+		Sleep(15);
 	}
 }
 
@@ -614,11 +614,49 @@ BOOL DoHookProcs()
 	return true;
 }
 
+
+static int isNT = 0;
+static HINSTANCE hDll = 0;
+static UINT WM_INJECT_HOOK = 0;
+static HHOOK hook = 0;
+
+static LRESULT CALLBACK HookProc(int nCode, WPARAM wparam, LPARAM lparam)
+{
+	static int i = 0;
+
+	if (!i && ((CWPSTRUCT *) lparam)->message == WM_INJECT_HOOK) {
+		i++;
+		MessageBox(0, "injected", "", 0);
+	}
+	return CallNextHookEx(hook, nCode, wparam, lparam);
+}
+
+CEXTERN __declspec(dllexport) LRESULT CALLBACK HookInject(HWND hWnd, DWORD hThread)
+{
+	hook = SetWindowsHookEx(WH_GETMESSAGE, (HOOKPROC) HookProc, hDll, hThread);
+	if (hook == 0)
+		return FALSE;
+
+	SendMessage(hWnd, WM_INJECT_HOOK, 0, 0);
+	return TRUE;
+}
+
 CEXTERN BOOL APIENTRY DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
 {
 	switch(dwReason)
 	{
 	case DLL_PROCESS_ATTACH:
+		OSVERSIONINFO version;
+		version.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+		GetVersionEx(&version);
+		isNT = version.dwPlatformId == VER_PLATFORM_WIN32_NT;
+		if (!isNT) {
+			hDll = hInstance;
+			if (!WM_INJECT_HOOK)
+				WM_INJECT_HOOK = RegisterWindowMessage("WM_INJECT_HOOK");
+			break;
+		}
+
 		g_hInst = hInstance;
 		falseClient_send = (char*)malloc(MAX_BUFFER_LENGTH);
 		falseClient_sendLength = 0;
