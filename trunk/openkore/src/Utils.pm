@@ -10,6 +10,10 @@
 #########################################################################
 ##
 # MODULE DESCRIPTION: Utility functions
+#
+# This module contains various general-purpose and independant utility 
+# functions. Functions in this module should have <b>no</b> dependancies
+# on other Kore modules.
 
 package Utils;
 

@@ -333,7 +333,6 @@ sub addHook {
 	my %hook = ();
 	$hook{'func'} = $r_func;
 	$hook{'user_data'} = $user_data;
-	# FIXME: circular dependancy with Utils.pm?
 	return binAdd(\@hooks, \%hook);
 }
 
