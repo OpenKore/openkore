@@ -5,6 +5,14 @@
 #include "perl.h"
 #include "XSUB.h"
 
+#if TIOCGWINSZ
+	#define WINSIZE(name) struct winsize name
+#else
+	#define TIOCGWINSZ 0
+	#define WINSIZE(name) struct { int ws_col, ws_row; } name
+	#define ioctl(a, b, c) 0
+#endif
+
 MODULE = UnixUtils		PACKAGE = UnixUtils		PREFIX = UnixUtils_
 PROTOTYPES: ENABLE
 
@@ -12,7 +20,7 @@ PROTOTYPES: ENABLE
 void
 getTerminalSize()
 	INIT:
-		struct winsize size;
+		WINSIZE(size);
 	PPCODE:
 		if (ioctl (1, TIOCGWINSZ, &size) != 0) {
 			size.ws_col = 80;
