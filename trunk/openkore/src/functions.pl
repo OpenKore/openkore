@@ -5770,8 +5770,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			getField("fields/$ai_v{'temp'}{'map'}.fld", \%field);
 		}
 
-		my $map_ip = makeIP(substr($msg, 22, 4));
-		my $map_port = unpack("S1", substr($msg, 26, 2));
+		$map_ip = makeIP(substr($msg, 22, 4));
+		$map_port = unpack("S1", substr($msg, 26, 2));
 		format MAPINFO =
 ---------Map Change Info----------
 MAP Name: @<<<<<<<<<<<<<<<<<<
