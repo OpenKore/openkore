@@ -2725,7 +2725,7 @@ sub AI {
 
 	AUTOSELL: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route") && $config{'sellAuto'} && $config{'sellAuto_npc'} ne ""
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto") && $config{'sellAuto'} && $config{'sellAuto_npc'} ne ""
 	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight_sellOrStore'})
 	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
 	  )) {
@@ -3390,7 +3390,6 @@ sub AI {
 	if (@ai_seq && $ai_seq[$#ai_seq] eq "follow" && !defined $ai_seq_args[$#ai_seq]{'following'} && !defined($ai_seq_args[0]{'ai_follow_lost'})) {
 		ai_partyfollow();
 	}
-
 
 	##### AUTO-SIT/SIT/STAND #####
 
@@ -4091,7 +4090,7 @@ sub AI {
 				delete $ai_seq_args[0]{'dest'}{'field'};
 				debug "Map Solution Ready for traversal.\n", "route";
 			} elsif ($ai_seq_args[0]{'done'}) {
-				debug "No map solution was found from [$field{'name'}($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'})] to [$ai_seq_args[0]{'dest'}{'map'}($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'})].\n", "route";
+				warning "No map solution was found from [$field{'name'}($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'})] to [$ai_seq_args[0]{'dest'}{'map'}($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'})].\n", "route";
 				shift @ai_seq;
 				shift @ai_seq_args;
 			}
@@ -9779,57 +9778,51 @@ sub avoidList_talk {
 }
 
 sub compilePortals {
-	my %failedMap;
-	my %srcPortals;
-	my $map;
+	my %missingMap;
+	my %mapPortals;
+	my @solution;
 
-	foreach (keys %portals_lut) {
-		$map = $portals_lut{$_}{'source'}{'map'};
-
-		%{$srcPortals{$map}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
-		$srcPortals{$map}{$_}{'out'} = 1; # flag as outgoing portals
-		
-		foreach my $dest (keys %{$portals_lut{$_}{'dest'}}) {
-			if (!exists $srcPortals{$portals_lut{$_}{'dest'}{$dest}{'map'}}{$portals_lut{$_}{'dest'}{$dest}{'ID'}}) {
-				%{$srcPortals{$portals_lut{$_}{'dest'}{$dest}{'map'}}{$portals_lut{$_}{'dest'}{$dest}{'ID'}}{'pos'}} = %{$portals_lut{$_}{'dest'}{$dest}{'pos'}}
+	foreach my $portal (keys %portals_lut) {
+		%{$mapPortals{$portals_lut{$portal}{'source'}{'map'}}{$portal}{'pos'}} = %{$portals_lut{$portal}{'source'}{'pos'}};
+	}
+	foreach my $map (sort keys %mapPortals) {
+		my @list = sort keys %{$mapPortals{$map}};
+		foreach my $this (@list) {
+			foreach my $that (@list) {
+				next if $this eq $that;
+				next if $portals_los{$this}{$that} ne '' && $portals_los{$that}{$this} ne '';
+				if ($field{'name'} ne $map) { if (!getField("$Settings::def_field/$map.fld", \%field)) { $missingMap{$map} = 1; }}
+				ai_route_getRoute(\@solution, \%field, \%{$mapPortals{$map}{$this}{'pos'}}, \%{$mapPortals{$map}{$that}{'pos'}});
+				$portals_los{$this}{$that} = scalar @solution;
+				$portals_los{$that}{$this} = scalar @solution;
+				message sprintf("Path cost: [%4d] $map ($mapPortals{$map}{$this}{'pos'}{'x'},$mapPortals{$map}{$this}{'pos'}{'y'}) ($mapPortals{$map}{$that}{'pos'}{'x'},$mapPortals{$map}{$that}{'pos'}{'y'})\n", $portals_los{$this}{$that}), "system";
 			}
 		}
 	}
-
-	# Go through all maps
-	foreach $map (sort keys %srcPortals) {
-		if (! -f "$Settings::def_field/$map.fld") {
-			warning "Cannot find field file for $map\n";
-			$failedMap{$map} = 1;
-			next;
-		} elsif ($field{'name'} ne $map) {
-			message "Processing map $map\n", "system";
-			getField("$Settings::def_field/$map.fld", \%field);
-		}
-
-		# Go through all portals within this map
-		foreach my $portal (keys %{$srcPortals{$map}}) {
-			# Look for portal LOS entries that are not linked to each other
-			foreach (keys %{$srcPortals{$map}}) {
-				next if ($_ eq $portal || !defined $srcPortals{$map}{$_}{'out'});
-				if ($portals_los{$portal}{$_} eq "" || $portals_los{$_}{$portal} eq "") {
-					my @solution;
-					message "Calculating portal route $portal -> $_ ", "system";
-					ai_route_getRoute(\@solution, \%field, $srcPortals{$map}{$portal}{'pos'}, $srcPortals{$map}{$_}{'pos'});
-					$portals_los{$portal}{$_} = scalar @solution;
-					message "[path cost: $portals_los{$portal}{$_}]\n";
-				}
+	message "Adding NPC's Destination\n", "system";
+	foreach my $portal (keys %portals_lut) {
+		foreach my $npc (keys %{$portals_lut{$portal}{'dest'}}) {
+			next unless $portals_lut{$portal}{'dest'}{$npc}{'steps'};
+			my $map = $portals_lut{$portal}{'dest'}{$npc}{'map'};
+			foreach my $dest (keys %{$mapPortals{$map}}) {
+				next if $portals_los{$npc}{$dest} ne '';
+				if ($field{'name'} ne $map) { if (!getField("$Settings::def_field/$map.fld", \%field)) { $missingMap{$map} = 1; }}
+				ai_route_getRoute(\@solution, \%field, \%{$portals_lut{$portal}{'dest'}{$npc}{'pos'}}, \%{$mapPortals{$map}{$dest}{'pos'}});
+				$portals_los{$npc}{$dest} = scalar @solution;
+				message sprintf("Path cost: [%4d] $map ($npc) ($dest)\n", $portals_los{$npc}{$dest}), "system";
 			}
 		}
 	}
 
 	writePortalsLOS("$Settings::tables_folder/portalsLOS.txt", \%portals_los);
 	message "Wrote portals Line of Sight table to '$Settings::tables_folder/portalsLOS.txt'\n", "system";
-	
-	if (%failedMap) {
-		warning "-----Error Summary-----\n";
-		warning "Missing: $_.fld\n" foreach (sort keys %failedMap);
-		warning "-----Error Summary-----\n";
+
+	if (%missingMap) {
+		warning "----------------------------Error Summary----------------------------\n";
+		warning "Missing: $_.fld\n" foreach (sort keys %missingMap);
+		warning "Note: LOS information for the above listed map(s) will be inaccurate;\n";
+		warning "      however it is safe to ignore if those map(s) are not in used\n";
+		warning "----------------------------Error Summary----------------------------\n";
 	}	
 }
 
