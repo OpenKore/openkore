@@ -158,7 +158,7 @@ sub DESTROY {
 	}
 
 	delete $self->{select};
-	$self->color('reset');
+	color('reset');
 	STDOUT->autoflush(1);
 }
 

@@ -119,7 +119,6 @@ sub parseArguments {
 	undef $item_log_file;
 	undef $default_interface;
 
-
 	my $help_option;
 	GetOptions(
 		'help',		\$help_option,
@@ -140,7 +139,6 @@ sub parseArguments {
 
 		'interface=s',		\$default_interface
 	);
-
 	if ($help_option) {
 		return 2;
 	}
