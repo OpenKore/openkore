@@ -135,6 +135,7 @@ Another skore-revamped release (for those who complain about support for
   Automatically deny guild join request.
 - New command: guild. Support for listing guild members and info (thanks
   to ModKore).
+- The avoidGM option is now split into avoidGM_near and avoidGM_talk.
 
 
 Based on blueviper22's mod for RO 4.0:
