@@ -224,7 +224,7 @@ static void GRF_qsort (Grf *grf, uint32_t left, uint32_t right, GrfSortCallback 
 			grf->filedatas[pivot]=grf->filedatas[left];
 			grf->filedatas[left]=swpdata;
 		}
-#error debug code
+//#error debug code
 #if 0
 		{uint32_t k;
 		for ( k = left; k < pivot; ++k )
@@ -261,7 +261,7 @@ GRFEXPORT void grf_sort (Grf *grf, GrfSortCallback callback) {
 	/* Run the sort */
 	GRF_qsort(grf, 0, grf->nfiles-1, callback);
 
-#error debug code
+//#error debug code
 #if 0
 	{
 	uint32_t k;

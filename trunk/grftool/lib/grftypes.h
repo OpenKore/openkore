@@ -296,6 +296,8 @@ typedef struct {
 				 *
 				 * Can Grf be modified?
 				 */
+	void *zbuf; /*!< \brief Internal use only - temporary buffer space */
+
 } Grf;
 
 #ifdef WIN32
