@@ -10,9 +10,10 @@ use Wx ':everything';
 use Wx::Event qw(EVT_BUTTON);
 use Wx::XRC;
 
-our @EXPORT = qw(loadDialog setupDialog dataFile);
+our @EXPORT = qw(loadDialog loadPNG setupDialog dataFile);
 our %files;
 our @searchPath;
+our $pngAdded;
 
 sub loadDialog {
 	my ($file, $parent, $name) = @_;
@@ -29,6 +30,17 @@ sub loadDialog {
 	}
 
 	return $xml->LoadDialog($parent, $name);
+}
+
+sub loadPNG {
+	my $file = shift;
+
+	if (!$pngAdded) {
+		Wx::Image::AddHandler(new Wx::PNGHandler);
+		$pngAdded = 1;
+	}
+	my $image = Wx::Image->newNameType(dataFile($file), wxBITMAP_TYPE_PNG);
+	return new Wx::Bitmap($image);
 }
 
 sub setupDialog {
@@ -49,6 +61,13 @@ sub dataFile {
 		my $file = File::Spec->catfile($dir, $_[0]);
 		return $file if (-f $file);
 	}
+}
+
+
+package Wx::Window;
+
+sub W {
+	return $_[0]->FindWindow($_[1]);
 }
 
 1;
