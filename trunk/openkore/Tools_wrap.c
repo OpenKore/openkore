@@ -16,6 +16,9 @@
  *
  ************************************************************************/
 
+/* Dummy structure to work around compilation problem with Perl 5.8.3 */
+struct crypt_data { int dummy; };
+
 #define SWIG_TypeRegister    SWIG_Perl_TypeRegister
 #define SWIG_TypeCheck       SWIG_Perl_TypeCheck
 #define SWIG_TypeCast        SWIG_Perl_TypeCast
