@@ -80,13 +80,12 @@ sub initMapChangeVars {
 	undef %incomingParty;
 	undef $msg;
 	undef %talk;
-	undef $ai_v{'temp'};
-	undef @cartID;
-	undef %{$cart{'inventory'}};
+	undef %{$ai_v{'temp'}};
+	undef @{$cart{'inventory'}};
 	undef @venderItemList;
 	undef $venderID;
 	undef @venderListsID;
-	undef $venderLists;
+	undef %venderLists;
 	undef %guild;
 	undef %incomingGuild;
 
@@ -493,15 +492,11 @@ $i $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quant
 			$~ = "CARTLIST";
 			print "-------------Cart--------------\n";
 			print "#  Name\n";
-			
-			for ($i=0; $i < @cartID; $i++) {
-				next if ($cartID[$i] eq "");
-				$display = "$cart{'inventory'}{$cartID[$i]}{'name'} x $cart{'inventory'}{$cartID[$i]}{'amount'}";
-				format CARTLIST =
-@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$i $display
-.
-				write;
+
+			for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
+				next if (!%{$cart{'inventory'}[$i]});
+				$display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
+				print sprintf("%-2d %-34s\n", $i, $display);
 			}
 			print "\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n";
 			print "-------------------------------\n";
@@ -517,14 +512,14 @@ $i $display
 		} elsif ($arg1 eq "add" && $arg2 eq "") {
 			print	"Syntax Error in function 'cart add' (Add Item to Cart)\n"
 				,"Usage: cart add <item #>\n";
-		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/ && !%{$cart{'inventory'}{$cartID[$arg2]}}) {
+		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/ && !%{$cart{'inventory'}[$arg2]}) {
 			print	"Error in function 'cart get' (Get Item from Cart)\n"
 				,"Cart Item $arg2 does not exist.\n";
 		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/) {
-			if (!$arg3 || $arg3 > $cart{'inventory'}{$cartID[$arg2]}{'amount'}) {
-				$arg3 = $cart{'inventory'}{$cartID[$arg2]}{'amount'};
+			if (!$arg3 || $arg3 > $cart{'inventory'}[$arg2]{'amount'}) {
+				$arg3 = $cart{'inventory'}[$arg2]{'amount'};
 			}
-			sendCartGet(\$remote_socket, $cart{'inventory'}{$cartID[$arg2]}{'index'}, $arg3);
+			sendCartGet(\$remote_socket, $arg2, $arg3);
 		} elsif ($arg1 eq "get" && $arg2 eq "") {
 			print	"Syntax Error in function 'cart get' (Get Item from Cart)\n"
 				,"Usage: cart get <cart item #>\n";
@@ -7403,7 +7398,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		undef %{$spells{$ID}};
 		binRemove(\@spellsID, $ID);
 
-	#Cart Parses - chobit andy 20030102
+	# Parses - chobit andy 20030102
 	} elsif ($switch eq "0121") {
 		$cart{'items'} = unpack("S1", substr($msg, 2, 2));
 		$cart{'items_max'} = unpack("S1", substr($msg, 4, 2));
@@ -7411,121 +7406,77 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$cart{'weight_max'} = int(unpack("L1", substr($msg, 10, 4)) / 10);
 
 	} elsif ($switch eq "0122") {
-	#Solos Start
-		$msg_size = unpack("S1",substr($msg, 2, 2));
+		# "0122" sends non-stackable item info
+		# "0123" sends stackable item info
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
-		for($i = 4; $i < $msg_size; $i+=20) {
-			$index = unpack("S1", substr($msg, $i, 2));
-			$ID = unpack("S1", substr($msg, $i+2, 2));
-			$type = unpack("C1",substr($msg, $i+4, 1));
 
-#"0122" sends non-stackable item info
-#"0123" sends stackable item info
-# This is a HACK!!! If the item ID is non-stackable, then try to get an unique item ID for it
-# but get the item name first!
-			$display = ($items_lut{$ID} ne "")
-				? $items_lut{$ID}
-				: "Unknown ".$ID;
-#			print "[0122]Cart Item Original ID: ".$ID."\n";
-			$oldID = $ID;
-			$ID += 30000;
-			while (%{$cart{'inventory'}{$ID}}) {
-				$ID += 1;
-			}
-#			print "[0122]Cart Item New ID: ".$ID."\n";
+		for (my $i = 4; $i < $msg_size; $i += 20) {
+			my $index = unpack("S1", substr($msg, $i, 2));
+			my $ID = unpack("S1", substr($msg, $i+2, 2));
+			my $type = unpack("C1",substr($msg, $i+4, 1));
+			my $display = ($items_lut{$ID} ne "") ? $items_lut{$ID} : "Unknown $ID";
+			$cart{'inventory'}[$index]{'nameID'} = $ID;
+			$cart{'inventory'}[$index]{'amount'} = 1;
+			$cart{'inventory'}[$index]{'name'} = $display;
+			$cart{'inventory'}[$index]{'identified'} = unpack("C1", substr($msg, $i+5, 1));
+			$cart{'inventory'}[$index]{'type_equip'} = $itemSlots_lut{$ID};
 
-			binAdd(\@cartID, $ID);
-			$cart{'inventory'}{$ID}{'index'} = $index;
-			$cart{'inventory'}{$ID}{'nameID'} = $ID;
-			$cart{'inventory'}{$ID}{'amount'} = 1;
-			$cart{'inventory'}{$ID}{'name'} = $display;
-			$cart{'inventory'}{$ID}{'binID'} = binFind(\@cartID, $ID);
-			$cart{'inventory'}{$ID}{'type_equip'} = $itemSlots_lut{$ID};
-			$cart{'inventory'}{$ID}{'identified'} = unpack("C1", substr($msg, $i+5, 1));
-			$cart{'inventory'}{$ID}{'oldID'} = $oldID;
-			print "Non-Stackable Cart Item: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x 1\n" if ($config{'debug'} >= 1);
+			print "Non-Stackable Cart Item: $cart{'inventory'}[$index]{'name'} ($index) x 1\n" if ($config{'debug'} >= 1);
 		}
-#Solos End
-	} elsif ($switch eq "0123") {
-		$msg_size = unpack("S1",substr($msg, 2, 2));
+
+	} elsif ($switch eq "0123" || $switch eq "01EF") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
-		for($i = 4; $i < $msg_size; $i+=10) {
-			$index = unpack("S1", substr($msg, $i, 2));
-			$ID = unpack("S1", substr($msg, $i+2, 2));
-			$amount = unpack("S1", substr($msg, $i+6, 2));
-			if (%{$cart{'inventory'}{$ID}}) {
-				$cart{'inventory'}{$ID}{'amount'} += $amount;
+		my $psize = ($switch eq "0123") ? 10 : 18;
+
+		for (my $i = 4; $i < $msg_size; $i += $psize) {
+			my $index = unpack("S1", substr($msg, $i, 2));
+			my $ID = unpack("S1", substr($msg, $i+2, 2));
+			my $amount = unpack("S1", substr($msg, $i+6, 2));
+
+			if (%{$cart{'inventory'}[$index]}) {
+				$cart{'inventory'}[$index]{'amount'} += $amount;
 			} else {
-				binAdd(\@cartID, $ID);
-				$cart{'inventory'}{$ID}{'index'} = $index;
-				$cart{'inventory'}{$ID}{'amount'} = $amount;
-				$display = ($items_lut{$ID} ne "")
-					? $items_lut{$ID}
-					: "Unknown ".$ID;
-				$cart{'inventory'}{$ID}{'name'} = $display;
-				$cart{'inventory'}{$ID}{'binID'} = binFind(\@cartID, $ID);
+				$cart{'inventory'}[$index]{'nameID'} = $ID;
+				$cart{'inventory'}[$index]{'amount'} = $amount;
+				$display = ($items_lut{$ID} ne "") ? $items_lut{$ID} : "Unknown ".$ID;
+				$cart{'inventory'}[$index]{'name'} = $display;
 			}
-			print "Cart Item: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x $amount\n" if ($config{'debug'} >= 1);
+			print "Stackable Cart Item: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n" if ($config{'debug'} >= 1);
 		}
 
-	} elsif ($switch eq "0124") {
-		$index = unpack("S1", substr($msg, 2, 2));
-		$amount = unpack("L1", substr($msg, 4, 4));
-		$ID = unpack("S1", substr($msg, 8, 2));
+	} elsif ($switch eq "0124" || $switch eq "01C5") {
+		my $index = unpack("S1", substr($msg, 2, 2));
+		my $amount = unpack("L1", substr($msg, 4, 4));
+		my $ID = unpack("S1", substr($msg, 8, 2));
 
-#Solos Start
-# This is another HACK!!! If the item ID is >= 9000 then you know it is a non-stackable item!
-# Then get it an unique item ID but get display name first, as usual.
-		if ($ID >= 9000) {
-			$oldID = $ID;
-			$display = ($items_lut{$ID} ne "")
-				? $items_lut{$ID}
-				: "Unknown ".$ID;
-			$ID += 30000;
-			while (%{$cart{'inventory'}{$ID}}) {
-				$ID += 1;
-			}
-			binAdd(\@cartID, $ID);
-			$cart{'inventory'}{$ID}{'index'} = $index;
-			$cart{'inventory'}{$ID}{'amount'} = $amount;
-			$cart{'inventory'}{$ID}{'name'} = $display;
-			$cart{'inventory'}{$ID}{'binID'} = binFind(\@cartID, $ID);
-			$cart{'inventory'}{$ID}{'oldID'} = $oldID;
-
-		} elsif (%{$cart{'inventory'}{$ID}}) {
-			$cart{'inventory'}{$ID}{'amount'} += $amount;
-
+		if (%{$cart{'inventory'}[$index]}) {
+			$cart{'inventory'}[$index]{'amount'} += $amount;
 		} else {
-			binAdd(\@cartID, $ID);
-			$cart{'inventory'}{$ID}{'index'} = $index;
-			$cart{'inventory'}{$ID}{'amount'} = $amount;
-			$display = ($items_lut{$ID} ne "")
-				? $items_lut{$ID}
-				: "Unknown ".$ID;
-			$cart{'inventory'}{$ID}{'name'} = $display;
-			$cart{'inventory'}{$ID}{'binID'} = binFind(\@cartID, $ID);
+			$cart{'inventory'}[$index]{'nameID'} = $ID;
+			$cart{'inventory'}[$index]{'amount'} = $amount;
+			$display = (defined $items_lut{$ID}) ? $items_lut{$ID} : "Unknown $ID";
+			$cart{'inventory'}[$index]{'name'} = $display;
 		}
-		print "Cart Item Added: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x $amount\n";
 
 	} elsif ($switch eq "0125") {
-		$index = unpack("S1", substr($msg, 2, 2));
-		$amount = unpack("L1", substr($msg, 4, 4));
-		$ID = findKey(\%{$cart{'inventory'}}, "index", $index);
+		my $index = unpack("S1", substr($msg, 2, 2));
+		my $amount = unpack("L1", substr($msg, 4, 4));
 
-		$cart{'inventory'}{$ID}{'amount'} -= $amount;
-		print "Cart Item Removed: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x $amount\n";
-		if ($cart{'inventory'}{$ID}{'amount'} <= 0) {
-			undef %{$cart{'inventory'}{$ID}};
-			binRemove(\@cartID, $ID);
+		$cart{'inventory'}[$index]{'amount'} -= $amount;
+		print "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($cart{'inventory'}[$index]{'binID'}) x $amount\n";
+		if ($cart{'inventory'}[$index]{'amount'} <= 0) {
+			undef %{$cart{'inventory'}[$index]};
 		}
 
 	} elsif ($switch eq "012C") {
-		$index = unpack("S1", substr($msg, 3, 2));
-		$amount = unpack("L1", substr($msg, 7, 2));
-		$ID = unpack("S1", substr($msg, 9, 2));
-		if ($items_lut{$ID} ne "") {
+		my $index = unpack("S1", substr($msg, 3, 2));
+		my $amount = unpack("L1", substr($msg, 7, 2));
+		my $ID = unpack("S1", substr($msg, 9, 2));
+		if (defined $items_lut{$ID}) {
 			print "Can't Add Cart Item: $items_lut{$ID}\n";
 		}
 
@@ -8044,7 +7995,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 
 		}
 
-	} elsif ($switch eq "01D8" && length($msg) >= 52) {
+	} elsif ($switch eq "01D8") {
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
 		$type = unpack("S*",substr($msg, 14,  2));
@@ -8136,7 +8087,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n" if $config{'debug'};
 		}
       		
-      		} elsif ($switch eq "01D9" && length($msg) >= 51) {
+	} elsif ($switch eq "01D9") {
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
 		$type = unpack("S*",substr($msg, 14,  2));
@@ -9638,21 +9589,21 @@ sub sendBuyVender {
 	print "Sent Vender Buy: ".getHex($ID)."\n" if ($config{'debug'} >= 2);
 }
 
-sub sendCartAdd {  
-	my $r_socket = shift;  
-	my $index = shift;  
+sub sendCartAdd {
+	my $r_socket = shift;
+	my $index = shift;
 	my $amount = shift;
-	my $msg = pack("C*", 0x26, 0x01) . pack("S*", $index) . pack("L*", $amount); 
-	sendMsgToServer($r_socket, $msg);  
+	my $msg = pack("C*", 0x26, 0x01) . pack("S*", $index) . pack("L*", $amount);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Cart Add: $index x $amount\n" if ($config{'debug'} >= 2);
 }
 
-sub sendCartGet {  
-	my $r_socket = shift;  
-	my $index = shift;  
+sub sendCartGet {
+	my $r_socket = shift;
+	my $index = shift;
 	my $amount = shift;
-	my $msg = pack("C*", 0x27, 0x01) . pack("S*", $index) . pack("L*", $amount); 
-	sendMsgToServer($r_socket, $msg);  
+	my $msg = pack("C*", 0x27, 0x01) . pack("S*", $index) . pack("L*", $amount);
+	sendMsgToServer($r_socket, $msg);
 	print "Sent Cart Get: $index x $amount\n" if ($config{'debug'} >= 2);
 }
 
@@ -10055,8 +10006,9 @@ sub sendOpenShop {
 		$i = 0;
 		$items_selling = 0;
 		while ($shop{"name_$i"} ne "" && $items_selling < $chars[$config{'char'}]{'skills'}{'MC_VENDING'}{'lv'} + 2) {
-			for ($index = 0; $index < @cartID; $index++) {
-				if ($cart{'inventory'}{$cartID[$index]}{'name'} eq $shop{"name_$i"}) {
+			for ($index = 0; $index < @{$cart{'inventory'}}; $index++) {
+				next if (!%{$cart{'inventory'}[$index]});
+				if ($cart{'inventory'}[$index]{'name'} eq $shop{"name_$i"}) {
 					$citem = $index;
 					foreach (keys %itemtosell) {
 						if ($_ eq $index) {
@@ -10066,15 +10018,15 @@ sub sendOpenShop {
 					}
 
 					if ($citem >- 1) {
-						$itemtosell{$index}{'index'} = $cart{'inventory'}{$cartID[$index]}{'index'};
+						$itemtosell{$index}{'index'} = $cart{'inventory'}[$index]{'index'};
 
 						# Calculate amount
-						if ($shop{"quantity_$i"} > 0 && $cart{'inventory'}{$cartID[$index]}{'amount'} >= $shop{"quantity_$i"}) {
+						if ($shop{"quantity_$i"} > 0 && $cart{'inventory'}[$index]{'amount'} >= $shop{"quantity_$i"}) {
 							$itemtosell{$index}{'amount'} = $shop{"quantity_$i"};
-						} elsif ($shop{"quantity_$i"} > 0 && $cart{'inventory'}{$cartID[$index]}{'amount'} < $shop{"quantity_$i"}) {
-							$itemtosell{$index}{'amount'} = $cart{'inventory'}{$cartID[$index]}{'amount'};
+						} elsif ($shop{"quantity_$i"} > 0 && $cart{'inventory'}[$index]{'amount'} < $shop{"quantity_$i"}) {
+							$itemtosell{$index}{'amount'} = $cart{'inventory'}[$index]{'amount'};
 						} else {
-							$itemtosell{$index}{'amount'} = $cart{'inventory'}{$cartID[$index]}{'amount'};
+							$itemtosell{$index}{'amount'} = $cart{'inventory'}[$index]{'amount'};
 						}
 
 						# Calculate price
@@ -10099,7 +10051,6 @@ sub sendOpenShop {
 		}
 
 		my $length = 0x55 + 0x08 * $items_selling;
-
 		my $msg = pack("C*", 0xB2, 0x01) . pack("S*", $length) . 
 		$shop{'shop_title'} . chr(0) x (80 - length($shop{'shop_title'})) .  pack("C*", 0x01);
 
@@ -10509,7 +10460,7 @@ sub dumpData {
 			my $char = substr($data, $j, 1);
 
 			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
-			    || ($char eq chr(10) || $char eq chr(13))) {
+			    || ($char eq chr(10) || $char eq chr(13) || $char eq "\t")) {
 				$rawData .= '.';
 			} else {
 				$rawData .= substr($data, $j, 1);
@@ -10521,7 +10472,7 @@ sub dumpData {
 
 		$line .= ' ' x (50 - length($line)) if (length($line) < 54);
 		$line .= "    $rawData\n";
-		$line = sprintf("%2d>  ", $i) . $line;
+		$line = sprintf("%3d>  ", $i) . $line;
 		$dump .= $line;
 	}
 
