@@ -11737,29 +11737,6 @@ sub redirectXKoreMessages {
 	sendMessage(\$remote_socket, "k", $message);
 }
 
-sub vocalString {
-        my $letter_length = shift;
-        return if ($letter_length <= 0);
-        my $r_string = shift;
-        my $test;
-        my $i;
-        my $password;
-        my @cons = ("b", "c", "d", "g", "h", "j", "k", "l", "m", "n", "p", "r", "s", "t", "v", "w", "y", "z", "tr", "cl", "cr", "br", "fr", "th", "dr", "ch", "st", "sp", "sw", "pr", "sh", "gr", "tw", "wr", "ck");
-        my @vowels = ("a", "e", "i", "o", "u" , "a", "e" ,"i","o","u","a","e","i","o", "ea" , "ou" , "ie" , "ai" , "ee" ,"au", "oo");
-        my %badend = ( "tr" => 1, "cr" => 1, "br" => 1, "fr" => 1, "dr" => 1, "sp" => 1, "sw" => 1, "pr" =>1, "gr" => 1, "tw" => 1, "wr" => 1, "cl" => 1);
-        for (;;) {
-                $password = "";
-                for($i = 0; $i < $letter_length; $i++){
-                        $password .= $cons[rand(@cons - 1)] . $vowels[rand(@vowels - 1)];
-                }
-                $password = substr($password, 0, $letter_length);
-                ($test) = ($password =~ /(..)\z/);
-                last if ($badend{$test} != 1);
-        }
-        $$r_string = $password;
-        return $$r_string;
-}
-
 sub calcStat {
 	my $damage = shift;
 	$totaldmg = $totaldmg + $damage;
