@@ -267,7 +267,7 @@ sub parseDataFile2 {
 	open FILE, "< $file";
 	foreach (<FILE>) {
 		next if (/^#/);
-		s/[\r\n]//;
+		s/[\r\n]//g;
 		next if (length($_) == 0);
 
 		my ($key, $value) = split / /, $_, 2;
@@ -825,7 +825,7 @@ sub processUltimate {
 	undef %{$hash} if (!$writeMode);
 	return if (!open($f, "< $file"));
 	foreach (<$f>) {
-		s/[\r\n]//;
+		s/[\r\n]//g;
 
 		if ($_ eq '' || /^[ \t]*#/) {
 			push @lines, $_ if ($writeMode);
