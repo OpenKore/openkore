@@ -356,8 +356,10 @@ DLLEXPORT int WINAPI InjectDLL(DWORD ProcID, LPCTSTR dll)
 
 	/* Create a remote thread in the ragexe.exe process, which
 	   calls LoadLibraryA(our DLL filename) */
+	HMODULE kDLL = GetModuleHandle("Kernel32");
 	HANDLE hThread = CreateRemoteThread( hProcessToAttach, NULL, 0, 
-		(LPTHREAD_START_ROUTINE)LoadLibraryA, (LPVOID)pAttachProcessMemory, 0,   
+		(LPTHREAD_START_ROUTINE)GetProcAddress(kDLL, "LoadLibraryA"),
+		(LPVOID)pAttachProcessMemory, 0,   
 		NULL);
 	if (!hThread)
 		return 0;

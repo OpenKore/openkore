@@ -1,15 +1,19 @@
 # This is a Makefile for Cygwin.
 #
-# IMPORTANT NOTE: although Tools.dll can be compiled with gcc, it will
-# produce wrong code for the X-Kore-related functions. For some reason,
-# the RO client crashes when you use X-Kore in combination with a
-# gcc-compiled Tools.dll. If anybody can figure out why, please contact me.
+# IMPORTANT NOTE: although Inject.dll can be compiled with gcc, it will
+# produce wrong code. Kore will freeze at 'Wait for InjectDLL to connect...'
+# If anybody can figure out why, please contact me.
 
 .PHONY: all clean
 CXX=g++
 CFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
 DLLWRAP=dllwrap
 DLLTOOL=dlltool
+
+VERSION=1.0.0
+DISTNAME=openkore-$(VERSION)
+DISTFILES=DevelopersNotes.txt Inject.cpp Tools.cpp Makefile Makefile.win32\
+	Inject.def Tools.def openkore.pl
 
 all: Tools.dll Inject.dll
 
@@ -33,6 +37,12 @@ Inject.gccdef:
 Inject.o: Inject.cpp
 	$(CXX) -mdll -mno-cygwin $(CFLAGS) -c Inject.cpp -o Inject.o
 
+
+dist:
+	mkdir $(DISTNAME)
+	cp $(DISTFILES) $(DISTNAME)/
+	zip -9r $(DISTNAME).zip $(DISTNAME)
+	rm -rf $(DISTNAME)
 
 clean:
 	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef
