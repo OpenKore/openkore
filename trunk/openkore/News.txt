@@ -82,6 +82,7 @@ New features:
   to auto-detect the saveMap, and then it'll work the second time.)
 - parseMsg_statuslook verbose 1 displays status effects on you;
   verbose 2 displays status effects on others.
+- logs/storage.txt will show what is in your storage.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
