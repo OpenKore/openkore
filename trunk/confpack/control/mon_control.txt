@@ -4,8 +4,10 @@
 #
 # <monster>:  Name of monster as found in monsters.txt (not case sensitive)
 #
-# <auto-attack>: Put a 1 or 0 to auto-attack or leave alone.  This also
-# controls which monsters Kore will tank.
+# <auto-attack>:
+#  1 means to always auto-attack this monster.
+#  0 means to leave the monster alone, unless it attacks you.
+# -1 means to leave the monster alone, even if it attacks you.
 #
 # <auto-teleport>: Put a 1 to teleport if the monster is on the screen,
 # or 2 to teleport if the monster attacks you.
