@@ -44,7 +44,7 @@ sub new {
 		}
 	}
 
-	my $size = 20;
+	my $size = $self->{size} = 20;
 
 	if (!$no_buttons) {
 		my $sizer = $self->{sizer} = new Wx::BoxSizer(wxVERTICAL);
@@ -129,6 +129,15 @@ sub onPaint {
 	my $dc = new Wx::PaintDC($self);
 
 	my $width = $self->GetSize->GetWidth;
+	if ($self->{detachButton}) {
+		$width -= $self->{detachButton}->GetSize->GetWidth + $self->{closeButton}->GetSize->GetWidth;
+	}
+
+	eval {
+	# The app can crash if I don't use eval here.
+	# Something about "the invocant is not a reference".
+	# This'll do for now, I just hope it doesn't corrupt memory...
+
 	if (!defined $oldWidth || $width != $oldWidth) {
 		@brushes = ();
 		my @from = (0, 40, 130);
@@ -156,9 +165,6 @@ sub onPaint {
 		$dc->DrawRectangle($x, 0, $block + 1, $height);
 	}
 
-	if ($self->{detachButton}) {
-		$width -= $self->{detachButton}->GetSize->GetWidth + $self->{closeButton}->GetSize->GetWidth;
-	}
 	$dc->SetBrush(wxTRANSPARENT_BRUSH);
 	if (!$dark) {
 		$dark = new Wx::Pen(new Wx::Colour(164, 164, 164), 1, wxSOLID);
@@ -175,6 +181,9 @@ sub onPaint {
 	$dc->SetTextForeground(wxWHITE);
 	my (undef, $textHeight) = $dc->GetTextExtent($self->{title}, $font);
 	$dc->DrawText($self->{title}, 6, $height / 2 - $textHeight / 2);
+
+	};
+	undef $@;
 }
 
 1;
