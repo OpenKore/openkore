@@ -2072,6 +2072,11 @@ sub AI {
 				undef $args->{time};
 				undef $ai_v{'npc_talk'}{'time'};
 
+				# look at the NPC
+				$args->{pos} = {};
+				getNPCInfo($ai_seq_args[0]{'nameID'}, $args->{pos});
+				lookAtPosition($args->{pos});
+
 			} else {
 				# An x,y position has been passed
 				foreach my $npc (@npcsID) {
@@ -2087,6 +2092,7 @@ sub AI {
 						@{$args->{steps}} = parse_line('\s+', 0, "w3 x $args->{sequence}");
 						undef $args->{time};
 						undef $ai_v{'npc_talk'}{'time'};
+						lookAtPosition($args->{pos});
 						last;
 					}
 				}

@@ -86,6 +86,7 @@ New features:
 - "vl" (vender list) command now displays coordinates
 - Automatic disconnection during specified times of the day.
 - If storage opening fails the first time for some reason, Kore will try again.
+- The bot will now look at NPCs when it is talking to them, like a real player.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
