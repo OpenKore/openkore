@@ -9776,7 +9776,7 @@ sub itemName {
 	$display .= "+$item->{upgrade} " if $item->{upgrade};
 	$display .= $prefix if $prefix;
 	$display .= $name;
-	$display .= " [$suffix]" if $suffix;
+	$display .= " [$suffix]" if $suffix && ($item->{type} < 3);
 	$display .= " [$numSlots]" if $numSlots;
 
 	return $display;
