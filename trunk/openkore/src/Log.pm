@@ -106,7 +106,7 @@ use strict;
 use Exporter;
 use base qw(Exporter);
 
-use Globals qw(%config $interface %consoleColors);
+use Globals qw(%config $interface %consoleColors %field %cities_lut);
 use Interface;
 use Utils qw(binAdd existsInList);
 
@@ -174,6 +174,11 @@ sub processMsg {
 	my $files = shift;
 
 	$currentVerbosity = 1 if ($currentVerbosity eq "");
+
+	# Beep on certain domains
+	$interface->beep() if existsInList($config{beepDomains}, $domain) &&
+		!(existsInList($config{beepDomains_notInTown}, $domain) &&
+		  $cities_lut{$field{name}.'.rsw'});
 
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
