@@ -47,7 +47,8 @@ sub new {
 		return new Interface::Console::Win32;
 	} else {
 		# Linux
-		eval "use Interface::Console::Other;";
+		my $str = "use Interface::Console::Other;";
+		eval ${\$str};
 		die $@ if $@;
 		Modules::register("Interface::Console::Other");
 		return new Interface::Console::Other;
