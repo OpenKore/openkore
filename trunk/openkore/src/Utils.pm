@@ -627,7 +627,7 @@ sub vectorToDegree {
 sub checkLaunchedApp {
 	my $pid = shift;
 	if ($^O eq 'MSWin32') {
-		return $pid->Wait(0);
+		return ($pid->Wait(0) == 0);
 	} else {
 		import POSIX ':sys_wait_h';
 		my $wnohang = eval "WNOHANG";
