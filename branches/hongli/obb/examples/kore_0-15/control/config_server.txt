@@ -1,0 +1,15 @@
+#################################
+# Server Configuration
+#################################
+bindIp
+encrypt 0
+
+master 
+server 
+username 
+password 
+char 
+sex
+
+ignoreInvalidLogin 0
+

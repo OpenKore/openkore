@@ -1,0 +1,9 @@
+####################################
+# Merchant Options
+####################################
+buyAuto {
+	npc
+	distance 5
+	minAmount 2
+	maxAmount 3
+}

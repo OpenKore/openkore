@@ -1,0 +1,10 @@
+# Ending stats
+# str 71
+# agi 71
+# vit 71
+# int 1
+# dex 21
+# luk 1
+statsAddAuto 0
+statsAddAuto_list 11dex 11vit 11str 11agi 21vit 21dex 21agi 41str 51agi 51str 31vit 71str 71agi 71vit
+
