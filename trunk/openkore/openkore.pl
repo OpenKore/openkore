@@ -13,6 +13,7 @@ use Getopt::Long;
 use IO::Socket;
 use Digest::MD5 qw(md5);
 use Carp;
+no utf8;
 unshift @INC, '.';
 
 
@@ -246,27 +247,30 @@ print "\n";
 
 ##### SETUP ERROR HANDLER #####
 
-#$SIG{'__DIE__'} = sub {
-#	die @_ if $^S;
-#	my $msg = Carp::longmess(@_);
-#
-#	Log::color("red");
-#	print "Program terminated unexpectedly. Error message:\n";
-#	Log::color("reset");
-#
-#	print "\@ai_seq = @ai_seq\n";
-#	print $msg;
-#	if (open(F, "> errors.txt")) {
-#		print F "\@ai_seq = @ai_seq\n";
-#		print F $msg;
-#		close F;
-#	}
-#
-#	print "\nThe above message has been saved to errors.txt.\n";
-#	print "Press ENTER to exit this program.\n";
-#	<STDIN>;
-#	exit 255;
-#};
+sub _errorHandler {
+	die @_ if (defined($^S) && $^S);
+	no utf8;
+	if (defined &Carp::longmess) {
+		Log::color("red") if (defined &Log::color);
+		print "Program terminated unexpectedly. Error message:\n";
+		Log::color("reset") if (defined &Log::color);
+
+		my $msg = Carp::longmess(@_);
+		print "\@ai_seq = @ai_seq\n";
+		print ;
+		if (open(F, "> errors.txt")) {
+			print F "\@ai_seq = @ai_seq\n";
+			print F $msg;
+			close F;
+		}
+	} else {
+		print "Program terminated unexpectedly.\n";
+	}
+
+	print "Press ENTER to exit this program.\n";
+	<STDIN>;
+};
+# $SIG{'__DIE__'} = \&_errorHandler;
 
 
 ##### MAIN LOOP #####

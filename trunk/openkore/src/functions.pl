@@ -13,7 +13,7 @@ use IO::Socket;
 use Digest::MD5 qw(md5);
 use Config;
 use Log qw(message warning error debug);
-eval "no utf8;";
+no utf8;
 
 
 #######################################
@@ -3003,7 +3003,10 @@ sub AI {
 			if ($ai_seq_args[0]{'sentStore'} <= 1) {
 				sendTalk(\$remote_socket, pack("L1",$config{'storageAuto_npc'})) if !$ai_seq_args[0]{'sentStore'};
 				sendTalkContinue(\$remote_socket, pack("L1",$config{'storageAuto_npc'})) if !$ai_seq_args[0]{'sentStore'};
+				# FIXME: get rid of sleep()!
+				sleep(1);
 				sendTalkResponse(\$remote_socket, pack("L1",$config{'storageAuto_npc'}),'2') if !$ai_seq_args[0]{'sentStore'};
+				sendTalkCancel(\$remote_socket, pack("L1",$config{'storageAuto_npc'}));
 				$ai_seq_args[0]{'sentStore'}++;
 				$timeout{'ai_storageAuto'}{'time'} = time;
 				last AUTOSTORAGE;
@@ -11547,22 +11550,9 @@ sub formatNumber {
 		return 0;
 	} else {
 		$num = reverse $num;
-		my $len = length($num);
-		my $count = 0;
-		my $tmp = '';
-		my @array = ();
-
-		for (my $i = 0; $i < $len; $i++) {
-			$tmp .= substr($num, $i, 1);
-			$count++;
-			if ($count == 3) {
-				$count = 0;
-				push @array, $tmp;
-				$tmp = '';
-			}
-		}
-		push @array, $tmp if ($tmp ne '');
-		return reverse join(',', @array);
+		$num =~s/(\d{3})(\d)/$1,$2/g;
+		$num = reverse $num;
+		return $num;
 	}
 }
 
