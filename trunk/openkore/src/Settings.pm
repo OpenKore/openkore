@@ -22,7 +22,7 @@ our @EXPORT = qw($buildType %config %consoleColors);
 
 
 # Constants
-our $versionText = "*** OpenKore 1.2.1 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
+our $versionText = "*** OpenKore 1.2.1 - Custom Ragnarok Online client ***\n***   http://openkore.sourceforge.net   ***\n";
 our $welcomeText = "Welcome to X-OpenKore.";
 our $MAX_READ = 30000;
 
@@ -105,6 +105,7 @@ sub parseArguments {
 	$chat_file = "$logs_folder/chat.txt" if (!defined $chat_file);
 	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
 	$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
+	$logs_folder = "logs" if (!defined $logs_folder);
 
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
