@@ -43,6 +43,14 @@ our @EXPORT_OK = qw(&register &reload &checkSyntax @modules);
 
 ##
 # Modules::register(names...)
+# names: the names of the modules to register.
+#
+# Register modules. Registered modules can be dynamically reloaded.
+# Upon registration, the module's MODINIT() function is called.
+# A module should only be registered once (at Kore's startup).
+#
+# Example:
+# Modules::register("Log", "Input");  # Registers Log.pm and Input.pm
 sub register {
 	foreach (@_) {
 		next if (! -f "$_.pm");

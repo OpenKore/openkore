@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Logging Framework
+#  OpenKore - Plugin system
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
