@@ -6885,9 +6885,12 @@ sub parseMsg {
 
 		# Resolve source name
 		my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
+		my $disp = "$source $uses ".skillName($skillID);
+		$disp .= " (lvl $lv)" unless $lv == 65535;
+		$disp .= " on location ($x, $y)\n";
 
 		# Print skill use message
-		message "$source $uses ".skillName($skillID)." (level $lv) on location ($x, $y)\n", "skill";
+		message $disp, 'skill';
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
