@@ -8680,7 +8680,7 @@ sub parseMsg {
 		# I'm not sure what this is. In inRO this seems to have something
 		# to do with logging into the game server, while on
 		# oRO it has got something to do with the sync packet.
-		if ($config{serverType} != 0) {
+		if ($config{serverType} == 1) {
 			my $ID = substr($msg, 2, 4);
 			if ($ID == $accountID) {
 				$timeout{ai_sync}{time} = time;
