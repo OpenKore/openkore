@@ -17,7 +17,7 @@ $(FILENAME): tables/*.txt
 	rm -rf tmp
 	mkdir -p tmp/tables
 	cp tables/*.txt tmp/tables/
-	./unix2dos.pl tmp/tables/*.txt
+	perl unix2dos.pl tmp/tables/*.txt
 	echo -n $(VERSION) > tmp/$(VERSIONFILE)
 	rm -f $(FILENAME)
 	cd tmp && zip -9 ../$(FILENAME) tables/*.txt
