@@ -42,19 +42,20 @@ sub clear {
 	undef @ai_seq_args;
 }
 
-sub aiRemove {
-	my $ai_type = shift;
-	my $index;
-	while (1) {
-		$index = binFind(\@ai_seq, $ai_type);
-		if ($index ne "") {
-			if ($ai_seq_args[$index]{'destroyFunction'}) {
-				&{$ai_seq_args[$index]{'destroyFunction'}}(\%{$ai_seq_args[$index]});
+sub remove {
+	return if !defined $_[0];
+	my @arr = split /,/, $_[0];
+	foreach (@arr) {
+		s/\s+//g;
+		while (1) {
+			my $index = binFind(\@ai_seq, $_);
+			last if !defined $index;
+			
+			if ($ai_seq_args[$index]{destroyFunction}) {
+				&{$ai_seq_args[$index]{destroyFunction}}(\%{$ai_seq_args[$index]});
 			}
 			binRemoveAndShiftByIndex(\@ai_seq, $index);
 			binRemoveAndShiftByIndex(\@ai_seq_args, $index);
-		} else {
-			last;
 		}
 	}
 }
@@ -69,7 +70,7 @@ sub mapChanged {
 	$ai_seq_args[$i]{mapChanged} = time if $i < @ai_seq_args;;
 }
 
-sub find {
+sub findAction {
 	return undef if !defined $_[0];
 	return binFind(\@ai_seq, $_[0]);
 }
