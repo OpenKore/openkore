@@ -3310,7 +3310,7 @@ sub AI {
 			 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
 			 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
 			 && checkSelfCondition("attackComboSlot_$i")
-			 && checkMonsterCondition("attackComboSlot_${i}_target", $ID)) {
+			 && checkMonsterCondition("attackComboSlot_${i}_target", $monsters{$ID})) {
 
 				$args->{attackComboSlot_uses}{$i}++;
 				delete $char->{last_skill_used};
@@ -3348,7 +3348,7 @@ sub AI {
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $args->{attackSkillSlot_uses}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
 					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $monsters{$ID}{'name'}))
-					&& checkMonsterCondition("attackSkillSlot_${i}_target", $ID)
+					&& checkMonsterCondition("attackSkillSlot_${i}_target", $monsters{$ID})
 				) {
 					$args->{attackSkillSlot_uses}{$i}++;
 					$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
