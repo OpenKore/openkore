@@ -5,7 +5,7 @@
 #include "perl.h"
 #include "XSUB.h"
 
-#if TIOCGWINSZ
+#ifdef TIOCGWINSZ
 	#define WINSIZE(name) struct winsize name
 #else
 	#define TIOCGWINSZ 0
