@@ -32,7 +32,7 @@ BEGIN {
 	if (!$found) {
 		if ($^O ne 'MSWin32') {
 			# If we're on Unix, attempt to compile XSTools.so if it isn't available
-			my $ret = system('gmake', '-C', 'tools');
+			my $ret = system('gmake', '-C', 'src/auto/XSTools');
 			if ($ret != 0) {
 				if (($ret & 127) == 2) {
 					# Ctrl+C pressed
