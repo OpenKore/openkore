@@ -7,30 +7,31 @@ OBJ+=unix/*.o
 #endif
 #if win32
 OBJ+=win32/wrapper.o win32/utils.o
+DLLNAME=--dllname XSTools.dll
 #endif
 
 XSTools.$(DLLEXT): sub
 	dlltool --dllname XSTools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
-	$(DLLWRAP) $(OBJ) -o XSTools.$(DLLEXT) $(LIBPERL)
+	$(DLLWRAP) $(DLLNAME) $(OBJ) -o XSTools.$(DLLEXT) $(LIBPERL)
 
 
 sub:
-	gmake -C pathfinding
-	gmake -C misc
+	make -C pathfinding
+	make -C misc
 #if unix
-	gmake -C unix
+	make -C unix
 #endif
 #if win32
-	gmake -C win32
+	make -C win32
 #endif
 
 
 clean:
 	rm -f XSTools.$(DLLEXT) symbols.gccdef Makefile.real
-	gmake clean -C pathfinding
+	make clean -C pathfinding
 #if unix
-	gmake clean -C unix
+	make clean -C unix
 #endif
 #if win32
-	gmake clean -C win32
+	make clean -C win32
 #endif
