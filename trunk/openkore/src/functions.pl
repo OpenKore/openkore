@@ -2537,7 +2537,6 @@ sub AI {
 						$timeout{'ai_thanks_set'}{'time'} = time;
 					} else {
 						error "Map $ai_v{'temp'}{'map'} does not exist\n";
-						injectMessage("Map $ai_v{'temp'}{'map'} does not exist\n") if ($config{'verbose'} && $config{'XKore'});
 						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("moveF"), $cmd{'user'}) if $config{'verbose'};
 					}
 				}
@@ -2993,7 +2992,6 @@ sub AI {
 				$timeout{'ai_storageAuto'}{'time'} = time;
 			} else {
 				message "Calculating auto-storage route to: $maps_lut{$npcs_lut{$config{'storageAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'storageAuto_npc'}}{'map'}): $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}\n", "route";
-				injectMessage("Calculating auto-storage route to: $maps_lut{$npcs_lut{$config{'storageAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'storageAuto_npc'}}{'map'}): $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}\n") if ($config{'XKore'});
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'storageAuto_npc'}}{'map'}, 0, 0, 1, 0, $config{'storageAuto_distance'}, 1);
 			}
 		} else {
@@ -3174,7 +3172,6 @@ sub AI {
 				$timeout{'ai_sellAuto'}{'time'} = time;
 			} else {
 				message "Calculating auto-sell route to: $maps_lut{$npcs_lut{$config{'sellAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'sellAuto_npc'}}{'map'}): $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}\n", "route";
-				injectMessage("Calculating auto-sell route to: $maps_lut{$npcs_lut{$config{'sellAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'sellAuto_npc'}}{'map'}): $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}\n") if ($config{'XKore'});
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'sellAuto_npc'}}{'map'}, 0, 0, 1, 0, $config{'sellAuto_distance'}, 1);
 			}
 		} else {
@@ -3293,7 +3290,6 @@ sub AI {
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
 			} else {
 				message qq~Calculating auto-buy route to: $maps_lut{$npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}.'.rsw'}($npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}): $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}\n~, "route";
-				injectMessage(qq~Calculating auto-buy route to: $maps_lut{$npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}.'.rsw'}($npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}): $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}~) if ($config{'XKore'} && $config{'verbose'});
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}, 0, 0, 1, 0, $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}, 1);
 			}
 		} else {
@@ -3347,14 +3343,11 @@ sub AI {
 	) {
 		if ($maps_lut{$config{'lockMap'}.'.rsw'} eq "") {
 			error "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
-			injectMessage("Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist") if ($config{'XKore'} && $config{'verbose'});
 		} else {
 			if ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "") {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}\n", "route";
-				injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'}): $config{'lockMap_x'}, $config{'lockMap_y'}") if ($config{'XKore'} && $config{'verbose'});
 			} else {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
-				injectMessage("Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})") if ($config{'XKore'} && $config{'verbose'});
 			}
 			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $config{'lockMap_x'}, $config{'lockMap_y'}, $config{'lockMap'}, 0, 0, 1, 0, 0, 1);
 		}
@@ -3368,7 +3361,6 @@ sub AI {
 			$ai_v{'temp'}{'randY'} = int(rand() * ($field{'height'} - 1));
 		} while ($field{'field'}[$ai_v{'temp'}{'randY'}*$field{'width'} + $ai_v{'temp'}{'randX'}]);
 		message "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n", "route";
-		injectMessage("Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}") if ($config{'verbose'} && $config{'XKore'});
 		ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}, $field{'name'}, 0, $config{'route_randomWalk_maxRouteTime'}, 2, undef, undef, 1);
 	}
 
@@ -3402,7 +3394,6 @@ sub AI {
 	
 	if ($ai_seq[0] eq "dead" && $config{'dcOnDeath'} && $config{'dcOnDeath'} != -1) {
 		message "Disconnecting on death!\n";
-		injectMessage("Disconnecting on death!") if ($config{'verbose'} && $config{'XKore'});
 		$quit = 1;
 	}
 
@@ -3618,29 +3609,24 @@ sub AI {
 	}
 
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || $players_old{$ai_seq_args[0]{'ID'}}{'dead'})) {
-		message "Master died.  I'll wait here.\n";
-		injectMessage("Master died.  I'll wait here.") if ($config{'verbose'} && $config{'XKore'});
+		message "Master died.  I'll wait here.\n", "party";
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
 		message "I lost my master\n";
 		if ($config{'followBot'}) {
-			message "Trying to get him back\n";
+			message "Trying to get him back\n", "party";
 			sendMessage(\$remote_socket, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
-		injectMessage("I lost my master") if ($config{'verbose'} && $config{'XKore'});
 
 		undef $ai_seq_args[0]{'following'};
 		if ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
 			message "My master disconnected\n";
-			injectMessage("My master disconnected") if ($config{'verbose'} && $config{'XKore'});
-		
+
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'teleported'}) {
-			message "My master teleported\n";
-			injectMessage("My master teleported") if ($config{'verbose'} && $config{'XKore'});
+			message "My master teleported\n", "party", 1;
 
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disappeared'}) {
-			message "Trying to find lost master\n";
-			injectMessage("Trying to find lost master") if ($config{'verbose'} && $config{'XKore'});
+			message "Trying to find lost master\n", "party", 1;
 
 			undef $ai_seq_args[0]{'ai_follow_lost_char_last_pos'};
 			undef $ai_seq_args[0]{'follow_lost_portal_tried'};
@@ -3663,11 +3649,7 @@ sub AI {
 			}
 			$ai_seq_args[0]{'follow_lost_portalID'} = $ai_v{'temp'}{'foundID'};
 		} else {
-			if (!$config{'XKore'}) {
-				message "Don't know what happened to Master\n";
-			} else {
-				injectMessage("Don't know what happened to Master") if ($config{'verbose'});
-			}
+				message "Don't know what happened to Master\n", "party", 1;
 		}
 	}
 
@@ -3923,8 +3905,7 @@ sub AI {
 		$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
 		shift @ai_seq;
 		shift @ai_seq_args;
-		message "Can't reach or damage target, dropping target\n";
-		injectMessage("Can't reach or damage target, dropping target") if ($config{'XKore'} && $config{'verbose'});
+		message "Can't reach or damage target, dropping target\n",,1;
 
 	} elsif ($ai_seq[0] eq "attack" && !%{$monsters{$ai_seq_args[0]{'ID'}}}) {
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
@@ -3965,8 +3946,7 @@ sub AI {
 			## kokal end
 
 		} else {
-			message "Target lost\n";
-			injectMessage("Target lost") if ($config{'verbose'} && $config{'XKore'});
+			message "Target lost\n", 1;
 		}
 
 	} elsif ($ai_seq[0] eq "attack") {
@@ -4031,8 +4011,7 @@ sub AI {
 
 		} elsif (!$ai_v{'ai_attack_cleanMonster'}) {
 			# Drop target if it's already attacked by someone else
-			message "Dropping target - you will not kill steal others\n";
-			injectMessage("Dropping target - you will not kill steal others") if ($config{'verbose'} && $config{'XKore'});
+			message "Dropping target - you will not kill steal others\n", 1;
 			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
 			sendAttackStop(\$remote_socket);
 			shift @ai_seq;
@@ -4054,8 +4033,7 @@ sub AI {
 				$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
 				shift @ai_seq;
 				shift @ai_seq_args;
-				message "Dropping target - couldn't reach target\n";
-				injectMessage("Dropping target - couldn't reach target") if ($config{'verbose'} && $config{'XKore'});
+				message "Dropping target - couldn't reach target\n",,1;
 			} else {
 				getVector(\%{$ai_v{'temp'}{'vec'}}, \%{$monsters{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_v{'temp'}{'vec'}},
@@ -4126,8 +4104,7 @@ sub AI {
 		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ID}{'attackedByPlayer'});
 
 		if (!$ai_v{'ai_attack_cleanMonster'}) {
-			message "Dropping target - you will not kill steal others\n";
-			injectMessage("Dropping target - you will not kill steal others") if ($config{'verbose'} && $config{'XKore'});
+			message "Dropping target - you will not kill steal others\n",,1;
 			sendAttackStop(\$remote_socket);
 			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
 
@@ -4731,8 +4708,7 @@ sub AI {
 		}
 		$ai_v{'temp'}{'dist'} = distance(\%{$items{$ai_seq_args[0]{'ID'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 		if (timeOut(\%{$ai_seq_args[0]{'ai_items_gather_giveup'}})) {
-			message "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout\n";
-			injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout") if ($config{'XKore'} && $config{'verbose'});
+			message "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : Timeout\n",,1;
 			$items{$ai_seq_args[0]{'ID'}}{'take_failed'}++;
 			shift @ai_seq;
 			shift @ai_seq_args;
@@ -4749,8 +4725,7 @@ sub AI {
 			shift @ai_seq_args;
 			take($ai_v{'ai_items_gather_ID'});
 		} elsif ($ai_v{'temp'}{'found'} > 0) {
-			message "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!\n";
-			injectMessage("Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!") if ($config{'XKore'} && $config{'verbose'});
+			message "Failed to gather $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'}) : No looting!\n",,1;
 			shift @ai_seq;
 			shift @ai_seq_args;
 		}
@@ -4770,8 +4745,7 @@ sub AI {
 		shift @ai_seq_args;
 
 	} elsif ($ai_seq[0] eq "take" && timeOut(\%{$ai_seq_args[0]{'ai_take_giveup'}})) {
-		message "Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})\n";
-		injectMessage("Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})") if ($config{'XKore'} && $config{'verbose'});
+		message "Failed to take $items{$ai_seq_args[0]{'ID'}}{'name'} ($items{$ai_seq_args[0]{'ID'}}{'binID'})\n",,1;
 		$items{$ai_seq_args[0]{'ID'}}{'take_failed'}++;
 		shift @ai_seq;
 		shift @ai_seq_args;
