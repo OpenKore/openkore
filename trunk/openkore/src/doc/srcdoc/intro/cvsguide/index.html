@@ -86,8 +86,8 @@ CVS is widely used in the open source world, and is a very useful tool.
 	<p>
 	When using the code in CVS, you should:
 	<ul>
-	<li>Keep a close eye on NEWS.TXT.</li>
-	<li>Report any bugs you find, except if NEWS.TXT or the forum already says it's a known problem.</li>
+	<li>Keep a close eye on News.txt.</li>
+	<li>Report any bugs you find, except if News.txt or the forum already says it's a known problem.</li>
 	</ul>
 </div>
 
@@ -113,114 +113,6 @@ CVS is widely used in the open source world, and is a very useful tool.
 	</ul>
 </li>
 </ul>
-
-
-<!--
-<h2>Basic concept</h2>
-
-If you'd like to work on OpenKore's code, you shouldn't just take the latest public release and modify
-that. Instead, you should get the code from CVS and work on that instead.
-
-<p>
-The OpenKore CVS repository contains several <i>modules</i>.
-A module is a subfolder on the CVS server. These modules are currently available:
-<table border="1">
-<tr>
-	<th>Module name</th>
-	<th>Description</th>
-</tr>
-<tr>
-	<td><tt>openkore</tt></td>
-	<td>The main openkore source code, including the code for Tools.dll and Inject.dll. This is probably what you're looking for.</td>
-</tr>
-<tr>
-	<td><tt>confpack</tt></td>
-	<td>The default configuration files (control/*).</td>
-</tr>
-<tr>
-	<td><tt>tablepack</tt></td>
-	<td>The default table files (tables/*).</td>
-</tr>
-<tr>
-	<td><tt>fieldpack</tt></td>
-	<td>*.fld files.</td>
-</tr>
-<tr>
-	<td><tt>plugins</tt></td>
-	<td>Simple example plugins for OpenKore.</td>
-</tr>
-<tr>
-	<td><tt>extract</tt></td>
-	<td>Tools used to automatically generate recvpackets.txt</td>
-</tr>
-<tr>
-	<td><tt>grftool</tt></td>
-	<td>Source code of GRF Tool, libgrf and related stuff.</td>
-</tr>
-</table>
-
-<P>
-Basically, this is what you have to do:
-<OL>
-<LI>Download (checkout) source code from CVS.</LI>
-<LI>Modify the source code.</LI>
-<LI>Merge your changes with the latest changes in CVS.</LI>
-<LI>
-	<UL>
-	<LI>If you're a developer, upload (commit) your changes to CVS.</LI>
-	<LI>If you're not a developer, make a patch and submit it
-	    to the forums.</LI>
-	</UL>
-</LI>
-</OL>
-
-Each step will be explained.<P>
-<B>Note:</B> this guide assumes that you are using MS Windows. If you're
-a Linux developer, you probably already know how to use CVS.
-<P>
-
-
-<H2>Preparations</H2>
-
-First, you will need to install a CVS client in order to access
-CVS servers, just like you need a web browser to access HTTP
-servers.
-There are many CVS clients for Windows, but I recommend
-TortoiseCVS because of it's simplicity and integration with
-Windows Explorer:
-<A HREF="http://www.tortoisecvs.org/">http://www.tortoisecvs.org/</A><P>
-This guide assumes that you're using TortoiseCVS.
-<P>
-
-<B>Tip:</B> once you've installed TortoiseCVS, you should tell it to use
-compression when uploading/downloading stuff. Rightclick on an empty
-spot in any folder and choose <TT>"CVS-&gt;Preferences..."</TT>. Go
-to the <I>"Advanced"</I> tab and choose <I>"3 - Low"</I> for
-<I>Network compression</I>. <B>Do NOT choose a higher level of
-compression!</B> Anything higher than 3 won't give much better results,
-but will stress the server more. SourceForge already has to deal with
-lots of traffic, so please don't set compression higher than 3.
-<P>
-
-
-<H2>Choose a guide</H2>
-
-There are two guides: one for those who have direct write access to CVS
-(official developers) and one for those who don't.
-<UL>
-<LI><A HREF="developers.html">I have write access CVS (I am a developer).</A></LI>
-<LI><A HREF="contributors.html">I don't have write access to CVS.</A></LI>
-</UL>
-
-
-<H2>Further documentation</H2>
-
-<UL>
-<LI><A HREF="conflicts.html">How to resolve merging conflicts</A></LI>
-<LI>Full CVS manual: <A HREF="http://www.gnu.org/software/cvs/manual/html_chapter/cvs_toc.html">http://www.gnu.org/software/cvs/manual/html_chapter/cvs_toc.html</A></LI>
-</UL>
-
--->
 
 
 </div>
