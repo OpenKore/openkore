@@ -5,6 +5,7 @@
 - Support for idRO: secureLogin_type 3
 - Possibly fixed the "utf8.pm not found" error.
 - Fix monster status/ailment detection.
+- Fix getAuto.
 - Show (x, y) position after teleporting.
 - Attacking party or followTarget's monster is never considered KS.
 - Added north/east/south/west/northeast/southeast/southwest/northwest
