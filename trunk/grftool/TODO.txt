@@ -1,5 +1,4 @@
 libsprite:
-- Support for loading sprite data from memory.
 - Better documentation.
 
 GTK+ frontend:
