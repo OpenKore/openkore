@@ -622,9 +622,10 @@ sub cmdNPCList {
 }
 
 sub cmdPlayerList {
-	message("-----------Player List-----------\n" .
-		"#    Name                                    Sex   Job         Dist  Coord\n",
-		"list");
+	my $msg;
+
+	$msg =  "-----------Player List-----------\n" .
+		"#    Name                                    Sex   Job         Dist  Coord\n";
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if ($playersID[$i] eq "");
 		my ($name, $dist, $pos);
@@ -637,12 +638,12 @@ sub cmdPlayerList {
 		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
 		$pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
 
-		message(swrite(
+		$msg .= swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
-			[$i, $name, $sex_lut{$players{$playersID[$i]}{'sex'}}, $jobs_lut{$players{$playersID[$i]}{'jobID'}}, $dist, $pos]),
-			"list");
+			[$i, $name, $sex_lut{$players{$playersID[$i]}{'sex'}}, $jobs_lut{$players{$playersID[$i]}{'jobID'}}, $dist, $pos]);
 	}
-	message("---------------------------------\n", "list");
+	$msg .= "---------------------------------\n";
+	message($msg, "list");
 }
 
 sub cmdPlugin {

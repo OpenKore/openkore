@@ -328,9 +328,9 @@ sub mainLoop {
 		$interface->title($title);
 
 	} elsif ($conState == 1) {
-		$interface->title("${charName}not connected - $Settings::NAME");
+		$interface->title("${charName}Not connected - $Settings::NAME");
 	} else {
-		$interface->title("${charName}connecting - $Settings::NAME");
+		$interface->title("${charName}Connecting - $Settings::NAME");
 	}
 
 	Plugins::callHook('mainLoop_post');

@@ -193,6 +193,7 @@ sub createInterface {
 	my $frame = $self->{frame} = new Wx::Frame(undef, -1, $Settings::NAME);
 	$self->{title} = $frame->GetTitle();
 	$frame->SetClientSize(600, 400);
+	$frame->SetIcon(Wx::GetWxPerlIcon());
 	$frame->Show(1);
 	$self->SetTopWindow($frame);
 	EVT_CLOSE($frame, \&onClose);
@@ -276,9 +277,8 @@ sub createInterface {
 
 	### Status bar
 	my $statusbar = $self->{statusbar} = new Wx::StatusBar($frame, -1, wxST_SIZEGRIP);
-	$statusbar->SetFieldsCount(1);
-	#$statusbar->SetFieldsCount(2);
-	#$statusbar->SetStatusWidths(-1, 150);
+	$statusbar->SetFieldsCount(2);
+	$statusbar->SetStatusWidths(-1, 175);
 	$frame->SetStatusBar($statusbar);
 }
 
@@ -294,15 +294,19 @@ sub updateStatusBar {
 	my $self = shift;
 	return unless (timeOut($self->{aiBarTimeout}));
 
-	my $text;
-	if (!defined $conState) {
-		$text = "Initializing...";
-	} elsif ($conState == 0) {
-		$text = "Not connected";
-	} elsif ($conState > 0 && $conState < 5) {
-		$text = "Connecting...";
+	my ($statText, $aiText);
 
+	if (!$conState) {
+		$statText = "Initializing...";
+	} elsif ($conState == 1) {
+		$statText = "Not connected";
+	} elsif ($conState > 1 && $conState < 5) {
+		$statText = "Connecting...";
 	} elsif ($conState == 5) {
+		$statText = '';
+	}
+
+	if ($conState == 5) {
 		if (@ai_seq) {
 			my @seqs = @ai_seq;
 			foreach (@seqs) {
@@ -310,17 +314,25 @@ sub updateStatusBar {
 				s/_/ /g;
 				s/([a-z])([A-Z])/$1 $2/g;
 			}
-			$text = join(', ', @seqs);
-			$text = "Active actions: $text";
+			substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
+			$aiText = join(', ', @seqs);
 		} else {
-			$text = "";
+			$aiText = "";
 		}
 	}
 
-	if ($self->{statusText} ne $text) {
-		$self->{statusText} = $text;
-		$self->{statusbar}->SetStatusText($text, 0);
-	}
+	# Only set status bar text if it has changed
+	my $i = 0;
+	my $setStatus = sub {
+		if ($self->{$_[0]} ne $_[1]) {
+			$self->{$_[0]} = $_[1];
+			$self->{statusbar}->SetStatusText($_[1], $i);
+		}
+		$i++;
+	};
+
+	$setStatus->('statText', $statText);
+	$setStatus->('aiText', $aiText);
 	$self->{aiBarTimeout}{time} = time;
 }
 
