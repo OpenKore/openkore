@@ -34,8 +34,9 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 ################################
 
 ##
-# IPC->new([host, port])
-# host: host address of the manager server.
+# IPC->new([userAgent, host, port])
+# userAgent: a name to identify yourself. Default value: 'openkore'.
+# host: host address of the manager server. Default value: localhost.
 # port: port number of the manager server.
 # Returns: an IPC object, or undef if unable to connect.
 #
@@ -49,12 +50,12 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 # communication with the manager server. You must call $ipc->iterate() in a loop,
 # until $ipc->ready() returns 1.
 sub new {
-	my $class = shift;
-	my $host = shift;
-	my $port = shift;
+	my ($class, $userAgent, $host, $port) = @_;
 	my %self;
 
 	$host = "localhost" if (!defined($host) || $host eq "127.0.0.1");
+	$self{userAgent} = defined($userAgent) ? $userAgent : 'openkore';
+
 	if ($host eq "localhost" && !$port) {
 		$self{host} = $host;
 		$self{manager} = {};
@@ -134,7 +135,8 @@ sub iterate {
 	return 0 if !$self->{connected};
 
 	if (!$self->{port} && $self->{host} eq "localhost") {
-		# Start the manager server
+		# The port is not given and we're on localhost.
+		# Start the manager server if we haven't yet done so.
 		my $manager = $self->{manager};
 		if ($manager->{state} eq '') {
 			# Create a server socket on a random port.
@@ -209,7 +211,8 @@ sub iterate {
 				$self->{ID} = $msg->{params}{ID};
 				$self->{ready} = 1;
 				debug "Received _WELCOME - our client ID: $self->{ID}\n", "ipc";
-				$self->send("_WELCOME");
+				$self->send("_WELCOME",
+					"userAgent" => $self->{userAgent});
 			}
 		}
 	}

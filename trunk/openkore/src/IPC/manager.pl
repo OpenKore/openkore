@@ -133,14 +133,16 @@ sub process {
 
 	# Special messages
 	if ($ID eq "_WELCOME") {
+		$clients{$from}{userAgent} = $msg->{params}{userAgent};
 		$clients{$from}{ready} = 1;
 
 	} elsif ($ID eq "_LIST-CLIENTS") {
 		my %params;
 		my $i = 0;
 		foreach ($server->clients) {
-			if ($_ ne $from && $clients{$from}{ready}) {
+			if ($_ ne $from && $clients{$_}{ready}) {
 				$params{"client$i"} = $_;
+				$params{"clientUserAgent$i"} = $clients{$_}{userAgent};
 				$i++;
 			}
 		}
