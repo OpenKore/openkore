@@ -1243,6 +1243,10 @@ sub sendSkillUseLoc {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x16, 0x01).pack("S*",$lv,$ID,$x,$y);
 	} else {
+		$msg = pack("S*", 0x0116, 0x0000, 0x0000, $lv) .
+			chr(0) . pack("S*", $ID) .
+			pack("L*", 0, 0, 0) .
+			pack("S*", $x) . chr(0) . pack("S*", $y);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
