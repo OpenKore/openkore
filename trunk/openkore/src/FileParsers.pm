@@ -58,6 +58,7 @@ our @EXPORT = qw(
 	writeDataFileIntact
 	writeDataFileIntact2
 	writePortalsLOS
+	writeSectionedFileIntact
 	updateMonsterLUT
 	updatePortalLUT
 	updateNPCLUT
@@ -528,8 +529,13 @@ sub parseSectionedFile {
 			$section = $1;
 			next;
 		} else {
-			my ($key, $value) = $line =~ /([\s\S]*?) ([\s\S]*)$/;
-			$$r_hash{$section}{$key} = $value;
+			my ($key, $value);
+			if ($line =~ / /) {
+				($key, $value) = $line =~ /^(.*?) (.*)/;
+			} else {
+				$key = $line;
+			}
+			$r_hash->{$section}{$key} = $value;
 		}
 	}
 	close FILE;
@@ -789,6 +795,42 @@ sub writePortalsLOS {
 		}
 		print FILE "\n";
 	}
+	close FILE;
+}
+
+sub writeSectionedFileIntact {
+	my $file = shift;
+	my $r_hash = shift;
+	my $section = "";
+	my @lines;
+
+	open(FILE, "< $file");
+	foreach (<FILE>) {
+		s/[\r\n]//g;
+		if (/^#/ || /^ *$/) {
+			push @lines, $_;
+			next;
+		}
+
+		my $line = $_;
+		if (/^\[(.*)\]$/) {
+			$section = $1;
+			push @lines, $_;
+		} else {
+			my ($key, $value);
+			if ($line =~ / /) {
+				($key) = $line =~ /^(.*?) /;
+			} else {
+				$key = $line;
+			}
+			$value = $r_hash->{$section}{$key};
+			push @lines, "$key $value";
+		}
+	}
+	close FILE;
+
+	open(FILE, "> $file");
+	print FILE join("\n", @lines) . "\n";
 	close FILE;
 }
 

@@ -162,37 +162,40 @@ sub initOtherVars {
 sub checkConnection {
 	return if ($config{'XKore'} || $Settings::no_connect);
 
-	if ($conState == 1 && !($remote_socket && $remote_socket->connected()) && timeOut(\%{$timeout_ex{'master'}}) && !$conState_tries) {
+	if ($conState == 1 && !($remote_socket && $remote_socket->connected()) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
+		my $master = $masterServers{$config{'master'}};
+
 		message("Connecting to Master Server...\n", "connection");
 		$shopstarted = 1;
 		$conState_tries++;
 		undef $msg;
-		Network::connectTo(\$remote_socket, $config{"master_host_$config{'master'}"}, $config{"master_port_$config{'master'}"});
+		Network::connectTo(\$remote_socket, $master->{ip}, $master->{port});
 
-		if ($config{'secureLogin'} >= 1) {
+		if ($master->{secureLogin} >= 1) {
 			message("Secure Login...\n", "connection");
 			undef $secureLoginKey;
-			if ($config{'secureLogin_requestCode'} ne '') {
-				sendMasterCodeRequest(\$remote_socket, 'code', $config{'secureLogin_requestCode'});
+			if ($master->{secureLogin_requestCode} ne '') {
+				sendMasterCodeRequest(\$remote_socket, 'code', $master->{secureLogin_requestCode});
 			} else {
-				sendMasterCodeRequest(\$remote_socket, 'type', $config{'secureLogin_type'});
+				sendMasterCodeRequest(\$remote_socket, 'type', $master->{secureLogin_type});
 			}
 		} else {
-			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'});
+			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'}, $master->{master_version});
 		}
 
 		$timeout{'master'}{'time'} = time;
 
-	} elsif ($conState == 1 && $config{'secureLogin'} >= 1 && $secureLoginKey ne "" && !timeOut(\%{$timeout{'master'}}) 
-			  && $conState_tries) {
+	} elsif ($conState == 1 && $masterServers{$config{'master'}}{secureLogin} >= 1 && $secureLoginKey ne ""
+	   && !timeOut($timeout{'master'}) && $conState_tries) {
 
+		my $master = $masterServers{$config{'master'}};
 		message("Sending encoded password...\n", "connection");
-		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'},$secureLoginKey,
-						$config{'version'},$config{"master_version_$config{'master'}"},
-						$config{'secureLogin'},$config{'secureLogin_account'});
+		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'}, $secureLoginKey,
+				$config{'version'}, $master->{master_version},
+				$master->{secureLogin}, $master->{secureLogin_account});
 		undef $secureLoginKey;
 
-	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
+	} elsif ($conState == 1 && timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
 		error "Timeout on Master Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -206,7 +209,7 @@ sub checkConnection {
 		sendGameLogin(\$remote_socket, $accountID, $sessionID, $sessionID2, $accountSex);
 		$timeout{'gamelogin'}{'time'} = time;
 
-	} elsif ($conState == 2 && timeOut(\%{$timeout{'gamelogin'}}) && $config{'server'} ne "") {
+	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'}) && $config{'server'} ne "") {
 		error "Timeout on Game Login Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -242,7 +245,7 @@ sub checkConnection {
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		$timeout{'maplogin'}{'time'} = time;
 
-	} elsif ($conState == 4 && timeOut(\%{$timeout{'maplogin'}})) {
+	} elsif ($conState == 4 && timeOut($timeout{'maplogin'})) {
 		message("Timeout on Map Server, connecting to Master Server...\n", "connection");
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -5125,16 +5128,17 @@ sub parseMsg {
 			$interface->errorDialog("Critical Error: Your account has been blocked.");
 			$quit = 1 if (!$config{'XKore'});
 		} elsif ($type == 5) {
-			$masterver = $config{"master_version_$config{'master'}"};
-			error("Version $config{'version'} failed...trying to find version\n", "connection");
-			error("Master Version: $masterver\n", "connection");
-			$config{'version'}++;
+			my $master = $masterServers{$config{'master'}};
+			error("Version $master->{version} failed... trying to find version\n", "connection");
+			error("Master Version: $master->{master_version}\n", "connection");
+			$master->{master_version}++;
 			if (!$versionSearch) {
-				$config{'version'} = 0;
+				$master->{master_version} = 0 if ($master->{master_version} > 1);
+				$master->{version} = 0;
 				$versionSearch = 1;
-			} elsif ($config{'version'} eq 51) {
-				$config{"master_version_$config{'master'}"}++;
-				$config{'version'} = 0;
+			} elsif ($master->{master_version} eq 60) {
+				$master->{master_version} = 0;
+				$master->{version}++;
 			}
 			relog();
 		} elsif ($type == 6) {
@@ -5142,7 +5146,7 @@ sub parseMsg {
 		}
 		if ($type != 5 && $versionSearch) {
 			$versionSearch = 0;
-			Misc::saveConfigFile();
+			writeSectionedFileIntact("$Settings::control_folder/servers.txt", \%masterServers);
 		}
 
 	} elsif ($switch eq "006B") {

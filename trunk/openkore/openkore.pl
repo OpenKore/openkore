@@ -167,6 +167,7 @@ undef $@;
 
 import Settings qw(addConfigFile);
 addConfigFile($Settings::config_file, \%config,\&parseDataFile2);
+addConfigFile("$Settings::control_folder/servers.txt", \%masterServers, \&parseSectionedFile);
 addConfigFile($Settings::items_control_file, \%items_control,\&parseItemsControl);
 addConfigFile($Settings::mon_control_file, \%mon_control, \&parseMonControl);
 addConfigFile("$Settings::control_folder/overallAuth.txt", \%overallAuth, \&parseDataFile);
@@ -287,6 +288,7 @@ if (compilePortals_check()) {
 ### PROMPT USERNAME AND PASSWORD IF NECESSARY ###
 
 if (!$config{'XKore'}) {
+	my $msg;
 	if (!$config{'username'}) {
 		Log::message("Enter Username: ");
 		$msg = $interface->getInput(-1);
@@ -298,23 +300,42 @@ if (!$config{'XKore'}) {
 		configModify('password', $msg, 1);
 	}
 
-	if ($config{'master'} eq "") {
-		Log::message("------- Master Servers --------\n", "connection");
-		Log::message("#         Name\n", "connection");
-		my $i = 0;
-		while ($config{"master_name_$i"} ne "") {
-			Log::message(swrite(
-				"@<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$i,   $config{"master_name_$i"}],
-				), "connection");
-			$i++;
-		}
-		undef $i;
-		Log::message("-------------------------------\n", "connection");
+	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/) {
+		my $err;
+		while (1) {
+			Log::message("------- Master Servers --------\n", "connection");
+			Log::message("#         Name\n", "connection");
 
-		Log::message("Choose your master server: ");
-		$msg = $interface->getInput(-1);
-		configModify('master', $msg, 1);
+			my $i = 0;
+			my @servers = sort(keys %masterServers);
+			foreach my $name (@servers) {
+				Log::message(swrite(
+					"@<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$i,  $name],
+					), "connection");
+				$i++;
+			}
+			Log::message("-------------------------------\n", "connection");
+
+			if (defined $err) {
+				Log::error("'$err' is not a valid server.\n");
+			}
+			Log::message("Choose your master server: ");
+			$msg = $interface->getInput(-1);
+
+			my $serverName;
+			if ($msg =~ /^\d+$/) {
+				$serverName = $servers[$msg];
+				$err = $msg;
+			} else {
+				$serverName = $err = $msg;
+			}
+
+			if ($masterServers{$serverName}) {
+				configModify('master', $serverName, 1);
+				last;
+			}
+		}
 	}
 
 } elsif (!$config{'XKore'} && (!$config{'username'} || !$config{'password'})) {
