@@ -12,6 +12,7 @@ use Time::HiRes qw(time usleep);
 use Getopt::Long;
 use IO::Socket;
 use Digest::MD5 qw(md5);
+use Carp;
 unshift @INC, '.';
 
 
@@ -77,10 +78,12 @@ load(\@parseFiles);
 
 if ($buildType == 0) {
 	# MS Windows
-	eval "use Win32::API;";
 	require Win32::API;
 	import Win32::API;
-	die if ($@);
+	if ($@) {
+		Log::error("Unable to load the Win32::API module. Please install this Perl module first.", "startup");
+		exit 1;
+	}
 
 	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPNNPPN", "N");
 	if (!$CalcPath_init) {
@@ -241,6 +244,31 @@ initConfChange();
 print "\n";
 
 
+##### SETUP ERROR HANDLER #####
+
+$SIG{'__DIE__'} = sub {
+	die @_ if $^S;
+	my $msg = Carp::longmess(@_);
+
+	Log::color("red");
+	print "Program terminated unexpectedly. Error message:\n";
+	Log::color("reset");
+
+	print "\@ai_seq = @ai_seq\n";
+	print $msg;
+	if (open(F, "> errors.txt")) {
+		print F "\@ai_seq = @ai_seq\n";
+		print F $msg;
+		close F;
+	}
+
+	print "\nThe above message has been saved to errors.txt.\n";
+	print "Press ENTER to exit this program.\n";
+	<STDIN>;
+	exit 255;
+};
+
+
 ##### MAIN LOOP #####
 
 while ($quit != 1) {
@@ -266,7 +294,10 @@ while ($quit != 1) {
 			}
 			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
 			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
-			die "Could not inject DLL" if ($retVal != 1);
+			if ($retVal != 1) {
+				Log::error("Could not inject DLL", "startup");
+				return 1;
+			}
 
 			print "Waiting for InjectDLL to connect...\n";
 			$remote_socket = $injectServer_socket->accept();

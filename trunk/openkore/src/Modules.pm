@@ -9,6 +9,16 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 
+# This file contains a list of other modules that Kore uses (internal modules;
+# not public Perl modules).
+# At startup, Modules::register() is called with a list of modules (see also
+# openkore.pl). This module will save that list so it can be used later for
+# automatic source code reloading.
+#
+# Modules::reload() is similar to the "reload" command you type in the
+# console. he difference is that this function reloads the source code,
+# not config files.
+
 package Modules;
 
 use strict;
