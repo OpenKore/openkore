@@ -2476,6 +2476,7 @@ sub AI {
 					$store = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
 					my $keep = $items_control{'all'}{'keep'};
 					$keep = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
+					debug "AUTOSTORAGE: $char->{inventory}[$i]{name} x $char->{inventory}[$i]{amount} - store = $store, keep = $keep\n", "storage";
 					if ($store && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $keep) {
 						if ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $chars[$config{'char'}]{'inventory'}[$i]{'index'}
 							&& timeOut(\%{$timeout{'ai_storageAuto_giveup'}})) {
@@ -2485,7 +2486,7 @@ sub AI {
 						}
 						undef $ai_seq_args[0]{'done'};
 						$ai_seq_args[0]{'lastIndex'} = $chars[$config{'char'}]{'inventory'}[$i]{'index'};
-						sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'});
+						sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $keep);
 						$timeout{'ai_storageAuto'}{'time'} = time;
 						$ai_seq_args[0]{'nextItem'} = $i + 1;
 						last AUTOSTORAGE;
@@ -2641,7 +2642,7 @@ sub AI {
 					}
 					undef $ai_seq_args[0]{'done'};
 					$ai_seq_args[0]{'lastIndex'} = $chars[$config{'char'}]{'inventory'}[$i]{'index'};
-					sendSell(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'});
+					sendSell(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $keep);
 					$timeout{'ai_sellAuto'}{'time'} = time;
 					last AUTOSELL;
 				}
