@@ -143,6 +143,7 @@ Internal:
 - Move some messages from "route" to "route_teleport" domain.
 - Comment out stopAttack() to try to fix "bot attacks slowly when buff
   ran out" bug.
+- attackMinPortalDistance's minimum value has been lowered to 1.
 
 Credits:
 - asuwannarat, as2765324: tRO server details.
