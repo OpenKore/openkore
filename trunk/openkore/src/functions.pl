@@ -1142,37 +1142,36 @@ sub parseCommand {
 	} elsif ($switch eq "move") {
 		($arg1, $arg2, $arg3) = $input =~ /^[\s\S]*? (\d+) (\d+)(.*?)$/;
 
-		undef $ai_v{'temp'}{'map'};
+		my $map;
 		if ($arg1 eq "") {
-			($ai_v{'temp'}{'map'}) = $input =~ /^[\s\S]*? (.*?)$/;
+			($map) = $input =~ /^[\s\S]*? (.*?)$/;
 		} else {
-			$ai_v{'temp'}{'map'} = $arg3;
+			$map = $arg3;
 		}
-		$ai_v{'temp'}{'map'} =~ s/\s//g;
-		if (($arg1 eq "" || $arg2 eq "") && !$ai_v{'temp'}{'map'}) {
+		$map =~ s/\s//g;
+		if (($arg1 eq "" || $arg2 eq "") && !$map) {
 			error	"Syntax Error in function 'move' (Move Player)\n" .
 				"Usage: move <x> <y> &| <map>\n";
-		} elsif ($ai_v{'temp'}{'map'} eq "stop") {
+		} elsif ($map eq "stop") {
 			AI::clear(qw/move route mapRoute/);
 			message "Stopped all movement\n", "success";
 		} else {
 			AI::clear(qw/move route mapRoute/);
-			$ai_v{'temp'}{'map'} = $field{'name'} if ($ai_v{'temp'}{'map'} eq "");
-			if ($maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}) {
+			$map = $field{name} if ($map eq "");
+			if ($maps_lut{"${map}.rsw"}) {
+				my ($x, $y);
 				if ($arg2 ne "") {
-					message("Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'}): $arg1, $arg2\n", "route");
-					$ai_v{'temp'}{'x'} = $arg1;
-					$ai_v{'temp'}{'y'} = $arg2;
+					message("Calculating route to: $maps_lut{$map.'.rsw'}($map): $arg1, $arg2\n", "route");
+					$x = $arg1;
+					$y = $arg2;
 				} else {
-					message("Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'})\n", "route");
-					undef $ai_v{'temp'}{'x'};
-					undef $ai_v{'temp'}{'y'};
+					message("Calculating route to: $maps_lut{$map.'.rsw'}($map)\n", "route");
 				}
-				ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'},
+				ai_route($map, $x, $y,
 					attackOnRoute => 1,
 					noSitAuto => 1);
 			} else {
-				error "Map $ai_v{'temp'}{'map'} does not exist\n";
+				error "Map $map does not exist\n";
 			}
 		}
 
@@ -9673,7 +9672,10 @@ sub getField {
 	$dist_file =~ s/\.fld$/.dist/i;
 
 	# Load the .fld file
-	($$r_hash{'name'}) = $file =~ m{/?([^/.]*)\.};
+	$r_hash->{name} = $file;
+	$r_hash->{name} =~ s/.*[\\\/]//;
+	$r_hash->{name} =~ s/(.*)\..*/$1/;
+
 	open FILE, "<", $file;
 	binmode(FILE);
 	my $data;

@@ -2,3 +2,4 @@ algorithm.cpp
 algorithm.h
 Changes
 wrapper.xs
+typemap

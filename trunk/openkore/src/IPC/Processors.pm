@@ -30,7 +30,7 @@ sub ipcMoveTo {
 
 	if ($conState == 5) {
 		my $map = $params->{field};
-		message "On route to: $maps_lut{$map}($map): $params->{x}, $params->{y}\n";
+		message "On route to: " . $maps_lut{"${map}.rsw"} . "($map): $params->{x}, $params->{y}\n";
 		main::ai_route($params->{field}, $params->{x}, $params->{y},
 			attackOnRoute => 1);
 	}
