@@ -48,7 +48,6 @@ New features:
   alias_mvp sm 292
 - If 'sp' command is called without a player target, it will target yourself.
   Useful for e.g. 'alias_heal sp 28'.
-- Support for Umbala maps and portals.
 
 New commands:
 - guild join (flag)
@@ -96,9 +95,40 @@ Credits:
 - fov: writeDataFile*() tweaks
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
+- jsteng: Arrow equip bugfix.
+
+
+==================
+### 1.4.4
+==================
+
+New features:
+- Ability to take an item as fast as possible (as soon as it appears):
+  in pickupitems.txt, set the flag to 2. Example:
+  Vitata Card 2
+  This will pick up Vitata Card as soon as it appears.
+- Auto-drop support: automatically drop an item when it appears in the
+  inventory. This is useful for Rogues with auto-steal.
+  In pickupitems.txt, set the flag to -1.
+
+Bug fixes:
+- The "monster with no name" bug should be a lot less common now, if it
+  still exists at all.
+- Fixed a bug which caused unjustified "Can't reach target" messages.
+- Fixed party auto share.
+
+Credits:
+- Joseph: Auto-drop, fast item take
 - mfr, Xeno-chan: advanced 2-2 skills support.
 - Steven80s: Umbala maps and portals
-- jsteng: Arrow equip bugfix.
+
+
+==================
+### 1.4.3
+==================
+
+Bug fixes:
+- *Really* fixed the telportAuto_search bug this time.
 
 
 ==================
