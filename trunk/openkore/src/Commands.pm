@@ -1427,11 +1427,6 @@ sub cmdStorage_list {
 sub cmdStorage_add {
 	my $items = shift;
 
-	if (!$ai_v{temp}{storage_opened}) {
-		error "Storage is not open.\n";
-		return;
-	}
-
 	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
 	my $item = Match::inventoryItem($name);
 	if (!$item) {
@@ -1447,11 +1442,6 @@ sub cmdStorage_add {
 
 sub cmdStorage_get {
 	my $items = shift;
-
-	if (!$ai_v{temp}{storage_opened}) {
-		error "Storage is not open.\n";
-		return;
-	}
 
 	my ($names, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
 	my @names = split(',', $names);
@@ -1470,11 +1460,7 @@ sub cmdStorage_get {
 }
 
 sub cmdStorage_close {
-	if ($ai_v{temp}{storage_opened}) { 
-		sendStorageClose(\$remote_socket);
-	} else {
-		warning "Storage is already closed.\n";
-	}
+	sendStorageClose(\$remote_socket);
 }
 
 sub cmdUseSkill {
