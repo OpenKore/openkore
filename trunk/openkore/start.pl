@@ -56,6 +56,7 @@ if (0) {
 	require Win32;
 	require Win32::Console;
 	require Win32::Process;
+	require XSTools;
 }
 
 $0 = PerlApp::exe() if ($PerlApp::TOOL eq "PerlApp");
