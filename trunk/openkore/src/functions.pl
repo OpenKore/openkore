@@ -4273,10 +4273,11 @@ sub AI {
 				if ($args->{index}) {
 					debug "Route - not moving, decreasing step size to $args->{index}\n", "route";
 					if (@{$args->{solution}}) {
-						#if we still have more points to cover, walk to next point
+						# If we still have more points to cover, walk to next point
 						$args->{index} = @{$args->{solution}} - 1 if $args->{index} >= @{$args->{solution}};
 						$args->{new_x} = $args->{solution}[$args->{index}]{x};
 						$args->{new_y} = $args->{solution}[$args->{index}]{y};
+						$args->{time_step} = time;
 						move($args->{new_x}, $args->{new_y}, $args->{attackID});
 					}
 				} elsif (!$wasZero) {
