@@ -82,6 +82,9 @@ New config options:
   Set to 1, if you want to avoid people on your avoid list when they
   are on screen, but only when you are in lockMap.
 
+New timeouts.txt options:
+- ai_attack_unfail 5
+
 Bug fixes:
 - Kore can walk on walkable water now (bug #21).
 - Don't open shop immediately after login in X-Kore mode (bug #49).
