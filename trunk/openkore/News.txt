@@ -54,6 +54,10 @@
 - OpenKore on Linux will now keep the prompt visible. Keys like Home,
   End, Ctrl+U etc. are supported.
 
+Other contributors:
+- jsteng: simplified move AI code.
+
+
 ==================
 ### OpenKore 1.2.1
 ==================
