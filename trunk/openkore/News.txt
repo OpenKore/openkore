@@ -40,8 +40,10 @@ New config options:
   This specifies whether the combo skill is used on yourself.
 - _defendMonsters consition, e.g.:
   partySkill Pneuma {
+	  lvl 1
       target_defendMonsters Raydric Archer
   }
+  will only cast this skill if a Raydric Archer's last attack hit the person.
 - verboseDomains is the opposite of squelchDomains.
 - missDamage; any damage you do <= this amount will be counted as a miss.
   (e.g. for monks who have Spirit Spheres)
