@@ -55,13 +55,16 @@ typedef struct {
 	pos * start;
 	pos * dest;
 	unsigned long time_max;
-	bool active;
+	int active;
+
+	int static_solution_used;
 } CalcPath_session;
 
 
 CalcPath_session *CalcPath_init (char* map, unsigned char* weight, unsigned long width, unsigned long height,
 	pos * start, pos * dest, unsigned long time_max);
 int CalcPath_pathStep (CalcPath_session *session);
+void CalcPath_destroy (CalcPath_session *session);
 
 
 #ifdef __cplusplus
