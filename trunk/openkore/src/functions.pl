@@ -6628,7 +6628,8 @@ sub parseMsg {
 	} elsif ($switch eq "00AF") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my ($index, $amount) = unpack("x2 S1 S1", $msg);
-		inventoryItemRemoved($index, $amount);
+		my $invIndex = findIndex(\@{$char->{inventory}}, "index", $index);
+		inventoryItemRemoved($invIndex, $amount);
 
 	} elsif ($switch eq "00B0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
