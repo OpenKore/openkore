@@ -4794,7 +4794,7 @@ sub AI {
 				last;
 			}
 		}
-		$timeout{ai_items_gather_auto} = time;
+		$timeout{ai_items_gather_auto}{time} = time;
 	}
 
 
