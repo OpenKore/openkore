@@ -631,8 +631,8 @@ sub parseCommand {
 		unshift @ai_seq_args, {};
 
 	} elsif ($switch eq "autostorage") {
-		unshift @ai_seq, "storageAuto";
-		unshift @ai_seq_args, {};
+		message "Initiating auto-storage sequence.\n";
+		AI::queue("storageAuto");
 
 	} elsif ($switch eq "c") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
@@ -2230,7 +2230,7 @@ sub AI {
 
 		} else {
 			# Force storage after death
-			AI::queue("storageAuto") if ($config{'storageAuto'});
+			AI::queue("storageAuto") if $config{storageAuto};
 		}
 
 	} elsif (AI::action ne "dead" && $char->{'dead'}) {
@@ -2323,10 +2323,13 @@ sub AI {
 
 	AUTOSTORAGE: {
 
-	if (AI::is("", "route", "sitAuto", "follow") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
-	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-	  ) && !AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
+	if (AI::is("", "route", "sitAuto", "follow") &&
+	    $config{'storageAuto'} && $config{'storageAuto_npc'} ne "" &&
+		(($config{'itemsMaxWeight_sellOrStore'} &&
+		 percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) ||
+		 (!$config{'itemsMaxWeight_sellOrStore'} &&
+		  percent_weight($char) >= $config{'itemsMaxWeight'})) &&
+		!AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
 		# Initiate autostorage when the weight limit has been reached
 		my $routeIndex = AI::findAction("route");
 		my $attackOnRoute = 2;
@@ -2336,13 +2339,14 @@ sub AI {
 			AI::queue("storageAuto");
 		}
 
-	} elsif (AI::is("", "route", "attack") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
-	     && !AI::inQueue("storageAuto") && timeOut($timeout{'ai_storageAuto'})) {
+	} elsif (AI::is("", "route", "attack") &&
+	         $config{'storageAuto'} && $config{'storageAuto_npc'} ne "" &&
+			 !AI::inQueue("storageAuto") &&
+			 timeOut($timeout{'ai_storageAuto'})) {
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found;
 		my $i = 0;
-		while (1) {
-			last if (!$config{"getAuto_$i"});
+		while ($config{"getAuto_$i"}) {
 			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" && $config{"getAuto_${i}_maxAmount"} ne ""
 			   && !$config{"getAuto_${i}_passive"}
@@ -2381,10 +2385,10 @@ sub AI {
 		# Main autostorage block
 		my $args = AI::args;
 
-		# Stop if storageAuto is not enabled, or if the specified NPC is invalid
+		# Stop if the specified NPC is invalid
 		$args->{npc} = {};
 		getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
-		if (!$config{'storageAuto'} || !defined($args->{npc}{ok})) {
+		if (!defined($args->{npc}{ok})) {
 			$args->{done} = 1;
 			last AUTOSTORAGE;
 		}
@@ -9120,7 +9124,11 @@ sub ai_skillUse {
 	AI::queue("skill_use", \%args);
 }
 
-#storageAuto for items_control - chobit andy 20030210
+##
+# ai_storageAutoCheck()
+#
+# Returns 1 if it is time to perform storageAuto sequence.
+# Returns 0 otherwise.
 sub ai_storageAutoCheck {
 	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
 		my $slot = $char->{inventory}[$i];
