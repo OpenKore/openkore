@@ -296,17 +296,13 @@ sub getFormattedDate {
 }
 
 sub swrite {
-	my @format = split(/\n/, shift);
 	my $result = '';
-	for (my $i = 0; $i < @format; $i += 2) {
-		my $args = $format[$i + 1];
-		$args =~ s/(\$[a-z0-9_]+)/$1,/ig;
-		$args =~ s/, *$//;
-
+	for (my $i = 0; $i < @_; $i += 2) {
 		$^A = '';
-		eval "formline(\$format[\$i], $args);\n";
+		formline($_[$i], @{$_[$i + 1]});
 		$result .= "$^A\n";
 	}
+	$^A = '';
 	return $result;
 }
 
