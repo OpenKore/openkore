@@ -3,9 +3,7 @@
 ==================
 
 ***** CURRENTLY BROKEN STUFF *****
-- follow (need to check again)
-- routing (fails way too often; sometimes even walks backward)
-- seems to lag out on some priv servers
+- routing (fails way too often; sometimes even walks backwards?)
 
 
 New features:

@@ -3154,6 +3154,7 @@ sub AI {
 			unshift @ai_seq, "storageAuto";
 			unshift @ai_seq_args, {};
 		}
+
 	} elsif ($ai_seq[0] ne "dead" && $chars[$config{'char'}]{'dead'}) {
 		aiRemove("route_getRoute");	# Run the destructor for route_getRoute to prevent memory leaks
 		undef @ai_seq;
@@ -3161,7 +3162,7 @@ sub AI {
 		unshift @ai_seq, "dead";
 		unshift @ai_seq_args, {};
 	}
-	
+
 	if ($ai_seq[0] eq "dead" && $config{'dcOnDeath'} != -1 && time - $chars[$config{'char'}]{'dead_time'} >= $timeout{'ai_dead_respawn'}{'timeout'}) {
 		sendRespawn(\$remote_socket);
 		$chars[$config{'char'}]{'dead_time'} = time;
@@ -3278,6 +3279,7 @@ sub AI {
 			 && (!$config{"useSelf_skill_$i"."_whenStatusActive"} || whenStatusActive($config{"useSelf_skill_$i"."_whenStatusActive"}))
 			 && (!$config{"useSelf_skill_$i"."_whenStatusInactive"} || !whenStatusActive($config{"useSelf_skill_$i"."_whenStatusInactive"}))
 			 && (!$config{"useSelf_skill_$i"."_whenAffected"} || whenAffected($config{"useSelf_skill_$i"."_whenAffected"}))
+			 && (!$config{"useSelf_skill_$i"."_notWhileSitting"} || !$chars[$config{'char'}]{'sitting'})
 			) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$ai_v{'useSelf_skill'} = $config{"useSelf_skill_$i"};
@@ -3447,7 +3449,7 @@ sub AI {
 		ai_partyfollow();
 	}	
 
-	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || (!$players{$ai_seq_args[0]{'ID'}} && $players_old{$ai_seq_args[0]{'ID'}}{'dead'}))) {
+	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || (!%{$players{$ai_seq_args[0]{'ID'}}} && $players_old{$ai_seq_args[0]{'ID'}}{'dead'}))) {
 		message "Master died.  I'll wait here.\n", "party";
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
@@ -3656,7 +3658,6 @@ sub AI {
 				   && $monsters{$_}{'attack_failed'} == 0 && ($mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} >= 1 || $mon_control{lc($monsters{$_}{'name'})}{'attack_auto'} eq "")
 				) {
 					push @{$ai_v{'ai_attack_partyMonsters'}}, $_;
-					print "OK: $monsters{$_}{name}\n";
 
 				# Begin the attack only when noone else is on screen, stollen from the skore forums a long time ago.
 				} elsif ($config{'attackAuto_onlyWhenSafe'}
@@ -3877,7 +3878,12 @@ sub AI {
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $ai_seq_args[0]{'attackSkillSlot_uses'}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& $config{"attackSkillSlot_$i"."_minAggressives"} <= ai_getAggressives()
 					&& (!$config{"attackSkillSlot_$i"."_maxAggressives"} || $config{"attackSkillSlot_$i"."_maxAggressives"} >= ai_getAggressives())
-					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))) {
+					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusActive"} || whenStatusActiveMon($monsters{$ai_seq_args[0]{'ID'}}, $config{"attackSkillSlot_$i"."_targetWhenStatusActive"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusInactive"} || !whenStatusActiveMon($monsters{$ai_seq_args[0]{'ID'}}, $config{"attackSkillSlot_$i"."_targetWhenStatusInactive"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenAffected"} || whenAffectedMon($monsters{$ai_seq_args[0]{'ID'}}, $config{"attackSkillSlot_$i"."_targetWhenAffected"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenNotAffected"} || !whenAffectedMon($monsters{$ai_seq_args[0]{'ID'}}, $config{"attackSkillSlot_$i"."_targetWhenNotAffected"}))
+				) {
 					$ai_seq_args[0]{'attackSkillSlot_uses'}{$i}++;
 					$ai_seq_args[0]{'attackMethod'}{'distance'} = $config{"attackSkillSlot_$i"."_dist"};
 					$ai_seq_args[0]{'attackMethod'}{'type'} = "skill";
@@ -5416,11 +5422,11 @@ sub parseMsg {
 
 
 				# Monster state
-				my $state = unpack("S*", substr($msg, 8, 2)); 
-				if ($state) {
+				my $param1 = unpack("S*", substr($msg, 8, 2)); 
+				if ($param1) {
+					my $state = (defined $skillsState{$param1}) ? $skillsState{$param1} : "Unknown $param1";
 					$monsters{$ID}{state}{$state} = 1;
-					$monsters{$ID}{ignore} = 1;
-					message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
+					message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state ($param1)\n", "parseMsg_statuslook", 1;
 				} else {
 					undef %{$monsters{$ID}{state}};
 				}
@@ -7418,19 +7424,19 @@ sub parseMsg {
 				$chars[$config{char}]{state}{$state} = 1;
 				message "You have been $state.\n", "parseMsg_statuslook";
 			} else {
-				undef %{$chars[$config{char}]{state}};
+				delete $chars[$config{char}]{state}{$state};
 			}
 			if ($param2 && $param2 != 32) {
 				$chars[$config{char}]{ailments}{$ailment} = 1;
 				message "You have been $ailment.\n", "parseMsg_statuslook";
 			} else {
-				undef %{$chars[$config{char}]{ailments}};
+				delete $chars[$config{char}]{ailments}{$ailment};
 			}
 			if ($param3) {
 				$chars[$config{char}]{looks}{$looks} = 1;
 				debug "You have look: $looks\n", "parseMsg_statuslook";
 			} else {
-				undef %{$chars[$config{char}]{looks}};
+				delete $chars[$config{char}]{looks}{$looks};
 			}
 
 			# FIXME: move this to the AI
@@ -7452,19 +7458,19 @@ sub parseMsg {
 				$players{$ID}{state}{$state} = 1;
 				message "Player $players{$ID}{name} ($players{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
 			} else {
-				undef %{$players{$ID}{state}};
+				delete $players{$ID}{state}{$state};
 			}
 			if ($param2 && $param2 != 32) {
 				$players{$ID}{ailments}{$ailment} = 1;
 				message "Player $players{$ID}{name} ($players{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 2;
 			} else {
-				undef %{$players{$ID}{ailments}};
+				delete $players{$ID}{ailments}{$ailment};
 			}
 			if ($param3) {
 				$players{$ID}{looks}{$looks} = 1;
 				debug "Player $players{$ID}{name} ($players{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook";
 			} else {
-				undef %{$players{$ID}{looks}};
+				delete $players{$ID}{looks}{$looks};
 			}
 
 		} elsif (%{$monsters{$ID}}) {
@@ -7474,21 +7480,21 @@ sub parseMsg {
 				#$monsters{$ID}{ignore} = 1;
 				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $state", "parseMsg_statuslook", 2;
 			} else {
-				undef %{$monsters{$ID}{state}};
+				delete $monsters{$ID}{state}{$state};
 			}
 			if ($param2 && $param2 != 32) {
 				$monsters{$ID}{ailments}{$ailment} = 1;
 				#$monsters{$ID}{ignore} = 1;
 				message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) is affected by $ailment", "parseMsg_statuslook", 2;
 			} else {
-				undef %{$monsters{$ID}{ailments}};
+				delete $monsters{$ID}{ailments}{$ailment};
 			}
 			if ($param3) {
 				$monsters{$ID}{looks}{$looks} = 1;
 				#$monsters{$ID}{ignore} = 1;
 				debug "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) has look: $looks\n", "parseMsg_statuslook";
 			} else {
-				undef %{$monsters{$ID}{looks}};
+				delete $monsters{$ID}{looks}{$looks};
 			}
 		}
 
@@ -8589,10 +8595,11 @@ sub ai_partyfollow {
 	my %master;
 	$master{id} = findPartyUserID($config{followTarget});
 	if (($master{id} ne "") 
-		&& (binFind(\@ai_seq, "storageAuto") eq "")
-		&& (binFind(\@ai_seq, "storageGet") eq "")
-		&& (binFind(\@ai_seq, "sellAuto") eq "")
-		&& (binFind(\@ai_seq, "buyAuto") eq "")) {
+	 && $ai_seq[0] ne "dead"
+	 && (binFind(\@ai_seq, "storageAuto") eq "")
+	 && (binFind(\@ai_seq, "storageGet") eq "")
+	 && (binFind(\@ai_seq, "sellAuto") eq "")
+	 && (binFind(\@ai_seq, "buyAuto") eq "")) {
 
 		$master{x} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{x};
 		$master{y} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{y};
@@ -8612,16 +8619,21 @@ sub ai_partyfollow {
 
 			if (defined($ai_v{temp}{master}{x}) && defined($ai_v{temp}{master}{y})) {
 				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'} ($ai_v{temp}{master}{x},$ai_v{temp}{master}{y})\n", "party";
-				aiRemove("move");
-				aiRemove("route");
-				aiRemove("route_getRoute");
-				aiRemove("route_getMapRoute");
-				ai_route(\%{$ai_v{temp}{returnHash}},
-					$ai_v{temp}{master}{x},
-					$ai_v{temp}{master}{y},
-					$ai_v{temp}{master}{map},
-					0, 0, 0, 0, 0, 0);
+			} elsif ($ai_v{temp}{master}{x} ne '0' && $ai_v{temp}{master}{y} ne '0') {
+				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'}\n", "party";
+			} else {
+				return;
 			}
+
+			aiRemove("move");
+			aiRemove("route");
+			aiRemove("route_getRoute");
+			aiRemove("route_getMapRoute");
+			ai_route(\%{$ai_v{temp}{returnHash}},
+				$ai_v{temp}{master}{x},
+				$ai_v{temp}{master}{y},
+				$ai_v{temp}{master}{map},
+				0, 0, 0, 0, 0, 0);
 		}                                                     																																																																																																																																																																																																																																																																																								
 	}
 }
