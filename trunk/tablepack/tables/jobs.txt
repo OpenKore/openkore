@@ -11,3 +11,12 @@
 10 Blacksmith
 11 Hunter
 12 Assassin
+13 Knight P
+14 Crusader
+15 Monk
+16 Sage
+17 Rogue
+18 Alchemist
+19 Bard
+20 Dancer
+21 Crusader P
