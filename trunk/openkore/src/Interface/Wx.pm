@@ -26,7 +26,7 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK EVT_CHOICE);
 use Time::HiRes qw(time sleep);
 use File::Spec;
 
@@ -339,8 +339,10 @@ sub createInterface {
 	$inputBox->onEnter($self, \&onInputEnter);
 	$hsizer->Add($inputBox, 1, wxGROW);
 
-	my $choice = $self->{inputType} = new Wx::Choice($frame, -1, wxDefaultPosition, wxDefaultSize,
+	my $choice = $self->{inputType} = new Wx::Choice($frame, 456, wxDefaultPosition, wxDefaultSize,
 			['Command', 'Public chat', 'Private chat', 'Party chat', 'Guild chat']);
+	$choice->SetSelection(0);
+	EVT_CHOICE($self, 456, sub { $inputBox->SetFocus; });
 	$hsizer->Add($choice, 0, wxGROW);
 
 
