@@ -40,9 +40,6 @@ our @EXPORT = qw(
 	checkFollowMode
 	getPortalDestName
 	printItemDesc
-	whenAffected
-	whenAffectedMon
-	whenAffectedPL
 	whenStatusActive
 	whenStatusActiveMon
 	whenStatusActivePL
@@ -143,38 +140,6 @@ sub printItemDesc {
 	message("Item: $items_lut{$itemID}\n\n", "info");
 	message($itemsDesc_lut{$itemID}, "info");
 	message("==============================================\n", "info");
-}
-
-sub whenAffected {
-	my $ailments = shift;
-	my $affected = 0;
-	my @arr = split / *, */, $ailments;
-	for (my $j = 0; $j < @arr; $j++) {
-		$affected += $chars[$config{char}]{ailments}{$arr[$j]} + $chars[$config{char}]{state}{$arr[$j]} + $chars[$config{char}]{looks}{$arr[$j]};
-	}
-	return $affected;
-}
-
-sub whenAffectedMon {
-	my $ID = shift;
-	my $ailments= shift;
-	my $affected = 0;
-	my @arr = split / *, */, $ailments;
-	for (my $j = 0; $j < @arr; $j++) {
-		$affected += $monsters{$ID}{ailments}{$arr[$j]} + $monsters{$ID}{state}{$arr[$j]} + $monsters{$ID}{looks}{$arr[$j]};
-	}
-	return $affected;
-}
-
-sub whenAffectedPL {
-	my $ID = shift;
-	my $ailments= shift;
-	my $affected = 0;
-	my @arr = split / *, */, $ailments;
-	for (my $j = 0; $j < @arr; $j++) {
-		$affected += $players{$ID}{ailments}{$arr[$j]} + $players{$ID}{state}{$arr[$j]} + $players{$ID}{looks}{$arr[$j]};
-	}
-	return $affected;
 }
 
 sub whenStatusActive {
