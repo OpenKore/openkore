@@ -537,7 +537,7 @@ static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 	if (z != Z_OK) {
 		free(buf);
 		free(zbuf);
-		GRF_SETERR_2(error, GE_ZLIB, uncompress, (ssize_t) z);  /* NOTE: uint32_t => ssize_t /-signed-/ => uintptr* conversion */
+		GRF_SETERR_2(error, GE_ZLIB, uncompress, (ssize_t) z);  /* NOTE: int => ssize_t /-signed-/ => uintptr* conversion */
 		return 1;
 	}
 
@@ -1257,7 +1257,7 @@ GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback)
 	if (z != Z_OK) {
 		free(buf);
 		free(zbuf);
-		GRF_SETERR_2(error, GE_ZLIB, compress, (ssize_t) z);  /* NOTE: uint32_t => ssize_t /-signed-/ => uintptr* conversion */
+		GRF_SETERR_2(error, GE_ZLIB, compress, (ssize_t) z);  /* NOTE: uint => ssize_t /-signed-/ => uintptr* conversion */
 		return 0;
 	}
 
@@ -1413,7 +1413,7 @@ grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpen
 		}
 		/* storing "compressed" length into zlen */
 		if ((z=compress((Bytef*)zbuf, &zlen, (const Bytef*)buf, 0))!=Z_OK) {
-			GRF_SETERR_2(error,GE_ZLIB,compress,(ssize_t)z);  /* NOTE: uint32_t => ssize_t /-signed-/ => uintptr* conversion */
+			GRF_SETERR_2(error,GE_ZLIB,compress,(ssize_t)z);  /* NOTE: uint => ssize_t /-signed-/ => uintptr* conversion */
 			return NULL;
 		}
 		zlen_le = ToLittleEndian32(zlen);
@@ -1472,7 +1472,7 @@ grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpen
 		grf->allowCrypt=1;
 		/* 00 01 02 03 04 05 06 07 08 09 0A 0B 0C 0D 0E */
 		for (i=0;i<0xF;i++)
-			if (buf[GRF_HEADER_LEN+i] != i) {
+			if (buf[GRF_HEADER_LEN+i] != (int)i) {
 				grf_free(grf);
 				GRF_SETERR(error,GE_CORRUPTED,grf_callback_open);
 				return NULL;
@@ -1668,12 +1668,12 @@ grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error)
 		/* Ignore Z_DATA_ERROR */
 		if (z == Z_DATA_ERROR) {
 			/* Set an error, just don't crash out */
-			GRF_SETERR_2(error,GE_ZLIB,uncompress,(ssize_t)z);  /* NOTE: uint32_t => ssize_t /-signed-/ => uintptr* conversion */
+			GRF_SETERR_2(error,GE_ZLIB,uncompress,(ssize_t)z);  /* NOTE: uint => ssize_t /-signed-/ => uintptr* conversion */
 
 		} else {
 			free(grf->files[index].data);
 			grf->files[index].data = NULL;
-			GRF_SETERR_2(error,GE_ZLIB,uncompress,(ssize_t)z);  /* NOTE: uint32_t => ssize_t /-signed-/ => uintptr* conversion */
+			GRF_SETERR_2(error,GE_ZLIB,uncompress,(ssize_t)z);  /* NOTE: uint => ssize_t /-signed-/ => uintptr* conversion */
 			return NULL;
 		}
 	}
@@ -2398,6 +2398,7 @@ GRFEXPORT int
 grf_repak(const char *grf, const char *tmpgrf, GrfError *error)
 {
 	/** @todo Write this code! */
+	GRF_SETERR(error,GE_NOTIMPLEMENTED,grf_repak);
 	return 0;
 }
 

@@ -20,3 +20,8 @@ env.Install(BINDIR, grftool)
 spritetool = tools.Program('spritetool', 'spritetool.c')
 Default(spritetool)
 env.Install(BINDIR, spritetool)
+
+# Commandline grf extraction utility
+gxtool = tools.Program('gxtool', 'gx/gx.c')
+Default(gxtool)
+env.Install(BINDIR, gxtool)

@@ -268,7 +268,7 @@ int
 GRF_array_from_list(Grf *grf, GrfError *error)
 {
 	GrfFile *newfiles, *cur;
-	int i;
+	uint32_t i;
 
 	/* Check our arguments */
 	if (!grf) {
@@ -367,6 +367,8 @@ GRF_strerror_type(GrfErrorType error)
 		return "Error in zlib.";
 	case GE_BADMODE:
 		return "Bad mode: tried to modify in read-only mode.";
+	case GE_NOTIMPLEMENTED:
+		return "This feature is not implemented.";
 	default:
 		return "Unknown error.";
 	};

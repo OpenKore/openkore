@@ -29,6 +29,7 @@ scons -Q
 inst gtk/grftool-gtk "$BINDIR"
 inst tools/grftool "$BINDIR"
 inst tools/spritetool "$BINDIR"
+inst tools/gxtool "$BINDIR"
 inst tools/libgrf-1.1.pc "$LIBDIR/pkgconfig"
 inst lib/static/libstatic-grf.a "$LIBDIR"
 inst lib/grf.h "$INCLUDEDIR"

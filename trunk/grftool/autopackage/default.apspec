@@ -27,7 +27,7 @@ true
 
 
 [Imports]
-echo tools/{grftool,spritetool} | import tools
+echo tools/{grftool,spritetool,gxtool} | import tools
 echo gtk/{grftool-gtk,grftool.glade} gtk/x-grf.desktop | import gtk
 echo gtk/grftool-gtk{.desktop,.png,.applications,.keys,.mime} | import gtk
 
