@@ -1386,7 +1386,7 @@ sub switchConfigFile {
 		}
 	}
 	$Settings::config_file = $filename;
-	parseDataFile2($filename, \%config);
+	parseConfigFile($filename, \%config);
 	return 1;
 }
 
