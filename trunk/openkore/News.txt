@@ -71,6 +71,7 @@ Bug fixes:
 - Don't open shop immediately after login in X-Kore mode (bug #49).
 - sitAuto_idle doesn't conflict with shopAuto_open's timeout now (bug #50).
 - MO_BODYRELOCATION is now recognized as an area-usage skill.
+- Don't display "level 65535" when an area-usage skill is used.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
