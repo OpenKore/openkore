@@ -37,6 +37,8 @@ New features:
   Abracadabra.
 - Added command 'kill <player #>' to make the bot attack in PVP.
 - A new, WxWidgets-based interface.
+- Failed skill usage (e.g. insufficient SP, overweight) is now displayed
+  at normal verbosity.
 
 New config options:
 - *_inInventory_name : inventory item name
@@ -63,6 +65,8 @@ Bug fixes:
   without saying anything else.
 - Emotions that aren't in the lookup table will be displayed by number.
 - Sit/stand and attack messages were getting mixed up.
+- Skill failed messages now display the correct reason. (The old code
+  decoded the packet incorrectly.)
 
 Internal:
 - Portal compilation is now 30% faster.
