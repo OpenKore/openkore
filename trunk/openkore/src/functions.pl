@@ -6,7 +6,12 @@
 #  Basically, this means that you're allowed to modify and distribute
 #  this software. However, if you distribute modified versions, you MUST
 #  also distribute the source code.
-#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.#
+#
+#
+#  $Revision$
+#  $Id$
+#
 #########################################################################
 use Time::HiRes qw(time usleep);
 use IO::Socket;
@@ -2614,73 +2619,165 @@ sub AI {
 				$responseVars{'map'} = qq~$maps_lut{$field{'name'}.'.rsw'} ($field{'name'})~;
 				$timeout{'ai_thanks_set'}{'time'} = time;
 				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("whereS"), $cmd{'user'}) if $config{'verbose'};
+
+
 			}
-			
-		}
-		$ai_v{'temp'}{'qm'} = quotemeta $config{'callSign'};
-		if ($overallAuth{$cmd{'user'}} >= 1 && ($cmd{'msg'} =~ /\b$ai_v{'temp'}{'qm'}\b/i || $cmd{'type'} eq "pm")
-			&& $cmd{'msg'} =~ /\bheal\b/i) {
-			$ai_v{'temp'}{'after'} = $';
-			($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
-			$ai_v{'temp'}{'after'} =~ s/\d+//;
-			$ai_v{'temp'}{'after'} =~ s/^\s+//;
-			$ai_v{'temp'}{'after'} =~ s/\s+$//;
-			$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
-			if ($ai_v{'temp'}{'targetID'} eq "") {
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
-			} elsif ($chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'} > 0) {
-				undef $ai_v{'temp'}{'amount_healed'};
-				undef $ai_v{'temp'}{'sp_needed'};
-				undef $ai_v{'temp'}{'sp_used'};
-				undef $ai_v{'temp'}{'failed'};
-				undef @{$ai_v{'temp'}{'skillCasts'}};
-				while ($ai_v{'temp'}{'amount_healed'} < $ai_v{'temp'}{'amount'}) {
-					for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'}; $i++) {
-						$ai_v{'temp'}{'sp'} = 10 + ($i * 3);
-						$ai_v{'temp'}{'amount_this'} = int(($chars[$config{'char'}]{'lv'} + $chars[$config{'char'}]{'int'}) / 8)
-								* (4 + $i * 8);
-						last if ($ai_v{'temp'}{'amount_healed'} + $ai_v{'temp'}{'amount_this'} >= $ai_v{'temp'}{'amount'});
+
+			if ($cmd{'msg'} =~ /\bheal\b/i) {
+				$ai_v{'temp'}{'after'} = $';
+				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
+				$ai_v{'temp'}{'after'} =~ s/\d+//;
+				$ai_v{'temp'}{'after'} =~ s/^\s+//;
+				$ai_v{'temp'}{'after'} =~ s/\s+$//;
+				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
+				if ($ai_v{'temp'}{'targetID'} eq "") {
+					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
+				} elsif ($chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'} > 0) {
+					undef $ai_v{'temp'}{'amount_healed'};
+					undef $ai_v{'temp'}{'sp_needed'};
+					undef $ai_v{'temp'}{'sp_used'};
+					undef $ai_v{'temp'}{'failed'};
+					undef @{$ai_v{'temp'}{'skillCasts'}};
+					while ($ai_v{'temp'}{'amount_healed'} < $ai_v{'temp'}{'amount'}) {
+						for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'}; $i++) {
+							$ai_v{'temp'}{'sp'} = 10 + ($i * 3);
+							$ai_v{'temp'}{'amount_this'} = int(($chars[$config{'char'}]{'lv'} + $chars[$config{'char'}]{'int'}) / 8)
+									* (4 + $i * 8);
+							last if ($ai_v{'temp'}{'amount_healed'} + $ai_v{'temp'}{'amount_this'} >= $ai_v{'temp'}{'amount'});
+						}
+						$ai_v{'temp'}{'sp_needed'} += $ai_v{'temp'}{'sp'};
+						$ai_v{'temp'}{'amount_healed'} += $ai_v{'temp'}{'amount_this'};
 					}
-					$ai_v{'temp'}{'sp_needed'} += $ai_v{'temp'}{'sp'};
-					$ai_v{'temp'}{'amount_healed'} += $ai_v{'temp'}{'amount_this'};
+					while ($ai_v{'temp'}{'sp_used'} < $ai_v{'temp'}{'sp_needed'} && !$ai_v{'temp'}{'failed'}) {
+						for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'}; $i++) {
+							$ai_v{'temp'}{'lv'} = $i;
+							$ai_v{'temp'}{'sp'} = 10 + ($i * 3);
+							if ($ai_v{'temp'}{'sp_used'} + $ai_v{'temp'}{'sp'} > $chars[$config{'char'}]{'sp'}) {
+								$ai_v{'temp'}{'lv'}--;
+								$ai_v{'temp'}{'sp'} = 10 + ($ai_v{'temp'}{'lv'} * 3);
+								last;
+							}
+							last if ($ai_v{'temp'}{'sp_used'} + $ai_v{'temp'}{'sp'} >= $ai_v{'temp'}{'sp_needed'});
+						}
+						if ($ai_v{'temp'}{'lv'} > 0) {
+							$ai_v{'temp'}{'sp_used'} += $ai_v{'temp'}{'sp'};
+							$ai_v{'temp'}{'skillCast'}{'skill'} = 28;
+							$ai_v{'temp'}{'skillCast'}{'lv'} = $ai_v{'temp'}{'lv'};
+							$ai_v{'temp'}{'skillCast'}{'maxCastTime'} = 0;
+							$ai_v{'temp'}{'skillCast'}{'minCastTime'} = 0;
+							$ai_v{'temp'}{'skillCast'}{'ID'} = $ai_v{'temp'}{'targetID'};
+							unshift @{$ai_v{'temp'}{'skillCasts'}}, {%{$ai_v{'temp'}{'skillCast'}}};
+						} else {
+							$responseVars{'char_sp'} = $chars[$config{'char'}]{'sp'} - $ai_v{'temp'}{'sp_used'};
+							sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF2"), $cmd{'user'}) if $config{'verbose'};
+							$ai_v{'temp'}{'failed'} = 1;
+						}
+					}
+					if (!$ai_v{'temp'}{'failed'}) {
+						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
+					}
+					foreach (@{$ai_v{'temp'}{'skillCasts'}}) {
+						ai_skillUse($$_{'skill'}, $$_{'lv'}, $$_{'maxCastTime'}, $$_{'minCastTime'}, $$_{'ID'});
+					}
+				} else {
+					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
 				}
-				while ($ai_v{'temp'}{'sp_used'} < $ai_v{'temp'}{'sp_needed'} && !$ai_v{'temp'}{'failed'}) {
-					for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{'AL_HEAL'}{'lv'}; $i++) {
-						$ai_v{'temp'}{'lv'} = $i;
-						$ai_v{'temp'}{'sp'} = 10 + ($i * 3);
-						if ($ai_v{'temp'}{'sp_used'} + $ai_v{'temp'}{'sp'} > $chars[$config{'char'}]{'sp'}) {
-							$ai_v{'temp'}{'lv'}--;
-							$ai_v{'temp'}{'sp'} = 10 + ($ai_v{'temp'}{'lv'} * 3);
+			}
+
+
+			if ($cmd{'msg'} =~ /\bagi\b/i){
+				$ai_v{'temp'}{'after'} = $';
+				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
+				$ai_v{'temp'}{'after'} =~ s/\d+//;
+				$ai_v{'temp'}{'after'} =~ s/^\s+//;
+				$ai_v{'temp'}{'after'} =~ s/\s+$//;
+				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
+				if ($ai_v{'temp'}{'targetID'} eq "") {
+					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
+				} elsif ($chars[$config{'char'}]{'skills'}{'AL_INCAGI'}{'lv'} > 0) {
+					undef $ai_v{'temp'}{'failed'};
+					$ai_v{'temp'}{'failed'} = 1;
+					for ($i = $chars[$config{'char'}]{'skills'}{'AL_INCAGI'}{'lv'}; $i >=1; $i--) {
+						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc("Increase AGI")}}{$i}) {
+							ai_skillUse(29,$i,0,0,$ai_v{'temp'}{'targetID'});
+							$ai_v{'temp'}{'failed'} = 0;
 							last;
 						}
-						last if ($ai_v{'temp'}{'sp_used'} + $ai_v{'temp'}{'sp'} >= $ai_v{'temp'}{'sp_needed'});
 					}
-					if ($ai_v{'temp'}{'lv'} > 0) {
-						$ai_v{'temp'}{'sp_used'} += $ai_v{'temp'}{'sp'};
-						$ai_v{'temp'}{'skillCast'}{'skill'} = 28;
-						$ai_v{'temp'}{'skillCast'}{'lv'} = $ai_v{'temp'}{'lv'};
-						$ai_v{'temp'}{'skillCast'}{'maxCastTime'} = 0;
-						$ai_v{'temp'}{'skillCast'}{'minCastTime'} = 0;
-						$ai_v{'temp'}{'skillCast'}{'ID'} = $ai_v{'temp'}{'targetID'};
-						unshift @{$ai_v{'temp'}{'skillCasts'}}, {%{$ai_v{'temp'}{'skillCast'}}};
-					} else {
-						$responseVars{'char_sp'} = $chars[$config{'char'}]{'sp'} - $ai_v{'temp'}{'sp_used'};
+					if (!$ai_v{'temp'}{'failed'}) {
+						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
+					}else{
 						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF2"), $cmd{'user'}) if $config{'verbose'};
-						$ai_v{'temp'}{'failed'} = 1;
 					}
+				} else {
+					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
 				}
-				if (!$ai_v{'temp'}{'failed'}) {
-					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
-				}
-				foreach (@{$ai_v{'temp'}{'skillCasts'}}) {
-					ai_skillUse($$_{'skill'}, $$_{'lv'}, $$_{'maxCastTime'}, $$_{'minCastTime'}, $$_{'ID'});
-				}
-			} else {
-				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
+				$timeout{'ai_thanks_set'}{'time'} = time;
 			}
-		}
 
-		if ($overallAuth{$cmd{'user'}} >= 1) {
+
+			if ($cmd{'msg'} =~ /\bbless\b/i || $cmd{'msg'} =~ /\bblessing\b/i){
+				$ai_v{'temp'}{'after'} = $';
+				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
+				$ai_v{'temp'}{'after'} =~ s/\d+//;
+				$ai_v{'temp'}{'after'} =~ s/^\s+//;
+				$ai_v{'temp'}{'after'} =~ s/\s+$//;
+				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
+				if ($ai_v{'temp'}{'targetID'} eq "") {
+					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
+				} elsif ($chars[$config{'char'}]{'skills'}{'AL_BLESSING'}{'lv'} > 0) {
+					undef $ai_v{'temp'}{'failed'};
+					$ai_v{'temp'}{'failed'} = 1;
+					for ($i = $chars[$config{'char'}]{'skills'}{'AL_BLESSING'}{'lv'}; $i >=1; $i--) {
+						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc("Blessing")}}{$i}) {
+							ai_skillUse(34,$i,0,0,$ai_v{'temp'}{'targetID'});
+							$ai_v{'temp'}{'failed'} = 0;
+							last;
+						}
+					}
+					if (!$ai_v{'temp'}{'failed'}) {
+						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
+					}else{
+						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF2"), $cmd{'user'}) if $config{'verbose'};
+					}
+				} else {
+					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
+				}
+				$timeout{'ai_thanks_set'}{'time'} = time;
+			}
+
+
+			if ($cmd{'msg'} =~ /\bkyrie\b/i){
+				$ai_v{'temp'}{'after'} = $';
+				($ai_v{'temp'}{'amount'}) = $ai_v{'temp'}{'after'} =~ /(\d+)/;
+				$ai_v{'temp'}{'after'} =~ s/\d+//;
+				$ai_v{'temp'}{'after'} =~ s/^\s+//;
+				$ai_v{'temp'}{'after'} =~ s/\s+$//;
+				$ai_v{'temp'}{'targetID'} = ai_getIDFromChat(\%players, $cmd{'user'}, $ai_v{'temp'}{'after'});
+				if ($ai_v{'temp'}{'targetID'} eq "") {
+					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF1"), $cmd{'user'}) if $config{'verbose'};
+				} elsif ($chars[$config{'char'}]{'skills'}{'PR_KYRIE'}{'lv'} > 0) {
+					undef $ai_v{'temp'}{'failed'};
+					$ai_v{'temp'}{'failed'} = 1;
+					for ($i = $chars[$config{'char'}]{'skills'}{'PR_KYRIE'}{'lv'}; $i >=1; $i--) {
+						if ($chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc("Kyrie Eleison")}}{$i}) {
+							ai_skillUse(73,$i,0,0,$ai_v{'temp'}{'targetID'});
+							$ai_v{'temp'}{'failed'} = 0;
+							last;
+						}
+					}
+					if (!$ai_v{'temp'}{'failed'}) {
+						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healS"), $cmd{'user'}) if $config{'verbose'};
+					}else{
+						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF2"), $cmd{'user'}) if $config{'verbose'};
+					}
+				} else {
+					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("healF3"), $cmd{'user'}) if $config{'verbose'};
+				}
+				$timeout{'ai_thanks_set'}{'time'} = time;
+			}
+
+
 			if ($cmd{'msg'} =~ /\bthank/i || $cmd{'msg'} =~ /\bthn/i) {
 				if (!timeOut(\%{$timeout{'ai_thanks_set'}})) {
 					$timeout{'ai_thanks_set'}{'time'} -= $timeout{'ai_thanks_set'}{'timeout'};
