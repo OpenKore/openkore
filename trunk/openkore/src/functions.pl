@@ -5067,7 +5067,7 @@ sub parseMsg {
 			}
 
 		} elsif ($jobs_lut{$type}) {
-			if (!%{$players{$ID}}) {
+			if (!defined($players{$ID}{binID})) {
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
@@ -5127,7 +5127,7 @@ sub parseMsg {
 		my $sex = unpack("C*",substr($msg, 45,  1));
 
 		if ($jobs_lut{$type}) {
-			if (!%{$players{$ID}}) {
+			if (!defined($players{$ID}{binID})) {
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
@@ -5193,7 +5193,7 @@ sub parseMsg {
 				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 2;
 			}
 		} elsif ($jobs_lut{$type}) {
-			if (!%{$players{$ID}}) {
+			if (!defined($players{$ID}{binID})) {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'appear_time'} = time;
 				$players{$ID}{'sex'} = $sex;
@@ -5250,7 +5250,7 @@ sub parseMsg {
 				debug "Monster Spawned: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
 			}
 		} elsif ($jobs_lut{$type}) {
-			if (!%{$players{$ID}}) {
+			if (!defined($players{$ID}{binID})) {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'sex'} = $sex;
@@ -7828,7 +7828,7 @@ sub parseMsg {
 			}
 
 		} elsif ($jobs_lut{$type}) {
-			if (!%{$players{$ID}}) {
+			if (!defined($players{$ID}{binID})) {
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
@@ -7886,7 +7886,7 @@ sub parseMsg {
 		$type = unpack("S*",substr($msg, 14,  2));
 		$sex = unpack("C*",substr($msg, 45,  1));
 		if ($jobs_lut{$type}) {
-			if (!%{$players{$ID}}) {
+			if (!defined($players{$ID}{binID})) {
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
@@ -7948,7 +7948,7 @@ sub parseMsg {
 				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
 			}
 		} elsif ($jobs_lut{$type}) {
-			if (!%{$players{$ID}}) {
+			if (!defined($players{$ID}{binID})) {
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'appear_time'} = time;
 				$players{$ID}{'sex'} = $sex;
