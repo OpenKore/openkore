@@ -67,6 +67,8 @@ New features:
 - Spells being cast now show how long they take.
 - Combo skill support.
 - While walking, Kore can teleport until it's near the destination.
+- New command "spells" will display what area effects are currently active,
+  e.g. Pneuma, Warp Portal
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:

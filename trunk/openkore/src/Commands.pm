@@ -76,6 +76,7 @@ our %handlers = (
 	s		=> \&cmdStatus,
 	send		=> \&cmdSendRaw,
 	skills		=> \&cmdSkills,
+	spells		=> \&cmdSpells,
 	sl		=> \&cmdUseSkill,
 	sm		=> \&cmdUseSkill,
 	sp		=> \&cmdPlayerSkill,
@@ -1160,6 +1161,18 @@ sub cmdReload {
 sub cmdSendRaw {
 	my (undef, $args) = @_;
 	sendRaw(\$remote_socket, $args);
+}
+
+sub cmdSpells {
+	message "-----------Area Effects List-----------\n", "list";
+	message "  # Type                 Source                   X   Y\n", "list";
+	for my $ID (@spellsID) {
+		my $spell = $spells{$ID};
+		next unless $spell;
+
+		message sprintf("%3d %-20s %-20s   %3d %3d\n", $spell->{binID}, getSpellName($spell->{type}), main::getActorName($spell->{sourceID}), $spell->{pos}{x}, $spell->{pos}{y}), "list";
+	}
+	message "---------------------------------------\n", "list";
 }
 
 sub cmdSkills {

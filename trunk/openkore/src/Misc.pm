@@ -52,6 +52,7 @@ our @EXPORT = qw(
 	getFieldPoint
 	getPortalDestName
 	getPlayer
+	getSpellName
 	objectAdded
 	objectInsideSpell
 	objectIsMovingTowardsPlayer
@@ -833,6 +834,11 @@ sub launchURL {
 			}
 		}
 	}
+}
+
+sub getSpellName {
+	my $spell = shift;
+	return $spells_lut{$spell} || "Unknown $spell";
 }
 
 return 1;
