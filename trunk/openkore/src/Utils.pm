@@ -323,16 +323,28 @@ sub findIndexString_lc {
 	}
 }
 
-sub findIndexStringList_lc{
+our %findIndexStringList_lc_cache;
+
+sub findIndexStringList_lc {
 	my $r_array = shift;
 	return undef if !defined $r_array;
 	my $match = shift;
 	my $ID = shift;
-	my ($i,$j);
-	my @arr = split / *, */, $ID;
-	for ($j = 0; $j < @arr; $j++) {
-		for ($i = 0; $i < @{$r_array} ;$i++) {
-			if (lc($$r_array[$i]{$match}) eq lc($arr[$j])) {
+
+	my $max = @{$r_array};
+	my ($i, $arr);
+	if (exists $findIndexStringList_lc_cache{$ID}) {
+		$arr = $findIndexStringList_lc_cache{$ID};
+	} else {
+		my @tmp = split / *, */, $ID;
+		$arr = \@tmp;
+		%findIndexStringList_lc_cache = () if (scalar(keys %findIndexStringList_lc_cache) > 30);
+		$findIndexStringList_lc_cache{$ID} = $arr;
+	}
+
+	foreach (@{$arr}) {
+		for ($i = 0; $i < $max; $i++) {
+			if (lc($r_array->[$i]{$match}) eq lc $_) {
 				return $i;
 			}
 		}
@@ -684,11 +696,10 @@ sub timeConvert {
 #     }
 # }
 sub timeOut {
-	my ($r_time, $compare_time) = @_;
-	if ($compare_time ne "") {
-		return (time - $r_time > $compare_time);
+	if (defined $_[1]) {
+		return (time - $_[0] > $_[1]);
 	} else {
-		return (time - $$r_time{'time'} > $$r_time{'timeout'});
+		return (time - $_[0]{time} > $_[0]{timeout});
 	}
 }
 
