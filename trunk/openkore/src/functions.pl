@@ -84,7 +84,6 @@ sub initMapChangeVars {
 	$timeout{ai_sit_idle}{time} = time;
 	$timeout{ai_teleport}{time} = time;
 	$timeout{ai_teleport_idle}{time} = time;
-	$AI::Timeouts::teleSearch = time;
 	$timeout{ai_teleport_safe_force}{time} = time;
 
 	undef %incomingDeal;
@@ -4071,7 +4070,8 @@ sub AI {
 	     # Don't auto-attack monsters while taking loot, and itemsTake/GatherAuto >= 2
 	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
-	  && timeOut($timeout{ai_attack_auto})) {
+	  && timeOut($timeout{ai_attack_auto})
+	  && (!$config{teleportAuto_search} || $ai_v{temp}{searchMonsters} > 0)) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
@@ -4926,51 +4926,10 @@ sub AI {
 					message "Teleporting to avoid $monsters{$_}{name}\n", "teleport";
 					useTeleport(1);
 					$ai_v{temp}{clear_aiQueue} = 1;
-					$AI::Timeouts::teleSearch = time;
 					last TELEPORT;
 				}
 			}
 			$timeout{ai_teleport_away}{time} = time;
-		}
-
-		##### TELEPORT SEARCH #####
-		if ($safe && $config{'attackAuto'} && $config{'teleportAuto_search'}
-		&& ($field{name} eq $config{'lockMap'} || $config{'lockMap'} eq "")) {
-			if (AI::inQueue(qw/clientSuspend sitAuto sitting attack follow items_take items_gather take buyAuto skill_use sellAuto storageAuto/)) {
-				$AI::Timeouts::teleSearch = time;
-			}
-
-			if (timeOut($AI::Timeouts::teleSearch, $timeout{ai_teleport_search}{timeout})) {
-				my $do_search;
-				foreach (values %mon_control) {
-					if ($_->{teleport_search}) {
-						$do_search = 1;
-						last;
-					}
-				}
-				if ($do_search) {
-					my $found;
-					foreach (@monstersID) {
-						next unless $_;
-						if ($mon_control{lc($monsters{$_}{name})}{teleport_search} && !$monsters{$_}{attack_failed}) {
-							$found = 1;
-							last;
-						}
-					}
-					if (!$found) {
-						message "Teleporting to search for monster\n", "teleport";
-						useTeleport(1);
-						$ai_v{temp}{clear_aiQueue} = 1;
-						$AI::Timeouts::teleSearch = time;
-						last TELEPORT;
-					}
-				}
-
-				$AI::Timeouts::teleSearch = time;
-			}
-
-		} else {
-			$AI::Timeouts::teleSearch = time;
 		}
 
 
@@ -5681,8 +5640,8 @@ sub parseMsg {
 
 				if ($monsters{$ID}) {
 					binRemove(\@monstersID, $ID);
+					objectRemoved('monster', $ID, $monsters{$ID});
 					delete $monsters{$ID};
-					objectRemoved('monster', $ID);
 				}
 
 				objectAdded('pet', $ID, $pets{$ID}) if ($added);
@@ -5891,8 +5850,8 @@ sub parseMsg {
 
 				if ($monsters{$ID}) {
 					binRemove(\@monstersID, $ID);
+					objectRemoved('monster', $ID, $monsters{$ID});
 					delete $monsters{$ID};
-					objectRemoved('monster', $ID);
 				}
 
 				debug "Pet Moved: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
@@ -5978,8 +5937,8 @@ sub parseMsg {
 
 				if ($monsters{$ID}) {
 					binRemove(\@monstersID, $ID);
+					objectRemoved('monster', $ID, $monsters{$ID});
 					delete $monsters{$ID};
-					objectRemoved('monster', $ID);
 				}
 
 			} else {
@@ -6053,8 +6012,8 @@ sub parseMsg {
 				$monsters_old{$ID}{'teleported'} = 1;
 			}
 			binRemove(\@monstersID, $ID);
+			objectRemoved('monster', $ID, $monsters{$ID});
 			delete $monsters{$ID};
-			objectRemoved('monster', $ID);
 
 		} elsif (%{$players{$ID}}) {
 			if ($type == 1) {
@@ -6078,12 +6037,11 @@ sub parseMsg {
 				%{$players_old{$ID}} = %{$players{$ID}};
 				$players_old{$ID}{'gone_time'} = time;
 				binRemove(\@playersID, $ID);
+				objectRemoved('player', $ID, $players{$ID});
 				delete $players{$ID};
 
 				binRemove(\@venderListsID, $ID);
 				delete $venderLists{$ID};
-
-				objectRemoved('player', $ID);
 			}
 
 		} elsif (%{$players_old{$ID}}) {
@@ -6109,8 +6067,8 @@ sub parseMsg {
 			$npcs_old{$ID}{'disappeared'} = 1;
 			$npcs_old{$ID}{'gone_time'} = time;
 			binRemove(\@npcsID, $ID);
+			objectRemoved('npc', $ID, $npcs{$ID});
 			delete $npcs{$ID};
-			objectRemoved('npc', $ID);
 
 		} elsif (%{$pets{$ID}}) {
 			debug "Pet Disappeared: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
@@ -8660,8 +8618,8 @@ sub parseMsg {
 		}
 		if (%{$monsters{$ID}}) {
 			binRemove(\@monstersID, $ID);
+			objectRemoved('monster', $ID, $monsters{$ID});
 			delete $monsters{$ID};
-			objectRemoved('monster', $ID);
 		}
 		debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 		#end of pet spawn code

@@ -1100,13 +1100,18 @@ sub manualMove {
 }
 
 sub objectAdded {
-	my $type = shift;
-	my $ID = shift;
-	my $obj = shift;
+	my ($type, $ID, $obj) = @_;
 
 	if ($type eq 'player' || $type eq 'npc') {
 		push @unknownObjects, $ID;
 	}
+
+	if ($type eq 'monster') {
+		if ($mon_control{lc($obj->{name})}{teleport_search}) {
+			$ai_v{temp}{searchMonsters}++;
+		}
+	}
+
 	Plugins::callHook('objectAdded', {
 		type => $type,
 		ID => $ID,
@@ -1115,8 +1120,14 @@ sub objectAdded {
 }
 
 sub objectRemoved {
-	my $type = shift;
-	my $ID = shift;
+	my ($type, $ID, $obj) = @_;
+
+	if ($type eq 'monster') {
+		if ($mon_control{lc($obj->{name})}{teleport_search}) {
+			$ai_v{temp}{searchMonsters}--;
+		}
+	}
+
 	Plugins::callHook('objectRemoved', {
 		type => $type,
 		ID => $ID
