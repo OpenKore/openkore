@@ -271,11 +271,12 @@ itemsMaxWeight_sellOrStore 48
 #   eg: storageAuto_npc alberta 113 60
 #
 
-buyAuto_0
-buyAuto_0_npc
-buyAuto_0_distance 5
-buyAuto_0_minAmount 2
-buyAuto_0_maxAmount 3
+buyAuto {
+	npc
+	distance 5
+	minAmount 2
+	maxAmount 3
+}
 
 sellAuto 0
 sellAuto_npc
@@ -287,10 +288,11 @@ storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
 
-getAuto_0
-getAuto_0_minAmount
-getAuto_0_maxAmount
-getAuto_0_passive
+getAuto {
+	minAmount
+	maxAmount
+	passive
+}
 
 follow 0
 followTarget
@@ -324,6 +326,7 @@ avoidGM_reconnect 1800
 avoid_ignore_0
 
 avoidList 1
+avoidList_inLockOnly 0
 avoidList_reconnect 1800
 
 autoEmote_word_0
@@ -335,12 +338,13 @@ autoSwitch_default_rightHand
 autoSwitch_default_leftHand
 autoSwitch_default_arrow
 
-autoSwitch_0
-autoSwitch_0_rightHand
-autoSwitch_0_leftHand
-autoSwitch_0_arrow
-autoSwitch_0_distance
-autoSwitch_0_useWeapon
+autoSwitch {
+	rightHand
+	leftHand
+	arrow
+	distance
+	useWeapon
+}
 
 
 #NOTE: In the case of two handed weapons, or no Shield,
