@@ -57,6 +57,7 @@ our %handlers = (
 	guild		=> \&cmdGuild,
 	i		=> \&cmdInventory,
 	ignore		=> \&cmdIgnore,
+	ihist	=> \&cmdIhist,
 	il		=> \&cmdItemList,
 	im		=> \&cmdUseItemOnMonster,
 	ip		=> \&cmdUseItemOnPlayer,
@@ -120,6 +121,7 @@ our %descriptions = (
 	i		=> 'Display inventory items.',
 	ignore		=> 'Ignore a user (block his messages).',
 	il		=> 'Display items on the ground.',
+	ihist	=> 'Displays last few entries of the item log.',
 	im		=> 'Use item on monster.',
 	ip		=> 'Use item on player.',
 	is		=> 'Use item on yourself.',
@@ -523,6 +525,31 @@ sub cmdChist {
 
 	} else {
 		error "Unable to open $Settings::chat_file\n";
+	}
+}
+
+sub cmdIhist {
+	# Display item history
+	my (undef, $args) = @_;
+	$args = 5 if ($args eq "");
+
+	if (!($args =~ /^\d+$/)) {
+		error	"Syntax Error in function 'ihist' (Show Item History)\n" .
+			"Usage: ihist [<number of entries #>]\n";
+
+	} elsif (open(ITEM, "<", $Settings::item_log_file)) {
+		my @item = <ITEM>;
+		close(ITEM);
+		message("------ Item History --------------------\n", "list");
+		my $i = @item - $args;
+		$i = 0 if ($i < 0);
+		for (; $i < @item; $i++) {
+			message($item[$i], "list");
+		}
+		message("----------------------------------------\n", "list");
+
+	} else {
+		error "Unable to open $Settings::item_log_file\n";
 	}
 }
 
