@@ -27,6 +27,8 @@
 
 GRFEXTERN_BEGIN
 
+typedef int (*GrfSortCallback) (GrfFile *f1, GrfFile *f2);
+
 # ifdef WIN32
 /* Windows function names are so... ugghhhh */
 #  define strcasecmp(a,b) _stricmp(a,b)
@@ -45,12 +47,12 @@ GRFINLINE uint32_t ToLittleEndian32(uint32_t);
 
 GRFEXPORT char *GRF_normalize_path(char *out, const char *in);
 GRFEXPORT uint32_t GRF_NameHash(const char *name);
-GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index);
 
-GRFEXPORT void grf_sort (Grf *grf, int(*callback)(GrfFile*,GrfFile*));
+GRFEXPORT void grf_sort (Grf *grf, GrfSortCallback callback);
 GRFEXPORT int GRF_AlphaSort(GrfFile *g1, GrfFile *g2);
 GRFEXPORT int GRF_OffsetSort(GrfFile *g1, GrfFile *g2);
 
+GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index);
 GRFEXPORT uint32_t grf_find_unused (Grf *grf, uint32_t len);
 
 GRFEXPORT GrfError *GRF_SetError(GrfError *err, GrfErrorType errtype, uint32_t line, const char *file, const char *func, void *extra);

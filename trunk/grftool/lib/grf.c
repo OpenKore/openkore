@@ -565,7 +565,39 @@ static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 	return 0;
 }
 
+/*! \brief Private function to find unused space in a GRF file
+ *
+ * \warning This function assumes the files have been sorted with
+ *	grf_sort() using GRF_OffsetSort();
+ *
+ * \param grf GRF file to search for the unused space in
+ * \param len Amount of contiguous unused space we need to find before we
+ *	return
+ * \return The first offset in the GRF in which at least len amount of
+ *	unused space was found, or 0 if none was found
+ */
+static uint32_t GRF_find_unused (Grf *grf, uint32_t len) {
+	uint32_t i,startAt,curAmt;
 
+	/* Ignore the files with bogus offsets */
+	startAt = GRF_HEADER_FULL_LEN;
+	for(i=0;i<grf->nfiles && grf->files[i].pos<startAt;i++);
+
+	/* Find open spaces */
+	for(;i<grf->nfiles;i++) {
+		/* Grab amount of space */
+		curAmt=grf->files[i].pos-startAt;
+		
+		/* Check if its enough */
+		if (curAmt >= len) return startAt;
+		
+		/* Find the new startpoint */
+		startAt=grf->files[i].pos+grf->files[i].compressed_len_aligned;
+	}
+	
+	/* No fitting space found, tell 'em to append it */
+	return 0;
+}
 /*! \brief Private function to restructure GRF0x1xx archives
  *
  * Generate the information about files within the archive
@@ -591,18 +623,15 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	/*! \todo Write this code! (pseudo-coded) */
 	/* pseudo-code:
 
-	grf_sort(offset)
-
 	for each GrfFile with pos 0
 		compress_and_encrypt(newdata)
-		grf_find_unused
+		GRF_find_unused
 		fseek
 		fwrite
 	next
 
-	compress(file_info_table)
-	grf_find_unused
-	fseek
+	create(file_info_table) // 0x1xx doesn't compress fileinfo table
+	fseek(seek_end) // file info table is always at end
 	fwrite
 
 	*/
@@ -737,7 +766,7 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 				}
 
 				/* Remember the position prior to writing */
-				write_offset = grf_find_unused(grf, grf->files[i].compressed_len_aligned);
+				write_offset = GRF_find_unused(grf, grf->files[i].compressed_len_aligned);
 				if ( write_offset == 0 ) {
 					/* grf_find_unused returned 0 -> append */
 					if (fseek(grf->f, 0, SEEK_END)) {
@@ -829,7 +858,7 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	free(buf); buf = 0;
 
 	/* Write the compressed table at an unused position */
-	write_offset = grf_find_unused(grf, 2*sizeof(uint32_t)+zlen);
+	write_offset = GRF_find_unused(grf, 2*sizeof(uint32_t)+zlen);
 	if ( write_offset == 0 ) {
 		/* grf_find_unused returned 0 -> append */
 		if (fseek(grf->f, 0, SEEK_END)) {
@@ -1570,7 +1599,7 @@ GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len
 		return 0;
 	}
 	grf->files = realloc_files;
-	memset(grf->files + grf->nfiles, 0x00, sizeof(GrfFile));
+	memset(&grf->files[grf->nfiles], 0x00, sizeof(GrfFile));
 
 	/* Set filename */
 	memcpy(grf->files[grf->nfiles].name,name,namelen);
@@ -1602,6 +1631,12 @@ GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len
  */
 GRFEXPORT int grf_callback_flush(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	int i;
+	
+	/* Sort the file infos by offset, to ensure GRF_find_unused will not return
+	 * bogus information.
+	 */
+	grf_sort(grf,GRF_OffsetSort);
+	
 	switch (grf->version&0xFF00) {
 	case 0x0200:
 		i=GRF_flushVer2(grf,error,callback);
