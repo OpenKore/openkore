@@ -454,8 +454,9 @@ sub distance {
 # If there is, then you can read from r_handle without being blocked.
 sub dataWaiting {
 	my $r_fh = shift;
-	my $bits = '';
+	return 0 if (!defined $r_fh);
 
+	my $bits = '';
 	vec($bits, fileno($$r_fh), 1) = 1;
 	# The timeout was 0.005
 	return (select($bits, undef, undef, 0) > 0);
