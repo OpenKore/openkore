@@ -31,3 +31,9 @@ DynaLoader::dl_install_xsub(__PACKAGE__ . '::bootstrap', $sym);
 UnixUtils::bootstrap();
 
 1;
+
+##
+# UnixUtils::getTerminalSize()
+# Returns: an array with 2 elements.
+#
+# Get the size of the active terminal.
