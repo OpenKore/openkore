@@ -160,6 +160,7 @@ sub cmdAI {
 		undef @ai_seq;
 		undef @ai_seq_args;
 		undef %ai_v;
+		undef $chars[$config{char}]{dead};
 		message "AI sequences cleared\n", "success";
 		return;
 
