@@ -88,7 +88,6 @@ New features:
 - If storage opening fails the first time for some reason, Kore will try again.
 - The bot will now look at NPCs when it is talking to them, like a real player.
 - When you issue a "move" command, this will clear previous move actions.
-- 
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -215,6 +214,18 @@ New config options:
     dist 1.5
     notMonsters Green Plant, Poring, Lunatic
   }
+- itemsTakeAuto_party 1 will take items from monsters killed by party members.
+- attackAuto_party can be set to 2 instead of 1; this will only attack
+  monsters that attacked the party, and not monsters that the party hit.
+  This fixes the "tank hits monster, bot mage casts spell on monster, monster
+  hits bot since it hasn't retaliated against the tank yet" problem.
+- New config "attackCheckLOS 1"; when activated, this will enable the new
+  experimental LOS check code. If you are a ranged attacker
+  (attackDistance > 2), this code will check whether it thinks you have a
+  clear line of attack to the target; if not, it will attempt to move to a
+  space where you do, while respecting runFromTarget_dist and
+  followDistanceMax. This code isn't perfect yet! It will frequently be unable
+  to find a solution.
 
 
 New timeouts.txt options:

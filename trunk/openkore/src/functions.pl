@@ -3210,8 +3210,9 @@ sub AI {
 				my $pos = calcPosition($monster);
 
 				# List monsters that party members are attacking
-				if ($config{'attackAuto_party'} && $attackOnRoute && !AI::is("take", "items_take")
-				 && ($monster->{dmgToParty} || $monster->{dmgFromParty} || $monster->{missedToParty})
+				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
+				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
+				     $monster->{dmgToParty} || $monster->{missedToParty})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
 					next;
@@ -3580,6 +3581,72 @@ sub AI {
 			message "Dropping target - you will not kill steal others\n", "ai_attack";
 			sendMove(\$remote_socket, $realMyPos->{x}, $realMyPos->{y});
 			AI::dequeue;
+
+		} elsif ($config{attackCheckLOS} &&
+		         $args->{attackMethod}{distance} > 2 &&
+		         !checkLineSnipable($realMyPos, $realMonsterPos)) {
+			# We are a ranged attacker without LOS
+
+			# Calculate leash range around master
+			my @leash = ();
+			if ($config{follow}) {
+				my $master;
+				foreach (keys %players) {
+					if ($players{$_}{name} eq $config{followTarget}) {
+						$master = $players{$_};
+						last;
+					}
+				}
+				if ($master) {
+					my $masterPos = calcPosition($master);
+					@leash = calcRectArea2($masterPos->{x}, $masterPos->{y},
+					                       $config{followDistanceMax});
+				}
+			}
+			# FIXME: disable leash range for now; it's broken
+			@leash = ();
+
+			# Calculate squares around monster within shooting range, but not
+			# closer than runFromTarget_dist
+			my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
+			                          $args->{attackMethod}{distance},
+									  $config{runFromTarget_dist});
+
+			# Calculate squares that are both in the leash range, and
+			# are in a valid range around the target to stand on.
+			my @merge = ();
+			if (@leash) {
+				my %union = ();
+				my %isect = ();
+				for my $e (@leash, @stand) { $union{$e}++ && $isect{$e}++ }
+				@merge = keys %isect;
+			} else {
+				@merge = @stand;
+			}
+
+			# Determine which of these spots are snipable
+			my $best_spot;
+			my $best_dist;
+			for my $spot (@merge) {
+				if (checkLineSnipable($spot, $realMonsterPos)) {
+					# FIXME: use route distance, not pythagorean distance
+					my $dist = distance($realMyPos, $spot);
+					if (!defined($best_dist) || $dist < $best_dist) {
+						$best_dist = $dist;
+						$best_spot = $spot;
+					}
+				}
+			}
+
+			# Move to the closest spot
+			my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
+			if ($best_spot) {
+				message "$msg; moving to ($best_spot->{x}, $best_spot->{y})\n";
+				ai_route($field{name}, $best_spot->{x}, $best_spot->{y});
+			} else {
+				warning "$msg; no acceptable place to stand\n";
+				AI::dequeue;
+			}
 
 		} elsif ($config{'runFromTarget'} && ($monsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
 			#my $begin = time;
@@ -5815,6 +5882,13 @@ sub parseMsg {
 			} elsif ($type == 1) {
 				debug "Monster Died: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_damage";
 				$monsters_old{$ID}{'dead'} = 1;
+
+				if ($config{itemsTakeAuto_party} &&
+				    $monsters_old{$ID}{dmgFromParty} > 0) {
+					AI::clear("items_take");
+					ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
+						$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
+				}
 
 			} elsif ($type == 2) { # What's this?
 				debug "Monster Disappeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";

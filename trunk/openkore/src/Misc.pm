@@ -47,6 +47,7 @@ our @EXPORT = (
 
 	# Field math
 	qw/calcRectArea
+	calcRectArea2
 	checkFieldSnipable
 	checkFieldWalkable
 	checkLineSnipable
@@ -204,7 +205,6 @@ sub debug_showSpots {
 #######################################
 #######################################
 
-
 ##
 # calcRectArea($x, $y, $radius)
 # Returns: an array with position hashes. Each has contains an x and a y key.
@@ -261,6 +261,26 @@ sub calcRectArea {
 	}
 
 	return @walkableBlocks;
+}
+
+##
+# calcRectArea2($x, $y, $radius, $minRange)
+# Returns: an array with position hashes. Each has contains an x and a y key.
+#
+# Creates a rectangle with center ($x,$y) and radius $radius,
+# and returns a list of positions inside the rectangle that are
+# not closer than $minRange to the center.
+sub calcRectArea2 {
+	my ($cx, $cy, $r, $min) = @_;
+
+	my @rectangle;
+	for (my $x = $cx - $r; $x <= $cx + $r; $x++) {
+		for (my $y = $cx - $r; $y <= $cx + $r; $y++) {
+			next if distance({x => $cx, y => $cy}, {x => $x, y => $y}) < $min;
+			push(@rectangle, {x => $x, y => $y});
+		}
+	}
+	return @rectangle;
 }
 
 ##
