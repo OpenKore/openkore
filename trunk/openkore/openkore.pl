@@ -153,11 +153,12 @@ if (-f "$RealBin/Misc.pm") {
 # Use 'require' here because XSTools.so might not be compiled yet at startup
 require XSTools;
 if (!defined &XSTools::majorVersion) {
-	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.");
+	$interface->errorDialog("Your version of the XSTools library is too old.\n" .
+		"Please download the latest version, or upgrade (wx)start.exe.");
 	exit 1;
 } elsif (XSTools::majorVersion() != 2) {
 	$interface->errorDialog("Your version of XSTools library is incompatible.\n" .
-		"Please download the correct version.");
+		"Please download the correct version, or upgrade (wx)start.exe.");
 	exit 1;
 } elsif (XSTools::minorVersion() < 1) {
 	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.");
