@@ -166,7 +166,18 @@ sub parseDataFile2 {
 		s/\s+$//g;	# Remove trailing whitespace
 		next if ($_ eq "");
 
-		if (!defined $inBlock && /{$/) {
+		if (!defined $commentBlock && /^\/\*/) {
+			$commentBlock = 1;
+			next;
+
+		} elsif (m/\*\/$/) {
+			undef $commentBlock;
+			next;
+
+		} elsif (defined $commentBlock) {
+			next;
+
+		} elsif (!defined $inBlock && /{$/) {
 			# Begin of block
 			s/ *{$//;
 			($key, $value) = $_ =~ /^(.*?) (.*)/;
@@ -183,17 +194,6 @@ sub parseDataFile2 {
 		} elsif (defined $inBlock && $_ eq "}") {
 			# End of block
 			undef $inBlock;
-
-		} elsif (!defined $commentBlock && /^\/\*/) {
-			$commentBlock = 1;
-			next;
-
-		} elsif (m/\*\/$/) {
-			undef $commentBlock;
-			next;
-
-		} elsif (defined $commentBlock) {
-			next;
 
 		} else {
 			# Option
