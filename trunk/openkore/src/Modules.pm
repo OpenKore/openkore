@@ -111,11 +111,11 @@ sub reload {
 }
 
 ##
-# Modules::reloadSafe($filename)
+# Modules::reloadFile($filename)
 #
 # Executes "do $filename" iff $filename exists and does not contain syntax
 # errors.
-sub reloadSafe {
+sub reloadFile {
 	my $filename = shift;
 
 	my $found = 0;
@@ -167,7 +167,7 @@ sub reloadSafe {
 # See also: Modules::reload()
 sub doReload {
 	foreach my $mod (@queue) {
-		reloadSafe($mod);
+		reloadFile($mod);
 	}
 	undef @queue;
 }
