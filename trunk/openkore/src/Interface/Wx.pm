@@ -255,7 +255,7 @@ sub createInterface {
 	$console->SetBackgroundColour(new Wx::Colour(0, 0, 0));
 	$self->{defaultStyle} = new Wx::TextAttr(
 		new Wx::Colour(255, 255, 255),
-		wxNullColour,
+		$console->GetBackgroundColour(),
 		$self->{fonts}{default}
 	);
 	$console->SetDefaultStyle($self->{defaultStyle});
@@ -277,7 +277,7 @@ sub createInterface {
 
 	#################
 
-	$frame->SetClientSize(650, 410);
+	$frame->SetClientSize(665, 420);
 	$frame->SetIcon(Wx::GetWxPerlIcon());
 	$frame->Show(1);
 	$self->SetTopWindow($frame);
