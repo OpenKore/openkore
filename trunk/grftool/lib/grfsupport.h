@@ -21,22 +21,22 @@
  */
 
 #ifndef __GRFSUPPORT_H__
-# define __GRFSUPPORT_H__
+#define __GRFSUPPORT_H__
 
 /* Other includes */
-# include "grftypes.h"
+#include "grftypes.h"
 
 GRFEXTERN_BEGIN
 
-# ifdef WIN32
-/* Windows function names are so... ugghhhh */
-#  define strcasecmp(a,b) _stricmp(a,b)
-#  define snprintf _snprintf
-#  if !defined(_INC_IO)
-#   include <io.h>
-#   define dup(handle) _dup(handle)
-#   define fileno(stream) _fileno(stream)
-#  endif /* !defined(_INC_IO) */
+#ifdef WIN32
+	/* Windows function names are so... ugghhhh */
+	#define strcasecmp(a,b) _stricmp(a,b)
+	#define snprintf _snprintf
+	#if !defined(__MINGW32__) && !defined(_INC_IO)
+		#include <io.h>
+		#define dup(handle) _dup(handle)
+		#define fileno(stream) _fileno(stream)
+	#endif /* !defined(__MINGW32__) && !defined(_INC_IO) */
 #endif /* defined(WIN32) */
 
 /* GRFINLINE uint8_t LittleEndian8 (uint8_t *p); */	/* Pointless */

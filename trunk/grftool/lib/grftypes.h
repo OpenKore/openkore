@@ -65,12 +65,14 @@ GRFEXTERN_BEGIN
 
 /* Integer types */
 #ifdef WIN32
-	#ifndef _INC_WINDOWS
-		#include <windows.h>
-	#endif /* _INC_WINDOWS */
-	typedef UINT32 uint32_t;
-	typedef UINT16 uint16_t;
-	typedef UINT8 uint8_t;
+	#ifdef __MINGW32__
+		#include <stdint.h>
+	#else
+		#ifndef _INC_WINDOWS
+			#include <windows.h>
+		#endif /* _INC_WINDOWS */
+	#endif /* __MINGW32__ */
+	
 #else /* WIN32 */
 	#include <inttypes.h>
 #endif /* WIN32 */
