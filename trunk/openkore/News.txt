@@ -11,6 +11,11 @@ Bug fixes:
 - Fixed some cases of ksPlayers not working
 - When following master around a corner, fallback to routing algorithm instead
   of trying to walk through the corner
+- Don't increment maxUses counter for an attackSkillSlot until the skill is
+  actually used (internal note: this counter is indexed using the monster ID
+  and the skill ID, so if you have more than one attackSkillSlot or
+  monsterSkill block that uses the same skill, they will unexpectedly share
+  the same maxUses counter)
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux

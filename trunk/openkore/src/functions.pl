@@ -3444,13 +3444,14 @@ sub AI {
 					next;
 				}
 
+				my $skill = Skills->new(name => $config{"attackSkillSlot_$i"});
 				if (checkSelfCondition("attackSkillSlot_$i")
-					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $args->{attackSkillSlot_uses}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
+					&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
+					    $monsters{$ID}{skillUses}{$skill->handle} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
 					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $monsters{$ID}{'name'}))
 					&& checkMonsterCondition("attackSkillSlot_${i}_target", $monsters{$ID})
 				) {
-					$args->{attackSkillSlot_uses}{$i}++;
 					$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
 					$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_dist"};
 					$args->{attackMethod}{type} = "skill";
