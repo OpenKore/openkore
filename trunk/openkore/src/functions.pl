@@ -6276,24 +6276,27 @@ sub parseMsg {
 
 		stripLanguageCode(\$chatMsg);
 
-		foreach (@playersID) {
-			next unless $_;
-			if (lc($players{$_}{name}) eq lc($chatMsgUser)) {
-				$ID = $_;
-				last;
-			}
+		#foreach (@playersID) {
+		#	next unless $_;
+		#	if (lc($players{$_}{name}) eq lc($chatMsgUser)) {
+		#		$ID = $_;
+		#		last;
+		#	}
+		#}
+
+		my $dist = "unknown";
+		if ($players{$ID}) {
+			$dist = distance($char->{pos_to}, $players{$ID}{pos_to});
+			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 		}
 
-		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ID}{'pos_to'}});
-		$dist = sprintf("%.2f",$dist);
-
-		$chat = "[dist=${dist}] $chatMsgUser : $chatMsg";
-		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
-		chatLog("c", "[$map_string ${$chars[$config{'char'}]{'pos_to'}}{x}, ${$chars[$config{'char'}]{'pos_to'}}{y}] [${$players{$ID}{'pos_to'}}{x}, ${$players{$ID}{'pos_to'}}{y}] $chat\n") if ($config{'logChat'});
-		message "$chat\n", "publicchat";
+		chatLog("c", "[$map_string $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}}{x}, $players{$ID}{pos_to}{y}] [dist=$dist]\n" .
+			"$chat\n") if ($config{logChat});
+		message "[dist=$dist] $chat\n", "publicchat";
 
 		ChatQueue::add('c', $ID, $chatMsgUser, $chatMsg);
 		Plugins::callHook('packet_pubMsg', { 
+			pubID => $ID,
 			pubMsgUser => $chatMsgUser, 
 			pubMsg => $chatMsg 
 		}); 

@@ -535,8 +535,9 @@ sub updateMapViewer {
 
 	$map->set($field{name}, $myPos->{x}, $myPos->{y}, \%field);
 	my $i = AI::findAction("route");
-	if (defined $i) {
-		$map->setDest($ai_seq_args[$i]{dest}{pos}{x}, $ai_seq_args[$i]{dest}{pos}{y});
+	my $args;
+	if (defined $i && ($args = AI::args($i)) && $args->{dest} && $args->{dest}{pos}) {
+		$map->setDest($args->{dest}{pos}{x}, $args->{dest}{pos}{y});
 	} else {
 		$map->setDest;
 	}
