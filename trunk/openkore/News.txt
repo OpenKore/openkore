@@ -37,6 +37,7 @@ Bug fixes:
 - Portal recording has been fixed more.
 - Moved some messages to "teleport" domain.
 - Show weapon name instead of ID in the pl # commands.
+- shop_random has been readded.
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux
@@ -132,6 +133,7 @@ Credits:
 - jojobail: some work on oRO support, storageAuto ability check, some
   bug fixes.
 - asuwannarat: Niflmheim portals.
+- arachno: shop_random.
 
 
 ==================

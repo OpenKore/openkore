@@ -11072,6 +11072,7 @@ sub makeShop {
 		error "There are no items to sell.\n";
 		return;
 	}
+	shuffleArray(\@items) if ($config{shop_random});
 	return @items;
 }
 
