@@ -125,19 +125,43 @@ sub setTimeout {
 #######################################
 #######################################
 
+our %debug_showSpots_list;
+
 sub debug_showSpots {
 	return unless $config{XKore};
+	my $ID = shift;
 	my $spots = shift;
+	my $special = shift;
+
+	if ($debug_showSpots_list{$ID}) {
+		foreach (@{$debug_showSpots_list{$ID}}) {
+			my $msg = pack("C*", 0x20, 0x01) . pack("L", $_);
+			sendToClientByInject(\$remote_socket, $msg);
+		}
+	}
+
 	my $i = 1554;
+	$debug_showSpots_list{$ID} = [];
 	foreach (@{$spots}) {
 		next if !defined $_;
 		my $msg = pack("C*", 0x1F, 0x01)
-			. pack("L*", $i, $i)
+			. pack("L*", $i, 1550)
 			. pack("S*", $_->{x}, $_->{y})
 			. pack("C*", 0x93, 0);
 		sendToClientByInject(\$remote_socket, $msg);
 		sendToClientByInject(\$remote_socket, $msg);
+		push @{$debug_showSpots_list{$ID}}, $i;
 		$i++;
+	}
+
+	if ($special) {
+		my $msg = pack("C*", 0x1F, 0x01)
+			. pack("L*", 1553, 1550)
+			. pack("S*", $special->{x}, $special->{y})
+			. pack("C*", 0x83, 0);
+		sendToClientByInject(\$remote_socket, $msg);
+		sendToClientByInject(\$remote_socket, $msg);
+		push @{$debug_showSpots_list{$ID}}, 1553;
 	}
 }
 
