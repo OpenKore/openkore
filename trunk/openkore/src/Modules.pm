@@ -120,12 +120,15 @@ sub reloadFile {
 	my $filename = shift;
 
 	my $found = 0;
-	for my $path (@INC) {
-		if (-f "$path/$filename") {
+	my $path;
+	for my $x (@INC) {
+		if (-f "$x/$filename") {
 			$found = 1;
+			$path = $x;
 			last;
 		}
 	}
+
 	if (!$found) {
 		error("Unable to reload code: $filename not found\n");
 		return;
@@ -136,7 +139,7 @@ sub reloadFile {
 	}
 
 	message "Checking $filename for errors...\n", "info";
-	system($Config{'perlpath'}, '-c', $filename);
+	system($Config{'perlpath'}, '-c', "$path/$filename");
 	if ($? == -1) {
 		error("Failed to execute $Config{'perlpath'}\n");
 		return;

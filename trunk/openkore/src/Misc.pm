@@ -170,8 +170,7 @@ sub whenStatusActive {
 }
 
 sub whenStatusActiveMon {
-	my $ID = shift;
-	my $statuses = shift;
+	my ($ID, $statuses) = @_;
 	my $active = 0;
 	my @arr = split / *, */, $statuses;
 	for (my $j = 0; $j < @arr; $j++) {
@@ -181,8 +180,8 @@ sub whenStatusActiveMon {
 }
 
 sub whenStatusActivePL {
-	my $ID = shift;
-	my $statuses = shift;
+	my ($ID, $statuses) = @_;
+	if ($ID eq $accountID) { return whenStatusActive($statuses) }
 	my $active = 0;
 	my @arr = split / *, */, $statuses;
 	for (my $j = 0; $j < @arr; $j++) {
