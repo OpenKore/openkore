@@ -1,0 +1,199 @@
+#See the documentation for what these variables do
+#New variables have comments above them
+
+local_port 2341
+local_host localhost
+buildType 0
+
+master_name_0 iRO: Master I
+master_host_0 38.144.194.2
+master_port_0 6900
+master_version_0 1
+
+version 18
+#encrypt 2
+
+XKore 0
+exeName ragexe.exe
+commandPrefix ;
+
+master 
+server 
+username 
+password 
+char 
+sex 
+
+adminPassword 
+callSign 
+
+dcOnDeath 0
+dcOnDualLogin 0
+autoRestart 0
+
+verbose 1
+debug 0
+debugPacket_unparsed 1
+debugPacket_received 0
+debugPacket_ro_sent 0
+debugPacket_sent 0
+debugPacket_exclude 
+
+message_length_max 80
+
+attackAuto 2
+attackAuto_party 1
+attackAuto_followTarget 1
+attackDistance 3
+attackMaxRouteDistance 100
+attackMaxRouteTime 4
+attackUseWeapon 1
+
+lockMap 
+lockMap_x 
+lockMap_y 
+
+saveMap 
+saveMap_warpToBuyOrSell 0
+
+route_randomWalk 1
+route_randomWalk_maxRouteTime 15
+route_step 15
+
+attackSkillSlot_0 
+attackSkillSlot_0_dist 2
+attackSkillSlot_0_hp_lower 0
+attackSkillSlot_0_hp_upper 100
+attackSkillSlot_0_lvl 9
+attackSkillSlot_0_maxAggressives 0
+attackSkillSlot_0_minAggressives 4
+attackSkillSlot_0_maxCastTime 8
+attackSkillSlot_0_minCastTime 0
+attackSkillSlot_0_maxUses 3
+attackSkillSlot_0_monsters 
+attackSkillSlot_0_sp_lower 10
+attackSkillSlot_0_sp_upper 100
+attackSkillSlot_0_stopWhenHit 0
+
+sitAuto_hp_lower 0
+sitAuto_hp_upper 100
+sitAuto_sp_lower 0
+sitAuto_sp_upper 0
+
+sitAuto_idle 1
+shopAuto_open 0
+
+#use fly wing when someone tries to warp you
+avoidWarpByTeleport 0
+#try to walk away when someone tries to teleport you
+avoidWarpByWalk 1
+
+#if a monster hits you for higher than this Dmg, teleport
+maxDmg 500 
+#if the next hit by a monster of the same or higher Hit could kill you, teleport away. 
+teleportDeadly 1 
+
+teleportAuto_hp 10
+teleportAuto_idle 0
+teleportAuto_portal 0
+teleportAuto_search 0
+teleportAuto_minAggressives 0
+teleportAuto_onlyWhenSafe 0
+teleportAuto_useItem 1
+
+useSelf_skill_0 
+useSelf_skill_0_hp_lower 0
+useSelf_skill_0_hp_upper 100
+useSelf_skill_0_lvl 1
+useSelf_skill_0_maxAggressives 0
+useSelf_skill_0_minAggressives 0
+useSelf_skill_0_maxCastTime 1
+useSelf_skill_0_minCastTime 0
+useSelf_skill_0_sp_lower 0
+useSelf_skill_0_sp_upper 100
+useSelf_skill_0_stopWhenHit 0
+useSelf_skill_0_timeout 0
+
+useSelf_skill_smartHeal 1
+
+useSelf_itemCurePoison 1
+
+useSelf_item_0 
+useSelf_item_0_hp_lower 0
+useSelf_item_0_hp_upper 50
+useSelf_item_0_maxAggressives 0
+useSelf_item_0_minAggressives 0
+useSelf_item_0_sp_lower 0
+useSelf_item_0_sp_upper 100
+useSelf_item_0_stopWhenHit 0
+#use item only once you reach your locked map
+useSelf_item_0_inLockOnly 0
+#use item every ### seconds
+useSelf_item_0_timeout
+
+itemsTakeAuto 2
+itemsGatherAuto 2
+itemsMaxWeight 49.5
+
+buyAuto_0 
+buyAuto_0_npc 
+buyAuto_0_minAmount 2
+buyAuto_0_maxAmount 3
+
+sellAuto 0
+sellAuto_npc 
+
+storageAuto 0
+storageAuto_npc 
+
+follow 0
+followTarget 
+followEmotion 1
+followEmotion_distance 4
+followDistanceMax 6
+followDistanceMin 3
+followLostStep 12
+
+tankMode 0
+tankModeTarget 
+
+dealAutoCancel 1
+partyAutoDeny 1
+partyAutoShare 0
+
+seconds_per_block 0.12
+sleepTime 50000
+
+intervalMapDrt 2
+
+avoidGM_near 1
+avoidGM_near_inTown 0
+avoidGM_talk 0
+avoidGM_reconnect 1800
+avoidList 1
+
+autoEmote_word_0 
+autoEmote_num_0 
+
+#turn on or off autoSwitch command
+autoSwitch 0
+
+autoSwitch_weapon_def 
+autoSwitch_shield_def
+ 
+autoSwitch_mon_0 
+autoSwitch_weapon_new_0 
+autoSwitch_shield_new_0 
+
+#NOTE: In the case of two handed weapons, or no Shield, 
+#      duplicate the weapon name for "autoSwitch_shield_new_#
+
+autoEquip_item_card_new 
+autoEquip_item_card_def 
+autoEquip_item_hp 0
+autoEquip_item_sp 0
+
+autoResponseOnHeal 0
+autoResponse 1
+IgnoreAll 0
+itemHistory 0
