@@ -7456,18 +7456,21 @@ sub parseMsg {
 	} elsif ($switch eq "0148") {
 		# 0148 long ID, word type
 		my $targetID = substr($msg, 2, 4);
-		my $type = unpack("S1",substr($msg, 6, 2));
+		# FIXME: Is $type useless? It always seems to be 00 00 -pmak
+		my $type = unpack("S1", substr($msg, 6, 2));
 
-		if ($type) {
-			if ($targetID eq $accountID) {
-				message("You have been resurrected\n", "info");
-				undef $chars[$config{'char'}]{'dead'};
-				undef $chars[$config{'char'}]{'dead_time'};
-				$chars[$config{'char'}]{'resurrected'} = 1;
+		if ($targetID eq $accountID) {
+			message("You have been resurrected\n", "info");
+			undef $chars[$config{'char'}]{'dead'};
+			undef $chars[$config{'char'}]{'dead_time'};
+			$chars[$config{'char'}]{'resurrected'} = 1;
 
-			} elsif (%{$players{$targetID}}) {
-				undef $players{$targetID}{'dead'};
-			}
+		} elsif (%{$players{$targetID}}) {
+			undef $players{$targetID}{'dead'};
+		}
+
+		if ($targetID ne $accountID) {
+			message(getActorName($targetID)." has been resurrected\n", "info");
 		}
 
 	} elsif ($switch eq "0154") {
