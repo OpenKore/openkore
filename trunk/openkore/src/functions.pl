@@ -5712,6 +5712,7 @@ sub parseMsg {
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
 		my $type = unpack("S*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
+		my $weapon = unpack("S1", substr($msg, 18, 2));
 		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
 		my $tophead = $headgears_lut[unpack("S1",substr($msg, 24,  2))];
 		my $midhead = $headgears_lut[unpack("S1",substr($msg, 26,  2))];
@@ -5851,6 +5852,7 @@ sub parseMsg {
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
 		my $type = unpack("S*", substr($msg, 14,  2));
+		my $weapon = unpack("S1", substr($msg, 18, 2));
 		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
 		my $tophead = $headgears_lut[unpack("S1",substr($msg, 24,  2))];
 		my $midhead = $headgears_lut[unpack("S1",substr($msg, 26,  2))];
@@ -5901,6 +5903,7 @@ sub parseMsg {
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
 		my $type = unpack("S*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
+		my $weapon = unpack("S1", substr($msg, 18, 2));
 		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
 		my $tophead = $headgears_lut[unpack("S1",substr($msg, 28,  2))];
 		my $midhead = $headgears_lut[unpack("S1",substr($msg, 30,  2))];
@@ -6440,10 +6443,8 @@ sub parseMsg {
 		if (%{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			$players{$ID}{'gotName'} = 1;
-			if ($config{'debug'} >= 2) {
-				my $binID = binFind(\@playersID, $ID);
-				debug "Player Info: $players{$ID}{'name'} ($binID)\n", "parseMsg", 2;
-			}
+			my $binID = binFind(\@playersID, $ID);
+			debug "Player Info: $players{$ID}{'name'} ($binID)\n", "parseMsg_presence", 2;
 		}
 		if (%{$monsters{$ID}}) {
 			($monsters{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
@@ -8597,7 +8598,7 @@ sub parseMsg {
 			($players{$ID}{'party'}{'name'}) = substr($msg, 30, 24) =~ /([\s\S]*?)\000/;
 			($players{$ID}{'guild'}{'name'}) = substr($msg, 54, 24) =~ /([\s\S]*?)\000/;
 			($players{$ID}{'guild'}{'title'}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
-			debug "Player Info: $players{$ID}{'name'} ($players{$ID}{'binID'})\n", "parseMsg", 2;
+			debug "Player Info: $players{$ID}{'name'} ($players{$ID}{'binID'})\n", "parseMsg_presence", 2;
 			Plugins::callHook('charNameUpdate');
 		}
 
@@ -10650,6 +10651,7 @@ sub cardName {
 # Resolve the name of a simple item
 sub itemNameSimple {
 	my $ID = shift;
+	return 'None' unless $ID;
 	return $items_lut{$ID} || "Unknown $ID";
 }
 
