@@ -3741,10 +3741,6 @@ sub AI {
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $ai_seq_args[0]{'attackSkillSlot_uses'}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
 					&& checkMonsterCondition("attackSkillSlot_$i"."_target", $ID)
-#					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusActive"} || whenStatusActiveMon($ID, $config{"attackSkillSlot_$i"."_targetWhenStatusActive"}))
-#					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusInactive"} || !whenStatusActiveMon($ID, $config{"attackSkillSlot_$i"."_targetWhenStatusInactive"}))
-#					&& (!$config{"attackSkillSlot_$i"."_targetWhenAffected"} || whenAffectedMon($ID, $config{"attackSkillSlot_$i"."_targetWhenAffected"}))
-#					&& (!$config{"attackSkillSlot_$i"."_targetWhenNotAffected"} || !whenAffectedMon($ID, $config{"attackSkillSlot_$i"."_targetWhenNotAffected"}))
 				) {
 					$ai_seq_args[0]{'attackSkillSlot_uses'}{$i}++;
 					$ai_seq_args[0]{'attackMethod'}{'distance'} = $config{"attackSkillSlot_$i"."_dist"};
@@ -3785,6 +3781,11 @@ sub AI {
 		} elsif (($config{'tankMode'} && $monsters{$ID}{'dmgFromYou'} == 0)
 		      || !$config{'tankMode'}) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
+
+			if (timeOut ($timeout{'ai_attack_debug'}{'time'}, 0.2)) {
+				$timeout{'ai_attack_debug'}{'time'} = time;
+				debug "About to send attack packet; attackMethod: $ai_seq_args[0]{'attackMethod'}{'type'}\n", "ai_attack";
+			}
 
 			if ($ai_seq_args[0]{'attackMethod'}{'type'} eq "weapon" && timeOut($timeout{'ai_attack'})) {
 				sendAttack(\$remote_socket, $ID,
@@ -4567,10 +4568,11 @@ sub AI {
 
 	# DEBUG CODE
 	if (time - $ai_v{'time'} > 2 && $config{'debug'} >= 2) {
-		$stuff = @ai_seq_args;
-		debug "AI: @ai_seq | $stuff\n", "ai";
+		my $len = @ai_seq_args;
+		debug "AI: @ai_seq | $len\n", "ai", 2;
 		$ai_v{'time'} = time;
 	}
+	$ai_v{'AI_last_finished'} = time;
 
 	if ($ai_v{'clear_aiQueue'}) {
 		undef $ai_v{'clear_aiQueue'};
@@ -4788,6 +4790,7 @@ sub parseMsg {
 		}
 	}
 
+	$lastPacketTime = time;
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
 	 || ($config{'XKore'} && !$accountID && length($msg) == 4)) {
 		$accountID = substr($msg, 0, 4);

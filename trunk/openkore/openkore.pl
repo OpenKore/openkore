@@ -322,7 +322,7 @@ Log::message("\n");
 ##### SETUP WARNING AND ERROR HANDLER #####
 
 $SIG{__DIE__} = sub {
-	die @_ if (defined($^S) && $^S);
+	return unless (defined $^S && $^S == 0);
 	if (defined &Carp::longmess) {
 		$interface->writeOutput("error", "Program terminated unexpectedly. Error message: @_\n");
 		my $msg = Carp::longmess(@_);
