@@ -17,9 +17,11 @@ New features:
 - Support for the 'charServer_ip', and 'charServer_port' options
   in servers.txt, which allow you to force connection to a specific
   map server.
+- Support for eAthena servers. Set serverType to 3 for these servers.
 
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
+- kaliwanagan: eathena support.
 
 ==================
 ### 1.6.0

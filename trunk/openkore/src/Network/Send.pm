@@ -403,6 +403,9 @@ sub sendAttack {
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag);
+	} elsif ($config{serverType} == 3) {
+		$msg = pack("C*", 0x90, 0x01, 0xc7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) . 
+		$monID . pack("C*", 0x00, 0x00, 0x21, 0x00, 0x00, 0x00, $flag);
 	} else {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00) .
 		$monID .
@@ -503,9 +506,16 @@ sub sendChat {
 	my $r_socket = shift;
 	my $message = shift;
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
-	my $msg = pack("C*", 0x8C, 0x00) .
-		pack("S*", length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
-		$chars[$config{'char'}]{'name'} . " : $message" . chr(0);
+	my $msg;
+	if ($config{serverType} == 3) {
+		$msg = pack("C*", 0xf3, 0x00) .
+			pack("S*", length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
+			$chars[$config{'char'}]{'name'} . " : $message" . chr(0);
+	} else {
+		$msg = pack("C*", 0x8C, 0x00) .
+			pack("S*", length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
+			$chars[$config{'char'}]{'name'} . " : $message" . chr(0);
+	}
 	sendMsgToServer($r_socket, $msg);
 }
 
@@ -698,6 +708,8 @@ sub sendGetPlayerInfo {
 
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x94, 0x00) . $ID;
+	} elsif ($config{serverType} == 3) {
+		$msg = pack("C*", 0x8c, 0x00, 0x12, 0x00) . $ID;
 	} else {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
 	}
@@ -871,6 +883,22 @@ sub sendMapLogin {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
 
+	} elsif ($config{serverType} == 3) { #OpenRO
+		my $key;
+
+		$key = pack("C*", 0x50, 0x92, 0x61, 0x00);
+
+		$msg = pack("C*", 0x9b, 0, 0) .
+		$accountID .
+		pack("C*", 0, 0, 0, 0, 0) .
+		$charID .
+		pack("C*", 0x50, 0x92, 0x61, 0x00) . #not sure what this is yet (maybe $key?)
+#		$key .
+		pack("C*", 0xff, 0xff, 0xff) .
+		$sessionID .
+		pack("C*", 07, 69, 49, 00) . #not sure what this is either
+		pack("C*", $sex);
+
 	} else {
 		my $key;
 
@@ -1015,7 +1043,12 @@ sub sendMove {
 	my $y = int scalar shift;
 	my $msg;
 
-	$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
+	if ($config{serverType} == 3) { #OpenRO
+		$msg = pack("C*", 0xa7, 0x00, 0x60, 0x00, 0x00, 0x00) .
+			 pack("C*", 0xc7, 0x00, 0x00, 0x00) . getCoordString($x, $y);
+	} else {
+		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
+	}
 
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
@@ -1216,6 +1249,10 @@ sub sendSit {
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
+	} elsif ($config{serverType} == 3) { #OpenRO
+		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
+  				    0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
+					0x00, 0x00, 0x00, 0x02);
 	} else {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x02);
@@ -1304,6 +1341,10 @@ sub sendStand {
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
+	} elsif ($config{serverType} == 3) { #OpenRO
+		$msg = pack("C*", 0x90, 0x01, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
+				      0x00, 0x00, 0x00, 0x00, 0x00, 0x00 ,0x00 ,0x00,
+					0x00, 0x00, 0x00, 0x03);
 	} else {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
 			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x03);
@@ -1319,6 +1360,12 @@ sub sendSync {
 
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x7E, 0x00) . pack("L1", getTickCount());
+
+	} elsif ($config{serverType} == 3) { #OpenRo
+		$msg = pack("C*", 0x89, 0x00);
+		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
+		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
+		$msg .= pack("L", getTickCount());
 
 	} else {
 		$msg = pack("C*", 0x7E, 0x00);
