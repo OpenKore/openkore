@@ -4290,7 +4290,7 @@ sub AI {
 
 			my $found = 0;
 			foreach (@ai_gather_playerID) {
-				if (distance(\%{$items{$item}{pos}}, \%{$players{$_}{pos_to}}) < 9) {
+				if (distance(\%{$items{$item}{pos}}, \%{$players{$_}{pos_to}}) < 12) {
 					$found = 1;
 					last;
 				}
@@ -4327,7 +4327,7 @@ sub AI {
 			}
 		}
 		foreach (@ai_gather_playerID) {
-			if (distance(\%{$items{$ID}{pos}}, \%{$players{$_}{pos_to}}) < 9) {
+			if (distance(\%{$items{$ID}{pos}}, \%{$players{$_}{pos_to}}) < 12) {
 				$found++;
 				last;
 			}
@@ -4459,7 +4459,7 @@ sub AI {
 	}
 
 	##### TELEPORT SEARCH #####
-	if (($config{teleportAuto_search} &&  AI::inQueue("sitAuto","sitting","attack","follow","items_take","buyAuto","skill_use","sellAuto","storageAuto")) || !$config{attackAuto}){
+	if (($config{teleportAuto_search} && AI::inQueue("sitAuto","sitting","attack","follow","items_take","buyAuto","skill_use","sellAuto","storageAuto")) || !$config{attackAuto}){
 		$timeout{ai_teleport_search}{time} = time;
 	}
 
