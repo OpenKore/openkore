@@ -1,6 +1,7 @@
 MapViewer.pm
 Dock.pm
 TitleBar.pm
+LogView.pm
 Console.pm
 Input.pm
 ItemList.pm
