@@ -196,8 +196,10 @@ sub readEvents {
 				$in_pos = length($input_part);
 			##Right Arrow
 			} elsif ($event[3] == 39) {
-				$in_pos++;
-				$out_con->Cursor($in_pos, $in_line);
+				if ($in_pos + 1 <= length($input_part)) {
+					$in_pos++;
+					$out_con->Cursor($in_pos, $in_line);
+				}
 			##Down Arrow
 			} elsif ($event[3] == 40) {
 				unless ($input_offset) {
@@ -248,7 +250,7 @@ sub writeOutput {
 	my $domain = shift;
 	
 	#wrap the text
-	local($Text::Wrap::columns) = $right - $left;
+	local($Text::Wrap::columns) = $right - $left + 1;
 	my ($endspace) = $message =~ /(\s*)$/; #Save trailing whitespace: wrap kills spaces near wraps, especialy at the end of stings, so "\n" becomes "", not what we want
 	$message = wrap('', '', $message);
 	$message =~ s/\s*$/$endspace/; #restore the whitespace
