@@ -78,6 +78,7 @@ our @EXPORT = (
 	getSpellName
 	manualMove
 	objectAdded
+	objectRemoved
 	positionNearPlayer
 	positionNearPortal
 	printItemDesc
@@ -1058,6 +1059,20 @@ sub objectAdded {
 	if ($type eq 'player' || $type eq 'npc') {
 		push @unknownObjects, $ID;
 	}
+	Plugins::callHook('objectAdded', {
+		type => $type,
+		ID => $ID,
+		obj => $obj
+	});
+}
+
+sub objectRemoved {
+	my $type = shift;
+	my $ID = shift;
+	Plugins::callHook('objectRemoved', {
+		type => $type,
+		ID => $ID
+	});
 }
 
 sub positionNearPlayer {

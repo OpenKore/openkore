@@ -105,7 +105,7 @@ sub set {
 	my $r_playersID = shift;
 	my $players = shift;
 	foreach (@{$r_playersID}) {
-		next if !$_;
+		next if (!$_ || !$players->{$_});
 		push @objectsID, $_;
 		$objects{$_} = {%{$players->{$_}}};
 		$objects{$_}{type} = 'p';
@@ -123,7 +123,7 @@ sub set {
 	my $r_itemsID = shift;
 	my $items = shift;
 	foreach (@{$r_itemsID}) {
-		next if !$_;
+		next if (!$_ || !$items->{$_});
 		push @objectsID, $_;
 		$objects{$_} = {%{$items->{$_}}};
 		$objects{$_}{type} = 'i';
@@ -132,7 +132,7 @@ sub set {
 	my $r_npcsID = shift;
 	my $npcs = shift;
 	foreach (@{$r_npcsID}) {
-		next if !$_;
+		next if (!$_ || !$npcs->{$_});
 		push @objectsID, $_;
 		$objects{$_} = {%{$npcs->{$_}}};
 		$objects{$_}{type} = 'n';
