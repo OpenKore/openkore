@@ -83,6 +83,8 @@ Internal:
 - %mon_control added to Globals.pm.
 - The Wx map viewer's xpmmake() has been rewritten in C++ for speed.
   It is now more than 100 times faster.
+- makeDistMap() has also been written in C++ and is now more than 100
+  times faster.
 
 Credits:
 - jsteng: Pet detection fix.

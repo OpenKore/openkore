@@ -191,3 +191,139 @@ CODE:
 	RETVAL = buf;
 OUTPUT:
 	RETVAL
+
+
+SV *
+makeDistMap(rawMap, width, height)
+	SV *rawMap
+	int width
+	int height
+INIT:
+	STRLEN len;
+	int i, x, y;
+	int dist, val;
+	unsigned char *c_rawMap, *data;
+	bool done;
+CODE:
+	if (!SvOK (rawMap))
+		XSRETURN_UNDEF;
+
+	c_rawMap = (unsigned char *) SvPV (rawMap, len);
+	if ((int) len != width * height)
+		XSRETURN_UNDEF;
+
+	/* Simplify the raw map data. Each byte in the raw map data
+	   represents a block on the field, but only some bytes are
+	   interesting to pathfinding. */
+	New (0, data, len, unsigned char);
+	Copy (c_rawMap, data, len, unsigned char);
+	for (i = 0; i < (int) len; i++) {
+		// 0 is open, 3 is walkable water
+		switch (data[i]) {
+		case 0:
+		case 3:
+			data[i] = 255;
+			break;
+		default:
+			data[i] = 0;
+			break;
+		}
+	}
+
+	done = false;
+	while (!done) {
+		done = true;
+
+		// 'push' wall distance right and up
+		for (y = 0; y < height; y++) {
+			for (x = 0; x < width; x++) {
+				i = y * width + x;
+				dist = data[i];
+				if (x != width - 1) {
+					int ir = y * width + x + 1;
+					int distr = (int) data[ir];
+					int comp = dist - distr;
+					if (comp > 1) {
+						val = distr + 1;
+						if (val > 255)
+							val = 255;
+						data[i] = val;
+						done = false;
+					} else if (comp < -1) {
+						val = dist + 1;
+						if (val > 255)
+							val = 255;
+						data[ir] = val;
+						done = false;
+					}
+				}
+
+				if (y != height - 1) {
+					int iu = (y + 1) * width + x;
+					int distu = (int) data[iu];
+					int comp = dist - distu;
+					if (comp > 1) {
+						int val = distu + 1;
+						if (val > 255)
+							val = 255;
+						data[i] = (char) val;
+						done = false;
+					} else if (comp < -1) {
+						int val = dist + 1;
+						if (val > 255)
+							val = 255;
+						data[iu] = (char) val;
+						done = true;
+					}
+				}
+			}
+		}
+
+		// 'push' wall distance left and down
+		for (y = height - 1; y >= 0; y--) {
+			for (x = width - 1; x >= 0 ; x--) {
+				i = y * width + x;
+				dist = data[i];
+				if (x != 0) {
+					int il = y * width + x - 1;
+					int distl = data[il];
+					int comp = dist - distl;
+					if (comp > 1) {
+						val = distl + 1;
+						if (val > 255)
+							val = 255;
+						data[i] = val;
+						done = false;
+					} else if (comp < -1) {
+						val = dist + 1;
+						if (val > 255)
+							val = 255;
+						data[il] = val;
+						done = false;
+					}
+				}
+				if (y != 0) {
+					int id = (y - 1) * width + x;
+					int distd = data[id];
+					int comp = dist - distd;
+					if (comp > 1) {
+						val = distd + 1;
+						if (val > 255)
+							val = 255;
+						data[i] = val;
+						done = false;
+					} else if (comp < -1) {
+						val = dist + 1;
+						if (val > 255)
+							val = 255;
+						data[id] = val;
+						done = false;
+					}
+				}
+			}
+		}
+	}
+
+	RETVAL = newSVpv ((const char *) data, len);
+OUTPUT:
+	RETVAL

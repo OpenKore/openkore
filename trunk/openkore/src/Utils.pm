@@ -1023,7 +1023,9 @@ sub makeCoords2 {
 # for wall avoidance support.
 #
 # This function is used internally by getField(). You shouldn't have to use this directly.
-sub makeDistMap {
+sub old_makeDistMap {
+	# makeDistMap() is now written in C++ (src/auto/XSTools/misc/fastutils.xs)
+	# The old Perl function is still here in case anyone wants to read it
 	my $data = shift;
 	my $width = shift;
 	my $height = shift;
