@@ -22,6 +22,8 @@
 - Implemented a simple form of dynamic code reloading. All functions
   are now in functions.pl.
   New command: rc (reloads functions.pl)
+- Vending code now supports multiple non-stackable items.
+  Code by Star-Kung.
 
 
 ChangeLog for skore-revamped
