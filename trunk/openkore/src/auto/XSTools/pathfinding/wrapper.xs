@@ -39,7 +39,7 @@ PathFinding_runref(session)
 	PREINIT:
 		AV * results;
 		int i, status;
-		session = (PathFinding) 0; // shut up compiler warning
+		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
 		status = CalcPath_pathStep(session);
 		if (status < 0) {
@@ -67,7 +67,7 @@ PathFinding_runstr(session)
 		PathFinding session
 	PREINIT:
 		int status;
-		session = (PathFinding) 0; // shut up compiler warning
+		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
 		status = CalcPath_pathStep(session);
 		if (status < 0) {
@@ -80,11 +80,28 @@ PathFinding_runstr(session)
 	OUTPUT:
 		RETVAL
 
+unsigned int
+PathFinding_runcount(session)
+		PathFinding session
+	PREINIT:
+		int status;
+		session = (PathFinding) 0; /* shut up compiler warning */
+	CODE:
+		status = CalcPath_pathStep(session);
+		if (status < 0)
+			RETVAL = -1;
+		else if (status > 0)
+			RETVAL = (int) session->solution.size;
+		else
+			RETVAL = 0;
+	OUTPUT:
+		RETVAL
+
 void
 PathFinding_DESTROY(session)
 		PathFinding session
 	PREINIT:
-		session = (PathFinding) 0; // shut up compiler warning
+		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
 		free (session->start);
 		free (session->dest);

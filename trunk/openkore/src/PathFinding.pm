@@ -25,9 +25,9 @@ XSLoader::load('Tools');
 #
 # Optional arguments:
 #   timeout: the number of milliseconds to run each step for, defaults to 1500
-#   weights: a string of characters used as the weights to give squares from 0 to
-#            255 squares away from the closest wall, the first character must be 
-#            chr(255) and it must be 256 characters long.
+#   weights: a string of 256 characters, used as the weights to give squares from 0 to
+#            255 squares away from the closest wall. The first character must be 
+#            chr(255).
 #
 # Returns: a PathFinding object
 sub new {
@@ -61,12 +61,17 @@ __END__
 
 ##
 # $path_obj->runref()
-# Retunrs: undef on falure, 0 when pathfinding is not yet complete, or an array
+# Retunrs: undef on failure, 0 when pathfinding is not yet complete, or an array
 #     reference when a path is found. The array reference contains hashes of x
 #     and y coordinates from the start to the end of the path.
 
 ##
 # $path_obj->runstr()
-# Retunrs: undef on falure, 0 when pathfinding is not yet compleat, or a string
+# Retunrs: undef on failure, 0 when pathfinding is not yet complete, or a string
 #     of packed shorts. The shorts are pairs of X and Y coordinates running
 #     from the end to the start of the path. (note that the order is reversed)
+
+##
+# $path_obj->runcount()
+# Returns: -1 on failure, 0 when pathfinding is not yet complete, or the
+#     number of steps required to walk from source to destination.
