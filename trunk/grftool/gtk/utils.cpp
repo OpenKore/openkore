@@ -32,22 +32,22 @@ load_glade (gchar *basename)
 	GladeXML *xml = NULL;
 	char self[PATH_MAX + 1];
 	int i;
-	vector<string> searchDirs;
-	string filename;
+	vector<String> searchDirs;
+	String filename;
 
 	/* Locate itself if we're on Linux */
 	if (realpath ("/proc/self/exe", self)) {
-		string dir = g_path_get_dirname (self);
+		String dir = g_path_get_dirname (self);
 		searchDirs.push_back (dir);
 		searchDirs.push_back (dir + "../share/grftool");
 	}
-	
+
 	searchDirs.push_back (".");
 
 	for (i = 0; i < searchDirs.size(); i++) {
 
-		string fn = searchDirs[i] + "/" + basename;
-		if (g_file_test (fn.c_str (), G_FILE_TEST_IS_REGULAR)) {
+		String fn = searchDirs[i] + "/" + basename;
+		if (g_file_test (fn, G_FILE_TEST_IS_REGULAR)) {
 			filename = fn;
 		}
 	}
@@ -57,7 +57,7 @@ load_glade (gchar *basename)
 		exit (5);
 	}
 
-	xml = glade_xml_new (filename.c_str (), NULL, NULL);
+	xml = glade_xml_new (filename, NULL, NULL);
 	if (!xml) {
 		show_error (_("Unable to initialize the user interface. You may have to re-install this software."));
 		exit (5);

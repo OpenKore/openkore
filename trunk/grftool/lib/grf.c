@@ -1533,15 +1533,17 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 		/*! \todo Create a directory contents listing instead
 		 *	of just returning "<directory>"
 		 */
-		*size=12;
+		*size = 12;
 		return "<directory>";
 	}
 
 	/* Check to see if the filedata has has been extracted already
 	 * (or never compressed/encrypted)
 	 */
-	if (grf->files[index].data)
+	if (grf->files[index].data) {
+		*size = grf->files[index].real_len;
 		return grf->files[index].data;
+	}
 
 	/* Return NULL if there is no data */
 	if (!grf->files[index].real_len) {
@@ -1562,23 +1564,23 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 	}
 
 	/* Make sure uncompress doesn't modify our file information */
-	zlen=rsiz;
+	zlen = rsiz;
 
 	/* Uncompress the data, and catch any errors */
 	if ((i=uncompress((Bytef*)grf->files[index].data,&zlen,(const Bytef *)zbuf, (uLong)zsiz))!=Z_OK) {
 		/* Ignore Z_DATA_ERROR */
-		if (i==Z_DATA_ERROR) {
+		if (i == Z_DATA_ERROR) {
 			/* Set an error, just don't crash out */
 			GRF_SETERR_2(error,GE_ZLIB,uncompress,i);
-		}
-		else {
+
+		} else {
 			free(grf->files[index].data);
 			grf->files[index].data = NULL;
 			GRF_SETERR_2(error,GE_ZLIB,uncompress,i);
 			return NULL;
 		}
 	}
-	*size=zlen;
+	*size = zlen;
 
 #undef NEVER_DEFINED
 #ifdef NEVER_DEFINED
@@ -1591,7 +1593,9 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 #endif /* defined(NEVER_DEFINED) */
 
 	/* Throw a nul-terminator on the extra byte we allocated */
-	*(char*)(grf->files[index].data + *size)=0;
+	*(char*)(grf->files[index].data + *size) = 0;
+
+	grf->files[index].real_len = zlen;
 
 	/* Return our decrypted, uncompressed data */
 	return grf->files[index].data;

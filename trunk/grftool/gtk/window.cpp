@@ -155,32 +155,29 @@ MainWindow::preview (char *displayName, char *fname)
 			return;
 		}
 
-		string text = str_to_utf8 (data);
-		gtk_text_buffer_set_text (buf, text.c_str (), text.size ());
+		String text = str_to_utf8 (data);
+		gtk_text_buffer_set_text (buf, text, text.size ());
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (W(notebook1)), 0);
 
 	} else if (ext == ".BMP" || ext == ".JPG" || ext == ".PNG" || ext == ".GIF") {
-		char *data, *tmpfile = NULL;
 		uint32_t size;
 		GrfError err;
 
-		GError *gerr = NULL;
-		int fd;
-
-
-		(void *) data = grf_get (document.grf, fname, &size, &err);
+		void *data = grf_get (document.grf, fname, &size, &err);
 		if (!data) {
 			status (grf_strerror (err));
 			return;
 		}
 
+		int fd;
+		char *tmpfile;
+		GError *gerr = NULL;
 		if ((fd = g_file_open_tmp ("grftoolXXXXXX", &tmpfile, &gerr)) == -1) {
 			show_error (_("Unable to create a temporary file: %s"),
 				gerr->message);
 			g_error_free (gerr);
 			return;
 		}
-
 		write (fd, data, size);
 		close (fd);
 
@@ -213,15 +210,15 @@ MainWindow::selectOpenFile ()
 }
 
 void
-MainWindow::status (string msg)
+MainWindow::status (String msg)
 {
 	static guint ctx = 0;
 	GtkStatusbar *bar;
 
 	bar = GTK_STATUSBAR (W(status));
 	gtk_statusbar_pop (bar, ctx);
-	ctx = gtk_statusbar_get_context_id (bar, msg.c_str ());
-	gtk_statusbar_push (bar, ctx, msg.c_str ());
+	ctx = gtk_statusbar_get_context_id (bar, msg);
+	gtk_statusbar_push (bar, ctx, msg);
 }
 
 void

@@ -3,6 +3,7 @@
 
 #include <gtk/gtk.h>
 #include <string>
+#include "utils.h"
 
 using namespace std;
 
@@ -13,7 +14,7 @@ public:
 	void busy (bool b);
 	void preview (char *displayName, char *fname);
 	string selectOpenFile ();
-	void status (string msg);
+	void status (String msg);
 	void statusf (const char *format, ...);
 private:
 	GdkCursor *busyCursor;

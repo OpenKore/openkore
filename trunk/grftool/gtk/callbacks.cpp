@@ -12,9 +12,9 @@ extern "C" {
 void
 open_cb ()
 {
-	string fname;
+	String fname;
 	if ((fname = mainWin.selectOpenFile ()) != "")
-		open_grf_file (fname.c_str ());
+		open_grf_file (fname);
 }
 
 
@@ -40,7 +40,7 @@ extract_cb ()
 		dirsel = gtk_file_selection_new (_("Extract & save to folder"));
 		gtk_widget_set_sensitive (GTK_FILE_SELECTION (dirsel)->file_list,
 			FALSE);
-		tmp = g_path_get_dirname (document.filename.c_str ());
+		tmp = g_path_get_dirname (document.filename);
 		dir = g_strdup_printf ("%s%c", tmp, G_DIR_SEPARATOR);
 
 		gtk_file_selection_complete (GTK_FILE_SELECTION (savesel), dir);
@@ -213,7 +213,7 @@ filelist_selection_changed_cb (GtkTreeSelection *selection, GtkTreeView *tree)
 			DISPLAY_COL, &display,
 			-1);
 
-		tmp = g_path_get_basename (document.filename.c_str ());
+		tmp = g_path_get_basename (document.filename);
 		mainWin.statusf (_("%s: %ld files - file #%ld selected"),
 			tmp, document.grf->nfiles, index + 1);
 		g_free (tmp);
@@ -223,7 +223,7 @@ filelist_selection_changed_cb (GtkTreeSelection *selection, GtkTreeView *tree)
 		g_free (display);
 
 	} else if (!list) { /* no files selected */
-		tmp = g_path_get_basename (document.filename.c_str ());
+		tmp = g_path_get_basename (document.filename);
 		mainWin.statusf (_("%s: %ld files"), tmp, document.grf->nfiles);
 		g_free (tmp);
 
@@ -241,7 +241,7 @@ filelist_selection_changed_cb (GtkTreeSelection *selection, GtkTreeView *tree)
 		}
 
 		sizestr = friendly_size_name (size);
-		tmp = g_path_get_basename (document.filename.c_str ());
+		tmp = g_path_get_basename (document.filename);
 		mainWin.statusf (_("%s: %ld files - %d files selected (%s)"),
 			tmp, document.grf->nfiles, len, sizestr);
 		g_free (tmp);
