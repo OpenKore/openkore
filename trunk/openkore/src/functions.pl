@@ -2672,7 +2672,6 @@ sub AI {
 
 			# Form list of 8 items to sell
 			my @sellItems;
-			my $sellAmount = 0;
 			for ($i = 0; $i < @{$char->{inventory}};$i++) {
 				my $item = $char->{inventory}[$i];
 				next if (!%{$item} || $item->{equipped});
@@ -2696,12 +2695,9 @@ sub AI {
 					push @sellItems, \%obj;
 
 					$timeout{ai_sellAuto}{time} = time;
-
-					$sellAmount++;
-					last if ($sellAmount == 8);
 				}
 			}
-			sendSellBulk(\$remote_socket, \@sellItems) if ($sellAmount > 0);
+			sendSellBulk(\$remote_socket, \@sellItems) if (@sellItems);
 		}
 	}
 
@@ -6911,6 +6907,10 @@ sub parseMsg {
 		} elsif ($type == 12) {
 			$chars[$config{'char'}]{'points_skill'} = $val;
 			debug "Skill Points: $val\n", "parseMsg", 2;
+			# Reset $skillChanged back to 0 to tell kore that a skill can be auto-raised again
+			if ($skillChanged == 2) {
+				$skillChanged = 0;
+			}
 		} elsif ($type == 24) {
 			$chars[$config{'char'}]{'weight'} = int($val / 10);
 			debug "Weight: $chars[$config{'char'}]{'weight'}\n", "parseMsg", 2;
@@ -7793,6 +7793,12 @@ sub parseMsg {
 		my $handle = $skill->handle;
 		my $name = $skill->name;
 		$char->{skills}{$handle}{lv} = $lv;
+
+		# Set $skillchanged to 2 so it knows to unset it when skill points are updated
+		if ($skillChanged eq $handle) {
+			$skillChanged = 2;
+		}
+
 		debug "Skill $name: $lv\n", "parseMsg";
 
 	} elsif ($switch eq "010F") {
@@ -7817,11 +7823,6 @@ sub parseMsg {
 			}
 			$skillsID_lut{$skillID} = $skills_lut{$skillName};
 			binAdd(\@skillsID, $skillName);
-
-			# Reset $skillChanged back to 0 to tell kore that a skill can be auto-raised again
-			if ($skillChanged eq $skillName) {
-				$skillChanged = 0;
-			}
 
 			Plugins::callHook('packet_charSkills', {
 				'ID' => $skillID,
