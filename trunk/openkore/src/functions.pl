@@ -3130,9 +3130,9 @@ sub AI {
 		while (defined($config{"partySkill_$i"})) {
 			for (my $j = 0; $j < @partyUsersID; $j++) {
 				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
-				if ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'online'}
-					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) <= 8
-					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) > 0
+				if ($players{$partyUsersID[$j]}
+					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) <= ($config{partySkillMaxDistance} || 8)
+					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) >= ($config{partySkillMinDistance} || 1)
 					&& (!$config{"partySkill_$i"."_target"} || $config{"partySkill_$i"."_target"} eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'})
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
@@ -3169,7 +3169,7 @@ sub AI {
 			$ai_v{'partySkill_lvl'} = $ai_v{'partySkill_smartHeal_lvl'};
 		}
 		if ($ai_v{'partySkill_lvl'} > 0) {
-			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}) Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'follow_skill'})}} (lvl $ai_v{'follow_skill_lvl'})\n~ if $config{'debug'};
+			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}) Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'partySkill'})}} (lvl $ai_v{'partySkill_lvl'})\n~ if $config{'debug'};
 			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'partySkill'})})) {
 				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $ai_v{'partySkill_targetID'});
 			} else {
@@ -4961,7 +4961,7 @@ sub parseMsg {
 		Network::disconnect(\$remote_socket);
 
 	} elsif ($switch eq "0071") {
-		message "Recieved character ID and Map IP from Game Login Server\n", "connection";
+		message "Received character ID and Map IP from Game Login Server\n", "connection";
 		$conState = 4;
 		undef $conState_tries;
 		$charID = substr($msg, 2, 4);
@@ -5269,7 +5269,7 @@ sub parseMsg {
 	} elsif ($switch eq "007F") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$time = unpack("L1",substr($msg, 2, 4));
-		debug "Recieved Sync\n", "parseMsg", 2;
+		debug "Received Sync\n", "parseMsg", 2;
 		$timeout{'play'}{'time'} = time;
 
 	} elsif ($switch eq "0080") {
@@ -7348,7 +7348,7 @@ sub parseMsg {
 		%{$monsters{$ID}{'pos_attack_info'}} = %coords1;
 		%{$chars[$config{'char'}]{'pos'}} = %coords2;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords2;
-		debug "Recieved attack location - $monsters{$ID}{'pos_attack_info'}{'x'}, $monsters{$ID}{'pos_attack_info'}{'y'} - ".getHex($ID)."\n", "parseMsg", 2;
+		debug "Received attack location - $monsters{$ID}{'pos_attack_info'}{'x'}, $monsters{$ID}{'pos_attack_info'}{'y'} - ".getHex($ID)."\n", "parseMsg", 2;
 
 	} elsif ($switch eq "013A") {
 		$type = unpack("S1",substr($msg, 2, 2));
@@ -7552,7 +7552,7 @@ sub parseMsg {
 			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			binAdd(\@identifyID, $invIndex);
 		}
-		message "Recieved Possible Identify List - type 'identify'\n";
+		message "Received Possible Identify List - type 'identify'\n";
 
 	} elsif ($switch eq "0179") {
 		$index = unpack("S*",substr($msg, 2, 2));
@@ -7643,6 +7643,12 @@ sub parseMsg {
 			} else {
 				delete $monsters{$ID}{statuses}{$skillName};
 				message "Monster $monsters{$ID}{name} lost status $skillName\n", "parseMsg_statuslook", 2;
+			}
+		} else {
+			if ($flag) {
+				message "Unknown ".getHex($ID)." got status $skillName\n", "parseMsg_statuslook", 2;
+			} else {
+				message "Unknown ".getHex($ID)." lost status status $skillName\n", "parseMsg_statuslook", 2;
 			}
 		}
 
