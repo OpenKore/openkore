@@ -695,7 +695,7 @@ sub onAdvancedConfig {
 			$revert->Enable($_[0]);
 		});
 
-		my $pad = new Wx::Window($dialog, 46);
+		my $pad = new Wx::Window($dialog, -1);
 		$sizer->Add($pad, 1);
 
 		my $close = new Wx::Button($dialog, 47, '&Close');
@@ -703,8 +703,7 @@ sub onAdvancedConfig {
 		$close->SetDefault;
 		$sizer->Add($close, 0);
 		EVT_BUTTON($close, 47, sub {
-			$dialog->Destroy;
-			delete $self->{advancedDialog};
+			$dialog->Close;
 		});
 
 		$dialog->SetClientSize(600, 360);

@@ -135,7 +135,15 @@ use Wx::Html;
 use base qw(Wx::Panel);
 
 our $manual;
-Wx::FileSystem::AddHandler(new Wx::InternetFSHandler);
+undef $@;
+eval {
+	# WxPerl for Windows doesn't include InternetFSHandler??
+	Wx::FileSystem::AddHandler(new Wx::InternetFSHandler);
+};
+if ($@) {
+	$manual = '';
+	undef $@;
+}
 
 sub new {
 	my $class = shift;
