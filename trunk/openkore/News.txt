@@ -100,6 +100,49 @@ Credits:
 
 
 ==================
+### 1.4.5
+==================
+
+New features:
+- When a monster casts on you, you can switch target and/or avoid its spell.
+  You can turn this option on by editing mon_control.txt. The new syntax
+  for mon_control.txt is:
+  (monster name) (attack) (teleport) (search) (avoid spell)
+
+  Example:
+  Minorous 1 0 0 1
+  The "1" at the end will make Kore avoid spells casted by Minorous.
+- Ability to automatically put items in cart. You can do this by editing
+  items_control.txt. The new syntax is:
+  (item name) (minimum in inventory) (autostore) (autosell) [put in cart]
+  So to put all Flowers in cart:
+  Flower 0 0 0 1
+- Wx interface's map viewer can now attach to and detach from the main window.
+
+New config options:
+- attackMinPortalDistance (number)
+  Only auto-attack monsters that are at least (number) blocks away from a
+  portal. The default value for (number) is 4.
+
+Bug fixes:
+- Hopefully fixed some stuck problems.
+- Hopefully fixed the teleport-search-vs-autosit bug (bug #67).
+- Arrow equip is detected correctly.
+- Lag will no longer (incorrectly) trigger autostorage/autobuy/equipauto.
+- Fix partyAutoShare.
+- Clear AI after autorestart.
+- Fix display of guild name in guild join request.
+- useSelf_skill_# skills and useSelf_item_# items can now be used while
+  using attack skills.
+
+Credits:
+- jsteng: Arrow equip bugfix, lag bugfix.
+- Joseph: Spell avoiding, target switching
+- anu: Fix display of Alchemist potions.
+- Steven80s: new portals and maps.
+
+
+==================
 ### 1.4.4
 ==================
 
