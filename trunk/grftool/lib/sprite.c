@@ -180,7 +180,6 @@ sprite_load (const char *fname, SpriteError *error)
 	Sprite *sprite;
 	FILE *f;
 	unsigned char palette[1024], magic[5], buf[4];
-	unsigned char *rpalette;
 	int i, size;
 
 
@@ -214,7 +213,7 @@ sprite_load (const char *fname, SpriteError *error)
 	memset (&palette, 0, sizeof (palette));
 	fseek (f, -1024, SEEK_END);
 	fread (&palette, 1, 1024, f);
-	sprite->palette = rpalette = reverse_palette (palette, 1024, &size);
+	sprite->palette = (SpritePalette *) reverse_palette (palette, 1024, &size);
 	sprite->palette_size = size;
 
 	/* Now read the actual sprite data */
@@ -323,7 +322,7 @@ sprite_to_bmp (Sprite *sprite, int i, int *size, SpriteError *error)
 	strbuf_append (buf, (unsigned char *) &tmp, 4);		/* Number of important colors */
 
 	/* Palette */
-	strbuf_append (buf, sprite->palette, sprite->palette_size);
+	strbuf_append (buf, (unsigned char *) sprite->palette, sprite->palette_size);
 	/* Pixel data */
 	strbuf_append (buf, sprite->images[i].data, sprite->images[i].len);
 
@@ -359,4 +358,45 @@ sprite_to_bmp_file (Sprite *sprite, int i, const char *writeToFile, SpriteError 
 	fwrite (buf, 1, bufsize, f);
 	fclose (f);
 	return 1;
+}
+
+
+SPREXPORT void *
+sprite_to_rgb (Sprite *sprite, int i, int *size, SpriteError *error)
+{
+	unsigned char *pixels;
+	int rowstride, x, y, j;
+
+	if (!sprite || i < 0) {
+		if (error) *error = SE_BADARGS;
+		return NULL;
+	}
+
+	if (i >= sprite->nimages) {
+		if (error) *error = SE_INDEX;
+		return NULL;
+	}
+
+
+	rowstride = sprite->images[i].len / sprite->images[i].height;
+	pixels = calloc (3, sprite->images[i].height * rowstride);
+	if (size) *size = sprite->images[i].height * rowstride * 3;
+
+	j = 0;
+	for (y = 0; y < sprite->images[i].height; y++) {
+		for (x = 0; x < sprite->images[i].width; x++) {
+			int d;	/* Raw bitmap data index */
+			int p;	/* Palette index */
+
+			d = (sprite->images[i].height - y - 1) * rowstride + x;
+			p = sprite->images[i].data[d];
+
+			pixels[j]	= sprite->palette[p].r;
+			pixels[j + 1]	= sprite->palette[p].g;
+			pixels[j + 2]	= sprite->palette[p].b;
+			j += 3;
+		}
+	}
+
+	return pixels;
 }

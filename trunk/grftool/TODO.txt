@@ -3,7 +3,6 @@ libgrf:
 
 libsprite:
 - Support for loading sprite data from memory.
-- Ability to convert a frame to RGB data.
 - Better documentation.
 
 Win32 Delphi frontend:
