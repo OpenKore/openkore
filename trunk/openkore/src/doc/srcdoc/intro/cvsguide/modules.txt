@@ -34,6 +34,10 @@ A module is a subfolder on the CVS server. These modules are currently available
 	<td><tt>grftool</tt></td>
 	<td>Source code of GRF Tool, libgrf and related stuff.</td>
 </tr>
+<tr>
+	<td><tt>mercdb</tt></td>
+	<td>The <a href="http://openkore.sourceforge.net/forum/viewtopic.php?t=1379">Merchant Database plugin</a>.</td>
+</tr>
 </table>
 
 <p>
