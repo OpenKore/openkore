@@ -1,8 +1,11 @@
 # This file controls the colors used to highlight messages in the
 # console.
 # Valid colors are:
-# black, red, green, yellow, blue, magenta, cyan, white, default
-#
+# black, darkgrey, grey, white
+# red, darkred, yellow, brown, green, darkgreen,
+# cyan, darkcyan, blue, darkblue, magenta, darkmagenta,
+# default
+# 
 # Format:
 # [Message type]
 # <message domain> [foreground color][/background color]
@@ -12,15 +15,15 @@ useColors 1
 
 [message]
 attackMon cyan 
-attackMonMiss lightcyan 
-attacked lightmagenta 
+attackMonMiss cyan 
+attacked magenta 
 attackedMiss magenta 
 
 connection darkgreen
-drop lightblue
-useItem lightblue/blue
+drop blue
+useItem blue/darkblue
 
-skill lightgreen 
+skill green 
 
 system white
 pm red/yellow
@@ -30,7 +33,7 @@ info white
 equip grey/cyan
 
 [error]
-default lightred
+default red
 
 [warning]
 default yellow
