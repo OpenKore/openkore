@@ -4387,32 +4387,35 @@ sub AI {
 				} while ($ai_v{'temp'}{'index'} >= $ai_v{'temp'}{'index_old'} && !$ai_v{'temp'}{'done'});
 				debug "Route logic - stuck: decrease solution index from $ai_v{temp}{index_old} to $ai_v{temp}{index} (divideIndex = $ai_seq_args[0]{divideIndex})\n", "route";
 
-			} else {
+			} elsif ($chars[$config{'char'}]{'pos_to'}{'x'} && $chars[$config{'char'}]{'pos_to'}{'y'}) {
 				$ai_seq_args[0]{'divideIndex'} = 1;
-				#debug "Route logic - divide index = 1\n", "route";
-				$pos_x = int($chars[$config{'char'}]{'pos_to'}{'x'}) if ($chars[$config{'char'}]{'pos_to'}{'x'} ne "");
-				$pos_y = int($chars[$config{'char'}]{'pos_to'}{'y'}) if ($chars[$config{'char'}]{'pos_to'}{'y'} ne "");
-				#if kore is stuck
-				if (($old_pos_x == $pos_x) && ($old_pos_y == $pos_y)) {
-					$route_stuck++;
-				} else {
-					$route_stuck = 0;
-					$old_pos_x = $pos_x;
-					$old_pos_y = $pos_y;
+
+				if ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
+			         && $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
+					$pos_x = int($chars[$config{'char'}]{'pos_to'}{'x'}) if ($chars[$config{'char'}]{'pos_to'}{'x'} ne "");
+					$pos_y = int($chars[$config{'char'}]{'pos_to'}{'y'}) if ($chars[$config{'char'}]{'pos_to'}{'y'} ne "");
+					#if kore is stuck
+					if (($old_pos_x == $pos_x) && ($old_pos_y == $pos_y)) {
+						$route_stuck++;
+					} else {
+						$route_stuck = 0;
+						$old_pos_x = $pos_x;
+						$old_pos_y = $pos_y;
+					}
+					if ($route_stuck >= 50) {
+						ClearRouteAI("Route failed, clearing route AI to unstuck ...\n");
+						last ROUTE;
+					}
+					if ($route_stuck >= 80) {
+						$route_stuck = 0;
+						Unstuck("Route failed, trying to unstuck ...\n");
+						last ROUTE;
+					}	
+					if ($totalStuckCount >= 10) {
+						RespawnUnstuck();
+						last ROUTE;
+					}		
 				}
-				if ($route_stuck >= 50) {
-					ClearRouteAI("Route failed, clearing route AI to unstuck ...\n");
-					last ROUTE;
-				}
-				if ($route_stuck >= 80) {
-					$route_stuck = 0;
-					Unstuck("Route failed, trying to unstuck ...\n");
-					last ROUTE;
-				}	
-				if ($totalStuckCount >= 10) {
-					RespawnUnstuck();
-					last ROUTE;
-				}		
 			}
 
 			#We've tried all possible skip amounts, and the server won't move us.  Fail.
