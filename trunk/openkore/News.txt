@@ -60,6 +60,11 @@ New features:
 - autoTalkCont will print a message when it is triggered.
 - Prevent getting skill/chat muted when playing in X-Kore mode.
 - "exp reset" command now prints a confirmation message.
+- New "monsterSkill" directive; works like "partySkill", and will target
+  all monsters that you are engaging/can engage. Useful for fighting
+  multiple opponents at once, e.g. acolyte can offensive-bless
+  Khalitzburg even if it's not your current target, or knight can
+  provoke all Sohees and then Brandish Spear them
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
@@ -111,6 +116,11 @@ Internal:
 - Guild member job ID format is now the same as char job ID format.
 - IPC protocol's numbers are now in big endian format.
 - is_casting plugin hook.
+- $monsters{$ID}{ID} is now set to $ID, so that %monsters objects contain
+  complete information about themselves.
+- New ai_skillUse2() function is a wrapper to ai_skillUse() that (1)
+  uses "objects" instead of identifiers, and (2) automatically resolves
+  (x,y) coordinates for area-targetted skills.
 
 
 Credits:
