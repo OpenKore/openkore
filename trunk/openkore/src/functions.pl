@@ -5591,19 +5591,21 @@ sub parseMsg {
 		} elsif ($type == 2) {
 			# Sit
 			my ($source, $verb) = getActorNames($ID1, 0, 'are', 'is');
-			debug "$source $verb sitting.\n", 'parseMsg';
 			if ($ID1 eq $accountID) {
+				message "You are sitting.\n";
 				$char->{sitting} = 1;
 			} else {
+				debug getActorName($ID1)." is sitting.\n", 'parseMsg';
 				$players{$ID1}{sitting} = 1;
 			}
 		} elsif ($type == 3) {
 			# Stand
 			my ($source, $verb) = getActorNames($ID1, 0, 'are', 'is');
-			debug "$source $verb standing.\n", 'parseMsg';
 			if ($ID1 eq $accountID) {
+				message "You are standing.\n";
 				$char->{sitting} = 0;
 			} else {
+				debug getActorName($ID1)." is standing.\n", 'parseMsg';
 				$players{$ID1}{sitting} = 0;
 			}
 		} else {
