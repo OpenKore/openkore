@@ -2326,39 +2326,41 @@ sub AI {
 
 	##### TALK WITH NPC ######
 	NPCTALK: {
-		last NPCTALK if ($ai_seq[0] ne "NPC");
-		$ai_seq_args[0]{'time'} = time unless $ai_seq_args[0]{'time'};
+		last NPCTALK if (AI::action ne "NPC");
+		my $args = AI::args;
+		$args->{time} = time unless $args->{time};
 
-		if ($ai_seq_args[0]{'stage'} eq '') {
-			if (timeOut($ai_seq_args[0]{'time'}, $timeout{'ai_npcTalk'}{'timeout'})) {
+		if ($args->{stage} eq '') {
+			if (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
 				error "Could not find the NPC at the designated location.\n", "ai_npcTalk";
-				shift @ai_seq;
-				shift @ai_seq_args;
+				AI::dequeue;
 
-			} elsif ($ai_seq_args[0]{'nameID'}) {
+			} elsif ($args->{nameID}) {
 				# An NPC ID has been passed
 				my $npc = pack("L1", $ai_seq_args[0]{'nameID'});
 				last if (!$npcs{$npc} || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i);
-				$ai_seq_args[0]{'ID'} = $npc;
-				$ai_seq_args[0]{'name'} = $npcs{$npc}{'name'};
-				$ai_seq_args[0]{'stage'} = 'Talking to NPC';
-				@{$ai_seq_args[0]{'steps'}} = parse_line('\s+', 0, "w3 x $ai_seq_args[0]{'sequence'}");
-				undef $ai_seq_args[0]{'time'};
+				$args->{ID} = $npc;
+				$args->{name} = $npcs{$npc}{'name'};
+				$args->{stage} = 'Talking to NPC';
+				$args->{steps} = [];
+				@{$args->{steps}} = parse_line('\s+', 0, "w3 x $args->{sequence}");
+				undef $args->{time};
 				undef $ai_v{'npc_talk'}{'time'};
 
 			} else {
 				# An x,y position has been passed
 				foreach my $npc (@npcsID) {
 					next if !$npc || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i;
-					if ( $npcs{$npc}{'pos'}{'x'} eq $ai_seq_args[0]{'pos'}{'x'} &&
-					     $npcs{$npc}{'pos'}{'y'} eq $ai_seq_args[0]{'pos'}{'y'} ) {
-						debug "Target NPC $npcs{$npc}{'name'} at ($ai_seq_args[0]{'pos'}{'x'},$ai_seq_args[0]{'pos'}{'y'}) found.\n", "ai_npcTalk";
-					     	$ai_seq_args[0]{'nameID'} = $npcs{$npc}{'nameID'};
-				     		$ai_seq_args[0]{'ID'} = $npc;
-					     	$ai_seq_args[0]{'name'} = $npcs{$npc}{'name'};
-						$ai_seq_args[0]{'stage'} = 'Talking to NPC';
-						@{$ai_seq_args[0]{'steps'}} = parse_line('\s+', 0, "w3 x $ai_seq_args[0]{'sequence'}");
-						undef $ai_seq_args[0]{'time'};
+					if ( $npcs{$npc}{'pos'}{'x'} eq $args->{pos}{'x'} &&
+					     $npcs{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
+						debug "Target NPC $npcs{$npc}{'name'} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
+						$args->{'nameID'} = $npcs{$npc}{'nameID'};
+				     		$args->{'ID'} = $npc;
+						$args->{'name'} = $npcs{$npc}{'name'};
+						$args->{'stage'} = 'Talking to NPC';
+						$args->{steps} = [];
+						@{$args->{steps}} = parse_line('\s+', 0, "w3 x $args->{sequence}");
+						undef $args->{time};
 						undef $ai_v{'npc_talk'}{'time'};
 						last;
 					}
@@ -2366,50 +2368,48 @@ sub AI {
 			}
 
 
-		} elsif ($ai_seq_args[0]{'mapChanged'} || @{$ai_seq_args[0]{'steps'}} == 0) {
-			message "Done talking with $ai_seq_args[0]{'name'}.\n", "ai_npcTalk";
+		} elsif ($args->{mapChanged} || @{$args->{steps}} == 0) {
+			message "Done talking with $args->{name}.\n", "ai_npcTalk";
 			# There is no need to cancel conversation if map changed; NPC is nowhere by now.
-			#sendTalkCancel(\$remote_socket, $ai_seq_args[0]{'ID'});
-			shift @ai_seq;
-			shift @ai_seq_args;
+			#sendTalkCancel(\$remote_socket, $args->{ID});
+			AI::dequeue;
 
-		} elsif (timeOut($ai_seq_args[0]{'time'}, $timeout{'ai_npcTalk'}{'timeout'})) {
+		} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
 			# If NPC does not respond before timing out, then by default, it's a failure
 			error "NPC did not respond.\n", "ai_npcTalk";
-			sendTalkCancel(\$remote_socket, $ai_seq_args[0]{'ID'});
-			shift @ai_seq;
-			shift @ai_seq_args;
+			sendTalkCancel(\$remote_socket, $args->{ID});
+			AI::dequeue;
 
 		} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
-			$ai_seq_args[0]{'time'} = time;
+			$args->{time} = time;
 			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 
 			if ($config{autoTalkCont}) {
-				while ($ai_seq_args[0]{'steps'}[0] =~ /c/i) {
-					shift @{$ai_seq_args[0]{'steps'}};
+				while ($args->{steps}[0] =~ /c/i) {
+					shift @{$args->{steps}};
 				}
 			}
 
-			if ($ai_seq_args[0]{'steps'}[0] =~ /w(\d+)/i) {
+			if ($args->{steps}[0] =~ /w(\d+)/i) {
 				my $time = $1;
 				$ai_v{'npc_talk'}{'time'} = time + $time;
-				$ai_seq_args[0]{'time'}   = time + $time;
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^t=(.*)/i ) {
-				sendTalkText(\$remote_socket, $ai_seq_args[0]{'ID'}, $1);
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /x/i ) {
-				sendTalk(\$remote_socket, $ai_seq_args[0]{'ID'});
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /c/i ) {
-				sendTalkContinue(\$remote_socket, $ai_seq_args[0]{'ID'});
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /r(\d+)/i ) {
-				sendTalkResponse(\$remote_socket, $ai_seq_args[0]{'ID'}, $1+1);
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /n/i ) {
-				sendTalkCancel(\$remote_socket, $ai_seq_args[0]{'ID'});
+				$args->{time} = time + $time;
+			} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
+				sendTalkText(\$remote_socket, $args->{ID}, $1);
+			} elsif ( $args->{steps}[0] =~ /x/i ) {
+				sendTalk(\$remote_socket, $args->{ID});
+			} elsif ( $args->{steps}[0] =~ /c/i ) {
+				sendTalkContinue(\$remote_socket, $args->{ID});
+			} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
+				sendTalkResponse(\$remote_socket, $args->{ID}, $1+1);
+			} elsif ( $args->{steps}[0] =~ /n/i ) {
+				sendTalkCancel(\$remote_socket, $args->{ID});
 				$ai_v{'npc_talk'}{'time'} = time;
-				$ai_seq_args[0]{'time'}   = time;
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /b/i ) {
-				sendGetStoreList(\$remote_socket, $ai_seq_args[0]{'ID'});
+				$args->{time}   = time;
+			} elsif ( $args->{steps}[0] =~ /b/i ) {
+				sendGetStoreList(\$remote_socket, $args->{ID});
 			}
-			shift @{$ai_seq_args[0]{'steps'}};
+			shift @{$args->{steps}};
 		}
 	}
 
@@ -2523,86 +2523,100 @@ sub AI {
 	if (AI::is("", "route", "sitAuto", "follow") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
 	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
 	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-	  ) && time > $ai_v{'inventory_time'}) {
+	  ) && !AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
+		# Initiate autostorage when the weight limit has been reached
 		my $routeIndex = AI::findAction("route");
 		my $attackOnRoute;
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
+		# Only autostorage when we're on an attack route, or not moving
 		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
 			AI::queue("storageAuto");
 		}
 
 	} elsif (AI::is("", "route", "attack") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
-	     && timeOut($timeout{'ai_storageAuto'})) {
-		undef $ai_v{'temp'}{'found'};
+	     && !AI::inQueue("storageAuto") && timeOut($timeout{'ai_storageAuto'})) {
+		# Initiate autostorage when we're low on some item, and getAuto is set
+		my $found;
 		my $i = 0;
 		while (1) {
 			last if (!$config{"getAuto_$i"});
-			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"getAuto_$i"});
-			if ($config{"getAuto_$i"."_minAmount"} ne "" && $config{"getAuto_$i"."_maxAmount"} ne ""
-			   && !$config{"getAuto_$i"."_passive"}
-			   && ($ai_v{'temp'}{'invIndex'} eq "" 
-				 	|| ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"getAuto_$i"."_minAmount"} 
-					&& $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"getAuto_$i"."_maxAmount"}))
+			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
+			if ($config{"getAuto_${i}_minAmount"} ne "" && $config{"getAuto_${i}_maxAmount"} ne ""
+			   && !$config{"getAuto_${i}_passive"}
+			   && (!defined($invIndex)
+				|| ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"} 
+				 && $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"}))
 			   && (findKeyString(\%storage, "name", $config{"getAuto_$i"}) ne "" || !$storage{opened})
 			) {
-				$ai_v{'temp'}{'found'} = 1;
+				$found = 1;
+				last;
 			}
 			$i++;
 		}
 
 		my $routeIndex = AI::findAction("route");
-		if (defined $routeIndex) {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$routeIndex]{'attackOnRoute'};
-		}
-		if (!(defined($routeIndex) && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && $ai_v{'temp'}{'found'}) {
+		my $attackOnRoute;
+		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
+
+		# Only autostorage when we're on an attack route, or not moving
+		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found) {
 			AI::queue("storageAuto");
 		}
 		$timeout{'ai_storageAuto'}{'time'} = time;
 	}
 
-	if ($ai_seq[0] eq "storageAuto" && $ai_seq_args[0]{'done'}) {
-		$ai_v{'temp'}{'var'} = $ai_seq_args[0]{'forcedBySell'};
-		shift @ai_seq;
-		shift @ai_seq_args;
-		if (!$ai_v{'temp'}{'var'}) {
-			unshift @ai_seq, "sellAuto";
-			unshift @ai_seq_args, {forcedByStorage => 1};
+
+	if (AI::action eq "storageAuto" && AI::args->{done}) {
+		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
+		my $forcedBySell = AI::args->{forcedBySell};
+		AI::dequeue;
+		if (!$forcedBySell) {
+			AI::queue("sellAuto", {forcedByStorage => 1});
 		}
-	} elsif ($ai_seq[0] eq "storageAuto" && timeOut(\%{$timeout{'ai_storageAuto'}})) {
-		getNPCInfo($config{'storageAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
-		if (!$config{'storageAuto'} || !defined($ai_seq_args[0]{'npc'}{'ok'})) {
-			$ai_seq_args[0]{'done'} = 1;
+
+	} elsif (AI::action eq "storageAuto" && timeOut($timeout{'ai_storageAuto'})) {
+		# Main autostorage block
+		my $args = AI::args;
+
+		# Stop if storageAuto is not enabled, or if the specified NPC is invalid
+		getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
+		if (!$config{'storageAuto'} || !defined($args->{npc}{ok})) {
+			$args->{done} = 1;
 			last AUTOSTORAGE;
 		}
 
-		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
-			$ai_v{'temp'}{'do_route'} = 1;
+		# Determine whether we have to move to the NPC
+		my $do_route;
+		if ($field{'name'} ne $args->{npc}{map}) {
+			$do_route = 1;
 		} else {
-			$ai_v{'temp'}{'distance'} = distance(\%{$ai_seq_args[0]{'npc'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-			if ($ai_v{'temp'}{'distance'} > $config{'storageAuto_distance'}) {
-				$ai_v{'temp'}{'do_route'} = 1;
+			my $distance = distance($args->{npc}{pos}, $char->{pos_to});
+			if ($distance > $config{'storageAuto_distance'}) {
+				$do_route = 1;
 			}
 		}
-		if ($ai_v{'temp'}{'do_route'}) {
-			if ($ai_seq_args[0]{'warpedToSave'} && !$ai_seq_args[0]{'mapChanged'}) {
-				undef $ai_seq_args[0]{'warpedToSave'};
+
+		if ($do_route) {
+			if ($args->{warpedToSave} && !$args->{mapChanged}) {
+				undef $args->{warpedToSave};
 			}
 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
-				&& !$cities_lut{$field{'name'}.'.rsw'}) {
-				$ai_seq_args[0]{'warpedToSave'} = 1;
+			# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
+			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
+			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
+				$args->{warpedToSave} = 1;
 				useTeleport(2);
 				$timeout{'ai_storageAuto'}{'time'} = time;
 			} else {
-				message "Calculating auto-storage route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n", "route";
-				ai_route($ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'},
+				# warpToBuyOrSell is not set, or we've already warped. Walk to the NPC
+				message "Calculating auto-storage route to: $maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
+				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 					attackOnRoute => 1,
-					distFromGoal => $config{'storageAuto_distance'},
-					noSitAuto => 1);
+					distFromGoal => $config{'storageAuto_distance'});
 			}
 		} else {
-			if (!defined($ai_seq_args[0]{'sentStore'})) {
+			# Talk to NPC if we haven't done so
+			if (!defined($args->{sentStore})) {
 				if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
 					warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
 					$config{'storageAuto_npc_steps'} = "c r1 n";
@@ -2617,25 +2631,26 @@ sub AI {
 				}
 
 				delete $ai_v{temp}{storage_opened};
-				$ai_seq_args[0]{'sentStore'} = 1;
-				
-				if (defined $ai_seq_args[0]{'npc'}{'id'}) { 
-					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, $config{'storageAuto_npc_steps'}); 
+				$args->{sentStore} = 1;
+
+				if (defined $args->{npc}{id}) { 
+					ai_talkNPC(ID => $args->{npc}{id}, $config{'storageAuto_npc_steps'}); 
 				} else {
-					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, $config{'storageAuto_npc_steps'}); 
+					ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'}); 
 				}
 
 				$timeout{'ai_storageAuto'}{'time'} = time;
 				last AUTOSTORAGE;
 			}
-			
+
 			if (!defined $ai_v{temp}{storage_opened}) {
+				# Storage not yet opened; stop and wait until it's open
 				last AUTOSTORAGE;
 			}
-			
-			if (!$ai_seq_args[0]{'getStart'}) {
-				$ai_seq_args[0]{'done'} = 1;
-				$ai_seq_args[0]{'nextItem'} = 0 unless $ai_seq_args[0]{'nextItem'};
+
+			if (!$args->{getStart}) {
+				$args->{done} = 1;
+				$args->{nextItem} = 0 unless $args->{nextItem};
 				for (my $i = $ai_seq_args[0]{'nextItem'}; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
 					next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
 					if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'}
@@ -2655,19 +2670,19 @@ sub AI {
 					}
 				}
 			}
-			
-			# getAuto begin
-			
-			if (!$ai_seq_args[0]{getStart} && $ai_seq_args[0]{done} == 1) {
-				$ai_seq_args[0]{getStart} = 1;
-				undef $ai_seq_args[0]{done};
-				$ai_seq_args[0]{index} = 0;
-				$ai_seq_args[0]{retry} = 0;
 
+
+			# getAuto begin
+
+			if (!$args->{getStart} && $args->{done} == 1) {
+				$args->{getStart} = 1;
+				undef $args->{done};
+				$args->{index} = 0;
+				$args->{retry} = 0;
 				last AUTOSTORAGE;
 			}
 			
-			if (defined($ai_seq_args[0]{getStart}) && $ai_seq_args[0]{done} != 1) {
+			if (defined($args->{getStart}) && $args->{done} != 1) {
 
 				my %item;
 				while ($config{"getAuto_$ai_seq_args[0]{index}"}) {
@@ -2704,9 +2719,9 @@ sub AI {
 					$ai_seq_args[0]{retry} = 0;
 				}
 			}
-			
+
 			sendStorageClose(\$remote_socket);
-			$ai_seq_args[0]{done} = 1;
+			$args->{done} = 1;
 		}
 	}
 	} #END OF BLOCK AUTOSTORAGE
@@ -2761,7 +2776,7 @@ sub AI {
 			}
 
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
-				&& !$cities_lut{$field{'name'}.'.rsw'}) {
+			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
 				useTeleport(2);
 				$timeout{'ai_sellAuto'}{'time'} = time;
@@ -2884,7 +2899,7 @@ sub AI {
 			}
 
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
-				&& !$cities_lut{$field{'name'}.'.rsw'}) {
+			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
 				useTeleport(2);
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
