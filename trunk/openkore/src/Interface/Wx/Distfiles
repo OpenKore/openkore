@@ -3,5 +3,6 @@ Dock.pm
 TitleBar.pm
 Console.pm
 Input.pm
+ItemList.pm
 close.png
 window.png
