@@ -22,7 +22,7 @@
 		border-bottom: 1px dotted black;
 	}
 	.cstr {
-		color: #aa0000;
+		color: #007700;
 	}
 	-->
 	</style>
@@ -160,8 +160,8 @@ Let's take a look at a small piece of it's source code:
 <pre class="example">
     <span class="comment">##### AUTO-ATTACK #####</span>
 
-    <b>if</b> (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" 
-      || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
+    <b>if</b> (($ai_seq[0] <b>eq</b> <span class="cstr">""</span> || $ai_seq[0] <b>eq</b> <span class="cstr">"route"</span> || $ai_seq[0] <b>eq</b> <span class="cstr">"route_getRoute"</span> || $ai_seq[0] <b>eq</b> <span class="cstr">"route_getMapRoute"</span> || $ai_seq[0] <b>eq</b> <span class="cstr">"follow"</span>
+      || $ai_seq[0] <b>eq</b> <span class="cstr">"sitAuto"</span> || $ai_seq[0] <b>eq</b> <span class="cstr">"take"</span> || $ai_seq[0] <b>eq</b> <span class="cstr">"items_gather"</span> || $ai_seq[0] <b>eq</b> <span class="cstr">"items_take"</span>)
       ...
 </pre>
 
@@ -273,7 +273,7 @@ The <code>AI()</code> function runs only very shortly. So AI code blocks shouldn
 <h3>Glossary</h3>
 <ul>
 <li>An <em class="term">AI code block</em> is an entire block of code which deals with a certain part of the AI.</li>
-<li>An <em class="term">AI sequence</em> is a value within the <code>@ai_seq</code> queue.</li>
+<li>An <em class="term">AI sequence</em> is a value within the <code>@ai_seq</code> queue (and an associated value inside the <code>@ai_seq_args</code> array).</li>
 </ul>
 
 
