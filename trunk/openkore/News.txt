@@ -97,6 +97,7 @@ Bug fixes:
 - Fixed a crash when cart inventory is not available (such as during login).
 - Fixed chat room creation with non-default usercount, private-flag and passwd
 - $config{'char'} eq '' is no longer treated as $config{'char'} == 0
+- Route AI should get stuck a lot less now.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
