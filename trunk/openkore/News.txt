@@ -39,6 +39,7 @@ New features:
 - A new, WxWidgets-based interface.
 - Failed skill usage (e.g. insufficient SP, overweight) is now displayed
   at normal verbosity.
+- show exp percentage gained per hour
 
 New config options:
 - *_inInventory_name : inventory item name
