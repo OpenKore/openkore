@@ -265,11 +265,11 @@ typedef struct _GrfFile {
  *
  * \param f GrfFile struct to check
  */
-#define GRFFILE_IS_DIR(f) (((f).flags&GRFFILE_FLAG_FILE)==0 || ( \
-	((f).compressed_len_aligned==GRFFILE_DIR_SZFILE) && \
-	((f).compressed_len==GRFFILE_DIR_SZSMALL) && \
-	((f).real_len==GRFFILE_DIR_SZORIG) && \
-	((f).pos==GRFFILE_DIR_OFFSET) \
+#define GRFFILE_IS_DIR(f) (((f).flags & GRFFILE_FLAG_FILE)==0 || ( \
+	((f).compressed_len_aligned == GRFFILE_DIR_SZFILE) && \
+	((f).compressed_len == GRFFILE_DIR_SZSMALL) && \
+	((f).real_len == GRFFILE_DIR_SZORIG) && \
+	((f).pos == GRFFILE_DIR_OFFSET) \
 	))
 
 /*! \brief Grf structure

@@ -1302,9 +1302,9 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError 
 	}
 
 	/* Allocate memory for grf filename */
-	if ((grf->filename=(char*)malloc(sizeof(char)*(strlen(fname)+1)))==NULL) {
+	if ((grf->filename = (char*) malloc (sizeof(char) * strlen(fname) + 1)) == NULL) {
 		grf_free(grf);
-		GRF_SETERR(error,GE_ERRNO,malloc);
+		GRF_SETERR(error, GE_ERRNO, malloc);
 		return NULL;
 	}
 
@@ -1312,7 +1312,7 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError 
 	strcpy(grf->filename,fname);
 
 	/* Open the file */
-	if ((grf->f=fopen(grf->filename,mode))==NULL) {
+	if ((grf->f = fopen(grf->filename, mode))==NULL) {
 		grf_free(grf);
 		GRF_SETERR(error,GE_ERRNO,fopen);
 		return NULL;
@@ -1862,29 +1862,29 @@ GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfE
 
 	/* Make sure we have a filename to write to */
 	if (!file) {
-		GRF_SETERR(error,GE_BADARGS,grf_index_extract);
+		GRF_SETERR(error, GE_BADARGS, grf_index_extract);
 		return 0;
 	}
 
 	/* Normalize the filename */
-	if ((fixedname=(char*)malloc(strlen(file)+1))==NULL) {
-		GRF_SETERR(error,GE_ERRNO,malloc);
+	if ((fixedname = (char *) malloc(strlen(file) + 1)) == NULL) {
+		GRF_SETERR(error, GE_ERRNO, malloc);
 		return 0;
 	}
 	GRF_normalize_path(fixedname,file);
 
 	/* Read the data */
-	if ((buf=grf_index_get(grf,index,&size,error))==NULL) {
+	if ((buf = grf_index_get(grf, index, &size, error)) == NULL) {
 		/* Check if the file actually has no data */
 		if (error->type != GE_NODATA)
 			return 0;
 	}
 
 	/* Open the file we should write to */
-	if ((f=fopen(fixedname,"wb"))==NULL) {
+	if (!(f = fopen(fixedname, "wb"))) {
 		free(buf);
-		grf->files[index].data=NULL;
-		GRF_SETERR(error,GE_ERRNO,fopen);
+		grf->files[index].data = NULL;
+		GRF_SETERR(error, GE_ERRNO, fopen);
 		return 0;
 	}
 

@@ -58,7 +58,7 @@ main (int argc, char *argv[])
 	if (!argv[1])
 		usage (2);
 
-	grf = grf_open (argv[1], "r", &error);
+	grf = grf_open (argv[1], "rb", &error);
 	if (!grf) {
 		fprintf (stderr, "Error: %s\n", grf_strerror (error));
 		return 1;
