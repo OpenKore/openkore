@@ -28,6 +28,8 @@
   New command: rc (reloads functions.pl)
 - Vending code now supports multiple non-stackable items.
   Code by Star-Kung.
+- XKore mode now *may* work in Win98/ME too. This new code is highly
+  experimental; use at own risk.
 
 xlr82xs:
 - Removed dead monster count sub.

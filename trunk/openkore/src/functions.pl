@@ -8337,9 +8337,9 @@ sub ai_itemExchangeCheck {
 	my $failed = 0;
 	my $exchange = @_[0];
 	my $j = 0;
-	while ($config{itemExchange_item_$j) {
+	while ($config{"itemExchange_item_$j"}) {
 		last if ($failed eq '1');
-		last if (!$config{"itemExchange_item_$j"} || !$config{"itemExchange_amount_$j" || !config{"itemExchange_minamount_$j"});
+		last if (!$config{"itemExchange_item_$j"} || !$config{"itemExchange_amount_$j"} || !config{"itemExchange_minamount_$j"});
 		my $item = $config{"itemExchange_item_$j"};
 		if ($exchange eq "minimum") {
 			my $amount = $config{"itemExchange_minamount_$j"};
