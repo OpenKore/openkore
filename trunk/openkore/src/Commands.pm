@@ -47,6 +47,7 @@ our %handlers = (
 	closeshop => \&cmdCloseShop,
 	conf	=> \&cmdConf,
 	crl	=> \&cmdChatRoomList,
+	death	=> \&cmdDeath,
 	debug	=> \&cmdDebug,
 	e	=> \&cmdEmotion,
 	eq	=> \&cmdEquip,
@@ -1125,6 +1126,18 @@ sub cmdMonocell {
 	}
 	message "Attempting to monocell ".main::getActorName($id)."\n";
 	main::ai_skillUse(291, 10, 0, 0, $id);
+}
+
+sub cmdDeath {
+	my (undef, $num) = @_;
+
+	my $id = $playersID[$num];
+	if ($id eq "") {
+		error "Player $num does not exist.\n";
+		return;
+	}
+	message "Attempting to death ".main::getActorName($id)."\n";
+	main::ai_skillUse(295, 10, 0, 0, $id);
 }
 
 sub cmdMVP {
