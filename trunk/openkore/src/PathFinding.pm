@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 
 require XSLoader;
-XSLoader::load('Tools');
+XSLoader::load('XSTools');
 
 
 

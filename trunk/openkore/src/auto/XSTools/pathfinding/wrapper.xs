@@ -18,7 +18,7 @@ derefPV (SV *pv)
 }
 
 
-MODULE = Tools		PACKAGE = PathFinding		PREFIX = PathFinding_
+MODULE = XSTools		PACKAGE = PathFinding		PREFIX = PathFinding_
 PROTOTYPES: ENABLE
 
 
