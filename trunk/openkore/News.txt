@@ -4,6 +4,8 @@
 
 New features:
 - "<name> refined weapon <success/failure>" messages from modkore added.
+- New Amatsu emotions are now supported. You must download the latest
+  default table files.
 
 Bug fixes:
 - Fixed login problems with newer eAthena versions (2nd session id, bug #28)
@@ -20,6 +22,10 @@ Bug fixes:
 
 New config options:
 - teleportAuto_useSP - use SP (cast skill) when using teleport without item
+
+Credits:
+- mfr: Updated emoticon list.
+
 
 ==================
 ### 1.3.5 (beta)
