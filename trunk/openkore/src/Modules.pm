@@ -33,6 +33,7 @@ package Modules;
 
 use strict;
 use warnings;
+no warnings 'redefine';
 use Exporter;
 use Config;
 use base qw(Exporter);
@@ -152,8 +153,12 @@ sub reloadFile {
 	}
 
 	$msg->("Checking $filename for errors...\n", "info");
-	$ENV{PERL5LIB} = join(':', @INC);
-	system($Config{'perlpath'}, '-c', "$path/$filename");
+	my @inc;
+	foreach (@INC) {
+		push @inc, "-I", $_;
+	}
+
+	system($Config{'perlpath'}, @inc, '-c', "$path/$filename");
 	if ($? == -1) {
 		$err->("Failed to execute $Config{'perlpath'}\n");
 		return;
