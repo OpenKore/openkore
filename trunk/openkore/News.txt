@@ -21,6 +21,7 @@ New features:
   teleportAuto_minAggressivesInLock is specified.
 - Don't use teleportAuto_maxDmg if the more specific
   teleportAuto_maxDmgInLock is specified.
+- New 'guild request <player>' command to request someone to join a guild.
 
 New config options:
 - showDomain, if set to 1 will display domains along with messages.
