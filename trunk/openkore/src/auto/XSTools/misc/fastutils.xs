@@ -19,6 +19,7 @@ INIT:
 	AV *array;
 	I32 len;
 CODE:
+	/* Sanity check */
 	ok = SvOK (r_array);
 	if (ok) {
 		ref = SvRV (r_array);
@@ -27,10 +28,8 @@ CODE:
 	if (ok) {
 		array = (AV *) SvRV (r_array);
 		len = av_len (array);
-		if (len < 0) {
-			RETVAL = &PL_sv_undef;
+		if (len < 0)
 			ok = 0;
-		}
 	}
 
 	if (ok) {
@@ -39,6 +38,7 @@ CODE:
 		char *IDstr;
 		STRLEN IDlen;
 
+		/* Loop through the array and stop if one item matches */
 		IDstr = SvPV (ID, IDlen);
 		for (i = 0; i <= len; i++) {
 			SV **currentSV;
@@ -59,9 +59,9 @@ CODE:
 		if (found)
 			RETVAL = newSViv (i);
 		else
-			RETVAL = &PL_sv_undef;
+			XSRETURN_UNDEF;
 
 	} else
-		RETVAL = &PL_sv_undef;
+		XSRETURN_UNDEF;
 OUTPUT:
 	RETVAL
