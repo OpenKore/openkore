@@ -125,6 +125,8 @@ sub color {
 		print "\e[1;36m";
 	} elsif ($color eq "white") {
 		print "\e[1;37m";
+	} elsif ($color eq "default") {
+		print "\e[0m";
 	}
 }
 
@@ -173,20 +175,33 @@ sub setColor {
 	my ($type, $domain) = @_;
 
 	if ($type eq "error") {
-		color('red');
+		color($config{"color_error"});
 	} elsif ($type eq "warning") {
-		color('yellow');
+		color($config{"color_warning"});
 	} elsif ($domain eq "connection") {
-		color('green');
+		color($config{"color_connection"});
 	} elsif ($domain eq "atk") {
-		color('cyan');
+		color($config{"color_atk"});
 	} elsif ($domain eq "monatkyou") {
-		color('blue');
+		color($config{"color_monatkyou"});
 	} elsif ($domain eq "list") {
-		color('white');
+		color($config{"color_list"});
+	} elsif ($domain eq "info") {
+		color($config{"color_info"});
+	} elsif ($domain eq "input") {
+		color($config{"color_input"});
+	} elsif ($domain eq "itemuse") {
+		color($config{"color_itemuse"});
+	} elsif ($domain eq "mon_itemuse") {
+		color($config{"color_mon_itemuse"});
+	} elsif ($domain eq "player_itemuse") {
+		color($config{"color_player_itemuse"});
+	} elsif ($domain eq "success") {
+		color($config{"color_success"});
+	} elsif ($domain eq "storage") {
+		color($config{"color_storage"});
 	}
 }
-
 
 #################################
 #################################
