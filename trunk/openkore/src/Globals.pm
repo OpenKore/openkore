@@ -126,6 +126,26 @@ our %jobs_lut = (
 	179 => 'Creator',
 	180 => 'Clown / Gypsy',
 	181 => 'Peco Paladin',
+
+	# Some servers appear to use these IDs for advanced 2-2 classes
+	4002 => 'High Swordsman',
+	4003 => 'High Magician',
+	4004 => 'High Archer',
+	4005 => 'High Acolyte',
+	4006 => 'High Merchant',
+	4007 => 'High Thief',
+	4008 => 'Lord Knight',
+	4009 => 'High Priest',
+	4010 => 'High Wizard',
+	4011 => 'Whitesmith',
+	4012 => 'Sniper',
+	4013 => 'Assassin Cross',
+	4015 => 'Paladin',
+	4016 => 'Champion',
+	4017 => 'Professor',
+	4018 => 'Stalker',
+	4019 => 'Creator',
+	4020 => 'Clown / Gypsy'
 );
 
 
