@@ -100,6 +100,8 @@ Bug fixes:
   message.
 - dcOnDisconnect now handles packet 0081 too. (Why did I have to type
   $config{dcOnDisconnect} in the code 3 times instead of 1?)
+- Message domain 'skill' was not properly labeled when other people are
+  spamming skills in town.
 
 Internal:
 - Portal compilation is now 30% faster.
