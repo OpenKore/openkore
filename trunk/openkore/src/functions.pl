@@ -7581,7 +7581,7 @@ sub parseMsg {
 		message	"---Guild Notice---\n"
 			."$address\n\n"
 			."$message\n"
-			."------------------\n","guildnotice";
+			."------------------\n", "guildnotice";
 
 	} elsif ($switch eq "0171") {
 		my $ID = substr($msg, 2, 4);
@@ -7646,7 +7646,7 @@ sub parseMsg {
 		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 		
 		if ($nameRequest{type} eq "g") {
-			message "Guild Member $name Log ".($nameRequest{online}?"In":"Out")."\n";
+			message "Guild Member $name Log ".($nameRequest{online}?"In":"Out")."\n", 'guildchat';
 		}
 
 	} elsif ($switch eq "0195") {
@@ -9763,7 +9763,7 @@ sub redirectXKoreMessages {
 	my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
 
 	return if ($type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
-	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|selfchat|emotion|drop|inventory|deal)$/);
+	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|guildnotice|selfchat|emotion|drop|inventory|deal)$/);
 	return if ($domain =~ /^(attack|skill|list|info|partychat|npc|route)/);
 
 	$message =~ s/\n*$//s;
