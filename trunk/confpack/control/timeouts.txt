@@ -73,8 +73,7 @@ ai_equipAuto_skilluse_giveup 5
 
 ai_teleport 1
 ai_teleport_away 3
-ai_teleport_search 4
-ai_teleport_idle 12
+ai_teleport_idle 4
 ai_teleport_portal 2
 ai_teleport_hp 3
 ai_teleport_safe_force 120
