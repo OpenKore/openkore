@@ -9926,11 +9926,11 @@ sub useTeleport {
 	my $level = shift;	
 	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $level + 600);
 	
-	# it is safe to always set this value coz $ai_v{temp} is always cleared after teleport
+	# it is safe to always set this value, because $ai_v{temp} is always cleared after teleport
 	if (!$ai_v{temp}{teleport}{lv}) {
 		$ai_v{temp}{teleport}{lv} = $level;
 		
-		# set a small timeout, will be overrided if related config in equipAuto is set
+		# set a small timeout, will be overridden if related config in equipAuto is set
 		$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
 		$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
 		
@@ -9941,6 +9941,7 @@ sub useTeleport {
 	
 	# {'skills'}{'AL_TELEPORT'}{'lv'} is valid even after creamy is unequiped, use @skillsID instead
 	if (!$config{teleportAuto_useItem} && binFind(\@skillsID, 'AL_TELEPORT') ne "") {
+		sendSkillUse(\$remote_socket, $skillsID_rlut{lc('Teleport')}, 2, $accountID);
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
 		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2);
 		delete $ai_v{temp}{teleport};
