@@ -22,7 +22,7 @@ New features:
 
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
-- kaliwanagan: eathena support.
+- kaliwanagan, piroJOKE: eathena support.
 
 ==================
 ### 1.6.0
