@@ -179,6 +179,7 @@ attackComboSlot {
 	afterSkill
 	waitBeforeUse
 	dist 1.5
+	isSelfSkill 1
 }
 
 sitAuto_hp_lower 40
