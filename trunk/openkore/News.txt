@@ -22,6 +22,7 @@ New features:
 - Priority attacks for non-aggressive monsters are now supported.
 - Weighted maprouting to avoid/prefer walking through certain maps
   (see control/routeweights.txt for configuration).
+- Some parseMsg messages moved to parseMsg_presence.
 
 New config options:
 - useSelfSkill_#_monsters
