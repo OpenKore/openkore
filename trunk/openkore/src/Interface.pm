@@ -33,6 +33,9 @@ use warnings;
 no warnings 'redefine';
 use Exporter;
 use base qw(Exporter);
+use Time::HiRes qw(usleep);
+
+use Globals qw(%config $quit);
 use Modules;
 
 
@@ -67,6 +70,17 @@ sub switchInterface {
 	Modules::register("Interface::$new_if_name");
 	undef $self;
 	return $new_interface;
+}
+
+##
+# $interface->mainLoop()
+#
+# Enter the interface's main loop.
+sub mainLoop {
+	while (!$quit) {
+		usleep($config{sleepTime});
+		main::mainLoop();
+	}
 }
 
 ##

@@ -302,7 +302,7 @@ if (!$config{'XKore'}) {
 
 	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/) {
 		my $err;
-		while (1) {
+		while (!$quit) {
 			Log::message("------- Master Servers --------\n", "connection");
 			Log::message("#         Name\n", "connection");
 
@@ -364,129 +364,7 @@ Log::message("\n");
 ##### MAIN LOOP #####
 
 Plugins::callHook('initialized');
-
-while ($quit != 1) {
-	my $input;
-
-	usleep($config{'sleepTime'});
-	$interface->iterate();
-
-	if ($xkore && !$xkore->alive) {
-		# (Re-)initialize X-Kore if necessary
-		$conState = 1;
-		my $printed;
-		my $pid;
-		# Wait until the RO client has started
-		while (!($pid = WinUtils::GetProcByName($config{exeName}))) {
-			Log::message("Please start the Ragnarok Online client ($config{exeName})\n", "startup") unless $printed;
-			$printed = 1;
-			$interface->iterate;
-			if (defined($input = $interface->getInput(0))) {
-				if ($input eq "quit") {
-					$quit = 1;
-					last;
-				} else {
-					Log::message("Error: You cannot type anything except 'quit' right now.\n");
-				}
-			}
-			usleep 10000;
-			last if $quit;
-		}
-		last if $quit;
-
-		# Inject DLL
-		Log::message("Ragnarok Online client found\n", "startup");
-		sleep 1 if $printed;
-		if (!$xkore->inject($pid)) {
-			# Failed to inject
-			$interface->errorDialog($@);
-			exit 1;
-		}
-
-		# Wait until the RO client has connected to us
-		$remote_socket = $xkore->waitForClient;
-		Log::message("You can login with the Ragnarok Online client now.\n", "startup");
-		$timeout{'injectSync'}{'time'} = time;
-	}
-
-	# Parse command input
-	if (defined($input = $interface->getInput(0))) {
-		parseInput($input);
-	}
-
-	# Receive and handle data from the RO server
-	if ($xkore) {
-		my $injectMsg = $xkore->recv;
-		while ($injectMsg ne "") {
-			if (length($injectMsg) < 3) {
-				undef $injectMsg;
-				last;
-			}
-
-			my $type = substr($injectMsg, 0, 1);
-			my $len = unpack("S",substr($injectMsg, 1, 2));
-			my $newMsg = substr($injectMsg, 3, $len);
-			$injectMsg = (length($injectMsg) >= $len+3) ? substr($injectMsg, $len+3, length($injectMsg) - $len - 3) : "";
-
-			if ($type eq "R") {
-				$msg .= $newMsg;
-				$msg_length = length($msg);
-				while ($msg ne "") {
-					$msg = parseMsg($msg);
-					last if ($msg_length == length($msg));
-					$msg_length = length($msg);
-				}
-			} elsif ($type eq "S") {
-				parseSendMsg($newMsg);
-			}
-		}
-		
-		if (timeOut($timeout{'injectSync'})) {
-			$xkore->sync;
-			$timeout{'injectSync'}{'time'} = time;
-		}
-
-	} elsif (dataWaiting(\$remote_socket)) {
-		$remote_socket->recv($new, $Settings::MAX_READ);
-		$msg .= $new;
-		$msg_length = length($msg);
-		while ($msg ne "") {
-			$msg = parseMsg($msg);
-			last if ($msg_length == length($msg));
-			$msg_length = length($msg);
-		}
-	}
-
-	# Process AI
-	my $i = 0;
-	do {
-		if ($conState == 5 && timeOut($timeout{'ai'}) && $remote_socket && $remote_socket->connected()) {
-			AI($ai_cmdQue[$i]);
-		}
-		$ai_cmdQue-- if ($ai_cmdQue > 0);
-		$i++;
-	} while ($ai_cmdQue > 0);
-	undef @ai_cmdQue;
-
-	# Handle connection states
-	checkConnection() unless $quit;
-
-	# Process messages from the IPC network
-	my @ipcMessages;
-	if ($ipc && $ipc->recv(\@ipcMessages)) {
-		foreach (@ipcMessages) {
-			IPC::Processors::process($ipc, $_);
-		}
-	}
-
-	# Other stuff that's run in the main loop
-	mainLoop();
-
-	# Reload any modules that requested to be reloaded
-	Modules::doReload();
-}
-
-
+$interface->mainLoop;
 Plugins::unloadAll();
 
 # Shutdown everything else

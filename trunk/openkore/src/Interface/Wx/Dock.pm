@@ -55,7 +55,6 @@ sub attach {
 			$self->{control}->Reparent($self);
 			$self->{sizer}->Add($self->{control}, 1, wxGROW);
 		}
-		$self->{dialog}->Show(0);
 		$self->{dialog}->Destroy;
 		delete $self->{dialog};
 		$self->Layout;
@@ -159,7 +158,6 @@ sub set {
 	}
 	$self->{control} = $control;
 	$self->{sizer}->Add($control, 1, wxGROW);
-	#$self->SetSizerAndFit($self->{sizer});
 }
 
 sub setParentFrame {
