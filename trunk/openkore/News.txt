@@ -56,6 +56,7 @@ New config options:
 - squelchDomains : Increases verbosity of a message from 0 to 1
   if it is in that domain, e.g. "conf squelchDomains skill" if you don't
   want your vendbot to be spammed by people using skills in town
+- dcOnDisconnect : If kore gets disconnected from the server, it will exit.
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
@@ -95,6 +96,8 @@ Internal:
 - Added $char, an alias for $chars[$config{'char'}].
 - ai_skillUse's first parameter is skillID (eg AL_HEAL) rather then the
   internal ID Number
+- cards.txt is no longer used. Card names are taken from items.txt
+  s/ Card$// instead.
 
 Credits:
 - Fenris: Tk interface improvements.

@@ -163,7 +163,6 @@ addConfigFile("$Settings::tables_folder/skillsailments.txt", \%skillsAilments, \
 addConfigFile("$Settings::tables_folder/skillsstate.txt", \%skillsState, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skillslooks.txt", \%skillsLooks, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/skillsarea.txt", \%skillsArea, \&parseDataFile2);
-addConfigFile("$Settings::tables_folder/cards.txt", \%cards_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
 
