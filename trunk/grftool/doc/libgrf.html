@@ -46,22 +46,22 @@ The functions are declared in the header file <code>grf.h</code>.
 	<td>Opens a GRF archive.</td>
 </tr>
 <tr>
-	<td><code>GrfFile *grf_find (Grf *grf, char *fname, unsigned long *index);</code></td>
+	<td><code>GrfFile *grf_find (Grf *grf, char *fname, uint32_t *index);</code></td>
 	<td>Find information about a file inside the archive.</td>
 </tr>
 <tr>
-	<td><code>void *grf_get (Grf *grf, char *fname, unsigned long *size, GrfError *error);</code></td>
+	<td><code>void *grf_get (Grf *grf, char *fname, uint32_t *size, GrfError *error);</code></td>
 	<td>Extracts a file inside a GRF archive into memory.</td>
 </tr>
 <tr>
-	<td><code>void *grf_index_get (Grf *grf, unsigned long index, unsigned long *size, GrfError *error);</code></td>
+	<td><code>void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error);</code></td>
 	<td>Like <code>grf_get()</code>, but expects an index instead of filename.</td>
 <tr>
 	<td><code>int grf_extract (Grf *grf, char *fname, char *writeToFile, GrfError *error);</code></td>
 	<td>Extracts a file inside a GRF archive into a file.</td>
 </tr>
 <tr>
-	<td><code>int grf_index_extract (Grf *grf, unsigned long index, const char *writeToFile, GrfError *error);</code></td>
+	<td><code>int grf_index_extract (Grf *grf, uint32_t index, const char *writeToFile, GrfError *error);</code></td>
 	<td>The equivalent of <code>grf_index_get()</code> for <code>grf_extract</code>.</td>
 <tr>
 	<td><code>void grf_free (Grf *grf);</code></td>
@@ -131,8 +131,8 @@ filenames inside in the archive to screen:
 Yes, it's this simple! The <code>Grf</code> structure contains information about the GRF archive,
 and has the following public fields:
 <pre class="struct"><span class="ctype">char *</span>filename;         <span class="comment">/* The filename of the GRF archive */</span>
-<span class="ctype">uint32_t</span> version;            <span class="comment">/* The GRF archive's internal version number */</span>
-<span class="ctype">uint32_t</span> nfiles;   <span class="comment">/* Number of files inside the archive */</span>
+<span class="ctype">uint32_t</span> version;       <span class="comment">/* The GRF archive's internal version number */</span>
+<span class="ctype">uint32_t</span> nfiles;        <span class="comment">/* Number of files inside the archive */</span>
 <span class="ctype">GrfFile *</span>files;         <span class="comment">/* An array which contains information about all files */</span>
 </pre>
 
@@ -162,7 +162,7 @@ Most fields in the <code>GrfFile</code> structure are used internally.
 Only two fields are interesting to application developers:
 <ul>
 <li><code>char *name;</code><br>This is the file name of the entry.</li>
-<li><code>unsigned long real_len;</code><br>Files in GRF archives are compressed. This field specifies how big (in bytes) the resulting file will be if you extract it.</li>
+<li><code>uin32_t real_len;</code><br>Files in GRF archives are compressed. This field specifies how big (in bytes) the resulting file will be if you extract it.</li>
 </ul>
 
 
