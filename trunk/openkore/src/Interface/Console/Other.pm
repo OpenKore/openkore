@@ -103,7 +103,6 @@ sub new {
 
 		eval 'require "sys/ioctl.ph";';
 		if ($@) {
-		print "$@\n";
 			$interface{inputMode} = 'static';
 
 		} else {
@@ -199,7 +198,9 @@ sub readEvents {
 
 	if ($interface->{inputMode} eq 'static') {
 		if ($interface->{select}->can_read(0)) {
-			return <STDIN>;
+			my $line = <STDIN>;
+			$line =~ s/\n//s if defined $line;
+			return $line;
 		} else {
 			return undef;
 		}
