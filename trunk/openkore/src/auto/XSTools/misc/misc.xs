@@ -17,7 +17,7 @@ CODE:
 	/* The major version number indicates compatibility.
 	   If this number is increased, then that means it's no longer
 	   compatible with the previous interface. */
-	RETVAL = 1;
+	RETVAL = 2;
 OUTPUT:
 	RETVAL
 
