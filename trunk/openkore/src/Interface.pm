@@ -47,7 +47,7 @@ END {
 }
 
 ##
-#$interface->switchInterface(new_interface)
+# $interface->switchInterface(new_interface)
 # new_interface: The name of the interface to be swiched to.
 # Returns: The newly created interface object on success, or the previous
 #          interface object on failure
@@ -71,6 +71,7 @@ sub switchInterface {
 		Log::error("Failed to create $new_if_name: $@\n");
 		return $self;
 	}
+	undef $self;
 	return $new_interface;
 }
 
