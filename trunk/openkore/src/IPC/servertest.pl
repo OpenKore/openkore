@@ -1,34 +1,42 @@
 #!/usr/bin/env perl
-BEGIN {
-	chdir "..";
-}
 use strict;
-use Interface;
+use FindBin qw($RealBin);
+use lib "$RealBin/..";
+
+use Globals qw(%config $interface);
 use Interface::Console;
 use IPC::Server;
-use Globals;
+use Utils qw(parseArgs);
 
 $config{verbose} = 1;
 $config{debug} = 1;
 $interface = new Interface::Console;
-$ipc = new IPC::Server;
+my $ipc = new IPC::Server;
+printf "Server started at port %s\n", $ipc->port;
 
 while (1) {
-	my @messages = $ipc->iterate();
-
+	my @messages = $ipc->iterate;
 	my $input = $interface->getInput(0.02);
-	if ($input eq "q" || $input eq "quit") {
+	my @args;
+	@args = parseArgs($input) if defined $input;
+
+	if ($args[0] eq "q" || $args[0] eq "quit") {
 		last;
 
-	} elsif ($input eq "list") {
-		my @servers = IPC::Server::list();
-		print "Active servers on ports: @servers\n";
+	} elsif ($args[0] eq "b") {
+		if (@args == 4) {
+			my %hash;
+			$hash{$args[2]} = $args[3];
+			$ipc->broadcast($args[1], \%hash);
+			print "Broadcasted message $args[1]\n";
+		} else {
+			print "Usage: b (ID) (KEY) (VALUE)\n";
+			print "Broadcast a message.\n";
+		}
 
-	} elsif ($input =~ /^b (.+) (.+) (.+)/) {
-		my %hash;
-		$hash{$2} = $3;
-		$ipc->broadcast($1, \%hash);
-		print "Broadcasted message $1\n";
+	} elsif (@args) {
+		print "Unrecognized command $args[0]\n";
+		print "Available commands: b, quit\n";
 	}
 
 	foreach (@messages) {
