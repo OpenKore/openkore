@@ -2621,7 +2621,7 @@ sub AI {
 			unshift @ai_seq_args, {forcedBySell => 1};
 		}
 	} elsif ($ai_seq[0] eq "sellAuto" && timeOut(\%{$timeout{'ai_sellAuto'}})) {
-		getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
+		($config{sellAuto_standpoint}) ? getNPCInfo($config{'sellAuto_standpoint'}, \%{$ai_seq_args[0]{'npc'}}) : getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
 		if (!defined($ai_seq_args[0]{'npc'}{'ok'})) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOSELL;
@@ -2632,6 +2632,7 @@ sub AI {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
 			$ai_v{'temp'}{'distance'} = distance(\%{$ai_seq_args[0]{'npc'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			$config{'sellAuto_distance'} = 1 if ($config{sellAuto_standpoint});
 			if ($ai_v{'temp'}{'distance'} > $config{'sellAuto_distance'}) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
@@ -2655,6 +2656,7 @@ sub AI {
 					noSitAuto => 1);
 			}
 		} else {
+			getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
 				$ai_seq_args[0]{'sentSell'} = 1;
 				
@@ -2747,7 +2749,7 @@ sub AI {
 			if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"buyAuto_$i"."_maxAmount"} ne "" && ($ai_seq_args[0]{'invIndex'} eq "" 
 				|| $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"})) {
 
-				getNPCInfo($config{"buyAuto_$i"."_npc"}, \%{$ai_seq_args[0]{'npc'}});
+				($config{"buyAuto_$i"."_standpoint"}) ? getNPCInfo($config{"buyAuto_$i"."_standpoint"}, \%{$ai_seq_args[0]{'npc'}}) : getNPCInfo($config{"buyAuto_$i"."_npc"}, \%{$ai_seq_args[0]{'npc'}});
 				if (defined $ai_seq_args[0]{'npc'}{'ok'}) {
 					$ai_seq_args[0]{'index'} = $i;
 				}
@@ -2766,6 +2768,7 @@ sub AI {
 			$ai_v{'temp'}{'do_route'} = 1;			
 		} else {
 			$ai_v{'temp'}{'distance'} = distance(\%{$ai_seq_args[0]{'npc'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			$config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"} = 0 if ($config{"buyAuto_$i"."_standpoint"});
 			if ($ai_v{'temp'}{'distance'} > $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
@@ -2788,6 +2791,7 @@ sub AI {
 					distFromGoal => $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"});
 			}
 		} else {
+			getNPCInfo($config{"buyAuto_$i"."_npc"}, \%{$ai_seq_args[0]{'npc'}});
 			if ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $ai_seq_args[0]{'index'}) {
 				undef $ai_seq_args[0]{'itemID'};
 				if ($config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"} != $config{"buyAuto_$ai_seq_args[0]{'lastIndex'}"."_npc"}) {

@@ -101,6 +101,14 @@ New config options:
   0 - don't automatically record portals
   1 - record portals you walk through
   2 - record the return portal too (by guessing)
+- webproxy <proxy_addr>
+  webproxy_port <port>
+  To enable and specify wether WX will use this proxy for manual downloading.
+- sellAuto_standpoint
+  buyAuto {
+	standpoint <map> <x> <y>
+  }
+  Bots will use this location as a standpoint instead of anywhere near NPC itself.
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
