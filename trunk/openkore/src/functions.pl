@@ -8795,6 +8795,9 @@ sub parseMsg {
 			message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) changed to $name\n";
 			$monsters{$ID}{type} = $type;
 			$monsters{$ID}{name} = $name;
+			$monsters{$ID}{dmgToParty} = 0;
+			$monsters{$ID}{dmgFromParty} = 0;
+			$monsters{$ID}{missedToParty} = 0;
 		}
 
 	} elsif ($switch eq "01B3") {

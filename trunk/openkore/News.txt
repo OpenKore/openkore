@@ -68,10 +68,12 @@ New features:
   the name in monsters.txt prevails. (Lets us distinguish between monsters
   that the server gives the same name to, but are different)
 - WX Advance Settings now support proxy for download manual.
-  You have to add lines 'webproxy' and 'webproxy_port' in config.txt to enable proxy.
+  You have to add lines 'webproxy' and 'webproxy_port' in config.txt to enable
+  proxy.
 - storageAuto will now check if you have the ability to open storage.
-- Bulk selling has finally been implemented! Kore will always auto-sell this way
-  from now on, no need to set any config options.
+- Bulk selling has finally been implemented! Kore will always auto-sell this
+  way from now on, no need to set any config options.
+- Reset monster aggression when it changes to another type of monster.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
