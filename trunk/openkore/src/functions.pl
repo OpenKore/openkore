@@ -3220,6 +3220,7 @@ sub AI {
 						stand() if ($chars[$config{char}]{sitting});
 						getVector(\%vec, \%{$players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 						moveAlongVector(\%pos, \%{$chars[$config{'char'}]{'pos_to'}}, \%vec, $dist - $config{'followDistanceMin'});
+						$timeout{'ai_sit_idle'}{'time'} = time;
 						sendMove(\$remote_socket, $pos{'x'}, $pos{'y'});
 					}
 				}
