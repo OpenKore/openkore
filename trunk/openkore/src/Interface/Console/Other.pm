@@ -462,7 +462,7 @@ sub color {
 );
 
 %bgcolors = (
-	''			=> "\e[22;40m",
+	''		=> "\e[22;40m",
 	'default'	=> "\e[22;40m",
 
 	'black'		=> "\e[22;40m",
