@@ -1385,3 +1385,85 @@
 7169#Taeguk_Plate#
 7171#Leopard_Skin#
 7172#Leopard_Talon#
+
+// -----------------Ep. 8.5 Louyang-------------------------------
+
+7262#Fan_of_Cat_Official#
+7263#Stone_of_Cat's_Eye#
+7264#Dried_Sand#
+7265#Dragon_Horn#
+7266#Dragon_Fang#
+7267#Tiger_Undies#
+7268#Baby_Ghost_Sprite#
+7269#Baby_Bib#
+7270#Baby_Milk_Bottle#
+668#Handsel#
+7277#Munak_Doll#
+
+// ----- ???? ------
+7228#Gold Bullion#
+7229#Silver Bullion#
+7230#White Gold Bullion#
+7231#Gold Ore#
+7232#Silver Ore#
+7233#Mithril Ore#
+670#Gold Coin Moneybag#
+671#Gold Coin#
+672#Copper Moneybag#
+673#Copper#
+674#Mithril Coin#
+675#Silver Coin#
+676#Silver Coin Moneybag#
+677#Platinum Coin#
+678#Deadly Poison Bottle#
+
+// ----- ?????? -----
+7234#Soul of Guild#
+7235#Soul of Courage#
+7236#Soul of Guard#
+7237#Soul of Partnership#
+7238#Soul of Correspondence#
+7239#Soul of Proceeding#
+7240#Soul of Confidence#
+7241#Soul of Agreement#
+7242#Soul of Harmony#
+7243#Soul of Cooperate#
+7244#Soul of Unity#
+7245#Soul of Friendship#
+7246#Soul of Peace#
+7247#Soul of Spirit#
+7248#Soul of Honor#
+7249#Soul of Service#
+7250#Soul of Glory#
+7251#Soul of Victory#
+7252#Herb Medicine#
+679#Gold Pill#
+7253#Taeguk Flag#
+7254#Digital Print Ticket#
+11000#Prontera Book#
+562#Double-Crust Swiss Fondue#
+563#Double-Crust Swiss Fondue#
+
+// ----Jawaii------
+681#Memory of wedding#
+
+// ----Level 4 Weapon -----------
+
+7289#Olivine#
+7290#Phlogopite#
+7291#Agate#
+7292#Muscovite#
+7293#Rose Quartz#
+7294#Turquoise#
+7295#Citrine#
+7296#Pyroxene#
+7297#Biotite#
+569#Novice Potion#
+
+// ----- 2005 New year & Valentine Event added item-----
+
+570#Lucky Candy#
+571#Lucky Candy Cane#
+572#Lucky Cookie#
+12018#Fire Cracker#
+573#Chocolate_Drink#
