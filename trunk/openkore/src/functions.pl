@@ -890,8 +890,8 @@ $you_string                      $other_string
 
 
 	} elsif ($switch eq "drop") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
+		($arg1) = $input =~ /^[\s\S]*? ([\d,-]+)/;
+		($arg2) = $input =~ /^[\s\S]*? [\d,-]+ (\d+)$/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'drop' (Drop Inventory Item)\n"
 				,"Usage: drop <item #> [<amount>]\n";
@@ -899,10 +899,25 @@ $you_string                      $other_string
 			print	"Error in function 'drop' (Drop Inventory Item)\n"
 				,"Inventory Item $arg1 does not exist.\n";
 		} else {
-			if (!$arg2 || $arg2 > $chars[$config{'char'}]{'inventory'}[$arg1]{'amount'}) {
-				$arg2 = $chars[$config{'char'}]{'inventory'}[$arg1]{'amount'};
+			#if (!$arg2 || $arg2 > $chars[$config{'char'}]{'inventory'}[$arg1]{'amount'}) {
+			#	$arg2 = $chars[$config{'char'}]{'inventory'}[$arg1]{'amount'};
+			#}
+			#sendDrop(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $arg2);
+
+			my @temp = split(/,/, $arg1);
+			@temp = grep(!/^$/, @temp); # Remove empty entries
+
+			my @items = ();
+			foreach (@temp) {
+				if (/(\d+)-(\d+)/) {
+					for ($1..$2) {
+						push(@items, $_) if (%{$chars[$config{'char'}]{'inventory'}[$_]});
+					}
+				} else {
+					push @items, $_;
+				}
 			}
-			sendDrop(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $arg2);
+			ai_dropBulk(\@items, $arg2);
 		}
 
 	} elsif ($switch eq "dump") {
@@ -1900,8 +1915,8 @@ $chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$conf
 
 	} elsif ($switch eq "storage") {
 		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		my ($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,]+)/;
-		my ($arg3) = $input =~ /^[\s\S]*? \w+ [\d,]+ (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,-]+)/;
+		my ($arg3) = $input =~ /^[\s\S]*? \w+ [\d,-]+ (\d+)/;
 		if ($arg1 eq "") {
 			$~ = "STORAGELIST";
 			print "----------Storage-----------\n";
@@ -1939,16 +1954,20 @@ $i $display
 		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/ && $storageID[$arg2] eq "") {
 			print	"Error in function 'storage get' (Get Item from Storage)\n"
 				,"Storage Item $arg2 does not exist\n";
-		} elsif ($arg1 eq "get" && $arg2 =~ /[\d,]+/) {
-			if (0) {
-			if (!$arg3 || $arg3 > $storage{$storageID[$arg2]}{'amount'}) {
-				$arg3 = $storage{$storageID[$arg2]}{'amount'};
-			}
-			sendStorageGet(\$remote_socket, $storage{$storageID[$arg2]}{'index'}, $arg3);
-			}
+		} elsif ($arg1 eq "get" && $arg2 =~ /[\d,-]+/) {
+			my @temp = split(/,/, $arg2);
+			@temp = grep(!/^$/, @temp); # Remove empty entries
 
-			my @items = split(/ *, */, $arg2);
-			@items = grep(!/^$/, @items); # Remove empty entires
+			my @items = ();
+			foreach (@temp) {
+				if (/(\d+)-(\d+)/) {
+					for ($1..$2) {
+						push(@items, $_) if ($storageID[$_] ne "");
+					}
+				} else {
+					push @items, $_;
+				}
+			}
 			ai_storageGetBulk(\@items, $arg3);
 
 		} elsif ($arg1 eq "close") {
@@ -2745,9 +2764,34 @@ sub AI {
 
 	if ($ai_seq[0] eq "storageGetBulk" && timeOut($ai_seq_args[0])) {
 		my $item = $ai_seq_args[0]{'items'}[0];
-		my $max = $ai_seq_args[0]{'max'};
-print "Bulk getting item $item ($storage{$storageID[$item]}{'name'})\n"; # debug; remove this later
-		sendStorageGet(\$remote_socket, $storage{$storageID[$item]}{'index'}, $max);
+		my $amount = $ai_seq_args[0]{'max'};
+
+		if (!$amount || $amount > $storage{$storageID[$item]}{'amount'}) {
+			$amount = $storage{$storageID[$item]}{'amount'};
+		}
+		sendStorageGet(\$remote_socket, $storage{$storageID[$item]}{'index'}, $amount);
+		shift @{$ai_seq_args[0]{'items'}};
+		$ai_seq_args[0]{'time'} = time;
+
+		if (@{$ai_seq_args[0]{'items'}} <= 0) {
+			shift @ai_seq;
+			shift @ai_seq_args;
+		}
+	}
+
+
+	#####BULK DROP#####
+	# Drop many items from inventory.
+
+	if ($ai_seq[0] eq "dropBulk" && timeOut($ai_seq_args[0])) {
+		my $item = $ai_seq_args[0]{'items'}[0];
+		my $amount = $ai_seq_args[0]{'max'};
+
+		if (!$amount || $amount > $chars[$config{'char'}]{'inventory'}[$item]{'amount'}) {
+			$amount = $chars[$config{'char'}]{'inventory'}[$item]{'amount'};
+		}
+		sendDrop(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$item]{'index'}, $amount);
+		shift @{$ai_seq_args[0]{'items'}};
 		$ai_seq_args[0]{'time'} = time;
 
 		if (@{$ai_seq_args[0]{'items'}} <= 0) {
@@ -8277,6 +8321,30 @@ sub ai_clientSuspend {
 	unshift @ai_seq_args, \%args;
 }
 
+##
+# ai_dropBulk(items, max)
+# items: reference to an array of inventory item numbers.
+# max: the maximum amount to drop, for each item, or 0 for unlimited.
+#
+# Drop many items.
+#
+# Example:
+# # Drop inventory items 2 and 5.
+# ai_dropBulk([2, 5]);
+# # Drop inventory items 2 and 5, but at most 30 of each item.
+# ai_dropBulk([2, 5], 30);
+sub ai_dropBulk {
+	my $r_items = shift;
+	my $max = shift;
+	my %seq = ();
+
+	$seq{'items'} = \@{$r_items};
+	$seq{'max'} = $max;
+	$seq{'timeout'} = 1;
+	unshift @ai_seq, "dropBulk";
+	unshift @ai_seq_args, \%seq;
+}
+
 sub ai_follow {
 	my $name = shift;
 	my %args;
@@ -8860,7 +8928,7 @@ sub ai_storageGetBulk {
 
 	$seq{'items'} = \@{$r_items};
 	$seq{'max'} = $max;
-	$seq[0]{'timeout'} = 0.25;
+	$seq{'timeout'} = 0.15;
 	unshift @ai_seq, "storageGetBulk";
 	unshift @ai_seq_args, \%seq;
 }
@@ -10357,6 +10425,7 @@ sub dataWaiting {
 }
 
 sub killConnection {
+	return if ($config{'XKore'});
 	my $r_socket = shift;
 	sendQuit(\$remote_socket) if ($conState == 5 && $remote_socket && $remote_socket->connected());
 	if ($$r_socket && $$r_socket->connected()) {
