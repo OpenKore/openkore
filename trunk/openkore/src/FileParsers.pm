@@ -8,8 +8,6 @@
 #  also distribute the source code.
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#
-#
 #  $Revision$
 #  $Id$
 #
@@ -23,7 +21,9 @@
 package FileParsers;
 
 use strict;
+use File::Spec;
 use Exporter;
+use base qw(Exporter);
 use Carp;
 
 our @ISA = qw(Exporter);
@@ -60,15 +60,35 @@ our @EXPORT = qw(
 sub parseDataFile {
 	my $file = shift;
 	my $r_hash = shift;
-	undef %{$r_hash};
+	my $no_undef = shift;
+
+	undef %{$r_hash} unless $no_undef;
+
 	my ($key,$value);
-	open FILE, $file;
+	open FILE, "< $file";
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
+
 		($key, $value) = $_ =~ /([\s\S]*) ([\s\S]*?)$/;
-		if ($key ne "" && $value ne "") {
+		if ($key eq "!include") {
+			my $fname = $value;
+			if (!File::Spec->file_name_is_absolute($value) && !($value =~ /^\//)) {
+				if ($file =~ /[\/\\]/) {
+					$fname = $file;
+					$fname =~ s/(.*)[\/\\].*/$1/;
+					$fname = File::Spec->catfile($fname, $value);
+				} else {
+					$fname = $value;
+				}
+			}
+
+			$r_hash->{_INCLUDES}{$file} = [] if (!$r_hash->{_INCLUDES}{$file});
+			parseDataFile($fname, $r_hash, 1);
+			push @{$r_hash->{_INCLUDES}{$file}}, $fname;
+
+		} elsif ($key ne "" && $value ne "") {
 			$$r_hash{$key} = $value;
 		}
 	}
@@ -487,19 +507,25 @@ sub writeDataFileIntact {
 	my $r_hash = shift;
 	my $data;
 	my $key;
+
 	open(FILE, "< $file");
 	foreach (<FILE>) {
-                if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/) {
-                        $data .= $_;
-                        next;
-                }
-                ($key) = $_ =~ /^(\w+)/;
-                $data .= "$key $$r_hash{$key}\n";
-        }
+		if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/ || $_ =~ /^\!include /) {
+			$data .= $_;
+			next;
+		}
+		($key) = $_ =~ /^(\w+)/;
+		$data .= "$key $$r_hash{$key}\n";
+	}
 	close FILE;
 	open(FILE, "> $file");
 	print FILE $data;
 	close FILE;
+
+	return if (!$r_hash->{_INCLUDES}{$file});
+	foreach my $fname (@{$r_hash->{_INCLUDES}{$file}}) {
+		writeDataFileIntact($fname, $r_hash);
+	}
 }
 
 sub writeDataFileIntact2 {
