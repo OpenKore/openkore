@@ -31,7 +31,7 @@ sub initRandomRestart {
 # Initialize random configuration switching time
 sub initConfChange {
 	my $changetime = $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'});
-	return if (!$config{'autoChangeConfig'});
+	return if (!$config{'autoConfChange'});
 	$nextConfChangeTime = time + $changetime;
 	print "Next Config Change will be in ".timeConvert($changetime).".\n";
 }
@@ -7711,26 +7711,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$targetDisplay = "unknown";
 		}
 		print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay\n";
-#Solos Start
-#Check if GM is casting warp on you
-		if ($skillID == 27) {
-#warp avoid code 
-			if (($chars[$config{'char'}]{'pos_to'}{'x'} == $x) && ($chars[$config{'char'}]{'pos_to'}{'y'} == $y)) { 
-				if (($config{'avoidWarpByTeleport'})) { 
-					useTeleport(1); 
-				} 
-				if (($config{'avoidWarpByWalk'})) { 
-					$ai_v{'temp'}{'pos'}{'x'} = int(rand() * 2 - 1 + $x); 
-					$ai_v{'temp'}{'pos'}{'y'} = int(rand() * 2 - 1 + $y); 
-					if (($ai_v{'temp'}{'pos'}{'x'} == $x) && ($ai_v{'temp'}{'pos'}{'y'} == $y)) { 
-						$ai_v{'temp'}{'pos'}{'x'} = int(1 + $x); 
-					} 
-					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}); 
-				} 
-			} 
-#avoid code end 
-		}
-#Solos End
 
 	} elsif ($switch eq "0141") {
 		$type = unpack("S1",substr($msg, 2, 2));
@@ -11298,18 +11278,18 @@ sub updateDamageTables {
 			$monsters{$ID1}{'attackedYou'}++ unless ($monsters{$ID1}{'dmgFromPlayer'} || $monsters{$ID1}{'missedFromPlayer'}
 			                                      || $monsters{$ID1}{'missedToPlayer'} || $monsters{$ID1}{'dmgToPlayer'});
 
-			my $teleported = 0;
+			my $teleport = 0;
 			if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
-				print "[Act] Teleport due to $monsters{$ID1}{'name'} attack\n";
-				$teleported = 1;
-			}elsif($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'}){
-				print "[Act] Next $damage dmg could kill you. Teleporting...\n";
-				$teleported = 1;
-			}elsif($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'}){
-				print "[Act] $monsters{$ID1}{'name'} attack you more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
-				$teleported = 1;
+				print "Teleport due to $monsters{$ID1}{'name'} attack\n";
+				$teleport = 1;
+			} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'}) {
+				print "Next $damage dmg could kill you. Teleporting...\n";
+				$teleport = 1;
+			} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'}) {
+				print "$monsters{$ID1}{'name'} attack you more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
+				$teleport = 1;
 			}
-			useTeleport(1) if ($teleported);
+			useTeleport(1) if ($teleport);
 		}
 	} elsif (%{$monsters{$ID1}}) {
 		if (%{$players{$ID2}}) {
