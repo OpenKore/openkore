@@ -94,6 +94,8 @@ sub mainLoop {
 			return;
 		}
 
+		$self->{iterating}++;
+
 		if ($sleepTime ne $config{sleepTime}) {
 			$sleepTime = $config{sleepTime};
 			$timer->Start($sleepTime / 1000);
@@ -114,6 +116,8 @@ sub mainLoop {
 			$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
 			$itemListTime = time;
 		}
+
+		$self->{iterating}--;
 	};
 
 	EVT_TIMER($self, 247, $sub);
@@ -124,13 +128,11 @@ sub mainLoop {
 sub iterate {
 	my $self = shift;
 
-	$self->{iterating}++;
 	while ($self->Pending) {
 		$self->Dispatch;
 	}
 	$self->Yield;
 	$iterationTime = time;
-	$self->{iterating}--;
 }
 
 sub getInput {
@@ -138,7 +140,6 @@ sub getInput {
 	my $timeout = shift;
 	my $msg;
 
-	$self->{iterating}++;
 	if ($timeout < 0) {
 		while (!defined $self->{input} && !$quit) {
 			$self->iterate;
@@ -157,7 +158,6 @@ sub getInput {
 		}
 		$msg = $self->{input};
 	}
-	$self->{iterating}--;
 
 	undef $self->{input};
 	undef $msg if (defined($msg) && $msg eq "");
