@@ -365,7 +365,7 @@ open_grf_file (const char *fname)
 	gdk_window_set_cursor (W(main)->window, busy_cursor);
 	set_status (_("Loading..."));
 	while (gtk_events_pending ()) gtk_main_iteration ();
-	newgrf = grf_open (fname, &err);
+	newgrf = grf_open (fname, "r", &err);
 	if (!newgrf) {
 		char *base;
 
