@@ -673,6 +673,8 @@ sub onAdvancedConfig {
 
 		my $cfg = new Interface::Wx::ConfigEditor($dialog, -1);
 		$cfg->setConfig(\%config);
+		$cfg->addCategory('Attacks', 'Grid', ['attackAuto', 'attackDistance', 'attackMaxDistance']);
+		$cfg->addCategory('All', 'Grid');
 		$cfg->onChange(sub {
 			my ($key, $value) = @_;
 			configModify($key, $value) if ($value ne $config{$key});
@@ -683,10 +685,14 @@ sub onAdvancedConfig {
 		$vsizer->Add($sizer, 0, wxGROW | wxLEFT | wxRIGHT | wxBOTTOM, 8);
 
 		my $revert = new Wx::Button($dialog, 46, '&Revert');
-		$revert->SetToolTip('Revert settings to before you opened this dialog');
+		$revert->SetToolTip('Revert settings to before you opened the selected category');
 		$sizer->Add($revert, 0);
 		EVT_BUTTON($revert, 46, sub {
 			$cfg->revert;
+		});
+		$revert->Enable(0);
+		$cfg->onRevertEnable(sub {
+			$revert->Enable($_[0]);
 		});
 
 		my $pad = new Wx::Window($dialog, 46);
@@ -701,7 +707,7 @@ sub onAdvancedConfig {
 			delete $self->{advancedDialog};
 		});
 
-		$dialog->SetClientSize(580, 350);
+		$dialog->SetClientSize(600, 360);
 	}
 	$dialog->Show(1);
 	$dialog->Raise;
