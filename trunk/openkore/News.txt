@@ -45,6 +45,9 @@ New features:
   e.g. "storage get +5 Sword Mace [Andre]"
   Currently, item names containing commas may not work properly.
 - "version" command tells you what version of openkore you are running.
+- Show distance of player when public chat and add more log message of public chat.
+  The format is like this.
+  [Date Time][C] [Mapname BotsPosition] [TargetPosition] [dist=DistanceFromPlayer] ChatName : ChatMessage
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
