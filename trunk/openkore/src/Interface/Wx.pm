@@ -250,7 +250,7 @@ sub createInterface {
 	### Fonts
 	my ($fontName, $fontSize);
 	if ($self->{platform} eq 'win32') {
-		$fontSize = 10;
+		$fontSize = 9;
 		$fontName = 'Courier New';
 	} elsif ($self->{platform} eq 'gtk2') {
 		$fontSize = 10;
@@ -302,7 +302,7 @@ sub createInterface {
 
 	#################
 
-	$frame->SetClientSize(665, 420);
+	$frame->SetClientSize(635, 410);
 	$frame->SetIcon(Wx::GetWxPerlIcon());
 	$frame->Show(1);
 	$self->SetTopWindow($frame);
