@@ -17,7 +17,7 @@ $(FILENAME): control/*.txt
 	rm -rf tmp
 	mkdir -p tmp/control
 	cp control/*.txt tmp/control/
-	./unix2dos.pl tmp/control/*.txt
+	perl unix2dos.pl tmp/control/*.txt
 	echo -n $(VERSION) > tmp/$(VERSIONFILE)
 	rm -f $(FILENAME)
 	cd tmp && zip -9 ../$(FILENAME) control/*.txt
