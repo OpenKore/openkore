@@ -196,17 +196,7 @@ sub whenStatusActivePL {
 #
 # Writes %config to config.txt.
 sub saveConfigFile {
-	my %old_config;
-
-	%old_config = %config;
-	if ($config{dontSaveLogin}) {
-		# Do not write username/password to config file
-		undef $config{username};
-		undef $config{password};
-		undef $config{char};
-	}
 	writeDataFileIntact($Settings::config_file, \%config);
-	%config = %old_config;
 }
 
 return 1;
