@@ -98,7 +98,7 @@ sub new {
 	$interface{input}{buf} = '';
 	$interface{input}{pos} = 0;
 
-	if (-t STDIN && POSIX::tcgetpgrp(0) == POSIX::getpid()) {
+	if (POSIX::ttyname(0) && POSIX::tcgetpgrp(0) == POSIX::getpgrp()) {
 		$interface{select} = IO::Select->new(\*STDIN);
 
 		eval 'require "sys/ioctl.ph";';
@@ -386,7 +386,10 @@ sub getInput {
 	return undef if ($class->{inputMode} eq 'none');
 
 	if ($timeout < 0) {
-		$msg = $class->readEvents until defined($msg);
+		while (!defined($msg)) {
+			$msg = $class->readEvents;
+			usleep 10000 unless defined $msg;
+		}
 
 	} elsif ($timeout > 0) {
 		my %timeOut = ();

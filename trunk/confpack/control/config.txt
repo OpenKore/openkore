@@ -1,8 +1,8 @@
 # See the documentation for what these variables do
 # New variables have comments above them
 
-master_name_0 localhost
-master_host_0 127.0.0.1
+master_name_0 iRO: Main Server
+master_host_0 38.144.194.2
 master_port_0 6900
 master_version_0 1
 
@@ -87,15 +87,15 @@ route_maxWarpFee
 route_step 15
 
 attackSkillSlot_0 
-attackSkillSlot_0_dist 2
+attackSkillSlot_0_dist 3
 attackSkillSlot_0_hp_lower 0
 attackSkillSlot_0_hp_upper 100
-attackSkillSlot_0_lvl 9
+attackSkillSlot_0_lvl 10
 attackSkillSlot_0_maxAggressives 0
-attackSkillSlot_0_minAggressives 4
+attackSkillSlot_0_minAggressives 0
 attackSkillSlot_0_maxCastTime 8
 attackSkillSlot_0_minCastTime 0
-attackSkillSlot_0_maxUses 3
+attackSkillSlot_0_maxUses 0
 attackSkillSlot_0_monsters 
 attackSkillSlot_0_sp_lower 10
 attackSkillSlot_0_sp_upper 100
@@ -105,7 +105,7 @@ attackSkillSlot_0_targetWhenAffected
 attackSkillSlot_0_targetWhenNotAffected
 attackSkillSlot_0_stopWhenHit 0
 
-sitAuto_hp_lower 0
+sitAuto_hp_lower 35
 sitAuto_hp_upper 100
 sitAuto_sp_lower 0
 sitAuto_sp_upper 0

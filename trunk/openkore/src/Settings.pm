@@ -140,9 +140,6 @@ sub parseArguments {
 
 		'interface=s',		\$default_interface
 	);
-	if ($help_option) {
-		return 2;
-	}
 	
 	# This is where variables depending on other userconfigable variables should be set..
 	# after we see what the user is changing...
@@ -156,6 +153,7 @@ sub parseArguments {
 	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
 	$default_interface = "Console" if (!defined $default_interface);
 
+	return 2 if ($help_option);
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
 			return "Unable to create folder $logs_folder ($!)";
