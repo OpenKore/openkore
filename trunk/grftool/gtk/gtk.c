@@ -439,7 +439,7 @@ preview_file (char *display, char *fname)
 
 	if (strcmp (ext, ".TXT") == 0 || strcmp (ext, ".XML") == 0) {
 		char *data, *text;
-		unsigned long size;
+		uint32_t size;
 		gsize strsize;
 		GrfError err;
 
@@ -460,7 +460,7 @@ preview_file (char *display, char *fname)
 	} else if (strcmp (ext, ".BMP") == 0 || strcmp (ext, ".JPG") == 0
 	  || strcmp (ext, ".PNG") == 0 || strcmp (ext, ".GIF") == 0) {
 		char *data, *tmpfile = NULL;
-		unsigned long size;
+		uint32_t size;
 		GrfError err;
 
 		GError *gerr = NULL;

@@ -65,7 +65,7 @@ main (int argc, char *argv[])
 	}
 
 	if (argv[2]) {
-		unsigned long i;
+		uint32_t i;
 		char *file = NULL;
 		void *data;
 
@@ -77,7 +77,7 @@ main (int argc, char *argv[])
 				}
 			}
 			if (!file) {
-				fprintf (stderr, "Error: %s\n", grf_strerror (GE_NOTFOUND));
+				fprintf (stderr, "Error: file not found\n");
 				return 1;
 			}
 		} else
