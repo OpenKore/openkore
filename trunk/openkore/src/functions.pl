@@ -388,15 +388,9 @@ sub parseInput {
 	$XKore_dontRedirect = 1 if ($config{XKore});
 
 	# Check if in special state
-	if (!$config{'XKore'} && $conState == 2 && $waitingForInput) {
+	if (!$xkore && $conState == 2 && $waitingForInput) {
 		configModify('server', $input, 1);
 		$waitingForInput = 0;
-
-	} elsif (!$config{'XKore'} && $conState == 3 && $waitingForInput) {
-		configModify('char', $input, 1);
-		$waitingForInput = 0;
-		sendCharLogin(\$remote_socket, $config{'char'});
-		$timeout{'charlogin'}{'time'} = time;
 
 	} else {
 		Commands::run($input) || parseCommand($input);
@@ -2478,6 +2472,23 @@ sub AI {
 		AI::dequeue if (@{AI::args->{items}} <= 0);
 	}
 
+	#### CART Get ####
+	# Get one or more items from cart.
+
+	if (AI::action eq "cartGet" && timeOut(AI::args)) {
+		my $item = AI::args->{items}[0];
+		my $i = $item->{index};
+		my $amount = $item->{amount};
+
+		if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
+			$amount = $cart{inventory}[$i]{amount};
+		}
+		sendCartGet(\$remote_socket, $cart{inventory}[$i]{index}, $amount);
+		shift @{AI::args->{items}};
+		AI::args->{time} = time;
+		AI::dequeue if (@{AI::args->{items}} <= 0);
+	}
+
 	##### DROPPING #####
 	# Drop one or more items from inventory.
 
@@ -2505,22 +2516,21 @@ sub AI {
 
 	AUTOSTORAGE: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "follow") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
-	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight_sellOrStore'})
-	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
+	if (AI::is("", "route", "sitAuto", "follow") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
+	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
 	  ) && time > $ai_v{'inventory_time'}) {
-		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
+		my $routeIndex = AI::findAction("route");
+		my $attackOnRoute;
+		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
+		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
+			AI::queue("storageAuto");
 		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && ai_storageAutoCheck()) {
-			unshift @ai_seq, "storageAuto";
-			unshift @ai_seq_args, {};
-		}
-	} elsif (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "attack")
-	      && $config{'storageAuto'} && $config{'storageAuto_npc'} ne "" && timeOut(\%{$timeout{'ai_storageAuto'}})) {
+
+	} elsif (AI::is("", "route", "attack") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
+	     && timeOut($timeout{'ai_storageAuto'})) {
 		undef $ai_v{'temp'}{'found'};
-		$i = 0;
+		my $i = 0;
 		while (1) {
 			last if (!$config{"getAuto_$i"});
 			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"getAuto_$i"});
@@ -2536,13 +2546,12 @@ sub AI {
 			$i++;
 		}
 
-		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
+		my $routeIndex = AI::findAction("route");
+		if (defined $routeIndex) {
+			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$routeIndex]{'attackOnRoute'};
 		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && $ai_v{'temp'}{'found'}) {
-			unshift @ai_seq, "storageAuto";
-			unshift @ai_seq_args, {};
+		if (!(defined($routeIndex) && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && $ai_v{'temp'}{'found'}) {
+			AI::queue("storageAuto");
 		}
 		$timeout{'ai_storageAuto'}{'time'} = time;
 	}
@@ -4879,7 +4888,7 @@ sub parseMsg {
 	$lastswitch = $switch;
 	# Determine packet length using recvpackets.txt.
 	if (substr($msg,0,4) ne $accountID || ($conState != 2 && $conState != 4)) {
-		if ($rpackets{$switch} eq "-") {
+		if ($rpackets{$switch} eq "-" || $switch eq "0070") {
 			# Complete packet; the size of this packet is equal
 			# to the size of the entire data
 			$msg_size = length($msg);
@@ -5046,6 +5055,7 @@ sub parseMsg {
 		#}
 		$startVal = $msg_size % 106;
 
+		my $num;
 		for (my $i = $startVal; $i < $msg_size; $i += 106) {
 			#exp display bugfix - chobit andy 20030129
 			$num = unpack("C1", substr($msg, $i + 104, 1));
@@ -5070,6 +5080,7 @@ sub parseMsg {
 			$chars[$num]{'sex'} = $accountSex2;
 		}
 
+		if (0) {
 		for ($num = 0; $num < @chars; $num++) {
 			message(swrite(
 				"-------  Character @< ---------",
@@ -5095,19 +5106,73 @@ sub parseMsg {
 
  		}
 
-		if (!$config{'XKore'}) {
-			if ($config{'char'} eq "") {
-				message("Choose your character.  Enter the character number:\n", "input");
-				$waitingForInput = 1;
+		if (!$xkore) {
+			my $new;
+			if (!@chars) {
+				message("There are no characters on this account.\n", "connection");
+				$new = 1;
+
+			} elsif ($config{'char'} eq "" && $chars[$config{'char'}]) {
+				message("Type 'c' to create a new character, or type 'd' to delete a character.\n" .
+					"Or choose a character by entering its number.\n", "input");
+
+				while (1) {
+					my $input = $interface->getInput(-1);
+					next if (!defined $input);
+
+					if ($input eq "c") {
+						$new = 1;
+						last;
+					} elsif ($input eq "quit") {
+						quit();
+						return;
+					} elsif ($input !~ /^\d+$/) {
+						error "\"$input\" is not a valid character number.\n";
+					} elsif (!$chars[$input]) {
+						error "Character #$input does not exist.\n";
+					} else {
+						configModify('char', $input, 1);
+						sendCharLogin(\$remote_socket, $config{'char'});
+						$timeout{'charlogin'}{'time'} = time;
+						last;
+					}
+				}
+
 			} else {
-				message("Character $config{'char'} selected\n", "connection");
+				message("Character $config{'char'} ($chars[$config{'char'}]{name}) selected\n", "connection");
 				sendCharLogin(\$remote_socket, $config{'char'});
 				$timeout{'charlogin'}{'time'} = time;
 			}
+
+			if ($new) {
+				my $message = "Please enter the desired properties for your characters, in this form:\n" .
+						"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk)]\n";
+				message($message, "input");
+
+				while (1) {
+					my $input = $interface->getInput(-1);
+					next if (!defined $input);
+
+					my @args = parseArgs($input);
+					if (@args < 2) {
+						error $message;
+						next;
+					}
+
+					message "Creating character \"$args[1]\" in slot \"$args[0]\"...\n", "connection";
+					createCharacter(@args);
+				}
+			}
 		}
-		$firstLoginMap = 1;
-		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
-		$sentWelcomeMessage = 1;
+		}
+
+		if (charSelectScreen() == 1) {
+			$firstLoginMap = 1;
+			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+			$sentWelcomeMessage = 1;
+		} else {
+			return;
+		}
 
 	} elsif ($switch eq "006C") {
 		error("Error logging into Game Login Server (invalid character specified)...\n", "connection");
@@ -5116,6 +5181,72 @@ sub parseMsg {
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
+
+	} elsif ($switch eq "006D") {
+		my %char;
+		my $ID = unpack("L", substr($msg, 2, 4));
+		$char{name} = substr($msg, 76, 24);
+		$char{zenny} = unpack("L", substr($msg, 10, 4));
+		($char{str}, $char{agi}, $char{vit}, $char{int}, $char{dex}, $char{luk}) = unpack("C*", substr($msg, 100, 6));
+		my $slot = unpack("C", substr($msg, 106, 1));
+
+		$char{name} =~ s/\000*$//g;
+		$char{lv} = 1;
+		$char{lv_job} = 1;
+		$chars[$slot] = \%char;
+
+		$conState = 3;
+		message "Character $char{name} ($slot) created.\n", "info";
+		if (charSelectScreen() == 1) {
+			$conState = 3;
+			$firstLoginMap = 1;
+			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+			$sentWelcomeMessage = 1;
+		} else {
+			return;
+		}
+
+	} elsif ($switch eq "006E") {
+		message "Character cannot be to created. If you didn't make any mistake, then the name you chose already exists.\n", "info";
+		if (charSelectScreen() == 1) {
+			$conState = 3;
+			$firstLoginMap = 1;
+			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+			$sentWelcomeMessage = 1;
+		} else {
+			return;
+		}
+
+	} elsif ($switch eq "006F") {
+		if (defined $AI::temp::delIndex) {
+			message "Character $chars[$AI::temp::delIndex]{name} ($AI::temp::delIndex) deleted.\n", "info";
+			delete $chars[$AI::temp::delIndex];
+			undef $AI::temp::delIndex;
+		} else {
+			message "Character deleted.\n", "info";
+		}
+
+		if (charSelectScreen() == 1) {
+			$conState = 3;
+			$firstLoginMap = 1;
+			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+			$sentWelcomeMessage = 1;
+		} else {
+			return;
+		}
+
+	} elsif ($switch eq "0070") {
+		#my $errno = unpack("C", substr($msg, 2, 1));
+		error "Character cannot be deleted. Your email address probably wrong.\n";
+		undef $AI::temp::delIndex;
+		if (charSelectScreen() == 1) {
+			$conState = 3;
+			$firstLoginMap = 1;
+			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+			$sentWelcomeMessage = 1;
+		} else {
+			return;
+		}
 
 	} elsif ($switch eq "0071") {
 		message "Received character ID and Map IP from Game Login Server\n", "connection";
@@ -8615,11 +8746,37 @@ sub ai_storageGet {
 }
 
 ##
+# cartGet(items)
+# items: a reference to an array of indices.
+#
+# Get one or more items from cart.
+# \@items is a list of hashes; each has must have an "index" key, and may optionally have an "amount" key.
+# "index" is the index of the cart inventory item number. If "amount" is given, only the given amount of
+# items will retrieved from cart.
+#
+# Example:
+# # You want to get 5 Apples (inventory item 2) and all
+# # Fly Wings (inventory item 5) from cart.
+# my @items;
+# push @items, {index => 2, amount => 5};
+# push @items, {index => 5};
+# cartGet(\@items);
+sub cartGet {
+	my $items = shift;
+	return unless ($items && @{$items});
+
+	my %args;
+	$args{items} = $items;
+	$args{timeout} = 0.15;
+	AI::queue("cartGet", \%args);
+}
+
+##
 # cartAdd(items)
 # items: a reference to an array of hashes.
 #
 # Put one or more items in cart.
-# items is a list of hashes; each has must have an "index" key, and may optionally have an "amount" key.
+# \@items is a list of hashes; each has must have an "index" key, and may optionally have an "amount" key.
 # "index" is the index of the inventory item number. If "amount" is given, only the given amount of items will be put in cart.
 #
 # Example:
