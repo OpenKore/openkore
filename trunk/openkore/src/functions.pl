@@ -3131,8 +3131,7 @@ sub AI {
 			for (my $j = 0; $j < @partyUsersID; $j++) {
 				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
 				if ($players{$partyUsersID[$j]}
-					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) <= ($config{partySkillMaxDistance} || 8)
-					&& distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}) >= ($config{partySkillMinDistance} || 1)
+					&& inRange(distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'pos'}}), $config{partySkillDistance} || "1..8")
 					&& (!$config{"partySkill_$i"."_target"} || $config{"partySkill_$i"."_target"} eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'})
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
@@ -7610,11 +7609,11 @@ sub parseMsg {
 	} elsif ($switch eq "0196") {
 		# 0196 - type: word, ID: long, flag: bool
 		# This packet tells you about character statuses (such as when blessing or poison is (de)activated)
-                my $type = unpack("S1", substr($msg, 2, 2));
-                my $ID = substr($msg, 4, 4);
-                my $flag = unpack("C1", substr($msg, 8, 1));
+		my $type = unpack("S1", substr($msg, 2, 2));
+		my $ID = substr($msg, 4, 4);
+		my $flag = unpack("C1", substr($msg, 8, 1));
 
-                my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
+		my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
 
 		if ($ID eq $accountID) {
 			if ($flag) {
