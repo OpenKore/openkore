@@ -3386,17 +3386,21 @@ sub AI {
 	##### ATTACK #####
 
 
-	if ($ai_seq[0] eq "attack" && $ai_seq_args[0]{'suspended'}) {
+	if (AI::action eq "attack" && AI::args->{suspended}) {
 		$ai_seq_args[0]{'ai_attack_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
 		undef $ai_seq_args[0]{'suspended'};
 	}
 
-	if ($ai_seq[0] eq "attack" && $ai_seq_args[0]{move_start}) {
+	if (AI::action eq "attack" && AI::args->{move_start}) {
 		# We've just finished moving to the monster.
 		# Don't count the time we spent on moving
-		$ai_seq_args[0]{'ai_attack_giveup'}{'time'} += time - $ai_seq_args[0]{move_start};
-		undef $ai_seq_args[0]{'unstuck'}{'time'};
-		undef $ai_seq_args[0]{move_start};
+		AI::args->{ai_attack_giveup}{time} += time - AI::args->{move_start};
+		undef AI::args->{unstuck}{time};
+		undef AI::args->{move_start};
+
+	} elsif (AI::action eq "attack" && AI::args->{avoiding}) {
+		AI::args->{ai_attack_giveup}{time} = time;
+		undef AI::args->{avoiding};
 
 	} elsif ((($ai_seq[0] eq "route" && $ai_seq[1] eq "attack") || ($ai_seq[0] eq "move" && $ai_seq[2] eq "attack"))
 	   && $ai_seq_args[0]{attackID}) {
@@ -3425,7 +3429,7 @@ sub AI {
 		shift @ai_seq_args;
 		message "Can't reach or damage target, dropping target\n", "ai_attack";
 
-	} elsif ($ai_seq[0] eq "attack" && !%{$monsters{$ai_seq_args[0]{'ID'}}}) {
+	} elsif ($ai_seq[0] eq "attack" && !$monsters{$ai_seq_args[0]{'ID'}}) {
 		# Monster died or disappeared
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
 		my $ID = $ai_seq_args[0]{'ID'};
@@ -3526,6 +3530,10 @@ sub AI {
 				}
 				$i++;
 			}
+
+			if ($config{'runFromTarget'} && $config{'runFromTarget_dist'} > AI::args->{attackMethod}{distance}) {
+				AI::args->{attackMethod}{distance} = $config{'runFromTarget_dist'};
+			}
 		}
 
 		if ($chars[$config{'char'}]{'sitting'}) {
@@ -3540,7 +3548,63 @@ sub AI {
 			shift @ai_seq;
 			shift @ai_seq_args;
 
-		} elsif ($monsterDist > $ai_seq_args[0]{'attackMethod'}{'distance'}) {
+		} elsif ($config{'runFromTarget'} && $monsterDist < $config{'runFromTarget_dist'}) {
+			#my $begin = time;
+			# Get a list of blocks that we can run to
+			my @blocks = calcAvoidArea($char->{pos_to}{x}, $char->{pos_to}{y}, $config{'runFromTarget_dist'});
+
+			# Find the distance value of the block that's farthest away from a wall
+			my $highest;
+			foreach (@blocks) {
+				my $dist = ord(substr($field{dstMap}, $_->{y} * $field{width} + $_->{x}));
+				if (!defined $highest || $dist > $highest) {
+					$highest = $dist;
+				}
+			}
+
+			# Get rid of rediculously large route distances (such as spots that are on a hill)
+			# Get rid of blocks that are near a wall
+			my $pathfinding = new PathFinding;
+			use constant AVOID_WALLS => 4;
+			for (my $i = 0; $i < @blocks; $i++) {
+				# We want to avoid walls (so we don't get cornered), if possible
+				my $dist = ord(substr($field{dstMap}, $blocks[$i]{y} * $field{width} + $blocks[$i]{x}));
+				if ($highest >= AVOID_WALLS && $dist < AVOID_WALLS) {
+					delete $blocks[$i];
+					next;
+				}
+
+				$pathfinding->reset(
+					field => \%field,
+					start => $char->{pos_to},
+					dest => $blocks[$i]);
+				my $ret = $pathfinding->runcount;
+				if ($ret <= 0 || $ret > $config{'runFromTarget_dist'} * 2) {
+					delete $blocks[$i];
+					next;
+				}
+			}
+
+			# Find the block that's farthest to us
+			my ($largestDistSelf, $largestDistMon);
+			my $bestBlock;
+			foreach (@blocks) {
+				next unless defined $_;
+				my $dist = distance($char->{pos_to}, $_);
+				my $monDist = distance($monsters{$ID}{pos_to}, $_);
+				if (!defined $largestDistSelf || $monDist > $largestDistMon) {
+					$largestDistSelf = $dist;
+					$largestDistMon = $monDist;
+					$bestBlock = $_;
+				}
+			}
+
+			#message "Time spent: " . (time - $begin) . "\n";
+			#debug_showSpots(\@blocks);
+			AI::args->{avoiding} = 1;
+			move($bestBlock->{x}, $bestBlock->{y}, $ID);
+
+		} elsif (!$config{'runFromTarget'} && $monsterDist > $ai_seq_args[0]{'attackMethod'}{'distance'}) {
 			if (checkFieldWalkable(\%field, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y})) {
 				# Move to target
 				$ai_seq_args[0]{move_start} = time;
@@ -3572,10 +3636,8 @@ sub AI {
 				message "Can't reach or damage target, dropping target\n", "ai_attack";
 			}
 
-		} elsif (($config{'tankMode'} && $monsters{$ID}{'dmgFromYou'} == 0)
-		      || !$config{'tankMode'}) {
+		} elsif (!$config{'tankMode'} || !$monsters{$ID}{'dmgFromYou'} == 0) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
-
 			if (!$ai_seq_args[0]{'firstAttack'}) {
 				$ai_seq_args[0]{'firstAttack'} = 1;
 				my $dist = sprintf("%.1f", distance($char->{pos_to}, $monsters{$ID}{pos_to}));
