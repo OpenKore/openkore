@@ -33,10 +33,7 @@ our @EXPORT_OK = qw(&register &reload &checkSyntax @modules);
 
 sub register {
 	foreach (@_) {
-		if (! -f "$_.pm") {
-			print STDERR "Error: module $_.pm not found\n";
-			exit 1;
-		}
+		next if (! -f "$_.pm");
 
 		# Call the module's MODINIT() function when it's registered
 		my $initFunc = "${_}::MODINIT";
