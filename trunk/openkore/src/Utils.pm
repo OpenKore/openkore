@@ -18,7 +18,6 @@
 package Utils;
 
 use strict;
-no strict 'refs';
 use Time::HiRes qw(time usleep);
 use IO::Socket::INET;
 use bytes;
@@ -214,8 +213,8 @@ sub binSize {
 # existsInList($list, "juice");		# => 0
 sub existsInList {
 	my ($list, $val) = @_;
-	my @array = split / *, */, $list;
 	return 0 if ($val eq "");
+	my @array = split / *, */, $list;
 	$val = lc($val);
 	foreach (@array) {
 		s/^\s+//;
@@ -257,16 +256,16 @@ sub findIndex {
 	my $key = shift;
 	my $num = shift;
 	my $i = 0;
-	my $max = @{$r_array};
+	my $max = @{$r_array} - 1;
 
 	if ($num ne "") {
-		for ($i = 0; $i < $max; $i++) {
+		for $i (0..$max) {
 			if ($r_array->[$i]{$key} == $num) {
 				return $i;
 			}
 		}
 	} else {
-		for ($i = 0; $i < $max; $i++) {
+		for $i (0..$max) {
 			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
 	}
@@ -289,16 +288,16 @@ sub findIndexString {
 	my $key = shift;
 	my $str = shift;
 	my $i = 0;
-	my $max = @{$r_array};
+	my $max = @{$r_array} - 1;
 
 	if ($str ne "") {
-		for ($i = 0; $i < $max; $i++) {
+		for $i (0..$max) {
 			if ($r_array->[$i]{$key} eq $str) {
 				return $i;
 			}
 		}
 	} else {
-		for ($i = 0; $i < $max; $i++) {
+		for $i (0..$max) {
 			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
 	}
@@ -321,17 +320,17 @@ sub findIndexString_lc {
 	my $key = shift;
 	my $str = shift;
 	my $i = 0;
-	my $max = @{$r_array};
+	my $max = @{$r_array} - 1;
 
 	if ($str ne "") {
 		$str = lc $str;
-		for ($i = 0; $i < $max; $i++) {
+		for $i (0..$max) {
 			if (lc $r_array->[$i]{$key} eq $str) {
 				return $i;
 			}
 		}
 	} else {
-		for ($i = 0; $i < $max; $i++) {
+		for $i (0..$max) {
 			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
 		}
 	}
