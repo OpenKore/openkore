@@ -3442,7 +3442,7 @@ sub AI {
 					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
 
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !%{$monsters{$_}{'state'}}) {
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !%{$monsters{$_}{'statuses'}}) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						undef $ai_v{'temp'}{'first'};
@@ -3456,7 +3456,7 @@ sub AI {
 					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
 
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !%{$monsters{$_}{'state'}}) {
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !%{$monsters{$_}{'statuses'}}) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						$ai_v{'temp'}{'priorityAttack'} = 1;
@@ -3472,7 +3472,7 @@ sub AI {
 				$ai_v{'temp'}{'first'} = 1;
 				foreach (@{$ai_v{'ai_attack_partyMonsters'}}) {
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'ignore'} && !%{$monsters{$_}{'state'}}) {
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'ignore'} && !%{$monsters{$_}{'statuses'}}) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						undef $ai_v{'temp'}{'first'};
@@ -3492,7 +3492,7 @@ sub AI {
 				foreach (@{$ai_v{'ai_attack_cleanMonsters'}}) {
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
 					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'})
-					 && !$monsters{$_}{'ignore'} && !%{$monsters{$_}{'state'}}
+					 && !$monsters{$_}{'ignore'} && !%{$monsters{$_}{'statuses'}}
 					 && !positionNearPlayer(\%{$monsters{$_}{'pos_to'}}, 3)
 					 && !positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4)) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
