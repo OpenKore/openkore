@@ -59,6 +59,8 @@ New config options:
   4 - respawn
 - teleportAuto_idle must be true in order for teleportAuto_search to behave as
   expected.
+- _maxAttempts condition for attackSkillSlot works like the old _maxUses did
+  (counts attempts to use a skill even if they failed)
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
