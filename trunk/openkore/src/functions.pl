@@ -4200,7 +4200,7 @@ sub AI {
 
 
 	##### ITEMS TAKE #####
-
+	# Look for loot to pickup when your monster died.
 
 	if ($ai_seq[0] eq "items_take" && $ai_seq_args[0]{'suspended'}) {
 		$ai_seq_args[0]{'ai_items_take_start'}{'time'} += time - $ai_seq_args[0]{'suspended'};
@@ -5552,7 +5552,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		avoidList_talk($chatMsgUser, $chatMsg);
 #Solos End
 
-	} elsif ($switch eq "008E" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
+	} elsif ($switch eq "008E") {
 		$msg_size = unpack("S*", substr($msg, 2, 2));
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000//g;
@@ -5592,11 +5592,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Sending Map Loaded\n" if ($config{'debug'} && !$config{'XKore'});
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 
-	} elsif ($switch eq "0092" && length($msg) >= 28) {
+	} elsif ($switch eq "0092") {
 		$conState = 4;
 		initMapChangeVars() if ($config{'XKore'});
 		undef $conState_tries;
-		for ($i = 0; $i < @ai_seq; $i++) {
+		for (my $i = 0; $i < @ai_seq; $i++) {
 			ai_setMapChanged($i);
 		}
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
@@ -5620,7 +5620,20 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		write;
 		print "Closing connection to Map Server\n";
 		killConnection(\$remote_socket) if (!$config{'XKore'});
-		
+
+		# Reset item and skill times. The effect of items (like aspd potions)
+		# and skills (like Twohand Quicken) disappears when we change map server.
+		my $i = 0;
+		while ($config{"useSelf_item_$i"}) {
+			$ai_v{"useSelf_item_$i"."_time"} = 0;
+			$i++;
+		}
+		$i = 0;
+		while ($config{"useSelf_skill_$i"}) {
+			$ai_v{"useSelf_skill_$i"."_time"} = 0;
+			$i++;
+		}
+
 	} elsif ($switch eq "0093") {
 
 	} elsif ($switch eq "0095") {
@@ -5677,9 +5690,12 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
 			$privMsgUsers[@privMsgUsers] = $privMsgUser;
 		}
+
 		chatLog("pm", "(From: $privMsgUser) : $privMsg\n");
-            if ($config{'relay'} == "1") {
-                sendMessage(\$remote_socket, "pm", "(From: $privMsgUser) : $privMsg", $config{'relay_user'}); }
+		if ($config{'relay'}) {
+			sendMessage(\$remote_socket, "pm", "(From: $privMsgUser) : $privMsg", $config{'relay_user'});
+		}
+
 		$ai_cmdQue[$ai_cmdQue]{'type'} = "pm";
 		$ai_cmdQue[$ai_cmdQue]{'user'} = $privMsgUser;
 		$ai_cmdQue[$ai_cmdQue]{'msg'} = $privMsg;
@@ -5690,7 +5706,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		avoidGM_talk($privMsgUser, $privMsg);
 		avoidList_talk($privMsgUser, $privMsg);
 
-#auto-response
+		# auto-response
 		if ($config{"autoResponse"}) {
 			$i = 0;
 			while ($chat_resp{"words_said_$i"} ne "") {
@@ -8299,7 +8315,7 @@ sub ai_getSkillUseType {
 }
 
 ##
-# ai_itemExchangeCheck($exchange)
+# ai_itemExchangeCheck([$exchange])
 #
 # This is where most of the actual calculation for the item exchange is done.
 # If $exchange equals "minimum", we only check that we can do
@@ -10859,8 +10875,8 @@ sub parseSkillsSPLUT {
 sub parseTimeouts {
 	my $file = shift;
 	my $r_hash = shift;
-	my $key,$value;
-	open FILE, $file;
+	my ($key,$value);
+	open (FILE, "<$file");
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
@@ -10875,8 +10891,8 @@ sub parseTimeouts {
 sub writeDataFile {
 	my $file = shift;
 	my $r_hash = shift;
-	my $key,$value;
-	open FILE, "+> $file";
+	my ($key,$value);
+	open (FILE, "+> $file");
 	foreach (keys %{$r_hash}) {
 		if ($_ ne "") {
 			print FILE "$_ $$r_hash{$_}\n";
@@ -11481,7 +11497,7 @@ sub getTickCount {
 }
 
 ##
-# lookAtPosition $pos [$headdir]
+# lookAtPosition($pos, [$headdir])
 # $pos: a reference to a coordinate hash.
 # $headdir: 0 = face directly, 1 = look right, 2 = look left
 #
