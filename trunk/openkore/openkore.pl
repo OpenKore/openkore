@@ -52,8 +52,9 @@ use Plugins;
 use FileParsers;
 use Network;
 use Network::Send;
+use Commands;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send));
+	Network Network::Send Commands));
 
 
 Log::message("$Settings::versionText\n");
@@ -445,6 +446,8 @@ while ($quit != 1) {
 
 	# Other stuff that's run in the main loop
 	mainLoop();
+
+	Modules::doReload();
 }
 
 
