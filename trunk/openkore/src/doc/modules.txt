@@ -8,4 +8,5 @@ Plugins
 Utils
 Skills
 Misc
+IPC
 IPC::Protocol

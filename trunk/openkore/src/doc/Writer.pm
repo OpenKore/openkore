@@ -57,7 +57,7 @@ sub makeupText {
 	}
 
 	# Functions
-	$text =~ s/([a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
+	$text =~ s/(\$?[a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
 	# Variables
 	$text =~ s/(^| )([\$\%\@][a-z0-9_{\'}:]+)/<code>$1$2<\/code>/gi;
 	# Links to modules
@@ -119,7 +119,7 @@ sub writeModuleHTML {
 		if ($text ne '') {
 			my $title = ($category eq "") ? "Functions in this module" : $category;
 			$text = "<p><h2>$title</h2>\n" .
-				"<table id=\"functionIndex\">\n" .
+				"<table class=\"functionIndex\">\n" .
 				"<tr><th>Name</th><th>Parameters</th></tr>\n" .
 				"$text\n" .
 				"</table>\n";
@@ -194,7 +194,7 @@ sub writeModuleHTML {
 		if ($text ne '') {
 			$text = "<p><hr class=\"details_sep\">\n\n" .
 				"<h2>Details</h2>\n" .
-				"<div id=\"details\">\n\n\n" .
+				"<div class=\"details\">\n\n\n" .
 				"$text\n\n\n" .
 				"</div>";
 		}

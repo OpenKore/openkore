@@ -12,6 +12,8 @@
 #  $Id$
 #
 #########################################################################
+##
+# MODULE DESCRIPTION: Inter-process communication framework
 
 package IPC;
 
@@ -22,11 +24,14 @@ use File::Spec;
 use Fcntl ':flock';
 use Time::HiRes qw(time sleep);
 
-use Globals qw($quit);
 use Log qw(debug);
 use IPC::Client;
 use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 
+
+################################
+### CATEGORY: Constructor
+################################
 
 ##
 # IPC->new([host, port])
@@ -39,48 +44,36 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 # If $port is not given, and $host is not given or is localhost, then a connection
 # will be made to the local manager server. The local manager server is automatically
 # started, if not already started.
+#
+# The IPC object isn't immediately usable yet. It must first do some handshaking
+# communication with the manager server. You must call $ipc->iterate() in a loop,
+# until $ipc->ready() returns 1.
 sub new {
 	my $class = shift;
 	my $host = shift;
 	my $port = shift;
+	my %self;
 
 	$host = "localhost" if (!defined($host) || $host eq "127.0.0.1");
 	if ($host eq "localhost" && !$port) {
+		$self{host} = $host;
+		$self{manager} = {};
 		$port = _checkManager();
-		$port = _startManager() if (!$port);
-		return undef if (!$port);
 
 	} elsif (!$port) {
 		$@ = "No port number specified.";
 		return undef;
+
 	}
 
-	my %self;
-	$self{client} = new IPC::Client($host, $port);
-	return undef if (!$self{client});
-
-
-	# Receive the WELCOME message
-	while (!$quit) {
-		my @messages;
-		my $ret = $self{client}->recv(\@messages);
-		if ($ret == -1) {
-			undef %self;
-			return undef;
-		} elsif ($ret == 0) {
-			sleep 0.01;
-			next;
-		}
-
-		foreach my $msg (@messages) {
-			if ($msg->{ID} eq "_WELCOME") {
-				$self{ID} = $msg->{params}{ID};
-				debug "Received WELCOME - our client ID: $self{ID}\n", "ipc";
-			}
-		}
-		last;
+	if ($port) {
+		$self{host} = $host;
+		$self{port} = $port;
+		$self{client} = new IPC::Client($host, $port);
+		return undef if (!$self{client});
 	}
 
+	$self{connected} = 1;
 	bless \%self, $class;
 	return \%self;
 }
@@ -128,56 +121,170 @@ sub _checkManager {
 	}
 }
 
-# Start the manager server
-sub _startManager {
-	my $server = new IO::Socket::INET(
-		Listen => 5,
-		LocalHost => 'localhost',
-		LocalPort => 0,
-		Proto => 'tcp',
-		ReuseAddr => 1,
-		Timeout => 6
-		);
-	if (!$server) {
-		$@ = "Unable to start a server socket on a random port.";
-		return 0;
-	}
-	my $pid = launchScript(1, undef, 'src/IPC/manager.pl', '--quiet', '--feedback=' . $server->sockport());
 
-	my $time = time;
-	while (!$quit && checkLaunchedApp($pid) && !timeOut($time, 6)) {
-		if (dataWaiting($server)) {
-			my $client = $server->accept;
-			my $data;
-			$client->recv($data, 1024 * 32);
+################################
+### CATEGORY: Methods
+################################
 
-			if ($data =~ /^\d+$/) {
-				return $data;
-			} else {
-				$@ = "Server returned error: $data";
+##
+# $ipc->iterate()
+#
+# Call this function in the program's main loop.
+sub iterate {
+	my $self = shift;
+
+	return 0 if !$self->{connected};
+
+	if (!$self->{port} && $self->{host} eq "localhost") {
+		# Start the manager server
+		my $manager = $self->{manager};
+		if ($manager->{state} eq '') {
+			# Create a server socket on a random port.
+			# The manager server will also create a server socket on a random
+			# port, and will tell us its port number by sending it to this
+			# socket.
+			debug "Starting server socket for manager server\n", "ipc";
+			my $server = new IO::Socket::INET(
+				Listen => 5,
+				LocalHost => 'localhost',
+				LocalPort => 0,
+				Proto => 'tcp',
+				ReuseAddr => 1,
+				Timeout => 6
+			);
+			if (!$server) {
+				#$@ = "Unable to start a server socket on a random port.";
+				$self->{connected} = 0;
 				return 0;
 			}
+			$manager->{server} = $server;
+			$manager->{state} = 'Launch the manager server';
+
+		} elsif ($manager->{state} eq 'Launch the manager server') {
+			debug "Launching manager server\n", "ipc";
+			$manager->{pid} = launchScript(1, undef, 'src/IPC/manager.pl',
+				'--quiet', '--feedback=' . $manager->{server}->sockport);
+			$manager->{time} = time;
+			$manager->{state} = 'Connect to the manager server';
+
+		} elsif ($manager->{state} eq 'Connect to the manager server') {
+			if (!checkLaunchedApp($manager->{pid}) || timeOut($manager->{time}, 8)) {
+				# Manager server exited abnormally, or failed to
+				# start within 6 seconds
+				debug "Manager server exited abnormally\n", "ipc";
+				$manager->{server}->close;
+				$self->{connected} = 0;
+				return 0;
+
+			} elsif (dataWaiting($manager->{server})) {
+				my $client = $manager->{server}->accept;
+				my $data;
+				$client->recv($data, 1024 * 32);
+				$manager->{server}->close;
+
+				if ($data =~ /^\d+$/) {
+					# We got the manager server's port!
+					debug "Manager server started at port $data\n", "ipc";
+					$self->{port} = $data;
+					$self->{client} = new IPC::Client($self->{host}, $self->{port});
+					return defined $self->{client};
+				} else {
+					debug "Manager server returned error: $data\n", "ipc";
+					$self->{connected} = 0;
+					return 0;
+				}
+			}
 		}
-		sleep 0.01;
+
+	} elsif (!$self->{ready}) {
+		# We've just connected to the manager server.
+		# Perform handshaking communication.
+		my @messages;
+		my $ret = $self->{client}->recv(\@messages);
+
+		if ($ret == -1) {
+			$self->{connected} = 0;
+			return 0;
+		}
+		foreach my $msg (@messages) {
+			if ($msg->{ID} eq "_WELCOME") {
+				$self->{ID} = $msg->{params}{ID};
+				$self->{ready} = 1;
+				debug "Received _WELCOME - our client ID: $self->{ID}\n", "ipc";
+				$self->send("_WELCOME");
+			}
+		}
 	}
-	$@ = "Manager server failed to start.";
-	$server->close;
-	return 0;
+	return 1;
 }
 
+##
+# $ipc->ready()
+#
+# Check whether the handshaking communication with the manager server has
+# been performed. The IPC connection is only usable when handshaking has been
+# performed.
+sub ready {
+	return shift->{ready};
+}
 
+##
+# $ipc->connected()
+#
+# Check whether you're still connected to the manager server.
+sub connected {
+	return shift->{connected};
+}
+
+##
+# $ipc->host()
+#
+# Returns the host name of the manager server.
+# You can only use this function when the connection is ready.
+#
+# See also: $ipc->ready(), $ipc->port()
+sub host {
+	return shift->{host};
+}
+
+##
+# $ipc->ID()
+#
+# Returns the ID of the client. Each client in the IPC network has a unique ID.
 sub ID {
 	return shift->{ID};
 }
 
-sub broadcast {
+##
+# $ipc->port()
+#
+# Returns the port number of the manager server.
+# You can only use this function when the connection is ready.
+#
+# See also: $ipc->ready(), $ipc->host()
+sub port {
+	return shift->{port};
+}
+
+##
+# $ipc->send(ID, hash | key => value)
+sub send {
 	my $self = shift;
+	return 2 if (!$self->{ready});
+	return 0 if (!$self->{connected});
 	return $self->{client}->send(@_);
 }
 
+##
+# $ipc->recv(r_msgs)
 sub recv {
 	my $self = shift;
-	return $self->{client}->recv(@_);
+	return 0 if (!$self->{ready});
+	return -1 if (!$self->{connected});
+
+	my $ret = $self->{client}->recv(@_);
+	$self->{connected} = 0 if ($ret == -1);
+	return $ret;
 }
 
 1;

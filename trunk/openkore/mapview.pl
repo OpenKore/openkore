@@ -15,11 +15,13 @@ use Getopt::Long;
 
 my %options = (
 	fields => 'fields',
-	maps => 'map'
+	maps => 'map',
+	logs => 'logs',
 );
 GetOptions(
 	"fields=s" => \$options{fields},
 	"maps=s" => \$options{maps},
+	"logs=s" => \$options{logs},
 	"help" => \$options{help}
 );
 
@@ -47,12 +49,15 @@ use Wx::Event qw(EVT_TIMER);
 use base qw(Wx::App);
 
 use Interface::Wx::MapViewer;
+use IPC;
 
 my $frame;
 my $sizer;
 my $mapview;
 my $status;
 my %field;
+my %ipcInfo;
+my $ipc;
 
 sub OnInit {
 	my $self = shift;
@@ -82,6 +87,7 @@ sub OnInit {
 	EVT_TIMER($self, 5, \&onTimer);
 	$timer->Start(500);
 	onTimer();
+
 	return 1;
 }
 
@@ -93,6 +99,21 @@ sub onMouseMove {
 }
 
 sub onClick {
+	my (undef, $x, $y) = @_;
+
+	if ($ipcInfo{host} && (!$ipc || $ipc->host ne $ipcInfo{host})) {
+		$ipc = new IPC($ipcInfo{host}, $ipcInfo{port});
+		while ($ipc && $ipc->connected && !$ipc->ready) {
+			$ipc->iterate;
+		}
+	}
+	if ($ipc && $ipc->ready && $ipc->connected) {
+		$ipc->send("move to",
+			client => $ipcInfo{ID},
+			field => $field{name},
+			x => $x,
+			y => $y);
+	}
 }
 
 sub onMapChange {
@@ -101,7 +122,7 @@ sub onMapChange {
 }
 
 sub onTimer {
-	return unless open(F, "< logs/walk.dat");
+	return unless open(F, "< $options{logs}/walk.dat");
 	my @lines = <F>;
 	close F;
 	s/[\r\n]//g foreach (@lines);
@@ -111,8 +132,10 @@ sub onTimer {
 	}
 	$mapview->set($lines[0], $lines[1], $lines[2], \%field);
 
+	($ipcInfo{host}, $ipcInfo{port}, $ipcInfo{ID}) = split / /, $lines[3];
+
 	my @monsters;
-	for (my $i = 3; $i < @lines; $i++) {
+	for (my $i = 4; $i < @lines; $i++) {
 		my ($type, $x, $y) = split / /, $lines[$i];
 		if ($type eq "ML") {
 			my %monster;

@@ -7,7 +7,8 @@ use Log qw(message debug);
 use Utils qw(calcPosition);
 
 my %handlers = (
-	'where are you' => \&ipcWhereAreYou
+	'where are you' => \&ipcWhereAreYou,
+	'move to',	=> \&ipcMoveTo,
 );
 
 sub process {
@@ -21,12 +22,22 @@ sub process {
 	}
 }
 
+sub ipcMoveTo {
+	my ($ipc, $ID, $params) = @_;
+	return unless $conState == 5;
+
+	if ($params->{client} eq $ipc->ID) {
+		main::ai_route($params->{field}, $params->{x}, $params->{y},
+			attackOnRoute => 1);
+	}
+}
+
 sub ipcWhereAreYou {
 	my ($ipc, $ID, $params) = @_;
 	return unless $conState == 5;
 
 	my $pos = calcPosition($char);
-	$ipc->broadcast("i am here", {
+	$ipc->send("i am here", {
 		clientID => $ipc->ID,
 		charServer => $charServer,
 		name	=> $char->{name},

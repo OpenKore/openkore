@@ -5,6 +5,7 @@
 # This server keeps track of all clients. A client can query
 # a list of all other clients, or broadcast a message.
 #################################################
+
 use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin/src";
@@ -20,6 +21,8 @@ use IPC::Server;
 my $lockFile = File::Spec->catfile(File::Spec->tmpdir(), "KoreServer");
 my $lockHandle;
 my $server;
+my %clients;
+
 $config{debug} = 1;
 
 sub __start {
@@ -111,7 +114,7 @@ sub __start {
 
 
 	#### Main loop ####
-	$server->addListener(\&on_new_client);
+	$server->addListener(\&onConnectionActivity);
 	while (1) {
 		foreach my $msg ($server->iterate) {
 			process($msg);
@@ -125,30 +128,45 @@ sub __start {
 # Broadcast everything else throughout the network.
 sub process {
 	my $msg = shift;
-	print "Message: $msg->{ID} (from client $msg->{clientID})\n";
+	my $ID = $msg->{ID};
+	my $clientID = $msg->{clientID};
+	print "Message: $ID (from client $clientID)\n";
 
-	if ($msg->{ID} eq "_LIST-CLIENTS") {
+	if ($ID eq "_WELCOME") {
+		$clients{$clientID}{ready} = 1;
+
+	} elsif ($ID eq "_LIST-CLIENTS") {
 		my %params;
 		my $i = 0;
 		foreach ($server->clients) {
-			if ($_ ne $msg->{clientID}) {
+			if ($_ ne $clientID && $clients{$clientID}{ready}) {
 				$params{"client$i"} = $_;
 				$i++;
 			}
 		}
 		$params{count} = $i;
-		$server->send($msg->{clientID}, "_LIST-CLIENTS", \%params);
+		$server->send($clientID, "_LIST-CLIENTS", \%params);
 
 	} else {
-		$server->broadcast($msg->{clientID}, $msg->{ID}, $msg->{params});
+		# Broadcast the message too all clients except the sender,
+		# or clients that aren't done with handshaking yet
+		foreach ($server->clients) {
+			next if ($_ eq $clientID || !$clients{$_}{ready});
+			$server->send($_, $ID, $msg->{params});
+		}
 	}
 }
 
-sub on_new_client {
+sub onConnectionActivity {
 	my ($context, $clientID) = @_;
-	return unless $context eq "connect";
 
-	$server->send($clientID, "_WELCOME", { ID => $clientID });
+	if ($context eq "connect") {
+		$clients{$clientID} = {};
+		$server->send($clientID, "_WELCOME", { ID => $clientID });
+
+	} elsif ($context eq "disconnect") {
+		delete $clients{$clientID};
+	}
 }
 
 
