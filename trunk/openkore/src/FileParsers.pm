@@ -336,18 +336,26 @@ sub parseMonControl {
 	my $r_hash = shift;
 	undef %{$r_hash};
 	my ($key,@args,$args);
-	open FILE, $file;
+
+	open FILE, "< $file";
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $args) = $_ =~ /([\s\S]+?) ([\-\d]+[\s\S]*)/;
-		@args = split / /,$args;
+
+		if (/\t/) {
+			($key, $args) = split /\t+/, lc($_);
+		} else {
+			($key, $args) = lc($_) =~ /([\s\S]+?) ([\-\d]+[\s\S]*)/;
+		}
+
+		@args = split / /, $args;
 		if ($key ne "") {
-			$$r_hash{lc($key)}{'attack_auto'} = $args[0];
-			$$r_hash{lc($key)}{'teleport_auto'} = $args[1];
-			$$r_hash{lc($key)}{'teleport_search'} = $args[2];
-			$$r_hash{lc($key)}{'skillcancel_auto'} = $args[3];
+			$r_hash{$key}->{'attack_auto'} = $args[0];
+			$r_hash{$key}->{'teleport_auto'} = $args[1];
+			$r_hash{$key}->{'teleport_search'} = $args[2];
+			$r_hash{$key}->{'skillcancel_auto'} = $args[3];
+			$r_hash{$key}->{'attack_lvl'} = $args[4];
 		}
 	}
 	close FILE;

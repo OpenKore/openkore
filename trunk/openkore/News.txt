@@ -61,6 +61,23 @@ New features:
 - kRO/PK servers are now (partially?) supported. In config.txt, set
   pkServer to 1.
 
+mon_control.txt:
+- mon_control.txt has gained more features. The new syntax is:
+  (monster name) (attack-auto) (teleport) (search) (level)
+
+- (attack-auto):
+  You can now mark a monster as "always aggressive". This means that, 
+  if a certain monster is on screen, Kore will always attack it, even
+  when Kore is sitting and the monster isn't attacking you.
+  In mon_control.txt, set the (attack_auto) flag to 2.
+  Example:
+  Skeleton Soldier 2 0 0 0
+- (level):
+  You can configure Kore to only attack a monster, if your base level is high
+  enough. Example:
+  Sohee 1 0 0 50
+  Only attack Sohee if your are lv 50 or higher.
+
 New commands:
 - guild join (flag)
   Accept or deny a guild join request.
@@ -125,7 +142,8 @@ Internal:
   away. Sometimes players don't get removed from the list for some reason.
 
 Credits:
-- Joseph: -1 flag support in mon_control.txt, avoidList_inLockOnly
+- Joseph: -1 and 2 attack-auto support in mon_control.txt,
+  avoidList_inLockOnly
 - aputs: Support for the _monsters option in useSelf_skill, useSelf_item
   and partySkill.
 - obyarou: Priority attack support for non-aggressive monsters,
@@ -138,6 +156,7 @@ Credits:
 - sparshong: character creation/deletion packet code.
 - jsteng, littlewens: mute packet support.
 - anoxemian: (partial?) kRO/PK server support.
+- doenet: mon_control.txt attack level support.
 
 
 ==================
