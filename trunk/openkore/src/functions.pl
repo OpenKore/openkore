@@ -4521,7 +4521,7 @@ sub AI {
 			# When the server sends us the "You move from A to B" packet, it means
 			# that we will arrive at B shortly, not that we are at B.
 			# So wait until we've arrived.
-			if (timeOut($char->{time_move}, $char->{time_move_calc}) - $config{'seconds_per_block'}) {
+			if (timeOut($char->{time_move}, $char->{time_move_calc} - $config{'seconds_per_block'})) {
 				#debug("Move - dequeue\n", "ai_move");
 				shift @ai_seq;
 				shift @ai_seq_args;
