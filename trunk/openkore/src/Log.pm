@@ -71,6 +71,7 @@
 # list			List of information (monster list, player list, item list, etc.)
 # load			Loading config files
 # npc			NPC messages
+# presence		Player/monster appeared/exists
 # party			Party/follow related
 # partychat		Party chat messages
 # plugins		Messages about plugin handling
