@@ -295,7 +295,6 @@ sub cmdAI {
 		undef %ai_v;
 		undef $chars[$config{char}]{dead};
 		message "AI sequences cleared\n", "success";
-		return;
 
 	} elsif ($args eq 'print') {
 		# Display detailed info about current AI sequence
@@ -307,22 +306,25 @@ sub cmdAI {
 		}
 
 		message("------ AI Sequences --------------------\n", "list");
-		return;
 
 	} elsif ($args eq 'ai_v') {
 		message dumpHash(\%ai_v) . "\n", "list";
-		return;
-	}
 
-	# Toggle AI
-	if ($AI) {
-		undef $AI;
-		$AI_forcedOff = 1;
-		message "AI turned off\n", "success";
+	} elsif ($args eq '') {
+		# Toggle AI
+		if ($AI) {
+			undef $AI;
+			$AI_forcedOff = 1;
+			message "AI turned off\n", "success";
+		} else {
+			$AI = 1;
+			undef $AI_forcedOff;
+			message "AI turned on\n", "success";
+		}
+
 	} else {
-		$AI = 1;
-		undef $AI_forcedOff;
-		message "AI turned on\n", "success";
+		error	"Syntax Error in function 'ai' (AI Commands)\n" .
+			"Usage: ai [ clear | print | ai_v ]\n";
 	}
 }
 

@@ -263,6 +263,7 @@ Bug fixes:
 - "Player are now: Blessing" changed to "Player is now: Blessing"
 - When creating a character using openkore, there will no longer be
   garbage trailing the character name.
+- Command "ai" returns error if invalid parameters are given.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
