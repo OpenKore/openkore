@@ -9337,7 +9337,7 @@ sub ai_skillUse {
 sub ai_skillUse2 {
 	my ($skill, $lvl, $maxCastTime, $minCastTime, $target) = @_;
 
-	if (!ai_getSkillUseType($skillID)) {
+	if (!ai_getSkillUseType($skill->handle)) {
 		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{ID});
 	} else {
 		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{pos_to}{x}, $target->{pos_to}{y});
@@ -10682,7 +10682,7 @@ sub checkSelfCondition {
 		return 0 unless (inRange(scalar ai_getAggressives(undef, 1), $config{$prefix . "_partyAggressives"}));
 	}
 
-	if ($config{$prefix . "_stopWhenHit"} > 0) { return 0 if (scalar ai_getAggressives()); }
+	if ($config{$prefix . "_stopWhenHit"} > 0) { return 0 if (scalar ai_getMonstersAttacking($accountID)); }
 
 	if ($config{$prefix . "_whenFollowing"} && $config{follow}) {
 		return 0 if (!checkFollowMode());
