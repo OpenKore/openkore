@@ -6,9 +6,10 @@ use Net::HTTP::NB;
 use Utils qw(dataWaiting);
 use constant MAX_RETRIES => 3;
 
+our ($defaultProxyHost, $defaultProxyPort);
 
 sub new {
-	my ($class, $host, $file,$proxy,$proxy_port) = @_;
+	my ($class, $host, $file, $proxy, $proxy_port) = @_;
 	my %self;
 
 	$self{host} = $host;
@@ -17,6 +18,9 @@ sub new {
 	$self{proxy_port} = $proxy_port;
 	$self{stage} = 'Connect';
 	$self{retry} = 0;
+	
+	$self{proxy} = $defaultProxyHost if (!defined $proxy);
+	$self{proxy_port} = $defaultProxyPort if (!defined $proxy_port);
 
 	bless \%self, $class;
 	return \%self;
