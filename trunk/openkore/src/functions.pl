@@ -395,37 +395,23 @@ sub parseCommand {
 		}
 
 	} elsif ($switch eq "al") {
+		if (!$shopstarted) {
+			error("You do not have a shop open.\n");
+			return;
+		}
 		message("----------Items being sold in store------------\n", "list");
 		message("#  Name                                     Type         Qty     Price   Sold\n", "list");
 
 		my $i = 1;
-		for ($number = 0; $number < @articles; $number++) {
-			next if ($articles[$number] eq "");
-			my $display = $articles[$number]{'name'};
-			if (!($articles[$number]{'identified'})) {
-				$display = $display." -- Not Identified";
-			}
-			if ($articles[$number]{'card1'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card1'}}."]";
-			}
-			if ($articles[$number]{'card2'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card2'}}."]";
-			}
-			if ($articles[$number]{'card3'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card3'}}."]";
-			}
-			if ($articles[$number]{'card4'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card4'}}."]";
-			}
-
+		for my $item (@articles) {
+			next unless $item;
 			message(swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>",
-				[$i, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}, $articles[$number]{'sold'}]),
+				[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, $item->{price}, $item->{sold}]),
 				"list");
-			$i++;
 		}
 		message("----------------------------------------------\n", "list");
-		message("You have earned " . formatNumber($shopEarned) . "z.\n", "list");
+		message("You have earned: " . formatNumber($shopEarned) . "z.\n", "list");
 
 	} elsif ($switch eq "as") {
 		# Stop attacking monster
@@ -1083,7 +1069,7 @@ sub parseCommand {
 			}
 		}
 
-	} elsif ($switch eq "openshop"){
+	} elsif ($switch eq "openshop") {
 		if (!$shopstarted) {
 			sendOpenShop(\$remote_socket);
 		} else {
@@ -5886,89 +5872,34 @@ sub parseMsg {
 
 	} elsif ($switch eq "00A0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$index = unpack("S1",substr($msg, 2, 2));
-		$amount = unpack("S1",substr($msg, 4, 2));
-		$ID = unpack("S1",substr($msg, 6, 2));
-		$type = unpack("C1",substr($msg, 21, 1));
-		$type_equip = unpack("C1",substr($msg, 19, 2));
-		makeCoords(\%test, substr($msg, 8, 3));
-		$fail = unpack("C1",substr($msg, 22, 1));
+
+		my $index = unpack("S1", substr($msg, 2, 2));
+		my $amount = unpack("S1", substr($msg, 4, 2));
+		my $fail = unpack("C1", substr($msg, 22, 1));
 
 		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		if ($fail == 0) {
-			if ($invIndex eq "" || $itemSlots_lut{$ID} != 0) {
+		if (!$fail) {
+			my $item;
+			if (!$invIndex) {
 				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'index'} = $index;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'} = $ID;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} = $amount;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = $type;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $type_equip;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'identified'} = unpack("C1",substr($msg, 8, 1));
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} = unpack("C1",substr($msg, 10, 1));
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'} = unpack("S1",substr($msg, 12, 2));
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} = $elements_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementID'}};
-				undef @cnt;
-				$count = 0;
-
-				my $j;
-				for ($j = 1 ; $j < 5; $j++) {
-					if (unpack("S1", substr($msg, 9 + $j + $j, 2)) > 0) {
-						$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} = unpack("S1", substr($msg, 9 + $j + $j, 2));
-						for (my $k = 0;$k < 4;$k++) {
-							if (($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} eq $cnt[$k]{'ID'}) && ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "")) {
-								$cnt[$k]{'amount'} += 1;
-								last;
-							} elsif ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'} ne "") {
-								$cnt[$k]{'amount'} = 1;
-								$cnt[$k]{'name'} = $cards_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'}};
-								$cnt[$k]{'ID'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'slotID_$j'};
-								$count++;
-								last;
-							}
-						}
-					}
-				}
-				$display = "";
-				$count ++;
-				for ($j = 0; $j < $count; $j++) {
-					if ($j == 0 && $cnt[$j]{'amount'}) {
-						if ($cnt[$j]{'amount'} > 1) {
-							$display .= "$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
-                  				} else {
-							$display .= "$cnt[$j]{'name'}"; 
-						}
-					} elsif ($cnt[$j]{'amount'}) {
-						if ($cnt[$j]{'amount'} > 1) {
-							$display .= ",$cnt[$j]{'amount'}X$cnt[$j]{'name'}";
-						} else {
-							$display .= ",$cnt[$j]{'name'}";
-						}
-					}
-				}
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} = $display;
-				undef @cnt;
-				undef $count;
-
+				$item = $chars[$config{'char'}]{'inventory'}[$invIndex] = {};
+				$item->{index} = $index;
+				$item->{nameID} = unpack("S1", substr($msg, 6, 2));
+				$item->{type} = unpack("C1", substr($msg, 21, 1));
+				$item->{type_equip} = unpack("C1", substr($msg, 19, 2));
+				$item->{amount} = $amount;
+				$item->{identified} = unpack("C1", substr($msg, 8, 1));
+				$item->{upgrade} = unpack("C1", substr($msg, 10, 1));
+				$item->{cards} = substr($msg, 11, 8);
+				$item->{name} = itemName($item);
 			} else {
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} += $amount;
+				$item = $chars[$config{'char'}]{'inventory'}[$invIndex];
+				$item->{amount} += $amount;
 			}
-			$display = ($items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}} ne "")
-				? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
-				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
 
 			my $disp = "Item added to inventory: ";
-			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} > 0) {
-				$disp .= "+$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} ";
-			}
-			$disp .= $display;
-			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'} ne "") {
-				$disp .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}]";
-			}
-			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'} ne "") {
-				$disp .= " [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}]";
-			}
-			$disp .= " ($invIndex) x $amount - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}}";
+			$disp .= $item->{name};
+			$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
 			message "$disp\n", "drop";
 			($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 			$disp .= " ($map_string)\n";
@@ -6032,42 +5963,11 @@ sub parseMsg {
 			$item->{amount} = 1;
 			$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 			$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
-			$item->{type_equip} = $itemSlots_lut{$ID};
+			$item->{type_equip} = unpack("S1", substr($msg, $i + 6, 2));
 			$item->{equipped} = unpack("C1", substr($msg, $i + 8, 1));
-			$item->{enchant} = unpack("C1", substr($msg, $i + 11, 1)); 
-
-			if (my $equipped = unpack("C1", substr($msg, $i + 9, 1))) {
-				$item->{equipped} = $equipped;
-			}
-			$item->{name} = $items_lut{$item->{nameID}} ||
-				"Unknown $item->{nameID}";
-
-			# Resolve item suffix (carded or forged)
-			$item->{suffix} = "";
-			my $cards = ($item->{cards} = []);
-			for (my $j = 1; $j <= 4; $j++) {
-				my $card = unpack("S1", substr($msg, $i + 10 + $j + $j, 2));
-				last unless $card;
-				push(@{$cards}, $card);
-			}
-			if ($cards->[0] == 255) {
-				# Forged item
-				$item->{elementID} = $cards->[1] % 10;
-				$item->{elementName} = $elements_lut{$item->{elementID}};
-				$item->{starCrumbs} = ($cards->[1] >> 8) / 5;
-				$item->{suffix} .= 'V'x$item->{starCrumbs}."S " if $item->{starCrumbs};
-				$item->{suffix} .= $item->{elementName};
-			} elsif (@{$cards}) {
-				# Carded item
-				$item->{suffix} = join(',', map { $cards_lut{$_} || $_ } @{$cards});
-			}
-
-			my $display = "";
-			$display .= "+$item->{enchant} " if $item->{enchant};
-			$display .= $item->{name};
-			$display .= " [$item->{suffix}]" if $item->{suffix};
-
-			$item->{name} = $display;
+			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1)); 
+			$item->{cards} = substr($msg, $i + 12, 8);
+			$item->{name} = itemName($item);
 
 			debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
 		}
@@ -6746,19 +6646,21 @@ sub parseMsg {
 		undef %incomingDeal;
 
 	} elsif ($switch eq "00E9") {
-		my $amount = unpack("L*", substr($msg, 2,4));
-		my $ID = unpack("S*", substr($msg, 6,2));
+		my $amount = unpack("L*", substr($msg, 2, 4));
+		my $ID = unpack("S*", substr($msg, 6, 2));
 		if ($ID > 0) {
-			$currentDeal{'other'}{$ID}{'amount'} += $amount;
-			$display = ($items_lut{$ID} ne "")
-					? $items_lut{$ID}
-					: "Unknown ".$ID;
-			$currentDeal{'other'}{$ID}{'name'} = $display;
-			message "$currentDeal{'name'} added Item to Deal: $currentDeal{'other'}{$ID}{'name'} x $amount\n", "deal";
+			my $item = $currentDeal{other}{$ID} ||= {};
+			$item->{amount} += $amount;
+			$item->{nameID} = $ID;
+			$item->{identified} = unpack("C1", substr($msg, 8, 1));
+			$item->{upgrade} = unpack("C1", substr($msg, 10, 1));
+			$item->{cards} = substr($msg, 11, 8);
+			$item->{name} = itemName($item);
+			message "$currentDeal{name} added Item to Deal: $item->{name} x $amount\n", "deal";
 		} elsif ($amount > 0) {
-			$currentDeal{'other_zenny'} += $amount;
+			$currentDeal{other_zenny} += $amount;
 			$amount = formatNumber($amount);
-			message "$currentDeal{'name'} added $amount z to Deal\n", "deal";
+			message "$currentDeal{name} added $amount z to Deal\n", "deal";
 		}
 
 	} elsif ($switch eq "00EA") {
@@ -7324,14 +7226,16 @@ sub parseMsg {
 			my $index = unpack("S1", substr($msg, $i, 2));
 			my $ID = unpack("S1", substr($msg, $i+2, 2));
 			my $type = unpack("C1",substr($msg, $i+4, 1));
-			my $display = ($items_lut{$ID} ne "") ? $items_lut{$ID} : "Unknown $ID";
-			$cart{'inventory'}[$index]{'nameID'} = $ID;
-			$cart{'inventory'}[$index]{'amount'} = 1;
-			$cart{'inventory'}[$index]{'name'} = $display;
-			$cart{'inventory'}[$index]{'identified'} = unpack("C1", substr($msg, $i+5, 1));
-			$cart{'inventory'}[$index]{'type_equip'} = $itemSlots_lut{$ID};
+			my $item = $cart{inventory}[$index] = {};
+			$item->{nameID} = $ID;
+			$item->{amount} = 1;
+			$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
+			$item->{type_equip} = unpack("C1", substr($msg, $i+6, 1));
+			$item->{upgrade} = unpack("C1", substr($msg, $i+11, 1));
+			$item->{cards} = substr($msg, $i+12, 8);
+			$item->{name} = itemName($item);
 
-			debug "Non-Stackable Cart Item: $cart{'inventory'}[$index]{'name'} ($index) x 1\n", "parseMsg";
+			debug "Non-Stackable Cart Item: $item->{name} ($index) x 1\n", "parseMsg";
 		}
 
 	} elsif ($switch eq "0123" || $switch eq "01EF") {
@@ -7345,15 +7249,15 @@ sub parseMsg {
 			my $ID = unpack("S1", substr($msg, $i+2, 2));
 			my $amount = unpack("S1", substr($msg, $i+6, 2));
 
-			if (%{$cart{'inventory'}[$index]}) {
-				$cart{'inventory'}[$index]{'amount'} += $amount;
+			my $item = $cart{inventory}[$index] ||= {};
+			if ($item->{amount}) {
+				$item->{amount} += $amount;
 			} else {
-				$cart{'inventory'}[$index]{'nameID'} = $ID;
-				$cart{'inventory'}[$index]{'amount'} = $amount;
-				$display = ($items_lut{$ID} ne "") ? $items_lut{$ID} : "Unknown ".$ID;
-				$cart{'inventory'}[$index]{'name'} = $display;
+				$item->{nameID} = $ID;
+				$item->{amount} = $amount;
+				$item->{name} = itemNameSimple($ID);
 			}
-			debug "Stackable Cart Item: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n", "parseMsg";
+			debug "Stackable Cart Item: $item->{name} ($index) x $amount\n", "parseMsg";
 		}
 
 	} elsif ($switch eq "0124" || $switch eq "01C5") {
@@ -7361,14 +7265,17 @@ sub parseMsg {
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		my $ID = unpack("S1", substr($msg, 8, 2));
 
-		if (%{$cart{'inventory'}[$index]}) {
-			$cart{'inventory'}[$index]{'amount'} += $amount;
+		my $item = $cart{inventory}[$index] ||= {};
+		if ($item->{amount}) {
+			$item->{amount} += $amount;
 		} else {
-			$cart{'inventory'}[$index]{'nameID'} = $ID;
-			$cart{'inventory'}[$index]{'amount'} = $amount;
-			$display = (defined $items_lut{$ID}) ? $items_lut{$ID} : "Unknown $ID";
-			$cart{'inventory'}[$index]{'name'} = $display;
-			message "Cart Item Added: $display ($index) x $amount\n";
+			$item->{nameID} = $ID;
+			$item->{amount} = $amount;
+			$item->{identified} = unpack("C1", substr($msg, 10, 1));
+			$item->{upgrade} = unpack("C1", substr($msg, 12, 1));
+			$item->{cards} = substr($msg, 13, 8);
+			$item->{name} = itemName($item);
+			message "Cart Item Added: $item->{name} ($index) x $amount\n";
 		}
 
 	} elsif ($switch eq "0125") {
@@ -7485,83 +7392,47 @@ sub parseMsg {
 		$msg_size = unpack("S1",substr($msg,2,2));
 
 		#started a shop.
-		undef @articles;
+		@articles = ();
 		$articles = 0;
 
 		message("----------Items added to shop ------------------\n", "list");
 		message("#  Name                                         Type        Amount     Price\n", "list");
-		for (my $i = 8; $i < $msg_size; $i+=22) {
-			$price = unpack("L1", substr($msg, $i, 4));
-			$number = unpack("S1", substr($msg, $i + 4, 2));
-			$amount = unpack("S1", substr($msg, $i + 6, 2));
-			$type = unpack("C1", substr($msg, $i + 8, 1));
-			$ID = unpack("S1", substr($msg, $i + 9, 2));
-			$identified = unpack("C1", substr($msg, $i + 11, 1));
-			$custom = unpack("C1", substr($msg, $i + 13, 1));
-			$card1 = unpack("S1", substr($msg, $i + 14, 2));
-			$card2 = unpack("S1", substr($msg, $i + 16, 2));
-			$card3 = unpack("S1", substr($msg, $i + 18, 2));
-			$card4 = unpack("S1", substr($msg, $i + 20, 2));
-
-			$articles[$number]{'nameID'} = $ID;
-			$display = ($items_lut{$ID} ne "") 
-				? $items_lut{$ID}
-				: "Unknown ".$ID;
-			if ($custom) {
-				$display = "+$custom " . $display;
-			}
-			$articles[$number]{'name'} = $display;
-			$articles[$number]{'quantity'} = $amount;
-			$articles[$number]{'type'} = $type;
-			$articles[$number]{'identified'} = $identified;
-			$articles[$number]{'custom'} = $custom;
-			$articles[$number]{'card1'} = $card1;
-			$articles[$number]{'card2'} = $card2;
-			$articles[$number]{'card3'} = $card3;
-			$articles[$number]{'card4'} = $card4;
-			$articles[$number]{'price'} = $price;
-			undef $articles[$number]{'sold'};
+		for (my $i = 8; $i < $msg_size; $i += 22) {
+			my $number = unpack("S1", substr($msg, $i + 4, 2));
+			my $item = $articles[$number] = {};
+			$item->{nameID} = unpack("S1", substr($msg, $i + 9, 2));
+			$item->{quantity} = unpack("S1", substr($msg, $i + 6, 2));
+			$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
+			$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
+			$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
+			$item->{cards} = substr($msg, $i + 14, 8);
+			$item->{price} = unpack("L1", substr($msg, $i, 4));
+			$item->{name} = itemName($item);
 			$articles++;
 
-			debug("Item added to Vender Store: $items{$ID}{'name'} - $price z\n", "vending", 2);
-			$display = $articles[$number]{'name'};
-			if (!($articles[$number]{'identified'})) {
-				$display = $display."[NI]";
-			}
-			if ($articles[$number]{'card1'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card1'}}."]";
-			}
-			if ($articles[$number]{'card2'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card2'}}."]";
-			}
-			if ($articles[$number]{'card3'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card3'}}."]";
-			}
-			if ($articles[$number]{'card4'}) {
-				$display = $display."[".$cards_lut{$articles[$number]{'card4'}}."]";
-			}
+			debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
 			message(swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>z",
-				[$articles, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}]),
+				[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, $item->{price}]),
 				"list");
 		}
 		message("-----------------------------------------\n", "list");
-		$shopEarned = 0 if (!defined($shopEarned));
+		$shopEarned ||= 0;
 
 	} elsif ($switch eq "0137") {
 		#sold something.
 		$number = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
-		$articles[$number]{'sold'} += $amount;
-		$shopEarned += $amount * $articles[$number]{'price'};
-		$articles[$number]{'quantity'} -= $amount;
-		message("sold: $amount $articles[$number]{'name'}.\n", "sold");
-		if ($articles[$number]{'quantity'} < 1) {
-			message("sold out: $articles[$number]{'name'}.\n", "sold");
+		$articles[$number]{sold} += $amount;
+		$shopEarned += $amount * $articles[$number]{price};
+		$articles[$number]{quantity} -= $amount;
+		message("sold: $amount $articles[$number]{name}.\n", "sold");
+		if ($articles[$number]{quantity} < 1) {
+			message("sold out: $articles[$number]{name}.\n", "sold");
 			#$articles[$number] = "";
 			if (!--$articles){
-				message("sold all out.^^\n", "sold");
+				message("Items have been sold out.\n", "sold");
 				sendCloseShop(\$remote_socket);
 			}
 		}
@@ -10115,5 +9986,72 @@ sub stuckCheck {
 	}
 }
 
+# Resolve the name of a card
+sub cardName {
+	my $cardID = shift;
+
+	# If card name is unknown, just return ?number
+	return $cards_lut{$cardID} || "?$cardID";
+}
+
+# Resolve the name of a simple item
+sub itemNameSimple {
+	my $ID = shift;
+
+	return $items_lut{$ID} || "Unknown $ID";
+}
+
+##
+# itemName($item)
+#
+# Resolve the name of an item. $item should be a hash with these keys:
+# nameID  => integer index into %items_lut
+# cards   => 8-byte binary data as sent by server
+# upgrade => integer upgrade level
+sub itemName {
+	my $item = shift;
+
+	my $name = itemNameSimple($item->{nameID});
+
+	# Resolve item suffix (carded or forged)
+	my $suffix = "";
+	my @cards;
+	my %cards;
+	for (my $i = 0; $i < 4; $i++) {
+		my $card = unpack("S1", substr($item->{cards}, $i*2, 2));
+		last unless $card;
+		push(@cards, $card);
+		($cards{$card} ||= 0) += 1;
+	}
+	if ($cards[0] == 255) {
+		# Forged item
+		#
+		# Display e.g. "VVS Earth" or "Fire"
+		my $elementID = $cards[1] % 10;
+		my $elementName = $elements_lut{$elementID};
+		my $starCrumbs = ($cards[1] >> 8) / 5;
+		$suffix .= ('V'x$starCrumbs)."S " if $starCrumbs;
+		$suffix .= $elementName;
+	} elsif (@cards) {
+		# Carded item
+		#
+		# List cards in alphabetical order.
+		# Stack identical cards.
+		# e.g. "Hydra*2,Mummy*2", "Hydra*3,Mummy"
+		$suffix = join(',', map { 
+			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
+		} sort { cardName($a) <=> cardName($b) } keys %cards);
+	}
+
+	my $slots = $itemSlotCount_lut{$item->{nameID}};
+
+	my $display = "";
+	$display .= "+$item->{upgrade} " if $item->{upgrade};
+	$display .= $name;
+	$display .= " [$suffix]" if $suffix;
+	$display .= " [$slots]" if $slots;
+
+	return $display;
+}
 
 return 1;

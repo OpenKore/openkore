@@ -515,6 +515,7 @@ sub sendCloseShop {
 	# FIXME: this belongs somewhere else?
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
+	message "Shop closed.\n";
 }
 
 sub sendCurrentDealCancel {
@@ -851,7 +852,7 @@ sub sendOpenShop {
 		$items_selling = 0;
 		while ($shop{"name_$i"} ne "" && $items_selling < $chars[$config{'char'}]{'skills'}{'MC_VENDING'}{'lv'} + 2) {
 			for ($index = 0; $index < @{$cart{'inventory'}}; $index++) {
-				next if (!%{$cart{'inventory'}[$index]});
+				next if !$cart{'inventory'}[$index];
 				if ($cart{'inventory'}[$index]{'name'} eq $shop{"name_$i"}) {
 					$citem = $index;
 					foreach (keys %itemtosell) {
@@ -875,11 +876,13 @@ sub sendOpenShop {
 
 						# Calculate price
 						if ($shop{"price_$i"} > 10000000) {
-							$itemtosell{$index}{'price'} = 10000000;
+							error "Cannot open shop: Price of item #$i exceeds 10,000,000z.\n";
+							return 0;
 						} elsif ($shop{"price_$i"} > 0) {
 							$itemtosell{$index}{'price'} = $shop{"price_$i"};
 						} else {
-							$itemtosell{$index}{'price'} = 1;
+							error "Cannot open shop: Missing price for item #$i.\n";
+							return 0;
 						}
 						$items_selling++;
 						$itemtosellorder[$items_selling] = $index;
