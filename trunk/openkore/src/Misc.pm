@@ -39,9 +39,10 @@ our @EXPORT = qw(
 	saveConfigFile
 
 	center
+	checkFieldWalkable
 	checkFollowMode
 	closestWalkableSpot
-	getMapPoint
+	getFieldPoint
 	getPortalDestName
 	printItemDesc
 	whenStatusActive
@@ -133,6 +134,18 @@ sub center {
 }
 
 ##
+# checkFieldWalkable(r_field, x, y)
+# r_field: a reference to a field hash.
+# x, y: the coordinate to check.
+# Returns: 1 (true) or 0 (false).
+#
+# Check whether ($x, $y) on field $r_field is walkable.
+sub checkFieldWalkable {
+	my $p = getFieldPoint(@_);
+	return ($p == 0 || $p == 3);
+}
+
+##
 # checkFollowMode()
 # Returns: 1 if in follow mode, 0 if not.
 #
@@ -158,9 +171,7 @@ sub closestWalkableSpot {
 	my $pos = shift;
 
 	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
-		next if getMapPoint($r_field,
-				$pos->{'x'} + $z->[0],
-				$pos->{'y'} + $z->[1]);
+		next unless checkFieldWalkable($r_field, $pos->{'x'} + $z->[0], $pos->{'y'} + $z->[1]);
 		$pos->{'x'} += $z->[0];
 		$pos->{'y'} += $z->[1];
 		last;
@@ -168,13 +179,14 @@ sub closestWalkableSpot {
 }
 
 ##
-# getMapPoint(r_field, x, y)
+# getFieldPoint(r_field, x, y)
 # r_field: a reference to a field hash.
-# x, y: the coordinate on the map to check.
-# Returns: 0 = walkable, 1 = not walkable, 5 = cliff (not walkable, but you can snipe)
+# x, y: the coordinate on the field to check.
+# Returns: An integer: 0 = walkable, 1 = not walkable, 3 = water (walkable), 5 = cliff (not walkable, but you can snipe)
 #
-# Check whether the coordinate specified by ($x, $y) is walkable.
-sub getMapPoint {
+# Get the raw value of the specified coordinate on the map. If you want to check whether
+# ($x, $y) is walkable, use checkFieldWalkable instead.
+sub getFieldPoint {
 	my $r_field = shift;
 	my $x = shift;
 	my $y = shift;
