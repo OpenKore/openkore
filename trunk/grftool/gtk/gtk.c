@@ -19,6 +19,8 @@ GtkWidget *opensel = NULL, *savesel = NULL, *dirsel = NULL;
 GtkTreeModel *filelist;
 GtkTreePath *current_selection = NULL;
 gboolean filling = FALSE;
+GdkCursor *busy_cursor = NULL;
+
 
 typedef struct {
 	GThread *thread;
@@ -353,6 +355,7 @@ open_grf_file (const char *fname)
 		return;
 	}
 
+	gdk_window_set_cursor (W(main)->window, busy_cursor);
 	set_status (_("Loading..."));
 	while (gtk_events_pending ()) gtk_main_iteration ();
 	newgrf = grf_open (fname, &err);
@@ -397,6 +400,7 @@ open_grf_file (const char *fname)
 	g_free (tmp);
 	g_free (title);
 	gtk_widget_set_sensitive (W(extract), TRUE);
+	gdk_window_set_cursor (W(main)->window, NULL);
 }
 
 
@@ -1128,6 +1132,7 @@ main (int argc, char *argv[])
 
 	/* Show the GUI */
 	set_status (_("Click Open to open a GRF archive."));
+	busy_cursor = gdk_cursor_new (GDK_WATCH);
 	if (argv[1])
 		gtk_idle_add (idle_open, argv[1]);
 	gtk_widget_realize (W(main));
