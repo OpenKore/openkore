@@ -7286,9 +7286,9 @@ sub parseMsg {
 		my $invIndex = findIndex($char->{inventory}, "index", $index);
 		if (defined $invIndex) {
 			my $item = $char->{inventory}[$invIndex];
-			$item->{upgrade} = $upgrade ;
-			$item->{name} = itemName($item);
+			$item->{upgrade} = $upgrade;
 			message "Item $item->{name} has been upgraded to +$upgrade\n", "parseMsg/upgrade";
+			$item->{name} = itemName($item);
 		}
 
 	} elsif ($switch eq "0109") {

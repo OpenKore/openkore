@@ -129,6 +129,8 @@ Bug fixes:
 - $config{'char'} eq '' is no longer treated as $config{'char'} == 0
 - Route AI should get stuck a lot less now.
 - Autostorage will now walk back to the NPC if it fails to teleport back.
+- Item <x> has been upgraded to <y> now correctly shows the old upgrade
+  level for <x>
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
