@@ -8894,13 +8894,11 @@ sub parseMsg {
 		}
 		message "Received Possible Arrow Craft List - type 'arrowcraft'\n";
 
-	#} elsif ($switch eq "0187") {
-		# 0187 - ID: long
-		# Deal canceled
-	#	undef %incomingDeal;
-	#	undef %outgoingDeal;
-	#	undef %currentDeal;
-	#	message "Deal Cancelled\n", "deal";
+	} elsif ($switch eq "0187") {
+		# 0187 - long ID
+		# I'm not sure what this is. In inRO this seems to have something
+		# to do with logging into the game server, while on
+		# oRO it has got something to do with the sync packet.
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";

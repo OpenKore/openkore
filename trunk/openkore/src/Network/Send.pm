@@ -396,7 +396,14 @@ sub sendAttack {
 	my $r_socket = shift;
 	my $monID = shift;
 	my $flag = shift;
-	my $msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag);
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag);
+	} else {
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00) .
+		$monID .
+		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, $flag);
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
@@ -791,7 +798,13 @@ sub sendLook {
 	my $r_socket = shift;
 	my $body = shift;
 	my $head = shift;
-	my $msg = pack("C*", 0x9B, 0x00, $head, 0x00, $body);
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0x9B, 0x00, $head, 0x00, $body);
+	} else {
+		$msg = pack("C*", 0x9B, 0x00, 0xF2, 0x04, 0xC0, 0xBD, $head,
+			0x00, 0xA0, 0x71, 0x75, 0x12, 0x88, 0xC1, $body);
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$chars[$config{'char'}]{'look'}{'head'} = $head;
@@ -1153,7 +1166,8 @@ sub sendSit {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
 	} else {
-		$msg = pack("C*", 0x89, 0x00, 0x9c, 0x22, 0xfa, 0x83, 0x02);
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x02);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sitting\n", "sendPacket", 2;
@@ -1211,7 +1225,8 @@ sub sendStand {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
 	} else {
-		$msg = pack("C*", 0x89, 0x00, 0x9c, 0x22, 0xfa, 0x83, 0x03);
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0xFF, 0x00, 0x00, 0x00, 0x00,
+			0x00, 0x00, 0x00, 0x80, 0x00, 0x00, 0x03);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Standing\n", "sendPacket", 2;
@@ -1240,7 +1255,12 @@ sub sendSync {
 sub sendTake {
 	my $r_socket = shift;
 	my $itemID = shift;
-	my $msg = pack("C*", 0x9F, 0x00) . $itemID;
+	my $msg;
+	if ($config{serverType} == 0) {
+		$msg = pack("C*", 0x9F, 0x00) . $itemID;
+	} else {
+		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x68) . $itemID;
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent take\n", "sendPacket", 2;
 }
