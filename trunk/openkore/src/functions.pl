@@ -3216,12 +3216,11 @@ sub AI {
 	##### AUTO-ITEM USE #####
 
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take"
-#Solos Start
-		|| $ai_seq[0] eq "attack"
-#Solos End
-	)
-		&& timeOut(\%{$timeout{'ai_item_use_auto'}})) { 
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute"
+		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"
+		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack"
+	    ) && timeOut(\%{$timeout{'ai_item_use_auto'}}))
+	{
 		$i = 0;
 		while (1) {
 			last if (!$config{"useSelf_item_$i"});
@@ -3231,12 +3230,13 @@ sub AI {
 				&& $config{"useSelf_item_$i"."_minAggressives"} <= ai_getAggressives()
 				&& (!$config{"useSelf_item_$i"."_maxAggressives"} || $config{"useSelf_item_$i"."_maxAggressives"} >= ai_getAggressives()) 
             			&& timeOut($ai_v{"useSelf_item_$i"."_time"}, $config{"useSelf_item_$i"."_timeout"})
-            			&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'}))) {
+            			&& (!$config{"useSelf_item_$i"."_inLockOnly"} || ($config{"useSelf_item_$i"."_inLockOnly"} && $field{'name'} eq $config{'lockMap'})))
+            		{
 				undef $ai_v{'temp'}{'invIndex'};
-				$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_$i"});
-				$ai_v{"useSelf_item_$i"."_time"} = time;
+				$ai_v{'temp'}{'invIndex'} = findIndexStringList_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"useSelf_item_$i"});
 				if ($ai_v{'temp'}{'invIndex'} ne "") {
 					sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'}, $accountID);
+					$ai_v{"useSelf_item_$i"."_time"} = time;
 					$timeout{'ai_item_use_auto'}{'time'} = time;
 					print qq~Auto-item use: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~ if $config{'debug'};
 					last;
