@@ -3835,9 +3835,13 @@ sub AI {
 		      || !$config{'tankMode'}) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 
-			if (timeOut ($timeout{'ai_attack_debug'}{'time'}, 0.2)) {
-				$timeout{'ai_attack_debug'}{'time'} = time;
-				debug "About to send attack packet; attackMethod: $ai_seq_args[0]{'attackMethod'}{'type'}\n", "ai_attack";
+			if (!$monsters{$ID}{'dmgFromYou'} && timeOut($ai_seq_args[0]{'unstuck'})) {
+				# We are close enough to the target, and we're trying to attack it,
+				# but some time has passed and we still haven't dealed any damage.
+				# Our recorded position might be out of sync, so try to unstuck
+				$ai_seq_args[0]{'unstuck'}{'time'} = time;
+				debug("Attack - trying to unstuck\n", "ai_attack");
+				move($char->{pos_to}{x}, $char->{pos_to}{y});
 			}
 
 			if ($ai_seq_args[0]{'attackMethod'}{'type'} eq "weapon" && timeOut($timeout{'ai_attack'})) {
@@ -8748,10 +8752,13 @@ sub attack {
 	$args{'ai_attack_giveup'}{'time'} = time;
 	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
 	$args{'ID'} = $ID;
+	$args{'unstuck'}{'time'} = time;
+	$args{'unstuck'}{'timeout'} = ($timeout{'ai_attack_unstuck'}{'timeout'} || 1.5);
 	%{$args{'pos_to'}} = %{$monsters{$ID}{'pos_to'}};
 	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
 	unshift @ai_seq, "attack";
 	unshift @ai_seq_args, \%args;
+
 	if ($priorityAttack) {
 		message "Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
 	} else {
