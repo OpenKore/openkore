@@ -142,7 +142,8 @@ Bug fixes:
 - teleportAuto_search no longer spams the server with the teleport packet
   many times per second.
 - Guild login/logout and chat messages no longer show blanks all the time.
-- Trapped monsters are now ignored.
+- Kore will not attack monsters that are trapped by non-party members, or
+  monsters that are being lured.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

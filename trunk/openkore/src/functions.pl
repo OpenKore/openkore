@@ -3383,16 +3383,13 @@ sub AI {
 			foreach (@monstersID) {
 				next if (!$_ || !checkMonsterCleanness($_));
 				my $monster = $monsters{$_};
-				# Ignore monsters that
-				# - Have a status (such as poisoned), because there's a high chance
-				#   they're being attacked by other players
-				# - Are inside others' area spells (this includes being trapped).
-				next if (($monster->{statuses} && scalar(keys %{$monster->{statuses}})) || objectInsideSpell($monster));
 				# Ignore ignored monsters in mon_control.txt
 				my $monName = lc($monster->{name});
 				my $monCtrl = $mon_control{$monName}{attack_auto};
 				next if ($monCtrl ne "" && $monCtrl <= 0);
 				next if ($mon_control{$monName}{attack_lvl} ne "" && $mon_control{$monName}{attack_lvl} > $char->{lv});
+
+
 				my $pos = calcPosition($monster);
 
 				# List monsters that party members are attacking
@@ -3411,7 +3408,30 @@ sub AI {
 					next;
 				}
 
-				# List normal, non-aggressive monsters
+
+				### List normal, non-aggressive monsters. ###
+
+				# Ignore monsters that
+				# - Have a status (such as poisoned), because there's a high chance
+				#   they're being attacked by other players
+				# - Are inside others' area spells (this includes being trapped).
+				next if (($monster->{statuses} && scalar(keys %{$monster->{statuses}})) || objectInsideSpell($monster));
+
+				# Ignore monsters that are moving towards other players
+				if (!timeOut($monster->{time_move}, $monster->{time_move_calc})) {
+					my $stop;
+					my %vec;
+					getVector(\%vec, $monster->{pos_to}, $monster->{pos});
+					foreach (@playersID) {
+						next unless $_;
+						if (checkMovementDirection($monster->{pos}, \%vec, $players{$_}{pos}, 15)) {
+							$stop = 1;
+							last;
+						}
+					}
+					next if $stop;
+				}
+
 				if (!AI::is(qw/sitAuto take items_gather items_take/) && $config{'attackAuto'} >= 2
 				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou}
 				 && (!$config{'attackAuto_onlyWhenSafe'} || binSize(\@playersID) == 0)
@@ -7669,7 +7689,7 @@ sub parseMsg {
 		}
   
 		message "$source $uses ".skillName($skillID)." on $target$extra\n", "skill";
-warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()");
+
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
