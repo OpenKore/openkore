@@ -5962,7 +5962,7 @@ sub parseMsg {
 			my $item = $storage{$index} = {};
 			$item->{index} = $index;
 			$item->{nameID} = $ID;
-			$item->{amount} = unpack("L1", substr($msg, $i + 6, 4));
+			$item->{amount} = unpack("L1", substr($msg, $i + 6, 4)) & ~0x80000000;
 			$item->{name} = itemNameSimple($ID);
 			$item->{binID} = binFind(\@storageID, $index);
 			debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
