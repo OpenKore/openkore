@@ -288,9 +288,10 @@ Bug fixes:
 - When creating a character using openkore, there will no longer be
   garbage trailing the character name.
 - Command "ai" returns error if invalid parameters are given.
-- Bot will no longer incorrectly timeout when using d# talk sequence code.
+- Kore will no longer incorrectly timeout when using d# talk sequence code.
 - When using a teleport NPC, get 10 spaces away instead of 3 spaces away.
   Lets you use e.g. the guild castle flags on the unwalkable water in Payon.
+- Fix auto cart bug for equipped items.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).

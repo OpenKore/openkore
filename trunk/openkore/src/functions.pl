@@ -2781,7 +2781,7 @@ sub AI {
 				next unless ($item);
 
 				my $control = $items_control{lc($item->{name})};
-				if ($control->{cart_add} && $item->{amount} > $control->{keep}) {
+				if ($control->{cart_add} && $item->{amount} > $control->{keep} && !$item->{equipped}) {
 					my %obj;
 					$obj{index} = $i;
 					$obj{amount} = $item->{amount} - $control->{keep};
