@@ -9388,6 +9388,7 @@ sub getField {
 			'new_1-2.fld' => 'new_zone02.fld',
 			'new_1-3.fld' => 'new_zone03.fld',
 			'new_1-4.fld' => 'new_zone04.fld',
+			'new_4-1.fld' => 'new_zone04.fld',
 		);
 
 		my ($dir, $base) = $file =~ /^(.*[\\\/])?(.*)$/;
