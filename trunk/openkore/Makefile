@@ -9,14 +9,8 @@ CFLAGS=-Wall -Wno-unused -O3 -funroll-loops -finline-functions -march=i586 -mcpu
 CXX=g++
 CXXFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
 
-VERSION=1.2.1
-DISTNAME=openkore-$(VERSION)
-DISTFILES=DevelopersNotes.txt Inject.cpp Tools.cpp Makefile Makefile.win32\
-	News.txt Inject.def Tools.def openkore.pl functions.pl\
-	Tools_wrap.c Tools.pm\
-	Input.pm Modules.pm Utils.pm Log.pm Settings.pm Plugins.pm
 
-.PHONY: all clean dist distdir
+.PHONY: all clean
 
 all: Tools.so
 
@@ -29,14 +23,5 @@ ToolsXS.o: ToolsXS.c
 ToolsXS.c: ToolsXS.xs
 	$(XSUBPP) -typemap "$(TYPEMAP)" ToolsXS.xs > ToolsXS.c
 
-distdir:
-	rm -rf $(DISTNAME)
-	mkdir $(DISTNAME)
-	cp $(DISTFILES) $(DISTNAME)/
-
-dist: distdir
-	tar -czf $(DISTNAME).tar.gz $(DISTNAME)
-	rm -rf $(DISTNAME)
-
 clean:
-	rm -f Tools.so ToolsXS.o $(DISTNAME.zip)
+	rm -f Tools.so ToolsXS.o ToolsXS.c
