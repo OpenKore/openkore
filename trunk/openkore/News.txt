@@ -343,6 +343,23 @@ Credits:
 - BotMan: server details for pRO.
 - anu: add storage opening timeout, teleportAuto_dropTarget
 - juifeng: NPC talk timeout fix when using "d#" talk code
+- isieo: attackComboSlot bugfix
+
+
+==================
+### 1.4.12
+==================
+
+New features:
+- A storage log is saved in logs/storage.txt
+- Wx interface: ability to minimize to tray.
+- Win32 console interface:
+  * Support for Ctrl-U, for clearing to the entire input line.
+  * History keys behave more like that of the Wx interface now.
+
+Bug fixes:
+- Don't stand still after picking up items, if there are aggressive monsters.
+- Fix PM list synchronization bug.
 
 
 ==================
