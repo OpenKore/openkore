@@ -681,7 +681,7 @@ sub objectIsMovingTowardsPlayer {
 		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
 
 		foreach (@playersID) {
-			next if (!$_ || ( $ignore_party_members && $char->{party}{users}{$_} ));
+			next if (!$_ || ($ignore_party_members && $char->{party} && $char->{party}{users}{$_}));
 			if (checkMovementDirection($obj->{pos}, \%vec, $players{$_}{pos}, 15)) {
 				return 1;
 			}
@@ -710,7 +710,7 @@ sub stopAttack {
 sub stripLanguageCode {
 	my $r_msg = shift;
 	if ($config{chatLangCode} ne "none" && $config{chatLangCode} ne "0") {
-		configModify("chatLangCode", 1, 1) if ($config{chatLangCode} eq "");
+		#configModify("chatLangCode", 1, 1) if ($config{chatLangCode} eq "");
 		$$r_msg =~ s/^\|..//;
 		return 1;
 	} else {
