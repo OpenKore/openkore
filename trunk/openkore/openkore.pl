@@ -165,7 +165,10 @@ Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	IPC IPC::Processors/);
 
 Log::message("$Settings::versionText\n");
-Plugins::loadAll();
+if (!Plugins::loadAll()) {
+	$interface->errorDialog('One or more plugins failed to load.');
+	exit 1;
+}
 Log::message("\n");
 Plugins::callHook('start');
 undef $@;
