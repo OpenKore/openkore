@@ -142,6 +142,7 @@ useSelf_skill_0_whenStatusActive
 useSelf_skill_0_whenStatusInactive
 useSelf_skill_0_whenAffected
 useSelf_skill_0_notWhileSitting 0
+useSelf_skill_0_notInTown 0
 useSelf_skill_0_timeout 0
 
 useSelf_skill_smartHeal 1
