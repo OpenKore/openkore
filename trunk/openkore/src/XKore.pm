@@ -122,6 +122,7 @@ sub recv {
 	my $msg;
 
 	return undef unless dataWaiting(\$client);
+	undef $@;
 	eval {
 		$client->recv($msg, 32 * 1024);
 	};
