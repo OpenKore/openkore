@@ -5,6 +5,8 @@ ExtractThread.pas
 GPattern.pas
 Main.dfm
 Main.pas
+SettingsForms.dfm
+SettingsForms.pas
 grf.pas
 grftool.cfg
 grftool.dof

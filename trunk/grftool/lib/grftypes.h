@@ -294,6 +294,12 @@ typedef struct {
 	GrfFile *first;		/*!< \brief Beginning of the linked list of files */
 	GrfFile *last;		/*!< \brief Beginning of the reverse linked list */
 
+	/* Reserved space for future expansion */
+	void *_reserved1;
+	void *_reserved2;
+	void *_reserved3;
+	void *_reserved4;
+
 	/* Private fields */
 	uint8_t allowCrypt;	/*!< \brief Internal use only
 				 *
@@ -305,6 +311,12 @@ typedef struct {
 				 * Can Grf be modified?
 				 */
 	void *zbuf;		/*!< \brief Internal use only - temporary buffer space */
+
+	/* Reserved space for future expansion */
+	void *_priv_reserved1;
+	void *_priv_reserved2;
+	void *_priv_reserved3;
+	void *_priv_reserved4;
 
 } Grf;
 
