@@ -19,6 +19,7 @@
 # monatkyou		Monster attacks you
 # player_itemuse	Player used item
 # list			List of information (monster list, player list, item list, etc.)
+# success		An operation succeeded
 # storage		Storage item added/removed
 # xkore			X-Kore system messages
 
@@ -206,7 +207,9 @@ sub error {
 }
 
 sub debug {
-	return processMsg("debug", $_[0], $_[1], $_[2], $debugLevel,
+	my $level = $_[2];
+	$level = 1 if (!defined $level);
+	return processMsg("debug", $_[0], $_[1], $level, $debugLevel,
 		\%debugConsole, \%debugFiles);
 }
 

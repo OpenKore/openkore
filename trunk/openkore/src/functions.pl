@@ -167,7 +167,7 @@ sub checkConnection {
 		undef $secureLoginKey;
 
 	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
-		error("Timeout on Master Server, reconnecting...\n", "connection");
+		error "Timeout on Master Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -181,7 +181,7 @@ sub checkConnection {
 		$timeout{'gamelogin'}{'time'} = time;
 
 	} elsif ($conState == 2 && timeOut(\%{$timeout{'gamelogin'}}) && $config{'server'} ne "") {
-		error("Timeout on Game Login Server, reconnecting...\n", "connection");
+		error "Timeout on Game Login Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -196,7 +196,7 @@ sub checkConnection {
 		$timeout{'charlogin'}{'time'} = time;
 
 	} elsif ($conState == 3 && timeOut(\%{$timeout{'charlogin'}}) && $config{'char'} ne "") {
-		error("Timeout on Character Select Server, reconnecting...\n", "connection");
+		error "Timeout on Character Select Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -225,7 +225,7 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 5 && timeOut(\%{$timeout{'play'}})) {
-		error("Timeout on Map Server, connecting to Master Server...\n", "connection");
+		error "Timeout on Map Server, connecting to Master Server...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -473,8 +473,8 @@ sub parseInput {
 	} elsif ($switch eq "c") {
 		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'c' (Chat)\n"
-				,"Usage: c <message>\n";
+			error	"Syntax Error in function 'c' (Chat)\n" .
+				"Usage: c <message>\n";
 		} else {
 			sendMessage(\$remote_socket, "c", $arg1);
 		}
@@ -485,40 +485,39 @@ sub parseInput {
 		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
 		my ($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
 		if ($arg1 eq "") {
-			$~ = "CARTLIST";
-			print "-------------Cart--------------\n";
-			print "#  Name\n";
+			message("-------------Cart--------------\n" .
+				"#  Name\n", "list");
 
 			for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
 				next if (!%{$cart{'inventory'}[$i]});
 				$display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
-				print sprintf("%-2d %-34s\n", $i, $display);
+				message(sprintf("%-2d %-34s\n", $i, $display), "list");
 			}
-			print "\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n";
-			print "-------------------------------\n";
+			message("\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n", "list");
+			message("-------------------------------\n", "list");
 
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
-			print	"Error in function 'cart add' (Add Item to Cart)\n"
-				,"Inventory Item $arg2 does not exist.\n";
+			error	"Error in function 'cart add' (Add Item to Cart)\n" .
+				"Inventory Item $arg2 does not exist.\n";
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
 			if (!$arg3 || $arg3 > $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'}) {
 				$arg3 = $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'};
 			}
 			sendCartAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg2]{'index'}, $arg3);
 		} elsif ($arg1 eq "add" && $arg2 eq "") {
-			print	"Syntax Error in function 'cart add' (Add Item to Cart)\n"
-				,"Usage: cart add <item #>\n";
+			error	"Syntax Error in function 'cart add' (Add Item to Cart)\n" .
+				"Usage: cart add <item #>\n";
 		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/ && !%{$cart{'inventory'}[$arg2]}) {
-			print	"Error in function 'cart get' (Get Item from Cart)\n"
-				,"Cart Item $arg2 does not exist.\n";
+			error	"Error in function 'cart get' (Get Item from Cart)\n" .
+				"Cart Item $arg2 does not exist.\n";
 		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/) {
 			if (!$arg3 || $arg3 > $cart{'inventory'}[$arg2]{'amount'}) {
 				$arg3 = $cart{'inventory'}[$arg2]{'amount'};
 			}
 			sendCartGet(\$remote_socket, $arg2, $arg3);
 		} elsif ($arg1 eq "get" && $arg2 eq "") {
-			print	"Syntax Error in function 'cart get' (Get Item from Cart)\n"
-				,"Usage: cart get <cart item #>\n";
+			error	"Syntax Error in function 'cart get' (Get Item from Cart)\n" .
+				"Usage: cart get <cart item #>\n";
 		}
 
 	} elsif ($switch eq "chat") {
@@ -634,91 +633,87 @@ sub parseInput {
 
 	} elsif ($switch eq "cri") {
 		if ($currentChatRoom eq "") {
-			print "There is no chat room info - you are not in a chat room\n";
+			error "There is no chat room info - you are not in a chat room\n";
 		} else {
-			$~ = "CRI";
-			print	"-----------Chat Room Info-----------\n"
-				,"Title                     Users   Public/Private\n";
+			message("-----------Chat Room Info-----------\n" .
+				"Title                     Users   Public/Private\n",
+				"list");
 			my $public_string = ($chatRooms{$currentChatRoom}{'public'}) ? "Public" : "Private";
 			my $limit_string = $chatRooms{$currentChatRoom}{'num_users'}."/".$chatRooms{$currentChatRoom}{'limit'};
-			format CRI =
-@<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<
-$chatRooms{$currentChatRoom}{'title'} $limit_string $public_string
-.
-			write;
-			$~ = "CRIUSERS";
-			print	"-- Users --\n";
-			for ($i = 0; $i < @currentChatRoomUsers; $i++) {
+
+			message(swrite(
+				"@<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<",
+				[$chatRooms{$currentChatRoom}{'title'}, $limit_string, $public_string]),
+				"list");
+
+			message("-- Users --\n", "list");
+			for (my $i = 0; $i < @currentChatRoomUsers; $i++) {
 				next if ($currentChatRoomUsers[$i] eq "");
 				my $user_string = $currentChatRoomUsers[$i];
 				my $admin_string = ($chatRooms{$currentChatRoom}{'users'}{$currentChatRoomUsers[$i]} > 1) ? "(Admin)" : "";
-				format CRIUSERS =
-@<< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<
-$i  $user_string               $admin_string
-.
-				write;
+				message(swrite(
+					"@<< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
+					[$i, $user_string, $admin_string]),
+					"list");
 			}
-			print "------------------------------------\n";
+			message("------------------------------------\n", "list");
 		}
 
 	} elsif ($switch eq "crl") {
-		$~ = "CRLIST";
-		print	"-----------Chat Room List-----------\n"
-			,"#   Title                     Owner                Users   Public/Private\n";
-		for ($i = 0; $i < @chatRoomsID; $i++) {
+		message("-----------Chat Room List-----------\n" .
+			"#   Title                     Owner                Users   Public/Private\n",
+			"list");
+		for (my $i = 0; $i < @chatRoomsID; $i++) {
 			next if ($chatRoomsID[$i] eq "");
-			$owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $chars[$config{'char'}]{'name'};
-			$public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
-			$limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
-			format CRLIST = 
-@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<          @<<<<<< @<<<<<<<<<
-$i  $chatRooms{$chatRoomsID[$i]}{'title'}          $owner_string $limit_string $public_string
-.
-			write;
+			my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $chars[$config{'char'}]{'name'};
+			my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
+			my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
+			message(swrite(
+				"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<          @<<<<<< @<<<<<<<<<",
+				[$i, $chatRooms{$chatRoomsID[$i]}{'title'}, $owner_string, $limit_string, $public_string]),
+				"list");
 		}
-		print "------------------------------------\n";
+		message("------------------------------------\n", "list");
 
-#Solos Start
 	} elsif ($switch eq "vl") {
-		$~ = "VLIST";
-		print	 "-----------Vender List-----------\n"
-				,"#   Title                                Owner\n";
-		for ($i = 0; $i < @venderListsID; $i++) {
+		message("-----------Vender List-----------\n" .
+			"#   Title                                Owner\n",
+			"list");
+		for (my $i = 0; $i < @venderListsID; $i++) {
 			next if ($venderListsID[$i] eq "");
-			$owner_string = ($venderListsID[$i] ne $accountID) ? $players{$venderListsID[$i]}{'name'} : $chars[$config{'char'}]{'name'};
-			format VLIST = 
-@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<
-$i  $venderLists{$venderListsID[$i]}{'title'} $owner_string
-.
-			write;
+			my $owner_string = ($venderListsID[$i] ne $accountID) ? $players{$venderListsID[$i]}{'name'} : $chars[$config{'char'}]{'name'};
+			message(swrite(
+				"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<",
+				[$i, $venderLists{$venderListsID[$i]}{'title'}, $owner_string]),
+				"list");
 		}
-		print	"----------------------------------\n";
+		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "vender") {
-		($arg1) = $input =~ /^.*? (\d+)/;
-		($arg2) = $input =~ /^.*? \d+ (\d+)/;
-		($arg3) = $input =~ /^.*? \d+ \d+ (\d+)/;
+		my ($arg1) = $input =~ /^.*? (\d+)/;
+		my ($arg2) = $input =~ /^.*? \d+ (\d+)/;
+		my ($arg3) = $input =~ /^.*? \d+ \d+ (\d+)/;
 		if ($arg1 eq "") {
-			print	 "Error in function 'vender' (Vender Shop)\n"
-					,"Usage: vender <vender # | end> [<item #> <amount>]\n";
+			error	"Error in function 'vender' (Vender Shop)\n" .
+				"Usage: vender <vender # | end> [<item #> <amount>]\n";
 		} elsif ($arg1 eq "end") {
 			undef @venderItemList;
 			undef $venderID;
 		} elsif ($venderListsID[$arg1] eq "") {
-			print	 "Error in function 'vender' (Vender Shop)\n"
-					,"Vender $arg1 does not exist.\n";
+			error	"Error in function 'vender' (Vender Shop)\n" .
+				"Vender $arg1 does not exist.\n";
 		} elsif ($arg2 eq "") {
 			sendEnteringVender(\$remote_socket, $venderListsID[$arg1]);
 		} elsif ($venderListsID[$arg1] ne $venderID) {
-			print	 "Error in function 'vender' (Vender Shop)\n"
-					,"Vender ID is wrong.\n";
+			error	"Error in function 'vender' (Vender Shop)\n" .
+				"Vender ID is wrong.\n";
 		} else {
 			if ($arg3 <= 0) {
 				$arg3 = 1;
 			}
 			sendBuyVender(\$remote_socket, $arg2, $arg3);
 		}
-#Solos End
+
 	} elsif ($switch eq "deal") {
 		@arg = split / /, $input;
 		shift @arg;
@@ -811,26 +806,24 @@ $i  $venderLists{$venderListsID[$i]}{'title'} $owner_string
 
 	} elsif ($switch eq "dl") {
 		if (!%currentDeal) {
-			print "There is no deal list - You are not in a deal\n";
+			error "There is no deal list - You are not in a deal\n";
 
 		} else {
-			print	"-----------Current Deal-----------\n";
-			$other_string = $currentDeal{'name'};
-			$you_string = "You";
+			message("-----------Current Deal-----------\n", "list");
+			my $other_string = $currentDeal{'name'};
+			my $you_string = "You";
 			if ($currentDeal{'other_finalize'}) {
 				$other_string .= " - Finalized";
 			}
 			if ($currentDeal{'you_finalize'}) {
 				$you_string .= " - Finalized";
 			}
-		
-			$~ = "PREDLIST";
-			format PREDLIST =
-@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$you_string                      $other_string
-.
-			write;
-			$~ = "DLIST";
+
+			message(swrite(
+				"@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$you_string, $other_string]),
+				"list");
+
 			undef @currentDealYou;
 			undef @currentDealOther;
 			foreach (keys %{$currentDeal{'you'}}) {
@@ -839,9 +832,11 @@ $you_string                      $other_string
 			foreach (keys %{$currentDeal{'other'}}) {
 				push @currentDealOther, $_;
 			}
+
+			my ($lastindex, $display);
 			$lastindex = @currentDealOther;
 			$lastindex = @currentDealYou if (@currentDealYou > $lastindex);
-			for ($i = 0; $i < $lastindex; $i++) {
+			for (my $i = 0; $i < $lastindex; $i++) {
 				if ($i < @currentDealYou) {
 					$display = ($items_lut{$currentDealYou[$i]} ne "") 
 						? $items_lut{$currentDealYou[$i]}
@@ -858,21 +853,20 @@ $you_string                      $other_string
 				} else {
 					$display2 = "";
 				}
-				format DLIST =
-@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$display                         $display2
-.
-				write;
+
+				message(swrite(
+					"@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$display, $display2]),
+					"list");
 			}
 			$you_string = ($currentDeal{'you_zenny'} ne "") ? $currentDeal{'you_zenny'} : 0;
 			$other_string = ($currentDeal{'other_zenny'} ne "") ? $currentDeal{'other_zenny'} : 0;
-			$~ = "DLISTSUF";
-			format DLISTSUF =
-Zenny: @<<<<<<<<<<<<<            Zenny: @<<<<<<<<<<<<<
-$you_string                      $other_string
-.
-			write;
-			print "----------------------------------\n";
+
+			message(swrite(
+				"Zenny: @<<<<<<<<<<<<<            Zenny: @<<<<<<<<<<<<<",
+				[$you_string, $other_string]),
+				"list");
+			message("----------------------------------\n", "list");
 		}
 
 
@@ -1473,33 +1467,32 @@ $you_string                      $other_string
 		}
 
 	} elsif ($switch eq "petl") {
-		$~ = "PETLIST";
-		print	"-----------Pet List-----------\n"
-			,"#    Type                     Name\n";
-		for ($i = 0; $i < @petsID; $i++) {
+		message("-----------Pet List-----------\n" .
+			"#    Type                     Name\n",
+			"list");
+		for (my $i = 0; $i < @petsID; $i++) {
 			next if ($petsID[$i] eq "");
-			format PETLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<
-$i   $pets{$petsID[$i]}{'name'} $pets{$petsID[$i]}{'name_given'}
-.
-			write;
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$i, $pets{$petsID[$i]}{'name'}, $pets{$petsID[$i]}{'name_given'}]),
+				"list");
 		}
-		print "----------------------------------\n";
+		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "pm") {
-		($arg1, $arg2) =$input =~ /^[\s\S]*? "([\s\S]*?)" ([\s\S]*)/;
-		$type = 0;
+		my ($arg1, $arg2) = $input =~ /^[\s\S]*? "([\s\S]*?)" ([\s\S]*)/;
+		my $type = 0;
 		if (!$arg1) {
-			($arg1, $arg2) =$input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
+			($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
 			$type = 1;
 		}
 		if ($arg1 eq "" || $arg2 eq "") {
-			print	"Syntax Error in function 'pm' (Private Message)\n"
-				,qq~Usage: pm ("<username>" | <pm #>) <message>\n~;
+			error	"Syntax Error in function 'pm' (Private Message)\n" .
+				qq~Usage: pm ("<username>" | <pm #>) <message>\n~;
 		} elsif ($type) {
 			if ($arg1 - 1 >= @privMsgUsers) {
-				print	"Error in function 'pm' (Private Message)\n"
-				,"Quick look-up $arg1 does not exist\n";
+				error	"Error in function 'pm' (Private Message)\n" .
+					"Quick look-up $arg1 does not exist\n";
 			} else {
 				sendMessage(\$remote_socket, "pm", $arg2, $privMsgUsers[$arg1 - 1]);
 				$lastpm{'msg'} = $arg2;
@@ -1509,7 +1502,7 @@ $i   $pets{$petsID[$i]}{'name'} $pets{$petsID[$i]}{'name_given'}
 			if ($arg1 =~ /^%(\d*)$/) {
 				$arg1 = $1;
 			}
-#pml bugfix - chobit andy 20030127
+
 			if (binFind(\@privMsgUsers, $arg1) eq "") {
 				$privMsgUsers[@privMsgUsers] = $arg1;
 			}
@@ -1519,55 +1512,51 @@ $i   $pets{$petsID[$i]}{'name'} $pets{$petsID[$i]}{'name_given'}
 		}
 
 	} elsif ($switch eq "pml") {
-		$~ = "PMLIST";
-		print "-----------PM LIST-----------\n";
-		for ($i = 1; $i <= @privMsgUsers; $i++) {
-			format PMLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<
-$i   $privMsgUsers[$i - 1]
-.
-			write;
+		message("-----------PM LIST-----------\n", "list");
+		for (my $i = 1; $i <= @privMsgUsers; $i++) {
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<",
+				[$i, $privMsgUsers[$i - 1]]),
+				"list");
 		}
-		print "-----------------------------\n";
-
+		message("-----------------------------\n", "list");
 
 	} elsif ($switch eq "pl") {
-		$~ = "PLIST";
-		print	"-----------Player List-----------\n"
-			,"#    Name                                    Sex   Job         Dist  Coord\n";
-		for ($i = 0; $i < @playersID; $i++) {
+		message("-----------Player List-----------\n" .
+			"#    Name                                    Sex   Job         Dist  Coord\n",
+			"list");
+		for (my $i = 0; $i < @playersID; $i++) {
 			next if ($playersID[$i] eq "");
+			my ($name, $dist, $pos);
 			if (%{$players{$playersID[$i]}{'guild'}}) {
 				$name = "$players{$playersID[$i]}{'name'} [$players{$playersID[$i]}{'guild'}{'name'}]";
 			} else {
 				$name = $players{$playersID[$i]}{'name'};
 			}
-			my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
+			$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
 			$dist = sprintf ("%.1f", $dist) if (index ($dist, '.') > -1);
-			my $pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
+			$pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
 
-			format PLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<
-$i   $name $sex_lut{$players{$playersID[$i]}{'sex'}} $jobs_lut{$players{$playersID[$i]}{'jobID'}} $dist $pos
-.
-			write;
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+				[$i, $name, $sex_lut{$players{$playersID[$i]}{'sex'}}, $jobs_lut{$players{$playersID[$i]}{'jobID'}}, $dist, $pos]),
+				"list");
 		}
-		print "---------------------------------\n";
+		message("---------------------------------\n", "list");
 
 	} elsif ($switch eq "portals") {
-		$~ = "PORTALLIST";
-		print	"-----------Portal List-----------\n"
-			,"#    Name                                Coordinates\n";
-		for ($i = 0; $i < @portalsID; $i++) {
+		message("-----------Portal List-----------\n" .
+			"#    Name                                Coordinates\n",
+			"list");
+		for (my $i = 0; $i < @portalsID; $i++) {
 			next if ($portalsID[$i] eq "");
-			$coords = "($portals{$portalsID[$i]}{'pos'}{'x'},$portals{$portalsID[$i]}{'pos'}{'y'})";
-			format PORTALLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<
-$i   $portals{$portalsID[$i]}{'name'}    $coords
-.
-			write;
+			my $coords = "($portals{$portalsID[$i]}{'pos'}{'x'},$portals{$portalsID[$i]}{'pos'}{'y'})";
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
+				[$i, $portals{$portalsID[$i]}{'name'}, $coords]),
+				"list");
 		}
-		print "---------------------------------\n";
+		message("---------------------------------\n", "list");
 
 	} elsif ($switch eq "quit") {
 		quit();
@@ -1582,28 +1571,28 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 
 			if (! -f 'functions.pl') {
 				$ok = 0;
-				print "Unable to reload code: functions.pl does not exist";
+				error "Unable to reload code: functions.pl does not exist";
 			} elsif (-f $Config{'perlpath'}) {
 				$ok = 0;
-				print "Checking functions.pl for errors...\n";
+				message "Checking functions.pl for errors...\n";
 				system($Config{'perlpath'}, '-c', 'functions.pl');
 				if ($? == -1) {
-					print "Error: failed to execute $Config{'perlpath'}\n";
+					error "Error: failed to execute $Config{'perlpath'}\n";
 				} elsif ($? & 127) {
-					print "Error: $Config{'perlpath'} exited abnormally\n";
+					error "Error: $Config{'perlpath'} exited abnormally\n";
 				} elsif (($? >> 8) == 0) {
-					print "functions.pl passed syntax check.\n" if ($printType);
+					message("functions.pl passed syntax check.\n", "success");
 					$ok = 1;
 				} else {
-					print "Error: functions.pl contains syntax errors.\n";
+					error "Error: functions.pl contains syntax errors.\n";
 				}
 			}
 
 			if ($ok) {
-				print "Reloading functions.pl...\n";
+				message("Reloading functions.pl...\n");
 				if (!do 'functions.pl' || $@) {
-					print "Unable to reload functions.pl\n";
-					print "$@\n" if ($@);
+					error "Unable to reload functions.pl\n";
+					error("$@\n", "syntax", 1) if ($@);
 				}
 			}
 		}
@@ -1740,18 +1729,16 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
 		if ($arg1 eq "") {
-			$~ = "SKILLS";
-			print "----------Skill List-----------\n";
-			print "#  Skill Name                    Lv     SP\n";
-			for ($i=0; $i < @skillsID; $i++) {
-				format SKILLS =
-@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<    @<<<
-$i $skills_lut{$skillsID[$i]} $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'} $skillsSP_lut{$skillsID[$i]}{$chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}}
-.
-				write;
+			message("----------Skill List-----------\n", "list");
+			message("#  Skill Name                    Lv     SP\n", "list");
+			for (my $i = 0; $i < @skillsID; $i++) {
+				message(swrite(
+					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<    @<<<",
+					[$i, $skills_lut{$skillsID[$i]}, $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}, $skillsSP_lut{$skillsID[$i]}{$chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'lv'}}]),
+					"list");
 			}
-			print "\nSkill Points: $chars[$config{'char'}]{'points_skill'}\n";
-			print "-------------------------------\n";
+			message("\nSkill Points: $chars[$config{'char'}]{'points_skill'}\n", "list");
+			message("-------------------------------\n", "list");
 
 
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $skillsID[$arg2] eq "") {
@@ -1990,35 +1977,33 @@ $i $skills_lut{$skillsID[$i]} $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'
 
 
 	} elsif ($switch eq "talk") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
 
 		if ($arg1 =~ /^\d+$/ && $npcsID[$arg1] eq "") {
-			print	"Error in function 'talk' (Talk to NPC)\n"
-				,"NPC $arg1 does not exist\n";
+			error	"Error in function 'talk' (Talk to NPC)\n" .
+				"NPC $arg1 does not exist\n";
 		} elsif ($arg1 =~ /^\d+$/) {
 			sendTalk(\$remote_socket, $npcsID[$arg1]);
 
 		} elsif ($arg1 eq "resp" && !%talk) {
-			print	"Error in function 'talk resp' (Respond to NPC)\n"
-				,"You are not talking to any NPC.\n";
+			error	"Error in function 'talk resp' (Respond to NPC)\n" .
+				"You are not talking to any NPC.\n";
 		} elsif ($arg1 eq "resp" && $arg2 eq "") {
-			$display = $npcs{$talk{'nameID'}}{'name'};
-			$~ = "RESPONSES";
-			print "----------Responses-----------\n";
-			print "NPC: $display\n";
-			print "#  Response\n";
-			for ($i=0; $i < @{$talk{'responses'}};$i++) {
-				format RESPONSES =
-@< @<<<<<<<<<<<<<<<<<<<<<<
-$i $talk{'responses'}[$i]
-.
-				write;
+			my $display = $npcs{$talk{'nameID'}}{'name'};
+			message("----------Responses-----------\n", "list");
+			message("NPC: $display\n", "list");
+			message("#  Response\n", "list");
+			for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+				message(swrite(
+					"@< @<<<<<<<<<<<<<<<<<<<<<<",
+					[$i, $talk{'responses'}[$i]]),
+					"list");
 			}
-			print "-------------------------------\n";
+			message("-------------------------------\n", "list");
 		} elsif ($arg1 eq "resp" && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
-			print	"Error in function 'talk resp' (Respond to NPC)\n"
-				,"Response $arg2 does not exist.\n";
+			error	"Error in function 'talk resp' (Respond to NPC)\n" .
+				"Response $arg2 does not exist.\n";
 		} elsif ($arg1 eq "resp" && $arg2 ne "") {
 			if ($talk{'responses'}[$arg2] eq "Cancel Chat") {
 				$arg2 = 255;
@@ -2029,7 +2014,7 @@ $i $talk{'responses'}[$i]
 
 
 		} elsif ($arg1 eq "cont" && !%talk) {
-			print	"Error in function 'talk cont' (Continue Talking to NPC)\n"
+			error	"Error in function 'talk cont' (Continue Talking to NPC)\n"
 				,"You are not talking to any NPC.\n";
 		} elsif ($arg1 eq "cont") {
 			sendTalkContinue(\$remote_socket, $talk{'ID'});
@@ -2040,7 +2025,7 @@ $i $talk{'responses'}[$i]
 
 
 		} else {
-			print	"Syntax Error in function 'talk' (Talk to NPC)\n"
+			error	"Syntax Error in function 'talk' (Talk to NPC)\n"
 				,"Usage: talk <NPC # | cont | resp> [<response #>]\n";
 		}
 
@@ -2048,12 +2033,12 @@ $i $talk{'responses'}[$i]
 	} elsif ($switch eq "tank") {
 		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'tank' (Tank for a Player)\n"
+			error	"Syntax Error in function 'tank' (Tank for a Player)\n"
 				,"Usage: tank <player #>\n";
 		} elsif ($arg1 eq "stop") {
 			configModify("tankMode", 0);
 		} elsif ($playersID[$arg1] eq "") {
-			print	"Error in function 'tank' (Tank for a Player)\n"
+			error	"Error in function 'tank' (Tank for a Player)\n"
 				,"Player $arg1 does not exist.\n";
 		} else {
 			configModify("tankMode", 1);
@@ -2066,13 +2051,13 @@ $i $talk{'responses'}[$i]
 	} elsif ($switch eq "timeout") {
 		my ($arg1, $arg2) = $input =~ /^[\s\S]*? ([\s\S]*) ([\s\S]*?)$/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'timeout' (set a timeout)\n"
+			error	"Syntax Error in function 'timeout' (set a timeout)\n"
 				,"Usage: timeout <type> [<seconds>]\n";
 		} elsif ($timeout{$arg1} eq "") {
-			print	"Error in function 'timeout' (set a timeout)\n"
+			error	"Error in function 'timeout' (set a timeout)\n"
 				,"Timeout $arg1 doesn't exist\n";
 		} elsif ($arg2 eq "") {
-			print "Timeout '$arg1' is $config{$arg1}\n";
+			error "Timeout '$arg1' is $config{$arg1}\n";
 		} else {
 			setTimeout($arg1, $arg2);
 		}
@@ -5762,19 +5747,18 @@ sub parseMsg {
 
 		$map_ip = makeIP(substr($msg, 22, 4));
 		$map_port = unpack("S1", substr($msg, 26, 2));
-		format MAPINFO =
----------Map Change Info----------
-MAP Name: @<<<<<<<<<<<<<<<<<<
-            $map_name
-MAP IP: @<<<<<<<<<<<<<<<<<<
-            $map_ip
-MAP Port: @<<<<<<<<<<<<<<<<<<
-	$map_port
--------------------------------
-.
-		$~ = "MAPINFO";
-		write;
-		print "Closing connection to Map Server\n";
+		message(swrite(
+			"---------Map Change Info----------", [],
+			"MAP Name: @<<<<<<<<<<<<<<<<<<",
+			[$map_name],
+			"MAP IP: @<<<<<<<<<<<<<<<<<<",
+			[$map_ip],
+			"MAP Port: @<<<<<<<<<<<<<<<<<<",
+			[$map_port],
+			"-------------------------------", []),
+			"connection");
+
+		message("Closing connection to Map Server\n", "connection");
 		killConnection(\$remote_socket) if (!$config{'XKore'});
 
 		# Reset item and skill times. The effect of items (like aspd potions)
@@ -5789,8 +5773,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$ai_v{"useSelf_skill_$i"."_time"} = 0;
 			$i++;
 		}
-
-	} elsif ($switch eq "0093") {
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -7409,9 +7391,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			undef $venderID;
 			$venderID = substr($msg,4,4);
 			$venderItemList = 0;
-			$~ = "VSTORELIST";
-			print "----------Vender Store List-----------\n";
-			print "#  Name                                         Type           Amount Price\n";								   
+
+			message("----------Vender Store List-----------\n", "list");
+			message("#  Name                                         Type           Amount Price\n", "list");
 			for ($i = 8; $i < $msg_size; $i+=22) {
 				$price = unpack("L1", substr($msg, $i, 4));
 				$amount = unpack("S1", substr($msg, $i + 4, 2));
@@ -7443,7 +7425,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				$venderItemList[$number]{'card4'} = $card4;
 				$venderItemList[$number]{'price'} = $price;
 				$venderItemList++;
-				print "Item added to Vender Store: $items{$ID}{'name'} - $price z\n" if ($config{'debug'} >= 2);
+				debug("Item added to Vender Store: $items{$ID}{'name'} - $price z\n", "vending", 2);
 
 				$display = $venderItemList[$number]{'name'};
 				if (!($venderItemList[$number]{'identified'})) {
@@ -7461,13 +7443,13 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 				if ($venderItemList[$number]{'card4'}) {
 					$display = $display."[".$cards_lut{$venderItemList[$number]{'card4'}}."]";
 				}
-				format VSTORELIST =
-@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>z
-$number $display $itemTypes_lut{$venderItemList[$number]{'type'}} $venderItemList[$number]{'amount'} $venderItemList[$number]{'price'}
-.
-				write;
+
+				message(swrite(
+					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>z",
+					[$number, $display, $itemTypes_lut{$venderItemList[$number]{'type'}}, $venderItemList[$number]{'amount'}, $venderItemList[$number]{'price'}]),
+					"list");
 			}
-			print "--------------------------------------\n";
+			message("--------------------------------------\n", "list");
 
 	} elsif ($switch eq "0136") {
 		$msg_size = unpack("S1",substr($msg,2,2));
@@ -7475,12 +7457,13 @@ $number $display $itemTypes_lut{$venderItemList[$number]{'type'}} $venderItemLis
 		#started a shop.
 		undef @articles;
 		$articles = 0;
-		$~ = "ARTICLESLIST";
-		print "----------Items added to shop ------------------\n";
-		print "#  Name                                         Type        Amount     Price\n";				
-		for ($i = 8; $i < $msg_size; $i+=22) {
+
+		message("----------Items added to shop ------------------\n", "list");
+		message("#  Name                                         Type        Amount     Price\n", "list");
+		my $number = 1;
+		for (my $i = 8; $i < $msg_size; $i+=22) {
 			$price = unpack("L1", substr($msg, $i, 4));
-			$number = unpack("S1", substr($msg, $i + 4, 2));
+			#$number = unpack("S1", substr($msg, $i + 4, 2));
 			$amount = unpack("S1", substr($msg, $i + 6, 2));
 			$type = unpack("C1", substr($msg, $i + 8, 1));
 			$ID = unpack("S1", substr($msg, $i + 9, 2));
@@ -7511,7 +7494,7 @@ $number $display $itemTypes_lut{$venderItemList[$number]{'type'}} $venderItemLis
 			undef $articles[$number]{'sold'};
 			$articles++;
 
-			print "Item added to Vender Store: $items{$ID}{'name'} - $price z\n" if ($config{'debug'} >= 2);
+			debug("Item added to Vender Store: $items{$ID}{'name'} - $price z\n", "vending", 2);
 			$display = $articles[$number]{'name'};
 			if (!($articles[$number]{'identified'})) {
 				$display = $display."[NI]";
@@ -7528,13 +7511,14 @@ $number $display $itemTypes_lut{$venderItemList[$number]{'type'}} $venderItemLis
 			if ($articles[$number]{'card4'}) {
 				$display = $display."[".$cards_lut{$articles[$number]{'card4'}}."]";
 			}
-			format ARTICLESLIST =
-@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>z
-$number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quantity'} $articles[$number]{'price'}
-.
-			write;
+
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>z",
+				[$number, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}]),
+				"list");
+			$number++;
 		}
-		print "-----------------------------------------\n";
+		message("-----------------------------------------\n", "list");
 		$shopEarned = 0 if (!defined($shopEarned));
 
 	} elsif ($switch eq "0137") {

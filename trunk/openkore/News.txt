@@ -69,6 +69,14 @@ so people can easily see what config options have been added/changed)
 
 
 ==================
+### OpenKore 1.0.3
+==================
+
+- *Really* fix vending this time.
+- Fix storage listing.
+
+
+==================
 ### OpenKore 1.0.2
 ==================
 
