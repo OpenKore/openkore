@@ -775,22 +775,31 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 	}
 	grf->files[i].pos = write_offset;
 
-	/* Move the file in the linked list */
+	/* Take the file out of the linked list */
 	if (grf->files[i].prev)
 		grf->files[i].prev->next=grf->files[i].next;
 	if (grf->files[i].next)
 		grf->files[i].next->prev=grf->files[i].prev;
+	
+	/* Find a spot in the linked list for the file */
 	GrfFile *cur = grf->first;
 	while (cur!=NULL && cur->pos<write_offset)
 		cur=cur->next;
-/* URGENT FIXME: what's this code supposed to do? right now it will crash if cur == NULL */
-	if (cur==NULL)
-	if (cur->next==NULL)
+		
+	/* Set the files next and prev */
+	if (cur==NULL) {
+		grf->files[i].prev=grf->last;
 		grf->files[i].next=NULL;
-	else {
-		grf->files[i].next=cur->next;
-		cur->next->prev=&(grf->files[i]);
 	}
+	else {
+		grf->files[i].prev=cur;
+		grf->files[i].next=cur->next;
+	}
+	
+	/* Move the file after its prev, and before its next */
+	cur=&(grf->files[i]);
+	if (cur->next!=NULL) cur->next->prev=cur;
+	if (cur->prev!=NULL) cur->prev->next=cur;
 
 	/* Write the data to its spot */
 	if (fwrite(write_dat, grf->files[i].compressed_len_aligned, 1U, grf->f) < 1U) {
