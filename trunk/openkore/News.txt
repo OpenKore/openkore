@@ -12,11 +12,13 @@ New features:
 - More infomation for merchant shop ('al' command).
 - Support for private RO server (which has only one real IP).
   To use this feature you must put the line 'private 1' in tables/servers.txt.
+- config.txt now supports multi-line comments, like C/C++.
+  /* indicates the beginning of a comment, and */ indicates the end.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will print a beep character when you
   hear a PM/public chat message.
-- Multiple lines comment in config.txt now avilable.
+
 
 ==================
 ### 1.5.0 (beta)
