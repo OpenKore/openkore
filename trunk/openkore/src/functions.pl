@@ -4982,8 +4982,7 @@ sub AI {
 	}
 	if ($ai_seq[0] eq "move") {
 		if (timeOut(\%{$ai_seq_args[0]{'ai_move_giveup'}})) {
-			# We couldn't move within ai_move_giveup seconds.
-			# Abort move commands.
+			# We couldn't move within ai_move_giveup seconds; abort
 			debug("Move - give up\n", "ai_move");
 			shift @ai_seq;
 			shift @ai_seq_args;
@@ -5002,10 +5001,14 @@ sub AI {
 			sendMove(\$remote_socket, int($ai_seq_args[0]{'move_to'}{'x'}), int($ai_seq_args[0]{'move_to'}{'y'}));
 			$ai_seq_args[0]{'ai_move_giveup'}{'time'} = time;
 			$ai_seq_args[0]{'ai_move_time_last'} = $chars[$config{'char'}]{'time_move'};
+			$ai_seq_args[0]{'ai_move_started'}{'time'} = time;
+			$ai_seq_args[0]{'ai_move_started'}{'timeout'} = ($timeout{'ai_move_retry'}{'timeout'} || 0.25);
 			$ai_seq_args[0]{'stage'} = 'Sent Move Request';
 
-		} elsif ($ai_seq_args[0]{'ai_move_time_last'} eq $chars[$config{'char'}]{'time_move'}) {
+		} elsif ($ai_seq_args[0]{'ai_move_time_last'} eq $chars[$config{'char'}]{'time_move'}
+		     && timeOut($ai_seq_args[0]{'ai_move_started'}, 0.2)) {
 			# We haven't moved yet, send move request again
+			$ai_seq_args[0]{'ai_move_started'} = time;
 			sendMove(\$remote_socket, int($ai_seq_args[0]{'move_to'}{'x'}), int($ai_seq_args[0]{'move_to'}{'y'}));
 
 		} elsif ($ai_seq_args[0]{'move_to'}{'x'} eq $chars[$config{'char'}]{'pos_to'}{'x'}
@@ -5183,7 +5186,7 @@ sub parseSendMsg {
 		decrypt(\$msg, $msg);
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	debug "Packet Switch SENT_BY_CLIENT: $switch\n" if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch));
+	debug "Packet Switch SENT_BY_CLIENT: $switch\n", "parseSendMsg", 0 if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch));
 
 	# If the player tries to manually do something in the RO client, disable AI for a small period
 	# of time using ai_clientSuspend().
@@ -5207,7 +5210,7 @@ sub parseSendMsg {
 			undef $firstLoginMap;
 		}
 		$timeout{'welcomeText'}{'time'} = time;
-		message "Map loaded\n";
+		message "Map loaded\n", "connection";
 
 	} elsif ($switch eq "0085") {
 		# Move
@@ -5326,7 +5329,7 @@ sub parseMsg {
 		decrypt(\$msg, $msg);
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	debug "Packet Switch: $switch\n", "parseMsg" if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch));
+	debug "Packet Switch: $switch\n", "parseMsg", 0 if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch));
 
 	# The user is running in X-Kore mode and wants to switch character.
 	# We're now expecting an accountID.
@@ -5743,6 +5746,7 @@ sub parseMsg {
 
 		} else {
 			debug "Unknown Exists: $type - ".unpack("L*",$ID)."\n", "parseMsg";
+			print "Unknown Exists: $type - ".unpack("L*",$ID)."\n";
 		}
 
 	} elsif ($switch eq "0079") {
@@ -6024,7 +6028,8 @@ sub parseMsg {
 		makeCoords2(\%coordsTo, substr($msg, 8, 3));
 		%{$chars[$config{'char'}]{'pos'}} = %coordsFrom;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coordsTo;
-		debug "You move to: $coordsTo{'x'}, $coordsTo{'y'}\n", "parseMsg";
+		my $dist = sprintf("%.1f", distance(\%coordsFrom, \%coordsTo));
+		debug "You move from ($coordsFrom{x}, $coordsFrom{y}) to ($coordsTo{x}, $coordsTo{y}) - distance $dist\n", "parseMsg";
 		$chars[$config{'char'}]{'time_move'} = time;
 		$chars[$config{'char'}]{'time_move_calc'} = distance(\%{$chars[$config{'char'}]{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}) * $config{'seconds_per_block'};
 
@@ -6210,7 +6215,7 @@ sub parseMsg {
 		$coords{'y'} = unpack("S1", substr($msg, 20, 2));
 		%{$chars[$config{'char'}]{'pos'}} = %coords;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords;
-		message "Map Change: $map_name\n";
+		message "Map Change: $map_name\n", "connection";
 		debug "Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", "parseMsg";
 		debug "Sending Map Loaded\n", "parseMsg";
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
@@ -7804,11 +7809,12 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "011F" || $switch eq "01C9") {
-		#area effect spell
-		$ID = substr($msg, 2, 4);
-		$SourceID = substr($msg, 6, 4);
-		$x = unpack("S1",substr($msg, 10, 2));
-		$y = unpack("S1",substr($msg, 12, 2));
+		# Area effect spell; including traps!
+		my $ID = substr($msg, 2, 4);
+		my $SourceID = substr($msg, 6, 4);
+		my $x = unpack("S1",substr($msg, 10, 2));
+		my $y = unpack("S1",substr($msg, 12, 2));
+
 		$spells{$ID}{'sourceID'} = $SourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
 		$spells{$ID}{'pos'}{'y'} = $y;
@@ -7816,7 +7822,7 @@ sub parseMsg {
 		$spells{$ID}{'binID'} = $binID;
 
 	} elsif ($switch eq "0120") {
-		#The area effect spell with ID dissappears
+		# The area effect spell with ID dissappears
 		my $ID = substr($msg, 2, 4);
 		undef %{$spells{$ID}};
 		binRemove(\@spellsID, $ID);
@@ -8433,16 +8439,22 @@ sub parseMsg {
 		#end of pet spawn code
 		
 	} elsif ($switch eq "01AA") {
-		#pet
+		# pet
+
+	} elsif ($switch eq "01B0") {
+		# Class change
+		# 01B0 : long ID, byte WhateverThisIs, long class
+		my $ID = unpack("L", substr($msg, 2, 4));
+		my $class = unpack("L", substr($msg, 7, 4));
 
 	} elsif ($switch eq "01B3") {
-		#NPC image 
+		# NPC image 
 		my $npc_image = substr($msg, 2,64); 
 		($npc_image) = $npc_image =~ /(\S+)/; 
 		debug "NPC image: $npc_image\n", "parseMsg";
 
 	} elsif ($switch eq "01B6") {
-		#Guild Info 
+		# Guild Info 
 		$guild{'ID'}        = substr($msg, 2, 4);
 		$guild{'lvl'}       = unpack("L1", substr($msg,  6, 4));
 		$guild{'conMember'} = unpack("L1", substr($msg, 10, 4));
@@ -10495,7 +10507,7 @@ sub redirectXKoreMessages {
 
 	return if ($type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
 	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|selfchat|emotion|drop|inventory|deal)$/);
-	return if ($domain =~ /^(attack|skill)/);
+	return if ($domain =~ /^(attack|skill|list|info)/);
 
 	$message =~ s/\n*$//s;
 	$message =~ s/\n/\\n/g;
