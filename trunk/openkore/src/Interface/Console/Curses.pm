@@ -453,13 +453,13 @@ sub updateStatus {
 	vline $self->{winStatus}, 0, $width-1, 0, $self->{winStatusHeight};
 	my $hpbar = $self->makeBar($width-29, $char->{hp}, $char->{hp_max}, "bold|red", 15, "bold|green");
 	$self->printw($self->{winStatus}, 0, $width, "{bold|yellow}     HP:{normal} @####/@#### $hpbar (@##%)",
-		$char->{hp}, $char->{hp_max}, $char->{hp_max} ? $char->{hp} / $char->{hp_max} * 100 : 0);
+		$char->{hp}, $char->{hp_max}, $char->{hp_max} ? int($char->{hp} / $char->{hp_max} * 100) : 0);
 	my $spbar = $self->makeBar($width-29, $char->{sp}, $char->{sp_max}, "bold|blue");
 	$self->printw($self->{winStatus}, 1, $width, "{bold|yellow}     SP:{normal} @####/@#### $spbar (@##%)",
-		$char->{sp}, $char->{sp_max}, $char->{sp_max} ? $char->{sp} / $char->{sp_max} * 100 : 0);
+		$char->{sp}, $char->{sp_max}, $char->{sp_max} ? int($char->{sp} / $char->{sp_max} * 100) : 0);
 	my $weightbar = $self->makeBar($width-29, $char->{weight}, $char->{weight_max}, "cyan", 50, "red");
 	$self->printw($self->{winStatus}, 2, $width, "{bold|yellow} Weight:{normal} @####/@#### $weightbar (@##%)",
-		$char->{weight}, $char->{weight_max}, $char->{weight_max} ? $char->{weight} / $char->{weight_max} * 100 : 0);
+		$char->{weight}, $char->{weight_max}, $char->{weight_max} ? int($char->{weight} / $char->{weight_max} * 100) : 0);
 	my $statuses = ($char->{statuses}) ? join(",", keys %{$char->{statuses}}) : "none";
 	$self->printw($self->{winStatus}, 3, $width, "{bold|yellow} Status:{normal} @*",
 		$statuses);
