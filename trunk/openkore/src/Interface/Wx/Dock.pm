@@ -53,13 +53,11 @@ sub attach {
 	if ($self->{dialog}) {
 		if ($self->{control}) {
 			$self->{control}->Reparent($self);
-			$self->{dialogSizer}->Remove($self->{control});
 			$self->{sizer}->Add($self->{control}, 1, wxGROW);
 		}
 		$self->{dialog}->Show(0);
 		$self->{dialog}->Destroy;
 		delete $self->{dialog};
-		#$self->SetSizerAndFit($self->{sizer});
 		$self->Layout;
 	}
 
@@ -79,18 +77,14 @@ sub detach {
 	}
 
 	if ($self->{control}) {
-		my $sizer = $self->{dialogSizer} = new Wx::BoxSizer(wxVERTICAL);
 		$self->{control}->Reparent($dialog);
 		$self->{sizer}->Remove($self->{control});
-		#$self->SetSizerAndFit($self->{sizer});
 		$self->Layout;
-		$sizer->Add($self->{control}, 0, wxGROW);
-		$dialog->SetSizer($sizer);
-		$dialog->Fit;
 	}
 
 	$self->{dialog} = $dialog;
 	$dialog->Show(1);
+	$self->Fit;
 	EVT_CLOSE($dialog, sub { $self->attach; });
 }
 
@@ -136,7 +130,7 @@ sub Fit {
 			}
 		}
 	} else {
-		$self->SUPER::Fit(@_);
+		$self->Layout;
 	}
 }
 
