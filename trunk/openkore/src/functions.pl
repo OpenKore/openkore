@@ -9969,8 +9969,10 @@ sub updateDamageTables {
 			} else {
 				$monsters{$ID2}{'atkMiss'} = 0;
 			}
-			message "Teleporting because of attack miss\n", "teleport";
-			useTeleport(1) if ($config{'teleportAuto_atkMiss'} && $monsters{$ID2}{'atkMiss'} >= $config{'teleportAuto_atkMiss'});
+			 if ($config{'teleportAuto_atkMiss'} && $monsters{$ID2}{'atkMiss'} >= $config{'teleportAuto_atkMiss'}) {
+				message "Teleporting because of attack miss\n", "teleport";
+				useTeleport(1);
+			}
 		}
 	} elsif ($ID2 eq $accountID) {
 		if ($monsters{$ID1}) {
