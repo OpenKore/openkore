@@ -2,7 +2,7 @@
 # If you want to run this Makefile in Windows, you need Cygwin:
 # http://sources.redhat.com/cygwin/
 
-VERSION=1.1
+VERSION=1.3
 FILENAME=confpack-$(VERSION).zip
 
 .PHONY: clean
