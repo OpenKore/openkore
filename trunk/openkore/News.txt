@@ -33,6 +33,7 @@ New features:
   in portals' NPC steps (t="some text")
 - Added command 'death <player #>' for use if you get the Death spell from
   Abracadabra.
+- Added command 'kill <player #>' to make the bot attack in PVP.
 
 New config options:
 - *_inInventory_name : inventory item name
@@ -54,6 +55,9 @@ Bug fixes:
 - Fixed 'monster', 'mvp' and 'death' commands to work with new ai_skillUse.
 - Fixed storage access when storage is empty.
 - Various routing bug fixes (by jsteng).
+- 'talk resp' now works correctly with NPCs that present a list of selections
+  without saying anything else.
+- Emotions that aren't in the lookup table will be displayed by number.
 
 Internal:
 - Portal compilation is now 30% faster.

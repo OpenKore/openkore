@@ -57,6 +57,7 @@ our %handlers = (
 	im	=> \&cmdUseItemOnMonster,
 	ip	=> \&cmdUseItemOnPlayer,
 	is	=> \&cmdUseItemOnSelf,
+	kill	=> \&cmdKill,
 	leave	=> \&cmdLeaveChatRoom,
 	help	=> \&cmdHelp,
 	reload	=> \&cmdReload,
@@ -102,6 +103,7 @@ our %descriptions = (
 	im	=> 'Use item on monster.',
 	ip	=> 'Use item on player.',
 	is	=> 'Use item on yourself.',
+	kill	=> 'Attack another player (PVP/GVG only).',
 	leave	=> 'Leave chat room.',
 	reload	=> 'Reload configuration files.',
 	memo	=> 'Save current position for warp portal.',
@@ -1106,6 +1108,17 @@ sub cmdWarp {
 
 sub cmdWho {
 	sendWho(\$remote_socket);
+}
+
+sub cmdKill {
+	my (undef, $ID) = @_;
+
+	my $target = $playersID[$ID];
+	unless ($target) {
+		error "Player $ID does not exist.\n";
+		return;
+	}
+	attack($target);
 }
 
 sub cmdMonster {
