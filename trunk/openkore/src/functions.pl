@@ -3827,7 +3827,7 @@ sub AI {
 				"from ($chars[$config{char}]{pos_to}{x},$chars[$config{char}]{pos_to}{y}) to ($monsters{$ID}{pos_to}{x},$monsters{$ID}{pos_to}{y})\n", "ai_attack";
 
 			ai_route($field{'name'}, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y},
-				pyDistFromGoal => $ai_seq_args[0]{'attackMethod'}{'distance'},
+				distFromGoal => $ai_seq_args[0]{'attackMethod'}{'distance'},
 				maxRouteTime => $config{'attackMaxRouteTime'},
 				attackID => $ID);
 
@@ -4060,10 +4060,14 @@ sub AI {
 
 		} elsif ( $ai_seq_args[0]{'stage'} eq 'Route Solution Ready' ) {
 			if ($ai_seq_args[0]{'maxRouteDistance'} > 0 && $ai_seq_args[0]{'maxRouteDistance'} < 1) {
-				#fractional route motion
+				# fractional route motion
 				$ai_seq_args[0]{'maxRouteDistance'} = int($ai_seq_args[0]{'maxRouteDistance'} * scalar @{$ai_seq_args[0]{'solution'}});
 			}
 			splice(@{$ai_seq_args[0]{'solution'}},1+$ai_seq_args[0]{'maxRouteDistance'}) if $ai_seq_args[0]{'maxRouteDistance'} && $ai_seq_args[0]{'maxRouteDistance'} < @{$ai_seq_args[0]{'solution'}};
+
+			# Trim down solution tree for distFromGoal
+			splice(@{$ai_seq_args[0]{'solution'}}, -$ai_seq_args[0]{distFromGoal}) if ($ai_seq_args[0]{distFromGoal});
+
 			undef $ai_seq_args[0]{'mapChanged'};
 			undef $ai_seq_args[0]{'index'};
 			undef $ai_seq_args[0]{'old_x'};
@@ -4091,15 +4095,6 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 
-			} elsif ($ai_seq_args[0]{'distFromGoal'} >= @{$ai_seq_args[0]{'solution'}}
-			      || $ai_seq_args[0]{'pyDistFromGoal'} > ($dist = distance($ai_seq_args[0]{'dest'}{'pos'}, $chars[$config{'char'}]{'pos_to'})) ) {
-				# We are near the goal, thats good enough.
-				# Distance is computed based on step counts (distFromGoal) or pythagorean distance (pyDistFromGoal).
-				$dist = sprintf("%.1f", $dist);
-				debug "We are near our goal ($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'}); " .
-					"currently at ($cur_x,$cur_y); distance $dist\n", "route";
-				shift @ai_seq;
-				shift @ai_seq_args;
 			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y) {
 				#we are still on the same spot
 				#decrease step movement
