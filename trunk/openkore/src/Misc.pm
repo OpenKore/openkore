@@ -34,44 +34,52 @@ use Utils;
 use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete sendCharLogin sendMove);
 
 our @EXPORT = qw(
+	# Config modifiers
 	auth
 	configModify
 	setTimeout
 	saveConfigFile
 
+	# Debugging
 	debug_showSpots
 
+	# Field math
 	calcRectArea
-	center
-	charSelectScreen
 	checkFieldWalkable
-	checkFollowMode
-	checkMonsterCleanness
+	checkLOS
+	checkWallLength
 	closestWalkableSpot
-	createCharacter
 	getFieldPoint
-	getPortalDestName
-	getPlayer
-	getSpellName
-	objectAdded
 	objectInsideSpell
 	objectIsMovingTowardsPlayer
+
+	# OS specific
+	launchURL
+
+	# Misc
+	center
+	charSelectScreen
+	checkFollowMode
+	checkMonsterCleanness
+	createCharacter
+	getPlayer
+	getPortalDestName
+	getSpellName
+	objectAdded
 	printItemDesc
 	stopAttack
 	stripLanguageCode
+	whenGroundStatus
 	whenStatusActive
 	whenStatusActiveMon
 	whenStatusActivePL
-	whenGroundStatus
-
-	launchURL
 	);
 
 
 
 #######################################
 #######################################
-#CONFIG MODIFIERS
+### CATEGORY: Configuration modifiers
 #######################################
 #######################################
 
@@ -130,7 +138,7 @@ sub setTimeout {
 
 #######################################
 #######################################
-#DEBUGGING FUNCTIONS
+### Category: Debugging
 #######################################
 #######################################
 
@@ -177,7 +185,7 @@ sub debug_showSpots {
 
 #######################################
 #######################################
-# OTHER STUFF
+### CATEGORY: Field math
 #######################################
 #######################################
 
@@ -239,6 +247,252 @@ sub calcRectArea {
 
 	return @walkableBlocks;
 }
+
+##
+# checkFieldWalkable(r_field, x, y)
+# r_field: a reference to a field hash.
+# x, y: the coordinate to check.
+# Returns: 1 (true) or 0 (false).
+#
+# Check whether ($x, $y) on field $r_field is walkable.
+sub checkFieldWalkable {
+	my $p = getFieldPoint(@_);
+	return ($p == 0 || $p == 3);
+}
+
+##
+# checkLOS(pos, pos_to, [min_wall_length = 3])
+# pos, pos_to: references to position hashes.
+#
+# Check whether you can walk from $pos to $pos_to in a straight line,
+# without being interrupted by walls. Walls that are less than
+# $min_wall_length long are ignored.
+sub checkLOS {
+	my $pos = shift;
+	my $pos_to = shift;
+	my $min_wall_length = shift;
+	$min_wall_length = 3 if (!defined $min_wall_length);
+
+	my $dist = distance($pos, $pos_to);
+	my %vec;
+
+	getVector(\%vec, $pos, $pos_to);
+	# Simulate walking from $pos to $pos_to
+	for (my $i = 1; $i < $dist; $i++) {
+		my %p;
+		moveAlongVector(\%p, $pos, \%vec, -$i);
+		$p{x} = int $p{x};
+		$p{y} = int $p{y};
+
+		if ( !checkFieldWalkable(\%field, $p{x}, $p{y}) ) {
+			# The current spot is not walkable. Check whether
+			# this wall is long enough to get in our way.
+			if (checkWallLength(\%p, -1,  0, $min_wall_length) || checkWallLength(\%p,  1, 0, $min_wall_length) ||
+			    checkWallLength(\%p,  0, -1, $min_wall_length) || checkWallLength(\%p,  0, 1, $min_wall_length) ||
+			    checkWallLength(\%p, -1, -1, $min_wall_length) || checkWallLength(\%p,  1, 1, $min_wall_length) ||
+			    checkWallLength(\%p,  1, -1, $min_wall_length) || checkWallLength(\%p, -1, 1, $min_wall_length)) {
+				return 0;
+			}
+		}
+	}
+	return 1;
+}
+
+sub checkWallLength {
+	my $pos = shift;
+	my $dx = shift;
+	my $dy = shift;
+	my $length = shift;
+
+	my $x = $pos->{x};
+	my $y = $pos->{y};
+	my $len = 0;
+
+	do {
+		last if ($x < 0 || $x >= $field{width} || $y < 0 || $y >= $field{height});
+		$x += $dx;
+		$y += $dy;
+		$len++;
+	} while (!checkFieldWalkable(\%field, $x, $y) && $len < $length);
+	return $len < $length;
+}
+
+##
+# closestWalkableSpot(r_field, pos)
+# r_field: a reference to a field hash.
+# pos: reference to a position hash (which contains 'x' and 'y' keys).
+# Returns: 1 if %pos has been modified, 0 of not.
+#
+# If the position specified in $pos is walkable, this function will do nothing.
+# If it's not walkable, this function will find the closest position that is walkable (up to 2 blocks away),
+# and modify the x and y values in $pos.
+sub closestWalkableSpot {
+	my $r_field = shift;
+	my $pos = shift;
+
+	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
+		next if !checkFieldWalkable($r_field, $pos->{'x'} + $z->[0], $pos->{'y'} + $z->[1]);
+		$pos->{'x'} += $z->[0];
+		$pos->{'y'} += $z->[1];
+		return 1;
+	}
+	return 0;
+}
+
+##
+# getFieldPoint(r_field, x, y)
+# r_field: a reference to a field hash.
+# x, y: the coordinate on the field to check.
+# Returns: An integer: 0 = walkable, 1 = not walkable, 3 = water (walkable), 5 = cliff (not walkable, but you can snipe)
+#
+# Get the raw value of the specified coordinate on the map. If you want to check whether
+# ($x, $y) is walkable, use checkFieldWalkable instead.
+sub getFieldPoint {
+	my $r_field = shift;
+	my $x = shift;
+	my $y = shift;
+
+	if ($x < 0 || $x >= $r_field->{'width'} || $y < 0 || $y >= $r_field->{'height'}) {
+		return 1;
+	}
+	return ord(substr($r_field->{rawMap}, ($y * $r_field->{'width'}) + $x, 1));
+}
+
+##
+# objectInsideSpell(object)
+# object: reference to a player or monster hash.
+#
+# Checks whether an object is inside someone else's spell area.
+# (Traps are also "area spells").
+sub objectInsideSpell {
+	my $object = shift;
+	my ($x, $y) = ($object->{pos_to}{x}, $object->{pos_to}{y});
+	foreach (@spellsID) {
+		my $spell = $spells{$_};
+		if ($spell->{sourceID} ne $accountID && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
+			return 1;
+		}
+	}
+	return 0;
+}
+
+##
+# objectIsMovingTowardsPlayer(object, [ignore_party_members = 1])
+#
+# Check whether an object is moving towards a player.
+sub objectIsMovingTowardsPlayer {
+	my $obj = shift;
+	my $ignore_party_members = shift;
+	$ignore_party_members = 1 if (!defined $ignore_party_members);
+
+	if (!timeOut($obj->{time_move}, $obj->{time_move_calc}) && @playersID) {
+		# Monster is still moving, and there are players on screen
+		my %vec;
+		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
+
+		foreach (@playersID) {
+			next if (!$_ || ($ignore_party_members && $char->{party} && $char->{party}{users}{$_}));
+			if (checkMovementDirection($obj->{pos}, \%vec, $players{$_}{pos}, 15)) {
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+
+#########################################
+#########################################
+### CATEGORY: Operating system specific
+#########################################
+#########################################
+
+
+##
+# launchURL(url)
+#
+# Open $url in the operating system's preferred web browser.
+sub launchURL {
+	my $url = shift;
+
+	if ($^O eq 'MSWin32') {
+		eval "use Win32::API;";
+		my $ShellExecute = new Win32::API("shell32", "ShellExecute", "NPPPPN", "V");
+		$ShellExecute->Call(0, '', $url, '', '', 1);
+
+	} else {
+		my $mod = 'POSIX';
+		require $mod;
+		import $mod;
+
+		# This is a script I wrote for the autopackage project
+		# It autodetects the current desktop environment
+		my $detectionScript = <<"		EOF";
+			function detectDesktop() {
+				if [[ "\$DISPLAY" = "" ]]; then
+                			return 1
+				fi
+
+				local LC_ALL=C
+				local clients
+				if ! clients=`xlsclients`; then
+			                return 1
+				fi
+
+				if echo "\$clients" | grep -qE '(gnome-panel|nautilus|metacity)'; then
+					echo gnome
+				elif echo "\$clients" | grep -qE '(kicker|slicker|karamba|kwin)'; then
+        			        echo kde
+				else
+        			        echo other
+				fi
+				return 0
+			}
+			detectDesktop
+		EOF
+
+		my ($r, $w, $desktop);
+		my $pid = IPC::Open2::open2($r, $w, '/bin/bash');
+		print $w $detectionScript;
+		close $w;
+		$desktop = <$r>;
+		$desktop =~ s/\n//;
+		close $r;
+		waitpid($pid, 0);
+
+		sub checkCommand {
+			foreach (split(/:/, $ENV{PATH})) {
+				return 1 if (-x "$_/$_[0]");
+			}
+			return 0;
+		}
+
+		if ($desktop eq "gnome" && checkCommand('gnome-open')) {
+			launchApp('gnome-open', $url);
+
+		} elsif ($desktop eq "kde") {
+			launchApp('kfmclient', 'exec', $url);
+
+		} else {
+			if (checkCommand('firefox')) {
+				launchApp('firefox', $url);
+			} elsif (checkCommand('mozillaa')) {
+				launchApp('mozilla', $url);
+			} else {
+				$interface->errorDialog("No suitable browser detected. " .
+					"Please launch your favorite browser and go to:\n$url");
+			}
+		}
+	}
+}
+
+
+#######################################
+#######################################
+### CATEGORY: Other functions
+#######################################
+#######################################
+
 
 ##
 # center(string, width, [fill])
@@ -425,18 +679,6 @@ sub charSelectScreen {
 }
 
 ##
-# checkFieldWalkable(r_field, x, y)
-# r_field: a reference to a field hash.
-# x, y: the coordinate to check.
-# Returns: 1 (true) or 0 (false).
-#
-# Check whether ($x, $y) on field $r_field is walkable.
-sub checkFieldWalkable {
-	my $p = getFieldPoint(@_);
-	return ($p == 0 || $p == 3);
-}
-
-##
 # checkFollowMode()
 # Returns: 1 if in follow mode, 0 if not.
 #
@@ -514,28 +756,6 @@ sub checkMonsterCleanness {
 }
 
 ##
-# closestWalkableSpot(r_field, pos)
-# r_field: a reference to a field hash.
-# pos: reference to a position hash (which contains 'x' and 'y' keys).
-# Returns: 1 if %pos has been modified, 0 of not.
-#
-# If the position specified in $pos is walkable, this function will do nothing.
-# If it's not walkable, this function will find the closest position that is walkable (up to 2 blocks away),
-# and modify the x and y values in $pos.
-sub closestWalkableSpot {
-	my $r_field = shift;
-	my $pos = shift;
-
-	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
-		next if !checkFieldWalkable($r_field, $pos->{'x'} + $z->[0], $pos->{'y'} + $z->[1]);
-		$pos->{'x'} += $z->[0];
-		$pos->{'y'} += $z->[1];
-		return 1;
-	}
-	return 0;
-}
-
-##
 # createCharacter(slot, name, [str,agi,vit,int,dex,luk] = 5)
 # slot: the slot in which to create the character (1st slot is 0).
 # name: the name of the character to create.
@@ -580,25 +800,6 @@ sub createCharacter {
 	}
 }
 
-##
-# getFieldPoint(r_field, x, y)
-# r_field: a reference to a field hash.
-# x, y: the coordinate on the field to check.
-# Returns: An integer: 0 = walkable, 1 = not walkable, 3 = water (walkable), 5 = cliff (not walkable, but you can snipe)
-#
-# Get the raw value of the specified coordinate on the map. If you want to check whether
-# ($x, $y) is walkable, use checkFieldWalkable instead.
-sub getFieldPoint {
-	my $r_field = shift;
-	my $x = shift;
-	my $y = shift;
-
-	if ($x < 0 || $x >= $r_field->{'width'} || $y < 0 || $y >= $r_field->{'height'}) {
-		return 1;
-	}
-	return ord(substr($r_field->{rawMap}, ($y * $r_field->{'width'}) + $x, 1));
-}
-
 sub getPortalDestName {
 	my $ID = shift;
 	my %hash; # We only want unique names, so we use a hash
@@ -638,6 +839,11 @@ sub getPlayer {
 	return undef;
 }
 
+sub getSpellName {
+	my $spell = shift;
+	return $spells_lut{$spell} || "Unknown $spell";
+}
+
 sub objectAdded {
 	my $type = shift;
 	my $ID = shift;
@@ -646,48 +852,6 @@ sub objectAdded {
 	if ($type eq 'player' || $type eq 'npc') {
 		push @unknownObjects, $ID;
 	}
-}
-
-##
-# objectInsideSpell(object)
-# object: reference to a player or monster hash.
-#
-# Checks whether an object is inside someone else's spell area.
-# (Traps are also "area spells").
-sub objectInsideSpell {
-	my $object = shift;
-	my ($x, $y) = ($object->{pos_to}{x}, $object->{pos_to}{y});
-	foreach (@spellsID) {
-		my $spell = $spells{$_};
-		if ($spell->{sourceID} ne $accountID && $spell->{pos}{x} == $x && $spell->{pos}{y} == $y) {
-			return 1;
-		}
-	}
-	return 0;
-}
-
-##
-# objectIsMovingTowardsPlayer(object, [ignore_party_members = 1])
-#
-# Check whether an object is moving towards a player.
-sub objectIsMovingTowardsPlayer {
-	my $obj = shift;
-	my $ignore_party_members = shift;
-	$ignore_party_members = 1 if (!defined $ignore_party_members);
-
-	if (!timeOut($obj->{time_move}, $obj->{time_move_calc}) && @playersID) {
-		# Monster is still moving, and there are players on screen
-		my %vec;
-		getVector(\%vec, $obj->{pos_to}, $obj->{pos});
-
-		foreach (@playersID) {
-			next if (!$_ || ($ignore_party_members && $char->{party} && $char->{party}{users}{$_}));
-			if (checkMovementDirection($obj->{pos}, \%vec, $players{$_}{pos}, 15)) {
-				return 1;
-			}
-		}
-	}
-	return 0;
 }
 
 ##
@@ -730,6 +894,28 @@ sub stripLanguageCode {
 	}
 }
 
+##
+# whenGroundStatus(target, statuses)
+# target: $char, $players{$ID} or $monsters{$ID}
+# statuses: a comma-separated list of ground effects e.g. Safety Wall,Pneuma
+#
+# Returns 1 if $target is inside one of the ground effects specified by $statuses.
+sub whenGroundStatus {
+	my ($target, $statuses) = @_;
+
+	my $pos = calcPosition($target);
+	my ($x, $y) = ($pos->{x}, $pos->{y});
+	for my $ID (@spellsID) {
+		my $spell;
+		next unless ($spell = $spells{$ID});
+		if ($x == $spell->{pos}{x} &&
+		    $y == $spell->{pos}{y}) {
+			return 1 if existsInList($statuses, getSpellName($spell->{type}));
+		}
+	}
+	return 0;
+}
+
 sub whenStatusActive {
 	my $statuses = shift;
 	my @arr = split /,/, $statuses;
@@ -764,115 +950,5 @@ sub whenStatusActivePL {
 	return 0;
 }
 
-
-#########################################
-#########################################
-# ABSTRACTION AROUND OS-SPECIFIC STUFF
-#########################################
-#########################################
-
-##
-# launchURL(url)
-#
-# Open $url in the operating system's preferred web browser.
-sub launchURL {
-	my $url = shift;
-
-	if ($^O eq 'MSWin32') {
-		eval "use Win32::API;";
-		my $ShellExecute = new Win32::API("shell32", "ShellExecute", "NPPPPN", "V");
-		$ShellExecute->Call(0, '', $url, '', '', 1);
-
-	} else {
-		my $mod = 'POSIX';
-		require $mod;
-		import $mod;
-
-		# This is a script I wrote for the autopackage project
-		# It autodetects the current desktop environment
-		my $detectionScript = <<"		EOF";
-			function detectDesktop() {
-				if [[ "\$DISPLAY" = "" ]]; then
-                			return 1
-				fi
-
-				local LC_ALL=C
-				local clients
-				if ! clients=`xlsclients`; then
-			                return 1
-				fi
-
-				if echo "\$clients" | grep -qE '(gnome-panel|nautilus|metacity)'; then
-					echo gnome
-				elif echo "\$clients" | grep -qE '(kicker|slicker|karamba|kwin)'; then
-        			        echo kde
-				else
-        			        echo other
-				fi
-				return 0
-			}
-			detectDesktop
-		EOF
-
-		my ($r, $w, $desktop);
-		my $pid = IPC::Open2::open2($r, $w, '/bin/bash');
-		print $w $detectionScript;
-		close $w;
-		$desktop = <$r>;
-		$desktop =~ s/\n//;
-		close $r;
-		waitpid($pid, 0);
-
-		sub checkCommand {
-			foreach (split(/:/, $ENV{PATH})) {
-				return 1 if (-x "$_/$_[0]");
-			}
-			return 0;
-		}
-
-		if ($desktop eq "gnome" && checkCommand('gnome-open')) {
-			launchApp('gnome-open', $url);
-
-		} elsif ($desktop eq "kde") {
-			launchApp('kfmclient', 'exec', $url);
-
-		} else {
-			if (checkCommand('firefox')) {
-				launchApp('firefox', $url);
-			} elsif (checkCommand('mozillaa')) {
-				launchApp('mozilla', $url);
-			} else {
-				$interface->errorDialog("No suitable browser detected. " .
-					"Please launch your favorite browser and go to:\n$url");
-			}
-		}
-	}
-}
-
-##
-# whenGroundStatus($target, $statuses)
-#
-# $target: $char, $players{$ID} or $monsters{$ID}
-# $statuses: a comma-separated list of ground effects e.g. Safety Wall,Pneuma
-#
-# Returns 1 iff $target is affected by one of $statuses.
-sub whenGroundStatus {
-	my ($target, $statuses) = @_;
-
-	my $pos = calcPosition($target);
-	for my $ID (@spellsID) {
-		next unless my $spell = $spells{$ID};
-		if ($pos->{x} == $spell->{pos}{x} &&
-		    $pos->{y} == $spell->{pos}{y}) {
-			return 1 if existsInList($statuses, getSpellName($spell->{type}));
-		}
-	}
-	return 0;
-}
-
-sub getSpellName {
-	my $spell = shift;
-	return $spells_lut{$spell} || "Unknown $spell";
-}
 
 return 1;
