@@ -2461,7 +2461,7 @@ sub AI {
 			close F;
 
 			$time =~ s/[\r\n].*//;
-			if (timeOut($time, 60 * 60 * 24)) {
+			if (timeOut($time, 1)) {
 				$checkUpdate{stage} = 'Connect';
 			} else {
 				$checkUpdate{checked} = 1;
@@ -2483,7 +2483,9 @@ sub AI {
 			}
 
 		} elsif ($checkUpdate{stage} eq 'Request') {
-			$checkUpdate{sock}->send("GET /misc/leastVersion.txt HTTP/1.1\r\n", 0);
+			my $filename = "/cgi-bin/leastVersion.pl";
+			my $stats = $config{"master_host_$config{'master'}"};
+			$checkUpdate{sock}->send("GET $filename?$stats HTTP/1.1\r\n", 0);
 			$checkUpdate{sock}->send("Host: openkore.sourceforge.net\r\n\r\n", 0);
 			$checkUpdate{sock}->flush;
 			$checkUpdate{stage} = 'Receive';
