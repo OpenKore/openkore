@@ -120,6 +120,8 @@ New configuration options:
 - autoTalkCont
   If set to 1, kore will automatically type 'talk cont' for you when
   you're in a conversation with an NPC.
+- attackAuto_inLockOnly
+  When walking to lockmap, only attack monsters if this option is set to 0.
 
 
 Bug fixes:
