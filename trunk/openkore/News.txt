@@ -90,9 +90,6 @@ New features:
 - When you issue a "move" command, this will clear previous move actions.
 - When the amount of zeny you have changes, you will be told.
 - Support for specifying hair color and hair style at character creation.
-- Config option attackNoGiveup will make bot not stop attacking enemy
-  even if it can't damage it. Useful if your attackSkillSlot is e.g.
-  Spell Breaker.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -129,7 +126,8 @@ New commands:
 New config options:
 - attackMaxDistance (number)
   You should set it to 2.5
-- useSelf_skill, partySkill and useSelf_item now also support the 'monsters' option.
+- useSelf_skill, partySkill and useSelf_item now also support the 'monsters'
+  and 'notMonsters' options.
 - New partySkill options:
   * target_aggressives
     Only activate partySkill if a certain monster attacks a party member.
@@ -231,7 +229,9 @@ New config options:
   space where you do, while respecting runFromTarget_dist and
   followDistanceMax. This code isn't perfect yet! It will frequently be unable
   to find a solution.
-- _notMonsters works with all conditions now where _monsters works
+- Config option attackNoGiveup will make bot not stop attacking enemy
+  even if it can't damage it. Useful if your attackSkillSlot is e.g.
+  Spell Breaker.
 
 
 New timeouts.txt options:
