@@ -102,6 +102,7 @@ our @EXPORT = qw(
 	sendPetPerformance
 	sendPetReturnToEgg
 	sendPetUnequipItem
+	sendPkMapLogin
 	sendQuit
 	sendRaw
 	sendRespawn
@@ -967,6 +968,17 @@ sub sendPetUnequipItem {
 	my $msg = pack("C*", 0xA1, 0x01, 0x04);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Pet Unequip Item\n", "sendPacket", 2;
+}
+
+sub sendPkMapLogin {
+	my $r_socket = shift;
+	my $accountID = shift;
+	my $sessionID = shift;
+	my $sex = shift;
+	my $msg = pack("C*", 0x72,0,0) . $accountID .
+		pack("C*",0x00,0x2C,0xFC,0x2B,0x8B,0x01,0x00,0x60,0x00,0xFF,0xFF,0xFF,0xFF) .
+		$sessionID . pack("L1", getTickCount()) . pack("C*",$sex);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendQuit {
