@@ -1,28 +1,40 @@
 # This file controls the colors used to highlight messages in the
 # console.
 # Valid colors are:
-# black, red, brown, green, darkgreen, yellow, blue, ightblue, magenta,
-# lightmagenta, cyan, darkcyan, white, gray, default
+# black, red, green, yellow, blue, magenta, cyan, white, default
 #
 # Format:
 # [Message type]
-# <message domain> [foreground color]
+# <message domain> [foreground color][/background color]
 
 # Set to 0 to disable colors
 useColors 1
 
 [message]
-attacked brown
-attackMon darkgreen
-connection darkcyan
-info white
-list white
+attackMon cyan 
+attackMonMiss lightcyan 
+attacked lightmagenta 
+attackedMiss magenta 
+
+connection darkgreen
+drop lightblue
+useItem lightblue/blue
+
+skill lightgreen 
+
+system white
+pm red/yellow
+guildchat blue/yellow
+list white 
+info white 
+equip grey/cyan
 
 [error]
-default red
+default lightred
 
 [warning]
 default yellow
+info yellow
 
 [debug]
 default default
