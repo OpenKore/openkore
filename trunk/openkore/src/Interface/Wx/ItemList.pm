@@ -114,7 +114,7 @@ sub set {
 	my $r_monstersID = shift;
 	my $monsters = shift;
 	foreach (@{$r_monstersID}) {
-		next if !$_;
+		next if (!$_ || !$monsters->{$_});
 		push @objectsID, $_;
 		$objects{$_} = {%{$monsters->{$_}}};
 		$objects{$_}{type} = 'm';
