@@ -1370,3 +1370,17 @@
 7222#Tree Knot#
 7223#Distorted Portrait#
 7225#Pumpkin Bucket#
+
+// ---- gonryun - 01 ---------
+553#Bun#
+7161#Black_Bear's_Skin#
+7162#Cloud_Piece#
+7163#Sharp_Feeler#
+7164#Hard_Peach#
+7165#Limpid_Celestial_Robe#
+7166#Soft_Silky_Cloth#
+7167#Mystery_Iron_Bit#
+7168#Wing_of_Great_Butterfly#
+7169#Taeguk_Plate#
+7171#Leopard_Skin#
+7172#Leopard_Talon#
