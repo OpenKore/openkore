@@ -193,6 +193,7 @@ sub checkConnection {
 		message("Connecting to Master Server...\n", "connection");
 		$shopstarted = 1;
 		$conState_tries++;
+		$initSync = 1;
 		undef $msg;
 		Network::connectTo(\$remote_socket, $master->{ip}, $master->{port});
 
@@ -5572,6 +5573,7 @@ sub parseMsg {
 				$chars[$num]{'sex'} = $accountSex2;
 			}
 
+			sendBanCheck(\$remote_socket) if (!$xkore && $config{serverType} == 2);
 			if (charSelectScreen(1) == 1) {
 				$firstLoginMap = 1;
 				$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
@@ -7062,6 +7064,10 @@ sub parseMsg {
 			$chars[$config{'char'}]{'exp_max_last'} = $chars[$config{'char'}]{'exp_max'};
 			$chars[$config{'char'}]{'exp_max'} = $val;
 			debug "Required Exp: $val\n", "parseMsg";
+			if (!$xkore && $initSync && $config{serverType} == 2) {
+				sendSync(\$remote_socket, 1);
+				$initSync = 0;
+			}
 		} elsif ($type == 23) {
 			$chars[$config{'char'}]{'exp_job_max_last'} = $chars[$config{'char'}]{'exp_job_max'};
 			$chars[$config{'char'}]{'exp_job_max'} = $val;
