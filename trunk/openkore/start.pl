@@ -28,14 +28,17 @@ if (0) {
 	# Force PerlApp to include the following modules
 	require base;
 	require bytes;
+	require lib;
+	require Config;
 	require warnings;
 	require Exporter;
 	require Carp;
 	require FindBin;
 	require Math::Trig;
 	require Text::Wrap;
+	require Text::ParseWords;
 	require Time::HiRes;
-	require IO::Socket;
+	require IO::Socket::INET;
 	require Getopt::Long;
 	require Digest::MD5;
 	require Win32::Console;
@@ -44,17 +47,25 @@ if (0) {
 if ($0 =~ /\.exe$/i) {
 	$ENV{INTERPRETER} = $0;
 }
+if ($0 =~ /wxstart\.exe$/i) {
+	$ENV{OPENKORE_DEFAULT_INTERFACE} = 'Wx';
+}
 
 my $file = 'openkore.pl';
 if ($ARGV[0] eq '!') {
 	shift;
-	while ($ARGV[0] =~ /^-I(.*)/) {
-		unshift @INC, $1;
-		shift;
+	while (@ARGV) {
+		if ($ARGV[0] =~ /^-I(.*)/) {
+			unshift @INC, $1;
+			shift;
+		} else {
+			last;
+		}
 	}
 	$file = shift;
 }
 
+$0 = $file;
 do $file;
 die $@ if ($@);
 

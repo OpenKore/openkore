@@ -160,7 +160,13 @@ sub parseArguments {
 	$monster_log = "$logs_folder/monsters.txt" if (!defined $monster_log);
 	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
 	$shop_log_file ||= "$logs_folder/shop.txt";
-	$default_interface = "Console" if (!defined $default_interface);
+	if (!defined $default_interface) {
+		if ($ENV{OPENKORE_DEFAULT_INTERFACE} && $ENV{OPENKORE_DEFAULT_INTERFACE} ne "") {
+			$default_interface = $ENV{OPENKORE_DEFAULT_INTERFACE};
+		} else {
+			$default_interface = "Console"
+		}
+	}
 
 	return 2 if ($help_option);
 	if (! -d $logs_folder) {
