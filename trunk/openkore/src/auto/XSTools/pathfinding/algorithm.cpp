@@ -34,7 +34,7 @@ static unsigned char *default_weight = NULL;
 
 
 static inline int
-QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
+QuickfindFloatMax(QuicksortFloat* a, int val, int lo, int hi)
 {
 	int x = (lo+hi)>>1;
 	if (val == a[x].val)
@@ -106,7 +106,7 @@ CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* 
 		session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
 		session->fullList.array = (pos_ai*) malloc(FULL_LIST_MAX*sizeof(pos_ai));
 		session->openList.array = (QuicksortFloat*) malloc(OPEN_LIST_MAX*sizeof(QuicksortFloat));
-		session->lookup.array = (float*) malloc(LOOKUPS_MAX*sizeof(float));
+		session->lookup.array = (int*) malloc(LOOKUPS_MAX*sizeof(int));
 	}
 
 	solution->size = 0;
@@ -114,7 +114,7 @@ CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* 
 	fullList->size = 1;
 	fullList->array[0].p = *start;
 	fullList->array[0].g = 0;
-	fullList->array[0].f = (float)abs(start->x - dest->x) + abs(start->y - dest->y);
+	fullList->array[0].f = abs(start->x - dest->x) + abs(start->y - dest->y);
 	fullList->array[0].parent = -1;
 	openList->array[0].val = fullList->array[0].f;
 	openList->array[0].index = 0;
@@ -139,7 +139,7 @@ int
 CalcPath_pathStep(CalcPath_session * session)
 {
 	pos mappos;
-	float newg;
+	int newg;
 	unsigned char successors_size;
 	int j, cur, successors_start,suc, found,index;
 	unsigned long timeout = (unsigned long) GetTickCount();

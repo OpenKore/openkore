@@ -18,8 +18,8 @@ typedef struct {
 
 typedef struct {
 	pos p;
-	float g;
-	float f;
+	int g;
+	int f;
 	int parent;
 } pos_ai;
 
@@ -29,7 +29,7 @@ typedef struct {
 } pos_ai_list;
 
 typedef struct {
-	float val;
+	int val;
 	int index;
 } QuicksortFloat;
 
@@ -40,7 +40,7 @@ typedef struct {
 
 typedef struct {
 	unsigned int size;
-	float *array;
+	int *array;
 } lookups_list;
 
 typedef struct {
