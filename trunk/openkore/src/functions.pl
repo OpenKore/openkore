@@ -1693,7 +1693,8 @@ sub AI {
 	# Automatically record new unknown portals
 
 	PORTALRECORD: {
-		last PORTALRECORD if (!$ai_v{portalTrace_mapChanged});
+		last unless $config{portalRecord};
+		last unless $ai_v{portalTrace_mapChanged};
 		delete $ai_v{portalTrace_mapChanged};
 		
 		debug "Checking for new portals...\n", "portalRecord";
@@ -4728,7 +4729,7 @@ sub AI {
 								if ($dist > 0 && $config{route_teleport_maxTries} && $args->{teleportTries} >= $config{route_teleport_maxTries}) {
 									debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route_teleport";
 								} else {
-									debug "Attempting to teleport near portal, try #".($args->{teleportTries} + 1)."\n", "route_teleport";
+									message "Attempting to teleport near portal, try #".($args->{teleportTries} + 1)."\n", "route_teleport";
 									if (!useTeleport(1)) {
 										$args->{teleport} = 0;
 									} else {
