@@ -176,6 +176,8 @@ sub readEvents {
 						$self->{in_pos}+1, $self->{in_line}, ord(' '), $main::ATTR_NORMAL, 
 						$self->{in_pos}, $self->{in_line}, $self->{right}, $self->{in_line},
 					);
+				} elsif ($self->{in_pos} > length($self->{input_part})) {
+					$self->{in_pos} = length($self->{input_part});
 				}
 				$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
 				$self->{out_con}->Write(chr($event[5]));
