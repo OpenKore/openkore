@@ -1757,6 +1757,26 @@ sub parseInput {
 		sit();
 		$ai_v{'sitAuto_forceStop'} = 0;
 
+	} elsif ($switch eq "sl") {
+		my $input =~ /^[\s\S]*? (\d+) (\d+) (\d+)(?: (\d+))?/;
+		my $skill_num = $1;
+		my $x = $2;
+		my $y = $3;
+		my $lvl = $4;
+		if (!$skill_num) {
+			error "Syntax Error in function 'sl' (Use Skill on Location)\n" .
+				"Usage: ss <skill #> <x> <y> [<skill lvl>]\n";
+		} elsif (!$skillsID[$skill_num]) {
+			print "Error in function 'sl' (Use Skill on Location)\n" .
+				"Skill $skill_num does not exist.\n";
+		} else {
+			my $skill = $chars[$config{'char'}]{'skills'}{$skillsID[$skill_num]};
+			if (!$lvl || $lvl > $skill->{'lv'}) {
+				$lvl = $skill->{'lv'};
+			}
+			ai_skillUse($skill->{'ID'}, $lvl, 0, 0, $x, $y);
+		}
+
 	} elsif ($switch eq "sm") {
 		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
@@ -2133,7 +2153,12 @@ sub parseInput {
 		} else {
 			sendUnequip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'});
 		}
-		
+
+	} elsif ($switch eq "warp") {
+		my ($map) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		message "Attempting to open a warp portal to map '$map'\n";
+		sendOpenWarp(\$remote_socket, $map);
+
 	} elsif ($switch eq "where") {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		message("Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n", "info");
@@ -10180,6 +10205,13 @@ sub sendOpenShop {
 		print "Cannot open shop: you don't have the Vending skill.\n";
 		return 0;
 	}
+}
+
+sub sendOpenWarp {
+	my ($r_socket, $map) = @_;
+	my $msg = pack("C*", 0x1b, 0x01, 0x1b, 0x00) . $map .
+		chr(0) x (16 - length($map));
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendPartyChat {

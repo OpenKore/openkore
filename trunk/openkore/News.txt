@@ -74,6 +74,10 @@ so people can easily see what config options have been added/changed)
 - New command: cart desc
 - Log files (item log, chat log, walk.dat) are now stored in the logs folder.
 - Color support. Colors are defined in control/consolecolors.txt
+- Ability to open a warp portal. Thanks to pmak.
+  New commands:
+  * sl (use skill on location)
+  * warp (open warp portal)
 
 
 ==================
