@@ -57,12 +57,14 @@ ai_dead_respawn 4
 ai_wipe_old 200
 ai_wipe_check 30
 
-ai_sit 4
+# Send the sit/stand packet at most every x second
+ai_sit 1
 # Sit after having idled for x seconds
 ai_sit_idle 10
-ai_stand_wait 1
+# Stand after x seconds, after having typed the 'stand' command
+ai_stand_wait 0
 # Sit after x seconds, after having typed the "sit" command
-ai_sit_wait 0.2
+ai_sit_wait 0
 
 ai_skill_use_giveup 1
 ai_item_use_auto 0.5
