@@ -66,6 +66,9 @@ so people can easily see what config options have been added/changed)
 - The config options "partyAutoDeny" and "dealAutoDeny" have been
   replaced by "partyAuto" and "dealAuto".
   0 = disable, 1 = auto-cancel. 2 = auto-accept
+- "drop" and "storage get" can now drop/get more than 1 item. Example:
+  storage get 4,7   (gets storage item 4 and 7)
+  drop 3,5          (drops inventory item 3 and 5)
 
 
 ==================
@@ -74,6 +77,7 @@ so people can easily see what config options have been added/changed)
 
 - *Really* fix vending this time.
 - Fix storage listing.
+- Fix avoid_ignore.
 
 
 ==================
