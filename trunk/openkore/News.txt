@@ -21,6 +21,7 @@ Bug fixes:
 - Restore advanced 2-2 class support from version 1.5.0.
 - Sell all items at once instead of just 8 at a time.
 - skillsAddAuto was waiting a long time to add the next skill point.
+- Auto-drop will look at full item name now.
 
 New features:
 - Don't use teleportAuto_minAggressives if the more specific
