@@ -216,10 +216,11 @@ sub setColor {
 ##
 # Log::message(message, [domain], [level])
 #
-# Prints a normal message. See the description for Log.pm for more details about the parameters.
+# Prints a normal message. See the description for Log.pm for more details
+# about the parameters.
 sub message {
 	my ($message, $domain, $level) = @_;
-	$level = 1 if !$level && existsInList($config{squelchDomains}, $domain);
+	$level = 5 if existsInList($config{squelchDomains}, $domain);
 	return processMsg("message",	# type
 		$message,
 		$domain,
