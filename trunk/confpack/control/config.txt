@@ -424,4 +424,7 @@ itemHistory 0
 autoTalkCont 0
 noAutoSkill 0
 
-alias_heal sp 28
+beepOnPM 0
+beepOnChat 0
+
+#alias_heal sp 28
