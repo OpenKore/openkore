@@ -14,14 +14,8 @@ type
     ToolBar1: TToolBar;
     ToolBar2: TToolBar;
     StatusBar1: TStatusBar;
-    OpenBtn: TToolButton;
     Search: TEdit;
     SearchBtn: TToolButton;
-    ExtractBtn: TToolButton;
-    ToolButton4: TToolButton;
-    PreviewBtn: TToolButton;
-    ToolButton6: TToolButton;
-    AboutBtn: TToolButton;
     ImageList2: TImageList;
     Splitter1: TSplitter;
     PreviewPane: TPanel;
@@ -40,6 +34,12 @@ type
     ProgressBar1: TProgressBar;
     FileList: TVirtualStringTree;
     Label1: TLabel;
+    OpenBtn: TSpeedButton;
+    ExtractBtn: TSpeedButton;
+    PreviewBtn: TSpeedButton;
+    AboutBtn: TSpeedButton;
+    PaintBox1: TPaintBox;
+    PaintBox2: TPaintBox;
     procedure FormResize(Sender: TObject);
     procedure OpenBtnClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -66,6 +66,7 @@ type
       Node2: PVirtualNode; Column: TColumnIndex; var Result: Integer);
     procedure FileListHeaderClick(Sender: TVTHeader; Column: TColumnIndex;
       Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
+    procedure PaintBox1Paint(Sender: TObject);
   private
     Grf: TGrf;
     FSortColumn: Integer;
@@ -542,6 +543,19 @@ begin
       FSortDirection := sdAscending;
   end;
   FileList.Sort(nil, Column, FSortDirection);
+end;
+
+procedure TForm1.PaintBox1Paint(Sender: TObject);
+var
+  P: TPaintBox;
+begin
+  P := TPaintBox(Sender);
+  P.Canvas.Pen.Color := clBtnHighlight;
+  P.Canvas.MoveTo(4, 3);
+  P.Canvas.LineTo(4, P.Height - 3);
+  P.Canvas.Pen.Color := clBtnShadow;
+  P.Canvas.MoveTo(3, 3);
+  P.Canvas.LineTo(3, P.Height - 3);
 end;
 
 end.
