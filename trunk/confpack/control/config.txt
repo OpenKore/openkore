@@ -68,6 +68,7 @@ debugPacket_ro_sent 0
 debugPacket_sent 0
 debugPacket_exclude
 debugDomains
+showDomain 0
 squelchDomains
 verboseDomains
 
