@@ -136,9 +136,10 @@ use Log qw(message warning error debug);
 
 #use Mysql;
 use DBI;
-use CGI::Enurl;
-use Date::Format;
-use Date::Language;
+use POSIX qw(strftime);
+#use CGI::Enurl;
+#use Date::Format;
+#use Date::Language;
 #use Statistics::Basic::Mean;
 #use Statistics::Basic::StdDev;
 
@@ -188,7 +189,7 @@ sub Called{
 	$servername =~ s/\s+$//;
 	
 	# connecting to the database
-	$dbh		= DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
+	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
 
 #	print "ID: " . unpack("L1",$::ID) . "\n";
 
@@ -255,7 +256,7 @@ sub Called{
 sub mercDbFill{
 	my $itemName;
 	my $shopName ;
-	my $datum = time2str("%d.%m.%Y %T", time);
+	my $datum = strftime("%d.%m.%Y %T", localtime(time));
 	my $map;
 	my $card1ID = 0;
 	my $card2ID = 0;
@@ -586,7 +587,7 @@ sub charNameUpdate{
 	$servername =~ s/\s+$//;
 	
 	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
-	my $datum	= time2str("%d.%m.%Y %T", time);
+	my $datum	= strftime("%d.%m.%Y %T", localtime(time));
 	
 	my $shopOwnerID = unpack("L1",$::ID);
 	my $shopOwner = $::players{$::ID}{'name'};
