@@ -4972,14 +4972,15 @@ sub AI {
 		}
 
 		# Check whether it's safe to teleport
-		if ($config{teleportAuto_onlyWhenSafe}) {
-			if (!$cities_lut{$map_name_lu} && timeOut($timeout{ai_teleport_safe_force})) {
-				$safe = 1 if (!binSize(\@playersID));
-				$timeout{ai_teleport_safe_force}{time} = time;
+		if (!$cities_lut{$map_name_lu}) {
+			if ($config{teleportAuto_onlyWhenSafe}) {
+				if (!binSize(\@playersID) || timeOut($timeout{ai_teleport_safe_force})) {
+					$safe = 1;
+					$timeout{ai_teleport_safe_force}{time} = time;
+				}
+			} else {
+				$safe = 1;
 			}
-		} elsif (!$cities_lut{$map_name_lu}) {
-			$safe = 1;
-			$timeout{ai_teleport_safe_force}{time} = time;
 		}
 
 		##### TELEPORT HP #####

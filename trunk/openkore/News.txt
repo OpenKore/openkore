@@ -40,6 +40,7 @@ Bug fixes:
 - shop_random has been readded.
 - Win32 console interface: fixed a crash regarding text input.
 - "aggressives 0" and "partyAggressives 0" should work now.
+- Fix bugged teleportAuto_onlyWhenSafe.
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux
