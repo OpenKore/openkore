@@ -10018,7 +10018,7 @@ sub sendOpenShop {
 					}
 
 					if ($citem >- 1) {
-						$itemtosell{$index}{'index'} = $cart{'inventory'}[$index]{'index'};
+						$itemtosell{$index}{'index'} = $index;
 
 						# Calculate amount
 						if ($shop{"quantity_$i"} > 0 && $cart{'inventory'}[$index]{'amount'} >= $shop{"quantity_$i"}) {
