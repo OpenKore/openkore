@@ -3056,7 +3056,7 @@ sub AI {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
 			}
 			ai_route($config{'lockMap'}, $config{'lockMap_x'}, $config{'lockMap_y'},
-				attackOnRoute => !$config{'attackAuto_inLockOnly'});
+				attackOnRoute => $config{'attackAuto_inLockOnly'} ? 1 : 2);
 		}
 	}
 	undef $ai_v{'temp'}{'lockMap_coords'};
