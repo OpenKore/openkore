@@ -1,3 +1,44 @@
+sec_in01.rsw#Inside Valhalla#
+sec_in02.rsw#Inside Valhalla#
+sec_pri.rsw#Room of Meditation(Valhalla Prison)#
+gon_test.rsw#Arena#
+gon_dun01.rsw#Shrine of Gonryun Queen#
+gon_dun02.rsw#Hermit's Checkers#
+gon_dun03.rsw#Arcadia#
+gon_fild01.rsw#Gonryun Field#
+gon_in.rsw#Inside Gonryun#
+gonryun.rsw#Gonryun, the Hermit Land#
+ama_test.rsw#Momotaro Experience Place#
+ama_dun03.rsw#Amatsu Underground Shrine#
+ama_dun02.rsw#Battle Field in the Underground Forest#
+ama_dun01.rsw#Tatami Maze#
+ama_fild01.rsw#Amatsu Field#
+ama_in02.rsw#Inside Himezi Castle#
+ama_in01.rsw#Inside Amatsu#
+amatsu.rsw#Amatsu, the Land of Destiny#
+alde_alche.rsw#Alchemist Job Change Place#
+yuno_in05.rsw#Power Plant of Ymir's Heart#
+yuno_in04.rsw#Republic Library#
+job_duncer.rsw#Comodo Theatre#
+job_sage.rsw#Sage Job Change Place#
+job_cru.rsw#Crusader Job Change Place#
+job_monk.rsw#Saint Capitolina Abbey#
+monk_test.rsw#Saint Capitolina Abbey#
+in_rogue.rsw#Inside the Rogue Guild#
+mag_dun02.rsw#Nogg Road#
+mag_dun01.rsw#Nogg Road#
+yuno_fild04.rsw#El Mes Plateau#
+yuno_fild03.rsw#El Mes Plateau#
+yuno_fild02.rsw#Kiel Hyre's Cottage#
+yuno_fild01.rsw#Border Posts#
+yuno_in03.rsw#Inside Yuno#
+yuno_in02.rsw#Inside the Sage Castle#
+yuno_in01.rsw#Inside Yuno#
+yuno.rsw#Yuno, the capital of Schwarzwald Republic#
+job_wiz.rsw#Wizard Job Change Place#
+job_prist.rsw#Priest Job Change Place#
+job_knt.rsw#Knight Job Change Place#
+job_hunte.rsw#Hunter Job Change Place#
 gld_dun04.rsw#Guild Dungeon#
 gld_dun03.rsw#Guild Dungeon#
 gld_dun02.rsw#Guild Dungeon#
