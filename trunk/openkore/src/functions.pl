@@ -4117,6 +4117,12 @@ sub AI {
 					#stopAttack();
 				}
 
+				# Give an error if we don't actually possess this skill
+				if ($char->{skills}{$handle}{lv} <= 0) {
+					my $skill = new Skills(handle => $handle) if (!$skill); 
+					error "Attempted to use skill (".$skill->name.") which you do not have.\n";
+				}
+
 				if ($skillsArea{$handle} == 2) {
 					sendSkillUse(\$remote_socket, $skillID, $args->{lv}, $accountID);
 				} elsif ($args->{x} ne "") {

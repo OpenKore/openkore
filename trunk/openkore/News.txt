@@ -27,6 +27,7 @@ New features:
 - New 'guild leave' command (needs testing, but the server I play is down)
   added.
 - Nearly complete oRO and pRO support. Thanks to jojobaoil and duckieeex!
+- Display a warning if Kore is attempting to use a skill it doesn't have.
 
 New config options:
 - showDomain (flag)
