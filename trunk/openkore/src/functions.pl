@@ -10398,6 +10398,7 @@ sub openShop {
 }
 
 sub closeShop {
+	return unless $shopstarted;
 	sendCloseShop();
 
 	$shopstarted = 0;
