@@ -76,3 +76,9 @@ ip 202.168.25.133
 port 6900
 master_version 23
 version 2
+
+[Brazil - bRO]
+ip 200.229.49.10
+port 6900
+master_version 22
+version 1
