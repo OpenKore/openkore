@@ -156,7 +156,7 @@ sub parseDataFile2 {
 	my $no_undef = shift;
 
 	undef %{$r_hash} unless $no_undef;
-	my ($key, $value, $inBlock, %blocks);
+	my ($key, $value, $inBlock, $commentBlock, %blocks);
 
 	open FILE, "< $file";
 	foreach (<FILE>) {
@@ -183,6 +183,17 @@ sub parseDataFile2 {
 		} elsif (defined $inBlock && $_ eq "}") {
 			# End of block
 			undef $inBlock;
+
+		} elsif (!defined $commentBlock && /^\/\*/) {
+			$commentBlock = 1;
+			next;
+
+		} elsif (m/\*\/$/) {
+			undef $commentBlock;
+			next;
+
+		} elsif (defined $commentBlock) {
+			next;
 
 		} else {
 			# Option

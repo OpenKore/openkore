@@ -16,6 +16,7 @@ New features:
 New config options:
 - beepOnPM, beepOnChat if set to 1 will print a beep character when you
   hear a PM/public chat message.
+- Multiple lines comment in config.txt now avilable.
 
 ==================
 ### 1.5.0 (beta)
