@@ -3457,12 +3457,24 @@ sub AI {
 
 	##### RANDOM WALK #####
 	if ($config{'route_randomWalk'} && $ai_seq[0] eq "" && @{$field{'field'}} > 1 && !$cities_lut{$field{'name'}.'.rsw'}) {
+		# Find a random block on the map that we can walk on
 		do { 
 			$ai_v{'temp'}{'randX'} = int(rand() * ($field{'width'} - 1));
 			$ai_v{'temp'}{'randY'} = int(rand() * ($field{'height'} - 1));
 		} while ($field{'field'}[$ai_v{'temp'}{'randY'}*$field{'width'} + $ai_v{'temp'}{'randX'}]);
+
+		# Move to that block
 		message "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n", "route";
-		ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}, $field{'name'}, 0, $config{'route_randomWalk_maxRouteTime'}, 2, undef, undef, 1);
+		ai_route(\%{$ai_v{'temp'}{'returnHash'}},
+			$ai_v{'temp'}{'randX'},
+			$ai_v{'temp'}{'randY'},
+			$field{'name'},
+			0,
+			$config{'route_randomWalk_maxRouteTime'},
+			2,
+			undef,
+			undef,
+			1);
 	}
 
 	##### DEAD #####

@@ -156,7 +156,7 @@ sub registered {
 
 
 ##
-# addHook(hookname, r_func, user_data)
+# Plugins::addHook(hookname, r_func, user_data)
 # hookname: Name of the hook.
 # r_func: Reference to the function to call.
 # user_data: Additional data to pass to r_func.
@@ -185,7 +185,7 @@ sub delHook {
 
 
 ##
-# callHook(hookname, r_param)
+# Plugins::callHook(hookname, r_param)
 # hookname: Name of the hook.
 # r_param: A reference to a hash that will be passed to the hook functions.
 #
