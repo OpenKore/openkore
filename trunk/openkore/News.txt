@@ -20,6 +20,8 @@
   			    (NOTE responce numbering starts at 0 (unlike it does if you
   			    are using sendTalkResponse)) after training everyone to start
   			    counting at 0, i thaught it best to preserve it ;)
+- New config option: shop_random.
+  When set to 1, the item order in the shop will be randomized.
 
 ==================
 ### OpenKore 1.2.1

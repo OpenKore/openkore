@@ -19,6 +19,16 @@
 # - External programs can control Kore. You can, for example, write a user
 #   interface for Kore as an external program.
 # `l`
+#
+# <h3>How it works</h3>
+# <img src="ipc.png" width="323" height="365" alt="Overview of the IPC system">
+#
+# The IPC subsystem sets up a server socket. Clients (which could be,
+# for example, another Kore instance) can connect to that server socket
+# to communicate with Kore.
+#
+# This module handles all the connection issues. The core Kore code
+# doesn't have to worry about that.
 
 package IPC;
 
