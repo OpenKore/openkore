@@ -1571,10 +1571,22 @@ sub parseCommand {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		message("Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n", "info");
 
-	} elsif ($switch eq "undead") {
-		# FIXME: Remove this after kore correctly detects resurrection
-		print "Assuming character to be not dead\n";
-		$chars[$config{'char'}]{'dead'} = 0;
+	} elsif ($switch eq "east") {
+		manualMove(5, 0);
+	} elsif ($switch eq "west") {
+		manualMove(-5, 0);
+	} elsif ($switch eq "north") {
+		manualMove(0, 5);
+	} elsif ($switch eq "south") {
+		manualMove(0, -5);
+	} elsif ($switch eq "northeast") {
+		manualMove(5, 5);
+	} elsif ($switch eq "southwest") {
+		manualMove(-5, -5);
+	} elsif ($switch eq "northwest") {
+		manualMove(-5, 5);
+	} elsif ($switch eq "southeast") {
+		manualMove(5, -5);
 
 	} else {
 		my $return = 0;
@@ -10017,6 +10029,25 @@ sub checkMonsterCondition {
 	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActiveMon($id, $config{$prefix . "_whenStatusInactive"}) || whenAffectedMon($id, $config{$prefix . "_whenStatusInactive"})); }
 	
 	return 1;
+}
+
+##
+# manualMove($delta_x, $delta_y)
+#
+# Moves the character offset from its current position.
+sub manualMove {
+	my ($delta_x, $delta_y) = @_;
+
+	# Stop following if necessary
+	if ($config{'follow'}) {
+		configModify('follow', 0);
+		aiRemove('follow');
+	}
+
+	$ai_v{'temp'}{'map'} = $field{'name'};
+	$ai_v{'temp'}{'x'} = $chars[$config{'char'}]{'pos_to'}{'x'} + $delta_x;
+	$ai_v{'temp'}{'y'} = $chars[$config{'char'}]{'pos_to'}{'y'} + $delta_y;
+	ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'});
 }
 
 return 1;
