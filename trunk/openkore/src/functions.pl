@@ -3002,20 +3002,48 @@ sub AI {
 		} else {
 			if ($ai_seq_args[0]{'sentStore'} <= 1) {
 				sendTalk(\$remote_socket, pack("L1",$config{'storageAuto_npc'})) if !$ai_seq_args[0]{'sentStore'};
-				sendTalkContinue(\$remote_socket, pack("L1",$config{'storageAuto_npc'})) if !$ai_seq_args[0]{'sentStore'};
-				## TESTME: I dont have access to both a copy of ro, and a paid for established account (wait till monday and i'm at work i guess) but this SHOULD work atleast)...
-				# I don't think this will work (since it merely unshifts the "clientSuspend" AI sequence; it doesn't actually sleep.
-				# Temporarily replacing it will sleep() so I can release 1.2.1.
-				# ai_clientSuspend(kludge, 1, 0);
-				# FIXME: get rid of sleep()!
-				sleep(1);
-				sendTalkResponse(\$remote_socket, pack("L1",$config{'storageAuto_npc'}),'2') if !$ai_seq_args[0]{'sentStore'};
-				sendTalkCancel(\$remote_socket, pack("L1",$config{'storageAuto_npc'}));
+				if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
+					if (!$ai_seq_args[0]{'sentStore'}) {
+						if ($config{'storageAuto_npc_type'} eq "") {
+							message("Warning storageAuto has changed. Please read News.txt\n", "warning");
+						}
+						$config{'storageAuto_npc_steps'} = "c r1 n";
+						message("Using standard iRO npc storage steps.\n", "debug");					
+					} elsif ($config{'storageAuto_npc_type'} eq "2") {
+						$config{'storageAuto_npc_steps'} = "c c r1 n";
+						message("Using iRO comodo (location) npc storage steps.\n", "debug");
+					} elsif ($config{'storageAuto_npc_type'} eq "3") {
+						message("Using storage steps defined in config.\n", "info");
+					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
+						message("Something is wrong with storageAuto_npc_type in your config.\n", "error");
+					}
+				}
+				@{$ai_seq_args[0]{'steps'}} = split(/ +/, $config{'storageAuto_npc_steps'});
+				$timeout{'ai_storageAuto'}{'time'} = time;
 				$ai_seq_args[0]{'sentStore'}++;
+				last AUTOSTORAGE;
+				$ai_seq_args[0]{'step'} = 0;
+			} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}]) {
+				if ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /c/i) {
+					sendTalkContinue(\$remote_socket, pack("L1",$config{'storageAuto_npc'}));
+					message("Sent Talk Continue.\n", "debug");
+				} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /n/i) {
+					sendTalkCancel(\$remote_socket, pack("L1",$config{'storageAuto_npc'}));
+					message("Sent Talk Cancel.\n", "debug");
+				} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] ne "") {
+					($ai_v{'temp'}{'arg'}) = $ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /r(\d+)/i;
+					if ($ai_v{'temp'}{'arg'} ne "") {
+						$ai_v{'temp'}{'arg'}++;
+						sendTalkResponse(\$remote_socket, pack("L1",$config{'storageAuto_npc'}), $ai_v{'temp'}{'arg'});
+						message("Sent Talk Responce ".$ai_v{'temp'}{'arg'}."\n", "debug");
+					}
+				} else {
+					undef @{$ai_seq_args[0]{'steps'}};
+				}
+				$ai_seq_args[0]{'step'}++;
 				$timeout{'ai_storageAuto'}{'time'} = time;
 				last AUTOSTORAGE;
 			}
-
 			$ai_seq_args[0]{'done'} = 1;
 			if (!$ai_seq_args[0]{'getStart'}) {
 				for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
