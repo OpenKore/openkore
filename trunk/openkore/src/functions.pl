@@ -3318,7 +3318,7 @@ sub AI {
 
 					getVector(\%vec, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 					moveAlongVector(\%pos, \%{$chars[$config{'char'}]{'pos_to'}}, \%vec, $dist - $config{'followDistanceMin'});
-					move($pos{'x'}, $pos{'y'});
+					sendMove(\$remote_socket, $pos{'x'}, $pos{'y'});
 				}
 			}
 		}
@@ -6945,22 +6945,22 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$ai_cmdQue++;
 		print "%$chat\n";
 
-# Hambo Started
-# 3 Packets About MVP
-	} elsif ($switch eq "010A" && length($msg) >= 4) {
+	# Hambo Started
+	# 3 Packets About MVP
+	} elsif ($switch eq "010A") {
 		$ID = unpack("S1", substr($msg, 2, 2));
 		$display = ($items_lut{$ID} ne "")
 		? $items_lut{$ID}
 		: "Unknown" . $ID;
 		print "Get MVP item&#65306;$display\n";
-		chatLog("S", "Get MVP item&#65306;$display\n");
+		chatLog("k", "Get MVP item&#65306;$display\n");
 
-	} elsif ($switch eq "010B" && length($msg) >= 6) {
+	} elsif ($switch eq "010B") {
 		$expAmout = unpack("L1", substr($msg, 2, 4));
-		print "Your become MVP, Get $expAmout Exp!\n";
-		chatLog("S", "Your become MVP, Get $expAmout Exp!\n");
+		print "Congradulations, you are the MVP! Your reward is $expAmout exp!\n";
+		chatLog("k", "Congradulations, you are the MVP! Your reward is $expAmout exp!\n");
 
-	} elsif ($switch eq "010C" && length($msg) >= 6) {
+	} elsif ($switch eq "010C") {
 		$ID = substr($msg, 2, 4);
 		$display = "Unknown";
 		if (%{$players{$ID}}) {
@@ -6969,8 +6969,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$display = "Your";
 		}
 		print "$displaybecome MVP!\n";
-		chatLog("S", $display . "become MVP!\n");
-# Hambo Ended 
+		chatLog("k", $display . "become MVP!\n");
+	# Hambo Ended
 
 	} elsif ($switch eq "010E") {
 		$ID = unpack("S1",substr($msg, 2, 2));
@@ -7191,19 +7191,19 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$extra = ": Lv $amount";
 		}
 		print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra\n";
-		#X Start 
-      		if ($config{'autoResponseOnHeal'}) {
-      			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) { 
-         			if ($targetDisplay eq "you") { 
-         				chatLog("s", "***$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra***\n"); 
-         				sendMessage(\$remote_socket, "pm", getResponse("skillgoodM"), $players{$sourceID}{'name'}); 
-         			} elsif ($targetDisplay eq  "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})") { 
-         				chatLog("s", "***$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra***\n"); 
-         				sendMessage(\$remote_socket, "pm", getResponse("skillbadM"), $players{$sourceID}{'name'}); 
-         			} 
-      			} 
-      		} 
-#X End
+		#X Start
+		if ($config{'autoResponseOnHeal'}) {
+			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
+				if ($targetDisplay eq "you") {
+					chatLog("k", "***$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra***\n");
+					sendMessage(\$remote_socket, "pm", getResponse("skillgoodM"), $players{$sourceID}{'name'});
+				} elsif ($targetDisplay eq  "$monsters{$targetID}{'name'} ($monsters{$targetID}{'binID'})") {
+					chatLog("k", "***$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra***\n");
+					sendMessage(\$remote_socket, "pm", getResponse("skillbadM"), $players{$sourceID}{'name'});
+				}
+			}
+		}
+		#X End
 
 	} elsif ($switch eq "011C") {
 
@@ -10108,6 +10108,13 @@ sub sendPartyShareEXP {
 	print "Sent Party Share: $flag\n" if ($config{'debug'} >= 2);
 }
 
+sub sendQuit {
+	my $r_socket = shift;
+	my $msg = pack("C*", 0x8A, 0x01, 0x00, 0x00);
+	sendMsgToServer($r_socket, $msg);
+	print "Sent Quit\n" if ($config{'debug'} >= 2);
+}
+
 sub sendRaw {
 	my $r_socket = shift;
 	my $raw = shift;
@@ -10286,6 +10293,7 @@ sub sendToServerByInject {
 sub sendMsgToServer {
 	my $r_socket = shift;
 	my $msg = shift;
+	return if (!$$r_socket || !$$r_socket->connected());
 	encrypt(\$msg, $msg);
 	if ($config{'XKore'}) {
 		sendToServerByInject(\$remote_socket, $msg);
@@ -10384,6 +10392,7 @@ sub killConnection {
 	my $r_socket = shift;
 	if ($$r_socket && $$r_socket->connected()) {
 		print "Disconnecting (".$$r_socket->peerhost().":".$$r_socket->peerport().")... ";
+		sendQuit($r_socket);
 		close($$r_socket);
 		!$$r_socket->connected() ? print "disconnected\n" : print "couldn't disconnect\n";
 	}
@@ -11335,7 +11344,7 @@ sub avoidGM_near() {
 
 		if ($statusGM && $players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
-			chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
+			chatLog("k", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
 
 			my $tmp = $config{'avoidGM_reconnect'};
 			print "Disconnect for $tmp seconds...\n";
@@ -11367,7 +11376,7 @@ sub avoidGM_talk($$) {
 
 	if ($statusGM && $chatMsgUser =~/GM(.*)\d{1,}/i) {
 		print "Disconnecting to avoid GM!\n"; 
-		chatLog("s", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n");
+		chatLog("k", "*** The GM $chatMsgUser talked to you, auto disconnected ***\n");
 
 		my $tmp = $config{'avoidGM_reconnect'};
 		print "Disconnect for $tmp seconds...\n";
@@ -11386,7 +11395,7 @@ sub avoidList_near() {
 		while ($avoid{"avoid_$j"} ne "") {
 			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
 				print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
-				chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
+				chatLog("k", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
 				print "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
 				$timeout_ex{'master'}{'time'} = time;
 				$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
@@ -11407,7 +11416,7 @@ sub avoidList_talk($$) {
 	while ($avoid{"avoid_$j"} ne "") {
 		if ($chatMsgUser eq $avoid{"avoid_$j"}) { 
 			print "Disconnecting to avoid $chatMsgUser!\n"; 
-			chatLog("s", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
+			chatLog("k", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
 			print "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
 			$timeout_ex{'master'}{'time'} = time;
 			$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
@@ -11770,7 +11779,7 @@ sub getFromList {
 sub ClearRouteAI {
 	my $msg = shift;
 	print $msg;
-	chatLog("s", $msg);
+	chatLog("k", $msg);
 	aiRemove("move");
 	aiRemove("route");
 	aiRemove("route_getRoute");
@@ -11791,7 +11800,7 @@ sub Unstuck {
 	$move_pos_x = 0;
 	$move_pos_y = 0;
 	print $msg;
-	chatLog("s", $msg);
+	chatLog("k", $msg);
 	aiRemove("move");
 	aiRemove("route");
 	aiRemove("route_getRoute");
@@ -11816,7 +11825,7 @@ sub RespawnUnstuck {
 	$move_pos_x = 0;
 	$move_pos_y = 0;
 	print "Cannot calculate route, respawning to saveMap ...\n";
-	chatLog("s", "Cannot calculate route, respawning to saveMap ...\n"); 
+	chatLog("k", "Cannot calculate route, respawning to saveMap ...\n"); 
 	aiRemove("move");
 	aiRemove("route");
 	aiRemove("route_getRoute");
