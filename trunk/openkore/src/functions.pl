@@ -15,7 +15,7 @@
 #########################################################################
 use Time::HiRes qw(time usleep);
 use IO::Socket;
-use Digest::MD5 qw(md5);
+use Digest::MD5;
 use Config;
 use Globals;
 use Log qw(message warning error debug);
@@ -160,19 +160,23 @@ sub checkConnection {
 		undef $msg;
 		connection(\$remote_socket, $config{"master_host_$config{'master'}"},$config{"master_port_$config{'master'}"});
 
-		if ($config{'secure'} >= 1) {
+		if ($config{'SecureLogin'} >= 1) {
 			message("Secure Login...\n", "connection");
 			undef $secureLoginKey;
-			sendMasterCodeRequest(\$remote_socket);
-                } else {
+			sendMasterEncryptKeyRequest(\$remote_socket,$config{'SecureLogin_RequestType'});
+		} else {
 			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'});
 		}
 
 		$timeout{'master'}{'time'} = time;
 
-	} elsif ($conState == 1 && $config{'secure'} >= 1 && $secureLoginKey ne "" && !timeOut(\%{$timeout{'master'}}) && $conState_tries) {
+	} elsif ($conState == 1 && $config{'SecureLogin'} >= 1 && $secureLoginKey ne "" && !timeOut(\%{$timeout{'master'}}) 
+			  && $conState_tries) {
+
 		message("Sending encoded password...\n", "connection");
-		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'}, $secureLoginKey);
+		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'},$secureLoginKey,
+											$config{'version'},$config{"master_version_$config{'master'}"},
+											$config{'SecureLogin'},$config{'SecureLogin_Account'});
 		undef $secureLoginKey;
 
 	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
@@ -961,32 +965,19 @@ sub parseCommand {
 		}
 
 	} elsif ($switch eq "eq") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\w+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\w+)/;
 		if ($arg1 eq "") {
-			error	"Syntax Error in function 'equip' (Equip Inventory Item)\n" .
-				"Usage: equip <item #> [r]\n";
+			message	"Syntax Error in function 'equip' (Equip Inventory Item)\n"
+				,"Usage: equip <item #> [r]\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			error	"Error in function 'equip' (Equip Inventory Item)\n" .
-				"Inventory Item $arg1 does not exist.\n";
-		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 0) {
-			error	"Error in function 'equip' (Equip Inventory Item)\n" .
-				"Inventory Item $arg1 can't be equipped.\n";
+			message	"Error in function 'equip' (Equip Inventory Item)\n"
+				,"Inventory Item $arg1 does not exist.\n";
+		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 0 && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
+			message	"Error in function 'equip' (Equip Inventory Item)\n"
+				,"Inventory Item $arg1 can't be equipped.\n";
 		} else {
-			if ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 256
-				|| $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 513) {
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, 0, 1);
-			} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 512) {
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, 0, 2);
-			} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 1) {
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, 1, 0);
-			} else {
-				if ($arg2 eq "r") {
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, 32, 0);
-				} else {
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'}, 0);
-				}
-			}
+			sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'});
 		}
 
 	} elsif ($switch eq "exp" || $switch eq "count") {
@@ -3441,10 +3432,12 @@ sub AI {
 	
 
 	%{$ai_v{'temp'}{'lockMap_coords'}} = ();
-	$ai_v{'temp'}{'lockMap_coords'}{'x'} = $config{'lockMap_x'};
-	$ai_v{'temp'}{'lockMap_coords'}{'y'} = $config{'lockMap_y'};
+	$ai_v{'temp'}{'lockMap_coords'}{'x'} = $config{'lockMap_x'} + ((int(rand(3))-1)*(int(rand($config{'lockMap__randX'}))+1));
+	$ai_v{'temp'}{'lockMap_coords'}{'y'} = $config{'lockMap_y'} + ((int(rand(3))-1)*(int(rand($config{'lockMap__randY'}))+1));
 	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'}
-	    && ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" && ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) && distance(\%{$ai_v{'temp'}{'lockMap_coords'}}, \%{$chars[$config{'char'}]{'pos_to'}}) > 1.42))
+		&& ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" 
+		&& ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) 
+		&& distance(\%{$ai_v{'temp'}{'lockMap_coords'}}, \%{$chars[$config{'char'}]{'pos_to'}}) > 1.42))
 	) {
 		if ($maps_lut{$config{'lockMap'}.'.rsw'} eq "") {
 			error "Invalid map specified for lockMap - map $config{'lockMap'} doesn't exist\n";
@@ -3454,10 +3447,11 @@ sub AI {
 			} else {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
 			}
-			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $config{'lockMap_x'}, $config{'lockMap_y'}, $config{'lockMap'}, 0, 0, 1, 0, 0, 1);
+			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $config{'lockMap_x'}, $config{'lockMap_y'}, $config{'lockMap'}, 0, 0, !$config{'attackAuto_inLockOnly'}, 0, 0, 1);
 		}
 	}
 	undef $ai_v{'temp'}{'lockMap_coords'};
+
 
 	##### RANDOM WALK #####
 	if ($config{'route_randomWalk'} && $ai_seq[0] eq "" && @{$field{'field'}} > 1 && !$cities_lut{$field{'name'}.'.rsw'}) {
@@ -3536,46 +3530,58 @@ sub AI {
 		}
 	}
 
-#Solos Start
+#Auto Equip - Kaldi Update 12/03/2004
 	##### AUTO-EQUIP #####
-
 	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || 
-	     $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || 
+		 $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || 
 		 $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take" || 
-		 $ai_seq[0] eq "attack"
-	)
-		&& timeOut(\%{$timeout{'ai_item_equip_auto'}}) 
-		&& ($config{"autoEquip_item_card_new"} ne "")) { 
-			if (percent_hp(\%{$chars[$config{'char'}]}) <= $config{"autoEquip_item_hp"} && 
-				percent_sp(\%{$chars[$config{'char'}]}) >= $config{"autoEquip_item_sp"}) {
+		 $ai_seq[0] eq "attack")&& timeOut(\%{$timeout{'ai_equip_auto'}}) 
+		){
+		my $i = 0;
+		my $ai_index_attack = binFind(\@ai_seq, "attack");
+		my $ai_index_skill_use = binFind(\@ai_seq, "skill_use");
+		while ($config{"equipAuto_$i"}) {
+			#last if (!$config{"equipAuto_$i"});
+			if (percent_hp(\%{$chars[$config{'char'}]}) <= $config{"equipAuto_$i" . "_hp_upper"}
+				&& percent_hp(\%{$chars[$config{'char'}]}) >= $config{"equipAuto_$i" . "_hp_lower"}
+				&& percent_sp(\%{$chars[$config{'char'}]}) <= $config{"equipAuto_$i" . "_sp_upper"}
+				&& percent_sp(\%{$chars[$config{'char'}]}) >= $config{"equipAuto_$i" . "_sp_lower"}
+				&& $config{"equipAuto_$i" . "_minAggressives"} <= ai_getAggressives()
+				&& (!$config{"equipAuto_$i" . "_maxAggressives"} || $config{"equipAuto_$i" . "_maxAggressives"} >= ai_getAggressives())
+				&& (!$config{"equipAuto_$i" . "_monsters"} || existsInList($config{"equipAuto_$i" . "_monsters"}, $monsters{$ai_seq_args[0]{'ID'}}{'name'}))
+				&& (!$config{"equipAuto_$i" . "_weight"} || $chars[$config{'char'}]{'percent_weight'} >= $config{"equipAuto_$i" . "_weight"})
+				&& ($config{"equipAuto_$i"."_whileSitting"} || !$chars[$config{'char'}]{'sitting'})
+				&& (!$config{"equipAuto_$i" . "_skills"} || $ai_index_skill_use ne "" && existsInList($config{"equipAuto_$i" . "_skills"},$skillsID_lut{$ai_seq_args[$ai_index_skill_use]{'skill_use_id'}}))
+			) {
 				undef $ai_v{'temp'}{'invIndex'};
-				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}}, "slotName", $config{"autoEquip_item_card_new"});
+				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i"});
 				if ($ai_v{'temp'}{'invIndex'} ne "") {
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'}, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'}, 0);
+					sendEquip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
 					$timeout{'ai_item_equip_auto'}{'time'} = time;
-					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~, "ai";
+					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~ if $config{'debug'};
+					last;
 				}
-			} else {
+			} elsif ($config{"equipAuto_$i" . "_def"} && !$chars[$config{'char'}]{'sitting'}) {
 				undef $ai_v{'temp'}{'invIndex'};
-				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}}, "slotName", $config{"autoEquip_item_card_def"});
+				$ai_v{'temp'}{'invIndex'} = findIndexString_lc_not_equip(\@{$chars[$config{'char'}]{'inventory'}},"name", $config{"equipAuto_$i" . "_def"});
 				if ($ai_v{'temp'}{'invIndex'} ne "") {
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'}, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'}, 0);					
+					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'index'},$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'type_equip'});
 					$timeout{'ai_item_equip_auto'}{'time'} = time;
-					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~, "ai";
+					debug qq~Auto-equip: $items_lut{$chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'nameID'}}\n~ if $config{'debug'};
 				}
 			}
+			$i++;
+		}
 	}
-#Solos End
 
 
 	##### AUTO-SKILL USE #####
 
 
-	if ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute" || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take"
-#Solos Start
-		|| $ai_seq[0] eq "attack"
-#Solos End
-	   	) {
+	if ($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute" 
+		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
+		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack"
+	) {
 		$i = 0;
 		undef $ai_v{'useSelf_skill'};
 		undef $ai_v{'useSelf_skill_lvl'};
@@ -3624,6 +3630,76 @@ sub AI {
 		}
 	}
 
+
+	##### PARTY-SKILL USE ##### 
+
+
+	#will doing this event if set only one config
+	if ( $config{'partySkill_0'} && %{$chars[$config{'char'}]{'party'}} && ($ai_seq[0] eq "" || $ai_seq[0] eq "route" 
+		|| $ai_seq[0] eq "route_getRoute" || $ai_seq[0] eq "route_getMapRoute"
+		|| $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" 
+		|| $ai_seq[0] eq "items_take" || $ai_seq[0] eq "attack") ){
+		my $i = 0;
+		undef $ai_v{'partySkill'};
+		undef $ai_v{'partySkill_lvl'};
+		my $partyTargetID;
+		my $partyTarget_HP_Percent;
+		while (defined($config{"partySkill_$i"})) {
+			undef $partyTargetID;
+			undef $partyTarget_HP_Percent;
+			for (my $j = 0; $j < @partyUsersID; $j++) {
+				next if ($partyUsersID[$j] eq "");
+				if ($config{"partySkill_$i"."_target"} eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}
+					&& $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'online'}){
+					$partyTargetID = $partyUsersID[$j];
+					$partyTarget_HP_Percent = $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'percent_hp'};
+					last if (defined($partyTargetID) && defined($partyTarget_HP_Percent));
+				}
+			}
+			#if defined $partyTarget_HP_Percent mean that player is in the screen. else skip to  do think.
+			if (defined($partyTargetID) && defined($partyTarget_HP_Percent) 
+			&& $partyTarget_HP_Percent <= $config{"partySkill_$i"."_targetHp_upper"} 
+			&& $partyTarget_HP_Percent >= $config{"partySkill_$i"."_targetHp_lower"}
+			&& percent_sp(\%{$chars[$config{'char'}]}) <= $config{"partySkill_$i"."_sp_upper"} 
+			&& percent_sp(\%{$chars[$config{'char'}]}) >= $config{"partySkill_$i"."_sp_lower"}
+			&& $chars[$config{'char'}]{'sp'} >= $skillsSP_lut{$skills_rlut{lc($config{"partySkill_$i"})}}{$config{"partySkill_$i"."_lvl"}}
+			&& timeOut($ai_v{"partySkill_$i"."_time"},$config{"partySkill_$i"."_timeout"})
+			&& !($config{"partySkill_$i"."_stopWhenHit"} && ai_getMonstersWhoHitMe())
+			&& (!$config{"partySkill_$i"."_onSit"} || ($config{"partySkill_$i"."_onSit"} && $ai_seq[0] eq "sitAuto"))) {
+				$ai_v{"partySkill_$i"."_time"} = time;
+				$ai_v{'partySkill'} = $config{"partySkill_$i"};
+				$ai_v{'partySkill_target'} = $config{"partySkill_$i"."_target"};
+				$ai_v{'partySkill_lvl'} = $config{"partySkill_$i"."_lvl"};
+				$ai_v{'partySkill_maxCastTime'} = $config{"partySkill_$i"."_maxCastTime"};
+				$ai_v{'partySkill_minCastTime'} = $config{"partySkill_$i"."_minCastTime"};
+				last; 
+			}
+			$i++;
+		}
+		if ($partyTargetID && $config{'useSelf_skill_smartHeal'} && $skills_rlut{lc($ai_v{'partySkill'})} eq "AL_HEAL") {
+			undef $ai_v{'partySkill_smartHeal_lvl'};
+			$ai_v{'partySkill_smartHeal_hp_dif'} = $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'hp_max'} - $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'hp'};
+			for ($i = 1; $i <= $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'lv'}; $i++) {
+				$ai_v{'partySkill_smartHeal_lvl'} = $i;
+				$ai_v{'partySkill_smartHeal_sp'} = 10 + ($i * 3);
+				$ai_v{'partySkill_smartHeal_amount'} = int(($chars[$config{'char'}]{'lv'} + $chars[$config{'char'}]{'int'}) / 8) * (4 + $i * 8);
+				if ($chars[$config{'char'}]{'sp'} < $ai_v{'partySkill_smartHeal_sp'}) {
+					$ai_v{'partySkill_smartHeal_lvl'}--;
+					last;
+				}
+				last if ($ai_v{'partySkill_smartHeal_amount'} >= $ai_v{'partySkill_smartHeal_hp_dif'});
+			}
+			$ai_v{'partySkill_lvl'} = $ai_v{'partySkill_smartHeal_lvl'};
+		}
+		if ($ai_v{'partySkill_lvl'} > 0 && $partyTargetID) {
+			debug qq~Party Skill used ($chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'name'})Skills Used: $skills_lut{$skills_rlut{lc($ai_v{'follow_skill'})}} (lvl $ai_v{'follow_skill_lvl'})\n~ if $config{'debug'};
+			if (!ai_getSkillUseType($skills_rlut{lc($ai_v{'partySkill'})})) {
+				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $partyTargetID);
+			} else {
+				ai_skillUse($chars[$config{'char'}]{'skills'}{$skills_rlut{lc($ai_v{'partySkill'})}}{'ID'}, $ai_v{'partySkill_lvl'}, $ai_v{'partySkill_maxCastTime'}, $ai_v{'partySkill_minCastTime'}, $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'pos'}{'x'}, $chars[$config{'char'}]{'party'}{'users'}{$partyTargetID}{'pos'}{'y'});
+			}
+		}
+	}
 
 
 	##### SKILL USE #####
@@ -6639,7 +6715,9 @@ sub parseMsg {
 		$amount = unpack("S1",substr($msg, 4, 2));
 		undef $invIndex;
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		message "Inventory Item Removed: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n";
+		if (!$chars[$config{'char'}]{'arrow'} || ($chars[$config{'char'}]{'arrow'} && !($chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} =~/arrow/i))) {
+			message "Inventory Item Removed: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n";
+		}
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
 		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
 			undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
@@ -7905,6 +7983,26 @@ sub parseMsg {
 	} elsif ($switch eq "013A") {
 		$type = unpack("S1",substr($msg, 2, 2));
 
+# Hambo Arrow Equip
+	} elsif ($switch eq "013B") {
+		$type = unpack("S1",substr($msg, 2, 2)); 
+		if ($type == 0) { 
+			message "Please equip arrow first\n";
+			undef $chars[$config{'char'}]{'arrow'};
+			quit() if ($config{'dcOnEmptyArrow'});
+		} elsif ($type == 3) {
+			print "Arrow equipped\n" if ($config{'debug'}); 
+		} 
+
+	} elsif ($switch eq "013C") {
+		$index = unpack("S1", substr($msg, 2, 2)); 
+		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index); 
+		if ($invIndex ne "") { 
+			$chars[$config{'char'}]{'arrow'}=1 if (!defined($chars[$config{'char'}]{'arrow'}));
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = 32768; 
+			message "Arrow equipped: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex)\n";
+		} 
+
 	} elsif ($switch eq "013D") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
@@ -9041,42 +9139,97 @@ sub attack {
 		}
 	}
 
-	if ($config{"autoSwitch"}) {
+	#Mod Start
+	AUTOEQUIP: {
 		my $i = 0;
-		my $is_mon = 0;
-		while ($config{"autoSwitch_mon_$i"} ne "") {
-			if (existsInList($config{"autoSwitch_mon_$i"}, $monsters{$ID}{'name'})) {
-				message "Auto-Switching for this monster : ".$monsters{$ID}{'name'}."\n";
-				$eq_weap = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_weapon_new_$i"});
-				$eq_shield = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_shield_new_$i"});
-				$is_mon = 1;
-				if (($eq_weap ne "") && !($chars[$config{'char'}]{'inventory'}[$eq_weap]{'equipped'})) {
-					print "Equiping :".$config{"autoSwitch_weapon_new_$i"}."\n";
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_weap]{'index'}, $chars[$config{'char'}]{'inventory'}[$eq_weap]{'type_equip'}, 0);
+		my ($Rdef,$Ldef,$Req,$Leq,$arrow,$j);
+		while ($config{"autoSwitch_$i"} ne "") { 
+			if (existsInList($config{"autoSwitch_$i"}, $monsters{$ID}{'name'})) {
+				message "Encounter Monster : ".$monsters{$ID}{'name'}."\n";
+
+				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_RightHand"}) if ($config{"autoSwitch_$i"."_RightHand"});
+				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_LeftHand"}) if ($config{"autoSwitch_$i"."_LeftHand"});
+				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_Arrow"}) if ($config{"autoSwitch_$i"."_Arrow"});
+
+				if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) { 
+					$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
+					sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "");
+					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_LeftHand"}." ($Leq)\n";
+					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'}); 
 				}
-         			if (($eq_shield ne "") && !($chars[$config{'char'}]{'inventory'}[$eq_shield]{'equipped'})) {
-            				message "Equiping :".$config{"autoSwitch_shield_new_$i"}."\n";
-            				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'index'}, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'type_equip'}, 32, 0);
-         			}
-				last;
+				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_RightHand"} eq "[NONE]") {
+					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
+					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
+					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
+					if(((binFind(\@skillsST,$skillsST_lut{2}) eq "" && binFind(\@skillsST,$skillsST_lut{23}) eq "" && binFind(\@skillsST,$skillsST_lut{68}) eq "") 
+						|| $config{"autoSwitch_$i"."_RightHand"} eq "[NONE]" )
+						&& $Rdef ne ""){
+						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
+					}
+					if ($Req eq $Leq) {
+						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
+							next if (!%{$chars[$config{'char'}]{'inventory'}[$j]});
+							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_$i"."_RightHand"} && $j != $Leq) {
+								$Req = $j;
+								last;
+							}
+						}
+					}
+					if ($config{"autoSwitch_$i"."_RightHand"} ne "[NONE]") {
+						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_RightHand"}."($Req)\n"; 
+						sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
+					}
+				}
+				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) { 
+					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_Arrow"}."\n";
+					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0); 
+				}
+				if ($config{"autoSwitch_$i"."_Distance"} && $config{"autoSwitch_$i"."_Distance"} != $config{'attackDistance'}) { 
+					$ai_v{'attackDistance'} = $config{'attackDistance'};
+					$config{'attackDistance'} = $config{"autoSwitch_$i"."_Distance"};
+					message "Change Attack Distance to : ".$config{'attackDistance'}."\n";
+				}
+				if ($config{"autoSwitch_$i"."_useWeapon"} ne "") { 
+					$ai_v{'attackUseWeapon'} = $config{'attackUseWeapon'};
+					$config{'attackUseWeapon'} = $config{"autoSwitch_$i"."_useWeapon"};
+					message "Change Attack useWeapon to : ".$config{'attackUseWeapon'}."\n";
+				}
+				last AUTOEQUIP; 
 			}
 			$i++;
 		}
-		if (($is_mon == 0) && ($config{"autoSwitch_weapon_def"} ne "")) {
-			$eq_weap = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_weapon_def"});
-			if (($eq_weap ne "") && !($chars[$config{'char'}]{'inventory'}[$eq_weap]{'equipped'})) {
-				message "Equiping :".$config{"autoSwitch_weapon_def"}."\n";
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_weap]{'index'}, $chars[$config{'char'}]{'inventory'}[$eq_weap]{'type_equip'}, 0);
+		if ($config{'autoSwitch_default_LeftHand'}) { 
+			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_LeftHand'});
+			if($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
+				$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
+				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'});
+				message "Auto equiping default [L] :".$config{'autoSwitch_default_LeftHand'}."\n";
+				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'});
 			}
 		}
-		if (($is_mon == 0) && ($config{"autoSwitch_shield_def"} ne "")) {
-			$eq_shield = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_shield_def"});
-			if (($eq_shield ne "") && !($chars[$config{'char'}]{'inventory'}[$eq_shield]{'equipped'})) {
-				message "Equiping :".$config{"autoSwitch_shield_def"}."\n";
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'index'}, 32, 0);
+		if ($config{'autoSwitch_default_RightHand'}) { 
+			$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_RightHand'}); 
+			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
+				message "Auto equiping default [R] :".$config{'autoSwitch_default_RightHand'}."\n"; 
+				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
 			}
 		}
-	}
+		if ($config{'autoSwitch_default_Arrow'}) { 
+			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_Arrow'}); 
+			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
+				message "Auto equiping default [A] :".$config{'autoSwitch_default_Arrow'}."\n"; 
+				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0);
+			}
+		}
+		if ($ai_v{'attackDistance'} && $config{'attackDistance'} != $ai_v{'attackDistance'}) { 
+			$config{'attackDistance'} = $ai_v{'attackDistance'};
+			message "Change Attack Distance to Default : ".$config{'attackDistance'}."\n";
+		}
+		if ($ai_v{'attackUseWeapon'} ne "" && $config{'attackUseWeapon'} != $ai_v{'attackUseWeapon'}) { 
+			$config{'attackUseWeapon'} = $ai_v{'attackUseWeapon'};
+			message "Change Attack useWeapon to default : ".$config{'attackUseWeapon'}."\n";
+		}
+	} #END OF BLOCK AUTOEQUIP 
 }
 
 sub aiRemove {
@@ -9916,10 +10069,9 @@ sub sendEquip{
 	my $r_socket = shift;
 	my $index = shift;
 	my $type = shift;
-	my $masktype = shift;
-	my $msg = pack("C*", 0xA9, 0x00) . pack("S*", $index) .  pack("C*", $type, $masktype);
+	my $msg = pack("C*", 0xA9, 0x00) . pack("S*", $index) .  pack("S*", $type);
 	sendMsgToServer($r_socket, $msg);
-	debug "Sent Equip: $index\n", "sendPacket", 2;
+	debug "Sent Equip: $index\n" , 2;
 }
 
 sub sendGameLogin {
@@ -10079,7 +10231,14 @@ sub sendMapLogin {
 
 sub sendMasterCodeRequest {
 	my $r_socket = shift;
-	my $msg = pack("C*", 0xDB, 0x01);
+	my $type = shift;
+	my $msg = "";
+	if ($type == 1) {
+		 $msg = pack("C*", 0x04, 0x02, 0x7B, 0x8A, 0xA8, 0x90, 0x2F, 0xD8, 0xE8, 0x30, 0xF8, 0xA5, 0x25, 0x7A, 0x0D, 0x3B, 0xCE, 0x52);
+	} elsif ($type == 2) {
+		 $msg = pack("C*", 0x04, 0x02, 0x27, 0x6A, 0x2C, 0xCE, 0xAF, 0x88, 0x01, 0x87, 0xCB, 0xB1, 0xFC, 0xD5, 0x90, 0xC4, 0xED, 0xD2);
+	}
+	$msg .= pack("C*", 0xDB, 0x01);
 	sendMsgToServer($r_socket, $msg);
 }
 
@@ -10095,16 +10254,29 @@ sub sendMasterLogin {
 sub sendMasterSecureLogin {
 	my $r_socket = shift;
 	my $username = shift;
-	my $password = shift;
+	my $password = shift; 
 	my $salt = shift;
+	my $version = shift;
+	my $master_version = shift;
+	my $type =  shift;
+	my $account = shift;
+	my $md5 = Digest::MD5->new;
+	my ($msg);
 
-	if ($config{'secure'} == 1) {
+	if ($type % 2 == 1) {
 		$salt = $salt . $password;
 	} else {
 		$salt = $password . $salt;
 	}
-	my $msg = pack("C*", 0xDD, 0x01) . pack("L1", $config{'version'}) . $username . chr(0) x (24 - length($username)) .
-	md5($salt) . pack("C*", $config{"master_version_$config{'master'}"});
+	$md5->add($salt);
+	if ($type < 3 ) {
+		$msg = pack("C*", 0xDD, 0x01) . pack("L1", $version) . $username . chr(0) x (24 - length($username)) .
+					 $md5->digest . pack("C*", $master_version);
+	}else{
+		$account = ($account>0) ? $account -1 : 0;
+		$msg = pack("C*", 0xFA, 0x01) . pack("L1", $version) . $username . chr(0) x (24 - length($username)) .
+					 $md5->digest . pack("C*", $master_version). pack("C1", $account);
+	}
 	sendMsgToServer($r_socket, $msg);
 }
 
