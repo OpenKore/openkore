@@ -2462,9 +2462,15 @@ sub AI {
 			my $data;
 			$checkUpdate{sock}->recv($data, 1024 * 32);
 			if ($data =~ /^HTTP\/.\.. 200/s) {
-				print $data . "\n";
-				$data =~ s/.*?\r\n\r\n.*?\r\n//s;
-				$data =~ s/[\r\n].*[\r\n]//s;
+				# Remove CR
+				$data =~ s/\r\n/\n/sg;
+				# Strip HTTP header
+				$data =~ s/.*?\n\n//s;
+				# Get rid of first and last lines (HTTP chuncked encoding junk)
+				$data =~ s/^.*?\n//s;
+				$data =~ s/\n.*?$//s;
+				# Remove everything but the first line
+				$data =~ s/\n.*//;
 
 				debug "Update check - least version: $data\n";
 				unless (($Settings::VERSION cmp $data) >= 0) {
