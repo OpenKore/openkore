@@ -656,10 +656,11 @@ sub charSelectScreen {
 	TOP: {
 		undef $mode;
 		undef $input2;
+		undef $msg;
 	}
 
 	for (my $num = 0; $num < @chars; $num++) {
-		next unless $chars[$num];
+		next unless ($chars[$num] && %{$chars[$num]});
 		if (0) {
 		$msg .= swrite(
 			"-------  Character @< ---------",
@@ -691,8 +692,8 @@ sub charSelectScreen {
 	if ($msg) {
 		message
 			"---------------------- Character List ----------------------\n".
-			sprintf("%3s %-34s %-15s %-6s\n", '#', 'Name', 'Job', 'Lv').
-			$msg.
+			sprintf("%3s %-34s %-15s %-6s\n", '#', 'Name', 'Job', 'Lv') .
+			$msg .
 			"------------------------------------------------------------\n",
 			"connection";
 	}
@@ -758,7 +759,14 @@ sub charSelectScreen {
 				$input = $interface->getInput(-1);
 			}
 			next if (!defined $input);
-			goto TOP if ($input eq "quit");
+			if ($input eq "quit") {
+				if (@chars) {
+					goto TOP;
+				} else {
+					main::quit();
+					last;
+				}
+			}
 
 			my @args = parseArgs($input);
 			if (@args < 2) {
@@ -767,6 +775,7 @@ sub charSelectScreen {
 			}
 
 			message "Creating character \"$args[1]\" in slot \"$args[0]\"...\n", "connection";
+			$timeout{'charlogin'}{'time'} = time;
 			last if (createCharacter(@args));
 			message($message, "input");
 		}
@@ -809,6 +818,7 @@ sub charSelectScreen {
 				message "Deletion aborted\n", "info";
 				goto TOP;
 			}
+			$timeout{'charlogin'}{'time'} = time;
 			last;
 		}
 	}

@@ -5285,7 +5285,7 @@ sub parseMsg {
 			$chars[$num]{'sp'} = unpack("S1", substr($msg, $i + 46, 2));
 			$chars[$num]{'sp_max'} = unpack("S1", substr($msg, $i + 48, 2));
 			$chars[$num]{'jobID'} = unpack("C1", substr($msg, $i + 52, 1));
-			$chars[$num]{'ID'} = substr($msg, $i, 4) ;
+			$chars[$num]{'ID'} = substr($msg, $i, 4);
 			$chars[$num]{'lv'} = unpack("C1", substr($msg, $i + 58, 1));
 			$chars[$num]{'hair_color'} = unpack("C1", substr($msg, $i + 70, 1));
 			($chars[$num]{'name'}) = substr($msg, $i + 74, 24) =~ /([\s\S]*?)\000/;
@@ -5296,92 +5296,6 @@ sub parseMsg {
 			$chars[$num]{'dex'} = unpack("C1", substr($msg, $i + 102, 1));
 			$chars[$num]{'luk'} = unpack("C1", substr($msg, $i + 103, 1));
 			$chars[$num]{'sex'} = $accountSex2;
-		}
-
-		if (0) {
-		for ($num = 0; $num < @chars; $num++) {
-			message(swrite(
-				"-------  Character @< ---------",
-				[$num],
-				"Name: @<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$chars[$num]{'name'}],
-				"Job:  @<<<<<<<      Job Exp: @<<<<<<<",
-				[$jobs_lut{$chars[$num]{'jobID'}}, $chars[$num]{'exp_job'}],
-				"Lv:   @<<<<<<<      Str: @<<<<<<<<",
-				[$chars[$num]{'lv'}, $chars[$num]{'str'}],
-				"J.Lv: @<<<<<<<      Agi: @<<<<<<<<",
-				[$chars[$num]{'lv_job'}, $chars[$num]{'agi'}],
-				"Exp:  @<<<<<<<      Vit: @<<<<<<<<",
-				[$chars[$num]{'exp'}, $chars[$num]{'vit'}],
-				"HP:   @||||/@||||   Int: @<<<<<<<<",
-				[$chars[$num]{'hp'}, $chars[$num]{'hp_max'}, $chars[$num]{'int'}],
-				"SP:   @||||/@||||   Dex: @<<<<<<<<",
-				[$chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'}],
-				"Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<",
-				[$chars[$num]{'zenny'}, $chars[$num]{'luk'}],
-				"-------------------------------", []),
-				"connection");
-
- 		}
-
-		if (!$xkore) {
-			my $new;
-			if (!@chars) {
-				message("There are no characters on this account.\n", "connection");
-				$new = 1;
-
-			} elsif ($config{'char'} eq "" && $chars[$config{'char'}]) {
-				message("Type 'c' to create a new character, or type 'd' to delete a character.\n" .
-					"Or choose a character by entering its number.\n", "input");
-
-				while (1) {
-					my $input = $interface->getInput(-1);
-					next if (!defined $input);
-
-					if ($input eq "c") {
-						$new = 1;
-						last;
-					} elsif ($input eq "quit") {
-						quit();
-						return;
-					} elsif ($input !~ /^\d+$/) {
-						error "\"$input\" is not a valid character number.\n";
-					} elsif (!$chars[$input]) {
-						error "Character #$input does not exist.\n";
-					} else {
-						configModify('char', $input, 1);
-						sendCharLogin(\$remote_socket, $config{'char'});
-						$timeout{'charlogin'}{'time'} = time;
-						last;
-					}
-				}
-
-			} else {
-				message("Character $config{'char'} ($chars[$config{'char'}]{name}) selected\n", "connection");
-				sendCharLogin(\$remote_socket, $config{'char'});
-				$timeout{'charlogin'}{'time'} = time;
-			}
-
-			if ($new) {
-				my $message = "Please enter the desired properties for your characters, in this form:\n" .
-						"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk) [(hairstyle) [(haircolor)]]]\n";
-				message($message, "input");
-
-				while (1) {
-					my $input = $interface->getInput(-1);
-					next if (!defined $input);
-
-					my @args = parseArgs($input);
-					if (@args < 2) {
-						error $message;
-						next;
-					}
-
-					message "Creating character \"$args[1]\" in slot \"$args[0]\"...\n", "connection";
-					createCharacter(@args);
-				}
-			}
-		}
 		}
 
 		if (charSelectScreen(1) == 1) {
@@ -5402,7 +5316,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "006D") {
 		my %char;
-		my $ID = unpack("L", substr($msg, 2, 4));
+		$char{ID} = substr($msg, 2, 4);
 		$char{name} = unpack("Z24", substr($msg, 76, 24));
 		$char{zenny} = unpack("L", substr($msg, 10, 4));
 		($char{str}, $char{agi}, $char{vit}, $char{int}, $char{dex}, $char{luk}) = unpack("C*", substr($msg, 100, 6));
@@ -5440,6 +5354,9 @@ sub parseMsg {
 			message "Character $chars[$AI::temp::delIndex]{name} ($AI::temp::delIndex) deleted.\n", "info";
 			delete $chars[$AI::temp::delIndex];
 			undef $AI::temp::delIndex;
+			for (my $i = 0; $i < @chars; $i++) {
+				delete $chars[$i] if ($chars[$i] && !scalar(keys %{$chars[$i]}))
+			}
 		} else {
 			message "Character deleted.\n", "info";
 		}

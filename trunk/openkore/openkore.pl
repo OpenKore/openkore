@@ -308,7 +308,7 @@ if (!$config{'XKore'}) {
 		configModify('password', $msg, 1);
 	}
 
-	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/) {
+	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
 		my $err;
 		while (!$quit) {
 			Log::message("------- Master Servers --------\n", "connection");
