@@ -29,6 +29,9 @@ extern "C" {
 
 /*******************************************/
 
+static pos static_solution[SOLUTION_MAX * sizeof(pos)];
+static unsigned int static_solution_used = 0;
+
 
 static inline int
 QuickfindFloatMax(QuicksortFloat* a, float val, int lo, int hi)
@@ -61,12 +64,12 @@ CalcPath_init (char* map, unsigned char* weight, unsigned long width, unsigned l
 	pos * start, pos * dest, unsigned long time_max)
 {
 	CalcPath_session * session = (CalcPath_session*)malloc(sizeof(CalcPath_session));
-	
+
 	pos_list * solution = &session->solution;
 	pos_ai_list * fullList = &session->fullList;
 	index_list * openList = &session->openList;
 	lookups_list * lookup = &session->lookup;
-	
+
 	unsigned long i;
 	int index;
 
@@ -77,29 +80,37 @@ CalcPath_init (char* map, unsigned char* weight, unsigned long width, unsigned l
 	session->dest = dest;
 	session->time_max = time_max;
 
-	session->map = (char*) malloc(height*width*sizeof(char));
-	memcpy(session->map, map, height*width*sizeof(char));
-	session->weight = (unsigned char*) malloc(256*sizeof(unsigned char));
-	memcpy(session->weight, weight, 256*sizeof(char));
-	session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
+	session->map = map;
+	session->weight = weight;
+
+	// For performance reasons, we want to avoid dynamically allocating the solution array.
+	// So we use a static variable, if possible.
+	if (static_solution_used) {
+		session->static_solution_used = 0;
+		session->solution.array = (pos *) malloc(SOLUTION_MAX * sizeof(pos));
+	} else {
+		static_solution_used = 1;
+		session->static_solution_used = 1;
+		session->solution.array = (pos *) static_solution;
+	}
+
 	session->fullList.array = (pos_ai*) malloc(FULL_LIST_MAX*sizeof(pos_ai));
 	session->openList.array = (QuicksortFloat*) malloc(OPEN_LIST_MAX*sizeof(QuicksortFloat));
 	session->lookup.array = (float*) malloc(LOOKUPS_MAX*sizeof(float));
 
 	solution->size = 0;
-	openList->size = 0;
-	fullList->size = 0;
+	openList->size = 1;
+	fullList->size = 1;
 	fullList->array[0].p = *start;
 	fullList->array[0].g = 0;
 	fullList->array[0].f = (float)abs(start->x - dest->x) + abs(start->y - dest->y);
 	fullList->array[0].parent = -1;
-	fullList->size++;
 	openList->array[0].val = fullList->array[0].f;
 	openList->array[0].index = 0;
-	openList->size++;
-	for (i = 0; i < width * height;i++) {
+	for (i = 0; i < width * height; i++) {
 		lookup->array[i] = 999999;
 	}
+
 	index = fullList->array[0].p.y*width + fullList->array[0].p.x;
 	lookup->array[index] = fullList->array[0].g;
 	lookup->size = width*height;
@@ -244,6 +255,21 @@ CalcPath_pathStep(CalcPath_session * session)
 		}
 	}
 	return 0;
+}
+
+void
+CalcPath_destroy (CalcPath_session *session)
+{
+	/* free (session->start);
+	free (session->dest);
+	if (!session->static_solution_used)
+		free (session->solution.array);
+	else
+		static_solution_used = 0;
+	free (session->fullList.array);
+	free (session->openList.array);
+	free (session->lookup.array); */
+	free (session);
 }
 
 

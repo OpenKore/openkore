@@ -11,9 +11,9 @@ PROTOTYPES: ENABLE
 
 
 PathFinding
-PathFinding_init(map, weight, width, height, startx, starty, destx, desty, time_max)
+PathFinding_init(map, weights, width, height, startx, starty, destx, desty, time_max)
 		char *map
-		unsigned char *weight
+		unsigned char *weights
 		unsigned long width
 		unsigned long height
 		unsigned short startx
@@ -29,7 +29,7 @@ PathFinding_init(map, weight, width, height, startx, starty, destx, desty, time_
 		dest->x = destx;
 		dest->y = desty;
 	CODE:
-		RETVAL = CalcPath_init (map, weight, width, height, start, dest, time_max);
+		RETVAL = CalcPath_init (map, weights, width, height, start, dest, time_max);
 	OUTPUT:
 		RETVAL
 
@@ -103,12 +103,4 @@ PathFinding_DESTROY(session)
 	PREINIT:
 		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
-		free (session->start);
-		free (session->dest);
-		free (session->map);
-		free (session->weight);
-		free (session->solution.array);
-		free (session->fullList.array);
-		free (session->openList.array);
-		free (session->lookup.array);
-		free (session);
+		CalcPath_destroy (session);
