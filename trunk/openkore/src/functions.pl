@@ -7872,6 +7872,8 @@ sub parseMsg {
 		$conState = 5 if $conState != 4 && $config{XKore};
 		updateDamageTables($sourceID, $targetID, $damage) if ($damage != -30000);
 		setSkillUseTimer($skillID, $targetID) if ($sourceID eq $accountID);
+		setPartySkillTimer($skillID, $targetID) if
+			$sourceID eq $accountID or $sourceID eq $targetID;
 		countCastOn($sourceID, $targetID, $skillID);
 
 		# Resolve source and target names
@@ -8010,6 +8012,8 @@ sub parseMsg {
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $config{XKore};
 		setSkillUseTimer($skillID, $targetID) if ($sourceID eq $accountID);
+		setPartySkillTimer($skillID, $targetID) if
+			$sourceID eq $accountID or $sourceID eq $targetID;
 		countCastOn($sourceID, $targetID, $skillID);
 		if ($sourceID eq $accountID) {
 			my $pos = calcPosition($char);
@@ -10634,10 +10638,6 @@ sub setSkillUseTimer {
 	$char->{last_skill_used} = $skillID;
 	$char->{last_skill_target} = $targetID;
 
-	# set partySkill target_time
-	my $i = $targetTimeout{$targetID}{$skill->handle};
-	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
-
 	# increment monsterSkill maxUses counter
 	if ($monsters{$targetID}) {
 		$monsters{$targetID}{skillUses}{$skill->handle}++;
@@ -10645,6 +10645,16 @@ sub setSkillUseTimer {
 
 	# Set encore skill if applicable
 	$char->{encoreSkill} = $skill if $targetID eq $accountID && $skillsEncore{$skill->handle};
+}
+
+sub setPartySkillTimer {
+	my ($skillID, $targetID) = @_;
+	my $skill = new Skills(id => $skillID);
+	my $handle = $skill->handle; 
+
+	# set partySkill target_time
+	my $i = $targetTimeout{$targetID}{$handle};
+	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
 }
 
 # Increment counter for monster being casted on

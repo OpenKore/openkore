@@ -6,6 +6,10 @@ Bug fixes:
 - Fix bulk selling bug which caused disconnect.
 - Correctly set names for VVVS weapons.
 - Correct strip language code in public messages.
+- Chat messages were saying "chatMsgUser" instead of the person's name.
+- target_timeout should work with skills like Kyrie Eleison now. (The problem
+  was it says "<target> uses Kyrie Eleison on self", instead of "You use Kyrie
+  Eleison on <target>". It now recognizes the former when setting timeouts)
 - The Wx interface can now correctly launch a browser on Linux.
 
 New features:
