@@ -5214,6 +5214,7 @@ sub parseMsg {
 		undef @servers;
 		for($i = 47; $i < $msg_size; $i+=32) {
 			$servers[$num]{'ip'} = makeIP(substr($msg, $i, 4));
+			$servers[$num]{'ip'} = $masterServers{$config{'master'}}->{ip} if ($masterServers{$config{'master'}}->{private});
 			$servers[$num]{'port'} = unpack("S1", substr($msg, $i+4, 2));
 			($servers[$num]{'name'}) = substr($msg, $i + 6, 20) =~ /([\s\S]*?)\000/;
 			$servers[$num]{'users'} = unpack("L",substr($msg, $i + 26, 4));
@@ -5435,6 +5436,7 @@ sub parseMsg {
 		}
 
 		$map_ip = makeIP(substr($msg, 22, 4));
+		$map_ip = $masterServers{$config{'master'}}->{ip} if ($masterServers{$config{'master'}}->{private});
 		$map_port = unpack("S1", substr($msg, 26, 2));
 		message(swrite(
 			"---------Game Info----------", [],
