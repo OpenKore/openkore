@@ -4,21 +4,11 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Setting up the development environment - OpenKore Development Introduction Guide</title>
 	<link rel="stylesheet" type="text/css" href="../openkore.css">
+	<link rel="stylesheet" type="text/css" href="../links.css">
 	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
 	<!--[if gte IE 5.5000]>
 	<script type="text/javascript" src="pngfix.js"></script>
 	<![endif]-->
-
-	<style type="text/css">
-	<!--
-	a {
-		text-decoration: none;
-	}
-	a:hover {
-		text-decoration: underline;
-	}
-	-->
-	</style>
 </head>
 
 <body>
@@ -61,7 +51,7 @@ You should download and install <i>version 5.8</i>. Install it to the default pa
 
 Once it is installed, you must install additional <i>Perl modules</i> (think of them as third party libraries).
 These modules are not part of the default Perl installation. Kore requires these modules:
-<ul style="font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier;">
+<ul style="font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;">
 <li>Win32::API</li>
 <li>Time::HiRes</li>
 <li>Win32::Console::ANSI</li>
@@ -103,27 +93,39 @@ You only need a C++ compiler if you want to work on <tt>Tools.cpp</tt> and/or
 <p>
 GCC is a suite which contains a C and C++ compiler. It's originally meant 
 for Unix systems (and is the standard compiler for Linux), but Win32 
-ports are available. One of the Win32 ports is called MinGW (Minimalist 
-GNU for Win32): <A HREF="http://www.mingw.org/">http://www.mingw.org/</A>
+ports are available. One of the Win32 ports is called Cygwin:
+<a href="http://sources.redhat.com/cygwin/">http://sources.redhat.com/cygwin/</a>
 
 <p>
-(TODO: write instructions here about how to install mingw. Actually,
-shouldn't I recommend Cygwin instead?)
+<h3>Installing Cygwin</h3>
 
-<p>
+Download the installer from the Cygwin website and run it.
+After clicking Next a few times, it will ask you what components to install.
+Make sure the following components will be installed:
+<ul style="font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;">
+<li>bash</li>
+<li>gcc</li>
+<li>gcc-c++</li>
+<li>make</li>
+<li>python</li>
+</ul>
+
+
+<!-- <p>
 There are two files in the OpenKore source code which help you compile Tools.cpp and Inject.cpp:
 <ul>
 <li>"Makefile.win32" : This is a makefile for Win32 GCC</li>
 <li>"Makefile" : This file is for Linux/Unix only.</li>
-</ul>
+</ul> -->
 
 
-<A NAME="editors"></A>
-<H2>Editors</H2>
+<a name="editors"></a>
+<h2>Editors</h2>
 
-You can of course edit the source code in any text editor. It is, however, not recommended to use Notepad. Notepad doesn't support CRLF (Unix line endings; at least one of the developers develop OpenKore mainly in Linux) and doesn't support auto-indent.<p>
+You can of course edit the source code in any text editor. It is, however, not recommended to use Notepad. Notepad doesn't support CRLF (Unix line endings; at least one of the developers develop OpenKore mainly in Linux) and doesn't support auto-indent.
 
-For Windows, I hightly recommend <A HREF="http://www.crimsoneditor.com/">Crimson Editor</A>, a freeware general-purpose code editor which supports syntax highlighting for many languages (including Perl and C++).
+<p>
+For Windows, I hightly recommend <a href="http://www.crimsoneditor.com/">Crimson Editor</a>, a freeware general-purpose code editor which supports syntax highlighting for many languages (including Perl and C++).
 
 
 </div>
