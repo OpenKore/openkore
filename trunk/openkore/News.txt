@@ -46,6 +46,8 @@ New commands:
   List warp portal maps.
 - talk num (#number)
   Respond to an NPC with a number.
+- plugin
+  Control plugins. Type 'plugin help' for full usage description.
 
 
 New configuration options:

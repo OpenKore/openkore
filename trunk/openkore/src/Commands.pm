@@ -29,6 +29,7 @@ use Globals;
 use Log qw(message error);
 use Network::Send;
 use Settings;
+use Plugins;
 use Utils;
 use Misc;
 
@@ -48,6 +49,7 @@ our %handlers = (
 	help	=> \&cmdHelp,
 	reload	=> \&cmdReload,
 	memo	=> \&cmdMemo,
+	plugin	=> \&cmdPlugin,
 	s	=> \&cmdStatus,
 	stat_add => \&cmdStatAdd,
 	uneq	=> \&cmdUnequip,
@@ -69,6 +71,7 @@ our %descriptions = (
 	is	=> 'Use item on yourself.',
 	reload	=> 'Reload configuration files.',
 	memo	=> 'Save current position for warp portal.',
+	plugin	=> 'Control plugins.',
 	s	=> 'Display character status.',
 	stat_add => 'Add status point.',
 	warp	=> 'Open warp portal.',
@@ -334,6 +337,74 @@ sub cmdInventory {
 
 sub cmdMemo {
 	sendMemo(\$remote_socket);
+}
+
+sub cmdPlugin {
+	my (undef, $input) = @_;
+	my @args = split(/ +/, $input, 2);
+
+	if (@args == 0) {
+		message("--------- Currently loaded plugins ---------\n", "list");
+		message("#   Name              Description\n", "list");
+		my $i = 0;
+		foreach my $plugin (@Plugins::plugins) {
+			message(swrite(
+				"@<< @<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$i, $plugin->{name}, $plugin->{description}]
+			), "list");
+			$i++;
+		}
+		message("--------------------------------------------\n", "list");
+
+	} elsif ($args[0] eq 'reload') {
+		my @names;
+
+		if ($args[1] =~ /^\d+$/) {
+			push @names, $Plugins::plugins[$args[1]]{name};
+
+		} elsif ($args[1] eq '') {
+			error	"Syntax Error in function 'plugin reload' (Reload Plugin)\n" .
+				"Usage: plugin reload <plugin name|plugin number#|\"all\">\n";
+			return;
+
+		} elsif ($args[1] eq 'all') {
+			foreach my $plugin (@Plugins::plugins) {
+				push @names, $plugin->{name};
+			}
+
+		} else {
+			foreach my $plugin (@Plugins::plugins) {
+				if ($plugin->{name} =~ /$args[1]/i) {
+					push @names, $plugin->{name};
+				}
+			}
+			if (!@names) {
+				error	"Error in function 'plugin reload' (Reload Plugin)\n" .
+					"The specified plugin names do not exist.\n";
+				return;
+			}
+		}
+
+		foreach (my $i = 0; $i < @names; $i++) {
+			Plugins::reload($names[$i]);
+		}
+
+	} else {
+		my $msg;
+		$msg =	"--------------- Plugin command syntax ---------------\n" .
+			"Command:                                              Description:\n" .
+			" plugin                                                List loaded plugins\n" .
+			" plugin load <filename>                                Load a plugin\n" .
+			" plugin unload <plugin name|plugin number#|\"all\">    Unload a loaded plugin\n" .
+			" plugin reload <plugin name|plugin number#|\"all\">    Reload a loaded plugin\n" .
+			"-----------------------------------------------------\n";
+		if ($args[0] eq 'help') {
+			message($msg, "info");
+		} else {
+			error "Syntax Error in function 'plugin' (Control Plugins)\n";
+			error($msg);
+		}
+	}
 }
 
 sub cmdReload {
