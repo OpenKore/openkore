@@ -42,10 +42,25 @@ if ($help_option) {
 }
 
 srand(time());
+
 $versionText = "*** OpenKore 1.0.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
+our $welcomeText = "Welcome to X-OpenKore.";
+our $MAX_READ = 30000;
+
 print $versionText;
 
-our $welcomeText = "Welcome to X-sKore.";
+print "\n";
+
+our $input_server_socket = IO::Socket::INET->new(
+				Listen	=> 5,
+				LocalAddr 	=> 'localhost',
+				Proto		=> 'tcp');
+
+($input_server_socket) || die "Error creating local input server: $!";
+print "Local input server started (".$input_server_socket->sockhost().":".$input_server_socket->sockport().")\n";
+our $input_pid = input_client();
+
+print "\n";
 
 addParseFiles($config_file, \%config,\&parseDataFile2);
 addParseFiles($items_control_file, \%items_control,\&parseItemsControl);
@@ -117,44 +132,6 @@ if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 	configModify('buildType', 1, 1);
 }
 
-if ($config{'adminPassword'} eq 'x' x 10) {
-	print "\nAuto-generating Admin Password\n";
-	configModify("adminPassword", vocalString(8));
-}
-
-print "\n";
-
-$proto = getprotobyname('tcp');
-our $MAX_READ = 30000;
-
-our $injectServer_socket;
-our $remote_socket = IO::Socket::INET->new();
-our $input_server_socket = IO::Socket::INET->new(
-				Listen		=> 5,
-				LocalAddr	=> $config{'local_host'},
-				Proto		=> 'tcp',
-				Timeout		=> 2,
-				Reuse		=> 1);
-
-($input_server_socket) || die "Error creating local input server: $!";
-print "Local input server started ($config{'local_host'}:$config{'local_port'})\n";
-
-if ($config{'XKore'}) {
-	$injectServer_socket = IO::Socket::INET->new(
-			Listen		=> 5,
-			LocalAddr	=> $config{'local_host'},
-			LocalPort	=> 2350,
-			Proto		=> 'tcp',
-			Timeout		=> 999,
-			Reuse		=> 1);
-	($injectServer_socket) || die "Error creating local inject server: $!";
-	print "Local inject server started ($config{'local_host'}:2350)\n";
-}
-
-our $input_pid = input_client();
-$conState = 1;
-
-
 if ($config{'XKore'}) {
 	our $cwd = Win32::GetCwd();
 	our $injectDLL_file = $cwd."\\Inject.dll";
@@ -162,6 +139,26 @@ if ($config{'XKore'}) {
 	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
 	die "Could not locate Tools.dll" if (!$GetProcByName);
 }
+
+if ($config{'adminPassword'} eq 'x' x 10) {
+	print "\nAuto-generating Admin Password\n";
+	configModify("adminPassword", vocalString(8));
+}
+
+print "\n";
+
+our $injectServer_socket;
+if ($config{'XKore'}) {
+	$injectServer_socket = IO::Socket::INET->new(
+			Listen		=> 5,
+			LocalAddr	=> 'localhost',
+			LocalPort	=> 2350,
+			Proto		=> 'tcp');
+	($injectServer_socket) || die "Error creating local inject server: $!";
+	print "Local inject server started (".$injectServer_socket->sockhost().":2350)\n";
+}
+
+our $remote_socket = IO::Socket::INET->new();
 
 
 ###COMPILE PORTALS###
@@ -267,7 +264,7 @@ while ($quit != 1) {
 
 			print "Waiting for InjectDLL to connect...\n";
 			$remote_socket = $injectServer_socket->accept();
-			(inet_aton($remote_socket->peerhost()) == inet_aton($config{'local_host'})) || die "Inject Socket must be connected from localhost";
+			(inet_aton($remote_socket->peerhost()) == inet_aton('localhost')) || die "Inject Socket must be connected from localhost";
 			print "InjectDLL Socket connected - Ready to start botting\n";
 			$timeout{'injectKeepAlive'}{'time'} = time;
 		}
@@ -10374,8 +10371,7 @@ sub input_client {
 		$local_socket = IO::Socket::INET->new(
 				PeerAddr	=> $host,
 				PeerPort	=> $port,
-				Proto		=> 'tcp',
-				Timeout		=> 4);
+				Proto		=> 'tcp');
 		($local_socket) || die "Error creating connection to local server: $!";
 		while (1) {
 			$input = <STDIN>;
@@ -10390,7 +10386,7 @@ sub input_client {
 		exit;
 	} else {
 		$input_socket = $input_server_socket->accept();
-		(inet_aton($input_socket->peerhost()) == inet_aton($config{'local_host'})) 
+		(inet_aton($input_socket->peerhost()) == inet_aton('localhost')) 
 		|| die "Input Socket must be connected from localhost";
 		print "Input Socket connected\n";
 		return $pid;
