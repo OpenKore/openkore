@@ -224,7 +224,7 @@ Credits:
   and partySkill.
 - obyarou: Priority attack support for non-aggressive monsters,
   shop timeout in X-Kore bugfix (bug #49), sitAuto_idle vs
-  shopAuto_open conflict fix (bug #50).
+  shopAuto_open conflict fix (bug #50), other misc bugfixes.
 - fov: writeDataFile*() tweaks, lockMap and randomWalk tweaks,
   partySkills for certain jobs
 - polokus: idRO Amatsu/Kunlun support
