@@ -142,8 +142,7 @@ sub center {
 # Check whether ($x, $y) on field $r_field is walkable.
 sub checkFieldWalkable {
 	my $p = getFieldPoint(@_);
-	#return ($p == 0 || $p == 3);
-	return ($p == 0);
+	return ($p == 0 || $p == 3);
 }
 
 ##

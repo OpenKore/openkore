@@ -37,6 +37,7 @@ New config options:
 
 Bug fixes:
 - The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
+- Kore can walk on walkable water now (bug #21).
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
@@ -51,6 +52,7 @@ Credits:
 - obyarou: Priority attack support for non-aggressive monsters.
 - fov: writeDataFile*() tweaks
 - polokus: idRO Amatsu/Kunlun support
+- Ven`Tatsu: walkable water bugfix (bug #21)
 
 
 ==================
