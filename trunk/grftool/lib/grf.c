@@ -402,7 +402,7 @@ grf_open (const char *fname, GrfError *error)
 				compressed_len = 0;
 				cycle = 0;
 				/* Only files with an extension are encoded */
-				if ((ext = rindex ((const char *) name, '.')) != NULL) {
+				if ((ext = strrchr ((const char *) name, '.')) != NULL) {
 					compressed_len = getlong (filelist_data + ofs2) - getlong (filelist_data + ofs2 + 8) - 715;
 					if (strcasecmp (ext, ".gnd") != 0 && strcasecmp (ext, ".gat") != 0
 					 && strcasecmp (ext, ".act") != 0 && strcasecmp (ext, ".str") != 0) {
