@@ -17,7 +17,8 @@
 #
 # This module processes commandline input.
 #
-# (At this time, some stuff is still handled by the parseCommand() function in functions.pl. The plan is to eventually move everything to this module.)
+# (At this time, some stuff is still handled by the parseCommand() function in
+# functions.pl. The plan is to eventually move everything to this module.)
 
 package Commands;
 
@@ -59,7 +60,10 @@ our %handlers = (
 	help	=> \&cmdHelp,
 	reload	=> \&cmdReload,
 	memo	=> \&cmdMemo,
+	monocell	=> \&cmdMonocell,
+	monster	=> \&cmdMonster,
 	ml	=> \&cmdMonsterList,
+	mvp	=> \&cmdMVP,
 	nl	=> \&cmdNPCList,
 	pl	=> \&cmdPlayerList,
 	plugin	=> \&cmdPlugin,
@@ -100,7 +104,10 @@ our %descriptions = (
 	leave	=> 'Leave chat room.',
 	reload	=> 'Reload configuration files.',
 	memo	=> 'Save current position for warp portal.',
+	monocell	=> 'Cast Monocell spell on a monster when granted by Abracadabra.',
+	monster	=> 'Cast Summon Monster spell when granted by Abracadabra.',
 	ml	=> 'List monsters that are on screen.',
+	mvp	=> 'Change a monster into an MVP when granted by Abracadabra.',
 	nl	=> 'List NPCs that are on screen.',
 	pl	=> 'List players that are on screen.',
 	plugin	=> 'Control plugins.',
@@ -1101,6 +1108,35 @@ sub cmdWarp {
 
 sub cmdWho {
 	sendWho(\$remote_socket);
+}
+
+sub cmdMonster {
+	message "Attempting to summon monster\n";
+	ai_skillUse(293, 10, 0, 0, $accountID);
+}
+
+sub cmdMonocell {
+	my $num = shift;
+
+	my $id = $monstersID[$num];
+	if ($id eq "") {
+		error "Monster $num does not exist.\n";
+		return;
+	}
+	message "Attempting to monocell ".getActorName($id)."\n";
+	ai_skillUse(291, 10, 0, 0, $id);
+}
+
+sub cmdMVP {
+	my $num = shift;
+
+	my $id = $monstersID[$num];
+	if ($id eq "") {
+		error "Monster $num does not exist.\n";
+		return;
+	}
+	message "Attempting to change into MVP ".getActorName($id)."\n";
+	ai_skillUse(292, 10, 0, 0, $id);
 }
 
 return 1;

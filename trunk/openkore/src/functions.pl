@@ -1614,6 +1614,14 @@ sub parseCommand {
 	} elsif ($switch eq "southeast") {
 		manualMove(5, -5);
 
+	} elsif ($switch eq "abra") {
+		unless (AI::action eq 'abracadabra') {
+			message "Starting Abracadabra sequence\n";
+			AI::enqueue('abracadabra');
+		} else {
+			error "Abracadabra sequence already started\n";
+		}
+
 	} else {
 		my $return = 0;
 		Plugins::callHook('Command_post', {
@@ -2285,9 +2293,8 @@ sub AI {
 	# The clientSuspend AI sequence is used to freeze all other AI activity
 	# for a certain period of time.
 
-	if ($ai_seq[0] eq "clientSuspend" && timeOut(\%{$ai_seq_args[0]})) {
-		shift @ai_seq;
-		shift @ai_seq_args;
+	if (AI::action eq 'clientSuspend' && timeOut(\%{AI::args})) {
+		AI::dequeue;
 	} elsif ($ai_seq[0] eq "clientSuspend" && $config{'XKore'}) {
 		# When XKore mode is turned on, clientSuspend will increase it's timeout
 		# every time the user tries to do something manually.
@@ -3215,8 +3222,8 @@ sub AI {
 
 	##### FOLLOW #####
 	
-	# TODO: follow should be a 'mode' rather then a sequence, hence all var/flag about follow
-	# should be moved to %ai_v
+	# TODO: follow should be a 'mode' rather then a sequence, hence all
+	# var/flag about follow should be moved to %ai_v
 
 	FOLLOW: {
 	last FOLLOW	if (!$config{follow});
@@ -5041,6 +5048,7 @@ sub parseMsg {
 	} elsif ($switch eq "0073") {
 		$conState = 5;
 		undef $conState_tries;
+		$char = $chars[$config{char}];
 		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
 		%{$chars[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos'}};
 		message("Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", undef, 1);
@@ -7487,13 +7495,23 @@ sub parseMsg {
 	} elsif ($switch eq "0147") {
 		my $skillID = unpack("S*",substr($msg, 2, 2));
 		my $skillLv = unpack("S*",substr($msg, 8, 2)); 
-      		message "Now use $skillsID_lut{$skillID}, level $skillLv\n";
-      		sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
+		my $skillName = unpack("A*", substr($msg, 14, 24));
+
+		message "Permitted to use $skillsID_lut{$skillID} ($skillID), level $skillLv\n";
+
+		unless ($config{noAutoSkill}) {
+			sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
+		}
+
+		Plugins::callHook('item_skill', {
+			ID => $skillID,
+			level => $skillLv,
+			name => $skillName
+		});
 
 	} elsif ($switch eq "0148") {
 		# 0148 long ID, word type
 		my $targetID = substr($msg, 2, 4);
-		# FIXME: Is $type useless? It always seems to be 00 00 -pmak
 		my $type = unpack("S1", substr($msg, 6, 2));
 
 		if ($targetID eq $accountID) {

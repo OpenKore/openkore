@@ -56,6 +56,7 @@ use Network;
 use Network::Send;
 use Commands;
 use Misc;
+use AI;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
 	Network Network::Send Commands Misc));
 
