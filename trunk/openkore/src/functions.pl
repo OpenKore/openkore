@@ -3042,7 +3042,7 @@ sub AI {
 				$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}});
 				if ($ai_v{'temp'}{'dist'} > $config{'followDistanceMax'} && timeOut($ai_seq_args[$followIndex]{'move_timeout'}, 0.25)) {
 					$ai_seq_args[$followIndex]{'move_timeout'} = time;
-					if ($ai_v{'temp'}{'dist'} > 15) {
+					if ($ai_v{'temp'}{'dist'} > 15 || !checkLineWalkable($char->{pos_to}, $players{$ai_seq_args[$followIndex]{ID}{pos_to}})) {
 						ai_route($field{'name'}, $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'},
 							attackOnRoute => 1,
 							distFromGoal => $config{'followDistanceMin'});
@@ -10054,7 +10054,8 @@ sub updateDamageTables {
 				$monsters{$ID1}{'missedToPlayer'}{$ID2}++;
 				$players{$ID2}{'missedFromMonster'}{$ID1}++;
 			}
-			if (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}}) {
+			if (existsInList($config{ksPlayers}, $players{$ID2}{name}) ||
+			    (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}})) {
 				# Monster attacks party member
 				$monsters{$ID1}{'dmgToParty'} += $damage;
 				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
@@ -10074,7 +10075,8 @@ sub updateDamageTables {
 				$monsters{$ID2}{'missedFromPlayer'}{$ID1}++;
 				$players{$ID1}{'missedToMonster'}{$ID2}++;
 			}
-			if (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}}) {
+			if (existsInList($config{ksPlayers}, $players{$ID2}{name}) ||
+			    (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
 			}
 		}
