@@ -152,7 +152,7 @@ if ($config{'adminPassword'} eq '') {
 	configModify("adminPassword", vocalString(8));
 }
 
-#This is where we induldge the paranoid and let them have session generated admin passwords
+# This is where we induldge the paranoid and let them have session generated admin passwords
 if ($config{'securePassword'} eq '1') {
 	print "\nGenerating session Admin Password\n";
 	configModify("adminPassword", vocalString(8));
