@@ -8631,8 +8631,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "01A2") {
 		#pet
-		my ($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
-		$pets{$ID}{'name_given'} = 1;
+		#my ($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 
 	} elsif ($switch eq "01A4") {
 		#pet spawn
