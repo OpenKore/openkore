@@ -375,12 +375,7 @@ sub createInterface {
 				my (undef, $x, $y) = @_;
 				my $walkable;
 
-				if ($CVS) {
-					$walkable = checkFieldWalkable(\%field, $x, $y);
-				} else {
-					$walkable = !ord(substr($field{rawMap}, $y * $field{width} + $x, 1));
-				}
-
+				$walkable = checkFieldWalkable(\%field, $x, $y);
 				if ($x >= 0 && $y >= 0 && $walkable) {
 					$self->{mouseMapText} = "Mouse over: $x, $y";
 				} else {
@@ -532,11 +527,7 @@ sub updateMapViewer {
 	return unless ($map && %field && $char);
 
 	my $myPos;
-	if ($CVS) {
-		$myPos = calcPosition($char);
-	} else {
-		$myPos = $char->{pos_to};
-	}
+	$myPos = calcPosition($char);
 
 	$map->set($field{name}, $myPos->{x}, $myPos->{y}, \%field);
 	my $i = AI::findAction("route");

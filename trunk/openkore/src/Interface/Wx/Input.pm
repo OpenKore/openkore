@@ -91,7 +91,7 @@ sub _onUpdown {
 			$self->SetInsertionPointEnd;
 		}
 
-	} elsif ($event->GetKeyCode == WXK_TAB && !$event->ShiftDown && $Settings::CVS =~ /CVS/) {
+	} elsif ($event->GetKeyCode == WXK_TAB && !$event->ShiftDown) {
 		my $pos = $self->GetInsertionPoint;
 		my $pre = substr($self->GetValue, 0, $pos);
 		my $post = substr($self->GetValue, $pos);
