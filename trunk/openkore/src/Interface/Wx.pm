@@ -83,13 +83,13 @@ sub OnInit {
 		$self->updateStatusBar;
 		$self->updateMapViewer;
 	});
-	$timer->Start(15);
+	$timer->Start(150);
 
 	$timer = new Wx::Timer($self, 249);
 	EVT_TIMER($self, 249, sub {
 		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
 	});
-	$timer->Start(35);
+	$timer->Start(350);
 
 	return 1;
 }

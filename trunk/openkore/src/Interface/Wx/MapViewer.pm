@@ -233,20 +233,27 @@ sub _xpmmake {
 	my $field = shift;
 	my $data = "/* XPM */\n" .
 		"static char * my_xpm[] = {\n" .
-		"\"$field->{width} $field->{height} 3 1\",\n" .
+		"\"$field->{width} $field->{height} 4 1\",\n" .
 		"\" \tc #000000\",\n" .
-		"\"A\tc #6666FF\",\n" .
+		"\"A\tc #0029AA\",\n" .
+		"\"B\tc #227022\",\n" .
 		"\".\tc #FFFFFF\",\n";
 	for (my $y = $field->{height} - 1; $y >= 0; $y--) {
 		$data .= "\"";
 		for (my $x = 0; $x < $field->{width}; $x++) {
 			my $char = substr($field->{rawMap}, $y * $field->{width} + $x, 1);
 			if ($char eq "\0") {
+				# Walkable
 				$data .= '.';
 			} elsif ($char eq "\1") {
+				# Not walkable
 				$data .= ' ';
-			} else {
+			} elsif ($char eq "\3") {
+				# Walkable water
 				$data .= 'A';
+			} else {
+				# Everything else
+				$data .= 'B';
 			}
 		}
 		$data .= "\",\n";
