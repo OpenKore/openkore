@@ -71,7 +71,6 @@ Bug fixes:
 - sitAuto_idle doesn't conflict with shopAuto_open's timeout now (bug #50).
 - MO_BODYRELOCATION is now recognized as an area-usage skill.
 - Don't display "level 65535" when an area-usage skill is used.
-- Arrow equip is detected correctly.
 - Incoming Request to join Guild message now displays guild name.
 
 Internal:
@@ -98,7 +97,6 @@ Credits:
 - fov: writeDataFile*() tweaks
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
-- jsteng: Arrow equip bugfix.
 
 
 ==================

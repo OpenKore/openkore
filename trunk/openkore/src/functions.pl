@@ -100,6 +100,8 @@ sub initMapChangeVars {
 	undef %{$ai_v{'temp'}};
 	undef @{$cart{'inventory'}};
 	undef @{$chars[$config{'char'}]{'inventory'}};
+	$ai_v{'inventory_time'} = time + 60;
+	$ai_v{'cart_time'} = time + 60;
 	undef @venderItemList;
 	undef $venderID;
 	undef @venderListsID;
@@ -2489,7 +2491,7 @@ foreach (keys %monsters) { if (!$monsters{$_}{name}) { chatLog("k", "Monster wit
 	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "follow") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
 	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight_sellOrStore'})
 	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
-	  )) {
+	  ) && time > $ai_v{'inventory_time'}) {
 		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
 			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
@@ -2780,7 +2782,7 @@ foreach (keys %monsters) { if (!$monsters{$_}{name}) { chatLog("k", "Monster wit
 
 	AUTOBUY: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow") && timeOut(\%{$timeout{'ai_buyAuto'}})) {
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow") && timeOut(\%{$timeout{'ai_buyAuto'}}) && time > $ai_v{'inventory_time'}) {
 		undef $ai_v{'temp'}{'found'};
 		$i = 0;
 		while (1) {
@@ -3844,7 +3846,7 @@ foreach (keys %monsters) { if (!$monsters{$_}{name}) { chatLog("k", "Monster wit
 
 	##### AUTO-EQUIP #####
 	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto skill_use take items_gather items_take attack)) || $ai_v{temp}{teleport}{lv})
-	  && timeOut($timeout{ai_item_equip_auto})) {
+	  && timeOut($timeout{ai_item_equip_auto}) && time > $ai_v{'inventory_time'}) {
 
 		my $ai_index_attack = AI::findAction("attack");
 		my $ai_index_skill_use = AI::findAction("skill_use");
@@ -5956,7 +5958,6 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		my $psize = ($switch eq "00A3") ? 10 : 18;
-		undef $invIndex;
 
 		for($i = 4; $i < $msg_size; $i += $psize) {
 			my $index = unpack("S1", substr($msg, $i, 2));
@@ -5981,6 +5982,9 @@ sub parseMsg {
 				"$itemTypes_lut{$char->{inventory}[$invIndex]{type}}\n", "parseMsg";
 			Plugins::callHook('packet_inventory', {index => $invIndex});
 		}
+
+		$ai_v{'inventory_time'} = time + 1;
+		$ai_v{'cart_time'} = time + 1;
 
 	} elsif ($switch eq "00A4") {
 		$conState = 5 if $conState != 4 && $config{XKore};
@@ -6008,6 +6012,9 @@ sub parseMsg {
 			debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
 			Plugins::callHook('packet_inventory', {index => $invIndex});
 		}
+
+		$ai_v{'inventory_time'} = time + 1;
+		$ai_v{'cart_time'} = time + 1;
 
 	} elsif ($switch eq "00A5" || $switch eq "01F0") {
 		# Retrieve list of stackable storage items
@@ -7232,6 +7239,9 @@ sub parseMsg {
 			Plugins::callHook('packet_cart', {index => $index});
 		}
 
+		$ai_v{'inventory_time'} = time + 1;
+		$ai_v{'cart_time'} = time + 1;
+
 	} elsif ($switch eq "0123" || $switch eq "01EF") {
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
@@ -7255,6 +7265,9 @@ sub parseMsg {
 			debug "Stackable Cart Item: $item->{name} ($index) x $amount\n", "parseMsg";
 			Plugins::callHook('packet_cart', {index => $index});
 		}
+
+		$ai_v{'inventory_time'} = time + 1;
+		$ai_v{'cart_time'} = time + 1;
 
 	} elsif ($switch eq "0124" || $switch eq "01C5") {
 		my $index = unpack("S1", substr($msg, 2, 2));
@@ -8982,121 +8995,6 @@ sub getField {
 	}
 
 	return 1;
-}
-
-##
-# makeDistMap(data, width, height)
-# data: the raw field data.
-# width: the field's width.
-# height: the field's height.
-# Returns: the raw data of the distance map.
-#
-# Create a distance map from raw field data. This distance map data is used by pathfinding
-# for wall avoidance support.
-#
-# This function is used internally by getField(). You shouldn't have to use this directly.
-sub makeDistMap {
-	my $data = shift;
-	my $width = shift;
-	my $height = shift;
-
-	# Simplify the raw map data. Each byte in the raw map data
-	# represents a block on the field, but only some bytes are
-	# interesting to pathfinding.
-	for (my $i = 0; $i < length($data); $i++) {
-		my $v = ord(substr($data, $i, 1));
-		# 0 is open, 3 is walkable water
-		if ($v == 0 || $v == 3) {
-			$v = 255;
-		} else {
-			$v = 0;
-		}
-		substr($data, $i, 1, chr($v));
-	}
-
-	my $done = 0;
-	until ($done) {
-		$done = 1;
-		#'push' wall distance right and up
-		for (my $y = 0; $y < $height; $y++) {
-			for (my $x = 0; $x < $width; $x++) {
-				my $i = $y * $width + $x;
-				my $dist = ord(substr($data, $i, 1));
-				if ($x != $width - 1) {
-					my $ir = $y * $width + $x + 1;
-					my $distr = ord(substr($data, $ir, 1));
-					my $comp = $dist - $distr;
-					if ($comp > 1) {
-						my $val = $distr + 1;
-						$val = 255 if $val > 255;
-						substr($data, $i, 1, chr($val));
-						$done = 0;
-					} elsif ($comp < -1) {
-						my $val = $dist + 1;
-						$val = 255 if $val > 255;
-						substr($data, $ir, 1, chr($val));
-						$done = 0;
-					}
-				}
-				if ($y != $height - 1) {
-					my $iu = ($y + 1) * $width + $x;
-					my $distu = ord(substr($data, $iu, 1));
-					my $comp = $dist - $distu;
-					if ($comp > 1) {
-						my $val = $distu + 1;
-						$val = 255 if $val > 255;
-						substr($data, $i, 1, chr($val));
-						$done = 0;
-					} elsif ($comp < -1) {
-						my $val = $dist + 1;
-						$val = 255 if $val > 255;
-						substr($data, $iu, 1, chr($val));
-						$done = 0;
-					}
-				}
-			}
-		}
-		#'push' wall distance left and down
-		for (my $y = $height - 1; $y >= 0; $y--) {
-			for (my $x = $width - 1; $x >= 0 ; $x--) {
-				my $i = $y * $width + $x;
-				my $dist = ord(substr($data, $i, 1));
-				if ($x != 0) {
-					my $il = $y * $width + $x - 1;
-					my $distl = ord(substr($data, $il, 1));
-					my $comp = $dist - $distl;
-					if ($comp > 1) {
-						my $val = $distl + 1;
-						$val = 255 if $val > 255;
-						substr($data, $i, 1, chr($val));
-						$done = 0;
-					} elsif ($comp < -1) {
-						my $val = $dist + 1;
-						$val = 255 if $val > 255;
-						substr($data, $il, 1, chr($val));
-						$done = 0;
-					}
-				}
-				if ($y != 0) {
-					my $id = ($y - 1) * $width + $x;
-					my $distd = ord(substr($data, $id, 1));
-					my $comp = $dist - $distd;
-					if ($comp > 1) {
-						my $val = $distd + 1;
-						$val = 255 if $val > 255;
-						substr($data, $i, 1, chr($val));
-						$done = 0;
-					} elsif ($comp < -1) {
-						my $val = $dist + 1;
-						$val = 255 if $val > 255;
-						substr($data, $id, 1, chr($val));
-						$done = 0;
-					}
-				}
-			}
-		}
-	}
-	return $data;
 }
 
 sub getGatField {
