@@ -2,6 +2,7 @@ About.dfm
 About.pas
 Distfiles
 ExtractThread.pas
+GPattern.pas
 Main.dfm
 Main.pas
 grf.pas
