@@ -18,12 +18,18 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef __RGZ_H__
-# define __RGZ_H__
+/** @file rgz.h
+ *
+ * Reading .RGZ archives.
+ */
 
-# include "grf.h"
+#ifndef __RGZ_H__
+#define __RGZ_H__
+
+#include "grf.h"
 
 GRFEXTERN_BEGIN
+
 
 /*! \brief Value to distinguish a RGZ file in Grf::type */
 # define GRF_TYPE_RGZ	0x02
@@ -75,6 +81,8 @@ GRFEXPORT int rgz_index_extract (Rgz *rgz, uint32_t index, const char *file, Rgz
 
 GRFEXPORT void __rgz_free_memory__(void *buf);
 
+
 GRFEXTERN_END
+
 
 #endif /* !defined(__RGZ_H__) */

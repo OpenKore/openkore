@@ -16,6 +16,11 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/** @file sprite.h
+ *
+ * Reading .SPR (sprite) files.
+ */
+
 #ifndef _SPRITE_H_
 #define _SPRITE_H_
 

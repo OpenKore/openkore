@@ -20,16 +20,21 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/** @file grfsupport.h
+ *
+ * Various utility functions, to be used in combination with grf.h
+ */
+
 #ifndef __GRFSUPPORT_H__
 #define __GRFSUPPORT_H__
 
-/* Other includes */
 #include "grftypes.h"
 
 /* Comment this before final release */
 /* #define GRF_DEBUG 1 */
 
 GRFEXTERN_BEGIN
+
 
 #ifdef WIN32
 	/* Windows function names are so... ugghhhh */
@@ -42,18 +47,21 @@ GRFEXTERN_BEGIN
 	#endif /* !defined(__MINGW32__) && !defined(_INC_IO) */
 #endif /* defined(WIN32) */
 
+/* #define GRF_AlphaSort ((int(*)(const void *, const void *))GRF_AlphaSort_Func) */
+#define GRF_OffsetSort ((int(*)(const void *, const void *))GRF_OffsetSort_Func)
+
+
 /* GRFINLINE uint8_t LittleEndian8 (uint8_t *p); */	/* Pointless */
 /* GRFINLINE uint16_t LittleEndian16 (uint8_t *p); */	/* Unused */
-GRFINLINE uint32_t LittleEndian32 (uint8_t *p);
+
+GRFINLINE uint32_t LittleEndian32(uint8_t *p);
 GRFINLINE uint32_t ToLittleEndian32(uint32_t);
 
 GRFEXPORT char *GRF_normalize_path(char *out, const char *in);
 GRFEXPORT uint32_t GRF_NameHash(const char *name);
 
 GRFEXPORT void grf_sort (Grf *grf, int(*compar)(const void *, const void *));
-#define GRF_AlphaSort ((int(*)(const void *, const void *))GRF_AlphaSort_Func)
 GRFEXPORT int GRF_AlphaSort_Func(const GrfFile *g1, const GrfFile *g2);
-#define GRF_OffsetSort ((int(*)(const void *, const void *))GRF_OffsetSort_Func)
 GRFEXPORT int GRF_OffsetSort_Func(const GrfFile *g1, const GrfFile *g2);
 
 GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index);
@@ -78,6 +86,7 @@ GRFEXPORT const char *grf_strerror(GrfError err);
  * Simplifies setting an error (with extra data) to a GrfError pointer
  */
 #define GRF_SETERR_2(err,type,func,extra) GRF_SETERR_ADD(err,type,func,extra)
+
 
 GRFEXTERN_END
 

@@ -20,6 +20,17 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/** @mainpage
+ * libgrf is a library for reading and writing GRF archives.
+ * Application developers are probably most interested in grf.h and grfsupport.h.
+ * Use the link bar on top of this page to browse the documentation.
+ */
+
+/** @file grf.h
+ *
+ * Reading and writing .GRF archives.
+ */
+
 #ifndef __GRF_H__
 #define __GRF_H__
 
@@ -28,27 +39,42 @@
 
 GRFEXTERN_BEGIN
 
+#ifdef WORK_AROUND_DOXYGEN_BUG
+static int foo;
+#endif /* WORK_AROUND_DOXYGEN_BUG */
 
-/*! \brief Callback prototype of a function called for each file entry when opening a Grf file.
+
+/** Callback prototype of a function called for each file entry when opening a GRF file.
  *
  * It should return -1 if there has been an error.
  * 0 if processing may continue,
  * or 1 if further reading should stop (for example, when trying to locate a file quickly)
  *
- * \param file Pointer to the read file entry
- * \param error [out] Pointer to a GrfError variable for error reporting. May be NULL.
+ * @see grf_callback_open()
+ *
+ * @param file   Pointer to a Grf structure, as returned by grf_callback_open()
+ * @param error  [out] Pointer to a GrfError variable for error reporting. When an error
+ *               occured, the value of this parameter is non-NULL.
+ *
  */
 typedef int (*GrfOpenCallback) (GrfFile *file, GrfError *error);
+
+/** Callback prototype for grf_callback_flush()
+ * @param file   Pointer to a Grf structure, as returned by grf_callback_open()
+ * @param error  [out] Pointer to a GrfError variable for error reporting. When an error
+ *               occured, the value of this parameter is non-NULL.
+ */
 typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 
-/*! \brief Value to distinguish a GRF file in Grf::type */
+
+/** Value to distinguish a GRF file in Grf::type */
 # define GRF_TYPE_GRF 0x01
 
-/*! \brief Macro to open a file without a callback */
+/** @brief The same as grf_callback_open(), but without a callback parameter. Kept for compatibility with libgrf 0.9. */
 # define grf_open(fname, mode, error) grf_callback_open(fname, mode, error, NULL)
 
-/*! \brief Macro to flush a grf file without a callback */
-# define grf_flush(fname, error) grf_callback_flush(fname, error, NULL)
+/** The same as grf_callback_flush(), but without a callback parameter. */
+#define grf_flush(fname, error) grf_callback_flush(fname, error, NULL)
 
 /* Prototypes */
 GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpenCallback callback);
