@@ -42,7 +42,6 @@ GStaticMutex extractProgressM;
 enum {
 	INDEX_COL,
 	DISPLAY_COL,
-	FILENAME_COL,
 	TYPE_COL,
 	SIZE_COL,
 	SIZE_DISPLAY_COL,
@@ -314,7 +313,6 @@ fill_filelist ()
 		gtk_list_store_set (GTK_LIST_STORE (filelist), &iter,
 			INDEX_COL, i,
 			DISPLAY_COL, filename,
-			FILENAME_COL, grf->files[i].name,
 			TYPE_COL, type,
 			SIZE_COL, grf->files[i].real_len,
 			SIZE_DISPLAY_COL, size,
@@ -488,8 +486,9 @@ extract_thread (gpointer user_data)
 	GList *args = user_data;
 	const char *savedir = g_list_nth_data (args, 0);
 	GList *files = g_list_nth_data (args, 1);
+	GList *indices = g_list_nth_data (args, 2);
 
-	GList *l, *dirs = NULL;
+	GList *l, *f, *dirs = NULL;
 	char *dir;
 	unsigned long failed = 0, max = 0;
 	gboolean stop = FALSE;
@@ -548,50 +547,32 @@ extract_thread (gpointer user_data)
 	timer = g_timer_new ();
 	g_timer_start (timer);
 
-	for (l = files; l; l = l->next) {
-		char *name_inside_archive, *p;
-		void *data;
-		unsigned long size;
+	/* Start the actual extraction */
+	for (l = indices, f = files; l; l = l->next, f = f->next) {
+		unsigned long i;
+		char *fname;
 
-		name_inside_archive = g_strdup ((char *) l->data);
-		for (p = name_inside_archive; *p; p++) if (*p == G_DIR_SEPARATOR) *p = '\\';
-		data = grf_get (grf, name_inside_archive, &size, NULL);
-		g_free (name_inside_archive);
-
-		if (data) {
-			char *fname;
-			FILE *f;
-
-			fname = g_build_filename (savedir, (char *) l->data, NULL);
-			f = fopen (fname, "wb");
-			if (f) {
-				fwrite (data, size, 1, f);
-				fclose (f);
-			} else
-				failed++;
-			free (data);
-			g_free (fname);
-
-		} else
+		i = GPOINTER_TO_INT (l->data);
+		fname = g_build_filename (savedir, (char *) f->data, NULL);
+		if (!grf_index_extract (grf, i, fname, NULL))
 			failed++;
+		g_free (fname);
 
 		g_static_mutex_lock (&extractProgressM);
 		extractProgress.current++;
-		strncpy (extractProgress.file, (char *) l->data, PATH_MAX - 1);
+		strncpy (extractProgress.file, grf->files[i].name, PATH_MAX - 1);
 		stop = extractProgress.stop;
 		g_static_mutex_unlock (&extractProgressM);
 
 		if (stop) goto end;
 	}
 
-	
-
 
 	end:
 	if (timer)
 		g_timer_destroy (timer);
-	g_list_foreach (files, (GFunc) g_free, NULL);
 	g_list_free (files);
+	g_list_free (indices);
 
 	g_static_mutex_lock (&extractProgressM);
 	extractProgress.failed = failed;
@@ -694,7 +675,7 @@ watch_extract_thread_stop (gpointer user_data)
 
 
 static void
-extract_files (const char *savedir, GList *files)
+extract_files (const char *savedir, GList *files, GList *indices)
 {
 	GError *err = NULL;
 	GList *args;
@@ -703,6 +684,7 @@ extract_files (const char *savedir, GList *files)
 	/* Run extraction as background thread */
 	args = g_list_append (NULL, (gpointer) savedir);
 	args = g_list_append (args, files);
+	args = g_list_append (args, indices);
 	memset (&extractProgress, 0, sizeof (ExtractProgress));
 	memset (&lastKnownProgress, 0, sizeof (ExtractProgress));
 	extractProgress.thread = g_thread_create (extract_thread,
@@ -792,7 +774,7 @@ extract_cb ()
 	GtkTreePath *path;
 	GtkTreeIter iter;
 	char *fname, *display;
-	unsigned long size;
+	unsigned long size, index;
 	void *data;
 
 	if (!grf) return;
@@ -826,13 +808,15 @@ extract_cb ()
 		gchar *basename;
 		GrfError err;
 
+		/* Get file information */
 		path = (GtkTreePath *) list->data;
 		gtk_tree_model_get_iter (filelist, &iter, path);
 		gtk_tree_model_get (filelist, &iter,
-			FILENAME_COL, &fname,
+			INDEX_COL, &index,
 			DISPLAY_COL, &display,
 			-1);
 
+		/* Setup save dialog */
 		basename = strrchr (display, '\\');
 		if (basename)
 			gtk_file_selection_set_filename (GTK_FILE_SELECTION (savesel),
@@ -841,43 +825,28 @@ extract_cb ()
 			savename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (savesel));
 		gtk_widget_hide (savesel);
 		if (!savename) {
-			g_free (fname);
 			g_free (display);
 			goto end;
 		}
 
-		data = grf_get (grf, fname, &size, &err);
-		if (data) {
-			FILE *f;
+		/* Extract */
+		if (grf_index_extract (grf, index, savename, &err)) {
+			char *msg;
 
-			f = fopen (savename, "wb");
-			if (!f)
-				show_error (_("Cannot write to %s:\n%s"),
-					fname, g_strerror (errno));
-			else {
-				char *basename, *msg;
-
-				fwrite (data, size, 1, f);
-				fclose (f);
-
-				basename = g_path_get_basename (display);
-				msg = g_strdup_printf (_("%s saved"), basename);
-				set_status (msg);
-				g_free (basename);
-				g_free (msg);
-			}
-			g_free (data);
-
+			msg = g_strdup_printf (_("%s saved"), basename + 1);
+			set_status (msg);
+			g_free (msg);
 		} else {
-			show_error (_("Unable to extract: %s"),
+			show_error (_("Unable to extract %s:\n%s"),
+				basename + 1,
 				grf_strerror (err));
 		}
-		g_free (fname);
 		g_free (display);
 
 	} else {
+		/* More than 1 file selected, or nothing selected */
 		const gchar *savedir = NULL;
-		GList *files = NULL;
+		GList *files = NULL, *indices = NULL;
 
 		if (gtk_dialog_run (GTK_DIALOG (dirsel)) == GTK_RESPONSE_OK)
 			savedir = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dirsel));
@@ -894,27 +863,31 @@ extract_cb ()
 		}
 
 		if (list) {
+			/* More than 1 file is selected */
 			for (l = list; l; l = l->next) {
 				path = (GtkTreePath *) l->data;
 				gtk_tree_model_get_iter (filelist, &iter, path);
 				gtk_tree_model_get (filelist, &iter,
-					FILENAME_COL, &fname,
+					INDEX_COL, &index,
 					-1);
-				files = g_list_prepend (files, fname);
+				files = g_list_prepend (files, grf->files[index].name);
+				indices = g_list_prepend (indices, GINT_TO_POINTER (index));
 			}
 			list = g_list_reverse (list);
 
 		} else if (gtk_tree_model_get_iter_first (filelist, &iter)) {
+			/* Nothing is selected */
 			do {
 				gtk_tree_model_get (filelist, &iter,
-					FILENAME_COL, &fname,
+					INDEX_COL, &index,
 					-1);
-				files = g_list_prepend (files, fname);
+				files = g_list_prepend (files, grf->files[index].name);
+				indices = g_list_prepend (indices, GINT_TO_POINTER (index));
 			} while (gtk_tree_model_iter_next (filelist, &iter));
 			list = g_list_reverse (list);
 		}
 
-		extract_files (savedir, files);
+		extract_files (savedir, files, indices);
 	}
 
 	end:
@@ -990,7 +963,6 @@ filelist_selection_changed_cb (GtkTreeSelection *selection, GtkTreeView *tree)
 		gtk_tree_model_get_iter (filelist, &iter, this);
 		gtk_tree_model_get (filelist, &iter,
 			INDEX_COL, &index,
-			FILENAME_COL, &fname,
 			DISPLAY_COL, &display,
 			-1);
 
@@ -1001,9 +973,8 @@ filelist_selection_changed_cb (GtkTreeSelection *selection, GtkTreeView *tree)
 		g_free (tmp);
 		g_free (title);
 
-		preview_file (display, fname);
+		preview_file (display, grf->files[index].name);
 
-		g_free (fname);
 		g_free (display);
 
 	} else if (!list) { /* no files selected */
@@ -1085,7 +1056,6 @@ main (int argc, char *argv[])
 	filelist = GTK_TREE_MODEL (gtk_list_store_new (N_COLS,
 		G_TYPE_ULONG,	/* index */
 		G_TYPE_STRING,	/* display name (filename converted to UTF-8) */
-		G_TYPE_STRING,	/* filename */
 		G_TYPE_STRING,	/* type */
 		G_TYPE_ULONG,	/* decompressed file size */
 		G_TYPE_STRING	/* file size string */

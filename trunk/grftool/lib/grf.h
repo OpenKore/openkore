@@ -88,8 +88,11 @@ typedef enum
 	GE_NOMEM,	/* Out of memory */
 	GE_NSUP,	/* Unsupported GRF archive version */
 
-	/* grf_get() and grf_extract() errors */
+	/* grf_get(), grf_index_get() and grf_extract() errors */
 	GE_NOTFOUND,	/* File not found inside GRF file */
+
+	/* grf_index_get() errors */
+	GE_INDEX,	/* Invalid index */
 
 	/* grf_extract() errors */
 	GE_WRITE	/* Unable to write to destination file */
@@ -97,7 +100,6 @@ typedef enum
 
 
 /* Open a .grf file */
-
 GRFEXPORT Grf *grf_open (const char *fname, GrfError *error);
 
 /* Look for a file in the file list */
@@ -106,12 +108,17 @@ GRFEXPORT GrfFile *grf_find (Grf *grf, char *fname, unsigned long *index);
 /* Extract a file inside a .grf file into memory */
 GRFEXPORT void *grf_get (Grf *grf, char *fname, unsigned long *size, GrfError *error);
 
+/* Like grf_get(), but expects an index instead of a filename */
+GRFEXPORT void *grf_index_get (Grf *grf, unsigned long index, unsigned long *size, GrfError *error);
+
 /* Extract to a file */
-GRFEXPORT int grf_extract (Grf *grf, char *fname, char *writeToFile, GrfError *error);
+GRFEXPORT int grf_extract (Grf *grf, char *fname, const char *writeToFile, GrfError *error);
+GRFEXPORT int grf_index_extract (Grf *grf, unsigned long index, const char *writeToFile, GrfError *error);
 
 /* Free a Grf* pointer */
 GRFEXPORT void grf_free (Grf *grf);
 
+/* Converts an error code to a human-readable message */
 GRFEXPORT const char *grf_strerror (GrfError error);
 
 
