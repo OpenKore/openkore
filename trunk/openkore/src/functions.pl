@@ -10934,17 +10934,25 @@ sub getField {
 			$dist_data = <FILE>;
 		}
 		close FILE;
+		my $dversion = 0;
+		if (substr($dist_data, 0, 2) eq "V#") {
+			$dversion = unpack("xx S1", substr($dist_data, 0, 4, ''));
+		}
 		my ($dw, $dh) = unpack("S1 S1", substr($dist_data, 0, 4, ''));
-		if ($$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh) {
+		if (
+			#version 0 files had a bug when height != width, so keep version 0 files not effected by the bug.
+			   $dversion == 0 && $dw == $dh && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
+			#version 1 and greater have no know bugs, so just do a minimum validity check.
+			|| $dversion >= 1 && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
+		) {
 			$$r_hash{'dstMap'} = $dist_data;
 		}
 	}
 	unless ($$r_hash{'dstMap'}) {
-		message("Building distance map for $$r_hash{'name'}.\nThis may take a while, but will only be done once for this map.\n");
 		$$r_hash{'dstMap'} = makeDistMap(@$r_hash{'rawMap', 'width', 'height'});
-		message("Done.\n");
 		open FILE, ">", $dist_file or die "Could not write dist cache file: $!\n";
 		binmode(FILE);
+		print FILE pack("a2 S1", 'V#', 1);
 		print FILE pack("S1 S1", @$r_hash{'width', 'height'});
 		print FILE $$r_hash{'dstMap'};
 		close FILE;
@@ -10953,8 +10961,8 @@ sub getField {
 
 sub makeDistMap {
 	my $data = shift;
-	my $height = shift;
 	my $width = shift;
+	my $height = shift;
 	for (my $i = 0; $i < length($data); $i++) {
 		substr($data, $i, 1, (ord(substr($data, $i, 1)) ? chr(0) : chr(255)));
 	}
