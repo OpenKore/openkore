@@ -6626,7 +6626,7 @@ sub parseMsg {
 		} elsif ($type == 2) {
 			warning "Player ignored your message\n";
 		} else {
-			warning "Player doesnt want to recieved messages\n";
+			warning "Player doesn't want to receive messages\n";
 		}
 		shift @lastpm;
 
