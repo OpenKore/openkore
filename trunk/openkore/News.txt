@@ -15,6 +15,9 @@ New features:
 - Fixed some cases of ksPlayers not working
 - When following master around a corner, fallback to routing algorithm instead
   of trying to walk through the corner
+- If old files (from before the CVS cleanup) are found, warn the user
+  and bail out. Too many people are reporting "bugs" that are a result
+  of conflicts with old files.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
