@@ -206,18 +206,6 @@ MainWindow::preview (char *displayName, char *fname)
 		sprite = sprite_open_from_data ((const unsigned char *) data,
 				(unsigned int) size, NULL);
 		spriteViewer->set (sprite);
-/*		if (sprite) {
-			GdkPixbuf *buf;
-
-			pixels = sprite_to_rgb (sprite, 0, NULL, NULL);
-			buf = gdk_pixbuf_new_from_data ((const guchar *) pixels,
-				GDK_COLORSPACE_RGB, FALSE, 8,
-				sprite->images[0].width, sprite->images[0].height,
-				sprite->images[0].width * 3, NULL, NULL);
-			sprite_free (sprite);
-			gtk_image_set_from_pixbuf (GTK_IMAGE (W(image_preview)), buf);
-			g_object_unref (G_OBJECT (buf));
-		} */
 		sprite_free (sprite);
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (W(notebook1)), 2);
 
