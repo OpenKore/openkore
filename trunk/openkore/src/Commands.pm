@@ -515,39 +515,7 @@ sub cmdGuild {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
-	if ($arg1 eq "info") {
-		message("---------- Guild Information ----------\n", "info");
-		message(swrite(
-			"Name    : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{name}],
-			"Lv      : @<<",			[$guild{lvl}],
-			"Exp     : @>>>>>>>>>/@<<<<<<<<<<",	[$guild{exp}, $guild{next_exp}],
-			"Master  : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{master}],
-			"Connect : @>>/@<<",			[$guild{conMember}, $guild{maxMember}]),
-			"info");
-		message("---------------------------------------\n", "info");
-
-	} elsif ($arg1 eq "member") {
-		my $msg = "------------ Guild  Member ------------\n";
-		$msg .= "#  Name                       Job        Lv  Title                       Online\n";
-
-		my ($i, $name, $job, $lvl, $title, $online);
-		my $count = @{$guild{member}};
-		for ($i = 0; $i < $count; $i++) {
-			$name  = $guild{member}[$i]{name};
-			next if (!defined $name);
-
-			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
-			$lvl   = $guild{member}[$i]{lvl};
-			$title = $guild{member}[$i]{title};
-			$online = $guild{member}[$i]{online} ? "Yes" : "No";
-
-			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<",
-					[$i, $name, $job, $lvl, $title, $online]);
-		}
-		$msg .= "---------------------------------------\n";
-		message "$msg\n", "list";
-
-	} elsif ($arg1 eq "join") {
+	if ($arg1 eq "join") {
 		if ($arg2 ne "1" && $arg2 ne "0") {
 			error	"Syntax Error in function 'guild join' (Accept/Deny Guild Join Request)\n" .
 				"Usage: guild join <flag>\n";
@@ -566,12 +534,57 @@ sub cmdGuild {
 			message "You denied the guild join request.\n", "info";
 		}
 
-	} elsif ($arg1 eq "") {
-		message	"Requesting guild information...\n" .
-			"Enter command to view guild information: guild < info | member >\n", "info";
+	} elsif (!defined $char->{guild}) {
+		error "You are not in a guild.\n";
+
+	} elsif ($arg1 eq "" || !%guild) {
+		message	"Requesting guild information...\n", "info";
 		sendGuildInfoRequest(\$remote_socket);
 		sendGuildRequest(\$remote_socket, 0);
 		sendGuildRequest(\$remote_socket, 1);
+		if ($arg1 eq "") {
+			message "Enter command to view guild information: guild < info | member >\n", "info";
+		} else {
+			message	"Type 'guild $args' again to view the information.\n", "info";
+		}
+
+	} elsif ($arg1 eq "info") {
+		message("---------- Guild Information ----------\n", "info");
+		message(swrite(
+			"Name    : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{name}],
+			"Lv      : @<<",			[$guild{lvl}],
+			"Exp     : @>>>>>>>>>/@<<<<<<<<<<",	[$guild{exp}, $guild{next_exp}],
+			"Master  : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{master}],
+			"Connect : @>>/@<<",			[$guild{conMember}, $guild{maxMember}]),
+			"info");
+		message("---------------------------------------\n", "info");
+
+	} elsif ($arg1 eq "member") {
+		if (!$guild{member}) {
+			error "No guild member information available.\n";
+			return;
+		}
+
+		my $msg = "------------ Guild  Member ------------\n";
+		$msg .= "#  Name                       Job        Lv  Title                       Online\n";
+
+		my ($i, $name, $job, $lvl, $title, $online);
+		my $count = @{$guild{member}};
+		for ($i = 0; $i < $count; $i++) {
+			$name  = $guild{member}[$i]{name};
+			next if (!defined $name);
+
+			$job   = $jobs_lut{$guild{member}[$i]{jobID}};
+			$lvl   = $guild{member}[$i]{lvl};
+			$title = $guild{member}[$i]{title};
+			$online = $guild{member}[$i]{online} ? "Yes" : "No";
+
+			$msg .= swrite("@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<",
+					[$i, $name, $job, $lvl, $title, $online]);
+		}
+		$msg .= "---------------------------------------\n";
+		message $msg, "list";
+
 	}
 }
 

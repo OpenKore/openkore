@@ -27,9 +27,8 @@ New features:
   useSelf_skill_6_monsters Raydric Archer
   ...
 - Priority attacks for non-aggressive monsters are now supported.
-- Weighted maprouting to avoid/prefer walking through certain maps
+- You can set Kore to avoid/prefer walking through certain maps
   (see control/routeweights.txt for configuration).
-- Some parseMsg messages moved to parseMsg_presence.
 - Support for advanced 2-2 skills.
 - If you are granted use of a temporary skill (e.g. Yggdrasil Leaf,
   Abracadabra), you can use the sl/sm/sp/ss commands to cast it using the
@@ -49,10 +48,6 @@ New features:
   alias_mvp sm 292
 - If 'sp' command is called without a player target, it will target yourself.
   Useful for e.g. 'alias_heal sp 28'.
-- Improved lockMap and randomWalk settings. Without route_randomWalk,
-  lockMap_randX/Y modify the lockMap_x/y position by a random amount. If
-  route_randomWalk is set, lockMap_x/y and lockMap_randX/Y specify the area
-  in which randomWalk should walk.
 - Support for Umbala maps and portals.
 
 New commands:
@@ -85,6 +80,11 @@ Internal:
 - Kore now detects what directory its executable is in, and adds it to
   its include path (@INC).
 - Fixed a crash when cart inventory is not available (such as during login).
+- Some parseMsg messages moved to parseMsg_presence.
+- Improved lockMap and randomWalk settings. Without route_randomWalk,
+  lockMap_randX/Y modify the lockMap_x/y position by a random amount. If
+  route_randomWalk is set, lockMap_x/y and lockMap_randX/Y specify the area
+  in which randomWalk should walk.
 
 Credits:
 - Joseph: -1 flag support in mon_control.txt
