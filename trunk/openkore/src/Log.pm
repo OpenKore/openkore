@@ -59,7 +59,9 @@
 
 # Known domains:
 # attacked		Monster attacks you
+# attackedMiss		Monster attacks you but miss
 # attackMon		You attack monster
+# attackMonMiss		You attack monster but miss
 # connection		Connection messages
 # deal			Deal messages
 # info			View info that's requested by the user (status, guild info, etc.)
@@ -81,6 +83,7 @@
 # skill			Skill use unrelated to attack
 # pm			Private message
 # guildchat		Guild chat
+# equip		        Equipment Switching 
 
 # Debug domains:
 # parseInput
