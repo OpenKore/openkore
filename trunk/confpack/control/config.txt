@@ -298,17 +298,17 @@ itemsMaxWeight_sellOrStore 48
 
 buyAuto_0 
 buyAuto_0_npc 
-buyAuto_0_distance 3
+buyAuto_0_distance 5
 buyAuto_0_minAmount 2
 buyAuto_0_maxAmount 3
 
 sellAuto 0
 sellAuto_npc 
-sellAuto_distance 3
+sellAuto_distance 5
 
 storageAuto 0
 storageAuto_npc 
-storageAuto_distance 3
+storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
 
