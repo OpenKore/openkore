@@ -12,7 +12,7 @@ use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Digest::MD5 qw(md5);
 use Config;
-use Log qw(message warning error);
+use Log qw(message warning error debug);
 
 
 #######################################
@@ -3841,10 +3841,10 @@ sub AI {
 				ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
 			}
 
-## kokal start 
-## mosters counting 
-			$i = 0;
-			$found = 0;
+			## kokal start
+			## mosters counting
+			my $i = 0;
+			my $found = 0;
 			while ($monsters_Killed[$i]) {
 				if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ai_v{'ai_attack_ID_old'}}{'nameID'}) {
 					$monsters_Killed[$i]{'count'}++;
@@ -3858,7 +3858,7 @@ sub AI {
 				$monsters_Killed[$i]{'name'} = $monsters_old{$ai_v{'ai_attack_ID_old'}}{'name'};
 				$monsters_Killed[$i]{'count'} = 1;
 			}
-## kokal end
+			## kokal end
 
 		} else {
 			print "Target lost\n";
@@ -5445,6 +5445,7 @@ sub parseMsg {
 			}
 			binRemove(\@monstersID, $ID);
 			undef %{$monsters{$ID}};
+			delete $monsters{$ID};
 
 		} elsif (%{$players{$ID}}) {
 			if ($type == 1) {
@@ -5469,9 +5470,11 @@ sub parseMsg {
 				$players_old{$ID}{'gone_time'} = time;
 				binRemove(\@playersID, $ID);
 				undef %{$players{$ID}};
+				delete $players{$ID};
 
 				binRemove(\@venderListsID, $ID);
 				undef %{$venderLists{$ID}};
+				delete $venderLists{$ID};
 			}
 
 		} elsif (%{$players_old{$ID}}) {
@@ -5489,6 +5492,7 @@ sub parseMsg {
 			$portals_old{$ID}{'gone_time'} = time;
 			binRemove(\@portalsID, $ID);
 			undef %{$portals{$ID}};
+			delete $portals{$ID};
 		} elsif (%{$npcs{$ID}}) {
 			print "NPC Disappeared: $npcs{$ID}{'name'} ($npcs{$ID}{'binID'})\n" if ($config{'debug'});
 			%{$npcs_old{$ID}} = %{$npcs{$ID}};
@@ -5496,10 +5500,12 @@ sub parseMsg {
 			$npcs_old{$ID}{'gone_time'} = time;
 			binRemove(\@npcsID, $ID);
 			undef %{$npcs{$ID}};
+			delete $npcs{$ID};
 		} elsif (%{$pets{$ID}}) {
 			print "Pet Disappeared: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n" if ($config{'debug'});
 			binRemove(\@petsID, $ID);
 			undef %{$pets{$ID}};
+			delete $pets{$ID};
 		} else {
 			print "Unknown Disappeared: ".getHex($ID)."\n" if $config{'debug'};
 		}
@@ -7460,10 +7466,9 @@ sub parseMsg {
 
 		message("----------Items added to shop ------------------\n", "list");
 		message("#  Name                                         Type        Amount     Price\n", "list");
-		my $number = 1;
 		for (my $i = 8; $i < $msg_size; $i+=22) {
 			$price = unpack("L1", substr($msg, $i, 4));
-			#$number = unpack("S1", substr($msg, $i + 4, 2));
+			$number = unpack("S1", substr($msg, $i + 4, 2));
 			$amount = unpack("S1", substr($msg, $i + 6, 2));
 			$type = unpack("C1", substr($msg, $i + 8, 1));
 			$ID = unpack("S1", substr($msg, $i + 9, 2));
@@ -7514,9 +7519,8 @@ sub parseMsg {
 
 			message(swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>z",
-				[$number, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}]),
+				[$articles + 1, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}]),
 				"list");
-			$number++;
 		}
 		message("-----------------------------------------\n", "list");
 		$shopEarned = 0 if (!defined($shopEarned));
@@ -10946,6 +10950,7 @@ sub updateDamageTables {
 	my ($ID1, $ID2, $damage) = @_;
 	if ($ID1 eq $accountID) {
 		if (%{$monsters{$ID2}}) {
+			# You attack monster
 			$monsters{$ID2}{'dmgTo'} += $damage;
 			$monsters{$ID2}{'dmgFromYou'} += $damage;
 			if ($damage == 0) {
@@ -10961,8 +10966,11 @@ sub updateDamageTables {
 				$monsters{$ID1}{'missedYou'}++;
 			}
 			$monsters{$ID1}{'attackedByPlayer'} = 0;
-			$monsters{$ID1}{'attackedYou'}++ unless ($monsters{$ID1}{'dmgFromPlayer'} || $monsters{$ID1}{'missedFromPlayer'}
-			                                      || $monsters{$ID1}{'missedToPlayer'} || $monsters{$ID1}{'dmgToPlayer'});
+			$monsters{$ID1}{'attackedYou'}++ unless (
+								binSize(keys %{$monsters{$ID1}{'dmgFromPlayer'}}) ||
+								binSize(keys %{$monsters{$ID1}{'dmgToPlayer'}}) ||
+								$monsters{$ID1}{'missedFromPlayer'} ||
+								$monsters{$ID1}{'missedToPlayer'});
 
 			my $teleport = 0;
 			if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
@@ -10979,6 +10987,7 @@ sub updateDamageTables {
 		}
 	} elsif (%{$monsters{$ID1}}) {
 		if (%{$players{$ID2}}) {
+			# Monster attacks player
 			$monsters{$ID1}{'dmgFrom'} += $damage;
 			$monsters{$ID1}{'dmgToPlayer'}{$ID2} += $damage;
 			$players{$ID2}{'dmgFromMonster'}{$ID1} += $damage;
@@ -11003,6 +11012,7 @@ sub updateDamageTables {
 		
 	} elsif (%{$players{$ID1}}) {
 		if (%{$monsters{$ID2}}) {
+			# Player attacks monster
 			$monsters{$ID2}{'dmgTo'} += $damage;
 			$monsters{$ID2}{'dmgFromPlayer'}{$ID1} += $damage;
 			$players{$ID1}{'dmgToMonster'}{$ID2} += $damage;
@@ -11040,7 +11050,7 @@ sub avoidGM_near {
 		# in order to prevent false matches
 		my $statusGM = 1;
 		my $j = 0;
-		while ($avoid{"avoid_$j"} ne "") {
+		while ($avoid{"avoid_ignore_$j"} ne "") {
 			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_ignore_$j"})
 			{
 				$statusGM = 0;
@@ -11072,7 +11082,7 @@ sub avoidGM_talk {
 	# in order to prevent false matches
 	my $statusGM = 1;
 	my $j = 0;
-	while ($avoid{"avoid_$j"} ne "") {
+	while ($avoid{"avoid_ignore_$j"} ne "") {
 		if ($chatMsgUser eq $avoid{"avoid_ignore_$j"})
 		{
 			$statusGM = 0;
@@ -11098,7 +11108,7 @@ sub avoidGM_talk {
 sub avoidList_near() {
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
-		$j = 0;
+		my $j = 0;
 		while ($avoid{"avoid_$j"} ne "") {
 			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
 				print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
