@@ -6920,8 +6920,8 @@ sub parseMsg {
 				if ((($param2 & $_) == $_) && (!defined $chars[$config{char}]{ailments}{$skillsAilments{$_}})) {
 					$chars[$config{char}]{ailments}{$skillsAilments{$_}} = 1;
 					message "You have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
-				} elsif (defined $chars[$config{char}]{ailments}{$skillsAilments{_}}) {
-					delete $chars[$config{char}]{ailments}{$skillsAilments{_}};
+				} elsif (defined $chars[$config{char}]{ailments}{$skillsAilments{$_}}) {
+					delete $chars[$config{char}]{ailments}{$skillsAilments{$_}};
 					message "You are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
 				}
 			}
@@ -6965,8 +6965,8 @@ sub parseMsg {
 				if ((($param2 & $_) == $_) && (!defined $players{$ID}{ailments}{$skillsAilments{$_}})) {
 					$players{$ID}{ailments}{$skillsAilments{$_}} = 1;
 					message getActorName($ID) . " has ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 2;
-				} elsif (defined $players{$ID}{ailments}{$skillsAilments{_}}) {
-					delete $players{$ID}{ailments}{$skillsAilments{_}};
+				} elsif (defined $players{$ID}{ailments}{$skillsAilments{$_}}) {
+					delete $players{$ID}{ailments}{$skillsAilments{$_}};
 					message getActorName($ID) . " out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 2;
 				}
 			}
@@ -6996,8 +6996,8 @@ sub parseMsg {
 				if ((($param2 & $_) == $_) && (!defined $monsters{$ID}{ailments}{$skillsAilments{$_}})) {
 					$monsters{$ID}{ailments}{$skillsAilments{$_}} = 1;
 					message getActorName($ID) . " has ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
-				} elsif (defined $monsters{$ID}{ailments}{$skillsAilments{_}}) {
-					delete $monsters{$ID}{ailments}{$skillsAilments{_}};
+				} elsif (defined $monsters{$ID}{ailments}{$skillsAilments{$_}}) {
+					delete $monsters{$ID}{ailments}{$skillsAilments{$_}};
 					message getActorName($ID) . " out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", 1;
 				}
 			}
