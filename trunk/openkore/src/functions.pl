@@ -3648,7 +3648,8 @@ sub AI {
 					my $dist = distance($myPos, $pos);
 					my $name = lc $monster->{name};
 
-					if (!defined($smallestDist) || $dist < $smallestDist || $priority{$name} > $highestPri) {
+					if (!defined($smallestDist) || $priority{$name} > $highestPri
+					  || ( $priority{$name} == $highestPri && $dist < $smallestDist )) {
 						$smallestDist = $dist;
 						$attackTarget = $_;
 						$highestPri = $priority{$monster};
