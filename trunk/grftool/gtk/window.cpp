@@ -117,6 +117,10 @@ MainWindow::init ()
 		&(gtk_widget_get_style (W(viewport1))->white));
 
 
+	spriteViewer = new SpriteViewer ();
+	gtk_notebook_append_page (GTK_NOTEBOOK (W(notebook1)),
+		spriteViewer->widget, NULL);
+
 	/* Show the GUI */
 	status (_("Click Open to open a GRF archive."));
 	pixbuf = gdk_pixbuf_new_from_inline (sizeof (grftool_icon),
@@ -191,9 +195,8 @@ MainWindow::preview (char *displayName, char *fname)
 		uint32_t size;
 		GrfError err;
 		Sprite *sprite;
-		void *data, *pixels;
+		void *data;
 
-		gtk_image_set_from_pixbuf (GTK_IMAGE (W(image_preview)), NULL);
 		data = grf_get (document.grf, fname, &size, &err);
 		if (!data) {
 			status (grf_strerror (err));
@@ -202,7 +205,8 @@ MainWindow::preview (char *displayName, char *fname)
 
 		sprite = sprite_open_from_data ((const unsigned char *) data,
 				(unsigned int) size, NULL);
-		if (sprite) {
+		spriteViewer->set (sprite);
+/*		if (sprite) {
 			GdkPixbuf *buf;
 
 			pixels = sprite_to_rgb (sprite, 0, NULL, NULL);
@@ -213,11 +217,14 @@ MainWindow::preview (char *displayName, char *fname)
 			sprite_free (sprite);
 			gtk_image_set_from_pixbuf (GTK_IMAGE (W(image_preview)), buf);
 			g_object_unref (G_OBJECT (buf));
-		}
-		gtk_notebook_set_current_page (GTK_NOTEBOOK (W(notebook1)), 1);
+		} */
+		sprite_free (sprite);
+		gtk_notebook_set_current_page (GTK_NOTEBOOK (W(notebook1)), 2);
 
-	} else
+	} else {
+		spriteViewer->set (NULL);
 		gtk_notebook_set_current_page (GTK_NOTEBOOK (W(notebook1)), 0);
+	}
 }
 
 string

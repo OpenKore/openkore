@@ -2,10 +2,9 @@
 #define _WINDOW_H_
 
 #include <gtk/gtk.h>
-#include <string>
 #include "utils.h"
+#include "sprite-viewer.h"
 
-using namespace std;
 
 class MainWindow {
 public:
@@ -19,6 +18,7 @@ public:
 private:
 	GdkCursor *busyCursor;
 	GtkWidget *opensel;
+	SpriteViewer *spriteViewer;
 };
 
 #endif /* _WINDOW_H_ */
