@@ -105,6 +105,18 @@ sub onTimer {
 		return unless getField("$options{fields}/$lines[0].fld", \%field);
 	}
 	$mapview->set($lines[0], $lines[1], $lines[2], \%field);
+
+	my @monsters;
+	for (my $i = 3; $i < @lines; $i++) {
+		my ($type, $x, $y) = split / /, $lines[$i];
+		if ($type eq "ML") {
+			my %monster;
+			$monster{pos_to} = {x => $x, y => $y};
+			push @monsters, \%monster;
+		}
+	}
+	$mapview->setMonsters(\@monsters);
+
 	$mapview->update;
 	$status->SetStatusText("$lines[1], $lines[2]", 0);
 }
