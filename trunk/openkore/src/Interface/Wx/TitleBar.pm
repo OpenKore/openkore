@@ -22,11 +22,12 @@ package Interface::Wx::TitleBar;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_BUTTON EVT_PAINT);
+use Wx::Event qw(EVT_PAINT EVT_TOOL);
 use base qw(Wx::Panel);
 
 
 our (@brushes, $font, $dark, $light);
+our ($detachBitmap, $closeBitmap);
 
 
 sub new {
@@ -51,29 +52,32 @@ sub new {
 		my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
 		$sizer->Add($hsizer, 1, wxALIGN_RIGHT);
 
-		Wx::Image::AddHandler(new Wx::PNGHandler);
-		my $image = Wx::Image->newNameType(f('Interface', 'Wx', 'window.png'), wxBITMAP_TYPE_PNG);
-		my $detachButton = new Wx::BitmapButton($self, 1024, new Wx::Bitmap($image),
-			wxDefaultPosition, [$size, $size]);
-		$self->{detachButton} = $detachButton;
-		$detachButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
-		$hsizer->Add($detachButton, 0, wxGROW);
+		if (!$detachBitmap) {
+			my $image;
+			Wx::Image::AddHandler(new Wx::PNGHandler);
+			$image = Wx::Image->newNameType(f('Interface', 'Wx', 'window.png'), wxBITMAP_TYPE_PNG);
+			$detachBitmap = new Wx::Bitmap($image);
+			$image = Wx::Image->newNameType(f('Interface', 'Wx', 'close.png'), wxBITMAP_TYPE_PNG);
+			$closeBitmap = new Wx::Bitmap($image);
+		}
 
-		$image = Wx::Image->newNameType(f('Interface', 'Wx', 'close.png'), wxBITMAP_TYPE_PNG);
-		my $closeButton = new Wx::BitmapButton($self, 1025, new Wx::Bitmap($image),
-			wxDefaultPosition, [$size, $size]);
-		$self->{closeButton} = $closeButton;
-		$closeButton->SetBackgroundColour(Wx::SystemSettings::GetColour(wxSYS_COLOUR_BTNFACE));
-		$hsizer->Add($closeButton, 0, wxGROW);
+		my $toolbar = new Wx::ToolBar($self, -1, wxDefaultPosition, [-1, $size],
+			wxTB_HORIZONTAL | wxNO_BORDER | wxTB_3DBUTTONS | wxTB_FLAT);
+		$toolbar->AddTool(1, 'Detach', $detachBitmap, 'Detach tab');
+		$toolbar->AddTool(2, 'Close', $closeBitmap, 'Close tab');
+		$toolbar->Realize;
+		$hsizer->Add($toolbar, 0, wxGROW);
 
-		$self->EVT_BUTTON(1024, sub {
+		EVT_TOOL($toolbar, 1, sub {
 			$self->{onDetach}->($self->{onDetachData}) if ($self->{onDetach});
 		});
-		$self->EVT_BUTTON(1025, sub {
+
+		EVT_TOOL($toolbar, 2, sub {
 			$self->{onClose}->($self->{onCloseData}) if ($self->{onClose});
 		});
 
-		$self->SetSizeHints($closeButton->GetBestSize->GetWidth * 2 + 8, $size);
+		$self->{toolbar} = $toolbar;
+		$self->SetSizeHints($toolbar->GetBestSize->GetWidth, $size);
 		$self->SetSizer($sizer);
 	} else {
 		$self->SetSizeHints(8, $size);
@@ -153,8 +157,8 @@ sub onPaint {
 	my $dc = new Wx::PaintDC($self);
 
 	my $width = $self->GetSize->GetWidth;
-	if ($self->{detachButton}) {
-		$width -= $self->{detachButton}->GetSize->GetWidth + $self->{closeButton}->GetSize->GetWidth;
+	if ($self->{toolbar}) {
+		$width -= $self->{toolbar}->GetSize->GetWidth;
 	}
 
 	eval {
