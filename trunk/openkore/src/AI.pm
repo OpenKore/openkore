@@ -10,7 +10,7 @@ package AI;
 
 use strict;
 use Globals;
-
+use Utils;
 
 sub action {
 	my $i = (defined $_[0] ? $_[0] : 0);
@@ -19,11 +19,11 @@ sub action {
 
 sub args {
 	my $i = (defined $_[0] ? $_[0] : 0);
-	return $ai_seq_args[$i];
+	return \%{$ai_seq_args[$i]};
 }
 
 sub v {
-	return %ai_v;
+	return \%ai_v;
 }
 
 sub dequeue {
@@ -44,8 +44,27 @@ sub clear {
 
 sub suspend {
 	my $i = (defined $_[0] ? $_[0] : 0);
-	
-	$ai_seq_args[$i]{suspended} = time if ($i < @ai_seq_args);
+	$ai_seq_args[$i]{suspended} = time if $i < @ai_seq_args;
+}
+
+sub mapChanged {
+	my $i = (defined $_[0] ? $_[0] : 0);
+	$ai_seq_args[$i]{mapChanged} = time if $i < @ai_seq_args;;
+}
+
+sub find {
+	return undef if !defined $_[0];
+	return binFind(\@ai_seq, $_[0]);
+}
+
+sub inQueue {
+	my $action = shift;
+	my $found = 0;
+
+	foreach (split(/,/, $action)) {
+		$found++ if defined binFind(\@ai_seq, $_);
+	}
+	return $found;
 }
 
 return 1;

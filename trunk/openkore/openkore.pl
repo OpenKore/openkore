@@ -29,16 +29,17 @@ $SIG{__DIE__} = sub {
 	}
 	$err = sub { print "$_[0]\nPress ENTER to exit this program.\n"; <STDIN>; } if !defined $err;
 
-	# Extract file and line number from the die message
-	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
+	# Extract file and line number from the die message 
+	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/; 
+    
+	# Get rid of the annoying "@INC contains:" 
+	my $dieMsg = $_[0]; 
+	$dieMsg =~ s/ \(\@INC contains: .*\)//; 
+    
+	# Create error message and display it 
+	my $msg = "Program terminated unexpectedly. Error message:\n" . 
+		"$dieMsg\nA more detailed error report is saved to errors.txt"; 
 
-	# Get rid of the annoying "@INC contains:"
-	my $dieMsg = $_[0];
-	$dieMsg =~ s/ \(\@INC contains: .*\)//;
-
-	# Create error message and display it
-	my $msg = "Program terminated unexpectedly. Error message:\n" .
-		"$dieMsg\nA more detailed error report is saved to errors.txt";
 	my $log = '';
 	$log .= "\@ai_seq = @Globals::ai_seq\n\n" if (defined @Globals::ai_seq);
 	if (defined &Carp::longmess) {
@@ -46,18 +47,17 @@ $SIG{__DIE__} = sub {
 	} else {
 		$log .= $dieMsg;
 	}
-
-	# Find out which line died
-	if (-f $file && open(F, "< $file")) {
-		my @lines = <F>;
-		close F;
-
-		my $msg;
-		$msg =  "*   $lines[$line-2]" if ($line - 2 >= 0);
-		$msg .= "*>> $lines[$line-1]";
-		$msg .= "*   $lines[$line]" if (@lines > $line);
-		$msg .= "\n" unless $msg =~ /\n$/s;
-		$log .= "\n\nDied at this line:\n$msg\n";
+	# Find out which line died 
+	if (-f $file && open(F, "< $file")) { 
+		my @lines = <F>; 
+		close F; 
+    
+		my $msg; 
+		$msg =  "*   $lines[$line-2]" if ($line - 2 >= 0); 
+		$msg .= "*>> $lines[$line-1]"; 
+		$msg .= "*   $lines[$line]" if (@lines > $line); 
+		$msg .= "\n" unless $msg =~ /\n$/s; 
+		$log .= "\n\nDied at this line:\n$msg\n"; 
 	}
 
 	if (open(F, "> errors.txt")) {
@@ -100,6 +100,7 @@ if ($parseArgResult eq '2') {
 
 
 require 'functions.pl';
+
 use Globals;
 use Modules;
 use Log;
@@ -114,7 +115,6 @@ use AI;
 use Interface;
 Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
 	Network Network::Send Commands Misc AI Interface));
-
 
 Log::message("$Settings::versionText\n");
 Plugins::loadAll();

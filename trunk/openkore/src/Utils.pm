@@ -28,7 +28,7 @@ use base qw(Exporter);
 
 our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
-	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
+	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
 	findKey findKeyString minHeapAdd
 	distance
 	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getTickCount
@@ -303,6 +303,25 @@ sub findIndexStringList_lc{
 		return undef;
 	}
 }
+
+sub findIndexString_lc_not_equip {
+	my $r_array = shift;
+	my $match = shift;
+	my $ID = shift;
+	my $i;
+	for ($i = 0; $i < @{$r_array} ;$i++) {
+		if ((%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($ID) && !($$r_array[$i]{'equipped'}))
+			 || (!%{$$r_array[$i]} && $ID eq "")) {			  
+			return $i;
+		}
+	}
+	if ($ID eq "") {
+		return $i;
+	} else {
+		return undef;
+	}
+}
+
 
 sub findKey {
 	my $r_hash = shift;

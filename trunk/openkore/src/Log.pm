@@ -109,7 +109,7 @@ use Globals;
 use Interface;
 
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(
+our @EXPORT = qw(
 	$warningVerbosity $errorVerbosity
 	%messageConsole %warningConsole %errorConsole %debugConsole
 	message warning error debug
