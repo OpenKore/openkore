@@ -28,7 +28,7 @@ ai_attack_giveup 12
 # and you're not picking up any items, wait x seconds before doing
 # anything else.
 ai_attack_waitAfterKill 0.7
-ai_attack_unstuck 1.5
+ai_attack_unstuck 2.75
 
 # When your monster died, start checking for loot after x seconds
 ai_items_take_start 0.4
