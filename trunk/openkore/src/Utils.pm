@@ -424,11 +424,11 @@ sub swrite {
 }
 
 ##
-# timeConvert(time)
-# time: number of seconds.
-# Returns: a human-readable version of $time.
+# timeConvert(seconds)
+# seconds: number of seconds.
+# Returns: a human-readable version of $seconds.
 #
-# Converts $time into a string in the form of "x seconds y minutes z seconds".
+# Converts $seconds into a string in the form of "x hours y minutes z seconds".
 sub timeConvert {
 	my $time = shift;
 	my $hours = int($time / 3600);
