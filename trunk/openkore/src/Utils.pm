@@ -387,7 +387,7 @@ sub findKeyString {
 	my $match = shift;
 	my $ID = shift;
 	foreach (keys %{$r_hash}) {
-		if ($$r_hash{$_}{$match} eq $ID) {
+		if (ref($r_hash->{$_}) && $r_hash->{$_}{$match} eq $ID) {
 			return $_;
 		}
 	}
