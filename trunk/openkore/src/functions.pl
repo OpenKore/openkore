@@ -3917,6 +3917,7 @@ sub AI {
 		undef @{$ai_v{'ai_attack_agMonsters'}};
 		undef @{$ai_v{'ai_attack_cleanMonsters'}};
 		undef @{$ai_v{'ai_attack_partyMonsters'}};
+		undef $ai_v{'temp'}{'priorityAttack'};
 		undef $ai_v{'temp'}{'foundID'};
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
@@ -3983,18 +3984,48 @@ sub AI {
 			}
 			undef $ai_v{'temp'}{'distSmall'};
 			undef $ai_v{'temp'}{'foundID'};
-			$ai_v{'temp'}{'first'} = 1;
+			undef $ai_v{'temp'}{'highestPri'};
+			undef $ai_v{'temp'}{'priorityAttack'};
 
-			# Look for the closest aggressive monster to attack
+			# Look for all aggressive monsters that have the highest priority
 			foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
 				# Don't attack monsters near portals
 				next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
 
-				$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
-				if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
-					$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
-					$ai_v{'temp'}{'foundID'} = $_;
-					undef $ai_v{'temp'}{'first'};
+				if (defined ($priority{lc($monsters{$_}{'name'})}) &&
+				    $priority{lc($monsters{$_}{'name'})} > $ai_v{'temp'}{'highestPri'}) {
+					$ai_v{'temp'}{'highestPri'} = $priority{lc($monsters{$_}{'name'})};
+				}
+			}
+
+			$ai_v{'temp'}{'first'} = 1;
+			if (!$ai_v{'temp'}{'highestPri'}) {
+				# If not found, look for the closest aggressive monster (without priority)
+				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
+					# Don't attack monsters near portals
+					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+
+					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
+						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
+						$ai_v{'temp'}{'foundID'} = $_;
+						undef $ai_v{'temp'}{'first'};
+					}
+				}
+			} else {
+				# If found, look for the closest monster with the highest priority
+				foreach (@{$ai_v{'ai_attack_agMonsters'}}) {
+					next if ($priority{lc($monsters{$_}{'name'})} != $ai_v{'temp'}{'highestPri'});
+					# Don't attack monsters near portals
+					next if (positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4));
+
+					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
+					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'}) && !$monsters{$_}{'state'}) {
+						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
+						$ai_v{'temp'}{'foundID'} = $_;
+						$ai_v{'temp'}{'priorityAttack'} = 1;
+						undef $ai_v{'temp'}{'first'};
+					}
 				}
 			}
 
@@ -4017,6 +4048,8 @@ sub AI {
 				# No party monsters either; look for the closest, non-aggressive monster that:
 				# 1) nobody's attacking
 				# 2) isn't within 2 blocks distance of someone else
+
+				# Look for the monster with the highest priority
 				undef $ai_v{'temp'}{'distSmall'};
 				undef $ai_v{'temp'}{'foundID'};
 				$ai_v{'temp'}{'first'} = 1;
@@ -4037,7 +4070,7 @@ sub AI {
 		# If an appropriate monster's found, attack it. If not, wait ai_attack_auto secs before searching again.
 		if ($ai_v{'temp'}{'foundID'}) {
 			ai_setSuspend(0);
-			attack($ai_v{'temp'}{'foundID'});
+			attack($ai_v{'temp'}{'foundID'}, $ai_v{'temp'}{'priorityAttack'});
 		} else {
 			$timeout{'ai_attack_auto'}{'time'} = time;
 		}
@@ -9195,6 +9228,7 @@ sub ai_storageGet {
 
 sub attack {
 	my $ID = shift;
+	my $priorityAttack = shift;
 	my %args;
 	$args{'ai_attack_giveup'}{'time'} = time;
 	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
@@ -9203,7 +9237,12 @@ sub attack {
 	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
 	unshift @ai_seq, "attack";
 	unshift @ai_seq_args, \%args;
-	message "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
+	if ($priorityAttack) {
+		message "Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
+	} else {
+		message "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
+	}
+
 
 	$startedattack = 1;
 	if ($config{"monsterCount"}) {	

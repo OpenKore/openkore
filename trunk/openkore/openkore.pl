@@ -67,6 +67,7 @@ addParseFiles("$Settings::control_folder/timeouts.txt", \%timeout, \&parseTimeou
 addParseFiles($Settings::shop_file, \%shop, \&parseDataFile2);
 addParseFiles("$Settings::control_folder/chat_resp.txt", \%chat_resp, \&parseDataFile2);
 addParseFiles("$Settings::control_folder/avoid.txt", \%avoid, \&parseDataFile2);
+addParseFiles("$Settings::control_folder/priority.txt", \%priority, \&parsePriority);
 addParseFiles("$Settings::control_folder/consolecolors.txt", \%consoleColors, \&parseSectionedFile);
 
 addParseFiles("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
