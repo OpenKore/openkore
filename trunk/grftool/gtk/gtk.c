@@ -90,10 +90,14 @@ load_glade (gchar *basename)
 
 	/* Locate itself if we're on Linux */
 	if (realpath ("/proc/self/exe", self)) {
-		search_dirs = g_list_append (search_dirs, g_path_get_dirname (self));
+		char *dir;
+
+		dir = g_path_get_dirname (self);
+		search_dirs = g_list_append (search_dirs, dir);
+		search_dirs = g_list_append (search_dirs,
+			g_strdup_printf ("%s/../share/grftool", dir));
 	}
 	search_dirs = g_list_append (search_dirs, g_strdup ("."));
-	search_dirs = g_list_append (search_dirs, g_strdup_printf ("."));
 
 	for (dir = search_dirs; dir; dir = dir->next) {
 		gchar *fn;
@@ -1142,6 +1146,10 @@ main (int argc, char *argv[])
 		G_CALLBACK (sort_by_column), GINT_TO_POINTER (SIZE_COL));
 
 	gtk_tree_view_set_headers_visible (tree, TRUE);
+
+
+	gtk_widget_modify_bg (W(viewport1), GTK_STATE_NORMAL,
+		&(gtk_widget_get_style (W(viewport1))->white));
 
 
 	/* Show the GUI */
