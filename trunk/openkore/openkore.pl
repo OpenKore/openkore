@@ -148,8 +148,17 @@ if ($buildType == 0) {
 			exit 1;
 		}
 	}
-	require Tools;
-	import Tools;
+	eval "use Tools;";
+	if ($@) {
+		my $msg;
+		if ($@ =~ /^Can't locate /s) {
+			$msg = 'The file Tools.pm is not found. Please check your installation.';
+		} else {
+			$msg = $@;
+		}
+		$interface->errorDialog("Unable to load Tools.so:\n$msg");
+		exit 1;
+	}
 }
 
 if ($config{'XKore'}) {
