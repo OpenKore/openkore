@@ -1514,42 +1514,30 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 		quit();
 
 	} elsif ($switch eq "rc") {
-		if (!$codeReloading) {
-			print "Dynamic code reloading has been disabled because functions.pl did not exists during startup.\n";
-		} else {
-			# Check functions.pl for syntax errors
-			# Note: this is $Config, not $config!
-			my $ok = 1;
-			if (-f $Config{'perlpath'}) {
-				$ok = 0;
-				print "Checking functions.pl for errors...\n";
-				system($Config{'perlpath'}, '-c', 'functions.pl');
-				if ($? == -1) {
-					print "Error: failed to execute $Config{'perlpath'}\n";
-				} elsif ($? & 127) {
-					print "Error: $Config{'perlpath'} exited abnormally\n";
-				} elsif (($? >> 8) == 0) {
-					print "functions.pl passed syntax check.\n" if ($printType);
-					$ok = 1;
-				} else {
-					print "Error: functions.pl contains syntax errors.\n";
-				}
+		# Check functions.pl for syntax errors
+		# Note: this is $Config, not $config!
+		my $ok = 1;
+		if (-f $Config{'perlpath'}) {
+			$ok = 0;
+			print "Checking functions.pl for errors...\n";
+			system($Config{'perlpath'}, '-c', 'functions.pl');
+			if ($? == -1) {
+				print "Error: failed to execute $Config{'perlpath'}\n";
+			} elsif ($? & 127) {
+				print "Error: $Config{'perlpath'} exited abnormally\n";
+			} elsif (($? >> 8) == 0) {
+				print "functions.pl passed syntax check.\n" if ($printType);
+				$ok = 1;
+			} else {
+				print "Error: functions.pl contains syntax errors.\n";
 			}
+		}
 
-			if ($ok) {
-				print "Reloading functions.pl...\n";
-				if (!do 'functions.pl' || $@) {
-					print "Unable to reload functions.pl\n";
-					print "$@\n" if ($@);
-
-				} else {
-					# Register new functions
-					@codeSubs = ();
-					foreach (grep(/^[\s\t]*sub ([a-zA-Z0-9])*/, @lines)) {
-						my ($subName) = $_ =~ /^[\s\t]*sub ([a-zA-Z0-9]*)/;
-						push (@codeSubs, $subName);
-					}
-				}
+		if ($ok) {
+			print "Reloading functions.pl...\n";
+			if (!do 'functions.pl' || $@) {
+				print "Unable to reload functions.pl\n";
+				print "$@\n" if ($@);
 			}
 		}
 
