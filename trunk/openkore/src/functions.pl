@@ -6780,9 +6780,10 @@ sub parseMsg {
 		# "Next" button appeared on the NPC message dialog
 		my $ID = substr($msg, 2, 4);
 		if ($config{autoTalkCont}) {
+			message "$npcs{$ID}{name} : Auto-continuing talking\n", "npc";
 			sendTalkContinue(\$remote_socket, $ID);
 		} else {
-			message "$npcs{$ID}{'name'} : Type 'talk cont' to continue talking\n", "npc";
+			message "$npcs{$ID}{name} : Type 'talk cont' to continue talking\n", "npc";
 		}
 		$ai_v{'npc_talk'}{'talk'} = 'next';
 		$ai_v{'npc_talk'}{'time'} = time;
