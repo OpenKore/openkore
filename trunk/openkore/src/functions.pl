@@ -2050,6 +2050,8 @@ sub AI {
 				$args->{time} = time + $time;
 			} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
 				sendTalkText(\$remote_socket, $args->{ID}, $1);
+			} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
+				sendTalkNumber(\$remote_socket, $args->{ID}, $1);
 			} elsif ( $args->{steps}[0] =~ /x/i ) {
 				sendTalk(\$remote_socket, $args->{ID});
 			} elsif ( $args->{steps}[0] =~ /c/i ) {
