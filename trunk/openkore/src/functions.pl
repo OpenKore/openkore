@@ -7182,7 +7182,7 @@ sub parseMsg {
 			$item->{nameID} = $ID;
 			$item->{amount} = 1;
 			$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
-			$item->{type_equip} = unpack("C1", substr($msg, $i+6, 1));
+			$item->{type_equip} = unpack("S1", substr($msg, $i+6, 2));
 			$item->{upgrade} = unpack("C1", substr($msg, $i+11, 1));
 			$item->{cards} = substr($msg, $i+12, 8);
 			$item->{name} = itemName($item);
