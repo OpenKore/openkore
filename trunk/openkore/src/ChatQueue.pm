@@ -1,3 +1,18 @@
+#########################################################################
+# This software is open source, licensed under the GNU General Public
+# License, version 2.
+# Basically, this means that you're allowed to modify and distribute
+# this software. However, if you distribute modified versions, you MUST
+# also distribute the source code.
+# See http://www.gnu.org/licenses/gpl.html for the full license.
+#########################################################################
+##
+# MODULE DESCRIPTION: Processing of incoming chat commands
+#
+# Kore has a feature called 'chat commands': you command your bot to
+# do certain things by using PM or public chat. This module processes
+# chat input and executes chat commands when necessary.
+
 package ChatQueue;
 
 use strict;
@@ -17,6 +32,12 @@ our @queue;
 
 ##
 # ChatQueue::add(type, userID, user, msg)
+# type: 'c' (public chat), 'pm' (private message), 'p' (party chat) or 'g' (guild chat)
+# userID: the ID of the user who sent this message.
+# user: the name of the user who sent this message.
+# msg: the message.
+#
+# Add a chat message to the chat queue. The messages in the queue will be processed later.
 sub add {
 	my %item = (
 		type => shift,
@@ -31,12 +52,17 @@ sub add {
 
 ##
 # ChatQueue::clear()
+#
+# Clear the chat queue, if there are any unprocessed messages.
 sub clear {
 	@queue = ();
 }
 
 ##
 # ChatQueue::processFirst()
+#
+# Process the first message in the queue, if any.
+# That message will be removed from the queue.
 sub processFirst {
 	return unless @queue;
 	my $cmd = shift @queue;

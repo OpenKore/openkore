@@ -1,5 +1,6 @@
 Interface
 Network
+ChatQueue
 Commands
 Log
 Settings
