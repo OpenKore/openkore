@@ -10966,7 +10966,17 @@ sub connection {
 	my $r_socket = shift;
 	my $host = shift;
 	my $port = shift;
+	my $return = 0;
+
 	message("Connecting ($host:$port)... ", "connection");
+	Plugins::callHook('connection', {
+		socket => $r_socket,
+		return => \$return,
+		host => $host,
+		port => $port
+	});
+	return if ($return);
+
 	$$r_socket = IO::Socket::INET->new(
 			PeerAddr	=> $host,
 			PeerPort	=> $port,
