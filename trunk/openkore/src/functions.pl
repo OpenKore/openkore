@@ -9768,13 +9768,21 @@ sub avoidList_talk {
 	}
 }
 
-
 sub compilePortals {
 	my %srcPortals;
 	my $map;
 	foreach (keys %portals_lut) {
 		$map = $portals_lut{$_}{'source'}{'map'};
+
 		%{$srcPortals{$map}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
+		$srcPortals{$map}{$_}{'out'} = 1; # flag as outgoing portals
+		
+		foreach my $dest (keys %{$portals_lut{$_}{'dest'}}) {
+			if (!exists $srcPortals{$portals_lut{$_}{'dest'}{$dest}{'map'}}{$portals_lut{$_}{'dest'}{$dest}{'ID'}}) {
+				# find incoming-only portal
+				%{$srcPortals{$portals_lut{$_}{'dest'}{$dest}{'map'}}{$portals_lut{$_}{'dest'}{$dest}{'ID'}}{'pos'}} = %{$portals_lut{$_}{'dest'}{$dest}{'pos'}}
+			}
+		}
 	}
 
 	# Go through all maps
@@ -9791,7 +9799,7 @@ sub compilePortals {
 		foreach my $portal (keys %{$srcPortals{$map}}) {
 			# Look for portal LOS entries that are not linked to each other
 			foreach (keys %{$srcPortals{$map}}) {
-				next if ($_ eq $portal);
+				next if ($_ eq $portal || !defined $srcPortals{$map}{$_}{'out'});
 				if ($portals_los{$portal}{$_} eq "" || $portals_los{$_}{$portal} eq "") {
 					my @solution;
 					message "Calculating portal route $portal -> $_\n", "system";
