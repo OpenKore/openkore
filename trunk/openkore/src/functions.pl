@@ -12,6 +12,7 @@
 use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Config;
+eval "no utf8;";
 use bytes;
 
 use Globals;
