@@ -87,6 +87,8 @@
 # xkore			X-Kore system messages
 
 # Debug domains:
+# ai_attack
+# ai_move
 # parseInput
 # parseMsg
 # parseMsg_damage
@@ -94,7 +96,6 @@
 # sendPacket
 # ai
 # npc
-# move
 # route
 
 package Log;
