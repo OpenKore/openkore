@@ -11669,9 +11669,9 @@ sub timeConvert {
 	my $seconds = $time;
 	my $gathered = '';
 
-	$gathered = '$hours hours ' if ($hours);
-	$gathered .= '$minutes minutes ' if ($minutes);
-	$gathered .= '$seconds seconds' if ($seconds);
+	$gathered = "$hours hours " if ($hours);
+	$gathered .= "$minutes minutes " if ($minutes);
+	$gathered .= "$seconds seconds" if ($seconds);
 	$gathered =~ s/ $//;
 	$gathered = '0 seconds' if ($gathered eq '');
 	return $gathered;
