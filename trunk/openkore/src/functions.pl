@@ -10,7 +10,6 @@
 #########################################################################
 use Time::HiRes qw(time usleep);
 use IO::Socket;
-use Getopt::Long;
 use Digest::MD5 qw(md5);
 use Config;
 use Log qw(message warning error);
@@ -6156,21 +6155,16 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			if ($invIndex eq "") {
 				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
-#Solos Start
 			}
-#Solos End
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'index'} = $index;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'} = $ID;
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} = unpack("S1", substr($msg, $i + 6, 2));
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = unpack("C1", substr($msg, $i + 4, 1));
-				$display = ($items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}} ne "")
-					? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
-					: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
-				$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
-				print "Inventory: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}}\n" if $config{'debug'};
-#Solos Start
-#			} 
-#Solos End
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'index'} = $index;
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'} = $ID;
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} = unpack("S1", substr($msg, $i + 6, 2));
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'} = unpack("C1", substr($msg, $i + 4, 1));
+			$display = ($items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}} ne "")
+				? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
+				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
+			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
+			print "Inventory: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}}\n" if $config{'debug'};
 		}
 
 	} elsif ($switch eq "00A4") {
@@ -6262,23 +6256,25 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			print "Inventory: +$chars[$config{'char'}]{'inventory'}[$invIndex]{'enchant'} $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} [$chars[$config{'char'}]{'inventory'}[$invIndex]{'slotName'}] [$chars[$config{'char'}]{'inventory'}[$invIndex]{'elementName'}] ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}} - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n" if $config{'debug'};
 		}
 
-	} elsif ($switch eq "00A5") {
+	} elsif ($switch eq "00A5" || $switch eq "01F0") {
 		# Retrieve list of stackable storage items
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef %storage;
 		undef @storageID;
-		for(my $i = 4; $i < $msg_size; $i+=10) {
-			$index = unpack("C1", substr($msg, $i, 1));
-			$ID = unpack("S1", substr($msg, $i + 2, 2));
+
+		my $psize = ($switch eq "00A5") ? 10 : 18;
+		for(my $i = 4; $i < $msg_size; $i += $psize) {
+			my $index = unpack("C1", substr($msg, $i, 1));
+			my $ID = unpack("S1", substr($msg, $i + 2, 2));
 			binAdd(\@storageID, $ID);
 			$storage{$ID}{'index'} = $index;
 			$storage{$ID}{'nameID'} = $ID;
 			$storage{$ID}{'amount'} = unpack("L1", substr($msg, $i + 6, 4));
 			$display = ($items_lut{$ID} ne "")
 				? $items_lut{$ID}
-				: "Unknown ".$ID;
+				: "Unknown $ID";
 			$storage{$ID}{'name'} = $display;
 			$storage{$ID}{'binID'} = binFind(\@storageID, $ID);
 			print "Storage: $storage{$ID}{'name'} ($storage{$ID}{'binID'})\n" if $config{'debug'};
@@ -6287,7 +6283,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 	} elsif ($switch eq "00A6") {
 		# Retrieve list of non-stackable (weapons & armor) storage items.
-		# This packet is sent immediately after 00A5.
+		# This packet is sent immediately after 00A5/01F0.
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
@@ -7959,10 +7955,10 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			$storage{'inventory'}[$index]{'amount'} = $amount;
 			my $display = ($items_lut{$ID} ne "")
 				? $items_lut{$ID}
-				: "Unknown ".$ID;
+				: "Unknown $ID";
 			$storage{'inventory'}[$index]{'name'} = $display;
 		}
-		print "Storage Item Added: $storage{'inventory'}[$index]{'name'} ($index) x $amount\n";
+		message("Storage Item Added: $storage{'inventory'}[$index]{'name'} ($index) x $amount\n", "storage", 1);
 
 	} elsif ($switch eq "01C8") {
 		my $index = unpack("S1",substr($msg, 2, 2));
@@ -7971,26 +7967,26 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		my $amountleft = unpack("S1",substr($msg, 10, 2));
 		my $itemDisplay = ($items_lut{$itemType} ne "") 
 			? $items_lut{$itemType}
-			: "Unknown";
+			: "Unknown " . unpack("L*", $ID);
 
 		if ($ID eq $accountID) {
 			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			my $amount = $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $amountleft;
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
 
-			print "You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n";
+			message("You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "itemuse", 1);
 			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
 				undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
 			}
 
 		} elsif (%{$players{$ID}}) {
-			print "Player $players{$ID}{'name'} ($players{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n";
+			message("Player $players{$ID}{'name'} ($players{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "player_itemuse", 2);
 
 		} elsif (%{$monsters{$ID}}) {
-			print "Monster $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n";
+			message("Monster $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "monster_itemuse", 2);
 
 		} else {
-			print "Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n";
+			message("Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n", "player_itemuse", 2);
 
 		}
 
@@ -9337,6 +9333,7 @@ sub configModify {
 	my $quiet = shift;
 	print "Config '$key' set to $val\n" unless ($quiet);
 	$config{$key} = $val;
+	$Log::messageVerbosity = $config{'verbose'};
 	writeDataFileIntact($config_file, \%config);
 }
 
@@ -10568,7 +10565,7 @@ sub parseDataFile {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,$value;
+	my ($key,$value);
 	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
@@ -10621,6 +10618,7 @@ sub parseDataFile2 {
 		}
 	}
 	close FILE;
+	$Log::messageVerbosity = $config{'verbose'} if ($file eq $config_file);
 }
 
 sub parseItemsControl {

@@ -10,17 +10,22 @@
 #########################################################################
 
 # Known domains:
-# atk		You attack monster
-# connection	Connection messages
-# input		Waiting for user input
-# monatkyou	Monster attacks you
-# xkore		X-Kore system messages
+# atk			You attack monster
+# connection		Connection messages
+# input			Waiting for user input
+# itemuse		You used item
+# mon_itemuse		Monster used item
+# monatkyou		Monster attacks you
+# player_itemuse	Player used item
+# storage		Storage item added/removed
+# xkore			X-Kore system messages
 
 package Log;
 
 use Carp;
 use Utils;
 use Exporter;
+use IO::Socket;
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -39,6 +44,7 @@ our @EXPORT_OK = qw(
 
 # The verbosity level for messages. Messages that have a higher verbosity than this will not be printed.
 # Low level = important messages. High level = less important messages.
+# If you set the current verbosity higher, you will see more messages.
 our $messageVerbosity;
 our $warningVerbosity;
 our $errorVerbosity;
@@ -125,6 +131,7 @@ sub processMsg {
 		if ($^O ne 'MSWin32' && $^O ne 'cygwin') {
 			# Restore normal color
 			print "\033[0m";
+			STDOUT->flush;
 		}
 	}
 

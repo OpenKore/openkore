@@ -14,6 +14,7 @@ package Utils;
 use strict;
 no strict 'refs';
 use Exporter;
+use Time::HiRes qw(time usleep);
 our @ISA = "Exporter";
 our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
