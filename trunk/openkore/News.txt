@@ -169,6 +169,8 @@ Bug fixes:
 - The skill_use AI sequence will now wait until the skill has finished casting.
 - Typing "talk no" while not talking to an NPC would cause disconnection;
   "talk no" is no longer allowed in that case now.
+- Headgear display for "pl <#>" command will say Unknown instead of None
+  as appropriate.
 - "storage get" no longer requires AI to be enabled.
 - Fixed PM list synchronization bug.
 - Fix attackAuto_onlyWhenSafe: ignore party members.
@@ -189,6 +191,9 @@ Internal:
   in which randomWalk should walk.
 - Automatically remove player entries, when that player is more than 35 blocks
   away. Sometimes players don't get removed from the list for some reason.
+- Detect what weapon (later shield) people are using.
+- "Player Info" message domain is now parseMsg_presence instead of parseMsg
+- itemName()/itemNameSimple() function now returns "None" for item #0
 
 Credits:
 - Joseph: -1 and 2 attack-auto support in mon_control.txt,

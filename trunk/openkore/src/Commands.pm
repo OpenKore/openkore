@@ -977,19 +977,19 @@ sub cmdPlayerList {
 			"Sex: @<<<<<<    Class: @<<<<<<<<<<<",
 			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}]);
 
-		my $headTop = $items_lut{$player->{headgear}{top}};
-		my $headMid = $items_lut{$player->{headgear}{mid}};
-		my $headLow = $items_lut{$player->{headgear}{low}};
+		my $headTop = main::itemName({nameID => $player->{headgear}{top}});
+		my $headMid = main::itemName({nameID => $player->{headgear}{mid}});
+		my $headLow = main::itemName({nameID => $player->{headgear}{low}});
 		$msg .= "-------------------------------------------------\n";
 		$msg .= swrite(
 			"Body direction: @<<<<<<<<<<<<<<<<<<< Head direction:  @<<<<<<<<<<<<<<<<<<<",
 			["$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)"]);
 		$msg .= swrite(
 			"Upper headgear: @<<<<<<<<<<<<<<<<<<< Middle headgear: @<<<<<<<<<<<<<<<<<<<",
-			[($headTop) ? $headTop : "none", ($headMid) ? $headMid : "none"]);
+			[$headTop, $headMid]);
 		$msg .= swrite(
 			"Lower headgear: @<<<<<<<<<<<<<<<<<<< Hair color:      @<<<<<<<<<<<<<<<<<<<",
-			[($headLow) ? $headLow : "none", "$haircolors{$player->{hair_color}} ($player->{hair_color})"]);
+			[$headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})"]);
 		
 		$msg .= sprintf("Walk speed: %.2f secs per block\n", $player->{walk_speed});
 		if ($player->{dead}) {
