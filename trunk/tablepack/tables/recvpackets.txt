@@ -1,5 +1,5 @@
-# Packet lengths for iRO Amatsu / eAthena RC 5
-# Sep 17 2004 / Oct 19 2004
+# Packet lengths for iRO Gonryun / eAthena RC 5
+# Oct 29 2004
 0064 55
 0065 17
 0066 0
