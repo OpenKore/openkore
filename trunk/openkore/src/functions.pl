@@ -9485,8 +9485,8 @@ sub updateDamageTables {
 			}
 			$monsters{$ID1}{'attackedByPlayer'} = 0;
 			$monsters{$ID1}{'attackedYou'}++ unless (
-					binSize(scalar(keys %{$monsters{$ID1}{'dmgFromPlayer'}})) ||
-					binSize(scalar(keys %{$monsters{$ID1}{'dmgToPlayer'}})) ||
+					binSize([keys %{$monsters{$ID1}{'dmgFromPlayer'}}]) ||
+					binSize([keys %{$monsters{$ID1}{'dmgToPlayer'}}]) ||
 					$monsters{$ID1}{'missedFromPlayer'} ||
 					$monsters{$ID1}{'missedToPlayer'}
 				);
