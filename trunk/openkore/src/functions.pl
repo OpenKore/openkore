@@ -280,7 +280,7 @@ sub mainLoop {
 	Plugins::callHook('mainLoop_pre');
 
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
-	 && $conState == 5 && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
+	 && $conState == 5 && !AI::inQueue(qw/attack take items_take/)) {
 		message "\nAuto-restarting!!\n", "system";
 
 		if ($config{'autoRestartSleep'}) {
@@ -304,7 +304,7 @@ sub mainLoop {
 
 	# Automatically switch to a different config file after a while
 	if ($config{'autoConfChange'} && $config{'autoConfChange_files'} && $conState == 5
-	 && time >= $nextConfChangeTime && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
+	 && time >= $nextConfChangeTime && !AI::inQueue(qw/attack take items_take/)) {
 	 	my ($file, @files);
 	 	my ($oldMasterHost, $oldMasterPort, $oldUsername, $oldChar);
 
