@@ -36,6 +36,7 @@ our @EXPORT = qw(
 	parseMonControl
 	parsePortals
 	parsePortalsLOS
+	parsePriority
 	parseResponses
 	parseROLUT
 	parseRODescLUT
