@@ -10814,7 +10814,7 @@ sub checkPlayerCondition {
 		return 0 unless whenGroundStatus($players{$id}, $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus($players{$id}, $config{$prefix."_whenGround"});
+		return 0 if whenGroundStatus($players{$id}, $config{$prefix."_whenNotGround"});
 	}
 	
 	return 1;
@@ -10835,7 +10835,7 @@ sub checkMonsterCondition {
 		return 0 unless whenGroundStatus($monsters{$id}, $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus($monsters{$id}, $config{$prefix."_whenGround"});
+		return 0 if whenGroundStatus($monsters{$id}, $config{$prefix."_whenNotGround"});
 	}
 	
 	return 1;
