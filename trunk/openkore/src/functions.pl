@@ -4089,30 +4089,27 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 
-			} elsif ($ai_seq_args[0]{'index'} eq '0' 		#if index eq '0' (but not index == 0)
-			      && $ai_seq_args[0]{'old_x'} == $cur_x		#and we are still on the same
-			      && $ai_seq_args[0]{'old_y'} == $cur_y ) {		#old XY coordinate,
-
-				my $msg = "Stuck at $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'}).";
-				$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
-				$msg .= "\n";
-				warning $msg, "route";
-				#chatLog("k", $msg);
-				useTeleport(1) if $config{teleportAuto_unstuck};
-				shift @ai_seq;
-				shift @ai_seq_args;
-
 			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y && timeOut($ai_seq_args[0]{'time_step'}, 3)) {
-				#we are still on the same spot
-				#decrease step movement
+				#we are still on the same spot, decrease step size
 				$ai_seq_args[0]{'index'} = int($ai_seq_args[0]{'index'}*0.85);
-				debug "Route - not moving, decreasing step size to $ai_seq_args[0]{'index'}\n", "route";
-				if (@{$ai_seq_args[0]{'solution'}}) {
-					#if we still have more points to cover, walk to next point
-					$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
-					$ai_seq_args[0]{'new_x'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'};
-					$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
-					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
+				if ($ai_seq_args[0]{'index'}) {
+					debug "Route - not moving, decreasing step size to $ai_seq_args[0]{'index'}\n", "route";
+					if (@{$ai_seq_args[0]{'solution'}}) {
+						#if we still have more points to cover, walk to next point
+						$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
+						$ai_seq_args[0]{'new_x'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'};
+						$ai_seq_args[0]{'new_y'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'};
+						move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
+					}
+				} else {
+					#we're stuck
+					my $msg = "Stuck at $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'}).";
+					$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
+					$msg .= "\n";
+					warning $msg, "route";
+					useTeleport(1) if $config{teleportAuto_unstuck};
+					shift @ai_seq;
+					shift @ai_seq_args;
 				}
 
 			} else {
@@ -4122,22 +4119,26 @@ sub AI {
 				$ai_seq_args[0]{'index'}++ if $ai_seq_args[0]{'index'} < $config{'route_step'};
 				if ($ai_seq_args[0]{'old_x'} && $ai_seq_args[0]{'old_y'}) {
 					#see how far we've walked since the last move command and
-					#trim down the soultion tree by this distance, but
-					#never remove the last step (it'll be removed when we arrive there)
+					#trim down the soultion tree by this distance.
+					#only remove the last step if we reached the destination
 					my $trimsteps = 0;
+					#if position has changed, we must have walked at least one step
+					$trimsteps++ if ($cur_x != $ai_seq_args[0]{'old_x'} || $cur_y != $ai_seq_args[0]{'old_y'});
+					#search the best matching entry for our position in the solution
 					while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
 							 && distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps+1])
 							    < distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps])
 						) { 
 						$trimsteps++; 
-					} 
-
+					}
+					#remove the last step also if we reached the destination
 					$trimsteps = @{$ai_seq_args[0]{'solution'}} - 1 if ($trimsteps >= @{$ai_seq_args[0]{'solution'}});
+					$trimsteps = @{$ai_seq_args[0]{'solution'}} if ($trimsteps <= $ai_seq_args[0]{'index'} && $ai_seq_args[0]{'new_x'} == $cur_x && $ai_seq_args[0]{'new_y'} == $cur_y);
 					debug "Route - trimming down solution by $trimsteps steps\n", "route";
 					splice(@{$ai_seq_args[0]{'solution'}}, 0, $trimsteps) if ($trimsteps > 0);
 				}
 				my $stepsleft = @{$ai_seq_args[0]{'solution'}};
-				if ($stepsleft && ($ai_seq_args[0]{'new_x'} != $cur_x || $ai_seq_args[0]{'new_y'} != $cur_y)) {
+				if ($stepsleft > 0) {
 					#if we still have more points to cover, walk to next point
 					$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
 					$ai_seq_args[0]{'new_x'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'};
@@ -4145,11 +4146,11 @@ sub AI {
 					$ai_seq_args[0]{'old_x'} = $cur_x;
 					$ai_seq_args[0]{'old_y'} = $cur_y;
 					$ai_seq_args[0]{'time_step'} = time if ($cur_x != $ai_seq_args[0]{'old_x'} || $cur_y != $ai_seq_args[0]{'old_y'});
-					debug "Route - next step moving to ($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}), $stepsleft steps left\n", "route";
+					debug "Route - next step moving to ($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}), index $ai_seq_args[0]{'index'}, $stepsleft steps left\n", "route";
 					move($ai_seq_args[0]{'new_x'}, $ai_seq_args[0]{'new_y'}, $ai_seq_args[0]{'attackID'});
 				} else {
 					#no more points to cover
-					message "Destination reached.\n", "success", 2;
+					message "Destination reached.\n", "success";
 					shift @ai_seq;
 					shift @ai_seq_args;
 				}
