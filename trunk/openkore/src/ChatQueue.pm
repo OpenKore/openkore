@@ -9,7 +9,7 @@ use AI;
 use Commands;
 use Plugins;
 use Log qw(message error);
-use Utils qw(parseArgs);
+use Utils qw(parseArgs getFormattedDate);
 use Misc qw(auth configModify sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse);
 
 
@@ -199,7 +199,7 @@ sub _processChatCommand {
 					message "Calculating route to: $maps_lut{$rsw}($map)\n", "route";
 				}
 				sendMessage(\$remote_socket, $type, getResponse("moveS"), $user) if $config{verbose};
-				ai_route($map, $x, $y, attackOnRoute => 1);
+				main::ai_route($map, $x, $y, attackOnRoute => 1);
 				$timeout{ai_thanks_set}{time} = time;
 
 			} else {
