@@ -10,6 +10,9 @@ TODO:
 Bug fixes:
 - Fixed useSelf_skill. It didn't work in the previous beta because of a typo.
 
+New features:
+- 'al', 'testshop' and 'openshop' commands now display the shop title
+
 
 ==================
 ### 1.3.2 (beta)

@@ -970,7 +970,7 @@ sub cmdTestShop {
 	my @items = main::makeShop();
 	return unless @items;
 
-	message("--------------------------------- Shop Items ----------------------------------\n", "list");
+	message(center(" $shop{title} ", 79, '-')."\n", "list");
 	message(sprintf("%-40s  %-7s %-10s\n", 'Name', 'Amount', 'Price'), "list");
 	for my $item (@items) {
 		message(sprintf("%-40s %7d %10s z\n", $item->{name}, $item->{amount}, main::formatNumber($item->{price})), "list");

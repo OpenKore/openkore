@@ -43,6 +43,8 @@ our @EXPORT = qw(
 	whenStatusActive
 	whenStatusActiveMon
 	whenStatusActivePL
+
+	center
 	);
 
 
@@ -179,6 +181,21 @@ sub whenStatusActivePL {
 # Writes %config to config.txt.
 sub saveConfigFile {
 	writeDataFileIntact($Settings::config_file, \%config);
+}
+
+##
+# center(<string>,<width>[,<fill>])
+# 
+# This function will center <string> within a field <width> characters wide,
+# using <fill> characters for padding on either end of the string for
+# centering. If <fill> is not specified, a space will be used.
+sub center {
+	my ($string, $width, $fill) = @_;
+
+	$fill ||= ' ';
+	my $left = int(($width - length($string)) / 2);
+	my $right = ($width - length($string)) - $left;
+	return $fill x $left . $string . $fill x $right;
 }
 
 return 1;
