@@ -132,7 +132,6 @@ our $remote_socket = IO::Socket::INET->new();
 our $input_server_socket = IO::Socket::INET->new(
 				Listen		=> 5,
 				LocalAddr	=> $config{'local_host'},
-				LocalPort	=> $config{'local_port'},
 				Proto		=> 'tcp',
 				Timeout		=> 2,
 				Reuse		=> 1);
@@ -560,7 +559,7 @@ sub checkConnection {
 
 sub parseInput {
 	my $input = shift;
-	my $printType;
+	my ($printType, $flushState);
 	$printType = shift if ($config{'XKore'});
 
 	my ($arg1, $arg2, $switch);
@@ -568,8 +567,10 @@ sub parseInput {
 	($switch) = $input =~ /^(\w*)/;
 
 	if ($config{'XKore'}) {
-		open BUFFER, "> buffer";
+		$flushState = $|;
+		pipe(BUFREAD, BUFFER);
 		select(BUFFER);
+		$| = 1;
 	}
 
 #Check if in special state
@@ -2334,19 +2335,24 @@ $i $talk{'responses'}[$i]
 
 
 	if ($config{'XKore'}) {
+		close(BUFFER);
+
 		my $msg = '';
-		open (BUFFER, "buffer");
-		while (<BUFFER>) {
+		while (<BUFREAD>) {
 			$msg .= $_;
 		}
+		close(BUFREAD);
+
+		$| = $flushState;
 		select(STDOUT);
+		print "$input\n";
 		print $msg;
+
 		if ($printType) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
 			sendMessage(\$remote_socket, "k", $msg);
 		}
-		close BUFFER;
 	}
 }
 
@@ -10358,12 +10364,16 @@ sub input_client {
 	my $msg;
 	my $local_socket;
 	my ($addrcheck, $portcheck, $hostcheck);
+	my ($host, $port);
+
 	print "Spawning Input Socket...\n";
-	my $pid = fork;
+	$host = $input_server_socket->sockhost();
+	$port = $input_server_socket->sockport();
+	my $pid = fork();
 	if ($pid == 0) {
 		$local_socket = IO::Socket::INET->new(
-				PeerAddr	=> $config{'local_host'},
-				PeerPort	=> $config{'local_port'},
+				PeerAddr	=> $host,
+				PeerPort	=> $port,
 				Proto		=> 'tcp',
 				Timeout		=> 4);
 		($local_socket) || die "Error creating connection to local server: $!";

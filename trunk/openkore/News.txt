@@ -15,6 +15,9 @@
   New config options:
 	avoidList	(set to 1 to turn on the avoid list)
 	avoidList_reconnect
+- XKore: removed the need for the "buffer" file; use pipes instead.
+- Removed the need for the local_port config option.
+  You can remove this option now!
 
 
 ChangeLog for skore-revamped
