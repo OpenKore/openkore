@@ -7499,10 +7499,16 @@ sub parseMsg {
 		$x = unpack("S1",substr($msg, 10, 2));
 		$y = unpack("S1",substr($msg, 12, 2));
 		$skillID = unpack("S1",substr($msg, 14, 2));
+		my ($dist, %coords);
 
 		# Resolve source and target names
 		my ($source, $verb, $target) = getActorNames($sourceID, $targetID, 'are casting', 'is casting');
 		if ($x != 0 || $y != 0) {
+			# If $dist is positive we are in range of the attack?
+			$coords{x} = $x;
+			$coords{y} = $y;
+			$dist = judgeSkillArea($skillID) - distance($char->{pos_to}, \%coords);
+
 			$target = "location ($x, $y)";
 		}
 
@@ -7513,6 +7519,42 @@ sub parseMsg {
 
 		countCastOn($sourceID, $targetID);
 		message "$source $verb ".skillName($skillID)." on $target\n", "skill", 1;
+
+		# Skill Cancel
+		if ($AI && %{$monsters{$sourceID}} && $mon_control{lc($monsters{$sourceID}{'name'})}{'skillcancel_auto'}) {
+			if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
+				message "Monster Skill - switch Target to : $monsters{$sourceID}{name} ($monsters{$sourceID}{binID})\n";
+				sendAttackStop(\$remote_socket);
+				AI::dequeue;
+				attack($sourceID);
+			}
+
+			# Skill area casting -> running to monster's back
+			my $ID = AI::args->{ID};
+			if ($dist > 0) {
+				# Calculate X axis
+				if ($char->{pos_to}{x} - $monsters{$ID}{pos_to}{x} < 0) {
+					$coords{x} = $monsters{$ID}{pos_to}{x} + 2;
+				} else {
+					$coords{x} = $monsters{$ID}{pos_to}{x} - 2;
+				}
+				# Calculate Y axis
+				if ($char->{pos_to}{y} - $monsters{$ID}{pos_to}{y} < 0) {
+					$coords{y} = $monsters{$ID}{pos_to}{y} + 2;
+				} else {
+					$coords{y} = $monsters{$ID}{pos_to}{y} - 2;
+				}
+
+				my (%vec, %pos);
+				getVector(\%vec, \%coords, $char->{pos_to});
+				moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{'pos_to'}, \%coords));
+				ai_route($field{name}, $pos{x}, $pos{y},
+					maxRouteDistance => $config{'attackMaxRouteDistance'},
+					maxRouteTime => $config{'attackMaxRouteTime'},
+					noMapRoute => 1);
+				message "Avoid casting Skill - switch position to : $pos{x},$pos{y}\n", 1;
+			}
+		}
 
 	} elsif ($switch eq "0141") {
 		$type = unpack("S1",substr($msg, 2, 2));
