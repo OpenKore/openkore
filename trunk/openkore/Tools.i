@@ -12,6 +12,7 @@
 extern unsigned long int CalcPath_init(
 	char* solution,
 	char* map,
+	char* weight,
 	unsigned long width,
 	unsigned long height,
 	char* start,

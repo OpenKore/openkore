@@ -79,6 +79,7 @@ struct CalcPath_session {
 	index_list openList;
 	lookups_list lookup;
 	char* map;
+	unsigned char* weight;
 	unsigned long width;
 	unsigned long height;
 	pos * start;
@@ -96,7 +97,7 @@ static CalcPath_session g_sessions[SESSION_MAX];
 	#define CEXTERN
 #endif
 
-extern DLLEXPORT DWORD WINAPI CalcPath_init(pos_list *solution, char* map, unsigned long width,unsigned long height,
+extern DLLEXPORT DWORD WINAPI CalcPath_init(pos_list *solution, char* map, unsigned char* weight, unsigned long width,unsigned long height,
 			pos * start, pos * dest, DWORD time_max); 
 extern DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session);
 extern DLLEXPORT void WINAPI CalcPath_destroy(DWORD session);
@@ -134,7 +135,7 @@ static inline char CalcPath_getMap(char *map, unsigned long width, unsigned long
 	}
 }
 
-DLLEXPORT DWORD WINAPI CalcPath_init (pos_list *solution, char* map, unsigned long width, unsigned long height,
+DLLEXPORT DWORD WINAPI CalcPath_init (pos_list *solution, char* map, unsigned char* weight, unsigned long width, unsigned long height,
 							pos * start, pos * dest, DWORD time_max) {
 	DWORD i;
 	int session = -1;
@@ -151,6 +152,7 @@ DLLEXPORT DWORD WINAPI CalcPath_init (pos_list *solution, char* map, unsigned lo
 	g_sessions[session].active = 1;
 	g_sessions[session].solution = solution;
 	g_sessions[session].map = map;
+	g_sessions[session].weight = weight;
 	g_sessions[session].width = width;
 	g_sessions[session].height = height;
 	g_sessions[session].start = start;
@@ -186,7 +188,6 @@ DLLEXPORT DWORD WINAPI CalcPath_init (pos_list *solution, char* map, unsigned lo
 }
 
 DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
-	char type = 0;
 	pos mappos;
 	float newg;
 	unsigned char successors_size;
@@ -199,6 +200,7 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 	index_list *openList = &g_sessions[session].openList;
 	lookups_list *lookup = &g_sessions[session].lookup;
 	char* map = g_sessions[session].map;
+	unsigned char* weight  = g_sessions[session].weight;
 	unsigned long width = g_sessions[session].width;
 	unsigned long height = g_sessions[session].height;
 	pos * start = g_sessions[session].start;
@@ -207,7 +209,7 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 
 	if (start == NULL && dest == NULL)
 		return 0;
-	if (CalcPath_getMap(map, width, height, start) || CalcPath_getMap(map, width, height, dest)) {
+	if (CalcPath_getMap(map, width, height, start) == 0 || CalcPath_getMap(map, width, height, dest) ==  0) {
 		return 0;
 	}
 	while (1) {
@@ -244,7 +246,7 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 		successors_size = 0;
 		mappos.x = fullList->array[cur].p.x-1;
 		mappos.y = fullList->array[cur].p.y;
-		if (CalcPath_getMap(map, width, height, &mappos) == type
+		if (CalcPath_getMap(map, width, height, &mappos) != 0
 			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
 			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
 			fullList->array[fullList->size].p = mappos;
@@ -254,7 +256,7 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 
 		mappos.x = fullList->array[cur].p.x;
 		mappos.y = fullList->array[cur].p.y-1;
-		if (CalcPath_getMap(map, width, height, &mappos) == type
+		if (CalcPath_getMap(map, width, height, &mappos) != 0
 			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
 			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
 			fullList->array[fullList->size].p = mappos;
@@ -264,7 +266,7 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 
 		mappos.x = fullList->array[cur].p.x+1;
 		mappos.y = fullList->array[cur].p.y;
-		if (CalcPath_getMap(map, width, height, &mappos) == type
+		if (CalcPath_getMap(map, width, height, &mappos) != 0
 			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
 			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
 			fullList->array[fullList->size].p = mappos;
@@ -274,7 +276,7 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 
 		mappos.x = fullList->array[cur].p.x;
 		mappos.y = fullList->array[cur].p.y+1;
-		if (CalcPath_getMap(map, width, height, &mappos) == type
+		if (CalcPath_getMap(map, width, height, &mappos) != 0
 			&& !(fullList->array[cur].parent >= 0 && fullList->array[fullList->array[cur].parent].p.x == mappos.x
 			&& fullList->array[fullList->array[cur].parent].p.y == mappos.y)) {
 			fullList->array[fullList->size].p = mappos;
@@ -283,9 +285,9 @@ DLLEXPORT DWORD WINAPI CalcPath_pathStep(DWORD session) {
 		}
 
 		//do the step
-		newg = fullList->array[cur].g + G_NORMAL;
 		for (j=0;j < successors_size;j++) {
 			suc = successors_start+j;
+			newg = fullList->array[cur].g + weight[CalcPath_getMap(map, width, height, &fullList->array[suc].p)];
 			index = fullList->array[suc].p.y*width + fullList->array[suc].p.x;
 			if (newg >= lookup->array[index])
 				continue;
