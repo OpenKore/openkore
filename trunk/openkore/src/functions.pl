@@ -40,17 +40,25 @@ sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
 		message "Next restart in ".timeConvert($autoRestart).".\n", "system";
-
 		configModify("autoRestart", $autoRestart, 1);
 	}
 }
 
 # Initialize random configuration switching time
 sub initConfChange {
-	my $changetime = $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'});
-	return if (!$config{'autoConfChange'});
-	$nextConfChangeTime = time + $changetime;
-	message "Next Config Change will be in ".timeConvert($changetime).".\n", "system";
+	my $i = 0;
+	while (exists $ai_v{"autoConfChange_${i}_timeout"}) {
+		delete $ai_v{"autoConfChange_${i}_timeout"};
+		$i++;
+	}
+
+	$i = 0;
+	while (exists $config{"autoConfChange_$i"}) {
+		$ai_v{"autoConfChange_${i}_timeout"} = $config{"autoConfChange_${i}_minTime"} +
+			int(rand($config{"autoConfChange_${i}_varTime"}));
+		$i++;
+	}
+	$lastConfChangeTime = time;
 }
 
 # Initialize variables when you start a connection to a map server
@@ -377,18 +385,13 @@ sub mainLoop {
 	}
 
 	# Process AI
-	my $i = 0;
-	do {
-		if ($conState == 5 && timeOut($timeout{ai}) && $remote_socket && $remote_socket->connected) {
-			AI($ai_cmdQue[$i]);
-		}
-		$ai_cmdQue-- if ($ai_cmdQue > 0);
-		$i++;
-	} while ($ai_cmdQue > 0);
-	undef @ai_cmdQue;
+	if ($conState == 5 && timeOut($timeout{ai}) && $remote_socket && $remote_socket->connected) {
+		AI($ai_cmdQue[$i]);
+		return if $quit;
+	}
 
 	# Handle connection states
-	checkConnection() unless $quit;
+	checkConnection();
 
 	# Process messages from the IPC network
 	if ($ipc && $ipc->connected) {
@@ -401,7 +404,8 @@ sub mainLoop {
 		}
 	}
 
-	# Other stuff that's run in the main loop
+
+	###### Other stuff that's run in the main loop #####
 
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
 	 && $conState == 5 && !AI::inQueue(qw/attack take items_take/)) {
@@ -426,79 +430,63 @@ sub mainLoop {
 		initRandomRestart();
 	}
 
-	# Break time: automatically disconnect at certain times of the day
-	if ($conState == 5) {
-		my @datetimeyear = split / /, localtime;
+	# Automatically switch to a different config file
+	# based on certain conditions
+	if ($conState == 5 && timeOut($AI::Timeouts::autoConfChangeTime, 0.5)
+	 && !AI::inQueue(qw/attack take items_take/)) {
+		my $selected;
 		my $i = 0;
-		while ($config{"autoBreakTime_$i"} ne "") {
-			if ($datetimeyear[0] eq $config{"autoBreakTime_$i"}) {
-				my $mytime = $datetimeyear[3];
-				my $hormin = substr($mytime, 0, 5);
-				if ($config{"autoBreakTime_$i"."_startTime"} eq $hormin) {
-					my ($hr1,$min1) = split /:/, $config{"autoBreakTime_$i"."_startTime"};
-					my ($hr2,$min2) = split /:/, $config{"autoBreakTime_$i"."_stopTime"};
-					my $halt_sec = 0;
-					my $hr = $hr2-$hr1;
-					my $min = $min2-$min1;
-					if ($hr < 0) {
-						$hr = $hr+24;
-					} elsif ($min < 0) {
-						$hr = 24;
-					}
-					my $reconnect_time = $hr*3600+$min*60;
-
-					message("\nDisconnecting due to break time: ".$config{"autoBreakTime_$i"."_startTime"}." to ".$config{"autoBreakTime_$i"."_stopTime"}."\n\n", "system");
-					chatLog("k", "*** Disconnected due to Break Time: ".$config{"autoBreakTime_$i"."_startTime"}." to ".$config{"autoBreakTime_$i"."_stopTime"}." ***\n");
-
-					$timeout_ex{'master'}{'timeout'} = $reconnect_time;
-					$timeout_ex{'master'}{'time'} = time;
-					$KoreStartTime = time;
-					Network::disconnect(\$remote_socket);
-					AI::clear();
-					undef %ai_v;
-					$conState = 1;
-					undef $conState_tries;
-				}
+		while (exists $config{"autoConfChange_$i"}) {
+			if ($config{"autoConfChange_$i"}
+			 && ( !$config{"autoConfChange_${i}_minTime"} || timeOut($lastConfChangeTime, $ai_v{"autoConfChange_${i}_timeout"}) )
+			 && inRange($char->{lv}, $config{"autoConfChange_${i}_lvl"})
+			 && inRange($char->{lv_job}, $config{"autoConfChange_${i}_joblvl"})
+			 && ( !$config{"autoConfChange_${i}_isJob"} || $jobs_lut{$char->{jobID}} eq $config{"autoConfChange_${i}_isJob"} )
+			) {
+				$selected = $config{"autoConfChange_$i"};
+				last;
 			}
 			$i++;
 		}
-	}
 
-	# Automatically switch to a different config file after a while
-	if ($config{'autoConfChange'} && $config{'autoConfChange_files'} && $conState == 5
-	 && time >= $nextConfChangeTime && !AI::inQueue(qw/attack take items_take/)) {
-	 	my ($file, @files);
+		if ($selected) {
+			# Choose a random configuration file
+			my @files = split(/,+/, $selected);
+			my $file = $files[rand(@files)];
+			message "Changing configuration file (from \"$Settings::config_file\" to \"$file\")...\n", "system";
 
-		# Choose random config file
-		@files = split(/ /, $config{'autoConfChange_files'});
-		$file = @files[rand(@files)];
-		message "Changing configuration file (from \"$Settings::config_file\" to \"$file\")...\n", "system";
+			# A relogin is necessary if the host/port, username or char is different
+			my $oldMaster = $masterServers{$config{'master'}};
+			my $oldUsername = $config{'username'};
+			my $oldChar = $config{'char'};
 
-		# A relogin is necessary if the host/port, username or char is different
-		my $oldMaster = $masterServers{$config{'master'}};
-		my $oldUsername = $config{'username'};
-		my $oldChar = $config{'char'};
-
-		foreach (@Settings::configFiles) {
-			if ($_->{file} eq $Settings::config_file) {
-				$_->{file} = $file;
-				last;
+			# Change config file filename
+			foreach (@Settings::configFiles) {
+				if ($_->{file} eq $Settings::config_file) {
+					$_->{file} = $file;
+					last;
+				}
 			}
-		}
-		$Settings::config_file = $file;
-		parseDataFile2($file, \%config);
+			$Settings::config_file = $file;
+			parseDataFile2($file, \%config);
 
-		my $master = $masterServers{$config{'master'}};
-		if ($oldMaster->{ip} ne $master->{ip}
-		 || $oldMaster->{port} ne $master->{port}
-		 || $oldUsername ne $config{'username'}
-		 || $oldChar ne $config{'char'}) {
-			relog();
-		} else {
-			AI::clear("move", "route", "mapRoute");
+			my $master = $masterServers{$config{'master'}};
+			if (!$xkore
+			 && $oldMaster->{ip} ne $master->{ip}
+			 || $oldMaster->{port} ne $master->{port}
+			 || $oldMaster->{master_version} ne $master->{master_version}
+			 || $oldMaster->{version} ne $master->{version}
+			 || $oldUsername ne $config{'username'}
+			 || $oldChar ne $config{'char'}) {
+				relog();
+			} else {
+				AI::clear("move", "route", "mapRoute");
+			}
+
+			initConfChange();
 		}
 
-		initConfChange();
+		$AI::Timeouts::autoConfChangeTime = time;
 	}
 
 	# Set interface title
@@ -2019,6 +2007,55 @@ sub AI {
 			$checkUpdate{checked} = 1;
 		}
 	}
+
+
+	##### AUTOBREAKTIME #####
+	# Break time: automatically disconnect at certain times of the day
+
+	if (timeOut($AI::Timeouts::autoBreakTime, 1)) {
+		my @datetimeyear = split / /, localtime;
+		my $i = 0;
+		while (exists $config{"autoBreakTime_$i"}) {
+			if (!$config{"autoBreakTime_$i"}) {
+				$i++;
+				next;
+			}
+
+			if ($datetimeyear[0] eq $config{"autoBreakTime_$i"}) {
+				my $mytime = $datetimeyear[3];
+				my $hormin = substr($mytime, 0, 5);
+				if ($config{"autoBreakTime_${i}_startTime"} eq $hormin) {
+					my ($hr1, $min1) = split /:/, $config{"autoBreakTime_${i}_startTime"};
+					my ($hr2, $min2) = split /:/, $config{"autoBreakTime_${i}_stopTime"};
+					my $halt_sec = 0;
+					my $hr = $hr2-$hr1;
+					my $min = $min2-$min1;
+					if ($hr < 0) {
+						$hr = $hr+24;
+					} elsif ($min < 0) {
+						$hr = 24;
+					}
+					my $reconnect_time = $hr * 3600 + $min * 60;
+
+					message("\nDisconnecting due to break time: " . $config{"autoBreakTime_$i"."_startTime"} . " to " . $config{"autoBreakTime_$i"."_stopTime"}."\n\n", "system");
+					chatLog("k", "*** Disconnected due to Break Time: " . $config{"autoBreakTime_$i"."_startTime"}." to " . $config{"autoBreakTime_$i"."_stopTime"}." ***\n");
+
+					$timeout_ex{'master'}{'timeout'} = $reconnect_time;
+					$timeout_ex{'master'}{'time'} = time;
+					$KoreStartTime = time;
+					Network::disconnect(\$remote_socket);
+					AI::clear();
+					undef %ai_v;
+					$conState = 1;
+					undef $conState_tries;
+					last;
+				}
+			}
+			$i++;
+		}
+		$AI::Timeouts::autoBreakTime = time;
+	}
+
 
 	##### TALK WITH NPC ######
 	NPCTALK: {
@@ -4408,6 +4445,7 @@ sub AI {
 				|| $itemsPickup{lc($items{$item}{name})} == -1
 				|| ( !$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})} ) );
 			if (!positionNearPlayer($items{$item}{pos}, 12)) {
+				message "Gathering: $items{$item}{name} ($items{$item}{binID})\n";
 				gather($item);
 				last;
 			}
