@@ -17,7 +17,6 @@ use IPC::Manager::Server;
 
 
 my $server;
-my %clients;
 
 $config{debug} = 1;
 
