@@ -38,11 +38,12 @@ Modules::register(qw(Globals Modules Input Log Utils Settings Plugins FileParser
 
 srand(time());
 Settings::parseArguments();
+
+Interface::start() unless ($Settings::daemon);
 Log::message("$Settings::versionText\n");
 
 Plugins::loadAll();
 
-Input::start() unless ($Settings::daemon);
 Log::message("\n");
 
 Plugins::callHook('start');

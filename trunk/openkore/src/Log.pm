@@ -97,12 +97,7 @@ use Utils;
 use Exporter;
 use IO::Socket;
 use Settings;
-if ($Settings::buildType == 0) {
-	require Win32::Console::ANSI;
-	import Win32::Console::ANSI;
-	require Win32::Console;
-	import Win32::Console;
-}
+use Interface;
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -170,86 +165,6 @@ sub MODINIT {
 	$chatTimestamp = 1;
 }
 
-sub color {
-	return if ($config{'XKore'}); # Don't print colors in X-Kore mode; this is a temporary hack!
-	my $color = shift;
-
-	$color =~ s/\/(.*)//;
-	$bgcolor = $1;
-
-
-	if ($color eq "reset" || $color eq "default") {
-		print "\e[0m";
-
-	} elsif ($color eq "black") {
-		print "\e[1;30m";
-
-	} elsif ($color eq "red" || $color eq "lightred") {
-		print "\e[1;31m";
-	} elsif ($color eq "brown" || $color eq "darkred") {
-		print "\e[0;31m";
-
-	} elsif ($color eq "green" || $color eq "lightgreen") {
-		print "\e[1;32m";
-	} elsif ($color eq "darkgreen") {
-		print "\e[0;32m";
-
-	} elsif ($color eq "yellow") {
-		print "\e[1;33m";
-
-	} elsif ($color eq "blue") {
-		print "\e[0;34m";
-	} elsif ($color eq "lightblue") {
-		print "\e[1;34m";
-
-	} elsif ($color eq "magenta") {
-		print "\e[0;35m";
-	} elsif ($color eq "lightmagenta") {
-		print "\e[1;35m";
-
-	} elsif ($color eq "cyan" || $color eq "lightcyan") {
-		print "\e[1;36m";
-	} elsif ($color eq "darkcyan") {
-		print "\e[0;36m";
-
-	} elsif ($color eq "white") {
-		print "\e[1;37m";
-	} elsif ($color eq "gray" || $color eq "grey") {
-		print "\e[0;37m";
-	}
-
-	if ($bgcolor eq "black" || $bgcolor eq "" || $bgcolor eq "default") {
-		print "\e[40m";
-
-	} elsif ($bgcolor eq "red" || $bgcolor eq "lightred" || $bgcolor eq "brown" || $bgcolor eq "darkred") {
-		print "\e[41m";
-
-	} elsif ($bgcolor eq "green" || $bgcolor eq "lightgreen" || $bgcolor eq "darkgreen") {
-		print "\e[42m";
-
-	} elsif ($bgcolor eq "yellow") {
-		print "\e[43m";
-
-	} elsif ($bgcolor eq "blue" || $bgcolor eq "lightblue") {
-		print "\e[44m";
-
-	} elsif ($bgcolor eq "magenta" || $bgcolor eq "lightmagenta") {
-		print "\e[45m";
-
-	} elsif ($bgcolor eq "cyan" || $bgcolor eq "lightcyan" || $bgcolor eq "darkcyan") {
-		print "\e[46m";
-
-	} elsif ($bgcolor eq "white" || $bgcolor eq "gray" || $bgcolor eq "grey") {
-		print "\e[47m";
-  
-	}
-}
-
-END {
-	color 'reset';
-}
-
-
 sub processMsg {
 	my $type = shift;
 	my $message = shift;
@@ -261,13 +176,8 @@ sub processMsg {
 
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
-		setColor($type, $domain);
-
 		$consoleVar->{$domain} = 1 if (!defined($consoleVar->{$domain}));
-		print $message if ($consoleVar->{$domain});
-
-		color 'reset';
-		STDOUT->flush;
+		Interface::writeOutput($type, $message, $domain) if ($consoleVar->{$domain});
 	}
 
 	# Print to files

@@ -43,6 +43,7 @@ use strict;
 use warnings; #can comment this out for releases, but If I do my job that will never be needed
 use Exporter;
 use Settings;
+use Interface;
 use Log;
 use Utils;
 
@@ -53,32 +54,6 @@ our $use_curses = 0; #hasn't been writen yet
 
 # This will load proper OS module at run time
 sub MODINIT {
-	if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
-		eval "use Input::Win32;";
-		die $@ if $@; #rethrow errors
-	} else {
-		if ($use_curses) {
-			eval "use Input::Curses;";
-			#if that didn't work it's probably because curses is missing
-			#that's ok, just try to use the IO::Select method instead
-			#we may want to warn, but we may not, but this isn't OpenKore,
-			#so we don't have nice logging
-			if ($@) {
-				warn $@;
-			} else {
-				Modules::register("Input::Curses");
-			}
-		}
-		if (!$use_curses || $@) {
-			eval "use Input::Other;";
-			if ($@) {
-				#rethrow errors
-				die $@;
-			} else {
-				Modules::register("Input::Other");
-			}
-		}
-	}
 }
 
 ##
@@ -87,7 +62,9 @@ sub MODINIT {
 # Initializes the input system. You must call this function
 # to be able to use the input system.
 #
-# Exported from a Input::* module
+sub start {
+	return Interface::start();
+}
 
 ##
 # Input::stop()
@@ -95,8 +72,9 @@ sub MODINIT {
 # Stops the input system. The input client process
 # will be terminated and sockets will be freed.
 #
-# Exported from a Input::* module
-
+sub stop {
+	return Interface::stop();
+}
 
 ##
 # Input::canRead()
@@ -110,7 +88,7 @@ sub MODINIT {
 # Input::canRead() && Input::getInput(0);
 # Input::getInput(1);
 #
-# Exported from a Input::* module
+# deprecated
 
 ##
 # Input::getInput(wait)
@@ -120,11 +98,16 @@ sub MODINIT {
 #
 # Reads keyboard data.
 #
-# Exported from a Input::* module
-
-
-END {
-	stop();
+# Now just a wrapper around Interface::getInput (though note that
+# Interface::getInput's arguments are sligtly different)
+sub getInput {
+	my $wait = shift;
+	return Interface::getInput(-1) if $wait;
+	return Interface::getInput(0);
 }
+
+#END {
+#	stop();
+#}
 
 return 1;
