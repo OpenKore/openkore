@@ -247,6 +247,7 @@ sub createInterface {
 		$menu->Append($opMenu, 'P&rogram');
 		EVT_MENU_OPEN($opMenu, sub { $self->onMenuOpen; });
 
+		# Info menu
 		my $infoMenu = new Wx::Menu;
 		$self->addMenu($infoMenu, '&Status	Alt-S',	sub { Commands::run("s"); });
 		$self->addMenu($infoMenu, 'S&tatistics',	sub { Commands::run("st"); });
@@ -261,13 +262,19 @@ sub createInterface {
 		$menu->Append($infoMenu, 'I&nfo');
 
 		# View menu
-		my $viewMenu = new Wx::Menu;
-		$self->addMenu($viewMenu, '&Map	Ctrl-M',	\&onMapToggle, 'Show where you are on the current map');
+		my $viewMenu = $self->{viewMenu} = new Wx::Menu;
+		$self->addMenu($viewMenu,
+			'&Map	Ctrl-M',	\&onMapToggle, 'Show where you are on the current map');
+		$self->{infoBarToggle} = $self->addCheckMenu($viewMenu,
+			'&Info Bar',		\&onInfoBarToggle, 'Show or hide the information bar.');
 		$viewMenu->AppendSeparator;
-		$self->addMenu($viewMenu, '&Font...',		\&onFontChange, 'Change console font');
+		$self->addMenu($viewMenu,
+			'&Font...',		\&onFontChange, 'Change console font');
 		$viewMenu->AppendSeparator;
-		$self->addMenu($viewMenu, '&Clear Console',	\&onClearConsole);
+		$self->addMenu($viewMenu,
+			'&Clear Console',	\&onClearConsole);
 		$menu->Append($viewMenu, '&View');
+		EVT_MENU_OPEN($viewMenu, sub { $self->onMenuOpen; });
 
 		$self->createCustomMenus() if $self->can('createCustomMenus');
 
@@ -279,49 +286,52 @@ sub createInterface {
 
 
 	### Vertical box sizer
-	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
+	my $vsizer = $self->{vsizer} = new Wx::BoxSizer(wxVERTICAL);
 	$frame->SetSizer($vsizer);
 
 
-	### Horizontal sizer with HP/SP/Exp box
-	my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
-	$vsizer->Add($hsizer, 0, wxGROW);
+	### Horizontal panel with HP/SP/Exp box
+	my $infoPanel = $self->{infoPanel} = new Wx::Panel($frame, -1);
+	$vsizer->Add($infoPanel, 0, wxGROW);
 
-	my $label = new Wx::StaticText($frame, -1, "HP: ");
-	$hsizer->Add($label, 0);
+		my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
+		$infoPanel->SetSizer($hsizer);
 
-	my $hpBar = $self->{hpBar} = new Wx::Gauge($frame, -1, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($hpBar, 1, wxRIGHT, 8);
+		my $label = new Wx::StaticText($infoPanel, -1, "HP: ");
+		$hsizer->Add($label, 0);
 
-	$label = new Wx::StaticText($frame, -1, "SP: ");
-	$hsizer->Add($label, 0);
+		my $hpBar = $self->{hpBar} = new Wx::Gauge($infoPanel, -1, 100,
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxGA_HORIZONTAL | wxGA_SMOOTH);
+		$hsizer->Add($hpBar, 1, wxRIGHT, 8);
 
-	my $spBar = $self->{spBar} = new Wx::Gauge($frame, -1, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($spBar, 1, wxRIGHT, 8);
+		$label = new Wx::StaticText($infoPanel, -1, "SP: ");
+		$hsizer->Add($label, 0);
 
-	$label = new Wx::StaticText($frame, -1, "Exp: ");
-	$hsizer->Add($label, 0);
+		my $spBar = $self->{spBar} = new Wx::Gauge($infoPanel, -1, 100,
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxGA_HORIZONTAL | wxGA_SMOOTH);
+		$hsizer->Add($spBar, 1, wxRIGHT, 8);
 
-	my $expBar = $self->{expBar} = new Wx::Gauge($frame, -1, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($expBar, 1);
-	my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($frame, -1, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
+		$label = new Wx::StaticText($infoPanel, -1, "Exp: ");
+		$hsizer->Add($label, 0);
 
-	$label = new Wx::StaticText($frame, -1, "Weight: ");
-	$hsizer->Add($label, 0);
+		my $expBar = $self->{expBar} = new Wx::Gauge($infoPanel, -1, 100,
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxGA_HORIZONTAL | wxGA_SMOOTH);
+		$hsizer->Add($expBar, 1);
+		my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($infoPanel, -1, 100,
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxGA_HORIZONTAL | wxGA_SMOOTH);
+		$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
 
-	my $weightBar = $self->{weightBar} = new Wx::Gauge($panel, -1, 100,
-		wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
-		wxGA_HORIZONTAL | wxGA_SMOOTH);
-	$hsizer->Add($weightBar, 1);
+		$label = new Wx::StaticText($infoPanel, -1, "Weight: ");
+		$hsizer->Add($label, 0);
+
+		my $weightBar = $self->{weightBar} = new Wx::Gauge($infoPanel, -1, 100,
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxGA_HORIZONTAL | wxGA_SMOOTH);
+		$hsizer->Add($weightBar, 1);
 
 
 	## Splitter with console and another splitter
@@ -449,6 +459,16 @@ sub addMenu {
 	return $item;
 }
 
+sub addCheckMenu {
+	my ($self, $menu, $label, $callback, $help) = @_;
+
+	$self->{menuIDs}++;
+	my $item = new Wx::MenuItem(undef, $self->{menuIDs}, $label, $help, wxITEM_CHECK);
+	$menu->Append($item);
+	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self); });
+	return $item;
+}
+
 sub updateStatusBar {
 	my $self = shift;
 
@@ -541,7 +561,7 @@ sub onInputEnter {
 	my $command;
 
 	my $n = $self->{inputType}->GetSelection;
-	if (($n == 0 || $text =~ /^\/(.*)/) && $self->{targetBox}->GetValue eq "") {
+	if ($n == 0 || $text =~ /^\/(.*)/) {
 		my $command = ($n == 0) ? $text : $1;
 		$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
 		$self->{console}->AppendText("$command\n");
@@ -551,16 +571,27 @@ sub onInputEnter {
 		return;
 	}
 
-	return unless $conState == 5;
-	if ($self->{targetBox}->GetValue ne "") {
-		main::sendMessage(\$remote_socket, "pm", $text, $self->{targetBox}->GetValue);
-	} elsif ($n == 1) { # Public chat
-		main::sendMessage(\$remote_socket, "c", $text);
-	} elsif ($n == 2) { # Party chat
-		main::sendMessage(\$remote_socket, "p", $text);
-	} else { # Guild chat
-		main::sendMessage(\$remote_socket, "g", $text);
+	if ($conState != 5) {
+		$self->{console}->add("error", "You're not logged in.\n");
+		return;
 	}
+
+	if ($self->{targetBox}->GetValue ne "") {
+		sendMessage(\$remote_socket, "pm", $text, $self->{targetBox}->GetValue);
+	} elsif ($n == 1) { # Public chat
+		sendMessage(\$remote_socket, "c", $text);
+	} elsif ($n == 2) { # Party chat
+		sendMessage(\$remote_socket, "p", $text);
+	} else { # Guild chat
+		sendMessage(\$remote_socket, "g", $text);
+	}
+}
+
+sub onMenuOpen {
+	my $self = shift;
+	$self->{mPause}->Enable($AI);
+	$self->{mResume}->Enable(!$AI);
+	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
 }
 
 sub onLoadFiles {
@@ -570,12 +601,6 @@ sub onLoadFiles {
 	} else {
 		delete $self->{loadingFiles};
 	}
-}
-
-sub onMenuOpen {
-	my $self = shift;
-	$self->{mPause}->Enable($AI);
-	$self->{mResume}->Enable(!$AI);
 }
 
 sub onEnableAI {
@@ -618,6 +643,12 @@ sub onClearConsole {
 sub onMapToggle {
 	my $self = shift;
 	$self->{mapDock}->attach;
+}
+
+sub onInfoBarToggle {
+	my $self = shift;
+	$self->{vsizer}->Show($self->{infoPanel}, $self->{infoBarToggle}->IsChecked);
+	$self->{frame}->Layout;
 }
 
 sub onManual {
