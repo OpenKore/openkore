@@ -7428,8 +7428,13 @@ sub parseMsg {
 		my $skillID = unpack("S1", substr($msg, 2, 2));
 		my $sourceID = substr($msg, 4, 4);
 		my $targetID = substr($msg, 8, 4);
-		my $damage_size = $switch eq "0114" ? 2 : 4;
-		my $damage = unpack("S1", substr($msg, 24, $damage_size));
+		my $damage = $switch eq "0114" ?
+			unpack("S1", substr($msg, 24, 2)) :
+			unpack("L1", substr($msg, 24, 4));
+		my $level = ($switch eq "0114") ?
+			unpack("S1", substr($msg, 26, 2)) :
+		   	unpack("S1", substr($msg, 28, 2));
+			
 		my $level = unpack("S1", substr($msg, 28, 2));
 		if (my $spell = $spells{$sourceID}) {
 			# Resolve source of area attack skill
