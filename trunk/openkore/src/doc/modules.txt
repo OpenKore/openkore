@@ -12,3 +12,5 @@ Match
 Misc
 IPC
 IPC::Protocol
+Interface::Wx::DockNotebook
+Interface::Wx::DockNotebook::Page

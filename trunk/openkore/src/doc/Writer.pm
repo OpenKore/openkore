@@ -29,7 +29,7 @@ sub makeupText {
 		$package =~ s/\.pm$//;
 
 		if ($Extractor::modules{$package}) {
-			$package =~ s/::/--/;
+			$package =~ s/::/--/g;
 			$text = "<a href=\"${package}.html\">$text</a>";
 		}
 		return $text;
@@ -50,7 +50,7 @@ sub makeupText {
 
 		if ($Extractor::functions{$name}) {
 			my $file = $Extractor::functions{$name}{package};
-			$file =~ s/::/--/;
+			$file =~ s/::/--/g;
 			return "<a href=\"$file.html#$name\"><code>$func</code></a>";
 		}
 		return "<code>$func<\/code>";
@@ -75,7 +75,7 @@ sub writeModuleHTML {
 	}
 
 	my $htmlFile = $module->{package};
-	$htmlFile =~ s/::/--/;
+	$htmlFile =~ s/::/--/g;
 	$module->{htmlFile} = "$htmlFile.html";
 	$htmlFile = "srcdoc/$htmlFile.html";
 

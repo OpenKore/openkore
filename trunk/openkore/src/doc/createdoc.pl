@@ -18,7 +18,7 @@ foreach (<F>) {
 
 	my $package = $_;
 	my $file = "../$_.pm";
-	$file =~ s/::/\//;
+	$file =~ s/::/\//g;
 	Extractor::addModule($file, $package);
 	push @modules, $package;
 }
@@ -48,8 +48,15 @@ sub writeContentTable {
 	close($f);
 
 	sub writeModulesList {
+		my $showWx = shift;
 		my $list;
 		foreach my $package (@modules) {
+			if ($showWx) {
+				next if ($package !~ /^Interface::Wx/);
+			} else {
+				next if ($package =~ /^Interface::Wx/);
+			}
+
 			my $file = $Extractor::modules{$package}{htmlFile};
 			$list .= "<tr onclick=\"location.href='$file';\">\n" .
 				"\t<td class=\"moduleName\"><a href=\"$file\">$package</a></td>\n" .
@@ -60,7 +67,8 @@ sub writeContentTable {
 	}
 
 	$html =~ s/\@MODIFIED\@/gmtime/ge;
-	$html =~ s/\@MODULES\@/&writeModulesList()/ge;
+	$html =~ s/\@MODULES\@/&writeModulesList(0)/ge;
+	$html =~ s/\@WXMODULES\@/&writeModulesList(1)/ge;
 	if (!open($f, "> srcdoc/index.html")) {
 		error "Unable to write to srcdoc/index.html\n";
 		exit 1;
