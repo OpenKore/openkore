@@ -1161,8 +1161,8 @@ sub cmdStatAdd {
 }
 
 sub cmdStats {
-	message("-----------Char Stats-----------\n", "info");
-	message(swrite(
+	my $msg = "-----------Char Stats-----------\n";
+	$msg .= swrite(
 		"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<",
 		[$chars[$config{'char'}]{'str'}, $chars[$config{'char'}]{'str_bonus'}, $chars[$config{'char'}]{'points_str'}, $chars[$config{'char'}]{'attack'}, $chars[$config{'char'}]{'attack_bonus'}, $chars[$config{'char'}]{'def'}, $chars[$config{'char'}]{'def_bonus'}],
 		"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<",
@@ -1174,9 +1174,17 @@ sub cmdStats {
 		"Dex: @<<+@<< #@< Status Points: @<<",
 		[$chars[$config{'char'}]{'dex'}, $chars[$config{'char'}]{'dex_bonus'}, $chars[$config{'char'}]{'points_dex'}, $chars[$config{'char'}]{'points_free'}],
 		"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
-		[$chars[$config{'char'}]{'luk'}, $chars[$config{'char'}]{'luk_bonus'}, $chars[$config{'char'}]{'points_luk'}, $chars[$config{'char'}]{'guild'}{'name'}]),
-		"info");
-	message("--------------------------------\n", "info");
+		[$chars[$config{'char'}]{'luk'}, $chars[$config{'char'}]{'luk_bonus'}, $chars[$config{'char'}]{'points_luk'}, $chars[$config{'char'}]{'guild'}{'name'}]);
+	$msg .= "--------------------------------\n";
+
+	$msg .= swrite(
+		"Hair color: @<<<<<<<<<<<<<<<<<",
+		["$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
+	$msg .= sprintf("Walk speed: %.2f secs per block\n", $char->{walk_speed});
+	$msg .= "You are sitting.\n" if ($char->{sitting});
+
+	$msg .= "--------------------------------\n";
+	message $msg, "info";
 }
 
 sub cmdStatus {
