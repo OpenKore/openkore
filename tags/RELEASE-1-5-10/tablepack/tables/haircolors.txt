@@ -1,0 +1,9 @@
+0 Dark Brown
+1 Brown/Blond
+2 Purple
+3 Light Brown
+4 Green
+5 Blue
+6 White
+7 Dark Brown
+8 Red
