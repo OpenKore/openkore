@@ -29,7 +29,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	downloadSmall dataWaiting formatNumber getCoordString getFormattedDate getHex getTickCount
+	dataWaiting formatNumber getCoordString getFormattedDate getHex getTickCount
 	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString);
 
 
@@ -345,52 +345,6 @@ sub dataWaiting {
 	# The timeout was 0.005
 	return (select($bits, undef, undef, 0) > 0);
 	#return select($bits, $bits, $bits, 0) > 1);
-}
-
-##
-# downloadSmall(url)
-# url: the URL to download data from.
-# Returns: the (partial) data of the downloaded file, or undef on failure.
-#
-# Downloads a file from $url. This function is only useful for downloading
-# a *small* file. It will absolutely not work correctly if you try to download
-# anything bigger than a few hundred bytes.
-sub downloadSmall {
-	my $url = shift;
-	my $host;
-	my $port;
-	my $sock;
-
-	$host = $url;
-	$host =~ s/^.*?:\/\///;
-	$host =~ s/\/.*//;
-	($port) = $host =~ /:(\d+)$/;
-	$port ||= 80;
-
-	$sock = new IO::Socket::INET(
-		PeerHost	=> $host,
-		PeerPort	=> $port,
-		Proto		=> 'tcp',
-		ReuseAddr	=> 1,
-		Timeout		=> 10
-		);
-	return undef if (!$sock);
-
-	$sock->autoflush(0);
-	$sock->timeout(10);
-
-	$sock->send("GET $url HTTP/1.1\r\n", 0);
-	$sock->send("Host: $host\r\n", 0);
-	$sock->send("\r\n", 0);
-	$sock->flush();
-
-	my ($header, $data);
-	$sock->recv($data, 1024 * 32);
-	undef $sock;
-
-	($header, $data) = $data =~ /(.*?)\r\n\r\n(.*)/s;
-	return undef unless ($header =~ /^HTTP\/1\.\d 200 ?/s);
-	return $data;
 }
 
 ##
