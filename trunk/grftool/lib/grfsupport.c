@@ -151,6 +151,53 @@ GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index) {
 	return NULL;
 }
 
+/*! \brief Implementation of Quick Sort to work with GrfFiles
+ *
+ * \note Ported from http://www.code-source.org/showcode.php?id=5
+ * 	(cleanest version i saw on google, all the c ones were ugly and not
+ *	easy to read at all)
+ *
+ * \todo Write documentation
+ */
+static void GRF_qsort (Grf *grf, uint32_t left, uint32_t right, GrfSortCallback callback) {
+	uint32_t i, j;
+	GrfFile swp;
+	void *swpdata;
+	
+	if (left<right) {
+		i=left+1;
+		j=left+1;
+		while (j <= right) {
+			if (callback(&(grf->files[j]),&(grf->files[right]))>0) {
+				/* Do the swap on the file info */
+				memcpy(&swp, &(grf->files[j]), sizeof(GrfFile));
+				memcpy(&(grf->files[j]),&(grf->files[i]),sizeof(GrfFile));
+				memcpy(&(grf->files[i]),&swp,sizeof(GrfFile));
+				
+				/* Swap the filedatas */
+				swpdata=grf->filedatas[j];
+				grf->filedatas[j]=grf->filedatas[i];
+				grf->filedatas[i]=swpdata;
+				
+				i++;
+			}
+			j++;
+		}
+		/* Do the swap on the file info */
+		memcpy(&swp, &(grf->files[left]), sizeof(GrfFile));
+		memcpy(&(grf->files[left]),&(grf->files[i-1]),sizeof(GrfFile));
+		memcpy(&(grf->files[i-1]),&swp,sizeof(GrfFile));
+		
+		/* Swap the filedatas */
+		swpdata=grf->filedatas[left];
+		grf->filedatas[left]=grf->filedatas[i-1];
+		grf->filedatas[i-1]=swpdata;
+		
+		GRF_qsort(grf, left, i, callback);
+		GRF_qsort(grf, i-2, right, callback);
+	}
+}
+
 /*! \brief Function to sort a Grf::files array
  *
  * \param grf Pointer to Grf struct which needs its files array sorted
@@ -158,8 +205,9 @@ GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index) {
  *		other. It should return -1 if the first file should be first,
  *		0 if they are equal, or 1 if the first file should be second.
  */
-GRFEXPORT void grf_sort (Grf *grf, int (*callback)(GrfFile*,GrfFile*)) {
-	/*! \todo Write this code! */
+GRFEXPORT void grf_sort (Grf *grf, GrfSortCallback callback) {
+	/* Run the sort */
+	GRF_qsort(grf, 0, grf->nfiles-1, callback);
 }
 
 /*! \brief Alphabetical sorting callback function
@@ -188,22 +236,6 @@ GRFEXPORT int GRF_OffsetSort(GrfFile *g1, GrfFile *g2) {
 	else if (g1->pos==g2->pos)
 		return 0;
 	return -1;
-}
-
-/*! \brief Function to find unused space in a GRF file
- *
- * \warning This function assumes the files have been sorted with
- *	grf_sort() using GRF_OffsetSort();
- *
- * \param grf GRF file to search for the unused space in
- * \param len Amount of contiguous unused space we need to find before we
- *	return
- * \return The first offset in the GRF in which at least len amount of
- *	unused space was found, or 0 if none was found
- */
-GRFEXPORT uint32_t grf_find_unused (Grf *grf, uint32_t len) {
-	/*! \todo Write this code! */
-	return 0;
 }
 
 /***************************

@@ -31,7 +31,7 @@ GRFEXTERN_BEGIN
 typedef int (*GrfOpenCallback) (GrfFile *file, GrfError *error);
 typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 
-/*! \brief Value to distinguish a GRF file in  Grf::type */
+/*! \brief Value to distinguish a GRF file in Grf::type */
 # define GRF_TYPE_GRF 0x01
 
 /*! \brief Macro to open a file without a callback */
