@@ -129,7 +129,9 @@ Internal:
 - New ai_skillUse2() function is a wrapper to ai_skillUse() that (1)
   uses "objects" instead of identifiers, and (2) automatically resolves
   (x,y) coordinates for area-targetted skills.
-
+- Move some messages from "route" to "route_teleport" domain.
+- Comment out stopAttack() to try to fix "bot attacks slowly when buff
+  ran out" bug.
 
 Credits:
 - asuwannarat, as2765324: tRO server details.

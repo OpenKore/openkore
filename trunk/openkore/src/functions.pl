@@ -3920,7 +3920,10 @@ sub AI {
 				# Stop attacking, otherwise skill use might fail
 				my $attackIndex = AI::findAction("attack");
 				if (defined($attackIndex) && AI::args($attackIndex)->{attackMethod}{type} eq "weapon") {
-					stopAttack();
+					# 2005-01-24 pmak: Commenting this out since it may
+					# be causing bot to attack slowly when a buff runs
+					# out.
+					#stopAttack();
 				}
 
 				if ($skillsArea{$handle} == 2) {
@@ -4545,14 +4548,13 @@ sub AI {
 								dest => $args->{mapSolution}[0]{pos},
 								field => \%field
 							)->runcount;
-							debug "Distance to portal is $dist\n", "route";
+							debug "Distance to portal is $dist\n", "route_teleport";
 
 							if ($dist <= 0 || $dist > $minDist) {
 								if ($dist > 0 && $config{route_teleport_maxTries} && $args->{teleportTries} >= $config{route_teleport_maxTries}) {
-									debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route";
+									debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route_teleport";
 								} else {
-									debug "Attempting to teleport near portal, for the " . 
-										($args->{teleportTries} + 1) . "th time.\n", "route";
+									debug "Attempting to teleport near portal, try #".($args->{teleportTries} + 1)."\n", "route_teleport";
 									if (!useTeleport(1)) {
 										$args->{teleport} = 0;
 									} else {
@@ -4565,7 +4567,7 @@ sub AI {
 							}
 
 						} elsif (timeOut($args->{teleportTime}, 4)) {
-							debug "Unable to teleport; falling back to walking.\n", "route";
+							debug "Unable to teleport; falling back to walking.\n", "route_teleport";
 							$args->{teleport} = 0;
 						} else {
 							$walk = 0;
