@@ -138,6 +138,10 @@ sub _startManager {
 		ReuseAddr => 1,
 		Timeout => 6
 		);
+	if (!$server) {
+		$@ = "Unable to start a server socket on a random port.";
+		return 0;
+	}
 	my $pid = launchScript(1, undef, 'src/IPC/manager.pl', '--quiet', '--feedback=' . $server->sockport());
 
 	my $time = time;
@@ -156,7 +160,7 @@ sub _startManager {
 		}
 		sleep 0.01;
 	}
-	$@ = "Manager server failed to start\n";
+	$@ = "Manager server failed to start.";
 	$server->close;
 	return 0;
 }

@@ -253,7 +253,13 @@ if ($config{'XKore'}) {
 }
 
 our $remote_socket = new IO::Socket::INET;
-$ipc = new IPC if ($config{'ipc'});
+if ($config{'ipc'}) {
+	$ipc = new IPC;
+	if (!$ipc && $@) {
+		Log::error("Unable to initialize the IPC subsystem: $@\n");
+		undef $@;
+	}
+}
 
 
 ### COMPILE PORTALS ###
