@@ -175,10 +175,9 @@ sub parseDataFile2 {
 }
 
 ##
-# parseShopControl($file, $shop)
-#
-# $file: Filename to parse
-# $shop: Return hash
+# parseShopControl(file, shop)
+# file: Filename to parse
+# shop: Return hash
 #
 # Parses a shop control file. The shop control file should have the shop title
 # on its first line, followed by "$item\t$price\t$quantity" on subsequent
@@ -188,7 +187,6 @@ sub parseDataFile2 {
 # wrong price. If $quantity is missing, all available will be sold.
 #
 # Example:
-#
 # My Shop!
 # Poring Card	1,000
 # Andre Card	1,000,000	3
