@@ -154,8 +154,8 @@
 1152 Orc Skeleton
 1153 Orc Zombie
 1154 Pasana
-1155 Petit
-1156 Petit
+1155 Ground Petite
+1156 Sky Petite
 1157 Pharaoh
 1158 Phen
 1159 Phreeoni
