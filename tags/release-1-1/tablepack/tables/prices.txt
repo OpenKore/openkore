@@ -1,0 +1,477 @@
+1carat Diamond 5000
+2carat Diamond 12500
+3carat Diamond 27500
+Acid Bottle 0
+Acid Bottle Creation Manual 0
+Acorn 48
+Alchol 50
+Alcohol Creation Manual 0
+Alice's Apron 0
+Aloe 1
+Aloe Leaflet 180
+Aloevera 1
+Amblem of the Sun God 0
+Amethyst 2500
+Amulet 50
+Ancient Lips 500
+Ancient Tooth 274
+Animal Gore 1
+Animal Poop 0
+Animal Skin 18
+Anodyne 500
+Anolian Skin 464
+Ant Jaw 116
+Anvil 15000
+Apple 7
+Apple Juice 10
+Aquamarine 2500
+Armlet of Obedience 9000
+Awakening Potion 750
+Baked Yam 0
+Baldur's Youth 0
+Banana 7
+Banana Juice 10
+Baphomet Doll 2500
+Barren Trunk 1
+Bear's Footskin 92
+Bee Sting 16
+Berserk Potion 1500
+Bill of Birds 32
+Bitter Herb 10
+Black Dyestuffs 500
+Black Hair 145
+Black Ladle 250
+Blade Lost in Darkness 327
+Bloody Edge 0
+Blue Gemstone 300
+Blue Hair 171
+Blue Herb 25
+Blue Potion 2500
+Book of Devil 900
+Bookclip in Memory 1500
+Bouquet 1000
+Breath of Spirit 0
+Brigan 400
+Broken Emblem of Pharaoh 0
+Broken Piece of Metal 0
+Broken Piece of Shield 0
+Broken Shell 0
+Broken Sword 0
+Bug Leg 215
+Burning Heart 0
+Burning Horseshoe 0
+Burning Log 0
+Burnt Tree 0
+Butterfly Wing 150
+Cactus Needle 41
+Candy 5
+Candy Cane 10
+Carrot 7
+Carrot Juice 10
+Cart Parts 0
+Cheese 0
+Chestnut Sweet Potato 0
+China 500
+Chivalry Emblem 10
+Chonchon Doll 900
+Chrysalis 4
+Chung Jah 2500
+Clam Flesh 79
+Clam Shell 28
+Claw of Desert Wolf 104
+Claw of Monkey 233
+Claw of Rat 374
+Claw of Scorpion 0
+Clock Hands 0
+Clover 5
+Coal 150
+Coating Wax 0
+Coating Wax Creation Manual 0
+Cobaltblue Dyestuffs 500
+Cobweb 92
+Cogwheel 0
+Concentration Potion 400
+Conch 79
+Contracts in Shadow 50
+Coral Reef 386
+Cotton Mat 0
+Counteragent 0
+Coupon 0
+Coupon-Normal 0
+Cracked Diamond 50
+Crap Shell 45
+Crystal Blue 500
+Crystal Mirror 15000
+Cultish Masque 206
+Cursed Ruby 0
+Cut of Egg Shell 84
+Cyfar 160
+Daenggie 125
+Darkgreen Dyestuffs 500
+Dead Branch 1
+Dead Medusa 264
+Deadly Noxious Herb 0
+Decayed Nail 41
+DEL Box 0
+DEL Message 1
+Destroyed Armor 0
+Detonator 110
+Detrimindexta 50
+Dew Laden Moss 0
+Dew of Yggdrasil 0
+Dokkaebi Horn 146
+Dragon Canine 242
+Dragon Scale 250
+Dragon Tail 600
+Drifting Air 0
+Earthworm Peeling 98
+Earthworm the Dude 2000
+Elder Pixie's Moustache 116
+Elunium 2
+Embryo 0
+Emerald 2500
+Emperium 10
+Emperium Anvil 1
+Empty Bottle 2
+Empty Cylinder 1
+Empty Potion 5
+Emveretarcon 500
+Evil Horn 510
+Executioner's Mitten 0
+Eye of Decision 0
+Fabric 153
+Fang 340
+Fang of Haiti 0
+Fatty Chubby Earthworm 2500
+Feather 10
+Feather of Angel Wing 0
+Feather of Birds 5
+Fin 206
+Fine-grained Trunk 1
+Fish Tail 98
+Flame Heart 0
+Flower 1
+Fluff 4
+Foolishness of the Blind 10
+Four Leaf Clover 1
+Frill 125
+Frozen Rose 12500
+Festive Rainbow Cake 0
+Festive Cookie 0
+Freyja's Jewel 0
+Flame Bottle Creation Manual 0
+Flame Bottle 0
+Feed for PecoPeco 0
+Fake Angel Wing 0
+Fake Heaven Ring 0
+Feather of Peco 0
+Fine Grit 50
+Frightening Paper Blade 0
+Feed for Falcon 0
+Fine Sand 0
+Galer Horn 0
+Garlet 20
+Garnet 2500
+Gift Box 0
+Gill 153
+Glass Bead 750
+Glass Tube 0
+Glitter Shell 264
+Glyphner 0
+Goat's Horn 0
+Goat's Skin 0
+Gold 0
+Golden Anvil 150000
+Golden Hair 215
+Golden Hammer 1500
+Grape 100
+Grape Juice 125
+Grasshopper's Leg 18
+Great Nature 1500
+Green Herb 5
+Green Live 500
+Green Potion 20
+Grit 153
+Hammer of Blacksmith 0
+Hand of God 0
+Hard-Hitting Wave 0
+Hardened Lava 0
+Harpy's Claw 0
+Harpy's Feather 0
+Heart of Mermaid 132
+Her Heart 0
+Heroic Emblem 1500
+Hinalle 0
+Hinalle Leaflet 75
+Holy Water 10
+Honey 250
+Honey Pot 0
+Horn 53
+Horrendous Hair 400
+Horrendous Mouth 195
+Horror of Tribe 0
+Horseshoe 294
+Hot Feather 0
+Ice Cream 50
+Ice Cubic 0
+Illusion Flower 0
+Immortal Heart 337
+Insect Feeler 57
+Iron 50
+Iron Hammer 500
+Iron Maiden 0
+Iron Ore 2
+Izidor 0
+Jack o' Pumpkin 137
+Jellopy 3
+Karvodailnirol 50
+Key of Clocktower 0
+Key of Underground 0
+Lantern 125
+Large Jellopy 0
+Leather Bag of Infinity 0
+Lemon Dyestuffs 500
+Little Evil Horn 264
+Little Evil Wing 1000
+Loki's Whispers 0
+Lucifer's Lament 0
+Lump of Sand 0
+Magic Paint 0
+Magniflier 20
+Manacles 329
+Mane 98
+Maneater Blossom 
+Maneater Root 104
+Mantis Scythe 98
+Map 0
+Mastela Fruit 420
+Matchstick 50
+Meat 27
+Medicine Bowl 0
+Megaphone 0
+Memento 150
+Ment 0
+Milk 5
+Mine Bottle 0
+Mine Bottle Creation Manual 0
+Mini Furnace 75
+Mixture 0
+Mole Claw 105
+Mole Whiskers 53
+Monster Juice 0
+Monster's Feed 30
+Morroc Solution 1
+Moth Dust 69
+Moth Wings 100
+Mother's Nightmare 0
+Mould Powder 233
+Mud Lumb 438
+Muscle of Bear 0
+Mushroom Spore 18
+Music Note(?) 0
+Music Note(??) 0
+Music Note(???) 0
+Music Note(????) 0
+Mysterious Liquid Bottle 0
+Mystic Frozen 1500
+Necklace of Oblivion 0
+Necklace of Wisdom 0
+Needle of Alarm 398
+Newbie Tag 0
+Nightmare 0
+Nine Tails 325
+Nipper 57
+No Repicient 0
+Normal Potion Creation Manual 0
+Nose Ring 284
+Ogre Tooth 329
+Old Blue Box 0
+Old Broom 175
+Old Card Album 0
+Old Frying Fan 98
+Old Hilt 0
+Old Magical Formation 0
+Old Magicbook 1
+Old Portrait 0
+Old Purple Box 0
+Opal 2500
+Ora Ora 0
+Orange Dyestuffs 0
+Orange Gooey Mushroom 0
+Orange Juice 0
+Orange Net Mushroom 0
+Orange Potion 200
+Orc Claw 84
+Orc's Fang 110
+Orcish Voucher 89
+Oridecon 2
+Oridecon Anvil 60000
+Oridecon Hammer 2500
+Osiris Doll 3000
+Panacea 250
+Payment Statement for Kafra Employee 0
+Payon Solution 1
+Pearl 2500
+Pencil Case 0
+Pet Food 1250
+Pet Incubator 1500
+Phracon 100
+Piece of Cake 1500
+Piece of the Unknown 0
+Plant Bottle 0
+Plant Bottle Creation Manual 0
+Pointed Scale 35
+Poison Spore 57
+Popped Rice 0
+Porcupine Quill 79
+Poring Doll 500
+Powder of Butterfly 45
+Power of Gangster 0
+Pumkin 7
+Puppet 1500
+Quiet Wave 0
+Raccoon Leaf 53
+Racoon Doll 3500
+Ragnarok T-Shirt 0
+Rainbow Carrot 1250
+Rainbow Shell 45
+Rat Tail 26
+Red Blood 500
+Red Frame 1500
+Red Gemstone 300
+Red Herb 9
+Red Potion 25
+Red Socks with Holes 50
+Reins 401
+Reptile Tongue 25
+Resin 64
+Rocker Doll 2000
+Rotten Bandage 179
+Rotten Fish 1250
+Rouge 500
+Rough Elunium 1
+Rough Oridecon 1
+Rough Wind 1500
+Round Shell 477
+Royal Jelly 2500
+Ruby 2500
+Rusty Iron 0
+Saliva of Bird 0
+Sapphire 2500
+Sardonyx 2500
+Scale Shell 233
+Scarlet Dyestuffs 500
+Scell 80
+Scorpion Nipper 116
+Scorpion Tail 84
+Sea otter Fur 0
+Seed of Life 0
+Sharp Leaf 0
+Sharp scale 125
+Shell 6
+Shell of Dragon 0
+Shining Scale 233
+Shining Stone 1500
+Shiny Spearhead 0
+Shoot 1
+Short Daenggi 139
+Silk Mat 0
+Silver Knife of Chastity 6000
+Silver Ornament 0
+Singing Flower 0
+Singing Plant 75
+Single Cell 23
+Skel Bone 116
+Skirt of Virgin 850
+Skull 674
+Slim Potion Creation Manual 0
+Snail's Shell 32
+Snake Scale 41
+Snow Crystal 0
+Soft Feather 0
+Solid Shell 244
+Solid Trunk 1
+Spawn 74
+Spirit of Fish 0
+Spoon Stup 1250
+Spore Doll 0
+Squid Ink 132
+Star Crumb 750
+Star Dust 750
+Steel 500
+Stem 29
+Sticky Mucus 35
+Sticky Webfoot 10
+Stiff Horn 0
+Stinky Scale 84
+Stone 0
+Stone Fragment 0
+Stone Heart 92
+Sushi 0
+Sweet Milk 3500
+Sweet Potato 7
+Tail of Steel Scorpion 0
+Talon 10
+Talon of Griffon 0
+Tattered Clothes 0
+Tentacle 35
+Thor's Guntlet 0
+Tiger Skin 274
+Tiger's Footskin 0
+Tongue 264
+Tooth of Bat 16
+Topaz 2500
+Torn Magic Book 0
+Torn Scroll 0
+Tough Scalelike Stem 206
+Trap 50
+Tread of Cat 0
+Tree Root 6
+Tropical Banana 0
+Trunk 30
+Turtle Shell 1
+Tutankamen Mask 0
+Unknown Cylinder 1
+Unripe Apple 500
+Valkyrie's Rage 0
+Vein 225
+Venom Canine 79
+Vigorgra 0
+Violet Dyestuffs 500
+Voucher 0
+Wasted Magazine 0
+Waxed Paper 0
+Wedding Bouquet 20000
+Well-baked Cookie 500
+Well-Dried Bone 0
+Wheel of the Unknown 0
+White Dyestuffs 500
+White Herb 60
+White Potion 600
+Wind of Verdure 500
+Wing of Dragonfly 0
+Wing of Fly 30
+Wing of Red Bat 84
+Witched Starsand 242
+Witherless Rose 25000
+Wolf Claw 29
+Woman's Moustache 0
+Wool 0
+Worm Peeling 23
+Worn Out Scroll 25
+Worn-out Page 410
+Worn-out Prison Uniform 340
+Wrath of Valkyrie 0
+Yarn 0
+Yellow Gemstone 300
+Yellow Herb 20
+Yellow Potion 225
+Yggdrasil Berry 2500
+Yggdrasil Leaf 2000
+Yggdrasil Seed 2500
+Young Twig 225
+Yoyo Doll 3500
+Yoyo Tail 57
+Zargon 250
+Zenorc's Fang 132
+Zircon 2500
