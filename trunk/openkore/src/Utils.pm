@@ -31,7 +31,7 @@ our @EXPORT = qw(
 	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
 	findKey findKeyString minHeapAdd
 	distance
-	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getTickCount
+	dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex getTickCount judgeSkillArea
 	getRange inRange
 	makeCoords makeCoords2 makeIP swrite timeConvert timeOut vocalString);
 
@@ -555,6 +555,30 @@ sub getTickCount {
 		return substr($time, length($time) - 8, length($time));
 	} else {
 		return $time;
+	}
+}
+
+##
+# judgeSkillArea(ID)
+# ID: a skill ID.
+# Returns: the size of the skill's area.
+#
+# Figure out how large the skill area is, in diameters.
+sub judgeSkillArea {
+	my $id = shift;
+
+	if ($id == 81 || $id == 85 || $id == 89 || $id == 83 || $id == 110 || $id == 91) {
+		 return 5;
+	} elsif ($id == 70 || $id == 79 ) {
+		 return 4;
+	} elsif ($id == 21 || $id == 17 ){
+		 return 3;
+	} elsif ($id == 88  || $id == 80
+	      || $id == 11  || $id == 18
+	      || $id == 140 || $id == 229 ) {
+		 return 2;
+	} else {
+		 return 0;
 	}
 }
 
