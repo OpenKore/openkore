@@ -313,7 +313,7 @@ sub delHook {
 }
 
 ##
-# Plugins::delHook($hooks)
+# Plugins::delHooks($hooks)
 # $hooks: the return value Plugins::addHooks()
 #
 # Removes all hooks that are registered by Plugins::addHook().
