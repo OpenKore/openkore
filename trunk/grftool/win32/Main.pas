@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grf, ComCtrls, ToolWin, ImgList, ExtCtrls, Buttons, Types,
   ShellAPI, ShlObj, ExtractThread, VirtualTrees, Menus, TntStdCtrls,
-  TntComCtrls, mmsystem, TntDialogs, jpeg;
+  TntComCtrls, mmsystem, TntDialogs, jpeg, ActiveX;
 
 type
   TForm1 = class(TForm)
@@ -298,6 +298,7 @@ begin
   FileList.NodeDataSize := SizeOf(TGrfItem);
   Font.Name := 'Tahoma';
   Panel2.Font.Name := 'Tahoma';
+  CoInitializeEx(nil, COINIT_APARTMENTTHREADED);
 end;
 
 procedure TForm1.PreviewPaneResize(Sender: TObject);
@@ -504,15 +505,19 @@ begin
       Info.ulFlags := BIF_EDITBOX or BIF_NEWDIALOGSTYLE;
       Info.lpszTitle := 'Select a folder to extract the files to.';
       ItemList := SHBrowseForFolder(Info);
-      if not Assigned(ItemList) then Exit;
-
-      if not SHGetPathFromIDList(ItemList, Dir) then
+      if not Assigned(ItemList) then
       begin
-          FreeMemory(ItemList);
           Files.Free;
           Exit;
       end;
-      FreeMemory(ItemList);
+
+      if not SHGetPathFromIDList(ItemList, Dir) then
+      begin
+          CoTaskMemFree(ItemList);
+          Files.Free;
+          Exit;
+      end;
+      CoTaskMemFree(ItemList);
 
       StatusBar1.SimpleText := 'Extracting ' + IntToStr(Files.Count) + ' files...';
       Extractor := TExtractor.Create(True);
@@ -533,6 +538,7 @@ end;
 procedure TForm1.ExtractWatcherTimer(Sender: TObject);
 var
   FileName: WideString;
+  Percentage: Single;
 begin
   if not Assigned(Extractor) then
   begin
@@ -541,10 +547,13 @@ begin
   end;
 
   ProgressBar1.Position := Extractor.Current;
-  FileName := KoreanToUnicode(ExtractFileName(Extractor.CurrentFile));
-  StatusBar1.SimpleText := WideFormat('Extracting (%f%%): %s',
-        [Extractor.Current / Extractor.Max * 100.0,
-        FileName]);
+  try
+     Percentage := Extractor.Current * 100 / Extractor.Max;
+     FileName := KoreanToUnicode(ExtractFileName(Extractor.CurrentFile));
+     StatusBar1.SimpleText := WideFormat('Extracting (%f%%): %s',
+        [Percentage, FileName]);
+  except
+  end;
 end;
 
 procedure TForm1.StopButtonClick(Sender: TObject);
