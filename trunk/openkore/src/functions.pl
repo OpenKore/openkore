@@ -5988,23 +5988,24 @@ sub parseMsg {
 		$x = unpack("S1", substr($msg, 9, 2));
 		$y = unpack("S1", substr($msg, 11, 2));
 		$amount = unpack("S1", substr($msg, 15, 2));
-		if (!%{$items{$ID}}) {
+		my $item = $items{$ID} ||= {};
+		if (!%{$item}) {
 			binAdd(\@itemsID, $ID);
-			$items{$ID}{'appear_time'} = time;
-			$items{$ID}{'amount'} = $amount;
-			$items{$ID}{'nameID'} = $type;
-			$items{$ID}{'binID'} = binFind(\@itemsID, $ID);
-			$items{$ID}{'name'} = itemName($items{$ID});
+			$item->{appear_time} = time;
+			$item->{amount} = $amount;
+			$item->{nameID} = $type;
+			$item->{binID} = binFind(\@itemsID, $ID);
+			$item->{name} = itemName($item);
 		}
-		$items{$ID}{'pos'}{'x'} = $x;
-		$items{$ID}{'pos'}{'y'} = $y;
+		$item->{pos}{x} = $x;
+		$item->{pos}{y} = $y;
 
 		# Take item as fast as possible
-		if ($AI && $itemsPickup{lc($items{$ID}{name})} == 2 && distance($items{$ID}{pos}, $char->{pos_to}) <= 5) {
+		if ($AI && $itemsPickup{lc($item->{name})} == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
 			sendTake(\$remote_socket, $ID);
 		}
 
-		message "Item Appeared: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n", "drop", 1;
+		message "Item Appeared: $item->{name} ($item->{binID}) x $item->{amount} ($x, $y)\n", "drop", 1;
 
 	} elsif ($switch eq "00A0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
