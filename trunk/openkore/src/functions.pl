@@ -7290,6 +7290,14 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 			message getActorName($sourceID)." opened Warp Portal on ($x, $y)\n", "skill";
 		}
 
+		Plugins::callHook('packet_areaSpell', {
+			fail => $fail,
+			sourceID => $SourceID,
+			type => $type,
+			x => $x,
+			y => $y
+		});
+
 	} elsif ($switch eq "0120") {
 		# The area effect spell with ID dissappears
 		my $ID = substr($msg, 2, 4);
