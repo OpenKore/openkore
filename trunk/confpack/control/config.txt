@@ -415,6 +415,7 @@ equipAuto {
 
 statsAddAuto 0
 statsAddAuto_list
+statsAddAuto_dontUseBonus 0
 
 autoResponseOnHeal 0
 autoResponse 0
