@@ -3405,7 +3405,8 @@ sub AI {
 		$AI::Temp::attack_route_adjust = time;
 	}
 
-	if (AI::action eq "attack" && timeOut(AI::args->{ai_attack_giveup})) {
+	if (AI::action eq "attack" && timeOut(AI::args->{ai_attack_giveup}) &&
+	    !$config{attackNoGiveup}) {
 		my $ID = AI::args->{ID};
 		$monsters{$ID}{attack_failed} = time if ($monsters{$ID});
 		AI::dequeue;
