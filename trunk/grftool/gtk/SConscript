@@ -8,11 +8,10 @@ gtk['LIBPATH'] += ['../lib/static']
 
 CSourceBuilder = Builder(action = "gdk-pixbuf-csource --name=grftool_icon $SOURCE > $TARGET")
 gtk.Append(BUILDERS = {'CSource' : CSourceBuilder});
-gtk.CSource('grftool-gtk.csource', 'grftool-gtk.png')
+Default(gtk.CSource('grftool-gtk.csource', 'grftool-gtk.png'))
 
-gtktool = gtk.Program('grftool-gtk', ['gtk.c'],
+gtktool = gtk.Program('grftool-gtk', 'gtk.c',
 	LIBS=['z', 'static-grf'])
-gtk.Depends('gtk.c', 'grftool-gtk.csource')
 Clean('grftool-gtk', ['grftool.glade.bak', 'grftool.gladep.bak'])
 Default(gtktool)
 
