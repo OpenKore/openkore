@@ -3348,8 +3348,8 @@ sub AI {
 
 	##### AUTO-ATTACK #####
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "mapRoute" || $ai_seq[0] eq "follow" 
-	  || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || ($ai_seq[0] eq "mapRoute" && $ai_seq_args[0]{'stage'} eq 'Getting Map Solution')
+	  || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
 	  && !($config{'itemsTakeAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"))
 	  && timeOut($timeout{'ai_attack_auto'})) {
