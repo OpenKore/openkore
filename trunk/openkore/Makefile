@@ -1,4 +1,4 @@
-.PHONY: all exe dist
+.PHONY: all exe start.exe wxstart.exe dist
 
 all clean:
 	make -C src/auto/XSTools $@
@@ -17,8 +17,17 @@ exe:
 		--trim POSIX \
 		--force --icon src\\auto\\XSTools\\build\\openkore.ico
 
-start.exe: start.pl
-	perlapp --lib src start.pl --force --icon src\\auto\\XSTools\\build\\openkore.ico
-
 dist:
 	bash makedist.sh
+
+
+PERLAPP=perlapp --lib src \
+	--trim Pod::Usage \
+	start.pl --force \
+	--icon src\\auto\\XSTools\\build\\openkore.ico
+
+start.exe:
+	$(PERLAPP)
+
+wxstart.exe:
+	$(PERLAPP) --add Wx -o wxstart.exe
