@@ -22,39 +22,27 @@ init ()
 
 
 DWORD
-GetProcByName (char * name)
+GetProcByName (char *name)
 {
-	init ();
-	if (isNT) {
-		HANDLE toolhelp;
-		PROCESSENTRY32 pe;
+	HANDLE toolhelp;
+	PROCESSENTRY32 pe;
 
-		pe.dwSize = sizeof(PROCESSENTRY32);
-		toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-		if (Process32First(toolhelp,&pe)) {
-			do {
-				if (!stricmp(name, pe.szExeFile)) {
-					CloseHandle(toolhelp);
-					return pe.th32ProcessID;
-				}
-			} while (Process32Next(toolhelp,&pe));
-		}
-		CloseHandle(toolhelp);
-		return 0;
-	} else {
-		/* HWND hwnd = FindWindow(NULL, "Ragnarok");
-		if (!hwnd)
-			return 0;
-
-		DWORD hProcess;
-		GetWindowThreadProcessId(hwnd, &hProcess);
-		return hProcess; */
-		return 0;
+	pe.dwSize = sizeof(PROCESSENTRY32);
+	toolhelp = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+	if (Process32First(toolhelp,&pe)) {
+		do {
+			if (!stricmp(name, pe.szExeFile)) {
+				CloseHandle(toolhelp);
+				return pe.th32ProcessID;
+			}
+		} while (Process32Next(toolhelp,&pe));
 	}
+	CloseHandle(toolhelp);
+	return 0;
 }
 
 int
-InjectDLL(DWORD ProcID, LPCTSTR dll)
+InjectDLL (DWORD ProcID, LPCTSTR dll)
 {
 	init ();
 	if (!isNT) {
