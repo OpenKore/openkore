@@ -24,6 +24,8 @@ Bug fixes:
 - Auto-drop will look at full item name now.
 - Shop auto open delay will now work correctly after reconnecting.
 - Don't autoreply in town.
+- The !include directive in a config file was causing everything above it to
+  be clobbered.
 
 New features:
 - Don't use teleportAuto_minAggressives if the more specific
