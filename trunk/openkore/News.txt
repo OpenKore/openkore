@@ -10,6 +10,8 @@ New features:
 - statsAddAuto will now print a message when it increases a stat.
 - Plugins Commands now work (unload, unload all, load, load all).
 - More infomation for merchant shop ('al' command).
+- Support for private RO server (which has only one real IP).
+  To use this feature you must put the line 'private 1' in tables/servers.txt.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will print a beep character when you
