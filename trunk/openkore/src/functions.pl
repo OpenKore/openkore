@@ -113,6 +113,7 @@ sub initMapChangeVars {
 	undef @unknownPlayers;
 	undef @chatRoomsID;
 	undef %chatRooms;
+	undef @lastpm;
 
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
@@ -4090,8 +4091,8 @@ sub AI {
 
 		my $currentSkill;
 		if (defined $ai_index_skill_use) {
-			my $skillID = AI::args($ai_index_skill_use)->{skill_use_id};
-			$currentSkill = $skills_lut{$skillID};
+			my $skillHandle = AI::args($ai_index_skill_use)->{skillHandle};
+			$currentSkill = $skills_lut{$skillHandle};
 		}
 
 		my $ai_attack_mon;
@@ -9972,7 +9973,11 @@ sub updateDamageTables {
 			$monsters{$ID2}{'dmgFromYou'} += $damage;
 			if ($damage == 0) {
 				$monsters{$ID2}{'missedFromYou'}++;
+				$monsters{$ID2}{'atkMiss'}++;
+			} else {
+				$monsters{$ID2}{'atkMiss'} = 0;
 			}
+			useTeleport(1) if ($config{'teleportAuto_atkMiss'} && $monsters{$ID2}{'atkMiss'} >= $config{'teleportAuto_atkMiss'});
 		}
 	} elsif ($ID2 eq $accountID) {
 		if ($monsters{$ID1}) {

@@ -118,6 +118,10 @@ New config options:
   Only auto-attack monsters that are at least (number) blocks away from
   other players. (number) is at least 3; if you enter a lower value, Kore
   will treat it as 3.
+- teleportAuto_atkMiss (number)
+  Teleport if you've missed a monster more than (number) times in a row.
+  This is useful if you're trying to attack a monster with the wrong
+  elemental weapon, for example.
 
 - route_teleport (flag)
   route_teleport_minDistance (number)
@@ -166,6 +170,7 @@ Bug fixes:
 - Typing "talk no" while not talking to an NPC would cause disconnection;
   "talk no" is no longer allowed in that case now.
 - "storage get" no longer requires AI to be enabled.
+- Fixed PM list synchronization bug.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
