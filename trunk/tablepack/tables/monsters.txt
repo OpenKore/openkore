@@ -132,11 +132,11 @@
 1130 Jakk
 1131 Joker
 1132 Khalitzburg
-1133 Kobold 1
-1134 Kobold 2
-1135 Kobold 3
-1136 Kobold 4
-1137 Kobold 5
+1133 Kobold-1
+1134 Kobold-2
+1135 Kobold-3
+1136 Kobold-4
+1137 Kobold-5
 1138 Magnolia
 1139 Mantis
 1140 Maduk
