@@ -886,11 +886,6 @@ $you_string                      $other_string
 			print	"Error in function 'drop' (Drop Inventory Item)\n"
 				,"Inventory Item $arg1 does not exist.\n";
 		} else {
-			#if (!$arg2 || $arg2 > $chars[$config{'char'}]{'inventory'}[$arg1]{'amount'}) {
-			#	$arg2 = $chars[$config{'char'}]{'inventory'}[$arg1]{'amount'};
-			#}
-			#sendDrop(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $arg2);
-
 			my @temp = split(/,/, $arg1);
 			@temp = grep(!/^$/, @temp); # Remove empty entries
 
@@ -982,19 +977,19 @@ $you_string                      $other_string
 	} elsif ($switch eq "guild") {
 		my ($arg1) = $input =~ /^.*? (\w+)/;
 		if ($arg1 eq "info") {
-			message("---------- Guild Information ----------\n", "guildinfo");
+			message("---------- Guild Information ----------\n", "info");
 			message(swrite(
 				"Name    : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{'name'}],
 				"Lv      : @<<",			[$guild{'lvl'}],
 				"Exp     : @>>>>>>>>>/@<<<<<<<<<<",	[$guild{'exp'}, $guild{'next_exp'}],
 				"Master  : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{'master'}],
 				"Connect : @>>/@<<",			[$guild{'conMember'}, $guild{'maxMember'}]),
-				"guildinfo");
-			message("---------------------------------------\n", "guildinfo");
+				"info");
+			message("---------------------------------------\n", "info");
 
 		} elsif ($arg1 eq "member") {
-			message("------------ Guild  Member ------------\n", "guildinfo");
-			message("#  Name                       Job        Lv  Title                       Online\n", "guildinfo");
+			message("------------ Guild  Member ------------\n", "list");
+			message("#  Name                       Job        Lv  Title                       Online\n", "list");
 			my ($i, $name, $job, $lvl, $title, $online);
 
 			my $count = @{$guild{'member'}};
@@ -1009,9 +1004,9 @@ $you_string                      $other_string
 				message(swrite(
 					"@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<",
 					[$i, $name, $job, $lvl, $title, $online]),
-					"guildinfo");
+					"list");
 			}
-			message("---------------------------------------\n", "guildinfo");
+			message("---------------------------------------\n", "list");
 
 		} elsif ($arg1 eq "") {
 			print "Requesting guild information...\n",
@@ -1099,19 +1094,17 @@ $you_string                      $other_string
 		}
 
 	} elsif ($switch eq "identify") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
-			$~ = "IDENTIFY";
-			print	"---------Identify List--------\n";
-			for ($i = 0; $i < @identifyID; $i++) {
+			message("---------Identify List--------\n", "list");
+			for (my $i = 0; $i < @identifyID; $i++) {
 				next if ($identifyID[$i] eq "");
-				format IDENTIFY =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
-.
-				write;
+				message(swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$i, $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}]),
+					"list");
 			}
-			print	"------------------------------\n";
+			message("------------------------------\n", "list");
 		} elsif ($arg1 =~ /\d+/ && $identifyID[$arg1] eq "") {
 			print	"Error in function 'identify' (Identify Item)\n"
 				,"Identify Item $arg1 does not exist\n";
@@ -1153,8 +1146,8 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		message("-------------------------------\n", "list");
 
 	} elsif ($switch eq "im") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
 			print	"Syntax Error in function 'im' (Use Item on Monster)\n"
 				,"Usage: im <item #> <monster #>\n";
@@ -1172,8 +1165,8 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		}
 
 	} elsif ($switch eq "ip") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
 			print	"Syntax Error in function 'ip' (Use Item on Player)\n"
 				,"Usage: ip <item #> <player #>\n";
@@ -1191,7 +1184,7 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		}
 
 	} elsif ($switch eq "is") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'is' (Use Item on Self)\n"
 				,"Usage: is <item #>\n";
@@ -1206,8 +1199,8 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		}
 
 	} elsif ($switch eq "join") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ ([\s\S]*)$/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ ([\s\S]*)$/;
 		if ($arg1 eq "") {
 			print	"Syntax Error in function 'join' (Join Chat Room)\n"
 				,"Usage: join <chat room #> [<password>]\n";
@@ -1222,8 +1215,8 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		}
 
 	} elsif ($switch eq "judge") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
 		if ($arg1 eq "" || $arg2 eq "") {
 			print	"Syntax Error in function 'judge' (Give an alignment point to Player)\n"
 				,"Usage: judge <player #> <0 (good) | 1 (bad)>\n";
@@ -1236,7 +1229,7 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		}
 
 	} elsif ($switch eq "kick") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
+		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($currentChatRoom eq "") {
 			print	"Error in function 'kick' (Kick from Chat)\n"
 				,"You are not in a Chat Room.\n";
@@ -1285,6 +1278,7 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		sendMemo(\$remote_socket);
 
 	} elsif ($switch eq "ml") {
+		my ($dmgTo, $dmgFrom, $dist, $pos);
 		message("-----------Monster List-----------\n" .
 			"#    Name                     DmgTo    DmgFrom    Distance    Coordinates\n",
 			"list");
@@ -1296,9 +1290,9 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 			$dmgFrom = ($monsters{$monstersID[$i]}{'dmgFrom'} ne "")
 				? $monsters{$monstersID[$i]}{'dmgFrom'}
 				: 0;
-			my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
+			$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
 			$dist = sprintf ("%.1f", $dist) if (index($dist, '.') > -1);
-			my $pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
+			$pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
 
 			message(swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<",
@@ -1308,7 +1302,7 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "move") {
-		($arg1, $arg2, $arg3) = $input =~ /^[\s\S]*? (\d+) (\d+)(.*?)$/;
+		my ($arg1, $arg2, $arg3) = $input =~ /^[\s\S]*? (\d+) (\d+)(.*?)$/;
 		
 		undef $ai_v{'temp'}{'map'};
 		if ($arg1 eq "") {
@@ -1345,19 +1339,18 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		}
 
 	} elsif ($switch eq "nl") {
-		$~ = "NLIST";
-		print	"-----------NPC List-----------\n"
-			,"#    Name                         Coordinates   ID\n";
-		for ($i = 0; $i < @npcsID; $i++) {
+		message("-----------NPC List-----------\n" .
+			"#    Name                         Coordinates   ID\n",
+			"info");
+		for (my $i = 0; $i < @npcsID; $i++) {
 			next if ($npcsID[$i] eq "");
-			$ai_v{'temp'}{'pos_string'} = "($npcs{$npcsID[$i]}{'pos'}{'x'}, $npcs{$npcsID[$i]}{'pos'}{'y'})";
-			format NLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<
-$i   $npcs{$npcsID[$i]}{'name'} $ai_v{'temp'}{'pos_string'}   $npcs{$npcsID[$i]}{'nameID'}
-.
-			write;
+			my $pos = "($npcs{$npcsID[$i]}{'pos'}{'x'}, $npcs{$npcsID[$i]}{'pos'}{'y'})";
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<   @<<<<<<<<",
+				[$i, $npcs{$npcsID[$i]}{'name'}, $pos, $npcs{$npcsID[$i]}{'nameID'}]),
+				"info");
 		}
-		print "---------------------------------\n";
+		message("---------------------------------\n", "info");
 
 	} elsif ($switch eq "openshop"){
 		if (!$shopstarted) {
@@ -1376,23 +1369,23 @@ $i   $npcs{$npcsID[$i]}{'name'} $ai_v{'temp'}{'pos_string'}   $npcs{$npcsID[$i]}
 		}
 
 	} elsif ($switch eq "party") {
-		($arg1) = $input =~ /^[\s\S]*? (\w*)/;
-		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)\b/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w*)/;
+		my ($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)\b/;
 		if ($arg1 eq "" && !%{$chars[$config{'char'}]{'party'}}) {
 			print	"Error in function 'party' (Party Functions)\n"
 				,"Can't list party - you're not in a party.\n";
 		} elsif ($arg1 eq "") {
-			print "----------Party-----------\n";
-			print $chars[$config{'char'}]{'party'}{'name'}."\n";
-			$~ = "PARTYUSERS";
-			print "#      Name                  Map                    Online    HP\n";
-			for ($i = 0; $i < @partyUsersID; $i++) {
+			message("----------Party-----------\n", "list");
+			message($chars[$config{'char'}]{'party'}{'name'}."\n", "list");
+			message("#      Name                  Map                    Online    HP\n", "info");
+			for (my $i = 0; $i < @partyUsersID; $i++) {
 				next if ($partyUsersID[$i] eq "");
-				$coord_string = "";
-				$hp_string = "";
-				$name_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'name'};
-				$admin_string = ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "(A)" : "";
-				
+				my $coord_string = "";
+				my $hp_string = "";
+				my $name_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'name'};
+				my $admin_string = ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "(A)" : "";
+				my $online_string;
+
 				if ($partyUsersID[$i] eq $accountID) {
 					$online_string = "Yes";
 					($map_string) = $map_name =~ /([\s\S]*)\.gat/;
@@ -1411,14 +1404,13 @@ $i   $npcs{$npcsID[$i]}{'name'} $ai_v{'temp'}{'pos_string'}   $npcs{$npcsID[$i]}
 							." (".int($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100)
 							."%)" if ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'online'});
 				}
-				format PARTYUSERS = 
-@< @<< @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<< @<<<<<<< @<<       @<<<<<<<<<<<<<<<<<<
-$i $admin_string $name_string $map_string  $coord_string $online_string $hp_string
-.
-				write;
+				message(swrite(
+					"@< @<< @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<< @<<<<<<< @<<       @<<<<<<<<<<<<<<<<<<",
+					[$i, $admin_string, $name_string, $map_string, $coord_string, $online_string, $hp_string]),
+					"info");
 			}
-			print "--------------------------\n";
-			
+			message("--------------------------\n", "info");
+
 		} elsif ($arg1 eq "create") {
 			($arg2) = $input =~ /^[\s\S]*? [\s\S]*? \"([\s\S]*?)\"/;
 			if ($arg2 eq "") {
@@ -1664,22 +1656,21 @@ $i   $portals{$portalsID[$i]}{'name'}    $coords
 		$job_name_string = "$jobs_lut{$chars[$config{'char'}]{'jobID'}} $sex_lut{$chars[$config{'char'}]{'sex'}}";
 		$zeny_string = formatNumber($chars[$config{'char'}]{'zenny'}) if (defined($chars[$config{'char'}]{'zenny'}));
 
-		print	"-----------Status-----------\n";
-		$~ = "STATUS";
-		format STATUS =
-@<<<<<<<<<<<<<<<<<<<<<<<< HP: @<<<<<<<<<<<<<<<<<<
-$chars[$config{'char'}]{'name'} $hp_string
-@<<<<<<<<<<<<<<<<<<<<<<<< SP: @<<<<<<<<<<<<<<<<<<
-$job_name_string              $sp_string
-Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      $chars[$config{'char'}]{'lv'} $base_string
-Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-      $chars[$config{'char'}]{'lv_job'} $job_string
-Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<
-        $weight_string           $zeny_string
-.
-		write;
-		print	"----------------------------\n";
+		message("-----------Status-----------\n", "info");
+		message(swrite(
+			"@<<<<<<<<<<<<<<<<<<<<<<<< HP: @<<<<<<<<<<<<<<<<<<",
+			[$chars[$config{'char'}]{'name'}, $hp_string],
+			"@<<<<<<<<<<<<<<<<<<<<<<<< SP: @<<<<<<<<<<<<<<<<<<",
+			[$job_name_string, $sp_string],
+			"Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+			[$chars[$config{'char'}]{'lv'}, $base_string],
+			"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+			[$chars[$config{'char'}]{'lv_job'}, $job_string],
+			"Weight: @>>>>>>>>>>>>>>>> Zenny: @<<<<<<<<<<<<<<",
+			[$weight_string, $zeny_string]),
+			"info");
+
+		message("----------------------------\n", "info");
 		printStat();
 
 	} elsif ($switch eq "sell") {
@@ -1831,25 +1822,23 @@ $i $skills_lut{$skillsID[$i]} $chars[$config{'char'}]{'skills'}{$skillsID[$i]}{'
 		}
 
 	} elsif ($switch eq "st") {
-		print	"-----------Char Stats-----------\n";
-		$~ = "STATS";
-		$tilde = "~";
-		format STATS =
-Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<
-$chars[$config{'char'}]{'str'} $chars[$config{'char'}]{'str_bonus'} $chars[$config{'char'}]{'points_str'} $chars[$config{'char'}]{'attack'} $chars[$config{'char'}]{'attack_bonus'} $chars[$config{'char'}]{'def'} $chars[$config{'char'}]{'def_bonus'}
-Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<
-$chars[$config{'char'}]{'agi'} $chars[$config{'char'}]{'agi_bonus'} $chars[$config{'char'}]{'points_agi'} $chars[$config{'char'}]{'attack_magic_min'} $tilde $chars[$config{'char'}]{'attack_magic_max'} $chars[$config{'char'}]{'def_magic'} $chars[$config{'char'}]{'def_magic_bonus'}
-Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<
-$chars[$config{'char'}]{'vit'} $chars[$config{'char'}]{'vit_bonus'} $chars[$config{'char'}]{'points_vit'} $chars[$config{'char'}]{'hit'} $chars[$config{'char'}]{'flee'} $chars[$config{'char'}]{'flee_bonus'}
-Int: @<<+@<< #@< Critical: @<< Aspd: @<<
-$chars[$config{'char'}]{'int'} $chars[$config{'char'}]{'int_bonus'} $chars[$config{'char'}]{'points_int'} $chars[$config{'char'}]{'critical'} $chars[$config{'char'}]{'attack_speed'}
-Dex: @<<+@<< #@< Status Points: @<<
-$chars[$config{'char'}]{'dex'} $chars[$config{'char'}]{'dex_bonus'} $chars[$config{'char'}]{'points_dex'} $chars[$config{'char'}]{'points_free'}
-Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<
-$chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$config{'char'}]{'points_luk'} $chars[$config{'char'}]{'guild'}{'name'}
-.
-		write;
-		print	"--------------------------------\n";
+		message("-----------Char Stats-----------\n", "info");
+		my $tilde = "~";
+		message(swrite(
+			"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<",
+			[$chars[$config{'char'}]{'str'}, $chars[$config{'char'}]{'str_bonus'}, $chars[$config{'char'}]{'points_str'}, $chars[$config{'char'}]{'attack'}, $chars[$config{'char'}]{'attack_bonus'}, $chars[$config{'char'}]{'def'}, $chars[$config{'char'}]{'def_bonus'}],
+			"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<",
+			[$chars[$config{'char'}]{'agi'}, $chars[$config{'char'}]{'agi_bonus'}, $chars[$config{'char'}]{'points_agi'}, $chars[$config{'char'}]{'attack_magic_min'}, $tilde, $chars[$config{'char'}]{'attack_magic_max'}, $chars[$config{'char'}]{'def_magic'}, $chars[$config{'char'}]{'def_magic_bonus'}],
+			"Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<",
+			[$chars[$config{'char'}]{'vit'}, $chars[$config{'char'}]{'vit_bonus'}, $chars[$config{'char'}]{'points_vit'}, $chars[$config{'char'}]{'hit'}, $chars[$config{'char'}]{'flee'}, $chars[$config{'char'}]{'flee_bonus'}],
+			"Int: @<<+@<< #@< Critical: @<< Aspd: @<<",
+			[$chars[$config{'char'}]{'int'}, $chars[$config{'char'}]{'int_bonus'}, $chars[$config{'char'}]{'points_int'}, $chars[$config{'char'}]{'critical'}, $chars[$config{'char'}]{'attack_speed'}],
+			"Dex: @<<+@<< #@< Status Points: @<<",
+			[$chars[$config{'char'}]{'dex'}, $chars[$config{'char'}]{'dex_bonus'}, $chars[$config{'char'}]{'points_dex'}, $chars[$config{'char'}]{'points_free'}],
+			"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
+			[$chars[$config{'char'}]{'luk'}, $chars[$config{'char'}]{'luk_bonus'}, $chars[$config{'char'}]{'points_luk'}, $chars[$config{'char'}]{'guild'}{'name'}]),
+			"info");
+		message("--------------------------------\n", "info");
 
 	} elsif ($switch eq "stand") {
 		if ($ai_v{'attackAuto_old'} ne "") {
@@ -1866,12 +1855,13 @@ $chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$conf
 		$ai_v{'sitAuto_forceStop'} = 1;
 
 	} elsif ($switch eq "stat_add") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)$/;
+		my ($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)$/;
 		if ($arg1 ne "str" &&  $arg1 ne "agi" && $arg1 ne "vit" && $arg1 ne "int" 
-			&& $arg1 ne "dex" && $arg1 ne "luk") {
+		 && $arg1 ne "dex" && $arg1 ne "luk") {
 			print	"Syntax Error in function 'stat_add' (Add Status Point)\n"
 			,"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
 		} else {
+			my $ID;
 			if ($arg1 eq "str") {
 				$ID = 0x0D;
 			} elsif ($arg1 eq "agi") {
@@ -4977,8 +4967,7 @@ sub parseMsg {
 		} else {
 			$msg_size = 4;
 		}
-	} elsif ($switch eq "0069" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-		$msg_size = unpack("S1", substr($msg, 2, 2));
+	} elsif ($switch eq "0069") {
 		$conState = 2;
 		undef $conState_tries;
 		if ($versionSearch) {
@@ -5069,14 +5058,14 @@ sub parseMsg {
 		$conState = 3;
 		undef $conState_tries;
 
+		my ($startVal, $num);
 		if ($config{"master_version_$config{'master'}"} ne "" && $config{"master_version_$config{'master'}"} == 0) {
 			$startVal = 24;
 		} else {
 			$startVal = 4;
 		}
-		for($i = $startVal; $i < $msg_size; $i+=106) {
-
-#exp display bugfix - chobit andy 20030129
+		for (my $i = $startVal; $i < $msg_size; $i += 106) {
+			#exp display bugfix - chobit andy 20030129
 			$num = unpack("C1", substr($msg, $i + 104, 1));
 			$chars[$num]{'exp'} = unpack("L1", substr($msg, $i + 4, 4));
 			$chars[$num]{'zenny'} = unpack("L1", substr($msg, $i + 8, 4));
@@ -5097,30 +5086,29 @@ sub parseMsg {
 			$chars[$num]{'luk'} = unpack("C1", substr($msg, $i + 103, 1));
 			$chars[$num]{'sex'} = $accountSex2;
 		}
-		$~ = "CHAR";
+
 		for ($num = 0; $num < @chars; $num++) {
-			format CHAR =
--------  Character @< ---------
-         $num
-Name: @<<<<<<<<<<<<<<<<<<<<<<<<
-      $chars[$num]{'name'}
-Job:  @<<<<<<<      Job Exp: @<<<<<<<
-$jobs_lut{$chars[$num]{'jobID'}} $chars[$num]{'exp_job'}
-Lv:   @<<<<<<<      Str: @<<<<<<<<
-$chars[$num]{'lv'}  $chars[$num]{'str'}
-J.Lv: @<<<<<<<      Agi: @<<<<<<<<
-$chars[$num]{'lv_job'}  $chars[$num]{'agi'}
-Exp:  @<<<<<<<      Vit: @<<<<<<<<
-$chars[$num]{'exp'} $chars[$num]{'vit'}
-HP:   @||||/@||||   Int: @<<<<<<<<
-$chars[$num]{'hp'} $chars[$num]{'hp_max'} $chars[$num]{'int'}
-SP:   @||||/@||||   Dex: @<<<<<<<<
-$chars[$num]{'sp'} $chars[$num]{'sp_max'} $chars[$num]{'dex'}
-Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<
-$chars[$num]{'zenny'} $chars[$num]{'luk'}
--------------------------------
-.
-			write;
+			message(swrite(
+				"-------  Character @< ---------",
+				[$num],
+				"Name: @<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$chars[$num]{'name'}],
+				"Job:  @<<<<<<<      Job Exp: @<<<<<<<",
+				[$jobs_lut{$chars[$num]{'jobID'}}, $chars[$num]{'exp_job'}],
+				"Lv:   @<<<<<<<      Str: @<<<<<<<<",
+				[$chars[$num]{'lv'}, $chars[$num]{'str'}],
+				"J.Lv: @<<<<<<<      Agi: @<<<<<<<<",
+				[$chars[$num]{'lv_job'}, $chars[$num]{'agi'}],
+				"Exp:  @<<<<<<<      Vit: @<<<<<<<<",
+				[$chars[$num]{'exp'}, $chars[$num]{'vit'}],
+				"HP:   @||||/@||||   Int: @<<<<<<<<",
+				[$chars[$num]{'hp'}, $chars[$num]{'hp_max'}, $chars[$num]{'int'}],
+				"SP:   @||||/@||||   Dex: @<<<<<<<<",
+				[$chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'}],
+				"Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<",
+				[$chars[$num]{'zenny'}, $chars[$num]{'luk'}],
+				"-------------------------------", []),
+				"connection");
 		}
 		if (!$config{'XKore'}) {
 			if ($config{'char'} eq "") {
@@ -5144,8 +5132,6 @@ $chars[$num]{'zenny'} $chars[$num]{'luk'}
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 
-	} elsif ($switch eq "006E") {
-
 	} elsif ($switch eq "0071") {
 		print "Recieved character ID and Map IP from Game Login Server\n";
 		$conState = 4;
@@ -5160,21 +5146,19 @@ $chars[$num]{'zenny'} $chars[$num]{'luk'}
 
 		$map_ip = makeIP(substr($msg, 22, 4));
 		$map_port = unpack("S1", substr($msg, 26, 2));
-		format CHARINFO =
----------Game Info----------
-Char ID: @<<<<<<<<<<<<<<<<<<
-            getHex($charID)
-MAP Name: @<<<<<<<<<<<<<<<<<<
-            $map_name
-MAP IP: @<<<<<<<<<<<<<<<<<<
-            $map_ip
-MAP Port: @<<<<<<<<<<<<<<<<<<
-	$map_port
--------------------------------
-.
-		$~ = "CHARINFO";
-		write;
-		print "Closing connection to Game Login Server\n" if (!$config{'XKore'});
+		message(swrite(
+			"---------Game Info----------", [],
+			"Char ID: @<<<<<<<<<<<<<<<<<<",
+			[getHex($charID)],
+			"MAP Name: @<<<<<<<<<<<<<<<<<<",
+			[$map_name],
+			"MAP IP: @<<<<<<<<<<<<<<<<<<",
+			[$map_ip],
+			"MAP Port: @<<<<<<<<<<<<<<<<<<",
+			[$map_port],
+			"-------------------------------", []),
+			"connection");
+		message("Closing connection to Game Login Server\n", "connection") if (!$config{'XKore'});
 		killConnection(\$remote_socket) if (!$config{'XKore'});
 		initStatVars();
 
@@ -5183,9 +5167,9 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		undef $conState_tries;
 		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
 		%{$chars[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos'}};
-		print "Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n" if $config{'debug'};
-		print "You are now in the game\n" if (!$config{'XKore'});
-		print "Waiting for map to load...\n" if ($config{'XKore'});
+		message("Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", "console", 1);
+		message("You are now in the game\n", "connection") if (!$config{'XKore'});
+		message("Waiting for map to load...\n", "connection") if ($config{'XKore'});
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
 		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
@@ -5196,7 +5180,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "0077") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 
-	} elsif ($switch eq "0078" && length($msg) >= 52) {
+	} elsif ($switch eq "0078") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
 		makeCoords(\%coords, substr($msg, 46, 3));
@@ -7460,8 +7444,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		undef %{$venderLists{$ID}};
 
 	} elsif ($switch eq "0133") {
-		if (length($msg) >= unpack("S1", substr($msg, 2, 2))) {
-			$msg_size = unpack("S1",substr($msg,2,2));
 			undef @venderItemList;
 			undef $venderID;
 			$venderID = substr($msg,4,4);
@@ -7525,7 +7507,6 @@ $number $display $itemTypes_lut{$venderItemList[$number]{'type'}} $venderItemLis
 				write;
 			}
 			print "--------------------------------------\n";
-		}
 
 	} elsif ($switch eq "0136") {
 		$msg_size = unpack("S1",substr($msg,2,2));
@@ -7611,7 +7592,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 				sendCloseShop(\$remote_socket);
 			}
 		}
-#Solos End
 
 	} elsif ($switch eq "0139") {
 		$ID = substr($msg, 2, 4);
@@ -7627,8 +7607,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 
 	} elsif ($switch eq "013A") {
 		$type = unpack("S1",substr($msg, 2, 2));
-	} elsif ($switch eq "013B") {
-	} elsif ($switch eq "013C") {  
+
 	} elsif ($switch eq "013D") {
 		$type = unpack("S1",substr($msg, 2, 2));
 		$amount = unpack("S1",substr($msg, 4, 2));
@@ -8071,7 +8050,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			print "Unknown Connected: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
 
-	} elsif ($switch eq "01DA" && length($msg) >= 58) {
+	} elsif ($switch eq "01DA") {
 		$ID = substr($msg, 2, 4);
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
@@ -8137,7 +8116,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 	} elsif ($switch eq "01DC") {
 		$secureLoginKey = substr($msg, 4, $msg_size);
 
-	} elsif ($switch eq "01DE" && length($msg) >= 33) {
+	} elsif ($switch eq "01DE") {
 		$skillID = unpack("S1",substr($msg, 2, 2));
 		$sourceID = substr($msg, 4, 4);
 		$targetID = substr($msg, 8, 4);
@@ -11553,17 +11532,15 @@ sub printStat {
 	my $totalelasped_string = sprintf("%.2f", $totalelasped);
 	my $elasped_string = sprintf("%.2f", $elasped);
 
-	$~ = "COMBATSTATS";
-	format COMBATSTATS =
-Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<
-              $totaldmg               $dmgpsec_string
-Total Time spent (sec): @>>>>>>>>
-                        $totalelasped_string
-Last Monster took (sec): @>>>>>>>
- 			$elasped_string
-.
-	write;
-	print	"----------------------------\n";
+	message(swrite(
+		"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<",
+		[$totaldmg, $dmgpsec_string],
+		"Total Time spent (sec): @>>>>>>>>",
+		[$totalelasped_string],
+		"Last Monster took (sec): @>>>>>>>",
+		[$elasped_string]),
+		"info");
+	message("----------------------------\n", "info");
 }
 
 sub findIndexString_lc_not_equip {
