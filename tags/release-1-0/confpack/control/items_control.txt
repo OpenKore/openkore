@@ -1,0 +1,622 @@
+#This file allows specific items to be store or sell or leave
+#Syntax: <item name> <minimum keep amount in inventory> <storage-auto flag> <sell-auto flag>
+#
+#Ex. The example below will sell all jellopies, and store all knifes
+#
+#Jellopy 0 0 1
+#Knife 0 1 0
+#
+#The item name isn't case sensitive.  Only items found in this file will be stored or sold.
+#
+#If storage and sell flags are 1, Kore will do storage first (unless storage is full) then sell
+#
+#Kore will not sell or store equipped items.  For example, if you're using a knife and you
+#have a line to auto-sell all knives, kore will sell any extras it picks up, not the knife it's
+#using.
+#
+#An auto-sell list and auto-storage list is provided by default, modify it as you see fit
+
+####SELL LIST####
+
+Silver Robe 0 0 1
+Jack o' Pumpkin 0 0 1
+Fabric 0 0 1
+Stiletto 0 0 1
+Dagger 0 0 1
+Squid Ink 0 0 1
+Heart of Mermaid 0 0 1
+Rainbow Shell 0 0 1
+Dragon Canine 0 0 1
+Blue Hair 0 0 1
+Short Daenggie 0 0 1
+Honey 0 0 1
+Sweet Potato 0 0 1
+Meat 0 0 1
+Mane 0 0 1
+Slayer 0 0 1
+Acorn 0 0 1
+Adventurer's Suit 0 0 1
+Animal Skin 0 0 1
+Axe 0 0 1
+Battle Axe 1 0 1
+Bear's Footskin 0 0 1
+Bee Sting 0 0 1
+Bill of Birds 0 0 1
+Black Hair 0 0 1
+Blade 0 0 1
+Bow 0 0 1
+Bug Leg 0 0 1
+Cactus Needle 0 0 1
+Chrysalis 0 0 1
+Cleaver 0 0 1
+Clover 0 0 1
+Club 0 0 1
+Cobweb 0 0 1
+Composite Bow 0 0 1
+Conch 0 0 1
+Cotton Shirts 0 0 1
+Cross Bow 0 0 1
+Cutter 0 0 1
+Decayed Nail 0 0 1
+Elder Pixie's Moustache 0 0 1
+Falchion 0 0 1
+Feather of Birds 0 0 1
+Fin 0 0 1
+Flail 1 0 1
+Flower 0 0 1
+Fluff 0 0 1
+Garlet 0 0 1
+Gill 0 0 1
+Glaive 0 0 1
+Grasshopper's Leg 0 0 1
+Great Bow 0 0 1
+Green Herb 0 0 1
+Guard 0 0 1
+Guisarme 0 0 1
+Hammer 0 0 1
+Hat 0 0 1
+Heart of Mermaid 0 0 1
+Hood 0 0 1
+Horn 0 0 1
+Horseshoe 0 0 1
+Immortal Heart 0 0 1
+Insect Feeler 0 0 1
+Jacket 0 0 1
+Javelin 0 0 1
+Jellopy 0 0 1
+Knife 0 0 1
+Lantern 0 0 1
+Long Coat 0 0 1
+Mace 0 0 1
+Mantle 0 0 1
+Main Gauche 0 0 1
+Mole Claw 0 0 1
+Mole Whiskers 0 0 1
+Moth Dust 0 0 1
+Moth Wings 0 0 1
+Mushroom Spore 0 0 1
+Nipper 0 0 1
+Orc Claw 0 0 1
+Orcish Voucher 0 0 1
+Orc's Fang 0 0 1
+Pike 0 0 1
+Pointed Scale 0 0 1
+Poison Spore 0 0 1
+Porcupine Quill 0 0 1
+Raccoon Leaf 0 0 1
+Rat Tail 0 0 1
+Reptile Tongue 0 0 1
+Resin 0 0 1
+Rod 0 0 1
+Rotten Bandage 0 0 1
+Scale Shell 0 0 1
+Scell 0 0 1
+Scorpion Tail 0 0 1
+Shell 0 0 1
+Shining Scale 0 0 1
+Shoot 0 0 1
+Silk Robe 0 0 1
+Skel-Bone 0 0 1
+Smasher 0 0 1
+Snail's Shell 0 0 1
+Snake Scale 0 0 1
+Solid Shell 0 0 1
+Spawn 0 0 1
+Spear 0 0 1
+Staff 0 0 1
+Stem 0 0 1
+Sticky Mucus 0 0 1
+Sticky Webfoot 0 0 1
+Stinky Scale 0 0 1
+Stone Heart 0 0 1
+Sword 0 0 1
+Talon 0 0 1
+Tentacle 0 0 1
+Tooth of Bat 0 0 1
+Tree Root 0 0 1
+Fine-grained Trunk 0 0 1
+Solid Trunk 0 0 1
+Barren Trunk 0 0 1
+Wand 0 0 1
+Wing of Red Bat 0 0 1
+Wolf Claw 0 0 1
+Worm Peeling 0 0 1
+Yoyo Tail 0 0 1
+Zargon 0 0 1
+Monster's Feed 0 0 1
+Ribbon 0 0 1
+Wooden Mail 0 0 1
+Poison Spore 0 0 1
+
+####STORAGE LIST####
+
+Tights 0 1 0
+Red Potion 0 1 0
+Memento 0 1 0
+Fire Arrow 0 0 1
+Carrot 0 1 0
+Jur 0 1 0
+Katana 0 1 0
+Apple 0 1 0
+Banana 0 1 0
+Grape 0 1 0
+Empty Bottle 0 1 0
+White Herb 0 1 0
+Yellow Herb 0 1 0
+Phracon 0 1 0
+Steel 0 1 0
+Red Herb 0 1 0
+Feather 0 1 0
+Coal 0 1 0
+Emveretarcon 0 1 0
+Iron 0 1 0
+Iron Ore 0 1 0
+Hinalle Leaflet 0 1 0
+Aloe Leaflet 0 1 0
+Mastela Fruit 0 1 0
+Holy Water 0 1 0
+Panacea 0 1 0
+Royal Jelly 0 1 0
+Candy 0 1 0
+Candy Cane 0 1 0
+Apple Juice 0 1 0
+Banana Juice 0 1 0
+Grape Juice 0 1 0
+Carrot Juice 0 1 0
+Pumkin 0 1 0
+Mistic Bluebox 0 1 0
+Dead Branch 0 1 0
+Anodyne 0 1 0
+Aloevera 0 1 0
+Yggdrasilberry 0 1 0
+Yggdrasil Seed 0 1 0
+Amulet 0 1 0
+Yggdrasil Leaf 0 1 0
+Mini Furnace 0 1 0
+Ora Ora 0 1 0
+Animal Gore 0 1 0
+Hinalle 0 1 0
+Aloe 0 1 0
+Four Leaf Clover 0 1 0
+Singing Plant 0 1 0
+Ment 0 1 0
+Izidor 0 1 0
+Illusion Flower 0 1 0
+Shoot 0 1 0
+Emperium 0 1 0
+Red Gemstone 0 1 0
+Blue Gemstone 0 1 0
+Garnet 0 1 0
+Amethyst 0 1 0
+Aquamarine 0 1 0
+Emerald 0 1 0
+Pearl 0 1 0
+Ruby 0 1 0
+Cursed Ruby 0 1 0
+Sardonyx 0 1 0
+Sapphire 0 1 0
+Opal 0 1 0
+Topaz 0 1 0
+Zircon 0 1 0
+carat Diamond 0 1 0
+Cracked Diamond 0 1 0
+Red Frame 0 1 0
+Chung Jah 0 1 0
+Black Ladle 0 1 0
+Pencil Case 0 1 0
+Rouge 0 1 0
+Puppet 0 1 0
+Poring Doll 0 1 0
+Chonchon Doll 0 1 0
+Spore Doll 0 1 0
+Bouquet 0 1 0
+Wedding Bouquet 0 1 0
+Glass Bead 0 1 0
+Crystal Mirror 0 1 0
+Witherless Rose 0 1 0
+Frozen Rose 0 1 0
+Baphomet Doll 0 1 0
+Osiris Doll 0 1 0
+Rocker Doll 0 1 0
+Yoyo Doll 0 1 0
+Racoon Doll 0 1 0
+Rough Oridecon 0 1 0
+Rough Elunium 0 1 0
+Daenggie 0 1 0
+Evil Horn 0 1 0
+Nose Ring 0 1 0
+Heroic Emblem 0 1 0
+Gold 0 1 0
+Alchol 0 1 0
+Detrimindexta 0 1 0
+Karvodailnirol 0 1 0
+Counteragent 0 1 0
+Mixture 0 1 0
+Scarlet Dyestuffs 0 1 0
+Lemon Dyestuffs 0 1 0
+Cobaltblue Dyestuffs 0 1 0
+Darkgreen Dyestuffs 0 1 0
+Orange Dyestuffs 0 1 0
+Violet Dyestuffs 0 1 0
+White Dyestuffs 0 1 0
+Black Dyestuffs 0 1 0
+Oridecon 0 1 0
+Elunium 0 1 0
+Anvil 0 1 0
+Oridecon Anvil 0 1 0
+Golden Anvil 0 1 0
+Emperium Anvil 0 1 0
+Red Blood 0 1 0
+Crystal Blue 0 1 0
+Wind of Verdure 0 1 0
+Green Live 0 1 0
+Flame Heart 0 1 0
+Mistic Frozen 0 1 0
+Rough Wind 0 1 0
+Great Nature 0 1 0
+Star Crumb 0 1 0
+Star Dust 0 1 0
+Chivalry Emblem 0 1 0
+Hammer of Blacksmith 0 1 0
+Old Magicbook 0 1 0
+Necklace of Wisdom 0 1 0
+Necklace of Oblivion 0 1 0
+Hand of God 0 1 0
+Skirt of Virgin 0 1 0
+Golden Hair 0 1 0
+Fortune Sword 0 1 0
+Hair Band 0 1 0
+Kitty Band 0 1 0
+Bunny Band 0 1 0
+Kapra Band 0 1 0
+Tiara 0 1 0
+Crown 0 1 0
+Santa Hat 0 1 0
+Queen Ribbon 0 1 0
+Sweet Gent 0 1 0
+Golden Gear 0 1 0
+Romantic Gent 0 1 0
+Western Grace 0 1 0
+Coronet 0 1 0
+Cutie Band 0 1 0
+Monk Hat 0 1 0
+Wizard Hat 0 1 0
+Sunflower 0 1 0
+Angel Band 0 1 0
+Evil Band 0 1 0
+Majestic Goat 0 1 0
+Unicorn Horn 0 1 0
+Spiky Band 0 1 0
+Mini Propeller 0 1 0
+Mini Glasses 0 1 0
+Army Cap 0 1 0
+Pierrot Nose 0 1 0
+Zoro Masque 0 1 0
+Munak Turban 0 1 0
+Gangster Mask 0 1 0
+Iron Cain 0 1 0
+Cigar 0 1 0
+Pipe 0 1 0
+Romantic Flower 0 1 0
+Romantic Leaf 0 1 0
+Jack a Dandy 0 1 0
+Stop Post 0 1 0
+Doctor Band 0 1 0
+Ghost Bandana 0 1 0
+Red Bandana 0 1 0
+Eagle Eyes 0 1 0
+Nurse Cap 0 1 0
+Mr. Smile 0 1 0
+Bomb Wick 0 1 0
+Sakkat 0 1 0
+Phantom of Opera 0 1 0
+Heaven Ring 0 1 0
+Ear Muffs 0 1 0
+Antler 0 1 0
+Apple o' Archer 0 1 0
+Elven Ears 0 1 0
+Pirate Bandana 0 1 0
+Mr. Scream 0 1 0
+Poo Poo Hat 0 1 0
+Funeral Hat 0 1 0
+Masquerade 0 1 0
+Welding Mask 0 1 0
+Pretend Murdered 0 1 0
+Pentagon 0 1 0
+Blinker 0 1 0
+Binoculars 0 1 0
+Goblini Mask 0 1 0
+Green Feeler 0 1 0
+Viking Helm 0 1 0
+Ninja Suit 0 1 0
+Wedding Dress 0 1 0
+Ring 0 1 0
+Earring 0 1 0
+Necklace 0 1 0
+Glove 0 1 0
+Brooch 0 1 0
+Clip 0 1 0
+Rosary 0 1 0
+Skull Ring 0 1 0
+Gold Ring 0 1 0
+Silver Ring 0 1 0
+Flower Ring 0 1 0
+Diamond Ring 0 1 0
+Eye of Dullahan 0 1 0
+Safety Ring 0 1 0
+Critical Ring 0 1 0
+Presbyter's Mitten 0 1 0
+Matyr's Leash 0 1 0
+Bow Thimble 0 1 0
+Rogue's Treasure 0 1 0
+Poring Card 0 1 0
+Fabre Card 0 1 0
+Pupa Card 0 1 0
+Drops Card 0 1 0
+Santa Poring Card 0 1 0
+Lunatic Card 0 1 0
+Pecopeco Egg Card 0 1 0
+Picky Card 0 1 0
+Chonchon Card 0 1 0
+Willow Card 0 1 0
+Picky Egg Card 0 1 0
+Thiefbug Egg Card 0 1 0
+Andre Egg Card 0 1 0
+Roda Frog Card 0 1 0
+Condor Card 0 1 0
+Thief Card 0 1 0
+Savage Bebe Card 0 1 0
+Andre Larva Card 0 1 0
+Hornet Card 0 1 0
+Familiar Card 0 1 0
+Rocker Card 0 1 0
+Spore Card 0 1 0
+Baby Desertwolf Card 0 1 0
+Plankton Card 0 1 0
+Skeleton Card 0 1 0
+Female Thiefbug Card 0 1 0
+Kukre Card 0 1 0
+Tarou Card 0 1 0
+Wolf Card 0 1 0
+Mandragora Card 0 1 0
+Pecopeco Card 0 1 0
+Ambernite Card 0 1 0
+PoPoring Card 0 1 0
+Wormtail Card 0 1 0
+Hydra Card 0 1 0
+Muka Card 0 1 0
+Snake Card 0 1 0
+Zombie Card 0 1 0
+Stainer Card 0 1 0
+Creamy Card 0 1 0
+Coco Card 0 1 0
+Steel Chonchon Card 0 1 0
+Andre Card 0 1 0
+Smokie Card 0 1 0
+Horn Card 0 1 0
+Martin Card 0 1 0
+Ghostring Card 0 1 0
+Poison Spore Card 0 1 0
+Vadon Card 0 1 0
+Male Thiefbug Card 0 1 0
+Yoyo Card 0 1 0
+Elder Willow Card 0 1 0
+Vitata Card 0 1 0
+Angelring Card 0 1 0
+Marina Card 0 1 0
+Dustiness Card 0 1 0
+Metaller Card 0 1 0
+Thara Frog Card 0 1 0
+Soldier Andre Card 0 1 0
+Goblin Card 0 1 0
+Cornutus Card 0 1 0
+Anacondaq Card 0 1 0
+Caramel Card 0 1 0
+Zerom Card 0 1 0
+Kaho Card 0 1 0
+Orc Warrier Card 0 1 0
+Megalodon Card 0 1 0
+Scorpion Card 0 1 0
+Drainliar Card 0 1 0
+Eggyra Card 0 1 0
+Orc Zombie Card 0 1 0
+Golem Card 0 1 0
+Pirate Skel Card 0 1 0
+Bigfoot Card 0 1 0
+Argos Card 0 1 0
+Magnolia Card 0 1 0
+Phen Card 0 1 0
+Savage Card 0 1 0
+Mantis Card 0 1 0
+Flora Card 0 1 0
+Hode Card 0 1 0
+Desert Wolf Card 0 1 0
+Rafflesia Card 0 1 0
+Marine Sphere Card 0 1 0
+Orc Skeleton Card 0 1 0
+Soldier Skeleton Card 0 1 0
+Giearth Card 0 1 0
+Frilldora Card 0 1 0
+Swordfish Card 0 1 0
+Munak Card 0 1 0
+Cobold Card 0 1 0
+Skel Worker Card 0 1 0
+Obeaune Card 0 1 0
+Archer Skeleton Card 0 1 0
+Mars Card 0 1 0
+Zenorc Card 0 1 0
+Matyr Card 0 1 0
+Dokkaebi Card 0 1 0
+Pasana Card 0 1 0
+Sohee Card 0 1 0
+Sandman Card 0 1 0
+Whisper Card 0 1 0
+Horong Card 0 1 0
+Requiem Card 0 1 0
+Marc Card 0 1 0
+Mummy Card 0 1 0
+Verit Card 0 1 0
+Mist Card 0 1 0
+Zakk Card 0 1 0
+Ghoul Card 0 1 0
+Strouf Card 0 1 0
+Marduk Card 0 1 0
+Marionette Card 0 1 0
+Argiope Card 0 1 0
+Hunter Fly Card 0 1 0
+Isis Card 0 1 0
+Sidewinder Card 0 1 0
+Petite Card 0 1 0
+Bathory Card 0 1 0
+Petite Card 0 1 0
+Phreeoni Card 0 1 0
+Deviruchi Card 0 1 0
+Eddga Card 0 1 0
+Medusa Card 0 1 0
+Deviace Card 0 1 0
+Minorous Card 0 1 0
+Nightmare Card 0 1 0
+Golden Thiefbug Card 0 1 0
+Bapho Jr. Card 0 1 0
+Scorpion King Card 0 1 0
+Moonlight Flower Card 0 1 0
+Mistress Card 0 1 0
+Raydric Card 0 1 0
+Dracula Card 0 1 0
+Orc Lord Card 0 1 0
+Khalitzburg Card 0 1 0
+Drake Card 0 1 0
+Anubis Card 0 1 0
+Joker Card 0 1 0
+Abysmal Knight Card 0 1 0
+Evil Druid Card 0 1 0
+Doppelganger Card 0 1 0
+Orc Hero Card 0 1 0
+Osiris Card 0 1 0
+Berzebub Card 0 1 0
+Maya Card 0 1 0
+Baphomet Card 0 1 0
+Pharaoh Card 0 1 0
+Headset 0 1 0
+Gemmed Crown 0 1 0
+Joker Jester 0 1 0
+Oxygen Mask 0 1 0
+Gas Mask 0 1 0
+Machoman's Glasses 0 1 0
+Grand Circlet 0 1 0
+Puppy Love 0 1 0
+Safety Helmet 0 1 0
+Indian Fillet 0 1 0
+Aerial 0 1 0
+Ph.D Hat 0 1 0
+Lord Kaho's Horn 0 1 0
+Fin Helm 0 1 0
+Egg Shell 0 1 0
+Boys Cap 0 1 0
+Bone Helm 0 1 0
+Feather Bonnet 0 1 0
+Corsair 0 1 0
+Battered Pot 0 1 0
+Battered Pot 0 1 0
+Trunk 0 1 0
+Rainbow Carrot 0 1 0
+Grape 0 1 0
+Blue Herb 0 1 0
+Bitter Herb 0 1 0
+Earthworm the Dude 0 1 0
+Dew Laden Moss 0 1 0
+Belt 0 1 0
+Novce Armlet 0 1 0
+Katar of Cold Icicle 0 1 0
+Katar of Dusty Thornbush 0 1 0
+Katar of Raging Blaze 0 1 0
+Katar of Piercing Wind 0 1 0
+Shaprpened Legbone of Ghoul 0 1 0
+Infiltrator 0 1 0
+Claw of Desert Wolf 0 1 0
+Old Frying Fan 0 1 0
+Cut of Egg Shell 0 1 0
+Unripe Apple 0 1 0
+Orange Juice 0 1 0
+Rotten Fish 0 1 0
+Lusty Iron 0 1 0
+Monster Juice 0 1 0
+Sweet Milk 0 1 0
+Well-Dried Bone 0 1 0
+Singing Flower 0 1 0
+Deadly Noxious Herb 0 1 0
+Fatty Chubby Earthworm 0 1 0
+Baked Yam 0 1 0
+Tropical Banana 0 1 0
+Horror of Tribe 0 1 0
+No Recipient 0 1 0
+Old Broom 0 1 0
+Silver Knife of Chastity 0 1 0
+Armlet of Obedience 0 1 0
+Shining Stone 0 1 0
+Contracts in Shadow 0 1 0
+Book of Devil 0 1 0
+Pet Incubator 0 1 0
+Poring Egg 0 1 0
+Drops Egg 0 1 0
+Poporing Egg 0 1 0
+Lunatic Egg 0 1 0
+Picky Egg 0 1 0
+Chonchon Egg 0 1 0
+Steel Chonchon Egg 0 1 0
+Hunter Fly Egg 0 1 0
+Savage Bebe Egg 0 1 0
+Baby Desert Wolf Egg 0 1 0
+Rocker Egg 0 1 0
+Spore Egg 0 1 0
+Poison Spore Egg 0 1 0
+PecoPeco Egg 0 1 0
+Smokie Egg 0 1 0
+Yoyo Egg 0 1 0
+Orc Warrior Egg 0 1 0
+Munak Egg 0 1 0
+Dokkaebi Egg 0 1 0
+Sohee Egg 0 1 0
+Isis Egg 0 1 0
+Green Petite Egg 0 1 0
+Deviruchi Egg 0 1 0
+Bapho Jr. Egg 0 1 0
+Skull Helm 0 1 0
+Monster Oxygen Mask 0 1 0
+Transparent Head Protector 0 1 0
+Pacifier 0 1 0
+Wig 0 1 0
+Queen's Hair Ornament 0 1 0
+Silk Ribbon 0 1 0
+Punisher 0 1 0
+Wild Flower 0 1 0
+Stellar Hairpin 0 1 0
+Tiny Egg Shell 0 1 0
+Backpack 0 1 0
+Rocker Glasses 0 1 0
+Green Lace 0 1 0
+Golden Bell 0 1 0
+Bark Shorts 0 1 0
+Monkey Circlet 0 1 0
+Red Muffler 0 1 0
+Pet Food 0 1 0
