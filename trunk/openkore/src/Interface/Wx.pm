@@ -26,13 +26,17 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_COMMAND);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_PAINT);
 use Time::HiRes qw(time sleep);
+use File::Spec;
+use IPC::Open2;
+use POSIX;
 require DynaLoader;
 
 use Globals;
 use Interface;
 use base qw(Wx::App Interface);
+use Interface::Wx::MapViewer;
 use Settings;
 use Plugins;
 use Utils;
@@ -52,6 +56,10 @@ sub OnInit {
 		if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
 			# wxGTK is linked to GTK 2
 			$self->{platform} = 'gtk2';
+			# GTK 2 will segfault if we try to use non-UTF 8 characters,
+			# so we need functions to convert them to UTF-8
+			my $mod = 'use utf8; use Encode;';
+			eval $mod;
 		} else {
 			$self->{platform} = 'gtk1';
 		}
@@ -77,6 +85,10 @@ sub iterate {
 	my $self = shift;
 
 	$self->updateStatusBar();
+	if (0 && $self->{mapViewer} && %field && $char) {
+		$self->{mapViewer}->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
+	}
+
 	while ($self->Pending()) {
 		$self->Dispatch();
 	}
@@ -155,6 +167,17 @@ sub writeOutput {
 	}
 
 	# Add text
+	if ($self->{platform} eq 'gtk2') {
+		my $utf8;
+		# Convert to UTF-8 so we don't segfault.
+		# Conversion to ISO-8859-1 will always succeed
+		my @encs = ("EUC-KR", "EUCKR", "ISO-2022-KR", "ISO8859-1");
+		foreach (@encs) {
+			$utf8 = Encode::encode($_, $msg);
+			last if $utf8;
+		}
+		$msg = Encode::encode_utf8($utf8);
+	}
 	$self->{console}->AppendText($msg);
 	$self->{console}->SetDefaultStyle($self->{defaultStyle}) if ($revertStyle);
 
@@ -215,29 +238,26 @@ sub createInterface {
 
 
 	### Menu bar
-	my $menu = new Wx::MenuBar();
+	my $menu = $self->{menu} = new Wx::MenuBar();
 	$frame->SetMenuBar($menu);
 
 		# Program menu
 		my $opMenu = new Wx::Menu();
-		$self->addMenu($opMenu, 'E&xit', \&main::quit);
+		$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit);
 		$menu->Append($opMenu, '&Program');
 
 		# View menu
 		my $viewMenu = new Wx::Menu();
-		$self->addMenu($viewMenu, '&Font...', \&onFontChange);
+		$self->addMenu($viewMenu, '&Map	Ctrl-M', \&onMapToggle);
+		$viewMenu->AppendSeparator();
+		$self->addMenu($viewMenu, '&Font...	Ctrl-F', \&onFontChange);
 		$menu->Append($viewMenu, '&View');
 
-		if (0) {
-		# Test menu
-		my $testMenu = new Wx::Menu();
-		#$self->addMenu($testMenu, 'Test');
-		$menu->Append($testMenu, '&Test');
-		}
-
+		$self->createCustomMenus() if $self->can('createCustomMenus');
+		
 		# Help menu
 		my $helpMenu = new Wx::Menu();
-		$self->addMenu($helpMenu, '&Manual', \&onManual);
+		$self->addMenu($helpMenu, '&Manual	F1', \&onManual);
 		$self->addMenu($helpMenu, '&Forum', \&onForum);
 		$menu->Append($helpMenu, '&Help');
 
@@ -302,7 +322,8 @@ sub createInterface {
 
 	#################
 
-	$frame->SetClientSize(635, 410);
+	$frame->SetSizeHints(300, 250);
+	$frame->SetClientSize(630, 400);
 	$frame->SetIcon(Wx::GetWxPerlIcon());
 	$frame->Show(1);
 	$self->SetTopWindow($frame);
@@ -316,10 +337,10 @@ sub createInterface {
 }
 
 sub addMenu {
-	my ($self, $menu, $label, $callback) = @_;
+	my ($self, $menu, $label, $callback, $help) = @_;
 
 	$self->{menuIDs}++;
-	$menu->Append($self->{menuIDs}, $label);
+	$menu->Append($self->{menuIDs}, $label, $help);
 	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self) });
 }
 
@@ -402,6 +423,100 @@ sub updateStatusBar {
 	$self->{aiBarTimeout}{time} = time;
 }
 
+sub launchApp {
+	if ($buildType == 1) {
+		my @args = @_;
+		foreach (@args) {
+			$_ = "\"$_\"";
+		}
+
+		my ($priority, $obj);
+		eval 'use Win32::Process; use Win32; $priority = NORMAL_PRIORITY_CLASS;';
+		Win32::Process::Create($obj, $_[0], "@args", 0, $priority, '.');
+		return $obj;
+
+	} else {
+		my $pid = fork();
+		if ($pid == 0) {
+			open(STDOUT, "> /dev/null");
+			open(STDERR, "> /dev/null");
+			POSIX::setsid();
+			exec(@_);
+			POSIX::_exit(1);
+		}
+		return $pid;
+	}
+}
+
+sub launchURL {
+	my $self = shift;
+	my $url = shift;
+
+	if ($buildType == 0) {
+		eval "use Win32::API;";
+		my $ShellExecute = new Win32::API("shell32", "ShellExecute", "NPPPPN", "V");
+		$ShellExecute->Call(0, '', $url, '', '', 1);
+
+	} else {
+		my $detectionScript = <<"		EOF";
+			function detectDesktop() {
+				if [[ "\$DISPLAY" = "" ]]; then
+                			return 1
+				fi
+
+				local LC_ALL=C
+				local clients
+				if ! clients=`xlsclients`; then
+			                return 1
+				fi
+
+				if echo "\$clients" | grep -qE '(gnome-panel|nautilus|metacity)'; then
+					echo gnome
+				elif echo "\$clients" | grep -qE '(kicker|slicker|karamba|kwin)'; then
+        			        echo kde
+				else
+        			        echo other
+				fi
+				return 0
+			}
+			detectDesktop
+		EOF
+
+		my ($r, $w, $desktop);
+		my $pid = open2($r, $w, '/bin/bash');
+		print $w $detectionScript;
+		close $w;
+		$desktop = <$r>;
+		$desktop =~ s/\n//;
+		close $r;
+		waitpid($pid, 0);
+
+		sub checkCommand {
+			foreach (split(/:/, $ENV{PATH})) {
+				return 1 if (-x "$_/$_[0]");
+			}
+			return 0;
+		}
+
+		if ($desktop eq "gnome" && checkCommand('gnome-open')) {
+			launchApp('gnome-open', $url);
+
+		} elsif ($desktop eq "kde") {
+			launchApp('kfmclient', 'exec', $url);
+
+		} else {
+			if (checkCommand('firefox')) {
+				launchApp('firefox', $url);
+			} elsif (checkCommand('mozillaa')) {
+				launchApp('mozilla', $url);
+			} else {
+				$self->errorDialog("No suitable browser detected. " .
+					"Please launch your favorite browser and go to:\n$url");
+			}
+		}
+	}
+}
+
 
 ################## Callbacks ##################
 
@@ -442,11 +557,36 @@ sub onFontChange {
 	$dialog->Destroy();
 }
 
+sub onMapToggle {
+	my $self = shift;
+	if ($self->{mapFrame}) {
+		$self->{mapFrame}->Raise();
+		return;
+	}
+
+	my $mapFrame = $self->{mapFrame} = new Wx::Dialog($self->{frame}, -1, 'Map', wxDefaultPosition, wxDefaultSize,
+		wxRESIZE_BORDER | wxMINIMIZE_BOX | wxCLOSE_BOX);
+	EVT_CLOSE($mapFrame, sub {
+		$mapFrame->Destroy();
+		delete $self->{mapViewer};
+		delete $self->{mapFrame};
+	});
+
+	my $mapViewer = $self->{mapViewer} = new Interface::Wx::MapViewer($mapFrame);
+	if (%field && $char) {
+		$mapViewer->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
+	}
+	$mapFrame->Show(1);
+}
+
 sub onManual {
+	my $self = shift;
+	$self->launchURL('http://openkore.sourceforge.net/manual/');
 }
 
 sub onForum {
-	
+	my $self = shift;
+	$self->launchURL('http://openkore.sourceforge.net/forum.php');
 }
 
 
