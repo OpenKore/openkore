@@ -73,7 +73,7 @@ attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
 attackAuto_inLockOnly 1
-attackDistance 3
+attackDistance 1.5
 attackMaxRouteDistance 100
 attackMaxRouteTime 4
 attackUseWeapon 1
