@@ -45,10 +45,12 @@ Bug fixes:
 - autoTalkCont bugfix by fov.
 - Fixed new ai_skillUse to support temporary skills.
 - Fixed 'monster', 'mvp' and 'death' commands to work with new ai_skillUse.
+- Fixed storage access when storage is empty.
 
 Credits:
 - Fenris: Tk interface improvements.
 - aputs: Inventory checking config options.
+- fov: Storage access bugfix.
 
 Internal:
 - Added AI.pm, which is a wrapper for @ai_seq and @ai_seq_args.
