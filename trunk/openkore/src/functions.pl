@@ -4900,7 +4900,7 @@ sub parseMsg {
 		}
 	}
 
-	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg});
+	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
 
 	$lastPacketTime = time;
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
@@ -9674,84 +9674,57 @@ sub avoidList_talk {
 }
 
 sub compilePortals {
-	my %missingMap;
+	my $checkOnly = shift;
+
 	my %mapPortals;
+	my %mapSpawns;
+	my %missingMap;
 	my @solution;
 
+	# Collect portal source and destination coordinates per map
 	foreach my $portal (keys %portals_lut) {
-		%{$mapPortals{$portals_lut{$portal}{'source'}{'map'}}{$portal}{'pos'}} = %{$portals_lut{$portal}{'source'}{'pos'}};
+		%{$mapPortals{$portals_lut{$portal}{source}{map}}{$portal}} = %{$portals_lut{$portal}{source}{pos}};
+		foreach my $dest (keys %{$portals_lut{$portal}{dest}}) {
+			next if $portals_lut{$portal}{dest}{$dest}{map} eq '';
+			%{$mapSpawns{$portals_lut{$portal}{dest}{$dest}{map}}{$dest}} = %{$portals_lut{$portal}{dest}{$dest}{pos}};
+		}
 	}
-	foreach my $map (sort keys %mapPortals) {
-		message "Processing map $map...\n", "system";
-		my @list = sort keys %{$mapPortals{$map}};
-		foreach my $this (@list) {
-			foreach my $that (@list) {
-				next if $this eq $that;
-				next if $portals_los{$this}{$that} ne '' && $portals_los{$that}{$this} ne '';
 
-				if ($field{'name'} ne $map) {
+	# Calculate LOS values from each spawn point per map to other portals on same map
+	foreach my $map (sort keys %mapSpawns) {
+		message "Processing map $map...\n", "system" unless $checkOnly;
+		foreach my $spawn (keys %{$mapSpawns{$map}}) {
+			foreach my $portal (keys %{$mapPortals{$map}}) {
+				next if $spawn eq $portal;
+				next if $portals_los{$spawn}{$portal} ne '';
+				if ($field{name} ne $map && !$missingMap{$map}) {
 					$missingMap{$map} = 1 if (!getField("$Settings::def_field/$map.fld", \%field));
 				}
-
-				ai_route_getRoute(\@solution, \%field, \%{$mapPortals{$map}{$this}{'pos'}}, \%{$mapPortals{$map}{$that}{'pos'}});
-				$portals_los{$this}{$that} = scalar @solution;
-				$portals_los{$that}{$this} = scalar @solution;
+				return 1 if $checkOnly;
+				ai_route_getRoute(\@solution, \%field, \%{$mapSpawns{$map}{$spawn}}, \%{$mapPortals{$map}{$portal}});
+				$portals_los{$spawn}{$portal} = scalar @solution;
+				debug "LOS in $map from $mapSpawns{$map}{$spawn}{x},$mapSpawns{$map}{$spawn}{y} to $mapPortals{$map}{$portal}{x},$mapPortals{$map}{$portal}{y}: $portals_los{$spawn}{$portal}\n";
 			}
 		}
 	}
-	message "Adding NPC destinations...\n", "system";
-	foreach my $portal (keys %portals_lut) {
-		foreach my $npc (keys %{$portals_lut{$portal}{'dest'}}) {
-			next unless $portals_lut{$portal}{'dest'}{$npc}{'steps'};
-			my $map = $portals_lut{$portal}{'dest'}{$npc}{'map'};
-			foreach my $dest (keys %{$mapPortals{$map}}) {
-				next if $portals_los{$npc}{$dest} ne '';
-				message "Processing map $map...\n";
-				if ($field{'name'} ne $map) { if (!getField("$Settings::def_field/$map.fld", \%field, 1)) { $missingMap{$map} = 1;}}
-#				message "($portals_lut{$portal}{'dest'}{$npc}{pos}{x} $portals_lut{$portal}{'dest'}{$npc}{pos}{y} -> ($mapPortals{$map}{$dest}{pos}{x} $mapPortals{$map}{$dest}{pos}{y})\n"; #\%{$portals_lut{$portal}{'dest'}{$npc}{'pos'}}, \%{$mapPortals{$map}{$dest}{'pos'}});
-				ai_route_getRoute(\@solution, \%field, \%{$portals_lut{$portal}{'dest'}{$npc}{'pos'}}, \%{$mapPortals{$map}{$dest}{'pos'}});
-				$portals_los{$npc}{$dest} = scalar @solution;
-			}
-		}
-	}
+	return 0 if $checkOnly;
 
+	# Write new portalsLOS.txt
 	writePortalsLOS("$Settings::tables_folder/portalsLOS.txt", \%portals_los);
 	message "Wrote portals Line of Sight table to '$Settings::tables_folder/portalsLOS.txt'\n", "system";
 
+	# Print warning for missing fields
 	if (%missingMap) {
 		warning "----------------------------Error Summary----------------------------\n";
 		warning "Missing: $_.fld\n" foreach (sort keys %missingMap);
 		warning "Note: LOS information for the above listed map(s) will be inaccurate;\n";
-		warning "      however it is safe to ignore if those map(s) are not in used\n";
+		warning "      however it is safe to ignore if those map(s) are not used\n";
 		warning "----------------------------Error Summary----------------------------\n";
 	}	
 }
 
 sub compilePortals_check {
-	my %mapPortals;
-	foreach (keys %portals_lut) {
-		%{$mapPortals{$portals_lut{$_}{'source'}{'map'}}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
-	}
-	foreach my $map (sort keys %mapPortals) {
-		foreach my $this (sort keys %{$mapPortals{$map}}) {
-			foreach my $that (sort keys %{$mapPortals{$map}}) {
-				next if $this eq $that;
-				next if $portals_los{$this}{$that} ne '' && $portals_los{$that}{$this} ne '';
-				return 1;
-			}
-		}
-	}
-	foreach my $portal (keys %portals_lut) {
-		foreach my $npc (keys %{$portals_lut{$portal}{'dest'}}) {
-			next unless $portals_lut{$portal}{'dest'}{$npc}{'steps'};
-			my $map = $portals_lut{$portal}{'dest'}{$npc}{'map'};
-			foreach my $dest (keys %{$mapPortals{$map}}) {
-				next if $portals_los{$npc}{$dest} ne '';
-				return 1;
-			}
-		}
-	}
-	return 0;
+	return compilePortals(1);
 }
 
 ##
