@@ -332,7 +332,8 @@ sub cmdAI {
 
 sub cmdAIv {
 	# Display current AI sequences
-	message("ai_seq = @ai_seq\n", "list");
+	my $on = $AI ? 'on' : 'off';
+	message("ai_seq ($on) = @ai_seq\n", "list");
 	message("solution\n", "list") if ($ai_seq_args[0]{'solution'});
 }
 
