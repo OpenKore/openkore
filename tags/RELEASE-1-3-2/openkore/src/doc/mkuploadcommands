@@ -1,0 +1,35 @@
+#!/bin/bash
+# This script creates an upload script for sftp.
+
+cd srcdoc
+echo progress
+echo cd /home/groups/o/op/openkore/htdocs/srcdoc
+echo lcd srcdoc
+
+examineFolder() {
+	if [[ "$1" != "" ]]; then
+		pushd "$1" &>/dev/null
+		echo -mkdir "$1"
+		echo "cd $1"
+		echo "lcd $1"
+	fi
+
+	# Upload files
+	for F in *.html *.css *.png *.js *.php *.txt; do
+		[[ -f "$F" ]] && echo "put $F"
+	done
+
+	# Process subfolders
+	for D in *; do
+		[[ -d "$D" && "$D" != "CVS" ]] && examineFolder "$D"
+	done
+
+	if [[ "$1" != "" ]]; then
+		popd &>/dev/null
+		echo cd ..
+		echo lcd ..
+	fi
+}
+
+examineFolder
+echo bye
