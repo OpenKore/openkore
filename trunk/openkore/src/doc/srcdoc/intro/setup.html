@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+	<META NAME="Robots" CONTENT="noindex,nofollow">
+	<TITLE>Setting up the development environment - OpenKore Development Introduction Guide</TITLE>
+	<LINK HREF="guide.css" MEDIA="screen" REL="stylesheet" TYPE="text/css">
+	<STYLE TYPE="text/css">
+	<!--
+	@import url(guide.css);
+	-->
+	</STYLE>
+</HEAD>
+
+<BODY>
+
+<DIV ID="head"><A HREF="index.html">&lt;&lt; OpenKore Development Guide</A></DIV>
+
+<H2>Setting up the development environment</H2>
+
+This section teaches Windows developers how to setup the development environment.
+If you're a Linux developer you should already have Perl and GCC.
+All tools listed here are free. You don't necessarily have to use these 
+tools if you prefer other alternative tools, but this guide will only 
+teach you how to setup and use these tools.
+
+
+<A NAME="perl"></A>
+<H2>ActiveState ActivePerl - the Win32 Perl interpreter</H2>
+
+You need a Perl interpreter if you want to work on Kore.
+The best Perl interpreter for Win32 is probably ActivePerl:
+<A HREF="http://www.activestate.com/Products/ActivePerl/">http://www.activestate.com/Products/ActivePerl/</A>
+
+<P>
+(TODO: write instructions here about how to install Time::HiRes and 
+Win32::API)
+
+<P>
+Perl is commandline-based. In order to run a Perl script you need to
+type this in the commandline (assuming ActivePerl is installed to 
+C:\Perl):
+<PRE>C:\perl\bin\perl YourScript.pl</PRE>
+
+So, to run <TT>openkore.pl</TT>, you need to type this:
+<PRE>cd C:\Whever\Your\OpenKore\Folder\Is
+C:\perl\bin\perl openkore.pl</PRE>
+
+
+<A NAME="gcc"></A>
+<H2>GNU Compiler Collection (GCC) - the C++ compiler</H2>
+
+You only need a C++ compiler if you want to work on Tools.cpp and/or 
+Inject.cpp. If you aren't interested in them, you can skip this step.
+
+<P>
+GCC is a suite which contains a C and C++ compiler. It's originally meant 
+for Unix systems (and is the standard compiler for Linux), but Win32 
+ports are available. One of the Win32 ports is called MinGW (Minimalist 
+GNU for Win32): <A HREF="http://www.mingw.org/">http://www.mingw.org/</A>
+
+<P>
+TODO: write instructions here about how to install mingw.
+
+<P>
+The OpenKore source code contains the file "Makefile.win32", a makefile 
+for Win32 GCC. You can use that to compile Tools.cpp and Inject.cpp.
+The file "Makefile" is for Linux/Unix only.
+
+
+<A NAME="editors"></A>
+<H2>Editors</H2>
+
+You can of course edit the source code in any text editor. It is, however, not recommended to use Notepad. Notepad doesn't support CRLF (Unix line endings; at least one of the developers develop OpenKore mainly in Linux) and doesn't support auto-indent.<BR>
+For Windows, I recommend <A HREF="http://www.crimsoneditor.com/">Crimson Editor</A>, a freeware general-purpose code editor which supports syntax highlighting for many languages (including Perl and C++).
+
+
+</BODY>
+</HTML>

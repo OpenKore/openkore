@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+	<META NAME="Robots" CONTENT="noindex,nofollow">
+	<TITLE>OpenKore CVS Guide</TITLE>
+	<LINK HREF="cvs.css" MEDIA="screen" REL="stylesheet" TYPE="text/css">
+	<STYLE TYPE="text/css">
+	<!--
+	@import url(cvs.css);
+	-->
+	</STYLE>
+</HEAD>
+
+<BODY>
+
+<DIV ID="head"><A HREF="index.html">&lt;&lt; OpenKore CVS Guide</A></DIV>
+
+<H2>Important note</H2>
+
+The SourceForge anonymous CVS servers are known to be buggy. They tend to be down from time to time. If you're unable to access the CVS server right away, wait a while and try again.
+
+
+<H2>1. Download (checkout) source code from CVS</H2>
+
+<IMG SRC="checkout.png" WIDTH="197" HEIGHT="75" ALT="Menu for CVS checkout" ALIGN="Right">
+Go to the folder in which you want to put the source code.
+Rightclick on an empty spot in the folder, and click on
+<TT>"CVS Checkout..."</TT>.<BR>
+A dialog will appear. Fill in this for the "CVSROOT" field:
+<BLOCKQUOTE>
+<TT>:pserver:anonymous@cvs.sourceforge.net:/cvsroot/openkore</TT><BR>
+</BLOCKQUOTE>
+For the "Module" field, enter a module name (see the previous page for
+a list of modules).<BR>
+When you're done, click on OK. The code will now appear in a subfolder with
+the same name of the module. You can now modify the source code as you wish.
+
+
+<H2>2. Modify the source code</H2>
+
+This is up to you. ;) However, you should read the Developers Notes first
+if you haven't done so. If you've downloaded the <TT>openkore</TT>
+module, read DevelopersNotes.txt.<P>
+
+<B>Tip:</B> you may have already noticed by now that all files inside
+the module folder are green. Files that you have changed will automatically
+turn red.
+
+
+<H2>3. Tell CVS to merge your changes with the latest changes in CVS</H2>
+
+<IMG SRC="update.png" WIDTH="197" HEIGHT="104" ALT="CVS Update menu" ALIGN="Right">
+Your changes will not be in the CVS repository until you commit them.<P>
+
+By the time you're done modifying the code, another developer may have
+already uploaded his changes to CVS. This is why you should always
+do a <I>CVS update</I>: merge your changes with possible new changes
+in CVS.<P>
+
+Rightclick on an empty spot in the module's folder and choose
+<TT>"CVS Update"</TT>.<BR>
+<B>Note:</B> sometimes CVS may report conflicts during merging. For
+more information, read <A HREF="conflicts.html">"How to resolve merging
+conflicts"</A>.
+<P>
+
+This command is also used to download the latest source code from CVS,
+not just to merge your changes.
+<P>
+
+
+<H2>4. Create a patch and submit it to the forums</H2>
+
+A patch is a text file that contains the changes you've made.
+Select all the files that you want to make a patch for.
+Rightclick and choose <TT>"CVS Diff..."</TT> or <TT>"CVS-&gt;Make patch"</TT>.
+TortoiseCVS will ask you where to save the patch file. Make sure you
+save it with the <I>.patch</I> or <I>.diff</I> extension.<P>
+
+After having saved the patch file, go to the forums, section
+<A HREF="http://openkore.sourceforge.net/forum/viewforum.php?f=6">Addons, Mods & New Code</A>.
+Make a new topic. There are two ways to post your source code:
+<OL>
+<LI>Copy & paste your code from Notepad to the web browser. Put the 
+source code between [CODE] UBB tags (recommended way).</LI>
+<LI>Add your patch file as attachment.</LI>
+</OL>
+
+
+</BODY>
+</HTML>
