@@ -274,6 +274,7 @@ Amblem of the Sun God 0 1 0
 Animal Gore 0 1 0
 Baphomet Doll 0 1 0
 Black Dyestuffs 0 1 0
+Blush 0 1 0
 Breath of Spirit 0 1 0
 Chivalry Emblem 0 1 0
 Clock Tower Key 0 1 0
@@ -1163,7 +1164,6 @@ Bill of Birds 0 0 1
 Black Hair 0 0 1
 Black Ladle 0 0 1
 Blue Hair 0 0 1
-Blush 0 0 1
 Bouquet 0 0 1
 Brigan 0 0 1
 Broken Liquor Jar 0 0 1
