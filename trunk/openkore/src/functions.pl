@@ -5024,11 +5024,16 @@ sub parseMsg {
 			$interface->errorDialog("Critical Error: Your account has been blocked.");
 			$quit = 1;
 		} elsif ($type == 5) {
+			$masterver = $config{"master_version_$config{'master'}"};
 			error("Version $config{'version'} failed...trying to find version\n", "connection");
+			error("Master Version: $masterver\n", "connection");
 			$config{'version'}++;
 			if (!$versionSearch) {
 				$config{'version'} = 0;
 				$versionSearch = 1;
+			} elsif ($config{'version'} eq 51) {
+				$config{"master_version_$config{'master'}"}++;
+				$config{'version'} = 0;
 			}
 			relog();
 		} elsif ($type == 6) {
