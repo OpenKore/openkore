@@ -5876,7 +5876,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
-		chatLog("s", $chat."\n") if ($config{'logChat'});
+		chatLog("s", $chat."\n") if ($config{'logSystemChat'});
 		print "$chat\n";
 		avoidGM_talk(undef, $chat);
 

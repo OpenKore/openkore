@@ -68,6 +68,7 @@ logChat 1
 logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
+logSystemChat 1
 logEmoticons
 
 attackAuto 2
