@@ -165,7 +165,9 @@ sub checkConnection {
 		if ($config{'secureLogin'} >= 1) {
 			message("Secure Login...\n", "connection");
 			undef $secureLoginKey;
-			sendMasterCodeRequest(\$remote_socket, $config{'secureLogin_type'});
+			#in config example
+			#secureLogin_requestCode 04 02 c7 0A 94 C2 7A CC 38 9A 47 F5 54 39 7C A4 D0 39
+			sendMasterCodeRequest(\$remote_socket, $config{'secureLogin_requestCode'});
 		} else {
 			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'});
 		}
