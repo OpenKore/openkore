@@ -16,7 +16,7 @@
 #  GNU General Public License for more details.
 #
 #
-#  $Revision preCVS 0.2 $
+#  $Revision$
 #  $Id$
 #
 #########################################################################
@@ -169,13 +169,13 @@ sub writeOutput {
 	foreach my $s (split("\n", $msg)) {
 		if ($self->{winFight} && existsInList("attack", $domain)) {
 			scroll $self->{winFight};
-			$self->printw($self->{winFight}, $self->{winFightHeight} - 1, 0, "{normal}@*{normal} $color@*", $time, $s);
+			$self->printw($self->{winFight}, $self->{winFightHeight} - 1, 0, "{normal}@<<<<<<< $color@*", $time, $s);
 		} elsif ($self->{winChat} && existsInList("emotion,gmchat,guildchat,partychat,pm,publicchat,selfchat", $domain)) {
 			scroll $self->{winChat};
-			$self->printw($self->{winChat}, $self->{winChatHeight} - 1, 0, "{normal}@*{normal} $color@*", $time, $s);
+			$self->printw($self->{winChat}, $self->{winChatHeight} - 1, 0, "{normal}@<<<<<<< $color@*", $time, $s);
 		} else {
 			scroll $self->{winLog};
-			$self->printw($self->{winLog}, $self->{winLogHeight} - 1, 0, "{normal}@*{normal} $color@*", $time, $s);
+			$self->printw($self->{winLog}, $self->{winLogHeight} - 1, 0, "{normal}@<<<<<<< $color@*", $time, $s);
 		}
 	}
 	refresh $self->{winFight} if $self->{winFight};
@@ -333,7 +333,7 @@ sub updateStatus {
 	my $jexpbar = $self->makeBar($width-24, $char->{exp_job}, $char->{exp_job_max});
 	$self->printw($self->{winStatus}, 2, 0, "{bold|yellow}    Job:{normal} @<< $jexpbar (@#.##%)",
 		$char->{lv_job}, $char->{exp_job_max} ? $char->{exp_job} / $char->{exp_job_max} * 100 : 0);
-	$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @* (@##, @##)",
+	$self->printw($self->{winStatus}, 3, 0, "{bold|yellow}    Map:{normal} @<<<<<<<<<<<< (@##, @##)",
 		$field{name}, $char->{pos}{x}, $char->{pos}{y});
 
 	vline $self->{winStatus}, 0, $width-1, 0, 4;
