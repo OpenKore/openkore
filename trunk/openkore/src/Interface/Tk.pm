@@ -33,11 +33,11 @@ use Time::HiRes qw/time/;
 use Tk;
 use Tk::ROText;
 use Tk::BrowseEntry;
+use Tk::NoteBook;
 
 
 #these should go in a config file at some point.
 our $line_limit = 1000;
-our $default_font = "Courier";
 
 ################################################################
 # Public Method
@@ -51,6 +51,7 @@ sub new {
 		input_list => [],
 		input_offset => 0,
 		input_que => [],
+		default_font=>"MS_Sans_Serif",
 		input_type => "Command",
 		input_pm => undef,
 		total_lines => 0,
@@ -142,6 +143,20 @@ sub update {
 	$self->{mw}->update();
 }
 
+sub title {
+	my $self = shift;
+	my $title = shift;
+
+	if (defined $title) {
+		if (!defined $self->{currentTitle} || $self->{currentTitle} ne $title) {
+			$self->{mw}->title($title);
+			$self->{currentTitle} = $title;
+		}
+	} else {
+		return $self->{mw}->title();
+	}
+}
+
 sub updatePos {
 	my $self = shift;
 	return unless defined($config{'char'}) && defined($chars[$config{'char'}]) && defined($chars[$config{'char'}]{'pos_to'});
@@ -209,17 +224,28 @@ sub initTk {
 	$self->{mw}->protocol('WM_DELETE_WINDOW', [\&OnExit, $self]);
 	#$self->{mw}->Icon(-image=>$self->{mw}->Photo(-file=>"hyb.gif"));
 	$self->{mw}->title("OpenKore Tk Interface");
-	$self->{console} = $self->{mw}->Scrolled('ROText',
-		-bg=>'black',
-		-fg=>'grey',
+	$self->{mw}->minsize(500,310);
+	$self->{menuFont} = $self->{mw}->fontCreate(-family => "MS_Sans_Serif", -size => 8, -weight => "bold");
+	#------ Frame Control
+	$self->{main_frame} = $self->{mw}->Frame()->pack(-side => 'top',-expand => 1,-fill => 'both',);
+	$self->{btn_frame} = $self->{main_frame}->Frame()->pack(-side => 'right',-expand => 0,-fill => 'y',);
+	$self->{console_frame} = $self->{main_frame}->Frame(-bg=>'black')->pack(-side => 'left',-expand => 1,-fill => 'both',);
+	$self->{input_frame} = $self->{mw}->Frame(-bg=>'black')->pack(-side => 'top',-expand => 0,-fill => 'x',);
+	$self->{status_frame} = $self->{mw}->Frame()->pack(-side => 'top',-expand => 0,-fill => 'x',);
+
+	#------ subclass in console frame
+	$self->{tabPane} = $self->{console_frame}->NoteBook(-relief=>'flat',-border=>1,-tabpadx=>1,-tabpady=>1,-font=>${$self->{menuFont}},-bg=>'#CDCDCD',-foreground=>'grey',-inactivebackground=>"#999999")->pack(-expand => 1,-fill => 'both',-side => 'top',);
+	$self->{consoleTab} = $self->{tabPane}->add("Console",-label=>'Console');
+	$self->{chatTab} = $self->{tabPane}->add("Chat",-label=>'Chat');
+	$self->{console} = $self->{consoleTab}->Scrolled('ROText',-bg=>'black',-fg=>'grey',
 		-scrollbars => 'e',
-		-height => 20,
+		-height => 15,
 		-wrap => 'word',
-		-width => 80,
+		-width => 55,
 		-insertontime => 0,
 		-background => 'black',
 		-foreground => 'grey',
-		-font=>[ -family => $default_font ,-size=>10,],
+		-font=>[ -family => $self->{default_font} ,-size=>10,],
 		-relief => 'sunken',
 	)->pack(
 		-expand => 1,
@@ -227,19 +253,28 @@ sub initTk {
 		-side => 'top',
 	);
 
-	$self->{input_frame} = $self->{mw}->Frame(
-		-bg=>'black'
+	$self->{chatLog} = $self->{chatTab}->Scrolled('ROText',-bg=>'black',-fg=>'grey',
+		-scrollbars => 'e',
+		-height => 15,
+		-wrap => 'word',
+		-width => 55,
+		-insertontime => 0,
+		-background => 'black',
+		-foreground => 'grey',
+		-font=>[ -family => $self->{default_font} ,-size=>10,],
+		-relief => 'sunken',
 	)->pack(
+		-expand => 1,
+		-fill => 'both',
 		-side => 'top',
-		-expand => 0,
-		-fill => 'x',
 	);
 
-	$self->{status_frame} = $self->{mw}->Frame()->pack(
-		-side => 'top',
-		-expand => 0,
-		-fill => 'x',
-	);
+	$self->{mapBtn} = $self->{btn_frame}->Button(-text => ":: Map", -command => [\&mapToggle, $self] , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	$self->{statusBtn} = $self->{btn_frame}->Button(-text => ":: Status", -command =>[sub{push(@{$self->{input_list}}, "s");},$self] , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	$self->{skillsBtn} = $self->{btn_frame}->Button(-text => ":: Skills", -command => sub{push(@{$self->{input_list}}, "skills");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	$self->{inventBtn} = $self->{btn_frame}->Button(-text => ":: Inventory", -command =>sub{push(@{$self->{input_list}}, "i");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	$self->{pplBtn} = $self->{btn_frame}->Button(-text => ":: Players", -command => sub{push(@{$self->{input_list}}, "pl");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	$self->{monBtn} = $self->{btn_frame}->Button(-text => ":: Monsters", -command =>sub{push(@{$self->{input_list}}, "ml");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
 
 	#------ subclass in input frame
 	$self->{pminput} = $self->{input_frame}->BrowseEntry(
