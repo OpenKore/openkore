@@ -38,6 +38,7 @@ our @EXPORT = qw(
 	sendAddSkillPoint
 	sendAddStatusPoint
 	sendAlignment
+	sendArrowCraft
 	sendAttack
 	sendAttackStop
 	sendBuy
@@ -377,6 +378,14 @@ sub sendAlignment {
 	my $msg = pack("C*", 0x49, 0x01) . $ID . pack("C*", $alignment);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
+}
+
+sub sendArrowCraft {
+	my $r_socket = shift;
+	my $index = shift;
+	my $msg = pack("C*", 0xAE, 0x01) . pack("S*", $index);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent Arrowmake: $index\n", "sendPacket", 2;
 }
 
 sub sendAttack {

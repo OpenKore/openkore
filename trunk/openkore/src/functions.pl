@@ -2263,6 +2263,36 @@ sub AI {
 		useTeleport($ai_v{temp}{teleport}{lv});
 	}
 
+
+	####### AUTO MAKE ARROW #######
+	if ( (AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/))
+	 && timeOut($AI::Timeouts::autoArrow, 0.2) && defined(binFind(\@skillsID, 'AC_MAKINGARROW')) ) {
+		if (!(@arrowCraftID)) {
+			ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
+		} else {
+			my @changeItems;
+			my $max = @arrowCraftID;
+
+			for (my $i = 0; $i < $max; $i++) {
+				my $item = $char->{inventory}[$arrowCraftID[$i]];
+				next unless ($item);
+				my $change = $arrowcraft_items{lc($item->{name})};
+				if ($change) {
+					sendArrowCraft(\$remote_socket, $item->{nameID});
+					debug "Making Arrow\n", "ai_MakeArrow";
+					last
+				}
+				if ($i == $max) {
+					ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
+					last
+				}
+			}
+
+		}
+		$AI::Timeouts::autoArrow = time;
+	}
+
+
 	#storageAuto - chobit aska 20030128
 	#####AUTO STORAGE#####
 

@@ -1968,7 +1968,7 @@ sub cmdArrowCraft {
 		}
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {
-			sendIdentify(\$remote_socket, $char->{inventory}[$arrowCraftID[$arg1]]{index});
+			sendArrowCraft(\$remote_socket, $char->{inventory}[$arrowCraftID[$arg1]]{nameID});
 		} else {
 			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
 				"Usage: arrowcraft [<identify #>]",

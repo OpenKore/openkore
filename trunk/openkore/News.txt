@@ -78,6 +78,13 @@ New features:
 - 'conf' command will now display what the old value was.
 - "Received Possible Identify List" message now tells you how many items are
   in the list.
+- Automatically create arrows with Arrow Craft. You can control it by editing
+  control/arrowcraft.txt. In that file, put in the items that you need for creating
+  arrows. For example:
+    Lantern 1
+    Tooth of Bat 1
+    Red Blood 1
+    Garlet 1
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
@@ -153,7 +160,8 @@ Internal:
 Credits:
 - asuwannarat, as2765324: tRO server details.
 - MindChild: support for the 'all' option in items_control.txt,
-  support for the --storage argument, autoBreakTime 'all'.
+  support for the --storage argument, autoBreakTime 'all',
+  auto-arrow craft.
 - jabskeeterbug: item history command.
 - jsteng: some routing bug fixes.
 - ZetaAlpha: advanced 2-2 class support fixes, guild member ID fixes.
