@@ -85,6 +85,7 @@ New features:
 - logs/storage.txt will show what is in your storage.
 - "vl" (vender list) command now displays coordinates
 - Automatic disconnection during specified times of the day.
+- If storage opening fails the first time for some reason, Kore will try again.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -266,7 +267,7 @@ Internal:
 
 Credits:
 - Joseph: -1 and 2 attack-auto support in mon_control.txt,
-  avoidList_inLockOnly
+  avoidList_inLockOnly, auto cart get, misc other things
 - aputs: Support for the _monsters option in useSelf_skill, useSelf_item
   and partySkill.
 - obyarou: Priority attack support for non-aggressive monsters,
@@ -282,6 +283,7 @@ Credits:
 - doenet: improved mon_control.txt, randomWalk and lockMap
   fixes/improvements.
 - BotMan: server details for pRO.
+- anu: add storage opening timeout
 
 
 ==================

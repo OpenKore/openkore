@@ -2341,11 +2341,19 @@ sub AI {
 					ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'}); 
 				}
 
+				# Using for NPC talk retry
+				$timeout{'ai_storageAuto_giveup'}{'time'} = time;
 				$timeout{'ai_storageAuto'}{'time'} = time;
 				last AUTOSTORAGE;
 			}
 
 			if (!defined $ai_v{temp}{storage_opened}) {
+				# NPC talk retry
+				if (timeOut($timeout{'ai_storageAuto_giveup'}) {
+					$args->{sentStore}=0;
+					debug "Retry talking to autostorage NPC.\n", "npc";
+				}
+
 				# Storage not yet opened; stop and wait until it's open
 				last AUTOSTORAGE;
 			}
