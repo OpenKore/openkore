@@ -201,7 +201,7 @@ sub checkConnection {
 		undef $msg;
 		Network::connectTo(\$remote_socket, $master->{ip}, $master->{port});
 
-		if ($master->{secureLogin} >= 1) {
+		if ($remote_socket && $remote_socket->connected && $master->{secureLogin} >= 1) {
 			my $code;
 
 			message("Secure Login...\n", "connection");
@@ -218,7 +218,8 @@ sub checkConnection {
 			} else {
 				sendMasterCodeRequest(\$remote_socket, 'type', $master->{secureLogin_type});
 			}
-		} else {
+
+		} elsif ($remote_socket && $remote_socket->connected) {
 			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'},
 				$master->{master_version}, $master->{version});
 		}
@@ -5563,7 +5564,7 @@ sub parseMsg {
 		}
 		if ($type != 5 && $versionSearch) {
 			$versionSearch = 0;
-			writeSectionedFileIntact("$Settings::control_folder/servers.txt", \%masterServers);
+			writeSectionedFileIntact("$Settings::tables_folder/servers.txt", \%masterServers);
 		}
 
 	} elsif ($switch eq "006B") {
