@@ -9,6 +9,7 @@ New features:
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
+- Attacks will now properly time out when failed.
 
 
 ==================
