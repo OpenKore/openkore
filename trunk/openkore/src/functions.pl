@@ -5494,7 +5494,16 @@ sub parseMsg {
 				[$chars[$num]{'zenny'}, $chars[$num]{'luk'}],
 				"-------------------------------", []),
 				"connection");
-		}
+				my $j = 0;
+				while ($avoid{"avoid_$j"} ne "") {
+					if ($chars[$num]{'name'} eq $avoid{"avoid_$j"} || $chars[$num]{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+						error "Sanity Checking FAILED: Invalid username detected.\n";
+						killConnection(\$remote_socket);
+						quit();
+					}
+					$j++;
+				}
+			}
 		if (!$config{'XKore'}) {
 			if ($config{'char'} eq "") {
 				message("Choose your character.  Enter the character number:\n", "input");
