@@ -172,7 +172,7 @@ useSelf_item_0_sp_upper 100
 useSelf_item_0_stopWhenHit 0
 useSelf_item_0_inLockOnly 0
 useSelf_item_0_whenStatusActive
-useSelf_item_0_whenStatusInActive
+useSelf_item_0_whenStatusInactive
 useSelf_item_0_timeout 
 
 partySkill_0 
