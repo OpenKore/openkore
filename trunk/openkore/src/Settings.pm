@@ -32,10 +32,11 @@ our $daemon;
 our %config;
 our %consoleColors;
 
-# Data files
+# Data files and folders
 our $control_folder;
 our $tables_folder;
 our $logs_folder;
+our $plugins_folder;
 our $config_file;
 our $items_control_file;
 our $mon_control_file;
@@ -57,6 +58,7 @@ sub MODINIT {
 	$control_folder = "control";
 	$tables_folder = "tables";
 	$logs_folder = "logs";
+	$plugins_folder = "plugins";
 }
 
 
@@ -78,6 +80,7 @@ sub parseArguments {
 		'control=s', \$control_folder,
 		'tables=s', \$tables_folder,
 		'logs=s', \$logs_folder,
+		'plugins=s', \$plugins_folder,
 		'config=s', \$config_file,
 		'mon_control=s', \$mon_control_file,
 		'items_control=s', \$items_control_file,
@@ -92,6 +95,7 @@ sub parseArguments {
 		print "--control=path             Use a different folder as control folder.\n";
 		print "--tables=path              Use a different folder as tables folder.\n";
 		print "--logs=path                Save log files in a different folder.\n";
+		print "--plugins=path             Look for plugins in specified folder.\n"
 
 		print "\n";
 		print "--config=path/file         Which config.txt to use.\n";
@@ -109,10 +113,12 @@ sub parseArguments {
 	$item_log_file = "$logs_folder/items.txt" if (!defined $item_log_file);
 	$shop_file = "$control_folder/shop.txt" if (!defined $shop_file);
 	$logs_folder = "logs" if (!defined $logs_folder);
+	$plugins_folder = "plugins" if (!defined $plugins_folder);
 
 	if (! -d $logs_folder) {
 		if (!mkdir($logs_folder)) {
 			print "Error: unable to create folder $logs_folder ($!)\n";
+			<STDIN> if ($buildType == 0);
 			exit 1;
 		}
 	}
