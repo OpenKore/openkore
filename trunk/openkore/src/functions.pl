@@ -2319,7 +2319,7 @@ sub AI {
 		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
 		my $forcedBySell = AI::args->{forcedBySell};
 		AI::dequeue;
-		if (!$forcedBySell) {
+		if (!$forcedBySell && $config{sellAuto}) {
 			AI::queue("sellAuto", {forcedByStorage => 1});
 		}
 
