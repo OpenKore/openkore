@@ -29,6 +29,7 @@ sub:
 clean:
 	rm -f XSTools.$(DLLEXT) symbols.gccdef Makefile.real
 	make clean -C pathfinding
+	make clean -C misc
 #if unix
 	make clean -C unix
 #endif
