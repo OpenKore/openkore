@@ -2,7 +2,7 @@
 # This script creates a source tarball.
 
 PACKAGE=openkore
-VERSION=1.6.0
+VERSION=1.6.1
 TYPE=bz2
 # Uncomment the next line if you want a tar.gz archive
 # TYPE=gz
