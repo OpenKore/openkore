@@ -657,6 +657,7 @@ sub cmdPlugin {
 		message("#   Name              Description\n", "list");
 		my $i = 0;
 		foreach my $plugin (@Plugins::plugins) {
+			next unless $plugin;
 			message(swrite(
 				"@<< @<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 				[$i, $plugin->{name}, $plugin->{description}]
