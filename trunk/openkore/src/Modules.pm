@@ -35,7 +35,6 @@ use strict;
 use warnings;
 use Exporter;
 use Config;
-use Log qw(error warning message);
 use base qw(Exporter);
 
 our @modules;
@@ -58,7 +57,14 @@ sub register {
 		$mod =~ s/::/\//g;
 
 		eval "${_}::MODINIT();";
-		warning $@ if ($@ && !($@ =~ /^Undefined subroutine /));
+		if ($@ && !($@ =~ /^Undefined subroutine /)) {
+			# The Log module may not be available at this time
+			if (defined &Log::warning) {
+				Log::warning($@);
+			} else {
+				print $@;
+			}
+		}
 		undef $@;
 
 		push @modules, $_;
@@ -121,6 +127,12 @@ sub reloadFile {
 	my $filename = shift;
 
 	my $found = 0;
+	my $err = (defined &Log::error) ?
+		sub { Log::error(@_); } :
+		sub { print STDERR $_[0]; };
+	my $msg = (defined &Log::message) ?
+		sub { Log::message(@_); } :
+		sub { print STDERR $_[0]; };
 	my $path;
 	for my $x (@INC) {
 		if (-f "$x/$filename") {
@@ -131,30 +143,30 @@ sub reloadFile {
 	}
 
 	if (!$found) {
-		error("Unable to reload code: $filename not found\n");
+		$err->("Unable to reload code: $filename not found\n");
 		return;
 	}
 	if (!-f $Config{'perlpath'}) {
-		error("Cannot find Perl interpreter $Config{'perlpath'}\n");
+		$err->("Cannot find Perl interpreter $Config{'perlpath'}\n");
 		return;
 	}
 
-	message "Checking $filename for errors...\n", "info";
+	$msg->("Checking $filename for errors...\n", "info");
 	system($Config{'perlpath'}, '-c', "$path/$filename");
 	if ($? == -1) {
-		error("Failed to execute $Config{'perlpath'}\n");
+		$err->("Failed to execute $Config{'perlpath'}\n");
 		return;
 	} elsif ($? & 127) {
-		error("$Config{'perlpath'} exited abnormally\n");
+		$err->("$Config{'perlpath'} exited abnormally\n");
 		return;
 	} elsif (($? >> 8) == 0) {
-		message("$filename passed syntax check.\n", "success");
+		$msg->("$filename passed syntax check.\n", "success");
 	} else {
-		error("$filename contains syntax errors.\n");
+		$err->("$filename contains syntax errors.\n");
 		return;
 	}
 
-	message("Reloading $filename...\n", "info");
+	$msg->("Reloading $filename...\n", "info");
 	{
 		package main;
 		if (!do $filename || $@) {
@@ -162,7 +174,7 @@ sub reloadFile {
 			error("$@\n", "syntax", 1) if ($@);
 		}
 	}
-	message("Reloaded.\n", "info");
+	$msg->("Reloaded.\n", "info");
 }
 
 ##
@@ -179,5 +191,6 @@ sub doReload {
 	}
 	undef @queue;
 }
+
 
 return 1;

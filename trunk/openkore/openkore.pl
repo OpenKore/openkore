@@ -360,6 +360,7 @@ while ($quit != 1) {
 	my $input;
 
 	usleep($config{'sleepTime'});
+	$interface->iterate();
 
 	if ($config{'XKore'}) {
 		# (Re-)initialize X-Kore if necessary
