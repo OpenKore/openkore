@@ -1,3 +1,9 @@
+/*
+ * This DLL is "injected" into the RO client's address space.
+ * Once injected, we intercept all network traffic and redirect
+ * some of it to Kore.
+ */
+
 #include <stdio.h>
 #include "common.h"
 #include <string>
@@ -467,27 +473,103 @@ DoHookProcs ()
 			HookImportedFunction( GetModuleHandle(0), "KERNEL32.DLL", "GetProcAddress", (PROC)MyGetProcAddress);
 }
 
-extern "C" BOOL APIENTRY
-DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
+static void
+init ()
 {
 	WSAData WSAData;
 	ULONG threadID;
 
+	WSAStartup (MAKEWORD (2,2),&WSAData);
+	InitializeCriticalSection (&CS_koreClientIsAlive);
+	InitializeCriticalSection (&CS_dataAvailableFromKore);
+	InitializeCriticalSection (&CS_ro);
+	InitializeCriticalSection (&CS_send);
+	InitializeCriticalSection (&CS_rosend);
+	debugInit ();
+
+	debug ("Hooking functions...\n");
+	DoHookProcs ();
+	debug ("Creating thread...\n");
+	CreateThread (0, 0, (LPTHREAD_START_ROUTINE) koreConnectionMain, 0, 0, &threadID);
+	debug ("Thread created\n");
+}
+
+
+/********* DLL injection support for Win9x *********/
+
+//#define TESTING_INJECT9x
+
+static int isNT = 0;
+static int started = 0;
+static HINSTANCE hDll = 0;
+static HHOOK hookID = 0;
+
+static int
+start ()
+{
+	init ();
+	return 0;
+}
+
+// This function is called when we're injected into another process
+static LRESULT WINAPI
+hookProc (int code, WPARAM wParam, LPARAM lParam)
+{
+	if (!started) {
+		char lib[MAX_PATH];
+		ULONG threadID;
+
+		started = 1;
+		GetModuleFileName (hDll, lib, MAX_PATH);
+		if (LoadLibrary (lib))
+			UnhookWindowsHookEx (hookID);
+
+		CreateThread (NULL, 0, (LPTHREAD_START_ROUTINE) start, NULL, 0, &threadID);
+	}
+	return CallNextHookEx (hookID, code, wParam, lParam);
+}
+
+// Inject this DLL into the process that owns window hwnd
+extern "C" int WINAPI __declspec(dllexport)
+injectSelf (HWND hwnd)
+{
+	int idHook;
+
+	if (isNT)
+		idHook = WH_CALLWNDPROC;
+	else
+		idHook = WH_GETMESSAGE;
+
+	hookID = SetWindowsHookEx (idHook, (HOOKPROC) hookProc, hDll,
+		GetWindowThreadProcessId (hwnd, NULL));
+	if (hookID == NULL)
+		return 0;
+
+	SendMessage (hwnd, WM_USER + 10, 0, 1);
+	return 1;
+}
+
+/***************************************************/
+
+
+extern "C" BOOL APIENTRY
+DllMain (HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
+{
 	switch (dwReason) {
 	case DLL_PROCESS_ATTACH:
-		WSAStartup (MAKEWORD (2,2),&WSAData);
-		InitializeCriticalSection (&CS_koreClientIsAlive);
-		InitializeCriticalSection (&CS_dataAvailableFromKore);
-		InitializeCriticalSection (&CS_ro);
-		InitializeCriticalSection (&CS_send);
-		InitializeCriticalSection (&CS_rosend);
-		debugInit ();
+		hDll = hInstance;
+		#ifndef TESTING_INJECT9x
+		OSVERSIONINFO version;
 
-		debug ("Hooking functions...\n");
-		DoHookProcs ();
-		debug ("Creating thread...\n");
-		CreateThread (0, 0, (LPTHREAD_START_ROUTINE) koreConnectionMain, 0, 0, &threadID);
-		debug ("Thread created\n");
+		version.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
+		GetVersionEx (&version);
+		isNT = version.dwPlatformId == VER_PLATFORM_WIN32_NT;
+
+		// If we're injected on Win9x, then init() must
+		// be called from a different function
+		if (isNT)
+			init ();
+		#endif
 		break;
 
 	default:
