@@ -14,11 +14,14 @@ $(FILENAME): tables/*.txt
 	# Passed
 	@echo
 	# Creating zipfile...
-	./unix2dos.pl tables/*.txt
-	echo $(VERSION) > $(VERSIONFILE)
+	rm -rf tmp
+	mkdir -p tmp/tables
+	cp tables/*.txt tmp/tables/
+	./unix2dos.pl tmp/tables/*.txt
+	echo -n $(VERSION) > tmp/$(VERSIONFILE)
 	rm -f $(FILENAME)
-	zip -9 $(FILENAME) tables/*.txt
+	cd tmp && zip -9 ../$(FILENAME) tables/*.txt
+	rm -rf tmp
 
 clean:
 	rm -f $(FILENAME)
-	rm -f $(VERSIONFILE)
