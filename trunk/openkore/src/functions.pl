@@ -10409,16 +10409,36 @@ sub convertGatField {
 sub dumpData {
 	my $msg = shift;
 	my $dump;
-	my $i;
-	$dump = "\n\n================================================\n".getFormattedDate(int(time))."\n\n".length($msg)." bytes\n\n";
-	for ($i=0; $i + 15 < length($msg);$i += 16) {
-		$dump .= getHex(substr($msg,$i,8))."    ".getHex(substr($msg,$i+8,8))."\n";
+	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
+
+	$dump = "\n\n================================================\n" .
+		getFormattedDate(int(time)) . "\n\n" . 
+		length($msg) . " bytes\n\n";
+
+	for (my $i = 0; $i < length($msg); $i += 16) {
+		my $line;
+		my $data = substr($msg, $i, 16);
+		my $rawData = '';
+
+		for (my $j = 0; $j < length($data); $j++) {
+			my $char = substr($data, $j, 1);
+
+			if ($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/)) {
+				$rawData .= '.';
+			} else {
+				$rawData .= substr($data, $j, 1);
+			}
+		}
+
+		$line = getHex(substr($data, 0, 8));
+		$line .= '    ' . getHex(substr($data, 8)) if (length($data) > 8);
+
+		$line .= ' ' x (50 - length($line)) if (length($line) < 54);
+		$line .= "    $rawData\n";
+		$line = sprintf("%2d>  ", $i) . $line;
+		$dump .= $line;
 	}
-	if (length($msg) - $i > 8) {
-		$dump .= getHex(substr($msg,$i,8))."    ".getHex(substr($msg,$i+8,length($msg) - $i - 8))."\n";
-	} elsif (length($msg) > 0) {
-		$dump .= getHex(substr($msg,$i,length($msg) - $i))."\n";
-	}
+
 	open DUMP, ">> DUMP.txt";
 	print DUMP $dump;
 	close DUMP;
@@ -11154,6 +11174,24 @@ sub findIndexString_lc {
 		if ((%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($ID))
 			|| (!%{$$r_array[$i]} && $ID eq "")) {
 			return $i;
+		}
+	}
+	if ($ID eq "") {
+		return $i;
+	}
+}
+
+sub findIndexStringList_lc{
+	my $r_array = shift;
+	my $match = shift;
+	my $ID = shift;
+	my ($i,$j);
+	my @arr = split /,/, $ID;
+	for ($j = 0; $j < @arr; $j++) {
+		for ($i = 0; $i < @{$r_array} ;$i++) {
+			if (%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($arr[$j])) {
+				return $i;
+			}
 		}
 	}
 	if ($ID eq "") {
