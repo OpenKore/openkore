@@ -100,6 +100,7 @@ our @EXPORT = qw(
 	sendPartyLeave
 	sendPartyOrganize
 	sendPartyShareEXP
+	sendPetCapture
 	sendPetFeed
 	sendPetGetInfo
 	sendPetPerformance
@@ -1024,6 +1025,14 @@ sub sendPartyShareEXP {
 	my $msg = pack("C*", 0x02, 0x01).pack("L", $flag);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Party Share: $flag\n", "sendPacket", 2;
+}
+
+sub sendPetCapture {
+	my $r_socket = shift;
+	my $monID = shift;
+	my $msg = pack("C*", 0x9F, 0x01) . $monID . pack("C*", 0x00, 0x00);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
 sub sendPetFeed {
