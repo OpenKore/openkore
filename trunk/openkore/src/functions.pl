@@ -10484,6 +10484,10 @@ sub useTeleport {
 				warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
 				delete $ai_v{temp}{teleport};
 				return 0;
+
+			} else {
+				# Waiting for item to equip
+				return 1;
 			}
 		}
 		$i++;
