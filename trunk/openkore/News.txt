@@ -119,6 +119,7 @@ Credits:
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
 - sparshong: character creation/deletion packet code.
+- jsteng: mute packet.
 
 
 ==================
