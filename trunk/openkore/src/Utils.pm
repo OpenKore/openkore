@@ -336,7 +336,7 @@ sub findIndexStringList_lc {
 	if (exists $findIndexStringList_lc_cache{$ID}) {
 		$arr = $findIndexStringList_lc_cache{$ID};
 	} else {
-		my @tmp = split / *, */, $ID;
+		my @tmp = split / *, */, lc($ID);
 		$arr = \@tmp;
 		%findIndexStringList_lc_cache = () if (scalar(keys %findIndexStringList_lc_cache) > 30);
 		$findIndexStringList_lc_cache{$ID} = $arr;
@@ -344,7 +344,7 @@ sub findIndexStringList_lc {
 
 	foreach (@{$arr}) {
 		for ($i = 0; $i < $max; $i++) {
-			if (lc($r_array->[$i]{$match}) eq lc $_) {
+			if (lc($r_array->[$i]{$match}) eq $_) {
 				return $i;
 			}
 		}
@@ -360,10 +360,10 @@ sub findIndexString_lc_not_equip {
 	my $r_array = shift;
 	return undef if !defined $r_array;
 	my $match = shift;
-	my $ID = shift;
+	my $ID = lc(shift);
 	my $i;
 	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((lc($$r_array[$i]{$match}) eq lc($ID) && !($$r_array[$i]{'equipped'}))
+		if ((lc($$r_array[$i]{$match}) eq $ID && !($$r_array[$i]{'equipped'}))
 			 || (!$$r_array[$i] && $ID eq "")) {			  
 			return $i;
 		}
