@@ -2,15 +2,12 @@
 #
 # Eventually, @ai_seq should never be referenced directly, and then it can be
 # moved into this package.
-#
-# TODO:
-# Move ai_setMapChanged() and ai_setSuspend() to this module.
 
 package AI;
 
 use strict;
-use Globals;
-use Utils;
+use Globals qw(@ai_seq @ai_seq_args);
+use Utils qw(binFind);
 
 sub action {
 	my $i = (defined $_[0] ? $_[0] : 0);
@@ -20,10 +17,6 @@ sub action {
 sub args {
 	my $i = (defined $_[0] ? $_[0] : 0);
 	return \%{$ai_seq_args[$i]};
-}
-
-sub v {
-	return \%ai_v;
 }
 
 sub dequeue {
@@ -77,13 +70,18 @@ sub mapChanged {
 }
 
 sub findAction {
-	return undef if !defined $_[0];
 	return binFind(\@ai_seq, $_[0]);
 }
 
 sub inQueue {
 	foreach (@_) {
-		return 1 if defined binFind(\@ai_seq, $_);
+		# Apparently using a loop is faster than calling
+		# binFind() (which is optimized in C), because
+		# of function call overhead.
+		#return 1 if defined binFind(\@ai_seq, $_);
+		foreach my $seq (@ai_seq) {
+			return 1 if ($_ eq $seq);
+		}
 	}
 	return 0;
 }
