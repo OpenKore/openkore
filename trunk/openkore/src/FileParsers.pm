@@ -199,6 +199,7 @@ sub parseShopControl {
 
 	# Read shop title
 	chomp($shop->{title} = <SHOP>);
+	$shop->{title} =~ s/[\r\n]//g;
 
 	# Read shop items
 	$shop->{items} = [];
@@ -207,6 +208,7 @@ sub parseShopControl {
 	foreach (<SHOP>) {
 		$linenum++;
 		chomp;
+		s/[\r\n]//g;
 		next if /^$/ || /^#/;
 
 		my ($name, $price, $amount) = split(/\t+/);

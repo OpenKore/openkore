@@ -25,6 +25,9 @@ New config options:
 - partySkill_#_target_aggressives
   Only activate partySkill if a certain monster attacks a party member.
 
+Bug fixes:
+- The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
+
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
 - writeDataFile*() won't write trailing spaces.
