@@ -319,7 +319,7 @@ while ($quit != 1) {
 
 	$ai_cmdQue_shift = 0;
 	do {
-		AI(\%{$ai_cmdQue[$ai_cmdQue_shift]}) if ($AI && $conState == 5 && timeOut(\%{$timeout{'ai'}}) && $remote_socket && $remote_socket->connected());
+		AI(\%{$ai_cmdQue[$ai_cmdQue_shift]}) if ($conState == 5 && timeOut(\%{$timeout{'ai'}}) && $remote_socket && $remote_socket->connected());
 		undef %{$ai_cmdQue[$ai_cmdQue_shift++]};
 		$ai_cmdQue-- if ($ai_cmdQue > 0);
 	} while ($ai_cmdQue > 0);
@@ -2367,6 +2367,66 @@ sub AI {
 	my $i, $j;
 	my %cmd = %{(shift)};
 
+
+	if (timeOut(\%{$timeout{'ai_wipe_check'}})) {
+		foreach (keys %players_old) {
+			delete $players_old{$_} if (time - $players_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
+		}
+		foreach (keys %monsters_old) {
+			delete $monsters_old{$_} if (time - $monsters_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
+		}
+		foreach (keys %npcs_old) {
+			delete $npcs_old{$_} if (time - $npcs_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
+		}
+		foreach (keys %items_old) {
+			delete $items_old{$_} if (time - $items_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
+		}
+		foreach (keys %portals_old) {
+			delete $portals_old{$_} if (time - $portals_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
+		}
+		$timeout{'ai_wipe_check'}{'time'} = time;
+		print "Wiped old\n" if ($config{'debug'} >= 2);
+	}
+
+	if (timeOut(\%{$timeout{'ai_getInfo'}})) {
+		foreach (keys %players) {
+			if ($players{$_}{'name'} eq "Unknown") {
+				sendGetPlayerInfo(\$remote_socket, $_);
+				last;
+			}
+		}
+		foreach (keys %monsters) {
+			if ($monsters{$_}{'name'} =~ /Unknown/) {
+				sendGetPlayerInfo(\$remote_socket, $_);
+				last;
+			}
+		}
+		foreach (keys %npcs) { 
+			if ($npcs{$_}{'name'} =~ /Unknown/) { 
+				sendGetPlayerInfo(\$remote_socket, $_); 
+				last; 
+			}
+		}
+		foreach (keys %pets) { 
+			if ($pets{$_}{'name_given'} =~ /Unknown/) { 
+				sendGetPlayerInfo(\$remote_socket, $_); 
+				last; 
+			}
+		}
+		$timeout{'ai_getInfo'}{'time'} = time;
+	}
+
+	if (!$config{'XKore'} && timeOut(\%{$timeout{'ai_sync'}})) {
+		$timeout{'ai_sync'}{'time'} = time;
+		sendSync(\$remote_socket, getTickCount());
+	}
+
+	return if (!$AI);
+
+
+
+	##### REAL AI STARTS HERE #####
+
 	if (!$accountID) {
 		$AI = 0;
 		injectAdminMessage("Kore does not have enough account information, so AI has been disabled. Relog to enable AI.") if ($config{'verbose'});
@@ -2689,61 +2749,9 @@ sub AI {
 		}
 	}
 
-	
+
 	##### MISC #####
 
-	if (timeOut(\%{$timeout{'ai_wipe_check'}})) {
-		foreach (keys %players_old) {
-			delete $players_old{$_} if (time - $players_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
-		}
-		foreach (keys %monsters_old) {
-			delete $monsters_old{$_} if (time - $monsters_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
-		}
-		foreach (keys %npcs_old) {
-			delete $npcs_old{$_} if (time - $npcs_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
-		}
-		foreach (keys %items_old) {
-			delete $items_old{$_} if (time - $items_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
-		}
-		foreach (keys %portals_old) {
-			delete $portals_old{$_} if (time - $portals_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
-		}
-		$timeout{'ai_wipe_check'}{'time'} = time;
-		print "Wiped old\n" if ($config{'debug'} >= 2);
-	}
-
-	if (timeOut(\%{$timeout{'ai_getInfo'}})) {
-		foreach (keys %players) {
-			if ($players{$_}{'name'} eq "Unknown") {
-				sendGetPlayerInfo(\$remote_socket, $_);
-				last;
-			}
-		}
-		foreach (keys %monsters) {
-			if ($monsters{$_}{'name'} =~ /Unknown/) {
-				sendGetPlayerInfo(\$remote_socket, $_);
-				last;
-			}
-		}
-		foreach (keys %npcs) { 
-			if ($npcs{$_}{'name'} =~ /Unknown/) { 
-				sendGetPlayerInfo(\$remote_socket, $_); 
-				last; 
-			}
-		}
-		foreach (keys %pets) { 
-			if ($pets{$_}{'name_given'} =~ /Unknown/) { 
-				sendGetPlayerInfo(\$remote_socket, $_); 
-				last; 
-			}
-		}
-		$timeout{'ai_getInfo'}{'time'} = time;
-	}
-
-	if (!$config{'XKore'} && timeOut(\%{$timeout{'ai_sync'}})) {
-		$timeout{'ai_sync'}{'time'} = time;
-		sendSync(\$remote_socket, getTickCount());
-	}
 	if ($ai_seq[0] eq "look" && timeOut(\%{$timeout{'ai_look'}})) {
 		$timeout{'ai_look'}{'time'} = time;
 		sendLook(\$remote_socket, $ai_seq_args[0]{'look_body'}, $ai_seq_args[0]{'look_head'});
@@ -3841,11 +3849,8 @@ sub AI {
 ## kokal end
 
 		} else {
-			if (!$config{'XKore'}) {
-				print "Target lost\n";
-			} else {
-				injectMessage("Target lost") if ($config{'verbose'});
-			}
+			print "Target lost\n";
+			injectMessage("Target lost") if ($config{'verbose'} && $config{'XKore'});
 		}
 
 	} elsif ($ai_seq[0] eq "attack") {
@@ -3909,11 +3914,8 @@ sub AI {
 
 		} elsif (!$ai_v{'ai_attack_cleanMonster'}) {
 			# Drop target if it's already attacked by someone else
-			if (!$config{'XKore'}) {
-				print "Dropping target - no kill steal\n"; 
-			} else {
-				injectMessage("Dropping target - no kill steal") if ($config{'verbose'});
-			}
+			print "Dropping target - no kill steal\n"; 
+			injectMessage("Dropping target - no kill steal") if ($config{'verbose'} && $config{'XKore'});
 			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
 			sendAttackStop(\$remote_socket);
 			shift @ai_seq;
@@ -3947,9 +3949,9 @@ sub AI {
 
 				ai_setSuspend(0);
 				if (@{$field{'field'}} > 1) {
-					ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}, $field{'name'}, $config{'attackMaxRouteDistance'}, $config{'attackMaxRouteTime'}, 0, 0);
+					ai_route(\%{$ai_seq_args[0]{'ai_route_returnHash'}}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}, $field{'name'}, $config{'attackMaxRouteDistance'}, $config{'attackMaxRouteTime'}, 0, 0, 0, 0, $ai_seq_args[0]{'ID'});
 				} else {
-					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
+					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'}, 0, $ai_seq_args[0]{'ID'});
 				}
 			}
 
@@ -4229,7 +4231,7 @@ sub AI {
 			}
 			if ($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'} != $chars[$config{'char'}]{'pos_to'}{'x'}
 				|| $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'} != $chars[$config{'char'}]{'pos_to'}{'y'}) {
-				move($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}, $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'});
+				move($ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'}, $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'y'}, 1, $ai_seq_args[0]{'attackID'});
 			}
 		}
 	}
@@ -5425,7 +5427,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "Recieved Sync\n" if ($config{'debug'} >= 2);
 		$timeout{'play'}{'time'} = time;
 
-	
 	} elsif ($switch eq "0080") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
@@ -7266,7 +7267,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 		if ($skillID == 28) {
 			$extra = ": $amount hp gained";
-		} else {
+		} elsif ($amount != 65535) {
 			$extra = ": Lv $amount";
 		}
 		print "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra\n";
@@ -8612,7 +8613,7 @@ sub ai_items_take {
 }
 
 sub ai_route {
-	my ($r_ret, $x, $y, $map, $maxRouteDistance, $maxRouteTime, $attackOnRoute, $avoidPortals, $distFromGoal, $checkInnerPortals) = @_;
+	my ($r_ret, $x, $y, $map, $maxRouteDistance, $maxRouteTime, $attackOnRoute, $avoidPortals, $distFromGoal, $checkInnerPortals, $attackID) = @_;
 	my %args;
 #Solos Start
 	my $pos_x;
@@ -8632,6 +8633,7 @@ sub ai_route {
 	$args{'avoidPortals'} = $avoidPortals;
 	$args{'distFromGoal'} = $distFromGoal;
 	$args{'checkInnerPortals'} = $checkInnerPortals;
+	$args{'attackID'} = $attackID;
 	undef %{$args{'returnHash'}};
 	unshift @ai_seq, "route";
 	unshift @ai_seq_args, \%args;
@@ -8995,6 +8997,8 @@ sub look {
 sub move {
 	my $x = shift;
 	my $y = shift;
+	my $triggeredByRoute = shift;
+	my $attackID = shift;
 	my %args;
 #Solos Start
 	my $pos_x;
@@ -9004,6 +9008,8 @@ sub move {
 #Solos End
 	$args{'move_to'}{'x'} = $x;
 	$args{'move_to'}{'y'} = $y;
+	$args{'triggeredByRoute'} = $triggeredByRoute;
+	$args{'attackID'} = $attackID;
 	$args{'ai_move_giveup'}{'time'} = time;
 	$args{'ai_move_giveup'}{'timeout'} = $timeout{'ai_move_giveup'}{'timeout'};
 	unshift @ai_seq, "move";
