@@ -4074,10 +4074,20 @@ sub AI {
 			}
 			splice(@{$ai_seq_args[0]{'solution'}},1+$ai_seq_args[0]{'maxRouteDistance'}) if $ai_seq_args[0]{'maxRouteDistance'} && $ai_seq_args[0]{'maxRouteDistance'} < @{$ai_seq_args[0]{'solution'}};
 
-			# Trim down solution tree for distFromGoal
-			#if ($ai_seq_args[0]{distFromGoal} && @{$ai_seq_args[0]{'solution'}} >= $ai_seq_args[0]{distFromGoal}) {
-			#	splice(@{$ai_seq_args[0]{'solution'}}, -$ai_seq_args[0]{distFromGoal});
-			#}
+			# Trim down solution tree for pyDistFromGoal or distFromGoal
+			if ($ai_seq_args[0]{'pyDistFromGoal'}) {
+				my $trimsteps = 0;
+				$trimsteps++ while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
+						 && distance($ai_seq_args[0]{'solution'}[@{$ai_seq_args[0]{'solution'}}-1-$trimsteps], $ai_seq_args[0]{'solution'}[@{$ai_seq_args[0]{'solution'}}-1]) < $ai_seq_args[0]{'pyDistFromGoal'}
+					);
+				debug "Route - trimming down solution by $trimsteps steps for pyDistFromGoal $ai_seq_args[0]{'pyDistFromGoal'}\n", "route";
+				splice(@{$ai_seq_args[0]{'solution'}}, -$trimsteps) if ($trimsteps);
+			} elsif ($ai_seq_args[0]{'distFromGoal'}) {
+				my $trimsteps = $ai_seq_args[0]{distFromGoal};
+				$trimsteps = @{$ai_seq_args[0]{'solution'}} if $trimsteps > @{$ai_seq_args[0]{'solution'}};
+				debug "Route - trimming down solution by $trimsteps steps for distFromGoal $ai_seq_args[0]{'distFromGoal'}\n", "route";
+				splice(@{$ai_seq_args[0]{'solution'}}, -$trimsteps) if ($trimsteps);
+			}
 
 			undef $ai_seq_args[0]{'mapChanged'};
 			undef $ai_seq_args[0]{'index'};
@@ -4105,15 +4115,6 @@ sub AI {
 				shift @ai_seq;
 				shift @ai_seq_args;
 
-			} elsif ($ai_seq_args[0]{'distFromGoal'} >= @{$ai_seq_args[0]{'solution'}}
-			      || $ai_seq_args[0]{'pyDistFromGoal'} > ($dist = distance($ai_seq_args[0]{'dest'}{'pos'}, $chars[$config{'char'}]{'pos_to'})) ) {
-				# We are near the goal, thats good enough.
-				# Distance is computed based on step counts (distFromGoal) or pythagorean distance (pyDistFromGoal).
-				$dist = sprintf("%.1f", $dist);
-				debug "We are near our goal ($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'}); " .
-					"currently at ($cur_x,$cur_y); distance $dist\n", "route";
-				shift @ai_seq;
-				shift @ai_seq_args;
 			} elsif ($ai_seq_args[0]{'old_x'} == $cur_x && $ai_seq_args[0]{'old_y'} == $cur_y) {
 				#we are still on the same spot
 				#decrease step movement
@@ -4137,14 +4138,14 @@ sub AI {
 					#see how far we've walked since the last move command and
 					#trim down the soultion tree by this distance, but
 					#never remove the last step (it'll be removed when we arrive there)
-					my $dist = 1;
-					$dist++ while ($dist < @{$ai_seq_args[0]{'solution'}}
-						    && distance($chars[$config{'char'}]{'pos'}, $ai_seq_args[0]{'solution'}[$dist+1])
-							< distance($chars[$config{'char'}]{'pos'}, $ai_seq_args[0]{'solution'}[$dist])
+					my $trimsteps = 1;
+					$trimsteps++ while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
+							 && distance($chars[$config{'char'}]{'pos'}, $ai_seq_args[0]{'solution'}[$trimsteps+1])
+							    < distance($chars[$config{'char'}]{'pos'}, $ai_seq_args[0]{'solution'}[$trimsteps])
 						);
-					$dist = @{$ai_seq_args[0]{'solution'}} - 1 if ($dist >= @{$ai_seq_args[0]{'solution'}});
-					debug "Route - trimming down solution by $dist steps\n", "route";
-					splice(@{$ai_seq_args[0]{'solution'}}, 0, $dist) if ($dist > 0);
+					$trimsteps = @{$ai_seq_args[0]{'solution'}} - 1 if ($trimsteps >= @{$ai_seq_args[0]{'solution'}});
+					debug "Route - trimming down solution by $trimsteps steps\n", "route";
+					splice(@{$ai_seq_args[0]{'solution'}}, 0, $trimsteps) if ($trimsteps > 0);
 				}
 				my $stepsleft = @{$ai_seq_args[0]{'solution'}};
 				if ($stepsleft > 1 || ($stepsleft == 1 && ($ai_seq_args[0]{'new_x'} != $cur_x || $ai_seq_args[0]{'new_y'} != $cur_y))) {
