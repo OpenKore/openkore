@@ -26,9 +26,16 @@ New features:
 - "Press ENTER to exit this program." prompt removed from Linux version.
 - New 'guild leave' command (needs testing, but the server I play is down)
   added.
+- Nearly complete oRO and pRO support. Thanks to jojobaoil and duckieeex!
 
 New config options:
-- showDomain, if set to 1 will display domains along with messages.
+- showDomain (flag)
+  If set to 1 will display domains along with messages.
+- serverType (number)
+  Defines what kind of server you're playing on.
+  0 = normal server
+  1 = oRO (Oceania)
+  2 = pRO (Philippines)
 
 Credits:
 - jsteng: VVVS weapon name bugfix.
