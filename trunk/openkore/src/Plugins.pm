@@ -48,7 +48,6 @@ our %hooks;
 # Loads all plugins from the plugins folder. Plugins must have the .pl extension.
 sub loadAll {
 	if (!opendir(DIR, $Settings::plugins_folder)) {
-		Log::error("Unable to load plugins from folder $Settings::plugins_folder ($!)\n", "plugins");
 		return 0;
 	}
 	my @plugins = grep { /\.pl$/ } readdir(DIR);

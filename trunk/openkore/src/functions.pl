@@ -5409,7 +5409,7 @@ sub parseMsg {
 			error("Account name doesn't exist\n", "connection");
 			if (!$config{'XKore'}) {
 				message("Enter Username Again: ", "input");
-				$msg = Input::getInput(1);
+				$msg = $interface->getInput(-1);
 				configModify('username', $msg, 1);
 			}
 			relog();
@@ -5417,7 +5417,7 @@ sub parseMsg {
 			error("Password Error\n", "connection");
 			if (!$config{'XKore'}) {
 				message("Enter Password Again: ", "input");
-				$msg = Input::getInput(1);
+				$msg = $interface->getInput(-1);
 				configModify('password', $msg, 1);
 			}
 		} elsif ($type == 3) {
@@ -11500,15 +11500,6 @@ sub printItemDesc {
 	message("Item: $items_lut{$itemID}\n\n", "info");
 	message($itemsDesc_lut{$itemID}, "info");
 	message("==============================================\n", "info");
-}
-
-sub timeOut {
-	my ($r_time, $compare_time) = @_;
-	if ($compare_time ne "") {
-		return (time - $r_time > $compare_time);
-	} else {
-		return (time - $$r_time{'time'} > $$r_time{'timeout'});
-	}
 }
 
 sub vocalString {

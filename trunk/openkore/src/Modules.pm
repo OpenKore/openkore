@@ -41,9 +41,9 @@ use strict;
 no strict 'refs';
 use Exporter;
 use Config;
+use base qw(Exporter);
 
 our @modules;
-our @ISA = "Exporter";
 our @EXPORT_OK = qw(&register &reload &checkSyntax @modules);
 
 

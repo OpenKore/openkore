@@ -1,5 +1,6 @@
 #########################################################################
 #  OpenKore - Interface::Console::Other
+#  Console interface for platforms other than Win32 (Linux and Unix)
 #
 #  Copyright (c) 2004 OpenKore development team 
 #
@@ -18,51 +19,123 @@
 #  $Id$
 #
 #########################################################################
-##
-# MODULE DESCRIPTION: 
-#
-# Support for asyncronous input on non MS Windows computers
 
 package Interface::Console::Other;
 
 use strict;
 use warnings;
-
+no warnings 'redefine';
+use IO::Socket;
 use IO::Select;
-
+use Time::HiRes qw(time usleep);
 use Settings;
+use Utils;
+use Interface::Console;
+use base qw(Interface::Console);
+use POSIX qw(:termios_h);
+require 'sys/ioctl.ph';
 
-our $select;
-our $enabled;
 
 our %fgcolors;
 our %bgcolors;
 
-sub start {
-	return undef if ($enabled);
-	$select = IO::Select->new(\*STDIN);
-	$enabled = 1;
+our $term;
+our ($width, $height);
+
+
+##### TERMINAL FUNCTIONS #####
+
+sub getTerminalSize {
+	my $data = ' ' x 8;
+	if (ioctl (STDOUT, TIOCGWINSZ(), $data) == 0) {
+		($width, $height) = unpack("ss", $data);
+	} else {
+		$width = 80;
+		$height = 24;
+	}
 }
 
-sub stop {
-	color('reset');
-	undef $select;
-	undef $enabled;
+sub MODINIT {
+	$SIG{WINCH} = \&getTerminalSize;
+	getTerminalSize();
+}
+
+
+###### METHODS #####
+
+sub new {
+	my %interface = ();
+	my $term;
+
+	bless \%interface, __PACKAGE__;
+	$interface{select} = IO::Select->new(\*STDIN);
+
+if (0) {
+	$term = new POSIX::Termios;
+	$interface{term} = $term;
+	$term->getattr(fileno(STDIN));
+	$interface{oterm} = $term->getlflag();
+
+	# Set terminal on noecho and CBREAK
+	my $echo = ECHO | ECHOK | ICANON;
+	my $noecho = $interface{oterm} & ~$echo;
+	$term->setlflag($noecho);
+	$term->setcc(VTIME, 1);
+	$term->setattr(fileno(STDIN), TCSANOW);
+}
+
+	return \%interface;
+}
+
+sub DESTROY {
+	my $self = $_[0];
+
+if (0) {
+	$self->{term}->setlflag($self->{oterm});
+	$self->{term}->setcc(VTIME, 0);
+	$self->{term}->setattr(fileno(STDIN), TCSANOW);
+}
+
+	$self->color('reset');
+	delete $SIG{WINCH};
+}
+
+sub getWindowSize {
+	my $data = ' ' x 8;
+	if (ioctl (STDOUT, TIOCGWINSZ(), $data) == 0) {
+		($width, $height) = unpack("ss", $data);
+	} else {
+		$width = 80;
+		$height = 24;
+	}
 }
 
 sub getInput {
 	my $class = shift;
 	my $timeout = shift;
 	my $msg;
+
 	if ($timeout < 0) {
 		$msg = <STDIN> until defined($msg) && $msg ne "\n";
+
 	} elsif ($timeout > 0) {
-		
+		my %timeOut = ();
+
+		$timeOut{time} = time;
+		$timeOut{timeout} = $timeout;
+
+		while (!timeOut(\%timeOut)) {
+			$msg = $class->getInput(0);
+			return $msg if (defined $msg);
+			usleep(10000);
+		}
+
 	} else {
-		if ($select->can_read(0.00)) {
+		if ($class->{select}->can_read(0.00)) {
 			$msg = <STDIN>;
 		}
 	}
+
 	$msg =~ y/\r\n//d if defined $msg;
 	undef $msg if (defined $msg && $msg eq "");
 	return $msg;
@@ -73,11 +146,9 @@ sub writeOutput {
 	my $type = shift;
 	my $message = shift;
 	my $domain = shift;
-	
+
 	setColor($type, $domain);
-
 	print $message;
-
 	color('reset');
 	STDOUT->flush;
 }
@@ -91,7 +162,6 @@ sub setColor {
 }
 
 sub color {
-	return if ($config{'XKore'}); # Don't print colors in X-Kore mode; this is a temporary hack!
 	my $color = shift;
 
 	$color =~ s/\/(.*)//;
@@ -101,47 +171,30 @@ sub color {
 	print $bgcolors{$bgcolor} if defined($bgcolors{$bgcolor});
 }
 
-END {
-	color('reset');
-}
 
-
-$fgcolors{"reset"} = "\e[0m";
-$fgcolors{"default"} = "\e[0m";
-
-$fgcolors{"black"} = "\e[1;30m";
-
-$fgcolors{"red"} = "\e[1;31m";
-$fgcolors{"lightred"} = "\e[1;31m";
-
-$fgcolors{"brown"} = "\e[0;31m";
-$fgcolors{"darkred"} = "\e[0;31m";
-
-$fgcolors{"green"} = "\e[1;32m";
-$fgcolors{"lightgreen"} = "\e[1;32m";
-
-$fgcolors{"darkgreen"} = "\e[0;32m";
-
-$fgcolors{"yellow"} = "\e[1;33m";
-
-$fgcolors{"blue"} = "\e[0;34m";
-
-$fgcolors{"lightblue"} = "\e[1;34m";
-
-$fgcolors{"magenta"} = "\e[0;35m";
-
-$fgcolors{"lightmagenta"} = "\e[1;35m";
-
-$fgcolors{"cyan"} = "\e[1;36m";
-$fgcolors{"lightcyan"} = "\e[1;36m";
-
-$fgcolors{"darkcyan"} = "\e[0;36m";
-
-$fgcolors{"white"} = "\e[1;37m";
-
-$fgcolors{"gray"} = "\e[0;37m";
-$fgcolors{"grey"} = "\e[0;37m";
-
+%fgcolors = (
+	'reset'		=> "\e[0m",
+	'default'	=> "\e[0m",
+	'black'		=> "\e[1;30m",
+	'red'		=> "\e[1;31m",
+	'lightred'	=> "\e[1;31m",
+	'brown'		=> "\e[0;31m",
+	'darkred'	=> "\e[0;31m",
+	'green'		=> "\e[1;32m",
+	'lightgreen'	=> "\e[1;32m",
+	'darkgreen'	=> "\e[0;32m",
+	'yellow'	=> "\e[1;33m",
+	'blue'		=> "\e[0;34m",
+	'lightblue'	=> "\e[1;34m",
+	'magenta'	=> "\e[0;35m",
+	'lightmagenta'	=> "\e[1;35m",
+	'cyan'		=> "\e[1;36m",
+	'lightcyan'	=> "\e[1;36m",
+	'darkcyan'	=> "\e[0;36m",
+	'white'		=> "\e[1;37m",
+	'gray'		=> "\e[0;37m",
+	'grey'		=> "\e[0;37m"
+);
 
 $bgcolors{"black"} = "\e[40m";
 $bgcolors{""} = "\e[40m";
@@ -172,4 +225,5 @@ $bgcolors{"white"} = "\e[47m";
 $bgcolors{"gray"} = "\e[47m";
 $bgcolors{"grey"} = "\e[47m";
 
-1 #end of module
+
+1; #end of module
