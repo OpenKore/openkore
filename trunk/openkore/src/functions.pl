@@ -3768,6 +3768,37 @@ sub AI {
 		}
 	}
 
+	##### MONSTER SKILL USE #####
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))) {
+		my $i = 0;
+		my $prefix = "monsterSkill_$i";
+		while ($config{$prefix}) {
+			# monsterSkill can be used on any monster that we could
+			# attackAuto
+			@monsterIDs = ai_getAggressives(1, 1);
+			for my $monsterID (@monsterIDs) {
+				my $monster = $monsters{$monsterID};
+				if (checkSelfCondition($prefix)
+				    && checkMonsterCondition("${prefix}_target", $monster)) {
+					my $skill = Skills->new(name => $config{$prefix});
+
+					next if $config{"${prefix}_maxUses"} && $monster->{skillUses}{$skill->handle} >= $config{"${prefix}_maxUses"};
+					next if $config{"${prefix}_target"} && !existsInList($config{"${prefix}_target"}, $monster->{name});
+
+					my $lvl = $config{"${prefix}_lvl"};
+					my $maxCastTime = $config{"${prefix}_maxCastTime"};
+					my $minCastTime = $config{"${prefix}_minCastTime"};
+					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->name." (lvl $lvl)\n", "monsterSkill";
+					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $monster);
+					$ai_v{$prefix . "_time"}{$monsterID} = time;
+					last;
+				}
+			}
+			$i++;
+			$prefix = "monsterSkill_$i";
+		}
+	}
+
 	##### AUTO-EQUIP #####
 	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto skill_use take items_gather items_take attack)) || $ai_v{temp}{teleport}{lv})
 	  && timeOut($timeout{ai_item_equip_auto}) && time > $ai_v{'inventory_time'}) {
@@ -5539,6 +5570,7 @@ sub parseMsg {
 							? $monsters_lut{$type}
 							: "Unknown ".$type;
 					binAdd(\@monstersID, $ID);
+					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'nameID'} = $type;
 					$monsters{$ID}{'name'} = $display;
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
@@ -5743,6 +5775,7 @@ sub parseMsg {
 			} else {
 				if (!%{$monsters{$ID}}) {
 					binAdd(\@monstersID, $ID);
+					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'appear_time'} = time;
 					$monsters{$ID}{'nameID'} = $type;
 					$display = ($monsters_lut{$type} ne "") 
@@ -5821,6 +5854,7 @@ sub parseMsg {
 			} else {
 				if (!%{$monsters{$ID}}) {
 					binAdd(\@monstersID, $ID);
+					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'nameID'} = $type;
 					$monsters{$ID}{'appear_time'} = time;
 					$display = ($monsters_lut{$monsters{$ID}{'nameID'}} ne "") 
@@ -9124,6 +9158,32 @@ sub ai_skillUse {
 }
 
 ##
+# ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target)
+#
+# Calls ai_skillUse(), resolving $target to ($x, $y) if $skillID is an
+# area skill.
+#
+# FIXME: All code of the following structure:
+#
+# if (!ai_getSkillUseType(...)) {
+#     ai_skillUse(..., $ID);
+# } else {
+#     ai_skillUse(..., $x, $y);
+# }
+#
+# should be converted to use this helper function. Note that this
+# function uses objects instead of IDs for the skill and target.
+sub ai_skillUse2 {
+	my ($skill, $lvl, $maxCastTime, $minCastTime, $target) = @_;
+
+	if (!ai_getSkillUseType($skillID)) {
+		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{ID});
+	} else {
+		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{pos_to}{x}, $target->{pos_to}{y});
+	}
+}
+
+##
 # ai_storageAutoCheck()
 #
 # Returns 1 if it is time to perform storageAuto sequence.
@@ -10239,6 +10299,9 @@ sub setSkillUseTimer {
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$skill->handle};
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
+
+	# increment monsterSkill maxUses counter
+	$monsters{$targetID}{skillUses}{$skill->handle}++;
 }
 
 # Increment counter for monster being casted on
@@ -10571,6 +10634,8 @@ sub checkPlayerCondition {
 
 sub checkMonsterCondition {
 	my ($prefix, $monster) = @_;
+
+	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$monster->{ID}}, $config{$prefix . "_timeout"}) }
 
 	if (my $misses = $config{$prefix . "_misses"}) {
 		return 0 unless inRange($monster->{atkMiss}, $misses);
