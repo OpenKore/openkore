@@ -10583,7 +10583,7 @@ sub parseDataFile_lc {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,$value;
+	my ($key,$value);
 	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
@@ -10601,7 +10601,7 @@ sub parseDataFile2 {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,$value;
+	my ($key,$value);
 	open FILE, $file;
 	foreach (<FILE>) {
 		next if (/^#/);
@@ -10618,7 +10618,7 @@ sub parseDataFile2 {
 		}
 	}
 	close FILE;
-	$Log::messageVerbosity = $config{'verbose'} if ($file eq $config_file);
+	${\$Log::messageVerbosity} = $config{'verbose'} if ($file eq $config_file);
 }
 
 sub parseItemsControl {
