@@ -30,7 +30,7 @@ our %EXPORT_TAGS = (
 	state   => [qw($accountID @chars %cart %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID %portals @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild)],
 	network => [qw($remote_socket $conState $encryptVal $ipc $lastPacketTime $xkore)],
 	interface => [qw($interface)],
-	misc    => [qw($buildType $quit %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth)],
+	misc    => [qw($buildType $quit %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth)],
 );
 
 our @EXPORT = (
@@ -167,6 +167,8 @@ our $interface;
 # Misc
 our $buildType;
 our $quit;
+our %lastpm;
+our @privMsgUsers;
 our %timeout_ex;
 our %overallAuth;
 our $shopstarted;
