@@ -40,6 +40,9 @@ New features:
 - 'aiv' command will now indicate whether or not AI is on.
 - "You [successfully refined/failed to refine] a weapon!" message implemented.
   (packet switch 018F)
+- "storage [add|get]" commands now support item names,
+  e.g. "storage get +5 Sword Mace [Andre]"
+  Currently, item names containing commas may not work properly.
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
@@ -78,6 +81,9 @@ Internal:
   at least $quantity of it, or undef otherwise.
 - inventoryItemRemoved($index, $amount) function (packet 00AF is not the only
   way inventory items can be removed).
+- New module Match.pm contains functions for matching input typed by the
+  player with an in-game entity (e.g. players, monsters, items).
+
 
 Credits:
 - asuwannarat, as2765324: tRO server details.

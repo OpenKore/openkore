@@ -1407,66 +1407,6 @@ sub parseCommand {
 			sendSell(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $arg2);
 		}
 
-	} elsif ($switch eq "storage") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,-]+)/;
-		($arg3) = $input =~ /^[\s\S]*? \w+ [\d,-]+ (\d+)/;
-		if ($arg1 eq "") {
-			if ($storage{opened}) {
-				my $list = "----------Storage-----------\n";
-				$list .= "#  Name\n";
-				for (my $i = 0; $i < @storageID; $i++) {
-					next if ($storageID[$i] eq "");
-	
-					my $display = "$storage{$storageID[$i]}{'name'}";
-					$display .= " x $storage{$storageID[$i]}{'amount'}";
-					$display .= " -- Not Identified" if !$storage{$storageID[$i]}{identified};
-
-					$list .= sprintf("%2d %s\n", $i, $display);
-				}
-				$list .= "\nCapacity: $storage{'items'}/$storage{'items_max'}\n";
-				$list .= "-------------------------------\n";
-				message($list, "list");
-			} else {
-				warning "No information about storage; it has not been opened before in this session\n";
-			}
-
-		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
-			error	"Error in function 'storage add' (Add Item to Storage)\n" .
-				"Inventory Item $arg2 does not exist\n";
-		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
-			if (!$arg3 || $arg3 > $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'}) {
-				$arg3 = $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'};
-			}
-			sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg2]{'index'}, $arg3);
-
-		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/ && $storageID[$arg2] eq "") {
-			error	"Error in function 'storage get' (Get Item from Storage)\n" .
-				"Storage Item $arg2 does not exist\n";
-		} elsif ($arg1 eq "get" && $arg2 =~ /[\d,-]+/) {
-			my @temp = split(/,/, $arg2);
-			@temp = grep(!/^$/, @temp); # Remove empty entries
-
-			my @items = ();
-			foreach (@temp) {
-				if (/(\d+)-(\d+)/) {
-					for ($1..$2) {
-						push(@items, $_) if ($storageID[$_] ne "");
-					}
-				} else {
-					push @items, $_;
-				}
-			}
-			storageGet(\@items, $arg3);
-
-		} elsif ($arg1 eq "close") {
-			sendStorageClose(\$remote_socket);
-
-		} else {
-			error	"Syntax Error in function 'storage' (Storage Functions)\n" .
-				"Usage: storage [<add | get | close>] [<inventory # | storage #>] [<amount>]\n";
-		}
-
 	} elsif ($switch eq "store") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
@@ -2253,16 +2193,15 @@ sub AI {
 	# Get one or more items from storage.
 
 	if (AI::action eq "storageGet" && timeOut(AI::args)) {
-		my $item = AI::args->{items}[0];
+		my $item = shift @{AI::args->{items}};
 		my $amount = AI::args->{max};
 
-		if (!$amount || $amount > $storage{$storageID[$item]}{amount}) {
-			$amount = $storage{$storageID[$item]}{amount};
+		if (!$amount || $amount > $item->{amount}) {
+			$amount = $item->{amount};
 		}
-		sendStorageGet(\$remote_socket, $storage{$storageID[$item]}{index}, $amount) if ($storage{opened});
-		shift @{AI::args->{items}};
+		sendStorageGet(\$remote_socket, $item->{index}, $amount) if $storage{opened};
 		AI::args->{time} = time;
-		AI::dequeue if (@{AI::args->{'items'}} <= 0);
+		AI::dequeue if !@{AI::args->{items}};
 	}
 
 	#### CART ADD ####
@@ -9465,38 +9404,6 @@ sub sit {
 sub stand {
 	aiRemove("sitting");
 	AI::queue("standing");
-}
-
-##
-# storageGet(indices, max)
-# indices: reference to an array of storage item numbers.
-# max: the maximum amount to get, for each item, or 0 for unlimited.
-#
-# Get one or more items from storage.
-#
-# Example:
-# # Get items 2 and 5 from storage.
-# storageGet([2, 5]);
-# # Get items 2 and 5 from storage, but at most 30 of each item.
-# storageGet([2, 5], 30);
-sub storageGet {
-	my $indices = shift;
-	my $max = shift;
-
-	if (@{$indices} == 1) {
-		my $index = $indices->[0];
-		if (!$max || $max > $storage{$storageID[$index]}{amount}) {
-			$max = $storage{$storageID[$index]}{amount};
-		}
-		sendStorageGet(\$remote_socket, $storage{$storageID[$index]}{index}, $max);
-
-	} else {
-		my %args;
-		$args{items} = $indices;
-		$args{max} = $max;
-		$args{timeout} = 0.15;
-		AI::queue("storageGet", \%args);
-	}
 }
 
 sub take {
