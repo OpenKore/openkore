@@ -8304,7 +8304,7 @@ sub ai_getMonstersWhoHitMe {
 	my @agMonsters;
 	foreach (@monstersID) {
 		next if ($_ eq "");
-		if ($monsters{$_}{'dmgToYou'} > 0 && $monsters{$_}{'attack_failed'} <= 1) {
+		if (($monsters{$_}{'dmgToYou'} > 0 || $monsters{$_}{'missedYou'} > 0) && $monsters{$_}{'attack_failed'} <= 1) {
 			push @agMonsters, $_;
 		}
 	}
