@@ -31,17 +31,17 @@ New features:
 - teleportAuto_[hp|sp|minAggressives] will now print a message when it is
   triggered.
 - 'drop' command now works when AI is off, if you are only dropping one item.
-- isSelfSkill for attackSkillSlot. e.g.
-  attackSkillSlot Aspersio { monsters Zombie }
-- _defendMonsters consition, e.g.:
-  partySkill Pneuma { target_defendMonsters Raydric Archer }
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
   hear a PM/public chat message.
-- The attackComboSlot block now has an extra option:
+- The attackSkillSlot and attackComboSlot blocks now have an extra option:
   isSelfSkill (flag)
   This specifies whether the combo skill is used on yourself.
+- _defendMonsters consition, e.g.:
+  partySkill Pneuma {
+      target_defendMonsters Raydric Archer
+  }
 - verboseDomains is the opposite of squelchDomains.
 - missDamage; any damage you do <= this amount will be counted as a miss.
   (e.g. for monks who have Spirit Spheres)
@@ -67,6 +67,7 @@ Credits:
 - MindChild: support for the 'all' option in items_control.txt,
   support for the --storage argument.
 - jabskeeterbug: item history command.
+- jsteng: some routing bug fixes.
 
 
 ==================

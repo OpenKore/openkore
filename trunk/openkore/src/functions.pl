@@ -128,7 +128,7 @@ sub initMapChangeVars {
 	$timeout{'ai_storageAuto'}{'time'} = time + 5;
 	$timeout{'ai_buyAuto'}{'time'} = time + 5;
 
-	AI::clear("attack");
+	AI::clear("attack", "route", "move");
 	ChatQueue::clear;
 
 	initOtherVars();
