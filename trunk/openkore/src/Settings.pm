@@ -32,7 +32,7 @@ our @EXPORT = qw($buildType
 
 # Constants
 our $NAME = 'OpenKore';
-our $VERSION = '1.2.1';
+our $VERSION = 'CVS';
 our $WEBSITE = 'http://openkore.sourceforge.net';
 our $versionText = "*** $NAME $VERSION - Custom Ragnarok Online client ***\n***   $WEBSITE   ***\n";
 our $welcomeText = "Welcome to X-$NAME.";
