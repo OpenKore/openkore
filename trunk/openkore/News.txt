@@ -19,6 +19,10 @@ Bug fixes:
 - "Inventory Item Removed" message was not being displayed when you drop
   (instead of fire) arrows.
 - Your shop title and chatroom title will not longer than 36 characters.
+- openkore was allowing more than 10 items to be added to the deal (bug #31)
+  if you were adding more than one of the same type of equipment. The server
+  would destroy these excess items! This is now fixed, except when you type a
+  lot of "deal add" commands faster than the server responds.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.

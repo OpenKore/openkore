@@ -841,7 +841,7 @@ sub parseCommand {
 			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
 				"Amount must either be a number, or not specified.\n";
 		} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/) {
-			if (scalar(keys %{$currentDeal{'you'}}) < 10) {
+			if ($currentDeal{you_items} < 10) {
 				if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'}) {
 					$arg[2] = $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'};
 				}
@@ -7279,6 +7279,7 @@ sub parseMsg {
 			$currentDeal{'you'}{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}{'amount'} += $currentDeal{'lastItemAmount'};
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $currentDeal{'lastItemAmount'};
 			message "You added Item to Deal: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} x $currentDeal{'lastItemAmount'}\n", "deal";
+			$currentDeal{you_items}++;
 			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
 				delete $chars[$config{'char'}]{'inventory'}[$invIndex];
 			}
