@@ -433,7 +433,7 @@ MyGetProcAddress (HMODULE hModule, LPCSTR lpProcName)
 static void
 DoHookProcs ()
 {
-	// Read the comment for HookImportedFunction() in utils.cpp
+	// Read the comment for HookImportedFunction() in utils-netredirect.cpp
 	// about what's going on here
 
 	OriginalWSASendProc = (MyWSASendProc)
