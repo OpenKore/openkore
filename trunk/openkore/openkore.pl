@@ -140,14 +140,32 @@ if ($buildType == 0) {
 } else {
 	# Linux
 	if (! -f "Tools.so") {
-		# Tools.so doesn't exist; attempt to compile it
-		Log::message("Tools.so does not exist; compiling it...\n", "startup");
-		if (system('make') != 0) {
-			$interface->errorDialog("Unable to compile Tools.so. Please check the " .
-				"terminal for the error message, and report this bug at our forums.");
-			exit 1;
+		# Tools.so doesn't exist; maybe it's somewhere else in @INC?
+		my $found;
+		foreach (@INC) {
+			if (-f "$_/Tools.so") {
+				$found = 1;
+				last;
+			}
+		}
+
+		if (!$found) {
+			# Attempt to compile it
+			Log::message("Tools.so does not exist; compiling it...\n", "startup");
+			my $ret = system('make');
+			if ($ret != 0) {
+				if (($ret & 127) == 2) {
+					# Ctrl+C pressed
+					exit 1;
+				} else {
+					$interface->errorDialog("Unable to compile Tools.so. Please check the " .
+						"terminal for the error message, and report this bug at our forums.");
+					exit 1;
+				}
+			}
 		}
 	}
+
 	eval "use Tools;";
 	if ($@) {
 		my $msg;

@@ -535,6 +535,8 @@ sub timeConvert {
 # If r_time is a hash:
 # Check whether $r_time->{timeout} seconds have passed since $r_time->{time}.
 #
+# This function is usually used to handle timeouts in a loop.
+#
 # Example:
 # my %time;
 # $time{time} = time;

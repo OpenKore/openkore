@@ -8414,6 +8414,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "01F4") {
 		# Recieving deal request
+		# 01DC: 24byte nick, long charID, word level
 		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		my $dealUserLevel = unpack("S1",substr($msg, 30, 2));
 		$incomingDeal{'name'} = $dealUser;
@@ -8423,6 +8424,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "01F5") {
 		# The deal you request has been accepted
+		# 01F5: byte fail, long charID, word level
 		my $type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 3) {
 			if (%incomingDeal) {
