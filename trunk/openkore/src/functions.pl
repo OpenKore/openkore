@@ -1153,11 +1153,10 @@ sub parseCommand {
 			error	"Syntax Error in function 'move' (Move Player)\n" .
 				"Usage: move <x> <y> &| <map>\n";
 		} elsif ($ai_v{'temp'}{'map'} eq "stop") {
-			aiRemove("move");
-			aiRemove("route");
-			aiRemove("mapRoute");
+			AI::clear(qw/move route mapRoute/);
 			message "Stopped all movement\n", "success";
 		} else {
+			AI::clear(qw/move route mapRoute/);
 			$ai_v{'temp'}{'map'} = $field{'name'} if ($ai_v{'temp'}{'map'} eq "");
 			if ($maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}) {
 				if ($arg2 ne "") {
