@@ -213,6 +213,8 @@ Bug fixes:
   instead of trying to cast an empty skill ID
 - "Monster x changed to y" message no longer displays blank y
 - Check for numeric argument in Commands::cmdUseSkill.
+- Fix crash in party check of positionNearPlayer().
+- Fix crash in calculating exp gained %.
 - Fixed bug in "cartGet" AI sequence
 
 Internal:
