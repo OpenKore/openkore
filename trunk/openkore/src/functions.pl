@@ -8409,6 +8409,14 @@ sub parseMsg {
 		message "[Guild] $chat\n", "guildchat";
 		ChatQueue::add('g', $ID, $chatMsgUser, $chatMsg);
 
+	} elsif ($switch eq "018F") {
+		my ($flag) = unpack("x2 S1", $msg);
+		if ($flag) {
+			message "You failed to refine a weapon!\n";
+		} else {
+			message "You successfully refined a weapon!\n";
+		}
+
 	} elsif ($switch eq "0194") {
 		my $ID = substr($msg, 2, 4);
 		my ($name) = unpack("Z*", substr($msg, 6, 24));

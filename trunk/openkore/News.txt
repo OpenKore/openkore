@@ -36,6 +36,8 @@ New features:
   triggered.
 - 'drop' command now works when AI is off, if you are only dropping one item.
 - 'aiv' command will now indicate whether or not AI is on.
+- "You [successfully refined/failed to refine] a weapon!" message implemented.
+  (packet switch 018F)
 
 New config options:
 - beepOnPM, beepOnChat if set to 1 will generate a beep when you
@@ -70,8 +72,8 @@ Internal:
 - OpenKore will exit if a configuration file failed to load.
 - checkMonsterCondition() now takes a monster hash instead of monster ID.
   (Perhaps other similar functions should be converted too)
-- inInventory($item, $quantity = 1) returns 1 iff you have >= $quantity of
-  $item in your inventory.
+- inInventory($item, $quantity = 1) returns the index of the item if you have
+  at least $quantity of it, or undef otherwise.
 
 Credits:
 - asuwannarat, as2765324: tRO server details.
