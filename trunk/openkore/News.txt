@@ -9,6 +9,7 @@ Bug fixes:
 - partySkill target_timeouts are now saved when openkore uses the skill
   on the person, not when it tries to use it.
 - The day parameter for autoBreakTime is no longer case sensitive.
+- Fix a routing problem which causes Kore to walk back and forth.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
