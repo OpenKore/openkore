@@ -43,6 +43,7 @@ New features:
   <item>	<price>	[<quantity>]
 - Added 'testshop' command which tells you what your shop would sell
   if you opened it.
+- NPC coordinates are now displayed in the "NPC Exists" message.
 
 New config options:
 - *_inInventory_name : inventory item name
