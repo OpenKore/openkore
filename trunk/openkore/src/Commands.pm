@@ -808,19 +808,22 @@ sub cmdPlayerList {
 			return;
 		}
 
+		my $body = $player->{look}{body} % 8;
+		my $head = $player->{look}{head} % 8;
+
 		$msg = "------------- Player Info -------------\n";
 		$msg .= "$player->{name}\n";
 		$msg .= "Account ID: $player->{nameID}\n";
-		$msg .= "Party: $player->{party}{name}\n" if ($player->{party});
+		$msg .= "Party: $player->{party}{name}\n" if ($player->{party} && $player->{party}{name} ne '');
 		$msg .= "Guild: $player->{guild}{name} (" . scalar(keys %{$player->{guild}{men}}) . " members)\n" if ($player->{guild});
 		$msg .= swrite(
-			"Level: @<<               Position: @<<<<<<<<<<<<<<",
+			"Level: @<<                   Position: @<<<<<<<<<<<<<<",
 			[$player->{lv}, "$player->{pos_to}{x}, $player->{pos_to}{y}"]);
 		$msg .= swrite(
-			"Sex: @<<<<<<             Class: @<<<<<<<<<<<",
+			"Sex: @<<<<<<                 Class: @<<<<<<<<<<<",
 			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}],
-			"Body direction: @<<<<<<< Head direction: @<<<<<<<",
-			[$player->{look}{body}, $player->{look}{head}]);
+			"Body direction: @<<<<<<<<<<< Head direction: @<<<<<<<<<<<",
+			[$directions_lut{$body}, $directions_lut{$head}]);
 		$msg .= sprintf("Walk speed: %.2f seconds per block\n", $player->{walk_speed});
 		if ($player->{dead}) {
 			$msg .= "Player is dead.\n";
