@@ -35,8 +35,9 @@ use strict;
 use warnings;
 no warnings 'redefine';
 use Exporter;
-use Config;
 use base qw(Exporter);
+use Config;
+use FindBin;
 
 our @modules;
 our @queue;
@@ -153,17 +154,13 @@ sub reloadFile {
 	}
 
 	$msg->("Checking $filename for errors...\n", "info");
-	my @inc;
-	foreach (@INC) {
-		push @inc, "-I", $_;
-	}
 
-	system($Config{'perlpath'}, @inc, '-c', "$path/$filename");
+	system($Config{perlpath}, '-I', "$FindBin::RealBin/src", '-c', "$path/$filename");
 	if ($? == -1) {
 		$err->("Failed to execute $Config{'perlpath'}\n");
 		return;
 	} elsif ($? & 127) {
-		$err->("$Config{'perlpath'} exited abnormally\n");
+		$err->("$Config{perlpath} exited abnormally\n");
 		return;
 	} elsif (($? >> 8) == 0) {
 		$msg->("$filename passed syntax check.\n", "success");
