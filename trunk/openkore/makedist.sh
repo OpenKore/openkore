@@ -1,6 +1,14 @@
 #!/bin/bash
 # This script creates a source tarball.
 
+if [[ "$1" == "--help" ]]; then
+	echo "makedist.sh [--bin]"
+	echo " --bin    Create a binary distribution."
+	exit 1
+elif [[ "$1" == "--bin" ]]; then
+	BINDIST=1
+fi
+
 PACKAGE=openkore
 VERSION=1.5.0-beta
 TYPE=bz2
@@ -24,7 +32,12 @@ DIRS=(.
 	src/auto/XSTools/win32
 )
 PACKAGEDIR=$PACKAGE-$VERSION
-ADDITIONAL=(Distfiles makedist.sh Makefile Makefile.win32 Makefile.in)
+ADDITIONAL=(Makefile Makefile.win32 Makefile.in)
+if [[ "$BINDIST" != "1" ]]; then
+	ADDITIONAL[${#ADDITIONAL[@]}]=Distfiles
+	ADDITIONAL[${#ADDITIONAL[@]}]=makedist.sh
+fi
+
 export GZIP=--best
 export BZIP2=-9
 
@@ -71,6 +84,14 @@ for D in ${DIRS[@]}; do
 	process "$D"
 done
 
+# Stop if this is going to be a binary distribution
+if [[ "$BINDIST" == "1" ]]; then
+	rm -f "$PACKAGEDIR/Makefile"
+	echo
+	echo "====================="
+	echo "Directory '$PACKAGEDIR' created. Please add (wx)start.exe."
+	exit
+fi
 
 # Create tarball
 echo "Creating distribution archive..."

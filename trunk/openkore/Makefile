@@ -1,4 +1,4 @@
-.PHONY: all exe start.exe wxstart.exe dist
+.PHONY: all exe start.exe wxstart.exe dist bindist
 
 all clean:
 	make -C src/auto/XSTools $@
@@ -19,16 +19,5 @@ exe:
 
 dist:
 	bash makedist.sh
-
-
-PERLAPP=perlapp --lib src \
-	--add XSTools \
-	--trim Pod::Usage \
-	start.pl --force \
-	--icon src\\build\\openkore.ico
-
-start.exe:
-	$(PERLAPP)
-
-wxstart.exe:
-	$(PERLAPP) --add Wx --add Wx::Grid --add Wx::Html --add LWP::Simple -o wxstart.exe
+bindist:
+	bash makedist.sh --bin
