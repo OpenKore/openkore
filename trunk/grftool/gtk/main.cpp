@@ -223,7 +223,7 @@ open_grf_file (const char *fname)
 
 
 	tmp = g_path_get_basename (fname);
-	title = g_strdup_printf (_("%s: %ld files"), tmp, document.grf->nfiles);
+	title = g_strdup_printf (_("%s: %ld files"), tmp, (long int)document.grf->nfiles);
 	mainWin.status (title);
 	g_free (tmp);
 	g_free (title);

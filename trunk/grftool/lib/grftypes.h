@@ -187,7 +187,10 @@ typedef enum {
 	GE_NODATA,
 
 	/** Bad mode: tried to modify in read-only mode */
-	GE_BADMODE
+	GE_BADMODE,
+
+	/** Feature not implemented */
+	GE_NOTIMPLEMENTED
 } GrfErrorType;
 
 
