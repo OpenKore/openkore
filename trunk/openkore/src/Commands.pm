@@ -1398,28 +1398,33 @@ sub cmdWarp {
 			"Usage: warp <map name | map number# | list>\n";
 
 	} elsif ($map =~ /^\d+$/) {
-		if ($map < 0 || $map > @{$chars[$config{'char'}]{'warp'}{'memo'}}) {
+		if (!$char->{warp}{memo} || !@{$char->{warp}{memo}}) {
+			error "You didn't cast warp portal.\n";
+			return;
+		}
+
+		if ($map < 0 || $map > @{$char->{warp}{memo}}) {
 			error "Invalid map number $map.\n";
 		} else {
-			my $name = $chars[$config{'char'}]{'warp'}{'memo'}[$map];
+			my $name = $char->{warp}{memo}[$map];
 			my $rsw = "$name.rsw";
 			message "Attempting to open a warp portal to $maps_lut{$rsw} ($name)\n", "info";
 			sendOpenWarp(\$remote_socket, "$name.gat");
 		}
 
 	} elsif ($map eq 'list') {
-		if (!$chars[$config{'char'}]{'warp'}{'memo'} || !@{$chars[$config{'char'}]{'warp'}{'memo'}}) {
+		if (!$char->{warp}{memo} || !@{$char->{warp}{memo}}) {
 			error "You didn't cast warp portal.\n";
 			return;
 		}
 
 		message("----------------- Warp Portal --------------------\n", "list");
 		message("#  Place                           Map\n", "list");
-		for (my $i = 0; $i < @{$chars[$config{'char'}]{'warp'}{'memo'}}; $i++) {
+		for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
 			message(swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
-				[$i, $maps_lut{$chars[$config{'char'}]{'warp'}{'memo'}[$i].'.rsw'},
-				$chars[$config{'char'}]{'warp'}{'memo'}[$i]]),
+				[$i, $maps_lut{$char->{warp}{memo}[$i].'.rsw'},
+				$char->{warp}{memo}[$i]]),
 				"list");
 		}
 		message("--------------------------------------------------\n", "list");

@@ -294,6 +294,8 @@ sub mainLoop {
 
 		$timeout_ex{'master'}{'time'} = time;
 		$KoreStartTime = time + $timeout_ex{'master'}{'timeout'};
+		AI::clear();
+		undef %ai_v;
 		Network::disconnect(\$remote_socket);
 		$conState = 1;
 		undef $conState_tries;
