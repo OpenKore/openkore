@@ -3137,7 +3137,7 @@ sub AI {
 					&& checkSelfCondition("partySkill_$i")
 					){
 						$ai_v{"partySkill_$i"."_time"} = time;
-						$ai_v{"partySkill_$i"."_target"."_time"}{$partyUsersID[$j]} = time;
+						$ai_v{"partySkill_$i"."_target_time"}{$partyUsersID[$j]} = time;
 						$ai_v{'partySkill'} = $config{"partySkill_$i"};
 						$ai_v{'partySkill_target'} = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'};
 						$ai_v{'partySkill_targetID'} = $partyUsersID[$j];
@@ -9873,21 +9873,24 @@ sub getNPCInfo {
 	}
 }
 
-# should not happened but just to safeguard
 sub stuckCheck {
-	return if ($config{stuckcheckLimit} eq "" || $config{stuckcheckLimit} == 0);
-
 	my $stuck = shift;
+	my $limit = ($config{stuckcheckLimit} eq "" || $config{stuckcheckLimit} == 0)? 10 : $config{stuckcheckLimit};
 	if ($stuck) {
-		$ai_v{stuck_count}++;
-		if ($ai_v{stuck_count} > $config{stuckcheckLimit}) {
-			my $msg = "Failed to move for $ai_v{stuck_count} times, teleport. ($field{'name'} $chars[$config{char}]{pos}{x},$chars[$config{char}]{pos}{y})\n";
-			warning $msg;
+		if ($ai_v{stuck_count} >= $limit) {
+			# should not happened but just to safeguard
+			my $msg = "Failed to move for $ai_v{stuck_count} times, attempt to unstuck by teleport. ($field{'name'} $chars[$config{char}]{pos}{x},$chars[$config{char}]{pos}{y})\n";
+			warning $msg, "stuck";
 			chatLog("k", $msg);
 			useTeleport(1);
 			delete $ai_v{stuck_count};
+		} else {
+			$ai_v{stuck_count}++;
+			debug "Move failed, attempt ($ai_v{stuck_count}) to unstuck by moving to current recorded pos\n", "stuck";
+			sendMove(\$remote_socket, $chars[$config{char}]{pos_to}{x}, $chars[$config{char}]{pos_to}{y});
 		}
-	} else {
+	} elsif (exists $ai_v{stuck_count}) {
+		debug "Unstuck attempt sucessfull\n", "stuck";
 		delete $ai_v{stuck_count};
 	}
 }
@@ -9990,6 +9993,8 @@ sub checkSelfCondition {
 		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getAggressives());
 		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
 	}
+	
+	if ($config{$prefix . "_whenFollowing"} && $config{follow}) { return 0 if (!getFollowing()); }
 
 	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActive($config{$prefix . "_whenStatusActive"}) || whenAffected($config{$prefix . "_whenStatusActive"})); }
 	if ($config{$prefix . "_whenStatusInactive"}) { return 0 if (whenStatusActive($config{$prefix . "_whenStatusInactive"}) || whenAffected($config{$prefix . "_whenStatusInactive"})); }
@@ -10055,6 +10060,15 @@ sub manualMove {
 	$ai_v{'temp'}{'x'} = $chars[$config{'char'}]{'pos_to'}{'x'} + $delta_x;
 	$ai_v{'temp'}{'y'} = $chars[$config{'char'}]{'pos_to'}{'y'} + $delta_y;
 	ai_route($ai_v{'temp'}{'map'}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'});
+}
+
+sub getFollowing {
+	my $followIndex;
+	if ($config{follow} && (($followIndex = binFind(\@ai_seq, "follow")) ne "")) {
+		return 1 if ($ai_seq_args[$followIndex]{following});
+	}
+	
+	return 0;
 }
 
 return 1;
