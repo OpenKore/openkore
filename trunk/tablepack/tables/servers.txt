@@ -103,17 +103,7 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 
-[Thailand - tRO: Sol, Chaos, Loki, Iris, Fenrir, Lydia, Sarah]
-ip 203.144.244.5
-port 6900
-master_version 7
-version 24
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-
-[Thailand - tRO: Frigg, Freya, Baldur, Heimdal, Honir, Ordin, Thor]
+[Thailand - tRO Account 1: Sol, Chaos, Loki, Iris]
 ip 203.144.244.10
 port 6900
 master_version 7
@@ -123,8 +113,48 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 
-[Thailand - tRO: Isa, Tyr, Idun, Bijou, Grimnir, Bragi]
+[Thailand - tRO Account 1: Fenrir,Lydia,Sarah]
+ip 203.144.244.121
+port 6900
+master_version 7
+version 24
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
+[Thailand - tRO Account 2: Frigg,Freya,Baldur,Heimdal]
+ip 203.144.244.5
+port 6900
+master_version 7
+version 24
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
+[Thailand - tRO Account 2: Honir,Odin,Thor]
+ip 203.144.244.122
+port 6900
+master_version 7
+version 24
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
+[Thailand - tRO Account 3: Isa, Tyr, Idun]
 ip 203.144.244.7
+port 6900
+master_version 7
+version 24
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
+[Thailand - tRO Account 3: Bijou, Grimnir, Bragi]
+ip 203.144.244.123
 port 6900
 master_version 7
 version 24
