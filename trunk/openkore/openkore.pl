@@ -517,6 +517,7 @@ sub checkConnection {
 		initConnectVars();
 		connection(\$remote_socket, $map_ip, $map_port);
 		sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		$timeout{'maplogin'}{'time'} = time;
 
 	} elsif ($conState == 4 && timeOut(\%{$timeout{'maplogin'}})) {
@@ -539,6 +540,7 @@ sub checkConnection {
 		$conState = 1;
 		undef $conState_tries;
 	}
+
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}) {
 		$conState = 1;
 		undef $conState_tries;
