@@ -322,7 +322,7 @@ sub parseInput {
 			next if ($articles[$number] eq "");
 			$display = $articles[$number]{'name'};
 			if (!($articles[$number]{'identified'})) {
-				$display = $display."[NI]";
+				$display = $display." -- Not Identified";
 			}
 			if ($articles[$number]{'card1'}) {
 				$display = $display."[".$cards_lut{$articles[$number]{'card1'}}."]";
@@ -7135,6 +7135,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$index = unpack("S1", substr($msg, 2, 2));
 		$amount = unpack("L1", substr($msg, 4, 4));
 		$ID = unpack("S1", substr($msg, 8, 2));
+
 #Solos Start
 # This is another HACK!!! If the item ID is >= 9000 then you know it is a non-stackable item!
 # Then get it an unique item ID but get display name first, as usual.
@@ -7153,10 +7154,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$cart{'inventory'}{$ID}{'name'} = $display;
 			$cart{'inventory'}{$ID}{'binID'} = binFind(\@cartID, $ID);
 			$cart{'inventory'}{$ID}{'oldID'} = $oldID;
-		}
-		elsif (%{$cart{'inventory'}{$ID}}) {
-#Solos End
+
+		} elsif (%{$cart{'inventory'}{$ID}}) {
 			$cart{'inventory'}{$ID}{'amount'} += $amount;
+
 		} else {
 			binAdd(\@cartID, $ID);
 			$cart{'inventory'}{$ID}{'index'} = $index;
@@ -7172,10 +7173,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 	} elsif ($switch eq "0125") {
 		$index = unpack("S1", substr($msg, 2, 2));
 		$amount = unpack("L1", substr($msg, 4, 4));
-#Solos Start
-#		$ID = findKey(\%cart, "index", $index);
 		$ID = findKey(\%{$cart{'inventory'}}, "index", $index);
-#Solos End
+
 		$cart{'inventory'}{$ID}{'amount'} -= $amount;
 		print "Cart Item Removed: $cart{'inventory'}{$ID}{'name'} ($cart{'inventory'}{$ID}{'binID'}) x $amount\n";
 		if ($cart{'inventory'}{$ID}{'amount'} <= 0) {
@@ -9740,73 +9739,80 @@ sub sendMove {
 
 sub sendOpenShop {
 	my $r_socket = shift;
+	my ($i, $index, $totalitem, $items_selling, $citem, $oldid);
+	my %itemtosell;
 
-	$i = 0;
-	while ($shop{"name_$i"} ne "") {
-		$i++;
-	}
-	$totalitem = $i;
-
-	$items_selling = 0;
-	for( $i=0; $i < $totalitem; $i++) {
-		$citem = -1;
-		for ( $j=0; $j < $cart{'items'}; $j++) {
-			if ($cart{'inventory'}{$cartID[$j]}{'name'} eq $shop{"name_$i"}) {
-				$items_selling++;
-				last;
-			}
+	if ($chars[$config{'char'}]{'skills'}{'MC_VENDING'}{'lv'}) {
+		if ($shop{'shop_title'} eq "") {
+			print "Cannot open shop: you must specify a title for your shop.\n";
+			return 0;
 		}
-	}
 
-	if ($items_selling > 12) { 
-		$items_selling = 12; 
-	}
+		$i = 0;
+		$items_selling = 0;
+		while ($shop{"name_$i"} ne "" && $items_selling < $chars[$config{'char'}]{'skills'}{'MC_VENDING'}{'lv'} + 2) {
+			for ($index = 0; $index < @cartID; $index++) {
+				if ($cart{'inventory'}{$cartID[$index]}{'name'} eq $shop{"name_$i"}) {
+					$citem = $index;
+					foreach (keys %itemtosell) {
+						if ($_ eq $index) {
+							$oldid = $_;
+							$citem = -1;
+						}
+					}
 
-	my $length = 0x54 + 0x08 * $items_selling;
+					if ($citem >- 1) {
+						$itemtosell{$index}{'index'} = $cart{'inventory'}{$cartID[$index]}{'index'};
 
-	my $msg = pack("C*", 0x2F, 0x01) . pack("S*", $length) . 
-	$shop{'shop_title'} . chr(0) x (36 - length($shop{'shop_title'})) . chr(0) x 44;
+						# Calculate amount
+						if ($shop{"quantity_$i"} > 0 && $cart{'inventory'}{$cartID[$index]}{'amount'} >= $shop{"quantity_$i"}) {
+							$itemtosell{$index}{'amount'} = $shop{"quantity_$i"};
+						} elsif ($shop{"quantity_$i"} > 0 && $cart{'inventory'}{$cartID[$index]}{'amount'} < $shop{"quantity_$i"}) {
+							$itemtosell{$index}{'amount'} = $cart{'inventory'}{$cartID[$index]}{'amount'};
+						} else {
+							$itemtosell{$index}{'amount'} = 1;
+						}
 
-	$items_selling = 0;
-
-	for( $i=0; $i < $totalitem; $i++) {
-		$citem = -1;
-		for ( $j=0; $j < $cart{'items'}; $j++) {
-			if ($cart{'inventory'}{$cartID[$j]}{'name'} eq $shop{"name_$i"}) {
-				$index = $cart{'inventory'}{$cartID[$j]}{'index'};
-				$citem = $j;
-				$items_selling++;
-				last;
+						# Calculate price
+						if ($shop{"price_$i"} > 10000000) {
+							$itemtosell{$index}{'price'} = 10000000;
+						} elsif ($shop{"price_$i"} > 0) {
+							$itemtosell{$index}{'price'} = $shop{"price_$i"};
+						} else {
+							$itemtosell{$index}{'price'} = 1;
+						}
+						$items_selling++;
+						last;
+					}
+				}
 			}
+			$i++;
 		}
-		next if ($citem == -1);
-		next if ($items_selling > 12);
-		if ($shop{"quantity_$i"} > 0) {
-			if ($shop{"quantity_$i"} > $cart{'inventory'}{$cartID[$citem]}{'amount'}) { 
-				$amount = $cart{'inventory'}{$cartID[$citem]}{'amount'};
-			} else {
-				$amount = $shop{"quantity_$i"};
-			}
+
+		if (!$items_selling) {
+			print "Cannot open shop: no items to sell.\n";
+			return 0;
+		}
+
+		my $length = 0x55 + 0x08 * $items_selling;
+
+		my $msg = pack("C*", 0xB2, 0x01) . pack("S*", $length) . 
+		$shop{'shop_title'} . chr(0) x (80 - length($shop{'shop_title'})) .  pack("C*", 0x01);
+
+		foreach (keys %itemtosell) {
+			$msg .= pack("S1",$itemtosell{$_}{'index'}) . pack("S1", $itemtosell{$_}{'amount'}) . pack("L1", $itemtosell{$_}{'price'});
+		}
+		if(length($msg) == $length) {
+			sendMsgToServer($r_socket, $msg);
+			print "Opening shop ($shop{'shop_title'}) with $items_selling items...\n";
+			return 1;
 		} else {
-			$amount = $cart{'inventory'}{$cartID[$citem]}{'amount'};
+			print "Unknown error while opening shop.\n";
+			return 0;
 		}
-
-		if ($shop{"price_$i"} > 0) {
-			$price = $shop{"price_$i"};
-		} else {
-			print "You have provided an invalid price.\n";
-			last;
-		}
-
-		$msg .= pack("S*", $index) . pack("S*", $amount) . pack("L*", $price);
-	}
-
-	if (length($msg) == $length) {
-		sendMsgToServer($r_socket, $msg);
-		print "Shop Opened.\n";
-		$shopstarted = 1;
 	} else {
-		print "Error opening shop...\n";
+		print "Cannot open shop: you don't have the Vending skill.\n";
+		return 0;
 	}
 }
 
