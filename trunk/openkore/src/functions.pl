@@ -1014,6 +1014,7 @@ sub parseCommand {
 		} elsif ($arg1 eq "reset") {
 			($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
 			$startTime_EXP = time;
+			$startingZenny = $char->{zenny};
 			undef @monsters_Killed;
 		} else {
 			error "Error in function 'exp' (Exp Report)\n" .

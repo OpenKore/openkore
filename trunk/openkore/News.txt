@@ -15,6 +15,7 @@ Bug fixes:
 - 'autostorage' command will now work even if storageAuto is set to 0.
 - Sometimes openkore would stop auto-storing items covered by the 'all'
   setting in items_control.txt, necessitating a reload.
+- Zeny earned is reset when you use "exp reset".
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
