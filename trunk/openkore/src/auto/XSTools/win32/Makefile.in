@@ -7,16 +7,20 @@ CXXFLAGS=$(CFLAGS)
 .PHONY: all clean
 
 all: NetRedirect.dll wrapper.o utils.o
+NETOBJ=netredirect.o utils-netredirect.o
 
 
-NetRedirect.dll: netredirect.o netredirect.gccdef
-	dllwrap --driver=$(CXX) --target=i386-mingw -mno-cygwin --def netredirect.gccdef netredirect.o -o NetRedirect.dll -lws2_32
+NetRedirect.dll: $(NETOBJ) netredirect.gccdef
+	dllwrap --driver=$(CXX) --target=i386-mingw -mno-cygwin --def netredirect.gccdef $(NETOBJ) -o NetRedirect.dll -lws2_32 -lstdc++
 
-netredirect.o: netredirect.cpp
-	$(CXX) -mdll $(CXXFLAGS) netredirect.cpp -c -o netredirect.o
+netredirect.o: netredirect.cpp common.h
+	$(CXX) $(CXXFLAGS) netredirect.cpp -c -o netredirect.o
+
+utils-netredirect.o: utils-netredirect.cpp common.h
+	$(CXX) $(CXXFLAGS) utils-netredirect.cpp -c -o utils-netredirect.o
 
 netredirect.gccdef: netredirect.o
-	dlltool --dllname NetRedirect.dll --output-def netredirect.gccdef --no-export-all-symbols --add-stdcall-alias netredirect.o
+	dlltool --dllname NetRedirect.dll --output-def netredirect.gccdef --no-export-all-symbols --add-stdcall-alias $(NETOBJ)
 
 
 wrapper.o: wrapper.xs
