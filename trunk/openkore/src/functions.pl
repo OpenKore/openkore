@@ -3749,10 +3749,10 @@ sub AI {
 					&& $config{"attackSkillSlot_$i"."_minAggressives"} <= ai_getAggressives()
 					&& (!$config{"attackSkillSlot_$i"."_maxAggressives"} || $config{"attackSkillSlot_$i"."_maxAggressives"} >= ai_getAggressives())
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusActive"} || whenStatusActiveMon($monsters{$ID}, $config{"attackSkillSlot_$i"."_targetWhenStatusActive"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusInactive"} || !whenStatusActiveMon($monsters{$ID}, $config{"attackSkillSlot_$i"."_targetWhenStatusInactive"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenAffected"} || whenAffectedMon($monsters{$ID}, $config{"attackSkillSlot_$i"."_targetWhenAffected"}))
-					&& (!$config{"attackSkillSlot_$i"."_targetWhenNotAffected"} || !whenAffectedMon($monsters{$ID}, $config{"attackSkillSlot_$i"."_targetWhenNotAffected"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusActive"} || whenStatusActiveMon($ID, $config{"attackSkillSlot_$i"."_targetWhenStatusActive"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenStatusInactive"} || !whenStatusActiveMon($ID, $config{"attackSkillSlot_$i"."_targetWhenStatusInactive"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenAffected"} || whenAffectedMon($ID, $config{"attackSkillSlot_$i"."_targetWhenAffected"}))
+					&& (!$config{"attackSkillSlot_$i"."_targetWhenNotAffected"} || !whenAffectedMon($ID, $config{"attackSkillSlot_$i"."_targetWhenNotAffected"}))
 				) {
 					$ai_seq_args[0]{'attackSkillSlot_uses'}{$i}++;
 					$ai_seq_args[0]{'attackMethod'}{'distance'} = $config{"attackSkillSlot_$i"."_dist"};
@@ -7893,19 +7893,19 @@ sub parseMsg {
 		} elsif (%{$players{$ID}}) {
 			if ($flag) {
 				$players{$ID}{statuses}{$skillName} = 1;
-				message "Player $players{$ID}{name} got status $skillName", undef, 2;
+				message "Player $players{$ID}{name} got status $skillName\n", "parseMsg_statuslook", 2;
 			} else {
 				delete $players{$ID}{statuses}{$skillName};
-				message "Player $players{$ID}{name} lost status $skillName", undef, 2;
+				message "Player $players{$ID}{name} lost status $skillName\n", "parseMsg_statuslook", 2;
 			}
 
 		} elsif (%{$monsters{$ID}}) {
 			if ($flag) {
 				$monsters{$ID}{statuses}{$skillName} = 1;
-				message "Monster $monsters{$ID}{name} got status $skillName", undef, 2;
+				message "Monster $monsters{$ID}{name} got status $skillName\n", "parseMsg_statuslook", 2;
 			} else {
 				delete $monsters{$ID}{statuses}{$skillName};
-				message "Monster $monsters{$ID}{name} lost status $skillName", undef, 2;
+				message "Monster $monsters{$ID}{name} lost status $skillName\n", "parseMsg_statuslook", 2;
 			}
 		}
 
