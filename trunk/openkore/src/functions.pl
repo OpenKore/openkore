@@ -3235,105 +3235,123 @@ sub AI {
 
 
 	##### FOLLOW #####
+	
+	# TODO: follow should be a 'mode' rather then a sequence, hence all var/flag about follow
+	# should be moved to %ai_v
 
-	# failsafe needed as ai_seq is cleared after teleport. 
-	# $ai_seq[0] will never be "" if randomWalk (and a few other flag) is enable, hence removed
-
-	if ($config{'follow'} && $ai_seq[$#ai_seq] ne "follow") {
-		ai_follow($config{'followTarget'});
+	FOLLOW: {
+	last FOLLOW	if (!$config{follow});
+	
+	my $followIndex;
+	if (($followIndex = binFind(\@ai_seq, "follow")) eq "") {
+		# ai_follow will determine if the Target is 'follow-able'
+		last FOLLOW if (!ai_follow($config{followTarget}));
 	}
-
-	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'suspended'}) {
-		if ($ai_seq_args[0]{'ai_follow_lost'}) {
-			$ai_seq_args[0]{'ai_follow_lost_end'}{'time'} += time - $ai_seq_args[0]{'suspended'};
+	
+	# if we are not following now but master is in the screen...
+	if (!defined $ai_seq_args[$followIndex]{'ID'}) {
+		foreach (keys %players) {
+			if ($players{$_}{'name'} eq $ai_seq_args[$followIndex]{'name'} && !$players{$_}{'dead'}) {
+				$ai_seq_args[$followIndex]{'ID'} = $_;
+				$ai_seq_args[$followIndex]{'following'} = 1;
+				message "Found my master - $ai_seq_args[$followIndex]{'name'}\n", "follow";
+				last;
+			}
 		}
-		undef $ai_seq_args[0]{'suspended'};
+	} elsif (!$ai_seq_args[$followIndex]{'following'} && %{$players{$ai_seq_args[$followIndex]{'ID'}}}) {
+		$ai_seq_args[$followIndex]{'following'} = 1;
+		delete $ai_seq_args[$followIndex]{'ai_follow_lost'};
+		message "Found my master!\n", "follow"
 	}
-	if ($ai_seq[0] eq "follow" && !$ai_seq_args[0]{'ai_follow_lost'}) {
-		if (!$ai_seq_args[0]{'following'}) {
-			foreach (keys %players) {
-				if ($players{$_}{'name'} eq $ai_seq_args[0]{'name'} && !$players{$_}{'dead'}) {
-					$ai_seq_args[0]{'ID'} = $_;
-					$ai_seq_args[0]{'following'} = 1;
-					last;
+
+	# if we are not doing anything else now...
+	if ($ai_seq[0] eq "follow") {
+		if ($ai_seq_args[0]{'suspended'}) {
+			if ($ai_seq_args[0]{'ai_follow_lost'}) {
+				$ai_seq_args[0]{'ai_follow_lost_end'}{'time'} += time - $ai_seq_args[0]{'suspended'};
+			}
+			delete $ai_seq_args[0]{'suspended'};
+		}
+	
+		# if we are not doing anything else now...
+		if (!$ai_seq_args[$followIndex]{'ai_follow_lost'}) {
+			if ($ai_seq_args[$followIndex]{'following'} && $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}) {
+				$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}});
+				if ($ai_v{'temp'}{'dist'} > $config{'followDistanceMax'} && timeOut($ai_seq_args[$followIndex]{'move_timeout'}, 0.25)) {
+					$ai_seq_args[$followIndex]{'move_timeout'} = time;
+					if ($ai_v{'temp'}{'dist'} > 15) {
+						ai_route($field{'name'}, $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'},
+							attackOnRoute => 1,
+							distFromGoal => $config{'followDistanceMin'});
+					} else {
+						my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}});
+						my (%vec, %pos);
+	
+						stand() if ($chars[$config{char}]{sitting});
+						getVector(\%vec, \%{$players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+						moveAlongVector(\%pos, \%{$chars[$config{'char'}]{'pos_to'}}, \%vec, $dist - $config{'followDistanceMin'});
+						sendMove(\$remote_socket, $pos{'x'}, $pos{'y'});
+					}
+				}
+			}
+			
+			if ($ai_seq_args[$followIndex]{'following'} && %{$players{$ai_seq_args[$followIndex]{'ID'}}}) {
+				if ($config{'followSitAuto'} && $players{$ai_seq_args[$followIndex]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
+					sit();
+				}
+	
+				my $dx = $ai_seq_args[$followIndex]{'last_pos_to'}{'x'} - $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'};
+				my $dy = $ai_seq_args[$followIndex]{'last_pos_to'}{'y'} - $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'};
+				$ai_seq_args[$followIndex]{'last_pos_to'}{'x'} = $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'};
+				$ai_seq_args[$followIndex]{'last_pos_to'}{'y'} = $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'};
+				if ($dx != 0 || $dy != 0) {
+					lookAtPosition($players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, int(rand(3))) if ($config{'followFaceDirection'});
 				}
 			}
 		}
-		if ($ai_seq_args[0]{'following'} && $players{$ai_seq_args[0]{'ID'}}{'pos_to'}) {
-			$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}});
-			if ($ai_v{'temp'}{'dist'} > $config{'followDistanceMax'} && timeOut($ai_seq_args[0]{'move_timeout'}, 0.25)) {
-				$ai_seq_args[0]{'move_timeout'} = time;
-				if ($ai_v{'temp'}{'dist'} > 15) {
-					ai_route($field{'name'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'}, $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'},
-						attackOnRoute => 1,
-						distFromGoal => $config{'followDistanceMin'});
-				} else {
-					my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}});
-					my (%vec, %pos);
-
-					stand() if ($chars[$config{char}]{sitting});
-					getVector(\%vec, \%{$players{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-					moveAlongVector(\%pos, \%{$chars[$config{'char'}]{'pos_to'}}, \%vec, $dist - $config{'followDistanceMin'});
-					sendMove(\$remote_socket, $pos{'x'}, $pos{'y'});
-				}
-			}
-		}
-		if ($ai_seq_args[0]{'following'} && %{$players{$ai_seq_args[0]{'ID'}}}) {
-			if ($config{'followSitAuto'} && $players{$ai_seq_args[0]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
-				sit();
-			}
-
-			my $dx = $ai_seq_args[0]{'last_pos_to'}{'x'} - $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'};
-			my $dy = $ai_seq_args[0]{'last_pos_to'}{'y'} - $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'};
-			$ai_seq_args[0]{'last_pos_to'}{'x'} = $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'x'};
-			$ai_seq_args[0]{'last_pos_to'}{'y'} = $players{$ai_seq_args[0]{'ID'}}{'pos_to'}{'y'};
-			if ($dx != 0 || $dy != 0) {
-				lookAtPosition($players{$ai_seq_args[0]{'ID'}}{'pos_to'}, int(rand(3))) if ($config{'followFaceDirection'});
-			}
-		}
 	}
 
-	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || (!%{$players{$ai_seq_args[0]{'ID'}}} && $players_old{$ai_seq_args[0]{'ID'}}{'dead'}))) {
+	if ($ai_seq[0] eq "follow" && $ai_seq_args[$followIndex]{'following'} && ($players{$ai_seq_args[$followIndex]{'ID'}}{'dead'} || (!%{$players{$ai_seq_args[$followIndex]{'ID'}}} && $players_old{$ai_seq_args[$followIndex]{'ID'}}{'dead'}))) {
 		message "Master died.  I'll wait here.\n", "party";
-		undef $ai_seq_args[0]{'following'};
-	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
+		delete $ai_seq_args[$followIndex]{'following'};
+	} elsif ($ai_seq_args[$followIndex]{'following'} && !%{$players{$ai_seq_args[$followIndex]{'ID'}}}) {
 		message "I lost my master\n", "follow";
 		if ($config{'followBot'}) {
 			message "Trying to get him back\n", "follow";
 			sendMessage(\$remote_socket, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
 
-		undef $ai_seq_args[0]{'following'};
+		delete $ai_seq_args[$followIndex]{'following'};
 
-		if ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
+		if ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disconnected'}) {
 			message "My master disconnected\n", "follow";
 
-		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'teleported'}) {
+		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'teleported'}) {
 			message "My master teleported\n", "follow", 1;
 
-		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disappeared'}) {
+		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disappeared'}) {
 			message "Trying to find lost master\n", "follow", 1;
 
-			undef $ai_seq_args[0]{'ai_follow_lost_char_last_pos'};
-			undef $ai_seq_args[0]{'follow_lost_portal_tried'};
-			$ai_seq_args[0]{'ai_follow_lost'} = 1;
-			$ai_seq_args[0]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
-			$ai_seq_args[0]{'ai_follow_lost_end'}{'time'} = time;
-			getVector(\%{$ai_seq_args[0]{'ai_follow_lost_vec'}}, \%{$players_old{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			delete $ai_seq_args[followIndex]{'ai_follow_lost_char_last_pos'};
+			delete $ai_seq_args[followIndex]{'follow_lost_portal_tried'};
+			$ai_seq_args[$followIndex]{'ai_follow_lost'} = 1;
+			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
+			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'time'} = time;
+			getVector(\%{$ai_seq_args[$followIndex]{'ai_follow_lost_vec'}}, \%{$players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 
 			#check if player went through portal
 			my $first = 1;
 			my $foundID;
 			my $smallDist;
 			foreach (@portalsID) {
-				$ai_v{'temp'}{'dist'} = distance(\%{$players_old{$ai_seq_args[0]{'ID'}}{'pos_to'}}, \%{$portals{$_}{'pos'}});
+				$ai_v{'temp'}{'dist'} = distance(\%{$players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}}, \%{$portals{$_}{'pos'}});
 				if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
 					$smallDist = $ai_v{'temp'}{'dist'};
 					$foundID = $_;
 					undef $first;
 				}
 			}
-			$ai_seq_args[0]{'follow_lost_portalID'} = $foundID;
+			$ai_seq_args[$followIndex]{'follow_lost_portalID'} = $foundID;
 		} else {
 			message "Don't know what happened to Master\n", "follow", 1;
 		}
@@ -3341,58 +3359,53 @@ sub AI {
 
 	##### FOLLOW-LOST #####
 
-	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'ai_follow_lost'}) {
-		if ($ai_seq_args[0]{'ai_follow_lost_char_last_pos'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'} && $ai_seq_args[0]{'ai_follow_lost_char_last_pos'}{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}) {
-			$ai_seq_args[0]{'lost_stuck'}++;
+	if ($ai_seq[0] eq "follow" && $ai_seq_args[$followIndex]{'ai_follow_lost'}) {
+		if ($ai_seq_args[$followIndex]{'ai_follow_lost_char_last_pos'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'} && $ai_seq_args[$followIndex]{'ai_follow_lost_char_last_pos'}{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}) {
+			$ai_seq_args[$followIndex]{'lost_stuck'}++;
 		} else {
-			undef $ai_seq_args[0]{'lost_stuck'};
+			delete $ai_seq_args[$followIndex]{'lost_stuck'};
 		}
 		%{$ai_seq_args[0]{'ai_follow_lost_char_last_pos'}} = %{$chars[$config{'char'}]{'pos_to'}};
 
-		if (timeOut(\%{$ai_seq_args[0]{'ai_follow_lost_end'}})) {
-			undef $ai_seq_args[0]{'ai_follow_lost'};
+		if (timeOut(\%{$ai_seq_args[$followIndex]{'ai_follow_lost_end'}})) {
+			delete $ai_seq_args[$followIndex]{'ai_follow_lost'};
 			message "Couldn't find master, giving up\n", "follow";
 
-		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
-			undef $ai_seq_args[0]{'ai_follow_lost'};
+		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disconnected'}) {
+			delete $ai_seq_args[0]{'ai_follow_lost'};
 			message "My master disconnected\n", "follow";
 
-		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'teleported'}) {
-			undef $ai_seq_args[0]{'ai_follow_lost'};
+		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'teleported'}) {
+			delete $ai_seq_args[0]{'ai_follow_lost'};
 			message "My master teleported\n", "follow";
 
-		} elsif (%{$players{$ai_seq_args[0]{'ID'}}}) {
-			$ai_seq_args[0]{'following'} = 1;
-			undef $ai_seq_args[0]{'ai_follow_lost'};
-			message "Found my master!\n", "follow"
-
-		} elsif ($ai_seq_args[0]{'lost_stuck'}) {
-			if ($ai_seq_args[0]{'follow_lost_portalID'} eq "") {
-				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'ai_follow_lost_vec'}}, $config{'followLostStep'} / ($ai_seq_args[0]{'lost_stuck'} + 1));
+		} elsif ($ai_seq_args[$followIndex]{'lost_stuck'}) {
+			if ($ai_seq_args[$followIndex]{'follow_lost_portalID'} eq "") {
+				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[$followIndex]{'ai_follow_lost_vec'}}, $config{'followLostStep'} / ($ai_seq_args[$followIndex]{'lost_stuck'} + 1));
 				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
 			}
 		} else {
-			if ($ai_seq_args[0]{'follow_lost_portalID'} ne "") {
-				if (%{$portals{$ai_seq_args[0]{'follow_lost_portalID'}}} && !$ai_seq_args[0]{'follow_lost_portal_tried'}) {
-					$ai_seq_args[0]{'follow_lost_portal_tried'} = 1;
-					%{$ai_v{'temp'}{'pos'}} = %{$portals{$ai_seq_args[0]{'follow_lost_portalID'}}{'pos'}};
+			if ($ai_seq_args[$followIndex]{'follow_lost_portalID'} ne "") {
+				if (%{$portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}}} && !$ai_seq_args[$followIndex]{'follow_lost_portal_tried'}) {
+					$ai_seq_args[$followIndex]{'follow_lost_portal_tried'} = 1;
+					%{$ai_v{'temp'}{'pos'}} = %{$portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}}{'pos'}};
 					ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
 						attackOnRoute => 1);
 				}
 			} else {
-				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'ai_follow_lost_vec'}}, $config{'followLostStep'});
+				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[$followIndex]{'ai_follow_lost_vec'}}, $config{'followLostStep'});
 				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
 			}
 		}
 	}
 
 	# Use party information to find master
-	if (@ai_seq && $ai_seq[$#ai_seq] eq "follow" && !defined $ai_seq_args[$#ai_seq]{'following'} && !defined($ai_seq_args[0]{'ai_follow_lost'})) {
+	if (!exists $ai_seq_args[$followIndex]{'following'} && !exists $ai_seq_args[$followIndex]{'ai_follow_lost'}) {
 		ai_partyfollow();
 	}
-
+	} # end of FOLLOW block
+	
 	##### AUTO-SIT/SIT/STAND #####
-
 
 	if ($config{'sitAuto_idle'} && ($ai_seq[0] ne "" && $ai_seq[0] ne "follow")) {
 		$timeout{'ai_sit_idle'}{'time'} = time;
@@ -3709,7 +3722,7 @@ sub AI {
 		my $followIndex = binFind(\@ai_seq, "follow");
 		my $following;
 		my $followID;
-		if (defined $ai_follow_index) {
+		if (defined $followIndex) {
 			$following = $ai_seq_args[$followIndex]{'following'};
 			$followID = $ai_seq_args[$followIndex]{'ID'};
 		}
@@ -4467,7 +4480,6 @@ sub AI {
 			shift @ai_seq;
 			shift @ai_seq_args;
 		}
-
 	}
 
 
@@ -8312,6 +8324,8 @@ sub ai_follow {
 		push @ai_seq, "follow";
 		push @ai_seq_args, \%args;
 	}
+	
+	return 1;
 }
 
 sub ai_partyfollow {
@@ -8358,8 +8372,13 @@ sub ai_partyfollow {
 			aiRemove("move");
 			aiRemove("route");
 			aiRemove("mapRoute");
-			ai_route($ai_v{temp}{master}{map}, $ai_v{temp}{master}{x}, $ai_v{temp}{master}{y});
-		}
+			ai_route($ai_v{temp}{master}{map}, $ai_v{temp}{master}{x}, $ai_v{temp}{master}{y}, distFromGoal => $config{'followDistanceMin'});
+			
+			my $followIndex;
+			if (($followIndex = binFind(\@ai_seq, "follow")) ne "") {
+				$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
+			}
+		}		
 	}
 }
 
@@ -10115,6 +10134,5 @@ sub getNPCInfo {
 		error "Incomplete NPC info or ID not found in npcs.txt\n";
 	}
 }
-
 
 return 1;
