@@ -12,6 +12,7 @@ izlu2dun 108 27 izlude 176 182 0 c r0
 prt_fild05 270 212 prt_sewb1 135 248 0 c r0
 aldebaran 168 168 xmas_fild01 78 68 0 c r1 c c n
 moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
+prontera 165 194 prtg_cas05 52 41 0 r0
 
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
@@ -1192,3 +1193,15 @@ xmas_in 153 32 xmas 174 131
 xmas_in 163 93 xmas 173 160
 xmas_in 168 160 xmas 189 278
 xmas_in 179 109 xmas 181 169
+prtg_cas05 38 250 prtg_cas05 244 3
+prtg_cas05 244 3 prtg_cas05 38 250
+prtg_cas05 195 13 prtg_cas05 53 246
+prtg_cas05 53 246 prtg_cas05 195 13
+prtg_cas05 76 242 prtg_cas05 292 13
+prtg_cas05 292 13 prtg_cas05 76 242
+prtg_cas05 260 96 prtg_cas05 66 225
+prtg_cas05 66 225 prtg_cas05 260 96
+prtg_cas05 228 96 prtg_cas05 26 3
+prtg_cas05 26 3 prtg_cas05 228 96
+prtg_cas05 58 7 prtg_cas05 253 294
+prtg_cas05 253 294 prtg_cas05 58 7
