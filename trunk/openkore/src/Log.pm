@@ -70,7 +70,9 @@
 # useItem		You used item
 # list			List of information (monster list, player list, item list, etc.)
 # load			Loading config files
+# npc			NPC messages
 # party			Party/follow related
+# partychat		Party chat messages
 # plugins		Messages about plugin handling
 # pm			Private chat message
 # publicchat		Public chat message
@@ -90,6 +92,7 @@
 # sendPacket
 # ai
 # npc
+# move
 # route
 
 package Log;
