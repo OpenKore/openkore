@@ -3662,18 +3662,27 @@ sub AI {
 			shift @ai_seq_args;
 
 		} elsif ($monsterDist > $ai_seq_args[0]{'attackMethod'}{'distance'}) {
-			# Move to target
-			$ai_seq_args[0]{move_start} = time;
-			%{$ai_seq_args[0]{monsterPos}} = %{$monsters{$ID}{pos_to}};
+			if (checkFieldWalkable(\%field, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y})) {
+				# Move to target
+				$ai_seq_args[0]{move_start} = time;
+				%{$ai_seq_args[0]{monsterPos}} = %{$monsters{$ID}{pos_to}};
 
-			my $dist = sprintf("%.1f", $monsterDist);
-			debug "Target distance $dist is >$ai_seq_args[0]{'attackMethod'}{'distance'}; moving to target: " .
-				"from ($chars[$config{char}]{pos_to}{x},$chars[$config{char}]{pos_to}{y}) to ($monsters{$ID}{pos_to}{x},$monsters{$ID}{pos_to}{y})\n", "ai_attack";
+				my $dist = sprintf("%.1f", $monsterDist);
+				debug "Target distance $dist is >$ai_seq_args[0]{'attackMethod'}{'distance'}; moving to target: " .
+					"from ($chars[$config{char}]{pos_to}{x},$chars[$config{char}]{pos_to}{y}) to ($monsters{$ID}{pos_to}{x},$monsters{$ID}{pos_to}{y})\n", "ai_attack";
 
-			ai_route($field{'name'}, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y},
-				distFromGoal => $ai_seq_args[0]{'attackMethod'}{'distance'},
-				maxRouteTime => $config{'attackMaxRouteTime'},
-				attackID => $ID);
+				ai_route($field{'name'}, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y},
+					distFromGoal => $ai_seq_args[0]{'attackMethod'}{'distance'},
+					maxRouteTime => $config{'attackMaxRouteTime'},
+					attackID => $ID);
+			} else {
+				# The target is at a spot that's not walkable according to the field file
+				# Ignore the monster.
+				$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
+				shift @ai_seq;
+				shift @ai_seq_args;
+				message "Can't reach or damage target, dropping target\n", "ai_attack";
+			}
 
 		} elsif (($config{'tankMode'} && $monsters{$ID}{'dmgFromYou'} == 0)
 		      || !$config{'tankMode'}) {

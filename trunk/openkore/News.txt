@@ -38,14 +38,18 @@ New config options:
 Bug fixes:
 - The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
 - Kore can walk on walkable water now (bug #21).
-- Kore now detects what directory its executable is in, and adds it to
-  its include path (@INC).
+- If you type "stand", then type "sit", Kore will sit and then stand.
+  This is fixed.
+- Don't attack monsters that are standing on a spot that's unwalkable
+  according to the field file. This prevents an infinite loop.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
 - writeDataFile*() won't write trailing spaces.
 - Functions in Tools.dll are now called through XS, Perl's native
   C-to-Perl interface.
+- Kore now detects what directory its executable is in, and adds it to
+  its include path (@INC).
 
 Credits:
 - Joseph: -1 flag support in mon_control.txt
