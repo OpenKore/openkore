@@ -1,0 +1,30 @@
+# Useful things
+
+# Stay and back again
+lockMap pay_fild04
+saveMap prontera
+
+# Chasing enemies
+route_randomWalk 1
+attackAuto 2
+
+# Looting is good
+itemsTakeAuto 2
+itemsGatherAuto 2
+
+# Lets follow the master
+follow 0
+followTarget
+
+# Helping ftiends
+tankMode 0
+tankModeTarget none
+
+# Lets back to refill
+storageAuto 1
+storageAuto_npc prontera 151 29
+
+# Selling out the cargo
+sellAuto 1
+sellAuto_npc prt_in 126 76
+
