@@ -5331,7 +5331,7 @@ sub parseMsg {
 				$monsters_old{$ID}{'disappeared'} = 1;
 
 			} elsif ($type == 1) {
-				debug "Monster Died: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
+				debug "Monster Died: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_damage";
 				$monsters_old{$ID}{'dead'} = 1;
 			}
 			binRemove(\@monstersID, $ID);
