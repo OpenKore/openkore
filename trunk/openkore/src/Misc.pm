@@ -84,7 +84,7 @@ sub configModify {
 		silent => $silent
 	});
 
-	message("Config '$key' set to $val\n") unless ($silent);
+	message("Config '$key' set to $val\n", "info") unless ($silent);
 	$config{$key} = $val;
 	saveConfigFile();
 }
@@ -93,7 +93,7 @@ sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
 	$timeout{$timeout}{'timeout'} = $time;
-	message "Timeout '$timeout' set to $time\n";
+	message "Timeout '$timeout' set to $time\n", "info";
 	writeDataFileIntact2("control/timeouts.txt", \%timeout);
 }
 

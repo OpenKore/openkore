@@ -76,6 +76,8 @@ Bug fixes:
   00B6 packet handler.)
 - Hopefully fixed carded/elemental weapon name being corrupted when
   "Cart Item Added" message uses 01C5 packet.
+- Setting a non-existant configuration variable will now produce an error
+  message.
 
 Internal:
 - Portal compilation is now 30% faster.
@@ -87,7 +89,7 @@ Internal:
 Credits:
 - Fenris: Tk interface improvements.
 - aputs: Inventory checking config options.
-- fov: Storage access bugfix.
+- fov: Storage access bugfix, conf command bugfix.
 - brianhj: 010F packet typo fix.
 
 

@@ -1867,13 +1867,14 @@ sub AI {
 				sendMessage(\$remote_socket, $cmd{'type'}, getResponse("statusS"), $cmd{'user'}) if $config{'verbose'};
 			} elsif ($cmd{'msg'} =~ /\bconf\b/i) {
 				$ai_v{'temp'}{'after'} = $';
-				($ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'}) = $ai_v{'temp'}{'after'} =~ /(\w+) (\w+)/;
+				($ai_v{'temp'}{'arg1'}) = $ai_v{'temp'}{'after'} =~ /^\s*(\w+)/;
+				($ai_v{'temp'}{'arg2'}) = $ai_v{'temp'}{'after'} =~ /^\s*\w+\s+([\s\S]+)\s*$/;
 				@{$ai_v{'temp'}{'conf'}} = keys %config;
 				if ($ai_v{'temp'}{'arg1'} eq "") {
 					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confF1"), $cmd{'user'}) if $config{'verbose'};
 				} elsif (binFind(\@{$ai_v{'temp'}{'conf'}}, $ai_v{'temp'}{'arg1'}) eq "") {
 					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confF2"), $cmd{'user'}) if $config{'verbose'};
-				} elsif ($ai_v{'temp'}{'arg2'} eq "value") {
+				} elsif ($ai_v{'temp'}{'arg2'} eq "") {
 					if ($ai_v{'temp'}{'arg1'} =~ /username/i || $ai_v{'temp'}{'arg1'} =~ /password/i) {
 						sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confF3"), $cmd{'user'}) if $config{'verbose'};
 					} else {
@@ -1883,6 +1884,7 @@ sub AI {
 						$timeout{'ai_thanks_set'}{'time'} = time;
 					}
 				} else {
+					$ai_v{'temp'}{'arg2'} = undef if ($ai_v{'temp'}{'arg2'} eq "none");
 					configModify($ai_v{'temp'}{'arg1'}, $ai_v{'temp'}{'arg2'});
 					sendMessage(\$remote_socket, $cmd{'type'}, getResponse("confS2"), $cmd{'user'}) if $config{'verbose'};
 					$timeout{'ai_thanks_set'}{'time'} = time;
