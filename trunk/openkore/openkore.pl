@@ -11,8 +11,8 @@ use Time::HiRes qw(time usleep);
 use Getopt::Long;
 use IO::Socket;
 use Digest::MD5 qw(md5);
-require 'functions.pl';
 
+our $buildType = 0;
 our $config_file = "control/config.txt";
 our $items_control_file = "control/items_control.txt";
 our $mon_control_file = "control/mon_control.txt";
@@ -20,6 +20,8 @@ our $chat_file = "chat.txt";
 our $item_log_file = "items.txt";
 our $shop_file = "control/shop.txt";
 our $rpackets_file = 'tables/recvpackets.txt';
+
+require 'functions.pl';
 
 &GetOptions('config=s', \$config_file, 
 			'mon_control=s', \$mon_control_file, 
@@ -113,14 +115,14 @@ if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
 	die "Could not locate Tools.dll" if (!$CalcPath_destroy);
 
-	configModify('buildType', 0, 1);
+	$buildType = 0;
 } else {
 	eval "use Tools;";
 	die if ($@);
 	eval "use POSIX \":sys_wait_h\";";
 	die if ($@);
 
-	configModify('buildType', 1, 1);
+	$buildType = 1;
 }
 
 if ($config{'XKore'}) {

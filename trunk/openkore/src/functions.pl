@@ -8664,9 +8664,9 @@ sub ai_route_getRoute {
 
 sub ai_route_getRoute_destroy {
 	my $r_args = shift;
-	if (!$config{'buildType'}) {
+	if (!$buildType) {
 		$CalcPath_destroy->Call($$r_args{'session'}) if ($$r_args{'session'} ne "");;
-	} elsif ($config{'buildType'} == 1) {
+	} elsif ($buildType == 1) {
 		Tools::CalcPath_destroy($$r_args{'session'}) if ($$r_args{'session'} ne "");;
 	}
 }
@@ -8680,11 +8680,11 @@ sub ai_route_searchStep {
 		my $SOLUTION_MAX = 5000;
 		$$r_args{'solution'} = "\0" x ($SOLUTION_MAX*4+4);
 		#####
-		if (!$config{'buildType'}) {
+		if (!$buildType) {
 			$$r_args{'session'} = $CalcPath_init->Call($$r_args{'solution'},
 				$$r_args{'field'}{'rawMap'}, $$r_args{'field'}{'width'}, $$r_args{'field'}{'height'}, 
 				pack("S*",$$r_args{'start'}{'x'}, $$r_args{'start'}{'y'}), pack("S*",$$r_args{'dest'}{'x'}, $$r_args{'dest'}{'y'}), $$r_args{'timeout'});
-		} elsif ($config{'buildType'} == 1) {
+		} elsif ($buildType == 1) {
 			$$r_args{'session'} = Tools::CalcPath_init(
 				$$r_args{'solution'},
 				$$r_args{'field'}{'rawMap'},
@@ -8700,9 +8700,9 @@ sub ai_route_searchStep {
 		return;
 	}
 	$$r_args{'initialized'} = 1;
-	if (!$config{'buildType'}) {
+	if (!$buildType) {
 		$ret = $CalcPath_pathStep->Call($$r_args{'session'});
-	} elsif ($config{'buildType'} == 1) {
+	} elsif ($buildType == 1) {
 		$ret = Tools::CalcPath_pathStep($$r_args{'session'});
 	}
 	if (!$ret) {
