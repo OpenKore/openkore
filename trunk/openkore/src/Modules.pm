@@ -53,13 +53,15 @@ our @EXPORT_OK = qw(&register &reload &checkSyntax @modules);
 # Modules::register("Log", "Input");  # Registers Log.pm and Input.pm
 sub register {
 	foreach (@_) {
-		next if (! -f "$_.pm");
+		my $mod = $_;
+		$mod =~ s/::/\//g;
+		next if (! -f "$mod.pm");
 
 		# Call the module's MODINIT() function when it's registered
 		#my $initFunc = "${_}::MODINIT";
 		#$initFunc->() if (defined(&{$initFunc}));
 		# The above doesn't work in Win32 (??) so maybe this'll work:
-		eval "${_}::MODINIT()";
+		eval "${_}::MODINIT();";
 
 		push @modules, $_;
 	}
@@ -92,6 +94,7 @@ sub reload {
 			next if (!$match);
 
 			$mod .= '.pm';
+			$mod =~ s/::/\//g;
 			if (! -f $mod) {
 				print "Error: file $mod not found\n";
 			} elsif (checkSyntax($mod)) {

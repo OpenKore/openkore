@@ -25,7 +25,8 @@ use Log;
 use Utils;
 use Settings;
 use Plugins;
-Modules::register(qw(Globals Modules Input Log Utils Settings Plugins));
+use FileParsers;
+Modules::register(qw(Globals Modules Input Log Utils Settings Plugins FileParsers));
 
 
 ##### PARSE ARGUMENTS, LOAD PLUGINS, AND START INPUT SERVER #####

@@ -26,7 +26,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	formatNumber getFormattedDate swrite promptAndExit timeConvert);
+	formatNumber getFormattedDate getHex getTickCount swrite promptAndExit timeConvert);
 
 
 #######################################
@@ -339,6 +339,28 @@ sub getFormattedDate {
         $localtime[0] = "0" . $localtime[0] if ($localtime[0] < 10);
         $$r_date = "$themonth $localtime[3] $localtime[2]:$localtime[1]:$localtime[0] " . ($localtime[5] + 1900);
         return $$r_date;
+}
+
+sub getHex {
+	my $data = shift;
+	my $i;
+	my $return;
+	for ($i = 0; $i < length($data); $i++) {
+		$return .= uc(unpack("H2",substr($data, $i, 1)));
+		if ($i + 1 < length($data)) {
+			$return .= " ";
+		}
+	}
+	return $return;
+}
+
+sub getTickCount {
+	my $time = int(time()*1000);
+	if (length($time) > 9) {
+		return substr($time, length($time) - 8, length($time));
+	} else {
+		return $time;
+	}
 }
 
 ##
