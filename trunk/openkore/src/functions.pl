@@ -4909,6 +4909,8 @@ sub parseMsg {
 		}
 	}
 
+	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg});
+
 	$lastPacketTime = time;
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
 	 || ($config{'XKore'} && !$accountID && length($msg) == 4)) {

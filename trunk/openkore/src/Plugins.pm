@@ -80,6 +80,7 @@ sub loadAll {
 # Loads a plugin.
 sub load {
 	my $file = shift;
+	return unless defined $file;
 	Log::message("Loading plugin $file...\n", "plugins");
 
 	$current_plugin = $file;
