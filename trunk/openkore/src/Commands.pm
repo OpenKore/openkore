@@ -798,7 +798,43 @@ sub cmdOpenShop {
 }
 
 sub cmdPlayerList {
+	my (undef, $args) = @_;
 	my $msg;
+
+	if ($args ne "" && $args =~ /^\d+$/) {
+		my $player = $players{$playersID[$args]};
+		if (!$player) {
+			error "Player #$args does not exist.\n";
+			return;
+		}
+
+		$msg = "------------- Player Info -------------\n";
+		$msg .= "$player->{name}\n";
+		$msg .= "Account ID: $player->{nameID}\n";
+		$msg .= "Party: $player->{party}{name}\n" if ($player->{party});
+		$msg .= "Guild: $player->{guild}{name} (" . scalar(keys %{$player->{guild}{men}}) . " members)\n" if ($player->{guild});
+		$msg .= swrite(
+			"Level: @<<               Position: @<<<<<<<<<<<<<<",
+			[$player->{lv}, "$player->{pos_to}{x}, $player->{pos_to}{y}"]);
+		$msg .= swrite(
+			"Sex: @<<<<<<             Class: @<<<<<<<<<<<",
+			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}],
+			"Body direction: @<<<<<<< Head direction: @<<<<<<<",
+			[$player->{look}{body}, $player->{look}{head}]);
+		$msg .= sprintf("Walk speed: %.2f seconds per block\n", $player->{walk_speed});
+		if ($player->{dead}) {
+			$msg .= "Player is dead.\n";
+		} elsif ($player->{sitting}) {
+			$msg .= "Player is sitting: $player->{sitting}.\n";
+		}
+		$msg .= "--------------------------------------\n";
+		message $msg, "info";
+		return;
+
+	} elsif ($args ne "") {
+		error "'$args' is not a valid player number.\n";
+		return;
+	}
 
 	$msg =  "-----------Player List-----------\n" .
 		"#    Name                                    Sex   Job         Dist  Coord\n";
