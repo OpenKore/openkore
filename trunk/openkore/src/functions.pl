@@ -4468,33 +4468,40 @@ sub AI {
 
 		##### TELEPORT SEARCH #####
 		if ($config{attackAuto} && $config{teleportAuto_search} && safe
-		 && !AI::inQueue("sitAuto", "sitting", "attack", "follow", "items_take", "buyAuto", "skill_use", "sellAuto", "storageAuto")
-		 && ($field{name} eq $config{lockMap} || $config{lockMap} eq "")
-		 && timeOut($timeout{ai_teleport_search})) {
-			my $do_search = 0;
-			foreach (keys %mon_control) {
-				if ($mon_control{$_}{teleport_search}) {
-					$do_search = 1;
-					last;
-				}
+		&& ($field{name} eq $config{lockMap} || $config{lockMap} eq "")) {
+			if (AI::inQueue("sitAuto", "sitting", "attack", "follow", "items_take", "buyAuto", "skill_use", "sellAuto", "storageAuto")) {
+				$timeout{ai_teleport_search}{time} = time;
 			}
 
-			if ($do_search) {
-				my $found = 0;
-				foreach (@monstersID) {
-					if ($mon_control{lc($monsters{$_}{name})}{teleport_search}  && !$monsters{$_}{attackedByPlayer} && !$monsters{$_}{attack_failed}) {
-						$found = 1;
+			if (timeOut($timeout{ai_teleport_search})) {
+				my $do_search = 0;
+				foreach (keys %mon_control) {
+					if ($mon_control{$_}{teleport_search}) {
+						$do_search = 1;
 						last;
 					}
 				}
-				if (!$found) {
-					useTeleport(1);
-					$ai_v{temp}{clear_aiQueue} = 1;
+				if ($do_search) {
+					my $found = 0;
+					foreach (@monstersID) {
+						if ($mon_control{lc($monsters{$_}{name})}{teleport_search}  && !$monsters{$_}{attackedByPlayer} && !$monsters{$_}{attack_failed}) {
+							$found = 1;
+							last;
+						}
+					}
+					if (!$found) {
+						useTeleport(1);
+						$ai_v{temp}{clear_aiQueue} = 1;
+					}
 				}
+
+				$timeout{ai_teleport_search}{time} = time;
 			}
 
+		} else {
 			$timeout{ai_teleport_search}{time} = time;
 		}
+
 
 		##### TELEPORT IDLE / PORTAL #####
 		if ($config{teleportAuto_idle} && AI::action ne "") {
