@@ -139,8 +139,10 @@ our $manual;
 sub new {
 	my $class = shift;
 	my ($parent, $id) = @_;
+	my $style = wxTAB_TRAVERSAL;
+	$style |= wxSUNKEN_BORDER if ($^O ne 'MSWin32');
 	my $self = $class->SUPER::new($parent, $id, wxDefaultPosition, wxDefaultSize,
-		wxSUNKEN_BORDER | wxTAB_TRAVERSAL);
+		$style);
 
 	my $sizer = new Wx::BoxSizer(wxVERTICAL);
 	$self->SetSizer($sizer);

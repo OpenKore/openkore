@@ -232,6 +232,7 @@ sub createInterface {
 	### Menu bar
 	my $menu = $self->{menu} = new Wx::MenuBar();
 	$frame->SetMenuBar($menu);
+	EVT_MENU_OPEN($self->{frame}, sub { $self->onMenuOpen; });
 
 		# Program menu
 		my $opMenu = new Wx::Menu;
@@ -244,7 +245,6 @@ sub createInterface {
 		}
 		$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit, 'Exit this program');
 		$menu->Append($opMenu, 'P&rogram');
-		EVT_MENU_OPEN($opMenu, sub { $self->onMenuOpen; });
 
 		# Info menu
 		my $infoMenu = new Wx::Menu;
@@ -273,7 +273,6 @@ sub createInterface {
 		$self->addMenu($viewMenu,
 			'&Clear Console',	\&onClearConsole);
 		$menu->Append($viewMenu, '&View');
-		EVT_MENU_OPEN($viewMenu, sub { $self->onMenuOpen; });
 
 		my $settingsMenu = new Wx::Menu;
 		$self->addMenu($settingsMenu, '&Advanced...', \&onAdvancedConfig, 'Edit advanced configuration options.');
@@ -295,16 +294,14 @@ sub createInterface {
 
 	### Horizontal panel with HP/SP/Exp box
 	my $infoPanel = $self->{infoPanel} = new Wx::Panel($frame, -1);
-	$vsizer->Add($infoPanel, 0, wxGROW);
 
 		my $hsizer = new Wx::BoxSizer(wxHORIZONTAL);
-		$infoPanel->SetSizer($hsizer);
 
 		my $label = new Wx::StaticText($infoPanel, -1, "HP: ");
 		$hsizer->Add($label, 0);
 
 		my $hpBar = $self->{hpBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 			wxGA_HORIZONTAL | wxGA_SMOOTH);
 		$hsizer->Add($hpBar, 1, wxRIGHT, 8);
 
@@ -312,7 +309,7 @@ sub createInterface {
 		$hsizer->Add($label, 0);
 
 		my $spBar = $self->{spBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 			wxGA_HORIZONTAL | wxGA_SMOOTH);
 		$hsizer->Add($spBar, 1, wxRIGHT, 8);
 
@@ -320,11 +317,11 @@ sub createInterface {
 		$hsizer->Add($label, 0);
 
 		my $expBar = $self->{expBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 			wxGA_HORIZONTAL | wxGA_SMOOTH);
 		$hsizer->Add($expBar, 1);
 		my $jobExpBar = $self->{jobExpBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 			wxGA_HORIZONTAL | wxGA_SMOOTH);
 		$hsizer->Add($jobExpBar, 1, wxRIGHT, 8);
 
@@ -332,9 +329,12 @@ sub createInterface {
 		$hsizer->Add($label, 0);
 
 		my $weightBar = $self->{weightBar} = new Wx::Gauge($infoPanel, -1, 100,
-			wxDefaultPosition, [0, $label->GetBestSize->GetHeight],
+			wxDefaultPosition, [0, $label->GetBestSize->GetHeight + 2],
 			wxGA_HORIZONTAL | wxGA_SMOOTH);
 		$hsizer->Add($weightBar, 1);
+
+	$infoPanel->SetSizerAndFit($hsizer);
+	$vsizer->Add($infoPanel, 0, wxGROW);
 
 
 	## Splitter with console and another splitter
