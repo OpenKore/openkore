@@ -325,30 +325,24 @@ sub cmdCloseShop {
 sub cmdConf {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ ([\s\S]+)$/;
+	my ($arg2) = $args =~ /^\w+\s+([\s\S]+)\s*$/;
 
-	my @keys = keys %config;
 	if ($arg1 eq "") {
 		error	"Syntax Error in function 'conf' (Change a Configuration Key)\n" .
-			"Usage: conf <variable> [<value>]\n";
+			"Usage: conf <variable> [<value>|none]\n";
 
-	} elsif ($arg2 eq "value") {
-		my $value = undef;
-		Plugins::callHook('Commands::cmdConf', {
-			key => $arg1,
-			val => \$value
-		});
+	} elsif (!exists $config{$arg1}) {
+		error "Config variable $arg1 doesn't exist\n";
 
-		if (!defined $value) {
-			if (!exists $config{$arg1}) {
-				error "Config variable $arg1 doesn't exist\n";
-			} else {
-				$value = "$config{$arg1}";
-			}
-		}
-		message("Config '$arg1' is $value\n", "info") if defined $value;
+	} elsif ($arg2 eq "") {
+		message "Config '$arg1' is $config{$arg1}\n", "info";
 
 	} else {
+		undef $arg2 if ($arg2 eq "none");
+		Plugins::callHook('Commands::cmdConf', {
+			key => $arg1,
+			val => \$arg2
+		});
 		configModify($arg1, $arg2);
 	}
 }
