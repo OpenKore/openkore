@@ -1,6 +1,10 @@
-#control\shop.txt
+# This file controls which items to put into your shop, when you are
+# vending. To enable vending, set the 'shopAuto' configuration option in
+# config.txt to 1.
 
-# shop_title
+
+# Put the title of your shop behind this option.
+# You MUST specify a shop title.
 shop_title 
 
 name_0 

@@ -1,20 +1,23 @@
-#This file allows specific items to be store or sell or leave
-#Syntax: <item name> <minimum keep amount in inventory> <storage-auto flag> <sell-auto flag>
+# This file allows specific items to be store or sell or leave
+# Syntax: <item name> <minimum keep amount in inventory> <storage-auto flag> <sell-auto flag>
 #
-#Ex. The example below will sell all jellopies, and store all knifes
+# The example below will sell all jellopies, and store all knifes
 #
-#Jellopy 0 0 1
-#Knife 0 1 0
+# Jellopy 0 0 1
+# Knife 0 1 0
 #
-#The item name isn't case sensitive.  Only items found in this file will be stored or sold.
+# The item name isn't case sensitive. Only items found in this file will
+# be stored or sold.
 #
-#If storage and sell flags are 1, Kore will do storage first (unless storage is full) then sell
+# If storage and sell flags are 1, Kore will do storage first (unless
+# storage is full) then sell.
 #
-#Kore will not sell or store equipped items.  For example, if you're using a knife and you
-#have a line to auto-sell all knives, kore will sell any extras it picks up, not the knife it's
-#using.
+# Kore will not sell or store equipped items. For example, if you're using
+# a knife and you have a line to auto-sell all knives, kore will sell any
+# extras it picks up, not the knife it's using.
 #
-#An auto-sell list and auto-storage list is provided by default, modify it as you see fit
+# An auto-sell list and auto-storage list is provided by default, modify it
+# as you see fit
 
 ####SELL LIST####
 
