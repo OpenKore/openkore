@@ -25,12 +25,14 @@ package Interface::Console::Other::Gtk;
 use strict;
 use warnings;
 no warnings qw(redefine uninitialized);
-use Gtk2 -init;
+use Gtk2;
 use POSIX;
 
 use Interface::Console::Other;
 use base qw(Interface::Console::Other);
 use Globals;
+
+our $initialized;
 
 
 sub new {
@@ -42,12 +44,19 @@ sub new {
 	return $interface;
 }
 
+sub _initGtk {
+	return if $initialized;
+	$initialized = 1;
+	Gtk2::init();
+}
+
 sub errorDialog {
 	my $self = shift;
 	my $message = shift;
 
 	my $dialog;
 	my $name = $chars[$config{user}]{name};
+	_initGtk();
 	$dialog = new Gtk2::MessageDialog(undef, 'modal', 'error', 'close',
 		"%s", $message);
 	if ($name) {
