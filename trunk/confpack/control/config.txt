@@ -16,6 +16,8 @@ password
 char
 sex
 
+pauseMapServer 0
+
 ignoreInvalidLogin 0
 
 secureAdminPassword 0
