@@ -2,7 +2,9 @@
 ### OpenKore 1.2.0
 ==================
 
-NOTE: This release depends on tablepack version 1.2.
+NOTE: This release depends on:
+* tablepack version 1.2.
+* The Perl module Win32::Console::ANSI (only if you're not using the .exe)
 
 New features:
 - Console text is now colorized. The colors are defined in
