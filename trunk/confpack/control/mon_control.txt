@@ -19,14 +19,24 @@
 # <auto-teleport> = 0
 # <auto-search> = 0
 
-poring 1 0 0
-fabre 1 0 0
-pupa 1 0 0
-
-# Teleport from bosses
-Phreeoni 0 1 0
-Maya 0 1 0
-Golden Thief Bug 0 1 0
-
 # Don't attack ant eggs
 Ant's Egg 0 0 0
+
+# Teleport from MVP bosses
+Baphomet 0 1 0
+Dark Lord 0 1 0
+Doppelganger 0 1 0
+Drake 0 1 0
+Eddga 0 1 0
+Garm 0 1 0
+Golden Thief Bug 0 0 0
+Maya 0 1 0
+Mistress 0 1 0
+Moonlight 0 1 0
+Orc Hero 0 1 0
+Orc Lord 0 1 0
+Osiris 0 1 0
+Pharaoh 0 1 0
+Phreeoni 0 1 0
+Stormy Knight 0 1 0
+
