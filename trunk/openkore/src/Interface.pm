@@ -102,6 +102,15 @@ sub writeOutput {
 }
 
 ##
+# $interface->title([title])
+#
+# If $title is given, set the interface's window's title to $title.
+# If not given, returns the current window title.
+sub title {
+	# Do nothing; this is a dummy parent class
+}
+
+##
 # $interface->displayUsage(text)
 # text: The 'usage' text to display.
 #
