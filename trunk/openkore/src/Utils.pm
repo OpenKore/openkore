@@ -33,7 +33,7 @@ our @EXPORT = (
 	# Hash/array management
 	qw(binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
-	findKey findKeyString minHeapAdd),
+	findKey findKeyString minHeapAdd shuffleArray),
 	# Math
 	qw(calcPosition checkMovementDirection distance getVector moveAlongVector normalize vectorToDegree),
 	# OS-specific
@@ -424,6 +424,21 @@ sub minHeapAdd {
 		push @newArray, $r_hash;
 	}
 	@{$r_array} = @newArray;
+}
+
+##
+# shuffleArray(r_array)
+# r_array: A reference to an array.
+#
+# This function randomizes the order of the items in the array.
+sub shuffleArray {
+	my $r_array = shift;
+	my $i = @{$r_array};
+	my $j;
+        while ($i--) {
+               $j = int rand ($i+1);
+               @$r_array[$i,$j] = @$r_array[$j,$i];
+        }
 }
 
 
