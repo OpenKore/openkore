@@ -189,6 +189,8 @@ sub binRemoveAndShiftByIndex {
 # binSize(\@array);     # -> 2
 sub binSize {
 	my $r_array = shift;
+	return 0 if !defined $r_array;
+
 	my $found = 0;
 	my $i;
 	for ($i = 0; $i < @{$r_array};$i++) {
