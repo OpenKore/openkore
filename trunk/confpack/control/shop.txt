@@ -1,17 +1,14 @@
+My Shop
+
+Jellopy	3
+Andre Card	200,000	5
+
 # This file controls which items to put into your shop, when you are
 # vending. To enable vending, set the 'shopAuto' configuration option in
 # config.txt to 1.
-
-
-# Put the title of your shop behind this option.
-# You MUST specify a shop title.
-shop_title 
-
-name_0 
-quantity_0 0
-price_0 0
-
-name_1 
-quantity_1 0
-price_1 0
-
+#
+# The first line of the file is your shop title.
+# Subsequent lines are of this format (tab-delimited):
+# <name>	<price>	[<amount>]
+#
+# If <price> has commas in it, they must appear in the right places.
