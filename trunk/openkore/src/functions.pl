@@ -2975,7 +2975,7 @@ sub AI {
 
 
 	##### RANDOM WALK #####
-	if (AI::isIdle && $config{route_randomWalk} && !$cities_lut{$field{name}.'.rsw'}) {
+	if (AI::isIdle && $config{route_randomWalk} && !$cities_lut{$field{name}.'.rsw'} && length($field{rawMap}) ) {
 		my ($randX, $randY);
 		my $i = 500;
 		do {
@@ -3297,15 +3297,14 @@ sub AI {
 		$AI::Temp::attack_route_adjust = time;
 	}
 
-	if (AI::action eq "attack" && timeOut(AI::args->{ai_attack_giveup}) &&
-	    !$config{attackNoGiveup}) {
+	if (AI::action eq "attack" && timeOut(AI::args->{ai_attack_giveup}) && !$config{attackNoGiveup}) {
 		my $ID = AI::args->{ID};
 		$monsters{$ID}{attack_failed} = time if ($monsters{$ID});
 		AI::dequeue;
 		message "Can't reach or damage target, dropping target\n", "ai_attack";
 		useTeleport(1) if ($config{'teleportAuto_dropTarget'});
 
-	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{'ID'}}) {
+	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{ID}}) {
 		# Monster died or disappeared
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
 		my $ID = AI::args->{ID};
@@ -4506,7 +4505,10 @@ sub AI {
 				delete $ai_seq_args[0]{'dest'}{'field'};
 				debug "Map Solution Ready for traversal.\n", "route";
 			} elsif ($ai_seq_args[0]{'done'}) {
-				warning "Unable to calculate how to walk from [$field{'name'}($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'})] to [$ai_seq_args[0]{'dest'}{'map'}($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'})] (no map solution).\n", "route";
+				my $destpos = "$args->{dest}{pos}{x},$args->{dest}{pos}{y}";
+				$destpos = "($destpos)" if ($destpos ne "");
+				warning "Unable to calculate how to walk from [$field{name}($char->{pos_to}{x},$char->{pos_to}{y})] " .
+					"to [$args->{dest}{map}${destpos}] (no map solution).\n", "route";
 				AI::dequeue;
 			}
 
