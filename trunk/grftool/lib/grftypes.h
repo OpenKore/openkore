@@ -59,6 +59,8 @@
 	#endif /* __GNUC__ */
 #endif /* __cplusplus */
 
+/* Make use of C++ safety right away :) */
+GRFEXTERN_BEGIN
 
 /* Integer types */
 #ifdef WIN32
@@ -90,7 +92,7 @@
 
 
 /* Pack to 1 byte boundaries */
-#pragma pack(1)
+#include <pshpack1.h>
 
 /* Make sure we have NULL, because its used all the time */
 #ifndef NULL
@@ -286,6 +288,9 @@ typedef struct {
 				 * Data for files (grf_put() or extracted)
 				 */
 } Grf;
+
+/* Undo packing */
+#include <poppack.h>
 
 GRFEXTERN_END
 

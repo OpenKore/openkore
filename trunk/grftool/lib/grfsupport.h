@@ -30,6 +30,7 @@ GRFEXTERN_BEGIN
 # ifdef WIN32
 /* Windows function names are so... ugghhhh */
 #  define strcasecmp(a,b) _stricmp(a,b)
+#  define snprintf _snprintf
 #  if !defined(_INC_IO)
 #   include <io.h>
 #   define dup(handle) _dup(handle)
