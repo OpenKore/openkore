@@ -43,6 +43,7 @@ our %handlers = (
 	auth	=> \&cmdAuthorize,
 	bestow	=> \&cmdBestow,
 	buy	=> \&cmdBuy,
+	cart	=> \&cmdCart,
 	chatmod	=> \&cmdChatMod,
 	chist	=> \&cmdChist,
 	closeshop => \&cmdCloseShop,
@@ -259,6 +260,86 @@ sub cmdBuy {
 			$arg2 = 1;
 		}
 		sendBuy(\$remote_socket, $storeList[$arg1]{'nameID'}, $arg2);
+	}
+}
+
+sub cmdCart {
+	my (undef, $input) = @_;
+	my ($arg1) = $input =~ /^(\w+)/;
+	my ($arg2) = $input =~ /^\w+ (\d+)/;
+	my ($arg3) = $input =~ /^\w+ \d+ (\d+)/;
+
+	if ($arg1 eq "") {
+		my $msg = "-------------Cart--------------\n" .
+			"#  Name\n";
+		for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
+			next if (!$cart{'inventory'}[$i] || !%{$cart{'inventory'}[$i]});
+			my $display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
+			$display .= " -- Not Identified" if !$cart{inventory}[$i]{identified};
+			$msg .= sprintf("%-2d %-34s\n", $i, $display);
+		}
+		$msg .= "\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n";
+		$msg .= "-------------------------------\n";
+		message($msg, "list");
+
+	} elsif ($arg1 eq "add") {
+		my $hasCart = 0;
+		if ($char->{statuses}) {
+			foreach (keys %{$char->{statuses}}) {
+				if ($_ =~ /^Level \d Cart$/) {
+					$hasCart = 1;
+					last;
+				}
+			}
+		}
+
+		if ($arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
+			error	"Error in function 'cart add' (Add Item to Cart)\n" .
+				"Inventory Item $arg2 does not exist.\n";
+
+		} elsif ($arg2 =~ /\d+/ && !$hasCart) {
+			error	"Error in function 'cart add' (Add Item to Cart)\n" .
+				"You do not have a cart.\n";
+
+		} elsif ($arg2 =~ /\d+/) {
+			if (!$arg3 || $arg3 > $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'}) {
+				$arg3 = $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'};
+			}
+			sendCartAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg2]{'index'}, $arg3);
+
+		} else {
+			error	"Syntax Error in function 'cart add' (Add Item to Cart)\n" .
+				"Usage: cart add <item #>\n";
+		}
+
+	} elsif ($arg1 eq "get") {
+		if ($arg2 =~ /\d+/ && (!$cart{'inventory'}[$arg2] || !%{$cart{'inventory'}[$arg2]})) {
+			error	"Error in function 'cart get' (Get Item from Cart)\n" .
+				"Cart Item $arg2 does not exist.\n";
+		} elsif ($arg2 =~ /\d+/) {
+			if (!$arg3 || $arg3 > $cart{'inventory'}[$arg2]{'amount'}) {
+				$arg3 = $cart{'inventory'}[$arg2]{'amount'};
+			}
+			sendCartGet(\$remote_socket, $arg2, $arg3);
+		} elsif ($arg2 eq "") {
+			error	"Syntax Error in function 'cart get' (Get Item from Cart)\n" .
+				"Usage: cart get <cart item #>\n";
+		}
+
+	} elsif ($arg1 eq "desc") {
+		if (!($arg2 =~ /\d+/)) {
+			error	"Syntax Error in function 'cart desc' (Show Cart Item Description)\n" .
+				"'$arg2' is not a valid cart item number.\n";
+		} elsif (!$cart{'inventory'}[$arg2]) {
+			error	"Error in function 'cart desc' (Show Cart Item Description)\n" .
+				"Cart Item $arg2 does not exist.\n";
+		} else {
+			main::printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
+		}
+
+	} else {
+		error	"Error in function 'cart'\n" .
+			"Command '$arg1' is not a known command.\n";
 	}
 }
 

@@ -10,6 +10,8 @@ Bug fixes:
 - When monster changes state (like, Frozen), the message was not displayed.
   This has been fixed.
 - Fix typo which cause lockMap_randX/Y to not work.
+- The 'cart add' command now checks whether you have a cart.
+- Fix some memory leaks.
 
 New config options:
 - teleportAuto_useSP - use SP (cast skill) when using teleport without item

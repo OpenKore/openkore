@@ -495,51 +495,6 @@ sub parseCommand {
 			sendMessage(\$remote_socket, "c", $arg1);
 		}
 
-	#Cart command - chobit andy 20030101
-	} elsif ($switch eq "cart") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
-		($arg3) = $input =~ /^[\s\S]*? \w+ \d+ (\d+)/;
-		if ($arg1 eq "") {
-			message("-------------Cart--------------\n" .
-				"#  Name\n", "list");
-
-			for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
-				next if (!%{$cart{'inventory'}[$i]});
-				my $display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
-				$display .= " -- Not Identified" if !$cart{inventory}[$i]{identified};
-				message(sprintf("%-2d %-34s\n", $i, $display), "list");
-			}
-			message("\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n", "list");
-			message("-------------------------------\n", "list");
-
-		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
-			error	"Error in function 'cart add' (Add Item to Cart)\n" .
-				"Inventory Item $arg2 does not exist.\n";
-		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
-			if (!$arg3 || $arg3 > $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'}) {
-				$arg3 = $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'};
-			}
-			sendCartAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg2]{'index'}, $arg3);
-		} elsif ($arg1 eq "add" && $arg2 eq "") {
-			error	"Syntax Error in function 'cart add' (Add Item to Cart)\n" .
-				"Usage: cart add <item #>\n";
-		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/ && !%{$cart{'inventory'}[$arg2]}) {
-			error	"Error in function 'cart get' (Get Item from Cart)\n" .
-				"Cart Item $arg2 does not exist.\n";
-		} elsif ($arg1 eq "get" && $arg2 =~ /\d+/) {
-			if (!$arg3 || $arg3 > $cart{'inventory'}[$arg2]{'amount'}) {
-				$arg3 = $cart{'inventory'}[$arg2]{'amount'};
-			}
-			sendCartGet(\$remote_socket, $arg2, $arg3);
-		} elsif ($arg1 eq "get" && $arg2 eq "") {
-			error	"Syntax Error in function 'cart get' (Get Item from Cart)\n" .
-				"Usage: cart get <cart item #>\n";
-
-		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-			printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
-		}
-
 	} elsif ($switch eq "chat") {
 		my ($replace, $title) = $input =~ /(^[\s\S]*? \"([\s\S]*?)\" ?)/;
 		my $qm = quotemeta $replace;
@@ -5971,7 +5926,7 @@ sub parseMsg {
 			%{$items_old{$ID}} = %{$items{$ID}};
 			$items_old{$ID}{'disappeared'} = 1;
 			$items_old{$ID}{'gone_time'} = time;
-			undef %{$items{$ID}};
+			delete $items{$ID};
 			binRemove(\@itemsID, $ID);
 		}
 
@@ -6083,7 +6038,7 @@ sub parseMsg {
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
 		message "You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "useItem";
 		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
-			undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
+			delete $chars[$config{'char'}]{'inventory'}[$invIndex];
 		}
 
 	} elsif ($switch eq "00AA") {
@@ -6118,7 +6073,7 @@ sub parseMsg {
 		}
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
 		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
-			undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
+			delete $chars[$config{'char'}]{'inventory'}[$invIndex];
 		}
 
 	} elsif ($switch eq "00B0") {
@@ -6555,7 +6510,7 @@ sub parseMsg {
 	} elsif ($switch eq "00D8") {
 		$ID = substr($msg,2,4);
 		binRemove(\@chatRoomsID, $ID);
-		undef %{$chatRooms{$ID}};
+		delete $chatRooms{$ID};
 
 	} elsif ($switch eq "00DA") {
 		$type = unpack("C1",substr($msg, 2, 1));
@@ -6604,7 +6559,7 @@ sub parseMsg {
 		$chatRooms{$currentChatRoom}{'num_users'} = $num_users;
 		if ($leaveUser eq $chars[$config{'char'}]{'name'}) {
 			binRemove(\@chatRoomsID, $currentChatRoom);
-			undef %{$chatRooms{$currentChatRoom}};
+			delete $chatRooms{$currentChatRoom};
 			undef @currentChatRoomUsers;
 			$currentChatRoom = "";
 			message "You left the Chat Room\n";
@@ -6701,7 +6656,7 @@ sub parseMsg {
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $currentDeal{'lastItemAmount'};
 			message "You added Item to Deal: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} x $currentDeal{'lastItemAmount'}\n", "deal";
 			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
-				undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
+				delete $chars[$config{'char'}]{'inventory'}[$invIndex];
 			}
 		}
 
@@ -6747,7 +6702,7 @@ sub parseMsg {
 		$storage{$index}{amount} -= $amount;
 		message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
 		if ($storage{$index}{amount} <= 0) {
-			undef %{$storage{$index}};
+			delete $storage{$index};
 			delete $storage{$index};
 			binRemove(\@storageID, $index);
 		}
@@ -6845,7 +6800,7 @@ sub parseMsg {
 	} elsif ($switch eq "0105") {
 		my $ID = substr($msg, 2, 4);
 		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
-		undef %{$chars[$config{'char'}]{'party'}{'users'}{$ID}};
+		delete $chars[$config{'char'}]{'party'}{'users'}{$ID};
 		binRemove(\@partyUsersID, $ID);
 		if ($ID eq $accountID) {
 			message "You left the party\n";
@@ -7207,7 +7162,7 @@ sub parseMsg {
 	} elsif ($switch eq "0120") {
 		# The area effect spell with ID dissappears
 		my $ID = substr($msg, 2, 4);
-		undef %{$spells{$ID}};
+		delete $spells{$ID};
 		binRemove(\@spellsID, $ID);
 
 	# Parses - chobit andy 20030102
@@ -7291,7 +7246,7 @@ sub parseMsg {
 		$cart{'inventory'}[$index]{'amount'} -= $amount;
 		message "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n";
 		if ($cart{'inventory'}[$index]{'amount'} <= 0) {
-			undef %{$cart{'inventory'}[$index]};
+			delete $cart{'inventory'}[$index];
 		}
 
 	} elsif ($switch eq "012C") {
@@ -7319,7 +7274,7 @@ sub parseMsg {
 	} elsif ($switch eq "0132") {
 		my $ID = substr($msg,2,4);
 		binRemove(\@venderListsID, $ID);
-		undef %{$venderLists{$ID}};
+		delete $venderLists{$ID};
 
 	} elsif ($switch eq "0133") {
 			undef @venderItemList;
@@ -7843,7 +7798,7 @@ sub parseMsg {
 
 			message("You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "useItem", 1);
 			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
-				undef %{$chars[$config{'char'}]{'inventory'}[$invIndex]};
+				delete $chars[$config{'char'}]{'inventory'}[$invIndex];
 			}
 
 		} elsif (%{$players{$ID}}) {
