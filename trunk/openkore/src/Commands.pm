@@ -670,7 +670,7 @@ sub cmdEval {
 
 sub cmdGuild {
 	my (undef, $args) = @_;
-	my ($arg1, $arg2) = split(' ', $args);
+	my ($arg1, $arg2) = split(' ', $args, 2);
 
 	if ($arg1 eq "join") {
 		if ($arg2 ne "1" && $arg2 ne "0") {
@@ -693,6 +693,10 @@ sub cmdGuild {
 
 	} elsif (!defined $char->{guild}) {
 		error "You are not in a guild.\n";
+
+	} elsif ($arg1 eq "leave") {
+		sendGuildLeave($arg2);
+		message "Sending guild leave: $arg2\n";
 
 	} elsif ($arg1 eq "request") {
 		my $player = Match::player($arg2);
