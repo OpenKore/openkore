@@ -103,6 +103,11 @@ sub binRemove {
 			last;
 		}
 	}
+
+	my $last = @{$r_array} - 1;
+	if ($last >= 0 && !defined($$r_array[$last])) {
+		delete $$r_array[$last];
+	}
 }
 
 sub binRemoveAndShift {

@@ -6269,10 +6269,9 @@ sub parseMsg {
 
 	} elsif ($switch eq "00A8") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$index = unpack("S1",substr($msg, 2, 2));
-		$amount = unpack("C1",substr($msg, 6, 1));
-		undef $invIndex;
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		my $index = unpack("S1",substr($msg, 2, 2));
+		my $amount = unpack("C1",substr($msg, 6, 1));
+		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
 		print "You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n";
 		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
@@ -6315,8 +6314,8 @@ sub parseMsg {
 
 	} elsif ($switch eq "00B0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$type = unpack("S1",substr($msg, 2, 2));
-		$val = unpack("L1",substr($msg, 4, 4));
+		my $type = unpack("S1",substr($msg, 2, 2));
+		my $val = unpack("L1",substr($msg, 4, 4));
 		if ($type == 0) {
 			print "Something1: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 3) {
@@ -6384,11 +6383,9 @@ sub parseMsg {
 		} elsif ($type == 52) {
 			$chars[$config{'char'}]{'critical'} = $val;
 			print "Critical: $val\n" if ($config{'debug'} >= 2);
-#Solos Start
-        } elsif ($type == 53) { 
-            $chars[$config{'char'}]{'attack_speed'} = 200 - $val/10; 
-            print "Attack Speed: $chars[$config{'char'}]{'attack_speed'}\n" if ($config{'debug'} >= 2);
-#Solos End
+		} elsif ($type == 53) { 
+			$chars[$config{'char'}]{'attack_speed'} = 200 - $val/10; 
+			print "Attack Speed: $chars[$config{'char'}]{'attack_speed'}\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 55) {
 			$chars[$config{'char'}]{'lv_job'} = $val;
 			print "Job Level: $val\n" if ($config{'debug'} >= 2);
@@ -6851,22 +6848,22 @@ sub parseMsg {
 		$storage{'items_max'} = unpack("S1", substr($msg, 4, 2));
 
 	} elsif ($switch eq "00F4") {
-		$index = unpack("S1", substr($msg, 2, 2));
-		$amount = unpack("L1", substr($msg, 4, 4));
-		$ID = unpack("S1", substr($msg, 8, 2));
+		my $index = unpack("S1", substr($msg, 2, 2));
+		my $amount = unpack("L1", substr($msg, 4, 4));
+		my $ID = unpack("S1", substr($msg, 8, 2));
 		if (%{$storage{$ID}}) {
 			$storage{$ID}{'amount'} += $amount;
 		} else {
 			binAdd(\@storageID, $ID);
 			$storage{$ID}{'index'} = $index;
 			$storage{$ID}{'amount'} = $amount;
-			$display = ($items_lut{$ID} ne "")
+			my $display = ($items_lut{$ID} ne "")
 				? $items_lut{$ID}
-				: "Unknown ".$ID;
+				: "Unknown $ID";
 			$storage{$ID}{'name'} = $display;
 			$storage{$ID}{'binID'} = binFind(\@storageID, $ID);
 		}
-		print "Storage Item Added: $storage{$ID}{'name'} ($storage{$ID}{'binID'}) x $amount\n";
+		message("Storage Item Added: $storage{$ID}{'name'} ($storage{$ID}{'binID'}) x $amount\n", "storage", 1);
 
 	} elsif ($switch eq "00F6") {
 		$index = unpack("S1", substr($msg, 2, 2));
@@ -7776,9 +7773,6 @@ sub parseMsg {
 			($players{$ID}{'guild'}{'men'}{$players{$ID}{'name'}}{'title'}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
 			print "Player Info: $players{$ID}{'name'} ($players{$ID}{'binID'})\n" if ($config{'debug'} >= 2);
 		}
-
-	} elsif ($switch eq "0196") {
-		# Two-hand quicken
 
 	} elsif ($switch eq "019B") {
 		$ID = substr($msg, 2, 4);
@@ -8737,7 +8731,7 @@ sub ai_skillUse {
 
 #storageAuto for items_control - chobit andy 20030210
 sub ai_storageAutoCheck {
-	for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
+	for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
 		next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
 		if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'}
 			&& $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'}) {
@@ -10585,7 +10579,7 @@ sub parsePortals {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my $key,$value;
+	my ($key,$value);
 	my %IDs;
 	my $i;
 	my $j = 0;
