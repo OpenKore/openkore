@@ -5,7 +5,24 @@
 ** Important notices:
 - The format of portals.txt and portalsLOS.txt have been changed. You must
   upgrade to the latest tablepack.
+
 - Tools.cpp has changed. Linux users must recompile Tools.so.
+
+- attackSkillSlot, useSelf_skill and useSelf_item and gotten a major
+  revamp. It is recommended that you create recreate your configuration
+  from scratch using the default config.txt.
+
+  The biggest change is that _lower/_upper and that kind of things have
+  been deprecated in favor of "range operators". For example, this:
+    useSelf_skill_0_hp_lower 0
+    useSelf_skill_0_hp_upper 50
+  becomes:
+    useSelf_skill_0_hp <= 50
+
+  However, the old _lower/_upper syntax is still supported.
+
+
+--------------------------
 
 
 New features:
@@ -169,8 +186,8 @@ Special thanks:
   interaction improvements.
 - anu: support for new deal packets.
 - aputs: support for status ailments/looks.
-- floAt: support for NPC positions instead of NPC IDs; portal compilation
-  fix.
+- floAt: support for NPC positions instead of NPC IDs; party follow,
+  spirit sphere support, etc.
 
 
 ==================
