@@ -46,6 +46,7 @@ Bug fixes:
 - Fixed new ai_skillUse to support temporary skills.
 - Fixed 'monster', 'mvp' and 'death' commands to work with new ai_skillUse.
 - Fixed storage access when storage is empty.
+- Various routing bug fixes (by jsteng).
 
 Credits:
 - Fenris: Tk interface improvements.

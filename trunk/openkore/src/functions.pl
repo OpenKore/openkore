@@ -2465,7 +2465,8 @@ sub AI {
 
 		} elsif ($ai_seq_args[0]{'mapChanged'} || @{$ai_seq_args[0]{'steps'}} == 0) {
 			message "Done talking with $ai_seq_args[0]{'name'}.\n", "ai_npcTalk";
-			sendTalkCancel(\$remote_socket, $ai_seq_args[0]{'ID'});
+			# There is no need to cancel conversation if map changed; NPC is nowhere by now.
+			#sendTalkCancel(\$remote_socket, $ai_seq_args[0]{'ID'});
 			shift @ai_seq;
 			shift @ai_seq_args;
 
@@ -4173,15 +4174,17 @@ sub AI {
 				#If current solution has conversation steps specified
 				if ( $ai_seq_args[0]{'substage'} eq 'Waiting for Warp' ) {
 					$ai_seq_args[0]{'timeout'} = time unless $ai_seq_args[0]{'timeout'};
-					if (time - $ai_seq_args[0]{'timeout'} > 10) {
-						#We waited for 10 seconds and got nothing
-						#NPC sequence is a failure
-						#We delete that portal and try again
-						delete $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"};
+					if (timeOut($ai_seq_args[0]{'timeout'}, 10)) {
+						# We waited for 10 seconds and got nothing
 						delete $ai_seq_args[0]{'substage'};
 						delete $ai_seq_args[0]{'timeout'};
-						debug "CRITICAL ERROR: NPC Sequence was a failure at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "debug";
-						$ai_seq_args[0]{'stage'} = '';	#redo MAP router
+						if (++$ai_seq_args[0]{'mapSolution'}[0]{'retry'} > 5) {
+							# NPC sequence is a failure
+							# We delete that portal and try again
+							delete $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"};
+							warning "Unable to talk to NPC at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n");
+							$ai_seq_args[0]{'stage'} = '';	# redo MAP router
+						}
 					}
 
 				} elsif ( 4 > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) ) {
@@ -8494,13 +8497,13 @@ sub ai_route_getRoute {
 
 	return 1 if $args{'dest'}{'x'} eq '' || $args{'dest'}{'y'} eq '';
 
-	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1] ) {
+	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
 		next if $args{'field'}{'field'}[$args{'start'}{'x'}+$$z[0] + $args{'field'}{'width'}*($args{'start'}{'y'}+$$z[1])];
 		$args{'start'}{'x'} += $$z[0];
 		$args{'start'}{'y'} += $$z[1];
 		last;
 	}
-	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1] ) {
+	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
 		next if $args{'field'}{'field'}[$args{'dest'}{'x'}+$$z[0] + $args{'field'}{'width'}*($args{'dest'}{'y'}+$$z[1])];
 		$args{'dest'}{'x'} += $$z[0];
 		$args{'dest'}{'y'} += $$z[1];
