@@ -23,6 +23,8 @@ New features:
   http://openkore.sourceforge.net/forum/viewtopic.php?t=1729
 - Added command 'talk text blablabla' and the ability to specify text reply
   in portals' NPC steps (t="some text")
+- Added command 'death <player #>' for use if you get the Death spell from
+  Abracadabra.
 
 New config options:
 - *_inInventory_name : inventory item name
@@ -37,6 +39,8 @@ Bug fixes:
 - Properly support tabs in avoid.txt
 - equipAuto for teleport/skills now works, require ai_equipAuto_skilluse_giveup
   in timeout.txt
+- Hopefully fixed bug where typing 'follow a' and then 'follow b' will make
+  bot still follow a
 
 Credits:
 - Fenris: Tk interface improvements.
