@@ -8,7 +8,7 @@ TYPE=bz2
 # Uncomment the next line if you want a tar.gz archive
 # TYPE=gz
 
-DIRS=(. lib lib/zlib tools gtk win32 doc autopackage)
+DIRS=(. lib lib/zlib tools tools/gx tools/gx/zlib gtk win32 doc autopackage)
 PACKAGEDIR=$PACKAGE-$VERSION
 ADDITIONAL=(Distfiles makedist.sh SConstruct SConscript README.txt TODO.txt LICENSE.txt install.sh)
 export GZIP=--best
