@@ -31,8 +31,9 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
-use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete sendCharLogin sendMove
-		sendChat sendPartyChat sendGuildChat sendPrivateMsg);
+use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete
+	sendCharLogin sendMove sendChat sendPartyChat sendGuildChat
+	sendPrivateMsg injectMessage);
 
 our @EXPORT = (
 	# Config modifiers
