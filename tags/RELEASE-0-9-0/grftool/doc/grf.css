@@ -1,0 +1,156 @@
+body {
+	margin: 0px 0px 0px 0px;
+	font-family: 'Bitstream Vera Sans', Arial, Sans-Serif;
+}
+img, .img {
+	border: 0;
+}
+h2 {
+	color: darkgray;
+	border-bottom: 1px dashed darkgray;
+	cursor: default;
+}
+h2:hover {
+	border-bottom: 1px solid gray;
+}
+
+#title {
+	color: white;
+	background: black;
+	font-weight: bold;
+	padding: 0.2em;
+}
+
+#navigation {
+	background: #8888d0;
+}
+#navigation a, #navigation li b {
+	color: white;
+	text-decoration: none;
+	padding-left: 0.8em;
+	padding-right: 0.8em;
+}
+#navigation a {
+	float: left;
+	display: block;
+}
+#navigation a:hover {
+	background-color: #aaaaf0;
+}
+#navigation ul {
+	display: inline;
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+}
+#navigation li {
+	display: inline;
+	color: white;
+}
+
+#main {
+	margin: 0.6em 0.6em 0.6em 0.6em;
+}
+
+#footer {
+	font-size: small;
+	color: gray;
+	vertical-align: top;
+	font-family: 'Bitstream Vera Sans', Tahoma, Verdana, Arial, Sans-Serif;
+}
+#footer img, #footer .img {
+	vertical-align: top;
+}
+#footer ul {
+	list-style-type: none;
+	display: inline;
+	padding: 0;
+	margin: 0;
+	float: right;
+}
+#footer li {
+	display: inline;
+}
+
+#functionIndex {
+	width: 98%;
+	background: #eeeeee;
+	border: 1px lightgray solid;
+}
+#functionIndex th {
+	color: white;
+	background: black;
+	padding-left: 6px;
+	padding-right: 6px;
+	text-align: left;
+}
+#functionIndex tr:hover {
+	background: #e0e0ff;
+}
+
+#functionIndex td {
+	padding: 0.2em;
+}
+#functionIndex a {
+	text-decoration: none;
+	color: blue;
+}
+#functionIndex a:visited {
+	color: darkblue;
+}
+#functionIndex a:hover {
+	text-decoration: underline;
+	color: red;
+}
+
+.tip {
+	border: dashed 1px #ddeedd;
+	background: #f7fff7;
+	padding: 0.25cm;
+}
+.tip h3 {
+	padding: 0;
+	margin: 0;
+	padding-bottom: 0.25cm;
+}
+
+.p {
+	margin-bottom: 1cm;
+}
+
+.example {
+	border: lightgray dotted 1px;
+	background: #fffde8;
+	padding: 0.4em;
+	margin: 1em;
+}
+
+.comment {
+	color: darkblue;
+}
+
+.struct {
+	border: #ccccff solid 1px;
+	background: #f6f6ff;
+	padding: 6px;
+	margin: 1em;
+}
+
+.cstr {
+	color: blue;
+}
+.cnum {
+	color: brown;
+}
+.ctype {
+	color: green;
+}
+.ckey {
+	color: purple;
+}
+.cinc {
+	color: #cc66cc;
+}
+.cinc2 {
+	color: #b18f47;
+}

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+	<mime-type type="application/x-grf">
+		<comment>GRF Archive</comment>
+
+		<magic priority="50">
+			<match type="string" value="Master of Magic\x00" offset="0"/>
+		</magic>
+		<glob pattern="*.grf"/>
+
+		<!-- The following magic entry works around a gnome-vfs bug! -->
+		<magic priority="50">
+			<match type="string" value="Master of Magicc" offset="0"/>
+		</magic>
+	</mime-type>
+</mime-info>
