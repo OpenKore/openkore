@@ -45,8 +45,10 @@ our @EXPORT = (
 
 	# Field math
 	qw/calcRectArea
+	checkFieldSnipable
 	checkFieldWalkable
-	checkLOS
+	checkLineSnipable
+	checkLineWalkable
 	checkWallLength
 	closestWalkableSpot
 	getFieldPoint
@@ -252,6 +254,18 @@ sub calcRectArea {
 }
 
 ##
+# checkFieldSnipable(r_field, x, y)
+# r_field: a reference to a field hash.
+# x, y: the coordinate to check.
+# Returns: 1 (true) or 0 (false).
+#
+# Check whether you can snipe through ($x,$y) on field $r_field.
+sub checkFieldSnipable {
+	my $p = getFieldPoint(@_);
+	return ($p == 0 || $p == 3 || $p == 7);
+}
+
+##
 # checkFieldWalkable(r_field, x, y)
 # r_field: a reference to a field hash.
 # x, y: the coordinate to check.
@@ -264,36 +278,65 @@ sub checkFieldWalkable {
 }
 
 ##
-# checkLOS(pos, pos_to, [min_wall_length = 3])
-# pos, pos_to: references to position hashes.
+# checkLineSnipable(from, to)
+# from, to: references to position hashes.
 #
-# Check whether you can walk from $pos to $pos_to in a straight line,
-# without being interrupted by walls. Walls that are less than
-# $min_wall_length long are ignored.
-sub checkLOS {
-	my $pos = shift;
-	my $pos_to = shift;
-	my $min_wall_length = shift;
-	$min_wall_length = 3 if (!defined $min_wall_length);
+# Check whether you can snipe a target standing at $to,
+# from the position $from, without being blocked by any
+# obstacles.
+sub checkLineSnipable {
+	my $from = shift;
+	my $to = shift;
+	my $min_obstacle_size = shift;
+	$min_obstacle_size = 5 if (!defined $min_obstacle_size);
 
-	my $dist = distance($pos, $pos_to);
+	my $dist = distance($from, $to);
 	my %vec;
 
-	getVector(\%vec, $pos, $pos_to);
-	# Simulate walking from $pos to $pos_to
+	getVector(\%vec, $to, $from);
+	# Simulate walking from $from to $to
 	for (my $i = 1; $i < $dist; $i++) {
 		my %p;
-		moveAlongVector(\%p, $pos, \%vec, -$i);
+		moveAlongVector(\%p, $from, \%vec, $i);
+		$p{x} = int $p{x};
+		$p{y} = int $p{y};
+		return 0 if (!checkFieldSnipable(\%field, $p{x}, $p{y}));
+	}
+	return 1;
+}
+
+##
+# checkLineWalkable(from, to, [min_obstacle_size = 5])
+# from, to: references to position hashes.
+#
+# Check whether you can walk from $from to $to in an (almost)
+# straight line, without obstacles that are too large.
+# Obstacles are considered too large, if they are at least
+# the size of a rectangle with "radius" $min_obstacle_size.
+sub checkLineWalkable {
+	my $from = shift;
+	my $to = shift;
+	my $min_obstacle_size = shift;
+	$min_obstacle_size = 5 if (!defined $min_obstacle_size);
+
+	my $dist = distance($from, $to);
+	my %vec;
+
+	getVector(\%vec, $to, $from);
+	# Simulate walking from $from to $to
+	for (my $i = 1; $i < $dist; $i++) {
+		my %p;
+		moveAlongVector(\%p, $from, \%vec, $i);
 		$p{x} = int $p{x};
 		$p{y} = int $p{y};
 
 		if ( !checkFieldWalkable(\%field, $p{x}, $p{y}) ) {
 			# The current spot is not walkable. Check whether
-			# this wall is long enough to get in our way.
-			if (checkWallLength(\%p, -1,  0, $min_wall_length) || checkWallLength(\%p,  1, 0, $min_wall_length) ||
-			    checkWallLength(\%p,  0, -1, $min_wall_length) || checkWallLength(\%p,  0, 1, $min_wall_length) ||
-			    checkWallLength(\%p, -1, -1, $min_wall_length) || checkWallLength(\%p,  1, 1, $min_wall_length) ||
-			    checkWallLength(\%p,  1, -1, $min_wall_length) || checkWallLength(\%p, -1, 1, $min_wall_length)) {
+			# this the obstacle is small enough.
+			if (checkWallLength(\%p, -1,  0, $min_obstacle_size) || checkWallLength(\%p,  1, 0, $min_obstacle_size)
+			 || checkWallLength(\%p,  0, -1, $min_obstacle_size) || checkWallLength(\%p,  0, 1, $min_obstacle_size)
+			 || checkWallLength(\%p, -1, -1, $min_obstacle_size) || checkWallLength(\%p,  1, 1, $min_obstacle_size)
+			 || checkWallLength(\%p,  1, -1, $min_obstacle_size) || checkWallLength(\%p, -1, 1, $min_obstacle_size)) {
 				return 0;
 			}
 		}
@@ -310,14 +353,13 @@ sub checkWallLength {
 	my $x = $pos->{x};
 	my $y = $pos->{y};
 	my $len = 0;
-
 	do {
 		last if ($x < 0 || $x >= $field{width} || $y < 0 || $y >= $field{height});
 		$x += $dx;
 		$y += $dy;
 		$len++;
 	} while (!checkFieldWalkable(\%field, $x, $y) && $len < $length);
-	return $len < $length;
+	return $len >= $length;
 }
 
 ##
@@ -335,8 +377,8 @@ sub closestWalkableSpot {
 
 	foreach my $z ( [0,0], [0,1],[1,0],[0,-1],[-1,0], [-1,1],[1,1],[1,-1],[-1,-1],[0,2],[2,0],[0,-2],[-2,0] ) {
 		next if !checkFieldWalkable($r_field, $pos->{'x'} + $z->[0], $pos->{'y'} + $z->[1]);
-		$pos->{'x'} += $z->[0];
-		$pos->{'y'} += $z->[1];
+		$pos->{x} += $z->[0];
+		$pos->{y} += $z->[1];
 		return 1;
 	}
 	return 0;
@@ -355,10 +397,10 @@ sub getFieldPoint {
 	my $x = shift;
 	my $y = shift;
 
-	if ($x < 0 || $x >= $r_field->{'width'} || $y < 0 || $y >= $r_field->{'height'}) {
+	if ($x < 0 || $x >= $r_field->{width} || $y < 0 || $y >= $r_field->{height}) {
 		return 1;
 	}
-	return ord(substr($r_field->{rawMap}, ($y * $r_field->{'width'}) + $x, 1));
+	return ord(substr($r_field->{rawMap}, ($y * $r_field->{width}) + $x, 1));
 }
 
 ##
