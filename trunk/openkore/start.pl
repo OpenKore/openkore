@@ -82,6 +82,11 @@ if ($ARGV[0] eq '!') {
 
 $0 = $file;
 do $file;
-die $@ if ($@);
-
-main::__start() if defined(&main::__start);
+if ($@) {
+	print $@;
+	print "\nPress ENTER to exit.\n";
+	<STDIN>;
+	exit 1;
+} else {
+	main::__start() if defined(&main::__start);
+}
