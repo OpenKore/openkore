@@ -5663,6 +5663,11 @@ sub parseMsg {
 
 		chatLog("c", "$chat\n") if ($config{'logChat'});
 		message "$chat\n", "publicchat";
+		
+		Plugins::callHook('packet_pubMsg', {
+			pubMsgUser => $chatMsgUser,
+			pubMsg => $chatMsg
+		});
 
 	} elsif ($switch eq "008E") {
 		$chat = substr($msg, 4, $msg_size - 4);
