@@ -196,7 +196,7 @@ sub checkConnection {
 		message("Connecting to Game Login Server...\n", "connection");
 		$conState_tries++;
 		Network::connectTo(\$remote_socket, $servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
-		sendGameLogin(\$remote_socket, $accountID, $sessionID, $accountSex);
+		sendGameLogin(\$remote_socket, $accountID, $sessionID, $sessionID2, $accountSex);
 		$timeout{'gamelogin'}{'time'} = time;
 
 	} elsif ($conState == 2 && timeOut(\%{$timeout{'gamelogin'}}) && $config{'server'} ne "") {
@@ -4937,6 +4937,7 @@ sub parseMsg {
 		}
 		$sessionID = substr($msg, 4, 4);
 		$accountID = substr($msg, 8, 4);
+		$sessionID2 = substr($msg, 12, 4);
 		$accountSex = unpack("C1",substr($msg, 46, 1));
 		$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
 		message(swrite(
@@ -4944,6 +4945,7 @@ sub parseMsg {
 			"Account ID: @<<<<<<<<<<<<<<<<<<", [getHex($accountID)],
 			"Sex:        @<<<<<<<<<<<<<<<<<<", [$sex_lut{$accountSex}],
 			"Session ID: @<<<<<<<<<<<<<<<<<<", [getHex($sessionID)],
+			"            @<<<<<<<<<<<<<<<<<<", [getHex($sessionID2)],
 			"-------------------------------", [undef],
 		), "connection");
 
@@ -5715,6 +5717,7 @@ sub parseMsg {
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
 		ai_clientSuspend(0, 10) if ($config{'XKore'});
 		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
+		undef $chars[$config{char}]{usedTeleportSkill};
 
 	} elsif ($switch eq "0092") {
 		$conState = 4;
