@@ -228,6 +228,7 @@ New config options:
   space where you do, while respecting runFromTarget_dist and
   followDistanceMax. This code isn't perfect yet! It will frequently be unable
   to find a solution.
+- _notMonsters works with all conditions now where _monsters works
 
 
 New timeouts.txt options:

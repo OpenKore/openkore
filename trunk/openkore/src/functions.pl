@@ -10373,6 +10373,15 @@ sub checkSelfCondition {
 		return 0 unless $exists;
 	}
 
+	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i)) {
+		my $exists;
+		foreach (ai_getAggressives()) {
+			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}{name})) {
+				return 0;
+			}
+		}
+	}
+
 	if ($config{$prefix . "_inInventory_name"}) {
 		my @arrN = split / *, */, $config{$prefix . "_inInventory_name"};
 		my @arrQ = split / *, */, $config{$prefix . "_inInventory_qty"};
