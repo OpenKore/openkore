@@ -28,6 +28,7 @@ Bug fixes:
 - The 'follow' command will now work with names that contain symbols (bug #12).
 - The 'conf' command won't reveal passwords anymore (bug #18).
 - Fixed teleport using a skill not working on Athena servers (bug #17).
+- Fixed command 'i neq' (show unequipped items) not working.
 
 New config options:
 - teleportAuto_unstuck - teleport when stuck.

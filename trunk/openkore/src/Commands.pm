@@ -488,7 +488,7 @@ sub cmdInventory {
 		return;
 	}
 
-	if ($arg1 eq "" || $arg1 eq "eq" || $arg1 eq "u" || $arg1 eq "nu") {
+	if ($arg1 eq "" || $arg1 eq "eq" || $arg1 eq "neq" || $arg1 eq "u" || $arg1 eq "nu") {
 		my @useable;
 		my @equipment;
 		my @uequipment;
@@ -566,7 +566,7 @@ sub cmdInventory {
 
 	} else {
 		error	"Syntax Error in function 'i' (Inventory List)\n" .
-			"Usage: i [<u|eq|nu|desc>] [<inventory #>]\n";
+			"Usage: i [<u|eq|neq|nu|desc>] [<inventory #>]\n";
 	}
 }
 
