@@ -178,7 +178,7 @@ sub Unload {
 	if (defined $venderHook) {
 		Plugins::delHook('packet_vender', $venderHook);
 		Plugins::delHook('packet_vender_store', $venderStoreHook);
-		Plugins::addHook('charNameUpdate', $charNameUpdateHook);
+		Plugins::delHook('charNameUpdate', $charNameUpdateHook);
 	}
 }
 
