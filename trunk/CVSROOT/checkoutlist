@@ -11,4 +11,4 @@
 #	[<whitespace>]<filename><whitespace><error message><end-of-line>
 #
 # comment lines begin with '#'
-cia_bot_cvs.pl
+cia_bot_cvs.pl Cannot checkout file
