@@ -9161,10 +9161,10 @@ sub getField {
 
 		my ($dw, $dh) = unpack("S1 S1", substr($dist_data, 0, 4, ''));
 		if (
-			#version 0 files had a bug when height != width, so keep version 0 files not effected by the bug.
-			   $dversion == 0 && $dw == $dh && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
-			#version 1 and greater have no know bugs, so just do a minimum validity check.
-			|| $dversion >= 1 && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
+			#version 0 files had a bug when height != width
+			#version 1 files did not treat walkable water as walkable, all version 0 and 1 maps need to be rebuilt
+			#version 2 and greater have no know bugs, so just do a minimum validity check.
+			$dversion >= 2 && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
 		) {
 			$$r_hash{'dstMap'} = $dist_data;
 		}
@@ -9175,7 +9175,7 @@ sub getField {
 		$$r_hash{'dstMap'} = makeDistMap(@$r_hash{'rawMap', 'width', 'height'});
 		open FILE, ">", $dist_file or die "Could not write dist cache file: $!\n";
 		binmode(FILE);
-		print FILE pack("a2 S1", 'V#', 1);
+		print FILE pack("a2 S1", 'V#', 2);
 		print FILE pack("S1 S1", @$r_hash{'width', 'height'});
 		print FILE $$r_hash{'dstMap'};
 		close FILE;
@@ -9199,9 +9199,21 @@ sub makeDistMap {
 	my $data = shift;
 	my $width = shift;
 	my $height = shift;
+
+	# Simplify the raw map data. Each byte in the raw map data
+	# represents a block on the field, but only some bytes are
+	# interesting to pathfinding.
 	for (my $i = 0; $i < length($data); $i++) {
-		substr($data, $i, 1, (ord(substr($data, $i, 1)) ? chr(0) : chr(255)));
+		my $v = ord(substr($data, $i, 1));
+		# 0 is open, 3 is walkable water
+		if ($v == 0 || $v == 3) {
+			$v = 255;
+		} else {
+			$v = 0;
+		}
+		substr($data, $i, 1, chr($v));
 	}
+
 	my $done = 0;
 	until ($done) {
 		$done = 1;
