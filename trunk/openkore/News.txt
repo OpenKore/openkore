@@ -11,7 +11,8 @@ Bug fixes:
 - The day parameter for autoBreakTime is no longer case sensitive.
 - Fix a routing problem which causes Kore to walk back and forth.
 - Various attackComboSlot bug fixes.
-- "You are in Stunned state" message was verbosity 2 instead of 1
+- "You are in Stunned state" message was verbosity 2 instead of 1.
+- 'autostorage' command will now work even if storageAuto is set to 0.
 
 New features:
 - statsAddAuto will now print a message when it increases a stat.
