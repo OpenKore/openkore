@@ -6,9 +6,9 @@ libsprite:
 - Better documentation.
 
 Win32 Delphi frontend:
-- Extract on doubleclick.
-- Wildcard searching.
+- Column sort.
 - Support for previewing JPEG files?
 
 Win32 Delphi and GTK+ frontends:
+- Drag & drop?
 - Support for previewing GAT, SPR and WAV.
