@@ -4,6 +4,7 @@
 
 Bug fixes:
 - Correctly detect pets.
+- Fix all kinds of troubles regarding sitting and standing.
 - Set maxDistance = distance (instead of defaulting to 30) in attackSkillSlot.
 
 New features:

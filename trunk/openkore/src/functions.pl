@@ -3170,41 +3170,48 @@ sub AI {
 	} # end of FOLLOW block
 	
 
-	##### AUTO-SIT/SIT/STAND #####
+	##### SITAUTO-IDLE #####
+	if ($config{sitAuto_idle}) {
+		if (!AI::isIdle && AI::action ne "follow") {
+			$timeout{ai_sit_idle}{time} = time;
+		}
 
-	if ($config{'sitAuto_idle'} && ($ai_seq[0] ne "" && $ai_seq[0] ne "follow")) {
-		$timeout{'ai_sit_idle'}{'time'} = time;
-	}
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "follow") && $config{'sitAuto_idle'} && !$chars[$config{'char'}]{'sitting'} && timeOut(\%{$timeout{'ai_sit_idle'}}) && (!$config{'shopAuto_open'} || timeOut(\%{$timeout{'ai_shop'}}))) {
-		sit();
-	}
-	if ($ai_seq[0] eq "sitting" && ($chars[$config{'char'}]{'sitting'} || $chars[$config{'char'}]{'skills'}{'NV_BASIC'}{'lv'} < 3)) {
-		shift @ai_seq;
-		shift @ai_seq_args;
-		$timeout{'ai_sit'}{'time'} -= $timeout{'ai_sit'}{'timeout'};
-	} elsif ($ai_seq[0] eq "sitting" && !$chars[$config{'char'}]{'sitting'} && timeOut(\%{$timeout{'ai_sit'}}) && timeOut(\%{$timeout{'ai_sit_wait'}})) {
-		sendSit(\$remote_socket);
-		$timeout{'ai_sit'}{'time'} = time;
-
-		if ($config{'sitAuto_look'}) {
-			look($config{'sitAuto_look'});
+		if ( !$char->{sitting} && timeOut($timeout{ai_sit_idle})
+		 && (!$config{shopAuto_open} || timeOut($timeout{ai_shop})) ) {
+			sit();
 		}
 	}
-	if ($ai_seq[0] eq "standing" && !$chars[$config{'char'}]{'sitting'} && !$timeout{'ai_stand_wait'}{'time'}) {
-		$timeout{'ai_stand_wait'}{'time'} = time;
-	} elsif ($ai_seq[0] eq "standing" && !$chars[$config{'char'}]{'sitting'} && timeOut(\%{$timeout{'ai_stand_wait'}})) {
-		shift @ai_seq;
-		shift @ai_seq_args;
-		undef $timeout{'ai_stand_wait'}{'time'};
-		$timeout{'ai_sit'}{'time'} -= $timeout{'ai_sit'}{'timeout'};
-	} elsif ($ai_seq[0] eq "standing" && $chars[$config{'char'}]{'sitting'} && timeOut(\%{$timeout{'ai_sit'}})) {
-		sendStand(\$remote_socket);
-		$timeout{'ai_sit'}{'time'} = time;
+
+	##### SITTING #####
+	if (AI::action eq "sitting") {
+		if ($char->{sitting} || $char->{skills}{NV_BASIC}{lv} < 3) {
+			# Stop if we're already sitting
+			AI::dequeue;
+			$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
+
+		} elsif (!$char->{sitting} && timeOut($timeout{ai_sit}) && timeOut($timeout{ai_sit_wait})) {
+			# Send the 'sit' packet every x seconds until we're sitting
+			sendSit(\$remote_socket);
+			$timeout{ai_sit}{time} = time;
+			
+			look($config{sitAuto_look}) if ($config{sitAuto_look});
+		}
+	}
+
+	##### STANDING #####
+	# Same logic as the 'sitting' AI
+	if (AI::action eq "standing") {
+		if (!$char->{sitting}) {
+			AI::dequeue;
+
+		} elsif (timeOut($timeout{ai_sit}) && timeOut($timeout{ai_stand_wait})) {
+			sendStand(\$remote_socket);
+			$timeout{ai_sit}{time} = time;
+		}
 	}
 
 
 	##### SIT AUTO #####
-
 	SITAUTO: {
 		my $weight = percent_weight($char);
 		my $action = AI::action;
@@ -3218,11 +3225,13 @@ sub AI {
 		# Sit if we're not already sitting
 		if ($action eq "sitAuto" && !$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3 &&
 		  !ai_getAggressives() && ($weight < 50 || $config{'sitAuto_over_50'})) {
+			debug "sitAuto - sit\n", "sitAuto";
 			sit();
 
 		# Stand if our HP is high enough
 		} elsif ($action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'} || $upper_ok)) {
 			AI::dequeue;
+			debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
 			stand() if (!$config{'sitAuto_idle'} && $char->{sitting});
 
 		} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto") {
@@ -3233,7 +3242,7 @@ sub AI {
 				if (!AI::inQueue("attack") && !ai_getAggressives()
 				&& (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
 					AI::queue("sitAuto");
-					debug "Auto-sitting\n", "ai";
+					debug "Auto-sitting\n", "sitAuto";
 				}
 			}
 		}
@@ -3242,7 +3251,6 @@ sub AI {
 
 
 	##### ATTACK #####
-
 
 	if (AI::action eq "attack" && AI::args->{suspended}) {
 		AI::args->{ai_attack_giveup}{time} += time - AI::args->{suspended};
@@ -6297,17 +6305,19 @@ sub parseMsg {
 
 	} elsif ($switch eq "0091") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		initMapChangeVars();
-		for ($i = 0; $i < @ai_seq; $i++) {
-			ai_setMapChanged($i);
-		}
-		$ai_v{'portalTrace_mapChanged'} = 1;
 
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
 			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
 		}
+
+		initMapChangeVars();
+		for ($i = 0; $i < @ai_seq; $i++) {
+			ai_setMapChanged($i);
+		}
+		$ai_v{'portalTrace_mapChanged'} = 1;
+
 		$coords{'x'} = unpack("S1", substr($msg, 18, 2));
 		$coords{'y'} = unpack("S1", substr($msg, 20, 2));
 		%{$chars[$config{'char'}]{'pos'}} = %coords;
@@ -6319,18 +6329,19 @@ sub parseMsg {
 
 	} elsif ($switch eq "0092") {
 		$conState = 4;
-		initMapChangeVars() if ($config{'XKore'});
-		undef $conState_tries;
-		for (my $i = 0; $i < @ai_seq; $i++) {
-			ai_setMapChanged($i);
-		}
-		$ai_v{'portalTrace_mapChanged'} = 1;
 
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
 			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
 		}
+
+		initMapChangeVars() if ($config{'XKore'});
+		undef $conState_tries;
+		for (my $i = 0; $i < @ai_seq; $i++) {
+			ai_setMapChanged($i);
+		}
+		$ai_v{'portalTrace_mapChanged'} = 1;
 
 		$map_ip = makeIP(substr($msg, 22, 4));
 		$map_port = unpack("S1", substr($msg, 26, 2));
@@ -9649,13 +9660,24 @@ sub relog {
 
 sub sit {
 	$timeout{ai_sit_wait}{time} = time;
-	aiRemove("standing");
-	AI::queue("sitting");
+	$timeout{ai_sit}{time} = time;
+
+	AI::clear("sitting", "standing");
+	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
+		AI::queue("sitting");
+		sendSit(\$remote_socket);
+	}
 }
 
 sub stand {
-	aiRemove("sitting");
-	AI::queue("standing");
+	$timeout{ai_stand_wait}{time} = time;
+	$timeout{ai_sit}{time} = time;
+
+	AI::clear("sitting", "standing");
+	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
+		sendStand(\$remote_socket);
+		AI::queue("standing");
+	}
 }
 
 sub take {
