@@ -993,12 +993,11 @@ sub parseCommand {
 		if ($arg1 eq "") {
 			error	"Syntax Error in function 'lookp' (Look at Player)\n" .
 				"Usage: lookp <player #>\n";
+		} elsif (!$playersID[$arg1]) {
+			error	"Error in function 'lookp' (Look at Player)\n" .
+				"'$arg1' is not a valid player number.\n";
 		} else {
-			for (my $i = 0; $i < @playersID; $i++) {
-				next if ($players{$playersID[$i]} eq "");
-				lookAtPosition($players{$playersID[$i]}{'pos_to'}, int(rand(3)));
-				last;
-			}
+			lookAtPosition($players{$playersID[$arg1]}{pos_to});
 		}
 
 	} elsif ($switch eq "move") {
@@ -3041,7 +3040,7 @@ foreach (keys %monsters) { if (!$monsters{$_}{name}) { chatLog("k", "Monster wit
 				$ai_seq_args[$followIndex]{'last_pos_to'}{'x'} = $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'};
 				$ai_seq_args[$followIndex]{'last_pos_to'}{'y'} = $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'};
 				if ($dx != 0 || $dy != 0) {
-					lookAtPosition($players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, int(rand(3))) if ($config{'followFaceDirection'});
+					lookAtPosition($players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}) if ($config{'followFaceDirection'});
 				}
 			}
 		}
@@ -5097,7 +5096,7 @@ sub parseMsg {
 		# 0078: long ID, word speed, word state, word ailment, word look, word class, word hair,
 		# word weapon, word head_option_bottom, word sheild, word head_option_top, word head_option_mid,
 		# word hair_color, word ?, word head_dir, long guild, long emblem, word manner, byte karma,
-		# byte sex, 3byte coord, byte body_dir, byte ?, byte ?, byte act, word level
+		# byte sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word level
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
@@ -5125,8 +5124,7 @@ sub parseMsg {
 			$players{$ID}{'walk_speed'} = $walk_speed;
 			$players{$ID}{'look'}{'body'} = $body_dir;
 			$players{$ID}{'look'}{'head'} = $head_dir;
-			$players{$ID}{'sitting'} = ($act == 1);
-			$players{$ID}{'dead'} = ($act == 2);
+			$players{$ID}{'sitting'} = $act > 0;
 			$players{$ID}{'lv'} = $lv;
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
@@ -5259,12 +5257,17 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
+		my (%coordsFrom, %coordsTo);
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
 		my $type = unpack("S*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my $sex = unpack("C*",substr($msg, 49,  1));
 		my $lv = unpack("S*",substr($msg, 58,  2));
+
+		my %vec;
+		getVector(\%vec, \%coordsTo, \%coordsFrom);
+		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
 
 		if ($jobs_lut{$type}) {
 			if (!defined($players{$ID}{binID})) {
@@ -5279,9 +5282,11 @@ sub parseMsg {
 			}
 
 			$players{$ID}{walk_speed} = $walk_speed;
+			$players{$ID}{look}{head} = $direction;
+			$players{$ID}{look}{body} = $direction;
 			$players{$ID}{lv} = $lv;
-			%{$players{$ID}{'pos'}} = %coordsFrom;
-			%{$players{$ID}{'pos_to'}} = %coordsTo;
+			%{$players{$ID}{pos}} = %coordsFrom;
+			%{$players{$ID}{pos_to}} = %coordsTo;
 			$players{$ID}{time_move} = time;
 			$players{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
@@ -5299,8 +5304,10 @@ sub parseMsg {
 					$pets{$ID}{'name_given'} = "Unknown";
 					$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
 				}
-				%{$pets{$ID}{'pos'}} = %coords;
-				%{$pets{$ID}{'pos_to'}} = %coords;
+				$pets{$ID}{look}{head} = $direction;
+				$pets{$ID}{look}{body} = 0;
+				%{$pets{$ID}{pos}} = %coordsFrom;
+				%{$pets{$ID}{pos_to}} = %coordsTo;
 				$pets{$ID}{time_move} = time;
 				$pets{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 				$pets{$ID}{walk_speed} = $walk_speed;
@@ -5322,8 +5329,10 @@ sub parseMsg {
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
 					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
 				}
-				%{$monsters{$ID}{'pos'}} = %coordsFrom;
-				%{$monsters{$ID}{'pos_to'}} = %coordsTo;
+				$monsters{$ID}{look}{head} = $direction;
+				$monsters{$ID}{look}{body} = 0;
+				%{$monsters{$ID}{pos}} = %coordsFrom;
+				%{$monsters{$ID}{pos_to}} = %coordsTo;
 				$monsters{$ID}{time_move} = time;
 				$monsters{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 				$monsters{$ID}{walk_speed} = $walk_speed;
@@ -5336,6 +5345,7 @@ sub parseMsg {
 	} elsif ($switch eq "007C") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		$ID = substr($msg, 2, 4);
+		my %coords;
 		makeCoords(\%coords, substr($msg, 36, 3));
 		$type = unpack("S*",substr($msg, 20,  2));
 		$pet = unpack("C*",substr($msg, 22,  1));
@@ -5351,6 +5361,8 @@ sub parseMsg {
 				$players{$ID}{'appear_time'} = time;
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 			}
+			$players{$ID}{look}{head} = 0;
+			$players{$ID}{look}{body} = 0;
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
 			debug "Player Spawned: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
@@ -5368,6 +5380,8 @@ sub parseMsg {
 					$pets{$ID}{'name_given'} = "Unknown";
 					$pets{$ID}{'binID'} = binFind(\@petsID, $ID); 
 				}
+				$pets{$ID}{look}{head} = 0;
+				$pets{$ID}{look}{body} = 0;
 				%{$pets{$ID}{'pos'}} = %coords; 
 				%{$pets{$ID}{'pos_to'}} = %coords; 
 				debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
@@ -5382,6 +5396,8 @@ sub parseMsg {
 					$monsters{$ID}{'name'} = $display;
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
 				}
+				$monsters{$ID}{look}{head} = 0;
+				$monsters{$ID}{look}{body} = 0;
 				%{$monsters{$ID}{'pos'}} = %coords;
 				%{$monsters{$ID}{'pos_to'}} = %coords;
 				debug "Monster Spawned: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
@@ -9300,49 +9316,14 @@ sub compilePortals_check {
 #
 # Turn face and body direction to position %pos.
 sub lookAtPosition {
-	my $pos1 = $chars[$config{'char'}]{'pos_to'};
 	my $pos2 = shift;
 	my $headdir = shift;
-	my $dx = $pos2->{'x'} - $pos1->{'x'};
-	my $dy = $pos2->{'y'} - $pos1->{'y'};
-	my $bodydir = undef;
+	my %vec;
+	my $direction;
 
-	if ($dx == 0) {
-		if ($dy > 0) {
-			$bodydir = 0;
-		} elsif ($dy < 0) {
-			$bodydir = 4;
-		}
-	} elsif ($dx < 0) {
-		if ($dy > 0) {
-			$bodydir = 1;
-		} elsif ($dy < 0) {
-			$bodydir = 3;
-		} else {
-			$bodydir = 2;
-		}
-	} else {
-		if ($dy > 0) {
-			$bodydir = 7;
-		} elsif ($dy < 0) {
-			$bodydir = 5;
-		} else {
-			$bodydir = 6;
-		}
-	}
-
-	return unless (defined($bodydir));
-	if ($headdir == 1) {
-		$bodydir++;
-		$bodydir -= 8 if ($bodydir > 7);
-		look($bodydir, 1);
-	} elsif ($headdir == 2) {
-		$bodydir--;
-		$bodydir += 8 if ($bodydir < 0);
-		look($bodydir, 2);
-	} else {
-		look($bodydir);
-	}
+	getVector(\%vec, $pos2, $char->{pos_to});
+	$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+	look($direction, $headdir);
 }
 
 sub portalExists {

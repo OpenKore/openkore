@@ -809,7 +809,26 @@ sub cmdPlayerList {
 		}
 
 		my $body = $player->{look}{body} % 8;
-		my $head = $player->{look}{head} % 8;
+		my $head = $player->{look}{head};
+		if ($head == 0) {
+			$head = $body;
+		} elsif ($head == 1) {
+			$head = $body - 1;
+		} else {
+			$head = $body + 1;
+		}
+
+		my $pos = calcPosition($player);
+		my $mypos = calcPosition($char);
+
+		my %vecPlayerToYou;
+		my %vecYouToPlayer;
+		getVector(\%vecPlayerToYou, $mypos, $pos);
+		getVector(\%vecYouToPlayer, $pos, $mypos);
+		my $degPlayerToYou = vectorToDegree(\%vecPlayerToYou);
+		my $degYouToPlayer = vectorToDegree(\%vecYouToPlayer);
+		my $playerToYou = int(sprintf("%.0f", $degPlayerToYou / 45)) % 8;
+		my $youToPlayer = int(sprintf("%.0f", $degYouToPlayer / 45)) % 8;
 
 		$msg = "------------- Player Info -------------\n";
 		$msg .= "$player->{name}\n";
@@ -817,19 +836,24 @@ sub cmdPlayerList {
 		$msg .= "Party: $player->{party}{name}\n" if ($player->{party} && $player->{party}{name} ne '');
 		$msg .= "Guild: $player->{guild}{name} (" . scalar(keys %{$player->{guild}{men}}) . " members)\n" if ($player->{guild});
 		$msg .= swrite(
-			"Level: @<<                   Position: @<<<<<<<<<<<<<<",
-			[$player->{lv}, "$player->{pos_to}{x}, $player->{pos_to}{y}"]);
+			"Level: @<<                   Position: @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+			[$player->{lv}, "$pos->{x}, $pos->{y} ($directions_lut{$youToPlayer} of you: " . int($degYouToPlayer) . " degrees)"]);
 		$msg .= swrite(
 			"Sex: @<<<<<<                 Class: @<<<<<<<<<<<",
 			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}],
 			"Body direction: @<<<<<<<<<<< Head direction: @<<<<<<<<<<<",
-			[$directions_lut{$body}, $directions_lut{$head}]);
+			[$directions_lut{$body} . "($body)", $directions_lut{$head}. "($head)"]);
 		$msg .= sprintf("Walk speed: %.2f seconds per block\n", $player->{walk_speed});
 		if ($player->{dead}) {
 			$msg .= "Player is dead.\n";
 		} elsif ($player->{sitting}) {
-			$msg .= "Player is sitting: $player->{sitting}.\n";
+			$msg .= "Player is sitting.\n";
 		}
+
+		if ($degPlayerToYou >= $head * 45 - 29 && $degPlayerToYou <= $head * 45 + 29) {
+			$msg .= "Player is facing towards you.\n";
+		}
+
 		$msg .= "--------------------------------------\n";
 		message $msg, "info";
 		return;
