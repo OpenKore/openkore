@@ -15,8 +15,8 @@ reconnect 12
 # Activate AI after x seconds after the map's loaded
 ai 2
 
-ai_move_retry 0.3
-ai_move_giveup 2
+ai_move_retry 0.25
+ai_move_giveup 1.5
 
 # Check for monsters to attack every x seconds
 ai_attack 1
@@ -69,12 +69,10 @@ ai_teleport_portal 2
 ai_teleport_hp 3
 ai_teleport_safe_force 120
 
-ai_route_npcTalk 2
-ai_route_calcRoute 1
-ai_route_calcRoute_cont 0.2
-
 
 # You probably don't ever have to change the following timeouts.
+ai_route_calcRoute 1
+
 ai_buyAuto 5
 ai_buyAuto_giveup 15
 ai_buyAuto_wait 2
@@ -88,9 +86,7 @@ ai_itemExchange 2
 
 ai_avoidcheck 0.5
 ai_shop 10
-
-ai_npcResponse 1
-ai_npcTalk 10
+ai_npcTalk 8
 
 
 # Don't change the following timeouts!
@@ -100,6 +96,3 @@ compilePortals_auto 10
 injectSync 5
 injectKeepAlive 12
 welcomeText 4
-
-pw_setup2 5
-pw_open 20

@@ -1,5 +1,5 @@
-#See the documentation for what these variables do
-#New variables have comments above them
+# See the documentation for what these variables do
+# New variables have comments above them
 
 master_name_0 localhost
 master_host_0 127.0.0.1
@@ -33,35 +33,13 @@ dcOnDualLogin 0
 
 autoRestart 0
 
-# The time it takes before kore autorestart is calculated as follows:
-# time = autoRestartMin + rand(autoRestartSeed)
-#
-# The default values means that kore will autorestart between
-# 90 and 150 minutes.
 autoRestartMin 5400
 autoRestartSeed 3600
 
-# Turn on the random sleep time while disconnected (ie to do more than
-# just disconnect, then reconnect straight away
 autoRestartSleep 1
-
-# similar deal with the restartsleep time (thats the time it'll sit 
-# between the restart, and going to connect again) except its anywhere
-# between 15 seconds, and an hour
-# And the time spent sleeping before a restart DOES NOT count as run time
-# before the next restart by default somewhere between 15 seconds and an
-# hour
 autoSleepSeed 3585
 autoSleepMin 15
 
-# If enabled, change configuration file after an amount of time.
-# autoConfChange_files is a comma-seperated list of filenames. A random
-# file from that list will be chosen as the new config file to load.
-# time = autoConfChange_min + rand(autoConfChange_seed)
-#
-# Think of this feature as a more flexible version of timed lockMaps.
-# With this feature you can not only set different lockMaps, but also
-# different Kapras.
 autoConfChange 0
 autoConfChange_files
 autoConfChange_min 25200
@@ -88,6 +66,7 @@ attackAuto 2
 attackAuto_party 1
 attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
+attackAuto_inLockOnly 0
 attackDistance 3
 attackMaxRouteDistance 100
 attackMaxRouteTime 4
@@ -104,6 +83,7 @@ saveMap_warpToBuyOrSell 0
 
 route_randomWalk 1
 route_randomWalk_maxRouteTime 15
+route_maxWarpFee
 route_step 15
 
 attackSkillSlot_0 
@@ -258,18 +238,17 @@ avoidList_reconnect 1800
 autoEmote_word_0 
 autoEmote_num_0 
 
-# get weapon's name by type "i eq"
-# To used Bare Hand set with "[NONE]" (only in double quotes) on Right Hand
+# To attack with bare hands, specify "[NONE]" (without the quotes) for rightHand
 
-autoSwitch_default_RightHand 
-autoSwitch_default_LeftHand 
-autoSwitch_default_Arrow 
+autoSwitch_default_rightHand 
+autoSwitch_default_leftHand 
+autoSwitch_default_arrow 
 
 autoSwitch_0 
-autoSwitch_0_RightHand 
-autoSwitch_0_LeftHand 
-autoSwitch_0_Arrow 
-autoSwitch_0_Distance 
+autoSwitch_0_rightHand 
+autoSwitch_0_leftHand 
+autoSwitch_0_arrow 
+autoSwitch_0_distance 
 autoSwitch_0_useWeapon 
 
 
