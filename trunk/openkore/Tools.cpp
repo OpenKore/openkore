@@ -88,7 +88,10 @@ struct CalcPath_session {
 CalcPath_session g_sessions[SESSION_MAX];
 
 #ifdef __cplusplus
+#define CEXTERN extern "C"
 extern "C" {
+#else
+#define CEXTERN
 #endif
 
 extern DLLEXPORT DWORD WINAPI CalcPath_init(pos_list *solution, char* map, unsigned long width,unsigned long height,
@@ -404,7 +407,7 @@ DLLEXPORT DWORD WINAPI GetProcByName (char * name) {
 }
 
 
-BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
+CEXTERN BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
 {
 	switch(dwReason)
 	{
