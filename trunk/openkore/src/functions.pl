@@ -1157,7 +1157,14 @@ sub parseCommand {
 			$map = $arg3;
 		}
 		$map =~ s/\s//g;
-		if (($arg1 eq "" || $arg2 eq "") && !$map) {
+		if ($input eq "move 0") {
+			if ($portalsID[0]) {
+				message("Move into portal number 0 ($portals{$portalsID[0]}{'pos'}{'x'},$portals{$portalsID[0]}{'pos'}{'y'})\n");
+				ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+			} else {
+				error "No portals exist.\n";
+			}
+		} elsif (($arg1 eq "" || $arg2 eq "") && !$map) {
 			error	"Syntax Error in function 'move' (Move Player)\n" .
 				"Usage: move <x> <y> &| <map>\n";
 		} elsif ($map eq "stop") {
@@ -1178,6 +1185,13 @@ sub parseCommand {
 				ai_route($map, $x, $y,
 					attackOnRoute => 1,
 					noSitAuto => 1);
+			} elsif ($map =~ /^\d$/) {
+				if ($portalsID[$map]) {
+					message("Move into portal number $map ($portals{$portalsID[$map]}{'pos'}{'x'},$portals{$portalsID[$map]}{'pos'}{'y'})\n");
+					ai_route($field{name}, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+				} else {
+					error "No portals exist.\n";
+				}
 			} else {
 				error "Map $map does not exist\n";
 			}

@@ -57,6 +57,8 @@ New config options:
 New commands:
 - ihist
   Display last few entries of the item log.
+- move [Portal Number]
+  To move into portal if portals exist.
 
 Internal:
 - $interface->beep() function for cross-platform beep support.
