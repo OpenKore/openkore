@@ -38,8 +38,10 @@ our @EXPORT = qw(
 
 	printItemDesc
 	whenAffected
+	whenAffectedMon
 	whenAffectedPL
 	whenStatusActive
+	whenStatusActiveMon
 	whenStatusActivePL
 	);
 
@@ -120,7 +122,18 @@ sub whenAffected {
 	my $affected = 0;
 	my @arr = split / *, */, $ailments;
 	for (my $j = 0; $j < @arr; $j++) {
-		$affected += $chars[$config{char}]{ailments}{$arr[$j]};
+		$affected += $chars[$config{char}]{ailments}{$arr[$j]} + $chars[$config{char}]{state}{$arr[$j]};
+	}
+	return $affected;
+}
+
+sub whenAffectedMon {
+	my $ID = shift;
+	my $ailments= shift;
+	my $affected = 0;
+	my @arr = split / *, */, $ailments;
+	for (my $j = 0; $j < @arr; $j++) {
+		$affected += $monsters{$ID}{ailments}{$arr[$j]} + $monsters{$ID}{state}{$arr[$j]};
 	}
 	return $affected;
 }
@@ -131,7 +144,7 @@ sub whenAffectedPL {
 	my $affected = 0;
 	my @arr = split / *, */, $ailments;
 	for (my $j = 0; $j < @arr; $j++) {
-		$affected += $players{$ID}{ailments}{$arr[$j]};
+		$affected += $players{$ID}{ailments}{$arr[$j]} + $players{$ID}{state}{$arr[$j]};
 	}
 	return $affected;
 }
@@ -142,6 +155,17 @@ sub whenStatusActive {
 	my @arr = split / *, */, $statuses;
 	for (my $j = 0; $j < @arr; $j++) {
 		$active += $chars[$config{char}]{statuses}{$arr[$j]};
+	}
+	return $active;
+}
+
+sub whenStatusActiveMon {
+	my $ID = shift;
+	my $statuses = shift;
+	my $active = 0;
+	my @arr = split / *, */, $statuses;
+	for (my $j = 0; $j < @arr; $j++) {
+		$active += $monsters{$ID}{statuses}{$arr[$j]};
 	}
 	return $active;
 }
