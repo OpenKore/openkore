@@ -204,6 +204,8 @@ if ($found) {
 }
 
 
+### PROMPT USERNAME AND PASSWORD IF NECESSARY ###
+
 if (!$config{'XKore'} && !$Settings::daemon) {
 	if (!$config{'username'}) {
 		print "Enter Username: ";
@@ -241,7 +243,7 @@ if (!$config{'XKore'} && !$Settings::daemon) {
 		writeDataFileIntact($Settings::config_file, \%config);
 	}
 
-} elsif (!$config{'username'} || !$config{'password'}) {
+} elsif (!$config{'XKore'} && (!$config{'username'} || !$config{'password'})) {
 	Log::error("No username of password set.\n", "startup");
 	exit;
 }
