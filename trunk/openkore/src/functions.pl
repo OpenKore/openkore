@@ -2362,7 +2362,8 @@ sub AI {
 	# The clientSuspend AI sequence is used to freeze all other AI activity
 	# for a certain period of time.
 
-	if (AI::action eq 'clientSuspend' && timeOut(\%{AI::args})) {
+	if (AI::action eq 'clientSuspend' && timeOut(AI::args)) {
+		debug "AI suspend by clientSuspend dequeued\n";
 		AI::dequeue;
 	} elsif ($ai_seq[0] eq "clientSuspend" && $config{'XKore'}) {
 		# When XKore mode is turned on, clientSuspend will increase it's timeout
@@ -2411,6 +2412,9 @@ sub AI {
 				$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
 			}
 		}
+
+		# Client suspended, do not continue with AI
+		return;
 	}
 
 
@@ -4726,7 +4730,7 @@ sub parseSendMsg {
 		# Move
 		aiRemove("clientSuspend");
 		makeCoords(\%coords, substr($msg, 2, 3));
-		ai_clientSuspend($switch, (distance(\%{$chars[$config{'char'}]{'pos'}}, \%coords) * $config{'seconds_per_block'}) + 2);
+		ai_clientSuspend($switch, (distance(\%{$chars[$config{'char'}]{'pos'}}, \%coords) * $chars[$config{'char'}]{'walk_speed'}) + 2);
 		
 	} elsif ($switch eq "0089") {
 		# Attack
@@ -8164,6 +8168,7 @@ sub ai_clientSuspend {
 	$args{timeout} = $initTimeout;
 	@{$args{args}} = @args;
 	AI::queue("clientSuspend", \%args);
+	debug "AI suspended by clientSuspend for $args{timeout} seconds\n";
 }
 
 ##
