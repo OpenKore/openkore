@@ -46,6 +46,7 @@ New config options:
   These are add-ons for the skill usage, item usage and equipAuto config
   options.
 - *_currentAI : check for current active AI sequence (eg attack, move...)
+- partySkill_target: comma seperated targets
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
@@ -56,6 +57,8 @@ Bug fixes:
 - Hopefully fixed bug where typing 'follow a' and then 'follow b' will make
   bot still follow a
 - autoTalkCont bugfix by fov.
+- Fixed useSelf_skill_smartHeal disabling support for heal lvl1
+- Fixed chat messages c/g/p/pm - moved them to ai
 - Fixed new ai_skillUse to support temporary skills.
 - Fixed 'monster', 'mvp' and 'death' commands to work with new ai_skillUse.
 - Fixed storage access when storage is empty.

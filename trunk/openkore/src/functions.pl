@@ -1756,8 +1756,8 @@ sub AI {
 		}
  		if ($cmd{'type'} eq "pm" || $cmd{'type'} eq "p" || $cmd{'type'} eq "g") {
 			$ai_v{'temp'}{'qm'} = quotemeta $config{'adminPassword'};
-			if ($cmd{'msg'} =~ /^$ai_v{'temp'}{'qm'}\b/) {
-				if ($overallAuth{$cmd{'user'}} == 1) {
+			if ($cmd{msg} =~ /^$ai_v{'temp'}{'qm'}\b/) {
+				if ($overallAuth{$cmd{user}} == 1) {
 					sendMessage(\$remote_socket, "pm", getResponse("authF"), $cmd{'user'});
 				} else {
 					auth($cmd{'user'}, 1);
@@ -1765,6 +1765,61 @@ sub AI {
 				}
 			}
 		}
+
+		if ($cmd{'type'} eq "c" || $cmd{'type'} eq "p" || $cmd{'type'} eq "g"){
+			#check if player is in area
+			if (defined($players{$cmd{ID}})) {
+				my $i = 0;
+				while ($config{"autoEmote_word_$i"} ne "") {
+					my $chat = $cmd{msg};
+					if ($chat =~/.*$config{"autoEmote_word_$i"}+$/i || $chat =~ /.*$config{"autoEmote_word_$i"}+\W/i) {
+						my %args = ();
+						$args{'timeout'} = time + rand (1) + 0.75;
+						$args{'emotion'} = $config{"autoEmote_num_$i"};
+						unshift @ai_seq, "sendEmotion";
+						unshift @ai_seq_args, \%args;
+						last;
+					}
+					$i++;
+				}
+			}
+		}
+
+		if ($config{"autoResponse"}) {
+			if ($cmd{type} eq "pm") {
+				my $i = 0;
+				while ($chat_resp{"words_said_$i"} ne "") {
+					my $privMsg = $cmd{msg};
+					if (($privMsg =~/.*$chat_resp{"words_said_$i"}+$/i || $chat =~ /.*$chat_resp{"words_said_$i"}+\W/i) &&
+						binFind(\@ai_seq, "respPMAuto") eq "") {
+						$args{'resp_num'} = $i;
+						$args{'resp_user'} = $privMsgUser;
+						unshift @ai_seq, "respPMAuto";
+						unshift @ai_seq_args, \%args;
+						$nextrespPMtime = time + 5;
+						last;
+					}
+					$i++;
+				}
+			} elsif (($cmd{type} eq "c" && defined($players{$cmd{ID}})) || $cmd{type} eq "p" || $cmd{type} eq "g") {
+				my $i = 0;
+				while ($chat_resp{"words_said_$i"} ne "") {
+					my $chat = $cmd{msg};
+					if (($chat =~/.*$chat_resp{"words_said_$i"}+$/i || $chat =~ /.*$chat_resp{"words_said_$i"}+\W/i)
+						&& binFind(\@ai_seq, "respAuto") eq "") {
+						$args{'resp_num'} = $i;
+						unshift @ai_seq, "respAuto";			
+						unshift @ai_seq_args, \%args;
+						$nextresptime = time + 5;
+						last;
+					}
+					$i++;
+				}
+			}
+		}
+		avoidGM_talk($cmd{user}, $cmd{msg});
+		avoidList_talk($cmd{user}, $cmd{msg}, unpack("L1",$cmd{ID}));
+
 		$ai_v{'temp'}{'qm'} = quotemeta $config{'callSign'};
 		if ($overallAuth{$cmd{'user'}} >= 1 
 			&& ($cmd{'msg'} =~ /\b$ai_v{'temp'}{'qm'}\b/i || $cmd{'type'} eq "pm")) {
@@ -5600,17 +5655,11 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "008D") {
-		$ID = substr($msg, 4, 4);
-		$chat = substr($msg, 8, $msg_size - 8);
+		my $ID = substr($msg, 4, 4);
+		my $chat = substr($msg, 8, $msg_size - 8);
 		$chat =~ s/\000//g;
-		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
+		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		$chatMsgUser =~ s/ $//;
-
-		chatLog("c", "$chat\n") if ($config{'logChat'});
-		if ($config{'relay'}) {
-			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
-		}
-		message "$chat\n", "publicchat";
 
 		my %item;
 		$item{type} = "c";
@@ -5621,62 +5670,16 @@ sub parseMsg {
 		binAdd(\@ai_cmdQue, \%item);
 		$ai_cmdQue++;
 
-
-		# FIXME: the stuff below should be handled by the AI
-
-		# Auto-emote
-		$i = 0;
-		while ($config{"autoEmote_word_$i"} ne "") {
-			if ($chat =~/.*$config{"autoEmote_word_$i"}+$/i || $chat =~ /.*$config{"autoEmote_word_$i"}+\W/i) {
-				my %args = ();
-				$args{'timeout'} = time + rand (1) + 0.75;
-				$args{'emotion'} = $config{"autoEmote_num_$i"};
-				unshift @ai_seq, "sendEmotion";
-				unshift @ai_seq_args, \%args;
-				last;
-			}
-			$i++;
-		}
-
-		# Auto-response
-		if ($config{"autoResponse"}) {
-			$i = 0;
-			while ($chat_resp{"words_said_$i"} ne "") {
-				if (($chat =~/.*$chat_resp{"words_said_$i"}+$/i || $chat =~ /.*$chat_resp{"words_said_$i"}+\W/i) &&
-				    binFind(\@ai_seq, "respAuto") eq "") {
-					$args{'resp_num'} = $i;
-					unshift @ai_seq, "respAuto";			
-					unshift @ai_seq_args, \%args;
-					$nextresptime = time + 5;
-					last;
-				}
-				$i++;
-			}
-		}
-
-		avoidGM_talk($chatMsgUser, $chatMsg);
-		my $nameID = unpack("L1", $ID);
-		avoidList_talk($chatMsgUser, $chatMsg, $nameID);
+		chatLog("c", "$chat\n") if ($config{'logChat'});
+		message "$chat\n", "publicchat";
 
 	} elsif ($switch eq "008E") {
-		# Public messages that you sent yourself
-
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000//g;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
-		chatLog("c", $chat."\n") if ($config{'logChat'});
-		if ($config{'relay'}) {
-			sendMessage(\$remote_socket, "pm", $chat, $config{'relay_user'});
-		}
-		message "$chat\n", "selfchat";
 
-		my %item;
-		$item{type} = "c";
-		$item{user} = $chatMsgUser;
-		$item{msg} = $chatMsg;
-		$item{time} = time;
-		binAdd(\@ai_cmdQue, \%item);
-		$ai_cmdQue++;
+		chatLog("c", $chat."\n") if ($config{'logChat'});
+		message "$chat\n", "selfchat";
 
 	} elsif ($switch eq "0091") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -5790,17 +5793,11 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
 		$msg = substr($msg, 0, 28).$newmsg;
-		($privMsgUser) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
-		$privMsg = substr($msg, 28, $msg_size - 29);
-		if ($privMsgUser ne "" && !defined binFind(\@privMsgUsers, $privMsgUser)) {
+		my ($privMsgUser) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
+		my $privMsg = substr($msg, 28, $msg_size - 29);
+		if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
 			$privMsgUsers[@privMsgUsers] = $privMsgUser;
 		}
-
-		chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
-		if ($config{'relay'}) {
-			sendMessage(\$remote_socket, "pm", "(From: $privMsgUser) : $privMsg", $config{'relay_user'});
-		}
-		message "(From: $privMsgUser) : $privMsg\n", "pm";
 
 		my %item;
 		$item{type} = "pm";
@@ -5810,30 +5807,13 @@ sub parseMsg {
 		binAdd(\@ai_cmdQue, \%item);
 		$ai_cmdQue++;
 
-		avoidGM_talk($privMsgUser, $privMsg);
-		avoidList_talk($privMsgUser, $privMsg);
+		chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
+		message "(From: $privMsgUser) : $privMsg\n", "pm";
 
 		Plugins::callHook('packet_privMsg', {
 			privMsgUser => $privMsgUser,
 			privMsg => $privMsg
 			});
-
-		# auto-response
-		if ($config{"autoResponse"}) {
-			$i = 0;
-			while ($chat_resp{"words_said_$i"} ne "") {
-				if (($privMsg =~/.*$chat_resp{"words_said_$i"}+$/i || $chat =~ /.*$chat_resp{"words_said_$i"}+\W/i) &&
-				    binFind(\@ai_seq, "respPMAuto") eq "") {
-					$args{'resp_num'} = $i;
-					$args{'resp_user'} = $privMsgUser;
-					unshift @ai_seq, "respPMAuto";
-					unshift @ai_seq_args, \%args;
-					$nextrespPMtime = time + 5;
-					last;
-				}
-				$i++;
-			}
-		}
 
 	} elsif ($switch eq "0098") {
 		$type = unpack("C1",substr($msg, 2, 1));
@@ -5843,16 +5823,24 @@ sub parseMsg {
 		} elsif ($type == 1) {
 			warning "$lastpm[0]{'user'} is not online\n";
 		} elsif ($type == 2) {
-			warning "Player can't hear you - you are ignored\n";
+			warning "Player ignored your message\n";
+		} else {
+			warning "Player doesnt want to recieved messages\n";
 		}
 		shift @lastpm;
 
 	} elsif ($switch eq "009A") {
-		$chat = substr($msg, 4, $msg_size - 4);
+		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
+
+		my %item;
+		$item{type} = "gmchat";
+		$item{msg} = $chatMsg;
+		$item{time} = time;
+		binAdd(\@ai_cmdQue, \%item);
+		$ai_cmdQue++;
 		chatLog("s", $chat."\n") if ($config{'logSystemChat'});
-		message "$chat\n", "gmchat";
-		avoidGM_talk(undef, $chat);
+		message "$chat\n", "schat";
 
 	} elsif ($switch eq "009C") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6635,32 +6623,35 @@ sub parseMsg {
 			$chatRooms{$currentChatRoom}{'users'}{$chatUser} = 1;
 		}
 
-	} elsif ($switch eq "00E5") {
-		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
-		$incomingDeal{'name'} = $dealUser;
-		$timeout{'ai_dealAutoCancel'}{'time'} = time;
-		message "$dealUser Requests a Deal\n", "deal";
-		message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal";
+	} elsif ($switch eq "00E5" || $switch eq "01F4") {
+		# Recieving deal request
+		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/; 
+		my $dealUserLevel = unpack("S1",substr($msg, 30, 2)); 
+		$incomingDeal{'name'} = $dealUser; 
+		$timeout{'ai_dealAutoCancel'}{'time'} = time; 
+		message "$dealUser (level $dealUserLevel) Requests a Deal\n", "deal"; 
+		message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal"; 
 
-	} elsif ($switch eq "00E7") {
+	} elsif ($switch eq "00E7" || $switch eq "01F5") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		
 		if ($type == 3) {
 			if (%incomingDeal) {
 				$currentDeal{'name'} = $incomingDeal{'name'};
+				undef %incomingDeal;
 			} else {
 				$currentDeal{'ID'} = $outgoingDeal{'ID'};
 				$currentDeal{'name'} = $players{$outgoingDeal{'ID'}}{'name'};
+				undef %outgoingDeal;
 			} 
 			message "Engaged Deal with $currentDeal{'name'}\n", "deal";
 		}
-		undef %outgoingDeal;
-		undef %incomingDeal;
 
 	} elsif ($switch eq "00E9") {
-		my $amount = unpack("L*", substr($msg, 2, 4));
-		my $ID = unpack("S*", substr($msg, 6, 2));
+		my $amount = unpack("L*", substr($msg, 2,4));
+		my $ID = unpack("S*", substr($msg, 6,2));
 		if ($ID > 0) {
+			$currentDeal{'other'}{$ID}{'amount'} += $amount;
 			my $item = $currentDeal{other}{$ID} ||= {};
 			$item->{amount} += $amount;
 			$item->{nameID} = $ID;
@@ -6708,8 +6699,10 @@ sub parseMsg {
 		message "Deal Cancelled\n", "deal";
 
 	} elsif ($switch eq "00F0") {
-		message "Deal Complete\n", "deal";
+		undef %outgoingDeal;
+		undef %incomingDeal;
 		undef %currentDeal;
+		message "Deal Complete\n", "deal";
 
 	} elsif ($switch eq "00F2") {
 		$storage{'items'} = unpack("S1", substr($msg, 2, 2));
@@ -6861,20 +6854,23 @@ sub parseMsg {
 
 	} elsif ($switch eq "0109") {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
-		$msg = substr($msg, 0, 8).$newmsg;
-		$chat = substr($msg, 8, $msg_size - 8);
-		$chat =~ s/\000$//;
-		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
-		chatLog("p", $chat."\n") if ($config{'logPartyChat'});
-		message "%$chat\n", "partychat";
+		my $ID = substr($msg, 4, 4);
+		my $chat = substr($msg, 8, $msg_size - 8);
+		$chat =~ s/\000//g;
+		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
+		$chatMsgUser =~ s/ $//;
 
 		my %item;
 		$item{type} = "p";
+		$item{ID} = $ID;
 		$item{user} = $chatMsgUser;
-		$item{msg} = $catMsg;
+		$item{msg} = $chatMsg;
 		$item{time} = time;
 		binAdd(\@ai_cmdQue, \%item);
 		$ai_cmdQue++;
+
+		message "%$chat\n", "partychat";
+		chatLog("p", $chat."\n") if ($config{'logPartyChat'});
 
 	# Hambo Started
 	# 3 Packets About MVP
@@ -7677,12 +7673,11 @@ sub parseMsg {
 	} elsif ($switch eq "017F") { 
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
-		$ID = substr($msg, 4, 4);
-		$chat = substr($msg, 4, $msg_size - 4);
+		my $ID = substr($msg, 4, 4);
+		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
-		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
-		chatLog("g", $chat."\n") if ($config{'logGuildChat'});
-		message "[Guild] $chat\n", "guildchat";
+		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
+		$chatMsgUser =~ s/ $//;
 
 		my %item;
 		$item{type} = "g";
@@ -7692,6 +7687,9 @@ sub parseMsg {
 		$item{time} = time;
 		binAdd(\@ai_cmdQue, \%item);
 		$ai_cmdQue++;
+
+		chatLog("g", $chat."\n") if ($config{'logGuildChat'});
+		message "[Guild] $chat\n", "guildchat";
 
 	} elsif ($switch eq "0188") {
 		$type =  unpack("S1",substr($msg, 2, 2));
