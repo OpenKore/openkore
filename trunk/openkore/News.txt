@@ -1,4 +1,13 @@
 ==================
+### CVS
+==================
+
+- Support for idRO: secureLogin_type 3
+- Possibly fixed the "utf8.pm not found" error.
+- Fix monster status/ailment detection.
+
+
+==================
 ### 1.3.0 (beta)
 ==================
 

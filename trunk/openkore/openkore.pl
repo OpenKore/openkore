@@ -10,6 +10,7 @@
 #########################################################################
 
 use lib '.';
+use bytes;
 srand(time());
 
 #### INITIALIZE INTERFACE ####
@@ -318,7 +319,7 @@ Log::message("\n");
 
 ##### SETUP WARNING AND ERROR HANDLER #####
 
-sub _errorHandler {
+$SIG{__DIE__} = sub {
 	die @_ if (defined($^S) && $^S);
 	if (defined &Carp::longmess) {
 		Log::color("red") if (defined &Log::color);
@@ -337,17 +338,16 @@ sub _errorHandler {
 	}
 
 	Log::message("Press ENTER to exit this program.\n");
-	<STDIN>;
+	$interface->getInput(-1) if defined $interface;
 };
-# $SIG{'__DIE__'} = \&_errorHandler;
 
-$SIG{__WARN__} = sub {
-	my $msg = "@_";
-	unless ($msg =~ /^Use of uninitialized value in concatenation/
-	  || $msg =~ /^Subroutine .*? redefined at/) {
-		print "@_";
-	}
-};
+#$SIG{__WARN__} = sub {
+#	my $msg = "@_";
+#	unless ($msg =~ /^Use of uninitialized value in concatenation/
+#	  || $msg =~ /^Subroutine .*? redefined at/) {
+#		print "@_";
+#	}
+#};
 
 
 ##### MAIN LOOP #####
