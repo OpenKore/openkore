@@ -3370,7 +3370,7 @@ sub AI {
 			my @cleanMonsters;
 
 			# List aggressive monsters
-			@aggressives = ai_getAggressives() if ($config{'attackAuto'} && $attackOnRoute);
+			@aggressives = ai_getAggressives(1) if ($config{'attackAuto'} && $attackOnRoute);
 
 			# There are two types of non-aggressive monsters. We generate two lists:
 			foreach (@monstersID) {
@@ -3380,8 +3380,10 @@ sub AI {
 				# a high chance they're being attacked by other players
 				next if ($monster->{statuses} && scalar(keys %{$monster->{statuses}}));
 				# Ignore ignored monsters in mon_control.txt
-				my $monCtrl = $mon_control{lc($monster->{name})}{attack_auto};
+				my $monName = lc($monster->{name});
+				my $monCtrl = $mon_control{$monName}{attack_auto};
 				next if ($monCtrl ne "" && $monCtrl <= 0);
+				next if ($mon_control{$monName}{attack_lvl} ne "" && $mon_control{$monName}{attack_lvl} > $char->{lv});
 				my $pos = calcPosition($monster);
 
 				# List monsters that party members are attacking
@@ -3426,6 +3428,7 @@ sub AI {
 				# Don't attack ignored monsters
 				my $name = lc $monster->{name};
 				next if ($mon_control{$name}{attack_auto} == -1);
+				next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
 
 				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
 					$highestPri = $priority{$name};
@@ -3444,6 +3447,7 @@ sub AI {
 					# Don't attack ignored monsters
 					my $name = lc $monster->{name};
 					next if ($mon_control{$name}{attack_auto} == -1);
+					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;
@@ -3461,6 +3465,7 @@ sub AI {
 					# Don't attack ignored monsters
 					my $name = lc $monster->{name};
 					next if ($mon_control{$name}{attack_auto} == -1);
+					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;
@@ -8525,12 +8530,24 @@ sub ai_partyfollow {
 	}
 }
 
+##
+# ai_getAggressives([check_mon_control])
+# Returns: an array of monster hashes.
+#
+# Get a list of all aggressive monsters on screen.
+# The definition of "aggressive" is: a monster who has hit or missed me.
+#
+# If $check_mon_control is set, then all monsters in mon_control.txt
+# with the 'attack_auto' flag set to 2, will be considered as aggressive.
+# See also the manual for more information about this.
 sub ai_getAggressives {
+	my $type = shift;
 	my @agMonsters;
 	foreach (@monstersID) {
 		next if (!$_);
 		my $monster = $monsters{$_};
-		if (($monster->{dmgToYou} || $monster->{missedYou}) && timeOut($monster->{attack_failed}, $timeouts{ai_attack_unfail}{timeout})) {
+		if ((($type && $mon_control{lc($monster->{'name'})}{'attack_auto'} == 2) || $monster->{dmgToYou} || $monster->{missedYou})
+		  && timeOut($monster->{attack_failed}, $timeouts{ai_attack_unfail}{timeout})) {
 			push @agMonsters, $_;
 		}
 	}
