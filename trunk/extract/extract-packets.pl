@@ -20,11 +20,11 @@ if (!open (F, "< $ARGV[0]")) {
 	exit(1);
 }
 
-our $addr;
+my $addr;
 
 if (!$ARGV[2]) {
 	# Look for the address of the function that determines packet sizes.
-	our ($found, $lastLine);
+	my ($found, $lastLine);
 	while ((my $line = <F>)) {
 		if ($line =~ /mov ecx, dword( ptr )?\[ebp-0C\]/ && $lastLine =~ /E8ED0[0-9]0000/) {
 			($found) = $lastLine =~ /^:([A-Z0-9]{8})/;
@@ -73,29 +73,34 @@ if (@function == 0) {
 
 
 # Extract packets
-our %packets = ();
+my (%packets, $ebx, $switch);
 print "Extracting packets...\n";
+
 for (my $i = 0; $i < @function; $i++) {
 	$_ = $function[$i];
-	#if (/^:[A-Z0-9]+ [A-Z0-9]{14,}[\t\s]+mov (?:dword ptr )?\[ebp.*?\], ([0-9A-Z]{8,})$/) {
-	 if (/^:[A-Z0-9]+ [A-Z0-9]{14,}[\t\s]+mov dword\[.*?\], ([0-9A-Z]{8,})$/) {
-		my $packet = substr($1, 4);
-		my $size = 0;
-		for ($i = $i + 1; $i < @function; $i++) {
-			$_ = $function[$i];
-			#if (/^:[A-Z0-9]+ [A-Z0-9]{12,}[\t\s]+mov (?:dword ptr )?\[eax.*?\], ([0-9A-Z]{8,})$/) {
-			 if (/^:[A-Z0-9]+ [A-Z0-9]{12,}[\t\s]+mov dword\[eax.*?\], ([0-9A-Z]{8,})$/) {
-				# Packet size
-				$size = hex($1);
-				last;
-			#} elsif (/^:[A-Z0-9]+ [A-Z0-9]{14,}[\t\s]+mov (?:dword ptr )?\[ebp.*?\], ([0-9A-Z]{8,})$/) {
-			 } elsif (/:[A-Z0-9]+ [A-Z0-9]{14,}[\t\s]+mov dword\[.*?\], ([0-9A-Z]{8,})$/) {
-				# New packet switch
-				$i--;
-				last;
+	# We're only interested in 'mov dword' commands
+	if (/mov dword\[(.*?)\], (.*?)$/) {
+		my $a = $1;
+		my $b = $2;
+
+		if ($a =~ /ebp/ && $b =~ /^0000/) {
+			# Packet switch; client is pushing a value on the stack
+			$switch = substr($b, length($b) - 4, 4);
+
+		} elsif ($a =~ /eax/) {
+			my $len;
+			if ($b eq 'ebx') {
+				$len = $ebx;
+			} elsif ($b =~ /^0000/) {
+				$len = hex($b);
+			} else {
+				$len = 0;
 			}
+			$packets{$switch} = $len;
 		}
-		$packets{$packet} = $size;
+
+	} elsif (/mov ebx, (\d+)$/) {
+		$ebx = hex($1);
 	}
 }
 
