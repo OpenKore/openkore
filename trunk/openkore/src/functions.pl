@@ -10423,7 +10423,8 @@ sub dumpData {
 		for (my $j = 0; $j < length($data); $j++) {
 			my $char = substr($data, $j, 1);
 
-			if ($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/)) {
+			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
+			    || ($char eq chr(10) || $char eq chr(13))) {
 				$rawData .= '.';
 			} else {
 				$rawData .= substr($data, $j, 1);
