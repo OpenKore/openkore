@@ -15,7 +15,7 @@ wrapper.o: wrapper.xs
 	$(CC) -I. $(CFLAGS) wrapper.c -c $(PERLCFLAGS) -o wrapper.o -I$(COREDIR)
 
 algorithm.o: algorithm.cpp
-	$(CXX) $(CXXFLAGS) $< -c -o $@
+	$(CXX) $(SOCFLAGS) $(CXXFLAGS) $< -c -o $@
 
 clean:
 	rm -f wrapper.c $(OBJ) Makefile.real

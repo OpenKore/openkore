@@ -41,6 +41,7 @@ my $PERLCFLAGS = ($win32) ?
 		'-Wno-unused -Wno-implicit -D__MINGW32__ -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED' :
 		'-fPIC -Wno-unused -Wno-implicit -D_REENTRANT -D_GNU_SOURCE -DTHREADS_HAVE_PIDS -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64';
 my $LIBPERL = ($win32) ? "$COREDIR/perl58.lib" : "";
+my $SOCFLAGS = ($win32) ? "" : "-fPIC";
 
 my $header = <<EOF;
 CYGWIN=$CYGWIN
@@ -53,6 +54,7 @@ TYPEMAP=$TYPEMAP
 COREDIR=$COREDIR
 PERLCFLAGS=$PERLCFLAGS
 LIBPERL=$LIBPERL
+SOCFLAGS=$SOCFLAGS
 EOF
 
 $lines =~ s/\n\tdlltool.*?\n/\n/s if (!$win32);
