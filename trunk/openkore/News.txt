@@ -11,6 +11,9 @@ Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
 - Attacks will now properly time out when failed.
 
+Credits:
+- Fenris: Tk interface improvements.
+
 
 ==================
 ### 1.3.1 (beta)

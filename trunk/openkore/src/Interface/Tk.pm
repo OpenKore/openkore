@@ -149,6 +149,9 @@ sub updatePos {
 	$self->{status_posx}->configure( -text =>$x);
 	$self->{status_posy}->configure( -text =>$y);
 	if ($self->mapIsShown()) {
+		if ($self->{map}{field} ne $field{'name'}) {
+			$self->loadMap();
+		}
 		$self->{map}{canvas}->coords($self->{map}{ind}{player},
 			$x - 2, $self->{map}{height} - $y - 2,
 			$x + 2, $self->{map}{height} - $y + 2,
@@ -598,7 +601,7 @@ sub mapToggle {
 			
 		my $dis = $config{'attackDistance'};
 		print "dis: $dis\n";
-		$self->{map}{range} = $self->{map}{canvas}->createOval(
+		$self->{map}{ind}{range} = $self->{map}{canvas}->createOval(
 			-$dis, $self->{map}{height} - $dis,
 			 $dis, $self->{map}{height} + $dis,
 			-outline => '#0000ff',
@@ -613,6 +616,8 @@ sub mapToggle {
 #		if ($main::sys{'enableMoveClick'}) {
 #			$map_mw->bind('<Double-1>', [\&dblchk , Ev('x') , Ev('y')]);
 #		}
+		$self->{map}{window}->bind('<1>', [\&mapMove, $self, Ev('x') , Ev('y'), 2]); 
+		$self->{map}{window}->bind('<3>', [\&mapMove, $self, Ev('x') , Ev('y'), 1]); 
 		$self->{map}{window}->bind('<Motion>', [\&pointchk, $self, Ev('x') , Ev('y')]); 
 		$self->updatePos();
 	} else {
@@ -638,6 +643,24 @@ sub pointchk {
 	$self->{map}{window}->update; 
 }
 
+sub mapMove {
+	my (undef, $self, $mvcpx, $mvcpy, $moveAttack) = @_;
+	if (@_ == 4) {
+		($self, $mvcpx, $mvcpy, $moveAttack) = @_;
+	} elsif (@_ == 5) {
+		(undef, $self, $mvcpx, $mvcpy, $moveAttack) = @_;
+	} else {
+		die "wrong number of args to pointchk\n";
+	}
+	$mvcpy = $self->{map}{height} - $mvcpy;
+	main::aiRemove("move");
+	main::aiRemove("route");
+	main::aiRemove("mapRoute");
+	main::ai_route($field{'name'}, $mvcpx, $mvcpy,
+		attackOnRoute => $moveAttack,
+		noSitAuto => 1);
+}
+
 sub mapIsShown {
 	my $self = shift;
 	return defined($self->{map});
@@ -646,8 +669,9 @@ sub mapIsShown {
 sub loadMap {
 	my $self = shift;
 	return if (!$self->mapIsShown());
+	$self->{map}{field} = $field{'name'};
 	$self->{map}{canvas}->delete('map');
-	$self->{map}{canvas}->createText(50,20,-text =>'Processing..',-tags=>'map');
+	$self->{map}{canvas}->createText(50,20,-text =>'Processing..',-tags=>'loading');
 	$self->{map_bitmap} = $self->{map}{canvas}->Bitmap(
 		-data => ${&xbmmake(\%field)}
 	);
@@ -662,6 +686,7 @@ sub loadMap {
 	);
 	$self->{map}{width} = $field{'width'};
 	$self->{map}{height} = $field{'height'};
+	$self->{map}{canvas}->delete('loading');
 }
 
 #should this cache xbm files?
