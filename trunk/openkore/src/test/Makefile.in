@@ -19,4 +19,4 @@ AncientAlgorithm.o: AncientAlgorithm.cpp
 	$(CXX) $(CFLAGS) -c AncientAlgorithm.cpp -o AncientAlgorithm.o
 
 clean:
-	rm -f $(SRC) $(OBJ) AncientTools.$(DLLEXT) Makefile.real
+	rm -f *.o.c $(OBJ) AncientTools.$(DLLEXT) Makefile.real
