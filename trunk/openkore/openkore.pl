@@ -4635,6 +4635,19 @@ sub AI {
 #Solos End
 
 
+	##### AVOID GM OR PLAYERS #####
+
+	if (timeOut(\%{$timeout{'ai_avoidcheck'}})) {
+		if ($config{'avoidGM_near'} && (!$config{'avoidGM_near_inTown'} || !$cities_lut{$field{'name'}.'.rsw'})) {
+			avoidGM_near ();
+		}
+		if ($config{'avoidList'}) {
+			avoidList_near ();
+		}
+		$timeout{'ai_avoidcheck'}{'time'} = time;
+	}
+
+
 	SENDEMOTION: {
 		my $index = binFind(\@ai_seq, "sendEmotion");
 		last SENDEMOTION if ($index eq "" || time < $ai_seq_args[$index]{'timeout'});
@@ -4646,7 +4659,7 @@ sub AI {
 	##########
 
 	#DEBUG CODE
-	if (time - $ai_v{'time'} > 2 && $config{'debug'}) {
+	if (time - $ai_v{'time'} > 2 && $config{'debug'} >= 2) {
 		$stuff = @ai_seq_args;
 		print "AI: @ai_seq | $stuff\n";
 		$ai_v{'time'} = time;
@@ -5347,24 +5360,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			%{$players{$ID}{'pos'}} = %coordsFrom;
 			%{$players{$ID}{'pos_to'}} = %coordsTo;
 			print "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'} >= 2);
-
-			avoidGM_near();
-			for ($i=0;$i<@playersID;$i++) { 
-   				next if($playersID[$i] eq ""); 
-				$j = 0;
-				while ($avoid{"avoid_$j"} ne "") {
-					if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
-						print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
-						chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
-						print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-						$timeout_ex{'master'}{'time'} = time;
-						$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-						killConnection(\$remote_socket);
-					}
-					$j++;
-				}
-				undef $j;
-			} 
 		} else {
 			print "Unknown Moved: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
@@ -5712,27 +5707,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		}
 
 		avoidGM_talk($chatMsgUser, $chatMsg);
-#avoid list
-		$j = 0;
-		while ($avoid{"avoid_$j"} ne "") {
-			if ($chatMsgUser eq $avoid{"avoid_$j"}) { 
-				if ($config{'avoidGM_talk'}) {
-	   				print "Disconnecting to avoid $chatMsgUser!\n"; 
-   					chatLog("s", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
-					print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-					$timeout_ex{'master'}{'time'} = time;
-					$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-					killConnection(\$remote_socket);
-				} else {
-   					print "$chatMsgUser talked to you!\n"; 
-   					chatLog("s", "*** $chatMsgUser talked to you ***\n"); 
-				}
-				last; 
-			}
-			$j++;
-		}
-		undef $j;
-#Solos End		
+		avoidList_talk($chatMsgUser, $chatMsg);
+#Solos End
 
 	} elsif ($switch eq "008E" && length($msg) >= unpack("S1", substr($msg, 2, 2))) {
 		$msg_size = unpack("S*", substr($msg, 2, 2));
@@ -5870,27 +5846,8 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "(From: $privMsgUser) : $privMsg\n";
 
 		avoidGM_talk($privMsgUser, $privMsg);
+		avoidList_talk($privMsgUser, $privMsg);
 
-#avoid list
-		$j = 0;
-		while ($avoid{"avoid_$j"} ne "") {
-			if ($privMsgUser eq $avoid{"avoid_$j"}) { 
-				if ($config{'avoidGM_talk'}) {
-	   				print "Disconnecting to avoid $privMsgUser!\n"; 
-   					chatLog("s", "*** $privMsgUser talked to you, auto disconnected ***\n"); 
-					print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-					$timeout_ex{'master'}{'time'} = time;
-					$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-					killConnection(\$remote_socket);
-				} else {
-   					print "$privMsgUser talked to you!\n"; 
-   					chatLog("s", "*** $privMsgUser talked to you ***\n"); 
-				}
-				last; 
-			}
-			$j++;
-		}
-		undef $j;
 #auto-response
 		if ($config{"autoResponse"}) {
 			$i = 0;
@@ -6363,84 +6320,84 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		$type = unpack("S1",substr($msg, 2, 2));
 		$val = unpack("S1",substr($msg, 4, 2));
 		if ($type == 0) {
-			print "Something1: $val\n" if $config{'debug'};
+			print "Something1: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 3) {
-			print "Something2: $val\n" if $config{'debug'};
+			print "Something2: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 5) {
 			$chars[$config{'char'}]{'hp'} = $val;
-			print "Hp: $val\n" if $config{'debug'};
+			print "Hp: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 6) {
 			$chars[$config{'char'}]{'hp_max'} = $val;
-			print "Max Hp: $val\n" if $config{'debug'};
+			print "Max Hp: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 7) {
 			$chars[$config{'char'}]{'sp'} = $val;
-			print "Sp: $val\n" if $config{'debug'};
+			print "Sp: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 8) {
 			$chars[$config{'char'}]{'sp_max'} = $val;
-			print "Max Sp: $val\n" if $config{'debug'};
+			print "Max Sp: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 9) {
 			$chars[$config{'char'}]{'points_free'} = $val;
-			print "Status Points: $val\n" if $config{'debug'};
+			print "Status Points: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 11) {
 			$chars[$config{'char'}]{'lv'} = $val;
-			print "Level: $val\n" if $config{'debug'};
+			print "Level: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 12) {
 			$chars[$config{'char'}]{'points_skill'} = $val;
-			print "Skill Points: $val\n" if $config{'debug'};
+			print "Skill Points: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 24) {
 			$chars[$config{'char'}]{'weight'} = int($val / 10);
-			print "Weight: $chars[$config{'char'}]{'weight'}\n" if $config{'debug'};
+			print "Weight: $chars[$config{'char'}]{'weight'}\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 25) {
 			$chars[$config{'char'}]{'weight_max'} = int($val / 10);
-			print "Max Weight: $chars[$config{'char'}]{'weight_max'}\n" if $config{'debug'};
+			print "Max Weight: $chars[$config{'char'}]{'weight_max'}\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 41) {
 			$chars[$config{'char'}]{'attack'} = $val;
-			print "Attack: $val\n" if $config{'debug'};
+			print "Attack: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 42) {
 			$chars[$config{'char'}]{'attack_bonus'} = $val;
-			print "Attack Bonus: $val\n" if $config{'debug'};
+			print "Attack Bonus: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 43) {
 			$chars[$config{'char'}]{'attack_magic_min'} = $val;
-			print "Magic Attack Min: $val\n" if $config{'debug'};
+			print "Magic Attack Min: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 44) {
 			$chars[$config{'char'}]{'attack_magic_max'} = $val;
-			print "Magic Attack Max: $val\n" if $config{'debug'};
+			print "Magic Attack Max: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 45) {
 			$chars[$config{'char'}]{'def'} = $val;
-			print "Defense: $val\n" if $config{'debug'};
+			print "Defense: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 46) {
 			$chars[$config{'char'}]{'def_bonus'} = $val;
-			print "Defense Bonus: $val\n" if $config{'debug'};
+			print "Defense Bonus: $val\n"if ($config{'debug'} >= 2);
 		} elsif ($type == 47) {
 			$chars[$config{'char'}]{'def_magic'} = $val;
-			print "Magic Defense: $val\n" if $config{'debug'};
+			print "Magic Defense: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 48) {
 			$chars[$config{'char'}]{'def_magic_bonus'} = $val;
-			print "Magic Defense Bonus: $val\n" if $config{'debug'};
+			print "Magic Defense Bonus: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 49) {
 			$chars[$config{'char'}]{'hit'} = $val;
-			print "Hit: $val\n" if $config{'debug'};
+			print "Hit: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 50) {
 			$chars[$config{'char'}]{'flee'} = $val;
-			print "Flee: $val\n" if $config{'debug'};
+			print "Flee: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 51) {
 			$chars[$config{'char'}]{'flee_bonus'} = $val;
-			print "Flee Bonus: $val\n" if $config{'debug'};
+			print "Flee Bonus: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 52) {
 			$chars[$config{'char'}]{'critical'} = $val;
-			print "Critical: $val\n" if $config{'debug'};
+			print "Critical: $val\n" if ($config{'debug'} >= 2);
 #Solos Start
         } elsif ($type == 53) { 
             $chars[$config{'char'}]{'attack_speed'} = 200 - $val/10; 
-            print "Attack Speed: $chars[$config{'char'}]{'attack_speed'}\n" if $config{'debug'}; 
+            print "Attack Speed: $chars[$config{'char'}]{'attack_speed'}\n" if ($config{'debug'} >= 2);
 #Solos End
 		} elsif ($type == 55) {
 			$chars[$config{'char'}]{'lv_job'} = $val;
-			print "Job Level: $val\n" if $config{'debug'};
+			print "Job Level: $val\n" if ($config{'debug'} >= 2);
 		} elsif ($type == 124) {
-			print "Something3: $val\n" if $config{'debug'};
+			print "Something3: $val\n" if ($config{'debug'} >= 2);
 		} else {
-			print "Something: $val\n" if $config{'debug'};
+			print "Something: $val\n" if ($config{'debug'} >= 2);
 		}
 
 	} elsif ($switch eq "00B1") {
@@ -7745,8 +7702,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 				} 
 			} 
 #avoid code end 
-			$chatMsgUser = $players{$sourceID}{'name'}; 
-			avoidGM_near($chatMsgUser);
 		}
 #Solos End
 
@@ -8235,25 +8190,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 			%{$players{$ID}{'pos'}} = %coordsFrom;
 			%{$players{$ID}{'pos_to'}} = %coordsTo;
 			print "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n" if ($config{'debug'} >= 2);
-
-			avoidGM_near();
-			for ($i=0;$i<@playersID;$i++) { 
-   				next if($playersID[$i] eq ""); 
-				$j = 0;
-				while ($avoid{"avoid_$j"} ne "") {
-					if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) { 
-						print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";  
-						chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
-						print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-						$timeout_ex{'master'}{'time'} = time;
-						$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-						killConnection(\$remote_socket);
-						last;
-					}
-					$j++;
-				}
-				undef $j;
-			}
 		} else {
 			print "Unknown Moved: $type - ".getHex($ID)."\n" if $config{'debug'};
 		}
@@ -8414,9 +8350,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		$msg_size = unpack("S1", substr($msg, 2, 2));
 	} elsif ($switch eq "01DC") {
 		$msg_size = unpack("S1", substr($msg, 2, 2));
-	} elsif ($switch eq "40A1") {
-		# Do not remove this switch!
-		$msg_size = 4 if (!$msg_size);
 	} elsif (!$rpackets{$switch} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		print "Unparsed packet - $switch\n" if ($config{'debugPacket_received'});
 	}
@@ -11384,25 +11317,12 @@ sub updateDamageTables {
 #######################################
 #######################################
 
-sub avoidGM_near {
-	return if (!$config{'avoidGM_near'});
-	return if ($cities_lut{$field{'name'}.'.rsw'} && !$config{'avoidGM_near_inTown'});
-
-	my $user = $_[0];
-	if ($user) {
-		print "GM $user is nearby, disconnecting...\n";
-		chatLog("s", "*** Found GM $user nearby and disconnected ***\n");  
-		print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-		killConnection(\$remote_socket);
-		return 1;
-	}
-
+sub avoidGM_near() {
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
 
-		#Check validity of GM
+		# Check whether this "GM" is on the ignore list
+		# in order to prevent false matches
 		my $statusGM = 1;
 		my $j = 0;
 		while ($avoid{"avoid_$j"} ne "") {
@@ -11413,15 +11333,14 @@ sub avoidGM_near {
 			}
 			$j++;
 		}
-		#Check ends
 
 		if ($statusGM && $players{$playersID[$i]}{'name'} =~/GM(.*)\d{1,}/i) {
 			print "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
-			#chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
-			#print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
-			#$timeout_ex{'master'}{'time'} = time;
-			#$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
-			#killConnection(\$remote_socket);
+			chatLog("s", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");  
+			print "Disconnect for $config{'avoidGM_reconnect'} seconds...\n";
+			$timeout_ex{'master'}{'time'} = time;
+			$timeout_ex{'master'}{'timeout'} = $config{'avoidGM_reconnect'};
+			killConnection(\$remote_socket);
 			return 1;
 		}
 	}
@@ -11432,7 +11351,8 @@ sub avoidGM_talk($$) {
 	return if (!$config{'avoidGM_talk'});
 	my ($chatMsgUser, $chatMsg) = @_;
 
-	#Check validity of GM
+	# Check whether this "GM" is on the ignore list
+	# in order to prevent false matches
 	my $statusGM = 1;
 	my $j = 0;
 	while ($avoid{"avoid_$j"} ne "") {
@@ -11443,7 +11363,6 @@ sub avoidGM_talk($$) {
 		}
 		$j++;
 	}
-	#Check ends
 
 	if ($statusGM && $chatMsgUser =~/GM(.*)\d{1,}/i) {
 		print "Disconnecting to avoid GM!\n"; 
@@ -11455,6 +11374,48 @@ sub avoidGM_talk($$) {
 		return 1;
 	}
 	return 0;
+}
+
+sub avoidList_near() {
+	for (my $i = 0; $i < @playersID; $i++) {
+		next if($playersID[$i] eq "");
+		$j = 0;
+		print "Check $players{$playersID[$i]}{'name'}\n";
+		while ($avoid{"avoid_$j"} ne "") {
+			if ($players{$playersID[$i]}{'name'} eq $avoid{"avoid_$j"} || $players{$playersID[$i]}{'nameID'} eq $avoid{"avoid_aid_$j"}) {
+				print "$players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
+				chatLog("s", "*** Found $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
+				print "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
+				$timeout_ex{'master'}{'time'} = time;
+				$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
+				killConnection(\$remote_socket);
+				return 1;
+			}
+			$j++;
+		}
+	}
+	return 0;
+}
+
+sub avoidList_talk($$) {
+	return if (!$config{'avoidList'});
+	my ($chatMsgUser, $chatMsg) = @_;
+
+	my $j = 0;
+	while ($avoid{"avoid_$j"} ne "") {
+		if ($chatMsgUser eq $avoid{"avoid_$j"}) { 
+			print "Disconnecting to avoid $chatMsgUser!\n"; 
+			chatLog("s", "*** $chatMsgUser talked to you, auto disconnected ***\n"); 
+			print "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
+			$timeout_ex{'master'}{'time'} = time;
+			$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
+			killConnection(\$remote_socket);
+		} else {
+			print "$chatMsgUser talked to you!\n"; 
+			chatLog("s", "*** $chatMsgUser talked to you ***\n"); 
+		}
+		$j++;
+	}
 }
 
 sub compilePortals {

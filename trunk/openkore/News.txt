@@ -7,7 +7,13 @@
 - Fixed a typo in the clientSuspend AI sequence.
 - Improved anti-looting.
 - Makefile.win: enable compilation of Inject.dll. It seems the problem
-  with gcc is in Tools.dll, not Inject.dll.
+  with gcc is in both Tools.dll *and* Inject.dll. *sigh*
+- Changed avoidGM and avoid player code to an AI sequence.
+  New entry for timeouts.txt:
+	ai_avoidcheck 0.5
+  New config options:
+	avoidList	(set to 1 to turn on the avoid list)
+	avoidList_reconnect
 
 
 ChangeLog for skore-revamped
