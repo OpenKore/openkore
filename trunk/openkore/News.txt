@@ -94,7 +94,7 @@ Internal:
 Credits:
 - Fenris: Tk interface improvements.
 - aputs: Inventory checking config options.
-- fov: Storage access bugfix, conf command bugfix.
+- fov: Storage access bugfix, conf command bugfix, routing improvements.
 - brianhj: 010F packet typo fix.
 
 
