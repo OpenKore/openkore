@@ -36,9 +36,9 @@ const
   GE_INVALID = 2;
   GE_CORRUPTED = 3;
   GE_NOMEM = 4;
-  GE_NSUP1 = 5;
-  GE_NSUP = 6;
-  GE_NOTFOUND = 7;
+  GE_NSUP = 5;
+  GE_NOTFOUND = 6;
+  GE_INDEX = 7;
   GE_WRITE = 8;
 
 function grf_open(const FileName: PChar; var Error: TGrfError): TGrf; cdecl; external 'grf.dll';
