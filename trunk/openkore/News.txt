@@ -82,7 +82,6 @@ New features:
   to auto-detect the saveMap, and then it'll work the second time.)
 - parseMsg_statuslook verbose 1 displays status effects on you;
   verbose 2 displays status effects on others.
-- logs/storage.txt will show what is in your storage.
 - "vl" (vender list) command now displays coordinates.
 - Automatic disconnection during specified times of the day.
 - If storage opening fails the first time for some reason, Kore will try again.
