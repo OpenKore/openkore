@@ -3707,40 +3707,6 @@ sub AI {
 	}
 
 
-	##### SKILL USE #####
-
-
-	if ($ai_seq[0] eq "skill_use" && $ai_seq_args[0]{'suspended'}) {
-		$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		$ai_seq_args[0]{'ai_skill_use_minCastTime'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		$ai_seq_args[0]{'ai_skill_use_maxCastTime'}{'time'} += time - $ai_seq_args[0]{'suspended'};
-		undef $ai_seq_args[0]{'suspended'};
-	}
-	if ($ai_seq[0] eq "skill_use") {
-		if ($chars[$config{'char'}]{'sitting'}) {
-			ai_setSuspend(0);
-			stand();
-		} elsif (!$ai_seq_args[0]{'skill_used'}) {
-			$ai_seq_args[0]{'skill_used'} = 1;
-			$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} = time;
-			if ($ai_seq_args[0]{'skill_use_target_x'} ne "") {
-				sendSkillUseLoc(\$remote_socket, $ai_seq_args[0]{'skill_use_id'}, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target_x'}, $ai_seq_args[0]{'skill_use_target_y'});
-			} else {
-				sendSkillUse(\$remote_socket, $ai_seq_args[0]{'skill_use_id'}, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target'});
-			}
-			$ai_seq_args[0]{'skill_use_last'} = $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ai_seq_args[0]{'skill_use_id'}})}}{'time_used'};
-
-		} elsif (($ai_seq_args[0]{'skill_use_last'} != $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ai_seq_args[0]{'skill_use_id'}})}}{'time_used'}
-			|| (timeOut(\%{$ai_seq_args[0]{'ai_skill_use_giveup'}}) && (!$chars[$config{'char'}]{'time_cast'} || !$ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'}))
-			|| ($ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'} && timeOut(\%{$ai_seq_args[0]{'skill_use_maxCastTime'}})))
-			&& timeOut(\%{$ai_seq_args[0]{'skill_use_minCastTime'}})) {
-			shift @ai_seq;
-			shift @ai_seq_args;
-		}
-	}
-
-
-
 	
 	##### FOLLOW #####
 
@@ -4307,7 +4273,42 @@ sub AI {
 		}
 	}
 
-	
+
+
+	##### SKILL USE #####
+
+
+	if ($ai_seq[0] eq "skill_use" && $ai_seq_args[0]{'suspended'}) {
+		$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} += time - $ai_seq_args[0]{'suspended'};
+		$ai_seq_args[0]{'ai_skill_use_minCastTime'}{'time'} += time - $ai_seq_args[0]{'suspended'};
+		$ai_seq_args[0]{'ai_skill_use_maxCastTime'}{'time'} += time - $ai_seq_args[0]{'suspended'};
+		undef $ai_seq_args[0]{'suspended'};
+	}
+	if ($ai_seq[0] eq "skill_use") {
+		if ($chars[$config{'char'}]{'sitting'}) {
+			ai_setSuspend(0);
+			stand();
+		} elsif (!$ai_seq_args[0]{'skill_used'}) {
+			$ai_seq_args[0]{'skill_used'} = 1;
+			$ai_seq_args[0]{'ai_skill_use_giveup'}{'time'} = time;
+			if ($ai_seq_args[0]{'skill_use_target_x'} ne "") {
+				sendSkillUseLoc(\$remote_socket, $ai_seq_args[0]{'skill_use_id'}, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target_x'}, $ai_seq_args[0]{'skill_use_target_y'});
+			} else {
+				sendSkillUse(\$remote_socket, $ai_seq_args[0]{'skill_use_id'}, $ai_seq_args[0]{'skill_use_lv'}, $ai_seq_args[0]{'skill_use_target'});
+			}
+			$ai_seq_args[0]{'skill_use_last'} = $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ai_seq_args[0]{'skill_use_id'}})}}{'time_used'};
+
+		} elsif (($ai_seq_args[0]{'skill_use_last'} != $chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ai_seq_args[0]{'skill_use_id'}})}}{'time_used'}
+			|| (timeOut(\%{$ai_seq_args[0]{'ai_skill_use_giveup'}}) && (!$chars[$config{'char'}]{'time_cast'} || !$ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'}))
+			|| ($ai_seq_args[0]{'skill_use_maxCastTime'}{'timeout'} && timeOut(\%{$ai_seq_args[0]{'skill_use_maxCastTime'}})))
+			&& timeOut(\%{$ai_seq_args[0]{'skill_use_minCastTime'}})) {
+			shift @ai_seq;
+			shift @ai_seq_args;
+		}
+	}
+
+
+
 	##### ROUTE #####
 	#There are three important things that need to be done here:
 	#
