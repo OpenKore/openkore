@@ -63,6 +63,7 @@
 # load			Loading config files
 # plugins		Messages about plugin handling
 # route			Routing/pathfinding messages
+# sold			Item sold while vending.
 # startup		Messages that are printed during startup.
 # success		An operation succeeded
 # syntax		Syntax check files

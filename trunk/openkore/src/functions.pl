@@ -7914,12 +7914,12 @@ sub parseMsg {
 		$articles[$number]{'sold'} += $amount;
 		$shopEarned += $amount * $articles[$number]{'price'};
 		$articles[$number]{'quantity'} -= $amount;
-		print "sold: $amount $articles[$number]{'name'}.\n";
+		message("sold: $amount $articles[$number]{'name'}.\n", "sold");
 		if ($articles[$number]{'quantity'} < 1) {
-			print "sold out: $articles[$number]{'name'}.\n";
+			message("sold out: $articles[$number]{'name'}.\n", "sold");
 			#$articles[$number] = "";
 			if (!--$articles){
-				print "sold all out.^^\n";
+				message("sold all out.^^\n", "sold");
 				sendCloseShop(\$remote_socket);
 			}
 		}
@@ -10348,9 +10348,11 @@ sub sendOpenShop {
 		if ($config{'shop_random'}) {
 			@itemtosellorder = keys %itemtosell;
 		}
-		foreach  (@itemtosellorder) {
+		foreach (@itemtosellorder) {
+			next if (!defined $itemtosell{$_});
 			$msg .= pack("S1",$itemtosell{$_}{'index'}) . pack("S1", $itemtosell{$_}{'amount'}) . pack("L1", $itemtosell{$_}{'price'});
 		}
+		print "$length : ".length($msg)."; $items_selling\n";
 		if(length($msg) == $length) {
 			sendMsgToServer($r_socket, $msg);
 			print "Shop opened ($shop{'shop_title'}) with $items_selling items.\n";
