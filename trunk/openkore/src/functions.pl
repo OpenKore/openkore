@@ -2492,10 +2492,10 @@ sub AI {
 
 		} elsif ($checkUpdate{stage} eq 'Receive' && dataWaiting(\$checkUpdate{sock})) {
 			my $data;
-			$checkUpdate{sock}->recv($data, 1024 * 32);
+			$checkUpdate{sock}->recv($data, 1024 * 512);
 			if ($data =~ /^HTTP\/.\.. 200/s) {
-				$data =~ s/.*?\r\n\r\n//s;
-				$data =~ s/[\r\n].*//s;
+				$data =~ s/.*?\r\n\r\n.*?\r\n//s;
+				$data =~ s/[\r\n].*[\r\n]//s;
 
 				debug "Update check - least version: $data\n";
 				unless (($Settings::VERSION cmp $data) >= 0) {
