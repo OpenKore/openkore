@@ -361,7 +361,7 @@ while ($quit != 1) {
 	if ($config{'XKore'}) {
 		# (Re-)initialize X-Kore if necessary
 
-		if (timeOut(\%{$timeout{'injectKeepAlive'}})) {
+		if (timeOut($timeout{'injectKeepAlive'})) {
 			$conState = 1;
 			my $printed = 0;
 			my $procID = 0;
