@@ -35,6 +35,7 @@ callSign
 dcOnDeath 0
 dcOnDualLogin 0
 dcOnDisconnect 0
+dcOnEmptyArrow 0
 
 autoRestart 0
 
