@@ -42,6 +42,7 @@ if (0) {
 	require IO::Socket::INET;
 	require Getopt::Long;
 	require Digest::MD5;
+	require Win32;
 	require Win32::Console;
 	require Win32::Process;
 }
