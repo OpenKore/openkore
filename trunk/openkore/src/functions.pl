@@ -1685,7 +1685,7 @@ sub AI {
 
 			for (my $i = 0; $i < @npcsID; $i++) {
 				next if ($npcsID[$i] eq "");
-				print DATA "NL " . $npcs{$npcsID[$i]}{pos_to}{x} . " " . $npcs{$npcsID[$i]}{pos_to}{y} . "\n";
+				print DATA "NL " . $npcs{$npcsID[$i]}{pos}{x} . " " . $npcs{$npcsID[$i]}{pos}{y} . "\n";
 			}
 			for (my $i = 0; $i < @playersID; $i++) {
 				next if ($playersID[$i] eq "");
