@@ -1,6 +1,6 @@
 # This is a Makefile for Cygwin.
 
-.PHONY: all clean
+.PHONY: all clean dist
 
 CXX=g++
 CFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
@@ -43,3 +43,6 @@ ToolsXS.c: ToolsXS.xs
 
 clean:
 	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef ToolsXS.o ToolsXS.c
+
+dist:
+	./makedist.sh
