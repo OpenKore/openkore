@@ -102,19 +102,14 @@
 package Log;
 
 use strict;
-use Carp;
-use Utils;
 use Exporter;
-use IO::Socket;
-use Globals;
-use Interface;
+use base qw(Exporter);
 
-our @ISA = qw(Exporter);
-our @EXPORT = qw(
-	$warningVerbosity $errorVerbosity
-	%messageConsole %warningConsole %errorConsole %debugConsole
-	message warning error debug
-	$fileTampstamp $chatTimestamp);
+use Globals qw(%config $interface %consoleColors);
+use Interface;
+use Utils qw(binAdd existsInList);
+
+our @EXPORT_OK = qw(message warning error debug);
 
 
 #################################
@@ -164,7 +159,7 @@ our $chatTimestamp;
 sub MODINIT {
 	$warningVerbosity = 1;
 	$errorVerbosity = 1;
-	$logTimestamp = 0;
+	$logTimestamp = 1;
 	$chatTimestamp = 1;
 }
 
@@ -177,10 +172,18 @@ sub processMsg {
 	my $consoleVar = shift;
 	my $files = shift;
 
+	$currentVerbosity = 1 if ($currentVerbosity eq "");
+
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
 		$consoleVar->{$domain} = 1 if (!defined($consoleVar->{$domain}));
-		$interface->writeOutput($type, $message, $domain) if (defined $interface && $consoleVar->{$domain});
+		if ($consoleVar->{$domain}) {
+			if ($interface) {
+				$interface->writeOutput($type, $message, $domain);
+			} else {
+				print $message;
+			}
+		}
 	}
 
 	# Print to files
@@ -199,13 +202,6 @@ sub processMsg {
 	}
 }
 
-sub setColor {
-	return if (!$consoleColors{''}{'useColors'});
-	my ($type, $domain) = @_;
-	my $color = $consoleColors{$type}{$domain};
-	$color = $consoleColors{$type}{'default'} if (!defined $color);
-	color($color) if (defined $color);
-}
 
 #################################
 #################################
@@ -288,7 +284,7 @@ sub debug {
 		$_[0],
 		$_[1],
 		$level,
-		$config{'debug'},
+		(defined $config{'debug'}) ? $config{'debug'} : 0,
 		\%debugConsole,
 		\%debugFiles);
 }
@@ -333,9 +329,9 @@ sub debug {
 # Log::message("Hello World", "MyDomain", 2);  # hook() will now be called
 sub addHook {
 	my ($r_func, $user_data) = @_;
-	my %hook = ();
-	$hook{'func'} = $r_func;
-	$hook{'user_data'} = $user_data;
+	my %hook;
+	$hook{func} = $r_func;
+	$hook{user_data} = $user_data;
 	return binAdd(\@hooks, \%hook);
 }
 
@@ -352,8 +348,7 @@ sub addHook {
 # Log::message("Hello World", "MyDomain");	# hook() is NOT called
 sub delHook {
 	my $ID = shift;
-	undef $hooks[$ID];
-	delete $hooks[$ID] if (@hooks - 1 == $ID);
+	delete $hooks[$ID];
 }
 
 

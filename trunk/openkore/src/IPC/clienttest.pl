@@ -1,47 +1,60 @@
 #!/usr/bin/env perl
-BEGIN {
-	chdir "..";
-}
 use strict;
-use IPC::Server;
+use FindBin qw($RealBin);
+use lib "$RealBin/..";
+
+use Globals qw($interface);
 use IPC::Client;
-use Interface;
 use Interface::Console;
+use Utils qw(parseArgs);
 
 my $port;
 if ($ARGV[0]) {
 	$port = $ARGV[0];
 } else {
-	my @servers = IPC::Server::list();
-	$port = $servers[0];
-	die "No server" unless $port;
+	print STDERR "No server specified\n";
+	exit 1;
 }
 
 
-print "Server at $port\n";
+print "Connecting to server at port $port\n";
 my $ipc = new IPC::Client('localhost', $port);
 $interface = new Interface::Console;
 
 while (1) {
-	my @packets;
-	my $ret = $ipc->recvData(\@packets);
+	my @messages;
+	my $ret = $ipc->recv(\@messages);
 
 	if ($ret == -1) {
 		print "Server died.\n";
 		exit;
 
 	} elsif ($ret) {
-		foreach my $packet (@packets) {
-			print "Incoming message from server: " . $packet->{ID} . "\n";
-			foreach (keys %{$packet->{params}}) {
-				print "$_ = " . $packet->{params}{$_} . "\n";
+		foreach my $msg (@messages) {
+			print "Incoming message from server: " . $msg->{ID} . "\n";
+			foreach (keys %{$msg->{params}}) {
+				print "$_ = " . $msg->{params}{$_} . "\n";
 			}
 			print "--------\n";
 		}
 	}
 
 	my $input = $interface->getInput(0.02);
-	if ($input eq "q" || $input eq "quit") {
+	my @args;
+	@args = parseArgs($input) if (defined $input);
+
+	if ($args[0] eq "q" || $args[0] eq "quit") {
 		last;
+	} elsif ($args[0] eq "s") {
+		if (@args == 4) {
+			print "Sending $args[1]: $args[2] = $args[3]\n";
+			$ipc->send($args[1], $args[2] => $args[3]);
+		} else {
+			print "Usage: s (ID) (KEY) (VALUE)\n";
+			print "Send a message to the server\n";
+		}
+	} elsif (@args) {
+		print "Unrecognized command $args[0]\n";
+		print "Available commands: s, quit\n";
 	}
 }

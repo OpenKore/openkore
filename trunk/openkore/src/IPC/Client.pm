@@ -23,9 +23,11 @@ use base qw(Exporter);
 use IO::Socket::INET;
 
 use IPC::Protocol;
-use Utils;
+use Utils qw(dataWaiting);
 
 
+##
+# IPC::Client->new(host, port)
 sub new {
 	my ($class, $host, $port) = @_;
 	my %client;
@@ -34,47 +36,72 @@ sub new {
 			PeerHost => $host,
 			PeerPort => $port,
 			Proto => 'tcp',
+			Timeout => 4
 		);
 	return undef if (!$client{sock});
+	$client{sock}->autoflush(0);
 
 	$client{buffer} = '';
-	bless \%client;
+	bless \%client, $class;
 	return \%client;
 }
 
-sub sendData {
-	my ($client, $ID, $hash) = @_;
-	my $msg = IPC::Protocol::encode($ID, $hash);
+##
+# $ipc_client->send(ID, hash | key => value)
+sub send {
+	my $client = shift;
+	my $ID = shift;
+	my $r_hash;
+	if (ref($_[0]) && ref($_[0]) eq "HASH") {
+		$r_hash = shift;
+	} else {
+		my %hash = @_;
+		$r_hash = \%hash;
+	}
+
+	my $msg = IPC::Protocol::encode($ID, $r_hash);
+	undef $@;
 	eval {
 		$client->{sock}->send($msg, 0);
 		$client->{sock}->flush;
 	};
-	return ($@) ? 0 : 1;
+	return (defined $@) ? 0 : 1;
 }
 
-sub recvData {
-	my ($client, $r_packets) = @_;
+##
+# $ipc_client->recv(r_msgs)
+# r_msgs: reference to an array, in which the messages are stored.
+# Returns: the number of messages received (0 if there are none), or -1 if the connection has closed.
+#
+# Receive messages from the server. This function returns immediately
+# if there are no messages.
+#
+# The returned array contains hashes. Each hash has an "ID" and "params" key.
+# "ID" is the ID of the message, and "params" is a hash containing the message's parameters.
+sub recv {
+	my ($client, $r_msgs) = @_;
 	my $msg;
 
 	return 0 if (!dataWaiting($client->{sock}));
 
+	undef $@;
 	eval {
 		$client->{sock}->recv($msg, 1024 * 32, 0);
 	};
-	if ($@ || !defined $msg || length $msg == 0) {
+	if ($@ || !defined $msg || length($msg) == 0) {
 		return -1;
 	}
 
 	$client->{buffer} .= $msg;
 
-	my (@packets, $ID, %hash);
+	my (@messages, $ID, %hash);
 	while (($ID = IPC::Protocol::decode($client->{buffer}, \%hash, \$client->{buffer}))) {
 		my %copy = %hash;
-		push @packets, {ID => $ID, params => \%copy};
+		push @messages, {ID => $ID, params => \%copy};
 		undef %hash;
 	}
-	@{$r_packets} = @packets;
-	return scalar @packets;
+	@{$r_msgs} = @messages;
+	return scalar(@messages);
 }
 
 return 1;

@@ -54,59 +54,37 @@ use strict;
 use warnings;
 no warnings 'redefine';
 use File::Spec;
-use Fcntl ':flock';
 use IO::Socket::INET;
 use Exporter;
 use base qw(Exporter);
 
-use Globals;
 use Log qw(message error debug);
 use IPC::Protocol;
-use Utils;
-
-our $ipc;
-our @EXPORT = qw($ipc);
-
-my $lockDir = File::Spec->catfile(File::Spec->tmpdir(), "KoreServers");
+use Utils qw(binAdd dataWaiting);
 
 
 ##
-# IPC::Server->new()
+# IPC::Server->new([port])
+# port: Start the server at the specified port.
 # Returns: an IPC::Server object.
 #
 # Initializes an IPC server.
 sub new {
+	my $class = shift;
+	my $port = (shift || 0);
 	my %ipc;
 	$ipc{server} = IO::Socket::INET->new(
 		Listen		=> 5,
-		LocalAddr 	=> 'localhost',
-		LocalPort	=> 0,
+		LocalAddr	=> 'localhost',
+		LocalPort	=> $port,
 		Proto		=> 'tcp',
 		ReuseAddr	=> 1);
 	return undef if (!$ipc{server});
 
-	if (! -d $lockDir) {
-		if (!mkdir $lockDir) {
-			error "Unable to create temporary directory $lockDir\n", "ipc";
-			undef %ipc;
-			return;
-		}
-		chmod(0777, $lockDir);
-	}
-
-	$ipc{lockFile} = File::Spec->catfile($lockDir, $ipc{server}->sockport());
-	if (!open($ipc{lock}, '>', $ipc{lockFile})) {
-		error "Unable to create lock file $ipc{lockFile}\n", "ipc";
-		undef %ipc;
-		return;
-	}
-
-	flock($ipc{lock}, LOCK_EX);
-	chmod(0666, $ipc{lockFile});
-
+	$ipc{port} = $ipc{server}->sockport();
 	$ipc{clients} = [];
 	$ipc{listeners} = [];
-	bless \%ipc;
+	bless \%ipc, $class;
 	return \%ipc;
 }
 
@@ -114,32 +92,31 @@ sub DESTROY {
 	my $ipc = shift;
 	delete $ipc->{clients};
 	delete $ipc->{server};
-
-	flock($ipc->{lock}, LOCK_UN);
-	close $ipc->{lock};
-	unlink $ipc->{lockFile};
 }
 
 
 sub _readData {
-	my $client = shift;
+	my $socket = shift;
 	my $data;
+
+	undef $@;
 	eval {
-		$data = $client->recv($data, 1024 * 32, 0);
+		$socket->recv($data, 1024 * 32, 0);
 	};
 
-	if ($@ || !defined $data || length($data) == 0) {
+	if ($@ || !defined($data) || length($data) == 0) {
 		return undef;
 	}
 	return $data;
 }
 
 sub _sendData {
-	my ($client, $data) = @_;
+	my ($socket, $data) = @_;
 
+	undef $@;
 	eval {
-		$client->send($data, 0);
-		$client->flush;
+		$socket->send($data, 0);
+		$socket->flush;
 	};
 	return 0 if ($@);
 	return 1;
@@ -147,41 +124,37 @@ sub _sendData {
 
 
 ##
-# IPC::Server::list()
-# Returns: an array of port numbers.
+# $ipc->port()
+# Returns: a port number.
 #
-# List all ports on which a Kore IPC server exists.
-sub list {
-	my (@list, @servers, @dead);
-
-	opendir(DIR, $lockDir);
-	@list = grep { /^\d+$/ && -f File::Spec->catfile($lockDir, $_) } readdir(DIR);
-	closedir DIR;
-
-	foreach (@list) {
-		my $file = File::Spec->catfile($lockDir, $_);
-		open(F, '>', $file);
-		if (!flock(F, LOCK_EX | LOCK_NB)) {
-			push @servers, $_;
-		} else {
-			push @dead, $file;
-		}
-		close F;
-	}
-
-	foreach (@dead) {
-		unlink $_;
-	}
-
-	return @servers;
+# Get the port on which the server is started.
+sub port {
+	return $_[0]->{port};
 }
-
 
 ##
 # $ipc->iterate()
+# Returns: an array of messages, if the clients sent any.
 #
 # Handle client connections input. You should call
 # this function every time in the main loop.
+#
+# The messages that the clients sent are returned in an array.
+# Each element in it is an array with two elements: element 0 is the
+# ID of the message, and element 1 is a hash containing the parameters.
+#
+# Example:
+# while (1) {
+# 	foreach my $msg ($ipc->iterate) {
+# 		my $ID = $msg->[0];
+# 		my $params = $msg->[1];
+# 		print "Received message with ID $ID.\n";
+# 		print "Parameters:\n";
+# 		foreach my $key (keys %{$params}) {
+# 			print "$key = $params->{$key}\n";
+# 		}
+# 	}
+# }
 sub iterate {
 	my $ipc = shift;
 
@@ -205,7 +178,7 @@ sub iterate {
 		next if (!defined $client);
 
 		# Input available
-		if (dataWaiting($client->{sock})) {
+		if (dataWaiting(\$client->{sock})) {
 			my $data = _readData($client->{sock});
 			if (!defined $data) {
 				# Client disconnected
@@ -217,7 +190,7 @@ sub iterate {
 			my ($ID, %hash);
 			$client->{buffer} .= $data;
 
-			while (($ID = IPC::Server::decode($client->{buffer}, \%hash, \$client->{buffer}))) {
+			while (($ID = IPC::Protocol::decode($client->{buffer}, \%hash, \$client->{buffer}))) {
 				my %copy = %hash;
 				foreach my $listener (@{$ipc->{listeners}}) {
 					next if (!defined $listener);
@@ -285,11 +258,6 @@ sub broadcast {
 			delete $ipc->{clients}[$i];
 		}
 	}
-}
-
-
-END {
-	undef $ipc if defined $ipc;
 }
 
 return 1;
