@@ -5413,7 +5413,7 @@ sub parseMsg {
 
 		if ($ID eq $accountID) {
 			message "You have died\n";
-			closeShop() unless $config{'dcOnDeath'} == -1;
+			closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1;
 			$chars[$config{'char'}]{'deathCount'}++;
 			$chars[$config{'char'}]{'dead'} = 1;
 			$chars[$config{'char'}]{'dead_time'} = time;
@@ -10340,37 +10340,10 @@ sub findCartItem {
 # Returns an array of items to sell. The array can be no larger than the
 # maximum number of items that the character can vend. Each item is a hash
 # reference containing the keys "index", "amount" and "price".
+#
+# If there is a problem with opening a shop, an error message will be printed
+# and nothing will be returned.
 sub makeShop {
-	return unless $char->{skills}{MC_VENDING}{lv};
-
-	my @items = ();
-	my $max_items = $char->{skills}{MC_VENDING}{lv} + 2;
-
-	# Iterate through items to be sold
-	findCartItemInit();
-	for my $sale (@{$shop{items}}) {
-		my $index = findCartItem($sale->{name}, 1);
-		next unless defined($index);
-
-		# Found item to vend
-		my $amount = $cart{inventory}[$index]->{amount};
-
-		my %item;
-		$item{index} = $index;
-		$item{price} = $sale->{price};
-		$item{amount} = 
-			$sale->{amount} && $sale->{amount} < $amount ?
-			$sale->{amount} : $amount;
-		push(@items, \%item);
-
-		# We can't vend anymore items
-		last if @items >= $max_items;
-	}
-
-	return @items;
-}
-
-sub openShop {
 	if ($shopstarted) {
 		error "A shop has already been opened.\n";
 		return;
@@ -10386,11 +10359,42 @@ sub openShop {
 		return;
 	}
 
-	my @items = makeShop();
+	my @items = ();
+	my $max_items = $char->{skills}{MC_VENDING}{lv} + 2;
+
+	# Iterate through items to be sold
+	findCartItemInit();
+	for my $sale (@{$shop{items}}) {
+		my $index = findCartItem($sale->{name}, 1);
+		next unless defined($index);
+
+		# Found item to vend
+		my $cart_item = $cart{inventory}[$index];
+		my $amount = $cart_item->{amount};
+
+		my %item;
+		$item{name} = $cart_item->{name};
+		$item{index} = $index;
+		$item{price} = $sale->{price};
+		$item{amount} = 
+			$sale->{amount} && $sale->{amount} < $amount ?
+			$sale->{amount} : $amount;
+		push(@items, \%item);
+
+		# We can't vend anymore items
+		last if @items >= $max_items;
+	}
+
 	if (!@items) {
 		error "There are no items to sell.\n";
 		return;
 	}
+	return @items;
+}
+
+sub openShop {
+	my @items = makeShop();
+	return unless @items;
 
 	sendOpenShop($shop{title}, \@items);
 	message "Shop opened ($shop{title}) with ".@items." selling items.\n", "success";
@@ -10398,7 +10402,11 @@ sub openShop {
 }
 
 sub closeShop {
-	return unless $shopstarted;
+	if (!$shopstarted) {
+		error "A shop has not been opened.\n";
+		return;
+	}
+
 	sendCloseShop();
 
 	$shopstarted = 0;

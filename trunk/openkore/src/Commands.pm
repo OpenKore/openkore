@@ -77,6 +77,7 @@ our %handlers = (
 	st	=> \&cmdStats,
 	stat_add => \&cmdStatAdd,
 	tank	=> \&cmdTank,
+	testshop	=> \&cmdTestShop,
 	timeout	=> \&cmdTimeout,
 	uneq	=> \&cmdUnequip,
 	verbose	=> \&cmdVerbose,
@@ -123,6 +124,7 @@ our %descriptions = (
 	st	=> 'Display stats.',
 	stat_add => 'Add status point.',
 	tank	=> 'Tank for a player.',
+	testshop	=> 'Show what your vending shop would well.',
 	timeout	=> 'Set a timeout.',
 	verbose	=> 'Toggle verbose on/off.',
 	warp	=> 'Open warp portal.',
@@ -962,6 +964,19 @@ sub cmdTank {
 				"Player $arg does not exist.\n";
 		}
 	}
+}
+
+sub cmdTestShop {
+	my @items = main::makeShop();
+	return unless @items;
+
+	message("--------------------------------- Shop Items ----------------------------------\n", "list");
+	message(sprintf("%-40s  %-7s %-10s\n", 'Name', 'Amount', 'Price'), "list");
+	for my $item (@items) {
+		message(sprintf("%-40s %7d %10s z\n", $item->{name}, $item->{amount}, main::formatNumber($item->{price})), "list");
+	}
+	message("-------------------------------------------------------------------------------\n", "list");
+	message("Total of ".@items." items to sell.\n", "list");
 }
 
 sub cmdTimeout {

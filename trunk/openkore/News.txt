@@ -41,6 +41,8 @@ New features:
 - New format for control/shop.txt! The first line is the shop title.
   The rest of the lines are (tab delimited):
   <item>	<price>	[<quantity>]
+- Added 'testshop' command which tells you what your shop would sell
+  if you opened it.
 
 New config options:
 - *_inInventory_name : inventory item name
