@@ -132,7 +132,7 @@ sub whenAffected {
 	my $affected = 0;
 	my @arr = split / *, */, $ailments;
 	for (my $j = 0; $j < @arr; $j++) {
-		$affected += $chars[$config{char}]{ailments}{$arr[$j]} + $chars[$config{char}]{state}{$arr[$j]};
+		$affected += $chars[$config{char}]{ailments}{$arr[$j]} + $chars[$config{char}]{state}{$arr[$j]} + $chars[$config{char}]{looks}{$arr[$j]};
 	}
 	return $affected;
 }
@@ -143,7 +143,7 @@ sub whenAffectedMon {
 	my $affected = 0;
 	my @arr = split / *, */, $ailments;
 	for (my $j = 0; $j < @arr; $j++) {
-		$affected += $monsters{$ID}{ailments}{$arr[$j]} + $monsters{$ID}{state}{$arr[$j]};
+		$affected += $monsters{$ID}{ailments}{$arr[$j]} + $monsters{$ID}{state}{$arr[$j]} + $monsters{$ID}{looks}{$arr[$j]};
 	}
 	return $affected;
 }
@@ -154,7 +154,7 @@ sub whenAffectedPL {
 	my $affected = 0;
 	my @arr = split / *, */, $ailments;
 	for (my $j = 0; $j < @arr; $j++) {
-		$affected += $players{$ID}{ailments}{$arr[$j]} + $players{$ID}{state}{$arr[$j]};
+		$affected += $players{$ID}{ailments}{$arr[$j]} + $players{$ID}{state}{$arr[$j]} + $players{$ID}{looks}{$arr[$j]};
 	}
 	return $affected;
 }

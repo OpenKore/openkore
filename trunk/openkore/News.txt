@@ -2,10 +2,6 @@
 ### CVS
 ==================
 
-**** CURRENTLY (PARTIALLY) BROKEN STUFF ****
-- Compilation of portalsLOS.txt.
-
-
 ** Important notices:
 - The format of portals.txt and portalsLOS.txt have been changed. You must
   upgrade to the latest tablepack.
