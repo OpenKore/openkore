@@ -1,0 +1,38 @@
+@HEADER@
+.PHONY: sub clean
+
+OBJ=pathfinding/*.o misc/*.o
+#if unix
+OBJ+=unix/*.o
+#endif
+#if win32
+OBJ+=win32/wrapper.o win32/utils.o
+DLLNAME=--dllname XSTools.dll
+#endif
+
+XSTools.$(DLLEXT): sub
+	dlltool --dllname XSTools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
+	$(DLLWRAP) $(DLLNAME) $(OBJ) -o XSTools.$(DLLEXT) $(LIBPERL) -lstdc++
+
+
+sub:
+	make -C pathfinding
+	make -C misc
+#if unix
+	make -C unix
+#endif
+#if win32
+	make -C win32
+#endif
+
+
+clean:
+	rm -f XSTools.$(DLLEXT) symbols.gccdef Makefile.real
+	make clean -C pathfinding
+	make clean -C misc
+#if unix
+	make clean -C unix
+#endif
+#if win32
+	make clean -C win32
+#endif

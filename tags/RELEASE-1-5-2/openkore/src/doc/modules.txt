@@ -1,0 +1,16 @@
+Interface
+Network
+ChatQueue
+Commands
+Log
+Settings
+Modules
+Plugins
+Utils
+Skills
+Match
+Misc
+IPC
+IPC::Messages
+Interface::Wx::DockNotebook
+Interface::Wx::DockNotebook::Page
