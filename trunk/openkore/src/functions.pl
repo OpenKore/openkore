@@ -2907,6 +2907,7 @@ sub AI {
 					$char->{$st} += 1;
 					# Raise stat
 					sendAddStatusPoint(\$remote_socket, $ID);
+					message "Auto-adding stat $st\n";
 					# Save which stat was raised, so that when we received the "stat changed" packet (00BC?)
 					# we can changed $statChanged back to 0 so that kore will start checking again if stats
 					# need to be raised.
@@ -6118,7 +6119,8 @@ sub parseMsg {
 		$chat = "$chatMsgUser : $chatMsg";
 
 		chatLog("c", "$chat\n") if ($config{'logChat'});
-		message "$chat\n", "publicchat";
+		my $beep = $config{beepOnChat} ? "\a" : '';
+		message "$chat$beep\n", "publicchat";
 
 		ChatQueue::add('c', $ID, $chatMsgUser, $chatMsg);
 		Plugins::callHook('packet_pubMsg', { 
@@ -6279,7 +6281,8 @@ sub parseMsg {
 
 		stripLanguageCode(\$privMsg);
 		chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
-		message "(From: $privMsgUser) : $privMsg\n", "pm";
+		my $beep = $config{beepOnPM} ? "\a" : '';
+		message "(From: $privMsgUser) : $privMsg$beep\n", "pm";
 
 		ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
 		Plugins::callHook('packet_privMsg', {
