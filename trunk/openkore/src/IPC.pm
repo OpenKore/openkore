@@ -86,7 +86,14 @@ sub DESTROY {
 
 # Check whether the manager server's already started
 sub _checkManager {
-	my $lockFile = File::Spec->catfile(File::Spec->tmpdir, "KoreServer");
+	my $lockFile;
+	if ($^O eq 'MSWin32') {
+		$lockFile = File::Spec->catfile(File::Spec->tmpdir(), "KoreServer");
+	} else {
+		my $tmpdir = $ENV{TEMP};
+		$tmpdir = "/tmp" if (!$tmpdir || ! -d $tmpdir);
+		$lockFile = File::Spec->catfile($tmpdir, "KoreServer");
+	}
 
 	return 0 if (! -f $lockFile);
 

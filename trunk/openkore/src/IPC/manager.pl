@@ -17,11 +17,18 @@ use Globals qw(%config);
 use IPC::Client;
 use IPC::Server;
 
-my $lockFile = File::Spec->catfile(File::Spec->tmpdir(), "KoreServer");
+my $lockFile;
 my $lockHandle;
 my $server;
 my %clients;
 
+if ($^O eq 'MSWin32') {
+	$lockFile = File::Spec->catfile(File::Spec->tmpdir(), "KoreServer");
+} else {
+	my $tmpdir = $ENV{TEMP};
+	$tmpdir = "/tmp" if (!$tmpdir || ! -d $tmpdir);
+	$lockFile = File::Spec->catfile($tmpdir, "KoreServer");
+}
 $config{debug} = 1;
 
 sub __start {
