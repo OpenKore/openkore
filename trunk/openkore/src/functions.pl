@@ -5141,6 +5141,7 @@ sub parseMsg {
 	} elsif ($switch eq "0073") {
 		$conState = 5;
 		undef $conState_tries;
+		$char = $chars[$config{'char'}];
 		makeCoords(\%{$chars[$config{'char'}]{'pos'}}, substr($msg, 6, 3));
 		%{$chars[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos'}};
 		message("Your Coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", undef, 1);
