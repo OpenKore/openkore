@@ -3425,7 +3425,8 @@ sub AI {
 	}
 
 	if (AI::action eq "attack" && timeOut(AI::args->{ai_attack_giveup})) {
-		$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
+		my $ID = AI::args->{ID};
+		$monsters{$ID}{attack_failed}++ if ($monsters{$ID});
 		AI::dequeue;
 		message "Can't reach or damage target, dropping target\n", "ai_attack";
 
