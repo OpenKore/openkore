@@ -48,31 +48,12 @@ sub new {
 		return new Interface::Console::Win32;
 	} else {
 		# Linux/Unix
-		use DynaLoader;
-		my $useGtk = 0;
-
-		# Try to load the GTK+ interface if we're in X, and GTK2 (and the Perl bindings) are available
-		if ($ENV{DISPLAY} && DynaLoader::dl_findfile('libgtk-x11-2.0.so.0')) {
-			eval "use Gtk2;";
-			$useGtk = 1 if (!$@);
-		}
-
-		if ($useGtk) {
-			my $mod = 'Interface::Console::Other::Gtk';
-			my $str = "use $mod;";
-			eval ${\$str};
-			die $@ if $@;
-			Modules::register("$mod");
-			return new Interface::Console::Other::Gtk;
-
-		} else {
-			my $mod = 'Interface::Console::Other';
-			my $str = "use $mod;";
-			eval ${\$str};
-			die $@ if $@;
-			Modules::register("$mod");
-			return new Interface::Console::Other;
-		}
+		my $mod = 'Interface::Console::Other';
+		my $str = "use $mod;";
+		eval ${\$str};
+		die $@ if $@;
+		Modules::register("$mod");
+		return new Interface::Console::Other;
 	}
 }
 
