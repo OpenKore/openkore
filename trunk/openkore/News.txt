@@ -49,6 +49,8 @@
 - background color is now supported
 - major changes to input and output systems, Windows users are getting a
   managed console and basic readline support.
+- path finding code modifications, Windows users should get the new Tools.dll
+  Linux users should rerun make.
 
 ==================
 ### OpenKore 1.2.1
