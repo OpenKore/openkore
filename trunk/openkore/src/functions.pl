@@ -4863,7 +4863,7 @@ sub parseMsg {
 		undef $conState_tries;
 		if ($versionSearch) {
 			$versionSearch = 0;
-			writeDataFileIntact($Settings::config_file, \%config);
+			Misc::saveConfigFile();
 		}
 		$sessionID = substr($msg, 4, 4);
 		$accountID = substr($msg, 8, 4);
@@ -4943,7 +4943,7 @@ sub parseMsg {
 		}
 		if ($type != 5 && $versionSearch) {
 			$versionSearch = 0;
-			writeDataFileIntact($Settings::config_file, \%config);
+			Misc::saveConfigFile();
 		}
 
 	} elsif ($switch eq "006B") {

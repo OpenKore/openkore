@@ -87,7 +87,7 @@ sub configModify {
 
 	message("Config '$key' set to $val\n") unless ($silent);
 	$config{$key} = $val;
-	writeDataFileIntact($Settings::config_file, \%config);
+	saveConfigFile();
 }
 
 sub setTimeout {
@@ -189,6 +189,24 @@ sub whenStatusActivePL {
 		$active += $players{$ID}{statuses}{$arr[$j]};
 	}
 	return $active;
+}
+
+##
+# saveConfigFile()
+#
+# Writes %config to config.txt.
+sub saveConfigFile {
+	my %old_config;
+
+	%old_config = %config;
+	if ($config{dontSaveLogin}) {
+		# Do not write username/password to config file
+		undef $config{username};
+		undef $config{password};
+		undef $config{char};
+	}
+	writeDataFileIntact($Settings::config_file, \%config);
+	%config = %old_config;
 }
 
 return 1;

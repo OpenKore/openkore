@@ -519,15 +519,16 @@ sub writeDataFileIntact2 {
 	my $r_hash = shift;
 	my $data;
 	my $key;
+
 	open(FILE, "< $file");
 	foreach (<FILE>) {
-                if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/) {
-                        $data .= $_;
-                        next;
-                }
-                ($key) = $_ =~ /^(\w+)/;
-                $data .= "$key $$r_hash{$key}{'timeout'}\n";
-        }
+		if (/^#/ || $_ =~ /^\n/ || $_ =~ /^\r/) {
+			$data .= $_;
+			next;
+		}
+		($key) = $_ =~ /^(\w+)/;
+		$data .= "$key $$r_hash{$key}{'timeout'}\n";
+	}
 	close FILE;
 	open(FILE, "> $file");
 	print FILE $data;
