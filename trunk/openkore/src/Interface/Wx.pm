@@ -38,6 +38,7 @@ use Modules;
 use Interface::Wx::MapViewer;
 use Settings;
 use Plugins;
+use Misc;
 use Utils;
 
 use constant MAX_CONSOLE_LINES => 2000;
@@ -434,100 +435,6 @@ sub updateStatusBar {
 	$self->{aiBarTimeout}{time} = time;
 }
 
-sub launchApp {
-	if ($buildType == 0) {
-		my @args = @_;
-		foreach (@args) {
-			$_ = "\"$_\"";
-		}
-
-		my ($priority, $obj);
-		eval 'use Win32::Process; use Win32; $priority = NORMAL_PRIORITY_CLASS;';
-		Win32::Process::Create($obj, $_[0], "@args", 0, $priority, '.');
-		return $obj;
-
-	} else {
-		my $pid = fork();
-		if ($pid == 0) {
-			open(STDOUT, "> /dev/null");
-			open(STDERR, "> /dev/null");
-			POSIX::setsid();
-			exec(@_);
-			POSIX::_exit(1);
-		}
-		return $pid;
-	}
-}
-
-sub launchURL {
-	my $self = shift;
-	my $url = shift;
-
-	if ($buildType == 0) {
-		eval "use Win32::API;";
-		my $ShellExecute = new Win32::API("shell32", "ShellExecute", "NPPPPN", "V");
-		$ShellExecute->Call(0, '', $url, '', '', 1);
-
-	} else {
-		my $detectionScript = <<"		EOF";
-			function detectDesktop() {
-				if [[ "\$DISPLAY" = "" ]]; then
-                			return 1
-				fi
-
-				local LC_ALL=C
-				local clients
-				if ! clients=`xlsclients`; then
-			                return 1
-				fi
-
-				if echo "\$clients" | grep -qE '(gnome-panel|nautilus|metacity)'; then
-					echo gnome
-				elif echo "\$clients" | grep -qE '(kicker|slicker|karamba|kwin)'; then
-        			        echo kde
-				else
-        			        echo other
-				fi
-				return 0
-			}
-			detectDesktop
-		EOF
-
-		my ($r, $w, $desktop);
-		my $pid = IPC::Open2::open2($r, $w, '/bin/bash');
-		print $w $detectionScript;
-		close $w;
-		$desktop = <$r>;
-		$desktop =~ s/\n//;
-		close $r;
-		waitpid($pid, 0);
-
-		sub checkCommand {
-			foreach (split(/:/, $ENV{PATH})) {
-				return 1 if (-x "$_/$_[0]");
-			}
-			return 0;
-		}
-
-		if ($desktop eq "gnome" && checkCommand('gnome-open')) {
-			launchApp('gnome-open', $url);
-
-		} elsif ($desktop eq "kde") {
-			launchApp('kfmclient', 'exec', $url);
-
-		} else {
-			if (checkCommand('firefox')) {
-				launchApp('firefox', $url);
-			} elsif (checkCommand('mozillaa')) {
-				launchApp('mozilla', $url);
-			} else {
-				$self->errorDialog("No suitable browser detected. " .
-					"Please launch your favorite browser and go to:\n$url");
-			}
-		}
-	}
-}
-
 
 ################## Callbacks ##################
 
@@ -633,12 +540,12 @@ sub onMapToggle {
 
 sub onManual {
 	my $self = shift;
-	$self->launchURL('http://openkore.sourceforge.net/manual/');
+	launchURL('http://openkore.sourceforge.net/manual/');
 }
 
 sub onForum {
 	my $self = shift;
-	$self->launchURL('http://openkore.sourceforge.net/forum.php');
+	launchURL('http://openkore.sourceforge.net/forum.php');
 }
 
 
