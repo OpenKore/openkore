@@ -224,6 +224,7 @@ useSelf_skill {
 	spirit
 	aggressives
 	monsters
+	notMonsters
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -246,6 +247,7 @@ useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
 	spirit
 	aggressives
 	monsters
+	notMonsters
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
@@ -269,6 +271,7 @@ partySkill {
 	spirit
 	aggressives
 	monsters
+	notMonsters
 	stopWhenHit 0
 	inLockOnly 0
 	notWhileSitting 0
