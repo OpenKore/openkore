@@ -51,6 +51,7 @@ New features:
   lockMap_randX/Y modify the lockMap_x/y position by a random amount. If
   route_randomWalk is set, lockMap_x/y and lockMap_randX/Y specify the area
   in which randomWalk should walk.
+- Support for Umbala maps and portals.
 
 New commands:
 - guild join (flag)
@@ -93,6 +94,7 @@ Credits:
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
 - mfr, Xeno-chan: advanced 2-2 skills support.
+- Steven80s: Umbala maps and portals
 
 
 ==================

@@ -409,3 +409,8 @@ pvp_y_6-5.rsw#PvP : Room Morroc#
 pvp_y_7-5.rsw#PvP : Room Morroc#
 pvp_y_8-5.rsw#PvP : Room Morroc#
 pvp_2vs2.rsw#PvP : Event Colosseum#
+umbala.rws#Utan Tribe Umbala#
+um_fild01.rws#RuRuKa Jungle#
+um_fild02.rws#HooKa Jungle#
+um_fild03.rsw#Carara Jungle#
+um_fild04.rws#Hooka Fores#

@@ -220,6 +220,7 @@ anthell02 32 267 anthell01 253 32
 anthell02 171 169 moc_fild15 258 253
 beach_dun 276 67 comodo 24 214
 beach_dun2 154 13 comodo 176 358
+beach_dun2 258 244 um_fild01 31 274
 beach_dun3 17 265 comodo 333 175
 beach_dun3 286 57 cmd_fild01 26 318
 c_tower1 123 22 alde_dun01 302 25
@@ -235,6 +236,7 @@ cmd_fild01 26 318 beach_dun3 286 57
 cmd_fild01 222 24 cmd_fild02 222 376
 cmd_fild01 362 73 cmd_fild03 23 68
 cmd_fild01 362 263 cmd_fild03 23 269
+cmd_fild01 77 366 um_fild03 114 50
 cmd_fild02 222 376 cmd_fild01 222 24
 cmd_fild02 358 95 cmd_fild04 31 92
 cmd_fild02 382 269 cmd_fild04 21 275
@@ -1487,6 +1489,18 @@ tur_dun02 148 268 tur_dun01 154 241
 tur_dun02 167 19 tur_dun03 132 193
 tur_dun03 217 71 tur_dun04 100 196
 tur_dun04 100 196 tur_dun03 217 71
+umbala 130 79 um_fild04 215 339
+um_fild01 31 374 beach_dun2 258 244
+um_fild01 366 277 um_fild02 22 272
+um_fild02 22 272 um_fild01 366 277
+um_fild02 188 374 um_fild04 182 13
+um_fild02 373 148 um_fild03 32 145
+um_fild02 373 329 um_fild03 19 334
+um_fild03 19 334 um_fild 02 373 329
+um_fild03 32 145 um_fild02 373 148
+um_fild03 114 50 cmd_fild01 77 366
+um_fild04 182 13 um_fild02 188 374
+um_fild04 215 339 umbala 130 79
 yuno 48 105 yuno_in01 40 176
 yuno 48 151 yuno_in01 34 100
 yuno 87 321 yuno_in02 172 61
