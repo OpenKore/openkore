@@ -59,6 +59,7 @@ sub register {
 
 		eval "${_}::MODINIT();";
 		warning $@ if ($@ && !($@ =~ /^Undefined subroutine /));
+		undef $@;
 
 		push @modules, $_;
 	}
