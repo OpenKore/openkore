@@ -115,6 +115,8 @@ New commands:
   Show detailed information about a player.
 
 New config options:
+- attackAuto_maxDistance (number)
+  You should set it to 2.5
 - useSelf_skill, partySkill and useSelf_item now also support the 'monsters' option.
 - New partySkill options:
   * target_aggressives
