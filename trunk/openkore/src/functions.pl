@@ -3319,7 +3319,7 @@ sub AI {
 
 	##### AUTO-ATTACK #####
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || ($ai_seq[0] eq "mapRoute" && $ai_seq_args[0]{'stage'} eq 'Getting Map Solution')
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || ($ai_seq[0] eq "mapRoute" && $ai_seq_args[0]{'stage'} eq 'Getting Map Solution' && !$ai_seq_args[0]{'attackID'})
 	  || $ai_seq[0] eq "follow" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather" || $ai_seq[0] eq "items_take")
 	  && !($config{'itemsTakeAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && ($ai_seq[0] eq "take" || $ai_seq[0] eq "items_gather"))
@@ -3673,10 +3673,19 @@ sub AI {
 				debug "Target distance $dist is >$ai_seq_args[0]{'attackMethod'}{'distance'}; moving to target: " .
 					"from ($chars[$config{char}]{pos_to}{x},$chars[$config{char}]{pos_to}{y}) to ($monsters{$ID}{pos_to}{x},$monsters{$ID}{pos_to}{y})\n", "ai_attack";
 
-				ai_route($field{'name'}, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y},
+				my $result = ai_route($field{'name'}, $monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y},
 					distFromGoal => $ai_seq_args[0]{'attackMethod'}{'distance'},
 					maxRouteTime => $config{'attackMaxRouteTime'},
-					attackID => $ID);
+					attackID => $ID,
+					noMapRoute => 1);
+				if (!$result) {
+					# Unable to calculate a route to target
+					$monsters{$ai_seq_args[0]{'ID'}}{'attack_failed'}++;
+					shift @ai_seq;
+					shift @ai_seq_args;
+					message "Can't reach or damage target, dropping target\n", "ai_attack";
+				}
+
 			} else {
 				# The target is at a spot that's not walkable according to the field file
 				# Ignore the monster.
@@ -8413,10 +8422,13 @@ sub ai_route {
 		debug "Route Solution Ready\n", "route";
 		unshift @ai_seq, "route";
 		unshift @ai_seq_args, \%args;
+		return 1;
 	} else {
+		return 0 if ($param{noMapRoute});
 		# Nothing is initialized so we start scratch
 		unshift @ai_seq, "mapRoute";
 		unshift @ai_seq_args, \%args;
+		return 1;
 	}
 }
 
