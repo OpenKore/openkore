@@ -78,7 +78,7 @@ sub parseAvoidControl {
 			next;
 
 		} else {
-			($key, $args) = $_ =~ /([\s\S]+?) (\d+[\s\S]*)/;
+			($key, $args) = $_ =~ /([\s\S]+?)[\s]+(\d+[\s\S]*)/;
 			@args = split / /,$args;
 			if ($key ne "") {
 				$$r_hash{$section}{lc($key)}{'disconnect_on_sight'} = $args[0];
