@@ -10,7 +10,7 @@ DISTNAME=openkore-$(VERSION)
 DISTFILES=DevelopersNotes.txt Inject.cpp Tools.cpp Makefile Makefile.win32\
 	News.txt Inject.def Tools.def openkore.pl functions.pl\
 	Tools_wrap.c Tools.pm\
-	Input.pm Modules.pm Utils.pm Log.pm Settings.pm
+	Input.pm Modules.pm Utils.pm Log.pm Settings.pm Plugins.pm
 
 .PHONY: all clean dist distdir
 

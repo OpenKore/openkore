@@ -15,6 +15,7 @@ package Settings;
 use strict;
 use Exporter;
 use Getopt::Long;
+# NOTE: do not use any other Kore modules here. It will create circular dependancies.
 
 our @ISA = ("Exporter");
 our @EXPORT_OK = qw(parseArguments);
@@ -22,8 +23,11 @@ our @EXPORT = qw($buildType %config %consoleColors);
 
 
 # Constants
-our $versionText = "*** OpenKore 1.2.1 - Custom Ragnarok Online client ***\n***   http://openkore.sourceforge.net   ***\n";
-our $welcomeText = "Welcome to X-OpenKore.";
+our $NAME = 'OpenKore';
+our $VERSION = '1.2.1';
+our $WEBSITE = 'http://openkore.sourceforge.net';
+our $versionText = "*** $NAME $VERSION - Custom Ragnarok Online client ***\n***   $WEBSITE   ***\n";
+our $welcomeText = "Welcome to X-$NAME.";
 our $MAX_READ = 30000;
 
 # Configuration variables
