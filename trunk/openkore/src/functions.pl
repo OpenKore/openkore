@@ -62,7 +62,6 @@ sub initConfChange {
 sub initConnectVars {
 	$char = $chars[$config{char}];
 	initMapChangeVars();
-	undef @{$chars[$config{'char'}]{'inventory'}};
 	undef %{$chars[$config{'char'}]{'skills'}};
 	undef @skillsID;
 }
@@ -104,6 +103,7 @@ sub initMapChangeVars {
 	undef $msg;
 	undef %talk;
 	undef %{$ai_v{'temp'}};
+	undef @{$chars[$config{'char'}]{'inventory'}};
 	undef @{$cart{'inventory'}};
 	undef @venderItemList;
 	undef $venderID;
