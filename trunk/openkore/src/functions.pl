@@ -325,11 +325,12 @@ sub parseInput {
 	if ($printType) {
 		my $hookOutput = sub {
 			my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
-			$msg .= $message;
+			$msg .= $message if ($type ne 'debug' && $level <= $globalVerbosity);
 		};
 		$hook = Log::addHook($hookOutput);
 		$interface->writeOutput("console", "$input\n");
 	}
+	$XKore_dontRedirect = 1 if ($config{XKore});
 
 	# Check if in special state
 
@@ -349,20 +350,21 @@ sub parseInput {
 
 	if ($printType) {
 		Log::delHook($hook);
-		if ($config{'XKore'} && defined $msg) {
+		if ($config{'XKore'} && defined $msg && $conState == 5) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
 			sendMessage(\$remote_socket, "k", $msg);
 		}
 	}
+	$XKore_dontRedirect = 0 if ($config{XKore});
 }
 
 sub parseCommand {
 	my $input = shift;
-	
+
 	my ($switch, $args) = split(' ', $input, 2);
 	my ($arg1, $arg2, $arg3, $arg4);
-		
+
 	# Resolve command aliases
 	if (my $alias = $config{"alias_$switch"}) {
 		$input = $alias;
@@ -5688,7 +5690,7 @@ sub parseMsg {
 				%{$monsters{$ID}{'pos'}} = %coords;
 				%{$monsters{$ID}{'pos_to'}} = %coords;
 
-				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
+				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 1;
 
 				my $prevState = $monsters{$ID}{'state'};
 				$monsters{$ID}{'state'} = unpack("S*", substr($msg, 8, 2)); 
@@ -5732,7 +5734,7 @@ sub parseMsg {
 			$players{$ID}{'sitting'} = $sitting > 0;
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
-			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg", 1;
 
 		} elsif ($type == 45) {
 			if (!%{$portals{$ID}}) {
@@ -5750,7 +5752,7 @@ sub parseMsg {
 				$portals{$ID}{'binID'} = binFind(\@portalsID, $ID);
 			}
 			%{$portals{$ID}{'pos'}} = %coords;
-			message "Portal Exists: $portals{$ID}{'name'} - ($portals{$ID}{'binID'})\n";
+			message "Portal Exists: $portals{$ID}{'name'} - ($portals{$ID}{'binID'})\n", "portals", 1;
 
 		} elsif ($type < 1000) {
 			if (!%{$npcs{$ID}}) {
@@ -5766,7 +5768,7 @@ sub parseMsg {
 				$npcs{$ID}{'binID'} = binFind(\@npcsID, $ID);
 			}
 			%{$npcs{$ID}{'pos'}} = %coords;
-			message "NPC Exists: $npcs{$ID}{'name'} (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n";
+			message "NPC Exists: $npcs{$ID}{'name'} (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n", undef, 1;
 
 		} else {
 			debug "Unknown Exists: $type - ".unpack("L*",$ID)."\n", "parseMsg";
@@ -6164,7 +6166,7 @@ sub parseMsg {
 		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
 		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
 		$ai_cmdQue++;
-		message "$chat\n";
+		message "$chat\n", "publicchat";
 #Solos Start
 
 #auto-emote
@@ -6201,6 +6203,8 @@ sub parseMsg {
 #Solos End
 
 	} elsif ($switch eq "008E") {
+		# Public messages that you sent yourself
+
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000//g;
 		($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
@@ -6213,11 +6217,7 @@ sub parseMsg {
 		$ai_cmdQue[$ai_cmdQue]{'msg'} = $chatMsg;
 		$ai_cmdQue[$ai_cmdQue]{'time'} = time;
 		$ai_cmdQue++;
-		message "$chat\n";
-#Solos Start
-# this is self talk portion
-#Solos End
-	} elsif ($switch eq "008F") {
+		message "$chat\n", "selfchat";
 
 	} elsif ($switch eq "0091") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6388,7 +6388,7 @@ sub parseMsg {
 		$chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000$//;
 		chatLog("s", $chat."\n") if ($config{'logSystemChat'});
-		message "$chat\n";
+		message "$chat\n", "gmchat";
 		avoidGM_talk(undef, $chat);
 
 	} elsif ($switch eq "009C") {
@@ -6432,7 +6432,7 @@ sub parseMsg {
 		}
 		$items{$ID}{'pos'}{'x'} = $x;
 		$items{$ID}{'pos'}{'y'} = $y;
-		message "Item Exists: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n", "drop";
+		message "Item Exists: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n", "drop", 1;
 
 	} elsif ($switch eq "009E") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6454,7 +6454,7 @@ sub parseMsg {
 		}
 		$items{$ID}{'pos'}{'x'} = $x;
 		$items{$ID}{'pos'}{'y'} = $y;
-		message "Item Appeared: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n", "drop";
+		message "Item Appeared: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n", "drop", 1;
 
 	} elsif ($switch eq "00A0") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -6804,7 +6804,7 @@ sub parseMsg {
 		undef $invIndex;
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		if (!$chars[$config{'char'}]{'arrow'} || ($chars[$config{'char'}]{'arrow'} && !($chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} =~/arrow/i))) {
-			message "Inventory Item Removed: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n";
+			message "Inventory Item Removed: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "inventory";
 		}
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
 		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
@@ -7098,10 +7098,10 @@ sub parseMsg {
 		$ID = substr($msg, 2, 4);
 		$type = unpack("C*", substr($msg, 6, 1));
 		if ($ID eq $accountID) {
-			message "$chars[$config{'char'}]{'name'} : $emotions_lut{$type}\n";
+			message "$chars[$config{'char'}]{'name'} : $emotions_lut{$type}\n", "emotion";
 			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotions_lut{$type}\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 		} elsif (%{$players{$ID}}) {
-			message "$players{$ID}{'name'} : $emotions_lut{$type}\n";
+			message "$players{$ID}{'name'} : $emotions_lut{$type}\n", "emotion";
 			chatLog("e", "$players{$ID}{'name'} : $emotions_lut{$type}\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 
 			my $index = binFind(\@ai_seq, "follow");
@@ -7630,30 +7630,33 @@ sub parseMsg {
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID);
 		$damage ||= "Miss!";
-    my $disp = "$source $uses $skillsID_lut{$skillID}" . (($level == 65535)? "" : " (lvl $level)") . (($damage == 35536)? "" : " on $target - Dmg: $damage") . "\n";
+		my $disp = "$source $uses $skillsID_lut{$skillID}" .
+			(($level == 65535)? "" : " (lvl $level)") .
+			(($damage == 35536)? "" : " on $target - Dmg: $damage") .
+			"\n";
 
-    my $domain;
-    $domain = "skill" if (($source eq "You") || ($target eq "You"));
-    
-    if ($damage == 0) {
-      $domain = "attackMonMiss" if (($source eq "You") && ($target ne "Self"));
-      $domain = "attackedMiss" if (($source ne "You") && ($target eq "You"));
-    }
-    elsif ($damage != 35536) {
-      $domain = "attackMon" if (($source eq "You") && ($target ne "Self"));
-      $domain = "attacked" if (($source ne "You") && ($target eq "You"));
-    }
-    
-    message $disp, $domain;
-    
+		my $domain;
+		$domain = "skill" if (($source eq "You") || ($target eq "You"));
+
+		if ($damage == 0) {
+			$domain = "attackMonMiss" if (($source eq "You") && ($target ne "Self"));
+			$domain = "attackedMiss" if (($source ne "You") && ($target eq "You"));
+
+		} elsif ($damage != 35536) {
+			$domain = "attackMon" if (($source eq "You") && ($target ne "Self"));
+			$domain = "attacked" if (($source ne "You") && ($target eq "You"));
+		}
+
+		message $disp, $domain, 1;
+
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
-      'targetID' => $targetID,
-      'damage' => $damage,
-      'amount' => 0,
-      'x' => 0,
-      'y' => 0
+			'targetID' => $targetID,
+			'damage' => $damage,
+			'amount' => 0,
+			'x' => 0,
+			'y' => 0
 			});
 
 	} elsif ($switch eq "0117") {
@@ -7774,15 +7777,15 @@ sub parseMsg {
 			$extra = ": Lv $amount";
 		}
   
-		message "$source $uses $skillsID_lut{$skillID} on $target$extra\n", (($source eq "You") || ($target eq "You"))? "skill" : "";
+		message "$source $uses $skillsID_lut{$skillID} on $target$extra\n", "skill";
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
-      'targetID' => $targetID,
-      'damage' => 0,
-      'amount' => $amount,
-      'x' => 0,
-      'y' => 0
+			'targetID' => $targetID,
+			'damage' => 0,
+			'amount' => $amount,
+			'x' => 0,
+			'y' => 0
 			});
 
 	} elsif ($switch eq "011C") {
@@ -8191,7 +8194,7 @@ sub parseMsg {
 		} else {
 			$targetDisplay = "unknown";
 		}
-		message "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay\n";
+		message "$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay\n", "skill", 1;
 
 	} elsif ($switch eq "0141") {
 		$type = unpack("S1",substr($msg, 2, 2));
@@ -8529,7 +8532,7 @@ sub parseMsg {
 				}
 				%{$monsters{$ID}{'pos'}} = %coords;
 				%{$monsters{$ID}{'pos_to'}} = %coords;
-				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
+				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 1;
 			}
 
 		} elsif ($jobs_lut{$type}) {
@@ -8545,7 +8548,7 @@ sub parseMsg {
 			$players{$ID}{'sitting'} = $sitting > 0;
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
-			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg", 1;
 
 		} elsif ($type == 45) {
 			if (!%{$portals{$ID}}) {
@@ -8563,7 +8566,7 @@ sub parseMsg {
 				$portals{$ID}{'binID'} = binFind(\@portalsID, $ID);
 			}
 			%{$portals{$ID}{'pos'}} = %coords;
-			message "Portal Exists: $portals{$ID}{'name'} - ($portals{$ID}{'binID'})\n";
+			message "Portal Exists: $portals{$ID}{'name'} - ($portals{$ID}{'binID'})\n", undef, 1;
 
 		} elsif ($type < 1000) {
 			if (!%{$npcs{$ID}}) {
@@ -8579,7 +8582,7 @@ sub parseMsg {
 				$npcs{$ID}{'binID'} = binFind(\@npcsID, $ID);
 			}
 			%{$npcs{$ID}{'pos'}} = %coords;
-			message "NPC Exists: $npcs{$ID}{'name'} (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n";
+			message "NPC Exists: $npcs{$ID}{'name'} (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n", undef, 1;
 
 		} else {
 			debug "Unknown Exists: $type - ".unpack("L*",$ID)."\n", "parseMsg";
@@ -9625,7 +9628,7 @@ sub take {
 	%{$args{'pos'}} = %{$items{$ID}{'pos'}};
 	unshift @ai_seq, "take";
 	unshift @ai_seq_args, \%args;
-	debug "Targeting for Pickup: $items{$ID}{'name'} ($items{$ID}{'binID'})\n";
+	debug "Picking up: $items{$ID}{'name'} ($items{$ID}{'binID'})\n";
 }
 
 #######################################
@@ -10982,7 +10985,7 @@ sub dumpData {
 	close DUMP;
  
 	debug "$dump\n", "parseMsg", 2;
-	message "Message Dumped into DUMP.txt!\n";
+	message "Message Dumped into DUMP.txt!\n", undef, 1;
 }
 
 sub getField {
@@ -11614,6 +11617,18 @@ sub printItemDesc {
 	message("Item: $items_lut{$itemID}\n\n", "info");
 	message($itemsDesc_lut{$itemID}, "info");
 	message("==============================================\n", "info");
+}
+
+sub redirectXKoreMessages {
+	my ($type, $domain, $level, $globalVerbosity, $message, $user_data) = @_;
+
+	return if ($type eq "debug" || $level > 0 || $conState != 5 || $XKore_dontRedirect);
+	return if ($domain =~ /^(connection|startup|pm|publicchat|guildchat|selfchat|emotion|drop|inventory)$/);
+	return if ($domain =~ /^(attack|skill)/);
+
+	$message =~ s/\n*$//s;
+	$message =~ s/\n/\\n/g;
+	sendMessage(\$remote_socket, "k", $message);
 }
 
 sub vocalString {

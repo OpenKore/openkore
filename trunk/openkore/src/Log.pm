@@ -64,17 +64,21 @@
 # attackMonMiss		You attack monster but miss
 # connection		Connection messages
 # deal			Deal messages
-# drop			monster drop related
+# drop			Monster drop related
+# emotion		Emoticon
 # equip		        Equipment Switching 
-# guildchat		Guild chat
+# gmchat		GM chat message
+# guildchat		Guild chat message
 # info			View info that's requested by the user (status, guild info, etc.)
 # input			Waiting for user input
+# inventory		Inventory related messages
 # useItem		You used item
 # list			List of information (monster list, player list, item list, etc.)
 # load			Loading config files
 # party			Party/follow related
 # plugins		Messages about plugin handling
-# pm			Private message
+# pm			Private chat message
+# publicchat	Public chat message
 # route			Routing/pathfinding messages
 # sold			Item sold while vending.
 # skill			Skill use unrelated to attack
@@ -219,11 +223,11 @@ sub setColor {
 #
 # Prints a normal message. See the description for Log.pm for more details about the parameters.
 sub message {
-	return processMsg("message",
-		$_[0],
-		$_[1],
-		$_[2],
-		$config{'verbose'},
+	return processMsg("message",	# type
+		$_[0],						# message
+		$_[1],						# domain
+		$_[2],						# level
+		$config{'verbose'},			# currentVerbosity
 		\%messageConsole,
 		\%messageFiles);
 }
