@@ -7307,6 +7307,7 @@ sub parseMsg {
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		my $ID = unpack("S1", substr($msg, 8, 2));
+		my $psize = $switch eq "0124" ? 0 : 1;
 
 		my $item = $cart{inventory}[$index] ||= {};
 		if ($item->{amount}) {
@@ -7314,9 +7315,9 @@ sub parseMsg {
 		} else {
 			$item->{nameID} = $ID;
 			$item->{amount} = $amount;
-			$item->{identified} = unpack("C1", substr($msg, 10, 1));
-			$item->{upgrade} = unpack("C1", substr($msg, 12, 1));
-			$item->{cards} = substr($msg, 13, 8);
+			$item->{identified} = unpack("C1", substr($msg, 10 + $psize, 1));
+			$item->{upgrade} = unpack("C1", substr($msg, 12 + $psize, 1));
+			$item->{cards} = substr($msg, 13 + $psize, 8);
 			$item->{name} = itemName($item);
 			message "Cart Item Added: $item->{name} ($index) x $amount\n";
 		}

@@ -74,6 +74,8 @@ Bug fixes:
 - Saving at Kafra no longer prevents you from talking to another NPC
   until you relog/leave the screen. (Added sendTalkCancel call to
   00B6 packet handler.)
+- Hopefully fixed carded/elemental weapon name being corrupted when
+  "Cart Item Added" message uses 01C5 packet.
 
 Internal:
 - Portal compilation is now 30% faster.
