@@ -2,6 +2,12 @@
 ### 1.5.2 (beta)
 ==================
 
+** INCOMPATIBLE CHANGES **:
+- For users of teleportAuto_search, in order to have it work you must now:
+  - Set teleportAuto_idle to 1
+  - Set ai_teleport_idle in timeouts.txt to the same as ai_teleport_search
+  - Delete ai_teleport_search in timeouts.txt (it is obsolete)
+
 Bug fixes:
 - Correctly detect pets.
 - Fix all kinds of troubles regarding sitting and standing.
@@ -59,8 +65,6 @@ New config options:
   2 - disconnect
   3 - teleport
   4 - respawn
-- teleportAuto_idle must be true in order for teleportAuto_search to behave as
-  expected.
 - New 'previousDamage' condition for attackSkillSlot.
 
 Internal:
