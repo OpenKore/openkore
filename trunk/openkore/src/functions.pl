@@ -232,7 +232,7 @@ sub checkConnection {
 		$conState_tries++;
 		initConnectVars();
 		Network::connectTo(\$remote_socket, $map_ip, $map_port);
-		if ($config{'pkLogin'}) {
+		if ($config{'pkServer'}) {
 			sendPkMapLogin(\$remote_socket, $accountID, $sessionID, $accountSex2);
 		} else {
 			sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);

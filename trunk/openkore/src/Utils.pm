@@ -26,6 +26,7 @@ use Exporter;
 use base qw(Exporter);
 use Config;
 use FastUtils;
+use Globals qw(%config);
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our @EXPORT = (
@@ -803,10 +804,58 @@ sub formatNumber {
 	}
 }
 
+sub _find_x {
+	my ($x, $y) = @_;
+	my $a = _find_x_top($x, $y);
+
+	my @ans = (
+		[$a,$a+1,$a+2,$a+3,$a+4,$a+5,$a+6,$a+7],
+		[$a+1,$a,$a+3,$a+2,$a+5,$a+4,$a+7,$a+6],
+		[$a+2,$a+3,$a,$a+1,$a+6,$a+7,$a+4,$a+5],
+		[$a+3,$a+2,$a+1,$a,$a+7,$a+6,$a+5,$a+4],
+		[$a+4,$a+5,$a+6,$a+7,$a,$a+1,$a+2,$a+3],
+		[$a+5,$a+4,$a+7,$a+6,$a+1,$a,$a+3,$a+2],
+		[$a+6,$a+7,$a+4,$a+5,$a+2,$a+3,$a,$a+2],
+		[$a+7,$a+6,$a+5,$a+4,$a+3,$a+2,$a+1,$a]
+	);
+	return $ans[int($x % 32) / 4][int($y % 32) / 4];
+}
+
+sub _find_x_top {
+	my ($x, $y) = @_;
+	my $b;
+
+	if ($x < 256 && $y < 256) {
+		$b = 0;
+	} elsif ($x >= 256 && $y >= 256) {
+		$b = 0;
+	} else {
+		$b = 64;
+	}
+
+	my @ans = (
+		[$b,$b+1*8,$b+2*8,$b+3*8,$b+4*8,$b+5*8,$b+6*8,$b+7*8],
+		[$b+1*8,$b,$b+3*8,$b+2*8,$b+5*8,$b+4*8,$b+7*8,$b+6*8],
+		[$b+2*8,$b+3*8,$b,$b+1*8,$b+6*8,$b+7*8,$b+4*8,$b+5*8],
+		[$b+3*8,$b+2*8,$b+1*8,$b,$b+7*8,$b+6*8,$b+5*8,$b+4*8],
+		[$b+4*8,$b+5*8,$b+6*8,$b+7*8,$b,$b+1*8,$b+2*8,$b+3*8],
+		[$b+5*8,$b+4*8,$b+7*8,$b+6*8,$b+1*8,$b,$b+3*8,$b+2*8],
+		[$b+6*8,$b+7*8,$b+4*8,$b+5*8,$b+2*8,$b+3*8,$b,$b+2*8],
+		[$b+7*8,$b+6*8,$b+5*8,$b+4*8,$b+3*8,$b+2*8,$b+1*8,$b]
+	);
+	return $ans[int($x % 256) / 32][int($y % 256) / 32];
+}
+
 sub getCoordString {
-	my $x = int scalar shift;
-	my $y = int scalar shift;
-	return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
+	my $x = int(shift);
+	my $y = int(shift);
+	if ($config{'pkServer'}) {
+		return pack("C*", _find_x($x, $y),
+			(64 * (($x + $y) % 4) + 31 - int($y / 16)),
+			(($y - int(($y - 8 ) / 16) * 16 - 8 ) *16));
+	} else {
+		return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
+	}
 }
 
 sub getFormattedDate {
