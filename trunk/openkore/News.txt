@@ -1,4 +1,11 @@
 ==================
+### 1.5.1 (CVS)
+==================
+
+
+
+
+==================
 ### 1.5.0 (beta)
 ==================
 
@@ -54,10 +61,9 @@ New features:
 - useSelfSkill, useSelfItem and partySkill now also support the
   _monsters config option, just like attackSkillSlot.
   This example uses Pneuma only when Raydric Archer attacks:
-  useSelf_skill_6 Pneuma
-  ...
-  useSelf_skill_6_monsters Raydric Archer
-  ...
+  useSelf_skill Pneuma {
+      monsters Raydric Archer
+  }
 - Priority attacks for non-aggressive monsters are now supported.
 - You can set Kore to avoid/prefer walking through certain maps
   (see control/routeweights.txt for configuration).
@@ -204,9 +210,9 @@ New config options:
   only if certain conditions are met. For example:
 
   useSelf_skill Pneuma {
-	  lvl 1
+      lvl 1
       monsters Raydric Archer
-	  whenNotGround Pneuma
+      whenNotGround Pneuma
   }
 
   will use the Pneuma skill if you are fighting Raydric Archer, and
