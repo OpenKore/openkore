@@ -179,7 +179,7 @@ reverse_palette (unsigned char *palette, int palettelen, int *returnsize)
 
 
 SPREXPORT Sprite *
-sprite_load (const char *fname, SpriteError *error)
+sprite_open (const char *fname, SpriteError *error)
 {
 	Sprite *sprite;
 	FILE *f;
