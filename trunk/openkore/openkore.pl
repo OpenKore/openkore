@@ -155,7 +155,7 @@ if ($config{'XKore'}) {
 			LocalAddr	=> 'localhost',
 			LocalPort	=> 2350,
 			Proto		=> 'tcp');
-	($injectServer_socket) || die "Error creating local inject server: $!";
+	($injectServer_socket) || die "Error creating local inject server: $@";
 	print "Local inject server started (".$injectServer_socket->sockhost().":2350)\n";
 }
 
@@ -388,6 +388,11 @@ while ($quit != 1) {
 	mainLoop();
 }
 
+
+# Exit X-Kore
+eval {
+	$remote_socket->send("Z".pack("S", 0));
+} if ($config{'XKore'} && $remote_socket && $remote_socket->connected());
 
 Input::stop();
 close($remote_socket);
