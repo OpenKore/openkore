@@ -117,6 +117,18 @@ sub writeOutput {
 }
 
 ##
+# $interface->beep()
+# 
+# Emit a beep on the available audio device.
+#
+# NOTE: If you are printing a message while beeping, you should call
+# beep() before printing so that the display buffers are flushed
+# correctly on systems where beep() is implemented by printing "\a".
+sub beep {
+	print "\a";
+}
+
+##
 # $interface->title([title])
 #
 # If $title is given, set the interface's window's title to $title.

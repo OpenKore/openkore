@@ -6121,8 +6121,8 @@ sub parseMsg {
 		$chat = "$chatMsgUser : $chatMsg";
 
 		chatLog("c", "$chat\n") if ($config{'logChat'});
-		my $beep = $config{beepOnChat} ? "\a" : '';
-		message "$chat$beep\n", "publicchat";
+		$interface->beep() if $config{beepOnChat};
+		message "$chat\n", "publicchat";
 
 		ChatQueue::add('c', $ID, $chatMsgUser, $chatMsg);
 		Plugins::callHook('packet_pubMsg', { 
@@ -6283,8 +6283,8 @@ sub parseMsg {
 
 		stripLanguageCode(\$privMsg);
 		chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
-		my $beep = $config{beepOnPM} ? "\a" : '';
-		message "(From: $privMsgUser) : $privMsg$beep\n", "pm";
+		$interface->beep() if $config{beepOnPM};
+		message "(From: $privMsgUser) : $privMsg\n", "pm";
 
 		ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
 		Plugins::callHook('packet_privMsg', {
