@@ -9,9 +9,9 @@ OBJ+=unix/*.o
 OBJ+=win32/wrapper.o win32/utils.o
 #endif
 
-Tools.$(DLLEXT): sub
-	dlltool --dllname Tools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
-	$(DLLWRAP) $(OBJ) -o Tools.$(DLLEXT) $(LIBPERL)
+XSTools.$(DLLEXT): sub
+	dlltool --dllname XSTools.dll --output-def symbols.gccdef --export-all-symbols --add-stdcall-alias $(OBJ)
+	$(DLLWRAP) $(OBJ) -o XSTools.$(DLLEXT) $(LIBPERL)
 
 
 sub:
@@ -25,7 +25,7 @@ sub:
 
 
 clean:
-	rm -f Tools.$(DLLEXT) symbols.gccdef Makefile.real
+	rm -f XSTools.$(DLLEXT) symbols.gccdef Makefile.real
 	make clean -C pathfinding
 #if unix
 	make clean -C unix
