@@ -37,6 +37,8 @@ use Misc;
 our %handlers = (
 	ai	=> \&cmdAI,
 	aiv	=> \&cmdAIv,
+	auth	=> \&cmdAuthorize,
+	buy	=> \&cmdBuy,
 	chist	=> \&cmdChist,
 	e	=> \&cmdEmotion,
 	eq	=> \&cmdEquip,
@@ -51,8 +53,13 @@ our %handlers = (
 	memo	=> \&cmdMemo,
 	plugin	=> \&cmdPlugin,
 	s	=> \&cmdStatus,
+	send	=> \&cmdSendRaw,
+	st	=> \&cmdStats,
 	stat_add => \&cmdStatAdd,
+	tank	=> \&cmdTank,
+	timeout	=> \&cmdTimeout,
 	uneq	=> \&cmdUnequip,
+	verbose	=> \&cmdVerbose,
 	warp	=> \&cmdWarp,
 	who	=> \&cmdWho,
 );
@@ -60,6 +67,8 @@ our %handlers = (
 our %descriptions = (
 	ai	=> 'Enable/disable AI.',
 	aiv	=> 'Display current AI sequences.',
+	auth	=> '(Un)authorize a user for using Kore chat commands.',
+	buy	=> 'Buy an item from the current NPC shop.',
 	chist	=> 'Display last few entries from the chat log.',
 	e	=> 'Show emotion.',
 	eq	=> 'Equip an item.',
@@ -73,7 +82,12 @@ our %descriptions = (
 	memo	=> 'Save current position for warp portal.',
 	plugin	=> 'Control plugins.',
 	s	=> 'Display character status.',
+	send	=> 'Send a raw packet to the server.',
+	st	=> 'Display stats.',
 	stat_add => 'Add status point.',
+	tank	=> 'Tank for a player.',
+	timeout	=> 'Set a timeout.',
+	verbose	=> 'Toggles verbose on/off.',
 	warp	=> 'Open warp portal.',
 	who	=> 'Display the number of people on the current server.',
 );
@@ -132,6 +146,35 @@ sub cmdAIv {
 	message("waitingForMapSolution\n", "list") if ($ai_seq_args[0]{'waitingForMapSolution'});
 	message("waitingForSolution\n", "list") if ($ai_seq_args[0]{'waitingForSolution'});
 	message("solution\n", "list") if ($ai_seq_args[0]{'solution'});
+}
+
+sub cmdAuthorize {
+	my (undef, $args) = @_;
+	my ($arg1, $arg2) = $args =~ /^([\s\S]*) ([\s\S]*?)$/;
+	if ($arg1 eq "" || ($arg2 ne "1" && $arg2 ne "0")) {
+		error	"Syntax Error in function 'auth' (Overall Authorize)\n" .
+			"Usage: auth <username> <flag>\n";
+	} else {
+		auth($arg1, $arg2);
+	}
+}
+
+sub cmdBuy {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\d+)/;
+	my ($arg2) = $args =~ /^\d+ (\d+)$/;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'buy' (Buy Store Item)\n" .
+			"Usage: buy <item #> [<amount>]\n";
+	} elsif ($storeList[$arg1] eq "") {
+		error	"Error in function 'buy' (Buy Store Item)\n" .
+			"Store Item $arg1 does not exist.\n";
+	} else {
+		if ($arg2 <= 0) {
+			$arg2 = 1;
+		}
+		sendBuy(\$remote_socket, $storeList[$arg1]{'nameID'}, $arg2);
+	}
 }
 
 sub cmdChist {
@@ -418,6 +461,11 @@ sub cmdReload {
 	}
 }
 
+sub cmdSendRaw {
+	my (undef, $args) = @_;
+	sendRaw(\$remote_socket, $args);
+}
+
 sub cmdStatAdd {
 	# Add status point
 	my (undef, $arg) = @_;
@@ -449,6 +497,25 @@ sub cmdStatAdd {
 		$chars[$config{'char'}]{$arg} += 1;
 		sendAddStatusPoint(\$remote_socket, $ID);
 	}
+}
+
+sub cmdStats {
+	message("-----------Char Stats-----------\n", "info");
+	message(swrite(
+		"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<",
+		[$chars[$config{'char'}]{'str'}, $chars[$config{'char'}]{'str_bonus'}, $chars[$config{'char'}]{'points_str'}, $chars[$config{'char'}]{'attack'}, $chars[$config{'char'}]{'attack_bonus'}, $chars[$config{'char'}]{'def'}, $chars[$config{'char'}]{'def_bonus'}],
+		"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<",
+		[$chars[$config{'char'}]{'agi'}, $chars[$config{'char'}]{'agi_bonus'}, $chars[$config{'char'}]{'points_agi'}, $chars[$config{'char'}]{'attack_magic_min'}, '~', $chars[$config{'char'}]{'attack_magic_max'}, $chars[$config{'char'}]{'def_magic'}, $chars[$config{'char'}]{'def_magic_bonus'}],
+		"Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<",
+		[$chars[$config{'char'}]{'vit'}, $chars[$config{'char'}]{'vit_bonus'}, $chars[$config{'char'}]{'points_vit'}, $chars[$config{'char'}]{'hit'}, $chars[$config{'char'}]{'flee'}, $chars[$config{'char'}]{'flee_bonus'}],
+		"Int: @<<+@<< #@< Critical: @<< Aspd: @<<",
+		[$chars[$config{'char'}]{'int'}, $chars[$config{'char'}]{'int_bonus'}, $chars[$config{'char'}]{'points_int'}, $chars[$config{'char'}]{'critical'}, $chars[$config{'char'}]{'attack_speed'}],
+		"Dex: @<<+@<< #@< Status Points: @<<",
+		[$chars[$config{'char'}]{'dex'}, $chars[$config{'char'}]{'dex_bonus'}, $chars[$config{'char'}]{'points_dex'}, $chars[$config{'char'}]{'points_free'}],
+		"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
+		[$chars[$config{'char'}]{'luk'}, $chars[$config{'char'}]{'luk_bonus'}, $chars[$config{'char'}]{'points_luk'}, $chars[$config{'char'}]{'guild'}{'name'}]),
+		"info");
+	message("--------------------------------\n", "info");
 }
 
 sub cmdStatus {
@@ -543,6 +610,62 @@ sub cmdStatus {
 	message("----------------------------------------\n", "info");
 }
 
+sub cmdTank {
+	my (undef, $arg) = @_;
+	$arg =~ s/ .*//;
+
+	if ($arg eq "") {
+		error	"Syntax Error in function 'tank' (Tank for a Player)\n" .
+			"Usage: tank <player #|player name>\n";
+
+	} elsif ($arg eq "stop") {
+		configModify("tankMode", 0);
+
+	} elsif ($arg =~ /^\d+$/) {
+		if (!$playersID[$arg]) {
+			error	"Error in function 'tank' (Tank for a Player)\n" .
+				"Player $arg does not exist.\n";
+		} else {
+			configModify("tankMode", 1);
+			configModify("tankModeTarget", $players{$playersID[$arg]}{name});
+		}
+
+	} else {
+		my $found;
+		foreach my $ID (@playersID) {
+			next if !$ID;
+			if (lc $players{$ID}{name} eq lc $arg) {
+				$found = $ID;
+				last;
+			}
+		}
+
+		if ($found) {
+			configModify("tankMode", 1);
+			configModify("tankModeTarget", $players{$found}{name});
+		} else {
+			error	"Error in function 'tank' (Tank for a Player)\n" .
+				"Player $arg does not exist.\n";
+		}
+	}
+}
+
+sub cmdTimeout {
+	my (undef, $args) = @_;
+	my ($arg1, $arg2) = $args =~ /^([\s\S]*) ([\s\S]*?)$/;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'timeout' (set a timeout)\n" .
+			"Usage: timeout <type> [<seconds>]\n";
+	} elsif ($timeout{$arg1} eq "") {
+		error	"Error in function 'timeout' (set a timeout)\n" .
+			"Timeout $arg1 doesn't exist\n";
+	} elsif ($arg2 eq "") {
+		error "Timeout '$arg1' is $config{$arg1}\n";
+	} else {
+		setTimeout($arg1, $arg2);
+	}
+}
+
 sub cmdUnequip {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d+)/;
@@ -620,6 +743,14 @@ sub cmdUseItemOnSelf {
 			"Inventory Item $arg1 is not of type Usable.\n";
 	} else {
 		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $accountID);
+	}
+}
+
+sub cmdVerbose {
+	if ($config{'verbose'}) {
+		configModify("verbose", 0);
+	} else {
+		configModify("verbose", 1);
 	}
 }
 
