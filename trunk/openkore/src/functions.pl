@@ -8239,12 +8239,18 @@ sub parseMsg {
 
 	} elsif ($switch eq "0154") {
 		my $newmsg;
+		my $jobID;
 		decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
 		my $msg = substr($msg, 0, 4) . $newmsg;
 		my $c = 0;
 		for (my $i = 4; $i < $msg_size; $i+=104){
 			$guild{'member'}[$c]{'ID'}    = substr($msg, $i, 4);
-			$guild{'member'}[$c]{'jobID'} = unpack("S1", substr($msg, $i + 14, 2));
+			$jobID = unpack("S1", substr($msg, $i + 14, 2));
+			if ($jobID =~ /^40/) {
+				$jobID =~ s/^40/1/;
+				$jobID += 60;
+			}
+			$guild{'member'}[$c]{'jobID'} = $jobID;
 			$guild{'member'}[$c]{'lvl'}   = unpack("S1", substr($msg, $i + 16, 2));
 			$guild{'member'}[$c]{'contribution'} = unpack("L1", substr($msg, $i + 18, 4));
 			$guild{'member'}[$c]{'online'} = unpack("S1", substr($msg, $i + 22, 2));

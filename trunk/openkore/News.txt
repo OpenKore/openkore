@@ -84,6 +84,8 @@ Internal:
   way inventory items can be removed).
 - New module Match.pm contains functions for matching input typed by the
   player with an in-game entity (e.g. players, monsters, items).
+- Better support for advanced 2-2 classes.
+- Guild member job ID format is now the same as char job ID format.
 
 
 Credits:
@@ -92,6 +94,7 @@ Credits:
   support for the --storage argument.
 - jabskeeterbug: item history command.
 - jsteng: some routing bug fixes.
+- ZetaAlpha: advanced 2-2 class support fixes, guild member ID fixes.
 
 
 ==================
