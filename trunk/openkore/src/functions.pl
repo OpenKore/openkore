@@ -8780,18 +8780,38 @@ sub ai_partyfollow {
 # (not just you) will be considered as aggressive.
 sub ai_getAggressives {
 	my ($type, $party) = @_;
+	my $wantArray = wantarray;
+	my $num = 0;
 	my @agMonsters;
+
 	foreach (@monstersID) {
 		next if (!$_);
 		my $monster = $monsters{$_};
-		if ((($type && $mon_control{lc($monster->{'name'})}{'attack_auto'} == 2) || 
+		if ((($type && $mon_control{lc($monster->{name})}{attack_auto} == 2) || 
 		    $monster->{dmgToYou} || $monster->{missedYou} ||
 			($party && $monster->{dmgToParty} || $monster->{missedToParty}))
 		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-			push @agMonsters, $_;
+
+			if ($wantArray) {
+				# Function is called in array context
+				push @agMonsters, $_;
+
+			} else {
+				# Function is called in scalar context
+				if ($mon_control{lc($monster->{name})}{weight} > 0) {
+					$num += $mon_control{lc($monster->{name})}{weight};
+				} elsif ($mon_control{lc($monster->{name})}{weight} != -1) {
+					$num++;
+				}
+			}
 		}
 	}
-	return @agMonsters;
+
+	if ($wantArray) {
+		return @agMonsters;
+	} else {
+		return $num;
+	}
 }
 
 sub ai_getPlayerAggressives {
