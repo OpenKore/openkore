@@ -37,6 +37,7 @@ use IO::Socket::INET;
 use Settings;
 use Log;
 use Utils;
+use POSIX;
 
 our @ISA = "Exporter";
 our @EXPORT_OK = qw(&init &stop &canRead &readLine $enabled);
@@ -114,10 +115,10 @@ sub startInputClient {
 				$local_socket->send($input);
 				$local_socket->flush;
 			}
-			last if ($input eq "quit" || $input eq "dump");
+			#last if ($input eq "quit" || $input eq "dump");
 		}
 		close($local_socket);
-		exit;
+		_exit(0);
 
 	} elsif ($pid) {
 		# Parent; poll input server and read data when available
@@ -148,7 +149,8 @@ sub canRead {
 	return undef unless ($enabled);
 	my $bits = '';
 	vec($bits, $input_socket->fileno, 1) = 1;
-	return (select($bits, $bits, $bits, 0.005) > 1);
+	# The timeout was 0.005
+	return (select($bits, $bits, $bits, 0.00) > 1);
 }
 
 
