@@ -5979,11 +5979,6 @@ sub parseMsg {
 			} else {
 				$dmgdisplay = $damage;
 				$dmgdisplay .= "!" if ($type == 10);
-
-				# FIXME: param3 is only meaningful if this is not an attack
-				# made by a monster. How can you tell if it's a monster?
-				# You could check %monsters but there should be a better
-				# way...?
 				$dmgdisplay .= " + $param3" if $param3;
 			}
 
