@@ -11548,15 +11548,15 @@ sub getTickCount {
 #
 # Example:
 # formatNumber(1000000)   # -> 1,000,000
+
+#umm i tweeked it a little, just to make it display as described ;) -xlr82xs
 sub formatNumber {
-	my $num = shift;
-	if (!$num) {
+	my $num = reverse $_[0];
+	if ($num == 0) {
 		return 0;
-	} else {
-		$num = reverse $num;
-		$num =~s/(\d{3})(\d)/$1,$2/g;
-		$num = reverse $num;
-		return $num;
+	}else {
+		$num =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/g;
+		return scalar reverse $num;
 	}
 }
 
