@@ -31,7 +31,7 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
-use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete sendCharLogin);
+use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete sendCharLogin sendMove);
 
 our @EXPORT = qw(
 	auth
@@ -55,6 +55,7 @@ our @EXPORT = qw(
 	objectAdded
 	objectInsideSpell
 	printItemDesc
+	stopAttack
 	whenStatusActive
 	whenStatusActiveMon
 	whenStatusActivePL
@@ -664,6 +665,11 @@ sub printItemDesc {
 	message("Item: $items_lut{$itemID}\n\n", "info");
 	message($itemsDesc_lut{$itemID}, "info");
 	message("==============================================\n", "info");
+}
+
+sub stopAttack {
+	my $pos = calcPosition($char);
+	sendMove(\$remote_socket, $pos->{x}, $pos->{y});
 }
 
 sub whenStatusActive {
