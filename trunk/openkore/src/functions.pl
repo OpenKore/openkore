@@ -1253,7 +1253,7 @@ sub parseCommand {
 			Modules::reload($args, 1);
 
 		} else {
-			Modules::reloadSafe('functions.pl');
+			Modules::reloadFile('functions.pl');
 		}
 
 	} elsif ($switch eq "relog") {
