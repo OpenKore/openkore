@@ -106,6 +106,12 @@ CalcPath_init (char* map, unsigned char* weight, unsigned long width, unsigned l
 	return session;
 }
 
+/*
+ * Return values:
+ * -1 = failed (no solution found)
+ *  0 = timeout (pathfinding not yet complete; run this function again to resume)
+ *  1 = finished
+ */
 int
 CalcPath_pathStep(CalcPath_session * session)
 {
