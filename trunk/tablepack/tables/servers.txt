@@ -54,6 +54,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverType 2
 
 [Philippines - pRO: Loki/Sarah]
 ip 202.57.118.231
@@ -64,6 +65,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverType 2
 
 [Philippines - pRO: Odin/Chaos]
 ip 202.57.118.233
@@ -74,16 +76,18 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverType 2
 
 [Philippines - pRO: Urdr] 
 ip 202.57.118.231
-port 6900 
+port 6900
 master_version 27
-version 1 
-secureLogin 1 
-secureLogin_type 0 
-secureLogin_requestCode 
-secureLogin_account 0 
+version 1
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType 2
 
 [Europe - euRO]
 ip 62.109.138.134
@@ -96,6 +100,7 @@ ip 202.168.25.133
 port 6900
 master_version 23
 version 2
+serverType 1
 
 [Brazil - bRO]
 ip 200.229.49.10
