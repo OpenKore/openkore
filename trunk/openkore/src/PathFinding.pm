@@ -24,7 +24,7 @@ XSLoader::load('Tools');
 #   height: the height of the field
 #
 # Optional arguments:
-#   timeout: the number of milliseconds to run each step for, defaults to 10
+#   timeout: the number of milliseconds to run each step for, defaults to 1500
 #   weights: a string of characters used as the weights to give squares from 0 to
 #            255 squares away from the closest wall, the first character must be 
 #            chr(255) and it must be 256 characters long.
@@ -44,7 +44,7 @@ sub new {
 	$args{distance_map} = $args{field}{dstMap} unless $args{distance_map};
 	$args{width} = $args{field}{width} unless $args{width};
 	$args{height} = $args{field}{height} unless $args{height};
-	$args{timeout} = 1000 unless $args{timeout};
+	$args{timeout} = 1500 unless $args{timeout};
 	$args{weights} = chr(255) . chr(1) x 255 unless $args{weights};
 
 	return init($args{distance_map}, $args{weights}, $args{width}, $args{height},

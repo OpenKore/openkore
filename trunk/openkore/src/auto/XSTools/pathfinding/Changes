@@ -2,6 +2,7 @@ Revision history for Perl extension PathFinding.
 
 1.0.0-2  Aug 18 2004
 	- Build system changes
+	- Change default timeout to 1500 msec
 
 1.0.0-1  Aug 02 2004
 	- More cleanups
