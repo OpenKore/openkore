@@ -11,12 +11,12 @@ use Globals;
 
 
 sub action {
-	my $i = (defined $_[1] ? $_[1] : 0);
+	my $i = (defined $_[0] ? $_[0] : 0);
 	return $ai_seq[$i];
 }
 
 sub args {
-	my $i = (defined $_[1] ? $_[1] : 0);
+	my $i = (defined $_[0] ? $_[0] : 0);
 	return $ai_seq_args[$i];
 }
 
