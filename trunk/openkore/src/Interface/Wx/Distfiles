@@ -5,5 +5,6 @@ Console.pm
 Input.pm
 ItemList.pm
 ConfigEditor.pm
+DockNotebook.pm
 close.png
 window.png

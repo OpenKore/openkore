@@ -15,6 +15,7 @@ DIRS=(.
 	src/Interface/Console
 	src/Interface/Console/Other
 	src/Interface/Wx
+	src/Interface/Wx/DockNotebook
 	src/Network
 	src/Utils
 	src/auto/XSTools
