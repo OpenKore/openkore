@@ -2533,7 +2533,7 @@ sub AI {
 
 	AUTOSTORAGE: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto") && $config{'storageAuto'} && $config{'storageAuto_npc'} ne ""
 	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight_sellOrStore'})
 	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
 	  )) {
@@ -2552,8 +2552,8 @@ sub AI {
 		while (1) {
 			last if (!$config{"getAuto_$i"});
 			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"getAuto_$i"});
-
-			if ($config{"getAuto_$i"."_minAmount"} ne "" && $config{"getAuto_$i"."_maxAmount"} ne "" && !$stockVoid[$i]
+			
+			if ($config{"getAuto_$i"."_minAmount"} ne "" && $config{"getAuto_$i"."_maxAmount"} ne "" && findKeyString(\%storage, "name", $config{"getAuto_$ai_seq_args[0]{index}"}) ne ""
 			   && !$config{"getAuto_$i"."_passive"}
 			   && ($ai_v{'temp'}{'invIndex'} eq ""
 			       || ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"getAuto_$i"."_minAmount"}
@@ -2585,16 +2585,17 @@ sub AI {
 			unshift @ai_seq_args, {forcedByStorage => 1};
 		}
 	} elsif ($ai_seq[0] eq "storageAuto" && timeOut(\%{$timeout{'ai_storageAuto'}})) {
-		if (!$config{'storageAuto'} || !%{$npcs_lut{$config{'storageAuto_npc'}}}) {
+		getNPCInfo($config{'storageAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
+		if (!$config{'storageAuto'} || !defined($ai_seq_args[0]{'npc'}{'ok'})) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOSTORAGE;
 		}
 
 		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $npcs_lut{$config{'storageAuto_npc'}}{'map'}) {
+		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
-			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{'storageAuto_npc'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			$ai_v{'temp'}{'distance'} = distance(\%{$ai_seq_args[0]{'npc'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 			if ($ai_v{'temp'}{'distance'} > $config{'storageAuto_distance'}) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
@@ -2610,56 +2611,43 @@ sub AI {
 				useTeleport(2);
 				$timeout{'ai_storageAuto'}{'time'} = time;
 			} else {
-				message "Calculating auto-storage route to: $maps_lut{$npcs_lut{$config{'storageAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'storageAuto_npc'}}{'map'}): $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}\n", "route";
-				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'storageAuto_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'storageAuto_npc'}}{'map'}, 0, 0, 1, 0, $config{'storageAuto_distance'}, 1);
+				message "Calculating auto-storage route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n", "route";
+				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, $ai_seq_args[0]{'npc'}{'map'}, 0, 0, 1, 0, $config{'storageAuto_distance'}, 1);
 			}
 		} else {
-			if ($ai_seq_args[0]{'sentStore'} <= 1) {
-				sendTalk(\$remote_socket, pack("L1",$config{'storageAuto_npc'})) if !$ai_seq_args[0]{'sentStore'};
+			if (!defined($ai_seq_args[0]{'sentStore'})) {
 				if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
-					if (!$ai_seq_args[0]{'sentStore'}) {
-						if ($config{'storageAuto_npc_type'} eq "") {
-							warning "Warning storageAuto has changed. Please read News.txt\n";
-						}
-						$config{'storageAuto_npc_steps'} = "c r1 n";
-						debug "Using standard iRO npc storage steps.\n", "npc";
-					} elsif ($config{'storageAuto_npc_type'} eq "2") {
-						$config{'storageAuto_npc_steps'} = "c c r1 n";
-						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
-					} elsif ($config{'storageAuto_npc_type'} eq "3") {
-						message "Using storage steps defined in config.\n", "info";
-					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
-						error "Something is wrong with storageAuto_npc_type in your config.\n";
-					}
+					warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
+					$config{'storageAuto_npc_steps'} = "c r1 n";
+					debug "Using standard iRO npc storage steps.\n", "npc";				
+				} elsif ($config{'storageAuto_npc_type'} eq "2") {
+					$config{'storageAuto_npc_steps'} = "c c r1 n";
+					debug "Using iRO comodo (location) npc storage steps.\n", "npc";
+				} elsif ($config{'storageAuto_npc_type'} eq "3") {
+					message "Using storage steps defined in config.\n", "info";
+				} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
+					error "Something is wrong with storageAuto_npc_type in your config.\n";
 				}
-				@{$ai_seq_args[0]{'steps'}} = split(/ +/, $config{'storageAuto_npc_steps'});
-				$timeout{'ai_storageAuto'}{'time'} = time;
-				$ai_seq_args[0]{'sentStore'}++;
-				last AUTOSTORAGE;
-				$ai_seq_args[0]{'step'} = 0;
-			} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}]) {
-				if ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /c/i) {
-					sendTalkContinue(\$remote_socket, pack("L1",$config{'storageAuto_npc'}));
-					debug "Sent Talk Continue.\n", "npc";
-				} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /n/i) {
-					sendTalkCancel(\$remote_socket, pack("L1",$config{'storageAuto_npc'}));
-					debug "Sent Talk Cancel.\n", "npc";
-				} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] ne "") {
-					($ai_v{'temp'}{'arg'}) = $ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /r(\d+)/i;
-					if ($ai_v{'temp'}{'arg'} ne "") {
-						$ai_v{'temp'}{'arg'}++;
-						sendTalkResponse(\$remote_socket, pack("L1",$config{'storageAuto_npc'}), $ai_v{'temp'}{'arg'});
-						debug "Sent Talk Responce ".$ai_v{'temp'}{'arg'}."\n", "npc";
-					}
+
+				undef $ai_v{temp}{storage_opened};
+				$ai_seq_args[0]{'sentStore'} = 1;
+				
+				if (defined $ai_seq_args[0]{'npc'}{'id'}) { 
+					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, $config{'storageAuto_npc_steps'}); 
 				} else {
-					undef @{$ai_seq_args[0]{'steps'}};
+					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, $config{'storageAuto_npc_steps'}); 
 				}
-				$ai_seq_args[0]{'step'}++;
+
 				$timeout{'ai_storageAuto'}{'time'} = time;
 				last AUTOSTORAGE;
 			}
-			$ai_seq_args[0]{'done'} = 1;
+			
+			if (!defined $ai_v{temp}{storage_opened}) {
+				last AUTOSTORAGE;
+			}
+			
 			if (!$ai_seq_args[0]{'getStart'}) {
+				$ai_seq_args[0]{'done'} = 1;
 				for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
 					next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
 					if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'}
@@ -2678,61 +2666,60 @@ sub AI {
 					}
 				}
 			}
+			
+			# getAuto begin
+			
+			if (!$ai_seq_args[0]{getStart} && $ai_seq_args[0]{done} == 1) {
+				$ai_seq_args[0]{getStart} = 1;
+				undef $ai_seq_args[0]{done};
+				$ai_seq_args[0]{index} = 0;
+				$ai_seq_args[0]{retry} = 0;
 
-			if (!$ai_seq_args[0]{'getStart'} && $ai_seq_args[0]{'done'} == 1) {
-				$ai_seq_args[0]{'getStart'} = 1;
-				undef $ai_seq_args[0]{'done'};
 				last AUTOSTORAGE;
 			}
-			$i = 0;
-			undef $ai_seq_args[0]{'index'};
-			while (1) {
-				last if (!$config{"getAuto_$i"});
-				$ai_seq_args[0]{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"getAuto_$i"});
-				if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"getAuto_$i"."_maxAmount"} ne "" && !$stockVoid[$i] && ($ai_seq_args[0]{'invIndex'} eq ""
-				   || $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} < $config{"getAuto_$i"."_maxAmount"})) {
-					$ai_seq_args[0]{'index'} = $i;
-					last;
-				}
-				$i++;
-			}
-			if ($ai_seq_args[0]{'index'} eq ""
-			   || ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $ai_seq_args[0]{'index'}
-			   && timeOut(\%{$timeout{'ai_storageAuto_giveup'}}))) {
-				$ai_seq_args[0]{'done'} = 1;
-				sendStorageClose(\$remote_socket);
-				last AUTOSTORAGE;
-			} elsif ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $ai_seq_args[0]{'index'}) {
-				$timeout{'ai_storageAuto_giveup'}{'time'} = time;
-			}
+			
+			if (defined($ai_seq_args[0]{getStart}) && $ai_seq_args[0]{done} != 1) {
 
-			undef $ai_seq_args[0]{'done'};
-			undef $ai_seq_args[0]{'storageInvID'};
-			$ai_seq_args[0]{'lastIndex'} = $ai_seq_args[0]{'index'};
-			$ai_seq_args[0]{'storageInvID'} = findKeyString(\%storage, "name", $config{"getAuto_$ai_seq_args[0]{'index'}"});
-			if ($ai_seq_args[0]{'storageInvID'} eq "") {
-				$stockVoid[$ai_seq_args[0]{'index'}] = 1;
-				last AUTOSTORAGE;
-			} elsif ($ai_seq_args[0]{'invIndex'} ne "") {
-				if ($config{"getAuto_$ai_seq_args[0]{'index'}"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} > $storage{$ai_seq_args[0]{'storageInvID'}}{'amount'}) {
-					$getAmount = $storage{$ai_seq_args[0]{'storageInvID'}}{'amount'};
-					$stockVoid[$ai_seq_args[0]{'index'}] = 1;
-				} else {
-					$getAmount = $config{"getAuto_$ai_seq_args[0]{'index'}"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'};
-				}
-			} else {
-				if ($config{"getAuto_$ai_seq_args[0]{'index'}"."_maxAmount"} > $storage{$ai_seq_args[0]{'storageInvID'}}{'amount'}) {
-					$getAmount = $storage{$ai_seq_args[0]{'storageInvID'}}{'amount'};
-					$stockVoid[$ai_seq_args[0]{'index'}] = 1;
-				} else {
-					$getAmount = $config{"getAuto_$ai_seq_args[0]{'index'}"."_maxAmount"};
+				my %item;
+				while ($config{"getAuto_$ai_seq_args[0]{index}"}) {
+					undef %item;
+					$item{name} = $config{"getAuto_$ai_seq_args[0]{index}"};
+					$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
+					$item{inventory}{amount} = ($item{inventory}{index} ne "")? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount}: 0;
+					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
+					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
+					$item{max_amount} = $config{"getAuto_$ai_seq_args[0]{index}"."_maxAmount"};
+					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
+					
+					if ($item{amount_needed} > 0) {
+						$item{amount_get} = ($item{storage}{amount} >= $item{amount_needed})? $item{amount_needed} : $item{storage}{amount};
+					}
+					
+					if (($item{amount_get} > 0) && ($ai_seq_args[0]{retry} < 3)) {
+						message "Attempt to get $item{amount_get} x $item{name} from storage, retry: $ai_seq_args[0]{retry}\n", "storage", 1;
+						sendStorageGet(\$remote_socket, $item{storage}{index}, $item{amount_get});
+						$timeout{ai_storageAuto}{time} = time;
+						$ai_seq_args[0]{retry}++;
+						last AUTOSTORAGE;
+						
+						# we don't inc the index when amount_get is more then 0, this will enable a way of retrying
+						# on next loop if it fails this time
+					}
+					
+					if ($item{storage}{amount} < $item{amount_needed}) {
+						warning "storage: $item{name} out of stock\n";
+					}
+	
+					# otherwise, increment the index
+					$ai_seq_args[0]{index}++;
+					$ai_seq_args[0]{retry} = 0;
 				}
 			}
-			sendStorageGet(\$remote_socket, $storage{$ai_seq_args[0]{'storageInvID'}}{'index'}, $getAmount);
-			$timeout{'ai_storageAuto'}{'time'} = time;
+			
+			sendStorageClose(\$remote_socket);
+			$ai_seq_args[0]{done} = 1;
 		}
 	}
-
 	} #END OF BLOCK AUTOSTORAGE
 
 
@@ -2764,16 +2751,17 @@ sub AI {
 			unshift @ai_seq_args, {forcedBySell => 1};
 		}
 	} elsif ($ai_seq[0] eq "sellAuto" && timeOut(\%{$timeout{'ai_sellAuto'}})) {
-		if (!$config{'sellAuto'} || !%{$npcs_lut{$config{'sellAuto_npc'}}}) {
+		getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
+		if (!$config{'sellAuto'} || !defined($ai_seq_args[0]{'npc'}{'ok'})) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOSELL;
 		}
 
 		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $npcs_lut{$config{'sellAuto_npc'}}{'map'}) {
+		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
-			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{'sellAuto_npc'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			$ai_v{'temp'}{'distance'} = distance(\%{$ai_seq_args[0]{'npc'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 			if ($ai_v{'temp'}{'distance'} > $config{'sellAuto_distance'}) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
@@ -2790,15 +2778,18 @@ sub AI {
 #Solos End
 				$timeout{'ai_sellAuto'}{'time'} = time;
 			} else {
-				message "Calculating auto-sell route to: $maps_lut{$npcs_lut{$config{'sellAuto_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'sellAuto_npc'}}{'map'}): $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}\n", "route";
-				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'sellAuto_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'sellAuto_npc'}}{'map'}, 0, 0, 1, 0, $config{'sellAuto_distance'}, 1);
+				message "Calculating auto-sell route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n", "route";
+				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, $ai_seq_args[0]{'npc'}{'map'}, 0, 0, 1, 0, $config{'sellAuto_distance'}, 1);
 			}
 		} else {
-			if ($ai_seq_args[0]{'sentSell'} <= 1) {
-				sendTalk(\$remote_socket, pack("L1",$config{'sellAuto_npc'})) if !$ai_seq_args[0]{'sentSell'};
-				sendGetSellList(\$remote_socket, pack("L1",$config{'sellAuto_npc'})) if $ai_seq_args[0]{'sentSell'};
-				$ai_seq_args[0]{'sentSell'}++;
-				$timeout{'ai_sellAuto'}{'time'} = time;
+			if (!defined($ai_seq_args[0]{'sentSell'})) {
+				$ai_seq_args[0]{'sentSell'} = 1;
+				
+				if (defined $ai_seq_args[0]{'npc'}{'id'}) { 
+					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "b"); 
+				} else {
+					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b"); 
+				}
 				last AUTOSELL;
 			}
 			$ai_seq_args[0]{'done'} = 1;
@@ -2872,11 +2863,15 @@ sub AI {
 		undef $ai_seq_args[0]{'index'};
 		
 		while (1) {
-			last if (!$config{"buyAuto_$i"} || !%{$npcs_lut{$config{"buyAuto_$i"."_npc"}}});
+			last if (!$config{"buyAuto_$i"});
 			$ai_seq_args[0]{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
 			if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"buyAuto_$i"."_maxAmount"} ne "" && ($ai_seq_args[0]{'invIndex'} eq "" 
 				|| $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"})) {
-				$ai_seq_args[0]{'index'} = $i;
+
+				getNPCInfo($config{"buyAuto_$i"."_npc"}, \%{$ai_seq_args[0]{'npc'}});
+				if (defined $ai_seq_args[0]{'npc'}{'ok'}) {
+					$ai_seq_args[0]{'index'} = $i;
+				}
 				last;
 			}
 			$i++;
@@ -2888,10 +2883,10 @@ sub AI {
 			last AUTOBUY;
 		}
 		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}) {
+		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;			
 		} else {
-			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			$ai_v{'temp'}{'distance'} = distance(\%{$ai_seq_args[0]{'npc'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
 			if ($ai_v{'temp'}{'distance'} > $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}) {
 				$ai_v{'temp'}{'do_route'} = 1;
 			}
@@ -2908,8 +2903,8 @@ sub AI {
 #Solos End
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
 			} else {
-				message qq~Calculating auto-buy route to: $maps_lut{$npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}.'.rsw'}($npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}): $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}\n~, "route";
-				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'x'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'pos'}{'y'}, $npcs_lut{$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"}}{'map'}, 0, 0, 1, 0, $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}, 1);
+				message qq~Calculating auto-buy route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n~, "route";
+				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, $ai_seq_args[0]{'npc'}{'map'}, 0, 0, 1, 0, $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}, 1);
 			}
 		} else {
 			if ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $ai_seq_args[0]{'index'}) {
@@ -2933,11 +2928,14 @@ sub AI {
 				}
 			}
 
-			if ($ai_seq_args[0]{'sentBuy'} <= 1) {
-				sendTalk(\$remote_socket, pack("L1",$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"})) if !$ai_seq_args[0]{'sentBuy'};
-				sendGetStoreList(\$remote_socket, pack("L1",$config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"})) if $ai_seq_args[0]{'sentBuy'};
-				$ai_seq_args[0]{'sentBuy'}++;
+			if (!defined($ai_seq_args[0]{'sentBuy'})) {
+				$ai_seq_args[0]{'sentBuy'} = 1;
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
+				if (defined $ai_seq_args[0]{'npc'}{'id'}) { 
+					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "b"); 
+				} else {
+					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b"); 
+				}
 				last AUTOBUY;
 			}	
 			if ($ai_seq_args[0]{'invIndex'} ne "") {
@@ -3304,31 +3302,26 @@ sub AI {
 		}
 	}
 
-	# use party information to find master (higher priority if follow=2)
-	if (($config{follow} eq 2) && !defined($ai_seq_args[$#ai_seq]{'following'}) && ($ai_seq[$#ai_seq] eq "follow")) {
-		ai_partyfollow();
-	}	
-
 	if ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && ($players{$ai_seq_args[0]{'ID'}}{'dead'} || (!%{$players{$ai_seq_args[0]{'ID'}}} && $players_old{$ai_seq_args[0]{'ID'}}{'dead'}))) {
 		message "Master died.  I'll wait here.\n", "party";
 		undef $ai_seq_args[0]{'following'};
 	} elsif ($ai_seq[0] eq "follow" && $ai_seq_args[0]{'following'} && !%{$players{$ai_seq_args[0]{'ID'}}}) {
-		message "I lost my master\n", "party";
+		message "I lost my master\n", "follow";
 		if ($config{'followBot'}) {
-			message "Trying to get him back\n", "party";
+			message "Trying to get him back\n", "follow";
 			sendMessage(\$remote_socket, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
 
 		undef $ai_seq_args[0]{'following'};
 
 		if ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
-			message "My master disconnected\n", "party";
+			message "My master disconnected\n", "follow";
 
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'teleported'}) {
-			message "My master teleported\n", "party", 1;
+			message "My master teleported\n", "follow", 1;
 
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disappeared'}) {
-			message "Trying to find lost master\n", "party", 1;
+			message "Trying to find lost master\n", "follow", 1;
 
 			undef $ai_seq_args[0]{'ai_follow_lost_char_last_pos'};
 			undef $ai_seq_args[0]{'follow_lost_portal_tried'};
@@ -3351,7 +3344,7 @@ sub AI {
 			}
 			$ai_seq_args[0]{'follow_lost_portalID'} = $ai_v{'temp'}{'foundID'};
 		} else {
-			message "Don't know what happened to Master\n", "party", 1;
+			message "Don't know what happened to Master\n", "follow", 1;
 		}
 	}
 
@@ -3368,20 +3361,20 @@ sub AI {
 
 		if (timeOut(\%{$ai_seq_args[0]{'ai_follow_lost_end'}})) {
 			undef $ai_seq_args[0]{'ai_follow_lost'};
-			message "Couldn't find master, giving up\n", "party";
+			message "Couldn't find master, giving up\n", "follow";
 
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'disconnected'}) {
 			undef $ai_seq_args[0]{'ai_follow_lost'};
-			message "My master disconnected\n", "party";
+			message "My master disconnected\n", "follow";
 
 		} elsif ($players_old{$ai_seq_args[0]{'ID'}}{'teleported'}) {
 			undef $ai_seq_args[0]{'ai_follow_lost'};
-			message "My master teleported\n", "party";
+			message "My master teleported\n", "follow";
 
 		} elsif (%{$players{$ai_seq_args[0]{'ID'}}}) {
 			$ai_seq_args[0]{'following'} = 1;
 			undef $ai_seq_args[0]{'ai_follow_lost'};
-			message "Found my master!\n", "party"
+			message "Found my master!\n", "follow"
 
 		} elsif ($ai_seq_args[0]{'lost_stuck'}) {
 			if ($ai_seq_args[0]{'follow_lost_portalID'} eq "") {
@@ -6287,8 +6280,10 @@ sub parseMsg {
 			$storage{$index}{'binID'} = binFind(\@storageID, $index);
 			debug "Storage: $display ($storage{$index}{'binID'})\n", "parseMsg";
 		}
-		message "Storage opened\n";
-
+		
+		$ai_v{temp}{storage_opened} = 1;
+		message "Storage Opened\n", "storage";
+		
 	} elsif ($switch eq "00A6") {
 		# Retrieve list of non-stackable (weapons & armor) storage items.
 		# This packet is sent immediately after 00A5/01F0.
@@ -6353,7 +6348,6 @@ sub parseMsg {
 			$storage{$index}{'binID'} = binFind(\@storageID, $index);
 			debug "Storage: $storage{$index}{'name'} ($storage{$index}{'binID'})\n", "parseMsg";
 		}
-
 	} elsif ($switch eq "00A8") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $index = unpack("S1",substr($msg, 2, 2));
@@ -7022,7 +7016,8 @@ sub parseMsg {
 
 	} elsif ($switch eq "00F8") {
 		message "Storage Closed\n", "storage";
-
+		undef $ai_v{temp}{storage_opened}
+		
 	} elsif ($switch eq "00FA") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
@@ -8507,9 +8502,9 @@ sub ai_partyfollow {
 			$ai_v{temp}{time} = time; 
 
 			if (defined($ai_v{temp}{master}{x}) && defined($ai_v{temp}{master}{y})) {
-				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'} ($ai_v{temp}{master}{x},$ai_v{temp}{master}{y})\n", "party";
+				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'} ($ai_v{temp}{master}{x},$ai_v{temp}{master}{y})\n", "follow";
 			} elsif ($ai_v{temp}{master}{x} ne '0' && $ai_v{temp}{master}{y} ne '0') {
-				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'}\n", "party";
+				message "Calculating route to find master: $maps_lut{$ai_v{temp}{master}{map}.'.rsw'}\n", "follow";
 			} else {
 				return;
 			}
@@ -10448,7 +10443,8 @@ sub countCastOn {
 		}
 	}
 }
- 
+
+# return ID based on name if party member is online
 sub findPartyUserID {
 	if (%{$chars[$config{'char'}]{'party'}}) {
 		my $partyUserName = shift; 
@@ -10463,5 +10459,37 @@ sub findPartyUserID {
 
 	return undef;
 }
+
+# fill in a hash of NPC information either base on ID or location ("map x y")
+sub getNPCInfo {
+	my $id = shift;
+	my $return_hash = shift;
+
+	undef %{$return_hash};
+	
+	if ($id =~ /^\d+$/) {
+		if (%{$npcs_lut{$id}}) {
+			$$return_hash{id} = $id;
+			$$return_hash{map} = $npcs_lut{$id}{map};
+			$$return_hash{pos}{x} = $npcs_lut{$id}{pos}{x};
+			$$return_hash{pos}{y} = $npcs_lut{$id}{pos}{y};		
+		}
+	}
+	else {
+		my ($map, $x, $y) = split(/ +/, $id, 3);
+		
+		$$return_hash{map} = $map;
+		$$return_hash{pos}{x} = $x;
+		$$return_hash{pos}{y} = $y;
+	}
+	
+	if (defined($$return_hash{map}) && defined($$return_hash{pos}{x}) && defined($$return_hash{pos}{y})) {
+		$$return_hash{ok} = 1;
+	}
+	else {
+		error "Incomplete NPC info or ID not found in npcs.txt\n";
+	}
+}
+
 
 return 1;
