@@ -64,6 +64,11 @@ Plugins::loadAll();
 Log::message("\n");
 Plugins::callHook('start');
 
+# if this error is not trapped, all plugin related error will be wrongly reported as missing Win32::API
+if ($@) {
+	$interface->errorDialog("Error loading plugin. Please install necessary modules first.\n$@");
+	exit 1;
+}
 
 ##### PARSE CONFIGURATION AND DATA FILES #####
 
