@@ -23,6 +23,7 @@ New features:
 - If old files (from before the CVS cleanup) are found, warn the user
   and bail out. Too many people are reporting "bugs" that are a result
   of conflicts with old files.
+- More avoidGM modes. See the news avoid the new avoidGM_near config option.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
@@ -39,6 +40,12 @@ New config options:
 - New condition _smartEncore for useSelfSkill. When 1, it will cast the
   Encore skill instead of this skill if Encore would cause this skill to
   be cast (saves SP for bards and dancers).
+- avoidGM_near now supports different modes:
+  0 - disabled (do not avoid GM)
+  1 - teleport & disconnect
+  2 - disconnect
+  3 - teleport
+  4 - respawn
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't

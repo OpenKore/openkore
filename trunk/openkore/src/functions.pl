@@ -10105,7 +10105,7 @@ sub updateDamageTables {
 
 sub avoidGM_near {
 	for (my $i = 0; $i < @playersID; $i++) {
-		next if($playersID[$i] eq "");
+		next if ($playersID[$i] eq "");
 
 		# Check whether this "GM" is on the ignore list
 		# in order to prevent false matches
@@ -10117,22 +10117,47 @@ sub avoidGM_near {
 				next;
 			}
 
-			if ($players{$playersID[$i]}{'name'} eq $config{"avoid_ignore_$j"}) {
+			if ($players{$playersID[$i]}{name} eq $config{"avoid_ignore_$j"}) {
 				$statusGM = 0;
 				last;
 			}
 			$j++;
 		}
 
-		if ($statusGM && $players{$playersID[$i]}{'name'} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
-			warning "GM $players{$playersID[$i]}{'name'} is nearby, disconnecting...\n";
-			chatLog("k", "*** Found GM $players{$playersID[$i]}{'name'} nearby and disconnected ***\n");
+		if ($statusGM && $players{$playersID[$i]}{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+			my $msg = "GM $players{$playersID[$i]}{'name'} is nearby, ";
 
-			my $tmp = $config{'avoidGM_reconnect'};
-			warning "Disconnect for $tmp seconds...\n";
-			$timeout_ex{'master'}{'time'} = time;
-			$timeout_ex{'master'}{'timeout'} = $tmp;
-			Network::disconnect(\$remote_socket);
+			if ($config{avoidGM_near} == 1) {
+				# Mode 1: teleport & disconnect
+				useTeleport(1);
+				my $tmp = $config{avoidGM_reconnect};
+				$msg .= "teleport & disconnect for $tmp seconds";
+				$timeout_ex{master}{time} = time;
+				$timeout_ex{master}{timeout} = $tmp;
+				Network::disconnect(\$remote_socket);
+
+			} elsif ($config{avoidGM_near} == 2) {
+				# Mode 2: disconnect
+				my $tmp = $config{avoidGM_reconnect};
+				$msg .= "disconnect for $tmp seconds";
+				$timeout_ex{master}{time} = time;
+				$timeout_ex{master}{timeout} = $tmp;
+				Network::disconnect(\$remote_socket);
+
+			} elsif ($config{avoidGM_near} == 3) {
+				# Mode 3: teleport
+				useTeleport(1);
+				$msg .= "teleporting";
+
+			} elsif ($config{avoidGM_near} >= 4) {
+				# Mode 4: respawn
+				useTeleport(2);
+				$msg .= "respawning";
+			}
+
+			warning "$msg\n";
+			chatLog("k", "*** $msg ***\n");
+
 			return 1;
 		}
 	}
