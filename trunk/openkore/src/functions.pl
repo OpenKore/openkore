@@ -5803,9 +5803,8 @@ sub parseMsg {
 			$items{$ID}{'appear_time'} = time;
 			$items{$ID}{'amount'} = $amount;
 			$items{$ID}{'nameID'} = $type;
-			$display = itemName($items{$ID});
 			$items{$ID}{'binID'} = binFind(\@itemsID, $ID);
-			$items{$ID}{'name'} = $display;
+			$items{$ID}{'name'} = itemName($items{$ID});
 		}
 		$items{$ID}{'pos'}{'x'} = $x;
 		$items{$ID}{'pos'}{'y'} = $y;
@@ -5823,9 +5822,8 @@ sub parseMsg {
 			$items{$ID}{'appear_time'} = time;
 			$items{$ID}{'amount'} = $amount;
 			$items{$ID}{'nameID'} = $type;
-			$display = itemName($items{$ID});
 			$items{$ID}{'binID'} = binFind(\@itemsID, $ID);
-			$items{$ID}{'name'} = $display;
+			$items{$ID}{'name'} = itemName($items{$ID});
 		}
 		$items{$ID}{'pos'}{'x'} = $x;
 		$items{$ID}{'pos'}{'y'} = $y;
@@ -6786,28 +6784,23 @@ sub parseMsg {
 	# Hambo Started
 	# 3 Packets About MVP
 	} elsif ($switch eq "010A") {
-		my $ID = unpack("S1", substr($msg, 2, 2));
-		my $display = ($items_lut{$ID} ne "")
-		? $items_lut{$ID}
-		: "Unknown" . $ID;
-		message "Get MVP item&#65306;$display\n";
-		chatLog("k", "Get MVP item&#65306;$display\n");
+		my %item;
+		$item{ID} = unpack("S1", substr($msg, 2, 2));
+		my $display = itemName(\%item);
+		message "Get MVP item $display\n";
+		chatLog("k", "Get MVP item $display\n");
 
 	} elsif ($switch eq "010B") {
 		my $expAmount = unpack("L1", substr($msg, 2, 4));
-		message "Congradulations, you are the MVP! Your reward is $expAmount exp!\n";
-		chatLog("k", "Congradulations, you are the MVP! Your reward is $expAmount exp!\n");
+		my $msg = "Congratulations, you are the MVP! Your reward is $expAmount exp!\n";
+		message $msg;
+		chatLog("k", $msg);
 
 	} elsif ($switch eq "010C") {
 		my $ID = substr($msg, 2, 4);
-		my $display = "Unknown";
-		if (%{$players{$ID}}) {
-			$display = "Player ". $players{$ID}{'name'} . "(" . $players{$ID}{'binID'} . ") ";
-		} elsif ($ID eq $accountID) {
-			$display = "Your";
-		}
-		message "$displaybecome MVP!\n";
-		chatLog("k", $display . "become MVP!\n");
+		my $display = getActorName($ID);
+		message "$display become MVP!\n";
+		chatLog("k", "$display become MVP!\n");
 	# Hambo Ended
 
 	} elsif ($switch eq "010E") {

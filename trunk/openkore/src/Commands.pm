@@ -562,7 +562,7 @@ sub cmdMonsterList {
 
 		message(swrite(
 			"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<",
-			[$i, $monsters{$monstersID[$i]}{'name'}, $dmgTo, $dmgFrom, $dist, $pos]),
+			[$i, getHex($monstersID[$i])." ".$monsters{$monstersID[$i]}{'name'}, $dmgTo, $dmgFrom, $dist, $pos]),
 			"list");
 	}
 	message("----------------------------------\n", "list");
@@ -805,6 +805,7 @@ sub cmdStatus {
 	# Display character status
 	my ($baseEXPKill, $jobEXPKill);
 
+	print "Account ID: ".getHex($accountID)."\n";
 	if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
 		$baseEXPKill = $chars[$config{'char'}]{'exp_max_last'} - $chars[$config{'char'}]{'exp_last'} + $chars[$config{'char'}]{'exp'};
 	} elsif ($chars[$config{'char'}]{'exp_last'} == 0 && $chars[$config{'char'}]{'exp_max_last'} == 0) {
