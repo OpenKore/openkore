@@ -5,7 +5,7 @@
 4 Armour
 5 Weapon
 6 Card
-7 Unknown_Type_7
+7 Egg
 8 Weapon
 9 Weapon
 10 Arrows
