@@ -103,6 +103,7 @@ sub startInputClient {
 			PeerPort	=> $port,
 			Proto		=> 'tcp');
 		($local_socket) || die "Error creating connection to local server: $@";
+		$local_socket->autoflush(0);
 
 		my $input;
 		while (1) {
@@ -111,6 +112,7 @@ sub startInputClient {
 			chomp $input;
 			if ($input ne "") {
 				$local_socket->send($input);
+				$local_socket->flush;
 			}
 			last if ($input eq "quit" || $input eq "dump");
 		}

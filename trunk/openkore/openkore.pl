@@ -191,17 +191,20 @@ if ($found) {
 
 if (!$config{'XKore'}) {
 	if (!$config{'username'}) {
-		print "Enter Username:\n";
+		print "Enter Username: ";
+		STDOUT->flush;
 		$msg = Input::getInput(1);
 		$config{'username'} = $msg;
-		writeDataFileIntact($config_file, \%config);
+		writeDataFileIntact($Settings::config_file, \%config);
 	}
 	if (!$config{'password'}) {
-		print "Enter Password:\n";
+		print "Enter Password: ";
+		STDOUT->flush;
 		$msg = Input::getInput(1);
 		$config{'password'} = $msg;
-		writeDataFileIntact($config_file, \%config);
+		writeDataFileIntact($Settings::config_file, \%config);
 	}
+
 	if ($config{'master'} eq "") {
 		Log::message("------- Master Servers --------\n", "connection");
 		Log::message("#         Name\n", "connection");
@@ -216,10 +219,11 @@ if (!$config{'XKore'}) {
 		undef $i;
 		Log::message("-------------------------------\n", "connection");
 
-		print "Choose your master server:\n";
+		print "Choose your master server: ";
+		STDOUT->flush;
 		$msg = Input::getInput(1);
 		$config{'master'} = $msg;
-		writeDataFileIntact($config_file, \%config);
+		writeDataFileIntact($Settings::config_file, \%config);
 	}
 
 	$timeout{'injectSync'}{'time'} = time;
@@ -315,7 +319,7 @@ while ($quit != 1) {
 		}
 	}
 
-	if ($input = Input::getInput(1)) {
+	if (defined($input = Input::getInput(0))) {
 		parseInput($input);
 
 	} elsif (!$config{'XKore'} && dataWaiting(\$remote_socket)) {
@@ -362,6 +366,8 @@ while ($quit != 1) {
 		$ai_cmdQue-- if ($ai_cmdQue > 0);
 	} while ($ai_cmdQue > 0);
 	checkConnection();
+
+	mainLoop();
 }
 
 
