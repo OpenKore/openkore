@@ -81,7 +81,7 @@ sub start {
 		LocalAddr 	=> 'localhost',
 		LocalPort	=> $port,
 		Proto		=> 'tcp',
-		Reuse		=> 1);
+		ReuseAddr	=> 1);
 	if (!$server) {
 		Log::error("Unable to create IPC socket at port $port: $@\n");
 		return 0;
