@@ -108,9 +108,23 @@ function KoreanToUnicode(Str: AnsiString): WideString;
 var
   Size: Integer;
 begin
+  // Attempt to convert from Korean
   Size := MultiByteToWideChar(51949, MB_PRECOMPOSED, PChar(Str), -1, nil, 0);
-  SetLength(Result, Size);
-  MultiByteToWideChar(51949, MB_PRECOMPOSED, PChar(Str), -1, PWideChar(Result), Size);
+  if Size > 0 then
+  begin
+      // Don't include NULL character.
+      Size := Size - 1;
+      SetLength(Result, Size);
+      MultiByteToWideChar(51949, MB_PRECOMPOSED, PChar(Str), -1, PWideChar(Result), Size);
+  end else
+  begin
+      // Failed (maybe Korean support is not installed). Convert from ANSI.
+      Size := MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, PChar(Str), -1, nil, 0);
+      // Don't include NULL character.
+      Size := Size - 1;
+      SetLength(Result, Size);
+      MultiByteToWideChar(CP_ACP, MB_PRECOMPOSED, PChar(Str), -1, PWideChar(Result), Size);
+  end;
 end;
 
 function UnicodeToKorean(Str: WideString): String;
@@ -118,8 +132,16 @@ var
   Size: Integer;
 begin
   Size := WideCharToMultiByte(51949, 0, PWideChar(Str), Length(Str), nil, 0, nil, nil);
-  SetLength(Result, Size);
-  WideCharToMultiByte(51949, 0, PWideChar(Str), Length(Str), PChar(Result), Size, nil, nil);
+  if Size > 0 then
+  begin
+      SetLength(Result, Size);
+      WideCharToMultiByte(51949, 0, PWideChar(Str), Length(Str), PChar(Result), Size, nil, nil);
+  end else
+  begin
+      Size := WideCharToMultiByte(CP_ACP, 0, PWideChar(Str), Length(Str), nil, 0, nil, nil);
+      SetLength(Result, Size);
+      WideCharToMultiByte(CP_ACP, 0, PWideChar(Str), Length(Str), PChar(Result), Size, nil, nil);
+  end;
 end;
 
 function TForm1.OpenGRF(FileName: String): Boolean;

@@ -1168,11 +1168,11 @@ object AboutBox: TAboutBox
     OnClick = SpeedButton1Click
   end
   object Label4: TLabel
-    Left = 217
+    Left = 187
     Top = 128
-    Width = 86
+    Width = 116
     Height = 13
-    Caption = 'Copyright (c) 2004'
+    Caption = 'Copyright (c) 2004, 2005'
     Font.Charset = ANSI_CHARSET
     Font.Color = clBlack
     Font.Height = -11
