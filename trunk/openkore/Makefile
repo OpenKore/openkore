@@ -1,7 +1,7 @@
 .PHONY: all exe dist
 
-all:
-	make -C src/auto/XSTools
+all clean:
+	make -C src/auto/XSTools $@
 
 exe:
 	strip --strip-all src/auto/XSTools/XSTools.dll
