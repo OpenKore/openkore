@@ -133,6 +133,9 @@ sub initOtherVars {
 	# chat response stuff
 	undef $nextresptime;
 	undef $nextrespPMtime;
+
+	# shop stuff
+	$timeout{'ai_shop'}{'time'} = $KoreStartTime;
 }
 
 

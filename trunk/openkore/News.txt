@@ -38,6 +38,7 @@ Bug fixes:
 - Kore can walk on walkable water now (bug #21).
 - getAuto never gets triggered if you're low on a certain item. This has
   been fixed.
+- Don't open shop immediately after login in X-Kore mode (bug #49).
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
@@ -56,6 +57,7 @@ Credits:
 - fov: writeDataFile*() tweaks
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
+- obyarou: shop timeout in X-Kore bugfix (bug #49).
 
 
 ==================
