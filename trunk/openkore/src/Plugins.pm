@@ -267,7 +267,7 @@ sub addHook {
 sub delHook {
 	my $hookname = shift;
 	my $ID = shift;
-	delete $hooks{$hookname}[$ID] if ($hooks{$hookname});
+	delete $hooks{$hookname}[$ID] if ($hookname && $hooks{$hookname});
 }
 
 

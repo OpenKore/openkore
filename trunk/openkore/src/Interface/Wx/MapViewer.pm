@@ -40,6 +40,9 @@ sub new {
 	return $self;
 }
 
+
+#### Events ####
+
 sub onClick {
 	my $self = shift;
 	my $callback = shift;
@@ -63,6 +66,61 @@ sub onMapChange {
 	$self->{mapChangeCb} = $callback;
 	$self->{mapChangeData} = $user_data;
 }
+
+
+#### Public methods ####
+
+sub set {
+	my ($self, $map, $x, $y, $field) = @_;
+
+	$self->{field}{width} = $field->{width} if ($field && $field->{width});
+	$self->{field}{height} = $field->{height} if ($field && $field->{height});
+
+	if ($map && $map ne $self->{field}{name}) {
+		# Map changed
+		undef $self->{bitmap};
+		$self->{field}{name} = $map;
+		$self->{field}{x} = $x;
+		$self->{field}{y} = $y;
+
+		my $bitmap = $self->{bitmap} = $self->_loadMapImage($field);
+		return unless $bitmap;
+		$self->SetSizeHints($bitmap->GetWidth, $bitmap->GetHeight);
+		$self->{mapChangeCb}->($self->{mapChangeData}) if ($self->{mapChangeCb});
+		$self->{needUpdate} = 1;
+
+	} elsif ($x ne $self->{field}{x} || $y ne $self->{field}{y}) {
+		# Position changed
+		$self->{field}{x} = $x;
+		$self->{field}{y} = $y;
+		$self->{needUpdate} = 1;
+	}
+}
+
+sub setDest {
+	my ($self, $x, $y) = @_;
+	if (defined $x) {
+		if ($self->{dest}{x} ne $x && $self->{dest}{y} ne $y) {
+			$self->{dest}{x} = $x;
+			$self->{dest}{y} = $y;
+			$self->{needUpdate} = 1;
+		}
+	} elsif (defined $self->{dest}) {
+		undef $self->{dest};
+		$self->{needUpdate} = 1;
+	}
+}
+
+sub update {
+	my $self = shift;
+	if ($self->{needUpdate}) {
+		$self->{needUpdate} = 0;
+		$self->Refresh;
+	}
+}
+
+
+#### Private ####
 
 sub _onClick {
 	my $self = shift;
@@ -174,56 +232,6 @@ sub _loadMapImage {
 		return $bitmap;
 	}
 }
-
-sub set {
-	my ($self, $map, $x, $y, $field) = @_;
-
-	$self->{field}{width} = $field->{width} if ($field && $field->{width});
-	$self->{field}{height} = $field->{height} if ($field && $field->{height});
-
-	if ($map && $map ne $self->{field}{name}) {
-		# Map changed
-		undef $self->{bitmap};
-		$self->{field}{name} = $map;
-		$self->{field}{x} = $x;
-		$self->{field}{y} = $y;
-
-		my $bitmap = $self->{bitmap} = $self->_loadMapImage($field);
-		return unless $bitmap;
-		$self->SetSizeHints($bitmap->GetWidth(), $bitmap->GetHeight());
-		$self->{mapChangeCb}->($self->{mapChangeData}) if ($self->{mapChangeCb});
-		$self->{needUpdate} = 1;
-
-	} elsif ($x ne $self->{field}{x} || $y ne $self->{field}{y}) {
-		# Position changed
-		$self->{field}{x} = $x;
-		$self->{field}{y} = $y;
-		$self->{needUpdate} = 1;
-	}
-}
-
-sub setDest {
-	my ($self, $x, $y) = @_;
-	if (defined $x) {
-		if ($self->{dest}{x} ne $x && $self->{dest}{y} ne $y) {
-			$self->{dest}{x} = $x;
-			$self->{dest}{y} = $y;
-			$self->{needUpdate} = 1;
-		}
-	} elsif (defined $self->{dest}) {
-		undef $self->{dest};
-		$self->{needUpdate} = 1;
-	}
-}
-
-sub update {
-	my $self = shift;
-	if ($self->{needUpdate}) {
-		undef $self->{needUpdate};
-		$self->Refresh();
-	}
-}
-
 
 sub _posXYToView {
 	my ($self, $x, $y) = @_;

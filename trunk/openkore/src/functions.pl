@@ -8300,7 +8300,7 @@ sub ai_route_getRoute {
 	return undef if !$pathfinding;
 
 	my $ret = $pathfinding->run($returnArray);
-	if (!$ret) {
+	if ($ret <= 0) {
 		# Failure
 		return undef;
 	} else {

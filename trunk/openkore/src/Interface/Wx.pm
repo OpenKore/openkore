@@ -26,7 +26,7 @@ package Interface::Wx;
 
 use strict;
 use Wx ':everything';
-use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_PAINT);
+use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_TEXT_ENTER EVT_PAINT EVT_SPLITTER_DOUBLECLICKED);
 use Time::HiRes qw(time sleep);
 use File::Spec;
 require DynaLoader;
@@ -35,16 +35,15 @@ use Globals;
 use Interface;
 use base qw(Wx::App Interface);
 use Modules;
+use Interface::Wx::Dock;
 use Interface::Wx::MapViewer;
+use Interface::Wx::Console;
+use AI;
 use Settings;
 use Plugins;
 use Misc;
+use Commands;
 use Utils;
-
-use constant MAX_CONSOLE_LINES => 2000;
-
-our %fgcolors;
-
 
 sub OnInit {
 	my $self = shift;
@@ -143,65 +142,7 @@ sub getInput {
 
 sub writeOutput {
 	my $self = shift;
-	my $type = shift;
-	my $msg = shift;
-	my $domain = shift;
-
-	$self->{console}->Freeze();
-
-	# Determine color
-	my $revertStyle;
-	if ($consoleColors{$type}) {
-		$domain = 'default' if (!$consoleColors{$type}{$domain});
-
-		my $colorName = $consoleColors{$type}{$domain};
-		if ($fgcolors{$colorName} && $colorName ne "default" && $colorName ne "reset") {
-			my $style;
-			if ($fgcolors{$colorName}[9]) {
-				$style = $fgcolors{$colorName}[9];
-			} else {
-				my $color = new Wx::Colour(
-					$fgcolors{$colorName}[0],
-					$fgcolors{$colorName}[1],
-					$fgcolors{$colorName}[2]);
-				if ($fgcolors{$colorName}[3]) {
-					$style = new Wx::TextAttr($color, wxNullColour, $self->{fonts}{bold});
-				} else {
-					$style = new Wx::TextAttr($color);
-				}
-				$fgcolors{$colorName}[9] = $style;
-			}
-
-			$self->{console}->SetDefaultStyle($style);
-			$revertStyle = 1;
-		}
-	}
-
-	# Add text
-	if ($self->{platform} eq 'gtk2') {
-		my $utf8;
-		# Convert to UTF-8 so we don't segfault.
-		# Conversion to ISO-8859-1 will always succeed
-		my @encs = ("EUC-KR", "EUCKR", "ISO-2022-KR", "ISO8859-1");
-		foreach (@encs) {
-			$utf8 = Encode::encode($_, $msg);
-			last if $utf8;
-		}
-		$msg = Encode::encode_utf8($utf8);
-	}
-	$self->{console}->AppendText($msg);
-	$self->{console}->SetDefaultStyle($self->{defaultStyle}) if ($revertStyle);
-
-	# Limit the number of lines in the console
-	if ($self->{console}->GetNumberOfLines() > MAX_CONSOLE_LINES) {
-		my $linesToDelete = $self->{console}->GetNumberOfLines() - MAX_CONSOLE_LINES;
-		my $pos = $self->{console}->XYToPosition(0, $linesToDelete);
-		$self->{console}->Remove(0, $pos);
-	}
-
-	$self->{console}->SetInsertionPointEnd();
-	$self->{console}->Thaw();
-
+	$self->{console}->add(@_);
 	# Make sure we update the GUI. This is to work around the effect
 	# of functions that block for a while
 	$self->iterate() if (timeOut($self->{iterationTimeout}));
@@ -255,13 +196,23 @@ sub createInterface {
 		# Program menu
 		my $opMenu = new Wx::Menu();
 		$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit);
-		$menu->Append($opMenu, '&Program');
+		$menu->Append($opMenu, 'P&rogram');
+
+		my $infoMenu = new Wx::Menu();
+		$self->addMenu($infoMenu, '&Status	Alt-S', sub { Commands::run("s"); });
+		$self->addMenu($infoMenu, 'S&tatistics', sub { Commands::run("st"); });
+		$self->addMenu($infoMenu, '&Inventory	Alt-I', sub { Commands::run("i"); });
+		$self->addMenu($infoMenu, 'S&kills', sub { Commands::run("skills"); });
+		$infoMenu->AppendSeparator();
+		$self->addMenu($infoMenu, '&Players	Alt-P', sub { Commands::run("pl"); });
+		$self->addMenu($infoMenu, '&Monsters	Alt-M', sub { Commands::run("ml"); });
+		$menu->Append($infoMenu, 'I&nfo');
 
 		# View menu
 		my $viewMenu = new Wx::Menu();
 		$self->addMenu($viewMenu, '&Map	Ctrl-M', \&onMapToggle);
 		$viewMenu->AppendSeparator();
-		$self->addMenu($viewMenu, '&Font...	Ctrl-F', \&onFontChange);
+		$self->addMenu($viewMenu, '&Font...', \&onFontChange);
 		$menu->Append($viewMenu, '&View');
 
 		$self->createCustomMenus() if $self->can('createCustomMenus');
@@ -278,44 +229,68 @@ sub createInterface {
 	$frame->SetSizer($vsizer);
 
 
-	### Fonts
-	my ($fontName, $fontSize);
-	if ($self->{platform} eq 'win32') {
-		$fontSize = 9;
-		$fontName = 'Courier New';
-	} elsif ($self->{platform} eq 'gtk2') {
-		$fontSize = 10;
-		$fontName = 'MiscFixed';
-	} else {
-		$fontSize = 12;
-	}
+	## Splitter with console, dock and map viewer
+	my $splitter = new Wx::SplitterWindow($frame, 928, wxDefaultPosition, wxDefaultSize,
+		wxSP_3D | wxSP_LIVE_UPDATE);
+	$splitter->SetMinimumPaneSize(25);
+	$vsizer->Add($splitter, 1, wxGROW);
+	EVT_SPLITTER_DOUBLECLICKED($self, 928, sub { $_[1]->Skip; });
 
-	if ($fontName) {
-		$self->changeFont(new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxNORMAL, 0, $fontName));
-	} else {
-		$self->changeFont(new Wx::Font($fontSize, wxMODERN, wxNORMAL, wxNORMAL));
-	}
+		my $console = $self->{console} = new Interface::Wx::Console($splitter);
 
-	$self->{inputStyle} = new Wx::TextAttr(
-		new Wx::Colour(200, 200, 200),
-		wxNullColour
-	);
+		my $mapDock = $self->{mapDock} = new Interface::Wx::Dock($splitter, -1, 'Map');
+		$mapDock->Show(0);
+		$mapDock->setHideFunc($self, sub {
+			$splitter->Unsplit($mapDock);
+			$mapDock->Show(0);
+		});
+		$mapDock->setShowFunc($self, sub {
+			$splitter->SplitVertically($console, $mapDock, -$mapDock->GetBestSize->GetWidth);
+			$mapDock->Show(1);
+		});
 
+		my $mapView = $self->{mapViewer} = new Interface::Wx::MapViewer($mapDock);
+		$mapDock->setParentFrame($frame);
+		$mapDock->set($mapView);
+		$mapView->onMouseMove(sub {
+			# Mouse moved over the map viewer control
+			my (undef, $x, $y) = @_;
+			my $walkable;
 
-	## Console
-	my $console = $self->{console} = new Wx::TextCtrl($frame, -1, '',
-		wxDefaultPosition, wxDefaultSize,
-		wxTE_MULTILINE | wxTE_RICH | wxTE_NOHIDESEL);
-	$vsizer->Add($console, 1, wxALL | wxGROW);
-	$console->SetEditable(0);
-	$console->SetBackgroundColour(new Wx::Colour(0, 0, 0));
-	$self->{defaultStyle} = new Wx::TextAttr(
-		new Wx::Colour(255, 255, 255),
-		$console->GetBackgroundColour(),
-		$self->{fonts}{default}
-	);
-	$console->SetDefaultStyle($self->{defaultStyle});
+			if ($Settings::CVS =~ /CVS/) {
+				$walkable = checkFieldWalkable(\%field, $x, $y);
+			} else {
+				$walkable = !ord(substr($field{rawMap}, $y * $field{width} + $x, 1));
+			}
 
+			if ($x >= 0 && $y >= 0 && $walkable) {
+				$self->{mouseMapText} = "Mouse over: $x, $y";
+			} else {
+				delete $self->{mouseMapText};
+			}
+			$self->{statusbar}->SetStatusText($self->{mouseMapText}, 0);
+		});
+		$mapView->onClick(sub {
+			# Clicked on map viewer control
+			my (undef, $x, $y) = @_;
+			delete $self->{mouseMapText};
+			$self->writeOutput("message", "Moving to $x, $y\n", "info");
+			#AI::clear("mapRoute", "route", "move");
+			main::aiRemove("mapRoute");
+			main::aiRemove("route");
+			main::aiRemove("move");
+			main::ai_route($field{name}, $x, $y);
+			$self->{inputBox}->SetFocus;
+		});
+		$mapView->onMapChange(sub {
+			$mapDock->title($field{name});
+			$mapDock->Fit;
+		});
+		if (%field && $char) {
+			$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
+		}
+
+	$splitter->Initialize($console);
 
 	### Input field
 	my $inputBox = $self->{inputBox} = new Wx::TextCtrl($frame, 1, '',
@@ -353,35 +328,6 @@ sub addMenu {
 	$self->{menuIDs}++;
 	$menu->Append($self->{menuIDs}, $label, $help);
 	EVT_MENU($self->{frame}, $self->{menuIDs}, sub { $callback->($self) });
-}
-
-sub changeFont {
-	my $self = shift;
-	my $font = shift;
-
-	$self->{fonts}{default} = $font;
-	my $bold = new Wx::Font(
-		$font->GetPointSize(),
-		$font->GetFamily(),
-		$font->GetStyle(),
-		wxBOLD,
-		$font->GetUnderlined(),
-		$font->GetFaceName()
-	);
-	$self->{fonts}{bold} = $bold;
-
-	if ($self->{console}) {
-		$self->{defaultStyle} = new Wx::TextAttr(
-			new Wx::Colour(255, 255, 255),
-			$self->{console}->GetBackgroundColour(),
-			$font
-		);
-		$self->{console}->SetDefaultStyle($self->{defaultStyle});
-	}
-
-	foreach (keys %fgcolors) {
-		delete $fgcolors{$_}[9];
-	}
 }
 
 sub updateStatusBar {
@@ -442,9 +388,9 @@ sub updateStatusBar {
 sub onInputEnter {
 	my $self = shift;
 	$self->{input} = $self->{inputBox}->GetValue();
-	$self->{console}->SetDefaultStyle($self->{inputStyle});
+	$self->{console}->SetDefaultStyle($self->{console}{inputStyle});
 	$self->{console}->AppendText("$self->{input}\n");
-	$self->{console}->SetDefaultStyle($self->{defaultStyle});
+	$self->{console}->SetDefaultStyle($self->{console}{defaultStyle});
 	$self->{inputBox}->Remove(0, -1);
 }
 
@@ -465,78 +411,12 @@ sub onClose {
 
 sub onFontChange {
 	my $self = shift;
-
-	my $fontData = new Wx::FontData();
-	$fontData->SetInitialFont($self->{fonts}{default});
-	$fontData->EnableEffects(0);
-
-	my $dialog = new Wx::FontDialog($self->{frame}, $fontData);
-	if ($dialog->ShowModal() == wxID_OK) {
-		$self->changeFont($dialog->GetFontData()->GetChosenFont());
-	}
-	$dialog->Destroy();
+	$self->{console}->selectFont($self->{frame});
 }
 
 sub onMapToggle {
 	my $self = shift;
-	# Raise map window and return if it already exists
-	if ($self->{mapFrame}) {
-		$self->{mapFrame}->Raise();
-		return;
-	}
-
-	# Create map window
-	my $mapFrame;
-	if ($self->{platform} eq 'win32') {
-		$mapFrame = $self->{mapFrame} = new Wx::MiniFrame($self->{frame}, -1, 'Map');
-	} else {
-		$mapFrame = $self->{mapFrame} = new Wx::Dialog($self->{frame}, -1, 'Map');
-	}
-	$mapFrame->SetClientSize(128, 128);
-	EVT_CLOSE($mapFrame, sub {
-		# WxWidgets doesn't destroy this window until the next idle event.
-		# Unfortunately, WxPerl doesn't have a binding for WxApp::SendIdleEvents().
-		# And right now we don't have the ability to properly integrate with WxWidgets's
-		# main loop. This should be fixed in the future.
-		$mapFrame->Show(0);
-		$mapFrame->Destroy();
-		delete $self->{mapViewer};
-		delete $self->{mapFrame};
-	});
-
-	my $mapViewer = $self->{mapViewer} = new Interface::Wx::MapViewer($mapFrame);
-
-	$mapViewer->onMouseMove(sub {
-			# Mouse moved over the map viewer control
-			my (undef, $x, $y) = @_;
-			if ($x >= 0 && $y >= 0) {
-				$self->{mouseMapText} = "Mouse over: $x, $y";
-			} else {
-				delete $self->{mouseMapText};
-			}
-			$self->{statusbar}->SetStatusText($self->{mouseMapText}, 0);
-		});
-
-	$mapViewer->onClick(sub {
-			# Clicked on map viewer control
-			my (undef, $x, $y) = @_;
-			delete $self->{mouseMapText};
-			$self->writeOutput("message", "Moving to $x, $y\n", "info");
-			main::aiRemove("mapRoute");
-			main::aiRemove("route");
-			main::aiRemove("move");
-			main::ai_route($field{name}, $x, $y);
-		});
-
-	$mapViewer->onMapChange(sub {
-			$mapFrame->SetClientSize($mapViewer->{bitmap}->GetWidth(), $mapViewer->{bitmap}->GetHeight());
-			$mapFrame->SetTitle($maps_lut{$field{name} . '.rsw'} . " ($field{name})");
-		});
-
-	if (%field && $char) {
-		$mapViewer->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
-	}
-	$mapFrame->Show(1);
+	$self->{mapDock}->attach;
 }
 
 sub onManual {
@@ -548,42 +428,5 @@ sub onForum {
 	my $self = shift;
 	launchURL('http://openkore.sourceforge.net/forum.php');
 }
-
-
-###############################
-
-
-# Format: [R, G, B, bold]
-%fgcolors = (
-	'reset'		=> [255, 255, 255],
-	'default'	=> [255, 255, 255],
-
-	'black'		=> [0, 0, 0],
-	'darkgray'	=> [85, 85, 85],
-	'darkgrey'	=> [85, 85, 85],
-
-	'darkred'	=> [170, 0, 0],
-	'red'		=> [255, 0, 0, 1],
-
-	'darkgreen'	=> [0, 170, 0],
-	'green'		=> [0, 255, 0],
-
-	'brown'		=> [170, 85, 0],
-	'yellow'	=> [255, 255, 85],
-
-	'darkblue'	=> [85, 85, 255],
-	'blue'		=> [122, 154, 225],
-
-	'darkmagenta'	=> [170, 0, 170],
-	'magenta'	=> [255, 85, 255],
-
-	'darkcyan'	=> [0, 170, 170],
-	'cyan'		=> [85, 255, 255],
-
-	'gray'		=> [170, 170, 170],
-	'grey'		=> [170, 170, 170],
-	'white'		=> [255, 255, 255, 1],
-);
-
 
 1;
