@@ -6976,6 +6976,7 @@ sub parseMsg {
 			message "$chars[$config{'char'}]{'name'} : $emotion\n", "emotion";
 			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 		} elsif (%{$players{$ID}}) {
+			$interface->beep() if $config{beepOnChat};
 			message "$players{$ID}{'name'} : $emotion\n", "emotion";
 			chatLog("e", "$players{$ID}{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 
