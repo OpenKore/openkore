@@ -12,13 +12,13 @@
 # Known domains:
 # atk			You attack monster
 # connection		Connection messages
+# guildinfo		Guild info & guild member listing
 # input			Waiting for user input
-# i			List inventory items
 # itemuse		You used item
 # mon_itemuse		Monster used item
 # monatkyou		Monster attacks you
 # player_itemuse	Player used item
-# shoplist		List items in shop
+# list			List of information (monster list, player list, item list, etc.)
 # storage		Storage item added/removed
 # xkore			X-Kore system messages
 
@@ -107,23 +107,23 @@ sub MODINIT {
 sub color {
 	my $color = shift;
 	if ($color eq "reset") {
-		print "\033[0m";
+		print "\e[0m";
 	} elsif ($color eq "black") {
-		print "\033[1;30m";
+		print "\e[1;30m";
 	} elsif ($color eq "red") {
-		print "\033[1;31m";
+		print "\e[1;31m";
 	} elsif ($color eq "green") {
-		print "\033[1;32m";
+		print "\e[1;32m";
 	} elsif ($color eq "yellow") {
-		print "\033[1;33m";
+		print "\e[1;33m";
 	} elsif ($color eq "blue") {
-		print "\033[1;34m";
+		print "\e[1;34m";
 	} elsif ($color eq "magenta") {
-		print "\033[1;35m";
+		print "\e[1;35m";
 	} elsif ($color eq "cyan") {
-		print "\033[1;36m";
+		print "\e[1;36m";
 	} elsif ($color eq "white") {
-		print "\033[1;37m";
+		print "\e[1;37m";
 	}
 }
 
@@ -173,8 +173,10 @@ sub setColor {
 
 	if ($type eq "error") {
 		color 'red';
+	} elsif ($type eq "warning") {
+		color 'yellow';
 	} elsif ($domain eq "connection") {
-		color 'magenta';
+		color 'green';
 	} elsif ($domain eq "atk") {
 		color 'cyan';
 	}

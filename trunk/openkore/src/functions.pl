@@ -372,8 +372,8 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "al") {
-		print "----------Items being sold in store------------\n";
-		print "#  Name                                     Type         Qty     Price   Sold\n";		       
+		message("----------Items being sold in store------------\n", "list");
+		message("#  Name                                     Type         Qty     Price   Sold\n", "list");
 
 		my $i = 1;
 		for ($number = 0; $number < @articles; $number++) {
@@ -398,11 +398,11 @@ sub parseInput {
 			message(swrite(
 				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>",
 				[$i, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}, $articles[$number]{'sold'}]),
-				"shoplist");
+				"list");
 			$i++;
 		}
-		print "----------------------------------------------\n";
-		print "You have earned " . formatNumber($shopEarned) . "z.\n";
+		message("----------------------------------------------\n", "list");
+		message("You have earned " . formatNumber($shopEarned) . "z.\n", "list");
 
 	} elsif ($switch eq "as") {
 		# Stop attacking monster
@@ -602,39 +602,35 @@ sub parseInput {
 			configModify($arg1, $arg2);
 		}
 
-#kokal monster count code
-	} elsif ($switch eq "count") { 
-       		$~ = "MONKILLED"; 
-        	print "-[ Monster Count ]--------------------------------\n"; 
-        	print "#   ID   Name                Count\n"; 
-       		my $i = 0; 
-        	while ($monsters_Killed[$i]) { 
-			format MONKILLED = 
-@<< @<<<< @<<<<<<<<<<<<<       @<<< 
-$i $monsters_Killed[$i]{'nameID'} $monsters_Killed[$i]{'name'} $monsters_Killed[$i]{'count'} 
-. 
-            		write;       
-            		$i++;    
-      		} 
-      		print "--------------------------------------------------\n";
-#end of kokal monster count code
+	#kokal monster count code
+	} elsif ($switch eq "count") {
+        	message("-[ Monster Count ]--------------------------------\n", "list");
+        	message("#   ID    Name                       Count\n", "list");
+       		my $i = 0;
+        	while ($monsters_Killed[$i]) {
+			message(swrite(
+				"@<< @<<<< @<<<<<<<<<<<<<<<<<<<       @<<<",
+				[$i, $monsters_Killed[$i]{'nameID'}, $monsters_Killed[$i]{'name'}, $monsters_Killed[$i]{'count'}]),
+				"list");
+            		$i++;
+      		}
+      		message("--------------------------------------------------\n", "list");
+	#end of kokal monster count code
 
-#non-functional item count code
+	#non-functional item count code
 	} elsif ($switch eq "icount") {
-		$~ = "IPICKED";
-		print "-[ Item Count ]--------------------------------\n";
-		print "#   ID   Name                Count\n";
+		message("-[ Item Count ]--------------------------------\n", "list");
+		message("#   ID   Name                Count\n", "list");
 		my $i = 0;
 		while ($pickup_count[$i]) {
-			format IPICKED =
-@<< @<<<< @<<<<<<<<<<<<<       @<<<
-$i $pickup_count[$i]{'nameID'} $pickup_count[$i]{'name'} $pickup_count[$i]{'count'}
-.
-			write;      
-			$i++;   
+			message(swrite(
+				"@<< @<<<< @<<<<<<<<<<<<<       @<<<",
+				[$i, $pickup_count[$i]{'nameID'}, $pickup_count[$i]{'name'}, $pickup_count[$i]{'count'}]),
+				"list");
+			$i++;
 		}
-		print "--------------------------------------------------\n"; 
-#end of non-functional item count code
+		message("--------------------------------------------------\n", "list");
+	#end of non-functional item count code
 
 	} elsif ($switch eq "cri") {
 		if ($currentChatRoom eq "") {
@@ -908,7 +904,7 @@ $you_string                      $other_string
 					push @items, $_;
 				}
 			}
-			ai_dropBulk(\@items, $arg2);
+			ai_drop(\@items, $arg2);
 		}
 
 	} elsif ($switch eq "dump") {
@@ -986,33 +982,20 @@ $you_string                      $other_string
 	} elsif ($switch eq "guild") {
 		my ($arg1) = $input =~ /^.*? (\w+)/;
 		if ($arg1 eq "info") {
-			print "---------- Guild Information ----------\n";
-			$~ = "GUILD";
-			format GUILD =
-Name    : @<<<<<<<<<<<<<<<<<<<<<<<<
-$guild{'name'}
-Lv      : @<<
-$guild{'lvl'}
-Exp     : @>>>>>>>>>/@<<<<<<<<<<
-$guild{'exp'} $guild{'next_exp'}
-Master  : @<<<<<<<<<<<<<<<<<<<<<<<<
-$guild{'master'}
-Connect : @>>/@<<
-$guild{'conMember'} $guild{'maxMember'}
-.
-			write;
-			print "---------------------------------------\n";
+			message("---------- Guild Information ----------\n", "guildinfo");
+			message(swrite(
+				"Name    : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{'name'}],
+				"Lv      : @<<",			[$guild{'lvl'}],
+				"Exp     : @>>>>>>>>>/@<<<<<<<<<<",	[$guild{'exp'}, $guild{'next_exp'}],
+				"Master  : @<<<<<<<<<<<<<<<<<<<<<<<<",	[$guild{'master'}],
+				"Connect : @>>/@<<",			[$guild{'conMember'}, $guild{'maxMember'}]),
+				"guildinfo");
+			message("---------------------------------------\n", "guildinfo");
 
 		} elsif ($arg1 eq "member") {
-			print "------------ Guild  Member ------------\n";
-			print "#  Name                       Job        Lv  Title                       Online\n";
+			message("------------ Guild  Member ------------\n", "guildinfo");
+			message("#  Name                       Job        Lv  Title                       Online\n", "guildinfo");
 			my ($i, $name, $job, $lvl, $title, $online);
-
-			$~ = "GM";
-			format GM = 
-@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<
-$i  $name                    $job       $lvl $title                   $online
-.
 
 			my $count = @{$guild{'member'}};
 			for ($i = 0; $i < $count; $i++) {
@@ -1022,9 +1005,13 @@ $i  $name                    $job       $lvl $title                   $online
 				$lvl   = $guild{'member'}[$i]{'lvl'};
 				$title = $guild{'member'}[$i]{'title'};
 				$online = $guild{'member'}[$i]{'online'} ? "Yes" : "No";
-				write;
+
+				message(swrite(
+					"@< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<< @>  @<<<<<<<<<<<<<<<<<<<<<<<<<< @<<",
+					[$i, $name, $job, $lvl, $title, $online]),
+					"guildinfo");
 			}
-			print "---------------------------------------\n";
+			message("---------------------------------------\n", "guildinfo");
 
 		} elsif ($arg1 eq "") {
 			print "Requesting guild information...\n",
@@ -1038,9 +1025,9 @@ $i  $name                    $job       $lvl $title                   $online
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
 		if ($arg1 eq "" || $arg1 eq "eq" || $arg1 eq "u" || $arg1 eq "nu") {
-			undef @useable;
-			undef @equipment;
-			undef @non_useable;
+			my @useable;
+			my @equipment;
+			my @non_useable;
 			for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
 				next if (!%{$chars[$config{'char'}]{'inventory'}[$i]});
 				if ($chars[$config{'char'}]{'inventory'}[$i]{'type_equip'} != 0) {
@@ -1052,18 +1039,17 @@ $i  $name                    $job       $lvl $title                   $online
 				} 
 			}
 
-			print	"-----------Inventory-----------\n";
+			message("-----------Inventory-----------\n", "list");
 			if ($arg1 eq "" || $arg1 eq "eq") {
-				print	"-- Equipment --\n";
+				message("-- Equipment --\n", "list");
 				for ($i = 0; $i < @equipment; $i++) {
 					$display = $chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'name'};
-#Solos Start
 					$display .= " ($itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'type'}})";
 
 					if ($chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'equipped'}) {
 						$display .= " -- Eqp: $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'type_equip'}}";
 					}
-#Solos End
+
 					if (!$chars[$config{'char'}]{'inventory'}[$equipment[$i]]{'identified'}) {
 						$display .= " -- Not Identified";
 					}
@@ -1072,11 +1058,11 @@ $i  $name                    $job       $lvl $title                   $online
 					message(swrite(
 						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 						[$index, $display]),
-						"i");
+						"list");
 				}
 			}
 			if ($arg1 eq "" || $arg1 eq "nu") {
-				print	"-- Non-Useable --\n";
+				message("-- Non-Useable --\n", "list");
 				for ($i = 0; $i < @non_useable; $i++) {
 					$display = $chars[$config{'char'}]{'inventory'}[$non_useable[$i]]{'name'};
 					$display .= " x $chars[$config{'char'}]{'inventory'}[$non_useable[$i]]{'amount'}";
@@ -1084,11 +1070,11 @@ $i  $name                    $job       $lvl $title                   $online
 					message(swrite(
 						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 						[$index, $display]),
-						"i");
+						"list");
 				}
 			}
 			if ($arg1 eq "" || $arg1 eq "u") {
-				print	"-- Useable --\n";
+				message("-- Useable --\n", "list");
 				for ($i = 0; $i < @useable; $i++) {
 					$display = $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'name'};
 					$display .= " x $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'amount'}";
@@ -1096,10 +1082,10 @@ $i  $name                    $job       $lvl $title                   $online
 					message(swrite(
 						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 						[$index, $display]),
-						"i");
+						"list");
 				}
 			}
-			print "-------------------------------\n";
+			message("-------------------------------\n", "list");
 
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
 			print	"Error in function 'i' (Iventory Item Desciption)\n"
@@ -1139,7 +1125,7 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 
 
 	} elsif ($switch eq "ignore") {
-		($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
+		my ($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
 		if ($arg1 eq "" || $arg2 eq "" || ($arg1 ne "0" && $arg1 ne "1")) {
 			print	"Syntax Error in function 'ignore' (Ignore Player/Everyone)\n"
 				,"Usage: ignore <flag> <name | all>\n";
@@ -1152,20 +1138,19 @@ $i   $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}
 		}
 
 	} elsif ($switch eq "il") {
-		$~ = "ILIST";
-		print	"-----------Item List-----------\n"
-			,"#    Name                      \n";
-		for ($i = 0; $i < @itemsID; $i++) {
+		message("-----------Item List-----------\n" .
+			"#    Name                      \n",
+			"list");
+		for (my $i = 0; $i < @itemsID; $i++) {
 			next if ($itemsID[$i] eq "");
 			$display = $items{$itemsID[$i]}{'name'};
 			$display .= " x $items{$itemsID[$i]}{'amount'}";
-			format ILIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$i   $display
-.
-			write;
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$i, $display]),
+				"list");
 		}
-		print "-------------------------------\n";
+		message("-------------------------------\n", "list");
 
 	} elsif ($switch eq "im") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
@@ -1300,9 +1285,9 @@ $i   $display
 		sendMemo(\$remote_socket);
 
 	} elsif ($switch eq "ml") {
-		$~ = "MLIST";
-		print	"-----------Monster List-----------\n"
-			,"#    Name                     DmgTo    DmgFrom    Distance    Coordinates\n";
+		message("-----------Monster List-----------\n" .
+			"#    Name                     DmgTo    DmgFrom    Distance    Coordinates\n",
+			"list");
 		for (my $i = 0; $i < @monstersID; $i++) {
 			next if ($monstersID[$i] eq "");
 			$dmgTo = ($monsters{$monstersID[$i]}{'dmgTo'} ne "")
@@ -1312,16 +1297,15 @@ $i   $display
 				? $monsters{$monstersID[$i]}{'dmgFrom'}
 				: 0;
 			my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
-			$dist = sprintf ("%.1f", $dist) if (index ($dist, '.') > -1);
+			$dist = sprintf ("%.1f", $dist) if (index($dist, '.') > -1);
 			my $pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
 
-			format MLIST =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<
-$i   $monsters{$monstersID[$i]}{'name'}                 $dmgTo   $dmgFrom  $dist  $pos
-.
-			write;
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<    @<<<<      @<<<<<      @<<<<<<<<<<",
+				[$i, $monsters{$monstersID[$i]}{'name'}, $dmgTo, $dmgFrom, $dist, $pos]),
+				"list");
 		}
-		print "----------------------------------\n";
+		message("----------------------------------\n", "list");
 
 	} elsif ($switch eq "move") {
 		($arg1, $arg2, $arg3) = $input =~ /^[\s\S]*? (\d+) (\d+)(.*?)$/;
@@ -1915,10 +1899,9 @@ $chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$conf
 		my ($arg2) = $input =~ /^[\s\S]*? \w+ ([\d,-]+)/;
 		my ($arg3) = $input =~ /^[\s\S]*? \w+ [\d,-]+ (\d+)/;
 		if ($arg1 eq "") {
-			$~ = "STORAGELIST";
-			print "----------Storage-----------\n";
-			print "#  Name\n";
-			for (my $i=0; $i < @storageID; $i++) {
+			message("----------Storage-----------\n", "list");
+			message("#  Name\n", "list");
+			for (my $i = 0; $i < @storageID; $i++) {
 				next if ($storageID[$i] eq "");
 
 				my $display = "$storage{$storageID[$i]}{'name'}";
@@ -1930,14 +1913,13 @@ $chars[$config{'char'}]{'luk'} $chars[$config{'char'}]{'luk_bonus'} $chars[$conf
 				}
 				$display = $display . " x $storage{$storageID[$i]}{'amount'}";
 
-				format STORAGELIST =
-@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$i $display                
-.
-				write;
+				message(swrite(
+					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$i, $display]),
+					"list");
 			}
-			print "\nCapacity: $storage{'items'}/$storage{'items_max'}\n";
-			print "-------------------------------\n";
+			message("\nCapacity: $storage{'items'}/$storage{'items_max'}\n", "list");
+			message("-------------------------------\n", "list");
 
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
 			print	"Error in function 'storage add' (Add Item to Storage)\n"
@@ -1965,7 +1947,7 @@ $i $display
 					push @items, $_;
 				}
 			}
-			ai_storageGetBulk(\@items, $arg3);
+			ai_storageGet(\@items, $arg3);
 
 		} elsif ($arg1 eq "close") {
 			sendStorageClose(\$remote_socket);
@@ -1976,24 +1958,21 @@ $i $display
 		}
 
 	} elsif ($switch eq "store") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
+		my ($arg1) = $input =~ /^[\s\S]*? (\w+)/;
+		my ($arg2) = $input =~ /^[\s\S]*? \w+ (\d+)/;
 		if ($arg1 eq "" && !$talk{'buyOrSell'}) {
-			$~ = "STORELIST";
-			print "----------Store List-----------\n";
-			print "#  Name                    Type           Price\n";
-			for ($i=0; $i < @storeList;$i++) {
+			message("----------Store List-----------\n", "list");
+			message("#  Name                    Type           Price\n", "list");
+			for (my $i = 0; $i < @storeList; $i++) {
 				$display = $storeList[$i]{'name'};
-				format STORELIST =
-@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>z
-$i $display                $itemTypes_lut{$storeList[$i]{'type'}} $storeList[$i]{'price'}
-.
-				write;
+				message(swrite(
+					"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>z",
+					[$i, $display, $itemTypes_lut{$storeList[$i]{'type'}}, $storeList[$i]{'price'}]),
+					"list");
 			}
 			print "-------------------------------\n";
 		} elsif ($arg1 eq "" && $talk{'buyOrSell'}) {
 			sendGetStoreList(\$remote_socket, $talk{'ID'});
-			
 
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $storeList[$arg2] eq "") {
 			print	"Error in function 'store desc' (Store Item Description)\n"
@@ -2756,10 +2735,10 @@ sub AI {
 	}
 
 
-	#####STORAGE BULK GET#####
-	# Get many items from storage.
+	#####STORAGE GET#####
+	# Get one or more items from storage.
 
-	if ($ai_seq[0] eq "storageGetBulk" && timeOut($ai_seq_args[0])) {
+	if ($ai_seq[0] eq "storageGet" && timeOut($ai_seq_args[0])) {
 		my $item = $ai_seq_args[0]{'items'}[0];
 		my $amount = $ai_seq_args[0]{'max'};
 
@@ -2777,10 +2756,10 @@ sub AI {
 	}
 
 
-	#####BULK DROP#####
-	# Drop many items from inventory.
+	#####DROPPING#####
+	# Drop one or more items from inventory.
 
-	if ($ai_seq[0] eq "dropBulk" && timeOut($ai_seq_args[0])) {
+	if ($ai_seq[0] eq "drop" && timeOut($ai_seq_args[0])) {
 		my $item = $ai_seq_args[0]{'items'}[0];
 		my $amount = $ai_seq_args[0]{'max'};
 
@@ -4946,19 +4925,6 @@ sub parseMsg {
 	print "Packet Switch: $switch\n" if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch));
 
 
-	# Handle unparsed packets
-	if ($lastswitch eq $switch && length($msg) > $lastMsgLength) {
-		$errorCount++;
-	} else {
-		$errorCount = 0;
-	}
-	if ($errorCount > 3) {
-		print "Caught unparsed packet error, potential loss of data.\n";
-		dumpData($msg) if ($config{'debugPacket_unparsed'} && !existsInList($config{'debugPacket_exclude'}, $switch));
-		$errorCount = 0;
-		$msg_size = length($msg);
-	}
-
 	$lastswitch = $switch;
 	# Determine packet length using recvpackets.txt.
 	if (substr($msg,0,4) ne $accountID || ($conState != 2 && $conState != 4)) {
@@ -4979,18 +4945,20 @@ sub parseMsg {
 
 		} elsif ($rpackets{$switch} > 1) {
 			# Static length packet
-			if (length($msg) < $rpackets{$switch}) {
+			$msg_size = $rpackets{$switch};
+			if (length($msg) < $msg_size) {
 				return $msg;
 			}
-			$msg_size = $rpackets{$switch};
 
 		} else {
-			dumpData($last_known_msg.$msg);
+			# Unknown packet - ignore it
+			if (!existsInList($config{'debugPacket_exclude'}, $switch)) {
+				warning("Unknown packet - $switch\n", "connection");
+				dumpData($msg) if ($config{'debugPacket_unparsed'});
+			}
+			return "";
 		}
-
-		$last_known_msg = substr($msg, 0, $msg_size);
 	}
-	$lastMsgLength = length($msg);
 
 
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4)) || ($config{'XKore'} && !$accountID && length($msg) == 4)) {
@@ -6295,7 +6263,6 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			binAdd(\@storageID, $index);
 			$storage{$index}{'index'} = $index;
 			$storage{$index}{'nameID'} = $ID;
-			#$storage{$index}{'amount'} = unpack("L1", substr($msg, $i + 6, 4));
 			$storage{$index}{'amount'} = 1;
 			$storage{$index}{'enchant'} = unpack("C1", substr($msg, $i + 11, 1));
 
@@ -6341,12 +6308,11 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 
 			$display = ($items_lut{$ID} ne "")
 				? $items_lut{$ID}
-				: "Unknown ".$ID;
+				: "Unknown $ID";
 			$storage{$index}{'name'} = $display;
 			$storage{$index}{'binID'} = binFind(\@storageID, $index);
 			print "Storage: $storage{$index}{'name'} ($storage{$index}{'binID'})\n" if $config{'debug'};
 		}
-		print "Storage opened\n";
 
 	} elsif ($switch eq "00A8") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
@@ -8182,7 +8148,7 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 		undef $targetDisplay;
 		undef $extra;
 		if (%{$spells{$sourceID}}) {
-			$sourceID = $spells{$sourceID}{'sourceID'}
+			$sourceID = $spells{$sourceID}{'sourceID'};
 		}
 
 		updateDamageTables($sourceID, $targetID, $damage) if ($damage != 35536);
@@ -8232,9 +8198,6 @@ $number $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'
 				print "$sourceDisplay $skillsID_lut{$skillID} (lvl $level) on $targetDisplay$extra - Dmg: $damage\n";
 			}
 		}
-
-	} elsif (!$rpackets{$switch} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
-		print "Unparsed packet - $switch\n" if ($config{'debugPacket_received'});
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
@@ -8268,18 +8231,18 @@ sub ai_clientSuspend {
 }
 
 ##
-# ai_dropBulk(items, max)
+# ai_drop(items, max)
 # items: reference to an array of inventory item numbers.
 # max: the maximum amount to drop, for each item, or 0 for unlimited.
 #
-# Drop many items.
+# Drop one or more items.
 #
 # Example:
 # # Drop inventory items 2 and 5.
-# ai_dropBulk([2, 5]);
+# ai_drop([2, 5]);
 # # Drop inventory items 2 and 5, but at most 30 of each item.
-# ai_dropBulk([2, 5], 30);
-sub ai_dropBulk {
+# ai_drop([2, 5], 30);
+sub ai_drop {
 	my $r_items = shift;
 	my $max = shift;
 	my %seq = ();
@@ -8287,7 +8250,7 @@ sub ai_dropBulk {
 	$seq{'items'} = \@{$r_items};
 	$seq{'max'} = $max;
 	$seq{'timeout'} = 1;
-	unshift @ai_seq, "dropBulk";
+	unshift @ai_seq, "drop";
 	unshift @ai_seq_args, \%seq;
 }
 
@@ -8856,18 +8819,18 @@ sub ai_storageAutoCheck {
 }
 
 ##
-# ai_storageGetBulk(items, max)
+# ai_storageGet(items, max)
 # items: reference to an array of storage item numbers.
 # max: the maximum amount to get, for each item, or 0 for unlimited.
 #
-# Get many items from storage.
+# Get one or more items from storage.
 #
 # Example:
 # # Get items 2 and 5 from storage.
-# ai_storageGetBulk([2, 5]);
+# ai_storageGet([2, 5]);
 # # Get items 2 and 5 from storage, but at most 30 of each item.
-# ai_storageGetBulk([2, 5], 30);
-sub ai_storageGetBulk {
+# ai_storageGet([2, 5], 30);
+sub ai_storageGet {
 	my $r_items = shift;
 	my $max = shift;
 	my %seq = ();
@@ -8875,7 +8838,7 @@ sub ai_storageGetBulk {
 	$seq{'items'} = \@{$r_items};
 	$seq{'max'} = $max;
 	$seq{'timeout'} = 0.15;
-	unshift @ai_seq, "storageGetBulk";
+	unshift @ai_seq, "storageGet";
 	unshift @ai_seq_args, \%seq;
 }
 
