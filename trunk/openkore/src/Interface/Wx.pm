@@ -27,7 +27,8 @@ package Interface::Wx;
 use strict;
 use Wx ':everything';
 use Wx::Event qw(EVT_CLOSE EVT_MENU EVT_MENU_OPEN EVT_LISTBOX_DCLICK
-		EVT_CHOICE EVT_TIMER EVT_TASKBAR_LEFT_DOWN EVT_KEY_DOWN);
+		EVT_CHOICE EVT_TIMER EVT_TASKBAR_LEFT_DOWN EVT_KEY_DOWN
+		EVT_BUTTON);
 use Time::HiRes qw(time sleep);
 use File::Spec;
 
@@ -41,6 +42,7 @@ use Interface::Wx::MapViewer;
 use Interface::Wx::Console;
 use Interface::Wx::Input;
 use Interface::Wx::ItemList;
+use Interface::Wx::ConfigEditor;
 use AI;
 use Settings;
 use Plugins;
@@ -73,7 +75,8 @@ sub OnInit {
 		"Interface::Wx::MapViewer",
 		"Interface::Wx::Console",
 		"Interface::Wx::Input",
-		"Interface::Wx::ItemList");
+		"Interface::Wx::ItemList",
+		"Interface::Wx::ConfigEditor");
 
 
 	# Update user interface controls
@@ -87,14 +90,7 @@ sub OnInit {
 
 	$timer = new Wx::Timer($self, 249);
 	EVT_TIMER($self, 249, sub {
-		if ($conState == 5) {
-			$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters, \@itemsID, \%items);
-			$self->{hpBar}->SetValue($char->{hp} / $char->{hp_max} * 100) if ($char->{hp_max});
-			$self->{spBar}->SetValue($char->{sp} / $char->{sp_max} * 100) if ($char->{sp_max});
-			$self->{expBar}->SetValue($char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
-			$self->{jobExpBar}->SetValue($char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
-			$self->{weightBar}->SetValue($char->{weight} / $char->{weight_max} * 100) if ($char->{weight_max});
-		}
+		$self->updateItemList;
 	});
 	$timer->Start(350);
 
@@ -275,6 +271,10 @@ sub createInterface {
 			'&Clear Console',	\&onClearConsole);
 		$menu->Append($viewMenu, '&View');
 		EVT_MENU_OPEN($viewMenu, sub { $self->onMenuOpen; });
+
+		my $settingsMenu = new Wx::Menu;
+		$self->addMenu($settingsMenu, '&Advanced...', \&onAdvancedConfig, 'Edit advanced configuration options.');
+		$menu->Append($settingsMenu, '&Settings');
 
 		$self->createCustomMenus() if $self->can('createCustomMenus');
 
@@ -536,7 +536,7 @@ sub updateMapViewer {
 	}
 
 	$map->set($field{name}, $myPos->{x}, $myPos->{y}, \%field);
-	my $i = binFind(\@ai_seq, "route");
+	my $i = AI::findAction("route");
 	if (defined $i) {
 		$map->setDest($ai_seq_args[$i]{dest}{pos}{x}, $ai_seq_args[$i]{dest}{pos}{y});
 	} else {
@@ -547,9 +547,24 @@ sub updateMapViewer {
 	$map->setPlayers(\@players);
 	my @monsters = values %monsters;
 	$map->setMonsters(\@monsters);
+	my @npcs = values %npcs;
+	$map->setNPCs(\@npcs);
 
 	$map->update;
 	$self->{mapViewTimeout}{time} = time;
+}
+
+sub updateItemList {
+	my $self = shift;
+	if ($conState == 5) {
+		$self->{itemList}->set(\@playersID, \%players, \@monstersID, \%monsters,
+			\@itemsID, \%items, \@npcsID, \%npcs);
+		$self->{hpBar}->SetValue($char->{hp} / $char->{hp_max} * 100) if ($char->{hp_max});
+		$self->{spBar}->SetValue($char->{sp} / $char->{sp_max} * 100) if ($char->{sp_max});
+		$self->{expBar}->SetValue($char->{exp} / $char->{exp_max} * 100) if ($char->{exp_max});
+		$self->{jobExpBar}->SetValue($char->{exp_job} / $char->{exp_job_max} * 100) if ($char->{exp_job_max});
+		$self->{weightBar}->SetValue($char->{weight} / $char->{weight_max} * 100) if ($char->{weight_max});
+	}
 }
 
 
@@ -640,6 +655,58 @@ sub onClearConsole {
 	$self->{console}->Remove(0, -1);
 }
 
+sub onAdvancedConfig {
+	my $self = shift;
+	my $dialog = $self->{advancedDialog};
+
+	if (!$dialog) {
+		$dialog = $self->{advancedDialog} = new Wx::Dialog($self->{frame},
+			-1, "Advanced Configuration", wxDefaultPosition, wxDefaultSize,
+			wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER);
+		EVT_CLOSE($dialog, sub {
+			$_[1]->Skip;
+			delete $self->{advancedDialog};
+		});
+
+		my $vsizer = new Wx::BoxSizer(wxVERTICAL);
+		$dialog->SetSizer($vsizer);
+
+		my $cfg = new Interface::Wx::ConfigEditor($dialog, -1);
+		$cfg->setConfig(\%config);
+		$cfg->onChange(sub {
+			my ($key, $value) = @_;
+			configModify($key, $value) if ($value ne $config{$key});
+		});
+		$vsizer->Add($cfg, 1, wxGROW | wxALL, 8);
+
+		my $sizer = new Wx::BoxSizer(wxHORIZONTAL);
+		$vsizer->Add($sizer, 0, wxGROW | wxLEFT | wxRIGHT | wxBOTTOM, 8);
+
+		my $revert = new Wx::Button($dialog, 46, '&Revert');
+		$revert->SetToolTip('Revert settings to before you opened this dialog');
+		$sizer->Add($revert, 0);
+		EVT_BUTTON($revert, 46, sub {
+			$cfg->revert;
+		});
+
+		my $pad = new Wx::Window($dialog, 46);
+		$sizer->Add($pad, 1);
+
+		my $close = new Wx::Button($dialog, 47, '&Close');
+		$close->SetToolTip('Close this dialog');
+		$close->SetDefault;
+		$sizer->Add($close, 0);
+		EVT_BUTTON($close, 47, sub {
+			$dialog->Destroy;
+			delete $self->{advancedDialog};
+		});
+
+		$dialog->SetClientSize(580, 350);
+	}
+	$dialog->Show(1);
+	$dialog->Raise;
+}
+
 sub onMapToggle {
 	my $self = shift;
 	$self->{mapDock}->attach;
@@ -667,19 +734,18 @@ sub onItemListActivate {
 	my $object = shift;
 	my $type = shift;
 
-	if ($type eq 'p') {
-		if ($CVS) {
-			Commands::run("pl " . $players{$ID}{binID}) if ($players{$ID});
-		}
+	if ($type eq 'p' && $players{$ID}) {
+		Commands::run("pl " . $players{$ID}{binID});
 
-	} elsif ($type eq 'm') {
-		main::attack($ID) if ($monsters{$ID});
+	} elsif ($type eq 'm' && $monsters{$ID}) {
+		main::attack($ID);
 
-	} elsif ($type eq 'i') {
-		if ($items{$ID}) {
-			$self->{console}->add("message", "Taking item $items{$ID}{name} ($items{$ID}{binID})\n", "info");
-			main::take($ID);
-		}
+	} elsif ($type eq 'i' && $items{$ID}) {
+		$self->{console}->add("message", "Taking item $items{$ID}{name} ($items{$ID}{binID})\n", "info");
+		main::take($ID);
+
+	} elsif ($type eq 'n' && $npcs{$ID}) {
+		Commands::run("nl " . $npcs{$ID}{binID});
 	}
 
 	$self->{inputBox}->SetFocus;
