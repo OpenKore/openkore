@@ -4,7 +4,6 @@
 master_name_0 iRO: Master I
 master_host_0 38.144.194.2
 master_port_0 6900
-master_version_0 1
 
 version 18
 #encrypt 2
@@ -184,6 +183,8 @@ sellAuto_distance 3
 storageAuto 0
 storageAuto_npc 
 storageAuto_distance 3
+storageAuto_npc_type 1
+storageAuto_npc_steps
 
 getAuto_0
 getAuto_0_minAmount
@@ -258,3 +259,5 @@ autoResponse 1
 
 ignoreAll 0
 itemHistory 0
+
+alias_heal sp 9
