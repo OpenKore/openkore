@@ -24,6 +24,7 @@ package Commands;
 use strict;
 use warnings;
 no warnings qw(redefine uninitialized);
+use Time::HiRes qw(time);
 
 use Globals;
 use Log qw(message error);
@@ -344,13 +345,29 @@ sub cmdConf {
 
 sub cmdDebug {
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\d+)/;
+	my ($arg1) = $args =~ /^([\w\d]+)/;
+
 	if ($arg1 eq "0") {
 		configModify("debug", 0);
 	} elsif ($arg1 eq "1") {
 		configModify("debug", 1);
 	} elsif ($arg1 eq "2") {
 		configModify("debug", 2);
+
+	} elsif ($arg1 eq "info") {
+		my $connected = ($remote_socket && $remote_socket->connected()) ? "yes" : "no";
+		my $time = sprintf("%.2f", time - $lastPacketTime);
+		my $ai_timeout = sprintf("%.2f", time - $timeout{'ai'}{'time'});
+		my $ai_time = sprintf("%.4f", time - $ai_v{'AI_last_finished'});
+
+		message "------------ Debug information ------------\n", "list";
+		message "ConState: $conState              Connected: $connected\n", "list";
+		message "AI enabled: $AI            AI_forcedOff: $AI_forcedOff\n", "list";
+		message "\@ai_seq = @ai_seq\n", "list";
+		message "Last packet: $time secs ago\n", "list";
+		message "\$timeout{ai}: $ai_timeout secs ago  (value should be >$timeout{'ai'}{'timeout'})\n", "list";
+		message "Last AI() call: $ai_time secs ago\n", "list";
+		message "-------------------------------------------\n", "list";
 	}
 }
 
