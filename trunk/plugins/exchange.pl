@@ -1,162 +1,139 @@
+############################################################
+#
+# itemexchange
+# 
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+# 
+
+# See this thread for detailed config information:
+# http://openkore.sourceforge.net/forum/viewtopic.php?t=3497
+
 package itemexchange;
 
 use strict;
 use Plugins;
+use Commands;
 use Globals;
-use Log qw(message);
+use Log;
+use Utils;
 
+Plugins::register('itemexchange', 'exchanges items with NPCs using talk sequence', \&unload);
+my $mainLoopHook = Plugins::addHook('AI_pre', \&mainLoop);
+my $hookCommandPost = Plugins::addHook('Command_post', \&onCommandPost);
 
-Plugins::register('itemexchange', 'xlr82xs item exchange code.', \&Unload, \&Reload);
-my $ai_hook = Plugins::addHook('AI_pre', \&Called);
-
-sub Unload {
-	Plugins::delHook('AI_pre', $ai_hook);
+sub unload {
+	Plugins::delHook('AI_pre', $mainLoopHook);
+	Plugins::delHook('Command_post', $hookCommandPost);
 }
 
-sub Reload {
-	&Unload;
+sub onCommandPost {
+	my (undef, $args) = @_;
+	my ($cmd, $subcmd) = split(' ', $args->{input}, 2);
+
+	if ($cmd eq "itemexchange") {
+		AI::queue('itemExchange');
+		$args->{return} = 1;
+	}
 }
 
-sub Called {
+sub mainLoop {
+	ITEMEXCHANGE: {
 
-# This is my really really really funky way of dealing with all the red socks with holes that I constantly pick up
-# However, it can just as easily be used to have your bot convert any * herb + empty bottles that it picks up into a potion
-# Not much of the real meat is done here (strangly enough) basically, if itemExchange is turned on in config.txt
-# and ai_itemExchangeCheck returns true, it'll move to the npc designated by itemExchange_npc in config.txt and talk to them
-# The sequence it sends the npc is controlled by itemExchange_steps in config.txt so its easy to set it up to do juice, or potions
-# or red socks, or whatever.
-#  accepts only one input, "minimum"
-# more about that near the sub ;)
-
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route") && $config{'itemExchange'} && $config{'itemExchange_npc'} ne "" && itemexchange::Check()) {
-		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
-		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1)) {
-			unshift @ai_seq, "itemExchange";
-			unshift @ai_seq_args, {};
-		}
+	if ((AI::isIdle || AI::action eq 'route') && !AI::inQueue('itemExchange') && $::config{'itemExchange'} && $::config{'itemExchange_npc'} ne "" && itemexchange::check()) {
+		AI::queue('itemExchange');
 	}
 
-	if ($ai_seq[0] eq "itemExchange" && timeOut(\%{$timeout{'ai_itemExchange'}})) {
-		if (!$config{'itemExchange'} || !%{$npcs_lut{$config{'itemExchange_npc'}}}) {
-			$ai_seq_args[0]{'done'} = 1;
-			last;
+	if (AI::action eq "itemExchange" && AI::args->{done}) {
+		# Autoexchange finished
+		AI::dequeue;
+
+	} elsif (AI::action eq "itemExchange") {
+		# Main autoexchange block
+		my $args = AI::args;
+
+		# Stop if itemExchange is not enabled, or if the specified NPC is invalid
+		$args->{npc} = {};
+		main::getNPCInfo($::config{'itemExchange_npc'}, $args->{npc});
+		if (!$::config{'itemExchange'} || !defined($args->{npc}{ok})) {
+			$args->{done} = 1;
+			return;
 		}
 
-		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $npcs_lut{$config{'itemExchange_npc'}}{'map'}) {
-			$ai_v{'temp'}{'do_route'} = 1;
+		# Determine whether we have to move to the NPC
+		my $do_route = 0;
+		if ($::field{'name'} ne $args->{npc}{map}) {
+			$do_route = 1;
 		} else {
-			$ai_v{'temp'}{'distance'} = distance(\%{$npcs_lut{$config{'itemExchange_npc'}}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
-			if ($ai_v{'temp'}{'distance'} > 14) {
-				$ai_v{'temp'}{'do_route'} = 1;
+			my $distance = Utils::distance($args->{npc}{pos}, $::char->{pos_to});
+			if ($distance > $::config{'itemExchange_distance'}) {
+				$do_route = 1;
 			}
 		}
 
-		if ($ai_v{'temp'}{'do_route'}) {
-			message "Calculating auto-exchange route to: $maps_lut{$npcs_lut{$config{'itemExchange_npc'}}{'map'}.'.rsw'}($npcs_lut{$config{'itemExchange_npc'}}{'map'}): $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}\n", "route";
-			ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'x'}, $npcs_lut{$config{'itemExchange_npc'}}{'pos'}{'y'}, $npcs_lut{$config{'itemExchange_npc'}}{'map'}, 0, 0, 1, 0, 0, 1);
-		}
+		if ($do_route) {
+			Log::message "Calculating auto-exchange route to: $::maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
+			main::ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
+				attackOnRoute => 1,
+				distFromGoal => $::config{'itemExchange_distance'});
+		} else {
+			# Talk to NPC if we haven't done so
+			if (!defined($args->{queuedTalkSequence})) {
+				$args->{queuedTalkSequence} = 1;
 
-	} elsif ($config{'itemExchange'}) {
-		my $temp = "minimum";
-		while (itemexchange::Check($temp)) {
-			if ($ai_seq_args[0]{'sentTalk'} <= 1) {
-				sendTalk(\$remote_socket, pack("L1",$config{'itemExchange_npc'})) if !$ai_seq_args[0]{'sentTalk'};
-				@{$ai_seq_args[0]{'steps'}} = split(/ +/, $config{'itemExchange_steps'});
-				$timeout{'ai_itemExchange'}{'time'} = time;
-				$ai_seq_args[0]{'sentTalk'}++;
-				last;
-				$ai_seq_args[0]{'step'} = 0;
-
-			} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}]) {
-				if ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /c/i) {
-					sendTalkContinue(\$remote_socket, pack("L1",$config{'itemExchange_npc'}));
-					message("Sent Talk Continue.\n", "debug");
-				} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /n/i) {
-					sendTalkCancel(\$remote_socket, pack("L1",$config{'itemExchange_npc'}));
-					message("Sent Talk Cancel.\n", "debug");
-				} elsif ($ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] ne "") {
-					($ai_v{'temp'}{'arg'}) = $ai_seq_args[0]{'steps'}[$ai_seq_args[0]{'step'}] =~ /r(\d+)/i;
-					if ($ai_v{'temp'}{'arg'} ne "") {
-						$ai_v{'temp'}{'arg'}++;
-						sendTalkResponse(\$remote_socket, pack("L1",$config{'itemExchange_npc'}), $ai_v{'temp'}{'arg'});
-						message("Sent Talk Responce ".$ai_v{'temp'}{'arg'}."\n", "debug");
-					}
+				if (defined $args->{npc}{id}) {
+					main::ai_talkNPC(ID => $args->{npc}{id}, $::config{'itemExchange_npc_steps'}); 
+				} else {
+					main::ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $::config{'itemExchange_npc_steps'}); 
 				}
-			} else {
-				undef @{$ai_seq_args[0]{'steps'}};
+
+				return;
 			}
-			$ai_seq_args[0]{'step'}++;
-			$timeout{'ai_itemExchange'}{'time'} = time;
-			last;
+
+			if (itemexchange::check(1)) {
+				undef $args->{queuedTalkSequence};
+			}
+			else {
+				$args->{done} = 1;
+			}
 		}
 	}
+
+	} #END OF BLOCK ITEMEXCHANGE
 }
 
-# itemexchange::Check([exchange])
-#
-# This is where most of the actual calculation for the item exchange is done.
-# If $exchange equals "minimum", we only check that we can do
-# one exchange (specified by itemExchange_minAmount_x in the config).
-# Say we're making something that requires 3 pearls, 2 apples, and 8 empty bottles
-# and we only want to go and make this item when we have at least 30 pearls, 20 apples, and 80 empty bottles
-# what we would put into config.txt would be:
-#
-# itemExchange_item_0 Pearl
-# itemExchange_amount_0 30
-# itemExchange_minAmount_0 3
-#
-# itemExchange_item_1 Apple
-# itemExchange_amount_1 20
-# itemExchange_minAmount_1 2
-#
-# itemExchange_item_2 Empty bottle
-# itemExchange_   etc etc etc
-#
-# If $exchange is not "minimum" it will look to see if we have at least 30 pearls,
-# 20 apples, and 80 empty bottles (done very inelligently by cycling through your inventory, seeing if item names match
-# what is in your config.txt, and if it does, seeing if the amount is greater than amount)
-# if on the other hand you do a itemexchange::Check('minimum'), it does the same thing, except it compares the amounts
-# to the minamount specified in config.txt
-# maybe at some stage i'll modify it so you can make more than one item, but for now, meh
-sub Check {
-	my $exchange = $_[0];
-	my $failed = 0;
+sub check {
+	my $exchangeAlreadyActive = shift;
 	my $j = 0;
 
-	while ($config{"itemExchange_item_$j"}) {
-		last if ($failed);
-		last if (!$config{"itemExchange_item_$j"} || !$config{"itemExchange_amount_$j"} || !config{"itemExchange_minAmount_$j"});
+	while ($::config{"itemExchange_item_$j"}) {
+		last if (!$::config{"itemExchange_item_$j"} || !$::config{"itemExchange_item_$j"."_requiredAmount"} || !$::config{"itemExchange_item_$j"."_triggerAmount"});
 		my $amount;
 
-		my $item = $config{"itemExchange_item_$j"};
-		if ($exchange eq 'minimum') {
-			$amount = $config{"itemExchange_minAmount_$j"};
+		my $item = $::config{"itemExchange_item_$j"};
+		if ($exchangeAlreadyActive) {
+			$amount = $::config{"itemExchange_item_$j"."_requiredAmount"};
 		} else {
-			$amount = $config{"itemExchange_amount_$j"};
+			$amount = $::config{"itemExchange_item_$j"."_triggerAmount"};
 		}
 
-		for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
-			next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
+		my $index = Utils::findIndexStringList_lc($::char->{inventory}, "name", $::config{"itemExchange_item_$j"});
+		return 0 if (!defined $index || $::char->{'inventory'}[$index]{'amount'} < $amount);
 
-			if (lc($chars[$config{'char'}]{'inventory'}[$i]{'name'}) eq lc($item)
-			    && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} ne $amount) {
-				$failed = 1;
-				last;
-			}
-		}
 		$j++;
 	}
 
-	if ($failed) {
-		return 0;
-	} else {
-		return 1;
-	}
+	return 1;
 }
-
-
 return 1;
