@@ -1,8 +1,4 @@
 # This is a Makefile for Cygwin.
-#
-# IMPORTANT NOTE: although Inject.dll can be compiled with gcc, it will
-# produce wrong code. Kore will freeze at 'Wait for InjectDLL to connect...'
-# If anybody can figure out why, please contact me.
 
 .PHONY: all clean
 CXX=g++
@@ -22,7 +18,7 @@ Tools.dll: Tools.o Tools.gccdef
 	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Tools.gccdef Tools.o -o Tools.dll
 
 Tools.gccdef:
-	$(DLLTOOL) --dllname Tools.dll --output-def Tools.gccdef --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 Tools.o
+	$(DLLTOOL) --dllname Tools.dll --output-def Tools.gccdef --no-export-all-symbols --add-stdcall-alias Tools.o
 
 Tools.o: Tools.cpp
 	$(CXX) -DWIN32 -mdll -mno-cygwin $(CFLAGS) -c Tools.cpp -o Tools.o
@@ -32,7 +28,7 @@ Inject.dll: Inject.o Inject.gccdef
 	$(DLLWRAP) --driver=$(CXX) --target=i386-mingw32 -mno-cygwin --def Inject.gccdef Inject.o -o Inject.dll -lws2_32
 
 Inject.gccdef:
-	$(DLLTOOL) --dllname Inject.dll --output-def Inject.gccdef --no-export-all-symbols --add-stdcall-alias --exclude-symbol=DllMainCRTStartup@12 Inject.o
+	$(DLLTOOL) --dllname Inject.dll --output-def Inject.gccdef --no-export-all-symbols --add-stdcall-alias Inject.o
 
 Inject.o: Inject.cpp
 	$(CXX) -mdll -mno-cygwin $(CFLAGS) -c Inject.cpp -o Inject.o

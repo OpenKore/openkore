@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <windows.h>
 #include <winsock2.h>
 #include <mswsock.h>
 
@@ -8,6 +9,12 @@
 #define FALSECLIENT_TIMEOUT 12000
 #define FALSECLIENT_SEND_TIMEOUT 5000
 #define MAX_BUFFER_LENGTH 10000
+
+#ifdef __cplusplus
+#define CEXTERN extern "C"
+#else
+#define CEXTERN
+#endif
 
 
 ////
@@ -607,7 +614,7 @@ BOOL DoHookProcs()
 	return true;
 }
 
-BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
+CEXTERN BOOL APIENTRY DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
 {
 	switch(dwReason)
 	{
@@ -621,7 +628,7 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID _Reserved)
 		WSAStartup(MAKEWORD(2,2),&WSAData);
 		InitializeCriticalSection(&falseClient_sendSection);
 		InitializeCriticalSection(&falseClient_recvInjectSection);
-		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)falseClientCom, 0,	0, &falseClientComId);
+		CreateThread(0, 0, (LPTHREAD_START_ROUTINE)falseClientCom, 0, 0, &falseClientComId);
 		DoHookProcs();
 		break;
 
