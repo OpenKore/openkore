@@ -333,13 +333,14 @@ sub findIndexString_lc {
 
 sub findIndexStringList_lc{
 	my $r_array = shift;
+	return undef if !defined $r_array;
 	my $match = shift;
 	my $ID = shift;
 	my ($i,$j);
 	my @arr = split / *, */, $ID;
 	for ($j = 0; $j < @arr; $j++) {
 		for ($i = 0; $i < @{$r_array} ;$i++) {
-			if (%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($arr[$j])) {
+			if (lc($$r_array[$i]{$match}) eq lc($arr[$j])) {
 				return $i;
 			}
 		}
@@ -353,12 +354,13 @@ sub findIndexStringList_lc{
 
 sub findIndexString_lc_not_equip {
 	my $r_array = shift;
+	return undef if !defined $r_array;
 	my $match = shift;
 	my $ID = shift;
 	my $i;
 	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((%{$$r_array[$i]} && lc($$r_array[$i]{$match}) eq lc($ID) && !($$r_array[$i]{'equipped'}))
-			 || (!%{$$r_array[$i]} && $ID eq "")) {			  
+		if ((lc($$r_array[$i]{$match}) eq lc($ID) && !($$r_array[$i]{'equipped'}))
+			 || (!$$r_array[$i] && $ID eq "")) {			  
 			return $i;
 		}
 	}
@@ -427,7 +429,7 @@ sub minHeapAdd {
 #
 # Example:
 # # Calculates the distance between you an a monster
-# my $dist = distance($chars[$config{char}]{pos_to},
+# my $dist = distance($char->{pos_to},
 #                     $monsters{$ID}{pos_to});
 sub distance {
 	my $r_hash1 = shift;
