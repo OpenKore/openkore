@@ -59,6 +59,18 @@ CalcPath_getMap(const char *map, unsigned long width, unsigned long height, pos 
 }
 
 
+// Create a new, empty pathfinding session.
+// You must initialize it with CalcPath_init()
+CalcPath_session *
+CalcPath_new ()
+{
+	CalcPath_session *session;
+
+	session = (CalcPath_session*) malloc (sizeof (CalcPath_session));
+	session->first_time = 1;
+	return session;
+}
+
 // Create a new pathfinding session, or reset an existing session.
 // Resetting is preferred over destroying and creating, because it saves
 // unnecessary memory allocations, thus improving performance.
@@ -67,10 +79,8 @@ CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* 
 	unsigned long width, unsigned long height,
 	pos * start, pos * dest, unsigned long time_max)
 {
-	if (!session) {
-		session = (CalcPath_session*)malloc(sizeof(CalcPath_session));
-		session->first_time = 1;
-	}
+	if (!session)
+		session = CalcPath_new ();
 	
 	pos_list * solution = &session->solution;
 	pos_ai_list * fullList = &session->fullList;
@@ -131,6 +141,7 @@ CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* 
 
 /*
  * Return values:
+ * -2 = session not initialized (you must call CalcPath_init() first)
  * -1 = failed (no solution found)
  *  0 = timeout (pathfinding not yet complete; run this function again to resume)
  *  1 = finished
@@ -156,6 +167,10 @@ CalcPath_pathStep(CalcPath_session * session)
 	pos * start = session->start;
 	pos * dest = session->dest;
 	unsigned long time_max = session->time_max;
+
+	if (session->first_time) {
+		return -2;
+	}
 
 	if (start == NULL && dest == NULL) {
 		return -1;
@@ -272,12 +287,14 @@ CalcPath_pathStep(CalcPath_session * session)
 void
 CalcPath_destroy (CalcPath_session *session)
 {
-	free (session->start);
-	free (session->dest);
-	free (session->solution.array);
-	free (session->fullList.array);
-	free (session->openList.array);
-	free (session->lookup.array);
+	if (!session->first_time) {
+		free (session->start);
+		free (session->dest);
+		free (session->solution.array);
+		free (session->fullList.array);
+		free (session->openList.array);
+		free (session->lookup.array);
+	}
 	free (session);
 }
 

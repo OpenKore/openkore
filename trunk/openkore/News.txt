@@ -14,6 +14,8 @@
 
 
 New features:
+- HUGE performance gains in portal compilation. It's now 70% faster
+  compared to 1.4.x.
 - You can now configure Kore to never attack certain monsters, even when
   they attack you. In mon_control.txt, set the flag to -1. Example:
   Matyr -1 0 0

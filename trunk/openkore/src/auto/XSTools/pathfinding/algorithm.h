@@ -59,6 +59,7 @@ typedef struct {
 } CalcPath_session;
 
 
+CalcPath_session *CalcPath_new ();
 CalcPath_session *CalcPath_init (CalcPath_session *session, const char* map, const unsigned char* weight,
 	unsigned long width, unsigned long height,
 	pos * start, pos * dest, unsigned long time_max);

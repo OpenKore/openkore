@@ -15,7 +15,22 @@ XSLoader::load('XSTools');
 
 
 ##
-# PathFinding->new(...)
+# PathFinding->new([args])
+# args: Arguments to pass to $pathfinding->reset().
+#
+# Create a new PathFinding object. If args are given, the object will
+# be initialized for you. If you, you must initialize it yourself
+# by calling $pathfinding->reset().
+sub new {
+	my $class = shift;
+	my $self = create();
+	$self->reset(@_) if (@_);
+	return $self;
+}
+
+
+##
+# PathFinding->reset(key => value)
 # Required arguments:
 #   start: a hash containing x and y values where the path should start
 #   dest: a hash as above, but for the path's destination
@@ -34,29 +49,6 @@ XSLoader::load('XSTools');
 #            character must be chr(255).
 #
 # Returns: a PathFinding object
-sub new {
-	my $class = shift;
-	my %args = @_;
-
-	# Check arguments
-	croak "Required arguments missing, specify 'field' or 'distance_map' and 'width' and 'height'\n"
-		unless $args{field} || ($args{distance_map} && $args{width} && $args{height});
-	croak "Required argument 'start' missing\n" unless $args{start};
-	croak "Required argument 'dest' missing\n" unless $args{dest};
-
-	# Default optional arguments
-	$args{distance_map} = \$args{field}{dstMap} unless $args{distance_map};
-	$args{width} = $args{field}{width} unless $args{width};
-	$args{height} = $args{field}{height} unless $args{height};
-	$args{timeout} = 1500 unless $args{timeout};
-
-	return init(${$args{distance_map}}, $args{weights}, $args{width}, $args{height},
-		$args{start}{x}, $args{start}{y},
-		$args{dest}{x}, $args{dest}{y},
-		$args{timeout});
-}
-
-
 sub reset {
 	my $class = shift;
 	my %args = @_;
@@ -86,14 +78,21 @@ __END__
 # Docs for XS functions:
 
 ##
+# $path_obj->run(r_array)
+# r_array: Reference to an array in which the solution is stored. It will contain
+#     hashes of x and y coordinates from the start to the end of the path.
+# Returns: -1 on failure, 0 when pathfinding is not yet complete, or the number
+#     of steps required to walk from source to destination.
+
+##
 # $path_obj->runref()
-# Retunrs: undef on failure, 0 when pathfinding is not yet complete, or an array
+# Returns: undef on failure, 0 when pathfinding is not yet complete, or an array
 #     reference when a path is found. The array reference contains hashes of x
 #     and y coordinates from the start to the end of the path.
 
 ##
 # $path_obj->runstr()
-# Retunrs: undef on failure, 0 when pathfinding is not yet complete, or a string
+# Returns: undef on failure, 0 when pathfinding is not yet complete, or a string
 #     of packed shorts. The shorts are pairs of X and Y coordinates running
 #     from the end to the start of the path. (note that the order is reversed)
 

@@ -8289,7 +8289,6 @@ sub ai_route {
 
 sub ai_route_getRoute {
 	my ($returnArray, $r_field, $r_start, $r_dest) = @_;
-	undef @{$returnArray};
 	return 1 if (!defined $r_dest->{x} || !defined $r_dest->{'y'});
 
 	# The exact destination may not be a spot that we can walk on.
@@ -8312,10 +8311,15 @@ sub ai_route_getRoute {
 	);
 	return undef if !$pathfinding;
 
-	my $ret = $pathfinding->runref();
-	return undef if !$ret; # Failure
-	@{$returnArray} = @{$ret};
-	return scalar @{$ret}; # Success
+	my $ret = $pathfinding->run($returnArray);
+	if (!$ret) {
+		# Failure
+		undef @{$returnArray};
+		return undef;
+	} else {
+		# Success
+		return $ret;
+	}
 }
 
 #sellAuto for items_control - chobit andy 20030210
@@ -9413,6 +9417,7 @@ sub compilePortals {
 	my %mapPortals;
 	my %mapSpawns;
 	my %missingMap;
+	my $pathfinding;
 	my @solution;
 
 	# Collect portal source and destination coordinates per map
@@ -9424,6 +9429,8 @@ sub compilePortals {
 		}
 	}
 
+	$pathfinding = new PathFinding if (!$checkOnly);
+
 	# Calculate LOS values from each spawn point per map to other portals on same map
 	foreach my $map (sort keys %mapSpawns) {
 		message "Processing map $map...\n", "system" unless $checkOnly;
@@ -9431,13 +9438,24 @@ sub compilePortals {
 			foreach my $portal (keys %{$mapPortals{$map}}) {
 				next if $spawn eq $portal;
 				next if $portals_los{$spawn}{$portal} ne '';
+				return 1 if $checkOnly;
 				if ($field{name} ne $map && !$missingMap{$map}) {
 					$missingMap{$map} = 1 if (!getField("$Settings::def_field/$map.fld", \%field));
 				}
-				return 1 if $checkOnly;
-				ai_route_getRoute(\@solution, \%field, \%{$mapSpawns{$map}{$spawn}}, \%{$mapPortals{$map}{$portal}});
-				$portals_los{$spawn}{$portal} = scalar @solution;
-				debug "LOS in $map from $mapSpawns{$map}{$spawn}{x},$mapSpawns{$map}{$spawn}{y} to $mapPortals{$map}{$portal}{x},$mapPortals{$map}{$portal}{y}: $portals_los{$spawn}{$portal}\n";
+
+				my %start = %{$mapSpawns{$map}{$spawn}};
+				my %dest = %{$mapPortals{$map}{$portal}};
+				closestWalkableSpot(\%field, \%start);
+				closestWalkableSpot(\%field, \%dest);
+				
+				$pathfinding->reset(
+					start => \%start,
+					dest => \%dest,
+					field => \%field
+					);
+				my $count = $pathfinding->runcount;
+				$portals_los{$spawn}{$portal} = ($count >= 0) ? $count : 0;
+				debug "LOS in $map from $start{x},$start{y} to $dest{x},$dest{y}: $portals_los{$spawn}{$portal}\n";
 			}
 		}
 	}
