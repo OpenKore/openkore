@@ -83,7 +83,7 @@ Credits:
 - fov: writeDataFile*() tweaks
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
-- mfr: advanced 2-2 skills support.
+- mfr, Xeno-chan: advanced 2-2 skills support.
 
 
 ==================
