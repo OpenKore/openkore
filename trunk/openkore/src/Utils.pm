@@ -12,6 +12,7 @@
 package Utils;
 
 use strict;
+no strict 'refs';
 use Exporter;
 our @ISA = "Exporter";
 our @EXPORT = qw(
@@ -27,6 +28,16 @@ our @EXPORT = qw(
 #######################################
 
 
+##
+# binAdd(r_array, ID)
+# r_array: a reference to an array.
+# ID: the element to add to @r_array.
+#
+# Add $ID to the first empty slot in @r_array, or append it to
+# the end of @r_array if there are no empty slots.
+#
+# Example:
+# binAdd(\@monstersID, $ID);
 sub binAdd {
 	my $r_array = shift;
 	my $ID = shift;
@@ -39,6 +50,19 @@ sub binAdd {
 	}
 }
 
+##
+# binFind(r_array, ID)
+# r_array: a reference to an array.
+# ID: the element to search for.
+# Returns: the element number of $ID, or undef is $ID is not an
+#          element in @r_array.
+#
+# Look for element $ID in @r_array.
+#
+# Example:
+# our @array = ("hello", "world", "!");
+# binFind(\@array, "world");   # => 1
+# binFind(\@array, "?");       # => undef
 sub binFind {
 	my $r_array = shift;
 	my $ID = shift;
@@ -48,8 +72,14 @@ sub binFind {
 			return $i;
 		}
 	}
+	return undef;
 }
 
+##
+# binFindReverse(r_array, ID)
+#
+# Same as binFind() but starts looking from the end of the array
+# instead of from the beginning.
 sub binFindReverse {
 	my $r_array = shift;
 	my $ID = shift;
@@ -207,7 +237,7 @@ sub findKey {
 	my $match = shift;
 	my $ID = shift;
 	foreach (keys %{$r_hash}) {
-		if ($$r_hash{$_}{$match} == $ID) {
+		if ($r_hash{$_}->{$match} == $ID) {
 			return $_;
 		}
 	}
