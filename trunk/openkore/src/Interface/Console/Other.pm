@@ -28,18 +28,20 @@ no warnings 'redefine';
 use IO::Socket;
 use IO::Select;
 use Time::HiRes qw(time usleep);
+use Term::Cap;
+use POSIX qw(:termios_h);
+require 'sys/ioctl.ph';
+
 use Settings;
 use Utils;
 use Interface::Console;
+
 use base qw(Interface::Console);
-use POSIX qw(:termios_h);
-require 'sys/ioctl.ph';
 
 
 our %fgcolors;
 our %bgcolors;
 
-our $term;
 our ($width, $height);
 
 
@@ -60,6 +62,22 @@ sub MODINIT {
 	getTerminalSize();
 }
 
+# Move cursor to left
+sub cursorLeft {
+	return if ($_[1] <= 0);
+	$_[0]->{cap}->Tgoto('LE', undef, $_[1], \*STDOUT);
+}
+
+# Move cursor to right
+sub cursorRight {
+	return if ($_[1] <= 0);
+	$_[0]->{cap}->Tgoto('RI', undef, $_[1], \*STDOUT);
+}
+
+sub delLine {
+	$_[0]->{cap}->Tgoto('DC', 0, $width, \*STDOUT);
+}
+
 
 ###### METHODS #####
 
@@ -67,10 +85,11 @@ sub new {
 	my %interface = ();
 	my $term;
 
-	bless \%interface, __PACKAGE__;
 	$interface{select} = IO::Select->new(\*STDIN);
+	$interface{input} = {};
+	$interface{input}{buf} = '';
+	$interface{input}{pos} = 0;
 
-if (0) {
 	$term = new POSIX::Termios;
 	$interface{term} = $term;
 	$term->getattr(fileno(STDIN));
@@ -82,33 +101,221 @@ if (0) {
 	$term->setlflag($noecho);
 	$term->setcc(VTIME, 1);
 	$term->setattr(fileno(STDIN), TCSANOW);
-}
 
+	# Setup termcap
+	my $OSPEED = $term->getospeed;
+	$interface{cap} = Term::Cap->Tgetent({ OSPEED => $OSPEED });
+
+	getTerminalSize();
+	STDOUT->autoflush(0);
+
+	bless \%interface, __PACKAGE__;
 	return \%interface;
 }
 
 sub DESTROY {
 	my $self = $_[0];
 
-if (0) {
 	$self->{term}->setlflag($self->{oterm});
 	$self->{term}->setcc(VTIME, 0);
 	$self->{term}->setattr(fileno(STDIN), TCSANOW);
-}
 
 	$self->color('reset');
 	delete $SIG{WINCH};
+	STDOUT->autoflush(1);
 }
 
-sub getWindowSize {
-	my $data = ' ' x 8;
-	if (ioctl (STDOUT, TIOCGWINSZ(), $data) == 0) {
-		($width, $height) = unpack("ss", $data);
-	} else {
-		$width = 80;
-		$height = 24;
-	}
+
+# Insert a substring into a string.
+# insert(str, pos, substr)
+sub insert {
+	my $i = $_[1];
+	$i = 0 if ($i < 0);
+	$i = length($_[0]) if ($i > length($_[0]));
+	$_[0] = substr($_[0], 0, $i) . $_[2] . substr($_[0], $i);
 }
+
+# Delete a substring from a string.
+# strdel(str, pos, length)
+sub strdel {
+	return if ($_[1] > length($_[0]) || $_[2] <= 0);
+	my $p = $_[1];
+	my $i = $_[2];
+	if ($p < 0) {
+		$i += $p;
+		$p = 0;
+	} else {
+		$i = length($_[0]) - $p if ($i > length($_[0]) - $p);
+	}
+	$_[0] = substr($_[0], 0, $p) . substr($_[0], $p + $i);
+}
+
+# This function handles key events
+# TODO:
+# * Input history
+# * TAB completion
+sub readEvents {
+	my $interface = shift;
+	my %input = %{$interface->{input}};
+	my $entered = undef;
+
+	return undef unless ($interface->{select}->can_read(0));
+
+	my $key = '';
+	sysread(STDIN, $key, 1);
+	insert($input{buf}, $input{pos}, $key);
+	$input{pos}++;
+
+	# Home
+	if (index($input{buf}, "\e[1~") > -1) {
+		# Remove escape sequence from input buffer
+		strdel($input{buf}, $input{pos} - 4, 4);
+		$input{pos} -= 4;
+
+		# Move cursor to beginning
+		$interface->cursorLeft($input{pos});
+		$input{pos} = 0;
+
+	# End
+	} elsif (index($input{buf}, "\e[4~") > -1) {
+		# Remove escape sequence from input buffer
+		strdel($input{buf}, $input{pos} - 4, 4);
+		$input{pos} -= 4;
+
+		# Move cursor to end
+		$interface->cursorRight(length($input{buf}) - $input{pos});
+		$input{pos} = length($input{buf});
+
+	# Delete
+	} elsif (index($input{buf}, "\e[3~") > -1) {
+		# Remove escape sequence and next character
+		strdel($input{buf}, $input{pos} - 4, 5);
+		$input{pos} -= 4;
+
+		# Move cursor to beginning, delete whole line and print buffer
+		$interface->cursorLeft($input{pos});
+		$interface->delLine;
+		print $input{buf};
+
+		# Move cursor back to where it's supposed to be
+		if ($input{pos} < length($input{buf})) {
+			$interface->cursorLeft(length($input{buf}) - $input{pos});
+		}
+
+	# Backspace
+	} elsif (ord($key) == 127) {
+		# Remove backspace character from input buffer
+		strdel($input{buf}, $input{pos} - 2, 2);
+
+		if ($input{pos} != 1) {
+			# Move cursor to beginning, delete whole line and print buffer
+			$interface->cursorLeft($input{pos} - 1);
+			$interface->delLine;
+			print $input{buf};
+
+			# Move cursor back to where it's supposed to be
+			$input{pos} -= 2;
+			if ($input{pos} < length($input{buf})) {
+				$interface->cursorLeft(length($input{buf}) - $input{pos});
+			}
+
+		} else {
+			# Don't do anything if the cursor is already at the beginning
+			$input{pos} = 0;
+		}
+
+	# Left arrow key
+	} elsif (index($input{buf}, "\e[D") > -1) {
+		# Remove escape sequence from input buffer
+		strdel($input{buf}, $input{pos} - 3, 3);
+
+		# Move cursor one left
+		$input{pos} -= 4;
+		$interface->cursorLeft(1) if ($input{pos} >= 0);
+
+	# Right arrow key
+	} elsif (index($input{buf}, "\e[C") > -1) {
+		# Remove escape sequence from input buffer
+		strdel($input{buf}, $input{pos} - 3, 3);
+		$input{pos} -= 3;
+
+		# Move cursor one right
+		if ($input{pos} < length($input{buf})) {
+			$input{pos}++;
+			$interface->cursorRight(1);
+		}
+
+	# Ctrl+U - delete entire line
+	} elsif (ord($key) == 21) {
+		# Remove Ctrl+U character from input buffer
+		strdel($input{buf}, $input{pos} - 2, 2);
+
+		# Move cursor to beginning and delete whole line
+		$interface->cursorLeft($input{pos} - 1);
+		$interface->delLine;
+
+		# Reset buffer
+		undef $input{buf};
+		$input{buf} = '';
+		$input{pos} = 0;
+
+	# TAB
+	} elsif (index($input{buf}, "\t") > -1) {
+		# Ignore tabs for now
+		strdel($input{buf}, $input{pos} - 1, 1);
+		$input{pos}--;
+
+	# F1-F12
+	} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\eO[A-Z]/) {
+		$input{pos} -= 3;
+		$input{buf} =~ s/\eO[A-Z]//g;
+		# TODO: this doesn't work!
+
+	# Normal character
+	} elsif (index($input{buf}, "\e") == -1) {
+		if (index($input{buf}, "\n") == -1) {
+			# If Enter has not been pressed,
+			# move cursor to beginning, delete whole line and print buffer
+			$interface->cursorLeft($input{pos} - 1);
+
+			$interface->delLine;
+			print $input{buf};
+
+			# Move cursor back to where it's supposed to be
+			if ($input{pos} < length($input{buf})) {
+				$interface->cursorLeft(length($input{buf}) - $input{pos});
+			}
+
+		} else {
+			# Enter has been pressed; delete newline character,
+			# return and reset buffer
+			strdel($input{buf}, $input{pos} - 1, 1);
+			print "\n";
+			$entered = $input{buf};
+			undef $input{buf};
+			$input{buf} = '';
+			$input{pos} = 0;
+		}
+
+	# Somehow an escape character got into our buffer and is not removed.
+	# Remove it if it's a full escape character (4 bytes)
+	} elsif (length($input{buf}) >= 4 && $input{buf} =~ /\e\[(\d~|[A-Z])/) {
+		$input{pos} -= length($1) + 2;
+		$input{buf} =~ s/\e\[(\d~|[A-Z])//g;
+	}
+
+	#open(F, '>/dev/pts/2'); # Debugging stuff
+	#print F "\n";
+	#close F;
+	$input{pos} = 0 if ($input{pos} < 0);
+	STDOUT->flush;
+
+
+	undef $interface->{input};
+	$interface->{input} = \%input;
+	return $entered;
+}
+
 
 sub getInput {
 	my $class = shift;
@@ -116,7 +323,7 @@ sub getInput {
 	my $msg;
 
 	if ($timeout < 0) {
-		$msg = <STDIN> until defined($msg) && $msg ne "\n";
+		$msg = $class->readEvents until defined($msg);
 
 	} elsif ($timeout > 0) {
 		my %timeOut = ();
@@ -125,18 +332,15 @@ sub getInput {
 		$timeOut{timeout} = $timeout;
 
 		while (!timeOut(\%timeOut)) {
-			$msg = $class->getInput(0);
-			return $msg if (defined $msg);
-			usleep(10000);
+			$msg = $class->readEvents;
+			last if (defined $msg);
+			usleep 10000;
 		}
 
 	} else {
-		if ($class->{select}->can_read(0.00)) {
-			$msg = <STDIN>;
-		}
+		$msg = $class->readEvents;
 	}
 
-	$msg =~ y/\r\n//d if defined $msg;
 	undef $msg if (defined $msg && $msg eq "");
 	return $msg;
 }
@@ -147,9 +351,32 @@ sub writeOutput {
 	my $message = shift;
 	my $domain = shift;
 
-	setColor($type, $domain);
-	print $message;
-	color('reset');
+	# This code keeps the input prompt visible even on output
+	if (length $class->{input}{buf} == 0) {
+		# Just print our message if there is no input buffer
+		setColor($type, $domain);
+		print $message;
+		color('reset');
+
+	} else {
+		# If there's an input buffer, clear it
+		$class->cursorLeft($class->{input}{pos});
+		$class->delLine;
+
+		# Print the message
+		setColor($type, $domain);
+		print $message;
+		color('reset');
+
+		# Print the input buffer
+		print $class->{input}{buf};
+
+		# Move cursor to where it's supposed to be
+		if ($class->{input}{pos} < length($class->{input}{buf})) {
+			$class->cursorLeft(length($class->{input}{buf}) - $class->{input}{pos});
+		}
+	}
+
 	STDOUT->flush;
 }
 
