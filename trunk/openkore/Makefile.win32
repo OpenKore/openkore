@@ -51,7 +51,7 @@ exe:
 		--trim Term::Cap \
 		--trim POSIX \
 		--trim Tools \
-		--force --icon openkore.ico
+		--force --icon tools\\build\\openkore.ico
 
 clean:
 	rm -f Tools.dll Tools.o Tools.gccdef Inject.dll Inject.o Inject.gccdef ToolsXS.o ToolsXS.c openkore.exe
