@@ -264,7 +264,7 @@ sub checkConnection {
 		# Choose random config file
 		@files = split(/ /, $config{'autoConfChange_files'});
 		$file = @files[rand(@files)];
-		print "Changing configuration file (from \"$config_file\" to \"$file\")...\n";
+		print "Changing configuration file (from \"$Settings::config_file\" to \"$file\")...\n";
 
 		# A relogin is necessary if the host/port, username or char is different
 		$oldMasterHost = $config{"master_host_$config{'master'}"};
@@ -272,7 +272,7 @@ sub checkConnection {
 		$oldUsername = $config{'username'};
 		$oldChar = $config{'char'};
 
-		$config_file = $file;
+		$Settings::config_file = $file;
 		$parseFiles[0]{'file'} = $file;
 		parseDataFile2($file, \%config);
 
@@ -316,13 +316,11 @@ sub parseInput {
 	# Check if in special state
 
 	if (!$config{'XKore'} && $conState == 2 && $waitingForInput) {
-		$config{'server'} = $input;
+		configModify('server', $input, 1);
 		$waitingForInput = 0;
-		writeDataFileIntact($config_file, \%config);
 	} elsif (!$config{'XKore'} && $conState == 3 && $waitingForInput) {
-		$config{'char'} = $input;
+		configModify('char', $input, 1);
 		$waitingForInput = 0;
-		writeDataFileIntact($config_file, \%config);
 		sendCharLogin(\$remote_socket, $config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 
@@ -374,7 +372,6 @@ sub parseInput {
 		}
 
 	} elsif ($switch eq "al") {
-		$~ = "ARTICLESLIST2";
 		print "----------Items being sold in store------------\n";
 		print "#  Name                                     Type         Qty     Price   Sold\n";		       
 
@@ -398,11 +395,10 @@ sub parseInput {
 				$display = $display."[".$cards_lut{$articles[$number]{'card4'}}."]";
 			}
 
-			format ARTICLESLIST2 =
-@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>
-$i $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quantity'} $articles[$number]{'price'} $articles[$number]{'sold'}
-.
-			write;
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>",
+				[$i, $display, $itemTypes_lut{$articles[$number]{'type'}}, $articles[$number]{'quantity'}, $articles[$number]{'price'}, $articles[$number]{'sold'}]),
+				"shoplist");
 			$i++;
 		}
 		print "----------------------------------------------\n";
@@ -571,7 +567,7 @@ $i $display $itemTypes_lut{$articles[$number]{'type'}} $articles[$number]{'quant
 		}
 
 	} elsif ($switch eq "chist") { 
-		(open(CHAT, $chat_file)) or print("Unable to open chat.txt\n");
+		(open(CHAT, $Settings::chat_file)) or print("Unable to open chat.txt\n");
 		@chat = <CHAT>;
 		close(CHAT);
 		print "------ Chat History --------------------\n";
@@ -1055,11 +1051,7 @@ $i  $name                    $job       $lvl $title                   $online
 					push @non_useable, $i;
 				} 
 			}
-			$~ = "INVENTORY";
-			format INVENTORY =
-@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-$index   $display
-.
+
 			print	"-----------Inventory-----------\n";
 			if ($arg1 eq "" || $arg1 eq "eq") {
 				print	"-- Equipment --\n";
@@ -1076,7 +1068,11 @@ $index   $display
 						$display .= " -- Not Identified";
 					}
 					$index = $equipment[$i];
-					write;
+
+					message(swrite(
+						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+						[$index, $display]),
+						"i");
 				}
 			}
 			if ($arg1 eq "" || $arg1 eq "nu") {
@@ -1085,7 +1081,10 @@ $index   $display
 					$display = $chars[$config{'char'}]{'inventory'}[$non_useable[$i]]{'name'};
 					$display .= " x $chars[$config{'char'}]{'inventory'}[$non_useable[$i]]{'amount'}";
 					$index = $non_useable[$i];
-					write;
+					message(swrite(
+						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+						[$index, $display]),
+						"i");
 				}
 			}
 			if ($arg1 eq "" || $arg1 eq "u") {
@@ -1094,7 +1093,10 @@ $index   $display
 					$display = $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'name'};
 					$display .= " x $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'amount'}";
 					$index = $useable[$i];
-					write;
+					message(swrite(
+						"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+						[$index, $display]),
+						"i");
 				}
 			}
 			print "-------------------------------\n";
@@ -5013,7 +5015,7 @@ sub parseMsg {
 		undef $conState_tries;
 		if ($versionSearch) {
 			$versionSearch = 0;
-			writeDataFileIntact($config_file, \%config);
+			writeDataFileIntact($Settings::config_file, \%config);
 		}
 		$sessionID = substr($msg, 4, 4);
 		$accountID = substr($msg, 8, 4);
@@ -5065,16 +5067,14 @@ sub parseMsg {
 			if (!$config{'XKore'}) {
 				message("Enter Username Again:\n", "input");
 				$input_socket->recv($msg, $Settings::MAX_READ);
-				$config{'username'} = $msg;
-				writeDataFileIntact($config_file, \%config);
+				configModify('username', $msg, 1);
 			}
 		} elsif ($type == 1) {
 			error("Password Error\n", "connection");
 			if (!$config{'XKore'}) {
 				message("Enter Password Again:\n", "input");
 				$input_socket->recv($msg, $Settings::MAX_READ);
-				$config{'password'} = $msg;
-				writeDataFileIntact($config_file, \%config);
+				configModify('password', $msg, 1);
 			}
 		} elsif ($type == 3) {
 			error("Server connection has been denied\n", "connection");
@@ -5093,7 +5093,7 @@ sub parseMsg {
 		}
 		if ($type != 5 && $versionSearch) {
 			$versionSearch = 0;
-			writeDataFileIntact($config_file, \%config);
+			writeDataFileIntact($Settings::config_file, \%config);
 		}
 
 	} elsif ($switch eq "006B") {
@@ -9334,7 +9334,7 @@ sub configModify {
 	print "Config '$key' set to $val\n" unless ($quiet);
 	$config{$key} = $val;
 	$Log::messageVerbosity = $config{'verbose'};
-	writeDataFileIntact($config_file, \%config);
+	writeDataFileIntact($Settings::config_file, \%config);
 }
 
 sub setTimeout {
@@ -10408,7 +10408,7 @@ sub addParseFiles {
 sub chatLog {
 	my $type = shift;
 	my $message = shift;
-	open CHAT, ">> $chat_file";
+	open CHAT, ">> $Settings::chat_file";
 	print CHAT "[".getFormattedDate(int(time))."][".uc($type)."] $message";
 	close CHAT;
 }
@@ -10416,17 +10416,17 @@ sub chatLog {
 sub itemLog {
 	my $crud = shift;
 	return if (!$config{'itemHistory'});
-	open ITEMLOG, ">> $item_log_file";
+	open ITEMLOG, ">> $Settings::item_log_file";
 	print ITEMLOG "[".getFormattedDate(int(time))."] $crud";
 	close ITEMLOG;
 }
 
 sub chatLog_clear { 
-	if (-f $chat_file) { unlink($chat_file); } 
+	if (-f $Settings::chat_file) { unlink($Settings::chat_file); } 
 }
 
 sub itemLog_clear { 
-	if (-f $item_log_file) { unlink($item_log_file); } 
+	if (-f $Settings::item_log_file) { unlink($Settings::item_log_file); } 
 }
 
 sub convertGatField {
@@ -10618,7 +10618,7 @@ sub parseDataFile2 {
 		}
 	}
 	close FILE;
-	$Log::messageVerbosity = $config{'verbose'} if ($file eq $config_file);
+	$Log::messageVerbosity = $config{'verbose'} if ($file eq $Settings::config_file);
 }
 
 sub parseItemsControl {

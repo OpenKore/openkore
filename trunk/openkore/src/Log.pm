@@ -9,19 +9,16 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 
-#this is commented out because it requires additional packages, but is included here to give other mods ideas ;)
-#
-
-
-
 # Known domains:
 # atk			You attack monster
 # connection		Connection messages
 # input			Waiting for user input
+# i			List inventory items
 # itemuse		You used item
 # mon_itemuse		Monster used item
 # monatkyou		Monster attacks you
 # player_itemuse	Player used item
+# shoplist		List items in shop
 # storage		Storage item added/removed
 # xkore			X-Kore system messages
 
@@ -31,10 +28,11 @@ use Carp;
 use Utils;
 use Exporter;
 use IO::Socket;
-if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
-	eval "use Win32::Console::ANSI;";
+use Settings;
+if ($Settings::buildType == 0) {
+	require Win32::Console::ANSI;
+	import Win32::Console::ANSI;
 }
-use Term::ANSIScreen qw/:color :cursor :screen :keyboard/;
 
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(
@@ -106,6 +104,33 @@ sub MODINIT {
 	$chatTimestamp = 1;
 }
 
+sub color {
+	my $color = shift;
+	if ($color eq "reset") {
+		print "\033[0m";
+	} elsif ($color eq "black") {
+		print "\033[1;30m";
+	} elsif ($color eq "red") {
+		print "\033[1;31m";
+	} elsif ($color eq "green") {
+		print "\033[1;32m";
+	} elsif ($color eq "yellow") {
+		print "\033[1;33m";
+	} elsif ($color eq "blue") {
+		print "\033[1;34m";
+	} elsif ($color eq "magenta") {
+		print "\033[1;35m";
+	} elsif ($color eq "cyan") {
+		print "\033[1;36m";
+	} elsif ($color eq "white") {
+		print "\033[1;37m";
+	}
+}
+
+END {
+	color 'reset';
+}
+
 
 sub processMsg {
 	my $type = shift;
@@ -118,31 +143,13 @@ sub processMsg {
 
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
-		# TODO: set console color here
-		# This is a small example (works only on Unix).
-		# It should be in a config file rather than hardcoded.
-		if (1 == 1) {
-			# above if statement would not be required if the Win32::Console::ANSI package was installed
-			if ($type eq "error") {
-				# Errors are red
-				color 'red';
-				} elsif ($domain eq "connection") {
-				# Magenta
-				color 'magenta';
-			} elsif ($domain eq "atk") {
-				# Cyan
-				color 'cyan';
-			}
-		}
+		setColor($type, $domain);
 
 		$consoleVar->{$domain} = 1 if (!defined($consoleVar->{$domain}));
 		print $message if ($consoleVar->{$domain});
 
-		if (1 == 1) {
-		# Restore normal color
 		color 'reset';
-			STDOUT->flush;
-		}
+		STDOUT->flush;
 	}
 
 	# Print to files
@@ -158,6 +165,18 @@ sub processMsg {
 	foreach (@hooks) {
 		next if (!defined($_));
 		$_->{'func'}->($type, $domain, $currentVerbosity, $message, $_->{'user_data'});
+	}
+}
+
+sub setColor {
+	my ($type, $domain) = @_;
+
+	if ($type eq "error") {
+		color 'red';
+	} elsif ($domain eq "connection") {
+		color 'magenta';
+	} elsif ($domain eq "atk") {
+		color 'cyan';
 	}
 }
 

@@ -42,12 +42,15 @@ our $item_log_file;
 our $shop_file;
 
 
-sub MODINIT {
+BEGIN {
 	if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 		$buildType = 0;
 	} else {
 		$buildType = 1;
 	}
+}
+
+sub MODINIT {
 	$daemon = 0;
 	$control_folder = "control";
 	$tables_folder = "tables";
