@@ -200,8 +200,8 @@ followBot 0
 tankMode 0
 tankModeTarget 
 
-dealAutoCancel 1
-partyAutoDeny 1
+dealAuto 1
+partyAuto 1
 partyAutoShare 0
 guildAutoDeny 1
 
