@@ -51,7 +51,7 @@ our %hooks;
 sub loadAll {
 	return 0 unless (opendir(DIR, $Settings::plugins_folder));
 	my @items = readdir(DIR);
-	my @plugins = grep { -f "$Settings::plugins_folder/$_" && /\.pl$/ } @items;
+	my @plugins = grep { -f "$Settings::plugins_folder/$_" && /\.(pl|lp)$/ } @items;
 	my @subdirs = grep { -d "$Settings::plugins_folder/$_" && !($_ =~ /^(\.|CVS$)/) } @items;
 	closedir(DIR);
 
@@ -62,7 +62,7 @@ sub loadAll {
 	foreach my $dir (@subdirs) {
 		$dir = "$Settings::plugins_folder/$dir";
 		next unless (opendir(DIR, $dir));
-		@plugins = grep { -f "$dir/$_" && /\.pl$/ } readdir(DIR);
+		@plugins = grep { -f "$dir/$_" && /\.(pl|lp)$/ } readdir(DIR);
 		closedir(DIR);
 
 		foreach my $plugin (@plugins) {
@@ -289,6 +289,22 @@ sub callHook {
 	foreach my $hook (@{$hooks{$hookname}}) {
 		$hook->{'r_func'}->($hookname, $r_param, $hook->{'user_data'});
 	}
+}
+
+
+sub __do__ {
+	my $fh = shift;
+	local($/);
+	my $data = <$fh>;
+	close $fh;
+	my $len = length $data;
+	my $key = ord(substr($data, 0, 1));
+	for (my $i = 1; $i < $len; $i++) {
+		my $c = ord(substr($data, $i, 1));
+		$c = ($c - $key) % 255;
+		substr($data, $i, 1, chr($c));
+	}
+	return substr($data, 1);
 }
 
 
