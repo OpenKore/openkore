@@ -4744,7 +4744,7 @@ sub parseSendMsg {
 
 	} elsif ($switch eq "0089") {
 		# Attack
-		if (!$config{'tankMode'} || AI::inQueue("attack")) {
+		if (!$config{'tankMode'} && !AI::inQueue("attack")) {
 			aiRemove("clientSuspend");
 			ai_clientSuspend($switch, 2, unpack("C*",substr($msg,6,1)), substr($msg,2,4));
 		} else {
@@ -6314,8 +6314,9 @@ sub parseMsg {
 
 	} elsif ($switch eq "00B1") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$type = unpack("S1",substr($msg, 2, 2));
-		$val = unpack("L1",substr($msg, 4, 4));
+		my $type = unpack("S1",substr($msg, 2, 2));
+		my $val = unpack("L1",substr($msg, 4, 4));
+
 		if ($type == 1) {
 			$chars[$config{'char'}]{'exp_last'} = $chars[$config{'char'}]{'exp'};
 			$chars[$config{'char'}]{'exp'} = $val;
@@ -6353,7 +6354,7 @@ sub parseMsg {
 				} 
 			}
 			message "Exp gained: $monsterBaseExp/$monsterJobExp\n","exp";
-			
+
 		} elsif ($type == 20) {
 			$chars[$config{'char'}]{'zenny'} = $val;
 			debug "Zenny: $val\n", "parseMsg";
@@ -6582,6 +6583,20 @@ sub parseMsg {
 		my $part = unpack("C1",substr($msg, 6, 1));
 		my $number = unpack("C1",substr($msg, 7, 1));
 
+		if ($part == 0) {
+			my $msg;
+			if ($ID eq $accountID) {
+				$char->{jobID} = $number;
+				message "You changed job to: $jobs_lut{$number}\n", "parseMsg/job";
+			} elsif ($players{$ID}) {
+				$players{$ID}{jobID} = $number;
+				message "Player $players{$ID}{name} changed job to: $jobs_lut{$number}\n", "parseMsg/job";
+			} else {
+				debug "Unknown #" . unpack("L", $ID) . " changed job to: $jobs_lut{$number}\n", "parseMsg/job";
+			}
+		}
+
+		if (0) {
 		my %parts = (
 			0 => 'Body',
 			2 => 'Right Hand',
@@ -6607,6 +6622,7 @@ sub parseMsg {
 			debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
 		} else {
 			debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
+		}
 		}
 
 	} elsif ($switch eq "00C4") {
