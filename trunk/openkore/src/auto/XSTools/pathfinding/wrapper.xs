@@ -36,28 +36,25 @@ PathFinding_init(map, sv_weights, width, height, startx, starty, destx, desty, t
 	INIT:
 		unsigned char *weights = NULL;
 		pos *start, *dest;
-		int ok = 1;
 	CODE:
 		if (sv_weights && SvOK (sv_weights)) {
 			STRLEN len;
 
 			weights = (unsigned char *) SvPV (derefPV (sv_weights), len);
 			if (weights && len < 256) {
-				ok = 0;
 				XSRETURN_UNDEF;
 			}
 		}
 
-		if (ok) {
-			start = (pos *) malloc (sizeof (pos));
-			dest = (pos *) malloc (sizeof (pos));
-			start->x = startx;
-			start->y = starty;
-			dest->x = destx;
-			dest->y = desty;
 
-			RETVAL = CalcPath_init (NULL, map, weights, width, height, start, dest, time_max);
-		}
+		start = (pos *) malloc (sizeof (pos));
+		dest = (pos *) malloc (sizeof (pos));
+		start->x = startx;
+		start->y = starty;
+		dest->x = destx;
+		dest->y = desty;
+
+		RETVAL = CalcPath_init (NULL, map, weights, width, height, start, dest, time_max);
 	OUTPUT:
 		RETVAL
 
@@ -74,45 +71,43 @@ PathFinding__reset(session, map, sv_weights, width, height, startx, starty, dest
 		unsigned short desty
 		unsigned int time_max
 	PREINIT:
-		session = (PathFinding) 0; /* shut up compiler warning */
-	INIT:
 		unsigned char *weights = NULL;
 		pos *start, *dest;
-		int ok = 1;
+		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
 		if (sv_weights && SvOK (sv_weights)) {
 			STRLEN len;
 
 			weights = (unsigned char *) SvPV (derefPV (sv_weights), len);
 			if (weights && len < 256) {
-				ok = 0;
 				XSRETURN_UNDEF;
 			}
 		}
 
-		if (ok) {
-			start = (pos *) malloc (sizeof (pos));
-			dest = (pos *) malloc (sizeof (pos));
-			start->x = startx;
-			start->y = starty;
-			dest->x = destx;
-			dest->y = desty;
 
-			CalcPath_init (session, map, weights, width, height, start, dest, time_max);
-		}
+		start = (pos *) malloc (sizeof (pos));
+		dest = (pos *) malloc (sizeof (pos));
+		start->x = startx;
+		start->y = starty;
+		dest->x = destx;
+		dest->y = desty;
+
+		CalcPath_init (session, map, weights, width, height, start, dest, time_max);
 
 SV *
 PathFinding_runref(session)
 		PathFinding session
 	PREINIT:
-		AV * results;
-		int i, status;
-		session = (PathFinding) 0; /* shut up compiler warning */
+		int status;
 	CODE:
-		status = CalcPath_pathStep(session);
+		status = CalcPath_pathStep (session);
 		if (status < 0) {
 			XSRETURN_UNDEF;
+
 		} else if (status > 0) {
+			AV * results;
+			int i;
+
 			results = (AV *)sv_2mortal((SV *)newAV());
 			av_extend(results, session->solution.size);
 			for (i = session->solution.size - 1; i >= 0; i--) {
@@ -124,6 +119,7 @@ PathFinding_runref(session)
 				av_push(results, newRV((SV *)rh));
 			}
 			RETVAL = newRV((SV *)results);
+
 		} else {
 			XSRETURN_NO;
 		}
@@ -135,7 +131,6 @@ PathFinding_runstr(session)
 		PathFinding session
 	PREINIT:
 		int status;
-		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
 		status = CalcPath_pathStep(session);
 		if (status < 0) {
@@ -153,7 +148,6 @@ PathFinding_runcount(session)
 		PathFinding session
 	PREINIT:
 		int status;
-		session = (PathFinding) 0; /* shut up compiler warning */
 	CODE:
 		status = CalcPath_pathStep(session);
 		if (status < 0)
