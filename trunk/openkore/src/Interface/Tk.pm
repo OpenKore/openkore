@@ -27,9 +27,10 @@ use Interface;
 use base qw/Interface/;
 use Plugins;
 use Globals;
+use Settings;
 
 use Carp qw/carp croak confess/;
-use Time::HiRes qw/time/;
+use Time::HiRes qw/time usleep/;
 use Tk;
 use Tk::ROText;
 use Tk::BrowseEntry;
@@ -51,13 +52,20 @@ sub new {
 		input_list => [],
 		input_offset => 0,
 		input_que => [],
-		default_font=>"MS_Sans_Serif",
+		default_font=>"MS Sans Serif",
 		input_type => "Command",
 		input_pm => undef,
 		total_lines => 0,
 		last_line_end => 0,
 		colors => {},
 	};
+
+	if ($buildType == 0) {
+		eval "use Win32::API;";
+		$self->{ShellExecute} = new Win32::API("shell32", "ShellExecute",
+			"NPPPPN", "V");
+	}
+
 	bless $self, $class;
 	$self->initTk;
 
@@ -125,8 +133,6 @@ sub writeOutput {
 	}
 
 	$self->{console}->see('end') if $scroll;
-
-	$self->update();
 }
 
 sub updateHook {
@@ -136,11 +142,21 @@ sub updateHook {
 	return unless defined $self->{mw};
 	$self->updatePos();
 	$self->{mw}->update();
+	$self->setAiText("@ai_seq");
 }
 
 sub update {
 	my $self = shift;
 	$self->{mw}->update();
+
+	if ($buildType == 0 && $self->{SettingsObj}) {
+		if ($self->{SettingsObj}->Wait(0)) {
+			my $code;
+			$self->{SettingsObj}->GetExitCode($code);
+			Settings::parseReload("all") if $code == 0;
+			delete $self->{SettingsObj};
+		}
+	}
 }
 
 sub title {
@@ -223,9 +239,10 @@ sub initTk {
 	$self->{mw} = MainWindow->new();
 	$self->{mw}->protocol('WM_DELETE_WINDOW', [\&OnExit, $self]);
 	#$self->{mw}->Icon(-image=>$self->{mw}->Photo(-file=>"hyb.gif"));
-	$self->{mw}->title("OpenKore Tk Interface");
-	$self->{mw}->minsize(500,310);
-	$self->{menuFont} = $self->{mw}->fontCreate(-family => "MS_Sans_Serif", -size => 8, -weight => "bold");
+	$self->{mw}->title("$Settings::NAME");
+	$self->{mw}->minsize(620,400);
+	$self->{menuFont} = $self->{mw}->fontCreate(-family => $self->{default_font}, -size => 8, -weight => "bold");
+
 	#------ Frame Control
 	$self->{main_frame} = $self->{mw}->Frame()->pack(-side => 'top',-expand => 1,-fill => 'both',);
 	$self->{btn_frame} = $self->{main_frame}->Frame()->pack(-side => 'right',-expand => 0,-fill => 'y',);
@@ -236,7 +253,7 @@ sub initTk {
 	#------ subclass in console frame
 	$self->{tabPane} = $self->{console_frame}->NoteBook(-relief=>'flat',-border=>1,-tabpadx=>1,-tabpady=>1,-font=>${$self->{menuFont}},-bg=>'#CDCDCD',-foreground=>'grey',-inactivebackground=>"#999999")->pack(-expand => 1,-fill => 'both',-side => 'top',);
 	$self->{consoleTab} = $self->{tabPane}->add("Console",-label=>'Console');
-	$self->{chatTab} = $self->{tabPane}->add("Chat",-label=>'Chat');
+	#$self->{chatTab} = $self->{tabPane}->add("Chat",-label=>'Chat');
 	$self->{console} = $self->{consoleTab}->Scrolled('ROText',-bg=>'black',-fg=>'grey',
 		-scrollbars => 'e',
 		-height => 15,
@@ -245,7 +262,7 @@ sub initTk {
 		-insertontime => 0,
 		-background => 'black',
 		-foreground => 'grey',
-		-font=>[ -family => $self->{default_font} ,-size=>10,],
+		-font=>[ -family => 'Courier' ,-size=>10,],
 		-relief => 'sunken',
 	)->pack(
 		-expand => 1,
@@ -253,6 +270,7 @@ sub initTk {
 		-side => 'top',
 	);
 
+if (0) {
 	$self->{chatLog} = $self->{chatTab}->Scrolled('ROText',-bg=>'black',-fg=>'grey',
 		-scrollbars => 'e',
 		-height => 15,
@@ -268,35 +286,45 @@ sub initTk {
 		-fill => 'both',
 		-side => 'top',
 	);
+}
 
-	$self->{mapBtn} = $self->{btn_frame}->Button(-text => ":: Map", -command => [\&mapToggle, $self] , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
-	$self->{statusBtn} = $self->{btn_frame}->Button(-text => ":: Status", -command =>[sub{push(@{$self->{input_list}}, "s");},$self] , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
-	$self->{skillsBtn} = $self->{btn_frame}->Button(-text => ":: Skills", -command => sub{push(@{$self->{input_list}}, "skills");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
-	$self->{inventBtn} = $self->{btn_frame}->Button(-text => ":: Inventory", -command =>sub{push(@{$self->{input_list}}, "i");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
-	$self->{pplBtn} = $self->{btn_frame}->Button(-text => ":: Players", -command => sub{push(@{$self->{input_list}}, "pl");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
-	$self->{monBtn} = $self->{btn_frame}->Button(-text => ":: Monsters", -command =>sub{push(@{$self->{input_list}}, "ml");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	my $addButton = sub {
+		my $label = shift;
+		my $command = shift;
+		return $self->{btn_frame}->Button(-text => $label, -command => $command , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	};
+
+	$self->{mapBtn} = $addButton->(':: Map', [\&mapToggle, $self]);
+	$self->{settingsBtn} = $addButton->(':: Settings', [\&showSettings, $self]) if ($ENV{'OPENKORE_SETTINGS'} && -f $ENV{'OPENKORE_SETTINGS'});
+	$self->{helpBtn} = $addButton->(':: Help', [\&showManual, $self]) if ($self->{ShellExecute});
+	$self->{exitBtn} = $addButton->(':: Exit', [\&OnExit, $self]);
+
+	#$self->{statusBtn} = $self->{btn_frame}->Button(-text => ":: Status", -command =>[sub{push(@{$self->{input_list}}, "s");},$self] , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	#$self->{skillsBtn} = $self->{btn_frame}->Button(-text => ":: Skills", -command => sub{push(@{$self->{input_list}}, "skills");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	#$self->{inventBtn} = $self->{btn_frame}->Button(-text => ":: Inventory", -command =>sub{push(@{$self->{input_list}}, "i");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	#$self->{pplBtn} = $self->{btn_frame}->Button(-text => ":: Players", -command => sub{push(@{$self->{input_list}}, "pl");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
+	#$self->{monBtn} = $self->{btn_frame}->Button(-text => ":: Monsters", -command =>sub{push(@{$self->{input_list}}, "ml");} , -takefocus => 0, -font => $self->{menuFont}, -activeforeground => "white", -activebackground => "#004E98", -relief => "flat", -anchor => "w")->pack(-fill => "x", -side => "top");
 
 	#------ subclass in input frame
 	$self->{pminput} = $self->{input_frame}->BrowseEntry(
-		-bg=>'black',
-		-fg=>'grey',
+		-bg => 'white',
+		-insertbackground => 'white',
 		-variable => \$self->{input_pm},
 		-width => 8,
 		-choices => $self->{pm_list},
 		-state =>'normal',
-		-relief => 'flat',
-	)->pack(
-		-expand=>0,
-		-fill => 'x',
-		-side => 'left',
-	);
+		-relief => 'sunken',
+	); # ->pack(
+	#	-expand=>0,
+	#	-fill => 'x',
+	#	-side => 'left',
+	#);
 
 	$self->{input} = $self->{input_frame}->Entry(
-		-bg => 'black',
-		-fg => 'grey',
-		-insertbackground => 'grey',
+		-bg => 'white',
+		-insertbackground => 'white',
 		-relief => 'sunken',
-		-font=>[ -family => $default_font ,-size=>10,],
+		-font=>[ -family => $self->{default_font} ,-size=>8,],
 	)->pack(
 		-expand=>1,
 		-fill => 'x',
@@ -310,12 +338,12 @@ sub initTk {
 		-choices => [qw(Command Public Party Guild)],
 		-width => 8,
 		-state =>'readonly',
-		-relief => 'flat',
-	)->pack	(
-		-expand=>0,
-		-fill => 'x',
-		-side => 'left',
-	);
+		-relief => 'sunken',
+	);#->pack	(
+	#	-expand=>0,
+	#	-fill => 'x',
+	#	-side => 'left',
+	#);
 
 	#------ subclass in status frame
 	$self->{status_gen} = $self->{status_frame}->Label(
@@ -363,6 +391,7 @@ sub initTk {
 		-fill => 'x',
 	);
 
+if (0) {
 	$self->{mw}->configure(-menu => $self->{mw}->Menu(-menuitems=>
 	[ map 
 		['cascade', $_->[0], -tearoff=> 0, -font=>[-family=>"Tahoma",-size=>8], -menuitems => $_->[1]],
@@ -443,18 +472,35 @@ sub initTk {
 	#$self->{mw}->bind('all','<Alt-f>'=>sub{push(@input_que, "guild i");});
 	#$self->{mw}->bind('all','<Alt-g>'=>sub{push(@input_que, "guild m");});
 	#$self->{mw}->bind('all','<Alt-h>'=>sub{push(@input_que, "guild p");});
-
+}
 	$self->{input}->bind('<Up>' => [\&inputUp, $self]);
 	$self->{input}->bind('<Down>' => [\&inputDown, $self]);
 	$self->{input}->bind('<Return>' => [\&inputEnter, $self]);
 
-	if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
+
+	if ($buildType == 0) {
 		$self->{input}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k')]);
 		$self->{console}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k')]);
+
+		my $console;
+		eval 'use Win32::Console; $console = new Win32::Console(STD_OUTPUT_HANDLE);';
+		$console->Free();
 	} else {
 		#I forgot the X code. will insert later
 	}
 
+	$self->{mw}->raise();
+}
+
+sub errorDialog {
+	my $self = shift;
+	my $msg = shift;
+	$self->{mw}->messageBox(
+		-icon => 'error',
+		-message => $msg,
+		-title => 'Error',
+		-type => 'Ok'
+		);
 }
 
 sub inputUp {
@@ -535,7 +581,29 @@ sub w32mWheel {
 
 sub OnExit{
 	my $self = shift;
-	push(@{ $self->{input_que} }, 'quit');
+	if ($conState) {
+		push(@{ $self->{input_que} }, "\n");
+		main::quit();
+	} else {
+		exit();
+	}
+}
+
+sub showManual {
+	my $self = shift;
+	$self->{ShellExecute}->Call(0, '', 'http://openkore.sourceforge.net/manual/', '', '', 1);
+}
+
+sub showSettings {
+	return unless $buildType == 0;
+	my $self = shift;
+	my ($obj, $priority);
+	eval 'use Win32::Process; use Win32; $priority = NORMAL_PRIORITY_CLASS;';
+
+	Win32::Process::Create($obj, $ENV{OPENKORE_SETTINGS}, "\"$ENV{OPENKORE_SETTINGS}\" " .
+		"/settings \"$Settings::config_file\" \"$Settings::control_folder\" \"$Settings::tables_folder\"",
+		0, $priority, ".");
+	$self->{SettingsObj} = $obj;
 }
 
 sub resetColors {
@@ -607,6 +675,7 @@ sub resetColors {
 
 sub mapToggle {
 	my ($self);
+
 	if (@_ == 1) {
 		$self = $_[0];
 	} elsif (@_ == 2) {
@@ -614,7 +683,7 @@ sub mapToggle {
 	} else {
 		die "wrong number of args to mapToggle\n";
 	}
-	unless (defined($self->{map})) {
+	if (!defined($self->{map}) && $chars[$config{'char'}] && %field) {
 		$self->{map}{window} = $self->{mw}->Toplevel();
 		my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
 		$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d)", $field{'name'}, $x, $y);
@@ -635,7 +704,6 @@ sub mapToggle {
 		
 			
 		my $dis = $config{'attackDistance'};
-		print "dis: $dis\n";
 		$self->{map}{ind}{range} = $self->{map}{canvas}->createOval(
 			-$dis, $self->{map}{height} - $dis,
 			 $dis, $self->{map}{height} + $dis,
@@ -655,7 +723,7 @@ sub mapToggle {
 		$self->{map}{window}->bind('<3>', [\&mapMove, $self, Ev('x') , Ev('y'), 1]); 
 		$self->{map}{window}->bind('<Motion>', [\&pointchk, $self, Ev('x') , Ev('y')]); 
 		$self->updatePos();
-	} else {
+	} elsif (defined $self->{map}) {
 		$self->{map}{window}->destroy();
 		undef $self->{map}{canvas};
 		undef $self->{map}{window};
