@@ -42,6 +42,7 @@ sub clear {
 	undef @ai_seq_args;
 }
 
+# TODO: This should be integrated with AI::clear()
 sub remove {
 	return if !defined $_[0];
 	my @arr = split /,/, $_[0];
@@ -67,7 +68,7 @@ sub suspend {
 
 sub mapChanged {
 	my $i = (defined $_[0] ? $_[0] : 0);
-	$ai_seq_args[$i]{mapChanged} = time if $i < @ai_seq_args;;
+	$ai_seq_args[$i]{mapChanged} = time if $i < @ai_seq_args;
 }
 
 sub findAction {
@@ -75,6 +76,9 @@ sub findAction {
 	return binFind(\@ai_seq, $_[0]);
 }
 
+# TODO: This function should accept an array instead of a string, for
+# performance reasons.
+# AI::inQueue("foo,bar")   becomes  AI::inQueue("foo", "bar")
 sub inQueue {
 	my $action = shift;
 	my $found = 0;
