@@ -3619,7 +3619,9 @@ sub AI {
 				foreach (@{$ai_v{'ai_attack_cleanMonsters'}}) {
 					$ai_v{'temp'}{'dist'} = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$_}{'pos_to'}});
 					if (($ai_v{'temp'}{'first'} || $ai_v{'temp'}{'dist'} < $ai_v{'temp'}{'distSmall'})
-					 && !$monsters{$_}{'ignore'} && !$monsters{$_}{'state'} && !posNearPlayer (\%{$monsters{$_}{'pos_to'}}, 3)) {
+					 && !$monsters{$_}{'ignore'} && !$monsters{$_}{'state'}
+					 && !positionNearPlayer(\%{$monsters{$_}{'pos_to'}}, 3)
+					 && !positionNearPortal(\%{$monsters{$_}{'pos_to'}}, 4)) {
 						$ai_v{'temp'}{'distSmall'} = $ai_v{'temp'}{'dist'};
 						$ai_v{'temp'}{'foundID'} = $_;
 						undef $ai_v{'temp'}{'first'};
@@ -9282,13 +9284,24 @@ sub percent_weight {
 	}
 }
 
-sub posNearPlayer {
+sub positionNearPlayer {
 	my $r_hash = shift;
 	my $dist = shift;
 
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if ($playersID[$i] eq "");
 		return 1 if (distance($r_hash, \%{$players{$playersID[$i]}{'pos_to'}}) <= $dist);
+	}
+	return 0;
+}
+
+sub positionNearPortal {
+	my $r_hash = shift;
+	my $dist = shift;
+
+	for (my $i = 0; $i < @portalsID; $i++) {
+		next if ($portalsID[$i] eq "");
+		return 1 if (distance($r_hash, \%{$portals{$portalsID[$i]}{'pos'}}) <= $dist);
 	}
 	return 0;
 }

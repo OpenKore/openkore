@@ -43,6 +43,7 @@ miss any of the new config options.
   Specifies that followTarget is a Kore bot. When enabled, a "move"
   command will be PM'ed to the follow target, telling him to go to
   where you are.
+- Don't attack any monsters that are near portals.
 
 xlr82xs:
 - Removed dead monster count sub.
