@@ -411,6 +411,7 @@ sub updateStatusBar {
 				s/^route_//;
 				s/_/ /g;
 				s/([a-z])([A-Z])/$1 $2/g;
+				$_ = lc $_;
 			}
 			substr($seqs[0], 0, 1) = uc substr($seqs[0], 0, 1);
 			$aiText = join(', ', @seqs);
