@@ -313,9 +313,7 @@ sub parseInput {
 	my $printType;
 	$printType = shift if ($config{'XKore'});
 
-	my ($arg1, $arg2, $arg4, $switch);
 	debug("Input: $input\n", "parseInput", 2);
-	($switch) = $input =~ /^(\w*)/;
 
 	if ($printType) {
 		open(BUFFER, '>buffer');
@@ -335,10 +333,45 @@ sub parseInput {
 		sendCharLogin(\$remote_socket, $config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 
+	} else {
+		parseCommand($input);
+	}
 
-	# Parse command...ugh
+	if ($printType) {
+		close(BUFFER);
+		open(BUFREAD, '<buffer');
 
-	} elsif ($switch eq "a") {
+		my $msg = '';
+		while (<BUFREAD>) {
+			$msg .= $_;
+		}
+		close(BUFREAD);
+
+		select(STDOUT);
+		print "$input\n";
+		print $msg;
+
+		if ($config{'XKore'}) {
+			$msg =~ s/\n*$//s;
+			$msg =~ s/\n/\\n/g;
+			sendMessage(\$remote_socket, "k", $msg);
+		}
+	}
+}
+
+sub parseCommand {
+	my $input = shift;
+
+	my ($switch, $args) = split(' ', $input, 2);
+
+	# Resolve command aliases
+	if (my $alias = $config{"alias_$switch"}) {
+		$input = $alias;
+		$input .= " $args" if $args;
+		($switch, $args) = split(' ', $input, 2);
+	}
+
+	if ($switch eq "a") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
 		if ($arg1 =~ /^\d+$/ && $monstersID[$arg1] eq "") {
@@ -2222,31 +2255,7 @@ sub parseInput {
 	} else {
 		error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
 	}
-
-
-	if ($printType) {
-		close(BUFFER);
-		open(BUFREAD, '<buffer');
-
-		my $msg = '';
-		while (<BUFREAD>) {
-			$msg .= $_;
-		}
-		close(BUFREAD);
-
-		select(STDOUT);
-		print "$input\n";
-		print $msg;
-
-		if ($config{'XKore'}) {
-			$msg =~ s/\n*$//s;
-			$msg =~ s/\n/\\n/g;
-			sendMessage(\$remote_socket, "k", $msg);
-		}
-	}
 }
-
-
 
 
 #######################################
