@@ -459,7 +459,7 @@ sub parseCommand {
 
 			for (my $i = 0; $i < @{$cart{'inventory'}}; $i++) {
 				next if (!%{$cart{'inventory'}[$i]});
-				$display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
+				my $display = "$cart{'inventory'}[$i]{'name'} x $cart{'inventory'}[$i]{'amount'}";
 				message(sprintf("%-2d %-34s\n", $i, $display), "list");
 			}
 			message("\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n", "list");
@@ -6266,7 +6266,11 @@ sub parseMsg {
 		# 00b5: long ID
 		# "Next" button appeared on the NPC message dialog
 		my $ID = substr($msg, 2, 4);
-		message "$npcs{$ID}{'name'} : Type 'talk cont' to continue talking\n", "npc";
+		if ($config{autoTalkCont}) {
+			sendTalkContinue(\$remote_socket, $ID);
+		} else {
+			message "$npcs{$ID}{'name'} : Type 'talk cont' to continue talking\n", "npc";
+		}
 		$ai_v{'npc_talk'}{'talk'} = 'next';
 		$ai_v{'npc_talk'}{'time'} = time;
 
@@ -7308,7 +7312,7 @@ sub parseMsg {
 			binAdd(\@venderListsID, $ID);
 			Plugins::callHook('packet_vender', {ID => $ID});
 		}
-		($venderLists{$ID}{'title'}) = substr($msg,6,36) =~ /(.*?)\000/;
+		($venderLists{$ID}{'title'}) = unpack("A30", substr($msg, 6, 36));
 		$venderLists{$ID}{'id'} = $ID;
 
 	} elsif ($switch eq "0132") {
@@ -7325,66 +7329,32 @@ sub parseMsg {
 			message("----------Vender Store List-----------\n", "list");
 			message("#  Name                                         Type           Amount Price\n", "list");
 			for ($i = 8; $i < $msg_size; $i+=22) {
-				$price = unpack("L1", substr($msg, $i, 4));
-				$amount = unpack("S1", substr($msg, $i + 4, 2));
 				$number = unpack("S1", substr($msg, $i + 6, 2));
-				$type = unpack("C1", substr($msg, $i + 8, 1));
-				$ID = unpack("S1", substr($msg, $i + 9, 2));
-				$identified = unpack("C1", substr($msg, $i + 11, 1));
-				$custom = unpack("C1", substr($msg, $i + 13, 1));
-				$card1 = unpack("S1", substr($msg, $i + 14, 2));
-				$card2 = unpack("S1", substr($msg, $i + 16, 2));
-				$card3 = unpack("S1", substr($msg, $i + 18, 2));
-				$card4 = unpack("S1", substr($msg, $i + 20, 2));
 
-				$venderItemList[$number]{'nameID'} = $ID;
-				$display = ($items_lut{$ID} ne "") 
-					? $items_lut{$ID}
-					: "Unknown ".$ID;
-				if ($custom) {
-					$display = "+$custom " . $display;
-				}
-				$venderItemList[$number]{'name'} = $display;
-				$venderItemList[$number]{'amount'} = $amount;
-				$venderItemList[$number]{'type'} = $type;
-				$venderItemList[$number]{'identified'} = $identified;
-				$venderItemList[$number]{'custom'} = $custom;
-				$venderItemList[$number]{'card1'} = $card1;
-				$venderItemList[$number]{'card2'} = $card2;
-				$venderItemList[$number]{'card3'} = $card3;
-				$venderItemList[$number]{'card4'} = $card4;
-				$venderItemList[$number]{'price'} = $price;
+				my $item = $venderItemList[$number] = {};
+				$item->{price} = unpack("L1", substr($msg, $i, 4));
+				$item->{amount} = unpack("S1", substr($msg, $i + 4, 2));
+				$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
+				$item->{nameID} = unpack("S1", substr($msg, $i + 9, 2));
+				$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
+				$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
+				$item->{cards} = substr($msg, $i + 14, 8);
+				$item->{name} = itemName($item);
+
 				$venderItemList++;
-				debug("Item added to Vender Store: $items{$ID}{'name'} - $price z\n", "vending", 2);
-
-				$display = $venderItemList[$number]{'name'};
-				if (!($venderItemList[$number]{'identified'})) {
-					$display = $display."[NI]";
-				}
-				if ($venderItemList[$number]{'card1'}) {
-					$display = $display."[".$cards_lut{$venderItemList[$number]{'card1'}}."]";
-				}
-				if ($venderItemList[$number]{'card2'}) {
-					$display = $display."[".$cards_lut{$venderItemList[$number]{'card2'}}."]";
-				}
-				if ($venderItemList[$number]{'card3'}) {
-					$display = $display."[".$cards_lut{$venderItemList[$number]{'card3'}}."]";
-				}
-				if ($venderItemList[$number]{'card4'}) {
-					$display = $display."[".$cards_lut{$venderItemList[$number]{'card4'}}."]";
-				}
+				debug("Item added to Vender Store: $item->{name} - $price z\n", "vending", 2);
 
 				Plugins::callHook('packet_vender_store', {
 					venderID => $venderID,
 					number => $number,
-					name => $display,
-					amount => $amount,
-					price => $price
+					name => $item->{name},
+					amount => $item->{amount},
+					price => $item->{price}
 				});
 
 				message(swrite(
 					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>z",
-					[$number, $display, $itemTypes_lut{$venderItemList[$number]{'type'}}, $venderItemList[$number]{'amount'}, $venderItemList[$number]{'price'}]),
+					[$number, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, $item->{price}]),
 					"list");
 			}
 			message("--------------------------------------\n", "list");
@@ -10041,7 +10011,7 @@ sub itemName {
 		# e.g. "Hydra*2,Mummy*2", "Hydra*3,Mummy"
 		$suffix = join(',', map { 
 			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
-		} sort { cardName($a) <=> cardName($b) } keys %cards);
+		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}
 
 	my $slots = $itemSlotCount_lut{$item->{nameID}};
