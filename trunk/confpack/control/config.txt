@@ -1,7 +1,6 @@
 #See the documentation for what these variables do
 #New variables have comments above them
 
-local_host localhost
 buildType 0
 
 master_name_0 iRO: Master I
@@ -12,15 +11,15 @@ master_version_0 1
 version 18
 #encrypt 2
 
-XKore 0
+XKore 1
 exeName ragexe.exe
 commandPrefix ;
 
-master 
-server 
-username 
-password 
-char 
+master 0
+server 0
+username cira1
+password asdf
+char 1
 sex 
 
 adminPassword 
@@ -88,9 +87,9 @@ avoidWarpByTeleport 0
 avoidWarpByWalk 1
 
 #if a monster hits you for higher than this Dmg, teleport
-maxDmg 500 
+maxDmg 500
 #if the next hit by a monster of the same or higher Hit could kill you, teleport away. 
-teleportDeadly 1 
+teleportDeadly 1
 
 teleportAuto_hp 10
 teleportAuto_idle 0
@@ -128,7 +127,7 @@ useSelf_item_0_stopWhenHit 0
 #use item only once you reach your locked map
 useSelf_item_0_inLockOnly 0
 #use item every ### seconds
-useSelf_item_0_timeout
+useSelf_item_0_timeout 
 
 itemsTakeAuto 2
 itemsGatherAuto 2
@@ -178,7 +177,7 @@ autoEmote_num_0
 autoSwitch 0
 
 autoSwitch_weapon_def 
-autoSwitch_shield_def
+autoSwitch_shield_def 
  
 autoSwitch_mon_0 
 autoSwitch_weapon_new_0 
