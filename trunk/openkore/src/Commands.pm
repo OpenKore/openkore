@@ -631,17 +631,15 @@ sub cmdIgnore {
 }
 
 sub cmdItemList {
-	my $display;
 	message("-----------Item List-----------\n" .
-		"#    Name                      \n",
+		"   # Name                      \n",
 		"list");
 	for (my $i = 0; $i < @itemsID; $i++) {
 		next if ($itemsID[$i] eq "");
-		$display = $items{$itemsID[$i]}{'name'};
-		$display .= " x $items{$itemsID[$i]}{'amount'}";
-		message(swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-			[$i, $display]),
+		my $item = $items{$itemsID[$i]};
+		my $display = "$item->{name} x $item->{amount}";
+		message(sprintf("%4d %36s (%3d, %3d)",
+			$i, $display, $item->{pos}{x}, $item->{pos}{y}),
 			"list");
 	}
 	message("-------------------------------\n", "list");

@@ -48,6 +48,8 @@ New features:
   alias_mvp sm 292
 - If 'sp' command is called without a player target, it will target yourself.
   Useful for e.g. 'alias_heal sp 28'.
+- 'Item Appeared' message and 'il' command now display the item's
+  coordinates.
 
 New commands:
 - guild join (flag)
