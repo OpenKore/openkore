@@ -187,26 +187,17 @@ if (!$config{'XKore'}) {
 	}
     if ($config{'master'} eq "") {
         $~ = "MASTERS";
-        message("--------- Master Servers ----------\n");
-        message("#         Name\n");
+        message("------- Master Servers --------\n", "connection");
+        message("#         Name\n", "connection");
 		$i = 0;
 		while ($config{"master_name_$i"} ne "") {
 			message(swrite(
-			"@>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+			"@<<  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 			[$i,   $config{"master_name_$i"}],
 			), "connection");
 			$i++;
 		}
-        
-        #        while ($config{"master_name_$i"} ne "") {
-#               format MASTERS =
-#@>>  @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-#$i,  $config{"master_name_$i"}
-#.
-#                write();
-#                $i++;
-#        }
-        print "-------------------------------\n";
+        message("-------------------------------\n", "connection");
 		print "Choose your master server:\n";
 		$msg = Input::readLine;
 		$config{'master'} = $msg;
