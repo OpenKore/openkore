@@ -2606,6 +2606,7 @@ sub AI {
 			}
 
 			sendStorageClose(\$remote_socket);
+			relog() if ($config{'relogAfterStorage'});
 			$args->{done} = 1;
 		}
 	}
@@ -7683,6 +7684,21 @@ sub parseMsg {
 			Plugins::callHook('packet_storage_open');
 		}
 
+	} elsif ($switch eq "00F6") {
+		my $index = unpack("S1", substr($msg, 2, 2));
+		my $amount = unpack("L1", substr($msg, 4, 4));
+		$storage{$index}{amount} -= $amount;
+		message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
+		if ($storage{$index}{amount} <= 0) {
+			delete $storage{$index};
+			binRemove(\@storageID, $index);
+		}
+
+	} elsif ($switch eq "00F8") {
+		message "Storage closed.\n", "storage";
+		delete $ai_v{temp}{storage_opened};
+		Plugins::callHook('packet_storage_close');
+
 		# Storage log
 		my $f;
 		if (open($f, "> $Settings::storage_file")) {
@@ -7699,21 +7715,6 @@ sub parseMsg {
 			print $f "-------------------------------\n";
 			close $f;
 		}
-
-	} elsif ($switch eq "00F6") {
-		my $index = unpack("S1", substr($msg, 2, 2));
-		my $amount = unpack("L1", substr($msg, 4, 4));
-		$storage{$index}{amount} -= $amount;
-		message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
-		if ($storage{$index}{amount} <= 0) {
-			delete $storage{$index};
-			binRemove(\@storageID, $index);
-		}
-
-	} elsif ($switch eq "00F8") {
-		message "Storage closed.\n", "storage";
-		delete $ai_v{temp}{storage_opened};
-		Plugins::callHook('packet_storage_close');
 
 	} elsif ($switch eq "00FA") {
 		$type = unpack("C1", substr($msg, 2, 1));
