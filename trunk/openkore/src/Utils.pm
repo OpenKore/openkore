@@ -653,7 +653,9 @@ sub launchApp {
 		}
 
 		my ($priority, $obj);
-		eval 'use Win32::Process; use Win32; $priority = NORMAL_PRIORITY_CLASS;';
+		undef $@;
+		eval 'use Win32::Process; $priority = NORMAL_PRIORITY_CLASS;';
+		die if ($@);
 		Win32::Process::Create($obj, $_[0], "@args", 0, $priority, '.');
 		return $obj;
 
@@ -706,6 +708,7 @@ sub launchScript {
 
 	if (-f $Config{perlpath}) {
 		@interp = ($Config{perlpath});
+		delete $ENV{INTERPRETER};
 	} else {
 		@interp = ($ENV{INTERPRETER}, '!');
 	}

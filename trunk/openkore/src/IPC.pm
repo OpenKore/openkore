@@ -138,7 +138,7 @@ sub _startManager {
 		ReuseAddr => 1,
 		Timeout => 6
 		);
-	my $pid = launchScript(1, [], 'src/IPC/manager.pl', '--feedback=' . $server->sockport());
+	my $pid = launchScript(1, undef, 'src/IPC/manager.pl', '--quiet', '--feedback=' . $server->sockport());
 
 	my $time = time;
 	while (!$quit && checkLaunchedApp($pid) && !timeOut($time, 6)) {
@@ -168,12 +168,12 @@ sub ID {
 
 sub broadcast {
 	my $self = shift;
-	$self->{client}->send(@_);
+	return $self->{client}->send(@_);
 }
 
 sub recv {
 	my $self = shift;
-	my $ret = $self->{client}->recv(@_);
+	return $self->{client}->recv(@_);
 }
 
 1;

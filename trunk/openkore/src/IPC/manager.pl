@@ -26,6 +26,11 @@ sub __start {
 	my $feedback;
 	my $port = 0;
 
+	if ($ARGV[0] eq "--quiet") {
+		shift @ARGV;
+		close(STDOUT);
+		close(STDERR);
+	}
 
 	# There are two ways to launch this manager server.
 	if ($ARGV[0] =~ /^--feedback=(\d+)$/) {

@@ -151,8 +151,11 @@ use Misc;
 use AI;
 use Skills;
 use Interface;
-Modules::register(qw(Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Skills Interface));
+use IPC;
+use IPC::Processors;
+Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
+	Network Network::Send Commands Misc AI Skills Interface
+	IPC IPC::Processors/);
 
 Log::message("$Settings::versionText\n");
 Plugins::loadAll();
@@ -249,7 +252,8 @@ if ($config{'XKore'}) {
 	Log::addHook(sub { &redirectXKoreMessages; });
 }
 
-our $remote_socket = IO::Socket::INET->new();
+our $remote_socket = new IO::Socket::INET;
+$ipc = new IPC;
 
 
 ### COMPILE PORTALS ###
@@ -439,6 +443,14 @@ while ($quit != 1) {
 
 	# Handle connection states
 	checkConnection() unless $quit;
+
+	# Process messages from the IPC network
+	my @ipcMessages;
+	if ($ipc && $ipc->recv(\@ipcMessages)) {
+		foreach (@ipcMessages) {
+			IPC::Processors::process($ipc, $_);
+		}
+	}
 
 	# Other stuff that's run in the main loop
 	mainLoop();
