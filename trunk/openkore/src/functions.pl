@@ -2851,12 +2851,16 @@ sub AI {
 	if (!$statChanged && $config{'statsAddAuto'}) {
 		# Split list of stats/values
 		my @list = split(/ *,+ */, $config{"statsAddAuto_list"});
+		my $statAmount;
+		my ($num, $st);
 
 		foreach my $item (@list) {
 			# Split each stat/value pair
-			my ($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/;
+			($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/;
 			# If stat needs to be raised to match desired amount
-			if ( ($char->{$st} + $char->{"${st}_bonus"}) < $num ) {
+                        $statAmount = $char->{$st};
+			$statAmount += $char->{"${st}_bonus"} if ($config{statsAddAuto_dontUseBonus});
+			if ($statAmount < $num ) {
 				# If char has enough stat points free to raise stat
 				if ($char->{points_free} >= $char->{"points_$st"}) {
 					my $ID;
