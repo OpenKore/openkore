@@ -259,25 +259,25 @@ while ($quit != 1) {
 			do {
 				$procID = $GetProcByName->Call($config{'exeName'});
 				if (!$procID) {
-					print "Error: Could not locate process $config{'exeName'}.\n";
-					print "Waiting for you to start the process...\n" if (!$printed);
+					Log::error("Error: Could not locate process $config{'exeName'}.\n", "xkore");
+					Log::message("Waiting for you to start the process...\n", "xkore") if (!$printed);
 					$printed = 1;
 				}
 				sleep 1;
 			} while (!$procID);
 
 			if ($printed == 1) {
-				print "Process found\n";
+				Log::message("Process found\n", "xkore");
 			}
 			my $InjectDLL = new Win32::API("Tools", "InjectDLL", "NP", "I");
 			my $retVal = $InjectDLL->Call($procID, $injectDLL_file);
 			die "Could not inject DLL" if ($retVal != 1);
 
-			print "Waiting for InjectDLL to connect...\n";
+			Log::message("Waiting for InjectDLL to connect...\n", "xkore");
 			$remote_socket = $injectServer_socket->accept();
 			(inet_aton($remote_socket->peerhost()) eq inet_aton('localhost'))
 			|| die "Inject Socket must be connected from localhost";
-			print "InjectDLL Socket connected - Ready to start botting\n";
+			print Log::message("InjectDLL Socket connected - Ready to start botting\n", "xkore");
 			$timeout{'injectKeepAlive'}{'time'} = time;
 		}
 		if (timeOut(\%{$timeout{'injectSync'}})) {

@@ -13,6 +13,7 @@ use IO::Socket;
 use Getopt::Long;
 use Digest::MD5 qw(md5);
 use Config;
+use Log qw(message warning error);
 
 
 #######################################
@@ -24,7 +25,7 @@ use Config;
 sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
-		print "Next restart in ".timeConvert($autoRestart).".\n";
+		message "Next restart in ".timeConvert($autoRestart).".\n";
 		configModify("autoRestart", $autoRestart, 1);
 	}
 }
@@ -34,7 +35,7 @@ sub initConfChange {
 	my $changetime = $config{'autoConfChange_min'} + rand($config{'autoConfChange_seed'});
 	return if (!$config{'autoConfChange'});
 	$nextConfChangeTime = time + $changetime;
-	print "Next Config Change will be in ".timeConvert($changetime).".\n";
+	message "Next Config Change will be in ".timeConvert($changetime).".\n";
 }
 
 # Initialize variables when you start a connection to a map server
@@ -145,14 +146,14 @@ sub checkConnection {
 	return if ($config{'XKore'});
 
 	if ($conState == 1 && !($remote_socket && $remote_socket->connected()) && timeOut(\%{$timeout_ex{'master'}}) && !$conState_tries) {
-		print "Connecting to Master Server...\n";
+		message("Connecting to Master Server...\n", "connection");
 		$shopstarted = 1;
 		$conState_tries++;
 		undef $msg;
 		connection(\$remote_socket, $config{"master_host_$config{'master'}"},$config{"master_port_$config{'master'}"});
 
 		if ($config{'secure'} >= 1) {
-			print "Secure Login...\n";
+			message("Secure Login...\n", "connection");
 			undef $secureLoginKey;
 			sendMasterCodeRequest(\$remote_socket);
                 } else {
@@ -162,26 +163,26 @@ sub checkConnection {
 		$timeout{'master'}{'time'} = time;
 
 	} elsif ($conState == 1 && $config{'secure'} >= 1 && $secureLoginKey ne "" && !timeOut(\%{$timeout{'master'}}) && $conState_tries) {
-		print "Sending encoded password...\n";
+		message("Sending encoded password...\n", "connection");
 		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'}, $secureLoginKey);
 		undef $secureLoginKey;
 
 	} elsif ($conState == 1 && timeOut(\%{$timeout{'master'}}) && timeOut(\%{$timeout_ex{'master'}})) {
-		print "Timeout on Master Server, reconnecting...\n";
+		error("Timeout on Master Server, reconnecting...\n", "connection");
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
 		undef $conState_tries;
 
 	} elsif ($conState == 2 && !($remote_socket && $remote_socket->connected()) && $config{'server'} ne "" && !$conState_tries) {
-		print "Connecting to Game Login Server...\n";
+		message("Connecting to Game Login Server...\n", "connection");
 		$conState_tries++;
 		connection(\$remote_socket, $servers[$config{'server'}]{'ip'},$servers[$config{'server'}]{'port'});
 		sendGameLogin(\$remote_socket, $accountID, $sessionID, $accountSex);
 		$timeout{'gamelogin'}{'time'} = time;
 
 	} elsif ($conState == 2 && timeOut(\%{$timeout{'gamelogin'}}) && $config{'server'} ne "") {
-		print "Timeout on Game Login Server, reconnecting...\n";
+		error("Timeout on Game Login Server, reconnecting...\n", "connection");
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -189,14 +190,14 @@ sub checkConnection {
 		$conState = 1;
 
 	} elsif ($conState == 3 && !($remote_socket && $remote_socket->connected()) && $config{'char'} ne "" && !$conState_tries) {
-		print "Connecting to Character Select Server...\n";
+		message("Connecting to Character Select Server...\n", "connection");
 		$conState_tries++;
 		connection(\$remote_socket, $servers[$config{'server'}]{'ip'},$servers[$config{'server'}]{'port'});
 		sendCharLogin(\$remote_socket, $config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 
 	} elsif ($conState == 3 && timeOut(\%{$timeout{'charlogin'}}) && $config{'char'} ne "") {
-		print "Timeout on Character Select Server, reconnecting...\n";
+		error("Timeout on Character Select Server, reconnecting...\n", "connection");
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -204,7 +205,7 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 4 && !($remote_socket && $remote_socket->connected()) && !$conState_tries) {
-		print "Connecting to Map Server...\n";
+		message("Connecting to Map Server...\n", "connection");
 		$conState_tries++;
 		initConnectVars();
 		connection(\$remote_socket, $map_ip, $map_port);
@@ -213,7 +214,7 @@ sub checkConnection {
 		$timeout{'maplogin'}{'time'} = time;
 
 	} elsif ($conState == 4 && timeOut(\%{$timeout{'maplogin'}})) {
-		print "Timeout on Map Server, connecting to Master Server...\n";
+		message("Timeout on Map Server, connecting to Master Server...\n", "connection");
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -225,7 +226,7 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 5 && timeOut(\%{$timeout{'play'}})) {
-		print "Timeout on Map Server, connecting to Master Server...\n";
+		error("Timeout on Map Server, connecting to Master Server...\n", "connection");
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		killConnection(\$remote_socket);
@@ -5040,61 +5041,60 @@ Session ID: @<<<<<<<<<<<<<<<<<<
 			$servers[$num]{'users'} = unpack("L",substr($msg, $i + 26, 4));
 			$num++;
 		}
-		$~ = "SERVERS";
-		print "--------- Servers ----------\n";
-		print "#         Name            Users  IP              Port\n";
+
+		message("--------- Servers ----------\n", "connection");
+		message("#         Name            Users  IP              Port\n", "connection");
 		for ($num = 0; $num < @servers; $num++) {
-			format SERVERS =
+			message(swrite(<<'.'), "connection");
 @<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<
 $num  $servers[$num]{'name'}  $servers[$num]{'users'} $servers[$num]{'ip'} $servers[$num]{'port'}
 .
-			write;
 		}
-		print "-------------------------------\n";
+		message("-------------------------------\n", "connection");
 
 		if (!$config{'XKore'}) {
-			print "Closing connection to Master Server\n";
+			message("Closing connection to Master Server\n", "connection");
 			killConnection(\$remote_socket);
 			if ($config{'server'} eq "") {
-				print "Choose your server.  Enter the server number:\n";
+				message("Choose your server.  Enter the server number:\n", "input");
 				$waitingForInput = 1;
 			} else {
-				print "Server $config{'server'} selected\n";
+				message("Server $config{'server'} selected\n", "connection");
 			}
 		}
 
 	} elsif ($switch eq "006A") {
 		$type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
-			print "Account name doesn't exist\n";
+			error("Account name doesn't exist\n", "connection");
 			if (!$config{'XKore'}) {
-				print "Enter Username Again:\n";
+				message("Enter Username Again:\n", "input");
 				$input_socket->recv($msg, $MAX_READ);
 				$config{'username'} = $msg;
 				writeDataFileIntact($config_file, \%config);
 			}
 		} elsif ($type == 1) {
-			print "Password Error\n";
+			error("Password Error\n", "connection");
 			if (!$config{'XKore'}) {
-				print "Enter Password Again:\n";
+				message("Enter Password Again:\n", "input");
 				$input_socket->recv($msg, $MAX_READ);
 				$config{'password'} = $msg;
 				writeDataFileIntact($config_file, \%config);
 			}
 		} elsif ($type == 3) {
-			print "Server connection has been denied\n";
+			error("Server connection has been denied\n", "connection");
 		} elsif ($type == 4) {
-			print "Critical Error: Account has been disabled by evil Gravity\n";
+			error("Critical Error: Account has been disabled by evil Gravity\n", "connection");
 			$quit = 1;
 		} elsif ($type == 5) {
-			print "Version $config{'version'} failed...trying to find version\n";
+			error("Version $config{'version'} failed...trying to find version\n", "connection");
 			$config{'version'}++;
 			if (!$versionSearch) {
 				$config{'version'} = 0;
 				$versionSearch = 1;
 			}
 		} elsif ($type == 6) {
-			print "The server is temporarily blocking your connection\n";
+			error("The server is temporarily blocking your connection\n", "connection");
 		}
 		if ($type != 5 && $versionSearch) {
 			$versionSearch = 0;
@@ -5102,7 +5102,7 @@ $num  $servers[$num]{'name'}  $servers[$num]{'users'} $servers[$num]{'ip'} $serv
 		}
 
 	} elsif ($switch eq "006B") {
-		print "Recieved characters from Game Login Server\n";
+		message("Recieved characters from Game Login Server\n", "connection");
 		$conState = 3;
 		undef $conState_tries;
 
@@ -5601,7 +5601,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		killConnection(\$remote_socket);
 
 		if ($type == 2) {
-			print "Critical Error: Dual login prohibited - Someone trying to login!\n";
+			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
 			if ($config{'dcOnDualLogin'} == 1) {
 				print "Disconnect immediately!\n";
 				$quit = 1;
@@ -5611,12 +5611,12 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			}
 
 		} elsif ($type == 3) {
-			print "Error: Out of sync with server\n";
+			error("Error: Out of sync with server\n", "connection");
 		} elsif ($type == 6) {
-			print "Critical Error: You must pay to play this account!\n";
+			error("Critical Error: You must pay to play this account!\n", "connection");
 			$quit = 1;
 		} elsif ($type == 8) {
-			print "Error: The server still recognizes your last connection\n";
+			error("Error: The server still recognizes your last connection\n", "connection");
 		}
 
 	} elsif ($switch eq "0087") {
@@ -5669,9 +5669,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		updateDamageTables($ID1, $ID2, $damage);
 		if ($ID1 eq $accountID) {
 			if (%{$monsters{$ID2}}) { 
-				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
-				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
-				."%)] "."You attack Monster: $monsters{$ID2}{'name'} $monsters{$ID2}{'nameID'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n";
+				message("[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
+					.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
+					."%)] "."You attack Monster: $monsters{$ID2}{'name'} $monsters{$ID2}{'nameID'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n",
+					"atk");
 
 				if ($startedattack) {
 					$monstarttime = time();
@@ -5695,9 +5696,10 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			if (%{$monsters{$ID1}}) {
 				useTeleport(1) if ($monsters{$ID1}{'name'} eq "");
 
-				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
-				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
-				."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n";
+				message("[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
+					.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
+					."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: $dmgdisplay\n",
+					"monatkyou");
 			}
 			undef $chars[$config{'char'}]{'time_cast'};
 		} elsif (%{$monsters{$ID1}}) {
@@ -7460,6 +7462,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			$cart{'inventory'}[$index]{'amount'} = $amount;
 			$display = (defined $items_lut{$ID}) ? $items_lut{$ID} : "Unknown $ID";
 			$cart{'inventory'}[$index]{'name'} = $display;
+			print "Cart Item Added: $display ($index) x $amount\n";
 		}
 
 	} elsif ($switch eq "0125") {
@@ -7467,7 +7470,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		my $amount = unpack("L1", substr($msg, 4, 4));
 
 		$cart{'inventory'}[$index]{'amount'} -= $amount;
-		print "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($cart{'inventory'}[$index]{'binID'}) x $amount\n";
+		print "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n";
 		if ($cart{'inventory'}[$index]{'amount'} <= 0) {
 			undef %{$cart{'inventory'}[$index]};
 		}
@@ -10359,13 +10362,15 @@ sub connection {
 	my $r_socket = shift;
 	my $host = shift;
 	my $port = shift;
-	print "Connecting ($host:$port)... ";
+	message("Connecting ($host:$port)... ", "connection");
 	$$r_socket = IO::Socket::INET->new(
 			PeerAddr	=> $host,
 			PeerPort	=> $port,
 			Proto		=> 'tcp',
 			Timeout		=> 4);
-	($$r_socket && inet_aton($$r_socket->peerhost()) eq inet_aton($host)) ? print "connected\n" : print "couldn't connect\n";
+	($$r_socket && inet_aton($$r_socket->peerhost()) eq inet_aton($host)) ?
+		message("connected\n", "connection") :
+		error("couldn't connect\n", "connection");
 }
 
 sub dataWaiting {
@@ -10380,9 +10385,11 @@ sub killConnection {
 	my $r_socket = shift;
 	sendQuit(\$remote_socket) if ($conState == 5 && $remote_socket && $remote_socket->connected());
 	if ($$r_socket && $$r_socket->connected()) {
-		print "Disconnecting (".$$r_socket->peerhost().":".$$r_socket->peerport().")... ";
+		message("Disconnecting (".$$r_socket->peerhost().":".$$r_socket->peerport().")... ", "connection");
 		close($$r_socket);
-		!$$r_socket->connected() ? print "disconnected\n" : print "couldn't disconnect\n";
+		!$$r_socket->connected() ?
+			message("disconnected\n", "connection") :
+			error("couldn't disconnect\n", "connection");
 	}
 }
 
@@ -11338,23 +11345,10 @@ sub compilePortals_getRoute {
 	}
 }
 
-
 sub getCoordString {
 	my $x = shift;
 	my $y = shift;
 	return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
-}
-
-sub getFormattedDate {
-        my $thetime = shift;
-        my $r_date = shift;
-        my @localtime = localtime $thetime;
-        my $themonth = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec)[$localtime[4]];
-        $localtime[2] = "0" . $localtime[2] if ($localtime[2] < 10);
-        $localtime[1] = "0" . $localtime[1] if ($localtime[1] < 10);
-        $localtime[0] = "0" . $localtime[0] if ($localtime[0] < 10);
-        $$r_date = "$themonth $localtime[3] $localtime[2]:$localtime[1]:$localtime[0] " . ($localtime[5] + 1900);
-        return $$r_date;
 }
 
 sub getHex {
