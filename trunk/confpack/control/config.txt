@@ -16,6 +16,7 @@ secureLogin_requestCode
 secureLogin_account 0
 
 XKore 0
+XKore_silent 1
 exeName ragexe.exe
 commandPrefix ;
 
@@ -63,6 +64,7 @@ debugDomains
 squelchDomains
 
 message_length_max 80
+chatLangCode
 
 logChat 1
 logPrivateChat 1
@@ -79,6 +81,7 @@ attackAuto_inLockOnly 1
 attackDistance 1.5
 attackMaxRouteDistance 100
 attackMaxRouteTime 4
+attackMinPlayerDistance 3
 attackMinPortalDistance 4
 attackUseWeapon 1
 
