@@ -35,7 +35,7 @@ import POSIX qw(:termios_h);
 use Globals;
 use Utils;
 use base qw(Interface::Console);
-
+use Log qw(warning error);
 
 our %fgcolors;
 our %bgcolors;
@@ -105,6 +105,7 @@ sub new {
 		eval 'require "sys/ioctl.ph";';
 		if ($@) {
 			$interface{inputMode} = 'static';
+			warning("Could not load dynamic interface: $@\n");
 
 		} else {
 			$interface{inputMode} = 'dynamic';

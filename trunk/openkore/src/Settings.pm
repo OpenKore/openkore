@@ -34,7 +34,7 @@ use Getopt::Long;
 use Globals;
 use Plugins;
 use Utils;
-use Log;
+use Log qw(warning error);
 
 our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile);
 
@@ -298,5 +298,4 @@ sub parseReload {
 	load(\@temp);
 }
 
-
-return 1;
+1;

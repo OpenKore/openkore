@@ -26,6 +26,9 @@ use Exporter;
 use base qw(Exporter);
 use Carp;
 
+use Utils;
+use Log qw(warning error);
+
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
 	parseAvoidControl
@@ -43,6 +46,7 @@ our @EXPORT = qw(
 	parseRODescLUT
 	parseROSlotsLUT
 	parseSectionedFile
+	parseShopControl
 	parseSkillsLUT
 	parseSkillsIDLUT
 	parseSkillsReverseLUT_lc
@@ -168,6 +172,71 @@ sub parseDataFile2 {
 		}
 	}
 	close FILE;
+}
+
+##
+# parseShopControl($file, $shop)
+#
+# $file: Filename to parse
+# $shop: Return hash
+#
+# Parses a shop control file. The shop control file should have the shop title
+# on its first line, followed by "$item\t$price\t$quantity" on subsequent
+# lines. Blank lines, or lines starting with "#" are ignored. If $price
+# contains commas, then they are checked for syntactical validity (e.g.
+# "1,000,000" instead of "1,000,00") to protect the user from entering the
+# wrong price. If $quantity is missing, all available will be sold.
+#
+# Example:
+#
+# My Shop!
+# Poring Card	1,000
+# Andre Card	1,000,000	3
+# +8 Chain [3]	500,000
+sub parseShopControl {
+	my ($file, $shop) = @_;
+
+	%{$shop} = ();
+	open(SHOP, $file);
+
+	# Read shop title
+	chomp($shop->{title} = <SHOP>);
+
+	# Read shop items
+	$shop->{items} = [];
+	my $linenum = 1;
+	my @errors = ();
+	foreach (<SHOP>) {
+		$linenum++;
+		chomp;
+		next if /^$/ || /^#/;
+
+		my ($name, $price, $amount) = split(/\t/);
+		my $real_price = $price;
+		$real_price =~ s/,//g;
+
+		my $loc = "Line $linenum: Item '$name'";
+		if ($real_price !~ /^\d+$/) {
+			push(@errors, "$loc has non-integer price: $price");
+		} elsif ($price ne $real_price && formatNumber($real_price) ne $price) {
+			push(@errors, "$loc has incorrect comma placement in price: $price");
+		} elsif ($real_price < 0) {
+			push(@errors, "$loc has non-positive price: $price");
+		} elsif ($real_price > 10000000) {
+			push(@errors, "$loc has price over 10mil: $price");
+		}
+
+		push(@{$shop->{items}}, {name => $name, price => $real_price, amount => $amount});
+	}
+	close(SHOP);
+
+	if (@errors) {
+		%{$shop} = ();
+
+		error("Errors were found in $file:\n");
+		foreach (@errors) { error("$_\n"); }
+		error("Please correct the above errors and type 'reload $file'.\n");
+	}
 }
 
 sub parseItemsControl {
@@ -625,5 +694,4 @@ sub updateNPCLUT {
 	close FILE; 
 }
 
-
-return 1;
+1;

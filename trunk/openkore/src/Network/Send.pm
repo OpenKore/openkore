@@ -507,16 +507,9 @@ sub sendChatRoomLeave {
 }
 
 sub sendCloseShop {
-	my $r_socket = shift;
 	my $msg = pack("C*", 0x2E, 0x01);
-	sendMsgToServer($r_socket, $msg);
-	#debug "Shop Closed: $index x $amount\n", "sendPacket", 2;
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Shop Closed\n", "sendPacket", 2;
-
-	# FIXME: this belongs somewhere else?
-	$shopstarted = 0;
-	$timeout{'ai_shop'}{'time'} = time;
-	message "Shop closed.\n";
 }
 
 sub sendCurrentDealCancel {
@@ -836,96 +829,21 @@ sub sendMove {
 }
 
 sub sendOpenShop {
-	my $r_socket = shift;
-	my ($i, $index, $totalitem, $items_selling, $citem, $oldid);
-	my %itemtosell;
-	my @itemtosellorder;
+	my ($title, $items) = @_;
 
-	# FIXME: split the "intelligence" into a seperate openShop() function.
-	# sendOpenShop() should only send a packet and do nothing else.
+	my $length = 0x55 + 0x08 * @{$items};
+	my $msg = pack("C*", 0xB2, 0x01).
+		pack("S*", $length).
+		pack("a80", $title).
+		pack("C*", 0x01);
 
-	$shopstarted = 0;
-	if ($chars[$config{'char'}]{'skills'}{'MC_VENDING'}{'lv'}) {
-		if ($shop{'shop_title'} eq "") {
-			error "Cannot open shop: you must specify a title for your shop.\n";
-			return 0;
-		}
-
-		$i = 0;
-		$items_selling = 0;
-		while ($shop{"name_$i"} ne "" && $items_selling < $chars[$config{'char'}]{'skills'}{'MC_VENDING'}{'lv'} + 2) {
-			for ($index = 0; $index < @{$cart{'inventory'}}; $index++) {
-				next if !$cart{'inventory'}[$index];
-				if ($cart{'inventory'}[$index]{'name'} eq $shop{"name_$i"}) {
-					$citem = $index;
-					foreach (keys %itemtosell) {
-						if ($_ eq $index) {
-							$oldid = $_;
-							$citem = -1;
-						}
-					}
-
-					if ($citem >- 1) {
-						$itemtosell{$index}{'index'} = $index;
-
-						# Calculate amount
-						if ($shop{"quantity_$i"} > 0 && $cart{'inventory'}[$index]{'amount'} >= $shop{"quantity_$i"}) {
-							$itemtosell{$index}{'amount'} = $shop{"quantity_$i"};
-						} elsif ($shop{"quantity_$i"} > 0 && $cart{'inventory'}[$index]{'amount'} < $shop{"quantity_$i"}) {
-							$itemtosell{$index}{'amount'} = $cart{'inventory'}[$index]{'amount'};
-						} else {
-							$itemtosell{$index}{'amount'} = $cart{'inventory'}[$index]{'amount'};
-						}
-
-						# Calculate price
-						if ($shop{"price_$i"} > 10000000) {
-							error "Cannot open shop: Price of item #$i exceeds 10,000,000z.\n";
-							return 0;
-						} elsif ($shop{"price_$i"} > 0) {
-							$itemtosell{$index}{'price'} = $shop{"price_$i"};
-						} else {
-							error "Cannot open shop: Missing price for item #$i.\n";
-							return 0;
-						}
-						$items_selling++;
-						$itemtosellorder[$items_selling] = $index;
-						last;
-					}
-				}
-			}
-			$i++;
-		}
-
-		if (!$items_selling) {
-			error "Cannot open shop: no items to sell.\n";
-			return 0;
-		}
-
-		my $length = 0x55 + 0x08 * $items_selling;
-		my $msg = pack("C*", 0xB2, 0x01) . pack("S*", $length) . 
-		$shop{'shop_title'} . chr(0) x (80 - length($shop{'shop_title'})) .  pack("C*", 0x01);
-
-		if ($config{'shop_random'}) {
-			@itemtosellorder = keys %itemtosell;
-		}
-		foreach (@itemtosellorder) {
-			next if (!defined $itemtosell{$_});
-			$msg .= pack("S1",$itemtosell{$_}{'index'}) . pack("S1", $itemtosell{$_}{'amount'}) . pack("L1", $itemtosell{$_}{'price'});
-		}
-		message "$length : ".length($msg)."; $items_selling\n";
-		if(length($msg) == $length) {
-			sendMsgToServer($r_socket, $msg);
-			message "Shop opened ($shop{'shop_title'}) with $items_selling items.\n", "success";
-			$shopstarted = 1;
-			return 1;
-		} else {
-			error "Unknown error while opening shop.\n";
-			return 0;
-		}
-	} else {
-		error "Cannot open shop: you don't have the Vending skill.\n";
-		return 0;
+	foreach my $item (@{$items}) {
+		$msg .= pack("S1", $item->{index}).
+			pack("S1", $item->{amount}).
+			pack("L1", $item->{price});
 	}
+
+	sendMsgToServer(\$remote_socket, $msg);
 }
 
 sub sendOpenWarp {

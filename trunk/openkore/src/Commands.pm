@@ -67,6 +67,7 @@ our %handlers = (
 	ml	=> \&cmdMonsterList,
 	mvp	=> \&cmdMVP,
 	nl	=> \&cmdNPCList,
+	openshop => \&cmdOpenShop,
 	pl	=> \&cmdPlayerList,
 	plugin	=> \&cmdPlugin,
 	portals	=> \&cmdPortalList,
@@ -91,7 +92,7 @@ our %descriptions = (
 	buy	=> 'Buy an item from the current NPC shop.',
 	chatmod	=> 'Modify chat room settings.',
 	chist	=> 'Display last few entries from the chat log.',
-	closeshop => 'Close your shop.',
+	closeshop => 'Close your vending shop.',
 	conf	=> 'Change a configuration key.',
 	crl	=> 'List chat rooms.',
 	debug	=> 'Toggle debug on/off.',
@@ -112,6 +113,7 @@ our %descriptions = (
 	ml	=> 'List monsters that are on screen.',
 	mvp	=> 'Change a monster into an MVP when granted by Abracadabra.',
 	nl	=> 'List NPCs that are on screen.',
+	openshop	=> 'Open your vending shop.',
 	pl	=> 'List players that are on screen.',
 	plugin	=> 'Control plugins.',
 	portals	=> 'List portals that are on screen.',
@@ -319,7 +321,7 @@ sub cmdChist {
 }
 
 sub cmdCloseShop {
-	sendCloseShop(\$remote_socket);
+	main::closeShop();
 }
 
 sub cmdConf {
@@ -613,6 +615,10 @@ sub cmdNPCList {
 			"list");
 	}
 	message("---------------------------------\n", "list");
+}
+
+sub cmdOpenShop {
+	main::openShop();
 }
 
 sub cmdPlayerList {
