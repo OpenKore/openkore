@@ -1305,12 +1305,12 @@ sub whenStatusActive {
 }
 
 sub whenStatusActiveMon {
-	my ($ID, $statuses) = @_;
+	my ($monster, $statuses) = @_;
 	my @arr = split /,/, $statuses;
 	foreach (@arr) {
 		s/^\s+//g;
 		s/\s+$//g;
-		return 1 if $monsters{$ID}{statuses}{$_};
+		return 1 if $monster->{statuses}{$_};
 	}
 	return 0;
 }
