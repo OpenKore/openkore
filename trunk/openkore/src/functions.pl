@@ -5531,9 +5531,9 @@ sub parseMsg {
 
 		updateDamageTables($ID1, $ID2, $damage);
 		if ($ID1 eq $accountID) {
-			if (%{$monsters{$ID2}}) { 
+			if (%{$monsters{$ID2}} || %{$players{$ID2}}) { 
 				message(sprintf("[%3d/%3d]", percent_hp(\%{$chars[$config{'char'}]}), percent_sp(\%{$chars[$config{'char'}]}))
-					. " You attack $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n",
+					. " You attack ".getActorName($ID2)." - Dmg: $dmgdisplay\n",
 					($damage > 0) ? "attackMon" : "attackMonMiss");
 
 				if ($startedattack) {
@@ -6712,9 +6712,11 @@ sub parseMsg {
 		$storage{'items_max'} = unpack("S1", substr($msg, 4, 2));
 
 		$ai_v{temp}{storage_opened} = 1;
-		$storage{opened} = 1;
-		message "Storage opened.\n", "storage";
-		Plugins::callHook('packet_storage_open');
+		if (!$storage{opened}) {
+			$storage{opened} = 1;
+			message "Storage opened.\n", "storage";
+			Plugins::callHook('packet_storage_open');
+		}
 
 	} elsif ($switch eq "00F6") {
 		my $index = unpack("S1", substr($msg, 2, 2));
@@ -9943,10 +9945,10 @@ sub getActorName {
 		return 'Nothing';
 	} elsif ($id eq $accountID) {
 		return 'You';
-	} elsif (my $monster = $monsters{$id}) {
-		return "Monster $monster->{name} ($monster->{binID})";
 	} elsif (my $player = $players{$id}) {
 		return "Player $player->{name} ($player->{binID})";
+	} elsif (my $monster = $monsters{$id}) {
+		return "Monster $monster->{name} ($monster->{binID})";
 	} else {
 		return "Unknown #".unpack("L1", $id);
 	}

@@ -1118,7 +1118,11 @@ sub cmdKill {
 		error "Player $ID does not exist.\n";
 		return;
 	}
-	attack($target);
+
+	# The current attack code assumes that the target is a monster.
+	# So we must add the target into the %monsters hash.
+	$monsters{$target} = $players{$target};
+	main::attack($target);
 }
 
 sub cmdMonster {
