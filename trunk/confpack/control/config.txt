@@ -22,7 +22,6 @@ password
 char 
 sex 
 
-#generate new admin password everytime the bot is started (default: off)
 securePassword 0
 adminPassword 
 callSign 
@@ -32,19 +31,24 @@ dcOnDualLogin 0
 
 autoRestart 0
 
-#the random function is int(rand autoRestartSeed) + autoRestartMin
-#ie a random integer between 0 and autoRestartSeed + autoRestartmin
-#with the defaults, its a random integer between 0 and 1.5 hours + 1.0 hours
-#ie it'll run somewhere between 1 and 2.5 hours before restart
-autoRestartSeed 3600
+# The time it takes before kore autorestart is calculated as follows:
+# time = autoRestartMin + rand(autoRestartSeed)
+#
+# The default values means that kore will autorestart between
+# 72 and 142 minutes.
 autoRestartMin 5400
+autoRestartSeed 3600
 
-#Turn on the random sleep time while disconnected (ie to do more than just disconnect, then reconnect straight away
+# Turn on the random sleep time while disconnected (ie to do more than
+# just disconnect, then reconnect straight away
 autoRestartSleep 1
 
-#similar deal with the restartsleep time (thats the time it'll sit between the restart, and going to connect again) except its anywhere between 15 seconds, and an hour
-#oh, and the time spent sleeping before a restart DOES NOT count as run time before the next restart
-#by default somewhere between 15 seconds and an hour
+# similar deal with the restartsleep time (thats the time it'll sit 
+# between the restart, and going to connect again) except its anywhere
+# between 15 seconds, and an hour
+# And the time spent sleeping before a restart DOES NOT count as run time
+# before the next restart by default somewhere between 15 seconds and an
+# hour
 autoSleepSeed 3585
 autoSleepMin 15
 
