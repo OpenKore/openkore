@@ -342,6 +342,7 @@ while ($quit != 1) {
 
 	if ($xkore && !$xkore->alive) {
 		# (Re-)initialize X-Kore if necessary
+		$conState = 1;
 		my $printed;
 		my $pid;
 		# Wait until the RO client has started
