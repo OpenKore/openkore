@@ -104,6 +104,10 @@ New config options:
   To to 1 if you're playing kRO or on a PK server.
 - dcOnMute (flag)
   Disconnect when you have been muted by a GM.
+- attackMinPlayerDistance (number)
+  Only auto-attack monsters that are at least (number) blocks away from
+  other players. (number) is at least 3; if you enter a lower value, Kore
+  will treat it as 3.
 
 New timeouts.txt options:
 - ai_attack_unfail 5

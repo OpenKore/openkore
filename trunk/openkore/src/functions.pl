@@ -3344,8 +3344,10 @@ sub AI {
 		my $priorityAttack;
 
 		if (!$config{'tankMode'} || $foundTankee) {
-			# This variable controls how far monsters must be away from portals.
+			# This variable controls how far monsters must be away from portals and players.
 			my $portalDist = $config{'attackMinPortalDistance'} || 4;
+			my $playerDist = $config{'attackMinPlayerDistance'};
+			$playerDist = 3 if ($playerDist < 3);
 
 			# Detect whether we are currently in follow mode
 			my $following;
@@ -3406,7 +3408,7 @@ sub AI {
 				if (!AI::is(qw/sitAuto take items_gather items_take/) && $config{'attackAuto'} >= 2
 				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou}
 				 && (!$config{'attackAuto_onlyWhenSafe'} || binSize(\@playersID) == 0)
-				 && !positionNearPlayer($pos, 3) && !positionNearPortal($pos, $portalDist)
+				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
 				 && timeOut($monster->{attack_failed}, $timeouts{ai_attack_unfail}{timeout})) {
 					push @cleanMonsters, $_;
 				}
@@ -4123,17 +4125,18 @@ sub AI {
 			}
 
 		} elsif ($args->{stage} eq 'Route Solution Ready') {
+			my $solution = $args->{solution};
 			if ($args->{maxRouteDistance} > 0 && $args->{maxRouteDistance} < 1) {
 				# Fractional route motion
-				$args->{maxRouteDistance} = int($args->{maxRouteDistance} * scalar @{$args->{solution}});
+				$args->{maxRouteDistance} = int($args->{maxRouteDistance} * scalar(@{$solution}));
 			}
-			splice(@{$args->{solution}}, 1 + $args->{maxRouteDistance}) if $args->{maxRouteDistance} && $args->{maxRouteDistance} < @{$args->{solution}};
+			splice(@{$solution}, 1 + $args->{maxRouteDistance}) if $args->{maxRouteDistance} && $args->{maxRouteDistance} < @{$solution};
 
 			# Trim down solution tree for pyDistFromGoal or distFromGoal
 			if ($args->{pyDistFromGoal}) {
 				my $trimsteps = 0;
-				$trimsteps++ while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
-						 && distance($ai_seq_args[0]{'solution'}[@{$ai_seq_args[0]{'solution'}}-1-$trimsteps], $ai_seq_args[0]{'solution'}[@{$ai_seq_args[0]{'solution'}}-1]) < $ai_seq_args[0]{'pyDistFromGoal'}
+				$trimsteps++ while ($trimsteps < @{$solution}
+						 && distance($solution->[@{$solution} - 1 - $trimsteps], $solution->[@{$solution} - 1]) < $args->{pyDistFromGoal}
 					);
 				debug "Route - trimming down solution by $trimsteps steps for pyDistFromGoal $ai_seq_args[0]{'pyDistFromGoal'}\n", "route";
 				splice(@{$ai_seq_args[0]{'solution'}}, -$trimsteps) if ($trimsteps);
@@ -4189,6 +4192,7 @@ sub AI {
 			} else {
 				# We're either starting to move or already moving, so send out more
 				# move commands periodically to keep moving and updating our position
+				my $solution = $args->{solution};
 				$args->{index} = $config{'route_step'} unless $args->{index};
 				$args->{index}++ if ($args->{index} < $config{'route_step'});
 
@@ -4197,23 +4201,24 @@ sub AI {
 					# trim down the soultion tree by this distance.
 					# Only remove the last step if we reached the destination
 					my $trimsteps = 0;
-					#if position has changed, we must have walked at least one step
-					$trimsteps++ if ($cur_x != $ai_seq_args[0]{'old_x'} || $cur_y != $ai_seq_args[0]{'old_y'});
-					#search the best matching entry for our position in the solution
-					while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
-							 && distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps+1])
-							    < distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps])
-						) { 
-						$trimsteps++; 
+					# If position has changed, we must have walked at least one step
+					$trimsteps++ if ($cur_x != $args->{'old_x'} || $cur_y != $args->{'old_y'});
+					# Search the best matching entry for our position in the solution
+					while ($trimsteps < @{$solution}
+							 && distance( { x => $cur_x, y => $cur_y }, $solution->[$trimsteps + 1])
+							    < distance( { x => $cur_x, y => $cur_y }, $solution->[$trimsteps])
+						) {
+						$trimsteps++;
 					}
-					#remove the last step also if we reached the destination
-					$trimsteps = @{$ai_seq_args[0]{'solution'}} - 1 if ($trimsteps >= @{$ai_seq_args[0]{'solution'}});
-					$trimsteps = @{$ai_seq_args[0]{'solution'}} if ($trimsteps <= $ai_seq_args[0]{'index'} && $ai_seq_args[0]{'new_x'} == $cur_x && $ai_seq_args[0]{'new_y'} == $cur_y);
+					# Remove the last step also if we reached the destination
+					$trimsteps = @{$solution} - 1 if ($trimsteps >= @{$solution});
+					#$trimsteps = @{$solution} if ($trimsteps <= $args->{'index'} && $args->{'new_x'} == $cur_x && $args->{'new_y'} == $cur_y);
+					$trimsteps = @{$solution} if ($cur_x == $args->{dest}{pos}{x} && $cur_y == $args->{dest}{pos}{y});
 					debug "Route - trimming down solution by $trimsteps steps\n", "route";
-					splice(@{$ai_seq_args[0]{'solution'}}, 0, $trimsteps) if ($trimsteps > 0);
+					splice(@{$solution}, 0, $trimsteps) if ($trimsteps > 0);
 				}
 
-				my $stepsleft = @{$args->{solution}};
+				my $stepsleft = @{$solution};
 				if ($stepsleft > 0) {
 					# If we still have more points to cover, walk to next point
 					$args->{index} = $stepsleft - 1 if ($args->{index} >= $stepsleft);
