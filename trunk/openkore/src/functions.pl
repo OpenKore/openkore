@@ -1518,7 +1518,7 @@ sub AI {
 
 	if (timeOut($timeout{'ai_getInfo'})) {
 		foreach (keys %players) {
-			if (!$players{$ID}{'gotName'} && $players{$_}{'name'} eq "Unknown") {
+			if (!$players{$_}{'gotName'}) {
 				sendGetPlayerInfo(\$remote_socket, $_);
 				last;
 			}
@@ -3413,7 +3413,7 @@ sub AI {
 		my $ID = AI::args->{attackID};
 		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
 
-		if ($monsters{$ID} && %{$monsters{$ID}} && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
+		if ($monsters{$ID} && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
 		 && distance($monsters{$ID}{pos_to}, $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{distance}) {
 			# Stop moving
 			AI::dequeue;
@@ -7518,7 +7518,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		$coords1{'y'} = unpack("S1",substr($msg, 8, 2));
 		$coords2{'x'} = unpack("S1",substr($msg, 10, 2));
 		$coords2{'y'} = unpack("S1",substr($msg, 12, 2));
-		%{$monsters{$ID}{'pos_attack_info'}} = %coords1 if ($monsters{$ID} && %{$monsters{$ID}});
+		%{$monsters{$ID}{'pos_attack_info'}} = %coords1 if ($monsters{$ID});
 		%{$chars[$config{'char'}]{'pos'}} = %coords2;
 		%{$chars[$config{'char'}]{'pos_to'}} = %coords2;
 		debug "Received attack location - monster: $coords1{'x'},$coords1{'y'} - " .
@@ -9166,7 +9166,7 @@ sub getResponse {
 sub updateDamageTables {
 	my ($ID1, $ID2, $damage) = @_;
 	if ($ID1 eq $accountID) {
-		if (%{$monsters{$ID2}}) {
+		if ($monsters{$ID2}) {
 			# You attack monster
 			$monsters{$ID2}{'dmgTo'} += $damage;
 			$monsters{$ID2}{'dmgFromYou'} += $damage;
@@ -9175,7 +9175,7 @@ sub updateDamageTables {
 			}
 		}
 	} elsif ($ID2 eq $accountID) {
-		if (%{$monsters{$ID1}}) {
+		if ($monsters{$ID1}) {
 			# Monster attacks you
 			$monsters{$ID1}{'dmgFrom'} += $damage;
 			$monsters{$ID1}{'dmgToYou'} += $damage;
@@ -9183,27 +9183,30 @@ sub updateDamageTables {
 				$monsters{$ID1}{'missedYou'}++;
 			}
 			$monsters{$ID1}{'attackedYou'}++ unless (
-					binSize([keys %{$monsters{$ID1}{'dmgFromPlayer'}}]) ||
-					binSize([keys %{$monsters{$ID1}{'dmgToPlayer'}}]) ||
+					scalar(keys %{$monsters{$ID1}{'dmgFromPlayer'}}) ||
+					scalar(keys %{$monsters{$ID1}{'dmgToPlayer'}}) ||
 					$monsters{$ID1}{'missedFromPlayer'} ||
 					$monsters{$ID1}{'missedToPlayer'}
 				);
 
-			my $teleport = 0;
-			if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
-				message "Teleport due to $monsters{$ID1}{'name'} attack\n";
-				$teleport = 1;
-			} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
-				message "Next $damage dmg could kill you. Teleporting...\n";
-				$teleport = 1;
-			} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination")) {
-				message "$monsters{$ID1}{'name'} attack you more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
-				$teleport = 1;
+			if ($AI) {
+				my $teleport = 0;
+				if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
+					message "Teleport due to $monsters{$ID1}{'name'} attack\n";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
+					message "Next $damage dmg could kill you. Teleporting...\n";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination")) {
+					message "$monsters{$ID1}{'name'} attack you more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
+					$teleport = 1;
+				}
+				useTeleport(1) if ($teleport);
 			}
-			useTeleport(1) if ($teleport && $AI);
 		}
-	} elsif (%{$monsters{$ID1}}) {
-		if (%{$players{$ID2}}) {
+
+	} elsif ($monsters{$ID1}) {
+		if ($players{$ID2}) {
 			# Monster attacks player
 			$monsters{$ID1}{'dmgFrom'} += $damage;
 			$monsters{$ID1}{'dmgToPlayer'}{$ID2} += $damage;
@@ -9219,8 +9222,8 @@ sub updateDamageTables {
 			}
 		}
 		
-	} elsif (%{$players{$ID1}}) {
-		if (%{$monsters{$ID2}}) {
+	} elsif ($players{$ID1}) {
+		if ($monsters{$ID2}) {
 			# Player attacks monster
 			$monsters{$ID2}{'dmgTo'} += $damage;
 			$monsters{$ID2}{'dmgFromPlayer'}{$ID1} += $damage;
@@ -9540,16 +9543,18 @@ sub getActorHash {
 # Resolves a player or monster ID into a name
 sub getActorName {
 	my $id = shift;
+	my $hash;
+
 	if (!$id) {
 		return 'Nothing';
 	} elsif ($id eq $accountID) {
 		return 'You';
-	} elsif (my $player = $players{$id} && scalar(keys %{$player})) {
-		return "Player $player->{name} ($player->{binID})";
-	} elsif (my $monster = $monsters{$id} && scalar(keys %{$monster})) {
-		return "Monster $monster->{name} ($monster->{binID})";
-	} elsif (my $item = $items{$id} && scalar(keys %{$item})) {
-		return "Item $item->{name} ($item->{binID})";
+	} elsif (($hash = $players{$id}) && defined $hash->{binID}) {
+		return "Player $hash->{name} ($hash->{binID})";
+	} elsif (($hash = $monsters{$id}) && defined $hash->{binID}) {
+		return "Monster $hash->{name} ($hash->{binID})";
+	} elsif (($hash = $items{$id}) && defined $hash->{binID}) {
+		return "Item $hash->{name} ($hash->{binID})";
 	} else {
 		return "Unknown #".unpack("L1", $id);
 	}
@@ -9711,7 +9716,6 @@ sub cardName {
 # Resolve the name of a simple item
 sub itemNameSimple {
 	my $ID = shift;
-
 	return $items_lut{$ID} || "Unknown $ID";
 }
 
