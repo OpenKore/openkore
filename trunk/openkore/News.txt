@@ -11,7 +11,10 @@ Bug fixes:
 New features:
 - Mask password input display '*' instead of your real password (Only on linux
   console)
-- partyAggressives now counts monsters your party attacked.
+- partyAggressives now counts monsters your party attacked
+- Fixed some cases of ksPlayers not working
+- When following master around a corner, fallback to routing algorithm instead
+  of trying to walk through the corner
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
