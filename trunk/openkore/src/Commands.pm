@@ -492,7 +492,7 @@ sub cmdInventory {
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "nu") {
-			message("-- Non-Useable --\n", "list");
+			message("-- Non-Usable --\n", "list");
 			for ($i = 0; $i < @non_useable; $i++) {
 				$index = $non_useable[$i];
 				$display = $chars[$config{'char'}]{'inventory'}[$index]{'name'};
@@ -504,7 +504,7 @@ sub cmdInventory {
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "u") {
-			message("-- Useable --\n", "list");
+			message("-- Usable --\n", "list");
 			for ($i = 0; $i < @useable; $i++) {
 				$display = $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'name'};
 				$display .= " x $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'amount'}";
