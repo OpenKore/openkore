@@ -55,12 +55,7 @@ sub register {
 	foreach (@_) {
 		my $mod = $_;
 		$mod =~ s/::/\//g;
-		next if (! -f "$mod.pm");
 
-		# Call the module's MODINIT() function when it's registered
-		#my $initFunc = "${_}::MODINIT";
-		#$initFunc->() if (defined(&{$initFunc}));
-		# The above doesn't work in Win32 (??) so maybe this'll work:
 		eval "${_}::MODINIT();";
 		print $@ if ($@ && !($@ =~ /^Undefined subroutine /));
 
