@@ -65,7 +65,7 @@ sub getInput {
 	my $msg;
 
 	if ($timeout < 0) {
-		while (!defined $self->{input}) {
+		while (!defined $self->{input} && !$quit) {
 			$self->iterate();
 			sleep 0.01;
 		}
@@ -76,7 +76,7 @@ sub getInput {
 
 	} else {
 		my $begin = time;
-		until (defined $self->{input} || time - $begin > $timeout) {
+		until (defined $self->{input} || time - $begin > $timeout || $quit) {
 			$self->iterate();
 			sleep 0.01;
 		}
@@ -192,11 +192,6 @@ sub createInterface {
 	### Main window
 	my $frame = $self->{frame} = new Wx::Frame(undef, -1, $Settings::NAME);
 	$self->{title} = $frame->GetTitle();
-	$frame->SetClientSize(600, 400);
-	$frame->SetIcon(Wx::GetWxPerlIcon());
-	$frame->Show(1);
-	$self->SetTopWindow($frame);
-	EVT_CLOSE($frame, \&onClose);
 
 
 	### Menu bar
@@ -230,9 +225,8 @@ sub createInterface {
 	### Fonts
 	my ($fontName, $fontSize);
 	if ($buildType == 0) {
-		#$consoleFont = new Wx::Font(10, wxMODERN, wxNORMAL, wxNORMAL, 0, 'Courier');
 		$fontSize = 10;
-		$fontName = 'Courier';
+		$fontName = 'Courier New';
 	} else {
 		require DynaLoader;
 		if (DynaLoader::dl_find_symbol_anywhere('pango_font_description_new')) {
@@ -256,7 +250,7 @@ sub createInterface {
 	my $console = $self->{console} = new Wx::TextCtrl($frame, -1, '',
 		wxDefaultPosition, wxDefaultSize,
 		wxTE_MULTILINE | wxTE_RICH | wxTE_NOHIDESEL);
-	$vsizer->Add($console, 1, wxALL | wxEXPAND | wxGROW);
+	$vsizer->Add($console, 1, wxALL | wxGROW);
 	$console->SetEditable(0);
 	$console->SetBackgroundColour(new Wx::Colour(0, 0, 0));
 	$self->{defaultStyle} = new Wx::TextAttr(
@@ -271,7 +265,6 @@ sub createInterface {
 	my $inputBox = $self->{inputBox} = new Wx::TextCtrl($frame, 1, '',
 		wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 	$vsizer->Add($inputBox, 0, wxALL | wxGROW);
-	$inputBox->SetFocus();
 	EVT_TEXT_ENTER($inputBox, 1, sub { $self->onInputEnter(); });
 
 
@@ -280,6 +273,14 @@ sub createInterface {
 	$statusbar->SetFieldsCount(2);
 	$statusbar->SetStatusWidths(-1, 175);
 	$frame->SetStatusBar($statusbar);
+
+
+	$frame->SetClientSize(600, 400);
+	$frame->SetIcon(Wx::GetWxPerlIcon());
+	$frame->Show(1);
+	$self->SetTopWindow($frame);
+	$inputBox->SetFocus();
+	EVT_CLOSE($frame, \&onClose);
 }
 
 sub addMenu {
@@ -337,6 +338,7 @@ sub updateStatusBar {
 }
 
 sub onClose {
+	exit;
 	my $self = shift;
 	$self->Show(0);
 	main::quit();
