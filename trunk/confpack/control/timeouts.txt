@@ -74,6 +74,7 @@ ai_sellAuto 2
 ai_sellAuto_giveup 15
 ai_storageAuto 2
 ai_storageAuto_giveup 15
+ai_itemExchange 2
 
 ai_avoidcheck 0.5
 ai_shop 10

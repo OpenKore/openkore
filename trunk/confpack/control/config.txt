@@ -65,6 +65,7 @@ message_length_max 80
 
 attackAuto 2
 attackAuto_party 1
+attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
 attackDistance 3
 attackMaxRouteDistance 100
@@ -210,6 +211,16 @@ autoEquip_item_card_new
 autoEquip_item_card_def 
 autoEquip_item_hp 0
 autoEquip_item_sp 0
+
+
+itemExchange 0
+itemExchange_npc
+itemExchange_steps
+
+itemExchange_item_0
+itemExchange_amount_0
+itemExchange_minAmount_0
+
 
 autoResponseOnHeal 0
 autoResponse 1
