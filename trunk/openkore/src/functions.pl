@@ -183,6 +183,13 @@ sub checkConnection {
 	if ($conState == 1 && (!$remote_socket || !$remote_socket->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServers{$config{'master'}};
 
+		if ($master->{serverType} ne '' && $config{serverType} != $master->{serverType}) {
+			configModify('serverType', $master->{serverType});
+		}
+		if ($master->{chatLangCode} ne '' && $config{chatLangCode} != $master->{chatLangCode}) {
+			configModify('chatLangCode', $master->{chatLangCode});
+		}
+
 		message("Connecting to Master Server...\n", "connection");
 		$shopstarted = 1;
 		$conState_tries++;
