@@ -2,6 +2,10 @@
 ### OpenKore 1.0.0
 ==================
 
+NOTE: a lot of new config options has been added. It's highly recommended
+take the default configuration files and modify them, so that you won't
+miss any of the new config options.
+
 - Forgot to mention in the last News.txt:
   followEmotion requires another config option: followEmotion_distance
   The master must be within this distance to imitate his emoticons.
@@ -30,6 +34,15 @@
   Code by Star-Kung.
 - XKore mode now *may* work in Win98/ME too. This new code is highly
   experimental; use at own risk.
+- New config options:
+  logChat, logPrivateChat, logPartyChat, logGuildChat, logEmoticons
+  Enables/disables logging of certain chats.
+  The option logEmoticons is a comma-seperated list of emoticons numbers
+  (see tables/emotions.txt), that you want to log.
+- New config option: followBot
+  Specifies that followTarget is a Kore bot. When enabled, a "move"
+  command will be PM'ed to the follow target, telling him to go to
+  where you are.
 
 xlr82xs:
 - Removed dead monster count sub.
