@@ -4640,6 +4640,7 @@ sub AI {
 		my $safe = 0;
 
 		if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
+		 && ($config{'lockMap'} eq "" || $field{name} ne $config{'lockMap'})
 		 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
