@@ -7082,30 +7082,30 @@ sub parseMsg {
 			foreach (keys %skillsState) {
 				if ($param1 == $_) {
 					$actor->{$skillsState{$_}} = 1;
-					message "$name are in $skillsState{$_} state\n", "parseMsg_statuslook";
+					message "$name are in $skillsState{$_} state\n", "parseMsg_statuslook",2;
 				} elsif (defined $hash->{$skillsState{$_}}) {
 					delete $actor->{statuses}{$skillsState{$_}};
-					message "$name are out of $skillsState{$_} state\n", "parseMsg_statuslook";
+					message "$name are out of $skillsState{$_} state\n", "parseMsg_statuslook",2;
 				}
 			}
 			
 			foreach (keys %skillsAilments) {
 				if (($param2 & $_) == $_) {
 					$actor->{statuses}{$skillsAilments{$_}} = 1;
-					message "$name have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook";
+					message "$name have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook",2;
 				} elsif (defined $chars[$config{char}]{statuses}{$skillsAilments{$_}}) {
 					delete $actor->{statuses}{$skillsAilments{$_}};
-					message "$name are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook";
+					message "$name are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook",2;
 				}
 			}
 			
 			foreach (keys %skillsLooks) {
 				if (($param3 & $_) == $_) {
 					$actor->{statuses}{$skillsLooks{$_}} = 1;
-					debug "$name have look: $skillsLooks{$_}\n", "parseMsg_statuslook";
+					debug "$name have look: $skillsLooks{$_}\n", "parseMsg_statuslook",2;
 				} elsif (exists $actor->{statuses}{$skillsLooks{$_}}) {
 					delete $actor->{statuses}{$skillsLooks{$_}};
-					debug "$name are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook";
+					debug "$name are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook",2;
 				}
 			}
 		}
@@ -7730,12 +7730,12 @@ sub parseMsg {
 			if ($flag) {
 				# Skill activated
 				$actor->{statuses}{$skillName} = 1;
-				message "$name are now: $skillName\n", "parseMsg_statuslook";
+				message "$name are now: $skillName\n", "parseMsg_statuslook",2;
 
 			} else {
 				# Skill de-activate (expired)
 				delete $actor->{statuses}{$skillName};
-				message "$name are no longer: $skillName\n", "parseMsg_statuslook";
+				message "$name are no longer: $skillName\n", "parseMsg_statuslook",2;
 			}
 		} else {
 			if ($flag) {
