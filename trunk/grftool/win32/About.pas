@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Buttons, ExtCtrls;
+  Dialogs, StdCtrls, Buttons, ExtCtrls, Menus;
 
 type
   TAboutBox = class(TForm)
@@ -18,9 +18,12 @@ type
     Bevel1: TBevel;
     Image1: TImage;
     Label5: TLabel;
+    PopupMenu1: TPopupMenu;
+    CopyURL1: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
     procedure Label3Click(Sender: TObject);
+    procedure CopyURL1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,7 +36,7 @@ var
 implementation
 
 uses
-  ShellAPI;
+  ShellAPI, Clipbrd;
 
 {$R *.dfm}
 
@@ -52,6 +55,11 @@ procedure TAboutBox.Label3Click(Sender: TObject);
 begin
   ShellExecute(Handle, nil, 'http://openkore.sourceforge.net/grftool/',
       nil, nil, SW_NORMAL);
+end;
+
+procedure TAboutBox.CopyURL1Click(Sender: TObject);
+begin
+  Clipboard.AsText := Label3.Caption;
 end;
 
 end.
