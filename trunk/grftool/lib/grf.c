@@ -236,7 +236,7 @@ static char *GRF_GenerateDataKey(char *key, const char *src) {
  * Reads the information about files within the archive...
  * for archive versions 0x01xx
  *
- * \todo Watch for any files with version 0x103 or greater,
+ * \todo Watch for any files with version 0x104 or greater,
  *	and patchers to decrypt them
  *
  * \param grf Pointer to the Grf struct to read to
@@ -246,7 +246,7 @@ static char *GRF_GenerateDataKey(char *key, const char *src) {
  *		reading should stop), or -1 if there has been an error
  * \return 0 if everything went fine, 1 if something went wrong
  */
-static int GRF_readVer1_info(Grf *grf, GrfError *error, int (*callback)(GrfFile*,GrfError*)) {
+static int GRF_readVer1_info(Grf *grf, GrfError *error, GrfOpenCallback callback) {
 	int callbackRet;
 	uint32_t i,offset,len,len2;
 	char namebuf[GRF_NAMELEN], keyschedule[0x80], *buf;
@@ -261,7 +261,7 @@ static int GRF_readVer1_info(Grf *grf, GrfError *error, int (*callback)(GrfFile*
 #endif /* defined(GRF_FIXED_KEYSCHEDULE) */
 
 	/* Make sure we can handle the version */
-	if (grf->version>0x102) {
+	if (grf->version>0x103) {
 		GRF_SETERR(error,GE_NSUP,GRF_readVer1_info);
 		return 1;
 	}
@@ -342,7 +342,7 @@ static int GRF_readVer1_info(Grf *grf, GrfError *error, int (*callback)(GrfFile*
 			/* Swap nibbles into the name */
 			GRF_SwapNibbles((uint8_t*)grf->files[i].name, (uint8_t*)(buf+offset), len2);
 		}
-		else if (grf->version<0x103) {
+		else if (grf->version<0x104) {
 			/* Skip the first 2 bytes */
 			offset+=2;
 
@@ -456,7 +456,7 @@ static int GRF_readVer1_info(Grf *grf, GrfError *error, int (*callback)(GrfFile*
  *		reading should stop), or -1 if there has been an error
  * \return 0 if everything went fine, 1 if something went wrong
  */
-static int GRF_readVer2_info(Grf *grf, GrfError *error, int (*callback)(GrfFile*,GrfError*)) {
+static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback) {
 	int callbackRet;
 	uint32_t i,offset,len,len2;
 	uLongf zlen;
@@ -687,6 +687,11 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, GrfError *error, GrfOpenCal
 			grf_free(grf);
 			return NULL;
 		}
+		if ((grf->filedatas=(void**)calloc(grf->nfiles,sizeof(void*)))==NULL) {
+			GRF_SETERR(error,GE_ERRNO,calloc);
+			grf_free(grf);
+			return NULL;
+		}
 	}
 
 	/* Grab the filesize */
@@ -735,9 +740,6 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, GrfError *error, GrfOpenCal
  *
  * This is basically the same as the one found in original libgrf
  *
- * \warning Memory will be leaked unless the pointer returned is properly
- *	freed by calling __grf_free_memory__()
- *
  * \param grf Pointer to information about the GRF to extract from
  * \param fname Exact filename of the file to be extracted
  * \param size Pointer to a location in memory where the size of memory
@@ -767,9 +769,6 @@ GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *
 
 /*! \brief Extract a file (pointed to by its index) into memory
  *
- * \warning Memory will be leaked unless the pointer returned is properly
- *	freed by calling __grf_free_memory__()
- *
  * \param grf Pointer to information about the GRF to extract from
  * \param index Index of the file to be extracted
  * \param size Pointer to a location in memory where the size of memory
@@ -798,7 +797,7 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 	gfile=&(grf->files[index]);
 
 	/* Check to see if the file is actually a directory entry */
-	if (!(gfile->type & GRFFILE_FLAG_FILE)) {
+	if (GRFFILE_IS_DIR(*gfile)) {
 		/*! \todo Create a directory contents listing instead
 		 *	of just returning "<directory>"
 		 */
@@ -894,6 +893,10 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 
 	/* Throw a nul-terminator on the extra byte we allocated */
 	outbuf[*size]=0;
+	
+	/* Set the pointer in grf->filedatas */
+	free(grf->filedatas[index]);
+	grf->filedatas[index]=outbuf;
 
 	/* Return our decrypted, uncompressed data */
 	return outbuf;
@@ -936,6 +939,7 @@ GRFEXPORT int grf_extract(Grf *grf, const char *grfname, const char *file, GrfEr
  */
 GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfError *error) {
 	void *buf;
+	char *fixedname;
 	uint32_t size,i;
 	FILE *f;
 
@@ -944,6 +948,13 @@ GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfE
 		GRF_SETERR(error,GE_BADARGS,grf_index_extract);
 		return 0;
 	}
+	
+	/* Normalize the filename */
+	if ((fixedname=(char*)malloc(strlen(file)+1))==NULL) {
+		GRF_SETERR(error,GE_ERRNO,malloc);
+		return 0;
+	}
+	GRF_normalize_path(fixedname,file);
 
 	/* Read the data */
 	if ((buf=grf_index_get(grf,index,&size,error))==NULL) {
@@ -953,8 +964,9 @@ GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfE
 	}
 
 	/* Open the file we should write to */
-	if ((f=fopen(file,"wb"))==NULL) {
+	if ((f=fopen(fixedname,"wb"))==NULL) {
 		free(buf);
+		grf->filedatas[index]=NULL;
 		GRF_SETERR(error,GE_ERRNO,fopen);
 		return 0;
 	}
@@ -967,21 +979,42 @@ GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfE
 	/* Clean up and return */
 	fclose(f);
 	free(buf);
+	grf->filedatas[index]=NULL;
 	return (i)? 1 : 0;
 }
 
-#ifdef GRF_UNIMPLEMENTED
 /*! \brief Delete a file from the file table
  *
- * \todo Write this! And its code!
+ * \param grf Pointer to information about the GRF to delete from
+ * \param fname Exact filename of the file to be deleted
+ * \param error Pointer to a GrfErrorType struct/enum for error reporting
+ * \return The number of files deleted from the GRF archive
  */
-GRFEXPORT int grf_del(Grf *grf, const char *name, GrfError *error) {
-	return 0;
+GRFEXPORT int grf_del(Grf *grf, const char *fname, GrfError *error) {
+	uint32_t i;
+
+	/* Make sure we've got valid arguments */
+	if (!grf || !fname) {
+		GRF_SETERR(error,GE_BADARGS,grf_del);
+		return 0;
+	}
+
+	/* Find the file inside the GRF */
+	if (!grf_find(grf,fname,&i)) {
+		GRF_SETERR(error,GE_NOTFOUND,grf_del);
+		return 0;
+	}
+
+	/* Delete the file, using its index */
+	return grf_index_del(grf,i,error);
 }
 
 /*! \brief Delete a file from the file table, taking index instead of name
  *
- * \todo Write this! And its code!
+ * \param grf Pointer to information about the GRF to delete from
+ * \param index Index of the Grf::files entry to be deleted
+ * \param error Pointer to a GrfErrorType struct/enum for error reporting
+ * \return The number of files deleted from the GRF archive
  */
 GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
 	return 0;
@@ -989,17 +1022,45 @@ GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
 
 /*! \brief Replace the data of a file
  *
- * \todo Write this! And its code!
+ * \param grf Pointer to information about the GRF to delete from
+ * \param name Name of the file inside the GRF
+ * \param data Pointer to the replacement data
+ * \param len Length of the replacement data
+ * \param flags Flags to store the data with
+ * \param error Pointer to a GrfErrorType struct/enum for error reporting
+ * \return The number of files successfully replaced
  */
-GRFEXPORT int grf_replace(Grf *grf, const char *name, const char *data, uint32_t len, uint8_t flags) {
-	return 0;
+GRFEXPORT int grf_replace(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error) {
+	uint32_t i;
+
+	/* Make sure we've got valid arguments */
+	if (!grf || !name) {
+		GRF_SETERR(error,GE_BADARGS,grf_replace);
+		return 0;
+	}
+
+	/* Find the file inside the GRF */
+	if (!grf_find(grf,name,&i)) {
+		GRF_SETERR(error,GE_NOTFOUND,grf_replace);
+		return 0;
+	}
+
+	/* Replace the file, using its index */
+	return grf_index_replace(grf,i,data,len,flags,error);
 }
 
 /*! \brief Replace the data of a file
  *
- * \todo Write this! And its code!
+ * \param grf Pointer to information about the GRF to delete from
+ * \param index Index of the Grf::files entry to be replaced
+ * \param data Pointer to the replacement data
+ * \param len Length of the replacement data
+ * \param flags Flags to store the data with
+ * \param error Pointer to a GrfErrorType struct/enum for error reporting
+ * \return The number of files successfully replaced
  */
-GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const char *data, uint32_t len, uint8_t flags) {
+GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const void *data, uint32_t len, uint8_t flags, GrfError *error) {
+	/*! \todo Write this code! */
 	return 0;
 }
 
@@ -1007,7 +1068,7 @@ GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const char *data, uint
  *
  * \todo Write this! And its code!
  */
-GRFEXPORT int grf_put(Grf *grf, const char *name, const char *data, uint32_t len, uint8_t flags) {
+GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error) {
 	return 0;
 }
 
@@ -1059,17 +1120,50 @@ GRFEXPORT void grf_close(Grf *grf) {
 	grf_free(grf);
 }
 
+/*! \brief Close a GRF file
+ *
+ * \warning This will not save any data!
+ *
+ * \param grf Grf pointer to free
+ */
+GRFEXPORT void grf_free(Grf *grf) {
+	uint32_t i;
+	
+	/* Ensure we don't have access violations when freeing NULLs */
+	if (!grf)
+		return;
+
+	/* Free the grf name */
+	free(grf->filename);
+
+	/* Free the array of files */
+	free(grf->files);
+	
+	/* Free the array of file datas */
+	for(i=0;i<grf->nfiles;i++)
+		if (grf->filedatas[i])
+			free(grf->filedatas[i]);
+	free(grf->filedatas);
+
+	/* Close the file */
+	if (grf->f)
+		fclose(grf->f);
+
+	/* And finally, free the pointer itself */
+	free(grf);
+}
+
 /*! \brief Completely restructure a GRF archive
  *
  * \param grf Filename of the original GRF
  * \param tmpgrf Filename to use temporarily while restructuring
+ * \param error Pointer to a GrfErrorType struct/enum for error reporting
  * \return 0 if an error occurred, 1 if the repak failed
  */
-GRFEXPORT int grf_repak(char *grf, const char *tmpgrf) {
+GRFEXPORT int grf_repak(const char *grf, const char *tmpgrf, GrfError *error) {
 	/*! \todo Write this code! */
 	return 0;
 }
-#endif /* defined(GRF_UNIMPLEMENTED) */
 
 GRFEXTERN_END
 

@@ -55,6 +55,29 @@ GRFINLINE uint32_t LittleEndian32 (uint8_t *p) { return ((p[3]*256 + p[2])*256 +
 * GRF Support Functions *
 ************************/
 
+/*! \brief Normalize path for use in file operations
+ *
+ * Regardless of platform (Win32, *NIX, etc) '/' is used as a path seperator
+ * with fopen(), etc. Also, I've not seen any MBCS use anything less than
+ * (decimal) 127 as part of a multi-byte character, so this shouldn't cause
+ * any problems.
+ *
+ * \warning out must be allocated at least as long as strlen(in)+1
+ *
+ * \param out c-string to place converted path-/filename
+ * \param in c-string to convert '\\' to '/'
+ * \return A duplicate pointer to the normalized data
+ */
+GRFEXPORT char *GRF_normalize_path (char *out, const char *in) {
+	char *orig;
+
+	for (orig=out;*in!=0;out++,in++)
+		*out=(*in=='\\')? '/' : *in;
+	out[1]=0;
+
+	return orig;
+}
+
 /*! \brief Function to hash a filename
  *
  * \note This function hashes the exact same way that GRAVITY's GRF openers
@@ -163,31 +186,6 @@ GRFEXPORT int GRF_OffsetSort(GrfFile *g1, GrfFile *g2) {
 GRFEXPORT uint32_t grf_find_unused (Grf *grf, uint32_t len) {
 	/*! \todo Write this code! */
 	return 0;
-}
-
-/*! \brief Close a GRF file
- *
- * \warning This will not save any data!
- *
- * \param grf Grf pointer to free
- */
-GRFEXPORT void grf_free(Grf *grf) {
-	/* Ensure we don't have access violations when freeing NULLs */
-	if (!grf)
-		return;
-
-	/* Free the grf name */
-	free(grf->filename);
-
-	/* Free the array of files */
-	free(grf->files);
-
-	/* Close the file */
-	if (grf->f)
-		fclose(grf->f);
-
-	/* And finally, free the pointer itself */
-	free(grf);
 }
 
 /***************************
@@ -318,17 +316,6 @@ GRFEXPORT const char *grf_strerror(GrfError err) {
 	snprintf(errbuf,0x1000,"%s:%u:%s: %s", err.file, err.line, err.func, tmpbuf);
 
 	return errbuf;
-}
-
-/*! \brief Frees memory allocated with grf_get() or grf_index_get()
- *
- * Extension added for dll support, where clients may not have the free()
- * function, or are using a different C Runtime (...bad)
- *
- * \param buf Pointer to memory area to be freed
- */
-GRFEXPORT void __grf_free_memory__(void *buf) {
-	free(buf);
 }
 
 GRFEXTERN_END

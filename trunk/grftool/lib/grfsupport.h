@@ -41,6 +41,7 @@ GRFEXTERN_BEGIN
 /* GRFINLINE uint16_t LittleEndian16 (uint8_t *p); */	/* Unused */
 GRFINLINE uint32_t LittleEndian32 (uint8_t *p);
 
+GRFEXPORT char *GRF_normalize_path(char *out, const char *in);
 GRFEXPORT uint32_t GRF_NameHash(const char *name);
 GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index);
 
@@ -50,12 +51,8 @@ GRFEXPORT int GRF_OffsetSort(GrfFile *g1, GrfFile *g2);
 
 GRFEXPORT uint32_t grf_find_unused (Grf *grf, uint32_t len);
 
-GRFEXPORT void grf_free(Grf *grf);
-
 GRFEXPORT GrfError *GRF_SetError(GrfError *err, GrfErrorType errtype, uint32_t line, const char *file, const char *func, void *extra);
 GRFEXPORT const char *grf_strerror(GrfError err);
-
-GRFEXPORT void __grf_free_memory__(void *buf);
 
 /*! \brief Macro used internally
  *
