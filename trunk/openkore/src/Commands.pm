@@ -1116,7 +1116,7 @@ sub cmdMonster {
 }
 
 sub cmdMonocell {
-	my (undef, $num) = shift;
+	my (undef, $num) = @_;
 
 	my $id = $monstersID[$num];
 	if ($id eq "") {
@@ -1128,7 +1128,7 @@ sub cmdMonocell {
 }
 
 sub cmdMVP {
-	my (undef, $num) = shift;
+	my (undef, $num) = @_;
 
 	my $id = $monstersID[$num];
 	if ($id eq "") {
