@@ -3243,31 +3243,36 @@ sub AI {
 
 	##### SIT AUTO #####
 
-	if ($ai_v{'sitAuto_forceStop'} && percent_hp($char) >= $config{'sitAuto_hp_lower'} && percent_sp($char) >= $config{'sitAuto_sp_lower'}) {
-		$ai_v{'sitAuto_forceStop'} = 0;
-	}
-	my $percentWeight = 0;
-	$percentWeight = $char->{'weight'} / $char->{'weight_max'} * 100 if ($char->{'weight_max'});
+	SITAUTO: {
+		my $weight = percent_weight($char);
+		my $action = AI::action;
+		my $lower_ok = (percent_hp($char) >= $config{'sitAuto_hp_lower'} && percent_sp($char) >= $config{'sitAuto_sp_lower'});
+		my $upper_ok = (percent_hp($char) >= $config{'sitAuto_hp_upper'} && percent_sp($char) >= $config{'sitAuto_sp_upper'});
 
-	if (!$ai_v{'sitAuto_forceStop'} && ($ai_seq[0] eq "" || $ai_seq[0] eq "follow" ||
-	      ($ai_seq[0] eq "route" && (!$ai_seq_args[0]{'noSitAuto'} || $percentWeight < 50)) ||
-	      ($ai_seq[0] eq "mapRoute" && (!$ai_seq_args[0]{'noSitAuto'} || $percentWeight < 50))
-	   )
-	 && !AI::inQueue("attack") && !ai_getAggressives()
-	 && (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
-		AI::queue("sitAuto");
-		debug "Auto-sitting\n", "ai";
-	}
+		if ($ai_v{'sitAuto_forceStop'} && $lower_ok) {
+			$ai_v{'sitAuto_forceStop'} = 0;
+		}
 
-	if (AI::action eq "sitAuto" && !$char->{'sitting'} && $char->{'skills'}{'NV_BASIC'}{'lv'} >= 3 &&
-	  !ai_getAggressives() && ($percentWeight < 50 || $config{'sitAuto_over_50'} eq '1')) {
-		sit();
-	}
-	if (AI::action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'}
-	|| (percent_hp($char) >= $config{'sitAuto_hp_upper'} && percent_sp($char) >= $config{'sitAuto_sp_upper'}))) {
-		AI::dequeue;
-		if (!$config{'sitAuto_idle'} && $char->{'sitting'}) {
-			stand();
+		# Sit if we're not already sitting
+		if ($action eq "sitAuto" && !$char->{sitting} && $char->{skills}{NV_BASIC}{lv} >= 3 &&
+		  !ai_getAggressives() && ($weight < 50 || $config{'sitAuto_over_50'})) {
+			sit();
+
+		# Stand if our HP is high enough
+		} elsif ($action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'} || $upper_ok)) {
+			AI::dequeue;
+			stand() if (!$config{'sitAuto_idle'} && $char->{sitting});
+
+		} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'})) {
+			if ($action eq "" || $action eq "follow"
+			|| ($action eq "route" && !AI::args->{noSitAuto})
+			|| ($action eq "mapRoute") && !AI::args->{noSitAuto}) {
+				if (!AI::inQueue("attack") && !ai_getAggressives()
+				&& (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
+					AI::queue("sitAuto");
+					debug "Auto-sitting\n", "ai";
+				}
+			}
 		}
 	}
 
@@ -6324,11 +6329,13 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		my $index = unpack("S1",substr($msg, 2, 2));
 		my $amount = unpack("C1",substr($msg, 6, 1));
-		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
-		message "You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "useItem";
-		if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
-			delete $chars[$config{'char'}]{'inventory'}[$invIndex];
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
+		if (defined $invIndex) {
+			$char->{inventory}[$invIndex]{amount} -= $amount;
+			message "You used Item: $char->{inventory}[$invIndex]{name} ($invIndex) x $amount\n", "useItem";
+			if ($char->{inventory}[$invIndex]{amount} <= 0) {
+				delete $char->{inventory}[$invIndex];
+			}
 		}
 
 	} elsif ($switch eq "00AA") {
@@ -8219,13 +8226,13 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 			: "Unknown " . unpack("L*", $ID);
 
 		if ($ID eq $accountID) {
-			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-			my $amount = $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $amountleft;
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $amount;
+			my $invIndex = findIndex($char->{inventory}, "index", $index);
+			my $amount = $char->{inventory}[$invIndex]{amount} - $amountleft;
+			$char->{inventory}[$invIndex]{amount} -= $amount;
 
-			message("You used Item: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $amount\n", "useItem", 1);
-			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
-				delete $chars[$config{'char'}]{'inventory'}[$invIndex];
+			message("You used Item: $char->{inventory}[$invIndex]{name} ($invIndex) x $amount\n", "useItem", 1);
+			if ($char->{inventory}[$invIndex]{amount} <= 0) {
+				delete $char->{inventory}[$invIndex];
 			}
 
 		} elsif (%{$players{$ID}}) {
@@ -8242,10 +8249,16 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 	} elsif ($switch eq "01D0" || $switch eq "01E1"){
 		# Monk Spirits
 		my $sourceID = substr($msg, 2, 4);
+		my $spirits = unpack("S1", substr($msg, 6, 2));
+
 		if ($sourceID eq $accountID) {
-			$chars[$config{char}]{spirits} = unpack("S1",substr($msg, 6, 2));
-			message "You have $chars[$config{char}]{spirits} spirit(s) now\n", "parseMsg_statuslook", 1;
+			$char->{spirits} = $spirits;
+			message "You have $spirits spirit(s) now\n", "parseMsg_statuslook", 1;
+
+		} elsif ($players{$sourceID}) {
+			$players{$sourceID}{spirits} = $spirits;
 		}
+
 	} elsif ($switch eq "01D4") {
 		# NPC requested a text string reply
 		my $ID = substr($msg, 2, 4);
