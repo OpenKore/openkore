@@ -8306,7 +8306,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0171") {
 		my $ID = substr($msg, 2, 4);
-		my ($name) = substr($msg, 6, 24) =~ /[\s\S]*?\000/;
+		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 		message "Incoming Request to Ally Guild '$name'\n";
 		$incomingGuild{'ID'} = $ID;
 		$incomingGuild{'Type'} = 2;
