@@ -249,7 +249,6 @@ if (!$config{'XKore'} && !$Settings::daemon) {
 
 undef $msg;
 our $KoreStartTime = time;
-our $AI = 1;
 our $conState = 1;
 our $nextConfChangeTime;
 our $bExpSwitch = 2;
