@@ -43,7 +43,7 @@ sub new {
 
 	if ($buildType == 0) {
 		# Win32
-		eval "use Interface::Console;";
+		eval "use Interface::Console::Win32;";
 		die $@ if $@;
 		Modules::register("Interface::Console::Win32");
 		return new Interface::Console::Win32;
