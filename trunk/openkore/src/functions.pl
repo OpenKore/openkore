@@ -9968,7 +9968,7 @@ sub itemName {
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}
 
-	my $numSlots = $itemSlotCount_lut{$item->{nameID}};
+	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
 
 	my $display = "";
 	$display .= "+$item->{upgrade} " if $item->{upgrade};
