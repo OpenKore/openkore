@@ -1,54 +1,20 @@
-#this table is automatically generated
-#pls update your NPCs.txt before remove #
+#format: <source coordinate><destination coordinate><zenny cost><conversation sequence>
+alb2trea 39 50 alberta 192 169 0 r0
+alberta 195 151 alb2trea 62 69 200 c c r0
+alberta 189 151 alb2trea 43 53 250 c r0
+alberta 189 151 izlude 176 182 500 c r1
+aldebaran 168 168 xmas_fild01 78 66 0 c r1 c n
+aldebaran 143 136 c_tower1 199 162 0 c r2
+izlu2dun 108 27 izlude 176 182 0 c r0
+izlude 201 181 izlu2dun 107 50 150 c r0
+izlude 201 181 alberta 188 169 500 c r1
+moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
+#I could not get the Sailor at (247,122) to teleport me to turtle island
+#alberta 247 122 tur_dun01 157 39 #NPC# c r1 c r0 c c c
+prt_fild05 270 212 prt_sewb1 135 248 0 c r0
+#tur_dun01 165 29 alberta 241 115 #NPC# c r0 c c
 
-#need NPC No. update EP4.0
-#alb2trea 39 50 alberta 192 169 #NPC# c r0 
-#alberta 195 151 alb2trea 62 69 #NPC# c c r0 
-#alberta 247 122 tur_dun01 157 39 #NPC# c r1 c r0 c c c 
-#aldebaran 168 168 xmas_fild01 78 66 #NPC# c r1 c n 
-#izlu2dun 108 29 izlude 176 182 #NPC# c r0 
-#izlude 198 180 izlu2dun 107 50 #NPC# c r0 
-#moc_fild12 35 303 cmd_fild08 331 319 #NPC# c r0 n 
-#prt_fild05 270 212 prt_sewb1 135 248 #NPC# c r0 
-#tur_dun01 165 29 alberta 241 115 #NPC# c r0 c c 
-
-# Kapra teleport services
-#alberta 113 60 payon 70 100 #NPC# c r2 c r0
-#alberta 113 60 prontera 116 72 #NPC# c r2 c r1
-#alberta 113 60 morocc 156 46 #NPC# c r2 c r2
-#alberta 113 60 comodo 209 143 #NPC# c r2 c r3
-#aldebaran 143 119 geffen 120 39 #NPC# c r2 c r0
-#aldebaran 143 119 mjolnir_02 99 351 #NPC# c r2 c r1
-#aldebaran 143 119 comodo 209 143 #NPC# c r2 c r2
-#comodo 195 150 morocc 156 46 #NPC# c r2 c r0
-#comodo 195 150 cmd_fild07 127 134 #NPC# c r2 c r1
-#cmd_fild07 136 134 comodo 209 143 #NPC# c r2 c r0
-#cmd_fild07 136 134 morocc 156 46 #NPC# c r2 c r1
-#geffen 120 62 prontera 116 72 #NPC# c r2 c r0
-#geffen 120 62 izlude 91 105 #NPC# c r2 c r1
-#geffen 120 62 aldebaran 143 110 #NPC# c r2 c r2
-#geffen 120 62 morocc 156 46 #NPC# c r2 c r3
-#geffen 120 62 comodo 209 143 #NPC# c r2 c r4
-#izlude 134 88 prontera 116 72 #NPC# c r2 c r0
-#izlude 134 88 payon 70 100 #NPC# c r2 c r1
-#izlude 134 88 geffen 120 39 #NPC# c r2 c r2
-#izlude 134 88 comodo 209 143 #NPC# c r2 c r3
-#morocc 156 97 prontera 116 72 #NPC# c r2 c r0
-#morocc 156 97 payon 70 100 #NPC# c r2 c r1
-#morocc 156 97 alberta 117 56 #NPC# c r2 c r2
-#morocc 156 97 geffen 120 39 #NPC# c r2 c r3
-#morocc 156 97 comodo 209 143 #NPC# c r2 c r4
-#payon 99 116 alberta 117 56 #NPC# c r2 c r0
-#payon 99 116 prontera 116 72 #NPC# c r2 c r1
-#payon 99 116 morocc 156 46 #NPC# c r2 c r2
-#payon 99 116 comodo 209 143 #NPC# c r2 c r3
-#prontera 146 89 izlude 91 105 #NPC# c r2 c r0
-#prontera 146 89 geffen 120 39 #NPC# c r2 c r1
-#prontera 146 89 payon 70 100 #NPC# c r2 c r2
-#prontera 146 89 morocc 156 46 #NPC# c r2 c r3
-#prontera 146 89 gef_fild10 52 326 #NPC# c r2 c r4
-#prontera 146 89 comodo 209 143 #NPC# c r2 c r5
-
+#Standard Portals
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
 alb_ship 41 163 alberta 178 165
@@ -88,8 +54,10 @@ alde_dun01 292 306 alde_dun02 43 20
 alde_dun01 302 25 c_tower1 123 22
 alde_dun02 43 20 alde_dun01 292 306
 alde_dun02 122 169 c_tower3 42 41
+alde_dun02 267 41 c_tower3 163 252
 alde_dun02 279 250 alde_dun03 12 267
 alde_dun03 12 267 alde_dun02 279 250
+alde_dun03 130 125 c_tower3 252 24
 alde_dun03 191 31 c_tower3 212 159
 alde_dun03 276 48 c_tower1 235 226
 alde_dun03 277 183 c_tower2 24 24
@@ -148,14 +116,16 @@ beach_dun2 154 13 comodo 176 358
 beach_dun3 17 265 comodo 333 175
 beach_dun3 286 57 cmd_fild01 26 318
 c_tower1 123 22 alde_dun01 302 25
-c_tower1 200 157 aldebaran 139 135
+c_tower1 200 157 aldebaran 139 131
 c_tower1 235 226 c_tower2 273 26
 c_tower2 24 24 alde_dun03 277 183
 c_tower2 142 283 c_tower3 60 147
 c_tower2 273 26 c_tower1 235 226
 c_tower3 42 41 alde_dun02 122 169
 c_tower3 60 147 c_tower2 142 283
+c_tower3 163 252 alde_dun02 267 41
 c_tower3 212 159 alde_dun03 276 48
+c_tower3 252 24 alde_dun03 130 125
 cmd_fild01 26 318 beach_dun3 286 57
 cmd_fild01 222 24 cmd_fild02 222 376
 cmd_fild01 362 73 cmd_fild03 23 68
@@ -429,7 +399,6 @@ in_moc_16 88 136 in_moc_16 88 105
 in_moc_16 168 116 in_moc_16 182 169
 in_moc_16 182 169 in_moc_16 168 116
 in_moc_16 182 187 in_moc_16 88 46
-in_moc_16 18 8 moc_fild16 205 296
 in_orcs01 29 116 gef_fild10 138 284
 in_orcs01 30 154 gef_fild10 63 337
 in_orcs01 30 182 orcsdun01 32 172
@@ -603,7 +572,6 @@ moc_fild16 16 179 moc_fild17 369 272
 moc_fild16 125 383 moc_fild15 104 16
 moc_fild16 206 297 in_moc_16 20 72
 moc_fild16 334 382 moc_fild15 348 18
-moc_fild16 205 296 in_moc_16 18 8
 moc_fild17 30 300 moc_fild18 382 305
 moc_fild17 218 369 moc_fild11 212 29
 moc_fild17 369 272 moc_fild16 16 179
@@ -849,9 +817,9 @@ prontera 107 215 prt_in 240 141
 prontera 132 222 prt_in 135 71
 prontera 133 183 prt_in 53 105
 prontera 156 22 prt_fild08 170 378
+prontera 179 184 prt_in 60 77
 prontera 156 360 prt_castle 102 16
 prontera 177 221 prt_in 168 124
-prontera 179 184 prt_in 60 77
 prontera 192 267 prt_in 181 55
 prontera 204 192 prt_in 68 130
 prontera 208 154 prt_in 172 33
@@ -1123,4 +1091,3 @@ xmas_in 104 117 xmas 149 258
 xmas_in 153 32 xmas 174 131
 xmas_in 163 93 xmas 173 160
 xmas_in 168 160 xmas 189 278
-
