@@ -75,13 +75,13 @@ Yggdrasil Leaf 0 1 0
 ##### ARROWS #####
 # You may want to modify these if you're an archer/hunter
 
-Arrow 0 1 0
+Arrow 3000 1 0
 Arrow of Counter Evil 0 1 0
 Arrow of Shadow 0 1 0
 Arrow of Wind 0 1 0
 Crystal Arrow 0 1 0
 Cursed Arrow 0 1 0
-Fire Arrow 0 1 0
+Fire Arrow 3000 1 0
 Flash Arrow 0 1 0
 Frozen Arrow 0 1 0
 Immaterial Arrow 0 1 0
@@ -91,11 +91,12 @@ Oridecon Arrow 0 1 0
 Poison Arrow 0 1 0
 Rusty Arrow 0 1 0
 Sharp Arrow 0 1 0
-Silver Arrow 0 1 0
+Silver Arrow 3000 1 0
 Sleep Arrow 0 1 0
 Steel Arrow 0 1 0
 Stone Arrow 0 1 0
 Stun Arrow 0 1 0
+Trap 0 1 0
 
 
 ##### FORGING ITEMS #####
@@ -1358,7 +1359,6 @@ Tongue 0 0 1
 Tooth of Bat 0 0 1
 Tough Scalelike Stem 0 0 1
 Transit Permitt from the Feudal Lord 0 0 1
-Trap 0 0 1
 Tree Root 0 0 1
 Tribal Solidarity 0 0 1
 Turtle Shell 0 0 1
