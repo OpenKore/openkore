@@ -243,13 +243,8 @@ our $KoreStartTime = time;
 our $AI = 1;
 our $conState = 1;
 
-#Solos Start
 initStatVars();
-#Solos End
-
-#xlr82xs start 
 initRandomRestart();
-#xlr82xs end
 
 while ($quit != 1) {
 	usleep($config{'sleepTime'});
@@ -334,12 +329,14 @@ while ($quit != 1) {
 	} while ($ai_cmdQue > 0);
 	checkConnection();
 }
+
 close($input_server_socket);
 close($input_socket);
 close($remote_socket);
 kill 9, $input_pid;
 unlink('buffer') if ($config{'XKore'} && -f 'buffer');
 killConnection(\$remote_socket);
+
 print "Bye!\n";
 print $versionText;
 exit;
