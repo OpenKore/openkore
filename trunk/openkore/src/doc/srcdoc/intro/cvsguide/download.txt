@@ -1,0 +1,30 @@
+<div class="note">
+	<h3>Note</h3>
+	The SourceForge anonymous CVS servers are known to be buggy. They tend to be down from time to time.
+	If you're unable to access the CVS server right away, wait a while and try again.
+</div>
+
+<p>
+<img src="checkout.png" style="float: right;" width="197" height="75" alt="Menu for CVS checkout">
+Go to the folder in which you want to put the source code.
+Rightclick on an empty spot in the folder, and click on <em>"CVS Checkout..."</em>.
+A dialog will appear. Fill in this for the <em>"CVSROOT"</em> field:
+
+<blockquote>
+<tt>:pserver:anonymous@cvs.sourceforge.net:/cvsroot/openkore</tt>
+</blockquote>
+
+For the <em>"Module"</em> field, enter a module name (see the the previous paragraph for a list of modules).
+When you're done, click on <em>OK</em>. TortoiseCVS will now download the code; the result will appear in a subfolder
+with the same name of the module.
+
+
+<h2>Step 4: Regularly update the module</h2>
+
+<img src="update.png" width="197" height="104" alt="Menu for CVS update" style="float: right;">
+You should regularly <em>update</em> the module. This means telling TortoiseCVS to download
+the latest stuff from CVS. TortoiseCVS will only download the things that have changed, so it saves bandwidth.
+
+<p>
+Rightclick on an empty spot in the module's folder and choose <em>"CVS Update"</em>. That's all.
+<br style="clear: right;">

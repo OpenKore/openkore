@@ -152,3 +152,14 @@ h2:hover {
 .moduleIndex a:hover {
 	text-decoration: underline;
 }
+
+.note {
+	padding: 1em;
+	border: solid 2px #ffdeab;
+	background: #fff9ec;
+	margin-bottom: 1em;
+}
+.note h3 {
+	padding: 0;
+	margin: 0;
+}

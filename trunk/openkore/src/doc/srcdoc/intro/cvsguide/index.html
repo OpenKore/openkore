@@ -1,58 +1,129 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<HTML>
-<HEAD>
-	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-	<META NAME="Robots" CONTENT="noindex,nofollow">
-	<TITLE>OpenKore CVS Guide</TITLE>
-	<LINK HREF="cvs.css" MEDIA="screen" REL="stylesheet" TYPE="text/css">
-	<STYLE TYPE="text/css">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>OpenKore CVS Guide</title>
+	<link rel="stylesheet" type="text/css" href="../../openkore.css">
+	<link rel="stylesheet" type="text/css" href="../../links.css">
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+
+	<style type="text/css">
 	<!--
-	@import url(cvs.css);
+	.warning {
+		border: solid 1px #ffd0d0;
+		background: #ffe5e5;
+		padding: 6px;
+	}
+	.warning h3 {
+		padding: 0;
+		margin: 0;
+		padding-bottom: 0.25cm;
+	}
+	.warning p {
+		padding-bottom: 0;
+		margin-bottom: 0;
+	}
 	-->
-	</STYLE>
-</HEAD>
+	</style>
+</head>
 
-<BODY>
+<body>
 
-<DIV ID="head">OpenKore CVS Guide</DIV>
+<div id="title">OpenKore CVS Guide</div>
 
-<H1>Introduction to CVS</H1>
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="../../index.html">Table of contents</a></li>
+	<li><a href="../index.html">Development Introduction Guide</a></li>
+	<li><b>CVS Guide</b></li>
+	</ul>
+</div>
 
-One of the problems of multiple developers working on one
-file/project is that they have to merge their changes with
-each other.<P>
+<div id="main">
 
-<A HREF="http://www.cvshome.org/">CVS (Concurrent Versions System)</A>
-is a tool that makes it easier
-for multiple developers to work on one project.
-Basically, it helps you with:
-<UL>
-<LI>Merge your changes to other people's changes.</LI>
-<LI>Revert back changes that you've made.</LI>
-</UL>
 
-CVS is widely used in the open source world, and is a very
-useful tool.<P>
+<H1>What is CVS?</H1>
 
-<div style="background: #ffd0d0; padding: 6px;">
-<h3 style="padding: 0; margin: 0; padding-bottom: 0.25cm;">Warning</h3>
-CVS is a developer tool. The code in CVS is "bleeding-edge": some code may be experimental and not well tested. The code may not work, it may contain lots of bugs, it may format your hard drive. The code in CVS is not meant to be used by the general public, but is meant as a place for developers to store the latest versions of their source code.
+The latest public release of OpenKore does not necessarily contain the latest code (the code that
+developers are working on <em>at this moment</em>). OpenKore has multiple developers, so each developer can't just keep his own code on his own hard drive: he'll get into problems when he wants to merge his changes with other developers' changes.
+
+<p>
+This is why OpenKore uses <a href="http://www.cvshome.org/">CVS (Concurrent Versions System)</a>.
+The latest development source code is stored on the SourceForge <em>CVS server</em> (CVS repository).
+CVS is a tool that makes it easier for multiple developers to work on one project.
+
+<p>
+You can compare CVS with an FTP server to which developers upload their changes to.
+Now you may wonder why we don't just use an FTP server.
+The reason is, you'll get into trouble when multiple developers work on the same file at the same time.
+CVS can automatically:
+<ul>
+<li>Merge your changes with other people's changes.</li>
+<li>Revert back changes that you've made.</li>
+</ul>
+In other words: CVS makes it easier for multiple developers to work on the same project.
+CVS is widely used in the open source world, and is a very useful tool.
+
+<p>
+<div class="warning">
+	<h3>Warning to users</h3>
+
+	You might be a user who's interested the code in CVS, because it usually has more features.
+	However, the code in CVS might be <em>in development</em>. This means that:
+	<ul>
+	<li>The code might be unstable or not well-tested.</li>
+	<li>The code might not work at all.</li>
+	<li>You might need to install additional Perl modules in order to be able to run the code.</li>
+	</ul>
+	In other words: the code in CVS usually also have more bugs.
+	Although we try to keep the code as usable as possible, there's no guarantee that it will work correctly.
+	Please keep this in mind.
+
+	<p>
+	When using the code in CVS, you should:
+	<ul>
+	<li>Keep a close eye on NEWS.TXT.</li>
+	<li>Report any bugs you find, except if NEWS.TXT or the forum already says it's a known problem.</li>
+	</ul>
 </div>
 
 
-<H2>Basic concept</H2>
+<h2>Choose a guide</h2>
 
-The latest public release of OpenKore does not necessarily
-contain the latest code (the code that developers are working
-on at this moment). Instead, that code is stored on the
-SourceForge CVS server (a <I>CVS repository</I>).<BR>
-You shouldn't just take the latest public release and modify
-that. Instead, you should get the code from CVS and work on
-that instead.<P>
+<ul>
+<li>
+	<h3><a href="users.php">CVS guide for users</a></h3>
+	Choose this guide if you're a user who just wants to use the latest of the latest, and aren't interested in writing code.
+</li>
+<li>
+	<h3>CVS guide for developers</h3>
 
-The OpenKore CVS repository contains several <I>modules</I>.
-A module is a subfolder containing a part of OpenKore.
-These are the available modules at this moment:
+	Only official OpenKore developers have <em>CVS write access</em> (ability to directly upload changes to CVS).
+	Other people don't have write access. So I've written two guides.
+
+	<p>
+	Choose one of the following:
+	<ul>
+	<li><a href="contributors.php">For those who DON'T have CVS write access.</a></li>
+	<li><a href="developers.php">For those who do have CVS write access.</a></li>
+	</ul>
+</li>
+</ul>
+
+
+<!--
+<h2>Basic concept</h2>
+
+If you'd like to work on OpenKore's code, you shouldn't just take the latest public release and modify
+that. Instead, you should get the code from CVS and work on that instead.
+
+<p>
+The OpenKore CVS repository contains several <i>modules</i>.
+A module is a subfolder on the CVS server. These modules are currently available:
 <table border="1">
 <tr>
 	<th>Module name</th>
@@ -89,8 +160,7 @@ These are the available modules at this moment:
 </table>
 
 <P>
-Basically, this is what you have to do if you want to work
-on OpenKore:
+Basically, this is what you have to do:
 <OL>
 <LI>Download (checkout) source code from CVS.</LI>
 <LI>Modify the source code.</LI>
@@ -150,5 +220,10 @@ There are two guides: one for those who have direct write access to CVS
 <LI>Full CVS manual: <A HREF="http://www.gnu.org/software/cvs/manual/html_chapter/cvs_toc.html">http://www.gnu.org/software/cvs/manual/html_chapter/cvs_toc.html</A></LI>
 </UL>
 
-</BODY>
-</HTML>
+-->
+
+
+</div>
+
+</body>
+</html>
