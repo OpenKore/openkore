@@ -1448,7 +1448,8 @@ sub parseCommand {
 
 	} elsif ($switch eq "where") {
 		($map_string) = $map_name =~ /([\s\S]*)\.gat/;
-		message("Location $maps_lut{$map_string.'.rsw'}($map_string) : $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}\n", "info");
+		my $pos = calcPosition($char);
+		message("Location $maps_lut{$map_string.'.rsw'} ($map_string) : $pos->{x}, $pos->{y}\n", "info");
 
 	} elsif ($switch eq "east") {
 		manualMove(5, 0);
@@ -5070,6 +5071,7 @@ sub parseMsg {
 			$chars[$num]{'jobID'} = unpack("C1", substr($msg, $i + 52, 1));
 			$chars[$num]{'ID'} = substr($msg, $i, 4) ;
 			$chars[$num]{'lv'} = unpack("C1", substr($msg, $i + 58, 1));
+			$chars[$num]{'hair_color'} = unpack("C1", substr($msg, $i + 70, 1));
 			($chars[$num]{'name'}) = substr($msg, $i + 74, 24) =~ /([\s\S]*?)\000/;
 			$chars[$num]{'str'} = unpack("C1", substr($msg, $i + 98, 1));
 			$chars[$num]{'agi'} = unpack("C1", substr($msg, $i + 99, 1));
@@ -5193,6 +5195,7 @@ sub parseMsg {
 		$char{name} =~ s/\000*$//g;
 		$char{lv} = 1;
 		$char{lv_job} = 1;
+		$char{sex} = $accountSex2;
 		$chars[$slot] = \%char;
 
 		$conState = 3;
@@ -5775,27 +5778,29 @@ sub parseMsg {
 		$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
 
 	} elsif ($switch eq "0088") {
-		# Long distance attack solution
-		$ID = substr($msg, 2, 4);
-		undef %coords;
-		$coords{'x'} = unpack("S1", substr($msg, 6, 2));
-		$coords{'y'} = unpack("S1", substr($msg, 8, 2));
+		# Object has been attacked; position changed
+		my $ID = substr($msg, 2, 4);
+		my %coords;
+		$coords{x} = unpack("S1", substr($msg, 6, 2));
+		$coords{y} = unpack("S1", substr($msg, 8, 2));
 		if ($ID eq $accountID) {
 			%{$chars[$config{'char'}]{'pos'}} = %coords;
 			%{$chars[$config{'char'}]{'pos_to'}} = %coords;
-			debug "Movement interrupted, your coordinates: $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}\n", "parseMsg_move";
+			$char->{sitting} = 0;
+			debug "Movement interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
 			aiRemove("move");
-		} elsif (%{$monsters{$ID}}) {
-			%{$monsters{$ID}{'pos'}} = %coords;
-			%{$monsters{$ID}{'pos_to'}} = %coords;
-		} elsif (%{$players{$ID}}) {
-			%{$players{$ID}{'pos'}} = %coords;
-			%{$players{$ID}{'pos_to'}} = %coords;
+		} elsif ($monsters{$ID}) {
+			%{$monsters{$ID}{pos}} = %coords;
+			%{$monsters{$ID}{pos_to}} = %coords;
+			$monsters{$ID}{sitting} = 0;
+		} elsif ($players{$ID}) {
+			%{$players{$ID}{pos}} = %coords;
+			%{$players{$ID}{pos_to}} = %coords;
+			$players{$ID}{sitting} = 0;
 		}
-		# End of Long Distance attack Solution
 
 	} elsif ($switch eq "008A") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my ($ID1, $ID2, $tick, $src_speed, $dst_speed, $damage, $param2, $type, $param3) = unpack("x2 a4 a4 a4 L1 L1 S1 S1 C1 S1", $msg);
 
 		if ($type == 1) {
