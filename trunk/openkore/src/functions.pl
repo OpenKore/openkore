@@ -3605,7 +3605,7 @@ sub AI {
 				}
 				$args->{monsterID} = $ID;
 
-				debug qq~Auto-skill on monster: $config{"attackSkillSlot_$slot"} (lvl $config{"attackSkillSlot_${slot}_lvl"})\n~, "ai_attack";
+				debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $config{"attackSkillSlot_${slot}_lvl"})\n~, "ai_attack";
 
 			} elsif ($args->{attackMethod}{type} eq "combo") {
 				my $slot = $args->{attackMethod}{comboSlot};
