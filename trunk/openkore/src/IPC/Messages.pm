@@ -1,6 +1,6 @@
 ##########################################################
 #  OpenKore - Inter-Process Communication system
-#  Simple Key-Value Protocol
+#  IPC protocol message encoder/decoder
 #
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
@@ -13,6 +13,70 @@
 #  $Id$
 #
 #########################################################################
+##
+# MODULE DESCRIPTION: IPC protocol message encoder/decoder
+#
+# The core element of the IPC network's protocol is the <b>message</b>.
+# This module provides functions for easily encoding Perl data types into
+# a message, and to decode a message into Perl data types.
+#
+# <h3>Protocol description</h3>
+# I call the protocol the "Simple Key-Value Protocol". This protocol is binary.
+#
+# A message contains the following information:
+#
+# `l
+# - A message identifier (ID). This is a string, which can be anything.
+# - A list of parameters. This is a list of key-value pairs.
+# `l`
+#
+# A message is very comparable to a function call. Imagine the following C++ function:
+#
+# <pre>void copyFile(string from, string to);
+# copyFile("foo.txt", "bar.txt");</pre>
+#
+# `l
+# - The message ID would be "copyFile".
+# - The key/value pairs would look like this:
+# <pre>from = foo.txt
+#   to = bar.txt</pre>
+# `l`
+#
+# <h3>Message structure</h3>
+# The structure of a message can be described with the following C structure:
+#
+# <pre>struct {
+#     // Header
+#     unsigned short ID_length;
+#     char ID[ID_length];
+#     unsigned short parameter_count;
+#  
+#     // Body
+#     struct {
+#         unsigned short key_length;
+#         char key[key_length];
+#  
+#         unsigned short value_length;
+#         char value[value_length];
+#     } parameters[parameter_count];
+# };</pre>
+# (All numbers are 16-bit little-endian.)
+#
+# <h4>Header</h4>
+# `l
+# - The first 2 bytes describe the length the ID sring.
+# - The following bytes are the ID string.
+# - The 2 bytes after the ID string describe the number of parameters.
+# - Now follows a list of parameters.
+# `l`
+#
+# <h4>Body (parameter structure)</h4>
+# `l
+# - The first 2 bytes describe the length of the key string.
+# - The following bytes are the key string.
+# - The next 2 bytes describe the length of the value string.
+# - The following bytes are the value string.
+# `l`
 
 package IPC::Protocol;
 
@@ -95,36 +159,4 @@ sub encode {
 }
 
 
-##
-# sendPacket($socket, $id, $hash)
-# $socket: The socket to send to.
-# $id: The identifier.
-# $hash: A reference to a hash containing all the key/value pairs to send.
-# Returns: 1 on success, 0 on failure.
-sub sendPacket {
-	my ($socket, $id, $hash) = @_;
-
-	return 0 unless (defined($socket) && defined($id) && defined($hash));
-
-	eval {
-		send($socket, pack('n1', length($id)) . $id, 0);
-
-		my @keys = keys %{$hash};
-		send($socket, pack('n1', $#keys + 1), 0);
-
-		foreach my $key (@keys) {
-			my $value = $hash->{$key};
-			$value = '' if (!defined($value));
-
-			send($socket, pack('n1', length($key)) . $key, 0);
-			send($socket, pack('n1', length($value)) . $value, 0);
-		}
-
-		die if ($socket->flush() != 0);
-	};
-	return 0 if ($@);
-	return 1;
-}
-
-
-return 1;
+1;
