@@ -543,7 +543,7 @@ sub cmdMonsterList {
 		$dmgFrom = ($monsters{$monstersID[$i]}{'dmgFrom'} ne "")
 			? $monsters{$monstersID[$i]}{'dmgFrom'}
 			: 0;
-		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
+		$dist = main::distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
 		$dist = sprintf ("%.1f", $dist) if (index($dist, '.') > -1);
 		$pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
 
