@@ -54,7 +54,7 @@ sub MODINIT {
 			if ($@) {
 				warn $@;
 			} else {
-				Modules::register("Interface::Console::Curses");
+				#Modules::register("Interface::Console::Curses");
 			}
 		}
 		if (!$use_curses || $@) {
@@ -66,7 +66,7 @@ sub MODINIT {
 				#rethrow errors
 				die $@;
 			} else {
-				Modules::register("Interface::Console::Other");
+				#Modules::register("Interface::Console::Other");
 			}
 		}
 	}

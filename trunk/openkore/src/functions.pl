@@ -968,14 +968,14 @@ sub parseCommand {
 		my ($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		my ($arg2) = $input =~ /^[\s\S]*? \d+ (\w+)/;
 		if ($arg1 eq "") {
-			message	"Syntax Error in function 'equip' (Equip Inventory Item)\n"
-				,"Usage: equip <item #> [r]\n";
+			error	"Syntax Error in function 'equip' (Equip Inventory Item)\n" .
+				"Usage: equip <item #> [r]\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			message	"Error in function 'equip' (Equip Inventory Item)\n"
-				,"Inventory Item $arg1 does not exist.\n";
+			error	"Error in function 'equip' (Equip Inventory Item)\n" .
+				"Inventory Item $arg1 does not exist.\n";
 		} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} == 0 && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
-			message	"Error in function 'equip' (Equip Inventory Item)\n"
-				,"Inventory Item $arg1 can't be equipped.\n";
+			error	"Error in function 'equip' (Equip Inventory Item)\n" .
+				"Inventory Item $arg1 can't be equipped.\n";
 		} else {
 			sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'});
 		}
