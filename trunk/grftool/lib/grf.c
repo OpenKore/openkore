@@ -68,6 +68,7 @@ static const char specialExts[][5] = {
  * Macro to make it easier to call GRF_CheckExtFunc
  */
 #define GRF_CheckExt(a,b) GRF_CheckExtFunc(a,b,sizeof(b))
+
 /*! \brief Private function to check filename extensions
  *
  * Checks the last 4 characters of a filename for
@@ -1041,9 +1042,9 @@ GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
 	free(grf->filedatas[index]);
 	
 	/* Loop through, moving each entry forward */
-	for(i=index;i<grf->nfiles-1;) {
+	for(i=index;i<grf->nfiles-1;i++) {
 		memcpy(&(grf->files[i]),&(grf->files[i+1]),sizeof(GrfFile));
-		grf->filedatas[i]=grf->filedatas[++i];
+		grf->filedatas[i]=grf->filedatas[i+1];
 	}
 	
 	/* 1 fewer file */
@@ -1159,10 +1160,10 @@ GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const void *data, uint
 		gf->pos=0;
 	}
 	else {
-		grf->compressed_len=GRFFILE_DIR_SZSMALL;
-		grf->compressed_len_aligned=GRFFILE_DIR_SZDISK;
-		grf->real_len=GRFFILE_DIR_SZORIG;
-		grf->pos=GRFFILE_DIR_OFFSET;
+		gf->compressed_len=GRFFILE_DIR_SZSMALL;
+		gf->compressed_len_aligned=GRFFILE_DIR_SZFILE;
+		gf->real_len=GRFFILE_DIR_SZORIG;
+		gf->pos=GRFFILE_DIR_OFFSET;
 	}
 
 	return 1;

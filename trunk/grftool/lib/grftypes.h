@@ -77,6 +77,9 @@ GRFEXTERN_BEGIN
 
 /* Win32 DLL macros */
 #ifdef WIN32
+	/* Pack to 1 byte boundaries */
+	#include <pshpack1.h>
+
 	#ifndef GRF_STATIC
 		#ifdef GRF_BUILDING
 			#define GRFEXPORT __declspec(dllexport)
@@ -87,12 +90,11 @@ GRFEXTERN_BEGIN
 		#define GRFEXPORT
 	#endif /* GRF_STATIC */
 #else /* WIN32 */
+	/* Pack to 1 byte boundaries */
+	#pragma pack(1)
+
 	#define GRFEXPORT
 # endif /* WIN32 */
-
-
-/* Pack to 1 byte boundaries */
-#include <pshpack1.h>
 
 /* Make sure we have NULL, because its used all the time */
 #ifndef NULL
@@ -289,8 +291,13 @@ typedef struct {
 				 */
 } Grf;
 
-/* Undo packing */
-#include <poppack.h>
+#ifdef WIN32
+	/* Undo packing */
+	#include <poppack.h>
+#else /* WIN32 */
+	/* Undo packing */
+	#pragma pack()
+#endif /* WIN32 */
 
 GRFEXTERN_END
 
