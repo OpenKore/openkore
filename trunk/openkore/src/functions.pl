@@ -6363,7 +6363,9 @@ sub parseMsg {
 					$totalJobExp += $monsterJobExp; 
 					$jExpSwitch = 2; 
 				} 
-			} 
+			}
+			message "Exp gained: $monsterBaseExp/$monsterJobExp\n","exp", 1;
+			
 		} elsif ($type == 20) {
 			$chars[$config{'char'}]{'zenny'} = $val;
 			debug "Zenny: $val\n", "parseMsg";
@@ -9391,10 +9393,14 @@ sub dumpData {
 sub getField {
 	my $file = shift;
 	my $r_hash = shift;
+	my $result = 1;
+	
 	undef %{$r_hash};
 	unless (-e $file) {
-		warning "\n!!Could not load field - you must install the kore-field pack!!\n\n";
+		warning "Could not load field $file - you must install the kore-field pack!\n";
+		$result = 0;
 	}
+	
 	($$r_hash{'name'}) = $file =~ m{/?([^/.]*)\.};
 	open FILE, "<", $file;
 	binmode(FILE);
@@ -9444,6 +9450,8 @@ sub getField {
 		print FILE $$r_hash{'dstMap'};
 		close FILE;
 	}
+	
+	return $result;
 }
 
 sub makeDistMap {
@@ -9769,8 +9777,10 @@ sub avoidList_talk {
 }
 
 sub compilePortals {
+	my %failedMap;
 	my %srcPortals;
 	my $map;
+
 	foreach (keys %portals_lut) {
 		$map = $portals_lut{$_}{'source'}{'map'};
 
@@ -9779,16 +9789,16 @@ sub compilePortals {
 		
 		foreach my $dest (keys %{$portals_lut{$_}{'dest'}}) {
 			if (!exists $srcPortals{$portals_lut{$_}{'dest'}{$dest}{'map'}}{$portals_lut{$_}{'dest'}{$dest}{'ID'}}) {
-				# find incoming-only portal
 				%{$srcPortals{$portals_lut{$_}{'dest'}{$dest}{'map'}}{$portals_lut{$_}{'dest'}{$dest}{'ID'}}{'pos'}} = %{$portals_lut{$_}{'dest'}{$dest}{'pos'}}
 			}
 		}
 	}
 
 	# Go through all maps
-	foreach $map (keys %srcPortals) {
+	foreach $map (sort keys %srcPortals) {
 		if (! -f "$Settings::def_field/$map.fld") {
 			warning "Cannot find field file for $map\n";
+			$failedMap{$map} = 1;
 			next;
 		} elsif ($field{'name'} ne $map) {
 			message "Processing map $map\n", "system";
@@ -9802,9 +9812,10 @@ sub compilePortals {
 				next if ($_ eq $portal || !defined $srcPortals{$map}{$_}{'out'});
 				if ($portals_los{$portal}{$_} eq "" || $portals_los{$_}{$portal} eq "") {
 					my @solution;
-					message "Calculating portal route $portal -> $_\n", "system";
+					message "Calculating portal route $portal -> $_ ", "system";
 					ai_route_getRoute(\@solution, \%field, $srcPortals{$map}{$portal}{'pos'}, $srcPortals{$map}{$_}{'pos'});
 					$portals_los{$portal}{$_} = scalar @solution;
+					message "[path cost: $portals_los{$portal}{$_}]\n";
 				}
 			}
 		}
@@ -9812,22 +9823,35 @@ sub compilePortals {
 
 	writePortalsLOS("$Settings::tables_folder/portalsLOS.txt", \%portals_los);
 	message "Wrote portals Line of Sight table to '$Settings::tables_folder/portalsLOS.txt'\n", "system";
+	
+	if (%failedMap) {
+		warning "-----Error Summary-----\n";
+		warning "Missing: $_.fld\n" foreach (sort keys %failedMap);
+		warning "-----Error Summary-----\n";
+	}	
 }
 
 sub compilePortals_check {
-	my %srcPortals;
-	my $map;
+	my %mapPortals;
 	foreach (keys %portals_lut) {
-		$map = $portals_lut{$_}{'source'}{'map'};
-		%{$srcPortals{$map}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
+		%{$mapPortals{$portals_lut{$_}{'source'}{'map'}}{$_}{'pos'}} = %{$portals_lut{$_}{'source'}{'pos'}};
 	}
-	foreach $map (keys %srcPortals) {
-		foreach my $portal (keys %{$srcPortals{$map}}) {
-			foreach my $portal2 (keys %{$srcPortals{$map}}) {
-				next if ($portal2 eq $portal);
-				if ($portals_los{$portal}{$portal2} eq "" || $portals_los{$portal2}{$portal} eq "") {
-					return 1;
-				}
+	foreach my $map (sort keys %mapPortals) {
+		foreach my $this (sort keys %{$mapPortals{$map}}) {
+			foreach my $that (sort keys %{$mapPortals{$map}}) {
+				next if $this eq $that;
+				next if $portals_los{$this}{$that} ne '' && $portals_los{$that}{$this} ne '';
+				return 1;
+			}
+		}
+	}
+	foreach my $portal (keys %portals_lut) {
+		foreach my $npc (keys %{$portals_lut{$portal}{'dest'}}) {
+			next unless $portals_lut{$portal}{'dest'}{$npc}{'steps'};
+			my $map = $portals_lut{$portal}{'dest'}{$npc}{'map'};
+			foreach my $dest (keys %{$mapPortals{$map}}) {
+				next if $portals_los{$npc}{$dest} ne '';
+				return 1;
 			}
 		}
 	}
