@@ -128,6 +128,18 @@ sub run {
 
 
 sub cmdAI {
+	my (undef, $args) = @_;
+	$args =~ s/ .*//;
+
+	# Clear AI
+	if ($args eq 'clear') {
+		# Run the destructor for route_getRoute to prevent memory leaks
+		main::aiRemove("route_getRoute");
+		undef @ai_seq;
+		undef @ai_seq_args;
+		return;
+	}
+
 	# Toggle AI
 	if ($AI) {
 		undef $AI;
