@@ -1,16 +1,8 @@
 #!/bin/bash
 # This script creates a source tarball.
 
-if [[ "$1" == "--help" ]]; then
-	echo "makedist.sh [--bin]"
-	echo " --bin    Create a binary distribution."
-	exit 1
-elif [[ "$1" == "--bin" ]]; then
-	BINDIST=1
-fi
-
 PACKAGE=openkore
-VERSION=1.5.0-beta
+VERSION=1.5.1-beta
 TYPE=bz2
 # Uncomment the next line if you want a tar.gz archive
 # TYPE=gz
@@ -32,6 +24,16 @@ DIRS=(.
 	src/auto/XSTools/win32
 )
 PACKAGEDIR=$PACKAGE-$VERSION
+
+
+if [[ "$1" == "--help" ]]; then
+	echo "makedist.sh [--bin]"
+	echo " --bin    Create a binary distribution."
+	exit 1
+elif [[ "$1" == "--bin" ]]; then
+	BINDIST=1
+fi
+
 ADDITIONAL=(Makefile Makefile.win32 Makefile.in)
 if [[ "$BINDIST" != "1" ]]; then
 	ADDITIONAL[${#ADDITIONAL[@]}]=Distfiles
