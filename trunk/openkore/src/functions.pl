@@ -5475,59 +5475,57 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "006B") {
-		message("Received characters from Game Login Server\n", "connection");
-		$conState = 3;
-		undef $conState_tries;
-		undef @chars;
+		# Check for conState here. Unparsed packets can cause this switch to
+		# be triggered at the wrong time.
+		if ($conState != 5) {
+			message("Received characters from Game Login Server\n", "connection");
+			$conState = 3;
+			undef $conState_tries;
+			undef @chars;
 
-		my %options;
-		Plugins::callHook('parseMsg/recvChars', \%options);
-		if (exists $options{charServer}) {
-			$charServer = $options{charServer};
-		} else {
-			$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
-		}
+			my %options;
+			Plugins::callHook('parseMsg/recvChars', \%options);
+			if (exists $options{charServer}) {
+				$charServer = $options{charServer};
+			} else {
+				$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
+			}
 
-		#my ($startVal, $num);
-		#if ($config{"master_version_$config{'master'}"} ne "" && $config{"master_version_$config{'master'}"} == 0) {
-		#	$startVal = 24;
-		#} else {
-		#	$startVal = 4;
-		#}
-		$startVal = $msg_size % 106;
+			$startVal = $msg_size % 106;
 
-		my $num;
-		for (my $i = $startVal; $i < $msg_size; $i += 106) {
-			#exp display bugfix - chobit andy 20030129
-			$num = unpack("C1", substr($msg, $i + 104, 1));
-			$chars[$num]{'exp'} = unpack("L1", substr($msg, $i + 4, 4));
-			$chars[$num]{'zenny'} = unpack("L1", substr($msg, $i + 8, 4));
-			$chars[$num]{'exp_job'} = unpack("L1", substr($msg, $i + 12, 4));
-			$chars[$num]{'lv_job'} = unpack("C1", substr($msg, $i + 16, 1));
-			$chars[$num]{'hp'} = unpack("S1", substr($msg, $i + 42, 2));
-			$chars[$num]{'hp_max'} = unpack("S1", substr($msg, $i + 44, 2));
-			$chars[$num]{'sp'} = unpack("S1", substr($msg, $i + 46, 2));
-			$chars[$num]{'sp_max'} = unpack("S1", substr($msg, $i + 48, 2));
-			$chars[$num]{'jobID'} = unpack("C1", substr($msg, $i + 52, 1));
-			$chars[$num]{'ID'} = substr($msg, $i, 4);
-			$chars[$num]{'lv'} = unpack("C1", substr($msg, $i + 58, 1));
-			$chars[$num]{'hair_color'} = unpack("C1", substr($msg, $i + 70, 1));
-			($chars[$num]{'name'}) = substr($msg, $i + 74, 24) =~ /([\s\S]*?)\000/;
-			$chars[$num]{'str'} = unpack("C1", substr($msg, $i + 98, 1));
-			$chars[$num]{'agi'} = unpack("C1", substr($msg, $i + 99, 1));
-			$chars[$num]{'vit'} = unpack("C1", substr($msg, $i + 100, 1));
-			$chars[$num]{'int'} = unpack("C1", substr($msg, $i + 101, 1));
-			$chars[$num]{'dex'} = unpack("C1", substr($msg, $i + 102, 1));
-			$chars[$num]{'luk'} = unpack("C1", substr($msg, $i + 103, 1));
-			$chars[$num]{'sex'} = $accountSex2;
-		}
+			my $num;
+			for (my $i = $startVal; $i < $msg_size; $i += 106) {
+				#exp display bugfix - chobit andy 20030129
+				$num = unpack("C1", substr($msg, $i + 104, 1));
+				$chars[$num]{'exp'} = unpack("L1", substr($msg, $i + 4, 4));
+				$chars[$num]{'zenny'} = unpack("L1", substr($msg, $i + 8, 4));
+				$chars[$num]{'exp_job'} = unpack("L1", substr($msg, $i + 12, 4));
+				$chars[$num]{'lv_job'} = unpack("C1", substr($msg, $i + 16, 1));
+				$chars[$num]{'hp'} = unpack("S1", substr($msg, $i + 42, 2));
+				$chars[$num]{'hp_max'} = unpack("S1", substr($msg, $i + 44, 2));
+				$chars[$num]{'sp'} = unpack("S1", substr($msg, $i + 46, 2));
+				$chars[$num]{'sp_max'} = unpack("S1", substr($msg, $i + 48, 2));
+				$chars[$num]{'jobID'} = unpack("C1", substr($msg, $i + 52, 1));
+				$chars[$num]{'ID'} = substr($msg, $i, 4);
+				$chars[$num]{'lv'} = unpack("C1", substr($msg, $i + 58, 1));
+				$chars[$num]{'hair_color'} = unpack("C1", substr($msg, $i + 70, 1));
+				($chars[$num]{'name'}) = substr($msg, $i + 74, 24) =~ /([\s\S]*?)\000/;
+				$chars[$num]{'str'} = unpack("C1", substr($msg, $i + 98, 1));
+				$chars[$num]{'agi'} = unpack("C1", substr($msg, $i + 99, 1));
+				$chars[$num]{'vit'} = unpack("C1", substr($msg, $i + 100, 1));
+				$chars[$num]{'int'} = unpack("C1", substr($msg, $i + 101, 1));
+				$chars[$num]{'dex'} = unpack("C1", substr($msg, $i + 102, 1));
+				$chars[$num]{'luk'} = unpack("C1", substr($msg, $i + 103, 1));
+				$chars[$num]{'sex'} = $accountSex2;
+			}
 
-		if (charSelectScreen(1) == 1) {
-			$firstLoginMap = 1;
-			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
-			$sentWelcomeMessage = 1;
-		} else {
-			return;
+			if (charSelectScreen(1) == 1) {
+				$firstLoginMap = 1;
+				$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+				$sentWelcomeMessage = 1;
+			} else {
+				return;
+			}
 		}
 
 	} elsif ($switch eq "006C") {
