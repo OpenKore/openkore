@@ -110,6 +110,8 @@ route_step 15
 # attackSkillSlot_0_maxUses 0 [number]
 # attackSkillSlot_0_target_whenStatusActive [activate the skill only when the monster have the listed status/state/ailments/look active]
 # attackSkillSlot_0_target_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
+# attackSkillSlot_0_inInventory_name [activate skill only if you have a certain item in inventory]
+# attackSkillSlot_0_inInventory_qty [range, specify how many items you must have in order to activate this skill]
 #
 # notes:
 #   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
@@ -137,6 +139,8 @@ attackSkillSlot_0_monsters
 attackSkillSlot_0_maxUses 0
 attackSkillSlot_0_target_whenStatusActive
 attackSkillSlot_0_target_whenStatusInactive
+attackSkillSlot_0_inInventory_name
+attackSkillSlot_0_inInventory_qty
 
 sitAuto_hp_lower 35
 sitAuto_hp_upper 100
@@ -201,6 +205,8 @@ useSelf_skill_0_notWhileSitting 0
 useSelf_skill_0_notInTown 0
 useSelf_skill_0_timeout 0
 useSelf_skill_0_disabled 0
+useSelf_skill_0_inInventory_name
+useSelf_skill_0_inInventory_qty
 
 useSelf_skill_smartHeal 1
 
@@ -241,6 +247,8 @@ useSelf_item_0_notWhileSitting 0
 useSelf_item_0_notInTown 0
 useSelf_item_0_timeout
 useSelf_item_0_disabled 0
+useSelf_item_0_inInventory_name
+useSelf_item_0_inInventory_qty
 
 #
 # partySkill_0 Heal
@@ -293,6 +301,8 @@ partySkill_0_target_hp
 partySkill_0_target_whenStatusActive
 partySkill_0_target_whenStatusInactive 
 partySkill_0_target_timeout 0
+partySkill_0_inInventory_name
+partySkill_0_inInventory_qty
 
 itemsTakeAuto 2
 itemsGatherAuto 2
@@ -423,6 +433,8 @@ equipAuto_0_notWhileSitting 0
 equipAuto_0_notInTown 0
 equipAuto_0_timeout 0
 equipAuto_0_disabled 0
+equipAuto_0_inInventory_name
+equipAuto_0_inInventory_qty
 
 autoResponseOnHeal 0
 autoResponse 1

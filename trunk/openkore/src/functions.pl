@@ -10059,14 +10059,14 @@ sub checkSelfCondition {
 	if ($prefix =~ /skill/i) {
 		return 0 unless ($chars[$config{char}]{sp} >= $skillsSP_lut{$skills_rlut{lc($config{$prefix})}}{$config{$prefix . "_lvl"}})
 	}
-	
+
 	if ($config{$prefix . "_aggressives"}) {
 		return 0 unless (inRange(scalar ai_getAggressives(), $config{$prefix . "_aggressives"}));
 	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
 		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getAggressives());
 		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
 	}
-	
+
 	if ($config{$prefix . "_whenFollowing"} && $config{follow}) {
 		return 0 if (!checkFollowMode());
 	}
@@ -10076,13 +10076,30 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_whenAffected"}) { return 0 unless (whenAffected($config{$prefix . "_whenAffected"})); } 	# backward compatibility with old config format
 
 	if ($config{$prefix . "_spirit"}) {return 0 unless (inRange($chars[$config{char}]{spirits}, $config{$prefix . "_spirit"})); }
-	
+
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_stopWhenHit"} > 0) { return 0 if (ai_getMonstersWhoHitMe()); }
 	if ($config{$prefix . "_inLockOnly"} > 0) { return 0 unless ($field{name} eq $config{lockMap}); }
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
-	
+
+	if ($config{$prefix . "_inInventory_name"}) {
+		my @arrN = split / *, */, $config{$prefix . "_inInventory_name"};
+		my @arrQ = split / *, */, $config{$prefix . "_inInventory_qty"};
+		my $found = 0;
+
+		my $i = 0;
+		foreach (@arrN) {
+			my $index = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $_);
+			if ($index ne "") {
+				$found = 1;
+				return 0 unless inRange($chars[$config{'char'}]{'inventory'}[$index]{amount},$arrQ[$i]);
+			}
+			$i++;
+		}
+		return 0 unless $found;
+	}
+
 	return 1;
 }
 
