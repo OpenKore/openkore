@@ -5111,7 +5111,7 @@ sub parseMsg {
 				%{$monsters{$ID}{'pos'}} = %coords;
 				%{$monsters{$ID}{'pos_to'}} = %coords;
 
-				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 1;
+				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence", 1;
 
 
 				# Monster state
@@ -5139,7 +5139,7 @@ sub parseMsg {
 			$players{$ID}{'sitting'} = $sitting > 0;
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
-			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg", 1;
+			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence", 1;
 
 		} elsif ($type == 45) {
 			if (!%{$portals{$ID}}) {
@@ -5246,7 +5246,7 @@ sub parseMsg {
 					$monsters{$ID}{'nameID'} = $type;
 					$monsters{$ID}{'name'} = $display;
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
-					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
+					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
 				}
 				%{$monsters{$ID}{'pos'}} = %coordsFrom;
 				%{$monsters{$ID}{'pos_to'}} = %coordsTo;
@@ -5262,7 +5262,7 @@ sub parseMsg {
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 				
-				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg";
+				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
 			}
 			%{$players{$ID}{'pos'}} = %coordsFrom;
 			%{$players{$ID}{'pos_to'}} = %coordsTo;
@@ -5539,12 +5539,12 @@ sub parseMsg {
 
 		} elsif (%{$monsters{$ID1}}) {
 			if (%{$players{$ID2}}) {
-				debug "Monster $monsters{$ID1}{'name'} ($monsters{$ID1}{'binID'}) attacks Player $players{$ID2}{'name'} ($players{$ID2}{'binID'}) - Dmg: $dmgdisplay\n", "parseMsg";
+				debug "Monster $monsters{$ID1}{'name'} ($monsters{$ID1}{'binID'}) attacks Player $players{$ID2}{'name'} ($players{$ID2}{'binID'}) - Dmg: $dmgdisplay\n", "parseMsg_damage";
 			}
 
 		} elsif (%{$players{$ID1}}) {
 			if (%{$monsters{$ID2}}) {
-				debug "Player $players{$ID1}{'name'} ($players{$ID1}{'binID'}) attacks Monster $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n", "parseMsg";
+				debug "Player $players{$ID1}{'name'} ($players{$ID1}{'binID'}) attacks Monster $monsters{$ID2}{'name'} ($monsters{$ID2}{'binID'}) - Dmg: $dmgdisplay\n", "parseMsg_damage";
 			} elsif (%{$items{$ID2}}) {
 				$items{$ID2}{'takenBy'} = $ID1;
 				debug "Player $players{$ID1}{'name'} ($players{$ID1}{'binID'}) picks up Item $items{$ID2}{'name'} ($items{$ID2}{'binID'})\n", "parseMsg";
@@ -5558,7 +5558,7 @@ sub parseMsg {
 				}
 			}
 		} else {
-			debug "Unknown ".getHex($ID1)." attacks ".getHex($ID2)." - Dmg: $dmgdisplay\n", "parseMsg";
+			debug "Unknown ".getHex($ID1)." attacks ".getHex($ID2)." - Dmg: $dmgdisplay\n", "parseMsg_damage";
 		}
 
 	} elsif ($switch eq "008D") {
@@ -7891,7 +7891,7 @@ sub parseMsg {
 				}
 				%{$monsters{$ID}{'pos'}} = %coords;
 				%{$monsters{$ID}{'pos_to'}} = %coords;
-				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 1;
+				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence", 1;
 			}
 
 		} elsif ($jobs_lut{$type}) {
@@ -7907,7 +7907,7 @@ sub parseMsg {
 			$players{$ID}{'sitting'} = $sitting > 0;
 			%{$players{$ID}{'pos'}} = %coords;
 			%{$players{$ID}{'pos_to'}} = %coords;
-			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg", 1;
+			debug "Player Exists: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence", 1;
 
 		} elsif ($type == 45) {
 			if (!%{$portals{$ID}}) {
@@ -8008,7 +8008,7 @@ sub parseMsg {
 					$monsters{$ID}{'nameID'} = $type;
 					$monsters{$ID}{'name'} = $display;
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
-					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg";
+					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
 				}
 				%{$monsters{$ID}{'pos'}} = %coordsFrom;
 				%{$monsters{$ID}{'pos_to'}} = %coordsTo;
@@ -8024,7 +8024,7 @@ sub parseMsg {
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 
-				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg";
+				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
 			}
 			%{$players{$ID}{'pos'}} = %coordsFrom;
 			%{$players{$ID}{'pos_to'}} = %coordsTo;
