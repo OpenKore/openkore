@@ -53,6 +53,7 @@ our %handlers = (
 	debug		=> \&cmdDebug,
 	e		=> \&cmdEmotion,
 	eq		=> \&cmdEquip,
+	eval		=> \&cmdEval,
 	guild		=> \&cmdGuild,
 	i		=> \&cmdInventory,
 	ignore		=> \&cmdIgnore,
@@ -110,6 +111,7 @@ our %descriptions = (
 	debug		=> 'Toggle debug on/off.',
 	e		=> 'Show emotion.',
 	eq		=> 'Equip an item.',
+	#eval		=> 'Evaluable a Perl expression (developers only).',
 	guild		=> 'Guild management.',
 	i		=> 'Display inventory items.',
 	ignore		=> 'Ignore a user (block his messages).',
@@ -129,6 +131,7 @@ our %descriptions = (
 	openshop	=> 'Open your vending shop.',
 	pl		=> 'List players that are on screen.',
 	plugin		=> 'Control plugins.',
+	pm		=> 'Send a private message.',
 	portals		=> 'List portals that are on screen.',
 	s		=> 'Display character status.',
 	send		=> 'Send a raw packet to the server.',
@@ -605,6 +608,19 @@ sub cmdEquip {
 
 	} else {
 		sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'});
+	}
+}
+
+sub cmdEval {
+	if ($_[1] eq "") {
+		error	"Syntax Error in function 'eval' (Evaluate a Perl expression)\n" .
+			"Usage: eval <expression>\n";
+	} else {
+		package main;
+		no strict;
+		undef $@;
+		eval $_[1];
+		Log::error("$@") if ($@);
 	}
 }
 
