@@ -155,6 +155,7 @@ teleportAuto_onlyWhenSafe 0
 teleportAuto_maxDmg 500
 teleportAuto_deadly 1
 teleportAuto_useItem 1
+teleportAuto_emptyName 1
 
 #
 # useSelf_skill_0 Heal
