@@ -6,9 +6,13 @@ Hopefully the last beta.
 
 Bug fixes:
 - Fixed shopAuto_open timing problems with sitAuto (also changed ai_shop
-  timeout)
-- Added optional teleportAuto_unstuck to use teleport when stucked
+  timeout).
+- Option to teleport when stuck.
+- Fix crash when you trying to (un)equip a nonexistant item.
 - Fixed command "timeout" not displaying the current timeout
+
+New config options:
+- teleportAuto_unstuck - teleport when stuck.
 
 
 ==================

@@ -401,7 +401,7 @@ sub cmdEquip {
 		error	"Syntax Error in function 'equip' (Equip Inventory Item)\n" .
 			"Usage: equip <item #> [r]\n";
 
-	} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
+	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
 		error	"Error in function 'equip' (Equip Inventory Item)\n" .
 			"Inventory Item $arg1 does not exist.\n";
 
@@ -1003,7 +1003,7 @@ sub cmdUnequip {
 		error	"Syntax Error in function 'unequip' (Unequip Inventory Item)\n" .
 			"Usage: unequip <item #>\n";
 
-	} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
+	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
 		error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
 			"Inventory Item $arg1 does not exist.\n";
 
@@ -1024,7 +1024,7 @@ sub cmdUseItemOnMonster {
 	if ($arg1 eq "" || $arg2 eq "") {
 		error	"Syntax Error in function 'im' (Use Item on Monster)\n" .
 			"Usage: im <item #> <monster #>\n";
-	} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
+	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
 		error	"Error in function 'im' (Use Item on Monster)\n" .
 			"Inventory Item $arg1 does not exist.\n";
 	} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
@@ -1045,7 +1045,7 @@ sub cmdUseItemOnPlayer {
 	if ($arg1 eq "" || $arg2 eq "") {
 		error	"Syntax Error in function 'ip' (Use Item on Player)\n" .
 			"Usage: ip <item #> <player #>\n";
-	} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
+	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
 		error	"Error in function 'ip' (Use Item on Player)\n" .
 			"Inventory Item $arg1 does not exist.\n";
 	} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
@@ -1065,7 +1065,7 @@ sub cmdUseItemOnSelf {
 	if ($arg1 eq "") {
 		error	"Syntax Error in function 'is' (Use Item on Yourself)\n" .
 			"Usage: is <item #>\n";
-	} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
+	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
 		error	"Error in function 'is' (Use Item on Yourself)\n" .
 			"Inventory Item $arg1 does not exist.\n";
 	} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
