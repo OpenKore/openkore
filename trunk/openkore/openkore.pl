@@ -31,15 +31,17 @@ use Utils;
 use Settings;
 use Plugins;
 use FileParsers;
-Modules::register(qw(Globals Modules Input Log Utils Settings Plugins FileParsers));
+use Interface;
+Modules::register(qw(Globals Modules Input Log Utils Settings Plugins FileParsers Interface));
 
 
 ##### PARSE ARGUMENTS, LOAD PLUGINS, AND START INPUT SERVER #####
 
+$interface = new Interface;
+
 srand(time());
 Settings::parseArguments();
 
-Interface::start() unless ($Settings::daemon);
 Log::message("$Settings::versionText\n");
 
 Plugins::loadAll();
@@ -99,28 +101,24 @@ if ($buildType == 0) {
 	import Win32::API;
 	if ($@) {
 		Log::error("Unable to load the Win32::API module. Please install this Perl module first.", "startup");
-		Input::stop();
 		promptAndExit();
 	}
 
 	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPPNNPPN", "N");
 	if (!$CalcPath_init) {
 		Log::error("Could not locate Tools.dll", "startup");
-		Input::stop();
 		promptAndExit();
 	}
 
 	$CalcPath_pathStep = new Win32::API("Tools", "CalcPath_pathStep", "N", "N");
 	if (!$CalcPath_pathStep) {
 		Log::error("Could not locate Tools.dll", "startup");
-		Input::stop();
 		promptAndExit();
 	}
 
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
 	if (!$CalcPath_destroy) {
 		Log::error("Could not locate Tools.dll", "startup");
-		Input::stop();
 		promptAndExit();
 	}
 } else {
@@ -141,7 +139,6 @@ if ($config{'XKore'}) {
 	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
 	if (!$GetProcByName) {
 		Log::error("Could not locate Tools.dll", "startup");
-		Input::stop();
 		promptAndExit();
 	}
 	undef $cwd;
@@ -181,30 +178,22 @@ our $remote_socket = IO::Socket::INET->new();
 ### COMPILE PORTALS ###
 
 Log::message("Checking for new portals... ");
-STDOUT->flush;
 compilePortals_check(\$found);
 
 if ($found) {
 	Log::message("found new portals!\n");
 
-	if ($Input::enabled) {
-		Log::message("Compile portals now? (y/n)\n");
-		Log::message("Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...");
-		$timeout{'compilePortals_auto'}{'time'} = time;
-		undef $msg;
-		while (!timeOut(\%{$timeout{'compilePortals_auto'}})) {
-			$msg = Input::getInput(0);
-			last if $msg;
-		}
-		if ($msg =~ /y/ || $msg eq "") {
-			Log::message("compiling portals\n\n");
-			compilePortals();
-		} else {
-			Log::message("skipping compile\n\n");
-		}
-	} else {
+	Log::message("Compile portals now? (Y/n)\n");
+	Log::message("Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...");
+	$timeout{'compilePortals_auto'}{'time'} = time;
+	undef $msg;
+	
+	$msg = $interface->getInput($timeout{'compilePortals_auto'});
+	if ($msg =~ /y/ || $msg eq "") {
 		Log::message("compiling portals\n\n");
 		compilePortals();
+	} else {
+		Log::message("skipping compile\n\n");
 	}
 } else {
 	Log::message("none found\n\n");
@@ -216,15 +205,13 @@ if ($found) {
 if (!$config{'XKore'} && !$Settings::daemon) {
 	if (!$config{'username'}) {
 		Log::message("Enter Username: ");
-		STDOUT->flush;
-		$msg = Input::getInput(1);
+		$msg = $interface->getInput(-1);
 		$config{'username'} = $msg;
 		writeDataFileIntact($Settings::config_file, \%config);
 	}
 	if (!$config{'password'}) {
 		Log::message("Enter Password: ");
-		STDOUT->flush;
-		$msg = Input::getInput(1);
+		$msg = $interface->getInput(-1);
 		$config{'password'} = $msg;
 		writeDataFileIntact($Settings::config_file, \%config);
 	}
@@ -245,7 +232,7 @@ if (!$config{'XKore'} && !$Settings::daemon) {
 
 		Log::message("Choose your master server: ");
 		STDOUT->flush;
-		$msg = Input::getInput(1);
+		$msg = $interface->getInput(-1);
 		$config{'master'} = $msg;
 		writeDataFileIntact($Settings::config_file, \%config);
 	}
@@ -275,7 +262,7 @@ $timeout{'injectSync'}{'time'} = time;
 Log::message("\n");
 
 
-##### SETUP ERROR HANDLER #####
+##### SETUP WARNING AND ERROR HANDLER #####
 
 sub _errorHandler {
 	die @_ if (defined($^S) && $^S);
@@ -301,6 +288,14 @@ sub _errorHandler {
 };
 # $SIG{'__DIE__'} = \&_errorHandler;
 
+$SIG{__WARN__} = sub {
+	my $msg = "@_";
+	unless ($msg =~ /^Use of uninitialized value in concatenation/
+	  || $msg =~ /^Subroutine .*? redefined at/) {
+		print "@_";
+	}
+};
+
 
 ##### MAIN LOOP #####
 
@@ -324,7 +319,7 @@ while ($quit != 1) {
 					$printed = 1;
 				}
 
-				if (defined($input = Input::getInput(0))) {
+				if (defined($input = $interface->getInput(0))) {
 				   	if ($input eq 'quit') {
 						$quit = 1;
 						last;
@@ -360,7 +355,7 @@ while ($quit != 1) {
 		}
 	}
 
-	if (defined($input = Input::getInput(0))) {
+	if (defined($input = $interface->getInput(0))) {
 		parseInput($input);
 
 	}
@@ -421,11 +416,11 @@ eval {
 	$remote_socket->send("Z".pack("S", 0));
 } if ($config{'XKore'} && $remote_socket && $remote_socket->connected());
 
-Input::stop();
 close($remote_socket);
 unlink('buffer') if ($config{'XKore'} && -f 'buffer');
 killConnection(\$remote_socket);
 
 Log::message("Bye!\n");
 Log::message($Settings::versionText);
-exit;
+
+undef $interface;

@@ -32,7 +32,7 @@ our @EXPORT = qw(
 	binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexStringList_lc
 	findKey findKeyString minHeapAdd
-	formatNumber getFormattedDate getHex getTickCount swrite promptAndExit timeConvert);
+	formatNumber getFormattedDate getHex getTickCount swrite promptAndExit timeConvert timeOut);
 
 
 #######################################
@@ -426,6 +426,15 @@ sub timeConvert {
 	$gathered =~ s/ $//;
 	$gathered = '0 seconds' if ($gathered eq '');
 	return $gathered;
+}
+
+sub timeOut {
+	my ($r_time, $compare_time) = @_;
+	if ($compare_time ne "") {
+		return (time - $r_time > $compare_time);
+	} else {
+		return (time - $$r_time{'time'} > $$r_time{'timeout'});
+	}
 }
 
 

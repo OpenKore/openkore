@@ -30,14 +30,21 @@ package Interface;
 use strict;
 use warnings;
 use Exporter;
+use base qw(Exporter);
+use Interface::Console;
 
-our @ISA = qw(Exporter);
-#default to Startup untill we bootstrap another Interface
-our $interface = 'Interface::Console';
+our $interface;
 our @EXPORT = qw($interface);
 
-eval "use $interface";
-die $@ if $@;
+
+sub new {
+	# Default interface until we switch to a new one
+	return new Interface::Console;
+}
+
+END {
+	undef $interface;
+}
 
 
 sub switchInterface {
@@ -71,35 +78,37 @@ sub switchInterface {
 	return 1;
 }
 
+
 sub start {
-	return $interface->start();
+	# Do nothing; this is a dummy parent class
 }
 
+
 sub stop {
-	return $interface->stop();
+	# Do nothing; this is a dummy parent class
 }
+
 
 ##
 # Interface::getInput(timeout)
 # timeout: Number of second to wait until keyboard data is available. 
-# Negative numbers will wait forever, 0 will not wait at all.
+#          Negative numbers will wait forever, 0 will not wait at all.
 # Returns: The keyboard data (including newline) as a string, or undef if there's no
-#          keyboard data available or if the input system hasn't been initialized.
+#          keyboard data available.
 #
 # Reads keyboard data.
-#
 sub getInput {
-	return $interface->getInput(@_);
+	# Do nothing; this is a dummy parent class
 }
 
+
 ##
-# Interface::writeOutput(message, domain)
+# Interface::writeOutput(type, message, domain)
 # 
-# Dispatches output to the current Interface module, message and domain are
-# the same as in Log.pm
-# This method should not be used directly, use Log::message instead.
+# Writes a message to the interface's console.
+# This method should not be used directly, use Log::message() instead.
 sub writeOutput {
-	$interface->writeOutput(@_);
+	# Do nothing; this is a dummy parent class
 }
 
 

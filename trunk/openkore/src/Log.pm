@@ -64,26 +64,26 @@
 # attackMonMiss		You attack monster but miss
 # connection		Connection messages
 # deal			Deal messages
+# drop			monster drop related
+# equip		        Equipment Switching 
+# guildchat		Guild chat
 # info			View info that's requested by the user (status, guild info, etc.)
 # input			Waiting for user input
 # useItem		You used item
 # list			List of information (monster list, player list, item list, etc.)
 # load			Loading config files
+# party			Party/follow related
 # plugins		Messages about plugin handling
+# pm			Private message
 # route			Routing/pathfinding messages
 # sold			Item sold while vending.
+# skill			Skill use unrelated to attack
 # startup		Messages that are printed during startup.
+# storage		Storage item added/removed
 # success		An operation succeeded
 # syntax		Syntax check files
-# storage		Storage item added/removed
-# xkore			X-Kore system messages
 # system		System messages
-# party			Party/follow related
-# drop			monster drop related
-# skill			Skill use unrelated to attack
-# pm			Private message
-# guildchat		Guild chat
-# equip		        Equipment Switching 
+# xkore			X-Kore system messages
 
 # Debug domains:
 # parseInput
@@ -180,7 +180,7 @@ sub processMsg {
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
 		$consoleVar->{$domain} = 1 if (!defined($consoleVar->{$domain}));
-		Interface::writeOutput($type, $message, $domain) if ($consoleVar->{$domain});
+		$interface->writeOutput($type, $message, $domain) if (defined $interface && $consoleVar->{$domain});
 	}
 
 	# Print to files
