@@ -420,7 +420,6 @@ statsAddAuto_dontUseBonus 0
 skillsAddAuto 0
 skillsAddAuto_list
 
-autoResponseOnHeal 0
 autoResponse 0
 
 ignoreAll 0

@@ -1,27 +1,18 @@
-#control\chat_resp.txt
+# Kore can reply with a message when someone talks to you. In this file,
+# you can configure what Kore should say when someone says something.
+#
+# Each line has the following format:
+# (words) TAB (answers)
+#
+# (words) is a comma-seperated list of words. When the message (of the
+# one who talks to Kore) contains a word that's in this list, Kore will
+# pick a random answer from (answers), which is a comma-seperated list
+# of possible answers.
+#
+# For example:
+# bot,botter	no,I'm not a bot,huh?
+#
+# When someone says something that contains the word "bot" or "botter",
+# Kore will reply with "no", "I'm not a bot" or "huh?".
 
-#first response, usually "hi" or "what's up"
-first_resp_0 
-first_resp_1 
-
-#second response, usually "who are you" or "what do you want?"
-second_resp_0 
-second_resp_1 
-
-#third response, start to tell people you are busy doing something
-third_resp_0 
-third_resp_1 
-
-#forth response, tell people you will stop responding to them since you're busy
-forth_resp_0 
-forth_resp_1 
-
-#fifth response, say good-bye
-fifth_resp_0 
-fifth_resp_1 
-
-#things that people said in chat channel and you want to respond, you can have multiple responses
-#for example:
-#words_said_0 hi
-#words_resp_0 hey,yo,what's up,heya,hello,hi hi,hi~
-
+bot,botter	no,I'm not a bot,huh?

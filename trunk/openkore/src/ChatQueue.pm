@@ -19,7 +19,8 @@ use strict;
 use Time::HiRes qw(time);
 
 use Globals qw($remote_socket %config %players $char %ai_v %timeout
-		%responseVars %field %overallAuth %maps_lut %skillsSP_lut);
+		%responseVars %field %overallAuth %maps_lut %skillsSP_lut
+		@chatResponses $AI);
 use AI;
 use Commands;
 use Plugins;
@@ -29,6 +30,9 @@ use Misc qw(auth configModify sendMessage getIDFromChat avoidGM_talk avoidList_t
 
 
 our @queue;
+our $wordSplitters = qr/(\b| |,|\.|\!)/;
+our %lastInput;
+
 
 ##
 # ChatQueue::add(type, userID, user, msg)
@@ -56,6 +60,7 @@ sub add {
 # Clear the chat queue, if there are any unprocessed messages.
 sub clear {
 	@queue = ();
+	%lastInput = ();
 }
 
 ##
@@ -91,13 +96,17 @@ sub processFirst {
 	# check whether his message is a chat command, and execute it.
 	my $callSign = quotemeta $config{callSign};
 	if ($overallAuth{$user} && ( $type eq "pm" || $msg =~ /^\b*$callSign\b*/i )) {
-		$msg =~ s/^\b*$callSign\b*//i;
-		$msg =~ s/ *$//;
-		return if _processChatCommand($type, $user, $msg);
+		my $msg2 = $msg;
+		$msg2 =~ s/^\b*$callSign\b*//i;
+		$msg2 =~ s/ *$//;
+		return if processChatCommand($type, $user, $msg2);
 	}
+
+	# Not a chat command; attempt to reply with a message
+	processChatResponse($cmd) if ($config{autoResponse});
 }
 
-sub _processChatCommand {
+sub processChatCommand {
 	my ($type, $user, $msg) = @_;
 	my ($switch, $after) = split / +/, $msg, 2;
 	$after =~ s/ *$//;
@@ -480,6 +489,58 @@ sub _processChatCommand {
 		return 0;
 	}
 	return 1;
+}
+
+
+sub processChatResponse {
+	return unless ($AI);
+	my $cmd = shift;
+	my $msg = lc $cmd->{msg};
+	my $reply;
+	my $repeating;
+
+	# Check whether the user is repeating itself
+	$msg =~ s/^ +//;
+	$msg =~ s/ +$//;
+	if (defined $lastInput{msg} && $lastInput{user} eq $cmd->{user} && $lastInput{msg} eq $msg) {
+		$repeating = $cmd->{repeating} = 1;
+	}
+
+	# Determine a reply
+	Plugins::callHook('ChatQueue::processChatResponse', $cmd);
+	if (defined $cmd->{reply}) {
+		$reply = $cmd->{reply};
+
+	} elsif (!$repeating && ($cmd->{type} eq "c" || $cmd->{type} eq "pm")) {
+		foreach my $item (@chatResponses) {
+			if ($msg =~ /${wordSplitters}$item->{word}${wordSplitters}/) {
+				my $max = @{$item->{responses}};
+				$reply = $item->{responses}[rand($max)];
+				last;
+			}
+		}
+	}
+
+	return unless (defined $reply);
+
+	# Calculate a small delay (to simulate typing)
+	# The average typing speed is 65 words per minute.
+	# The average length of a word used by RO players is 4.25 characters (yes I measured it).
+	# So the average user types 65 * 4.25 = 276.25 charcters per minute, or
+	# 276.25 / 60 = 4.6042 characters per second
+	# We also add a random delay of 0.5-1.5 seconds.
+	my $timeout = 0.5 + rand(1) + length($reply) / 4.6042;
+	my %args = (
+		time => time,
+		timeout => $timeout,
+		type => $cmd->{type},
+		from => $cmd->{user},
+		reply => $reply
+	);
+	AI::queue("autoResponse", \%args);
+
+	$lastInput{msg} = $msg;
+	$lastInput{user} = $cmd->{user};
 }
 
 1;

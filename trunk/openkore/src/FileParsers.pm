@@ -32,6 +32,7 @@ use Log qw(warning error);
 our @EXPORT = qw(
 	parseArrayFile
 	parseAvoidControl
+	parseChatResp
 	parseDataFile
 	parseDataFile_lc
 	parseDataFile2
@@ -103,13 +104,42 @@ sub parseAvoidControl {
 			next;
 
 		} else {
-			($key, $args) = $_ =~ /([\s\S]+?)[\s]+(\d+[\s\S]*)/;
+			($key, $args) = lc($_) =~ /([\s\S]+?)[\s]+(\d+[\s\S]*)/;
 			@args = split / /,$args;
 			if ($key ne "") {
-				$$r_hash{$section}{lc($key)}{'disconnect_on_sight'} = $args[0];
-				$$r_hash{$section}{lc($key)}{'teleport_on_sight'} = $args[1];
-				$$r_hash{$section}{lc($key)}{'disconnect_on_chat'} = $args[2];
+				$r_hash->{$section}{$key}{disconnect_on_sight} = $args[0];
+				$r_hash->{$section}{$key}{teleport_on_sight} = $args[1];
+				$r_hash->{$section}{$key}{disconnect_on_chat} = $args[2];
 			}
+		}
+	}
+	close FILE;
+}
+
+sub parseChatResp {
+	my $file = shift;
+	my $r_array = shift;
+
+	open FILE, "< $file";
+	foreach (<FILE>) {
+		s/[\r\n]//g;
+		next if ($_ eq "" || /^#/);
+		if (/^first_resp_/) {
+			Log::error("The chat_resp.txt format has changed. Please read News.txt and upgrade to the new format.\n");
+			close FILE;
+			return;
+		}
+
+		my ($key, $value) = split /\t+/, lc($_), 2;
+		my @input = split /,+/, $key;
+		my @responses = split /,+/, $value;
+
+		foreach my $word (@input) {
+			my %args = (
+				word => $word,
+				responses => \@responses
+			);
+			push @{$r_array}, \%args;
 		}
 	}
 	close FILE;

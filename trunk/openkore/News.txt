@@ -24,6 +24,9 @@ New features:
   and bail out. Too many people are reporting "bugs" that are a result
   of conflicts with old files.
 - More avoidGM modes. See the news avoid the new avoidGM_near config option.
+- The autoresponse system is now back, and improved. The chat_resp.txt
+  format has changed. Kore will also not respond to people who are repeating
+  themselves.
 
 New config options:
 - ksPlayers is a comma-seperated lists of player names that should be treated
