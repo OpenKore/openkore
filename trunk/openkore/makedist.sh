@@ -16,6 +16,7 @@ DIRS=(.
 	src/Interface/Console/Other
 	src/Interface/Wx
 	src/Network
+	src/Utils
 	src/auto/XSTools
 	src/auto/XSTools/build
 	src/auto/XSTools/misc

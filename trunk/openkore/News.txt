@@ -4,9 +4,9 @@
 
 ** INCOMPATIBLE CHANGES **:
 - For users of teleportAuto_search, in order to have it work you must now:
-  - Set teleportAuto_idle to 1
-  - Set ai_teleport_idle in timeouts.txt to the same as ai_teleport_search
-  - Delete ai_teleport_search in timeouts.txt (it is obsolete)
+  * Set teleportAuto_idle to 1
+  * Set ai_teleport_idle in timeouts.txt to the same as ai_teleport_search
+  * Delete ai_teleport_search in timeouts.txt (it is obsolete)
 
 Bug fixes:
 - Correctly detect pets.
@@ -65,7 +65,11 @@ New config options:
   2 - disconnect
   3 - teleport
   4 - respawn
-- New 'previousDamage' condition for attackSkillSlot.
+- teleportAuto_idle must be true in order for teleportAuto_search to behave as
+  expected.
+- New 'previousDamage (range)' condition for attackSkillSlot.
+  Use this skill only when your damage to the monster is between the
+  specified range.
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
