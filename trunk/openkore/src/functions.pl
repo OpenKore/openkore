@@ -4360,7 +4360,7 @@ sub AI {
 						}
 					}
 
-				} elsif ( 5 > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) ) {
+				} elsif (distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) <= 10) {
 					my ($from,$to) = split /=/, $ai_seq_args[0]{'mapSolution'}[0]{'portal'};
 					if ($chars[$config{'char'}]{'zenny'} >= $portals_lut{$from}{'dest'}{$to}{'cost'}) {
 						#we have enough money for this service
@@ -4387,7 +4387,7 @@ sub AI {
 					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
 						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
 						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-						distFromGoal => 3,
+						distFromGoal => 10,
 						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
 						_solution => \@solution,
 						_internal => 1);
