@@ -134,7 +134,7 @@ secureLogin_requestCode
 secureLogin_account 0
 
 [mobRO Private Server]
-ip 67.19.17.196
+ip 70.85.47.148
 port 6900
 version 18
 master_version 1
@@ -144,12 +144,3 @@ ip 70.85.26.148
 port 6822
 master_version 18
 version 20
-
-# For server that has only one real IP must put 'private 1'
-[Test Mini Private Server]
-ip 10.10.10.10
-port 6900
-master_version 1
-version 1
-private 1
-
