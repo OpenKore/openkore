@@ -69,6 +69,7 @@ debugPacket_sent 0
 debugPacket_exclude
 debugDomains
 squelchDomains
+verboseDomains
 
 message_length_max 80
 chatLangCode
