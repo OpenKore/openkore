@@ -156,7 +156,8 @@ useSelf_item_0_timeout
 
 itemsTakeAuto 2
 itemsGatherAuto 2
-itemsMaxWeight 49.5
+itemsMaxWeight 89
+itemsMaxWeight_sellOrStore 48
 
 buyAuto_0 
 buyAuto_0_npc 
