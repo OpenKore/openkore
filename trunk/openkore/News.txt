@@ -4,6 +4,7 @@
 
 Bug fixes:
 - Correctly detect pets.
+- Set maxDistance = distance (instead of defaulting to 30) in attackSkillSlot.
 
 New features:
 - Mask password input display '*' instead of your real password (Only on linux

@@ -3445,6 +3445,7 @@ sub AI {
 				) {
 					$args->{attackSkillSlot_uses}{$i}++;
 					$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
+					$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_dist"};
 					$args->{attackMethod}{type} = "skill";
 					$args->{attackMethod}{skillSlot} = $i;
 					last;
