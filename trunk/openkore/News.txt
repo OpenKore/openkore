@@ -53,6 +53,7 @@ New features:
 - The Linux version no longer depends on sys/ioctl.ph. This means 
   the dynamic interface (support for left/right arrow keys, etc.) will work
   out-of-the-box on many systems now.
+- Support for creation and deletion of characters.
 
 New commands:
 - guild join (flag)
@@ -105,6 +106,7 @@ Credits:
 - fov: writeDataFile*() tweaks
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
+- sparshong: character creation/deletion packet code.
 
 
 ==================

@@ -44,6 +44,8 @@ our @EXPORT = qw(
 	sendBuyVender
 	sendCartAdd
 	sendCartGet
+	sendCharCreate
+	sendCharDelete
 	sendCharLogin
 	sendChat
 	sendChatRoomBestow
@@ -431,6 +433,28 @@ sub sendCartGet {
 	my $msg = pack("C*", 0x27, 0x01) . pack("S*", $index) . pack("L*", $amount);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Cart Get: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendCharCreate {
+	my $r_socket = shift;
+	my $slot = shift;
+	my $name = shift;
+	my ($str,$agi,$vit,$int,$dex,$luk) = @_;
+
+	my $msg = pack("C*", 0x67, 0x00) .
+		pack("a24", $name) .
+		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
+		pack("C*", 0x00, 0x00, 0x01, 0x00);
+	sendMsgToServer($r_socket, $msg);
+}
+
+sub sendCharDelete {
+	my $r_socket = shift;
+	my $charID = shift;
+	my $email = shift;
+	my $msg = pack("C*", 0x68, 0x00) .
+			$charID . pack("a40", $email);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendCharLogin {

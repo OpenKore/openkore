@@ -232,7 +232,6 @@ Log::message("\n");
 
 ##### INITIALIZE X-KORE ######
 
-our $xkore;
 our $XKore_dontRedirect = 0;
 if ($config{'XKore'}) {
 	require XKore;

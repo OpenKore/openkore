@@ -26,12 +26,12 @@ use Exporter;
 use base qw(Exporter);
 
 use Globals;
-use Log qw(message warning);
+use Log qw(message warning error);
 use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
-use Network::Send;
+use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete sendCharLogin);
 
 our @EXPORT = qw(
 	auth
@@ -43,10 +43,12 @@ our @EXPORT = qw(
 
 	calcAvoidArea
 	center
+	charSelectScreen
 	checkFieldWalkable
 	checkFollowMode
 	checkMonsterCleanness
 	closestWalkableSpot
+	createCharacter
 	getFieldPoint
 	getPortalDestName
 	printItemDesc
@@ -246,6 +248,157 @@ sub center {
 	return $fill x $left . $string . $fill x $right;
 }
 
+# Returns: 0 if user chose to quit, 1 if user chose a character, 2 if user created or deleted a character
+sub charSelectScreen {
+	my $msg;
+	my $mode;
+	my $input2;
+
+	TOP: {
+		undef $mode;
+		undef $input2;
+	}
+
+	for (my $num = 0; $num < @chars; $num++) {
+		next unless $chars[$num];
+		if (0) {
+		$msg .= swrite(
+			"-------  Character @< ---------",
+			[$num],
+			"Name: @<<<<<<<<<<<<<<<<<<<<<<<<",
+			[$chars[$num]{'name'}],
+			"Job:  @<<<<<<<      Job Exp: @<<<<<<<",
+			[$jobs_lut{$chars[$num]{'jobID'}}, $chars[$num]{'exp_job'}],
+			"Lv:   @<<<<<<<      Str: @<<<<<<<<",
+			[$chars[$num]{'lv'}, $chars[$num]{'str'}],
+			"J.Lv: @<<<<<<<      Agi: @<<<<<<<<",
+			[$chars[$num]{'lv_job'}, $chars[$num]{'agi'}],
+			"Exp:  @<<<<<<<      Vit: @<<<<<<<<",
+			[$chars[$num]{'exp'}, $chars[$num]{'vit'}],
+			"HP:   @||||/@||||   Int: @<<<<<<<<",
+			[$chars[$num]{'hp'}, $chars[$num]{'hp_max'}, $chars[$num]{'int'}],
+			"SP:   @||||/@||||   Dex: @<<<<<<<<",
+			[$chars[$num]{'sp'}, $chars[$num]{'sp_max'}, $chars[$num]{'dex'}],
+			"Zenny: @<<<<<<<<<<  Luk: @<<<<<<<<",
+			[$chars[$num]{'zenny'}, $chars[$num]{'luk'}],
+			"-------------------------------", []);
+		}
+		$msg .= swrite(
+			"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<",
+			[$num, $chars[$num]{name}, "$chars[$num]{lv}/$chars[$num]{lv_job}"]);
+	}
+	message "---------------  Character list ---------------\n" .
+		"#       Name                          Lv\n" . $msg .
+		"-----------------------------------------------\n", "connection" if ($msg ne '');
+	return 1 if $xkore;
+
+	if (@chars) {
+		message("Type 'c' to create a new character, or type 'd' to delete a character.\n" .
+			"Or choose a character by entering its number.\n", "input");
+		while (!$quit) {
+			my $input = $interface->getInput(-1);
+			next if (!defined $input);
+
+			my @args = parseArgs($input);
+
+			if ($args[0] eq "c") {
+				$mode = "create";
+				($input2) = $input =~ /^.*? +(.*)/;
+				last;
+			} elsif ($args[0] eq "d") {
+				$mode = "delete";
+				($input2) = $input =~ /^.*? +(.*)/;
+				last;
+			} elsif ($args[0] eq "quit") {
+				main::quit();
+				return 0;
+			} elsif ($input !~ /^\d+$/) {
+				error "\"$input\" is not a valid character number.\n";
+			} elsif (!$chars[$input]) {
+				error "Character #$input does not exist.\n";
+			} else {
+				configModify('char', $input, 1);
+				sendCharLogin(\$remote_socket, $config{'char'});
+				$timeout{'charlogin'}{'time'} = time;
+				return 1;
+			}
+		}
+	} else {
+		message("There are no characters on this account.\n", "connection");
+		$mode = "create";
+	}
+
+	if ($mode eq "create") {
+		my $message = "Please enter the desired properties for your characters, in this form:\n" .
+				"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk)]\n";
+		message($message, "input") if ($input2 ne "");
+
+		while (!$quit) {
+			my $input;
+			if ($input2 ne "") {
+				$input = $input2;
+				undef $input2;
+			} else {
+				$input = $interface->getInput(-1);
+			}
+			next if (!defined $input);
+			goto TOP if ($input eq "quit");
+
+			my @args = parseArgs($input);
+			if (@args < 2) {
+				error $message;
+				next;
+			}
+
+			message "Creating character \"$args[1]\" in slot \"$args[0]\"...\n", "connection";
+			last if (createCharacter(@args));
+			message($message, "input");
+		}
+
+	} elsif ($mode eq "delete") {
+		my $message = "Enter the number of the character you want to delete, and your email,\n" .
+				"in this form: (slot) (email address)\n";
+		message $message, "input" unless($input2 ne "");
+
+		while (!$quit) {
+			my $input;
+			if ($input2 ne "") {
+				$input = $input2;
+				undef $input2;
+			} else {
+				$input = $interface->getInput(-1);
+			}
+			next if (!defined $input);
+			goto TOP if ($input eq "quit");
+
+			my @args = parseArgs($input);
+			if (@args < 2) {
+				error $message;
+				next;
+			} elsif ($args[0] !~ /^\d+/) {
+				error "\"$args[0]\" is not a valid character number.\n";
+				next;
+			} elsif (!$chars[$args[0]]) {
+				error "Character #$args[0] does not exist.\n";
+				next;
+			}
+
+			warning "Are you ABSOLUTELY SURE you want to delete $chars[$args[0]]{name} ($args[0])? (y/n) ";
+			$input = $interface->getInput(-1);
+			if ($input eq "y") {
+				sendCharDelete(\$remote_socket, $chars[$args[0]]{ID}, $args[1]);
+				message "Deleting character $chars[$args[0]]{name}...\n", "connection";
+				$AI::temp::delIndex = $args[0];
+			} else {
+				message "Deletion aborted\n", "info";
+				goto TOP;
+			}
+			last;
+		}
+	}
+	return 2;
+}
+
 ##
 # checkFieldWalkable(r_field, x, y)
 # r_field: a reference to a field hash.
@@ -348,6 +501,51 @@ sub closestWalkableSpot {
 		return 1;
 	}
 	return 0;
+}
+
+##
+# createCharacter(slot, name, [str,agi,vit,int,dex,luk] = 5)
+# slot: the slot in which to create the character (1st slot is 0).
+# name: the name of the character to create.
+#
+# Create a new character. You must be currently connected to the character login server.
+sub createCharacter {
+	my $slot = shift;
+	my $name = shift;
+	my ($str,$agi,$vit,$int,$dex,$luk) = @_;
+
+	if (!@_) {
+		($str,$agi,$vit,$int,$dex,$luk) = (5,5,5,5,5,5);
+	}
+
+	if ($conState != 3) {
+		error "We're not currently connected to the character login server.\n";
+	} elsif ($slot !~ /^\d+$/) {
+		error "Slot \"$slot\" is not a valid number.\n";
+	} elsif ($slot < 0 || $slot > 4) {
+		error "The slot must be comprised between 0 and 2\n";
+	} elsif ($chars[$slot]) {
+		error "Slot $slot already contains a character ($chars[$slot]{name}).\n";
+	} elsif (length($name) > 23) {
+		error "Name must not be longer than 23 characters\n";
+
+	} else {
+		for ($str,$agi,$vit,$int,$dex,$luk) {
+			if ($_ > 9 || $_ < 1) {
+				error "Stats must be comprised between 1 and 9\n";
+				return;
+			}
+		}
+		for ($str+$int, $agi+$luk, $vit+$dex) {
+			if ($_ != 10) {
+				error "The sums Str + Int, Agi + Luk and Vit + Dex must all be equal to 10\n" ;
+				return;
+			}
+		}
+
+		sendCharCreate(\$remote_socket, $slot, $name, $str, $agi, $vit, $int, $dex, $luk);
+		return 1;
+	}
 }
 
 ##
