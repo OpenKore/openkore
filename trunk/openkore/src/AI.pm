@@ -87,6 +87,8 @@ sub isIdle {
 	return $ai_seq[0] eq "";
 }
 
+##### DON'T put ai_useWhatever() in here yet!
+
 # TODO: move references of ai_skillUse in functions.pl here
 sub skillUse {
 	my ($ID, $lv, $maxCastTime, $minCastTime, $target, $y) = @_;
@@ -107,5 +109,7 @@ sub skillUse {
 	}
 	queue("skill_use",\%args);
 }
+
+##### DON'T put ai_useWhatever() in here yet!
 
 return 1;
