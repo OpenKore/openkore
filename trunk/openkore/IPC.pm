@@ -73,11 +73,37 @@ sub start {
 #
 # Stops the IPC system. Resources are freed.
 sub stop {
-	foreach (@clients) {
-		undef $_;
+	for (my $i = 0; $i < @clients; $i++) {
+		delete $clients[$i];
 	}
 	undef @clients;
 	undef $server;
+}
+
+
+sub readData {
+	my $client = shift;
+	my $data;
+	eval {
+		$data = <$client>;
+	};
+
+	if ($@ || !defined $data || length($data) == 0) {
+		return undef;
+	}
+	$data =~ s/\r?\n//;
+	return $data;
+}
+
+sub sendData {
+	my ($client, $data) = @_;
+
+	eval {
+		$client->send($data . "\n", 0);
+		$client->flush;
+	};
+	return 0 if ($@);
+	return 1;
 }
 
 
@@ -91,7 +117,7 @@ sub iterate {
 
 	# Checks whether a new client wants to connect
 	vec($bits, $server->fileno, 1) = 1;
-	if (select($bits, undef, undef, 0.001)) {
+	if (select($bits, undef, undef, 0.5)) {
 		# Accept connection from new client
 		my $client = $server->accept;
 		$client->autoflush(0);
@@ -101,7 +127,14 @@ sub iterate {
 
 	# Check for input from clients
 	my $i = 0;
+	my $recreate = 0;
+
 	foreach my $client (@clients) {
+		if (!defined $client) {
+			$recreate = 1;
+			next;
+		}
+
 		my $disconnected = 0;
 		$bits = '';
 		vec($bits, $client->fileno, 1) = 1;
@@ -110,12 +143,8 @@ sub iterate {
 		if (select($bits, undef, undef, 0)) {
 			my $data = undef;
 
-			eval {
-				# FIXME: don't do this. We should come up with a protocol. One line per command or a binary protocol?
-				$client->recv($data, $Settings::MAX_READ);
-			};
-
-			if ($@ || !defined $data || length($data) == 0) {
+			$data = readData($client);
+			if (!defined $data) {
 				$disconnected = 1;
 
 			} else {
@@ -129,11 +158,19 @@ sub iterate {
 		# Client disconnected
 		if ($disconnected || select(undef, undef, $bits, 0)) {
 			Log::debug("Client " . $client->peerhost . " disconnected", "ipc");
-			undef $client;
 			delete $clients[$i];
-			next;
 		}
 		$i++;
+	}
+
+	# Recreate @clients so we won't have undefined values in it.
+	if ($recreate) {
+		my @newClients = ();
+		foreach my $client (@clients) {
+			push @newClients, $client if (defined $client);
+		}
+		undef @clients;
+		@clients = @newClients;
 	}
 }
 
@@ -154,7 +191,18 @@ sub addListener {
 	my %listener = ();
 	$listener{'func'} = $r_func;
 	$listener{'user_data'} = $user_data;
-	# FIXME: circular dependancy with Utils.pm?
+
+	# We copy & past binAdd() here to avoid circular dependancies with Utils.pm
+	sub binAdd {
+		my $r_array = shift;
+		my $ID = shift;
+		for (my $i = 0; $i <= @{$r_array};$i++) {
+			if ($$r_array[$i] eq "") {
+				$$r_array[$i] = $ID;
+				return $i;
+			}
+		}
+	}
 	return binAdd(\@listeners, \%listener);
 }
 
@@ -179,13 +227,10 @@ sub broadcast {
 	my ($data) = @_;
 	my $i = 0;
 	foreach my $client (@clients) {
-		eval {
-			$client->send($data, 0);
-			$client->flush;
-		};
-		if ($@) {
+		next if (!defined $client);
+		if (!sendData($client, $data)) {
+			Log::debug("Client " . $client->peerhost . " disconnected", "ipc");
 			delete $clients[$i];
-			$i--;
 		}
 		$i++;
 	}
@@ -193,6 +238,7 @@ sub broadcast {
 
 
 END {
+	print "STOP\n";
 	stop();
 }
 
