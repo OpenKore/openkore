@@ -2980,7 +2980,8 @@ sub AI {
 
 	##### RANDOM WALK #####
 	if (AI::isIdle && $config{route_randomWalk} && !$cities_lut{$field{name}.'.rsw'}) {
-		my $randX, $randY, $i = 500;
+		my ($randX, $randY);
+		my $i = 500;
 		do {
 			$randX = int(rand() * ($field{width} - 1));
 			$randX = $config{lockMap_x} + ((int(rand(3))-1)*(int(rand($config{lockMap_randX}))+1)) if ($config{lockMap_x} ne '' && $config{lockMap_randX} ne '');
@@ -2988,7 +2989,7 @@ sub AI {
 			$randY = $config{lockMap_y} + ((int(rand(3))-1)*(int(rand($config{lockMap_randY}))+1)) if ($config{lockMap_y} ne '' && $config{lockMap_randY} ne '');
 		} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
 		if (!$i) {
-			error "Invalid coordinates specified for randomWalk, coordinates are unwalkable\n";
+			error "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n";
 			$config{route_randomWalk} = 0;
 		} else {
 			message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";
