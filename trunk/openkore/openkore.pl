@@ -59,7 +59,7 @@ if ($help_option) {
 
 srand(time());
 
-our $versionText = "*** OpenKore 1.0.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
+our $versionText = "*** OpenKore 1.0.0b - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
 our $welcomeText = "Welcome to X-OpenKore.";
 our $MAX_READ = 30000;
 
