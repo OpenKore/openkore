@@ -5541,6 +5541,8 @@ sub parseMsg {
 			$quit = 1;
 		} elsif ($type == 8) {
 			error("Error: The server still recognizes your last connection\n", "connection");
+		} else {
+			error("Unknown error $type");
 		}
 
 	} elsif ($switch eq "0087") {
