@@ -58,13 +58,18 @@ type
     procedure ExtractWatcherTimer(Sender: TObject);
     procedure StopButtonClick(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure FileListColumnClick(Sender: TObject; Column: TListColumn);
     procedure FileListGetText(Sender: TBaseVirtualTree; Node: PVirtualNode;
       Column: TColumnIndex; TextType: TVSTTextType;
       var CellText: WideString);
     procedure FileListDblClick(Sender: TObject);
+    procedure FileListCompareNodes(Sender: TBaseVirtualTree; Node1,
+      Node2: PVirtualNode; Column: TColumnIndex; var Result: Integer);
+    procedure FileListHeaderClick(Sender: TVTHeader; Column: TColumnIndex;
+      Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
   private
     Grf: TGrf;
+    FSortColumn: Integer;
+    FSortDirection: TSortDirection;
     function OpenGRF(FileName: String): Boolean;
     procedure FillFileList;
     procedure UpdateSelectionStatus;
@@ -105,6 +110,7 @@ begin
       grf_free (Grf);
   Grf := NewGrf;
 
+  FSortColumn := -1;
   FillFileList;
   Caption := FileName + ' - GRF Tool';
   ExtractBtn.Enabled := True;
@@ -471,11 +477,6 @@ begin
   Application.ProcessMessages;
 end;
 
-procedure TForm1.FileListColumnClick(Sender: TObject; Column: TListColumn);
-begin
-//FileList.CustomSort();
-end;
-
 procedure TForm1.FileListGetText(Sender: TBaseVirtualTree;
   Node: PVirtualNode; Column: TColumnIndex; TextType: TVSTTextType;
   var CellText: WideString);
@@ -503,6 +504,44 @@ procedure TForm1.FileListDblClick(Sender: TObject);
 begin
   if ExtractBtn.Enabled then
       ExtractBtnClick(Sender);
+end;
+
+procedure TForm1.FileListCompareNodes(Sender: TBaseVirtualTree; Node1,
+  Node2: PVirtualNode; Column: TColumnIndex; var Result: Integer);
+var
+  Data1, Data2: ^TGrfItem;
+begin
+  Data1 := FileList.GetNodeData(Node1);
+  Data2 := FileList.GetNodeData(Node2);
+
+  if Column = 0 then         // Name
+      Result := CompareText(Grf.files[Data1.i].Name, Grf.files[Data2.i].Name)
+  else if Column = 1 then    // Type
+      Result := CompareText(GetTypeName(Grf.files[Data1.i].Name),
+                            GetTypeName(Grf.files[Data2.i].Name))
+  else if Column = 2 then    // Size
+      Result := Grf.files[Data2.i].RealLen - Grf.files[Data1.i].RealLen
+  else
+      Result := 0;
+  StatusBar1.SimpleText := IntToStr(Column);
+end;
+
+procedure TForm1.FileListHeaderClick(Sender: TVTHeader;
+  Column: TColumnIndex; Button: TMouseButton; Shift: TShiftState; X,
+  Y: Integer);
+begin
+  if Column = FSortColumn then
+  begin
+     if FSortDirection = sdAscending then
+         FSortDirection := sdDescending
+     else
+         FSortDirection := sdAscending;
+  end else
+  begin
+      FSortColumn := Column;
+      FSortDirection := sdAscending;
+  end;
+  FileList.Sort(nil, Column, FSortDirection);
 end;
 
 end.

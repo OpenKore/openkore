@@ -347,8 +347,10 @@ object Form1: TForm1
     TreeOptions.PaintOptions = [toHotTrack, toShowButtons, toShowDropmark, toThemeAware, toUseBlendedImages, toUseBlendedSelection]
     TreeOptions.SelectionOptions = [toExtendedFocus, toFullRowSelect, toMultiSelect]
     OnClick = FileListClick
+    OnCompareNodes = FileListCompareNodes
     OnDblClick = FileListDblClick
     OnGetText = FileListGetText
+    OnHeaderClick = FileListHeaderClick
     OnKeyDown = FileListKeyDown
     Columns = <
       item
