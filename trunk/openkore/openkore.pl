@@ -193,6 +193,7 @@ addConfigFile("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parse
 addConfigFile("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
+addConfigFile("$Settings::tables_folder/packetdescriptions.txt", \%packetDescriptions, \&parseSectionedFile);
 addConfigFile("$Settings::tables_folder/portals.txt", \%portals_lut, \&parsePortals);
 addConfigFile("$Settings::tables_folder/portalsLOS.txt", \%portals_los, \&parsePortalsLOS);
 addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
