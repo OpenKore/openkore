@@ -78,7 +78,11 @@
 
 # Debug domains:
 # parseInput
+# parseMsg
+# sendPacket
 # ai
+# npc
+# route
 
 package Log;
 
