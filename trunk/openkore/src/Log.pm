@@ -13,11 +13,13 @@
 # attacked		Monster attacks you
 # attackMon		You attack monster
 # connection		Connection messages
+# deal			Deal messages
 # info			View info that's requested by the user (status, guild info, etc.)
 # input			Waiting for user input
 # useItem		You used item
 # list			List of information (monster list, player list, item list, etc.)
 # load			Loading config files.
+# route			Routing/pathfinding messages
 # startup		Messages that are printed during startup.
 # success		An operation succeeded
 # syntax		Syntax check files

@@ -529,11 +529,11 @@ sub parseInput {
 		my $input =~ s/$qm//;
 		my @arg = split / /, $input;
 		if ($title eq "") {
-			print	"Syntax Error in function 'chat' (Create Chat Room)\n"
-				,qq~Usage: chat "<title>" [<limit #> <public flag> <password>]\n~;
+			error	"Syntax Error in function 'chat' (Create Chat Room)\n" .
+				"Usage: chat \"<title>\" [<limit #> <public flag> <password>]\n";
 		} elsif ($currentChatRoom ne "") {
-			print	"Error in function 'chat' (Create Chat Room)\n"
-				,"You are already in a chat room.\n";
+			error	"Error in function 'chat' (Create Chat Room)\n" .
+				"You are already in a chat room.\n";
 		} else {
 			if ($arg[0] eq "") {
 				$arg[0] = 20;
@@ -556,8 +556,8 @@ sub parseInput {
 		my $input =~ s/$qm//;
 		my @arg = split / /, $input;
 		if ($title eq "") {
-			print	"Syntax Error in function 'chatmod' (Modify Chat Room)\n"
-				,qq~Usage: chatmod "<title>" [<limit #> <public flag> <password>]\n~;
+			error	"Syntax Error in function 'chatmod' (Modify Chat Room)\n" .
+				"Usage: chatmod \"<title>\" [<limit #> <public flag> <password>]\n";
 		} else {
 			if ($arg[0] eq "") {
 				$arg[0] = 20;
@@ -604,7 +604,7 @@ sub parseInput {
 		} elsif (binFind(\@{$ai_v{'temp'}{'conf'}}, $arg1) eq "") {
 			error "Config variable $arg1 doesn't exist\n";
 		} elsif ($arg2 eq "value") {
-			error "Config '$arg1' is $config{$arg1}\n";
+			message("Config '$arg1' is $config{$arg1}\n", "info");
 		} else {
 			configModify($arg1, $arg2);
 		}
@@ -734,37 +734,37 @@ sub parseInput {
 
 
 		} elsif ($arg[0] eq "" && !%incomingDeal && !%currentDeal) {
-			print	"Error in function 'deal' (Deal a Player)\n"
-				,"There is no deal to accept\n";
+			error	"Error in function 'deal' (Deal a Player)\n" .
+				"There is no deal to accept\n";
 		} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && !$currentDeal{'other_finalize'}) {
-			print	"Error in function 'deal' (Deal a Player)\n"
-				,"Cannot make the trade - $currentDeal{'name'} has not finalized\n";
+			error	"Error in function 'deal' (Deal a Player)\n" .
+				"Cannot make the trade - $currentDeal{'name'} has not finalized\n";
 		} elsif ($arg[0] eq "" && $currentDeal{'final'}) {
-			print	"Error in function 'deal' (Deal a Player)\n"
-				,"You already accepted the final deal\n";
+			error	"Error in function 'deal' (Deal a Player)\n" .
+				"You already accepted the final deal\n";
 		} elsif ($arg[0] eq "" && %incomingDeal) {
 			sendDealAccept(\$remote_socket);
 		} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && $currentDeal{'other_finalize'}) {
 			sendDealTrade(\$remote_socket);
 			$currentDeal{'final'} = 1;
-			print "You accepted the final Deal\n";
+			message("You accepted the final Deal\n", "deal");
 		} elsif ($arg[0] eq "" && %currentDeal) {
 			sendDealAddItem(\$remote_socket, 0, $currentDeal{'you_zenny'});
 			sendDealFinalize(\$remote_socket);
 			
 
 		} elsif ($arg[0] eq "add" && !%currentDeal) {
-			print	"Error in function 'deal_add' (Add Item to Deal)\n"
-				,"No deal in progress\n";
+			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
+				"No deal in progress\n";
 		} elsif ($arg[0] eq "add" && $currentDeal{'you_finalize'}) {
-			print	"Error in function 'deal_add' (Add Item to Deal)\n"
-				,"Can't add any Items - You already finalized the deal\n";
+			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
+				"Can't add any Items - You already finalized the deal\n";
 		} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && !%{$chars[$config{'char'}]{'inventory'}[$arg[1]]}) {
-			print	"Error in function 'deal_add' (Add Item to Deal)\n"
-				,"Inventory Item $arg[1] does not exist.\n";
+			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
+				"Inventory Item $arg[1] does not exist.\n";
 		} elsif ($arg[0] eq "add" && $arg[2] && $arg[2] !~ /\d+/) {
-			print	"Error in function 'deal_add' (Add Item to Deal)\n"
-				,"Amount must either be a number, or not specified.\n";
+			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
+				"Amount must either be a number, or not specified.\n";
 		} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/) {
 			if (scalar(keys %{$currentDeal{'you'}}) < 10) {
 				if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'}) {
@@ -773,18 +773,18 @@ sub parseInput {
 				$currentDeal{'lastItemAmount'} = $arg[2];
 				sendDealAddItem(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg[1]]{'index'}, $arg[2]);
 			} else {
-				print "You can't add any more items to the deal\n";
+				error("You can't add any more items to the deal\n", "deal");
 			}
 		} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
 			if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'zenny'}) {
 				$arg[2] = $chars[$config{'char'}]{'zenny'};
 			}
 			$currentDeal{'you_zenny'} = $arg[2];
-			print "You put forward $arg[2] z to Deal\n";
+			message("You put forward $arg[2] z to Deal\n", "deal");
 
 		} else {
-			print	"Syntax Error in function 'deal' (Deal a player)\n"
-				,"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n";
+			error	"Syntax Error in function 'deal' (Deal a player)\n" .
+				"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n";
 		}
 
 	} elsif ($switch eq "debug") {
@@ -1010,8 +1010,8 @@ sub parseInput {
 	} elsif ($switch eq "g") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
-			print "Syntax Error in function 'g' (Guild Chat)\n"
-				,"Usage: g <message>\n";
+			error 	"Syntax Error in function 'g' (Guild Chat)\n" .
+				"Usage: g <message>\n";
 		} else {
 			sendMessage(\$remote_socket, "g", $arg1);
 		}
@@ -1051,7 +1051,7 @@ sub parseInput {
 			message("---------------------------------------\n", "list");
 
 		} elsif ($arg1 eq "") {
-			print "Requesting guild information...\n",
+			message	"Requesting guild information...\n" .
 				"Enter command to view guild information: guild < info | member >\n";
 			sendGuildInfoRequest(\$remote_socket);
 			sendGuildRequest(\$remote_socket, 0);
@@ -1148,22 +1148,22 @@ sub parseInput {
 			}
 			message("------------------------------\n", "list");
 		} elsif ($arg1 =~ /\d+/ && $identifyID[$arg1] eq "") {
-			print	"Error in function 'identify' (Identify Item)\n"
-				,"Identify Item $arg1 does not exist\n";
+			error	"Error in function 'identify' (Identify Item)\n" .
+				"Identify Item $arg1 does not exist\n";
 
 		} elsif ($arg1 =~ /\d+/) {
 			sendIdentify(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$identifyID[$arg1]]{'index'});
 		} else {
-			print	"Syntax Error in function 'identify' (Identify Item)\n"
-				,"Usage: identify [<identify #>]\n";
+			error	"Syntax Error in function 'identify' (Identify Item)\n" .
+				"Usage: identify [<identify #>]\n";
 		}
 
 
 	} elsif ($switch eq "ignore") {
 		($arg1, $arg2) = $input =~ /^[\s\S]*? (\d+) ([\s\S]*)/;
 		if ($arg1 eq "" || $arg2 eq "" || ($arg1 ne "0" && $arg1 ne "1")) {
-			print	"Syntax Error in function 'ignore' (Ignore Player/Everyone)\n"
-				,"Usage: ignore <flag> <name | all>\n";
+			error	"Syntax Error in function 'ignore' (Ignore Player/Everyone)\n" .
+				"Usage: ignore <flag> <name | all>\n";
 		} else {
 			if ($arg2 eq "all") {
 				sendIgnoreAll(\$remote_socket, !$arg1);
@@ -1273,22 +1273,22 @@ sub parseInput {
 	} elsif ($switch eq "kick") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($currentChatRoom eq "") {
-			print	"Error in function 'kick' (Kick from Chat)\n"
-				,"You are not in a Chat Room.\n";
+			error	"Error in function 'kick' (Kick from Chat)\n" .
+				"You are not in a Chat Room.\n";
 		} elsif ($arg1 eq "") {
-			print	"Syntax Error in function 'kick' (Kick from Chat)\n"
-				,"Usage: kick <user #>\n";
+			error	"Syntax Error in function 'kick' (Kick from Chat)\n" .
+				"Usage: kick <user #>\n";
 		} elsif ($currentChatRoomUsers[$arg1] eq "") {
-			print	"Error in function 'kick' (Kick from Chat)\n"
-				,"Chat Room User $arg1 doesn't exist\n";
+			error	"Error in function 'kick' (Kick from Chat)\n" .
+				"Chat Room User $arg1 doesn't exist\n";
 		} else {
 			sendChatRoomKick(\$remote_socket, $currentChatRoomUsers[$arg1]);
 		}
 
 	} elsif ($switch eq "leave") {
 		if ($currentChatRoom eq "") {
-			print	"Error in function 'leave' (Leave Chat Room)\n"
-				,"You are not in a Chat Room.\n";
+			error	"Error in function 'leave' (Leave Chat Room)\n" .
+				"You are not in a Chat Room.\n";
 		} else {
 			sendChatRoomLeave(\$remote_socket);
 		}
@@ -1297,8 +1297,8 @@ sub parseInput {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
 		if ($arg1 eq "") {
-			print	"Syntax Error in function 'look' (Look a Direction)\n"
-				,"Usage: look <body dir> [<head dir>]\n";
+			error	"Syntax Error in function 'look' (Look a Direction)\n" .
+				"Usage: look <body dir> [<head dir>]\n";
 		} else {
 			look($arg1, $arg2);
 		}
@@ -1306,8 +1306,8 @@ sub parseInput {
 	} elsif ($switch eq "lookp") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		if ($arg1 eq "") {
-			print "Syntax Error in function 'lookp' (Look at Player)\n" .
-					"Usage: lookp <player #>\n";
+			error	"Syntax Error in function 'lookp' (Look at Player)\n" .
+				"Usage: lookp <player #>\n";
 		} else {
 			for (my $i = 0; $i < @playersID; $i++) {
 				next if ($players{$playersID[$i]} eq "");
@@ -1361,22 +1361,22 @@ sub parseInput {
 			aiRemove("route");
 			aiRemove("route_getRoute");
 			aiRemove("route_getMapRoute");
-			print "Stopped all movement\n";
+			message "Stopped all movement\n";
 		} else {
 			$ai_v{'temp'}{'map'} = $field{'name'} if ($ai_v{'temp'}{'map'} eq "");
 			if ($maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}) {
 				if ($arg2 ne "") {
-					print "Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'}): $arg1, $arg2\n";
+					message("Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'}): $arg1, $arg2\n", "route");
 					$ai_v{'temp'}{'x'} = $arg1;
 					$ai_v{'temp'}{'y'} = $arg2;
 				} else {
-					print "Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'})\n";
+					message("Calculating route to: $maps_lut{$ai_v{'temp'}{'map'}.'.rsw'}($ai_v{'temp'}{'map'})\n", "route");
 					undef $ai_v{'temp'}{'x'};
 					undef $ai_v{'temp'}{'y'};
 				}
 				ai_route(\%{$ai_v{'temp'}{'returnHash'}}, $ai_v{'temp'}{'x'}, $ai_v{'temp'}{'y'}, $ai_v{'temp'}{'map'}, 0, 0, 1, 0, 0, 1);
 			} else {
-				print "Map $ai_v{'temp'}{'map'} does not exist\n";
+				error "Map $ai_v{'temp'}{'map'} does not exist\n";
 			}
 		}
 
@@ -1398,7 +1398,7 @@ sub parseInput {
 		if (!$shopstarted) {
 			sendOpenShop(\$remote_socket);
 		} else {
-			print "Error: a shop has already been opened.\n";
+			error "Error: a shop has already been opened.\n";
 		}
 
 	} elsif ($switch eq "p") {
@@ -1717,11 +1717,11 @@ sub parseInput {
 			sendGetSellList(\$remote_socket, $talk{'ID'});
 
 		} elsif ($arg1 eq "") {
-			print	"Syntax Error in function 'sell' (Sell Inventory Item)\n"
-				,"Usage: sell <item #> [<amount>]\n";
+			error	"Syntax Error in function 'sell' (Sell Inventory Item)\n" .
+				"Usage: sell <item #> [<amount>]\n";
 		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			print	"Error in function 'sell' (Sell Inventory Item)\n"
-				,"Inventory Item $arg1 does not exist.\n";
+			error	"Error in function 'sell' (Sell Inventory Item)\n" .
+				"Inventory Item $arg1 does not exist.\n";
 		} else {
 			if (!$arg2 || $arg2 > $chars[$config{'char'}]{'inventory'}[$arg1]{'amount'}) {
 				$arg2 = $chars[$config{'char'}]{'inventory'}[$arg1]{'amount'};
@@ -1756,10 +1756,10 @@ sub parseInput {
 		my $y = $3;
 		my $lvl = $4;
 		if (!$skill_num) {
-			error "Syntax Error in function 'sl' (Use Skill on Location)\n" .
+			error	"Syntax Error in function 'sl' (Use Skill on Location)\n" .
 				"Usage: ss <skill #> <x> <y> [<skill lvl>]\n";
 		} elsif (!$skillsID[$skill_num]) {
-			print "Error in function 'sl' (Use Skill on Location)\n" .
+			error	"Error in function 'sl' (Use Skill on Location)\n" .
 				"Skill $skill_num does not exist.\n";
 		} else {
 			my $skill = $chars[$config{'char'}]{'skills'}{$skillsID[$skill_num]};
@@ -1967,8 +1967,8 @@ sub parseInput {
 			message("-------------------------------\n", "list");
 
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
-			print	"Error in function 'storage add' (Add Item to Storage)\n"
-				,"Inventory Item $arg2 does not exist\n";
+			error	"Error in function 'storage add' (Add Item to Storage)\n" .
+				"Inventory Item $arg2 does not exist\n";
 		} elsif ($arg1 eq "add" && $arg2 =~ /\d+/) {
 			if (!$arg3 || $arg3 > $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'}) {
 				$arg3 = $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'};
@@ -6336,7 +6336,6 @@ sub parseMsg {
 				? $items_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}
 				: "Unknown ".$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'};
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} = $display;
-#			print "Inventory: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) x $chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} - $itemTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type'}} - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n" if $config{'debug'};
 			undef @cnt;
 
 			$count = 0;
@@ -6408,16 +6407,16 @@ sub parseMsg {
 		for(my $i = 4; $i < $msg_size; $i += $psize) {
 			my $index = unpack("C1", substr($msg, $i, 1));
 			my $ID = unpack("S1", substr($msg, $i + 2, 2));
-			binAdd(\@storageID, $ID);
-			$storage{$ID}{'index'} = $index;
-			$storage{$ID}{'nameID'} = $ID;
-			$storage{$ID}{'amount'} = unpack("L1", substr($msg, $i + 6, 4));
+			binAdd(\@storageID, $index);
+			$storage{$index}{'index'} = $index;
+			$storage{$index}{'nameID'} = $ID;
+			$storage{$index}{'amount'} = unpack("L1", substr($msg, $i + 6, 4));
 			$display = ($items_lut{$ID} ne "")
 				? $items_lut{$ID}
 				: "Unknown $ID";
-			$storage{$ID}{'name'} = $display;
-			$storage{$ID}{'binID'} = binFind(\@storageID, $ID);
-			print "Storage: $storage{$ID}{'name'} ($storage{$ID}{'binID'})\n" if $config{'debug'};
+			$storage{$index}{'name'} = $display;
+			$storage{$index}{'binID'} = binFind(\@storageID, $ID);
+			print "Storage: $display ($storage{$index}{'binID'})\n" if $config{'debug'};
 		}
 		print "Storage opened\n";
 
@@ -7099,29 +7098,29 @@ sub parseMsg {
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		my $ID = unpack("S1", substr($msg, 8, 2));
-		if (%{$storage{$ID}}) {
-			$storage{$ID}{'amount'} += $amount;
+		if (%{$storage{$index}}) {
+			$storage{$index}{'amount'} += $amount;
 		} else {
-			binAdd(\@storageID, $ID);
-			$storage{$ID}{'index'} = $index;
-			$storage{$ID}{'amount'} = $amount;
+			binAdd(\@storageID, $index);
+			$storage{$index}{'index'} = $index;
+			$storage{$index}{'amount'} = $amount;
 			my $display = ($items_lut{$ID} ne "")
 				? $items_lut{$ID}
 				: "Unknown $ID";
-			$storage{$ID}{'name'} = $display;
-			$storage{$ID}{'binID'} = binFind(\@storageID, $ID);
+			$storage{$index}{'name'} = $display;
+			$storage{$index}{'binID'} = binFind(\@storageID, $index);
 		}
-		message("Storage Item Added: $storage{$ID}{'name'} ($storage{$ID}{'binID'}) x $amount\n", "storage", 1);
+		message("Storage Item Added: $storage{$index}{'name'} ($storage{$index}{'binID'}) x $amount\n", "storage", 1);
 
 	} elsif ($switch eq "00F6") {
 		$index = unpack("S1", substr($msg, 2, 2));
 		$amount = unpack("L1", substr($msg, 4, 4));
-		$ID = findKey(\%storage, "index", $index);
-		$storage{$ID}{'amount'} -= $amount;
-		print "Storage Item Removed: $storage{$ID}{'name'} ($storage{$ID}{'binID'}) x $amount\n";
-		if ($storage{$ID}{'amount'} <= 0) {
-			undef %{$storage{$ID}};
-			binRemove(\@storageID, $ID);
+		$storage{$index}{'amount'} -= $amount;
+		print "Storage Item Removed: $storage{$index}{'name'} ($storage{$index}{'binID'}) x $amount\n";
+		if ($storage{$index}{'amount'} <= 0) {
+			undef %{$storage{$index}};
+			delete $storage{$index};
+			binRemove(\@storageID, $index);
 		}
 
 	} elsif ($switch eq "00F8") {
@@ -8081,20 +8080,22 @@ sub parseMsg {
 		($guild{'master'})  = substr($msg, 70, 24) =~ /([\s\S]*?)\000/;
 
 	} elsif ($switch eq "01C4") {
+		# Non-stackable storage item added
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		my $ID = unpack("S1", substr($msg, 8, 2));
-		if (%{$storage{'inventory'}[$index]}) {
-			$storage{'inventory'}[$index]{'amount'} += $amount;
-		} else {
-			$storage{'inventory'}[$index]{'nameID'} = $ID;
-			$storage{'inventory'}[$index]{'amount'} = $amount;
-			my $display = ($items_lut{$ID} ne "")
-				? $items_lut{$ID}
-				: "Unknown $ID";
-			$storage{'inventory'}[$index]{'name'} = $display;
+
+		if (!%{$storage{$index}}) {
+			binAdd(\@storageID, $index);
 		}
-		message("Storage Item Added: $storage{'inventory'}[$index]{'name'} ($index) x $amount\n", "storage", 1);
+		my $display = ($items_lut{$ID} ne "")
+			? $items_lut{$ID}
+			: "Unknown $ID";
+		$storage{$index}{'nameID'} = $ID;
+		$storage{$index}{'index'} = $index;
+		$storage{$index}{'amount'} += $amount;
+		$storage{$index}{'name'} = $display;
+		message("Storage Item Added: $display ($index) x $amount\n", "storage", 1);
 
 	} elsif ($switch eq "01C8") {
 		my $index = unpack("S1",substr($msg, 2, 2));
