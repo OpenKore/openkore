@@ -61,6 +61,8 @@ my $starCrumbs;
 my $insertTemp;
 my $servername;
 
+$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
+
 sub Unload {
 	Plugins::delHook('start3', $startHook);
 	if (defined $venderHook) {
@@ -68,6 +70,7 @@ sub Unload {
 		Plugins::delHook('packet_vender_store', $venderStoreHook);
 		Plugins::delHook('charNameUpdate', $charNameUpdateHook);
 	}
+	$dbh->disconnect;
 }
 
 sub Called{
@@ -77,7 +80,7 @@ sub Called{
 	$servername =~ s/\s+$//;
 	
 	# connecting to the database
-	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
+#	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
 
 #	print "ID: " . unpack("L1",$::ID) . "\n";
 
@@ -125,7 +128,7 @@ sub Called{
 			
 		}
 	}
-	$dbh->disconnect;
+#	$dbh->disconnect;
 	return $result;
 }
 
@@ -153,8 +156,12 @@ sub mercDbFill{
 	$servername = $::servers[$::config{'server'}]{'name'};
 	$servername =~ s/\s+$//;
 	
+	
+	my $myHotDeal = $Globals::config{'merchantDB_myHotDeal'}; #look for cheaper items ie: hotdeal-range * 90%
+	$myHotDeal = 1 	if !$myHotDeal;
+	
 	# connecting to the database
-	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
+#	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
 
 	#print "Shop-Owner: " . $shopOwner . "(" . $shopOwnerID .")\n";
 	#print "Shop-Array: " . $::venderItemList . "\n";
@@ -237,13 +244,13 @@ sub mercDbFill{
 		
 		# if actual price is lower than average price minus standard deviation it's a HOT DEAL
 		
-		my $barrier_price = $avg_price - $std_price;
+		my $barrier_price = ($avg_price - $std_price) * $myHotDeal;
 		if ($::venderItemList[$::number]{'price'} < $barrier_price){
 			#
 			# HOT DEAL !!!!!!!!!!!!
 			#
 			Log::message("HOT DEAL !!!!!!!!!");	
-#			print $avg_price . " - " . $std_price . " = " . $barrier_price . " // price: " . $::venderItemList[$::number]{'price'} ."\n";
+#			print $avg_price . " - " . $std_price . " * " . $myHotDeal . " = " . $barrier_price . " // price: " . $::venderItemList[$::number]{'price'} ."\n";
 #			print $avg_std_query . "\n";
 			
 			my @shoppinglist = split(/,/, $Settings::config{"merchantDB_shoppinglist"});
@@ -268,11 +275,10 @@ sub mercDbFill{
 						Log::message(" ... but no money!\n");
 						$buyresult = -1;
 					}
-				} else {
-					if (!$buyresult && !$onlist){
-						Log::message(" ... not on my list!\n");
-						$buyresult = -1;
-					}
+				}
+				if (!$buyresult && !$onlist){
+					Log::message(" ... not on my list!\n");
+					$buyresult = -1;
 				}
 			}	
 		}
@@ -462,7 +468,7 @@ sub mercDbFill{
 		undef $shopOwnerID;
 		undef $shopOwner;
 	}
-	$dbh->disconnect;
+#	$dbh->disconnect;
 	return $result;
 }
 
@@ -478,7 +484,7 @@ sub charNameUpdate{
 	$servername = $::servers[$::config{'server'}]{'name'};
 	$servername =~ s/\s+$//;
 	
-	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
+#	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
 	my $datum	= strftime("%d.%m.%Y %T", localtime(time));
 	
 	my $shopOwnerID = unpack("L1",$::ID);
@@ -497,7 +503,7 @@ sub charNameUpdate{
 	}
 	undef $shopOwnerID;
 	undef $shopOwner;
-	$dbh->disconnect;
+#	$dbh->disconnect;
 	return 1;
 }
 
