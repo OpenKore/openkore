@@ -1293,7 +1293,7 @@ sub parseCommand {
 		$ai_v{'route_randomWalk_old'} = $config{'route_randomWalk'};
 		$ai_v{'teleportAuto_idle_old'} = $config{'teleportAuto_idle'};
 		$ai_v{'itemsGatherAuto_old'} = $config{'itemsGatherAuto'};
-		configModify("attackAuto", 1);
+		configModify("attackAuto", 1) if $config{attackAuto};
 		configModify("route_randomWalk", 0);
 		configModify("teleportAuto_idle", 0);
 		configModify("itemsGatherAuto", 0);
@@ -1739,7 +1739,7 @@ sub AI {
 				$ai_v{'sitAuto_forceStop'} = 0;
 				$ai_v{'attackAuto_old'} = $config{'attackAuto'};
 				$ai_v{'route_randomWalk_old'} = $config{'route_randomWalk'};
-				configModify("attackAuto", 1);
+				configModify("attackAuto", 1) if $config{attackAuto};
 				configModify("route_randomWalk", 0);
 				aiRemove("move");
 				aiRemove("route");
