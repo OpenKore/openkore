@@ -1056,6 +1056,11 @@ sub cmdWarp {
 		}
 
 	} elsif ($map eq 'list') {
+		if (!$chars[$config{'char'}]{'warp'}{'memo'} || !@{$chars[$config{'char'}]{'warp'}{'memo'}}) {
+			error "You didn't cast warp portal.\n";
+			return;
+		}
+
 		message("----------------- Warp Portal --------------------\n", "list");
 		message("#  Place                           Map\n", "list");
 		for (my $i = 0; $i < @{$chars[$config{'char'}]{'warp'}{'memo'}}; $i++) {
