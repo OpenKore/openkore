@@ -104,11 +104,12 @@ New config options:
 - webproxy <proxy_addr>
   webproxy_port <port>
   To enable and specify wether WX will use this proxy for manual downloading.
-- sellAuto_standpoint
+- sellAuto_standpoint <map> <x> <y>
   buyAuto {
 	standpoint <map> <x> <y>
   }
-  Bots will use this location as a standpoint instead of anywhere near NPC itself.
+  Bots will use this location as a standpoint instead of anywhere near NPC
+  itself.
 
 Internal:
 - Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
@@ -128,7 +129,8 @@ Credits:
 - mondlicht: misc bug fixes.
 - denni: previousDamage condition, teleportAuto_maxDmgInLock,
   teleportAuto_minAggressivesInLock.
-- jojobail: some work on oRO support, storageAuto ability check.
+- jojobail: some work on oRO support, storageAuto ability check, some
+  bug fixes.
 - asuwannarat: Niflmheim portals.
 
 
