@@ -29,9 +29,12 @@ package Interface;
 
 use strict;
 use warnings;
+use Exporter;
 
+our @ISA = qw(Exporter);
 #default to Startup untill we bootstrap another Interface
 our $interface = 'Interface::Console';
+our @EXPORT = qw($interface);
 
 eval "use $interface";
 die $@ if $@;

@@ -33,7 +33,7 @@ our @EXPORT = qw(
 
 	$remote_socket
 
-	%timeout_ex
+	%timeout_ex $isOnline
 	);
 
 
@@ -61,5 +61,6 @@ our $remote_socket;
 
 # Misc
 our %timeout_ex;
+our $isOnline; # for determining whether a guild member logged in or out
 
 return 1;
