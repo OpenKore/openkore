@@ -879,12 +879,26 @@ sub _find_x_top {
 sub getCoordString {
 	my $x = int(shift);
 	my $y = int(shift);
-	if ($config{serverType} == 1) {
-		return pack("C*", _find_x($x, $y),
-			(64 * (($x + $y) % 4) + 31 - int($y / 16)),
-			(($y - int(($y - 8 ) / 16) * 16 - 8 ) *16));
+	if ($config{serverType} == 0) {
+ 		return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
 	} else {
-		return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
+		# Old method
+		#return pack("C*", _find_x($x, $y),
+		#	(64 * (($x + $y) % 4) + 31 - int($y / 16)),
+		#	(($y - int(($y - 8 ) / 16) * 16 - 8 ) *16));
+
+		# Slow new method
+		#my $b0 = 0x00; #unknown
+		#my $b1 = ($x & 0x3FC)>>2;
+		#my $b2 = (($x & 0x03)<<6) | (($y & 0x3F0)>>4);
+		#my $b3 = ($y & 0x0F)<<4;
+		#return pack("C*",$b0,$b1,$b2,$b3);
+
+		# Faster (i think) new method
+		# I don't know how this first byte is generated
+		my $dw = 0x44000000 | (($x & 0x3FF) << 14) | (($y & 0x3FF) << 4);
+		# Reorder the 4-bytes (oops! i forgot about endians!)
+		return pack("C*", ($dw & 0xFF000000) >> 24, ($dw & 0xFF0000) >> 16, ($dw & 0xFF00) >> 8, $dw & 0xFF);
 	}
 }
 
