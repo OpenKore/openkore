@@ -8109,11 +8109,13 @@ sub ai_partyfollow {
 		$master{y} = $chars[$config{char}]{party}{users}{$master{id}}{pos}{y};
 		($master{map}) = $chars[$config{char}]{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
 
-		if ($master{map} ne $field{'name'}) {
+		if ($master{map} ne $field{'name'} || $master{x} == 0 || $master{y} == 0) {
 			undef $master{x};
 			undef $master{y};
 		}			
 
+		return unless ($master{map} ne $field{'name'} || defined $master{x});
+		
 		if (distance(\%master, \%{$ai_v{temp}{master}}) > 15 || $master{map} != $ai_v{temp}{master}{map}
 		|| (timeOut($ai_v{temp}{time}, 15) && distance(\%master, $chars[$config{char}]{pos_to}) > $config{followDistanceMax})) {
 			$ai_v{temp}{master}{x} = $master{x};
