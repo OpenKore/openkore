@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, Grf, ComCtrls, ToolWin, ImgList, ExtCtrls, Buttons, Types,
   ShellAPI, ShlObj, ExtractThread, VirtualTrees, Menus, TntStdCtrls,
-  TntComCtrls, mmsystem;
+  TntComCtrls, mmsystem, TntDialogs;
 
 type
   TForm1 = class(TForm)
@@ -27,7 +27,6 @@ type
     Timer1: TTimer;
     ScrollBox1: TScrollBox;
     Image1: TImage;
-    SaveDialog1: TSaveDialog;
     ExtractWatcher: TTimer;
     ExtractorPanel: TPanel;
     Panel3: TPanel;
@@ -43,6 +42,9 @@ type
     PaintBox2: TPaintBox;
     PopupMenu1: TPopupMenu;
     Copy1: TMenuItem;
+    SaveDialog1: TTntSaveDialog;
+    SettingsBtn: TSpeedButton;
+    PaintBox3: TPaintBox;
     procedure FormResize(Sender: TObject);
     procedure OpenBtnClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -72,6 +74,7 @@ type
     procedure PaintBox1Paint(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
     procedure PopupMenu1Popup(Sender: TObject);
+    procedure SettingsBtnClick(Sender: TObject);
   private
     Grf: TGrf;
     FSortColumn: Integer;
@@ -97,7 +100,7 @@ function KoreanToUnicode(Str: AnsiString): WideString;
 implementation
 
 uses
-  About, GPattern, TntSysUtils;
+  About, GPattern, TntSysUtils, SettingsForms;
 
 {$R *.dfm}
 
@@ -332,15 +335,17 @@ begin
 
   if (FType = '.TXT') or (FType = '.XML') then
   begin
-      Data := grf_get(Grf, Grf.files[Item.i].Name, Size, Error);
-      if Data = nil then
+      GetMem(Data, Grf.files[Item.i].RealLen);
+      if grf_chunk_get(Grf, Grf.files[Item.i].Name, Data, 0, Size, Error) = nil then
       begin
+          FreeMem(Data);
           MessageBox(Handle, grf_strerror(Error), 'Error', MB_ICONERROR);
           Exit;
       end;
 
       RichEdit1.Text := KoreanToUnicode(PChar(Data));
       NoteBook1.PageIndex := 0;
+      FreeMem(Data);
 
   end else if (FType = '.BMP') then
   begin
@@ -438,6 +443,7 @@ var
   Info: TBrowseInfo;
   ItemList: PItemIDList;
   Dir: array[0..MAX_PATH] of Char;
+  Result: Boolean;
 const
   BIF_NEWDIALOGSTYLE = 64;
 begin
@@ -455,7 +461,12 @@ begin
       SaveDialog1.FileName := WideExtractFileName(KoreanToUnicode(Files[0]));
       if SaveDialog1.Execute then
       begin
-          if grf_extract(Grf, PChar(Files[0]), PChar(SaveDialog1.FileName), Error) <= 0 then
+          if Settings.Unicode then
+              Result := grf_extractW(Grf, PChar(Files[0]), SaveDialog1.FileName, Error) <= 0
+          else
+              Result := grf_extract(Grf, PChar(Files[0]), PChar(UnicodeToKorean(SaveDialog1.FileName)), Error) <= 0;
+
+          if Result then
               MessageBox(Handle,
                   PChar('Unable to extract ' + ExtractFileName(Files[0]) + ':' + #13#10 + grf_strerror(Error)),
                   'Error', MB_ICONERROR)
@@ -501,10 +512,15 @@ procedure TForm1.ExtractWatcherTimer(Sender: TObject);
 var
   FileName: WideString;
 begin
-  if not Assigned(Extractor) then Exit;
+  if not Assigned(Extractor) then
+  begin
+      ExtractWatcher.Enabled := False;
+      Exit;
+  end;
+
   ProgressBar1.Position := Extractor.Current;
   FileName := KoreanToUnicode(ExtractFileName(Extractor.CurrentFile));
-  StatusBar1.SimpleText := WideFormat('Extracting (%.1f%%): %s',
+  StatusBar1.SimpleText := WideFormat('Extracting (%f%%): %s',
         [Extractor.Current / Extractor.Max * 100.0,
         FileName]);
 end;
@@ -609,6 +625,17 @@ end;
 procedure TForm1.PopupMenu1Popup(Sender: TObject);
 begin
   Copy1.Enabled := RichEdit1.SelLength > 0;
+end;
+
+procedure TForm1.SettingsBtnClick(Sender: TObject);
+begin
+  SettingsForm := TSettingsForm.Create(Self);
+  with SettingsForm do
+  try
+     ShowModal;
+  finally
+     Free;
+  end;
 end;
 
 end.

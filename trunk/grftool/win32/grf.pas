@@ -4,7 +4,7 @@ unit grf;
 interface
 
 uses
-  Types, Windows;
+  Types, Windows, Dialogs, SysUtils;
 
 const
   GRF_NAMELEN = $100;
@@ -75,6 +75,9 @@ const
 function grf_callback_open(const fname: PChar; const mode: PChar; var error: TGrfError; callback: TGrfOpenCallback): TGrf; cdecl; external 'grf.dll';
 function grf_get(Grf: TGrf; const fname: PChar; var size: Cardinal; var Error: TGrfError): Pointer; cdecl; external 'grf.dll';
 function grf_extract(Grf: TGrf; const grfname: PChar; const f: PChar; var Error: TGrfError): Integer; cdecl; external 'grf.dll';
+function grf_extractW(Grf: TGrf; const grfname: PChar; const f: WideString; var Error: TGrfError): Integer;
+function grf_chunk_get(Grf: TGrf; const fname: PChar; Buf: Pointer; Offset: Cardinal; var Len: Cardinal; var Error: TGrfError): Pointer; cdecl; external 'grf.dll';
+function grf_index_chunk_get(Grf: TGrf; Index: Cardinal; Buf: Pointer; Offset: Cardinal; var Len: Cardinal; var Error: TGrfError): Pointer; cdecl; external 'grf.dll';
 function grf_find(Grf: TGrf; const fname: PChar; var Index: Cardinal): PGrfFile; cdecl; external 'grf.dll';
 procedure grf_free(Grf: TGrf); cdecl; external 'grf.dll';
 function grf_strerror(err: TGrfError): PChar; cdecl; external 'grf.dll';
@@ -104,6 +107,29 @@ begin
        (f.RealLen = GRFFILE_DIR_SZORIG) and
        (f.pos = GRFFILE_DIR_OFFSET)
     );
+end;
+
+function grf_extractW(Grf: TGrf; const grfname: PChar; const f: WideString; var Error: TGrfError): Integer;
+var
+  Data: Pointer;
+  GrfFile: PGrfFile;
+  Index, Size, Handle, Written: Cardinal;
+begin
+  GrfFile := grf_find(Grf, grfname, Index);
+  Data := VirtualAlloc(nil, GrfFile.RealLen, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+  if grf_index_chunk_get(Grf, Index, Data, 0, Size, Error) = nil then
+  begin
+      VirtualFree(Data, GrfFile.RealLen, MEM_RELEASE);
+      Result := 0;
+      Exit;
+  end;
+
+  Handle := CreateFileW(PWideChar(f), GENERIC_WRITE, 0, nil,
+      CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+  WriteFile(Handle, Data^, Size, Written, nil);
+  CloseHandle(Handle);
+  VirtualFree(Data, GrfFile.RealLen, MEM_RELEASE);
+  Result := 1;
 end;
 
 end.

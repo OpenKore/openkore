@@ -69,7 +69,8 @@ begin
   MessageBox(Handle,
       'VCL - Main program.' + #13#10 +
       'floAt - Help with various components.' + #13#10 +
-      'mrdiablo - Sound preview support.'
+      'mrdiablo - Sound preview support.' + #13#10 +
+      'jojobail & Rasqual - many improvements in libgrf.'
       , 'Credits', MB_ICONINFORMATION);
 end;
 

@@ -6,7 +6,8 @@ uses
   grf in 'grf.pas',
   about in 'about.pas' {AboutBox},
   ExtractThread in 'ExtractThread.pas',
-  GPattern in 'GPattern.pas';
+  GPattern in 'GPattern.pas',
+  SettingsForms in 'SettingsForms.pas' {SettingsForm};
 
 {$R *.res}
 
