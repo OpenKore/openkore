@@ -9406,6 +9406,18 @@ sub take {
 #######################################
 
 
+##
+# distance(r_hash1, r_hash2)
+# r_hash1, r_hash2: references to position hash tables.
+# Returns: the distance as integer.
+#
+# Calculates the distance between r_hash1 and r_hash2.
+# Both hash tables must have an 'x' and a 'y' key.
+#
+# Example:
+# # Calculates the distance between you an a monster
+# my $dist = distance($chars[$config{char}]{pos_to},
+#                     $monsters{$ID}{pos_to});
 sub distance {
 	my $r_hash1 = shift;
 	my $r_hash2 = shift;
@@ -9547,6 +9559,14 @@ sub auth {
 	writeDataFile("control/overallAuth.txt", \%overallAuth);
 }
 
+##
+# configModify(key, val, [silent])
+# key: a key name.
+# val: the new value.
+# silent: if set to 1, do not print a message to the console.
+#
+# Changes the value of the configuration variable $key to $val.
+# %config and config.txt will be updated.
 sub configModify {
 	my $key = shift;
 	my $val = shift;

@@ -1,5 +1,5 @@
 OpenKore Developers Notes
-    November 6, 2003
+     July 30, 2004
 =========================
 
 
@@ -10,7 +10,7 @@ language, due to the language's extreme flexibility, many developers
 (including Kura, the original author of Kore, and many modders) make coding
 mistakes.
 The goal of this document is to inform developers about how to properly
-write code for (Open)Kore.
+write code for OpenKore.
 
 
 
@@ -18,12 +18,15 @@ write code for (Open)Kore.
 ---------------
 a) Use Tabs, not spaces.
 b) Put the bracket immediately after a statement or subroutine definition.
+c) Kore uses a naming style similar to. This means that function names:
+   - Start with a lowercase character.
+   - Use uppercase characters to mark the beginning of each word, except
+     the first one.
+   The usage of this naming style is also recommended for variables.
 c) Do not put a space between a function name and the argument list.
-d) Do not capitalize the first character of a name. Like: "$helloWorld",
-   not "$HelloWorld".
 
-Correct example for the above points:
-	sub foo {
+Correct example:
+	sub fooBar {
 		my $canProceed = $_[0];
 
 		if ($canProceed) {
@@ -35,7 +38,7 @@ Correct example for the above points:
 
 Wrong example:
 	sub
-	foo()
+	FooBar()
 	{
 		my $CanProceed = $_[0];
 		if ($CanProceed)
@@ -51,9 +54,7 @@ Wrong example:
 3. Variable definitions
 -----------------------
 Avoid global variables as much as possible. They are not automatically
-destroyed when not needed anymore, so they hog memory. A lot of memory
-leaks in Kore are caused by the use of global variables that really should
-have been local.
+destroyed when not needed anymore, so they hog memory.
 
 (!!) If the variable is only used temporary (only within one function or
 statement), make the variable local by defining it with "my". Example:
@@ -67,12 +68,12 @@ statement), make the variable local by defining it with "my". Example:
 	if ($switch eq "ABCD") {
 		my $level = unpack("S1", substr($msg, 0, 2));
 
-		print "/me uses Dummy Skill lv $level\n";
+		message "/me uses Dummy Skill lv $level\n";
 	}
 
 (!!) Within the AI() function, you may want to use shared variables
 between two blocks. Even so, try to avoid using global variables. Instead,
-use the $ai_v{'temp'} hash. This hash is destroyed every time you change a
+use the $ai_v{temp} hash. This hash is destroyed every time you change a
 map or re-login, so it's still better than using global variables.
 You shouldn't forget to manually destroy your variable when no longer needed.
 
@@ -80,28 +81,29 @@ Example:
 
 	# An imaginary block within the AI() function
 	if ($mobbed) {
-		if ($ai_v{'temp'}{'escape_chance'} >= 0.5) {
+		if ($ai_v{temp}{escape_chance} >= 0.5) {
 			# We tried running away before, but the chance
 			# was too low
 			useTeleport(1);
 
 			# Now we really don't need this variable anymore
-			undef $ai_v{'temp'}{'escape_chance'};
+			undef $ai_v{temp}{escape_chance};
 
 		} else {
 			# Calculate the chance to run away
-			$ai_v{'temp'}{'escape_chance'} = rand(1);
+			$ai_v{temp}{escape_chance} = rand(1);
 			unshift @ai_seq, "escape";
+			unshift @ai_seq_args, {};
 		}
 	}
 
 	if ($ai_seq[0] eq "escape") {
-		if ($ai_v{'temp'}{'escape_chance'} < 0.5) {
+		if ($ai_v{temp}{escape_chance} < 0.5) {
 			print "Running away!\n";
 			runAway();
 
 			# We don't need it anymore, so destroy it
-			undef $ai_v{'temp'}{'escape_chance'};
+			undef $ai_v{temp}{escape_chance};
 		}
 
 		# The chance to run away is too low. The current value
@@ -110,8 +112,13 @@ Example:
 	}
 
 
+4. Use message(), not print()
+-----------------------------
+See the documentation for Log.pm for more information.
+http://openkore.sourceforge.net/srcdoc/Log.html
 
-4. Comment your code
+
+5. Comment your code
 ---------------------
 Comments are important and often underestimated. In the long run, good
 comments will help you and potential contributors.
@@ -134,19 +141,24 @@ Example:
 b) You should put a comment before every function definition, describing
 what the function does, what parameters it accepts, and the function's
 return value. If the function's complex, add an example.
+The comment should start with a "##". This allows makedoc.pl to
+automatically generate HTML for the documentation.
 
 Examples:
 
-	# configModify(key, val)
+	##
+	# configModify(key, val, [silent])
 	# key: a key name.
 	# val: the new value.
+	# silent: if set to 1, do not print a message to the console.
 	#
-	# Changes the value of configuration key $key to $val. Both
-	# $config and config.txt are modified.
+	# Changes the value of the configuration variable $key to $val.
+	# %config and config.txt will be updated.
 	sub configModify {
 		...
 
 
+	##
 	# decrypt(r_msg, themsg)
 	# r_msg: a reference to a scalar.
 	# themsg: the message to decrypt.
@@ -162,52 +174,25 @@ Examples:
 		...
 
 
+	##
 	# distance(r_hash1, r_hash2)
 	# r_hash1, r_hash2: references to position hash tables.
 	# Returns: the distance as integer.
 	#
 	# Calculates the distance between r_hash1 and r_hash2.
+	# Both hash tables must have an 'x' and a 'y' key.
 	#
 	# Example:
-	# my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}},
-	#                     \%{$monsters{$ID}{'pos_to'}});
+	# # Calculates the distance between you an a monster
+	# my $dist = distance($chars[$config{char}]{pos_to},
+	#                     $monsters{$ID}{pos_to});
 	sub distance {
 		...
 
 
-5. Write a ChangeLog and NEWS entry
------------------------------------
-Most open source projects have a ChangeLog and a NEWS file.
-
-In the ChangeLog, you write down technical descriptions about your changes.
-That may include the files you changed, the functions you changed or added,
-new global variables, new AI sequences and how they work, etc.
-The ChangeLog is intended for *developers*, so everybody can see who wrote
-what. This is useful if we need to revert or recall something in the future.
-
-Example ChangeLog entry:
-
-	07 November 2003  FBW:
-
-		* skore.pl: new AI sequence "escape".
-		* encrypt(): support the new GravitySuperSecret encryption
-		  algorithm.
-		* control/timeouts.txt: new entry ai_escape_timeout.
-		* tools.cpp (DlLMain): check for correct DLL handle.
-
-
-In NEWS, you write down a brief, high-level overview of changes. NEWS
-is intended for users, who want to read what has changed in each release.
-You should also write down new config options so users can update their 
-config files correctly.
-
-Example NEWS entry:
-
-	Release 1.0.1:
-	* Support PVP packets.
-	* Bugfixes in the pathfinding algorithm.
-	* Support for Gravity's new GravitySuperSecret encryption algorithm.
-	* New config option: useSecretEncryption.
-
-	Release 1.0:
-	* First release. Renamed skore-revamped to OpenKore.
+6. Write a News entry
+---------------------
+In News.txt, you write down a brief, high-level overview of changes.
+News.txt is intended for users, who want to read what has changed in each
+release. You should also write down new config options so users can update
+their config files correctly.
