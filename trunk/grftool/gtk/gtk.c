@@ -1039,6 +1039,8 @@ main (int argc, char *argv[])
 	GtkTreeViewColumn *column;
 	GtkTreeSelection *selection;
 	GtkTooltips *tips;
+	GdkPixbuf *pixbuf;
+	#include "grftool-gtk.csource"
 
 	g_thread_init (NULL);
 	gtk_init (&argc, &argv);
@@ -1053,11 +1055,13 @@ main (int argc, char *argv[])
 	/* Manually set tooltips (libglade bug??) */
 	tips = gtk_tooltips_new ();
 	gtk_tooltips_set_tip (tips, W(open),
-		_("Open GRF file"), NULL);
+		_("Open GRF archive"), NULL);
 	gtk_tooltips_set_tip (tips, W(extract),
 		_("Extract all files or selected files"), NULL);
 	gtk_tooltips_set_tip (tips, W(preview_toggle),
 		_("Enable/disable preview of files"), NULL);
+	gtk_tooltips_set_tip (tips, W(about),
+		_("Show about box"), NULL);
 
 
 	/* Setup the file list model and widget */
@@ -1133,6 +1137,10 @@ main (int argc, char *argv[])
 	/* Show the GUI */
 	set_status (_("Click Open to open a GRF archive."));
 	busy_cursor = gdk_cursor_new (GDK_WATCH);
+	pixbuf = gdk_pixbuf_new_from_inline (sizeof (grftool_icon), grftool_icon,
+		FALSE, NULL);
+	gtk_window_set_icon (GTK_WINDOW (W(main)), pixbuf);
+
 	if (argv[1])
 		gtk_idle_add (idle_open, argv[1]);
 	gtk_widget_realize (W(main));
