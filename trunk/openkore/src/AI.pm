@@ -42,6 +42,23 @@ sub clear {
 	undef @ai_seq_args;
 }
 
+sub aiRemove {
+	my $ai_type = shift;
+	my $index;
+	while (1) {
+		$index = binFind(\@ai_seq, $ai_type);
+		if ($index ne "") {
+			if ($ai_seq_args[$index]{'destroyFunction'}) {
+				&{$ai_seq_args[$index]{'destroyFunction'}}(\%{$ai_seq_args[$index]});
+			}
+			binRemoveAndShiftByIndex(\@ai_seq, $index);
+			binRemoveAndShiftByIndex(\@ai_seq_args, $index);
+		} else {
+			last;
+		}
+	}
+}
+
 sub suspend {
 	my $i = (defined $_[0] ? $_[0] : 0);
 	$ai_seq_args[$i]{suspended} = time if $i < @ai_seq_args;
@@ -65,6 +82,10 @@ sub inQueue {
 		$found++ if defined binFind(\@ai_seq, $_);
 	}
 	return $found;
+}
+
+sub isIdle {
+	return $ai_seq[0] eq "";
 }
 
 return 1;

@@ -14,7 +14,6 @@ NOTES:
 - The attack routing behavior has changed. It's recommended that you
   lower your attackDistance to 1.5.
 
-
 New features:
 - X-Kore works on Windows 98/ME now!
 - Properly recognizes advanced seconds classes.
@@ -66,6 +65,7 @@ New config options:
   want your vendbot to be spammed by people using skills in town
 - dcOnDisconnect : If kore gets disconnected from the server, it will exit.
 - ignoreInvalidLogin : ignore Missing Account Error
+- teleportAuto_sp: for those acolytes thats low on sp
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.

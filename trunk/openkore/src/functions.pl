@@ -2481,12 +2481,6 @@ sub AI {
 		}
 	}
 
-	##### DELAYED-TELEPORORT #####
-
-	if (AI::v->{temp}{teleport}{lv}) {
-		useTeleport(AI::v->{temp}{teleport}{lv});
-	}
-
 	##### TALK WITH NPC ######
 	NPCTALK: {
 		last NPCTALK if ($ai_seq[0] ne "NPC");
@@ -2575,48 +2569,68 @@ sub AI {
 		}
 	}
 
+	##### DEAD #####
+	if (AI::action eq "dead" && !$char->{dead}) {
+		AI::dequeue;
 
-	#####STORAGE GET#####
+		if ($char->{resurrected}) {
+			# We've been resurrected
+			$char->{resurrected} = 0;
+
+		} else {
+			# Force storage after death
+			AI::queue("storageAuto") if ($config{'storageAuto'});
+		}
+
+	} elsif (AI::action ne "dead" && $char->{'dead'}) {
+		AI::clear();
+		AI::queue("dead");
+	}
+
+	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
+		sendRespawn(\$remote_socket);
+		$char->{'dead_time'} = time;
+	}
+
+	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
+		message "Disconnecting on death!\n";
+		$quit = 1;
+	}
+
+	##### STORAGE GET #####
 	# Get one or more items from storage.
+	if (AI::action eq "storageGet" && timeOut(AI::args) && $storage{opened}) {
+		my $item = AI::args->{items}[0];
+		my $amount = AI::args->{max};
 
-	if ($ai_seq[0] eq "storageGet" && timeOut($ai_seq_args[0])) {
-		my $item = $ai_seq_args[0]{'items'}[0];
-		my $amount = $ai_seq_args[0]{'max'};
-
-		if (!$amount || $amount > $storage{$storageID[$item]}{'amount'}) {
-			$amount = $storage{$storageID[$item]}{'amount'};
+		if (!$amount || $amount > $storage{$storageID[$item]}{amount}) {
+			$amount = $storage{$storageID[$item]}{amount};
 		}
-		sendStorageGet(\$remote_socket, $storage{$storageID[$item]}{'index'}, $amount);
-		shift @{$ai_seq_args[0]{'items'}};
-		$ai_seq_args[0]{'time'} = time;
-
-		if (@{$ai_seq_args[0]{'items'}} <= 0) {
-			shift @ai_seq;
-			shift @ai_seq_args;
-		}
+		sendStorageGet(\$remote_socket, $storage{$storageID[$item]}{index}, $amount);
+		shift @{AI::args->{items}};
+		AI::args->{time} = time;
+		AI::dequeue if (@{AI::args->{'items'}} <= 0);
 	}
 
-
-	#####DROPPING#####
+	##### DROPPING #####
 	# Drop one or more items from inventory.
+	if (AI::action eq "drop" && timeOut(AI::args)) {
+		my $item = AI::args->{'items'}[0];
+		my $amount = AI::args->{max};
 
-	if ($ai_seq[0] eq "drop" && timeOut($ai_seq_args[0])) {
-		my $item = $ai_seq_args[0]{'items'}[0];
-		my $amount = $ai_seq_args[0]{'max'};
-
-		if (!$amount || $amount > $chars[$config{'char'}]{'inventory'}[$item]{'amount'}) {
-			$amount = $chars[$config{'char'}]{'inventory'}[$item]{'amount'};
+		if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
+			$amount = $char->{inventory}[$item]{amount};
 		}
-		sendDrop(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$item]{'index'}, $amount);
-		shift @{$ai_seq_args[0]{'items'}};
-		$ai_seq_args[0]{'time'} = time;
-
-		if (@{$ai_seq_args[0]{'items'}} <= 0) {
-			shift @ai_seq;
-			shift @ai_seq_args;
-		}
+		sendDrop(\$remote_socket, $char->{inventory}[$item]{index}, $amount);
+		shift @{AI::args->{items}};
+		AI::args->{time} = time;
+		AI::dequeue if (@{AI::args->{'items'}} <= 0);
 	}
 
+	##### DELAYED-TELEPORT #####
+	if (AI::v->{temp}{teleport}{lv}) {
+		useTeleport(AI::v->{temp}{teleport}{lv});
+	}
 
 	#storageAuto - chobit aska 20030128
 	#####AUTO STORAGE#####
@@ -3062,57 +3076,27 @@ sub AI {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
 			}
 			ai_route($config{'lockMap'}, $config{'lockMap_x'}, $config{'lockMap_y'},
-				attackOnRoute => $config{'attackAuto_inLockOnly'} ? 1 : 2);
+				attackOnRoute => $config{'attackAuto_inLockOnly'} ? 0 : 1);
 		}
 	}
 	undef $ai_v{'temp'}{'lockMap_coords'};
 
 
 	##### RANDOM WALK #####
-	if ($config{'route_randomWalk'} && $ai_seq[0] eq "" && @{$field{'field'}} > 1 && !$cities_lut{$field{'name'}.'.rsw'}) {
+	if ($config{route_randomWalk} && AI::isIdle && @{$field{field}} > 1 && !$cities_lut{$field{name}.'.rsw'}) {
 		# Find a random block on the map that we can walk on
+		my $randX, $randY;
 		do { 
-			$ai_v{'temp'}{'randX'} = int(rand() * ($field{'width'} - 1));
-			$ai_v{'temp'}{'randY'} = int(rand() * ($field{'height'} - 1));
-		} while ($field{'field'}[$ai_v{'temp'}{'randY'}*$field{'width'} + $ai_v{'temp'}{'randX'}]);
+			$randX = int(rand() * ($field{width} - 1));
+			$randY = int(rand() * ($field{height} - 1));
+		} while ($field{field}[$randY*$field{width} + $randX]);
 
 		# Move to that block
-		message "Calculating random route to: $maps_lut{$field{'name'}.'.rsw'}($field{'name'}): $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'}\n", "route";
-		ai_route($field{'name'}, $ai_v{'temp'}{'randX'}, $ai_v{'temp'}{'randY'},
-			maxRouteTime => $config{'route_randomWalk_maxRouteTime'},
+		message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";
+		ai_route($field{name}, $randX, $randY,
+			maxRouteTime => $config{route_randomWalk_maxRouteTime},
 			attackOnRoute => 2);
 	}
-
-	##### DEAD #####
-
-
-	if (AI::action eq "dead" && !$char->{dead}) {
-		AI::dequeue;
-
-		if ($char->{resurrected}) {
-			# We've been resurrected
-			$char->{resurrected} = 0;
-
-		} else {
-			# Force storage after death
-			AI::queue("storageAuto") if ($config{'storageAuto'});
-		}
-
-	} elsif (AI::action ne "dead" && $char->{'dead'}) {
-		AI::clear();
-		AI::queue("dead");
-	}
-
-	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
-		sendRespawn(\$remote_socket);
-		$char->{'dead_time'} = time;
-	}
-
-	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
-		message "Disconnecting on death!\n";
-		$quit = 1;
-	}
-
 
 	##### AUTO-ITEM USE #####
 
@@ -3947,7 +3931,7 @@ sub AI {
 
 	##### AUTO-EQUIP #####
 
-	if ((AI::action eq "" || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || $AI::v->{teleport}{lv})
+	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,skill_use,take,items_gather,items_take,attack", AI::action) || $AI::v->{teleport}{lv})
 		&& timeOut($timeout{ai_item_equip_auto})) {
 
 		my $ai_index_attack = AI::find("attack");
@@ -4559,7 +4543,6 @@ sub AI {
 		}
 	}
 
-
 	##### AUTO-TELEPORT #####
 	TELEPORT: {
 	my $map_name_lu = $field{name}.'.rsw';
@@ -4575,8 +4558,7 @@ sub AI {
 	}
 
 	##### TELEPORT HP #####
-	if ((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp} && scalar ai_getAggressives())
-		|| ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))
+	if (((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))
 		&& $ai_teleport_safe 
 		&& timeOut(\%{$timeout{ai_teleport_hp}})) {
 		useTeleport(1);
@@ -4651,6 +4633,7 @@ sub AI {
 	}
 	} # end of block teleport
 
+
 	##### AUTO RESPONSE #####
 
 	if (AI::action eq "respAuto" && time >= $nextresptime) {
@@ -4668,30 +4651,27 @@ sub AI {
 		AI::dequeue;
 	}
 
-	##### AVOID GM OR PLAYERS #####
 
-	if (timeOut(\%{$timeout{'ai_avoidcheck'}})) {
-		if ($config{'avoidGM_near'} && (!$config{'avoidGM_near_inTown'} || !$cities_lut{$field{'name'}.'.rsw'})) {
-			avoidGM_near ();
-		}
-		if ($config{'avoidList'}) {
-			avoidList_near ();
-		}
-		$timeout{'ai_avoidcheck'}{'time'} = time;
+	##### AVOID GM OR PLAYERS #####
+	if (timeOut(\%{$timeout{ai_avoidcheck}})) {
+		avoidGM_near() if ($config{avoidGM_near} && (!$config{avoidGM_near_inTown} || !$cities_lut{$field{name}.'.rsw'}));
+		avoidList_near() if $config{avoidList};
+		$timeout{ai_avoidcheck}{time} = time;
 	}
+
 
 	##### SEND EMOTICON #####
 	SENDEMOTION: {
-		my $index = binFind(\@ai_seq, "sendEmotion");
-		last SENDEMOTION if ($index eq "" || time < $ai_seq_args[$index]{'timeout'});
-		sendEmotion(\$remote_socket, $ai_seq_args[$index]{'emotion'});
-		aiRemove ("sendEmotion");
+	my $ai_sendemotion_index = AI::find("sendEmotion");
+	last SENDEMOTION if (!defined $ai_sendemotion_index || time < AI::args->{timeout});
+	sendEmotion(\$remote_socket, AI::args->{emotion});
+	aiRemove("sendEmotion");
 	}
 
 
 	##### AUTO SHOP OPEN #####
 
-	if ($config{shopAuto_open} && AI::action eq "" && $conState == 5 && !$char->{sitting} && timeOut(\%{$timeout{ai_shop}})) {
+	if ($config{shopAuto_open} && AI::isIdle && $conState == 5 && !$char->{sitting} && timeOut(\%{$timeout{ai_shop}})) {
 		openShop();
 	}
 
@@ -8208,11 +8188,10 @@ sub ai_drop {
 	my $max = shift;
 	my %seq = ();
 
-	$seq{'items'} = \@{$r_items};
-	$seq{'max'} = $max;
-	$seq{'timeout'} = 1;
-	unshift @ai_seq, "drop";
-	unshift @ai_seq_args, \%seq;
+	$seq{items} = \@{$r_items};
+	$seq{max} = $max;
+	$seq{timeout} = 1;
+	AI::queue("drop", \%seq);
 }
 
 sub ai_follow {
@@ -8717,11 +8696,10 @@ sub ai_storageGet {
 	my $max = shift;
 	my %seq = ();
 
-	$seq{'items'} = \@{$r_items};
-	$seq{'max'} = $max;
-	$seq{'timeout'} = 0.15;
-	unshift @ai_seq, "storageGet";
-	unshift @ai_seq_args, \%seq;
+	$seq{items} = \@{$r_items};
+	$seq{max} = $max;
+	$seq{timeout} = 0.15;
+	AI::queue("storageGet", \%seq);
 }
 
 ##
