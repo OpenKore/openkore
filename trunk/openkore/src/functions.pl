@@ -311,7 +311,6 @@ sub mainLoop {
 	if ($config{'autoConfChange'} && $config{'autoConfChange_files'} && $conState == 5
 	 && time >= $nextConfChangeTime && !AI::inQueue(qw/attack take items_take/)) {
 	 	my ($file, @files);
-	 	my ($oldMasterHost, $oldMasterPort, $oldUsername, $oldChar);
 
 		# Choose random config file
 		@files = split(/ /, $config{'autoConfChange_files'});
@@ -319,10 +318,9 @@ sub mainLoop {
 		message "Changing configuration file (from \"$Settings::config_file\" to \"$file\")...\n", "system";
 
 		# A relogin is necessary if the host/port, username or char is different
-		$oldMasterHost = $config{"master_host_$config{'master'}"};
-		$oldMasterPort = $config{"master_port_$config{'master'}"};
-		$oldUsername = $config{'username'};
-		$oldChar = $config{'char'};
+		my $oldMaster = $masterServers{$config{'master'}};
+		my $oldUsername = $config{'username'};
+		my $oldChar = $config{'char'};
 
 		foreach (@Settings::configFiles) {
 			if ($_->{file} eq $Settings::config_file) {
@@ -333,8 +331,9 @@ sub mainLoop {
 		$Settings::config_file = $file;
 		parseDataFile2($file, \%config);
 
-		if ($oldMasterHost ne $config{"master_host_$config{'master'}"}
-		 || $oldMasterPort ne $config{"master_port_$config{'master'}"}
+		my $master = $masterServers{$config{'master'}};
+		if ($oldMaster->{ip} ne $master->{ip}
+		 || $oldMaster->{port} ne $master->{port}
 		 || $oldUsername ne $config{'username'}
 		 || $oldChar ne $config{'char'}) {
 			relog();
@@ -3361,6 +3360,7 @@ sub AI {
 			}
 
 			my $routeIndex = AI::findAction("route");
+			$routeIndex = AI::findAction("mapRoute") if (!defined $routeIndex);
 			my $attackOnRoute;
 			if (defined $routeIndex) {
 				$attackOnRoute = AI::args($routeIndex)->{attackOnRoute};

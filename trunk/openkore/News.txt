@@ -11,6 +11,8 @@
   you are playing, even if you equip accessories that grant skills.
   If you previously made aliases for manually triggering skills, you will
   have to edit them to use the new skill numbers.
+- All server-specific information is now stored in servers.txt. The
+  master_* config options are now obsolete.
 
 
 New features:
