@@ -13,12 +13,14 @@ use Time::HiRes qw(sleep);
 use File::Spec;
 use Fcntl ':flock';
 
+use Globals qw(%config);
 use IPC::Client;
 use IPC::Server;
 
 my $lockFile = File::Spec->catfile(File::Spec->tmpdir(), "KoreServer");
 my $lockHandle;
 my $server;
+$config{debug} = 1;
 
 sub __start {
 	my $feedback;
@@ -96,6 +98,7 @@ sub __start {
 
 
 	#### Main loop ####
+	$server->addListener(\&on_new_client);
 	while (1) {
 		foreach my $msg ($server->iterate) {
 			process($msg);
@@ -104,10 +107,37 @@ sub __start {
 	}
 }
 
+# Process messages that the client sent to us.
+# Some messages are special, and are for the manager server. Process those.
+# Broadcast everything else throughout the network.
 sub process {
 	my $msg = shift;
-	print "Message: $msg->[0]\n";
+	print "Message: $msg->{ID} (from client $msg->{clientID})\n";
+
+	if ($msg->{ID} eq "_LIST-CLIENTS") {
+		my %params;
+		my $i = 0;
+		foreach ($server->clients) {
+			if ($_ ne $msg->{clientID}) {
+				$params{"client$i"} = $_;
+				$i++;
+			}
+		}
+		$params{count} = $i;
+		$server->send($msg->{clientID}, "_LIST-CLIENTS", \%params);
+
+	} else {
+		$server->broadcast($msg->{clientID}, $msg->{ID}, $msg->{params});
+	}
 }
+
+sub on_new_client {
+	my ($context, $clientID) = @_;
+	return unless $context eq "connect";
+
+	$server->send($clientID, "_WELCOME", { ID => $clientID });
+}
+
 
 sub locked {
 	my $file = shift;

@@ -36,7 +36,7 @@ our @EXPORT = (
 	# Math
 	qw(calcPosition distance getVector moveAlongVector normalize vectorToDegree),
 	# OS-specific
-	qw(launchApp launchScript),
+	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP parseArgs swrite timeConvert timeOut
@@ -615,12 +615,36 @@ sub vectorToDegree {
 ################################
 
 ##
-# launchApp(args...)
-# args: The application's name and arguments.
-# Returns: a PID on Unix; an object created by Win32::Process::Create() on Windows.
+# checkLaunchApp(pid)
+# pid: the return value of launchApp() or launchScript()
+# Returns: 1 if the app is still running, 0 if it has exited.
+#
+# If you ran a script or an app asynchronously, you can use this function to check
+# whether it's currently still running.
+#
+# See also: launchApp(), launchScript()
+sub checkLaunchedApp {
+	my $pid = shift;
+	if ($^O eq 'MSWin32') {
+		return $pid->Wait(0);
+	} else {
+		import POSIX ':sys_wait_h';
+		my $wnohang = eval "WNOHANG";
+		return (waitpid($pid, $wnohang) <= 0);
+	}
+}
+
+##
+# launchApp(detach, args...)
+# detach: set to 1 if you don't care when this application exits.
+# args: the application's name and arguments.
+# Returns: a PID on Unix; a Win32::Process object on Windows.
 #
 # Asynchronously launch an application.
+#
+# See also: checkLaunchedApp()
 sub launchApp {
+	my $detach = shift;
 	if ($^O eq 'MSWin32') {
 		my @args = @_;
 		foreach (@args) {
@@ -635,18 +659,28 @@ sub launchApp {
 	} else {
 		require POSIX;
 		import POSIX;
-
 		my $pid = fork();
-		if ($pid == 0) {
-			open(STDOUT, "> /dev/null");
-			open(STDERR, "> /dev/null");
-			POSIX::setsid();
-			if (fork() == 0) {
-				exec(@_);
+
+		if ($detach) {
+			if ($pid == 0) {
+				open(STDOUT, "> /dev/null");
+				open(STDERR, "> /dev/null");
+				POSIX::setsid();
+				if (fork() == 0) {
+					exec(@_);
+				}
+				POSIX::_exit(1);
+			} elsif ($pid) {
+				waitpid($pid, 0);
 			}
-			POSIX::_exit(1);
-		} elsif ($pid) {
-			waitpid($pid, 0);
+		} else {
+			if ($pid == 0) {
+				open(STDOUT, "> /dev/null");
+				open(STDERR, "> /dev/null");
+				POSIX::setsid();
+				exec(@_);
+				POSIX::_exit(1);
+			}
 		}
 		return $pid;
 	}
@@ -658,8 +692,11 @@ sub launchApp {
 # module_paths: reference to an array which contains paths to look for modules, or undef.
 # script: filename of the Perl script.
 # args: parameters to pass to the script.
+# Returns: a PID on Unix, a Win32::Process object on Windows.
 #
 # Run a Perl script.
+#
+# See also: launchApp(), checkLaunchedApp()
 sub launchScript {
 	my $async = shift;
 	my $module_paths = shift;
@@ -680,7 +717,7 @@ sub launchScript {
 	}
 
 	if ($async) {
-		launchApp(@interp, @paths, $script, @_);
+		return launchApp(0, @interp, @paths, $script, @_);
 	} else {
 		system(@interp, @paths, $script, @_);
 	}

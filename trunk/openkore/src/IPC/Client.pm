@@ -46,6 +46,11 @@ sub new {
 	return \%client;
 }
 
+sub DESTROY {
+	my $self = shift;
+	$self->{sock}->close if ($self->{sock});
+}
+
 ##
 # $ipc_client->send(ID, hash | key => value)
 sub send {

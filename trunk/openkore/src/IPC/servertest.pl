@@ -27,7 +27,7 @@ while (1) {
 		if (@args == 4) {
 			my %hash;
 			$hash{$args[2]} = $args[3];
-			$ipc->broadcast($args[1], \%hash);
+			$ipc->broadcast(undef, $args[1], \%hash);
 			print "Broadcasted message $args[1]\n";
 		} else {
 			print "Usage: b (ID) (KEY) (VALUE)\n";
@@ -39,11 +39,10 @@ while (1) {
 		print "Available commands: b, quit\n";
 	}
 
-	foreach (@messages) {
-		my ($ID, $hash) = @{$_};
-		print "Incoming message from client: $ID\n";
-		foreach (keys %{$hash}) {
-			print "$_ = $$hash{$_}\n";
+	foreach my $msg (@messages) {
+		print "Incoming message from client $msg->{clientID}: $msg->{ID}\n";
+		foreach (keys %{$msg->{params}}) {
+			print "$_ = $msg->{params}{$_}\n";
 		}
 		print "--------\n";
 	}
