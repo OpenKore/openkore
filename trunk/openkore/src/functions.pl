@@ -4273,10 +4273,10 @@ sub AI {
 	}
 	if ($config{itemsTakeAuto} && AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
 		my $foundID;
-		my $dist, $dist_to;
+		my ($dist, $dist_to);
 		
 		foreach (@itemsID) {
-			next if ($_ eq "" || $itemsPickup{lc($items{$_}{name})} eq "0" || (!$itemsPickup{all} && !$itemsPickup{lc($items{$_}{name})}));
+			next if ($_ eq "" || $itemsPickup{lc($items{$_}{name})} eq "0" || $itemsPickup{lc($items{$_}{name})} == -1 || (!$itemsPickup{all} && !$itemsPickup{lc($items{$_}{name})}));
 			$dist = distance(\%{$items{$_}{pos}}, AI::args->{pos});
 			$dist_to = distance(\%{$items{$_}{pos}}, AI::args->{pos_to});
 			if (($dist <= 4 || $dist_to <= 4) && $items{$_}{take_failed} == 0) {
@@ -4313,7 +4313,7 @@ sub AI {
 			next if ($item eq ""
 				|| time - $items{$item}{appear_time} < $timeout{ai_items_gather_start}{timeout}
 				|| $items{$item}{take_failed} >= 1
-				|| $itemsPickup{lc($items{$item}{name})} eq "0" || (!$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})}));
+				|| $itemsPickup{lc($items{$item}{name})} eq "0" || $itemsPickup{lc($items{$item}{name})} == -1 || (!$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})}));
 
 			my $found = 0;
 			foreach (@ai_gather_playerID) {
@@ -5832,6 +5832,12 @@ sub parseMsg {
 		}
 		$items{$ID}{'pos'}{'x'} = $x;
 		$items{$ID}{'pos'}{'y'} = $y;
+
+		# Take item as fast as possible
+		if ($itemsPickup{lc($items{$ID}{name})} == 2 && distance($items{$ID}{pos}, $char->{pos_to}) <= 5) {
+			sendTake(\$remote_socket, $ID);
+		}
+
 		message "Item Appeared: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n", "drop", 1;
 
 	} elsif ($switch eq "00A0") {
@@ -5871,6 +5877,13 @@ sub parseMsg {
 			($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 			$disp .= " ($map_string)\n";
 			itemLog($disp);
+
+			# Auto-drop item
+			$item = $char->{inventory}[$invIndex];
+			if ($itemsPickup{lc($items_lut{$item->{nameID}})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
+				sendDrop(\$remote_socket, $item->{index}, $amount);
+				message "Auto-dropping item: $item->{name} ($invIndex) x $amount\n", "drop";
+			}
 
 		} elsif ($fail == 6) {
 			message "Can't loot item...wait...\n", "drop";
