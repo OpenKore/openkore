@@ -1,3 +1,6 @@
+- Don't immediately reconnect if connecting to master server times out.
+
+
 ==================
 ### OpenKore 1.0.0
 ==================
