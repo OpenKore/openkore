@@ -5099,7 +5099,7 @@ sub parseMsg {
 				$portals{$ID}{'binID'} = binFind(\@portalsID, $ID);
 			}
 			%{$portals{$ID}{'pos'}} = %coords;
-			message "Portal Exists: $portals{$ID}{'name'} - ($portals{$ID}{'binID'})\n", "portals", 1;
+			message "Portal Exists: $portals{$ID}{'name'} ($coords{x}, $coords{y}) - ($portals{$ID}{'binID'})\n", "portals", 1;
 
 		} elsif ($type < 1000) {
 			if (!%{$npcs{$ID}}) {
@@ -5789,9 +5789,7 @@ sub parseMsg {
 			$items{$ID}{'appear_time'} = time;
 			$items{$ID}{'amount'} = $amount;
 			$items{$ID}{'nameID'} = $type;
-			$display = ($items_lut{$items{$ID}{'nameID'}} ne "") 
-				? $items_lut{$items{$ID}{'nameID'}}
-				: "Unknown ".$items{$ID}{'nameID'};
+			$display = itemName($items{$ID});
 			$items{$ID}{'binID'} = binFind(\@itemsID, $ID);
 			$items{$ID}{'name'} = $display;
 		}
@@ -5811,9 +5809,7 @@ sub parseMsg {
 			$items{$ID}{'appear_time'} = time;
 			$items{$ID}{'amount'} = $amount;
 			$items{$ID}{'nameID'} = $type;
-			$display = ($items_lut{$items{$ID}{'nameID'}} ne "") 
-				? $items_lut{$items{$ID}{'nameID'}}
-				: "Unknown ".$items{$ID}{'nameID'};
+			$display = itemName($items{$ID});
 			$items{$ID}{'binID'} = binFind(\@itemsID, $ID);
 			$items{$ID}{'name'} = $display;
 		}
@@ -7858,7 +7854,7 @@ sub parseMsg {
 				$portals{$ID}{'binID'} = binFind(\@portalsID, $ID);
 			}
 			%{$portals{$ID}{'pos'}} = %coords;
-			message "Portal Exists: $portals{$ID}{'name'} - ($portals{$ID}{'binID'})\n", "portals", 1;
+			message "Portal Exists: $portals{$ID}{'name'} ($coords{x}, $coords{y}) - ($portals{$ID}{'binID'})\n", "portals", 1;
 
 		} elsif ($type < 1000) {
 			if (!%{$npcs{$ID}}) {
