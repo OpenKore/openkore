@@ -6172,6 +6172,7 @@ sub parseMsg {
 			$item->{index} = $index;
 			$item->{nameID} = $ID;
 			$item->{amount} = 1;
+			$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 			$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
 			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
 			$item->{cards} = substr($msg, $i + 12, 8);
@@ -9840,8 +9841,12 @@ sub itemName {
 		push(@cards, $card);
 		($cards{$card} ||= 0) += 1;
 	}
-	if ($cards[0] == 255) {
-		# Forged item
+	if ($cards[0] == 254) {
+		# Alchemist-made potion
+		#
+		# Ignore the "cards" inside.
+	} elsif ($cards[0] == 255) {
+		# Forged weapon
 		#
 		# Display e.g. "VVS Earth" or "Fire"
 		my $elementID = $cards[1] % 10;
@@ -9866,7 +9871,7 @@ sub itemName {
 	$display .= "+$item->{upgrade} " if $item->{upgrade};
 	$display .= $prefix if $prefix;
 	$display .= $name;
-	$display .= " [$suffix]" if ($suffix && $item->{type} >= 3);
+	$display .= " [$suffix]" if $suffix;
 	$display .= " [$numSlots]" if $numSlots;
 
 	return $display;

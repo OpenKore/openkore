@@ -72,6 +72,9 @@ Bug fixes:
 - MO_BODYRELOCATION is now recognized as an area-usage skill.
 - Don't display "level 65535" when an area-usage skill is used.
 - Incoming Request to join Guild message now displays guild name.
+- Alchemist potions aren't called [?254] anymore.
+- Cards in equipment in storage weren't being displayed.
+- $item->{type} is now set correctly for equipment in storage.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
