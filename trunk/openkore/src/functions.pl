@@ -3847,8 +3847,8 @@ sub AI {
 
 		} elsif (!$ai_v{'ai_attack_cleanMonster'}) {
 			# Drop target if it's already attacked by someone else
-			print "Dropping target - no kill steal\n"; 
-			injectMessage("Dropping target - no kill steal") if ($config{'verbose'} && $config{'XKore'});
+			print "Dropping target - you will not kill steal others\n"; 
+			injectMessage("Dropping target - you will not kill steal others") if ($config{'verbose'} && $config{'XKore'});
 			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
 			sendAttackStop(\$remote_socket);
 			shift @ai_seq;
@@ -3942,7 +3942,11 @@ sub AI {
 		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ID}{'attackedByPlayer'});
 
 		if (!$ai_v{'ai_attack_cleanMonster'}) {
+			print "Dropping target - you will not kill steal others\n"; 
+			injectMessage("Dropping target - you will not kill steal others") if ($config{'verbose'} && $config{'XKore'});
 			sendAttackStop(\$remote_socket);
+			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
+
 			shift @ai_seq;
 			shift @ai_seq_args;
 			if ($ai_seq[0] eq "route") {
@@ -6051,12 +6055,14 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 			binRemove(\@itemsID, $ID);
 		}
 
-	} elsif ($switch eq "00A3") {
+	} elsif ($switch eq "00A3" || $switch eq "01EE") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
+		my $psize = ($switch eq "00A3") ? 10 : 18;
 		undef $invIndex;
-		for($i = 4; $i < $msg_size; $i+=10) {
+
+		for($i = 4; $i < $msg_size; $i += $psize) {
 			$index = unpack("S1", substr($msg, $i, 2));
 			$ID = unpack("S1", substr($msg, $i + 2, 2));
 			$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
@@ -11280,8 +11286,10 @@ sub updateDamageTables {
 						$ID2 eq $ai_v{'temp'}{'ai_follow_ID'}
 					)); 
 			} else {
-				$monsters{$ID1}{'attackedByPlayer'} = 1 unless ($config{'attackAuto_followTarget'}
-					&& $ai_v{'temp'}{'ai_follow_following'} && $ID2 eq $ai_v{'temp'}{'ai_follow_ID'});
+				$monsters{$ID1}{'attackedByPlayer'} = 1 unless (
+					($config{'attackAuto_followTarget'} && $ai_v{'temp'}{'ai_follow_following'} && $ID2 eq $ai_v{'temp'}{'ai_follow_ID'})
+					|| $monsters{$ID1}{'attackedYou'}
+				);
 			}
 		}
 		
