@@ -74,7 +74,7 @@ sub initMapChangeVars {
 	$timeout{'ai_sync'}{'time'} = time;
 	$timeout{'ai_sit_idle'}{'time'} = time;
 	$timeout{'ai_teleport_idle'}{'time'} = time;
-	$timeout{'ai_teleport_search'}{'time'} = time;
+	$AI::Timeouts::teleSearch = time;
 	$timeout{'ai_teleport_safe_force'}{'time'} = time;
 	undef %incomingDeal;
 	undef %outgoingDeal;
@@ -1519,15 +1519,10 @@ sub AI {
 		foreach (keys %portals_old) {
 			delete $portals_old{$_} if (time - $portals_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
 		}
-		$timeout{'ai_wipe_check'}{'time'} = time;
-		debug "Wiped old\n", "ai", 2;
-	}
 
-	if (timeOut($timeout{'ai_getInfo'})) {
 		# Remove players that are too far away; sometimes they don't get
 		# removed from the list for some reason
 		foreach (keys %players) {
-			next if $_ eq '';
 			if (distance($char->{pos_to}, $players{$_}{pos_to}) > 35) {
 				delete $players{$_};
 				binRemove(\@playersID, $_);
@@ -1535,6 +1530,11 @@ sub AI {
 			}
 		}
 
+		$timeout{'ai_wipe_check'}{'time'} = time;
+		debug "Wiped old\n", "ai", 2;
+	}
+
+	if (timeOut($timeout{'ai_getInfo'})) {
 		while (@unknownObjects) {
 			my $ID = $unknownObjects[0];
 			my $object = $players{$ID} || $npcs{$ID};
@@ -4149,8 +4149,8 @@ sub AI {
 					${$args->ret} = 'cancelled' if ($args->ret);
 
 				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
-				  && ((timeOut($args->{ai_skill_use_giveup}) && (!$char->{time_cast} || !$args->{skill_use_maxCastTime}{timeout}))
-				      || ($args->{skill_use_maxCastTime}{timeout} && timeOut($args->{skill_use_maxCastTime})))
+				  && ( (timeOut($args->{ai_skill_use_giveup}) && (!$char->{time_cast} || !$args->{skill_use_maxCastTime}{timeout}) )
+				      || ( $args->{skill_use_maxCastTime}{timeout} && timeOut($args->{skill_use_maxCastTime})) )
 				) {
 					AI::dequeue;
 					${$args->ret} = 'timeout' if ($args->ret);
@@ -4614,8 +4614,8 @@ sub AI {
 			stand();
 		} elsif ($found == 0 && $dist > 2) {
 			my %vec, %pos;
-			getVector(\%vec, \%{$items{$ID}{pos}}, \%{$char->{pos_to}});
-			moveAlongVector(\%pos, \%{$char->{pos_to}}, \%vec, $dist - 1);
+			getVector(\%vec, $items{$ID}{pos}, $char->{pos_to});
+			moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - 1);
 			move($pos{x}, $pos{y});
 		} elsif ($found == 0) {
 			AI::dequeue;
@@ -4721,9 +4721,8 @@ sub AI {
 		}
 
 		##### TELEPORT HP #####
-		if (((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))
-		  && $safe 
-		  && timeOut($timeout{ai_teleport_hp})) {
+		if ($safe && timeOut($timeout{ai_teleport_hp})
+		  && ((($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) || ($config{teleportAuto_sp} && percent_sp($char) <= $config{teleportAuto_sp})) && scalar(ai_getAggressives()) || ($config{teleportAuto_minAggressives} && scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}))) {
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_hp}{time} = time;
@@ -4731,27 +4730,27 @@ sub AI {
 		}
 
 		##### TELEPORT MONSTER #####
-		if (timeOut(\%{$timeout{ai_teleport_away}}) && $safe) {
+		if ($safe && timeOut($timeout{ai_teleport_away})) {
 			foreach (@monstersID) {
 				next unless $_;
 				if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
 					useTeleport(1);
 					$ai_v{temp}{clear_aiQueue} = 1;
-					$timeout{ai_teleport_search}{time} = time;
+					$AI::Timeouts::teleSearch = time;
 					last TELEPORT;
 				}
 			}
-			$timeout{'ai_teleport_away'}{'time'} = time;
+			$timeout{ai_teleport_away}{time} = time;
 		}
 
 		##### TELEPORT SEARCH #####
-		if ($config{'attackAuto'} && $config{'teleportAuto_search'} && safe
+		if ($safe && $config{'attackAuto'} && $config{'teleportAuto_search'}
 		&& ($field{name} eq $config{'lockMap'} || $config{'lockMap'} eq "")) {
 			if (AI::inQueue(qw/clientSuspend sitAuto sitting attack follow items_take items_gather take buyAuto skill_use sellAuto storageAuto/)) {
-				$timeout{ai_teleport_search}{time} = time;
+				$AI::Timeouts::teleSearch = time;
 			}
 
-			if (timeOut($timeout{ai_teleport_search})) {
+			if (timeOut($AI::Timeouts::teleSearch, $timeout{ai_teleport_search}{time})) {
 				my $do_search;
 				foreach (values %mon_control) {
 					if ($_->{teleport_search}) {
@@ -4770,18 +4769,17 @@ sub AI {
 					}
 					if (!$found) {
 						useTeleport(1);
-						$timeout{ai_teleport_search}{time} = time;
 						$ai_v{temp}{clear_aiQueue} = 1;
-						$timeout{ai_teleport_search}{time} = time;
+						$AI::Timeouts::teleSearch = time;
 						last TELEPORT;
 					}
 				}
 
-				$timeout{ai_teleport_search}{time} = time;
+				$AI::Timeouts::teleSearch = time;
 			}
 
 		} else {
-			$timeout{ai_teleport_search}{time} = time;
+			$AI::Timeouts::teleSearch = time;
 		}
 
 
@@ -4790,16 +4788,16 @@ sub AI {
 			$timeout{ai_teleport_idle}{time} = time;
 		}
 
-		if ($config{teleportAuto_idle} && $safe && timeOut($timeout{ai_teleport_idle})){
+		if ($safe && $config{teleportAuto_idle} && timeOut($timeout{ai_teleport_idle})){
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_idle}{time} = time;
 			last TELEPORT;
 		}
 
-		if ($config{teleportAuto_portal} && $safe
+		if ($safe && $config{teleportAuto_portal}
 		  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
-		  && timeOut($timeout{'ai_teleport_portal'})) {
+		  && timeOut($timeout{ai_teleport_portal})) {
 			if (scalar(@portalsID)) {
 				useTeleport(1);
 				$ai_v{temp}{clear_aiQueue} = 1;
