@@ -1106,7 +1106,20 @@ sub sendSell {
 	my $msg = pack("C*", 0xC9, 0x00, 0x08, 0x00) . pack("S*", $index, $amount);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent sell: $index x $amount\n", "sendPacket", 2;
-	
+}
+
+sub sendSellBulk {
+	my $r_socket = shift;
+	my $r_array = shift;
+	my $sellMsg = "";
+
+	for (my $i = 0; $i < @{$r_array}; $i++) {
+		$sellMsg .= pack("S*", $r_array->[$i]{index}, $r_array->[$i]{amount});
+		debug "Sent bulk sell: $r_array->[$i]{index} x $r_array->[$i]{amount}\n", "d_sendPacket", 2;
+	}
+
+	my $msg = pack("C*", 0xC9, 0x00) . pack("S*", length($sellMsg) + 4) . $sellMsg;
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendSit {

@@ -2457,8 +2457,11 @@ sub AI {
 				$args->{nextItem} = 0 unless $args->{nextItem};
 				for (my $i = $ai_seq_args[0]{'nextItem'}; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
 					next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
-					if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'}
-						&& $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'}) {
+					my $store = $items_control{'all'}{'storage'};
+					$store = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
+					my $keep = $items_control{'all'}{'keep'};
+					$keep = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
+					if ($store && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $keep) {
 						if ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $chars[$config{'char'}]{'inventory'}[$i]{'index'}
 							&& timeOut(\%{$timeout{'ai_storageAuto_giveup'}})) {
 							last AUTOSTORAGE;
@@ -2610,8 +2613,11 @@ sub AI {
 			$ai_seq_args[0]{'done'} = 1;
 			for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
 				next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
-				if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'}
-					&& $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'}) {
+				my $sell = $items_control{'all'}{'sell'};
+				$sell = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
+				my $keep = $items_control{'all'}{'keep'};
+				$keep = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
+				if ($sell && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $keep) {
 					if ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $chars[$config{'char'}]{'inventory'}[$i]{'index'}
 						&& timeOut(\%{$timeout{'ai_sellAuto_giveup'}})) {
 						last AUTOSELL;
@@ -2787,7 +2793,9 @@ sub AI {
 				my $item = $inventory->[$i];
 				next unless ($item);
 
-				my $control = $items_control{lc($item->{name})};
+				my $control = $items_control{'all'};
+				$control = $items_control{lc($item->{name})} if ($items_control{lc($item->{name})});
+
 				if ($control->{cart_add} && $item->{amount} > $control->{keep} && !$item->{equipped}) {
 					my %obj;
 					$obj{index} = $i;
@@ -2802,7 +2810,8 @@ sub AI {
 			for (my $i = 0; $i < $max; $i++) {
 				my $cartItem = $cartInventory->[$i];
 				next unless ($cartItem);
-				my $control = $items_control{lc($cartItem->{name})};
+				my $control = $items_control{'all'};
+				$control = $items_control{lc($cartItem->{name})} if ($items_control{lc($cartItem->{name})});
 				next unless ($control->{cart_get});
 
 				my $invIndex = findIndexString_lc($inventory, "name", $cartItem->{name});
@@ -9030,8 +9039,11 @@ sub ai_route_getRoute {
 sub ai_sellAutoCheck {
 	for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
 		next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
-		if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'}
-			&& $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'}) {
+		my $sell = $items_control{'all'}{'sell'};
+		$sell = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
+		my $keep = $items_control{'all'}{'keep'};
+		$keep = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
+		if ($sell && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $keep) {
 			return 1;
 		}
 	}
@@ -9081,7 +9093,11 @@ sub ai_storageAutoCheck {
 	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
 		my $slot = $char->{inventory}[$i];
 		next if (!$slot || $slot->{equipped});
-		if ($items_control{lc($slot->{name})}{storage} && $slot->{amount} > $items_control{lc($slot->{name})}{keep}) {
+		my $store = $items_control{'all'}{'storage'};
+		$store = $items_control{lc($slot->{name})}{'storage'} if ($items_control{lc($slot->{name})});
+		my $keep = $items_control{'all'}{'keep'};
+		$keep = $items_control{lc($slot->{name})}{'keep'} if ($items_control{lc($slot->{name})});
+		if ($store && $slot->{amount} > $keep) {
 			return 1;
 		}
 	}

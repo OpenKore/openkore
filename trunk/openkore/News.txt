@@ -21,7 +21,11 @@ New features:
   /* indicates the beginning of a comment, and */ indicates the end.
 - AI sequence will now be cleared when switching characters due to
   autoConfChange.
-- beepOnChat also affects emotions.
+- items_control.txt can now have an 'all' option, just like pickupitems.txt.
+  Example:
+  # Store everything but nippers; keep nippers in inventory
+  nipper 0 0 0
+  all 0 1 0
 - teleportAuto_[hp|sp|minAggressives] will now print a message when it is
   triggered.
 
@@ -42,6 +46,7 @@ Internal:
 
 Credits:
 - asuwannarat, as2765324: tRO server details.
+- MindChild: support for the 'all' option in items_control.txt
 
 
 ==================
