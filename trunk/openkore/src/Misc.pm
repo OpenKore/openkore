@@ -351,7 +351,7 @@ sub charSelectScreen {
 	if ($mode eq "create") {
 		my $message = "Please enter the desired properties for your characters, in this form:\n" .
 				"(slot) \"(name)\" [(str) (agi) (vit) (int) (dex) (luk)]\n";
-		message($message, "input") if ($input2 ne "");
+		message($message, "input") if ($input2 eq "");
 
 		while (!$quit) {
 			my $input;
@@ -378,7 +378,7 @@ sub charSelectScreen {
 	} elsif ($mode eq "delete") {
 		my $message = "Enter the number of the character you want to delete, and your email,\n" .
 				"in this form: (slot) (email address)\n";
-		message $message, "input" unless($input2 ne "");
+		message $message, "input" unless($input2 eq "");
 
 		while (!$quit) {
 			my $input;

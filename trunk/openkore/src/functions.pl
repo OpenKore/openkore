@@ -111,6 +111,8 @@ sub initMapChangeVars {
 	undef %guild;
 	undef %incomingGuild;
 	undef @unknownPlayers;
+	undef @chatRoomsID;
+	undef %chatRooms;
 
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
@@ -4099,33 +4101,60 @@ sub AI {
 	}
 
 	if (AI::action eq "skill_use") {
-		if (exists AI::args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, AI::args->{skill_use_id}) eq "" && timeOut(AI::args->{ai_equipAuto_skilluse_giveup})) {
+		my $args = AI::args;
+		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skill_use_id}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
 			warning "Timeout equiping for skill\n";
 			AI::dequeue;
+			${$args->ret} = 'equip timeout' if ($args->ret);
 
 		} else {
-			my $skillIDNumber = $skillsID_rlut{lc($skills_lut{AI::args->{skill_use_id}})};
-			if (defined AI::args->{monsterID} && !defined $monsters{AI::args->{monsterID}}) {
+			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
 				# This skill is supposed to be used for attacking a monster, but that monster has died
 				AI::dequeue;
-	
+				${$args->ret} = 'target gone' if ($args->ret);
+
 			} elsif ($char->{sitting}) {
-				AI::suspend();
+				AI::suspend;
 				stand();
 
-			} elsif (!AI::args->{skill_used}) {
-				AI::args->{skill_used} = 1;
-				AI::args->{ai_skill_use_giveup}{time} = time;
-				if (AI::args->{skill_use_target_x} ne "") {
-					sendSkillUseLoc(\$remote_socket, $skillIDNumber, AI::args->{skill_use_lv}, AI::args->{skill_use_target_x}, AI::args->{skill_use_target_y});
-				} else {
-					sendSkillUse(\$remote_socket, $skillIDNumber, AI::args->{skill_use_lv}, AI::args->{skill_use_target});
+			# Use skill if we haven't done so yet
+			} elsif (!$args->{skill_used}) {
+				my $handle = $args->{skill_use_id};
+				if (!defined $args->{skillID}) {
+					my $skill = new Skills(handle => $handle);
+					$args->{skillID} = $skill->id;
 				}
-				AI::args->{skill_use_last} = $char->{skills}{AI::args->{skill_use_id}}{time_used};
-	
-			} elsif ((AI::args->{skill_use_last} != $char->{skills}{AI::args->{skill_use_id}}{time_used} || (timeOut(AI::args->{ai_skill_use_giveup}) && (!$char->{time_cast} || !AI::args->{skill_use_maxCastTime}{timeout})) || (AI::args->{skill_use_maxCastTime}{timeout} && timeOut(AI::args->{skill_use_maxCastTime})))
-				&& timeOut(AI::args->{skill_use_minCastTime})) {
-				AI::dequeue;
+				my $skillID = $args->{skillID};
+				
+
+				$args->{skill_used} = 1;
+				$args->{ai_skill_use_giveup}{time} = time;
+
+				if ($args->{skill_use_target_x} ne "") {
+					sendSkillUseLoc(\$remote_socket, $skillID, $args->{skill_use_lv}, $args->{skill_use_target_x}, $args->{skill_use_target_y});
+				} else {
+					sendSkillUse(\$remote_socket, $skillID, $args->{skill_use_lv}, $args->{skill_use_target});
+				}
+				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
+
+				delete $char->{time_cast_cancelled};
+
+			} elsif (timeOut($args->{skill_use_minCastTime})) {
+				if ($args->{skill_use_last} != $char->{skills}{$args->{skill_use_id}}{time_used}) {
+					AI::dequeue;
+					${$args->ret} = 'ok' if ($args->ret);
+
+				} elsif ($char->{time_cast_cancelled} > $char->{time_cast}) {
+					AI::dequeue;
+					${$args->ret} = 'cancelled' if ($args->ret);
+
+				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
+				  && ((timeOut($args->{ai_skill_use_giveup}) && (!$char->{time_cast} || !$args->{skill_use_maxCastTime}{timeout}))
+				      || ($args->{skill_use_maxCastTime}{timeout} && timeOut($args->{skill_use_maxCastTime})))
+				) {
+					AI::dequeue;
+					${$args->ret} = 'timeout' if ($args->ret);
+				}
 			}
 		}
 	}
@@ -6071,10 +6100,6 @@ sub parseMsg {
 					}
 				}
 				message("$status $msg\n", $damage > 0 ? "attacked" : "attackedMiss");
-				# FIXME: This assumes that if you're attacked, the spell
-				# you were casting got stopped. But what about Phen card,
-				# Endure, Sacrifice, dodge, etc.?
-				undef $char->{time_cast};
 			} else {
 				debug("$msg\n", 'parseMsg_damage');
 			}
@@ -7544,9 +7569,11 @@ sub parseMsg {
 		message "Skill $skillsID_lut{$skillID} failed ($failtype{$type})\n", "skill";
 
 	} elsif ($switch eq "01B9") {
-		# cast is cancelled
+		# Cast is cancelled
 		my $skillID = unpack("S1", substr($msg, 2, 2));
-		my $name = Skills->new(id => $skillID)->name;
+		my $skill = new Skills(id => $skillID);
+		my $name = $skill->name;
+		$char->{time_cast_cancelled} = time;
 		debug "Casting of skill $name has been cancelled.\n", "parseMsg";
 
 	} elsif ($switch eq "0114" || $switch eq "01DE") {
@@ -8099,7 +8126,9 @@ sub parseMsg {
 
 		# Perform trigger actions
 		if ($sourceID eq $accountID) {
-			$chars[$config{'char'}]{'time_cast'} = time;
+			$char->{time_cast} = time;
+			$char->{time_cast_wait} = $wait / 1000;
+			delete $char->{time_cast_cancelled};
 		}
 
 		countCastOn($sourceID, $targetID, $skillID, $x, $y);
@@ -9012,6 +9041,7 @@ sub ai_skillUse {
 	my $target = shift;
 	my $y = shift;
 	my $tag = shift;
+	my $ret = shift;
 	my %args;
 	$args{ai_skill_use_giveup}{time} = time;
 	$args{ai_skill_use_giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
@@ -9022,6 +9052,7 @@ sub ai_skillUse {
 	$args{skill_use_minCastTime}{time} = time;
 	$args{skill_use_minCastTime}{timeout} = $minCastTime;
 	$args{tag} = $tag;
+	$args{ret} = $ret;
 	if ($y eq "") {
 		$args{skill_use_target} = $target;
 	} else {
@@ -10272,16 +10303,23 @@ sub useTeleport {
 		}
 		$i++;
 	}
+
+	if ($level == 1) {
+		warning "You don't have the Teleport skill or a Fly Wing\n";
+	} else {
+		warning "You don't have the Teleport skill or a Butterfly Wing\n";
+	}
 }
 
 # Keep track of when we last cast a skill
 sub setSkillUseTimer {
-	my ($skillID, $targetID) = @_;
+	my ($skillID, $targetID, $wait) = @_;
 	my $skill = new Skills(id => $skillID);
 	my $handle = $skill->handle;
 
 	$char->{skills}{$handle}{time_used} = time;
-	undef $char->{time_cast};
+	delete $char->{time_cast};
+	delete $char->{time_cast_cancelled};
 
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$skillID};
