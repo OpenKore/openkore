@@ -75,7 +75,12 @@ sub initConnectVars {
 sub initMapChangeVars {
 	@portalsID_old = @portalsID;
 	%portals_old = %portals;
-	%{$chars_old[$config{'char'}]{'pos_to'}} = %{$chars[$config{'char'}]{'pos_to'}};
+	foreach (@portalsID_old) {
+		next if (!$_ || !$portals_old{$_});
+		$portals_old{$_}{gone_time} = time if (!$portals_old{$_}{gone_time});
+	}
+
+	$chars_old[$config{'char'}]{pos_to} = {%{$chars[$config{'char'}]{pos_to}}};
 	delete $chars[$config{'char'}]{'sitting'};
 	delete $chars[$config{'char'}]{'dead'};
 	delete $chars[$config{'char'}]{'warp'};
@@ -1577,11 +1582,19 @@ sub AI {
 
 
 	if (timeOut($timeout{ai_wipe_check})) {
+		my $timeout = $timeout{ai_wipe_old}{timeout};
+
 		foreach (keys %players_old) {
-			delete $players_old{$_} if (time - $players_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
+			if (timeOut($players_old{$_}{'gone_time'}, $timeout)) {
+				delete $players_old{$_};
+				binRemove(\@playersID_old, $_);
+			}
 		}
 		foreach (keys %monsters_old) {
-			delete $monsters_old{$_} if (time - $monsters_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
+			if (timeOut($monsters_old{$_}{'gone_time'}, $timeout)) {
+				delete $monsters_old{$_};
+				binRemove(\@monstersID_old, $_);
+			}
 		}
 		foreach (keys %npcs_old) {
 			delete $npcs_old{$_} if (time - $npcs_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
@@ -1590,7 +1603,10 @@ sub AI {
 			delete $items_old{$_} if (time - $items_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
 		}
 		foreach (keys %portals_old) {
-			delete $portals_old{$_} if (time - $portals_old{$_}{'gone_time'} >= $timeout{'ai_wipe_old'}{'timeout'});
+			if (timeOut($portals_old{$_}{gone_time}, $timeout)) {
+				delete $portals_old{$_};
+				binRemove(\@portalsID_old, $_);
+			}
 		}
 
 		# Remove players that are too far away; sometimes they don't get
@@ -1599,7 +1615,6 @@ sub AI {
 			if (distance($char->{pos_to}, $players{$_}{pos_to}) > 35) {
 				delete $players{$_};
 				binRemove(\@playersID, $_);
-				next;
 			}
 		}
 
@@ -1788,7 +1803,7 @@ sub AI {
 			$field{name}, $destPos{x}, $destPos{y},
 			$sourceMap, $sourcePos{x}, $sourcePos{y});
 
-		debug "Portal recording successful\n", "portalRecord";
+		message "Recorded new portal: $sourceMap -> $field{name}\n", "portalRecord";
 	}
 
 	return if (!$AI);
@@ -6119,7 +6134,7 @@ sub parseMsg {
 
 		} elsif (%{$portals{$ID}}) {
 			debug "Portal Disappeared: $portals{$ID}{'name'} ($portals{$ID}{'binID'})\n", "parseMsg";
-			%{$portals_old{$ID}} = %{$portals{$ID}};
+			$portals_old{$ID} = {%{$portals{$ID}}};
 			$portals_old{$ID}{'disappeared'} = 1;
 			$portals_old{$ID}{'gone_time'} = time;
 			binRemove(\@portalsID, $ID);
@@ -6815,9 +6830,6 @@ sub parseMsg {
 					chatLog("k", "*** You have been muted for $val minutes, auto disconnect! ***\n");
 					quit();
 				} else {
-					#message "max = " . 0xFFFFFFFF . "\n";
-					#message "1   = " . $a . "\n";
-					#message "2   = " . abs($a) . "\n";
 					message "You've been muted for $val minutes\n";
 				}
 			}
