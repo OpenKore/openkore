@@ -9922,14 +9922,12 @@ sub useTeleport {
 	if (!$config{'teleportAuto_useItem'} && binFind(\@skillsID, 'AL_TELEPORT') ne "") {
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
 		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2);
-		
 		delete $ai_v{'temp'}{'teleport'};
 		
 	} elsif ($config{'teleportAuto_useItem'} && $invIndex ne "") {
 		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$invIndex]{'index'}, $accountID);
-		if ($level == 1) {
-			sendTeleport(\$remote_socket, "Random");
-		}
+		sendTeleport(\$remote_socket, "Random") if ($level == 1);
+		delete $ai_v{'temp'}{'teleport'};
 	}
 }
 
