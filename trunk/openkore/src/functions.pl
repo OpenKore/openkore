@@ -4705,6 +4705,7 @@ sub AI {
 					}
 					if (!$found) {
 						useTeleport(1);
+						$timeout{ai_teleport_search}{time} = time;
 						$ai_v{temp}{clear_aiQueue} = 1;
 						last TELEPORT;
 					}
@@ -8005,11 +8006,13 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 
 	} elsif ($switch eq "013E") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
-		$sourceID = substr($msg, 2, 4);
-		$targetID = substr($msg, 6, 4);
-		$x = unpack("S1",substr($msg, 10, 2));
-		$y = unpack("S1",substr($msg, 12, 2));
-		$skillID = unpack("S1",substr($msg, 14, 2));
+		my $sourceID = substr($msg, 2, 4);
+		my $targetID = substr($msg, 6, 4);
+		my $x = unpack("S1", substr($msg, 10, 2));
+		my $y = unpack("S1", substr($msg, 12, 2));
+		my $skillID = unpack("S1", substr($msg, 14, 2));
+		my $type = unpack("S1", substr($msg, 18, 2));
+		my $wait = unpack("L1", substr($msg, 20, 4));
 		my ($dist, %coords);
 
 		# Resolve source and target names
@@ -8030,7 +8033,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		}
 
 		countCastOn($sourceID, $targetID, $skillID, $x, $y);
-		message "$source $verb ".skillName($skillID)." on $target\n", "skill", 1;
+		message "$source $verb ".skillName($skillID)." on $target (time ${wait}ms)\n", "skill", 1;
 
 		# Skill Cancel
 		if ($AI && %{$monsters{$sourceID}} && $mon_control{lc($monsters{$sourceID}{'name'})}{'skillcancel_auto'}) {

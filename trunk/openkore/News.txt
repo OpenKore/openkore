@@ -64,6 +64,7 @@ New features:
   pkServer to 1.
 - TAB completion in Wx and Linux interface!!!
 - Input history support in Linux interface.
+- Spells being cast now show how long they take.
 
 mon_control.txt:
 - mon_control.txt has gained more features. The new syntax is:
@@ -138,6 +139,8 @@ Bug fixes:
 - When determining whether not to attack a monster due to it being too
   close to another player (to avoid KSing), exempt party members.
   Implemented in positionNearPlayer().
+- teleportAuto_search no longer spams the server with the teleport packet
+  many times per second.
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
