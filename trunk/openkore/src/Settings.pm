@@ -95,7 +95,7 @@ sub parseArguments {
 		print "--control=path             Use a different folder as control folder.\n";
 		print "--tables=path              Use a different folder as tables folder.\n";
 		print "--logs=path                Save log files in a different folder.\n";
-		print "--plugins=path             Look for plugins in specified folder.\n"
+		print "--plugins=path             Look for plugins in specified folder.\n";
 
 		print "\n";
 		print "--config=path/file         Which config.txt to use.\n";

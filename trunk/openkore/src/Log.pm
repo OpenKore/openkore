@@ -60,7 +60,8 @@
 # input			Waiting for user input
 # useItem		You used item
 # list			List of information (monster list, player list, item list, etc.)
-# load			Loading config files.
+# load			Loading config files
+# plugins		Messages about plugin handling
 # route			Routing/pathfinding messages
 # startup		Messages that are printed during startup.
 # success		An operation succeeded

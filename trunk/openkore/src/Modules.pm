@@ -48,8 +48,10 @@ sub register {
 		next if (! -f "$_.pm");
 
 		# Call the module's MODINIT() function when it's registered
-		my $initFunc = "${_}::MODINIT";
-		$initFunc->() if (defined(&{$initFunc}));
+		#my $initFunc = "${_}::MODINIT";
+		#$initFunc->() if (defined(&{$initFunc}));
+		# The above doesn't work in Win32 (??) so maybe this'll work:
+		eval "${_}::MODINIT()";
 
 		push @modules, $_;
 	}
