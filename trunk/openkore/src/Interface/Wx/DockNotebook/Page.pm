@@ -44,6 +44,7 @@ sub new {
 	$self->{show_buttons} = $show_buttons;
 
 	$vbox->Add($titlebar, 0, wxGROW);
+	$vbox->SetItemMinSize($titlebar, -1, $titlebar->{size});
 	$self->SetSizer($vbox);
 	return $self;
 }
@@ -86,6 +87,15 @@ sub onDetach {
 
 	$dock->closePage($self);
 	push @{$dock->{dialogs}}, $self;
+
+	$self->{child}->Layout;
+	$self->{child}->Fit;
+	my $size = $self->{child}->GetBestSize;
+	my $w = $size->GetWidth;
+	my $h = $size->GetHeight;
+	$w = 150 if ($w < 150);
+	$h = 150 if ($h < 150);
+	$dialog->SetClientSize($w, $h);
 }
 
 sub onDialogClose {
