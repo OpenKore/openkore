@@ -174,11 +174,11 @@ sub saveConfigFile {
 }
 
 ##
-# center(<string>,<width>[,<fill>])
-# 
-# This function will center <string> within a field <width> characters wide,
-# using <fill> characters for padding on either end of the string for
-# centering. If <fill> is not specified, a space will be used.
+# center(string, width, [fill])
+#
+# This function will center $string within a field $width characters wide,
+# using $fill characters for padding on either end of the string for
+# centering. If $fill is not specified, a space will be used.
 sub center {
 	my ($string, $width, $fill) = @_;
 
@@ -186,6 +186,19 @@ sub center {
 	my $left = int(($width - length($string)) / 2);
 	my $right = ($width - length($string)) - $left;
 	return $fill x $left . $string . $fill x $right;
+}
+
+##
+# checkFollowMode()
+# Returns: 1 if in follow mode, 0 if not.
+#
+# Check whether we're current in follow mode.
+sub checkFollowMode { 	 
+	my $followIndex;
+	if ($config{follow} && defined($followIndex = binFind(\@ai_seq, "follow"))) {
+		return 1 if ($ai_seq_args[$followIndex]{following});
+	}
+	return 0;
 }
 
 return 1;
