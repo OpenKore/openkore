@@ -8844,7 +8844,7 @@ sub parseMsg {
 
 		}
 
-	} elsif ($switch eq "01D0" || $switch eq "01E1"){
+	} elsif ($switch eq "01D0" || $switch eq "01E1") {
 		# Monk Spirits
 		my $sourceID = substr($msg, 2, 4);
 		my $spirits = unpack("S1", substr($msg, 6, 2));
