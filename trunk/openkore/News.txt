@@ -80,6 +80,7 @@ so people can easily see what config options have been added/changed)
   * warp (open warp portal)
 - Optimizations: some big memory leaks have been fixed. Loading fields
   is now 3 times faster.
+- Exp report by kokal
 
 
 ==================
