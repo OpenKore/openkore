@@ -1,4 +1,27 @@
 ==================
+### CVS
+==================
+
+- Fixed comma placement in formatNumber sub (its what puts the commas
+  in your zenny amount.
+- Implemented the ability to set your own npc storage steps.
+  It is based loosly off a combination of modKore and my old itemexchange code.
+  Two new config.txt variables.
+  autoStorage_npc_type and autoStorage_npc_steps
+  if autoStorage_npc_type is blank it will use the current steps (and display a warning)
+  			     1 it will use the current steps (c r1 n)
+  			     2 it will use the steps for the comodo npcs (c c r1 n)
+  			     3 it will use the steps defined in autoStorage_npc_steps
+  autoStorage_npc_steps is a (any number of) space(s) seperated list of commands to send
+  while attempting to store.
+  These commands consist of n which will send the cancel command
+  			    c which will send the continue command
+  			    r* which will send a responce where the responce number is *
+  			    (NOTE responce numbering starts at 0 (unlike it does if you
+  			    are using sendTalkResponse)) after training everyone to start
+  			    counting at 0, i thaught it best to preserve it ;)
+
+==================
 ### OpenKore 1.2.1
 ==================
 
