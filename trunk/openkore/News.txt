@@ -110,6 +110,21 @@ Credits:
 
 
 ==================
+### 1.4.7
+==================
+
+New features:
+- The Wx interface now supports input history. Use the up and down arrow
+  keys to retrieve commands that you typed previously.
+
+Bug fixes:
+- Fixed display of items with cards.
+- The map viewer now resizes properly when detached.
+- Don't autorestart while picking up items.
+- Win32 console interface: don't eat 100% CPU while waiting for input.
+
+
+==================
 ### 1.4.6
 ==================
 
