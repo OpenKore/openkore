@@ -6,7 +6,6 @@ libsprite:
 - Better documentation.
 
 Win32 Delphi frontend:
-- Column sort.
 - Support for previewing JPEG files?
 
 Win32 Delphi and GTK+ frontends:

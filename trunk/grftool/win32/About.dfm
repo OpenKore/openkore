@@ -1221,11 +1221,11 @@ object AboutBox: TAboutBox
         ParentFont = False
       end
       object Label2: TLabel
-        Left = 96
+        Left = 168
         Top = 35
-        Width = 187
+        Width = 113
         Height = 13
-        Caption = 'Version I'#39'm-Still-Working-On-This'
+        Caption = 'Version 0.9.0 (beta)'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11
