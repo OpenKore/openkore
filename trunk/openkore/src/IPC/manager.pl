@@ -141,6 +141,7 @@ sub process {
 	# Special messages
 	if ($ID eq "HELLO") {
 		$clients{$from}{userAgent} = $msg->{args}{userAgent};
+		$clients{$from}{wantGlobals} = exists($msg->{args}{wantGlobals}) ? $msg->{args}{wantGlobals} : 1;
 		$clients{$from}{ready} = 1;
 
 	} elsif ($ID eq "_LIST-CLIENTS") {
@@ -166,7 +167,7 @@ sub process {
 		# Broadcast the message to all clients except the sender,
 		# or clients that aren't done with handshaking yet
 		foreach my $clientID ($server->clients) {
-			next if ($clientID eq $from || !$clients{$clientID}{ready});
+			next if ($clientID eq $from || !$clients{$clientID}{ready} || !$clients{$clientID}{wantGlobals});
 			$msg->{args}{FROM} = $msg->{from};
 			$server->send($clientID, $ID, $msg->{args});
 		}

@@ -42,6 +42,16 @@ sub process {
 	}
 }
 
+sub sendMsg {
+	my $ipc = shift;
+	my $ID = shift;
+	my $to = shift;
+	my %hash = @_;
+
+	$hash{TO} = $to if (defined $to);
+	$ipc->send($ID, \%hash);
+}
+
 sub ipcMoveTo {
 	my ($ipc, $ID, $args) = @_;
 
@@ -54,17 +64,20 @@ sub ipcMoveTo {
 }
 
 sub ipcWhereAreYou {
-	my ($ipc, $ID) = @_;
-	return unless $conState == 5;
+	my ($ipc, $ID, $args) = @_;
 
-	my $pos = calcPosition($char);
-	$ipc->send("i am here",
-		charServer => $charServer,
-		name	=> $char->{name},
-		field	=> $field{name},
-		x	=> $pos->{x},
-		y	=> $pos->{y}
-	);
+	if ($conState == 5) {
+		my $pos = calcPosition($char);
+		sendMsg($ipc, "i am here", $args->{REPLY_TO},
+			charServer => $charServer,
+			name	=> $char->{name},
+			field	=> $field{name},
+			x	=> $pos->{x},
+			y	=> $pos->{y}
+		);
+	} else {
+		sendMsg($ipc, "i am here", $args->{REPLY_TO});
+	}
 }
 
 1;
