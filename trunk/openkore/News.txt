@@ -63,6 +63,7 @@ New features:
 - kRO/PK servers are now (partially?) supported. In config.txt, set
   pkServer to 1.
 - TAB completion in Wx and Linux interface!!!
+- Wx interface can now be minimized to tray.
 - Input history support in Linux interface.
 - Spells being cast now show how long they take.
 - Combo skill support.
