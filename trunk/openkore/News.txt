@@ -27,12 +27,14 @@ New config options:
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
+- writeDataFile*() won't write trailing spaces.
 
 Credits:
 - Joseph: -1 flag support in mon_control.txt
 - aputs: Support for the _monsters option in useSelf_skill, useSelf_item
   and partySkill.
 - obyarou: Priority attack support for non-aggressive monsters.
+- fov: writeDataFile*() tweaks
 
 
 ==================
