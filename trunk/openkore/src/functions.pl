@@ -8186,10 +8186,10 @@ sub parseMsg {
 		# Class change / monster type change
 		# 01B0 : long ID, byte WhateverThisIs, long type
 		my $ID = substr($msg, 2, 4);
-		my $type = unpack("L", substr($msg, 7, 4));
+		my $type = unpack("L1", substr($msg, 7, 4));
 
 		if ($monsters{$ID}) {
-			my $name = $monsters_lut{$type}{name};
+			my $name = $monsters_lut{$type} || "Unknown $type";
 			message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) changed to $name\n";
 			$monsters{$ID}{type} = $type;
 			$monsters{$ID}{name} = $name;

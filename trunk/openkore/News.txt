@@ -200,6 +200,7 @@ Bug fixes:
 - Warp Portal opening message now shows correct person name
 - Warn when user specified a useSelf_skill with an invalid name
   instead of trying to cast an empty skill ID
+- "Monster x changed to y" message no longer displays blank y
 
 Internal:
 - findIndex() and related functions are now much faster (bug #16).
