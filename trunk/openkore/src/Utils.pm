@@ -117,15 +117,15 @@ sub binRemove {
 	my $i;
 	for ($i = 0; $i < @{$r_array};$i++) {
 		if ($$r_array[$i] eq $ID) {
-			undef $$r_array[$i];
+			delete $$r_array[$i];
 			last;
 		}
 	}
 
-	my $last = @{$r_array} - 1;
-	if ($last >= 0 && !defined($$r_array[$last])) {
-		delete $$r_array[$last];
-	}
+	#my $last = @{$r_array} - 1;
+	#if ($last >= 0 && !defined($$r_array[$last])) {
+	#	delete $$r_array[$last];
+	#}
 }
 
 sub binRemoveAndShift {

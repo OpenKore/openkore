@@ -12,7 +12,9 @@ use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Digest::MD5 qw(md5);
 use Config;
+use Globals;
 use Log qw(message warning error debug);
+use Plugins;
 no utf8;
 
 
@@ -237,6 +239,8 @@ sub checkConnection {
 
 # Misc. main loop code
 sub mainLoop {
+	Plugins::callHook('mainLoop_pre');
+
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
 	 && $conState == 5 && $ai_seq[0] ne "attack" && $ai_seq[0] ne "take") {
 		message "\nAuto-restarting!!\n";
@@ -293,6 +297,8 @@ sub mainLoop {
 
 		initConfChange();
 	}
+
+	Plugins::callHook('mainLoop_post');
 }
 
 
@@ -2299,6 +2305,8 @@ sub AI {
 
 	##### REAL AI STARTS HERE #####
 
+	Plugins::callHook('AI_pre');
+
 	if (!$accountID) {
 		$AI = 0;
 		injectAdminMessage("Kore does not have enough account information, so AI has been disabled. Relog to enable AI.") if ($config{'verbose'});
@@ -3384,9 +3392,15 @@ sub AI {
 		shift @ai_seq;
 		shift @ai_seq_args;
 
-		#force storage after death
-		unshift @ai_seq, "storageAuto";
-		unshift @ai_seq_args, {};
+		if ($chars[$config{'char'}]{'resurrected'}) {
+			# We've been resurrected
+			$chars[$config{'char'}]{'resurrected'} = 0;
+
+		} else {
+			# Force storage after death
+			unshift @ai_seq, "storageAuto";
+			unshift @ai_seq_args, {};
+		}
 	} elsif ($ai_seq[0] ne "dead" && $chars[$config{'char'}]{'dead'}) {
 		undef @ai_seq;
 		undef @ai_seq_args;
@@ -5092,6 +5106,8 @@ sub parseSendMsg {
 	if ($sendMsg ne "") {
 		sendToServerByInject(\$remote_socket, $sendMsg);
 	}
+
+	Plugins::callHook('AI_post');
 }
 
 
@@ -6106,6 +6122,11 @@ sub parseMsg {
 
 		avoidGM_talk($privMsgUser, $privMsg);
 		avoidList_talk($privMsgUser, $privMsg);
+
+		Plugins::callHook('packet_privMsg', {
+			'privMsgUser' => $privMsgUser,
+			'privMsg' => $privMsg
+			});
 
 		# auto-response
 		if ($config{"autoResponse"}) {
@@ -7921,6 +7942,23 @@ sub parseMsg {
 		my $skillLv = unpack("S*",substr($msg, 8, 2)); 
       		print "Now use $skillsID_lut{$skillID}, level $skillLv\n"; 
       		sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
+
+	} elsif ($switch eq "0148") {
+		# 0148 ID:l type:w
+		my $targetID = substr($msg, 2, 4);
+		my $type = unpack("S1",substr($msg, 6, 2));
+
+		if ($type) {
+			if ($targetID eq $accountID) {
+				message("You have been resurrected\n", "info");
+				undef $chars[$config{'char'}]{'dead'};
+				undef $chars[$config{'char'}]{'dead_time'};
+				$chars[$config{'char'}]{'resurrected'} = 1;
+
+			} elsif (%{$players{$targetID}}) {
+				undef $players{$targetID}{'dead'};
+			}
+		}
 
         } elsif ($switch eq "0154") {
         	my $newmsg;

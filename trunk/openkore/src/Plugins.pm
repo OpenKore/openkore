@@ -26,12 +26,14 @@ no strict 'refs';
 use warnings;
 use Exporter;
 use Settings;
+use Utils;
 use Log;
 
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(loadAll load unload register registered);
+our @EXPORT_OK = qw(loadAll load unload register registered addHook delHook callHook);
 
 our @plugins;
+our %hooks;
 
 
 ##
@@ -93,6 +95,22 @@ sub unload {
 
 
 ##
+# Plugins::unloadAll
+#
+# Unloads all registered plugins.
+sub unloadAll {
+	my $name = shift;
+	foreach my $plugin (@plugins) {
+		$plugin->{'unload_callback'}->();
+		undef %{$plugin};
+	}
+	undef @plugins;
+	@plugins = ();
+	return 0;
+}
+
+
+##
 # Plugins::register(name, description, unload_callback, reload_callback)
 # name: The plugin's name.
 # description: A short one-line description of the plugin.
@@ -129,6 +147,52 @@ sub registered {
 		return 1 if ($_->{'name'} eq $name);
 	}
 	return 0;
+}
+
+
+##
+# addHook(hookname, r_func, user_data)
+# hookname: Name of the hook.
+# r_func: Reference to the function to call.
+# user_data: Additional data to pass to r_func.
+# Returns: An ID which can be used to remove this hook.
+#
+# TODO: Document this
+sub addHook {
+	my $hookname = shift;
+	my $r_func = shift;
+	my $user_data = shift;
+
+	my %hook = (
+		'r_func' => $r_func,
+		'user_data' => $user_data
+	);
+	$hooks{$hookname} = [] if (!defined $hooks{$hookname});
+	return binAdd($hooks{$hookname}, \%hook);
+}
+
+
+sub delHook {
+	my $hookname = shift;
+	my $ID = shift;
+	delete $hooks{$hookname}[$ID] if ($hooks{$hookname});
+}
+
+
+##
+# callHook(hookname, r_param)
+# hookname: Name of the hook.
+# r_param: A reference to a hash that will be passed to the hook functions.
+#
+# TODO: Document this
+sub callHook {
+	my $hookname = shift;
+	my $r_param = shift;
+	return if (!$hooks{$hookname});
+
+	foreach my $hook (@{$hooks{$hookname}}) {
+		$hook->{'r_func'}->($hookname, $r_param, $hook->{'user_data'});
+	}
 }
 
 

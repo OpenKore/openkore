@@ -19,7 +19,9 @@ use Getopt::Long;
 
 our @ISA = ("Exporter");
 our @EXPORT_OK = qw(parseArguments);
-our @EXPORT = qw($buildType %config %consoleColors);
+our @EXPORT = qw($buildType
+	%config %consoleColors %timeout
+	@parseFiles $parseFiles);
 
 
 # Constants
@@ -35,6 +37,7 @@ our $buildType;
 our $daemon;
 our %config;
 our %consoleColors;
+our %timeout;
 
 # Data files and folders
 our $control_folder;
@@ -48,6 +51,9 @@ our $chat_file;
 our $item_log_file;
 our $shop_file;
 
+our @parseFiles;
+our $parseFiles;
+
 
 BEGIN {
 	if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
@@ -59,6 +65,7 @@ BEGIN {
 
 sub MODINIT {
 	$daemon = 0;
+	$parseFiles = 0;
 	$control_folder = "control";
 	$tables_folder = "tables";
 	$logs_folder = "logs";
