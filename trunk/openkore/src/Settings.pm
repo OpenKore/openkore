@@ -20,7 +20,7 @@ use Getopt::Long;
 our @ISA = ("Exporter");
 our @EXPORT_OK = qw(parseArguments);
 our @EXPORT = qw($buildType
-	%config %consoleColors %timeout
+	%config %consoleColors %timeout %npcs_lut %maps_lut
 	@parseFiles $parseFiles);
 
 
@@ -38,6 +38,8 @@ our $daemon;
 our %config;
 our %consoleColors;
 our %timeout;
+our %npcs_lut;
+our %maps_lut;
 
 # Data files and folders
 our $control_folder;
