@@ -6050,7 +6050,7 @@ sub parseMsg {
 			message "You can't put on $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex)\n";
 		} else {
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'};
-			message "You equip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n";
+			message "You equip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n", 'inventory';
 		}
 
 	} elsif ($switch eq "00AC") {
@@ -6060,7 +6060,7 @@ sub parseMsg {
 		undef $invIndex;
 		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = "";
-		message "You unequip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n";
+		message "You unequip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n", 'inventory';
 
 	} elsif ($switch eq "00AF") {
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
