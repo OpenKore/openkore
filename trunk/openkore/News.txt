@@ -54,6 +54,16 @@
 
 
 ==================
+### OpenKore 1.0.1
+==================
+
+Bugfix release (iRO server changes on March 10 2004)
+- Inventory listing fixed.
+- Cart listing fixed.
+- Linux version now uses XS instead of C::DynaLib.
+
+
+==================
 ### OpenKore 1.0.0
 ==================
 
