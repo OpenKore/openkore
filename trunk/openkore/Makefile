@@ -4,7 +4,7 @@ CXXFLAGS=-Wall -O3 -funroll-loops -finline-functions -march=i586 -mcpu=i686
 VERSION=1.0.0
 DISTNAME=openkore-$(VERSION)
 DISTFILES=DevelopersNotes.txt Inject.cpp Tools.cpp Makefile Makefile.win32\
-	Inject.def Tools.def openkore.pl functions.pl
+	Inject.gccdef Tools.gccdef openkore.pl functions.pl
 
 .PHONY: all clean dist
 
