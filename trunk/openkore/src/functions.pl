@@ -490,10 +490,6 @@ sub parseCommand {
 		unshift @ai_seq, "storageAuto";
 		unshift @ai_seq_args, {};
 
-	} elsif ($switch eq "itemexchange") {
-		unshift @ai_seq, "itemExchange";
-		unshift @ai_seq_args, {};
-
 	} elsif ($switch eq "c") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
@@ -4628,22 +4624,26 @@ sub AI {
 	}
 	if (AI::action eq "items_take" && (percent_weight($char) >= $config{itemsMaxWeight})) {
 		AI::dequeue;
-		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout});
+		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout}) unless (ai_getAggressives());
 	}
 	if ($config{'itemsTakeAuto'} && AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
 		my $foundID;
 		my ($dist, $dist_to);
-		
+
 		foreach (@itemsID) {
-			next if ($_ eq "" || $itemsPickup{lc($items{$_}{name})} eq "0" || $itemsPickup{lc($items{$_}{name})} == -1 || (!$itemsPickup{all} && !$itemsPickup{lc($items{$_}{name})}));
-			$dist = distance(\%{$items{$_}{pos}}, AI::args->{pos});
-			$dist_to = distance(\%{$items{$_}{pos}}, AI::args->{pos_to});
+			next unless $_;
+			my $name = lc $items{$_}{name};
+			next if ($itemsPickup{$name} eq "0" || $itemsPickup{$name} == -1
+				|| ( !$itemsPickup{all} && !$itemsPickup{$name} ));
+
+			$dist = distance($items{$_}{pos}, AI::args->{pos});
+			$dist_to = distance($items{$_}{pos}, AI::args->{pos_to});
 			if (($dist <= 4 || $dist_to <= 4) && $items{$_}{take_failed} == 0) {
 				$foundID = $_;
 				last;
 			}
 		}
-		if ($foundID) {
+		if (defined $foundID) {
 			AI::args->{ai_items_take_end}{time} = time;
 			AI::args->{started} = 1;
 			take($foundID);
@@ -4655,37 +4655,23 @@ sub AI {
 
 	##### ITEMS AUTO-GATHER #####
 
-	if ((AI::isIdle || AI::is(qw/follow route mapRoute/))
-	  && $config{'itemsGatherAuto'}
-	  && percent_weight($char) < $config{'itemsMaxWeight'}
-	  && timeOut($timeout{ai_items_gather_auto})) {
+	if ( ( AI::isIdle || AI::is(qw/follow route mapRoute/) )
+	  && $config{'itemsGatherAuto'} && percent_weight($char) < $config{'itemsMaxWeight'}
+	  && timeOut($timeout{ai_items_gather_auto}) ) {
 
-		my @ai_gather_playerID;
-		foreach (@playersID) {
-			next if ($_ eq "");
-			if (!%{$char->{party}} || !%{$char->{party}{users}{$_}}) {
-				push @ai_gather_playerID, $_;
-			}
-		}
 		foreach my $item (@itemsID) {
 			next if ($item eq ""
-				|| time - $items{$item}{appear_time} < $timeout{ai_items_gather_start}{timeout}
+				|| !timeOut($items{$item}{appear_time}, $timeout{ai_items_gather_start}{timeout})
 				|| $items{$item}{take_failed} >= 1
-				|| $itemsPickup{lc($items{$item}{name})} eq "0" || $itemsPickup{lc($items{$item}{name})} == -1 || (!$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})}));
-
-			my $found = 0;
-			foreach (@ai_gather_playerID) {
-				if (distance($items{$item}{pos}, $players{$_}{pos_to}) < 12) {
-					$found = 1;
-					last;
-				}
-			}
-			if (!$found) {
+				|| $itemsPickup{lc($items{$item}{name})} eq "0"
+				|| $itemsPickup{lc($items{$item}{name})} == -1
+				|| ( !$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})} ) );
+			if (!positionNearPlayer($items{$item}{pos}, 12)) {
 				gather($item);
 				last;
 			}
 		}
-		$timeout{ai_items_gather_auto}{time} = time;
+		$timeout{ai_items_gather_auto} = time;
 	}
 
 
@@ -4702,40 +4688,33 @@ sub AI {
 
 	} elsif (AI::action eq "items_gather") {
 		my $ID = AI::args->{ID};
-		my $found = 0;
-		my @ai_gather_playerID;
-		
-		foreach (@playersID) {
-			next if ($_ eq "");
-			if (!%{$char->{party}} || !%{$char->{party}{users}{$_}}) {
-				push @ai_gather_playerID, $_;
-			}
+
+		if (AI::args->{walk_start}) {
+			undef AI::args->{walk_start};
+			AI::args->{ai_items_gather_giveup}{time} = time;
 		}
-		foreach (@ai_gather_playerID) {
-			if (distance(\%{$items{$ID}{pos}}, \%{$players{$_}{pos_to}}) < 12) {
-				$found++;
-				last;
-			}
-		}
-		my $dist = distance(\%{$items{$ID}{pos}}, \%{$char->{pos_to}});
-		if (timeOut(AI::args->{ai_items_gather_giveup})) {
-			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : Timeout\n",,1;
+
+		if (positionNearPlayer($items{$ID}{pos}, 12)) {
+			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : No looting!\n", undef, 1;
+			AI::dequeue;
+
+		} elsif (timeOut(AI::args->{ai_items_gather_giveup})) {
+			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : Timeout\n", undef, 1;
 			$items{$ID}{take_failed}++;
 			AI::dequeue;
+
 		} elsif ($char->{sitting}) {
 			AI::suspend();
 			stand();
-		} elsif ($found == 0 && $dist > 2) {
-			my %vec, %pos;
-			getVector(\%vec, $items{$ID}{pos}, $char->{pos_to});
-			moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - 1);
-			move($pos{x}, $pos{y});
-		} elsif ($found == 0) {
+
+		} elsif (distance($items{$ID}{pos}, calcPosition($char)) > 2) {
+			AI::args->{walk_start} = 1;
+			ai_route($field{name}, $items{$ID}{pos}{x}, $items{$ID}{pos}{y},
+				attackOnRoute => ($config{'itemsGatherAuto'} >= 2) ? 0 : 1);
+
+		} else {
 			AI::dequeue;
 			take($ID);
-		} elsif ($found > 0) {
-			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : No looting!\n",,1;
-			AI::dequeue;
 		}
 	}
 
@@ -9082,8 +9061,8 @@ sub ai_route {
 	$args{'time_start'} = time;
 
 	if (!$param{'_internal'}) {
-		undef @{$args{'solution'}};
-		undef @{$args{'mapSolution'}};
+		$args{'solution'} = [];
+		$args{'mapSolution'} = [];
 	} elsif (exists $param{'_solution'}) {
 		$args{'solution'} = $param{'_solution'};
 	}
@@ -9093,14 +9072,12 @@ sub ai_route {
 		# Since the solution array is here, we can start in "Route Solution Ready"
 		$args{'stage'} = 'Route Solution Ready';
 		debug "Route Solution Ready\n", "route";
-		unshift @ai_seq, "route";
-		unshift @ai_seq_args, \%args;
+		AI::queue("route", \%args);
 		return 1;
 	} else {
 		return 0 if ($param{noMapRoute});
 		# Nothing is initialized so we start scratch
-		unshift @ai_seq, "mapRoute";
-		unshift @ai_seq_args, \%args;
+		AI::queue("mapRoute", \%args);
 		return 1;
 	}
 }
@@ -9437,20 +9414,18 @@ sub gather {
 	$args{ai_items_gather_giveup}{time} = time;
 	$args{ai_items_gather_giveup}{timeout} = $timeout{ai_items_gather_giveup}{timeout};
 	$args{ID} = $ID;
-	%{$args{pos}} = %{$items{$ID}{pos}};
+	$args{pos} = { %{$items{$ID}{pos}} };
 	AI::queue("items_gather", \%args);
 	debug "Targeting for Gather: $items{$ID}{name} ($items{$ID}{binID})\n";
 }
 
 
 sub look {
-	my $body = shift;
-	my $head = shift;
-	my %args;
-	unshift @ai_seq, "look";
-	$args{'look_body'} = $body;
-	$args{'look_head'} = $head;
-	unshift @ai_seq_args, \%args;
+	my %args = (
+		look_body => shift,
+		look_head => shift
+	);
+	AI::queue("look", \%args);
 }
 
 sub move {
