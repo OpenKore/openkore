@@ -156,6 +156,7 @@ Internal:
   stripped down version of modKore's Vx mode.
 - Support packet 01D7 (Karasu).
 - New functions itemName() and itemNameSimple() to parse item info.
+- teleportAuto_portal bugfix by joseph.
 
 
 Special thanks:
