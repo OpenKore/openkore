@@ -11,7 +11,7 @@
 ##
 # MODULE DESCRIPTION: Logging framework
 #
-# <i>What is a logging framework and why is it needed?</i>
+# <h3>What is a logging framework and why is it needed?</h3>
 #
 # Kore prints messages to the console using print(). There are several
 # problems though:
@@ -235,7 +235,7 @@ sub processMsg {
 	# Call hooks
 	foreach (@hooks) {
 		next if (!defined($_));
-		$_->{'func'}->($type, $domain, $currentVerbosity, $message, $_->{'user_data'});
+		$_->{'func'}->($type, $domain, $level, $globalVerbosity, $message, $_->{'user_data'});
 	}
 }
 
@@ -328,6 +328,43 @@ sub debug {
 }
 
 
+##
+# Log::addHook(r_func, user_data)
+# r_func: A reference to the function to call.
+# user_data: Additional data to pass to r_func.
+# Returns: An ID which you can use to remove this hook.
+#
+# Adds a hook. Every time message(), warning(), error() or debug() is called,
+# r_func is also called, in the following way:
+# <pre>
+# r_func->($type, $domain, $level, $globalVerbosity, $message, $user_data);
+# $type : One of the following: "message", "warning", "error", "debug".
+# $domain : The message's domain.
+# $level : The message's own verbosity level.
+# $globalVerbosity : The global verbosity level.
+# $message : The message itself.
+# $user_data : The value of user_data, as passed to addHook.
+# </pre>
+#
+# See also: delHook()
+#
+# Example:
+# sub hook {
+# 	my $type = shift;		# "message"
+# 	my $domain = shift;		# "MyDomain"
+# 	my $level = shift;		# 2
+#	my $globalVerbosity = shift;	# 1 (equal to $config{'verbose'})
+#	my $message = shift;		# "Hello World"
+#	my $user_data = shift;		# "my_user_data"
+# 	# Do whatever you want here
+# }
+# Log::addHook(\&hook, "my_user_data");
+#
+# $config{'verbose'} = 1;
+# # Note that the following function will not print anything to screen,
+# # because it's verbosity level is higher than the global verbosity
+# # level ($config{'verbose'}).
+# Log::message("Hello World", "MyDomain", 2);  # hook() will now be called
 sub addHook {
 	my ($r_func, $user_data) = @_;
 	my %hook = ();
@@ -336,6 +373,17 @@ sub addHook {
 	return binAdd(\@hooks, \%hook);
 }
 
+##
+# Log::delHook(ID)
+# ID: A hook ID, as returned by addHook().
+#
+# Removes a hook. r_func will not be called anymore.
+#
+# Example:
+# my $ID = Log::addHook(\&hook);
+# Log::message("Hello World", "MyDomain");	# hook() is called
+# Log::delHook($ID);
+# Log::message("Hello World", "MyDomain");	# hook() is NOT called
 sub delHook {
 	my $ID = shift;
 	undef $hooks[$ID];

@@ -171,9 +171,7 @@ if ($found) {
 		$timeout{'compilePortals_auto'}{'time'} = time;
 		undef $msg;
 		while (!timeOut(\%{$timeout{'compilePortals_auto'}})) {
-			if (Input::canRead) {
-				$msg = Input::readLine();
-			}
+			$msg = Input::getInput(0);
 			last if $msg;
 		}
 		if ($msg =~ /y/ || $msg eq "") {
@@ -194,13 +192,13 @@ if ($found) {
 if (!$config{'XKore'}) {
 	if (!$config{'username'}) {
 		print "Enter Username:\n";
-		$msg = Input::readLine;
+		$msg = Input::getInput(1);
 		$config{'username'} = $msg;
 		writeDataFileIntact($config_file, \%config);
 	}
 	if (!$config{'password'}) {
 		print "Enter Password:\n";
-		$msg = Input::readLine;
+		$msg = Input::getInput(1);
 		$config{'password'} = $msg;
 		writeDataFileIntact($config_file, \%config);
 	}
@@ -219,7 +217,7 @@ if (!$config{'XKore'}) {
 		Log::message("-------------------------------\n", "connection");
 
 		print "Choose your master server:\n";
-		$msg = Input::readLine;
+		$msg = Input::getInput(1);
 		$config{'master'} = $msg;
 		writeDataFileIntact($config_file, \%config);
 	}
@@ -317,8 +315,7 @@ while ($quit != 1) {
 		}
 	}
 
-	if (Input::canRead) {
-		$input = Input::readLine();
+	if ($input = Input::getInput(1)) {
 		parseInput($input);
 
 	} elsif (!$config{'XKore'} && dataWaiting(\$remote_socket)) {
