@@ -33,6 +33,7 @@ selfchat green
 list white
 info white
 equip grey
+teleport yellow
 
 [error]
 default red
