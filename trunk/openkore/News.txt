@@ -6,6 +6,10 @@ New features:
 - X-Kore works on Windows 98/ME now!
 - Properly recognizes advanced seconds classes.
 - The console window title now displays useful information.
+- Rudimentary Abracadabra support. Set 'noAutoSkill 1' in config.txt,
+  then keep using 'ss' command to cast Abracadabra. If it says that you're
+  permitted to use Mono Cell, Summon Monster or Class Change, you can then
+  activate those skills using 'monocell <#>', 'monster' or 'mvp <#>'.
 
 Bug fixes:
 - "vender" command now properly detects the "end" argument. Bugfix by Fenris.
@@ -13,6 +17,10 @@ Bug fixes:
 
 Credits:
 - Fenris: Tk interface improvements.
+
+Internal:
+- Added AI.pm, which is a wrapper for @ai_seq and @ai_seq_args.
+- Added $char, an alias for $chars[$config{'char'}].
 
 
 ==================
