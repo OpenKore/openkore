@@ -1,0 +1,24 @@
+Revision history for Perl extension PathFinding.
+
+This file is kinda useless. It's been updated after Aug 18 2004
+but I just didn't bother updating it.
+
+1.0.0-2  Aug 18 2004
+	- Build system changes
+	- Change default timeout to 1500 msec
+
+1.0.0-1  Aug 02 2004
+	- More cleanups
+	- Revamped build system
+
+0.001_001  Sun Jul 25 03:45:00 2004
+	- Cleanups
+
+0.001_000  Sat Jul 24 17:25:00 2004
+	- Alpha release, all functions working, need path tests, initial
+	manual tests appear good.
+
+0.000_001  Thu Jul 22 20:33:01 2004
+	- original version; created by h2xs 1.23 with options
+		-BPA -b 5.6.0 -n Utils::Path::Intramap
+

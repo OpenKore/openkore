@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Setting up the development environment - OpenKore Development Introduction Guide</title>
+	<link rel="stylesheet" type="text/css" href="../openkore.css">
+	<link rel="stylesheet" type="text/css" href="../links.css">
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div id="title">OpenKore source code documentation</div>
+
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="../index.html">Table of contents</a></li>
+	<li><a href="index.html">Development Introduction Guide</a></li>
+	<li><b>Setting up the development environment</b></li>
+	</ul>
+</div>
+
+<div id="main">
+
+
+<a name="before"></a>
+<h2>Before you continue...</h2>
+
+Are you only looking for information about how to <i>run</i> OpenKore
+from source code?
+Then you should read <a href="cvsguide/run.html">this guide</a> instead.
+You can skip the rest of this page.
+
+
+<h2>Setting up the development environment</h2>
+
+This section teaches Windows developers how to setup the development environment.
+If you're a Linux developer you should already have Perl and GCC.
+All tools listed here are free. You don't necessarily have to use these 
+tools if you prefer other alternative tools, but this guide will only 
+teach you how to setup and use these tools.
+
+
+<a name="perl"></a>
+<h2>Step 1: ActiveState ActivePerl - the Win32 Perl interpreter</h2>
+
+<h3>1.1 - Installing the interpreter</h3>
+
+You need a Perl interpreter if you want to work on Kore.
+The best Perl interpreter for Win32 is probably ActivePerl:
+<a href="http://www.activestate.com/Products/ActivePerl/">http://www.activestate.com/Products/ActivePerl/</a>.
+You should download and install <i>version 5.8</i>. Install it to the default path (<tt>C:\perl</tt>).
+
+
+<h3>1.2 - Installing additional Perl modules</h3>
+
+Once it is installed, you must install additional <i>Perl modules</i> (think of them as third party libraries).
+These modules are not part of the default Perl installation. Kore requires this module:
+<ul style="font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;">
+<li>Time::HiRes</li>
+</ul>
+
+<p>
+Click <i>Start -&gt; Programs -&gt; ActiveState ActivePerl 5.8 &gt; Perl Package Manager</i>.
+You will now get a big DOS-like black window with a command prompt. Don't be scared by it - it isn't that hard to use.
+
+<p>
+Type in the following commands:
+<pre class="example">
+install Time-HiRes
+exit
+</pre>
+And that's it. If you don't get an error message, then you are done installing. If you do get an error message,
+you could ask the forum for help. Make sure you copy &amp; paste the entire output of Perl Package Manager.
+
+<p>
+<small><b>Note:</b> If you get <em>"Error: 500 Can't connect to ppm.ActiveState.com:80 (Bad hostname 'ppm.ActiveStat
+e.com')" messages</em>, then take a look at
+<a href="http://openkore.sourceforge.net/forum/viewtopic.php?t=1347">http://openkore.sourceforge.net/forum/viewtopic.php?t=1347</a>
+for more information about how to solve it.</small>
+
+
+<p style="margin-bottom: 1cm;"></p>
+<a name="gcc"></a>
+<h2>Step 2: GNU Compiler Collection (GCC) - the C++ compiler</h2>
+
+You only need a C++ compiler if you want to work on <tt>Tools.cpp</tt> and/or 
+<tt>Inject.cpp</tt>. If you aren't interested in them, you can skip this step.
+
+<p>
+GCC is a suite which contains a C and C++ compiler. It's originally meant 
+for Unix systems (and is the standard compiler for Linux), but Win32 
+ports are available. One of the Win32 ports is called Cygwin:
+<a href="http://sources.redhat.com/cygwin/">http://sources.redhat.com/cygwin/</a>
+
+<p>
+<h3>Installing Cygwin</h3>
+
+Download the installer from the Cygwin website and run it.
+After clicking Next a few times, it will ask you what components to install.
+Make sure the following components will be installed:
+<ul style="font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;">
+<li>bash</li>
+<li>gcc</li>
+<li>gcc-c++</li>
+<li>make</li>
+</ul>
+
+
+<!-- <p>
+There are two files in the OpenKore source code which help you compile Tools.cpp and Inject.cpp:
+<ul>
+<li>"Makefile.win32" : This is a makefile for Win32 GCC</li>
+<li>"Makefile" : This file is for Linux/Unix only.</li>
+</ul> -->
+
+
+<a name="editors"></a>
+<h2>Editors</h2>
+
+You can of course edit the source code in any text editor. It is, however, not recommended to use Notepad. Notepad doesn't
+support LF (Unix line endings; at least one of the developers develop OpenKore mainly in Linux)
+and doesn't support auto-indent.
+
+<p>
+For Windows, I hightly recommend <a href="http://www.crimsoneditor.com/">Crimson Editor</a>, a freeware general-purpose
+code editor which supports syntax highlighting for many languages (including Perl and C++).
+
+
+</div>
+</body>
+</html>
