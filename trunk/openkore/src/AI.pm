@@ -92,4 +92,11 @@ sub isIdle {
 	return $ai_seq[0] eq "";
 }
 
+sub is {
+	foreach (@_) {
+		return 1 if ($ai_seq[0] eq $_);
+	}
+	return 0;
+}
+
 return 1;
