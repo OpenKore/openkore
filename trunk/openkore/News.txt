@@ -8,6 +8,10 @@ Bug fixes:
 - Fix lockMap_randX/Y. lockMap_x/y acting as the top right corner of the
   rectangle. This is now treated as the center of the rectangle.
 
+New features:
+- Beginnings of code that will allow skill usage on non-partied players.
+  deltaHp condition added (currently useless to non-developers).
+
 ==================
 ### 1.6.0
 ==================

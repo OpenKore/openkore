@@ -3931,7 +3931,7 @@ sub AI {
 			for (my $j = 0; $j < @partyUsersID; $j++) {
 				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
 				if ($players{$partyUsersID[$j]}
-					&& inRange(distance(\%{$char->{pos_to}}, \%{$char->{party}{users}{$partyUsersID[$j]}{pos}}), $config{partySkillDistance} || "1..8")
+					&& inRange(distance(\%{$char->{pos_to}}, $players{$partyUsersID[$j]}{pos}), $config{partySkillDistance} || "1..8")
 					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $char->{party}{users}{$partyUsersID[$j]}{'name'}))
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
@@ -3955,7 +3955,12 @@ sub AI {
 
 		if ($config{useSelf_skill_smartHeal} && $party_skill{skillID} eq "AL_HEAL") {
 			my $smartHeal_lv = 1;
-			my $hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
+			my $hp_diff;
+			if ($char->{party}{users}{$party_skill{targetID}}{hp}) {
+				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
+			} else {
+				$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
+			}
 			for ($i = 1; $i <= $char->{skills}{$party_skill{skillID}}{lv}; $i++) {
 				my $sp_req, $amount;
 				
@@ -8086,6 +8091,7 @@ sub parseMsg {
 		my $extra = "";
 		if ($skillID == 28) {
 			$extra = ": $amount hp gained";
+			updateDamageTables($sourceID, $targetID, -$amount);
 		} elsif ($amount != 65535) {
 			$extra = ": Lv $amount";
 		}
@@ -8605,6 +8611,7 @@ sub parseMsg {
 
 		if ($targetID ne $accountID) {
 			message(getActorName($targetID)." has been resurrected\n", "info");
+			$players{$targetID}{deltaHp} = 0;
 		}
 
 	} elsif ($switch eq "0154") {
@@ -10197,6 +10204,21 @@ sub getGatField {
 
 sub updateDamageTables {
 	my ($ID1, $ID2, $damage) = @_;
+
+	# Track deltaHp
+	#
+	# A player's "deltaHp" initially starts at 0.
+	# When he takes damage, the damage is subtracted from his deltaHp.
+	# When he is healed, this amount is added to the deltaHp.
+	# If the deltaHp becomes positive, it is reset to 0.
+	#
+	# Someone with a lot of negative deltaHp is probably in need of healing.
+	# This allows us to intelligently heal non-party members.
+	if ($players{$ID2}) {
+		$players{$ID2}{deltaHp} -= $damage;
+		$players{$ID2}{deltaHp} = 0 if $players{$ID2}{deltaHp} > 0;
+	}
+
 	if ($ID1 eq $accountID) {
 		if ($monsters{$ID2}) {
 			# You attack monster
@@ -11020,6 +11042,8 @@ sub checkPlayerCondition {
 			return 0 unless (percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}) >= $config{$prefix . "Hp_lower"});
 		}
 	}
+
+	return 0 if $config{$prefix."_deltaHp"} && $players{$id}{deltaHp} > $config{$prefix."_deltaHp"};
 
 	# check player job class
 	if ($config{$prefix . "_isJob"}) { return 0 unless (existsInList($config{$prefix . "_isJob"}, $jobs_lut{$players{$id}{jobID}})); }
