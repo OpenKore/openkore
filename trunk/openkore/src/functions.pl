@@ -1,18 +1,17 @@
 # To run kore, execute openkore.pl instead.
 
 #########################################################################
-#  This software is open source, licensed under the GNU General Public
-#  License, version 2.
-#  Basically, this means that you're allowed to modify and distribute
-#  this software. However, if you distribute modified versions, you MUST
-#  also distribute the source code.
-#  See http://www.gnu.org/licenses/gpl.html for the full license.#
+# This software is open source, licensed under the GNU General Public
+# License, version 2.
+# Basically, this means that you're allowed to modify and distribute
+# this software. However, if you distribute modified versions, you MUST
+# also distribute the source code.
+# See http://www.gnu.org/licenses/gpl.html for the full license.
 #
-#
-#  $Revision$
-#  $Id$
-#
+# $Revision$
+# $Id$
 #########################################################################
+
 use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Digest::MD5;
@@ -756,7 +755,7 @@ sub parseCommand {
 			if ($arg3 <= 0) {
 				$arg3 = 1;
 			}
-			sendBuyVender(\$remote_socket, $arg2, $arg3);
+			sendBuyVender(\$remote_socket, $venderID, $arg2, $arg3);
 		}
 
 	} elsif ($switch eq "deal") {
@@ -7614,12 +7613,12 @@ sub parseMsg {
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
-      'targetID' => '',
-      'damage' => 0,
-      'amount' => $lv,
-      'x' => $x,
-      'y' => $y
-			});
+			'targetID' => '',
+			'damage' => 0,
+			'amount' => $lv,
+			'x' => $x,
+			'y' => $y
+		});
 
 
 	} elsif ($switch eq "0119") {
@@ -7873,6 +7872,7 @@ sub parseMsg {
 		my $ID = substr($msg,2,4);
 		if (!%{$venderLists{$ID}}) {
 			binAdd(\@venderListsID, $ID);
+			Plugins::callHook('packet_vender', {ID => $ID});
 		}
 		($venderLists{$ID}{'title'}) = substr($msg,6,36) =~ /(.*?)\000/;
 		$venderLists{$ID}{'id'} = $ID;
@@ -7939,6 +7939,14 @@ sub parseMsg {
 				if ($venderItemList[$number]{'card4'}) {
 					$display = $display."[".$cards_lut{$venderItemList[$number]{'card4'}}."]";
 				}
+
+				Plugins::callHook('packet_vender_store', {
+					venderID => $venderID,
+					number => $number,
+					name => $display,
+					amount => $amount,
+					price => $price
+				});
 
 				message(swrite(
 					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>z",
@@ -9935,6 +9943,7 @@ sub sendBuy {
 
 sub sendBuyVender {
 	my $r_socket = shift;
+	my $venderID = shift;
 	my $ID = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0x34, 0x01, 0x0C, 0x00) . $venderID . pack("S*", $amount, $ID);
@@ -11098,6 +11107,10 @@ sub parseReload {
 			foreach (@parseFiles) {
 				$temp{$$_{'file'}} = $_;
 			}
+		} elsif ($temp2 eq "plugins") {
+			message("Reloading all plugins...\n", "load");
+			Plugins::unloadAll();
+			Plugins::loadAll();
 		} elsif ($temp2 =~ /\bexcept\b/i || $temp2 =~ /\bbut\b/i) {
 			$except = 1;
 		} else {

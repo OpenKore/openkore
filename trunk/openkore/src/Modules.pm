@@ -1,39 +1,37 @@
 #########################################################################
-#  OpenKore - Module Support Code
+#OpenKore - Module Support Code
 #
 #  This software is open source, licensed under the GNU General Public
-#  License, version 2.
-#  Basically, this means that you're allowed to modify and distribute
-#  this software. However, if you distribute modified versions, you MUST
-#  also distribute the source code.
-#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#  License, version 2.  Basically, this means that you're allowed to
+#  modify and distribute this software. However, if you distribute
+#  modified versions, you MUST also distribute the source code.  See
+#  http://www.gnu.org/licenses/gpl.html for the full license.
 #
 #
 #
-#  $Revision$
-#  $Id$
+#  $Revision$ $Id$
 #
 #########################################################################
-##
-# MODULE DESCRIPTION: Module support system
+## MODULE DESCRIPTION: Module support system
 #
-# The OpenKore source code is split into various files: openkore.pl, functions.pl,
-# and some .pm files. These .pm files are modules: source code that's part of OpenKore.
-# Modules implement various subsystems.
+# The OpenKore source code is split into various files: openkore.pl,
+# functions.pl, and some .pm files. These .pm files are modules: source
+# code that's part of OpenKore.  Modules implement various subsystems.
 #
-# One of the features of OpenKore is "dynamic code reloading". This means that
-# if you've modified source code, you can reload it at runtime, without restarting
-# Kore.
+# One of the features of OpenKore is "dynamic code reloading". This
+# means that if you've modified source code, you can reload it at
+# runtime, without restarting Kore.
 #
-# This module, Modules.pm, is what makes it possible. It "glues" all the other modules
-# together. openkore.pl registers all the other modules, and this modules will save that
-# list in memory.
+# This module, Modules.pm, is what makes it possible. It "glues" all the
+# other modules together. openkore.pl registers all the other modules,
+# and this modules will save that list in memory.
 #
-# Modules must put initialization code in a function called MODINIT(). This function
-# is called at startup. Initialization code must not be put elsewhere, because that code
-# will be called again every time the module is reloaded, and will overwrite existing
-# values of variables. MODINIT() is only called once at startup (during registration),
-# and is never called again.
+# Modules must put initialization code in a function called MODINIT().
+# This function is called at startup. Initialization code must not be
+# put elsewhere, because that code will be called again every time the
+# module is reloaded, and will overwrite existing values of variables.
+# MODINIT() is only called once at startup (during registration), and is
+# never called again.
 
 package Modules;
 

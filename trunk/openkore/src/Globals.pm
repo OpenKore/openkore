@@ -26,7 +26,9 @@ use Exporter;
 
 our @ISA = qw(Exporter);
 our @EXPORT = qw(
-	@ai_seq @ai_seq_args %ai_v
+	%config
+
+	@ai_seq @ai_seq_args %ai_v $AI
 
 	@chars @playersID %players @monstersID %monsters @portalsID %portals @itemsID %items @npcsID %npcs
 	%field
@@ -34,13 +36,15 @@ our @EXPORT = qw(
 	$remote_socket
 
 	%timeout_ex $isOnline
-	);
+);
 
+our %config;
 
 # AI
 our @ai_seq;
 our @ai_seq_args;
 our %ai_v;
+our $AI = 1;
 
 # Game state
 our @chars;
