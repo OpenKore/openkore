@@ -10128,7 +10128,6 @@ sub stuckCheck {
 	my $stuck = shift;
 	if ($stuck) {
 		$ai_v{stuck_count}++;
-		warning "stuckCheck=$ai_v{stuck_count}\n";
 		if ($ai_v{stuck_count} > $config{stuckcheckLimit}) {
 			my $msg = "Failed to move for $ai_v{stuck_count} times, teleport. ($field{'name'} $chars[$config{char}]{pos}{x},$chars[$config{char}]{pos}{y})\n";
 			warning $msg;
