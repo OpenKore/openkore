@@ -522,11 +522,6 @@ sub writeDataFileIntact {
 	open(FILE, "> $file");
 	print FILE $data;
 	close FILE;
-
-	return if (!$r_hash->{_INCLUDES}{$file});
-	foreach my $fname (@{$r_hash->{_INCLUDES}{$file}}) {
-		writeDataFileIntact($fname, $r_hash);
-	}
 }
 
 sub writeDataFileIntact2 {
