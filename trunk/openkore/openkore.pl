@@ -139,6 +139,15 @@ if ($parseArgResult eq '2') {
 	exit 1;
 }
 
+# If Misc.pm is in the same folder as openkore.pl, then the
+# user is still using the old (pre-CVS cleanup) source tree.
+# So bail out to prevent weird errors.
+if (-f "$RealBin/Misc.pm") {
+	$interface->errorDialog("You have old files in the OpenKore folder, which may cause conflicts.\n" .
+		"Please delete your entire OpenKore source folder, and redownload everything.");
+	exit 1;
+}
+
 
 require PathFinding;
 require WinUtils if ($^O eq 'MSWin32');
