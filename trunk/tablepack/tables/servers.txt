@@ -103,6 +103,36 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 
+[Thailand - tRO: Sol, Chaos, Loki, Iris, Fenrir, Lydia, Sarah]
+ip 203.144.244.5
+port 6900
+master_version 7
+version 24
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
+[Thailand - tRO: Frigg, Freya, Baldur, Heimdal, Honir, Ordin, Thor]
+ip 203.144.244.10
+port 6900
+master_version 7
+version 24
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
+[Thailand - tRO: Isa, Tyr, Idun, Bijou, Grimnir, Bragi]
+ip 203.144.244.7
+port 6900
+master_version 7
+version 24
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
 [mobRO Private Server]
 ip 67.19.17.196
 port 6900
