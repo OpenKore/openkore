@@ -2168,7 +2168,7 @@ sub parseInput {
 		}
 
 	} else {
-		error "Unknown command '$switch'\n";
+		error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
 	}
 
 

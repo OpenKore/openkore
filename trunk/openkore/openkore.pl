@@ -83,29 +83,30 @@ if ($buildType == 0) {
 	import Win32::API;
 	if ($@) {
 		Log::error("Unable to load the Win32::API module. Please install this Perl module first.", "startup");
-		exit 1;
+		promptAndExit();
 	}
 
 	$CalcPath_init = new Win32::API("Tools", "CalcPath_init", "PPNNPPN", "N");
 	if (!$CalcPath_init) {
 		Log::error("Could not locate Tools.dll", "startup");
-		exit 1;
+		promptAndExit();
 	}
 
 	$CalcPath_pathStep = new Win32::API("Tools", "CalcPath_pathStep", "N", "N");
 	if (!$CalcPath_pathStep) {
 		Log::error("Could not locate Tools.dll", "startup");
-		exit 1;
+		promptAndExit();
 	}
 
 	$CalcPath_destroy = new Win32::API("Tools", "CalcPath_destroy", "N", "V");
 	if (!$CalcPath_destroy) {
 		Log::error("Could not locate Tools.dll", "startup");
-		exit 1;
+		promptAndExit();
 	}
 } else {
 	# Linux
 	if (! -f "Tools.so") {
+		# Linux users invoke kore from the console anyway so there's no point in using promptAndExit() here
 		Log::error("Could not locate Tools.so. Type 'make' if you haven't done so.\n", "startup");
 		exit 1;
 	}
@@ -120,7 +121,7 @@ if ($config{'XKore'}) {
 	our $GetProcByName = new Win32::API("Tools", "GetProcByName", "P", "N");
 	if (!$GetProcByName) {
 		Log::error("Could not locate Tools.dll", "startup");
-		exit 1;
+		promptAndExit();
 	}
 	undef $cwd;
 }
