@@ -152,6 +152,7 @@ sub reloadFile {
 	}
 
 	$msg->("Checking $filename for errors...\n", "info");
+	$ENV{PERL5LIB} = join(':', @INC);
 	system($Config{'perlpath'}, '-c', "$path/$filename");
 	if ($? == -1) {
 		$err->("Failed to execute $Config{'perlpath'}\n");
