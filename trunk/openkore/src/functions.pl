@@ -2140,6 +2140,59 @@ sub AI {
 		}
 	}
 
+
+	##### WAYPOINT ####
+
+	if (AI::action eq "waypoint") {
+		my $args = AI::args;
+
+		if (defined $args->{walkedTo}) {
+			message "Arrived at waypoint $args->{walkedTo}\n", "waypoint";
+			Plugins::callHook('waypoint/arrived', {
+				points => $args->{points},
+				index => $args->{walkedTo}
+			});
+			delete $args->{walkedTo};
+
+		} elsif ($args->{index} > -1 && $args->{index} < @{$args->{points}}) {
+			# Walk to the next point
+			my $point = $args->{points}[$args->{index}];
+			message "Walking to waypoint $args->{index}: $maps_lut{$point->{map}}($point->{map}): $point->{x},$point->{y}\n", "waypoint";
+			$args->{walkedTo} = $args->{index};
+			$args->{index} += $args->{inc};
+
+			my $result = ai_route($point->{map}, $point->{x}, $point->{y},
+				attackOnRoute => $args->{attackOnRoute},
+				tags => "waypoint");
+			if (!$result) {
+				error "Unable to calculate how to walk to $point->{map} ($point->{x}, $point->{y})\n";
+				AI::dequeue;
+			}
+
+		} else {
+			# We're at the end of the waypoint.
+			# Figure out what to do now.
+			if (!$args->{whenDone}) {
+				AI::dequeue;
+
+			} elsif ($args->{whenDone} eq 'repeat') {
+				$args->{index} = 0;
+
+			} elsif ($args->{whenDone} eq 'reverse') {
+				if ($args->{inc} < 0) {
+					$args->{inc} = 1;
+					$args->{index} = 1;
+					$args->{index} = 0 if ($args->{index} > $#{$args->{points}});
+				} else {
+					$args->{inc} = -1;
+					$args->{index} -= 2;
+					$args->{index} = 0 if ($args->{index} < 0);
+				}
+			}
+		}
+	}
+
+
 	##### DEAD #####
 
 	if (AI::action eq "dead" && !$char->{dead}) {
@@ -2379,7 +2432,7 @@ sub AI {
 			if (!defined $ai_v{temp}{storage_opened}) {
 				# NPC talk retry
 				if (timeOut($AI::Timeouts::storageOpening, 40)) {
-					$args->{sentStore}=0;
+					undef $args->{sentStore};
 					debug "Retry talking to autostorage NPC.\n", "npc";
 				}
 
@@ -3154,7 +3207,7 @@ sub AI {
 				# List monsters that party members are attacking
 				if ($config{'attackAuto_party'} && $attackOnRoute && !AI::is("take", "items_take")
 				 && ($monster->{dmgToParty} || $monster->{dmgFromParty} || $monster->{missedToParty})
-				 && timeOut($monster->{attack_failed}, $timeouts{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
 					next;
 				}
@@ -3162,7 +3215,7 @@ sub AI {
 				# List monsters that the master is attacking
 				if ($following && $config{'attackAuto_followTarget'} && $attackOnRoute && !AI::is("take", "items_take")
 				 && ($monster->{dmgToPlayer}{$followID} || $monster->{dmgFromPlayer}{$followID} || $monster->{missedToPlayer}{$followID})
-				 && timeOut($monster->{attack_failed}, $timeouts{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @partyMonsters, $_;
 					next;
 				}
@@ -3192,7 +3245,7 @@ sub AI {
 				if (!AI::is(qw/sitAuto take items_gather items_take/) && $config{'attackAuto'} >= 2
 				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
-				 && timeOut($monster->{attack_failed}, $timeouts{ai_attack_unfail}{timeout})) {
+				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 					push @cleanMonsters, $_;
 				}
 			}
@@ -4366,6 +4419,7 @@ sub AI {
 								attackOnRoute => $args->{attackOnRoute},
 								maxRouteTime => $args->{maxRouteTime},
 								noSitAuto => $args->{noSitAuto},
+								tags => $args->{tags},
 								_solution => \@solution,
 								_internal => 1);
 
@@ -8603,7 +8657,7 @@ sub ai_getAggressives {
 		next if (!$_);
 		my $monster = $monsters{$_};
 		if ((($type && $mon_control{lc($monster->{'name'})}{'attack_auto'} == 2) || $monster->{dmgToYou} || $monster->{missedYou})
-		  && timeOut($monster->{attack_failed}, $timeouts{ai_attack_unfail}{timeout})) {
+		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 			push @agMonsters, $_;
 		}
 	}
@@ -8762,7 +8816,7 @@ sub ai_route {
 	$args{'pyDistFromGoal'} = $param{pyDistFromGoal} if exists $param{pyDistFromGoal};
 	$args{'attackID'} = $param{attackID} if exists $param{attackID};
 	$args{'noSitAuto'} = $param{noSitAuto} if exists $param{noSitAuto};
-	$args{'params'} = $param{params} if exists $param{params};
+	$args{'tags'} = $param{tags} if exists $param{tags};
 	$args{'time_start'} = time;
 
 	if (!$param{'_internal'}) {
@@ -8882,6 +8936,29 @@ sub ai_storageAutoCheck {
 		}
 	}
 	return 0;
+}
+
+##
+# ai_waypoint(points, [whenDone, attackOnRoute])
+# points: reference to an array containing waypoint information. FileParsers::parseWaypoint() creates such an array.
+# whenDone: specifies what to do when the waypoint has finished. Possible values are: 'repeat' (repeat waypoint) or 'reverse' (repeat waypoint, but in opposite direction).
+# attackOnRoute: 0 (or not given) if you don't want to attack anything while walking, 1 if you want to attack aggressives, and 2 if you want to attack all monsters.
+#
+# Initialize a waypoint.
+sub ai_waypoint {
+	my %args = (
+		points => shift,
+		index => 0,
+		inc => 1,
+		whenDone => shift
+		attackOnRoute => shift
+	);
+
+	if ($args{whenDone} && $args{whenDone} ne "repeat" && $args{whenDone} ne "reverse") {
+		error "Unknown waypoint argument: $args{whenDone}\n";
+		return;
+	}
+	AI::queue("waypoint", \%args);
 }
 
 ##

@@ -92,7 +92,7 @@ our %handlers = (
 	uneq		=> \&cmdUnequip,
 	verbose		=> \&cmdVerbose,
 	warp		=> \&cmdWarp,
-	who		=> \&cmdWho
+	who		=> \&cmdWho,
 );
 
 our %completions = (
