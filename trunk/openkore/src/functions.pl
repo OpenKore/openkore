@@ -3796,7 +3796,7 @@ sub AI {
 	##### AUTO-ITEM USE #####
 
 	if ((AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack", AI::action))
-		&& timeOut(\%{$timeout{ai_item_use_auto}})) {
+	  && timeOut($timeout{ai_item_use_auto})) {
 		my $i = 0;
 		while (1) {
 			last if (!$config{"useSelf_item_$i"});
@@ -3817,8 +3817,7 @@ sub AI {
 
 	##### AUTO-SKILL USE #####
 
-	if (AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack")
-		) {
+	if (AI::isIdle || existsInList("route,mapRoute,follow,sitAuto,take,items_gather,items_take,attack", AI::action)) {
 		my $i = 0;
 		my %self_skill = ();
 		while (1) {
@@ -10190,13 +10189,13 @@ sub checkSelfCondition {
 	$prefix = shift;
 
 	return 0 if ($config{$prefix . "_disabled"} > 0);
-	
+
 	if ($config{$prefix . "_hp"}) { 
 		return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]}), $config{$prefix . "_hp"}));
 	} elsif ($config{$prefix . "_hp_upper"}) { # backward compatibility with old config format
 		return 0 unless (percent_hp(\%{$chars[$config{char}]}) <= $config{$prefix . "_hp_upper"} && percent_hp(\%{$chars[$config{char}]}) >= $config{$prefix . "_hp_lower"});
 	}
-		
+
 	if ($config{$prefix . "_sp"}) { 
 		return 0 unless (inRange(percent_sp(\%{$chars[$config{char}]}), $config{$prefix . "_sp"}));
 	} elsif ($config{$prefix . "_sp_upper"}) { # backward compatibility with old config format
