@@ -442,7 +442,9 @@ sub parseCommand {
 			error("You do not have a shop open.\n");
 			return;
 		}
-		message("------------------------ Items being sold in store -------------------------\n", "list");
+		# FIXME: Read the packet the server sends us to determine
+		# the shop title instead of using $shop{title}.
+		message(center(" $shop{title} ", 79, '-')."\n", "list");
 		message("#  Name                                     Type         Qty     Price   Sold\n", "list");
 
 		my $i = 1;
@@ -453,7 +455,7 @@ sub parseCommand {
 				[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, $item->{price}, $item->{sold}]),
 				"list");
 		}
-		message("----------------------------------------------------------------------------\n", "list");
+		message(('-'x79)."\n", "list");
 		message("You have earned: " . formatNumber($shopEarned) . "z.\n", "list");
 
 	} elsif ($switch eq "as") {
@@ -7406,7 +7408,9 @@ sub parseMsg {
 		@articles = ();
 		$articles = 0;
 
-		message("--------------------------- Items added to shop ----------------------------\n", "list");
+		# FIXME: Read the packet the server sends us to determine
+		# the shop title instead of using $shop{title}.
+		message(center(" $shop{title} ", 79, '-')."\n", "list");
 		message("#  Name                                         Type        Amount     Price\n", "list");
 		for (my $i = 8; $i < $msg_size; $i += 22) {
 			my $number = unpack("S1", substr($msg, $i + 4, 2));
@@ -7428,7 +7432,7 @@ sub parseMsg {
 				[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, $item->{price}]),
 				"list");
 		}
-		message("----------------------------------------------------------------------------\n", "list");
+		message(('-'x79)."\n", "list");
 		$shopEarned ||= 0;
 
 	} elsif ($switch eq "0137") {
