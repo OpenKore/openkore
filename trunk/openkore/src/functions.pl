@@ -7044,10 +7044,12 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00EA") {
-		$index = unpack("S1", substr($msg, 2, 2));
-		undef $invIndex;
-		if ($index > 0) {
-			$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		my $index = unpack("S1", substr($msg, 2, 2));
+		my $fail = unpack("C1", substr($msg, 4, 1));
+		if ($fail) {
+			error "That person is overweight; you cannot trade.", "deal";
+		} elsif ($index > 0) {
+			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 			$currentDeal{'you'}{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}{'amount'} += $currentDeal{'lastItemAmount'};
 			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $currentDeal{'lastItemAmount'};
 			message "You added Item to Deal: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} x $currentDeal{'lastItemAmount'}\n", "deal";
