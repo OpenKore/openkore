@@ -5025,7 +5025,7 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		print "You are now in the game\n" if (!$config{'XKore'});
 		print "Waiting for map to load...\n" if ($config{'XKore'});
 		sendMapLoaded(\$remote_socket) if (!$config{'XKore'});
-		sendIgnoreAll(\$remote_socket, "all") if ($config{'IgnoreAll'});
+		sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
 		$timeout{'ai'}{'time'} = time if (!$config{'XKore'});
 
 	} elsif ($switch eq "0075") {
@@ -5492,25 +5492,25 @@ MAP Port: @<<<<<<<<<<<<<<<<<<
 		} elsif ($ID2 eq $accountID) {
 			if (%{$monsters{$ID1}}) {
 				useTeleport(1) if ($monsters{$ID1}{'name'} eq "");
-#Solos Start
+
 				print  "[".$chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
 				.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
 				."%)] "."Monster $monsters{$ID1}{'name'} $monsters{$ID1}{'nameID'} ($monsters{$ID1}{'binID'}) attacks You: - Dmg: $dmgdisplay\n";
-#Solos End
-#junq start
-				if ($config{'maxDmg'} > 0) { 
-               				if ($dmgdisplay > $config{'maxDmg'}) { 
-                  				print "Monster hit you for more than ".$config{'maxDmg'}."DMG. Teleporting\n"; 
-                  				useTeleport(1); 
+
+				#junq start
+				if ($config{'teleportAuto_maxDmg'} > 0) {
+               				if ($dmgdisplay > $config{'teleportAuto_maxDmg'}) {
+                  				print "Monster hits you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting\n";
+                  				useTeleport(1);
                				} 
-            			} 
-            			if ($config{'teleportDeadly'} eq 1) { 
-               				if ($dmgdisplay > $chars[$config{'char'}]{'hp'}) { 
-                  				print "Next hit of $dmgdisplay DMG could kill you. Teleporting\n"; 
-                  				useTeleport(1); 
-               				} 
-            			} 
-#junq end
+            			}
+            			if ($config{'teleportAuto_deadly'}) {
+               				if ($damage > $chars[$config{'char'}]{'hp'}) {
+                  				print "Next hit of $damage dmg could kill you. Teleporting\n";
+                  				useTeleport(1);
+               				}
+            			}
+				#junq end
 			}
 			undef $chars[$config{'char'}]{'time_cast'};
 		} elsif (%{$monsters{$ID1}}) {
@@ -8871,7 +8871,6 @@ sub ai_storageAutoCheck {
 }
 
 sub attack {
-	#print "ATTACK!!!!!!\n";
 	my $ID = shift;
 	my %args;
 	$args{'ai_attack_giveup'}{'time'} = time;
@@ -8883,10 +8882,9 @@ sub attack {
 	unshift @ai_seq_args, \%args;
 	print "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n";
 	injectMessage("Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})") if ($config{'verbose'} && $config{'XKore'});
-#Solos Start
+
 	$startedattack = 1;
-#xlr82xs start
-	if ($config{"monsterCount"} eq "1") {	
+	if ($config{"monsterCount"}) {	
 		$i = 0;
 		while ($config{"monsterCount_mon_$i"} ne "") {
 			if ($config{"monsterCount_mon_$i"} eq $monsters{$ID}{'name'}) {
@@ -8896,9 +8894,7 @@ sub attack {
 		}
 	}
 
-#xlr82xs end
-
-	if ($config{"autoSwitch"} == 1) {
+	if ($config{"autoSwitch"}) {
 		$i = 0;
 		$is_mon = 0;
 		while ($config{"autoSwitch_mon_$i"} ne "") {
@@ -8934,8 +8930,7 @@ sub attack {
          			sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$eq_shield]{'index'}, 32, 0);
       			}
    		}
-	}	
-#Solos End
+	}
 }
 
 sub aiRemove {

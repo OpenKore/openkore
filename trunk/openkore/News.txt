@@ -44,6 +44,10 @@ miss any of the new config options.
   command will be PM'ed to the follow target, telling him to go to
   where you are.
 - Don't attack any monsters that are near portals.
+- Renamed the following config options for better naming consistency:
+  IgnoreAll      -> ignoreAll
+  maxDmg         -> teleportAuto_maxDmg
+  teleportDeadly -> teleportAuto_deadly
 
 xlr82xs:
 - Removed dead monster count sub.
