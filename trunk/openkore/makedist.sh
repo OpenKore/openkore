@@ -2,7 +2,7 @@
 # This script creates a source tarball.
 
 PACKAGE=openkore
-VERSION=1.5.1-beta
+VERSION=1.5.2-beta
 TYPE=bz2
 # Uncomment the next line if you want a tar.gz archive
 # TYPE=gz
@@ -89,6 +89,7 @@ done
 # Stop if this is going to be a binary distribution
 if [[ "$BINDIST" == "1" ]]; then
 	rm -f "$PACKAGEDIR/Makefile"
+	unix2dos "$PACKAGEDIR/News.txt"
 	echo
 	echo "====================="
 	echo "Directory '$PACKAGEDIR' created. Please add (wx)start.exe."
