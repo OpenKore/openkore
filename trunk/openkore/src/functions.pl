@@ -9533,10 +9533,10 @@ sub updateDamageTables {
 			if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'}==2){
 				message "Teleport due to $monsters{$ID1}{'name'} attack\n";
 				$teleport = 1;
-			} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'}) {
+			} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
 				message "Next $damage dmg could kill you. Teleporting...\n";
 				$teleport = 1;
-			} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'}) {
+			} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination")) {
 				message "$monsters{$ID1}{'name'} attack you more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n";
 				$teleport = 1;
 			}
