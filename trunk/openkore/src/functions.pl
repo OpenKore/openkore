@@ -4195,7 +4195,7 @@ sub AI {
 					# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
 					# for example.
 					my %nextPos = (x => $args->{new_x}, y => $args->{new_y});
-					if ($config{'route_step'} <= 25 && distance(\%nextPos, $pos) > 25) {
+					if (distance(\%nextPos, $pos) > $config{'route_step'}) {
 						debug "Route - movement interrupted: reset route\n", "route";
 						$args->{stage} = '';
 
@@ -4207,17 +4207,15 @@ sub AI {
 						move($args->{new_x}, $args->{new_y}, $args->{attackID});
 					}
 				} else {
-					#no more points to cover
-					message "Destination reached.\n", "success", 2;
-					shift @ai_seq;
-					shift @ai_seq_args;
+					# No more points to cover
+					message "Destination reached.\n", "ai_route", 2;
+					AI::dequeue;
 				}
 			}
 
 		} else {
-			debug "Unexpected route stage [$ai_seq_args[0]{'stage'}] occured.\n", "route";
-			shift @ai_seq;
-			shift @ai_seq_args;
+			debug "Unexpected route stage [$args->{stage}] occured.\n", "route";
+			AI::dequeue;
 		}
 	}
 
@@ -4419,7 +4417,7 @@ sub AI {
 		AI::dequeue;
 		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout});
 	}
-	if ($config{itemsTakeAuto} && AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
+	if ($config{'itemsTakeAuto'} && AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
 		my $foundID;
 		my ($dist, $dist_to);
 		
@@ -4438,7 +4436,6 @@ sub AI {
 			take($foundID);
 		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
 			AI::dequeue;
-			ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout});
 		}
 	}
 
