@@ -33,6 +33,9 @@ It's written in C and is cross-platform. This document describes how to use
 
 <h2>Functions</h2>
 
+The functions are declared in the header file <code>grf.h</code>.
+<p>
+
 <table id="functionIndex">
 <tr>
 	<th>Function</th>
@@ -212,7 +215,7 @@ typedef enum
     GE_INVALID,      <span class="comment">/* Bad magic header; probably not a valid GRF file */</span>
     GE_CORRUPTED,    <span class="comment">/* Good magic header but bad file list header; probably corrupted */</span>
     GE_NOMEM,        <span class="comment">/* Out of memory */</span>
-    GE_NSUP1,        <span class="comment">/* Version 1 GRF archive not supported */</span>
+    GE_NSUP,        <span class="comment">/* Version 1 GRF archive not supported */</span>
 
     <span class="comment"><i>/* grf_get() and grf_extract() errors */</i></span>
     GE_NOTFOUND,     <span class="comment">/* File not found inside GRF file */</span>

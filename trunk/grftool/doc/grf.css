@@ -18,7 +18,7 @@ h2:hover {
 	color: white;
 	background: black;
 	font-weight: bold;
-	padding: 3px;
+	padding: 0.2em;
 }
 
 #navigation {
@@ -27,8 +27,8 @@ h2:hover {
 #navigation a, #navigation li b {
 	color: white;
 	text-decoration: none;
-	padding-left: 12px;
-	padding-right: 12px;
+	padding-left: 0.8em;
+	padding-right: 0.8em;
 }
 #navigation a {
 	float: left;
@@ -39,7 +39,7 @@ h2:hover {
 }
 #navigation ul {
 	display: inline;
-	padding: 0px;
+	padding: 0;
 	margin: 0;
 	list-style-type: none;
 }
@@ -49,7 +49,7 @@ h2:hover {
 }
 
 #main {
-	margin: 8px 8px 8px 8px;
+	margin: 0.6em 0.6em 0.6em 0.6em;
 }
 
 #footer {
@@ -89,7 +89,7 @@ h2:hover {
 }
 
 #functionIndex td {
-	padding: 3px;
+	padding: 0.2em;
 }
 #functionIndex a {
 	text-decoration: none;
@@ -103,32 +103,20 @@ h2:hover {
 	color: red;
 }
 
-.function .decl {
-	font-size: large;
-	margin-bottom: 8px;
-}
-.function .params_and_returns {
-	background: #e4eeff;
-	padding: 6px;
-}
-.function .desc {
-	margin-bottom: 12px;
-}
 .example {
 	border: lightgray dotted 1px;
 	background: #fffde8;
-	padding: 6px;
+	padding: 0.4em;
+	margin: 1em;
 }
+
 .comment {
 	color: darkblue;
 }
 
-.moduleIndex a {
-	text-decoration: none;
-}
-.moduleIndex a:visited {
-	color: darkblue;
-}
-.moduleIndex a:hover {
-	text-decoration: underline;
+.struct {
+	border: lightgray dotted 1px;
+	background: #f6f6ff;
+	padding: 6px;
+	margin: 1em;
 }
