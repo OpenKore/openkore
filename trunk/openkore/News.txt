@@ -5,9 +5,16 @@
 **** Currently broken stuff ****
 - According to bug reports we can't attack stationary monsters (pupa,
   plants, etc.). The bot will just try forever until it times out.
-  This must be fixed.
-  (Though, I can't reproduce this problem myself.)
+  This must be fixed. (Though, I can't reproduce this problem myself.)
 
+
+NOTE:
+- Because of a routing bugfix, portalsLOS.txt will need an update. It's
+  recommended that you do one of the following things:
+  * Download the latest tablepack, and extract portalsLOS.txt into your
+    tables folder.
+  - OR -
+  * Delete your portalsLOS.txt and let Kore recompile it.
 
 New features:
 - X-Kore works on Windows 98/ME now!
@@ -47,6 +54,9 @@ Bug fixes:
 - Fixed 'monster', 'mvp' and 'death' commands to work with new ai_skillUse.
 - Fixed storage access when storage is empty.
 - Various routing bug fixes (by jsteng).
+
+Internal:
+- Portal compilation is now 30% faster.
 
 Credits:
 - Fenris: Tk interface improvements.
