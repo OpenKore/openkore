@@ -5035,6 +5035,10 @@ sub parseSendMsg {
 		# Trying to exit
 		aiRemove("clientSuspend");
 		ai_clientSuspend($switch, 10);
+
+	} elsif ($switch eq "0149") {
+		# Chat/skill mute
+		undef $sendMsg;
 	}
 
 	if ($sendMsg ne "") {
