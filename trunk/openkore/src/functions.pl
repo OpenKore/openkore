@@ -3003,8 +3003,12 @@ sub AI {
 			if ($ai_seq_args[0]{'sentStore'} <= 1) {
 				sendTalk(\$remote_socket, pack("L1",$config{'storageAuto_npc'})) if !$ai_seq_args[0]{'sentStore'};
 				sendTalkContinue(\$remote_socket, pack("L1",$config{'storageAuto_npc'})) if !$ai_seq_args[0]{'sentStore'};
-				# TESTME: I dont have access to both a copy of ro, and a paid for established account (wait till monday and i'm at work i guess) but this SHOULD work atleast)...
-				ai_clientSuspend(kludge, 1, 0);
+				## TESTME: I dont have access to both a copy of ro, and a paid for established account (wait till monday and i'm at work i guess) but this SHOULD work atleast)...
+				# I don't think this will work (since it merely unshifts the "clientSuspend" AI sequence; it doesn't actually sleep.
+				# Temporarily replacing it will sleep() so I can release 1.2.1.
+				# ai_clientSuspend(kludge, 1, 0);
+				# FIXME: get rid of sleep()!
+				sleep(1);
 				sendTalkResponse(\$remote_socket, pack("L1",$config{'storageAuto_npc'}),'2') if !$ai_seq_args[0]{'sentStore'};
 				sendTalkCancel(\$remote_socket, pack("L1",$config{'storageAuto_npc'}));
 				$ai_seq_args[0]{'sentStore'}++;

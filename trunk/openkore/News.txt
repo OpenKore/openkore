@@ -6,6 +6,7 @@
 - Storage fix.
 - Fix a crash with swrite() when using Perl 5.8 on some Linux systems.
 - Fix a divison by zero error.
+- Fix creation of "logs" folder on Win32.
 
 
 ==================

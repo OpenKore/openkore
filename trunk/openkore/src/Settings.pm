@@ -68,6 +68,8 @@ sub parseArguments {
 	undef $chat_file;
 	undef $item_log_file;
 	undef $shop_file;
+	# For some reason MODINIT() is not called on Win32 (when running as compiled executable)
+	# FIXME: find out why and fix it.
 	MODINIT();
 	
 	GetOptions(
