@@ -121,23 +121,19 @@ You need the return value of <code>grf_open()</code> to do anything else with th
 Now that you've opened a GRF archive, you can look at what's inside. The following example will print all
 filenames inside in the archive to screen:
 <pre class="example">
-<span class="ctype">int</span> i;
+<span class="ctype">uint32_t</span> i;
 
 <span class="ckey">for</span> (i = <span class="cnum">0</span>; i &lt; grf-&gt;nfiles; i++) {
     printf (<span class="cstr">"%s\n"</span>, grf-&gt;files[i].name);
 }
 </pre>
 
-Yes, it's this simple! The <code>Grf</code> structure contains information about the GRF archive, and has the following fields:
-<pre class="struct"><span class="ckey">typedef struct</span> {
-    <span class="ctype">char *</span>filename;         <span class="comment">/* The filename of the GRF archive */</span>
-    <span class="ctype">int</span> version;            <span class="comment">/* The GRF archive's internal version number */</span>
-    <span class="ctype">unsigned long</span> nfiles;   <span class="comment">/* Number of files inside the archive */</span>
-    <span class="ctype">GrfFile *</span>files;         <span class="comment">/* An array which contains information about all files */</span>
-
-    <span class="comment">/* Private fields; do not use! */</span>
-    <span class="ctype">FILE</span> *f;
-} Grf;
+Yes, it's this simple! The <code>Grf</code> structure contains information about the GRF archive,
+and has the following public fields:
+<pre class="struct"><span class="ctype">char *</span>filename;         <span class="comment">/* The filename of the GRF archive */</span>
+<span class="ctype">uint32_t</span> version;            <span class="comment">/* The GRF archive's internal version number */</span>
+<span class="ctype">uint32_t</span> nfiles;   <span class="comment">/* Number of files inside the archive */</span>
+<span class="ctype">GrfFile *</span>files;         <span class="comment">/* An array which contains information about all files */</span>
 </pre>
 
 
@@ -148,7 +144,7 @@ You want to know more about that file. The following example will retrieve a
 structure which contains information about "data\readme.txt":
 <pre class="example">
 <span class="ctype">GrfFile *</span>f;
-<span class="ctype">unsigned long</span> index;
+<span class="ctype">uint32_t</span> index;
 
 f = grf_find (grf, <span class="cstr">"data\\readme.txt"</span>, &amp;index);
 <span class="ckey">if</span> (!f) {
@@ -175,7 +171,7 @@ Only two fields are interesting to application developers:
 Use <code>grf_get()</code> to extract a file into memory. Example:
 <pre class="example">
 <span class="ctype">void *</span>data;
-<span class="ctype">unsigned long</span> size;
+<span class="ctype">uint32_t</span> size;
 <span class="ctype">GrfError</span> error;
 
 data = grf_get (grf, <span class="cstr">"data\\readme.txt"</span>, &amp;size, error);
