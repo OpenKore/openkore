@@ -1346,6 +1346,7 @@
 7194#Solf Leaf#
 7195#Air Rifle#
 7196#Shoulder Protection#
+7197#Tough Vines#
 7198#Great Leaf#
 7200#Flexible String#
 7201#Log#
