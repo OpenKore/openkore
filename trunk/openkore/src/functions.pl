@@ -6726,7 +6726,7 @@ sub parseMsg {
 			if ($AI) {
 				# Auto-drop item
 				$item = $char->{inventory}[$invIndex];
-				if ($itemsPickup{lc($items_lut{$item->{nameID}})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
+				if ($itemsPickup{lc($item->{name})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 					sendDrop(\$remote_socket, $item->{index}, $amount);
 					message "Auto-dropping item: $item->{name} ($invIndex) x $amount\n", "drop";
 				}
