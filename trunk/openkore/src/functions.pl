@@ -4295,7 +4295,7 @@ sub AI {
 					debug "portal within same map\n", "route";
 					# Portal is reachable from current position
 					# >> Then "route" to it
-					print "Portal route attackOnRoute = $ai_seq_args[0]{'attackOnRoute'}\n";
+					debug "Portal route attackOnRoute = $ai_seq_args[0]{'attackOnRoute'}\n", "route";
 					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
 						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
 						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
@@ -8053,7 +8053,7 @@ sub parseMsg {
 			my $index = findIndex(\@{char->{inventory}}, "nameID", $ID);
 			binAdd(\@arrowCraftID, $index);
 		}
-		print "Recieved Possible Arrow Craft List - type 'arrowcraft'\n";
+		message "Recieved Possible Arrow Craft List - type 'arrowcraft'\n";
 
 	#} elsif ($switch eq "0187") {
 		# 0187 - ID: long
