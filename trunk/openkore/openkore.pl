@@ -90,7 +90,6 @@ addConfigFile("$Settings::tables_folder/itemsdescriptions.txt", \%itemsDesc_lut,
 addConfigFile("$Settings::tables_folder/itemslots.txt", \%itemSlots_lut, \&parseROSlotsLUT);
 addConfigFile("$Settings::tables_folder/itemslotcounttable.txt", \%itemSlotCount_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/itemtypes.txt", \%itemTypes_lut, \&parseDataFile2);
-#addConfigFile("$Settings::tables_folder/jobs.txt", \%jobs_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/maps.txt", \%maps_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/monsters.txt", \%monsters_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/npcs.txt", \%npcs_lut, \&parseNPCs);
@@ -227,7 +226,8 @@ if ($config{'XKore'}) {
 			Proto		=> 'tcp');
 	if (!$injectServer_socket) {
 		$interface->errorDialog("Unable to start the X-Kore server.\n" .
-				"You can only run one X-Kore session at the same time.");
+				"You can only run one X-Kore session at the same time.\n\n" .
+				"And make sure no other servers are running on port 2350.");
 		exit 1;
 	}
 	Log::message("Local X-Kore server started (".$injectServer_socket->sockhost().":2350)\n", "startup");
@@ -339,14 +339,6 @@ $SIG{__DIE__} = sub {
 	Log::message("Press ENTER to exit this program.\n");
 	$interface->getInput(-1) if defined $interface;
 };
-
-#$SIG{__WARN__} = sub {
-#	my $msg = "@_";
-#	unless ($msg =~ /^Use of uninitialized value in concatenation/
-#	  || $msg =~ /^Subroutine .*? redefined at/) {
-#		print "@_";
-#	}
-#};
 
 
 ##### MAIN LOOP #####
@@ -471,16 +463,12 @@ while ($quit != 1) {
 	# Other stuff that's run in the main loop
 	mainLoop();
 
+	# Reload any modules that requested to be reloaded
 	Modules::doReload();
 }
 
 
 Plugins::unloadAll();
-
-# Shutdown X-Kore
-eval {
-	$remote_socket->send("Z".pack("S", 0));
-} if ($config{'XKore'} && $remote_socket && $remote_socket->connected());
 
 # Shutdown everything else
 close($remote_socket);

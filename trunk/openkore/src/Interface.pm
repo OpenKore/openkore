@@ -1,5 +1,5 @@
 #########################################################################
-#  OpenKore - Interface System Front End
+#  OpenKore - User interface system
 #
 #  Copyright (c) 2004 OpenKore development team 
 #
@@ -19,9 +19,9 @@
 #
 #########################################################################
 ##
-# MODULE DESCRIPTION: Interface System Front End
+# MODULE DESCRIPTION: User interface system
 #
-# This module provides the public methods to the interface system.
+# This module provides functions for controlling Kore's user interface.
 #
 # The interface system has several implementations for different platforms.
 # This module glues them all together under one interface.
