@@ -803,7 +803,7 @@ sub processUltimate {
 	my ($file, $hash, $rules, $writeMode) = @_;
 	my $f;
 	my $secname = '';
-	my ($section, $rule, @lines, %written);
+	my ($section, $rule, @lines, %written, %sectionsWritten);
 
 	undef %{$hash} if (!$writeMode);
 	return if (!open($f, "< $file"));
@@ -859,6 +859,7 @@ sub processUltimate {
 			if ($writeMode) {
 				$section = $hash->{$secname};
 				push @lines, $_;
+				$sectionsWritten{$secname} = 1;
 
 			} else {
 				if ($rule ne 'list') {
@@ -893,14 +894,7 @@ sub processUltimate {
 			# Line is part of a list
 			if ($writeMode) {
 				# Add line only if it exists in the hash
-				my $exists;
-				foreach my $line (@{$section}) {
-					if ($line eq $_) {
-						$exists = 1;
-						last;
-					}
-				}
-				push @lines, $_ if ($exists);
+				push @lines, $_ if (defined(binFind($section, $_)));
 				$written{$_} = 1;
 
 			} else {
@@ -911,8 +905,9 @@ sub processUltimate {
 	close $f;
 
 	if ($writeMode) {
-		# Add stuff that hasn't already been added
+		# Add stuff that haven't already been added
 		my $h = (defined $section) ? $section : $hash;
+
 		if ($rule ne 'list') {
 			foreach my $key (keys %{$h}) {
 				if (!$written{$key} && !ref($h->{$key})) {
@@ -923,6 +918,19 @@ sub processUltimate {
 		} else {
 			foreach my $line (@{$h}) {
 				push @lines, $line if (!$written{$line});
+			}
+		}
+
+		# Write sections that aren't already in the file
+		foreach my $section (keys %{$hash}) {
+			next if (!ref($hash->{$section}) || $sectionsWritten{$section});
+			push @lines, "", "[$section]";
+			if ($rules->{$section} eq 'list') {
+				push @lines, @{$hash->{$section}};
+			} else {
+				foreach my $key (keys %{$hash->{$section}}) {
+					push @lines, "$key $hash->{$section}{$key}";
+				}
 			}
 		}
 
