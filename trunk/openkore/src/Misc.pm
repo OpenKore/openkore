@@ -30,6 +30,7 @@ use Log qw(message warning);
 use Plugins;
 use FileParsers;
 use Settings;
+use Utils;
 
 our @EXPORT = qw(
 	auth
