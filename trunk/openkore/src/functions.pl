@@ -3939,7 +3939,7 @@ sub AI {
 			}
 		}
 		else {
-			my $skillIDNumber = $chars[$config{'char'}]{'skills'}{$ai_seq_args[0]{'skill_use_id'}}{'ID'};
+			my $skillIDNumber = $skillsID_rlut{lc($skills_lut{AI::args->{skill_use_id}})};
 			if (defined $ai_seq_args[0]{monsterID} && !%{$monsters{$ai_seq_args[0]{monsterID}}}) {
 				# This skill is supposed to be used for attacking a monster, but that monster has died
 				shift @ai_seq;
