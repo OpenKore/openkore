@@ -2713,7 +2713,7 @@ sub AI {
 			unshift @ai_seq_args, {forcedBySell => 1};
 		}
 	} elsif ($ai_seq[0] eq "sellAuto" && timeOut(\%{$timeout{'ai_sellAuto'}})) {
-		getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
+		getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}}) if ($config{'sellAuto'});
 		if (!$config{'sellAuto'} || !defined($ai_seq_args[0]{'npc'}{'ok'})) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOSELL;
@@ -2785,8 +2785,7 @@ sub AI {
 
 	AUTOBUY: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow")
-	  && timeOut(\%{$timeout{'ai_buyAuto'}})) {
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow") && timeOut(\%{$timeout{'ai_buyAuto'}})) {
 		undef $ai_v{'temp'}{'found'};
 		$i = 0;
 		while (1) {
@@ -3490,9 +3489,9 @@ sub AI {
 				) {
 					push @{$ai_v{'ai_attack_partyMonsters'}}, $_;
 
-				# Begin the attack only when noone else is on screen, stollen from the skore forums a long time ago.
+				# Begin the attack only when noone else is on screen, stolen from the skore forums a long time ago.
 				} elsif ($config{'attackAuto_onlyWhenSafe'}
-					&& $config{'attackAuto'} >= 1
+					&& $config{'attackAuto'} >= 2
 					&& binSize(\@playersID) == 0
 					&& $ai_seq[0] ne "sitAuto" && $ai_seq[0] ne "take" && $ai_seq[0] ne "items_gather" && $ai_seq[0] ne "items_take"
 					&& !($monsters{$_}{'dmgFromYou'} == 0 && ($monsters{$_}{'dmgTo'} > 0 || $monsters{$_}{'dmgFrom'} > 0 || %{$monsters{$_}{'missedFromPlayer'}} || %{$monsters{$_}{'missedToPlayer'}} || %{$monsters{$_}{'castOnByPlayer'}})) && $monsters{$_}{'attack_failed'} == 0
@@ -3846,7 +3845,7 @@ sub AI {
 		$ai_v{'ai_attack_cleanMonster'} = 0 if ($monsters{$ID}{'attackedByPlayer'});
 
 		if (!$ai_v{'ai_attack_cleanMonster'}) {
-			message "Dropping target - you will not kill steal others\n",,1;
+			message "Dropping target - you will not kill steal others\n";
 			sendAttackStop(\$remote_socket);
 			$monsters{$ai_seq_args[0]{'ID'}}{'ignore'} = 1;
 
@@ -3855,7 +3854,6 @@ sub AI {
 			shift @ai_seq_args;
 			# Remove "route"
 			if ($ai_seq[0] eq "route") {
-				$ai_seq_args[0]{'destroyFunction'}->($ai_seq_args[$index]) if ($ai_seq_args[0]{'destroyFunction'});
 				shift @ai_seq;
 				shift @ai_seq_args;
 			}
@@ -3958,7 +3956,7 @@ sub AI {
 			} elsif ($ai_seq_args[0]{'index'} eq '0' 		#if index eq '0' (but not index == 0)
 			      && $ai_seq_args[0]{'old_x'} == $cur_x		#and we are still on the same
 			      && $ai_seq_args[0]{'old_y'} == $cur_y ) {	#old XY coordinate,
-				
+
 				debug "Stuck: $field{'name'} ($cur_x,$cur_y)->($ai_seq_args[0]{'new_x'},$ai_seq_args[0]{'new_y'})\n", "route";
 				#ShowValue('solution', \@{$ai_seq_args[0]{'solution'}});
 				shift @ai_seq;
@@ -4079,7 +4077,7 @@ sub AI {
 				delete $ai_seq_args[0]{'dest'}{'field'};
 				debug "Map Solution Ready for traversal.\n", "route";
 			} elsif ($ai_seq_args[0]{'done'}) {
-				warning "No map solution was found from [$field{'name'}($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'})] to [$ai_seq_args[0]{'dest'}{'map'}($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'})].\n", "route";
+				warning "Unable to calculate how to walk from [$field{'name'}($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'})] to [$ai_seq_args[0]{'dest'}{'map'}($ai_seq_args[0]{'dest'}{'pos'}{'x'},$ai_seq_args[0]{'dest'}{'pos'}{'y'})] (no map solution).\n", "route";
 				shift @ai_seq;
 				shift @ai_seq_args;
 			}
@@ -5850,10 +5848,11 @@ sub parseMsg {
 		my $amount = unpack("S1", substr($msg, 4, 2));
 		my $fail = unpack("C1", substr($msg, 22, 1));
 
-		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
 		if (!$fail) {
 			my $item;
-			if (!$invIndex) {
+			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+			if (!defined $invIndex) {
+				# Add new item
 				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
 				$item = $chars[$config{'char'}]{'inventory'}[$invIndex] = {};
 				$item->{index} = $index;
@@ -5866,6 +5865,7 @@ sub parseMsg {
 				$item->{cards} = substr($msg, 11, 8);
 				$item->{name} = itemName($item);
 			} else {
+				# Add stackable item
 				$item = $chars[$config{'char'}]{'inventory'}[$invIndex];
 				$item->{amount} += $amount;
 			}
@@ -5874,6 +5874,7 @@ sub parseMsg {
 			$disp .= $item->{name};
 			$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
 			message "$disp\n", "drop";
+
 			($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 			$disp .= " ($map_string)\n";
 			itemLog($disp);
