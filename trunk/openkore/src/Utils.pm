@@ -41,7 +41,19 @@ our @EXPORT = qw(
 # the end of @r_array if there are no empty slots.
 #
 # Example:
-# binAdd(\@monstersID, $ID);
+# @list = ("ID1", undef, "ID2");
+# binAdd(\@list, "New");
+# # Result:
+# # $list[0] eq "ID1"
+# # $list[1] eq "New"
+# # $list[2] eq "ID2"
+#
+# @list = ("ID1", "ID2");
+# binAdd(\@list, "New")
+# # Result:
+# # $list[0] eq "ID1"
+# # $list[1] eq "ID2"
+# # $list[2] eq "New"
 sub binAdd {
 	my $r_array = shift;
 	my $ID = shift;
