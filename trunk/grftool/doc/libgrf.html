@@ -54,9 +54,15 @@ The functions are declared in the header file <code>grf.h</code>.
 	<td>Extracts a file inside a GRF archive into memory.</td>
 </tr>
 <tr>
+	<td><code>void *grf_index_get (Grf *grf, unsigned long index, unsigned long *size, GrfError *error);</code></td>
+	<td>Like <code>grf_get()</code>, but expects an index instead of filename.</td>
+<tr>
 	<td><code>int grf_extract (Grf *grf, char *fname, char *writeToFile, GrfError *error);</code></td>
 	<td>Extracts a file inside a GRF archive into a file.</td>
 </tr>
+<tr>
+	<td><code>int grf_index_extract (Grf *grf, unsigned long index, const char *writeToFile, GrfError *error);</code></td>
+	<td>The equivalent of <code>grf_index_get()</code> for <code>grf_extract</code>.</td>
 <tr>
 	<td><code>void grf_free (Grf *grf);</code></td>
 	<td>Frees a <code>Grf</code> structure pointer.</td>
@@ -68,19 +74,29 @@ The functions are declared in the header file <code>grf.h</code>.
 </table>
 
 
-<h2>Opening a GRF file</h2>
+<p class="p"><h2>Opening a GRF file</h2>
 
-Let's say you have the GRF file "data.grf". The first thing to do is to call <code>grf_open()</code>.
+Let's say you have the GRF archive "data.grf". The first thing to do is
+to call <code>grf_open()</code>.
 This will open a GRF archive. Example:
 <pre class="example">
-Grf *grf;
-GrfError error_code;
+<span class="cinc">#include</span> <span class="cinc2">&lt;stdio.h&gt;</span>
+<span class="cinc">#include</span> <span class="cinc2">&lt;stdlib.h&gt;</span>
+<span class="cinc">#include</span> <span class="cinc2">"grf.h"</span>
 
-grf = grf_open ("data.grf", &amp;error_code);
-if (!grf) {
-    printf ("Cannot open data.grf: error code %d\n", error_code);
-    printf ("The error message is: %s\n", grf_strerror (error_code));
-    exit (1);
+<span class="ctype">int</span> main (<span class="ctype">int</span> argc, <span class="ctype">char *</span>argv[])
+{
+    <span class="ctype">Grf *</span>grf;
+    <span class="ctype">GrfError</span> error_code;
+
+    grf = grf_open (<span class="cstr">"data.grf"</span>, <span class="cpointer">&amp;error_code</span>);
+    <span class="ckey">if</span> (!grf) {
+        printf (<span class="cstr">"Cannot open data.grf: error code %d\n"</span>, error_code);
+        printf (<span class="cstr">"The error message is: %s\n"</span>, grf_strerror (error_code));
+        exit (<span class="cnum">1</span>);
+    }
+
+    <span class="ckey">return</span> <span class="cnum">0</span>;
 }
 </pre>
 
@@ -100,49 +116,49 @@ this code into a human-readable message.
 You need the return value of <code>grf_open()</code> to do anything else with the opened archive.
 
 
-<h2>Listing the files inside a GRF archive</h2>
+<p class="p"><h2>Listing the files inside a GRF archive</h2>
 
 Now that you've opened a GRF archive, you can look at what's inside. The following example will print all
 filenames inside in the archive to screen:
 <pre class="example">
-int i;
+<span class="ctype">int</span> i;
 
-for (i = 0; i &lt; grf-&gt;nfiles; i++) {
-    printf ("%s\n", grf-&gt;files[i].name);
+<span class="ckey">for</span> (i = <span class="cnum">0</span>; i &lt; grf-&gt;nfiles; i++) {
+    printf (<span class="cstr">"%s\n"</span>, grf-&gt;files[i].name);
 }
 </pre>
 
 Yes, it's this simple! The <code>Grf</code> structure contains information about the GRF archive, and has the following fields:
-<pre class="struct">typedef struct {
-    char *filename;         <span class="comment">/* The filename of the GRF archive */</span>
-    int version;            <span class="comment">/* The GRF archive's internal version number */</span>
-    unsigned long nfiles;   <span class="comment">/* Number of files inside the archive */</span>
-    GrfFile *files;         <span class="comment">/* An array which contains information about all files */</span>
+<pre class="struct"><span class="ckey">typedef struct</span> {
+    <span class="ctype">char *</span>filename;         <span class="comment">/* The filename of the GRF archive */</span>
+    <span class="ctype">int</span> version;            <span class="comment">/* The GRF archive's internal version number */</span>
+    <span class="ctype">unsigned long</span> nfiles;   <span class="comment">/* Number of files inside the archive */</span>
+    <span class="ctype">GrfFile *</span>files;         <span class="comment">/* An array which contains information about all files */</span>
 
     <span class="comment">/* Private fields; do not use! */</span>
-    FILE *f;
+    <span class="ctype">FILE</span> *f;
 } Grf;
 </pre>
 
 
-<h2>Finding more information about a specific file</h2>
+<p class="p"><h2>Finding more information about a specific file</h2>
 
 Let's say there's a file inside the GRF archive, called "data\readme.txt".
 You want to know more about that file. The following example will retrieve a
 structure which contains information about "data\readme.txt":
 <pre class="example">
-GrfFile *f;
-unsigned long index;
+<span class="ctype">GrfFile *</span>f;
+<span class="ctype">unsigned long</span> index;
 
-f = grf_find (grf, "data\\readme.txt", &amp;index);
-if (!f) {
-    printf ("File data\\readme.txt not found inside archive.\n");
-    exit (1);
-} else {
+f = grf_find (grf, <span class="cstr">"data\\readme.txt"</span>, &amp;index);
+<span class="ckey">if</span> (!f) {
+    printf (<span class="cstr">"File data\\readme.txt not found inside archive.\n"</span>);
+    exit (<span class="cnum">1</span>);
+} <span class="ckey">else</span> {
     <span class="comment">/* File found inside archive!
      * Note that the variable f is equal to grf-&gt;files[index]
      */</span>
-    printf ("data\\readme.txt will be %ld bytes if you extract it.\n", f-&gt;real_len);
+    printf (<span class="cstr">"data\\readme.txt will be %ld bytes if you extract it.\n"</span>, f-&gt;real_len);
 }
 </pre>
 
@@ -154,22 +170,22 @@ Only two fields are interesting to application developers:
 </ul>
 
 
-<h2>Extracting files from an archive</h2>
+<p class="p"><h2>Extracting files from an archive</h2>
 
 Use <code>grf_get()</code> to extract a file into memory. Example:
 <pre class="example">
-void *data;
-unsigned long size;
-GrfError error;
+<span class="ctype">void *</span>data;
+<span class="ctype">unsigned long</span> size;
+<span class="ctype">GrfError</span> error;
 
-data = grf_get (grf, "data\\readme.txt", &amp;size, error);
-if (!data) {
-    printf ("Unable to extract data\\readme.txt. Error code: %d\n", error);
-    printf ("Error message: %s\n", grf_strerror (error));
-    exit (1);
+data = grf_get (grf, <span class="cstr">"data\\readme.txt"</span>, &amp;size, error);
+<span class="ckey">if</span> (!data) {
+    printf (<span class="cstr">"Unable to extract data\\readme.txt. Error code: %d\n"</span>, error);
+    printf (<span class="cstr">"Error message: %s\n"</span>, grf_strerror (error));
+    exit (<span class="cnum">1</span>);
 }
-printf ("data\\readme.txt is %ld bytes long.\n", size);
-printf ("The content of that file is: %s\n", (char *) data);
+printf (<span class="cstr">"data\\readme.txt is %ld bytes long.\n"</span>, size);
+printf (<span class="cstr">"The content of that file is: %s\n"</span>, (<span class="ctype">char *</span>) data);
 </pre>
 On success, <code>grf_get</code> will return a pointer to the a piece of memory which contains the data.
 The data is <code>size</code> bytes long. On failure, it will return <code>NULL</code>.
@@ -179,19 +195,26 @@ The error code is put into the variable <code>error</code>.
 If you want to extract a file inside the archive directly into a real file,
 use <code>grf_extract()</code>:
 <pre class="example">
-GrfError error;
+<span class="ctype">GrfError</span> error;
 
-if (grf_extract (grf, "data\\readme.txt", "saved.txt", &amp;error)) {
-    printf ("File extracted into saved.txt.\n");
-} else {
-    printf ("Cannot extract file. Error code: %d\n", error);
-    printf ("Error message: %s\n", grf_strerror (error));
-    exit (1);
+<span class="ckey">if</span> (grf_extract (grf, <span class="cstr">"data\\readme.txt"</span>, <span class="cstr">"saved.txt"</span>, &amp;error)) {
+    printf (<span class="cstr">"File extracted into saved.txt.\n"</span>);
+} <span class="ckey">else</span> {
+    printf (<span class="cstr">"Cannot extract file. Error code: %d\n"</span>, error);
+    printf (<span class="cstr">"Error message: %s\n"</span>, grf_strerror (error));
+    exit (<span class="cnum">1</span>);
 }
 </pre>
 
 
-<h2>Cleaning up</h2>
+<div class="tip">
+	<h3>Tip</h3>
+	If you already know the index (in the <code>grf-&gt;files</code> array) of the file you want to extract,
+	you should use <code>grf_index_get()</code> or <code>grf_index_extract()</code>.
+</div>
+
+
+<p class="p"><h2>Cleaning up</h2>
 
 Always call <code>grf_free()</code> if you do not need a <code>Grf</code> variable anymore.
 This will release the memory used by that variable.
@@ -200,13 +223,12 @@ grf_free (grf);
 </pre>
 
 
-<h2>Error codes</h2>
+<p class="p"><h2>Error codes</h2>
 
 The following error codes are available:
 
 <pre class="struct">
-typedef enum
-{
+<span class="ckey">typedef enum</span> {
     <span class="comment"><i>/* Developer errors */</i></span>
     GE_BADARGS,      <span class="comment">/* Bad arguments passed to function */</span>
 

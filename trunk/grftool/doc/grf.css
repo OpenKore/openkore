@@ -103,6 +103,21 @@ h2:hover {
 	color: red;
 }
 
+.tip {
+	border: dashed 1px #ddeedd;
+	background: #f7fff7;
+	padding: 0.25cm;
+}
+.tip h3 {
+	padding: 0;
+	margin: 0;
+	padding-bottom: 0.25cm;
+}
+
+.p {
+	margin-bottom: 1cm;
+}
+
 .example {
 	border: lightgray dotted 1px;
 	background: #fffde8;
@@ -115,8 +130,27 @@ h2:hover {
 }
 
 .struct {
-	border: lightgray dotted 1px;
+	border: #ccccff solid 1px;
 	background: #f6f6ff;
 	padding: 6px;
 	margin: 1em;
+}
+
+.cstr {
+	color: blue;
+}
+.cnum {
+	color: brown;
+}
+.ctype {
+	color: darkgreen;
+}
+.ckey {
+	color: purple;
+}
+.cinc {
+	color: #cc66cc;
+}
+.cinc2 {
+	color: #b18f47;
 }
