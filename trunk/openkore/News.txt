@@ -48,7 +48,7 @@ New config options:
   *_inInventory_qty  : check for quantity
   These are add-ons for the skill usage, item usage and equipAuto config
   options.
-- *_currentAI : check for current active AI sequence (eg attack, move...)
+- *_onAction : check for current active AI sequence (eg attack, move...)
 - partySkill_target: comma seperated targets
 
 Bug fixes:
