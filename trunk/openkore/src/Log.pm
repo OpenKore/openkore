@@ -9,6 +9,40 @@
 #  See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 
+# Q: What is a logging framework and why is it needed?
+#
+# Kore prints messages to the console using print(). There are several
+# problems though:
+# - Messages can only be printed to the console. If you want to print it
+#   to elsewhere you have to resort to all kinds of hacks (take a look
+#   at the code for sending console output to X-Kore, for example).
+# - The messages have no classification. You have a message, but there's
+#   no easy way for the program to find out what kind of message it is;
+#   you don't know it's context. This means that the user can't really control
+#   what kind of messages he does and doesn't want to see.
+# - Debug messages are all in the form of print "bla\n" if ($config{'verbose'});
+#   You can either enable all debug messages, or nothing at all. For developers,
+#   the huge amount of debug messages can make things look cluttered.
+#
+# The logging framework provides a new way to print messages:
+# - You can print messages (of course).
+# - You can classify messages: attaching a context (domain) to a message you print.
+# - You can intercept messages and decide what else to do with it. You can write to
+#   a file, send to X-Kore (based on the message's domain), or whatever you want.
+# - You can attach certain colors to messages of a certain domains.
+# - You can choose what kind of message you do and do not want to see.
+#
+# The most important functions are:
+# message(), warning(), error(), debug()
+#
+# You pass the following arguments to those functions:
+# message: The message you want to print.
+# domain: The message domain (context). This is used to classify a message.
+# level: The message's verbosity level. The message will only be printed if this number
+#        is lower than or equal to $config{'verbose'} (or $config{'debug'} if this is a
+#        debug message). Important messages should have a low verbosity level,
+#        unimportant/redundant messages should have a high verbosity level.
+
 # Known domains:
 # attacked		Monster attacks you
 # attackMon		You attack monster
@@ -211,21 +245,29 @@ sub setColor {
 #################################
 
 
+# Prints a normal message.
+# Usage: message(message, [domain], [level])
 sub message {
 	return processMsg("message", $_[0], $_[1], $_[2], $config{'verbose'},
 		\%messageConsole, \%messageFiles);
 }
 
+# Prints a warning message. It warns the user that a possible error has occured or will occur.
+# Usage: warning(message, [domain], [level])
 sub warning {
 	return processMsg("warning", $_[0], $_[1], $_[2], $warningVerbosity,
 		\%warningConsole, \%warningFiles);
 }
 
+# Prints an error message. It tells the user that a non-recoverable error has occured.
+# Usage: error(message, [domain], [level])
 sub error {
 	return processMsg("error", $_[0], $_[1], $_[2], $errorVerbosity,
 		\%errorConsole, \%errorFiles);
 }
 
+# Prints a debugging message.
+# Usage: debug(message, [domain], [level])
 sub debug {
 	my $level = $_[2];
 	$level = 1 if (!defined $level);
