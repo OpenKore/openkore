@@ -163,7 +163,7 @@
 1161 Plankton
 1162 Rafflesia
 1163 Raydric
-1164 Requim
+1164 Requiem
 1165 Sand Man
 1166 Savage
 1167 Savage Babe
@@ -187,7 +187,7 @@
 1185 Whisper
 1186 Whisper Boss
 1187 Switch
-1188 Bon Gun
+1188 Bongun
 1189 Orc Archer
 1190 Orc Lord
 1191 Mimic
