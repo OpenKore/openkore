@@ -92,14 +92,17 @@ Another example:
 
 Like Perl, GCC is also a commandline program.
 <p>
-Compiling <tt>Tools.cpp</tt> and <tt>Inject.cpp</tt> is just a matter of typing
-<tt>"make -f Makefile.win32"</tt> in the console. Example:
-<pre class="example">
-<b>C:\&gt;</b> cd "C:\My Downloads\openkore"
-<b>C:\My Downloads\openkore&gt;</b> make -f Makefile.win32
-</pre>
-
-If you see no error messages, then the compilation succeeded.
+To compile <tt>XSTools.dll</tt> and <tt>NetRedirect.dll</tt>, you must use the <tt>Cygwin Bash shell</tt>.
+Grossly oversimplified, Bash is like DOS, except the directory seperated is a <b>/</b> instead of <b>\</b>.
+<p>
+First, cd into your OpenKore folder:
+<pre class="example">cd "C:/My Downloads/openkore"</pre>
+Now type:
+<pre class="example">make</pre>
+Yes, that's it.
+<p>
+If you see no error messages, then the compilation succeeded. You will find the DLLs in
+<tt>src\auto\XSTools</tt> and <tt>src\auto\XSTools\win32</tt>.
 
 
 </div>
