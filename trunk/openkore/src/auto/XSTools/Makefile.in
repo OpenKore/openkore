@@ -15,22 +15,22 @@ XSTools.$(DLLEXT): sub
 
 
 sub:
-	make -C pathfinding
-	make -C misc
+	gmake -C pathfinding
+	gmake -C misc
 #if unix
-	make -C unix
+	gmake -C unix
 #endif
 #if win32
-	make -C win32
+	gmake -C win32
 #endif
 
 
 clean:
 	rm -f XSTools.$(DLLEXT) symbols.gccdef Makefile.real
-	make clean -C pathfinding
+	gmake clean -C pathfinding
 #if unix
-	make clean -C unix
+	gmake clean -C unix
 #endif
 #if win32
-	make clean -C win32
+	gmake clean -C win32
 #endif
