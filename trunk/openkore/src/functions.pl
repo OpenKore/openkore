@@ -257,6 +257,7 @@ sub checkConnection {
 		$conState_tries++;
 		initConnectVars();
 		Network::connectTo(\$remote_socket, $map_ip, $map_port);
+		#Network::connectTo(\$remote_socket, '70.85.47.164', $map_port);
 		sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		$timeout{'maplogin'}{'time'} = time;
@@ -6333,7 +6334,7 @@ sub parseMsg {
 			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 		}
 
-		chatLog("c", "[$map_string $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}{x}, $players{$ID}{pos_to}{y}] [dist=$dist]\n" .
+		chatLog("c", "[$map_string $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}{x}, $players{$ID}{pos_to}{y}] [dist=$dist] " .
 			"$chat\n") if ($config{logChat});
 		message "[dist=$dist] $chat\n", "publicchat";
 
