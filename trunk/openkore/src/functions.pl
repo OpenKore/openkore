@@ -1456,7 +1456,7 @@ sub parseCommand {
 					my $display = "$storage{$storageID[$i]}{'name'}";
 					$display .= " x $storage{$storageID[$i]}{'amount'}";
 					$display .= " -- Not Identified" if !$storage{$storageID[$i]}{identified};
-	
+
 					$list .= sprintf("%2d %s\n", $i, $display);
 				}
 				$list .= "\nCapacity: $storage{'items'}/$storage{'items_max'}\n";
@@ -2602,14 +2602,14 @@ sub AI {
 	##### STORAGE GET #####
 	# Get one or more items from storage.
 
-	if (AI::action eq "storageGet" && timeOut(AI::args) && $storage{opened}) {
+	if (AI::action eq "storageGet" && timeOut(AI::args)) {
 		my $item = AI::args->{items}[0];
 		my $amount = AI::args->{max};
 
 		if (!$amount || $amount > $storage{$storageID[$item]}{amount}) {
 			$amount = $storage{$storageID[$item]}{amount};
 		}
-		sendStorageGet(\$remote_socket, $storage{$storageID[$item]}{index}, $amount);
+		sendStorageGet(\$remote_socket, $storage{$storageID[$item]}{index}, $amount) if ($storage{opened});
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{'items'}} <= 0);
