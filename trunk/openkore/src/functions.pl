@@ -339,7 +339,7 @@ sub mainLoop {
 		$basePercent = sprintf("%.2f", $chars[$config{'char'}]{'exp'} / $chars[$config{'char'}]{'exp_max'} * 100) if $chars[$config{'char'}]{'exp_max'};
 		$jobPercent = sprintf("%.2f", $chars[$config{'char'}]{'exp_job'} /$ chars[$config{'char'}]{'exp_job_max'} * 100) if $chars[$config{'char'}]{'exp_job_max'};
 		$weight = int($chars[$config{'char'}]{'weight'} / $chars[$config{'char'}]{'weight_max'} * 100) . "%" if $chars[$config{'char'}]{'weight_max'};
-		$pos = " : $chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'} $field{'name'}" if ($chars[$config{'char'}]{'pos_to'} && $field{'name'});
+		$pos = " : $chars[$config{'char'}]{'pos'}{'x'},$chars[$config{'char'}]{'pos'}{'y'} $field{'name'}" if ($chars[$config{'char'}]{'pos'} && $field{'name'});
 
 		$title = "${charName} B$chars[$config{'char'}]{'lv'} ($basePercent%), J$chars[$config{'char'}]{'lv_job'}($jobPercent%) : w$weight${pos} - $Settings::NAME";
 		$interface->title($title);
@@ -4075,8 +4075,8 @@ sub AI {
 			undef $ai_seq_args[0]{'index'};
 			undef $ai_seq_args[0]{'old_x'};
 			undef $ai_seq_args[0]{'old_y'};
-			$ai_seq_args[0]{'new_x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
-			$ai_seq_args[0]{'new_y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
+			undef $ai_seq_args[0]{'new_x'};
+			undef $ai_seq_args[0]{'new_y'};
 			$ai_seq_args[0]{'time_step'} = time;
 			$ai_seq_args[0]{'stage'} = 'Walk the Route Solution';
 
@@ -4120,17 +4120,19 @@ sub AI {
 					#see how far we've walked since the last move command and
 					#trim down the soultion tree by this distance, but
 					#never remove the last step (it'll be removed when we arrive there)
-					my $trimsteps = 1;
-					$trimsteps++ while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
+					my $trimsteps = 0;
+					while ($trimsteps < @{$ai_seq_args[0]{'solution'}}
 							 && distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps+1])
 							    < distance( { 'x' => $cur_x, 'y' => $cur_y }, $ai_seq_args[0]{'solution'}[$trimsteps])
-						);
+						) {
+						$trimsteps++;
+					}
 					$trimsteps = @{$ai_seq_args[0]{'solution'}} - 1 if ($trimsteps >= @{$ai_seq_args[0]{'solution'}});
 					debug "Route - trimming down solution by $trimsteps steps\n", "route";
 					splice(@{$ai_seq_args[0]{'solution'}}, 0, $trimsteps) if ($trimsteps > 0);
 				}
 				my $stepsleft = @{$ai_seq_args[0]{'solution'}};
-				if ($stepsleft > 1 || ($stepsleft == 1 && ($ai_seq_args[0]{'new_x'} != $cur_x || $ai_seq_args[0]{'new_y'} != $cur_y))) {
+				if ($stepsleft && ($ai_seq_args[0]{'new_x'} != $cur_x || $ai_seq_args[0]{'new_y'} != $cur_y)) {
 					#if we still have more points to cover, walk to next point
 					$ai_seq_args[0]{'index'} = @{$ai_seq_args[0]{'solution'}}-1 if $ai_seq_args[0]{'index'} >= @{$ai_seq_args[0]{'solution'}};
 					$ai_seq_args[0]{'new_x'} = $ai_seq_args[0]{'solution'}[$ai_seq_args[0]{'index'}]{'x'};
