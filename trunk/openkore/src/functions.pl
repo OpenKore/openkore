@@ -4503,7 +4503,7 @@ sub AI {
 		}
 	}
 
-	
+
 	##### MOVE #####
 
 	if ($ai_seq[0] eq "move" && $ai_seq_args[0]{'suspended'}) {
@@ -4511,7 +4511,17 @@ sub AI {
 		undef $ai_seq_args[0]{'suspended'};
 	}
 	if ($ai_seq[0] eq "move") {
-		if (timeOut(\%{$ai_seq_args[0]{'ai_move_giveup'}})) {
+		if ($ai_seq_args[0]{'stage'} eq 'Done') {
+			# When the server sends us the "You move from A to B" packet, it means
+			# that we will arrive at B shortly, not that we are at B.
+			# So wait until we've arrived.
+			if (timeOut($char->{time_move}, $char->{time_move_calc}) - $config{'seconds_per_block'}) {
+				#debug("Move - dequeue\n", "ai_move");
+				shift @ai_seq;
+				shift @ai_seq_args;
+			}
+
+		} elsif (timeOut(\%{$ai_seq_args[0]{'ai_move_giveup'}})) {
 			# We couldn't move within ai_move_giveup seconds; abort
 			debug("Move - give up\n", "ai_move");
 			stuckCheck(1);
@@ -4544,11 +4554,10 @@ sub AI {
 
 		} elsif ($ai_seq_args[0]{'move_to'}{'x'} eq $chars[$config{'char'}]{'pos_to'}{'x'}
 		      && $ai_seq_args[0]{'move_to'}{'y'} eq $chars[$config{'char'}]{'pos_to'}{'y'}) {
-			# We've arrived at our destination. Remove the move AI sequence.
+			# We've arrived at our destination
 			debug("Move - arrived\n", "ai_move");
 			stuckCheck(0);
-			shift @ai_seq;
-			shift @ai_seq_args;
+			$ai_seq_args[0]{'stage'} = 'Done';
 		}
 	}
 

@@ -34,7 +34,7 @@ use base qw(Wx::App Interface);
 use Settings;
 use Utils;
 
-use constant MAX_CONSOLE_LINES => 30;
+use constant MAX_CONSOLE_LINES => 2000;
 
 our %fgcolors;
 
@@ -277,7 +277,7 @@ sub createInterface {
 
 	#################
 
-	$frame->SetClientSize(600, 400);
+	$frame->SetClientSize(650, 410);
 	$frame->SetIcon(Wx::GetWxPerlIcon());
 	$frame->Show(1);
 	$self->SetTopWindow($frame);
@@ -353,9 +353,9 @@ sub onClose {
 sub onInputEnter {
 	my $self = shift;
 	$self->{input} = $self->{inputBox}->GetValue();
-	#$self->{console}->SetDefaultStyle($self->{inputStyle});
-	#$self->{console}->AppendText("$self->{input}\n");
-	#$self->{console}->SetDefaultStyle($self->{defaultStyle});
+	$self->{console}->SetDefaultStyle($self->{inputStyle});
+	$self->{console}->AppendText("$self->{input}\n");
+	$self->{console}->SetDefaultStyle($self->{defaultStyle});
 	$self->{inputBox}->Remove(0, -1);
 }
 
