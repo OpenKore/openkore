@@ -3,6 +3,7 @@
  *  grf.c - read and manipulate GRF/GPF files
  *  Copyright (C) 2004  Faithful <faithful@users.sf.net>
  *  Copyright (C) 2004  Hongli Lai <h.lai@chello.nl>
+ *  Copyright (C) 2004  Rasqual <rasqualtwilight@users.sf.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -665,7 +666,7 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 		GRF_SETERR(error,GE_ERRNO,malloc);
 		return 0;
 	}
-	compress(comp_dat, &comp_len, grf->filedatas[i], grf->files[i].real_len);
+	compress(comp_dat, &comp_len, grf->files[i].data, grf->files[i].real_len);
 	grf->files[i].compressed_len = comp_len;
 	
 	/* Encrypt the data as well */
@@ -760,36 +761,14 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
  * \return 0 if an error occurred, 1 if all is good
  */
 static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
-	/* pseudo-code:
-
-	for each GrfFile with pos 0
-		compress_and_encrypt(newdata)
-		GRF_find_unused
-		fseek
-		fwrite
-	next
-
-	create(file_info_table) // 0x1xx doesn't compress fileinfo table
-	fseek(seek_end) // file info table is always at end
-	fwrite
-
-	*/
-	GRF_SETERR(error,GE_NSUP,GRF_flushVer1);
-	return 0;
-	/*! \todo Finish writing this code... */
-#if 0
 	int callbackRet;
 	int processOnlyReady = 0;
 	uLong table_len;
 	uint32_t i,offset,len,table_maxlen;
-	uLongf zlen;
-	uLong zlenmax;
-	uint32_t table_len_le;
-	uint32_t zlen_le;
 	uint32_t write_offset, write_offset_le;
-	uint32_t dummy_seed = 0;
+	uint32_t dummy_seed = 0, dummy_seed_le = 0;
 	uint32_t e_count = 0, e_count_le;
-	char *buf, *zbuf, namebuf[GRF_NAMELEN], keyschedule[0x80];
+	char *buf, namebuf[GRF_NAMELEN], keyschedule[0x80];
 
 #ifdef GRF_FIXED_KEYSCHEDULE
 	char key[8];
@@ -807,15 +786,9 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	 * is relied upon to read only as much as necessary.
 	 */
 	table_maxlen = grf->nfiles * sizeof(GrfFile);
-	zlenmax = compressBound(table_maxlen);
 
 	/* Allocate memory for the table */
 	if ((buf=(char*)malloc(table_maxlen))==NULL) {
-		GRF_SETERR(error,GE_ERRNO,malloc);
-		return 0;
-	}
-	if ((zbuf=(char*)malloc(zlenmax))==NULL) {
-		free(buf);
 		GRF_SETERR(error,GE_ERRNO,malloc);
 		return 0;
 	}
@@ -830,7 +803,11 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 
 	/* compress in-memory files */
 	/* Write information about each file */
-	for (i=offset=0;i<grf->nfiles;++i) {
+	for (i=offset=0;i<grf->nfiles;++i
+#ifdef GRF_FIXED_KEYSCHEDULE
+,keygen102+=5,keygen101-=2
+#endif /* GRF_FIXED_KEYSCHEDULE */
+	) {
 		/* Run the callback, if we have one */
 		if (callback && 0!=(callbackRet=callback(&(grf->files[i]),error))) {
 			if (callbackRet<0) {
@@ -838,7 +815,6 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 				 * have an error
 				 */
 				free(buf);
-				free(zbuf);
 				return 0;
 			}
 			else if (callbackRet==1) {
@@ -874,7 +850,7 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 				 */
 				if ((grf->files[i].type & GRFFILE_FLAG_FILE)) {
 					/* Most files in versions 0x01xx use MIXCRYPT, only special ones use 0x14_DES */
-					if (GRF_CheckExt(grf->files[i].name,specialExts)) {
+					if (GRF_CheckExt(grf->files[i].name,specialExts))
 						grf->files[i].type=(grf->files[i].type & ~GRFFILE_FLAG_MIXCRYPT) | GRFFILE_FLAG_0x14_DES;
 					else
 						grf->files[i].type=(grf->files[i].type & ~GRFFILE_FLAG_0x14_DES) | GRFFILE_FLAG_MIXCRYPT;
@@ -882,7 +858,6 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 					/* Compress, encrypt, and write the file */
 					if (GRF_flushFile(grf,i,error)) {
 						free(buf);
-						free(zbuf);
 						return 0;
 					}
 				}
@@ -962,7 +937,7 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 		*(uint32_t*)(buf+offset)     = ToLittleEndian32(grf->files[i].compressed_len+grf->files[i].real_len+0x02CB);
 		*(uint32_t*)(buf+offset+4)   = ToLittleEndian32(grf->files[i].compressed_len_aligned+0x92CB);
 		*(uint32_t*)(buf+offset+8)   = ToLittleEndian32(grf->files[i].real_len);
-		/* Encryption method is determined by file extension in 0x01xx, so just write the file flag */
+		/* Encryption method is determined by file extension in 0x01xx GRFs, so just write the file flag */
 		*(uint8_t*)(buf+offset+0xC)  = grf->files[i].type & GRFFILE_FLAG_FILE;
 		*(uint32_t*)(buf+offset+0xD) = ToLittleEndian32(grf->files[i].pos-GRF_HEADER_FULL_LEN);
 		
@@ -970,7 +945,75 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 		offset+=0x11;
 		++e_count;
 	}
-#endif /* 0 */
+	
+	/* this is the real table length - note to optimizers: extra variable, equiv. to offset */
+	table_len = offset;
+	
+	/*! \todo Find the last used byte so we can overwrite any trailing, unused data */
+	
+	/* Write the table at the end of the file */
+	if (fseek(grf->f, 0, SEEK_END)) {
+		free(buf);
+		GRF_SETERR(error,GE_ERRNO,fseek);
+		return 0;
+	}
+	if (ftell(grf->f)==-1) {
+		free(buf);
+		GRF_SETERR(error,GE_ERRNO,ftell);
+		return 0;
+	}
+	write_offset = ftell(grf->f); /* not -1 */
+	
+	/* Write the file informations */
+	if (fwrite(buf, table_len, 1U, grf->f) < 1U) {
+		free(buf);
+		if (feof(grf->f))
+			GRF_SETERR(error,GE_CORRUPTED,fwrite); /* !!? Cannot write because of end of file */
+		else
+			GRF_SETERR(error,GE_ERRNO,fwrite);
+		return 0;
+	}
+	
+	/* Clean up */
+	free(buf);
+	
+	/* seek to header and update information. Do not forget to alter
+	 * the offset of the table information, write_offset, before writing it.
+	 */
+	if (fseek(grf->f, GRF_HEADER_MID_LEN, SEEK_SET)) {
+		GRF_SETERR(error,GE_ERRNO,fseek);
+		return 0;
+	}
+
+	/* Format for file header
+	 * - uint32_t (4 bytes) = location of fileinfo AFTER the main header. (for
+	 *   example, if file info was at position 1000 and main header is size
+	 *   GRF_HEADER_FULL_LEN, this number would be 1000-GRF_HEADER_FULL_LEN)
+	 * - uint32_t (4 bytes) = part 1 of num_files (i'll explain these in a bit)
+	 * - uint32_t (4 bytes) = part 2 of num_files
+	 * - uint32_t (4 bytes) = version
+	 * When determining the number of files in the GRF/GPF, the client subtracts
+	 * part1 from part2, and then from that subtracts 7 (ie, part2-part1-7).
+	 * I'm not sure how the number for part1 is decided.
+	 * For 0x200 it seems that part1 is always 0x00000000, other than that I'm not sure.
+	 * It shouldn't really matter because that is all it seems it is used for.
+	 */
+
+	/*! \todo Find how 0x01xx version GRFs dummy_seed is generated */
+	/* dummy_seed=0; */
+
+	write_offset_le = ToLittleEndian32(write_offset-GRF_HEADER_FULL_LEN);
+	/* dummy_seed_le = ToLittleEndian32(dummy_seed); */
+	e_count_le = ToLittleEndian32(e_count+dummy_seed+7);
+
+	if (fwrite(&write_offset_le, sizeof(uint32_t), 1U, grf->f) < 1U ||
+	  fwrite(&dummy_seed_le, sizeof(uint32_t), 1U, grf->f) < 1U ||
+	  fwrite(&e_count_le, sizeof(uint32_t), 1U, grf->f) < 1U) {
+		GRF_SETERR(error,GE_ERRNO,fwrite);
+		return 0;
+	}
+	
+	return 1;	
 }
 
 /*! \brief Private function to restructure GRF0x2xx archives
@@ -1003,7 +1046,7 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	uint32_t table_len_le;
 	uint32_t zlen_le;
 	uint32_t write_offset, write_offset_le;
-	uint32_t dummy_seed = 0;
+	uint32_t dummy_seed = 0, dummy_seed_le = 0;
 	uint32_t e_count = 0, e_count_le;
 	char *buf, *zbuf;
 
@@ -1161,7 +1204,8 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	write_offset_le = ToLittleEndian32(write_offset-GRF_HEADER_FULL_LEN);
 	zlen_le = ToLittleEndian32(zlen);
 	table_len_le = ToLittleEndian32(table_len);
-	e_count_le = ToLittleEndian32(e_count+7);
+	/* dummy_seed_le = ToLittleEndian32(dummy_seed); */
+	e_count_le = ToLittleEndian32(e_count+dummy_seed+7);
 	/* Format for Table info
 	 * - uint32_t = compressed_filetable_len
 	 * - uint32_t = real_filetable_len
@@ -1186,7 +1230,7 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 		GRF_SETERR(error,GE_ERRNO,fseek);
 		return 0;
 	}
-	/* Format for file info
+	/* Format for file header
 	 * - uint32_t (4 bytes) = location of fileinfo AFTER the main header. (for
 	 *   example, if file info was at position 1000 and main header is size
 	 *   GRF_HEADER_FULL_LEN, this number would be 1000-GRF_HEADER_FULL_LEN)
@@ -1201,9 +1245,10 @@ static int GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 	 */
 
 	if (fwrite(&write_offset_le, sizeof(uint32_t), 1U, grf->f) < 1U ||
-	  fwrite(&dummy_seed, sizeof(uint32_t), 1U, grf->f) < 1U ||
+	  fwrite(&dummy_seed_le, sizeof(uint32_t), 1U, grf->f) < 1U ||
 	  fwrite(&e_count_le, sizeof(uint32_t), 1U, grf->f) < 1U) {
 		GRF_SETERR(error,GE_ERRNO,fwrite);
+		return 0;
 	}
 
 	return 1;
@@ -1381,11 +1426,6 @@ GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError 
 			GRF_SETERR(error,GE_ERRNO,calloc);
 			return NULL;
 		}
-		if ((grf->filedatas=(void**)calloc(grf->nfiles,sizeof(void*)))==NULL) {
-			grf_free(grf);
-			GRF_SETERR(error,GE_ERRNO,calloc);
-			return NULL;
-		}
 	}
 
 	/* Grab the filesize */
@@ -1500,8 +1540,8 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 	/* Check to see if the filedata has has been extracted already
 	 * (or never compressed/encrypted)
 	 */
-	if (grf->filedatas[index])
-		return grf->filedatas[index];
+	if (grf->files[index].data)
+		return grf->files[index].data;
 
 	/* Return NULL if there is no data */
 	if (!grf->files[index].real_len) {
@@ -1515,8 +1555,8 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 	}
 
 	/* Allocate memory to write into */
-	/* grf->filedatas */
-	if ((grf->filedatas[index]=(char*)malloc(rsiz+1))==NULL) {
+	/* grf->files[i].data */
+	if ((grf->files[index].data=(char*)malloc(rsiz+1))==NULL) {
 		GRF_SETERR(error,GE_ERRNO,malloc);
 		return NULL;
 	}
@@ -1525,15 +1565,15 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 	zlen=rsiz;
 
 	/* Uncompress the data, and catch any errors */
-	if ((i=uncompress((Bytef*)grf->filedatas[index],&zlen,(const Bytef *)zbuf, (uLong)zsiz))!=Z_OK) {
+	if ((i=uncompress((Bytef*)grf->files[index].data,&zlen,(const Bytef *)zbuf, (uLong)zsiz))!=Z_OK) {
 		/* Ignore Z_DATA_ERROR */
 		if (i==Z_DATA_ERROR) {
 			/* Set an error, just don't crash out */
 			GRF_SETERR_2(error,GE_ZLIB,uncompress,i);
 		}
 		else {
-			free(grf->filedatas[index]);
-			grf->filedatas[index] = NULL;
+			free(grf->files[index].data);
+			grf->files[index].data = NULL;
 			GRF_SETERR_2(error,GE_ZLIB,uncompress,i);
 			return NULL;
 		}
@@ -1551,10 +1591,10 @@ GRFEXPORT void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfErro
 #endif /* defined(NEVER_DEFINED) */
 
 	/* Throw a nul-terminator on the extra byte we allocated */
-	*((char*)grf->filedatas[index] + *size)=0;
+	*(char*)(grf->files[index].data + *size)=0;
 
 	/* Return our decrypted, uncompressed data */
-	return grf->filedatas[index];
+	return grf->files[index].data;
 }
 
 
@@ -1752,7 +1792,7 @@ GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfE
 	/* Open the file we should write to */
 	if ((f=fopen(fixedname,"wb"))==NULL) {
 		free(buf);
-		grf->filedatas[index]=NULL;
+		grf->files[index].data=NULL;
 		GRF_SETERR(error,GE_ERRNO,fopen);
 		return 0;
 	}
@@ -1765,7 +1805,7 @@ GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfE
 	/* Clean up and return */
 	fclose(f);
 	free(buf);
-	grf->filedatas[index]=NULL;
+	grf->files[index].data=NULL;
 	return (i)? 1 : 0;
 }
 
@@ -1826,26 +1866,16 @@ GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
 		return 0;
 	}
 
-	/* Free the memory stored by Grf::filedatas */
-	free(grf->filedatas[index]);
+	/* Free the memory stored by GrfFile::data */
+	free(grf->files[index].data);
 
 	/* Loop through, moving each entry forward */
 	for(i=index;i<grf->nfiles-1;i++) {
 		memcpy(&(grf->files[i]),&(grf->files[i+1]),sizeof(GrfFile));
-		grf->filedatas[i]=grf->filedatas[i+1];
 	}
 
 	/* 1 fewer file */
 	grf->nfiles--;
-
-	/* Resize the filedatas array */
-	if ((grf->filedatas=(void**)realloc(grf->filedatas,grf->nfiles*sizeof(void*)))==NULL) {
-		/* Bomb out? It just doesn't seem the best option */
-		GRF_SETERR(error,GE_ERRNO,realloc);
-
-		/* Really return 0? The file was removed though... */
-		return 0;
-	}
 
 	/* Resize the GrfFile array */
 	if ((grf->files=(GrfFile*)realloc(grf->files,grf->nfiles*sizeof(GrfFile)))==NULL) {
@@ -1926,20 +1956,20 @@ GRFEXPORT int grf_index_replace(Grf *grf, uint32_t index, const void *data, uint
 	/* Make sure the data is longer than 0 bytes */
 	if (len>0) {
 		/* Reallocate the memory */
-		if ((grf->filedatas[index]=(void*)realloc(grf->filedatas[index],len))==NULL) {
+		if ((grf->files[index].data=(void*)realloc(grf->files[index].data,len))==NULL) {
 			GRF_SETERR(error,GE_ERRNO,realloc);
 			return 0;
 		}
 
 		/* Copy the memory */
-		memcpy(grf->filedatas[index],data,len);
+		memcpy(grf->files[index].data,data,len);
 	}
 	else {
 		/* Free anything that was there */
-		free(grf->filedatas[index]);
+		free(grf->files[index].data);
 
 		/* Point to NULL */
-		grf->filedatas[index]=NULL;
+		grf->files[index].data=NULL;
 	}
 
 	/* Treat directories seperately */
@@ -1983,7 +2013,6 @@ GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len
 	/* Since realloc() is used, it doesn't matter if we work on temporary buffers,
 	 * because we are extending the realloc()'d buffers.
 	 */
-	void** realloc_datas;
 	GrfFile* realloc_files;
 
 
@@ -2016,22 +2045,15 @@ GRFEXPORT int grf_put(Grf *grf, const char *name, const void *data, uint32_t len
 	return 0;
 
 	/* The file does not exist */
-	/* Resize the filedatas array */
-	if ((realloc_datas = (void**)realloc(grf->filedatas,(grf->nfiles+1)*sizeof(void*)))==NULL) {
-		GRF_SETERR(error,GE_ERRNO,realloc);
-		return 0;
-	}
-	grf->filedatas = realloc_datas;
-	grf->filedatas[grf->nfiles] = NULL;
-	/* if the current function fails later on, the realloc_datas buffer (resp. realloc_files)
-	 * is larger than the expected size but it doesn't matter.
-	 */
 
 	/* Resize the GrfFile array */
 	if ((realloc_files = (GrfFile*)realloc(grf->files,(grf->nfiles+1)*sizeof(GrfFile)))==NULL) {
 		GRF_SETERR(error,GE_ERRNO,realloc);
 		return 0;
 	}
+	/* if the current function fails later on, the realloc_files buffer
+	 * is larger than the expected size but it doesn't matter.
+	 */
 	grf->files = realloc_files;
 	memset(&grf->files[grf->nfiles], 0x00, sizeof(GrfFile));
 
@@ -2120,12 +2142,11 @@ GRFEXPORT void grf_free(Grf *grf) {
 	free(grf->filename);
 
 	/* Free the array of files */
-	free(grf->files);
-
-	/* Free the array of file datas */
 	for(i=0;i<grf->nfiles;i++)
-		free(grf->filedatas[i]);
-	free(grf->filedatas);
+		free(grf->files[i].data);
+
+	/* Free the array of files */
+	free(grf->files);
 
 	free(grf->zbuf);
 

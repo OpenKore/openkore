@@ -3,6 +3,7 @@
  *  grfsupport.c - provide commonly used functions to the library
  *  Copyright (C) 2004  Faithful <faithful@users.sf.net>
  *  Copyright (C) 2004  Hongli Lai <h.lai@chello.nl>
+ *  Copyright (C) 2004  Rasqual <rasqualtwilight@users.sf.net>
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -27,6 +28,7 @@
 #include <errno.h>		/* errno */
 #include <string.h>		/* strerror */
 #include <zlib.h>		/* gzerror */
+#include <dirent.h>		/* alphasort */
 
 GRFEXTERN_BEGIN
 
@@ -151,105 +153,6 @@ GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index) {
 	return NULL;
 }
 
-
-#define CMP_GF(g,a,b) callback(g->files + a, g->files + b)
-
-/*! \brief Implementation of Quick Sort to work with GrfFiles
- * \warn Feeding with a particular sequence can lead to stack overflow.
- *
- * \todo Write documentation
- */
-static void GRF_qsort (Grf *grf, uint32_t left, uint32_t right, GrfSortCallback callback) {
-	uint32_t i, j;
-	GrfFile swp;
-	void *swpdata;
-
-	if ( left < right ) {
-		/* Select a sweeper "randomly" */
-		uint32_t ref=(left+right+1)/2,pivot;
-		memcpy(&swp, &(grf->files[left]), sizeof(GrfFile));
-		memcpy(&(grf->files[left]),&(grf->files[ref]),sizeof(GrfFile));
-		memcpy(&(grf->files[ref]),&swp,sizeof(GrfFile));
-
-		/* Swap the filedatas */
-		swpdata=grf->filedatas[left];
-		grf->filedatas[left]=grf->filedatas[ref];
-		grf->filedatas[ref]=swpdata;
-
-		i=left+1;
-		j=right;
-		do {
-			while (i<j && CMP_GF(grf,i,left)<0) ++i;
-			while (i<j && CMP_GF(grf,j,left)>0) --j;
-
-			if (i < j) {
-				/* Do the swap on the file info */
-				memcpy(&swp, &(grf->files[j]), sizeof(GrfFile));
-				memcpy(&(grf->files[j]),&(grf->files[i]),sizeof(GrfFile));
-				memcpy(&(grf->files[i]),&swp,sizeof(GrfFile));
-
-				/* Swap the filedatas */
-				swpdata=grf->filedatas[j];
-				grf->filedatas[j]=grf->filedatas[i];
-				grf->filedatas[i]=swpdata;
-				++i; --j;
-			}
-		} while (i < j);
-		/* out:  a[left+1..j-1] is lt a[left]
-		         a[j+1..right] is gt a[left]
-		*/
-		if ( i == j ) {
-			/* [j] not compared yet */
-			if (CMP_GF(grf,left,j)<0) {
-				/* [left] < [j] but [left] > [j-1] */
-				pivot = j - 1;
-			}
-			else
-			{
-				/* [left] >= [j] */
-				pivot = j;
-			}
-		}
-		else {
-			pivot = j;
-		}
-		if ( left != pivot ) {
-			/* Do the swap on the file info */
-			memcpy(&swp, &(grf->files[pivot]), sizeof(GrfFile));
-			memcpy(&(grf->files[pivot]),&(grf->files[left]),sizeof(GrfFile));
-			memcpy(&(grf->files[left]),&swp,sizeof(GrfFile));
-
-			/* Swap the filedatas */
-			swpdata=grf->filedatas[pivot];
-			grf->filedatas[pivot]=grf->filedatas[left];
-			grf->filedatas[left]=swpdata;
-		}
-//#error debug code
-#if 0
-		{uint32_t k;
-		for ( k = left; k < pivot; ++k )
-		{
-			if ( grf->files[k].pos > grf->files[pivot].pos )
-				fprintf(stderr, "LEFT: %4u %4u -%4u\n", k, pivot, grf->files[k].pos - grf->files[pivot].pos);
-		}
-		for ( k = pivot + 1; k < right; ++k )
-		{
-			if ( grf->files[pivot].pos > grf->files[k].pos )
-				fprintf(stderr, "RIGT: %4u %4u -%4u\n", pivot, k, grf->files[pivot].pos - grf->files[k].pos);
-		}
-		fprintf(stderr, "\n");
-		}
-#endif  /* 0 */
-
-		/* recurse on sub-arrays */
-		if ( left < pivot )
-	        GRF_qsort(grf, left, pivot-1, callback);
-		if ( pivot < right )
-			GRF_qsort(grf, pivot+1, right, callback);
-	}
-}
-#undef CMP_GF
-
 /*! \brief Function to sort a Grf::files array
  *
  * \param grf Pointer to Grf struct which needs its files array sorted
@@ -257,21 +160,9 @@ static void GRF_qsort (Grf *grf, uint32_t left, uint32_t right, GrfSortCallback 
  *		other. It should return -1 if the first file should be first,
  *		0 if they are equal, or 1 if the first file should be second.
  */
-GRFEXPORT void grf_sort (Grf *grf, GrfSortCallback callback) {
+GRFEXPORT void grf_sort (Grf *grf, int(*compar)(const void *, const void *)) {
 	/* Run the sort */
-	GRF_qsort(grf, 0, grf->nfiles-1, callback);
-
-//#error debug code
-#if 0
-	{
-	uint32_t k;
-	for ( k = 0; k <= grf->nfiles-2; ++k )
-		{
-			if ( grf->files[k].pos > grf->files[k+1].pos )
-				fprintf(stderr, "Error: %4u %4u -%4u\n", k, k+1, grf->files[k].pos - grf->files[k+1].pos);
-		}
-	}
-#endif  /* 0 */
+	qsort(grf, grf->nfiles-1, sizeof(GrfFile), compar);
 }
 
 /*! \brief Alphabetical sorting callback function
@@ -281,9 +172,8 @@ GRFEXPORT void grf_sort (Grf *grf, GrfSortCallback callback) {
  * \return -1 if g1 should be first, 0 if g1 and g2 are equal, or 1 if
  *	g2 should be before g1
  */
-GRFEXPORT int GRF_AlphaSort(GrfFile *g1, GrfFile *g2) {
-	/*! \todo Write this code! (it should be extremely easy) */
-	return 0;
+GRFEXPORT int GRF_AlphaSort_Func(const GrfFile *g1, const GrfFile *g2) {
+	return alphasort(g1->name, g2->name);
 }
 
 /*! \brief Offset-based sorting callback function
@@ -293,7 +183,7 @@ GRFEXPORT int GRF_AlphaSort(GrfFile *g1, GrfFile *g2) {
  * \return -1 if g1 should be first, 0 if g1 and g2 are equal, or 1 if
  *	g2 should be before g1
  */
-GRFEXPORT int GRF_OffsetSort(GrfFile *g1, GrfFile *g2) {
+GRFEXPORT int GRF_OffsetSort_Func(const GrfFile *g1, const GrfFile *g2) {
 	/* Check their offsets */
 	if (g1->pos>g2->pos)
 		return 1;
