@@ -1,14 +1,12 @@
-.PHONY: exe dist
+.PHONY: all exe dist
+
+all:
+	make -C src/auto/XSTools
 
 exe:
-	mkdir -p tools/auto/XSTools
-	cp tools/XSTools.dll tools/auto/XSTools/
-	strip --strip-all tools/auto/XSTools/XSTools.dll
+	strip --strip-all src/auto/XSTools/XSTools.dll
 	perlapp openkore.pl \
-		--lib tools \
-		--lib tools\\pathfinding \
-		--lib tools\\win32 \
-		--lib tools\\misc \
+		--lib src \
 		--add XSTools \
 		--add Interface::Console \
 		--trim Interface::Console::Other \
@@ -18,7 +16,6 @@ exe:
 		--trim Term::Cap \
 		--trim POSIX \
 		--force --icon tools\\build\\openkore.ico
-	rm -rf tools/auto
 
 dist:
 	bash makedist.sh
