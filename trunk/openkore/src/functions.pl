@@ -7059,29 +7059,37 @@ sub parseMsg {
 	# Hambo Ended
 
 	} elsif ($switch eq "010E") {
-		$ID = unpack("S1",substr($msg, 2, 2));
-		$lv = unpack("S1",substr($msg, 4, 2));
-		$chars[$config{'char'}]{'skills'}{$skills_rlut{lc($skillsID_lut{$ID})}}{'lv'} = $lv;
-		debug "Skill $skillsID_lut{$ID}: $lv\n", "parseMsg";
+		my $ID = unpack("S1",substr($msg, 2, 2));
+		my $lv = unpack("S1",substr($msg, 4, 2));
+
+		my $skill = new Skills(id => $ID);
+		my $handle = $skill->handle;
+		my $name = $skill->name;
+		$char->{skills}{$handle}{lv} = $lv;
+		debug "Skill $name: $lv\n", "parseMsg";
 
 	} elsif ($switch eq "010F") {
+		# Character skill list
 		$conState = 5 if ($conState != 4 && $config{'XKore'});
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
+
 		undef @skillsID;
-		for ($i = 4;$i < $msg_size;$i+=37) {
+		for (my $i = 4; $i < $msg_size; $i += 37) {
 			my $skillID = unpack("S1", substr($msg, $i, 2));
 			my $level = unpack("S1", substr($msg, $i + 6, 2));
-			($skillName) = substr($msg, $i + 12, 24) =~ /([\s\S]*?)\000/;
+			my ($skillName) = substr($msg, $i + 12, 24) =~ /([\s\S]*?)\000/;
 			if (!$skillName) {
-				$skillName = $skills_rlut{lc($skillsID_lut{$skillID})};
+				$skillName = Skills->new(id => $skillID)->handle;
 			}
-			$chars[$config{'char'}]{'skills'}{$skillName}{'ID'} = $skillID;
-			if (!$chars[$config{'char'}]{'skills'}{$skillName}{'lv'}) {
-				$chars[$config{'char'}]{'skills'}{$skillName}{'lv'} = $level;
+
+			$char->{skills}{$skillName}{ID} = $skillID;
+			if (!$char->{skills}{$skillName}{lv}) {
+				$char->{skills}{$skillName}{lv} = $level;
 			}
 			$skillsID_lut{$skillID} = $skills_lut{$skillName};
 			binAdd(\@skillsID, $skillName);
+
 			Plugins::callHook('packet_charSkills', {
 				'ID' => $skillID,
 				'skillName' => $skillName,
@@ -7114,6 +7122,8 @@ sub parseMsg {
 	} elsif ($switch eq "01B9") {
 		# cast is cancelled
 		my $skillID = unpack("S1", substr($msg, 2, 2));
+		my $name = Skills->new(id => $skillID)->name;
+		debug "Casting of skill $name has been cancelled.\n", "parseMsg";
 
 	} elsif ($switch eq "0114" || $switch eq "01DE") {
 		# Skill use
@@ -7127,9 +7137,9 @@ sub parseMsg {
 
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $config{XKore};
-		updateDamageTables($sourceID, $targetID, $damage) if $damage != -30000;
-		setSkillUseTimer($skillID) if $sourceID eq $accountID;
-		countCastOn($sourceID, $targetID);
+		updateDamageTables($sourceID, $targetID, $damage) if ($damage != -30000);
+		setSkillUseTimer($skillID) if ($sourceID eq $accountID);
+		countCastOn($sourceID, $targetID, $skillID);
 
 		# Resolve source and target names
 		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
@@ -7182,7 +7192,7 @@ sub parseMsg {
 
 		# Print skill use message
 		message $disp, 'skill';
-warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()");
+
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
@@ -7253,8 +7263,8 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $config{XKore};
-		setSkillUseTimer($skillID, $targetID) if $sourceID eq $accountID;
-		countCastOn($sourceID, $targetID);
+		setSkillUseTimer($skillID, $targetID) if ($sourceID eq $accountID);
+		countCastOn($sourceID, $targetID, $skillID);
 		if ($sourceID eq $accountID) {
 			my $pos = calcPosition($char);
 			$char->{pos_to} = $pos;
@@ -7598,13 +7608,15 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 			"you: $coords2{'x'},$coords2{'y'}\n", "parseMsg_move", 2;
 
 	} elsif ($switch eq "013A") {
-		$type = unpack("S1",substr($msg, 2, 2));
+		my $type = unpack("S1",substr($msg, 2, 2));
+		debug "Your attack range is: $type\n";
+		$char->{attack_range} = $type;
 
 	# Hambo Arrow Equip
 	} elsif ($switch eq "013B") {
-		$type = unpack("S1",substr($msg, 2, 2)); 
+		my $type = unpack("S1",substr($msg, 2, 2)); 
 		if ($type == 0) { 
-			undef $chars[$config{'char'}]{'arrow'};
+			delete $char->{'arrow'};
 			if ($config{'dcOnEmptyArrow'}) {
 				$interface->errorDialog("Please equip arrow first.");
 				quit();
@@ -7613,7 +7625,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 			}
 
 		} elsif ($type == 3) {
-			message "Arrow equipped\n" if ($config{'debug'}); 
+			debug "Arrow equipped\n";
 		} 
 
 	} elsif ($switch eq "013C") {
@@ -7655,6 +7667,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 			$dist = judgeSkillArea($skillID) - distance($char->{pos_to}, \%coords);
 
 			$target = "location ($x, $y)";
+			undef $targetID;
 		}
 
 		# Perform trigger actions
@@ -7662,7 +7675,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 			$chars[$config{'char'}]{'time_cast'} = time;
 		}
 
-		countCastOn($sourceID, $targetID);
+		countCastOn($sourceID, $targetID, $skillID, $x, $y);
 		message "$source $verb ".skillName($skillID)." on $target\n", "skill", 1;
 
 		# Skill Cancel
@@ -9681,43 +9694,64 @@ sub getActorNames {
 	return ($source, $verb, $target);
 }
 
+##
+# useTeleport(level)
+# level: 1 to teleport to a random spot, 2 to respawn.
 sub useTeleport {
-	my $level = shift;	
-	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", $level + 600);
-	
-	# it is safe to always set this value, because $ai_v{temp} is always cleared after teleport
-	if (!$ai_v{temp}{teleport}{lv}) {
-		$ai_v{temp}{teleport}{lv} = $level;
-		
-		# set a small timeout, will be overridden if related config in equipAuto is set
-		$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
-		$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
+	my $level = shift;
 
-	} elsif (defined $ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut(\%{$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}})) {
-		warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
-		delete $ai_v{temp}{teleport};
+	if (defined binFind(\@skillsID, 'AL_TELEPORT')) {
+		# We have the teleport skill
+		my $skill = new Skills(handle => 'AL_TELEPORT');
+		sendSkillUse(\$remote_socket, $skill->id, $level, $accountID) if ($config{'teleportAuto_useSP'});
+		if ($level == 1) {
+			sendTeleport(\$remote_socket, "Random");
+			return;
+		} elsif ($level == 2 && $config{saveMap} ne "") {
+			sendTeleport(\$remote_socket, $config{'saveMap'}.".gat");
+			return;
+			# If saveMap is not set, attempt to use Butterfly Wing
+		}
 	}
 
-	# {'skills'}{'AL_TELEPORT'}{'lv'} is valid even after creamy is unequiped, use @skillsID instead
-	if (!$config{teleportAuto_useItem} && binFind(\@skillsID, 'AL_TELEPORT') ne "") {
-		sendSkillUse(\$remote_socket, $skillsID_rlut{teleport}, $level, $accountID) if ($config{'teleportAuto_useSP'});
+	my $invIndex = findIndex($char->{inventory}, "nameID", $level + 600);
+	if (defined $invIndex) {
+		# We have Fly Wing/Butterfly Wing
+		sendItemUse(\$remote_socket, $char->{inventory}[$invIndex]{index}, $accountID);
 		sendTeleport(\$remote_socket, "Random") if ($level == 1);
-		sendTeleport(\$remote_socket, $config{'saveMap'}.".gat") if ($level == 2);
-		delete $ai_v{temp}{teleport};
-		
-	} elsif ($config{teleportAuto_useItem} && $invIndex ne "") {
-		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$invIndex]{'index'}, $accountID);
-		sendTeleport(\$remote_socket, "Random") if ($level == 1);
-		delete $ai_v{temp}{teleport};
+		return;
+	}
+
+	# No skill and no wings; try to equip a Tele clip or something, if equipAuto_#_onTeleport is set
+	my $i = 0;
+	while ($config{"equipAuto_$i"} ne "") {
+		if ($config{"equipAuto_${i}_onTeleport"}) {
+			# it is safe to always set this value, because $ai_v{temp} is always cleared after teleport
+			if (!$ai_v{temp}{teleport}{lv}) {
+				$ai_v{temp}{teleport}{lv} = $level;
+
+				# set a small timeout, will be overridden if related config in equipAuto is set
+				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
+				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
+
+			} elsif (defined $ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut($ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup})) {
+				warning "You don't have wing or skill to teleport/respawn or timeout elapsed\n";
+				delete $ai_v{temp}{teleport};
+			}
+			return;
+		}
+		$i++;
 	}
 }
 
 # Keep track of when we last cast a skill
 sub setSkillUseTimer {
 	my ($skillID, $targetID) = @_;
+	my $skill = new Skills(id => $skillID);
+	my $handle = $skill->handle;
 
-	$chars[$config{char}]{skills}{$skills_rlut{lc($skillsID_lut{$skillID})}}{time_used} = time;
-	undef $chars[$config{char}]{time_cast};
+	$char->{skills}{$handle}{time_used} = time;
+	undef $char->{time_cast};
 
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$skillID};
@@ -9726,7 +9760,8 @@ sub setSkillUseTimer {
 
 # Increment counter for monster being casted on
 sub countCastOn {
-	my ($sourceID, $targetID) = @_;
+	my ($sourceID, $targetID, $skillID, $x, $y) = @_;
+	return unless defined $targetID;
 
 	if ($monsters{$sourceID}) {
 		if ($targetID eq $accountID) {
