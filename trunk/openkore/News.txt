@@ -143,7 +143,7 @@ Credits:
 - jabskeeterbug: item history command.
 - jsteng: some routing bug fixes.
 - ZetaAlpha: advanced 2-2 class support fixes, guild member ID fixes.
-- blacklady: Monster weights.
+- blacklady: Monster weights, autobuy/sell/storage optimizations.
 - isieo: Mute prevention.
 
 
