@@ -6,7 +6,6 @@
 - Tools.dll is obsolete! You must get XSTools.dll and put it in your 
   'tools' folder. See the forum for more information:
   http://openkore.sourceforge.net/forum/viewtopic.php?p=17344#17344
-- secureLogin_type is no longer supported; use secureLogin_codeRequest instead.
 
 
 New features:
@@ -33,13 +32,6 @@ New config options:
   monster attacks.
 - partySkill_#_target_aggressives
   Only activate partySkill if a certain monster attacks a party member.
-- secureLogin_codeRequest
-  If your server uses secure login, you have to put the server's
-  "code request string" here.
-
-Removed config options:
-- secureLogin_type
-  Obsolete by secureLogin_codeRequest
 
 Bug fixes:
 - The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
@@ -67,6 +59,33 @@ Credits:
 - fov: writeDataFile*() tweaks
 - polokus: idRO Amatsu/Kunlun support
 - Ven`Tatsu: walkable water bugfix (bug #21)
+
+
+==================
+### 1.4.1
+==================
+
+New features:
+- idRO's new secure login keys are now supported. Set secureLogin_type to 4
+  or 5, depending on your server.
+
+New config options:
+- secureLogin_requestCode
+  If idRO's secure login key changes again, you don't have to modify the
+  source code to be able to login. Put the secure login key in this option.
+  Example:
+  04 02 22 37 D7 FC 8E 9B 05 79 60 AE 02 33 6D 0D 82 C6
+  (Do not append "DB 01" at the end of the key; it's automatically 
+  appended.)
+
+Bug fixes:
+- The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
+- If you type "stand", then type "sit", Kore will sit and then stand.
+  This is fixed.
+- Don't attack monsters that are standing on a spot that's unwalkable
+  according to the field file. This prevents an infinite loop.
+- getAuto never gets triggered if you're low on a certain item. This has
+  been fixed.
 
 
 ==================
