@@ -2365,7 +2365,7 @@ sub AI {
 	if (AI::action eq 'clientSuspend' && timeOut(AI::args)) {
 		debug "AI suspend by clientSuspend dequeued\n";
 		AI::dequeue;
-	} elsif ($ai_seq[0] eq "clientSuspend" && $config{'XKore'}) {
+	} elsif (AI::action eq "clientSuspend" && $config{'XKore'}) {
 		# When XKore mode is turned on, clientSuspend will increase it's timeout
 		# every time the user tries to do something manually.
 
@@ -3991,7 +3991,7 @@ sub AI {
 	}
 
 	if (AI::action eq "skill_use") {
-		if (exists AI::args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, AI::args->{skill_use_id}) eq "" && timeOut(\%{AI::args->{ai_equipAuto_skilluse_giveup}})) {
+		if (exists AI::args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, AI::args->{skill_use_id}) eq "" && timeOut(AI::args->{ai_equipAuto_skilluse_giveup})) {
 			warning "Timeout equiping for skill\n";
 			AI::dequeue;
 
@@ -4015,8 +4015,8 @@ sub AI {
 				}
 				AI::args->{skill_use_last} = $char->{skills}{AI::args->{skill_use_id}}{time_used};
 	
-			} elsif ((AI::args->{skill_use_last} != $char->{skills}{AI::args->{skill_use_id}}{time_used} || (timeOut(\%{AI::args->{ai_skill_use_giveup}}) && (!$char->{time_cast} || !AI::args->{skill_use_maxCastTime}{timeout})) || (AI::args->{skill_use_maxCastTime}{timeout} && timeOut(\%{AI::args->{skill_use_maxCastTime}})))
-				&& timeOut(\%{AI::args->{skill_use_minCastTime}})) {
+			} elsif ((AI::args->{skill_use_last} != $char->{skills}{AI::args->{skill_use_id}}{time_used} || (timeOut(AI::args->{ai_skill_use_giveup}) && (!$char->{time_cast} || !AI::args->{skill_use_maxCastTime}{timeout})) || (AI::args->{skill_use_maxCastTime}{timeout} && timeOut(AI::args->{skill_use_maxCastTime})))
+				&& timeOut(AI::args->{skill_use_minCastTime})) {
 				AI::dequeue;
 			}
 		}
@@ -4355,14 +4355,14 @@ sub AI {
 		AI::dequeue;
 		ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout});
 	}
-	if ($config{itemsTakeAuto} && AI::action eq "items_take" && timeOut(\%{AI::args->{ai_items_take_start}})) {
+	if ($config{itemsTakeAuto} && AI::action eq "items_take" && timeOut(AI::args->{ai_items_take_start})) {
 		my $foundID;
 		my $dist, $dist_to;
 		
 		foreach (@itemsID) {
 			next if ($_ eq "" || $itemsPickup{lc($items{$_}{name})} eq "0" || (!$itemsPickup{all} && !$itemsPickup{lc($items{$_}{name})}));
-			$dist = distance(\%{$items{$_}{pos}}, \%{AI::args->{pos}});
-			$dist_to = distance(\%{$items{$_}{pos}}, \%{AI::args->{pos_to}});
+			$dist = distance(\%{$items{$_}{pos}}, AI::args->{pos});
+			$dist_to = distance(\%{$items{$_}{pos}}, AI::args->{pos_to});
 			if (($dist <= 4 || $dist_to <= 4) && $items{$_}{take_failed} == 0) {
 				$foundID = $_;
 				last;
@@ -4372,7 +4372,7 @@ sub AI {
 			AI::args->{ai_items_take_end}{time} = time;
 			AI::args->{started} = 1;
 			take($foundID);
-		} elsif (AI::args->{started} || timeOut(\%{AI::args->{ai_items_take_end}})) {
+		} elsif (AI::args->{started} || timeOut(AI::args->{ai_items_take_end})) {
 			AI::dequeue;
 			ai_clientSuspend(0, $timeout{ai_attack_waitAfterKill}{timeout});
 		}
@@ -4443,7 +4443,7 @@ sub AI {
 			}
 		}
 		my $dist = distance(\%{$items{$ID}{pos}}, \%{$char->{pos_to}});
-		if (timeOut(\%{AI::args->{ai_items_gather_giveup}})) {
+		if (timeOut(AI::args->{ai_items_gather_giveup})) {
 			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : Timeout\n",,1;
 			$items{$ID}{take_failed}++;
 			AI::dequeue;
@@ -4475,7 +4475,7 @@ sub AI {
 	if (AI::action eq "take" && !%{$items{AI::args->{ID}}}) {
 		AI::dequeue;
 
-	} elsif (AI::action eq "take" && timeOut(\%{AI::args->{ai_take_giveup}})) {
+	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
 		message "Failed to take $items{AI::args->{ID}}{name} ($items{AI::args->{ID}}{binID})\n",,1;
 		$items{AI::args->{ID}}{take_failed}++;
 		AI::dequeue;
@@ -4730,8 +4730,8 @@ sub parseSendMsg {
 		# Move
 		aiRemove("clientSuspend");
 		makeCoords(\%coords, substr($msg, 2, 3));
-		ai_clientSuspend($switch, (distance(\%{$chars[$config{'char'}]{'pos'}}, \%coords) * $chars[$config{'char'}]{'walk_speed'}) + 2);
-		
+		ai_clientSuspend($switch, (distance($char->{'pos'}, \%coords) * $char->{walk_speed}) + 4);
+
 	} elsif ($switch eq "0089") {
 		# Attack
 		if (!($config{'tankMode'} && binFind(\@ai_seq, "attack") ne "")) {
@@ -4794,6 +4794,7 @@ sub parseSendMsg {
 		sendToServerByInject(\$remote_socket, $sendMsg);
 	}
 
+	# What's this doing here?
 	Plugins::callHook('AI_post');
 }
 
@@ -8155,17 +8156,17 @@ sub parseMsg {
 #######################################
 
 ##
-# ai_clientSuspend(type, initTimeout, args...)
+# ai_clientSuspend(packet_switch, duration, args...)
 # initTimeout: a number of seconds.
 #
-# Freeze the AI for $initTimeout seconds. $type and @args are only
+# Freeze the AI for $duration seconds. $packet_switch and @args are only
 # used internally and are ignored unless XKore mode is turned on.
 sub ai_clientSuspend {
-	my ($type,$initTimeout,@args) = @_;
+	my ($type, $duration, @args) = @_;
 	my %args;
 	$args{type} = $type;
 	$args{time} = time;
-	$args{timeout} = $initTimeout;
+	$args{timeout} = $duration;
 	@{$args{args}} = @args;
 	AI::queue("clientSuspend", \%args);
 	debug "AI suspended by clientSuspend for $args{timeout} seconds\n";
