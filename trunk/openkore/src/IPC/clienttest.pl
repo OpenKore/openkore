@@ -31,11 +31,7 @@ while (1) {
 
 	} elsif ($ret) {
 		foreach my $msg (@messages) {
-			print "Incoming message from server: " . $msg->{ID} . "\n";
-			foreach (keys %{$msg->{params}}) {
-				print "$_ = " . $msg->{params}{$_} . "\n";
-			}
-			print "--------\n";
+			process($msg);
 		}
 	}
 
@@ -45,6 +41,7 @@ while (1) {
 
 	if ($args[0] eq "q" || $args[0] eq "quit") {
 		last;
+
 	} elsif ($args[0] eq "s") {
 		if (@args == 4) {
 			print "Sending $args[1]: $args[2] = $args[3]\n";
@@ -53,8 +50,30 @@ while (1) {
 			print "Usage: s (ID) (KEY) (VALUE)\n";
 			print "Send a message to the server\n";
 		}
+
+	} elsif ($args[0] eq "lc") {
+		$ipc->send("_LIST-CLIENTS");
+
 	} elsif (@args) {
 		print "Unrecognized command $args[0]\n";
-		print "Available commands: s, quit\n";
+		print "Available commands: s, lc, quit\n";
+	}
+}
+
+sub process {
+	my $msg = shift;
+	if ($msg->{ID} eq "_LIST-CLIENTS") {
+		print "------- Client list --------\n";
+		for (my $i = 0; $i < $msg->{params}{count}; $i++) {
+			printf "ID = %s\n", $msg->{params}{"client$i"};
+		}
+		print "----------------------------\n";
+
+	} else {
+		print "Incoming message from server: " . $msg->{ID} . "\n";
+			foreach (keys %{$msg->{params}}) {
+			print "$_ = " . $msg->{params}{$_} . "\n";
+		}
+		print "--------\n";
 	}
 }

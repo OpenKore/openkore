@@ -22,8 +22,10 @@ use File::Spec;
 use Fcntl ':flock';
 use Time::HiRes qw(time sleep);
 
+use Globals qw($quit);
+use Log qw(debug);
 use IPC::Client;
-use Utils qw(timeOut dataWaiting);
+use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 
 
 ##
@@ -57,8 +59,35 @@ sub new {
 	$self{client} = new IPC::Client($host, $port);
 	return undef if (!$self{client});
 
+
+	# Receive the WELCOME message
+	while (!$quit) {
+		my @messages;
+		my $ret = $self{client}->recv(\@messages);
+		if ($ret == -1) {
+			undef %self;
+			return undef;
+		} elsif ($ret == 0) {
+			sleep 0.01;
+			next;
+		}
+
+		foreach my $msg (@messages) {
+			if ($msg->{ID} eq "_WELCOME") {
+				$self{ID} = $msg->{params}{ID};
+				debug "Received WELCOME - our client ID: $self{ID}\n", "ipc";
+			}
+		}
+		last;
+	}
+
 	bless \%self, $class;
 	return \%self;
+}
+
+sub DESTROY {
+	my $self = shift;
+	undef $self->{client};
 }
 
 # Check whether the manager server's already started
@@ -103,10 +132,10 @@ sub _startManager {
 		ReuseAddr => 1,
 		Timeout => 6
 		);
-	system("perl src/IPC/manager.pl --feedback=" . $server->sockport() . " &");
+	my $pid = launchScript(1, [], 'src/IPC/manager.pl', '--feedback=' . $server->sockport());
 
 	my $time = time;
-	while (!timeOut($time, 6)) {
+	while (!$quit && checkLaunchedApp($pid) && !timeOut($time, 6)) {
 		if (dataWaiting($server)) {
 			my $client = $server->accept;
 			my $data;
@@ -122,13 +151,23 @@ sub _startManager {
 		sleep 0.01;
 	}
 	$@ = "Manager server failed to start\n";
+	$server->close;
 	return 0;
 }
 
 
+sub ID {
+	return shift->{ID};
+}
+
 sub broadcast {
 	my $self = shift;
 	$self->{client}->send(@_);
+}
+
+sub recv {
+	my $self = shift;
+	my $ret = $self->{client}->recv(@_);
 }
 
 1;
