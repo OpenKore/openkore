@@ -6063,17 +6063,21 @@ sub parseMsg {
 	} elsif ($switch eq "008E") {
 		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000//g;
-		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
+		my ($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/;
+		# Note: $chatMsgUser/Msg may be undefined. This is the case on
+		# eAthena servers: it uses this packet for non-chat server messages.
 
-		my $langCode = quotemeta $config{'chatLangCode'};
-		if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
-			$chatMsg =~ s/^$langCode//;
-		} elsif ($langCode ne "none" && $chatMsg =~ /^(\|0\d)/) {
-			configModify("chatLangCode", $1);
-			$chatMsg =~ s/^\|0\d//;
+		if (defined $chatMsgUser) {
+			my $langCode = quotemeta $config{'chatLangCode'};
+			if ($langCode ne "" && $chatMsg =~ /^$langCode/) {
+				$chatMsg =~ s/^$langCode//;
+			} elsif ($langCode ne "none" && $chatMsg =~ /^(\|0\d)/) {
+				configModify("chatLangCode", $1);
+				$chatMsg =~ s/^\|0\d//;
+			}
+			$chat = "$chatMsgUser : $chatMsg";
 		}
 
-		$chat = "$chatMsgUser : $chatMsg";
 		chatLog("c", "$chat\n") if ($config{'logChat'});
 		message "$chat\n", "selfchat";
 
@@ -8240,8 +8244,8 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 		$msg = substr($msg, 0, 4).$newmsg;
 		my $ID = substr($msg, 4, 4);
 		my $chat = substr($msg, 4, $msg_size - 4);
-		$chat =~ s/\000$//;
-		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)\000/;
+		$chat =~ s/\000*$//;
+		my ($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/;
 		$chatMsgUser =~ s/ $//;
 
 		my $langCode = quotemeta $config{'chatLangCode'};
@@ -8267,7 +8271,7 @@ warning join(' ', keys %{$players{$sourceID}}) . "\n" if ($source eq "Player  ()
 
 	} elsif ($switch eq "0194") {
 		my $ID = substr($msg, 2, 4);
-		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000*/;
 		
 		if ($nameRequest{type} eq "g") {
 			message "Guild Member $name Log ".($nameRequest{online}?"In":"Out")."\n", 'guildchat';
