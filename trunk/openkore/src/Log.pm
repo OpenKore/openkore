@@ -12,7 +12,7 @@
 # Known domains:
 # atk			You attack monster
 # connection		Connection messages
-# guildinfo		Guild info & guild member listing
+# info			View info (status, guild info, etc.)
 # input			Waiting for user input
 # itemuse		You used item
 # mon_itemuse		Monster used item

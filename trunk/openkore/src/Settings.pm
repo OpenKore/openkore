@@ -22,7 +22,7 @@ our @EXPORT = qw($buildType %config);
 
 
 # Constants
-our $versionText = "*** OpenKore 1.0.0b - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
+our $versionText = "*** OpenKore 1.1.0 - Custom Ragnarok Online client - http://openkore.sourceforge.net***\n";
 our $welcomeText = "Welcome to X-OpenKore.";
 our $MAX_READ = 30000;
 
@@ -83,8 +83,9 @@ sub parseArguments {
 		print "--help                     Displays this help message.\n";
 		print "--daemon                   Start as daemon; don't listen for keyboard input.\n";
 		print "--control=path             Use a different folder as control folder.\n";
-		print "--tables=path              Use a different folder as tables folder.\n\n";
+		print "--tables=path              Use a different folder as tables folder.\n";
 
+		print "\n";
 		print "--config=path/file         Which config.txt to use.\n";
 		print "--mon_control=path/file    Which mon_control.txt to use.\n";
 		print "--items_control=path/file  Which items_control.txt to use.\n";
