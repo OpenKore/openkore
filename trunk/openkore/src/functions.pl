@@ -361,10 +361,10 @@ sub parseInput {
 
 sub parseCommand {
 	my $input = shift;
-
+	
 	my ($switch, $args) = split(' ', $input, 2);
 	my ($arg1, $arg2, $arg3, $arg4);
-
+		
 	# Resolve command aliases
 	if (my $alias = $config{"alias_$switch"}) {
 		$input = $alias;
@@ -2259,7 +2259,13 @@ sub parseCommand {
 		}
 
 	} else {
-		error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
+		Plugins::callHook('Command_post', $input);
+#		We really need a way to allow plugins to retrieve user input, and not return the error message.
+#		possibly a standard input.pl plugin, that everyone requiring user input/commands registers a hook in.
+#               and if it fails to match a hook there, then the error is displayed.
+#               either that, or we move all commands to the plugin system
+#		i added this as a command post rather than pre, so a plugin cant override an existing command.
+#		error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
 	}
 }
 
