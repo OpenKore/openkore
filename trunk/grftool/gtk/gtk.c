@@ -291,6 +291,10 @@ fill_filelist ()
 		if (!grf->files[i].real_len)
 			continue;
 
+		/* Do not display folders */
+		if (grf->files[i].type == 2)
+			continue;
+
 		/* Attempt to convert the filename to UTF-8 */
 		if (!grf->files[i].name) {
 			printf("%ld: %s\n", i, grf->files[i].name);
