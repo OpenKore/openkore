@@ -84,7 +84,7 @@ addParseFiles($rpackets_file, \%rpackets, \&parseDataFile2);
 
 load(\@parseFiles);
 
-if ($^O eq 'MSWin32') {
+if ($^O eq 'MSWin32' || $^O eq 'cygwin') {
 	eval "use Win32::API;";
 	die if ($@);
 
