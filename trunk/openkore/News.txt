@@ -31,6 +31,7 @@ New config options:
 - The attackComboSlot block now has an extra option:
   isSelfSkill (flag)
   This specifies whether the combo skill is used on yourself.
+- verboseDomains is the opposite of squelchDomains.
 - missDamage; any damage you do <= this amount will be counted as a miss.
   (e.g. for monks who have Spirit Spheres)
 
