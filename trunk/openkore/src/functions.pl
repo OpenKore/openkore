@@ -3554,6 +3554,7 @@ sub AI {
 				if (checkSelfCondition("attackSkillSlot_$i")
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} || $args->{attackSkillSlot_uses}{$i} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
+					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $monsters{$ID}{'name'}))
 					&& checkMonsterCondition("attackSkillSlot_${i}_target", $ID)
 				) {
 					$args->{attackSkillSlot_uses}{$i}++;
