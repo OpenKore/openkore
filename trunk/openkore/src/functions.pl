@@ -3079,8 +3079,8 @@ sub AI {
 	##### LOCKMAP #####
 
 	%{$ai_v{'temp'}{'lockMap_coords'}} = ();
-	$ai_v{'temp'}{'lockMap_coords'}{'x'} = $config{'lockMap_x'} + ((int(rand(3))-1)*(int(rand($config{'lockMap__randX'}))+1));
-	$ai_v{'temp'}{'lockMap_coords'}{'y'} = $config{'lockMap_y'} + ((int(rand(3))-1)*(int(rand($config{'lockMap__randY'}))+1));
+	$ai_v{'temp'}{'lockMap_coords'}{'x'} = $config{'lockMap_x'} + ((int(rand(3))-1)*(int(rand($config{'lockMap_randX'}))+1));
+	$ai_v{'temp'}{'lockMap_coords'}{'y'} = $config{'lockMap_y'} + ((int(rand(3))-1)*(int(rand($config{'lockMap_randY'}))+1));
 	if ($ai_seq[0] eq "" && $config{'lockMap'} && $field{'name'}
 		&& ($field{'name'} ne $config{'lockMap'} || ($config{'lockMap_x'} ne "" && $config{'lockMap_y'} ne "" 
 		&& ($chars[$config{'char'}]{'pos_to'}{'x'} != $config{'lockMap_x'} || $chars[$config{'char'}]{'pos_to'}{'y'} != $config{'lockMap_y'}) 
@@ -3095,7 +3095,9 @@ sub AI {
 				message "Calculating lockMap route to: $maps_lut{$config{'lockMap'}.'.rsw'}($config{'lockMap'})\n", "route";
 			}
 			ai_route($config{'lockMap'}, $config{'lockMap_x'}, $config{'lockMap_y'},
-				attackOnRoute => $config{'attackAuto_inLockOnly'} ? 1 : 2);
+				attackOnRoute => $config{'attackAuto_inLockOnly'} ?
+					($config{'attackAuto'} ? 1 : 0) :
+					$config{'attackAuto'});
 		}
 	}
 	undef $ai_v{'temp'}{'lockMap_coords'};
@@ -4338,6 +4340,7 @@ sub AI {
 					debug "portal within same map\n", "route";
 					# Portal is reachable from current position
 					# >> Then "route" to it
+					print "Portal route attackOnRoute = $ai_seq_args[0]{'attackOnRoute'}\n";
 					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
 						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
 						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
@@ -7055,37 +7058,40 @@ sub parseMsg {
 		my $param1 = unpack("S1", substr($msg, 6, 2));
 		my $param2 = unpack("S1", substr($msg, 8, 2));
 		my $param3 = unpack("S1", substr($msg, 10, 2));
-		my $actor = getActorHash($ID);
+		my $actorType;
+		my $actor = getActorHash($ID, \$actorType);
 
 		if (defined $actor) {
 			my $name = getActorName($ID);
+			my $verbosity = ($actorType ne 'self') ? 1 : 2;
+
 			foreach (keys %skillsState) {
 				if ($param1 == $_) {
 					$actor->{$skillsState{$_}} = 1;
-					message "$name are in $skillsState{$_} state\n", "parseMsg_statuslook",2;
+					message "$name are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
 				} elsif (defined $hash->{$skillsState{$_}}) {
 					delete $actor->{statuses}{$skillsState{$_}};
-					message "$name are out of $skillsState{$_} state\n", "parseMsg_statuslook",2;
+					message "$name are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
 				}
 			}
-			
+
 			foreach (keys %skillsAilments) {
 				if (($param2 & $_) == $_) {
 					$actor->{statuses}{$skillsAilments{$_}} = 1;
-					message "$name have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook",2;
+					message "$name have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
 				} elsif (defined $chars[$config{char}]{statuses}{$skillsAilments{$_}}) {
 					delete $actor->{statuses}{$skillsAilments{$_}};
-					message "$name are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook",2;
+					message "$name are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
 				}
 			}
-			
+
 			foreach (keys %skillsLooks) {
 				if (($param3 & $_) == $_) {
 					$actor->{statuses}{$skillsLooks{$_}} = 1;
-					debug "$name have look: $skillsLooks{$_}\n", "parseMsg_statuslook",2;
+					debug "$name have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 				} elsif (exists $actor->{statuses}{$skillsLooks{$_}}) {
 					delete $actor->{statuses}{$skillsLooks{$_}};
-					debug "$name are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook",2;
+					debug "$name are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 				}
 			}
 		}
@@ -9863,13 +9869,19 @@ sub getFromList {
 # Resolves a player or monster ID into a hash
 sub getActorHash {
 	my $id = shift;
+	my $r_type = shift;
+
 	if ($id eq $accountID) {
+		$$r_type = 'self' if ($r_type);
 		return $char;
 	} elsif (my $player = $players{$id}) {
+		$$r_type = 'player' if ($r_type);
 		return $player;
 	} elsif (my $monster = $monsters{$id}) {
+		$$r_type = 'monster' if ($r_type);
 		return $monster;
 	} elsif (my $item = $items{$id}) {
+		$$r_type = 'item' if ($r_type);
 		return $item;
 	} else {
 		return undef;

@@ -2,7 +2,14 @@
 ### 1.4.0
 ==================
 
+Bug fixes:
 - Fixed login problems with newer eAthena versions (2nd session id, bug #28)
+- If attackAuto is set to 0, Kore will no longer attack all monsters
+  while moving to lockMap.
+- When in X-Kore mode, do not quit on payment/banned error (fix by anu).
+- When monster changes state (like, Frozen), the message was not displayed.
+  This has been fixed.
+- Fix typo which cause lockMap_randX/Y to not work.
 
 New config options:
 - teleportAuto_useSP - use SP (cast skill) when using teleport without item
