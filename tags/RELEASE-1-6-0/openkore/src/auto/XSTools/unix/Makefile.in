@@ -1,0 +1,15 @@
+CC=gcc
+CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 $(CYGWIN)
+@HEADER@
+
+.PHONY: clean
+
+unix.o: unix.c
+	$(CC) -I. $(CFLAGS) unix.c -c $(PERLCFLAGS) -o unix.o -I$(COREDIR)
+
+unix.c: unix.xs
+	$(XSUBPP) -typemap "$(TYPEMAP)" unix.xs > unix.xsc
+	mv unix.xsc unix.c
+
+clean:
+	rm -f unix.xsc unix.c unix.o Makefile.real
