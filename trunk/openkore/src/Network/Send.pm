@@ -21,7 +21,7 @@ use Digest::MD5;
 use Exporter;
 use base qw(Exporter);
 
-use Globals;
+use Globals qw(%config $conState $encryptVal $remote_socket @chars);
 use Log qw(message warning error debug);
 use Utils;
 
@@ -1062,7 +1062,12 @@ sub sendSell {
 
 sub sendSit {
 	my $r_socket = shift;
-	my $msg = pack("C*", 0x89,0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
+	my $msg;
+	if ($config{'pkServer'}) {
+		$msg = pack("C*", 0x89, 0x00, 0x9c, 0x22, 0xfa, 0x83, 0x02);
+	} else {
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sitting\n", "sendPacket", 2;
 }
@@ -1115,7 +1120,12 @@ sub sendStorageGet {
 
 sub sendStand {
 	my $r_socket = shift;
-	my $msg = pack("C*", 0x89,0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
+	my $msg;
+	if ($config{'pkServer'}) {
+		$msg = pack("C*", 0x89, 0x00, 0x9c, 0x22, 0xfa, 0x83, 0x03);
+	} else {
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Standing\n", "sendPacket", 2;
 }
