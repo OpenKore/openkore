@@ -1018,6 +1018,7 @@ sub parseCommand {
 			$startTime_EXP = time;
 			$startingZenny = $char->{zenny};
 			undef @monsters_Killed;
+			message "Exp counter reset.\n", "success";
 		} else {
 			error "Error in function 'exp' (Exp Report)\n" .
 				"Usage: exp [reset]\n";
