@@ -4258,7 +4258,7 @@ sub AI {
 						}
 					}
 
-				} elsif ( 4 > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) ) {
+				} elsif ( 5 > distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) ) {
 					my ($from,$to) = split /=/, $ai_seq_args[0]{'mapSolution'}[0]{'portal'};
 					if ($chars[$config{'char'}]{'zenny'} >= $portals_lut{$from}{'dest'}{$to}{'cost'}) {
 						#we have enough money for this service
@@ -4299,7 +4299,7 @@ sub AI {
 
 			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'portal'} eq "$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}=$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}" ) {
 				#This solution points to an X,Y coordinate
-				if ( $ai_seq_args[0]{'distFromGoal'} + 4 > distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'})) {
+				if ( 5 > distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'})) {
 					#We need to specify 4 because sometimes the exact spot is occupied by someone else
 					shift @{$ai_seq_args[0]{'mapSolution'}};
 
@@ -4315,7 +4315,7 @@ sub AI {
 					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
 						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
 						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-						distFromGoal => 4,
+						distFromGoal => 3,
 						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
 						_solution => $args{'solution'},
 						_internal => 1);
