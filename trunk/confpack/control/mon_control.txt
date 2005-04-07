@@ -13,7 +13,7 @@
 # or 2 to teleport if the monster attacks you.
 # This is only used in auto-attack mode.
 #
-# <search>: Put a 1 to teleport if the monster is NOT on the screen.
+# <search>: Put a 1 to only attack the monster in the search mode.
 # This is only used in auto-attack mode.
 #
 # <skillcancel>: Set to 1 if you want to interrupt spells casted by this
