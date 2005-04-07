@@ -392,6 +392,7 @@ begin
 
   end else if (FType = '.WAV') then
   begin
+      sndPlaySound(nil, SND_ASYNC);
       GetTempPath(SizeOf(TempDir) - 1, @TempDir);
       GetTempFileName(TempDir, 'grf', 1, @TempFile);
       FName := TempFile + FType;
