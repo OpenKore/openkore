@@ -3,7 +3,7 @@
 
 bindIp
 encrypt 0
-# 0 = normal server, 1 = oRO, 2 = pRO
+# 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya
 serverType 0
 
 XKore 0
