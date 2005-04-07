@@ -7267,8 +7267,8 @@ sub parseMsg {
 		$chars[$config{'char'}]{'points_luk'} = unpack("C1", substr($msg, 15, 1));
 		$chars[$config{'char'}]{'attack'} = unpack("S1", substr($msg, 16, 2));
 		$chars[$config{'char'}]{'attack_bonus'} = unpack("S1", substr($msg, 18, 2));
-		$chars[$config{'char'}]{'attack_magic_min'} = unpack("S1", substr($msg, 20, 2));
-		$chars[$config{'char'}]{'attack_magic_max'} = unpack("S1", substr($msg, 22, 2));
+		$chars[$config{'char'}]{'attack_magic_min'} = unpack("S1", substr($msg, 22, 2));
+		$chars[$config{'char'}]{'attack_magic_max'} = unpack("S1", substr($msg, 20, 2));
 		$chars[$config{'char'}]{'def'} = unpack("S1", substr($msg, 24, 2));
 		$chars[$config{'char'}]{'def_bonus'} = unpack("S1", substr($msg, 26, 2));
 		$chars[$config{'char'}]{'def_magic'} = unpack("S1", substr($msg, 28, 2));
