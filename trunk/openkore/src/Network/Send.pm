@@ -784,7 +784,13 @@ sub sendGuildJoinRequest {
 sub sendGuildMemberNameRequest {
 	my $r_socket = shift;
 	my $ID = shift;
-	my $msg = pack("C*", 0x93, 0x01) . $ID;
+	my $msg;
+	if ($config{serverType} == 3) {
+		$msg = pack("C*", 0xa2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
+				$ID;
+	} else {
+		$msg = pack("C*", 0x93, 0x01) . $ID;
+	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Guild Member Name Request : ".getHex($ID)."\n", "sendPacket", 2;
 }
