@@ -191,9 +191,10 @@
 1189 Orc Archer
 1190 Orc Lord
 1191 Mimic
+1192 Wraith
 1193 Alarm
 1194 Arclouse
-1195 Riding Word
+1195 Rideword
 1196 Skeleton Prisoner
 1197 Zombie Prisoner
 1198 Dark Priest
@@ -227,12 +228,278 @@
 1250 Chepet
 1251 Stormy Knight
 1252 Garm
-1298 Zombie Master
-1297 Ancient Mummy
-1301 Am Mut
-1292 Mini Demon
-1372 Goat
-1287 Soldier Guardian
-1384 Deleter
+1253 Gargoyle
+1254 Raggler
+1255 Neraid
+1256 Pest
+1257 Injustice
+1258 Goblin Archer
+1259 Gryphon
+1260 Dark Frame
+1261 Wild Rose
+1262 Mutant Dragon
+1263 Wind Ghost
+1264 Merman
+1265 Cookie
+1266 Aster
+1268 Bloody Knight
+1269 Clock
+1270 Clock Tower Manager
+1271 Alligator
 1272 Dark Lord
+1273 Orc Lady
+1274 Megalith
+1275 Alice
+1276 Raydric Archer
 1277 Greatest General
+1278 Stalactic Golem
+1279 Tri Joint
+1280 Steam Goblin
+1281 Sageworm
+1282 Kobold Archer
+1283 Chimera
+1284 Hugeling
+1285 Archer Guardian
+1287 Soldier Guardian
+1288 Emperium
+1289 Maya Purple
+1290 Skeleton General
+1291 Wraith Dead
+1292 Mini Demon
+1293 Creamy Fear
+1294 Killer Mantis
+1295 Owl Baron
+1297 Ancient Mummy
+1298 Zombie Master
+1299 Goblin Leader
+1300 Caterpillar
+1301 Am Mut
+1302 Dark Illusion
+1303 Giant Hornet
+1304 Giant Spider
+1305 Ancient Worm
+1306 Leib Olmai
+1307 Cat'o'Nine Tails
+1308 Panzer Goblin
+1309 Gajomart
+1310 Majorous
+1311 Gullinbursti
+1312 Turtle General
+1313 Mobster
+1314 Permeter
+1315 Assaulter
+1316 Solider
+1317 Seal
+1318 Heater
+1319 Freezer
+1320 Owl Duke
+1321 Dragon Tail
+1322 Spring Rabbit
+1323 Sea Otter
+1324 Treasure Box
+1325 Treasure Box
+1326 Treasure Box
+1327 Treasure Box
+1328 Treasure Box
+1329 Treasure Box
+1330 Treasure Box
+1331 Treasure Box
+1332 Treasure Box
+1334 Treasure Box
+1335 Treasure Box
+1336 Treasure Box
+1337 Treasure Box
+1338 Treasure Box
+1339 Treasure Box
+1340 Treasure Box
+1341 Treasure Box
+1342 Treasure Box
+1343 Treasure Box
+1344 Treasure Box
+1345 Treasure Box
+1346 Treasure Box
+1347 Treasure Box
+1348 Treasure Box
+1349 Treasure Box
+1350 Treasure Box
+1351 Treasure Box
+1352 Treasure Box
+1353 Treasure Box
+1354 Treasure Box
+1355 Treasure Box
+1356 Treasure Box
+1357 Treasure Box
+1358 Treasure Box
+1359 Treasure Box
+1360 Treasure Box
+1361 Treasure Box
+1362 Treasure Box
+1363 Treasure Box
+1364 Assaulter
+1365 Apocalypse
+1366 Lava Golem
+1367 Blazzer
+1368 Geographer
+1369 Grand Peco
+1370 Succubus
+1371 Fake Angel
+1372 Goat
+1373 Lord of Death
+1374 Incubus
+1375 The Paper
+1376 Harpy
+1377 Elder
+1378 Demon Pungus
+1379 Nightmare Terror
+1380 Driller
+1381 Grizzly
+1382 Diabolic
+1383 Explosion
+1384 Sky Deleter
+1385 Earth Deleter
+1386 Sleeper
+1387 Gig
+1388 Archangeling
+1389 Dracula
+1390 Violy
+1391 Galapago
+1392 Rotar Zairo
+1393 Mummy
+1394 Zombie
+1395 Crystal 1
+1396 Crystal 2
+1397 Crystal 3
+1398 Crystal 4
+1399 Event Bapho
+1400 Karakasa
+1401 Shinobi
+1402 Poison Toad
+1403 Antique Firelock
+1404 Miyabi Ningyo
+1405 Tengu
+1406 Kapha
+1408 Bloody Butterfly
+1409 Rice Cake Boy
+1410 Enchanted Peach Tree
+1412 Evil Cloud Hermit
+1413 Hermit Plant
+1415 Baby Leapord
+1416 Wicked Nymph
+1417 Zipper Bear
+1418 Dark Snake Lord
+1419 Farmiliar
+1420 Skel Archer
+1421 Isis
+1422 Hunter Fly
+1423 Ghoul
+1424 Side Winder
+1425 Obeaune
+1426 Marc
+1427 Nightmare
+1428 Poison Spore
+1429 Argiope
+1430 Argos
+1431 Baphomet
+1432 Desert Wolf
+1433 Deviruchi
+1434 Drainliar
+1435 Evil Druid
+1436 Jakk
+1437 Joker
+1438 Khalitzburg
+1439 High Orc
+1440 Stem Worm
+1441 Penomena
+1442 Sasquatch
+1443 Cruiser
+1444 Chepet
+1445 Raggler
+1446 Injustice
+1447 Gryphon
+1448 Dark Frame
+1449 Mutant Dragon
+1450 Wind Ghost
+1451 Merman
+1452 Orc Lady
+1453 Raydric Archer
+1454 Tri Joint
+1455 Kobold Archer
+1456 Chimera
+1457 Mantis
+1458 Marduk
+1459 Marionette
+1460 Matyr
+1461 Minorous
+1462 Orc Skeleton
+1463 Orc Zombie
+1464 Pasana
+1465 Ground Petit
+1466 Sky Petit
+1467 Raydric
+1468 Requiem
+1469 Skel Worker
+1470 Zerom
+1471 Nine Tail
+1472 Bon Gun
+1473 Orc Archer
+1474 Mimic
+1475 Wraith
+1476 Alarm
+1477 Arclouse
+1478 Rideword
+1479 Skel Prisoner
+1480 Zombie Prisoner
+1481 Punk
+1482 Zherelthsh
+1483 Rybio
+1484 Phendark
+1485 Mysteltainn
+1486 Tirfing
+1487 Executioner
+1488 Anolian
+1489 Sting
+1490 Wander Man
+1491 Dokebi
+1492 Incantation Samurai
+1493 Dryad
+1494 Beetle king
+1495 Stone Shooter
+1497 Wooden Golem
+1498 Wootan Shooter
+1499 Wootan Fighter
+1500 Parasite
+1503 Gibbet
+1504 Dullahan
+1505 Loli Ruri
+1506 Disguise
+1508 Quve
+1509 Lude
+1510 Hylozoist
+1511 Amon Ra
+1512 Hyegun
+1513 Civil Servant
+1514 Dancing Dragon
+1515 Garm Baby
+1516 Increase Soil
+1517 Li Me Mang Ryang
+1518 Bacsojin
+1519 Chung E
+1520 Boiled Rice
+1582 Deviling
+1583 Tao Gunka
+1584 Tamruan
+1585 Mime Monkey
+1586 Leaf Cat
+1587 Kraben
+1614 Metaling
+1615 Mineral
+1617 Pitman
+1618 Waste Stove
+1619 Ungoliant
+1620 Percellio
+1621 Noxious
+1622 Venomus
+1623 Teddy Bear
+1624 RSX 0806
+1625 Waste Stove
+1626 Porcellio
