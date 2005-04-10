@@ -11,6 +11,7 @@ Bug fixes:
 - Stopped the annoying "Attempted to use skill you do not have."
   messages by moving the message from error to debug.
 - Fix autoBreakTime not working on some systems.
+- Fix 'store desc <num>' command.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
