@@ -8804,6 +8804,23 @@ sub parseMsg {
 				$ID eq $accountID ? 1 : 2;
 		}
 
+	} elsif ($switch eq "0199") {
+		# 99 01 - 4 bytes, used by eAthena and < EP5 Aegis
+		my $mode = uc(unpack("H2", substr($msg, 3, 1))) . uc(unpack("H2", substr($msg, 2, 1)));
+		if ($mode eq "0003") {
+			# 01 00 - PvP - No emblem, damage shown
+			debug "PvP Display Mode\n", "map_event";
+		} elsif ($mode eq "0001") {
+			# 03 00 - GvG - Emblem, no damage shown
+			debug "GvG Display Mode\n", "map_event";
+		}
+
+
+	} elsif ($switch eq "019A") {
+		# 9A 01 - 14 bytes long
+		message "PvP On\n", "map_event";
+
+
 	} elsif ($switch eq "019B") {
 		my $ID = substr($msg, 2, 4);
 		my $type = unpack("L1",substr($msg, 6, 4));

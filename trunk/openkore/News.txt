@@ -23,6 +23,7 @@ New features:
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
 - kaliwanagan, piroJOKE: eathena support.
+- zdivpsa: PVP mode packet support
 
 ==================
 ### 1.6.0
