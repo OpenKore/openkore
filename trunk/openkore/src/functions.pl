@@ -1464,11 +1464,11 @@ sub parseCommand {
 		} elsif ($arg1 eq "" && $talk{'buyOrSell'}) {
 			sendGetStoreList(\$remote_socket, $talk{'ID'});
 
-		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $storeList[$arg2] eq "") {
+		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
 			error	"Error in function 'store desc' (Store Item Description)\n" .
 				"Usage: Store item $arg2 does not exist\n";
 		} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-			printItemDesc($storeList[$arg2]);
+			printItemDesc($storeList[$arg2]{nameID});
 
 		} else {
 			error	"Syntax Error in function 'store' (Store Functions)\n" .
