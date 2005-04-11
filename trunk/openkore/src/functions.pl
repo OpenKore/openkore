@@ -5271,7 +5271,7 @@ sub parseSendMsg {
 			undef $sendMsg;
 		}
 
-	} elsif ($switch eq "008C" || $switch eq "0108" || $switch eq "017E") {
+	} elsif ($switch eq "008C" || $switch eq "0108" || $switch eq "017E" || ($switch eq "00F3" && $config{serverType} == 3)) {
 		# Public, party and guild chat
 		my $length = unpack("S",substr($msg,2,2));
 		my $message = substr($msg, 4, $length - 4);
