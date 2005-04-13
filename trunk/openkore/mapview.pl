@@ -73,7 +73,6 @@ sub OnInit {
 	$mapview = new Interface::Wx::MapViewer($frame);
 	$mapview->setMapDir($options{maps});
 	$mapview->onMouseMove(\&onMouseMove);
-	$mapview->onClick(\&onClick);
 	$mapview->onMapChange(\&onMapChange);
 	$sizer->Add($mapview, 1, wxGROW);
 
@@ -84,10 +83,19 @@ sub OnInit {
 
 	$frame->SetSizer($sizer);
 
-	my $timer = new Wx::Timer($self, 5);
-	EVT_TIMER($self, 5, \&onTimer);
-	$timer->Start(500);
-	onTimer();
+	if ($ARGV[0] eq '') {
+		$mapview->onClick(\&onClick);
+
+		my $timer = new Wx::Timer($self, 5);
+		EVT_TIMER($self, 5, \&onTimer);
+		$timer->Start(500);
+		onTimer();
+
+	} else {
+		getField("$options{fields}/$ARGV[0].fld", \%field);
+		$mapview->set($ARGV[0], $ARGV[1], $ARGV[2], \%field);
+		$mapview->update;
+	}
 
 	return 1;
 }
