@@ -20,11 +20,18 @@ New features:
   in servers.txt, which allow you to force connection to a specific
   map server.
 - Support for eAthena servers. Set serverType to 3 for these servers.
+- The _inInventory option's syntax has changed.
+  Previous syntax:
+    inInventory_name Red Potion,Blue Gem,AnotherItem
+    inInventory_qty >5,>0,=10
+  New syntax:
+    inInventory Red Potion >5,Blue Gem,AnotherItem=10
 
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
 - kaliwanagan, piroJOKE: eathena support.
 - zdivpsa: PVP mode packet support
+- jsteng: new syntax for the inInventory option.
 
 ==================
 ### 1.6.0
