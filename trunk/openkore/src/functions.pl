@@ -11012,19 +11012,14 @@ sub checkSelfCondition {
 		}
 	}
 
-	if ($config{$prefix . "_inInventory_name"}) {
-		my @arrN = split / *, */, $config{$prefix . "_inInventory_name"};
-		my @arrQ = split / *, */, $config{$prefix . "_inInventory_qty"};
+	if ($config{$prefix."_inInventory"}) {
 		my $found = 0;
-
-		my $i = 0;
-		foreach (@arrN) {
-			my $index = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $_);
-			if ($index ne "") {
-				$found = 1;
-				return 0 unless inRange($chars[$config{'char'}]{'inventory'}[$index]{amount},$arrQ[$i]);
-			}
-			$i++;
+		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
+			my ($item,$count) = $line =~ /(.*?)(\s+[><= 0-9]+)?$/;
+			$count = '>0' if $count eq '';
+			my $iX = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $item);
+			$found++ if inRange($iX eq '' ? 0 : $chars[$config{'char'}]{'inventory'}[$iX]{amount}, $count);
+			last if $found;
 		}
 		return 0 unless $found;
 	}
