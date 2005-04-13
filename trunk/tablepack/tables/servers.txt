@@ -53,19 +53,8 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_account 0
 
-[Philippines - pRO: Fenrir/Iris/Lydia]
+[Philippines - pRO: Fenrir/Iris/Lydia/Loki/Sarah]
 ip 202.57.118.232
-port 6900
-master_version 15
-version 1
-secureLogin 1
-secureLogin_type 0
-secureLogin_requestCode
-secureLogin_account 0
-serverType 2
-
-[Philippines - pRO: Loki/Sarah]
-ip 202.57.118.231
 port 6900
 master_version 15
 version 1
@@ -87,7 +76,7 @@ secureLogin_account 0
 serverType 2
 
 [Philippines - pRO: Urdr]
-ip 202.57.118.231
+ip 202.57.118.233
 port 6900
 master_version 27
 version 1
