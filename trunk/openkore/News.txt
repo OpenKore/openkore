@@ -12,6 +12,9 @@ Bug fixes:
   messages by moving the message from error to debug.
 - Fix autoBreakTime not working on some systems.
 - Fix 'store desc <num>' command.
+- Don't spam the teleport packet when you're not on one of the maps in
+  allowedMaps. Only attempt to teleport up to 3 times, because some maps
+  don't allow teleport.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
@@ -32,6 +35,7 @@ Credits:
 - kaliwanagan, piroJOKE: eathena support.
 - zdivpsa: PVP mode packet support
 - jsteng: new syntax for the inInventory option.
+- denni: bug fixes.
 
 ==================
 ### 1.6.0
