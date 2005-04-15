@@ -29,6 +29,7 @@ New features:
     inInventory_qty >5,>0,=10
   New syntax:
     inInventory Red Potion >5,Blue Gem,AnotherItem=10
+- Support login error 1 as "Error: Server is closed".
 
 New config options:
 - autoSpell (spell name)
