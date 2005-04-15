@@ -30,13 +30,19 @@ New features:
   New syntax:
     inInventory Red Potion >5,Blue Gem,AnotherItem=10
 
+New config options:
+- autoSpell (spell name)
+  When the sage autospell list is sent from the server, Kore will
+  automatically pick the specified skill name to be used.
+  Combine this with a useSelf_skill for casting Auto Spell.
+
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
 - kaliwanagan, piroJOKE: eathena support.
 - zdivpsa: PVP mode packet support
 - jsteng: new syntax for the inInventory option.
 - denni: bug fixes.
-
+- kaliwanagan: sage autospell support
 ==================
 ### 1.6.0
 ==================
