@@ -443,6 +443,8 @@ portalRecord 2
 beepOnPM 0
 beepOnChat 0
 
-ksPlayers
+tankersList
+
+autoSpell
 
 #alias_heal sp 28
