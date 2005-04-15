@@ -35,6 +35,9 @@ New config options:
   When the sage autospell list is sent from the server, Kore will
   automatically pick the specified skill name to be used.
   Combine this with a useSelf_skill for casting Auto Spell.
+- tankersList is a comma-seperated lists of player names that should be
+  treated as if they were in your party so they can tank monsters for you.
+  It was previously called ksPlayers.
 
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
@@ -43,6 +46,7 @@ Credits:
 - jsteng: new syntax for the inInventory option.
 - denni: bug fixes.
 - kaliwanagan: sage autospell support
+
 ==================
 ### 1.6.0
 ==================

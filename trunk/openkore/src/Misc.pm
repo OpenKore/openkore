@@ -547,7 +547,7 @@ sub objectIsMovingTowardsPlayer {
 		foreach (@playersID) {
 			next if (!$_ || ($ignore_party_members &&
 			                 ($char->{party} && $char->{party}{users}{$_}) ||
-							 (existsInList($config{ksPlayers}, $players{$_}{name}) &&
+							 (existsInList($config{tankersList}, $players{$_}{name}) &&
 							  $players{$_}{name} ne 'Unknown')));
 			if (checkMovementDirection($obj->{pos}, \%vec, $players{$_}{pos}, 15)) {
 				return 1;
