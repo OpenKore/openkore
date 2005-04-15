@@ -9647,7 +9647,7 @@ sub cartGet {
 
 	my %args;
 	$args{items} = $items;
-	$args{timeout} = $timeout{ai_cartAuto}{timeout} || 0.15;
+	$args{timeout} = $timeout{ai_cartAuto} ? $timeout{ai_cartAuto}{timeout} : 0.15;
 	AI::queue("cartGet", \%args);
 }
 
@@ -9672,7 +9672,7 @@ sub cartAdd {
 
 	my %args;
 	$args{items} = $items;
-	$args{timeout} = $timeout{ai_cartAuto}{timeout} || 0.15;
+	$args{timeout} = $timeout{ai_cartAuto} ? $timeout{ai_cartAuto}{timeout} : 0.15;
 	AI::queue("cartAdd", \%args);
 }
 
