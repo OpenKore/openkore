@@ -6310,7 +6310,9 @@ sub parseMsg {
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
 
-		if ($type == 2) {
+		if ($type == 1) {
+			error("Error: Server is closed\n", "connection");
+		} elsif ($type == 2) {
 			if ($config{'dcOnDualLogin'} == 1) {
 				$interface->errorDialog("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
 					"$Settings::NAME will now immediately disconnect.");
