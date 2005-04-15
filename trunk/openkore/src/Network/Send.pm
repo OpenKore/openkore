@@ -41,6 +41,7 @@ our @EXPORT = qw(
 	sendArrowCraft
 	sendAttack
 	sendAttackStop
+	sendAutoSpell
 	sendBanCheck
 	sendBuy
 	sendBuyVender
@@ -425,6 +426,13 @@ sub sendAttackStop {
 	# Don't use this function, use Misc::stopAttack() instead!
 	#sendMove ($r_socket, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 	#debug "Sent stop attack\n", "sendPacket";
+}
+
+sub sendAutoSpell {
+	my $r_socket = shift;
+	my $ID = shift;
+	my $msg = pack("C*", 0xce, 0x01, $ID, 0x00, 0x00, 0x00);
+	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendBanCheck {

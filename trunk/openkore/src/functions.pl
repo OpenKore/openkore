@@ -2062,7 +2062,7 @@ sub AI {
 	##### AUTOBREAKTIME #####
 	# Break time: automatically disconnect at certain times of the day
 
-	if (timeOut($AI::Timeouts::autoBreakTime, 1)) {
+	if (timeOut($AI::Timeouts::autoBreakTime, 10)) {
 		my @datetimeyear = split / /, getFormattedDate(int(time));
 		my $mytime = $datetimeyear[2];
 		my $hormin = substr($mytime, 0, 5);		
@@ -8995,6 +8995,13 @@ sub parseMsg {
 		} else {
 			message("Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
 
+		}
+
+	} elsif ($switch eq "01CD") {
+		# Sage Autospell - list of spells availible sent from server
+		if ($config{autoSpell}) {
+			my $skill = Skills->new(name => $config{autoSpell});
+			sendAutoSpell(\$remote_socket,$skill->id);
 		}
 
 	} elsif ($switch eq "01D0" || $switch eq "01E1") {
