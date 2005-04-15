@@ -10323,7 +10323,7 @@ sub updateDamageTables {
 				$monsters{$ID1}{'missedToPlayer'}{$ID2}++;
 				$players{$ID2}{'missedFromMonster'}{$ID1}++;
 			}
-			if (existsInList($config{ksPlayers}, $players{$ID2}{name}) ||
+			if (existsInList($config{tankersList}, $players{$ID2}{name}) ||
 			    (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}})) {
 				# Monster attacks party member
 				$monsters{$ID1}{'dmgToParty'} += $damage;
@@ -10344,7 +10344,7 @@ sub updateDamageTables {
 				$monsters{$ID2}{'missedFromPlayer'}{$ID1}++;
 				$players{$ID1}{'missedToMonster'}{$ID2}++;
 			}
-			if (existsInList($config{ksPlayers}, $players{$ID2}{name}) ||
+			if (existsInList($config{tankersList}, $players{$ID2}{name}) ||
 			    (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
 			}
