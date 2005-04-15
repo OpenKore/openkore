@@ -30,6 +30,9 @@ New features:
   New syntax:
     inInventory Red Potion >5,Blue Gem,AnotherItem=10
 - Support login error 1 as "Error: Server is closed".
+- Use ai_cartAdd timeout if it's specified in timeouts.txt.
+  This is for servers where you are disconnected when you try to add
+  many items to the cart too quickly.
 
 New config options:
 - autoSpell (spell name)
