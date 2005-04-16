@@ -70,6 +70,7 @@ our @EXPORT = qw(
 	sendEmotion
 	sendEnteringVender
 	sendEquip
+	sendForgeItem
 	sendGameLogin
 	sendGetPlayerInfo
 	sendGetStoreList
@@ -704,6 +705,14 @@ sub sendEquip {
 	my $msg = pack("C*", 0xA9, 0x00) . pack("S*", $index) .  pack("S*", $type);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Equip: $index\n" , 2;
+}
+
+sub sendForgeItem {
+	my $r_socket = shift;
+	my $ID = shift;
+	my $msg = pack("C*", 0x8E, 0x01) . pack("S*", $ID) . pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent Forge Item: $ID\n" , 2;
 }
 
 sub sendGameLogin {
