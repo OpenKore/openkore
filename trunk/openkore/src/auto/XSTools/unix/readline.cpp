@@ -41,7 +41,7 @@ reader_thread (void *data)
 			add_history (line);
 
 		pthread_mutex_lock (&input_list_lock);
-		input_list.push_front (line);
+		input_list.push_back (line);
 		pthread_mutex_unlock (&input_list_lock);
 	}
 	return NULL;
