@@ -33,6 +33,8 @@ New features:
 - Use ai_cartAdd timeout if it's specified in timeouts.txt.
   This is for servers where you are disconnected when you try to add
   many items to the cart too quickly.
+- A brand new console interface for Unix/Linux, which uses GNU readline.
+  Input buffer corruption is now a thing of the past.
 
 New config options:
 - autoSpell (spell name)
