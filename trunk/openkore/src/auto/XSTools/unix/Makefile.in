@@ -2,14 +2,20 @@ CC=gcc
 CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 $(CYGWIN)
 @HEADER@
 
-.PHONY: clean
+.PHONY: all clean
 
-unix.o: unix.c
+all: unix.o readline-wrapper.o readline.o
+
+unix.o: unix.xs
+	$(XSUBPP) -typemap "$(TYPEMAP)" unix.xs > unix.c
 	$(CC) -I. $(CFLAGS) unix.c -c $(PERLCFLAGS) -o unix.o -I$(COREDIR)
 
-unix.c: unix.xs
-	$(XSUBPP) -typemap "$(TYPEMAP)" unix.xs > unix.xsc
-	mv unix.xsc unix.c
+readline-wrapper.o: readline-wrapper.xs
+	$(XSUBPP) -typemap "$(TYPEMAP)" readline-wrapper.xs > readline-wrapper.c
+	$(CC) -I. $(CFLAGS) readline-wrapper.c -c $(PERLCFLAGS) -o readline-wrapper.o -I$(COREDIR)
+
+readline.o: readline.cpp
+	$(CXX) $(SOCFLAGS) $(CXXFLAGS) $< -c -o $@
 
 clean:
-	rm -f unix.xsc unix.c unix.o Makefile.real
+	rm -f unix.c readline-wrapper.c *.xsc *.o Makefile.real

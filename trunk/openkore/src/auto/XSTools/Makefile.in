@@ -4,6 +4,7 @@
 OBJ=pathfinding/*.o misc/*.o
 #if unix
 OBJ+=unix/*.o
+LIBS=-lreadline -ltermcap
 #endif
 #if win32
 OBJ+=win32/wrapper.o win32/utils.o
