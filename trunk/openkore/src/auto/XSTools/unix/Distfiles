@@ -1,1 +1,4 @@
 unix.xs
+readline-wrapper.xs
+readline.cpp
+readline.h
