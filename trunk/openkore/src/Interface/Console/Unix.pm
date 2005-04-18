@@ -75,9 +75,11 @@ sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
 	my $tail;
 
+	# Hide prompt and input buffer
 	ReadLine::hide();
 
 	if ($message =~ /\n$/s) {
+		# Line ends with a newline; print it normally
 		print $message;
 		if ($self->{last_message_had_no_newline}) {
 			ReadLine::setPrompt("");
@@ -85,6 +87,9 @@ sub writeOutput {
 		}
 
 	} else {
+		# Line doesn't end with a newline.
+		# Print all lines except the last one,
+		# and set the last line as readline's prompt.
 		my @lines = split /\n/, $message;
 		my $lastLine = $lines[@lines - 1];
 		for (my $i = 0; $i < @lines - 1; $i++) {
@@ -94,6 +99,7 @@ sub writeOutput {
 		$self->{last_message_had_no_newline} = 1;
 	}
 
+	# Show prompt and input buffer
 	ReadLine::show();
 }
 
