@@ -85,21 +85,19 @@ sub getInput {
 
 sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
-	my $tail;
+	my $code;
 
 	# Hide prompt and input buffer
 	ReadLine::hide() if ($self->{readline});
+	$code = getColorForMessage($type, $domain);
 
 	if (!$self->{readline}) {
-		setColor($type, $domain);
-		print $message . color('reset');
+		print $code . $message . getColor('reset');
 		STDOUT->flush;
 
 	} elsif ($message =~ /\n$/s) {
 		# Line ends with a newline; print it normally
-		setColor($type, $domain);
-		print $message . color('reset');
-		STDOUT->flush;
+		ReadLine::print($code . $message . getColor('reset'));
 		if ($self->{last_message_had_no_newline}) {
 			ReadLine::setPrompt("");
 			$self->{last_message_had_no_newline} = 0;
@@ -112,13 +110,12 @@ sub writeOutput {
 		my @lines = split /\n/, $message;
 		my $lastLine = $lines[@lines - 1];
 
-		my $code = setColor($type, $domain);
+		ReadLine::print($code);
 		for (my $i = 0; $i < @lines - 1; $i++) {
-			print $lines[$i];
+			ReadLine::print($lines[$i]);
 		}
 
-		STDOUT->flush;
-		ReadLine::setPrompt($code . $lastLine . color('reset'));
+		ReadLine::setPrompt($code . $lastLine . getColor('reset'));
 		$self->{last_message_had_no_newline} = 1;
 	}
 
@@ -131,20 +128,19 @@ sub writeOutput {
 
 
 # Print color code for the given message type and domain
-sub setColor {
+sub getColorForMessage {
 	return if (!$consoleColors{''}{useColors});
 	my ($type, $domain) = @_;
 	my $color = $consoleColors{$type}{$domain};
 	$color = $consoleColors{$type}{default} if (!defined $color);
 	
 	my $code = '';
-	$code = color($color) if (defined $color);
-	print $code;
+	$code = getColor($color) if (defined $color);
 	return $code;
 }
 
 # Get the color code for the given color name
-sub color {
+sub getColor {
 	my $color = shift;
 	my $code = '';
 

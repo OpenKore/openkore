@@ -4,3 +4,4 @@ char *R_pop ();
 void R_hide ();
 void R_show ();
 void R_setPrompt (const char *prompt);
+void R_print (const char *msg);

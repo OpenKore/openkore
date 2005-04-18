@@ -40,3 +40,7 @@ R_hide()
 void
 R_setPrompt(prompt)
 	char *prompt
+
+void
+R_print(msg)
+	char *msg
