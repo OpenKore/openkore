@@ -72,6 +72,7 @@ R_init ()
 {
 	quit = false;
 	rl_event_hook = event_hook;
+	setvbuf (stdout, NULL, _IOFBF, 0);
 	pthread_create (&thread, NULL, reader_thread, NULL);
 }
 
@@ -86,8 +87,8 @@ R_stop ()
 	quit = true;
 	pthread_mutex_unlock (&quit_lock);
 	pthread_join (thread, NULL);
+	setlinebuf (stdout);
 }
-
 
 /*
  * Check whether there's a line in the input list
@@ -108,7 +109,6 @@ R_pop ()
 	return result;
 }
 
-
 /*
  * Hide the prompt.
  */
@@ -124,7 +124,6 @@ R_hide ()
 	rl_deprep_terminal ();
 }
 
-
 /*
  * Restore the prompt.
  */
@@ -139,10 +138,25 @@ R_show ()
 	rl_redisplay ();
 }
 
+/*
+ * Set readline's prompt
+ */
 void
 R_setPrompt (const char *prompt)
 {
 	rl_set_prompt (prompt);
+}
+
+/*
+ * Print a message to the console using libc's printf()
+ * because we want to print a message and the prompt in
+ * the same flush. Perl's print might conflict with
+ * libc's buffer.
+ */
+void
+R_print (const char *msg)
+{
+	printf ("%s", msg);
 }
 
 
