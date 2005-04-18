@@ -45,7 +45,6 @@ use Interface::Wx::LogView;
 use Interface::Wx::Console;
 use Interface::Wx::Input;
 use Interface::Wx::ItemList;
-use Interface::Wx::ConfigEditor;
 use Interface::Wx::DockNotebook;
 use AI;
 use Settings;
@@ -80,13 +79,6 @@ sub OnInit {
 
 	$self->{history} = [];
 	$self->{historyIndex} = -1;
-
-	Modules::register("Interface::Wx::Dock",
-		"Interface::Wx::MapViewer",
-		"Interface::Wx::Console",
-		"Interface::Wx::Input",
-		"Interface::Wx::ItemList",
-		"Interface::Wx::ConfigEditor");
 
 	return 1;
 }
@@ -734,6 +726,7 @@ sub onAdvancedConfig {
 	my $vsizer = new Wx::BoxSizer(wxVERTICAL);
 	$panel->SetSizer($vsizer);
 
+	require Interface::Wx::ConfigEditor;
 	my $cfg = new Interface::Wx::ConfigEditor($panel, -1);
 	$cfg->setConfig(\%config);
 #	$cfg->addCategory('Attacks', 'Grid', ['attackAuto', 'attackDistance', 'attackMaxDistance']);

@@ -43,6 +43,10 @@ New config options:
   treated as if they were in your party so they can tank monsters for you.
   It was previously called ksPlayers.
 
+Internal:
+- Wx interface: load some modules only when they're necessary. This
+  saves about 2 MB memory.
+
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
 - kaliwanagan, piroJOKE: eathena support.

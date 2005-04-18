@@ -8,7 +8,6 @@ use base qw(Exporter);
 
 use Wx ':everything';
 use Wx::Event qw(EVT_BUTTON);
-use Wx::XRC;
 
 our @EXPORT = qw(loadDialog loadPNG setupDialog dataFile);
 our %files;
@@ -21,6 +20,7 @@ sub loadDialog {
 	my $xml;
 
 	if (!$files{$realfile}) {
+		require Wx::XRC;
 		$xml = new Wx::XmlResource;
 		$xml->InitAllHandlers;
 		$xml->Load($realfile);
