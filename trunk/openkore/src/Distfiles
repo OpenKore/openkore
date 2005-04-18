@@ -16,6 +16,7 @@ Modules.pm
 Network.pm
 PathFinding.pm
 Plugins.pm
+ReadLine.pm
 Settings.pm
 Skills.pm
 UnixUtils.pm
