@@ -1,5 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 $(CYGWIN)
+CXXFLAGS=$(CFLAGS)
 @HEADER@
 
 .PHONY: all clean
