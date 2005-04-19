@@ -9,7 +9,7 @@ using namespace std;
 
 
 /* Variables */
-static pthread_t thread;
+static pthread_t reader;
 
 static bool quit;
 static list<char *> input_list;
@@ -73,7 +73,7 @@ R_init ()
 	quit = false;
 	rl_event_hook = event_hook;
 	setvbuf (stdout, NULL, _IOFBF, 0);
-	pthread_create (&thread, NULL, reader_thread, NULL);
+	pthread_create (&reader, NULL, reader_thread, NULL);
 }
 
 
@@ -86,7 +86,8 @@ R_stop ()
 	pthread_mutex_lock (&quit_lock);
 	quit = true;
 	pthread_mutex_unlock (&quit_lock);
-	pthread_join (thread, NULL);
+
+	pthread_join (reader, NULL);
 	setlinebuf (stdout);
 }
 
@@ -156,7 +157,7 @@ R_setPrompt (const char *prompt)
 void
 R_print (const char *msg)
 {
-	printf ("%s", msg);
+	fprintf (rl_outstream, "%s", msg);
 }
 
 
