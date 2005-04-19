@@ -1335,11 +1335,22 @@ sub sendSkillUseLoc {
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x16, 0x01).pack("S*",$lv,$ID,$x,$y);
-	} else {
+
+	} elsif ($config{serverType} == 2) {
 		$msg = pack("S*", 0x0116, 0x0000, 0x0000, $lv) .
 			chr(0) . pack("S*", $ID) .
 			pack("L*", 0, 0, 0) .
 			pack("S*", $x) . chr(0) . pack("S*", $y);
+
+	} elsif ($config{serverType} == 3) {
+		$msg = pack("C*", 0x13, 0x01, 0xbe, 0x44, 0x00, 0x00, 0xa0, 0xc0, 0x00, 0x00) .
+			pack("S*", $lv) .
+			pack("C*", 0x00, 0x00, 0xa0, 0x40, 0x00, 0x00) .
+			pack("S*", $ID) .
+			pack("C*", 0x00, 0x00) .
+			pack("S*", $x) .
+			pack("C*", 0x00, 0x00, 0xa0, 0x40, 0xe0, 0x80, 0x09, 0xc2) .
+			pack("S*", $y);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
