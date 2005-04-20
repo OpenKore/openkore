@@ -35,6 +35,7 @@ New features:
   many items to the cart too quickly.
 - A brand new console interface for Unix/Linux, which uses GNU readline.
   Input buffer corruption is now a thing of the past.
+- Wait 3 seconds before standing if someone heals you.
 
 New config options:
 - autoSpell (spell name)
