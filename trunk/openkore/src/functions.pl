@@ -3930,13 +3930,9 @@ sub AI {
 	##### PARTY-SKILL USE ##### 
 
 	if ($char->{party} && (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move)))){
-		my $i = 0;
 		my %party_skill;
-		while ($config{"partySkill_$i"}) {
-			if (!$config{"partySkill_$i"}) {
-				$i++;
-				next;
-			}
+		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
+			next if (!$config{"partySkill_$i"});
 
 			for (my $j = 0; $j < @partyUsersID; $j++) {
 				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
@@ -3959,8 +3955,7 @@ sub AI {
 					last;
 				}
 			}
-			$i++;
-			last if (defined($party_skill{targetID}));
+			last if (defined $party_skill{targetID});
 		}
 
 		if ($config{useSelf_skill_smartHeal} && $party_skill{skillID} eq "AL_HEAL") {
