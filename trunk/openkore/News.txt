@@ -15,6 +15,7 @@ Bug fixes:
 - Don't spam the teleport packet when you're not on one of the maps in
   allowedMaps. Only attempt to teleport up to 3 times, because some maps
   don't allow teleport.
+- Fix a bug with empty partySkill blocks messing up partySkill.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
