@@ -3340,7 +3340,7 @@ sub AI {
 			sit();
 
 		# Stand if our HP is high enough
-		} elsif ($action eq "sitAuto" && timeOut(AI::args) && ($ai_v{'sitAuto_forceStop'} || $upper_ok)) {
+		} elsif ($action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'} || $upper_ok)) {
 			AI::dequeue;
 			debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
 			stand() if (!$config{'sitAuto_idle'} && $char->{sitting});
@@ -8102,12 +8102,6 @@ sub parseMsg {
 		# Print skill use message
 		my $extra = "";
 		if ($skillID == 28) {
-			# Wait before standing
-			if (AI::action eq "sitAuto" && $char->{hp} < $config{sitAuto_hp_upper} && $targetID eq $accountID) {
-				AI::args->{time} = time;
-				AI::args->{timeout} = 3;
-			}
-
 			$extra = ": $amount hp gained";
 			updateDamageTables($sourceID, $targetID, -$amount);
 		} elsif ($amount != 65535) {
