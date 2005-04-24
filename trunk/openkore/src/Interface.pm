@@ -79,7 +79,7 @@ sub switchInterface {
 sub mainLoop {
 	my $self = shift;
 	while (!$quit) {
-		usleep($config{sleepTime} || 1);
+		usleep($config{sleepTime});
 		$self->iterate();
 		main::mainLoop();
 	}

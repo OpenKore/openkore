@@ -161,7 +161,6 @@ sub initStatVars {
 
 sub initOtherVars {
 	$timeout{ai_shop}{time} = time;
-	$useArrowCraft = 1;
 }
 
 
@@ -7857,7 +7856,10 @@ sub parseMsg {
 		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
 		$chatMsgUser =~ s/ $//;
 
-		message "%$chat\n", "partychat";
+		stripLanguageCode(\$chatMsg);
+		$chat = "$chatMsgUser : $chatMsg";
+		message "[Party] $chat\n", "partychat";
+
 		chatLog("p", "$chat\n") if ($config{'logPartyChat'});
 		ChatQueue::add('p', $ID, $chatMsgUser, $chatMsg);
 
