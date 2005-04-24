@@ -1,6 +1,6 @@
 CC=gcc
 CXX=g++
-CFLAGS=-Wall -O2 -funroll-loops -finline-functions -march=i586 $(CYGWIN)
+CFLAGS=-Wall -O2 -funroll-loops -finline-functions $(CYGWIN)
 CXXFLAGS=$(CFLAGS)
 @HEADER@
 
