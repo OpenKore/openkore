@@ -17,6 +17,7 @@ Bug fixes:
   don't allow teleport.
 - Fix a bug with empty partySkill blocks messing up partySkill.
 - Static mode in the Console::Other interface now works correctly.
+- Correctly strip language code from party chat.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
