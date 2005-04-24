@@ -10119,6 +10119,7 @@ sub dumpData {
 sub getField {
 	my $file = shift;
 	my $r_hash = shift;
+	$file =~ s/\//\\/g if ($^O eq 'MSWin32');
 	my $dist_file = $file;
 
 	undef %{$r_hash};
