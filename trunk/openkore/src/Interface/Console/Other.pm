@@ -109,6 +109,7 @@ sub new {
 
 	if ($ENV{OPENKORE_STATIC_INPUT}) {
 		$interface{inputMode} = 'static';
+		$interface{select} = IO::Select->new(\*STDIN);
 
 	} elsif (POSIX::ttyname(0) && POSIX::tcgetpgrp(0) == POSIX::getpgrp()) {
 		$interface{select} = IO::Select->new(\*STDIN);
