@@ -1,6 +1,6 @@
 # This file allows specific AI control for certain monsters
 # Syntax:
-# <monster> <attack> <teleport> <search> <skillcancel> <lv> <joblv> <hp> <sp>
+# <monster> <attack> <teleport> <search> <skillcancel> <lv> <joblv> <hp> <sp> <weight>
 #
 # <monster>:  Name of monster as found in monsters.txt (not case sensitive)
 #
@@ -30,6 +30,22 @@
 #
 # <sp>: Only auto-attack this monster if your SP is higher than the
 # specified amount. The SP is not specified in percentage.
+#
+# <weight>: Counts this monster as the specified amount aggressives. Supports floating point numbers (eg 1.8237402).
+# Example:
+#	(config.txt)
+#	teleportAuto_minAggressives 6
+#	teleportAuto_minAggressivesInLock 6
+#
+#	(mon_control.txt)
+#	Hydra 1 0 0 0 0 0 0 0 0.2
+#	Merman 1 0 0 0 0 0 0 0 2
+#
+#	If there's five hydras and two sword fish attacks the bot, it won't
+#	teleport away since the aggressives are counted as 5*0.2 + 2*1 = 3
+#	However, two marcs and two merman will make it tele away because
+#	it sees 2*1* + 2*2 = 6 aggressives.
+#
 #
 # Monsters not found in this file, or flags not specified will default to:
 # <attack> = 1
