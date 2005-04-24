@@ -63,6 +63,7 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType 2
+field_payon old_payon.fld
 
 [Philippines - pRO: Loki/Sarah]
 ip 202.57.118.231
@@ -74,6 +75,7 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType 2
+field_payon old_payon.fld
 
 [Philippines - pRO: Odin/Chaos]
 ip 202.57.118.233
@@ -85,6 +87,7 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType 2
+field_payon old_payon.fld
 
 [Philippines - pRO: Urdr]
 ip 202.57.118.231
@@ -96,6 +99,7 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType 2
+field_payon old_payon.fld
 
 [Europe - euRO]
 ip 62.109.138.134
@@ -119,6 +123,7 @@ master_version 23
 version 2
 serverType 1
 chatLangCode 1
+field_payon old_payon.fld
 
 [Brazil - bRO]
 ip 200.229.49.10
@@ -201,6 +206,7 @@ ip 70.85.47.148
 port 6900
 version 18
 master_version 1
+field_payon old_payon.fld
 
 [qRO Private Server]
 ip 70.85.26.148
