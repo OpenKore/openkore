@@ -38,6 +38,11 @@ New features:
   many items to the cart too quickly.
 - A brand new console interface for Unix/Linux, which uses GNU readline.
   Input buffer corruption is now a thing of the past.
+- Different RO servers can have different versions of the same field.
+  For example, pRO is stuck with the old Payon while most other servers
+  have the new Payon. OpenKore can now automatically select the correct
+  field file by using servers.txt. You must have the latest fieldpack
+  and the latest servers.txt from the latest tablepack.
 
 New config options:
 - autoSpell (spell name)

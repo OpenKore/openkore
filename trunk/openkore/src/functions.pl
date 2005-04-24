@@ -184,7 +184,7 @@ sub checkConnection {
 	return if ($config{'XKore'} || $Settings::no_connect);
 
 	if ($conState == 1 && (!$remote_socket || !$remote_socket->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
-		my $master = $masterServers{$config{'master'}};
+		my $master = $masterServer = $masterServers{$config{'master'}};
 
 		if ($master->{serverType} ne '' && $config{serverType} != $master->{serverType}) {
 			configModify('serverType', $master->{serverType});
@@ -225,10 +225,10 @@ sub checkConnection {
 
 		$timeout{'master'}{'time'} = time;
 
-	} elsif ($conState == 1 && $masterServers{$config{'master'}}{secureLogin} >= 1 && $secureLoginKey ne ""
+	} elsif ($conState == 1 && $masterServer->{secureLogin} >= 1 && $secureLoginKey ne ""
 	   && !timeOut($timeout{'master'}) && $conState_tries) {
 
-		my $master = $masterServers{$config{'master'}};
+		my $master = $masterServer;
 		message("Sending encoded password...\n", "connection");
 		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'}, $secureLoginKey,
 				$master->{version}, $master->{master_version},
@@ -243,9 +243,9 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 2 && !($remote_socket && $remote_socket->connected())
-	  && ($config{'server'} ne "" || $masterServers{$config{'master'}}{charServer_ip})
+	  && ($config{'server'} ne "" || $masterServer->{charServer_ip})
 	  && !$conState_tries) {
-		my $master = $masterServers{$config{'master'}};
+		my $master = $masterServer;
 
 		message("Connecting to Game Login Server...\n", "connection");
 		$conState_tries++;
@@ -260,7 +260,7 @@ sub checkConnection {
 		$timeout{'gamelogin'}{'time'} = time;
 
 	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'})
-	  && ($config{'server'} ne "" || $masterServers{$config{'master'}}{'charServer_ip'})) {
+	  && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
 		error "Timeout on Game Login Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -489,14 +489,15 @@ sub mainLoop {
 			my $file = $files[rand(@files)];
 			message "Changing configuration file (from \"$Settings::config_file\" to \"$file\")...\n", "system";
 
-			# A relogin is necessary if the host/port, username or char is different
-			my $oldMaster = $masterServers{$config{'master'}};
+			# A relogin is necessary if the server host/port, username
+			# or char is different.
+			my $oldMaster = $masterServer;
 			my $oldUsername = $config{'username'};
 			my $oldChar = $config{'char'};
 
 			switchConfigFile($file);
 
-			my $master = $masterServers{$config{'master'}};
+			my $master = $masterServer = $masterServers{$config{'master'}};
 			if (!$xkore
 			 && $oldMaster->{ip} ne $master->{ip}
 			 || $oldMaster->{port} ne $master->{port}
@@ -2960,7 +2961,7 @@ sub AI {
 			Plugins::callHook("AI/lockMap", \%args);
 			if (!$args{return}) {
 				my %lockField;
-				getField("$Settings::def_field/$config{lockMap}.fld", \%lockField);
+				getField($config{lockMap}, \%lockField);
 
 				my ($lockX, $lockY);
 				my $i = 500;
@@ -4625,7 +4626,7 @@ sub AI {
 			delete $ai_seq_args[0]{'openlist'};
 			delete $ai_seq_args[0]{'closelist'};
 			undef @{$ai_seq_args[0]{'mapSolution'}};
-			getField("$Settings::def_field/$ai_seq_args[0]{'dest'}{'map'}.fld", \%{$ai_seq_args[0]{'dest'}{'field'}});
+			getField($ai_seq_args[0]{dest}{map}, \%{$ai_seq_args[0]{'dest'}{'field'}});
 
 			# Initializes the openlist with portals walkable from the starting point
 			foreach my $portal (keys %portals_lut) {
@@ -5496,7 +5497,7 @@ sub parseMsg {
 		undef @servers;
 		for($i = 47; $i < $msg_size; $i+=32) {
 			$servers[$num]{'ip'} = makeIP(substr($msg, $i, 4));
-			$servers[$num]{'ip'} = $masterServers{$config{'master'}}->{ip} if ($masterServers{$config{'master'}}->{private});
+			$servers[$num]{'ip'} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 			$servers[$num]{'port'} = unpack("S1", substr($msg, $i+4, 2));
 			($servers[$num]{'name'}) = substr($msg, $i + 6, 20) =~ /([\s\S]*?)\000/;
 			$servers[$num]{'users'} = unpack("L",substr($msg, $i + 26, 4));
@@ -5513,14 +5514,14 @@ sub parseMsg {
 		}
 		message("-------------------------------\n", "connection");
 
-		if (!$config{'XKore'}) {
+		if (!$xkore) {
 			message("Closing connection to Master Server\n", "connection");
 			Network::disconnect(\$remote_socket);
-			if (!$masterServers{$config{'master'}}{'charServer_ip'} && $config{'server'} eq "") {
+			if (!$masterServer->{'charServer_ip'} && $config{'server'} eq "") {
 				message("Choose your server.  Enter the server number: ", "input");
 				$waitingForInput = 1;
-			} elsif ($masterServers{$config{'master'}}{'charServer_ip'}) {
-				message("Forcing connect to char server $masterServers{$config{'master'}}{charServer_ip}:$masterServers{$config{'master'}}{charServer_port}\n", "connection");
+			} elsif ($masterServer->{'charServer_ip'}) {
+				message("Forcing connect to char server $masterServer->{charServer_ip}:$masterServer->{charServer_port}\n", "connection");
 			} else {
 				message("Server $config{server} selected\n", "connection");
 			}
@@ -5554,7 +5555,7 @@ sub parseMsg {
 			$interface->errorDialog("Critical Error: Your account has been blocked.");
 			$quit = 1 if (!$config{'XKore'});
 		} elsif ($type == 5) {
-			my $master = $masterServers{$config{'master'}};
+			my $master = $masterServer;
 			error("Version $master->{version} failed... trying to find version\n", "connection");
 			error("Master Version: $master->{master_version}\n", "connection");
 			$master->{master_version}++;
@@ -5716,13 +5717,13 @@ sub parseMsg {
 		$charID = substr($msg, 2, 4);
 		($map_name) = substr($msg, 6, 16) =~ /([\s\S]*?)\000/;
 
-		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
-		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
-			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
+		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
+		if ($ai_v{temp}{map} ne $field{name}) {
+			getField($ai_v{temp}{map}, \%field);
 		}
 
 		$map_ip = makeIP(substr($msg, 22, 4));
-		$map_ip = $masterServers{$config{'master'}}->{ip} if ($masterServers{$config{'master'}}->{private});
+		$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 		$map_port = unpack("S1", substr($msg, 26, 2));
 		message(swrite(
 			"---------Game Info----------", [],
@@ -6491,9 +6492,9 @@ sub parseMsg {
 		$conState = 4 if ($conState != 4 && $xkore);
 
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
-		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
-		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
-			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
+		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
+		if ($ai_v{temp}{map} ne $field{name}) {
+			getField($ai_v{temp}{map}, \%field);
 		}
 
 		initMapChangeVars();
@@ -6518,9 +6519,9 @@ sub parseMsg {
 		$conState = 4;
 
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
-		($ai_v{'temp'}{'map'}) = $map_name =~ /([\s\S]*)\./;
-		if ($ai_v{'temp'}{'map'} ne $field{'name'}) {
-			getField("$Settings::def_field/$ai_v{'temp'}{'map'}.fld", \%field);
+		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
+		if ($ai_v{temp}{map} ne $field{name}) {
+			getField($ai_v{temp}{map}, \%field);
 		}
 
 		undef $conState_tries;
@@ -10098,8 +10099,8 @@ sub dumpData {
 }
 
 ##
-# getField(file, r_field)
-# file: the filename of the .fld file you want to load.
+# getField(name, r_field)
+# name: the name of the field you want to load.
 # r_field: reference to a hash, in which information about the field is stored.
 # Returns: 1 on success, 0 on failure.
 #
@@ -10109,7 +10110,8 @@ sub dumpData {
 #
 # The r_field hash will contain the following keys:
 # ~l
-# - name: The name of the field, which is basically the base name of the file without the extension.
+# - name: The name of the field. This is not always the same as baseName.
+# - baseName: The name of the field, which is the base name of the file without the extension.
 # - width: The field's width.
 # - height: The field's height.
 # - rawMap: The raw map data. Contains information about which blocks you can walk on (byte 0),
@@ -10117,12 +10119,28 @@ sub dumpData {
 # - dstMap: The distance map data. Used by pathfinding.
 # ~l~
 sub getField {
-	my $file = shift;
-	my $r_hash = shift;
-	$file =~ s/\//\\/g if ($^O eq 'MSWin32');
-	my $dist_file = $file;
+	my ($name, $r_hash) = @_;
+	my ($file, $dist_file);
+
+	if ($name eq '') {
+		error "Unable to load field file: no field name specified.\n";
+		return 0;
+	}
 
 	undef %{$r_hash};
+	if ($masterServer && $masterServer->{"field_$name"}) {
+		# Handle server-specific versions of the field.
+		$file = "$Settings::def_field/" . $masterServer->{"field_$name"};
+		$r_hash->{name} = $name;
+	} else {
+		$file = "$Settings::def_field/$name.fld";
+		$r_hash->{name} = $file;
+		$r_hash->{name} =~ s/.*[\\\/]//;
+		$r_hash->{name} =~ s/(.*)\..*/$1/;
+	}
+	$file =~ s/\//\\/g if ($^O eq 'MSWin32');
+	$dist_file = $file;
+
 	unless (-e $file) {
 		my %aliases = (
 			'new_1-1.fld' => 'new_zone01.fld',
@@ -10160,16 +10178,19 @@ sub getField {
 			warning "Could not load field $file - you must install the kore-field pack!\n";
 			return 0;
 		}
+
+		$r_hash->{name} = $file;
+		$r_hash->{name} =~ s/.*[\\\/]//;
+		$r_hash->{name} =~ s/(.*)\..*/$1/;
 	}
 
 	$dist_file =~ s/\.fld$/.dist/i;
+	$r_hash->{baseName} = $file;
+	$r_hash->{baseName} =~ s/.*[\\\/]//;
+	$r_hash->{baseName} =~ s/(.*)\..*/$1/;
 
 	# Load the .fld file
-	$r_hash->{name} = $file;
-	$r_hash->{name} =~ s/.*[\\\/]//;
-	$r_hash->{name} =~ s/(.*)\..*/$1/;
-
-	open FILE, "<", $file;
+	open FILE, "< $file";
 	binmode(FILE);
 	my $data;
 	{
@@ -10484,7 +10505,7 @@ sub compilePortals {
 				next if $portals_los{$spawn}{$portal} ne '';
 				return 1 if $checkOnly;
 				if ($field{name} ne $map && !$missingMap{$map}) {
-					$missingMap{$map} = 1 if (!getField("$Settings::def_field/$map.fld", \%field));
+					$missingMap{$map} = 1 if (!getField($map, \%field));
 				}
 
 				my %start = %{$mapSpawns{$map}{$spawn}};

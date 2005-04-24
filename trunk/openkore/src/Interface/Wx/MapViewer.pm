@@ -292,7 +292,7 @@ sub _f {
 sub _loadMapImage {
 	my $self = shift;
 	my $field = shift;
-	my $name = $field->{name};
+	my $name = $field->{baseName};
 
 	if (-f $self->_map("$name.jpg")) {
 		return _loadImage($self->_map("$name.jpg"));
