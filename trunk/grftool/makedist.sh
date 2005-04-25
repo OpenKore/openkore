@@ -10,7 +10,7 @@ TYPE=bz2
 
 DIRS=(. lib lib/zlib tools tools/gx tools/gx/zlib gtk win32 doc autopackage)
 PACKAGEDIR=$PACKAGE-$VERSION
-ADDITIONAL=(Distfiles makedist.sh SConstruct SConscript README.txt TODO.txt LICENSE.txt install.sh)
+ADDITIONAL=(Distfiles makedist.sh makewin32sdk.sh SConstruct SConscript README.txt TODO.txt LICENSE.txt SDK-README.txt RELEASE.txt install.sh)
 export GZIP=--best
 export BZIP2=-9
 
