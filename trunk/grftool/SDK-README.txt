@@ -1,3 +1,5 @@
+libgrf version 1.2.0
+--------------------
 This is libgrf, the open source library for reading and writing GRF
 archives. This Software Develpment Kit (SDK) for Win32 includes
 a precompiled DLL and C headers.
