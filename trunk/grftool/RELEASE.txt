@@ -5,6 +5,7 @@ Update the version number in:
 - makedist.sh
 - makewin32sdk.sh
 - NEWS.txt
+- SDK-README.txt
 - win32/About.pas
 - gtk/grftool.glade
 - autopackage/default.apspec
