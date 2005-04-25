@@ -1,0 +1,14 @@
+Things to do before releasing a new version
+-------------------------------------------
+
+Update the version number in:
+- makedist.sh
+- makewin32sdk.sh
+- NEWS.txt
+- win32/About.pas
+- gtk/grftool.glade
+- autopackage/default.apspec
+
+Run makedist.sh to create a source tarball.
+
+Run makewin32sdk.sh to create a Win32 SDK.

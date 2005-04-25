@@ -16,7 +16,7 @@ if platform == "cygwin":
 		)
 
 	dllbld = Builder(action = [
-		'dllwrap --driver=gcc --target=i386-mingw32 -mno-cygwin --def lib/dll/grf.gccdef $SOURCE -o $TARGET lib/zlib/libgrfzlib-static.a',
+		'dllwrap --driver=gcc --target=i386-mingw32 -mno-cygwin --def lib/dll/grf.gccdef $SOURCE -o $TARGET --output-exp lib/dll/grf.exp --output-lib lib/dll/grf.lib lib/zlib/libgrfzlib-static.a',
 		'strip --strip-all $TARGET'
 		])
 	defbld = Builder(action = [
