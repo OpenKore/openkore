@@ -1729,7 +1729,7 @@ sub AI {
 		last unless $config{portalRecord};
 		last unless $ai_v{portalTrace_mapChanged};
 		delete $ai_v{portalTrace_mapChanged};
-		
+
 		debug "Checking for new portals...\n", "portalRecord";
 		my $first = 1;
 		my ($foundID, $smallDist, $dist);
@@ -5716,6 +5716,11 @@ sub parseMsg {
 		undef $conState_tries;
 		$charID = substr($msg, 2, 4);
 		($map_name) = substr($msg, 6, 16) =~ /([\s\S]*?)\000/;
+		
+		if ($xkore) {
+			undef $masterServer;
+			$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
+		}
 
 		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
 		if ($ai_v{temp}{map} ne $field{name}) {
