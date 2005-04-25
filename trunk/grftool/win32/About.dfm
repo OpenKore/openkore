@@ -1257,7 +1257,7 @@ object AboutBox: TAboutBox
         Top = 35
         Width = 76
         Height = 13
-        Caption = 'Version 1.1.0'
+        Caption = 'Version 1.2.0'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clBlack
         Font.Height = -11

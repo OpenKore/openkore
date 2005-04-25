@@ -7,7 +7,7 @@ ShortName: grftool
 Maintainer: http://openkore.sourceforge.net/grftool/
 Packager: Hongli Lai <h.lai@chello.nl>
 Summary: A userfriendly GRF archive viewer and extractor.
-SoftwareVersion: 1.0.0
+SoftwareVersion: 1.2.0
 PackageVersion: 2
 AutopackageTarget: 1.0
 
