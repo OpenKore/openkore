@@ -9,6 +9,7 @@ Update the version number in:
 - win32/About.pas
 - gtk/grftool.glade
 - autopackage/default.apspec
+- tools/libgrf-1.2.pc
 
 Run makedist.sh to create a source tarball.
 
