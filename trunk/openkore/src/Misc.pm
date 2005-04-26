@@ -671,7 +671,7 @@ sub avoidGM_talk {
 		return 1 if ($args{return});
 
 		warning "Disconnecting to avoid GM!\n";
-		chatLog("k", "*** The GM $user talked to you, auto disconnected ***\n");
+		main::chatLog("k", "*** The GM $user talked to you, auto disconnected ***\n");
 
 		my $tmp = $config{avoidGM_reconnect};
 		warning "Disconnect for $tmp seconds...\n";
@@ -689,7 +689,7 @@ sub avoidList_talk {
 
 	if ($avoid{Players}{lc($user)}{disconnect_on_chat} || $avoid{ID}{$ID}{disconnect_on_chat}) {
 		warning "Disconnecting to avoid $user!\n";
-		chatLog("k", "*** $user talked to you, auto disconnected ***\n");
+		main::chatLog("k", "*** $user talked to you, auto disconnected ***\n");
 		warning "Disconnect for $config{avoidList_reconnect} seconds...\n";
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
