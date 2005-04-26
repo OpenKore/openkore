@@ -1917,40 +1917,42 @@ grf_index_chunk_get (Grf *grf, uint32_t index, char *buf, uint32_t offset, uint3
 	return buf;
 }
 
-/*! \brief Extract to a file
+/** Extract a file in the archive to an external file.
  *
- * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
- * \param grfname Full filename of the Grf::files file to extract
- * \param file Filename to write the data to
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return The number of successfully extracted files
+ * @param grf Pointer to a Grf structure, as returned by grf_callback_open()
+ * @param grfname Full filename of the Grf::files file to extract
+ * @param file Filename to write the data to
+ * @param error Pointer to a GrfError structure for error reporting
+ * @return The number of successfully extracted files
  */
-GRFEXPORT int grf_extract(Grf *grf, const char *grfname, const char *file, GrfError *error) {
+GRFEXPORT int
+grf_extract (Grf *grf, const char *grfname, const char *file, GrfError *error)
+{
 	uint32_t i;
 
 	if (!grf || !grfname || grf->type!=GRF_TYPE_GRF) {
-		GRF_SETERR(error,GE_BADARGS,grf_extract);
+		GRF_SETERR (error, GE_BADARGS, grf_extract);
 		return 0;
 	}
 
-	if (!grf_find(grf,grfname,&i)) {
-		GRF_SETERR(error,GE_NOTFOUND,grf_extract);
+	if (!grf_find (grf,grfname, &i)) {
+		GRF_SETERR (error, GE_NOTFOUND, grf_extract);
 		return 0;
 	}
-	return grf_index_extract(grf,i,file,error);
+	return grf_index_extract (grf, i, file, error);
 }
 
-/*! \brief Extract to a file, taking index instead of filename
+/** Extract to a file, taking index instead of filename.
  *
- * Very similar to the original libgrf's grf_index_extract
- *
- * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
- * \param index The Grf::files index number to extract
- * \param file Filename to write the data to
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return The number of successfully extracted files
+ * @param grf Pointer to a Grf structure, as returned by grf_callback_open()
+ * @param index The Grf::files index number to extract
+ * @param file Filename to write the data to
+ * @param error Pointer to a GrfErrorType struct/enum for error reporting
+ * @return The number of successfully extracted files
  */
-GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfError *error) {
+GRFEXPORT int
+grf_index_extract (Grf *grf, uint32_t index, const char *file, GrfError *error)
+{
 	void *buf;
 	char *fixedname;
 	uint32_t size,i;
@@ -1958,43 +1960,44 @@ GRFEXPORT int grf_index_extract(Grf *grf, uint32_t index, const char *file, GrfE
 
 	/* Make sure we have a filename to write to */
 	if (!file) {
-		GRF_SETERR(error, GE_BADARGS, grf_index_extract);
+		GRF_SETERR (error, GE_BADARGS, grf_index_extract);
 		return 0;
 	}
 
 	/* Normalize the filename */
-	if ((fixedname = (char *) malloc(strlen(file) + 1)) == NULL) {
-		GRF_SETERR(error, GE_ERRNO, malloc);
+	if ((fixedname = (char *) malloc (strlen (file) + 1)) == NULL) {
+		GRF_SETERR (error, GE_ERRNO, malloc);
 		return 0;
 	}
-	GRF_normalize_path(fixedname,file);
+	GRF_normalize_path (fixedname,file);
 
 	/* Read the data */
-	if ((buf = grf_index_get(grf, index, &size, error)) == NULL) {
+	if ((buf = grf_index_get (grf, index, &size, error)) == NULL) {
 		/* Check if the file actually has no data */
 		if (error->type != GE_NODATA)
 			return 0;
 	}
 
 	/* Open the file we should write to */
-	if (!(f = fopen(fixedname, "wb"))) {
+	f = fopen (fixedname, "wb");
+	if (f == NULL) {
 		free(buf);
 		grf->files[index].data = NULL;
-		GRF_SETERR(error, GE_ERRNO, fopen);
+		GRF_SETERR (error, GE_ERRNO, fopen);
 		return 0;
 	}
 
 	/* Write the data */
-	i = (uint32_t) fwrite(buf, size, 1, f);
+	i = (uint32_t) fwrite (buf, size, 1, f);
 	if (0 == i) {  /* NOTE: size_t => uint32_t conversion */
-		GRF_SETERR(error,GE_ERRNO,fwrite);
+		GRF_SETERR (error, GE_ERRNO, fwrite);
 	}
 
 	/* Clean up and return */
-	fclose(f);
-	free(buf);
-	grf->files[index].data=NULL;
-	return (i)? 1 : 0;
+	fclose (f);
+	free (buf);
+	grf->files[index].data = NULL;
+	return (i) ? 1 : 0;
 }
 
 /*! \brief Delete a file from the file table
