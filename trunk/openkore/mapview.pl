@@ -119,14 +119,14 @@ sub onClick {
 	if ($ipc && $ipc->ready && $ipc->connected) {
 		$ipc->send("move to",
 			TO => $ipcInfo{ID},
-			field => $field{name},
+			field => $field{realName},
 			x => $x,
 			y => $y);
 	}
 }
 
 sub onMapChange {
-	$frame->SetTitle("$field{name}");
+	$frame->SetTitle("$field{realName}");
 	$frame->Fit;
 }
 
@@ -136,10 +136,12 @@ sub onTimer {
 	close F;
 	s/[\r\n]//g foreach (@lines);
 
-	if ($lines[0] ne $field{name}) {
-		return unless getField("$options{fields}/$lines[0].fld", \%field);
+	my ($fieldName, $fieldBaseName) = split / /, $lines[0];
+	if ($fieldName ne $field{name}) {
+		return unless getField("$options{fields}/$fieldBaseName.fld", \%field);
+		$field{realName} = $fieldName;
 	}
-	$mapview->set($lines[0], $lines[1], $lines[2], \%field);
+	$mapview->set($fieldBaseName, $lines[1], $lines[2], \%field);
 
 	($ipcInfo{host}, $ipcInfo{port}, $ipcInfo{ID}) = split / /, $lines[3];
 
@@ -205,6 +207,7 @@ sub getField {
 	$r_hash->{name} = $file;
 	$r_hash->{name} =~ s/.*[\\\/]//;
 	$r_hash->{name} =~ s/(.*)\..*/$1/;
+	$r_hash->{baseName} = $r_hash->{name};
 
 	open FILE, "< $file";
 	binmode(FILE);
