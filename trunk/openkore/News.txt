@@ -19,6 +19,7 @@ Bug fixes:
 - Static mode in the Console::Other interface now works correctly.
 - Correctly strip language code from party chat.
 - When someone in your avoid list sends you a PM, Kore will crash.
+- Only clear AI if teleport succeeded.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.

@@ -1687,12 +1687,11 @@ sub AI {
 
 	if (timeOut($mapdrt, $config{'intervalMapDrt'})) {
 		$mapdrt = time;
-
-		$map_name =~ /([\s\S]*)\.gat/;
-		if ($1) {
+		if ($field{name}) {
 			my $pos = calcPosition($char);
 			open(DATA, ">$Settings::logs_folder/walk.dat");
-			print DATA "$1\n$pos->{x}\n$pos->{y}\n";
+			print DATA "$field{name} $field{baseName}\n";
+			print DATA "$pos->{x}\n$pos->{y}\n";
 			if ($ipc && $ipc->connected && $ipc->ready) {
 				print DATA $ipc->host . " " . $ipc->port . " " . $ipc->ID . "\n";
 			} else {
@@ -5073,8 +5072,9 @@ sub AI {
 		  )
 		) {
 			message "Teleporting due to insufficient HP/SP or too many aggressives\n", "teleport";
-			useTeleport(1);
-			$ai_v{temp}{clear_aiQueue} = 1;
+			if (useTeleport(1)) {
+				$ai_v{temp}{clear_aiQueue} = 1;
+			}
 			$timeout{ai_teleport_hp}{time} = time;
 			last TELEPORT;
 		}
