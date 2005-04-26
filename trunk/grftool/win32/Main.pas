@@ -383,7 +383,13 @@ begin
       end;
 
       try
-          Image1.Picture.LoadFromFile(FName);
+          // Delphi has a bug which makes it unable to load RLE bitmaps. :(
+          // Use the Win32 API as workaround.
+          if FType = '.BMP' then
+             Image1.Picture.Bitmap.Handle := LoadImage(Handle,
+                PChar(FName), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE)
+          else
+             Image1.Picture.LoadFromFile(FName);
       except
           // Do nothing
       end;
