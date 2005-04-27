@@ -10301,6 +10301,7 @@ sub updateDamageTables {
 				useTeleport(1);
 			}
 		}
+
 	} elsif ($ID2 eq $accountID) {
 		if ($monsters{$ID1}) {
 			# Monster attacks you
@@ -10365,12 +10366,13 @@ sub updateDamageTables {
 			$monsters{$ID2}{'dmgFromPlayer'}{$ID1} += $damage;
 			$monsters{$ID2}{'lastAttackFrom'} = $ID1;
 			$players{$ID1}{'dmgToMonster'}{$ID2} += $damage;
-			
+
 			if ($damage == 0) {
 				$monsters{$ID2}{'missedFromPlayer'}{$ID1}++;
 				$players{$ID1}{'missedToMonster'}{$ID2}++;
 			}
-			if (existsInList($config{tankersList}, $players{$ID2}{name}) ||
+
+			if (existsInList($config{tankersList}, $players{$ID1}{name}) ||
 			    (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
 			}
