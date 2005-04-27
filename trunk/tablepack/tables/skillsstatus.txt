@@ -54,6 +54,7 @@
 62 Defender
 65 Auto Spell
 68 Spear Quicken
+77 Sleeping
 86 Vigor Explosion
 87 Steel Body
 89 Triple Attack Delay
