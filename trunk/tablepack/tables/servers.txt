@@ -132,7 +132,7 @@ master_version 22
 version 1
 
 [India - inRO]
-ip 210.210.26.35
+ip 202.92.9.35
 port 6900
 version 1
 master_version 21
