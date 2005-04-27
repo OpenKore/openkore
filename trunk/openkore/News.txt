@@ -21,6 +21,8 @@ Bug fixes:
 - When someone in your avoid list sends you a PM, Kore will crash.
 - Only clear AI if teleport succeeded.
 - Fix a bug which causes monster IDs to end up in the player hash.
+- Make "Unknown gained a [job] level" message and "[Guild]  : " message
+  show up correctly in OpenRO.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
