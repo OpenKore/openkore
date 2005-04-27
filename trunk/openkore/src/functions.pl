@@ -8734,11 +8734,12 @@ sub parseMsg {
 		my $ID = substr($msg, 4, 4);
 		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000*$//;
-		my ($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/;
-		$chatMsgUser =~ s/ $//;
-
-		stripLanguageCode(\$chatMsg);
-		$chat = "$chatMsgUser : $chatMsg";
+		my ($chatMsgUser, $chatMsg);
+		if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/) {
+			$chatMsgUser =~ s/ $//;
+			stripLanguageCode(\$chatMsg);
+			$chat = "$chatMsgUser : $chatMsg";
+		}
 
 		chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 		message "[Guild] $chat\n", "guildchat";
@@ -8832,15 +8833,11 @@ sub parseMsg {
 	} elsif ($switch eq "019B") {
 		my $ID = substr($msg, 2, 4);
 		my $type = unpack("L1",substr($msg, 6, 4));
-		if (%{$players{$ID}}) {
-			$name = $players{$ID}{'name'};
-		} else {
-			$name = "Unknown";
-		}
+		my $name = getActorName($ID);
 		if ($type == 0) {
-			message "Player $name gained a level!\n";
+			message "$name gained a level!\n";
 		} elsif ($type == 1) {
-			message "Player $name gained a job level!\n";
+			message "$name gained a job level!\n";
 		} elsif ($type == 2) {
 			message "$name failed to refine a weapon!\n", "refine";
 		} elsif ($type == 3) {
