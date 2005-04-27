@@ -73,7 +73,7 @@ sub on_start3 {
 		}
 		$recordEnd = $packet{time};
 		message "Packet recording was finished at: " . localtime($recordEnd) . "\n", "info";
-		message "Total time recorded: " . timeConvert($recordEnd - $recordBegin) . " (" . ($recordEnd - $recordBegin) . "seconds)\n", "info";
+		message "Total time recorded: " . timeConvert($recordEnd - $recordBegin) . " (" . int($recordEnd - $recordBegin) . "seconds)\n", "info";
 
 		message "You can flash forward to a given time, or start replaying from the beginning.\n";
 		message "Enter the number of seconds you want to skip, or press ENTER if you want to\n";
@@ -123,7 +123,7 @@ sub on_start3 {
 		}
 
 		$nextTime = $replayBegin + $nextPacket{time} - $recordBegin;
-		main::getField("$Settings::def_field/$field.fld", \%field);
+		main::getField($field, \%field);
 	}
 }
 
