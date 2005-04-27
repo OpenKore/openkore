@@ -219,3 +219,9 @@ ip 66.118.163.40
 port 6900
 master_version 0
 version 1
+
+[OpenRO Private Server]
+ip 66.111.59.100
+port 6900
+version 20
+master_version 14
