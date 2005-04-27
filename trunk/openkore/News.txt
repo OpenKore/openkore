@@ -20,6 +20,7 @@ Bug fixes:
 - Correctly strip language code from party chat.
 - When someone in your avoid list sends you a PM, Kore will crash.
 - Only clear AI if teleport succeeded.
+- Fix a bug which causes monster IDs to end up in the player hash.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
