@@ -1368,7 +1368,8 @@ sub cmdPlayerSkill {
 	my $skill = new Skills(auto => $args[0]);
 	my $target;
 	my $targetID;
-	my $lv = $args[2];
+	my $char_skill = $char->{skills}{$skill->handle};
+	my $lv = $args[2] || $char_skill->{lv} || 10;
 
 	if (!defined $skill->id) {
 		error	"Error in function 'sp' (Use Skill on Player)\n" .
