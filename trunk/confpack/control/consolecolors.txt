@@ -29,8 +29,10 @@ success green
 system yellow
 pm yellow
 pm/sent yellow
+publicchat green
 guildchat darkgreen
 selfchat green
+gmchat yellow
 list white
 info white
 equip grey
