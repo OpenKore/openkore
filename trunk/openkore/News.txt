@@ -21,6 +21,8 @@ Bug fixes:
 - When someone in your avoid list sends you a PM, Kore will crash.
 - Only clear AI if teleport succeeded.
 - Fix a bug which causes monster IDs to end up in the player hash.
+- Correctly move to a monster when using an attack skill if
+  attackSkillSlot_#_dist is not set.
 - Make "Unknown gained a [job] level" message and "[Guild]  : " message
   show up correctly in OpenRO.
 
@@ -58,10 +60,14 @@ New config options:
 - tankersList is a comma-seperated lists of player names that should be
   treated as if they were in your party so they can tank monsters for you.
   It was previously called ksPlayers.
+- dcOnPM (flag)
+  Disconnect when somebody sends you a PM.
 
 Internal:
 - Wx interface: load some modules only when they're necessary. This
   saves about 2 MB memory.
+- The first argument of getField() must now be a field name ("payon")
+  instead of a filename ("fields/payon.fld").
 
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
@@ -70,6 +76,7 @@ Credits:
 - jsteng: new syntax for the inInventory option.
 - denni: bug fixes.
 - kaliwanagan: sage autospell support
+- MindChild: dcOnPM
 
 ==================
 ### 1.6.0

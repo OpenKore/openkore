@@ -3579,6 +3579,8 @@ sub AI {
 			}
 		}
 
+		$args->{attackMethod}{maxDistance} ||= $config{attackMaxDistance};
+		$args->{attackMethod}{distance} ||= $config{attackDistance};
 		if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
 			$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
 		}
@@ -6647,6 +6649,11 @@ sub parseMsg {
 			privMsgUser => $privMsgUser,
 			privMsg => $privMsg
 		});
+
+		if ($config{dcOnPM}) {
+			chatLog("k", "*** You were PM'd, auto disconnect! ***\n");
+			quit();
+		}
 
 	} elsif ($switch eq "0098") {
 		$type = unpack("C1",substr($msg, 2, 1));
