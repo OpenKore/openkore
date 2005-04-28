@@ -1,8 +1,21 @@
 #!/bin/bash
+# Installation script for Unix.
 PREFIX=/usr/local
 BINDIR="$PREFIX/bin"
 LIBDIR="$PREFIX/lib"
 INCLUDEDIR="$PREFIX/include/libgrf"
+PKGDATADIR="$PREFIX/share/grftool"
+
+if test "$1" = "--help"; then
+	echo "GRF Tool Unix installation script."
+	echo
+	echo "To install GRF Tool:"
+	echo "	./install.sh"
+	echo
+	echo "To uninstall GRF Tool:"
+	echo "	./install.sh --uninstall"
+	exit
+fi
 
 uninstall=0
 if test "$1" = "--uninstall"; then
@@ -27,10 +40,11 @@ echo scons -Q
 scons -Q
 
 inst gtk/grftool-gtk "$BINDIR"
+inst gtk/grftool.glade "$PKGDATADIR"
 inst tools/grftool "$BINDIR"
 inst tools/spritetool "$BINDIR"
 inst tools/gxtool "$BINDIR"
-inst tools/libgrf-1.1.pc "$LIBDIR/pkgconfig"
+inst tools/libgrf-1.2.pc "$LIBDIR/pkgconfig"
 inst lib/static/libstatic-grf.a "$LIBDIR"
 inst lib/grf.h "$INCLUDEDIR"
 inst lib/grfcrypt.h "$INCLUDEDIR"
