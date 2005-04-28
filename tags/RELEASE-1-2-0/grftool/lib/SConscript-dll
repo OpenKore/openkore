@@ -1,0 +1,36 @@
+Import('*')
+
+files = ['grf.c', 'grfcrypt.c', 'grfsupport.c', 'rgz.c', 'sprite.c']
+
+lib = env.Copy()
+lib['CPPPATH'] += ['zlib']
+lib['CPPDEFINES'] = ['GRF_BUILDING', 'SPR_BUILDING', 'WIN32']
+if DEBUG:
+	lib['CPPDEFINES'] += ['DEBUG']
+
+if platform == "cygwin":
+	# Compile the DLL on Cygwin.
+	lib.StaticLibrary(
+		'static-grf-dll',
+		files
+		)
+
+	dllbld = Builder(action = [
+		'dllwrap --driver=gcc --target=i386-mingw32 -mno-cygwin --def lib/dll/grf.gccdef $SOURCE -o $TARGET --output-exp lib/dll/grf.exp --output-lib lib/dll/grf.lib lib/zlib/libgrfzlib-static.a',
+		'strip --strip-all $TARGET'
+		])
+	defbld = Builder(action = [
+		'dlltool --dllname grf.dll --output-def $TARGET --no-export-all-symbols --add-stdcall-alias $SOURCE'
+		])
+	dll = lib.Copy(BUILDERS = { 'Dll' : dllbld, 'Def' : defbld })
+
+	dll.Depends('grf.dll', ['grf.gccdef'])
+	dll.Def('grf.gccdef', 'libstatic-grf-dll.a');
+	Default(dll.Dll('grf.dll', 'libstatic-grf-dll.a'))
+
+else:
+	# Compile the DLL with MS Visual C++ and mingw. Not sure whether this works
+	lib.SharedLibrary(
+		'static-grf-dll',
+		files
+		)

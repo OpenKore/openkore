@@ -1,0 +1,72 @@
+# -*-shell-script-*-
+
+[Meta]
+RootName: @openkore.sourceforge.net/grftool:$SOFTWAREVERSION
+DisplayName: GRF Tool
+ShortName: grftool
+Maintainer: http://openkore.sourceforge.net/grftool/
+Packager: Hongli Lai <h.lai@chello.nl>
+Summary: A userfriendly GRF archive viewer and extractor.
+SoftwareVersion: 1.2.0
+PackageVersion: 1
+AutopackageTarget: 1.0
+
+
+[Description]
+A userfriendly GRF archive viewer and extractor.
+
+
+[BuildPrepare]
+if [[ "$APKG_BUILD_SKIP_MAKE" != "1" ]]; then
+	scons -Q CC=apgcc CXX=apg++
+fi
+
+
+[BuildUnprepare]
+true
+
+
+[Imports]
+cd "$source_dir"
+echo tools/{grftool,spritetool} | import tools
+echo gtk/{grftool-gtk,grftool.glade} gtk/x-grf.desktop | import gtk
+echo gtk/grftool-gtk{.desktop,.png,.applications,.keys,.mime} | import gtk
+echo lib/static/libstatic-grf.a tools/libgrf-1.2.pc | import
+echo 'lib/*.h' | import include
+
+
+[Prepare]
+# g++ 3.2/3.3 ABI
+require @gnu.org/libstdc++ 3
+
+require @gtk.org/gtk 2.2
+require @zlib.org/zlib 1.0
+
+
+[Install]
+installExe gtk/grftool-gtk tools/*
+copyFiles gtk/grftool.glade "$PREFIX/share/grftool"
+installIcon gtk/grftool-gtk.png
+installDesktop "Utilities" gtk/grftool-gtk.desktop
+
+installGnome2Mime gtk/grftool-gtk.{keys,mime}
+installGnome2AppEntry gtk/grftool-gtk.applications
+
+copyFiles libstatic-grf.a "$PREFIX/lib"
+escaped=`escapeValue "$PREFIX"`
+safeSed libgrf-1.2.pc "s/^prefix=.*/prefix=$escaped/"
+copyFiles libgrf-1.2.pc "$PREFIX/lib/pkgconfig"
+copyFiles include/*.h "$PREFIX/include/libgrf"
+
+outputStatus "Registering KDE MIME associations..."
+if [[ `id -u` = 0 ]]; then
+	if kdePrefix=`getKdePrefix`; then
+		copyFiles --silent gtk/x-grf.desktop "$kdePrefix/share/mimelnk/application"
+	fi
+else
+	copyFiles --silent gtk/x-grf.desktop "$HOME/.kde/share/mimelnk/application"
+fi
+
+
+[Uninstall]
+uninstallFromLog

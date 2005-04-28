@@ -1,0 +1,12 @@
+grf.c
+grf.h
+grfcrypt.c
+grfcrypt.h
+grfsupport.c
+grfsupport.h
+grftypes.h
+rgz.c
+rgz.h
+sprite.c
+sprite.h
+SConscript-dll
