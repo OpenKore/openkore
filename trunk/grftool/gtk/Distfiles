@@ -12,6 +12,8 @@ callbacks.cpp
 callbacks.h
 main.cpp
 main.h
+sprite-viewer.cpp
+sprite-viewer.h
 utils.cpp
 utils.h
 window.cpp
