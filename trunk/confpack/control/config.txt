@@ -31,6 +31,7 @@ dcOnDualLogin 0
 dcOnDisconnect 0
 dcOnEmptyArrow 0
 dcOnMute 0
+dcOnPM 0
 
 autoRestart 0
 
