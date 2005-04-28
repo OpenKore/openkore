@@ -68,6 +68,7 @@ Internal:
   saves about 2 MB memory.
 - The first argument of getField() must now be a field name ("payon")
   instead of a filename ("fields/payon.fld").
+- Add %monsters_lut to Globals.pm.
 
 Credits:
 - Squall: some minor fixes, charServer support in servers.txt.
