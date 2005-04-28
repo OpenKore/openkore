@@ -48,6 +48,7 @@ New features:
   have the new Payon. OpenKore can now automatically select the correct
   field file by using servers.txt. You must have the latest fieldpack
   and the latest servers.txt from the latest tablepack.
+- Support level 2 Teleport as well in blocks like useSelf_skill.
 
 New config options:
 - autoSpell (spell name)

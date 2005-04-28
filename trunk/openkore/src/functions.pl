@@ -4141,7 +4141,7 @@ sub AI {
 				if ($handle eq 'AL_TELEPORT') {
 					${$args->{ret}} = 'ok' if ($args->{ret});
 					AI::dequeue;
-					useTeleport(1);
+					useTeleport($args->{lv});
 					last SKILL_USE;
 				}
 
