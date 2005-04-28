@@ -36,8 +36,10 @@ function inst()
 }
 
 set -e
-echo scons -Q
-scons -Q
+if test "$uninstall" = 0; then
+	echo scons -Q
+	scons -Q
+fi
 
 inst gtk/grftool-gtk "$BINDIR"
 inst gtk/grftool.glade "$PKGDATADIR"
