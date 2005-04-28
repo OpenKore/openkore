@@ -1,0 +1,16 @@
+Import('*')
+
+Default(env.StaticLibrary('grfzlib-static', [
+	'deflate.c',
+	'inflate.c',
+	'zutil.c',
+	'inftrees.c',
+	'adler32.c',
+	'crc32.c',
+	'inffast.c',
+	'trees.c',
+	'compress.c',
+	'gzio.c',
+	'infback.c',
+	'uncompr.c'
+	]))

@@ -1,0 +1,286 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>libgrf documentation - The GRF Project</title>
+	<link rel="stylesheet" type="text/css" href="grf.css">
+
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div id="title">The GRF Project</div>
+
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><b>libgrf documentation</b></li>
+	</ul>
+</div>
+
+<div id="main">
+
+<h1>Introduction</h1>
+
+<code>libgrf</code> is a library which allows you to read GRF archives.
+It's written in C and is cross-platform. This document describes how to use
+<code>libgrf</code>.
+
+
+<h2>Functions</h2>
+
+The functions are declared in the header file <code>grf.h</code>.
+<p>
+
+<table id="functionIndex">
+<tr>
+	<th>Function</th>
+	<th>Description</th>
+</tr>
+<tr>
+	<td><code>Grf *grf_open (const char *fname, GrfError *error);</code></td>
+	<td>Opens a GRF archive.</td>
+</tr>
+<tr>
+	<td><code>GrfFile *grf_find (Grf *grf, char *fname, uint32_t *index);</code></td>
+	<td>Find information about a file inside the archive.</td>
+</tr>
+<tr>
+	<td><code>void *grf_get (Grf *grf, char *fname, uint32_t *size, GrfError *error);</code></td>
+	<td>Extracts a file inside a GRF archive into memory.</td>
+</tr>
+<tr>
+	<td><code>void *grf_index_get (Grf *grf, uint32_t index, uint32_t *size, GrfError *error);</code></td>
+	<td>Like <code>grf_get()</code>, but expects an index instead of filename.</td>
+<tr>
+	<td><code>int grf_extract (Grf *grf, char *fname, char *writeToFile, GrfError *error);</code></td>
+	<td>Extracts a file inside a GRF archive into a file.</td>
+</tr>
+<tr>
+	<td><code>int grf_index_extract (Grf *grf, uint32_t index, const char *writeToFile, GrfError *error);</code></td>
+	<td>The equivalent of <code>grf_index_get()</code> for <code>grf_extract</code>.</td>
+<tr>
+	<td><code>void grf_free (Grf *grf);</code></td>
+	<td>Frees a <code>Grf</code> structure pointer.</td>
+</tr>
+<tr>
+	<td><code>const char *grf_strerror (GrfError error);</code></td>
+	<td>Converts a <code>GrfError</code> integer into a human-readable message.</td>
+</tr>
+</table>
+
+
+<p class="p"><h2>Opening a GRF file</h2>
+
+Let's say you have the GRF archive "data.grf". The first thing to do is
+to call <code>grf_open()</code>.
+This will open a GRF archive. Example:
+<pre class="example">
+<span class="cinc">#include</span> <span class="cinc2">&lt;stdio.h&gt;</span>
+<span class="cinc">#include</span> <span class="cinc2">&lt;stdlib.h&gt;</span>
+<span class="cinc">#include</span> <span class="cinc2">"grf.h"</span>
+
+<span class="ctype">int</span> main (<span class="ctype">int</span> argc, <span class="ctype">char *</span>argv[])
+{
+    <span class="ctype">Grf *</span>grf;
+    <span class="ctype">GrfError</span> error;
+
+    grf = grf_open (<span class="cstr">"data.grf"</span>, <span class="cpointer">&amp;error</span>);
+    <span class="ckey">if</span> (!grf) {
+        printf (<span class="cstr">"Cannot open data.grf: error code %d\n"</span>, error-&gt;type);
+        printf (<span class="cstr">"The error message is: %s\n"</span>, grf_strerror (error));
+        exit (<span class="cnum">1</span>);
+    }
+
+    <span class="ckey">return</span> <span class="cnum">0</span>;
+}
+</pre>
+
+You pass two arguments to <code>grf_open()</code>:
+<ol>
+<li>A filename to a GRF archive.</li>
+<li>A pointer to a <code>GrfError</code> variable. This is optional: you can also pass NULL instead.</li>
+</ol>
+
+<code>grf_open()</code> will open the GRF archive. If it succeeded, it will return a pointer to a pointer
+with the type <code>Grf</code>. If an error has occured while opening, the function will return
+<code>NULL</code>, and it will put error information into the variable that the 2nd argument points to.
+You can use this variable to see what kind of error occured. Use <code>grf_strerror()</code> to get
+a human-readable error message.
+
+<p>
+You need the return value of <code>grf_open()</code> to do anything else with the opened archive.
+
+
+<p class="p"><h2>Listing the files inside a GRF archive</h2>
+
+Now that you've opened a GRF archive, you can look at what's inside. The following example will print all
+filenames inside in the archive to screen:
+<pre class="example">
+<span class="ctype">uint32_t</span> i;
+
+<span class="ckey">for</span> (i = <span class="cnum">0</span>; i &lt; grf-&gt;nfiles; i++) {
+    printf (<span class="cstr">"%s\n"</span>, grf-&gt;files[i].name);
+}
+</pre>
+
+Yes, it's this simple! The <code>Grf</code> structure contains information about the GRF archive,
+and has the following public fields:
+<pre class="struct"><span class="ctype">char *</span>filename;         <span class="comment">/* The filename of the GRF archive */</span>
+<span class="ctype">uint32_t</span> version;       <span class="comment">/* The GRF archive's internal version number */</span>
+<span class="ctype">uint32_t</span> nfiles;        <span class="comment">/* Number of files inside the archive */</span>
+<span class="ctype">GrfFile *</span>files;         <span class="comment">/* An array which contains information about all files */</span>
+</pre>
+
+
+<p class="p"><h2>Finding more information about a specific file</h2>
+
+Let's say there's a file inside the GRF archive, called "data\readme.txt".
+You want to know more about that file. The following example will retrieve a
+structure which contains information about "data\readme.txt":
+<pre class="example">
+<span class="ctype">GrfFile *</span>f;
+<span class="ctype">uint32_t</span> index;
+
+f = grf_find (grf, <span class="cstr">"data\\readme.txt"</span>, &amp;index);
+<span class="ckey">if</span> (!f) {
+    printf (<span class="cstr">"File data\\readme.txt not found inside archive.\n"</span>);
+    exit (<span class="cnum">1</span>);
+} <span class="ckey">else</span> {
+    <span class="comment">/* File found inside archive!
+     * Note that the variable f is equal to grf-&gt;files[index]
+     */</span>
+    printf (<span class="cstr">"data\\readme.txt will be %ld bytes if you extract it.\n"</span>, f-&gt;real_len);
+}
+</pre>
+
+Most fields in the <code>GrfFile</code> structure are used internally.
+Only two fields are interesting to application developers:
+<ul>
+<li><code>char *name;</code><br>This is the file name of the entry.</li>
+<li><code>uin32_t real_len;</code><br>Files in GRF archives are compressed. This field specifies how big (in bytes) the resulting file will be if you extract it.</li>
+</ul>
+
+
+<p class="p"><h2>Extracting files from an archive</h2>
+
+Use <code>grf_get()</code> to extract a file into memory. Example:
+<pre class="example">
+<span class="ctype">void *</span>data;
+<span class="ctype">uint32_t</span> size;
+<span class="ctype">GrfError</span> error;
+
+data = grf_get (grf, <span class="cstr">"data\\readme.txt"</span>, &amp;size, error);
+<span class="ckey">if</span> (!data) {
+    printf (<span class="cstr">"Unable to extract data\\readme.txt. Error code: %d\n"</span>, error-&gt;type);
+    printf (<span class="cstr">"Error message: %s\n"</span>, grf_strerror (error));
+    exit (<span class="cnum">1</span>);
+}
+printf (<span class="cstr">"data\\readme.txt is %ld bytes long.\n"</span>, size);
+printf (<span class="cstr">"The content of that file is: %s\n"</span>, (<span class="ctype">char *</span>) data);
+</pre>
+On success, <code>grf_get</code> will return a pointer to the a piece of memory which contains the data.
+The data is <code>size</code> bytes long. On failure, it will return <code>NULL</code>.
+The error information is put into the variable <code>error</code>.
+<b>Warning:</b> you must not free <code>grf_get()</code>'s return value! The decompressed data is cached internally.
+It will be freed when you call <code>grf_free()</code> on the <code>Grf</code> variable.
+
+<p>
+If you want to extract a file inside the archive directly into a real file,
+use <code>grf_extract()</code>:
+<pre class="example">
+<span class="ctype">GrfError</span> error;
+
+<span class="ckey">if</span> (grf_extract (grf, <span class="cstr">"data\\readme.txt"</span>, <span class="cstr">"saved.txt"</span>, &amp;error)) {
+    printf (<span class="cstr">"File extracted into saved.txt.\n"</span>);
+} <span class="ckey">else</span> {
+    printf (<span class="cstr">"Cannot extract file. Error code: %d\n"</span>, error-&gt;type);
+    printf (<span class="cstr">"Error message: %s\n"</span>, grf_strerror (error));
+    exit (<span class="cnum">1</span>);
+}
+</pre>
+
+
+<div class="tip">
+	<h3>Tip</h3>
+	If you already know the index (in the <code>grf-&gt;files</code> array) of the file you want to extract,
+	you should use <code>grf_index_get()</code> or <code>grf_index_extract()</code>.
+</div>
+
+
+<p class="p"><h2>Cleaning up</h2>
+
+Always call <code>grf_free()</code> when you do not need a <code>Grf</code> variable anymore.
+This will release the memory used by that variable.
+<pre class="example">
+grf_free (grf);
+</pre>
+
+
+<p class="p"><h2>Error codes</h2>
+
+The <code>type</code> field in a <code>GrfError</code> structure contains the error code.
+The following error codes are available:
+
+<pre class="struct"><span class="ckey">typedef enum</span> {
+	<span class="comment"><i>/*! No error, everything went well */</i></span>
+	GE_SUCCESS,
+	
+	<span class="comment"><i>/*! Bad arguments passed to function */</i></span>
+	GE_BADARGS,
+
+	<span class="comment"><i>/*! Not a GRF file */</i></span>
+	GE_INVALID,
+
+	<span class="comment"><i>/*! Corrupted, but valid GRF file */</i></span>
+	GE_CORRUPTED,
+
+	<span class="comment"><i>/*! Unsupported GRF version */</i></span>
+	GE_NSUP,
+
+	<span class="comment"><i>/*! File not found within the GRF */</i></span>
+	GE_NOTFOUND,
+
+	<span class="comment"><i>/*! Invalid index */</i></span>
+	GE_INDEX,
+
+	<span class="comment"><i>/*! Error information held in errno (if you're on Unix) */</i></span>
+	GE_ERRNO,
+
+	<span class="comment"><i>/*! Error is a zlib error, stored in extra */</i></span>
+	GE_ZLIB,
+
+	<span class="comment"><i>/*! Error is a zlib error, stored in gzFile, use gzerror to get it */</i></span>
+	GE_ZLIBFILE,
+
+	<span class="comment"><i>/*! File has no data (not really an "error") */</i></span>
+	GE_NODATA,
+
+	<span class="comment"><i>/*! Bad mode: tried to modify in read-only mode */</i></span>
+	GE_BADMODE
+} GrfErrorType;</pre>
+
+
+<p class="p"><h2>More information</h2>
+
+See also <a href="http://openkore.sourceforge.net/grftool/html/">the full libgrf API documentation.</a>
+
+
+<p><hr><p>
+
+<div id="footer">
+	<ul>
+	<li><a href="http://validator.w3.org/check?uri=referer" title="Valid HTML 4.01!"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01!" height="31" width="88"></a></li>
+	<li><a href="http://www.mozilla.org/products/firefox/" title="Get Firefox - Take Back the Web"><img width="104" height="32" src="http://www.mozilla.org/products/firefox/buttons/getfirefox_small.png" alt="Get Firefox - Take Back the Web"></a></li>
+	<li><a href="http://www.mozilla.org/products/firefox/" title="If you were looking at this page in any browser but Microsoft Internet Explorer, it would look and run better and faster"><img width="45" height="45" src="http://linuxart.com/img/noIE-small.png" alt="If you were looking at this page in any browser but Microsoft Internet Explorer, it would look and run better and faster"></a></li>
+	</ul>
+</div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,11 @@
+libsprite:
+- Better documentation.
+
+GTK+ frontend:
+- Drag & drop?
+- Support for previewing GAT and WAV.
+- Creating archives and adding files.
+
+Win32 Delphi frontend:
+- Everything the GTK frontend needs, except WAV preview.
+- SPR preview.
