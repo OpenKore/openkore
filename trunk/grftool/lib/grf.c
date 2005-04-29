@@ -2033,37 +2033,40 @@ grf_del(Grf *grf, const char *fname, GrfError *error)
 	return grf_index_del(grf,i,error);
 }
 
-/*! \brief Delete a file from the file table, taking index instead of name
+
+/** Delete a file from the file table, taking index instead of name.
  *
- * \param grf Pointer to information about the GRF to delete from
- * \param index Index of the Grf::files entry to be deleted
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return The number of files deleted from the GRF archive
+ * @param grf   Pointer to information about the GRF to delete from.
+ * @param index Index of the Grf::files entry to be deleted.
+ * @param error Pointer to a GrfError structure for error reporting.
+ * @return The number of files deleted from the GRF archive.
  */
-GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
+GRFEXPORT int
+grf_index_del (Grf *grf, uint32_t index, GrfError *error)
+{
 	uint32_t i;
 
 	/* Check our arguments */
-	if (!grf) {
-		GRF_SETERR(error,GE_BADARGS,grf_index_del);
+	if (grf == NULL) {
+		GRF_SETERR (error, GE_BADARGS, grf_index_del);
 		return 0;
 	}
 	if (grf->allowWrite == 0) {
-		GRF_SETERR(error,GE_BADMODE,grf_index_del);
+		GRF_SETERR (error,GE_BADMODE, grf_index_del);
 		return 0;
 	}
 
 	/* Check the index */
-	if (index>=grf->nfiles) {
-		GRF_SETERR(error,GE_INDEX,grf_index_del);
+	if (index >= grf->nfiles) {
+		GRF_SETERR (error, GE_INDEX, grf_index_del);
 		return 0;
 	}
 
 	/* Free the memory stored by GrfFile::data */
-	free(grf->files[index].data);
+	free (grf->files[index].data);
 
 	/* Loop through, moving each entry forward */
-	for(i=index;i<grf->nfiles-1;i++) {
+	for (i = index; i < grf->nfiles - 1; i++) {
 		memcpy(&(grf->files[i]),&(grf->files[i+1]),sizeof(GrfFile));
 	}
 
@@ -2071,66 +2074,74 @@ GRFEXPORT int grf_index_del(Grf *grf, uint32_t index, GrfError *error) {
 	grf->nfiles--;
 
 	/* Resize the GrfFile array */
-	if ((grf->files=(GrfFile*)realloc(grf->files,grf->nfiles*sizeof(GrfFile)))==NULL) {
+	grf->files = (GrfFile *) realloc (grf->files, grf->nfiles * sizeof (GrfFile));
+	if (grf->files == NULL) {
 		/* Bomb out? It just doesn't seem the best option */
-		GRF_SETERR(error,GE_ERRNO,realloc);
+		GRF_SETERR (error, GE_ERRNO, realloc);
 
 		/* Really return 0? The file was removed though... */
 		return 0;
 	}
 
-	GRF_SETERR(error,GE_SUCCESS,grf_index_del);
+	GRF_SETERR (error, GE_SUCCESS, grf_index_del);
 	return 1;
 }
 
-/*! \brief Replace the data of a file
+
+/** Replace the data of an existing file inside the GRF archive.
  *
- * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
- * \param name Name of the file inside the GRF
- * \param data Pointer to the replacement data
- * \param len Length of the replacement data
- * \param flags Flags to store the data with
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return The number of files successfully replaced
+ * @param grf   Pointer to a Grf structure, as returned by grf_callback_open()
+ * @param name  Name of the file inside the GRF.
+ * @param data  Pointer to the replacement data.
+ * @param len   Length of the replacement data.
+ * @param flags Must be set to GRFFILE_FLAG_FILE.
+ * @param error Pointer to a GrfError structure for error reporting.
+ *
+ * @return The number of files successfully replaced.
+ *
+ * @see grf_index_replace(), grf_put()
  */
 GRFEXPORT int
-grf_replace(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error)
+grf_replace (Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error)
 {
 	uint32_t i;
 
 	/* Make sure we've got valid arguments */
-	if (!grf || !name) {
-		GRF_SETERR(error,GE_BADARGS,grf_replace);
+	if (grf == NULL || name == NULL) {
+		GRF_SETERR (error, GE_BADARGS, grf_replace);
 		return 0;
 	}
 	if (grf->allowWrite == 0) {
-		GRF_SETERR(error,GE_BADMODE,grf_index_del);
+		GRF_SETERR (error, GE_BADMODE, grf_replace);
 		return 0;
 	}
 
 	/* Find the file inside the GRF */
-	if (!grf_find(grf,name,&i)) {
-		GRF_SETERR(error,GE_NOTFOUND,grf_replace);
+	if (!grf_find (grf, name, &i)) {
+		GRF_SETERR (error, GE_NOTFOUND, grf_replace);
 		return 0;
 	}
 
 	/* Replace the file, using its index */
-	return grf_index_replace(grf,i,data,len,flags,error);
+	return grf_index_replace (grf, i, data, len, flags, error);
 }
 
 
-/*! \brief Replace the data of a file
+/** Replace the data of a file.
  *
- * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
- * \param index Index of the Grf::files entry to be replaced
- * \param data Pointer to the replacement data
- * \param len Length of the replacement data
- * \param flags Flags to store the data with
- * \param error Pointer to a GrfErrorType struct/enum for error reporting
- * \return The number of files successfully replaced
+ * @param grf   Pointer to a Grf structure, as returned by grf_callback_open().
+ * @param index Index of the Grf::files entry to be replaced.
+ * @param data  Pointer to the replacement data.
+ * @param len   Length of the replacement data.
+ * @param flags Must be set to #GRFFILE_FLAG_FILE.
+ * @param error Pointer to a GrfError structure for error reporting.
+ *
+ * @return The number of files successfully replaced
+ *
+ * @see grf_replace(), grf_put()
  */
 GRFEXPORT int
-grf_index_replace(Grf *grf, uint32_t index, const void *data, uint32_t len, uint8_t flags, GrfError *error)
+grf_index_replace (Grf *grf, uint32_t index, const void *data, uint32_t len, uint8_t flags, GrfError *error)
 {
 	GrfFile *gf;
 
@@ -2195,20 +2206,22 @@ grf_index_replace(Grf *grf, uint32_t index, const void *data, uint32_t len, uint
 	return 1;
 }
 
-/*! \brief Add a file into a write-enabled grf archive.
+
+/** Add a file into a write-enabled grf archive.
  *
- * \warning Not testing when file already exists and trying to replace with a different type (is GRFFILE_FLAG_FILE set?). To be carefully debugged.
+ * @warning Not testing when file already exists and trying to replace with a different type (is GRFFILE_FLAG_FILE set?). To be carefully debugged.
  *
- * \param grf Pointer to a Grf structure, as returned by grf_callback_open()
- * \param name Name of the destination file inside the GRF
- * \param data Pointer to the file data
- * \param len Length of the data
- * \param flags Flags to store the data with
- * \param error Pointer to a GrfError structure for error reporting
- * \return The number of files successfully added
+ * @param grf   Pointer to a Grf structure, as returned by grf_callback_open().
+ * @param name  Name of the destination file inside the GRF.
+ * @param data  Pointer to the file data.
+ * @param len   Length of the data.
+ * @param flags Must be set to #GRFFILE_FLAG_FILE.
+ * @param error Pointer to a GrfError structure for error reporting.
+ *
+ * @return The number of files successfully added.
  */
 GRFEXPORT int
-grf_put(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error)
+grf_put (Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flags, GrfError *error)
 {
 	int i;
 	uint32_t namelen;
@@ -2219,29 +2232,29 @@ grf_put(Grf *grf, const char *name, const void *data, uint32_t len, uint8_t flag
 
 
 	/* Check our arguments */
-	if (!grf || !name || (!data && len>0)) {
-		GRF_SETERR(error,GE_BADARGS,grf_put);
+	if (!grf || !name || (!data && len > 0)) {
+		GRF_SETERR (error, GE_BADARGS, grf_put);
 		return 0;
 	}
 	if (grf->allowWrite == 0) {
-		GRF_SETERR(error,GE_BADMODE,grf_put);
+		GRF_SETERR (error, GE_BADMODE, grf_put);
 		return 0;
 	}
 	namelen = (uint32_t) strlen(name) + 1;  /* NOTE: size_t => uint32_t conversion */
 
 	/* Make sure its not too large */
-	if (namelen>=GRF_NAMELEN) {
+	if (namelen >= GRF_NAMELEN) {
 		/* Not very transparent in the way of passing errors */
-		GRF_SETERR(error,GE_BADARGS,grf_put);
+		GRF_SETERR (error, GE_BADARGS, grf_put);
 		return 0;
 	}
 
 	/* Try replacing an existing file.
 	 * Note that this will set the error if replace failed.
 	 */
-	if ((i=grf_replace(grf,name,data,len,flags,error)) > 0) {
+	i = grf_replace(grf,name,data,len,flags,error);
+	if (i > 0)
 		return i;
-	}
 
 	if (error->type != GE_NOTFOUND)
 		return 0;

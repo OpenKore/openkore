@@ -68,7 +68,6 @@ GRFEXPORT int GRF_AlphaSort_Func(const GrfFile *g1, const GrfFile *g2);
 GRFEXPORT int GRF_OffsetSort_Func(const GrfFile *g1, const GrfFile *g2);
 
 GRFEXPORT GrfFile *grf_find (Grf *grf, const char *fname, uint32_t *index);
-GRFEXPORT uint32_t grf_find_unused (Grf *grf, uint32_t len);
 
 int GRF_list_from_array(Grf *grf, GrfError *error);
 int GRF_array_from_list(Grf *grf, GrfError *error);
@@ -76,22 +75,15 @@ int GRF_array_from_list(Grf *grf, GrfError *error);
 GRFEXPORT GrfError *GRF_SetError(GrfError *err, GrfErrorType errtype, uint32_t line, const char *file, const char *func, void *extra);
 GRFEXPORT const char *grf_strerror(GrfError err);
 
-/*! \brief Macro used internally
- *
- * \sa GRF_SETERR
- * \sa GRF_SETERR_2
- */
-#define GRF_SETERR_ADD(a,b,e,f) GRF_SetError(a,b,__LINE__,__FILE__,#e,(uintptr_t*)f)    /* NOTE: ? => uintptr_t* conversion */
-/*! \brief Simplification Macro
- *
- * Simplifies setting an error to a GrfError pointer
- */
-#define GRF_SETERR(err,type,func) GRF_SETERR_ADD(err,type,func,0)
-/*! \brief Simplificatoin Macro
- *
- * Simplifies setting an error (with extra data) to a GrfError pointer
- */
-#define GRF_SETERR_2(err,type,func,extra) GRF_SETERR_ADD(err,type,func,extra)
+
+/** Macro used internally to set a GrfError structure. */
+#define GRF_SETERR_ADD(a,b,e,f) GRF_SetError (a, b, __LINE__, __FILE__, #e, (uintptr_t *) f)
+
+/** Macro used internally to set a GrfError structure. */
+#define GRF_SETERR(err,type,func) GRF_SETERR_ADD (err, type, func, 0)
+
+/** Macro used internally to set a GrfError structure. */
+#define GRF_SETERR_2(err,type,func,extra) GRF_SETERR_ADD (err, type, func, extra)
 
 
 GRFEXTERN_END
