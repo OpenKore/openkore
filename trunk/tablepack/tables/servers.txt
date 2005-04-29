@@ -215,7 +215,7 @@ master_version 18
 version 20
 
 [ProjectRO Private Server]
-ip 66.118.163.40
+ip 66.111.48.190
 port 6900
 master_version 0
 version 1
