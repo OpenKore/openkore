@@ -32,7 +32,7 @@ pm/sent yellow
 publicchat green
 guildchat darkgreen
 selfchat green
-gmchat yellow
+schat yellow
 list white
 info white
 equip grey
