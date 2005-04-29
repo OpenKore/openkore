@@ -194,7 +194,22 @@ typedef enum {
 } GrfErrorType;
 
 
-/** Structure which contains error information */
+/** This structure is used by many libgrf functions to report detailed error information.
+ *
+ * Here's an example about how to use this structure:
+ * @code
+ * GrfError error;
+ * Grf *grf;
+ *
+ * grf = grf_callback_open ("foo.grf", "rb", &error, NULL);
+ * if (grf == NULL) {
+ *     printf ("An error occured!\n");
+ *     printf ("Error type %d\n", error->type);
+ *     printf ("Occured at file %s line %d (function %s)\n", error->file, error->line, error->func);
+ *     exit (1);
+ * }
+ * @endcode
+ */
 typedef struct {
 	GrfErrorType	type;		/**<  Error type */
 	uint32_t	line;		/**<  Line number in the soure code where the error took place */
@@ -243,20 +258,13 @@ typedef struct _GrfFile {
 	uint8_t flags;
 
 	/* Known flags for GRF/GPF files */
-	#define GRFFILE_FLAG_FILE	0x01	/**< File entry
-						 * GrfFile::type flag to specify that
-						 * entry is a file when set (and
-						 * directory when not set)
-						 */
-	#define GRFFILE_FLAG_MIXCRYPT	0x02	/**< Encrypted
-						 * GrfFile::type flag to specify that the file
-						 * uses mixed crypto, explained in grfcrypt.h.
-						 */
-	#define GRFFILE_FLAG_0x14_DES	0x04	/**< Encrypted
-						 * GrfFile::type flag to specify that only the
-						 * first 0x14 blocks are encrypted.
-						 * Explained in grfcrypt.h
-						 */
+	/** This flag specifies that an entry is a file. If not set, then the entry is a directory.
+	    This flag is used by GrfFile::flags, grf_replace(), grf_index_replace() and grf_put(). */
+	#define GRFFILE_FLAG_FILE	0x01
+	/** Flag for GrfFile::flags to specify that the file uses mixed crypto. Explained in grfcrypt.h. */
+	#define GRFFILE_FLAG_MIXCRYPT	0x02
+	/** Flag for GrfFile::flags to specify that only the first 0x14 blocks are encrypted. Explained in grfcrypt.h. */
+	#define GRFFILE_FLAG_0x14_DES	0x04
 
 	uint32_t hash;			/**<  Filename hash; used internally by grf_find() */
 	char name[GRF_NAMELEN];		/**<  Filename */
