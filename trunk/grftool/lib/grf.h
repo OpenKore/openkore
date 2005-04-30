@@ -70,15 +70,17 @@ typedef int (*GrfFlushCallback) (GrfFile *file, GrfError *error);
 /** Value to distinguish a GRF file in Grf::type */
 # define GRF_TYPE_GRF 0x01
 
-/** @brief The same as grf_callback_open(), but without a callback parameter. Kept for compatibility with libgrf 0.9. */
-# define grf_open(fname, mode, error) grf_callback_open(fname, mode, error, NULL)
-
 /** The same as grf_callback_flush(), but without a callback parameter. */
 #define grf_flush(fname, error) grf_callback_flush(fname, error, NULL)
 
 
 /* Opening */
 GRFEXPORT Grf *grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpenCallback callback);
+
+#ifdef GRF_STATIC
+GRFINLINE
+#endif /* GRF_STATIC */
+GRFEXPORT Grf *grf_open (const char *fname, const char *mode, GrfError *error);
 
 /* Extraction functions */
 GRFEXPORT void *grf_get (Grf *grf, const char *fname, uint32_t *size, GrfError *error);
