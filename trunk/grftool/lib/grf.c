@@ -708,6 +708,7 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 	uLongf comp_len;
 	char keyschedule[0x80], key[8];
 	uint32_t write_offset;
+	GrfFile *cur = NULL;
 	
 	size_bound = compressBound(grf->files[i].real_len);
 	
@@ -782,7 +783,7 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 		grf->files[i].next->prev=grf->files[i].prev;
 	
 	/* Find a spot in the linked list for the file */
-	GrfFile *cur = grf->first;
+	cur = grf->first;
 	while (cur!=NULL && cur->pos<write_offset)
 		cur=cur->next;
 		
