@@ -1,22 +1,24 @@
 #config target
 OUTDIR=.
+LIBGRF=../../lib/
 
 # command processor programs
 RM=erase
 
 # common compiler and linker executables/options/libraries
 CPP=cl
-CPP_FLAGS=/nologo /TC /MD /FD /W3 /Wp64 /GS /O2 /Oitb2 /Zi /DSTRICT /DWIN32 /D_CRT_SECURE_NO_DEPRECATE /D_CONSOLE /D_MBCS /DNDEBUG
+CPP_FLAGS=/nologo /MD /FD /W3 /Wp64 /GS /O2 /Oitb2 /Zi /DSTRICT /DWIN32 /D_CRT_SECURE_NO_DEPRECATE /D_CONSOLE /D_MBCS /DNDEBUG
 LINK32=link
-LINK32_FLAGS=/nologo /nodefaultlib /incremental:no /machine:X86 /subsystem:console
-LINK32_LIBS=kernel32.lib user32.lib gdi32.lib shell32.lib advapi32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib comdlg32.lib comctl32.lib
+LINK32_FLAGS=/nologo /incremental:no /subsystem:console
+LINK32_LIBS=
+#kernel32.lib user32.lib gdi32.lib shell32.lib advapi32.lib ole32.lib oleaut32.lib uuid.lib shlwapi.lib comdlg32.lib comctl32.lib
 RC=rc.exe
 
 # project specific
-CPP_FLAGS=$(CPP_FLAGS) /I.\zlib /I.\libgrf /DGRF_STATIC
+CPP_FLAGS=$(CPP_FLAGS) /I.\zlib /I$(LIBGRF) /DGRF_STATIC
 OR_CPP_FLAGS = $(CPP_FLAGS) /DEXTRACT_AS_UNICODE
 LINK32_FLAGS=$(LINK32_FLAGS) /LIBPATH:. /LIBPATH:.\zlib /OPT:REF,NOWIN98
-LINK32_LIBS=$(LINK32_LIBS) msvcrt.lib zlib.lib
+LINK32_LIBS=$(LINK32_LIBS) zlib.lib
 
 ################################################################################################
 #           list of object files
@@ -26,7 +28,7 @@ LINK32_OBJS1=gx.obj
 LINK32_OBJS2=gxu.obj
 ################################################################################################
 # build target
-ALL : "$(OUTDIR)\gx.exe" "$(OUTDIR)\gxu.exe"
+ALL : zlib.lib "$(OUTDIR)\gx.exe" "$(OUTDIR)\gxu.exe"
 	
 
 # for cleaning up
@@ -42,20 +44,26 @@ REMOVEEXE :
 
 
 # source/target file dependencies
-grfcrypt.obj : libgrf/grfcrypt.c
-   $(CPP) $(CPP_FLAGS) /c libgrf/grfcrypt.c
+grfcrypt.obj : $(LIBGRF)grfcrypt.c
+   $(CPP) $(CPP_FLAGS) /c $(LIBGRF)$*.c
 
-grfsupport.obj : libgrf/grfsupport.c
-   $(CPP) $(CPP_FLAGS) /c libgrf/grfsupport.c
+grfsupport.obj : $(LIBGRF)grfsupport.c
+   $(CPP) $(CPP_FLAGS) /c $(LIBGRF)$*.c
 
-grf.obj : libgrf/grf.c
-   $(CPP) $(CPP_FLAGS) /c libgrf/grf.c
+grf.obj : $(LIBGRF)grf.c
+   $(CPP) $(CPP_FLAGS) /c $(LIBGRF)$*.c
 
 gx.obj : gx.c
    $(CPP) $(CPP_FLAGS) /c gx.c
 
 gxu.obj : gx.c
    $(CPP) $(OR_CPP_FLAGS) /c gx.c /Fogxu.obj
+
+zlib.lib : ZLIB_ERROR
+
+ZLIB_ERROR :
+   @echo Error: zlib.lib missing. Please build it and copy it to the current directory.
+   @EXIT /B 1
 
 # linkage
 
