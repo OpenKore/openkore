@@ -1350,7 +1350,7 @@ GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback)
  * If the file is created, a valid header is produced. It is updated when file is closed
  * using grf_close() or when grf_callback_flush() is called.
  *
- * @see GrfOpenCallback, grf_open
+ * @see GrfOpenCallback, grf_open, grf_close, grf_free
  *
  * @param fname Filename of the GRF file
  * @param mode Character sequence specifying the mode to open the file in, according to fopen(3).
@@ -1561,6 +1561,24 @@ grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpen
 	return grf;
 }
 
+/** The same as grf_callback_open(), but without a callback parameter.
+ * @see grf_callback_open()
+ * @param fname Filename of the GRF file
+ * @param mode Character sequence specifying the mode to open the file in, according to fopen(3).
+ *             For maximal compatibility, recommended flags are @b "rb" for read-only mode,
+ *             @b "r+b" for read-write mode (modifying an archive), or @b "w+b" to create a new
+ *             empty grf file. Do not use mode "a" (append), or a mode where reading is impossible.
+ * @param error [out] Pointer to a GrfError variable for error reporting. May be NULL.
+progress bar, for example.
+ * @return A pointer to a newly created Grf struct
+ */
+#ifdef GRF_STATIC
+GRFINLINE
+#endif /* GRF_STATIC */
+GRFEXPORT Grf *grf_open (const char *fname, const char *mode, GrfError *error)
+{
+	return grf_callback_open(fname, mode, error, NULL);
+}
 
 /** Extract a file inside a GRF file into memory.
  *
