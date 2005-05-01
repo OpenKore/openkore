@@ -1484,7 +1484,7 @@ sub sendTake {
 		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x68) . $itemID;
 		
 	} elsif ($config{serverType} == 3) {
-	    $msg = pack("C*", 0xf5, 0x00, 0x00, 0x00, 0xb8) . $itemID;
+		$msg = pack("C*", 0xf5, 0x00, 0x00, 0x00, 0xb8) . $itemID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent take\n", "sendPacket", 2;
