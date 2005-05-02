@@ -6773,6 +6773,7 @@ sub parseMsg {
 				$item->{upgrade} = unpack("C1", substr($msg, 10, 1));
 				$item->{cards} = substr($msg, 11, 8);
 				$item->{name} = itemName($item);
+				$item->{broken} = unpack("C1", substr($msg, 9, 1));
 			} else {
 				# Add stackable item
 				$item = $chars[$config{'char'}]{'inventory'}[$invIndex];
@@ -6869,6 +6870,7 @@ sub parseMsg {
 			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1)); 
 			$item->{cards} = substr($msg, $i + 12, 8);
 			$item->{name} = itemName($item);
+			$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 
 			debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
 			Plugins::callHook('packet_inventory', {index => $invIndex});
@@ -6922,6 +6924,7 @@ sub parseMsg {
 			$item->{cards} = substr($msg, $i + 12, 8);
 			$item->{name} = itemName($item);
 			$item->{binID} = binFind(\@storageID, $index);
+			$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 			debug "Storage: $item->{name} ($item->{binID})\n", "parseMsg";
 		}
 
@@ -10962,6 +10965,7 @@ sub itemName {
 	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
 
 	my $display = "";
+	$display .= "BROKEN " if $item->{broken};
 	$display .= "+$item->{upgrade} " if $item->{upgrade};
 	$display .= $prefix if $prefix;
 	$display .= $name;
