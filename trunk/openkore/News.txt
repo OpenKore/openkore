@@ -24,6 +24,10 @@ Bug fixes:
   attackSkillSlot_#_dist is not set.
 - Make "Unknown gained a [job] level" message and "[Guild]  : " message
   show up correctly in OpenRO.
+- Fix "sp" command sending skill level 0 when unspecified (this wasn't
+  a problem on Aegis, but was on eAthena).
+- Hopefully support detection of Peco Lord Knight and other classes
+  on OpenRO now.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.

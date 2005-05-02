@@ -106,6 +106,30 @@ our %jobs_lut = (
 	21 => 'Peco Crusader',
 	22 => 'Wedding Suit',
 	23 => 'Super Novice',
+
+	24 => 'High Novice',
+	25 => 'High Swordsman',
+	26 => 'High Magician',
+	28 => 'High Archer',
+	29 => 'High Acolyte',
+	30 => 'High Merchant',
+	31 => 'High Thief',
+	35 => 'Lord Knight',
+	36 => 'High Priest',
+	37 => 'High Wizard',
+	38 => 'Whitesmith',
+	39 => 'Sniper',
+	40 => 'Assassin Cross',
+	41 => 'Peco Lord Knight',
+	42 => 'Paladin',
+	43 => 'Champion',
+	44 => 'Professor',
+	45 => 'Stalker',
+	46 => 'Creator',
+	47 => 'Clown',
+	48 => 'Gypsy',
+	49 => 'Peco Paladin',
+
 	161 => 'High Novice',
 	162 => 'High Swordsman',
 	163 => 'High Magician',
@@ -128,7 +152,7 @@ our %jobs_lut = (
 	180 => 'Clown / Gypsy',
 	181 => 'Peco Paladin',
 
-	# Some servers appear to use these IDs for advanced 2-2 classes
+	4001 => 'High Novice',
 	4002 => 'High Swordsman',
 	4003 => 'High Magician',
 	4004 => 'High Archer',
@@ -141,14 +165,16 @@ our %jobs_lut = (
 	4011 => 'Whitesmith',
 	4012 => 'Sniper',
 	4013 => 'Assassin Cross',
+	4014 => 'Peco Lord Knight',
 	4015 => 'Paladin',
 	4016 => 'Champion',
 	4017 => 'Professor',
 	4018 => 'Stalker',
 	4019 => 'Creator',
-	4020 => 'Clown / Gypsy'
+	4020 => 'Clown',
+	4021 => 'Gypsy',
+	4022 => 'Peco Paladin'
 );
-
 
 # AI
 our @ai_seq;
