@@ -6754,10 +6754,10 @@ sub parseMsg {
 				$item->{type_equip} = unpack("S1", substr($msg, 19, 2));
 				$item->{amount} = $amount;
 				$item->{identified} = unpack("C1", substr($msg, 8, 1));
+				$item->{broken} = unpack("C1", substr($msg, 9, 1));
 				$item->{upgrade} = unpack("C1", substr($msg, 10, 1));
 				$item->{cards} = substr($msg, 11, 8);
 				$item->{name} = itemName($item);
-				$item->{broken} = unpack("C1", substr($msg, 9, 1));
 			} else {
 				# Add stackable item
 				$item = $chars[$config{'char'}]{'inventory'}[$invIndex];
@@ -6851,10 +6851,10 @@ sub parseMsg {
 			$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
 			$item->{type_equip} = unpack("S1", substr($msg, $i + 6, 2));
 			$item->{equipped} = unpack("S1", substr($msg, $i + 8, 2));
+			$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1)); 
 			$item->{cards} = substr($msg, $i + 12, 8);
 			$item->{name} = itemName($item);
-			$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 
 			debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
 			Plugins::callHook('packet_inventory', {index => $invIndex});
@@ -6904,11 +6904,11 @@ sub parseMsg {
 			$item->{amount} = 1;
 			$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 			$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
+			$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
 			$item->{cards} = substr($msg, $i + 12, 8);
 			$item->{name} = itemName($item);
 			$item->{binID} = binFind(\@storageID, $index);
-			$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
 			debug "Storage: $item->{name} ($item->{binID})\n", "parseMsg";
 		}
 
@@ -7631,6 +7631,7 @@ sub parseMsg {
 			$item->{amount} += $amount;
 			$item->{nameID} = $ID;
 			$item->{identified} = unpack("C1", substr($msg, 8, 1));
+			$item->{broken} = unpack("C1", substr($msg, 9, 1));
 			$item->{upgrade} = unpack("C1", substr($msg, 10, 1));
 			$item->{cards} = substr($msg, 11, 8);
 			$item->{name} = itemName($item);
@@ -8226,6 +8227,7 @@ sub parseMsg {
 			$item->{amount} = 1;
 			$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
 			$item->{type_equip} = unpack("S1", substr($msg, $i+6, 2));
+			$item->{broken} = unpack("C1", substr($msg, $i+10, 1));
 			$item->{upgrade} = unpack("C1", substr($msg, $i+11, 1));
 			$item->{cards} = substr($msg, $i+12, 8);
 			$item->{name} = itemName($item);
@@ -8277,6 +8279,7 @@ sub parseMsg {
 			$item->{nameID} = $ID;
 			$item->{amount} = $amount;
 			$item->{identified} = unpack("C1", substr($msg, 10 + $psize, 1));
+			$item->{broken} = unpack("C1", substr($msg, 11 + $psize, 1));
 			$item->{upgrade} = unpack("C1", substr($msg, 12 + $psize, 1));
 			$item->{cards} = substr($msg, 13 + $psize, 8);
 			$item->{name} = itemName($item);
@@ -8337,6 +8340,7 @@ sub parseMsg {
 				$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
 				$item->{nameID} = unpack("S1", substr($msg, $i + 9, 2));
 				$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
+				$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
 				$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
 				$item->{cards} = substr($msg, $i + 14, 8);
 				$item->{name} = itemName($item);
@@ -8382,6 +8386,7 @@ sub parseMsg {
 			$item->{quantity} = unpack("S1", substr($msg, $i + 6, 2));
 			$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
 			$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
+			$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
 			$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
 			$item->{cards} = substr($msg, $i + 14, 8);
 			$item->{price} = unpack("L1", substr($msg, $i, 4));
@@ -8941,10 +8946,12 @@ sub parseMsg {
 			$item->{amount} = $amount;
 			if ($switch eq "01C4") {
 				$item->{identified} = unpack("C1", substr($msg, 11, 1));
+				$item->{broken} = unpack("C1", substr($msg, 12, 1));
 				$item->{upgrade} = unpack("C1", substr($msg, 13, 1));
 				$item->{cards} = substr($msg, 14, 8);
 			} elsif ($switch eq "00F4") {
 				$item->{identified} = unpack("C1", substr($msg, 10, 1));
+				$item->{broken} = unpack("C1", substr($msg, 11, 1));
 				$item->{upgrade} = unpack("C1", substr($msg, 12, 1));
 				$item->{cards} = substr($msg, 13, 8);
 			}
