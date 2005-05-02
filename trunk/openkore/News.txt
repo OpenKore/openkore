@@ -4,7 +4,6 @@
 
 Bug fixes:
 - Logging framework: writing messages to files should work again.
-- Don't wait for casting to finish if user has freecast.
 - Correct write to servers.txt for version search.
 - Fix lockMap_randX/Y. lockMap_x/y acting as the top right corner of the
   rectangle. This is now treated as the center of the rectangle.
