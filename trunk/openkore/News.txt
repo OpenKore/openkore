@@ -51,6 +51,7 @@ New features:
   field file by using servers.txt. You must have the latest fieldpack
   and the latest servers.txt from the latest tablepack.
 - Support level 2 Teleport as well in blocks like useSelf_skill.
+- Support for displaying broken weapons.
 
 New config options:
 - autoSpell (spell name)
@@ -78,6 +79,7 @@ Credits:
 - denni: bug fixes.
 - kaliwanagan: sage autospell support
 - MindChild: dcOnPM
+- Crypticode: broken weapon support
 
 ==================
 ### 1.6.0
