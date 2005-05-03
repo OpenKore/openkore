@@ -445,9 +445,6 @@ noAutoSkill 0
 portalRecord 2
 missDamage 0
 
-beepOnPM 0
-beepOnChat 0
-
 tankersList
 
 autoSpell
