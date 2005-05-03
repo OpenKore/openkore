@@ -88,7 +88,7 @@ Credits:
 - denni: bug fixes.
 - kaliwanagan: sage autospell support
 - MindChild: dcOnPM
-- Crypticode: broken weapon support
+- Crypticode: broken weapon support, teleport spam fix.
 
 ==================
 ### 1.6.0
