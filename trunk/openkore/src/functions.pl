@@ -2566,15 +2566,13 @@ sub AI {
 			}
 			
 			if (defined($args->{getStart}) && $args->{done} != 1) {
-
-				my %item;
 				while (exists $config{"getAuto_$ai_seq_args[0]{index}"}) {
 					if (!$config{"getAuto_$ai_seq_args[0]{index}"}) {
 						$ai_seq_args[0]{index}++;
 						next;
 					}
 
-					undef %item;
+					my %item;
 					$item{name} = $config{"getAuto_$ai_seq_args[0]{index}"};
 					$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
 					$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount} : 0;
@@ -2582,27 +2580,41 @@ sub AI {
 					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
 					$item{max_amount} = $config{"getAuto_$ai_seq_args[0]{index}"."_maxAmount"};
 					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
-					
+
+					# Calculate the amount to get
 					if ($item{amount_needed} > 0) {
 						$item{amount_get} = ($item{storage}{amount} >= $item{amount_needed})? $item{amount_needed} : $item{storage}{amount};
 					}
-					
+
+					# Try at most 3 times to get the item
 					if (($item{amount_get} > 0) && ($ai_seq_args[0]{retry} < 3)) {
 						message "Attempt to get $item{amount_get} x $item{name} from storage, retry: $ai_seq_args[0]{retry}\n", "storage", 1;
 						sendStorageGet(\$remote_socket, $item{storage}{index}, $item{amount_get});
 						$timeout{ai_storageAuto}{time} = time;
 						$ai_seq_args[0]{retry}++;
 						last AUTOSTORAGE;
-						
+
 						# we don't inc the index when amount_get is more then 0, this will enable a way of retrying
 						# on next loop if it fails this time
 					}
-					
+
 					if ($item{storage}{amount} < $item{amount_needed}) {
 						warning "storage: $item{name} out of stock\n";
 					}
-	
-					# otherwise, increment the index
+
+					if (!$config{relogAfterStorage} && $ai_seq_args[0]{retry} >= 3 && !$ai_seq_args[0]{warned}) {
+						# We tried 3 times to get the item and failed.
+						# There is a weird server bug which causes this to happen,
+						# but I can't reproduce it. This can be worked around by
+						# relogging in after autostorage.
+						warning "Kore tried to get an item from storage 3 times, but failed.\n";
+						warning "This problem could be caused by a server bug.\n";
+						warning "To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n";
+						$ai_seq_args[0]{warned} = 1;
+					}
+
+					# We got the item, or we tried 3 times to get it, but failed.
+					# Increment index and process the next item.
 					$ai_seq_args[0]{index}++;
 					$ai_seq_args[0]{retry} = 0;
 				}
