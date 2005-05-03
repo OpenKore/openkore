@@ -28,6 +28,7 @@ Bug fixes:
   a problem on Aegis, but was on eAthena).
 - Hopefully support detection of Peco Lord Knight and other classes
   on OpenRO now.
+- Fix monster avoiding teleport spamming.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
