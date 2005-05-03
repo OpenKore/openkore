@@ -1,77 +1,10 @@
 #
 # macro by Arachno
 #
-# Changelog:
-# 0.1    - initial release
-# 0.2    - cleanup
-#        - new feature: @call - calls another macro
-# 0.3    - new feature: macro macroname now allows option
-#          how many times the macro should be called:
-#          e.g. "macro macroname 10" calls macroname 10x.
-# 0.4    - items are now case insensitive
-#        - "deal" is now excluded from ai idle check
-# 0.5    - minor code cleanup
-#        - "map" directive is now optional
-# 0.6    - fix for items containing a +,* or [,]
-#        - added @cart directive
-# 0.7 (not released)
-#        - fix: load macro.txt if not loaded yet
-#        - minor code cleanup
-#        - added "macro stop" command
-# 0.8ß   - added automacro function
-#        - added switch for less/equal or higher than 1.5.2
-#        - removed own "move" function
-#        - added parameter to @call how many times the macro
-#          should be called
-# 0.8ß2  - added "soldout" to automacro
-#        - added version
-#        - macro list shows automacros as well
-#        - added "delay" to automacro
-#        - removed timeout from automacro checks
-# 0.8ß3  - macros can be invoked even if ai queue not clear
-#        - minor code cleanup
-#        - added "equipped" to automacro
-#        - removed useless "map" directive from macro
-# 0.8ß4  - added "weight" and "cartweight" to automacro
-#        - added "job" and "base"
-#        - minor code cleanup
-#        - added "location" which accepts coordinates
-#        - added "muted" to status
-# hf:    - typo in line 267 (@array[]->$array[])
-# hf2:   - fix: getItemID is incompatible with storage
-# hf3:   - fix: checkPercent, checkLevel
-# hf4:   - fix: checkPlayer
-# 0.8rc1 - added "spell" to automacro
-#        - changed "macro": a1..an are not longer supported
-#        - added "class" to automacro
-#        - fix: location
-#        - macro now initializes on load
-# 0.8rc2 - minor fix in "spell"
-#        - added "@log" keyword to macro
-#        - "macro reset" now accepts automacro as argument
-#        - added keyword "@release" to macro
-#        - added "pm" to automacro
-#        - rewrote parts of "equipped", new syntax
-#        - fix: ai commands were dequeued too soon
-#        - gave up gmnear, since there's no safe way to
-#          identify a gm
-#        - "equipped" accepts "[NONE]"
-#        - macro now keeps quiet unless macro_debug is set
-# hf:    - fix: macro ai queue, dequeue failed
-# hf2:   - fix: weight and cartweight
-# hf3:   - fix: item amounts of a closed shop
-# 0.8    - released final with no changes
-# 0.9a1  - allow regexp in PM
-#        - added @random to macro,
-#          syntax: @random (foo bar whatever)
-# 0.9a2  - added custom variable support to macro/automacro
-#        - when receiving a PM, the nick who sent the PM is stored
-#          in variable lastPMnick
-#        - code cleanup
 
 package macro;
 
-our $macroVersion = "0.9a2";
+our $macroVersion = "0.9cvs";
 
 use strict;
 use Plugins;
@@ -388,7 +321,7 @@ sub escapeCmd {
 # returns random item from argument list ##################
 sub getRandom {
   my $arg = shift;
-  $arg =~ s/^.*@random.?\(//g;
+  $arg =~ s/^.*\@random.?\(//g;
   $arg =~ s/\).*$//g;
   my @items = split(/ /, $arg);
   foreach (reverse 0..@items) {
