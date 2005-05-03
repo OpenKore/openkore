@@ -55,6 +55,8 @@ New features:
   and the latest servers.txt from the latest tablepack.
 - Support level 2 Teleport as well in blocks like useSelf_skill.
 - Support for displaying broken weapons.
+- A workaround for a server bug which causes autostorage to fail.
+  See the config option 'relogAfterStorage'.
 
 New config options:
 - autoSpell (spell name)
@@ -66,6 +68,9 @@ New config options:
   It was previously called ksPlayers.
 - dcOnPM (flag)
   Disconnect when somebody sends you a PM.
+- relogAfterStorage (flag)
+  Relogin after performing autostorage. This works around a server bug
+  which causes autostorage to fail when you do it the second time.
 
 Internal:
 - Wx interface: load some modules only when they're necessary. This
