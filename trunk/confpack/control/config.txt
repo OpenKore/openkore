@@ -331,6 +331,7 @@ storageAuto_npc
 storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
+relogAfterStorage 1
 
 getAuto {
 	minAmount
