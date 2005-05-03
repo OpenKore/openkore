@@ -61,10 +61,17 @@
 # hf2:   - fix: weight and cartweight
 # hf3:   - fix: item amounts of a closed shop
 # 0.8    - released final with no changes
+# 0.9a1  - allow regexp in PM
+#        - added @random to macro,
+#          syntax: @random (foo bar whatever)
+# 0.9a2  - added custom variable support to macro/automacro
+#        - when receiving a PM, the nick who sent the PM is stored
+#          in variable lastPMnick
+#        - code cleanup
 
 package macro;
 
-our $macroVersion = "0.8";
+our $macroVersion = "0.9a2";
 
 use strict;
 use Plugins;
@@ -77,6 +84,7 @@ use AI;
 use Commands;
 
 our %macros;
+our %varStack;
 
 Plugins::register('macro', 'allows usage of macros', \&Unload);
 
@@ -110,6 +118,7 @@ sub parseMacroFile {
     next if (/^\s*#/); # skip comments
     s/^\s*//g;         # remove leading whitespaces
     s/\s*[\r\n]?$//g;  # remove trailing whitespaces and eol
+    s/  +/ /g;         # trim down spaces
     next unless ($_);
     if (!defined $commentBlock && /^\/\*/) {
       $commentBlock = 1; next;
@@ -146,7 +155,7 @@ sub parseMacroFile {
 # just a facade for "macro"
 sub commandHandler {
   my (undef, $arg) = @_;
-  my ($cmd, $param, $paramt) = split(/ /, $arg->{input}, 3);
+  my ($cmd, $param, $paramt) = split(/ /, $arg->{input});
   if ($cmd eq 'macro') {
     if ($param eq 'list') { list_macros(); }
     elsif ($param eq 'stop') { clear_macro(); }
@@ -209,28 +218,33 @@ sub processQueue {
       if ($tmparr[$w] =~ /^\@/) {
         my $ret = -1;
         if ($tmparr[$w] eq '@npc') { $ret = getnpcID($tmparr[$w+1],$tmparr[$w+2]); }
-        elsif ($tmparr[$w] eq '@cart')      { $ret = getItemID($tmparr[$w+1], \@{$cart{inventory}}); }
-        elsif ($tmparr[$w] eq '@inventory') { $ret = getItemID($tmparr[$w+1], \@{$char->{inventory}}); }
-        elsif ($tmparr[$w] eq '@store')     { $ret = getItemID($tmparr[$w+1], \@::storeList); }
-        elsif ($tmparr[$w] eq '@storage')   { $ret = getStorageID($tmparr[$w+1]); }
-        elsif ($tmparr[$w] eq '@player')    { $ret = getPlayerID($tmparr[$w+1], \@::playersID); }
-        elsif ($tmparr[$w] eq '@vender')    { $ret = getPlayerID($tmparr[$w+1], \@::venderListsID); }
-        elsif ($tmparr[$w] eq '@call')      { $ret = pushMacro($tmparr[$w+1],$tmparr[$w+2]); }
-        elsif ($tmparr[$w] eq '@release')   { releaseAM($tmparr[$w+1]); $ret = 1; }
-        elsif ($tmparr[$w] eq '@log')       { $ret = logMessage($command); }
-        elsif ($tmparr[$w] eq '@pause')     { $ret = 1; };
+        elsif ($tmparr[$w] eq '@cart')      {$ret = getItemID($tmparr[$w+1], \@{$cart{inventory}})}
+        elsif ($tmparr[$w] eq '@inventory') {$ret = getItemID($tmparr[$w+1], \@{$char->{inventory}})}
+        elsif ($tmparr[$w] eq '@store')     {$ret = getItemID($tmparr[$w+1], \@::storeList)}
+        elsif ($tmparr[$w] eq '@storage')   {$ret = getStorageID($tmparr[$w+1])}
+        elsif ($tmparr[$w] eq '@player')    {$ret = getPlayerID($tmparr[$w+1], \@::playersID)}
+        elsif ($tmparr[$w] eq '@vender')    {$ret = getPlayerID($tmparr[$w+1], \@::venderListsID)}
+        elsif ($tmparr[$w] eq '@call')      {$ret = pushMacro($tmparr[$w+1],$tmparr[$w+2])}
+        elsif ($tmparr[$w] eq '@release')   {releaseAM($tmparr[$w+1]); $ret = 1}
+        elsif ($tmparr[$w] eq '@log')       {$ret = logMessage($command)}
+        elsif ($tmparr[$w] eq '@random')    {($ret, $command) = getRandom($command)}
+        elsif ($tmparr[$w] eq '@set')       {$ret = setVar($tmparr[$w+1],$tmparr[$w+2])}
+        elsif ($tmparr[$w] eq '@var')       {$ret = getVar($tmparr[$w+1])}
+        elsif ($tmparr[$w] eq '@pause')     {$ret = 1};
         if ($ret < 0) {
           Log::error(sprintf("macro: %s failed. Macro stopped.\n", $command));
           @macroQueue = (); return;
         };
         if ($tmparr[$w] eq '@npc') { $command =~ s/$tmparr[$w] $tmparr[$w+1] $tmparr[$w+2]+/$ret/g; }
-        elsif ($tmparr[$w] =~ /^\@(pause|call|release|log)$/) {undef $command;}
+        elsif ($tmparr[$w] =~ /^\@(pause|call|release|log|set)$/) {undef $command;}
         else { my $tmp = escapeCmd($tmparr[$w+1]); $command =~ s/$tmparr[$w] $tmp/$ret/g; };
         last;
       };
     };
     Log::message(sprintf("[macro] processing: %s\n", $command)) if ($::config{'macro_debug'});
-    if ($command) {Commands::run($command) || ::parseCommand($command)};
+    if ($command) {
+      Commands::run($command) || ::parseCommand($command)
+    };
     AI::dequeue if (!@macroQueue && AI::is('macro'));
     $timeout{macro_delay}{time} = time;
   };
@@ -300,6 +314,20 @@ sub clear_macro {
   Log::message("macro queue cleared.\n");
 };
 
+# adds variable and value to stack
+sub setVar {
+  my ($var, $val) = @_;
+  $varStack{$var} = $val;
+  return 1;
+};
+
+# gets variable's value from stack
+sub getVar {
+  my $var = shift;
+  return 0 unless $varStack{$var};
+  return $varStack{$var};
+};
+
 # logs message to console
 sub logMessage {
   my $message = shift;
@@ -357,13 +385,26 @@ sub escapeCmd {
   return $string;
 };
 
+# returns random item from argument list ##################
+sub getRandom {
+  my $arg = shift;
+  $arg =~ s/^.*@random.?\(//g;
+  $arg =~ s/\).*$//g;
+  my @items = split(/ /, $arg);
+  foreach (reverse 0..@items) {
+    my $rnd = splice(@items, rand @items, 1);
+    push @items, $rnd;
+  }
+  return 1, $items[0];
+};
+
 # automacro stuff #########################################
 
 # checks whether automacro is in runonce list #############
 sub isInRunOnce {
   my $automacro = shift;
   our @runonce;
-  foreach (@runonce) { if ($_ eq $automacro) {return 1} };
+  foreach (@runonce) {if ($_ eq $automacro) {return 1}};
   return 0;
 };
 
@@ -420,6 +461,7 @@ sub automacroCheck {
       else {next};
     };
     next if ($macros{$am."_map"} && $macros{$am."_map"} ne $field{name});
+    next if ($macros{$am."_var"} && !checkVar($macros{$am."_var"}));
     next if ($macros{$am."_location"} && !checkLoc($macros{$am."_location"}));
     next if ($macros{$am."_base"} && !checkLevel($macros{$am."_base"}, "base"));
     next if ($macros{$am."_job"} && !checkLevel($macros{$am."_job"}, "job"));
@@ -445,21 +487,39 @@ sub automacroCheck {
   };
 };
 
-# checks for location ######################################
-# parameter: map [x1 y1 [x2 y2]]
-# note: when looking in the default direction (north)
-# x1 < x2 and y1 > y2 where (x1|y1)=(upper left) and
-#                           (x2|y2)=(lower right)
+# utilities ################################################
 sub between {
   if ($_[0] <= $_[1] && $_[1] <= $_[2]) {return 1};
   return 0;
 };
 
+sub cmpr {
+  my ($a, $cond, $b) = @_;
+  if ($cond eq "="  && $a == $b) {return 1};
+  if ($cond eq ">=" && $a >= $b) {return 1};
+  if ($cond eq "<=" && $a <= $b) {return 1};
+  if ($cond eq ">"  && $a > $b)  {return 1};
+  if ($cond eq "<"  && $a < $b)  {return 1};
+  return 0;
+};
+
+# check for variable #######################################
+sub checkVar {
+  my ($var, $cond, $val) = split(/ /, $_[0]);
+  return 1 if (exists $varStack($var) && cmpr($varStack($var), $cond, $val));
+  return 0;
+};
+
+# checks for location ######################################
+# parameter: map [x1 y1 [x2 y2]]
+# note: when looking in the default direction (north)
+# x1 < x2 and y1 > y2 where (x1|y1)=(upper left) and
+#                           (x2|y2)=(lower right)
 sub checkLoc {
   my $arg = shift;
   my $ret = 1;
   if ($arg =~ /^not /) { $ret = 0; $arg =~ s/^not //g; };
-  my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg, 5);
+  my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
   if ($map eq $field{name}) {
     if ($x1 && $y1) {
       my $pos = calcPosition($char);
@@ -478,16 +538,12 @@ sub checkLoc {
 # checks for base/job level ################################
 sub checkLevel {
   my ($arg, $what) = @_;
-  my ($cond, $level) = split(/ /, $arg, 2);
+  my ($cond, $level) = split(/ /, $arg);
   my $lvl;
-  if ($what eq 'base') { $lvl = $char->{lv}; }
-  elsif ($what eq 'job') { $lvl = $char->{lv_job}; }
-  else {return 0};
-  if ($cond eq "=")  { if ($lvl == $level) {return 1} };
-  if ($cond eq "<")  { if ($lvl <  $level) {return 1} };
-  if ($cond eq ">")  { if ($lvl >  $level) {return 1} };
-  if ($cond eq "<=") { if ($lvl <= $level) {return 1} };
-  if ($cond eq ">=") { if ($lvl >= $level) {return 1} };
+  if ($what eq 'base')   {$lvl = $char->{lv}}
+  elsif ($what eq 'job') {$lvl = $char->{lv_job}}
+  else                   {return 0};
+  return 1 if cmpr($lvl, $cond, $level);
   return 0;
 };
 
@@ -500,25 +556,20 @@ sub checkClass {
 # checks for HP/SP/Weight ##################################
 sub checkPercent {
   my ($arg, $what) = @_;
-  my ($cond, $amount) = split(/ /, $arg, 2);
+  my ($cond, $amount) = split(/ /, $arg);
   my $percent;
-  if ($what eq 'hp') { $percent = $char->{hp} / $char->{hp_max} * 100; }
-  elsif ($what eq 'sp') { $percent = $char->{sp} / $char->{sp_max} * 100; }
-  elsif ($what eq 'weight') { $percent = $char->{weight} / $char->{weight_max} * 100; }
-  elsif ($what eq 'cweight') { $percent = $cart{weight} / $cart{weight_max} * 100; }
+  if ($what eq 'hp')         {$percent = $char->{hp} / $char->{hp_max} * 100}
+  elsif ($what eq 'sp')      {$percent = $char->{sp} / $char->{sp_max} * 100}
+  elsif ($what eq 'weight')  {$percent = $char->{weight} / $char->{weight_max} * 100}
+  elsif ($what eq 'cweight') {$percent = $cart{weight} / $cart{weight_max} * 100}
   else {return 0};
-  if ($cond eq "=")  { if ($percent == $amount) {return 1} };
-  if ($cond eq "<")  { if ($percent <  $amount) {return 1} };
-  if ($cond eq ">")  { if ($percent >  $amount) {return 1} };
-  if ($cond eq "<=") { if ($percent <= $amount) {return 1} };
-  if ($cond eq ">=") { if ($percent >= $amount) {return 1} };
+  return 1 if cmpr($percent, $cond, $amount);
   return 0;
 };
 
 # checks for status #######################################
 sub checkStatus {
-  my $arg = shift;
-  my ($tmp, $status) = split(/ /, $arg, 2);
+  my ($tmp, $status) = split(/ /, $_[0]);
   if (!$status) { $status = $tmp; undef $tmp; };
   if ($status eq 'muted' && $char->{muted}) {return 1};
   if (!$char->{statuses}) {
@@ -549,14 +600,8 @@ sub getInventoryAmount {
 };
 
 sub checkInventory {
-  my $arg = shift;
-  my ($item, $cond, $amount) = split(/ /, $arg, 3);
-  $item =~ s/_/ /g;
-  if ($cond eq "=")  { if (getInventoryAmount($item) == $amount) {return 1} };
-  if ($cond eq "<")  { if (getInventoryAmount($item) <  $amount) {return 1} };
-  if ($cond eq ">")  { if (getInventoryAmount($item) >  $amount) {return 1} };
-  if ($cond eq "<=") { if (getInventoryAmount($item) <= $amount) {return 1} };
-  if ($cond eq ">=") { if (getInventoryAmount($item) >= $amount) {return 1} };
+  my ($item, $cond, $amount) = split(/ /, $_[0]);
+  return 1 if cmpr(getInventoryAmount($item), $cond, $amount);
   return 0;
 };
 
@@ -573,14 +618,9 @@ sub getCartAmount {
 };
 
 sub checkCart {
-  my $arg = shift;
-  my ($item, $cond, $amount) = split(/ /, $arg, 3);
+  my ($item, $cond, $amount) = split(/ /, $_[0]);
   $item =~ s/_/ /g;
-  if ($cond eq "=")  { if (getCartAmount($item) == $amount) {return 1} };
-  if ($cond eq "<")  { if (getCartAmount($item) <  $amount) {return 1} };
-  if ($cond eq ">")  { if (getCartAmount($item) >  $amount) {return 1} };
-  if ($cond eq "<=") { if (getCartAmount($item) <= $amount) {return 1} };
-  if ($cond eq ">=") { if (getCartAmount($item) >= $amount) {return 1} };
+  return 1 if cmpr(getCartAmount($item), $cond, $amount);
   return 0;
 };
 
@@ -595,14 +635,9 @@ sub getShopAmount {
 
 sub checkShop {
   return 0 unless $shopstarted;
-  my $arg = shift;
-  my ($item, $cond, $amount) = split(/ /, $arg, 3);
+  my ($item, $cond, $amount) = split(/ /, $_[0]);
   $item =~ s/_/ /g;
-  if ($cond eq "=")  { if (getShopAmount($item) == $amount) {return 1} };
-  if ($cond eq "<")  { if (getShopAmount($item) <  $amount) {return 1} };
-  if ($cond eq ">")  { if (getShopAmount($item) >  $amount) {return 1} };
-  if ($cond eq "<=") { if (getShopAmount($item) <= $amount) {return 1} };
-  if ($cond eq ">=") { if (getShopAmount($item) >= $amount) {return 1} };
+  return 1 if cmpr(getShopAmount($item), $cond, $amount);
   return 0;
 };
 
@@ -618,13 +653,8 @@ sub getSoldOut {
 };
 
 sub checkSoldOut {
-  my $arg = shift;
-  my ($cond, $slots) = split(/ /, $arg, 2);
-  if ($cond eq "=")  { if (getSoldOut() == $slots) {return 1} };
-  if ($cond eq "<")  { if (getSoldOut() <  $slots) {return 1} };
-  if ($cond eq ">")  { if (getSoldOut() >  $slots) {return 1} };
-  if ($cond eq "<=") { if (getSoldOut() <= $slots) {return 1} };
-  if ($cond eq ">=") { if (getSoldOut() >= $slots) {return 1} };
+  my ($cond, $slots) = split(/ /, $_[0]);
+  return 1 if cmpr(getSoldOut, $cond, $slots);
   return 0;
 };
 
@@ -637,20 +667,14 @@ sub checkPerson {
 
 # checks for zeny #########################################
 sub checkZeny {
-  my $arg = shift;
-  my ($cond, $amount) = split(/ /, $arg, 2);
-  if ($cond eq "=")  { if ($char->{zenny} == $amount) {return 1} };
-  if ($cond eq "<")  { if ($char->{zenny} <  $amount) {return 1} };
-  if ($cond eq ">")  { if ($char->{zenny} >  $amount) {return 1} };
-  if ($cond eq "<=") { if ($char->{zenny} <= $amount) {return 1} };
-  if ($cond eq ">=") { if ($char->{zenny} >= $amount) {return 1} };
+  my ($cond, $amount) = split(/ /, $_[0]);
+  return 1 if cmpr($char->{zenny}, $cond, $amount);
   return 0;
 };
 
 # checks for equipment ####################################
 sub checkEquip {
-  my $arg = shift;
-  my @tfld = split(/ /, $arg);
+  my @tfld = split(/ /, $_[0]);
   my %eq;
   foreach (@tfld) { $_ =~ s/_/ /g; };
   for (my $i = 0; $i < @tfld; $i++) {
@@ -696,18 +720,19 @@ sub checkCast {
 };
 
 # checks for private message ##############################
-# pm whatever you like|allowed1|allowed2|...
+# pm whatever you like!allowed1!allowed2!...
 sub checkPM {
   my ($trigger, $arg) = @_;
-  my @tfld = split(/\|/, $trigger);
+  my @tfld = split(/\!/, $trigger);
   my $auth = 0;
   if (!$tfld[1]) {$auth = 1}
   else {
     for (my $i = 1; $i < @tfld; $i++) {
-      if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last};
+      if ($arg->{privMsgUser} =~ $tfld[$i]) {$auth = 1; last};
     };
   };
-  if ($auth && $tfld[0] eq $arg->{privMsg}) {return 1};
+  setVar("lastPMnick", $arg->{privMsgUser});
+  if ($auth && $arg->{privMsg} =~ /$tfld[0]/) {return 1};
   return 0;
 };
 
