@@ -91,7 +91,7 @@ sub commandHandler {
   my ($cmd, $param, $paramt) = split(/ /, $arg->{input});
   if ($cmd eq 'macro') {
     if ($param eq 'list') { list_macros(); }
-    elsif ($param eq 'stop') { clear_macro(); }
+    elsif ($param eq 'stop') { clearMacro(); }
     elsif ($param eq 'reset') { automacroReset($paramt); }
     elsif ($param eq 'version') { showVersion(); }
     elsif ($param eq '') { usage(); }
@@ -122,21 +122,72 @@ sub findMacroID {
     return $index if ($macros{"macro_".$index} eq $_[0]);
     $index++;
   };
-  return -1;
+  return;
 };
 
 # inserts another macro into queue
 sub pushMacro {
   my ($arg, $times) = @_;
   my $macroID = findMacroID($arg);
-  if ($macroID < 0) {return -1}
+  if (!$macroID) {return}
   else {
     our @macroQueue;
     my @tmparr = loadMacro($macroID);
-    if (!$times) { $times = 1 };
+    if (!$times) {$times = 1};
     for (my $t = 0; $t < $times; $t++) { @macroQueue = (@tmparr, @macroQueue); };
   };
   return 0;
+};
+
+# command line parser for macro
+sub parseCmd {
+  my $command = shift;
+  debug(sprintf("command is: +%s+\n", $command));
+  # shortcut commands that won't be executed
+  if ($command =~ /\@(log|call|release|pause|set)/) {
+    if ($command =~ /\@log/) {
+      $command =~ s/\@log //;
+      logMessage(parseCmd($command));
+    } elsif ($command =~ /\@release/) {
+      my (undef, $am) = split(/ /, $command);
+      releaseAM($am);
+    } elsif ($command =~ /\@call/) {
+      my (undef, $macro, $times) = split(/ /, $command);
+      pushMacro($macro, $times);
+    } elsif ($command =~ /\@set/) {
+      my (undef, $var, $val) = split(/ /, $command);
+      setVar($var, $val);
+    } elsif ($command =~ /\@pause/) {
+      ;
+    };
+    return;
+  };
+  my $allowed = "[a-z0-9 _\\\+\\\-\\\*\\\[\\\]]";
+  while ($command =~ /\@/) {
+    my $ret = "_%_";
+    my ($kw, $arg) = $command =~ /\@([a-z]*) +\(($allowed*?)\)/i;
+    return $command if (!defined $kw || !defined $arg);
+    if ($kw eq 'npc')          {$ret = getnpcID($arg)}
+    elsif ($kw eq 'cart')      {$ret = getItemID($arg, \@{$cart{inventory}})}
+    elsif ($kw eq 'inventory') {$ret = getItemID($arg, \@{$char->{inventory}})}
+    elsif ($kw eq 'store')     {$ret = getItemID($arg, \@::storeList)}
+    elsif ($kw eq 'storage')   {$ret = getStorageID($arg)}
+    elsif ($kw eq 'player')    {$ret = getPlayerID($arg, \@::playersID)}
+    elsif ($kw eq 'vender')    {$ret = getPlayerID($arg, \@::venderListsID)}
+    elsif ($kw eq 'var')       {$ret = getVar($arg)}
+    elsif ($kw eq 'random')    {$ret = getRandom($arg)}
+    elsif ($kw eq "eval")      {$ret = eval($arg)};
+    return $command if $ret eq '_%_';
+    # FIXME - the substitution is dirty. Does crap when keyword is in line more than
+    # once
+    if ($ret ne '') {$command =~ s/\@$kw +\(.*?\)/$ret/g}
+    else {
+      error(sprintf("macro: %s failed. Macro stopped.\n", $command));
+      clearMacro();
+      return;
+    }
+  };
+  return $command;
 };
 
 # runs and removes commands from queue
@@ -145,36 +196,9 @@ sub processQueue {
   if (!@macroQueue) {AI::dequeue if AI::is('macro'); return};
   
   if (timeOut($timeout{macro_delay}) && ai_isIdle()) {
-    my $command = shift(@macroQueue);
-    my @tmparr = split(/ /, $command);
-    for (my $w = 0; $w < @tmparr; $w++) {
-      if ($tmparr[$w] =~ /^\@/) {
-        my $ret = -1;
-        if ($tmparr[$w] eq '@npc') { $ret = getnpcID($tmparr[$w+1],$tmparr[$w+2]); }
-        elsif ($tmparr[$w] eq '@cart')      {$ret = getItemID($tmparr[$w+1], \@{$cart{inventory}})}
-        elsif ($tmparr[$w] eq '@inventory') {$ret = getItemID($tmparr[$w+1], \@{$char->{inventory}})}
-        elsif ($tmparr[$w] eq '@store')     {$ret = getItemID($tmparr[$w+1], \@::storeList)}
-        elsif ($tmparr[$w] eq '@storage')   {$ret = getStorageID($tmparr[$w+1])}
-        elsif ($tmparr[$w] eq '@player')    {$ret = getPlayerID($tmparr[$w+1], \@::playersID)}
-        elsif ($tmparr[$w] eq '@vender')    {$ret = getPlayerID($tmparr[$w+1], \@::venderListsID)}
-        elsif ($tmparr[$w] eq '@call')      {$ret = pushMacro($tmparr[$w+1],$tmparr[$w+2])}
-        elsif ($tmparr[$w] eq '@release')   {releaseAM($tmparr[$w+1]); $ret = 1}
-        elsif ($tmparr[$w] eq '@log')       {$ret = logMessage($command)}
-        elsif ($tmparr[$w] eq '@random')    {($ret, $command) = getRandom($command)}
-        elsif ($tmparr[$w] eq '@set')       {$ret = setVar($tmparr[$w+1],$tmparr[$w+2])}
-        elsif ($tmparr[$w] eq '@var')       {$ret = getVar($tmparr[$w+1])}
-        elsif ($tmparr[$w] eq '@pause')     {$ret = 1};
-        if ($ret < 0) {
-          Log::error(sprintf("macro: %s failed. Macro stopped.\n", $command));
-          @macroQueue = (); return;
-        };
-        if ($tmparr[$w] eq '@npc') { $command =~ s/$tmparr[$w] $tmparr[$w+1] $tmparr[$w+2]+/$ret/g; }
-        elsif ($tmparr[$w] =~ /^\@(pause|call|release|log|set)$/) {undef $command;}
-        else { my $tmp = escapeCmd($tmparr[$w+1]); $command =~ s/$tmparr[$w] $tmp/$ret/g; };
-        last;
-      };
-    };
-    Log::message(sprintf("[macro] processing: %s\n", $command)) if ($::config{'macro_debug'});
+    my $cmdfromstack = shift(@macroQueue);
+    my $command = parseCmd($cmdfromstack);
+    debug(sprintf("[macro] processing: %s (-> %s)\n", $cmdfromstack, $command));
     if ($command) {
       Commands::run($command) || ::parseCommand($command)
     };
@@ -196,7 +220,7 @@ sub runMacro {
         @macroQueue = (@tmparr, @macroQueue);
       };
     };
-    Log::message(sprintf("macro %s selected.\n", $arg)) if ($::config{'macro_debug'});
+    debug(sprintf("macro %s selected.\n", $arg));
     AI::queue('macro');
   };
 };
@@ -241,7 +265,7 @@ sub list_macros {
 };
 
 # clears macro queue
-sub clear_macro {
+sub clearMacro {
   our @macroQueue = ();
   AI::dequeue() if AI::is('macro');
   Log::message("macro queue cleared.\n");
@@ -257,7 +281,8 @@ sub setVar {
 # gets variable's value from stack
 sub getVar {
   my $var = shift;
-  return 0 unless $varStack{$var};
+  debug(sprintf("asking for +%s+ which is +%s+\n", $var, $varStack{$var}));
+  return unless $varStack{$var};
   return $varStack{$var};
 };
 
@@ -270,13 +295,13 @@ sub logMessage {
 
 # get NPC array index
 sub getnpcID {
-  my ($tmpx, $tmpy) = @_;
+  my ($tmpx, $tmpy) = split(/ /,$_[0]);
   for (my $id = 0; $id < @npcsID; $id++) {
-    next if ($npcsID[$id] eq '');
+    next unless $npcsID[$id];
     if ($npcs{$npcsID[$id]}{pos}{x} == $tmpx &&
         $npcs{$npcsID[$id]}{pos}{y} == $tmpy) {return $id};
   };
-  return -1;
+  return;
 };
 
 # get player array index
@@ -286,29 +311,27 @@ sub getPlayerID {
     next if ($$pool[$id] eq '');
     if ($players{$$pool[$id]}->{name} eq $name) {return $id};
   };
-  return -1;
+  return;
 };
 
 # get item array index
 sub getItemID {
   my ($item, $where) = @_;
-  $item =~ s/_/ /g;
   for (my $id = 0; $id < @{$where}; $id++) {
     next if ($$where[$id] eq '');
     if (lc($$where[$id]{name}) eq lc($item)) {return $id};
   };
-  return -1;
+  return;
 };
 
 # get storage array index
 sub getStorageID {
   my $item = shift;
-  $item =~ s/_/ /g;
   for (my $id = 0; $id < @storageID; $id++) {
     next if ($storageID[$id] eq '');
     if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {return $id};
   };
-  return -1;
+  return;
 };
 
 # escapes string
@@ -321,14 +344,12 @@ sub escapeCmd {
 # returns random item from argument list ##################
 sub getRandom {
   my $arg = shift;
-  $arg =~ s/^.*\@random.?\(//g;
-  $arg =~ s/\).*$//g;
   my @items = split(/ /, $arg);
   foreach (reverse 0..@items) {
     my $rnd = splice(@items, rand @items, 1);
     push @items, $rnd;
   }
-  return 1, $items[0];
+  return $items[0];
 };
 
 # automacro stuff #########################################
@@ -382,7 +403,7 @@ sub automacroCheck {
     next unless ($am =~ /^automacro_[0-9]*$/);
     next if (isInRunOnce($macros{$am}));
     if (!$macros{$am."_call"} || findMacroID($macros{$am."_call"}) < 0) {
-      Log::error(sprintf("automacro %s: call not defined or not found.\n", $macros{$am}));
+      error(sprintf("automacro %s: call not defined or not found.\n", $macros{$am}));
       our @runonce; push @runonce, $macros{$am}; return 0;
     };
     if ($macros{$am."_spell"}) {
@@ -436,10 +457,18 @@ sub cmpr {
   return 0;
 };
 
+sub debug {
+  Log::message($_[0], "list") if $::config{macro_debug};
+};
+
+sub error {
+  Log::error($_[0]);
+};
+
 # check for variable #######################################
 sub checkVar {
   my ($var, $cond, $val) = split(/ /, $_[0]);
-  return 1 if (exists $varStack($var) && cmpr($varStack($var), $cond, $val));
+  return 1 if (exists $varStack{$var} && cmpr($varStack{$var}, $cond, $val));
   return 0;
 };
 
@@ -509,7 +538,6 @@ sub checkStatus {
     if ($tmp eq 'not') {return 1};
     return 0;
   };
-  $status =~ s/_/ /g;
   foreach (keys %{$char->{statuses}}) {
     if (lc($_) eq lc($status)) {
       if ($tmp eq 'not') {return 0};
@@ -552,7 +580,6 @@ sub getCartAmount {
 
 sub checkCart {
   my ($item, $cond, $amount) = split(/ /, $_[0]);
-  $item =~ s/_/ /g;
   return 1 if cmpr(getCartAmount($item), $cond, $amount);
   return 0;
 };
@@ -569,7 +596,6 @@ sub getShopAmount {
 sub checkShop {
   return 0 unless $shopstarted;
   my ($item, $cond, $amount) = split(/ /, $_[0]);
-  $item =~ s/_/ /g;
   return 1 if cmpr(getShopAmount($item), $cond, $amount);
   return 0;
 };
@@ -606,6 +632,7 @@ sub checkZeny {
 };
 
 # checks for equipment ####################################
+# FIXME: needs to be rewritten to avoid underscores replacing blanks
 sub checkEquip {
   my @tfld = split(/ /, $_[0]);
   my %eq;
@@ -643,7 +670,6 @@ sub checkEquip {
 # checks for a spell casted on us #########################
 sub checkCast {
   my ($cast, $args) = @_;
-  $cast =~ s/_/ /g;
   my $pos = calcPosition($char);
   if (($args->{targetID} eq $::accountID ||
       $pos->{x} == $args->{x} && $pos->{y} == $args->{y} ||
