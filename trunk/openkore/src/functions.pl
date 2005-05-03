@@ -5070,9 +5070,7 @@ sub AI {
 		  )
 		) {
 			message "Teleporting due to insufficient HP/SP or too many aggressives\n", "teleport";
-			if (useTeleport(1)) {
-				$ai_v{temp}{clear_aiQueue} = 1;
-			}
+			$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 			$timeout{ai_teleport_hp}{time} = time;
 			last TELEPORT;
 		}
@@ -5083,8 +5081,8 @@ sub AI {
 				next unless $_;
 				if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
 					message "Teleporting to avoid $monsters{$_}{name}\n", "teleport";
-					useTeleport(1);
-					$ai_v{temp}{clear_aiQueue} = 1;
+					$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
+					$timeout{ai_teleport_away}{time} = time;
 					last TELEPORT;
 				}
 			}
@@ -5110,8 +5108,7 @@ sub AI {
 		  && timeOut($timeout{ai_teleport_portal})) {
 			if (scalar(@portalsID)) {
 				message "Teleporting to avoid portal\n", "teleport";
-				useTeleport(1);
-				$ai_v{temp}{clear_aiQueue} = 1;
+				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 				$timeout{ai_teleport_portal}{time} = time;
 				last TELEPORT;
 			}
