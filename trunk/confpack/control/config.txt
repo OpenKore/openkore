@@ -94,6 +94,7 @@ attackAuto_onlyWhenSafe 0
 attackAuto_followTarget 1
 attackAuto_inLockOnly 1
 attackDistance 1.5
+attackDistanceAuto 0
 attackMaxDistance 2.5
 attackMaxRouteDistance 100
 attackMaxRouteTime 4
