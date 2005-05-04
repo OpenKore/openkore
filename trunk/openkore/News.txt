@@ -31,6 +31,7 @@ Bug fixes:
 - Roll back part of the above because portals were being detected as
   Stalkers.
 - Fix monster avoiding teleport spamming.
+- dcOnPM will no longer activate if AI is off.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.

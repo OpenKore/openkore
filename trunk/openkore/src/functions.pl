@@ -6649,8 +6649,9 @@ sub parseMsg {
 			privMsg => $privMsg
 		});
 
-		if ($config{dcOnPM}) {
+		if ($config{dcOnPM} && $AI) {
 			chatLog("k", "*** You were PM'd, auto disconnect! ***\n");
+			message "Disconnecting on PM!\n";
 			quit();
 		}
 
