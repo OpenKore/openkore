@@ -28,6 +28,8 @@ Bug fixes:
   a problem on Aegis, but was on eAthena).
 - Hopefully support detection of Peco Lord Knight and other classes
   on OpenRO now.
+- Roll back part of the above because portals were being detected as
+  Stalkers.
 - Fix monster avoiding teleport spamming.
 
 New features:
