@@ -1869,21 +1869,27 @@ sub AI {
 
 	if ($ai_seq[0] ne "deal" && %currentDeal) {
 		AI::queue('deal');
-	} elsif ($ai_seq[0] eq "deal" && %currentDeal && !$currentDeal{'you_finalize'} && timeOut(\%{$timeout{'ai_dealAuto'}}) && $config{'dealAuto'}==2) {
-		sendDealFinalize(\$remote_socket);
-		$timeout{'ai_dealAuto'}{'time'} = time;
-	} elsif ($ai_seq[0] eq "deal" && %currentDeal && $currentDeal{'other_finalize'} && $currentDeal{'you_finalize'} &&timeOut(\%{$timeout{'ai_dealAuto'}}) && $config{'dealAuto'}==2) {
-		sendDealTrade(\$remote_socket);
-		$timeout{'ai_dealAuto'}{'time'} = time;
-	} elsif ($ai_seq[0] eq "deal" && !%currentDeal) {
-		AI::dequeue();
+	} elsif ($ai_seq[0] eq "deal") {
+		if (%currentDeal) {
+			if (!$currentDeal{you_finalize} && timeOut(\%{$timeout{ai_dealAuto}}) &&
+			    ($config{dealAuto} == 2 ||
+				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
+				sendDealFinalize(\$remote_socket);
+				$timeout{ai_dealAuto}{time} = time;
+			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut(\%{$timeout{ai_dealAuto}}) && $config{dealAuto} >= 2) {
+				sendDealTrade(\$remote_socket);
+				$timeout{ai_dealAuto}{time} = time;
+			}
+		} else {
+			AI::dequeue();
+		}
 	}
 
-	# dealAuto 1=refuse 2=accept
+	# dealAuto 1=refuse 2,3=accept
 	if ($config{'dealAuto'} && %incomingDeal && timeOut(\%{$timeout{'ai_dealAuto'}})) {
-		if ($config{'dealAuto'}==1) {
+		if ($config{'dealAuto'} == 1) {
 			sendDealCancel(\$remote_socket);
-		}elsif ($config{'dealAuto'}==2) {
+		} elsif ($config{'dealAuto'} >= 2) {
 			sendDealAccept(\$remote_socket);
 		}
 		$timeout{'ai_dealAuto'}{'time'} = time;

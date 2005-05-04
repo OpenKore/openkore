@@ -62,6 +62,9 @@ New features:
   See the config option 'relogAfterStorage'.
 - Set attackDistanceAuto to 1 if you want attackDistance and
   attackMaxDistance to be automatically set by autodetection.
+- New "dealAuto 3" setting works as a mix of 0 and 2.
+  - It will auto-accept incoming deals.
+  - It will finalize and trade if other party finalizes.
 
 New config options:
 - autoSpell (spell name)
