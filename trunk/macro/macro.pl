@@ -142,7 +142,6 @@ sub pushMacro {
 # command line parser for macro
 sub parseCmd {
   my $command = shift;
-  debug(sprintf("command is: +%s+\n", $command));
   # shortcut commands that won't be executed
   if ($command =~ /\@(log|call|release|pause|set)/) {
     if ($command =~ /\@log/) {
@@ -162,10 +161,9 @@ sub parseCmd {
     };
     return;
   };
-  my $allowed = "[a-z0-9 _\\\+\\\-\\\*\\\[\\\]]";
   while ($command =~ /\@/) {
     my $ret = "_%_";
-    my ($kw, $arg) = $command =~ /\@([a-z]*) +\(($allowed*?)\)/i;
+    my ($kw, $arg) = $command =~ /\@([a-z]*) +\(([^@]*?)\)/i;
     return $command if (!defined $kw || !defined $arg);
     if ($kw eq 'npc')          {$ret = getnpcID($arg)}
     elsif ($kw eq 'cart')      {$ret = getItemID($arg, \@{$cart{inventory}})}
@@ -211,7 +209,7 @@ sub processQueue {
 sub runMacro {
   my ($arg, $times) = @_;
   my $macroID = findMacroID($arg);
-  if ($macroID < 0) { Log::message(sprintf("Macro %s not found.\n", $arg)); }
+  if ($macroID < 0) {error(sprintf("Macro %s not found.\n", $arg))}
   else {
     our @macroQueue = loadMacro($macroID);
     if ($times > 1) {
@@ -281,7 +279,6 @@ sub setVar {
 # gets variable's value from stack
 sub getVar {
   my $var = shift;
-  debug(sprintf("asking for +%s+ which is +%s+\n", $var, $varStack{$var}));
   return unless $varStack{$var};
   return $varStack{$var};
 };
