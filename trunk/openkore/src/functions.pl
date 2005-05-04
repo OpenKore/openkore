@@ -8449,6 +8449,11 @@ sub parseMsg {
 		my $type = unpack("S1",substr($msg, 2, 2));
 		debug "Your attack range is: $type\n";
 		$char->{attack_range} = $type;
+		if ($config{attackDistanceAuto}) {
+			message "Autodetected attackDistance = $type\n", "success";
+			configModify('attackDistance', $type);
+			configModify('attackMaxDistance', $type);
+		}
 
 	# Hambo Arrow Equip
 	} elsif ($switch eq "013B") {

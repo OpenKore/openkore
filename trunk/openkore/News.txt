@@ -60,6 +60,8 @@ New features:
 - Support for displaying broken weapons.
 - A workaround for a server bug which causes autostorage to fail.
   See the config option 'relogAfterStorage'.
+- Set attackDistanceAuto to 1 if you want attackDistance and
+  attackMaxDistance to be automatically set by autodetection.
 
 New config options:
 - autoSpell (spell name)
