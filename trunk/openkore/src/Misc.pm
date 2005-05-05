@@ -75,6 +75,7 @@ our @EXPORT = (
 	avoidList_talk
 	center
 	charSelectScreen
+	checkAllowedMap
 	checkFollowMode
 	checkMonsterCleanness
 	createCharacter
@@ -891,6 +892,25 @@ sub charSelectScreen {
 		}
 	}
 	return 2;
+}
+
+##
+# checkAllowedMap($map)
+#
+# Checks whether $map is in $config{allowedMaps}.
+# Disconnects if it is not, and $config{allowedMaps_reaction} != 0.
+sub checkAllowedMap {
+	my $map = shift;
+
+	return unless $AI;
+	return unless $config{allowedMaps};
+	return if existsInList($config{allowedMaps}, $map);
+	return if $config{allowedMaps_reaction} == 0;
+
+	warning "The current map ($map) is not on the list of allowed maps.\n";
+	main::chatLog("k", "** The current map ($map) is not on the list of allowed maps.\n");
+	main::chatLog("k", "** Exiting...\n");
+	quit();
 }
 
 ##

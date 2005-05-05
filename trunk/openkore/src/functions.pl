@@ -5124,23 +5124,25 @@ sub AI {
 
 
 	##### ALLOWED MAPS #####
-	# Disconnect if you're on a map other than the specified list of maps.
+	# Respawn/disconnect if you're on a map other than the specified
+	# list of maps.
 	# This is to mostly useful on pRO, where GMs warp you to a secret room.
-	if ($field{name} && $config{allowedMaps} && timeOut($timeout{ai_teleport}) && !existsInList($config{allowedMaps}, $field{name})
-	 && $ai_v{temp}{allowedMapRespawnAttempts} < 3) {
+	#
+	# Here, we only check for respawn. (Disconnect is handled in
+	# packets 0091 and 0092.)
+	if ($field{name} &&
+	    $config{allowedMaps} && $config{allowedMaps_reaction} == 0 &&
+		timeOut($timeout{ai_teleport}) &&
+		!existsInList($config{allowedMaps}, $field{name}) &&
+		$ai_v{temp}{allowedMapRespawnAttempts} < 3) {
 		warning "The current map ($field{name}) is not on the list of allowed maps.\n";
 		chatLog("k", "** The current map ($field{name}) is not on the list of allowed maps.\n");
 		ai_clientSuspend(0, 5);
-		if ($config{allowedMaps_reaction} == 0) {
-			message "Respawning to save point.\n";
-			chatLog("k", "** Respawning to save point.\n");
-			$ai_v{temp}{allowedMapRespawnAttempts}++;
-			useTeleport(2);
-			$timeout{ai_teleport}{time} = time;
-		} else {
-			chatLog("k", "** Exiting...\n");
-			quit();
-		}
+		message "Respawning to save point.\n";
+		chatLog("k", "** Respawning to save point.\n");
+		$ai_v{temp}{allowedMapRespawnAttempts}++;
+		useTeleport(2);
+		$timeout{ai_teleport}{time} = time;
 	}
 
 
@@ -5743,6 +5745,8 @@ sub parseMsg {
 			[$map_port],
 			"-------------------------------", []),
 			"connection");
+		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
+		checkAllowedMap($ai_v{temp}{map});
 		message("Closing connection to Game Login Server\n", "connection") if (!$config{'XKore'});
 		Network::disconnect(\$remote_socket) if (!$config{'XKore'});
 		initStatVars();
@@ -6499,6 +6503,7 @@ sub parseMsg {
 
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
+		checkAllowedMap($ai_v{temp}{map});
 		if ($ai_v{temp}{map} ne $field{name}) {
 			getField($ai_v{temp}{map}, \%field);
 		}
@@ -6526,6 +6531,7 @@ sub parseMsg {
 
 		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
+		checkAllowedMap($ai_v{temp}{map});
 		if ($ai_v{temp}{map} ne $field{name}) {
 			getField($ai_v{temp}{map}, \%field);
 		}
