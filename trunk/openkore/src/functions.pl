@@ -2062,17 +2062,14 @@ sub AI {
 
 	##### AUTOBREAKTIME #####
 	# Break time: automatically disconnect at certain times of the day
-
-	if (timeOut($AI::Timeouts::autoBreakTime, 10)) {
-		my @datetimeyear = split / /, getFormattedDate(int(time));
-		my $mytime = $datetimeyear[2];
-		my $hormin = substr($mytime, 0, 5);		
+	if (timeOut($AI::Timeouts::autoBreakTime, 30)) {
+		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
+		my $hormin = sprintf("%02d:%02d", $hour, $min);
+		my @wdays = ('sun','mon','tue','wed','thu','fri','sat');
 		for (my $i = 0; exists $config{"autoBreakTime_$i"}; $i++) {
-			if (!$config{"autoBreakTime_$i"}) {
-				next;
-			}
+			next if (!$config{"autoBreakTime_$i"});
 
-			if  ( (lc($datetimeyear[0]) eq lc($config{"autoBreakTime_$i"})) || (lc($config{"autoBreakTime_$i"}) eq "all") ) {
+			if  ( ($wdays[$wday] eq lc($config{"autoBreakTime_$i"})) || (lc($config{"autoBreakTime_$i"}) eq "all") ) {
 				if ($config{"autoBreakTime_${i}_startTime"} eq $hormin) {
 					my ($hr1, $min1) = split /:/, $config{"autoBreakTime_${i}_startTime"};
 					my ($hr2, $min2) = split /:/, $config{"autoBreakTime_${i}_stopTime"};

@@ -32,6 +32,7 @@ Bug fixes:
   Stalkers.
 - Fix monster avoiding teleport spamming.
 - dcOnPM will no longer activate if AI is off.
+- Hopefully fix problems with autoBreakTime on some systems.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
@@ -93,7 +94,7 @@ Credits:
 - kaliwanagan, piroJOKE: eathena support.
 - zdivpsa: PVP mode packet support
 - jsteng: new syntax for the inInventory option.
-- denni: bug fixes.
+- denni: bug fixes, autoBreakTime fix.
 - kaliwanagan: sage autospell support
 - MindChild: dcOnPM
 - Crypticode: broken weapon support, teleport spam fix.
