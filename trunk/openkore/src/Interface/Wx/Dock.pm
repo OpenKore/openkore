@@ -55,6 +55,7 @@ sub attach {
 			$self->{control}->Reparent($self);
 			$self->{sizer}->Add($self->{control}, 1, wxGROW);
 		}
+		$self->{dialog}->Show(0);
 		$self->{dialog}->Destroy;
 		delete $self->{dialog};
 		$self->Layout;
@@ -68,23 +69,31 @@ sub detach {
 	my $self = shift;
 	$self->close;
 
-	my $dialog;
-	if ($^O eq 'MSWin32') {
-		$dialog = new Wx::MiniFrame($self->{frame}, -1, $self->{titleBar}->title);
-	} else {
-		$dialog = new Wx::Dialog($self->{frame}, -1, $self->{titleBar}->title);
-	}
+	if (!$self->{dialog}) {
+		my $dialog;
+		if ($^O eq 'MSWin32') {
+			$dialog = new Wx::MiniFrame($self->{frame}, -1, $self->{titleBar}->title);
+		} else {
+			$dialog = new Wx::Dialog($self->{frame}, -1, $self->{titleBar}->title);
+		}
 
-	if ($self->{control}) {
-		$self->{control}->Reparent($dialog);
-		$self->{sizer}->Remove($self->{control});
+		if ($self->{control}) {
+			$self->{control}->Reparent($dialog);
+			$self->{sizer}->Remove($self->{control});
+			$self->Layout;
+		}
+
+		$self->{dialog} = $dialog;
+		$dialog->Show(1);
+		$self->Fit;
+		EVT_CLOSE($dialog, sub { $self->attach; });
+
+	} else {
+		$self->{dialog}->Show(0);
+		$self->{dialog}->Destroy;
+		delete $self->{dialog};
 		$self->Layout;
 	}
-
-	$self->{dialog} = $dialog;
-	$dialog->Show(1);
-	$self->Fit;
-	EVT_CLOSE($dialog, sub { $self->attach; });
 }
 
 sub close {

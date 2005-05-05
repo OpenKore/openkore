@@ -98,6 +98,7 @@ Credits:
 - kaliwanagan: sage autospell support
 - MindChild: dcOnPM
 - Crypticode: broken weapon support, teleport spam fix.
+- kunjandad: Wx interface docking fixes.
 
 ==================
 ### 1.6.0

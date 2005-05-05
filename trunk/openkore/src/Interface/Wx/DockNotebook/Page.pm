@@ -106,6 +106,7 @@ sub onDetach {
 
 sub onDialogClose {
 	my ($self, $dock) = @_;
+	$self->{dialog}->Show(0);
 	$self->{dialog}->Destroy;
 
 	for (my $i = 0; $i < @{$dock->{dialogs}}; $i++) {
