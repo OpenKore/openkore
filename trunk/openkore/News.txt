@@ -67,6 +67,7 @@ New features:
 - New "dealAuto 3" setting works as a mix of 0 and 2.
   - It will auto-accept incoming deals.
   - It will finalize and trade if other party finalizes.
+- Detect "Unknown error 10" = "You are out of available time paid for".
 
 New config options:
 - autoSpell (spell name)
