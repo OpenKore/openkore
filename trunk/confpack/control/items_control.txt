@@ -483,6 +483,7 @@ Opera Masque 0 1 0
 Opera Phantom Mask 0 1 0
 Orc Helm 0 1 0
 Oxygen Mask 0 1 0
+Padded Armor [1] 0 0 1
 Panda Hat 0 1 0
 Parcel Hat 0 1 0
 Party Hat 0 1 0
@@ -932,7 +933,6 @@ Mirror Shield 0 0 1
 Mr. Smile 0 0 1
 Muffler 0 0 1
 Padded Armor 0 0 1
-Padded Armor [1] 0 0 1
 Pantie 0 0 1
 Ribbon 0 0 1
 Ribbon [1] 0 0 1
