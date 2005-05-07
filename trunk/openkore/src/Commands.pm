@@ -44,6 +44,8 @@ our %handlers = (
 	arrowcraft	=> \&cmdArrowCraft,
 	auth		=> \&cmdAuthorize,
 	bestow		=> \&cmdBestow,
+	bangbang	=> \&cmdBangBang,
+	bingbing	=> \&cmdBingBing,
 	buy		=> \&cmdBuy,
 	cart		=> \&cmdCart,
 	chatmod		=> \&cmdChatMod,
@@ -52,13 +54,14 @@ our %handlers = (
 	conf		=> \&cmdConf,
 	crl		=> \&cmdChatRoomList,
 	debug		=> \&cmdDebug,
+	doridori	=> \&cmdDoriDori,
 	e		=> \&cmdEmotion,
 	eq		=> \&cmdEquip,
 	eval		=> \&cmdEval,
 	guild		=> \&cmdGuild,
 	i		=> \&cmdInventory,
 	ignore		=> \&cmdIgnore,
-	ihist	=> \&cmdIhist,
+	ihist		=> \&cmdIhist,
 	il		=> \&cmdItemList,
 	im		=> \&cmdUseItemOnMonster,
 	ip		=> \&cmdUseItemOnPlayer,
@@ -108,7 +111,9 @@ our %descriptions = (
 	aiv		=> 'Display current AI sequences.',
 	arrowcraft	=> 'Create Arrows.',
 	auth		=> '(Un)authorize a user for using Kore chat commands.',
-	bestow		=> 'Bestow admin in a chat room',
+	bangbang	=> 'Does a bangbang body turn.',
+	bestow		=> 'Bestow admin in a chat room.',
+	bingbing	=> 'Does a bingbing body turn.',
 	buy		=> 'Buy an item from the current NPC shop',
 	cart		=> 'Cart management',
 	chatmod		=> 'Modify chat room settings.',
@@ -117,6 +122,7 @@ our %descriptions = (
 	conf		=> 'Change a configuration key.',
 	crl		=> 'List chat rooms.',
 	debug		=> 'Toggle debug on/off.',
+	doridori	=> 'Does a doridori head turn.',
 	e		=> 'Show emotion.',
 	eq		=> 'Equip an item.',
 	#eval		=> 'Evaluable a Perl expression (developers only).',
@@ -124,7 +130,7 @@ our %descriptions = (
 	i		=> 'Display inventory items.',
 	ignore		=> 'Ignore a user (block his messages).',
 	il		=> 'Display items on the ground.',
-	ihist	=> 'Displays last few entries of the item log.',
+	ihist		=> 'Displays last few entries of the item log.',
 	im		=> 'Use item on monster.',
 	ip		=> 'Use item on player.',
 	is		=> 'Use item on yourself.',
@@ -159,7 +165,7 @@ our %descriptions = (
 	testshop	=> 'Show what your vending shop would well.',
 	timeout		=> 'Set a timeout.',
 	verbose		=> 'Toggle verbose on/off.',
-	version	=> 'Display the version of openkore.',
+	version		=> 'Display the version of openkore.',
 	warp		=> 'Open warp portal.',
 	who		=> 'Display the number of people on the current server.',
 );
@@ -355,6 +361,12 @@ sub cmdAuthorize {
 	}
 }
 
+sub cmdBangBang {
+  my $bodydir = $char->{look}{body} - 1;
+  $bodydir = 7 if ($bodydir == -1);
+  sendLook(\$remote_socket, $bodydir, $char->{look}{head});
+}
+
 sub cmdBestow {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\s\S]*)/;
@@ -370,6 +382,11 @@ sub cmdBestow {
 	} else {
 		sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg1]);
 	}
+}
+
+sub cmdBingBing {
+  my $bodydir = ($char->{look}{body} + 1) % 8;
+  sendLook(\$remote_socket, $bodydir, $char->{look}{head});
 }
 
 sub cmdBuy {
@@ -619,6 +636,16 @@ sub cmdDebug {
 		message "-------------------------------------------\n", "list";
 	}
 }
+
+sub cmdDoriDori {
+  if ($char->{look}{head} == 2) {
+    my $headdir = 1;
+  } else {
+    my $headdir = 2;
+  }
+  sendLook(\$remote_socket, $char->{look}{body}, $headdir);
+}
+
 
 sub cmdEmotion {
 	# Show emotion
