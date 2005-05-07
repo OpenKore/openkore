@@ -3532,6 +3532,8 @@ sub AI {
 			 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
 			 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
 			 && checkSelfCondition("attackComboSlot_$i")
+			 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $monsters{$ID}{name}))
+			 && (!$config{"attackComboSlot_${i}_notMonsters"} || !existsInList($config{"attackComboSlot_${i}_notMonsters"}, $monsters{$ID}{name}))
 			 && checkMonsterCondition("attackComboSlot_${i}_target", $monsters{$ID})) {
 
 				$args->{attackComboSlot_uses}{$i}++;
@@ -11078,7 +11080,7 @@ sub checkSelfCondition {
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($chars[$config{char}]{'sitting'}); }
 	if ($config{$prefix . "_notInTown"} > 0) { return 0 if ($cities_lut{$field{name}.'.rsw'}); }
 
-	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i)) {
+	if ($config{$prefix . "_monsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
 			if (existsInList($config{$prefix . "_monsters"}, $monsters{$_}{name})) {
@@ -11089,7 +11091,7 @@ sub checkSelfCondition {
 		return 0 unless $exists;
 	}
 
-	if ($config{$prefix . "_defendMonsters"} && !($prefix =~ /skillSlot/i)) {
+	if ($config{$prefix . "_defendMonsters"}) {
 		my $exists;
 		foreach (ai_getMonstersAttacking($accountID)) {
 			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
@@ -11100,7 +11102,7 @@ sub checkSelfCondition {
 		return 0 unless $exists;
 	}
 
-	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i)) {
+	if ($config{$prefix . "_notMonsters"} && !($prefix =~ /skillSlot/i) && !($prefix =~ /ComboSlot/i)) {
 		my $exists;
 		foreach (ai_getAggressives()) {
 			if (existsInList($config{$prefix . "_notMonsters"}, $monsters{$_}{name})) {
