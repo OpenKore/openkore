@@ -134,7 +134,7 @@ sub pushMacro {
     our @macroQueue;
     my @tmparr = loadMacro($macroID);
     if (!$times) {$times = 1};
-    for (my $t = 0; $t < $times; $t++) { @macroQueue = (@tmparr, @macroQueue); };
+    for (my $t = 0; $t < $times; $t++) {@macroQueue = (@tmparr, @macroQueue)};
   };
   return 0;
 };
@@ -192,7 +192,7 @@ sub parseCmd {
 sub processQueue {
   our @macroQueue;
   if (!@macroQueue) {AI::dequeue if AI::is('macro'); return};
-  
+
   if (timeOut($timeout{macro_delay}) && ai_isIdle()) {
     my $cmdfromstack = shift(@macroQueue);
     my $command = parseCmd($cmdfromstack);
@@ -209,7 +209,7 @@ sub processQueue {
 sub runMacro {
   my ($arg, $times) = @_;
   my $macroID = findMacroID($arg);
-  if ($macroID < 0) {error(sprintf("Macro %s not found.\n", $arg))}
+  if (!$macroID) {error(sprintf("Macro %s not found.\n", $arg))}
   else {
     our @macroQueue = loadMacro($macroID);
     if ($times > 1) {
@@ -313,10 +313,10 @@ sub getPlayerID {
 
 # get item array index
 sub getItemID {
-  my ($item, $where) = @_;
-  for (my $id = 0; $id < @{$where}; $id++) {
-    next if ($$where[$id] eq '');
-    if (lc($$where[$id]{name}) eq lc($item)) {return $id};
+  my ($item, $pool) = @_;
+  for (my $id = 0; $id < @{$pool}; $id++) {
+    next if ($$pool[$id] eq '');
+    if (lc($$pool[$id]{name}) eq lc($item)) {return $id};
   };
   return;
 };
@@ -329,13 +329,6 @@ sub getStorageID {
     if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {return $id};
   };
   return;
-};
-
-# escapes string
-sub escapeCmd {
-  my $string = shift;
-  $string =~ s/([\+\[\]\*])/\\\1/g;
-  return $string;
 };
 
 # returns random item from argument list ##################
@@ -399,17 +392,19 @@ sub automacroCheck {
   foreach my $am (keys %macros) {
     next unless ($am =~ /^automacro_[0-9]*$/);
     next if (isInRunOnce($macros{$am}));
-    if (!$macros{$am."_call"} || findMacroID($macros{$am."_call"}) < 0) {
+    if (!$macros{$am."_call"} || !findMacroID($macros{$am."_call"})) {
       error(sprintf("automacro %s: call not defined or not found.\n", $macros{$am}));
       our @runonce; push @runonce, $macros{$am}; return 0;
     };
     if ($macros{$am."_spell"}) {
-      if ($trigger =~ /^(is_casting|packet_skilluse)$/) {next if (!checkCast($macros{$am."_spell"}, $args))}
-      else {next};
+      if ($trigger =~ /^(is_casting|packet_skilluse)$/) {
+        next if (!checkCast($macros{$am."_spell"}, $args))
+      } else {next};
     };
     if ($macros{$am."_pm"}) {
-      if ($trigger eq 'packet_privMsg') {next if (!checkPM($macros{$am."_pm"}, $args))}
-      else {next};
+      if ($trigger eq 'packet_privMsg') {
+        next if (!checkPM($macros{$am."_pm"}, $args))
+      } else {next};
     };
     next if ($macros{$am."_map"} && $macros{$am."_map"} ne $field{name});
     next if ($macros{$am."_var"} && !checkVar($macros{$am."_var"}));
@@ -460,6 +455,12 @@ sub debug {
 
 sub error {
   Log::error($_[0]);
+};
+
+sub parseArgs {
+  my $arg = shift;
+  if ($arg =~ /".*"/) {return $arg =~ /"(.*)" +(.*) +(.*)/}
+  else {return split(/ /, $_[0])};
 };
 
 # check for variable #######################################
@@ -558,7 +559,7 @@ sub getInventoryAmount {
 };
 
 sub checkInventory {
-  my ($item, $cond, $amount) = split(/ /, $_[0]);
+  my ($item, $cond, $amount) = parseArgs($_[0]);
   return 1 if cmpr(getInventoryAmount($item), $cond, $amount);
   return 0;
 };
@@ -576,7 +577,7 @@ sub getCartAmount {
 };
 
 sub checkCart {
-  my ($item, $cond, $amount) = split(/ /, $_[0]);
+  my ($item, $cond, $amount) = parseArgs($_[0]);
   return 1 if cmpr(getCartAmount($item), $cond, $amount);
   return 0;
 };
@@ -592,7 +593,7 @@ sub getShopAmount {
 
 sub checkShop {
   return 0 unless $shopstarted;
-  my ($item, $cond, $amount) = split(/ /, $_[0]);
+  my ($item, $cond, $amount) = parseArgs($_[0]);
   return 1 if cmpr(getShopAmount($item), $cond, $amount);
   return 0;
 };
@@ -676,19 +677,20 @@ sub checkCast {
 };
 
 # checks for private message ##############################
-# pm whatever you like!allowed1!allowed2!...
+# pm /whatever you like or regexp/,whoever,whoever else,...
 sub checkPM {
-  my ($trigger, $arg) = @_;
-  my @tfld = split(/\!/, $trigger);
+  my ($tPM, $allowed) = $_[0] =~ /\/(.*)\/(.*)/;
+  my $arg = $_[1];
+  my @tfld = split(/,/, $allowed);
   my $auth = 0;
-  if (!$tfld[1]) {$auth = 1}
+  if (!$allowed) {$auth = 1}
   else {
-    for (my $i = 1; $i < @tfld; $i++) {
+    for (my $i = 0; $i < @tfld; $i++) {
       if ($arg->{privMsgUser} =~ $tfld[$i]) {$auth = 1; last};
     };
   };
   setVar("lastPMnick", $arg->{privMsgUser});
-  if ($auth && $arg->{privMsg} =~ /$tfld[0]/) {return 1};
+  if ($auth && $arg->{privMsg} =~ /$tPM/) {return 1};
   return 0;
 };
 
