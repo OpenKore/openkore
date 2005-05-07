@@ -6894,7 +6894,7 @@ sub parseMsg {
 
 		my $psize = ($switch eq "00A5") ? 10 : 18;
 		for (my $i = 4; $i < $msg_size; $i += $psize) {
-			my $index = unpack("C1", substr($msg, $i, 1));
+			my $index = unpack("S1", substr($msg, $i, 2));
 			my $ID = unpack("S1", substr($msg, $i + 2, 2));
 			binAdd(\@storageID, $index);
 			my $item = $storage{$index} = {};
@@ -6915,7 +6915,7 @@ sub parseMsg {
 		$msg = substr($msg, 0, 4).$newmsg;
 
 		for (my $i = 4; $i < $msg_size; $i += 20) {
-			my $index = unpack("C1", substr($msg, $i, 1));
+			my $index = unpack("S1", substr($msg, $i, 2));
 			my $ID = unpack("S1", substr($msg, $i + 2, 2));
 
 			binAdd(\@storageID, $index);
@@ -7740,6 +7740,7 @@ sub parseMsg {
 
 				my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
 				$display .= " -- Not Identified" if !$item->{identified};
+				$display .= " -- Broken" if $item->{broken};
 				print $f "$display\n";
 			}
 			print $f "\nCapacity: $storage{items}/$storage{items_max}\n";
@@ -8757,7 +8758,7 @@ sub parseMsg {
 		$msg = substr($msg, 0, 4).$newmsg;
 		my $ID = substr($msg, 4, 4);
 		my $chat = substr($msg, 4, $msg_size - 4);
-		$chat =~ s/\000*$//;
+		$chat =~ s/\000+.*$//;
 		my ($chatMsgUser, $chatMsg);
 		if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/) {
 			$chatMsgUser =~ s/ $//;
@@ -10723,41 +10724,71 @@ sub getActorNames {
 # useTeleport(level)
 # level: 1 to teleport to a random spot, 2 to respawn.
 sub useTeleport {
-	my $level = shift;
+	my $use_lvl = shift;
+	my $internal = shift;
 
+	# for possible recursive calls
+	if (!defined $internal) {
+		$internal = $config{teleportAuto_useSkill};
+	}
+
+	# look if the character has the skill
+	my $sk_lvl = 0;
+	if ($char->{skills}{AL_TELEPORT}) {
+		$sk_lvl = $char->{skills}{AL_TELEPORT}{lv};
+	}
+
+	# only if we want to use skill ?
 	return if ($char->{muted});
-	if ($char->{skills}{AL_TELEPORT} && $char->{skills}{AL_TELEPORT}{lv} > 0) {
-		# We have the teleport skill
+
+	if ($sk_lvl > 0 && $internal > 0) {
+		# We have the teleport skill, and should use it
 		my $skill = new Skills(handle => 'AL_TELEPORT');
-		if ($config{teleportAuto_useSP} == 1 || 
-		    ($config{teleportAuto_useSP} == 2 && binSize(\@playersID))) {
+		if ($internal == 1 || ($internal == 2 && binSize(\@playersID))) {
 			# Send skill use packet to appear legitimate
-			sendSkillUse(\$remote_socket, $skill->id, $level, $accountID);
+			sendSkillUse(\$remote_socket, $skill->id, $use_lvl, $accountID);
 			undef $char->{permitSkill};
 		}
-
+		
 		delete $ai_v{temp}{teleport};
-		debug "Sending teleport\n", "useTeleport";
-		if ($level == 1) {
+		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
+		if ($use_lvl == 1) {
 			sendTeleport(\$remote_socket, "Random");
 			return 1;
-		} elsif ($level == 2 && $config{saveMap} ne "") {
-			sendTeleport(\$remote_socket, "$config{saveMap}.gat");
+		} elsif ($use_lvl == 2) {
+			# check for possible skill level abuse
+			message "Using Teleport Skill Level 2 though we not have it !\n", "useTeleport" if ($sk_lvl == 1);
+
+			# If saveMap is not set simply use a wrong .gat.
+			# eAthena servers ignore it, but this trick doesn't work
+			# on official servers.
+			my $telemap = "prontera.gat";
+			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
+
+			sendTeleport(\$remote_socket, $telemap);
 			return 1;
-			# If saveMap is not set, attempt to use Butterfly Wing
 		}
 	}
 
-	my $invIndex = findIndex($char->{inventory}, "nameID", $level + 600);
+	# else if $internal == 0 or $sk_lvl == 0
+	# try to use item
+
+	# could lead to problems if the ItemID would be different on some servers
+	my $invIndex = findIndex($char->{inventory}, "nameID", $use_lvl + 600);
 	if (defined $invIndex) {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
 			sendItemUse(\$remote_socket, $char->{inventory}[$invIndex]{index}, $accountID);
-			sendTeleport(\$remote_socket, "Random") if ($level == 1);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
+	}
+
+	# no item, but skill is still available
+	if ( $sk_lvl > 0 ) {
+		message "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n", "useTeleport";
+		return useTeleport($use_lvl, 1);
 	}
 
 	# No skill and no wings; try to equip a Tele clip or something,
@@ -10773,7 +10804,7 @@ sub useTeleport {
 			# it is safe to always set this value, because $ai_v{temp} is always cleared after teleport
 			if (!$ai_v{temp}{teleport}{lv}) {
 				debug "Equipping " . $config{"equipAuto_$i"} . " to teleport\n", "useTeleport";
-				$ai_v{temp}{teleport}{lv} = $level;
+				$ai_v{temp}{teleport}{lv} = $use_lvl;
 
 				# set a small timeout, will be overridden if related config in equipAuto is set
 				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
@@ -10793,13 +10824,16 @@ sub useTeleport {
 		$i++;
 	}
 
-	if ($level == 1) {
+	if ($use_lvl == 1) {
 		message "You don't have the Teleport skill or a Fly Wing\n", "teleport";
 	} else {
 		message "You don't have the Teleport skill or a Butterfly Wing\n", "teleport";
 	}
+
 	return 0;
 }
+
+
 
 # Keep track of when we last cast a skill
 sub setSkillUseTimer {

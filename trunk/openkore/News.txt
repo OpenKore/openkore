@@ -2,6 +2,9 @@
 ### 1.6.1
 ==================
 
+** INCOMPATIBLE CHANGES:
+- teleportAuto_useSP is now obsolete my teleportAuto_useSkill.
+
 Bug fixes:
 - Logging framework: writing messages to files should work again.
 - Correct write to servers.txt for version search.
@@ -82,6 +85,20 @@ New config options:
 - relogAfterStorage (flag)
   Relogin after performing autostorage. This works around a server bug
   which causes autostorage to fail when you do it the second time.
+- teleportAuto_useSkill (number)
+  Specifies how you want to teleport.
+  0 = Use Fly Wing to teleport. If Fly Wing is not available, use the
+      Teleport skill if available.
+  1 = Use the Teleport skill to teleport, and always show the "Teleport!!"
+      message on top of your head when teleporting. If the Teleport skill
+      is not available, Fly Wings will be used if available.
+  2 = Use the Teleport skill to teleport, and only show the "Teleport!!"
+      message on top of your head when teleporting, if there are other
+      players on screen. If the Teleport skill is not available, Fly Wings
+      will be used if available.
+  3 = Use the teleport skill and never show the "Teleport!!" message. No
+      SP will be used when teleporting. This option only works on official
+      servers, not on eAthena or Freya servers.
 
 Internal:
 - Wx interface: load some modules only when they're necessary. This
@@ -98,7 +115,8 @@ Credits:
 - denni: bug fixes, autoBreakTime fix.
 - kaliwanagan: sage autospell support
 - MindChild: dcOnPM
-- Crypticode: broken weapon support, teleport spam fix.
+- Crypticode: broken weapon support, teleport spam fix, teleport improvements,
+  bug fixes.
 - kunjandad: Wx interface docking fixes.
 
 ==================
