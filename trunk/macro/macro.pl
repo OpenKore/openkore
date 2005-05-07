@@ -1,6 +1,10 @@
 #
 # macro by Arachno
 #
+#
+# This source code is licensed under the
+# GNU General Public License, Version 2.
+# See http://www.gnu.org/licenses/gpl.html
 
 package macro;
 
@@ -90,12 +94,12 @@ sub commandHandler {
   my (undef, $arg) = @_;
   my ($cmd, $param, $paramt) = split(/ /, $arg->{input});
   if ($cmd eq 'macro') {
-    if ($param eq 'list') { list_macros(); }
-    elsif ($param eq 'stop') { clearMacro(); }
-    elsif ($param eq 'reset') { automacroReset($paramt); }
-    elsif ($param eq 'version') { showVersion(); }
-    elsif ($param eq '') { usage(); }
-    else { runMacro($param, $paramt); };
+    if ($param eq 'list') {list_macros()}
+    elsif ($param eq 'stop') {clearMacro()}
+    elsif ($param eq 'reset') {automacroReset($paramt)}
+    elsif ($param eq 'version') {showVersion()}
+    elsif ($param eq '') {usage()}
+    else {runMacro($param, $paramt)};
     $arg->{return} = 1;
   };
 };
@@ -174,6 +178,9 @@ sub parseCmd {
     elsif ($kw eq 'vender')    {$ret = getPlayerID($arg, \@::venderListsID)}
     elsif ($kw eq 'var')       {$ret = getVar($arg)}
     elsif ($kw eq 'random')    {$ret = getRandom($arg)}
+    elsif ($kw eq 'iamount')   {$ret = getInventoryAmount($arg)}
+    elsif ($kw eq 'camount')   {$ret = getCartAmount($arg)}
+    elsif ($kw eq 'samount')   {$ret = getShopAmount($arg)}
     elsif ($kw eq "eval")      {$ret = eval($arg)};
     return $command if $ret eq '_%_';
     # FIXME - the substitution is dirty. Does crap when keyword is in line more than
@@ -329,6 +336,55 @@ sub getStorageID {
     if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {return $id};
   };
   return;
+};
+
+# get amount of sold out slots
+sub getSoldOut {
+  if (!$shopstarted) {return 0};
+  my $soldout = 0;
+  foreach my $cartitem (@::articles) {
+    next unless $cartitem;
+    if ($cartitem->{quantity} == 0) {$soldout++};
+  };
+  return $soldout;
+};
+
+# get amount of an item in inventory
+sub getInventoryAmount {
+  my $item = shift;
+  if (!$char->{inventory}) {return 0};
+  for (my $id = 0; $id < @{$char->{inventory}}; $id++) {
+    next if ($char->{inventory}[$id] eq '');
+    if (lc($char->{inventory}[$id]{name}) eq lc($item)) {
+      return $char->{inventory}[$id]{amount};
+    };
+  };
+  return 0;
+};
+
+# get amount of an item in cart
+sub getCartAmount {
+  my $item = shift;
+  if (!$cart{inventory}) {return 0};
+  for (my $id = 0; $id < @{$cart{inventory}}; $id++) {
+    next if ($cart{inventory}[$id] eq '');
+    if (lc($cart{inventory}[$id]{name}) eq lc($item)) {
+      return $cart{inventory}[$id]{amount};
+    };
+  };
+  return 0;
+};
+
+# get amount of an item in shop
+sub getShopAmount {
+  my $item = shift;
+  foreach my $cartitem (@::articles) {
+    next unless $cartitem;
+    if (lc($cartitem->{name}) eq lc($item)) {
+      return $cartitem->{quantity}
+    };
+  };
+  return 0;
 };
 
 # returns random item from argument list ##################
@@ -547,17 +603,6 @@ sub checkStatus {
 };
 
 # checks for item in inventory ############################
-sub getInventoryAmount {
-  my $item = shift;
-  if (!$char->{inventory}) {return 0};
-  for (my $id = 0; $id < @{$char->{inventory}}; $id++) {
-    next if ($char->{inventory}[$id] eq '');
-    if (lc($char->{inventory}[$id]{name}) eq lc($item)) {
-      return $char->{inventory}[$id]{amount};
-    };
-  };
-};
-
 sub checkInventory {
   my ($item, $cond, $amount) = parseArgs($_[0]);
   return 1 if cmpr(getInventoryAmount($item), $cond, $amount);
@@ -565,17 +610,6 @@ sub checkInventory {
 };
 
 # checks for item in cart #################################
-sub getCartAmount {
-  my $item = shift;
-  if (!$cart{inventory}) {return 0};
-  for (my $id = 0; $id < @{$cart{inventory}}; $id++) {
-    next if ($cart{inventory}[$id] eq '');
-    if (lc($cart{inventory}[$id]{name}) eq lc($item)) {
-      return $cart{inventory}[$id]{amount};
-    };
-  };
-};
-
 sub checkCart {
   my ($item, $cond, $amount) = parseArgs($_[0]);
   return 1 if cmpr(getCartAmount($item), $cond, $amount);
@@ -583,14 +617,6 @@ sub checkCart {
 };
 
 # checks for item in shop #################################
-sub getShopAmount {
-  my $item = shift;
-  foreach my $cartitem (@::articles) {
-    next unless $cartitem;
-    if (lc($cartitem->{name}) eq lc($item)) {return $cartitem->{quantity}};
-  };
-};
-
 sub checkShop {
   return 0 unless $shopstarted;
   my ($item, $cond, $amount) = parseArgs($_[0]);
@@ -599,16 +625,6 @@ sub checkShop {
 };
 
 # checks for sold out slots ###############################
-sub getSoldOut {
-  if (!$shopstarted) {return 0};
-  my $soldout = 0;
-  foreach my $cartitem (@::articles) {
-    next unless $cartitem;
-    if ($cartitem->{quantity} == 0) { $soldout++; };
-  };
-  return $soldout;
-};
-
 sub checkSoldOut {
   my ($cond, $slots) = split(/ /, $_[0]);
   return 1 if cmpr(getSoldOut, $cond, $slots);
