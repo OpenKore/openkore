@@ -5,6 +5,10 @@
 #include <pthread.h>
 #include <list>
 
+#if RL_READLINE_VERSION < 0x0403
+	#error "Your version of GNU readline is too old. Please install version 4.3 or higher."
+#endif
+
 using namespace std;
 
 
