@@ -71,6 +71,7 @@ New features:
   - It will auto-accept incoming deals.
   - It will finalize and trade if other party finalizes.
 - Detect "Unknown error 10" = "You are out of available time paid for".
+- "eq" command now accepts item names.
 
 New config options:
 - autoSpell (spell name)

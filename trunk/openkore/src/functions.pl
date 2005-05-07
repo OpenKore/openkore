@@ -6784,6 +6784,7 @@ sub parseMsg {
 				$item = $chars[$config{'char'}]{'inventory'}[$invIndex];
 				$item->{amount} += $amount;
 			}
+			$item->{invIndex} = $invIndex;
 
 			my $disp = "Item added to inventory: ";
 			$disp .= $item->{name};
@@ -6834,6 +6835,7 @@ sub parseMsg {
 				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
 			}
 
+			$char->{inventory}[$invIndex]{invIndex} = $invIndex;
 			$char->{inventory}[$invIndex]{index} = $index;
 			$char->{inventory}[$invIndex]{nameID} = $ID;
 			$char->{inventory}[$invIndex]{amount} = unpack("S1", substr($msg, $i + 6, 2));
