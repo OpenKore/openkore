@@ -216,7 +216,7 @@ teleportAuto_onlyWhenSafe 0
 teleportAuto_maxDmg 500
 teleportAuto_maxDmgInLock 0
 teleportAuto_deadly 1
-teleportAuto_useSP 0
+teleportAuto_useSkill 3
 teleportAuto_emptyName 1
 teleportAuto_allPlayers 0
 teleportAuto_atkMiss 10
