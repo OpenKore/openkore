@@ -636,23 +636,26 @@ sub cmdEmotion {
 sub cmdEquip {
 	# Equip an item
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\d+)/;
-	my ($arg2) = $args =~ /^\d+ (\w+)/;
+	my $arg1 = $args;
+
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'equip' (Equip Inventory Item)\n" .
-			"Usage: equip <item #> [r]\n";
-
-	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-		error	"Error in function 'equip' (Equip Inventory Item)\n" .
-			"Inventory Item $arg1 does not exist.\n";
-
-	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'} && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
-		error	"Error in function 'equip' (Equip Inventory Item)\n" .
-			"Inventory Item $arg1 can't be equipped.\n";
-
-	} else {
-		sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $chars[$config{'char'}]{'inventory'}[$arg1]{'type_equip'});
+		error "You must specify an item to equip.\n";
+		return;
 	}
+
+	my $item = Match::inventoryItem($arg1);
+
+	if (!$item) {
+		error "You don't have $arg1.\n";
+		return;
+	}
+
+	if (!$item->{type_equip} && $item->{type} != 10) {
+		error "Inventory Item $item->{name} ($item->{invIndex}) can't be equipped.\n";
+		return;
+	}
+
+	sendEquip(\$remote_socket, $item->{index}, $item->{type_equip});
 }
 
 sub cmdEval {
