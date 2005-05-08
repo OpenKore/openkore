@@ -2,6 +2,9 @@
 ### 1.6.2
 ==================
 
+Bug fixes:
+- Fix deal bug: showing twice as many items added.
+
 New features:
 - Better support for detecting dead players.
 

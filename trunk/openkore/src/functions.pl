@@ -7655,7 +7655,6 @@ sub parseMsg {
 		my $amount = unpack("L*", substr($msg, 2,4));
 		my $ID = unpack("S*", substr($msg, 6,2));
 		if ($ID > 0) {
-			$currentDeal{'other'}{$ID}{'amount'} += $amount;
 			my $item = $currentDeal{other}{$ID} ||= {};
 			$item->{amount} += $amount;
 			$item->{nameID} = $ID;
@@ -8764,7 +8763,8 @@ sub parseMsg {
 	} elsif ($switch eq "017F") { 
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
-		my $ID = substr($msg, 4, 4);
+		# there is no ID
+		#my $ID = substr($msg, 4, 4);
 		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000+.*$//;
 		my ($chatMsgUser, $chatMsg);
@@ -8776,7 +8776,7 @@ sub parseMsg {
 
 		chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 		message "[Guild] $chat\n", "guildchat";
-		ChatQueue::add('g', $ID, $chatMsgUser, $chatMsg);
+		ChatQueue::add('g', 0, $chatMsgUser, $chatMsg);
 
 	} elsif ($switch eq "0187") {
 		# 0187 - long ID
