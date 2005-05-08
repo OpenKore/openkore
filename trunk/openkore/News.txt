@@ -52,6 +52,7 @@ New features:
   many items to the cart too quickly.
 - A brand new console interface for Unix/Linux, which uses GNU readline.
   Input buffer corruption is now a thing of the past.
+  You can activate it with --interface=Console::Unix
 - Different RO servers can have different versions of the same field.
   For example, pRO is stuck with the old Payon while most other servers
   have the new Payon. OpenKore can now automatically select the correct
