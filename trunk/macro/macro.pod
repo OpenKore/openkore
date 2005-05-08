@@ -6,7 +6,7 @@ B<macro.pl> - plugin for openkore 1.5.2 and later
 
 This documentation applies to B<macro.pl> version 0.9.0 cvs
 
-Documentation version 20050508-0
+Documentation version 20050508-2
 
 =head1 DESCRIPTION
 
@@ -19,6 +19,24 @@ Please refer to L<http://openkore.sf.net/macro> for a description of
 B<macro>'s configuration file syntax.
 
 =head1 DOCUMENTATION
+
+=head2 variables and hashes
+
+=over 4
+
+=item C<%macros>
+
+Hash containing the macros and automacros.
+
+=item C<%varStack>
+
+Variable stack, set with C<setVar(variable, value)> and get with C<getVar(variable>.
+
+=item C<$cfID>
+
+Config file ID, set by Settings::addConfigFile
+
+=back
 
 =head2 functions used by macros
 
@@ -223,14 +241,17 @@ Returns: 1 (true), 0 (false)
 =item C<checkSoldOut(condition)>
 
 Checks whether the soldout slots of the shop matches I<conditíon>,
-e.g. C<checkSoldOut(">= 3")>.
+
+Example: C<checkSoldOut(">= 3")>.
 
 Returns: 1 (true), 0 (false)
 
 =item C<checkStatus(status)>
 
 Checks whether we are I<status>. Allows prepended "not" to negate
-the query, e.g. C<checkStatus("not awaken")>
+the query.
+
+Example: C<checkStatus("not awaken")>
 
 Returns: 1 (true), 0 (false)
 
@@ -247,7 +268,7 @@ Returns: 1 (true), 0 (false)
 
 Checks whether we have our Zeny matching I<condition>.
 
-Example: C<checkZeny(">= 100000")>
+Example: C<checkZeny("<= 100000")>
 
 Returns: 1 (true), 0 (false)
 
@@ -318,7 +339,9 @@ Returns: 1 (true), 0 (false)
 
 =item C<cmpr(arg1, condition, arg2)>
 
-Checks whether I<arg1> and I<arg2> match I<condition>, e.g. cmpr(12, "<=", 28).
+Checks whether I<arg1> and I<arg2> match I<condition>.
+
+Example: cmpr(12, "<=", 28).
 
 Returns: 1 (true), 0 (false)
 
