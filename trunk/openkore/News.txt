@@ -2,8 +2,9 @@
 ### 1.6.1
 ==================
 
-** INCOMPATIBLE CHANGES:
+*** INCOMPATIBLE CHANGES ***:
 - teleportAuto_useSP is now obsolete my teleportAuto_useSkill.
+- The _inInventory directive has changed. See below.
 
 Bug fixes:
 - Logging framework: writing messages to files should work again.
@@ -29,12 +30,7 @@ Bug fixes:
   show up correctly in OpenRO.
 - Fix "sp" command sending skill level 0 when unspecified (this wasn't
   a problem on Aegis, but was on eAthena).
-- Hopefully support detection of Peco Lord Knight and other classes
-  on OpenRO now.
-- Roll back part of the above because portals were being detected as
-  Stalkers.
 - Fix monster avoiding teleport spamming.
-- dcOnPM will no longer activate if AI is off.
 - Hopefully fix problems with autoBreakTime on some systems.
 
 New features:
@@ -72,7 +68,6 @@ New features:
   - It will finalize and trade if other party finalizes.
 - Detect "Unknown error 10" = "You are out of available time paid for".
 - "eq" command now accepts item names.
-- Add new commands: doridori, bingbing, bangbang.
 - Better support for _monsters and _notMonsters with attackComboSlot.
 
 New config options:
@@ -103,6 +98,10 @@ New config options:
       SP will be used when teleporting. This option only works on official
       servers, not on eAthena or Freya servers.
 
+New commands:
+- doridori, bingbing, bangbang
+  Same as the RO client's commands.
+
 Internal:
 - Wx interface: load some modules only when they're necessary. This
   saves about 2 MB memory.
@@ -121,6 +120,7 @@ Credits:
 - Crypticode: broken weapon support, teleport spam fix, teleport improvements,
   bug fixes.
 - kunjandad: Wx interface docking fixes.
+
 
 ==================
 ### 1.6.0
