@@ -5833,7 +5833,11 @@ sub parseMsg {
 			$player->{hair_color} = $hair_color;
 			$player->{look}{body} = $body_dir;
 			$player->{look}{head} = $head_dir;
-			$player->{sitting} = $act > 0;
+			if ($act == 1) {
+				$player->{dead} = 1;
+			} else { # usually 2?
+				$player->{sitting} = 1;
+			}
 			$player->{lv} = $lv;
 			$player->{pos} = {%coords};
 			$player->{pos_to} = {%coords};
@@ -11206,6 +11210,9 @@ sub checkPlayerCondition {
 	}
 	if ($config{$prefix."_whenNotGround"}) {
 		return 0 if whenGroundStatus($players{$id}, $config{$prefix."_whenNotGround"});
+	}
+	if ($config{$prefix."_dead"}) {
+		return 0 if !$players{$id}{dead};
 	}
 	
 	return 1;
