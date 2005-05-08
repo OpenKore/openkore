@@ -1,0 +1,9 @@
+0 North
+1 Northwest
+2 West
+3 Southwest
+4 South
+5 Southeast
+6 East
+7 Northeast
+8 North

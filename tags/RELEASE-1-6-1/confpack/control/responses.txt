@@ -1,0 +1,171 @@
+#See the documentation for how to add responses
+
+dateS Lay off the RO %$cmd_user.  It's %$date
+dateS What am I?  A clock?? (BTW it's %$date)
+
+authS You are now an admin %$cmd_user. Go nuts! ^^
+authF You're already an admin %$cmd_user!
+
+relogS brb
+relogS k, be back..
+
+reloadS *beep*
+reloadS *boop*
+reloadS All done.
+
+confS1 That variable %$key is...%$value
+confS2 *beep*
+confS2 *boop*
+confS2 All done.
+confF1 Huh?
+confF2 I don't see that config variable
+confF3 uhh, nice try %$cmd_user
+confF3 I don't think so
+
+timeoutS1 I think the timeout %$key is %$value
+timeoutS2 *beep*
+timeoutS2 *boop*
+timeoutS2 All done.
+timeoutF1 Huh?
+timeoutF2 I don't see that timeout
+
+quitS Ciao
+quitS I'm outta here, lamers
+quitS Off I go!
+
+sitS *boof*
+sitS *plop*
+
+standS Okie ^^
+standS Right
+standS ok %$cmd_user, like this?
+
+tankS Leecher
+tankF huh?
+
+tankStopS That was fun...
+tankStopF Does it look like I'm tanking?
+
+moveS Right away!
+moveS For freedom!
+moveS Yes sah!
+moveF I have no idea what you're saying %$user
+moveF That makes no sense ><
+
+followS Right away!
+followS For freedom!
+followS Yes sah!
+followF I have no idea what you're saying %$user
+followF That makes no sense ><
+
+followStopS I get the idea...
+followStopS Am I that annoying?
+followStopF You're so paranoid
+followStopF Like I'd be stalking YOU
+
+statusS HP: %$char_hp / %$char_hp_max   SP: %$char_sp / %$char_sp_max\nBase: %$char_lv  |  %$char_exp / %$char_exp_max\nJob: %$char_lv_job  |  %$char_exp_job / %$char_exp_job_max\nWeight: %$char_weight / %$char_weight_max   Zenny: %$zenny
+
+thankS np ^^
+thankS No problem
+thankS Always a pleasure, master %$cmd_user
+thankS ^^
+
+verboseOnS Ah, finally.
+verboseOnS *gasp* Oh thank you master...ass.
+verboseOnF Does it look like I can't talk?
+verboseOnF You twit, I can speak fine...
+
+verboseOffS You ass...fine.
+verboseOffS OMG, whatever
+verboseOffF Screw off, im already staying quiet
+verboseOffF Ya ya..I get it already
+
+whereS Lost me? I'm at %$map: %$x, %$y
+whereS Here I am! %$map: %$x, %$y
+
+pw_authS You are now authorized to use this portal %$cmd_user. Enjoy!\nTo open the portal just scream 'GATE OPEN!'
+pw_authF You're already authorized to use this portal!
+
+pw_statusS The portal is %$pw_portalStatus at: %$pw_portalX, %$pw_portalY - set to open to %$pw_portalLoc
+pw_statusS Lost it again eh? It's %$pw_portalStatus around %$pw_portalX, %$pw_portalY - opening to %$pw_portalLoc
+
+pw_setupS She's up n' ready.
+pw_setupS Yes sah...all set up.
+pw_setupF1 Wha?  Where the hell are these coords? - %$pw_setupErrorX, %$pw_setupErrorY
+pw_setupF2 OMG you're stupid %$cmd_user, I'd be warping myself
+pw_setupF2 Ya I'll get right on it </sarcasm>...nice try, that's my location.
+pw_setupF3 Gah! I need 30 sp, but I only have %$char_sp ><
+
+pw_switchS No prob.  I switched it to open at %$pw_portalLoc
+pw_switchS ok ok... it's set to %$pw_portalLoc
+pw_switchF Fool, I don't have that memorized
+pw_switchF How about a black hole instead?
+
+pw_openS GAAAAAAATE OOOOPEN!!!!
+pw_openS Here it comes %$cmd_user...
+pw_openS Yes %$cmd_user...slave driver
+pw_openS Everyone just uses me T_T
+pw_openS One gate to hell, coming right up!
+pw_openS *poof*
+pw_openS "Open this" "open that" SHUT UP ALREADY! ~>_<~
+pw_openF1 sigh... The portal isn't setup.  I'll grudgingly do it.
+pw_openF1 You always forget to setup the portal %$user...I'll do it.
+pw_openF2 Close the damned portal first.
+pw_openF2 One of those 'eternal portals' is open, close it...idiot
+pw_openF2 No damnit! Walk into the one that's forever open...
+pw_openF2 Close the portal, then I'll think about it
+pw_openF2 You're really that dumb aren't you %$cmd_user?  Close the portal
+pw_openF3 Patience %$cmd_user... I'll open another in a moment
+pw_openF3 No portal for you... come again ^^
+pw_openF3 Not yet %$cmd_user, settle down
+pw_openF3 Calm your piece...wait
+pw_openF3 %$cmd_user, See that portal?  Walk into it.
+
+pw_open2OpenS Okie, this one is staying open
+pw_open2OpenS I'll do my best to keep it open...master %$cmd_user ><
+pw_open2OpenF1 sigh... The portal isn't setup.  I'll grudgingly do it.
+pw_open2OpenF1 You always forget to setup the portal %$user...I'll do it.
+pw_open2OpenF2 You're braindead - an eternal portal is open
+pw_open2OpenF2 I don't bend that way
+
+pw_open2CloseS k, all gone...
+pw_open2CloseS *slam*
+pw_open2CloseS Had enough %$cmd_user?
+pw_open2CloseS It was fun while it lasted...real damn fun
+pw_open2CloseF What the hell is there to close?
+pw_open2CloseF %$cmd_user, do you see a portal spawning?  Do you??? Thought so
+pw_open2CloseF ummm, there's a portal somewhere?
+pw_open2CloseF k...I want whatever drug you're abusing %$cmd_user
+pw_open2CloseF THERE IS NO PORTAL ><
+
+pw_portalAuthOffS Okie, now anyone can just say "OPEN THE GATE!"
+pw_portalAuthOffS Say it everybody!! "OPEN THE GATE!"
+pw_portalAuthOffF Everyone can already say the magic words
+pw_portalAuthOffF Get with it %$cmd_user, it's been off for a while.  
+pw_portalAuthOnS Alright newbs, stop spamming me
+pw_portalAuthOnS Fine..don't share me ><
+pw_portalAuthOnS You on a power trip %$cmd_user?  Whatever...it's off now
+pw_portalAuthOnF It's on already %$cmd_user...calm down
+pw_portalAuthOnF Ya...it's on
+
+pw_healS All better!
+pw_healF1 Hmm?  I don't know who you want me to heal.
+pw_healF2 Bah, I need more SP. I have %$char_sp SP left T_T
+pw_healF3 I don't have the skillz
+
+pw_listS Here's where I can warp ya:\n%$pw_portalList
+
+skillgoodM Thank, you.
+skillgoodM You are too kind.
+skillgoodM Oh no. That's enough. =)
+skillgoodM  
+skillgoodM  
+skillgoodM  
+
+skillbadM What did you do that for?
+skillbadM Please stop!
+skillbadM I said stop it!
+skillbadM ...
+skillbadM ...
+skillbadM  
+skillbadM  

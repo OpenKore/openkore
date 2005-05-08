@@ -1,0 +1,2072 @@
+==================
+### 1.6.1
+==================
+
+*** INCOMPATIBLE CHANGES ***:
+- teleportAuto_useSP is now obsolete my teleportAuto_useSkill.
+- The _inInventory directive has changed. See below.
+
+Bug fixes:
+- Logging framework: writing messages to files should work again.
+- Correct write to servers.txt for version search.
+- Fix lockMap_randX/Y. lockMap_x/y acting as the top right corner of the
+  rectangle. This is now treated as the center of the rectangle.
+- Stopped the annoying "Attempted to use skill you do not have."
+  messages by moving the message from error to debug.
+- Fix autoBreakTime not working on some systems.
+- Fix 'store desc <num>' command.
+- Don't spam the teleport packet when you're not on one of the maps in
+  allowedMaps. Only attempt to teleport up to 3 times, because some maps
+  don't allow teleport.
+- Fix a bug with empty partySkill blocks messing up partySkill.
+- Static mode in the Console::Other interface now works correctly.
+- Correctly strip language code from party chat.
+- When someone in your avoid list sends you a PM, Kore will crash.
+- Only clear AI if teleport succeeded.
+- Fix a bug which causes monster IDs to end up in the player hash.
+- Correctly move to a monster when using an attack skill if
+  attackSkillSlot_#_dist is not set.
+- Make "Unknown gained a [job] level" message and "[Guild]  : " message
+  show up correctly in OpenRO.
+- Fix "sp" command sending skill level 0 when unspecified (this wasn't
+  a problem on Aegis, but was on eAthena).
+- Fix monster avoiding teleport spamming.
+- Hopefully fix problems with autoBreakTime on some systems.
+
+New features:
+- Beginnings of code that will allow skill usage on non-partied players.
+  deltaHp condition added (currently useless to non-developers).
+- Support for the 'charServer_ip', and 'charServer_port' options
+  in servers.txt, which allow you to force connection to a specific
+  map server.
+- Support for eAthena servers. Set serverType to 3 for these servers.
+- The _inInventory option's syntax has changed.
+  Previous syntax:
+    inInventory_name Red Potion,Blue Gem,AnotherItem
+    inInventory_qty >5,>0,=10
+  New syntax:
+    inInventory Red Potion >5,Blue Gem,AnotherItem=10
+- Support login error 1 as "Error: Server is closed".
+- Use ai_cartAdd timeout if it's specified in timeouts.txt.
+  This is for servers where you are disconnected when you try to add
+  many items to the cart too quickly.
+- A brand new console interface for Unix/Linux, which uses GNU readline.
+  Input buffer corruption is now a thing of the past.
+  You can activate it with --interface=Console::Unix
+- Different RO servers can have different versions of the same field.
+  For example, pRO is stuck with the old Payon while most other servers
+  have the new Payon. OpenKore can now automatically select the correct
+  field file by using servers.txt. You must have the latest fieldpack
+  and the latest servers.txt from the latest tablepack.
+- Support level 2 Teleport as well in blocks like useSelf_skill.
+- Support for displaying broken weapons.
+- A workaround for a server bug which causes autostorage to fail.
+  See the config option 'relogAfterStorage'.
+- Set attackDistanceAuto to 1 if you want attackDistance and
+  attackMaxDistance to be automatically set by autodetection.
+- New "dealAuto 3" setting works as a mix of 0 and 2.
+  - It will auto-accept incoming deals.
+  - It will finalize and trade if other party finalizes.
+- Detect "Unknown error 10" = "You are out of available time paid for".
+- "eq" command now accepts item names.
+- Better support for _monsters and _notMonsters with attackComboSlot.
+
+New config options:
+- autoSpell (spell name)
+  When the sage autospell list is sent from the server, Kore will
+  automatically pick the specified skill name to be used.
+  Combine this with a useSelf_skill for casting Auto Spell.
+- tankersList is a comma-seperated lists of player names that should be
+  treated as if they were in your party so they can tank monsters for you.
+  It was previously called ksPlayers.
+- dcOnPM (flag)
+  Disconnect when somebody sends you a PM.
+- relogAfterStorage (flag)
+  Relogin after performing autostorage. This works around a server bug
+  which causes autostorage to fail when you do it the second time.
+- teleportAuto_useSkill (number)
+  Specifies how you want to teleport.
+  0 = Use Fly Wing to teleport. If Fly Wing is not available, use the
+      Teleport skill if available.
+  1 = Use the Teleport skill to teleport, and always show the "Teleport!!"
+      message on top of your head when teleporting. If the Teleport skill
+      is not available, Fly Wings will be used if available.
+  2 = Use the Teleport skill to teleport, and only show the "Teleport!!"
+      message on top of your head when teleporting, if there are other
+      players on screen. If the Teleport skill is not available, Fly Wings
+      will be used if available.
+  3 = Use the teleport skill and never show the "Teleport!!" message. No
+      SP will be used when teleporting. This option only works on official
+      servers, not on eAthena or Freya servers.
+
+New commands:
+- doridori, bingbing, bangbang
+  Same as the RO client's commands.
+
+Internal:
+- Wx interface: load some modules only when they're necessary. This
+  saves about 2 MB memory.
+- The first argument of getField() must now be a field name ("payon")
+  instead of a filename ("fields/payon.fld").
+- Add %monsters_lut to Globals.pm.
+
+Credits:
+- Squall: some minor fixes, charServer support in servers.txt.
+- kaliwanagan, piroJOKE: eathena support.
+- zdivpsa: PVP mode packet support
+- jsteng: new syntax for the inInventory option.
+- denni: bug fixes, autoBreakTime fix.
+- kaliwanagan: sage autospell support
+- MindChild: dcOnPM
+- Crypticode: broken weapon support, teleport spam fix, teleport improvements,
+  bug fixes.
+- kunjandad: Wx interface docking fixes.
+
+
+==================
+### 1.6.0
+==================
+
+** INCOMPATIBLE CHANGES **:
+- Fixed spelling of two monsters.
+  Bon Gun is now Bongun.
+  Requim is now Requiem.
+
+Bug fixes:
+- Fixed a memory problem in the pathfinding code which makes Kore crash.
+- Fix bulk selling bug which caused disconnect.
+- Correctly set names for VVVS weapons.
+- Correct strip language code in public messages.
+- Chat messages were saying "chatMsgUser" instead of the person's name.
+- target_timeout should work with skills like Kyrie Eleison now. (The problem
+  was it says "<target> uses Kyrie Eleison on self", instead of "You use Kyrie
+  Eleison on <target>". It now recognizes the former when setting timeouts)
+- The Wx interface can now correctly launch a browser on Linux.
+- Fix display of map name in config.txt chat entries.
+- Restore advanced 2-2 class support from version 1.5.0.
+- Sell all items at once instead of just 8 at a time.
+- skillsAddAuto was waiting a long time to add the next skill point.
+- Auto-drop will look at full item name now.
+- Shop auto open delay will now work correctly after reconnecting.
+- Don't autoreply in town.
+- The !include directive in a config file was causing everything above it to
+  be clobbered.
+- items_take AI sequence was getting stuck in queue if !itemsTakeAuto.
+- 'guild leave' command actually works now.
+
+New features:
+- Don't use teleportAuto_minAggressives if the more specific
+  teleportAuto_minAggressivesInLock is specified.
+- Don't use teleportAuto_maxDmg if the more specific
+  teleportAuto_maxDmgInLock is specified.
+- New 'guild request <player>' command to request someone to join a guild.
+- "Press ENTER to exit this program." prompt removed from Linux version.
+- New 'guild leave' command (needs testing, but the server I play is down)
+  added.
+- Nearly complete oRO and pRO support. Thanks to jojobaoil and duckieeex!
+- Display a warning if Kore is attempting to use a skill it doesn't have.
+- Using the Teleport skill will now correctly make Kore teleport.
+- Some statuses might be detected more accurately now.
+- When you use an item, now displays how many remaining.
+
+New config options:
+- showDomain (flag)
+  If set to 1 will display domains along with messages.
+- serverType (number)
+  Defines what kind of server you're playing on.
+  0 = normal server
+  1 = oRO (Oceania)
+  2 = pRO (Philippines)
+- allowedMaps (list of maps)
+  Exit or respawn of Kore is on a map other than the ones specified
+  in (list of maps). This is useful on pRO where GMs warp you to
+  secret rooms.
+- allowedMaps_reaction (number)
+  0 = respawn
+  1 = exit
+
+Credits:
+- jsteng: VVVS weapon name bugfix, packet 01AB support.
+- arachno: Language code bugfix, chat.txt map name bugfix.
+- Duckieeex, Mananabas, gradeA: Help with pRO support.
+- jojobaoil: Minor bug fixes.
+
+==================
+### 1.5.2 (beta)
+==================
+
+** INCOMPATIBLE CHANGES **:
+- For users of teleportAuto_search, in order to have it work you must now:
+  * Set teleportAuto_idle to 1
+  * Set ai_teleport_idle in timeouts.txt to the same as ai_teleport_search
+  * Delete ai_teleport_search in timeouts.txt (it is obsolete)
+  * Set route_randomWalk to 0
+- If you have been using "maxUses" to limit the number of times you attempt to
+  cast a skill, you may have to change it to "maxAttempts" instead.
+- Kobolds have been renamed from Kobold # to Kobold-#.
+  Many people don't know about using tabs in mon_control.txt, and
+  would probably have problems figuring out what to do for Kobolds.
+  Example: Kobold 1 is now Kobold-1
+
+
+Bug fixes:
+- Correctly detect pets.
+- Fix all kinds of troubles regarding sitting and standing.
+- Set maxDistance = distance (instead of defaulting to 30) in attackSkillSlot.
+- The 'conf' chat command now works.
+- partyAggressives now counts monsters your party attacked
+- Fixed some cases of ksPlayers not working
+- When following master around a corner, fallback to routing algorithm instead
+  of trying to walk through the corner
+- Don't increment maxUses counter for an attackSkillSlot until the skill is
+  actually used (internal note: this counter is indexed using the monster ID
+  and the skill ID, so if you have more than one attackSkillSlot or
+  monsterSkill block that uses the same skill, they will unexpectedly share
+  the same maxUses counter)
+- Fix reference to undefined variable $skillID in ai_skillUse2()
+- Make _stopWhenHit condition not count party members, and stop counting a
+  monster as aggressive if it hit you in the past, but then attacked someone
+  else
+- "Total Damage" display in 's' command now includes damage from skills
+- "exp reset" command now resets damage statistics in 's' command
+- Portal recording has been fixed.
+- Fix teleport using clip.
+- Portal recording has been fixed more.
+- Moved some messages to "teleport" domain.
+- Show weapon name instead of ID in the pl # commands.
+- shop_random has been readded.
+- Win32 console interface: fixed a crash regarding text input.
+- "aggressives 0" and "partyAggressives 0" should work now.
+- Fix bugged teleportAuto_onlyWhenSafe.
+
+New features:
+- Mask password input display '*' instead of your real password (Only on linux
+  console)
+- If old files (from before the CVS cleanup) are found, warn the user
+  and bail out. Too many people are reporting "bugs" that are a result
+  of conflicts with old files.
+- More avoidGM modes. See the news avoid the new avoidGM_near config option.
+- The autoresponse system is now back, and improved. The chat_resp.txt
+  format has changed. Kore will also not respond to people who are repeating
+  themselves.
+- teleportAuto_search will now prevent attackAuto from attacking monsters in
+  the event that no monsters you are searching for exist onscreen.
+- chat.txt uses one line per message, allowing grepping.
+- skillsAddAuto will now print a message when it auto-adds a skill.
+- Display source and destination coordinates in "Recorded new portal" message.
+- route_teleport is now a normal message instead of a debug message (something
+  that made my party bot suddenly teleport away from me should not be silent).
+- "Failed to take <item>" message now shows more information.
+- If a monster's name in monsters.txt is different from what the server sends,
+  the name in monsters.txt prevails. (Lets us distinguish between monsters
+  that the server gives the same name to, but are different)
+- WX Advance Settings now support proxy for download manual.
+  You have to add lines 'webproxy' and 'webproxy_port' in config.txt to enable
+  proxy.
+- storageAuto will now check if you have the ability to open storage.
+- Bulk selling has finally been implemented! Kore will always auto-sell this
+  way from now on, no need to set any config options.
+- Reset monster aggression when it changes to another type of monster.
+
+New config options:
+- ksPlayers is a comma-seperated lists of player names that should be treated
+  as if they were in your party for the purpose of KS checks.
+- beepDomains contains a list of message domains (see Log.pm) for which
+  openkore will beep.
+- beepDomains_notInTown contains a list of message domains that are exempted
+  from beepDomains if you are in a town.
+- beepOnChat and beepOnPM were removed. Use this instead:
+  beepDomains publicchat,emotion,pm
+- New selfCondition _whenPermitSkill _whenNotPermitSkill for use in auto-skill
+  usage blocks; they are true/false respectively when you have been granted
+  use of that temporary skill.
+- New condition _smartEncore for useSelfSkill. When 1, it will cast the
+  Encore skill instead of this skill if Encore would cause this skill to
+  be cast (saves SP for bards and dancers).
+- avoidGM_near now supports different modes:
+  0 - disabled (do not avoid GM)
+  1 - teleport & disconnect
+  2 - disconnect
+  3 - teleport
+  4 - respawn
+- New 'previousDamage (range)' condition for attackSkillSlot.
+  Use this skill only when your damage to the monster is between the
+  specified range.
+- teleportAuto_maxDmgInLock (number)
+  Similar to teleportAuto_maxDmg, but only has effect when in lockMap.
+- teleportAuto_minAggressivesInLock (number)
+  Similar to teleportAuto_minAggressives, but only has effect when in lockMap.
+- portalRecord:
+  0 - don't automatically record portals
+  1 - record portals you walk through
+  2 - record the return portal too (by guessing)
+- webproxy <proxy_addr>
+  webproxy_port <port>
+  To enable and specify whether WX will use this proxy for downloading the manual.
+- sellAuto_standpoint <map> <x> <y>
+  buyAuto {
+	standpoint <map> <x> <y>
+  }
+  Bots will use this location as a standpoint instead of anywhere near NPC
+  itself.
+
+Internal:
+- Move a "pm" message into "pm/sent" domain so that "beepOnDomains pm" won't
+  beep on your own PMs.
+- Add a third argument $obj to objectRemoved() function (just like
+  objectAdded() has), and moved the objectRemoved() calls to just before the
+  object was deleted so that $obj still exists when it is called.
+- %mon_control added to Globals.pm.
+- The Wx map viewer's xpmmake() has been rewritten in C++ for speed.
+  It is now more than 100 times faster.
+- makeDistMap() has also been written in C++ and is now more than 100
+  times faster.
+- New "refine" message domain.
+
+Credits:
+- jsteng: Pet detection fix.
+- mondlicht: misc bug fixes.
+- denni: previousDamage condition, teleportAuto_maxDmgInLock,
+  teleportAuto_minAggressivesInLock.
+- jojobail: some work on oRO support, storageAuto ability check, some
+  bug fixes.
+- asuwannarat: Niflmheim portals.
+- arachno: shop_random, missing euRO item.
+
+
+==================
+### 1.5.1 (beta)
+==================
+
+Bug fixes:
+- Fix "undefined value as HASH" bug in the Wx item list control.
+- Reset earned money when openshop.
+- Fix crash when using "move" and "date" commands via PM/chat.
+- partySkill target_timeouts are now saved when openkore uses the skill
+  on the person, not when it tries to use it.
+- The day parameter for autoBreakTime is no longer case sensitive.
+- Fix a routing problem which causes Kore to walk back and forth.
+- Various attackComboSlot bug fixes.
+- "You are in Stunned state" message was verbosity 2 instead of 1.
+- 'autostorage' command will now work even if storageAuto is set to 0.
+- Sometimes openkore would stop auto-storing items covered by the 'all'
+  setting in items_control.txt, necessitating a reload.
+- Zeny earned is reset when you use "exp reset".
+- "Inventory Item Removed" message was not being displayed when you drop
+  (instead of fire) arrows.
+- Your shop title and chatroom title will not longer than 36 characters.
+- openkore was allowing more than 10 items to be added to the deal (bug #31)
+  if you were adding more than one of the same type of equipment. The server
+  would destroy these excess items! This is now fixed, except when you type a
+  lot of "deal add" commands faster than the server responds.
+- 'autosell' command will now work even if sellAuto is set to 0.
+- Don't trigger sellAuto after storageAuto if sellAuto is 0.
+- Set $char->{spirits} to 0 upon changing map servers.
+- Fix teleporting for characters that have Teleport level 0.
+- $monsters{$targetID}{skillUses}{$skill->handle}++ line was auto-vivifying
+  $monsters{$targetID}, making players getting incorrectly counted as monsters
+  and causing various bugs such as ghost player images, and
+  itemsTakeAuto_party not working.
+- Do not automatically add stats over 99 base stat.
+- Detect negative damage correctly. (unpack 'S1' => 's1')
+- 's' command correctly displays Status Points >= 1000 now.
+- Don't trigger autosit while already auto-sitting.
+- Fix maxDistance.
+- Don't use runFromTarget_dist in attackCheckLOS when !runFromTarget.
+- Don't use Arrow Crafting skill when !autoMakeArrows.
+
+New features:
+- statsAddAuto will now print a message when it increases a stat.
+- Plugins Commands now work (unload, unload all, load, load all).
+- More infomation for merchant shop ('al' command).
+- Support for private RO server (which has only one real IP).
+  To use this feature you must put the line 'private 1' in tables/servers.txt.
+- config.txt now supports multi-line comments, like C/C++.
+  /* indicates the beginning of a comment, and */ indicates the end.
+- AI sequence will now be cleared when switching characters due to
+  autoConfChange.
+- items_control.txt can now have an 'all' option, just like pickupitems.txt.
+  Example:
+  # Store everything but nippers; keep nippers in inventory
+  nipper 0 0 0
+  all 0 1 0
+- teleportAuto_[hp|sp|minAggressives] will now print a message when it is
+  triggered.
+- 'drop' command now works when AI is off, if you are only dropping one item.
+- 'aiv' command will now indicate whether or not AI is on.
+- "You [successfully refined/failed to refine] a weapon!" message implemented.
+  (packet switch 018F)
+- "storage [add|get]" commands now support item names,
+  e.g. "storage get +5 Sword Mace [Andre]"
+  Currently, item names containing commas may not work properly.
+- "version" command tells you what version of openkore you are running.
+- Show distance of player when public chat and add more log message of public chat.
+  The format is like this.
+  [Date Time][C] [Mapname BotsPosition] [TargetPosition] [dist=DistanceFromPlayer] ChatName : ChatMessage
+- Monster weights. See
+  http://openkore.sourceforge.net/forum/viewtopic.php?t=3890
+- autoTalkCont will print a message when it is triggered.
+- Prevent getting skill/chat muted when playing in X-Kore mode.
+- "exp reset" command now prints a confirmation message.
+- New "monsterSkill" directive; works like "partySkill", and will target
+  all monsters that you are engaging/can engage. Useful for fighting
+  multiple opponents at once, e.g. acolyte can offensive-bless
+  Khalitzburg even if it's not your current target, or knight can
+  provoke all Sohees and then Brandish Spear them.
+- statAddAuto_list is now case-insensitive.
+- Recognize "Unknown error 15" ("You have been forced to disconnect by a GM").
+- 'conf' command will now display what the old value was.
+- "Received Possible Identify List" message now tells you how many items are
+  in the list.
+- Automatically create arrows with Arrow Craft. You can control it by editing
+  control/arrowcraft.txt. In that file, put in the items that you need for creating
+  arrows. For example:
+    Lantern 1
+    Tooth of Bat 1
+    Red Blood 1
+    Garlet 1
+- Automatically raise skill levels.
+- All teleportAuto code will now print a message saying why it teleported.
+
+New config options:
+- beepOnPM, beepOnChat if set to 1 will generate a beep when you
+  hear a PM/public chat message.
+- The attackSkillSlot and attackComboSlot blocks now have an extra option:
+  isSelfSkill (flag)
+  This specifies whether the combo skill is used on yourself.
+- _defendMonsters consition, e.g.:
+  partySkill Pneuma {
+      lvl 1
+      target_defendMonsters Raydric Archer
+  }
+  will only cast this skill if a Raydric Archer's last attack hit the person.
+- verboseDomains is the opposite of squelchDomains.
+- missDamage; any damage you do <= this amount will be counted as a miss.
+  (e.g. for monks who have Spirit Spheres)
+- teleportAuto_useSP if set to 2 will only use SP when other players are 
+  present.
+- EXPERIMENTAL _misses and _totalMisses conditions, e.g. to switch elemental
+  weapons using equipAuto when you are missing a monster that changed
+  elements.
+- shopTitleOversize (flag)
+  chatTitleOversize (flag)
+  if set to 1 will enable shop title or chatroom title length longer than 36 characters.
+- pauseMapServer (seconds)
+  Pause for (seconds) before connect to map server (Sometime server slower than bots).
+- autoBreakTime now supports the 'all' time, which makes it take a break
+  every day in the week.
+- statsAddAuto_dontUseBonus (flag)
+  If set to 1 then statsAddAuto will not factor in the stat bonuses at all.
+- teleportAuto_attackedWhenSitting (flag)
+  Teleport when a monster attacked you while you're auto-sitting. This is useful if
+  you set mon_control.txt to completely ignore the attacks of certain monsters,
+  but you only want to teleport when they hit you while you're sitting.
+- skillsAddAuto (flag)
+  skillsAddAuto_list (list of skills and levels, seperated by comma)
+
+  Automatically raise skill levels. Similar to statsAddAuto, but works on skills.
+  Example:
+    skillsAddAuto 1
+    skillsAddAuto_list Basic Skill 9, Increase HP Recovery 10, Sword Mastery 10
+
+New timeouts.txt options:
+- ai_teleport 1
+  Specifies the timeout for using Fly Wing when teleporting. This prevents Kore
+  from using tons of Fly Wings when trying to teleport.
+
+New commands:
+- ihist
+  Display last few entries of the item log.
+- move [Portal Number]
+  To move into portal if portals exist.
+
+Internal:
+- $interface->beep() function for cross-platform beep support.
+- OpenKore will exit if a plugin failed to load.
+- OpenKore will exit if a configuration file failed to load.
+- checkMonsterCondition() now takes a monster hash instead of monster ID.
+  (Perhaps other similar functions should be converted too)
+- inInventory($item, $quantity = 1) returns the index of the item if you have
+  at least $quantity of it, or undef otherwise.
+- inventoryItemRemoved($index, $amount) function (packet 00AF is not the only
+  way inventory items can be removed).
+- New module Match.pm contains functions for matching input typed by the
+  player with an in-game entity (e.g. players, monsters, items).
+- Better support for advanced 2-2 classes.
+- Guild member job ID format is now the same as char job ID format.
+- IPC protocol's numbers are now in big endian format.
+- is_casting plugin hook.
+- $monsters{$ID}{ID} is now set to $ID, so that %monsters objects contain
+  complete information about themselves.
+- New ai_skillUse2() function is a wrapper to ai_skillUse() that (1)
+  uses "objects" instead of identifiers, and (2) automatically resolves
+  (x,y) coordinates for area-targetted skills.
+- Move some messages from "route" to "route_teleport" domain.
+- Comment out stopAttack() to try to fix "bot attacks slowly when buff
+  ran out" bug.
+- attackMinPortalDistance's minimum value has been lowered to 1.
+
+Credits:
+- asuwannarat, as2765324: tRO server details.
+- MindChild: support for the 'all' option in items_control.txt,
+  support for the --storage argument, autoBreakTime 'all',
+  auto-arrow craft.
+- jabskeeterbug: item history command.
+- jsteng: some routing bug fixes.
+- ZetaAlpha: advanced 2-2 class support fixes, guild member ID fixes.
+- blacklady: Monster weights, autobuy/sell/storage optimizations, pet
+  taming packets support.
+- isieo: Mute prevention.
+- denni: Teleport if attacked while sitting.
+- brianhj: skillsAddAuto
+
+
+==================
+### 1.5.0 (beta)
+==================
+
+A new beta version, 1.5.0, has finally been released. A lot of stuff
+has changed, and your old configuration files may not work, so please
+read this document thoroughly. But the easiest way is to delete your
+configuration files and start from scratch using the new default
+configuration files.
+Remember: this is a BETA version. It may not be stable.
+
+Special thanks to the following people; OpenKore would not have been
+possible without them:
+- Joseph: -1 and 2 attack-auto support in mon_control.txt,
+  avoidList_inLockOnly, auto cart get, misc other things
+- aputs: Support for the _monsters option in useSelf_skill, useSelf_item
+  and partySkill.
+- obyarou: Priority attack support for non-aggressive monsters,
+  shop timeout in X-Kore bugfix (bug #49), sitAuto_idle vs
+  shopAuto_open conflict fix (bug #50), other misc bugfixes.
+- fov: writeDataFile*() tweaks, lockMap and randomWalk tweaks,
+  partySkills for certain jobs
+- polokus: idRO Amatsu/Kunlun support
+- Ven`Tatsu: walkable water bugfix (bug #21)
+- sparshong: character creation/deletion packet code.
+- jsteng, littlewens: mute packet support, chat room list clear bugfix.
+- anoxemian: (partial?) kRO/PK server support.
+- doenet: improved mon_control.txt, randomWalk and lockMap
+  fixes/improvements.
+- BotMan: server details for pRO.
+- anu: add storage opening timeout, teleportAuto_dropTarget
+- juifeng: NPC talk timeout fix when using "d#" talk code
+- isieo: attackComboSlot bugfix
+- brianhj: auto stat-add
+
+
+** INCOMPATIBLE CHANGES **:
+- Tools.dll is obsolete! Delete it!
+- The skill numbers listed in 'skills' have changed! They are now stable,
+  so for example 'Heal' will always be skill #28 no matter what character
+  you are playing, even if you equip accessories that grant skills.
+  If you previously made aliases for manually triggering skills, you will
+  have to edit them to use the new skill numbers.
+- All server-specific information is now stored in servers.txt. The
+  master_* config options are now obsolete.
+
+
+New features:
+- HUGE performance gains in portal compilation. It's now 70% faster
+  compared to 1.4.x.
+- You can now configure Kore to never attack certain monsters, even when
+  they attack you. In mon_control.txt, set the flag to -1. Example:
+  Matyr -1 0 0
+- useSelfSkill, useSelfItem and partySkill now also support the
+  _monsters config option, just like attackSkillSlot.
+  This example uses Pneuma only when Raydric Archer attacks:
+  useSelf_skill Pneuma {
+      monsters Raydric Archer
+  }
+- Priority attacks for non-aggressive monsters are now supported.
+- You can set Kore to avoid/prefer walking through certain maps
+  (see control/routeweights.txt for configuration).
+- Support for advanced 2-2 skills.
+- If you are granted use of a temporary skill (e.g. Yggdrasil Leaf,
+  Abracadabra), you can use the sl/sm/sp/ss commands to cast it using the
+  number shown in the "Permitted to use" message. Example:
+
+  > ss 290
+  Permitted to use Defender (257), level 5
+  You use Abracadabra on yourself: Lv 10
+  > ss 257
+  You use Defender on yourself: Lv 5
+- 'monster', 'monocell', 'death' and 'mvp' commands have been removed. If you
+  actually use these, set these aliases in your config.txt:
+
+  alias_monster ss 293
+  alias_monocell sm 293
+  alias_death sp 295
+  alias_mvp sm 292
+- If 'sp' command is called without a player target, it will target yourself.
+  Useful for e.g. 'alias_heal sp 28'.
+- 'Item Appeared' message and 'il' command now display the item's
+  coordinates.
+- The Linux version no longer depends on sys/ioctl.ph. This means 
+  the dynamic interface (support for left/right arrow keys, etc.) will work
+  out-of-the-box on many systems now.
+- Support for creation and deletion of characters.
+- Weapon upgrades are now detected.
+- Newbie zones are now correctly supported.
+- Delay of attacks is now displayed. 200 - Delay indicates the ASPD.
+- Support for partySkills on certain job classes.
+- kRO/PK servers are now (partially?) supported. In config.txt, set
+  pkServer to 1.
+- TAB completion in Wx and Linux interface!!!
+- Input history support in Linux interface.
+- Spells being cast now show how long they take.
+- Combo skill support.
+- While walking, Kore can teleport until it's near the destination.
+- New command "spells" will display what area effects are currently active,
+  e.g. Pneuma, Warp Portal
+- Area effect spell appeared/disappeared message added,
+  domain skill, debug level 2
+- When displaying exp gained, also display % of base/job gained
+- New talk sequence code:
+  d# - send # to the NPC (useful for buying forging items)
+  If you wanted to buy 100 mini furnaces for example:
+  c r1 c r0 c d100
+- Auto-detect saveMap when you cast Teleport level 2. (If saveMap is
+  set incorrectly, you'll have to type 'respawn' twice; once to get it
+  to auto-detect the saveMap, and then it'll work the second time.)
+- parseMsg_statuslook verbose 1 displays status effects on you;
+  verbose 2 displays status effects on others.
+- "vl" (vender list) command now displays coordinates.
+- Automatic disconnection during specified times of the day.
+- If storage opening fails the first time for some reason, Kore will try again.
+- The bot will now look at NPCs when it is talking to them, like a real player.
+- When you issue a "move" command, this will clear previous move actions.
+- When the amount of zeny you have changes, you will be told.
+- Support for specifying hair color and hair style at character creation.
+- Improvements in the Wx interface: advanced configuration editor, info bar,
+  ability to send PMs.
+- Automatically raise stats.
+
+mon_control.txt:
+- mon_control.txt has gained more features. The new syntax is:
+  (monster name) (attack) (teleport) (search) (skillcancel) (lv) (joblv) (hp) (sp)
+
+- (attack-auto):
+  You can now mark a monster as "always aggressive". This means that, 
+  if a certain monster is on screen, Kore will always attack it, even
+  when Kore is sitting and the monster isn't attacking you.
+  In mon_control.txt, set the (attack_auto) flag to 2.
+  Example:
+  Skeleton Soldier 2 0 0 0
+- (level):
+  You can configure Kore to only attack a monster, if your base level is high
+  enough. Example:
+  Sohee 1 0 0 50
+  Only attack Sohee if your are lv 50 or higher.
+
+items_control.txt:
+- items_control.txt now has ability to automatically get items from cart
+  The new syntax is:
+  (item name) (minimum in inventory) (autostore) (autosell) [put in cart] [get from cart]
+  So to automatically keep 10 Meat in inventory from cart:
+  Meat 10 0 0 0 1
+
+New commands:
+- guild join (flag)
+  Accept or deny a guild join request.
+- pl (number)
+  Show detailed information about a player.
+- switchconf (file)
+  Switch to another configuration file.
+
+New config options:
+- attackMaxDistance (number)
+  You should set it to 2.5
+- useSelf_skill, partySkill and useSelf_item now also support the 'monsters'
+  and 'notMonsters' options.
+- New partySkill options:
+  * target_aggressives
+    Only activate partySkill if a certain monster attacks a party member.
+  * target_isJob
+  * target_isNotJob
+    Only activate partySkill for certain job classes
+
+- attackComboSlot {
+     ...everything that attackSkillSlot supports is also supported here...
+     afterSkill (skill name)
+     waitBeforeUse (number of seconds)
+  }
+  Use a certain attack skill, after another attack skill was last used.
+
+- avoidList_inLockOnly (flag)
+  Set to 1, if you want to avoid people on your avoid list when they
+  are on screen, but only when you are in lockMap.
+- pkServer (flag)
+  To to 1 if you're playing kRO or on a PK server.
+- dcOnMute (flag)
+  Disconnect when you have been muted by a GM.
+- attackMinPlayerDistance (number)
+  Only auto-attack monsters that are at least (number) blocks away from
+  other players. (number) is at least 3; if you enter a lower value, Kore
+  will treat it as 3.
+- teleportAuto_atkMiss (number)
+  Teleport if you've missed a monster more than (number) times in a row.
+  This is useful if you're trying to attack a monster with the wrong
+  elemental weapon, for example.
+
+- route_teleport (flag)
+  route_teleport_minDistance (number)
+  route_teleport_maxTries (number)
+
+  While walking to other maps, Kore will teleport until it's near a
+  portal, if route_teleport is enabled. It will keep teleporting until
+  it's at least route_teleport_minDistance steps away from the portal.
+  It will attempt to teleport at most route_teleport_maxTries times,
+  before falling back to walking.
+  It's recommended that you set a value between 100 or 200 for
+  route_teleport_minDistance.
+- New conditions _whenGround and _whenNotGround can e.g. cast a skill
+  only if certain conditions are met. For example:
+
+  useSelf_skill Pneuma {
+      lvl 1
+      monsters Raydric Archer
+      whenNotGround Pneuma
+  }
+
+  will use the Pneuma skill if you are fighting Raydric Archer, and
+  there is not already a Pneuma affecting you.
+- New condition _whenIdle for use only when the bot is doing nothing
+- Automatic disconnection during certain times of the day. Example:
+
+  autoBreakTime Sun {
+    startTime 21:29
+    stopTime 1:08
+  }
+
+  will disconnect at 9:29 P.M. on Sunday and resume botting at
+  1:08 A.M. on Monday.
+  You can only specify breaks of less than 24 hours.
+  You can add multiple break times by adding additional blocks.
+  Only specify the first three letters of the week day.
+- The autoConfChanged syntax has changed, and is now more powerful.
+  autoConfChange (filenames...) {
+    minTime (number)
+    varTime (number)
+    lvl (range)
+    joblvl (range)
+  }
+
+  (filenames...) is a list of filenames, seperated by comma. A
+  random file out of this list will be selected.
+  Kore will wait at least minTime seconds, and at most minTime + varTime
+  seconds before switching config file.
+  If lvl and joblvl are given, Kore will only switch config file if you're
+  in the given level or job level range.
+- teleportAuto_dropTarget (flag)
+  Teleport if you can't reach a monster.
+- partyAggressives condition works like aggressives, but also counts
+  monsters that have fought party members.
+- New attackSkillSlot option: _notMonsters
+  attackSkillSlot Bash {
+    lvl 1
+    dist 1.5
+    notMonsters Green Plant, Poring, Lunatic
+  }
+- itemsTakeAuto_party 1 will take items from monsters killed by party members.
+- attackAuto_party can be set to 2 instead of 1; this will only attack
+  monsters that attacked the party, and not monsters that the party hit.
+  This fixes the "tank hits monster, bot mage casts spell on monster, monster
+  hits bot since it hasn't retaliated against the tank yet" problem.
+- New config "attackCheckLOS 1"; when activated, this will enable the new
+  experimental LOS check code. If you are a ranged attacker
+  (attackDistance > 2), this code will check whether it thinks you have a
+  clear line of attack to the target; if not, it will attempt to move to a
+  space where you do, while respecting runFromTarget_dist and
+  followDistanceMax. This code isn't perfect yet! It will frequently be unable
+  to find a solution.
+- Config option attackNoGiveup will make bot not stop attacking enemy
+  even if it can't damage it. Useful if your attackSkillSlot is e.g.
+  Spell Breaker.
+- attackCanSnipe (flag)
+  Set to 1 if your character can snipe (archers/mages).
+- statsAddAuto (flag)
+  Automatically increase stats.
+
+  statsAddAuto_list (stats)
+  Example:
+  statsAuddAuto_list 10 vit, 20 str, 25dex, 30 vit, 30 str, 50 vit, 40 str
+
+
+New timeouts.txt options:
+- ai_attack_unfail 5
+
+Bug fixes:
+- Kore can walk on walkable water now (bug #21).
+- Don't open shop immediately after login in X-Kore mode (bug #49).
+- sitAuto_idle doesn't conflict with shopAuto_open's timeout now (bug #50).
+- MO_BODYRELOCATION is now recognized as an area-usage skill.
+- Don't display "level 65535" when an area-usage skill is used.
+- Incoming Request to join Guild message now displays guild name.
+- Alchemist potions aren't called [?254] anymore.
+- Cards in equipment in storage weren't being displayed.
+- $item->{type} is now set correctly for equipment in storage.
+- When following players by name, typing 'follow A' then 'follow B' would
+  cause you to still be following A instead of B.
+- Fixed a crash when cart inventory is not available (such as during login).
+- Fixed chat room creation with non-default usercount, private-flag and passwd
+- $config{'char'} eq '' is no longer treated as $config{'char'} == 0
+- Route AI should get stuck a lot less now.
+- Autostorage will now walk back to the NPC if it fails to teleport back.
+- Item <x> has been upgraded to <y> now correctly shows the old upgrade
+  level for <x>
+- When determining whether not to attack a monster due to it being too
+  close to another player (to avoid KSing), exempt party members.
+  Implemented in positionNearPlayer().
+- teleportAuto_search no longer spams the server with the teleport packet
+  many times per second.
+- Guild login/logout and chat messages no longer show blanks all the time.
+- Kore will not attack monsters that are trapped by non-party members, or
+  monsters that are being lured.
+- Chat room list is correctly cleared on map change.
+- The skill_use AI sequence will now wait until the skill has finished casting.
+- Typing "talk no" while not talking to an NPC would cause disconnection;
+  "talk no" is no longer allowed in that case now.
+- Headgear display for "pl <#>" command will say Unknown instead of None
+  as appropriate.
+- "storage get" no longer requires AI to be enabled.
+- Fixed PM list synchronization bug.
+- Fix attackAuto_onlyWhenSafe: ignore party members.
+- If itemsGatherAuto is 1, don't gather items while walking towards a
+  monster, or when there are aggressive monsters on screen.
+- Casting area-effect skills (e.g. Safety Wall, Warp Portal, Storm Gust)
+  works again now (ai_skillUse() was passing $args{target_x} instead of
+  $args{x}).
+- Warp Portal opening message now shows correct person name
+- Warn when user specified a useSelf_skill with an invalid name
+  instead of trying to cast an empty skill ID
+- "Monster x changed to y" message no longer displays blank y
+- Check for numeric argument in Commands::cmdUseSkill.
+- Fix crash in party check of positionNearPlayer().
+- Fix crash in calculating exp gained %.
+- Fixed bug in "cartGet" AI sequence
+- Fixed the location of the AI_post plugin hook
+- When attempting to "deal add" an item that the other party cannot
+  carry, display the appropriate error message and don't pretend that the
+  item is not in inventory anymore.
+- "Player are now: Blessing" changed to "Player is now: Blessing"
+- When creating a character using openkore, there will no longer be
+  garbage trailing the character name.
+- Command "ai" returns error if invalid parameters are given.
+- Kore will no longer incorrectly timeout when using d# talk sequence code.
+- When using a teleport NPC, get 10 spaces away instead of 3 spaces away.
+  Lets you use e.g. the guild castle flags on the unwalkable water in Payon.
+- Fix auto cart bug for equipped items.
+- Fix corrupted character name displayed upon creation.
+- Maybe fix "Incoming Request to Ally Guild '1'" message.
+- route_randomWalk on non-contiguous maps will no longer try to leave the
+  map to get to the other section.
+- Don't auto-attack monsters that are behind a wall.
+- Don't walk away after picking up items; immediately attack other
+  monsters on screen.
+
+Internal:
+- findIndex() and related functions are now much faster (bug #16).
+- writeDataFile*() won't write trailing spaces.
+- Functions in Tools.dll are now called through XS, Perl's native
+  C-to-Perl interface.
+- Kore now detects what directory its executable is in, and adds it to
+  its include path (@INC).
+- Some parseMsg messages moved to parseMsg_presence.
+- Improved lockMap and randomWalk settings. Without route_randomWalk,
+  lockMap_randX/Y modify the lockMap_x/y position by a random amount. If
+  route_randomWalk is set, lockMap_x/y and lockMap_randX/Y specify the area
+  in which randomWalk should walk.
+- Automatically remove player entries, when that player is more than 35 blocks
+  away. Sometimes players don't get removed from the list for some reason.
+- Detect what weapon (later shield) people are using.
+- "Player Info" message domain is now parseMsg_presence instead of parseMsg
+- itemName()/itemNameSimple() function now returns "None" for item #0
+- ai_getAggressives() now accepts a second optional argument $party;
+  if true, it will return monsters that have fought party members
+- Don't avoid walls when moving to monsters.
+
+
+==================
+### 1.4.12
+==================
+
+New features:
+- A storage log is saved in logs/storage.txt
+- Wx interface: ability to minimize to tray.
+- Win32 console interface:
+  * Support for Ctrl-U, for clearing to the entire input line.
+  * History keys behave more like that of the Wx interface now.
+
+Bug fixes:
+- Don't stand still after picking up items, if there are aggressive monsters.
+- Fix PM list synchronization bug.
+
+
+==================
+### 1.4.11
+==================
+
+New config options:
+- XKore_silent (flag)
+  Set to 1 if you're in X-Kore mode, and you don't want Kore messages to
+  show up in the RO client.
+
+Bug fixes:
+- teleportAuto_allPlayers will only teleport when in lockMap (as 
+  opposed to *not* in lockMap from the previous release).
+- Guild chat messages and eAthena server messages are displayed
+  correctly again.
+- Color codes are now stripped from NPC messages.
+
+Credits:
+- Joseph: NPC color code stripping.
+
+
+==================
+### 1.4.10
+==================
+
+For those who are confused about the version number:
+This is 1.4.10, not 1.4.1.0. The version number didn't go backwards. 10
+comes after 9, right?
+
+Bug fixes:
+- When an aggressive monster attacks you while walking to lockMap, Kore
+  will attack all non-aggressive monsters before it continues to walk to
+  lockMap. This has been fixed.
+- oRO and euRO language characters (|00) are now supported.
+- Some teleport_search flooding bugs are fixed.
+- teleportAuto_allPlayers will only teleport when not in lockMap (or
+  when lockMap is not set).
+
+New config options:
+- chatLangCode (code)
+  If your RO server uses language codes in chat messages, you can specify
+  that here. euRO and oRO use "|00" (without quotes) as language code.
+  If you leave this option empty, the language code will be automatically
+  detected whenever Kore sees someone talking. Set to "none" if your
+  server does not use language codes, and you don't want it to (falsely)
+  autodetect the language code.
+
+Credits:
+- doenet: euRO and oRO language character support.
+- jsteng: monster type change packet support.
+
+
+==================
+### 1.4.9
+==================
+
+Wx interface:
+- Improvements to the map viewer:
+  * Monsters and players are now also displayed.
+  * Drawing is now double buffered. This means no more flickering on Windows.
+- There's now a listbox showing the current players on screen.
+- You can select between "command mode" and "chat mode". In command mode,
+  the text you enter in the input box are recognized as commands. In chat
+  mode, the text you enter will become chat messages, just like when you
+  enter text in the real RO cient.
+
+New config options:
+- teleportAuto_allPlayers (flag)
+  If set to 1, teleport when anybody is on screen.
+
+
+==================
+### 1.4.8
+==================
+
+New features:
+- A new config.txt parser!
+  Do you also hate config options like this?
+  useSelf_item_0 Apple
+  useSelf_item_0_hp < 50
+  useSelf_item_0_whenStatusActive Inc AGI
+  useSelf_item_1 White Potion
+  useSelf_item_1_hp < 10
+  useSelf_item_1_whenStatusActive Blessing
+
+  Instead of the above, you can now write this:
+  useSelf_item Apple {
+      hp < 50
+      whenStatusActive Inc AGI
+  }
+  useSelf_item White Potion {
+      hp < 10
+      whenStatusActive Blessing
+  }
+
+  As you can see, no more messing with numbers, or typing long lines!
+
+Bug fixes:
+- Remove the "Inventory:" debug message that I forgot to remove.
+- Correctly resize the map viewer in Wx interface.
+- Hopefully fixed the autostorage-vs-sitauto bug.
+
+
+==================
+### 1.4.7
+==================
+
+New features:
+- The Wx interface now supports input history. Use the up and down arrow
+  keys to retrieve commands that you typed previously.
+
+Bug fixes:
+- Fixed display of items with cards.
+- The map viewer now resizes properly when detached.
+- Don't autorestart while picking up items.
+- Win32 console interface: don't eat 100% CPU while waiting for input.
+
+
+==================
+### 1.4.6
+==================
+
+- Fixed the judgeSkillArea() error. I forgot to add this function in the
+  last release, which caused Kore to crash.
+
+
+==================
+### 1.4.5
+==================
+
+New features:
+- When a monster casts on you, you can switch target and/or avoid its spell.
+  You can turn this option on by editing mon_control.txt. The new syntax
+  for mon_control.txt is:
+  (monster name) (attack) (teleport) (search) (avoid spell)
+
+  Example:
+  Minorous 1 0 0 1
+  The "1" at the end will make Kore avoid spells casted by Minorous.
+- Ability to automatically put items in cart. You can do this by editing
+  items_control.txt. The new syntax is:
+  (item name) (minimum in inventory) (autostore) (autosell) [put in cart]
+  So to put all Flowers in cart:
+  Flower 0 0 0 1
+- Wx interface's map viewer can now attach to and detach from the main window.
+
+New config options:
+- attackMinPortalDistance (number)
+  Only auto-attack monsters that are at least (number) blocks away from a
+  portal. The default value for (number) is 4.
+
+Bug fixes:
+- Hopefully fixed some stuck problems.
+- Hopefully fixed the teleport-search-vs-autosit bug (bug #67).
+- Arrow equip is detected correctly.
+- Lag will no longer (incorrectly) trigger autostorage/autobuy/equipauto.
+- Fix partyAutoShare.
+- Clear AI after autorestart.
+- Fix display of guild name in guild join request.
+- useSelf_skill_# skills and useSelf_item_# items can now be used while
+  using attack skills.
+
+Credits:
+- jsteng: Arrow equip bugfix, lag bugfix.
+- Joseph: Spell avoiding, target switching
+- anu: Fix display of Alchemist potions.
+- Steven80s: new portals and maps.
+
+
+==================
+### 1.4.4
+==================
+
+New features:
+- Ability to take an item as fast as possible (as soon as it appears):
+  in pickupitems.txt, set the flag to 2. Example:
+  Vitata Card 2
+  This will pick up Vitata Card as soon as it appears.
+- Auto-drop support: automatically drop an item when it appears in the
+  inventory. This is useful for Rogues with auto-steal.
+  In pickupitems.txt, set the flag to -1.
+
+Bug fixes:
+- The "monster with no name" bug should be a lot less common now, if it
+  still exists at all.
+- Fixed a bug which caused unjustified "Can't reach target" messages.
+- Fixed party auto share.
+
+Credits:
+- Joseph: Auto-drop, fast item take
+- mfr, Xeno-chan: advanced 2-2 skills support.
+- Steven80s: Umbala maps and portals
+
+
+==================
+### 1.4.3
+==================
+
+Bug fixes:
+- *Really* fixed the telportAuto_search bug this time.
+
+
+==================
+### 1.4.2
+==================
+
+Bugfixes:
+- Re-entering a username/password works correctly now (bug #45).
+- Wx/MapViewer.pm is now added to the source distribution.
+- *Really* fixed the bug which causes an infinite loop if the target
+  monster is not reachable.
+- Don't stand still for so long after having killed a mob.
+- Fix teleportAuto_search. It totally ignored other AI sequences, like
+  autoBuy.
+
+
+==================
+### 1.4.1
+==================
+
+New features:
+- idRO's new secure login keys are now supported. Set secureLogin_type to 4
+  or 5, depending on your server.
+
+New config options:
+- secureLogin_requestCode
+  If idRO's secure login key changes again, you don't have to modify the
+  source code to be able to login. Put the secure login key in this option.
+  Example:
+  04 02 22 37 D7 FC 8E 9B 05 79 60 AE 02 33 6D 0D 82 C6
+  (Do not append "DB 01" at the end of the key; it's automatically 
+  appended.)
+
+Bug fixes:
+- The shop.txt parser now correctly handles CRLF (DOS) line endings in Linux.
+- If you type "stand", then type "sit", Kore will sit and then stand.
+  This is fixed.
+- Don't attack monsters that are standing on a spot that's unwalkable
+  according to the field file. This prevents an infinite loop.
+- getAuto never gets triggered if you're low on a certain item. This has
+  been fixed.
+
+
+==================
+### 1.4.0
+==================
+
+New features:
+- "<name> refined weapon <success/failure>" messages from modkore added.
+- New Amatsu emotions are now supported. You must download the latest
+  default table files.
+- If attackAuto_inLockOnly is set to 2, Kore will ignore all aggressive
+  monsters while walking to lockMap.
+- "<name> refined weapon <success/failure>" messages from modkore added.
+
+Bug fixes:
+- Fixed login problems with newer eAthena versions (2nd session id, bug #28)
+- If attackAuto is set to 0, Kore will no longer attack all monsters
+  while moving to lockMap.
+- When in X-Kore mode, do not quit on payment/banned error (fix by anu).
+- State changes (like Frozen) are now correctly detected again.
+- Fix typo which cause lockMap_randX/Y to not work.
+- The 'cart add' command now checks whether you have a cart.
+- Fix some memory leaks.
+- Various messages no longer spam X-Kore.
+- partySkill targetTimeout is now honored.
+- 'talk num' command bugs fixed.
+
+New config options:
+- teleportAuto_useSP - use SP (cast skill) when using teleport without item
+
+Credits:
+- mfr: Updated emoticon list.
+
+
+==================
+### 1.3.5 (beta)
+==================
+
+- Fixed a rare bug which caused OpenKore to quit with a "version too old"
+  error.
+
+
+==================
+### 1.3.4 (beta)
+==================
+
+Hopefully the last beta.
+
+*** NOTE ***
+- portalsLOS.txt has changed. Please use the portalsLOS.txt from the
+  latest tablepack, or delete your copy and let Kore recompile it.
+
+
+New features:
+- Added (n)curses text UI console interface for Unix. You can start it with
+  the parameter: --interface=Console::Curses
+- Added command 'arrowcraft' - making arrows
+
+Bug fixes:
+- Fixed shopAuto_open timing problems with sitAuto (also changed ai_shop
+  timeout).
+- Option to teleport when stuck.
+- Fix crash when you trying to (un)equip a nonexistant item.
+- Fixed command "timeout" not displaying the current timeout.
+- Fixed AI not suspending, when playing manually in XKore mode.
+- Fixed XKore sending commands before map was loaded completely
+  (fixes empty inventory or skilllist with eAthena servers).
+- Made motion not stop 3 steps from goal when crossing maps.
+- Fixed bot not reacting to damage during mapRoute calculation.
+- The Linux interface's input mode will be correct restored after a resume.
+- ai_dealAuto added to timeouts.txt.
+- Typing "aiv" during an auto-deal will no longer crash.
+- The 'timeout' and 'auth' commands now respect the --control parameter.
+- When out of arrows, only ask the user to press ENTER if dcOnEmptyArrow
+  is set (bug #14).
+- The 'follow' command will now work with names that contain symbols (bug #12).
+- The 'conf' command won't reveal passwords anymore (bug #18).
+- Fixed teleport using a skill not working on Athena servers (bug #17).
+- Fixed command 'i neq' (show unequipped items) not working.
+- The portalsLOS.txt entry for gef_dun00 -> gef_dun01 is fixed. This means
+  Kore can correctly walk from gef_dun00 to gef_dun01 again.
+- Advanced 2-2 classes are now correctly identified.
+- Fixed a bug which caused portalsLOS.txt to be generated incorrectly.
+- Fixed route AI problems with mazes and narrow passages
+- Added all prt_maze* portals. If you bot there, please report your
+  experiences at http://openkore.sourceforge.net/forum/viewtopic.php?p=16098
+
+New config options:
+- teleportAuto_unstuck - teleport when stuck.
+
+==================
+### 1.3.3 (beta)
+==================
+
+Bug fixes:
+- Fixed useSelf_skill. It didn't work in the previous beta because of a typo.
+- Fixed party skills; they weren't working because of typos.
+- Fixed shopAuto_open flooding console with "A shop has already been opened.".
+- Fixed route AI not decreasing step size when stuck
+
+New features:
+- 'al', 'testshop' and 'openshop' commands now display the shop title
+
+
+==================
+### 1.3.2 (beta)
+==================
+
+NOTES:
+- Because of a routing bugfix, portalsLOS.txt will need an update. It's
+  recommended that you do one of the following things:
+  * Download the latest tablepack, and extract portalsLOS.txt into your
+    tables folder.
+  - OR -
+  * Delete your portalsLOS.txt and let Kore recompile it.
+- Shop.txt format has changed! See below.
+- Syntax of the console command "conf" has changed! See below.
+- The attack routing behavior has changed. It's recommended that you
+  lower your attackDistance to 1.5.
+
+Bugs:
+- attackAuto_onlyWhenSafe doesn't work.
+
+New features:
+- X-Kore works on Windows 98/ME now!
+- Properly recognizes advanced seconds classes.
+- The console window title now displays useful information.
+- Rudimentary Abracadabra support. Set 'noAutoSkill 1' in config.txt,
+  then keep using 'ss' command to cast Abracadabra. If it says that you're
+  permitted to use Mono Cell, Summon Monster or Class Change, you can then
+  activate those skills using 'monocell <#>', 'monster' or 'mvp <#>'.
+- Ability to only active a skill/use an item, if you have a certain item
+  in inventory.
+  This is useful for skills that require an item in the inventory (Stone
+  Curse, Warp, Aqua Benedicta, etc.)
+  http://openkore.sourceforge.net/forum/viewtopic.php?t=1729
+- Dual-wielding assassin left hand damage is now displayed.
+- PVP damage is now displayed.
+- Added command 'talk text blablabla' and the ability to specify text reply
+  in portals' NPC steps (t="some text")
+- Added command 'death <player #>' for use if you get the Death spell from
+  Abracadabra.
+- Added command 'kill <player #>' to make the bot attack in PVP.
+- Command "conf <var>" now shows the value of var. To set var to nothing,
+  use "conf <var> none".
+- A new, WxWidgets-based interface.
+- Failed skill usage (e.g. insufficient SP, overweight) is now displayed
+  at normal verbosity.
+- Show exp percentage gained per hour
+- When failed to connect to server, display why (e.g. "Connection refused")
+- logs/shop.txt will show what was sold when
+- New format for control/shop.txt! The first line is the shop title.
+  The rest of the lines are (tab delimited):
+  <item>	<price>	[<quantity>]
+- Added 'testshop' command which tells you what your shop would sell
+  if you opened it.
+- NPC coordinates are now displayed in the "NPC Exists" message.
+- "-- Not Identified" is now displayed as appropriate in i/cart/storage.
+- Unidentified items will no longer be selected for vending.
+
+New config options:
+- *_inInventory_name : inventory item name
+  *_inInventory_qty  : check for quantity
+  These are add-ons for the skill usage, item usage and equipAuto config
+  options.
+- *_onAction : check for current active AI sequence (eg attack, move...)
+- partySkill_target: comma seperated targets
+- bindIp : if your host has multiple IP addresses, you can select which
+  one to use
+- squelchDomains : Sets verbosity of a message to 5
+  if it is in that domain, e.g. "conf squelchDomains skill" if you don't
+  want your vendbot to be spammed by people using skills in town
+- dcOnDisconnect : If kore gets disconnected from the server, it will exit.
+- ignoreInvalidLogin : ignore Missing Account Error
+- teleportAuto_sp: for those acolytes thats low on sp
+
+Bug fixes:
+- "vender" command now properly detects the "end" argument. Bugfix by Fenris.
+- Attacks will now properly time out when failed.
+- Properly support tabs in avoid.txt
+- equipAuto for teleport/skills now works, require ai_equipAuto_skilluse_giveup
+  in timeout.txt
+- Hopefully fixed bug where typing 'follow a' and then 'follow b' will make
+  bot still follow a
+- autoTalkCont bugfix by fov.
+- Fixed useSelf_skill_smartHeal disabling support for heal lvl1
+- Fixed chat messages c/g/p/pm - moved them to ai
+- Fixed new ai_skillUse to support temporary skills.
+- Fixed 'monster', 'mvp' and 'death' commands to work with new ai_skillUse.
+- Fixed storage access when storage is empty.
+- Various routing bug fixes (by jsteng).
+- Fix typo in code block for packet 010F: rename $ID to $skillID.
+- 'talk resp' now works correctly with NPCs that present a list of selections
+  without saying anything else.
+- Emotions that aren't in the lookup table will be displayed by number.
+- Sit/stand and attack messages were getting mixed up.
+- Skill failed messages now display the correct reason. (The old code
+  decoded the packet incorrectly.)
+- Saving at Kafra no longer prevents you from talking to another NPC
+  until you relog/leave the screen. (Added sendTalkCancel call to
+  00B6 packet handler.)
+- Hopefully fixed carded/elemental weapon name being corrupted when
+  "Cart Item Added" message uses 01C5 packet.
+- "Cart Item Added" message wasn't being shown when a stackable item
+  that you already have some of is added to the cart.
+- Setting a non-existant configuration variable will now produce an error
+  message.
+- dcOnDisconnect now handles packet 0081 too. (Why did I have to type
+  $config{dcOnDisconnect} in the code 3 times instead of 1?)
+- Message domain 'skill' was not properly labeled when other people are
+  spamming skills in town.
+- checkConnection() will no longer be called if $quit is true.
+- storageAuto now continues with the next item, if the last item wasn't
+  put into storage (e.g. because storage is full)
+
+Internal:
+- Portal compilation is now 30% faster.
+- Added AI.pm, which is a wrapper for @ai_seq and @ai_seq_args.
+- Added $char, an alias for $chars[$config{'char'}].
+- ai_skillUse's first parameter is skillID (eg AL_HEAL) rather then the
+  internal ID Number
+- cards.txt is no longer used. Card names are taken from items.txt
+  s/ Card$// instead.
+- Inventory is now cleared on mapchange (fixes problems with eAthena)
+
+Credits:
+- Fenris: Tk interface improvements.
+- aputs: Inventory checking config options, vending improvements.
+- fov: Storage access bugfix, conf command bugfix, routing improvements,
+  console improvement in unix screen sessions, some improvements related
+  to eAthena servers.
+- brianhj: 010F packet typo fix.
+- pmak, float: All kinds of stuff.
+
+
+==================
+### 1.3.1 (beta)
+==================
+
+New features:
+- Easier and more flexible avoid.txt format by joseph.
+  You should download the new avoid.txt from the latest confpack! The
+  old format is not supported anymore.
+  See also http://openkore.sourceforge.net/forum/viewtopic.php?t=1633
+
+- Support for idRO: secureLogin_type 3
+- Added north/east/south/west/northeast/southeast/southwest/northwest
+  commands to manually move the bot in that direction. If you want
+  abbreviations for these commands like in a MUD, put this in your config.txt:
+
+  # short movement commands
+  alias_n north
+  alias_e east
+  alias_w west
+  alias_s south
+  alias_ne northeast
+  alias_se southeast
+  alias_sw southwest
+  alias_nw northwest
+
+  # new names for existing commands
+  alias_sc s
+  alias_em e
+
+Bug fixes:
+- Possibly fixed the "utf8.pm not found" error.
+- Fix monster status/ailment detection.
+- Fix getAuto.
+- Attacking party or followTarget's monster is never considered KS.
+- Added some unstucking routines.
+  The teleportAuto_noUnstuck configuration option will make bot not 
+  teleport when it's stuck.
+- Hopefully fix zeny display when dealing for real.
+- "respawn" command now works when dead.
+
+Minor tweaks:
+- Show (x, y) position after teleporting.
+- Automatically display coordinates of portal when encountering it.
+- Show number of slots on items on the floor.
+
+Known bugs (will be fixed later):
+- equipAuto_#_skill doesn't seem to work at all.
+
+==================
+### 1.3.0 (beta)
+==================
+
+** Important notices:
+- The format of portals.txt and portalsLOS.txt have been changed. You must
+  upgrade to the latest tablepack.
+
+- Tools.cpp has changed. Linux users must recompile Tools.so.
+
+- attackSkillSlot, useSelf_skill and useSelf_item and gotten a major
+  revamp. It is recommended that you create recreate your configuration
+  from scratch using the default config.txt.
+
+  The biggest change is that _lower/_upper and that kind of things have
+  been deprecated in favor of "range operators". For example, this:
+    useSelf_skill_0_hp_lower 0
+    useSelf_skill_0_hp_upper 50
+  becomes:
+    useSelf_skill_0_hp <= 50
+
+  However, the old _lower/_upper syntax is still supported.
+
+
+--------------------------
+
+
+New features:
+- Kore will no longer hug walls. Walking should be smoother now.
+- Startup is now *much* faster than before.
+  We've gotten rid of the "forking input server".
+- Command prompt improvements:
+  * Your command prompt will now be kept visible even when output is printed
+    to the screen.
+  * You can get the command you previously typed by pressing the Up/Down arrow
+    key.
+  * Keys like the Left arrow, Right arrow, Home and End now work.
+
+- Support for priority attacks. Current only works with aggressive monsters.
+  See control/priority.txt for more information about how to use this.
+- You can now set your own NPC storage steps.
+  See the configuration options storageAuto_npc_type and
+  storageAuto_npc_steps
+- Support command aliases. For example, you can write in config.txt:
+      alias_heal sp 9
+  and then if you type "heal 0", it will behave as if you typed
+  "sp 9 0", so if spell #9 is Heal it will cast Heal on player #0.
+- Even better support for opening warp portals.
+  New command: warp list (list warp portal maps)
+- Support for sending numbers to NPCs.
+  For example, you can now buy Phracons in the Prontera upgrade shop.
+  New command: talk num (#number)
+- Background colors in consolecolors.txt are now supported.
+- Added optional parameter for chist, "chist 10" will show last 10 lines of
+  chat.txt.
+- Better support for secure logins.
+- Support for party skills.
+- Added ability to activate skills or use items based on current active
+  skills (such as blessed, agi upped, etc). This allows you to re-activate
+  skills that have been deactivated without using timeouts.
+  This is similar to modkore's _inStatus/_outStatus feature.
+- Added ability to activate skills or use items based on current
+  status ailments/looks (like poisoned, hidden, etc.)
+- Added ability to equip items based on the current situation (hp, sp,
+  what skills you're about to use, etc.)
+  This allows you to, for example, equip a teleport clip just before you
+  use teleport.
+- The Linux version now automatically compiles Tools.so for you if it
+  doesn't exist.
+- The "follow" feature can now follow the master even if he's off
+  screen, if the master is in the same party.
+- The Linux version now longer needs --daemon.
+  So './openkore.pl &' will Just Work(tm).
+- You can now specify a location instead of NPC ID for storage/buy/sell.
+  Format: map x y
+  eg: storageAuto_npc prontera 29 207
+  You must also add ai_npcTalk to timeout.txt
+- monk's spirit is now supported, format: useSelf_skill_x_spirit < 5
+
+New commands:
+- warp list
+  List warp portal maps.
+- talk num (#number)
+  Respond to an NPC with a number.
+- plugin
+  Control plugins. Type 'plugin help' for full usage description.
+- ai clear
+  Clears the AI sequence queue.
+
+
+New configuration options:
+- shop_random
+  When set to 1, the item order in the shop will be randomized. The behavior
+  in the previous releases was to always randomize shop item order, but now
+  it's configurable.
+- storageAuto_npc_type and storageAuto_npc_steps
+  If storageAuto_npc_type is blank it will use the current steps (and
+  display a warning)
+  			     1 it will use the current steps (c r1 n)
+  			     2 it will use the steps for the comodo npcs (c c r1 n)
+  			     3 it will use the steps defined in autoStorage_npc_steps
+  storageAuto_npc_steps is a (any number of) space(s) seperated list of
+  commands to send while attempting to store.
+  These commands consist of n which will send the cancel command
+  			    c which will send the continue command
+  			    r* which will send a responce where the responce number is *
+  			    (NOTE responce numbering starts at 0 (unlike it does if you
+  			    are using sendTalkResponse)) after training everyone to start
+  			    counting at 0, i thaught it best to preserve it ;)
+- secureLogin
+  secureLogin_type
+  secureLogin_account
+  These options are used for secure logins.
+- partySkill_#_*
+  Used for party skills.
+  See config.txt in the latest confpack.
+- useSelf_skill_#_whenStatusActive
+  useSelf_skill_#_whenStatusInactive
+  useSelf_item_#_whenStatusActive
+  useSelf_item_#_whenStatusInctive
+
+  Activate skill/use item only if your character have a certain status
+  ailment/look, like poisoned, hidden, etc. Take a look at
+  skillslooks.txt, skillsstate.txt, skillsstatus.txt and skillsailments.txt in the
+  latest tablepack for a list of names.
+- equipAuto_*
+- useSelf_skill_#_notWhileSitting
+  If set to 1, this skill will not be used while sitting.
+- useSelf_skill_#_notInTown
+  If set to 1, this skill will not be used if you're in town.
+- route_maxWarpFee
+  The maximum amount of money you're willing to spend on a Kapra which
+  teleports you to another map.
+- autoTalkCont
+  If set to 1, kore will automatically type 'talk cont' for you when
+  you're in a conversation with an NPC.
+- attackAuto_inLockOnly
+  When walking to lockmap, only attack monsters if this option is set to 0.
+
+Bug fixes:
+- Fixed comma placement in formatNumber sub (its what puts the commas
+  in your zenny amount).
+- When in X-Kore mode, the RO client will still work if you shutdown
+  Kore. However, you can't start Kore in X-Kore mode again until you've
+  restarted the RO client.
+- Kore will now correctly continue if it gets resurrected before respawn.
+- Even if it was resurrected using the Resurrection skill.
+- avoid_ignore now works properly.
+- Kore now works correctly on eathena servers.
+- Damage numbers above 65535 (e.g. from Guillotine Fist) should be
+  displayed correctly now, but my monk can't do that much damage; can
+  someone test and report on the forum please?
+- Fixed bug where openkore would say "Unknown uses" instead of the
+  correct name of the player who had cast an area attack spell.
+- Carded and forged items should now be displayed correctly everywhere
+  (inventory, deal, cart, storage, vending shops). Post your comments in
+  http://openkore.sourceforge.net/forum/viewtopic.php?t=1491
+- openkore now supports the use of more area effect spells using ss/sp
+  command.
+- And lots of other misc bug fixes.
+
+
+Internal:
+- Fully migrated to the logging framework. Thanks to floAt.
+- Experimental plugin system.
+- Interfaces are closer to completion --interface can now be used on the
+  command line to select an interface to use. 'Console' is the default 
+  interface. There is only one alternate interface at this point 'Tk' a
+  stripped down version of modKore's Vx mode.
+- Support packet 01D7 (Karasu).
+- New functions itemName() and itemNameSimple() to parse item info.
+- teleportAuto_portal bugfix by joseph.
+- stat_add limit bugfix by joseph. Do not allow the user to add more
+  than 99 points.
+
+
+Special thanks:
+- Ven'Tatsu: Interface stuff, A* pathfinding enhancements.
+- pmak: various bug fixes and enhancements, as well as assisting me with
+  maintaining the website.
+- jsteng: simplified move AI code, skill use improvements, NPC
+  interaction improvements, revamped routing AI.
+- anu: support for new deal packets.
+- aputs: support for status ailments/looks.
+- floAt: support for NPC positions instead of NPC IDs; party follow,
+  spirit sphere support, etc.
+
+
+==================
+### OpenKore 1.2.1
+==================
+
+- Removed error handler; it seems to be causing problems.
+- Storage fix.
+- Fix a crash with swrite() when using Perl 5.8 on some Linux systems.
+- Fix a divison by zero error.
+- Fix creation of "logs" folder on Win32.
+
+
+==================
+### OpenKore 1.2.0
+==================
+
+NOTE: This release depends on:
+* tablepack version 1.2.
+* The Perl module Win32::Console::ANSI (only if you're not using the .exe)
+
+New features:
+- Console text is now colorized. The colors are defined in
+  control\consolecolors.txt
+- You can now specify more than one item in useSelf_item_#.
+- New regular expression for detecting GM names. This will get rid of many
+  false matches. Names like "LaGMaster" don't match anymore.
+- If dcOnDisconnect is set to -1, kore will not respawn nor disconnect on
+  death.
+- mon_control.txt's auto-teleport flag can now have two values:
+  1 = teleport when monster's on screen
+  2 = teleport when monster hits you
+- Ability to automatically switch configuration file after a while.
+  See the "New/changed config option" section about autoConfChange.
+- Ability to tell kore to never sit, even when overweight.
+- Both party and deal requests can now be auto-accepted.
+  See the "New/changed config option" section about paryAuto/dealAuto.
+- "drop" and "storage get" can now drop/get more than 1 item. Example:
+  storage get 4,7   (gets storage item 4 and 7)
+  drop 3,5          (drops inventory item 3 and 5)
+- dumpData() now also dumps raw data so you can see strings (just like in
+  hex editors).
+- Ability to open a warp portal. See the "New commands" section about
+  'sl' and 'warp'.
+- A new experience report feature.
+  See the "New commands" section about 'exp'.
+
+
+Changes:
+- Kore is now partially split into multiple modules.
+- Some memory leaks have been fixed.
+- Loading fields is now 3 times faster (it takes 0.3 seconds on my Athlon
+  1.4 Ghz).
+- Don't immediately reconnect if connecting to master server times out.
+- The "sit" command now also sets itemsGatherAuto to 0.
+- Don't drop target when a monster has already attacked you, but switches
+  target later. This fixes a lot of "kore walks away when being kill
+  stealed" complaints.
+- Don't autorestart while taking items.
+- Completely revamped cart inventory handling.
+- Fixed storage issues.
+- Log files (item log, chat log, walk.dat) are now stored in the logs folder.
+
+
+New commands:
+- cart desc - similar to 'i desc' but for the cart.
+- Added the commandline argument --daemon. This argument allows you to
+  start kore without input server so kore won't read input from console.
+  Mostly useful for Linux users who run kore as a background service.
+- sl - use skill on location
+- warp - open warp portal
+- exp - detailed report of gained experience, killed monsters, etc.
+
+
+New/changed config options:
+- useSelf_item_# can now be a comma-seperated list. Example:
+  useSelf_item_0 Red Potion, Yellow Potion
+- Config options for automatically switching configuration file:
+  autoConfChange, autoConfChange_files, autoConfChange_min, autoConfChange_seed
+
+  If autoConfChange is set to 1, switch configuration file after a certain
+  amount of time. It's calculated as follows:
+  time = autoConfChange_min + random(autoConfChange_seed)
+
+  autoConfChange_files is a comma-seperated list of filenames. A random
+  file from that list will be chosen as the new config file to load.
+
+  Think of this feature as a more flexible version of timed lockMaps.
+  With this feature you can not only set different lockMaps, but also
+  different Kapras.
+- sitAuto_over_50: when set to 1, kore won't sit when overweight.
+- The config options "partyAutoDeny" and "dealAutoDeny" have been
+  replaced by "partyAuto" and "dealAuto".
+  0 = disable, 1 = auto-cancel. 2 = auto-accept
+
+
+Special credit to:
+- Digital Anomaly (support for packet 01EE)
+- floAt (mon_control.txt's new auto-teleport flag)
+- pmak (warp funcins)
+- kokal (exp report)
+
+
+==================
+### OpenKore 1.0.3
+==================
+
+- *Really* fix vending this time.
+- Fix storage listing.
+- Fix avoid_ignore.
+
+
+==================
+### OpenKore 1.0.2
+==================
+
+- Fix vending.
+
+
+==================
+### OpenKore 1.0.1
+==================
+
+Bugfix release (iRO server changes on March 10 2004)
+- Inventory listing fixed.
+- Cart listing fixed.
+- Linux version now uses XS instead of C::DynaLib.
+
+
+==================
+### OpenKore 1.0.0
+==================
+
+NOTE: a lot of new config options has been added. It's highly recommended
+take the default configuration files and modify them, so that you won't
+miss any of the new config options.
+
+- Forgot to mention in the last News.txt:
+  followEmotion requires another config option: followEmotion_distance
+  The master must be within this distance to imitate his emoticons.
+- Better way to autodetect platform (using $^O).
+- Fixed teleportAuto_search.
+- Added comments to some pieces of code.
+- Fixed a typo in the clientSuspend AI sequence.
+- Improved anti-looting.
+- Don't get disconnected when AI's turned off in non-XKore mode.
+- Changed avoidGM and avoid player code to an AI sequence.
+  New entry for timeouts.txt:
+	ai_avoidcheck 0.5
+  New config options:
+	avoidList	(set to 1 to turn on the avoid list)
+	avoidList_reconnect
+- Removed the need for the local_port config option.
+  You can remove this option now!
+- Input client child process will now exit correctly if parent process
+  exits abnormally.
+- Implemented a simple form of dynamic code reloading. All functions
+  are now in functions.pl.
+  New command: rc (reloads functions.pl)
+- Vending code now supports multiple non-stackable items.
+  Code by Star-Kung.
+- Began work on Win98 support in Tools.dll and Inject.dll. It currently
+  doesn't work so don't try it out!
+- New config options:
+  logChat, logPrivateChat, logPartyChat, logGuildChat, logSystemChat,
+  logEmoticons
+  Enables/disables logging of certain chats.
+  The option logEmoticons is a comma-seperated list of emoticons numbers
+  (see tables/emotions.txt), that you want to log.
+- New config option: followBot
+  Specifies that followTarget is a Kore bot. When enabled, a "move"
+  command will be PM'ed to the follow target, telling him to go to
+  where you are.
+- Don't attack any monsters that are near portals.
+- Renamed the following config options for better naming consistency:
+  IgnoreAll      -> ignoreAll
+  maxDmg         -> teleportAuto_maxDmg
+  teleportDeadly -> teleportAuto_deadly
+- Merged Karasu's storageAutoGet code and modified it a bit.
+  Config options:
+  getAuto_0 Red Potion
+  getAuto_0_minAmount 10
+  getAuto_0_maxAmount 50
+  getAuto_0_passive 0
+
+  Kore will go to storage (you need to set storageAuto and storageAuto_npc)
+  to get Red Potions when you have 10 or less Red Potions in your inventory.
+  It will get as many Red Potions as needed so that your inventory will have
+  50 of them.
+  If getAuto_0_passive is set to 1, then Kore will not go to storage when
+  you have less than 10 Red Potions in your inventory. But, next time it
+  goes to storage (because of overweight), it will get the Red Potions.
+- New config option: useSelf_skill_0_inLockOnly
+  Use a skill only when in lockMap.
+- New config option: maxWeight_sellOrStore.
+  Kore will sell or go to storage if weight equals or is bigger than
+  itemsMaxWeight_sellOrStore. While walking to the sell/storage NPC,
+  Kore will pick up loot as long as your weight is under itemsMaxWeight.
+- New config options:
+  storageAuto_distance
+  buyAuto_0_distance
+  sellAuto_distance
+  Set a distance so Kore won't walk into an NPC.
+
+xlr82xs:
+- Removed dead monster count sub.
+- Added admin password generation on blank aswell as default (since the skore default
+  is blank, not "xxxxxxxxxx"
+- New config.txt option securePassword. When turned on (ie set to 1) it will generate
+  a new admin password every session
+- New feature: random autoRestart:
+  * Added new sub initRandomRestart() to randomise autoRestart in the config.txt file
+    initRandomRestart() is controled by two new config.txt options autoRestartSeed 
+    and autoRestartMin.
+    autoRestart is now generated by autoRestartMin + rand(autoRestartSeed)
+  * To carry on with the spirit of random restart times, there are another 3 new config.txt
+    options.
+    autoRestartSleep which turns on sleeping for a random time when set to 1
+    autoSleepMin and autoSleepSeed (which act the same as the randomrestart options)
+- Began work on better communication between bots. (Being lazy to start with (for a quick implement)
+  and simply using a sub to detect known names (ie tank and follow targets, auth list users) that should
+  be ignored by things such as chat ai so they can send eachother commands via chat (ie move, heal, etc)
+  Eventually I'm looking at having the bots generate diagnostic information on a designated port, that can
+  be polled by tankees (so they can find the tanker) and healers, so they can see the other bots location,
+  hp, etc
+  
+- If you have the detoxify skill (by a card or being a thief) and get poisoned, you will automagically use it
+- changed configModify() so it accepts a third paramater if it is 1 configModify() operates in "silent mode"
+- added ai_itemExchangeCheck() returns 1 if you have atleast the amount of items specified in config.txt
+	 you'll REALLY have to check the source for more information on this one (i just spent 10 minutes describing it
+	 (i suck at documentation) and i'm about dead now)
+  *  added AUTOEXCHANGE {  a new ai section to exchange items at an npc (see above for information about documentation)
+	 although, the source is fairly documented...
+  *  Made a note to make this more readable tommorrow after i've gotten some sleep.
+  *  lots of new config.txt options along the lines of itemExchange_item_0, itemExchange_amount_0 itemExchange_minamount_0
+	 and itemExchange_npc aswell as itemExchange_steps
+- Shamelessly stole and implemented ebilguy / BCN's autodeal code
+
+
+
+
+ChangeLog for skore-revamped
+=============================
+
+Another skore-revamped release (for those who complain about support for
+(pre-)comodo):
+
+- Added GPL clause.
+- Improved platform autodetection. Won't attempt to execute 'uname -s'
+  on Windows anymore.
+- New function: lookpos().
+- New command: lookp. Face a person.
+- Resurrect the followSitAuto config option. Somehow it was in the manual
+  but not implemented.
+- New option: followFaceDirection. When set to 1, always look at master.
+- Faster autofollow.
+- "pl" and "ml" show more information now.
+- Added support for recvpackets.txt (code taken from ModKore).
+- Support secure login. New config option: secure
+  0 = no secure login (iRO)
+  1 = secure login method 1
+  2 = secure login method 2
+- New config option: guildAutoDeny
+  Automatically deny guild join request.
+- New command: guild. Support for listing guild members and info (thanks
+  to ModKore).
+- The avoidGM option is now split into avoidGM_near and avoidGM_talk.
+
+
+Based on blueviper22's mod for RO 4.0:
+
+- Merged X-Kore with skore-revamped. You can switch between "normal"
+  (console) Kore and X-Kore by setting the config option "XKore"
+  to 0 or 1. Add these to your config.txt:
+  XKore 1
+  exeName ragexe.exe
+  commandPrefix ;
+
+(Why didn't Kura do this in the first place? Maintaining one codebase is
+easier than maintaining two.)
+
+
+- More flexible packet debugger.
+  * Removed option debug_packet
+  * New options:
+    debugPacket_unparsed: Dump unparsed packets
+    debugPacket_received: Display all received packet switches
+    debugPacket_ro_sent:  Display packet switches sent by the
+                          RO client (only in X-Kore mode)
+    debugPacket_sent:     Display packet switches sent by Kore
+    debugPacket_exclude:  All packets switches that you want
+                          to ignore, seperated by a comma.
+
+- New config options:
+  * followEmotion
+  * followEmotion_distance
+  When follow and followEmotion are on, imitate the master's
+  emoticons if he's within followEmotion_distance blocks distance.
+
+- Servers will now be hammered less if Kore gets disconnected.
+  * New option in timeouts.txt: reconnect x
+    (x is the number of seconds to wait before relogging in.)
+
+- Improved anti-kill steal routines.
+  * Bug fixes.
+  * sendAttackStop() now actually works.
+  * Doesn't walk away anymore when KS'ed.
+  * The stun bug *should* be fixed by now but is untested.
+
+- Code cleanups
+  * Added comments to some parts of the code.
+  * Indentication fixes (use Tabs, not spaces!).
+
+- Renamed command "ai" to "aiv"
+  Shows content of @ai_seq
+- Command "ai" now toggles AI on and off.
+
+- Respect itemHistory config option.
+
+- New packets: 40A1, 01B0
+
+- Automatically detect platform. No more need to change buildType if
+  you're running Kore in Linux.
+
+- Check valid $$r_args{'session'} before calling $CalcPath_destroy().
+  This partially fixes a rare crash on teleport.
+
+- "nl" now also shows NPC ID.
+
+- Do not automatically attack monsters that are within than 4 blocks
+  distance of another player. This makes you less suspicious.
+
+- When a player teleports, he won't get removed from the player list.
+  This has been fixed.
+
+- Fixed attackAuto_followTarget. Attack the monster even if it misses
+  the follow target.
+
+
+----------------------------------------
+
+
+skore-revamped was based on the latest skore build (http://ro.horoy.com/download.html)
+
+
+October 1st:
+
+1  - Changed dump config so it dumps automatically to dump.txt
+2  - Fixed packet lengths
+3  - Added 01D8, 01D9, 01DA, 01DE packets
+[ TESTED -- STILL UNPARSED PACKET ]
+4  - Added unparsed packet 01D7
+[ TESTED -- WORKS]
+5  - Added SIT>ATTACK>SIT fix (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=880&highlight=sit+attack)
+6  - Fixed Teleport code (No more free teleports) (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=2037&start=0&postdays=0&postorder=asc&highlight=)
+[ TESTED -- WORKS | Teleport UNTESTED ]
+7  - Added Long Distance Fix (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1306&start=0&postdays=0&postorder=asc&highlight=spekids)
+
+--[ Done for the night. ]--
+
+October 3rd:
+
+[ TESTED -- WORKS IN MIDS 2 | Teleport UNTESTED ]
+1  - 'chist' bug fixed (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1360&start=0&postdays=0&postorder=asc&highlight=chist)
+2  - added item timeout code (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=709&start=0&postdays=0&postorder=asc&highlight=item timeout)
+3  - added Monster Count code (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1490&start=15&postdays=0&postorder=asc&highlight=item timeout)
+[ TESTED -- chist, Monster Count works | item timeout untested ]
+[ MORE TESTING -- BUGS -- Teleport doesn't work & Does respawn when dead ]
+4  - Went through code and fixed teleport code. It now works. Also respawns correctly when dead.
+5  - Added Item History Code (Extracted from http://xlr82xs.shacknet.nu/diff)
+6  - Added MVP packets (Extracted from http://xlr82xs.shacknet.nu/diff)
+7  - Added packets 0108 & 0188 (Extracted from http://xlr82xs.shacknet.nu/diff)
+8  - Fixed pet spawn packet 01A4 (Extracted from http://xlr82xs.shacknet.nu/diff)
+9  - Added auto-switch shield code (Extracted from http://xlr82xs.shacknet.nu/diff)
+[ TESTED -- Item History works | Everything else untested ]
+10 - Added 'cil' command to clear item history and fixed 'ihist' for when item log is empty
+[ TESTED -- 'cil' and 'ihist' work in accordance to each other ]
+11 - Added code to show location of where item is picked up in items.txt
+[ TESTED -- map name shows properly ]
+[ TESTED -- Auto-switch command works, 'petl' displays good ]
+12 - Added code for updated mapview
+13 - Added code for avoidTeleport
+14 - Modified GM string search method (tested and works GREAT!)
+15 - Added avoid AID code
+[ TESTED -- LOTS OF TESTING for GM search. Works flawlessly, Mapview works great too ]
+16 - Added 'IgnoreAll' switch for config.txt
+[ TESTED -- works ]
+17 - Changed killsteal methods (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1820&start=0&postdays=0&postorder=asc&highlight=kill steal)
+[ TESTED -- no errors so far | tested in payon dungeon ]
+18 - Added MOD to teleport when over ### damage is dealt (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=2065)
+
+--[ Done for the night. ]--
+
+--------------------------------------------------------------------------------------------------------------------------------
+Released: skore-revamped (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=2467&start=0&postdays=0&postorder=asc&highlight=)
+--------------------------------------------------------------------------------------------------------------------------------
+
+October 4th:
+
+1  - Added autoResponseOnHeal code
+2  - Changed avoidGM method to disconnect on sight of GM AND avoid.txt
+[ TESTED - AvoidGM works with people in avoid.txt wonderfully ]
+
+
+3  - Added "Monster attacks: ()" bug fix (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=2131&start=0&postdays=0&postorder=asc&highlight=)
+4  - Made new script: fld2xbm.pl  (converts .fld to .xbm, necessary for new maps in mapview)
+5  - Updated portals.txt, maps.txt, cities.txt, portalsLOS.txt, Maps folder, responses.txt, and config.txt
+6  - Made a skore-revamped.rar containing EVERYTHING you need to get the bot working except a configured config.txt file
+
+--[ Done for the night. ]--
+
+October 8th:
+
+1  - Added 01AC unparsed packet
+2  - Added Weight overflow fix 
+
+--[ Done for the night. ]--
+
+October 8th:
+
+1  - Added 016A & 0148 unparsed packets
+2  - Fixed bug where bot would disconnect if GM would send a broadcast message
+3  - Added length checker for every packet in the bot
+4  - Added packet debugger found here (http://kore.sourceforge.net/phpBB2/viewtopic.php?t=2964&start=0&postdays=0&postorder=asc&highlight=)
+
+--[ Done for the night. ]--
+
+-------------------------------------------------------------------------------------
+Uploaded updated skore-revamped
+-------------------------------------------------------------------------------------
+
+October 9th:
+
+1  - Added 013B unparsed packet
+2  - Added 0128 unparsed packet
+
+-------------------------------------------------------------------------------------
+Still Alive Guys
+-------------------------------------------------------------------------------------
+
+October 23rd:
+
+1  - Updated Anti-KS logic (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1820)
+2  - Added following unparsed packets: 01AD, 01CB, 01B6, 01E0, 0157, 018C, 0182, 01BF
+3  - Applied 1 and 2 to kRO version
+
+November 7th:
+
+1  - Updated mapview to display HP/SP/Name/etc - from junq
+2  - Added Auto-Heal NPC code
+
+November 12th:
+
+1  - Started to use proper variable initialization in some places. Bot ran fine for the
+     last 12h, so I assume it's safe to import it to CVS. Couple of the functions used
+     when loading the config files cleaned up, more internal error checking. (junq)
