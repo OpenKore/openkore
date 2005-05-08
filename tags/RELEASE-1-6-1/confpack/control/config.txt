@@ -1,0 +1,453 @@
+# See the documentation for what these variables do
+# New variables have comments above them
+
+bindIp
+encrypt 0
+# 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya
+serverType 0
+
+XKore 0
+XKore_silent 1
+exeName ragexe.exe
+commandPrefix ;
+
+master
+server
+username
+password
+char
+sex
+
+pauseMapServer 0
+ignoreInvalidLogin 0
+secureLogin_requestCode
+
+secureAdminPassword 0
+adminPassword
+callSign
+
+dcOnDeath 0
+dcOnDualLogin 0
+dcOnDisconnect 0
+dcOnEmptyArrow 0
+dcOnMute 0
+dcOnPM 0
+
+autoRestart 0
+
+autoRestartMin 10800
+autoRestartSeed 3600
+
+autoRestartSleep 1
+autoSleepMin 900
+autoSleepSeed 900
+
+autoConfChange {
+	minTime
+	varTime
+	lvl
+	joblvl
+}
+
+# autoBreakTime [week day, first three letters only] {
+# 	startTime [start time]
+# 	stopTime [stop time]
+# }
+#
+# Note:
+# Time must be given in 24 hour format,
+# 9:30 P.M. would be specified as 21:30
+
+autoBreakTime {
+	startTime
+	stopTime
+}
+
+verbose 1
+debug 0
+debugPacket_unparsed 1
+debugPacket_received 0
+debugPacket_ro_sent 0
+debugPacket_sent 0
+debugPacket_exclude
+debugDomains
+showDomain 0
+squelchDomains
+verboseDomains
+beepDomains
+beepDomains_notInTown
+
+message_length_max 80
+# If you play oRO or euRO, you should set chatLangCode to 1
+chatLangCode 0
+
+logChat 1
+logPrivateChat 1
+logPartyChat 1
+logGuildChat 1
+logSystemChat 1
+logEmoticons
+
+attackAuto 2
+attackAuto_party 1
+attackAuto_onlyWhenSafe 0
+attackAuto_followTarget 1
+attackAuto_inLockOnly 1
+attackDistance 1.5
+attackDistanceAuto 0
+attackMaxDistance 2.5
+attackMaxRouteDistance 100
+attackMaxRouteTime 4
+attackMinPlayerDistance 2
+attackMinPortalDistance 4
+attackUseWeapon 1
+attackNoGiveup 0
+attackCanSnipe 0
+attackCheckLOS 0
+
+runFromTarget 0
+runFromTarget_dist 6
+
+lockMap
+lockMap_x
+lockMap_y
+lockMap_randX
+lockMap_randY
+
+saveMap
+saveMap_warpToBuyOrSell 0
+
+route_randomWalk 1
+route_randomWalk_maxRouteTime 75
+route_maxWarpFee
+route_teleport 0
+route_teleport_minDistance 150
+route_teleport_maxTries 8
+route_step 15
+
+#
+# attackSkillSlot [skill to use, lookup from tables/skills.txt or type 'skills' in console] {
+# 	lvl [number]
+# 	dist [number]
+# 	maxCastTime [number, in seconds]
+# 	minCastTime [number, in seconds]
+# 	hp [range, in %]
+# 	sp [range, in %]
+# 	onAction [activate the skill only on current AI action, eg attack, move]
+# 	whenStatusActive [activate the skill only when the listed status/state/ailments/look active]
+# 	whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
+# 	whenFollowing [flag]
+# 	spirit [range, number of sprit ball]
+# 	aggressives [range, number of monster attacking]
+# 	stopWhenHit [flag]
+# 	inLockOnly [flag]
+# 	notWhileSitting [flag]
+# 	notInTown [flag]
+# 	timeout [number, in seconds before the skills can be activated again. A small timeout is always good to counter lag]
+# 	disabled [flag, to disable this block temporary]
+# 	monsters [list of monster to use this skill with, coma separated]
+# 	notMonsters [list of monster not to use this skill with, coma separated]
+# 	maxUses 0 [number]
+# 	target_whenStatusActive [activate the skill only when the monster have the listed status/state/ailments/look active]
+# 	target_whenStatusInactive [oposite to the above, lookup from tables/skills*.txt, coma separated]
+# 	inInventory_name [activate skill only if you have a certain item in inventory]
+# 	inInventory_qty [range, specify how many items you must have in order to activate this skill]
+# }
+#
+# notes:
+#   range supports the following operators: - .. > >= < <=, eg: 20-50, 20..50, > 10, < 80
+#   eg: hp       <-- don't care
+#   eg: sp > 10  <-- only when we have more then 10% sp left
+
+attackSkillSlot {
+	lvl 10
+	dist 1.5
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp > 10
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	previousDamage
+	stopWhenHit 0
+	inLockOnly 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	monsters
+	notMonsters
+	maxUses 0
+	target_whenStatusActive
+	target_whenStatusInactive
+	inInventory_name
+	inInventory_qty
+}
+
+attackComboSlot {
+	afterSkill
+	waitBeforeUse
+	dist 1.5
+	isSelfSkill 1
+}
+
+sitAuto_hp_lower 40
+sitAuto_hp_upper 100
+sitAuto_sp_lower 0
+sitAuto_sp_upper 0
+sitAuto_over_50 0
+
+sitAuto_idle 1
+
+shopAuto_open 0
+shop_random 0
+
+teleportAuto_hp 10
+teleportAuto_sp 0
+teleportAuto_idle 0
+teleportAuto_portal 0
+teleportAuto_search 0
+teleportAuto_minAggressives 0
+teleportAuto_minAggressivesInLock 0
+teleportAuto_onlyWhenSafe 0
+teleportAuto_maxDmg 500
+teleportAuto_maxDmgInLock 0
+teleportAuto_deadly 1
+teleportAuto_useSkill 3
+teleportAuto_emptyName 1
+teleportAuto_allPlayers 0
+teleportAuto_atkMiss 10
+teleportAuto_unstuck 0
+teleportAuto_dropTarget 0
+teleportAuto_attackedWhenSitting 0
+
+useSelf_skill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
+
+useSelf_skill_smartHeal 1
+
+useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
+	hp <= 50
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
+
+partySkill {
+	lvl 10
+	maxCastTime 0
+	minCastTime 0
+	hp
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	target
+	target_hp
+	target_isJob
+	target_isNotJob
+	target_whenStatusActive
+	target_whenStatusInactive
+	target_aggressives
+	target_monsters
+	target_timeout 0
+	inInventory_name
+	inInventory_qty
+}
+
+itemsTakeAuto 2
+itemsGatherAuto 2
+itemsMaxWeight 89
+itemsMaxWeight_sellOrStore 48
+
+#
+# note:
+#   location based NPC format is supported, format: map x y
+#   where map is the map where the NPC is standing, while x y is the _EXACT_ coordition where the NPC is standing
+#   eg: storageAuto_npc alberta 113 60
+#
+
+buyAuto {
+	npc
+	standpoint
+	distance 5
+	minAmount 2
+	maxAmount 3
+}
+
+sellAuto 0
+sellAuto_npc
+sellAuto_standpoint
+sellAuto_distance 5
+
+storageAuto 0
+storageAuto_npc
+storageAuto_distance 5
+storageAuto_npc_type 1
+storageAuto_npc_steps
+relogAfterStorage 1
+
+getAuto {
+	minAmount
+	maxAmount
+	passive
+}
+
+follow 0
+followTarget
+followEmotion 1
+followEmotion_distance 4
+followFaceDirection 0
+followDistanceMax 6
+followDistanceMin 3
+followLostStep 12
+followSitAuto 0
+followBot 0
+
+tankMode 0
+tankModeTarget
+
+dealAuto 1
+partyAuto 1
+partyAutoShare 0
+guildAutoDeny 1
+
+chatTitleOversize 0
+shopTitleOversize 0
+
+seconds_per_block 0.12
+sleepTime 10000
+
+intervalMapDrt 1
+
+avoidGM_near 0
+avoidGM_near_inTown 0
+avoidGM_talk 0
+avoidGM_reconnect 1800
+
+avoid_ignore_0
+
+avoidList 1
+avoidList_inLockOnly 0
+avoidList_reconnect 1800
+
+autoEmote_word_0
+autoEmote_num_0
+
+# To attack with bare hands, specify "[NONE]" (without the quotes) for rightHand
+
+autoSwitch_default_rightHand
+autoSwitch_default_leftHand
+autoSwitch_default_arrow
+
+autoSwitch {
+	rightHand
+	leftHand
+	arrow
+	distance
+	useWeapon
+}
+
+
+# NOTE: In the case of two handed weapons, or no Shield,
+#       duplicate the weapon name for 'rightHand'
+
+
+equipAuto {
+	def
+	monsters
+	skills
+	weight 0
+	whileSitting 0
+	onTeleport 0
+	hp
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
+
+statsAddAuto 0
+statsAddAuto_list
+statsAddAuto_dontUseBonus 0
+
+skillsAddAuto 0
+skillsAddAuto_list
+
+allowedMaps
+allowedMaps_reaction 1
+
+autoResponse 0
+
+ignoreAll 0
+itemHistory 0
+autoTalkCont 0
+noAutoSkill 0
+portalRecord 2
+missDamage 0
+
+tankersList
+
+autoSpell
+
+#alias_heal sp 28

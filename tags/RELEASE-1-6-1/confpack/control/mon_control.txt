@@ -1,0 +1,73 @@
+# This file allows specific AI control for certain monsters
+# Syntax:
+# <monster> <attack> <teleport> <search> <skillcancel> <lv> <joblv> <hp> <sp> <weight>
+#
+# <monster>:  Name of monster as found in monsters.txt (not case sensitive)
+#
+# <attack>:
+#  1 means to always auto-attack this monster.
+#  0 means to leave the monster alone, unless it attacks you.
+# -1 means to leave the monster alone, even if it attacks you.
+#
+# <teleport>: Put a 1 to teleport if the monster is on the screen,
+# or 2 to teleport if the monster attacks you.
+# This is only used in auto-attack mode.
+#
+# <search>: Put a 1 to only attack the monster in the search mode.
+# This is only used in auto-attack mode.
+#
+# <skillcancel>: Set to 1 if you want to interrupt spells casted by this
+# monster.
+#
+# <lv>: Only auto-attack this monster if your level is higher than the
+# specified level.
+#
+# <joblv>: Only auto-attack this monster if your job level is higher than
+# the specified level.
+#
+# <hp>: Only auto-attack this monster if your HP is higher than the
+# specified amount. The HP is not specified in percentage.
+#
+# <sp>: Only auto-attack this monster if your SP is higher than the
+# specified amount. The SP is not specified in percentage.
+#
+# <weight>: Counts this monster as the specified amount aggressives. Supports floating point numbers (eg 1.8237402).
+# Example:
+#	(config.txt)
+#	teleportAuto_minAggressives 6
+#	teleportAuto_minAggressivesInLock 6
+#
+#	(mon_control.txt)
+#	Hydra 1 0 0 0 0 0 0 0 0.2
+#	Merman 1 0 0 0 0 0 0 0 2
+#
+#	If there's five hydras and two sword fish attacks the bot, it won't
+#	teleport away since the aggressives are counted as 5*0.2 + 2*1 = 3
+#	However, two marcs and two merman will make it tele away because
+#	it sees 2*1* + 2*2 = 6 aggressives.
+#
+#
+# Monsters not found in this file, or flags not specified will default to:
+# <attack> = 1
+
+# Don't attack ant eggs
+Ant's Egg 0 0 0
+
+# Teleport from MVP bosses
+Baphomet 0 1 0
+Dark Lord 0 1 0
+Doppelganger 0 1 0
+Drake 0 1 0
+Eddga 0 1 0
+Garm 0 1 0
+Golden Thief Bug 0 0 0
+Maya 0 1 0
+Mistress 0 1 0
+Moonlight 0 1 0
+Orc Hero 0 1 0
+Orc Lord 0 1 0
+Osiris 0 1 0
+Pharaoh 0 1 0
+Phreeoni 0 1 0
+Stormy Knight 0 1 0
+

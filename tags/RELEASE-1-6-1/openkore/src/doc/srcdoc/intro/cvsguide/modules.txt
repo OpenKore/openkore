@@ -1,0 +1,48 @@
+The OpenKore CVS repository contains several <i>modules</i>.
+A module is a subfolder on the CVS server. These modules are currently available:
+<p>
+<table border="1" cellpadding="4">
+<tr style="color: white; background: black;">
+	<th>Module name</th>
+	<th>Description</th>
+</tr>
+<tr>
+	<td><tt>openkore</tt></td>
+	<td>The main openkore source code, including the code for Tools.dll and Inject.dll. This is probably what you're looking for.</td>
+</tr>
+<tr>
+	<td><tt>confpack</tt></td>
+	<td>The default configuration files (control/*).</td>
+</tr>
+<tr>
+	<td><tt>tablepack</tt></td>
+	<td>The default table files (tables/*).</td>
+</tr>
+<tr>
+	<td><tt>fieldpack</tt></td>
+	<td>*.fld files.</td>
+</tr>
+<tr>
+	<td><tt>plugins</tt></td>
+	<td>Simple example plugins for OpenKore.</td>
+</tr>
+<tr>
+	<td><tt>extract</tt></td>
+	<td>Tools used to automatically generate recvpackets.txt</td>
+</tr>
+<tr>
+	<td><tt>grftool</tt></td>
+	<td>Source code of GRF Tool, libgrf and related stuff.</td>
+</tr>
+<tr>
+	<td><tt>mercdb</tt></td>
+	<td>The <a href="http://openkore.sourceforge.net/forum/viewtopic.php?t=1379">Merchant Database plugin</a>.</td>
+</tr>
+<tr>
+	<td><tt>macro</tt></td>
+	<td>The <a href="http://openkore.sourceforge.net/macro/">macro plugin</a>.</td>
+</tr>
+</table>
+
+<p>
+Choose the module that you want to download.
