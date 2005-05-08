@@ -6,7 +6,7 @@ B<macro.pl> - plugin for openkore 1.5.2 and later
 
 This documentation applies to B<macro.pl> version 0.9.0 cvs
 
-Documentation version 20050507-0
+Documentation version 20050508-0
 
 =head1 DESCRIPTION
 
@@ -27,75 +27,85 @@ B<macro>'s configuration file syntax.
 =item C<setVar(variable, value)>
 
 Sets a variable with the value given as argument. Can be accessed either
-via C<getVar(I<variable>)> or directly with $varStack{variable}.
+via C<getVar("I<variable>")> or directly with $varStack{variable}.
 
-returns: 1
+Example: C<setVar("foo", "bar")>
+
+Returns: 1
 
 =item C<getVar(variable)>
 
 Gets a variable from %varStack hash.
 
-returns: value of $varStack{variable} or undef if empty
+Example: C<getVar("lastPMnick")>
+
+Returns: value of $varStack{variable} or undef if empty
 
 =item C<getNPCid(position)>
 
 Gets the array index of the NPC located at the given position. The argument
 is a string containing the X and Y coordinates, separated by a whitespace.
 
-returns: array index or -1 if no NPC was found at the given location
+Example: C<getNPCid("172 135")>
+
+Returns: array index or -1 if no NPC was found at the given location
 
 =item C<getPlayerID(name, r_pool)>
 
 Gets the array index of the player named by I<name>. It looks at r_pool,
-which is a reference to a variable. r_pool can be for example \@::playersID
-or \@::venderListsID.
+which is a reference to a variable.
 
-returns: array index or -1 if no player was found with that name
+Example: C<getPlayerID("Tom Jones", \@::playersID)>
+
+Returns: array index or -1 if no player was found with that name
 
 =item C<getStorageID(item, r_pool)>
 
 Gets the array index of the item I<name> in storage. It looks at r_pool,
-which is a reference to a variable. r_pool can be for example \@{$cart{inventory}}
-or \@::storeList.
+which is a reference to a variable.
 
-returns: array index or -1 if the item was not found.
+Example: C<getStorageID("red potion", \@{$cart{inventory})>
+
+Returns: array index or -1 if the item was not found.
 
 =item C<getInventoryAmount(item)>
 
 Gets the amount of an item I<name> in inventory.
 
-returns: amount
+Returns: amount
 
 =item C<getCartAmount(item)>
 
 Gets the amount of an item I<name> in cart.
 
-returns: amount
+Returns: amount
 
 =item C<getShopAmount(item)>
 
 Gets the amount of an item I<name> in shop.
 
-returns: amount
+Returns: amount
 
 =item C<getSoldOut>
 
 Gets the amount of shop slots that are sold out.
 
-returns: amount
+Returns: amount
 
 =item C<getRandom(items)>
 
 I<items> is a string containing the elements separated by whitespaces.
 
-returns: a random element of the list
+Example: C<getRandom("foo bar yatta blah")>
+
+Returns: a random element of the list
 
 =item C<pushMacro(name, n)>
 
 Inserts another macro at the current position into the macro queue.
 If I<n> is given, it will insert the macro I<n> times.
 
-returns: 0 or undef if macro to be inserted was not found.
+Returns: 0 or undef if macro to be inserted was not found.
 
 =item C<logMessage(message)>
 
@@ -105,7 +115,7 @@ Logs I<message> to openkore's console.
 
 Removes automacro I<name> from run-once list.
 
-returns: 1 if succeeded, 0 if I<name> was not found.
+Returns: 1 if succeeded, 0 if I<name> was not found.
 
 =back
 
@@ -117,67 +127,129 @@ returns: 1 if succeeded, 0 if I<name> was not found.
 
 Checks whether automacro I<name> is in the run-once list.
 
-returns: 1 (true), 0 (false)
+Returns: 1 (true), 0 (false)
 
-=item C<checkCart()>
+=item C<checkCart(item)>
 
-placeholder.
+Checks whether I<item> is in cart.
 
-=item C<checkCast()>
+Returns: 1 (true), 0 (false)
 
-placeholder.
+=item C<checkCast(spell, r_hash)>
 
-=item C<checkClass()>
+Checks whether I<spell> is casted on or affecting the character.
+r_hash is a reference to a hash containing I<targetID>, I<x>, I<y>, 
+I<skillID>.
 
-placeholder.
+=item C<checkClass(class)>
 
-=item C<checkEquip()>
+Checks whether the current character is of class I<class>.
 
-placeholder.
+Returns: 1 (true), 0 (false)
 
-=item C<checkInventory()>
+=item C<checkEquip(conditions)>
 
-placeholder.
+Checks whether the character has I<conditions> equipped.
+I<conditions> is a whitespace separated list of keys and values, 
+where a key is one of these: "garment", "arrow", "headlo", "headmid",
+"headmidlo", "helmet", "armor", "shield", "1hweapon", "2hweapon", 
+"accleft", "accright", "accessory". And the value is the item name,
+where blanks are replaces by an underscore.
 
-=item C<checkLevel()>
+Example: C<checkEquip("garment Muffler_[Whisper]_[1] helmet Sakkat")>
 
-placeholder.
+Returns: 1 (true), 0 (false)
 
-=item C<checkLoc()>
+=item C<checkInventory(item)>
 
-placeholder.
+Checks whether I<item> is in inventory..
 
-=item C<checkPercent()>
+Returns: 1 (true), 0 (false)
 
-placeholder.
+=item C<checkLevel(condition, pool)>
 
-=item C<checkPerson()>
+Checks whether either base- or joblevel matches I<condition>.
+I<pool> is either "job" or "base".
 
-placeholder.
+Returns: 1 (true), 0 (false)
 
-=item C<checkPM()>
+=item C<checkLoc(location)>
 
-placeholder.
+Checks for location. I<location> is a whitespace seperated list
+containing I<map>, I<x>, I<y>, I<x2>, I<y2>, where I<map> is
+mandatory. If I<x> and I<y> are given, it checks whether the
+character is standing at I<map> I<x> I<y>. If I<x2> and I<y2>
+are given, it checks whether the caracter is standing at I<map>
+somewhere between I<x> and I<x2> and I<y> and I<y2>, where
+I<x> < I<x2> and I<y> > I<y2>.
 
-=item C<checkShop()>
+Example: C<checkLoc("prontera 147 125 160 100")>
 
-placeholder.
+Returns: 1 (true), 0 (false)
 
-=item C<checkSoldOut()>
+=item C<checkPercent(condition, pool)>
 
-placeholder.
+Checks whether either HP or SP matches I<condition>. I<pool> is
+either "sp" or "hp".
 
-=item C<checkStatus()>
+Example: C<checkPercent("< 30", "hp")>
 
-placeholder.
+Returns: 1 (true), 0 (false)
 
-=item C<checkVar()>
+=item C<checkPerson(name)>
 
-placeholder.
+Checks whether I<name> is on our screen.
 
-=item C<checkZeny()>
+Returns: 1 (true), 0 (false)
 
-placeholder.
+=item C<checkPM(pmline, r_hash)>
+
+Checks whether a PM was received. I<pmline> has the following syntax:
+"/trigger message or regexp/,nick1,nick2,nick3,..", I<r_hash> is a
+reference to a hash containing I<privMsgUser> and I<privMsg>. This
+function sets the variable I<lastPMnick> which can be accessed either
+via C<getVar("I<variable>")> or directly with $varStack{variable}.
+
+Example: C<checkPM("/^my trigger message$/,Tom Jones")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkShop(item)>
+
+Checks whether I<item> is in shop.
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkSoldOut(condition)>
+
+Checks whether the soldout slots of the shop matches I<conditíon>,
+e.g. C<checkSoldOut(">= 3")>.
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkStatus(status)>
+
+Checks whether we are I<status>. Allows prepended "not" to negate
+the query, e.g. C<checkStatus("not awaken")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkVar(condition)>
+
+Checks if a variable's value matches a certain condition. Variable,
+condition and value are seperated by a whitespace.
+
+Example: C<checkVar("something >= 100")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkZeny(condition)>
+
+Checks whether we have our Zeny matching I<condition>.
+
+Example: C<checkZeny(">= 100000")>
+
+Returns: 1 (true), 0 (false)
 
 =back
 
@@ -189,17 +261,17 @@ placeholder.
 
 Checks whether AI is idle.
 
-returns: 1 if AI is "macro" or "deal", else 0
+Returns: 1 if AI is "macro" or "deal", else 0
 
 =item C<findMacroID(name)>
 
-returns: macro array index for I<name> or -1 if not found.
+Returns: macro array index for I<name> or -1 if not found.
 
 =item C<loadMacro(id)>
 
 Loads macro with id I<id> into an array.
 
-returns: this array
+Returns: this array
 
 =item C<clearMacro>
 
@@ -242,25 +314,25 @@ Runs the macro I<name>, if I<n> is specified, it will run I<n> times.
 
 Checks whether I<arg2> is between (or equal) I<arg1> and I<arg3>.
 
-returns: 1 (true), 0 (false)
+Returns: 1 (true), 0 (false)
 
 =item C<cmpr(arg1, condition, arg2)>
 
 Checks whether I<arg1> and I<arg2> match I<condition>, e.g. cmpr(12, "<=", 28).
 
-returns: 1 (true), 0 (false)
+Returns: 1 (true), 0 (false)
 
 =item C<parseArgs(string)>
 
 Parses I<string> into it's components where I<string> is either I<arg1 arg2 arg3> or I<"arg1" arg2 arg3>.
 
-returns: array containing the three arguments.
+Returns: array containing the three arguments.
 
 =item C<parseCmd(string)>
 
 Parses I<string> and replaces all '@'-constructs if possible.
 
-returns: parsed string, undef if I<string> was @(log|call|release|pause|set) or substitution failed. If the substitution failed, the macro queue is cleared.
+Returns: parsed string, undef if I<string> was @(log|call|release|pause|set) or substitution failed. If the substitution failed, the macro queue is cleared.
 
 =item C<parseMacroFile(filename, r_hash)>
 
