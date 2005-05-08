@@ -638,12 +638,13 @@ sub cmdDebug {
 }
 
 sub cmdDoriDori {
-  if ($char->{look}{head} == 2) {
-    my $headdir = 1;
-  } else {
-    my $headdir = 2;
-  }
-  sendLook(\$remote_socket, $char->{look}{body}, $headdir);
+	my $headdir;
+	if ($char->{look}{head} == 2) {
+		$headdir = 1;
+	} else {
+		$headdir = 2;
+	}
+	sendLook(\$remote_socket, $char->{look}{body}, $headdir);
 }
 
 
