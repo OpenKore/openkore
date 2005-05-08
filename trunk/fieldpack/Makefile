@@ -2,7 +2,7 @@
 # If you want to run this Makefile in Windows, you need Cygwin:
 # http://sources.redhat.com/cygwin/
 
-VERSION=1.5
+VERSION=1.6.1
 FILENAME=fieldpack-$(VERSION).zip
 VERSIONFILE=fields/FieldpackVersion.txt
 
@@ -16,7 +16,7 @@ $(FILENAME): fields/*.fld
 	# Creating zipfile...
 	echo $(VERSION) > $(VERSIONFILE)
 	rm -f $(FILENAME)
-	zip -9 $(FILENAME) fields/*.fld $(VERSIONFILE)
+	zip -9 $(FILENAME) fields/*.fld fields/News.txt $(VERSIONFILE)
 
 clean:
 	rm -f $(FILENAME)
