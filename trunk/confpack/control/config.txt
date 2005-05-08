@@ -300,6 +300,7 @@ partySkill {
 	target_aggressives
 	target_monsters
 	target_timeout 0
+	target_dead 0
 	inInventory_name
 	inInventory_qty
 }
