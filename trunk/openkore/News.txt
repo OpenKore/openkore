@@ -2,8 +2,12 @@
 ### 1.6.2
 ==================
 
+New features:
+- Better support for detecting dead players.
 
-
+New config options:
+- partySkill: target_dead
+  Only use the skill on a dead player. Useful for Resurrection.
 
 ==================
 ### 1.6.1
