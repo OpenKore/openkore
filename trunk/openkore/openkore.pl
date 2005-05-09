@@ -315,7 +315,7 @@ if (compilePortals_check()) {
 	$timeout{'compilePortals_auto'}{'time'} = time;
 
 	my $msg = $interface->getInput($timeout{'compilePortals_auto'}{'timeout'});
-	if ($msg =~ /y/ || $msg eq "") {
+	if ($msg =~ /y/i || $msg eq "") {
 		Log::message("compiling portals\n\n");
 		compilePortals();
 	} else {
