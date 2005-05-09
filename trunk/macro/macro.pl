@@ -16,7 +16,7 @@ if (defined $cvs) {
   my $fname = "plugins/macro.pl";
   open(MF, "< $fname" ) or die "Can't open $fname: $!";
   while (<MF>) {
-    if (/CVSHeader:/) {
+    if (/Header:/) {
       my ($rev) = $_ =~ /macro\.pl,v (.*) [0-9]{4}/i;
       $macroVersion .= "cvs rev ".$rev;
       last;
