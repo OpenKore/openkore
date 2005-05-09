@@ -1,3 +1,4 @@
+# $CVSHeader$
 #
 # macro by Arachno
 #
@@ -8,7 +9,23 @@
 
 package macro;
 
-our $macroVersion = "0.9cvs";
+our $macroVersion = "0.9";
+my $cvs = 1;
+
+if (defined $cvs) {
+  my $fname = "macro.pl";
+  open(MF, "< $fname" ) or die "Can't open $fname: $!";
+  while (<MF>) {
+    if (/CVSHeader:/) {
+      my ($rev) = $_ =~ /$fname,v (.*) [0-9]{4}/i;
+      $macroVersion .= "cvs rev ".$rev;
+      last;
+    }
+  }
+  close MF;
+};
+
+undef $cvs if defined $cvs;
 
 use strict;
 use Plugins;
@@ -19,6 +36,7 @@ use Log;
 use FileParsers;
 use AI;
 use Commands;
+
 
 our %macros;
 our %varStack;
@@ -702,6 +720,7 @@ sub checkPM {
   if (!$allowed) {$auth = 1}
   else {
     for (my $i = 0; $i < @tfld; $i++) {
+      next unless $tfld[$i];
       if ($arg->{privMsgUser} =~ $tfld[$i]) {$auth = 1; last};
     };
   };
