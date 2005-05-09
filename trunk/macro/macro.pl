@@ -1,4 +1,4 @@
-# $CVSHeader$
+# $Header$
 #
 # macro by Arachno
 #
@@ -13,11 +13,11 @@ our $macroVersion = "0.9";
 my $cvs = 1;
 
 if (defined $cvs) {
-  my $fname = "macro.pl";
+  my $fname = "plugins/macro.pl";
   open(MF, "< $fname" ) or die "Can't open $fname: $!";
   while (<MF>) {
     if (/CVSHeader:/) {
-      my ($rev) = $_ =~ /$fname,v (.*) [0-9]{4}/i;
+      my ($rev) = $_ =~ /macro\.pl,v (.*) [0-9]{4}/i;
       $macroVersion .= "cvs rev ".$rev;
       last;
     }
