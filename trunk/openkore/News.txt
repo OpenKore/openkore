@@ -4,6 +4,7 @@
 
 Bug fixes:
 - Fix deal bug: showing twice as many items added.
+- Make "Compiles portals now?" prompt case-insensitive.
 
 New features:
 - Better support for detecting dead players.
@@ -11,6 +12,10 @@ New features:
 New config options:
 - partySkill: target_dead
   Only use the skill on a dead player. Useful for Resurrection.
+
+Credits:
+- Damokles: case sensitivity fix.
+
 
 ==================
 ### 1.6.1
