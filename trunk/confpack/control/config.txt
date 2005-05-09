@@ -306,6 +306,7 @@ partySkill {
 }
 
 itemsTakeAuto 2
+itemsTakeAuto_party 0
 itemsGatherAuto 2
 itemsMaxWeight 89
 itemsMaxWeight_sellOrStore 48
