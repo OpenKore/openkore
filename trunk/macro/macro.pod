@@ -6,7 +6,7 @@ B<macro.pl> - plugin for openkore 1.5.2 and later
 
 This documentation applies to B<macro.pl> version 0.9.0 cvs
 
-Documentation version 20050508-2
+Documentation: $Revision$ $Date$
 
 =head1 DESCRIPTION
 
@@ -30,7 +30,7 @@ Hash containing the macros and automacros.
 
 =item C<%varStack>
 
-Variable stack, set with C<setVar(variable, value)> and get with C<getVar(variable>.
+Variable stack, set with C<setVar(variable, value)> and get with C<getVar(variable)>.
 
 =item C<$cfID>
 
@@ -228,7 +228,7 @@ reference to a hash containing I<privMsgUser> and I<privMsg>. This
 function sets the variable I<lastPMnick> which can be accessed either
 via C<getVar("I<variable>")> or directly with $varStack{variable}.
 
-Example: C<checkPM("/^my trigger message$/,Tom Jones")>
+Example: C<checkPM("/^my trigger message$/,Tom Jones", $arg)>
 
 Returns: 1 (true), 0 (false)
 
