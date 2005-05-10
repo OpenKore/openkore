@@ -18,7 +18,7 @@
 #
 # This example will get Red Potions from cart if you have less than 25
 # of them in your inventory:
-# 	Red Potion 25 0 0 0 0 1
+# 	Red Potion 25 0 0 0 1
 #
 # The item name isn't case sensitive. Only items found in this file will
 # be stored or sold.
