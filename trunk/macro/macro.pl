@@ -151,7 +151,7 @@ sub findMacroID {
 sub pushMacro {
   my ($arg, $times) = @_;
   my $macroID = findMacroID($arg);
-  if (!$macroID) {return}
+  if (!defined $macroID) {return}
   else {
     our @macroQueue;
     my @tmparr = loadMacro($macroID);
@@ -234,7 +234,7 @@ sub processQueue {
 sub runMacro {
   my ($arg, $times) = @_;
   my $macroID = findMacroID($arg);
-  if (!$macroID) {error(sprintf("Macro %s not found.\n", $arg))}
+  if (!defined $macroID) {error(sprintf("Macro %s not found.\n", $arg))}
   else {
     our @macroQueue = loadMacro($macroID);
     if ($times > 1) {
@@ -466,7 +466,7 @@ sub automacroCheck {
   foreach my $am (keys %macros) {
     next unless ($am =~ /^automacro_[0-9]*$/);
     next if (isInRunOnce($macros{$am}));
-    if (!$macros{$am."_call"} || !findMacroID($macros{$am."_call"})) {
+    if (!$macros{$am."_call"} || !defined findMacroID($macros{$am."_call"})) {
       error(sprintf("automacro %s: call not defined or not found.\n", $macros{$am}));
       our @runonce; push @runonce, $macros{$am}; return 0;
     };
