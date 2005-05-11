@@ -1401,14 +1401,13 @@ sub switchConfigFile {
 
 ##
 # whenGroundStatus(target, statuses)
-# target: $char, $players{$ID} or $monsters{$ID}
+# target: coordinates hash
 # statuses: a comma-separated list of ground effects e.g. Safety Wall,Pneuma
 #
-# Returns 1 if $target is inside one of the ground effects specified by $statuses.
+# Returns 1 if $target has one of the ground effects specified by $statuses.
 sub whenGroundStatus {
-	my ($target, $statuses) = @_;
+	my ($pos, $statuses) = @_;
 
-	my $pos = calcPosition($target);
 	my ($x, $y) = ($pos->{x}, $pos->{y});
 	for my $ID (@spellsID) {
 		my $spell;

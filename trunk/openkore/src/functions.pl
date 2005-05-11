@@ -11136,10 +11136,10 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_whenGround"}) {
-		return 0 unless whenGroundStatus($char, $config{$prefix."_whenGround"});
+		return 0 unless whenGroundStatus(calcPosition($char), $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus($char, $config{$prefix."_whenNotGround"});
+		return 0 if whenGroundStatus(calcPosition($char), $config{$prefix."_whenNotGround"});
 	}
 
 	if ($config{$prefix."_whenPermitSkill"}) {
@@ -11214,10 +11214,10 @@ sub checkPlayerCondition {
 	}
 
 	if ($config{$prefix."_whenGround"}) {
-		return 0 unless whenGroundStatus($players{$id}, $config{$prefix."_whenGround"});
+		return 0 unless whenGroundStatus(calcPosition($players{$id}), $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus($players{$id}, $config{$prefix."_whenNotGround"});
+		return 0 if whenGroundStatus(calcPosition($players{$id}), $config{$prefix."_whenNotGround"});
 	}
 	if ($config{$prefix."_dead"}) {
 		return 0 if !$players{$id}{dead};
@@ -11247,10 +11247,10 @@ sub checkMonsterCondition {
 	}
 
 	if ($config{$prefix."_whenGround"}) {
-		return 0 unless whenGroundStatus($monster, $config{$prefix."_whenGround"});
+		return 0 unless whenGroundStatus(calcPosition($monster), $config{$prefix."_whenGround"});
 	}
 	if ($config{$prefix."_whenNotGround"}) {
-		return 0 if whenGroundStatus($monster, $config{$prefix."_whenNotGround"});
+		return 0 if whenGroundStatus(calcPosition($monster), $config{$prefix."_whenNotGround"});
 	}
 	
 	return 1;
