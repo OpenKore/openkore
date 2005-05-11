@@ -8,6 +8,8 @@ Bug fixes:
 
 New features:
 - Better support for detecting dead players.
+- Show player number with emoticons and public chat.
+- Show distance with emoticons.
 
 New config options:
 - partySkill: target_dead
