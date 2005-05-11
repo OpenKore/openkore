@@ -6469,7 +6469,7 @@ sub parseMsg {
 			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 		}
 
-		$chat = "$chatMsgUser : $chatMsg";
+		$chat = "$chatMsgUser ($players{$ID}{binID}): $chatMsg";
 		my ($map_string) = $map_name =~ /([\s\S]*)\.gat/;
 		chatLog("c", "[$map_string $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}{x}, $players{$ID}{pos_to}{y}] [dist=$dist] " .
 			"$chat\n") if ($config{logChat});
@@ -7356,8 +7356,16 @@ sub parseMsg {
 			message "$chars[$config{'char'}]{'name'} : $emotion\n", "emotion";
 			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 		} elsif (%{$players{$ID}}) {
-			message "$players{$ID}{'name'} : $emotion\n", "emotion";
-			chatLog("e", "$players{$ID}{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
+			my $name = $players{$ID}{name} || "Unknown #".unpack("L", $ID);
+
+			my $dist = "unknown";
+			if ($players{$ID}) {
+				$dist = distance($char->{pos_to}, $players{$ID}{pos_to});
+				$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+			}
+
+			message "$name ($players{$ID}{binID}): $emotion\n", "emotion";
+			chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 
 			my $index = binFind(\@ai_seq, "follow");
 			if ($index ne "") {
@@ -7414,7 +7422,7 @@ sub parseMsg {
 				$players{$ID}{hair_color} = $number;
 				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
 			} else {
-				debug "Unknown #" . unpack("L", $ID) . " changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
+				debug "Unknown #".unpack("L", $ID)." changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
 			}
 		}
 
