@@ -664,7 +664,7 @@ sub avoidGM_talk {
 		$j++;
 	}
 
-	if ($user =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+	if ($user =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || $user =~ /$config{avoidGM_namePattern}/) {
 		my %args = (
 			name => $user,
 		);

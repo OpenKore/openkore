@@ -10456,7 +10456,7 @@ sub avoidGM_near {
 			$j++;
 		}
 
-		if ($statusGM && $players{$playersID[$i]}{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i) {
+		if ($statusGM && $players{$playersID[$i]}{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || $user =~ /$config{avoidGM_namePattern}/) {
 			my %args = (
 				name => $players{$playersID[$i]}{name},
 				ID => $playersID[$i]
