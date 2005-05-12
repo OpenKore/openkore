@@ -27,6 +27,7 @@ Internal:
 Credits:
 - Damokles: case sensitivity fix.
 - denni: 'storage log' command.
+- kunjandad: friend list packet support.
 
 
 ==================
