@@ -1438,6 +1438,8 @@ sub cmdStorage {
 		cmdStorage_get($items);
 	} elsif ($switch eq 'close') {
 		cmdStorage_close();
+	} elsif ($switch eq 'log') {
+		cmdStorage_log();
 	} else {
 		error <<"_";
 Syntax Error in function 'storage' (Storage Functions)
@@ -1445,6 +1447,7 @@ Usage: storage
        storage close
        storage add <inventory_item> [<amount>]
        storage get <storage_item> [<amount>]
+       storage log
 _
 	}
 }
@@ -1514,6 +1517,29 @@ sub cmdStorage_get {
 
 sub cmdStorage_close {
 	sendStorageClose(\$remote_socket);
+}
+
+sub cmdStorage_log {
+	if ($storage{opened}) {
+		my $f;
+		if (open($f, "> $Settings::storage_file")) {
+			print $f "---------- Storage ". getFormattedDate(int(time)) ." -----------\n";
+			for (my $i = 0; $i < @storageID; $i++) {
+				next if (!$storageID[$i]);
+				my $item = $storage{$storageID[$i]};
+
+				my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
+				$display .= " -- Not Identified" if !$item->{identified};
+				$display .= " -- Broken" if $item->{broken};
+				print $f "$display\n";
+			}
+			print $f "\nCapacity: $storage{items}/$storage{items_max}\n";
+			print $f "-------------------------------\n";
+			close $f;
+		}
+	} else {
+		error "No information about storage; it has not been opened before in this session\n";
+	}
 }
 
 sub cmdUseSkill {
