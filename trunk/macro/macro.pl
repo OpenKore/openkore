@@ -196,14 +196,15 @@ sub parseCmd {
     elsif ($kw eq 'vender')    {$ret = getPlayerID($arg, \@::venderListsID)}
     elsif ($kw eq 'var')       {$ret = getVar($arg)}
     elsif ($kw eq 'random')    {$ret = getRandom($arg)}
-    elsif ($kw eq 'iamount')   {$ret = getInventoryAmount($arg)}
-    elsif ($kw eq 'camount')   {$ret = getCartAmount($arg)}
-    elsif ($kw eq 'samount')   {$ret = getShopAmount($arg)}
+    elsif ($kw eq 'invamount') {$ret = getInventoryAmount($arg)}
+    elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
+    elsif ($kw eq 'shopamount') {$ret = getShopAmount($arg)}
+    elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
     elsif ($kw eq "eval")      {$ret = eval($arg)};
     return $command if $ret eq '_%_';
     # FIXME - the substitution is dirty. Does crap when keyword is in line more than
     # once
-    if ($ret ne '') {$command =~ s/\@$kw +\(.*?\)/$ret/g}
+    if (defined $ret) {$command =~ s/\@$kw +\(.*?\)/$ret/g}
     else {
       error(sprintf("macro: %s failed. Macro stopped.\n", $command));
       clearMacro();
@@ -222,7 +223,7 @@ sub processQueue {
     my $cmdfromstack = shift(@macroQueue);
     my $command = parseCmd($cmdfromstack);
     debug(sprintf("[macro] processing: %s (-> %s)\n", $cmdfromstack, $command));
-    if ($command) {
+    if (defined $command) {
       Commands::run($command) || ::parseCommand($command)
     };
     AI::dequeue if (!@macroQueue && AI::is('macro'));
@@ -267,7 +268,7 @@ sub loadMacro {
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
-  return AI::is('deal') || AI::is('macro');
+  return AI::is('macro', 'deal');
 };
 
 # lists available macros
@@ -330,7 +331,7 @@ sub getnpcID {
 sub getPlayerID {
   my ($name, $pool) = @_;
   for (my $id = 0; $id < @{$pool}; $id++) {
-    next if ($$pool[$id] eq '');
+    next unless $$pool[$id];
     if ($players{$$pool[$id]}->{name} eq $name) {return $id};
   };
   return;
@@ -340,7 +341,7 @@ sub getPlayerID {
 sub getItemID {
   my ($item, $pool) = @_;
   for (my $id = 0; $id < @{$pool}; $id++) {
-    next if ($$pool[$id] eq '');
+    next unless $$pool[$id];
     if (lc($$pool[$id]{name}) eq lc($item)) {return $id};
   };
   return;
@@ -350,7 +351,7 @@ sub getItemID {
 sub getStorageID {
   my $item = shift;
   for (my $id = 0; $id < @storageID; $id++) {
-    next if ($storageID[$id] eq '');
+    next unless $storageID[$id];
     if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {return $id};
   };
   return;
@@ -360,9 +361,9 @@ sub getStorageID {
 sub getSoldOut {
   if (!$shopstarted) {return 0};
   my $soldout = 0;
-  foreach my $cartitem (@::articles) {
-    next unless $cartitem;
-    if ($cartitem->{quantity} == 0) {$soldout++};
+  foreach my $aitem (@::articles) {
+    next unless $aitem;
+    if ($aitem->{quantity} == 0) {$soldout++};
   };
   return $soldout;
 };
@@ -370,38 +371,39 @@ sub getSoldOut {
 # get amount of an item in inventory
 sub getInventoryAmount {
   my $item = shift;
-  if (!$char->{inventory}) {return 0};
-  for (my $id = 0; $id < @{$char->{inventory}}; $id++) {
-    next if ($char->{inventory}[$id] eq '');
-    if (lc($char->{inventory}[$id]{name}) eq lc($item)) {
-      return $char->{inventory}[$id]{amount};
-    };
-  };
+  return 0 unless $char->{inventory};
+  my $id = getItemID($item, \@{$char->{inventory}});
+  return $char->{inventory}[$id]{amount} if defined $id;
   return 0;
 };
 
 # get amount of an item in cart
 sub getCartAmount {
   my $item = shift;
-  if (!$cart{inventory}) {return 0};
-  for (my $id = 0; $id < @{$cart{inventory}}; $id++) {
-    next if ($cart{inventory}[$id] eq '');
-    if (lc($cart{inventory}[$id]{name}) eq lc($item)) {
-      return $cart{inventory}[$id]{amount};
-    };
-  };
+  return 0 unless $cart{inventory};
+  my $id = getItemID($item, \@{$cart{inventory}});
+  return $cart{inventory}[$id]{amount} if defined $id;
   return 0;
 };
 
 # get amount of an item in shop
 sub getShopAmount {
   my $item = shift;
-  foreach my $cartitem (@::articles) {
-    next unless $cartitem;
-    if (lc($cartitem->{name}) eq lc($item)) {
-      return $cartitem->{quantity}
+  foreach my $aitem (@::articles) {
+    next unless $aitem;
+    if (lc($aitem->{name}) eq lc($item)) {
+      return $aitem->{quantity}
     };
   };
+  return 0;
+};
+
+# get amount of an item in storage
+sub getStorageAmount {
+  my $item = shift;
+  return 0 unless $::storage{opened};
+  my $id = getStorageID($item);
+  return $storage{$storageID[$id]}{amount} if defined $id;
   return 0;
 };
 
@@ -491,6 +493,7 @@ sub automacroCheck {
     next if ($macros{$am."_weight"} && !checkPercent($macros{$am."_weight"}, "weight"));
     next if ($macros{$am."_status"} && !checkStatus($macros{$am."_status"}));
     next if ($macros{$am."_inventory"} && !checkInventory($macros{$am."_inventory"}));
+    next if ($macros{$am."_storage"} && !checkStorage($macros{$am."_storage"}));
     next if ($macros{$am."_cart"} && !checkCart($macros{$am."_cart"}));
     next if ($macros{$am."_cartweight"} && !checkPercent($macros{$am."_cartweight"}, "cweight"));
     next if ($macros{$am."_shop"} && !checkShop($macros{$am."_shop"}));
@@ -499,9 +502,9 @@ sub automacroCheck {
     next if ($macros{$am."_zeny"} && !checkZeny($macros{$am."_zeny"}));
     next if ($macros{$am."_equipped"} && !checkEquip($macros{$am."_equipped"}));
     Log::message(sprintf("automacro %s triggered.\n",$macros{$am}));
-    if ($macros{$am."_run-once"} == 1) { our @runonce; push @runonce, $macros{$am}; };
+    if ($macros{$am."_run-once"} == 1) {our @runonce; push @runonce, $macros{$am}};
     $automacro{call} = $macros{$am."_call"};
-    $automacro{timeout} = $macros{$am."_delay"};
+    $automacro{timeout} = $macros{$am."_delay"} if ($macros{$am."_delay"});
     $automacro{time} = time;
     return 0; # don't execute multiple macros at once
   };
@@ -520,6 +523,7 @@ sub cmpr {
   if ($cond eq "<=" && $a <= $b) {return 1};
   if ($cond eq ">"  && $a > $b)  {return 1};
   if ($cond eq "<"  && $a < $b)  {return 1};
+  if ($cond eq "!=" && $a != $b) {return 1};
   return 0;
 };
 
@@ -540,6 +544,7 @@ sub parseArgs {
 # check for variable #######################################
 sub checkVar {
   my ($var, $cond, $val) = split(/ /, $_[0]);
+  return 1 if ($cond eq "unset" && !exists $varStack{$var});
   return 1 if (exists $varStack{$var} && cmpr($varStack{$var}, $cond, $val));
   return 0;
 };
@@ -604,8 +609,9 @@ sub checkPercent {
 # checks for status #######################################
 sub checkStatus {
   my ($tmp, $status) = split(/ /, $_[0]);
-  if (!$status) { $status = $tmp; undef $tmp; };
+  if (!$status) {$status = $tmp; undef $tmp};
   if ($status eq 'muted' && $char->{muted}) {return 1};
+  if ($status eq 'dead' && $char->{dead}) {return 1};
   if (!$char->{statuses}) {
     if ($tmp eq 'not') {return 1};
     return 0;
@@ -639,6 +645,13 @@ sub checkShop {
   return 0 unless $shopstarted;
   my ($item, $cond, $amount) = parseArgs($_[0]);
   return 1 if cmpr(getShopAmount($item), $cond, $amount);
+  return 0;
+};
+
+# checks for item in storage ##############################
+sub checkStorage {
+  my ($item, $cond, $amount) = parseArgs($_[0]);
+  return 1 if cmpr(getStorageAmount($item), $cond, $amount);
   return 0;
 };
 
