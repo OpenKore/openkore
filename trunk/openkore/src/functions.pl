@@ -9115,6 +9115,7 @@ sub parseMsg {
 			binAdd(\@arrowCraftID, $index);
 		}
 		message "Received Possible Arrow Craft List - type 'arrowcraft'\n";
+
 	} elsif ($switch eq "0169") {
 		my $type = unpack("C1", substr($msg, 2, 1));
 		my %types = (
@@ -9124,6 +9125,13 @@ sub parseMsg {
 			3 => 'Your guild is full.'
 		);
 		message "Guild join request: ".($types{$type} || "Unknown $type")."\n";
+
+	} elsif ($switch eq "0201") {
+		# Friend list
+		for (my $i = 4; $i < $msg_size; $i += 32) {
+			my $friendName = substr($msg, $i + 8 , 24);
+			# TODO: do something with this
+		}
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
