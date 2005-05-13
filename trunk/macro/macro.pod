@@ -32,6 +32,15 @@ Hash containing the macros and automacros.
 
 Variable stack, set with C<setVar(variable, value)> and get with C<getVar(variable)>.
 
+=item C<%automacro>
+
+When an automacro triggers, the hash contains the macro to be called in I<call>, the delay
+settings in I<time>, I<timeout> and whether the macro should override the AI in I<override_ai>.
+
+=item C<@macroQueue>
+
+Queue of macro commands to be executed.
+
 =item C<$cfID>
 
 Config file ID, set by Settings::addConfigFile
@@ -77,12 +86,20 @@ Example: C<getPlayerID("Tom Jones", \@::playersID)>
 
 Returns: array index or -1 if no player was found with that name
 
-=item C<getStorageID(item, r_pool)>
+=item C<getItemID(item, r_pool)>
 
-Gets the array index of the item I<name> in storage. It looks at r_pool,
-which is a reference to a variable.
+Gets the array index of the item I<name>.
+It looks at r_pool, which is a reference to a variable.
 
-Example: C<getStorageID("red potion", \@{$cart{inventory})>
+Example: C<getItemID("red potion", \@{$cart{inventory})>
+
+Returns: array index or -1 if the item was not found.
+
+=item C<getStorageID(item)>
+
+Gets the array index of the item I<name> in storage.
+
+Example: C<getStorageID("red potion")>
 
 Returns: array index or -1 if the item was not found.
 
@@ -91,6 +108,12 @@ Returns: array index or -1 if the item was not found.
 Gets the amount of an item I<name> in inventory.
 
 Returns: amount
+
+=item C<getStorageAmount(item)>
+
+Gets the amount of an item I<name> in storage.
+
+Returns: amount or null if storage had not been opened
 
 =item C<getCartAmount(item)>
 
@@ -112,9 +135,10 @@ Returns: amount
 
 =item C<getRandom(items)>
 
-I<items> is a string containing the elements separated by whitespaces.
+I<items> is a string containing the elements encased by quotes, separated
+by whitespaces or comma.
 
-Example: C<getRandom("foo bar yatta blah")>
+Example: C<getRandom("\"Element one\", \"Element two\", \"Element three\"")>
 
 Returns: a random element of the list
 
@@ -147,9 +171,10 @@ Checks whether automacro I<name> is in the run-once list.
 
 Returns: 1 (true), 0 (false)
 
-=item C<checkCart(item)>
+=item C<checkCart(condition)>
 
-Checks whether I<item> is in cart.
+Checks whether cart matches I<condition>. I<condition> is
+I<"item name"> I<condition> I<amount>.
 
 Returns: 1 (true), 0 (false)
 
@@ -178,9 +203,12 @@ Example: C<checkEquip("garment Muffler_[Whisper]_[1] helmet Sakkat")>
 
 Returns: 1 (true), 0 (false)
 
-=item C<checkInventory(item)>
+=item C<checkInventory(condition)>
 
-Checks whether I<item> is in inventory..
+Checks whether inventory matches I<condition>. I<condition> is
+I<"item name"> I<condition> I<amount>.
+
+Example: C<checkInventory("\"red potion\" >= 100")>
 
 Returns: 1 (true), 0 (false)
 
@@ -232,9 +260,12 @@ Example: C<checkPM("/^my trigger message$/,Tom Jones", $arg)>
 
 Returns: 1 (true), 0 (false)
 
-=item C<checkShop(item)>
+=item C<checkShop(condition)>
 
-Checks whether I<item> is in shop.
+Checks whether shop matches I<condition>. I<condition> is
+I<"item name"> I<condition> I<amount>.
+
+Example: C<checkShop("\"red potion\" >= 100")>
 
 Returns: 1 (true), 0 (false)
 
