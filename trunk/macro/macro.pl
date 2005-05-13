@@ -41,7 +41,7 @@ use Commands;
 our %macros;
 our %varStack;
 
-Plugins::register('macro', 'allows usage of macros', \&Unload);
+Plugins::register('macro', 'allows usage of macros', \&Unload, \&Reload);
 
 my $hooks = Plugins::addHooks(
             ['Command_post', \&commandHandler, undef],
@@ -61,6 +61,15 @@ sub Unload {
   Log::message("macro unloaded.\n");
   our $cfID; Settings::delConfigFile($cfID);
   Plugins::delHooks($hooks);
+};
+
+sub Reload {
+  Log::message("macro reloading, cleaning up.\n");
+  our %macros = undef;
+  our %automacro = undef;
+  our %varStack = undef;
+  our @macroQueue = undef;
+  our @runonce = undef;
 };
 
 # adapted config file parser
@@ -176,8 +185,9 @@ sub parseCmd {
       my (undef, $macro, $times) = split(/ /, $command);
       pushMacro($macro, $times);
     } elsif ($command =~ /\@set/) {
-      my (undef, $var, $val) = split(/ /, $command);
-      setVar($var, $val);
+      my ($var, $val) = $command =~ /^\@set +([a-zA-Z0-9]*)? +(.*)$/;
+      debug(sprintf("in 'set': var +%s+, val +%s+\n", $var, $val));
+      setVar($var, parseCmd($val));
     } elsif ($command =~ /\@pause/) {
       ;
     };
@@ -217,8 +227,9 @@ sub parseCmd {
 # runs and removes commands from queue
 sub processQueue {
   our @macroQueue;
+  our %automacro;
   if (!@macroQueue) {AI::dequeue if AI::is('macro'); return};
-
+  
   if (timeOut($timeout{macro_delay}) && ai_isIdle()) {
     my $cmdfromstack = shift(@macroQueue);
     my $command = parseCmd($cmdfromstack);
@@ -226,7 +237,10 @@ sub processQueue {
     if (defined $command) {
       Commands::run($command) || ::parseCommand($command)
     };
-    AI::dequeue if (!@macroQueue && AI::is('macro'));
+    if (!@macroQueue) {
+      AI::dequeue if (AI::is('macro'));
+      %automacro = undef if ($automacro{'override_AI'});
+    };
     $timeout{macro_delay}{time} = time;
   };
 };
@@ -268,6 +282,8 @@ sub loadMacro {
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
+  our %automacro;
+  return 1 if ($automacro{override_ai});
   return AI::is('macro', 'deal');
 };
 
@@ -291,6 +307,7 @@ sub list_macros {
 # clears macro queue
 sub clearMacro {
   our @macroQueue = ();
+  our %automacro = undef;
   AI::dequeue() if AI::is('macro');
   Log::message("macro queue cleared.\n");
 };
@@ -509,6 +526,7 @@ sub automacroCheck {
     Log::message(sprintf("automacro %s triggered.\n",$macros{$am}));
     if ($macros{$am."_run-once"} == 1) {our @runonce; push @runonce, $macros{$am}};
     $automacro{call} = $macros{$am."_call"};
+    $automacro{override_ai} = 1 if ($macros{$am."_overrideAI"});
     $automacro{timeout} = $macros{$am."_delay"} if ($macros{$am."_delay"});
     $automacro{time} = time;
     return 0; # don't execute multiple macros at once
