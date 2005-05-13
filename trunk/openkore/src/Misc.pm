@@ -98,7 +98,8 @@ our @EXPORT = (
 	whenGroundStatus
 	whenStatusActive
 	whenStatusActiveMon
-	whenStatusActivePL/
+	whenStatusActivePL
+	writeStorageLog/
 	);
 
 
@@ -1037,6 +1038,20 @@ sub createCharacter {
 	}
 }
 
+##
+# drop(item, amount)
+#
+# Drops $amount of $item. If $amount is not specified or too large, it defaults
+# to the number of $item you have.
+sub drop {
+	my ($item, $amount) = @_;
+
+	if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
+		$amount = $char->{inventory}[$item]{amount};
+	}
+	sendDrop(\$remote_socket, $char->{inventory}[$item]{index}, $amount);
+}
+
 sub getIDFromChat {
 	my $r_hash = shift;
 	my $msg_user = shift;
@@ -1454,19 +1469,30 @@ sub whenStatusActivePL {
 	return 0;
 }
 
-##
-# drop($item, $amount)
-#
-# Drops $amount of $item. If $amount is not specified or too large, it defaults
-# to the number of $item you have.
-sub drop {
-	my ($item, $amount) = @_;
+sub writeStorageLog {
+	my ($show_error_on_fail) = @_;
+	my $f;
 
-	if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
-		$amount = $char->{inventory}[$item]{amount};
+	if (open($f, "> $Settings::storage_file")) {
+		print $f "---------- Storage ". getFormattedDate(int(time)) ." -----------\n";
+		for (my $i = 0; $i < @storageID; $i++) {
+			next if (!$storageID[$i]);
+			my $item = $storage{$storageID[$i]};
+
+			my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
+			$display .= " -- Not Identified" if !$item->{identified};
+			$display .= " -- Broken" if $item->{broken};
+			print $f "$display\n";
+		}
+		print $f "\nCapacity: $storage{items}/$storage{items_max}\n";
+		print $f "-------------------------------\n";
+		close $f;
+
+	} elsif ($show_error_on_fail) {
+		error "Unable to write to $Settings::storage_file\n";
 	}
-	sendDrop(\$remote_socket, $char->{inventory}[$item]{index}, $amount);
 }
+
 
 OpenKoreMod::initMisc() if defined(&OpenKoreMod::initMisc);
 
