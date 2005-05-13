@@ -401,7 +401,7 @@ sub getShopAmount {
 # get amount of an item in storage
 sub getStorageAmount {
   my $item = shift;
-  return 0 unless $::storage{opened};
+  return unless $::storage{opened};
   my $id = getStorageID($item);
   return $storage{$storageID[$id]}{amount} if defined $id;
   return 0;
@@ -410,7 +410,12 @@ sub getStorageAmount {
 # returns random item from argument list ##################
 sub getRandom {
   my $arg = shift;
-  my @items = split(/ /, $arg);
+  my @items;
+  my $id = 0;
+  while ($arg ne '') {
+    ($items[$id++]) = $arg =~ /^[, ]*"(.*?)"/;
+    $arg =~ s/^[, ]*".*?"//g;
+  };
   foreach (reverse 0..@items) {
     my $rnd = splice(@items, rand @items, 1);
     push @items, $rnd;
