@@ -1521,22 +1521,7 @@ sub cmdStorage_close {
 
 sub cmdStorage_log {
 	if ($storage{opened}) {
-		my $f;
-		if (open($f, "> $Settings::storage_file")) {
-			print $f "---------- Storage ". getFormattedDate(int(time)) ." -----------\n";
-			for (my $i = 0; $i < @storageID; $i++) {
-				next if (!$storageID[$i]);
-				my $item = $storage{$storageID[$i]};
-
-				my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
-				$display .= " -- Not Identified" if !$item->{identified};
-				$display .= " -- Broken" if $item->{broken};
-				print $f "$display\n";
-			}
-			print $f "\nCapacity: $storage{items}/$storage{items_max}\n";
-			print $f "-------------------------------\n";
-			close $f;
-		}
+		writeStorageLog(1);
 	} else {
 		error "No information about storage; it has not been opened before in this session\n";
 	}

@@ -2624,7 +2624,10 @@ sub AI {
 			}
 
 			sendStorageClose(\$remote_socket);
-			relog() if ($config{'relogAfterStorage'});
+			if ($config{'relogAfterStorage'}) {
+				writeStorageLog(0);
+				relog();
+			}
 			$args->{done} = 1;
 		}
 	}
@@ -7746,22 +7749,7 @@ sub parseMsg {
 		Plugins::callHook('packet_storage_close');
 
 		# Storage log
-		my $f;
-		if (open($f, "> $Settings::storage_file")) {
-			print $f "---------- Storage ". getFormattedDate(int(time)) ." -----------\n";
-			for (my $i = 0; $i < @storageID; $i++) {
-				next if (!$storageID[$i]);
-				my $item = $storage{$storageID[$i]};
-
-				my $display = sprintf "%2d %s x %s", $i, $item->{name}, $item->{amount};
-				$display .= " -- Not Identified" if !$item->{identified};
-				$display .= " -- Broken" if $item->{broken};
-				print $f "$display\n";
-			}
-			print $f "\nCapacity: $storage{items}/$storage{items_max}\n";
-			print $f "-------------------------------\n";
-			close $f;
-		}
+		writeStorageLog(0);
 
 	} elsif ($switch eq "00FA") {
 		$type = unpack("C1", substr($msg, 2, 1));
