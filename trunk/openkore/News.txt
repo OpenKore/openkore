@@ -67,6 +67,7 @@ Bug fixes:
   a problem on Aegis, but was on eAthena).
 - Fix monster avoiding teleport spamming.
 - Hopefully fix problems with autoBreakTime on some systems.
+- Storage will now work correctly with over 255 items.
 
 New features:
 - Beginnings of code that will allow skill usage on non-partied players.
