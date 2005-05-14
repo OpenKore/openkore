@@ -1294,14 +1294,20 @@ sub cmdSendRaw {
 }
 
 sub cmdSit {
-	$ai_v{attackAuto_old} = $config{attackAuto};
-	$ai_v{route_randomWalk_old} = $config{route_randomWalk};
-	$ai_v{teleportAuto_idle_old} = $config{teleportAuto_idle};
-	$ai_v{itemsGatherAuto_old} = $config{itemsGatherAuto};
-	$config{attackAuto} = 1 if ($config{attackAuto});
-	$config{route_randomWalk} = 0;
-	$config{teleportAuto_idle} = 0;
-	$config{itemsGatherAuto} = 0;
+	if (!$ai_v{sitConfig}) {
+		my %cfg;
+
+		foreach (qw/attackAuto_party route_randomWalk teleportAuto_idle itemsGatherAuto/) {
+			$cfg{$_} = $config{$_};
+			$config{$_} = 0;
+		}
+		if ($config{attackAuto}) {
+			$cfg{attackAuto} = $config{attackAuto};
+			$config{attackAuto} = 1;
+		}
+		$ai_v{sitConfig} = \%cfg;
+	}
+
 	AI::clear("move", "route", "mapRoute");
 	main::sit();
 	$ai_v{sitAuto_forceStop} = 0;
@@ -1598,15 +1604,11 @@ sub cmdUseSkill {
 }
 
 sub cmdStand {
-	if (defined $ai_v{attackAuto_old}) {
-		$config{attackAuto} = $ai_v{attackAuto_old};
-		$config{route_randomWalk} = $ai_v{route_randomWalk_old};
-		$config{teleportAuto_idle} = $ai_v{teleportAuto_idle_old};
-		$config{itemsGatherAuto} = $ai_v{itemsGatherAuto_old};
-		delete $ai_v{attackAuto_old};
-		delete $ai_v{route_randomWalk_old};
-		delete $ai_v{teleportAuto_idle_old};
-		delete $ai_v{itemsGatherAuto_old};
+	if ($ai_v{sitConfig}) {
+		foreach my $key (keys %{$ai_v{sitConfig}}) {
+			$config{$key} = $ai_v{sitConfig}{$key};
+		}
+		delete $ai_v{sitConfig};
 	}
 	$ai_v{sitAuto_forceStop} = 1;
 	main::stand();
