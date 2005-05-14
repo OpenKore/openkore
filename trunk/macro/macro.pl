@@ -32,7 +32,7 @@ use Plugins;
 use Settings;
 use Globals;
 use Utils;
-use Log;
+use Log qw (message error warning);
 use FileParsers;
 use AI;
 use Commands;
@@ -58,13 +58,14 @@ Settings::load($cfID);
 undef $file;
 
 sub Unload {
-  Log::message("macro unloaded.\n");
+  message "macro unloaded.\n";
   our $cfID; Settings::delConfigFile($cfID);
   Plugins::delHooks($hooks);
 };
 
 sub Reload {
-  Log::message("macro reloading, cleaning up.\n");
+  message "macro reloading, cleaning up.\n";
+  Plugins::delHooks($hooks);
   our %macros = undef;
   our %automacro = undef;
   our %varStack = undef;
@@ -102,12 +103,17 @@ sub parseMacroFile {
     } elsif ($inBlock && $_ eq "}") {
       undef $inBlock;
     } elsif ($inBlock) {
-      if ($mblock >= 0) {$key = $mblock++; $value = $_;}
+      if ($mblock >= 0) {$key = "${inBlock}_".$mblock++; $value = $_}
       else {
         ($key, $value) = $_ =~ /^(.*?) (.*)/;
-        next if (!$key);
+        next unless $key;
+        # multiple triggers allowed for:
+        if ($key =~ /^(inventory|storage|cart|shop|var|status)$/) {
+          my $seq = 0;
+          while (exists $r_hash->{"${inBlock}_${key}".$seq}) {$seq++};
+          $key = "${inBlock}_${key}".$seq;
+        } else {$key = "${inBlock}_${key}";}
       };
-      $key = "${inBlock}_${key}";
       $r_hash->{$key} = $value;
     } else {
       next;
@@ -133,17 +139,18 @@ sub commandHandler {
 
 # prints macro version
 sub showVersion {
-  Log::message(sprintf("macro plugin version %s\n", $macroVersion), "list");
+  message "macro plugin version ".$macroVersion."\n", "list";
 };
 
 # prints a little usage text
 sub usage {
-  Log::message("usage: macro [MACRO|list|stop|version|reset] [automacro]\n", "list");
-  Log::message("macro MACRO: run macro MACRO\n".
-  "macro list: list available macros\n".
-  "macro stop: stop current macro\n".
-  "macro version: print macro plugin version\n".
-  "macro reset [automacro]: resets run-once status for all or given automacro(s)\n");
+  message "usage: macro [MACRO|list|stop|version|reset] [automacro]\n", "list";
+  message "macro MACRO: run macro MACRO\n".
+    "macro list: list available macros\n".
+    "macro stop: stop current macro\n".
+    "macro version: print macro plugin version\n".
+    "macro reset [automacro]: resets run-once status for all or given automacro(s)\n";
+  ;
 };
 
 # finds macro
@@ -186,7 +193,6 @@ sub parseCmd {
       pushMacro($macro, $times);
     } elsif ($command =~ /\@set/) {
       my ($var, $val) = $command =~ /^\@set +([a-zA-Z0-9]*)? +(.*)$/;
-      debug(sprintf("in 'set': var +%s+, val +%s+\n", $var, $val));
       setVar($var, parseCmd($val));
     } elsif ($command =~ /\@pause/) {
       ;
@@ -216,7 +222,7 @@ sub parseCmd {
     # once
     if (defined $ret) {$command =~ s/\@$kw +\(.*?\)/$ret/g}
     else {
-      error(sprintf("macro: %s failed. Macro stopped.\n", $command));
+      error "macro: ".$command." failed. Macro stopped.\n";
       clearMacro();
       return;
     }
@@ -249,7 +255,7 @@ sub processQueue {
 sub runMacro {
   my ($arg, $times) = @_;
   my $macroID = findMacroID($arg);
-  if (!defined $macroID) {error(sprintf("Macro %s not found.\n", $arg))}
+  if (!defined $macroID) {error "Macro ".$arg." not found.\n"}
   else {
     our @macroQueue = loadMacro($macroID);
     if ($times > 1) {
@@ -290,18 +296,18 @@ sub ai_isIdle {
 # lists available macros
 sub list_macros {
   my $index = 0;
-  Log::message(sprintf("The following macros are available:\n%smacro%s\n", "-"x10, "-"x10), "list");
+  message(sprintf("The following macros are available:\n%smacros%s\n","-"x10,"-"x10), "list");
   while (exists $macros{"macro_".$index}) {
-    Log::message(sprintf("%s\n",$macros{"macro_".$index}));
+    message $macros{"macro_".$index}."\n";
     $index++;
   };
-  Log::message(sprintf("%s\n%sautomacro%s\n", "-"x25, "-"x8, "-"x8), "list");
+  message(sprintf("%s\n%sautomacro%s\n", "-"x25, "-"x8, "-"x8), "list");
   $index = 0;
   while (exists $macros{"automacro_".$index}) {
-    Log::message(sprintf("%s\n",$macros{"automacro_".$index}));
+    message $macros{"automacro_".$index}."\n";
     $index++;
   };
-  Log::message(sprintf("%s\n", "-"x25), "list");
+  message(sprintf("%s\n","-"x25), "list");
 };
 
 # clears macro queue
@@ -309,7 +315,7 @@ sub clearMacro {
   our @macroQueue = ();
   our %automacro = undef;
   AI::dequeue() if AI::is('macro');
-  Log::message("macro queue cleared.\n");
+  message "macro queue cleared.\n";
 };
 
 # adds variable and value to stack
@@ -330,7 +336,7 @@ sub getVar {
 sub logMessage {
   my $message = shift;
   $message =~ s/\@log //g;
-  Log::message(sprintf("[macro] %s\n", $message));
+  message "[macro] ".$message."\n";
 };
 
 # get NPC array index
@@ -456,12 +462,12 @@ sub automacroReset {
   our @runonce;
   if (!$arg) {
     @runonce = ();
-    Log::message("automacro runonce list cleared.\n");
+    message "automacro runonce list cleared.\n";
     return;
   };
   my $ret = releaseAM($arg);
-  if ($ret) {Log::message(sprintf("automacro %s removed from runonce list.\n", $arg))}
-  else {Log::message(sprintf("automacro %s was not in runonce list.\n", $arg))};
+  if ($ret) {message "automacro ".$arg." removed from runonce list.\n"}
+  else      {message "automacro ".$arg." was not in runonce list.\n"};
 };
 
 # removes an automacro from runonce list ##################
@@ -487,11 +493,13 @@ sub automacroCheck {
 
   return 0 if (AI::is('macro') || $automacro{call});
 
-  foreach my $am (keys %macros) {
+  our %autotimer;
+
+  CHKAM: foreach my $am (keys %macros) {
     next unless ($am =~ /^automacro_[0-9]*$/);
     next if (isInRunOnce($macros{$am}));
-    if (!$macros{$am."_call"} || !defined findMacroID($macros{$am."_call"})) {
-      error(sprintf("automacro %s: call not defined or not found.\n", $macros{$am}));
+    if ($macros{$am."_call"} && !defined findMacroID($macros{$am."_call"})) {
+      error "automacro ".$macros{$am}.": macro ".$macros{$am."_call"}." not found.\n";
       our @runonce; push @runonce, $macros{$am}; return 0;
     };
     if ($macros{$am."_spell"}) {
@@ -505,7 +513,16 @@ sub automacroCheck {
       } else {next};
     };
     next if ($macros{$am."_map"} && $macros{$am."_map"} ne $field{name});
-    next if ($macros{$am."_var"} && !checkVar($macros{$am."_var"}));
+    my $seq = 0; while (exists $macros{$am."_var".$seq}) {
+      next CHKAM if ($macros{$am."_var".$seq} && !checkVar($macros{$am."_var".$seq}));
+      $seq++;
+    };
+    if ($macros{$am."_timeout"}) {
+      $macros{$am."_time"} = 0 unless $macros{$am."_time"};
+      my %tmptimer = (timeout => $macros{$am."_timeout"}, time => $macros{$am."_time"});
+      next if (!timeOut(\%tmptimer));
+      $macros{$am."_time"} = time;
+    };
     next if ($macros{$am."_location"} && !checkLoc($macros{$am."_location"}));
     next if ($macros{$am."_base"} && !checkLevel($macros{$am."_base"}, "base"));
     next if ($macros{$am."_job"} && !checkLevel($macros{$am."_job"}, "job"));
@@ -513,19 +530,41 @@ sub automacroCheck {
     next if ($macros{$am."_hp"} && !checkPercent($macros{$am."_hp"}, "hp"));
     next if ($macros{$am."_sp"} && !checkPercent($macros{$am."_sp"}, "sp"));
     next if ($macros{$am."_weight"} && !checkPercent($macros{$am."_weight"}, "weight"));
-    next if ($macros{$am."_status"} && !checkStatus($macros{$am."_status"}));
-    next if ($macros{$am."_inventory"} && !checkInventory($macros{$am."_inventory"}));
-    next if ($macros{$am."_storage"} && !checkStorage($macros{$am."_storage"}));
-    next if ($macros{$am."_cart"} && !checkCart($macros{$am."_cart"}));
+    $seq = 0; while (exists $macros{$am."_status".$seq}) {
+      next CHKAM if ($macros{$am."_status".$seq} && !checkStatus($macros{$am."_status".$seq}));
+      $seq++;
+    };
+    $seq = 0; while (exists $macros{$am."_inventory".$seq}) {
+      next CHKAM if ($macros{$am."_inventory".$seq} && !checkInventory($macros{$am."_inventory".$seq}));
+      $seq++;
+    };
+    $seq = 0; while (exists $macros{$am."_storage".$seq}) {
+      next CHKAM if ($macros{$am."_storage".$seq} && !checkStorage($macros{$am."_storage".$seq}));
+      $seq++;
+    };
+    $seq = 0; while (exists $macros{$am."_cart".$seq}) {
+      next CHKAM if ($macros{$am."_cart".$seq} && !checkCart($macros{$am."_cart".$seq}));
+      $seq++;
+    };
+    $seq = 0; while (exists $macros{$am."_shop".$seq}) {
+      next CHKAM if ($macros{$am."_shop".$seq} && !checkShop($macros{$am."_shop".$seq}));
+      $seq++;
+    };
     next if ($macros{$am."_cartweight"} && !checkPercent($macros{$am."_cartweight"}, "cweight"));
-    next if ($macros{$am."_shop"} && !checkShop($macros{$am."_shop"}));
     next if ($macros{$am."_soldout"} && !checkSoldOut($macros{$am."_soldout"}));
     next if ($macros{$am."_player"} && !checkPerson($macros{$am."_player"}));
     next if ($macros{$am."_zeny"} && !checkZeny($macros{$am."_zeny"}));
     next if ($macros{$am."_equipped"} && !checkEquip($macros{$am."_equipped"}));
-    Log::message(sprintf("automacro %s triggered.\n",$macros{$am}));
+    message "automacro ".$macros{$am}." triggered.\n";
+    if (!$macros{$am."_call"} && !$::config{macro_nowarn}) {
+      warning "automacro ".$macros{$am}.": call not defined.\n";
+    };
     if ($macros{$am."_run-once"} == 1) {our @runonce; push @runonce, $macros{$am}};
-    $automacro{call} = $macros{$am."_call"};
+    if ($macros{$am."_set"}) {
+       my ($var, $val) = split(/ /, $macros{$am."_set"});
+       setVar($var, $val);
+    };
+    $automacro{call} = $macros{$am."_call"} if (defined $macros{$am."_call"});
     $automacro{override_ai} = 1 if ($macros{$am."_overrideAI"});
     $automacro{timeout} = $macros{$am."_delay"} if ($macros{$am."_delay"});
     $automacro{time} = time;
@@ -551,11 +590,7 @@ sub cmpr {
 };
 
 sub debug {
-  Log::message($_[0], "list") if $::config{macro_debug};
-};
-
-sub error {
-  Log::error($_[0]);
+  message $_[0], "list" if $::config{macro_debug};
 };
 
 sub parseArgs {
