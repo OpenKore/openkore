@@ -82,21 +82,6 @@ sub on_parseMsg {
 
 package PacketRecorder::Writer;
 
-# File format:
-# Header (1024 bytes) {
-#     unsigned float time;         // time when recording started
-#     unsigned long accountID;
-#     unsigned long charID;
-#     char fieldName[20];
-#     char charName[25];
-#     // Everything else in the header is reserved for future usage.
-# }
-# Body (array of the following structure) {
-#     unsigned double time;
-#     unsigned int16 data_len;
-#     char *data;
-# }
-
 use Time::HiRes qw(time);
 
 sub new {
@@ -125,7 +110,8 @@ sub reset {
 
 sub writeHeader {
 	my ($self, $accountID, $charID, $field, $charName) = @_;
-	my $data = pack("F L L a20", time, $accountID, $charID, $field);
+	my $data = "PKT" . chr(0) . pack("S", 0);
+	$data .= pack("F C4 C4 a20", time, $accountID, $charID, $field);
 	$data .= pack("a25", $charName);
 
 	seek $self->{handle}, 0, 0;
