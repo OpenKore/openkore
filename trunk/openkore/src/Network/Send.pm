@@ -45,6 +45,8 @@ our @EXPORT = qw(
 	sendBanCheck
 	sendBuy
 	sendBuyVender
+	sendCardMerge
+	sendCardMergeRequest
 	sendCartAdd
 	sendCartGet
 	sendCharCreate
