@@ -65,7 +65,6 @@ sub on_start3 {
 
 		$reader = new Replayer::Reader($config{replayPacket});
 		$reader->header(\$recordBegin, \$accountID, \$charID, \$field, \$char->{name});
-
 		message "Packet recording was started at : " . localtime($recordBegin) . "\n", "info";
 		my %packet;
 		while ($reader->next(\%packet)) {
@@ -73,7 +72,7 @@ sub on_start3 {
 		}
 		$recordEnd = $packet{time};
 		message "Packet recording was finished at: " . localtime($recordEnd) . "\n", "info";
-		message "Total time recorded: " . timeConvert($recordEnd - $recordBegin) . " (" . int($recordEnd - $recordBegin) . "seconds)\n", "info";
+		message "Total time recorded: " . timeConvert($recordEnd - $recordBegin) . " (" . int($recordEnd - $recordBegin) . " seconds)\n", "info";
 
 		message "You can flash forward to a given time, or start replaying from the beginning.\n";
 		message "Enter the number of seconds you want to skip, or press ENTER if you want to\n";
@@ -172,11 +171,15 @@ sub DESTROY {
 
 sub header {
 	my ($self, $beginTime, $accountID, $charID, $field, $charName) = @_;
-	my $data;
+	my ($data, $magic, $version);
 
 	seek $self->{handle}, 0, 0;
 	read $self->{handle}, $data, 1024;
-	($$beginTime, $$accountID, $$charID, $$field, $$charName) = unpack("F L L a20 a25", $data);
+
+	($magic, $version, $$beginTime, $$accountID, $$charID, $$field, $$charName)
+	    = unpack("C4 S F C4 C4 a20 a25", $data);
+	# TODO: check whether $magic is "PKT\0" and whether $version is 0
+
 	$$field =~ s/\0//g;
 	$$charName =~ s/\0//g;
 }
