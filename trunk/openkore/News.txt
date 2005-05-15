@@ -23,6 +23,9 @@ New config options:
 - avoidGM_namePattern (regular expression)
   In case your server uses non-standard GM names, you can specify a
   regular expression for GM names with this option.
+- teleportAuto_totalDmg (number)
+  teleportAuto_totalDmgInLock (number)
+  Teleport away if a monster has done this much total damage to you.
 
 Internal:
 - whenGroundStatus() now takes coordinates instead of a player/monster.

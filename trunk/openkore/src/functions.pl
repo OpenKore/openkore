@@ -10371,6 +10371,12 @@ sub updateDamageTables {
 				} elsif (AI::inQueue("sitAuto") && $config{'teleportAuto_attackedWhenSitting'} && $damage > 0) {
 					message "$monsters{$ID1}{'name'} attacks you while you are sitting. Teleporting...\n", "teleport";
 					$teleport = 1;
+				} elsif ($config{'teleportAuto_totalDmg'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmg'} && !whenStatusActive("Hallucination") && !($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'})) {
+					message "$monsters{$ID1}{'name'} hit you for a total of more than $config{'teleportAuto_totalDmg'} dmg. Teleporting...\n", "teleport";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmgInLock'} && !whenStatusActive("Hallucination")) {
+					message "$monsters{$ID1}{'name'} hit you for a total of more than $config{'teleportAuto_totalDmgInLock'} dmg in lockMap. Teleporting...\n", "teleport";
+					$teleport = 1;
 				}
 				useTeleport(1) if ($teleport);
 			}
