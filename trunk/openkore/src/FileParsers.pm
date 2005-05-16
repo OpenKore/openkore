@@ -27,6 +27,7 @@ use base qw(Exporter);
 use Carp;
 
 use Utils;
+use Plugins;
 use Log qw(warning error);
 
 our @EXPORT = qw(
@@ -551,12 +552,19 @@ sub parseROLUT {
 }
 
 sub parseRODescLUT {
-	my $file = shift;
-	my $r_hash = shift;
+	my ($file, $r_hash) = @_;
+
+	my %ret = (
+		file => $file,
+		hash => $r_hash
+	    );
+	Plugins::callHook("FileParsers::RODescLUT", \%ret);
+	return if ($ret{return});
+
 	undef %{$r_hash};
 	my $ID;
 	my $IDdesc;
-	open FILE, $file;
+	open FILE, "< $file";
 	foreach (<FILE>) {
 		s/\r//g;
 		if (/^#/) {
