@@ -4,7 +4,7 @@
 
 typedef void (*ThreadCallback) (void *data);
 
-void run_in_thread (ThreadCallback callback, void *data);
+int run_in_thread (ThreadCallback callback, void *data);
 
 #ifdef WIN32
 	#include "threads-win32.h"
