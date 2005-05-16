@@ -50,6 +50,8 @@ our $current_plugin_folder;
 our @plugins;
 our %hooks;
 
+my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
+
 
 ### CATEGORY: Functions
 
@@ -60,20 +62,30 @@ our %hooks;
 # Loads all plugins from the plugins folder, and all plugins that are one subfolder below the plugins folder.
 # Plugins must have the .pl extension.
 sub loadAll {
-	return 1 if (!opendir(DIR, $Settings::plugins_folder));
-	my @items = readdir(DIR);
-	my @plugins = grep { -f "$Settings::plugins_folder/$_" && /\.(pl|lp)$/ } @items;
-	my @subdirs = grep { -d "$Settings::plugins_folder/$_" && !($_ =~ /^(\.|CVS$)/) } @items;
-	closedir(DIR);
+	my (@plugins, @subdirs);
+
+	foreach my $dir (split /$pathDelimiter+/, $Settings::plugins_folder) {
+		my @items;
+
+		next if (!opendir(DIR, $dir));
+		@items = readdir DIR;
+		closedir DIR;
+
+		foreach my $file (@items) {
+			push @plugins, "$dir/$file" if (-f "$dir/$file" && $file =~ /\.(pl|lp)$/);
+		}
+		foreach my $subdir (@items) {
+			push @subdirs, "$dir/$subdir" if (-d "$dir/$subdir" && $subdir !~ /^(\.|CVS$)/i);
+		}
+	}
 
 	my $result = 1;
 
 	foreach my $plugin (@plugins) {
-		$result = 0 if (!load("$Settings::plugins_folder/$plugin"));
+		$result = 0 if (!load($plugin));
 	}
 
 	foreach my $dir (@subdirs) {
-		$dir = "$Settings::plugins_folder/$dir";
 		next unless (opendir(DIR, $dir));
 		@plugins = grep { -f "$dir/$_" && /\.(pl|lp)$/ } readdir(DIR);
 		closedir(DIR);
@@ -82,6 +94,7 @@ sub loadAll {
 			$result = 0 if (!load("$dir/$plugin"));
 		}
 	}
+
 	return $result;
 }
 
@@ -103,6 +116,7 @@ sub load {
 
 	undef $@;
 	if (!do $file) {
+		$@ = "cannot open file" if (!defined $@);
 		Log::error("Unable to load plugin $file: $@\n", "plugins");
 		return 0;
 	}

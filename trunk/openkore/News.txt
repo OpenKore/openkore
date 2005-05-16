@@ -11,6 +11,8 @@ New features:
 - Show player number with emoticons and public chat.
 - Show distance with emoticons.
 - The uneq command now supports item names.
+- You can now specify multiple plugin directories on the commandline.
+  Each directory is seperated by a ';' (on Windows) or a ':' (on Unix).
 
 New commands:
 - storage log
