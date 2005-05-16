@@ -9,16 +9,16 @@
 
 package macro;
 
-our $macroVersion = "0.9";
+our $Version = "0.9";
 my $cvs = 1;
 
 if (defined $cvs) {
-  my $fname = "plugins/macro.pl";
-  open(MF, "< $fname" ) or die "Can't open $fname: $!";
+  my $fname = "macro.pl";
+  open(MF, "< plugins/$fname" ) or die "Can't open plugins/$fname: $!";
   while (<MF>) {
     if (/Header:/) {
-      my ($rev) = $_ =~ /macro\.pl,v (.*) [0-9]{4}/i;
-      $macroVersion .= "cvs rev ".$rev;
+      my ($rev) = $_ =~ /$fname,v (.*) [0-9]{4}/i;
+      $Version .= "cvs rev ".$rev;
       last;
     }
   }
@@ -139,7 +139,7 @@ sub commandHandler {
 
 # prints macro version
 sub showVersion {
-  message "macro plugin version ".$macroVersion."\n", "list";
+  message "macro plugin version ".$Version."\n", "list";
 };
 
 # prints a little usage text
@@ -218,9 +218,7 @@ sub parseCmd {
     elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
     elsif ($kw eq "eval")      {$ret = eval($arg)};
     return $command if $ret eq '_%_';
-    # FIXME - the substitution is dirty. Does crap when keyword is in line more than
-    # once
-    if (defined $ret) {$command =~ s/\@$kw +\(.*?\)/$ret/g}
+    if (defined $ret) {$command =~ s/\@$kw +\(.*?\)/$ret/}
     else {
       error "macro: ".$command." failed. Macro stopped.\n";
       clearMacro();
