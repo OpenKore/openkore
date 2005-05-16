@@ -138,7 +138,7 @@ unix_server_main_loop (UnixServer *server)
 		/* Check whether there are incoming connections. */
 		ufds.fd = server->fd;
 		ufds.events = POLLIN;
-		tmp = poll (&ufds, 1, 10);
+		tmp = poll (&ufds, 1, 20);
 		if (tmp == -1) {
 			/* Error. But it's OK if the system call was interrupted
 			 * (by Ctrl-C or whatever). */
@@ -169,7 +169,11 @@ unix_server_main_loop (UnixServer *server)
 		data = malloc (sizeof (ClientThreadData));
 		data->fd = fd;
 		data->callback = server->callback;
-		run_in_thread ((ThreadCallback) client_thread, data);
+		if (!run_in_thread ((ThreadCallback) client_thread, data)) {
+			/* Failed to create a thread. */
+			close (fd);
+			free (data);
+		}
 	}
 }
 

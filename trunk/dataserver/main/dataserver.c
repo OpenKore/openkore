@@ -62,7 +62,6 @@ client_callback (Client *client)
 	char *name;
 
 	buf_len = 0;
-
 	while (1) {
 		/* Buffer is full. The client is trying to perform a request with a rediculously
 		 * big name. It's probably misbehaving, so disconnect it. */
@@ -109,8 +108,10 @@ client_callback (Client *client)
 			DescInfo *info;
 
 			info = (type == 0) ? itemsDesc : skillsDesc;
-			if (!send_reply (client, desc_info_lookup (info, name)))
+			if (!send_reply (client, desc_info_lookup (info, name))) {
+				free (name);
 				return;
+			}
 			break;
 		}
 
