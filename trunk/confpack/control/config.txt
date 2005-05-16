@@ -53,7 +53,6 @@ attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 0
 
-
 autoBreakTime {
 	startTime
 	stopTime
@@ -90,13 +89,13 @@ avoidList 1
 avoidList_inLockOnly 0
 avoidList_reconnect 1800
 
-
 dcOnDeath 0
 dcOnDualLogin 0
 dcOnDisconnect 0
 dcOnEmptyArrow 0
 dcOnMute 0
 dcOnPM 0
+dcOnZeny 0
 
 follow 0
 followTarget
@@ -128,7 +127,6 @@ route_teleport 0
 route_teleport_minDistance 150
 route_teleport_maxTries 8
 route_step 15
-
 
 runFromTarget 0
 runFromTarget_dist 6
@@ -177,7 +175,6 @@ teleportAuto_attackedWhenSitting 0
 teleportAuto_totalDmg 0
 teleportAuto_totalDmgInLock 0
 
-
 dealAuto 1
 partyAuto 1
 partyAutoShare 0
@@ -220,7 +217,6 @@ callSign
 ######## Block options ########
 # You can copy & paste any block multiple times. So if you want to
 # configure two attack skills, just duplicate the attackSkillSlot block.
-
 
 attackSkillSlot {
 	lvl 10
@@ -274,7 +270,6 @@ autoSwitch {
 	useWeapon
 }
 
-
 buyAuto {
 	npc
 	standpoint
@@ -282,7 +277,6 @@ buyAuto {
 	minAmount 2
 	maxAmount 3
 }
-
 
 equipAuto {
 	def
@@ -308,7 +302,6 @@ equipAuto {
 	inInventory_name
 	inInventory_qty
 }
-
 
 useSelf_skill {
 	lvl 10
@@ -394,7 +387,6 @@ partySkill {
 
 ######## Autostorage/autosell ########
 
-
 sellAuto 0
 sellAuto_npc
 sellAuto_standpoint
@@ -416,9 +408,8 @@ getAuto {
 
 ######## Debugging options; only useful for developers ########
 
-
 debug 0
-debugPacket_unparsed 1
+debugPacket_unparsed 0
 debugPacket_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
