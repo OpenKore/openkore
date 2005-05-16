@@ -11323,6 +11323,10 @@ sub checkMonsterCondition {
 	if ($config{$prefix."_whenNotGround"}) {
 		return 0 if whenGroundStatus(calcPosition($monster), $config{$prefix."_whenNotGround"});
 	}
+
+	if ($config{$prefix."_dist"}) {
+		return 0 unless inRange(distance(calcPosition($char), calcPosition($monster)), $config{$prefix."_dist"});
+	}
 	
 	return 1;
 }
