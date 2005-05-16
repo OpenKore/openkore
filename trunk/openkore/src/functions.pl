@@ -5581,61 +5581,57 @@ sub parseMsg {
 			writeSectionedFileIntact("$Settings::tables_folder/servers.txt", \%masterServers);
 		}
 
-	} elsif ($switch eq "006B") {
-		# Check for conState here. Unparsed packets can cause this switch to
-		# be triggered at the wrong time.
-		if ($conState != 5) {
-			message("Received characters from Game Login Server\n", "connection");
-			$conState = 3;
-			undef $conState_tries;
-			undef @chars;
+	} elsif ($switch eq "006B" && $conState != 5) {
+		message("Received characters from Game Login Server\n", "connection");
+		$conState = 3;
+		undef $conState_tries;
+		undef @chars;
 
-			my %options;
-			Plugins::callHook('parseMsg/recvChars', \%options);
-			if (exists $options{charServer}) {
-				$charServer = $options{charServer};
-			} else {
-				$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
-			}
+		my %options;
+		Plugins::callHook('parseMsg/recvChars', \%options);
+		if (exists $options{charServer}) {
+			$charServer = $options{charServer};
+		} else {
+			$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
+		}
 
-			$startVal = $msg_size % 106;
+		$startVal = $msg_size % 106;
 
-			my $num;
-			for (my $i = $startVal; $i < $msg_size; $i += 106) {
-				#exp display bugfix - chobit andy 20030129
-				$num = unpack("C1", substr($msg, $i + 104, 1));
-				$chars[$num]{'exp'} = unpack("L1", substr($msg, $i + 4, 4));
-				$chars[$num]{'zenny'} = unpack("L1", substr($msg, $i + 8, 4));
-				$chars[$num]{'exp_job'} = unpack("L1", substr($msg, $i + 12, 4));
-				$chars[$num]{'lv_job'} = unpack("C1", substr($msg, $i + 16, 1));
-				$chars[$num]{'hp'} = unpack("S1", substr($msg, $i + 42, 2));
-				$chars[$num]{'hp_max'} = unpack("S1", substr($msg, $i + 44, 2));
-				$chars[$num]{'sp'} = unpack("S1", substr($msg, $i + 46, 2));
-				$chars[$num]{'sp_max'} = unpack("S1", substr($msg, $i + 48, 2));
-				$chars[$num]{'jobID'} = unpack("C1", substr($msg, $i + 52, 1));
-				$chars[$num]{'ID'} = substr($msg, $i, 4);
-				$chars[$num]{'lv'} = unpack("C1", substr($msg, $i + 58, 1));
-				$chars[$num]{'hair_color'} = unpack("C1", substr($msg, $i + 70, 1));
-				($chars[$num]{'name'}) = substr($msg, $i + 74, 24) =~ /([\s\S]*?)\000/;
-				$chars[$num]{'str'} = unpack("C1", substr($msg, $i + 98, 1));
-				$chars[$num]{'agi'} = unpack("C1", substr($msg, $i + 99, 1));
-				$chars[$num]{'vit'} = unpack("C1", substr($msg, $i + 100, 1));
-				$chars[$num]{'int'} = unpack("C1", substr($msg, $i + 101, 1));
-				$chars[$num]{'dex'} = unpack("C1", substr($msg, $i + 102, 1));
-				$chars[$num]{'luk'} = unpack("C1", substr($msg, $i + 103, 1));
-				$chars[$num]{'sex'} = $accountSex2;
-			}
+		my $num;
+		for (my $i = $startVal; $i < $msg_size; $i += 106) {
+			#exp display bugfix - chobit andy 20030129
+			$num = unpack("C1", substr($msg, $i + 104, 1));
+			$chars[$num]{'exp'} = unpack("L1", substr($msg, $i + 4, 4));
+			$chars[$num]{'zenny'} = unpack("L1", substr($msg, $i + 8, 4));
+			$chars[$num]{'exp_job'} = unpack("L1", substr($msg, $i + 12, 4));
+			$chars[$num]{'lv_job'} = unpack("C1", substr($msg, $i + 16, 1));
+			$chars[$num]{'hp'} = unpack("S1", substr($msg, $i + 42, 2));
+			$chars[$num]{'hp_max'} = unpack("S1", substr($msg, $i + 44, 2));
+			$chars[$num]{'sp'} = unpack("S1", substr($msg, $i + 46, 2));
+			$chars[$num]{'sp_max'} = unpack("S1", substr($msg, $i + 48, 2));
+			$chars[$num]{'jobID'} = unpack("C1", substr($msg, $i + 52, 1));
+			$chars[$num]{'ID'} = substr($msg, $i, 4);
+			$chars[$num]{'lv'} = unpack("C1", substr($msg, $i + 58, 1));
+			$chars[$num]{'hair_color'} = unpack("C1", substr($msg, $i + 70, 1));
+			($chars[$num]{'name'}) = substr($msg, $i + 74, 24) =~ /([\s\S]*?)\000/;
+			$chars[$num]{'str'} = unpack("C1", substr($msg, $i + 98, 1));
+			$chars[$num]{'agi'} = unpack("C1", substr($msg, $i + 99, 1));
+			$chars[$num]{'vit'} = unpack("C1", substr($msg, $i + 100, 1));
+			$chars[$num]{'int'} = unpack("C1", substr($msg, $i + 101, 1));
+			$chars[$num]{'dex'} = unpack("C1", substr($msg, $i + 102, 1));
+			$chars[$num]{'luk'} = unpack("C1", substr($msg, $i + 103, 1));
+			$chars[$num]{'sex'} = $accountSex2;
+		}
 
-			# gradeA says it's supposed to send this packet here, but
-			# it doesn't work...
-			#sendBanCheck(\$remote_socket) if (!$xkore && $config{serverType} == 2);
-			if (charSelectScreen(1) == 1) {
-				$firstLoginMap = 1;
-				$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
-				$sentWelcomeMessage = 1;
-			} else {
-				return;
-			}
+		# gradeA says it's supposed to send this packet here, but
+		# it doesn't work...
+		#sendBanCheck(\$remote_socket) if (!$xkore && $config{serverType} == 2);
+		if (charSelectScreen(1) == 1) {
+			$firstLoginMap = 1;
+			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+			$sentWelcomeMessage = 1;
+		} else {
+			return;
 		}
 
 	} elsif ($switch eq "006C") {
@@ -5646,7 +5642,7 @@ sub parseMsg {
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
 
-	} elsif ($switch eq "006D") {
+	} elsif ($switch eq "006D" && $conState != 5) {
 		my %char;
 		$char{ID} = substr($msg, 2, 4);
 		$char{name} = unpack("Z24", substr($msg, 76, 24));
@@ -5670,7 +5666,7 @@ sub parseMsg {
 			return;
 		}
 
-	} elsif ($switch eq "006E") {
+	} elsif ($switch eq "006E" && $conState != 5) {
 		message "Character cannot be to created. If you didn't make any mistake, then the name you chose already exists.\n", "info";
 		if (charSelectScreen() == 1) {
 			$conState = 3;
@@ -5681,7 +5677,7 @@ sub parseMsg {
 			return;
 		}
 
-	} elsif ($switch eq "006F") {
+	} elsif ($switch eq "006F" && $conState != 5) {
 		if (defined $AI::temp::delIndex) {
 			message "Character $chars[$AI::temp::delIndex]{name} ($AI::temp::delIndex) deleted.\n", "info";
 			delete $chars[$AI::temp::delIndex];
@@ -5702,7 +5698,7 @@ sub parseMsg {
 			return;
 		}
 
-	} elsif ($switch eq "0070") {
+	} elsif ($switch eq "0070" && $conState != 5) {
 		#my $errno = unpack("C", substr($msg, 2, 1));
 		error "Character cannot be deleted. Your e-mail address was probably wrong.\n";
 		undef $AI::temp::delIndex;
@@ -7144,6 +7140,10 @@ sub parseMsg {
 				message "You gained $change zeny.\n";
 			} elsif ($change < 0) {
 				message "You lost ".-$change." zeny.\n";
+				if ($config{'dcOnZeny'} && $val <= $config{'dcOnZeny'}) {
+					$interface->errorDialog("Disconnecting due to zeny lower than $config{'dcOnZeny'}.");
+					$quit = 1;
+				}
 			}
 			$char->{zenny} = $val;
 			debug "Zenny: $val\n", "parseMsg";

@@ -5,6 +5,8 @@
 Bug fixes:
 - Fix deal bug: showing twice as many items added.
 - Make "Compiles portals now?" prompt case-insensitive.
+- Prevent the character select screen from appearing randomly due to
+  lag or unparsed packets.
 
 New features:
 - Better support for detecting dead players.
@@ -43,13 +45,15 @@ New config options:
 - teleportAuto_totalDmg (number)
   teleportAuto_totalDmgInLock (number)
   Teleport away if a monster has done this much total damage to you.
+- dcOnZeny (number)
+  Disconnect automatically when your Zeny equals or lower than the
+  specified number. Useful if you use buyAuto or the auto buy plugin.
 
 Internal:
 - whenGroundStatus() now takes coordinates instead of a player/monster.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.
-- denni: 'storage log' command.
 - kunjandad: friend list packet support.
 - Crypticode: 'ai on'/'ai off' commands; item name support in 'uneq'
   command.
