@@ -16,6 +16,16 @@ New commands:
   Manually force writing to storage.txt. Some people complain that
   the storage log is broken, so until that has been resolved, this
   command will do.
+- card list
+  List cards in your inventory.
+- card use <card inventory number>
+  Get the list of items you can slot the card into.
+- card mergelist
+  Show the list of items you can slot the card into again.
+- card mergecancel
+  Cancel the card merging request.
+- card merge <merge list number>
+  Merge the card into the item.
 
 New config options:
 - partySkill: target_dead
