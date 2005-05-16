@@ -139,7 +139,7 @@ sub commandHandler {
 
 # prints macro version
 sub showVersion {
-  message "macro plugin version ".$Version."\n", "list";
+  message "macro plugin version $Version\n", "list";
 };
 
 # prints a little usage text
@@ -195,7 +195,12 @@ sub parseCmd {
       my ($var, $val) = $command =~ /^\@set +([a-zA-Z0-9]*)? +(.*)$/;
       setVar($var, parseCmd($val));
     } elsif ($command =~ /\@pause/) {
-      ;
+      my (undef, $timeout) = split(/ /, $command);
+      our $macro_delay;
+      if (defined $timeout && !defined $macro_delay) {
+        $macro_delay = $timeout{macro_delay}{timeout};
+        $timeout{macro_delay}{timeout} = $timeout;
+      };
     };
     return;
   };
@@ -220,7 +225,7 @@ sub parseCmd {
     return $command if $ret eq '_%_';
     if (defined $ret) {$command =~ s/\@$kw +\(.*?\)/$ret/}
     else {
-      error "macro: ".$command." failed. Macro stopped.\n";
+      error "macro: $command failed. Macro stopped.\n";
       clearMacro();
       return;
     }
@@ -235,9 +240,14 @@ sub processQueue {
   if (!@macroQueue) {AI::dequeue if AI::is('macro'); return};
   
   if (timeOut($timeout{macro_delay}) && ai_isIdle()) {
+    $timeout{macro_delay}{time} = time;
+    our $macro_delay;
+    if (defined $macro_delay) {
+      $timeout{macro_delay}{timeout} = $macro_delay; undef $macro_delay;
+    };
     my $cmdfromstack = shift(@macroQueue);
     my $command = parseCmd($cmdfromstack);
-    debug(sprintf("[macro] processing: %s (-> %s)\n", $cmdfromstack, $command));
+    debug "[macro] processing: $cmdfromstack (-> $command)\n";
     if (defined $command) {
       Commands::run($command) || ::parseCommand($command)
     };
@@ -245,7 +255,6 @@ sub processQueue {
       AI::dequeue if (AI::is('macro'));
       %automacro = undef if ($automacro{'override_AI'});
     };
-    $timeout{macro_delay}{time} = time;
   };
 };
 
@@ -253,7 +262,7 @@ sub processQueue {
 sub runMacro {
   my ($arg, $times) = @_;
   my $macroID = findMacroID($arg);
-  if (!defined $macroID) {error "Macro ".$arg." not found.\n"}
+  if (!defined $macroID) {error "Macro $arg not found.\n"}
   else {
     our @macroQueue = loadMacro($macroID);
     if ($times > 1) {
@@ -262,7 +271,7 @@ sub runMacro {
         @macroQueue = (@tmparr, @macroQueue);
       };
     };
-    debug(sprintf("macro %s selected.\n", $arg));
+    debug "macro $arg selected.\n";
     AI::queue('macro');
   };
 };
@@ -334,7 +343,7 @@ sub getVar {
 sub logMessage {
   my $message = shift;
   $message =~ s/\@log //g;
-  message "[macro] ".$message."\n";
+  message "[macro] $message\n";
 };
 
 # get NPC array index
@@ -464,8 +473,8 @@ sub automacroReset {
     return;
   };
   my $ret = releaseAM($arg);
-  if ($ret) {message "automacro ".$arg." removed from runonce list.\n"}
-  else      {message "automacro ".$arg." was not in runonce list.\n"};
+  if ($ret) {message "automacro $arg removed from runonce list.\n"}
+  else      {message "automacro $arg was not in runonce list.\n"};
 };
 
 # removes an automacro from runonce list ##################
@@ -555,7 +564,7 @@ sub automacroCheck {
     next if ($macros{$am."_equipped"} && !checkEquip($macros{$am."_equipped"}));
     message "automacro ".$macros{$am}." triggered.\n";
     if (!$macros{$am."_call"} && !$::config{macro_nowarn}) {
-      warning "automacro ".$macros{$am}.": call not defined.\n";
+      warning "automacro $macros{$am}: call not defined.\n";
     };
     if ($macros{$am."_run-once"} == 1) {our @runonce; push @runonce, $macros{$am}};
     if ($macros{$am."_set"}) {
@@ -591,6 +600,10 @@ sub debug {
   message $_[0], "list" if $::config{macro_debug};
 };
 
+sub debug2 {
+  warning $_[0] if ($::config{macro_debug} >= 2);
+};
+
 sub parseArgs {
   my $arg = shift;
   if ($arg =~ /".*"/) {return $arg =~ /"(.*)" +(.*) +(.*)/}
@@ -613,7 +626,7 @@ sub checkVar {
 sub checkLoc {
   my $arg = shift;
   my $ret = 1;
-  if ($arg =~ /^not /) { $ret = 0; $arg =~ s/^not //g; };
+  if ($arg =~ /^not /) {$ret = 0; $arg =~ s/^not //g};
   my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
   if ($map eq $field{name}) {
     if ($x1 && $y1) {
