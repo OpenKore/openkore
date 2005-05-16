@@ -71,6 +71,7 @@ our $no_connect;
 our @configFiles;
 
 # Other stuff
+my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 our $usageText = <<EOF;
 Usage: openkore.exe [options...]
 
@@ -79,7 +80,8 @@ The supported options are:
 --control=path             Use a different folder as control folder.
 --tables=path              Use a different folder as tables folder.
 --logs=path                Save log files in a different folder.
---plugins=path             Look for plugins in specified folder.
+--plugins=paths            Look for plugins in specified folder. You can
+                           specify multiple paths, delimited by '$pathDelimiter'.
 --fields=path              Where fields folder to use.
 
 --config=path/file         Which config.txt to use.
