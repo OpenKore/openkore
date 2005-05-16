@@ -37,6 +37,8 @@ use FileParsers;
 use AI;
 use Commands;
 
+sub debug {message $_[0], "list" if $::config{macro_debug}};
+sub debug2 {warning $_[0] if ($::config{macro_debug} >= 2)};
 
 our %macros;
 our %varStack;
@@ -594,14 +596,6 @@ sub cmpr {
   if ($cond eq "<"  && $a < $b)  {return 1};
   if ($cond eq "!=" && $a != $b) {return 1};
   return 0;
-};
-
-sub debug {
-  message $_[0], "list" if $::config{macro_debug};
-};
-
-sub debug2 {
-  warning $_[0] if ($::config{macro_debug} >= 2);
 };
 
 sub parseArgs {
