@@ -323,6 +323,25 @@ sub cmdAI {
 	} elsif ($args eq 'ai_v') {
 		message dumpHash(\%ai_v) . "\n", "list";
 
+	} elsif ($args eq 'on') {
+		# Turn AI on
+		if ($AI) {
+			message "AI is already on\n", "success";
+		} else {
+			$AI = 1;
+			undef $AI_forcedOff;
+			message "AI turned on\n", "success";
+		}
+	} elsif ($args eq 'off') {
+		# Turn AI off
+		if ($AI) {
+			undef $AI;
+			$AI_forcedOff = 1;
+			message "AI turned off\n", "success";
+		} else {
+			message "AI is already off\n", "success";
+		}
+
 	} elsif ($args eq '') {
 		# Toggle AI
 		if ($AI) {
@@ -337,7 +356,7 @@ sub cmdAI {
 
 	} else {
 		error	"Syntax Error in function 'ai' (AI Commands)\n" .
-			"Usage: ai [ clear | print | ai_v ]\n";
+			"Usage: ai [ clear | print | ai_v | on | off ]\n";
 	}
 }
 
@@ -1924,22 +1943,26 @@ sub cmdTimeout {
 
 sub cmdUnequip {
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\d+)/;
+	my ($arg1) = $args;
+
 	if ($arg1 eq "") {
-		error	"Syntax Error in function 'unequip' (Unequip Inventory Item)\n" .
-			"Usage: unequip <item #>\n";
+		error "You must specify an item to unequip.\n";
+		return;
+	}
+	
+	my $item = Match::inventoryItem($arg1);
 
-	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-		error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
-			"Inventory Item $arg1 does not exist.\n";
-
-	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1]{'equipped'} && $chars[$config{'char'}]{'inventory'}[$arg1]{'type'} != 10) {
+	if (!$item) {
+		error "You don't have $arg1.\n";
+		return;
+	}
+	
+	if (!$item->{equipped} && $item->{type} != 10) {
 		error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
 			"Inventory Item $arg1 is not equipped.\n";
-
-	} else {
-		sendUnequip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'});
+		return;
 	}
+	sendUnequip(\$remote_socket, $item->{index});
 }
 
 sub cmdUseItemOnMonster {

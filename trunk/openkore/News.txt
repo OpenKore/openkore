@@ -10,12 +10,16 @@ New features:
 - Better support for detecting dead players.
 - Show player number with emoticons and public chat.
 - Show distance with emoticons.
+- The uneq command now supports item names.
 
 New commands:
 - storage log
   Manually force writing to storage.txt. Some people complain that
   the storage log is broken, so until that has been resolved, this
   command will do.
+- ai on
+  ai off
+  Turns AI on/off.
 - card list
   List cards in your inventory.
 - card use <card inventory number>
@@ -26,6 +30,7 @@ New commands:
   Cancel the card merging request.
 - card merge <merge list number>
   Merge the card into the item.
+
 
 New config options:
 - partySkill: target_dead
@@ -44,6 +49,8 @@ Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.
 - denni: 'storage log' command.
 - kunjandad: friend list packet support.
+- Crypticode: 'ai on'/'ai off' commands; item name support in 'uneq'
+  command.
 
 
 ==================
