@@ -75,7 +75,7 @@ desc_info_load (const char *filename)
 
 		} else if (line[0] == '#') {
 			/* This should be the end of an entry. */
-			if (ID == NULL)
+			if (ID == NULL || description_len == 0)
 				/* Or maybe not. */
 				continue;
 
@@ -83,7 +83,7 @@ desc_info_load (const char *filename)
 			 * Add entry to list.
 			 */
 
-			if (info == NULL) {
+			if (first == NULL) {
 				/* This is the first entry. Allocate the first node. */
 				info = malloc (sizeof (DescInfo));
 				info->next = NULL;

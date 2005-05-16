@@ -227,5 +227,10 @@ main (int argc, char *argv[])
 	load_data_files ();
 
 	/* Initialize server and main loop. */
-	return unix_start ();
+	i = unix_start ();
+
+	/* Free resources. */
+	desc_info_free (itemsDesc);
+	desc_info_free (skillsDesc);
+	return i;
 }
