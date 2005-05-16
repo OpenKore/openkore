@@ -47,6 +47,7 @@ our %handlers = (
 	bangbang	=> \&cmdBangBang,
 	bingbing	=> \&cmdBingBing,
 	buy		=> \&cmdBuy,
+	card		=> \&cmdCard,
 	cart		=> \&cmdCart,
 	chatmod		=> \&cmdChatMod,
 	chist		=> \&cmdChist,
@@ -359,9 +360,9 @@ sub cmdAuthorize {
 }
 
 sub cmdBangBang {
-  my $bodydir = $char->{look}{body} - 1;
-  $bodydir = 7 if ($bodydir == -1);
-  sendLook(\$remote_socket, $bodydir, $char->{look}{head});
+	my $bodydir = $char->{look}{body} - 1;
+	$bodydir = 7 if ($bodydir == -1);
+	sendLook(\$remote_socket, $bodydir, $char->{look}{head});
 }
 
 sub cmdBestow {
@@ -382,8 +383,8 @@ sub cmdBestow {
 }
 
 sub cmdBingBing {
-  my $bodydir = ($char->{look}{body} + 1) % 8;
-  sendLook(\$remote_socket, $bodydir, $char->{look}{head});
+	my $bodydir = ($char->{look}{body} + 1) % 8;
+	sendLook(\$remote_socket, $bodydir, $char->{look}{head});
 }
 
 sub cmdBuy {
@@ -401,6 +402,84 @@ sub cmdBuy {
 			$arg2 = 1;
 		}
 		sendBuy(\$remote_socket, $storeList[$arg1]{'nameID'}, $arg2);
+	}
+}
+
+sub cmdCard {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	if ($arg1 eq "mergecancel") {
+		if ($cardMergeIndex ne "") {
+			undef $cardMergeIndex;
+			sendCardMerge(\$remote_socket, -1, -1);
+		} else {
+			error	"Error in function 'card mergecancel' (Cancel a card merge request)\n" .
+				"You are not currently in a card merge session.\n";
+		}
+	} elsif ($arg1 eq "mergelist") {
+		if (@cardMergeItemsID) {
+			my $msg;
+			$msg .= "-----Card Merge Candidates-----\n";
+			for (my $i = 0; $i < @cardMergeItemsID; $i++) {
+				next if ($cardMergeItemsID[$i] eq "");
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$i, $char->{inventory}[$cardMergeItemsID[$i]]{name}]);
+			}
+			$msg .= "-------------------------------\n";
+			message $msg, "list";
+		} else {
+			error	"Error in function 'card mergelist' (List availible card merge items)\n" .
+				"You are not currently in a card merge session.\n";
+		}
+	} elsif ($arg1 eq "merge") {
+		if ($arg2 =~ /^\d+$/) {
+			if ($cardMergeItemsID[$arg2] ne "") {
+				sendCardMerge(\$remote_socket, $char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$cardMergeItemsID[$arg2]]{index});
+			} else {
+				if ($cardMergeIndex ne "") {
+					error	"Error in function 'card merge' (Finalize card merging onto item)\n" .
+						"There is no item $arg2 in the card mergelist.\n";
+				} else {
+					error	"Error in function 'card merge' (Finalize card merging onto item)\n" .
+						"You are not currently in a card merge session.\n";
+				}
+			}
+		} else {
+			error	"Syntax Error in function 'card merge' (Finalize card merging onto item)\n" .
+				"Usage: card merge <item number>\n" .
+				"<item number> - Merge item number. Type 'card mergelist' to get number.\n";
+		}
+	} elsif ($arg1 eq "use") {
+		if ($arg2 =~ /^\d+$/) {
+			if (%{$char->{inventory}[$arg2]}) {
+				$cardMergeIndex = $arg2;
+				sendCardMergeRequest(\$remote_socket, $char->{inventory}[$cardMergeIndex]{index});
+				message "Sending merge list request for $char->{inventory}[$cardMergeIndex]{name}...\n";
+			} else {
+				error	"Error in function 'card use' (Request list of items for merging with card)\n" .
+					"Card $arg2 does not exist.\n";
+			}
+		} else {
+			error	"Syntax Error in function 'card use' (Request list of items for merging with card)\n" .
+				"Usage: card use <item number>\n" .
+				"<item number> - Card inventory number. Type 'i' to get number.\n";
+		}
+	} elsif ($arg1 eq "list") {
+		my $msg;
+		$msg .= "-----------Card List-----------\n";
+		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
+			next if (!$char->{'inventory'}[$i] || !%{$char->{'inventory'}[$i]});
+			if ($char->{inventory}[$i]{type} == 6) {
+				$msg .= "$i $char->{inventory}[$i]{name} x $char->{inventory}[$i]{amount}\n";
+			}
+		}
+		$msg .= "-------------------------------\n";
+		message $msg, "list";
+	} else {
+		error	"Syntax Error in function 'card' (Card Compounding)\n" .
+			"Usage: card <list|use|mergelist|mergecancel|merge>\n";
 	}
 }
 

@@ -8756,6 +8756,75 @@ sub parseMsg {
 		message "Item Identified: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'}\n", "info";
 		undef @identifyID;
 
+	} elsif ($switch eq "017B") {
+		# You just requested a list of possible items to merge a card into
+		# The RO client does this when you double click a card
+		decrypt(\$msg, substr($msg, 4, length($msg)-4));
+		$msg = substr($msg, 0, 4).$msg;
+
+		my $display;
+		$display .= "-----Card Merge Candidates-----\n";
+
+		my $index;
+		my $invIndex;
+		my $count = 0;
+		for ($i = 4; $i < $msg_size; $i += 2) {
+			$index = unpack("S1", substr($msg, $i, 2));
+			$invIndex = findIndex($char->{inventory}, "index", $index);
+			binAdd(\@cardMergeItemsID,$invIndex);
+			$display .= "$count $char->{inventory}[$invIndex]{name}\n";
+			$count++;
+		}
+
+		$display .= "-------------------------------\n";
+		message $display, "list";
+
+	} elsif ($switch eq "017D") {
+		# something about successful compound?
+		my $item_index = unpack("S1", substr($msg, 2, 2));
+		my $card_index = unpack("S1", substr($msg, 4, 2));
+		my $fail = unpack("C1", substr($msg, 6, 1));
+
+		if ($fail) {
+			message "Card merging failed\n";
+		} else {
+			my $item_invindex = findIndex($char->{inventory}, "index", $item_index);
+			my $card_invindex = findIndex($char->{inventory}, "index", $card_index);
+			message "$char->{inventory}[$card_invindex]{name} has been successfully merged into $char->{inventory}[$item_invindex]{name}\n", "success";
+
+			# get the ID so we can pack this into the weapon cards
+			my $nameID = $char->{inventory}[$card_invindex]{nameID};
+
+			# remove one of the card
+			my $item = $char->{inventory}[$card_invindex];
+			$item->{amount} -= 1;
+			if ($item->{amount} <= 0) {
+				delete $char->{inventory}[$card_invindex];
+			}
+
+			# rename the slotted item now
+			my $item = $char->{inventory}[$item_invindex];
+			# put the card into the item (optimize this)
+			my $newcards;
+			my $addedcard;
+			for (my $i = 0; $i < 4; $i++) {
+				my $card = substr($item->{cards}, $i*2, 2);
+				if (unpack("S1", $card)) {
+					$newcards .= $card;
+				} elsif (!$addedcard) {
+					$newcards .= pack("S1", $nameID);
+					$addedcard = 1;
+				} else {
+					$newcards .= pack("S1", 0);
+				}
+			}
+			$item->{cards} = $newcards;
+			$item->{name} = itemName($item);
+		}
+
+		undef @cardMergeItemsID;
+		undef $cardMergeIndex;
+
 	} elsif ($switch eq "017F") { 
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
