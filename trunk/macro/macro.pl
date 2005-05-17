@@ -110,7 +110,7 @@ sub parseMacroFile {
         ($key, $value) = $_ =~ /^(.*?) (.*)/;
         next unless $key;
         # multiple triggers allowed for:
-        if ($key =~ /^(inventory|storage|cart|shop|var|status)$/) {
+        if ($key =~ /^(inventory|storage|cart|shop|var|status|location)$/) {
           my $seq = 0;
           while (exists $r_hash->{"${inBlock}_${key}".$seq}) {$seq++};
           $key = "${inBlock}_${key}".$seq;
@@ -523,8 +523,7 @@ sub automacroCheck {
     };
     next if ($macros{$am."_map"} && $macros{$am."_map"} ne $field{name});
     my $seq = 0; while (exists $macros{$am."_var".$seq}) {
-      next CHKAM if ($macros{$am."_var".$seq} && !checkVar($macros{$am."_var".$seq}));
-      $seq++;
+      next CHKAM unless checkVar($macros{$am."_var".$seq++});
     };
     if ($macros{$am."_timeout"}) {
       $macros{$am."_time"} = 0 unless $macros{$am."_time"};
@@ -532,7 +531,9 @@ sub automacroCheck {
       next if (!timeOut(\%tmptimer));
       $macros{$am."_time"} = time;
     };
-    next if ($macros{$am."_location"} && !checkLoc($macros{$am."_location"}));
+    $seq = 0; while (exists $macros{$am."_location".$seq}) {
+      next unless checkLoc($macros{$am."_location".$seq++});
+    };
     next if ($macros{$am."_base"} && !checkLevel($macros{$am."_base"}, "base"));
     next if ($macros{$am."_job"} && !checkLevel($macros{$am."_job"}, "job"));
     next if ($macros{$am."_class"} && !checkClass($macros{$am."_class"}));
@@ -540,24 +541,19 @@ sub automacroCheck {
     next if ($macros{$am."_sp"} && !checkPercent($macros{$am."_sp"}, "sp"));
     next if ($macros{$am."_weight"} && !checkPercent($macros{$am."_weight"}, "weight"));
     $seq = 0; while (exists $macros{$am."_status".$seq}) {
-      next CHKAM if ($macros{$am."_status".$seq} && !checkStatus($macros{$am."_status".$seq}));
-      $seq++;
+      next CHKAM unless checkStatus($macros{$am."_status".$seq++});
     };
     $seq = 0; while (exists $macros{$am."_inventory".$seq}) {
-      next CHKAM if ($macros{$am."_inventory".$seq} && !checkInventory($macros{$am."_inventory".$seq}));
-      $seq++;
+      next CHKAM unless checkInventory($macros{$am."_inventory".$seq++});
     };
     $seq = 0; while (exists $macros{$am."_storage".$seq}) {
-      next CHKAM if ($macros{$am."_storage".$seq} && !checkStorage($macros{$am."_storage".$seq}));
-      $seq++;
+      next CHKAM unless checkStorage($macros{$am."_storage".$seq++});
     };
     $seq = 0; while (exists $macros{$am."_cart".$seq}) {
-      next CHKAM if ($macros{$am."_cart".$seq} && !checkCart($macros{$am."_cart".$seq}));
-      $seq++;
+      next CHKAM unless checkCart($macros{$am."_cart".$seq++});
     };
     $seq = 0; while (exists $macros{$am."_shop".$seq}) {
-      next CHKAM if ($macros{$am."_shop".$seq} && !checkShop($macros{$am."_shop".$seq}));
-      $seq++;
+      next CHKAM unless checkShop($macros{$am."_shop".$seq++});
     };
     next if ($macros{$am."_cartweight"} && !checkPercent($macros{$am."_cartweight"}, "cweight"));
     next if ($macros{$am."_soldout"} && !checkSoldOut($macros{$am."_soldout"}));
