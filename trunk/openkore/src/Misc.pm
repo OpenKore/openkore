@@ -172,7 +172,7 @@ sub setTimeout {
 our %debug_showSpots_list;
 
 sub debug_showSpots {
-	return unless $config{XKore};
+	return unless $xkore;
 	my $ID = shift;
 	my $spots = shift;
 	my $special = shift;
@@ -1315,7 +1315,7 @@ sub sendMessage {
 						$lastpm{'msg'} = $msg;
 						$lastpm{'user'} = $user;
 						push @lastpm, {%lastpm};
-					} elsif ($type eq "k" && $config{'XKore'}) {
+					} elsif ($type eq "k" && $xkore) {
 						injectMessage($msg);
 	 				}
 					$msg[$i] = substr($msg[$i], $amount - length($oldmsg), length($msg[$i]) - $amount - length($oldmsg));
@@ -1346,7 +1346,7 @@ sub sendMessage {
 					$lastpm{'msg'} = $msg;
 					$lastpm{'user'} = $user;
 					push @lastpm, {%lastpm};
-				} elsif ($type eq "k" && $config{'XKore'}) {
+				} elsif ($type eq "k" && $xkore) {
 					injectMessage($msg);
 				}
 				$msg = $msg[$i];
@@ -1364,7 +1364,7 @@ sub sendMessage {
 					$lastpm{'msg'} = $msg;
 					$lastpm{'user'} = $user;
 					push @lastpm, {%lastpm};
-				} elsif ($type eq "k" && $config{'XKore'}) {
+				} elsif ($type eq "k" && $xkore) {
 					injectMessage($msg);
 				}
 			}
