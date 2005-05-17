@@ -532,7 +532,7 @@ sub automacroCheck {
       $macros{$am."_time"} = time;
     };
     $seq = 0; while (exists $macros{$am."_location".$seq}) {
-      next unless checkLoc($macros{$am."_location".$seq++});
+      next CHKAM unless checkLoc($macros{$am."_location".$seq++});
     };
     next if ($macros{$am."_base"} && !checkLevel($macros{$am."_base"}, "base"));
     next if ($macros{$am."_job"} && !checkLevel($macros{$am."_job"}, "job"));
@@ -615,22 +615,21 @@ sub checkVar {
 #                           (x2|y2)=(lower right)
 sub checkLoc {
   my $arg = shift;
-  my $ret = 1;
-  if ($arg =~ /^not /) {$ret = 0; $arg =~ s/^not //g};
+  my $neg = 0;
+  if ($arg =~ /^not /) {$neg = 1;$arg =~ s/^not //g};
   my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
   if ($map eq $field{name}) {
     if ($x1 && $y1) {
       my $pos = calcPosition($char);
       if ($x2 && $y2) {
-        if (range($x1, $pos->{x}, $x2) && range($y2, $pos->{y}, $y1)) {return $ret};
-        return 1 if !$ret;
-        return 0;
+        if (between($x1, $pos->{x}, $x2) && between($y2, $pos->{y}, $y1)) {return $neg?0:1};
+        return $neg?1:0;
       };
-      if ($x1 == $pos->{x} && $y1 == $pos->{y}) {return $ret};
-    } else {return $ret};
+      if ($x1 == $pos->{x} && $y1 == $pos->{y}) {return return $neg?0:1};
+    } else {return return $neg?0:1};
+    return $neg?0:1;
   };
-  return 1 if !$ret;
-  return 0;
+  return $neg?1:0;
 };
 
 # checks for base/job level ################################
