@@ -80,7 +80,7 @@ sub connectTo {
 #
 # This function is used internally by Network::checkConnection() and should not be used directly.
 sub disconnect {
-	return if ($config{'XKore'});
+	return if ($xkore);
 	my $r_socket = shift;
 	sendQuit(\$remote_socket) if ($conState == 5 && $remote_socket && $remote_socket->connected());
 

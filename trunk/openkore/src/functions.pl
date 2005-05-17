@@ -177,7 +177,7 @@ sub initOtherVars {
 # Special state:
 # 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be the account ID
 sub checkConnection {
-	return if ($config{'XKore'} || $Settings::no_connect);
+	return if ($xkore || $Settings::no_connect);
 
 	if ($conState == 1 && (!$remote_socket || !$remote_socket->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
 		my $master = $masterServer = $masterServers{$config{'master'}};
@@ -549,7 +549,7 @@ sub parseInput {
 	my $input = shift;
 	my $printType;
 	my ($hook, $msg);
-	$printType = shift if ($config{'XKore'});
+	$printType = shift if ($xkore);
 
 	debug("Input: $input\n", "parseInput", 2);
 
@@ -561,7 +561,7 @@ sub parseInput {
 		$hook = Log::addHook($hookOutput);
 		$interface->writeOutput("console", "$input\n");
 	}
-	$XKore_dontRedirect = 1 if ($config{XKore});
+	$XKore_dontRedirect = 1 if ($xkore);
 
 	# Check if in special state
 	if (!$xkore && $conState == 2 && $waitingForInput) {
@@ -574,13 +574,13 @@ sub parseInput {
 
 	if ($printType) {
 		Log::delHook($hook);
-		if ($config{'XKore'} && defined $msg && $conState == 5) {
+		if ($xkore && defined $msg && $conState == 5) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
 			sendMessage(\$remote_socket, "k", $msg);
 		}
 	}
-	$XKore_dontRedirect = 0 if ($config{XKore});
+	$XKore_dontRedirect = 0 if ($xkore);
 }
 
 sub parseCommand {
@@ -1916,7 +1916,7 @@ sub AI {
 	}
 
 
-	if ($config{'XKore'} && !$sentWelcomeMessage && timeOut(\%{$timeout{'welcomeText'}})) {
+	if ($xkore && !$sentWelcomeMessage && timeOut(\%{$timeout{'welcomeText'}})) {
 		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
 		$sentWelcomeMessage = 1;
 	}
@@ -1929,7 +1929,7 @@ sub AI {
 	if (AI::action eq 'clientSuspend' && timeOut(AI::args)) {
 		debug "AI suspend by clientSuspend dequeued\n";
 		AI::dequeue;
-	} elsif (AI::action eq "clientSuspend" && $config{'XKore'}) {
+	} elsif (AI::action eq "clientSuspend" && $xkore) {
 		# When XKore mode is turned on, clientSuspend will increase it's timeout
 		# every time the user tries to do something manually.
 
@@ -5458,7 +5458,7 @@ sub parseMsg {
 
 	$lastPacketTime = time;
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
-	 || ($config{'XKore'} && !$accountID && length($msg) == 4)) {
+	 || ($xkore && !$accountID && length($msg) == 4)) {
 		$accountID = substr($msg, 0, 4);
 		$AI = 1 if (!$AI_forcedOff);
 		if ($config{'encrypt'} && $conState == 4) {
@@ -5537,7 +5537,7 @@ sub parseMsg {
 		Network::disconnect(\$remote_socket);
 		if ($type == 0) {
 			error("Account name doesn't exist\n", "connection");
-			if (!$config{'XKore'} && !$config{ignoreInvalidLogin}) {
+			if (!$xkore && !$config{ignoreInvalidLogin}) {
 				message("Enter Username Again: ", "input");
 				$msg = $interface->getInput(-1);
 				configModify('username', $msg, 1);
@@ -5546,7 +5546,7 @@ sub parseMsg {
 			}
 		} elsif ($type == 1) {
 			error("Password Error\n", "connection");
-			if (!$config{'XKore'}) {
+			if (!$xkore) {
 				message("Enter Password Again: ", "input");
 				# Set -9 on getInput timeout field mean this is password field
 				$msg = $interface->getInput(-9);
@@ -5558,7 +5558,7 @@ sub parseMsg {
 			error("Server connection has been denied\n", "connection");
 		} elsif ($type == 4) {
 			$interface->errorDialog("Critical Error: Your account has been blocked.");
-			$quit = 1 if (!$config{'XKore'});
+			$quit = 1 if (!$xkore);
 		} elsif ($type == 5) {
 			my $master = $masterServer;
 			error("Version $master->{version} failed... trying to find version\n", "connection");
@@ -5745,8 +5745,8 @@ sub parseMsg {
 			"connection");
 		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
 		checkAllowedMap($ai_v{temp}{map});
-		message("Closing connection to Game Login Server\n", "connection") if (!$config{'XKore'});
-		Network::disconnect(\$remote_socket) if (!$config{'XKore'});
+		message("Closing connection to Game Login Server\n", "connection") if (!$xkore);
+		Network::disconnect(\$remote_socket) if (!$xkore);
 		initStatVars();
 
 	} elsif ($switch eq "0073") {
@@ -5777,17 +5777,17 @@ sub parseMsg {
 		sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
 
 	} elsif ($switch eq "0075") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 
 	} elsif ($switch eq "0077") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 
 	} elsif ($switch eq "0078" || $switch eq "01D8") {
 		# 0078: long ID, word speed, word state, word ailment, word look, word class, word hair,
 		# word weapon, word head_option_bottom, word shield, word head_option_top, word head_option_mid,
 		# word hair_color, word ?, word head_dir, long guild, long emblem, word manner, byte karma,
 		# byte sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word level
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
                 my $param1 = unpack("S1", substr($msg, 8, 2));
@@ -5941,7 +5941,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0079" || $switch eq "01D9") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
 		my $param1 = unpack("S1", substr($msg, 8, 2));
@@ -5993,10 +5993,10 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "007A") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 
 	} elsif ($switch eq "007B" || $switch eq "01DA") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
 		my $param1 = unpack("S1", substr($msg, 8, 2));
@@ -6113,7 +6113,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "007C") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
 		my %coords;
 		makeCoords(\%coords, substr($msg, 36, 3));
@@ -6194,13 +6194,13 @@ sub parseMsg {
 		}
 		
 	} elsif ($switch eq "007F") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		$time = unpack("L1",substr($msg, 2, 4));
 		debug "Received Sync\n", "parseMsg", 2;
 		$timeout{'play'}{'time'} = time;
 
 	} elsif ($switch eq "0080") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		$ID = substr($msg, 2, 4);
 		$type = unpack("C1",substr($msg, 6, 1));
 
@@ -6336,7 +6336,7 @@ sub parseMsg {
 			error("Error: Out of sync with server\n", "connection");
 		} elsif ($type == 6) {
 			$interface->errorDialog("Critical Error: You must pay to play this account!");
-			$quit = 1 if (!$config{'XKore'});
+			$quit = 1 if (!$xkore);
 		} elsif ($type == 8) {
 			error("Error: The server still recognizes your last connection\n", "connection");
 		} elsif ($type == 10) {
@@ -6348,7 +6348,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0087") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $unknown = unpack("C1", substr($msg, 11, 1));
 		makeCoords($char->{pos}, substr($msg, 6, 3));
 		makeCoords2($char->{pos_to}, substr($msg, 8, 3));
@@ -6560,7 +6560,7 @@ sub parseMsg {
 			"connection");
 
 		message("Closing connection to Map Server\n", "connection");
-		Network::disconnect(\$remote_socket) if (!$config{'XKore'});
+		Network::disconnect(\$remote_socket) if (!$xkore);
 
 		# Reset item and skill times. The effect of items (like aspd potions)
 		# and skills (like Twohand Quicken) disappears when we change map server.
@@ -6590,7 +6590,7 @@ sub parseMsg {
 		undef $char->{encoreSkill};
 
 	} elsif ($switch eq "0095") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		$ID = substr($msg, 2, 4);
 		if (%{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
@@ -6634,7 +6634,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0097") {
 		# Private message
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
 		$msg = substr($msg, 0, 28) . $newmsg;
@@ -6695,7 +6695,7 @@ sub parseMsg {
 		ChatQueue::add('gm', undef, undef, $chat);
 
 	} elsif ($switch eq "009C") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
 		my $body = unpack("C1",substr($msg, 8, 1));
 		my $head = unpack("C1",substr($msg, 6, 1));
@@ -6716,7 +6716,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "009D") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		$ID = substr($msg, 2, 4);
 		$type = unpack("S1",substr($msg, 6, 2));
 		$x = unpack("S1", substr($msg, 9, 2));
@@ -6735,7 +6735,7 @@ sub parseMsg {
 		message "Item Exists: $items{$ID}{'name'} ($items{$ID}{'binID'}) x $items{$ID}{'amount'}\n", "drop", 1;
 
 	} elsif ($switch eq "009E") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		$ID = substr($msg, 2, 4);
 		$type = unpack("S1",substr($msg, 6, 2));
 		$x = unpack("S1", substr($msg, 9, 2));
@@ -6761,7 +6761,7 @@ sub parseMsg {
 		message "Item Appeared: $item->{name} ($item->{binID}) x $item->{amount} ($x, $y)\n", "drop", 1;
 
 	} elsif ($switch eq "00A0") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 
 		my $index = unpack("S1", substr($msg, 2, 2));
 		my $amount = unpack("S1", substr($msg, 4, 2));
@@ -6815,7 +6815,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00A1") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		$ID = substr($msg, 2, 4);
 		if (%{$items{$ID}}) {
 			debug "Item Disappeared: $items{$ID}{'name'} ($items{$ID}{'binID'})\n", "parseMsg_presence";
@@ -6827,7 +6827,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00A3" || $switch eq "01EE") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		my $psize = ($switch eq "00A3") ? 10 : 18;
@@ -6861,7 +6861,7 @@ sub parseMsg {
 		$ai_v{'cart_time'} = time + 1;
 
 	} elsif ($switch eq "00A4") {
-		$conState = 5 if $conState != 4 && $config{XKore};
+		$conState = 5 if $conState != 4 && $xkore;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4) . $newmsg;
 		my $invIndex;
@@ -6941,7 +6941,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00A8") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $index = unpack("S1",substr($msg, 2, 2));
 		my $amount = unpack("C1",substr($msg, 6, 1));
 		my $invIndex = findIndex($char->{inventory}, "index", $index);
@@ -6966,7 +6966,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00AC") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		$index = unpack("S1",substr($msg, 2, 2));
 		$type = unpack("S1",substr($msg, 4, 2));
 		undef $invIndex;
@@ -6975,13 +6975,13 @@ sub parseMsg {
 		message "You unequip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n", 'inventory';
 
 	} elsif ($switch eq "00AF") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my ($index, $amount) = unpack("x2 S1 S1", $msg);
 		my $invIndex = findIndex(\@{$char->{inventory}}, "index", $index);
 		inventoryItemRemoved($invIndex, $amount);
 
 	} elsif ($switch eq "00B0") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $type = unpack("S1",substr($msg, 2, 2));
 		my $val = unpack("L1",substr($msg, 4, 4));
 		if ($type == 0) {
@@ -7086,7 +7086,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00B1") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $type = unpack("S1",substr($msg, 2, 2));
 		my $val = unpack("L1",substr($msg, 4, 4));
 
@@ -7398,7 +7398,7 @@ sub parseMsg {
 		message "There are currently $users users online\n", "info";
 
 	} elsif ($switch eq "00C3") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
 		my $part = unpack("C1",substr($msg, 6, 1));
 		my $number = unpack("C1",substr($msg, 7, 1));
@@ -7928,7 +7928,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "010F") {
 		# Character skill list
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 
@@ -7997,7 +7997,7 @@ sub parseMsg {
 		}
 
 		# Perform trigger actions
-		$conState = 5 if $conState != 4 && $config{XKore};
+		$conState = 5 if $conState != 4 && $xkore;
 		updateDamageTables($sourceID, $targetID, $damage) if ($damage != -30000);
 		setSkillUseTimer($skillID, $targetID) if ($sourceID eq $accountID);
 		setPartySkillTimer($skillID, $targetID) if
@@ -8100,7 +8100,7 @@ sub parseMsg {
 		}
 
 		# Perform trigger actions
-		$conState = 5 if $conState != 4 && $config{XKore};
+		$conState = 5 if $conState != 4 && $xkore;
 		setSkillUseTimer($skillID, $targetID) if ($sourceID eq $accountID);
 		setPartySkillTimer($skillID, $targetID) if
 			$sourceID eq $accountID or $sourceID eq $targetID;
@@ -8509,7 +8509,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "013E") {
-		$conState = 5 if ($conState != 4 && $config{'XKore'});
+		$conState = 5 if ($conState != 4 && $xkore);
 		my $sourceID = substr($msg, 2, 4);
 		my $targetID = substr($msg, 6, 4);
 		my $x = unpack("S1", substr($msg, 10, 2));
@@ -10575,7 +10575,7 @@ sub avoidList_near {
 	return if ($config{'avoidList_inLockOnly'} && $field{'name'} ne $config{'lockMap'});
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if($playersID[$i] eq "");
-		if (($avoid{'Players'}{lc($players{$playersID[$i]}{'name'})}{'disconnect_on_sight'} || $avoid{'ID'}{$players{$playersID[$i]}{'nameID'}}{'disconnect_on_sight'}) && !$config{'XKore'}) {
+		if (($avoid{'Players'}{lc($players{$playersID[$i]}{'name'})}{'disconnect_on_sight'} || $avoid{'ID'}{$players{$playersID[$i]}{'nameID'}}{'disconnect_on_sight'}) && !$xkore) {
 			warning "$players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) is nearby, disconnecting...\n";
 			chatLog("k", "*** Found $players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) nearby and disconnected ***\n");
 			warning "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
