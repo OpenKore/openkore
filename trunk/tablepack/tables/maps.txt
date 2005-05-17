@@ -430,3 +430,7 @@ lou_dun02.rsw#Inside Royal Tomb#
 lou_dun01.rsw#Royal Tomb#
 lou_fild01.rsw#Castle of Dragon Field#
 louyang.rsw#Castle of Dragon#
+new_zone01.rsw#Training Ground#
+new_zone02.rsw#Training Ground#
+new_zone03.rsw#Training Ground#
+new_zone04.rsw#Training Ground#
