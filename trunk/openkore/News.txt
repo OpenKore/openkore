@@ -7,6 +7,8 @@ Bug fixes:
 - Make "Compiles portals now?" prompt case-insensitive.
 - Prevent the character select screen from appearing randomly due to
   lag or unparsed packets.
+- Bot should no longer fail to pick up items dropped by monsters that
+  died a distance away.
 
 New features:
 - Better support for detecting dead players.

@@ -4980,8 +4980,10 @@ sub AI {
 		
 	} elsif (AI::action eq "take") {
 		my $ID = AI::args->{ID};
-		my $myPos = calcPosition($char);
+		my $myPos = $char->{pos};
 		my $dist = distance($items{$ID}{pos}, $myPos);
+		my $item = $items{AI::args->{ID}};
+		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
 		
 		if ($char->{sitting}) {
 			stand();
