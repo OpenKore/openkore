@@ -536,6 +536,13 @@ sub parseResponses {
 sub parseROLUT {
 	my ($file, $r_hash) = @_;
 
+	my %ret = (
+		file => $file,
+		hash => $r_hash
+	    );
+	Plugins::callHook("FileParsers::ROLUT", \%ret);
+	return if ($ret{return});
+
 	undef %{$r_hash};
 	open FILE, "< $file";
 	foreach (<FILE>) {
