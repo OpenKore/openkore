@@ -18,6 +18,8 @@ New features:
 - You can now specify multiple plugin directories on the commandline.
   Each directory is seperated by a ';' (on Windows) or a ':' (on Unix).
 - target_dist range condition for monsters.
+- "Player Exists:" and "Player Appeared:" messages moved to domain
+  parseMsg_presence/player so you can put it in beepDomains.
 
 New commands:
 - storage log
