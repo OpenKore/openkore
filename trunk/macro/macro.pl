@@ -14,7 +14,8 @@ my $cvs = 1;
 
 if (defined $cvs) {
   my $fname = "macro.pl";
-  open(MF, "< plugins/$fname" ) or die "Can't open plugins/$fname: $!";
+  open(MF, "< $Plugins::current_plugin_folder/$fname" )
+      or die "Can't open $Plugins::current_plugin_folder/$fname: $!";
   while (<MF>) {
     if (/Header:/) {
       my ($rev) = $_ =~ /$fname,v (.*) [0-9]{4}/i;
@@ -42,6 +43,9 @@ sub debug2 {warning $_[0] if ($::config{macro_debug} >= 2)};
 
 our %macros;
 our %varStack;
+our %automacro;
+our @macroQueue;
+our @runonce;
 
 Plugins::register('macro', 'allows usage of macros', \&Unload, \&Reload);
 
@@ -61,18 +65,18 @@ undef $file;
 
 sub Unload {
   message "macro unloaded.\n";
-  our $cfID; Settings::delConfigFile($cfID);
+  Settings::delConfigFile($cfID);
   Plugins::delHooks($hooks);
 };
 
 sub Reload {
   message "macro reloading, cleaning up.\n";
   Plugins::delHooks($hooks);
-  our %macros = undef;
-  our %automacro = undef;
-  our %varStack = undef;
-  our @macroQueue = undef;
-  our @runonce = undef;
+  %macros = undef;
+  %automacro = undef;
+  %varStack = undef;
+  @macroQueue = undef;
+  @runonce = undef;
 };
 
 # adapted config file parser
@@ -171,7 +175,6 @@ sub pushMacro {
   my $macroID = findMacroID($arg);
   if (!defined $macroID) {return}
   else {
-    our @macroQueue;
     my @tmparr = loadMacro($macroID);
     if (!$times) {$times = 1};
     for (my $t = 0; $t < $times; $t++) {@macroQueue = (@tmparr, @macroQueue)};
@@ -237,8 +240,6 @@ sub parseCmd {
 
 # runs and removes commands from queue
 sub processQueue {
-  our @macroQueue;
-  our %automacro;
   if (!@macroQueue) {AI::dequeue if AI::is('macro'); return};
   
   if (timeOut($timeout{macro_delay}) && ai_isIdle()) {
@@ -266,7 +267,7 @@ sub runMacro {
   my $macroID = findMacroID($arg);
   if (!defined $macroID) {error "Macro $arg not found.\n"}
   else {
-    our @macroQueue = loadMacro($macroID);
+    @macroQueue = loadMacro($macroID);
     if ($times > 1) {
       for (my $t = 1; $t < $times; $t++) {
         my @tmparr = loadMacro($macroID);
@@ -297,7 +298,6 @@ sub loadMacro {
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
-  our %automacro;
   return 1 if ($automacro{override_ai});
   return AI::is('macro', 'deal');
 };
@@ -321,8 +321,8 @@ sub list_macros {
 
 # clears macro queue
 sub clearMacro {
-  our @macroQueue = ();
-  our %automacro = undef;
+  @macroQueue = ();
+  %automacro = undef;
   AI::dequeue() if AI::is('macro');
   message "macro queue cleared.\n";
 };
@@ -460,7 +460,6 @@ sub getRandom {
 # checks whether automacro is in runonce list #############
 sub isInRunOnce {
   my $automacro = shift;
-  our @runonce;
   foreach (@runonce) {if ($_ eq $automacro) {return 1}};
   return 0;
 };
@@ -468,7 +467,6 @@ sub isInRunOnce {
 # clears automacro runonce list ###########################
 sub automacroReset {
   my $arg = shift;
-  our @runonce;
   if (!$arg) {
     @runonce = ();
     message "automacro runonce list cleared.\n";
@@ -482,7 +480,6 @@ sub automacroReset {
 # removes an automacro from runonce list ##################
 sub releaseAM {
   my $automacro = shift;
-  our @runonce;
   for (my $i = 0; $i < @runonce; $i++) {
     if ($runonce[$i] eq $automacro) {splice(@runonce, $i, 1); return 1};
   };
@@ -493,7 +490,6 @@ sub releaseAM {
 sub automacroCheck {
   my ($trigger, $args) = @_;
 
-  our %automacro;
   if ($automacro{call} && timeOut(\%automacro)) {
     runMacro($automacro{call});
     undef $automacro{call};
@@ -509,7 +505,7 @@ sub automacroCheck {
     next if (isInRunOnce($macros{$am}));
     if ($macros{$am."_call"} && !defined findMacroID($macros{$am."_call"})) {
       error "automacro ".$macros{$am}.": macro ".$macros{$am."_call"}." not found.\n";
-      our @runonce; push @runonce, $macros{$am}; return 0;
+      push @runonce, $macros{$am}; return 0;
     };
     if ($macros{$am."_spell"}) {
       if ($trigger =~ /^(is_casting|packet_skilluse)$/) {
@@ -564,7 +560,7 @@ sub automacroCheck {
     if (!$macros{$am."_call"} && !$::config{macro_nowarn}) {
       warning "automacro $macros{$am}: call not defined.\n";
     };
-    if ($macros{$am."_run-once"} == 1) {our @runonce; push @runonce, $macros{$am}};
+    if ($macros{$am."_run-once"} == 1) {push @runonce, $macros{$am}};
     if ($macros{$am."_set"}) {
        my ($var, $val) = split(/ /, $macros{$am."_set"});
        setVar($var, $val);
