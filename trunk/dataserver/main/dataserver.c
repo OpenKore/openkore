@@ -18,8 +18,8 @@
 #endif
 
 
-DescInfo *itemsDesc;
-DescInfo *skillsDesc;
+StringHash *itemsDesc;
+StringHash *skillsDesc;
 
 static UnixServer *server;
 
@@ -105,10 +105,10 @@ client_callback (Client *client)
 		switch (type) {
 		case 0: case 1: {
 			/* itemsdescriptions.txt/skillsdescriptions.txt */
-			DescInfo *info;
+			StringHash *hash;
 
-			info = (type == 0) ? itemsDesc : skillsDesc;
-			if (!send_reply (client, desc_info_lookup (info, name))) {
+			hash = (type == 0) ? itemsDesc : skillsDesc;
+			if (!send_reply (client, string_hash_get (hash, name))) {
 				free (name);
 				return;
 			}
@@ -230,7 +230,7 @@ main (int argc, char *argv[])
 	i = unix_start ();
 
 	/* Free resources. */
-	desc_info_free (itemsDesc);
-	desc_info_free (skillsDesc);
+	string_hash_free (itemsDesc);
+	string_hash_free (skillsDesc);
 	return i;
 }
