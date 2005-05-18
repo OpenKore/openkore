@@ -7,6 +7,7 @@ Bug fixes:
 - Make "Compiles portals now?" prompt case-insensitive.
 - Prevent the character select screen from appearing randomly due to
   lag or unparsed packets.
+- Storage log not created when relogAfterStorage is active.
 - Bot should no longer fail to pick up items dropped by monsters that
   died a distance away.
 

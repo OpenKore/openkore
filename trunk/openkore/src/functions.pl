@@ -5632,6 +5632,11 @@ sub parseMsg {
 			$firstLoginMap = 1;
 			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 			$sentWelcomeMessage = 1;
+
+			if ($config{'dcOnZeny'} && $val <= $config{'dcOnZeny'}) {
+				$interface->errorDialog("Disconnecting due to zeny lower than $config{'dcOnZeny'}.");
+				$quit = 1;
+			}
 		} else {
 			return;
 		}
