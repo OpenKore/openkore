@@ -1,20 +1,25 @@
 #ifndef _DESCRIPTIONS_H_
 #define _DESCRIPTIONS_H_
 
+#include "linked-list.h"
+
 
 /*****************************
  * Description file parser
  *****************************/
 
 
-typedef struct _DescInfo DescInfo;
+typedef struct {
+	LListItem parent;
 
-struct _DescInfo {
 	char *ID;
 	char *description;
 	unsigned int hash;
-	DescInfo *next;
-};
+} DescInfoItem;
+
+typedef struct {
+	LList *list;
+} DescInfo;
 
 
 DescInfo   *desc_info_load (const char *filename);
