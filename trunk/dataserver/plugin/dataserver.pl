@@ -11,7 +11,10 @@ our ($sock);
 
 
 Plugins::register("shm", "Shared Memory");
-my $hooks = Plugins::addHooks(["FileParsers::RODescLUT", \&parseRODescLUT]);
+my $hooks = Plugins::addHooks(
+	["FileParsers::RODescLUT", \&parseRoOrDescLUT],
+	["FileParsers::ROLUT", \&parseRoOrDescLUT]		      
+);
 
 start() if (!$sock);
 
@@ -24,11 +27,10 @@ sub start {
 }
 
 sub fetch {
-	my ($type, $name) = @_;
+	my ($major, $minor, $name) = @_;
 	my $buf = '';
 
-	return if (!$sock);
-	send($sock, chr($type) . pack("n", length($name)) . $name, 0);
+	send($sock, chr($major) . chr($minor) . pack("n", length($name)) . $name, 0);
 
 	while (1) {
 		my ($tmp, $len);
@@ -43,38 +45,49 @@ sub fetch {
 	}
 }
 
-sub parseRODescLUT {
+sub parseRoOrDescLUT {
 	my (undef, $args) = @_;
-	my $type;
+	my ($major, $minor);
+	my %table = (
+		     itemsdescriptions => [0, 0],
+		     skillsdescriptions => [0, 1],
+		     cities => [1, 0],
+		     elements => [1, 1],
+		     items => [1, 2],
+		     itemslotcounttable => [1, 3],
+		     maps => [1, 4]
+		);
 
-	if ($args->{file} =~ /itemsdescriptions/i) {
-		$type = 0;
-	} elsif ($args->{file} =~ /skillsdescriptions/i) {
-		$type = 1;
+	foreach my $key (keys %table) {
+		if ($args->{file} =~ /$key/i) {
+			($major, $minor) = @{$table{$key}};
+			last;
+		}
 	}
 
-	if (defined $type) {
-		tie %{$args->{hash}}, "SharedMemoryPlugin::RODescHandler", $type;
+	if (defined $major) {
+		tie %{$args->{hash}}, "SharedMemoryPlugin::RoOrDescHandler", $major, $minor;
 		$args->{return} = 1;
 	}
 }
 
 
-package SharedMemoryPlugin::RODescHandler;
+package SharedMemoryPlugin::RoOrDescHandler;
 
 
 sub TIEHASH {
-	my ($class, $type) = @_;
+	my ($class, $major, $minor) = @_;
 	my %self;
 
-	$self{type} = $type;
+	$self{major} = $major;
+	$self{minor} = $minor;
 	bless \%self, $class;
 	return \%self;
 }
 
 sub FETCH {
 	my ($self, $key) = @_;
-	return SharedMemoryPlugin::fetch($self->{type}, $key);
+	return SharedMemoryPlugin::fetch($self->{major}, $self->{minor}, $key);
 }
 
 sub STORE {
