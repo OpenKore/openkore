@@ -1,10 +1,11 @@
 CC=gcc
 CFLAGS=-Wall -g
+OBJ=dataserver.o unix-server.o descriptions.o threads.o linked-list.o string-hash.o utils.o
 
 .PHONY: clean
 
-dataserver: dataserver.o unix-server.o descriptions.o threads.o linked-list.o
-	$(CC) $(CFLAGS) dataserver.o unix-server.o descriptions.o threads.o linked-list.o -o dataserver -lpthread
+dataserver: $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o dataserver -lpthread
 
 dataserver.o: dataserver.c
 	$(CC) $(CFLAGS) dataserver.c -c -o dataserver.o
@@ -20,6 +21,12 @@ threads.o: threads.c threads.h
 
 linked-list.o: linked-list.c linked-list.h
 	$(CC) $(CFLAGS) linked-list.c -c -o linked-list.o
+
+string-hash.o: string-hash.c string-hash.h linked-list.h
+	$(CC) $(CFLAGS) string-hash.c -c -o string-hash.o
+
+utils.o: utils.c utils.h
+	$(CC) $(CFLAGS) utils.c -c -o utils.o
 
 clean:
 	rm -f *.o dataserver

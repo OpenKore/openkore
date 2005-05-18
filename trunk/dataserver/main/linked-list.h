@@ -1,5 +1,5 @@
-#ifndef _ROLUT_H_
-#define _ROLUT_H_
+#ifndef _LINKED_LIST_H_
+#define _LINKED_LIST_H_
 
 /*******************************************************************
  * A very basic singly-linked list implementation, designed for
@@ -36,4 +36,4 @@ void  *llist_append (LList *list);
  * in your items, then you must free them before calling this function. */
 void   llist_free   (LList *list);
 
-#endif /* _ROLUT_H_ */
+#endif /* _LINKED_LIST_H_ */

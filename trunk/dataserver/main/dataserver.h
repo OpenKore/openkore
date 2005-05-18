@@ -3,7 +3,7 @@
 
 #include "descriptions.h"
 
-extern DescInfo *itemsDesc;
-extern DescInfo *skillsDesc;
+extern StringHash *itemsDesc;
+extern StringHash *skillsDesc;
 
 #endif /* _DATASERVER_H_ */
