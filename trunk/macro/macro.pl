@@ -556,6 +556,7 @@ sub automacroCheck {
     next if ($macros{$am."_player"} && !checkPerson($macros{$am."_player"}));
     next if ($macros{$am."_zeny"} && !checkZeny($macros{$am."_zeny"}));
     next if ($macros{$am."_equipped"} && !checkEquip($macros{$am."_equipped"}));
+    next if ($macros{$am."_npctalk"} && !checkNPCTalk($macros{$am."_npctalk"}));
     message "automacro ".$macros{$am}." triggered.\n";
     if (!$macros{$am."_call"} && !$::config{macro_nowarn}) {
       warning "automacro $macros{$am}: call not defined.\n";
@@ -793,6 +794,13 @@ sub checkPM {
   };
   setVar("lastPMnick", $arg->{privMsgUser});
   if ($auth && $arg->{privMsg} =~ /$tPM/) {return 1};
+  return 0;
+};
+
+# checks whether an NPC sent us the specified message (regexp)
+sub checkNPCTalk {
+  my $tNPC = shift;
+  return 1 if $::talk{msg} =~ /$tNPC/;
   return 0;
 };
 
