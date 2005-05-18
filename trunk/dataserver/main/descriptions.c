@@ -4,6 +4,11 @@
 #include "descriptions.h"
 
 
+/**********************
+ * Utility functions
+ **********************/
+
+
 /* Post process description. Get rid of the color codes. */
 static void
 postprocess (char *description, unsigned int *len)
@@ -37,14 +42,18 @@ calc_hash (const char *str)
 }
 
 
+/*********************
+ * Public functions
+ *********************/
+
 DescInfo *
 desc_info_load (const char *filename)
 {
+	DescInfo *info;
 	FILE *f;
-	DescInfo *info = NULL;
-	DescInfo *first = NULL;
 	char line[512];
 
+	DescInfoItem *item;
 	char *ID = NULL;
 	unsigned int hash = 0;
 	unsigned int description_len = 0;
@@ -54,6 +63,9 @@ desc_info_load (const char *filename)
 	f = fopen (filename, "r");
 	if (f == NULL)
 		return NULL;
+
+	info = malloc (sizeof (DescInfo));
+	info->list = llist_new (sizeof (DescInfoItem));
 
 	/* Read file and process each desription entry. */
 	while (!feof (f)) {
@@ -79,34 +91,16 @@ desc_info_load (const char *filename)
 				/* Or maybe not. */
 				continue;
 
-			/*
-			 * Add entry to list.
-			 */
-
-			if (first == NULL) {
-				/* This is the first entry. Allocate the first node. */
-				info = malloc (sizeof (DescInfo));
-				info->next = NULL;
-				first = info;
-
-			} else {
-				/* Allocate new node and append it to linked list. */
-				DescInfo *old;
-
-				old = info;
-				info = malloc (sizeof (DescInfo));
-				info->next = NULL;
-				old->next = info;
-			}
-
-			info->ID = ID;
-			info->hash = hash;
+			/* Create item and add to linked list. */
+			item = (DescInfoItem *) llist_append (info->list);
+			item->ID = ID;
+			item->hash = hash;
 			ID = NULL;
 
 			postprocess (description, &description_len);
-			info->description = malloc (description_len + 1);
-			memcpy (info->description, description, description_len);
-			info->description[description_len] = '\0';
+			item->description = malloc (description_len + 1);
+			memcpy (item->description, description, description_len);
+			item->description[description_len] = '\0';
 
 		} else {
 			/* This should be a line containing the description.
@@ -124,7 +118,7 @@ desc_info_load (const char *filename)
 	}
 	fclose (f);
 
-	return first;
+	return info;
 }
 
 
@@ -132,11 +126,12 @@ const char *
 desc_info_lookup (DescInfo *info, const char *ID)
 {
 	unsigned int hash;
+	DescInfoItem *item;
 
 	hash = calc_hash (ID);
-	for (; info != NULL; info = info->next) {
-		if (hash == info->hash && strcmp (info->ID, ID) == 0)
-			return info->description;
+	for (item = (DescInfoItem *) info->list->first; item != NULL; item = (DescInfoItem *) item->parent.next) {
+		if (hash == item->hash && strcmp (item->ID, ID) == 0)
+			return item->description;
 	}
 	return NULL;
 }
@@ -145,15 +140,12 @@ desc_info_lookup (DescInfo *info, const char *ID)
 void
 desc_info_free (DescInfo *info)
 {
-	while (1) {
-		DescInfo *next;
+	DescInfoItem *item;
 
-		next = info->next;
-		free (info->ID);
-		free (info->description);
-		free (info);
-		if (next == NULL)
-			break;
-		info = next;
+	for (item = (DescInfoItem *) info->list->first; item != NULL; item = (DescInfoItem *) item->parent.next) {
+		free (item->ID);
+		free (item->description);
 	}
+	llist_free (info->list);
+	free (info);
 }
