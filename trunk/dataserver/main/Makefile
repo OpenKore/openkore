@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -g
-OBJ=dataserver.o unix-server.o descriptions.o threads.o linked-list.o string-hash.o utils.o
+OBJ=dataserver.o unix-server.o fileparsers.o threads.o linked-list.o string-hash.o utils.o
 
 .PHONY: clean
 
@@ -13,8 +13,8 @@ dataserver.o: dataserver.c
 unix-server.o: unix-server.c unix-server.h client.h
 	$(CC) $(CFLAGS) unix-server.c -c -o unix-server.o
 
-descriptions.o: descriptions.c descriptions.h linked-list.h
-	$(CC) $(CFLAGS) descriptions.c -c -o descriptions.o
+fileparsers.o: fileparsers.c fileparsers.h string-hash.h
+	$(CC) $(CFLAGS) fileparsers.c -c -o fileparsers.o
 
 threads.o: threads.c threads.h
 	$(CC) $(CFLAGS) threads.c -c -o threads.o

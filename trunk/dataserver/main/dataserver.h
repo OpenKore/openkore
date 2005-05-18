@@ -1,9 +1,9 @@
 #ifndef _DATASERVER_H_
 #define _DATASERVER_H_
 
-#include "descriptions.h"
+#include "string-hash.h"
 
-extern StringHash *itemsDesc;
-extern StringHash *skillsDesc;
+extern StringHash *itemsDesc, *skillsDesc;
+extern StringHash *cities, *elements, *items, *itemSlotCount, *maps;
 
 #endif /* _DATASERVER_H_ */

@@ -8,7 +8,7 @@
 
 #include "dataserver.h"
 #include "client.h"
-#include "descriptions.h"
+#include "fileparsers.h"
 
 #ifdef WIN32
 	#include "tcp-server.h"
@@ -18,8 +18,9 @@
 #endif
 
 
-StringHash *itemsDesc;
-StringHash *skillsDesc;
+StringHash *itemsDesc, *skillsDesc;
+StringHash *cities, *elements, *items, *itemSlotCount, *maps;
+
 
 static UnixServer *server;
 
@@ -28,7 +29,7 @@ static struct {
 } options;
 
 
-static inline int
+static int
 send_reply (Client *client, const char *msg)
 {
 	uint16_t len, nlen;
@@ -48,7 +49,52 @@ send_reply (Client *client, const char *msg)
 }
 
 
-/* Process data received from a client. */
+/* Process data received from client. */
+static int
+process (Client *client, char major, char minor, char *data, int size)
+{
+	StringHash *hash = NULL;
+
+	switch (major) {
+	case 0:
+		if (minor == 0)
+			/* itemsdescriptions.txt */
+			hash = itemsDesc;
+		else if (minor == 1)
+			/* skillsdescriptions.txt */
+			hash = skillsDesc;
+		else
+			return 0;
+		return send_reply (client, string_hash_get (hash, data));
+
+	case 1:
+		if (minor == 0)
+			/* cities.txt */
+			hash = cities;
+		else if (minor == 1)
+			/* cities.txt */
+			hash = elements;
+		else if (minor == 2)
+			/* items.txt */
+			hash = items;
+		else if (minor == 3)
+			/* itemslotcounttable.txt */
+			hash = itemSlotCount;
+		else if (minor == 4)
+			/* maps.txt */
+			hash = maps;
+		else
+			return 0;
+		return send_reply (client, string_hash_get (hash, data));
+
+	default:
+		/* Client requested invalid major/minor number. */
+		return 0;
+	}
+}
+
+
+/* Process client connections. */
 static void
 client_callback (Client *client)
 {
@@ -57,9 +103,9 @@ client_callback (Client *client)
 	int buf_len, tmp;
 	ssize_t len;
 
-	char type;
+	char major, minor;
 	uint16_t size;
-	char *name;
+	char *data;
 
 	buf_len = 0;
 	while (1) {
@@ -78,54 +124,44 @@ client_callback (Client *client)
 
 		/* We expect the following packet:
 		 * struct {
-		 *     char type;
+		 *     char major;
+		 *     char minor;
 		 *     uint16_t size;
-		 *     char name[size];
+		 *     char data[size];
 		 * }
+		 *
+		 * major and minor specify which file's data the client is requesting.
 		 */
 
 		if (len < 4)
 			/* Packet too small; continue receiving. */
 			continue;
 
-		/* Get the 'type' and 'size' fields and check whether we've received enough data. */
-		type = buf[0];
-		memcpy (&size, buf + 1, 2);
+		/* Get the 'major', 'minor' and 'size' fields and check whether we've received enough data. */
+		major = buf[0];
+		minor = buf[1];
+		memcpy (&size, buf + 2, 2);
 		size = ntohs (size);
-//		size = ntohs (*((uint16_t *) (buf + 1)));
-		if (len < 3 + size)
+		if (len < 4 + size)
 			continue;
 
-		/* Get the 'name' field. */
-		name = malloc (size + 1);
-		memcpy (name, buf + 3, size);
-		name[size] = 0;
+		/* Get the 'data' field. */
+		data = malloc (size + 1);
+		memcpy (data, buf + 4, size);
+		data[size] = 0;
 
-		/* Send an appropriate reply. */
-		switch (type) {
-		case 0: case 1: {
-			/* itemsdescriptions.txt/skillsdescriptions.txt */
-			StringHash *hash;
-
-			hash = (type == 0) ? itemsDesc : skillsDesc;
-			if (!send_reply (client, string_hash_get (hash, name))) {
-				free (name);
-				return;
-			}
-			break;
+		if (!process (client, major, minor, data, size)) {
+			free (data);
+			return;
 		}
 
-		default: /* ????? */
-			break;
-		};
-
 		/* Remove this packet from the buffer. */
-		tmp = buf_len - size - 3;
+		tmp = buf_len - size - 4;
 		if (tmp > 0)
-			memmove (buf, buf + size + 3, tmp);
-		buf_len -= size + 3;
+			memmove (buf, buf + size + 4, tmp);
+		buf_len -= size + 4;
 
-		free (name);
+		free (data);
 	}
 }
 
@@ -163,6 +199,8 @@ unix_start ()
 	server = unix_server_new (strdup ("/tmp/kore-dataserver.socket"), client_callback);
 	if (server == NULL)
 		return 1;
+
+	printf ("Server ready.\n");
 	unix_server_main_loop (server);
 	return unix_server_free (server);
 }
@@ -177,24 +215,20 @@ usage (int retval)
 }
 
 
-static void
-load_data_files ()
+static StringHash *
+load_hash_file (const char *basename, StringHash * (*loader) (const char *filename))
 {
 	char file[PATH_MAX];
-	#define CHECK(var) do {	\
-			if (var == NULL) {				\
-				fprintf (stderr, "Error: cannot load %s\n", file); \
-				exit (1); \
-			} \
-		} while (0)
+	StringHash *hash;
 
-	snprintf (file, sizeof (file), "%s/itemsdescriptions.txt", options.tables);
-	itemsDesc = desc_info_load (file);
-	CHECK(itemsDesc);
-
-	snprintf (file, sizeof (file), "%s/skillsdescriptions.txt", options.tables);
-	skillsDesc = desc_info_load (file);
-	CHECK(skillsDesc);
+	snprintf (file, sizeof (file), "%s/%s", options.tables, basename);
+	printf ("Loading %s...\n", file);
+	hash = loader (file);
+	if (hash == NULL) {
+		fprintf (stderr, "Error: cannot load %s\n", file);
+		exit (1);
+	}
+	return hash;
 }
 
 
@@ -224,7 +258,13 @@ main (int argc, char *argv[])
 	}
 
 	/* Load data files. */
-	load_data_files ();
+	itemsDesc  = load_hash_file ("itemsdescriptions.txt",  desc_info_load);
+	skillsDesc = load_hash_file ("skillsdescriptions.txt", desc_info_load);
+	cities        = load_hash_file ("cities.txt",             rolut_load);
+	elements      = load_hash_file ("elements.txt",           rolut_load);
+	items         = load_hash_file ("items.txt",              rolut_load);
+	itemSlotCount = load_hash_file ("itemslotcounttable.txt", rolut_load);
+	maps          = load_hash_file ("maps.txt",               rolut_load);
 
 	/* Initialize server and main loop. */
 	i = unix_start ();
