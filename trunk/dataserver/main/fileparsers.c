@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "descriptions.h"
+#include "fileparsers.h"
 #include "utils.h"
 
 
@@ -101,5 +101,68 @@ desc_info_load (const char *filename)
 	}
 	fclose (f);
 
+	return hash;
+}
+
+
+StringHash *
+rolut_load (const char *filename)
+{
+        StringHash *hash;
+	FILE *f;
+	char line[512];
+
+	f = fopen (filename, "r");
+	if (f == NULL)
+		return NULL;
+
+	hash = string_hash_new ();
+	while (!feof (f)) {
+		int len;
+		char *tmp, *key, *value;
+
+		if (fgets (line, sizeof (line), f) == NULL)
+			break;
+		len = strlen (line);
+		if (len == 0)
+			/* Skip empty lines. */
+			continue;
+
+		/* Get rid of newline characters. */
+		if (line[len - 1] == '\n') {
+			line[len - 1] = 0;
+			len--;
+		}
+		if (line[len - 1] == '\r') {
+			line[len - 1] = 0;
+			len--;
+		}
+		/* Skip this line if it turns out to be empty. */
+		if (len == 0)
+			continue;
+
+
+		/* Line format: foo#bar#
+		 * Get rid of the trailing. # */
+		if (line[len - 1] == '#') {
+			line[len - 1] = 0;
+			len--;
+		} else
+			/* ????? Something's wrong. The line is invalid. */
+			continue;
+
+		/* Now split the string in two so we have a key-value pair. */
+		tmp = strchr (line, '#');
+		if (tmp == NULL)
+			/* Invalid line :( */
+			continue;
+
+		tmp[0] = 0;
+		key = line;
+		value = tmp + 1;
+		string_hash_set (hash, strdup (key), strdup (value));
+	}
+
+	fclose (f);
 	return hash;
 }
