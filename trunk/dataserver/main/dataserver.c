@@ -72,7 +72,7 @@ process (Client *client, char major, char minor, char *data, int size)
 			/* cities.txt */
 			hash = cities;
 		else if (minor == 1)
-			/* cities.txt */
+			/* elements.txt */
 			hash = elements;
 		else if (minor == 2)
 			/* items.txt */
