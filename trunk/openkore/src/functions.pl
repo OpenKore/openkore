@@ -5842,7 +5842,7 @@ sub parseMsg {
 			$player->{lv} = $lv;
 			$player->{pos} = {%coords};
 			$player->{pos_to} = {%coords};
-			debug "Player Exists: $player->{name} ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence", 1;
+			debug "Player Exists: $player->{name} ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence/player", 1;
 			setStatus($ID,$param1,$param2,$param3);
 
 			objectAdded('player', $ID, $player) if ($added);
@@ -6033,7 +6033,7 @@ sub parseMsg {
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 				$players{$ID}{weapon} = $weapon;
-				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence";
+				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence/player";
 				$added = 1;
 			}
 
