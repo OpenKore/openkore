@@ -36,15 +36,15 @@ send_reply (Client *client, const char *msg)
 
 	if (msg == NULL) {
 		len = 0;
-		return (send (client->fd, &len, 2, 0) != -1);
+		return (send (client->fd, &len, 2, MSG_NOSIGNAL) != -1);
 
 	} else {
 		len = strlen (msg);
 		nlen = htons (len);
 
-		if (send (client->fd, &nlen, 2, 0) == -1)
+		if (send (client->fd, &nlen, 2, MSG_NOSIGNAL) == -1)
 			return 0;
-		return (send (client->fd, msg, len, 0) != -1);
+		return (send (client->fd, msg, len, MSG_NOSIGNAL) != -1);
 	}
 }
 
@@ -115,7 +115,7 @@ client_callback (Client *client)
 			return;
 
 		/* Receive data from client. */
-		len = recv (client->fd, buf + buf_len, buf_size - buf_len, 0);
+		len = recv (client->fd, buf + buf_len, buf_size - buf_len, MSG_NOSIGNAL);
 		if (len <= 0)
 			/* Client exited. */
 			return;
