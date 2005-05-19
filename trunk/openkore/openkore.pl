@@ -114,9 +114,6 @@ $SIG{__DIE__} = sub {
 
 #### INITIALIZE STARTUP INTERFACE ####
 
-use Interface::Startup;
-$interface = new Interface::Startup;
-
 use Time::HiRes qw(time usleep);
 use Getopt::Long;
 use IO::Socket;
@@ -132,7 +129,9 @@ eval "use OpenKoreMod;";
 undef $@;
 my $parseArgResult = Settings::parseArguments();
 Settings::parseSysConfig();
-$interface = $interface->switchInterface($Settings::default_interface, 1);
+
+use Interface;
+$interface = Interface->switchInterface($Settings::default_interface, 1);
 
 if ($parseArgResult eq '2') {
 	$interface->displayUsage($Settings::usageText);

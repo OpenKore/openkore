@@ -103,6 +103,10 @@ Developer options:
 EOF
 
 
+use SelfLoader; 1;
+__DATA__
+
+
 ##
 # Settings::parseArguments()
 # Returns: 1 on success, 2 if a 'usage' text should be displayed.
