@@ -64,11 +64,11 @@ Internal:
 - whenGroundStatus() now takes coordinates instead of a player/monster.
 - There's now a %sys (in package Settings) variable for options in
   control/sys.txt
+- Most modules are now autoloadable (see perldoc SelfLoader).
 
-Credits:
-- Damokles: case sensitivity fix, avoidGM_namePattern.
-- kunjandad: friend list packet support.
-- Crypticode: 'ai on'/'ai off' commands; item name support in 'uneq'
+Credits: - Damokles: case sensitivity fix, avoidGM_namePattern. -
+kunjandad: friend list packet support. - Crypticode: 'ai on'/'ai off'
+commands; item name support in 'uneq'
   command.
 
 

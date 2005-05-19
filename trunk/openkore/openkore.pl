@@ -297,7 +297,7 @@ our $remote_socket = new IO::Socket::INET;
 if ($sys{ipc}) {
 	require IPC;
 	require IPC::Processors;
-	Module::register("IPC", "IPC::Processors");
+	Modules::register("IPC", "IPC::Processors");
 	$ipc = new IPC;
 	if (!$ipc && $@) {
 		Log::error("Unable to initialize the IPC subsystem: $@\n");

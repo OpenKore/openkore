@@ -38,7 +38,22 @@ use Misc;
 use AI;
 use Match;
 
-our %handlers = (
+
+our %handlers;
+our %completions;
+our %descriptions;
+
+undef %handlers;
+undef %completions;
+undef %descriptions;
+
+
+# use SelfLoader; 1;
+# __DATA__
+
+
+sub initHandlers {
+	%handlers = (
 	ai		=> \&cmdAI,
 	aiv		=> \&cmdAIv,
 	arrowcraft	=> \&cmdArrowCraft,
@@ -101,13 +116,17 @@ our %handlers = (
 	version		=> \&cmdVersion,
 	warp		=> \&cmdWarp,
 	who		=> \&cmdWho,
-);
+	);
+}
 
-our %completions = (
+sub initCompletions {
+	%completions = (
 	sp		=> \&cmdPlayerSkill,
-);
+	);
+}
 
-our %descriptions = (
+sub initDescriptions {
+	%descriptions = (
 	ai		=> 'Enable/disable AI.',
 	aiv		=> 'Display current AI sequences.',
 	arrowcraft	=> 'Create Arrows.',
@@ -166,7 +185,8 @@ our %descriptions = (
 	version		=> 'Display the version of openkore.',
 	warp		=> 'Open warp portal.',
 	who		=> 'Display the number of people on the current server.',
-);
+	);
+}
 
 
 ##
@@ -182,6 +202,8 @@ our %descriptions = (
 sub run {
 	my $input = shift;
 	my ($switch, $args) = split(/ +/, $input, 2);
+
+	initHandlers() if (!%handlers);
 
 	# Resolve command aliases
 	if (my $alias = $config{"alias_$switch"}) {
@@ -204,6 +226,7 @@ sub complete {
 	my ($switch, $args) = split(/ +/, $input, 2);
 
 	return if ($input eq '');
+	initCompletions() if (!%completions);
 
 	# Resolve command aliases
 	if (my $alias = $config{"alias_$switch"}) {
@@ -888,6 +911,8 @@ sub cmdHelp {
 	# Display help message
 	my (undef, $args) = @_;
 	my @commands = split(/ +/, $args);
+
+	initDescriptions if (!%descriptions);
 	@commands = sort keys %descriptions if (!@commands);
 	my @unknown;
 

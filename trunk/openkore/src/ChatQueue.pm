@@ -34,6 +34,10 @@ our $wordSplitters = qr/(\b| |,|\.|\!)/;
 our %lastInput;
 
 
+# use SelfLoader; 1;
+# __DATA__
+
+
 ##
 # ChatQueue::add(type, userID, user, msg)
 # type: 'c' (public chat), 'pm' (private message), 'p' (party chat) or 'g' (guild chat)

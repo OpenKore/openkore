@@ -30,6 +30,10 @@ use Plugins;
 use Utils;
 
 
+# use SelfLoader; 1;
+# __DATA__
+
+
 #######################################
 #INITIALIZE VARIABLES
 #######################################

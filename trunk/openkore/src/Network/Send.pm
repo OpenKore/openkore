@@ -140,6 +140,10 @@ our @EXPORT = qw(
 	);
 
 
+# use SelfLoader; 1;
+# __DATA__
+
+
 # TODO: move decrypt(); this doesn't belong here
 
 ##

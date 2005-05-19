@@ -190,14 +190,14 @@ sub parseSysConfig {
 	my $f;
 	return if (!open($f, "< $control_folder/sys.txt"));
 
-	%sys = ();
 	foreach (<$f>) {
 		my ($key, $val);
 		s/[\r\n]//g;
+
 		next if ($_ eq '' || /^#/);
 
 		($key, $val) = split / /, $_, 2;
-		print "$key = $val\n";
+		$sys{$key} = $val;
 	}
 	close $f;
 }

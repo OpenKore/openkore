@@ -45,6 +45,10 @@ our @EXPORT = (
 	);
 
 
+# use SelfLoader; 1;
+# __DATA__
+
+
 #######################################
 #######################################
 ### CATEGORY: Hash/array management

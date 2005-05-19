@@ -70,6 +70,11 @@ our @EXPORT = qw(
 	updateNPCLUT
 	);
 
+
+# use SelfLoader; 1;
+# __DATA__
+
+
 sub parseArrayFile {
 	my $file = shift;
 	my $r_array = shift;
