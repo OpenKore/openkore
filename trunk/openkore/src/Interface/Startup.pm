@@ -33,8 +33,8 @@ use IO::Handle;
 use Interface;
 use base qw(Interface);
 
+use constant OUTPUT_LIMIT => 50; #should be more than enough for any start up.
 
-my $output_limit = 50; #should be more than enough for any start up.
 
 sub new {
 	my $class = shift;
@@ -56,7 +56,7 @@ sub addOutHist {
 	my $self = shift;
 	my $oh = $self->{output_history};
 	push @$oh, [@_];
-	splice(@$oh, 0, @$oh - $output_limit) if @$oh > $output_limit;
+	splice(@$oh, 0, @$oh - OUTPUT_LIMIT) if @$oh > OUTPUT_LIMIT;
 }
 
 sub getOutHist {

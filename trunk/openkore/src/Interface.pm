@@ -68,7 +68,7 @@ sub switchInterface {
 		return $self;
 	}
 	Modules::register("Interface::$new_if_name");
-	undef $self;
+	undef $self if ($self);
 	return $new_interface;
 }
 

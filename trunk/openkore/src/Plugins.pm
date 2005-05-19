@@ -53,6 +53,10 @@ our %hooks;
 my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 
 
+# use SelfLoader; 1;
+# __DATA__
+
+
 ### CATEGORY: Functions
 
 ##
@@ -64,7 +68,7 @@ my $pathDelimiter = ($^O eq 'MSWin32') ? ';' : ':';
 sub loadAll {
 	my (@plugins, @subdirs);
 
-	foreach my $dir (split /$pathDelimiter+/, $Settings::plugins_folder) {
+	foreach my $dir (split /($pathDelimiter)+/, $Settings::plugins_folder) {
 		my @items;
 
 		next if (!opendir(DIR, $dir));

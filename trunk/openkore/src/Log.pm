@@ -152,6 +152,10 @@ our $logTimestamp;
 our $chatTimestamp;
 
 
+# use SelfLoader; 1;
+# __DATA__
+
+
 #################################
 #################################
 # PRIVATE FUNCTIONS
