@@ -307,7 +307,9 @@ sub checkConnection {
 			error "exiting...\n", "connection";
 			$quit = 1;
 		} else {
-			error "connecting to Master Server...\n", "connection";
+			error "connecting to Master Server in $timeout{reconnect}{timeout} seconds...\n", "connection";
+			$timeout_ex{master}{time} = time;
+			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$conState = 1;
 			undef $conState_tries;
 		}
@@ -318,9 +320,9 @@ sub checkConnection {
 			error "exiting...\n", "connection";
 			$quit = 1;
 		} else {
-			error "connecting to Master Server...\n", "connection";
-			$timeout_ex{'master'}{'time'} = time;
-			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+			error "connecting to Master Server in $timeout{reconnect}{timeout} seconds...\n", "connection";
+			$timeout_ex{master}{time} = time;
+			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			Network::disconnect(\$remote_socket);
 			$conState = 1;
 			undef $conState_tries;
@@ -408,13 +410,21 @@ sub mainLoop {
 		}
 
 	} elsif (dataWaiting(\$remote_socket)) {
+		my $new;
+
 		$remote_socket->recv($new, $Settings::MAX_READ);
-		$msg .= $new;
-		$msg_length = length($msg);
-		while ($msg ne "") {
-			$msg = parseMsg($msg);
-			return if ($msg_length == length($msg));
+		if ($new eq '') {
+			# Connection from server closed
+			close($remote_socket);
+
+		} else {
+			$msg .= $new;
 			$msg_length = length($msg);
+			while ($msg ne "") {
+				$msg = parseMsg($msg);
+				return if ($msg_length == length($msg));
+				$msg_length = length($msg);
+			}
 		}
 	}
 
