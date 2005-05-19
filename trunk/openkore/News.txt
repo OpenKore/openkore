@@ -21,6 +21,7 @@ New features:
 - target_dist range condition for monsters.
 - "Player Exists:" and "Player Appeared:" messages moved to domain
   parseMsg_presence/player so you can put it in beepDomains.
+- Server disconnections are now immediately detected.
 
 New commands:
 - storage log
