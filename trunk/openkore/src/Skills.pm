@@ -40,6 +40,11 @@ package Skills;
 use strict;
 use vars qw(@skills %handles %names);
 
+
+# use SelfLoader; 1;
+# __DATA__
+
+
 # These data structures work as follows:
 #
 # @skill = (

@@ -24,15 +24,27 @@ use Log qw(message debug);
 use Utils qw(calcPosition);
 
 
-our %handlers = (
-	'where are you' => \&ipcWhereAreYou,
-	'move to',	=> \&ipcMoveTo,
-);
+our %handlers;
+undef %handlers;
+
+
+# use SelfLoader; 1;
+# __DATA__
+
+
+sub initHandlers {
+	%handlers = (
+		'where are you' => \&ipcWhereAreYou,
+		'move to',	=> \&ipcMoveTo,
+	);
+}
 
 
 sub process {
 	my $ipc = shift;
 	my $msg = shift;
+
+	initHandlers() if (!%handlers);
 
 	if (defined $handlers{$msg->{ID}}) {
 		debug "Received message '$msg->{ID}' from client $msg->{args}{FROM}\n", "ipc";

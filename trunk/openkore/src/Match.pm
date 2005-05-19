@@ -13,6 +13,10 @@ use Globals;
 use Utils;
 
 
+# use SelfLoader; 1;
+# __DATA__
+
+
 ##
 # player(ID, [partial_match])
 # ID: either a number in the player list, or a player name.
