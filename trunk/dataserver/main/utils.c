@@ -4,11 +4,21 @@
 unsigned int
 calc_hash (const char *str)
 {
-	unsigned int result = 0;
-	int i, len;
+	unsigned int hash = (int) *str;
 
-	len = strlen (str);
-	for (i = 0; i < len; i++)
-		result = result * 31 + str[i];
-	return result;
+	if (hash != 0)
+		for (str += 1; str[0] != 0; str++)
+			hash = (hash << 5) - hash + str[0];
+	return hash;
+}
+
+unsigned int
+calc_hash2 (const char *str)
+{
+	/* Alternative algorithm. */
+	unsigned int hash;
+
+	for (hash = 0; str[0] != 0; str++)
+		hash = hash * 33 + str[0];
+	return hash;
 }
