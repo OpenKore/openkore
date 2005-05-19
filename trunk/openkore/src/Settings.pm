@@ -36,7 +36,7 @@ use Plugins;
 use Utils;
 use Log qw(warning error);
 
-our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile);
+our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys);
 
 
 # Constants
@@ -66,6 +66,9 @@ our $def_field;
 our $monster_log;
 our $default_interface;
 our $no_connect;
+
+# System configuration
+our %sys;
 
 # Configuration files and associated file parsers
 our @configFiles;
@@ -181,6 +184,22 @@ sub parseArguments {
 		}
 	}
 	return 1;
+}
+
+sub parseSysConfig {
+	my $f;
+	return if (!open($f, "< $control_folder/sys.txt"));
+
+	%sys = ();
+	foreach (<$f>) {
+		my ($key, $val);
+		s/[\r\n]//g;
+		next if ($_ eq '' || /^#/);
+
+		($key, $val) = split / /, $_, 2;
+		print "$key = $val\n";
+	}
+	close $f;
 }
 
 

@@ -126,11 +126,12 @@ use Carp;
 
 ##### PARSE ARGUMENTS, FURTHER INITIALIZE INTERFACE & LOAD PLUGINS #####
 
-use Settings;
+use Settings qw(%sys);
 
 eval "use OpenKoreMod;";
 undef $@;
 my $parseArgResult = Settings::parseArguments();
+Settings::parseSysConfig();
 $interface = $interface->switchInterface($Settings::default_interface, 1);
 
 if ($parseArgResult eq '2') {
@@ -184,11 +185,8 @@ use AI;
 use Skills;
 use Interface;
 use ChatQueue;
-use IPC;
-use IPC::Processors;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Skills Interface ChatQueue
-	IPC IPC::Processors/);
+	Network Network::Send Commands Misc AI Skills Interface ChatQueue/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
@@ -280,7 +278,7 @@ Log::message("\n");
 ##### INITIALIZE X-KORE ######
 
 our $XKore_dontRedirect = 0;
-if ($config{'XKore'}) {
+if ($config{XKore} || $sys{XKore}) {
 	require XKore;
 	Modules::register("XKore");
 	$xkore = new XKore;
@@ -296,7 +294,10 @@ if ($config{'XKore'}) {
 }
 
 our $remote_socket = new IO::Socket::INET;
-if ($config{'ipc'}) {
+if ($sys{ipc}) {
+	require IPC;
+	require IPC::Processors;
+	Module::register("IPC", "IPC::Processors");
 	$ipc = new IPC;
 	if (!$ipc && $@) {
 		Log::error("Unable to initialize the IPC subsystem: $@\n");
@@ -329,7 +330,7 @@ if (compilePortals_check()) {
 
 ### PROMPT USERNAME AND PASSWORD IF NECESSARY ###
 
-if (!$config{'XKore'}) {
+if (!$xkore) {
 	my $msg;
 	if (!$config{'username'}) {
 		Log::message("Enter Username: ");
@@ -381,7 +382,7 @@ if (!$config{'XKore'}) {
 		}
 	}
 
-} elsif (!$config{'XKore'} && (!$config{'username'} || !$config{'password'})) {
+} elsif (!$xkore && (!$config{'username'} || !$config{'password'})) {
 	$interface->errorDialog("No username or password set.");
 	exit 1;
 }
