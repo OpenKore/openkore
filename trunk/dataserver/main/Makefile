@@ -5,7 +5,7 @@ OBJ=dataserver.o unix-server.o fileparsers.o threads.o linked-list.o string-hash
 .PHONY: clean
 
 dataserver: $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) -o dataserver -lpthread
+	$(CC) $(CFLAGS) $(OBJ) -o dataserver -pthread
 
 dataserver.o: dataserver.c
 	$(CC) $(CFLAGS) dataserver.c -c -o dataserver.o
