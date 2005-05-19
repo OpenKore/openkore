@@ -47,7 +47,7 @@ use Interface::Wx::Input;
 use Interface::Wx::ItemList;
 use Interface::Wx::DockNotebook;
 use AI;
-use Settings;
+use Settings qw(%sys);
 use Plugins;
 use Misc;
 use Commands;
@@ -276,7 +276,7 @@ sub createInterface {
 	$timer->Start(100, 1);
 
 	# Hide console on Win32
-	if ($buildType == 0 && !$CVS) {
+	if ($^O eq 'MSWin32' && $sys{wxHideConsole}) {
 		eval 'use Win32::Console; Win32::Console->new(STD_OUTPUT_HANDLE)->Free();';
 	}
 }
