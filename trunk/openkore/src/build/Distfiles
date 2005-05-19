@@ -2,3 +2,4 @@ Do_Not_Compile_OpenKore.txt
 openkore.ico
 compile.bat
 compile-wx.bat
+autoload.pl
