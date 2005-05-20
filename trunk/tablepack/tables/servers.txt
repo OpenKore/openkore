@@ -107,6 +107,9 @@ port 6900
 master_version 20
 version 1
 chatLangCode 1
+patchserver wpatch.euro-ro.net
+patchpath /patch02
+patchttl 30
 
 [Oceania/Australia - oRO]
 ip 202.168.25.133
