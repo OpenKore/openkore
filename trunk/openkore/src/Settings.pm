@@ -103,8 +103,8 @@ Developer options:
 EOF
 
 
-use SelfLoader; 1;
-__DATA__
+# use SelfLoader; 1;
+# __DATA__
 
 
 ##
