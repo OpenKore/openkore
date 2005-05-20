@@ -135,6 +135,7 @@ client_thread (ClientThreadData *data)
 	/* Create client structure. */
 	client = malloc (sizeof (client));
 	client->fd = data->fd;
+	client_init (client);
 	data->callback (client);
 
 	close (client->fd);
