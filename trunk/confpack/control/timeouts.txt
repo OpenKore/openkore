@@ -104,3 +104,4 @@ compilePortals_auto 10
 injectSync 5
 injectKeepAlive 12
 welcomeText 4
+patchserver 120
