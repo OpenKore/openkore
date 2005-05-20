@@ -20,8 +20,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <netinet/in.h>
 
 #include "dataserver.h"
@@ -54,15 +52,15 @@ send_reply (Client *client, const char *msg)
 
 	if (msg == NULL) {
 		len = 0;
-		return (send (client->fd, &len, 2, MSG_NOSIGNAL) != -1);
+		return client_send (client, &len, 2);
 
 	} else {
 		len = strlen (msg);
 		nlen = htons (len);
 
-		if (send (client->fd, &nlen, 2, MSG_NOSIGNAL) == -1)
+		if (!client_send (client, &nlen, 2))
 			return 0;
-		return (send (client->fd, msg, len, MSG_NOSIGNAL) != -1);
+		return client_send (client, msg, len);
 	}
 }
 
@@ -119,7 +117,7 @@ client_callback (Client *client)
 	const int buf_size = 512;
 	char buf[buf_size];
 	int buf_len, tmp;
-	ssize_t len;
+	int len;
 
 	char major, minor;
 	uint16_t size;
@@ -133,7 +131,7 @@ client_callback (Client *client)
 			return;
 
 		/* Receive data from client. */
-		len = recv (client->fd, buf + buf_len, buf_size - buf_len, MSG_NOSIGNAL);
+		len = client_recv (client, buf + buf_len, buf_size - buf_len);
 		if (len <= 0)
 			/* Client exited. */
 			return;

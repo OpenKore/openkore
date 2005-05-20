@@ -16,8 +16,15 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+/* Socket & networking abstraction. */
+
 #ifndef _CLIENT_H_
 #define _CLIENT_H_
+
+
+/***********************
+ * Server client type
+ ***********************/
 
 typedef struct _Client Client;
 
@@ -26,5 +33,18 @@ struct _Client {
 };
 
 typedef void (*NewClientCallback) (Client *client);
+
+
+/* Initialize a client socket. */
+void client_init (Client *client);
+
+/* Receive data from a client.
+ * Returns: The number of bytes received, or -1 on error. */
+int client_recv (Client *client, void *buf, int len);
+
+/* Send data to a client.
+ * Returns: 0 on error, 1 on success. */
+int client_send (Client *client, const void *data, int len);
+
 
 #endif /* _CLIENT_H_ */
