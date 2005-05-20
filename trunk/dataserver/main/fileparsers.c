@@ -178,6 +178,12 @@ rolut_load (const char *filename)
 		tmp[0] = 0;
 		key = line;
 		value = tmp + 1;
+
+		/* Convert underscores to whitespace in the value. */
+		for (tmp = value; tmp[0] != 0; tmp++)
+			if (tmp[0] == '_')
+				tmp[0] = ' ';
+
 		string_hash_set (hash, strdup (key), strdup (value));
 	}
 
