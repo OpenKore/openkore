@@ -11,7 +11,8 @@ if ($ARGV[0] eq '' || $ARGV[0] eq '--help' || $ARGV[0] !~ /^(on|off|status)$/) {
 chdir "$RealBin/..";
 my @files = qw(Commands.pm Skills.pm Match.pm Misc.pm Network/Send.pm
 	       functions.pl ChatQueue.pm FileParsers.pm Utils.pm
-	       IPC/Processors.pm Log.pm Interface.pm Plugins.pm);
+	       IPC/Processors.pm Log.pm Interface.pm Plugins.pm
+	       Settings.pm);
 
 if ($ARGV[0] eq 'on') {
 	foreach my $file (@files) {
