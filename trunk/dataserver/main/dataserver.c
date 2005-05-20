@@ -242,6 +242,7 @@ load_hash_file (const char *basename, StringHash * (*loader) (const char *filena
 	hash = loader (file);
 	if (hash == NULL) {
 		fprintf (stderr, "Error: cannot load %s\n", file);
+		fprintf (stderr, "If your table files are somewhere else, then use the --tables parameter.\n");
 		exit (1);
 	}
 	return hash;
