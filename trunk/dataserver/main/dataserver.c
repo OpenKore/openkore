@@ -34,8 +34,15 @@
 #endif
 
 
-StringHash *itemsDesc, *skillsDesc;
-StringHash *cities, *elements, *items, *itemSlotCount, *maps;
+/* Table files are stored in this array. */
+#define NUM_HASH_FILES 7
+
+static StringHash *hashFiles[NUM_HASH_FILES];
+
+
+struct _PrivateData {
+	StringHashItem *iterators[NUM_HASH_FILES];
+};
 
 
 static UnixServer *server;
@@ -46,63 +53,89 @@ static struct {
 
 
 static int
-send_reply (Client *client, const char *msg)
+send_reply (Client *client, const char *data)
 {
-	uint16_t len, nlen;
+	unsigned char status;
 
-	if (msg == NULL) {
-		len = 0;
-		return client_send (client, &len, 2);
+	/*
+	 * struct {
+	 *    unsigned char status;   // 0 = error, 1 = success
+	 *    // The following fields are only sent if status != 0
+	 *    uint16_t len;
+	 *    char data[len];
+	 * }
+	 */
+
+	if (data == NULL) {
+		status = 0;
+		return client_send (client, &status, 1);
 
 	} else {
-		len = strlen (msg);
+		uint16_t len, nlen;
+
+		status = 1;
+		len = strlen (data);
 		nlen = htons (len);
 
+		if (!client_send (client, &status, 1))
+			return 0;
 		if (!client_send (client, &nlen, 2))
 			return 0;
-		return client_send (client, msg, len);
+		return client_send (client, data, len);
 	}
 }
 
 
 /* Process data received from client. */
 static int
-process (Client *client, char major, char minor, char *data, int size)
+process (Client *client, unsigned char major, unsigned char minor, char *data, int size)
 {
-	StringHash *hash = NULL;
+	PrivateData *priv = client->priv;
 
 	switch (major) {
-	case 0:
-		if (minor == 0)
-			/* itemsdescriptions.txt */
-			hash = itemsDesc;
-		else if (minor == 1)
-			/* skillsdescriptions.txt */
-			hash = skillsDesc;
-		else
+	case 0: {
+		/* Major command 0: retrieve data from table files of StringHash type. */
+		if (minor >= NUM_HASH_FILES)
+			/* Invalid file requested. */
 			return 0;
-		return send_reply (client, string_hash_get (hash, data));
-
-	case 1:
-		if (minor == 0)
-			/* cities.txt */
-			hash = cities;
-		else if (minor == 1)
-			/* elements.txt */
-			hash = elements;
-		else if (minor == 2)
-			/* items.txt */
-			hash = items;
-		else if (minor == 3)
-			/* itemslotcounttable.txt */
-			hash = itemSlotCount;
-		else if (minor == 4)
-			/* maps.txt */
-			hash = maps;
 		else
-			return 0;
-		return send_reply (client, string_hash_get (hash, data));
+			return send_reply (client, string_hash_get (hashFiles[(int) minor], data));
 
+	}
+	case 1: {
+		StringHashItem *item;
+		int fileIndex;
+
+		/* Major command 255: special operations for StringHash table files. */
+		if (minor < NUM_HASH_FILES) {
+			/* Command: start iterating. */
+			fileIndex = minor;
+
+			/* Send the first key in the hash and go to the next iteration. */
+			item = (StringHashItem *) hashFiles[fileIndex]->first;
+			if (item == NULL)
+				return send_reply (client, NULL);
+
+			priv->iterators[fileIndex] = (StringHashItem *) ((LListItem *) item)->next;
+			return send_reply (client, item->key);
+
+		} else if (minor >= 127 && minor < 127 + NUM_HASH_FILES) {
+			/* Command: iterate next. */
+			fileIndex = minor - 127;
+
+			/* Send the key in the current iteration and go to the next one. */
+			item = priv->iterators[fileIndex];
+			if (item == NULL)
+				return send_reply (client, NULL);
+
+			priv->iterators[fileIndex] = (StringHashItem *) ((LListItem *) item)->next;
+			return send_reply (client, item->key);
+
+		} else
+			/* Invalid command. */
+			return 0;
+
+	}
 	default:
 		/* Client requested invalid major/minor number. */
 		return 0;
@@ -119,29 +152,31 @@ client_callback (Client *client)
 	int buf_len, tmp;
 	int len;
 
-	char major, minor;
+	unsigned char major, minor;
 	uint16_t size;
 	char *data;
 
 	buf_len = 0;
+	client->priv = calloc (sizeof (PrivateData), 1);
+
 	while (1) {
 		/* Buffer is full. The client is trying to perform a request with a rediculously
 		 * big name. It's probably misbehaving, so disconnect it. */
 		if (buf_len >= buf_size)
-			return;
+			break;
 
 		/* Receive data from client. */
 		len = client_recv (client, buf + buf_len, buf_size - buf_len);
 		if (len <= 0)
 			/* Client exited. */
-			return;
+			break;
 
 		buf_len += len;
 
 		/* We expect the following packet:
 		 * struct {
-		 *     char major;
-		 *     char minor;
+		 *     unsigned char major;
+		 *     unsigned char minor;
 		 *     uint16_t size;
 		 *     char data[size];
 		 * }
@@ -151,7 +186,7 @@ client_callback (Client *client)
 
 		if (len < 4)
 			/* Packet too small; continue receiving. */
-			continue;
+			break;
 
 		/* Get the 'major', 'minor' and 'size' fields and check whether we've received enough data. */
 		major = buf[0];
@@ -168,7 +203,7 @@ client_callback (Client *client)
 
 		if (!process (client, major, minor, data, size)) {
 			free (data);
-			return;
+			break;
 		}
 
 		/* Remove this packet from the buffer. */
@@ -179,7 +214,13 @@ client_callback (Client *client)
 
 		free (data);
 	}
+
+	free (client->priv);
 }
+
+
+
+/***********************************************/
 
 
 static void
@@ -275,19 +316,19 @@ main (int argc, char *argv[])
 	}
 
 	/* Load data files. */
-	itemsDesc  = load_hash_file ("itemsdescriptions.txt",  desc_info_load);
-	skillsDesc = load_hash_file ("skillsdescriptions.txt", desc_info_load);
-	cities        = load_hash_file ("cities.txt",             rolut_load);
-	elements      = load_hash_file ("elements.txt",           rolut_load);
-	items         = load_hash_file ("items.txt",              rolut_load);
-	itemSlotCount = load_hash_file ("itemslotcounttable.txt", rolut_load);
-	maps          = load_hash_file ("maps.txt",               rolut_load);
+	hashFiles[0] = load_hash_file ("itemsdescriptions.txt",  desc_info_load);
+	hashFiles[1] = load_hash_file ("skillsdescriptions.txt", desc_info_load);
+        hashFiles[2] = load_hash_file ("cities.txt",             rolut_load);
+	hashFiles[3] = load_hash_file ("elements.txt",           rolut_load);
+	hashFiles[4] = load_hash_file ("items.txt",              rolut_load);
+	hashFiles[5] = load_hash_file ("itemslotcounttable.txt", rolut_load);
+	hashFiles[6] = load_hash_file ("maps.txt",               rolut_load);
 
 	/* Initialize server and main loop. */
 	i = unix_start ();
 
 	/* Free resources. */
-	string_hash_free (itemsDesc);
-	string_hash_free (skillsDesc);
+	for (i = 0; i < NUM_HASH_FILES; i++)
+		string_hash_free (hashFiles[i]);
 	return i;
 }

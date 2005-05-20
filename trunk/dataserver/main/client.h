@@ -27,9 +27,11 @@
  ***********************/
 
 typedef struct _Client Client;
+typedef struct _PrivateData PrivateData;
 
 struct _Client {
 	int fd;
+	PrivateData *priv;
 };
 
 typedef void (*NewClientCallback) (Client *client);
