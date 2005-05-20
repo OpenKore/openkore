@@ -50,7 +50,6 @@ sub fetch {
 	my $buf = '';
 
 	send($sock, chr($major) . chr($minor) . pack("n", length($name)) . $name, 0);
-
 	while (1) {
 		my ($tmp, $len);
 
@@ -58,55 +57,58 @@ sub fetch {
 		return undef if (!defined $tmp || $tmp eq '');
 		$buf .= $tmp;
 
-		$len = unpack("n", substr($buf, 0, 2));
-		next if (length($buf) < $len + 2);
-		return substr($buf, 2, $len);
+		# Status: error
+		return undef if (substr($buf, 0, 1) eq "\0");
+
+		# Status: success
+		$len = unpack("n", substr($buf, 1, 2));
+		next if (length($buf) < $len + 3);
+		return substr($buf, 3, $len);
 	}
 }
 
 sub parseRoOrDescLUT {
 	my (undef, $args) = @_;
-	my ($major, $minor);
+	my ($fileIndex);
 	my %table = (
-		     itemsdescriptions => [0, 0],
-		     skillsdescriptions => [0, 1],
-		     cities => [1, 0],
-		     elements => [1, 1],
-		     items => [1, 2],
-		     itemslotcounttable => [1, 3],
-		     maps => [1, 4]
+		     itemsdescriptions  => 0,
+		     skillsdescriptions => 1,
+		     cities   => 2,
+		     elements => 3,
+		     items    => 4,
+		     itemslotcounttable => 5,
+		     maps     => 6
 		);
 
 	foreach my $key (keys %table) {
 		if ($args->{file} =~ /$key/i) {
-			($major, $minor) = @{$table{$key}};
+			$fileIndex = $table{$key};
 			last;
 		}
 	}
 
-	if (defined $major) {
-		tie %{$args->{hash}}, "SharedMemoryPlugin::RoOrDescHandler", $major, $minor;
+	if (defined $fileIndex) {
+		tie %{$args->{hash}}, "SharedMemoryPlugin::HashHandler", $fileIndex;
 		$args->{return} = 1;
 	}
 }
 
 
-package SharedMemoryPlugin::RoOrDescHandler;
+package SharedMemoryPlugin::HashHandler;
 
 
 sub TIEHASH {
-	my ($class, $major, $minor) = @_;
+	my ($class, $fileIndex) = @_;
 	my %self;
 
-	$self{major} = $major;
-	$self{minor} = $minor;
+	$self{fileIndex} = $fileIndex;
 	bless \%self, $class;
 	return \%self;
 }
 
 sub FETCH {
 	my ($self, $key) = @_;
-	return SharedMemoryPlugin::fetch($self->{major}, $self->{minor}, $key);
+	return SharedMemoryPlugin::fetch(0, $self->{fileIndex}, $key);
 }
 
 sub STORE {
@@ -123,15 +125,17 @@ sub CLEAR {
 
 sub EXISTS {
 	my ($self, $key) = @_;
-	return $self->FETCH($key) ne '';
+	return defined($self->FETCH($key));
 }
 
 sub FIRSTKEY {
-	# Not implemented yet.
+	my ($self) = @_;
+	return SharedMemoryPlugin::fetch(1, $self->{fileIndex}, '');
 }
 
 sub NEXTKEY {
-	# Ditto.
+	my ($self) = @_;
+	return SharedMemoryPlugin::fetch(1, 127 + $self->{fileIndex}, '');
 }
 
 sub SCALAR {
