@@ -37,8 +37,13 @@ sub debug {
 		if ($input eq "q" || $input eq "quit") {
 			last;
 		} else {
+			undef $@;
 			my $ret = eval $input;
-			out "$ret\n";
+			if ($@ ne '') {
+				out "Error: $@\n";
+			} else {
+				out "$ret\n";
+			}
 		}
 	}
 	exit;
@@ -47,3 +52,4 @@ sub debug {
 $SIG{QUIT} = \&debug;
 
 1;
+sleep 10;
