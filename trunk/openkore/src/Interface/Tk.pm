@@ -28,6 +28,7 @@ use base qw/Interface/;
 use Plugins;
 use Globals;
 use Settings;
+use Misc;
 
 use Carp qw/carp croak confess/;
 use Time::HiRes qw/time usleep/;
@@ -790,31 +791,30 @@ sub loadMap {
 
 #should this cache xbm files?
 sub xbmmake {
-	my $r_hash = shift;
-	my ($i,$j,$k,$hx,$hy,$mvw_x,$mvw_y);
-	my $line=0;
-	my $dump=0;
-	my @data=[];
-	$mvw_x=$$r_hash{'width'};
-	$mvw_y=$$r_hash{'height'};
-	if (($mvw_x % 8)==0){
-		$hx=$mvw_x;
-	}else{
-		$hx=$mvw_x+(8-($mvw_x % 8));
+	my $r_field = shift;
+	my ($hx,$hy,$mvw_x,$mvw_y);
+	my $line = 0;
+	my $dump = 0;
+	$mvw_x = $r_field->{width};
+	$mvw_y = $r_field->{height};
+	if (($mvw_x % 8) == 0) {
+		$hx = $mvw_x;
+	} else {
+		$hx = $mvw_x+(8-($mvw_x % 8));
 	}
-	for($j=0;$j<$mvw_y;$j++){
-		$hy=($mvw_x*($mvw_y-$j-1));
-		for($k=0;$k<$hx;$k++){
-			$dump+=256 if (defined($$r_hash{'field'}[$hy+$k]) && $$r_hash{'field'}[$hy+$k] >0);
-			$dump=$dump/2;
-			if(($k % 8) ==7){
-				$line.=sprintf("0x%02x\,",$dump);
-				$dump=0;
+	for (my $j = 0; $j < $mvw_y; $j++) {
+		$hy = ($mvw_x*($mvw_y-$j-1));
+		for (my $k = 0; $k < $hx; $k++) {
+			$dump += 256 if (!checkFieldWalkable($r_field, $k, $j));
+			$dump = $dump/2;
+			if (($k % 8) == 7) {
+				$line .= sprintf("0x%02x\,",$dump);
+				$dump = 0;
 			}
 		}
 	}
-	$line="#define data_width $mvw_x\n#define data_height $mvw_y\nstatic unsigned char data_bits[] = {\n".$line."};";
+	$line = "#define data_width $mvw_x\n#define data_height $mvw_y\nstatic unsigned char data_bits[] = {\n".$line."};";
 	return \$line;
 }
 
-1 #end of module
+1;

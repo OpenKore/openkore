@@ -10,6 +10,7 @@ Bug fixes:
 - Storage log not created when relogAfterStorage is active.
 - Bot should no longer fail to pick up items dropped by monsters that
   died a distance away.
+- Tk map viewer has been fixed.
 
 New features:
 - Better support for detecting dead players.
