@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <time.h>
 
 #include "utils.h"
 #include "dataserver.h"
@@ -73,9 +74,15 @@ void
 debug (const char *format, ...)
 {
 	va_list ap;
+	struct tm *tm;
+	time_t t;
 
 	if (!options.debug)
 		return;
+
+	time (&t);
+	tm = localtime (&t);
+	printf ("[%02d:%02d:%02d] ", tm->tm_hour, tm->tm_min, tm->tm_sec);
 	va_start (ap, format);
 	vprintf (format, ap);
 	va_end (ap);
