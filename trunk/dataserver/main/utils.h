@@ -22,4 +22,12 @@
 unsigned int calc_hash  (const char *str);
 unsigned int calc_hash2 (const char *str);
 
+
+void message (const char *format, ...);
+void error (const char *format, ...);
+void debug (const char *format, ...);
+
+#define DEBUG debug   /* All uppercase for readability. */
+
+
 #endif /* _UTILS_H_ */

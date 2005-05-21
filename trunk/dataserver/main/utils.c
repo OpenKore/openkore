@@ -16,8 +16,13 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
+#include <stdio.h>
+#include <stdarg.h>
 #include <string.h>
+
 #include "utils.h"
+#include "dataserver.h"
+
 
 unsigned int
 calc_hash (const char *str)
@@ -39,4 +44,39 @@ calc_hash2 (const char *str)
 	for (hash = 0; str[0] != 0; str++)
 		hash = hash * 33 + str[0];
 	return hash;
+}
+
+
+void
+message (const char *format, ...)
+{
+	va_list ap;
+
+	if (options.silent)
+		return;
+	va_start (ap, format);
+	vprintf (format, ap);
+	va_end (ap);
+}
+
+void
+error (const char *format, ...)
+{
+	va_list ap;
+
+	va_start (ap, format);
+	vfprintf (stderr, format, ap);
+	va_end (ap);
+}
+
+void
+debug (const char *format, ...)
+{
+	va_list ap;
+
+	if (!options.debug)
+		return;
+	va_start (ap, format);
+	vprintf (format, ap);
+	va_end (ap);
 }

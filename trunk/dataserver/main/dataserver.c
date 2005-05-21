@@ -20,11 +20,14 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <errno.h>
 #include <netinet/in.h>
 
 #include "dataserver.h"
 #include "client.h"
 #include "fileparsers.h"
+#include "utils.h"
+
 
 #ifdef WIN32
 	#include "tcp-server.h"
@@ -47,15 +50,14 @@ struct _PrivateData {
 
 static UnixServer *server;
 
-static struct {
-	char *tables;
-} options;
+Options options;
 
 
 static int
 send_reply (Client *client, const char *data)
 {
 	unsigned char status;
+	int ret;
 
 	/*
 	 * struct {
@@ -68,7 +70,7 @@ send_reply (Client *client, const char *data)
 
 	if (data == NULL) {
 		status = 0;
-		return client_send (client, &status, 1);
+		ret = client_send (client, &status, 1);
 
 	} else {
 		uint16_t len, nlen;
@@ -77,12 +79,17 @@ send_reply (Client *client, const char *data)
 		len = strlen (data);
 		nlen = htons (len);
 
-		if (!client_send (client, &status, 1))
-			return 0;
-		if (!client_send (client, &nlen, 2))
-			return 0;
-		return client_send (client, data, len);
+		ret = client_send (client, &status, 1);
+		if (ret)
+			ret = client_send (client, &nlen, 2);
+		if (ret)
+			ret = client_send (client, data, len);
 	}
+
+	if (!ret) {
+		DEBUG ("Cannot send data to client: %s\n", strerror (errno));
+	}
+	return ret;
 }
 
 
@@ -95,10 +102,11 @@ process (Client *client, unsigned char major, unsigned char minor, char *data, i
 	switch (major) {
 	case 0: {
 		/* Major command 0: retrieve data from table files of StringHash type. */
-		if (minor >= NUM_HASH_FILES)
+		if (minor >= NUM_HASH_FILES) {
 			/* Invalid file requested. */
+			DEBUG ("Invalid file requested: %d\n", (int) minor);
 			return 0;
-		else
+		} else
 			return send_reply (client, string_hash_get (hashFiles[(int) minor], data));
 
 	}
@@ -131,13 +139,16 @@ process (Client *client, unsigned char major, unsigned char minor, char *data, i
 			priv->iterators[fileIndex] = (StringHashItem *) ((LListItem *) item)->next;
 			return send_reply (client, item->key);
 
-		} else
+		} else {
 			/* Invalid command. */
+			DEBUG ("Invalid command for major 1: %d\n", (int) minor);
 			return 0;
+		}
 
 	}
 	default:
 		/* Client requested invalid major/minor number. */
+		DEBUG ("Invalid major/minor number: %d/%d\n", (int) major, (int) minor);
 		return 0;
 	}
 }
@@ -156,20 +167,26 @@ client_callback (Client *client)
 	uint16_t size;
 	char *data;
 
+	DEBUG ("New client\n");
+
 	buf_len = 0;
 	client->priv = calloc (sizeof (PrivateData), 1);
 
 	while (1) {
 		/* Buffer is full. The client is trying to perform a request with a rediculously
 		 * big name. It's probably misbehaving, so disconnect it. */
-		if (buf_len >= buf_size)
+		if (buf_len >= buf_size) {
+			DEBUG ("Buffer full; disconnecting client\n");
 			break;
+		}
 
 		/* Receive data from client. */
 		len = client_recv (client, buf + buf_len, buf_size - buf_len);
-		if (len <= 0)
+		if (len <= 0) {
 			/* Client exited. */
+			DEBUG ("Client exited\n");
 			break;
+		}
 
 		buf_len += len;
 
@@ -186,7 +203,7 @@ client_callback (Client *client)
 
 		if (len < 4)
 			/* Packet too small; continue receiving. */
-			break;
+			continue;
 
 		/* Get the 'major', 'minor' and 'size' fields and check whether we've received enough data. */
 		major = buf[0];
@@ -215,6 +232,7 @@ client_callback (Client *client)
 		free (data);
 	}
 
+	DEBUG ("Exit client main loop\n");
 	free (client->priv);
 }
 
@@ -242,7 +260,7 @@ unix_start ()
 		return 1;
 	else if (ret == 0) {
 		/* Yes. */
-		fprintf (stderr, "Server already running.\n");
+		error ("Server already running.\n");
 		return 2;
 	}
 
@@ -257,7 +275,7 @@ unix_start ()
 	if (server == NULL)
 		return 1;
 
-	printf ("Server ready.\n");
+	message ("Server ready.\n");
 	unix_server_main_loop (server);
 	return unix_server_free (server);
 }
@@ -268,6 +286,8 @@ usage (int retval)
 {
 	printf ("Usage: dataserver [ARGS]\n\n");
 	printf ("  --tables DIR     Specify the tables folder. Default: working directory\n");
+	printf ("  --silent         Don't output any messages unless absolutely necessary.\n");
+	printf ("  --debug          Enable debugging messages.\n");
 	exit (retval);
 }
 
@@ -279,11 +299,11 @@ load_hash_file (const char *basename, StringHash * (*loader) (const char *filena
 	StringHash *hash;
 
 	snprintf (file, sizeof (file), "%s/%s", options.tables, basename);
-	printf ("Loading %s...\n", file);
+	message ("Loading %s...\n", file);
 	hash = loader (file);
 	if (hash == NULL) {
-		fprintf (stderr, "Error: cannot load %s\n", file);
-		fprintf (stderr, "If your table files are somewhere else, then use the --tables parameter.\n");
+		error ("Error: cannot load %s\n", file);
+		error ("If your table files are somewhere else, then use the --tables parameter.\n");
 		exit (1);
 	}
 	return hash;
@@ -296,21 +316,28 @@ main (int argc, char *argv[])
 	int i;
 
 	/* Parse arguments. */
+	memset (&options, 0, sizeof (options));
 	options.tables = ".";
 	for (i = 1; i < argc; i++) {
-		if (strcmp (argv[i], "--help") == 0)
+		if (strcmp (argv[i], "--help") == 0) {
 			usage (0);
 
-		else if (strcmp (argv[i], "--tables") == 0) {
+		} else if (strcmp (argv[i], "--tables") == 0) {
 			if (argv[i + 1] == NULL) {
-				fprintf (stderr, "--tables requires a directory name.\n");
+				error ("--tables requires a directory name.\n");
 				usage (1);
 			}
 			options.tables = argv[i + 1];
 			i++;
 
+		} else if (strcmp (argv[i], "--silent") == 0) {
+			options.silent = 1;
+
+		} else if (strcmp (argv[i], "--debug") == 0) {
+			options.debug = 1;
+
 		} else {
-			fprintf (stderr, "Unknown parameter: %s\n", argv[i]);
+			error ("Unknown parameter: %s\n", argv[i]);
 			usage (1);
 		}
 	}

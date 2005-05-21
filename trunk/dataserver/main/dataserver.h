@@ -19,6 +19,14 @@
 #ifndef _DATASERVER_H_
 #define _DATASERVER_H_
 
-#include "string-hash.h"
+
+typedef struct {
+	char *tables;
+	int silent;
+	int debug;
+} Options;
+
+extern Options options;
+
 
 #endif /* _DATASERVER_H_ */
