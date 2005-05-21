@@ -52,4 +52,3 @@ sub debug {
 $SIG{QUIT} = \&debug;
 
 1;
-sleep 10;
