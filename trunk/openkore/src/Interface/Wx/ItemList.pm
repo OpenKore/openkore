@@ -25,6 +25,7 @@ use strict;
 use Wx ':everything';
 use base qw(Wx::ListCtrl);
 use Wx::Event qw(EVT_LIST_ITEM_ACTIVATED EVT_LIST_ITEM_RIGHT_CLICK);
+use File::Spec;
 
 
 our $monsterColor;
@@ -86,11 +87,32 @@ sub onRightClick {
 sub OnGetItemText {
 	my ($self, $item, $column) = @_;
 	my $ID = $self->{objectsID}[$item];
+	my $objects = $self->{objects};
+
+	# Some people get a weird "can't coerce array into hash" error
+	# for some reason, so check the reference type.
 	if ($ID) {
-		return $self->{objects}{$ID}{name};
-	} else {
-		return "";
+		my $f;
+
+		if (!$objects && ref($objects) eq 'HASH' && $objects->{$ID} && ref($objects->{$ID}) eq 'HASH') {
+			return $self->{objects}{$ID}{name};
+
+		} else {
+			my $file = File::Spec->catfile($Settings::logs_folder, "debug.txt");
+			if (open($f, ">> $file")) {
+				# Wrong type; why?? Write to debugging log.
+				require Data::Dumper;
+				print $f "index = $item\n";
+				print $f "ID = " . unpack("L", $ID) . "\n";
+				print $f "\n";
+				print $f Data::Dumper::Dumper($objects);
+				print $f "\n--------------------------\n\n";
+				close $f;
+				Log::warning("Internal error detected. Please submit a bug report and attach the file $file.\n");
+			}
+		}
 	}
+	return "";
 }
 
 sub OnGetItemAttr {
