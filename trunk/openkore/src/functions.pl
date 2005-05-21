@@ -8946,8 +8946,10 @@ sub parseMsg {
 
 	} elsif ($switch eq "019A") {
 		# 9A 01 - 14 bytes long
-		message "PvP On\n", "map_event";
-
+		if (!$ai_v{temp}{pvp}) {
+			$ai_v{temp}{pvp} = 1;
+			message "PvP On\n", "map_event";
+		}
 
 	} elsif ($switch eq "019B") {
 		my $ID = substr($msg, 2, 4);
