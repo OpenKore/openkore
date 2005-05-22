@@ -248,6 +248,15 @@ Checks whether I<name> is on our screen.
 
 Returns: 1 (true), 0 (false)
 
+=item C<checkNPCTalk(message)>
+
+Checks wheter an NPC sent the message specified by I<message> which is
+a regexp.
+
+Example: C<checkNPCTalk("^Trigger Message$")>
+
+Returns: 1 (true), 0 (false)
+
 =item C<checkPM(pmline, r_hash)>
 
 Checks whether a PM was received. I<pmline> has the following syntax:
@@ -257,6 +266,18 @@ function sets the variable I<lastPMnick> which can be accessed either
 via C<getVar("I<variable>")> or directly with $varStack{variable}.
 
 Example: C<checkPM("/^my trigger message$/,Tom Jones", $arg)>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkPubM(publine, r_hash)>
+
+Checks whether a public chat message was received. I<publine> has the
+following syntax: "/trigger message or regexp/,distance", I<r_hash> is
+a reference to a hash containing I<pubMsgID>, I<pubMsgUser> and I<pubMsg>.
+This function sets the variable I<lastPubNick> which can be accessed
+either via C<getVar("I<variable>")> or directly with $varStack{variable}.
+
+Example: C<checkPubM("/^my trigger message$/,5", $arg)>
 
 Returns: 1 (true), 0 (false)
 
@@ -313,7 +334,8 @@ Returns: 1 (true), 0 (false)
 
 Checks whether AI is idle.
 
-Returns: 1 if AI is "macro" or "deal", else 0
+Returns: 1 if AI is either "macro" or "deal" or $automacro{overrideAI}
+is set, else 0
 
 =item C<findMacroID(name)>
 
