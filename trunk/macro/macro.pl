@@ -55,7 +55,8 @@ my $hooks = Plugins::addHooks(
             ['is_casting', \&automacroCheck, undef],
             ['packet_skilluse', \&automacroCheck, undef],
             ['AI_pre', \&automacroCheck, undef],
-            ['packet_privMsg', \&automacroCheck, undef]
+            ['packet_privMsg', \&automacroCheck, undef],
+            ['packet_pubMsg', \&automacroCheck, undef]
 );
 
 my $file = "$Settings::control_folder/macros.txt";
@@ -82,7 +83,8 @@ sub Reload {
 # adapted config file parser
 sub parseMacroFile {
   my ($file, $r_hash) = @_;
-  %{$r_hash} = ();
+  undef %{$r_hash};
+  
   my ($key, $value, $inBlock, $commentBlock, %blocks, $mblock);
   open FILE, "< $file";
   foreach (<FILE>) {
@@ -114,7 +116,7 @@ sub parseMacroFile {
         ($key, $value) = $_ =~ /^(.*?) (.*)/;
         next unless $key;
         # multiple triggers allowed for:
-        if ($key =~ /^(inventory|storage|cart|shop|var|status|location)$/) {
+        if ($key =~ /^(inventory|storage|cart|shop|var|status|location|set)$/) {
           my $seq = 0;
           while (exists $r_hash->{"${inBlock}_${key}".$seq}) {$seq++};
           $key = "${inBlock}_${key}".$seq;
@@ -269,10 +271,7 @@ sub runMacro {
   else {
     @macroQueue = loadMacro($macroID);
     if ($times > 1) {
-      for (my $t = 1; $t < $times; $t++) {
-        my @tmparr = loadMacro($macroID);
-        @macroQueue = (@tmparr, @macroQueue);
-      };
+      for (my $t = 1; $t < $times; $t++) {@macroQueue = (loadMacro($macroID), @macroQueue)};
     };
     debug "macro $arg selected.\n";
     AI::queue('macro');
@@ -288,7 +287,7 @@ sub loadMacro {
     my $command = $macros{"macro_".$macroID."_".$act};
     if ($command eq '@return') {
       my $pos = calcPosition($char);
-      $command = sprintf("move %d %d %s", $pos->{x}, $pos->{y}, $field{name});
+      $command = "move $pos->{x} $pos->{y} $field{name}";
     };
     push @tmparray, $command;
     $act++;
@@ -517,6 +516,11 @@ sub automacroCheck {
         next if (!checkPM($macros{$am."_pm"}, $args))
       } else {next};
     };
+    if ($macros{$am."_pubm"}) {
+      if ($trigger eq 'packet_pubMsg') {
+        next if (!checkPubM($macros{$am."_pubm"}, $args))
+      } else {next};
+    };
     next if ($macros{$am."_map"} && $macros{$am."_map"} ne $field{name});
     my $seq = 0; while (exists $macros{$am."_var".$seq}) {
       next CHKAM unless checkVar($macros{$am."_var".$seq++});
@@ -562,8 +566,8 @@ sub automacroCheck {
       warning "automacro $macros{$am}: call not defined.\n";
     };
     if ($macros{$am."_run-once"} == 1) {push @runonce, $macros{$am}};
-    if ($macros{$am."_set"}) {
-       my ($var, $val) = split(/ /, $macros{$am."_set"});
+    $seq = 0; while (exists $macros{$am."_set".$seq}) {
+       my ($var, $val) = split(/ /, $macros{$am."_set".$seq++});
        setVar($var, $val);
     };
     $automacro{call} = $macros{$am."_call"} if (defined $macros{$am."_call"});
@@ -792,8 +796,25 @@ sub checkPM {
       if ($arg->{privMsgUser} =~ $tfld[$i]) {$auth = 1; last};
     };
   };
-  setVar("lastPMnick", $arg->{privMsgUser});
-  if ($auth && $arg->{privMsg} =~ /$tPM/) {return 1};
+  if ($auth && $arg->{privMsg} =~ /$tPM/) {
+    setVar("lastPMnick", $arg->{privMsgUser});
+    return 1;
+  };
+  return 0;
+};
+
+# checks for public message ###############################
+# pubm /whatever you like or regexp/,distance
+sub checkPubM {
+  my ($tPM, $distance) = $_[0] =~ /\/(.*)\/,?(.*)/;
+  if (!defined $distance) {$distance = 15};
+  my $arg = $_[1];
+  my $mypos = calcPosition($char);
+  my $pos = calcPosition($::players{$arg->{pubID}});
+  if ($arg->{pubMsg} =~ /$tPM/ && distance($mypos, $pos) < $distance) {
+    setVar("lastPubNick", $arg->{pubMsgUser});
+    return 1;
+  };
   return 0;
 };
 
