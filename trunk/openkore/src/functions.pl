@@ -9864,22 +9864,9 @@ sub attack {
 		message "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
 	}
 
-
 	$startedattack = 1;
-	if ($config{"monsterCount"}) {	
-		my $i = 0;
-		while (exists $config{"monsterCount_mon_$i"}) {
-			if (!$config{"monsterCount_mon_$i"}) {
-				$i++;
-				next;
-			}
 
-			if ($config{"monsterCount_mon_$i"} eq $monsters{$ID}{'name'}) {
-				$monsters_killed[$i] = $monsters_killed[$i] + 1;
-			}
-			$i++;
-		}
-	}
+	Plugins::callHook('attack_start', {ID => $ID});
 
 	#Mod Start
 	AUTOEQUIP: {
