@@ -443,6 +443,7 @@ sub createSplitterContent {
 	$chatLog->addColor("pm", 142, 120, 0);
 	$chatLog->addColor("p", 164, 0, 143);
 	$chatLog->addColor("g", 0, 177, 108);
+	$chatLog->addColor("warning", 214, 93, 0);
 
 
 	## Parallel to the notebook is another sub-splitter
@@ -790,6 +791,7 @@ sub onChatLogToggle {
 		$chatLog->addColor("pm", 142, 120, 0);
 		$chatLog->addColor("p", 164, 0, 143);
 		$chatLog->addColor("g", 0, 177, 108);
+		$chatLog->addColor("warning", 214, 93, 0);
 		$page->set($chatLog);
 
 	} else {
