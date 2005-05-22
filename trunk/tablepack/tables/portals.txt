@@ -917,6 +917,9 @@ orcsdun02 21 188 orcsdun01 183 8
 orcsdun02 180 15 in_orcs01 108 114
 pay_arche 36 131 pay_dun00 21 186
 pay_arche 81 17 payon 228 329
+pay_arche 145 165 payon_in02 64 56
+pay_arche 71 156 payon_in02 82 45
+pay_arche 92 170 payon_in02 50 4
 pay_dun00 21 186 pay_arche 36 131
 pay_dun00 184 33 pay_dun01 15 33
 pay_dun01 15 33 pay_dun00 184 33
