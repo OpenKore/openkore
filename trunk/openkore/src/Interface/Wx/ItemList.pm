@@ -94,7 +94,7 @@ sub OnGetItemText {
 	if ($ID) {
 		my $f;
 
-		if (!$objects && ref($objects) eq 'HASH' && $objects->{$ID} && ref($objects->{$ID}) eq 'HASH') {
+		if ($objects && ref($objects) eq 'HASH' && $objects->{$ID} && ref($objects->{$ID}) eq 'HASH') {
 			return $self->{objects}{$ID}{name};
 
 		} else {
@@ -109,6 +109,7 @@ sub OnGetItemText {
 				print $f "\n--------------------------\n\n";
 				close $f;
 				Log::warning("Internal error detected. Please submit a bug report and attach the file $file.\n");
+				$::interface->{chatLog}->add("Internal error detected. Please submit a bug report and attach the file $file.\n", "warning");
 			}
 		}
 	}
