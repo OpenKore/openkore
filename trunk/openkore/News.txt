@@ -26,6 +26,8 @@ New features:
 - "Player Exists:" and "Player Appeared:" messages moved to domain
   parseMsg_presence/player so you can put it in beepDomains.
 - Server disconnections are now immediately detected.
+- New command "talknpc <x> <y> <sequence>" for sending a sequence of
+  commands to the NPC at <x> <y>. Useful in macros.
 
 New commands:
 - storage log
