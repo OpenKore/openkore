@@ -108,6 +108,7 @@ sub initHandlers {
 	stand		=> \&cmdStand,
 	stat_add	=> \&cmdStatAdd,
 	switchconf	=> \&cmdSwitchConf,
+	talknpc	=> \&cmdTalkNPC,
 	tank		=> \&cmdTank,
 	testshop	=> \&cmdTestShop,
 	timeout		=> \&cmdTimeout,
@@ -178,6 +179,7 @@ sub initDescriptions {
 	stand		=> 'Stand up.',
 	stat_add	=> 'Add status point.',
 	switchconf	=> 'Switch configuration file.',
+	talknpc	=> 'Send a sequence of responses to an NPC.',
 	tank		=> 'Tank for a player.',
 	testshop	=> 'Show what your vending shop would well.',
 	timeout		=> 'Set a timeout.',
@@ -1894,6 +1896,20 @@ sub cmdSwitchConf {
 		switchConfigFile($filename);
 		message "Switched to \"$filename\"\n", "system";
 	}
+}
+
+sub cmdTalkNPC {
+	my (undef, $args) = @_;
+
+	my ($x, $y, $sequence) = $args =~ /^(\d+) (\d+) (.+)$/;
+	unless (defined $x) {
+		error "Syntax Error in function 'talknpc' (Talk to an NPC)\n".
+			"Usage: talknpc <x> <y> <sequence>\n";
+		return;
+	}
+
+	message "Talking to NPC at ($x, $y) using sequence: $sequence\n";
+	main::ai_talkNPC($x, $y, $sequence);
 }
 
 sub cmdTank {
