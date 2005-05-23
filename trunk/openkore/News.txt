@@ -69,10 +69,10 @@ Internal:
   control/sys.txt
 - Most modules are now autoloadable (see perldoc SelfLoader).
 
-Credits: - Damokles: case sensitivity fix, avoidGM_namePattern. -
-kunjandad: friend list packet support. - Crypticode: 'ai on'/'ai off'
-commands; item name support in 'uneq'
-  command.
+Credits:
+- Damokles: case sensitivity fix, avoidGM_namePattern.
+- kunjandad: friend list packet support.
+- Crypticode: 'ai on'/'ai off' commands; item name support in 'uneq' command.
 
 
 ==================
