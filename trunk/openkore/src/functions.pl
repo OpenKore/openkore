@@ -6244,7 +6244,8 @@ sub parseMsg {
 				$monsters_old{$ID}{'dead'} = 1;
 
 				if ($config{itemsTakeAuto_party} &&
-				    $monsters{$ID}{dmgFromParty} > 0) {
+				    ($monsters{$ID}{dmgFromParty} > 0 ||
+				     $monsters{$ID}{dmgFromYou} > 0)) {
 					AI::clear("items_take");
 					ai_items_take($monsters{$ID}{pos}{x}, $monsters{$ID}{pos}{y},
 						$monsters{$ID}{pos_to}{x}, $monsters{$ID}{pos_to}{y});
