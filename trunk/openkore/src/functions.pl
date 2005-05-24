@@ -2031,12 +2031,13 @@ sub AI {
 
 		} elsif ($checkUpdate{stage} eq 'Request') {
 			my $filename = "/cgi-bin/leastVersion.pl";
-		if ($config{"master"}) {
-				my $stats = $config{"master"};
+			my $stats;
+			if ($config{"master"}) {
+				$stats = $config{"master"};
 				$stats =~ s/\//./g;
 				$stats =~ s/ - /./g;
 			} else {
-				my $stats = "unknown";
+				$stats = "unknown";
 			}
 			$checkUpdate{sock}->send("GET $filename?$stats HTTP/1.1\r\n", 0);
 			$checkUpdate{sock}->send("Host: openkore.sourceforge.net\r\n\r\n", 0);
