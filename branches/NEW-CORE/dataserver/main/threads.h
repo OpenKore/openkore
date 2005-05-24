@@ -20,14 +20,27 @@
 #ifndef _THREADS_H_
 #define _THREADS_H_
 
-typedef void (*ThreadCallback) (void *data);
-
-int run_in_thread (ThreadCallback callback, void *data);
 
 #ifdef WIN32
-	#include "threads-win32.h"
 #else
-	#include "threads-posix.h"
+	#include <pthread.h>
+
+	typedef pthread_t Thread;
+	typedef pthread_mutex_t Mutex;
+
+	#define LOCK(mutex) pthread_mutex_lock (mutex)
+	#define UNLOCK(mutex) pthread_mutex_unlock (mutex)
+	#define TRYLOCK(mutex) pthread_mutex_trylock (mutex) == 0
 #endif
+
+
+typedef void (*ThreadCallback) (void *data);
+
+Thread *thread_new  (ThreadCallback callback, void *data, int detachable);
+void    thread_join (Thread *thread);
+
+Mutex *mutex_new  ();
+void   mutex_free (Mutex *mutex);
+
 
 #endif /* _THREADS_H_ */
