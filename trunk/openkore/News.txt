@@ -28,6 +28,8 @@ New features:
 - Server disconnections are now immediately detected.
 - New command "talknpc <x> <y> <sequence>" for sending a sequence of
   commands to the NPC at <x> <y>. Useful in macros.
+- Messages about other players being muted moved to parseMsg_statuslook
+  domain with verbosity 2.
 
 New commands:
 - storage log

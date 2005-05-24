@@ -9016,9 +9016,9 @@ sub parseMsg {
 		my ($ID, $duration) = unpack "x2 a4 x2 L1", $msg;
 		if ($duration > 0) {
 			$duration = 0xFFFFFFFF - $duration + 1;
-			message getActorName($ID) . " is muted for $duration minutes\n";
+			message getActorName($ID) . " is muted for $duration minutes\n", "parseMsg_statuslook", 2;
 		} else {
-			message getActorName($ID) . " is no longer muted\n";
+			message getActorName($ID) . " is no longer muted\n", "parseMsg_statuslook", 2;
 		}
 
 	} elsif ($switch eq "01AC") {
