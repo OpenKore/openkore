@@ -2034,8 +2034,7 @@ sub AI {
 			my $stats;
 			if ($config{"master"}) {
 				$stats = $config{"master"};
-				$stats =~ s/\//./g;
-				$stats =~ s/ - /./g;
+				$stats =~ s/(\/| - |\(|\)|: | )/./g;
 			} else {
 				$stats = "unknown";
 			}
