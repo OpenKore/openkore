@@ -16,19 +16,59 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include <pthread.h>
+#include <stdlib.h>
 #include "threads.h"
 
-int
-run_in_thread (ThreadCallback callback, void *data)
+
+Thread *
+thread_new (ThreadCallback callback, void *data, int detachable)
 {
-	pthread_t thread;
-	pthread_attr_t attr;
+	pthread_t *thread;
+	pthread_attr_t attr, *p_attr = NULL;
 	int ret;
 
-	pthread_attr_init (&attr);
-	pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_DETACHED);
-	ret = pthread_create (&thread, NULL, (void * (*) (void *)) callback, data);
-	pthread_attr_destroy (&attr);
-	return ret == 0;
+	thread = malloc (sizeof (pthread_t));
+	if (detachable) {
+		pthread_attr_init (&attr);
+		pthread_attr_setdetachstate (&attr, PTHREAD_CREATE_DETACHED);
+		p_attr = &attr;
+	}
+	ret = pthread_create (thread, p_attr, (void * (*) (void *)) callback, data);
+	if (detachable)
+		pthread_attr_destroy (&attr);
+
+	if (ret != 0) {
+		free (thread);
+		return NULL;
+	} else {
+		return (Thread *) thread;
+	}
+}
+
+void
+thread_join (Thread *thread)
+{
+	pthread_join (*thread, NULL);
+	free (thread);
+}
+
+Mutex *
+mutex_new ()
+{
+	pthread_mutex_t *mutex;
+
+	mutex = malloc (sizeof (pthread_mutex_t));
+	if (pthread_mutex_init (mutex, NULL) == 0)
+		return mutex;
+	else {
+		free (mutex);
+		return NULL;
+	}
+}
+
+void
+mutex_free (Mutex *mutex)
+{
+	pthread_mutex_destroy ((pthread_mutex_t *) mutex);
+	free (mutex);
 }

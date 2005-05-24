@@ -34,12 +34,6 @@
 #include "threads.h"
 
 
-typedef struct {
-	int fd;
-	NewClientCallback callback;
-} ClientThreadData;
-
-
 #define LOCKFILE "/tmp/kore-dataserver.lock"
 
 
@@ -127,23 +121,6 @@ unix_server_new (char *filename, NewClientCallback callback)
 }
 
 
-static void
-client_thread (ClientThreadData *data)
-{
-	Client *client;
-
-	/* Create client structure. */
-	client = malloc (sizeof (Client));
-	client->fd = data->fd;
-	client_init (client);
-	data->callback (client);
-
-	close (client->fd);
-	free (client);
-	free (data);
-}
-
-
 void
 unix_server_main_loop (UnixServer *server)
 {
@@ -152,12 +129,12 @@ unix_server_main_loop (UnixServer *server)
 		struct sockaddr_un addr;
 		socklen_t addr_len;
 		int fd, tmp;
-		ClientThreadData *data;
+		Client *client;
 
 		/* Check whether there are incoming connections. */
 		ufds.fd = server->fd;
 		ufds.events = POLLIN;
-		tmp = poll (&ufds, 1, 20);
+		tmp = poll (&ufds, 1, 500);
 		if (tmp == -1) {
 			/* Error. But it's OK if the system call was interrupted
 			 * (by Ctrl-C or whatever). */
@@ -184,15 +161,11 @@ unix_server_main_loop (UnixServer *server)
 			return;
 		}
 
-		/* Handle client connection stuff in a new thread. */
-		data = malloc (sizeof (ClientThreadData));
-		data->fd = fd;
-		data->callback = server->callback;
-		if (!run_in_thread ((ThreadCallback) client_thread, data)) {
-			/* Failed to create a thread. */
-			close (fd);
-			free (data);
-		}
+		/* Create a Client structure and pass it to the callback. */
+		client = malloc (sizeof (Client));
+		client->fd = fd;
+		client_init (client);
+		server->callback (client);
 	}
 }
 

@@ -50,8 +50,15 @@ LList *llist_new    (int itemsize);
  */
 void  *llist_append (LList *list);
 
+/* Like llist_append(), but uses existing memory for the item.
+ * item must be at least itemsize bytes big. */
+void llist_append_existing (LList *list, void *item);
+
+/* Remove an item. */
+void llist_remove (LList *list, LListItem *item);
+
 /* Free the linked list, including items. If you have any pointers
  * in your items, then you must free them before calling this function. */
-void   llist_free   (LList *list);
+void llist_free   (LList *list);
 
 #endif /* _LINKED_LIST_H_ */
