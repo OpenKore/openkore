@@ -62,8 +62,6 @@ static UnixServer *server;
 Options options;
 
 
-#define THREADS_MAX 2
-
 typedef struct {
 	Mutex *lock;
 	Thread *thread;
@@ -75,7 +73,7 @@ typedef struct {
 	LList *clients;
 } ThreadData;
 
-ThreadData threads[THREADS_MAX];
+ThreadData *threads;
 
 
 /* Client connections are handled like this:
@@ -283,7 +281,8 @@ client_thread_callback (void *pointer)
 				if (ufds != NULL)
 					free (ufds);
 
-				for (client = (Client *) thread_data->clients->first; client != NULL; client = (Client *) client->parent.next) {
+				foreach_llist (thread_data->clients, client) {
+//				for (client = (Client *) thread_data->clients->first; client != NULL; client = (Client *) client->parent.next) {
 					free (client->priv);
 					client_close (client);
 				}
@@ -394,7 +393,7 @@ on_new_client (Client *client)
 	smallest = 0;
 	found = -1;
 
-	for (i = 0; i < THREADS_MAX; i++) {
+	for (i = 0; i < options.threads; i++) {
 		int nclients;
 
 		LOCK (threads[i].lock);
@@ -450,7 +449,7 @@ unix_start ()
 	unix_server_main_loop (server);
 
 	/* Main loop exited; tell all threads to quit. */
-	for (i = 0; i < THREADS_MAX; i++) {
+	for (i = 0; i < options.threads; i++) {
 		LOCK (threads[i].lock);
 		threads[i].quit = 1;
 		UNLOCK (threads[i].lock);
@@ -463,10 +462,13 @@ unix_start ()
 static void
 usage (int retval)
 {
-	printf ("Usage: dataserver [ARGS]\n\n");
-	printf ("  --tables DIR     Specify the tables folder. Default: working directory\n");
-	printf ("  --silent         Don't output any messages unless absolutely necessary.\n");
-	printf ("  --debug          Enable debugging messages.\n");
+	#define USAGE "Usage: dataserver [ARGS]\n\n" \
+			"  --tables DIR     Specify the tables folder. Default: working directory\n" \
+			"  --threads NUM    Specify the number of threads for handling client\n" \
+			"                   connections. (default: 5)\n"		\
+			"  --silent         Don't output any messages unless absolutely necessary.\n" \
+			"  --debug          Enable debugging messages.\n"
+	printf ("%s", USAGE);
 	exit (retval);
 }
 
@@ -508,6 +510,8 @@ main (int argc, char *argv[])
 	/* Parse arguments. */
 	memset (&options, 0, sizeof (options));
 	options.tables = ".";
+	options.threads = 5;
+
 	for (i = 1; i < argc; i++) {
 		if (strcmp (argv[i], "--help") == 0) {
 			usage (0);
@@ -518,6 +522,18 @@ main (int argc, char *argv[])
 				usage (1);
 			}
 			options.tables = argv[i + 1];
+			i++;
+
+		} else if (strcmp (argv[i], "--threads") == 0) {
+			if (argv[i + 1] == NULL) {
+				error ("--threads requires a number.\n");
+				usage (1);
+			}
+			options.threads = atoi (argv[i + 1]);
+			if (options.threads <= 0) {
+				error ("The number of threads must be bigger than 0.\n");
+				usage (1);
+			}
 			i++;
 
 		} else if (strcmp (argv[i], "--silent") == 0) {
@@ -542,7 +558,8 @@ main (int argc, char *argv[])
 	hashFiles[6] = load_hash_file ("maps.txt",               rolut_load);
 
 	/* Initialize threads for handling client connections. */
-	for (i = 0; i < THREADS_MAX; i++) {
+	threads = malloc (options.threads * sizeof (ThreadData));
+	for (i = 0; i < options.threads; i++) {
 		threads[i].lock = mutex_new ();
 		threads[i].ID = i;
 		threads[i].new_client = NULL;
@@ -561,10 +578,11 @@ main (int argc, char *argv[])
 	ret = unix_start ();
 
 	/* Free resources. */
-	for (i = 0; i < THREADS_MAX; i++) {
+	for (i = 0; i < options.threads; i++) {
 		thread_join (threads[i].thread);
 		mutex_free (threads[i].lock);
 	}
+	free (threads);
 
 	for (i = 0; i < NUM_HASH_FILES; i++)
 		string_hash_free (hashFiles[i]);
