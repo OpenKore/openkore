@@ -6345,7 +6345,10 @@ sub parseMsg {
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
 
-		if ($type == 1) {
+
+		if ($type == 0) {
+			error("Server shutting down\n", "connection");
+		} elsif ($type == 1) {
 			error("Error: Server is closed\n", "connection");
 		} elsif ($type == 2) {
 			if ($config{'dcOnDualLogin'} == 1) {

@@ -30,6 +30,7 @@ New features:
   commands to the NPC at <x> <y>. Useful in macros.
 - Messages about other players being muted moved to parseMsg_statuslook
   domain with verbosity 2.
+- "Unknown error 0" message changed to "Server shutting down".
 
 New commands:
 - storage log
