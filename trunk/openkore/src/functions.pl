@@ -5559,7 +5559,7 @@ sub parseMsg {
 		Network::disconnect(\$remote_socket);
 		if ($type == 0) {
 			error("Account name doesn't exist\n", "connection");
-			if (!$xkore && !$config{ignoreInvalidLogin}) {
+			if (!$xkore && !$config{'ignoreInvalidLogin'}) {
 				message("Enter Username Again: ", "input");
 				$msg = $interface->getInput(-1);
 				configModify('username', $msg, 1);
@@ -5568,7 +5568,7 @@ sub parseMsg {
 			}
 		} elsif ($type == 1) {
 			error("Password Error\n", "connection");
-			if (!$xkore) {
+			if (!$xkore && !$config{'ignoreInvalidLogin'}) {
 				message("Enter Password Again: ", "input");
 				# Set -9 on getInput timeout field mean this is password field
 				$msg = $interface->getInput(-9);
