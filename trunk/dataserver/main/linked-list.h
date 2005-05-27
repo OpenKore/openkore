@@ -22,7 +22,7 @@
 /*******************************************************************
  * A very basic singly-linked list implementation, designed for
  * minimal memory usage. Instead of using a pointer which points
- * to the list data, the list data lies at the end of the LList
+ * to the list data, the list data lies at the end of the LListItem
  * structure.
  *******************************************************************/
 
@@ -46,12 +46,24 @@ typedef struct {
 LList *llist_new    (int itemsize);
 
 /* Append a new item to the linked list. Returns newly-allocated memory,
- * which is sizeof(LListItem) + itemsize bytes long.
+ * which is itemsize bytes long.
  */
 void  *llist_append (LList *list);
 
+/* Like llist_append(), but uses existing memory for the item.
+ * item must be at least itemsize bytes big. */
+void llist_append_existing (LList *list, void *item);
+
+/* Remove an item. Free the memory used by item. You must free pointers
+ * inside item manually before calling this function. */
+void llist_remove (LList *list, LListItem *item);
+
 /* Free the linked list, including items. If you have any pointers
  * in your items, then you must free them before calling this function. */
-void   llist_free   (LList *list);
+void llist_free   (LList *list);
+
+
+#define foreach_llist(list, item) for ((LListItem *) item = ((LList *) list)->first; item != NULL; (LListItem *) item = ((LListItem *) item)->next)
+
 
 #endif /* _LINKED_LIST_H_ */
