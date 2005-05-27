@@ -64,6 +64,9 @@ New config options:
 - dcOnZeny (number)
   Disconnect automatically when your Zeny equals or lower than the
   specified number. Useful if you use buyAuto or the auto buy plugin.
+- teleportAuto_atkCount (number)
+  Teleport away if Kore can't kill the monster in the specified number
+  of attacks.
 
 New control files:
 - control/sys.txt

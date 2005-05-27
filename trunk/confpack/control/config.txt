@@ -132,7 +132,7 @@ runFromTarget 0
 runFromTarget_dist 6
 
 saveMap
-saveMap_warpToBuyOrSell 0
+saveMap_warpToBuyOrSell 1
 
 shopAuto_open 0
 shop_random 0
@@ -168,6 +168,7 @@ teleportAuto_deadly 1
 teleportAuto_useSkill 3
 teleportAuto_emptyName 1
 teleportAuto_allPlayers 0
+teleportAuto_atkCount 0
 teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
 teleportAuto_dropTarget 0
@@ -187,7 +188,7 @@ verboseDomains
 beepDomains
 beepDomains_notInTown
 
-logChat 1
+logChat 0
 logPrivateChat 1
 logPartyChat 1
 logGuildChat 1
@@ -202,7 +203,7 @@ intervalMapDrt 1
 
 ignoreAll 0
 itemHistory 0
-autoTalkCont 0
+autoTalkCont 1
 noAutoSkill 0
 portalRecord 2
 missDamage 0
@@ -254,55 +255,6 @@ attackComboSlot {
 }
 
 
-autoSwitch_default_rightHand
-autoSwitch_default_leftHand
-autoSwitch_default_arrow
-
-# NOTE: In the case of two handed weapons, or no Shield,
-#       duplicate the weapon name for 'rightHand'
-# To attack with bare hands, specify "[NONE]" (without the quotes) for rightHand
-
-autoSwitch {
-	rightHand
-	leftHand
-	arrow
-	distance
-	useWeapon
-}
-
-buyAuto {
-	npc
-	standpoint
-	distance 5
-	minAmount 2
-	maxAmount 3
-}
-
-equipAuto {
-	def
-	monsters
-	skills
-	weight 0
-	whileSitting 0
-	onTeleport 0
-	hp
-	sp
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	aggressives
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout 0
-	disabled 0
-	inInventory_name
-	inInventory_qty
-}
-
 useSelf_skill {
 	lvl 10
 	maxCastTime 0
@@ -329,26 +281,6 @@ useSelf_skill {
 
 useSelf_skill_smartHeal 1
 
-useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
-	hp <= 50
-	sp
-	onAction
-	whenStatusActive
-	whenStatusInactive
-	whenFollowing
-	spirit
-	aggressives
-	monsters
-	notMonsters
-	stopWhenHit 0
-	inLockOnly 0
-	notWhileSitting 0
-	notInTown 0
-	timeout
-	disabled 0
-	inInventory_name
-	inInventory_qty
-}
 
 partySkill {
 	lvl 10
@@ -385,7 +317,78 @@ partySkill {
 }
 
 
+autoSwitch_default_rightHand
+autoSwitch_default_leftHand
+autoSwitch_default_arrow
+
+# NOTE: In the case of two handed weapons, or no Shield,
+#       duplicate the weapon name for 'rightHand'
+# To attack with bare hands, specify "[NONE]" (without the quotes) for rightHand
+
+autoSwitch {
+	rightHand
+	leftHand
+	arrow
+	distance
+	useWeapon
+}
+
+equipAuto {
+	def
+	monsters
+	skills
+	weight 0
+	whileSitting 0
+	onTeleport 0
+	hp
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
+
+useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
+	hp <= 50
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	monsters
+	notMonsters
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
+
+
 ######## Autostorage/autosell ########
+
+buyAuto {
+	npc
+	standpoint
+	distance 5
+	minAmount 2
+	maxAmount 3
+}
 
 sellAuto 0
 sellAuto_npc
