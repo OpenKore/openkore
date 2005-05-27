@@ -5512,12 +5512,12 @@ sub parseMsg {
 		$accountSex = unpack("C1",substr($msg, 46, 1));
 		$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
 		message(swrite(
-			"---------Account Info----------", [undef],
-			"Account ID: @<<<<<<<<<<<<<<<<<<", [getHex($accountID)],
-			"Sex:        @<<<<<<<<<<<<<<<<<<", [$sex_lut{$accountSex}],
-			"Session ID: @<<<<<<<<<<<<<<<<<<", [getHex($sessionID)],
-			"            @<<<<<<<<<<<<<<<<<<", [getHex($sessionID2)],
-			"-------------------------------", [undef],
+			"---------Account Info-------------", [undef],
+			"Account ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("L1",$accountID), getHex($accountID)],
+			"Sex:        @<<<<<<<<<<<<<<<<<<<<<", [$sex_lut{$accountSex}],
+			"Session ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("L1",$sessionID), getHex($sessionID)],
+			"            @<<<<<<<<< @<<<<<<<<<<", [unpack("L1",$sessionID2), getHex($sessionID2)],
+			"----------------------------------", [undef],
 		), "connection");
 
 		$num = 0;

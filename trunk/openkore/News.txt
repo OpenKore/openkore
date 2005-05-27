@@ -34,6 +34,7 @@ New features:
 - The "ignoreInvalidLogin" config option now also ignores incorrect password.
 - Messages about other players parseMsg/hairColor and parseMsg/job moved
   to verbosity 2.
+- Your account ID is now shown in readable base 10 form on login.
 
 New commands:
 - storage log
