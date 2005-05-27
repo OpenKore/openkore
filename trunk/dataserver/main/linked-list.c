@@ -37,21 +37,54 @@ llist_append (LList *list)
 	LListItem *item;
 
 	item = malloc (list->itemsize);
-	item->next = NULL;
+	llist_append_existing (list, item);
+	return item;
+}
+
+void
+llist_append_existing (LList *list, void *item)
+{
+	LListItem *litem;
+
+	litem = (LListItem *) item;
+	litem->next = NULL;
 
 	if (list->len == 0) {
 		/* First item in the list. */
-		list->first = item;
-		list->last = item;
+		list->first = litem;
+		list->last = litem;
 	} else {
 		/* Link the last item to this item. */
-		list->last->next = item;
-		list->last = item;
+		if (list->last != NULL)
+			list->last->next = litem;
+		list->last = litem;
 	}
 
 	list->len++;
-	return item;
+}
 
+void
+llist_remove (LList *list, LListItem *item)
+{
+	LListItem *i, *prev;
+
+	prev = NULL;
+	for (i = list->first; i != NULL; prev = i, i = i->next) {
+		if (i != item)
+			continue;
+
+		if (item == list->first)
+			list->first = item->next;
+		else
+			prev->next = item->next;
+
+		if (item == list->last)
+			list->last = prev;
+
+		list->len--;
+		break;
+	}
+	free (item);
 }
 
 void

@@ -24,6 +24,7 @@ typedef struct {
 	char *tables;
 	int silent;
 	int debug;
+	int threads;
 } Options;
 
 extern Options options;

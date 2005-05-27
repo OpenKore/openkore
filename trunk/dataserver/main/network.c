@@ -1,5 +1,9 @@
-#include <sys/types.h>
-#include <sys/socket.h>
+#ifndef WIN32
+	#include <sys/types.h>
+	#include <sys/socket.h>
+	#include <unistd.h>
+#endif /* WIN32 */
+
 #include "client.h"
 
 #ifndef MSG_NOSIGNAL
@@ -30,4 +34,14 @@ int
 client_send (Client *client, const void *data, int len)
 {
 	return send (client->fd, data, len, MSG_NOSIGNAL) != -1;
+}
+
+void
+client_close (Client *client)
+{
+#ifdef WIN32
+	closesocket (client->fd);
+#else
+	close (client->fd);
+#endif
 }

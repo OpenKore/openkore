@@ -190,3 +190,30 @@ rolut_load (const char *filename)
 	fclose (f);
 	return hash;
 }
+
+#if 0
+
+typedef struct {
+	char *map;
+	int x, y;
+} SourcePortal;
+
+typedef struct {
+	char *map;
+	int x, y;
+	int cost;
+	char *steps;
+} DestPortal;
+
+typedef struct {
+	char *map;
+	int x, y;
+	SourcePortal source;
+	DestPortal dest[];
+} MapList;
+
+typedef struct {
+	MapList maps[];
+} Portals;
+
+#endif

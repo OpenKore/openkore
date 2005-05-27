@@ -21,6 +21,12 @@
 #ifndef _CLIENT_H_
 #define _CLIENT_H_
 
+#ifdef WIN32
+	#include <windows.h>
+	#include <winsock2.h>
+#endif
+#include "linked-list.h"
+
 
 /***********************
  * Server client type
@@ -30,7 +36,12 @@ typedef struct _Client Client;
 typedef struct _PrivateData PrivateData;
 
 struct _Client {
-	int fd;
+	LListItem parent;
+	#ifdef WIN32
+		SOCKET fd;
+	#else
+		int fd;
+	#endif
 	PrivateData *priv;
 };
 
@@ -42,11 +53,13 @@ void client_init (Client *client);
 
 /* Receive data from a client.
  * Returns: The number of bytes received, or -1 on error. */
-int client_recv (Client *client, void *buf, int len);
+int  client_recv (Client *client, void *buf, int len);
 
 /* Send data to a client.
  * Returns: 0 on error, 1 on success. */
-int client_send (Client *client, const void *data, int len);
+int  client_send (Client *client, const void *data, int len);
+
+void client_close (Client *client);
 
 
 #endif /* _CLIENT_H_ */
