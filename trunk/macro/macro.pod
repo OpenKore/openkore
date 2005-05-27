@@ -242,6 +242,14 @@ Example: C<checkPercent("< 30", "hp")>
 
 Returns: 1 (true), 0 (false)
 
+=item C<checkSpirits(condition)>
+
+Checks whether spirits match I<condition>.
+
+Example: C<checkSpirits("> 3")>
+
+Returns: 1 (true), 0 (false)
+
 =item C<checkPerson(name)>
 
 Checks whether I<name> is on our screen.

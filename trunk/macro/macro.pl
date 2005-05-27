@@ -539,6 +539,7 @@ sub automacroCheck {
     next if ($macros{$am."_class"} && !checkClass($macros{$am."_class"}));
     next if ($macros{$am."_hp"} && !checkPercent($macros{$am."_hp"}, "hp"));
     next if ($macros{$am."_sp"} && !checkPercent($macros{$am."_sp"}, "sp"));
+    next if ($macros{$am."_spirit"} && !checkSpirits($macros{$am."_spirit"}));
     next if ($macros{$am."_weight"} && !checkPercent($macros{$am."_weight"}, "weight"));
     $seq = 0; while (exists $macros{$am."_status".$seq}) {
       next CHKAM unless checkStatus($macros{$am."_status".$seq++});
@@ -599,6 +600,13 @@ sub parseArgs {
   my $arg = shift;
   if ($arg =~ /".*"/) {return $arg =~ /"(.*)" +(.*) +(.*)/}
   else {return split(/ /, $_[0])};
+};
+
+sub match {
+  my ($text, $kw) = @_;
+  if ($kw =~ /^".*"$/)   {if ($text eq $kw) {return 1} else {return 0}};
+  if ($kw =~ /^\/.*\/$/) {if ($text =~ $kw) {return 1} else {return 0}};
+  return 0;
 };
 
 # check for variable #######################################
@@ -783,9 +791,10 @@ sub checkCast {
 };
 
 # checks for private message ##############################
-# pm /whatever you like or regexp/,whoever,whoever else,...
+# pm "trigger message",whoever,whoever else,...
+# pm /regexp/,whoever, whoever else,...
 sub checkPM {
-  my ($tPM, $allowed) = $_[0] =~ /\/(.*)\/(.*)/;
+  my ($tPM, $allowed) = $_[0] =~ /[\/"](.*)[\/"](.*)/;
   my $arg = $_[1];
   my @tfld = split(/,/, $allowed);
   my $auth = 0;
@@ -793,10 +802,10 @@ sub checkPM {
   else {
     for (my $i = 0; $i < @tfld; $i++) {
       next unless $tfld[$i];
-      if ($arg->{privMsgUser} =~ $tfld[$i]) {$auth = 1; last};
+      if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last};
     };
   };
-  if ($auth && $arg->{privMsg} =~ /$tPM/) {
+  if ($auth && match($arg->{privMsg},$tPM)) {
     setVar("lastPMnick", $arg->{privMsgUser});
     return 1;
   };
@@ -804,14 +813,15 @@ sub checkPM {
 };
 
 # checks for public message ###############################
-# pubm /whatever you like or regexp/,distance
+# pm "trigger message",distance
+# pm /regexp/,distance
 sub checkPubM {
-  my ($tPM, $distance) = $_[0] =~ /\/(.*)\/,?(.*)/;
+  my ($tPM, $distance) = $_[0] =~ /[\/"](.*)[\/"],?(.*)/;
   if (!defined $distance) {$distance = 15};
   my $arg = $_[1];
   my $mypos = calcPosition($char);
   my $pos = calcPosition($::players{$arg->{pubID}});
-  if ($arg->{pubMsg} =~ /$tPM/ && distance($mypos, $pos) < $distance) {
+  if (match($arg->{pubMsg},$tPM) && distance($mypos, $pos) < $distance) {
     setVar("lastPubNick", $arg->{pubMsgUser});
     return 1;
   };
@@ -821,7 +831,14 @@ sub checkPubM {
 # checks whether an NPC sent us the specified message (regexp)
 sub checkNPCTalk {
   my $tNPC = shift;
-  return 1 if $::talk{msg} =~ /$tNPC/;
+  return 1 if match($::talk{msg},$tNPC);
+  return 0;
+};
+
+# checks for spirit spheres ###############################
+sub checkSpirits {
+  my ($cond, $amount) = split(/ /, $_[0]);
+  return 1 if cmpr($char->{spirits}, $cond, $amount);
   return 0;
 };
 
