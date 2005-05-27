@@ -22,6 +22,16 @@
 
 
 #ifdef WIN32
+	#include <windows.h>
+
+	typedef struct {
+		HANDLE handle;
+	} Thread;
+	typedef CRITICAL_SECTION Mutex;
+
+	#define LOCK(mutex) EnterCriticalSection (mutex)
+	#define UNLOCK(mutex) LeaveCriticalSection (mutex)
+	#define TRYLOCK(mutex) TryEnterCriticalSection (mutex)
 #else
 	#include <pthread.h>
 

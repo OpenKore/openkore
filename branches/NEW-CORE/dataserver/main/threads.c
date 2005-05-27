@@ -20,9 +20,52 @@
 #include "threads.h"
 
 
+#ifdef WIN32
+
+/* Work around Win32 calling convention problems. */
+static DWORD WINAPI
+win32_thread_start (LPVOID param)
+{
+	void **params = (void **) param;
+	ThreadCallback callback = (ThreadCallback) params[0];
+	void *data = params[1];
+	free (params);
+	callback (data);
+	return 0;
+}
+
+#endif
+
+
 Thread *
 thread_new (ThreadCallback callback, void *data, int detachable)
 {
+#ifdef WIN32
+	HANDLE handle;
+	DWORD threadID;
+	void **param;
+
+	param = malloc (sizeof (void *) * 2);
+	param[0] = callback;
+	param[1] = data;
+	handle = CreateThread (NULL, 0, win32_thread_start, param, 0, &threadID);
+
+	if (handle == NULL) {
+		free (param);
+		return NULL;
+	} else {
+		Thread *thread;
+
+		if (detachable) {
+			CloseHandle (handle);
+			handle = NULL;
+		}
+
+		thread = malloc (sizeof (Thread));
+		thread->handle = handle;
+		return thread;
+	}
+#else
 	pthread_t *thread;
 	pthread_attr_t attr, *p_attr = NULL;
 	int ret;
@@ -43,18 +86,34 @@ thread_new (ThreadCallback callback, void *data, int detachable)
 	} else {
 		return (Thread *) thread;
 	}
+#endif
 }
 
 void
 thread_join (Thread *thread)
 {
+#ifdef WIN32
+	if (thread->handle != NULL) {
+		WaitForSingleObject (thread->handle, INFINITE);
+		CloseHandle (thread->handle);
+	}
+	free (thread);
+#else
 	pthread_join (*thread, NULL);
 	free (thread);
+#endif
 }
 
 Mutex *
 mutex_new ()
 {
+#ifdef WIN32
+	CRITICAL_SECTION *cs;
+
+	cs = malloc (sizeof (CRITICAL_SECTION));
+	InitializeCriticalSection (cs);
+	return (Mutex *) cs;
+#else
 	pthread_mutex_t *mutex;
 
 	mutex = malloc (sizeof (pthread_mutex_t));
@@ -64,11 +123,17 @@ mutex_new ()
 		free (mutex);
 		return NULL;
 	}
+#endif
 }
 
 void
 mutex_free (Mutex *mutex)
 {
+#ifdef WIN32
+	DeleteCriticalSection ((LPCRITICAL_SECTION) mutex);
+	free (mutex);
+#else
 	pthread_mutex_destroy ((pthread_mutex_t *) mutex);
 	free (mutex);
+#endif
 }

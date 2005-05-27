@@ -21,6 +21,10 @@
 #ifndef _CLIENT_H_
 #define _CLIENT_H_
 
+#ifdef WIN32
+	#include <windows.h>
+	#include <winsock2.h>
+#endif
 #include "linked-list.h"
 
 
@@ -33,7 +37,11 @@ typedef struct _PrivateData PrivateData;
 
 struct _Client {
 	LListItem parent;
-	int fd;
+	#ifdef WIN32
+		SOCKET fd;
+	#else
+		int fd;
+	#endif
 	PrivateData *priv;
 };
 
