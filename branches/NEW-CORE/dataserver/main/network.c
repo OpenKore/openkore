@@ -1,6 +1,9 @@
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <unistd.h>
+#ifndef WIN32
+	#include <sys/types.h>
+	#include <sys/socket.h>
+	#include <unistd.h>
+#endif /* WIN32 */
+
 #include "client.h"
 
 #ifndef MSG_NOSIGNAL
@@ -36,5 +39,9 @@ client_send (Client *client, const void *data, int len)
 void
 client_close (Client *client)
 {
+#ifdef WIN32
+	closesocket (client->fd);
+#else
 	close (client->fd);
+#endif
 }
