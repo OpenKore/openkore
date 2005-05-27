@@ -604,8 +604,12 @@ sub parseArgs {
 
 sub match {
   my ($text, $kw) = @_;
-  if ($kw =~ /^".*"$/)   {if ($text eq $kw) {return 1} else {return 0}};
-  if ($kw =~ /^\/.*\/$/) {if ($text =~ $kw) {return 1} else {return 0}};
+  my $match;
+  if ($kw =~ /^".*"$/)   {$match = 0};
+  if ($kw =~ /^\/.*\/$/) {$match = 1};
+  $kw =~ s/^[\/"](.*)[\/"]/\1/g;
+  if ($match = 0 && $text eq $kw)   {return 1};
+  if ($match = 1 && $text =~ /$kw/) {return 1};
   return 0;
 };
 
@@ -794,7 +798,7 @@ sub checkCast {
 # pm "trigger message",whoever,whoever else,...
 # pm /regexp/,whoever, whoever else,...
 sub checkPM {
-  my ($tPM, $allowed) = $_[0] =~ /[\/"](.*)[\/"](.*)/;
+  my ($tPM, $allowed) = $_[0] =~ /([\/"].*?[\/"]),?(.*)/;
   my $arg = $_[1];
   my @tfld = split(/,/, $allowed);
   my $auth = 0;
@@ -816,7 +820,7 @@ sub checkPM {
 # pm "trigger message",distance
 # pm /regexp/,distance
 sub checkPubM {
-  my ($tPM, $distance) = $_[0] =~ /[\/"](.*)[\/"],?(.*)/;
+  my ($tPM, $distance) = $_[0] =~ /([\/"].*?[\/"]),?(.*)/;
   if (!defined $distance) {$distance = 15};
   my $arg = $_[1];
   my $mypos = calcPosition($char);
