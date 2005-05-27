@@ -4790,7 +4790,7 @@ sub AI {
 					shift @{$ai_seq_args[0]{'mapSolution'}};
 				}
 
-			} elsif ( $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"}{'source'}{'ID'} ) {
+			} elsif ( $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"}{'source'} ) {
 				# This is a portal solution
 
 				if ( 2 > distance($char->{pos_to}, $args->{mapSolution}[0]{pos}) ) {
@@ -9512,7 +9512,7 @@ sub ai_mapRoute_searchStep {
 		foreach my $child (keys %{$portals_los{$dest}}) {
 			next unless $portals_los{$dest}{$child};
 			foreach my $subchild (keys %{$portals_lut{$child}{'dest'}}) {
-				my $destID = $portals_lut{$child}{'dest'}{$subchild}{'ID'};
+				my $destID = $subchild;
 				my $mapName = $portals_lut{$child}{'source'}{'map'};
 				#############################################################
 				my $penalty = int($routeWeights{lc($mapName)}) + int(($portals_lut{$child}{'dest'}{$subchild}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});

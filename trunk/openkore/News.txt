@@ -75,6 +75,8 @@ Internal:
 - There's now a %sys (in package Settings) variable for options in
   control/sys.txt
 - Most modules are now autoloadable (see perldoc SelfLoader).
+- Optimizations in the %portals_lut data structure. This saves about
+  200 KB of memory.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.
