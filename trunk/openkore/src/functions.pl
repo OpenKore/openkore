@@ -10414,6 +10414,7 @@ sub updateDamageTables {
 			# You attack monster
 			$monsters{$ID2}{'dmgTo'} += $damage;
 			$monsters{$ID2}{'dmgFromYou'} += $damage;
+			$monsters{$ID2}{'numAtkFromYou'}++;
 			if ($damage <= ($config{missDamage} || 0)) {
 				$monsters{$ID2}{'missedFromYou'}++;
 				debug "Incremented missedFromYou count to $monsters{$ID2}{'missedFromYou'}\n", "attackMonMiss";
@@ -10423,6 +10424,10 @@ sub updateDamageTables {
 			}
 			 if ($config{'teleportAuto_atkMiss'} && $monsters{$ID2}{'atkMiss'} >= $config{'teleportAuto_atkMiss'}) {
 				message "Teleporting because of attack miss\n", "teleport";
+				useTeleport(1);
+			}
+			if ($config{'teleportAuto_atkCount'} && $monsters{$ID2}{'numAtkFromYou'} >= $config{'teleportAuto_atkCount'}) {
+				message "Teleporting after attacking a monster $config{'teleportAuto_atkCount'} times\n", "teleport";
 				useTeleport(1);
 			}
 		}
