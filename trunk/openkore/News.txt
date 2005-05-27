@@ -32,6 +32,8 @@ New features:
   domain with verbosity 2.
 - "Unknown error 0" message changed to "Server shutting down".
 - The "ignoreInvalidLogin" config option now also ignores incorrect password.
+- Messages about other players parseMsg/hairColor and parseMsg/job moved
+  to verbosity 2.
 
 New commands:
 - storage log

@@ -7442,9 +7442,9 @@ sub parseMsg {
 				message "You changed job to: $jobs_lut{$number}\n", "parseMsg/job";
 			} elsif ($players{$ID}) {
 				$players{$ID}{jobID} = $number;
-				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed job to: $jobs_lut{$number}\n", "parseMsg/job";
+				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed job to: $jobs_lut{$number}\n", "parseMsg/job", 2;
 			} else {
-				debug "Unknown #" . unpack("L", $ID) . " changed job to: $jobs_lut{$number}\n", "parseMsg/job";
+				debug "Unknown #" . unpack("L", $ID) . " changed job to: $jobs_lut{$number}\n", "parseMsg/job", 2;
 			}
 
 		} elsif ($part == 6) {
@@ -7454,9 +7454,9 @@ sub parseMsg {
 				message "Your hair color changed to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
 			} elsif ($players{$ID}) {
 				$players{$ID}{hair_color} = $number;
-				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
+				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor", 2;
 			} else {
-				debug "Unknown #".unpack("L", $ID)." changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
+				debug "Unknown #".unpack("L", $ID)." changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor", 2;
 			}
 		}
 
