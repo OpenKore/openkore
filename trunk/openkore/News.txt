@@ -31,6 +31,7 @@ New features:
 - Messages about other players being muted moved to parseMsg_statuslook
   domain with verbosity 2.
 - "Unknown error 0" message changed to "Server shutting down".
+- The "ignoreInvalidLogin" config option now also ignores incorrect password.
 
 New commands:
 - storage log
