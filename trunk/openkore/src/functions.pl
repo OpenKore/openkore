@@ -1828,10 +1828,12 @@ sub AI {
 		    !defined portalExists($field{name}, $portals{$foundID}{pos})) {
 			$ID = "$field{name} $destPos{x} $destPos{y}";
 			$portals_lut{$ID}{source}{map} = $field{name};
-			$portals_lut{$ID}{source}{pos} = {%destPos};
+			$portals_lut{$ID}{source}{x} = $destPos{x};
+			$portals_lut{$ID}{source}{y} = $destPos{y};
 			$destName = "$sourceMap $sourcePos{x} $sourcePos{y}";
 			$portals_lut{$ID}{dest}{$destName}{map} = $sourceMap;
-			$portals_lut{$ID}{dest}{$destName}{pos} = %sourcePos;
+			$portals_lut{$ID}{dest}{$destName}{x} = $sourcePos{x};
+			$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
 
 			message "Recorded new portal (destination): $field{name} ($destPos{x}, $destPos{y}) -> $sourceMap ($sourcePos{x}, $sourcePos{y})\n", "portalRecord";
 			updatePortalLUT("$Settings::tables_folder/portals.txt",
@@ -1843,10 +1845,12 @@ sub AI {
 		if (!defined portalExists($sourceMap, \%sourcePos)) {
 			$ID = "$sourceMap $sourcePos{x} $sourcePos{y}";
 			$portals_lut{$ID}{source}{map} = $sourceMap;
-			$portals_lut{$ID}{source}{pos} = {%sourcePos};
+			$portals_lut{$ID}{source}{x} = $sourcePos{x};
+			$portals_lut{$ID}{source}{y} = $sourcePos{y};
 			$destName = "$field{name} $destPos{x} $destPos{y}";
 			$portals_lut{$ID}{dest}{$destName}{map} = $field{name};
-			$portals_lut{$ID}{dest}{$destName}{pos} = {%destPos};
+			$portals_lut{$ID}{dest}{$destName}{x} = $destPos{x};
+			$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
 	
 			message "Recorded new portal (source): $sourceMap ($sourcePos{x}, $sourcePos{y}) -> $field{name} ($char->{pos}{x}, $char->{pos}{y})\n", "portalRecord";
 			updatePortalLUT("$Settings::tables_folder/portals.txt",
@@ -4662,7 +4666,7 @@ sub AI {
 			# Initializes the openlist with portals walkable from the starting point
 			foreach my $portal (keys %portals_lut) {
 				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
-				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}{'pos'}}) ) {
+				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}}) ) {
 					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
 						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
 						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$ai_seq_args[0]{'solution'}};
@@ -9498,7 +9502,7 @@ sub ai_mapRoute_searchStep {
 					$this = $$r_args{'closelist'}{$this}{'parent'};
 				}
 				return;
-			} elsif ( ai_route_getRoute(\@{$$r_args{'solution'}}, \%{$$r_args{'dest'}{'field'}}, \%{$portals_lut{$portal}{'dest'}{$dest}{'pos'}}, \%{$$r_args{'dest'}{'pos'}}) ) {
+			} elsif ( ai_route_getRoute(\@{$$r_args{'solution'}}, \%{$$r_args{'dest'}{'field'}}, \%{$portals_lut{$portal}{'dest'}{$dest}}, \%{$$r_args{'dest'}{'pos'}}) ) {
 				my $walk = "$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}=$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}";
 				$$r_args{'closelist'}{$walk}{'walk'} = scalar @{$$r_args{'solution'}} + $$r_args{'closelist'}{$parent}{$dest}{'walk'};
 				$$r_args{'closelist'}{$walk}{'parent'} = $parent;
@@ -10643,10 +10647,12 @@ sub compilePortals {
 
 	# Collect portal source and destination coordinates per map
 	foreach my $portal (keys %portals_lut) {
-		%{$mapPortals{$portals_lut{$portal}{source}{map}}{$portal}} = %{$portals_lut{$portal}{source}{pos}};
+		$mapPortals{$portals_lut{$portal}{source}{map}}{$portal}{x} = $portals_lut{$portal}{source}{x};
+		$mapPortals{$portals_lut{$portal}{source}{map}}{$portal}{y} = $portals_lut{$portal}{source}{y};
 		foreach my $dest (keys %{$portals_lut{$portal}{dest}}) {
 			next if $portals_lut{$portal}{dest}{$dest}{map} eq '';
-			%{$mapSpawns{$portals_lut{$portal}{dest}{$dest}{map}}{$dest}} = %{$portals_lut{$portal}{dest}{$dest}{pos}};
+			$mapSpawns{$portals_lut{$portal}{dest}{$dest}{map}}{$dest}{x} = $portals_lut{$portal}{dest}{$dest}{x};
+			$mapSpawns{$portals_lut{$portal}{dest}{$dest}{map}}{$dest}{y} = $portals_lut{$portal}{dest}{$dest}{y};
 		}
 	}
 
@@ -10721,8 +10727,8 @@ sub portalExists {
 	my ($map, $r_pos) = @_;
 	foreach (keys %portals_lut) {
 		if ($portals_lut{$_}{source}{map} eq $map
-		    && $portals_lut{$_}{source}{pos}{x} == $$r_pos{x}
-		    && $portals_lut{$_}{source}{pos}{y} == $$r_pos{y}) {
+		    && $portals_lut{$_}{source}{x} == $r_pos->{x}
+		    && $portals_lut{$_}{source}{y} == $r_pos->{y}) {
 			return $_;
 		}       
 	}       

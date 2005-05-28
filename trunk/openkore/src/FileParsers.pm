@@ -462,11 +462,11 @@ sub parsePortals {
 			my $portal = "$args[0] $args[1] $args[2]";
 			my $dest = "$args[3] $args[4] $args[5]";
 			$$r_hash{$portal}{'source'}{'map'} = $args[0];
-			$$r_hash{$portal}{'source'}{'pos'}{'x'} = $args[1];
-			$$r_hash{$portal}{'source'}{'pos'}{'y'} = $args[2];
+			$$r_hash{$portal}{'source'}{'x'} = $args[1];
+			$$r_hash{$portal}{'source'}{'y'} = $args[2];
 			$$r_hash{$portal}{'dest'}{$dest}{'map'} = $args[3];
-			$$r_hash{$portal}{'dest'}{$dest}{'pos'}{'x'} = $args[4];
-			$$r_hash{$portal}{'dest'}{$dest}{'pos'}{'y'} = $args[5];
+			$$r_hash{$portal}{'dest'}{$dest}{'x'} = $args[4];
+			$$r_hash{$portal}{'dest'}{$dest}{'y'} = $args[5];
 			$$r_hash{$portal}{'dest'}{$dest}{'cost'} = $args[6];
 			$$r_hash{$portal}{'dest'}{$dest}{'steps'} = $args[7];
 		}
