@@ -2129,7 +2129,10 @@ sub AI {
 		$args->{time} = time unless $args->{time};
 
 		if ($args->{stage} eq '') {
-			if (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
+			#if (timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
+			unless (time > $char->{'time_move'} + 3) {
+				# Wait for us to stop moving before talking
+			} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
 				error "Could not find the NPC at the designated location.\n", "ai_npcTalk";
 				AI::dequeue;
 
@@ -2141,7 +2144,7 @@ sub AI {
 				$args->{name} = $npcs{$npc}{'name'};
 				$args->{stage} = 'Talking to NPC';
 				$args->{steps} = [];
-				@{$args->{steps}} = parse_line('\s+', 0, "w3 x $args->{sequence}");
+				@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
 				undef $args->{time};
 				undef $ai_v{'npc_talk'}{'time'};
 
