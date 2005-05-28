@@ -1277,7 +1277,7 @@ sub parseCommand {
 
 				if ($partyUsersID[$i] eq $accountID) {
 					$online_string = "Yes";
-					($map_string) = $map_name =~ /([\s\S]*)\.gat/;
+					($map_string) = $field{name};
 					$coord_string = $chars[$config{'char'}]{'pos'}{'x'}. ", ".$chars[$config{'char'}]{'pos'}{'y'};
 					$hp_string = $chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}
 							." (".int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
@@ -1577,7 +1577,7 @@ sub parseCommand {
 		useTeleport(1);
 
 	} elsif ($switch eq "where") {
-		my ($map_string) = $map_name =~ /([\s\S]*)\.gat/;
+		my ($map_string) = $field{name} =~ /([\s\S]*)\.gat/;
 		my $pos = calcPosition($char);
 		message("Location $maps_lut{$map_string.'.rsw'} ($map_string) : $pos->{x}, $pos->{y}\n", "info");
 
@@ -5753,7 +5753,7 @@ sub parseMsg {
 		$conState = 4;
 		undef $conState_tries;
 		$charID = substr($msg, 2, 4);
-		($map_name) = substr($msg, 6, 16) =~ /([\s\S]*?)\000/;
+		my ($map_name) = substr($msg, 6, 16) =~ /([\s\S]*?)\000/;
 		
 		if ($xkore) {
 			undef $masterServer;
@@ -6510,8 +6510,7 @@ sub parseMsg {
 		}
 
 		$chat = "$chatMsgUser ($players{$ID}{binID}): $chatMsg";
-		my ($map_string) = $map_name =~ /([\s\S]*)\.gat/;
-		chatLog("c", "[$map_string $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}{x}, $players{$ID}{pos_to}{y}] [dist=$dist] " .
+		chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}{x}, $players{$ID}{pos_to}{y}] [dist=$dist] " .
 			"$chat\n") if ($config{logChat});
 		message "[dist=$dist] $chat\n", "publicchat";
 
@@ -6546,7 +6545,7 @@ sub parseMsg {
 	} elsif ($switch eq "0091") {
 		$conState = 4 if ($conState != 4 && $xkore);
 
-		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
+		my ($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
 		checkAllowedMap($ai_v{temp}{map});
 		if ($ai_v{temp}{map} ne $field{name}) {
@@ -6574,7 +6573,7 @@ sub parseMsg {
 	} elsif ($switch eq "0092") {
 		$conState = 4;
 
-		($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
+		my ($map_name) = substr($msg, 2, 16) =~ /([\s\S]*?)\000/;
 		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
 		checkAllowedMap($ai_v{temp}{map});
 		if ($ai_v{temp}{map} ne $field{name}) {
@@ -6837,9 +6836,10 @@ sub parseMsg {
 			$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
 			message "$disp\n", "drop";
 
-			my ($map_string) = $map_name =~ /([\s\S]*)\.gat/;
-			$disp .= " ($map_string)\n";
+			$disp .= " ($field{name})\n";
 			itemLog($disp);
+
+			Plugins::callHook('packet_item_added',{item => $item});
 
 			# TODO: move this stuff to AI()
 			if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
