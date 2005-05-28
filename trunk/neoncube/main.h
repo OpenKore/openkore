@@ -115,7 +115,7 @@ HBITMAP hbmBackground = NULL;
 /*#######################################################
 ## WEB BROWSER / NOTICE WINDOW FUNCTIONS
 ########################################################*/
-#include "nc32.h"
+#include "browser/browser.h"
 EmbedBrowserObjectPtr		*lpEmbedBrowserObject;
 UnEmbedBrowserObjectPtr		*lpUnEmbedBrowserObject;
 DisplayHTMLPagePtr			*lpDisplayHTMLPage;
@@ -192,7 +192,7 @@ extern LRESULT CALLBACK CancelButtonSubclassProc ( HWND, UINT, WPARAM, LPARAM);
 /*#######################################################
 ## FUNCTION: Loads all bitmap buttons
 ########################################################*/
-extern BOOL LoadButtonBitmap(void);
+extern void LoadButtonBitmap(void);
 
 /*#######################################################
 ## FUNCTION: Sets TrackMouseEvent to all the buttons

@@ -41,12 +41,12 @@
 
 
 int WINAPI WinMain(HINSTANCE hInstance,
-			       HINSTANCE hPrevInstance,
-				   LPSTR lpCmdLine,
-				   INT nCmdShow)
+			HINSTANCE hPrevInstance,
+			LPSTR lpCmdLine,
+			INT nCmdShow)
 {
 //	_CrtDumpMemoryLeaks();
-	HINSTANCE cwebdll; 
+	HINSTANCE hBrowserDll; 
 
 	HWND hwnd; 
 	MSG message; 
@@ -56,8 +56,8 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	InitCommonControls();
 	
 
-	GetPrivateProfileString("server", "noticeURL", NULL, settings.szNoticeURL, sizeof(settings.szNoticeURL), iniFile); //NOTICE URL
-	GetPrivateProfileString("server", "patchURL", NULL, settings.szPatchURL, sizeof(settings.szPatchURL), iniFile); //PATCH URL
+	GetPrivateProfileString("server", "noticeURL", NULL, settings.szNoticeURL, sizeof(settings.szNoticeURL), iniFile); 
+	GetPrivateProfileString("server", "patchURL", NULL, settings.szPatchURL, sizeof(settings.szPatchURL), iniFile); 
 	GetPrivateProfileString("server", "patchList", NULL, settings.szPatchList, sizeof(settings.szPatchList), iniFile);
 	GetPrivateProfileString("server", "executable", NULL, settings.szExecutable, sizeof(settings.szExecutable), iniFile);
 	GetPrivateProfileString("server", "patch_folder", NULL, settings.szPatchFolder, sizeof(settings.szPatchFolder), iniFile);
@@ -65,9 +65,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	GetPrivateProfileString("server", "grf", NULL, settings.szGrf, sizeof(settings.szGrf), iniFile);
 	
 
-/*	style.iFontColorRED = LoadINIInt("text","fontcolorR"); //static font color Red
-    style.iFontColorGREEN = LoadINIInt("text","fontcolorG"); //static font color Green
-	style.iFontColorBLUE = LoadINIInt("text","fontcolorB"); //static font color Blue
+/*	style.iFontColorRED = LoadINIInt("text","fontcolorR"); 
+    style.iFontColorGREEN = LoadINIInt("text","fontcolorG"); 
+	style.iFontColorBLUE = LoadINIInt("text","fontcolorB"); 
 
 	style.iTextBgRED = LoadINIInt("text","bgColorR");
 	style.iTextBgGREEN = LoadINIInt("text","bgColorG");
@@ -111,38 +111,37 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	crdProgress.height = LoadINIInt("progressbar","height");
 	
 
-	if (!(cwebdll = LoadLibrary("nc32.dll")))
-		PostError();
+	if (!(hBrowserDll = LoadLibrary("browser.dll")))
+		return -1;
 
 	//load bitmap buttons
-	if(!LoadButtonBitmap())
-		PostError();
+	LoadButtonBitmap();
 
 	
-		lpEmbedBrowserObject = (EmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)cwebdll, "EmbedBrowserObject");
-		lpUnEmbedBrowserObject = (UnEmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)cwebdll, "UnEmbedBrowserObject");
-		lpDisplayHTMLPage = (DisplayHTMLPagePtr *)GetProcAddress((HINSTANCE)cwebdll, "DisplayHTMLPage");
-		ZeroMemory(&wc, sizeof(WNDCLASSEX));
+	lpEmbedBrowserObject = (EmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "EmbedBrowserObject");
+	lpUnEmbedBrowserObject = (UnEmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "UnEmbedBrowserObject");
+	lpDisplayHTMLPage = (DisplayHTMLPagePtr *)GetProcAddress((HINSTANCE)hBrowserDll, "DisplayHTMLPage");
+	ZeroMemory(&wc, sizeof(WNDCLASSEX));
         
 	
-		wc.cbSize		 = sizeof(WNDCLASSEX);
-		wc.style		 = CS_OWNDC;
-		wc.lpfnWndProc	 = WndProc;
-		wc.cbClsExtra	 = 0;
-		wc.cbWndExtra	 = 0;
-		wc.hInstance	 = hInstance;
-		wc.hIcon		 = LoadIcon(NULL, IDI_APPLICATION);
-		wc.hCursor		 = LoadCursor(NULL, IDC_ARROW);
-		wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
-		wc.lpszMenuName  = NULL;
-		wc.lpszClassName = "NeonCube";
-		wc.hIconSm		 = LoadIcon(NULL, IDI_APPLICATION);
+	wc.cbSize		 = sizeof(WNDCLASSEX);
+	wc.style		 = CS_OWNDC;
+	wc.lpfnWndProc	 = WndProc;
+	wc.cbClsExtra	 = 0;
+	wc.cbWndExtra	 = 0;
+	wc.hInstance	 = hInstance;
+	wc.hIcon		 = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hCursor		 = LoadCursor(NULL, IDC_ARROW);
+	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	wc.lpszMenuName  = NULL;
+	wc.lpszClassName = "NeonCube";
+	wc.hIconSm		 = LoadIcon(NULL, IDI_APPLICATION);
 
 
 		// register class
-		if (!RegisterClassEx(&wc)) 
+	if (!RegisterClassEx(&wc)) 
 			PostError();
-		if(!SetupNoticeClass(hInstance))
+	if(!SetupNoticeClass(hInstance))
 			PostError();
 
 
@@ -162,131 +161,128 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
 		
 		hbmBackground = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\bg.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
+								"neoncube\\skin\\bg.bmp",
+								IMAGE_BITMAP,
+								0,
+								0,
+								LR_LOADFROMFILE
+								);
 		if(!hbmBackground)
 			PostError();
 
 
 		hwnd = CreateWindowEx(0,
-							 "NeonCube", 
-							"NeonCube Patch Client",
-							 WS_POPUP,
-							 rc.left,
-							 rc.top, 
-							 iWidth,
-							 iHeight,
-							 NULL, 
-							 NULL, 
-							 hInstance, 
-							 NULL
-							 );
+						"NeonCube", 
+						"NeonCube Patch Client",
+						WS_POPUP,
+						rc.left,
+						rc.top, 
+						iWidth,
+						iHeight,
+						NULL, 
+						NULL, 
+						hInstance, 
+						NULL
+						);
 		
 		ShowWindow(hwnd, nCmdShow);
 
 
-		hwndMinimize = CreateWindow(
-								  "BUTTON",
-								  "",
-								   BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
-								  bsMinimize.x,
-								  bsMinimize.y,
-								  bsMinimize.width,
-								  bsMinimize.height,
-								  hwnd,
-								  (HMENU)IDC_MINIMIZE,
-								  (HINSTANCE) GetWindowLong(hwnd, GWL_HINSTANCE),
-								  NULL
-								  );
+		hwndMinimize = CreateWindow("BUTTON",
+							"",
+							BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
+							bsMinimize.x,
+							bsMinimize.y,
+							bsMinimize.width,
+							bsMinimize.height,
+							hwnd,
+							(HMENU)IDC_MINIMIZE,
+							(HINSTANCE) GetWindowLong(hwnd, GWL_HINSTANCE),
+							NULL
+							);
 
 
 		ShowWindow(hwndMinimize,nCmdShow);
 		
-		hwndClose = CreateWindow(
-								  "BUTTON",
-								  "",
-								  BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
-								  bsClose.x,
-								  bsClose.y,
-								  bsClose.width,
-								  bsClose.height,
-								  hwnd,
-								  (HMENU)IDC_CLOSE,
-								  (HINSTANCE) GetWindowLong(hwnd, GWL_HINSTANCE),
-								  NULL
-								  );
+		hwndClose = CreateWindow("BUTTON",
+							"",
+							BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
+							bsClose.x,
+							bsClose.y,
+							bsClose.width,
+							bsClose.height,
+							hwnd,
+							(HMENU)IDC_CLOSE,
+							(HINSTANCE) GetWindowLong(hwnd, GWL_HINSTANCE),
+							NULL
+							);
 		
 		ShowWindow(hwndClose,nCmdShow);
 
-		hwndStartGame = CreateWindow(
-									"BUTTON",
-									"",
-									BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
-								    bsStartGame.x,
-									bsStartGame.y,
-									bsStartGame.width,
-									bsStartGame.height,
-									hwnd,
-									(HMENU)IDC_STARTGAME,
-									(HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
-									NULL
-									);
+		hwndStartGame = CreateWindow("BUTTON",
+							"",
+							BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
+							bsStartGame.x,
+							bsStartGame.y,
+							bsStartGame.width,
+							bsStartGame.height,
+							hwnd,
+							(HMENU)IDC_STARTGAME,
+							(HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
+							NULL
+							);
 		ShowWindow(hwndStartGame,nCmdShow);
 
 
-		hwndRegister = CreateWindow(
-									"BUTTON",
-									"",
-									BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
-								    bsRegister.x,
-									bsRegister.y,
-									bsRegister.width,
-									bsRegister.height,
-									hwnd,
-									(HMENU)IDC_REGISTER,
-									(HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
-									NULL
-									);
+		hwndRegister = CreateWindow("BUTTON",
+							"",
+							BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
+							bsRegister.x,
+							bsRegister.y,
+							bsRegister.width,
+							bsRegister.height,
+							hwnd,
+							(HMENU)IDC_REGISTER,
+							(HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
+							NULL
+							);
 		ShowWindow(hwndRegister,nCmdShow);	
 		
 	
-		hwndCancel = CreateWindow(
-									"BUTTON",
-									"",
-									BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
-								    bsCancel.x,
-									bsCancel.y,
-									bsCancel.width,
-									bsCancel.height,
-									hwnd,
-									(HMENU)IDC_CANCEL,
-									(HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
-									NULL
-									);
+		hwndCancel = CreateWindow("BUTTON",
+							"",
+							BS_OWNERDRAW | WS_TABSTOP | WS_CHILD,
+							bsCancel.x,
+							bsCancel.y,
+							bsCancel.width,
+							bsCancel.height,
+							hwnd,
+							(HMENU)IDC_CANCEL,
+							(HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
+							NULL
+							);
+
 		ShowWindow(hwndCancel,nCmdShow);		
 		/*track mouse event*/
 		if(!TME(hwnd))
 		{
-			FreeLibrary(cwebdll);
+			FreeLibrary(hBrowserDll);
 			PostError();
 		}
 
 		/*progress bar*/
 		hwndProgress = CreateWindow(PROGRESS_CLASS,
-								    (LPSTR)NULL,
-									WS_CHILD | WS_VISIBLE | WS_BORDER,
-									crdProgress.x,
-									crdProgress.y,
-									crdProgress.width,
-									crdProgress.height,
-									hwnd,
-									(HMENU)IDC_PROGRESS,
-									(HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
-									NULL
-									);
+							(LPSTR)NULL,
+							WS_CHILD | WS_VISIBLE | WS_BORDER,
+							crdProgress.x,
+							crdProgress.y,
+							crdProgress.width,
+							crdProgress.height,
+							hwnd,
+							(HMENU)IDC_PROGRESS,
+							(HINSTANCE)GetWindowLong(hwnd, GWL_HINSTANCE),
+							NULL
+							);
 
 		ShowWindow(hwndProgress,nCmdShow);
 
@@ -310,7 +306,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			TranslateMessage(&message);
 			DispatchMessage(&message);
 		}
-		FreeLibrary(cwebdll);
+		FreeLibrary(hBrowserDll);
 		return message.wParam;
 } 
 
@@ -321,9 +317,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 ## MAIN WINDOW PROCEDURE
 #################################*/
 LRESULT CALLBACK WndProc(HWND hWnd, 
-						 UINT message, 
-						 WPARAM wParam, 
-						 LPARAM lParam)
+				UINT message, 
+				WPARAM wParam, 
+				LPARAM lParam)
 { 
 
 	switch(message)
@@ -395,24 +391,24 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 		{ 
 			DRAWITEMSTRUCT *ptr = (DRAWITEMSTRUCT*)lParam;
 
-			if ( wParam == IDC_MINIMIZE )
+			if (wParam == IDC_MINIMIZE)
 			{ 
 					SetBitmapToButton(ptr->hDC, ptr->hwndItem, hbmMinimize);
 			}
-			else if( wParam == IDC_CLOSE )
+			else if(wParam == IDC_CLOSE)
 			{
 				SetBitmapToButton(ptr->hDC, ptr->hwndItem, hbmClose);
 			}
 
-			else if( wParam == IDC_STARTGAME )
+			else if(wParam == IDC_STARTGAME)
 			{
 				SetBitmapToButton(ptr->hDC, ptr->hwndItem, hbmStartGame);
 			}
-			else if( wParam == IDC_REGISTER )
+			else if(wParam == IDC_REGISTER)
 			{
 				SetBitmapToButton(ptr->hDC, ptr->hwndItem, hbmRegister);
 			}
-			else if( wParam == IDC_CANCEL )
+			else if(wParam == IDC_CANCEL)
 			{
 				SetBitmapToButton(ptr->hDC, ptr->hwndItem, hbmCancel);
 			}
@@ -533,9 +529,9 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 
 
 LRESULT CALLBACK NoticeWindowProcedure(HWND hwndNotice, 
-									   UINT message, 
-									   WPARAM wParam, 
-									   LPARAM lParam)
+							UINT message, 
+							WPARAM wParam, 
+							LPARAM lParam)
 {
     switch (message)                  
     {
@@ -616,10 +612,11 @@ int LoadINIInt(LPCSTR section,
 }
 
 /*
-void __stdcall Juggler	(HINTERNET hInternet, DWORD dwContext,
-							 DWORD dwInternetStatus,
-							 LPVOID lpvStatusInformation,
-							 DWORD dwStatusInformationLength)
+void __stdcall Juggler	(HINTERNET hInternet, 
+					DWORD dwContext,
+					DWORD dwInternetStatus,
+					LPVOID lpvStatusInformation,
+					DWORD dwStatusInformationLength)
 {
 	REQUEST_CONTEXT *cpContext;
 	cpContext= (REQUEST_CONTEXT*)dwContext;
@@ -701,7 +698,7 @@ DWORD Threader(void)
 									(const char**)"*/*\0",
 									0,
 									NULL
-							   );
+							   		);
 	if(hPatch2Request == NULL)
 		return -1;
 
@@ -785,8 +782,8 @@ DWORD Threader(void)
 				AddPatch(patch_tmp,index_tmp);
 				
 
-				strcpy(file_path,settings.szPatchFolder);
-				strcat(file_path,patch_tmp);
+				lstrcpy(file_path,settings.szPatchFolder);
+				lstrcat(file_path,patch_tmp);
 				hRequest = HttpOpenRequest(g_hConnection,
 										   "GET",
 										   file_path,
@@ -1002,8 +999,9 @@ void AddPatch(const char *item,
 
 void PostError(BOOL exitapp)
 {
-	LPTSTR szMessageBox = NULL;
+	TCHAR szMessageBox[50];
 	LPTSTR lpszMessage = NULL;
+
 	DWORD dwError = GetLastError();
 	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 		NULL,
@@ -1016,7 +1014,6 @@ void PostError(BOOL exitapp)
 	sprintf(szMessageBox,"Application error: %s (code: %d)", lpszMessage, dwError);
 	MessageBox(NULL,szMessageBox,"Error",MB_OK | MB_ICONERROR);
 	LocalFree(lpszMessage);
-	LocalFree(szMessageBox);
 	if(exitapp)
 		ExitProcess(dwError);
 
