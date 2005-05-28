@@ -11220,13 +11220,11 @@ sub checkSelfCondition {
 	}
 
 	if ($config{$prefix."_inInventory"}) {
-		my $found = 0;
 		foreach my $input (split / *, */, $config{$prefix."_inInventory"}) {
 			my ($item,$count) = $input =~ /(.*?)(\s+[><= 0-9]+)?$/;
 			$count = '>0' if $count eq '';
 			my $iX = findIndexString_lc($char->{inventory}, "name", $item);
-			return 0 if !inRange(defined $iX ? 0 : $char->{inventory}[$iX]{amount}, $count);
-		}
+ 			return 0 if !inRange(!defined $iX ? 0 : $char->{inventory}[$iX]{amount}, $count);		}
 	}
 
 	if ($config{$prefix."_whenGround"}) {
