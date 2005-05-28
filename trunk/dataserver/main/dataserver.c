@@ -281,7 +281,7 @@ client_thread_callback (void *pointer)
 				if (ufds != NULL)
 					free (ufds);
 
-				foreach_llist (thread_data->clients, client) {
+				foreach_llist (thread_data->clients, Client *, client) {
 //				for (client = (Client *) thread_data->clients->first; client != NULL; client = (Client *) client->parent.next) {
 					free (client->priv);
 					client_close (client);

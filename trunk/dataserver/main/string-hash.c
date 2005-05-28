@@ -58,7 +58,7 @@ string_hash_free (StringHash *hash)
 {
 	StringHashItem *item;
 
-	for (item = (StringHashItem *) hash->first; item != NULL; item = (StringHashItem *) item->parent.next) {
+	foreach_llist (hash, StringHashItem *, item) {
 		free (item->key);
 		free (item->value);
 	}
