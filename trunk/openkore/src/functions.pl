@@ -2212,6 +2212,10 @@ sub AI {
 				sendTalkCancel(\$remote_socket, $args->{ID});
 				$ai_v{'npc_talk'}{'time'} = time;
 				$args->{time}   = time;
+			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^b(\d+),(\d+)/i ) {
+				my $itemID = $storeList[$1]{nameID};
+				$ai_v{npc_talk}{itemID} = $itemID;
+				sendBuy(\$remote_socket, $itemID, $2);
 			} elsif ( $args->{steps}[0] =~ /b/i ) {
 				sendGetStoreList(\$remote_socket, $args->{ID});
 			}
@@ -6832,6 +6836,11 @@ sub parseMsg {
 			itemLog($disp);
 
 			# TODO: move this stuff to AI()
+			if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
+				$ai_v{'npc_talk'}{'talk'} = 'buy';
+				$ai_v{'npc_talk'}{'time'} = time;
+			}
+
 			if ($AI) {
 				# Auto-drop item
 				$item = $char->{inventory}[$invIndex];
@@ -7520,6 +7529,8 @@ sub parseMsg {
 			$storeList++;
 		}
 		message "$npcs{$talk{'ID'}}{'name'} : Check my store list by typing 'store'\n";
+		$ai_v{'npc_talk'}{'talk'} = 'store';
+		$ai_v{'npc_talk'}{'time'} = time;
 		
 	} elsif ($switch eq "00C7") {
 		#sell list, similar to buy list
