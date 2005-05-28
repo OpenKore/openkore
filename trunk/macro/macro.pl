@@ -199,7 +199,7 @@ sub parseCmd {
       my (undef, $macro, $times) = split(/ /, $command);
       pushMacro($macro, $times);
     } elsif ($command =~ /\@set/) {
-      my ($var, $val) = $command =~ /^\@set +([a-zA-Z0-9]*)? +(.*)$/;
+      my ($var, $val) = $command =~ /^\@set +(.*?) +(.*)$/;
       setVar($var, parseCmd($val));
     } elsif ($command =~ /\@pause/) {
       my (undef, $timeout) = split(/ /, $command);
@@ -568,7 +568,7 @@ sub automacroCheck {
     };
     if ($macros{$am."_run-once"} == 1) {push @runonce, $macros{$am}};
     $seq = 0; while (exists $macros{$am."_set".$seq}) {
-       my ($var, $val) = split(/ /, $macros{$am."_set".$seq++});
+       my ($var, $val) = $macros{$am."_set".$seq++} =~ /^.*? +(.*?) +(.*)$/;
        setVar($var, $val);
     };
     $automacro{call} = $macros{$am."_call"} if (defined $macros{$am."_call"});
