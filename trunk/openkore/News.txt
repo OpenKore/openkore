@@ -86,8 +86,9 @@ Internal:
 - Most modules are now autoloadable (see perldoc SelfLoader).
 - Optimizations in the %portals_lut data structure. This saves about
   200 KB of memory.
-- New "b<item>,<quantity>" NPC talk sequence, only useful to macro writers who
-  use the 'talknpc' command. Buys <quantity> of <item>. Use after "b".
+- New "b<item#>,<quantity>" NPC talk sequence, only useful to macro writers
+  who use the 'talknpc' command. Buys <quantity> of <item#> (<item#> is the
+  number shown in the 'store' list). Use after "b", e.g. "b b2,100".
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.
