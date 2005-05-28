@@ -27,7 +27,11 @@
 ## btnOld_*:	WndProc/Subclass of a button.
 ## treMouse_*:	TrackMouseEvent structure of a button.
 ########################################################*/
+
+extern void PostError(BOOL exitapp = TRUE);
+
 #include <commctrl.h>
+
 
 
 HBITMAP hbmMinimize = NULL; 

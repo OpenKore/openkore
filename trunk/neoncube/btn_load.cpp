@@ -238,7 +238,7 @@ BOOL TME(HWND hwnd)
 	return TRUE;
 }
 
-BOOL LoadButtonBitmap(void)
+void LoadButtonBitmap(void)
 {
 
 	//------------------------
@@ -252,9 +252,8 @@ BOOL LoadButtonBitmap(void)
 									  LR_LOADFROMFILE);
 	if(!hbmMinimize)
 	{
-		MessageBox(NULL,"Failed to load minimize.bmp","Error",MB_OK);
-		return FALSE;
-			
+		MessageBox(NULL,"Failed to load minimize.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 	}			
 	hbmMinimize_hover = (HBITMAP)LoadImage(NULL,
 									  "neoncube\\skin\\minimize_hover.bmp",
@@ -265,8 +264,8 @@ BOOL LoadButtonBitmap(void)
 			
 	if(!hbmMinimize_hover)
 	{
-		MessageBox(NULL,"Failed to load minimize_hover.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load minimize_hover.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 	}
 
 
@@ -278,8 +277,8 @@ BOOL LoadButtonBitmap(void)
 									  LR_LOADFROMFILE);
 	if(!hbmClose)
 	{
-		MessageBox(NULL,"Failed to load close.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load close.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 			
 	}			
 	hbmClose_hover = (HBITMAP)LoadImage(NULL,
@@ -291,8 +290,8 @@ BOOL LoadButtonBitmap(void)
 			
 	if(!hbmMinimize_hover)
 	{
-		MessageBox(NULL,"Failed to load close_hover.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load close_hover.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 	}
 
 
@@ -304,8 +303,8 @@ BOOL LoadButtonBitmap(void)
 									  LR_LOADFROMFILE);
 	if(!hbmStartGame)
 	{
-		MessageBox(NULL,"Failed to load startgame.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load startgame.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 			
 	}			
 	hbmStartGame_hover = (HBITMAP)LoadImage(NULL,
@@ -317,8 +316,8 @@ BOOL LoadButtonBitmap(void)
 			
 	if(!hbmStartGame_hover)
 	{
-		MessageBox(NULL,"Failed to load startgame_hover.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load startgame_hover.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 	}
 
 	hbmRegister = (HBITMAP)LoadImage(NULL,
@@ -329,8 +328,8 @@ BOOL LoadButtonBitmap(void)
 									  LR_LOADFROMFILE);
 	if(!hbmRegister)
 	{
-		MessageBox(NULL,"Failed to load register.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load register.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 			
 	}			
 	hbmRegister_hover = (HBITMAP)LoadImage(NULL,
@@ -342,8 +341,8 @@ BOOL LoadButtonBitmap(void)
 			
 	if(!hbmRegister_hover)
 	{
-		MessageBox(NULL,"Failed to load register_hover.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load register_hover.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 	}
 
 
@@ -355,8 +354,8 @@ BOOL LoadButtonBitmap(void)
 									  LR_LOADFROMFILE);
 	if(!hbmCancel)
 	{
-		MessageBox(NULL,"Failed to load cancel.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load cancel.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 			
 	}			
 	hbmCancel_hover = (HBITMAP)LoadImage(NULL,
@@ -368,9 +367,8 @@ BOOL LoadButtonBitmap(void)
 			
 	if(!hbmCancel_hover)
 	{
-		MessageBox(NULL,"Failed to load cancel_hover.bmp","Error",MB_OK);
-		return FALSE;
+		MessageBox(NULL,"Failed to load cancel_hover.bmp","Error",MB_OK | MB_ICONERROR);
+		PostError();
 	}
 
-	return TRUE;
 }
