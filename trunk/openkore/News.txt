@@ -18,6 +18,7 @@ Bug fixes:
 - Bot should no longer wait 3 seconds needlessly when starting an NPC
   conversation. http://openkore.sourceforge.net/forum/viewtopic.php?t=4743
 - Don't say "Done talking with <NPC>." until after "<NPC> : Done talking".
+- Undo above change because NPCs don't always say "Done talking".
 
 New features:
 - Better support for detecting dead players.
@@ -75,6 +76,8 @@ New config options:
 - teleportAuto_atkCount (number)
   Teleport away if Kore can't kill the monster in the specified number
   of attacks.
+- "e" sequence for NPC talk steps; use it when you want kore to wait
+  until the NPC says "Done talking"
 
 New control files:
 - control/sys.txt
