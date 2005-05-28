@@ -568,7 +568,7 @@ sub automacroCheck {
     };
     if ($macros{$am."_run-once"} == 1) {push @runonce, $macros{$am}};
     $seq = 0; while (exists $macros{$am."_set".$seq}) {
-       my ($var, $val) = $macros{$am."_set".$seq++} =~ /^.*? +(.*?) +(.*)$/;
+       my ($var, $val) = $macros{$am."_set".$seq++} =~ /^(.*?) +(.*)$/;
        setVar($var, $val);
     };
     $automacro{call} = $macros{$am."_call"} if (defined $macros{$am."_call"});
