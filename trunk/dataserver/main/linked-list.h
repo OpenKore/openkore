@@ -63,7 +63,7 @@ void llist_remove (LList *list, LListItem *item);
 void llist_free   (LList *list);
 
 
-#define foreach_llist(list, item) for ((LListItem *) item = ((LList *) list)->first; item != NULL; (LListItem *) item = ((LListItem *) item)->next)
+#define foreach_llist(list, thetype, item) for (item = (thetype) ((LList *) list)->first; item != NULL; item = (thetype) ((LListItem *) item)->next)
 
 
 #endif /* _LINKED_LIST_H_ */
