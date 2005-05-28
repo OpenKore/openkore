@@ -2174,7 +2174,7 @@ sub AI {
 			}
 
 
-		} elsif ($args->{mapChanged} || @{$args->{steps}} == 0) {
+		} elsif ($args->{mapChanged} || (@{$args->{steps}} == 0 && $ai_v{'npc_talk'}{'talk'} eq 'close')) {
 			message "Done talking with $args->{name}.\n", "ai_npcTalk";
 			# There is no need to cancel conversation if map changed; NPC is nowhere by now.
 			#sendTalkCancel(\$remote_socket, $args->{ID});
