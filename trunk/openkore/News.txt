@@ -14,6 +14,7 @@ Bug fixes:
 - Tk map viewer has been fixed.
 - Make itemsTakeAuto_party count dmgFromYou too. (Hack to allow
   looting monsters that you killed without ever using attack ai_seq.)
+- inInventory was not working at all since its last update.
 
 New features:
 - Better support for detecting dead players.
@@ -35,6 +36,7 @@ New features:
 - Messages about other players parseMsg/hairColor and parseMsg/job moved
   to verbosity 2.
 - Your account ID is now shown in readable base 10 form on login.
+- The inInventory option now checks if you have all of the items in the list.
 
 New commands:
 - storage log
