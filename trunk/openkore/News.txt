@@ -15,6 +15,8 @@ Bug fixes:
 - Make itemsTakeAuto_party count dmgFromYou too. (Hack to allow
   looting monsters that you killed without ever using attack ai_seq.)
 - inInventory was not working at all since its last update.
+- Bot should no longer wait 3 seconds needlessly when starting an NPC
+  conversation. http://openkore.sourceforge.net/forum/viewtopic.php?t=4743
 
 New features:
 - Better support for detecting dead players.
