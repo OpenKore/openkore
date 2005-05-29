@@ -469,8 +469,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 						ret = MessageBox(hWnd,"Patch is in progress! Are you sure you want to quit?","Patch in progress",MB_OKCANCEL | MB_ICONQUESTION);
 						if(ret == IDOK)
 						{
-							sprintf(szStatusMessage,"Status: Canceled\r\nInfo:-----\r\nProgress:-----");
-							SendMessage(g_hwndStatic,WM_SETTEXT,0,(LPARAM)szStatusMessage);
+							StatusMessage("Status: Canceled\r\nInfo:-----\r\nProgress:-----");
 							TerminateThread(hThread,0);
 							SendMessage(hWnd,WM_DESTROY,0,0);
 						}
@@ -501,8 +500,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 						ret = MessageBox(hWnd,"Patch is in progress! Are you sure you want to quit?","Patch in progress",MB_OKCANCEL | MB_ICONQUESTION);
 						if(ret == IDOK)
 						{
-							sprintf(szStatusMessage,"Status: Canceled\r\nInfo:-----\r\nProgress:-----");
-							SendMessage(g_hwndStatic,WM_SETTEXT,0,(LPARAM)szStatusMessage);
+							StatusMessage("Status: Canceled\r\nInfo:-----\r\nProgress:-----");
 							TerminateThread(hThread,0);
 							SendMessage(hWnd,WM_DESTROY,0,0);
 						}
@@ -515,7 +513,8 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 				break;
 
 				case IDC_REGISTER:
-					/*todo*/
+					//open registration page using the default browser
+					ShellExecute(NULL, NULL, settings.szRegistration, NULL, NULL, SW_SHOWNORMAL);
 				break;
 			}
 			break;
@@ -718,8 +717,9 @@ DWORD Threader(void)
 			lstrcat(szMessage,settings.szPatchList);			
 			MessageBox(0,szMessage,"Error",MB_OK);
 			bPatchInProgress = FALSE;
+			StatusMessage("Status: Failed to get patch list.\r\nInfo:-----\r\nProgress:-----");
 			return -1;
-			
+		
 		}
 		//ALLOCATE NEEDED MEMORY
 		LPTSTR pPatch2TxtData = (LPTSTR)GlobalAlloc(GMEM_FIXED, dwPatch2ContentLen + 1);
@@ -825,8 +825,7 @@ DWORD Threader(void)
 						pCopyPtr = pCopyPtr + dwBytesRead;
 						SendMessage(hwndProgress, PBM_SETPOS, (WPARAM) cReadCount+1, 0);
 						dwBytesReadTotal += dwBytesRead;
-						sprintf(szStatusMessage,"Status: Downloading %s...\r\nInfo: %.2f KB of %.2f KB downloaded \r\nProgress: %d%%",patch_tmp, BytesToKB(dwBytesReadTotal), BytesToKB(dwContentLen), cReadCount+1);
-						SendMessage(g_hwndStatic,WM_SETTEXT,0,(LPARAM)szStatusMessage);						
+						StatusMessage("Status: Downloading %s...\r\nInfo: %.2f KB of %.2f KB downloaded \r\nProgress: %d%%",patch_tmp, BytesToKB(dwBytesReadTotal), BytesToKB(dwContentLen), cReadCount+1);					
 					}
 
 				
@@ -846,8 +845,7 @@ DWORD Threader(void)
 				}
 				else
 				{
-					sprintf(szStatusMessage,"Status: Failed to get %s\r\nInfo:-----\r\nProgress:-----",patch_tmp);
-					SendMessage(g_hwndStatic,WM_SETTEXT,0,(LPARAM)szStatusMessage);	
+					StatusMessage("Status: Failed to get %s\r\nInfo:-----\r\nProgress:-----",patch_tmp);
 					bPatchInProgress = FALSE;
 					return -1;
 					
@@ -877,8 +875,7 @@ DWORD Threader(void)
 					break;
 				spCurrentItem = spCurrentItem->next;							
 			}
-			sprintf(szStatusMessage,"Status: Repacking files...\r\nInfo:-----\r\nProgress:-----");
-			SendMessage(g_hwndStatic,WM_SETTEXT,0,(LPARAM)szStatusMessage);
+			StatusMessage("Status: Repacking files...\r\nInfo:-----\r\nProgress:-----");
 
 			STARTUPINFO siStartupInfo;
 			PROCESS_INFORMATION piProcessInfo;
@@ -923,8 +920,7 @@ DWORD Threader(void)
 			if(!MoveFile("neoncube\\data.grf",settings.szGrf))
 				PostError();
 
-			sprintf(szStatusMessage,"Status: Patch process complete.\r\nInfo:-----\r\nProgress:-----");
-			SendMessage(g_hwndStatic,WM_SETTEXT,0,(LPARAM)szStatusMessage);
+			StatusMessage("Status: Patch process complete.\r\nInfo:-----\r\nProgress:-----");
 			
 			//write last index
 			FILE *hLastIndex;
@@ -937,8 +933,8 @@ DWORD Threader(void)
 		}
 		else
 		{
-			sprintf(szStatusMessage,"Status: No new updates.\r\nInfo:-----\r\nProgress:-----");
-			SendMessage(g_hwndStatic,WM_SETTEXT,0,(LPARAM)szStatusMessage);
+			StatusMessage("Status: No new updates.\r\nInfo:-----\r\nProgress:-----");
+
 		
 		}
 		
@@ -1018,5 +1014,16 @@ void PostError(BOOL exitapp)
 		ExitProcess(dwError);
 
 }
-	
+
+void StatusMessage(LPTSTR message, ...)
+{
+	va_list args;
+	LPTSTR buffer = (LPTSTR)LocalAlloc(GMEM_FIXED, strlen(message));
+
+	va_start(args, message);
+	vsprintf(buffer, message, args);
+	va_end(args);
+	SendMessage(g_hwndStatic, WM_SETTEXT, 0, (LPARAM)buffer);
+	LocalFree((HANDLE)buffer);
+}
                           
