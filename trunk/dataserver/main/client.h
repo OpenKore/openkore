@@ -24,6 +24,10 @@
 #ifdef WIN32
 	#include <windows.h>
 	#include <winsock2.h>
+
+	typedef u_short uint16_t;
+#else
+	#include <netinet/in.h>
 #endif
 #include "linked-list.h"
 

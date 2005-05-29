@@ -19,6 +19,20 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
+#ifdef WIN32
+	#include <windows.h>
+
+	#define yield SwitchToThread
+	#define milisleep Sleep
+#else
+	#include <sched.h>
+	#include <unistd.h>
+
+	#define yield sched_yield
+	#define milisleep(x) usleep (x * 1000)
+#endif
+
+
 unsigned int calc_hash  (const char *str);
 unsigned int calc_hash2 (const char *str);
 
