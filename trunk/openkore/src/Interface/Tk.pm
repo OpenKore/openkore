@@ -789,7 +789,8 @@ sub loadMap {
 	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d)", $field{'name'}, $x, $y);
 }
 
-#should this cache xbm files?
+# should this cache xbm files?
+
 sub xbmmake {
 	my $r_field = shift;
 	my ($hx,$hy,$mvw_x,$mvw_y);
@@ -805,7 +806,7 @@ sub xbmmake {
 	for (my $j = 0; $j < $mvw_y; $j++) {
 		$hy = ($mvw_x*($mvw_y-$j-1));
 		for (my $k = 0; $k < $hx; $k++) {
-			$dump += 256 if (!checkFieldWalkable($r_field, $k, $j));
+			$dump += 256 if (!checkFieldWalkable($r_field, $k, $r_field->{height}-$j));
 			$dump = $dump/2;
 			if (($k % 8) == 7) {
 				$line .= sprintf("0x%02x\,",$dump);
