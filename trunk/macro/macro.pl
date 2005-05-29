@@ -298,8 +298,26 @@ sub setVar {
 # gets variable's value from stack
 sub getVar {
   my $var = shift;
+  refreshGlobal($var);
   return unless $varStack{$var};
   return $varStack{$var};
+};
+
+# sets and/or refreshes global variables
+sub refreshGlobal {
+  my $var = shift;
+  if (!defined $var || $var eq '.pos') {
+    my %pos = calcPosition($char);
+    my $val = sprintf("%d %d %s", $pos{x}, $pos{y}, $field{name});
+    setVar(".pos", $val);
+  };
+  if (!defined $var || $var eq '.time') {
+    setVar(".time", time);
+  };
+  if (!defined $var || $var eq '.datetime') {
+    my $val = localtime;
+    setVar(".datetime", $val);
+  };
 };
 
 # logs message to console
@@ -572,7 +590,10 @@ sub match {
 sub checkVar {
   my ($var, $cond, $val) = split(/ /, $_[0]);
   return 1 if ($cond eq "unset" && !exists $varStack{$var});
-  return 1 if (exists $varStack{$var} && cmpr($varStack{$var}, $cond, $val));
+  if (exists $varStack{$var}) {
+    refreshGlobal($var);
+    return 1 if cmpr($varStack{$var}, $cond, $val);
+  };
   return 0;
 };
 
@@ -765,7 +786,7 @@ sub checkPM {
     };
   };
   if ($auth && match($arg->{privMsg},$tPM)) {
-    setVar("lastPMnick", $arg->{privMsgUser});
+    setVar(".lastpm", $arg->{privMsgUser});
     return 1;
   };
   return 0;
@@ -781,7 +802,7 @@ sub checkPubM {
   my $mypos = calcPosition($char);
   my $pos = calcPosition($::players{$arg->{pubID}});
   if (match($arg->{pubMsg},$tPM) && distance($mypos, $pos) < $distance) {
-    setVar("lastPubNick", $arg->{pubMsgUser});
+    setVar(".lastpub", $arg->{pubMsgUser});
     return 1;
   };
   return 0;
