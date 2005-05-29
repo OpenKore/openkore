@@ -1577,9 +1577,8 @@ sub parseCommand {
 		useTeleport(1);
 
 	} elsif ($switch eq "where") {
-		my ($map_string) = $field{name} =~ /([\s\S]*)\.gat/;
 		my $pos = calcPosition($char);
-		message("Location $maps_lut{$map_string.'.rsw'} ($map_string) : $pos->{x}, $pos->{y}\n", "info");
+		message("Location $maps_lut{$field{name}.'.rsw'} ($field{name}) : $pos->{x}, $pos->{y}\n", "info");
 
 	} elsif ($switch eq "east") {
 		manualMove(5, 0);
