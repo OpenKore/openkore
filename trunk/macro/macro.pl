@@ -307,8 +307,8 @@ sub getVar {
 sub refreshGlobal {
   my $var = shift;
   if (!defined $var || $var eq '.pos') {
-    my %pos = calcPosition($char);
-    my $val = sprintf("%d %d %s", $pos{x}, $pos{y}, $field{name});
+    my $pos = calcPosition($char);
+    my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
     setVar(".pos", $val);
   };
   if (!defined $var || $var eq '.time') {
