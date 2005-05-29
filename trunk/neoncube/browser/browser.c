@@ -1,20 +1,23 @@
-/*
- * Dll.c -- A dynamic link library to display a web page in your own window.
- *
- * This is very loosely based upon a C++ example written by Chris Becke. I used
- * that to learn the minimum of what I needed to know about hosting the browser
- * object. Then I wrote this example from the ground up in C.
- *
- * The functions in this DLL callable by a program:
- *
- * EmbedBrowserObject() -- Embeds a browser object in your own window.
- * UnEmbedBrowserObject() -- Detaches the browser object from your window.
- * DisplayHTMLPage() -- Displays a URL or HTML file on disk.
- * DisplayHTMLStr() -- Displays a (in memory) string of HTML code.
- *
- * For the release (ie, not debug) version, then you should set your linker to
- * ignore the default libraries. This will reduce code size.
- */
+/*############################################################################
+##			NEONCUBE - RAGNAROK ONLINE PATCH CLIENT
+##
+##  http://openkore.sourceforge.net/neoncube
+##  Credits: Jeff Glatt
+##  This program is free software; you can redistribute it and/or modify
+##  it under the terms of the GNU General Public License as published by
+##  the Free Software Foundation; either version 2 of the License, or
+##  (at your option) any later version.
+##
+##  This program is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU General Public License for more details.
+##
+## You should have received a copy of the GNU General Public License
+##  along with this program; if not, write to the Free Software
+##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+##
+##############################################################################*/
 
 #include <windows.h>
 #include <exdisp.h>		/* Defines of stuff like IWebBrowser2. This is an include file with Visual C 6 and above */
@@ -791,134 +794,6 @@ void WINAPI UnEmbedBrowserObject(HWND hwnd)
 	_ASSERT(0);
 }
 
-
-
-
-
-
-/******************************* DisplayHTMLStr() ****************************
- * Takes a string containing some HTML BODY, and displays it in the specified
- * window. For example, perhaps you want to display the HTML text of...
- *
- * <P>This is a picture.<P><IMG src="mypic.jpg">
- *
- * hwnd =		Handle to the window hosting the browser object.
- * string =		Pointer to nul-terminated string containing the HTML BODY.
- *				(NOTE: No <BODY></BODY> tags are required in the string).
- *
- * RETURNS: 0 if success, or non-zero if an error.
- *
- * NOTE: EmbedBrowserObject() must have been successfully called once with the
- * specified window, prior to calling this function. You need call
- * EmbedBrowserObject() once only, and then you can make multiple calls to
- * this function to display numerous pages in the specified window.
- */
-
-long WINAPI DisplayHTMLStr(HWND hwnd, LPCTSTR string)
-{	
-	IWebBrowser2	*webBrowser2;
-	LPDISPATCH		lpDispatch;
-	IHTMLDocument2	*htmlDoc2;
-	IOleObject		*browserObject;
-	SAFEARRAY		*sfArray;
-	VARIANT			myURL;
-	VARIANT			*pVar;
-	BSTR			bstr;
-
-	// Retrieve the browser object's pointer we stored in our window's GWL_USERDATA when
-	// we initially attached the browser object to this window.
-	browserObject = *((IOleObject **)GetWindowLong(hwnd, GWL_USERDATA));
-
-	// Assume an error.
-	bstr = 0;
-
-	// We want to get the base address (ie, a pointer) to the IWebBrowser2 object embedded within the browser
-	// object, so we can call some of the functions in the former's table.
-	if (!browserObject->lpVtbl->QueryInterface(browserObject, &IID_IWebBrowser2, (void**)&webBrowser2))
-	{
-		// Ok, now the pointer to our IWebBrowser2 object is in 'webBrowser2', and so its VTable is
-		// webBrowser2->lpVtbl.
-
-		// Before we can get_Document(), we actually need to have some HTML page loaded in the browser. So,
-		// let's load an empty HTML page. Then, once we have that empty page, we can get_Document() and
-		// write() to stuff our HTML string into it.
-		VariantInit(&myURL);
-		myURL.vt = VT_BSTR;
-		myURL.bstrVal = SysAllocString(L"about:blank");
-
-		// Call the Navigate2() function to actually display the page.
-		webBrowser2->lpVtbl->Navigate2(webBrowser2, &myURL, 0, 0, 0, 0);
-
-		// Free any resources (including the BSTR).
-		VariantClear(&myURL);
-
-		// Call the IWebBrowser2 object's get_Document so we can get its DISPATCH object. I don't know why you
-		// don't get the DISPATCH object via the browser object's QueryInterface(), but you don't.
-		if (!webBrowser2->lpVtbl->get_Document(webBrowser2, &lpDispatch))
-		{
-			// We want to get a pointer to the IHTMLDocument2 object embedded within the DISPATCH
-			// object, so we can call some of the functions in the former's table.
-			if (!lpDispatch->lpVtbl->QueryInterface(lpDispatch, &IID_IHTMLDocument2, (void**)&htmlDoc2))
-			{
-				// Ok, now the pointer to our IHTMLDocument2 object is in 'htmlDoc2', and so its VTable is
-				// htmlDoc2->lpVtbl.
-
-				// Our HTML must be in the form of a BSTR. And it must be passed to write() in an
-				// array of "VARIENT" structs. So let's create all that.
-				if ((sfArray = SafeArrayCreate(VT_VARIANT, 1, (SAFEARRAYBOUND *)&ArrayBound)))
-				{
-					if (!SafeArrayAccessData(sfArray, (void**)&pVar))
-					{
-						pVar->vt = VT_BSTR;
-#ifndef UNICODE
-						{
-						wchar_t		*buffer;
-						DWORD		size;
-
-						size = MultiByteToWideChar(CP_ACP, 0, string, -1, 0, 0);
-						if (!(buffer = (wchar_t *)GlobalAlloc(GMEM_FIXED, sizeof(wchar_t) * size))) goto bad;
-						MultiByteToWideChar(CP_ACP, 0, string, -1, buffer, size);
-						bstr = SysAllocString(buffer);
-						GlobalFree(buffer);
-						}
-#else
-						bstr = SysAllocString(string);
-#endif
-						// Store our BSTR pointer in the VARIENT.
-						if ((pVar->bstrVal = bstr))
-						{
-							// Pass the VARIENT with its BSTR to write() in order to shove our desired HTML string
-							// into the body of that empty page we created above.
-							htmlDoc2->lpVtbl->write(htmlDoc2, sfArray);
-
-							// Normally, we'd need to free our BSTR, but SafeArrayDestroy() does it for us
-//							SysFreeString(bstr);
-						}
-					}
-
-					// Free the array. This also frees the VARIENT that SafeArrayAccessData created for us,
-					// and even frees the BSTR we allocated with SysAllocString
-					SafeArrayDestroy(sfArray);
-				}
-
-				// Release the IHTMLDocument2 object.
-bad:			htmlDoc2->lpVtbl->Release(htmlDoc2);
-			}
-
-			// Release the DISPATCH object.
-			lpDispatch->lpVtbl->Release(lpDispatch);
-		}
-
-		// Release the IWebBrowser2 object.
-		webBrowser2->lpVtbl->Release(webBrowser2);
-	}
-
-	// No error?
-	if (bstr) return(0);
-
-	// An error
-	return(-1);
-}
 
 
 
