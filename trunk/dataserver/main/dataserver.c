@@ -21,7 +21,6 @@
 #include <string.h>
 #include <limits.h>
 #include <errno.h>
-#include <netinet/in.h>
 
 #include "dataserver.h"
 #include "client.h"
@@ -35,8 +34,6 @@
 #else
 	#include <sys/poll.h>
 	#include <signal.h>
-	#include <unistd.h>
-	#include <sched.h>
 	#include "unix-server.h"
 #endif
 
@@ -303,7 +300,7 @@ client_thread_callback (void *pointer)
 			/* We've been assigned a new client; add to client list. */
 			new_client->priv = calloc (sizeof (PrivateData), 1);
 			llist_append_existing (thread_data->clients, new_client);
-			sched_yield ();
+			yield ();
 			free (ufds);
 			ufds = NULL;
 
@@ -313,7 +310,7 @@ client_thread_callback (void *pointer)
 
 		if (client == NULL) {
 			/* We have no clients so just sleep. */
-			usleep (10000);
+			milisleep (10);
 			continue;
 		}
 
@@ -378,7 +375,7 @@ client_thread_callback (void *pointer)
 			ufds = NULL;
 		}
 
-		sched_yield();
+		yield();
 	}
 }
 
@@ -414,7 +411,7 @@ on_new_client (Client *client)
 	LOCK (threads[found].lock);
 	threads[found].new_client = client;
 	UNLOCK (threads[found].lock);
-	sched_yield ();
+	yield ();
 }
 
 
