@@ -19,6 +19,7 @@ Bug fixes:
   conversation. http://openkore.sourceforge.net/forum/viewtopic.php?t=4743
 - Don't say "Done talking with <NPC>." until after "<NPC> : Done talking".
 - Undo above change because NPCs don't always say "Done talking".
+- Fix where command.
 
 New features:
 - Better support for detecting dead players.
