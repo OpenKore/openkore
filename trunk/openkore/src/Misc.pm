@@ -215,17 +215,19 @@ sub debug_showSpots {
 }
 
 ##
-# visualDump(data)
+# visualDump(data [, label])
 #
 # Show the bytes in $data on screen as hexadecimal.
+# Displays the label if provided.
 sub visualDump {
-	my $msg = shift;
+	my ($msg, $label) = @_;
 	my $dump;
 	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
 
+	my $labelStr = $label ? " ($label)" : '';
 	$dump = "================================================\n" .
 		getFormattedDate(int(time)) . "\n\n" . 
-		length($msg) . " bytes\n\n";
+		length($msg) . " bytes$labelStr\n\n";
 
 	for (my $i = 0; $i < length($msg); $i += 16) {
 		my $line;
