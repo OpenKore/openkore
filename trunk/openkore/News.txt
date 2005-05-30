@@ -21,6 +21,9 @@ Bug fixes:
 - Undo above change because NPCs don't always say "Done talking".
 - Fix where command.
 - Fix detection of lower headgear in packet 01DA, 01D9, 01D8.
+- Correctly detect a player's sitting status when you walk onto their
+  screen (packet 01D8, "Player Exists"). It was previously detecting
+  every non-dead player as sitting.
 
 New features:
 - Better support for detecting dead players.
