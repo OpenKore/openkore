@@ -7480,17 +7480,17 @@ sub parseMsg {
 
 		} elsif ($part == 3) {
 			# Bottom headgear change
-			message getActorName($ID)." changed bottom headgear to: ".headgearName($number)."\n", "parseMsg_statuslook";
+			message getActorName($ID)." changed bottom headgear to: ".headgearName($number)."\n", "parseMsg_statuslook" unless $ID eq $accountID;
 			$players{$ID}{headgear}{low} = $number if $players{$ID};
 
 		} elsif ($part == 4) {
 			# Top headgear change
-			message getActorName($ID)." changed top headgear to: ".headgearName($number)."\n", "parseMsg_statuslook";
+			message getActorName($ID)." changed top headgear to: ".headgearName($number)."\n", "parseMsg_statuslook" unless $ID eq $accountID;
 			$players{$ID}{headgear}{top} = $number if $players{$ID};
 
 		} elsif ($part == 5) {
 			# Middle headgear change
-			message getActorName($ID)." changed middle headgear to: ".headgearName($number)."\n", "parseMsg_statuslook";
+			message getActorName($ID)." changed middle headgear to: ".headgearName($number)."\n", "parseMsg_statuslook" unless $ID eq $accountID;
 			$players{$ID}{headgear}{mid} = $number if $players{$ID};
 
 		} elsif ($part == 6) {
@@ -11325,8 +11325,9 @@ sub checkSelfCondition {
 }
 
 sub checkPlayerCondition {
-	$prefix = shift;
-	$id = shift;
+	my ($prefix, $id) = @_;
+
+	my $player = $players{$id};
 
 	if ($config{$prefix . "_timeout"}) { return 0 unless timeOut($ai_v{$prefix . "_time"}{$id}, $config{$prefix . "_timeout"}) }
 	if ($config{$prefix . "_whenStatusActive"}) { return 0 unless (whenStatusActivePL($id, $config{$prefix . "_whenStatusActive"})); }
@@ -11386,6 +11387,14 @@ sub checkPlayerCondition {
 	}
 	if ($config{$prefix."_dead"}) {
 		return 0 if !$players{$id}{dead};
+	}
+
+	if ($config{$prefix."_whenWeaponEquipped"}) {
+		return 1 if $player->{weapon};
+	}
+
+	if ($config{$prefix."_whenShieldEquipped"}) {
+		return 1 if $player->{shield};
 	}
 	
 	return 1;
