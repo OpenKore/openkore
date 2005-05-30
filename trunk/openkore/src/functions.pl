@@ -5488,12 +5488,14 @@ sub parseMsg {
 		}
 	}
 
-	if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
-		my $label = $packetDescriptions{Recv}{$switch} ?
-			" ($packetDescriptions{Recv}{$switch})" : '';
-		my $all = $config{debugPacket_received} > 1 ?
-			" - ".getHex(substr($msg, 2, $msg_size - 2)) : '';
-		debug "Packet: $switch$label$all\n", "parseMsg", 0;
+	if (!existsInList($config{'debugPacket_exclude'}, $switch)) {
+		if ($config{debugPacket_received} == 1) {
+			my $label = $packetDescriptions{Recv}{$switch} ?
+				" ($packetDescriptions{Recv}{$switch})" : '';
+			debug "Packet: $switch$label\n", "parseMsg", 0;
+		} else {
+			visualDump(substr($msg, 0, $msg_size), "$switch - $packetDescriptions{Recv}{$switch}");
+		}
 	}
 
 	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
