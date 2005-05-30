@@ -6056,7 +6056,7 @@ sub parseMsg {
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my $weapon = unpack("S1", substr($msg, 18, 2));
 		my $shield = unpack("S1", substr($msg, $switch eq "01DA" ? 20 : 26, 2));
-		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
+		my $lowhead = $headgears_lut[unpack("S1",substr($msg, $switch eq "01DA" ? 22 : 20,  2))];
 		my $tophead = $headgears_lut[unpack("S1",substr($msg, 28,  2))];
 		my $midhead = $headgears_lut[unpack("S1",substr($msg, 30,  2))];
 		my $hair_color = unpack("S1",substr($msg, 32,  2));
