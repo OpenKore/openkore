@@ -1214,6 +1214,7 @@ sub cmdPlayerList {
 			["$directions_lut{$body} ($body)", "$directions_lut{$head} ($head)"]);
 		$msg .= "Weapon: ".main::itemName({nameID => $player->{weapon}})."\n";
 		$msg .= "Shield: ".main::itemName({nameID => $player->{shield}})."\n";
+		$msg .= "Shoes : ".main::itemName({nameID => $player->{shoes}})."\n";
 		$msg .= swrite(
 			"Upper headgear: @<<<<<<<<<<<<<<<<<<< Middle headgear: @<<<<<<<<<<<<<<<<<<<",
 			[$headTop, $headMid]);
