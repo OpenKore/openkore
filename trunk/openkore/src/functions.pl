@@ -9220,18 +9220,18 @@ sub parseMsg {
 			my $name = getActorName($sourceID);
 			if ($type == 2) {
 				if ($ID1 ne $player->{weapon}) {
-					message "$name changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook";
+					message "$name changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
 					$player->{weapon} = $ID1;
 				}
 				if ($ID2 ne $player->{shield}) {
-					message "$name changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook";
+					message "$name changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook", 2;
 					$player->{shield} = $ID2;
 				}
 			} elsif ($type == 9) {
-				if ($ID1 ne $player->{shoes}) {
-					message "$name changed Shoes to: ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook";
-					$player->{shoes} = $ID1;
+				if ($player->{shoes} && $ID1 ne $player->{shoes}) {
+					message "$name changed Shoes to: ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
 				}
+				$player->{shoes} = $ID1;
 			}
 		}
       		
