@@ -5488,7 +5488,7 @@ sub parseMsg {
 		}
 	}
 
-	if (!existsInList($config{'debugPacket_exclude'}, $switch)) {
+	if ($config{debugPacket_received} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		if ($config{debugPacket_received} == 1) {
 			my $label = $packetDescriptions{Recv}{$switch} ?
 				" ($packetDescriptions{Recv}{$switch})" : '';
