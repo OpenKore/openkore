@@ -1264,7 +1264,7 @@ sub positionNearPlayer {
 		next unless defined $_;
 		next if $char->{party} && $char->{party}{users} &&
 			$char->{party}{users}{$_};
-		next if existsInList($config{ksPlayers}, $players{$_}{name});
+		next if existsInList($config{tankersList}, $players{$_}{name});
 		return 1 if (distance($r_hash, $players{$_}{pos_to}) <= $dist);
 	}
 	return 0;
