@@ -5440,13 +5440,6 @@ sub parseMsg {
 		decrypt(\$msg, $msg);
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
-	if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
-		my $label = $packetDescriptions{Recv}{$switch} ?
-			" - $packetDescriptions{Recv}{$switch}" : '';
-		my $all = $config{debugPacket_received} > 1 ?
-			" - ".getHex($msg) : '';
-		debug "Packet: $switch$label$all\n", "parseMsg", 0;
-	}
 
 	# The user is running in X-Kore mode and wants to switch character.
 	# We're now expecting an accountID.
@@ -5493,6 +5486,14 @@ sub parseMsg {
 			}
 			return "";
 		}
+	}
+
+	if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
+		my $label = $packetDescriptions{Recv}{$switch} ?
+			" ($packetDescriptions{Recv}{$switch})" : '';
+		my $all = $config{debugPacket_received} > 1 ?
+			" - ".getHex(substr($msg, 2, $msg_size - 2)) : '';
+		debug "Packet: $switch$label$all\n", "parseMsg", 0;
 	}
 
 	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
