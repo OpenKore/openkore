@@ -9188,6 +9188,17 @@ sub parseMsg {
 		my $type = unpack("C1",substr($msg, 6, 1));
 		my $ID1 = unpack("S1", substr($msg, 7, 2));
 		my $ID2 = unpack("S1", substr($msg, 9, 2));
+
+		if ($type == 2 && (my $player = $players{$sourceID})) {
+			if ($ID1 ne $player->{weapon}) {
+				message "$player->{name} changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook";
+			}
+			if ($ID2 ne $player->{shield}) {
+				message "$player->{name} changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook";
+			}
+			$player->{weapon} = $ID1;
+			$player->{shield} = $ID2;
+		}
       		
 	} elsif ($switch eq "01DC") {
 		$secureLoginKey = substr($msg, 4, $msg_size);
