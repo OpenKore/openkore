@@ -68,7 +68,7 @@
 00DF Chat Room Properties Modified
 00E1 Chat Room Owner Changed
 00E5 Deal Request
-00E7 Deal Accept
+00E7 Deal Request Reply
 00E9 Deal Added (Other)
 00EA Deal Added (You)
 00EC Deal Confirm
