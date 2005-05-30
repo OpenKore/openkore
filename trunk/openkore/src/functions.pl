@@ -1234,7 +1234,8 @@ sub parseCommand {
 				}
 				ai_route($map, $x, $y,
 					attackOnRoute => 1,
-					noSitAuto => 1);
+					noSitAuto => 1,
+					notifyUponArrival => 1);
 			} elsif ($map =~ /^\d$/) {
 				if ($portalsID[$map]) {
 					message("Move into portal number $map ($portals{$portalsID[$map]}{'pos'}{'x'},$portals{$portalsID[$map]}{'pos'}{'y'})\n");
@@ -4546,7 +4547,11 @@ sub AI {
 
 			unless (@{$args->{solution}}) {
 				# No more points to cover; we've arrived at the destination
-				debug "Destination reached.\n", "route";
+				if (AI::args->{notifyUponArrival}) {
+					message "Destination reached.\n", "success";
+				} else {
+					debug "Destination reached.\n", "route";
+				}
 				AI::dequeue;
 
 			} elsif ($args->{old_x} == $cur_x && $args->{old_y} == $cur_y && timeOut($args->{time_step}, 3)) {
@@ -4633,7 +4638,11 @@ sub AI {
 					}
 				} else {
 					# No more points to cover
-					debug "Destination reached.\n", "route";
+					if (AI::args->{notifyUponArrival}) {
+						message "Destination reached.\n", "success";
+					} else {
+						debug "Destination reached.\n", "route";
+					}
 					AI::dequeue;
 				}
 			}
@@ -9598,6 +9607,7 @@ sub ai_route {
 	$args{'attackID'} = $param{attackID} if exists $param{attackID};
 	$args{'noSitAuto'} = $param{noSitAuto} if exists $param{noSitAuto};
 	$args{'noAvoidWalls'} = $param{noAvoidWalls} if exists $param{noAvoidWalls};
+	$args{notifyUponArrival} = $param{notifyUponArrival} if exists $param{notifyUponArrival};
 	$args{'tags'} = $param{tags} if exists $param{tags};
 	$args{'time_start'} = time;
 
