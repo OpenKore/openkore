@@ -5883,7 +5883,7 @@ sub parseMsg {
 			$player->{look}{head} = $head_dir;
 			if ($act == 1) {
 				$player->{dead} = 1;
-			} else { # usually 2?
+			} elsif ($act == 2) {
 				$player->{sitting} = 1;
 			}
 			$player->{lv} = $lv;
