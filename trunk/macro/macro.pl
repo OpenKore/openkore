@@ -83,7 +83,7 @@ sub Reload {
 sub parseMacroFile {
   my ($file, $r_hash) = @_;
   undef %{$r_hash};
-  
+
   my ($cBlock, %block);
   open FILE, "< $file";
   foreach (<FILE>) {
@@ -93,7 +93,7 @@ sub parseMacroFile {
     s/  +/ /g;         # trim down spaces
     next unless ($_);
     if (!defined $cBlock && /^\/\*/) {
-      $block{type} = "comment"; next;
+      $cBlock = 1; next;
     } elsif (m/\*\/$/) {
       undef $cBlock;
       next;
@@ -230,7 +230,7 @@ sub parseCmd {
 # runs and removes commands from queue
 sub processQueue {
   if (!@macroQueue) {AI::dequeue if AI::is('macro'); return};
-  
+
   if (timeOut($timeout{macro_delay}) && ai_isIdle()) {
     $timeout{macro_delay}{time} = time;
     our $macro_delay;
@@ -543,7 +543,7 @@ sub automacroCheck {
 
     if (defined $automacro{$am}->{call}) {
       $launcher{call} = $automacro{$am}->{call};
-      $launcher{override_ai} = 1 if ($automacro{$am}->{overrideAI});
+      $launcher{override_ai} = 1 if $automacro{$am}->{overrideAI};
       $launcher{timeout} = $automacro{$am}->{delay} if defined $automacro{$am}->{delay};
       $launcher{time} = time;
     };
