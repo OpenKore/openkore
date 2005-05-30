@@ -17,7 +17,7 @@
 0087 You Move
 0088 Unit Position
 008A Item take / attack damage / sit / stand
-008D Public essage
+008D Public message
 008E Public message by yourself
 0091 Map Changed
 0092 Map Server Changed
