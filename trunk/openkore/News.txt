@@ -46,6 +46,8 @@ New features:
 - "pl" command now displays what shield people are using.
 - debugPacket_received 2 option functions like a packet sniffer.
 - Detect when another player changes their weapon/shield or headgear.
+- Detect what shoes another player is wearing. (It will say "Unknown" if
+  you never saw that person walk.)
 - Make "Destination reached." command a non-debug message when you arrive
   at a manually input destination.
 - Implemented "That person is too far from you to trade." error message.

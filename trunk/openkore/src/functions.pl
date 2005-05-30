@@ -9216,15 +9216,23 @@ sub parseMsg {
 		my $ID1 = unpack("S1", substr($msg, 7, 2));
 		my $ID2 = unpack("S1", substr($msg, 9, 2));
 
-		if ($type == 2 && (my $player = $players{$sourceID})) {
-			if ($ID1 ne $player->{weapon}) {
-				message "$player->{name} changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook";
+		if (my $player = $players{$sourceID}) {
+			my $name = getActorName($sourceID);
+			if ($type == 2) {
+				if ($ID1 ne $player->{weapon}) {
+					message "$name changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook";
+					$player->{weapon} = $ID1;
+				}
+				if ($ID2 ne $player->{shield}) {
+					message "$name changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook";
+					$player->{shield} = $ID2;
+				}
+			} elsif ($type == 9) {
+				if ($ID1 ne $player->{shoes}) {
+					message "$name changed Shoes to: ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook";
+					$player->{shoes} = $ID1;
+				}
 			}
-			if ($ID2 ne $player->{shield}) {
-				message "$player->{name} changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook";
-			}
-			$player->{weapon} = $ID1;
-			$player->{shield} = $ID2;
 		}
       		
 	} elsif ($switch eq "01DC") {
@@ -11136,6 +11144,7 @@ sub cardName {
 # Resolve the name of a simple item
 sub itemNameSimple {
 	my $ID = shift;
+	return 'Unknown' unless defined($ID);
 	return 'None' unless $ID;
 	return $items_lut{$ID} || "Unknown $ID";
 }
