@@ -5432,11 +5432,11 @@ sub parseMsg {
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{'debugPacket_received'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
-		if ($packetDescriptions{Recv}{$switch} ne '') {
-			debug "Packet: $switch - $packetDescriptions{Recv}{$switch}\n", "parseMsg", 0;
-		} else {
-			debug "Packet: $switch\n", "parseMsg", 0;
-		}
+		my $label = $packetDescriptions{Recv}{$switch} ?
+			" - $packetDescriptions{Recv}{$switch}" : '';
+		my $all = $config{debugPacket_received} > 1 ?
+			" - ".getHex($msg) : '';
+		debug "Packet: $switch$label$all\n", "parseMsg", 0;
 	}
 
 	# The user is running in X-Kore mode and wants to switch character.
@@ -5833,6 +5833,7 @@ sub parseMsg {
 		my $type = unpack("S*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my $weapon = unpack("S1", substr($msg, 18, 2));
+		my $shield = unpack("S1", substr($msg, $switch eq "01D8" ? 20 : 22, 2));
 		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
 		my $tophead = $headgears_lut[unpack("S1",substr($msg, 24,  2))];
 		my $midhead = $headgears_lut[unpack("S1",substr($msg, 26,  2))];
@@ -5859,6 +5860,7 @@ sub parseMsg {
 				$player->{nameID} = unpack("L1", $ID);
 				$player->{binID} = binFind(\@playersID, $ID);
 				$player->{weapon} = $weapon;
+				$player->{shield} = $shield;
 				$added = 1;
 			}
 
@@ -5986,6 +5988,7 @@ sub parseMsg {
 		my $param3 = unpack("S1", substr($msg, 12, 2));
 		my $type = unpack("S*", substr($msg, 14,  2));
 		my $weapon = unpack("S1", substr($msg, 18, 2));
+		my $shield = unpack("S1", substr($msg, $switch eq "01D9" ? 20 : 22, 2));
 		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
 		my $tophead = $headgears_lut[unpack("S1",substr($msg, 24,  2))];
 		my $midhead = $headgears_lut[unpack("S1",substr($msg, 26,  2))];
@@ -6006,10 +6009,11 @@ sub parseMsg {
 				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-				$players{$ID}{weapon} = $weapon;
 				$added = 1;
 			}
 
+			$players{$ID}{weapon} = $weapon;
+			$players{$ID}{shield} = $shield;
 			$players{$ID}{walk_speed} = $walk_speed;
 			$players{$ID}{headgear}{low} = $lowhead;
 			$players{$ID}{headgear}{top} = $tophead;
@@ -6042,6 +6046,7 @@ sub parseMsg {
 		my $type = unpack("S*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my $weapon = unpack("S1", substr($msg, 18, 2));
+		my $shield = unpack("S1", substr($msg, $switch eq "01DA" ? 20 : 26, 2));
 		my $lowhead = $headgears_lut[unpack("S1",substr($msg, 20,  2))];
 		my $tophead = $headgears_lut[unpack("S1",substr($msg, 28,  2))];
 		my $midhead = $headgears_lut[unpack("S1",substr($msg, 30,  2))];
@@ -6067,11 +6072,12 @@ sub parseMsg {
 				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-				$players{$ID}{weapon} = $weapon;
 				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence/player";
 				$added = 1;
 			}
 
+			$players{$ID}{weapon} = $weapon;
+			$players{$ID}{shield} = $shield;
 			$players{$ID}{walk_speed} = $walk_speed;
 			$players{$ID}{look}{head} = 0;
 			$players{$ID}{look}{body} = $direction;
