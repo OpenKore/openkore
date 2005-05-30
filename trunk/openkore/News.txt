@@ -20,7 +20,7 @@ Bug fixes:
 - Don't say "Done talking with <NPC>." until after "<NPC> : Done talking".
 - Undo above change because NPCs don't always say "Done talking".
 - Fix where command.
-- Fix detection of lower headgear in packet 01DA.
+- Fix detection of lower headgear in packet 01DA, 01D9.
 
 New features:
 - Better support for detecting dead players.
