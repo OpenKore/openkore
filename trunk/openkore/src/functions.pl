@@ -8120,8 +8120,6 @@ sub parseMsg {
 			$disp = $status.$disp;
 		}
 
-		message $disp, $domain, 1;
-
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
 			'sourceID' => $sourceID,
@@ -8129,8 +8127,11 @@ sub parseMsg {
 			'damage' => $damage,
 			'amount' => 0,
 			'x' => 0,
-			'y' => 0
-			});
+			'y' => 0,
+			'disp' => \$disp
+		});
+
+		message $disp, $domain, 1;
 
 	} elsif ($switch eq "0117") {
 		# Skill used on coordinates
