@@ -17,7 +17,7 @@
 #
 # This module contains functions that do not belong in any other modules.
 # The difference between Misc.pm and Utils.pm is that Misc.pm can have
-# dependancies on other Kore modules.
+# dependencies on other Kore modules.
 
 package Misc;
 
@@ -84,6 +84,7 @@ our @EXPORT = (
 	getPortalDestName
 	getResponse
 	getSpellName
+	headgearName
 	manualMove
 	objectAdded
 	objectRemoved
@@ -1177,6 +1178,27 @@ sub storageGet {
 		$args{timeout} = 0.15;
 		AI::queue("storageGet", \%args);
 	}
+}
+
+##
+# headgearName(lookID)
+#
+# Resolves a lookID of a headgear into a human readable string.
+#
+# A lookID corresponds to a line number in tables/headgears.txt.
+# The number on that line is the itemID for the headgear.
+sub headgearName {
+	my ($lookID) = @_;
+
+	return "Nothing" if $lookID == 0;
+
+	my $itemID = $headgears_lut[$lookID];
+
+	if (!defined($itemID)) {
+		return "Unknown lookID $lookID";
+	}
+
+	return main::itemName({nameID => $itemID});
 }
 
 ##

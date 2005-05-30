@@ -1205,9 +1205,9 @@ sub cmdPlayerList {
 			"Sex: @<<<<<<    Class: @<<<<<<<<<<<",
 			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}]);
 
-		my $headTop = main::itemName({nameID => $player->{headgear}{top}});
-		my $headMid = main::itemName({nameID => $player->{headgear}{mid}});
-		my $headLow = main::itemName({nameID => $player->{headgear}{low}});
+		my $headTop = headgearName($player->{headgear}{top});
+		my $headMid = headgearName($player->{headgear}{mid});
+		my $headLow = headgearName($player->{headgear}{low});
 		$msg .= "-------------------------------------------------\n";
 		$msg .= swrite(
 			"Body direction: @<<<<<<<<<<<<<<<<<<< Head direction:  @<<<<<<<<<<<<<<<<<<<",

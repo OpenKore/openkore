@@ -104,6 +104,9 @@ Internal:
   who use the 'talknpc' command. Buys <quantity> of <item#> (<item#> is the
   number shown in the 'store' list). Use after "b", e.g. "b b2,100".
 - Cleanup of redundant functions.pl $map_string variable.
+- Store lookID instead of itemID internally for other players' headgear.
+  http://openkore.sourceforge.net/forum/viewtopic.php?p=51034
+  Fixes "Unknown 140" bug; improves detection of custom headgears.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.
