@@ -5832,10 +5832,12 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $xkore);
 
 	} elsif ($switch eq "0078" || $switch eq "01D8") {
-		# 0078: long ID, word speed, word state, word ailment, word look, word class, word hair,
-		# word weapon, word head_option_bottom, word shield, word head_option_top, word head_option_mid,
-		# word hair_color, word ?, word head_dir, long guild, long emblem, word manner, byte karma,
-		# byte sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word level
+		# 0078: long ID, word speed, word state, word ailment, word look, word
+		# class, word hair, word weapon, word head_option_bottom, word shield,
+		# word head_option_top, word head_option_mid, word hair_color, word ?,
+		# word head_dir, long guild, long emblem, word manner, byte karma, byte
+		# sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word
+		# level
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
 		my $walk_speed = unpack("S", substr($msg, 6, 2)) / 1000;
@@ -5851,6 +5853,7 @@ sub parseMsg {
 		my $midhead = unpack("S1", substr($msg, 26, 2));
 		my $hair_color = unpack("S1", substr($msg, 28, 2));
 		my $head_dir = unpack("S", substr($msg, 32, 2)) % 8;
+		my $guildID = unpack("L1", substr($msg, 34, 4));
 		my $sex = unpack("C*",substr($msg, 45,  1));
 		my %coords;
 		makeCoords(\%coords, substr($msg, 46, 3));
@@ -5871,8 +5874,6 @@ sub parseMsg {
 				$player->{name} = "Unknown";
 				$player->{nameID} = unpack("L1", $ID);
 				$player->{binID} = binFind(\@playersID, $ID);
-				$player->{weapon} = $weapon;
-				$player->{shield} = $shield;
 				$added = 1;
 			}
 
@@ -5883,6 +5884,9 @@ sub parseMsg {
 			$player->{hair_color} = $hair_color;
 			$player->{look}{body} = $body_dir;
 			$player->{look}{head} = $head_dir;
+			$player->{weapon} = $weapon;
+			$player->{shield} = $shield;
+			$player->{guildID} = $guildID;
 			if ($act == 1) {
 				$player->{dead} = 1;
 			} elsif ($act == 2) {
@@ -6006,6 +6010,7 @@ sub parseMsg {
 		my $midhead = unpack("S1", substr($msg, 26,  2));
 		my $hair_color = unpack("S1", substr($msg, 28, 2));
 		my $sex = unpack("C*", substr($msg, 45,  1));
+		my $guildID = unpack("L1", substr($msg, 34, 4));
 		my %coords;
 		makeCoords(\%coords, substr($msg, 46, 3));
 		my $lv = unpack("S*", substr($msg, 51,  2));
@@ -6031,6 +6036,7 @@ sub parseMsg {
 			$players{$ID}{headgear}{top} = $tophead;
 			$players{$ID}{headgear}{mid} = $midhead;
 			$players{$ID}{hair_color} = $hair_color;
+			$players{$ID}{guildID} = $guildID;
 			$players{$ID}{look}{body} = 0;
 			$players{$ID}{look}{head} = 0;
 			$players{$ID}{lv} = $lv;
@@ -6064,6 +6070,7 @@ sub parseMsg {
 		my $midhead = unpack("S1", substr($msg, 30, 2));
 		my $hair_color = unpack("S1", substr($msg, 32, 2));
 		my $sex = unpack("C*",substr($msg, 49,  1));
+		my $guildID = unpack("L1", substr($msg, 38, 4));
 		my (%coordsFrom, %coordsTo);
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
@@ -6098,6 +6105,7 @@ sub parseMsg {
 			$players{$ID}{headgear}{mid} = $midhead;
 			$players{$ID}{hair_color} = $hair_color;
 			$players{$ID}{lv} = $lv;
+			$players{$ID}{guildID} = $guildID;
 			$players{$ID}{pos} = {%coordsFrom};
 			$players{$ID}{pos_to} = {%coordsTo};
 			$players{$ID}{time_move} = time;
@@ -8744,6 +8752,27 @@ sub parseMsg {
 		if ($targetID ne $accountID) {
 			message(getActorName($targetID)." has been resurrected\n", "info");
 			$players{$targetID}{deltaHp} = 0;
+		}
+
+	} elsif ($switch eq "014C") {
+		# Guild Allies/Enemy List
+		# <len>.w (<type>.l <guildID>.l <guild name>.24B).*
+		# type=0 Ally
+		# type=1 Enemy
+
+		# This is the length of the entire packet
+		my $len = unpack("S", substr($msg, 2, 2));
+
+		for (my $i = 4; $i < $len; $i += 32) {
+			my ($type, $guildID, $guildName) = unpack("L1 L1 Z24", substr($msg, $i, 32));
+			if ($type) {
+				# Enemy guild
+				$guild{enemy}{$guildID} = $guildName;
+			} else {
+				# Allied guild
+				$guild{ally}{$guildID} = $guildName;
+			}
+			debug "Your guild is ".($type ? 'enemy' : 'ally')." with guild $guildID ($guildName)\n", "guild";
 		}
 
 	} elsif ($switch eq "0154") {
