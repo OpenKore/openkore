@@ -7713,7 +7713,9 @@ sub parseMsg {
 	} elsif ($switch eq "00E7" || $switch eq "01F5") {
 		$type = unpack("C1", substr($msg, 2, 1));
 		
-		if ($type == 3) {
+		if ($type == 0) {
+			error "That person is too far from you to trade.\n";
+		} elsif ($type == 3) {
 			if (%incomingDeal) {
 				$currentDeal{'name'} = $incomingDeal{'name'};
 				undef %incomingDeal;
