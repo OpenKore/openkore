@@ -7974,7 +7974,7 @@ sub parseMsg {
 	# 3 Packets About MVP
 	} elsif ($switch eq "010A") {
 		my $ID = unpack("S1", substr($msg, 2, 2));
-		my $display = itemNameSimple($ID);
+		my $display = itemName({nameID => $ID});
 		message "Get MVP item $display\n";
 		chatLog("k", "Get MVP item $display\n");
 
