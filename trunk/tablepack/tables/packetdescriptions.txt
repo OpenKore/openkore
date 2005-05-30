@@ -2,16 +2,16 @@
 0000 Idle
 0069 Account Info
 006A Connection Failed
-006B Recieved characters from Game Login Server
+006B Received characters from Game Login Server
 006C Error logging into Game Login Server (invalid character specified)...
-0071 Recieved character ID and Map IP from Game Login Server
+0071 Received character ID and Map IP from Game Login Server
 0073 Enter Map
 0078 Unit Exists
 0079 Unit Connected
 007B Unit Move
 007C Unit Spawned
-007F Recieved Sync
-007F Recieved Sync
+007F Received Sync
+007F Received Sync
 0080 Unit Lost (Died, Disappeared, Disconnected)
 0081 Disconnected from Server
 0087 You Move
