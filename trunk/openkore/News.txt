@@ -44,6 +44,7 @@ New features:
 - The inInventory option now checks if you have all of the items in the list.
 - "pl" command now displays what shield people are using.
 - debugPacket_received 2 option functions like a packet sniffer.
+- Detect when another player changes their weapon/shield.
 
 New commands:
 - storage log
