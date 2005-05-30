@@ -45,6 +45,8 @@ New features:
 - "pl" command now displays what shield people are using.
 - debugPacket_received 2 option functions like a packet sniffer.
 - Detect when another player changes their weapon/shield.
+- Make "Destination reached." command a non-debug message when you arrive
+  at a manually input destination.
 
 New commands:
 - storage log
