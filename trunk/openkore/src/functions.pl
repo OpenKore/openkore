@@ -8818,7 +8818,9 @@ sub parseMsg {
 		$timeout{'ai_guildAutoDeny'}{'time'} = time;
 
 	} elsif ($switch eq "016C") {
-		($chars[$config{'char'}]{'guild'}{'name'}) = substr($msg, 19, 24) =~ /([\s\S]*?)\000/;
+		my ($guildID, $emblemID, $mode, $guildName) = unpack("x2 L L L x5 Z24", $msg);
+		$char->{guild}{name} = $guildName;
+		$char->{guildID} = $guildID;
 
 	} elsif ($switch eq "016D") {
 		my $ID = substr($msg, 2, 4);

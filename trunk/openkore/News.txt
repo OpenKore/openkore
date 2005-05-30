@@ -56,7 +56,7 @@ New features:
 - Implemented "That person is too far from you to trade." error message.
 - _whenWeaponEquipped _whenShieldEquipped conditions.
 - Implement packet 014C (guild ally/enemy list).
-- Detect $player->{guildID}.
+- Detect $player->{guildID} and $char->{guildID}.
 
 New commands:
 - storage log
