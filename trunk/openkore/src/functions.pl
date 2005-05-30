@@ -7461,8 +7461,8 @@ sub parseMsg {
 	} elsif ($switch eq "00C3") {
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
-		my $part = unpack("C1",substr($msg, 6, 1));
-		my $number = unpack("C1",substr($msg, 7, 1));
+		my $part = unpack("C1", substr($msg, 6, 1));
+		my $number = unpack("C1", substr($msg, 7, 1));
 
 		if ($part == 0) {
 			# Job change
@@ -7476,6 +7476,21 @@ sub parseMsg {
 			} else {
 				debug "Unknown #" . unpack("L", $ID) . " changed job to: $jobs_lut{$number}\n", "parseMsg/job", 2;
 			}
+
+		} elsif ($part == 3) {
+			# Bottom headgear change
+			message getActorName($ID)." changed bottom headgear to: ".headgearName($number)."\n", "parseMsg_statuslook";
+			$players{$ID}{headgear}{low} = $number if $players{$ID};
+
+		} elsif ($part == 4) {
+			# Top headgear change
+			message getActorName($ID)." changed top headgear to: ".headgearName($number)."\n", "parseMsg_statuslook";
+			$players{$ID}{headgear}{top} = $number if $players{$ID};
+
+		} elsif ($part == 5) {
+			# Middle headgear change
+			message getActorName($ID)." changed middle headgear to: ".headgearName($number)."\n", "parseMsg_statuslook";
+			$players{$ID}{headgear}{mid} = $number if $players{$ID};
 
 		} elsif ($part == 6) {
 			# Hair color change
