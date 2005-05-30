@@ -31,7 +31,7 @@ use Globals;
 use Settings qw(%sys);
 use Misc;
 use Utils;
-#use Log qw(message);
+#use Log qw(message warning);
 
 use Carp qw/carp croak confess/;
 use Time::HiRes qw/time usleep/;
@@ -591,14 +591,13 @@ sub pm_add {
 	my $self = shift;
 	my $input_name = shift;
 	my $found = 1;
-	#my @pm_list = $self->{pminput}->cget('-choices');
-	foreach (@{ $self->{pm_list} }){
+	foreach (@{ $self->{pminput}->get(0,'end') }){
 		if ($_ eq $input_name) {
 			$found = 0;
 			last;
 		}
 	}
-	if ($found) {
+	if ($found == 1) {
 		$self->{pminput}->insert("end",$input_name);
 	}
 }
