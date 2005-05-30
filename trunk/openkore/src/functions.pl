@@ -11393,13 +11393,13 @@ sub checkPlayerCondition {
 	}
 
 	if ($config{$prefix."_whenWeaponEquipped"}) {
-		return 1 if $player->{weapon};
+		return 0 unless $player->{weapon};
 	}
 
 	if ($config{$prefix."_whenShieldEquipped"}) {
-		return 1 if $player->{shield};
+		return 0 unless $player->{shield};
 	}
-	
+
 	return 1;
 }
 
@@ -11432,6 +11432,15 @@ sub checkMonsterCondition {
 
 	if ($config{$prefix."_dist"}) {
 		return 0 unless inRange(distance(calcPosition($char), calcPosition($monster)), $config{$prefix."_dist"});
+	}
+
+	# This is only supposed to make sense for players,
+	# but it has to be here for attackSkillSlot PVP to work
+	if ($config{$prefix."_whenWeaponEquipped"}) {
+		return 0 unless $monster->{weapon};
+	}
+	if ($config{$prefix."_whenShieldEquipped"}) {
+		return 0 unless $monster->{shield};
 	}
 
 	my %args = (
