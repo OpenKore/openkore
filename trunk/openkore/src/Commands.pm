@@ -857,8 +857,13 @@ sub cmdGuild {
 	} elsif ($arg1 eq "" || !%guild) {
 		message	"Requesting guild information...\n", "info";
 		sendGuildInfoRequest(\$remote_socket);
+
+		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
 		sendGuildRequest(\$remote_socket, 0);
+
+		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
 		sendGuildRequest(\$remote_socket, 1);
+
 		if ($arg1 eq "") {
 			message "Enter command to view guild information: guild < info | member >\n", "info";
 		} else {
