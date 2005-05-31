@@ -1,39 +1,76 @@
+;##############################################################################
+;##			NEONCUBE - RAGNAROK ONLINE PATCH CLIENT
+;##
+;##  http://openkore.sourceforge.net/neoncube
+;##  (c) 2005 Ansell "Cliffe" Cruz (Cliffe@xeronhosting.com)
+;##  
+;##  This program is free software; you can redistribute it and/or modify
+;##  it under the terms of the GNU General Public License as published by
+;##  the Free Software Foundation; either version 2 of the License, or
+;##  (at your option) any later version.
+;##
+;##  This program is distributed in the hope that it will be useful,
+;##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+;##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;##  GNU General Public License for more details.
+;##
+;## You should have received a copy of the GNU General Public License
+;##  along with this program; if not, write to the Free Software
+;##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+;##
+;###############################################################################
+
+; neoncube.style
+; configure the appearance of controls of the patch client.
+
+; xcoord = X coordinate of a control
+; ycoord = Y coordinate of a control
+; width = width of a control
+; height = height of a control
+
+;minimize button
 [minimize]
 xcoord=451
 ycoord=8
 width=18
 height=17
 
+;close button
 [close]
 xcoord=475
 ycoord=8
 width=18
 height=17
 
+;start game button
 [startgame]
 xcoord=375
 ycoord=110
 width=117
 height=23
 
+;register button
 [register]
 xcoord=375
 ycoord=135
 width=117
 height=23
 
+;cancel button
 [cancel]
 xcoord=375
 ycoord=160
 width=117
 height=23
 
+;notice (browser) window
 [notice]
 xcoord=20
 ycoord=270
 width=460
 height=210
 
+;progress bar
 [progressbar]
 xcoord=30
 ycoord=238
@@ -41,12 +78,14 @@ width=440
 height=15
 style=1
 
+;frame window
 [frame]
 xcoord=20
 ycoord=190
 width=460
 height=70
 
+;Status message
 [text]
 xcoord=30
 ycoord=195
