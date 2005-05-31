@@ -31,7 +31,6 @@
 
 #include "unix-server.h"
 #include "client.h"
-#include "threads.h"
 
 
 #define LOCKFILE "/tmp/kore-dataserver.lock"

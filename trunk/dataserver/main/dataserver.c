@@ -30,7 +30,7 @@
 
 
 #ifdef WIN32
-	#include "tcp-server.h"
+	#include "win-server.h"
 #else
 	#include <sys/poll.h>
 	#include <signal.h>
@@ -54,7 +54,11 @@ struct _PrivateData {
 };
 
 
-static UnixServer *server;
+#ifdef WIN32
+	static WinServer *server;
+#else
+	static UnixServer *server;
+#endif
 
 Options options;
 
