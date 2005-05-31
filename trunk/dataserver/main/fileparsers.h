@@ -16,8 +16,8 @@
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#ifndef _DESCRIPTIONS_H_
-#define _DESCRIPTIONS_H_
+#ifndef _FILEPARSERS_H_
+#define _FILEPARSERS_H_
 
 #include "string-hash.h"
 
@@ -31,4 +31,4 @@ StringHash *desc_info_load (const char *filename);
 StringHash *rolut_load (const char *filename);
 
 
-#endif /* _DESCRIPTIONS_H_ */
+#endif /* _FILEPARSERS_H_ */
