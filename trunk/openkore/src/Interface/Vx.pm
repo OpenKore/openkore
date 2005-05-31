@@ -24,6 +24,7 @@ package Interface::Vx;
 use strict;
 use warnings;
 
+use AI;
 use Interface;
 use base qw/Interface/;
 use Plugins;
@@ -31,9 +32,10 @@ use Globals;
 use Settings qw(%sys);
 use Misc;
 use Utils;
-use Log qw(message warning);
+#use Log qw(message warning);
 
 use Carp qw/carp croak confess/;
+use File::Spec;
 use Time::HiRes qw/time usleep/;
 use Tk;
 use Tk::ROText;
@@ -52,7 +54,8 @@ sub new {
 		input_pm => undef,
 		total_lines => {"panelTop" => 0, "panelBottom" => 0},
 		last_line_end => {"panelTop" => 0, "panelBottom" => 0},
-		lineLimit => {"panelTop" => $sys{panelTop_lineLimit} || 900, "panelBottom" => $sys{panelTop_lineLimit} || 100}
+		lineLimit => {"panelTop" => $sys{panelTop_lineLimit} || 900, "panelBottom" => $sys{panelTop_lineLimit} || 100},
+		mapDir => 'map'
 	};
 
 	if ($buildType == 0) {
@@ -536,12 +539,29 @@ sub updatePos {
 	$self->{status_posx}->configure( -text =>$x);
 	$self->{status_posy}->configure( -text =>$y);
 	if ($self->mapIsShown()) {
+		# show player coords
 		$self->{map}{'canvas'}->delete($self->{map}{'player'}) if ($self->{map}{'player'});
-		$self->{map}{'canvas'}->delete($self->{map}{'range'}) if ($self->{map}{'range'});
 		$self->{map}{'player'} = $self->{map}{'canvas'}->createOval(
 			$x-2,$self->{map}{'map'}{'y'} - $y-2,
 			$x+2,$self->{map}{'map'}{'y'} - $y+2,
 			,-fill => '#ffcccc', -outline=>'#ff0000');
+		$self->{map}{'canvas'}->delete($self->{map}{'dest'}) if ($self->{map}{'dest'});
+
+		# show route destination
+		my $action = AI::findAction("route");
+		if (defined $action) {
+			my $args = AI::args($action);
+			if ($args->{dest}{map} eq $field{name}) {
+				my ($x,$y) = @{$args->{dest}{pos}}{'x', 'y'};
+				$self->{map}{'dest'} = $self->{map}{'canvas'}->createOval(
+					$x-2,$self->{map}{'map'}{'y'} - $y-2,
+					$x+2,$self->{map}{'map'}{'y'} - $y+2,
+					,-fill => '#0000ff', -outline=>'#ccccff');
+			}
+		}
+
+		# show circle of attack range
+		$self->{map}{'canvas'}->delete($self->{map}{'range'}) if ($self->{map}{'range'});
 		my $dis = $config{'attackDistance'};
 		$self->{map}{'range'} = $self->{map}{'canvas'}->createOval(
 			$x-$dis,$self->{map}{'map'}{'y'} - $y-$dis,
@@ -634,6 +654,40 @@ sub OpenMap {
 	}
 }
 
+# map image loader functions
+
+sub _map {
+	my $self = shift;
+	return File::Spec->catfile($self->{mapDir}, @_);
+}
+
+sub loadMap {
+	my $self = shift;
+	$self->{map}{'canvas'}->delete('map');
+	$self->{map}{'canvas'}->createText(50,20,-text =>'Processing..',-tags=>'map');
+
+	my $name = $field{baseName};
+	if (-f $self->_map("$name.jpg")) {
+		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'jpeg', -file=> $self->_map("$name.jpg"));
+	} elsif (-f $self->_map("$name.gif")) {
+		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'gif', -file=> $self->_map("$name.gif"));
+	} elsif (-f $self->_map("$name.png")) {
+		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'png', -file=> $self->_map("$name.png"));
+	} elsif (-f $self->_map("$name.bmp")) {
+		$self->{map}{'map'} = $self->{map}{'canvas'}->Bitmap(-file => $self->_map("$name.bmp"));
+	} else {
+		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'xpm', -data => Utils::xpmmake($field{width}, $field{height}, $field{rawMap}));
+	}
+
+	$self->{map}{'canvas'}->delete('map');
+	$self->{map}{'canvas'}->createImage(2,2,-image =>$self->{map}{'map'},-anchor => 'nw',-tags=>'map');
+	$self->{map}{'canvas'}->configure(
+			-width => $field{'width'},
+			-height => $field{'height'}
+	);
+	$self->{map}{'map'}{'x'} = $field{'width'};
+	$self->{map}{'map'}{'y'} = $field{'height'};
+}
 
 # mouse moving over map viewer shows coordinates
 sub pointchk {
@@ -657,20 +711,6 @@ sub dblchk {
 sub mapIsShown {
 	my $self = shift;
 	return defined $self->{map};
-}
-sub loadMap {
-	my $self = shift;
-	$self->{map}{'canvas'}->delete('map');
-	$self->{map}{'canvas'}->createText(50,20,-text =>'Processing..',-tags=>'map');
-	$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'xpm', -data=> Utils::xpmmake($field{width}, $field{height}, $field{rawMap}));
-	$self->{map}{'canvas'}->delete('map');
-	$self->{map}{'canvas'}->createImage(2,2,-image =>$self->{map}{'map'},-anchor => 'nw',-tags=>'map');
-	$self->{map}{'canvas'}->configure(
-			-width => $field{'width'},
-			-height => $field{'height'}
-	);
-	$self->{map}{'map'}{'x'} = $field{'width'};
-	$self->{map}{'map'}{'y'} = $field{'height'};
 }
 
 sub addObj {
@@ -739,36 +779,6 @@ sub followObj {
 	my ($id, $type) = @_;
 	$self->{objc}{$id}[0] = "#FFCCFF";
 	$self->{objc}{$id}[1] = "#CC00CC";
-}
-
-# map image creation
-# FIXME: figure out how to replace this with the C++ xpmmake
-
-sub xbmmake {
-	my $r_field = shift;
-	my ($hx,$hy,$mvw_x,$mvw_y);
-	my $line = 0;
-	my $dump = 0;
-	$mvw_x = $r_field->{width};
-	$mvw_y = $r_field->{height};
-	if (($mvw_x % 8) == 0) {
-		$hx = $mvw_x;
-	} else {
-		$hx = $mvw_x+(8-($mvw_x % 8));
-	}
-	for (my $j = 0; $j < $mvw_y; $j++) {
-		$hy = ($mvw_x*($mvw_y-$j-1));
-		for (my $k = 0; $k < $hx; $k++) {
-			$dump += 256 if (!checkFieldWalkable($r_field, $k, $r_field->{height}-$j));
-			$dump = $dump/2;
-			if (($k % 8) == 7) {
-				$line .= sprintf("0x%02x\,",$dump);
-				$dump = 0;
-			}
-		}
-	}
-	$line = "#define data_width $mvw_x\n#define data_height $mvw_y\nstatic unsigned char data_bits[] = {\n".$line."};";
-	return \$line;
 }
 
 # load color tags
@@ -1030,5 +1040,6 @@ sub packet {
 		}
 	}
 }
+
 
 1;
