@@ -1,4 +1,16 @@
 
+06/01/05
+--------
+Bug Fixes:
+- Fixed StatusMessage()
+- Fixed some memory leaks
+- Fixed PostError()
+
+Features:
+- Added file deletion support
+- Better error logging
+
+
 05/31/05
 --------
 
