@@ -31,7 +31,7 @@ use Globals;
 use Settings qw(%sys);
 use Misc;
 use Utils;
-#use Log qw(message warning);
+use Log qw(message warning);
 
 use Carp qw/carp croak confess/;
 use Time::HiRes qw/time usleep/;
@@ -44,10 +44,9 @@ use Tk::BrowseEntry;
 sub new {
 	my $class = shift;
 	my $self = {
-		mw => undef,
-		input_list => [],
-		input_offset => 0,
-		input_que => [],
+		input_list => [], # input history
+		input_offset => 0, # position while scrolling through input history
+		input_que => [], # queued input data
 		default_font => "MS Sans Serif",
 		input_type => "Command",
 		input_pm => undef,
@@ -72,6 +71,11 @@ sub new {
 		['attack_start',		sub { $_[2]->followObj($_[1]->{ID}); }, $self]
 	);
 	return $self;
+}
+
+sub DESTROY {
+	my $self = shift;
+	Plugins::delHooks($self->{hooks});
 }
 
 sub update {
@@ -293,7 +297,7 @@ sub initTk {
 		-variable => \$self->{input_pm},
 		-width => 8,
 		-font=>[ -family => $panelFont ,-size=>10,],
-		-choices => $self->{pm_list},
+		-autolimitheight => 1,
 		-state =>'normal',
 		-relief => 'flat',
 	)->pack(
@@ -589,17 +593,8 @@ sub change_fontWeight {
 
 sub pm_add {
 	my $self = shift;
-	my $input_name = shift;
-	my $found = 1;
-	foreach (@{ $self->{pminput}->get(0,'end') }){
-		if ($_ eq $input_name) {
-			$found = 0;
-			last;
-		}
-	}
-	if ($found == 1) {
-		$self->{pminput}->insert("end",$input_name);
-	}
+	my $name = shift;
+	$self->{pminput}->insert("end",$name) if !defined binFind($self->{pminput}->get(0,'end'), $name);
 }
 
 # map functions
@@ -667,7 +662,7 @@ sub loadMap {
 	my $self = shift;
 	$self->{map}{'canvas'}->delete('map');
 	$self->{map}{'canvas'}->createText(50,20,-text =>'Processing..',-tags=>'map');
-	$self->{map}{'map'} = $self->{map}{'canvas'}->Bitmap(-data=>${&xbmmake(\%field)});
+	$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'xpm', -data=> Utils::xpmmake($field{width}, $field{height}, $field{rawMap}));
 	$self->{map}{'canvas'}->delete('map');
 	$self->{map}{'canvas'}->createImage(2,2,-image =>$self->{map}{'map'},-anchor => 'nw',-tags=>'map');
 	$self->{map}{'canvas'}->configure(
