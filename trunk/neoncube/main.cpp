@@ -22,9 +22,9 @@
 
 
 #ifdef _DEBUG
-#define CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
+	#define CRTDBG_MAP_ALLOC
+	#include <stdlib.h>
+	#include <crtdbg.h>
 #endif
 
 
@@ -44,9 +44,9 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			LPSTR lpCmdLine,
 			INT nCmdShow)
 {
-#ifdef _DEBUG
-	_CrtDumpMemoryLeaks();
-#endif
+	#ifdef _DEBUG
+	//	_CrtDumpMemoryLeaks();
+	#endif
 
 	HINSTANCE hBrowserDll; 
 
@@ -57,6 +57,21 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	WNDCLASSEX wc; 
 	InitCommonControls();
 	
+	//prepare data.grf.txt
+	if(DeleteFile("neoncube\\data.grf.txt"))
+	{
+		FILE *hGrfTxt;
+			
+		hGrfTxt = fopen("neoncube\\data.grf.txt","w");
+		if(!hGrfTxt)
+			PostError();
+		fprintf(hGrfTxt,"0x103\n");
+		fclose(hGrfTxt);
+	}
+
+	//prepare error.log
+	DeleteFile("neoncube\\error.log");
+
 
 	GetPrivateProfileString("server", "noticeURL", NULL, settings.szNoticeURL, sizeof(settings.szNoticeURL), iniFile); 
 	GetPrivateProfileString("server", "patchURL", NULL, settings.szPatchURL, sizeof(settings.szPatchURL), iniFile); 
@@ -114,12 +129,14 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	
 
 	if (!(hBrowserDll = LoadLibrary("browser.dll")))
+	{
+		AddErrorLog("Failed to load browser.dll");
 		return -1;
-
+	}
 	//load bitmap buttons
 	LoadButtonBitmap();
-
 	
+
 	lpEmbedBrowserObject = (EmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "EmbedBrowserObject");
 	lpUnEmbedBrowserObject = (UnEmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "UnEmbedBrowserObject");
 	lpDisplayHTMLPage = (DisplayHTMLPagePtr *)GetProcAddress((HINSTANCE)hBrowserDll, "DisplayHTMLPage");
@@ -132,12 +149,12 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	wc.cbClsExtra	 = 0;
 	wc.cbWndExtra	 = 0;
 	wc.hInstance	 = hInstance;
-	wc.hIcon		 = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hIcon		 = LoadIcon(NULL, IDI_ERROR);
 	wc.hCursor		 = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 	wc.lpszMenuName  = NULL;
 	wc.lpszClassName = "NeonCube";
-	wc.hIconSm		 = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hIconSm		 = LoadIcon(NULL, IDI_ERROR);
 
 
 		// register class
@@ -489,6 +506,8 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 					{
 						if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
 							SendMessage(hWnd,WM_DESTROY,0,0);
+						else
+							AddErrorLog("Cannot start %s", settings.szExecutable);
 					}
 					else
 						MessageBox(hWnd,"Unable to start application. Wait for the patch process to complete","Error",MB_OK | MB_ICONEXCLAMATION);
@@ -744,8 +763,7 @@ DWORD Threader(void)
 		CloseHandle(hTmp);
 		
 		//FREE MEMORY
-		if(GlobalFree((HANDLE)pPatch2TxtData)!=NULL)
-			PostError();
+		GlobalFree((HANDLE)pPatch2TxtData);
 
 		//GET LAST INDEX
 		FILE *fpLastIndex;
@@ -763,7 +781,7 @@ DWORD Threader(void)
 
 		//OPEN FILE FOR READING/PARSING
 		UINT index_tmp;
-		TCHAR patch_tmp[50];
+		TCHAR patch_tmp[1024];
 		FILE *fTmp = fopen("tmp.nc","r");
 
 		if(!fTmp)
@@ -776,6 +794,12 @@ DWORD Threader(void)
 		
 		while(fscanf(fTmp,"%d %s\n",&index_tmp,&patch_tmp) != EOF)
 		{
+			if(patch_tmp[strlen(patch_tmp)-1] == '*')
+			{
+				DelFile(patch_tmp);
+				bPatchUpToDate = FALSE;
+				break;
+			}
 
 			if(index_tmp > last_index)
 			{
@@ -833,7 +857,10 @@ DWORD Threader(void)
 					DWORD dwBytesWritten;
 					HANDLE hFile = CreateFile(patch_tmp,GENERIC_WRITE,0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL, NULL);
    					if(WriteFile(hFile,pData,dwContentLen,&dwBytesWritten,NULL) == 0)
-						MessageBox(0,"Failed to write data.","Error",MB_OK);
+					{
+						MessageBox(0,"Failed to write data","Error",MB_OK | MB_ICONERROR);
+						AddErrorLog("Failed to write %s", patch_tmp);
+					}
 					else
 						CloseHandle(hFile);
 				/*	
@@ -867,16 +894,40 @@ DWORD Threader(void)
 
 			while(1)
 			{
+
 				if(!ExtractGRF(spCurrentItem->szPatchName))
 				{
 					TCHAR szMess[50] = "Failed to extract ";
 					lstrcat(szMess,spCurrentItem->szPatchName);
 					MessageBox(NULL,szMess,"Error",MB_OK | MB_ICONERROR);
+					AddErrorLog(szMess);
 				}
 				if(spCurrentItem->next == NULL)
 					break;
 				spCurrentItem = spCurrentItem->next;							
 			}
+
+
+			DELFILE *dfCurrentItem;
+			dfCurrentItem = dfFirstItem;
+			TCHAR szFileNameToDel[1024] = "neoncube\\";
+
+			while(1)
+			{
+				if(dfCurrentItem == NULL)
+					break;
+				
+				lstrcat(szFileNameToDel, dfCurrentItem->szFileName);
+				if(!DeleteFile(szFileNameToDel))
+					//add error.log entry
+					AddErrorLog("Failed to delete %s\n", szFileNameToDel);
+
+				if(dfCurrentItem->next == NULL)
+					break;
+				dfCurrentItem = dfCurrentItem->next;
+			}
+
+
 			StatusMessage("Status: Repacking files...\r\nInfo:-----\r\nProgress:-----");
 
 			STARTUPINFO siStartupInfo;
@@ -903,14 +954,6 @@ DWORD Threader(void)
 			CloseHandle(piProcessInfo.hThread);
 			CloseHandle(piProcessInfo.hProcess);
 
-
-			FILE *hGrfTxt;
-			
-			hGrfTxt = fopen("neoncube\\data.grf.txt","w");
-			if(!hGrfTxt)
-				PostError();
-			fprintf(hGrfTxt,"0x103\n");
-			fclose(hGrfTxt);
 			
 			//delete extracted files
 			DeleteDirectory("neoncube\\data");
@@ -919,9 +962,9 @@ DWORD Threader(void)
 			//delete old GRF file
 				DeleteFile(settings.szGrf);
 			else
-				if(!MoveFile(settings.szGrf,"neoncube\\grf.bak"))
+				if(!MoveFileEx(settings.szGrf,"neoncube\\grf.bak", MOVEFILE_REPLACE_EXISTING))
 					PostError(FALSE);
-
+			
 			//moves and renames new GRF file
 			if(!MoveFile("neoncube\\data.grf",settings.szGrf))
 				PostError();
@@ -958,10 +1001,20 @@ DWORD Threader(void)
 }
 
 
+void DelFile(const char *item)
+{
+	DELFILE *dfNewItem;
+
+	dfNewItem = (DELFILE*)LocalAlloc(GMEM_FIXED, sizeof(DELFILE));
+	if(NULL == dfNewItem)
+		PostError();
+	lstrcpy(dfNewItem->szFileName, item);
+	dfNewItem->next = dfFirstItem;
+	dfFirstItem = dfNewItem;
+}
 
 
-void AddPatch(const char *item, 
-			  INT index)
+void AddPatch(const char *item, INT index)
 {
 	/* pointer to the next item in the list */
 	PATCH *spNewItem;
@@ -1002,9 +1055,9 @@ void AddPatch(const char *item,
 void PostError(BOOL exitapp)
 {
 	TCHAR szMessageBox[50];
-	LPTSTR lpszMessage = NULL;
-
+	TCHAR lpszMessage[150];
 	DWORD dwError = GetLastError();
+
 	FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
 		NULL,
 		dwError,
@@ -1013,23 +1066,43 @@ void PostError(BOOL exitapp)
         0, NULL 
 	);
 
-	sprintf(szMessageBox,"Application error: %s (code: %d)", lpszMessage, dwError);
+	sprintf(szMessageBox,"Application error: %s (code: %d)\n", lpszMessage, dwError);
 	MessageBox(NULL,szMessageBox,"Error",MB_OK | MB_ICONERROR);
-	LocalFree(lpszMessage);
+	AddErrorLog(lpszMessage);
 	if(exitapp)
 		ExitProcess(dwError);
 
 }
 
-void StatusMessage(LPTSTR message, ...)
+void StatusMessage(LPCTSTR message, ...)
 {
 	va_list args;
-	LPTSTR buffer = (LPTSTR)LocalAlloc(GMEM_FIXED, strlen(message));
+	TCHAR buffer[1024];
+	if(NULL == buffer)
+		PostError();
 
 	va_start(args, message);
 	vsprintf(buffer, message, args);
 	va_end(args);
 	SendMessage(g_hwndStatic, WM_SETTEXT, 0, (LPARAM)buffer);
-	LocalFree((HANDLE)buffer);
 }
-                          
+             
+       
+void AddErrorLog(LPCTSTR fmt, ...)
+{
+	va_list args;
+	TCHAR buf[1024];
+
+	va_start(args, fmt);
+	vsprintf(buf, fmt, args);
+	va_end(args);
+
+	FILE *f;
+	f = fopen("neoncube\\error.log", "a");
+	if(f) 
+	{
+		fwrite(buf, 1, strlen(buf), f);
+		fclose(f);
+	}
+
+}
