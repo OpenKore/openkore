@@ -126,6 +126,7 @@ route_maxWarpFee
 route_teleport 0
 route_teleport_minDistance 150
 route_teleport_maxTries 8
+route_teleport_notInMaps
 route_step 15
 
 runFromTarget 0
