@@ -47,7 +47,7 @@
 ## hwndRegister:	Register button handle.
 ## hwndCancel:		Cancel button handle.
 ########################################################*/
-
+#define MAXARRSIZE (0x10000)
 HWND hwndNotice; 
 HWND hwndMinimize; 
 HWND hwndClose; 
@@ -62,14 +62,15 @@ HWND hwndCancel;
 ########################################################*/
 
 struct inisetting {
-	TCHAR szServerName[50];
-	TCHAR szNoticeURL[150];
-	TCHAR szPatchURL[50];
-	TCHAR szPatchList[30];
+	TCHAR szServerName[100];
+	TCHAR szNoticeURL[MAXARRSIZE];
+	TCHAR szPatchURL[MAXARRSIZE];
+	TCHAR szPatchList[MAXARRSIZE];
 	TCHAR szExecutable[10];
-	TCHAR szPatchFolder[40];
-	TCHAR szRegistration[50];
+	TCHAR szPatchFolder[MAXARRSIZE];
+	TCHAR szRegistration[MAXARRSIZE];
 	TCHAR szGrf[50];
+	INT	nBackupGRF;
 } settings;
 
 
@@ -129,12 +130,6 @@ DisplayHTMLPagePtr			*lpDisplayHTMLPage;
 ########################################################*/
 TCHAR iniFile[] = "neoncube\\neoncube.ini";
 TCHAR styleFile[] = "neoncube\\neoncube.style";
-
-
-/*#######################################################
-## STATUS MESSAGE STRING
-########################################################*/
-TCHAR szStatusMessage[80];
 
 
 /*#######################################################
@@ -316,3 +311,5 @@ extern HBITMAP hbmClose_hover;
 extern HBITMAP hbmStartGame_hover;
 extern HBITMAP hbmRegister_hover;
 extern HBITMAP hbmCancel_hover;
+
+void StatusMessage(LPTSTR message, ...);

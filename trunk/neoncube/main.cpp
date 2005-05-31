@@ -20,7 +20,6 @@
 ##
 ##############################################################################*/
 
-#define MAXFILESIZE (0x10000)
 
 #ifdef _DEBUG
 #define CRTDBG_MAP_ALLOC
@@ -45,7 +44,10 @@ int WINAPI WinMain(HINSTANCE hInstance,
 			LPSTR lpCmdLine,
 			INT nCmdShow)
 {
-//	_CrtDumpMemoryLeaks();
+#ifdef _DEBUG
+	_CrtDumpMemoryLeaks();
+#endif
+
 	HINSTANCE hBrowserDll; 
 
 	HWND hwnd; 
@@ -63,7 +65,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
 	GetPrivateProfileString("server", "patch_folder", NULL, settings.szPatchFolder, sizeof(settings.szPatchFolder), iniFile);
 	GetPrivateProfileString("server", "registrationLink", NULL, settings.szRegistration, sizeof(settings.szRegistration), iniFile);
 	GetPrivateProfileString("server", "grf", NULL, settings.szGrf, sizeof(settings.szGrf), iniFile);
-	
+	settings.nBackupGRF = GetPrivateProfileInt("server","Backup_GRF", NULL, iniFile);
 
 /*	style.iFontColorRED = LoadINIInt("text","fontcolorR"); 
     style.iFontColorGREEN = LoadINIInt("text","fontcolorG"); 
@@ -169,7 +171,6 @@ int WINAPI WinMain(HINSTANCE hInstance,
 								);
 		if(!hbmBackground)
 			PostError();
-
 
 		hwnd = CreateWindowEx(0,
 						"NeonCube", 
@@ -486,7 +487,7 @@ LRESULT CALLBACK WndProc(HWND hWnd,
 				case IDC_STARTGAME:
 					if(bPatchCompleted)
 					{
-						if(ShellExecute(NULL,"open",settings.szExecutable,NULL,NULL,SW_SHOWNORMAL))
+						if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
 							SendMessage(hWnd,WM_DESTROY,0,0);
 					}
 					else
@@ -833,7 +834,8 @@ DWORD Threader(void)
 					HANDLE hFile = CreateFile(patch_tmp,GENERIC_WRITE,0,NULL,CREATE_ALWAYS,FILE_ATTRIBUTE_NORMAL, NULL);
    					if(WriteFile(hFile,pData,dwContentLen,&dwBytesWritten,NULL) == 0)
 						MessageBox(0,"Failed to write data.","Error",MB_OK);
-					CloseHandle(hFile);
+					else
+						CloseHandle(hFile);
 				/*	
 					InternetReadFile(hRequest,
 								   pCopyPtr,
@@ -913,8 +915,12 @@ DWORD Threader(void)
 			//delete extracted files
 			DeleteDirectory("neoncube\\data");
 			
+			if(!settings.nBackupGRF)
 			//delete old GRF file
-			DeleteFile(settings.szGrf);
+				DeleteFile(settings.szGrf);
+			else
+				if(!MoveFile(settings.szGrf,"neoncube\\grf.bak"))
+					PostError(FALSE);
 
 			//moves and renames new GRF file
 			if(!MoveFile("neoncube\\data.grf",settings.szGrf))
