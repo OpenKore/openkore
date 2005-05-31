@@ -94,6 +94,8 @@ New config options:
   of attacks.
 - "e" sequence for NPC talk steps; use it when you want kore to wait
   until the NPC says "Done talking"
+- route_teleport_notInMaps (list of maps)
+  Do not teleport on route in the specified maps.
 
 New control files:
 - control/sys.txt
@@ -120,6 +122,7 @@ Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.
 - kunjandad: friend list packet support.
 - Crypticode: 'ai on'/'ai off' commands; item name support in 'uneq' command.
+- punkpudding: route_teleport_notInMaps.
 
 
 ==================

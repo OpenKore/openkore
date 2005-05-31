@@ -4827,6 +4827,7 @@ sub AI {
 					$args->{teleport} = $config{route_teleport} if (!defined $args->{teleport});
 
 					if ($args->{teleport} && !$cities_lut{"$field{name}.rsw"}
+					&& !existsInList($config{route_teleport_notInMaps}, $field{name})
 					&& ( !$config{route_teleport_maxTries} || $args->{teleportTries} <= $config{route_teleport_maxTries} )) {
 						my $minDist = $config{route_teleport_minDistance};
 
