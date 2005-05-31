@@ -21,9 +21,9 @@
 ##############################################################################*/
 extern HWND hwndProgress;
 extern HWND g_hwndStatic;
-extern TCHAR szStatusMessage[80];
-
+extern void PostError(BOOL exitapp = TRUE);
 extern void GRFCreate_AddFile(const char* item);
+extern void StatusMessage(LPTSTR message, ...);
 
 
 static int CountFolders(const char*source);

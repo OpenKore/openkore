@@ -44,8 +44,7 @@ BOOL ExtractGRF(const char *fname)
 	SendMessage(hwndProgress, PBM_SETRANGE32, (WPARAM)0, (LPARAM)grf->nfiles);
 
 	//status message
-	sprintf(szStatusMessage,"Status: Extracting %s...\r\nInfo:------\r\nProgress:-----",fname);
-	SendMessage(g_hwndStatic,WM_SETTEXT,0,(LPARAM)szStatusMessage);
+	StatusMessage("Status: Extracting %s...\r\nInfo:------\r\nProgress:-----",fname);
 	for(DWORD ctr = 0;ctr < grf->nfiles; ctr++)
 	{
 
@@ -122,9 +121,6 @@ static INT CountFolders(const char *source)
 
 	return ret;
 }
-/*########################################
-## d2 nko
-########################################*/
 
 bool DeleteDirectory(LPCTSTR lpszDir)
 {
@@ -155,6 +151,8 @@ void GRFCreate_AddFile(const char* item)
 	FILE *fp;
 
 	fp = fopen("neoncube\\data.grf.txt","a");
+	if(NULL == fp)
+		PostError();
 	fprintf(fp,"F %s\n",item);
 	fclose(fp);
 }
