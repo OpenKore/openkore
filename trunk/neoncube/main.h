@@ -47,7 +47,7 @@
 ## hwndRegister:	Register button handle.
 ## hwndCancel:		Cancel button handle.
 ########################################################*/
-#define MAXARRSIZE (0x10000)
+#define MAXARRSIZE 1024
 HWND hwndNotice; 
 HWND hwndMinimize; 
 HWND hwndClose; 
@@ -287,7 +287,6 @@ BOOL bPatchInProgress;
 /*#######################################################
 ## FUNCTION: Extracts a GRF file
 ##
-## ch
 ########################################################*/
 extern BOOL ExtractGRF(const char*);
 
@@ -312,4 +311,15 @@ extern HBITMAP hbmStartGame_hover;
 extern HBITMAP hbmRegister_hover;
 extern HBITMAP hbmCancel_hover;
 
-void StatusMessage(LPTSTR message, ...);
+
+void StatusMessage(LPCTSTR message, ...);
+
+typedef struct delfile {
+	TCHAR szFileName[1024];
+	struct delfile *next;
+} DELFILE;
+
+DELFILE *dfFirstItem = NULL;
+
+void DelFile(LPCTSTR item);
+void AddErrorLog(LPCTSTR fmt, ...);
