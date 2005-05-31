@@ -1,0 +1,17 @@
+
+05/31/05
+--------
+
+Features:
+- Patch files downloaded via HTTP.
+- Built-in web browser: displays PHP, HTML, ASP, and other kind of files. Supports Flash™ and JavaScript™.
+- Fully skinable, control how the patch client looks (width, height, X and Y coordinates of buttons, windows, etc)
+- GRF extraction 
+- GRF repacking 
+- Detailed download
+- Error logging
+- Backup GRF option
+
+Credits: 
+- Jeff Glatt (OLE browser code)
+- GRFMaker(create.exe) author
