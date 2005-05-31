@@ -66,13 +66,7 @@ BOOL ExtractGRF(const char *fname)
 		if(grf_index_extract(grf, ctr, szPath, &err) > 0)
 			GRFCreate_AddFile(grf->files[ctr].name);
 		else
-		{
-
-			FILE *F;
-			F = fopen("neoncube\\error.log","a");
-			fprintf(F,"[code: %d][index: %d] [file: %s]\n",err.type, ctr, grf->files[ctr].name);
-			fclose(F);
-		}
+			AddErrorLog("Failed to extract %s [code: %d]\n", grf->files[ctr].name, err.type);
 		SendMessage(hwndProgress, PBM_SETPOS, (WPARAM)ctr+1, 0);
 
 
@@ -153,7 +147,6 @@ void GRFCreate_AddFile(const char* item)
 	fp = fopen("neoncube\\data.grf.txt","a");
 	if(NULL == fp)
 		PostError();
-	fprintf(fp,"F %s\n",item);
+	fprintf(fp, "F %s\n", item);
 	fclose(fp);
 }
-

@@ -23,8 +23,8 @@ extern HWND hwndProgress;
 extern HWND g_hwndStatic;
 extern void PostError(BOOL exitapp = TRUE);
 extern void GRFCreate_AddFile(const char* item);
-extern void StatusMessage(LPTSTR message, ...);
-
+extern void StatusMessage(LPCTSTR message, ...);
+extern void AddErrorLog(LPCTSTR fmt, ...);
 
 static int CountFolders(const char*source);
 static char *GetFolder(char *source, int index);
