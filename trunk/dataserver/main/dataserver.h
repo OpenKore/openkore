@@ -19,6 +19,13 @@
 #ifndef _DATASERVER_H_
 #define _DATASERVER_H_
 
+#include "client.h"
+#include "string-hash.h"
+#include "threads.h"
+
+
+#define NUM_HASH_FILES 7
+
 
 typedef struct {
 	char *tables;
@@ -27,7 +34,29 @@ typedef struct {
 	int threads;
 } Options;
 
+
+struct _PrivateData {
+	StringHashItem *iterators[NUM_HASH_FILES];
+
+	char buf[512];
+	int buf_len;
+};
+
+
+typedef struct {
+	Mutex *lock;
+	Thread *thread;
+	Client *new_client;
+	int quit;
+
+	int ID;
+	int nclients;
+	LList *clients;
+} ThreadData;
+
+
 extern Options options;
+extern StringHash *hashFiles[NUM_HASH_FILES];
 
 
 #endif /* _DATASERVER_H_ */
