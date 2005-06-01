@@ -10,36 +10,16 @@
 package macro;
 
 our $Version = "0.9";
-my $cvs = 1;
-
-if (defined $cvs) {
-  my $fname = "macro.pl";
-  open(MF, "< $Plugins::current_plugin_folder/$fname" )
-      or die "Can't open $Plugins::current_plugin_folder/$fname: $!";
-  while (<MF>) {
-    if (/Header:/) {
-      my ($rev) = $_ =~ /$fname,v (.*) [0-9]{4}/i;
-      $Version .= "cvs rev ".$rev;
-      last;
-    }
-  }
-  close MF;
-};
-
-undef $cvs if defined $cvs;
+my $stable = 0;
 
 use strict;
 use Plugins;
 use Settings;
 use Globals;
 use Utils;
-use Log qw (message error warning);
-use FileParsers;
+use Log qw(message error warning);
 use AI;
 use Commands;
-
-sub debug {message $_[0], "list" if $::config{macro_debug}};
-sub debug2 {warning $_[0] if ($::config{macro_debug} >= 2)};
 
 our %macro;
 our %automacro;
@@ -47,10 +27,26 @@ our %varStack;
 our %launcher;
 our @macroQueue;
 
-Plugins::register('macro', 'allows usage of macros', \&Unload, \&Reload);
+our $cvs;
+if (!$stable) {
+  eval {require cvsdebug};
+  if (!$@) {
+    $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]);
+    $Version .= "cvs rev ".$cvs->revision();
+  } else {print $@};
+} else {undef $stable};
+
+if (!defined $cvs) {
+  sub dummy {my $self = {}; bless($self); return $self};
+  sub debug {}; sub setDebug {}; $cvs = dummy();
+};
+
+Plugins::register('macro', 'allows usage of macros', \&Unload);
 
 my $hooks = Plugins::addHooks(
             ['Command_post', \&commandHandler, undef],
+            ['configModify', \&debuglevel, undef],
+            ['start3', \&setDebug, undef],
             ['AI_pre', \&processQueue, undef],
             ['is_casting', \&automacroCheck, undef],
             ['packet_skilluse', \&automacroCheck, undef],
@@ -61,22 +57,28 @@ my $hooks = Plugins::addHooks(
 
 my $file = "$Settings::control_folder/macros.txt";
 our $cfID = Settings::addConfigFile($file, \%macro, \&parseMacroFile);
+Settings::load($cfID);
 undef $file;
 
-sub Unload {
-  message "macro unloaded.\n";
-  Settings::delConfigFile($cfID);
-  Plugins::delHooks($hooks);
+sub setDebug {
+  $cvs->setDebug($::config{macro_debug}) if defined $::config{macro_debug};
 };
 
-sub Reload {
-  message "macro reloading, cleaning up.\n";
+sub Unload {
+  message "macro unloading, cleaning up.\n";
+  undef $cvs;
+  Settings::delConfigFile($cfID);
   Plugins::delHooks($hooks);
   undef %macro;
   undef %automacro;
   undef %launcher;
   undef %varStack;
   undef @macroQueue;
+};
+
+sub debuglevel {
+  my (undef, $args) = @_;
+  if ($args->{key} eq 'macro_debug') {$cvs->setDebug($args->{val})};
 };
 
 # adapted config file parser
@@ -107,7 +109,7 @@ sub parseMacroFile {
         $r_hash->{$value} = [];
       } elsif ($r_hash == \%automacro && $key eq 'automacro') {
         %block = (name => $value, type => "auto");
-      } else {next};
+      };
       next;
     } elsif (defined %block && $_ eq "}") {
       undef %block;
@@ -118,7 +120,7 @@ sub parseMacroFile {
     } elsif ($block{type} eq "auto") {
       my ($key, $value) = $_ =~ /^(.*?) (.*)/;
       next unless $key;
-      if ($key =~ /^(inventory|storage|cart|shop|var|status|location|set)$/) {
+      if ($key =~ /^(inventory|storage|cart|shop|equipped|var|status|location|set)$/) {
         push(@{$r_hash->{$block{name}}->{$key}}, $value);
       } else {$r_hash->{$block{name}}->{$key} = $value};
     } else {
@@ -174,6 +176,7 @@ sub pushMacro {
 # command line parser for macro
 sub parseCmd {
   my $command = shift;
+  $cvs->debug("in parseCmd: parsing +$command+", 2);
   # shortcut commands that won't be executed
   if ($command =~ /\@(log|call|release|pause|set)/) {
     if ($command =~ /\@log/) {
@@ -199,6 +202,7 @@ sub parseCmd {
     return;
   };
   while ($command =~ /\@/) {
+    $cvs->debug("parsing +$command+", 2);
     my $ret = "_%_";
     my ($kw, $arg) = $command =~ /\@([a-z]*) +\(([^@]*?)\)/i;
     return $command if (!defined $kw || !defined $arg);
@@ -219,7 +223,7 @@ sub parseCmd {
     return $command if $ret eq '_%_';
     if (defined $ret) {$command =~ s/\@$kw +\(.*?\)/$ret/}
     else {
-      error "macro: $command failed. Macro stopped.\n";
+      error "[macro] $command failed. Macro stopped.\n";
       clearMacro();
       return;
     }
@@ -239,7 +243,7 @@ sub processQueue {
     };
     my $cmdfromstack = shift(@macroQueue);
     my $command = parseCmd($cmdfromstack);
-    debug "[macro] processing: $cmdfromstack (-> $command)\n";
+    $cvs->debug("processing: $cmdfromstack (-> $command)", 1);
     if (defined $command) {
       Commands::run($command) || ::parseCommand($command)
     };
@@ -253,13 +257,13 @@ sub processQueue {
 # macro wrapper
 sub runMacro {
   my ($arg, $times) = @_;
-  if (!defined $macro{$arg}) {error "Macro $arg not found.\n"}
+  if (!defined $macro{$arg}) {error "[macro] $arg not found.\n"}
   else {
     @macroQueue = @{$macro{$arg}};
     if ($times > 1) {
       for (my $t = 1; $t < $times; $t++) {@macroQueue = (@{$macro{$arg}}, @macroQueue)};
     };
-    debug "macro $arg selected.\n";
+    $cvs->debug("macro $arg selected.", 1);
     AI::queue('macro');
   };
 };
@@ -285,12 +289,13 @@ sub clearMacro {
   @macroQueue = ();
   undef %launcher;
   AI::dequeue() if AI::is('macro');
-  message "macro queue cleared.\n";
+  message "[macro] queue cleared.\n";
 };
 
 # adds variable and value to stack
 sub setVar {
   my ($var, $val) = @_;
+  $cvs->debug("setting +$var+ = +$val+", 3);
   $varStack{$var} = $val;
   return 1;
 };
@@ -306,6 +311,7 @@ sub getVar {
 # sets and/or refreshes global variables
 sub refreshGlobal {
   my $var = shift;
+  $cvs->debug("refreshing +$var+", 4);
   if (!defined $var || $var eq '.pos') {
     my $pos = calcPosition($char);
     my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
@@ -324,7 +330,7 @@ sub refreshGlobal {
 sub logMessage {
   my $message = shift;
   $message =~ s/\@log //g;
-  message "[macro] $message\n";
+  message "[macro][log] $message\n";
 };
 
 # get NPC array index
@@ -441,13 +447,13 @@ sub automacroReset {
   my $arg = shift;
   if (!$arg) {
     foreach my $am (keys %automacro) {undef $automacro{$am}->{disabled}};
-    message "automacro runonce list cleared.\n";
+    message "[macro] automacro runonce list cleared.\n";
     return;
   };
   my $ret = releaseAM($arg);
-  if ($ret == 0) {warning "automacro $arg wasn't disabled.\n"}
-  elsif ($ret == 1) {message "automacro $arg reenabled.\n"}
-  else {error "automacro $arg not found.\n"};
+  if ($ret == 0) {warning "[macro] automacro $arg wasn't disabled.\n"}
+  elsif ($ret == 1) {message "[macro] automacro $arg reenabled.\n"}
+  else {error "[macro] automacro $arg not found.\n"};
 };
 
 # removes an automacro from runonce list ##################
@@ -515,18 +521,18 @@ sub automacroCheck {
     next CHKAM if (defined $automacro{$am}->{class}    && !checkClass($automacro{$am}->{class}));
     next CHKAM if (defined $automacro{$am}->{hp}       && !checkPercent($automacro{$am}->{hp}, "hp"));
     next CHKAM if (defined $automacro{$am}->{sp}       && !checkPercent($automacro{$am}->{sp}, "sp"));
-    next CHKAM if (defined $automacro{$am}->{spirit}   && !checkSpirits($automacro{$am}->{spirit}));
+    next CHKAM if (defined $automacro{$am}->{spirit}   && !checkCond($char->{spirits}, $automacro{$am}->{spirit}));
     next CHKAM if (defined $automacro{$am}->{weight}   && !checkPercent($automacro{$am}->{weight}, "weight"));
     next CHKAM if (defined $automacro{$am}->{cartweight} && !checkPercent($automacro{$am}->{cartweight}, "cweight"));
-    next CHKAM if (defined $automacro{$am}->{soldout}  && !checkSoldOut($automacro{$am}->{soldout}));
+    next CHKAM if (defined $automacro{$am}->{soldout}  && !checkCond(getSoldOut(), $automacro{$am}->{soldout}));
     next CHKAM if (defined $automacro{$am}->{player}   && !checkPerson($automacro{$am}->{player}));
-    next CHKAM if (defined $automacro{$am}->{zeny}     && !checkZeny($automacro{$am}->{zeny}));
-    next CHKAM if (defined $automacro{$am}->{equipped} && !checkEquip($automacro{$am}->{equipped}));
+    next CHKAM if (defined $automacro{$am}->{zeny}     && !checkCond($char->{zeny}, $automacro{$am}->{zeny}));
+    foreach my $i (@{$automacro{$am}->{equipped}})  {next CHKAM unless checkEquip($i)};
     foreach my $i (@{$automacro{$am}->{status}})    {next CHKAM unless checkStatus($i)};
-    foreach my $i (@{$automacro{$am}->{inventory}}) {next CHKAM unless checkInventory($i)};
-    foreach my $i (@{$automacro{$am}->{storage}})   {next CHKAM unless checkStorage($i)};
-    foreach my $i (@{$automacro{$am}->{shop}})      {next CHKAM unless checkShop($i)};
-    foreach my $i (@{$automacro{$am}->{cart}})      {next CHKAM unless checkCart($i)};
+    foreach my $i (@{$automacro{$am}->{inventory}}) {next CHKAM unless checkItem("inv", $i)};
+    foreach my $i (@{$automacro{$am}->{storage}})   {next CHKAM unless checkItem("stor", $i)};
+    foreach my $i (@{$automacro{$am}->{shop}})      {next CHKAM unless checkItem("shop", $i)};
+    foreach my $i (@{$automacro{$am}->{cart}})      {next CHKAM unless checkItem("cart", $i)};
 
     message "[macro] automacro $am triggered.\n";
 
@@ -673,39 +679,16 @@ sub checkStatus {
   return 0;
 };
 
-# checks for item in inventory ############################
-sub checkInventory {
+# checks for item conditions ##############################
+sub checkItem {
+  my $where = shift;
   my ($item, $cond, $amount) = parseArgs($_[0]);
-  return 1 if cmpr(getInventoryAmount($item), $cond, $amount);
-  return 0;
-};
-
-# checks for item in cart #################################
-sub checkCart {
-  my ($item, $cond, $amount) = parseArgs($_[0]);
-  return 1 if cmpr(getCartAmount($item), $cond, $amount);
-  return 0;
-};
-
-# checks for item in shop #################################
-sub checkShop {
-  return 0 unless $shopstarted;
-  my ($item, $cond, $amount) = parseArgs($_[0]);
-  return 1 if cmpr(getShopAmount($item), $cond, $amount);
-  return 0;
-};
-
-# checks for item in storage ##############################
-sub checkStorage {
-  my ($item, $cond, $amount) = parseArgs($_[0]);
-  return 1 if cmpr(getStorageAmount($item), $cond, $amount);
-  return 0;
-};
-
-# checks for sold out slots ###############################
-sub checkSoldOut {
-  my ($cond, $slots) = split(/ /, $_[0]);
-  return 1 if cmpr(getSoldOut, $cond, $slots);
+  my $what;
+  if ($where eq 'inv')  {$what = getInventoryAmount($item)};
+  if ($where eq 'cart') {$what = getCartAmount($item)};
+  if ($where eq 'shop') {return 0 unless $shopstarted; $what = getShopAmount($item)};
+  if ($where eq 'stor') {$what = getStorageAmount($item)};
+  return 1 if cmpr($what, $cond, $amount);
   return 0;
 };
 
@@ -716,47 +699,21 @@ sub checkPerson {
   return 0;
 };
 
-# checks for zeny #########################################
-sub checkZeny {
+# checks arg1 for condition in arg2 #######################
+sub checkCond {
+  my $what = shift;
   my ($cond, $amount) = split(/ /, $_[0]);
-  return 1 if cmpr($char->{zenny}, $cond, $amount);
+  return 1 if cmpr($what, $cond, $amount);
   return 0;
 };
 
 # checks for equipment ####################################
-# FIXME: needs to be rewritten to avoid underscores replacing blanks
 sub checkEquip {
-  my @tfld = split(/ /, $_[0]);
-  my %eq;
-  foreach (@tfld) { $_ =~ s/_/ /g; };
-  for (my $i = 0; $i < @tfld; $i++) {
-     if ($tfld[$i] eq 'headlow')       {$eq{1}   = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'garment')    {$eq{4}   = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'arrow')      {$eq{10}  = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'armor')      {$eq{16}  = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'shield')     {$eq{32}  = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'footgear')   {$eq{64}  = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'helmet')     {$eq{256} = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'headmid')    {$eq{512} = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'headmidlow') {$eq{513} = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq '1hweapon')   {$eq{2}   = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq '2hweapon')   {$eq{34}  = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'accleft')    {$eq{128} = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'accright')   {$eq{8}   = lc($tfld[$i+1])}
-     elsif ($tfld[$i] eq 'accessory')  {$eq{136} = lc($tfld[$i+1])};
+  my $equip = shift;
+  foreach my $item (@{$char->{inventory}}) {
+     return 1 if ($item->{equipped} && lc($item->{name}) eq lc($equip));
   };
-
-  foreach my $k (keys %eq) {
-    my $equipped;
-    foreach my $it (@{$char->{inventory}}) {
-      if ($it->{equipped} == $k) {
-        if ($eq{$k} eq "none" || $eq{$k} ne lc($it->{name})) {return 0};
-        $equipped = 1; last;
-      };
-    };
-    if (!$equipped && $eq{$k} ne "none") {return 0};
-  };
-  return 1;
+  return 0;
 };
 
 # checks for a spell casted on us #########################
@@ -805,13 +762,6 @@ sub checkPubM {
     setVar(".lastpub", $arg->{pubMsgUser});
     return 1;
   };
-  return 0;
-};
-
-# checks for spirit spheres ###############################
-sub checkSpirits {
-  my ($cond, $amount) = split(/ /, $_[0]);
-  return 1 if cmpr($char->{spirits}, $cond, $amount);
   return 0;
 };
 
