@@ -21,7 +21,6 @@
 package SharedMemoryPlugin;
 
 use strict;
-use IO::Socket::UNIX;
 use Time::HiRes qw(time);
 
 use Plugins;
@@ -39,10 +38,23 @@ start() if (!$sock);
 
 
 sub start {
-	$sock = new IO::Socket::UNIX(
-		Type => SOCK_STREAM,
-		Peer => "/tmp/kore-dataserver.socket"
-	);
+	if ($^O eq 'MSWin32') {
+		require IO::Socket::INET;
+
+		$sock = new IO::Socket::INET(
+			Type => SOCK_STREAM,
+			PeerHost => 'localhost',
+			PeerPort => 7232
+		);
+
+	} else {
+		require use IO::Socket::UNIX;;
+
+		$sock = new IO::Socket::UNIX(
+			Type => SOCK_STREAM,
+			Peer => "/tmp/kore-dataserver.socket"
+		);
+	}
 }
 
 sub fetch {
