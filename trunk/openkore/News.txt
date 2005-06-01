@@ -57,6 +57,8 @@ New features:
 - _whenWeaponEquipped _whenShieldEquipped conditions.
 - Implement packet 014C (guild ally/enemy list).
 - Detect $player->{guildID} and $char->{guildID}.
+- It will say "You are again:" instead of "You are now:" when you gain a
+  status effect that you already had.
 
 New commands:
 - storage log
