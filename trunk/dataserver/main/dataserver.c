@@ -30,7 +30,7 @@
 #ifdef WIN32
 	#include "win-server.h"
 #else
-	#include <sys/poll.h>
+	#include <sys/select.h>
 	#include <signal.h>
 	#include <unistd.h>
 	#include "unix-server.h"
@@ -57,27 +57,28 @@ static void
 client_thread_callback (void *pointer)
 {
 	ThreadData *thread_data;
-	struct pollfd *ufds;
+	fd_set readfds;
+	struct timeval tv;
+	int highestfd;
 
 	thread_data = (ThreadData *) pointer;
-	ufds = NULL;
+	tv.tv_sec = 0;
+	tv.tv_usec = 50000;
+	highestfd = -1;
 
 	while (1) {
 		Client *client, *new_client = NULL;
-		int i, free_ufds = 0;
+		int i;
 
 		/* Check whether we've just been assigned a new client,
 		 * or whether the server is shutting down. */
-		LOCK (thread_data->lock);
-		if (1 || TRYLOCK (thread_data->lock)) {
+		if (TRYLOCK (thread_data->lock)) {
 			if (thread_data->quit) {
 				/* Server is shutting down. Free resources and exit thread. */
 				UNLOCK (thread_data->lock);
-				if (ufds != NULL)
-					free (ufds);
 
 				foreach_llist (thread_data->clients, Client *, client) {
-//				for (client = (Client *) thread_data->clients->first; client != NULL; client = (Client *) client->parent.next) {
+				//for (client = (Client *) thread_data->clients->first; client != NULL; client = (Client *) client->parent.next) {
 					free (client->priv);
 					client_close (client);
 				}
@@ -98,14 +99,11 @@ client_thread_callback (void *pointer)
 			/* We've been assigned a new client; add to client list. */
 			new_client->priv = calloc (sizeof (PrivateData), 1);
 			llist_append_existing (thread_data->clients, new_client);
+			highestfd = -1;
 			yield ();
-			free (ufds);
-			ufds = NULL;
-
 		}
 
 		client = (Client *) thread_data->clients->first;
-
 		if (client == NULL) {
 			/* We have no clients so just sleep. */
 			milisleep (10);
@@ -113,28 +111,28 @@ client_thread_callback (void *pointer)
 		}
 
 
-		/* Generate a list of client file descriptors, which we pass to poll() */
-		if (ufds == NULL)
-			ufds = malloc (sizeof (struct pollfd) * thread_data->nclients);
-
-		for (i = 0; client != NULL; client = (Client *) client->parent.next, i++) {
-			ufds[i].fd = client->fd;
-			ufds[i].events = POLLIN | POLLERR | POLLHUP;
+		/* Check which clients have incoming data. */
+		FD_ZERO (&readfds);
+		foreach_llist (thread_data->clients, Client *, client) {
+			/* FIXME: fd_set can only hold FD_SETSIZE number of file descriptors.
+			 * On my system, that's 1024. Maybe we should check for this? */
+			FD_SET (client->fd, &readfds);
+			if (highestfd == -1 || client->fd > highestfd)
+				highestfd = client->fd;
 		}
-		i = poll (ufds, thread_data->nclients, 10);
+
+		i = select (highestfd + 1, &readfds, NULL, NULL, &tv);
 		if (i == -1) {
 			/* An error occured. */
-			error ("poll() failed: %s\n", strerror (errno));
+			error ("select() failed: %s\n", strerror (errno));
 			exit (1);
 
 		} else if (i == 0)
 			/* Timeout; no clients have data pending. */
 			continue;
 
-
 		/* Iterate through clients that have incoming data pending. */
 		client = (Client *) thread_data->clients->first;
-		i = 0;
 
 		while (client != NULL) {
 			Client *current;
@@ -143,18 +141,15 @@ client_thread_callback (void *pointer)
 			current = client;
 			client = (Client *) client->parent.next;
 
-			if (ufds[i].revents & POLLIN)
+			if (FD_ISSET (current->fd, &readfds))
 				failed = !process_client (thread_data, current, current->priv);
-			else if (ufds[i].revents & POLLERR || ufds[i].revents & POLLHUP)
-				failed = 1;
-			else {
-				i++;
+			else
 				continue;
-			}
 
 			if (failed) {
 				/* Remove client. */
 				DEBUG ("Thread %d, client %p: removing client from list\n", thread_data->ID, current);
+				highestfd = -1;
 				free (current->priv);
 				client_close (current);
 				llist_remove (thread_data->clients, (LListItem *) current);
@@ -162,18 +157,10 @@ client_thread_callback (void *pointer)
 				LOCK (thread_data->lock);
 				thread_data->nclients--;
 				UNLOCK (thread_data->lock);
-
-				free_ufds = 1;
 			}
-			i++;
 		}
 
-		if (free_ufds) {
-			free (ufds);
-			ufds = NULL;
-		}
-
-		yield();
+		yield ();
 	}
 }
 
