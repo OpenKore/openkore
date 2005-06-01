@@ -208,10 +208,11 @@ on_new_client (Client *client)
 
 #ifdef WIN32
 
-
 static int
 win_start ()
 {
+	int i;
+
 	/* Start server. */
 	server = win_server_new (7232, on_new_client);
 	if (server == NULL)
