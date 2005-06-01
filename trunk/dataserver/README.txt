@@ -1,5 +1,13 @@
-Introduction
-------------
+TABLE OF CONTENTS
+
+	1. Introduction
+	2. Installation on Unix/Linux
+	3. Installation on Windows
+	4. Usage
+
+
+1. Introduction
+---------------
 OpenKore uses quite some memory. This becomes a problem if you
 run many instances of OpenKore at the same time.
 
@@ -12,18 +20,37 @@ ask the server and retrieve only the data that it needs at the moment.
 So the table files are only loaded once - by the shared data server.
 
 
-Using the shared data server on Unix/Linux
-------------------------------------------
+2. Installation on Unix/Linux
+-----------------------------
 
-1. COMPILATION
+There is no installation procedure. You just have to compile the
+server. After that, you can put it anywhere you want.
 
-First you must compile the server by typing these commands:
+Compile the server by typing these commands:
 
       cd main
       make
 
+This will generate the binary 'dataserver'.
 
-2. COPY OPENKORE PLUGIN
+Now read paragraph 4, "Usage".
+
+
+3. Installation on Windows
+--------------------------
+
+(TODO: write this)
+
+If you want to compile the source code on Windows, you'll have to
+install Scons (http://www.scons.org). In the dataserver folder, type:
+
+       scons
+
+
+4. Usage
+--------
+
+Step 1: Copy OpenKore plugin
 
 Inside the 'plugin' folder you will find 'dataserver.pl'. Copy this
 plugin to your OpenKore plugins folder. Alternatively, you can use
@@ -32,7 +59,7 @@ OpenKore's --plugin argument:
       openkore.pl --plugins=/path/to/dataserver/plugin
 
 
-3. RUN THE SHARED DATA SERVER
+Step 2: Run the shared data server
 
 You must run the shared data server before you start OpenKore.
 
@@ -40,12 +67,7 @@ You must run the shared data server before you start OpenKore.
       ./dataserver --tables /path/to/openkore/tables/folder
 
 
-4. RUN OPENKORE
+Step 3: Run OpenKore
 
 You can now run OpenKore. The plugin will take care of everything.
 You don't have to configure anything.
-
-
-Using the shared data server on Windows
----------------------------------------
-(TODO: write this)
