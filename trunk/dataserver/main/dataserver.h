@@ -25,6 +25,7 @@
 
 
 #define NUM_HASH_FILES 7
+#define CLIENT_BUF_SIZE 512
 
 
 typedef struct {
@@ -38,7 +39,7 @@ typedef struct {
 struct _PrivateData {
 	StringHashItem *iterators[NUM_HASH_FILES];
 
-	char buf[512];
+	char buf[CLIENT_BUF_SIZE];
 	int buf_len;
 };
 

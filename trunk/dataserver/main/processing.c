@@ -121,7 +121,6 @@ process_data (ThreadData *thread_data, Client *client, unsigned char major, unsi
 int
 process_client (ThreadData *thread_data, Client *client, PrivateData *priv)
 {
-	#define BUF_SIZE sizeof (priv->buf_len)
 	int tmp, len;
 
 	unsigned char major, minor;
@@ -130,14 +129,14 @@ process_client (ThreadData *thread_data, Client *client, PrivateData *priv)
 
 	/* Buffer is full. The client is trying to perform a request with a rediculously
 	 * big name. It's probably misbehaving, so disconnect it. */
-	if (priv->buf_len >= BUF_SIZE) {
+	if (priv->buf_len >= CLIENT_BUF_SIZE) {
 		DEBUG ("Thread %d, client %p: buffer full; disconnecting client\n",
 		       thread_data->ID, client);
 		return 0;
 	}
 
 	/* Receive data from client. */
-	len = client_recv (client, priv->buf + priv->buf_len, BUF_SIZE - priv->buf_len);
+	len = client_recv (client, priv->buf + priv->buf_len, CLIENT_BUF_SIZE - priv->buf_len);
 	if (len <= 0) {
 		/* Client exited. */
 		DEBUG ("Thread %d, client %p: client exited\n", thread_data->ID, client);
@@ -156,7 +155,6 @@ process_client (ThreadData *thread_data, Client *client, PrivateData *priv)
 	 *
 	 * major and minor specify which file's data the client is requesting.
 	 */
-
 	if (len < 4)
 		/* Packet too small; continue receiving. */
 		return 1;
