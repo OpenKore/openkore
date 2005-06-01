@@ -9016,8 +9016,12 @@ sub parseMsg {
 		my ($name, $is) = getActorNames($ID, 0, 'are', 'is');
 		if ($flag) {
 			# Skill activated
-			$actor->{statuses}{$skillName} = 1 if $actor;
-			message "$name $is now: $skillName\n", "parseMsg_statuslook",
+			my $again = 'now';
+			if ($actor) {
+				$again = 'again' if $actor->{statuses}{$skillName};
+				$actor->{statuses}{$skillName} = 1;
+			}
+			message "$name $is $again: $skillName\n", "parseMsg_statuslook",
 				$ID eq $accountID ? 1 : 2;
 
 		} else {
