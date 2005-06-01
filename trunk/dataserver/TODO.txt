@@ -1,6 +1,8 @@
 0.1:
 
 	* Port to Windows.
+	* Use scons instead of make? Keeping multiple makefiles for
+	  multiple platform is a pain.
 
 Future:
 
