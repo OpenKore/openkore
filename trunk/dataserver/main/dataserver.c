@@ -29,11 +29,19 @@
 
 #ifdef WIN32
 	#include "win-server.h"
+
+	#define Server WinServer
+	#define server_trylock win_server_trylock
+	#define start win_start
 #else
 	#include <sys/select.h>
 	#include <signal.h>
 	#include <unistd.h>
 	#include "unix-server.h"
+
+	#define Server UnixServer
+	#define server_trylock unix_server_trylock
+	#define start unix_start
 #endif
 
 
@@ -41,12 +49,6 @@
 StringHash *hashFiles[NUM_HASH_FILES];
 
 /* Other variables. */
-#ifdef WIN32
-	#define Server WinServer
-#else
-	#define Server UnixServer
-#endif
-
 static Server *server;
 static ThreadData *threads;
 Options options;
@@ -204,6 +206,34 @@ on_new_client (Client *client)
 /***********************************************/
 
 
+#ifdef WIN32
+
+
+static int
+win_start ()
+{
+	/* Start server. */
+	server = win_server_new (7232, on_new_client);
+	if (server == NULL)
+		return 1;
+
+	/* Enter main loop. */
+	message ("Server ready.\n");
+	win_server_main_loop (server);
+
+	/* Main loop exited; tell all threads to quit. */
+	for (i = 0; i < options.threads; i++) {
+		LOCK (threads[i].lock);
+		threads[i].quit = 1;
+		UNLOCK (threads[i].lock);
+	}
+
+	return win_server_free (server);
+}
+
+
+#else
+
 static void
 unix_stop ()
 {
@@ -239,6 +269,8 @@ unix_start ()
 
 	return unix_server_free (server);
 }
+
+#endif /* WIN32 */
 
 
 static void
@@ -279,7 +311,7 @@ main (int argc, char *argv[])
 	int i, ret;
 
 	/* Check whether there's already a server running. */
-	ret = unix_server_trylock ();
+	ret = server_trylock ();
 	if (ret == -1)
 		/* Error. */
 		return 1;
@@ -357,7 +389,7 @@ main (int argc, char *argv[])
 	}
 
 	/* Initialize server and main loop. */
-	ret = unix_start ();
+	ret = start ();
 
 	/* Free resources. */
 	for (i = 0; i < options.threads; i++) {
