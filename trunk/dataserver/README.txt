@@ -11,12 +11,9 @@ files instead of OpenKore. When OpenKore needs the data, it will
 ask the server and retrieve only the data that it needs at the moment.
 So the table files are only loaded once - by the shared data server.
 
-Currently, this software only works on Unix. If anybody would like to
-help porting to Windows, please let me know.
 
-
-Using shared data server
-------------------------
+Using the shared data server on Unix/Linux
+------------------------------------------
 
 1. COMPILATION
 
@@ -48,3 +45,7 @@ You must run the shared data server before you start OpenKore.
 You can now run OpenKore. The plugin will take care of everything.
 You don't have to configure anything.
 
+
+Using the shared data server on Windows
+---------------------------------------
+(TODO: write this)
