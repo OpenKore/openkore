@@ -22,6 +22,7 @@ package SharedMemoryPlugin;
 
 use strict;
 use Time::HiRes qw(time);
+use IO::Socket::INET;
 
 use Plugins;
 
@@ -39,8 +40,6 @@ start() if (!$sock);
 
 sub start {
 	if ($^O eq 'MSWin32') {
-		require IO::Socket::INET;
-
 		$sock = new IO::Socket::INET(
 			Type => SOCK_STREAM,
 			PeerHost => 'localhost',
