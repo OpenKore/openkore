@@ -18,7 +18,3 @@ headers = Split (
 )
 
 env.Program('dataserver', sources)
-
-distfiles = base_sources + ['win-server.c', 'unix-server.c'] + headers
-tar = dist.Tar(dist['OUT'], distfiles)
-Return('tar')
