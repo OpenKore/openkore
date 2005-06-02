@@ -311,16 +311,18 @@ sub getVar {
 # sets and/or refreshes global variables
 sub refreshGlobal {
   my $var = shift;
-  $cvs->debug("refreshing +$var+", 4);
   if (!defined $var || $var eq '.pos') {
+    $cvs->debug("refreshing globals: +$var+", 4);
     my $pos = calcPosition($char);
     my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
     setVar(".pos", $val);
   };
   if (!defined $var || $var eq '.time') {
+    $cvs->debug("refreshing globals: +$var+", 4);
     setVar(".time", time);
   };
   if (!defined $var || $var eq '.datetime') {
+    $cvs->debug("refreshing globals: +$var+", 4);
     my $val = localtime;
     setVar(".datetime", $val);
   };
