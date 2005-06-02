@@ -17,11 +17,5 @@ else:
 	env['LINKFLAGS'] += ['-pthread']
 
 
-dist = Environment(TARFLAGS = '-c -z')
-dist['OUT'] = 'dataserver.tar.gz'
-disttar = []
-disttar += dist.Tar(dist['OUT'], Split('README.txt LICENSE.txt TODO.txt SConstruct'))
-
-Export('env WIN32 platform dist');
-disttar += SConscript('main/SConscript');
-Alias('dist', disttar)
+Export('env WIN32 platform')
+SConscript('main/SConscript')
