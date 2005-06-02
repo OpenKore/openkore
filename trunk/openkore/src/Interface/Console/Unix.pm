@@ -214,4 +214,10 @@ sub getColor {
 	'white'		=> "\e[5;47m",
 );
 
+
+sub beep {
+	print STDOUT "\a";
+	STDOUT->flush;
+}
+
 1;
