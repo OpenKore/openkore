@@ -47,7 +47,7 @@ sub start {
 		);
 
 	} else {
-		require use IO::Socket::UNIX;;
+		require IO::Socket::UNIX;;
 
 		$sock = new IO::Socket::UNIX(
 			Type => SOCK_STREAM,
@@ -82,17 +82,18 @@ sub parseRoOrDescLUT {
 	my (undef, $args) = @_;
 	my ($fileIndex);
 	my %table = (
-		     itemsdescriptions  => 0,
-		     skillsdescriptions => 1,
-		     cities   => 2,
-		     elements => 3,
-		     items    => 4,
-		     itemslotcounttable => 5,
-		     maps     => 6
+		     'itemsdescriptions.txt'  => 0,
+		     'skillsdescriptions.txt' => 1,
+		     'cities.txt'   => 2,
+		     'elements.txt' => 3,
+		     'items.txt'    => 4,
+		     'itemslotcounttable.txt' => 5,
+		     'maps.txt'     => 6
 		);
 
 	foreach my $key (keys %table) {
-		if ($args->{file} =~ /$key/i) {
+		my $re = quotemeta $key;
+		if ($args->{file} =~ /$re$/i) {
 			$fileIndex = $table{$key};
 			last;
 		}
