@@ -24,15 +24,19 @@ B<macro>'s configuration file syntax.
 
 =over 4
 
-=item C<%macros>
+=item C<%macro>
 
-Hash containing the macros and automacros.
+Hash containing the macros. Hash structure: 
+
+=item C<%automacro>
+
+Hash containing the automacros. Hash structure:
 
 =item C<%varStack>
 
 Variable stack, set with C<setVar(variable, value)> and get with C<getVar(variable)>.
 
-=item C<%automacro>
+=item C<%launcher>
 
 When an automacro triggers, the hash contains the macro to be called in I<call>, the delay
 settings in I<time>, I<timeout> and whether the macro should override the AI in I<override_ai>.
@@ -41,9 +45,17 @@ settings in I<time>, I<timeout> and whether the macro should override the AI in 
 
 Queue of macro commands to be executed.
 
+=item C<$cvs>
+
+Debug object. Type C<perldoc cvsdebug.pm> for more information.
+
 =item C<$cfID>
 
 Config file ID, set by Settings::addConfigFile
+
+=item C<@runOnce>
+
+Array of macro IDs that are to be ignored. Usually run-once automacro IDs get in here.
 
 =back
 
@@ -68,12 +80,12 @@ Example: C<getVar("lastPMnick")>
 
 Returns: value of $varStack{variable} or undef if empty
 
-=item C<getNPCid(position)>
+=item C<getnpcid(position)>
 
 Gets the array index of the NPC located at the given position. The argument
 is a string containing the X and Y coordinates, separated by a whitespace.
 
-Example: C<getNPCid("172 135")>
+Example: C<getnpcid("172 135")>
 
 Returns: array index or -1 if no NPC was found at the given location
 
@@ -127,7 +139,7 @@ Gets the amount of an item I<name> in shop.
 
 Returns: amount
 
-=item C<getSoldOut>
+=item C<getSoldOut()>
 
 Gets the amount of shop slots that are sold out.
 
@@ -165,18 +177,9 @@ Returns: 1 if succeeded, 0 if I<name> was not found.
 
 =over 4
 
-=item C<isInRunOnce(name)>
+=item C<refreshGlobal()>
 
-Checks whether automacro I<name> is in the run-once list.
-
-Returns: 1 (true), 0 (false)
-
-=item C<checkCart(condition)>
-
-Checks whether cart matches I<condition>. I<condition> is
-I<"item name"> I<condition> I<amount>.
-
-Returns: 1 (true), 0 (false)
+Refreshes global variables on access, such as I<.pos>, I<.time>, I<.datetime>.
 
 =item C<checkCast(spell, r_hash)>
 
@@ -190,25 +193,11 @@ Checks whether the current character is of class I<class>.
 
 Returns: 1 (true), 0 (false)
 
-=item C<checkEquip(conditions)>
+=item C<checkEquip(item)>
 
-Checks whether the character has I<conditions> equipped.
-I<conditions> is a whitespace separated list of keys and values, 
-where a key is one of these: "garment", "arrow", "headlo", "headmid",
-"headmidlo", "helmet", "armor", "shield", "1hweapon", "2hweapon", 
-"accleft", "accright", "accessory". And the value is the item name,
-where blanks are replaces by an underscore.
+Checks whether the character has I<item> equipped.
 
-Example: C<checkEquip("garment Muffler_[Whisper]_[1] helmet Sakkat")>
-
-Returns: 1 (true), 0 (false)
-
-=item C<checkInventory(condition)>
-
-Checks whether inventory matches I<condition>. I<condition> is
-I<"item name"> I<condition> I<amount>.
-
-Example: C<checkInventory("\"red potion\" >= 100")>
+Example: C<checkEquip("Muffler [Whisper] [1]")>
 
 Returns: 1 (true), 0 (false)
 
@@ -242,67 +231,38 @@ Example: C<checkPercent("< 30", "hp")>
 
 Returns: 1 (true), 0 (false)
 
-=item C<checkSpirits(condition)>
-
-Checks whether spirits match I<condition>.
-
-Example: C<checkSpirits("> 3")>
-
-Returns: 1 (true), 0 (false)
-
 =item C<checkPerson(name)>
 
 Checks whether I<name> is on our screen.
 
 Returns: 1 (true), 0 (false)
 
-=item C<checkNPCTalk(message)>
-
-Checks wheter an NPC sent the message specified by I<message> which is
-a regexp.
-
-Example: C<checkNPCTalk("^Trigger Message$")>
-
-Returns: 1 (true), 0 (false)
-
 =item C<checkPM(pmline, r_hash)>
 
 Checks whether a PM was received. I<pmline> has the following syntax:
-"/trigger message or regexp/,nick1,nick2,nick3,..", I<r_hash> is a
-reference to a hash containing I<privMsgUser> and I<privMsg>. This
-function sets the variable I<lastPMnick> which can be accessed either
+'/regexp/,nick1,nick2,nick3,..', or '"trigger message",nick1,nick2,nick3,...'
+The nick arguments are optional.
+I<r_hash> is a reference to a hash containing I<privMsgUser> and I<privMsg>.
+This function sets the variable I<lastPMnick> which can be accessed either
 via C<getVar("I<variable>")> or directly with $varStack{variable}.
 
-Example: C<checkPM("/^my trigger message$/,Tom Jones", $arg)>
+Example: C<checkPM("/^my trigger message$/,Tom Jones", $arg)> (same as:
+C<checkPM("\"my trigger message\",Tom Jones", $arg)>)
 
 Returns: 1 (true), 0 (false)
 
 =item C<checkPubM(publine, r_hash)>
 
 Checks whether a public chat message was received. I<publine> has the
-following syntax: "/trigger message or regexp/,distance", I<r_hash> is
-a reference to a hash containing I<pubMsgID>, I<pubMsgUser> and I<pubMsg>.
+following syntax: '/regexp/,distance' or '"trigger message",distance',
+The distance argument is optional.
+I<r_hash> is a reference to a hash containing I<pubMsgID>, I<pubMsgUser>
+and I<pubMsg>.
 This function sets the variable I<lastPubNick> which can be accessed
 either via C<getVar("I<variable>")> or directly with $varStack{variable}.
 
-Example: C<checkPubM("/^my trigger message$/,5", $arg)>
-
-Returns: 1 (true), 0 (false)
-
-=item C<checkShop(condition)>
-
-Checks whether shop matches I<condition>. I<condition> is
-I<"item name"> I<condition> I<amount>.
-
-Example: C<checkShop("\"red potion\" >= 100")>
-
-Returns: 1 (true), 0 (false)
-
-=item C<checkSoldOut(condition)>
-
-Checks whether the soldout slots of the shop matches I<conditíon>,
-
-Example: C<checkSoldOut(">= 3")>.
+Example: C<checkPubM("/^my trigger message$/,5", $arg)> (same as:
+C<checkPubM("\"my trigger message\",5", $arg)>
 
 Returns: 1 (true), 0 (false)
 
@@ -320,15 +280,24 @@ Returns: 1 (true), 0 (false)
 Checks if a variable's value matches a certain condition. Variable,
 condition and value are seperated by a whitespace.
 
-Example: C<checkVar("something >= 100")>
+Example: C<checkVar("something E<gt>= 100")>
 
 Returns: 1 (true), 0 (false)
 
-=item C<checkZeny(condition)>
+=item C<checkItem(pool, item)>
 
-Checks whether we have our Zeny matching I<condition>.
+Checks whether I<item> is in I<pool>. I<pool> can be one of the following:
+I<inv> (inventory), I<stor> (storage), I<cart> (cart), I<shop> (shop).
 
-Example: C<checkZeny("<= 100000")>
+Example: C<checkItem("inv", "Muffler [1]")>
+
+Returns: 1 (true), 0 (false)
+
+=item C<checkCond(obj, condition)>
+
+Checks whether I<obj> matches I<condition>.
+
+Example: C<checkItem($char->{zeny}, "E<lt>= 100000")>
 
 Returns: 1 (true), 0 (false)
 
@@ -338,11 +307,11 @@ Returns: 1 (true), 0 (false)
 
 =over 4
 
-=item C<ai_isIdle>
+=item C<ai_isIdle()>
 
 Checks whether AI is idle.
 
-Returns: 1 if AI is either "macro" or "deal" or $automacro{overrideAI}
+Returns: 1 if AI is either "macro" or "deal" or $launcher{overrideAI}
 is set, else 0
 
 =item C<findMacroID(name)>
@@ -355,7 +324,7 @@ Loads macro with id I<id> into an array.
 
 Returns: this array
 
-=item C<clearMacro>
+=item C<clearMacro()>
 
 Clears macro queue and removes 'macro' from AI queue.
 
@@ -370,15 +339,15 @@ Clears macro queue and removes 'macro' from AI queue.
 If I<name> is given, I<name> will be removed from automacro run-once list,
 else the whole list is cleared.
 
-=item C<usage>
+=item C<usage()>
 
 Sends an usage overview to console.
 
-=item C<showVersion>
+=item C<showVersion()>
 
 Sends the version number to console.
 
-=item C<list_macros>
+=item C<list_macros()>
 
 Sends an overview of all available macros and automacros to console.
 
@@ -402,7 +371,15 @@ Returns: 1 (true), 0 (false)
 
 Checks whether I<arg1> and I<arg2> match I<condition>.
 
-Example: cmpr(12, "<=", 28).
+Example: cmpr(12, "E<lt>=", 28).
+
+Returns: 1 (true), 0 (false)
+
+=item C<match(text, keyword)>
+
+Checks whether I<keyword> matches I<text>. If I<keyword> was enclosed by slashes (/) it will be treated as regexp. If it was enclosed by quotes ("), it checks for exact match.
+
+Example: C<match("hello World", "/[Ww]orld$/")>, C<match("hello World", "\"hello World\"")>
 
 Returns: 1 (true), 0 (false)
 
@@ -422,13 +399,24 @@ Returns: parsed string, undef if I<string> was @(log|call|release|pause|set) or 
 
 Parses the file I<filename> for macros and automacros and puts them into the hash reference I<r_hash>.
 
-=item C<debug(string)>
+=back
 
-Sends I<string> to openkore's log facility if 'macro_debug' is set to 1 or higher.
+=head2 other internal functions
 
-=item C<error(string)>
+=over 4
 
-Sends I<string> to openkore's error log facility.
+=item C<setDebug()>
+
+Sets the C<$cvs> debug level to whatever was specified in config.txt for I<macro_debug>.
+
+=item C<debuglevel(level)>
+
+This function is called when the user changed the debug level by typing C<conf macro_debug #>.
+
+=item C<Unload()>
+
+Undefines C<$cvs> with the effect that it's destructor is called.
+Then clears all hashes and hooks and removes macro.txt from C<Settings>.
 
 =back
 
@@ -444,3 +432,5 @@ C<cvs -d:pserver:anonymous@cvs.sf.net:/cvsroot/openkore co -P macro>
 =head1 AUTHOR
 
 Arachno <arachnophobia at users dot sf dot net>
+
+=cut
