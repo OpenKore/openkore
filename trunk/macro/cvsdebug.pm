@@ -87,3 +87,109 @@ sub getRevision {
 };
 
 1;
+
+__END__
+
+=head1 NAME
+
+cvsdebug - package for debugging openkore plugins
+
+=head1 VERSION
+
+$Revision$
+
+=head1 SYNOPSIS
+
+    package whatever;
+    use cvsdebug;
+    
+    my $cvs = new cvsdebug(
+           "/path/to/whatever.pl",
+           $level,
+           [\%hash, \%hash_of_hashes, \@array, ..]
+    );
+    ...
+    $cvs->debug "message", $level;
+    ...
+    $cvs->setDebug($level);
+    ...
+    $cvs->getRevision();
+    ...
+    undef $cvs;
+
+=head1 DESCRIPTION
+
+This package is intented to be a little helper for debugging openkore plugins.
+
+=head2 Initializing the cvsdebug object
+
+=over 4
+
+    my $object = new cvsdebug(args);
+
+Where I<args> are:
+
+=over
+
+=item *
+
+the filename of the plugin you want to debug
+
+=item *
+
+the debug level
+
+=item *
+
+the hashes or arrays you want to dump when destructor is called
+
+=back
+
+=back
+
+=head2 Using cvsdebug
+
+=over 4
+
+=item C<debug($message, $level)>
+
+Sends I<$message> to console if I<$level> is greater or equal to the level specified
+either when the object was created or C<setDebug($level)> was called.
+
+=item C<setDebug($level)>
+
+Sets debug level to I<$level>.
+
+=item C<getRevision()>
+
+Parses F</path/to/your/plugin.pl> and looks for a cvs C<$Header>. Returns the cvs revision.
+
+=back
+
+=head2 destroying a cvsdebug object
+
+=over 4
+
+Undefine the object using C<undef $object>. The destructor will be called which gives
+information about the length of the hashes of hashes/arrays specified and lists any hash if
+available.
+
+=back
+
+=head1 BUGS
+
+The destructor needs some refining.
+
+=head1 AVAILABILITY
+
+Get it via CVS:
+
+C<cvs -d:pserver:anonymous@cvs.sf.net:/cvsroot/openkore login>
+
+C<cvs -d:pserver:anonymous@cvs.sf.net:/cvsroot/openkore co -P macro>
+
+=head1 AUTHOR
+
+Arachno <arachnophobia at users dot sf dot net>
+
+=cut
