@@ -35,6 +35,7 @@
 	#define start win_start
 #else
 	#include <sys/select.h>
+	#include <sys/time.h>
 	#include <signal.h>
 	#include <unistd.h>
 	#include "unix-server.h"
@@ -64,8 +65,6 @@ client_thread_callback (void *pointer)
 	int highestfd;
 
 	thread_data = (ThreadData *) pointer;
-	tv.tv_sec = 0;
-	tv.tv_usec = 50000;
 	highestfd = -1;
 
 	while (1) {
@@ -123,6 +122,8 @@ client_thread_callback (void *pointer)
 				highestfd = client->fd;
 		}
 
+		tv.tv_sec = 0;
+		tv.tv_usec = 50000;
 		i = select (highestfd + 1, &readfds, NULL, NULL, &tv);
 		if (i == -1) {
 			/* An error occured. */

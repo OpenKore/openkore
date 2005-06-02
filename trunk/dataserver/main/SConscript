@@ -1,9 +1,11 @@
 Import('*')
 
-sources = Split(
+base_sources = Split(
 	'fileparsers.c linked-list.c string-hash.c threads.c ' +
 	'utils.c network.c processing.c dataserver.c'
 )
+
+sources = base_sources
 if WIN32:
 	sources += ['win-server.c']
 else:
@@ -11,8 +13,12 @@ else:
 
 headers = Split (
 	'fileparsers.h linked-list.h string-hash.h threads.h ' +
-	'utils.h client.h  processing.h dataserver.h' +
+	'utils.h client.h  processing.h dataserver.h ' +
 	'unix-server.h win-server.h'
 )
 
 env.Program('dataserver', sources)
+
+distfiles = base_sources + ['win-server.c', 'unix-server.c'] + headers
+tar = dist.Tar(dist['OUT'], distfiles)
+Return('tar')
