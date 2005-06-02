@@ -6,7 +6,7 @@
 # GNU General Public License, Version 2.
 # See http://www.gnu.org/licenses/gpl.html
 
-our $Version = "0.6";
+our $Version = "0.7";
 our $maxRad = 14;
 
 package autoshop;
@@ -20,7 +20,7 @@ use Misc;
 use Log qw(message warning error);
 use AI;
 
-#my $cvs = 1;
+my $cvs = 1;
 
 if (defined $cvs) {
   open(MF, "< $Plugins::current_plugin" )
@@ -36,6 +36,8 @@ if (defined $cvs) {
 };
                                         
 undef $cvs if defined $cvs;
+
+our @chtRooms;
                                         
 Plugins::register('autoshop', 'checks our environment before opening shop', \&Unload, \&Unload);
 
@@ -235,6 +237,8 @@ sub buildVendermap {
   my $arr = shift;
   if (!$arr) {
     buildVendermap(\@::venderListsID);
+    refreshChatRooms();
+    buildVendermap(\@chtRooms);
     buildVendermap(\@::playersID);
     return;
   };
@@ -253,8 +257,8 @@ sub buildVendermap {
     if ($pos->{y} >= $player->{pos_to}{y}) {$newY = $maxRad - ($pos->{y}) + ($player->{pos_to}{y})}
     else                                   {$newY = $maxRad + ($player->{pos_to}{y}) - ($pos->{y})};
 
-    if ($arr == \@::venderListsID) {addToVendermap($newX, $newY, 'vender', $player->{pos_to}{x}, $player->{pos_to}{y})}
-    else                           {addToVendermap($newX, $newY, 'player', $player->{pos_to}{x}, $player->{pos_to}{y})};
+    if ($arr == \@::playersID) {addToVendermap($newX, $newY, 'player', $player->{pos_to}{x}, $player->{pos_to}{y})}
+    else {addToVendermap($newX, $newY, 'vender', $player->{pos_to}{x}, $player->{pos_to}{y})};
   };
 };
 
@@ -265,4 +269,10 @@ sub clearVendermap {
   };
 };
           
+sub refreshChatRooms {
+  for (my $i = 0; $i < @::chatRoomsID; $i++) {
+     push(@chtRooms, $::chatRooms{$::chatRoomsID[$i]}{'ownerID'});
+  };
+};
+
 return 1;
