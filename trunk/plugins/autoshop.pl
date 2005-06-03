@@ -38,6 +38,7 @@ if (defined $cvs) {
 undef $cvs if defined $cvs;
 
 our @chtRooms;
+our $shopopen = 0;
                                         
 Plugins::register('autoshop', 'checks our environment before opening shop', \&Unload, \&Unload);
 
@@ -60,7 +61,7 @@ sub debug {
 # checks configuration for silly settings
 sub checkConfig {
   my $tpl = "Your %s setting is either too high or too low (%d). Using default value (%d).\n";
-  my %configs = ('autoshop_maxweight', '0 5 0', 'autoshop_tries', '1 900 16', 'autoshop_radius', '1 '.$maxRad.' 5');
+  my %configs = ('autoshop_maxweight', '0 5 0', 'autoshop_tries', '1 900 16', 'autoshop_radius', '1 '.$maxRad.' 5', 'autoshop_reopenOnClose', '0 1 0');
   while (my ($key, $value) = each(%configs)) {
     my ($min, $max, $def) = split(/ /, $value);
     if ($::config{$key} >= $max || $::config{$key} <= $min) {
@@ -82,7 +83,7 @@ sub commandHandler {
 sub showVer {
   message "autoshop version $Version\n", "list";
   my @cf = ('autoshop', 'shopAuto_open', 'autoshop_maxweight', 'autoshop_tries',
-            'autoshop_radius', 'autoshop_debug');
+            'autoshop_radius', 'autoshop_debug', 'autoshop_reopenOnClose');
   foreach (@cf) {message(sprintf("%s %d\n", $_, $::config{$_}))};
 };
 
@@ -149,6 +150,7 @@ sub autoshop {
     $timeout{ai_autoshop}{time} = time;
     $timeout{ai_shop}{time} = time;
   };
+  if (!$shopstarted && $::config{autoshop_reopenOnClose} && $shopopen) {$shopopen = 0};
   if ($::config{autoshop} && AI::isIdle && $conState == 5 && timeOut($timeout{ai_autoshop}) &&
       !$shopstarted && !$char->{muted} && !$char->{sitting}) {
     clearVendermap(); buildVendermap();
@@ -157,7 +159,7 @@ sub autoshop {
       debug("This place's weight is $vendermap[$maxRad][$maxRad]. Moving.");
       my ($x, $y, $success) = suggest($::config{autoshop_radius});
       walkto($x, $y) if ($success);
-    } elsif (timeOut($timeout{ai_shop})) {::openShop(); return};
+    } elsif (timeOut($timeout{ai_shop}) && !$shopopen) {$shopopen = 1; ::openShop(); return};
     $timeout{ai_autoshop}{time} = time;
   };
   if ($::config{autoshop} && !AI::isIdle && !$shopstarted) {
