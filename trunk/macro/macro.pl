@@ -568,6 +568,11 @@ sub between {
 
 sub cmpr {
   my ($a, $cond, $b) = @_;
+  if ($a =~ /\D/ || $b =~ /\D/) {
+    if ($cond eq "="  && $a eq $b) {return 1};
+    if ($cond eq "!=" && $a ne $b) {return 1};
+    return 0;
+  };
   if ($cond eq "="  && $a == $b) {return 1};
   if ($cond eq ">=" && $a >= $b) {return 1};
   if ($cond eq "<=" && $a <= $b) {return 1};
@@ -579,8 +584,8 @@ sub cmpr {
 
 sub parseArgs {
   my $arg = shift;
-  if ($arg =~ /".*"/) {return $arg =~ /"(.*)" +(.*) +(.*)/}
-  else {return split(/ /, $_[0])};
+  if ($arg =~ /".*"/) {return $arg =~ /^"(.*?)" +(.*?) +(.*)$/}
+  else {return $arg =~ /^(.*?) +(.*?) +(.*)$/};
 };
 
 sub match {
@@ -596,10 +601,12 @@ sub match {
 
 # check for variable #######################################
 sub checkVar {
-  my ($var, $cond, $val) = split(/ /, $_[0]);
+  my $arg = shift;
+  my ($var, $cond, $val) = parseArgs($arg);
   return 1 if ($cond eq "unset" && !exists $varStack{$var});
   if (exists $varStack{$var}) {
     refreshGlobal($var);
+    $cvs->debug("comparing: $var ($varStack{$var}) $cond $val", 4);
     return 1 if cmpr($varStack{$var}, $cond, $val);
   };
   return 0;
