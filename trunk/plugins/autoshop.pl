@@ -272,6 +272,7 @@ sub clearVendermap {
 };
           
 sub refreshChatRooms {
+  @chtRooms = ();
   for (my $i = 0; $i < @::chatRoomsID; $i++) {
      push(@chtRooms, $::chatRooms{$::chatRoomsID[$i]}{'ownerID'});
   };
