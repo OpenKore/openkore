@@ -63,6 +63,8 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType 2
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
 
 [Philippines - pRO: Loki/Sarah]
 ip 202.57.118.231
@@ -74,6 +76,8 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType 2
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
 
 [Philippines - pRO: Odin/Chaos]
 ip 202.57.118.233
@@ -85,6 +89,8 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType 2
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
 
 [Philippines - pRO: Urdr]
 ip 202.57.118.234
@@ -96,6 +102,8 @@ secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
 serverType 2
+patchserver wpatch.ragnarok.com.ph
+patchpath /patch50
 
 [Europe - euRO]
 ip 62.109.138.134
@@ -105,7 +113,6 @@ version 1
 chatLangCode 1
 patchserver wpatch.euro-ro.net
 patchpath /patch02
-patchttl 30
 
 [Oceania/Australia - oRO]
 ip 202.168.25.133
