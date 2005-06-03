@@ -32,8 +32,19 @@
 	#define LOCK(mutex) EnterCriticalSection (mutex)
 	#define UNLOCK(mutex) LeaveCriticalSection (mutex)
 	#define TRYLOCK(mutex) TryEnterCriticalSection (mutex)
+
+	#define milisleep Sleep
+	#define yield SwitchToThread
 #else
 	#include <pthread.h>
+	#include <unistd.h>
+
+	#if defined(LINUX) || defined(__LINUX__) || defined(__linux__) || defined(__FreeBSD__)
+		#define yield pthread_yield
+	#else
+		#include <sched.h>
+		#define yield sched_yield
+	#endif
 
 	typedef pthread_t Thread;
 	typedef pthread_mutex_t Mutex;
@@ -41,6 +52,8 @@
 	#define LOCK(mutex) pthread_mutex_lock (mutex)
 	#define UNLOCK(mutex) pthread_mutex_unlock (mutex)
 	#define TRYLOCK(mutex) pthread_mutex_trylock (mutex) == 0
+
+	#define milisleep(x) usleep (x * 1000)
 #endif
 
 
