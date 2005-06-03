@@ -59,6 +59,7 @@ New features:
 - Detect $player->{guildID} and $char->{guildID}.
 - It will say "You are again:" instead of "You are now:" when you gain a
   status effect that you already had.
+- When storageAuto is triggered, it will write a message saying why.
 
 New commands:
 - storage log

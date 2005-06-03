@@ -2294,7 +2294,10 @@ sub AI {
 
 		} else {
 			# Force storage after death
-			AI::queue("storageAuto") if $config{storageAuto};
+			if ($config{storageAuto}) {
+				message "Auto-storaging due to death\n";
+				AI::queue("storageAuto");
+			}
 		}
 
 	} elsif (AI::action ne "dead" && $char->{'dead'}) {
@@ -2425,6 +2428,7 @@ sub AI {
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
 		# Only autostorage when we're on an attack route, or not moving
 		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
+			message "Auto-storaging due to excess weight\n";
 			AI::queue("storageAuto");
 		}
 
@@ -2457,6 +2461,7 @@ sub AI {
 
 		# Only autostorage when we're on an attack route, or not moving
 		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found) {
+			message "Auto-storaging due to insufficient ".$config{"getAuto_$i"}."\n";
 			AI::queue("storageAuto");
 		}
 		$timeout{'ai_storageAuto'}{'time'} = time;
@@ -7491,17 +7496,17 @@ sub parseMsg {
 
 		} elsif ($part == 3) {
 			# Bottom headgear change
-			message getActorName($ID)." changed bottom headgear to: ".headgearName($number)."\n", "parseMsg_statuslook" unless $ID eq $accountID;
+			message getActorName($ID)." changed bottom headgear to: ".headgearName($number)."\n", "parseMsg_statuslook", 2 unless $ID eq $accountID;
 			$players{$ID}{headgear}{low} = $number if $players{$ID};
 
 		} elsif ($part == 4) {
 			# Top headgear change
-			message getActorName($ID)." changed top headgear to: ".headgearName($number)."\n", "parseMsg_statuslook" unless $ID eq $accountID;
+			message getActorName($ID)." changed top headgear to: ".headgearName($number)."\n", "parseMsg_statuslook", 2 unless $ID eq $accountID;
 			$players{$ID}{headgear}{top} = $number if $players{$ID};
 
 		} elsif ($part == 5) {
 			# Middle headgear change
-			message getActorName($ID)." changed middle headgear to: ".headgearName($number)."\n", "parseMsg_statuslook" unless $ID eq $accountID;
+			message getActorName($ID)." changed middle headgear to: ".headgearName($number)."\n", "parseMsg_statuslook", 2 unless $ID eq $accountID;
 			$players{$ID}{headgear}{mid} = $number if $players{$ID};
 
 		} elsif ($part == 6) {
