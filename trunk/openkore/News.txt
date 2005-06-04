@@ -63,6 +63,7 @@ New features:
   status effect that you already had.
 - When storageAuto is triggered, it will write a message saying why.
 - Display your PvP rank when you're in a PvP zone.
+- $ai_v{temp}{pvp} is set to 1 in PVP maps, 2 in GVG.
 
 New commands:
 - storage log
