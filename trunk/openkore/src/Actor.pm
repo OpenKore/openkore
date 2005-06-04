@@ -43,9 +43,11 @@ sub get {
 	if ($ID eq $accountID) {
 		return $char;
 	} elsif ($monsters{$ID}) {
-		return $monsters{$ID};
+		return $monsters{$ID} if UNIVERSAL::isa($monsters{$ID}, "Actor");
+		return new Actor::Unknown($ID);
 	} elsif ($players{$ID}) {
-		return $players{$ID};
+		return $players{$ID} if UNIVERSAL::isa($players{$ID}, "Actor");
+		return new Actor::Unknown($ID);
 	} elsif ($items{$ID}) {
 		return $items{$ID};
 	} else {
