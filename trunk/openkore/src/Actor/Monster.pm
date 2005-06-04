@@ -1,4 +1,4 @@
-package Monster;
+package Actor::Monster;
 use strict;
 our @ISA = qw(Actor);
 
