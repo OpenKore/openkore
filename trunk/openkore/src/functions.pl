@@ -6502,9 +6502,13 @@ sub parseMsg {
 			}
 
 			updateDamageTables($ID1, $ID2, $damage);
+			my $source = Actor::get($ID1);
+			my $target = Actor::get($ID2);
+			my $verb = $source->verb('attack', 'attacks');
 
-			my ($source, $verb, $target) = getActorNames($ID1, $ID2, 'attack', 'attacks');
-			my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($src_speed/10).")";
+			$target->{sitting} = 0 unless $type == 4 || $type == 9 || $totalDamage == 0;
+
+			my $msg = $source->name." $verb ".$target->name." - Dmg: $dmgdisplay (delay ".($src_speed/10).")";
 
 			my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
 
@@ -8143,7 +8147,7 @@ sub parseMsg {
 			my $status = sprintf("[%3d/%3d] ", percent_hp($char), percent_sp($char));
 			$disp = $status.$disp;
 		}
-		$target->{sitting} = 0 unless $type == 4 || $type == 9;
+		$target->{sitting} = 0 unless $type == 4 || $type == 9 || $damage == 0;
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
