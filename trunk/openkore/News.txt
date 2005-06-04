@@ -10,7 +10,6 @@ Bug fixes:
 - Storage log not created when relogAfterStorage is active.
 - Bot should no longer fail to pick up items dropped by monsters that
   died a distance away.
-- Don't spam "PvP On" over and over in PVP zones.
 - Tk map viewer has been fixed.
 - Make itemsTakeAuto_party count dmgFromYou too. (Hack to allow
   looting monsters that you killed without ever using attack ai_seq.)
@@ -60,6 +59,7 @@ New features:
 - It will say "You are again:" instead of "You are now:" when you gain a
   status effect that you already had.
 - When storageAuto is triggered, it will write a message saying why.
+- Display your PvP rank when you're in a PvP zone.
 
 New commands:
 - storage log

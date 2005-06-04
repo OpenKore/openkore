@@ -23,7 +23,7 @@
 #
 # An actor object is also a hash.
 #
-# See also: Actor::Monster.pm and Actor::Player.pm
+# See also: Actor::Monster.pm, Actor::Player.pm and Actor::You.pm
 
 package Actor;
 use strict;

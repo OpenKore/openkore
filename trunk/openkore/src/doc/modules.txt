@@ -1,6 +1,7 @@
 Actor
 Actor::Monster
 Actor::Player
+Actor::You
 Interface
 Network
 ChatQueue

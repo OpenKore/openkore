@@ -9057,10 +9057,8 @@ sub parseMsg {
 
 	} elsif ($switch eq "019A") {
 		# 9A 01 - 14 bytes long
-		if (!$ai_v{temp}{pvp}) {
-			$ai_v{temp}{pvp} = 1;
-			message "PvP On\n", "map_event";
-		}
+		my ($ID, $rank, $num) = unpack("x2 L1 L1 L1", $msg);
+		message "Your PvP rank is: $rank/$num\n", "map_event";
 
 	} elsif ($switch eq "019B") {
 		my $ID = substr($msg, 2, 4);

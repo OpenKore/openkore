@@ -27,4 +27,34 @@ sub new {
 	return bless({type => 'You'});
 }
 
+##
+# $char->weight_percent()
+#
+# Returns your weight percentage (between 0 and 100).
+sub weight_percent {
+	my ($self) = @_;
+
+	return main::percent_weight($self);
+}
+
+##
+# $char->hp_percent()
+#
+# Returns your HP percentage.
+sub hp_percent {
+	my ($self) = @_;
+
+	return main::percent_hp($self);
+}
+
+##
+# $char->sp_percent()
+#
+# Returns your SP percentage.
+sub sp_percent {
+	my ($self) = @_;
+
+	return main::percent_sp($self);
+}
+
 1;
