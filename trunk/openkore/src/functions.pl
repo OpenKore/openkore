@@ -8101,8 +8101,8 @@ sub parseMsg {
 			$sourceID = $spell->{sourceID};
 		}
 
-		my $source = Actor::getActor($sourceID);
-		my $target = Actor::getActor($targetID);
+		my $source = Actor::get($sourceID);
+		my $target = Actor::get($targetID);
 
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $xkore;

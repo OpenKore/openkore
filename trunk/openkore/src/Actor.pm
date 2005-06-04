@@ -34,10 +34,10 @@ use Log qw(message error debug);
 ### CATEGORY: Class methods
 
 ##
-# Actor::getActor($ID)
+# Actor::get($ID)
 #
 # Returns the actor object for $ID.
-sub getActor {
+sub get {
 	my ($ID) = @_;
 
 	if ($ID eq $accountID) {
@@ -46,6 +46,8 @@ sub getActor {
 		return $monsters{$ID};
 	} elsif ($players{$ID}) {
 		return $players{$ID};
+	} elsif ($items{$ID}) {
+		return $items{$ID};
 	} else {
 		return new Actor::Unknown($ID);
 	}
@@ -71,6 +73,17 @@ sub name {
 
 	return "You" if $self->{type} eq 'You';
 	return "$self->{type} $self->{name} ($self->{binID})";
+}
+
+##
+# $actor->verb($you, $other)
+#
+# Returns $you if $actor is you; $other otherwise.
+sub verb {
+	my ($self, $you, $other) = @_;
+
+	return $you if $self->{type} eq 'You';
+	return $other;
 }
 
 ##
