@@ -22,6 +22,7 @@ use Globals qw($conState %field $char $charServer %maps_lut);
 use IPC;
 use Log qw(message debug);
 use Utils qw(calcPosition);
+use Plugins;
 
 
 our %handlers;
@@ -41,8 +42,18 @@ sub initHandlers {
 
 
 sub process {
-	my $ipc = shift;
-	my $msg = shift;
+	my ($ipc, $msg) = @_;
+
+	my %args = (
+	    ipc => $ipc,
+	    ID => $msg->{ID},
+	    args => $msg->{args}
+	);
+	Plugins::callHook("IPC::Processors::process", \%args);
+	if ($args{return}) {
+		debug "IPC message '$msg->{ID}' from client $msg->{args}{FROM} handled by plugin\n", "ipc";
+		return;
+	}
 
 	initHandlers() if (!%handlers);
 
@@ -54,6 +65,8 @@ sub process {
 	}
 }
 
+# Send a message to the IPC network. This function automatically
+# sets the TO field for you if it's given.
 sub sendMsg {
 	my $ipc = shift;
 	my $ID = shift;
@@ -63,6 +76,10 @@ sub sendMsg {
 	$hash{TO} = $to if (defined $to);
 	$ipc->send($ID, \%hash);
 }
+
+
+##################
+
 
 sub ipcMoveTo {
 	my ($ipc, $ID, $args) = @_;
