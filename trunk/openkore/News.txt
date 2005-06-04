@@ -23,6 +23,7 @@ Bug fixes:
 - Correctly detect a player's sitting status when you walk onto their
   screen (packet 01D8, "Player Exists"). It was previously detecting
   every non-dead player as sitting.
+- openkore was not displaying left hand damage when right hand missed.
 
 New features:
 - Better support for detecting dead players.
