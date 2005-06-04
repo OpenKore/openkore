@@ -1,6 +1,7 @@
 DevelopersNotes.txt
 
 functions.pl
+Actor.pm
 AI.pm
 ChatQueue.pm
 Commands.pm
