@@ -6491,7 +6491,8 @@ sub parseMsg {
 		} else {
 			# Attack
 			my $dmgdisplay;
-			if ($damage == 0) {
+			my $totalDamage = $damage + $param3;
+			if ($totalDamage == 0) {
 				$dmgdisplay = "Miss!";
 				$dmgdisplay .= "!" if ($type == 11);
 			} else {
@@ -6508,7 +6509,7 @@ sub parseMsg {
 			my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
 
 			if ($ID1 eq $accountID) {
-				message("$status $msg\n", $damage > 0 ? "attackMon" : "attackMonMiss");
+				message("$status $msg\n", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 				if ($startedattack) {
 					$monstarttime = time();
 					$monkilltime = time();
