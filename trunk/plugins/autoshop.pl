@@ -64,7 +64,7 @@ sub checkConfig {
   my %configs = ('autoshop_maxweight', '0 5 0', 'autoshop_tries', '1 900 16', 'autoshop_radius', '1 '.$maxRad.' 5', 'autoshop_reopenOnClose', '0 1 0');
   while (my ($key, $value) = each(%configs)) {
     my ($min, $max, $def) = split(/ /, $value);
-    if ($::config{$key} >= $max || $::config{$key} <= $min) {
+    if ($::config{$key} > $max || $::config{$key} < $min) {
       error(sprintf($tpl, $key, $::config{$key}, $def));
       configModify($key, $def);
     };
