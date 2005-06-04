@@ -185,6 +185,7 @@ use Skills;
 use Actor;
 use Actor::Player;
 use Actor::Monster;
+use Actor::You;
 use Interface;
 use ChatQueue;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
