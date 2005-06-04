@@ -182,9 +182,9 @@ use Commands;
 use Misc;
 use AI;
 use Skills;
-use Player;
-use Monster;
 use Actor;
+use Actor::Player;
+use Actor::Monster;
 use Interface;
 use ChatQueue;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
