@@ -134,11 +134,12 @@ sub parseMacroFile {
 # just a facade for "macro"
 sub commandHandler {
   my (undef, $arg) = @_;
-  my ($cmd, $param, $paramt) = split(/ /, $arg->{input});
+  my ($cmd, $param, $paramt) = split(/ /, $arg->{input}, 3);
   if ($cmd eq 'macro') {
     if ($param eq 'list') {list_macros()}
     elsif ($param eq 'stop') {clearMacro()}
     elsif ($param eq 'reset') {automacroReset($paramt)}
+    elsif ($param eq 'set') {cmdSetVar($paramt)}
     elsif ($param eq 'version') {showVersion()}
     elsif ($param eq '') {usage()}
     else {runMacro($param, $paramt)};
@@ -153,10 +154,11 @@ sub showVersion {
 
 # prints a little usage text
 sub usage {
-  message "usage: macro [MACRO|list|stop|version|reset] [automacro]\n", "list";
+  message "usage: macro [MACRO|list|stop|set|version|reset] [automacro]\n", "list";
   message "macro MACRO: run macro MACRO\n".
     "macro list: list available macros\n".
     "macro stop: stop current macro\n".
+    "macro set {variable} {value}: set/change variable to value\n".
     "macro version: print macro plugin version\n".
     "macro reset [automacro]: resets run-once status for all or given automacro(s)\n";
   ;
@@ -171,6 +173,19 @@ sub pushMacro {
     for (my $t = 0; $t < $times; $t++) {@macroQueue = (@{$macro{$arg}}, @macroQueue)};
   };
   return 0;
+};
+
+# set variable using command line
+sub cmdSetVar {
+  my $arg = shift;
+  my ($var, $val) = split(/ /, $arg, 2);
+  if (defined $val) {
+    setVar($var, $val);
+    message "[macro] $var set to $val\n";
+  } else {
+    undef $varStack{$var};
+    message "[macro] $var removed\n";
+  };
 };
 
 # command line parser for macro
@@ -585,7 +600,7 @@ sub cmpr {
 sub parseArgs {
   my $arg = shift;
   if ($arg =~ /".*"/) {return $arg =~ /^"(.*?)" +(.*?) +(.*)$/}
-  else {return $arg =~ /^(.*?) +(.*?) +(.*)$/};
+  else {return split(/ /, $arg, 3)};
 };
 
 sub match {
