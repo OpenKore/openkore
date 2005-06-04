@@ -33,7 +33,7 @@ if (!$stable) {
   if (!$@) {
     $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]);
     $Version .= "cvs rev ".$cvs->revision();
-  } else {print $@};
+  };
 } else {undef $stable};
 
 if (!defined $cvs) {
@@ -46,7 +46,7 @@ Plugins::register('macro', 'allows usage of macros', \&Unload);
 my $hooks = Plugins::addHooks(
             ['Command_post', \&commandHandler, undef],
             ['configModify', \&debuglevel, undef],
-            ['start3', \&setDebug, undef],
+            ['start3', \&postsetDebug, undef],
             ['AI_pre', \&processQueue, undef],
             ['is_casting', \&automacroCheck, undef],
             ['packet_skilluse', \&automacroCheck, undef],
@@ -60,7 +60,7 @@ our $cfID = Settings::addConfigFile($file, \%macro, \&parseMacroFile);
 Settings::load($cfID);
 undef $file;
 
-sub setDebug {
+sub postsetDebug {
   $cvs->setDebug($::config{macro_debug}) if defined $::config{macro_debug};
 };
 
