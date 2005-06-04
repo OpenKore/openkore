@@ -27,13 +27,16 @@
 
 package Actor;
 use strict;
+use Globals;
+use Utils;
+use Log qw(message error debug);
 
 ### CATEGORY: Hash members
 
 ##
 # $actor->{type}
 #
-# The actor's type. Can be either "Monster" or "Player".
+# The actor's type. Can be "Monster", "Player" or "You".
 
 
 ### CATEGORY: Methods
@@ -48,6 +51,27 @@ sub name {
 
 	return "You" if $self->{type} eq 'You';
 	return "$self->{type} $self->{name} ($self->{binID})";
+}
+
+##
+# $actor->position()
+#
+# Returns the position of the actor.
+sub position {
+	my ($self) = @_;
+
+	return calcPosition($self);
+}
+
+##
+# $actor->distance([$otherActor])
+#
+# Returns the distance to another actor (defaults to yourself).
+sub distance {
+	my ($self, $otherActor) = @_;
+
+	$otherActor ||= $char;
+	return Utils::distance($self->position, $otherActor->position);
 }
 
 1;

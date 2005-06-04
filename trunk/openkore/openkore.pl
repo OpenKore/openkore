@@ -189,7 +189,8 @@ use Actor::You;
 use Interface;
 use ChatQueue;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Skills Interface ChatQueue/);
+	Network Network::Send Commands Misc AI Skills Interface ChatQueue
+	Actor Actor::Player Actor::Monster Actor::You/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
