@@ -90,7 +90,7 @@ sub addModule {
 
 			} else {
 				# This is a function description
-				($item{name}, $item{param_declaration}) = $line =~ /^# ([a-z0-9_:\$\->]+) *(\(.*\))?/i;
+				($item{name}, $item{param_declaration}) = $line =~ /^# ([a-z0-9_:\$\->{}]+) *(\(.*\))?/i;
 				$item{param_declaration} = '' if (!defined $item{param_declaration});
 				$state = 'function-params';
 			}

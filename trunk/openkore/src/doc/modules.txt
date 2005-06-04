@@ -1,3 +1,6 @@
+Actor
+Actor::Monster
+Actor::Player
 Interface
 Network
 ChatQueue
