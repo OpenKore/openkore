@@ -1,6 +1,6 @@
 =head1 NAME
 
-B<macro.pl> - plugin for openkore 1.5.2 and later
+macro.pl - plugin for openkore 1.5.2 and later
 
 =head1 VERSION
 
@@ -355,6 +355,13 @@ Sends an overview of all available macros and automacros to console.
 
 Runs the macro I<name>, if I<n> is specified, it will run I<n> times.
 
+=item C<cmdSetVar(arg)>
+
+I<arg> is a string with I<var> and I<val> separated by a whitespace. If
+I<val> is omitted, I<var> will be deleted from C<%varStack>.
+
+Example: C<cmdSetVar("kafra 151 29")>
+
 =back
 
 =head2 utility functions
@@ -416,7 +423,7 @@ This function is called when the user changed the debug level by typing C<conf m
 =item C<Unload()>
 
 Undefines C<$cvs> with the effect that it's destructor is called.
-Then clears all hashes and hooks and removes macro.txt from C<Settings>.
+Then clears all hashes and hooks and removes F<macro.txt> from C<Settings>.
 
 =back
 
