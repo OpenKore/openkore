@@ -620,7 +620,8 @@ sub pm_add {
 # map functions
 
 sub OpenMap {
-	my $self = shift;
+	my ($self, $param2) = @_;
+	$self = $param2 if ($param2);
 
 	if (!exists $self->{map}) {
 		undef $self->{obj};
