@@ -59,7 +59,7 @@ sub makeupText {
 	# Functions
 	$text =~ s/(\$?[a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
 	# Variables
-	$text =~ s/(^| )([\$\%\@][a-z0-9_{\'}:]+)/<code>$1$2<\/code>/gi;
+	$text =~ s/(^|\n| )([\$\%\@][a-z0-9_{\'}:]+)/$1<code>$2<\/code>/gis;
 	# Links to modules
 	$text =~ s/([a-z0-9_:]+\.pm)/&linkModule($1)/gie;
 	return $text;

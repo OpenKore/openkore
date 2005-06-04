@@ -18,18 +18,31 @@
 #
 # The Actor class is a base class for all actor objects.
 # An actor object is a monster or player (all members of %monsters and
-# %players).
+# %players). Do not create an object of this class; use one of the
+# subclasses instead.
 #
-# See also: Monster.pm and Player.pm
+# An actor object is also a hash.
+#
+# See also: Actor::Monster.pm and Actor::Player.pm
 
 package Actor;
 use strict;
 
+### CATEGORY: Hash members
+
+##
+# $actor->{type}
+#
+# The actor's type. Can be either "Monster" or "Player".
+
+
+### CATEGORY: Methods
+
 ##
 # $actor->name()
 #
-# Returns the name string of an actor, e.g. "Player pmak (3)"
-# or "Monster Poring (0)".
+# Returns the name string of an actor, e.g. "Player pmak (3)",
+# "Monster Poring (0)" or "You".
 sub name {
 	my ($self) = @_;
 
