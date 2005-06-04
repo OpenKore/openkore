@@ -31,6 +31,26 @@ use Globals;
 use Utils;
 use Log qw(message error debug);
 
+### CATEGORY: Class methods
+
+##
+# Actor::getActor($ID)
+#
+# Returns the actor object for $ID.
+sub getActor {
+	my ($ID) = @_;
+
+	if ($ID eq $accountID) {
+		return $char;
+	} elsif ($monsters{$ID}) {
+		return $monsters{$ID};
+	} elsif ($players{$ID}) {
+		return $players{$ID};
+	} else {
+		return new Actor::Unknown($ID);
+	}
+}
+
 ### CATEGORY: Hash members
 
 ##

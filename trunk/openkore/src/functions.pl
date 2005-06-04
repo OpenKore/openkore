@@ -8101,6 +8101,9 @@ sub parseMsg {
 			$sourceID = $spell->{sourceID};
 		}
 
+		my $source = Actor::getActor($sourceID);
+		my $target = Actor::getActor($targetID);
+
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $xkore;
 		updateDamageTables($sourceID, $targetID, $damage) if ($damage != -30000);
@@ -8110,11 +8113,10 @@ sub parseMsg {
 		countCastOn($sourceID, $targetID, $skillID);
 
 		# Resolve source and target names
-		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
 		$damage ||= "Miss!";
-		my $disp = "$source $uses ".skillName($skillID);
+		my $disp = $source->name." use ".skillName($skillID);
 		$disp .= " (lvl $level)" unless $level == 65535;
-		$disp .= " on $target";
+		$disp .= " on ".$target->name;
 		$disp .= " - Dmg: $damage" unless $damage == -30000;
 		$disp .= " (delay ".($src_speed/10).")";
 		$disp .= "\n";
@@ -8137,10 +8139,11 @@ sub parseMsg {
 		}
 
 		if ((($sourceID eq $accountID) && ($targetID ne $accountID)) ||
-		(($sourceID ne $accountID) && ($targetID eq $accountID))) {
+		    (($sourceID ne $accountID) && ($targetID eq $accountID))) {
 			my $status = sprintf("[%3d/%3d] ", percent_hp($char), percent_sp($char));
 			$disp = $status.$disp;
 		}
+		$target->{sitting} = 0 unless $type == 4 || $type == 9;
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
