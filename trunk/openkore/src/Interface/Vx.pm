@@ -397,7 +397,7 @@ sub initTk {
 
 	### Binding ###
 	$self->{mw}->bind('all', '<Alt-p>' => 		[\&OnExit, $self]);
-	$self->{mw}->bind('all', '<Alt-m>' =>		sub{ Commands::run("reload config") });
+	$self->{mw}->bind('all', '<Alt-m>' =>		[\&OpenMap, $self]);
 	$self->{mw}->bind('all', '<Control-Shift-C>' =>	sub{ Commands::run("reload config") });
 	$self->{mw}->bind('all', '<Control-Shift-W>' => sub{ Commands::run("reload mon_control") });
 	$self->{mw}->bind('all', '<Control-Shift-Q>' => sub{ Commands::run("reload items_control") });
@@ -668,11 +668,13 @@ sub loadMap {
 
 	my $name = $field{baseName};
 	if (-f $self->_map("$name.jpg")) {
+		require Tk::JPEG;
 		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'jpeg', -file=> $self->_map("$name.jpg"));
+	} elsif (-f $self->_map("$name.png")) {
+		require Tk::PNG;
+		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'png', -file=> $self->_map("$name.png"));
 	} elsif (-f $self->_map("$name.gif")) {
 		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'gif', -file=> $self->_map("$name.gif"));
-	} elsif (-f $self->_map("$name.png")) {
-		$self->{map}{'map'} = $self->{map}{'canvas'}->Photo(-format => 'png', -file=> $self->_map("$name.png"));
 	} elsif (-f $self->_map("$name.bmp")) {
 		$self->{map}{'map'} = $self->{map}{'canvas'}->Bitmap(-file => $self->_map("$name.bmp"));
 	} else {
