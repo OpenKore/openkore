@@ -5651,6 +5651,7 @@ sub parseMsg {
 		for (my $i = $startVal; $i < $msg_size; $i += 106) {
 			#exp display bugfix - chobit andy 20030129
 			$num = unpack("C1", substr($msg, $i + 104, 1));
+			$chars[$num] = new Actor::You;
 			$chars[$num]{'exp'} = unpack("L1", substr($msg, $i + 4, 4));
 			$chars[$num]{'zenny'} = unpack("L1", substr($msg, $i + 8, 4));
 			$chars[$num]{'exp_job'} = unpack("L1", substr($msg, $i + 12, 4));

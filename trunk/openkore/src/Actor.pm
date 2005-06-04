@@ -33,6 +33,7 @@ use strict;
 sub name {
 	my ($self) = @_;
 
+	return "You" if $self->{type} eq 'You';
 	return "$self->{type} $self->{name} ($self->{binID})";
 }
 
