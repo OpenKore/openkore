@@ -5871,7 +5871,7 @@ sub parseMsg {
 		if ($jobs_lut{$type}) {
 			my $player = $players{$ID};
 			if (!$player || !defined($player->{binID})) {
-				$player = $players{$ID} ||= {};
+				$player = $players{$ID} ||= Player->new;
 				binAdd(\@playersID, $ID);
 				$player->{appear_time} = time;
 				$player->{ID} = $ID;
@@ -5935,6 +5935,7 @@ sub parseMsg {
 
 			} else {
 				if (!%{$monsters{$ID}}) {
+					$monsters{$ID} = Monster->new;
 					$monsters{$ID}{'appear_time'} = time;
 					$display = ($monsters_lut{$type} ne "") 
 							? $monsters_lut{$type}
@@ -6024,6 +6025,7 @@ sub parseMsg {
 		if ($jobs_lut{$type}) {
 			my $added;
 			if (!$players{$ID} || !defined($players{$ID}{binID})) {
+				$players{$ID} = Player->new;
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'ID'} = $ID;
@@ -6089,6 +6091,7 @@ sub parseMsg {
 
 		if ($jobs_lut{$type}) {
 			if (!$players{$ID} && !defined($players{$ID}{binID})) {
+				$players{$ID} = Player->new;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'appear_time'} = time;
 				$players{$ID}{'sex'} = $sex;
@@ -6152,6 +6155,7 @@ sub parseMsg {
 
 			} else {
 				if (!%{$monsters{$ID}}) {
+					$monsters{$ID} = Monster->new;
 					binAdd(\@monstersID, $ID);
 					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'appear_time'} = time;
@@ -6193,6 +6197,7 @@ sub parseMsg {
 
 		if ($jobs_lut{$type}) {
 			if (!$players{$ID} || !defined($players{$ID}{binID})) {
+				$players{$ID} = Player->new;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'sex'} = $sex;
@@ -6238,6 +6243,7 @@ sub parseMsg {
 
 			} else {
 				if (!%{$monsters{$ID}}) {
+					$monsters{$ID} = Monster->new;
 					binAdd(\@monstersID, $ID);
 					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'nameID'} = $type;

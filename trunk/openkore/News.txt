@@ -120,6 +120,9 @@ Internal:
 - Store lookID instead of itemID internally for other players' headgear.
   http://openkore.sourceforge.net/forum/viewtopic.php?p=51034
   Fixes "Unknown 140" bug; improves detection of custom headgears.
+- All players and monsters (members of %monsters and %players) are now
+  objects. See Monster.pm and Player.pm for available methods, both of
+  which inherit Actor.pm.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.
