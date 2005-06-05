@@ -31,6 +31,7 @@ our $cvs;
 if (!$stable) {
   eval {require cvsdebug};
   if (!$@) {
+#   $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack, \$Version, \%automacro, \%macro]);
     $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]);
     $Version .= "cvs rev ".$cvs->revision();
   };
@@ -97,8 +98,7 @@ sub parseMacroFile {
     if (!defined $cBlock && /^\/\*/) {
       $cBlock = 1; next;
     } elsif (m/\*\/$/) {
-      undef $cBlock;
-      next;
+      undef $cBlock; next;
     } elsif (defined $cBlock) {
       next;
     } elsif (!defined %block && /{$/) {
@@ -112,17 +112,17 @@ sub parseMacroFile {
       };
       next;
     } elsif (defined %block && $_ eq "}") {
-      undef %block;
-      next;
+      undef %block; next;
     } elsif ($block{type} eq "macro") {
-      push(@{$r_hash->{$block{name}}}, $_);
-      next;
+      push(@{$r_hash->{$block{name}}}, $_); next;
     } elsif ($block{type} eq "auto") {
       my ($key, $value) = $_ =~ /^(.*?) (.*)/;
       next unless $key;
       if ($key =~ /^(inventory|storage|cart|shop|equipped|var|status|location|set)$/) {
         push(@{$r_hash->{$block{name}}->{$key}}, $value);
-      } else {$r_hash->{$block{name}}->{$key} = $value};
+      } else {
+        $r_hash->{$block{name}}->{$key} = $value;
+      };
     } else {
       next;
     };
@@ -183,7 +183,7 @@ sub cmdSetVar {
     setVar($var, $val);
     message "[macro] $var set to $val\n";
   } else {
-    undef $varStack{$var};
+    delete $varStack{$var};
     message "[macro] $var removed\n";
   };
 };
@@ -501,7 +501,7 @@ sub automacroCheck {
     next CHKAM if defined $automacro{$am}->{disabled};
 
     if (defined $automacro{$am}->{call} && !defined $macro{$automacro{$am}->{call}}) {
-      error "[macro] automacro $am: macro $automacro{$am}->{call} not found.\n";
+      error "[macro] automacro $am: macro ".$automacro{$am}->{call}." not found.\n";
       $automacro{$am}->{disabled} = 1; return;
     }
     if (defined $automacro{$am}->{spell}) {
