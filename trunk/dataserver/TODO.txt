@@ -9,6 +9,7 @@ Future:
 	* Use memory pools to avoid memory fragmentation and malloc()
 	  overhead.
 	* Configurable socket path/port.
+	* Use shared memory as transport on Windows (maybe Linux too?)
 
 Blue sky future:
 
