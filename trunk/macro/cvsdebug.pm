@@ -32,20 +32,14 @@ sub DESTROY {
   return unless $self->{debug};
   warning "[$self->{name}] unloading $self->{file} ".
                "debug level was $self->{debug}, have a nice day.\n";
-  message "examination ..\n", "list";
-  my $total;
+  message "dumping ..\n", "list";
   foreach my $dmp (@{$self->{examine}}) {
-    foreach my $k (keys %{$dmp}) {
-      my ($t, $e);
-      if (ref($$dmp{$k}) eq 'ARRAY') {$t = "array"; $e = lofA(\@{$$dmp{$k}})};
-      if (ref($$dmp{$k}) eq 'HASH')  {$t = "hash"; $e = lofH(\%{$$dmp{$k}})};
-      if ($t) {message "$k length $e $t\n"}
-      else {message "$k: $$dmp{$k}\n"; $e = length($k) + length($$dmp{$k})};
-      $total += $e;
-    };
+    message "parsing $dmp\n", "list";
+    if (ref($dmp) eq 'ARRAY') {dumpArray(\@{$dmp})}
+    elsif (ref($dmp) eq 'HASH') {dumpHash(\%{$dmp})}
+    else {message "$$dmp\n"};
     message "--\n", "list";
   };
-  message "total length is about $total\n";
 };
 
 sub debug {
@@ -62,16 +56,18 @@ sub revision {
   my $self = shift; return $self->{revision};
 };
 
-sub lofA {
-  my $arr = shift;
-  my $size = 0; foreach (@{$arr}) {$size += length($_)};
-  return $size;
+sub dumpHash {
+  my ($hash, $level) = @_; $level = 0 unless defined $level;
+  foreach my $h (keys %{$hash}) {
+    message "  "x$level."-> $h\n", "list";
+    if (ref($$hash{$h}) eq 'ARRAY') {dumpArray(\@{$$hash{$h}}, $level+1)}
+    elsif (ref($$hash{$h}) eq 'HASH') {dumpHash(\%{$$hash{$h}}, $level+1)}
+    else {message "  "x($level+1)."  $$hash{$h}\n"};
+  };
 };
 
-sub lofH {
-  my $hash = shift;
-  my $size = 0; foreach (keys %{$hash}) {$size += length($_) + length($$hash{$_})};
-  return $size;
+sub dumpArray {
+  foreach my $a (@{$_[0]}) {message "  "x$_[1]." $a\n"};
 };
 
 sub getRevision {
@@ -102,7 +98,7 @@ $Revision$
 
     package whatever;
     use cvsdebug;
-    
+
     my $cvs = new cvsdebug(
            "/path/to/whatever.pl",
            $level,
