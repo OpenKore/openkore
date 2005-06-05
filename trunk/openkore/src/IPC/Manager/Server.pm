@@ -26,8 +26,10 @@ sub onIPCData {
 	print "Message: $msgID (from $client->{name})\n";
 
 	if ($msgID eq "HELLO") {
+		# A new client just connected
 		$client->{userAgent} = $args->{userAgent};
 		$client->{wantGlobals} = exists($args->{wantGlobals}) ? $args->{wantGlobals} : 1;
+		$client->{userName} = $args->{userName};
 		$client->{ready} = 1;
 		$client->{name} = $args->{userAgent} . ":" . $client->{ID};
 
@@ -39,6 +41,7 @@ sub onIPCData {
 			next if (!$c || !$c->{ready});
 			$args{"client$i"} = $c->{ID};
 			$args{"clientUserAgent$i"} = $c->{userAgent};
+			$args{"clientUserName$i"} = $c->{userName};
 			$i++;
 		}
 		$args{count} = $i;
