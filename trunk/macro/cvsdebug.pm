@@ -166,9 +166,8 @@ Parses F</path/to/your/plugin.pl> and looks for a cvs C<$Header>. Returns the cv
 
 =over 4
 
-Undefine the object using C<undef $object>. The destructor will be called which gives
-information about the length of the hashes of hashes/arrays specified and lists any hash if
-available.
+Remove the object using C<undef $object>. The destructor will be called which dumps the
+contents of the variables/hashes/hashes of hashes/arrays/... given with C<new()>;
 
 =back
 
