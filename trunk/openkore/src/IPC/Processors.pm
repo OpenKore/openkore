@@ -18,7 +18,7 @@
 package IPC::Processors;
 
 use strict;
-use Globals qw($conState %field $char $charServer %maps_lut);
+use Globals qw($conState %field $char $charServer %maps_lut %config);
 use IPC;
 use Log qw(message debug);
 use Utils qw(calcPosition);
@@ -99,10 +99,11 @@ sub ipcWhereAreYou {
 		my $pos = calcPosition($char);
 		sendMsg($ipc, "i am here", $args->{REPLY_TO},
 			charServer => $charServer,
-			name	=> $char->{name},
-			field	=> $field{name},
-			x	=> $pos->{x},
-			y	=> $pos->{y}
+			name       => $char->{name},
+			username   => $config{username},
+			field      => $field{name},
+			x          => $pos->{x},
+			y          => $pos->{y}
 		);
 	} else {
 		sendMsg($ipc, "i am here", $args->{REPLY_TO});

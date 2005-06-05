@@ -250,7 +250,11 @@ sub iterate {
 				debug "Received HELLO - our client ID: $self->{ID}\n", "ipc";
 				$self->send("HELLO",
 					"userAgent" => $self->{userAgent},
-					"wantGlobals" => $self->{wantGlobals});
+					"wantGlobals" => $self->{wantGlobals},
+					"userName" => $::config{username});
+				$self->send("JOIN",
+					"ID" => $self->{ID},
+					"userName" => $::config{username});
 			}
 		}
 	}
