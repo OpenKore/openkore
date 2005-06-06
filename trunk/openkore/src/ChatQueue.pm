@@ -518,7 +518,8 @@ sub processChatResponse {
 
 	} elsif (!$repeating && ($cmd->{type} eq "c" || $cmd->{type} eq "pm") && !$cities_lut{$field{name}.'.rsw'}) {
 		foreach my $item (@chatResponses) {
-			if ($msg =~ /${wordSplitters}$item->{word}${wordSplitters}/) {
+			my $word = quotemeta $item->{word};
+			if ($msg =~ /${wordSplitters}${word}${wordSplitters}/) {
 				my $max = @{$item->{responses}};
 				$reply = $item->{responses}[rand($max)];
 				last;
