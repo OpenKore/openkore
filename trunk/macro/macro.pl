@@ -87,7 +87,7 @@ sub parseMacroFile {
   my ($file, $r_hash) = @_;
   undef %{$r_hash};
 
-  my ($cBlock, %block);
+  my %block;
   open FILE, "< $file";
   foreach (<FILE>) {
     next if (/^\s*#/); # skip comments
@@ -95,13 +95,7 @@ sub parseMacroFile {
     s/\s*[\r\n]?$//g;  # remove trailing whitespaces and eol
     s/  +/ /g;         # trim down spaces
     next unless ($_);
-    if (!defined $cBlock && /^\/\*/) {
-      $cBlock = 1; next;
-    } elsif (m/\*\/$/) {
-      undef $cBlock; next;
-    } elsif (defined $cBlock) {
-      next;
-    } elsif (!defined %block && /{$/) {
+    if (!defined %block && /{$/) {
       s/\s*{$//;
       my ($key, $value) = $_ =~ /^(.*?) (.*)/;
       if ($r_hash == \%macro && $key eq 'macro') {
