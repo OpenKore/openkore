@@ -116,6 +116,7 @@ sub initHandlers {
 	verbose		=> \&cmdVerbose,
 	version		=> \&cmdVersion,
 	warp		=> \&cmdWarp,
+	weight	=> \&cmdWeight,
 	who		=> \&cmdWho,
 	);
 }
@@ -186,6 +187,7 @@ sub initDescriptions {
 	verbose		=> 'Toggle verbose on/off.',
 	version		=> 'Display the version of openkore.',
 	warp		=> 'Open warp portal.',
+	weight	=> 'Gives a report about your inventory weight.',
 	who		=> 'Display the number of people on the current server.',
 	);
 }
@@ -2131,6 +2133,27 @@ sub cmdWarp {
 		my $rsw = "$map.rsw";
 		message "Attempting to open a warp portal to $maps_lut{$rsw} ($map)\n", "info";
 		sendOpenWarp(\$remote_socket, "$map.gat");
+	}
+}
+
+sub cmdWeight {
+	my (undef, $itemWeight) = @_;
+
+	$itemWeight ||= 1;
+	my $itemString = $itemWeight == 1 ? '' : "*$itemWeight";
+	message "Weight: $char->{weight}/$char->{weight_max} (".
+		sprintf("%.02f", $char->weight_percent)."%)\n", "list";
+	if ($char->weight_percent < 90) {
+		if ($char->weight_percent < 50) {
+			my $weight_50 = int((int($char->{weight_max}*0.5) - $char->{weight}) / $itemWeight);
+			message "You can carry $weight_50$itemString before 50% overweight.\n", "list";
+		} else {
+			message "You are 50% overweight.\n", "list";
+		}
+		my $weight_90 = int((int($char->{weight_max}*0.9) - $char->{weight}) / $itemWeight);
+		message "You can carry $weight_90$itemString before 90% overweight.\n", "list";
+	} else {
+		message "You are 90% overweight.\n";
 	}
 }
 

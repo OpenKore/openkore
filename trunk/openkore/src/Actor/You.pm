@@ -57,4 +57,14 @@ sub sp_percent {
 	return main::percent_sp($self);
 }
 
+##
+# $char->weight_percent()
+#
+# Returns your weight percentage.
+sub weight_percent {
+	my ($self) = @_;
+
+	return $self->{weight} / $self->{weight_max} * 100;
+}
+
 1;
