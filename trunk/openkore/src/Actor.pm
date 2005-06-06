@@ -31,6 +31,12 @@ use Globals;
 use Utils;
 use Log qw(message error debug);
 
+# Make it so that
+#     print $actor;
+# acts the same as
+#     print $actor->name;
+use overload '""' => \&name;
+
 ### CATEGORY: Class methods
 
 ##
