@@ -11205,7 +11205,7 @@ sub itemNameSimple {
 	my $ID = shift;
 	return 'Unknown' unless defined($ID);
 	return 'None' unless $ID;
-	return $items_lut{$ID} || "Unknown $ID";
+	return $items_lut{$ID} || "Unknown #$ID";
 }
 
 ##

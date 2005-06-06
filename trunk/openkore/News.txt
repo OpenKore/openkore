@@ -2,6 +2,10 @@
 ### 1.6.2
 ==================
 
+*** INCOMPATIBLE CHANGES ***:
+- Items named e.g. "Unknown 1234" are now called "Unknown #1234" so that
+  you can use their name in items_control.txt.
+
 Bug fixes:
 - Fix deal bug: showing twice as many items added.
 - Make "Compiles portals now?" prompt case-insensitive.
