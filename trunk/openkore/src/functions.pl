@@ -8134,12 +8134,12 @@ sub parseMsg {
 		my $domain = "skill";
 
 		if ($damage == 0) {
-			$domain = "attackMonMiss" if (($source eq "You") && ($target ne "yourself"));
-			$domain = "attackedMiss" if (($source ne "You") && ($target eq "You"));
+			$domain = "attackMonMiss" if $sourceID eq $accountID && $targetID ne $accountID;
+			$domain = "attackedMiss" if $sourceID ne $accountID && $targetID eq $accountID;
 
 		} elsif ($damage != -30000) {
-			$domain = "attackMon" if (($source eq "You") && ($target ne "yourself"));
-			$domain = "attacked" if (($source ne "You") && ($target eq "You"));
+			$domain = "attackMon" if $sourceID eq $accountID && $targetID ne $accountID;
+			$domain = "attacked" if $sourceID ne $accountID && $targetID eq $accountID;
 		}
 
 		if ((($sourceID eq $accountID) && ($targetID ne $accountID)) ||
