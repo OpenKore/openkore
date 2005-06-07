@@ -8,7 +8,6 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-
 our $Version = "0.9";
 my $stable = 0;
 
@@ -29,11 +28,9 @@ our @macroQueue;
 
 our $cvs;
 if (!$stable) {
+  $Version = sprintf(" rev%s %d.%02d", $Version, q$Revision$ =~ /(\d+)\.(\d+)/);
   eval {require cvsdebug};
-  if (!$@) {
-    $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]);
-    $Version .= "cvs rev ".$cvs->revision();
-  };
+  $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]) unless $@;
 } else {undef $stable};
 
 if (!defined $cvs) {
