@@ -317,6 +317,7 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch(message) {
     case WM_CREATE:
     {
+	DWORD dwThreadID;
 	COORDS crdFrame;
 	crdFrame.x	= LoadINIInt("frame","xcoord");
 	crdFrame.y	= LoadINIInt("frame","ycoord");
@@ -360,8 +361,9 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	SendMessage(g_hwndStatic, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(FALSE, 0));
 
 	Sleep(1000);			
-			
-	hThread = CreateThread(NULL,0,(LPTHREAD_START_ROUTINE)Threader,NULL,0,NULL);
+	
+	
+	hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Threader, NULL, 0, &dwThreadID);
     } 
     break;
 
