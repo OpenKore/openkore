@@ -28,7 +28,7 @@ our @macroQueue;
 
 our $cvs;
 if (!$stable) {
-  $Version .= sprintf(" rev%s %d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
+  $Version .= sprintf(" rev%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
   eval {require cvsdebug};
   $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]) unless $@;
 } else {undef $stable};
