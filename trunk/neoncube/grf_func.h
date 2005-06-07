@@ -19,13 +19,53 @@
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
 ##############################################################################*/
+
+#ifndef _GRF_FUNC_H_
+#define _GRF_FUNC_H_
+
 extern HWND hwndProgress;
 extern HWND g_hwndStatic;
+//
+// structure of files that will be deleted
+// 
+//
+typedef struct delfile {
+	TCHAR szFileName[1024];
+	struct delfile *next;
+}DELFILE;
+
+extern DELFILE *dfFirstItem;
+
 extern void PostError(BOOL exitapp = TRUE);
-extern void GRFCreate_AddFile(const char* item);
+extern void GRFCreate_AddFile(LPCTSTR item);
 extern void StatusMessage(LPCTSTR message, ...);
 extern void AddErrorLog(LPCTSTR fmt, ...);
 
-static int CountFolders(const char*source);
-static char *GetFolder(char *source, int index);
 
+typedef struct files {
+    TCHAR   szFileName[256];
+    struct files *next;
+} GRFFILES;
+
+GRFFILES *spfFirstItem = NULL;
+
+typedef struct patch {
+    TCHAR   szPatchName[50];
+    INT	    iPatchIndex;
+
+
+	struct patch *next;
+} PATCH;
+
+extern PATCH *spFirstItem;
+
+static BOOL WINAPI FileExist(LPCTSTR filename);
+static INT WINAPI AddFile(LPCTSTR filename);
+
+
+static INT CountFolders(LPCTSTR source);
+
+
+static LPTSTR GetFolder(LPTSTR source, INT index);
+
+#endif /*_GRF_FUNC_H_*/
