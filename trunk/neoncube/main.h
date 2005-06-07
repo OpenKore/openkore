@@ -1,5 +1,5 @@
 /*############################################################################
-##					 NEONCUBE - RAGNAROK ONLINE PATCH CLIENT
+##  NEONCUBE - RAGNAROK ONLINE PATCH CLIENT
 ##
 ##  http://openkore.sourceforge.net/neoncube
 ##  (c) 2005 Ansell "Cliffe" Cruz (Cliffe@xeronhosting.com)
@@ -20,19 +20,44 @@
 ##
 ##############################################################################*/
 
+#ifndef _MAIN_H_
+#define _MAIN_H_
 
+#ifdef _DEBUG
+#define CRTDBG_MAP_ALLOC
+
+#include <stdlib.h>
+#include <crtdbg.h>
+#endif /*_DEBUG*/
+
+#include <windows.h>
+#include <shellapi.h>
+#include <wininet.h>
+#include <commctrl.h>
+#include <direct.h>
+#include <stdio.h>
+
+#ifndef PBS_STYLE
+#define PBS_STYLE ( WS_CHILD	| \
+		    WS_VISIBLE	| \
+		    WS_BORDER)
+#endif // PBS_STYLE
+
+#ifndef DATA_GRF_TXT
+#define DATA_GRF_TXT "neoncube\\data.grf.txt"
+#endif //DATA_GRF_TXT
 /*#######################################################
 ## DEFINITIONS OF STATIC CONTROL IDS
 ########################################################*/
 
-#define IDC_MINIMIZE 4001
-#define IDC_CLOSE 4002
-#define IDC_GROUPBOX 4003
-#define IDC_PROGRESS 4004
-#define IDC_STATUS 4005
-#define IDC_STARTGAME 4006
-#define IDC_REGISTER 4007
-#define IDC_CANCEL 4008
+#define IDC_MINIMIZE	4001
+#define IDC_CLOSE	4002
+#define IDC_GROUPBOX	4003
+#define IDC_PROGRESS	4004
+#define IDC_STATUS	4005
+#define IDC_STARTGAME	4006
+#define IDC_REGISTER	4007
+#define IDC_CANCEL	4008
 
 
 /*#######################################################
@@ -116,10 +141,10 @@ HBITMAP hbmBackground = NULL;
 /*#######################################################
 ## WEB BROWSER / NOTICE WINDOW FUNCTIONS
 ########################################################*/
-#include "browser/browser.h"
+#include "browser\browser.h"
 EmbedBrowserObjectPtr		*lpEmbedBrowserObject;
 UnEmbedBrowserObjectPtr		*lpUnEmbedBrowserObject;
-DisplayHTMLPagePtr			*lpDisplayHTMLPage;
+DisplayHTMLPagePtr		*lpDisplayHTMLPage;
 
 /*#######################################################
 ## CONFIGURATION / FILENAMES
@@ -128,16 +153,18 @@ DisplayHTMLPagePtr			*lpDisplayHTMLPage;
 ##				configuration.
 ## styleFile:	File that contains the style setting.
 ########################################################*/
-TCHAR iniFile[] = "neoncube\\neoncube.ini";
-TCHAR styleFile[] = "neoncube\\neoncube.style";
+CONST TCHAR iniFile[] = "neoncube\\neoncube.ini";
+CONST TCHAR styleFile[] = "neoncube\\neoncube.style";
 
+#define STYLEFILE   styleFile
+#define INIFILE	    iniFile
 
 /*#######################################################
-## INTERNET HANDLES
+## HINTERNET HANDLES
 ########################################################*/
 HINTERNET g_hOpen;
 HINTERNET g_hConnection;
-/*INTERNET_STATUS_CALLBACK iscCallback;	*/
+
 
 /*#######################################################
 ## THREAD HANDLES
@@ -154,10 +181,11 @@ HANDLE	hThread;
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
 /*#######################################################
-## NOTICE WINDOW
+## SetupNoticeClass()
 ##
-## Registers the notice window class, create it, embed
-## the browser, display it.
+## return value:
+##
+## TRUE if function succeeds, FALSE otherwise.
 ########################################################*/
 BOOL SetupNoticeClass(HINSTANCE);
 void drawNotice(HWND, int);
@@ -169,7 +197,10 @@ void drawNotice(HWND, int);
 ## HDC:		Handle to Device Context.
 ## HWND:	Handle to the button.
 ## HBITMAP:	Handle to the bitmap that will be drawn to 
-			the button.
+##			the button.
+##
+## return value:
+## none
 ########################################################*/
 extern void WINAPI SetBitmapToButton(HDC, HWND, HBITMAP);
 
@@ -179,9 +210,9 @@ extern void WINAPI SetBitmapToButton(HDC, HWND, HBITMAP);
 ########################################################*/
 extern LRESULT CALLBACK minimizeButtonSubclassProc(HWND, UINT, WPARAM, LPARAM);
 extern LRESULT CALLBACK closeButtonSubclassProc(HWND, UINT, WPARAM, LPARAM);
-extern LRESULT CALLBACK StartGameButtonSubclassProc ( HWND, UINT, WPARAM, LPARAM);
-extern LRESULT CALLBACK RegisterButtonSubclassProc ( HWND, UINT, WPARAM, LPARAM);
-extern LRESULT CALLBACK CancelButtonSubclassProc ( HWND, UINT, WPARAM, LPARAM);
+extern LRESULT CALLBACK StartGameButtonSubclassProc(HWND, UINT, WPARAM, LPARAM);
+extern LRESULT CALLBACK RegisterButtonSubclassProc(HWND, UINT, WPARAM, LPARAM);
+extern LRESULT CALLBACK CancelButtonSubclassProc(HWND, UINT, WPARAM, LPARAM);
 
 
 /*#######################################################
@@ -194,30 +225,26 @@ extern void LoadButtonBitmap(void);
 ##			 under HWND.
 ##
 ## HWND:	Handle to the parent window.
+##
+## return value:
+## TRUE if _TrackMouseEvent succeeds, FALSE otherwise.
 ########################################################*/
 extern BOOL TME(HWND);
 
 /*#######################################################
 ## FUNCTION: Loads INI (integer) settings
+##
+## return value: the value which was loaded from the ini
+## file
 ########################################################*/
-int LoadINIInt(LPCTSTR, LPCTSTR);
-
-
-/*#######################################################
-## INTERNET CALLBACK FUNCTION
-## (not implemented yet)
-########################################################*/
-/*
-void __stdcall Juggler(HINTERNET, DWORD , DWORD , LPVOID, DWORD);
-*/
+#define LoadINIInt(s, k) GetPrivateProfileInt((s), (k), (0), (STYLEFILE))
 
 
 /*#######################################################
 ## THREAD FUNCTION: Download process thread function
 ##
-## RETURN VALUE: (unsigned long) return value is > 0 if
-##				 an error occured, otherwise it returns
-##				 S_OK
+## RETURN VALUE: return value is S_FALSE if an error occured, 
+## otherwise it returns S_OK
 ########################################################*/
 DWORD Threader(void);
 
@@ -225,30 +252,12 @@ DWORD Threader(void);
 
 /*#######################################################
 ## FUNCTION: Converts Bytes to KiloBytes
+##
+## return value: returns the new value in float
 ########################################################*/
 #define BytesToKB(n) (((float)n) / ((float)1024))
 
 
-
-/*#######################################################
-## REQUEST CONTEXT
-## (not implemented yet) 
-########################################################*/
-/*
-typedef struct {
-	HWND		hWindow;	//main window handle
-	int			nURL;		//ID of the Edit Box w/ the URL
-	int			nHeader;	//ID of the Edit Box for the header info
-	int			nResource;	//ID of the Edit Box for the resource
-	HINTERNET	hOpen;		//HINTERNET handle created by InternetOpen
-	HINTERNET	hResource;	//HINTERNET handle created by InternetOpenUrl
-	char		szMemo[512];//string to store status memo
-	HANDLE		hThread;	//thread handle
-	DWORD		dwThreadID;	//thread ID
-} REQUEST_CONTEXT;
-
-REQUEST_CONTEXT rContext;
-*/
 
 /*#######################################################
 ## STRUCT PATCH: A linked list that contains info about
@@ -256,11 +265,12 @@ REQUEST_CONTEXT rContext;
 ##
 ## szPatchName:		Filename of the patch.
 ## iPatchIndex:		Index number.
-## *next:			pointer to the next entry in the list
+## *next:		pointer to the next entry in the list
 ########################################################*/
 typedef struct patch {
-	char szPatchName[50];
-	int iPatchIndex;
+	TCHAR	szPatchName[50];
+	INT	iPatchIndex;
+
 	struct patch *next;
 } PATCH;
 
@@ -273,8 +283,11 @@ PATCH *spFirstItem = NULL;
 ## *item:	Pointer to a NULL terminated string which
 ##			contains the patch name.
 ## index:	patch index.
+##
+## return value: none
 ########################################################*/
-void AddPatch(const char *item, int index);
+void WINAPI AddPatch(LPCTSTR item, INT index);
+
 
 /************************************************
 ** Just to determine if the patch process is 
@@ -287,16 +300,33 @@ BOOL bPatchInProgress;
 /*#######################################################
 ## FUNCTION: Extracts a GRF file
 ##
+## return value: FALSE if an error occured.
 ########################################################*/
-extern BOOL ExtractGRF(const char*);
+extern BOOL ExtractGRF(LPCSTR);
 
-extern void GRFCreate_AddFile(const char* item);
+/*#######################################################
+## FUNCTION: Adds the current file being extracted to
+## data.grf.txt
+##
+## return value: none
+########################################################*/
+extern void GRFCreate_AddFile(LPCTSTR item);
 
-//delete entire directory and its subdirectories
-extern bool DeleteDirectory(LPCTSTR lpszDir);
 
-//Error message
-void PostError(BOOL exitapp = true);
+/*#######################################################
+## FUNCTION: Delete a directory and its contents
+##
+## return value: FALSE if an error occured.
+########################################################*/
+extern BOOL DeleteDirectory(LPCTSTR lpszDir);
+
+/*#######################################################
+## FUNCTION: Post an error message in a window
+##
+## return value: none
+########################################################*/
+void PostError(BOOL exitapp = TRUE);
+
 
 //bitmaps
 extern HBITMAP hbmMinimize;
@@ -312,14 +342,39 @@ extern HBITMAP hbmRegister_hover;
 extern HBITMAP hbmCancel_hover;
 
 
+/*#######################################################
+## FUNCTION: Print status message
+##
+## return value: none
+########################################################*/
 void StatusMessage(LPCTSTR message, ...);
 
+
+/*#######################################################
+## DELFILE structure
+## contains info about the files that will be deleted
+########################################################*/
 typedef struct delfile {
 	TCHAR szFileName[1024];
 	struct delfile *next;
 } DELFILE;
 
 DELFILE *dfFirstItem = NULL;
+void WINAPI DelFile(LPCTSTR item);
 
-void DelFile(LPCTSTR item);
+
+/*#######################################################
+## FUNCTION: Error logging
+##
+## return value: none
+########################################################*/
 void AddErrorLog(LPCTSTR fmt, ...);
+
+/*#######################################################
+## FUNCTION: Debugging use only
+##
+## return value: none
+########################################################*/
+void AddDebug(LPCTSTR fmt, ...);
+
+#endif /*_MAIN_H_*/
