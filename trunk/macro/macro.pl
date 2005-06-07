@@ -31,7 +31,6 @@ our $cvs;
 if (!$stable) {
   eval {require cvsdebug};
   if (!$@) {
-#   $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack, \$Version, \%automacro, \%macro]);
     $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]);
     $Version .= "cvs rev ".$cvs->revision();
   };
@@ -679,7 +678,7 @@ sub checkPercent {
 
 # checks for status #######################################
 sub checkStatus {
-  my ($tmp, $status) = split(/ /, $_[0]);
+  my ($tmp, $status) = split(/ /, $_[0], 2);
   if (!$status) {$status = $tmp; undef $tmp};
   if ($status eq 'muted' && $char->{muted}) {return 1};
   if ($status eq 'dead' && $char->{dead}) {return 1};
