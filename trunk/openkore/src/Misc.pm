@@ -162,8 +162,8 @@ sub saveConfigFile {
 sub setTimeout {
 	my $timeout = shift;
 	my $time = shift;
+	message "Timeout '$timeout' set to $time (was $timeout{$timeout}{timeout})\n", "info";
 	$timeout{$timeout}{'timeout'} = $time;
-	message "Timeout '$timeout' set to $time\n", "info";
 	writeDataFileIntact2("$Settings::control_folder/timeouts.txt", \%timeout);
 }
 
