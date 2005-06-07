@@ -1,6 +1,12 @@
 ###############################
 ## 1.0.0 (beta)
 ###############################
+06/07/05
+--------
+Fixed: fixed Windows 95, 98 and ME bug (CreateThread() won't start)
+
+
+
 /06/06/05
 --------
 Fixed: Duplicate data.grf.txt entry
