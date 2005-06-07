@@ -26,7 +26,7 @@ use Commands;
 use Plugins;
 use Log qw(message error);
 use Utils qw(parseArgs getFormattedDate timeOut);
-use Misc qw(auth configModify sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse);
+use Misc qw(auth configModify setTimeout sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse);
 
 
 our @queue;
@@ -181,6 +181,26 @@ sub processChatCommand {
 			$args[1] = "" if ($args[1] eq "none");
 			configModify($args[0], $args[1]);
 			sendMessage(\$remote_socket, $type, getResponse("confS2"), $user) if $config{verbose};
+			$timeout{ai_thanks_set}{time} = time;
+		}
+
+	} elsif ($switch eq "timeout") {
+		if ($args[0] eq "") {
+			sendMessage(\$remote_socket, $type, getResponse("timeoutF1"), $user) if $config{verbose};
+
+		} elsif (!exists $timeout{$args[0]}{timeout}) {
+			sendMessage(\$remote_socket, $type, getResponse("timeoutF2"), $user) if $config{verbose};
+
+		} elsif ($args[1] eq "") {
+			$vars->{key} = $args[0];
+			$vars->{value} = $timeout{$args[0]}{timeout};
+			sendMessage(\$remote_socket, $type, getResponse("timeoutS1"), $user) if $config{verbose};
+			$timeout{ai_thanks_set}{time} = time;
+
+		} else {
+			$args[1] = "" if ($args[1] eq "none");
+			setTimeout($args[0], $args[1]);
+			sendMessage(\$remote_socket, $type, getResponse("timeoutS2"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 		}
 

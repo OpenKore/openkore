@@ -32,6 +32,7 @@ Bug fixes:
   attack, taking into account that Endure/miss doesn't count.
 - Fixed a crash caused by autoresponse.
 - Fixed dealAuto not working while dead.
+- Add the missing "timeout" chat command.
 
 New features:
 - Better support for detecting dead players.
