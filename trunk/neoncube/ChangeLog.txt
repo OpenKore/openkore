@@ -1,29 +1,60 @@
+###############################
+## 1.0.0 (beta)
+###############################
+/06/06/05
+--------
+Fixed: Duplicate data.grf.txt entry
+Improved: File deletion
+
+
+/06/05/05
+--------
+code cleanup
+Added: Minor changes and fixes
+
+
+
+/06/02/05
+--------
+Added: AddDebug() function
+
+
 
 06/01/05
 --------
-Bug Fixes:
-- Fixed StatusMessage()
-- Fixed some memory leaks
-- Fixed PostError()
+Fixed: StatusMessage()
+Fixed: some memory leaks
+Fixed: PostError()
 
-Features:
-- Added file deletion support
-- Better error logging
+Added: file deletion support
+
+Improved: Better error logging
 
 
 05/31/05
 --------
+Added: Error logging
+Added: Patch files downloaded via HTTP.
+Added: Built-in web browser: displays PHP, HTML, ASP, and other kind of files. Supports Flash™ and JavaScript™.
+Added: Fully skinable, control how the patch client looks (width, height, X and Y coordinates of buttons, windows, etc)
+Added: GRF extraction 
+Added: GRF repacking 
+Added: Detailed download
+Added: Backup GRF option
 
-Features:
-- Patch files downloaded via HTTP.
-- Built-in web browser: displays PHP, HTML, ASP, and other kind of files. Supports Flash™ and JavaScript™.
-- Fully skinable, control how the patch client looks (width, height, X and Y coordinates of buttons, windows, etc)
-- GRF extraction 
-- GRF repacking 
-- Detailed download
-- Error logging
-- Backup GRF option
+
+
+
+
+
+
 
 Credits: 
+- Hongli Lai
+- Faithful
+- Rasqual
 - Jeff Glatt (OLE browser code)
 - GRFMaker(create.exe) author
+
+Authors:
+- Ansell "Cliffe" Cruz
