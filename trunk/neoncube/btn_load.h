@@ -27,6 +27,8 @@
 ## btnOld_*:	WndProc/Subclass of a button.
 ## treMouse_*:	TrackMouseEvent structure of a button.
 ########################################################*/
+#ifndef _BTN_LOAD_H_
+#define _BTN_LOAD_H_
 
 extern void PostError(BOOL exitapp = TRUE);
 
@@ -64,3 +66,5 @@ extern HWND hwndClose;
 extern HWND hwndStartGame;
 extern HWND hwndRegister;
 extern HWND hwndCancel;
+
+#endif /* _BTN_LOAD_H_*/

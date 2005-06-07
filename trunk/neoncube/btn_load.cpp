@@ -25,17 +25,16 @@
 
 void WINAPI SetBitmapToButton (HDC hdc, HWND hBtn, HBITMAP hBmp)
 {
-	RECT rc = {0};
-	HDC  hdcMem;
-	BITMAP bm;
-	GetObject(hBmp, sizeof(bm), &bm);
+    RECT rc = {0};
+    HDC  hdcMem;
+    BITMAP bm;
+    GetObject(hBmp, sizeof(bm), &bm);
 
-	GetWindowRect(hBtn, &rc);
-	hdcMem = CreateCompatibleDC(hdc);
+    GetWindowRect(hBtn, &rc);
+    hdcMem = CreateCompatibleDC(hdc);
 
-	SelectObject(hdcMem, hBmp);
-	StretchBlt(
-		hdc, 
+    SelectObject(hdcMem, hBmp);
+    StretchBlt(hdc, 
 		0, 
 		0,
 		rc.right - rc.left, 
@@ -47,328 +46,272 @@ void WINAPI SetBitmapToButton (HDC hdc, HWND hBtn, HBITMAP hBmp)
 		bm.bmHeight, 
 		SRCCOPY
 	); 
-	DeleteDC(hdcMem);
+    DeleteDC(hdcMem);
 }
 
-LRESULT CALLBACK minimizeButtonSubclassProc (HWND hwnd, 
-											 UINT msg, 
-											 WPARAM wParam, 
-											 LPARAM lParam)
+LRESULT CALLBACK minimizeButtonSubclassProc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	static BOOL bEnter = TRUE;
-	switch (msg)
-	{ 
-		case WM_MOUSELEAVE:
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmMinimize);
-			}
-			return 0; 
-
-		case WM_MOUSEMOVE: 
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmMinimize_hover);
-				if (!_TrackMouseEvent(&treMouse_minimize))
-				{
-					exit(0);
-				} 
-			}
-			return 0;
+    static BOOL bEnter = TRUE;
+    switch (msg) { 
+	case WM_MOUSELEAVE:
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmMinimize);
 	}
+	return 0; 
+
+	case WM_MOUSEMOVE: 
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmMinimize_hover);
+	    if (!_TrackMouseEvent(&treMouse_minimize)) {
+		exit(0);
+	    } 
+	}
+	return 0;
+    }
 	return CallWindowProc(btnOld_minimize, hwnd, msg, wParam, lParam);
 }
 
-LRESULT CALLBACK closeButtonSubclassProc(HWND hwnd, 
-										 UINT msg, 
-										 WPARAM wParam, 
-										 LPARAM lParam)
+LRESULT CALLBACK closeButtonSubclassProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	static BOOL bEnter = TRUE;
-	switch (msg)
-	{ 
-		case WM_MOUSELEAVE:
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmClose);
-			}
-			return 0; 
-
-		case WM_MOUSEMOVE:
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmClose_hover);
-
-				if (!_TrackMouseEvent(&treMouse_close))
-				{
-					exit(0);
-				} 
-			}
-			return 0;
+    static BOOL bEnter = TRUE;
+    switch (msg) { 
+	case WM_MOUSELEAVE:
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmClose);
 	}
-	return CallWindowProc(btnOld_close, hwnd, msg, wParam, lParam);
+	return 0; 
+
+	case WM_MOUSEMOVE:
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmClose_hover);
+
+	    if (!_TrackMouseEvent(&treMouse_close)) {
+		exit(0);
+	    } 
+	}
+	return 0;
+    }
+    return CallWindowProc(btnOld_close, hwnd, msg, wParam, lParam);
 }
 
-LRESULT CALLBACK StartGameButtonSubclassProc (HWND 
-											  hwnd, 
-											  UINT msg, 
-											  WPARAM wParam, 
-											  LPARAM lParam)
+LRESULT CALLBACK StartGameButtonSubclassProc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	static BOOL bEnter = TRUE;
-	switch (msg)
-	{ 
-		case WM_MOUSELEAVE:
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmStartGame);
-			}
-			return 0; 
-
-		case WM_MOUSEMOVE:
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmStartGame_hover);
-				if (!_TrackMouseEvent(&treMouse_StartGame))
-				{
-					exit(0);
-				} 
-			}
-			return 0;
+    static BOOL bEnter = TRUE;
+    switch (msg) { 
+	case WM_MOUSELEAVE:
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmStartGame);
 	}
-	return CallWindowProc(btnOld_StartGame, hwnd, msg, wParam, lParam);
+	return 0; 
+
+	case WM_MOUSEMOVE:
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmStartGame_hover);
+	    if (!_TrackMouseEvent(&treMouse_StartGame)) {
+		exit(0);
+	    } 
+	}
+	return 0;
+    }
+    return CallWindowProc(btnOld_StartGame, hwnd, msg, wParam, lParam);
 }
 
-LRESULT CALLBACK RegisterButtonSubclassProc (HWND hwnd, 
-											 UINT msg, 
-											 WPARAM wParam, 
-											 LPARAM lParam)
+LRESULT CALLBACK RegisterButtonSubclassProc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	static BOOL bEnter = TRUE;
-	switch (msg)
-	{ 
-		case WM_MOUSELEAVE:
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmRegister);
-			}
-			return 0; 
-
-		case WM_MOUSEMOVE: 
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmRegister_hover);
-				if (!_TrackMouseEvent(&treMouse_Register))
-				{
-					exit(0);
-				} 
-			}
-			return 0;
+    static BOOL bEnter = TRUE;
+    switch (msg) { 
+	case WM_MOUSELEAVE:
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmRegister);
 	}
-	return CallWindowProc(btnOld_Register, hwnd, msg, wParam, lParam);
+	return 0; 
+
+	case WM_MOUSEMOVE: 
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmRegister_hover);
+	    if (!_TrackMouseEvent(&treMouse_Register)) {
+		exit(0);
+	    } 
+	}
+	return 0;
+    }
+    return CallWindowProc(btnOld_Register, hwnd, msg, wParam, lParam);
 }
 
 
-LRESULT CALLBACK CancelButtonSubclassProc (HWND hwnd, 
-										   UINT msg, 
-										   WPARAM wParam, 
-										   LPARAM lParam)
+LRESULT CALLBACK CancelButtonSubclassProc (HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	static BOOL bEnter = TRUE;
-	switch (msg)
-	{ 
-		case WM_MOUSELEAVE:
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmCancel);
-			}
-			return 0; 
-
-		case WM_MOUSEMOVE: 
-			{
-				SetBitmapToButton(GetDC(hwnd), hwnd, hbmCancel_hover);
-
-				if (!_TrackMouseEvent(&treMouse_Cancel))
-				{
-					exit(0);
-				} 
-			}
-			return 0;
+    static BOOL bEnter = TRUE;
+    switch (msg) { 
+	case WM_MOUSELEAVE:
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmCancel);
 	}
-	return CallWindowProc(btnOld_Cancel, hwnd, msg, wParam, lParam);
+	return 0; 
+
+	case WM_MOUSEMOVE: 
+	{
+	    SetBitmapToButton(GetDC(hwnd), hwnd, hbmCancel_hover);
+
+    	    if (!_TrackMouseEvent(&treMouse_Cancel)) {
+		exit(0);
+	    } 
+	}
+	return 0;
+    }
+    return CallWindowProc(btnOld_Cancel, hwnd, msg, wParam, lParam);
 }
 
 BOOL TME(HWND hwnd)
 {
 
-	treMouse_minimize.cbSize		= sizeof(TRACKMOUSEEVENT);
-	treMouse_minimize.hwndTrack		= hwndMinimize;
-	treMouse_minimize.dwFlags		= TME_HOVER | TME_LEAVE ;
-	treMouse_minimize.dwHoverTime	= 10000;
-	_TrackMouseEvent(&treMouse_minimize);
-	btnOld_minimize = (WNDPROC)SetWindowLong(hwndMinimize, GWL_WNDPROC, (LONG)minimizeButtonSubclassProc);
+    treMouse_minimize.cbSize		= sizeof(TRACKMOUSEEVENT);
+    treMouse_minimize.hwndTrack		= hwndMinimize;
+    treMouse_minimize.dwFlags		= TME_HOVER | TME_LEAVE ;
+    treMouse_minimize.dwHoverTime	= 10000;
+    _TrackMouseEvent(&treMouse_minimize);
+    btnOld_minimize = (WNDPROC)SetWindowLong(hwndMinimize, GWL_WNDPROC, (LONG)minimizeButtonSubclassProc);
 
 
 
-	treMouse_close.cbSize		= sizeof(TRACKMOUSEEVENT);
-	treMouse_close.hwndTrack	= hwndClose;
-	treMouse_close.dwFlags		= TME_HOVER | TME_LEAVE ;
-	treMouse_close.dwHoverTime	= 10000;
-	_TrackMouseEvent(&treMouse_close);
-	btnOld_close = (WNDPROC)SetWindowLong(hwndClose, GWL_WNDPROC, (LONG)closeButtonSubclassProc);
+    treMouse_close.cbSize	= sizeof(TRACKMOUSEEVENT);
+    treMouse_close.hwndTrack	= hwndClose;
+    treMouse_close.dwFlags	= TME_HOVER | TME_LEAVE ;
+    treMouse_close.dwHoverTime	= 10000;
+    _TrackMouseEvent(&treMouse_close);
+    btnOld_close = (WNDPROC)SetWindowLong(hwndClose, GWL_WNDPROC, (LONG)closeButtonSubclassProc);
 
 
 
-	treMouse_StartGame.cbSize		= sizeof(TRACKMOUSEEVENT);
-	treMouse_StartGame.hwndTrack	= hwndStartGame;
-	treMouse_StartGame.dwFlags		= TME_HOVER | TME_LEAVE ;
-	treMouse_StartGame.dwHoverTime	= 10000;
-	_TrackMouseEvent(&treMouse_StartGame);
-	btnOld_StartGame = (WNDPROC)SetWindowLong(hwndStartGame, GWL_WNDPROC, (LONG)StartGameButtonSubclassProc);
+    treMouse_StartGame.cbSize		= sizeof(TRACKMOUSEEVENT);
+    treMouse_StartGame.hwndTrack	= hwndStartGame;
+    treMouse_StartGame.dwFlags		= TME_HOVER | TME_LEAVE ;
+    treMouse_StartGame.dwHoverTime	= 10000;
+    _TrackMouseEvent(&treMouse_StartGame);
+    btnOld_StartGame = (WNDPROC)SetWindowLong(hwndStartGame, GWL_WNDPROC, (LONG)StartGameButtonSubclassProc);
 
 
 
-	treMouse_Register.cbSize		= sizeof(TRACKMOUSEEVENT);
-	treMouse_Register.hwndTrack		= hwndRegister;
-	treMouse_Register.dwFlags		= TME_HOVER | TME_LEAVE ;
-	treMouse_Register.dwHoverTime	= 10000;
-	_TrackMouseEvent(&treMouse_Register);
-	btnOld_Register = (WNDPROC)SetWindowLong(hwndRegister, GWL_WNDPROC, (LONG)RegisterButtonSubclassProc);
+    treMouse_Register.cbSize		= sizeof(TRACKMOUSEEVENT);
+    treMouse_Register.hwndTrack		= hwndRegister;
+    treMouse_Register.dwFlags		= TME_HOVER | TME_LEAVE ;
+    treMouse_Register.dwHoverTime	= 10000;
+    _TrackMouseEvent(&treMouse_Register);
+    btnOld_Register = (WNDPROC)SetWindowLong(hwndRegister, GWL_WNDPROC, (LONG)RegisterButtonSubclassProc);
 
 
-	treMouse_Cancel.cbSize			= sizeof(TRACKMOUSEEVENT);
-	treMouse_Cancel.hwndTrack		= hwndCancel;
-	treMouse_Cancel.dwFlags		= TME_HOVER | TME_LEAVE ;
-	treMouse_Cancel.dwHoverTime	= 10000;
-	_TrackMouseEvent(&treMouse_Cancel);
-	btnOld_Cancel = (WNDPROC)SetWindowLong(hwndCancel, GWL_WNDPROC, (LONG)CancelButtonSubclassProc);
+    treMouse_Cancel.cbSize		= sizeof(TRACKMOUSEEVENT);
+    treMouse_Cancel.hwndTrack		= hwndCancel;
+    treMouse_Cancel.dwFlags		= TME_HOVER | TME_LEAVE ;
+    treMouse_Cancel.dwHoverTime	= 10000;
+    _TrackMouseEvent(&treMouse_Cancel);
+    btnOld_Cancel = (WNDPROC)SetWindowLong(hwndCancel, GWL_WNDPROC, (LONG)CancelButtonSubclassProc);
 
 
-	return TRUE;
+    return TRUE;
 }
 
 void LoadButtonBitmap(void)
 {
 
-	//------------------------
-	// MINIMIZE BUTTON
-	//------------------------
-	hbmMinimize = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\minimize.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
-	if(!hbmMinimize)
-	{
-		MessageBox(NULL,"Failed to load minimize.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
-	}			
-	hbmMinimize_hover = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\minimize_hover.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
+    //------------------------
+    // MINIMIZE BUTTON
+    //------------------------
+    hbmMinimize = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\minimize.bmp",
+				    IMAGE_BITMAP,
+				    0, 0, LR_LOADFROMFILE
+				    );
+    if(!hbmMinimize) {
+	MessageBox(NULL,"Failed to load minimize.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();
+    }			
+    hbmMinimize_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\minimize_hover.bmp",
+					    IMAGE_BITMAP,
+					    0, 0, LR_LOADFROMFILE
+					    );
 			
-	if(!hbmMinimize_hover)
-	{
-		MessageBox(NULL,"Failed to load minimize_hover.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
-	}
+    if(!hbmMinimize_hover) {
+	MessageBox(NULL,"Failed to load minimize_hover.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();
+    }
 
 
-	hbmClose = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\close.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
-	if(!hbmClose)
-	{
-		MessageBox(NULL,"Failed to load close.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
+    hbmClose = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\close.bmp",
+					IMAGE_BITMAP,
+					0, 0, LR_LOADFROMFILE
+					);
+    if(!hbmClose) {
+	MessageBox(NULL,"Failed to load close.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();		
+    }			
+    hbmClose_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\close_hover.bmp",
+					IMAGE_BITMAP,
+					0, 0, LR_LOADFROMFILE
+					);
 			
-	}			
-	hbmClose_hover = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\close_hover.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
-			
-	if(!hbmMinimize_hover)
-	{
-		MessageBox(NULL,"Failed to load close_hover.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
-	}
+    if(!hbmMinimize_hover) {
+	MessageBox(NULL,"Failed to load close_hover.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();
+    }
 
 
-	hbmStartGame = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\startgame.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
-	if(!hbmStartGame)
-	{
-		MessageBox(NULL,"Failed to load startgame.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
+    hbmStartGame = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\startgame.bmp",
+					    IMAGE_BITMAP,
+					    0, 0, LR_LOADFROMFILE
+					    );
+    if(!hbmStartGame) {
+	MessageBox(NULL,"Failed to load startgame.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();		
+    }			
+    hbmStartGame_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\startgame_hover.bmp",
+					    IMAGE_BITMAP, 0, 0,
+					    LR_LOADFROMFILE
+					    );
 			
-	}			
-	hbmStartGame_hover = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\startgame_hover.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
-			
-	if(!hbmStartGame_hover)
-	{
-		MessageBox(NULL,"Failed to load startgame_hover.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
-	}
+    if(!hbmStartGame_hover) {
+	MessageBox(NULL,"Failed to load startgame_hover.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();
+    }
 
-	hbmRegister = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\register.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
-	if(!hbmRegister)
-	{
-		MessageBox(NULL,"Failed to load register.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
+    hbmRegister = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\register.bmp",
+				    IMAGE_BITMAP,
+				    0, 0,
+				    LR_LOADFROMFILE
+				    );
+    if(!hbmRegister) {
+	MessageBox(NULL,"Failed to load register.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();		
+    }			
+    hbmRegister_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\register_hover.bmp",
+					    IMAGE_BITMAP, 0, 0,
+					    LR_LOADFROMFILE
+					    );
 			
-	}			
-	hbmRegister_hover = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\register_hover.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
-			
-	if(!hbmRegister_hover)
-	{
-		MessageBox(NULL,"Failed to load register_hover.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
-	}
+    if(!hbmRegister_hover) {
+	MessageBox(NULL,"Failed to load register_hover.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();
+    }
 
 
-	hbmCancel = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\cancel.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
-	if(!hbmCancel)
-	{
-		MessageBox(NULL,"Failed to load cancel.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
+    hbmCancel = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\cancel.bmp",
+				    IMAGE_BITMAP,
+				    0, 0,
+				    LR_LOADFROMFILE
+				    );
+    if(!hbmCancel) {
+	MessageBox(NULL,"Failed to load cancel.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();
 			
-	}			
-	hbmCancel_hover = (HBITMAP)LoadImage(NULL,
-									  "neoncube\\skin\\cancel_hover.bmp",
-									  IMAGE_BITMAP,
-									  0,
-									  0,
-									  LR_LOADFROMFILE);
+    }			
+    hbmCancel_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\cancel_hover.bmp",
+					IMAGE_BITMAP,
+					0, 0,
+					LR_LOADFROMFILE
+					);
 			
-	if(!hbmCancel_hover)
-	{
-		MessageBox(NULL,"Failed to load cancel_hover.bmp","Error",MB_OK | MB_ICONERROR);
-		PostError();
-	}
+    if(!hbmCancel_hover) {
+	MessageBox(NULL,"Failed to load cancel_hover.bmp","Error",MB_OK | MB_ICONERROR);
+	PostError();
+    }
 
 }
