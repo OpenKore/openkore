@@ -2300,7 +2300,7 @@ sub AI {
 			}
 		}
 
-	} elsif (AI::action ne "dead" && $char->{'dead'}) {
+	} elsif (AI::action ne "dead" && AI::action ne "deal" && $char->{'dead'}) {
 		AI::clear();
 		AI::queue("dead");
 	}

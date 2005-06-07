@@ -31,6 +31,7 @@ Bug fixes:
 - Kore should recognize when someone is made to stand up by an
   attack, taking into account that Endure/miss doesn't count.
 - Fixed a crash caused by autoresponse.
+- Fixed dealAuto not working while dead.
 
 New features:
 - Better support for detecting dead players.
