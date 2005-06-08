@@ -186,6 +186,26 @@ sub processMsg {
 		!(existsInList($config{beepDomains_notInTown}, $domain) &&
 		  $cities_lut{$field{name}.'.rsw'});
 
+	# Add timestamp if domain was specified in config.txt/showTimeDomains
+	if (existsInList($config{showTimeDomains}, $domain)) {
+		my @tmpdate = localtime();
+		$tmpdate[5] += 1900;
+		for (my $i = 0; $i < @tmpdate; $i++) {
+			if ($tmpdate[$i] < 10) {$tmpdate[$i] = "0".$tmpdate[$i]};
+		};
+		if (defined (my $format = $config{showTimeDomainsFormat})) {
+			$format =~ s/H/$tmpdate[2]/g;
+			$format =~ s/M/$tmpdate[1]/g;
+			$format =~ s/S/$tmpdate[0]/g;
+			$format =~ s/y/$tmpdate[5]/g;
+			$format =~ s/m/$tmpdate[4]/g;
+			$format =~ s/d/$tmpdate[3]/g;
+			$message = "$format $message";
+		} else {
+			$message = "[$tmpdate[2]:$tmpdate[1]:$tmpdate[0]] $message";
+		};
+	};
+	
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
 		$consoleVar->{$domain} = 1 if (!defined($consoleVar->{$domain}));
