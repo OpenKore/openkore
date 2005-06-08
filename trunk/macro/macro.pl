@@ -664,11 +664,12 @@ sub checkPercent {
   my ($arg, $what) = @_;
   my ($cond, $amount) = split(/ /, $arg);
   my $percent;
-  if ($what eq 'hp')         {$percent = $char->{hp} / $char->{hp_max} * 100}
-  elsif ($what eq 'sp')      {$percent = $char->{sp} / $char->{sp_max} * 100}
-  elsif ($what eq 'weight')  {$percent = $char->{weight} / $char->{weight_max} * 100}
-  elsif ($what eq 'cweight') {$percent = $cart{weight} / $cart{weight_max} * 100}
+  if ($what eq 'hp')         {eval {$percent = $char->{hp} / $char->{hp_max} * 100}}
+  elsif ($what eq 'sp')      {eval {$percent = $char->{sp} / $char->{sp_max} * 100}}
+  elsif ($what eq 'weight')  {eval {$percent = $char->{weight} / $char->{weight_max} * 100}}
+  elsif ($what eq 'cweight') {eval {$percent = $cart{weight} / $cart{weight_max} * 100}}
   else {return 0};
+  if ($@) {warning "[macro] checkPercent: $@\n"; return 0};
   return 1 if cmpr($percent, $cond, $amount);
   return 0;
 };
