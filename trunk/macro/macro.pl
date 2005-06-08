@@ -477,6 +477,7 @@ sub releaseAM {
 
 # parses automacros and checks conditions #################
 sub automacroCheck {
+  return if $conState < 5; # really needed?
   my ($trigger, $args) = @_;
 
   if ($launcher{call} && timeOut(\%launcher)) {
@@ -663,14 +664,13 @@ sub checkClass {
 sub checkPercent {
   my ($arg, $what) = @_;
   my ($cond, $amount) = split(/ /, $arg);
-  my $percent;
-  if ($what eq 'hp')         {eval {$percent = $char->{hp} / $char->{hp_max} * 100}}
-  elsif ($what eq 'sp')      {eval {$percent = $char->{sp} / $char->{sp_max} * 100}}
-  elsif ($what eq 'weight')  {eval {$percent = $char->{weight} / $char->{weight_max} * 100}}
-  elsif ($what eq 'cweight') {eval {$percent = $cart{weight} / $cart{weight_max} * 100}}
-  else {return 0};
-  if ($@) {warning "[macro] checkPercent: $@\n"; return 0};
-  return 1 if cmpr($percent, $cond, $amount);
+  if ($what =~ /^(hp|sp|weight)$/ && $char->{$what."_max"}) {
+    my $percent = $char->{$what} / $char->{$what."_max"} * 100;
+    return 1 if cmpr($percent, $cond, $amount);
+  } elsif ($what eq 'cweight' && $cart{weight_max}) {
+    my $percent = $cart{weight} / $cart{weight_max} * 100;
+    return 1 if cmpr($percent, $cond, $amount);
+  };
   return 0;
 };
 
