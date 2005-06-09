@@ -5537,7 +5537,11 @@ sub parseMsg {
 		$sessionID = substr($msg, 4, 4);
 		$accountID = substr($msg, 8, 4);
 		$sessionID2 = substr($msg, 12, 4);
-		$accountSex = unpack("C1",substr($msg, 46, 1));
+		# Account sex should only be 0 (female) or 1 (male)
+		# inRO gives female as 2 but expects 0 back
+		# do modulus of 2 here to fix?
+		# FIXME: we should check exactly what operation the client does to the number given
+		$accountSex = unpack("C1",substr($msg, 46, 1)) % 2;
 		$accountSex2 = ($config{'sex'} ne "") ? $config{'sex'} : $accountSex;
 		message(swrite(
 			"---------Account Info-------------", [undef],
