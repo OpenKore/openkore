@@ -65,6 +65,8 @@ autoConfChange {
 	joblvl
 }
 
+autoMakeArrows 0
+
 autoRestart 0
 
 autoRestartMin 10800
