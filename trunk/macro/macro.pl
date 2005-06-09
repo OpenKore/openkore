@@ -635,7 +635,7 @@ sub checkLoc {
         if (between($x1, $pos->{x}, $x2) && between($y2, $pos->{y}, $y1)) {return $neg?0:1};
         return $neg?1:0;
       };
-      if ($x1 == $pos->{x} && $y1 == $pos->{y}) {return return $neg?0:1};
+      if ($x1 == $pos->{x} && $y1 == $pos->{y}) {return $neg?0:1};
     } else {return return $neg?0:1};
     return $neg?0:1;
   };
