@@ -1,6 +1,10 @@
 ###############################
 ## 1.0.0 (beta)
 ###############################
+06/10/05
+--------
+Removed: Replaced MoveFileEx() with MoveFile() (for Win ME/98/95)
+
 06/09/05
 --------
 Improved: Removed GRFCreate_AddFile() function which causes high cpu usage when extracting files.

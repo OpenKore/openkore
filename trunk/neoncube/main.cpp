@@ -120,6 +120,8 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     crdProgress.height	= LoadINIInt("progressbar", "height");
 
 
+    //
+    // Load browser.dll
     if (!(hBrowserDll = LoadLibrary("browser.dll"))) {
 	AddErrorLog("Failed to load browser.dll");
 	return -1;
@@ -128,6 +130,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     //load bitmap buttons
     LoadButtonBitmap();
 	
+    //functions used on browser.dll
     lpEmbedBrowserObject	= (EmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "EmbedBrowserObject");
     lpUnEmbedBrowserObject	= (UnEmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "UnEmbedBrowserObject");
     lpDisplayHTMLPage		= (DisplayHTMLPagePtr *)GetProcAddress((HINSTANCE)hBrowserDll, "DisplayHTMLPage");
@@ -369,12 +372,13 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			NULL
 			);
 			
+	// set default GUI font
 	HFONT hFont = (HFONT)GetStockObject(DEFAULT_GUI_FONT);
 	SendMessage(g_hwndStatic, WM_SETFONT, (WPARAM)hFont, MAKELPARAM(FALSE, 0));
 
 	Sleep(1000);			
 	
-	
+	// download process thread
 	hThread = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)Threader, NULL, 0, &dwThreadID);
     } 
     break;
@@ -382,6 +386,8 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_DRAWITEM:
     { 
+
+	// set bitmap images to buttons 
 	DRAWITEMSTRUCT *ptr = (DRAWITEMSTRUCT*)lParam;
 
 	if (wParam == IDC_MINIMIZE)  
@@ -401,6 +407,7 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_PAINT:
     {
+	// when we need to repaint the window, we repaint the background
 	BITMAP	    bm;
 	PAINTSTRUCT ps;
 
@@ -418,7 +425,7 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     }
     break;
 
-
+	// windows hack: tell windows that we are dragging the title bar
     case WM_LBUTTONDOWN:
 	SendMessage(hWnd, WM_NCLBUTTONDOWN, HTCAPTION, NULL);
     break;
@@ -519,7 +526,7 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 
-
+// notice window proc. places the browser on the window. Destroys it when WM_DESTROY message is handled
 LRESULT CALLBACK 
 NoticeWindowProcedure(HWND hwndNotice, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -542,8 +549,12 @@ NoticeWindowProcedure(HWND hwndNotice, UINT message, WPARAM wParam, LPARAM lPara
     return 0;
 }
 
-
-
+//###################################################################
+// Registers notice class
+// @param hInstance - Application instance
+//
+// @return value - FALSE if function fails, otherwise it returs TRUE.
+//###################################################################
 BOOL 
 SetupNoticeClass(HINSTANCE hInstance)
 {
@@ -566,6 +577,14 @@ SetupNoticeClass(HINSTANCE hInstance)
 	return FALSE;
     return TRUE;
 }
+
+//#######################################################
+// Creates the notice window (browser window)
+// @param hwnd - handle to the parent window.
+// @param nCmdShow - must be the 4th param in WinMain()
+//
+// @return value - none
+//#######################################################
 
 
 void 
@@ -594,6 +613,14 @@ drawNotice(HWND hwnd, int nCmdShow)
 }
 
 
+
+//###########################################################
+// download process thread
+//
+//
+// @return value - S_FALSE if an error occured, otherwise 
+//		    it returns S_OK
+//###########################################################
 DWORD 
 Threader(void)
 {
@@ -653,7 +680,7 @@ Threader(void)
 	DWORD dwPatch2ContentLen;
 	DWORD dwPatch2BufLen = sizeof(dwPatch2ContentLen);
 		
-	//GET CONTENT LENGTH
+	// download the patch list, first get the content length for memory allocation
 	if(!HttpQueryInfo(hPatch2Request,HTTP_QUERY_CONTENT_LENGTH | HTTP_QUERY_FLAG_NUMBER,(LPVOID)&dwPatch2ContentLen,&dwPatch2BufLen,0)) {
 	    TCHAR szMessage[50];
 	    lstrcpy(szMessage,"Failed to get ");
@@ -669,7 +696,7 @@ Threader(void)
 	}
 
 
-        //ALLOCATE NEEDED MEMORY
+        //next is allocating the needed memory
 	LPTSTR pPatch2TxtData = (LPTSTR)GlobalAlloc(GMEM_FIXED, dwPatch2ContentLen + 1);
 		
 	if(NULL == pPatch2TxtData)
@@ -677,23 +704,25 @@ Threader(void)
 
 	DWORD dwPatch2TxtBytesRead;
 		
-	//READ THE FILE
+	//read the file into pPatch2TxtData
 	InternetReadFile(hPatch2Request, pPatch2TxtData, dwPatch2ContentLen, &dwPatch2TxtBytesRead);
 		
-	//NULL TERMINATE
+	// null terminate
 	pPatch2TxtData[dwPatch2TxtBytesRead] = 0;
 
-	//SAVE THE FILE
+	//save the file and names it "tmp.nc", this file contains the patches that will be downloaded
 	DWORD dwBytesWritten_Tmp;
 	HANDLE hTmp = CreateFile("tmp.nc", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
    	if(WriteFile(hTmp, pPatch2TxtData, dwPatch2ContentLen, &dwBytesWritten_Tmp, NULL) == 0)
 	    PostError();	
 	CloseHandle(hTmp);
 		
-	//FREE MEMORY
+	//free memory used by pPatch2TxtData
 	GlobalFree((HANDLE)pPatch2TxtData);
 
-	//GET LAST INDEX
+	// opens neoncube.file for reading and reads the last index (last patch number)
+	// if neoncube.file fails, neoncube assumes that its the first time the 
+	// application has been run, so it gives last_index = 1
 	FILE *fpLastIndex;
 	UINT last_index;
 		
@@ -706,7 +735,7 @@ Threader(void)
 	}
 
 
-	//OPEN FILE FOR READING
+	// this is the patch list which was saved earlier. read it until EOF
 	UINT index_tmp;
 	TCHAR patch_tmp[1024];
 	
@@ -719,15 +748,32 @@ Threader(void)
 	TCHAR file_path[50];
 	TCHAR szPatch_index[20];
 
+	// determines if the patch process has started downloading files
 	static BOOL bHasDownloadedFiles;
 
-	//add main GRF to linked list
+	// add the main GRF file (the one on neoncube.ini) to the linked list
+	// so that when we run the extraction loop, the main GRF file is included
 	AddPatch(settings.szGrf, 1);
+
+	
+
+	// reads the patch list (tmp.nc) for patches
+	// format:
+	// PATCH_NUM	PATCH_NAME
+	// 1234		test.gpf  -> downloads test.gpf. If test.gpf is the last patch, its index, 1234 will be
+	//		saved into "neoncube.file"
 		
 	while(fscanf(fTmp, "%s %s\n", szPatch_index, patch_tmp) != EOF) {
-	    
-	    //if the line contains a comment (//), ignore it	    
-	    
+	    	    
+	    // the next line is comment support, if szPatch_index[0] is equal to '/' or '#'
+	    // 
+	   
+
+	    // COMMENT FORMATS:
+	    // /*1234   this_patch_will_not_be_downloaded.gpf*/
+	    // #3456	this_will_also_be_ignored.gpf
+	    // //2234	also_this.gpf    
+	    // (actually, anything that starts with / or #)
 
 	    if(szPatch_index[0] == 0x2f || szPatch_index[0] == 0x23) {
 	
@@ -741,15 +787,21 @@ Threader(void)
 	    
 	    } else {
 
+		//  else, szPatch_index string doesnt contain any of the comment format we have,
+		//  so we sscanf it and store the patch index to index_tmp variable
 		sscanf(szPatch_index, "%d", &index_tmp);
 	    }		
 
+	    
+	    // if a patch contains a * at the end, it is a file-to-delete-patch
+	    // so we call DelFile() which adds the patch name into the DELFILE structure
+	    // so that its included in the delete-file loop later.
 	    if(index_tmp > last_index) {
 		if(patch_tmp[strlen(patch_tmp)-1] == 0x2a) {
 		    patch_tmp[strlen(patch_tmp)-1] = '\0';
 		    DelFile(patch_tmp);
 		    bPatchUpToDate = FALSE;
-		    goto end;
+		    goto end; //skip downloading, of course
 		}
 
 		//add patch_tmp and index_tmp to patch struct
@@ -767,7 +819,7 @@ Threader(void)
 				
 		HttpSendRequest(hRequest, NULL, 0, NULL, 0);      
 
-		DWORD dwContentLen;
+		DWORD dwContentLen; // the size of the patch
 		DWORD dwBufLen = sizeof(dwContentLen);
 		
 		if (HttpQueryInfo(hRequest,
@@ -776,6 +828,7 @@ Threader(void)
 				&dwBufLen,
 				0)) {
 
+		// allocate needed memory for the patch
 		    LPTSTR pData = (LPTSTR)GlobalAlloc(0x0000, dwContentLen + 1);
 		    if(NULL == pData)
 			PostError();
@@ -789,6 +842,12 @@ Threader(void)
 		    DWORD   dwBytesReadTotal = 0;
 		    LPTSTR  pCopyPtr = pData;
 
+
+		    //	the actual downloading of files is in a loop, we read the file
+		    //	1% for each loop, assigns it to pCopyPtr which is a pointer to
+		    //	pData. We then increment the address of pCopyPtr for the next read
+		    //	progress bar and status message wont be possible if we wont loop ^_~
+		    
 		    for (cReadCount = 0; cReadCount < 100; cReadCount++) {
 								
 			InternetReadFile(hRequest, pCopyPtr, dwReadSize, &dwBytesRead);
@@ -798,7 +857,7 @@ Threader(void)
 			StatusMessage("Status: Downloading %s...\r\nInfo: %.2f KB of %.2f KB downloaded \r\nProgress: %d%%",patch_tmp, BytesToKB(dwBytesReadTotal), BytesToKB(dwContentLen), cReadCount+1);					
 		    }
 
-				
+		    // saves the file 		
 		    DWORD dwBytesWritten;
 		    HANDLE hFile = CreateFile(patch_tmp, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
    		    if(WriteFile(hFile, pData,dwContentLen, &dwBytesWritten, NULL) == 0) {
@@ -809,11 +868,14 @@ Threader(void)
 		    } else {
 			CloseHandle(hFile);
 		    }
-
+		    
+		    // free memory
 		    GlobalFree((HANDLE)pData);
 		    bHasDownloadedFiles = TRUE;
 		
 		} else {
+		
+		    // if neoncube fails to get the content length of a certain patch... 
 		    StatusMessage("Status: Failed to get %s\r\nInfo:-----\r\nProgress:-----",patch_tmp);
 		    bPatchInProgress = FALSE;
 #ifdef _DEBUG
@@ -830,10 +892,10 @@ Threader(void)
 		bPatchUpToDate = TRUE;
 	    
 	    }
-end:;
+end:; 
 	}
 
-	
+	// close tmp.nc	
 	fclose(fTmp);
 	
 	if(!bPatchUpToDate) {
@@ -841,6 +903,8 @@ end:;
 	PATCH *spCurrentItem;
 	spCurrentItem = spFirstItem;
 
+	// the extraction loop, we loop through until spCurrentItem is NULL,
+	// each loop will extract the patch
 	while(1) {
 
 	    if(!ExtractGRF(spCurrentItem->szPatchName)) {
@@ -853,6 +917,7 @@ end:;
 	    
 	    //after extracting patch files, delete it
 	    //make sure the file isn't our main GRF file
+
 	    if(lstrcmp(spCurrentItem->szPatchName, settings.szGrf) != 0)
 		DeleteFile(spCurrentItem->szPatchName);
 
@@ -868,6 +933,8 @@ end:;
 	dfCurrentItem = dfFirstItem;
 	TCHAR szFileNameToDel[1024] = "neoncube\\";
 
+
+	// the delete-file loop, more like the extraction loop but for file deletion
 	while(1) {
 	    if(dfCurrentItem == NULL)
 		break;
@@ -882,7 +949,8 @@ end:;
 	    dfCurrentItem = dfCurrentItem->next;
 	}
 
-
+	// repacking process, we CreateProcess() create.exe for it to repack the extracted files
+	// TODO: add a progress-bar marquee style
 	StatusMessage("Status: Repacking files...\r\nInfo:-----\r\nProgress:-----");
 
 	STARTUPINFO	    siStartupInfo;
@@ -899,23 +967,26 @@ end:;
                      0, "neoncube", &siStartupInfo, &piProcessInfo))
 	    PostError();
 			
+	    // wait for create.exe to terminate
 	    WaitForSingleObject(piProcessInfo.hProcess, INFINITE);
 	    CloseHandle(piProcessInfo.hThread);
 	    CloseHandle(piProcessInfo.hProcess);
 
 			
-	    //delete extracted files
+	    //delete extracted files directory
 	    DeleteDirectory("neoncube\\data");
 			
 	    if(!settings.nBackupGRF)
 	    //delete old GRF file
 		DeleteFile(settings.szGrf);
-	    else
-	    if(!MoveFileEx(settings.szGrf, "neoncube\\grf.bak", MOVEFILE_REPLACE_EXISTING)) {
-		AddErrorLog("Failed to move file: %s\n", settings.szGrf);
-		PostError(FALSE);
-	    }
-			
+	    else {
+		
+		DeleteFile("neoncube\\grf.bak");
+		if(!MoveFile(settings.szGrf, "neoncube\\grf.bak")) {
+		    AddErrorLog("Failed to move file: %s\n", settings.szGrf);
+		    PostError(FALSE);
+		}
+	    }	
 	    //moves and renames new GRF file
 	    if(!MoveFile("neoncube\\data.grf",settings.szGrf))
 		PostError();
@@ -947,7 +1018,15 @@ end:;
     return S_OK;
 }
 
-
+//##########################################################################
+// adds an entry into the DELFILE linked list
+// (DELFILE contains the filenames which are to be deleted)
+//
+// @param item - Pointer to a null terminated string which is 
+//		 the name of the file to be added to the DELFILE linked list
+//		 	    
+// @return value - none
+//##########################################################################
 void
 DelFile(LPCTSTR item)
 {
@@ -961,6 +1040,23 @@ DelFile(LPCTSTR item)
     dfFirstItem = dfNewItem;
 }
 
+//###########################################################################
+// same as above, but adds patch names to the PATCH linked list
+// note: #define AddPatch(item, index) AddPatchEx(item, index, NULL)
+// the third parameter is to determine where the patch will be placed
+// if its FLD, it will be placed in the data folder, otherwise it'll be repacked.
+// (statement above isn't coded yet)
+//
+// @param item - Pointer to a null terminated string (name of the patch)
+//		 (EG: test.gpf, 2005-05-05adata.gpf)
+//
+// @param index - patch index
+//
+// @param fpath - Pointer to a null terminated string (could be the two following
+//		  values: FLD, GRF) (not coded yet, to be added on 1.1)
+//
+// @return value - none
+//###########################################################################
 
 void
 AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
@@ -1010,7 +1106,14 @@ AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
 	spLastItem->next = spNewItem;
     }
 }
-
+//#################################################################
+// Post a GetLastError() human-readable format(?) in a messagebox
+//
+// @param exitapp - TRUE if the application will call ExitProcess()
+//		    after posting the error message, FALSE otherwise.
+//
+// @return value - none.
+//#################################################################
 void 
 PostError(BOOL exitapp)
 {
@@ -1030,6 +1133,14 @@ PostError(BOOL exitapp)
 	ExitProcess(dwError);
 }
 
+//################################################################
+// Updates the status message (g_hwndStatic static control)
+//
+// @param message - message to be displayed on the status message box
+//
+// @return value - none.
+//################################################################
+
 void 
 StatusMessage(LPCTSTR message, ...)
 {
@@ -1044,7 +1155,13 @@ StatusMessage(LPCTSTR message, ...)
     SendMessage(g_hwndStatic, WM_SETTEXT, 0, (LPARAM)buffer);
 }
              
-       
+//#######################################################
+// adds an entry to error.log when called
+// 
+// @param fmt - Message format
+//
+// @return value - none.
+//#######################################################
 void 
 AddErrorLog(LPCTSTR fmt, ...)
 {
@@ -1063,6 +1180,8 @@ AddErrorLog(LPCTSTR fmt, ...)
     }
 }
 
+
+// debugging use only
 void 
 AddDebug(LPCTSTR fmt, ...)
 {
