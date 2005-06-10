@@ -30,7 +30,7 @@ our $cvs;
 if (!$stable) {
   $Version .= sprintf(" rev%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
   eval {require cvsdebug};
-  $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]) unless $@;
+  $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack, \%automacro]) unless $@;
 } else {undef $stable};
 
 if (!defined $cvs) {
@@ -574,17 +574,17 @@ sub between {
 
 sub cmpr {
   my ($a, $cond, $b) = @_;
-  if ($a =~ /\D/ || $b =~ /\D/) {
-    if ($cond eq "="  && $a eq $b) {return 1};
-    if ($cond eq "!=" && $a ne $b) {return 1};
+  if ($a =~ /^[\d.]*$/ && $b =~ /^\d.]*$/) {
+    if ($cond eq "="  && $a == $b) {return 1};
+    if ($cond eq ">=" && $a >= $b) {return 1};
+    if ($cond eq "<=" && $a <= $b) {return 1};
+    if ($cond eq ">"  && $a > $b)  {return 1};
+    if ($cond eq "<"  && $a < $b)  {return 1};
+    if ($cond eq "!=" && $a != $b) {return 1};
     return 0;
   };
-  if ($cond eq "="  && $a == $b) {return 1};
-  if ($cond eq ">=" && $a >= $b) {return 1};
-  if ($cond eq "<=" && $a <= $b) {return 1};
-  if ($cond eq ">"  && $a > $b)  {return 1};
-  if ($cond eq "<"  && $a < $b)  {return 1};
-  if ($cond eq "!=" && $a != $b) {return 1};
+  if ($cond eq "="  && $a eq $b) {return 1};
+  if ($cond eq "!=" && $a ne $b) {return 1};
   return 0;
 };
 
