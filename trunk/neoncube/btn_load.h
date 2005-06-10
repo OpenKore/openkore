@@ -30,6 +30,31 @@
 #ifndef _BTN_LOAD_H_
 #define _BTN_LOAD_H_
 
+
+#ifndef SKINFOLDER
+extern TCHAR szSkinFolder[256];
+
+#define SKINFOLDER szSkinFolder
+#endif // SKINFOLDER
+
+typedef struct {
+    TCHAR szMinimizeBmp[100];
+    TCHAR szMinimizeHoverBmp[100];
+    
+    TCHAR szCloseBmp[100];
+    TCHAR szCloseHoverBmp[100];
+
+    TCHAR szStartgameBmp[100];
+    TCHAR szStartgameHoverBmp[100];
+
+    TCHAR szRegisterBmp[100];
+    TCHAR szRegisterHoverBmp[100];
+
+    TCHAR szCancelBmp[100];
+    TCHAR szCancelHoverBmp[100];
+} IMAGEPATH;
+
+
 extern void PostError(BOOL exitapp = TRUE);
 
 #include <commctrl.h>

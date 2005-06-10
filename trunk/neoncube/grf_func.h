@@ -37,7 +37,7 @@ typedef struct delfile {
 extern DELFILE *dfFirstItem;
 
 extern void PostError(BOOL exitapp = TRUE);
-extern void GRFCreate_AddFile(LPCTSTR item);
+
 extern void StatusMessage(LPCTSTR message, ...);
 extern void AddErrorLog(LPCTSTR fmt, ...);
 
@@ -59,8 +59,8 @@ typedef struct patch {
 
 extern PATCH *spFirstItem;
 
-static BOOL WINAPI FileExist(LPCTSTR filename);
-static INT WINAPI AddFile(LPCTSTR filename);
+static BOOL FileExist(LPCTSTR filename);
+static INT AddFile(LPCTSTR filename);
 
 
 static INT CountFolders(LPCTSTR source);
