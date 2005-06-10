@@ -1,10 +1,24 @@
 ###############################
 ## 1.0.0 (beta)
 ###############################
+06/09/05
+--------
+Improved: Removed GRFCreate_AddFile() function which causes high cpu usage when extracting files.
+
+Added: Patch list comment support. (patches with C/C++ style comments (//, /**/ or #) will be ignored)
+
+Fixed: Checking of duplicate data.grf.txt entry
+
+06/08/05
+--------
+Added: Selectable skin via neoncube.ini
+Improved: Renamed ini setting variables
+
+
+
 06/07/05
 --------
 Fixed: fixed Windows 95, 98 and ME bug (CreateThread() won't start)
-
 
 
 /06/06/05

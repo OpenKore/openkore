@@ -213,11 +213,45 @@ BOOL TME(HWND hwnd)
 
 void LoadButtonBitmap(void)
 {
+    IMAGEPATH *img = (IMAGEPATH*)GlobalAlloc(GMEM_FIXED, sizeof(IMAGEPATH));
+    if(img == NULL)
+	PostError();
+
+    lstrcpy(img->szCancelBmp, SKINFOLDER);
+    lstrcpy(img->szCancelHoverBmp, SKINFOLDER);
+
+    lstrcpy(img->szCloseBmp, SKINFOLDER);
+    lstrcpy(img->szCloseHoverBmp, SKINFOLDER);
+
+    lstrcpy(img->szMinimizeBmp, SKINFOLDER);
+    lstrcpy(img->szMinimizeHoverBmp, SKINFOLDER);
+
+    lstrcpy(img->szRegisterBmp, SKINFOLDER);
+    lstrcpy(img->szRegisterHoverBmp, SKINFOLDER);
+
+    lstrcpy(img->szStartgameBmp, SKINFOLDER);
+    lstrcpy(img->szStartgameHoverBmp, SKINFOLDER);
+
+
+    lstrcat(img->szCancelBmp, "\\cancel.bmp");
+    lstrcat(img->szCancelHoverBmp, "\\cancel_hover.bmp");
+
+    lstrcat(img->szCloseBmp, "\\close.bmp");
+    lstrcat(img->szCloseHoverBmp, "\\close_hover.bmp");
+
+    lstrcat(img->szMinimizeBmp, "\\minimize.bmp");
+    lstrcat(img->szMinimizeHoverBmp, "\\minimize_hover.bmp");
+
+    lstrcat(img->szRegisterBmp, "\\register.bmp");
+    lstrcat(img->szRegisterHoverBmp, "\\register_hover.bmp");
+
+    lstrcat(img->szStartgameBmp, "\\startgame.bmp");
+    lstrcat(img->szStartgameHoverBmp, "\\startgame_hover.bmp");    
 
     //------------------------
     // MINIMIZE BUTTON
     //------------------------
-    hbmMinimize = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\minimize.bmp",
+    hbmMinimize = (HBITMAP)LoadImage(NULL, img->szMinimizeBmp,
 				    IMAGE_BITMAP,
 				    0, 0, LR_LOADFROMFILE
 				    );
@@ -225,7 +259,7 @@ void LoadButtonBitmap(void)
 	MessageBox(NULL,"Failed to load minimize.bmp","Error",MB_OK | MB_ICONERROR);
 	PostError();
     }			
-    hbmMinimize_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\minimize_hover.bmp",
+    hbmMinimize_hover = (HBITMAP)LoadImage(NULL, img->szMinimizeHoverBmp,
 					    IMAGE_BITMAP,
 					    0, 0, LR_LOADFROMFILE
 					    );
@@ -236,7 +270,7 @@ void LoadButtonBitmap(void)
     }
 
 
-    hbmClose = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\close.bmp",
+    hbmClose = (HBITMAP)LoadImage(NULL, img->szCloseBmp,
 					IMAGE_BITMAP,
 					0, 0, LR_LOADFROMFILE
 					);
@@ -244,7 +278,7 @@ void LoadButtonBitmap(void)
 	MessageBox(NULL,"Failed to load close.bmp","Error",MB_OK | MB_ICONERROR);
 	PostError();		
     }			
-    hbmClose_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\close_hover.bmp",
+    hbmClose_hover = (HBITMAP)LoadImage(NULL, img->szCloseHoverBmp,
 					IMAGE_BITMAP,
 					0, 0, LR_LOADFROMFILE
 					);
@@ -255,7 +289,7 @@ void LoadButtonBitmap(void)
     }
 
 
-    hbmStartGame = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\startgame.bmp",
+    hbmStartGame = (HBITMAP)LoadImage(NULL, img->szStartgameBmp,
 					    IMAGE_BITMAP,
 					    0, 0, LR_LOADFROMFILE
 					    );
@@ -263,7 +297,7 @@ void LoadButtonBitmap(void)
 	MessageBox(NULL,"Failed to load startgame.bmp","Error",MB_OK | MB_ICONERROR);
 	PostError();		
     }			
-    hbmStartGame_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\startgame_hover.bmp",
+    hbmStartGame_hover = (HBITMAP)LoadImage(NULL, img->szStartgameHoverBmp,
 					    IMAGE_BITMAP, 0, 0,
 					    LR_LOADFROMFILE
 					    );
@@ -273,7 +307,7 @@ void LoadButtonBitmap(void)
 	PostError();
     }
 
-    hbmRegister = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\register.bmp",
+    hbmRegister = (HBITMAP)LoadImage(NULL, img->szRegisterBmp,
 				    IMAGE_BITMAP,
 				    0, 0,
 				    LR_LOADFROMFILE
@@ -282,7 +316,7 @@ void LoadButtonBitmap(void)
 	MessageBox(NULL,"Failed to load register.bmp","Error",MB_OK | MB_ICONERROR);
 	PostError();		
     }			
-    hbmRegister_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\register_hover.bmp",
+    hbmRegister_hover = (HBITMAP)LoadImage(NULL, img->szRegisterHoverBmp,
 					    IMAGE_BITMAP, 0, 0,
 					    LR_LOADFROMFILE
 					    );
@@ -293,7 +327,7 @@ void LoadButtonBitmap(void)
     }
 
 
-    hbmCancel = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\cancel.bmp",
+    hbmCancel = (HBITMAP)LoadImage(NULL, img->szCancelBmp,
 				    IMAGE_BITMAP,
 				    0, 0,
 				    LR_LOADFROMFILE
@@ -303,7 +337,7 @@ void LoadButtonBitmap(void)
 	PostError();
 			
     }			
-    hbmCancel_hover = (HBITMAP)LoadImage(NULL, "neoncube\\skin\\cancel_hover.bmp",
+    hbmCancel_hover = (HBITMAP)LoadImage(NULL, img->szCancelHoverBmp,
 					IMAGE_BITMAP,
 					0, 0,
 					LR_LOADFROMFILE

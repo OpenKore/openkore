@@ -39,11 +39,17 @@ BOOL ExtractGRF(LPCTSTR fname)
     if(!grf)
 	return FALSE;
 
+    FILE *fp;
+    fp = fopen("neoncube\\data.grf.txt", "a");
+    if(NULL == fp)
+	return FALSE;
+
+
     //progress bar
     SendMessage(hwndProgress, PBM_SETRANGE32, (WPARAM)0, (LPARAM)grf->nfiles);
 
     //status message
-    StatusMessage("Status: Extracting %s...\r\nInfo:------\r\nProgress:-----",fname);
+    StatusMessage("Status: Extracting %s...\r\nInfo:------\r\nProgress:-----", fname);
     for(DWORD ctr = 0;ctr < grf->nfiles; ctr++) {
 
 	TCHAR szPath[256] = "neoncube\\";
@@ -71,16 +77,16 @@ BOOL ExtractGRF(LPCTSTR fname)
 	    //search the linked list for item deletion
 	    while(lstrcmp(grf->files[ctr].name, dfCurrentItem->szFileName) != 0) {	
 				
-		if(dfCurrentItem == NULL)
-		    break;
 		//add file
 		if(!FileExist(grf->files[ctr].name)) {
-
-		    GRFCreate_AddFile(grf->files[ctr].name);
+		
+		    fprintf(fp,"F %s\n", grf->files[ctr].name);
 
 		    if(AddFile(grf->files[ctr].name) < 0)
 			AddErrorLog("Failed to add file %s\n", grf->files[ctr].name);
 		}
+		if(dfCurrentItem == NULL)
+		    break;
 		dfCurrentItem = dfCurrentItem->next;
 	    }
 	} else {
@@ -91,6 +97,7 @@ BOOL ExtractGRF(LPCTSTR fname)
     }
 
     grf_free(grf);	
+    fclose(fp);
     return TRUE;
 }
 
@@ -151,18 +158,9 @@ BOOL DeleteDirectory(LPCTSTR lpszDir)
     return (ret == 0);
 }
 
-void GRFCreate_AddFile(LPCTSTR item)
-{
-    FILE *fp;
 
-    fp = fopen("neoncube\\data.grf.txt", "a");
-    if(NULL == fp)
-	PostError();
-    fprintf(fp,"F %s\n",item);
-    fclose(fp);
-}
 
-INT WINAPI
+static INT
 AddFile(LPCTSTR filename)
 {
     GRFFILES *spfNewItem;
@@ -178,7 +176,7 @@ AddFile(LPCTSTR filename)
     return 0;
 }  
 
-BOOL WINAPI
+static BOOL
 FileExist(LPCTSTR filename)
 {
     GRFFILES *spfCurrentItem;

@@ -43,7 +43,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     INT		iWidth = 500;
     INT		iHeight = 500;
     WNDCLASSEX	wc;
-
+    
 
     //initialize common controls
     InitCommonControls();
@@ -63,14 +63,22 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     //prepare error.log
     DeleteFile("neoncube\\error.log");
 
-
-    GetPrivateProfileString("server", "noticeURL", NULL, settings.szNoticeURL, sizeof(settings.szNoticeURL), iniFile); 
-    GetPrivateProfileString("server", "patchURL", NULL, settings.szPatchURL, sizeof(settings.szPatchURL), iniFile); 
-    GetPrivateProfileString("server", "patchList", NULL, settings.szPatchList, sizeof(settings.szPatchList), iniFile);
+    GetPrivateProfileString("server", "server_name", NULL, settings.szServerName, sizeof(settings.szServerName), iniFile); 
+    GetPrivateProfileString("server", "notice_url", NULL, settings.szNoticeURL, sizeof(settings.szNoticeURL), iniFile); 
+    GetPrivateProfileString("server", "patch_site", NULL, settings.szPatchURL, sizeof(settings.szPatchURL), iniFile); 
+    GetPrivateProfileString("server", "patch_list", NULL, settings.szPatchList, sizeof(settings.szPatchList), iniFile);
     GetPrivateProfileString("server", "executable", NULL, settings.szExecutable, sizeof(settings.szExecutable), iniFile);
     GetPrivateProfileString("server", "patch_folder", NULL, settings.szPatchFolder, sizeof(settings.szPatchFolder), iniFile);
-    GetPrivateProfileString("server", "registrationLink", NULL, settings.szRegistration, sizeof(settings.szRegistration), iniFile);
-    GetPrivateProfileString("server", "grf", NULL, settings.szGrf, sizeof(settings.szGrf), iniFile);
+    GetPrivateProfileString("server", "registration_link", NULL, settings.szRegistration, sizeof(settings.szRegistration), iniFile);
+    GetPrivateProfileString("server", "grf_file", NULL, settings.szGrf, sizeof(settings.szGrf), iniFile);
+    GetPrivateProfileString("server", "skin", NULL, settings.szSkin, sizeof(settings.szSkin), iniFile);
+
+       
+    lstrcat(STYLEFILE, settings.szSkin);
+    lstrcat(STYLEFILE, "\\neoncube.style");
+    
+    lstrcat(SKINFOLDER, settings.szSkin);     
+
     settings.nBackupGRF = GetPrivateProfileInt("server","Backup_GRF", NULL, iniFile);
 
 
@@ -162,19 +170,23 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     };
 
 
+    TCHAR szBgPath[100];
+    lstrcpy(szBgPath, SKINFOLDER);
+    lstrcat(szBgPath, "\\bg.bmp");
 		
     hbmBackground = (HBITMAP)LoadImage(NULL,
-		    "neoncube\\skin\\bg.bmp",
+		    szBgPath,
 		    IMAGE_BITMAP, 0, 0,
 		    LR_LOADFROMFILE
 		    );
 
     if(!hbmBackground)
 	PostError();
-				
+    
+    lstrcat(settings.szServerName, " - NeonCube");		
     hwnd	 = CreateWindowEx(0,
 		    "NeonCube",
-		    "NeonCube Patch Client",
+		    settings.szServerName,
 		    WS_POPUP,
 		    rc.left, rc.top, 
 		    iWidth, iHeight,
@@ -694,7 +706,7 @@ Threader(void)
 	}
 
 
-	//OPEN FILE FOR READING/PARSING
+	//OPEN FILE FOR READING
 	UINT index_tmp;
 	TCHAR patch_tmp[1024];
 	
@@ -705,14 +717,35 @@ Threader(void)
 	
 	//path to file
 	TCHAR file_path[50];
-		
+	TCHAR szPatch_index[20];
+
+	static BOOL bHasDownloadedFiles;
+
 	//add main GRF to linked list
 	AddPatch(settings.szGrf, 1);
 		
-	while(fscanf(fTmp, "%d %s\n", &index_tmp, patch_tmp) != EOF) {
+	while(fscanf(fTmp, "%s %s\n", szPatch_index, patch_tmp) != EOF) {
 	    
+	    //if the line contains a comment (//), ignore it	    
+	    
+
+	    if(szPatch_index[0] == 0x2f || szPatch_index[0] == 0x23) {
+	
+		
+		if(bHasDownloadedFiles)
+		    bPatchUpToDate = FALSE;
+		else
+		    bPatchUpToDate = TRUE;
+
+		goto end;
+	    
+	    } else {
+
+		sscanf(szPatch_index, "%d", &index_tmp);
+	    }		
+
 	    if(index_tmp > last_index) {
-		if(patch_tmp[strlen(patch_tmp)-1] == '*') {
+		if(patch_tmp[strlen(patch_tmp)-1] == 0x2a) {
 		    patch_tmp[strlen(patch_tmp)-1] = '\0';
 		    DelFile(patch_tmp);
 		    bPatchUpToDate = FALSE;
@@ -767,17 +800,18 @@ Threader(void)
 
 				
 		    DWORD dwBytesWritten;
-		    HANDLE hFile = CreateFile(patch_tmp, GENERIC_WRITE, 0, NULL,CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+		    HANDLE hFile = CreateFile(patch_tmp, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
    		    if(WriteFile(hFile, pData,dwContentLen, &dwBytesWritten, NULL) == 0) {
 		
 			MessageBox(0,"Failed to write data","Error",MB_OK | MB_ICONERROR);
-			AddErrorLog("Failed to write %s", patch_tmp);
+			AddErrorLog("Failed to write %s\n", patch_tmp);
 		    
 		    } else {
 			CloseHandle(hFile);
 		    }
 
 		    GlobalFree((HANDLE)pData);
+		    bHasDownloadedFiles = TRUE;
 		
 		} else {
 		    StatusMessage("Status: Failed to get %s\r\nInfo:-----\r\nProgress:-----",patch_tmp);
@@ -798,6 +832,7 @@ Threader(void)
 	    }
 end:;
 	}
+
 	
 	fclose(fTmp);
 	
@@ -913,7 +948,7 @@ end:;
 }
 
 
-void WINAPI
+void
 DelFile(LPCTSTR item)
 {
     DELFILE *dfNewItem;
@@ -927,8 +962,8 @@ DelFile(LPCTSTR item)
 }
 
 
-void WINAPI
-AddPatch(LPCTSTR item, INT index)
+void
+AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
 {
     /* pointer to the next item in the list */
     PATCH *spNewItem;
@@ -943,6 +978,12 @@ AddPatch(LPCTSTR item, INT index)
 	
 	strcpy(spNewItem->szPatchName, item);
 	spNewItem->iPatchIndex = index;
+	
+	// if fpath != NULL, this patch package will be extracted on fpath, else place
+	// it on the default GRF file
+	if(fpath != NULL)
+	    lstrcpy(spNewItem->szPath, fpath);
+
 	spNewItem->next = spFirstItem;
 	spFirstItem = spNewItem;
 	

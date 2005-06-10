@@ -39,8 +39,7 @@
 
 #ifndef PBS_STYLE
 #define PBS_STYLE ( WS_CHILD	| \
-		    WS_VISIBLE	| \
-		    WS_BORDER)
+		    WS_VISIBLE)
 #endif // PBS_STYLE
 
 #ifndef DATA_GRF_TXT
@@ -95,7 +94,8 @@ struct inisetting {
 	TCHAR szPatchFolder[MAXARRSIZE];
 	TCHAR szRegistration[MAXARRSIZE];
 	TCHAR szGrf[50];
-	INT	nBackupGRF;
+	TCHAR szSkin[256];
+	INT   nBackupGRF;
 } settings;
 
 
@@ -154,10 +154,12 @@ DisplayHTMLPagePtr		*lpDisplayHTMLPage;
 ## styleFile:	File that contains the style setting.
 ########################################################*/
 CONST TCHAR iniFile[] = "neoncube\\neoncube.ini";
-CONST TCHAR styleFile[] = "neoncube\\neoncube.style";
+TCHAR styleFile[256] = "neoncube\\";
+TCHAR szSkinFolder[256] = "neoncube\\";
 
 #define STYLEFILE   styleFile
 #define INIFILE	    iniFile
+#define SKINFOLDER  szSkinFolder
 
 /*#######################################################
 ## HINTERNET HANDLES
@@ -265,11 +267,14 @@ DWORD Threader(void);
 ##
 ## szPatchName:		Filename of the patch.
 ## iPatchIndex:		Index number.
+## szPath:		Where the patch will be placed.
+##			EG: FLD = folder, GRF = grf file
 ## *next:		pointer to the next entry in the list
 ########################################################*/
 typedef struct patch {
 	TCHAR	szPatchName[50];
 	INT	iPatchIndex;
+	TCHAR	szPath[3]; //1.1 release
 
 	struct patch *next;
 } PATCH;
@@ -286,7 +291,9 @@ PATCH *spFirstItem = NULL;
 ##
 ## return value: none
 ########################################################*/
-void WINAPI AddPatch(LPCTSTR item, INT index);
+void AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath);
+
+#define AddPatch(item, index) AddPatchEx(item, index, NULL)
 
 
 /************************************************
@@ -360,7 +367,7 @@ typedef struct delfile {
 } DELFILE;
 
 DELFILE *dfFirstItem = NULL;
-void WINAPI DelFile(LPCTSTR item);
+void DelFile(LPCTSTR item);
 
 
 /*#######################################################
