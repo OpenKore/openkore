@@ -19,15 +19,19 @@
 ##  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 ##
 ##############################################################################*/
-#include <windows.h>
-#include <commctrl.h>
-#include <tchar.h>
-#include <direct.h>
-#include <shlobj.h>
-#include "grf.h"
+
 #include "grf_func.h"
 
 
+
+//########################################################
+// Extracts a GRF/GPF file
+// 
+// @param fname - Filename to be extracted
+//
+// @return value - FALSE if an error occured, otherwise
+//		    it returns TRUE.
+//#########################################################
 BOOL ExtractGRF(LPCTSTR fname)
 {
 	
@@ -100,6 +104,19 @@ BOOL ExtractGRF(LPCTSTR fname)
     fclose(fp);
     return TRUE;
 }
+//########################################################################
+// returns the current folder from a given string
+// EG: LPTSTR folder = GetFolder("/this/is/a/folder/test.file", 3);
+// folder becomes "a"
+//
+// @param source - Pointer to a null terminated string which contains
+//		    the folder name to be returned.
+//
+// @param index - index number of the folder to be extracted separated by /
+//
+// @return value - Pointer to a NULL terminated string where the folder
+//		    name will be stored.
+//########################################################################
 
 static LPTSTR GetFolder(LPTSTR source, INT index)
 {
@@ -120,7 +137,16 @@ static LPTSTR GetFolder(LPTSTR source, INT index)
     ret[i] = '\0';
     return ret;
 }
-
+//#####################################################################
+// returns the number of folders from a given string
+// EG: int num = CountFolders("/count/this/folder/this_is_a_file.doc");
+// num becomes 3
+//
+// @param source - null terminated string which is a path to a file
+//		    or a directory
+//
+// @return value - number of folders counted
+//#####################################################################
 static INT CountFolders(LPCTSTR source)
 {
     INT ret = 0;
@@ -132,7 +158,14 @@ static INT CountFolders(LPCTSTR source)
 
     return ret;
 }
-
+// #################################################################
+// recursively deletes a lpszDir folder and its subfolders and files
+//
+// @param lpszDir - null terminated string which contains the path
+//		    to the folder to be deleted recursively
+//
+// @return value - 
+// ##################################################################
 BOOL DeleteDirectory(LPCTSTR lpszDir)
 {
     int len	    = _tcslen(lpszDir);
@@ -158,8 +191,16 @@ BOOL DeleteDirectory(LPCTSTR lpszDir)
     return (ret == 0);
 }
 
-
-
+//###############################################################################
+// each time we extract a file with ExtractGRF(), we add the filename to this
+// linked list, this is to prevent duplicate entry to adata.grf.txt which causes
+// a file to be repacked twice (yeah, GRF files becomes bigger if we do have duplicate entries)
+//
+// @param filename - null terminated string which contains the filename of 
+//		     a patch file to be added onto the list.
+//
+// @return value - return value is > 0 if an error occured, otherwise it returns 0
+//################################################################################
 static INT
 AddFile(LPCTSTR filename)
 {
@@ -175,7 +216,15 @@ AddFile(LPCTSTR filename)
 
     return 0;
 }  
-
+//##############################################################################
+// Searches GRFFILES linked list if an entry has been written to adata.grf.txt
+// returns false if file doesnt exist
+//
+// @param filename - null terminated string which contains the filename to search
+//		     in the list
+//
+// @return value - TRUE if the file exist, FALSE otherwise
+//###############################################################################
 static BOOL
 FileExist(LPCTSTR filename)
 {
