@@ -23,6 +23,15 @@
 #ifndef _GRF_FUNC_H_
 #define _GRF_FUNC_H_
 
+
+#include <windows.h>
+#include <commctrl.h>
+#include <tchar.h>
+#include <direct.h>
+#include <shlobj.h>
+#include "grf.h"
+
+
 extern HWND hwndProgress;
 extern HWND g_hwndStatic;
 //
