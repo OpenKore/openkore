@@ -3214,7 +3214,7 @@ sub AI {
 						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
 						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
 						$timeout{ai_sit_idle}{time} = time;
-						sendMove(\$remote_socket, $pos{x}, $pos{y});
+						sendMove($pos{x}, $pos{y});
 					}
 				}
 			}
@@ -3644,7 +3644,7 @@ sub AI {
 		} elsif (!$cleanMonster) {
 			# Drop target if it's already attacked by someone else
 			message "Dropping target - you will not kill steal others\n", "ai_attack";
-			sendMove(\$remote_socket, $realMyPos->{x}, $realMyPos->{y});
+			sendMove($realMyPos->{x}, $realMyPos->{y});
 			AI::dequeue;
 
 		} elsif ($config{attackCheckLOS} &&
@@ -4821,7 +4821,7 @@ sub AI {
 					# Portal is within 'Enter Distance'
 					$timeout{'ai_portal_wait'}{'timeout'} = $timeout{'ai_portal_wait'}{'timeout'} || 0.5;
 					if ( timeOut($timeout{'ai_portal_wait'}) ) {
-						sendMove( \$remote_socket, int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}), int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) );
+						sendMove(int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}), int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) );
 						$timeout{'ai_portal_wait'}{'time'} = time;
 					}
 
@@ -5075,7 +5075,7 @@ sub AI {
 			# No update yet, send move request again.
 			# We do this every 0.5 secs
 			$AI::Timeouts::move_retry = time;
-			sendMove(\$remote_socket, AI::args->{move_to}{x}, AI::args->{move_to}{y});
+			sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
 		}
 	}
 
