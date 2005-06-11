@@ -761,12 +761,15 @@ sub sendGetPlayerInfo {
 
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x94, 0x00) . $ID;
-		
+
 	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
-		
+
 	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0x8c, 0x00, 0x12, 0x00) . $ID;
+
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0x9B, 0x00, 0x66, 0x3C, 0x61, 0x62) . $ID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
@@ -971,6 +974,19 @@ sub sendMapLogin {
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
 
+	} elsif ($config{serverType} == 4) {
+		# This is used on the RuRO private server.
+		# A lot of packets are different so I gave up,
+		# but I'll keep this code around in case anyone ever needs it.
+		$msg = pack("C*", 0xF5, 0x00, 0xFF, 0xFF, 0xFF) .
+                        $accountID .
+                        pack("C*", 0xFF, 0xFF, 0xFF, 0xFF, 0xFF) .
+                        $charID .
+                        pack("C*", 0xFF, 0xFF) .
+                        $sessionID .
+                        pack("L1", getTickCount()) .
+                        pack("C*", $sex);
+
 	} else {
 		my $key;
 
@@ -991,19 +1007,6 @@ sub sendMapLogin {
 			pack("C", $sex);
 	}
 
-	if (0) {
-		# This is used on the RuRO private server.
-		# A lot of packets are different so I gave up,
-		# but I'll keep this code around in case anyone ever needs it.
-		$msg = pack("C*", 0xF5, 0x00, 0xFF, 0xFF, 0xFF) .
-                        $accountID .
-                        pack("C*", 0xFF, 0xFF, 0xFF, 0xFF, 0xFF) .
-                        $charID .
-                        pack("C*", 0xFF, 0xFF) .
-                        $sessionID .
-                        pack("L1", getTickCount()) .
-                        pack("C*", $sex);
-	}
 	sendMsgToServer($r_socket, $msg);
 }
 
@@ -1042,10 +1045,9 @@ sub sendMasterLogin {
 	my $password = shift;
 	my $master_version = shift;
 	my $version = shift;
-	my $loginType = shift;
 	my $msg;
 
-	if ($loginType <= 0) {
+	if ($config{serverType} != 4) {
 		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
 			pack("a24", $username) .
 			pack("a24", $password) .
@@ -1119,6 +1121,10 @@ sub sendMove {
 			# pack("C*", 0x0A, 0x01, 0x00, 0x00)
 			pack("C*", 0xC7, 0x00, 0x00, 0x00) .
 			getCoordString($x, $y);
+
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0x89, 0x00) . getCoordString($x, $y);
+
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 	}
@@ -1485,12 +1491,21 @@ sub sendSync {
 		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
 		$msg .= pack("L", getTickCount());
-		
+
 	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0x89, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
 		$msg .= pack("L", getTickCount());
+
+	} elsif ($config{serverType} == 4) {
+		# this is for Freya servers like VanRO
+		# this is probably not correct but it works for me
+		$msg = pack("C*", 0x16, 0x01);
+		$msg .= pack("C*", 0x61, 0x3A) if ($initialSync);
+		$msg .= pack("C*", 0x61, 0x62) if (!$initialSync);
+		$msg .= pack("L", getTickCount());
+		$msg .= pack("C*", 0x0B);
 	}
 
 	sendMsgToServer($r_socket, $msg);
