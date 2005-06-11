@@ -420,6 +420,10 @@ sub sendAttack {
 	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0x90, 0x01, 0xc7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) . 
 		$monID . pack("C*", 0x00, 0x00, 0x21, 0x00, 0x00, 0x00, $flag);
+
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0x85, 0x00, 0x60, 0x60) . 
+		$monID . pack("C*", 0x64, 0x64, 0x3E, 0x63, 0x67, 0x37, $flag);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
@@ -433,7 +437,7 @@ sub sendAttackStop {
 	# what this function is supposed to do.
 
 	# Don't use this function, use Misc::stopAttack() instead!
-	#sendMove ($chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
+	#sendMove ($r_socket, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 	#debug "Sent stop attack\n", "sendPacket";
 }
 
@@ -1112,6 +1116,7 @@ sub sendMemo {
 }
 
 sub sendMove {
+	my $r_socket = shift;
 	my $x = int scalar shift;
 	my $y = int scalar shift;
 	my $msg;
@@ -1129,7 +1134,7 @@ sub sendMove {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 	}
 
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
@@ -1524,6 +1529,9 @@ sub sendTake {
 		
 	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0xf5, 0x00, 0x00, 0x00, 0xb8) . $itemID;
+
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0x13, 0x01, 0x61, 0x60, 0x3B) . $itemID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent take\n", "sendPacket", 2;
