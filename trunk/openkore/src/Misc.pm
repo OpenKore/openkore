@@ -1402,7 +1402,7 @@ sub sendMessage {
 
 sub stopAttack {
 	my $pos = calcPosition($char);
-	sendMove(\$remote_socket, $pos->{x}, $pos->{y});
+	sendMove($pos->{x}, $pos->{y});
 }
 
 sub stripLanguageCode {

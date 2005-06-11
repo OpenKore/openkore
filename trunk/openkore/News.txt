@@ -138,8 +138,9 @@ Internal:
 - All players and monsters (members of %monsters and %players) are now
   objects. See Monster.pm and Player.pm for available methods, both of
   which inherit Actor.pm. Also You.pm and Unknown.pm.
-- New Actor::getActor($ID) function is sort of like
+- New Actor::get($ID) function is sort of like
   $ID eq $accountID ? $char : ($monsters{$ID} || $players{$ID})
+- Network::Send::sendMove() redundant $r_socket first argument removed.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.
