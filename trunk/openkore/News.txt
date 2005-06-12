@@ -33,6 +33,7 @@ Bug fixes:
 - Fixed a crash caused by autoresponse.
 - Fixed dealAuto not working while dead.
 - Add the missing "timeout" chat command.
+- Fix equipAuto trying to equip unidentified items.
 
 New features:
 - Better support for detecting dead players.
@@ -72,6 +73,7 @@ New features:
 - Display your PvP rank when you're in a PvP zone.
 - $ai_v{temp}{pvp} is set to 1 in PVP maps, 2 in GVG.
 - Female characters are now supported on inRO.
+- Kore now supports "monster-NPCs", NPCs which look like monsters.
 
 New commands:
 - storage log

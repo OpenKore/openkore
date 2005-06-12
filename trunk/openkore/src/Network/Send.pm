@@ -363,10 +363,12 @@ sub sendMsgToServer {
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{debugPacket_sent} && !existsInList($config{debugPacket_exclude}, $switch)) {
-		if ($packetDescriptions{Send}{$switch}) {
-			debug("Packet Switch SENT: $switch - $packetDescriptions{Send}{$switch}\n", "sendPacket", 0);
-		} else {
-			debug("Packet Switch SENT: $switch\n", "sendPacket", 0);
+		my $label = $packetDescriptions{Send}{$switch} ?
+			" - $packetDescriptions{Send}{$switch})" : '';
+		if ($config{debugPacket_sent} == 1) {
+			debug("Packet Switch SENT: $switch$label\n", "sendPacket", 0);
+		#} else {
+		#	visualDump($msg, $switch.$label);
 		}
 	}
 }
@@ -423,7 +425,8 @@ sub sendAttack {
 
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x85, 0x00, 0x60, 0x60) . 
-		$monID . pack("C*", 0x64, 0x64, 0x3E, 0x63, 0x67, 0x37, $flag);
+		$monID .
+		pack("C*", 0x64, 0x64, 0x3E, 0x63, 0x67, 0x37, $flag);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
@@ -545,16 +548,20 @@ sub sendCharLogin {
 sub sendChat {
 	my $r_socket = shift;
 	my $message = shift;
-	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
+	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
 	my $msg;
 	if ($config{serverType} == 3) {
 		$msg = pack("C*", 0xf3, 0x00) .
-			pack("S*", length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
-			$chars[$config{'char'}]{'name'} . " : $message" . chr(0);
+			pack("S*", length($char->{name}) + length($message) + 8) .
+			$char->{name} . " : $message" . chr(0);
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0x9F, 0x00) .
+			pack("S*", length($char->{name}) + length($message) + 8) .
+			$char->{name} . " : $message" . chr(0);
 	} else {
 		$msg = pack("C*", 0x8C, 0x00) .
-			pack("S*", length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
-			$chars[$config{'char'}]{'name'} . " : $message" . chr(0);
+			pack("S*", length($char->{name}) + length($message) + 8) .
+			$char->{name} . " : $message" . chr(0);
 	}
 	sendMsgToServer($r_socket, $msg);
 }
@@ -710,6 +717,13 @@ sub sendDrop {
 			pack("S*", $index) .
 			pack("C*", 0x00) .
 			pack("S*", $amount);
+
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0x94, 0x00) .
+			pack("C*", 0x61, 0x62, 0x34, 0x11) .
+			pack("S*", $index) .
+			pack("C*", 0x67, 0x64) .
+			pack("S*", $amount);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
@@ -773,7 +787,7 @@ sub sendGetPlayerInfo {
 		$msg = pack("C*", 0x8c, 0x00, 0x12, 0x00) . $ID;
 
 	} elsif ($config{serverType} == 4) {
-		$msg = pack("C*", 0x9B, 0x00, 0x66, 0x3C, 0x61, 0x62) . $ID;
+		$msg = pack("C*", 0x9B, 0x00) . pack("C*", 0x66, 0x3C, 0x61, 0x62) . $ID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
@@ -908,15 +922,19 @@ sub sendItemUse {
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xA7, 0x00).pack("S*",$ID).$targetID;
-		
+
 	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0xA7, 0x00, 0x9A, 0x12, 0x1C).pack("S*", $ID, 0).$targetID;
-		
+
 	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0x9f, 0x00, 0x12, 0x00, 0x00) .
 			pack("S*", $ID) .
 			pack("C*", 0x20, 0x60, 0xfb, 0x12, 0x00, 0x1c) .
 			$targetID;
+
+	} elsif ($config{serverType} == 4) {
+		# I have gotten various packets here but this one works well for me
+		$msg = pack("C*", 0x72, 0x00, 0x65, 0x36, 0x65).pack("S*", $ID).pack("C*", 0x64, 0x37).$targetID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
@@ -938,11 +956,15 @@ sub sendLook {
 		$msg = pack("C*", 0x85, 0x00, 0xff, 0xff, 0x9c, 0xfb, 0x12, 0x00, 0xc1, 0x12, 0x60, 0x00) .
 				pack("C*", $head, 0x00, 0x72, 0x21, 0x3d, 0x33, 0x52, 0x00, 0x00, 0x00) .
 				pack("C*", $body);
+
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0xF3, 0x00, 0x62, 0x32, 0x31, 0x33, $head,
+			0x00, 0x60, 0x30, 0x33, 0x31, 0x31, 0x31, $body);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
-	$chars[$config{'char'}]{'look'}{'head'} = $head;
-	$chars[$config{'char'}]{'look'}{'body'} = $body;
+	$char->{look}{head} = $head;
+	$char->{look}{body} = $body;
 }
 
 sub sendMapLoaded {
@@ -992,6 +1014,8 @@ sub sendMapLogin {
                         pack("C*", $sex);
 
 	} else {
+		# $config{serverType} == 1 || $config{serverType} == 2
+
 		my $key;
 
 		if ($config{serverType} == 1) {
@@ -1344,6 +1368,8 @@ sub sendSit {
 				  0x00, 0x00, 0x00, 0x02);
 
 	} elsif ($config{serverType} == 4) {
+		# I get a few different packets from sitting
+		# but it doesn't seem to matter which one we send
 		$msg = pack("C*", 0x85, 0x00, 0x61, 0x32, 0x00, 0x00, 0x00 ,0x00 ,0x65,
   				  0x36, 0x37, 0x34, 0x32, 0x35, 0x02);
 	}
@@ -1373,6 +1399,16 @@ sub sendSkillUse {
 				pack("S*", $ID) .
 				pack("C*", 0x6A, 0x0F, 0x00, 0x00) .
 				$targetID;
+
+	} elsif ($config{serverType} == 4) {
+		# this is another packet which has many possibilities
+		# these numbers have been working well for me
+		$msg = pack("C*", 0x90, 0x01, 0x64, 0x63) .
+			pack("S*", $lv) .
+			pack("C*", 0x62, 0x65, 0x66, 0x67) .
+			pack("S*", $ID) .
+			pack("C*", 0x6C, 0x6B, 0x68, 0x69, 0x3D, 0x6E, 0x3C, 0x0A, 0x95, 0xE3) .
+			$targetID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
@@ -1513,7 +1549,7 @@ sub sendSync {
 
 	} elsif ($config{serverType} == 4) {
 		# this is for Freya servers like VanRO
-		# this is probably not correct but it works for me
+		# this is probably not "correct" but it works for me
 		$msg = pack("C*", 0x16, 0x01);
 		$msg .= pack("C*", 0x61, 0x3A) if ($initialSync);
 		$msg .= pack("C*", 0x61, 0x62) if (!$initialSync);
@@ -1620,6 +1656,48 @@ sub sendWho {
 	my $msg = pack("C*", 0xC1, 0x00);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Who\n", "sendPacket", 2;
+}
+
+##
+# visualDump(data [, label])
+#
+# Show the bytes in $data on screen as hexadecimal.
+# Displays the label if provided.
+sub visualDump {
+	my ($msg, $label) = @_;
+	my $dump;
+	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
+
+	my $labelStr = $label ? " ($label)" : '';
+	$dump = "================================================\n" .
+		getFormattedDate(int(time)) . "\n\n" . 
+		length($msg) . " bytes$labelStr\n\n";
+
+	for (my $i = 0; $i < length($msg); $i += 16) {
+		my $line;
+		my $data = substr($msg, $i, 16);
+		my $rawData = '';
+
+		for (my $j = 0; $j < length($data); $j++) {
+			my $char = substr($data, $j, 1);
+
+			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
+			    || ($char eq chr(10) || $char eq chr(13) || $char eq "\t")) {
+				$rawData .= '.';
+			} else {
+				$rawData .= substr($data, $j, 1);
+			}
+		}
+
+		$line = getHex(substr($data, 0, 8));
+		$line .= '    ' . getHex(substr($data, 8)) if (length($data) > 8);
+
+		$line .= ' ' x (50 - length($line)) if (length($line) < 54);
+		$line .= "    $rawData\n";
+		$line = sprintf("%3d>  ", $i) . $line;
+		$dump .= $line;
+	}
+	message $dump;
 }
 
 1;

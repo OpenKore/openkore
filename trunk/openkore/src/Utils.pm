@@ -369,6 +369,11 @@ sub findIndexStringList_lc {
 	}
 }
 
+##
+# findIndexString_lc_not_equip(r_array, key, [str])
+#
+# Same has findIndexString(), except this function does case-insensitive string comparisons.
+# It only finds items which are not equipped AND are able to be equipped (identified).
 sub findIndexString_lc_not_equip {
 	my $r_array = shift;
 	return undef if !defined $r_array;
@@ -376,7 +381,7 @@ sub findIndexString_lc_not_equip {
 	my $ID = lc(shift);
 	my $i;
 	for ($i = 0; $i < @{$r_array} ;$i++) {
-		if ((lc($$r_array[$i]{$match}) eq $ID && !($$r_array[$i]{'equipped'}))
+		if ((lc($$r_array[$i]{$match}) eq $ID && ($$r_array[$i]{'identified'}) && !($$r_array[$i]{'equipped'}))
 			 || (!$$r_array[$i] && $ID eq "")) {			  
 			return $i;
 		}
