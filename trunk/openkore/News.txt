@@ -76,7 +76,7 @@ New features:
 - Kore now supports "monster-NPCs", NPCs which look like monsters.
 - Nearly complete Freya support, for servers like VanRO and EuphRO.
 - New "Vx" interface, ported from modKore.
-  See http://openkore.sourceforge.net/forum/viewtopic.php?p=50860#50860
+  See http://openkore.sourceforge.net/forum/viewtopic.php?p=50860
 
 New commands:
 - storage log
