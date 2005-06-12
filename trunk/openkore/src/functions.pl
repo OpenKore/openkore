@@ -1515,7 +1515,7 @@ sub parseCommand {
 				"You are not talking to any NPC.\n";
 
 		} elsif ($arg1 eq "resp" && $arg2 eq "") {
-			my $display = $npcs{$talk{'nameID'}}{'name'};
+			my $display = $talk{name};
 			message("----------Responses-----------\n", "list");
 			message("NPC: $display\n", "list");
 			message("#  Response\n", "list");
@@ -2135,13 +2135,13 @@ sub AI {
 		if ($args->{stage} eq '') {
 			unless (timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
 				# Wait for us to stop moving before talking
-			} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
+			} elsif (timeOut($args->{time}, $timeout{ai_npcTalk}{timeout})) {
 				error "Could not find the NPC at the designated location.\n", "ai_npcTalk";
 				AI::dequeue;
 
 			} elsif ($args->{nameID}) {
 				# An NPC ID has been passed
-				my $npc = pack("L1", $ai_seq_args[0]{'nameID'});
+				my $npc = pack("L1", $args->{nameID});
 				last if (!$npcs{$npc} || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i);
 				$args->{ID} = $npc;
 				$args->{name} = $npcs{$npc}{'name'};
@@ -2166,6 +2166,23 @@ sub AI {
 						$args->{'nameID'} = $npcs{$npc}{'nameID'};
 				     		$args->{'ID'} = $npc;
 						$args->{'name'} = $npcs{$npc}{'name'};
+						$args->{'stage'} = 'Talking to NPC';
+						$args->{steps} = [];
+						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
+						undef $args->{time};
+						undef $ai_v{'npc_talk'}{'time'};
+						lookAtPosition($args->{pos});
+						last;
+					}
+				}
+				foreach my $npc (@monstersID) {
+					next if !$npc;
+					if ( $monsters{$npc}{'pos'}{'x'} eq $args->{pos}{'x'} &&
+					     $monsters{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
+						debug "Target Monster-NPC $monsters{$npc}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
+						$args->{'nameID'} = $monsters{$npc}{'nameID'};
+				     		$args->{'ID'} = $npc;
+						$args->{'name'} = $monsters{$npc}{'name'};
 						$args->{'stage'} = 'Talking to NPC';
 						$args->{steps} = [];
 						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
@@ -5274,10 +5291,12 @@ sub parseSendMsg {
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
-		if ($packetDescriptions{Send}{$switch}) {
-			debug "Packet SENT_BY_CLIENT: $switch - $packetDescriptions{Send}{$switch}\n", "parseSendMsg", 0;
+		my $label = $packetDescriptions{Send}{$switch} ?
+			" - $packetDescriptions{Send}{$switch})" : '';
+		if ($config{debugPacket_ro_sent} == 1) {
+			debug "Packet SENT_BY_CLIENT: $switch$label\n", "parseSendMsg", 0;
 		} else {
-			debug "Packet SENT_BY_CLIENT: $switch\n", "parseSendMsg", 0;
+			visualDump($sendMsg, "$switch$label");
 		}
 	}
 
@@ -5495,12 +5514,12 @@ sub parseMsg {
 	}
 
 	if ($config{debugPacket_received} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
+		my $label = $packetDescriptions{Recv}{$switch} ?
+			" ($packetDescriptions{Recv}{$switch})" : '';
 		if ($config{debugPacket_received} == 1) {
-			my $label = $packetDescriptions{Recv}{$switch} ?
-				" ($packetDescriptions{Recv}{$switch})" : '';
 			debug "Packet: $switch$label\n", "parseMsg", 0;
 		} else {
-			visualDump(substr($msg, 0, $msg_size), "$switch - $packetDescriptions{Recv}{$switch}");
+			visualDump(substr($msg, 0, $msg_size), "$switch$label");
 		}
 	}
 
@@ -7270,17 +7289,39 @@ sub parseMsg {
 		$talk{'msg'} = $talk;
 		# Remove RO color codes
 		$talk{'msg'} =~ s/\^[a-fA-F0-9]{6}//g;
-		message "$npcs{$ID}{'name'} : $talk{'msg'}\n", "npc";
+
+		# Resolve the source name
+		my $name;
+		if ($npcs{$ID}) {
+			$name = $npcs{$ID}{name};
+		} elsif ($monsters{$ID}) {
+			$name = $monsters{$ID}{name};
+		} else {
+			$name = "Unknown #$talk{nameID}";
+		}
+
+		message "$name: $talk{'msg'}\n", "npc";
 
 	} elsif ($switch eq "00B5") {
 		# 00b5: long ID
 		# "Next" button appeared on the NPC message dialog
 		my $ID = substr($msg, 2, 4);
+
+		# Resolve the source name
+		my $name;
+		if ($npcs{$ID}) {
+			$name = $npcs{$ID}{name};
+		} elsif ($monsters{$ID}) {
+			$name = $monsters{$ID}{name};
+		} else {
+			$name = "Unknown #".unpack("L1", $ID);
+		}
+
 		if ($config{autoTalkCont}) {
-			message "$npcs{$ID}{name} : Auto-continuing talking\n", "npc";
+			message "$name: Auto-continuing talking\n", "npc";
 			sendTalkContinue(\$remote_socket, $ID);
 		} else {
-			message "$npcs{$ID}{name} : Type 'talk cont' to continue talking\n", "npc";
+			message "$name: Type 'talk cont' to continue talking\n", "npc";
 		}
 		$ai_v{'npc_talk'}{'talk'} = 'next';
 		$ai_v{'npc_talk'}{'time'} = time;
@@ -7290,7 +7331,18 @@ sub parseMsg {
 		# "Close" icon appreared on the NPC message dialog
 		my $ID = substr($msg, 2, 4);
 		undef %talk;
-		message "$npcs{$ID}{'name'} : Done talking\n", "npc";
+
+		# Resolve the source name
+		my $name;
+		if ($npcs{$ID}) {
+			$name = $npcs{$ID}{name};
+		} elsif ($monsters{$ID}) {
+			$name = $monsters{$ID}{name};
+		} else {
+			$name = "Unknown #".unpack("L1", $ID);
+		}
+
+		message "$name: Done talking\n", "npc";
 		$ai_v{'npc_talk'}{'talk'} = 'close';
 		$ai_v{'npc_talk'}{'time'} = time;
 		sendTalkCancel(\$remote_socket, $ID);
@@ -7327,7 +7379,18 @@ sub parseMsg {
 		}
 		$list .= "-------------------------------\n";
 		message($list, "list");
-		message("$npcs{$ID}{'name'} : Type 'talk resp #' to choose a response.\n", "npc");
+
+		# Resolve the source name
+		my $name;
+		if ($npcs{$ID}) {
+			$name = $npcs{$ID}{name};
+		} elsif ($monsters{$ID}) {
+			$name = $monsters{$ID}{name};
+		} else {
+			$name = "Unknown #".unpack("L1", $ID);
+		}
+
+		message("$name: Type 'talk resp #' to choose a response.\n", "npc");
 
 	} elsif ($switch eq "00BC") {
 		$type = unpack("S1",substr($msg, 2, 2));
@@ -7574,7 +7637,18 @@ sub parseMsg {
 		$talk{'ID'} = $ID;
 		$ai_v{'npc_talk'}{'talk'} = 'buy';
 		$ai_v{'npc_talk'}{'time'} = time;
-		message "$npcs{$ID}{'name'} : Type 'store' to start buying, or type 'sell' to start selling\n", "npc";
+
+		# Resolve the source name
+		my $name;
+		if ($npcs{$ID}) {
+			$name = $npcs{$ID}{name};
+		} elsif ($monsters{$ID}) {
+			$name = $monsters{$ID}{name};
+		} else {
+			$name = "Unknown #".unpack("L1", $ID);
+		}
+
+		message "$name: Type 'store' to start buying, or type 'sell' to start selling\n", "npc";
 
 	} elsif ($switch eq "00C6") {
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
@@ -7597,7 +7671,18 @@ sub parseMsg {
 			debug "Item added to Store: $storeList[$storeList]{'name'} - $price z\n", "parseMsg", 2;
 			$storeList++;
 		}
-		message "$npcs{$talk{'ID'}}{'name'} : Check my store list by typing 'store'\n";
+
+		# Resolve the source name
+		my $name;
+		if ($npcs{$ID}) {
+			$name = $npcs{$ID}{name};
+		} elsif ($monsters{$ID}) {
+			$name = $monsters{$ID}{name};
+		} else {
+			$name = "Unknown #".unpack("L1", $ID);
+		}
+
+		message "$name: Check my store list by typing 'store'\n";
 		$ai_v{'npc_talk'}{'talk'} = 'store';
 		$ai_v{'npc_talk'}{'time'} = time;
 		
@@ -8734,7 +8819,18 @@ sub parseMsg {
 
 	} elsif ($switch eq "0142") {
 		$ID = substr($msg, 2, 4);
-		message("$npcs{$ID}{'name'} : Type 'talk num <number #>' to input a number.\n", "input");
+
+		# Resolve the source name
+		my $name;
+		if ($npcs{$ID}) {
+			$name = $npcs{$ID}{name};
+		} elsif ($monsters{$ID}) {
+			$name = $monsters{$ID}{name};
+		} else {
+			$name = "Unknown #".unpack("L1", $ID);
+		}
+
+		message("$name: Type 'talk num <number #>' to input a number.\n", "input");
 		$ai_v{'npc_talk'}{'talk'} = 'num';
 		$ai_v{'npc_talk'}{'time'} = time;
 
@@ -9268,7 +9364,18 @@ sub parseMsg {
 	} elsif ($switch eq "01D4") {
 		# NPC requested a text string reply
 		my $ID = substr($msg, 2, 4);
-		message "$npcs{$ID}{'name'} : Type 'talk text' (Respond to NPC)\n", "npc";
+
+		# Resolve the source name
+		my $name;
+		if ($npcs{$ID}) {
+			$name = $npcs{$ID}{name};
+		} elsif ($monsters{$ID}) {
+			$name = $monsters{$ID}{name};
+		} else {
+			$name = "Unknown #".unpack("L1", $ID);
+		}
+
+		message "$name: Type 'talk text' (Respond to NPC)\n", "npc";
 		$ai_v{'npc_talk'}{'talk'} = 'text';
 		$ai_v{'npc_talk'}{'time'} = time;
 
