@@ -440,7 +440,7 @@ sub sendAttackStop {
 	# what this function is supposed to do.
 
 	# Don't use this function, use Misc::stopAttack() instead!
-	#sendMove ($r_socket, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
+	#sendMove ($chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
 	#debug "Sent stop attack\n", "sendPacket";
 }
 
@@ -1462,6 +1462,12 @@ sub sendStorageAdd {
 				pack("S*", $index) .
 				pack("C*", 0x00, 0x00, 0x00, 0x00) .
 				pack("L*", $amount);
+
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0x7E, 0x00) . pack("C*", 0x35, 0x34, 0x3D, 0x65) .
+			pack("S", $index) .
+			pack("C", 0x30) .
+			pack("L", $amount);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
@@ -1498,6 +1504,11 @@ sub sendStorageGet {
 				pack("S*", $index) .
 				pack("C*", 0x00, 0x00, 0x00, 0x00) .
 				pack("L*", $amount);
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0x93, 0x01, 0x3B, 0x3A, 0x33, 0x69, 0x3B, 0x3B, 0x3E, 0x3A, 0x0A, 0x0A) .
+			pack("S*", $index) .
+			pack("C*", 0x35, 0x34, 0x3D, 0x67) .
+			pack("L*", $amount);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
