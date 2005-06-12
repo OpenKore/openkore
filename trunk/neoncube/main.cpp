@@ -49,37 +49,54 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     InitCommonControls();
 	
     //prepare data.grf.txt
-    if(DeleteFile("neoncube\\data.grf.txt")) {
+    DeleteFile("neoncube\\data.grf.txt");
 				
-	FILE *hGrfTxt;
+    FILE *hGrfTxt;
 
-	hGrfTxt = fopen("neoncube\\data.grf.txt","w");
-	if(!hGrfTxt)
-	    PostError();
-	fprintf(hGrfTxt,"0x103\n");
-	fclose(hGrfTxt);
-    }
+    hGrfTxt = fopen("neoncube\\data.grf.txt","w");
+    if(!hGrfTxt)
+	PostError();
+    fprintf(hGrfTxt,"0x103\n");
+    fclose(hGrfTxt);
+    
 
     //prepare error.log
     DeleteFile("neoncube\\error.log");
 
-    GetPrivateProfileString("server", "server_name", NULL, settings.szServerName, sizeof(settings.szServerName), iniFile); 
-    GetPrivateProfileString("server", "notice_url", NULL, settings.szNoticeURL, sizeof(settings.szNoticeURL), iniFile); 
-    GetPrivateProfileString("server", "patch_site", NULL, settings.szPatchURL, sizeof(settings.szPatchURL), iniFile); 
-    GetPrivateProfileString("server", "patch_list", NULL, settings.szPatchList, sizeof(settings.szPatchList), iniFile);
-    GetPrivateProfileString("server", "executable", NULL, settings.szExecutable, sizeof(settings.szExecutable), iniFile);
-    GetPrivateProfileString("server", "patch_folder", NULL, settings.szPatchFolder, sizeof(settings.szPatchFolder), iniFile);
-    GetPrivateProfileString("server", "registration_link", NULL, settings.szRegistration, sizeof(settings.szRegistration), iniFile);
-    GetPrivateProfileString("server", "grf_file", NULL, settings.szGrf, sizeof(settings.szGrf), iniFile);
-    GetPrivateProfileString("server", "skin", NULL, settings.szSkin, sizeof(settings.szSkin), iniFile);
+     
+ 
+    try { 
+	if(GetPrivateProfileString("server", "server_name", NULL, settings.szServerName, sizeof(settings.szServerName), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: server_name";
+	if(GetPrivateProfileString("server", "notice_url", NULL, settings.szNoticeURL, sizeof(settings.szNoticeURL), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: notice_url";
+	if(GetPrivateProfileString("server", "patch_site", NULL, settings.szPatchURL, sizeof(settings.szPatchURL), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: patch_site";
+	if(GetPrivateProfileString("server", "patch_list", NULL, settings.szPatchList, sizeof(settings.szPatchList), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: patch_list";
+	if(GetPrivateProfileString("server", "executable", NULL, settings.szExecutable, sizeof(settings.szExecutable), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: executable";
+	if(GetPrivateProfileString("server", "patch_folder", NULL, settings.szPatchFolder, sizeof(settings.szPatchFolder), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: patch_folder";
+	if(GetPrivateProfileString("server", "registration_link", NULL, settings.szRegistration, sizeof(settings.szRegistration), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: registration_link";
+	if(GetPrivateProfileString("server", "grf_file", NULL, settings.szGrf, sizeof(settings.szGrf), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: grf_file";
+	if(GetPrivateProfileString("server", "skin", NULL, settings.szSkin, sizeof(settings.szSkin), INIFILE) <= 0)
+	    throw "Invalid key in NeonCube.ini: skin";
+    }
+    catch(LPCTSTR message) {
+	MessageBox(NULL, message, "Error", MB_OK | MB_ICONERROR);
+	return -1;
+    }
 
-       
+
     lstrcat(STYLEFILE, settings.szSkin);
     lstrcat(STYLEFILE, "\\neoncube.style");
     
     lstrcat(SKINFOLDER, settings.szSkin);     
 
-    settings.nBackupGRF = GetPrivateProfileInt("server","Backup_GRF", NULL, iniFile);
+    settings.nBackupGRF = GetPrivateProfileInt("server","Backup_GRF", NULL, INIFILE);
 
 
     BUTTONSTYLE bsMinimize;
@@ -114,6 +131,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     bsCancel.height 	= LoadINIInt("cancel", "height");
 
     COORDS crdProgress;
+    
     crdProgress.x	= LoadINIInt("progressbar", "xcoord");
     crdProgress.y	= LoadINIInt("progressbar", "ycoord");
     crdProgress.width	= LoadINIInt("progressbar", "width");
@@ -134,6 +152,10 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     lpEmbedBrowserObject	= (EmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "EmbedBrowserObject");
     lpUnEmbedBrowserObject	= (UnEmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "UnEmbedBrowserObject");
     lpDisplayHTMLPage		= (DisplayHTMLPagePtr *)GetProcAddress((HINSTANCE)hBrowserDll, "DisplayHTMLPage");
+
+
+    if((lpEmbedBrowserObject == NULL) || (lpUnEmbedBrowserObject == NULL) || (lpDisplayHTMLPage == NULL))
+	return -1;
 	
     ZeroMemory(&wc, sizeof(WNDCLASSEX));
         
@@ -144,12 +166,12 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     wc.cbClsExtra	= 0;
     wc.cbWndExtra	= 0;
     wc.hInstance	= hInstance;
-    wc.hIcon		= LoadIcon(NULL, IDI_ERROR);
+    wc.hIcon		= LoadIcon(NULL, MAKEINTRESOURCE(IDI_ICON));
     wc.hCursor		= LoadCursor(NULL, IDC_ARROW);
-    wc.hbrBackground	= (HBRUSH)GetStockObject(BLACK_BRUSH);
+    wc.hbrBackground	= (HBRUSH)GetStockObject(NULL_BRUSH);
     wc.lpszMenuName  	= NULL;
     wc.lpszClassName	= "NeonCube";
-    wc.hIconSm		= LoadIcon(NULL, IDI_ERROR);
+    wc.hIconSm		= LoadIcon(NULL, MAKEINTRESOURCE(IDI_ICON));
 
 
     // register class
