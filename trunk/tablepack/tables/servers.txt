@@ -231,3 +231,18 @@ ip 66.111.59.100
 port 6900
 version 20
 master_version 14
+serverType 3
+
+[VanRO: Medium Rate Private Server]
+ip 66.111.51.160
+port 6800
+master_version 20
+version 18
+serverType 4
+
+[EuphRO Private Server]
+ip euphro.game-server.cc
+port 6900
+master_version 1
+version 20
+serverType 4
