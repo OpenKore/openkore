@@ -28,7 +28,6 @@
 #include "resource.h"
 
 
-
 int WINAPI 
 WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdShow)
 {
@@ -45,6 +44,10 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     WNDCLASSEX	wc;
     
 
+    if(!InitInstance()) {
+	MessageBox(NULL, "Application already running...", "Error", MB_OK | MB_ICONINFORMATION);
+	return 0;
+    }
     //initialize common controls
     InitCommonControls();
 	
@@ -1219,5 +1222,24 @@ AddDebug(LPCTSTR fmt, ...)
     if(f != NULL) {
 	fwrite(buf, 1, strlen(buf), f);
 	fclose(f);
+    }
+}
+
+
+BOOL InitInstance(void)
+{
+    
+    HANDLE hMutex;
+    hMutex = CreateMutex(NULL, TRUE, "GlobalMutex");
+
+    switch(GetLastError()) {
+	case ERROR_SUCCESS:	  
+	return TRUE;
+
+	case ERROR_ALREADY_EXISTS:
+	return FALSE;
+
+	default:
+	return FALSE;
     }
 }
