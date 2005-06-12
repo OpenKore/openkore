@@ -74,6 +74,7 @@ New features:
 - $ai_v{temp}{pvp} is set to 1 in PVP maps, 2 in GVG.
 - Female characters are now supported on inRO.
 - Kore now supports "monster-NPCs", NPCs which look like monsters.
+- Nearly complete Freya support, for servers like VanRO and EuphRO.
 
 New commands:
 - storage log
@@ -116,6 +117,8 @@ New config options:
   until the NPC says "Done talking"
 - route_teleport_notInMaps (list of maps)
   Do not teleport on route in the specified maps.
+- serverType 4
+  Set this for new Freya servers such as EuphRO and VanRO.
 
 New control files:
 - control/sys.txt
