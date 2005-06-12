@@ -1658,46 +1658,4 @@ sub sendWho {
 	debug "Sent Who\n", "sendPacket", 2;
 }
 
-##
-# visualDump(data [, label])
-#
-# Show the bytes in $data on screen as hexadecimal.
-# Displays the label if provided.
-sub visualDump {
-	my ($msg, $label) = @_;
-	my $dump;
-	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
-
-	my $labelStr = $label ? " ($label)" : '';
-	$dump = "================================================\n" .
-		getFormattedDate(int(time)) . "\n\n" . 
-		length($msg) . " bytes$labelStr\n\n";
-
-	for (my $i = 0; $i < length($msg); $i += 16) {
-		my $line;
-		my $data = substr($msg, $i, 16);
-		my $rawData = '';
-
-		for (my $j = 0; $j < length($data); $j++) {
-			my $char = substr($data, $j, 1);
-
-			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
-			    || ($char eq chr(10) || $char eq chr(13) || $char eq "\t")) {
-				$rawData .= '.';
-			} else {
-				$rawData .= substr($data, $j, 1);
-			}
-		}
-
-		$line = getHex(substr($data, 0, 8));
-		$line .= '    ' . getHex(substr($data, 8)) if (length($data) > 8);
-
-		$line .= ' ' x (50 - length($line)) if (length($line) < 54);
-		$line .= "    $rawData\n";
-		$line = sprintf("%3d>  ", $i) . $line;
-		$dump .= $line;
-	}
-	message $dump;
-}
-
 1;
