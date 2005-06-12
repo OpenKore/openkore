@@ -148,6 +148,8 @@ Internal:
 - New Actor::get($ID) function is sort of like
   $ID eq $accountID ? $char : ($monsters{$ID} || $players{$ID})
 - Network::Send::sendMove() redundant $r_socket first argument removed.
+- New functions Commands::register() and Commands::unregister() for easy
+  registration of new commands in plugins.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.

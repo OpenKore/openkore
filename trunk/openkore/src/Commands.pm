@@ -47,6 +47,8 @@ undef %handlers;
 undef %completions;
 undef %descriptions;
 
+our %customCommands;
+
 
 # use SelfLoader; 1;
 # __DATA__
@@ -206,6 +208,7 @@ sub initDescriptions {
 sub run {
 	my $input = shift;
 	my ($switch, $args) = split(/ +/, $input, 2);
+	my $handler;
 
 	initHandlers() if (!%handlers);
 
@@ -216,14 +219,58 @@ sub run {
 		($switch, $args) = split(/ +/, $input, 2);
 	}
 
-	if ($handlers{$switch}) {
-		$handlers{$switch}->($switch, $args);
+	$handler = $customCommands{$switch}{callback} if ($customCommands{$switch});
+	$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
+
+	if ($handler) {
+		$handler->($switch, $args);
 		return 1;
 	} else {
 		# TODO: print error message here once we've fully migrated this stuff
 		return 0;
 	}
 }
+
+
+##
+# Commands::register([name, description, callback]...)
+# Returns: an ID for use with Commands::unregister()
+#
+# Register new commands.
+#
+# Example:
+# my $ID = Commands::register(
+#     ["my_command", "My custom command's description", \&my_callback],
+#     ["another_command", "Yet another command description", \&another_callback]
+# );
+# Commands::unregister($ID);
+sub register {
+	my @result;
+
+	foreach my $cmd (@_) {
+		my $name = $cmd->[0];
+		my %item = (
+			desc => $cmd->[1],
+			callback => $cmd->[2]
+		);
+		$customCommands{$name} = \%item;
+		push @result, $name;
+	}
+	return \@result;
+}
+
+
+##
+# Commands::unregister(ID)
+# ID: an ID returned by Commands::
+sub unregister {
+	my $ID = shift;
+
+	foreach my $name (@{$ID}) {
+		delete $customCommands{$name};
+	}
+}
+
 
 sub complete {
 	my $input = shift;
@@ -920,15 +967,25 @@ sub cmdHelp {
 	# Display help message
 	my (undef, $args) = @_;
 	my @commands = split(/ +/, $args);
+	my @unknown;
 
 	initDescriptions if (!%descriptions);
 	@commands = sort keys %descriptions if (!@commands);
-	my @unknown;
 
 	message("--------------- Available commands ---------------\n", "list");
 	foreach my $switch (@commands) {
 		if ($descriptions{$switch}) {
 			message(sprintf("%-10s  %s\n", $switch, $descriptions{$switch}), "list");
+		} else {
+			push @unknown, $switch;
+		}
+	}
+
+	@commands = sort keys %customCommands;
+	foreach my $switch (@commands) {
+		if ($customCommands{$switch}) {
+			message(sprintf("%-10s  %s\n", $switch, $customCommands{$switch}{desc}), "list");
+			@unknown = ();
 		} else {
 			push @unknown, $switch;
 		}
@@ -1317,6 +1374,7 @@ sub cmdPlugin {
 		foreach (my $i = 0; $i < @names; $i++) {
 			Plugins::reload($names[$i]);
 		}
+
 	} elsif ($args[0] eq 'load') {
 		if ($args[1] eq '') {
 			error   "Syntax Error in function 'plugin load' (Load Plugin)\n" .
@@ -1325,11 +1383,18 @@ sub cmdPlugin {
 		} elsif ($args[1] eq 'all') {
 			Plugins::loadAll();
 		} else {
-			Plugins::load("$Settings::plugins_folder/$args[1]");
+			Plugins::load($args[1]);
 		}
+
 	} elsif ($args[0] eq 'unload') {
 		if ($args[1] =~ /^\d+$/) {
-			Plugins::unload($Plugins::plugins[$args[1]]{name});
+			if ($Plugins::plugins[$args[1]]) {
+				my $name = $Plugins::plugins[$args[1]]{name};
+				Plugins::unload($name);
+				message "Plugin $name unloaded.\n", "system";
+			} else {
+				error "'$args[1]' is not a valid plugin number.\n";
+			}
 
 		} elsif ($args[1] eq '') {
 			error	"Syntax Error in function 'plugin unload' (Unload Plugin)\n" .
@@ -1342,7 +1407,9 @@ sub cmdPlugin {
 		} else {
 			foreach my $plugin (@Plugins::plugins) {
 				if ($plugin->{name} =~ /$args[1]/i) {
-					Plugins::unload($plugin->{name});
+					my $name = $plugin->{name};
+					Plugins::unload($name);
+					message "Plugin $name unloaded.\n", "system";
 				}
 			}
 		}
@@ -1353,8 +1420,8 @@ sub cmdPlugin {
 			"Command:                                              Description:\n" .
 			" plugin                                                List loaded plugins\n" .
 			" plugin load <filename>                                Load a plugin\n" .
-			" plugin unload <plugin name|plugin number#|\"all\">    Unload a loaded plugin\n" .
-			" plugin reload <plugin name|plugin number#|\"all\">    Reload a loaded plugin\n" .
+			" plugin unload <plugin name|plugin number#|\"all\">      Unload a loaded plugin\n" .
+			" plugin reload <plugin name|plugin number#|\"all\">      Reload a loaded plugin\n" .
 			"-----------------------------------------------------\n";
 		if ($args[0] eq 'help') {
 			message($msg, "info");
