@@ -41,6 +41,16 @@ use Tk;
 use Tk::ROText;
 use Tk::BrowseEntry;
 
+# parse panelBottom_domains into a hash
+my %panelBottom_domains;
+my @array = split / *, */, $sys{panelBottom_domains};
+foreach (@array) {
+	s/^\s+//;
+	s/\s+$//;
+	s/\s+/ /g;
+	$panelBottom_domains{$_} = 1;
+}
+
 # main interface functions
 
 sub new {
@@ -122,10 +132,9 @@ sub writeOutput {
 	my $domain = shift || '';
 
 	my $panel;
-	# FIXME: existsInList is slow, it should probably parse the string into a hash or something
-	#      - you can put message types like error and warning in the list because I wanted to see them
-	#      - a default list of domains should be given to the user if they didn't configure any
-	if (existsInList($sys{panelBottom_domains}, $domain) || ($domain eq 'console' && existsInList($sys{panelBottom_domains}, $type))) {
+	# FIXME: you can put message types like error and warning in the list because I wanted to see them
+	# FIXME: a default list of domains should be given to the user if they didn't configure any
+	if ($panelBottom_domains{$domain} || ($domain eq 'console' && $panelBottom_domains{$type})) {
 		$panel = "panelBottom";
 	} else {
 		$panel = "panelTop";
