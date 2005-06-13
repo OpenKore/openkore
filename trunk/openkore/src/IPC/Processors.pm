@@ -18,7 +18,7 @@
 package IPC::Processors;
 
 use strict;
-use Globals qw($conState %field $char $charServer %maps_lut %config);
+use Globals qw($conState %field $char $charServer %maps_lut %config $accountID);
 use IPC;
 use Log qw(message debug);
 use Utils qw(calcPosition);
@@ -35,8 +35,11 @@ undef %handlers;
 
 sub initHandlers {
 	%handlers = (
-		'where are you' => \&ipcWhereAreYou,
-		'move to',	=> \&ipcMoveTo,
+		'where are you'    => \&ipcWhereAreYou,
+		'move to'          => \&ipcMoveTo,
+
+		'CLIENT_NOT_FOUND' => \&ipcClientNotFound,
+		'LEAVE'            => \&ipcLeave
 	);
 }
 
@@ -103,11 +106,23 @@ sub ipcWhereAreYou {
 			username   => $config{username},
 			field      => $field{name},
 			x          => $pos->{x},
-			y          => $pos->{y}
+			y          => $pos->{y},
+			accountID  => $accountID
 		);
 	} else {
 		sendMsg($ipc, "i am here", $args->{REPLY_TO});
 	}
+}
+
+
+sub ipcClientNotFound {
+	my ($ipc, $ID, $args) = @_;
+	debug "Unable to deliver IPC message to client: $args->{ID}", "ipc";
+}
+
+sub ipcLeave {
+	my ($ipc, $ID, $args) = @_;
+	debug "IPC client left network: $args->{ID}", "ipc";
 }
 
 1;
