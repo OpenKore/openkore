@@ -110,7 +110,7 @@ sub initHandlers {
 	stand		=> \&cmdStand,
 	stat_add	=> \&cmdStatAdd,
 	switchconf	=> \&cmdSwitchConf,
-	talknpc	=> \&cmdTalkNPC,
+	talknpc		=> \&cmdTalkNPC,
 	tank		=> \&cmdTank,
 	testshop	=> \&cmdTestShop,
 	timeout		=> \&cmdTimeout,
@@ -118,7 +118,7 @@ sub initHandlers {
 	verbose		=> \&cmdVerbose,
 	version		=> \&cmdVersion,
 	warp		=> \&cmdWarp,
-	weight	=> \&cmdWeight,
+	weight		=> \&cmdWeight,
 	who		=> \&cmdWho,
 	);
 }
@@ -182,14 +182,14 @@ sub initDescriptions {
 	stand		=> 'Stand up.',
 	stat_add	=> 'Add status point.',
 	switchconf	=> 'Switch configuration file.',
-	talknpc	=> 'Send a sequence of responses to an NPC.',
+	talknpc		=> 'Send a sequence of responses to an NPC.',
 	tank		=> 'Tank for a player.',
 	testshop	=> 'Show what your vending shop would well.',
 	timeout		=> 'Set a timeout.',
 	verbose		=> 'Toggle verbose on/off.',
 	version		=> 'Display the version of openkore.',
 	warp		=> 'Open warp portal.',
-	weight	=> 'Gives a report about your inventory weight.',
+	weight		=> 'Gives a report about your inventory weight.',
 	who		=> 'Display the number of people on the current server.',
 	);
 }
@@ -439,6 +439,52 @@ sub cmdAIv {
 	my $on = $AI ? 'on' : 'off';
 	message("ai_seq ($on) = @ai_seq\n", "list");
 	message("solution\n", "list") if ($ai_seq_args[0]{'solution'});
+}
+
+sub cmdArrowCraft {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+ (\d+)/;
+
+	#print "-$arg1-\n";
+	if ($arg1 eq "") {
+		if (@arrowCraftID) {
+			message("----------------- Item To Craft -----------------\n", "info");
+			for (my $i = 0; $i < @arrowCraftID; $i++) {
+				next if ($arrowCraftID[$i] eq "");
+				message(swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$i, $char->{inventory}[$arrowCraftID[$i]]{name}]),"list");
+
+			}
+			message("-------------------------------------------------\n","list")
+		} else {
+			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
+				"Type 'arrowcraft use' to get list.\n";
+		}
+	} elsif ($arg1 eq "use") {
+		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
+			main::ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
+		} else {
+			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
+				"You don't have Arrow Making Skill.\n";
+		}
+	} elsif ($arg1 eq "forceuse") {
+		if ($char->{inventory}[$arg2] && !%{$char->{inventory}[$arg2]}) {
+			sendArrowCraft(\$remote_socket, $char->{inventory}[$arg2]{index});
+		} else {
+			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
+				"You don't have item $arg2 in your inventory.\n";
+		}
+	} else {
+		if ($arrowCraftID[$arg1] ne "") {
+			sendArrowCraft(\$remote_socket, $char->{inventory}[$arrowCraftID[$arg1]]{nameID});
+		} else {
+			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
+				"Usage: arrowcraft [<identify #>]",
+				"Type 'arrowcraft use' to get list.\n";
+		}
+	}
 }
 
 sub cmdAuthorize {
@@ -2242,44 +2288,5 @@ sub cmdKill {
 	$monsters{$target} = $players{$target};
 	main::attack($target);
 }
-
-sub cmdArrowCraft {
-	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^([\w\d]+)/;
-
-	#print "-$arg1-\n";
-	if ($arg1 eq "") {
-		if (@arrowCraftID) {
-			message("----------------- Item To Craft -----------------\n", "info");
-			for (my $i = 0; $i < @arrowCraftID; $i++) {
-				next if ($arrowCraftID[$i] eq "");
-				message(swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$i, $char->{inventory}[$arrowCraftID[$i]]{name}]),"list");
-
-			}
-			message("-------------------------------------------------\n","list")
-		} else {
-			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
-				"Type 'arrowcraft use' to get list.\n";
-		}
-	} elsif ($arg1 eq "use") {
-		if (defined binFind(\@skillsID, 'AC_MAKINGARROW')) {
-			main::ai_skillUse('AC_MAKINGARROW', 1, 0, 0, $accountID);
-		} else {
-			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
-				"You don't have Arrow Making Skill.\n";
-		}
-	} else {
-		if ($arrowCraftID[$arg1] ne "") {
-			sendArrowCraft(\$remote_socket, $char->{inventory}[$arrowCraftID[$arg1]]{nameID});
-		} else {
-			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
-				"Usage: arrowcraft [<identify #>]",
-				"Type 'arrowcraft use' to get list.\n";
-		}
-	}
-}
-
 
 return 1;
