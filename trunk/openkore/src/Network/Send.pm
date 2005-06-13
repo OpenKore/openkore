@@ -367,8 +367,8 @@ sub sendMsgToServer {
 			" - $packetDescriptions{Send}{$switch})" : '';
 		if ($config{debugPacket_sent} == 1) {
 			debug("Packet Switch SENT: $switch$label\n", "sendPacket", 0);
-		#} else {
-		#	visualDump($msg, $switch.$label);
+		} else {
+			Misc::visualDump($msg, $switch.$label);
 		}
 	}
 }
@@ -856,6 +856,9 @@ sub sendGuildMemberNameRequest {
 	my $msg;
 	if ($config{serverType} == 3) {
 		$msg = pack("C*", 0xa2, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
+				$ID;
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0xA2, 0x00, 0x39, 0x33, 0x68, 0x3B, 0x68, 0x3B, 0x6E, 0x0A, 0xE4, 0x16) .
 				$ID;
 	} else {
 		$msg = pack("C*", 0x93, 0x01) . $ID;
@@ -1438,6 +1441,11 @@ sub sendSkillUseLoc {
 			pack("S*", $x) .
 			pack("C*", 0x00, 0x00, 0xa0, 0x40, 0xe0, 0x80, 0x09, 0xc2) .
 			pack("S*", $y);
+	} elsif ($config{serverType} == 4) {
+		$msg = pack("C*", 0xA7, 0x00, 0x37, 0x65, 0x66, 0x60) . pack("S*", $lv) .
+			pack("C*", 0x32) . pack("S*", $ID) .
+			pack("C*", 0x3F, 0x6D, 0x6E, 0x68, 0x3D, 0x68, 0x6F, 0x0C, 0x0C, 0x93, 0xE5, 0x5C) .
+			pack("S*", $x) . chr(0) . pack("S*", $y);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
