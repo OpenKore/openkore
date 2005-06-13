@@ -9,7 +9,7 @@
 
 package macro;
 our $Version = "0.9";
-my $stable = 0;
+my $stable = 1;
 
 use strict;
 use Plugins;
@@ -773,7 +773,7 @@ sub checkPubM {
   my $arg = $_[1];
   my $mypos = calcPosition($char);
   my $pos = calcPosition($::players{$arg->{pubID}});
-  if (match($arg->{pubMsg},$tPM) && distance($mypos, $pos) < $distance) {
+  if (match($arg->{pubMsg},$tPM) && distance($mypos, $pos) <= $distance) {
     setVar(".lastpub", $arg->{pubMsgUser});
     return 1;
   };
