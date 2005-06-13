@@ -15,8 +15,10 @@
 ##
 # MODULE DESCRIPTION: Inter-process communication server
 #
-# This module implements a bare-bones IPC server. It's used by the
-# official IPC manager implementation and should not be used directly.
+# This module implements a bare-bones IPC server. It knows how to parse
+# messages, but knows nothing about the actual protocol.
+# This module is used by the official IPC manager implementation and
+# should not be used directly.
 
 package IPC::Server;
 
@@ -71,18 +73,22 @@ sub broadcast {
 
 ##
 # $ipc->send(clientID, msgID, hash)
+# Returns: 1 on success, 0 when failed to send data through the socket, -1 if the specified client doesn't exist.
 #
 # Send a message to the specified client.
 sub send {
 	my ($self, $clientID, $msgID, $hash) = @_;
 
 	my $client = $self->{ipc_clients}{$clientID};
-	return if (!$client);
-
-	my $msg = encode($msgID, $hash);
-	return $self->sendData($client, $msg);
+	if ($client) {
+		my $msg = encode($msgID, $hash);
+		return $self->sendData($client, $msg);
+	} else {
+		return -1;
+	}
 }
 
+# Process IPC message
 sub onIPCData {
 }
 
@@ -119,5 +125,6 @@ sub onClientData {
 		undef %hash;
 	}
 }
+
 
 return 1;

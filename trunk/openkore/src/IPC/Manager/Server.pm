@@ -6,11 +6,12 @@ use IPC::Server;
 use base qw(IPC::Server);
 
 
+# New client connected to network
 sub onClientNew {
 	my ($self, $client, $index) = @_;
 	$self->SUPER::onClientNew($client, $index);
 
-	# New client; initiate handshake
+	# Initiate handshake
 	my %args = (
 		ID => $client->{ID}
 	);
@@ -19,17 +20,30 @@ sub onClientNew {
 	$client->{name} = "Unknown:$client->{ID}";
 }
 
+# A client disconnected
+sub onClientExit {
+	my ($self, $client) = @_;
+	$self->SUPER::onClientExit($client);
+
+	my %args = (
+		ID => $client->{ID},
+	);
+	$self->broadcast(undef, 'LEAVE', \%args);
+}
+
 # A client sent a message
 sub onIPCData {
 	my ($self, $client, $msgID, $args) = @_;
 
 	print "Message: $msgID (from $client->{name})\n";
 
+	# Process known messages internally.
+	# Deliver unknown messages to client(s).
+
 	if ($msgID eq "HELLO") {
 		# A new client just connected
 		$client->{userAgent} = $args->{userAgent};
 		$client->{wantGlobals} = exists($args->{wantGlobals}) ? $args->{wantGlobals} : 1;
-		$client->{userName} = $args->{userName};
 		$client->{ready} = 1;
 		$client->{name} = $args->{userAgent} . ":" . $client->{ID};
 
@@ -41,7 +55,6 @@ sub onIPCData {
 			next if (!$c || !$c->{ready});
 			$args{"client$i"} = $c->{ID};
 			$args{"clientUserAgent$i"} = $c->{userAgent};
-			$args{"clientUserName$i"} = $c->{userName};
 			$i++;
 		}
 		$args{count} = $i;
@@ -52,11 +65,20 @@ sub onIPCData {
 		my $to = $self->{ipc_clients}{$args->{TO}}{name};
 		print "Delivering message from $client->{name} to $to\n";
 		$args->{FROM} = $client->{ID};
-		$self->send($args->{TO}, $msgID, $args);
+
+		if ($self->send($args->{TO}, $msgID, $args) == -1) {
+			# Unable to deliver the message because the specified client doesn't exist.
+			# Notify the sender.
+			my %args = (
+				ID => $client->{ID}
+			);
+			$self->send($client->{ID}, 'CLIENT_NOT_FOUND', \%args);
+		}
 
 	} else {
-		# Broadcast global messages to all clients except the sender,
-		# or clients that aren't done with handshaking yet
+		# Broadcast global messages to all clients except:
+		# - The sender.
+		# - Clients that aren't done with handshaking yet.
 
 		foreach my $c (@{$self->{clients}}) {
 			next if (!$c || $c eq $client || !$c->{ready} || !$c->{wantGlobals});
