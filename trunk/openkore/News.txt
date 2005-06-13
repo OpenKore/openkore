@@ -99,6 +99,10 @@ New commands:
 - 'weight [<#>]' command tells you how much more stuff you can carry
   (if you want to know how many more Red Potion you can carry, and
   Red Potion weighs 7, then type 'weight 7').
+- arrowcraft forceuse #
+  Craft arrows immediately without using the skill.
+  On many servers any class can create arrows using this exploit.
+  # is the inventory number of the item you wish to craft into arrows.
 
 New config options:
 - partySkill: target_dead
