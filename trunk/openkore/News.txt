@@ -74,7 +74,7 @@ New features:
 - $ai_v{temp}{pvp} is set to 1 in PVP maps, 2 in GVG.
 - Female characters are now supported on inRO.
 - Kore now supports "monster-NPCs", NPCs which look like monsters.
-- Nearly complete Freya support, for servers like VanRO and EuphRO.
+- Completed Freya support, for servers like VanRO and EuphRO.
 - New "Vx" interface, ported from modKore.
   See http://openkore.sourceforge.net/forum/viewtopic.php?p=50860
 
