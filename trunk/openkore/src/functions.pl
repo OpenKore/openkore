@@ -5810,18 +5810,12 @@ sub parseMsg {
 		$map_ip = makeIP(substr($msg, 22, 4));
 		$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 		$map_port = unpack("S1", substr($msg, 26, 2));
-		message(swrite(
-			"---------Game Info----------", [],
-			"Char ID: @<<<<<<<<<<<<<<<<<<",
-			[getHex($charID)],
-			"MAP Name: @<<<<<<<<<<<<<<<<<<",
-			[$map_name],
-			"MAP IP: @<<<<<<<<<<<<<<<<<<",
-			[$map_ip],
-			"MAP Port: @<<<<<<<<<<<<<<<<<<",
-			[$map_port],
-			"-------------------------------", []),
-			"connection");
+		message "----------Game Info----------\n", "connection";
+		message "Char ID: ".getHex($charID)." (".unpack("L1", $charID).")\n", "connection";
+		message "MAP Name: $map_name\n", "connection";
+		message "MAP IP: $map_ip\n", "connection";
+		message "MAP Port: $map_port\n", "connection";
+		message "-----------------------------\n", "connection";
 		($ai_v{temp}{map}) = $map_name =~ /([\s\S]*)\./;
 		checkAllowedMap($ai_v{temp}{map});
 		message("Closing connection to Game Login Server\n", "connection") if (!$xkore);
@@ -8904,6 +8898,7 @@ sub parseMsg {
 		my $c = 0;
 		for (my $i = 4; $i < $msg_size; $i+=104){
 			$guild{'member'}[$c]{'ID'}    = substr($msg, $i, 4);
+			$guild{'member'}[$c]{'charID'}    = substr($msg, $i+4, 4);
 			$jobID = unpack("S1", substr($msg, $i + 14, 2));
 			if ($jobID =~ /^40/) {
 				$jobID =~ s/^40/1/;
