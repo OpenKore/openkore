@@ -2016,7 +2016,7 @@ sub cmdSwitchConf {
 			"File $filename does not exist.\n";
 	} else {
 		switchConfigFile($filename);
-		message "Switched to \"$filename\"\n", "system";
+		message "Switched config file to \"$filename\".\n", "system";
 	}
 }
 
