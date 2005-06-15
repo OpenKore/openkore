@@ -133,6 +133,9 @@ sub initMapChangeVars {
 	undef @chatRoomsID;
 	undef %chatRooms;
 	undef @lastpm;
+	undef %friends;
+	undef %friendsID;
+	undef %incomingFriend;
 
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;
@@ -1097,6 +1100,42 @@ sub parseCommand {
 			configModify("followTarget", $arg1);
 		}
 
+	} elsif ($switch eq "friend") {
+		($arg1) = $input =~ /^[\s\S]*? (\w*)/;
+		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)\b/;
+		
+		if ($arg1 eq "request" && $playersID[$arg2] eq "") {
+			error	"Error in function 'friend request' (Request to be a friend)\n" .
+				"Can't request to be a friend - player $arg2 does not exist.\n";
+		} elsif ($arg1 eq "request" && $players{$playersID[$arg2]}{name} eq "Unknown") {
+			error	"Error in function 'friend request' (Request to be a friend)\n" .
+				"Can't request to be a friend - player information hasn't been received.\n";
+		} elsif ($arg1 eq "request") {
+			sendFriendRequest(\$remote_socket, $players{$playersID[$arg2]}{name});
+		} elsif ($arg1 eq "accept" && $incomingFriend{'accountID'} eq "") {
+			error	"Error in function 'friend accept' (Accept a friend request)\n" .
+				"Can't accept friend request - no incoming request.\n";
+		} elsif ($arg1 eq "accept") {
+			sendFriendAccept(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			undef %incomingFriend;
+		} elsif ($arg1 eq "reject" && $incomingFriend{'accountID'} eq "") {
+			error	"Error in function 'friend reject' (Reject a friend request)\n" .
+				"Can't reject friend request - no incoming request.\n";
+		} elsif ($arg1 eq "reject") {
+			sendFriendReject(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			undef %incomingFriend;
+		} else {
+			message("---------Friends----------\n", "list");
+			message("#   Name                      Online\n", "list");
+			for (my $i = 0; $i < @friendsID; $i++) {
+				message(swrite(
+					"@<  @<<<<<<<<<<<<<<<<<<<<<<<  @<",
+					[$friendsID[$i], $friends{$friendsID[$i]}{'name'}, 'No']),
+					"list");
+			}
+			message("--------------------------\n", "list");
+		}
+	
 	#Guild Chat - chobit andy 20030101
 	} elsif ($switch eq "g") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
@@ -9454,10 +9493,35 @@ sub parseMsg {
 
 	} elsif ($switch eq "0201") {
 		# Friend list
+		$ID = 0;
 		for (my $i = 4; $i < $msg_size; $i += 32) {
-			my $friendName = substr($msg, $i + 8 , 24);
-			# TODO: do something with this
+			$ID++;
+			binAdd(\@friendsID, $ID);
+			$friends{$ID}{'accountID'} = substr($msg, $i, 4);
+			$friends{$ID}{'charID'} = substr($msg, $i + 4, 4);
+			$friends{$ID}{'name'} = unpack("Z24", substr($msg, $i + 8 , 24));
 		}
+
+	} elsif ($switch eq "0207") {
+		# Incoming friend request
+		my $accountID = substr($msg, 2, 4);
+		my $charID = substr($msg, 6, 4);
+		my ($name) = unpack("Z24", substr($msg, 10, 24));
+		$incomingFriend{'accountID'} = $accountID;
+		$incomingFriend{'charID'} = $charID;
+		message "$name wants to be your friend\n";
+		message "Type 'friend accept' to be friend with $name, otherwise type 'friend reject'\n";
+
+	} elsif ($switch eq "0209") {
+		# Response to friend request
+		my $type = unpack("C1",substr($msg, 2, 1));
+		my ($name) = unpack("Z24", substr($msg, 12, 24));
+		if ($type) {
+			message "$name rejected to be your friend\n";
+		} else {
+			message "$name is now your friend\n";
+		}
+
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";

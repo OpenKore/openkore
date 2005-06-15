@@ -72,6 +72,9 @@ our @EXPORT = qw(
 	sendEmotion
 	sendEnteringVender
 	sendEquip
+	sendFriendAccept
+	sendFriendReject
+	sendFriendRequest
 	sendForgeItem
 	sendGameLogin
 	sendGetPlayerInfo
@@ -752,6 +755,34 @@ sub sendEquip {
 	my $msg = pack("C*", 0xA9, 0x00) . pack("S*", $index) .  pack("S*", $type);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Equip: $index\n" , 2;
+}
+
+sub sendFriendAccept {
+	my $r_socket = shift;
+	my $accountID = shift;
+	my $charID = shift;
+	my $msg = pack("C*", 0x08, 0x02) . $accountID . $charID . pack("C*", 0x01, 0x00, 0x00, 0x00);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Accept friend request\n", "sendPacket";
+}
+
+sub sendFriendReject {
+	my $r_socket = shift;
+	my $accountID = shift;
+	my $charID = shift;
+	my $msg = pack("C*", 0x08, 0x02) . $accountID . $charID . pack("C*", 0x00, 0x00, 0x00, 0x00);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Reject friend request\n", "sendPacket";
+}
+
+sub sendFriendRequest {
+	my $r_socket = shift;
+	my $name = shift;
+	$name = substr($name, 0, 24) if (length($name) > 24);
+	$name = $name . chr(0) x (24 - length($name));
+	my $msg = pack("C*", 0x02, 0x02).$name;
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Request to be a friend: $name\n", "sendPacket";
 }
 
 sub sendForgeItem {
