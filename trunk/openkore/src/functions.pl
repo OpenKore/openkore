@@ -6525,7 +6525,9 @@ sub parseMsg {
 
 			$target->{sitting} = 0 unless $type == 4 || $type == 9 || $totalDamage == 0;
 
-			my $msg = $source->name." $verb ".$target->name." - Dmg: $dmgdisplay (delay ".($src_speed/10).")";
+			Plugins::callHook('packet_attack', {sourceID => $ID1, targetID => $ID2, msg => \$msg});
+
+			my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($src_speed/10).")";
 
 			my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
 
@@ -10639,9 +10641,9 @@ sub updateDamageTables {
 	#
 	# Someone with a lot of negative deltaHp is probably in need of healing.
 	# This allows us to intelligently heal non-party members.
-	if ($players{$ID2}) {
-		$players{$ID2}{deltaHp} -= $damage;
-		$players{$ID2}{deltaHp} = 0 if $players{$ID2}{deltaHp} > 0;
+	if (my $target = Actor::get($ID2)) {
+		$target->{deltaHp} -= $damage;
+		$target->{deltaHp} = 0 if $target->{deltaHp} > 0;
 	}
 
 	if ($ID1 eq $accountID) {
