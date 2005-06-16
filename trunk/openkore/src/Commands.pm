@@ -564,10 +564,11 @@ sub cmdCard {
 			my $msg;
 			$msg .= "-----Card Merge Candidates-----\n";
 			foreach my $card (@cardMergeItemsID) {
-				next if ($card eq "" || !$char->{inventory}[$card] || !%{$char->{inventory}[$card]});
+				next if $card eq "" || !$char->{inventory}[$card] ||
+					!%{$char->{inventory}[$card]};
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$card, $char->{inventory}[$card]);
+					[$card, $char->{inventory}[$card]]);
 			}
 			$msg .= "-------------------------------\n";
 			message $msg, "list";
