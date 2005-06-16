@@ -34,6 +34,7 @@ Bug fixes:
 - Fixed dealAuto not working while dead.
 - Add the missing "timeout" chat command.
 - Fix equipAuto trying to equip unidentified items.
+- Fix crash with Actor::You when creating a new character in the bot.
 
 New features:
 - Better support for detecting dead players.
