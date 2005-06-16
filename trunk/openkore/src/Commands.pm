@@ -470,7 +470,7 @@ sub cmdArrowCraft {
 				"You don't have Arrow Making Skill.\n";
 		}
 	} elsif ($arg1 eq "forceuse") {
-		if ($char->{inventory}[$arg2] && !%{$char->{inventory}[$arg2]}) {
+		if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
 			sendArrowCraft(\$remote_socket, $char->{inventory}[$arg2]{index});
 		} else {
 			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
@@ -545,9 +545,11 @@ sub cmdBuy {
 }
 
 sub cmdCard {
-	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	my (undef, $input) = @_;
+	my ($arg1) = $input =~ /^(\w+)/;
+	my ($arg2) = $input =~ /^\w+ (\d+)/;
+	my ($arg3) = $input =~ /^\w+ \d+ (\d+)/;
+
 	if ($arg1 eq "mergecancel") {
 		if ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
@@ -557,14 +559,15 @@ sub cmdCard {
 				"You are not currently in a card merge session.\n";
 		}
 	} elsif ($arg1 eq "mergelist") {
+		# FIXME: if your items change order or are used, this list will be wrong
 		if (@cardMergeItemsID) {
 			my $msg;
 			$msg .= "-----Card Merge Candidates-----\n";
-			for (my $i = 0; $i < @cardMergeItemsID; $i++) {
-				next if ($cardMergeItemsID[$i] eq "");
+			foreach my $card (@cardMergeItemsID) {
+				next if ($card eq "" || !$char->{inventory}[$card] || !%{$char->{inventory}[$card]});
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$i, $char->{inventory}[$cardMergeItemsID[$i]]{name}]);
+					[$card, $char->{inventory}[$card]);
 			}
 			$msg .= "-------------------------------\n";
 			message $msg, "list";
@@ -574,8 +577,9 @@ sub cmdCard {
 		}
 	} elsif ($arg1 eq "merge") {
 		if ($arg2 =~ /^\d+$/) {
-			if ($cardMergeItemsID[$arg2] ne "") {
-				sendCardMerge(\$remote_socket, $char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$cardMergeItemsID[$arg2]]{index});
+			my $found = binFind(\@cardMergeItemsID, $arg2);
+			if (defined $found) {
+				sendCardMerge(\$remote_socket, $char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$arg2]{index});
 			} else {
 				if ($cardMergeIndex ne "") {
 					error	"Error in function 'card merge' (Finalize card merging onto item)\n" .
@@ -616,9 +620,19 @@ sub cmdCard {
 		}
 		$msg .= "-------------------------------\n";
 		message $msg, "list";
+	} elsif ($arg1 eq "forceuse") {
+		if (!$char->{inventory}[$arg2] || !%{$char->{inventory}[$arg2]}) {
+			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
+				"You don't have item $arg2 in your inventory.\n";
+		} elsif (!$char->{inventory}[$arg3] || !%{$char->{inventory}[$arg3]}) {
+			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
+				"You don't have item $arg3 in your inventory.\n";
+		} else {
+			sendCardMerge(\$remote_socket, $char->{inventory}[$arg2]{index}, $char->{inventory}[$arg3]{index});
+		}
 	} else {
 		error	"Syntax Error in function 'card' (Card Compounding)\n" .
-			"Usage: card <list|use|mergelist|mergecancel|merge>\n";
+			"Usage: card <use|mergelist|mergecancel|merge>\n";
 	}
 }
 

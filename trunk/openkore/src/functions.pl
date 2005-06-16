@@ -9088,13 +9088,11 @@ sub parseMsg {
 
 		my $index;
 		my $invIndex;
-		my $count = 0;
 		for ($i = 4; $i < $msg_size; $i += 2) {
 			$index = unpack("S1", substr($msg, $i, 2));
 			$invIndex = findIndex($char->{inventory}, "index", $index);
 			binAdd(\@cardMergeItemsID,$invIndex);
-			$display .= "$count $char->{inventory}[$invIndex]{name}\n";
-			$count++;
+			$display .= "$invIndex $char->{inventory}[$invIndex]{name}\n";
 		}
 
 		$display .= "-------------------------------\n";
@@ -9125,7 +9123,8 @@ sub parseMsg {
 
 			# rename the slotted item now
 			my $item = $char->{inventory}[$item_invindex];
-			# put the card into the item (optimize this)
+			# put the card into the item
+			# FIXME: this is unoptimized
 			my $newcards;
 			my $addedcard;
 			for (my $i = 0; $i < 4; $i++) {
