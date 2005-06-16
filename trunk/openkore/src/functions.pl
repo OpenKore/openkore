@@ -5811,6 +5811,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "006D" && $conState != 5) {
 		my %char;
+		$char = new Actor::You;
 		$char{ID} = substr($msg, 2, 4);
 		$char{name} = unpack("Z24", substr($msg, 76, 24));
 		$char{zenny} = unpack("L", substr($msg, 10, 4));
