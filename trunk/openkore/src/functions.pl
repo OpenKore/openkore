@@ -1109,7 +1109,27 @@ sub parseCommand {
 			error	"Error in function 'friend request' (Request to be a friend)\n" .
 				"Can't request to be a friend - player information hasn't been received.\n";
 		} elsif ($arg1 eq "request") {
-			sendFriendRequest(\$remote_socket, $players{$playersID[$arg2]}{name});
+			my $alreadyFriend = 0;
+			for (my $i = 0; $i < @friendsID; $i++) {
+				if ($friends{$i}{'name'} eq $players{$playersID[$arg2]}{name}) {
+					$alreadyFriend = 1;
+					last;
+				}
+			}
+			if ($alreadyFriend) {
+				error	"Error in function 'friend request' (Request to be a friend)\n" .
+					"Can't request to be a friend - $players{$playersID[$arg2]}{name} is already your friend.\n";
+			} else {
+				message "Requesting $players{$playersID[$arg2]}{name} to be your friend\n";
+				sendFriendRequest(\$remote_socket, $players{$playersID[$arg2]}{name});
+			}
+		} elsif ($arg1 eq "remove" && ($arg2 < 1 || $arg2 > @friendsID)) {
+			error	"Error in function 'friend remove' (Remove a friend)\n" .
+				"Can't remove a friend - friend # $arg2 does not exist.\n";
+		} elsif ($arg1 eq "remove") {
+			$arg2--;
+			message "Attempting to remove $friends{$arg2}{'name'} from your friend list\n";
+			sendFriendRemove(\$remote_socket, $friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
 		} elsif ($arg1 eq "accept" && $incomingFriend{'accountID'} eq "") {
 			error	"Error in function 'friend accept' (Accept a friend request)\n" .
 				"Can't accept friend request - no incoming request.\n";
@@ -1120,6 +1140,7 @@ sub parseCommand {
 			error	"Error in function 'friend reject' (Reject a friend request)\n" .
 				"Can't reject friend request - no incoming request.\n";
 		} elsif ($arg1 eq "reject") {
+			message "Friend request from $incomingFriend{'name'} is rejected\n";
 			sendFriendReject(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
 		} elsif ($arg1 eq "pm" && ($arg2 < 1 || $arg2 > @friendsID)) {
@@ -1127,11 +1148,11 @@ sub parseCommand {
 				"Can't add friend to the PM list - friend # $arg2 does not exist.\n";
 		} elsif ($arg1 eq "pm") {
 			$arg2--;
-			if (binFind(\@privMsgUsers, $friends{$friendsID[$arg2]}{'name'}) eq "") {
-				$privMsgUsers[@privMsgUsers] = $friends{$friendsID[$arg2]}{'name'};
-				message "Friend $friends{$friendsID[$arg2]}{'name'} is added to the PM list\n";
+			if (binFind(\@privMsgUsers, $friends{$arg2}{'name'}) eq "") {
+				$privMsgUsers[@privMsgUsers] = $friends{$arg2}{'name'};
+				message "Friend $friends{$arg2}{'name'} has been added to the PM list\n";
 			} else {
-				message "Friend $friends{$friendsID[$arg2]}{'name'} is already in the PM list\n";
+				message "Friend $friends{$arg2}{'name'} is already in the PM list\n";
 			}
 		} else {
 			message("---------Friends----------\n", "list");
@@ -1139,7 +1160,7 @@ sub parseCommand {
 			for (my $i = 0; $i < @friendsID; $i++) {
 				message(swrite(
 					"@<  @<<<<<<<<<<<<<<<<<<<<<<<  @<",
-					[$friendsID[$i], $friends{$friendsID[$i]}{'name'}, $friends{$friendsID[$i]}{'online'}? 'X':'']),
+					[$i + 1, $friends{$i}{'name'}, $friends{$i}{'online'}? 'X':'']),
 					"list");
 			}
 			message("--------------------------\n", "list");
@@ -9483,7 +9504,7 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef @arrowCraftID;
-		for ($i = 4; $i < $msg_size; $i += 2) {
+		for (my $i = 4; $i < $msg_size; $i += 2) {
 			$ID = unpack("S1", substr($msg, $i, 2));
 			my $index = findIndex($char->{inventory}, "nameID", $ID);
 			binAdd(\@arrowCraftID, $index);
@@ -9506,12 +9527,12 @@ sub parseMsg {
 		undef %friends;
 		$ID = 0;
 		for (my $i = 4; $i < $msg_size; $i += 32) {
-			$ID++;
 			binAdd(\@friendsID, $ID);
 			$friends{$ID}{'accountID'} = substr($msg, $i, 4);
 			$friends{$ID}{'charID'} = substr($msg, $i + 4, 4);
 			$friends{$ID}{'name'} = unpack("Z24", substr($msg, $i + 8 , 24));
 			$friends{$ID}{'online'} = 0;
+			$ID++;
 		}
 
 	} elsif ($switch eq "0206") {
@@ -9521,9 +9542,9 @@ sub parseMsg {
 		my $isNotOnline = unpack("C1",substr($msg, 10, 1));
 		
 		for (my $i = 0; $i < @friendsID; $i++) {
-			if ($friends{$friendsID[$i]}{'accountID'} eq $friendAccountID && $friends{$friendsID[$i]}{'charID'} eq $friendCharID) {
-				$friends{$friendsID[$i]}{'online'} = 1 - $isNotOnline;
-				message "Friend $friends{$friendsID[$i]}{'name'} has been " .
+			if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
+				$friends{$i}{'online'} = 1 - $isNotOnline;
+				message "Friend $friends{$i}{'name'} has been " .
 					($isNotOnline? 'disconnected' : 'connected') . "\n";
 				last;
 			}
@@ -9533,8 +9554,8 @@ sub parseMsg {
 		# Incoming friend request
 		$incomingFriend{'accountID'} = substr($msg, 2, 4);
 		$incomingFriend{'charID'} = substr($msg, 6, 4);
-		my $name = unpack("Z24", substr($msg, 10, 24));
-		message "$name wants to be your friend\n";
+		$incomingFriend{'name'} = unpack("Z24", substr($msg, 10, 24));
+		message "$incomingFriend{'name'} wants to be your friend\n";
 		message "Type 'friend accept' to be friend with $name, otherwise type 'friend reject'\n";
 
 	} elsif ($switch eq "0209") {
@@ -9544,7 +9565,26 @@ sub parseMsg {
 		if ($type) {
 			message "$name rejected to be your friend\n";
 		} else {
+			my $ID = @friendsID;
+			binAdd(\@friendsID, $ID);
+			$friends{$ID}{'accountID'} = substr($msg, 4, 4);
+			$friends{$ID}{'charID'} = substr($msg, 8, 4);
+			$friends{$ID}{'name'} = $name;
+			$friends{$ID}{'online'} = 1;
 			message "$name is now your friend\n";
+		}
+
+	} elsif ($switch eq "020A") {
+		# Friend removed
+		my $friendAccountID = substr($msg, 2, 4);
+		my $friendCharID = substr($msg, 6, 4);
+		for (my $i = 0; $i < @friendsID; $i++) {
+			if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
+				message "$friends{$i}{'name'} is no longer your friend\n";
+				binRemove(\@friendsID, $i);
+				delete $friends{$i};
+				last;
+			}
 		}
 
 	}

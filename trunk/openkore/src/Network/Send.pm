@@ -75,6 +75,7 @@ our @EXPORT = qw(
 	sendFriendAccept
 	sendFriendReject
 	sendFriendRequest
+	sendFriendRemove
 	sendForgeItem
 	sendGameLogin
 	sendGetPlayerInfo
@@ -783,6 +784,15 @@ sub sendFriendRequest {
 	my $msg = pack("C*", 0x02, 0x02).$name;
 	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Request to be a friend: $name\n", "sendPacket";
+}
+
+sub sendFriendRemove {
+	my $r_socket = shift;
+	my $accountID = shift;
+	my $charID = shift;
+	my $msg = pack("C*", 0x03, 0x02) . $accountID . $charID;
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Remove a friend\n", "sendPacket";
 }
 
 sub sendForgeItem {
