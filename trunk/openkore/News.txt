@@ -88,16 +88,18 @@ New commands:
 - ai on
   ai off
   Turns AI on/off.
-- card list
-  List cards in your inventory.
 - card use <card inventory number>
   Get the list of items you can slot the card into.
 - card mergelist
   Show the list of items you can slot the card into again.
 - card mergecancel
   Cancel the card merging request.
-- card merge <merge list number>
-  Merge the card into the item.
+- card merge <inventory number>
+  Merge the used card into the specified item.
+- card forceuse <card inventory index> <item inventory index>
+  This advanced command will instantly merge the specified card
+  and the specified item. It only checks if the items exist in the
+  inventory, so it's possible to screw up with this.
 - 'weight [<#>]' command tells you how much more stuff you can carry
   (if you want to know how many more Red Potion you can carry, and
   Red Potion weighs 7, then type 'weight 7').
