@@ -106,7 +106,7 @@ New commands:
   On many servers any class can create arrows using this exploit.
   # is the inventory number of the item you wish to craft into arrows.
 - friend
-  List your friends, the online status is currently not functioning.
+  List your friends.
 - friend request #
   Request a player to be your friend.
   The player number is obtained by the 'pl' command.
@@ -114,6 +114,8 @@ New commands:
   Accept the request to be friend.
 - friend reject
   Reject the request to be friend.
+- friend pm #
+  Add the specified friend to the PM list for easy PM-ing.
 
 New config options:
 - partySkill: target_dead
