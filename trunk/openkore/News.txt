@@ -173,6 +173,7 @@ Internal:
 - New functions Commands::register() and Commands::unregister() for easy
   registration of new commands in plugins.
 - Store $guild{member}[$c]{charID}.
+- Get rid of useless %chars_old
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern.

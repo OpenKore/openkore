@@ -84,7 +84,7 @@ sub initMapChangeVars {
 		$portals_old{$_}{gone_time} = time if (!$portals_old{$_}{gone_time});
 	}
 
-	$chars_old[$config{'char'}]{pos_to} = {%{$chars[$config{'char'}]{pos_to}}};
+	$char->{old_pos_to} = {%{$char->{pos_to}}};
 	delete $chars[$config{'char'}]{'sitting'};
 	delete $chars[$config{'char'}]{'dead'};
 	delete $chars[$config{'char'}]{'warp'};
@@ -1842,7 +1842,7 @@ sub AI {
 		# you came from (source portal)
 		foreach (@portalsID_old) {
 			next if (!$_);
-			$dist = distance($chars_old[$config{char}]{pos_to}, $portals_old{$_}{pos});
+			$dist = distance($char->{old_pos_to}, $portals_old{$_}{pos});
 			if ($dist <= 7 && ($first || $dist < $smallDist)) {
 				$smallDist = $dist;
 				$foundID = $_;
