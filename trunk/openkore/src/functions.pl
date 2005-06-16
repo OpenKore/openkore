@@ -1143,6 +1143,7 @@ sub parseCommand {
 				"Can't accept friend request - no incoming request.\n";
 
 		} elsif ($arg1 eq "accept") {
+			message "Accepting friend request\n";
 			sendFriendAccept(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
 
@@ -9575,7 +9576,7 @@ sub parseMsg {
 		$incomingFriend{'charID'} = substr($msg, 6, 4);
 		$incomingFriend{'name'} = unpack("Z24", substr($msg, 10, 24));
 		message "$incomingFriend{'name'} wants to be your friend\n";
-		message "Type 'friend accept' to be friend with $name, otherwise type 'friend reject'\n";
+		message "Type 'friend accept' to be friend with $incomingFriend{'name'}, otherwise type 'friend reject'\n";
 
 	} elsif ($switch eq "0209") {
 		# Response to friend request
