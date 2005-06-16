@@ -2,22 +2,22 @@
 0000 Idle
 0069 Account Info
 006A Connection Failed
-006B Received characters from Game Login Server
+006B Recieved characters from Game Login Server
 006C Error logging into Game Login Server (invalid character specified)...
-0071 Received character ID and Map IP from Game Login Server
+0071 Recieved character ID and Map IP from Game Login Server
 0073 Enter Map
 0078 Unit Exists
 0079 Unit Connected
 007B Unit Move
 007C Unit Spawned
-007F Received Sync
-007F Received Sync
+007F Recieved Sync
+007F Recieved Sync
 0080 Unit Lost (Died, Disappeared, Disconnected)
 0081 Disconnected from Server
 0087 You Move
 0088 Unit Position
 008A Item take / attack damage / sit / stand
-008D Public message
+008D Public essage
 008E Public message by yourself
 0091 Map Changed
 0092 Map Server Changed
@@ -68,7 +68,7 @@
 00DF Chat Room Properties Modified
 00E1 Chat Room Owner Changed
 00E5 Deal Request
-00E7 Deal Request Reply
+00E7 Deal Accept
 00E9 Deal Added (Other)
 00EA Deal Added (You)
 00EC Deal Confirm
@@ -205,6 +205,11 @@
 01F2 Guild member in/out
 01F4 Deal Request
 01F5 Deal Accept
+0201 Friend List
+0206 Friend In/Out
+0207 Friend Request Receive
+0209 Friend Request Response
+020A Friend Removed
 
 [Send]
 0064 Master Login
@@ -305,3 +310,6 @@
 01DB Login Code Request
 01DD Login
 01FA Login
+0202 Friend Request
+0203 Friend Remove
+0208 Friend Request Accept/Reject
