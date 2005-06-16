@@ -1162,8 +1162,8 @@ sub parseCommand {
 			} else {
 				$arg2--;
 				if (binFind(\@privMsgUsers, $friends{$arg2}{'name'}) eq "") {
+					message "Friend $friends{$arg2}{'name'} has been added to the PM list as ".@privMsgUsers."\n";
 					$privMsgUsers[@privMsgUsers] = $friends{$arg2}{'name'};
-					message "Friend $friends{$arg2}{'name'} has been added to the PM list\n";
 				} else {
 					message "Friend $friends{$arg2}{'name'} is already in the PM list\n";
 				}
