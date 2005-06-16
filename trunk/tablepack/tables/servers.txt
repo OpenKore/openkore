@@ -105,6 +105,17 @@ serverType 2
 patchserver wpatch.ragnarok.com.ph
 patchpath /patch50
 
+[Philippines - pRO: Sakray]
+ip 210.1.70.69
+port 6900
+master_version 27
+version 1
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+serverType 2
+
 [Europe - euRO]
 ip 62.109.138.134
 port 6900
