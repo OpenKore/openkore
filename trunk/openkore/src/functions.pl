@@ -1101,59 +1101,78 @@ sub parseCommand {
 	} elsif ($switch eq "friend") {
 		($arg1) = $input =~ /^[\s\S]*? (\w*)/;
 		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)\b/;
-		
-		if ($arg1 eq "request" && $playersID[$arg2] eq "") {
-			error	"Error in function 'friend request' (Request to be a friend)\n" .
-				"Can't request to be a friend - player $arg2 does not exist.\n";
-		} elsif ($arg1 eq "request" && $players{$playersID[$arg2]}{name} eq "Unknown") {
-			error	"Error in function 'friend request' (Request to be a friend)\n" .
-				"Can't request to be a friend - player information hasn't been received.\n";
-		} elsif ($arg1 eq "request") {
-			my $alreadyFriend = 0;
-			for (my $i = 0; $i < @friendsID; $i++) {
-				if ($friends{$i}{'name'} eq $players{$playersID[$arg2]}{name}) {
-					$alreadyFriend = 1;
-					last;
+
+		if ($arg1 eq "request") {
+			if ($playersID[$arg2] eq "") {
+				error	"Error in function 'friend request' (Request to be a friend)\n" .
+					"Can't request to be a friend - player $arg2 does not exist.\n";
+
+			} elsif (!$players{$playersID[$arg2]}{gotName}) {
+				error	"Error in function 'friend request' (Request to be a friend)\n" .
+					"Can't request to be a friend - player information hasn't been received.\n";
+
+			} else {
+				my $alreadyFriend = 0;
+				for (my $i = 0; $i < @friendsID; $i++) {
+					if ($friends{$i}{'name'} eq $players{$playersID[$arg2]}{name}) {
+						$alreadyFriend = 1;
+						last;
+					}
+				}
+				if ($alreadyFriend) {
+					error	"Error in function 'friend request' (Request to be a friend)\n" .
+						"Can't request to be a friend - $players{$playersID[$arg2]}{name} is already your friend.\n";
+				} else {
+					message "Requesting $players{$playersID[$arg2]}{name} to be your friend\n";
+					sendFriendRequest(\$remote_socket, $players{$playersID[$arg2]}{name});
 				}
 			}
-			if ($alreadyFriend) {
-				error	"Error in function 'friend request' (Request to be a friend)\n" .
-					"Can't request to be a friend - $players{$playersID[$arg2]}{name} is already your friend.\n";
-			} else {
-				message "Requesting $players{$playersID[$arg2]}{name} to be your friend\n";
-				sendFriendRequest(\$remote_socket, $players{$playersID[$arg2]}{name});
-			}
-		} elsif ($arg1 eq "remove" && ($arg2 < 1 || $arg2 > @friendsID)) {
-			error	"Error in function 'friend remove' (Remove a friend)\n" .
-				"Can't remove a friend - friend # $arg2 does not exist.\n";
+
 		} elsif ($arg1 eq "remove") {
-			$arg2--;
-			message "Attempting to remove $friends{$arg2}{'name'} from your friend list\n";
-			sendFriendRemove(\$remote_socket, $friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
+			if ($arg2 < 1 || $arg2 > @friendsID) {
+				error	"Error in function 'friend remove' (Remove a friend)\n" .
+					"Can't remove a friend - friend # $arg2 does not exist.\n";
+			} else {
+				$arg2--;
+				message "Attempting to remove $friends{$arg2}{'name'} from your friend list\n";
+				sendFriendRemove(\$remote_socket, $friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
+			}
+
 		} elsif ($arg1 eq "accept" && $incomingFriend{'accountID'} eq "") {
 			error	"Error in function 'friend accept' (Accept a friend request)\n" .
 				"Can't accept friend request - no incoming request.\n";
+
 		} elsif ($arg1 eq "accept") {
 			sendFriendAccept(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
+
 		} elsif ($arg1 eq "reject" && $incomingFriend{'accountID'} eq "") {
 			error	"Error in function 'friend reject' (Reject a friend request)\n" .
 				"Can't reject friend request - no incoming request.\n";
+
 		} elsif ($arg1 eq "reject") {
 			message "Friend request from $incomingFriend{'name'} is rejected\n";
 			sendFriendReject(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
-		} elsif ($arg1 eq "pm" && ($arg2 < 1 || $arg2 > @friendsID)) {
-			error	"Error in function 'friend pm' (Add a friend to the PM list)\n" .
-				"Can't add friend to the PM list - friend # $arg2 does not exist.\n";
+
 		} elsif ($arg1 eq "pm") {
-			$arg2--;
-			if (binFind(\@privMsgUsers, $friends{$arg2}{'name'}) eq "") {
-				$privMsgUsers[@privMsgUsers] = $friends{$arg2}{'name'};
-				message "Friend $friends{$arg2}{'name'} has been added to the PM list\n";
+			if ($arg2 < 1 || $arg2 > @friendsID) {
+				error	"Error in function 'friend pm' (Add a friend to the PM list)\n" .
+					"Can't add friend to the PM list - friend # $arg2 does not exist.\n";
 			} else {
-				message "Friend $friends{$arg2}{'name'} is already in the PM list\n";
+				$arg2--;
+				if (binFind(\@privMsgUsers, $friends{$arg2}{'name'}) eq "") {
+					$privMsgUsers[@privMsgUsers] = $friends{$arg2}{'name'};
+					message "Friend $friends{$arg2}{'name'} has been added to the PM list\n";
+				} else {
+					message "Friend $friends{$arg2}{'name'} is already in the PM list\n";
+				}
 			}
+
+		} elsif ($arg1 ne "") {
+			error	"Syntax Error in function 'friend' (Manage Friends List)\n" .
+				"Usage: friend [request|remove|accept|reject|pm]\n";
+
 		} else {
 			message("---------Friends----------\n", "list");
 			message("#   Name                      Online\n", "list");
