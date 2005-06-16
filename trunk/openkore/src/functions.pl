@@ -6376,21 +6376,21 @@ sub parseMsg {
 		
 	} elsif ($switch eq "007F") {
 		$conState = 5 if ($conState != 4 && $xkore);
-		$time = unpack("L1",substr($msg, 2, 4));
+		my $time = unpack("L1",substr($msg, 2, 4));
 		debug "Received Sync\n", "parseMsg", 2;
 		$timeout{'play'}{'time'} = time;
 
 	} elsif ($switch eq "0080") {
 		$conState = 5 if ($conState != 4 && $xkore);
-		$ID = substr($msg, 2, 4);
-		$type = unpack("C1",substr($msg, 6, 1));
+		my $ID = substr($msg, 2, 4);
+		my $type = unpack("C1",substr($msg, 6, 1));
 
 		if ($ID eq $accountID) {
 			message "You have died\n";
-			closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1;
-			$chars[$config{'char'}]{'deathCount'}++;
-			$chars[$config{'char'}]{'dead'} = 1;
-			$chars[$config{'char'}]{'dead_time'} = time;
+			closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || !$AI;
+			$char->{deathCount}++;
+			$char->{dead} = 1;
+			$char->{dead_time} = time;
 
 		} elsif (%{$monsters{$ID}}) {
 			%{$monsters_old{$ID}} = %{$monsters{$ID}};
