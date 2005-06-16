@@ -110,6 +110,8 @@ New commands:
 - friend request #
   Request a player to be your friend.
   The player number is obtained by the 'pl' command.
+- friend remove #
+  Remove a friend from your friend list.
 - friend accept
   Accept the request to be friend.
 - friend reject
