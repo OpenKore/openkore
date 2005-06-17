@@ -9565,7 +9565,7 @@ sub parseMsg {
 			if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
 				$friends{$i}{'online'} = 1 - $isNotOnline;
 				message "Friend $friends{$i}{'name'} has been " .
-					($isNotOnline? 'disconnected' : 'connected') . "\n";
+					($isNotOnline? 'disconnected' : 'connected') . "\n", undef, 1;
 				last;
 			}
 		}
