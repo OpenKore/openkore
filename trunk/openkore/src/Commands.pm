@@ -199,7 +199,7 @@ sub initDescriptions {
 # Commands::run(input)
 # input: a command.
 #
-# Processes $input. See also <a href="http://openkore.sourceforge.net/wiki/">the user documentation</a>
+# Processes $input. See also <a href="http://openkore.sourceforge.net/docs.php">the user documentation</a>
 # for a list of commands.
 #
 # Example:
@@ -262,7 +262,9 @@ sub register {
 
 ##
 # Commands::unregister(ID)
-# ID: an ID returned by Commands::
+# ID: an ID returned by Commands::register()
+#
+# Unregisters a registered command.
 sub unregister {
 	my $ID = shift;
 
