@@ -176,10 +176,11 @@ Internal:
 - Get rid of useless %chars_old
 
 Credits:
-- Damokles: case sensitivity fix, avoidGM_namePattern.
+- Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.
 - kunjandad: friend list packet support.
 - Crypticode: 'ai on'/'ai off' commands; item name support in 'uneq' command.
 - punkpudding: route_teleport_notInMaps.
+- Sinistral: skillsstatus.txt help.
 
 
 ==================
