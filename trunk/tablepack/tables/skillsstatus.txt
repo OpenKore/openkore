@@ -62,4 +62,9 @@
 92 Lightning Loader
 93 Seismic Weapon
 100 Muted
+103 Aura Blade
+104 Parrying
 106 Tension Relax
+108 Enchant Deadly Poison
+115 True Sight
+116 Wind Walk
