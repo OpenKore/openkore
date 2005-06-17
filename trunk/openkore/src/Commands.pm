@@ -56,57 +56,58 @@ our %customCommands;
 
 sub initHandlers {
 	%handlers = (
-	ai		=> \&cmdAI,
-	aiv		=> \&cmdAIv,
+	ai			=> \&cmdAI,
+	aiv			=> \&cmdAIv,
 	arrowcraft	=> \&cmdArrowCraft,
 	auth		=> \&cmdAuthorize,
 	bestow		=> \&cmdBestow,
 	bangbang	=> \&cmdBangBang,
 	bingbing	=> \&cmdBingBing,
-	buy		=> \&cmdBuy,
+	buy			=> \&cmdBuy,
 	card		=> \&cmdCard,
 	cart		=> \&cmdCart,
 	chatmod		=> \&cmdChatMod,
 	chist		=> \&cmdChist,
 	closeshop	=> \&cmdCloseShop,
 	conf		=> \&cmdConf,
-	crl		=> \&cmdChatRoomList,
+	crl			=> \&cmdChatRoomList,
 	debug		=> \&cmdDebug,
 	doridori	=> \&cmdDoriDori,
-	e		=> \&cmdEmotion,
-	eq		=> \&cmdEquip,
+	e			=> \&cmdEmotion,
+	eq			=> \&cmdEquip,
 	eval		=> \&cmdEval,
+	friend		=> \&cmdFriend,
 	guild		=> \&cmdGuild,
-	i		=> \&cmdInventory,
+	i			=> \&cmdInventory,
 	ignore		=> \&cmdIgnore,
 	ihist		=> \&cmdIhist,
-	il		=> \&cmdItemList,
-	im		=> \&cmdUseItemOnMonster,
-	ip		=> \&cmdUseItemOnPlayer,
-	is		=> \&cmdUseItemOnSelf,
+	il			=> \&cmdItemList,
+	im			=> \&cmdUseItemOnMonster,
+	ip			=> \&cmdUseItemOnPlayer,
+	is			=> \&cmdUseItemOnSelf,
 	kill		=> \&cmdKill,
 	leave		=> \&cmdLeaveChatRoom,
 	help		=> \&cmdHelp,
 	reload		=> \&cmdReload,
 	memo		=> \&cmdMemo,
-	ml		=> \&cmdMonsterList,
-	nl		=> \&cmdNPCList,
+	ml			=> \&cmdMonsterList,
+	nl			=> \&cmdNPCList,
 	openshop	=> \&cmdOpenShop,
-	pl		=> \&cmdPlayerList,
+	pl			=> \&cmdPlayerList,
 	plugin		=> \&cmdPlugin,
-	pm		=> \&cmdPrivateMessage,
+	pm			=> \&cmdPrivateMessage,
 	portals		=> \&cmdPortalList,
-	s		=> \&cmdStatus,
+	s			=> \&cmdStatus,
 	send		=> \&cmdSendRaw,
-	sit		=> \&cmdSit,
+	sit			=> \&cmdSit,
 	skills		=> \&cmdSkills,
 	spells		=> \&cmdSpells,
 	storage		=> \&cmdStorage,
-	sl		=> \&cmdUseSkill,
-	sm		=> \&cmdUseSkill,
-	sp		=> \&cmdPlayerSkill,
-	ss		=> \&cmdUseSkill,
-	st		=> \&cmdStats,
+	sl			=> \&cmdUseSkill,
+	sm			=> \&cmdUseSkill,
+	sp			=> \&cmdPlayerSkill,
+	ss			=> \&cmdUseSkill,
+	st			=> \&cmdStats,
 	stand		=> \&cmdStand,
 	stat_add	=> \&cmdStatAdd,
 	switchconf	=> \&cmdSwitchConf,
@@ -119,7 +120,7 @@ sub initHandlers {
 	version		=> \&cmdVersion,
 	warp		=> \&cmdWarp,
 	weight		=> \&cmdWeight,
-	who		=> \&cmdWho,
+	who			=> \&cmdWho,
 	);
 }
 
@@ -131,54 +132,55 @@ sub initCompletions {
 
 sub initDescriptions {
 	%descriptions = (
-	ai		=> 'Enable/disable AI.',
-	aiv		=> 'Display current AI sequences.',
+	ai			=> 'Enable/disable AI.',
+	aiv			=> 'Display current AI sequences.',
 	arrowcraft	=> 'Create Arrows.',
 	auth		=> '(Un)authorize a user for using Kore chat commands.',
 	bangbang	=> 'Does a bangbang body turn.',
 	bestow		=> 'Bestow admin in a chat room.',
 	bingbing	=> 'Does a bingbing body turn.',
-	buy		=> 'Buy an item from the current NPC shop',
+	buy			=> 'Buy an item from the current NPC shop',
 	cart		=> 'Cart management',
 	chatmod		=> 'Modify chat room settings.',
 	chist		=> 'Display last few entries from the chat log.',
 	closeshop	=> 'Close your vending shop.',
 	conf		=> 'Change a configuration key.',
-	crl		=> 'List chat rooms.',
+	crl			=> 'List chat rooms.',
 	debug		=> 'Toggle debug on/off.',
 	doridori	=> 'Does a doridori head turn.',
-	e		=> 'Show emotion.',
-	eq		=> 'Equip an item.',
+	e			=> 'Show emotion.',
+	eq			=> 'Equip an item.',
 	#eval		=> 'Evaluable a Perl expression (developers only).',
+	friend		=> 'Friend management.',
 	guild		=> 'Guild management.',
-	i		=> 'Display inventory items.',
+	i			=> 'Display inventory items.',
 	ignore		=> 'Ignore a user (block his messages).',
-	il		=> 'Display items on the ground.',
+	il			=> 'Display items on the ground.',
 	ihist		=> 'Displays last few entries of the item log.',
-	im		=> 'Use item on monster.',
-	ip		=> 'Use item on player.',
-	is		=> 'Use item on yourself.',
+	im			=> 'Use item on monster.',
+	ip			=> 'Use item on player.',
+	is			=> 'Use item on yourself.',
 	kill		=> 'Attack another player (PVP/GVG only).',
 	leave		=> 'Leave chat room.',
 	reload		=> 'Reload configuration files.',
 	memo		=> 'Save current position for warp portal.',
-	ml		=> 'List monsters that are on screen.',
-	nl		=> 'List NPCs that are on screen.',
+	ml			=> 'List monsters that are on screen.',
+	nl			=> 'List NPCs that are on screen.',
 	openshop	=> 'Open your vending shop.',
-	pl		=> 'List players that are on screen.',
+	pl			=> 'List players that are on screen.',
 	plugin		=> 'Control plugins.',
-	pm		=> 'Send a private message.',
+	pm			=> 'Send a private message.',
 	portals		=> 'List portals that are on screen.',
-	s		=> 'Display character status.',
+	s			=> 'Display character status.',
 	send		=> 'Send a raw packet to the server.',
-	sit		=> 'Sit down.',
+	sit			=> 'Sit down.',
 	skills		=> 'Show skills or add skill point.',
 	storage		=> 'Handle items in Kafra storage.',
-	sl		=> 'Use skill on location.',
-	sm		=> 'Use skill on monster.',
-	sp		=> 'Use skill on player.',
-	ss		=> 'Use skill on self.',
-	st		=> 'Display stats.',
+	sl			=> 'Use skill on location.',
+	sm			=> 'Use skill on monster.',
+	sp			=> 'Use skill on player.',
+	ss			=> 'Use skill on self.',
+	st			=> 'Display stats.',
 	stand		=> 'Stand up.',
 	stat_add	=> 'Add status point.',
 	switchconf	=> 'Switch configuration file.',
@@ -190,7 +192,7 @@ sub initDescriptions {
 	version		=> 'Display the version of openkore.',
 	warp		=> 'Open warp portal.',
 	weight		=> 'Gives a report about your inventory weight.',
-	who		=> 'Display the number of people on the current server.',
+	who			=> 'Display the number of people on the current server.',
 	);
 }
 
@@ -929,6 +931,91 @@ sub cmdEval {
 		eval $_[1];
 		Log::error("$@") if ($@);
 	}
+}
+
+sub cmdFriend {
+	my (undef, $args) = @_;
+	my ($arg1, $arg2) = split(' ', $args, 2);
+
+	if ($arg1 eq "request") {
+		my $player = Match::player($arg2);
+
+		if (!$player) {
+			error "Player $arg2 does not exist\n";
+		} elsif (!$player->{gotName}) {
+			error "Player name has not been received, please try again\n";
+		} else {
+			my $alreadyFriend = 0;
+			for (my $i = 0; $i < @friendsID; $i++) {
+				if ($friends{$i}{'name'} eq $player->{name}) {
+					$alreadyFriend = 1;
+					last;
+				}
+			}
+			if ($alreadyFriend) {
+				error "$player->{name} is already your friend\n";
+			} else {
+				message "Requesting $player->{name} to be your friend\n";
+				sendFriendRequest(\$remote_socket, $players{$playersID[$arg2]}{name});
+			}
+		}
+
+	} elsif ($arg1 eq "remove") {
+		if ($arg2 < 1 || $arg2 > @friendsID) {
+			error "Friend #$arg2 does not exist\n";
+		} else {
+			$arg2--;
+			message "Attempting to remove $friends{$arg2}{'name'} from your friend list\n";
+			sendFriendRemove(\$remote_socket, $friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
+		}
+
+	} elsif ($arg1 eq "accept") {
+		if ($incomingFriend{'accountID'} eq "") {
+			error "Can't accept the friend request, no incoming request\n";
+		} else {
+			message "Accepting the friend request from $incomingFriend{'name'}\n";
+			sendFriendAccept(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			undef %incomingFriend;
+		}
+
+	} elsif ($arg1 eq "reject") {
+		if ($incomingFriend{'accountID'} eq "") {
+			error "Can't reject the friend request - no incoming request\n";
+		} else {
+			message "Rejecting the friend request from $incomingFriend{'name'}\n";
+			sendFriendReject(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			undef %incomingFriend;
+		}
+
+	} elsif ($arg1 eq "pm") {
+		if ($arg2 < 1 || $arg2 > @friendsID) {
+			error "Friend #$arg2 does not exist\n";
+		} else {
+			$arg2--;
+			if (binFind(\@privMsgUsers, $friends{$arg2}{'name'}) eq "") {
+				message "Friend $friends{$arg2}{'name'} has been added to the PM list as ".@privMsgUsers."\n";
+				$privMsgUsers[@privMsgUsers] = $friends{$arg2}{'name'};
+			} else {
+				message "Friend $friends{$arg2}{'name'} is already in the PM list\n";
+			}
+		}
+
+	} elsif ($arg1 ne "") {
+		error "Syntax Error in function 'friend' (Manage Friends List)\n" .
+			"Usage: friend [request|remove|accept|reject|pm]\n";
+
+	} else {
+		message("---------Friends----------\n", "list");
+		message("#   Name                      Online\n", "list");
+		for (my $i = 0; $i < @friendsID; $i++) {
+			message(swrite(
+				"@<  @<<<<<<<<<<<<<<<<<<<<<<<  @<",
+				[$i + 1, $friends{$i}{'name'}, $friends{$i}{'online'}? 'X':'']),
+				"list");
+		}
+		message("--------------------------\n", "list");
+	}
+	
 }
 
 sub cmdGuild {
