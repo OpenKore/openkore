@@ -8,8 +8,8 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-our $Version = "0.9";
-my $stable = 1;
+our $Version = "1.0";
+my $stable = 0;
 
 use strict;
 use Plugins;
@@ -108,7 +108,7 @@ sub parseMacroFile {
     } elsif ($block{type} eq "auto") {
       my ($key, $value) = $_ =~ /^(.*?) (.*)/;
       next unless $key;
-      if ($key =~ /^(inventory|storage|cart|shop|equipped|var|status|location|set)$/) {
+      if ($key =~ /^(inventory|storage|cart|shop|equipped|var|status|location|set)+$/) {
         push(@{$r_hash->{$block{name}}->{$key}}, $value);
       } else {
         $r_hash->{$block{name}}->{$key} = $value;
@@ -191,11 +191,12 @@ sub parseCmd {
       my (undef, $am) = split(/ /, $command);
       releaseAM($am);
     } elsif ($command =~ /\@call/) {
-      my (undef, $macro, $times) = split(/ /, $command);
+      my (undef, $macro, $times) = split(/ /, $command, 3);
+      # TODO parse $times?
       pushMacro($macro, $times);
     } elsif ($command =~ /\@set/) {
-      my ($var, $val) = $command =~ /^\@set +(.*?) +(.*)$/;
-      setVar($var, parseCmd($val));
+      my ($var, $val) = $command =~ /^\@set +\((.*?)\) +(.*)$/;
+      setVar(parseCmd($var), parseCmd($val));
     } elsif ($command =~ /\@pause/) {
       my (undef, $timeout) = split(/ /, $command);
       our $macro_delay;
@@ -224,9 +225,9 @@ sub parseCmd {
     elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
     elsif ($kw eq 'shopamount') {$ret = getShopAmount($arg)}
     elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
-    elsif ($kw eq "eval")      {$ret = eval($arg)};
+    elsif ($kw eq 'eval')      {$ret = eval($arg)};
     return $command if $ret eq '_%_';
-    if (defined $ret) {$command =~ s/\@$kw +\(.*?\)/$ret/}
+    if (defined $ret) {escape(\$arg); $command =~ s/\@$kw +\($arg\)/$ret/g}
     else {
       error "[macro] $command failed. Macro stopped.\n";
       clearMacro();
@@ -517,6 +518,9 @@ sub automacroCheck {
     if (defined $automacro{$am}->{var}) {
       foreach my $i (@{$automacro{$am}->{var}}) {next CHKAM unless checkVar($i)};
     };
+    if (defined $automacro{$am}->{varvar}) {
+      foreach my $i (@{$automacro{$am}->{varvar}}) {next CHKAM unless checkVarVar($i)};
+    };
 
     if (defined $automacro{$am}->{timeout}) {
       $automacro{$am}->{time} = 0 unless $automacro{$am}->{time};
@@ -567,6 +571,11 @@ sub automacroCheck {
 };
 
 # utilities ################################################
+sub escape {
+  my $r_var = shift;
+  $$r_var =~ s/([\+\?\*\(\)\[\]\{\}\|\^\$]+)/\\$1/g;
+};
+
 sub between {
   if ($_[0] <= $_[1] && $_[1] <= $_[2]) {return 1};
   return 0;
@@ -590,7 +599,10 @@ sub cmpr {
 
 sub parseArgs {
   my $arg = shift;
-  if ($arg =~ /".*"/) {return $arg =~ /^"(.*?)" +(.*?) +(.*)$/}
+  if ($arg =~ /".*"/) {
+    my @ret = $arg =~ /^"(.*?)" +(.*?)( .*)?$/;
+    $ret[2] =~ s/^ *//g; return @ret;
+  }
   else {return split(/ /, $arg, 3)};
 };
 
@@ -599,9 +611,9 @@ sub match {
   my $match;
   if ($kw =~ /^".*"$/)   {$match = 0};
   if ($kw =~ /^\/.*\/$/) {$match = 1};
-  $kw =~ s/^[\/"](.*)[\/"]/\1/g;
-  if ($match = 0 && $text eq $kw)   {return 1};
-  if ($match = 1 && $text =~ /$kw/) {return 1};
+  $kw =~ s/^[\/"](.*)[\/"]/$1/g;
+  if ($match == 0 && $text eq $kw)   {return 1};
+  if ($match == 1 && $text =~ /$kw/) {return 1};
   return 0;
 };
 
@@ -614,6 +626,17 @@ sub checkVar {
     refreshGlobal($var);
     $cvs->debug("comparing: $var ($varStack{$var}) $cond $val", 4);
     return 1 if cmpr($varStack{$var}, $cond, $val);
+  };
+  return 0;
+};
+
+# check for a variable's variable ##########################
+sub checkVarVar {
+  my $arg = shift;
+  my ($varvar) = $arg =~ /^(.*?) /;
+  if (exists $varStack{$varvar}) {
+    $arg =~ s/$varvar/"$varStack{$varvar}"/g;
+    return checkVar($arg);
   };
   return 0;
 };
@@ -769,7 +792,7 @@ sub checkPM {
 # pm /regexp/,distance
 sub checkPubM {
   my ($tPM, $distance) = $_[0] =~ /([\/"].*?[\/"]),?(.*)/;
-  if (!defined $distance) {$distance = 15};
+  $distance = 15 if ($distance eq '');
   my $arg = $_[1];
   my $mypos = calcPosition($char);
   my $pos = calcPosition($::players{$arg->{pubID}});
