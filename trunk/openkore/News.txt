@@ -5,6 +5,7 @@
 *** INCOMPATIBLE CHANGES ***:
 - Items named e.g. "Unknown 1234" are now called "Unknown #1234" so that
   you can use their name in items_control.txt.
+- The syntax for chat room commands has been changed.
 
 Bug fixes:
 - Fix deal bug: showing twice as many items added.
