@@ -580,7 +580,7 @@ sub OnExit{
 	my $self = shift;
 	if ($conState) {
 		push(@{ $self->{input_que} }, "\n");
-		main::quit();
+		quit();
 	} else {
 		exit();
 	}

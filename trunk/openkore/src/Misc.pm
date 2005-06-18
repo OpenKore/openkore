@@ -805,7 +805,7 @@ sub charSelectScreen {
 				($input2) = $input =~ /^.*? +(.*)/;
 				last;
 			} elsif ($args[0] eq "quit") {
-				main::quit();
+				quit();
 				return 0;
 			} elsif ($input !~ /^\d+$/) {
 				error "\"$input\" is not a valid character number.\n";
@@ -841,7 +841,7 @@ sub charSelectScreen {
 				if (@chars) {
 					goto TOP;
 				} else {
-					main::quit();
+					quit();
 					last;
 				}
 			}
