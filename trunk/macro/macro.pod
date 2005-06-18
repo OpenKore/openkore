@@ -1,6 +1,6 @@
 =head1 NAME
 
-macro.pl - plugin for openkore 1.5.2 and later
+macro.pl - plugin for openkore 1.6.2 and later
 
 =head1 VERSION
 
@@ -26,7 +26,7 @@ B<macro>'s configuration file syntax.
 
 =item C<%macro>
 
-Hash containing the macros. Hash structure: 
+Hash containing the macros. Hash structure:
 
 =item C<%automacro>
 
@@ -52,10 +52,6 @@ Debug object. Type C<perldoc cvsdebug.pm> for more information.
 =item C<$cfID>
 
 Config file ID, set by Settings::addConfigFile
-
-=item C<@runOnce>
-
-Array of macro IDs that are to be ignored. Usually run-once automacro IDs get in here.
 
 =back
 
@@ -184,7 +180,7 @@ Refreshes global variables on access, such as I<.pos>, I<.time>, I<.datetime>.
 =item C<checkCast(spell, r_hash)>
 
 Checks whether I<spell> is casted on or affecting the character.
-r_hash is a reference to a hash containing I<targetID>, I<x>, I<y>, 
+r_hash is a reference to a hash containing I<targetID>, I<x>, I<y>,
 I<skillID>.
 
 =item C<checkClass(class)>
@@ -237,32 +233,15 @@ Checks whether I<name> is on our screen.
 
 Returns: 1 (true), 0 (false)
 
-=item C<checkPM(pmline, r_hash)>
+=item C<checkMsg(var, line, r_hash)>
 
-Checks whether a PM was received. I<pmline> has the following syntax:
-'/regexp/,nick1,nick2,nick3,..', or '"trigger message",nick1,nick2,nick3,...'
-The nick arguments are optional.
-I<r_hash> is a reference to a hash containing I<privMsgUser> and I<privMsg>.
-This function sets the variable I<lastPMnick> which can be accessed either
-via C<getVar("I<variable>")> or directly with $varStack{variable}.
-
-Example: C<checkPM("/^my trigger message$/,Tom Jones", $arg)> (same as:
-C<checkPM("\"my trigger message\",Tom Jones", $arg)>)
-
-Returns: 1 (true), 0 (false)
-
-=item C<checkPubM(publine, r_hash)>
-
-Checks whether a public chat message was received. I<publine> has the
-following syntax: '/regexp/,distance' or '"trigger message",distance',
-The distance argument is optional.
-I<r_hash> is a reference to a hash containing I<pubMsgID>, I<pubMsgUser>
-and I<pubMsg>.
-This function sets the variable I<lastPubNick> which can be accessed
-either via C<getVar("I<variable>")> or directly with $varStack{variable}.
-
-Example: C<checkPubM("/^my trigger message$/,5", $arg)> (same as:
-C<checkPubM("\"my trigger message\",5", $arg)>
+Checks whether the message given by I<r_hash> matches the message (in) I<line>.
+I<line> must contain at least a '/regexp/' or a '"trigger message"'. For public
+message check, you can add a maxmimum distance by appending ',distance' and use
+'.lastpub' as I<var>, for private message check, add the allowed nicks by
+appending ',nick1,nick2,...' and using '.lastpm' as I<var>.
+I<r_hash> is a reference to a hash containing I<MsgUser> and I<Msg>.
+This function sets the variable I<var> to I<$r_hash-E<gt>MsgUser>.
 
 Returns: 1 (true), 0 (false)
 
