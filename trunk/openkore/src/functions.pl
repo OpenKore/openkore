@@ -6472,10 +6472,12 @@ sub parseMsg {
 		message "[dist=$dist] $chat\n", "publicchat";
 
 		ChatQueue::add('c', $ID, $chatMsgUser, $chatMsg);
-		Plugins::callHook('packet_pubMsg', { 
+		Plugins::callHook('packet_pubMsg', {
 			pubID => $ID,
-			pubMsgUser => $chatMsgUser, 
-			pubMsg => $chatMsg 
+			pubMsgUser => $chatMsgUser,
+			pubMsg => $chatMsg,
+			MsgUser => $chatMsgUser,
+			Msg => $chatMsg
 		});
 
 	} elsif ($switch eq "008E") {
@@ -6653,7 +6655,9 @@ sub parseMsg {
 		ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
 		Plugins::callHook('packet_privMsg', {
 			privMsgUser => $privMsgUser,
-			privMsg => $privMsg
+			privMsg => $privMsg,
+			MsgUser => $privMsgUser,
+			Msg => $privMsg
 		});
 
 		if ($config{dcOnPM} && $AI) {
@@ -7976,6 +7980,11 @@ sub parseMsg {
 
 		chatLog("p", "$chat\n") if ($config{'logPartyChat'});
 		ChatQueue::add('p', $ID, $chatMsgUser, $chatMsg);
+		
+		Plugins::callHook('packet_partyMsg', {
+		        MsgUser => $chatMsgUser,
+		        Msg => $chatMsg
+		});
 
 	# Hambo Started
 	# 3 Packets About MVP
@@ -8969,6 +8978,11 @@ sub parseMsg {
 		chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 		message "[Guild] $chat\n", "guildchat";
 		ChatQueue::add('g', 0, $chatMsgUser, $chatMsg);
+		
+		Plugins::callHook('packet_guildMsg', {
+		        MsgUser => $chatMsgUser,
+		        Msg => $chatMsg
+		});
 
 	} elsif ($switch eq "0187") {
 		# 0187 - long ID
