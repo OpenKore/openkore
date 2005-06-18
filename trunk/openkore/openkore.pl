@@ -186,12 +186,13 @@ use Actor;
 use Actor::Player;
 use Actor::Monster;
 use Actor::You;
+use Actor::Party;
 use Actor::Unknown;
 use Interface;
 use ChatQueue;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	Network Network::Send Commands Misc AI Skills Interface ChatQueue
-	Actor Actor::Player Actor::Monster Actor::You Actor::Unknown/);
+	Actor Actor::Player Actor::Monster Actor::You Actor::Party Actor::Unknown/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
