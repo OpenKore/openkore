@@ -487,8 +487,9 @@ sub sendCardMerge {
 	my $card_index = shift;
 	my $item_index = shift;
 	my $msg = pack("C*", 0x7C, 0x01) . pack("S*", $card_index, $item_index);
-	encrypt(\$msg, $msg);
-	sendToServerByInject($r_socket, $msg);
+	#encrypt(\$msg, $msg);
+	#sendToServerByInject($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	debug "Sent Card Merge: $card_index, $item_index\n", "sendPacket";
 }
 
@@ -496,8 +497,9 @@ sub sendCardMergeRequest {
 	my $r_socket = shift;
 	my $card_index = shift;
 	my $msg = pack("C*", 0x7A, 0x01) . pack("S*", $card_index);
-	encrypt(\$msg, $msg);
-	sendToServerByInject($r_socket, $msg);
+	#encrypt(\$msg, $msg);
+	#sendToServerByInject($r_socket, $msg);
+	sendMsgToServer($r_socket, $msg);
 	debug "Sent Card Merge Request: $card_index\n", "sendPacket";
 }
 

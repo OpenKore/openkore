@@ -38,6 +38,9 @@ Bug fixes:
 - Fix crash with Actor::You when creating a new character in the bot.
 - Long-overdue fix to make a party that you joined in this session
   work properly (obscure variable sharing problem).
+- 'card merge' series commands actually works instead of disconnecting
+  you now, on non-encrypted servers. (But does it still work on
+  encrypted servers?)
 
 New features:
 - Better support for detecting dead players.
