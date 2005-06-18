@@ -6231,20 +6231,20 @@ sub parseMsg {
 
 		} elsif (%{$players{$ID}}) {
 			if ($type == 1) {
-				message "Player Died: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
+				message "Player Died: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
 				$players{$ID}{'dead'} = 1;
 			} else {
 				if ($type == 0) {
-					debug "Player Disappeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
+					debug "Player Disappeared: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 					$players{$ID}{'disappeared'} = 1;
 				} elsif ($type == 2) {
-					debug "Player Disconnected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
+					debug "Player Disconnected: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 					$players{$ID}{'disconnected'} = 1;
 				} elsif ($type == 3) {
-					debug "Player Teleported: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
+					debug "Player Teleported: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 					$players{$ID}{'teleported'} = 1;
 				} else {
-					debug "Player Disappeared in an unknown way: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
+					debug "Player Disappeared in an unknown way: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
 					$players{$ID}{'disappeared'} = 1;
 				}
 
@@ -9073,6 +9073,18 @@ sub parseMsg {
 			$ai_v{temp}{pvp} = 2;
 		}
 
+	} elsif ($switch eq "01D6") {
+		# D6 01 - 4 bytes, used by Aegis 8.5
+		my $type = unpack("x2 S1", $msg);
+		if ($type == 0) {
+			$ai_v{temp}{pvp} = 0;
+		} elsif ($type == 6) {
+			message "PvP Display Mode\n", "map_event";
+			$ai_v{temp}{pvp} = 1;
+		} elsif ($type == 8) {
+			message "GvG Display Mode\n", "map_event";
+			$ai_v{temp}{pvp} = 2;
+		}
 
 	} elsif ($switch eq "019A") {
 		# 9A 01 - 14 bytes long
