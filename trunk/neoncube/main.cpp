@@ -66,7 +66,39 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     //prepare error.log
     DeleteFile("neoncube\\error.log");
 
-     
+    // checks if neoncube.ini exists
+    switch(CheckFileForExistance("neoncube\\neoncube.ini")) {
+	case CFFE_FILE_NOT_FOUND:
+	    AddErrorLog("file not found (neoncube\\neoncube.ini)\n");
+	    MessageBox(NULL, "file not found (neoncube\\neoncube.ini)", "Error", MB_OK | MB_ICONERROR);
+	    return -1;
+	case CFFE_PATH_NOT_FOUND:
+	    AddErrorLog("file not found (neoncube\\neoncube.ini)\n");
+	    MessageBox(NULL, "path not found (neoncube\\neoncube.ini)", "Error", MB_OK | MB_ICONERROR);
+	    return -1;
+	case CFFE_ACCESS_DENIED:
+	    AddErrorLog("file not found (neoncube\\neoncube.ini)\n");
+	    MessageBox(NULL, "access denied (neoncube\\neoncube.ini)", "Error", MB_OK | MB_ICONERROR);
+	    return -1;
+    }
+
+
+    // checks if create.exe exists
+    switch(CheckFileForExistance("neoncube\\create.exe")) {
+	case CFFE_FILE_NOT_FOUND:
+	    AddErrorLog("file not found (neoncube\\create.exe)\n");
+	    MessageBox(NULL, "file not found (neoncube\\create.exe)", "Error", MB_OK | MB_ICONERROR);
+	    return -1;
+	case CFFE_PATH_NOT_FOUND:
+	    AddErrorLog("file not found (neoncube\\create.exe)\n");
+	    MessageBox(NULL, "path not found (neoncube\\create.exe)", "Error", MB_OK | MB_ICONERROR);
+	    return -1;
+	case CFFE_ACCESS_DENIED:
+	    AddErrorLog("file not found (neoncube\\create.exe)\n");
+	    MessageBox(NULL, "access denied (neoncube\\create.exe)", "Error", MB_OK | MB_ICONERROR);
+	    return -1;
+    }    
+
  
     try { 
 	if(GetPrivateProfileString("server", "server_name", NULL, settings.szServerName, sizeof(settings.szServerName), INIFILE) <= 0)
@@ -94,6 +126,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     }
 
 
+
     lstrcat(STYLEFILE, settings.szSkin);
     lstrcat(STYLEFILE, "\\neoncube.style");
     
@@ -101,6 +134,54 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 
     settings.nBackupGRF = GetPrivateProfileInt("server","Backup_GRF", NULL, INIFILE);
 
+
+    //	checks if ini entries exist
+    try {
+	switch(CheckFileForExistance(settings.szExecutable)) {
+	
+	    case CFFE_FILE_NOT_FOUND:
+		throw "Invalid entry in neoncube.ini: \"executable\" (file not found)";
+	    break;
+	    case CFFE_PATH_NOT_FOUND:
+		throw "Invalid entry in neoncube.ini: \"executable\" (invalid path)";
+	    break;
+	    case CFFE_ACCESS_DENIED:
+		throw "Invalid entry in neoncube.ini \"executable\" (access denied)";
+	    break;
+	}
+
+	
+	switch(CheckFileForExistance(settings.szGrf)) {
+	
+	    case CFFE_FILE_NOT_FOUND:
+		throw "Invalid entry in neoncube.ini: \"grf_file\" (file not found)";
+	    break;
+	    case CFFE_PATH_NOT_FOUND:
+		throw "Invalid entry in neoncube.ini: \"grf_file\" (invalid path)";
+	    break;
+	    case CFFE_ACCESS_DENIED:
+		throw "Invalid entry in neoncube.ini \"grf_file\" (access denied)";
+	    break;
+	}
+
+	switch(CheckFileForExistance(SKINFOLDER)) {
+	
+	    case CFFE_FILE_NOT_FOUND:
+		throw "Invalid entry in neoncube.ini: \"skin\" (folder not found)";
+	    break;
+	    case CFFE_PATH_NOT_FOUND:
+		throw "Invalid entry in neoncube.ini: \"skin\" (invalid path)";
+	    break;
+	    case CFFE_ACCESS_DENIED:
+		throw "Invalid entry in neoncube.ini \"skin\" (access denied)";
+	    break;
+	}
+    }
+    catch(LPCTSTR message) {
+	MessageBox(NULL, message, "Error", MB_OK | MB_ICONERROR);
+	AddErrorLog("%s\n", message);
+	return -1;
+    }
 
     BUTTONSTYLE bsMinimize;
 
@@ -1205,6 +1286,33 @@ AddErrorLog(LPCTSTR fmt, ...)
     }
 }
 
+// ##################################################################
+// Creates a named mutex to prevent multiple instance
+//
+// @return value - TRUE if function succeeds and no instance of
+//		    the same application is running, FALSE otherwise.
+//###################################################################
+
+BOOL 
+InitInstance(void)
+{
+    
+    HANDLE hMutex;
+    hMutex = CreateMutex(NULL, TRUE, "GlobalMutex");
+
+    switch(GetLastError()) {
+	case ERROR_SUCCESS:	  
+	return TRUE;
+
+	case ERROR_ALREADY_EXISTS:
+	return FALSE;
+
+	default:
+	return FALSE;
+    }
+}
+
+
 
 // debugging use only
 void 
@@ -1226,20 +1334,29 @@ AddDebug(LPCTSTR fmt, ...)
 }
 
 
-BOOL InitInstance(void)
+CFFE_ERROR 
+CheckFileForExistance(LPCTSTR lpszFileName)
 {
-    
-    HANDLE hMutex;
-    hMutex = CreateMutex(NULL, TRUE, "GlobalMutex");
+    CFFE_ERROR ret;
 
-    switch(GetLastError()) {
-	case ERROR_SUCCESS:	  
-	return TRUE;
+    DWORD dwAttr = GetFileAttributes(lpszFileName);
 
-	case ERROR_ALREADY_EXISTS:
-	return FALSE;
+    if(dwAttr == 0xffffffff) {
+	
+	DWORD dwError = GetLastError();
+	if(dwError == ERROR_FILE_NOT_FOUND)
+	    ret = CFFE_FILE_NOT_FOUND; // file not found
 
-	default:
-	return FALSE;
+
+	else if(dwError == ERROR_PATH_NOT_FOUND)
+	    ret = CFFE_PATH_NOT_FOUND; //invalid path
+
+
+	else if(dwError == ERROR_ACCESS_DENIED)
+	    ret = CFFE_ACCESS_DENIED; //access denied (another application is using the file)
+
+	return ret;
+    } else {
+	return CFFE_FILE_EXIST;
     }
 }
