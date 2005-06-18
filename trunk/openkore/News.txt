@@ -5,7 +5,7 @@
 *** INCOMPATIBLE CHANGES ***:
 - Items named e.g. "Unknown 1234" are now called "Unknown #1234" so that
   you can use their name in items_control.txt.
-- The syntax for chat room commands has been changed.
+- The syntax for chat room commands has been changed. See below.
 
 Bug fixes:
 - Fix deal bug: showing twice as many items added.
@@ -87,6 +87,8 @@ New features:
 - Display numerical character ID when logging in.
 - Server-side friend list support.
 - Implement packet 01D6 (detect PVP/GVG mode in Aegis 8.5).
+- debugPacket_sent and debugPacket_ro_sent 2 option functions like a
+  packet sniffer.
 
 New commands:
 - storage log
@@ -128,6 +130,22 @@ New commands:
   Reject the request to be friend.
 - friend pm #
   Add the specified friend to the PM list for easy PM-ing.
+- chat create "title" <max users> <public flag> <password>
+  Create a chat room.
+- chat modify "title" <max users> <public flag> <password>
+  Modify a chat room.
+- chat bestow <user #>
+  Give chat admin power to the user.
+- chat join <chat #>
+  Join the chat room.
+- chat kick <user #>
+  Join the chat room.
+- chat leave
+  Leave the chat room.
+- chat info
+  Info about the chat room.
+- chat list
+  List of chat rooms around you.
 
 New config options:
 - partySkill: target_dead
