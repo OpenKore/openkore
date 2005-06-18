@@ -180,6 +180,8 @@ Internal:
   $actor is overloaded to call $actor->nameString).
 - $player->{name} is now undef for players whose name is unknown.
   $player->name will return $player->{name} || e.g. "Unknown #300001".
+- New $char->master function returns party or player information about
+  your followTarget.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.

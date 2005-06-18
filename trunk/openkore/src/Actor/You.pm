@@ -20,8 +20,12 @@
 #
 # Actor.pm is the base class for this class.
 package Actor::You;
+
 use strict;
+
 use Globals;
+use Log qw(message);
+
 our @ISA = qw(Actor);
 
 sub new {
@@ -75,17 +79,31 @@ sub weight_percent {
 # Returns your master (if any).
 #
 # FIXME: Should eventually ensure that either an Actor::Party (party member who
-# is not near you) or Actor::Player is returned.
-#
-# FIXME: This function isn't completed! Don't use it yet!
+# is not near you) or Actor::Player (would be ensured if %players hash was
+# guaranteed to be clean) is returned.
 sub master {
 	my ($self) = @_;
 
-	return unless $config{followTarget};
+	# Stop if we have no master
+	return unless $config{follow} && $config{followTarget};
 
+	# Search through visible players
+	keys %players;
 	while (my ($ID, $player) = each %players) {
 		return $player if $player->{name} eq $config{followTarget};
 	}
+
+	# Stop if we have no party
+	return unless $char->{party} && %{$char->{party}};
+
+	# Search through party members
+	keys %{$char->{party}{users}};
+	while (my ($ID, $player) = each %{$char->{party}{users}}) {
+		return $player if $player->{name} eq $config{followTarget};
+	}
+
+	# Master is not visible and not in party
+	return undef;
 }
 
 1;
