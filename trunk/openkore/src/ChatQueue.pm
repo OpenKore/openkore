@@ -26,7 +26,7 @@ use Commands;
 use Plugins;
 use Log qw(message error);
 use Utils qw(parseArgs getFormattedDate timeOut);
-use Misc qw(auth configModify setTimeout sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse);
+use Misc qw(auth configModify setTimeout sendMessage getIDFromChat avoidGM_talk avoidList_talk getResponse relog quit);
 
 
 our @queue;
@@ -130,12 +130,12 @@ sub processChatCommand {
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "relog") {
-		main::relog($args[0]);
+		relog($args[0]);
 		sendMessage(\$remote_socket, $type, getResponse("relogS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "logout") {
-		main::quit();
+		quit();
 		sendMessage(\$remote_socket, $type, getResponse("quitS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 

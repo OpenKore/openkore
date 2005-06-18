@@ -298,7 +298,7 @@ sub createMenuBar {
 		$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
 		$opMenu->AppendSeparator;
 	}
-	$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&main::quit, 'Exit this program');
+	$self->addMenu($opMenu, 'E&xit	Ctrl-W', \&quit, 'Exit this program');
 	$menu->Append($opMenu, 'P&rogram');
 
 	# Info menu
