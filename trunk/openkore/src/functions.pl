@@ -5786,7 +5786,7 @@ sub parseMsg {
 
 		if ($jobs_lut{$type}) {
 			my $player = $players{$ID};
-			if (!$player || !defined($player->{binID})) {
+			if (!UNIVERSAL::isa($player, 'Actor')) {
 				$player = $players{$ID} ||= new Actor::Player;
 				binAdd(\@playersID, $ID);
 				$player->{appear_time} = time;
@@ -6229,7 +6229,7 @@ sub parseMsg {
 			objectRemoved('monster', $ID, $monsters{$ID});
 			delete $monsters{$ID};
 
-		} elsif (%{$players{$ID}}) {
+		} elsif (UNIVERSAL::isa($players{$ID}, 'Actor')) {
 			if ($type == 1) {
 				message "Player Died: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n";
 				$players{$ID}{'dead'} = 1;
@@ -9090,7 +9090,12 @@ sub parseMsg {
 	} elsif ($switch eq "019A") {
 		# 9A 01 - 14 bytes long
 		my ($ID, $rank, $num) = unpack("x2 L1 L1 L1", $msg);
-		message "Your PvP rank is: $rank/$num\n", "map_event";
+		if ($rank != $ai_v{temp}{pvp_rank} ||
+		    $num != $ai_v{temp}{pvp_num}) {
+			$ai_v{temp}{pvp_rank} = $rank;
+			$ai_v{temp}{pvp_num} = $num;
+			message "Your PvP rank is: $rank/$num\n", "map_event";
+		}
 
 	} elsif ($switch eq "019B") {
 		my $ID = substr($msg, 2, 4);
