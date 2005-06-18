@@ -1327,9 +1327,6 @@ sub parseCommand {
 			Modules::reloadFile('functions.pl');
 		}
 
-	} elsif ($switch eq "relog") {
-		relog();
-
 	} elsif ($switch eq "respawn") {
 		if ($chars[$config{'char'}]{'dead'}) {
 			sendRespawn(\$remote_socket);
@@ -10255,16 +10252,6 @@ sub move {
 	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
 		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
 	AI::queue("move", \%args);
-}
-
-sub relog {
-	my $timeout = (shift || 5);
-	$conState = 1;
-	undef $conState_tries;
-	$timeout_ex{'master'}{'time'} = time;
-	$timeout_ex{'master'}{'timeout'} = $timeout;
-	Network::disconnect(\$remote_socket);
-	message "Relogging in $timeout seconds...\n", "connection";
 }
 
 sub sit {
