@@ -1,9 +1,32 @@
 ###############################
+## 1.1
+###############################
+
+06/18/05
+--------
+Added: Checks for file existance of configuration files
+
+
+
+
+
+
+
+
+###############################
 ## 1.0.0 (beta)
 ###############################
+/06/12/05
+--------
+Improved: Prevents multiple instance of application
+Improved: minor changes; exception handling
+
+
 06/10/05
 --------
 Removed: Replaced MoveFileEx() with MoveFile() (for Win ME/98/95)
+
+
 
 06/09/05
 --------
@@ -12,6 +35,9 @@ Improved: Removed GRFCreate_AddFile() function which causes high cpu usage when 
 Added: Patch list comment support. (patches with C/C++ style comments (//, /**/ or #) will be ignored)
 
 Fixed: Checking of duplicate data.grf.txt entry
+
+
+
 
 06/08/05
 --------

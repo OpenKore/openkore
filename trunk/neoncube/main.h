@@ -30,6 +30,7 @@
 #include <crtdbg.h>
 #endif /*_DEBUG*/
 
+
 #include <windows.h>
 #include <shellapi.h>
 #include <wininet.h>
@@ -90,7 +91,7 @@ struct inisetting {
 	TCHAR szNoticeURL[MAXARRSIZE];
 	TCHAR szPatchURL[MAXARRSIZE];
 	TCHAR szPatchList[MAXARRSIZE];
-	TCHAR szExecutable[10];
+	TCHAR szExecutable[256];
 	TCHAR szPatchFolder[MAXARRSIZE];
 	TCHAR szRegistration[MAXARRSIZE];
 	TCHAR szGrf[50];
@@ -383,5 +384,29 @@ void AddErrorLog(LPCTSTR fmt, ...);
 ## return value: none
 ########################################################*/
 void AddDebug(LPCTSTR fmt, ...);
+
+
+
+// Exits when the application is already running
+// @return value: FALSE if the application is already running, FALSE otherwise
+
+BOOL InitInstance(void);
+
+//---------------------------------------------
+
+typedef enum {
+    CFFE_FILE_EXIST, // file exist
+    CFFE_FILE_NOT_FOUND, // file not found
+    CFFE_PATH_NOT_FOUND, // invalid path
+    CFFE_ACCESS_DENIED // access denied
+
+}CFFE_ERROR;
+
+// Check for fist existance
+// @param lpszFileName - Pointer to a null terminated string (path to file)
+// @return value - see enum above
+CFFE_ERROR CheckFileForExistance(LPCTSTR lpszFileName);
+
+
 
 #endif /*_MAIN_H_*/
