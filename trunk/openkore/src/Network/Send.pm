@@ -444,7 +444,7 @@ sub sendAttackStop {
 	# what this function is supposed to do.
 
 	# Don't use this function, use Misc::stopAttack() instead!
-	#sendMove ($chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'});
+	#sendMove ($char->{'pos_to'}{'x'}, $char->{'pos_to'}{'y'});
 	#debug "Sent stop attack\n", "sendPacket";
 }
 
@@ -863,8 +863,8 @@ sub sendGuildChat {
 	my $r_socket = shift;
 	my $message = shift;
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
-	my $msg = pack("C*",0x7E, 0x01) . pack("S*",length($chars[$config{'char'}]{'name'}) + length($message) + 8) .
-	$chars[$config{'char'}]{'name'} . " : " . $message . chr(0);
+	my $msg = pack("C*",0x7E, 0x01) . pack("S*",length($char->{name}) + length($message) + 8) .
+	$char->{name} . " : " . $message . chr(0);
 	sendMsgToServer($r_socket, $msg);
 }
 
@@ -1234,8 +1234,8 @@ sub sendPartyChat {
 	my $r_socket = shift;
 	my $message = shift;
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
-	my $msg = pack("C*",0x08, 0x01) . pack("S*",length($chars[$config{'char'}]{'name'}) + length($message) + 8) . 
-		$chars[$config{'char'}]{'name'} . " : " . $message . chr(0);
+	my $msg = pack("C*",0x08, 0x01) . pack("S*",length($char->{name}) + length($message) + 8) . 
+		$char->{name} . " : " . $message . chr(0);
 	sendMsgToServer($r_socket, $msg);
 }
 
