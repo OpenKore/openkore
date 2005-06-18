@@ -1,13 +1,12 @@
 
 
 - Support for the following archive: .rgz, .tar.gz, .tar.bz2, .zip, .rar
-- Win98 support [*]
 - Resume broken downloads
 - XP style progress bar (marquee while repacking/downloading files with unkown file size)
 - Option to use data folder instead of GRF file; or both at the same time
 - Multiple GRF patching (adata.grf, bdata.grf, etc)
 - Multi-part download (download accelerator-like download system)
 
-[*] - done
+
 suggestions?
-cliffe@xeronhosting.com
+ansell@users.sf.net
