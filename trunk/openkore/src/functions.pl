@@ -2694,8 +2694,8 @@ sub AI {
 	AUTOSELL: {
 
 	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "follow") && $config{'sellAuto'} && $config{'sellAuto_npc'} ne ""
-	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight_sellOrStore'})
-	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight(\%{$chars[$config{'char'}]}) >= $config{'itemsMaxWeight'})
+	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
 	  )) {
 		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
@@ -11445,15 +11445,15 @@ sub checkSelfCondition {
 	return 0 if $config{$prefix."_whenIdle"} && !AI::isIdle;
 
 	if ($config{$prefix . "_hp"}) { 
-		return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]}), $config{$prefix . "_hp"}));
+		return 0 unless (inRange(percent_hp($char), $config{$prefix . "_hp"}));
 	} elsif ($config{$prefix . "_hp_upper"}) { # backward compatibility with old config format
-		return 0 unless (percent_hp(\%{$chars[$config{char}]}) <= $config{$prefix . "_hp_upper"} && percent_hp(\%{$chars[$config{char}]}) >= $config{$prefix . "_hp_lower"});
+		return 0 unless (percent_hp($char) <= $config{$prefix . "_hp_upper"} && percent_hp($char) >= $config{$prefix . "_hp_lower"});
 	}
 
 	if ($config{$prefix . "_sp"}) { 
-		return 0 unless (inRange(percent_sp(\%{$chars[$config{char}]}), $config{$prefix . "_sp"}));
+		return 0 unless (inRange(percent_sp($char), $config{$prefix . "_sp"}));
 	} elsif ($config{$prefix . "_sp_upper"}) { # backward compatibility with old config format
-		return 0 unless (percent_sp(\%{$chars[$config{char}]}) <= $config{$prefix . "_sp_upper"} && percent_sp(\%{$chars[$config{char}]}) >= $config{$prefix . "_sp_lower"});
+		return 0 unless (percent_sp($char) <= $config{$prefix . "_sp_upper"} && percent_sp($char) >= $config{$prefix . "_sp_lower"});
 	}
 
 	# check skill use SP if this is a 'use skill' condition
@@ -11565,10 +11565,10 @@ sub checkPlayerCondition {
 	# we will have player HP info (only) if we are in the same party
 	if ($chars[$config{char}]{party}{users}{$id}) {
 		if ($config{$prefix . "_hp"}) { 
-			return 0 unless (inRange(percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}), $config{$prefix . "_hp"}));
+			return 0 unless (inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $config{$prefix . "_hp"}));
 		} elsif ($config{$prefix . "Hp_upper"}) { # backward compatibility with old config format
-			return 0 unless (percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}) <= $config{$prefix . "Hp_upper"});
-			return 0 unless (percent_hp(\%{$chars[$config{char}]{party}{users}{$id}}) >= $config{$prefix . "Hp_lower"});
+			return 0 unless (percent_hp($chars[$config{char}]{party}{users}{$id}) <= $config{$prefix . "Hp_upper"});
+			return 0 unless (percent_hp($chars[$config{char}]{party}{users}{$id}) >= $config{$prefix . "Hp_lower"});
 		}
 	}
 
