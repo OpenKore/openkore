@@ -188,6 +188,7 @@ our @storeList;
 our $currentChatRoom;
 our @currentChatRoomUsers;
 our @chatRoomsID;
+our %createdChatRoom;
 our %chatRooms;
 our @skillsID;
 our %storage;
