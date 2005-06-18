@@ -60,17 +60,15 @@ sub initHandlers {
 	aiv			=> \&cmdAIv,
 	arrowcraft	=> \&cmdArrowCraft,
 	auth		=> \&cmdAuthorize,
-	bestow		=> \&cmdBestow,
 	bangbang	=> \&cmdBangBang,
 	bingbing	=> \&cmdBingBing,
 	buy			=> \&cmdBuy,
 	card		=> \&cmdCard,
 	cart		=> \&cmdCart,
-	chatmod		=> \&cmdChatMod,
+	chat		=> \&cmdChatRoom,
 	chist		=> \&cmdChist,
 	closeshop	=> \&cmdCloseShop,
 	conf		=> \&cmdConf,
-	crl			=> \&cmdChatRoomList,
 	debug		=> \&cmdDebug,
 	doridori	=> \&cmdDoriDori,
 	e			=> \&cmdEmotion,
@@ -86,7 +84,6 @@ sub initHandlers {
 	ip			=> \&cmdUseItemOnPlayer,
 	is			=> \&cmdUseItemOnSelf,
 	kill		=> \&cmdKill,
-	leave		=> \&cmdLeaveChatRoom,
 	help		=> \&cmdHelp,
 	reload		=> \&cmdReload,
 	memo		=> \&cmdMemo,
@@ -137,15 +134,13 @@ sub initDescriptions {
 	arrowcraft	=> 'Create Arrows.',
 	auth		=> '(Un)authorize a user for using Kore chat commands.',
 	bangbang	=> 'Does a bangbang body turn.',
-	bestow		=> 'Bestow admin in a chat room.',
 	bingbing	=> 'Does a bingbing body turn.',
 	buy			=> 'Buy an item from the current NPC shop',
 	cart		=> 'Cart management',
-	chatmod		=> 'Modify chat room settings.',
+	chat		=> 'Chat room management.',
 	chist		=> 'Display last few entries from the chat log.',
 	closeshop	=> 'Close your vending shop.',
 	conf		=> 'Change a configuration key.',
-	crl			=> 'List chat rooms.',
 	debug		=> 'Toggle debug on/off.',
 	doridori	=> 'Does a doridori head turn.',
 	e			=> 'Show emotion.',
@@ -161,7 +156,6 @@ sub initDescriptions {
 	ip			=> 'Use item on player.',
 	is			=> 'Use item on yourself.',
 	kill		=> 'Attack another player (PVP/GVG only).',
-	leave		=> 'Leave chat room.',
 	reload		=> 'Reload configuration files.',
 	memo		=> 'Save current position for warp portal.',
 	ml			=> 'List monsters that are on screen.',
@@ -508,23 +502,6 @@ sub cmdBangBang {
 	sendLook(\$remote_socket, $bodydir, $char->{look}{head});
 }
 
-sub cmdBestow {
-	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^([\s\S]*)/;
-	if ($currentChatRoom eq "") {
-		error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
-			"You are not in a Chat Room.\n";
-	} elsif ($arg1 eq "") {
-		error	"Syntax Error in function 'bestow' (Bestow Admin in Chat)\n" .
-			"Usage: bestow <user #>\n";
-	} elsif ($currentChatRoomUsers[$arg1] eq "") {
-		error	"Error in function 'bestow' (Bestow Admin in Chat)\n" .
-			"Chat Room User $arg1 doesn't exist; type 'cri' to see the list of users\n";
-	} else {
-		sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg1]);
-	}
-}
-
 sub cmdBingBing {
 	my $bodydir = ($char->{look}{body} + 1) % 8;
 	sendLook(\$remote_socket, $bodydir, $char->{look}{head});
@@ -725,41 +702,165 @@ sub cmdCart {
 	}
 }
 
-sub cmdChatMod {
+sub cmdChatRoom {
 	my (undef, $args) = @_;
-	my ($replace, $title) = $args =~ /(^\"([\s\S]*?)\" ?)/;
-	my $qm = quotemeta $replace;
-	my $input =~ s/$qm//;
-	my @arg = split / /, $input;
-	if ($title eq "") {
-		error	"Syntax Error in function 'chatmod' (Modify Chat Room)\n" .
-			"Usage: chatmod \"<title>\" [<limit #> <public flag> <password>]\n";
-	} else {
-		if ($arg[0] eq "") {
-			$arg[0] = 20;
-		}
-		if ($arg[1] eq "") {
-			$arg[1] = 1;
-		}
-		sendChatRoomChange(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
-	}
-}
+	my ($arg1) = $args =~ /^(\w+)/;
 
-sub cmdChatRoomList {
-	message("-----------Chat Room List-----------\n" .
-		"#   Title                     Owner                Users   Public/Private\n",
-		"list");
-	for (my $i = 0; $i < @chatRoomsID; $i++) {
-		next if ($chatRoomsID[$i] eq "");
-		my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $chars[$config{'char'}]{'name'};
-		my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
-		my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
-		message(swrite(
-			"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<          @<<<<<< @<<<<<<<<<",
-			[$i, $chatRooms{$chatRoomsID[$i]}{'title'}, $owner_string, $limit_string, $public_string]),
+	if ($arg1 eq "bestow") {
+		my ($arg2) = $args =~ /^\w+ (\d+)/;
+
+		if ($currentChatRoom eq "") {
+			error	"Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
+				"You are not in a Chat Room.\n";
+		} elsif ($arg1 eq "") {
+			error	"Syntax Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
+				"Usage: chat bestow <user #>\n";
+		} elsif ($currentChatRoomUsers[$arg1] eq "") {
+			error	"Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
+				"Chat Room User $arg1 doesn't exist; type 'cri' to see the list of users\n";
+		} else {
+			sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg1]);
+		}
+
+	} elsif ($arg1 eq "modify") {
+		my ($arg2) = $args =~ /^\w+ ([\s\S]+)/;
+		my ($replace, $title) = $arg2 =~ /(^\"([\s\S]*?)\" ?)/;
+
+		my $qm = quotemeta $replace;
+		my $input =~ s/$qm//;
+		my @arg = split / /, $input;
+
+		if ($title eq "") {
+			error	"Syntax Error in function 'chatmod' (Modify Chat Room)\n" .
+				"Usage: chat modify \"<title>\" [<limit #> <public flag> <password>]\n";
+		} else {
+			if ($arg[0] eq "") {
+				$arg[0] = 20;
+			}
+			if ($arg[1] eq "") {
+				$arg[1] = 1;
+			}
+			sendChatRoomChange(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
+		}
+
+	} elsif ($arg1 eq "kick") {
+		my ($arg2) = $args =~ /^\w+ (\d+)/;
+
+		if ($currentChatRoom eq "") {
+			error	"Error in function 'chat kick' (Kick from Chat)\n" .
+				"You are not in a Chat Room.\n";
+		} elsif ($arg2 eq "") {
+			error	"Syntax Error in function 'chat kick' (Kick from Chat)\n" .
+				"Usage: chat kick <user #>\n";
+		} elsif ($currentChatRoomUsers[$arg2] eq "") {
+			error	"Error in function 'chat kick' (Kick from Chat)\n" .
+				"Chat Room User $arg2 doesn't exist\n";
+		} else {
+			sendChatRoomKick(\$remote_socket, $currentChatRoomUsers[$arg2]);
+		}
+
+	} elsif ($arg1 eq "join") {
+		my ($arg2) = $args =~ /^\w+ (\d+)/;
+		my ($arg3) = $args =~ /^\w+ \d+ (\d+)/;
+
+		if ($arg2 eq "") {
+			error	"Syntax Error in function 'chat join' (Join Chat Room)\n" .
+				"Usage: chat join <chat room #> [<password>]\n";
+		} elsif ($currentChatRoom ne "") {
+			error	"Error in function 'chat join' (Join Chat Room)\n" .
+				"You are already in a chat room.\n";
+		} elsif ($chatRoomsID[$arg2] eq "") {
+			error	"Error in function 'chat join' (Join Chat Room)\n" .
+				"Chat Room $arg2 does not exist.\n";
+		} else {
+			sendChatRoomJoin(\$remote_socket, $chatRoomsID[$arg2], $arg3);
+		}
+
+	} elsif ($arg1 eq "leave") {
+		if ($currentChatRoom eq "") {
+			error	"Error in function 'chat leave' (Leave Chat Room)\n" .
+				"You are not in a Chat Room.\n";
+		} else {
+			sendChatRoomLeave(\$remote_socket);
+		}
+
+	} elsif ($arg1 eq "create") {
+		my ($title) = $args =~ /^\w+ \"([\s\S]*?)\"/;
+		my ($users) = $args =~ /^\w+ \"[\s\S]*?\" (\d+)/;
+		my ($public) = $args =~ /^\w+ \"[\s\S]*?\" \d+ (\d+)/;
+		my ($password) = $args =~ /^\w+ \"[\s\S]*?\" \d+ \d+ ([\s\S]+)/;
+
+		if ($title eq "") {
+			error	"Syntax Error in function 'chat create' (Create Chat Room)\n" .
+				"Usage: chat create \"<title>\" [<limit #> <public flag> <password>]\n";
+		} elsif ($currentChatRoom ne "") {
+			error	"Error in function 'chat create' (Create Chat Room)\n" .
+				"You are already in a chat room.\n";
+		} else {
+			if ($users eq "") {
+				$users = 20;
+			}
+			if ($public eq "") {
+				$public = 1;
+			}
+			$title = ($config{chatTitleOversize}) ? $title : substr($title,0,36);
+			sendChatRoomCreate(\$remote_socket, $title, $users, $public, $password);
+			$createdChatRoom{'title'} = $title;
+			$createdChatRoom{'ownerID'} = $accountID;
+			$createdChatRoom{'limit'} = $users;
+			$createdChatRoom{'public'} = $public;
+			$createdChatRoom{'num_users'} = 1;
+			$createdChatRoom{'users'}{$char->{name}} = 2;
+		}
+
+	} elsif ($arg1 eq "list") {
+		message("-----------Chat Room List-----------\n" .
+			"#   Title                     Owner                Users   Public/Private\n",
 			"list");
+		for (my $i = 0; $i < @chatRoomsID; $i++) {
+			next if ($chatRoomsID[$i] eq "");
+			my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $chars[$config{'char'}]{'name'};
+			my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
+			my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
+			message(swrite(
+				"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<          @<<<<<< @<<<<<<<<<",
+				[$i, $chatRooms{$chatRoomsID[$i]}{'title'}, $owner_string, $limit_string, $public_string]),
+				"list");
+		}
+		message("------------------------------------\n", "list");
+
+	} elsif ($arg1 eq "info") {
+		if ($currentChatRoom eq "") {
+			error "There is no chat room info - you are not in a chat room\n";
+		} else {
+			message("-----------Chat Room Info-----------\n" .
+				"Title                     Users   Public/Private\n",
+				"list");
+			my $public_string = ($chatRooms{$currentChatRoom}{'public'}) ? "Public" : "Private";
+			my $limit_string = $chatRooms{$currentChatRoom}{'num_users'}."/".$chatRooms{$currentChatRoom}{'limit'};
+
+			message(swrite(
+				"@<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<",
+				[$chatRooms{$currentChatRoom}{'title'}, $limit_string, $public_string]),
+				"list");
+
+			message("-- Users --\n", "list");
+			for (my $i = 0; $i < @currentChatRoomUsers; $i++) {
+				next if ($currentChatRoomUsers[$i] eq "");
+				my $user_string = $currentChatRoomUsers[$i];
+				my $admin_string = ($chatRooms{$currentChatRoom}{'users'}{$currentChatRoomUsers[$i]} > 1) ? "(Admin)" : "";
+				message(swrite(
+					"@<< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
+					[$i, $user_string, $admin_string]),
+					"list");
+			}
+			message("------------------------------------\n", "list");
+		}
+	} else {
+		error	"Syntax Error in function 'chat' (Chat room management)\n" .
+			"Usage: chat <create|modify|join|kick|leave|info|list|bestow>\n";
 	}
-	message("------------------------------------\n", "list");
+
 }
 
 sub cmdChist {
@@ -1272,15 +1373,6 @@ sub cmdInventory {
 	} else {
 		error	"Syntax Error in function 'i' (Inventory List)\n" .
 			"Usage: i [<u|eq|neq|nu|desc>] [<inventory #>]\n";
-	}
-}
-
-sub cmdLeaveChatRoom {
-	if ($currentChatRoom eq "") {
-		error	"Error in function 'leave' (Leave Chat Room)\n" .
-			"You are not in a Chat Room.\n";
-	} else {
-		sendChatRoomLeave(\$remote_socket);
 	}
 }
 

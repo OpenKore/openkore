@@ -656,6 +656,7 @@ sub parseCommand {
 		message("Current zeny:    " . formatNumber($chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
 		message("Maximum earned:  " . formatNumber($priceAfterSale) . "z.\n", "list");
 		message("Maximum zeny:   " . formatNumber($priceAfterSale + $chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
+
 	} elsif ($switch eq "as") {
 		# Stop attacking monster
 		my $index = binFind(\@ai_seq, "attack");
@@ -687,35 +688,6 @@ sub parseCommand {
 			sendMessage(\$remote_socket, "c", $arg1);
 		}
 
-	} elsif ($switch eq "chat") {
-		my ($replace, $title) = $input =~ /(^[\s\S]*? \"([\s\S]*?)\" ?)/;
-		my $qm = quotemeta $replace;
-		my $args = $input;
-		$args =~ s/$qm//;
-		my @arg = split / /, $args;
-		if ($title eq "") {
-			error	"Syntax Error in function 'chat' (Create Chat Room)\n" .
-				"Usage: chat \"<title>\" [<limit #> <public flag> <password>]\n";
-		} elsif ($currentChatRoom ne "") {
-			error	"Error in function 'chat' (Create Chat Room)\n" .
-				"You are already in a chat room.\n";
-		} else {
-			if ($arg[0] eq "") {
-				$arg[0] = 20;
-			}
-			if ($arg[1] eq "") {
-				$arg[1] = 1;
-			}
-			$title = ($config{chatTitleOversize}) ? $title : substr($title,0,36);
-			sendChatRoomCreate(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
-			$createdChatRoom{'title'} = $title;
-			$createdChatRoom{'ownerID'} = $accountID;
-			$createdChatRoom{'limit'} = $arg[0];
-			$createdChatRoom{'public'} = $arg[1];
-			$createdChatRoom{'num_users'} = 1;
-			$createdChatRoom{'users'}{$chars[$config{'char'}]{'name'}} = 2;
-		}
-
 	} elsif ($switch eq "cil") { 
 		itemLog_clear();
 		message("Item log cleared.\n", "success");
@@ -738,50 +710,6 @@ sub parseCommand {
 		}
 		message("--------------------------------------------------\n", "list");
 	#end of non-functional item count code
-
-	} elsif ($switch eq "cri") {
-		if ($currentChatRoom eq "") {
-			error "There is no chat room info - you are not in a chat room\n";
-		} else {
-			message("-----------Chat Room Info-----------\n" .
-				"Title                     Users   Public/Private\n",
-				"list");
-			my $public_string = ($chatRooms{$currentChatRoom}{'public'}) ? "Public" : "Private";
-			my $limit_string = $chatRooms{$currentChatRoom}{'num_users'}."/".$chatRooms{$currentChatRoom}{'limit'};
-
-			message(swrite(
-				"@<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<<<<",
-				[$chatRooms{$currentChatRoom}{'title'}, $limit_string, $public_string]),
-				"list");
-
-			message("-- Users --\n", "list");
-			for (my $i = 0; $i < @currentChatRoomUsers; $i++) {
-				next if ($currentChatRoomUsers[$i] eq "");
-				my $user_string = $currentChatRoomUsers[$i];
-				my $admin_string = ($chatRooms{$currentChatRoom}{'users'}{$currentChatRoomUsers[$i]} > 1) ? "(Admin)" : "";
-				message(swrite(
-					"@<< @<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
-					[$i, $user_string, $admin_string]),
-					"list");
-			}
-			message("------------------------------------\n", "list");
-		}
-
-	} elsif ($switch eq "crl") {
-		message("-----------Chat Room List-----------\n" .
-			"#   Title                     Owner                Users   Public/Private\n",
-			"list");
-		for (my $i = 0; $i < @chatRoomsID; $i++) {
-			next if ($chatRoomsID[$i] eq "");
-			my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $chars[$config{'char'}]{'name'};
-			my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
-			my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
-			message(swrite(
-				"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<          @<<<<<< @<<<<<<<<<",
-				[$i, $chatRooms{$chatRoomsID[$i]}{'title'}, $owner_string, $limit_string, $public_string]),
-				"list");
-		}
-		message("------------------------------------\n", "list");
 
 	} elsif ($switch eq "vl") {
 		message("-----------Vender List-----------\n" .
@@ -1131,22 +1059,6 @@ sub parseCommand {
 				"Usage: identify [<identify #>]\n";
 		}
 
-	} elsif ($switch eq "join") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ ([\s\S]*)$/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'join' (Join Chat Room)\n" .
-				"Usage: join <chat room #> [<password>]\n";
-		} elsif ($currentChatRoom ne "") {
-			error	"Error in function 'join' (Join Chat Room)\n" .
-				"You are already in a chat room.\n";
-		} elsif ($chatRoomsID[$arg1] eq "") {
-			error	"Error in function 'join' (Join Chat Room)\n" .
-				"Chat Room $arg1 does not exist.\n";
-		} else {
-			sendChatRoomJoin(\$remote_socket, $chatRoomsID[$arg1], $arg2);
-		}
-
 	} elsif ($switch eq "judge") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
@@ -1159,21 +1071,6 @@ sub parseCommand {
 		} else {
 			$arg2 = ($arg2 >= 1);
 			sendAlignment(\$remote_socket, $playersID[$arg1], $arg2);
-		}
-
-	} elsif ($switch eq "kick") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		if ($currentChatRoom eq "") {
-			error	"Error in function 'kick' (Kick from Chat)\n" .
-				"You are not in a Chat Room.\n";
-		} elsif ($arg1 eq "") {
-			error	"Syntax Error in function 'kick' (Kick from Chat)\n" .
-				"Usage: kick <user #>\n";
-		} elsif ($currentChatRoomUsers[$arg1] eq "") {
-			error	"Error in function 'kick' (Kick from Chat)\n" .
-				"Chat Room User $arg1 doesn't exist\n";
-		} else {
-			sendChatRoomKick(\$remote_socket, $currentChatRoomUsers[$arg1]);
 		}
 
 	} elsif ($switch eq "look") {
