@@ -7860,7 +7860,9 @@ sub parseMsg {
 			if (binFind(\@partyUsersID, $ID) eq "") {
 				binAdd(\@partyUsersID, $ID);
 			}
+			$chars[$config{'char'}]{'party'}{'users'}{$ID} = new Actor::Party;
 			($chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'}) = substr($msg, $i + 4, 24) =~ /([\s\S]*?)\000/;
+			message "Party Member: $chars[$config{'char'}]{'party'}{'users'}{$ID}{'name'}\n", undef, 1;
 			($chars[$config{'char'}]{'party'}{'users'}{$ID}{'map'}) = substr($msg, $i + 28, 16) =~ /([\s\S]*?)\000/;
 			$chars[$config{'char'}]{'party'}{'users'}{$ID}{'online'} = !(unpack("C1",substr($msg, $i + 45, 1)));
 			$chars[$config{'char'}]{'party'}{'users'}{$ID}{'admin'} = 1 if ($num == 0);
@@ -7908,10 +7910,12 @@ sub parseMsg {
 			binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 			if ($ID eq $accountID) {
 				message "You joined party '$name'\n", undef, 1;
+				$char->{party} = {};
 			} else {
 				message "$partyUser joined your party '$name'\n", undef, 1;
 			}
 		}
+		$chars[$config{'char'}]{'party'}{'users'}{$ID} = new Actor::Party;
 		if ($type == 0) {
 			$chars[$config{'char'}]{'party'}{'users'}{$ID}{'online'} = 1;
 		} elsif ($type == 1) {

@@ -36,6 +36,8 @@ Bug fixes:
 - Add the missing "timeout" chat command.
 - Fix equipAuto trying to equip unidentified items.
 - Fix crash with Actor::You when creating a new character in the bot.
+- Long-overdue fix to make a party that you joined in this session
+  work properly (obscure variable sharing problem).
 
 New features:
 - Better support for detecting dead players.
