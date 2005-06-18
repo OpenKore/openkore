@@ -5620,18 +5620,17 @@ sub parseMsg {
 		Network::disconnect(\$remote_socket);
 
 	} elsif ($switch eq "006D" && $conState != 5) {
-		my %char;
-		$char = new Actor::You;
-		$char{ID} = substr($msg, 2, 4);
-		$char{name} = unpack("Z24", substr($msg, 76, 24));
-		$char{zenny} = unpack("L", substr($msg, 10, 4));
-		($char{str}, $char{agi}, $char{vit}, $char{int}, $char{dex}, $char{luk}) = unpack("C*", substr($msg, 100, 6));
+		my $char = new Actor::You;
+		$char->{ID} = substr($msg, 2, 4);
+		$char->{name} = unpack("Z24", substr($msg, 76, 24));
+		$char->{zenny} = unpack("L", substr($msg, 10, 4));
+		($char->{str}, $char->{agi}, $char->{vit}, $char->{int}, $char->{dex}, $char->{luk}) = unpack("C*", substr($msg, 100, 6));
 		my $slot = unpack("C", substr($msg, 106, 1));
 
-		$char{lv} = 1;
-		$char{lv_job} = 1;
-		$char{sex} = $accountSex2;
-		$chars[$slot] = \%char;
+		$char->{lv} = 1;
+		$char->{lv_job} = 1;
+		$char->{sex} = $accountSex2;
+		$chars[$slot] = $char;
 
 		$conState = 3;
 		message "Character $char{name} ($slot) created.\n", "info";
