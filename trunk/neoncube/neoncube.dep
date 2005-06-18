@@ -1,0 +1,48 @@
+# Microsoft Developer Studio Generated Dependency File, included by neoncube.mak
+
+.\btn_load.cpp : \
+	"..\..\..\microsoft platform sdk\include\basetsd.h"\
+	"..\..\..\microsoft platform sdk\include\guiddef.h"\
+	"..\..\..\microsoft platform sdk\include\propidl.h"\
+	"..\..\..\microsoft platform sdk\include\reason.h"\
+	"..\..\..\microsoft platform sdk\include\specstrings.h"\
+	"..\..\..\microsoft platform sdk\include\stralign.h"\
+	"..\..\..\microsoft platform sdk\include\tvout.h"\
+	"..\..\..\microsoft platform sdk\include\winefs.h"\
+	".\btn_load.h"\
+	
+
+.\grf_func.cpp : \
+	"..\..\..\microsoft platform sdk\include\basetsd.h"\
+	"..\..\..\microsoft platform sdk\include\guiddef.h"\
+	"..\..\..\microsoft platform sdk\include\propidl.h"\
+	"..\..\..\microsoft platform sdk\include\reason.h"\
+	"..\..\..\microsoft platform sdk\include\shldisp.h"\
+	"..\..\..\microsoft platform sdk\include\shobjidl.h"\
+	"..\..\..\microsoft platform sdk\include\shtypes.h"\
+	"..\..\..\microsoft platform sdk\include\specstrings.h"\
+	"..\..\..\microsoft platform sdk\include\stralign.h"\
+	"..\..\..\microsoft platform sdk\include\tvout.h"\
+	"..\..\..\microsoft platform sdk\include\winefs.h"\
+	".\grf.h"\
+	".\grf_func.h"\
+	".\grfsupport.h"\
+	".\grftypes.h"\
+	
+
+.\main.cpp : \
+	"..\..\..\microsoft platform sdk\include\basetsd.h"\
+	"..\..\..\microsoft platform sdk\include\guiddef.h"\
+	"..\..\..\microsoft platform sdk\include\propidl.h"\
+	"..\..\..\microsoft platform sdk\include\reason.h"\
+	"..\..\..\microsoft platform sdk\include\specstrings.h"\
+	"..\..\..\microsoft platform sdk\include\stralign.h"\
+	"..\..\..\microsoft platform sdk\include\tvout.h"\
+	"..\..\..\microsoft platform sdk\include\winefs.h"\
+	".\browser\browser.h"\
+	".\main.h"\
+	
+
+.\resource.rc : \
+	".\neoncube.ico"\
+	
