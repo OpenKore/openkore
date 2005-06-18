@@ -34,8 +34,8 @@ use Log qw(message error debug);
 # Make it so that
 #     print $actor;
 # acts the same as
-#     print $actor->name;
-use overload '""' => \&name;
+#     print $actor->nameString;
+use overload '""' => \&nameString;
 
 ### CATEGORY: Class methods
 
@@ -72,15 +72,25 @@ sub get {
 ### CATEGORY: Methods
 
 ##
-# $actor->name()
+# $actor->nameString()
 #
 # Returns the name string of an actor, e.g. "Player pmak (3)",
 # "Monster Poring (0)" or "You".
-sub name {
+sub nameString {
 	my ($self) = @_;
 
 	return "You" if $self->{type} eq 'You';
-	return "$self->{type} $self->{name} ($self->{binID})";
+	return "$self->{type} ".$self->name." ($self->{binID})";
+}
+
+##
+# $actor->name()
+#
+# Returns the name of an actor, e.g. "pmak" or "Unknown #300001".
+sub name {
+	my ($self) = @_;
+
+	return $self->{name} || "Unknown #".unpack("L1", $self->{ID});
 }
 
 ##

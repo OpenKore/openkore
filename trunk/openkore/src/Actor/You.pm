@@ -21,6 +21,7 @@
 # Actor.pm is the base class for this class.
 package Actor::You;
 use strict;
+use Globals;
 our @ISA = qw(Actor);
 
 sub new {
@@ -65,6 +66,26 @@ sub weight_percent {
 	my ($self) = @_;
 
 	return $self->{weight} / $self->{weight_max} * 100;
+}
+
+
+##
+# $char->master
+#
+# Returns your master (if any).
+#
+# FIXME: Should eventually ensure that either an Actor::Party (party member who
+# is not near you) or Actor::Player is returned.
+#
+# FIXME: This function isn't completed! Don't use it yet!
+sub master {
+	my ($self) = @_;
+
+	return unless $config{followTarget};
+
+	while (my ($ID, $player) = each %players) {
+		return $player if $player->{name} eq $config{followTarget};
+	}
 }
 
 1;

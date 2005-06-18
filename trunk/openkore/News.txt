@@ -174,7 +174,12 @@ Internal:
 - New functions Commands::register() and Commands::unregister() for easy
   registration of new commands in plugins.
 - Store $guild{member}[$c]{charID}.
-- Get rid of useless %chars_old
+- Get rid of useless %chars_old.
+- The old $actor->name was renamed to $actor->nameString (but just
+  reference it as $actorwhen constructing message strings since
+  $actor is overloaded to call $actor->nameString).
+- $player->{name} is now undef for players whose name is unknown.
+  $player->name will return $player->{name} || e.g. "Unknown #300001".
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.

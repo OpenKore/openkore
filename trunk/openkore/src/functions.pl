@@ -723,7 +723,7 @@ sub parseCommand {
 			message(sprintf(
 				"%3d %-36s (%3d, %3d) %-20s\n",
 				$i, $venderLists{$venderListsID[$i]}{'title'}, 
-				$player->{pos_to}{x}, $player->{pos_to}{y}, $player->{name}),
+				$player->{pos_to}{x}, $player->{pos_to}{y}, $player->name),
 				"list");
 		}
 		message("----------------------------------\n", "list");
@@ -5793,7 +5793,6 @@ sub parseMsg {
 				$player->{ID} = $ID;
 				$player->{jobID} = $type;
 				$player->{sex} = $sex;
-				$player->{name} = "Unknown";
 				$player->{nameID} = unpack("L1", $ID);
 				$player->{binID} = binFind(\@playersID, $ID);
 				$added = 1;
@@ -5817,7 +5816,7 @@ sub parseMsg {
 			$player->{lv} = $lv;
 			$player->{pos} = {%coords};
 			$player->{pos_to} = {%coords};
-			debug "Player Exists: $player->{name} ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence/player", 1;
+			debug "Player Exists: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg_presence/player", 1;
 			setStatus($ID,$param1,$param2,$param3);
 
 			objectAdded('player', $ID, $player) if ($added);
@@ -5947,7 +5946,6 @@ sub parseMsg {
 				$players{$ID}{'ID'} = $ID;
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 				$added = 1;
@@ -5966,7 +5964,7 @@ sub parseMsg {
 			$players{$ID}{lv} = $lv;
 			$players{$ID}{pos} = {%coords};
 			$players{$ID}{pos_to} = {%coords};
-			debug "Player Connected: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
+			debug "Player Connected: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
                         setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
@@ -6013,10 +6011,9 @@ sub parseMsg {
 				$players{$ID}{'sex'} = $sex;
 				$players{$ID}{'ID'} = $ID;
 				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-				debug "Player Appeared: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence/player";
+				debug "Player Appeared: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", "parseMsg_presence/player";
 				$added = 1;
 			}
 
@@ -6118,7 +6115,6 @@ sub parseMsg {
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'sex'} = $sex;
 				$players{$ID}{'ID'} = $ID;
-				$players{$ID}{'name'} = "Unknown";
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'appear_time'} = time;
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
@@ -6128,7 +6124,7 @@ sub parseMsg {
 			$players{$ID}{look}{body} = 0;
 			$players{$ID}{pos} = {%coords};
 			$players{$ID}{pos_to} = {%coords};
-			debug "Player Spawned: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+			debug "Player Spawned: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
 
@@ -8101,9 +8097,10 @@ sub parseMsg {
 
 		# Resolve source and target names
 		$damage ||= "Miss!";
-		my $disp = $source->name." use ".skillName($skillID);
+		my $verb = $source->verb('use', 'uses');
+		my $disp = "$source $verb ".skillName($skillID);
 		$disp .= " (lvl $level)" unless $level == 65535;
-		$disp .= " on ".$target->name;
+		$disp .= " on $target";
 		$disp .= " - Dmg: $damage" unless $damage == -30000;
 		$disp .= " (delay ".($src_speed/10).")";
 		$disp .= "\n";
