@@ -1497,7 +1497,7 @@ sub cmdPlayerList {
 		my $youToPlayer = int(sprintf("%.0f", (360 - $degYouToPlayer) / 45)) % 8;
 
 		$msg = "------------------ Player Info ------------------\n";
-		$msg .= "$player->{name} ($player->{binID})\n";
+		$msg .= $player->name." ($player->{binID})\n";
 		$msg .= "Account ID: $player->{nameID} (Hex: $hex)\n";
 		$msg .= "Party: $player->{party}{name}\n" if ($player->{party} && $player->{party}{name} ne '');
 		$msg .= "Guild: $player->{guild}{name}\n" if ($player->{guild});
@@ -1545,12 +1545,12 @@ sub cmdPlayerList {
 	$msg =  "-----------Player List-----------\n" .
 		"#    Name                                    Sex   Job         Dist  Coord\n";
 	for (my $i = 0; $i < @playersID; $i++) {
-		next if ($playersID[$i] eq "");
+		my $player = $players{$playersID[$i]};
+		next unless UNIVERSAL::isa($player, 'Actor');
 		my ($name, $dist, $pos);
-		if ($players{$playersID[$i]}{'guild'} && %{$players{$playersID[$i]}{'guild'}}) {
-			$name = "$players{$playersID[$i]}{'name'} [$players{$playersID[$i]}{'guild'}{'name'}]";
-		} else {
-			$name = $players{$playersID[$i]}{'name'};
+		$name = $player->name;
+		if ($player->{guild} && %{$player->{guild}}) {
+			$name .= " [$player->{guild}{name}]";
 		}
 		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
 		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
