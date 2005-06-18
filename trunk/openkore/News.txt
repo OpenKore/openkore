@@ -146,6 +146,8 @@ New commands:
   Info about the chat room.
 - chat list
   List of chat rooms around you.
+- relog [delay]
+  You can now specify a delay when relogging.
 
 New config options:
 - partySkill: target_dead

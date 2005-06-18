@@ -92,6 +92,7 @@ our @EXPORT = (
 	positionNearPortal
 	printItemDesc
 	quit
+	relog
 	sendMessage
 	stopAttack
 	stripLanguageCode
@@ -1296,6 +1297,16 @@ sub printItemDesc {
 sub quit {
 	$quit = 1;
 	message "Exiting...\n", "system";
+}
+
+sub relog {
+	my $timeout = (shift || 5);
+	$conState = 1;
+	undef $conState_tries;
+	$timeout_ex{'master'}{'time'} = time;
+	$timeout_ex{'master'}{'timeout'} = $timeout;
+	Network::disconnect(\$remote_socket);
+	message "Relogging in $timeout seconds...\n", "connection";
 }
 
 sub sendMessage {

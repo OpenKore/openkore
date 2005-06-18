@@ -94,6 +94,7 @@ sub initHandlers {
 	plugin		=> \&cmdPlugin,
 	pm			=> \&cmdPrivateMessage,
 	portals		=> \&cmdPortalList,
+	relog		=> \&cmdRelog,
 	s			=> \&cmdStatus,
 	send		=> \&cmdSendRaw,
 	sit			=> \&cmdSit,
@@ -165,6 +166,7 @@ sub initDescriptions {
 	plugin		=> 'Control plugins.',
 	pm			=> 'Send a private message.',
 	portals		=> 'List portals that are on screen.',
+	relog		=> 'Log out then log in again.',
 	s			=> 'Display character status.',
 	send		=> 'Send a raw packet to the server.',
 	sit			=> 'Sit down.',
@@ -1716,6 +1718,16 @@ sub cmdPortalList {
 			"list");
 	}
 	message("---------------------------------\n", "list");
+}
+
+sub cmdRelog {
+	my (undef, $arg) = @_;
+	if (!$arg || $arg =~ /^\d+$/) {
+		relog($arg);
+	} else {
+		error	"Syntax Error in function 'relog' (Log out then log in.)\n" .
+			"Usage: relog [delay]\n";
+	}
 }
 
 sub cmdReload {
