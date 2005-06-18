@@ -8900,15 +8900,16 @@ sub parseMsg {
 	} elsif ($switch eq "017B") {
 		# You just requested a list of possible items to merge a card into
 		# The RO client does this when you double click a card
-		decrypt(\$msg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$msg;
+		#decrypt(\$msg, substr($msg, 4, length($msg)-4));
+		#$msg = substr($msg, 0, 4).$msg;
+		my ($len) = unpack("x2 S1", $msg);
 
 		my $display;
 		$display .= "-----Card Merge Candidates-----\n";
 
 		my $index;
 		my $invIndex;
-		for ($i = 4; $i < $msg_size; $i += 2) {
+		for ($i = 4; $i < $len; $i += 2) {
 			$index = unpack("S1", substr($msg, $i, 2));
 			$invIndex = findIndex($char->{inventory}, "index", $index);
 			binAdd(\@cardMergeItemsID,$invIndex);
