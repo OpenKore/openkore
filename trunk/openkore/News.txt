@@ -41,6 +41,7 @@ Bug fixes:
 - 'card merge' series commands actually works instead of disconnecting
   you now, on non-encrypted servers. (But does it still work on
   encrypted servers?)
+- Correctly set the field name on aliased novice training fields.
 
 New features:
 - Better support for detecting dead players.
