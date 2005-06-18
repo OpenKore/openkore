@@ -35,9 +35,9 @@
 34 Hallucination
 35 Owg 50%
 36 Owg 90%
-37 Concent
-38 Awaken
-39 Berserk
+37 Concentration Potion
+38 Awakening Potion
+39 Berserk Potion
 42 Speed Up
 50 Strip Weapon
 51 Strip Shield
