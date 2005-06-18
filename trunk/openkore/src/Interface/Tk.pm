@@ -172,8 +172,8 @@ sub title {
 
 sub updatePos {
 	my $self = shift;
-	return unless defined($config{'char'}) && defined($chars[$config{'char'}]) && defined($chars[$config{'char'}]{'pos_to'});
-	my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
+	return unless defined($config{'char'}) && defined($chars[$config{'char'}]) && defined($char->{'pos_to'});
+	my ($x,$y) = @{$char->{'pos_to'}}{'x', 'y'};
 	$self->{status_posx}->configure( -text =>$x);
 	$self->{status_posy}->configure( -text =>$y);
 	if ($self->mapIsShown()) {
@@ -736,7 +736,7 @@ sub pointchk {
 		die "wrong number of args to pointchk\n";
 	}
 	$mvcpy = $self->{map}{height} - $mvcpy;
-	my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
+	my ($x,$y) = @{$char->{'pos_to'}}{'x', 'y'};
 	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d) m:(%3d, %3d)", $field{'name'}, $x, $y, $mvcpx, $mvcpy);
 	$self->{map}{window}->update; 
 }
@@ -785,7 +785,7 @@ sub loadMap {
 	$self->{map}{width} = $field{'width'};
 	$self->{map}{height} = $field{'height'};
 	$self->{map}{canvas}->delete('loading');
-	my ($x,$y) = @{$chars[$config{'char'}]{'pos_to'}}{'x', 'y'};
+	my ($x,$y) = @{$char->{'pos_to'}}{'x', 'y'};
 	$self->{map}{window}->title(sprintf "Map View: %8s p:(%3d, %3d)", $field{'name'}, $x, $y);
 }
 
