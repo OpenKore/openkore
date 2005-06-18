@@ -1985,6 +1985,7 @@ sub AI {
 		my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime;
 		my $hormin = sprintf("%02d:%02d", $hour, $min);
 		my @wdays = ('sun','mon','tue','wed','thu','fri','sat');
+		debug "$hormin $wdays[$wday]\n", "autoBreakTime", 2;
 		for (my $i = 0; exists $config{"autoBreakTime_$i"}; $i++) {
 			next if (!$config{"autoBreakTime_$i"});
 
@@ -10472,15 +10473,13 @@ sub getField {
 	}
 
 	undef %{$r_hash};
+	$r_hash->{name} = $name;
+
 	if ($masterServer && $masterServer->{"field_$name"}) {
 		# Handle server-specific versions of the field.
 		$file = "$Settings::def_field/" . $masterServer->{"field_$name"};
-		$r_hash->{name} = $name;
 	} else {
 		$file = "$Settings::def_field/$name.fld";
-		$r_hash->{name} = $file;
-		$r_hash->{name} =~ s/.*[\\\/]//;
-		$r_hash->{name} =~ s/(.*)\..*/$1/;
 	}
 	$file =~ s/\//\\/g if ($^O eq 'MSWin32');
 	$dist_file = $file;
@@ -10522,10 +10521,6 @@ sub getField {
 			warning "Could not load field $file - you must install the kore-field pack!\n";
 			return 0;
 		}
-
-		$r_hash->{name} = $file;
-		$r_hash->{name} =~ s/.*[\\\/]//;
-		$r_hash->{name} =~ s/(.*)\..*/$1/;
 	}
 
 	$dist_file =~ s/\.fld$/.dist/i;
