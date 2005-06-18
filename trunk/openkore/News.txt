@@ -83,6 +83,7 @@ New features:
   See http://openkore.sourceforge.net/forum/viewtopic.php?p=50860
 - Display numerical character ID when logging in.
 - Server-side friend list support.
+- Implement packet 01D6 (detect PVP/GVG mode in Aegis 8.5).
 
 New commands:
 - storage log
