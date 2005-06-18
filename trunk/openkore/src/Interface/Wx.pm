@@ -701,7 +701,7 @@ sub onMinimizeToTray {
 sub onClose {
 	my $self = shift;
 	$self->Show(0);
-	main::quit();
+	quit();
 }
 
 sub onFontChange {
