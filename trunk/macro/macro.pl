@@ -40,16 +40,19 @@ if (!defined $cvs) {
 
 Plugins::register('macro', 'allows usage of macros', \&Unload);
 
+# TODO maybe add hooks on demand?
 my $hooks = Plugins::addHooks(
             ['Command_post', \&commandHandler, undef],
             ['configModify', \&debuglevel, undef],
             ['start3', \&postsetDebug, undef],
             ['AI_pre', \&processQueue, undef],
+            ['AI_pre', \&automacroCheck, undef],
             ['is_casting', \&automacroCheck, undef],
             ['packet_skilluse', \&automacroCheck, undef],
-            ['AI_pre', \&automacroCheck, undef],
             ['packet_privMsg', \&automacroCheck, undef],
-            ['packet_pubMsg', \&automacroCheck, undef]
+            ['packet_pubMsg', \&automacroCheck, undef],
+            ['packet_partyMsg', \&automacroCheck, undef],
+            ['packet_guildMsg', \&automacroCheck, undef]
 );
 
 my $file = "$Settings::control_folder/macros.txt";
@@ -503,12 +506,22 @@ sub automacroCheck {
     };
     if (defined $automacro{$am}->{pm}) {
       if ($trigger eq 'packet_privMsg') {
-        next CHKAM if !checkPM($automacro{$am}->{pm}, $args);
+        next CHKAM if !checkMsg(".lastpm", $automacro{$am}->{pm}, $args);
       } else {next CHKAM};
     };
     if (defined $automacro{$am}->{pubm}) {
       if ($trigger eq 'packet_pubMsg') {
-        next CHKAM if !checkPubM($automacro{$am}->{pubm}, $args);
+        next CHKAM if !checkMsg(".lastpub", $automacro{$am}->{pubm}, $args);
+      } else {next CHKAM};
+    };
+    if (defined $automacro{$am}->{party}) {
+      if ($trigger eq 'packet_partyMsg') {
+        next CHKAM if !checkMsg(".lastparty", $automacro{$am}->{party}, $args);
+      } else {next CHKAM};
+    };
+    if (defined $automacro{$am}->{guild}) {
+      if ($trigger eq 'packet_guildMsg') {
+        next CHKAM if !checkMsg(".lastguild", $automacro{$am}->{guild}, $args);
       } else {next CHKAM};
     };
     next CHKAM if (defined $automacro{$am}->{map} && $automacro{$am}->{map} ne $field{name});
@@ -765,40 +778,34 @@ sub checkCast {
   return 0;
 };
 
-# checks for private message ##############################
-# pm "trigger message",whoever,whoever else,...
-# pm /regexp/,whoever, whoever else,...
-sub checkPM {
-  my ($tPM, $allowed) = $_[0] =~ /([\/"].*?[\/"]),?(.*)/;
-  my $arg = $_[1];
-  my @tfld = split(/,/, $allowed);
-  my $auth = 0;
-  if (!$allowed) {$auth = 1}
-  else {
-    for (my $i = 0; $i < @tfld; $i++) {
-      next unless $tfld[$i];
-      if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last};
+# checks for public, private, party or guild message ######
+# requires function.pl 1.998
+sub checkMsg {
+  my ($var, $tmp, $arg) = @_;
+  my $msg;
+  if ($var eq '.lastpub') {
+    ($msg, my $distance) = $tmp =~ /([\/"].*?[\/"]),?(.*)/;
+    $distance = 15 if ($distance eq '');
+    my $mypos = calcPosition($char);
+    my $pos = calcPosition($::players{$arg->{pubID}});
+    return 0 unless distance($mypos, $pos) <= $distance;
+  } elsif ($var eq '.lastpm') {
+    ($msg, my $allowed) = $tmp =~ /([\/"].*?[\/"]),?(.*)/;
+    my @tfld = split(/,/, $allowed);
+    my $auth;
+    if (!$allowed) {$auth = 1}
+    else {
+      for (my $i = 0; $i < @tfld; $i++) {
+        next unless $tfld[$i];
+        if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last};
+      };
     };
+    return 0 unless $auth;
+  } else {
+    $msg = $tmp;
   };
-  if ($auth && match($arg->{privMsg},$tPM)) {
-    setVar(".lastpm", $arg->{privMsgUser});
-    return 1;
-  };
-  return 0;
-};
-
-# checks for public message ###############################
-# pm "trigger message",distance
-# pm /regexp/,distance
-sub checkPubM {
-  my ($tPM, $distance) = $_[0] =~ /([\/"].*?[\/"]),?(.*)/;
-  $distance = 15 if ($distance eq '');
-  my $arg = $_[1];
-  my $mypos = calcPosition($char);
-  my $pos = calcPosition($::players{$arg->{pubID}});
-  if (match($arg->{pubMsg},$tPM) && distance($mypos, $pos) <= $distance) {
-    setVar(".lastpub", $arg->{pubMsgUser});
-    return 1;
+  if (match($arg->{Msg},$msg)){
+    setVar($var, $arg->{MsgUser}); return 1;
   };
   return 0;
 };
