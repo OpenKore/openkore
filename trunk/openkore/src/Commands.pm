@@ -723,24 +723,22 @@ sub cmdChatRoom {
 		}
 
 	} elsif ($arg1 eq "modify") {
-		my ($arg2) = $args =~ /^\w+ ([\s\S]+)/;
-		my ($replace, $title) = $arg2 =~ /(^\"([\s\S]*?)\" ?)/;
-
-		my $qm = quotemeta $replace;
-		my $input =~ s/$qm//;
-		my @arg = split / /, $input;
+		my ($title) = $args =~ /^\w+ \"([\s\S]*?)\"/;
+		my ($users) = $args =~ /^\w+ \"[\s\S]*?\" (\d+)/;
+		my ($public) = $args =~ /^\w+ \"[\s\S]*?\" \d+ (\d+)/;
+		my ($password) = $args =~ /^\w+ \"[\s\S]*?\" \d+ \d+ ([\s\S]+)/;
 
 		if ($title eq "") {
 			error	"Syntax Error in function 'chatmod' (Modify Chat Room)\n" .
 				"Usage: chat modify \"<title>\" [<limit #> <public flag> <password>]\n";
 		} else {
-			if ($arg[0] eq "") {
-				$arg[0] = 20;
+			if ($users eq "") {
+				$users = 20;
 			}
-			if ($arg[1] eq "") {
-				$arg[1] = 1;
+			if ($public eq "") {
+				$public = 1;
 			}
-			sendChatRoomChange(\$remote_socket, $title, $arg[0], $arg[1], $arg[2]);
+			sendChatRoomChange(\$remote_socket, $title, $users, $public, $password);
 		}
 
 	} elsif ($arg1 eq "kick") {
