@@ -257,3 +257,9 @@ port 6900
 master_version 1
 version 20
 serverType 4
+
+[agRO Private Server]
+ip 63.246.131.80
+port 6900
+master_version 13
+version 20
