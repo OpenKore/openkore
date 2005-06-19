@@ -12,7 +12,7 @@ sex
 
 bindIp
 encrypt 0
-# 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya
+# 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya, 4 = new Freya
 serverType 0
 
 XKore 0
@@ -243,6 +243,7 @@ attackSkillSlot {
 	disabled 0
 	monsters
 	notMonsters
+	maxAttempts 0
 	maxUses 0
 	target_whenStatusActive
 	target_whenStatusInactive
