@@ -263,3 +263,10 @@ ip 63.246.131.80
 port 6900
 master_version 13
 version 20
+
+[XaosRO Private Server]
+ip 67.18.209.218
+port 6900
+master_version 2
+version 0
+serverType 4
