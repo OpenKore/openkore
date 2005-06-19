@@ -136,8 +136,9 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     
     lstrcat(SKINFOLDER, settings.szSkin);     
 
-    settings.nBackupGRF = GetPrivateProfileInt("server","Backup_GRF", NULL, INIFILE);
-
+    // backup grf option
+    settings.nBackupGRF	    = GetPrivateProfileInt("server","Backup_GRF", NULL, INIFILE);
+    settings.nStartupOption = GetPrivateProfileInt("server","startup_option", NULL, INIFILE);
 
     //	checks if ini entries exist
     try {
@@ -597,14 +598,44 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 	    case IDC_STARTGAME:
-		if(bPatchCompleted) {
+		if(settings.nStartupOption == 1) {
+		// RO client may start anytime
 		    if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
 			SendMessage(hWnd,WM_DESTROY,0,0);
 		    else
 			AddErrorLog("Cannot start %s\n", settings.szExecutable);
 		}
-		else
-		    MessageBox(hWnd,"Unable to start application. Wait for the patch process to complete","Error",MB_OK | MB_ICONEXCLAMATION);
+
+
+		else if(settings.nStartupOption == 2) {		    
+		    if(bPatchCompleted) {
+			if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
+			    SendMessage(hWnd,WM_DESTROY,0,0);
+			else
+			    AddErrorLog("Cannot start %s\n", settings.szExecutable);
+		    }
+		    else
+			MessageBox(hWnd,"Unable to start application. Wait for the patch process to complete","Error",MB_OK | MB_ICONEXCLAMATION);
+
+		}
+	
+
+		else if(settings.nStartupOption == 3) {
+		
+		    if(!bPatchInProgress) {
+			if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
+			    SendMessage(hWnd,WM_DESTROY,0,0);
+			else
+			    AddErrorLog("Cannot start %s\n", settings.szExecutable);
+		    }
+		    else
+			MessageBox(hWnd,"Unable to start application. Wait for the patch process to complete","Error",MB_OK | MB_ICONEXCLAMATION);
+
+		} else {
+		    //invalid startup_opion
+		    PostError(FALSE, "Invalid value in neoncube.ini (startup_option): values must be one of the following: 1, 2, 3");
+		}
+	
 	    break;
 
 
@@ -864,13 +895,13 @@ Threader(void)
 	//path to file
 	TCHAR file_path[50];
 	TCHAR szPatch_index[20];
-	TCHAR szDest[3];
+	TCHAR szDest[5];
 	// determines if the patch process has started downloading files
 	static BOOL bHasDownloadedFiles;
 
 	// add the main GRF file (the one on neoncube.ini) to the linked list
 	// so that when we run the extraction loop, the main GRF file is included
-	AddPatch(settings.szGrf, 1);
+	AddPatchEx(settings.szGrf, 1, "GRF");
 
 	
 
@@ -880,8 +911,8 @@ Threader(void)
 	// 1234		test.gpf  -> downloads test.gpf. If test.gpf is the last patch, its index, 1234 will be
 	//		saved into "neoncube.file"
 		
-	while(fscanf(fTmp, "%s %s %s\n", szPatch_index, patch_tmp, szDest) != EOF) {
-	    	    
+	while(fscanf(fTmp, "%s %s %s\n", szPatch_index, szDest, patch_tmp) != EOF) {
+	    
 	    // the next line is comment support, if szPatch_index[0] is equal to '/' or '#'
 	    // 
 	   
@@ -916,14 +947,15 @@ Threader(void)
 	    if(index_tmp > last_index) {
 		if(patch_tmp[strlen(patch_tmp)-1] == 0x2a) {
 		    patch_tmp[strlen(patch_tmp)-1] = '\0';
-		    DelFile(patch_tmp);
+		    DelFile(patch_tmp, szDest);
 		    bPatchUpToDate = FALSE;
 		    goto end; //skip downloading, of course
 		}
 
 		//add patch_tmp and index_tmp to patch struct
+
 		AddPatchEx(patch_tmp, index_tmp, szDest);
-				
+		
 
 		lstrcpy(file_path, settings.szPatchFolder);
 		lstrcat(file_path, patch_tmp);
@@ -1017,13 +1049,32 @@ end:;
 	if(!bPatchUpToDate) {
 									
 	PATCH *spCurrentItem;
+	PATCH *spCItemSearch;
 	spCurrentItem = spFirstItem;
-
+	spCItemSearch = spFirstItem->next;
 	// the extraction loop, we loop through until spCurrentItem is NULL,
 	// each loop will extract the patch
 	while(1) {
 
-	    if(!ExtractGRF(spCurrentItem->szPatchName)) {
+	    //prevent grf_file from extracting if there's no GPF to be repacked with it
+	    if(lstrcmp(spCurrentItem->szPatchName, settings.szGrf) == 0) {
+		
+		while(1) {
+		    if(spCItemSearch == NULL) {
+			spCurrentItem = spCurrentItem->next;
+			break;
+		    }
+		    
+		    if(lstrcmp(spCItemSearch->szPath, "GRF") == 0) {
+			break;
+		    }
+		    
+		    spCItemSearch = spCItemSearch->next;
+		}
+		
+	    }
+ 
+	    if(!ExtractGRF(spCurrentItem->szPatchName, spCurrentItem->szPath)) {
 					
 		PostError(FALSE, "Failed to extract %s. Corrupt file.", spCurrentItem->szPatchName);
 	    }
@@ -1042,17 +1093,30 @@ end:;
 	}
 
 
+
 	DELFILE *dfCurrentItem;
 	dfCurrentItem = dfFirstItem;
-	TCHAR szFileNameToDel[1024] = "neoncube\\";
+	TCHAR szFileNameToDel[1024];
 
 
 	// the delete-file loop, more like the extraction loop but for file deletion
 	while(1) {
 	    if(dfCurrentItem == NULL)
 		break;
-				
-	    lstrcat(szFileNameToDel, dfCurrentItem->szFileName);
+
+
+	    if(lstrcmp(dfCurrentItem->szPath, "FLD") == 0) {
+		//filename to delete is inside the data folder
+		lstrcpy(szFileNameToDel, dfCurrentItem->szFileName);
+	    }
+
+	    else if(lstrcmp(dfCurrentItem->szPath, "GRF") == 0) {
+		//filename to delete is on neoncube\data\ folder
+		lstrcpy(szFileNameToDel, "neoncube\\");			
+		lstrcat(szFileNameToDel, dfCurrentItem->szFileName);
+	    }
+
+
 	    if(!DeleteFile(szFileNameToDel))
 		//add error.log entry
 		AddErrorLog("Failed to delete %s: file not found\n", szFileNameToDel);
@@ -1139,7 +1203,7 @@ end:;
 // @return value - none
 //##########################################################################
 void
-DelFile(LPCTSTR item)
+DelFile(LPCTSTR item, LPCTSTR fpath)
 {
     DELFILE *dfNewItem;
 
@@ -1147,6 +1211,9 @@ DelFile(LPCTSTR item)
     if(NULL == dfNewItem)
 	PostError(TRUE, "Failed to allocate memory.");
     lstrcpy(dfNewItem->szFileName, item);
+    lstrcpy(dfNewItem->szPath, fpath);
+
+    
     dfNewItem->next = dfFirstItem;
     dfFirstItem = dfNewItem;
 }
@@ -1188,9 +1255,8 @@ AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
 	
 	// if fpath != NULL, this patch package will be extracted on fpath, else place
 	// it on the default GRF file
-	if(fpath != NULL)
-	    lstrcpy(spNewItem->szPath, fpath);
-
+	
+	lstrcpy(spNewItem->szPath, fpath);
 	spNewItem->next = spFirstItem;
 	spFirstItem = spNewItem;
 	
@@ -1211,7 +1277,8 @@ AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
 	if(NULL == spNewItem)
 	    PostError(TRUE, "Failed to allocate memory.");
 	    
-	strcpy(spNewItem->szPatchName, item);
+	lstrcpy(spNewItem->szPatchName, item);
+	lstrcpy(spNewItem->szPath, fpath);
 	spNewItem->iPatchIndex = index;
 	spNewItem->next = NULL;
 	spLastItem->next = spNewItem;

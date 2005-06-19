@@ -32,7 +32,7 @@
 // @return value - FALSE if an error occured, otherwise
 //		    it returns TRUE.
 //#########################################################
-BOOL ExtractGRF(LPCTSTR fname)
+BOOL ExtractGRF(LPCTSTR fname, LPCTSTR fpath)
 {
 	
     Grf *grf;
@@ -56,10 +56,23 @@ BOOL ExtractGRF(LPCTSTR fname)
     StatusMessage("Status: Extracting %s...\r\nInfo:------\r\nProgress:-----", fname);
     for(DWORD ctr = 0;ctr < grf->nfiles; ctr++) {
 
-	TCHAR szPath[256] = "neoncube\\";
+	TCHAR szPath[256];
 	int folders = 0;
 	int i;
-	_tcscat(szPath,grf->files[ctr].name);
+
+	if(_tcscmp(fpath, "FLD") == 0) {
+	    //patches will not be packed into a GRF
+	    _tcscpy(szPath, grf->files[ctr].name);
+	}
+	    
+	else if(_tcscmp(fpath, "GRF") == 0) {
+	    //patches will be packed
+	    _tcscpy(szPath, "neoncube\\");
+	    _tcscat(szPath, grf->files[ctr].name);
+	    
+	} else {
+	    PostError(TRUE, "Invalid patch_list string: %s \n2nd flag must be: FLD or GRF", fpath);
+	}
 	GRF_normalize_path(szPath,szPath);
 		    
 	folders = CountFolders(szPath);
@@ -81,8 +94,9 @@ BOOL ExtractGRF(LPCTSTR fname)
 	    //search the linked list for item deletion
 	    while(lstrcmp(grf->files[ctr].name, dfCurrentItem->szFileName) != 0) {	
 				
-		//add file
-		if(!FileExist(grf->files[ctr].name)) {
+		//if file doesnt exist in our to-delete linked list and if
+		// fpath = GRF, add an entry to adata.grf.txt...
+		if((!FileExist(grf->files[ctr].name)) && (_tcscmp(fpath, "GRF") == 0)) {
 		
 		    fprintf(fp,"F %s\n", grf->files[ctr].name);
 

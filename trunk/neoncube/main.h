@@ -96,7 +96,8 @@ struct inisetting {
 	TCHAR szRegistration[MAXARRSIZE];
 	TCHAR szGrf[50];
 	TCHAR szSkin[256];
-	INT   nBackupGRF;
+	WORD nBackupGRF;
+	WORD nStartupOption;
 } settings;
 
 
@@ -287,7 +288,7 @@ PATCH *spFirstItem = NULL;
 ########################################################*/
 void AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath);
 
-#define AddPatch(item, index) AddPatchEx(item, index, NULL)
+//#define AddPatch(item, index) AddPatchEx(item, index, NULL)
 
 
 /************************************************
@@ -303,7 +304,7 @@ BOOL bPatchInProgress;
 ##
 ## return value: FALSE if an error occured.
 ########################################################*/
-extern BOOL ExtractGRF(LPCSTR);
+extern BOOL ExtractGRF(LPCSTR fname, LPCTSTR fpath);
 
 /*#######################################################
 ## FUNCTION: Adds the current file being extracted to
@@ -363,11 +364,13 @@ void StatusMessage(LPCTSTR message, ...);
 ########################################################*/
 typedef struct delfile {
 	TCHAR szFileName[1024];
+	TCHAR szPath[3];
+
 	struct delfile *next;
 } DELFILE;
 
 DELFILE *dfFirstItem = NULL;
-void DelFile(LPCTSTR item);
+void DelFile(LPCTSTR item, LPCTSTR fpath);
 
 
 /*#######################################################
