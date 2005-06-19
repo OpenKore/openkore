@@ -6428,7 +6428,7 @@ sub parseMsg {
 
 			$target->{sitting} = 0 unless $type == 4 || $type == 9 || $totalDamage == 0;
 
-			Plugins::callHook('packet_attack', {sourceID => $ID1, targetID => $ID2, msg => \$msg});
+			Plugins::callHook('packet_attack', {sourceID => $ID1, targetID => $ID2, msg => \$msg, dmg => $totalDamage});
 
 			my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($src_speed/10).")";
 
