@@ -42,8 +42,6 @@ Bug fixes:
   you now, on non-encrypted servers. (But does it still work on
   encrypted servers?)
 - Correctly set the field name on aliased novice training fields.
-- Potential crash bug: update calls to main::quit and main::relog
-  which have been moved into the Misc module.
 
 New features:
 - Better support for detecting dead players.
