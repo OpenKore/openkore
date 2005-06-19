@@ -712,22 +712,22 @@ sub checkPercent {
 
 # checks for status #######################################
 sub checkStatus {
-  my ($tmp, $status) = split(/ /, $_[0], 2);
-  if (!$status) {$status = $tmp; undef $tmp};
-  if ($status eq 'muted' && $char->{muted}) {return 1};
-  if ($status eq 'dead' && $char->{dead}) {return 1};
-  if (!$char->{statuses}) {
-    if ($tmp eq 'not') {return 1};
-    return 0;
+  my $status = shift;
+  my $not = 0;
+  if ($status =~ /^not /) {$not = 1; $status =~ s/^not +//g}
+   if ($status eq 'muted') {
+    if ($char->{muted}) {return 1 if !$not; return 0}
+    else {return 0 if !$not; return 1};
   };
+  if ($status eq 'dead') {
+    if ($char->{dead}) {return 1 if !$not; return 0}
+    else {return 0 if !$not; return 1};
+  };
+  if (!$char->{statuses}) {return 0 if !$not; return 1};
   foreach (keys %{$char->{statuses}}) {
-    if (lc($_) eq lc($status)) {
-      if ($tmp eq 'not') {return 0};
-      return 1;
-    };
+    if (lc($_) eq lc($status)) {return 1 if !$not; return 0}
   };
-  if ($tmp eq 'not') {return 1};
-  return 0;
+  return 0 if !$not; return 1;
 };
 
 # checks for item conditions ##############################
