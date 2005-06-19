@@ -237,13 +237,6 @@ port 6900
 master_version 0
 version 1
 
-[OpenRO Private Server]
-ip 66.111.59.100
-port 6900
-version 20
-master_version 14
-serverType 3
-
 [VanRO: Medium Rate Private Server]
 ip 66.111.51.160
 port 6800
