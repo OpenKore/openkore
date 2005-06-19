@@ -20,23 +20,50 @@
 ##############################################################################*/
 
 
-#ifndef __BROWSER_H_INCLUDED
-#define __BROWSER_H_INCLUDED
+#ifndef _BROWSER_H_
+#define _BROWSER_H_
 
 #include <windows.h>
 
+extern "C" {
+//########################################################
+// Embeds the OLE object to a window
+//
+// @param hwndWindow - handle of the window
+//########################################################
+long EmbedBrowserObject(HWND hwndWindow);
 
-long WINAPI EmbedBrowserObject(HWND);
-#define EMBEDBROWSEROBJECT EmbedBrowserObject
-typedef long WINAPI EmbedBrowserObjectPtr(HWND);
 
-void WINAPI UnEmbedBrowserObject(HWND);
-#define UNEMBEDBROWSEROBJECT UnEmbedBrowserObject
-typedef long WINAPI UnEmbedBrowserObjectPtr(HWND);
+//########################################################
+// Unemdeds the OLE object from the window
+//
+// @param hwndWindow - Handle of the window
+//########################################################
+void UnEmbedBrowserObject(HWND hwndWindow);
 
-long WINAPI DisplayHTMLPage(HWND, LPCTSTR);
-#define DISPLAYHTMLPAGE DisplayHTMLPage
-typedef long WINAPI DisplayHTMLPagePtr(HWND, LPCTSTR);
 
+//########################################################
+// Displays an HTML page
+//
+// @param hwndWindow - Handle of the window where the page will
+//		    be displayed.
+//
+// @param lpszPath - URL of the page that will be displayed
+//########################################################
+long DisplayHTMLPage(HWND hwndWindow, LPCTSTR lpszPath);
+
+
+//########################################################
+// Displays String (HTML CODED)
+//
+// @param hwndWindow - Handle of the window where the page
+//			will be displayed.
+//
+// @param lpszHtmlContent - Pointer to a null terminated string
+//			    (the HTML code itself)
+//#########################################################
+long DisplayHTMLStr(HWND hwndWindow, LPCTSTR lpszHtmlContent);
+
+}
 
 #endif
