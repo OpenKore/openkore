@@ -6379,7 +6379,9 @@ sub parseMsg {
 
 		if ($type == 1) {
 			# Take item
-			my ($source, $verb, $target) = getActorNames($ID1, $ID2, 'pick up', 'picks up');
+			my $source = Actor::get($ID1);
+			my $verb = $source->verb('pick up', 'picks up');
+			my $target = Actor::get($ID2);
 			debug "$source $verb $target\n", 'parseMsg_presence';
 			$items{$ID2}{takenBy} = $ID1 if ($items{$ID2});
 		} elsif ($type == 2) {
@@ -8236,6 +8238,12 @@ sub parseMsg {
 		# Resolve source and target names
 		my $source = Actor::get($sourceID);
 		my $target = Actor::get($targetID);
+		my $targetString;
+		if ($sourceID eq $targetID) {
+			$targetString = $target->verb("yourself", "self");
+		} else {
+			$targetString = "$target";
+		}
 		my $verb = $source->verb('use', 'uses');
 
 		# Print skill use message
@@ -8247,7 +8255,7 @@ sub parseMsg {
 			$extra = ": Lv $amount";
 		}
   
-		message "$source $verb ".skillName($skillID)." on $target$extra\n", "skill";
+		message "$source $verb ".skillName($skillID)." on $targetString$extra\n", "skill";
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
@@ -11013,11 +11021,11 @@ sub getActorHash {
 # Obsoleted by Actor module, don't use this!
 sub getActorName {
 	my $id = shift;
-	my $hash;
 
 	if (!$id) {
 		return 'Nothing';
 	} else {
+		my $hash = Actor::get($id);
 		return "$hash";
 	}
 }
