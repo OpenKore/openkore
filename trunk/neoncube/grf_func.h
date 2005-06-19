@@ -40,6 +40,8 @@ extern HWND g_hwndStatic;
 //
 typedef struct delfile {
 	TCHAR szFileName[1024];
+	TCHAR szPath[3];
+
 	struct delfile *next;
 }DELFILE;
 
@@ -61,9 +63,9 @@ GRFFILES *spfFirstItem = NULL;
 typedef struct patch {
     TCHAR   szPatchName[50];
     INT	    iPatchIndex;
+    TCHAR   szPath[3];
 
-
-	struct patch *next;
+    struct patch *next;
 } PATCH;
 
 extern PATCH *spFirstItem;

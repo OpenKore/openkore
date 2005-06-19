@@ -1,12 +1,17 @@
 ###############################
 ## 1.1
 ###############################
+
 06/19/05
 --------
 Improved: PostError() function
 Improved: Checks for handles before freeing
 Improved: browser now statically linked, no need for browser.dll (as requested by someone from eAthena)
 Update: zlib.h to 1.2.2
+Added: Data folder support (NeonCube now works with data folder and GRF file at the same time)
+Added: startup option (see neoncube.ini)
+
+
 
 06/18/05
 --------
