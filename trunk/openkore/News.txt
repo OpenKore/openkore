@@ -90,6 +90,10 @@ New features:
 - Implement packet 01D6 (detect PVP/GVG mode in Aegis 8.5).
 - debugPacket_sent and debugPacket_ro_sent 2 option functions like a
   packet sniffer.
+- Support for private RO servers like aeRO and powRO with weird
+  pre-login packets.
+  To use this feature you must put the line 'preLoginCode 1' in
+  tables/servers.txt.
 
 New commands:
 - storage log

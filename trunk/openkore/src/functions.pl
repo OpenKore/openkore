@@ -220,6 +220,7 @@ sub checkConnection {
 			}
 
 		} elsif ($remote_socket && $remote_socket->connected) {
+			sendPreLoginCode(\$remote_socket, $master->{preLoginCode}) if ($master->{preLoginCode});
 			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'},
 				$master->{master_version}, $master->{version});
 		}
