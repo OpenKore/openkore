@@ -55,7 +55,7 @@ typedef struct {
 } IMAGEPATH;
 
 
-extern void PostError(BOOL exitapp = TRUE);
+extern void PostError(BOOL exitapp, LPCTSTR lpszErrMessage, ...);
 
 #include <commctrl.h>
 
