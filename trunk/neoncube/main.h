@@ -139,13 +139,6 @@ typedef struct {
 HBITMAP hbmBackground = NULL;
 
 
-/*#######################################################
-## WEB BROWSER / NOTICE WINDOW FUNCTIONS
-########################################################*/
-#include "browser\browser.h"
-EmbedBrowserObjectPtr		*lpEmbedBrowserObject;
-UnEmbedBrowserObjectPtr		*lpUnEmbedBrowserObject;
-DisplayHTMLPagePtr		*lpDisplayHTMLPage;
 
 /*#######################################################
 ## CONFIGURATION / FILENAMES
@@ -329,11 +322,17 @@ extern void GRFCreate_AddFile(LPCTSTR item);
 extern BOOL DeleteDirectory(LPCTSTR lpszDir);
 
 /*#######################################################
-## FUNCTION: Post an error message in a window
+## Post an error message in a window
 ##
-## return value: none
+## @param exitapp - TRUE if the application will exit after
+##		    posting the error message. FALSE otherwise
+##
+## @param lpezErrMessage - pointer to a NULL terminated string
+##			    which contains the message to be posted
+##
+##
 ########################################################*/
-void PostError(BOOL exitapp = TRUE);
+void PostError(BOOL exitapp, LPCTSTR lpszErrMessage, ...);
 
 
 //bitmaps
@@ -406,7 +405,6 @@ typedef enum {
 // @param lpszFileName - Pointer to a null terminated string (path to file)
 // @return value - see enum above
 CFFE_ERROR CheckFileForExistance(LPCTSTR lpszFileName);
-
 
 
 #endif /*_MAIN_H_*/
