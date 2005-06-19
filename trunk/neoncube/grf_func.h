@@ -45,7 +45,7 @@ typedef struct delfile {
 
 extern DELFILE *dfFirstItem;
 
-extern void PostError(BOOL exitapp = TRUE);
+extern void PostError(BOOL exitapp, LPCTSTR lpszErrMessage, ...);
 
 extern void StatusMessage(LPCTSTR message, ...);
 extern void AddErrorLog(LPCTSTR fmt, ...);
