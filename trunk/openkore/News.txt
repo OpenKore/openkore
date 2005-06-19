@@ -42,6 +42,8 @@ Bug fixes:
   you now, on non-encrypted servers. (But does it still work on
   encrypted servers?)
 - Correctly set the field name on aliased novice training fields.
+- Give a warning if the user specifies an invalid "server" option in
+  config.txt.
 
 New features:
 - Better support for detecting dead players.

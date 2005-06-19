@@ -254,8 +254,10 @@ sub checkConnection {
 
 		if ($master->{charServer_ip}) {
 			Network::connectTo(\$remote_socket, $master->{charServer_ip}, $master->{charServer_port});
-		} else {
+		} elsif ($servers[$config{'server'}]) {
 			Network::connectTo(\$remote_socket, $servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
+		} else {
+			error "Invalid server specified, server $config{server} does not exist...\n", "connection";
 		}
 
 		sendGameLogin(\$remote_socket, $accountID, $sessionID, $sessionID2, $accountSex);
