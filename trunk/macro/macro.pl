@@ -737,8 +737,12 @@ sub checkItem {
   my $what;
   if ($where eq 'inv')  {$what = getInventoryAmount($item)};
   if ($where eq 'cart') {$what = getCartAmount($item)};
-  if ($where eq 'shop') {return 0 unless $shopstarted; $what = getShopAmount($item)};
-  if ($where eq 'stor') {$what = getStorageAmount($item)};
+  if ($where eq 'shop') {
+    return 0 unless $shopstarted; $what = getShopAmount($item);
+  };
+  if ($where eq 'stor') {
+    return 0 unless $::storage{opened}; $what = getStorageAmount($item);
+  };
   return 1 if cmpr($what, $cond, $amount);
   return 0;
 };
