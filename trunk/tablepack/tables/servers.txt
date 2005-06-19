@@ -284,3 +284,18 @@ port 6901
 master_version 14
 version 18
 serverType 4
+
+[aeRO Private Server]
+ip 66.196.34.89
+port 6900
+master_version 2
+version 20
+preLoginCode 1
+
+[powRO Private Server]
+ip 64.69.46.56
+port 6900
+master_version 2
+version 0
+preLoginCode 1
+serverType 3
