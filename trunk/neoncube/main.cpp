@@ -26,7 +26,7 @@
 
 #include "main.h"
 #include "resource.h"
-
+#include "browser\browser.h"
 
 int WINAPI 
 WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdShow)
@@ -36,7 +36,6 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 	_CrtDumpMemoryLeaks();
 #endif /*_DEBUG*/
 
-    HINSTANCE	hBrowserDll;
     HWND	hwnd;
     MSG		message;
     INT		iWidth = 500;
@@ -51,6 +50,10 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     //initialize common controls
     InitCommonControls();
 	
+    //initialize OLE
+    if(OleInitialize(NULL) != S_OK)
+	PostError(TRUE, "Failed to initialize OLE");
+    
     //prepare data.grf.txt
     DeleteFile("neoncube\\data.grf.txt");
 				
@@ -58,7 +61,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 
     hGrfTxt = fopen("neoncube\\data.grf.txt","w");
     if(!hGrfTxt)
-	PostError();
+	PostError(TRUE, "Failed to create file: data.grf.txt");
     fprintf(hGrfTxt,"0x103\n");
     fclose(hGrfTxt);
     
@@ -73,11 +76,11 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 	    MessageBox(NULL, "file not found (neoncube\\neoncube.ini)", "Error", MB_OK | MB_ICONERROR);
 	    return -1;
 	case CFFE_PATH_NOT_FOUND:
-	    AddErrorLog("file not found (neoncube\\neoncube.ini)\n");
+	    AddErrorLog("invalid path (neoncube\\neoncube.ini)\n");
 	    MessageBox(NULL, "path not found (neoncube\\neoncube.ini)", "Error", MB_OK | MB_ICONERROR);
 	    return -1;
 	case CFFE_ACCESS_DENIED:
-	    AddErrorLog("file not found (neoncube\\neoncube.ini)\n");
+	    AddErrorLog("access denied (neoncube\\neoncube.ini)\n");
 	    MessageBox(NULL, "access denied (neoncube\\neoncube.ini)", "Error", MB_OK | MB_ICONERROR);
 	    return -1;
     }
@@ -90,11 +93,11 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 	    MessageBox(NULL, "file not found (neoncube\\create.exe)", "Error", MB_OK | MB_ICONERROR);
 	    return -1;
 	case CFFE_PATH_NOT_FOUND:
-	    AddErrorLog("file not found (neoncube\\create.exe)\n");
+	    AddErrorLog("path not found (neoncube\\create.exe)\n");
 	    MessageBox(NULL, "path not found (neoncube\\create.exe)", "Error", MB_OK | MB_ICONERROR);
 	    return -1;
 	case CFFE_ACCESS_DENIED:
-	    AddErrorLog("file not found (neoncube\\create.exe)\n");
+	    AddErrorLog("access denied found (neoncube\\create.exe)\n");
 	    MessageBox(NULL, "access denied (neoncube\\create.exe)", "Error", MB_OK | MB_ICONERROR);
 	    return -1;
     }    
@@ -122,6 +125,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     }
     catch(LPCTSTR message) {
 	MessageBox(NULL, message, "Error", MB_OK | MB_ICONERROR);
+	AddErrorLog("%s\n", message);
 	return -1;
     }
 
@@ -222,25 +226,9 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     crdProgress.height	= LoadINIInt("progressbar", "height");
 
 
-    //
-    // Load browser.dll
-    if (!(hBrowserDll = LoadLibrary("browser.dll"))) {
-	AddErrorLog("Failed to load browser.dll");
-	return -1;
-    }
-
     //load bitmap buttons
     LoadButtonBitmap();
-	
-    //functions used on browser.dll
-    lpEmbedBrowserObject	= (EmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "EmbedBrowserObject");
-    lpUnEmbedBrowserObject	= (UnEmbedBrowserObjectPtr *)GetProcAddress((HINSTANCE)hBrowserDll, "UnEmbedBrowserObject");
-    lpDisplayHTMLPage		= (DisplayHTMLPagePtr *)GetProcAddress((HINSTANCE)hBrowserDll, "DisplayHTMLPage");
-
-
-    if((lpEmbedBrowserObject == NULL) || (lpUnEmbedBrowserObject == NULL) || (lpDisplayHTMLPage == NULL))
-	return -1;
-	
+		
     ZeroMemory(&wc, sizeof(WNDCLASSEX));
         
 	
@@ -260,9 +248,9 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 
     // register class
     if (!RegisterClassEx(&wc)) 
-	PostError();
+	PostError(TRUE, "Failed to register parent window class.");
     if(!SetupNoticeClass(hInstance))
-	PostError();
+	PostError(TRUE, "Failed to register notice window class.");
 
 
     // get actual screen resolution
@@ -290,7 +278,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 		    );
 
     if(!hbmBackground)
-	PostError();
+	PostError(TRUE, "Failed to load %s\n.", szBgPath);
     
     lstrcat(settings.szServerName, " - NeonCube");		
     hwnd	 = CreateWindowEx(0,
@@ -382,8 +370,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     ShowWindow(hwndCancel,nCmdShow);		
     /*track mouse event*/
     if(!TME(hwnd)) {
-	FreeLibrary(hBrowserDll);
-	PostError();
+	PostError(TRUE, "Failed to initialize TrackMouseEvent.");
     }
 
     /*progress bar*/
@@ -421,8 +408,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 	TranslateMessage(&message);
 	DispatchMessage(&message);
     }
-
-    FreeLibrary(hBrowserDll);
+    OleUninitialize();
     return message.wParam;
 } 
 
@@ -538,24 +524,49 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
     case WM_DESTROY:
-	CloseHandle(hThread);
+	if(hThread != NULL)
+	    CloseHandle(hThread);
+	
+	if(hbmBackground != NULL)
+	    DeleteObject(hbmBackground);
 
-	DeleteObject(hbmBackground);
 
-	DeleteObject(hbmMinimize);
-	DeleteObject(hbmMinimize_hover);
+	if(hbmMinimize != NULL)
+	    DeleteObject(hbmMinimize);
 
-	DeleteObject(hbmClose);
-	DeleteObject(hbmClose_hover);
+	if(hbmMinimize_hover != NULL)
+	    DeleteObject(hbmMinimize_hover);
 
-	DeleteObject(hbmStartGame);
-	DeleteObject(hbmStartGame_hover);
 
-	DeleteObject(hbmRegister);		
-	DeleteObject(hbmRegister_hover);
+	if(hbmClose != NULL)
+	    DeleteObject(hbmClose);
 
-	DeleteObject(hbmCancel);
-	DeleteObject(hbmCancel_hover);
+	if(hbmClose_hover != NULL)
+	    DeleteObject(hbmClose_hover);
+
+	if(hbmStartGame != NULL)
+		DeleteObject(hbmStartGame);
+
+	if(hbmStartGame_hover != NULL)
+	    DeleteObject(hbmStartGame_hover);
+
+	if(hbmRegister != NULL)
+		DeleteObject(hbmRegister);
+
+	if(hbmRegister_hover != NULL)	
+	    DeleteObject(hbmRegister_hover);
+
+	if(hbmCancel != NULL)
+	    DeleteObject(hbmCancel);
+
+	if(hbmCancel_hover != NULL)
+	    DeleteObject(hbmCancel_hover);
+
+	if(g_hConnection != NULL)
+	    InternetCloseHandle(g_hConnection);	
+
+	if(g_hOpen != NULL)
+	InternetCloseHandle(g_hOpen);
 
 	PostQuitMessage(0);
     break;
@@ -590,7 +601,7 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		    if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
 			SendMessage(hWnd,WM_DESTROY,0,0);
 		    else
-			AddErrorLog("Cannot start %s", settings.szExecutable);
+			AddErrorLog("Cannot start %s\n", settings.szExecutable);
 		}
 		else
 		    MessageBox(hWnd,"Unable to start application. Wait for the patch process to complete","Error",MB_OK | MB_ICONEXCLAMATION);
@@ -638,12 +649,12 @@ NoticeWindowProcedure(HWND hwndNotice, UINT message, WPARAM wParam, LPARAM lPara
 {
     switch(message) {
 	case WM_CREATE:
-	    if ((*lpEmbedBrowserObject)(hwndNotice)) 
+	    if (EmbedBrowserObject(hwndNotice)) 
 		return -1;
 	break;
 
 	case WM_DESTROY:
-	    (*lpUnEmbedBrowserObject)(hwndNotice);
+	    UnEmbedBrowserObject(hwndNotice);
     	    return(TRUE);
 	break;
 
@@ -713,8 +724,8 @@ drawNotice(HWND hwnd, int nCmdShow)
 		(HINSTANCE) GetWindowLong(hwnd, GWL_HINSTANCE), 
 		NULL
 		);
-    
-    (*lpDisplayHTMLPage)(hwndNotice, settings.szNoticeURL);		
+    		
+    DisplayHTMLPage(hwndNotice, settings.szNoticeURL);
     ShowWindow(hwndNotice, nCmdShow);
 }
 
@@ -806,7 +817,7 @@ Threader(void)
 	LPTSTR pPatch2TxtData = (LPTSTR)GlobalAlloc(GMEM_FIXED, dwPatch2ContentLen + 1);
 		
 	if(NULL == pPatch2TxtData)
-	    PostError();
+	    PostError(TRUE, "Failed to allocate memory.");
 
 	DWORD dwPatch2TxtBytesRead;
 		
@@ -820,7 +831,7 @@ Threader(void)
 	DWORD dwBytesWritten_Tmp;
 	HANDLE hTmp = CreateFile("tmp.nc", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
    	if(WriteFile(hTmp, pPatch2TxtData, dwPatch2ContentLen, &dwBytesWritten_Tmp, NULL) == 0)
-	    PostError();	
+	    PostError(TRUE, "Failed to create temporary file: tmp.nc");	
 	CloseHandle(hTmp);
 		
 	//free memory used by pPatch2TxtData
@@ -848,12 +859,12 @@ Threader(void)
 	FILE *fTmp = fopen("tmp.nc", "r");
 	
 	if(!fTmp)
-	    PostError();
+	    PostError(TRUE, "Failed to open temporary file: tmp.nc");
 	
 	//path to file
 	TCHAR file_path[50];
 	TCHAR szPatch_index[20];
-
+	TCHAR szDest[3];
 	// determines if the patch process has started downloading files
 	static BOOL bHasDownloadedFiles;
 
@@ -869,7 +880,7 @@ Threader(void)
 	// 1234		test.gpf  -> downloads test.gpf. If test.gpf is the last patch, its index, 1234 will be
 	//		saved into "neoncube.file"
 		
-	while(fscanf(fTmp, "%s %s\n", szPatch_index, patch_tmp) != EOF) {
+	while(fscanf(fTmp, "%s %s %s\n", szPatch_index, patch_tmp, szDest) != EOF) {
 	    	    
 	    // the next line is comment support, if szPatch_index[0] is equal to '/' or '#'
 	    // 
@@ -911,7 +922,7 @@ Threader(void)
 		}
 
 		//add patch_tmp and index_tmp to patch struct
-		AddPatch(patch_tmp, index_tmp);
+		AddPatchEx(patch_tmp, index_tmp, szDest);
 				
 
 		lstrcpy(file_path, settings.szPatchFolder);
@@ -937,7 +948,7 @@ Threader(void)
 		// allocate needed memory for the patch
 		    LPTSTR pData = (LPTSTR)GlobalAlloc(0x0000, dwContentLen + 1);
 		    if(NULL == pData)
-			PostError();
+			PostError(TRUE, "Failed to allocate memory.");
 
 		    DWORD dwReadSize = dwContentLen / 100;
 
@@ -967,9 +978,8 @@ Threader(void)
 		    DWORD dwBytesWritten;
 		    HANDLE hFile = CreateFile(patch_tmp, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
    		    if(WriteFile(hFile, pData,dwContentLen, &dwBytesWritten, NULL) == 0) {
-		
-			MessageBox(0,"Failed to write data","Error",MB_OK | MB_ICONERROR);
-			AddErrorLog("Failed to write %s\n", patch_tmp);
+			
+			PostError(TRUE, "Failed to save patch file: %s", patch_tmp);
 		    
 		    } else {
 			CloseHandle(hFile);
@@ -1015,10 +1025,7 @@ end:;
 
 	    if(!ExtractGRF(spCurrentItem->szPatchName)) {
 					
-		TCHAR szMess[50] = "Failed to extract ";
-		lstrcat(szMess,spCurrentItem->szPatchName);
-		MessageBox(NULL,szMess,"Error",MB_OK | MB_ICONERROR);
-		AddErrorLog(szMess);
+		PostError(FALSE, "Failed to extract %s. Corrupt file.", spCurrentItem->szPatchName);
 	    }
 	    
 	    //after extracting patch files, delete it
@@ -1048,7 +1055,7 @@ end:;
 	    lstrcat(szFileNameToDel, dfCurrentItem->szFileName);
 	    if(!DeleteFile(szFileNameToDel))
 		//add error.log entry
-		AddErrorLog("Failed to delete %s\n", szFileNameToDel);
+		AddErrorLog("Failed to delete %s: file not found\n", szFileNameToDel);
 
 	    if(dfCurrentItem->next == NULL)
 		break;
@@ -1071,7 +1078,7 @@ end:;
                      NULL, 0, 0, FALSE,
                      CREATE_DEFAULT_ERROR_MODE | CREATE_NO_WINDOW,
                      0, "neoncube", &siStartupInfo, &piProcessInfo))
-	    PostError();
+	    PostError(TRUE, "Failed to create process: Create.exe");
 			
 	    // wait for create.exe to terminate
 	    WaitForSingleObject(piProcessInfo.hProcess, INFINITE);
@@ -1089,13 +1096,12 @@ end:;
 		
 		DeleteFile("neoncube\\grf.bak");
 		if(!MoveFile(settings.szGrf, "neoncube\\grf.bak")) {
-		    AddErrorLog("Failed to move file: %s\n", settings.szGrf);
-		    PostError(FALSE);
+		    PostError(FALSE, "Failed to make a backup of %s", settings.szGrf);
 		}
 	    }	
 	    //moves and renames new GRF file
 	    if(!MoveFile("neoncube\\data.grf",settings.szGrf))
-		PostError();
+		PostError(TRUE, "Failed to move file (%s) to original path", settings.szGrf);
 
 	    StatusMessage("Status: Patch process complete.\r\nInfo:-----\r\nProgress:-----");
 			
@@ -1104,7 +1110,7 @@ end:;
 
 	    hLastIndex = fopen("neoncube.file","w");
 	    if(NULL == hLastIndex)
-		PostError();
+		PostError(TRUE, "Failed to write last index to neoncube.file");
 	    fprintf(hLastIndex,"%d",index_tmp);
 	    fclose(hLastIndex);								
 	
@@ -1117,8 +1123,7 @@ end:;
     bPatchCompleted = TRUE;
     InternetCloseHandle(hRequest);
     InternetCloseHandle(hPatch2Request);
-    InternetCloseHandle(g_hConnection);	
-    InternetCloseHandle(g_hOpen);
+
 	
     bPatchInProgress = FALSE;
     return S_OK;
@@ -1140,7 +1145,7 @@ DelFile(LPCTSTR item)
 
     dfNewItem = (DELFILE*)LocalAlloc(GMEM_FIXED, sizeof(DELFILE));
     if(NULL == dfNewItem)
-	PostError();
+	PostError(TRUE, "Failed to allocate memory.");
     lstrcpy(dfNewItem->szFileName, item);
     dfNewItem->next = dfFirstItem;
     dfFirstItem = dfNewItem;
@@ -1176,7 +1181,7 @@ AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
     	
         spNewItem = (PATCH*)LocalAlloc(GMEM_FIXED, sizeof(PATCH));
         if(NULL == spNewItem)
-	    PostError();
+	    PostError(TRUE, "Failed to allocated memory.");
 	
 	strcpy(spNewItem->szPatchName, item);
 	spNewItem->iPatchIndex = index;
@@ -1204,7 +1209,7 @@ AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
 	spNewItem = (PATCH*)LocalAlloc(GMEM_FIXED, sizeof(PATCH));
 	
 	if(NULL == spNewItem)
-	    PostError();
+	    PostError(TRUE, "Failed to allocate memory.");
 	    
 	strcpy(spNewItem->szPatchName, item);
 	spNewItem->iPatchIndex = index;
@@ -1221,20 +1226,19 @@ AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
 // @return value - none.
 //#################################################################
 void 
-PostError(BOOL exitapp)
+PostError(BOOL exitapp, LPCTSTR lpszErrMessage, ...)
 {
-    TCHAR szMessageBox[50];
-    TCHAR lpszMessage[150];
     DWORD dwError = GetLastError();
+    va_list arg;
+    TCHAR buf[1024];
 
-    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM,
-	NULL, dwError, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-        lpszMessage, 0, NULL 
-	);
-
-    sprintf(szMessageBox,"Application error: %s (code: %d)\n", lpszMessage, dwError);
-    MessageBox(NULL,szMessageBox,"Error",MB_OK | MB_ICONERROR);
-    AddErrorLog(lpszMessage);
+    va_start(arg, lpszErrMessage);
+    vsprintf(buf, lpszErrMessage, arg);
+    va_end(arg);
+    
+    MessageBox(NULL, buf, "Error", MB_OK | MB_ICONERROR);
+    lstrcat(buf, "\n"); //new line for our error log
+    AddErrorLog(buf);
     if(exitapp)
 	ExitProcess(dwError);
 }
@@ -1252,8 +1256,6 @@ StatusMessage(LPCTSTR message, ...)
 {
     va_list args;
     TCHAR buffer[1024];
-    if(NULL == buffer)
-	PostError();
 
     va_start(args, message);
     vsprintf(buffer, message, args);
@@ -1313,26 +1315,16 @@ InitInstance(void)
 }
 
 
-
-// debugging use only
-void 
-AddDebug(LPCTSTR fmt, ...)
-{
-    va_list args;
-    TCHAR buf[1024];
-
-    va_start(args, fmt);
-    vsprintf(buf, fmt, args);
-    va_end(args);
-
-    FILE *f;
-    f = fopen("neoncube\\debug.log", "a");
-    if(f != NULL) {
-	fwrite(buf, 1, strlen(buf), f);
-	fclose(f);
-    }
-}
-
+//#####################################################################
+// Checks a file/directory if it exists
+//
+// @param lpszFileName - Pointer to a NULL terminated string which
+//			 contains the path to the file/directory.
+//
+// @return value -	 returns CFFE_FILE_NOT_FOUND if file doesn't exist
+//			CFFE_PATH_NOT_FOUND if file path is invalid
+//			CFFE_ACCESS_DENIED file exists but access is denied
+//#####################################################################
 
 CFFE_ERROR 
 CheckFileForExistance(LPCTSTR lpszFileName)
@@ -1360,3 +1352,32 @@ CheckFileForExistance(LPCTSTR lpszFileName)
 	return CFFE_FILE_EXIST;
     }
 }
+
+
+
+// debugging use only
+void 
+AddDebug(LPCTSTR fmt, ...)
+{
+    va_list args;
+    TCHAR buf[1024];
+
+    va_start(args, fmt);
+    vsprintf(buf, fmt, args);
+    va_end(args);
+
+    FILE *f;
+    f = fopen("neoncube\\debug.log", "a");
+    if(f != NULL) {
+	fwrite(buf, 1, strlen(buf), f);
+	fclose(f);
+    }
+}
+
+
+
+
+
+
+
+
