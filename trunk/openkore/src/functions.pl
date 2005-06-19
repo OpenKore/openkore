@@ -5196,6 +5196,8 @@ sub parseSendMsg {
 		}
 	}
 
+	Plugins::callHook('RO_sendMsg_pre', {switch => $switch, msg => $msg, realMsg => \$sendMsg});
+
 	# If the player tries to manually do something in the RO client, disable AI for a small period
 	# of time using ai_clientSuspend().
 
