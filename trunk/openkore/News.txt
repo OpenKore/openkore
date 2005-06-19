@@ -44,6 +44,7 @@ Bug fixes:
 - Correctly set the field name on aliased novice training fields.
 - Give a warning if the user specifies an invalid "server" option in
   config.txt.
+- Job level flag in mon_control.txt was never actually implemented.
 
 New features:
 - Better support for detecting dead players.
