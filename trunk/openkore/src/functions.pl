@@ -5787,7 +5787,7 @@ sub parseMsg {
 		if ($jobs_lut{$type}) {
 			my $player = $players{$ID};
 			if (!UNIVERSAL::isa($player, 'Actor')) {
-				$player = $players{$ID} ||= new Actor::Player;
+				$player = $players{$ID} = new Actor::Player;
 				binAdd(\@playersID, $ID);
 				$player->{appear_time} = time;
 				$player->{ID} = $ID;
@@ -5939,7 +5939,7 @@ sub parseMsg {
 
 		if ($jobs_lut{$type}) {
 			my $added;
-			if (!$players{$ID} || !defined($players{$ID}{binID})) {
+			if (!UNIVERSAL::isa($players{$ID}, 'Actor')) {
 				$players{$ID} = new Actor::Player;
 				$players{$ID}{'appear_time'} = time;
 				binAdd(\@playersID, $ID);
@@ -6004,7 +6004,7 @@ sub parseMsg {
 		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
 
 		if ($jobs_lut{$type}) {
-			if (!$players{$ID} && !defined($players{$ID}{binID})) {
+			if (!UNIVERSAL::isa($players{$ID}, 'Actor')) {
 				$players{$ID} = new Actor::Player;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'appear_time'} = time;
@@ -6109,7 +6109,7 @@ sub parseMsg {
 		my $added;
 
 		if ($jobs_lut{$type}) {
-			if (!$players{$ID} || !defined($players{$ID}{binID})) {
+			if (!UNIVERSAL::isa($players{$ID}, 'Actor')) {
 				$players{$ID} = new Actor::Player;
 				binAdd(\@playersID, $ID);
 				$players{$ID}{'jobID'} = $type;
