@@ -117,6 +117,7 @@ our @EXPORT = qw(
 	sendPetPerformance
 	sendPetReturnToEgg
 	sendPetUnequipItem
+	sendPreLoginCode
 	sendQuit
 	sendRaw
 	sendRespawn
@@ -1121,12 +1122,7 @@ sub sendMasterLogin {
 	my $version = shift;
 	my $msg;
 
-	if ($config{serverType} != 4) {
-		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
-			pack("a24", $username) .
-			pack("a24", $password) .
-			pack("C*", $master_version);
-	} else {
+	if ($config{serverType} == 4) {
 		# This is used on the RuRO private server.
 		# A lot of packets are different so I gave up,
 		# but I'll keep this code around in case anyone ever needs it.
@@ -1144,6 +1140,11 @@ sub sendMasterLogin {
 
 		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
 			$username . $password .
+			pack("C*", $master_version);
+	} else {
+		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
+			pack("a24", $username) .
+			pack("a24", $password) .
 			pack("C*", $master_version);
 	}
 	sendMsgToServer($r_socket, $msg);
@@ -1335,6 +1336,17 @@ sub sendPetUnequipItem {
 	my $msg = pack("C*", 0xA1, 0x01, 0x04);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Pet Unequip Item\n", "sendPacket", 2;
+}
+
+sub sendPreLoginCode {
+	my $r_socket = shift;
+	my $type = shift;
+	my $msg;
+	if ($type == 1) {
+		$msg = pack("C*", 0x04, 0x02, 0x82, 0xD1, 0x2C, 0x91, 0x4F, 0x5A, 0xD4, 0x8F, 0xD9, 0x6F, 0xCF, 0x7E, 0xF4, 0xCC, 0x49, 0x2D);
+	}
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent pre-login packet $type\n", "sendPacket", 2;
 }
 
 sub sendQuit {
