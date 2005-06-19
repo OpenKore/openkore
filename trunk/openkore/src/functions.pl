@@ -3062,7 +3062,7 @@ sub AI {
 			ai_route($field{name}, $randX, $randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
 				attackOnRoute => 2,
-				noMapRoute => 1);
+				noMapRoute => ($config{route_randomWalk} == 2 ? 1 : 0) );
 		}
 	}
 

@@ -173,6 +173,9 @@ New config options:
   Do not teleport on route in the specified maps.
 - serverType 4
   Set this for new Freya servers such as EuphRO and VanRO.
+- route_randomWalk 2
+  The bot will not walk through portals to get to other areas
+  during route_randomWalk.
 
 New control files:
 - control/sys.txt
