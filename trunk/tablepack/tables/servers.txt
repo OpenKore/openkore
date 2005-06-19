@@ -270,3 +270,17 @@ port 6900
 master_version 2
 version 0
 serverType 4
+
+[NamelessRO: Eclipse Private Server]
+ip 72.29.76.150
+port 6900
+master_version 14
+version 18
+serverType 4
+
+[NamelessRO: Sunrise Private Server]
+ip 72.29.76.150
+port 6901
+master_version 14
+version 18
+serverType 4
