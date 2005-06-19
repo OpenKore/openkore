@@ -8234,7 +8234,9 @@ sub parseMsg {
 		}
 
 		# Resolve source and target names
-		my ($source, $uses, $target) = getActorNames($sourceID, $targetID, 'use', 'uses');
+		my $source = Actor::get($sourceID);
+		my $target = Actor::get($targetID);
+		my $verb = $source->verb('use', 'uses');
 
 		# Print skill use message
 		my $extra = "";
@@ -8245,7 +8247,7 @@ sub parseMsg {
 			$extra = ": Lv $amount";
 		}
   
-		message "$source $uses ".skillName($skillID)." on $target$extra\n", "skill";
+		message "$source $verb ".skillName($skillID)." on $target$extra\n", "skill";
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
@@ -11008,22 +11010,15 @@ sub getActorHash {
 }
 
 # Resolves a player or monster ID into a name
+# Obsoleted by Actor module, don't use this!
 sub getActorName {
 	my $id = shift;
 	my $hash;
 
 	if (!$id) {
 		return 'Nothing';
-	} elsif ($id eq $accountID) {
-		return 'You';
-	} elsif (($hash = $players{$id}) && defined $hash->{binID}) {
-		return "Player $hash->{name} ($hash->{binID})";
-	} elsif (($hash = $monsters{$id}) && defined $hash->{binID}) {
-		return "Monster $hash->{name} ($hash->{binID})";
-	} elsif (($hash = $items{$id}) && defined $hash->{binID}) {
-		return "Item $hash->{name} ($hash->{binID})";
 	} else {
-		return "Unknown #".unpack("L1", $id);
+		return "$hash";
 	}
 }
 
