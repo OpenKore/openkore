@@ -4229,6 +4229,7 @@ sub AI {
 				if ((my $monCtrl = $mon_control{$monName})) {
 					next if ( ($monCtrl->{attack_auto} ne "" && $monCtrl->{attack_auto} <= 0)
 						|| ($monCtrl->{attack_lvl} ne "" && $monCtrl->{attack_lvl} > $char->{lv})
+						|| ($monCtrl->{attack_jlvl} ne "" && $monCtrl->{attack_jlvl} > $char->{lv_job})
 						|| ($monCtrl->{attack_hp}  ne "" && $monCtrl->{attack_hp} > $char->{hp})
 						|| ($monCtrl->{attack_sp}  ne "" && $monCtrl->{attack_sp} > $char->{sp})
 						);
@@ -4307,6 +4308,7 @@ sub AI {
 				my $name = lc $monster->{name};
 				next if ($mon_control{$name}{attack_auto} == -1);
 				next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
+				next if ($mon_control{$name}{attack_jlvl} ne "" && $mon_control{$name}{attack_jlvl} > $char->{lv_job});
 
 				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
 					$highestPri = $priority{$name};
@@ -4326,6 +4328,7 @@ sub AI {
 					my $name = lc $monster->{name};
 					next if ($mon_control{$name}{attack_auto} == -1);
 					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
+					next if ($mon_control{$name}{attack_jlvl} ne "" && $mon_control{$name}{attack_jlvl} > $char->{lv_job});
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;
@@ -4344,6 +4347,7 @@ sub AI {
 					my $name = lc $monster->{name};
 					next if ($mon_control{$name}{attack_auto} == -1);
 					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
+					next if ($mon_control{$name}{attack_jlvl} ne "" && $mon_control{$name}{attack_jlvl} > $char->{lv_job});
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;

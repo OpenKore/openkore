@@ -42,13 +42,15 @@ use Tk::ROText;
 use Tk::BrowseEntry;
 
 # parse panelBottom_domains into a hash
-my %panelBottom_domains;
-my @array = split / *, */, $sys{panelBottom_domains};
-foreach (@array) {
-	s/^\s+//;
-	s/\s+$//;
-	s/\s+/ /g;
-	$panelBottom_domains{$_} = 1;
+if ($sys{panelBottom_domains}) {
+	my %panelBottom_domains;
+	my @array = split / *, */, $sys{panelBottom_domains};
+	foreach (@array) {
+		s/^\s+//;
+		s/\s+$//;
+		s/\s+/ /g;
+		$panelBottom_domains{$_} = 1;
+	}
 }
 
 # main interface functions
@@ -186,7 +188,7 @@ sub initTk {
 	# create main window
 
 	$self->{mw} = MainWindow->new();
-	$self->{mw}->minsize(316,290);
+	#$self->{mw}->minsize(316,290);
 	$self->{mw}->protocol('WM_DELETE_WINDOW', [\&OnExit, $self]);
 	#$self->{mw}->Icon(-image=>$self->{mw}->Photo(-file=>"hyb.gif"));
 	$self->{mw}->title("$Settings::NAME");
