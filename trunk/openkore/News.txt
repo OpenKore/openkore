@@ -45,6 +45,7 @@ Bug fixes:
 - Give a warning if the user specifies an invalid "server" option in
   config.txt.
 - Job level flag in mon_control.txt was never actually implemented.
+- avoidGM_near_inTown fixed.
 
 New features:
 - Better support for detecting dead players.
@@ -228,6 +229,7 @@ Credits:
 - Crypticode: 'ai on'/'ai off' commands; item name support in 'uneq' command.
 - punkpudding: route_teleport_notInMaps.
 - Sinistral: skillsstatus.txt help.
+- Hakore: avoidGM_near_inTown fix.
 
 
 ==================
