@@ -31,4 +31,12 @@ sub new {
 	});
 }
 
+sub nameString {
+	my ($self, $otherActor) = @_;
+
+	return 'self' if $self->{ID} eq $otherActor->{ID};
+	return "$self->name";
+}
+
+
 1;
