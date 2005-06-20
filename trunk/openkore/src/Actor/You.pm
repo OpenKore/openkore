@@ -36,7 +36,7 @@ sub nameString {
 	my ($self, $otherActor) = @_;
 
 	return 'yourself' if $self->{ID} eq $otherActor->{ID};
-	return 'you' if $otherActor;
+	return 'you' if UNIVERSAL::isa($otherActor, 'Actor');
 	return 'You';
 }
 
