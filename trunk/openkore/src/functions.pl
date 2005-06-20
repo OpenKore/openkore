@@ -5135,7 +5135,7 @@ sub AI {
 
 	##### AVOID GM OR PLAYERS #####
 	if (timeOut($timeout{ai_avoidcheck})) {
-		avoidGM_near() if ($config{'avoidGM_near'} && (!$config{'avoidGM_near_inTown'} || !$cities_lut{$field{name}.'.rsw'}));
+		avoidGM_near() if ($config{'avoidGM_near'} && (!$cities_lut{$field{name}.'.rsw'} || $config{'avoidGM_near_inTown'}));
 		avoidList_near() if $config{'avoidList'};
 		$timeout{ai_avoidcheck}{time} = time;
 	}
