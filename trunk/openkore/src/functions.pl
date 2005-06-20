@@ -6385,7 +6385,8 @@ sub parseMsg {
 			# Take item
 			my $source = Actor::get($ID1);
 			my $verb = $source->verb('pick up', 'picks up');
-			my $target = Actor::get($ID2);
+			#my $target = Actor::get($ID2);
+			my $target = $items{$ID2} ? "$items{$ID2}{name} ($items{$ID2}{binID})" : "Unknown #$ID2";
 			debug "$source $verb $target\n", 'parseMsg_presence';
 			$items{$ID2}{takenBy} = $ID1 if ($items{$ID2});
 		} elsif ($type == 2) {
