@@ -551,7 +551,7 @@ sub automacroCheck {
     next CHKAM if (defined $automacro{$am}->{cartweight} && !checkPercent($automacro{$am}->{cartweight}, "cweight"));
     next CHKAM if (defined $automacro{$am}->{soldout}  && !checkCond(getSoldOut(), $automacro{$am}->{soldout}));
     next CHKAM if (defined $automacro{$am}->{player}   && !checkPerson($automacro{$am}->{player}));
-    next CHKAM if (defined $automacro{$am}->{zeny}     && !checkCond($char->{zeny}, $automacro{$am}->{zeny}));
+    next CHKAM if (defined $automacro{$am}->{zeny}     && !checkCond($char->{zenny}, $automacro{$am}->{zeny}));
     foreach my $i (@{$automacro{$am}->{equipped}})  {next CHKAM unless checkEquip($i)};
     foreach my $i (@{$automacro{$am}->{status}})    {next CHKAM unless checkStatus($i)};
     foreach my $i (@{$automacro{$am}->{inventory}}) {next CHKAM unless checkItem("inv", $i)};
