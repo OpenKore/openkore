@@ -8242,12 +8242,6 @@ sub parseMsg {
 		# Resolve source and target names
 		my $source = Actor::get($sourceID);
 		my $target = Actor::get($targetID);
-		my $targetString;
-		if ($sourceID eq $targetID) {
-			$targetString = $target->verb("yourself", "self");
-		} else {
-			$targetString = "$target";
-		}
 		my $verb = $source->verb('use', 'uses');
 
 		# Print skill use message
@@ -8259,7 +8253,7 @@ sub parseMsg {
 			$extra = ": Lv $amount";
 		}
   
-		message "$source $verb ".skillName($skillID)." on $targetString$extra\n", "skill";
+		message "$source $verb ".skillName($skillID)." on $target->nameString($source)$extra\n", "skill";
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
