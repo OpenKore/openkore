@@ -72,14 +72,17 @@ sub get {
 ### CATEGORY: Methods
 
 ##
-# $actor->nameString()
+# $actor->nameString([$otherActor])
 #
 # Returns the name string of an actor, e.g. "Player pmak (3)",
 # "Monster Poring (0)" or "You".
+#
+# If $otherActor is specified and is equal to $actor, then it will
+# return 'self' or 'yourself' instead.
 sub nameString {
-	my ($self) = @_;
+	my ($self, $otherActor) = @_;
 
-	return "You" if $self->{type} eq 'You';
+	return 'self' if $self->{ID} eq $otherActor->{ID};
 	return "$self->{type} ".$self->name." ($self->{binID})";
 }
 
