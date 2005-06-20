@@ -83,7 +83,10 @@ sub nameString {
 	my ($self, $otherActor) = @_;
 
 	return 'self' if $self->{ID} eq $otherActor->{ID};
-	return "$self->{type} ".$self->name." ($self->{binID})";
+
+	my $nameString = "$self->{type} ".$self->name;
+	$nameString .= " ($self->{binID})" if $self->{binID};
+	return $nameString;
 }
 
 ##
