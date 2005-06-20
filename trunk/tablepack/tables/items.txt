@@ -515,7 +515,7 @@
 1067#Solid_Trunk#
 1068#Barren_Trunk#
 1069#Orange_Net_Mushroom#
-1070#Orange_Gooey_Mushroom_#
+1070#Orange_Gooey_Mushroom#
 1071#Unknown_Test_Tube#
 1072#Delivery_Message#
 1073#Voucher#
@@ -527,8 +527,8 @@
 1079#Voucher#
 1080#Voucher#
 1081#Delivery_Box#
-1082#Delivery_Box_#
-1083#Delivery_Box__#
+1082#Delivery_Box#
+1083#Delivery_Box#
 1084#Kafra_Pass#
 1085#Unknown_Test_Tube#
 1086#Unknown_Test_Tube#
@@ -1486,10 +1486,10 @@
 568#Lemon#
 575#2nd_Anniversary_Cake#
 662#Horse_Crest#
-664#Gift_Box_#
-665#Gift_Box__#
-666#Gift_Box___#
-667#Gift_Box____#
+664#Gift_Box#
+665#Gift_Box#
+666#Gift_Box#
+667#Gift_Box#
 669#Rice_Cake_Soup#
 680#Carnation#
 682#Realgar_Wine#
@@ -1526,8 +1526,8 @@
 2640#Kafra_Ring#
 2641#Fashion_Hip_Sack#
 2642#Celines_Ring#
-2643#Celines_Ring_#
-2644#The_Sign_#
+2643#Celines_Ring#
+2644#The_Sign#
 2645#Moonlight_Ring#
 2646#Bouquet#
 4149#Gargoyle_Card#
@@ -1747,9 +1747,9 @@
 5090#Goblin_Leader_Mask#
 5091#Golden_Bells#
 5092#Nun_Hat#
-5093#Nun_Hat_#
+5093#Nun_Hat#
 5094#Orc_Hero_Helm#
-5096#Assassin_Mask_#
+5096#Assassin_Mask#
 5097#Annual_Commemoration_Hat#
 5098#Tiger_Mask#
 5099#Neko_Mimi#
@@ -1845,7 +1845,7 @@
 9026#Alice_Egg#
 9027#Zherlthsh_Egg#
 9028#test_Egg#
-9029#test_Egg_#
+9029#test_Egg#
 11001#Izlude_History_Book#
 11002#Yuno_History_Book#
 11003#Geffen_History_Book#
@@ -1853,7 +1853,7 @@
 11005#Alberta_History_Book#
 11006#Payon_History_Book#
 11007#History_Book#
-11009#History_Book_#
+11009#History_Book#
 11010#Archer_Village_History_Book#
 11011#Lutie_History_Book#
 11012#Jawaii_History_Book#
