@@ -720,13 +720,12 @@ sub parseCommand {
 			"list");
 		for (my $i = 0; $i < @venderListsID; $i++) {
 			next if ($venderListsID[$i] eq "");
-			my $player = $venderListsID[$i] eq $accountID ?
-				$char :
-				$players{$venderListsID[$i]};
+			my $player = Actor::get($venderListsID[$i]);
+			# autovivifies $obj->{pos_to} but it doesnt matter
 			message(sprintf(
 				"%3d %-36s (%3d, %3d) %-20s\n",
 				$i, $venderLists{$venderListsID[$i]}{'title'}, 
-				$player->{pos_to}{x}, $player->{pos_to}{y}, $player->{name}),
+				$player->{pos_to}{x} || '?', $player->{pos_to}{y} || '?', $player->name),
 				"list");
 		}
 		message("----------------------------------\n", "list");
