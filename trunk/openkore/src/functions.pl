@@ -11022,9 +11022,11 @@ sub getActorName {
 
 	if (!$id) {
 		return 'Nothing';
+	} elsif (my $item = $items{$id}) {
+		return "Item $item->{name} ($item->{binID})";
 	} else {
 		my $hash = Actor::get($id);
-		return "$hash";
+		return $hash->nameString;
 	}
 }
 
