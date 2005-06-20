@@ -31,8 +31,4 @@ sub new {
 	});
 }
 
-sub nameString {
-	return "$self->{type} ".$self->name;
-}
-
 1;
