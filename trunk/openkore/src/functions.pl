@@ -8253,7 +8253,7 @@ sub parseMsg {
 			$extra = ": Lv $amount";
 		}
   
-		message "$source $verb ".skillName($skillID)." on $target->nameString($source)$extra\n", "skill";
+		message "$source $verb ".skillName($skillID)." on ".$target->nameString($source)."$extra\n", "skill";
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
