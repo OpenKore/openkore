@@ -35,7 +35,12 @@ use Log qw(message error debug);
 #     print $actor;
 # acts the same as
 #     print $actor->nameString;
-use overload '""' => \&nameString;
+use overload '""' => \&_nameString;
+
+# This function is needed to make the operator overload respect inheritance.
+sub _nameString {
+	nameString(@_);
+}
 
 ### CATEGORY: Class methods
 
