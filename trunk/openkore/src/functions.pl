@@ -4761,12 +4761,19 @@ sub AI {
 						}
 
 						if (!$args->{sentTeleport}) {
+							# Find first inter-map portal
+							my $portal;
+							for my $x (@{$args->{mapSolution}}) {
+								$portal = $x;
+								last unless $x->{map} eq $x->{dest_map};
+							}
+
 							my $dist = new PathFinding(
 								start => $char->{pos_to},
-								dest => $args->{mapSolution}[0]{pos},
+								dest => $portal->{pos},
 								field => \%field
 							)->runcount;
-							debug "Distance to portal is $dist\n", "route_teleport";
+							debug "Distance to portal ($portal->{portal}) is $dist\n", "route_teleport";
 
 							if ($dist <= 0 || $dist > $minDist) {
 								if ($dist > 0 && $config{route_teleport_maxTries} && $args->{teleportTries} >= $config{route_teleport_maxTries}) {
@@ -9715,6 +9722,7 @@ sub ai_mapRoute_searchStep {
 					$arg{'portal'} = $this;
 					my ($from,$to) = split /=/, $this;
 					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
+					($arg{dest_map}, $arg{dest_pos}{x}, $arg{dest_pos}{y}) = split(' ', $to);
 					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
 					$arg{'zenny'} = $$r_args{'closelist'}{$this}{'zenny'};
 					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
