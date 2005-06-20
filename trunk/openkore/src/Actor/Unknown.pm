@@ -27,7 +27,8 @@ sub new {
 	my (undef, $ID) = @_;
 	return bless({
 		type => 'Unknown',
-		ID => $ID
+		ID => $ID,
+		nameID => unpack("L1", $ID)
 	});
 }
 
