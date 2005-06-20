@@ -471,7 +471,7 @@ sub cmdArrowCraft {
 		}
 	} elsif ($arg1 eq "forceuse") {
 		if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
-			sendArrowCraft(\$remote_socket, $char->{inventory}[$arg2]{index});
+			sendArrowCraft(\$remote_socket, $char->{inventory}[$arg2]{nameID});
 		} else {
 			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item $arg2 in your inventory.\n";
