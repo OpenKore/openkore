@@ -27,15 +27,12 @@ sub new {
 	my (undef, $ID) = @_;
 	return bless({
 		type => 'Unknown',
-		ID => $ID,
-		name => '#'.unpack("L1", $ID)
+		ID => $ID
 	});
 }
 
-sub name {
-	my ($self) = @_;
-
-	return "Unknown $self->{name}";
+sub nameString {
+	return "$self->{type} ".$self->name;
 }
 
 1;

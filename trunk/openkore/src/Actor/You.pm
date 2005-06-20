@@ -32,6 +32,14 @@ sub new {
 	return bless({type => 'You'});
 }
 
+sub nameString {
+	my ($self, $otherActor) = @_;
+
+	return 'yourself' if $self->{ID} eq $otherActor->{ID};
+	return 'you' if $otherActor;
+	return 'You';
+}
+
 ##
 # $char->weight_percent()
 #
