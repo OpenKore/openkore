@@ -83,46 +83,71 @@ sub debuglevel {
 
 # adapted config file parser
 sub parseMacroFile {
-  my ($file, $r_hash) = @_;
-  undef %{$r_hash};
+	my ($file) = @_;
+	undef %macro;
+	undef %automacro;
 
-  my %block;
-  open FILE, "< $file";
-  foreach (<FILE>) {
-    next if (/^\s*#/); # skip comments
-    s/^\s*//g;         # remove leading whitespaces
-    s/\s*[\r\n]?$//g;  # remove trailing whitespaces and eol
-    s/  +/ /g;         # trim down spaces
-    next unless ($_);
-    if (!defined %block && /{$/) {
-      s/\s*{$//;
-      my ($key, $value) = $_ =~ /^(.*?) (.*)/;
-      if ($r_hash == \%macro && $key eq 'macro') {
-        %block = (name => $value, type => "macro");
-        $r_hash->{$value} = [];
-      } elsif ($r_hash == \%automacro && $key eq 'automacro') {
-        %block = (name => $value, type => "auto");
-      };
-      next;
-    } elsif (defined %block && $_ eq "}") {
-      undef %block; next;
-    } elsif ($block{type} eq "macro") {
-      push(@{$r_hash->{$block{name}}}, $_); next;
-    } elsif ($block{type} eq "auto") {
-      my ($key, $value) = $_ =~ /^(.*?) (.*)/;
-      next unless $key;
-      if ($key =~ /^(inventory|storage|cart|shop|equipped|var|status|location|set)+$/) {
-        push(@{$r_hash->{$block{name}}->{$key}}, $value);
-      } else {
-        $r_hash->{$block{name}}->{$key} = $value;
-      };
-    } else {
-      next;
-    };
-  };
-  close FILE;
-  if ($r_hash == \%macro) {parseMacroFile($file, \%automacro)};
-};
+	my %block;
+	my $tempmacro = 0;
+	open FILE, "< $file";
+	foreach (<FILE>) {
+		next if (/^\s*#/); # skip comments
+		s/^\s*//g;         # remove leading whitespaces
+		s/\s*[\r\n]?$//g;  # remove trailing whitespaces and eol
+		s/  +/ /g;         # trim down spaces
+		next unless ($_);
+
+		if (!defined %block) {
+			if (/{$/) {        # line ending with {
+				s/\s*{$//; # remove { at end of line
+
+				my ($key, $value) = $_ =~ /^(.*?) (.*)/;
+
+				if ($key eq 'macro') {
+					%block = (name => $value, type => "macro");
+					$macro{$value} = [];
+				} elsif ($key eq 'automacro') {
+					%block = (name => $value, type => "auto");
+				}
+			}
+
+		} elsif ($block{type} eq "macro") {
+			if ($_ eq "}") {
+				undef %block;
+			} else {
+				push(@{$macro{$block{name}}}, $_);
+			}
+
+		} elsif ($block{type} eq "auto") {
+			if ($_ eq "}") {
+				if ($block{loadmacro}) {
+					undef $block{loadmacro};
+				} else {
+					undef %block;
+				}
+			} elsif ($_ eq "call {") {
+				$block{loadmacro} = 1;
+				$block{loadmacro_name} = "tempMacro".$tempmacro++;
+				$automacro{$block{name}}->{call} = $block{loadmacro_name};
+				$macro{$block{loadmacro_name}} = [];
+
+			} elsif ($block{loadmacro}) {
+				push(@{$macro{$block{loadmacro_name}}}, $_);
+
+			} else {
+				my ($key, $value) = $_ =~ /^(.*?) (.*)/;
+				next unless $key;
+				if ($key =~ /^(inventory|storage|cart|shop|equipped|var|status|location|set)+$/) {
+					push(@{$automacro{$block{name}}->{$key}}, $value);
+				} else {
+	 				$automacro{$block{name}}->{$key} = $value;
+				}
+			}
+		}
+
+	}
+	close FILE;
+}
 
 # just a facade for "macro"
 sub commandHandler {
