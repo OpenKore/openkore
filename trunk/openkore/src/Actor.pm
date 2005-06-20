@@ -92,7 +92,7 @@ sub nameString {
 	return 'self' if $self->{ID} eq $otherActor->{ID};
 
 	my $nameString = "$self->{type} ".$self->name;
-	$nameString .= " ($self->{binID})" if $self->{binID};
+	$nameString .= " ($self->{binID})" if defined $self->{binID};
 	return $nameString;
 }
 
