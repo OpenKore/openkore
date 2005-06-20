@@ -46,6 +46,9 @@ Bug fixes:
   config.txt.
 - Job level flag in mon_control.txt was never actually implemented.
 - avoidGM_near_inTown fixed.
+- route_teleport through maps with inner warps should work now.
+  See http://openkore.sourceforge.net/forum/viewtopic.php?t=8267
+- Fix Segmentation fault bug with Actor::Unknown.nameString infinite loop.
 
 New features:
 - Better support for detecting dead players.
