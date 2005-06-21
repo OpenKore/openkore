@@ -2209,7 +2209,7 @@ sub AI {
 
 		} else {
 			# Force storage after death
-			if ($config{storageAuto}) {
+			if ($config{storageAuto} && !$config{storageAuto_notAfterDeath}) {
 				message "Auto-storaging due to death\n";
 				AI::queue("storageAuto");
 			}
