@@ -101,6 +101,8 @@ New features:
   pre-login packets.
   To use this feature you must put the line 'preLoginCode 1' in
   tables/servers.txt.
+- You can now use the monster name "all" in mon_control.txt
+  to specify default values.
 
 New commands:
 - storage log
@@ -225,6 +227,8 @@ Internal:
   your followTarget.
 - Added hooks "packet_partyMsg" and "packet_guildMsg". argument hash
   contains 'Msg' (the message) and 'MsgUser' (the sender)
+- Please use mon_control() from now on instead of accessing %mon_control
+  directly so that "all" will work.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.

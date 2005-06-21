@@ -88,6 +88,7 @@ our @EXPORT = (
 	manualMove
 	objectAdded
 	objectRemoved
+	mon_control
 	positionNearPlayer
 	positionNearPortal
 	printItemDesc
@@ -1230,7 +1231,7 @@ sub objectAdded {
 	}
 
 	if ($type eq 'monster') {
-		if ($mon_control{lc($obj->{name})}{teleport_search}) {
+		if (mon_control($obj->{name})->{teleport_search}) {
 			$ai_v{temp}{searchMonsters}++;
 		}
 	}
@@ -1246,7 +1247,7 @@ sub objectRemoved {
 	my ($type, $ID, $obj) = @_;
 
 	if ($type eq 'monster') {
-		if ($mon_control{lc($obj->{name})}{teleport_search}) {
+		if (mon_control($obj->{name})->{teleport_search}) {
 			$ai_v{temp}{searchMonsters}--;
 		}
 	}
@@ -1255,6 +1256,19 @@ sub objectRemoved {
 		type => $type,
 		ID => $ID
 	});
+}
+
+##
+# mon_control($name)
+#
+# Returns the mon_control.txt settings for monster name $name.
+# If $name has no specific settings, use 'all'.
+sub mon_control {
+	my ($name) = @_;
+
+	return $mon_control{lc($name)} ||
+		$mon_control{all} ||
+		{ attack_auto => 1 };
 }
 
 sub positionNearPlayer {
