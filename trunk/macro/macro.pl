@@ -255,8 +255,10 @@ sub parseCmd {
     elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
     elsif ($kw eq 'eval')      {$ret = eval($arg)};
     return $command if $ret eq '_%_';
-    if (defined $ret) {escape(\$arg); $command =~ s/\@$kw +\($arg\)/$ret/g}
-    else {
+    if (defined $ret) {
+      $arg = quotemeta $arg;
+      $command =~ s/\@$kw +\($arg\)/$ret/g;
+    } else {
       error "[macro] $command failed. Macro stopped.\n";
       clearMacro();
       return;
@@ -609,10 +611,6 @@ sub automacroCheck {
 };
 
 # utilities ################################################
-sub escape {
-  my $r_var = shift;
-  $$r_var =~ s/([\+\?\*\(\)\[\]\{\}\|\^\$]+)/\\$1/g;
-};
 
 sub between {
   if ($_[0] <= $_[1] && $_[1] <= $_[2]) {return 1};
