@@ -2070,7 +2070,7 @@ sub AI {
 						undef $args->{time};
 						undef $ai_v{'npc_talk'}{'time'};
 						lookAtPosition($args->{pos});
-						last;
+						last NPCTALK;
 					}
 				}
 				foreach my $npc (@monstersID) {
@@ -2087,7 +2087,7 @@ sub AI {
 						undef $args->{time};
 						undef $ai_v{'npc_talk'}{'time'};
 						lookAtPosition($args->{pos});
-						last;
+						last NPCTALK;
 					}
 				}
 			}
