@@ -65,6 +65,8 @@
 103 Aura Blade
 104 Parrying
 106 Tension Relax
+107 Berserk
 108 Enchant Deadly Poison
 115 True Sight
 116 Wind Walk
+120 Reject Sword
