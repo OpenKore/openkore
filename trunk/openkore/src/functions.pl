@@ -4225,7 +4225,7 @@ sub AI {
 				my $monster = $monsters{$_};
 				# Ignore ignored monsters in mon_control.txt
 				my $monName = lc($monster->{name});
-				if ((my $monCtrl = $mon_control{$monName})) {
+				if ((my $monCtrl = mon_control($monName))) {
 					next if ( ($monCtrl->{attack_auto} ne "" && $monCtrl->{attack_auto} <= 0)
 						|| ($monCtrl->{attack_lvl} ne "" && $monCtrl->{attack_lvl} > $char->{lv})
 						|| ($monCtrl->{attack_jlvl} ne "" && $monCtrl->{attack_jlvl} > $char->{lv_job})
@@ -4305,9 +4305,9 @@ sub AI {
 
 				# Don't attack ignored monsters
 				my $name = lc $monster->{name};
-				next if ($mon_control{$name}{attack_auto} == -1);
-				next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
-				next if ($mon_control{$name}{attack_jlvl} ne "" && $mon_control{$name}{attack_jlvl} > $char->{lv_job});
+				next if (mon_control($name)->{attack_auto} == -1);
+				next if (mon_control($name)->{attack_lvl} ne "" && mon_control($name)->{attack_lvl} > $char->{lv});
+				next if (mon_control($name)->{attack_jlvl} ne "" && mon_control($name)->{attack_jlvl} > $char->{lv_job});
 
 				if (defined($priority{$name}) && $priority{$name} > $highestPri) {
 					$highestPri = $priority{$name};
@@ -4325,9 +4325,9 @@ sub AI {
 
 					# Don't attack ignored monsters
 					my $name = lc $monster->{name};
-					next if ($mon_control{$name}{attack_auto} == -1);
-					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
-					next if ($mon_control{$name}{attack_jlvl} ne "" && $mon_control{$name}{attack_jlvl} > $char->{lv_job});
+					next if (mon_control($name)->{attack_auto} == -1);
+					next if (mon_control($name)->{attack_lvl} ne "" && mon_control($name)->{attack_lvl} > $char->{lv});
+					next if (mon_control($name)->{attack_jlvl} ne "" && mon_control($name)->{attack_jlvl} > $char->{lv_job});
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;
@@ -4344,9 +4344,9 @@ sub AI {
 
 					# Don't attack ignored monsters
 					my $name = lc $monster->{name};
-					next if ($mon_control{$name}{attack_auto} == -1);
-					next if ($mon_control{$name}{attack_lvl} ne "" && $mon_control{$name}{attack_lvl} > $char->{lv});
-					next if ($mon_control{$name}{attack_jlvl} ne "" && $mon_control{$name}{attack_jlvl} > $char->{lv_job});
+					next if (mon_control($name)->{attack_auto} == -1);
+					next if (mon_control($name)->{attack_lvl} ne "" && mon_control($name)->{attack_lvl} > $char->{lv});
+					next if (mon_control($name)->{attack_jlvl} ne "" && mon_control($name)->{attack_jlvl} > $char->{lv_job});
 
 					if (!defined($smallestDist) || (my $dist = distance($myPos, $pos)) < $smallestDist) {
 						$smallestDist = $dist;
@@ -5060,7 +5060,7 @@ sub AI {
 		if ($safe && timeOut($timeout{ai_teleport_away})) {
 			foreach (@monstersID) {
 				next unless $_;
-				if ($mon_control{lc($monsters{$_}{name})}{teleport_auto} == 1) {
+				if (mon_control($monsters{$_}{name})->{teleport_auto} == 1) {
 					message "Teleporting to avoid $monsters{$_}{name}\n", "teleport";
 					$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 					$timeout{ai_teleport_away}{time} = time;
@@ -8674,7 +8674,7 @@ sub parseMsg {
 		});
 
 		# Skill Cancel
-		if ($AI && %{$monsters{$sourceID}} && $mon_control{lc($monsters{$sourceID}{'name'})}{'skillcancel_auto'}) {
+		if ($AI && %{$monsters{$sourceID}} && mon_control($monsters{$sourceID}{'name'})->{'skillcancel_auto'}) {
 			if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 				message "Monster Skill - switch Target to : $monsters{$sourceID}{name} ($monsters{$sourceID}{binID})\n";
 				stopAttack();
@@ -9613,7 +9613,7 @@ sub ai_getAggressives {
 	foreach (@monstersID) {
 		next if (!$_);
 		my $monster = $monsters{$_};
-		if ((($type && $mon_control{lc($monster->{name})}{attack_auto} == 2) || 
+		if ((($type && mon_control($monster->{name})->{attack_auto} == 2) || 
 		    $monster->{dmgToYou} || $monster->{missedYou} ||
 			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})))
 		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
@@ -9624,9 +9624,9 @@ sub ai_getAggressives {
 
 			} else {
 				# Function is called in scalar context
-				if ($mon_control{lc($monster->{name})}{weight} > 0) {
-					$num += $mon_control{lc($monster->{name})}{weight};
-				} elsif ($mon_control{lc($monster->{name})}{weight} != -1) {
+				if (mon_control($monster->{name})->{weight} > 0) {
+					$num += mon_control($monster->{name})->{weight};
+				} elsif (mon_control($monster->{name})->{weight} != -1) {
 					$num++;
 				}
 			}
@@ -10680,7 +10680,7 @@ sub updateDamageTables {
 
 			if ($AI) {
 				my $teleport = 0;
-				if ($mon_control{lc($monsters{$ID1}{'name'})}{'teleport_auto'} == 2){
+				if (mon_control($monsters{$ID1}{'name'})->{'teleport_auto'} == 2){
 					message "Teleporting due to attack from $monsters{$ID1}{'name'}\n", "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
