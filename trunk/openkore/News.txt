@@ -187,6 +187,8 @@ New config options:
 - route_randomWalk 2
   The bot will not walk through portals to get to other areas
   during route_randomWalk.
+- storageAuto_notAfterDeath (flag)
+  If this is set, Kore will not do storage automatically after death.
 
 New control files:
 - control/sys.txt
