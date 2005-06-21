@@ -292,3 +292,9 @@ master_version 2
 version 0
 preLoginCode 1
 serverType 3
+
+[SonicRO Private Server]
+ip 70.84.81.42
+port 6901
+master_version 18
+version 20
