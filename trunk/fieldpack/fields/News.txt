@@ -1,3 +1,7 @@
+Version 1.6.2:
+* Einbroch added.
+* New Yuno fields added.
+
 Version 1.6.1:
 * Added Ayothaya fields.
 * Put back old Payon as old_payon.fld.
