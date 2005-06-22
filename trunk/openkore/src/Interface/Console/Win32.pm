@@ -162,10 +162,10 @@ sub readEvents {
 				if ($self->{input_part} ne ""
 				 && ( @{$self->{input_list}} < 2 || $self->{input_list}[1] ne $self->{input_part} )) {
 					unshift(@{ $self->{input_list} }, "");
-					$self->{input_offset} = 0;
 				}
 				push @{ $self->{input_lines} }, $self->{input_part};
 				$self->{out_col} = 0;
+				$self->{input_offset} = 0;
 				$self->{input_part} = '';
 #				print "\n";
 			#Other ASCII (+ ISO Latin-*)
