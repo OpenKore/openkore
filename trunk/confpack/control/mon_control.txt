@@ -5,6 +5,7 @@
 # <monster>:  Name of monster as found in monsters.txt (not case sensitive)
 #
 # <attack>:
+#  2 means always aggressive, auto-attack this monster when it appears, even if sitting.
 #  1 means to always auto-attack this monster.
 #  0 means to leave the monster alone, unless it attacks you.
 # -1 means to leave the monster alone, even if it attacks you.
