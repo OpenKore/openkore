@@ -49,6 +49,7 @@ Bug fixes:
 - route_teleport through maps with inner warps should work now.
   See http://openkore.sourceforge.net/forum/viewtopic.php?t=8267
 - Fix Segmentation fault bug with Actor::Unknown.nameString infinite loop.
+- Fix sitAuto_look. It's more reliable now.
 
 New features:
 - Better support for detecting dead players.

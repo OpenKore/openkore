@@ -3269,7 +3269,7 @@ sub AI {
 			sendSit(\$remote_socket);
 			$timeout{ai_sit}{time} = time;
 			
-			look($config{sitAuto_look}) if ($config{sitAuto_look});
+			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
 		}
 	}
 
@@ -10284,6 +10284,7 @@ sub sit {
 	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
 		AI::queue("sitting");
 		sendSit(\$remote_socket);
+		look($config{sitAuto_look}) if (defined $config{sitAuto_look});
 	}
 }
 
