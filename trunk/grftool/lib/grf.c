@@ -1000,7 +1000,7 @@ static int GRF_flushVer1(Grf *grf, GrfError *error, GrfFlushCallback callback) {
 						grf->files[i].flags=(grf->files[i].flags & ~GRFFILE_FLAG_0x14_DES) | GRFFILE_FLAG_MIXCRYPT;
 					
 					/* Compress, encrypt, and write the file */
-					if (GRF_flushFile(grf,i,error)) {
+					if (0 == GRF_flushFile(grf,i,error)) {
 						free(buf);
 						return 0;
 					}
