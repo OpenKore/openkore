@@ -113,7 +113,7 @@ GRF_normalize_path(char *out, const char *in)
 /** Function to hash a filename.
  *
  * @note This function hashes the exact same way that GRAVITY's GRF openers
- *		do. Enjoy ;-)
+ *		do. Two files with different cases are considered equivalent. Enjoy ;-)
  *
  * @param name Filename to be hashed
  * @return The value of the hashed filename
@@ -121,14 +121,14 @@ GRF_normalize_path(char *out, const char *in)
 GRFEXPORT uint32_t
 GRF_NameHash(const char *name)
 {
-	size_t i;
 	uint32_t tmp;
-
-	i = strlen(name);
-	tmp = 0x1505;
-	for (i = strlen(name); i > 0; i--, name++)
-		tmp = tmp * 0x21 + *name;
-
+	const char* pch = name;
+	tmp = 0;
+	while( *pch != 0 )
+	{
+		tmp = (tmp<<5)+tmp+toupper(*pch);
+		pch++;
+	}
 	return tmp;
 }
 
@@ -237,7 +237,7 @@ GRF_list_from_array(Grf *grf, GrfError *error)
 		GRF_SETERR(error,GE_BADARGS,GRF_list_from_array);
 		return 0;
 	}
-	
+
 	/* Reset the linked list */
 	for (i = 0; i < grf->nfiles; i++) {
 		if (i < grf->nfiles - 1)
