@@ -239,6 +239,7 @@ Credits:
 - punkpudding: route_teleport_notInMaps.
 - Sinistral: skillsstatus.txt help.
 - Hakore: avoidGM_near_inTown fix.
+- TJ09: Einbroch fields.
 
 
 ==================
