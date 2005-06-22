@@ -11472,6 +11472,10 @@ sub checkSelfCondition {
 			$char->{permitSkill}->name eq $config{$prefix."_whenNotPermitSkill"};
 	}
 
+	if ($config{$prefix."_onlyWhenSafe"}) {
+		return 0 if binSize(\@playersID);
+	}
+
 	my $pos = calcPosition($char);
 	return 0 if $config{$prefix."_whenWater"} &&
 		!checkFieldWater(\%field, $pos->{x}, $pos->{y});
