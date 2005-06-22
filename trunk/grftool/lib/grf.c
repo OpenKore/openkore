@@ -709,6 +709,7 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 	char keyschedule[0x80], key[8];
 	uint32_t write_offset;
 	GrfFile *cur = NULL;
+	int z;
 	
 	size_bound = compressBound(grf->files[i].real_len);
 	
@@ -721,7 +722,12 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 		GRF_SETERR(error,GE_ERRNO,malloc);
 		return 0;
 	}
-	compress(comp_dat, &comp_len, grf->files[i].data, grf->files[i].real_len);
+	z = compress(comp_dat, &comp_len, (const Bytef *)grf->files[i].data, grf->files[i].real_len);
+	if (z != Z_OK) {
+		free(comp_dat);
+		GRF_SETERR_2(error, GE_ZLIB, compress, (ssize_t) z);  /* NOTE: uint => ssize_t /-signed-/ => uintptr* conversion */
+		return 0;
+	}
 	grf->files[i].compressed_len = comp_len;
 	
 	/* Encrypt the data as well */
@@ -777,31 +783,88 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 	grf->files[i].pos = write_offset;
 
 	/* Take the file out of the linked list */
-	if (grf->files[i].prev)
+	if (grf->files[i].prev) {
 		grf->files[i].prev->next=grf->files[i].next;
-	if (grf->files[i].next)
-		grf->files[i].next->prev=grf->files[i].prev;
-	
-	/* Find a spot in the linked list for the file */
-	cur = grf->first;
-	while (cur!=NULL && cur->pos<write_offset)
-		cur=cur->next;
-		
-	/* Set the files next and prev */
-	if (cur==NULL) {
-		grf->files[i].prev=grf->last;
-		grf->files[i].next=NULL;
 	}
 	else {
-		grf->files[i].prev=cur;
-		grf->files[i].next=cur->next;
+		/* Extracting head */
+		grf->first = grf->files[i].next;
+	}
+	if (grf->files[i].next) {
+		grf->files[i].next->prev=grf->files[i].prev;
+	}
+	else {
+		/* Extracting tail */
+		grf->last = grf->files[i].prev;
+	}
+
+
+	/**
+		Here are the possibilities for the linked list:
+		- It is empty. [i] is both first and last; prev/next = 0
+		- It has one element. Insertion can be either at head or tail
+		- It has two or more elements.
+		  a) Insert at head
+		  b) Insert in middle
+		  c) Insert at tail
+
+	**/
+
+	if (grf->nfiles == 1) {
+		/* List had one element when we removed [i] */
+		grf->first = &(grf->files[i]);
+		grf->last = &(grf->files[i]);
+	}
+	else if (grf->nfiles == 2) {
+		/* Get the other */
+		cur = grf->first;
+		if (cur->pos>write_offset) {
+			/* Insert at head */
+			grf->first = cur->prev = &(grf->files[i]);
+			/*cur->next = NULL;*/
+			/*grf->last = */grf->files[i].next = cur;
+			grf->files[i].prev = NULL;
+		}
+		else {
+			/* Insert at tail */
+			/*grf->first = */grf->files[i].prev = cur;
+			/*cur->prev = NULL;*/
+			grf->last = cur->next = &(grf->files[i]);
+			grf->files[i].next = NULL;
+		}
+	}
+	else {
+		cur = grf->first;
+		/* Find a spot in the linked list for the file */
+		if (cur->pos>write_offset) {
+			/* Insert at head */
+			grf->first = cur->prev = &(grf->files[i]);
+			grf->files[i].next = cur;
+			grf->files[i].prev = NULL;
+		}
+		else {
+			while (cur!=NULL && cur->pos<write_offset) {
+				cur=cur->next;
+			}
+			if (cur != NULL) {
+				grf->files[i].next = cur;
+				cur = cur->prev;
+				/* Insert in middle */
+				grf->files[i].prev=cur;
+				cur->next = &(grf->files[i]);
+				grf->files[i].next->prev=&(grf->files[i]);
+			}
+			else {
+				/* Insert at tail */
+				grf->files[i].prev=grf->last;
+				grf->files[i].next=NULL;
+				grf->last->next=&(grf->files[i]);
+				grf->last=&(grf->files[i]);
+			}
+		}
 	}
 	
-	/* Move the file after its prev, and before its next */
-	cur=&(grf->files[i]);
-	if (cur->next!=NULL) cur->next->prev=cur;
-	if (cur->prev!=NULL) cur->prev->next=cur;
-
+proceedFlushWrite:
 	/* Write the data to its spot */
 	if (fwrite(write_dat, grf->files[i].compressed_len_aligned, 1U, grf->f) < 1U) {
 		free(comp_dat);
@@ -1207,7 +1270,7 @@ GRF_flushVer2(Grf *grf, GrfError *error, GrfFlushCallback callback)
 						grf->files[i].flags&=~(GRFFILE_FLAG_MIXCRYPT | GRFFILE_FLAG_0x14_DES);
 					
 					/* Compress, encrypt, and write the file */
-					if (GRF_flushFile(grf,i,error)) {
+					if (0 == GRF_flushFile(grf,i,error)) {
 						free(buf);
 						free(zbuf);
 						return 0;
