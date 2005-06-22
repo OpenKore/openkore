@@ -434,3 +434,19 @@ new_zone01.rsw#Training Ground#
 new_zone02.rsw#Training Ground#
 new_zone03.rsw#Training Ground#
 new_zone04.rsw#Training Ground#
+airplane.rsw#Airship#
+airport.rsw#Einbroch Airport#
+ein_dun01.rsw#Einbroch Mine F1#
+ein_dun02.rsw#Einbroch Mine F2#
+ein_fild03.rsw#Einbroch Field#
+ein_fild04.rsw#Einbroch Field#
+ein_fild06.rsw#Einbroch Field#
+ein_fild07.rsw#Einbroch Field#
+ein_fild08.rsw#Einbroch Field#
+ein_fild09.rsw#Einbroch Field#
+ein_fild10.rsw#Einbroch Field#
+ein_in01.rsw#Inside Einbroch#
+einbech.rsw#Einbech, mining village#
+einbroch.rsw#Einbroch, the Steel City#
+lhz_fild02.rsw#Lighthalzen Field#
+lhz_fild03.rsw#Lighthalzen Field#
