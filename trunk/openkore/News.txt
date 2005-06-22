@@ -189,6 +189,8 @@ New config options:
   during route_randomWalk.
 - storageAuto_notAfterDeath (flag)
   If this is set, Kore will not do storage automatically after death.
+- block condition: onlyWhenSafe (flag)
+  Only use this skill if there are no players on the screen.
 
 New control files:
 - control/sys.txt
