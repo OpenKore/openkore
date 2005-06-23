@@ -100,6 +100,7 @@ sub initHandlers {
 	portals		=> \&cmdPortalList,
 	quit		=> \&cmdQuit,
 	relog		=> \&cmdRelog,
+	respawn		=> \&cmdRespawn,
 	s		=> \&cmdStatus,
 	send		=> \&cmdSendRaw,
 	sit		=> \&cmdSit,
@@ -116,6 +117,7 @@ sub initHandlers {
 	switchconf	=> \&cmdSwitchConf,
 	talknpc		=> \&cmdTalkNPC,
 	tank		=> \&cmdTank,
+	tele		=> \&cmdTeleport,
 	testshop	=> \&cmdTestShop,
 	timeout		=> \&cmdTimeout,
 	uneq		=> \&cmdUnequip,
@@ -178,6 +180,7 @@ sub initDescriptions {
 	portals		=> 'List portals that are on screen.',
 	quit		=> 'Exit this program.',
 	relog		=> 'Log out then log in again.',
+	respawn		=> 'Respawn back to the save point.',
 	s		=> 'Display character status.',
 	send		=> 'Send a raw packet to the server.',
 	sit		=> 'Sit down.',
@@ -193,6 +196,7 @@ sub initDescriptions {
 	switchconf	=> 'Switch configuration file.',
 	talknpc		=> 'Send a sequence of responses to an NPC.',
 	tank		=> 'Tank for a player.',
+	tele		=> 'Teleport to a random location.',
 	testshop	=> 'Show what your vending shop would well.',
 	timeout		=> 'Set a timeout.',
 	verbose		=> 'Toggle verbose on/off.',
@@ -520,7 +524,6 @@ sub cmdAttack {
 }
 
 sub cmdAttackStop {
-	#my (undef, $args) = @_;
 	my $index = AI::findAction("attack");
 	if ($index ne "") {
 		my $args = AI::args($index);
@@ -546,19 +549,16 @@ sub cmdAuthorize {
 }
 
 sub cmdAutoBuy {
-	#my (undef, $args) = @_;
 	message "Initiating auto-buy.\n";
 	AI::queue("buyAuto");
 }
 
 sub cmdAutoSell {
-	#my (undef, $args) = @_;
 	message "Initiating auto-sell.\n";
 	AI::queue("sellAuto");
 }
 
 sub cmdAutoStorage {
-	#my (undef, $args) = @_;
 	message "Initiating auto-storage.\n";
 	AI::queue("storageAuto");
 }
@@ -1789,7 +1789,6 @@ sub cmdPortalList {
 }
 
 sub cmdQuit {
-	#my (undef, $arg) = @_;
 	quit();
 }
 
@@ -1811,6 +1810,14 @@ sub cmdReload {
 
 	} else {
 		Settings::parseReload($args);
+	}
+}
+
+sub cmdRespawn {
+	if ($char->{dead}) {
+		sendRespawn(\$remote_socket);
+	} else {
+		main::useTeleport(2);
 	}
 }
 
@@ -2351,6 +2358,10 @@ sub cmdTank {
 				"Player $arg does not exist.\n";
 		}
 	}
+}
+
+sub cmdTeleport {
+	main::useTeleport(1);
 }
 
 sub cmdTestShop {

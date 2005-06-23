@@ -1269,13 +1269,6 @@ sub parseCommand {
 			Modules::reloadFile('functions.pl');
 		}
 
-	} elsif ($switch eq "respawn") {
-		if ($chars[$config{'char'}]{'dead'}) {
-			sendRespawn(\$remote_socket);
-		} else {
-			useTeleport(2);
-		}
-
 	} elsif ($switch eq "sell") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
@@ -1410,9 +1403,6 @@ sub parseCommand {
 			error	"Syntax Error in function 'talk' (Talk to NPC)\n" .
 				"Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n";
 		}
-
-	} elsif ($switch eq "tele") {
-		useTeleport(1);
 
 	} elsif ($switch eq "where") {
 		my $pos = calcPosition($char);
