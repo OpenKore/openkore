@@ -3584,13 +3584,14 @@ sub AI {
 						undef,
 						"attackSkill");
 				} else {
+					my $pos = ($config{"attackSkillSlot_${slot}_isSelfSkill"}) ? $char->{pos_to} : $monsters{$ID}{pos_to};
 					ai_skillUse(
 						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
 						$config{"attackSkillSlot_${slot}_lvl"},
 						$config{"attackSkillSlot_${slot}_maxCastTime"},
 						$config{"attackSkillSlot_${slot}_minCastTime"},
-						$monsters{$ID}{pos_to}{x},
-						$monsters{$ID}{pos_to}{y},
+						$pos->{x},
+						$pos->{y},
 						"attackSkill");
 				}
 				$args->{monsterID} = $ID;
