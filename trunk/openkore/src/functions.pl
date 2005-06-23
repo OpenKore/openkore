@@ -6089,7 +6089,6 @@ sub parseMsg {
 					$display = ($monsters_lut{$type} ne "") 
 						? $monsters_lut{$type}
 						: "Unknown ".$type;
-					$monsters{$ID}{'nameID'} = $type;
 					$monsters{$ID}{'name'} = $display;
 					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
 					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
@@ -9211,6 +9210,7 @@ sub parseMsg {
 		if ($monsters{$ID}) {
 			my $name = $monsters_lut{$type} || "Unknown $type";
 			message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) changed to $name\n";
+			$monsters{$ID}{nameID} = $type;
 			$monsters{$ID}{name} = $name;
 			$monsters{$ID}{dmgToParty} = 0;
 			$monsters{$ID}{dmgFromParty} = 0;
