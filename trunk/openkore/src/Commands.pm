@@ -67,6 +67,7 @@ sub initHandlers {
 	bangbang	=> \&cmdBangBang,
 	bingbing	=> \&cmdBingBing,
 	buy		=> \&cmdBuy,
+	c		=> \&cmdChat,
 	card		=> \&cmdCard,
 	cart		=> \&cmdCart,
 	chat		=> \&cmdChatRoom,
@@ -81,6 +82,7 @@ sub initHandlers {
 	eval		=> \&cmdEval,
 	follow		=> \&cmdFollow,
 	friend		=> \&cmdFriend,
+	g		=> \&cmdGuildChat,
 	guild		=> \&cmdGuild,
 	i		=> \&cmdInventory,
 	ignore		=> \&cmdIgnore,
@@ -96,6 +98,7 @@ sub initHandlers {
 	ml		=> \&cmdMonsterList,
 	nl		=> \&cmdNPCList,
 	openshop	=> \&cmdOpenShop,
+	p		=> \&cmdPartyChat,
 	pl		=> \&cmdPlayerList,
 	plugin		=> \&cmdPlugin,
 	pm		=> \&cmdPrivateMessage,
@@ -152,6 +155,7 @@ sub initDescriptions {
 	bangbang	=> 'Does a bangbang body turn.',
 	bingbing	=> 'Does a bingbing body turn.',
 	buy		=> 'Buy an item from the current NPC shop',
+	c		=> 'Chat in the public chat.',
 	cart		=> 'Cart management',
 	chat		=> 'Chat room management.',
 	chist		=> 'Display last few entries from the chat log.',
@@ -165,6 +169,7 @@ sub initDescriptions {
 	#eval		=> 'Evaluable a Perl expression (developers only).',
 	follow		=> 'Follow another player.',
 	friend		=> 'Friend management.',
+	g		=> 'Chat in the guild chat.',
 	guild		=> 'Guild management.',
 	i		=> 'Display inventory items.',
 	ignore		=> 'Ignore a user (block his messages).',
@@ -179,6 +184,7 @@ sub initDescriptions {
 	ml		=> 'List monsters that are on screen.',
 	nl		=> 'List NPCs that are on screen.',
 	openshop	=> 'Open your vending shop.',
+	p		=> 'Chat in the party chat.',
 	pl		=> 'List players that are on screen.',
 	plugin		=> 'Control plugins.',
 	pm		=> 'Send a private message.',
@@ -775,6 +781,16 @@ sub cmdCart {
 	}
 }
 
+sub cmdChat {
+	my (undef, $arg1) = @_;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'c' (Chat)\n" .
+			"Usage: c <message>\n";
+	} else {
+		sendMessage(\$remote_socket, "c", $arg1);
+	}
+}
+
 sub cmdChatRoom {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
@@ -1341,6 +1357,16 @@ sub cmdGuild {
 	}
 }
 
+sub cmdGuildChat {
+	my (undef, $arg1) = @_;
+	if ($arg1 eq "") {
+		error 	"Syntax Error in function 'g' (Guild Chat)\n" .
+			"Usage: g <message>\n";
+	} else {
+		sendMessage(\$remote_socket, "g", $arg1);
+	}
+}
+
 sub cmdHelp {
 	# Display help message
 	my (undef, $args) = @_;
@@ -1568,6 +1594,16 @@ sub cmdNPCList {
 
 sub cmdOpenShop {
 	main::openShop();
+}
+
+sub cmdPartyChat {
+	my (undef, $arg1) = @_;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'p' (Party Chat)\n" .
+			"Usage: p <message>\n";
+	} else {
+		sendMessage(\$remote_socket, "p", $arg1);
+	}
 }
 
 sub cmdPlayerList {
