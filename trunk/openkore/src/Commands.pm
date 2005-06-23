@@ -79,6 +79,7 @@ sub initHandlers {
 	e		=> \&cmdEmotion,
 	eq		=> \&cmdEquip,
 	eval		=> \&cmdEval,
+	follow		=> \&cmdFollow,
 	friend		=> \&cmdFriend,
 	guild		=> \&cmdGuild,
 	i		=> \&cmdInventory,
@@ -161,6 +162,7 @@ sub initDescriptions {
 	e		=> 'Show emotion.',
 	eq		=> 'Equip an item.',
 	#eval		=> 'Evaluable a Perl expression (developers only).',
+	follow		=> 'Follow another player.',
 	friend		=> 'Friend management.',
 	guild		=> 'Guild management.',
 	i		=> 'Display inventory items.',
@@ -1127,6 +1129,33 @@ sub cmdEval {
 		undef $@;
 		eval $_[1];
 		Log::error("$@") if ($@);
+	}
+}
+
+sub cmdFollow {
+	my (undef, $arg1) = @_;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'follow' (Follow Player)\n" .
+			"Usage: follow <player #>\n";
+	} elsif ($arg1 eq "stop") {
+		AI::clear("follow");
+		configModify("follow", 0);
+	} elsif ($arg1 =~ /^\d+$/) {
+		if (!$playersID[$arg1]) {
+			error	"Error in function 'follow' (Follow Player)\n" .
+				"Player $arg1 either not visible or not online in party.\n";
+		} else {
+			AI::clear("follow");
+			main::ai_follow($players{$playersID[$arg1]}->name);
+			configModify("follow", 1);
+			configModify("followTarget", $players{$playersID[$arg1]}{name});
+		}
+
+	} else {
+		AI::clear("follow");
+		main::ai_follow($arg1);
+		configModify("follow", 1);
+		configModify("followTarget", $arg1);
 	}
 }
 
