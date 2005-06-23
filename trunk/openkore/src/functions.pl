@@ -8097,11 +8097,14 @@ sub parseMsg {
 
 	} elsif ($switch eq "01B9") {
 		# Cast is cancelled
-		my $skillID = unpack("S1", substr($msg, 2, 2));
-		my $skill = new Skills(id => $skillID);
-		my $name = $skill->name;
-		$char->{cast_cancelled} = time;
-		debug "Casting of skill $name has been cancelled.\n", "parseMsg";
+		my $ID = substr($msg, 2, 4);
+
+		my $source = Actor::get($ID);
+		$source->{cast_cancelled} = time;
+		my $skill = $source->{casting}->{skill};
+		my $skillName = $skill ? $skill->name : 'Unknown';
+		message "$source failed to cast $skillName\n", "skill";
+		delete $source->{casting};
 
 	} elsif ($switch eq "0114" || $switch eq "01DE") {
 		# Skill use
@@ -8115,6 +8118,8 @@ sub parseMsg {
 
 		my $source = Actor::get($sourceID);
 		my $target = Actor::get($targetID);
+
+		delete $source->{casting};
 
 		# Perform trigger actions
 		$conState = 5 if $conState != 4 && $xkore;
@@ -8250,6 +8255,8 @@ sub parseMsg {
 		my $source = Actor::get($sourceID);
 		my $target = Actor::get($targetID);
 		my $verb = $source->verb('use', 'uses');
+
+		delete $source->{casting};
 
 		# Print skill use message
 		my $extra = "";
@@ -8643,8 +8650,20 @@ sub parseMsg {
 		my $wait = unpack("L1", substr($msg, 20, 4));
 		my ($dist, %coords);
 
-		# Resolve source and target names
-		my ($source, $verb, $target) = getActorNames($sourceID, $targetID, 'are casting', 'is casting');
+		# Resolve source and target
+		my $source = Actor::get($sourceID);
+		my $target = Actor::get($targetID);
+		my $verb = $source->verb('are casting', 'is casting');
+
+		$source->{casting} = {
+			skill => new Skills(id => $skillID),
+			target => $target,
+			x => $x,
+			y => $y,
+			startTime => time,
+			castTime => $wait
+		};
+
 		if ($x != 0 || $y != 0) {
 			# If $dist is positive we are in range of the attack?
 			$coords{x} = $x;

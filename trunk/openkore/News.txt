@@ -106,6 +106,8 @@ New features:
   tables/servers.txt.
 - You can now use the monster name "all" in mon_control.txt
   to specify default values.
+- showTime config option to show high resolution timestamps with
+  all messages.
 
 New commands:
 - storage log
@@ -236,6 +238,8 @@ Internal:
   contains 'Msg' (the message) and 'MsgUser' (the sender)
 - Please use mon_control() from now on instead of accessing %mon_control
   directly so that "all" will work.
+- $actor->{casting} now tracks what spell someone is casting on what target,
+  and is cleared correctly when the spell completes/is interrupted.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.
