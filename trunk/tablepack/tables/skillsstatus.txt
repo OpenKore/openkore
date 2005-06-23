@@ -58,6 +58,7 @@
 86 Vigor Explosion
 87 Steel Body
 89 Triple Attack Delay
+90 Flame Weapon
 91 Frost Weapon
 92 Lightning Loader
 93 Seismic Weapon
