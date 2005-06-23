@@ -106,6 +106,7 @@ package Log;
 
 use strict;
 use Exporter;
+use Time::HiRes;
 use base qw(Exporter);
 
 use Globals qw(%config $interface %consoleColors %field %cities_lut);
@@ -212,6 +213,10 @@ sub processMsg {
 		if ($consoleVar->{$domain}) {
 			if ($interface) {
 				$message = "[$domain] " . $message if ($config{showDomain});
+				if ($config{showTime}) {
+					my ($seconds, $microseconds) = Time::HiRes::gettimeofday;
+					$message = "[$seconds.$microseconds] ".$message;
+				}
 				$interface->writeOutput($type, $message, $domain);
 			} else {
 				print $message;
