@@ -54,6 +54,7 @@ Bug fixes:
 - Fix sitAuto_look. It's more reliable now.
 - Fix bug where monsters changing into other monsters overwrote
   $obj->{type}.
+- The "pm 0" command no longer crash when there are no players in the pm list.
 
 New features:
 - Better support for detecting dead players.

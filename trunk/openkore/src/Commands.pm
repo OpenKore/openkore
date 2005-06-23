@@ -1688,6 +1688,9 @@ sub cmdPrivateMessage {
 		if ($user - 1 >= @privMsgUsers) {
 			error	"Error in function 'pm' (Private Message)\n" .
 				"Quick look-up $user does not exist\n";
+		} elsif (!@privMsgUsers) {
+			error	"Error in function 'pm' (Private Message)\n" .
+				"You have not pm-ed anyone before\n";
 		} else {
 			sendMessage(\$remote_socket, "pm", $msg, $privMsgUsers[$user - 1]);
 			$lastpm{msg} = $msg;
