@@ -9192,7 +9192,6 @@ sub parseMsg {
 		if ($monsters{$ID}) {
 			my $name = $monsters_lut{$type} || "Unknown $type";
 			message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) changed to $name\n";
-			$monsters{$ID}{type} = $type;
 			$monsters{$ID}{name} = $name;
 			$monsters{$ID}{dmgToParty} = 0;
 			$monsters{$ID}{dmgFromParty} = 0;
