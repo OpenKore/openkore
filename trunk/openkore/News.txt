@@ -56,6 +56,7 @@ Bug fixes:
   $obj->{type}.
 - The "pm 0" command no longer crash when there are no players in the pm list.
 - Kore was blocking packets in XKore mistakenly for certain serverTypes.
+- Fix isSelfSkill with area-skill attackSkillSlot skills.
 
 New features:
 - Better support for detecting dead players.
