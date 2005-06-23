@@ -1196,16 +1196,6 @@ sub parseCommand {
 			$lastpm{'user'} = $arg1;
 		}
 
-	} elsif ($switch eq "pml") {
-		message("-----------PM List-----------\n", "list");
-		for (my $i = 1; $i <= @privMsgUsers; $i++) {
-			message(swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<",
-				[$i, $privMsgUsers[$i - 1]]),
-				"list");
-		}
-		message("-----------------------------\n", "list");
-
 	} elsif ($switch eq "rc") {
 		($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($args ne "") {
