@@ -298,3 +298,18 @@ ip 70.84.81.42
 port 6901
 master_version 18
 version 20
+
+[ExcaliburRO Private Server]
+ip 62.234.144.199
+port 6900
+master_version 14
+version 0
+serverType 3
+
+[AvalonRO Private Server]
+ip 70.85.200.114
+port 6900
+master_version 14
+version 0
+serverType 4
+
