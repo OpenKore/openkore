@@ -6,6 +6,8 @@
 - Items named e.g. "Unknown 1234" are now called "Unknown #1234" so that
   you can use their name in items_control.txt.
 - The syntax for chat room commands has been changed. See below.
+- The "whenStatusInactive" names for ASPD potions have been changed to
+  "Concentration Potion", "Awakening Potion" and "Berserk Potion".
 
 Bug fixes:
 - Fix deal bug: showing twice as many items added.
