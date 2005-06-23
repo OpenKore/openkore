@@ -50,6 +50,8 @@ Bug fixes:
   See http://openkore.sourceforge.net/forum/viewtopic.php?t=8267
 - Fix Segmentation fault bug with Actor::Unknown.nameString infinite loop.
 - Fix sitAuto_look. It's more reliable now.
+- Fix bug where monsters changing into other monsters overwrote
+  $obj->{type}.
 
 New features:
 - Better support for detecting dead players.
