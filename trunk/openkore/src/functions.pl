@@ -1136,38 +1136,6 @@ sub parseCommand {
 		}
 		message("----------------------------------\n", "list");
 
-	} elsif ($switch eq "pm") {
-		($arg1, $arg2) = $input =~ /^[\S]*? "(.*?)" (.*)/;
-		my $type = 0;
-		if (!$arg1) {
-			($arg1, $arg2) = $input =~ /^[\S]*? (\d+) (.*)/;
-			$type = 1;
-		}
-		if ($arg1 eq "" || $arg2 eq "") {
-			error	"Syntax Error in function 'pm' (Private Message)\n" .
-				qq~Usage: pm ("<username>" | <pm #>) <message>\n~;
-		} elsif ($type) {
-			if ($arg1 - 1 >= @privMsgUsers) {
-				error	"Error in function 'pm' (Private Message)\n" .
-					"Quick look-up $arg1 does not exist\n";
-			} else {
-				sendMessage(\$remote_socket, "pm", $arg2, $privMsgUsers[$arg1 - 1]);
-				$lastpm{'msg'} = $arg2;
-				$lastpm{'user'} = $privMsgUsers[$arg1 - 1];
-			}
-		} else {
-			if ($arg1 =~ /^%(\d*)$/) {
-				$arg1 = $1;
-			}
-
-			if (binFind(\@privMsgUsers, $arg1) eq "") {
-				$privMsgUsers[@privMsgUsers] = $arg1;
-			}
-			sendMessage(\$remote_socket, "pm", $arg2, $arg1);
-			$lastpm{'msg'} = $arg2;
-			$lastpm{'user'} = $arg1;
-		}
-
 	} elsif ($switch eq "rc") {
 		($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($args ne "") {
