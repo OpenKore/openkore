@@ -98,6 +98,7 @@ sub initHandlers {
 	plugin		=> \&cmdPlugin,
 	pm		=> \&cmdPrivateMessage,
 	portals		=> \&cmdPortalList,
+	quit		=> \&cmdQuit,
 	relog		=> \&cmdRelog,
 	s		=> \&cmdStatus,
 	send		=> \&cmdSendRaw,
@@ -175,6 +176,7 @@ sub initDescriptions {
 	plugin		=> 'Control plugins.',
 	pm		=> 'Send a private message.',
 	portals		=> 'List portals that are on screen.',
+	quit		=> 'Exit this program.',
 	relog		=> 'Log out then log in again.',
 	s		=> 'Display character status.',
 	send		=> 'Send a raw packet to the server.',
@@ -1784,6 +1786,11 @@ sub cmdPortalList {
 			"list");
 	}
 	message("---------------------------------\n", "list");
+}
+
+sub cmdQuit {
+	#my (undef, $arg) = @_;
+	quit();
 }
 
 sub cmdRelog {

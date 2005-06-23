@@ -657,21 +657,6 @@ sub parseCommand {
 		chatLog_clear();
 		message("Chat log cleared.\n", "success");
 
-	#non-functional item count code
-	} elsif ($switch eq "icount") {
-		message("-[ Item Count ]--------------------------------\n", "list");
-		message("#   ID   Name                Count\n", "list");
-		my $i = 0;
-		while ($pickup_count[$i]) {
-			message(swrite(
-				"@<< @<<<< @<<<<<<<<<<<<<       @<<<",
-				[$i, $pickup_count[$i]{'nameID'}, $pickup_count[$i]{'name'}, $pickup_count[$i]{'count'}]),
-				"list");
-			$i++;
-		}
-		message("--------------------------------------------------\n", "list");
-	#end of non-functional item count code
-
 	} elsif ($switch eq "vl") {
 		message("-----------Vender List-----------\n" .
 			"#   Title                                Coords     Owner\n",
@@ -1274,9 +1259,6 @@ sub parseCommand {
 				"list");
 		}
 		message("-----------------------------\n", "list");
-
-	} elsif ($switch eq "quit") {
-		quit();
 
 	} elsif ($switch eq "rc") {
 		($args) = $input =~ /^[\s\S]*? ([\s\S]*)/;
