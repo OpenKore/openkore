@@ -5219,9 +5219,11 @@ sub parseSendMsg {
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
 	} elsif ($switch eq "0072") {
-		# Map login
-		if ($config{'sex'} ne "") {
-			$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
+		if ($config{serverType} == 0) {
+			# Map login
+			if ($config{'sex'} ne "") {
+				$sendMsg = substr($sendMsg, 0, 18) . pack("C",$config{'sex'});
+			}
 		}
 
 	} elsif ($switch eq "007D") {
@@ -5237,18 +5239,22 @@ sub parseSendMsg {
 		message "Map loaded\n", "connection";
 
 	} elsif ($switch eq "0085") {
-		# Move
-		#aiRemove("clientSuspend");
-		#makeCoords(\%coords, substr($msg, 2, 3));
-		#ai_clientSuspend($switch, (distance($char->{'pos'}, \%coords) * $char->{walk_speed}) + 4);
+		#if ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2) {
+		#	#Move
+		#	aiRemove("clientSuspend");
+		#	makeCoords(\%coords, substr($msg, 2, 3));
+		#	ai_clientSuspend($switch, (distance($char->{'pos'}, \%coords) * $char->{walk_speed}) + 4);
+		#}
 
 	} elsif ($switch eq "0089") {
-		# Attack
-		if (!$config{'tankMode'} && !AI::inQueue("attack")) {
-			aiRemove("clientSuspend");
-			ai_clientSuspend($switch, 2, unpack("C*",substr($msg,6,1)), substr($msg,2,4));
-		} else {
-			undef $sendMsg;
+		if ($config{serverType} == 0) {
+			# Attack
+			if (!$config{'tankMode'} && !AI::inQueue("attack")) {
+				aiRemove("clientSuspend");
+				ai_clientSuspend($switch, 2, unpack("C*",substr($msg,6,1)), substr($msg,2,4));
+			} else {
+				undef $sendMsg;
+			}
 		}
 
 	} elsif ($switch eq "008C" || $switch eq "0108" || $switch eq "017E" || ($switch eq "00F3" && $config{serverType} == 3)) {
@@ -5294,9 +5300,11 @@ sub parseSendMsg {
 		}
 
 	} elsif ($switch eq "009F") {
-		# Take
-		aiRemove("clientSuspend");
-		ai_clientSuspend($switch, 2, substr($msg,2,4));
+		if ($config{serverType} == 0) {
+			# Take
+			aiRemove("clientSuspend");
+			ai_clientSuspend($switch, 2, substr($msg,2,4));
+		}
 
 	} elsif ($switch eq "00B2") {
 		# Trying to exit (respawn)

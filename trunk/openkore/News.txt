@@ -55,6 +55,7 @@ Bug fixes:
 - Fix bug where monsters changing into other monsters overwrote
   $obj->{type}.
 - The "pm 0" command no longer crash when there are no players in the pm list.
+- Kore was blocking packets in XKore mistakenly for certain serverTypes.
 
 New features:
 - Better support for detecting dead players.
