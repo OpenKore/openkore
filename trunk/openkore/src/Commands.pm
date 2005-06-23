@@ -99,6 +99,7 @@ sub initHandlers {
 	pl		=> \&cmdPlayerList,
 	plugin		=> \&cmdPlugin,
 	pm		=> \&cmdPrivateMessage,
+	pml		=> \&cmdPMList,
 	portals		=> \&cmdPortalList,
 	quit		=> \&cmdQuit,
 	relog		=> \&cmdRelog,
@@ -181,6 +182,7 @@ sub initDescriptions {
 	pl		=> 'List players that are on screen.',
 	plugin		=> 'Control plugins.',
 	pm		=> 'Send a private message.',
+	pml		=> 'Quick PM list.',
 	portals		=> 'List portals that are on screen.',
 	quit		=> 'Exit this program.',
 	relog		=> 'Log out then log in again.',
@@ -1797,6 +1799,17 @@ sub cmdPlugin {
 			error($msg);
 		}
 	}
+}
+
+sub cmdPMList {
+	message("-----------PM List-----------\n", "list");
+	for (my $i = 1; $i <= @privMsgUsers; $i++) {
+		message(swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<",
+			[$i, $privMsgUsers[$i - 1]]),
+			"list");
+	}
+	message("-----------------------------\n", "list");
 }
 
 sub cmdPrivateMessage {
