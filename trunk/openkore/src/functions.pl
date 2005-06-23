@@ -640,15 +640,6 @@ sub parseCommand {
 		message("Maximum earned:  " . formatNumber($priceAfterSale) . "z.\n", "list");
 		message("Maximum zeny:   " . formatNumber($priceAfterSale + $chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
 
-	} elsif ($switch eq "c") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'c' (Chat)\n" .
-				"Usage: c <message>\n";
-		} else {
-			sendMessage(\$remote_socket, "c", $arg1);
-		}
-
 	} elsif ($switch eq "cil") { 
 		itemLog_clear();
 		message("Item log cleared.\n", "success");
@@ -917,16 +908,6 @@ sub parseCommand {
 				"Usage: exp [reset]\n";
 		}
 		
-	#Guild Chat - chobit andy 20030101
-	} elsif ($switch eq "g") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		if ($arg1 eq "") {
-			error 	"Syntax Error in function 'g' (Guild Chat)\n" .
-				"Usage: g <message>\n";
-		} else {
-			sendMessage(\$remote_socket, "g", $arg1);
-		}
-
 	} elsif ($switch eq "identify") {
 		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
 		if ($arg1 eq "") {
@@ -1035,15 +1016,6 @@ sub parseCommand {
 			} else {
 				error "Map $map does not exist\n";
 			}
-		}
-
-	} elsif ($switch eq "p") {
-		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'p' (Party Chat)\n" .
-				"Usage: p <message>\n";
-		} else {
-			sendMessage(\$remote_socket, "p", $arg1);
 		}
 
 	} elsif ($switch eq "party") {
