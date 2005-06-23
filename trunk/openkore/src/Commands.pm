@@ -53,7 +53,6 @@ our %customCommands;
 # use SelfLoader; 1;
 # __DATA__
 
-
 sub initHandlers {
 	%handlers = (
 	a		=> \&cmdAttack,
@@ -61,6 +60,9 @@ sub initHandlers {
 	aiv		=> \&cmdAIv,
 	arrowcraft	=> \&cmdArrowCraft,
 	as		=> \&cmdAttackStop,
+	autobuy		=> \&cmdAutoBuy,
+	autosell	=> \&cmdAutoSell,
+	autostorage	=> \&cmdAutoStorage,
 	auth		=> \&cmdAuthorize,
 	bangbang	=> \&cmdBangBang,
 	bingbing	=> \&cmdBingBing,
@@ -137,6 +139,9 @@ sub initDescriptions {
 	aiv		=> 'Display current AI sequences.',
 	arrowcraft	=> 'Create Arrows.',
 	as		=> 'Stop attacking a monster.',
+	autobuy		=> 'Initiate auto-buy AI sequence.',
+	autosell	=> 'Initiate auto-sell AI sequence.',
+	autostorage	=> 'Initiate auto-storage AI sequence.',
 	auth		=> '(Un)authorize a user for using Kore chat commands.',
 	bangbang	=> 'Does a bangbang body turn.',
 	bingbing	=> 'Does a bingbing body turn.',
@@ -536,6 +541,24 @@ sub cmdAuthorize {
 	} else {
 		auth($arg1, $arg2);
 	}
+}
+
+sub cmdAutoBuy {
+	#my (undef, $args) = @_;
+	message "Initiating auto-buy.\n";
+	AI::queue("buyAuto");
+}
+
+sub cmdAutoSell {
+	#my (undef, $args) = @_;
+	message "Initiating auto-sell.\n";
+	AI::queue("sellAuto");
+}
+
+sub cmdAutoStorage {
+	#my (undef, $args) = @_;
+	message "Initiating auto-storage.\n";
+	AI::queue("storageAuto");
 }
 
 sub cmdBangBang {

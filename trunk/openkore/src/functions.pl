@@ -640,18 +640,6 @@ sub parseCommand {
 		message("Maximum earned:  " . formatNumber($priceAfterSale) . "z.\n", "list");
 		message("Maximum zeny:   " . formatNumber($priceAfterSale + $chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
 
-	} elsif ($switch eq "autobuy") {
-		message "Initiating auto-buy.\n";
-		AI::queue("buyAuto");
-
-	} elsif ($switch eq "autosell") {
-		message "Initiating auto-sell.\n";
-		AI::queue("sellAuto");
-
-	} elsif ($switch eq "autostorage") {
-		message "Initiating auto-storage.\n";
-		AI::queue("storageAuto");
-
 	} elsif ($switch eq "c") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
 		if ($arg1 eq "") {
