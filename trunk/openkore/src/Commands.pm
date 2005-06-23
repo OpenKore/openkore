@@ -75,6 +75,7 @@ sub initHandlers {
 	conf		=> \&cmdConf,
 	debug		=> \&cmdDebug,
 	doridori	=> \&cmdDoriDori,
+	drop		=> \&cmdDrop,
 	e		=> \&cmdEmotion,
 	eq		=> \&cmdEquip,
 	eval		=> \&cmdEval,
@@ -156,6 +157,7 @@ sub initDescriptions {
 	conf		=> 'Change a configuration key.',
 	debug		=> 'Toggle debug on/off.',
 	doridori	=> 'Does a doridori head turn.',
+	drop		=> 'Drop an item from the inventory.',
 	e		=> 'Show emotion.',
 	eq		=> 'Equip an item.',
 	#eval		=> 'Evaluable a Perl expression (developers only).',
@@ -950,6 +952,35 @@ sub cmdChist {
 
 	} else {
 		error "Unable to open $Settings::chat_file\n";
+	}
+}
+
+sub cmdDrop {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^([\d,-]+)/;
+	my ($arg2) = $args =~ /^[\d,-]+ (\d+)$/;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'drop' (Drop Inventory Item)\n" .
+			"Usage: drop <item #> [<amount>]\n";
+	} else {
+		my @temp = split(/,/, $arg1);
+		@temp = grep(!/^$/, @temp); # Remove empty entries
+
+		my @items = ();
+		foreach (@temp) {
+			if (/(\d+)-(\d+)/) {
+				for ($1..$2) {
+					push(@items, $_) if ($char->{inventory}[$_] && %{$char->{inventory}[$_]});
+				}
+			} else {
+				push @items, $_ if ($char->{inventory}[$_] && %{$char->{inventory}[$_]});
+			}
+		}
+		if (@items > 0) {
+			main::ai_drop(\@items, $arg2);
+		} else {
+			error "No items were dropped.\n";
+		}
 	}
 }
 

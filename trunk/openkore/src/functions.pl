@@ -843,33 +843,6 @@ sub parseCommand {
 			message("----------------------------------\n", "list");
 		}
 
-
-	} elsif ($switch eq "drop") {
-		($arg1) = $input =~ /^[\s\S]*? ([\d,-]+)/;
-		($arg2) = $input =~ /^[\s\S]*? [\d,-]+ (\d+)$/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'drop' (Drop Inventory Item)\n" .
-				"Usage: drop <item #> [<amount>]\n";
-		} elsif (!%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
-			error	"Error in function 'drop' (Drop Inventory Item)\n" .
-				"Inventory Item $arg1 does not exist.\n";
-		} else {
-			my @temp = split(/,/, $arg1);
-			@temp = grep(!/^$/, @temp); # Remove empty entries
-
-			my @items = ();
-			foreach (@temp) {
-				if (/(\d+)-(\d+)/) {
-					for ($1..$2) {
-						push(@items, $_) if (%{$chars[$config{'char'}]{'inventory'}[$_]});
-					}
-				} else {
-					push @items, $_;
-				}
-			}
-			ai_drop(\@items, $arg2);
-		}
-
 	} elsif ($switch eq "dump") {
 		dumpData($msg);
 		quit();
