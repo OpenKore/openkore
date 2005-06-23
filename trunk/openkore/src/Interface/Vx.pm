@@ -42,8 +42,8 @@ use Tk::ROText;
 use Tk::BrowseEntry;
 
 # parse panelBottom_domains into a hash
+my %panelBottom_domains;
 if ($sys{panelBottom_domains}) {
-	my %panelBottom_domains;
 	my @array = split / *, */, $sys{panelBottom_domains};
 	foreach (@array) {
 		s/^\s+//;
