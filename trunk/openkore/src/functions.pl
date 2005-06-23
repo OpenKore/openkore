@@ -640,16 +640,6 @@ sub parseCommand {
 		message("Maximum earned:  " . formatNumber($priceAfterSale) . "z.\n", "list");
 		message("Maximum zeny:   " . formatNumber($priceAfterSale + $chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
 
-	} elsif ($switch eq "as") {
-		# Stop attacking monster
-		my $index = binFind(\@ai_seq, "attack");
-		if ($index ne "") {
-			$monsters{$ai_seq_args[$index]{'ID'}}{'ignore'} = 1;
-			stopAttack();
-			message "Stopped attacking $monsters{$ai_seq_args[$index]{'ID'}}{'name'} ($monsters{$ai_seq_args[$index]{'ID'}}{'binID'})\n", "success";
-			aiRemove("attack");
-		}
-
 	} elsif ($switch eq "autobuy") {
 		message "Initiating auto-buy.\n";
 		AI::queue("buyAuto");

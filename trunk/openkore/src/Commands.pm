@@ -60,6 +60,7 @@ sub initHandlers {
 	ai		=> \&cmdAI,
 	aiv		=> \&cmdAIv,
 	arrowcraft	=> \&cmdArrowCraft,
+	as		=> \&cmdAttackStop,
 	auth		=> \&cmdAuthorize,
 	bangbang	=> \&cmdBangBang,
 	bingbing	=> \&cmdBingBing,
@@ -135,6 +136,7 @@ sub initDescriptions {
 	ai		=> 'Enable/disable AI.',
 	aiv		=> 'Display current AI sequences.',
 	arrowcraft	=> 'Create Arrows.',
+	as		=> 'Stop attacking a monster.',
 	auth		=> '(Un)authorize a user for using Kore chat commands.',
 	bangbang	=> 'Does a bangbang body turn.',
 	bingbing	=> 'Does a bingbing body turn.',
@@ -507,6 +509,21 @@ sub cmdAttack {
 	} else {
 		error	"Syntax Error in function 'a' (Attack Monster)\n" .
 			"Usage: attack <monster # | no | yes >\n";
+	}
+}
+
+sub cmdAttackStop {
+	#my (undef, $args) = @_;
+	my $index = AI::findAction("attack");
+	if ($index ne "") {
+		my $args = AI::args($index);
+		my $monster = $monsters{$args->{ID}};
+		if ($monster) {
+			$monster->{ignore} = 1;
+			stopAttack();
+			message "Stopped attacking $monster->{name} ($monster->{binID})\n", "success";
+			AI::clear("attack");
+		}
 	}
 }
 
