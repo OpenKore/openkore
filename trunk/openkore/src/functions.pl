@@ -917,33 +917,6 @@ sub parseCommand {
 				"Usage: exp [reset]\n";
 		}
 		
-	} elsif ($switch eq "follow") {
-		($arg1) = $input =~ /^[\s\S]*? (.+) *$/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'follow' (Follow Player)\n" .
-				"Usage: follow <player #>\n";
-		} elsif ($arg1 eq "stop") {
-			aiRemove("follow");
-			configModify("follow", 0);
-
-		} elsif ($arg1 =~ /^\d+$/) {
-			if (!$playersID[$arg1]) {
-				error	"Error in function 'follow' (Follow Player)\n" .
-					"Player $arg1 either not visible or not online in party.\n";
-			} else {
-				aiRemove("follow");
-				ai_follow($players{$playersID[$arg1]}{name});
-				configModify("follow", 1);
-				configModify("followTarget", $players{$playersID[$arg1]}{name});
-			}
-
-		} else {
-			aiRemove("follow");
-			ai_follow($arg1);
-			configModify("follow", 1);
-			configModify("followTarget", $arg1);
-		}
-	
 	#Guild Chat - chobit andy 20030101
 	} elsif ($switch eq "g") {
 		($arg1) = $input =~ /^[\s\S]*? ([\s\S]*)/;
