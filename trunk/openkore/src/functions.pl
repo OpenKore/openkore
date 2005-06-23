@@ -614,27 +614,7 @@ sub parseCommand {
 		($switch, $args) = split(' ', $input, 2);
 	}
 
-	if ($switch eq "a") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		($arg2) = $input =~ /^[\s\S]*? [\s\S]*? (\d+)/;
-		if ($arg1 =~ /^\d+$/ && $monstersID[$arg1] eq "") {
-			error	"Error in function 'a' (Attack Monster)\n" .
-				"Monster $arg1 does not exist.\n";
-		} elsif ($arg1 =~ /^\d+$/) {
-			attack($monstersID[$arg1]);
-
-		} elsif ($arg1 eq "no") {
-			configModify("attackAuto", 1);
-		
-		} elsif ($arg1 eq "yes") {
-			configModify("attackAuto", 2);
-
-		} else {
-			error	"Syntax Error in function 'a' (Attack Monster)\n" .
-				"Usage: attack <monster # | no | yes >\n";
-		}
-
-	} elsif ($switch eq "al") {
+	if ($switch eq "al") {
 		if (!$shopstarted) {
 			error("You do not have a shop open.\n");
 			return;
