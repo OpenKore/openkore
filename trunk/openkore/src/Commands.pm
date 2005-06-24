@@ -74,6 +74,7 @@ sub initHandlers {
 	chist		=> \&cmdChist,
 	closeshop	=> \&cmdCloseShop,
 	conf		=> \&cmdConf,
+	deal		=> \&cmdDeal,
 	debug		=> \&cmdDebug,
 	doridori	=> \&cmdDoriDori,
 	drop		=> \&cmdDrop,
@@ -85,6 +86,7 @@ sub initHandlers {
 	g		=> \&cmdGuildChat,
 	guild		=> \&cmdGuild,
 	i		=> \&cmdInventory,
+	identify	=> \&cmdIdentify,
 	ignore		=> \&cmdIgnore,
 	ihist		=> \&cmdIhist,
 	il		=> \&cmdItemList,
@@ -92,6 +94,8 @@ sub initHandlers {
 	ip		=> \&cmdUseItemOnPlayer,
 	is		=> \&cmdUseItemOnSelf,
 	kill		=> \&cmdKill,
+	look		=> \&cmdLook,
+	lookp		=> \&cmdLookPlayer,
 	help		=> \&cmdHelp,
 	reload		=> \&cmdReload,
 	memo		=> \&cmdMemo,
@@ -164,6 +168,7 @@ sub initDescriptions {
 	chist		=> 'Display last few entries from the chat log.',
 	closeshop	=> 'Close your vending shop.',
 	conf		=> 'Change a configuration key.',
+	deal		=> 'Trade items with another player.',
 	debug		=> 'Toggle debug on/off.',
 	doridori	=> 'Does a doridori head turn.',
 	drop		=> 'Drop an item from the inventory.',
@@ -175,6 +180,7 @@ sub initDescriptions {
 	g		=> 'Chat in the guild chat.',
 	guild		=> 'Guild management.',
 	i		=> 'Display inventory items.',
+	identify	=> 'Identify an unindentified item.',
 	ignore		=> 'Ignore a user (block his messages).',
 	il		=> 'Display items on the ground.',
 	ihist		=> 'Displays last few entries of the item log.',
@@ -182,6 +188,8 @@ sub initDescriptions {
 	ip		=> 'Use item on player.',
 	is		=> 'Use item on yourself.',
 	kill		=> 'Attack another player (PVP/GVG only).',
+	look		=> 'Look in a certain direction.',
+	lookp		=> 'Look at a certain player.',
 	reload		=> 'Reload configuration files.',
 	memo		=> 'Save current position for warp portal.',
 	ml		=> 'List monsters that are on screen.',
@@ -1010,6 +1018,33 @@ sub cmdDrop {
 	}
 }
 
+sub cmdIdentify {
+	my (undef, $arg1) = @_;
+	if ($arg1 eq "") {
+		message("---------Identify List--------\n", "list");
+		for (my $i = 0; $i < @identifyID; $i++) {
+			next if ($identifyID[$i] eq "");
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$i, $char->{'inventory'}[$identifyID[$i]]{name}]),
+				"list");
+		}
+		message("------------------------------\n", "list");
+
+	} elsif ($arg1 =~ /^\d+$/) {
+		if ($identifyID[$arg1] eq "") {
+			error	"Error in function 'identify' (Identify Item)\n" .
+				"Identify Item $arg1 does not exist\n";
+		} else {
+			sendIdentify(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$identifyID[$arg1]]{'index'});
+		}
+
+	} else {
+		error	"Syntax Error in function 'identify' (Identify Item)\n" .
+			"Usage: identify [<identify #>]\n";
+	}
+}
+
 sub cmdIhist {
 	# Display item history
 	my (undef, $args) = @_;
@@ -1063,6 +1098,88 @@ sub cmdConf {
 			val => \$arg2
 		});
 		configModify($arg1, $arg2);
+	}
+}
+
+sub cmdDeal {
+	my (undef, $args) = @_;
+	my @arg = split / /, $args;
+
+	if (%currentDeal && $arg[0] =~ /\d+/) {
+		error	"Error in function 'deal' (Deal a Player)\n" .
+			"You are already in a deal\n";
+	} elsif (%incomingDeal && $arg[0] =~ /\d+/) {
+		error	"Error in function 'deal' (Deal a Player)\n" .
+			"You must first cancel the incoming deal\n";
+	} elsif ($arg[0] =~ /\d+/ && !$playersID[$arg[0]]) {
+		error	"Error in function 'deal' (Deal a Player)\n" .
+			"Player $arg[0] does not exist\n";
+	} elsif ($arg[0] =~ /\d+/) {
+		my $ID = $playersID[$arg[0]];
+		my $player = Actor::get($ID);
+		message "Attempting to deal $player\n";
+		$outgoingDeal{'ID'} = $ID;
+		sendDeal(\$remote_socket, $ID);
+
+	} elsif ($arg[0] eq "no" && !%incomingDeal && !%outgoingDeal && !%currentDeal) {
+		error	"Error in function 'deal' (Deal a Player)\n" .
+			"There is no incoming/current deal to cancel\n";
+	} elsif ($arg[0] eq "no" && (%incomingDeal || %outgoingDeal)) {
+		sendDealCancel(\$remote_socket);
+	} elsif ($arg[0] eq "no" && %currentDeal) {
+		sendCurrentDealCancel(\$remote_socket);
+
+	} elsif ($arg[0] eq "" && !%incomingDeal && !%currentDeal) {
+		error	"Error in function 'deal' (Deal a Player)\n" .
+			"There is no deal to accept\n";
+	} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && !$currentDeal{'other_finalize'}) {
+		error	"Error in function 'deal' (Deal a Player)\n" .
+			"Cannot make the trade - $currentDeal{'name'} has not finalized\n";
+	} elsif ($arg[0] eq "" && $currentDeal{'final'}) {
+		error	"Error in function 'deal' (Deal a Player)\n" .
+			"You already accepted the final deal\n";
+	} elsif ($arg[0] eq "" && %incomingDeal) {
+		sendDealAccept(\$remote_socket);
+	} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && $currentDeal{'other_finalize'}) {
+		sendDealTrade(\$remote_socket);
+		$currentDeal{'final'} = 1;
+		message("You accepted the final Deal\n", "deal");
+	} elsif ($arg[0] eq "" && %currentDeal) {
+		sendDealAddItem(\$remote_socket, 0, $currentDeal{'you_zenny'});
+		sendDealFinalize(\$remote_socket);
+		
+	} elsif ($arg[0] eq "add" && !%currentDeal) {
+		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
+			"No deal in progress\n";
+	} elsif ($arg[0] eq "add" && $currentDeal{'you_finalize'}) {
+		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
+			"Can't add any Items - You already finalized the deal\n";
+	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && !%{$chars[$config{'char'}]{'inventory'}[$arg[1]]}) {
+		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
+			"Inventory Item $arg[1] does not exist.\n";
+	} elsif ($arg[0] eq "add" && $arg[2] && $arg[2] !~ /\d+/) {
+		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
+			"Amount must either be a number, or not specified.\n";
+	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/) {
+		if ($currentDeal{you_items} < 10) {
+			if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'}) {
+				$arg[2] = $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'};
+			}
+			$currentDeal{'lastItemAmount'} = $arg[2];
+			sendDealAddItem(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg[1]]{'index'}, $arg[2]);
+		} else {
+			error("You can't add any more items to the deal\n", "deal");
+		}
+	} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
+		if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'zenny'}) {
+			$arg[2] = $chars[$config{'char'}]{'zenny'};
+		}
+		$currentDeal{'you_zenny'} = $arg[2];
+		message("You put forward $arg[2] z to Deal\n", "deal");
+
+	} else {
+		error	"Syntax Error in function 'deal' (Deal a player)\n" .
+			"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n";
 	}
 }
 
@@ -1532,6 +1649,31 @@ sub cmdInventory {
 	} else {
 		error	"Syntax Error in function 'i' (Inventory List)\n" .
 			"Usage: i [<u|eq|neq|nu|desc>] [<inventory #>]\n";
+	}
+}
+
+sub cmdLook {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\d+)/;
+	my ($arg2) = $args =~ /^\d+ (\d+)$/;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'look' (Look a Direction)\n" .
+			"Usage: look <body dir> [<head dir>]\n";
+	} else {
+		look($arg1, $arg2);
+	}
+}
+
+sub cmdLookPlayer {
+	my (undef, $arg1) = @_;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'lookp' (Look at Player)\n" .
+			"Usage: lookp <player #>\n";
+	} elsif (!$playersID[$arg1]) {
+		error	"Error in function 'lookp' (Look at Player)\n" .
+			"'$arg1' is not a valid player number.\n";
+	} else {
+		lookAtPosition($players{$playersID[$arg1]}{pos_to});
 	}
 }
 

@@ -85,6 +85,8 @@ our @EXPORT = (
 	getResponse
 	getSpellName
 	headgearName
+	look
+	lookAtPosition
 	manualMove
 	objectAdded
 	objectRemoved
@@ -1203,6 +1205,37 @@ sub headgearName {
 	}
 
 	return main::itemName({nameID => $itemID});
+}
+
+##
+# look(bodydir, [headdir])
+# bodydir: a number 0-7. See directions.txt.
+# headdir: 0 = look directly, 1 = look right, 2 = look left
+#
+# Look in the given directions.
+sub look {
+	my %args = (
+		look_body => shift,
+		look_head => shift
+	);
+	AI::queue("look", \%args);
+}
+
+##
+# lookAtPosition(pos, [headdir])
+# pos: a reference to a coordinate hash.
+# headdir: 0 = face directly, 1 = look right, 2 = look left
+#
+# Turn face and body direction to position %pos.
+sub lookAtPosition {
+	my $pos2 = shift;
+	my $headdir = shift;
+	my %vec;
+	my $direction;
+
+	getVector(\%vec, $pos2, $char->{pos_to});
+	$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
+	look($direction, $headdir);
 }
 
 ##
