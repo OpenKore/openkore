@@ -7719,7 +7719,8 @@ sub parseMsg {
 		$source->{cast_cancelled} = time;
 		my $skill = $source->{casting}->{skill};
 		my $skillName = $skill ? $skill->name : 'Unknown';
-		message "$source failed to cast $skillName\n", "skill";
+		my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
+		message "$source failed to cast $skillName\n", $domain;
 		delete $source->{casting};
 
 	} elsif ($switch eq "0114" || $switch eq "01DE") {
@@ -7761,7 +7762,7 @@ sub parseMsg {
 			calcStat($damage);
 		}
 
-		my $domain = "skill";
+		my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 
 		if ($damage == 0) {
 			$domain = "attackMonMiss" if $sourceID eq $accountID && $targetID ne $accountID;
@@ -7810,7 +7811,8 @@ sub parseMsg {
 		$disp .= " on location ($x, $y)\n";
 
 		# Print skill use message
-		message $disp, 'skill';
+		my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
+		message $disp, $domain;
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
@@ -7883,7 +7885,8 @@ sub parseMsg {
 			$extra = ": Lv $amount";
 		}
   
-		message "$source $verb ".skillName($skillID)." on ".$target->nameString($source)."$extra\n", "skill";
+		my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
+		message "$source $verb ".skillName($skillID)." on ".$target->nameString($source)."$extra\n", $domain;
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
@@ -8301,7 +8304,8 @@ sub parseMsg {
 		}
 
 		countCastOn($sourceID, $targetID, $skillID, $x, $y);
-		message "$source $verb ".skillName($skillID)." on $targetString (time ${wait}ms)\n", "skill", 1;
+		my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
+		message "$source $verb ".skillName($skillID)." on $targetString (time ${wait}ms)\n", $domain, 1;
 
 		Plugins::callHook('is_casting', {
 			sourceID => $sourceID,
