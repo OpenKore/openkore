@@ -30,7 +30,7 @@ our %EXPORT_TAGS = (
 	state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID @portalsID_old %portals %portals_old @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownObjects $statChanged $skillChanged $useArrowCraft)],
 	network => [qw($remote_socket $charServer $conState $conState_tries $encryptVal $ipc $lastPacketTime $masterServer $xkore)],
 	interface => [qw($interface)],
-	misc    => [qw($buildType $quit @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars)],
+	misc    => [qw($buildType $quit @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk)],
 );
 
 our @EXPORT = (
@@ -231,6 +231,7 @@ our $totalelasped;
 our $elasped;
 our $totaldmg;
 our %responseVars;
+our %talk;
 
 
 # Detect operating system

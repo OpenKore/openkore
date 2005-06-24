@@ -121,6 +121,7 @@ sub initHandlers {
 	stand		=> \&cmdStand,
 	stat_add	=> \&cmdStatAdd,
 	switchconf	=> \&cmdSwitchConf,
+	talk		=> \&cmdTalk,
 	talknpc		=> \&cmdTalkNPC,
 	tank		=> \&cmdTank,
 	tele		=> \&cmdTeleport,
@@ -131,6 +132,7 @@ sub initHandlers {
 	version		=> \&cmdVersion,
 	warp		=> \&cmdWarp,
 	weight		=> \&cmdWeight,
+	where		=> \&cmdWhere,
 	who		=> \&cmdWho,
 	);
 }
@@ -206,6 +208,7 @@ sub initDescriptions {
 	stand		=> 'Stand up.',
 	stat_add	=> 'Add status point.',
 	switchconf	=> 'Switch configuration file.',
+	talk		=> 'Manually talk to an NPC.',
 	talknpc		=> 'Send a sequence of responses to an NPC.',
 	tank		=> 'Tank for a player.',
 	tele		=> 'Teleport to a random location.',
@@ -215,6 +218,7 @@ sub initDescriptions {
 	version		=> 'Display the version of openkore.',
 	warp		=> 'Open warp portal.',
 	weight		=> 'Gives a report about your inventory weight.',
+	where		=> 'Shows your current location.',
 	who		=> 'Display the number of people on the current server.',
 	);
 }
@@ -2415,6 +2419,86 @@ sub cmdSwitchConf {
 	}
 }
 
+sub cmdTalk {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+ (\d+)/;
+
+	if ($arg1 =~ /^\d+$/ && $npcsID[$arg1] eq "") {
+		error	"Error in function 'talk' (Talk to NPC)\n" .
+			"NPC $arg1 does not exist\n";
+	} elsif ($arg1 =~ /^\d+$/) {
+		sendTalk(\$remote_socket, $npcsID[$arg1]);
+
+	} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
+		error	"Error in function 'talk resp' (Respond to NPC)\n" .
+			"You are not talking to any NPC.\n";
+
+	} elsif ($arg1 eq "resp" && $arg2 eq "") {
+		my $display = $talk{name};
+		message("----------Responses-----------\n", "list");
+		message("NPC: $display\n", "list");
+		message("#  Response\n", "list");
+		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<<",
+				[$i, $talk{'responses'}[$i]]),
+				"list");
+		}
+		message("-------------------------------\n", "list");
+
+	} elsif ($arg1 eq "resp" && $arg2 ne "" && $talk{'responses'}[$arg2] eq "") {
+		error	"Error in function 'talk resp' (Respond to NPC)\n" .
+			"Response $arg2 does not exist.\n";
+
+	} elsif ($arg1 eq "resp" && $arg2 ne "") {
+		if ($talk{'responses'}[$arg2] eq "Cancel Chat") {
+			$arg2 = 255;
+		} else {
+			$arg2 += 1;
+		}
+		sendTalkResponse(\$remote_socket, $talk{'ID'}, $arg2);
+
+	} elsif ($arg1 eq "num" && $arg2 eq "") {
+		error "Error in function 'talk num' (Respond to NPC)\n" .
+			"You must specify a number.\n";
+
+	} elsif ($arg1 eq "num" && !($arg2 =~ /^\d+$/)) {
+		error "Error in function 'talk num' (Respond to NPC)\n" .
+			"$arg2 is not a valid number.\n";
+
+	} elsif ($arg1 eq "num" && $arg2 =~ /^\d+$/) {
+		sendTalkNumber(\$remote_socket, $talk{'ID'}, $arg2);
+
+	} elsif ($arg1 eq "text") {
+		my ($arg2) = $args =~ /^\w+ (.*)/;
+		if ($arg2 eq "") {
+			error "Error in function 'talk text' (Respond to NPC)\n" .
+				"You must specify a string.\n";
+		} else {
+			sendTalkText(\$remote_socket, $talk{'ID'}, $arg2);
+		}
+			
+	} elsif ($arg1 eq "cont" && !%talk) {
+		error	"Error in function 'talk cont' (Continue Talking to NPC)\n" .
+			"You are not talking to any NPC.\n";
+
+	} elsif ($arg1 eq "cont") {
+		sendTalkContinue(\$remote_socket, $talk{'ID'});
+
+	} elsif ($arg1 eq "no") {
+		if (!%talk) {
+			error "You are not talking to any NPC.\n";
+		} else {
+			sendTalkCancel(\$remote_socket, $talk{'ID'});
+		}
+
+	} else {
+		error	"Syntax Error in function 'talk' (Talk to NPC)\n" .
+			"Usage: talk <NPC # | cont | resp | num> [<response #>|<number #>]\n";
+	}
+}
+
 sub cmdTalkNPC {
 	my (undef, $args) = @_;
 
@@ -2667,6 +2751,11 @@ sub cmdWeight {
 	} else {
 		message "You are 90% overweight.\n";
 	}
+}
+
+sub cmdWhere {
+	my $pos = calcPosition($char);
+	message("Location $maps_lut{$field{name}.'.rsw'} ($field{name}) : $pos->{x}, $pos->{y}\n", "info");
 }
 
 sub cmdWho {
