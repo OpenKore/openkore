@@ -6727,6 +6727,7 @@ sub parseMsg {
 		my ($index, $amount) = unpack("x2 S1 S1", $msg);
 		my $invIndex = findIndex(\@{$char->{inventory}}, "index", $index);
 		inventoryItemRemoved($invIndex, $amount);
+		Plugins::callHook('packet_item_removed', {index => $invIndex});
 
 	} elsif ($switch eq "00B0") {
 		$conState = 5 if ($conState != 4 && $xkore);
