@@ -121,6 +121,7 @@ sub initHandlers {
 	stand		=> \&cmdStand,
 	stat_add	=> \&cmdStatAdd,
 	switchconf	=> \&cmdSwitchConf,
+	take		=> \&cmdTake,
 	talk		=> \&cmdTalk,
 	talknpc		=> \&cmdTalkNPC,
 	tank		=> \&cmdTank,
@@ -208,6 +209,7 @@ sub initDescriptions {
 	stand		=> 'Stand up.',
 	stat_add	=> 'Add status point.',
 	switchconf	=> 'Switch configuration file.',
+	take		=> 'Take an item from the ground.',
 	talk		=> 'Manually talk to an NPC.',
 	talknpc		=> 'Send a sequence of responses to an NPC.',
 	tank		=> 'Tank for a player.',
@@ -2416,6 +2418,19 @@ sub cmdSwitchConf {
 	} else {
 		switchConfigFile($filename);
 		message "Switched config file to \"$filename\".\n", "system";
+	}
+}
+
+sub cmdTake {
+	my (undef, $arg1) = @_;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'take' (Take Item)\n" .
+			"Usage: take <item #>\n";
+	} elsif ($itemsID[$arg1] eq "") {
+		error	"Error in function 'take' (Take Item)\n" .
+			"Item $arg1 does not exist.\n";
+	} else {
+		main::take($itemsID[$arg1]);
 	}
 }
 
