@@ -172,14 +172,18 @@ sub checkEquip {
 # checks for a spell casted on us #########################
 # uses: distance, judgeSkillArea (Utils?)
 sub checkCast {
-  my ($cast, $args) = @_;
-  my $pos = calcPosition($char);
-  if (($args->{targetID} eq $::accountID ||
-      $pos->{x} == $args->{x} && $pos->{y} == $args->{y} ||
-      distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
-      (lc($cast) eq lc($::skillsID_lut{$args->{skillID}}))) {return 1};
-  return 0;
-};
+	my ($cast, $args) = @_;
+	my $pos = calcPosition($char);
+
+	if ($args->{sourceID} ne $accountID &&
+	($args->{targetID} eq $accountID ||
+	$pos->{x} == $args->{x} && $pos->{y} == $args->{y} ||
+	distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
+	lc($cast) eq lc($skillsID_lut{$args->{skillID}})) {
+		return 1;
+	}
+	return 0;
+}
 
 # checks for public, private, party or guild message ######
 # requires function.pl 1.998
