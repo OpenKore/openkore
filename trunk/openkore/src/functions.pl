@@ -248,7 +248,6 @@ sub checkConnection {
 	  && ($config{'server'} ne "" || $masterServer->{charServer_ip})
 	  && !$conState_tries) {
 		my $master = $masterServer;
-
 		message("Connecting to Game Login Server...\n", "connection");
 		$conState_tries++;
 
@@ -690,85 +689,6 @@ sub parseCommand {
 			sendBuyVender(\$remote_socket, $venderID, $arg2, $arg3);
 		}
 
-	} elsif ($switch eq "deal") {
-		@arg = split / /, $input;
-		shift @arg;
-		if (%currentDeal && $arg[0] =~ /\d+/) {
-			error	"Error in function 'deal' (Deal a Player)\n" .
-				"You are already in a deal\n";
-		} elsif (%incomingDeal && $arg[0] =~ /\d+/) {
-			error	"Error in function 'deal' (Deal a Player)\n" .
-				"You must first cancel the incoming deal\n";
-		} elsif ($arg[0] =~ /\d+/ && !$playersID[$arg[0]]) {
-			error	"Error in function 'deal' (Deal a Player)\n" .
-				"Player $arg[0] does not exist\n";
-		} elsif ($arg[0] =~ /\d+/) {
-			message "Attempting to deal ".getActorName($playersID[$arg[0]])."\n";
-			$outgoingDeal{'ID'} = $playersID[$arg[0]];
-			sendDeal(\$remote_socket, $playersID[$arg[0]]);
-
-		} elsif ($arg[0] eq "no" && !%incomingDeal && !%outgoingDeal && !%currentDeal) {
-			error	"Error in function 'deal' (Deal a Player)\n" .
-				"There is no incoming/current deal to cancel\n";
-		} elsif ($arg[0] eq "no" && (%incomingDeal || %outgoingDeal)) {
-			sendDealCancel(\$remote_socket);
-		} elsif ($arg[0] eq "no" && %currentDeal) {
-			sendCurrentDealCancel(\$remote_socket);
-
-
-		} elsif ($arg[0] eq "" && !%incomingDeal && !%currentDeal) {
-			error	"Error in function 'deal' (Deal a Player)\n" .
-				"There is no deal to accept\n";
-		} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && !$currentDeal{'other_finalize'}) {
-			error	"Error in function 'deal' (Deal a Player)\n" .
-				"Cannot make the trade - $currentDeal{'name'} has not finalized\n";
-		} elsif ($arg[0] eq "" && $currentDeal{'final'}) {
-			error	"Error in function 'deal' (Deal a Player)\n" .
-				"You already accepted the final deal\n";
-		} elsif ($arg[0] eq "" && %incomingDeal) {
-			sendDealAccept(\$remote_socket);
-		} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && $currentDeal{'other_finalize'}) {
-			sendDealTrade(\$remote_socket);
-			$currentDeal{'final'} = 1;
-			message("You accepted the final Deal\n", "deal");
-		} elsif ($arg[0] eq "" && %currentDeal) {
-			sendDealAddItem(\$remote_socket, 0, $currentDeal{'you_zenny'});
-			sendDealFinalize(\$remote_socket);
-			
-
-		} elsif ($arg[0] eq "add" && !%currentDeal) {
-			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
-				"No deal in progress\n";
-		} elsif ($arg[0] eq "add" && $currentDeal{'you_finalize'}) {
-			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
-				"Can't add any Items - You already finalized the deal\n";
-		} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && !%{$chars[$config{'char'}]{'inventory'}[$arg[1]]}) {
-			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
-				"Inventory Item $arg[1] does not exist.\n";
-		} elsif ($arg[0] eq "add" && $arg[2] && $arg[2] !~ /\d+/) {
-			error	"Error in function 'deal_add' (Add Item to Deal)\n" .
-				"Amount must either be a number, or not specified.\n";
-		} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/) {
-			if ($currentDeal{you_items} < 10) {
-				if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'}) {
-					$arg[2] = $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'};
-				}
-				$currentDeal{'lastItemAmount'} = $arg[2];
-				sendDealAddItem(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg[1]]{'index'}, $arg[2]);
-			} else {
-				error("You can't add any more items to the deal\n", "deal");
-			}
-		} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
-			if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'zenny'}) {
-				$arg[2] = $chars[$config{'char'}]{'zenny'};
-			}
-			$currentDeal{'you_zenny'} = $arg[2];
-			message("You put forward $arg[2] z to Deal\n", "deal");
-
-		} else {
-			error	"Syntax Error in function 'deal' (Deal a player)\n" .
-				"Usage: deal [<Player # | no | add>] [<item #>] [<amount>]\n";
-		}
 
 	} elsif ($switch eq "dl") {
 		if (!%currentDeal) {
@@ -909,29 +829,6 @@ sub parseCommand {
 				"Usage: exp [reset]\n";
 		}
 		
-	} elsif ($switch eq "identify") {
-		($arg1) = $input =~ /^[\s\S]*? (\w+)/;
-		if ($arg1 eq "") {
-			message("---------Identify List--------\n", "list");
-			for (my $i = 0; $i < @identifyID; $i++) {
-				next if ($identifyID[$i] eq "");
-				message(swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$i, $chars[$config{'char'}]{'inventory'}[$identifyID[$i]]{'name'}]),
-					"list");
-			}
-			message("------------------------------\n", "list");
-		} elsif ($arg1 =~ /\d+/ && $identifyID[$arg1] eq "") {
-			error	"Error in function 'identify' (Identify Item)\n" .
-				"Identify Item $arg1 does not exist\n";
-
-		} elsif ($arg1 =~ /\d+/) {
-			sendIdentify(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$identifyID[$arg1]]{'index'});
-		} else {
-			error	"Syntax Error in function 'identify' (Identify Item)\n" .
-				"Usage: identify [<identify #>]\n";
-		}
-
 	} elsif ($switch eq "judge") {
 		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
 		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)/;
@@ -944,28 +841,6 @@ sub parseCommand {
 		} else {
 			$arg2 = ($arg2 >= 1);
 			sendAlignment(\$remote_socket, $playersID[$arg1], $arg2);
-		}
-
-	} elsif ($switch eq "look") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		($arg2) = $input =~ /^[\s\S]*? \d+ (\d+)$/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'look' (Look a Direction)\n" .
-				"Usage: look <body dir> [<head dir>]\n";
-		} else {
-			look($arg1, $arg2);
-		}
-
-	} elsif ($switch eq "lookp") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'lookp' (Look at Player)\n" .
-				"Usage: lookp <player #>\n";
-		} elsif (!$playersID[$arg1]) {
-			error	"Error in function 'lookp' (Look at Player)\n" .
-				"'$arg1' is not a valid player number.\n";
-		} else {
-			lookAtPosition($players{$playersID[$arg1]}{pos_to});
 		}
 
 	} elsif ($switch eq "move") {
@@ -2215,13 +2090,20 @@ sub AI {
 						} elsif ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $chars[$config{'char'}]{'inventory'}[$i]{'index'}) {
 							$timeout{'ai_storageAuto_giveup'}{'time'} = time;
 						}
-						undef $ai_seq_args[0]{'done'};
+						undef $args->{done};
 						$ai_seq_args[0]{'lastIndex'} = $chars[$config{'char'}]{'inventory'}[$i]{'index'};
 						sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $keep);
 						$timeout{'ai_storageAuto'}{'time'} = time;
 						$ai_seq_args[0]{'nextItem'} = $i + 1;
 						last AUTOSTORAGE;
 					}
+				}
+
+				if ($args->{done}) {
+					# plugins can hook here and decide to keep storage open longer
+					my %hookArgs;
+					Plugins::callHook("AI_storage_done", \%hookArgs);
+					undef $args->{done} if ($hookArgs{return});
 				}
 			}
 
@@ -2410,6 +2292,14 @@ sub AI {
 				}
 			}
 			sendSellBulk(\$remote_socket, \@sellItems) if (@sellItems);
+
+			if (AI::args->{done}) {
+				# plugins can hook here and decide to keep sell going longer
+				my %hookArgs;
+				Plugins::callHook("AI_sell_done", \%hookArgs);
+				undef AI::args->{done} if ($hookArgs{return});
+			}
+
 		}
 	}
 
@@ -10005,15 +9895,6 @@ sub gather {
 	debug "Targeting for Gather: $items{$ID}{name} ($items{$ID}{binID})\n";
 }
 
-
-sub look {
-	my %args = (
-		look_body => shift,
-		look_head => shift
-	);
-	AI::queue("look", \%args);
-}
-
 sub move {
 	my $x = shift;
 	my $y = shift;
@@ -10674,23 +10555,6 @@ sub compilePortals {
 
 sub compilePortals_check {
 	return compilePortals(1);
-}
-
-##
-# lookAtPosition(pos, [headdir])
-# pos: a reference to a coordinate hash.
-# headdir: 0 = face directly, 1 = look right, 2 = look left
-#
-# Turn face and body direction to position %pos.
-sub lookAtPosition {
-	my $pos2 = shift;
-	my $headdir = shift;
-	my %vec;
-	my $direction;
-
-	getVector(\%vec, $pos2, $char->{pos_to});
-	$direction = int(sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45)) % 8;
-	look($direction, $headdir);
 }
 
 sub portalExists {
