@@ -4,6 +4,9 @@ package Macro::Queue;
 
 use strict;
 use warnings;
+# this should eleminate annoying
+# "Use of uninitialized value in sub..." with activestate perl
+if ('$^O' ne 'linux') {no warnings 'uninitialized'};
 
 require Exporter;
 our @ISA = qw(Exporter);
@@ -113,7 +116,7 @@ sub processQueue {
     if (defined $command) {
       if ($command ne "") {
         $cvs->debug("processing $command)", 1);
-        Commands::run($command) || main::parseCommand($command);
+        Commands::run($command) || ::parseCommand($command);
         $queue->setTimeout($timeout{macro_delay}{timeout});
       };
     } else {
