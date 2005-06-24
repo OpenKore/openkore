@@ -1193,18 +1193,6 @@ sub parseCommand {
 
 		}
 
-	} elsif ($switch eq "take") {
-		($arg1) = $input =~ /^[\s\S]*? (\d+)$/;
-		if ($arg1 eq "") {
-			error	"Syntax Error in function 'take' (Take Item)\n" .
-				"Usage: take <item #>\n";
-		} elsif ($itemsID[$arg1] eq "") {
-			error	"Error in function 'take' (Take Item)\n" .
-				"Item $arg1 does not exist.\n";
-		} else {
-			take($itemsID[$arg1]);
-		}
-
 	} elsif ($switch eq "east") {
 		manualMove(5, 0);
 	} elsif ($switch eq "west") {
