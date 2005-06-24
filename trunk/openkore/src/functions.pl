@@ -8387,14 +8387,17 @@ sub parseMsg {
 			castTime => $wait
 		};
 
+		my $targetString;
 		if ($x != 0 || $y != 0) {
 			# If $dist is positive we are in range of the attack?
 			$coords{x} = $x;
 			$coords{y} = $y;
 			$dist = judgeSkillArea($skillID) - distance($char->{pos_to}, \%coords);
 
-			$target = "location ($x, $y)";
+			$targetString = "location ($x, $y)";
 			undef $targetID;
+		} else {
+			$targetString = $target->nameString($source);
 		}
 
 		# Perform trigger actions
@@ -8405,7 +8408,7 @@ sub parseMsg {
 		}
 
 		countCastOn($sourceID, $targetID, $skillID, $x, $y);
-		message "$source $verb ".skillName($skillID)." on ".$target->nameString($source)." (time ${wait}ms)\n", "skill", 1;
+		message "$source $verb ".skillName($skillID)." on $targetString (time ${wait}ms)\n", "skill", 1;
 
 		Plugins::callHook('is_casting', {
 			sourceID => $sourceID,
