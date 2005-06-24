@@ -9214,6 +9214,14 @@ sub parseMsg {
 			}
 		}
 
+	} elsif ($switch eq "00CA") {
+		my $fail = unpack("x2 C1", $msg);
+
+		if ($fail == 0) {
+			message "Buy completed.\n", "success";
+		} else {
+			error "Buy failed (failure code $fail).\n";
+		}
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
