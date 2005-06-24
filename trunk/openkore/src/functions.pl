@@ -8405,7 +8405,7 @@ sub parseMsg {
 		}
 
 		countCastOn($sourceID, $targetID, $skillID, $x, $y);
-		message "$source $verb ".skillName($skillID)." on $target (time ${wait}ms)\n", "skill", 1;
+		message "$source $verb ".skillName($skillID)." on ".$target->nameString($source)." (time ${wait}ms)\n", "skill", 1;
 
 		Plugins::callHook('is_casting', {
 			sourceID => $sourceID,
