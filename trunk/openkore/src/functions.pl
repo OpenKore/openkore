@@ -308,6 +308,7 @@ sub checkConnection {
 	} elsif ($conState == 5 && !($remote_socket && $remote_socket->connected())) {
 		error "Disconnected from Map Server, ", "connection";
 		if ($config{dcOnDisconnect}) {
+			chatLog("k", "*** You disconnected, auto quit! ***\n");
 			error "exiting...\n", "connection";
 			$quit = 1;
 		} else {
@@ -1942,6 +1943,7 @@ sub AI {
 
 	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
 		message "Disconnecting on death!\n";
+		chatLog("k", "*** You died, auto disconnect! ***\n");
 		$quit = 1;
 	}
 
