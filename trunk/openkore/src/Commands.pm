@@ -16,9 +16,6 @@
 # MODULE DESCRIPTION: Commandline input processing
 #
 # This module processes commandline input.
-#
-# (At this time, some stuff is still handled by the parseCommand() function in
-# functions.pl. The plan is to eventually move everything to this module.)
 
 package Commands;
 
@@ -105,6 +102,7 @@ sub initHandlers {
 	lookp		=> \&cmdLookPlayer,
 	help		=> \&cmdHelp,
 	reload		=> \&cmdReload,
+	manualmove	=> \&cmdManualMove,
 	memo		=> \&cmdMemo,
 	ml		=> \&cmdMonsterList,
 	move		=> \&cmdMove,
@@ -213,6 +211,7 @@ sub initDescriptions {
 	look		=> 'Look in a certain direction.',
 	lookp		=> 'Look at a certain player.',
 	reload		=> 'Reload configuration files.',
+	#manualmove	=> 'Move 5 blocks in the given direction.',
 	memo		=> 'Save current position for warp portal.',
 	ml		=> 'List monsters that are on screen.',
 	move		=> 'Move your character.',
@@ -295,8 +294,11 @@ sub run {
 		$handler->($switch, $args);
 		return 1;
 	} else {
-		# TODO: print error message here once we've fully migrated this stuff
-		return 0;
+		my %params = ( switch => $switch, input => $input );
+		Plugins::callHook('Command_post', \%params);
+		if (!$params{return}) {
+			error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
+		}
 	}
 }
 
@@ -1873,6 +1875,27 @@ sub cmdLookPlayer {
 			"'$arg1' is not a valid player number.\n";
 	} else {
 		lookAtPosition($players{$playersID[$arg1]}{pos_to});
+	}
+}
+
+sub cmdManualMove {
+	my (undef, $switch) = @_;
+	if ($switch eq "east") {
+		manualMove(5, 0);
+	} elsif ($switch eq "west") {
+		manualMove(-5, 0);
+	} elsif ($switch eq "north") {
+		manualMove(0, 5);
+	} elsif ($switch eq "south") {
+		manualMove(0, -5);
+	} elsif ($switch eq "northeast") {
+		manualMove(5, 5);
+	} elsif ($switch eq "southwest") {
+		manualMove(-5, -5);
+	} elsif ($switch eq "northwest") {
+		manualMove(-5, 5);
+	} elsif ($switch eq "southeast") {
+		manualMove(5, -5);
 	}
 }
 

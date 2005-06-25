@@ -587,7 +587,7 @@ sub parseInput {
 		$waitingForInput = 0;
 
 	} else {
-		Commands::run($input) || parseCommand($input);
+		Commands::run($input);
 	}
 
 	if ($printType) {
@@ -600,46 +600,6 @@ sub parseInput {
 	}
 	$XKore_dontRedirect = 0 if ($xkore);
 }
-
-sub parseCommand {
-	my $input = shift;
-
-	my ($switch, $args) = split(' ', $input, 2);
-	my ($arg1, $arg2, $arg3, $arg4);
-
-	# Resolve command aliases
-	if (my $alias = $config{"alias_$switch"}) {
-		$input = $alias;
-		$input .= " $args" if defined $args;
-		($switch, $args) = split(' ', $input, 2);
-	}
-
-	if ($switch eq "east") {
-		manualMove(5, 0);
-	} elsif ($switch eq "west") {
-		manualMove(-5, 0);
-	} elsif ($switch eq "north") {
-		manualMove(0, 5);
-	} elsif ($switch eq "south") {
-		manualMove(0, -5);
-	} elsif ($switch eq "northeast") {
-		manualMove(5, 5);
-	} elsif ($switch eq "southwest") {
-		manualMove(-5, -5);
-	} elsif ($switch eq "northwest") {
-		manualMove(-5, 5);
-	} elsif ($switch eq "southeast") {
-		manualMove(5, -5);
-
-	} else {
-		my %params = ( switch => $switch, input => $input );
-		Plugins::callHook('Command_post', \%params);
-		if (!$params{return}) {
-			error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
-		}
-	}
-}
-
 
 #######################################
 #######################################
