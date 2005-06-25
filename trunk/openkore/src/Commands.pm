@@ -58,6 +58,7 @@ sub initHandlers {
 	a		=> \&cmdAttack,
 	ai		=> \&cmdAI,
 	aiv		=> \&cmdAIv,
+	al		=> \&cmdShopInfoSelf,
 	arrowcraft	=> \&cmdArrowCraft,
 	as		=> \&cmdAttackStop,
 	autobuy		=> \&cmdAutoBuy,
@@ -72,6 +73,8 @@ sub initHandlers {
 	cart		=> \&cmdCart,
 	chat		=> \&cmdChatRoom,
 	chist		=> \&cmdChist,
+	cil		=> \&cmdItemLogClear,
+	cl		=> \&cmdChatLogClear,
 	closeshop	=> \&cmdCloseShop,
 	conf		=> \&cmdConf,
 	deal		=> \&cmdDeal,
@@ -79,6 +82,8 @@ sub initHandlers {
 	dl		=> \&cmdDealList,
 	doridori	=> \&cmdDoriDori,
 	drop		=> \&cmdDrop,
+	dump		=> \&cmdDump,
+	dumpnow		=> \&cmdDumpNow,
 	e		=> \&cmdEmotion,
 	eq		=> \&cmdEquip,
 	eval		=> \&cmdEval,
@@ -141,8 +146,10 @@ sub initHandlers {
 	testshop	=> \&cmdTestShop,
 	timeout		=> \&cmdTimeout,
 	uneq		=> \&cmdUnequip,
+	vender		=> \&cmdVender,
 	verbose		=> \&cmdVerbose,
 	version		=> \&cmdVersion,
+	vl		=> \&cmdVenderList,
 	warp		=> \&cmdWarp,
 	weight		=> \&cmdWeight,
 	where		=> \&cmdWhere,
@@ -161,6 +168,7 @@ sub initDescriptions {
 	a		=> 'Attack a monster.',
 	ai		=> 'Enable/disable AI.',
 	aiv		=> 'Display current AI sequences.',
+	al		=> 'Display information about your vending store.',
 	arrowcraft	=> 'Create Arrows.',
 	as		=> 'Stop attacking a monster.',
 	autobuy		=> 'Initiate auto-buy AI sequence.',
@@ -174,6 +182,8 @@ sub initDescriptions {
 	cart		=> 'Cart management',
 	chat		=> 'Chat room management.',
 	chist		=> 'Display last few entries from the chat log.',
+	cil		=> 'Clear the item log.',
+	cl		=> 'Clear the chat log.',
 	closeshop	=> 'Close your vending shop.',
 	conf		=> 'Change a configuration key.',
 	deal		=> 'Trade items with another player.',
@@ -181,6 +191,8 @@ sub initDescriptions {
 	dl		=> 'List items in the deal.',
 	doridori	=> 'Does a doridori head turn.',
 	drop		=> 'Drop an item from the inventory.',
+	#dump		=> 'Dump the current packet recieve buffer.',
+	#dumpnow	=> 'Dump the current packet recieve buffer without quitting.',
 	e		=> 'Show emotion.',
 	eq		=> 'Equip an item.',
 	#eval		=> 'Evaluable a Perl expression (developers only).',
@@ -240,8 +252,10 @@ sub initDescriptions {
 	tele		=> 'Teleport to a random location.',
 	testshop	=> 'Show what your vending shop would well.',
 	timeout		=> 'Set a timeout.',
+	vender		=> 'Buy items from vending shops.',
 	verbose		=> 'Toggle verbose on/off.',
 	version		=> 'Display the version of openkore.',
+	vl		=> 'List nearby vending shops.',
 	warp		=> 'Open warp portal.',
 	weight		=> 'Gives a report about your inventory weight.',
 	where		=> 'Shows your current location.',
@@ -821,6 +835,11 @@ sub cmdChat {
 	}
 }
 
+sub cmdChatLogClear {
+	chatLog_clear();
+	message("Chat log cleared.\n", "success");
+}
+
 sub cmdChatRoom {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
@@ -1249,6 +1268,15 @@ sub cmdDrop {
 			error "No items were dropped.\n";
 		}
 	}
+}
+
+sub cmdDump {
+	dumpData($msg);
+	quit();
+}
+
+sub cmdDumpNow {
+	dumpData($msg);
 }
 
 sub cmdEmotion {
@@ -1707,6 +1735,11 @@ sub cmdItemList {
 			"list");
 	}
 	message("-------------------------------\n", "list");
+}
+
+sub cmdItemLogClear {
+	itemLog_clear();
+	message("Item log cleared.\n", "success");
 }
 
 sub cmdInventory {
@@ -2477,6 +2510,33 @@ sub cmdSit {
 	$ai_v{sitAuto_forceStop} = 0;
 }
 
+sub cmdShopInfoSelf {
+	if (!$shopstarted) {
+		error("You do not have a shop open.\n");
+		return;
+	}
+	# FIXME: Read the packet the server sends us to determine
+	# the shop title instead of using $shop{title}.
+	message(center(" $shop{title} ", 79, '-')."\n", "list");
+	message("#  Name                                     Type         Qty     Price   Sold\n", "list");
+
+	my $priceAfterSale=0;
+	my $i = 1;
+	for my $item (@articles) {
+		next unless $item;
+		message(swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>",
+			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, $item->{price}, $item->{sold}]),
+			"list");
+		$priceAfterSale += ($item->{quantity} * $item->{price});
+	}
+	message(('-'x79)."\n", "list");
+	message("You have earned: " . formatNumber($shopEarned) . "z.\n", "list");
+	message("Current zeny:    " . formatNumber($char->{zenny}) . "z.\n", "list");
+	message("Maximum earned:  " . formatNumber($priceAfterSale) . "z.\n", "list");
+	message("Maximum zeny:   " . formatNumber($priceAfterSale + $char->{zenny}) . "z.\n", "list");
+}
+
 sub cmdSpells {
 	message "-----------Area Effects List-----------\n", "list";
 	message "  # Type                 Source                   X   Y\n", "list";
@@ -3231,6 +3291,50 @@ sub cmdUseItemOnSelf {
 	} else {
 		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $accountID);
 	}
+}
+
+sub cmdVender {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^([\d\w]+)/;
+	my ($arg2) = $args =~ /^[\d\w]+ (\d+)/;
+	my ($arg3) = $args =~ /^[\d\w]+ \d+ (\d+)/;
+	if ($arg1 eq "") {
+		error	"Error in function 'vender' (Vender Shop)\n" .
+			"Usage: vender <vender # | end> [<item #> <amount>]\n";
+	} elsif ($arg1 eq "end") {
+		undef @venderItemList;
+		undef $venderID;
+	} elsif ($venderListsID[$arg1] eq "") {
+		error	"Error in function 'vender' (Vender Shop)\n" .
+			"Vender $arg1 does not exist.\n";
+	} elsif ($arg2 eq "") {
+		sendEnteringVender(\$remote_socket, $venderListsID[$arg1]);
+	} elsif ($venderListsID[$arg1] ne $venderID) {
+		error	"Error in function 'vender' (Vender Shop)\n" .
+			"Vender ID is wrong.\n";
+	} else {
+		if ($arg3 <= 0) {
+			$arg3 = 1;
+		}
+		sendBuyVender(\$remote_socket, $venderID, $arg2, $arg3);
+	}
+}
+
+sub cmdVenderList {
+	message("-----------Vender List-----------\n" .
+		"#   Title                                Coords     Owner\n",
+		"list");
+	for (my $i = 0; $i < @venderListsID; $i++) {
+		next if ($venderListsID[$i] eq "");
+		my $player = Actor::get($venderListsID[$i]);
+		# autovivifies $obj->{pos_to} but it doesnt matter
+		message(sprintf(
+			"%3d %-36s (%3d, %3d) %-20s\n",
+			$i, $venderLists{$venderListsID[$i]}{'title'}, 
+			$player->{pos_to}{x} || '?', $player->{pos_to}{y} || '?', $player->name),
+			"list");
+	}
+	message("----------------------------------\n", "list");
 }
 
 sub cmdVerbose {
