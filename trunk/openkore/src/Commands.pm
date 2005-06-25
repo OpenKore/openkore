@@ -102,7 +102,6 @@ sub initHandlers {
 	lookp		=> \&cmdLookPlayer,
 	help		=> \&cmdHelp,
 	reload		=> \&cmdReload,
-	manualmove	=> \&cmdManualMove,
 	memo		=> \&cmdMemo,
 	ml		=> \&cmdMonsterList,
 	move		=> \&cmdMove,
@@ -152,6 +151,15 @@ sub initHandlers {
 	weight		=> \&cmdWeight,
 	where		=> \&cmdWhere,
 	who		=> \&cmdWho,
+
+	north =>	\&cmdManualMove,
+	south =>	\&cmdManualMove,
+	east =>	\&cmdManualMove,
+	west =>	\&cmdManualMove,
+	northeast =>	\&cmdManualMove,
+	northwest =>	\&cmdManualMove,
+	southeast =>	\&cmdManualMove,
+	southwest =>	\&cmdManualMove,
 	);
 }
 
@@ -211,7 +219,6 @@ sub initDescriptions {
 	look		=> 'Look in a certain direction.',
 	lookp		=> 'Look at a certain player.',
 	reload		=> 'Reload configuration files.',
-	#manualmove	=> 'Move 5 blocks in the given direction.',
 	memo		=> 'Save current position for warp portal.',
 	ml		=> 'List monsters that are on screen.',
 	move		=> 'Move your character.',
@@ -1883,7 +1890,7 @@ sub cmdLookPlayer {
 }
 
 sub cmdManualMove {
-	my (undef, $switch) = @_;
+	my ($switch) = @_;
 	if ($switch eq "east") {
 		manualMove(5, 0);
 	} elsif ($switch eq "west") {
@@ -1938,7 +1945,7 @@ sub cmdMove {
 
 	my $map;
 	if ($arg1 eq "") {
-		($map) = $args =~ /^[\s\S]*? (.*?)$/;
+		$map = $args;
 	} else {
 		$map = $arg3;
 	}
