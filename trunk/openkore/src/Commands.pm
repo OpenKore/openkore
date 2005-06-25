@@ -859,14 +859,14 @@ sub cmdChatRoom {
 		if ($currentChatRoom eq "") {
 			error	"Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
 				"You are not in a Chat Room.\n";
-		} elsif ($arg1 eq "") {
+		} elsif ($arg2 eq "") {
 			error	"Syntax Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
 				"Usage: chat bestow <user #>\n";
-		} elsif ($currentChatRoomUsers[$arg1] eq "") {
+		} elsif ($currentChatRoomUsers[$arg2] eq "") {
 			error	"Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
-				"Chat Room User $arg1 doesn't exist; type 'cri' to see the list of users\n";
+				"Chat Room User $arg2 doesn't exist; type 'chat info' to see the list of users\n";
 		} else {
-			sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg1]);
+			sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg2]);
 		}
 
 	} elsif ($arg1 eq "modify") {
