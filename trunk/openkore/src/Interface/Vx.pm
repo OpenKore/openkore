@@ -239,7 +239,7 @@ sub initTk {
 				[qw/command pickupitems  -accelerator Ctrl+Shift+V/, -font=>[-family=>$menuFont,-size=>8], -command=>sub{ Commands::run("reload pickupitems") }],
 				[qw/command chatresp  -accelerator Ctrl+Shift+T/, -font=>[-family=>$menuFont,-size=>8], -command=>sub{ Commands::run("reload chat_resp") }],
 				'',
-				[qw/command All  -accelerator Ctrl+Shift+A/, -font=>[-family=>$menuFont,-size=>8], -command=>sub{ main::parseInput("reload all") }],
+				[qw/command All  -accelerator Ctrl+Shift+A/, -font=>[-family=>$menuFont,-size=>8], -command=>sub{ Commands::run("reload all") }],
 			]
 		],
 		['~Help',
@@ -424,7 +424,7 @@ sub initTk {
 	$self->{mw}->bind('all', '<Alt-a>' => 		sub{ Commands::run("st") });
 	$self->{mw}->bind('all', '<Alt-e>' => 		sub{ Commands::run("i u") });
 	$self->{mw}->bind('all', '<Alt-w>' => 		sub{ Commands::run("i nu") });
-	$self->{mw}->bind('all', '<Alt-z>' => 		sub{ main::parseInput("exp") });
+	$self->{mw}->bind('all', '<Alt-z>' => 		sub{ Commands::run("exp") });
 	$self->{mw}->bind('all', '<Alt-c>' => 		sub{ Commands::run("i neq") });
 	$self->{mw}->bind('all', '<Alt-f>' => 		sub{ Commands::run("guild info") });
 	$self->{mw}->bind('all', '<Alt-g>' => 		sub{ Commands::run("guild member") });
