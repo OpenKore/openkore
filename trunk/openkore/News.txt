@@ -204,6 +204,10 @@ New config options:
   Only use this skill if there are no players on the screen.
 - showTimeDomains list
   Show a timestamp in front of messages from certain domains.
+- friendlyAID list
+  A list of AIDs of friendly players. Currently, players in that list
+  who appear will be in domain parseMsg_presence instead of
+  parseMsg_presence/player (useful for beepDomains).
 
 New control files:
 - control/sys.txt
