@@ -43,14 +43,13 @@ use Tk::BrowseEntry;
 
 # parse panelBottom_domains into a hash
 my %panelBottom_domains;
-if ($sys{panelBottom_domains}) {
-	my @array = split / *, */, $sys{panelBottom_domains};
-	foreach (@array) {
-		s/^\s+//;
-		s/\s+$//;
-		s/\s+/ /g;
-		$panelBottom_domains{$_} = 1;
-	}
+$sys{panelBottom_domains} ||= "publicchat, selfchat, pm, guildchat, partychat, pm/sent, list, info";
+my @array = split / *, */, $sys{panelBottom_domains};
+foreach (@array) {
+	s/^\s+//;
+	s/\s+$//;
+	s/\s+/ /g;
+	$panelBottom_domains{$_} = 1;
 }
 
 # main interface functions
