@@ -114,6 +114,8 @@ New features:
 - showTime config option to show high resolution timestamps with
   all messages. Useful for developers only.
 - Skills cast by yourself are now in the 'selfSkill' domain.
+- "exp" command now tracks item changes (see how much loot you're
+  getting, see how many potions you're consuming).
 
 New commands:
 - storage log

@@ -1392,6 +1392,13 @@ sub cmdExp {
 			"----------------------------------\n",
 			"list");
 
+		message("-[Item Change Count]-------------\n", "list");
+		message(sprintf("%-40s %s\n", 'Name', 'Count'), "list");
+		for my $item (sort keys %itemChange) {
+			message(sprintf("%-40s %5d\n", $item, $itemChange{$item}), "list");
+		}
+		message("---------------------------------\n", "list");
+
 	} elsif ($arg1 eq "reset") {
 		($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
 		$startTime_EXP = time;
