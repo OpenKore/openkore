@@ -660,7 +660,7 @@ sub OpenMap {
 			$x-$dis,$self->{map}{'map'}{'y'} - $y-$dis,
 			$x+$dis,$self->{map}{'map'}{'y'} - $y+$dis,
 			,-outline=>'#ff0000');
-		$self->{map}->bind('<Double-1>', [\&dblchk, $self, Ev('x') , Ev('y')]);
+		$self->{map}->bind('<1>', [\&dblchk, $self, Ev('x') , Ev('y')]);
 		$self->{map}->bind('<Motion>', [\&pointchk, $self, Ev('x') , Ev('y')]); 
 	}
 }
