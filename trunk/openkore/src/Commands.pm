@@ -1395,6 +1395,7 @@ sub cmdExp {
 		message("-[Item Change Count]-------------\n", "list");
 		message(sprintf("%-40s %s\n", 'Name', 'Count'), "list");
 		for my $item (sort keys %itemChange) {
+			next unless $itemChange{$item};
 			message(sprintf("%-40s %5d\n", $item, $itemChange{$item}), "list");
 		}
 		message("---------------------------------\n", "list");
@@ -1408,6 +1409,7 @@ sub cmdExp {
 		$totaldmg = 0;
 		$elasped = 0;
 		$totalelasped = 0;
+		undef %itemChange;
 		message "Exp counter reset.\n", "success";
 	} else {
 		error "Error in function 'exp' (Exp Report)\n" .
