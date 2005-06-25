@@ -614,89 +614,7 @@ sub parseCommand {
 		($switch, $args) = split(' ', $input, 2);
 	}
 
-	if ($switch eq "al") {
-		if (!$shopstarted) {
-			error("You do not have a shop open.\n");
-			return;
-		}
-		# FIXME: Read the packet the server sends us to determine
-		# the shop title instead of using $shop{title}.
-		message(center(" $shop{title} ", 79, '-')."\n", "list");
-		message("#  Name                                     Type         Qty     Price   Sold\n", "list");
-
-		my $priceAfterSale=0;
-		my $i = 1;
-		for my $item (@articles) {
-			next unless $item;
-			message(swrite(
-				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>",
-				[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, $item->{price}, $item->{sold}]),
-				"list");
-			$priceAfterSale += ($item->{quantity} * $item->{price});
-		}
-		message(('-'x79)."\n", "list");
-		message("You have earned: " . formatNumber($shopEarned) . "z.\n", "list");
-		message("Current zeny:    " . formatNumber($chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
-		message("Maximum earned:  " . formatNumber($priceAfterSale) . "z.\n", "list");
-		message("Maximum zeny:   " . formatNumber($priceAfterSale + $chars[$config{'char'}]{'zenny'}) . "z.\n", "list");
-
-	} elsif ($switch eq "cil") { 
-		itemLog_clear();
-		message("Item log cleared.\n", "success");
-
-	} elsif ($switch eq "cl") { 
-		chatLog_clear();
-		message("Chat log cleared.\n", "success");
-
-	} elsif ($switch eq "vl") {
-		message("-----------Vender List-----------\n" .
-			"#   Title                                Coords     Owner\n",
-			"list");
-		for (my $i = 0; $i < @venderListsID; $i++) {
-			next if ($venderListsID[$i] eq "");
-			my $player = Actor::get($venderListsID[$i]);
-			# autovivifies $obj->{pos_to} but it doesnt matter
-			message(sprintf(
-				"%3d %-36s (%3d, %3d) %-20s\n",
-				$i, $venderLists{$venderListsID[$i]}{'title'}, 
-				$player->{pos_to}{x} || '?', $player->{pos_to}{y} || '?', $player->name),
-				"list");
-		}
-		message("----------------------------------\n", "list");
-
-	} elsif ($switch eq "vender") {
-		 ($arg1) = $input =~ /^.*? ([\d\w]+)/;
-		($arg2) = $input =~ /^.*? [\d\w]+ (\d+)/;
-		($arg3) = $input =~ /^.*? [\d\w]+ \d+ (\d+)/;
-		if ($arg1 eq "") {
-			error	"Error in function 'vender' (Vender Shop)\n" .
-				"Usage: vender <vender # | end> [<item #> <amount>]\n";
-		} elsif ($arg1 eq "end") {
-			undef @venderItemList;
-			undef $venderID;
-		} elsif ($venderListsID[$arg1] eq "") {
-			error	"Error in function 'vender' (Vender Shop)\n" .
-				"Vender $arg1 does not exist.\n";
-		} elsif ($arg2 eq "") {
-			sendEnteringVender(\$remote_socket, $venderListsID[$arg1]);
-		} elsif ($venderListsID[$arg1] ne $venderID) {
-			error	"Error in function 'vender' (Vender Shop)\n" .
-				"Vender ID is wrong.\n";
-		} else {
-			if ($arg3 <= 0) {
-				$arg3 = 1;
-			}
-			sendBuyVender(\$remote_socket, $venderID, $arg2, $arg3);
-		}
-
-	} elsif ($switch eq "dump") {
-		dumpData($msg);
-		quit();
-
-	} elsif ($switch eq "dumpnow") {
-		dumpData($msg);
-
-	} elsif ($switch eq "east") {
+	if ($switch eq "east") {
 		manualMove(5, 0);
 	} elsif ($switch eq "west") {
 		manualMove(-5, 0);
@@ -9671,14 +9589,6 @@ sub monsterLog {
 	close MONLOG;
 }
 
-sub chatLog_clear { 
-	if (-f $Settings::chat_file) { unlink($Settings::chat_file); } 
-}
-
-sub itemLog_clear { 
-	if (-f $Settings::item_log_file) { unlink($Settings::item_log_file); } 
-}
-
 sub convertGatField {
 	my $file = shift;
 	my $r_hash = shift;
@@ -9688,49 +9598,6 @@ sub convertGatField {
 	print FILE pack("S*", $$r_hash{'width'}, $$r_hash{'height'});
 	print FILE $$r_hash{'rawMap'};
 	close FILE;
-}
-
-sub dumpData {
-	my $msg = shift;
-	my $silent = shift;
-	my $dump;
-	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
-
-	$dump = "\n\n================================================\n" .
-		getFormattedDate(int(time)) . "\n\n" . 
-		length($msg) . " bytes\n\n";
-
-	for (my $i = 0; $i < length($msg); $i += 16) {
-		my $line;
-		my $data = substr($msg, $i, 16);
-		my $rawData = '';
-
-		for (my $j = 0; $j < length($data); $j++) {
-			my $char = substr($data, $j, 1);
-
-			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
-			    || ($char eq chr(10) || $char eq chr(13) || $char eq "\t")) {
-				$rawData .= '.';
-			} else {
-				$rawData .= substr($data, $j, 1);
-			}
-		}
-
-		$line = getHex(substr($data, 0, 8));
-		$line .= '    ' . getHex(substr($data, 8)) if (length($data) > 8);
-
-		$line .= ' ' x (50 - length($line)) if (length($line) < 54);
-		$line .= "    $rawData\n";
-		$line = sprintf("%3d>  ", $i) . $line;
-		$dump .= $line;
-	}
-
-	open DUMP, ">> DUMP.txt";
-	print DUMP $dump;
-	close DUMP;
-
-	debug "$dump\n", "parseMsg", 2;
-	message "Message Dumped into DUMP.txt!\n", undef, 1 unless ($silent);
 }
 
 ##

@@ -26,7 +26,7 @@ use Exporter;
 use base qw(Exporter);
 
 use Globals;
-use Log qw(message warning error);
+use Log qw(message warning error debug);
 use Plugins;
 use FileParsers;
 use Settings;
@@ -75,16 +75,19 @@ our @EXPORT = (
 	avoidList_talk
 	center
 	charSelectScreen
+	chatLogClear
 	checkAllowedMap
 	checkFollowMode
 	checkMonsterCleanness
 	createCharacter
 	drop
+	dumpData
 	getIDFromChat
 	getPortalDestName
 	getResponse
 	getSpellName
 	headgearName
+	itemLog_clear
 	look
 	lookAtPosition
 	manualMove
@@ -906,6 +909,10 @@ sub charSelectScreen {
 	return 2;
 }
 
+sub chatLog_clear {
+	if (-f $Settings::chat_file) { unlink($Settings::chat_file); } 
+}
+
 ##
 # checkAllowedMap($map)
 #
@@ -1063,6 +1070,49 @@ sub drop {
 	sendDrop(\$remote_socket, $char->{inventory}[$item]{index}, $amount);
 }
 
+sub dumpData {
+	my $msg = shift;
+	my $silent = shift;
+	my $dump;
+	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
+
+	$dump = "\n\n================================================\n" .
+		getFormattedDate(int(time)) . "\n\n" . 
+		length($msg) . " bytes\n\n";
+
+	for (my $i = 0; $i < length($msg); $i += 16) {
+		my $line;
+		my $data = substr($msg, $i, 16);
+		my $rawData = '';
+
+		for (my $j = 0; $j < length($data); $j++) {
+			my $char = substr($data, $j, 1);
+
+			if (($char =~ /\W/ && $char =~ /\S/ && !($char =~ /[$puncations]/))
+			    || ($char eq chr(10) || $char eq chr(13) || $char eq "\t")) {
+				$rawData .= '.';
+			} else {
+				$rawData .= substr($data, $j, 1);
+			}
+		}
+
+		$line = getHex(substr($data, 0, 8));
+		$line .= '    ' . getHex(substr($data, 8)) if (length($data) > 8);
+
+		$line .= ' ' x (50 - length($line)) if (length($line) < 54);
+		$line .= "    $rawData\n";
+		$line = sprintf("%3d>  ", $i) . $line;
+		$dump .= $line;
+	}
+
+	open DUMP, ">> DUMP.txt";
+	print DUMP $dump;
+	close DUMP;
+
+	debug "$dump\n", "parseMsg", 2;
+	message "Message Dumped into DUMP.txt!\n", undef, 1 unless ($silent);
+}
+
 sub getIDFromChat {
 	my $r_hash = shift;
 	my $msg_user = shift;
@@ -1205,6 +1255,10 @@ sub headgearName {
 	}
 
 	return main::itemName({nameID => $itemID});
+}
+
+sub itemLog_clear {
+	if (-f $Settings::item_log_file) { unlink($Settings::item_log_file); } 
 }
 
 ##
