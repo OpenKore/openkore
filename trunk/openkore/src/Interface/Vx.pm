@@ -209,7 +209,7 @@ sub initTk {
 				[qw/command Storage -accelerator Alt+X/, -font=>[-family=>$menuFont,-size=>8], -command => sub{ Commands::run("storage") }],
 				[qw/command Skill -accelerator Alt+S/, -font=>[-family=>$menuFont,-size=>8], -command => sub{ Commands::run("skills") }],
 				[qw/command Stat -accelerator Alt+A/, -font=>[-family=>$menuFont,-size=>8], -command => sub{ Commands::run("st") }],
-				[qw/command Exp -accelerator Alt+Z/, -font=>[-family=>$menuFont,-size=>8], -command => sub{ main::parseCommand("exp") }],
+				[qw/command Exp -accelerator Alt+Z/, -font=>[-family=>$menuFont,-size=>8], -command => sub{ Commands::run("exp") }],
 				[qw/command Usable -accelerator Alt+E/, -font=>[-family=>$menuFont,-size=>8], -command => sub{ Commands::run("i u") }],
 				[qw/command Equipped -accelerator Alt+Q/, -font=>[-family=>$menuFont,-size=>8], -command => sub{ Commands::run("i eq") }],
 				[qw/command Unequipped -accelerator Alt+C/, -font=>[-family=>$menuFont,-size=>8], -command => sub{ Commands::run("i neq") }],

@@ -81,6 +81,7 @@ sub initHandlers {
 	e		=> \&cmdEmotion,
 	eq		=> \&cmdEquip,
 	eval		=> \&cmdEval,
+	exp		=> \&cmdExp,
 	follow		=> \&cmdFollow,
 	friend		=> \&cmdFriend,
 	g		=> \&cmdGuildChat,
@@ -103,6 +104,7 @@ sub initHandlers {
 	nl		=> \&cmdNPCList,
 	openshop	=> \&cmdOpenShop,
 	p		=> \&cmdPartyChat,
+	party		=> \&cmdParty,
 	pl		=> \&cmdPlayerList,
 	plugin		=> \&cmdPlugin,
 	pm		=> \&cmdPrivateMessage,
@@ -175,6 +177,7 @@ sub initDescriptions {
 	e		=> 'Show emotion.',
 	eq		=> 'Equip an item.',
 	#eval		=> 'Evaluable a Perl expression (developers only).',
+	exp		=> 'Experience report.',
 	follow		=> 'Follow another player.',
 	friend		=> 'Friend management.',
 	g		=> 'Chat in the guild chat.',
@@ -196,6 +199,7 @@ sub initDescriptions {
 	nl		=> 'List NPCs that are on screen.',
 	openshop	=> 'Open your vending shop.',
 	p		=> 'Chat in the party chat.',
+	party		=> 'Party management.',
 	pl		=> 'List players that are on screen.',
 	plugin		=> 'Control plugins.',
 	pm		=> 'Send a private message.',
@@ -1273,6 +1277,75 @@ sub cmdEval {
 	}
 }
 
+sub cmdExp {
+	my (undef, $args) = @_;
+	# exp report
+	my ($arg1) = $args =~ /^(\w+)/;
+	if ($arg1 eq ""){
+		my ($endTime_EXP,$w_sec,$total,$bExpPerHour,$jExpPerHour,$EstB_sec,$percentB,$percentJ,$zennyMade,$zennyPerHour,$EstJ_sec,$percentJhr,$percentBhr);
+		$endTime_EXP = time;
+		$w_sec = int($endTime_EXP - $startTime_EXP);
+		if ($w_sec > 0) {
+			$zennyMade = $char->{zenny} - $startingZenny;
+			$bExpPerHour = int($totalBaseExp / $w_sec * 3600);
+			$jExpPerHour = int($totalJobExp / $w_sec * 3600);
+			$zennyPerHour = int($zennyMade / $w_sec * 3600);
+			if ($char->{exp_max} && $bExpPerHour){
+				$percentB = "(".sprintf("%.2f",$totalBaseExp * 100 / $char->{exp_max})."%)";
+				$percentBhr = "(".sprintf("%.2f",$bExpPerHour * 100 / $char->{exp_max})."%)";
+				$EstB_sec = int(($char->{exp_max} - $char->{exp})/($bExpPerHour/3600));
+			}
+			if ($char->{exp_job_max} && $jExpPerHour){
+				$percentJ = "(".sprintf("%.2f",$totalJobExp * 100 / $char->{exp_job_max})."%)";
+				$percentJhr = "(".sprintf("%.2f",$jExpPerHour * 100 / $char->{exp_job_max})."%)";
+				$EstJ_sec = int(($chars[$config{'char'}]{'exp_job_max'} - $char->{exp_job})/($jExpPerHour/3600));
+			}
+		}
+		$char->{deathCount} = 0 if (!defined $char->{deathCount});
+		message("------------Exp Report------------\n" .
+		"Botting time : " . timeConvert($w_sec) . "\n" .
+		"BaseExp      : " . formatNumber($totalBaseExp) . " $percentB\n" .
+		"JobExp       : " . formatNumber($totalJobExp) . " $percentJ\n" .
+		"BaseExp/Hour : " . formatNumber($bExpPerHour) . " $percentBhr\n" .
+		"JobExp/Hour  : " . formatNumber($jExpPerHour) . " $percentJhr\n" .
+		"Zenny        : " . formatNumber($zennyMade) . "\n" .
+		"Zenny/Hour   : " . formatNumber($zennyPerHour) . "\n" .
+		"Base Levelup Time Estimation : " . timeConvert($EstB_sec) . "\n" .
+		"Job Levelup Time Estimation  : " . timeConvert($EstJ_sec) . "\n" .
+		"Died : $chars[$config{'char'}]{'deathCount'}\n", "info");
+
+		message("-[Monster Killed Count]-----------\n" .
+			"#   ID   Name                Count\n",
+			"list");
+		for (my $i = 0; $i < @monsters_Killed; $i++) {
+			next if ($monsters_Killed[$i] eq "");
+			message(swrite(
+				"@<< @<<<< @<<<<<<<<<<<<<       @<<< ",
+				[$i, $monsters_Killed[$i]{'nameID'}, $monsters_Killed[$i]{'name'}, $monsters_Killed[$i]{'count'}]),
+				"list");
+			$total += $monsters_Killed[$i]{'count'};
+		}
+		message("----------------------------------\n" .
+			"Total number of killed monsters: $total\n" .
+			"----------------------------------\n",
+			"list");
+
+	} elsif ($arg1 eq "reset") {
+		($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
+		$startTime_EXP = time;
+		$startingZenny = $char->{zenny};
+		undef @monsters_Killed;
+		$dmgpsec = 0;
+		$totaldmg = 0;
+		$elasped = 0;
+		$totalelasped = 0;
+		message "Exp counter reset.\n", "success";
+	} else {
+		error "Error in function 'exp' (Exp Report)\n" .
+			"Usage: exp [reset]\n";
+	}
+}
+
 sub cmdFollow {
 	my (undef, $arg1) = @_;
 	if ($arg1 eq "") {
@@ -1742,6 +1815,116 @@ sub cmdNPCList {
 
 sub cmdOpenShop {
 	main::openShop();
+}
+
+sub cmdParty {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w*)/;
+	my ($arg2) = $args =~ /^\w* (\d+)\b/;
+
+	if ($arg1 eq "" && !%{$chars[$config{'char'}]{'party'}}) {
+		error	"Error in function 'party' (Party Functions)\n" .
+			"Can't list party - you're not in a party.\n";
+	} elsif ($arg1 eq "") {
+		message("----------Party-----------\n", "list");
+		message($chars[$config{'char'}]{'party'}{'name'}."\n", "list");
+		message("#      Name                  Map                    Online    HP\n", "list");
+		for (my $i = 0; $i < @partyUsersID; $i++) {
+			next if ($partyUsersID[$i] eq "");
+			my $coord_string = "";
+			my $hp_string = "";
+			my $name_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'name'};
+			my $admin_string = ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "(A)" : "";
+			my $online_string;
+			my $map_string;
+
+			if ($partyUsersID[$i] eq $accountID) {
+				$online_string = "Yes";
+				($map_string) = $field{name};
+				$coord_string = $chars[$config{'char'}]{'pos'}{'x'}. ", ".$chars[$config{'char'}]{'pos'}{'y'};
+				$hp_string = $chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}
+						." (".int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
+						."%)";
+			} else {
+				$online_string = ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'online'}) ? "Yes" : "No";
+				($map_string) = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'map'} =~ /([\s\S]*)\.gat/;
+				$coord_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'}
+					. ", ".$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'y'}
+					if ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'} ne ""
+						&& $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'online'});
+				$hp_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp'}."/".$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'}
+					." (".int($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100)
+					."%)" if ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'online'});
+			}
+			message(swrite(
+				"@< @<< @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<< @<<<<<<< @<<       @<<<<<<<<<<<<<<<<<<",
+				[$i, $admin_string, $name_string, $map_string, $coord_string, $online_string, $hp_string]),
+				"list");
+		}
+		message("--------------------------\n", "list");
+
+	} elsif ($arg1 eq "create") {
+		my ($arg2) = $args =~ /^\w* \"([\s\S]*)\"/;
+		if ($arg2 eq "") {
+			error	"Syntax Error in function 'party create' (Organize Party)\n" .
+				"Usage: party create \"<party name>\"\n";
+		} else {
+			sendPartyOrganize(\$remote_socket, $arg2);
+		}
+
+	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
+		error	"Syntax Error in function 'party join' (Accept/Deny Party Join Request)\n" .
+			"Usage: party join <flag>\n";
+	} elsif ($arg1 eq "join" && $incomingParty{'ID'} eq "") {
+		error	"Error in function 'party join' (Join/Request to Join Party)\n" .
+			"Can't accept/deny party request - no incoming request.\n";
+	} elsif ($arg1 eq "join") {
+		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $arg2);
+		undef %incomingParty;
+
+	} elsif ($arg1 eq "request" && !%{$chars[$config{'char'}]{'party'}}) {
+		error	"Error in function 'party request' (Request to Join Party)\n" .
+			"Can't request a join - you're not in a party.\n";
+	} elsif ($arg1 eq "request" && $playersID[$arg2] eq "") {
+		error	"Error in function 'party request' (Request to Join Party)\n" .
+			"Can't request to join party - player $arg2 does not exist.\n";
+	} elsif ($arg1 eq "request") {
+		sendPartyJoinRequest(\$remote_socket, $playersID[$arg2]);
+
+
+	} elsif ($arg1 eq "leave" && !%{$chars[$config{'char'}]{'party'}}) {
+		error	"Error in function 'party leave' (Leave Party)\n" .
+			"Can't leave party - you're not in a party.\n";
+	} elsif ($arg1 eq "leave") {
+		sendPartyLeave(\$remote_socket);
+
+
+	} elsif ($arg1 eq "share" && !%{$chars[$config{'char'}]{'party'}}) {
+		error	"Error in function 'party share' (Set Party Share EXP)\n" .
+			"Can't set share - you're not in a party.\n";
+	} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
+		error	"Syntax Error in function 'party share' (Set Party Share EXP)\n" .
+			"Usage: party share <flag>\n";
+	} elsif ($arg1 eq "share") {
+		sendPartyShareEXP(\$remote_socket, $arg2);
+
+
+	} elsif ($arg1 eq "kick" && !%{$chars[$config{'char'}]{'party'}}) {
+		error	"Error in function 'party kick' (Kick Party Member)\n" .
+			"Can't kick member - you're not in a party.\n";
+	} elsif ($arg1 eq "kick" && $arg2 eq "") {
+		error	"Syntax Error in function 'party kick' (Kick Party Member)\n" .
+			"Usage: party kick <party member #>\n";
+	} elsif ($arg1 eq "kick" && $partyUsersID[$arg2] eq "") {
+		error	"Error in function 'party kick' (Kick Party Member)\n" .
+			"Can't kick member - member $arg2 doesn't exist.\n";
+	} elsif ($arg1 eq "kick") {
+		sendPartyKick(\$remote_socket, $partyUsersID[$arg2]
+				,$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
+	} else {
+		error	"Syntax Error in function 'party' (Party Management)\n" .
+			"Usage: party [<create|join|request|leave|share|kick>]\n";
+	}
 }
 
 sub cmdPartyChat {
