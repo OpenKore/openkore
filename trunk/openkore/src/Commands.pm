@@ -1627,10 +1627,12 @@ sub cmdHelp {
 	initDescriptions if (!%descriptions);
 	@commands = sort keys %descriptions if (!@commands);
 
-	message("--------------- Available commands ---------------\n", "list");
+	my $message;
+
+	$message .= "--------------- Available commands ---------------\n";
 	foreach my $switch (@commands) {
 		if ($descriptions{$switch}) {
-			message(sprintf("%-10s  %s\n", $switch, $descriptions{$switch}), "list");
+			$message .= sprintf("%-11s  %s\n", $switch, $descriptions{$switch});
 		} else {
 			push @unknown, $switch;
 		}
@@ -1639,7 +1641,7 @@ sub cmdHelp {
 	@commands = sort keys %customCommands;
 	foreach my $switch (@commands) {
 		if ($customCommands{$switch}) {
-			message(sprintf("%-10s  %s\n", $switch, $customCommands{$switch}{desc}), "list");
+			$message .= sprintf("%-10s  %s\n", $switch, $customCommands{$switch}{desc});
 			@unknown = ();
 		} else {
 			push @unknown, $switch;
@@ -1654,7 +1656,9 @@ sub cmdHelp {
 		}
 		error("Type 'help' to see a list of all available commands.\n");
 	}
-	message("--------------------------------------------------\n", "list");
+	$message .= "--------------------------------------------------\n";
+
+	message $message, "list";
 }
 
 sub cmdIdentify {
