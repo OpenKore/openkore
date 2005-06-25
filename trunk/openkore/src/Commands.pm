@@ -1959,7 +1959,7 @@ sub cmdMove {
 		$map = $arg3;
 	}
 	$map =~ s/\s//g;
-	if ($args eq "move 0") {
+	if ($args eq "0") {
 		if ($portalsID[0]) {
 			message("Move into portal number 0 ($portals{$portalsID[0]}{'pos'}{'x'},$portals{$portalsID[0]}{'pos'}{'y'})\n");
 			main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
