@@ -2946,7 +2946,7 @@ sub AI {
 					$timeout{ai_item_use_auto}{time} = time;
 					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
 					last;
-				} elsif ($config{"useSelf_item_${i}_dcOnEmpty}) {
+				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"}) {
 					error "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n";
 					quit();
 				}
