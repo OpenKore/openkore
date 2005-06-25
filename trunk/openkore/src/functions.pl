@@ -2946,6 +2946,9 @@ sub AI {
 					$timeout{ai_item_use_auto}{time} = time;
 					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
 					last;
+				} elsif ($config{"useSelf_item_${i}_dcOnEmpty}) {
+					error "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n";
+					quit();
 				}
 			}
 			$i++;
@@ -4956,6 +4959,8 @@ sub parseMsg {
 
 			objectAdded('player', $ID, $player) if ($added);
 
+			Plugins::callHook('player', {player => $player});
+
 		} elsif ($type >= 1000) {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
@@ -5151,6 +5156,7 @@ sub parseMsg {
 				my $domain = existsInList($config{friendlyAID}, unpack("L1", $ID)) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 				debug "Player Appeared: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", $domain;
 				$added = 1;
+				Plugins::callHook('player', {player => $players{$ID}});
 			}
 
 			$players{$ID}{weapon} = $weapon;
