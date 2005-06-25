@@ -5148,7 +5148,7 @@ sub parseMsg {
 				$players{$ID}{'jobID'} = $type;
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
-				my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+				my $domain = existsInList($config{friendlyAID}, unpack("L1", $ID)) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 				debug "Player Appeared: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", $domain;
 				$added = 1;
 			}
