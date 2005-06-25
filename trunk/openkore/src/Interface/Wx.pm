@@ -312,7 +312,7 @@ sub createMenuBar {
 	$self->addMenu($infoMenu, '&Monsters	Alt-M',	sub { Commands::run("ml"); });
 	$self->addMenu($infoMenu, '&NPCs',		sub { Commands::run("nl"); });
 	$infoMenu->AppendSeparator;
-	$self->addMenu($infoMenu, '&Experience Report	Alt+E',	sub { main::parseInput("exp"); });
+	$self->addMenu($infoMenu, '&Experience Report	Alt+E',	sub { Commands::run("exp"); });
 	$menu->Append($infoMenu, 'I&nfo');
 
 	# View menu
