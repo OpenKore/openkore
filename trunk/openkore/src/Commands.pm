@@ -1959,6 +1959,7 @@ sub cmdMove {
 		$map = $arg3;
 	}
 	$map =~ s/\s//g;
+	# FIXME: this should be integrated with the other numbers
 	if ($args eq "0") {
 		if ($portalsID[0]) {
 			message("Move into portal number 0 ($portals{$portalsID[0]}{'pos'}{'x'},$portals{$portalsID[0]}{'pos'}{'y'})\n");
