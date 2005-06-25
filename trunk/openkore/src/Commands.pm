@@ -76,6 +76,7 @@ sub initHandlers {
 	conf		=> \&cmdConf,
 	deal		=> \&cmdDeal,
 	debug		=> \&cmdDebug,
+	dl		=> \&cmdDealList,
 	doridori	=> \&cmdDoriDori,
 	drop		=> \&cmdDrop,
 	e		=> \&cmdEmotion,
@@ -101,24 +102,29 @@ sub initHandlers {
 	reload		=> \&cmdReload,
 	memo		=> \&cmdMemo,
 	ml		=> \&cmdMonsterList,
+	move		=> \&cmdMove,
 	nl		=> \&cmdNPCList,
 	openshop	=> \&cmdOpenShop,
 	p		=> \&cmdPartyChat,
 	party		=> \&cmdParty,
+	petl		=> \&cmdPetList,
 	pl		=> \&cmdPlayerList,
 	plugin		=> \&cmdPlugin,
 	pm		=> \&cmdPrivateMessage,
 	pml		=> \&cmdPMList,
 	portals		=> \&cmdPortalList,
 	quit		=> \&cmdQuit,
+	rc		=> \&cmdReloadCode,
 	relog		=> \&cmdRelog,
 	respawn		=> \&cmdRespawn,
 	s		=> \&cmdStatus,
+	sell		=> \&cmdSell,
 	send		=> \&cmdSendRaw,
 	sit		=> \&cmdSit,
 	skills		=> \&cmdSkills,
 	spells		=> \&cmdSpells,
 	storage		=> \&cmdStorage,
+	store		=> \&cmdStore,
 	sl		=> \&cmdUseSkill,
 	sm		=> \&cmdUseSkill,
 	sp		=> \&cmdPlayerSkill,
@@ -172,6 +178,7 @@ sub initDescriptions {
 	conf		=> 'Change a configuration key.',
 	deal		=> 'Trade items with another player.',
 	debug		=> 'Toggle debug on/off.',
+	dl		=> 'List items in the deal.',
 	doridori	=> 'Does a doridori head turn.',
 	drop		=> 'Drop an item from the inventory.',
 	e		=> 'Show emotion.',
@@ -196,23 +203,28 @@ sub initDescriptions {
 	reload		=> 'Reload configuration files.',
 	memo		=> 'Save current position for warp portal.',
 	ml		=> 'List monsters that are on screen.',
+	move		=> 'Move your character.',
 	nl		=> 'List NPCs that are on screen.',
 	openshop	=> 'Open your vending shop.',
 	p		=> 'Chat in the party chat.',
 	party		=> 'Party management.',
+	petl		=> 'List pets that are on screen.',
 	pl		=> 'List players that are on screen.',
 	plugin		=> 'Control plugins.',
 	pm		=> 'Send a private message.',
 	pml		=> 'Quick PM list.',
 	portals		=> 'List portals that are on screen.',
 	quit		=> 'Exit this program.',
+	#rc		=> 'Reload source code files.',
 	relog		=> 'Log out then log in again.',
 	respawn		=> 'Respawn back to the save point.',
 	s		=> 'Display character status.',
+	sell		=> 'Sell items to an NPC.',
 	send		=> 'Send a raw packet to the server.',
 	sit		=> 'Sit down.',
 	skills		=> 'Show skills or add skill point.',
 	storage		=> 'Handle items in Kafra storage.',
+	store		=> 'Buy items from an NPC.',
 	sl		=> 'Use skill on location.',
 	sm		=> 'Use skill on monster.',
 	sp		=> 'Use skill on player.',
@@ -993,87 +1005,6 @@ sub cmdChist {
 	}
 }
 
-sub cmdDrop {
-	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^([\d,-]+)/;
-	my ($arg2) = $args =~ /^[\d,-]+ (\d+)$/;
-	if ($arg1 eq "") {
-		error	"Syntax Error in function 'drop' (Drop Inventory Item)\n" .
-			"Usage: drop <item #> [<amount>]\n";
-	} else {
-		my @temp = split(/,/, $arg1);
-		@temp = grep(!/^$/, @temp); # Remove empty entries
-
-		my @items = ();
-		foreach (@temp) {
-			if (/(\d+)-(\d+)/) {
-				for ($1..$2) {
-					push(@items, $_) if ($char->{inventory}[$_] && %{$char->{inventory}[$_]});
-				}
-			} else {
-				push @items, $_ if ($char->{inventory}[$_] && %{$char->{inventory}[$_]});
-			}
-		}
-		if (@items > 0) {
-			main::ai_drop(\@items, $arg2);
-		} else {
-			error "No items were dropped.\n";
-		}
-	}
-}
-
-sub cmdIdentify {
-	my (undef, $arg1) = @_;
-	if ($arg1 eq "") {
-		message("---------Identify List--------\n", "list");
-		for (my $i = 0; $i < @identifyID; $i++) {
-			next if ($identifyID[$i] eq "");
-			message(swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$i, $char->{'inventory'}[$identifyID[$i]]{name}]),
-				"list");
-		}
-		message("------------------------------\n", "list");
-
-	} elsif ($arg1 =~ /^\d+$/) {
-		if ($identifyID[$arg1] eq "") {
-			error	"Error in function 'identify' (Identify Item)\n" .
-				"Identify Item $arg1 does not exist\n";
-		} else {
-			sendIdentify(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$identifyID[$arg1]]{'index'});
-		}
-
-	} else {
-		error	"Syntax Error in function 'identify' (Identify Item)\n" .
-			"Usage: identify [<identify #>]\n";
-	}
-}
-
-sub cmdIhist {
-	# Display item history
-	my (undef, $args) = @_;
-	$args = 5 if ($args eq "");
-
-	if (!($args =~ /^\d+$/)) {
-		error	"Syntax Error in function 'ihist' (Show Item History)\n" .
-			"Usage: ihist [<number of entries #>]\n";
-
-	} elsif (open(ITEM, "<", $Settings::item_log_file)) {
-		my @item = <ITEM>;
-		close(ITEM);
-		message("------ Item History --------------------\n", "list");
-		my $i = @item - $args;
-		$i = 0 if ($i < 0);
-		for (; $i < @item; $i++) {
-			message($item[$i], "list");
-		}
-		message("----------------------------------------\n", "list");
-
-	} else {
-		error "Unable to open $Settings::item_log_file\n";
-	}
-}
-
 sub cmdCloseShop {
 	main::closeShop();
 }
@@ -1187,6 +1118,72 @@ sub cmdDeal {
 	}
 }
 
+sub cmdDealList {
+	if (!%currentDeal) {
+		error "There is no deal list - You are not in a deal\n";
+
+	} else {
+		message("-----------Current Deal-----------\n", "list");
+		my $other_string = $currentDeal{'name'};
+		my $you_string = "You";
+		if ($currentDeal{'other_finalize'}) {
+			$other_string .= " - Finalized";
+		}
+		if ($currentDeal{'you_finalize'}) {
+			$you_string .= " - Finalized";
+		}
+
+		message(swrite(
+			"@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+			[$you_string, $other_string]),
+			"list");
+
+		my @currentDealYou;
+		my @currentDealOther;
+		foreach (keys %{$currentDeal{'you'}}) {
+			push @currentDealYou, $_;
+		}
+		foreach (keys %{$currentDeal{'other'}}) {
+			push @currentDealOther, $_;
+		}
+
+		my ($lastindex, $display, $display2);
+		$lastindex = @currentDealOther;
+		$lastindex = @currentDealYou if (@currentDealYou > $lastindex);
+		for (my $i = 0; $i < $lastindex; $i++) {
+			if ($i < @currentDealYou) {
+				$display = ($items_lut{$currentDealYou[$i]} ne "") 
+					? $items_lut{$currentDealYou[$i]}
+					: "Unknown ".$currentDealYou[$i];
+				$display .= " x $currentDeal{'you'}{$currentDealYou[$i]}{'amount'}";
+			} else {
+				$display = "";
+			}
+			if ($i < @currentDealOther) {
+				$display2 = ($items_lut{$currentDealOther[$i]} ne "") 
+					? $items_lut{$currentDealOther[$i]}
+					: "Unknown ".$currentDealOther[$i];
+				$display2 .= " x $currentDeal{'other'}{$currentDealOther[$i]}{'amount'}";
+			} else {
+				$display2 = "";
+			}
+
+			message(swrite(
+				"@<<<<<<<<<<<<<<<<<<<<<<<<<<<<<   @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$display, $display2]),
+				"list");
+		}
+		$you_string = ($currentDeal{'you_zenny'} ne "") ? $currentDeal{'you_zenny'} : 0;
+		$other_string = ($currentDeal{'other_zenny'} ne "") ? $currentDeal{'other_zenny'} : 0;
+
+		message(swrite(
+			"Zenny: @<<<<<<<<<<<<<            Zenny: @<<<<<<<<<<<<<",
+			[$you_string, $other_string]),
+			"list");
+		message("----------------------------------\n", "list");
+	}
+}
+
 sub cmdDebug {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\w\d]+)/;
@@ -1225,6 +1222,34 @@ sub cmdDoriDori {
 	sendLook(\$remote_socket, $char->{look}{body}, $headdir);
 }
 
+sub cmdDrop {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^([\d,-]+)/;
+	my ($arg2) = $args =~ /^[\d,-]+ (\d+)$/;
+	if ($arg1 eq "") {
+		error	"Syntax Error in function 'drop' (Drop Inventory Item)\n" .
+			"Usage: drop <item #> [<amount>]\n";
+	} else {
+		my @temp = split(/,/, $arg1);
+		@temp = grep(!/^$/, @temp); # Remove empty entries
+
+		my @items = ();
+		foreach (@temp) {
+			if (/(\d+)-(\d+)/) {
+				for ($1..$2) {
+					push(@items, $_) if ($char->{inventory}[$_] && %{$char->{inventory}[$_]});
+				}
+			} else {
+				push @items, $_ if ($char->{inventory}[$_] && %{$char->{inventory}[$_]});
+			}
+		}
+		if (@items > 0) {
+			main::ai_drop(\@items, $arg2);
+		} else {
+			error "No items were dropped.\n";
+		}
+	}
+}
 
 sub cmdEmotion {
 	# Show emotion
@@ -1602,6 +1627,33 @@ sub cmdHelp {
 	message("--------------------------------------------------\n", "list");
 }
 
+sub cmdIdentify {
+	my (undef, $arg1) = @_;
+	if ($arg1 eq "") {
+		message("---------Identify List--------\n", "list");
+		for (my $i = 0; $i < @identifyID; $i++) {
+			next if ($identifyID[$i] eq "");
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$i, $char->{'inventory'}[$identifyID[$i]]{name}]),
+				"list");
+		}
+		message("------------------------------\n", "list");
+
+	} elsif ($arg1 =~ /^\d+$/) {
+		if ($identifyID[$arg1] eq "") {
+			error	"Error in function 'identify' (Identify Item)\n" .
+				"Identify Item $arg1 does not exist\n";
+		} else {
+			sendIdentify(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$identifyID[$arg1]]{'index'});
+		}
+
+	} else {
+		error	"Syntax Error in function 'identify' (Identify Item)\n" .
+			"Usage: identify [<identify #>]\n";
+	}
+}
+
 sub cmdIgnore {
 	my (undef, $args) = @_;
 	my ($arg1, $arg2) = $args =~ /^(\d+) ([\s\S]*)/;
@@ -1614,6 +1666,31 @@ sub cmdIgnore {
 		} else {
 			sendIgnore(\$remote_socket, $arg2, !$arg1);
 		}
+	}
+}
+
+sub cmdIhist {
+	# Display item history
+	my (undef, $args) = @_;
+	$args = 5 if ($args eq "");
+
+	if (!($args =~ /^\d+$/)) {
+		error	"Syntax Error in function 'ihist' (Show Item History)\n" .
+			"Usage: ihist [<number of entries #>]\n";
+
+	} elsif (open(ITEM, "<", $Settings::item_log_file)) {
+		my @item = <ITEM>;
+		close(ITEM);
+		message("------ Item History --------------------\n", "list");
+		my $i = @item - $args;
+		$i = 0 if ($i < 0);
+		for (; $i < @item; $i++) {
+			message($item[$i], "list");
+		}
+		message("----------------------------------------\n", "list");
+
+	} else {
+		error "Unable to open $Settings::item_log_file\n";
 	}
 }
 
@@ -1725,6 +1802,22 @@ sub cmdInventory {
 	}
 }
 
+#sub cmdJudge {
+#	my (undef, $args) = @_;
+#	my ($arg1) = $args =~ /^(\d+)/;
+#	my ($arg2) = $args =~ /^\d+ (\d+)/;
+#	if ($arg1 eq "" || $arg2 eq "") {
+#		error	"Syntax Error in function 'judge' (Give an alignment point to Player)\n" .
+#			"Usage: judge <player #> <0 (good) | 1 (bad)>\n";
+#	} elsif ($playersID[$arg1] eq "") {
+#		error	"Error in function 'judge' (Give an alignment point to Player)\n" .
+#			"Player $arg1 does not exist.\n";
+#	} else {
+#		$arg2 = ($arg2 >= 1);
+#		sendAlignment(\$remote_socket, $playersID[$arg1], $arg2);
+#	}
+#}
+
 sub cmdLook {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\d+)/;
@@ -1777,6 +1870,59 @@ sub cmdMonsterList {
 			"list");
 	}
 	message("----------------------------------\n", "list");
+}
+
+sub cmdMove {
+	my (undef, $args) = @_;
+	my ($arg1, $arg2, $arg3) = $args =~ /^(\d+) (\d+)(.*?)$/;
+
+	my $map;
+	if ($arg1 eq "") {
+		($map) = $args =~ /^[\s\S]*? (.*?)$/;
+	} else {
+		$map = $arg3;
+	}
+	$map =~ s/\s//g;
+	if ($args eq "move 0") {
+		if ($portalsID[0]) {
+			message("Move into portal number 0 ($portals{$portalsID[0]}{'pos'}{'x'},$portals{$portalsID[0]}{'pos'}{'y'})\n");
+			main::ai_route($field{name}, $portals{$portalsID[0]}{'pos'}{'x'}, $portals{$portalsID[0]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+		} else {
+			error "No portals exist.\n";
+		}
+	} elsif (($arg1 eq "" || $arg2 eq "") && !$map) {
+		error	"Syntax Error in function 'move' (Move Player)\n" .
+			"Usage: move <x> <y> &| <map>\n";
+	} elsif ($map eq "stop") {
+		AI::clear(qw/move route mapRoute/);
+		message "Stopped all movement\n", "success";
+	} else {
+		AI::clear(qw/move route mapRoute/);
+		$map = $field{name} if ($map eq "");
+		if ($maps_lut{"${map}.rsw"}) {
+			my ($x, $y);
+			if ($arg2 ne "") {
+				message("Calculating route to: $maps_lut{$map.'.rsw'}($map): $arg1, $arg2\n", "route");
+				$x = $arg1;
+				$y = $arg2;
+			} else {
+				message("Calculating route to: $maps_lut{$map.'.rsw'}($map)\n", "route");
+			}
+			main::ai_route($map, $x, $y,
+				attackOnRoute => 1,
+				noSitAuto => 1,
+				notifyUponArrival => 1);
+		} elsif ($map =~ /^\d$/) {
+			if ($portalsID[$map]) {
+				message("Move into portal number $map ($portals{$portalsID[$map]}{'pos'}{'x'},$portals{$portalsID[$map]}{'pos'}{'y'})\n");
+				main::ai_route($field{name}, $portals{$portalsID[$map]}{'pos'}{'x'}, $portals{$portalsID[$map]}{'pos'}{'y'}, attackOnRoute => 1, noSitAuto => 1);
+			} else {
+				error "No portals exist.\n";
+			}
+		} else {
+			error "Map $map does not exist\n";
+		}
+	}
 }
 
 sub cmdNPCList {
@@ -1935,6 +2081,20 @@ sub cmdPartyChat {
 	} else {
 		sendMessage(\$remote_socket, "p", $arg1);
 	}
+}
+
+sub cmdPetList {
+	message("-----------Pet List-----------\n" .
+		"#    Type                     Name\n",
+		"list");
+	for (my $i = 0; $i < @petsID; $i++) {
+		next if ($petsID[$i] eq "");
+		message(swrite(
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<<<<<<<",
+			[$i, $pets{$petsID[$i]}{'name'}, $pets{$petsID[$i]}{'name_given'}]),
+			"list");
+	}
+	message("----------------------------------\n", "list");
 }
 
 sub cmdPlayerList {
@@ -2232,6 +2392,16 @@ sub cmdQuit {
 	quit();
 }
 
+sub cmdReloadCode {
+	my (undef, $args) = @_;
+	if ($args ne "") {
+		Modules::reload($args, 1);
+
+	} else {
+		Modules::reloadFile('functions.pl');
+	}
+}
+
 sub cmdRelog {
 	my (undef, $arg) = @_;
 	if (!$arg || $arg =~ /^\d+$/) {
@@ -2258,6 +2428,27 @@ sub cmdRespawn {
 		sendRespawn(\$remote_socket);
 	} else {
 		main::useTeleport(2);
+	}
+}
+
+sub cmdSell {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\d+)/;
+	my ($arg2) = $args =~ /^\d+ (\d+)$/;
+	if ($arg1 eq "" && $talk{'buyOrSell'}) {
+		sendGetSellList(\$remote_socket, $talk{'ID'});
+
+	} elsif ($arg1 eq "") {
+		error	"Syntax Error in function 'sell' (Sell Inventory Item)\n" .
+			"Usage: sell <item #> [<amount>]\n";
+	} elsif (!%{$char->{'inventory'}[$arg1]}) {
+		error	"Error in function 'sell' (Sell Inventory Item)\n" .
+			"Inventory Item $arg1 does not exist.\n";
+	} else {
+		if (!$arg2 || $arg2 > $char->{inventory}[$arg1]{amount}) {
+			$arg2 = $char->{inventory}[$arg1]{amount};
+		}
+		sendSell(\$remote_socket, $char->{inventory}[$arg1]{index}, $arg2);
 	}
 }
 
@@ -2730,6 +2921,37 @@ sub cmdStatus {
 		[$elasped_string]);
 	$msg .= "----------------------------------------\n";
 	message($msg, "info");
+}
+
+sub cmdStore {
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
+	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	if ($arg1 eq "" && !$talk{'buyOrSell'}) {
+		message("----------Store List-----------\n", "list");
+		message("#  Name                    Type           Price\n", "list");
+		my $display;
+		for (my $i = 0; $i < @storeList; $i++) {
+			$display = $storeList[$i]{'name'};
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>z",
+				[$i, $display, $itemTypes_lut{$storeList[$i]{'type'}}, $storeList[$i]{'price'}]),
+				"list");
+		}
+		message("-------------------------------\n", "list");
+	} elsif ($arg1 eq "" && $talk{'buyOrSell'}) {
+		sendGetStoreList(\$remote_socket, $talk{'ID'});
+
+	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
+		error	"Error in function 'store desc' (Store Item Description)\n" .
+			"Usage: Store item $arg2 does not exist\n";
+	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
+		printItemDesc($storeList[$arg2]{nameID});
+
+	} else {
+		error	"Syntax Error in function 'store' (Store Functions)\n" .
+			"Usage: store [<desc>] [<store item #>]\n";
+	}
 }
 
 sub cmdSwitchConf {
