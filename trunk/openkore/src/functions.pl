@@ -1954,7 +1954,7 @@ sub AI {
 
 	##### AUTO-CART ADD/GET ####
 
-	if ((AI::isIdle || AI::is(qw/route move autoBuy storageAuto follow sitAuto items_take items_gather/)) && timeOut($AI::Timeouts::autoCart, 2)) {
+	if ((AI::isIdle || AI::is(qw/route move autoBuy follow sitAuto items_take items_gather/)) && timeOut($AI::Timeouts::autoCart, 2)) {
 		my $hasCart = 0;
 		if ($char->{statuses}) {
 			foreach (keys %{$char->{statuses}}) {
