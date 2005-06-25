@@ -249,6 +249,7 @@ Internal:
 - $actor->{casting} now tracks what spell someone is casting on what target,
   and is cleared correctly when the spell completes/is interrupted.
 - New hook packet_item_removed.
+- Many more commands are being moved to Commands.pm.
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.
