@@ -5930,6 +5930,7 @@ sub parseMsg {
 			}
 			$item->{invIndex} = $invIndex;
 
+			$itemChange{$item->{name}}++;
 			my $disp = "Item added to inventory: ";
 			$disp .= $item->{name};
 			$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
@@ -6969,6 +6970,7 @@ sub parseMsg {
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		$storage{$index}{amount} -= $amount;
 		message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
+		$itemChange{$item->{name}}--;
 		if ($storage{$index}{amount} <= 0) {
 			delete $storage{$index};
 			binRemove(\@storageID, $index);
@@ -7567,6 +7569,7 @@ sub parseMsg {
 			$item->{name} = itemName($item);
 		}
 		message "Cart Item Added: $item->{name} ($index) x $amount\n";
+		$itemChange{$item->{name}}++;
 
 	} elsif ($switch eq "0125") {
 		my $index = unpack("S1", substr($msg, 2, 2));
@@ -7574,6 +7577,7 @@ sub parseMsg {
 
 		$cart{'inventory'}[$index]{'amount'} -= $amount;
 		message "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n";
+		$itemChange{$item->{name}}--;
 		if ($cart{'inventory'}[$index]{'amount'} <= 0) {
 			delete $cart{'inventory'}[$index];
 		}
@@ -8395,6 +8399,7 @@ sub parseMsg {
 			$item->{binID} = binFind(\@storageID, $index);
 		}
 		message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
+		$itemChange{$item->{name}}++;
 		Plugins::callHook('packet_storage_added');
 		
 	} elsif ($switch eq "01C8") {
@@ -8413,6 +8418,7 @@ sub parseMsg {
 			$item->{amount} -= $amount;
 
 			message("You used Item: $item->{name} ($invIndex) x $amount - $amountleft left\n", "useItem", 1);
+			$itemChange{$item->{name}}--;
 			if ($item->{amount} <= 0) {
 				delete $char->{inventory}[$invIndex];
 			}

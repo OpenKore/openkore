@@ -1202,6 +1202,7 @@ sub inventoryItemRemoved {
 	}
 	$item->{amount} -= $amount;
 	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+	$itemChange{$item->{name}}--;
 }
 
 ##
