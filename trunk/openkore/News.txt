@@ -210,6 +210,8 @@ New config options:
   A list of AIDs of friendly players. Currently, players in that list
   who appear will be in domain parseMsg_presence instead of
   parseMsg_presence/player (useful for beepDomains).
+- dcOnEmpty option for useSelf_item block will disconnect if it tries
+  to use that item but ran out.
 
 New control files:
 - control/sys.txt
@@ -256,6 +258,8 @@ Internal:
   and is cleared correctly when the spell completes/is interrupted.
 - New hook packet_item_removed.
 - All commands have been moved to Commands.pm.
+- New plugin hook "player" passes a player object when "Player Appears"
+  or "Player Exists".
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.
