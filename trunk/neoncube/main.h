@@ -81,6 +81,7 @@ struct inisetting {
 	TCHAR szSkin[256];
 	WORD nBackupGRF;
 	WORD nStartupOption;
+	TCHAR szRagExeCall[MAXARRSIZE];
 } settings;
 
 
