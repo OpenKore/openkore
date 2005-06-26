@@ -103,6 +103,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
     }    
 
  
+    // loads config file
     try { 
 	if(GetPrivateProfileString("server", "server_name", NULL, settings.szServerName, sizeof(settings.szServerName), INIFILE) <= 0)
 	    throw "Invalid key in NeonCube.ini: server_name";
@@ -122,6 +123,7 @@ WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, INT nCmdS
 	    throw "Invalid key in NeonCube.ini: grf_file";
 	if(GetPrivateProfileString("server", "skin", NULL, settings.szSkin, sizeof(settings.szSkin), INIFILE) <= 0)
 	    throw "Invalid key in NeonCube.ini: skin";
+
     }
     catch(LPCTSTR message) {
 	MessageBox(NULL, message, "Error", MB_OK | MB_ICONERROR);
@@ -1091,7 +1093,7 @@ end:;
 
 		if(!ExtractGRF(spCurrentItem->szPatchName, spCurrentItem->szPath)) {
 					    
-		    PostError(FALSE, "Failed to extract %s", spCurrentItem->szPatchName);
+		    PostError(TRUE, "Failed to extract %s", spCurrentItem->szPatchName);
 		}
 			    
 
@@ -1100,9 +1102,10 @@ end:;
 
 		if(!ExtractRAR(spCurrentItem->szPatchName, spCurrentItem->szPath)) {
 					    
-		    PostError(FALSE, "Failed to extract %s", spCurrentItem->szPatchName);
+		    PostError(TRUE, "Failed to extract %s", spCurrentItem->szPatchName);
 		}
-	    }
+
+	    } 
 	    
 	    //after extracting patch files, delete it
 	    //make sure the file isn't our main GRF file
@@ -1163,7 +1166,7 @@ end:;
 		
 
 		if(WriteData("neoncube\\data\\*", hDataGrfTxt) != 0)
-		    PostError(TRUE, "Failed to write adata.grf.txt");
+		    PostError(TRUE, "Failed to write data.grf.txt");
 
 		fclose(hDataGrfTxt);
 		// repacking process, we CreateProcess() create.exe for it to repack the extracted files
@@ -1209,6 +1212,12 @@ end:;
 	       
 		if(!MoveFile("neoncube\\data.grf",settings.szGrf))
 		    PostError(TRUE, "Failed to move file (%s) to original path", settings.szGrf);
+
+		//delete tmp.nc
+		DeleteFile("tmp.nc");
+		
+		//delete data.grf.txt
+		DeleteFile("neoncube\\data.grf.txt");
 	    }
 	    StatusMessage("Status: Patch process complete.\r\nInfo:-----\r\nProgress:-----");
 			
@@ -1487,14 +1496,28 @@ LaunchApp(LPCTSTR lpszExecutable)
 
     STARTUPINFO		siStartupInfo;
     PROCESS_INFORMATION piProcessInfo;
+    LPTSTR		lpszCall; // ragexe call
 
     memset(&siStartupInfo, 0, sizeof(siStartupInfo));
     memset(&piProcessInfo, 0, sizeof(piProcessInfo));
 
     siStartupInfo.cb = sizeof(siStartupInfo);
+    
+
+    if(GetPrivateProfileString("server", "ragexe_call", NULL, settings.szRagExeCall, sizeof(settings.szRagExeCall), INIFILE) <= 0) {
+
+	lpszCall = NULL;
+
+    } else {
+
+	lpszCall = (LPTSTR)GlobalAlloc(GMEM_FIXED, strlen(settings.szRagExeCall) + 1);
+	lstrcpy(lpszCall, "-");
+	lstrcat(lpszCall, settings.szRagExeCall);
+    }
+
 
     if(0 != CreateProcess(lpszExecutable,     
-                     NULL, 0, 0, FALSE,
+                     lpszCall, 0, 0, FALSE,
                      CREATE_DEFAULT_ERROR_MODE,
                      0, "neoncube", &siStartupInfo, &piProcessInfo)) {
 	PostError(FALSE, "Failed to launch application: %s", lpszExecutable);
