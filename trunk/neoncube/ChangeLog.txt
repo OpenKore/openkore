@@ -1,13 +1,30 @@
 ###############################
-## 1.1
+## 1.1 (beta)
 ###############################
+06/26/05
+--------
+added: 1rag1/1sak1 call
+
+06/25/05
+--------
+Improved: faster and less CPU usage when extracting files
+Improved: data.grf.txt writing (now recursively retrieving filenames from the folder)
+Improved: grf.dll now statically linked [Rasqual]
+added: RAR support
+
+
+06/21/05
+--------
+Fixed: RO client won't launch when "start game" is clicked.
+Fixed: Crash if you only have a delete-file patch.
+Fixed: Patches not fully downloaded on some version of Windows.
+
 
 06/19/05
 --------
 Improved: PostError() function
 Improved: Checks for handles before freeing
 Improved: browser now statically linked, no need for browser.dll (as requested by someone from eAthena)
-Update: zlib.h to 1.2.2
 Added: Data folder support (NeonCube now works with data folder and GRF file at the same time)
 Added: startup option (see neoncube.ini)
 
