@@ -1,12 +1,12 @@
 
 
-- Support for the following archive: .rgz, .tar.gz, .tar.bz2, .zip, .rar
+- Support for the following archive: .rgz, .tar.gz, .tar.bz2, .zip
 - Resume broken downloads
 - XP style progress bar (marquee while repacking/downloading files with unkown file size)
-- Option to use data folder instead of GRF file; or both at the same time
+- [added][ver 1.1] Option to use data folder instead of GRF file; or both at the same time
 - Multiple GRF patching (adata.grf, bdata.grf, etc)
 - Multi-part download (download accelerator-like download system)
-
+- remotely hosted neoncube.ini
 
 suggestions?
 ansell@users.sf.net
