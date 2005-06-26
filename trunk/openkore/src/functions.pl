@@ -1495,71 +1495,79 @@ sub AI {
 		# Main autostorage block
 		my $args = AI::args;
 
-		# Stop if the specified NPC is invalid
-		$args->{npc} = {};
-		getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
-		if (!defined($args->{npc}{ok})) {
-			$args->{done} = 1;
-			last AUTOSTORAGE;
-		}
-
-		# Determine whether we have to move to the NPC
 		my $do_route;
-		if ($field{'name'} ne $args->{npc}{map}) {
-			$do_route = 1;
-		} else {
-			my $distance = distance($args->{npc}{pos}, $char->{pos_to});
-			if ($distance > $config{'storageAuto_distance'}) {
+
+		if (!$config{storageAuto_useChatCommand}) {
+			# Stop if the specified NPC is invalid
+			$args->{npc} = {};
+			getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
+			if (!defined($args->{npc}{ok})) {
+				$args->{done} = 1;
+				last AUTOSTORAGE;
+			}
+
+			# Determine whether we have to move to the NPC
+			if ($field{'name'} ne $args->{npc}{map}) {
 				$do_route = 1;
+			} else {
+				my $distance = distance($args->{npc}{pos}, $char->{pos_to});
+				if ($distance > $config{'storageAuto_distance'}) {
+					$do_route = 1;
+				}
+			}
+
+			if ($do_route) {
+				if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
+					undef $args->{warpedToSave};
+				}
+
+				# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
+				message "$args->{warpedToSave}\n";
+				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
+				&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
+					$args->{warpedToSave} = 1;
+					# If we still haven't warped after a certain amount of time, fallback to walking
+					$args->{warpStart} = time unless $args->{warpStart};
+					message "Teleporting to auto-storage\n", "teleport";
+					useTeleport(2);
+					$timeout{'ai_storageAuto'}{'time'} = time;
+				} else {
+					# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
+					message "Calculating auto-storage route to: $maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
+					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
+						attackOnRoute => 1,
+						distFromGoal => $config{'storageAuto_distance'});
+				}
 			}
 		}
-
-		if ($do_route) {
-			if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
-				undef $args->{warpedToSave};
-			}
-
-			# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
-			message "$args->{warpedToSave}\n";
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
-			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
-				$args->{warpedToSave} = 1;
-				# If we still haven't warped after a certain amount of time, fallback to walking
-				$args->{warpStart} = time unless $args->{warpStart};
-				message "Teleporting to auto-storage\n", "teleport";
-				useTeleport(2);
-				$timeout{'ai_storageAuto'}{'time'} = time;
-			} else {
-				# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
-				message "Calculating auto-storage route to: $maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
-				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
-					attackOnRoute => 1,
-					distFromGoal => $config{'storageAuto_distance'});
-			}
-		} else {
+		if (!$do_route) {
 			# Talk to NPC if we haven't done so
 			if (!defined($args->{sentStore})) {
-				if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
-					warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
-					$config{'storageAuto_npc_steps'} = "c r1 n";
-					debug "Using standard iRO npc storage steps.\n", "npc";				
-				} elsif ($config{'storageAuto_npc_type'} eq "2") {
-					$config{'storageAuto_npc_steps'} = "c c r1 n";
-					debug "Using iRO comodo (location) npc storage steps.\n", "npc";
-				} elsif ($config{'storageAuto_npc_type'} eq "3") {
-					message "Using storage steps defined in config.\n", "info";
-				} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
-					error "Something is wrong with storageAuto_npc_type in your config.\n";
+				if ($config{storageAuto_useChatCommand}) {
+					sendMessage(\$remote_socket, "c", $config{storageAuto_useChatCommand});
+				} else {
+					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
+						warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
+						$config{'storageAuto_npc_steps'} = "c r1 n";
+						debug "Using standard iRO npc storage steps.\n", "npc";				
+					} elsif ($config{'storageAuto_npc_type'} eq "2") {
+						$config{'storageAuto_npc_steps'} = "c c r1 n";
+						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
+					} elsif ($config{'storageAuto_npc_type'} eq "3") {
+						message "Using storage steps defined in config.\n", "info";
+					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
+						error "Something is wrong with storageAuto_npc_type in your config.\n";
+					}
+
+					if (defined $args->{npc}{id}) { 
+						ai_talkNPC(ID => $args->{npc}{id}, $config{'storageAuto_npc_steps'}); 
+					} else {
+						ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'}); 
+					}
 				}
 
 				delete $ai_v{temp}{storage_opened};
 				$args->{sentStore} = 1;
-
-				if (defined $args->{npc}{id}) { 
-					ai_talkNPC(ID => $args->{npc}{id}, $config{'storageAuto_npc_steps'}); 
-				} else {
-					ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'}); 
-				}
 
 				# NPC talk retry
 				$AI::Timeouts::storageOpening = time;

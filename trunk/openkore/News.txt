@@ -218,6 +218,9 @@ New config options:
   parseMsg_presence/player (useful for beepDomains).
 - dcOnEmpty option for useSelf_item block will disconnect if it tries
   to use that item but ran out.
+- storageAuto_useChatCommand (command)
+  Use a specified chat command to open the storage instead of going
+  to talk to the kafra.
 
 New control files:
 - control/sys.txt
