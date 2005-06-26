@@ -6978,7 +6978,7 @@ sub parseMsg {
 		my $amount = unpack("L1", substr($msg, 4, 4));
 		$storage{$index}{amount} -= $amount;
 		message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
-		$itemChange{$item->{name}} -= $amount;
+		$itemChange{$storage{$index}{name}} -= $amount;
 		if ($storage{$index}{amount} <= 0) {
 			delete $storage{$index};
 			binRemove(\@storageID, $index);
