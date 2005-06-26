@@ -8439,15 +8439,9 @@ sub parseMsg {
 				amount => $amount
 			});
 
-		} elsif (%{$players{$ID}}) {
-			message("Player $players{$ID}{'name'} ($players{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
-
-		} elsif (%{$monsters{$ID}}) {
-			message("Monster $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
-
 		} else {
-			message("Unknown " . unpack("L*", $ID) . " used Item: $itemDisplay - $amountleft left\n", "useItem", 2);
-
+			my $actor = Actor::get($ID);
+			message "$actor used Item: $itemDisplay - $amountleft left\n", "useItem", 2;
 		}
 
 	} elsif ($switch eq "01CD") {
