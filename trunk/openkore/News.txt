@@ -57,6 +57,8 @@ Bug fixes:
 - The "pm 0" command no longer crash when there are no players in the pm list.
 - Kore was blocking packets in XKore mistakenly for certain serverTypes.
 - Fix isSelfSkill with area-skill attackSkillSlot skills.
+- Fix $char->{guild} autovivification causing the bot to think you're in
+  a guild when you are not.
 
 New features:
 - Better support for detecting dead players.

@@ -2933,7 +2933,7 @@ sub cmdStats {
 		"Dex: @<<+@<< #@< Status Points: @<<<",
 		[$chars[$config{'char'}]{'dex'}, $chars[$config{'char'}]{'dex_bonus'}, $chars[$config{'char'}]{'points_dex'}, $chars[$config{'char'}]{'points_free'}],
 		"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
-		[$chars[$config{'char'}]{'luk'}, $chars[$config{'char'}]{'luk_bonus'}, $chars[$config{'char'}]{'points_luk'}, $chars[$config{'char'}]{'guild'}{'name'}]);
+		[$chars[$config{'char'}]{'luk'}, $chars[$config{'char'}]{'luk_bonus'}, $chars[$config{'char'}]{'points_luk'}, $char->{guild} ? $char->{guild}{name} : 'None']);
 	$msg .= "--------------------------------\n";
 
 	$msg .= swrite(
