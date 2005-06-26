@@ -6566,7 +6566,7 @@ sub parseMsg {
 				$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 			}
 
-			message "$name ($players{$ID}{binID}): $emotion\n", "emotion";
+			message "[dist=$dist] $name ($players{$ID}{binID}): $emotion\n", "emotion";
 			chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
 
 			my $index = binFind(\@ai_seq, "follow");
