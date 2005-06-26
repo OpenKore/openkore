@@ -600,37 +600,30 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	    case IDC_STARTGAME:
 		if(settings.nStartupOption == 1) {
 		// RO client may start anytime
-		    if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
+		    if(LaunchApp(settings.szExecutable))
 			SendMessage(hWnd,WM_DESTROY,0,0);
-		    else
-			AddErrorLog("Cannot start %s\n", settings.szExecutable);
 		}
 
 
 		else if(settings.nStartupOption == 2) {		    
 		    if(bPatchCompleted) {
-			if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
+			if(LaunchApp(settings.szExecutable))
 			    SendMessage(hWnd,WM_DESTROY,0,0);
-			else
-			    AddErrorLog("Cannot start %s\n", settings.szExecutable);
-		    }
-		    else
+		    } else {
 			MessageBox(hWnd,"Unable to start application. Wait for the patch process to complete","Error",MB_OK | MB_ICONEXCLAMATION);
-
+		    }
 		}
 	
 
 		else if(settings.nStartupOption == 3) {
-		
 		    if(!bPatchInProgress) {
-			if(ShellExecute(NULL, "open", settings.szExecutable, NULL, NULL, SW_SHOWNORMAL))
+		
+			if(LaunchApp(settings.szExecutable))
 			    SendMessage(hWnd,WM_DESTROY,0,0);
-			else
-			    AddErrorLog("Cannot start %s\n", settings.szExecutable);
-		    }
-		    else
+		    
+		    } else {
 			MessageBox(hWnd,"Unable to start application. Wait for the patch process to complete","Error",MB_OK | MB_ICONEXCLAMATION);
-
+		    }
 		} else {
 		    //invalid startup_opion
 		    PostError(FALSE, "Invalid value in neoncube.ini (startup_option): values must be one of the following: 1, 2, 3");
@@ -817,9 +810,7 @@ Threader(void)
 				);
 	
     if(hPatch2Request == NULL) {
-#ifdef _DEBUG
-	AddDebug("HttpOpenRequest() failed\n");
-#endif/*_DEBUG*/
+
 	return S_FALSE;
     } else {
 
@@ -836,9 +827,9 @@ Threader(void)
 	    MessageBox(0,szMessage,"Error",MB_OK);
 	    bPatchInProgress = FALSE;
 	    StatusMessage("Status: Failed to get patch list.\r\nInfo:-----\r\nProgress:-----");
-#ifdef _DEBUG
-	    AddDebug("HttpOpenRequest() failed\n");
-#endif/*_DEBUG*/
+
+	    if(NULL != hPatch2Request)
+		InternetCloseHandle(hPatch2Request);
 
 	    return S_FALSE;
 	}
@@ -870,7 +861,7 @@ Threader(void)
 
 	// opens neoncube.file for reading and reads the last index (last patch number)
 	// if neoncube.file fails, neoncube assumes that its the first time the 
-	// application has been run, so it gives last_index = 1
+	// application has been run, so it gives last_index = 0
 	FILE *fpLastIndex;
 	UINT last_index;
 		
@@ -912,7 +903,7 @@ Threader(void)
 	//		saved into "neoncube.file"
 		
 	while(fscanf(fTmp, "%s %s %s\n", szPatch_index, szDest, patch_tmp) != EOF) {
-	    
+	    //Sleep(10);
 	    // the next line is comment support, if szPatch_index[0] is equal to '/' or '#'
 	    // 
 	   
@@ -945,9 +936,11 @@ Threader(void)
 	    // so we call DelFile() which adds the patch name into the DELFILE structure
 	    // so that its included in the delete-file loop later.
 	    if(index_tmp > last_index) {
+
 		if(patch_tmp[strlen(patch_tmp)-1] == 0x2a) {
 		    patch_tmp[strlen(patch_tmp)-1] = '\0';
-		    DelFile(patch_tmp, szDest);
+		    DelFile(patch_tmp, szDest, index_tmp);
+		    
 		    bPatchUpToDate = FALSE;
 		    goto end; //skip downloading, of course
 		}
@@ -990,7 +983,7 @@ Threader(void)
 		    DWORD   dwBytesRead;
 		    DWORD   dwBytesReadTotal = 0;
 		    LPTSTR  pCopyPtr = pData;
-
+		    BOOL bIReadFile;
 
 		    //	the actual downloading of files is in a loop, we read the file
 		    //	1% for each loop, assigns it to pCopyPtr which is a pointer to
@@ -999,14 +992,21 @@ Threader(void)
 		    
 		    for (cReadCount = 0; cReadCount < 100; cReadCount++) {
 								
-			InternetReadFile(hRequest, pCopyPtr, dwReadSize, &dwBytesRead);
+			bIReadFile = InternetReadFile(hRequest, pCopyPtr, dwReadSize, &dwBytesRead);
 			pCopyPtr = pCopyPtr + dwBytesRead;
 			SendMessage(hwndProgress, PBM_SETPOS, (WPARAM) cReadCount+1, 0);
 			dwBytesReadTotal += dwBytesRead;
 			StatusMessage("Status: Downloading %s...\r\nInfo: %.2f KB of %.2f KB downloaded \r\nProgress: %d%%",patch_tmp, BytesToKB(dwBytesReadTotal), BytesToKB(dwContentLen), cReadCount+1);					
 		    }
-
-		    // saves the file 		
+		    
+		    // ensure all data was downloaded
+		    // Hopefully fixed the bug
+		    bIReadFile = InternetReadFile(hRequest, pCopyPtr, dwContentLen - (pCopyPtr - pData), &dwBytesRead);
+		  
+		      // Null terminate data
+		    pData[dwContentLen] = 0;
+		   
+		     // saves the file 		
 		    DWORD dwBytesWritten;
 		    HANDLE hFile = CreateFile(patch_tmp, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
    		    if(WriteFile(hFile, pData,dwContentLen, &dwBytesWritten, NULL) == 0) {
@@ -1026,9 +1026,7 @@ Threader(void)
 		    // if neoncube fails to get the content length of a certain patch... 
 		    StatusMessage("Status: Failed to get %s\r\nInfo:-----\r\nProgress:-----",patch_tmp);
 		    bPatchInProgress = FALSE;
-#ifdef _DEBUG
-		    AddDebug("Failed to get file: %s\n", patch_tmp);
-#endif /*_DEBUG*/
+
 		    return S_FALSE;
 					
 		}
@@ -1052,10 +1050,15 @@ end:;
 	PATCH *spCItemSearch;
 	spCurrentItem = spFirstItem;
 	spCItemSearch = spFirstItem->next;
+	BOOL bNeedRepack; //determines if we need to repack the GRF
+	LONG nIndex = 0;
+
 	// the extraction loop, we loop through until spCurrentItem is NULL,
 	// each loop will extract the patch
 	while(1) {
 
+
+	    
 	    //prevent grf_file from extracting if there's no GPF to be repacked with it
 	    if(lstrcmp(spCurrentItem->szPatchName, settings.szGrf) == 0) {
 		
@@ -1073,10 +1076,32 @@ end:;
 		}
 		
 	    }
- 
-	    if(!ExtractGRF(spCurrentItem->szPatchName, spCurrentItem->szPath)) {
-					
-		PostError(FALSE, "Failed to extract %s. Corrupt file.", spCurrentItem->szPatchName);
+	    if(spCurrentItem == NULL)
+		break;
+
+	    if((lstrcmp(spCurrentItem->szPath, "GRF") == 0))
+		bNeedRepack = TRUE;
+	    
+	    if(spCurrentItem->iPatchIndex > nIndex) {
+		nIndex = spCurrentItem->iPatchIndex;
+	    }
+
+
+	    if((lstrcmp(GetFileExt(spCurrentItem->szPatchName), "gpf") == 0) || (lstrcmp(GetFileExt(spCurrentItem->szPatchName), "grf") == 0)) {
+
+		if(!ExtractGRF(spCurrentItem->szPatchName, spCurrentItem->szPath)) {
+					    
+		    PostError(FALSE, "Failed to extract %s", spCurrentItem->szPatchName);
+		}
+			    
+
+
+	    } else if(lstrcmp(GetFileExt(spCurrentItem->szPatchName), "rar") == 0) {
+
+		if(!ExtractRAR(spCurrentItem->szPatchName, spCurrentItem->szPath)) {
+					    
+		    PostError(FALSE, "Failed to extract %s", spCurrentItem->szPatchName);
+		}
 	    }
 	    
 	    //after extracting patch files, delete it
@@ -1093,11 +1118,11 @@ end:;
 	}
 
 
-
+	
 	DELFILE *dfCurrentItem;
 	dfCurrentItem = dfFirstItem;
 	TCHAR szFileNameToDel[1024];
-
+	
 
 	// the delete-file loop, more like the extraction loop but for file deletion
 	while(1) {
@@ -1116,7 +1141,9 @@ end:;
 		lstrcat(szFileNameToDel, dfCurrentItem->szFileName);
 	    }
 
-
+	    if(dfCurrentItem->nIndex > nIndex) {
+		nIndex = dfCurrentItem->nIndex;
+	    }
 	    if(!DeleteFile(szFileNameToDel))
 		//add error.log entry
 		AddErrorLog("Failed to delete %s: file not found\n", szFileNameToDel);
@@ -1126,47 +1153,63 @@ end:;
 	    dfCurrentItem = dfCurrentItem->next;
 	}
 
-	// repacking process, we CreateProcess() create.exe for it to repack the extracted files
-	// TODO: add a progress-bar marquee style
-	StatusMessage("Status: Repacking files...\r\nInfo:-----\r\nProgress:-----");
-
-	STARTUPINFO	    siStartupInfo;
-	PROCESS_INFORMATION piProcessInfo;
-
-	memset(&siStartupInfo, 0, sizeof(siStartupInfo));
-	memset(&piProcessInfo, 0, sizeof(piProcessInfo));
-
-	siStartupInfo.cb = sizeof(siStartupInfo);
-
-	if(!CreateProcess("neoncube\\Create.exe",     
-                     NULL, 0, 0, FALSE,
-                     CREATE_DEFAULT_ERROR_MODE | CREATE_NO_WINDOW,
-                     0, "neoncube", &siStartupInfo, &piProcessInfo))
-	    PostError(TRUE, "Failed to create process: Create.exe");
-			
-	    // wait for create.exe to terminate
-	    WaitForSingleObject(piProcessInfo.hProcess, INFINITE);
-	    CloseHandle(piProcessInfo.hThread);
-	    CloseHandle(piProcessInfo.hProcess);
-
-			
-	    //delete extracted files directory
-	    DeleteDirectory("neoncube\\data");
-			
-	    if(!settings.nBackupGRF)
-	    //delete old GRF file
-		DeleteFile(settings.szGrf);
-	    else {
+	    if(bNeedRepack) {
+		StatusMessage("Status: Writing adata.grf.txt...\r\nInfo:-----\r\nProgress:-----");
+		//writes adata.grf.txt
+		FILE *hDataGrfTxt;
+		hDataGrfTxt = fopen("neoncube\\data.grf.txt", "a");
+		if(hDataGrfTxt == NULL)
+		    PostError(TRUE, "Failed to open adata.grf.txt");
 		
-		DeleteFile("neoncube\\grf.bak");
-		if(!MoveFile(settings.szGrf, "neoncube\\grf.bak")) {
-		    PostError(FALSE, "Failed to make a backup of %s", settings.szGrf);
-		}
-	    }	
-	    //moves and renames new GRF file
-	    if(!MoveFile("neoncube\\data.grf",settings.szGrf))
-		PostError(TRUE, "Failed to move file (%s) to original path", settings.szGrf);
 
+		if(WriteData("neoncube\\data\\*", hDataGrfTxt) != 0)
+		    PostError(TRUE, "Failed to write adata.grf.txt");
+
+		fclose(hDataGrfTxt);
+		// repacking process, we CreateProcess() create.exe for it to repack the extracted files
+		// TODO: add a progress-bar marquee style
+		StatusMessage("Status: Repacking files...\r\nInfo:-----\r\nProgress:-----");
+
+		STARTUPINFO	    siStartupInfo;
+		PROCESS_INFORMATION piProcessInfo;
+
+		memset(&siStartupInfo, 0, sizeof(siStartupInfo));
+		memset(&piProcessInfo, 0, sizeof(piProcessInfo));
+
+		siStartupInfo.cb = sizeof(siStartupInfo);
+
+		if(0 == CreateProcess("neoncube\\Create.exe",     
+			     NULL, 0, 0, FALSE,
+			     CREATE_DEFAULT_ERROR_MODE | CREATE_NO_WINDOW,
+			     0, "neoncube", &siStartupInfo, &piProcessInfo))
+		    PostError(TRUE, "Failed to create process: Create.exe");
+				
+		// wait for create.exe to terminate
+		WaitForSingleObject(piProcessInfo.hProcess, INFINITE);
+		CloseHandle(piProcessInfo.hThread);
+		CloseHandle(piProcessInfo.hProcess);
+
+				
+		//delete extracted files directory
+		DeleteDirectory("neoncube\\data");
+
+
+		if(!settings.nBackupGRF) {
+		//delete old GRF file
+		    DeleteFile(settings.szGrf);
+
+		} else {
+		    
+		    DeleteFile("neoncube\\grf.bak");
+		    if(!MoveFile(settings.szGrf, "neoncube\\grf.bak")) {
+			PostError(FALSE, "Failed to make a backup of %s", settings.szGrf);
+		    }
+		}	
+		//moves and renames new GRF file
+	       
+		if(!MoveFile("neoncube\\data.grf",settings.szGrf))
+		    PostError(TRUE, "Failed to move file (%s) to original path", settings.szGrf);
+	    }
 	    StatusMessage("Status: Patch process complete.\r\nInfo:-----\r\nProgress:-----");
 			
 	    //write last index
@@ -1175,7 +1218,7 @@ end:;
 	    hLastIndex = fopen("neoncube.file","w");
 	    if(NULL == hLastIndex)
 		PostError(TRUE, "Failed to write last index to neoncube.file");
-	    fprintf(hLastIndex,"%d",index_tmp);
+	    fprintf(hLastIndex,"%d",nIndex);
 	    fclose(hLastIndex);								
 	
 	} else {
@@ -1203,7 +1246,7 @@ end:;
 // @return value - none
 //##########################################################################
 void
-DelFile(LPCTSTR item, LPCTSTR fpath)
+DelFile(LPCTSTR item, LPCTSTR fpath, INT nIndex)
 {
     DELFILE *dfNewItem;
 
@@ -1212,7 +1255,7 @@ DelFile(LPCTSTR item, LPCTSTR fpath)
 	PostError(TRUE, "Failed to allocate memory.");
     lstrcpy(dfNewItem->szFileName, item);
     lstrcpy(dfNewItem->szPath, fpath);
-
+    dfNewItem->nIndex = nIndex;
     
     dfNewItem->next = dfFirstItem;
     dfFirstItem = dfNewItem;
@@ -1252,10 +1295,6 @@ AddPatchEx(LPCTSTR item, INT index, LPCTSTR fpath)
 	
 	strcpy(spNewItem->szPatchName, item);
 	spNewItem->iPatchIndex = index;
-	
-	// if fpath != NULL, this patch package will be extracted on fpath, else place
-	// it on the default GRF file
-	
 	lstrcpy(spNewItem->szPath, fpath);
 	spNewItem->next = spFirstItem;
 	spFirstItem = spNewItem;
@@ -1330,30 +1369,7 @@ StatusMessage(LPCTSTR message, ...)
     SendMessage(g_hwndStatic, WM_SETTEXT, 0, (LPARAM)buffer);
 }
              
-//#######################################################
-// adds an entry to error.log when called
-// 
-// @param fmt - Message format
-//
-// @return value - none.
-//#######################################################
-void 
-AddErrorLog(LPCTSTR fmt, ...)
-{
-    va_list args;
-    TCHAR buf[1024];
 
-    va_start(args, fmt);
-    vsprintf(buf, fmt, args);
-    va_end(args);
-
-    FILE *f;
-    f = fopen("neoncube\\error.log", "a");
-    if(f != NULL) {
-	fwrite(buf, 1, strlen(buf), f);
-	fclose(f);
-    }
-}
 
 // ##################################################################
 // Creates a named mutex to prevent multiple instance
@@ -1381,6 +1397,30 @@ InitInstance(void)
     }
 }
 
+//#######################################################
+// adds an entry to error.log when called
+// 
+// @param fmt - Message format
+//
+// @return value - none.
+//#######################################################
+void 
+AddErrorLog(LPCTSTR fmt, ...)
+{
+    va_list args;
+    TCHAR buf[1024];
+
+    va_start(args, fmt);
+    vsprintf(buf, fmt, args);
+    va_end(args);
+
+    FILE *f;
+    f = fopen("neoncube\\error.log", "a");
+    if(f != NULL) {
+	fwrite(buf, 1, strlen(buf), f);
+	fclose(f);
+    }
+}
 
 //#####################################################################
 // Checks a file/directory if it exists
@@ -1441,10 +1481,106 @@ AddDebug(LPCTSTR fmt, ...)
     }
 }
 
+BOOL
+LaunchApp(LPCTSTR lpszExecutable)
+{
+
+    STARTUPINFO		siStartupInfo;
+    PROCESS_INFORMATION piProcessInfo;
+
+    memset(&siStartupInfo, 0, sizeof(siStartupInfo));
+    memset(&piProcessInfo, 0, sizeof(piProcessInfo));
+
+    siStartupInfo.cb = sizeof(siStartupInfo);
+
+    if(0 != CreateProcess(lpszExecutable,     
+                     NULL, 0, 0, FALSE,
+                     CREATE_DEFAULT_ERROR_MODE,
+                     0, "neoncube", &siStartupInfo, &piProcessInfo)) {
+	PostError(FALSE, "Failed to launch application: %s", lpszExecutable);
+	return FALSE;
+    }
+    return TRUE;
+}
+
+// writes files into data.grf.txt recursively
+// @param lpszDir	- Pointer to a null terminated string (data directory)
+// @param hDataGrfTxt	- Handle to a FILE where the files will be written.
+// @return value	- -1 if an error occurs, 0 otherwise.
+
+    
+INT
+WriteData(LPTSTR lpszDir, FILE *hDataGrfTxt)
+{
+    WIN32_FIND_DATA *FindFileData;
+    TCHAR	    szNextDir[MAX_PATH];
+    TCHAR	    szPath[MAX_PATH];
+    DWORD	    dwError;
+    LPTSTR	    pszPath;
+    HANDLE hFind    = INVALID_HANDLE_VALUE;
+    FindFileData    = (WIN32_FIND_DATA*)GlobalAlloc(GMEM_FIXED, sizeof(WIN32_FIND_DATA));
+    
+
+ 
+    if(FindFileData == NULL)
+	return -1;
+    if(hDataGrfTxt == NULL)
+	return -1;
+
+
+    // searches directory for "."
+    hFind = FindFirstFile(lpszDir, FindFileData);
+
+    if (hFind == INVALID_HANDLE_VALUE) {
+	return -1;
+    } else {
+	while (FindNextFile(hFind, FindFileData) != 0) {
+		
+	    // but we skip it
+	    if(strcmp(FindFileData->cFileName, "..") != 0 && strcmp(FindFileData->cFileName, ".") != 0) {
+		if(FindFileData->dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+		
+		    //if cFileName is a directory, call WriteData again
+		    strcpy(szNextDir, lpszDir);
+		    szNextDir[strlen(szNextDir)-1] = '\0';
+		    strcat(szNextDir, FindFileData->cFileName);
+		    strcat(szNextDir, "\\*");
+		    WriteData(szNextDir, hDataGrfTxt);
+		    
+		} else {
+		    //else its a file, write it to data.grf.txt
+
+		    
+		    strcpy(szPath, lpszDir);
+		    szPath[strlen(szPath)-1] = '\0';
+		    strcat(szPath, FindFileData->cFileName);
+		    pszPath = strchr(szPath, '\\');
+
+		    pszPath += 1;
+		    fprintf(hDataGrfTxt, "F %s\n", pszPath);
+
+		}
+	    }
+	}
+	dwError = GetLastError();
+	FindClose(hFind);
+
+	if (dwError != ERROR_NO_MORE_FILES) {
+	    GlobalFree((HANDLE)FindFileData);
+	    FindFileData = NULL;
+
+	    return 0;
+	}
+      
+    }
+    if(FindFileData) {
+	GlobalFree((HANDLE)FindFileData);
+	FindFileData = NULL;
+    }
 
 
 
-
-
+    return 0;
+}
 
 
