@@ -5964,6 +5964,8 @@ sub parseMsg {
 
 		} elsif ($fail == 6) {
 			message "Can't loot item...wait...\n", "drop";
+		} else {
+			message "Cannot pickup item (failure code $fail)\n", "drop";
 		}
 
 	} elsif ($switch eq "00A1") {
