@@ -4962,7 +4962,7 @@ sub parseMsg {
 			$player->{pos} = {%coords};
 			$player->{pos_to} = {%coords};
 			my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-			debug "Player Exists: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
+			debug "Player Exists: ".$player->name." ($player->{binID}) Level $lv $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
 			setStatus($ID,$param1,$param2,$param3);
 
 			objectAdded('player', $ID, $player) if ($added);
@@ -5112,8 +5112,9 @@ sub parseMsg {
 			$players{$ID}{lv} = $lv;
 			$players{$ID}{pos} = {%coords};
 			$players{$ID}{pos_to} = {%coords};
-			debug "Player Connected: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg_presence";
-                        setStatus($ID, $param1, $param2, $param3);
+			my $domain = existsInList($config{friendlyAID}, unpack("L1", $ID)) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			debug "Player Connected: ".$players{$ID}->name." ($players{$ID}{'binID'}) Level $lv $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", $domain;
+			setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
 
@@ -5162,7 +5163,7 @@ sub parseMsg {
 				$players{$ID}{'nameID'} = unpack("L1", $ID);
 				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
 				my $domain = existsInList($config{friendlyAID}, unpack("L1", $ID)) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-				debug "Player Appeared: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$sex} $jobs_lut{$type}\n", $domain;
+				debug "Player Appeared: ".$players{$ID}->name." ($players{$ID}{'binID'}) Level $lv $sex_lut{$sex} $jobs_lut{$type}\n", $domain;
 				$added = 1;
 				Plugins::callHook('player', {player => $players{$ID}});
 			}
@@ -5452,7 +5453,7 @@ sub parseMsg {
 
 		if ($conState == 5 &&
 		    ($config{dcOnDisconnect} > 1 ||
-			 $config{dcOnDisconnect} && $type != 3)) {
+			 ($config{dcOnDisconnect} && $type != 3))) {
 			message "Lost connection; exiting\n";
 			$quit = 1;
 		}
