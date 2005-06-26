@@ -23,12 +23,7 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-#ifdef _DEBUG
-#define CRTDBG_MAP_ALLOC
 
-#include <stdlib.h>
-#include <crtdbg.h>
-#endif /*_DEBUG*/
 
 
 #include <windows.h>
@@ -38,26 +33,14 @@
 #include <direct.h>
 #include <stdio.h>
 
-#ifndef PBS_STYLE
-#define PBS_STYLE ( WS_CHILD	| \
-		    WS_VISIBLE)
-#endif // PBS_STYLE
+#include "neondef.h"
 
-#ifndef DATA_GRF_TXT
-#define DATA_GRF_TXT "neoncube\\data.grf.txt"
-#endif //DATA_GRF_TXT
+
+
 /*#######################################################
 ## DEFINITIONS OF STATIC CONTROL IDS
 ########################################################*/
 
-#define IDC_MINIMIZE	4001
-#define IDC_CLOSE	4002
-#define IDC_GROUPBOX	4003
-#define IDC_PROGRESS	4004
-#define IDC_STATUS	4005
-#define IDC_STARTGAME	4006
-#define IDC_REGISTER	4007
-#define IDC_CANCEL	4008
 
 
 /*#######################################################
@@ -72,7 +55,7 @@
 ## hwndRegister:	Register button handle.
 ## hwndCancel:		Cancel button handle.
 ########################################################*/
-#define MAXARRSIZE 1024
+
 HWND hwndNotice; 
 HWND hwndMinimize; 
 HWND hwndClose; 
@@ -101,37 +84,6 @@ struct inisetting {
 } settings;
 
 
-/*#######################################################
-## FONT COLORS / BACKGROUND COLORS
-## (not implemented yet)	
-########################################################*/
-/*
-struct stylesetting {
-	BYTE iFontColorRED;
-	BYTE iFontColorGREEN;
-	BYTE iFontColorBLUE;
-	
-	BYTE iTextBgRED;
-	BYTE iTextBgGREEN;
-	BYTE iTextBgBLUE;
-
-} style;
-*/
-
-/*#######################################################
-## COORDS, BUTTONSTYLE structure
-##
-## x:		x coordinate of a button / control.
-## y:		y coordinate of a button / control.
-## width:	Width of a button / control.
-## height:	Height of a button / control.
-########################################################*/
-typedef struct {
-	INT x;
-	INT y;
-	INT height;
-	INT width;
-} COORDS, BUTTONSTYLE;
 
 
 /*#######################################################
@@ -152,9 +104,6 @@ CONST TCHAR iniFile[] = "neoncube\\neoncube.ini";
 TCHAR styleFile[256] = "neoncube\\";
 TCHAR szSkinFolder[256] = "neoncube\\";
 
-#define STYLEFILE   styleFile
-#define INIFILE	    iniFile
-#define SKINFOLDER  szSkinFolder
 
 /*#######################################################
 ## HINTERNET HANDLES
@@ -228,13 +177,6 @@ extern void LoadButtonBitmap(void);
 ########################################################*/
 extern BOOL TME(HWND);
 
-/*#######################################################
-## FUNCTION: Loads INI (integer) settings
-##
-## return value: the value which was loaded from the ini
-## file
-########################################################*/
-#define LoadINIInt(s, k) GetPrivateProfileInt((s), (k), (0), (STYLEFILE))
 
 
 /*#######################################################
@@ -248,15 +190,6 @@ DWORD Threader(void);
 
 
 /*#######################################################
-## FUNCTION: Converts Bytes to KiloBytes
-##
-## return value: returns the new value in float
-########################################################*/
-#define BytesToKB(n) (((float)n) / ((float)1024))
-
-
-
-/*#######################################################
 ## STRUCT PATCH: A linked list that contains info about
 ##				 the patches being downloaded.
 ##
@@ -266,13 +199,6 @@ DWORD Threader(void);
 ##			EG: FLD = folder, GRF = grf file
 ## *next:		pointer to the next entry in the list
 ########################################################*/
-typedef struct patch {
-	TCHAR	szPatchName[50];
-	INT	iPatchIndex;
-	TCHAR	szPath[3]; //1.1 release
-
-	struct patch *next;
-} PATCH;
 
 PATCH *spFirstItem = NULL;
 
@@ -362,15 +288,10 @@ void StatusMessage(LPCTSTR message, ...);
 ## DELFILE structure
 ## contains info about the files that will be deleted
 ########################################################*/
-typedef struct delfile {
-	TCHAR szFileName[1024];
-	TCHAR szPath[3];
 
-	struct delfile *next;
-} DELFILE;
 
 DELFILE *dfFirstItem = NULL;
-void DelFile(LPCTSTR item, LPCTSTR fpath);
+void DelFile(LPCTSTR item, LPCTSTR fpath, INT nIndex);
 
 
 /*#######################################################
@@ -396,13 +317,7 @@ BOOL InitInstance(void);
 
 //---------------------------------------------
 
-typedef enum {
-    CFFE_FILE_EXIST, // file exist
-    CFFE_FILE_NOT_FOUND, // file not found
-    CFFE_PATH_NOT_FOUND, // invalid path
-    CFFE_ACCESS_DENIED // access denied
 
-}CFFE_ERROR;
 
 // Check for fist existance
 // @param lpszFileName - Pointer to a null terminated string (path to file)
@@ -410,4 +325,16 @@ typedef enum {
 CFFE_ERROR CheckFileForExistance(LPCTSTR lpszFileName);
 
 
+// Runs an executable
+// @param lpszExecutable - path to the executable
+
+BOOL LaunchApp(LPCTSTR lpszExecutable);
+
+
+//rar func
+extern BOOL ExtractRAR(LPTSTR fname, LPCTSTR fpath);
+extern LPCTSTR GetFileExt(const char *fname);
+
+//adata.grf.txt
+extern INT WriteData(LPTSTR dir, FILE *hDataGrfTxt);
 #endif /*_MAIN_H_*/

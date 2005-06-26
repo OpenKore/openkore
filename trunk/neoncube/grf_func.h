@@ -30,7 +30,7 @@
 #include <direct.h>
 #include <shlobj.h>
 #include "grf.h"
-
+#include "neondef.h"
 
 extern HWND hwndProgress;
 extern HWND g_hwndStatic;
@@ -38,12 +38,7 @@ extern HWND g_hwndStatic;
 // structure of files that will be deleted
 // 
 //
-typedef struct delfile {
-	TCHAR szFileName[1024];
-	TCHAR szPath[3];
 
-	struct delfile *next;
-}DELFILE;
 
 extern DELFILE *dfFirstItem;
 
@@ -53,30 +48,12 @@ extern void StatusMessage(LPCTSTR message, ...);
 extern void AddErrorLog(LPCTSTR fmt, ...);
 
 
-typedef struct files {
-    TCHAR   szFileName[256];
-    struct files *next;
-} GRFFILES;
-
-GRFFILES *spfFirstItem = NULL;
-
-typedef struct patch {
-    TCHAR   szPatchName[50];
-    INT	    iPatchIndex;
-    TCHAR   szPath[3];
-
-    struct patch *next;
-} PATCH;
 
 extern PATCH *spFirstItem;
 
-static BOOL FileExist(LPCTSTR filename);
-static INT AddFile(LPCTSTR filename);
-
-
-static INT CountFolders(LPCTSTR source);
-
-
-static LPTSTR GetFolder(LPTSTR source, INT index);
+extern BOOL FileExist(LPCTSTR filename);
+extern INT AddFile(LPCTSTR filename);
+extern INT CountFolders(LPCTSTR source);
+extern LPTSTR GetFolder(LPTSTR source, INT index);
 
 #endif /*_GRF_FUNC_H_*/
