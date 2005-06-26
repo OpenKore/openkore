@@ -121,11 +121,13 @@ sub OnGetItemAttr {
 	my $ID = $self->{objectsID}[$item];
 
 	my $attr = new Wx::ListItemAttr;
-	if ($ID && $self->{objects}{$ID}{type} eq 'm') {
+	if (!$ID || !$self->{objects} || ref($self->{objects}) ne 'HASH' || !$self->{objects}{$ID} || ref($self->{objects}{$ID}) ne 'HASH') {
+		return $attr;
+	} elsif ($self->{objects}{$ID}{type} eq 'm') {
 		$attr->SetTextColour($monsterColor);
-	} elsif ($ID && $self->{objects}{$ID}{type} eq 'i') {
+	} elsif ($self->{objects}{$ID}{type} eq 'i') {
 		$attr->SetTextColour($itemColor);
-	} elsif ($ID && $self->{objects}{$ID}{type} eq 'n') {
+	} elsif ($self->{objects}{$ID}{type} eq 'n') {
 		$attr->SetTextColour($npcColor);
 	}
 	return $attr;
