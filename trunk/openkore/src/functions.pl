@@ -1427,7 +1427,7 @@ sub AI {
 	AUTOSTORAGE: {
 
 	if (AI::is("", "route", "sitAuto", "follow") &&
-	    $config{'storageAuto'} && $config{'storageAuto_npc'} ne "" &&
+	    $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand}) &&
 		(($config{'itemsMaxWeight_sellOrStore'} &&
 		 percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) ||
 		 (!$config{'itemsMaxWeight_sellOrStore'} &&
@@ -1445,7 +1445,7 @@ sub AI {
 		}
 
 	} elsif (AI::is("", "route", "attack") &&
-	         $config{'storageAuto'} && $config{'storageAuto_npc'} ne "" &&
+	         $config{'storageAuto'} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand}) &&
 		 !AI::inQueue("storageAuto") &&
 		 timeOut($timeout{'ai_storageAuto'})) {
 
