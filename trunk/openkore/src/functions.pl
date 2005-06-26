@@ -5434,10 +5434,6 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0081") {
-		if ($config{dcOnDisconnect} && $conState == 5) {
-			message "Lost connection; exiting\n";
-			$quit = 1;
-		}
 		$type = unpack("C1", substr($msg, 2, 1));
 		$conState = 1;
 		undef $conState_tries;
@@ -5446,6 +5442,12 @@ sub parseMsg {
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
 
+		if ($conState == 5 &&
+		    ($config{dcOnDisconnect} > 1 ||
+			 $config{dcOnDisconnect} && $type != 3)) {
+			message "Lost connection; exiting\n";
+			$quit = 1;
+		}
 
 		if ($type == 0) {
 			error("Server shutting down\n", "connection");
