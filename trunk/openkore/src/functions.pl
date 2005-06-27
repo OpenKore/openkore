@@ -5981,6 +5981,8 @@ sub parseMsg {
 
 		} elsif ($fail == 6) {
 			message "Can't loot item...wait...\n", "drop";
+		} elsif ($fail == 2) {
+			message "Cannot pickup item (inventory full)\n", "drop";
 		} else {
 			message "Cannot pickup item (failure code $fail)\n", "drop";
 		}
