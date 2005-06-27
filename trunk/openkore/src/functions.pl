@@ -1191,12 +1191,15 @@ sub AI {
 
 		} elsif ($args->{mapChanged} || @{$args->{steps}} == 0) {
 			message "Done talking with $args->{name}.\n", "ai_npcTalk";
-			# There is no need to cancel conversation if map changed; NPC is nowhere by now.
-			#sendTalkCancel(\$remote_socket, $args->{ID});
+
+			# Cancel conversation only if NPC is still around; otherwise
+			# we could get disconnected.
+			sendTalkCancel(\$remote_socket, $args->{ID}) if $npcs{$args->{ID}};;
 			AI::dequeue;
 
 		} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
-			# If NPC does not respond before timing out, then by default, it's a failure
+			# If NPC does not respond before timing out, then by default, it's
+			# a failure
 			error "NPC did not respond.\n", "ai_npcTalk";
 			sendTalkCancel(\$remote_socket, $args->{ID});
 			AI::dequeue;
@@ -5329,7 +5332,7 @@ sub parseMsg {
 			}
 
 		} else {
-			debug "Unknown Spawned: $type - ".getHex($ID)."\n", "parseMsg";
+			debug "Unknown Spawned: $type - ".getHex($ID)."\n", "parseMsg_presence";
 		}
 		
 	} elsif ($switch eq "007F") {
@@ -6022,7 +6025,7 @@ sub parseMsg {
 			$char->{inventory}[$invIndex]{name} = $display;
 			debug "Inventory: $char->{inventory}[$invIndex]{name} ($invIndex) x $char->{inventory}[$invIndex]{amount} - " .
 				"$itemTypes_lut{$char->{inventory}[$invIndex]{type}}\n", "parseMsg";
-			Plugins::callHook('packet_inventory', {index => $invIndex});
+			Plugins::callHook('packet_inventory', {index => $invIndex, item => $char->{inventory}[$invIndex]});
 		}
 
 		$ai_v{'inventory_time'} = time + 1;
@@ -6041,6 +6044,7 @@ sub parseMsg {
 
 			my $item = $chars[$config{char}]{inventory}[$invIndex] = {};
 			$item->{index} = $index;
+			$item->{invIndex} = $invIndex;
 			$item->{nameID} = $ID;
 			$item->{amount} = 1;
 			$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
@@ -6402,6 +6406,8 @@ sub parseMsg {
 		$ai_v{'npc_talk'}{'talk'} = 'close';
 		$ai_v{'npc_talk'}{'time'} = time;
 		sendTalkCancel(\$remote_socket, $ID);
+
+		Plugins::callHook('npc_talk_done', {ID => $ID});
 
 	} elsif ($switch eq "00B7") {
 		# 00b7: word len, long ID, string str
