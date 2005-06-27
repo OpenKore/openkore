@@ -5443,13 +5443,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0081") {
-		$type = unpack("C1", substr($msg, 2, 1));
-		$conState = 1;
-		undef $conState_tries;
-
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		Network::disconnect(\$remote_socket);
+		my $type = unpack("C1", substr($msg, 2, 1));
 
 		if ($conState == 5 &&
 		    ($config{dcOnDisconnect} > 1 ||
@@ -5457,6 +5451,13 @@ sub parseMsg {
 			message "Lost connection; exiting\n";
 			$quit = 1;
 		}
+
+		$conState = 1;
+		undef $conState_tries;
+
+		$timeout_ex{'master'}{'time'} = time;
+		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+		Network::disconnect(\$remote_socket);
 
 		if ($type == 0) {
 			error("Server shutting down\n", "connection");
@@ -8640,6 +8641,10 @@ sub parseMsg {
 
 		if ($fail == 0) {
 			message "Buy completed.\n", "success";
+		} elsif ($fail == 1) {
+			error "Buy failed (insufficient zeny).\n";
+		} elsif ($fail == 2) {
+			error "Buy failed (insufficient inventory capacity).\n";
 		} else {
 			error "Buy failed (failure code $fail).\n";
 		}
