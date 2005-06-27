@@ -75,7 +75,7 @@ our @EXPORT = (
 	avoidList_talk
 	center
 	charSelectScreen
-	chatLogClear
+	chatLog_clear
 	checkAllowedMap
 	checkFollowMode
 	checkMonsterCleanness
