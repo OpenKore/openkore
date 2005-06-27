@@ -269,6 +269,7 @@ Internal:
 - All commands have been moved to Commands.pm.
 - New plugin hook "player" passes a player object when "Player Appears"
   or "Player Exists".
+- New items_control() function (use this instead of %items_control).
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.

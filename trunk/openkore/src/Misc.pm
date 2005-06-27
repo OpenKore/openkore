@@ -93,6 +93,7 @@ our @EXPORT = (
 	manualMove
 	objectAdded
 	objectRemoved
+	items_control
 	mon_control
 	positionNearPlayer
 	positionNearPortal
@@ -1344,6 +1345,17 @@ sub objectRemoved {
 		type => $type,
 		ID => $ID
 	});
+}
+
+##
+# items_control($name)
+#
+# Returns the items_control.txt settings for monster name $name.
+# If $name has no specific settings, use 'all'.
+sub items_control {
+	my ($name) = @_;
+
+	return $items_control{lc($name)} || $items_control{all} || {};
 }
 
 ##
