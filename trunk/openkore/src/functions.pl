@@ -1590,24 +1590,26 @@ sub AI {
 				$args->{done} = 1;
 				$args->{nextItem} = 0 unless $args->{nextItem};
 				for (my $i = $ai_seq_args[0]{'nextItem'}; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
-					next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
-					my $store = $items_control{'all'}{'storage'};
-					$store = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'storage'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
-					my $keep = $items_control{'all'}{'keep'};
-					$keep = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
-					debug "AUTOSTORAGE: $char->{inventory}[$i]{name} x $char->{inventory}[$i]{amount} - store = $store, keep = $keep\n", "storage";
-					if ($store && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $keep) {
-						if ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $chars[$config{'char'}]{'inventory'}[$i]{'index'}
-							&& timeOut(\%{$timeout{'ai_storageAuto_giveup'}})) {
+					my $item = $char->{inventory}[$i];
+					next unless %{$item};
+					next if $item->{equipped};
+
+					my $control = items_control($item->{name});
+					my $store = $control->{storage};
+					my $keep = $control->{keep};
+					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
+					if ($store && $item->{amount} > $keep) {
+						if (AI::args->{lastIndex} == $item->{index} &&
+						    timeOut(\%{$timeout{'ai_storageAuto_giveup'}})) {
 							last AUTOSTORAGE;
-						} elsif ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $chars[$config{'char'}]{'inventory'}[$i]{'index'}) {
-							$timeout{'ai_storageAuto_giveup'}{'time'} = time;
+						} elsif (AI::args->{lastIndex} != $item->{index}) {
+							$timeout{ai_storageAuto_giveup}{time} = time;
 						}
 						undef $args->{done};
-						$ai_seq_args[0]{'lastIndex'} = $chars[$config{'char'}]{'inventory'}[$i]{'index'};
-						sendStorageAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$i]{'index'}, $chars[$config{'char'}]{'inventory'}[$i]{'amount'} - $keep);
-						$timeout{'ai_storageAuto'}{'time'} = time;
-						$ai_seq_args[0]{'nextItem'} = $i + 1;
+						AI::args->{lastIndex} = $item->{index};
+						sendStorageAdd(\$remote_socket, $item->{index}, $item->{amount} - $keep);
+						$timeout{ai_storageAuto}{time} = time;
+						AI::args->{nextItem} = $i + 1;
 						last AUTOSTORAGE;
 					}
 				}
