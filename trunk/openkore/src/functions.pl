@@ -118,11 +118,11 @@ sub initMapChangeVars {
 	undef %incomingParty;
 	undef $msg;
 	undef %talk;
-	undef %{$ai_v{'temp'}} if ($ai_v{'temp'});
-	undef @{$cart{'inventory'}} if ($cart{'inventory'});
-	undef @{$chars[$config{'char'}]{'inventory'}} if ($chars[$config{'char'}]{'inventory'});
-	$ai_v{'inventory_time'} = time + 60;
-	$ai_v{'cart_time'} = time + 60;
+	$ai_v{cart_time} = time + 60;
+	$ai_v{inventory_time} = time + 60;
+	$ai_v{temp} = {};
+	$cart{inventory} = [];
+	$chars[$config{char}]{inventory} = [];
 	undef @venderItemList;
 	undef $venderID;
 	undef @venderListsID;
@@ -136,9 +136,9 @@ sub initMapChangeVars {
 	undef %incomingFriend;
 
 	$shopstarted = 0;
-	$timeout{'ai_shop'}{'time'} = time;
-	$timeout{'ai_storageAuto'}{'time'} = time + 5;
-	$timeout{'ai_buyAuto'}{'time'} = time + 5;
+	$timeout{ai_shop}{time} = time;
+	$timeout{ai_storageAuto}{time} = time + 5;
+	$timeout{ai_buyAuto}{time} = time + 5;
 
 	AI::clear("attack", "route", "move");
 	ChatQueue::clear;
