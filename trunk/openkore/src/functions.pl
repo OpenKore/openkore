@@ -3718,12 +3718,12 @@ sub AI {
 			delete $ai_seq_args[0]{'openlist'};
 			delete $ai_seq_args[0]{'closelist'};
 			undef @{$ai_seq_args[0]{'mapSolution'}};
-			getField($ai_seq_args[0]{dest}{map}, $ai_seq_args[0]{'dest'}{'field'});
+			getField($ai_seq_args[0]{dest}{map}, \%{$ai_seq_args[0]{'dest'}{'field'}});
 
 			# Initializes the openlist with portals walkable from the starting point
 			foreach my $portal (keys %portals_lut) {
 				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
-				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, $portals_lut{$portal}{'source'}) ) {
+				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}}) ) {
 					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
 						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
 						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$ai_seq_args[0]{'solution'}};
@@ -3735,7 +3735,7 @@ sub AI {
 
 		} elsif ( $args->{stage} eq 'Getting Map Solution' ) {
 			$timeout{'ai_route_calcRoute'}{'time'} = time;
-			while (!$ai_seq_args[0]{'done'} && !timeOut($timeout{'ai_route_calcRoute'})) {
+			while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
 				ai_mapRoute_searchStep($args);
 			}
 			if ($ai_seq_args[0]{'found'}) {
