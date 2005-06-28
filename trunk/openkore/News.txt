@@ -122,6 +122,7 @@ New features:
   getting, see how many potions you're consuming).
 - New message "Cannot pickup item (failure code #)" indicates when
   you can't pick up an item. (I think 2 always means overweight?)
+- New chat command "mag" for Magnificat.
 
 New commands:
 - storage log
