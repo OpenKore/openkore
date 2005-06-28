@@ -5768,7 +5768,7 @@ sub parseMsg {
 				my $binID = binFind(\@npcsID, $ID); 
 				debug "NPC Info: $npcs{$ID}{'name'} ($binID)\n", "parseMsg", 2;
 			} 
-			if (!$npcs_lut{$npcs{$ID}{'nameID'} || !%{$npcs_lut{$npcs{$ID}{'nameID'}}}) { 
+			if (!$npcs_lut{$npcs{$ID}{'nameID'}} || !%{$npcs_lut{$npcs{$ID}{'nameID'}}}) { 
 				$npcs_lut{$npcs{$ID}{'nameID'}}{'name'} = $npcs{$ID}{'name'};
 				$npcs_lut{$npcs{$ID}{'nameID'}}{'map'} = $field{'name'};
 				%{$npcs_lut{$npcs{$ID}{'nameID'}}{'pos'}} = %{$npcs{$ID}{'pos'}};
