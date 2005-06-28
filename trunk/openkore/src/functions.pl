@@ -3718,7 +3718,8 @@ sub AI {
 			delete $ai_seq_args[0]{'openlist'};
 			delete $ai_seq_args[0]{'closelist'};
 			undef @{$ai_seq_args[0]{'mapSolution'}};
-			getField($ai_seq_args[0]{dest}{map}, \%{$ai_seq_args[0]{'dest'}{'field'}});
+			$ai_seq_args[0]{'dest'}{'field'} = {};
+			getField($ai_seq_args[0]{dest}{map}, $ai_seq_args[0]{dest}{field});
 
 			# Initializes the openlist with portals walkable from the starting point
 			foreach my $portal (keys %portals_lut) {
@@ -9834,7 +9835,7 @@ sub updateDamageTables {
 				$players{$ID2}{'missedFromMonster'}{$ID1}++;
 			}
 			if (existsInList($config{tankersList}, $players{$ID2}{name}) ||
-			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}})) {
+			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && $chars[$config{'char'}]{'party'}{'users'}{$ID2} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}})) {
 				# Monster attacks party member
 				$monsters{$ID1}{'dmgToParty'} += $damage;
 				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
@@ -9856,7 +9857,7 @@ sub updateDamageTables {
 			}
 
 			if (existsInList($config{tankersList}, $players{$ID1}{name}) ||
-			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
+			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && $chars[$config{'char'}]{'party'}{'users'}{$ID1} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
 			}
 		}
