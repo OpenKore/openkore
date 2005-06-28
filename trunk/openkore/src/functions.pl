@@ -15,7 +15,6 @@ use Text::ParseWords;
 use Config;
 eval "no utf8;";
 use bytes;
-use strict;
 
 use Globals;
 use Modules;
@@ -7864,7 +7863,7 @@ sub parseMsg {
 		});
 
 		# Skill Cancel
-		if ($AI && %{$monsters{$sourceID}} && mon_control($monsters{$sourceID}{'name'})->{'skillcancel_auto'}) {
+		if ($AI && $monsters{$sourceID} && %{$monsters{$sourceID}} && mon_control($monsters{$sourceID}{'name'})->{'skillcancel_auto'}) {
 			if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 				message "Monster Skill - switch Target to : $monsters{$sourceID}{name} ($monsters{$sourceID}{binID})\n";
 				stopAttack();
