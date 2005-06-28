@@ -1516,13 +1516,14 @@ LaunchApp(LPCTSTR lpszExecutable)
     }
 
 
-    if(0 != CreateProcess(lpszExecutable,     
+    if(0 == CreateProcess(lpszExecutable,     
                      lpszCall, 0, 0, FALSE,
                      CREATE_DEFAULT_ERROR_MODE,
-                     0, "neoncube", &siStartupInfo, &piProcessInfo)) {
+                     0, NULL, &siStartupInfo, &piProcessInfo)) {
 	PostError(FALSE, "Failed to launch application: %s", lpszExecutable);
 	return FALSE;
     }
+    
     return TRUE;
 }
 
