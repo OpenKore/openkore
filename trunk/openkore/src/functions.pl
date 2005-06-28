@@ -68,7 +68,7 @@ sub initConfChange {
 # Initialize variables when you start a connection to a map server
 sub initConnectVars {
 	initMapChangeVars();
-	undef %{$chars[$config{'char'}]{'skills'}};
+	undef %{$chars[$config{'char'}]{'skills'}} if ($chars[$config{'char'}]{'skills'});
 	undef @skillsID;
 	delete $chars[$config{'char'}]{'mute_period'};
 	delete $chars[$config{'char'}]{'muted'};
@@ -118,9 +118,9 @@ sub initMapChangeVars {
 	undef %incomingParty;
 	undef $msg;
 	undef %talk;
-	undef %{$ai_v{'temp'}};
-	undef @{$cart{'inventory'}};
-	undef @{$chars[$config{'char'}]{'inventory'}};
+	undef %{$ai_v{'temp'}} if ($ai_v{'temp'});
+	undef @{$cart{'inventory'}} if ($cart{'inventory'});
+	undef @{$chars[$config{'char'}]{'inventory'}} if ($chars[$config{'char'}]{'inventory'});
 	$ai_v{'inventory_time'} = time + 60;
 	$ai_v{'cart_time'} = time + 60;
 	undef @venderItemList;
@@ -278,7 +278,7 @@ sub checkConnection {
 		sendCharLogin(\$remote_socket, $config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 
-	} elsif ($conState == 3 && timeOut(\%{$timeout{'charlogin'}}) && $config{'char'} ne "") {
+	} elsif ($conState == 3 && timeOut($timeout{'charlogin'}) && $config{'char'} ne "") {
 		error "Timeout on Character Select Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
@@ -318,7 +318,7 @@ sub checkConnection {
 			undef $conState_tries;
 		}
 
-	} elsif ($conState == 5 && timeOut(\%{$timeout{'play'}})) {
+	} elsif ($conState == 5 && timeOut($timeout{'play'})) {
 		error "Timeout on Map Server, ", "connection";
 		if ($config{dcOnDisconnect}) {
 			error "exiting...\n", "connection";
@@ -867,7 +867,7 @@ sub AI {
 
 	##### MISC #####
 
-	if ($ai_seq[0] eq "look" && timeOut(\%{$timeout{'ai_look'}})) {
+	if ($ai_seq[0] eq "look" && timeOut($timeout{'ai_look'})) {
 		$timeout{'ai_look'}{'time'} = time;
 		sendLook(\$remote_socket, $ai_seq_args[0]{'look_body'}, $ai_seq_args[0]{'look_head'});
 		shift @ai_seq;
@@ -878,12 +878,12 @@ sub AI {
 		AI::queue('deal');
 	} elsif ($ai_seq[0] eq "deal") {
 		if (%currentDeal) {
-			if (!$currentDeal{you_finalize} && timeOut(\%{$timeout{ai_dealAuto}}) &&
+			if (!$currentDeal{you_finalize} && timeOut($timeout{ai_dealAuto}) &&
 			    ($config{dealAuto} == 2 ||
 				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
 				sendDealFinalize(\$remote_socket);
 				$timeout{ai_dealAuto}{time} = time;
-			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut(\%{$timeout{ai_dealAuto}}) && $config{dealAuto} >= 2) {
+			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2) {
 				sendDealTrade(\$remote_socket);
 				$timeout{ai_dealAuto}{time} = time;
 			}
@@ -893,7 +893,7 @@ sub AI {
 	}
 
 	# dealAuto 1=refuse 2,3=accept
-	if ($config{'dealAuto'} && %incomingDeal && timeOut(\%{$timeout{'ai_dealAuto'}})) {
+	if ($config{'dealAuto'} && %incomingDeal && timeOut($timeout{'ai_dealAuto'})) {
 		if ($config{'dealAuto'} == 1) {
 			sendDealCancel(\$remote_socket);
 		} elsif ($config{'dealAuto'} >= 2) {
@@ -904,7 +904,7 @@ sub AI {
 
 
 	# partyAuto 1=refuse 2=accept
-	if ($config{'partyAuto'} && %incomingParty && timeOut(\%{$timeout{'ai_partyAuto'}})) {
+	if ($config{'partyAuto'} && %incomingParty && timeOut($timeout{'ai_partyAuto'})) {
 		if ($config{partyAuto} == 1) {
 			message "Auto-denying party request\n";
 		} else {
@@ -915,7 +915,7 @@ sub AI {
 		undef %incomingParty;
 	}
 
-	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut(\%{$timeout{'ai_guildAutoDeny'}})) {
+	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut($timeout{'ai_guildAutoDeny'})) {
 		sendGuildJoin(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
 		sendGuildAlly(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
 		$timeout{'ai_guildAutoDeny'}{'time'} = time;
@@ -923,7 +923,7 @@ sub AI {
 	}
 
 
-	if ($xkore && !$sentWelcomeMessage && timeOut(\%{$timeout{'welcomeText'}})) {
+	if ($xkore && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
 		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
 		$sentWelcomeMessage = 1;
 	}
@@ -963,7 +963,7 @@ sub AI {
 				} else {
 					$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
 				}
-				if (timeOut(\%{$ai_seq_args[0]{'forceGiveup'}})) {
+				if (timeOut($ai_seq_args[0]{'forceGiveup'})) {
 					$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
 				}
 			}
@@ -979,7 +979,7 @@ sub AI {
 			} else {
 				$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
 			}
-			if (timeOut(\%{$ai_seq_args[0]{'forceGiveup'}})) {
+			if (timeOut($ai_seq_args[0]{'forceGiveup'})) {
 				$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
 			}
 		}
@@ -1589,7 +1589,7 @@ sub AI {
 				$args->{nextItem} = 0 unless $args->{nextItem};
 				for (my $i = $ai_seq_args[0]{'nextItem'}; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
 					my $item = $char->{inventory}[$i];
-					next unless %{$item};
+					next unless ($item && %{$item});
 					next if $item->{equipped};
 
 					my $control = items_control($item->{name});
@@ -1598,7 +1598,7 @@ sub AI {
 					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
 					if ($store && $item->{amount} > $keep) {
 						if (AI::args->{lastIndex} == $item->{index} &&
-						    timeOut(\%{$timeout{'ai_storageAuto_giveup'}})) {
+						    timeOut($timeout{'ai_storageAuto_giveup'})) {
 							last AUTOSTORAGE;
 						} elsif (AI::args->{lastIndex} != $item->{index}) {
 							$timeout{ai_storageAuto_giveup}{time} = time;
@@ -1728,8 +1728,8 @@ sub AI {
 			unshift @ai_seq, "buyAuto";
 			unshift @ai_seq_args, {forcedBySell => 1};
 		}
-	} elsif ($ai_seq[0] eq "sellAuto" && timeOut(\%{$timeout{'ai_sellAuto'}})) {
-		($config{sellAuto_standpoint}) ? getNPCInfo($config{'sellAuto_standpoint'}, \%{$ai_seq_args[0]{'npc'}}) : getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
+	} elsif ($ai_seq[0] eq "sellAuto" && timeOut($timeout{'ai_sellAuto'})) {
+		($config{sellAuto_standpoint}) ? getNPCInfo($config{'sellAuto_standpoint'}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{'sellAuto_npc'}, $ai_seq_args[0]{'npc'});
 		if (!defined($ai_seq_args[0]{'npc'}{'ok'})) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOSELL;
@@ -1739,7 +1739,7 @@ sub AI {
 		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
-			$ai_v{'temp'}{'distance'} = distance(\%{$ai_seq_args[0]{'npc'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			$ai_v{'temp'}{'distance'} = distance($ai_seq_args[0]{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
 			$config{'sellAuto_distance'} = 1 if ($config{sellAuto_standpoint});
 			if ($ai_v{'temp'}{'distance'} > $config{'sellAuto_distance'}) {
 				$ai_v{'temp'}{'do_route'} = 1;
@@ -1764,7 +1764,7 @@ sub AI {
 					noSitAuto => 1);
 			}
 		} else {
-			getNPCInfo($config{'sellAuto_npc'}, \%{$ai_seq_args[0]{'npc'}});
+			getNPCInfo($config{'sellAuto_npc'}, $ai_seq_args[0]{'npc'});
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
 				$ai_seq_args[0]{'sentSell'} = 1;
 				
@@ -1824,7 +1824,7 @@ sub AI {
 
 	AUTOBUY: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow") && timeOut(\%{$timeout{'ai_buyAuto'}}) && time > $ai_v{'inventory_time'}) {
+	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow") && timeOut($timeout{'ai_buyAuto'}) && time > $ai_v{'inventory_time'}) {
 		undef $ai_v{'temp'}{'found'};
 		my $i = 0;
 		while (1) {
@@ -1864,7 +1864,7 @@ sub AI {
 			unshift @ai_seq_args, {forcedByBuy => 1};
 		}
 
-	} elsif ($ai_seq[0] eq "buyAuto" && timeOut(\%{$timeout{'ai_buyAuto_wait'}}) && timeOut(\%{$timeout{'ai_buyAuto_wait_buy'}})) {
+	} elsif ($ai_seq[0] eq "buyAuto" && timeOut($timeout{'ai_buyAuto_wait'}) && timeOut($timeout{'ai_buyAuto_wait_buy'})) {
 		my $i = 0;
 		undef $ai_seq_args[0]{'index'};
 		
@@ -1874,7 +1874,7 @@ sub AI {
 			if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"buyAuto_$i"."_maxAmount"} ne "" && ($ai_seq_args[0]{'invIndex'} eq "" 
 				|| $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"})) {
 
-				($config{"buyAuto_$i"."_standpoint"}) ? getNPCInfo($config{"buyAuto_$i"."_standpoint"}, \%{$ai_seq_args[0]{'npc'}}) : getNPCInfo($config{"buyAuto_$i"."_npc"}, \%{$ai_seq_args[0]{'npc'}});
+				($config{"buyAuto_$i"."_standpoint"}) ? getNPCInfo($config{"buyAuto_$i"."_standpoint"}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'});
 				if (defined $ai_seq_args[0]{'npc'}{'ok'}) {
 					$ai_seq_args[0]{'index'} = $i;
 				}
@@ -1884,7 +1884,7 @@ sub AI {
 		}
 		if ($ai_seq_args[0]{'index'} eq ""
 			|| ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $ai_seq_args[0]{'index'}
-			&& timeOut(\%{$timeout{'ai_buyAuto_giveup'}}))) {
+			&& timeOut($timeout{'ai_buyAuto_giveup'}))) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOBUY;
 		}
@@ -1892,7 +1892,7 @@ sub AI {
 		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
 			$ai_v{'temp'}{'do_route'} = 1;			
 		} else {
-			$ai_v{'temp'}{'distance'} = distance(\%{$ai_seq_args[0]{'npc'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			$ai_v{'temp'}{'distance'} = distance($ai_seq_args[0]{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
 			$config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"} = 0 if ($config{"buyAuto_$i"."_standpoint"});
 			if ($ai_v{'temp'}{'distance'} > $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}) {
 				$ai_v{'temp'}{'do_route'} = 1;
@@ -1916,7 +1916,7 @@ sub AI {
 					distFromGoal => $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"});
 			}
 		} else {
-			getNPCInfo($config{"buyAuto_$i"."_npc"}, \%{$ai_seq_args[0]{'npc'}});
+			getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'});
 			if ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $ai_seq_args[0]{'index'}) {
 				undef $ai_seq_args[0]{'itemID'};
 				if ($config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"} != $config{"buyAuto_$ai_seq_args[0]{'lastIndex'}"."_npc"}) {
@@ -2213,7 +2213,7 @@ sub AI {
 				last;
 			}
 		}
-	} elsif (!$ai_seq_args[$followIndex]{'following'} && %{$players{$ai_seq_args[$followIndex]{'ID'}}}) {
+	} elsif (!$ai_seq_args[$followIndex]{'following'} && $players{$ai_seq_args[$followIndex]{'ID'}} && %{$players{$ai_seq_args[$followIndex]{'ID'}}}) {
 		$ai_seq_args[$followIndex]{'following'} = 1;
 		delete $ai_seq_args[$followIndex]{'ai_follow_lost'};
 		message "Found my master!\n", "follow"
@@ -2254,7 +2254,7 @@ sub AI {
 				}
 			}
 			
-			if ($args->{following} && %{$player}) {
+			if ($args->{following} && $player && %{$player}) {
 				if ($config{'followSitAuto'} && $players{$ai_seq_args[$followIndex]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
 					sit();
 				}
@@ -2270,10 +2270,10 @@ sub AI {
 		}
 	}
 
-	if ($ai_seq[0] eq "follow" && $ai_seq_args[$followIndex]{'following'} && ($players{$ai_seq_args[$followIndex]{'ID'}}{'dead'} || (!%{$players{$ai_seq_args[$followIndex]{'ID'}}} && $players_old{$ai_seq_args[$followIndex]{'ID'}}{'dead'}))) {
+	if ($ai_seq[0] eq "follow" && $ai_seq_args[$followIndex]{'following'} && ( ( $players{$ai_seq_args[$followIndex]{'ID'}} && $players{$ai_seq_args[$followIndex]{'ID'}}{'dead'} ) || ( ( !$players{$ai_seq_args[$followIndex]{'ID'}} || !%{$players{$ai_seq_args[$followIndex]{'ID'}}} ) && $players_old{$ai_seq_args[$followIndex]{'ID'}}{'dead'}))) {
 		message "Master died.  I'll wait here.\n", "party";
 		delete $ai_seq_args[$followIndex]{'following'};
-	} elsif ($ai_seq_args[$followIndex]{'following'} && !%{$players{$ai_seq_args[$followIndex]{'ID'}}}) {
+	} elsif ($ai_seq_args[$followIndex]{'following'} && ( !$players{$ai_seq_args[$followIndex]{'ID'}} || !%{$players{$ai_seq_args[$followIndex]{'ID'}}} )) {
 		message "I lost my master\n", "follow";
 		if ($config{'followBot'}) {
 			message "Trying to get him back\n", "follow";
@@ -2296,14 +2296,14 @@ sub AI {
 			$ai_seq_args[$followIndex]{'ai_follow_lost'} = 1;
 			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
 			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'time'} = time;
-			getVector(\%{$ai_seq_args[$followIndex]{'ai_follow_lost_vec'}}, \%{$players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}}, \%{$chars[$config{'char'}]{'pos_to'}});
+			getVector($ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
 
 			#check if player went through portal
 			my $first = 1;
 			my $foundID;
 			my $smallDist;
 			foreach (@portalsID) {
-				$ai_v{'temp'}{'dist'} = distance(\%{$players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}}, \%{$portals{$_}{'pos'}});
+				$ai_v{'temp'}{'dist'} = distance($players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
 				if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
 					$smallDist = $ai_v{'temp'}{'dist'};
 					$foundID = $_;
@@ -2326,7 +2326,7 @@ sub AI {
 		}
 		%{$ai_seq_args[0]{'ai_follow_lost_char_last_pos'}} = %{$chars[$config{'char'}]{'pos_to'}};
 
-		if (timeOut(\%{$ai_seq_args[$followIndex]{'ai_follow_lost_end'}})) {
+		if (timeOut($ai_seq_args[$followIndex]{'ai_follow_lost_end'})) {
 			delete $ai_seq_args[$followIndex]{'ai_follow_lost'};
 			message "Couldn't find master, giving up\n", "follow";
 
@@ -2340,7 +2340,7 @@ sub AI {
 
 		} elsif ($ai_seq_args[$followIndex]{'lost_stuck'}) {
 			if ($ai_seq_args[$followIndex]{'follow_lost_portalID'} eq "") {
-				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[$followIndex]{'ai_follow_lost_vec'}}, $config{'followLostStep'} / ($ai_seq_args[$followIndex]{'lost_stuck'} + 1));
+				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $config{'followLostStep'} / ($ai_seq_args[$followIndex]{'lost_stuck'} + 1));
 				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
 			}
 		} else {
@@ -2352,7 +2352,7 @@ sub AI {
 						attackOnRoute => 1);
 				}
 			} else {
-				moveAlongVector(\%{$ai_v{'temp'}{'pos'}}, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[$followIndex]{'ai_follow_lost_vec'}}, $config{'followLostStep'});
+				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $config{'followLostStep'});
 				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
 			}
 		}
@@ -3029,7 +3029,7 @@ sub AI {
 			for (my $j = 0; $j < @partyUsersID; $j++) {
 				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
 				if ($players{$partyUsersID[$j]}
-					&& inRange(distance(\%{$char->{pos_to}}, $players{$partyUsersID[$j]}{pos}), $config{partySkillDistance} || "1..8")
+					&& inRange(distance($char->{pos_to}, $players{$partyUsersID[$j]}{pos}), $config{partySkillDistance} || "1..8")
 					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $char->{party}{users}{$partyUsersID[$j]}{'name'}))
 					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
 					&& checkSelfCondition("partySkill_$i")
@@ -3718,12 +3718,12 @@ sub AI {
 			delete $ai_seq_args[0]{'openlist'};
 			delete $ai_seq_args[0]{'closelist'};
 			undef @{$ai_seq_args[0]{'mapSolution'}};
-			getField($ai_seq_args[0]{dest}{map}, \%{$ai_seq_args[0]{'dest'}{'field'}});
+			getField($ai_seq_args[0]{dest}{map}, $ai_seq_args[0]{'dest'}{'field'});
 
 			# Initializes the openlist with portals walkable from the starting point
 			foreach my $portal (keys %portals_lut) {
 				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
-				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}}) ) {
+				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, $portals_lut{$portal}{'source'}) ) {
 					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
 						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
 						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$ai_seq_args[0]{'solution'}};
@@ -3735,7 +3735,7 @@ sub AI {
 
 		} elsif ( $args->{stage} eq 'Getting Map Solution' ) {
 			$timeout{'ai_route_calcRoute'}{'time'} = time;
-			while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
+			while (!$ai_seq_args[0]{'done'} && !timeOut($timeout{'ai_route_calcRoute'})) {
 				ai_mapRoute_searchStep($args);
 			}
 			if ($ai_seq_args[0]{'found'}) {
@@ -3787,7 +3787,7 @@ sub AI {
 						}
 					}
 
-				} elsif (distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}}) <= 10) {
+				} elsif (distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}) <= 10) {
 					my ($from,$to) = split /=/, $ai_seq_args[0]{'mapSolution'}[0]{'portal'};
 					if ($chars[$config{'char'}]{'zenny'} >= $portals_lut{$from}{'dest'}{$to}{'cost'}) {
 						#we have enough money for this service
@@ -3839,7 +3839,7 @@ sub AI {
 					shift @ai_seq;
 					shift @ai_seq_args;
 
-				} elsif ( ai_route_getRoute( \@solution, \%field, \%{$chars[$config{'char'}]{'pos_to'}}, \%{$ai_seq_args[0]{'mapSolution'}[0]{'pos'}} ) ) {
+				} elsif ( ai_route_getRoute( \@solution, \%field, $chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'} ) ) {
 					# X,Y is reachable from current position
 					# >> Then "route" to it
 					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
@@ -4022,7 +4022,7 @@ sub AI {
 		AI::args->{suspended}{ai_items_gather_giveup}{time} += time - AI::args->{suspended};
 		delete AI::args->{suspended};
 	}
-	if (AI::action eq "items_gather" && !%{$items{AI::args->{ID}}}) {
+	if (AI::action eq "items_gather" && !$items{AI::args->{ID}} && !%{$items{AI::args->{ID}}}) {
 		my $ID = AI::args->{ID};
 		message "Failed to gather $items_old{$ID}{name} ($items_old{$ID}{binID}) : Lost target\n", "drop";
 		AI::dequeue;
@@ -4064,7 +4064,7 @@ sub AI {
 		delete AI::args->{suspended};
 	}
 
-	if (AI::action eq "take" && !%{$items{AI::args->{ID}}}) {
+	if (AI::action eq "take" && ( !$items{AI::args->{ID}} || !%{$items{AI::args->{ID}}} )) {
 		AI::dequeue;
 
 	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
@@ -4353,7 +4353,7 @@ sub parseSendMsg {
 	} elsif ($switch eq "007D") {
 		# Map loaded
 		$conState = 5;
-		aiRemove("clientSuspend");
+		AI::clear("clientSuspend");
 		$timeout{'ai'}{'time'} = time;
 		if ($firstLoginMap) {
 			undef $sentWelcomeMessage;
@@ -4365,7 +4365,7 @@ sub parseSendMsg {
 	} elsif ($switch eq "0085") {
 		#if ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2) {
 		#	#Move
-		#	aiRemove("clientSuspend");
+		#	AI::clear("clientSuspend");
 		#	makeCoords(\%coords, substr($msg, 2, 3));
 		#	ai_clientSuspend($switch, (distance($char->{'pos'}, \%coords) * $char->{walk_speed}) + 4);
 		#}
@@ -4374,7 +4374,7 @@ sub parseSendMsg {
 		if ($config{serverType} == 0) {
 			# Attack
 			if (!$config{'tankMode'} && !AI::inQueue("attack")) {
-				aiRemove("clientSuspend");
+				AI::clear("clientSuspend");
 				ai_clientSuspend($switch, 2, unpack("C*",substr($msg,6,1)), substr($msg,2,4));
 			} else {
 				undef $sendMsg;
@@ -4426,18 +4426,18 @@ sub parseSendMsg {
 	} elsif ($switch eq "009F") {
 		if ($config{serverType} == 0) {
 			# Take
-			aiRemove("clientSuspend");
+			AI::clear("clientSuspend");
 			ai_clientSuspend($switch, 2, substr($msg,2,4));
 		}
 
 	} elsif ($switch eq "00B2") {
 		# Trying to exit (respawn)
-		aiRemove("clientSuspend");
+		AI::clear("clientSuspend");
 		ai_clientSuspend($switch, 10);
 
 	} elsif ($switch eq "018A") {
 		# Trying to exit
-		aiRemove("clientSuspend");
+		AI::clear("clientSuspend");
 		ai_clientSuspend($switch, 10);
 
 	} elsif ($switch eq "0149") {
@@ -5507,7 +5507,7 @@ sub parseMsg {
 			%{$chars[$config{'char'}]{'pos_to'}} = %coords;
 			$char->{sitting} = 0;
 			debug "Movement interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
-			aiRemove("move");
+			AI::clear("move");
 		} elsif ($monsters{$ID}) {
 			%{$monsters{$ID}{pos}} = %coords;
 			%{$monsters{$ID}{pos_to}} = %coords;
@@ -6589,7 +6589,7 @@ sub parseMsg {
 			if ($index ne "") {
 				my $masterID = $ai_seq_args[$index]{'ID'};
 				if ($config{'followEmotion'} && $masterID eq $ID &&
-			 	       distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$masterID}{'pos_to'}}) <= $config{'followEmotion_distance'})
+			 	       distance($chars[$config{'char'}]{'pos_to'}, $players{$masterID}{'pos_to'}) <= $config{'followEmotion_distance'})
 				{
 					my %args = ();
 					$args{'timeout'} = time + rand (1) + 0.75;
@@ -7039,7 +7039,7 @@ sub parseMsg {
 			$chars[$config{'char'}]{'party'}{'users'}{$ID}{'online'} = !(unpack("C1",substr($msg, $i + 45, 1)));
 			$chars[$config{'char'}]{'party'}{'users'}{$ID}{'admin'} = 1 if ($num == 0);
 		}
-		sendPartyShareEXP(\$remote_socket, 1) if ($config{'partyAutoShare'} && %{$chars[$config{'char'}]{'party'}});
+		sendPartyShareEXP(\$remote_socket, 1) if ($config{'partyAutoShare'} && $chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}});
 
 	} elsif ($switch eq "00FD") {
 		my ($name) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
@@ -7110,7 +7110,7 @@ sub parseMsg {
 		binRemove(\@partyUsersID, $ID);
 		if ($ID eq $accountID) {
 			message "You left the party\n";
-			undef %{$chars[$config{'char'}]{'party'}};
+			undef %{$chars[$config{'char'}]{'party'}} if ($chars[$config{'char'}]{'party'});
 			$chars[$config{'char'}]{'party'} = "";
 			undef @partyUsersID;
 		} else {
@@ -7421,7 +7421,7 @@ sub parseMsg {
 
 		if ($AI && $config{'autoResponseOnHeal'}) {
 			# Handle auto-response on heal
-			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
+			if (($players{$sourceID} && %{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
 				if ($targetID eq $accountID) {
 					chatLog("k", "***$source ".skillName($skillID)." on $target$extra***\n");
 					sendMessage(\$remote_socket, "pm", getResponse("skillgoodM"), $players{$sourceID}{'name'});
@@ -8757,7 +8757,7 @@ sub ai_partyfollow {
 
 		return unless ($master{map} ne $field{name} || exists $master{x});
 		
-		if ((exists $ai_v{master} && distance(\%master, \%{$ai_v{master}}) > 15)
+		if ((exists $ai_v{master} && distance(\%master, $ai_v{master}) > 15)
 			|| $master{map} != $ai_v{master}{map}
 			|| (timeOut($ai_v{master}{time}, 15) && distance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
 
@@ -8881,9 +8881,9 @@ sub ai_getSkillUseType {
 sub ai_mapRoute_searchStep {
 	my $r_args = shift;
 
-	unless (%{$$r_args{'openlist'}}) {
-		$$r_args{'done'} = 1;
-		$$r_args{'found'} = '';
+	unless ($r_args->{openlist} && %{$r_args->{openlist}}) {
+		$r_args->{done} = 1;
+		$r_args->{found} = '';
 		return 0;
 	}
 
@@ -8924,7 +8924,7 @@ sub ai_mapRoute_searchStep {
 					$this = $$r_args{'closelist'}{$this}{'parent'};
 				}
 				return;
-			} elsif ( ai_route_getRoute(\@{$$r_args{'solution'}}, \%{$$r_args{'dest'}{'field'}}, \%{$portals_lut{$portal}{'dest'}{$dest}}, \%{$$r_args{'dest'}{'pos'}}) ) {
+			} elsif ( ai_route_getRoute(\@{$$r_args{'solution'}}, $$r_args{'dest'}{'field'}, $portals_lut{$portal}{'dest'}{$dest}, $$r_args{'dest'}{'pos'}) ) {
 				my $walk = "$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}=$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}";
 				$$r_args{'closelist'}{$walk}{'walk'} = scalar @{$$r_args{'solution'}} + $$r_args{'closelist'}{$parent}{$dest}{'walk'};
 				$$r_args{'closelist'}{$walk}{'parent'} = $parent;
@@ -9414,24 +9414,6 @@ sub attack {
 	} #END OF BLOCK AUTOEQUIP 
 }
 
-sub aiRemove {
-	my $ai_type = shift;
-	my $index;
-	while (1) {
-		$index = binFind(\@ai_seq, $ai_type);
-		if ($index ne "") {
-			if ($ai_seq_args[$index]{'destroyFunction'}) {
-				&{$ai_seq_args[$index]{'destroyFunction'}}(\%{$ai_seq_args[$index]});
-			}
-			binRemoveAndShiftByIndex(\@ai_seq, $index);
-			binRemoveAndShiftByIndex(\@ai_seq_args, $index);
-		} else {
-			last;
-		}
-	}
-}
-
-
 sub gather {
 	my $ID = shift;
 	my %args;
@@ -9852,7 +9834,7 @@ sub updateDamageTables {
 				$players{$ID2}{'missedFromMonster'}{$ID1}++;
 			}
 			if (existsInList($config{tankersList}, $players{$ID2}{name}) ||
-			    (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}})) {
+			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}})) {
 				# Monster attacks party member
 				$monsters{$ID1}{'dmgToParty'} += $damage;
 				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
@@ -9874,7 +9856,7 @@ sub updateDamageTables {
 			}
 
 			if (existsInList($config{tankersList}, $players{$ID1}{name}) ||
-			    (%{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
+			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
 			}
 		}
