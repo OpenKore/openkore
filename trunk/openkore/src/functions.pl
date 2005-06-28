@@ -15,6 +15,7 @@ use Text::ParseWords;
 use Config;
 eval "no utf8;";
 use bytes;
+use strict;
 
 use Globals;
 use Modules;
@@ -1729,6 +1730,7 @@ sub AI {
 			unshift @ai_seq_args, {forcedBySell => 1};
 		}
 	} elsif ($ai_seq[0] eq "sellAuto" && timeOut($timeout{'ai_sellAuto'})) {
+		$ai_seq_args[0]{'npc'} = {};
 		($config{sellAuto_standpoint}) ? getNPCInfo($config{'sellAuto_standpoint'}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{'sellAuto_npc'}, $ai_seq_args[0]{'npc'});
 		if (!defined($ai_seq_args[0]{'npc'}{'ok'})) {
 			$ai_seq_args[0]{'done'} = 1;
@@ -1764,6 +1766,7 @@ sub AI {
 					noSitAuto => 1);
 			}
 		} else {
+			$ai_seq_args[0]{'npc'} = {};
 			getNPCInfo($config{'sellAuto_npc'}, $ai_seq_args[0]{'npc'});
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
 				$ai_seq_args[0]{'sentSell'} = 1;
@@ -1874,6 +1877,7 @@ sub AI {
 			if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"buyAuto_$i"."_maxAmount"} ne "" && ($ai_seq_args[0]{'invIndex'} eq "" 
 				|| $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"})) {
 
+				$ai_seq_args[0]{'npc'} = {};
 				($config{"buyAuto_$i"."_standpoint"}) ? getNPCInfo($config{"buyAuto_$i"."_standpoint"}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'});
 				if (defined $ai_seq_args[0]{'npc'}{'ok'}) {
 					$ai_seq_args[0]{'index'} = $i;
@@ -1916,6 +1920,7 @@ sub AI {
 					distFromGoal => $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"});
 			}
 		} else {
+			$ai_seq_args[0]{'npc'} = {};
 			getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'});
 			if ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $ai_seq_args[0]{'index'}) {
 				undef $ai_seq_args[0]{'itemID'};
@@ -2296,6 +2301,7 @@ sub AI {
 			$ai_seq_args[$followIndex]{'ai_follow_lost'} = 1;
 			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
 			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'time'} = time;
+			$ai_seq_args[$followIndex]{'ai_follow_lost_vec'} = {};
 			getVector($ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
 
 			#check if player went through portal
