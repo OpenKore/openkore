@@ -710,7 +710,7 @@ sub cmdCard {
 		}
 	} elsif ($arg1 eq "use") {
 		if ($arg2 =~ /^\d+$/) {
-			if (%{$char->{inventory}[$arg2]}) {
+			if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
 				$cardMergeIndex = $arg2;
 				sendCardMergeRequest(\$remote_socket, $char->{inventory}[$cardMergeIndex]{index});
 				message "Sending merge list request for $char->{inventory}[$cardMergeIndex]{name}...\n";
@@ -1117,7 +1117,7 @@ sub cmdDeal {
 	} elsif ($arg[0] eq "add" && $currentDeal{'you_finalize'}) {
 		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
 			"Can't add any Items - You already finalized the deal\n";
-	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && !%{$chars[$config{'char'}]{'inventory'}[$arg[1]]}) {
+	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && ( !$chars[$config{'char'}]{'inventory'}[$arg[1]] || !%{$chars[$config{'char'}]{'inventory'}[$arg[1]]} )) {
 		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
 			"Inventory Item $arg[1] does not exist.\n";
 	} elsif ($arg[0] eq "add" && $arg[2] && $arg[2] !~ /\d+/) {
@@ -2045,7 +2045,7 @@ sub cmdParty {
 	my ($arg1) = $args =~ /^(\w*)/;
 	my ($arg2) = $args =~ /^\w* (\d+)\b/;
 
-	if ($arg1 eq "" && !%{$chars[$config{'char'}]{'party'}}) {
+	if ($arg1 eq "" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
 		error	"Error in function 'party' (Party Functions)\n" .
 			"Can't list party - you're not in a party.\n";
 	} elsif ($arg1 eq "") {
@@ -2105,7 +2105,7 @@ sub cmdParty {
 		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $arg2);
 		undef %incomingParty;
 
-	} elsif ($arg1 eq "request" && !%{$chars[$config{'char'}]{'party'}}) {
+	} elsif ($arg1 eq "request" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
 		error	"Error in function 'party request' (Request to Join Party)\n" .
 			"Can't request a join - you're not in a party.\n";
 	} elsif ($arg1 eq "request" && $playersID[$arg2] eq "") {
@@ -2122,7 +2122,7 @@ sub cmdParty {
 		sendPartyLeave(\$remote_socket);
 
 
-	} elsif ($arg1 eq "share" && !%{$chars[$config{'char'}]{'party'}}) {
+	} elsif ($arg1 eq "share" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
 		error	"Error in function 'party share' (Set Party Share EXP)\n" .
 			"Can't set share - you're not in a party.\n";
 	} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
@@ -2132,7 +2132,7 @@ sub cmdParty {
 		sendPartyShareEXP(\$remote_socket, $arg2);
 
 
-	} elsif ($arg1 eq "kick" && !%{$chars[$config{'char'}]{'party'}}) {
+	} elsif ($arg1 eq "kick" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
 		error	"Error in function 'party kick' (Kick Party Member)\n" .
 			"Can't kick member - you're not in a party.\n";
 	} elsif ($arg1 eq "kick" && $arg2 eq "") {
@@ -2518,7 +2518,7 @@ sub cmdSell {
 	} elsif ($arg1 eq "") {
 		error	"Syntax Error in function 'sell' (Sell Inventory Item)\n" .
 			"Usage: sell <item #> [<amount>]\n";
-	} elsif (!%{$char->{'inventory'}[$arg1]}) {
+	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
 		error	"Error in function 'sell' (Sell Inventory Item)\n" .
 			"Inventory Item $arg1 does not exist.\n";
 	} else {
