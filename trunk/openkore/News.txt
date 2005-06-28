@@ -272,6 +272,7 @@ Internal:
 - New plugin hook "player" passes a player object when "Player Appears"
   or "Player Exists".
 - New items_control() function (use this instead of %items_control).
+- functions.pl is able to run using strict (but isn't yet).
 
 Credits:
 - Damokles: case sensitivity fix, avoidGM_namePattern, skillsstatus.txt help.
