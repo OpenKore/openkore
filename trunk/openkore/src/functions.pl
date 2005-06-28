@@ -1781,7 +1781,7 @@ sub AI {
 			my @sellItems;
 			for (my $i = 0; $i < @{$char->{inventory}};$i++) {
 				my $item = $char->{inventory}[$i];
-				next if (!%{$item} || $item->{equipped});
+				next if (!$item || !%{$item} || $item->{equipped});
 				my $sell = $items_control{all}{sell};
 				$sell = $items_control{lc($item->{name})}{sell} if ($items_control{lc($item->{name})});
 				my $keep = $items_control{all}{keep};
@@ -4966,7 +4966,7 @@ sub parseMsg {
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
-				if (!%{$pets{$ID}}) {
+				if (!$pets{$ID} || !%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
 					my $display = ($monsters_lut{$type} ne "") 
 							? $monsters_lut{$type}
@@ -4992,7 +4992,7 @@ sub parseMsg {
 				objectAdded('pet', $ID, $pets{$ID}) if ($added);
 
 			} else {
-				if (!%{$monsters{$ID}}) {
+				if (!$monsters{$ID} || !%{$monsters{$ID}}) {
 					$monsters{$ID} = new Actor::Monster;
 					$monsters{$ID}{'appear_time'} = time;
 					my $display = ($monsters_lut{$type} ne "") 
@@ -5020,7 +5020,7 @@ sub parseMsg {
 			}
 
 		} elsif ($type == 45) {
-			if (!%{$portals{$ID}}) {
+			if (!$portals{$ID} || !%{$portals{$ID}}) {
 				$portals{$ID}{'appear_time'} = time;
 				my $nameID = unpack("L1", $ID);
 				my $exists = portalExists($field{'name'}, \%coords);
@@ -5038,7 +5038,7 @@ sub parseMsg {
 			message "Portal Exists: $portals{$ID}{'name'} ($coords{x}, $coords{y}) - ($portals{$ID}{'binID'})\n", "portals", 1;
 
 		} elsif ($type < 1000) {
-			if (!%{$npcs{$ID}}) {
+			if (!$npcs{$ID} || !%{$npcs{$ID}}) {
 				$npcs{$ID}{'appear_time'} = time;
 				my $nameID = unpack("L1", $ID);
 				my $display = (%{$npcs_lut{$nameID}}) 
@@ -5185,7 +5185,7 @@ sub parseMsg {
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
-				if (!%{$pets{$ID}}) {
+				if (!$pets{$ID} || !%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
 					my $display = ($monsters_lut{$type} ne "") 
 							? $monsters_lut{$type}
@@ -5213,7 +5213,7 @@ sub parseMsg {
 				debug "Pet Moved: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 
 			} else {
-				if (!%{$monsters{$ID}}) {
+				if (!$monsters{$ID} || !%{$monsters{$ID}}) {
 					$monsters{$ID} = new Actor::Monster;
 					binAdd(\@monstersID, $ID);
 					$monsters{$ID}{ID} = $ID;
@@ -5275,7 +5275,7 @@ sub parseMsg {
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
-				if (!%{$pets{$ID}}) { 
+				if (!$pets{$ID} || !%{$pets{$ID}}) { 
 					binAdd(\@petsID, $ID); 
 					$pets{$ID}{'nameID'} = $type; 
 					$pets{$ID}{'appear_time'} = time; 
@@ -5299,7 +5299,7 @@ sub parseMsg {
 				}
 
 			} else {
-				if (!%{$monsters{$ID}}) {
+				if (!$monsters{$ID} || !%{$monsters{$ID}}) {
 					$monsters{$ID} = new Actor::Monster;
 					binAdd(\@monstersID, $ID);
 					$monsters{$ID}{ID} = $ID;
@@ -5768,7 +5768,7 @@ sub parseMsg {
 				my $binID = binFind(\@npcsID, $ID); 
 				debug "NPC Info: $npcs{$ID}{'name'} ($binID)\n", "parseMsg", 2;
 			} 
-			if (!%{$npcs_lut{$npcs{$ID}{'nameID'}}}) { 
+			if (!$npcs_lut{$npcs{$ID}{'nameID'} || !%{$npcs_lut{$npcs{$ID}{'nameID'}}}) { 
 				$npcs_lut{$npcs{$ID}{'nameID'}}{'name'} = $npcs{$ID}{'name'};
 				$npcs_lut{$npcs{$ID}{'nameID'}}{'map'} = $field{'name'};
 				%{$npcs_lut{$npcs{$ID}{'nameID'}}{'pos'}} = %{$npcs{$ID}{'pos'}};
@@ -5875,7 +5875,7 @@ sub parseMsg {
 		my $x = unpack("S1", substr($msg, 9, 2));
 		my $y = unpack("S1", substr($msg, 11, 2));
 		my $amount = unpack("S1", substr($msg, 13, 2));
-		if (!%{$items{$ID}}) {
+		if (!$items{$ID} || !%{$items{$ID}}) {
 			binAdd(\@itemsID, $ID);
 			$items{$ID}{'appear_time'} = time;
 			$items{$ID}{'amount'} = $amount;
@@ -5895,7 +5895,7 @@ sub parseMsg {
 		my $y = unpack("S1", substr($msg, 11, 2));
 		my $amount = unpack("S1", substr($msg, 15, 2));
 		my $item = $items{$ID} ||= {};
-		if (!%{$item}) {
+		if (!$item || !%{$item}) {
 			binAdd(\@itemsID, $ID);
 			$item->{appear_time} = time;
 			$item->{amount} = $amount;
@@ -6790,7 +6790,7 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 17, length($msg)-17));
 		my $msg = substr($msg, 0, 17).$newmsg;
 		my $ID = substr($msg,8,4);
-		if (!%{$chatRooms{$ID}}) {
+		if (!$chatRooms{$ID} || !%{$chatRooms{$ID}}) {
 			binAdd(\@chatRoomsID, $ID);
 		}
 		$chatRooms{$ID}{'title'} = substr($msg,17,$msg_size - 17);
@@ -7078,7 +7078,7 @@ sub parseMsg {
 		my ($name) = substr($msg, 15, 24) =~ /([\s\S]*?)\000/;
 		my ($partyUser) = substr($msg, 39, 24) =~ /([\s\S]*?)\000/;
 		my ($map) = substr($msg, 63, 16) =~ /([\s\S]*?)\000/;
-		if (!%{$chars[$config{'char'}]{'party'}{'users'}{$ID}}) {
+		if (!$chars[$config{'char'}]{'party'}{'users'}{$ID} || !%{$chars[$config{'char'}]{'party'}{'users'}{$ID}}) {
 			binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 			if ($ID eq $accountID) {
 				message "You joined party '$name'\n", undef, 1;
@@ -7632,7 +7632,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0131") {
 		my $ID = substr($msg,2,4);
-		if (!%{$venderLists{$ID}}) {
+		if (!$venderLists{$ID} || !%{$venderLists{$ID}}) {
 			binAdd(\@venderListsID, $ID);
 			Plugins::callHook('packet_vender', {ID => $ID});
 		}
@@ -8331,7 +8331,7 @@ sub parseMsg {
 		#pet spawn
 		my $type = unpack("C1",substr($msg, 2, 1));
 		my $ID = substr($msg, 3, 4);
-		if (!%{$pets{$ID}}) {
+		if (!$pets{$ID} || !%{$pets{$ID}}) {
 			binAdd(\@petsID, $ID);
 			%{$pets{$ID}} = %{$monsters{$ID}};
 			$pets{$ID}{'name_given'} = "Unknown";
@@ -9085,8 +9085,8 @@ sub ai_route_getRoute {
 
 #sellAuto for items_control - chobit andy 20030210
 sub ai_sellAutoCheck {
-	for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
-		next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
+	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
+		next if (!$char->{inventory}[$i] || !%{$char->{inventory}[$i]} || $char->{inventory}[$i]{equipped});
 		my $sell = $items_control{'all'}{'sell'};
 		$sell = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
 		my $keep = $items_control{'all'}{'keep'};
@@ -9350,7 +9350,7 @@ sub attack {
 					}
 					if ($Req eq $Leq) {
 						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
-							next if (!%{$chars[$config{'char'}]{'inventory'}[$j]});
+							next if (!$char->{inventory}[$j] || !%{$char->{inventory}[$j]});
 							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_$i"."_rightHand"} && $j != $Leq) {
 								$Req = $j;
 								last;
