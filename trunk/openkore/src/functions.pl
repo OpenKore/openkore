@@ -15,7 +15,6 @@ use Text::ParseWords;
 use Config;
 eval "no utf8;";
 use bytes;
-use strict;
 
 use Globals;
 use Modules;
