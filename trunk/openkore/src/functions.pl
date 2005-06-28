@@ -129,7 +129,7 @@ sub initMapChangeVars {
 	undef %venderLists;
 	undef %guild;
 	undef %incomingGuild;
-	undef @unknownPlayers;
+	undef @unknownObjects;
 	undef @chatRoomsID;
 	undef %chatRooms;
 	undef @lastpm;
