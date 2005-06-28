@@ -503,6 +503,33 @@ sub processChatCommand {
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
+	# Magnificat
+	} elsif ($switch eq "mag"){
+		my $targetID = getIDFromChat(\%players, $user, $after);
+		if ($targetID eq "") {
+			sendMessage(\$remote_socket, $type, getResponse("healF1"), $user) if $config{verbose};
+
+		} elsif ($char->{skills}{PR_MAGNIFICAT}{lv} > 0) {
+			my $failed = 1;
+			for (my $i = $char->{skills}{PR_MAGNIFICAT}{lv}; $i >= 1; $i--) {
+				if ($char->{sp} >= $skillsSP_lut{PR_MAGNIFICAT}{$i}) {
+					main::ai_skillUse('PR_MAGNIFICAT', $i, 0, 0, $targetID);
+					$failed = 0;
+					last;
+				}
+			}
+
+			if (!$failed) {
+				sendMessage(\$remote_socket, $type, getResponse("healS"), $user) if $config{verbose};
+			}else{
+				sendMessage(\$remote_socket, $type, getResponse("healF2"), $user) if $config{verbose};
+			}
+
+		} else {
+			sendMessage(\$remote_socket, $type, getResponse("healF3"), $user) if $config{verbose};
+		}
+		$timeout{ai_thanks_set}{time} = time;
+
 	} elsif ($switch eq "thank" || $switch eq "thn" || $switch eq "thx") {
 		if (!timeOut($timeout{ai_thanks_set})) {
 			$timeout{ai_thanks_set}{time} -= $timeout{ai_thanks_set}{timeout};
