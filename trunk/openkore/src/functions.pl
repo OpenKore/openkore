@@ -434,7 +434,7 @@ sub mainLoop {
 
 	# Process AI
 	if ($conState == 5 && timeOut($timeout{ai}) && $remote_socket && $remote_socket->connected) {
-		AI($ai_cmdQue[$i]);
+		AI();
 		return if $quit;
 	}
 
@@ -611,8 +611,6 @@ sub parseInput {
 
 sub AI {
 	my $i, $j;
-	my %cmd = %{(shift)};
-
 
 	if (timeOut($timeout{ai_wipe_check})) {
 		my $timeout = $timeout{ai_wipe_old}{timeout};
