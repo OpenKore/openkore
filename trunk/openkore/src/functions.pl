@@ -84,7 +84,7 @@ sub initMapChangeVars {
 		$portals_old{$_}{gone_time} = time if (!$portals_old{$_}{gone_time});
 	}
 
-	$char->{old_pos_to} = {%{$char->{pos_to}}};
+	$char->{old_pos_to} = {%{$char->{pos_to}}} if ($char->{pos_to});
 	delete $chars[$config{'char'}]{'sitting'};
 	delete $chars[$config{'char'}]{'dead'};
 	delete $chars[$config{'char'}]{'warp'};
@@ -4649,7 +4649,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "006A") {
-		$type = unpack("C1",substr($msg, 2, 1));
+		my $type = unpack("C1",substr($msg, 2, 1));
 		Network::disconnect(\$remote_socket);
 		if ($type == 0) {
 			error("Account name doesn't exist\n", "connection");
@@ -4711,7 +4711,7 @@ sub parseMsg {
 			$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
 		}
 
-		$startVal = $msg_size % 106;
+		my $startVal = $msg_size % 106;
 
 		my $num;
 		for (my $i = $startVal; $i < $msg_size; $i += 106) {
@@ -4747,11 +4747,6 @@ sub parseMsg {
 			$firstLoginMap = 1;
 			$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 			$sentWelcomeMessage = 1;
-
-			if ($config{'dcOnZeny'} && $val <= $config{'dcOnZeny'}) {
-				$interface->errorDialog("Disconnecting due to zeny lower than $config{'dcOnZeny'}.");
-				$quit = 1;
-			}
 		} else {
 			return;
 		}
@@ -4973,7 +4968,7 @@ sub parseMsg {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
-					$display = ($monsters_lut{$type} ne "") 
+					my $display = ($monsters_lut{$type} ne "") 
 							? $monsters_lut{$type}
 							: "Unknown ".$type;
 					binAdd(\@petsID, $ID);
@@ -5000,7 +4995,7 @@ sub parseMsg {
 				if (!%{$monsters{$ID}}) {
 					$monsters{$ID} = new Actor::Monster;
 					$monsters{$ID}{'appear_time'} = time;
-					$display = ($monsters_lut{$type} ne "") 
+					my $display = ($monsters_lut{$type} ne "") 
 							? $monsters_lut{$type}
 							: "Unknown ".$type;
 					binAdd(\@monstersID, $ID);
@@ -5027,9 +5022,9 @@ sub parseMsg {
 		} elsif ($type == 45) {
 			if (!%{$portals{$ID}}) {
 				$portals{$ID}{'appear_time'} = time;
-				$nameID = unpack("L1", $ID);
+				my $nameID = unpack("L1", $ID);
 				my $exists = portalExists($field{'name'}, \%coords);
-                $display = ($exists ne "")
+				my $display = ($exists ne "")
 					? "$portals_lut{$exists}{'source'}{'map'} -> " . getPortalDestName($exists)
 					: "Unknown ".$nameID;
 				binAdd(\@portalsID, $ID);
@@ -5045,8 +5040,8 @@ sub parseMsg {
 		} elsif ($type < 1000) {
 			if (!%{$npcs{$ID}}) {
 				$npcs{$ID}{'appear_time'} = time;
-				$nameID = unpack("L1", $ID);
-				$display = (%{$npcs_lut{$nameID}}) 
+				my $nameID = unpack("L1", $ID);
+				my $display = (%{$npcs_lut{$nameID}}) 
 					? $npcs_lut{$nameID}{'name'}
 					: "Unknown ".$nameID;
 				binAdd(\@npcsID, $ID);
@@ -5192,7 +5187,7 @@ sub parseMsg {
 			if ($pet) {
 				if (!%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
-					$display = ($monsters_lut{$type} ne "") 
+					my $display = ($monsters_lut{$type} ne "") 
 							? $monsters_lut{$type}
 							: "Unknown ".$type;
 					binAdd(\@petsID, $ID);
@@ -5224,7 +5219,7 @@ sub parseMsg {
 					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'appear_time'} = time;
 					$monsters{$ID}{'nameID'} = $type;
-					$display = ($monsters_lut{$type} ne "") 
+					my $display = ($monsters_lut{$type} ne "") 
 						? $monsters_lut{$type}
 						: "Unknown ".$type;
 					$monsters{$ID}{'name'} = $display;
@@ -5284,7 +5279,7 @@ sub parseMsg {
 					binAdd(\@petsID, $ID); 
 					$pets{$ID}{'nameID'} = $type; 
 					$pets{$ID}{'appear_time'} = time; 
-					$display = ($monsters_lut{$pets{$ID}{'nameID'}} ne "") 
+					my $display = ($monsters_lut{$pets{$ID}{'nameID'}} ne "") 
 					? $monsters_lut{$pets{$ID}{'nameID'}} 
 					: "Unknown ".$pets{$ID}{'nameID'}; 
 					$pets{$ID}{'name'} = $display; 
@@ -5310,7 +5305,7 @@ sub parseMsg {
 					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'nameID'} = $type;
 					$monsters{$ID}{'appear_time'} = time;
-					$display = ($monsters_lut{$monsters{$ID}{'nameID'}} ne "") 
+					my $display = ($monsters_lut{$monsters{$ID}{'nameID'}} ne "") 
 							? $monsters_lut{$monsters{$ID}{'nameID'}}
 							: "Unknown ".$monsters{$ID}{'nameID'};
 					$monsters{$ID}{'name'} = $display;
@@ -5668,7 +5663,7 @@ sub parseMsg {
 		}
 
 		initMapChangeVars();
-		for ($i = 0; $i < @ai_seq; $i++) {
+		for (my $i = 0; $i < @ai_seq; $i++) {
 			ai_setMapChanged($i);
 		}
 		$ai_v{'portalTrace_mapChanged'} = 1;
@@ -5757,7 +5752,7 @@ sub parseMsg {
 		if (%{$monsters{$ID}}) {
 			my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			if ($config{'debug'} >= 2) {
-				$binID = binFind(\@monstersID, $ID);
+				my $binID = binFind(\@monstersID, $ID);
 				debug "Monster Info: $name ($binID)\n", "parseMsg", 2;
 			}
 			if ($monsters_lut{$monsters{$ID}{'nameID'}} eq "") {
@@ -5770,7 +5765,7 @@ sub parseMsg {
 			($npcs{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/; 
 			$npcs{$ID}{'gotName'} = 1;
 			if ($config{'debug'} >= 2) { 
-				$binID = binFind(\@npcsID, $ID); 
+				my $binID = binFind(\@npcsID, $ID); 
 				debug "NPC Info: $npcs{$ID}{'name'} ($binID)\n", "parseMsg", 2;
 			} 
 			if (!%{$npcs_lut{$npcs{$ID}{'nameID'}}}) { 
@@ -5783,7 +5778,7 @@ sub parseMsg {
 		if (%{$pets{$ID}}) {
 			($pets{$ID}{'name_given'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			if ($config{'debug'} >= 2) {
-				$binID = binFind(\@petsID, $ID);
+				my $binID = binFind(\@petsID, $ID);
 				debug "Pet Info: $pets{$ID}{'name_given'} ($binID)\n", "parseMsg", 2;
 			}
 		}
@@ -5793,7 +5788,7 @@ sub parseMsg {
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
-		$msg = substr($msg, 0, 28) . $newmsg;
+		my $msg = substr($msg, 0, 28) . $newmsg;
 		my ($privMsgUser) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
 		my $privMsg = substr($msg, 28, $msg_size - 29);
 		if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
@@ -5824,7 +5819,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0098") {
-		$type = unpack("C1",substr($msg, 2, 1));
+		my $type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 0) {
 			message "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n", "pm/sent";
 			chatLog("pm", "(To: $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n") if ($config{'logPrivateChat'});
@@ -5875,11 +5870,11 @@ sub parseMsg {
 
 	} elsif ($switch eq "009D") {
 		$conState = 5 if ($conState != 4 && $xkore);
-		$ID = substr($msg, 2, 4);
-		$type = unpack("S1",substr($msg, 6, 2));
-		$x = unpack("S1", substr($msg, 9, 2));
-		$y = unpack("S1", substr($msg, 11, 2));
-		$amount = unpack("S1", substr($msg, 13, 2));
+		my $ID = substr($msg, 2, 4);
+		my $type = unpack("S1",substr($msg, 6, 2));
+		my $x = unpack("S1", substr($msg, 9, 2));
+		my $y = unpack("S1", substr($msg, 11, 2));
+		my $amount = unpack("S1", substr($msg, 13, 2));
 		if (!%{$items{$ID}}) {
 			binAdd(\@itemsID, $ID);
 			$items{$ID}{'appear_time'} = time;
@@ -5985,7 +5980,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "00A1") {
 		$conState = 5 if ($conState != 4 && $xkore);
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
 		if (%{$items{$ID}}) {
 			debug "Item Disappeared: $items{$ID}{'name'} ($items{$ID}{'binID'})\n", "parseMsg_presence";
 			%{$items_old{$ID}} = %{$items{$ID}};
@@ -5997,11 +5992,12 @@ sub parseMsg {
 
 	} elsif ($switch eq "00A3" || $switch eq "01EE") {
 		$conState = 5 if ($conState != 4 && $xkore);
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
+		my $msg = substr($msg, 0, 4).$newmsg;
 		my $psize = ($switch eq "00A3") ? 10 : 18;
 
-		for($i = 4; $i < $msg_size; $i += $psize) {
+		for (my $i = 4; $i < $msg_size; $i += $psize) {
 			my $index = unpack("S1", substr($msg, $i, 2));
 			my $ID = unpack("S1", substr($msg, $i + 2, 2));
 			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
@@ -6017,7 +6013,7 @@ sub parseMsg {
 			$char->{inventory}[$invIndex]{identified} = 1;
 			$char->{inventory}[$invIndex]{equipped} = 32768 if (defined $char->{arrow} && $index == $char->{arrow});
 
-			$display = ($items_lut{$char->{inventory}[$invIndex]{nameID}} ne "")
+			my $display = ($items_lut{$char->{inventory}[$invIndex]{nameID}} ne "")
 				? $items_lut{$char->{inventory}[$invIndex]{nameID}}
 				: "Unknown ".$char->{inventory}[$invIndex]{nameID};
 			$char->{inventory}[$invIndex]{name} = $display;
@@ -6031,12 +6027,13 @@ sub parseMsg {
 
 	} elsif ($switch eq "00A4") {
 		$conState = 5 if $conState != 4 && $xkore;
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4) . $newmsg;
+		my $msg = substr($msg, 0, 4) . $newmsg;
 		my $invIndex;
 		for (my $i = 4; $i < $msg_size; $i += 20) {
-			$index = unpack("S1", substr($msg, $i, 2));
-			$ID = unpack("S1", substr($msg, $i + 2, 2));
+			my $index = unpack("S1", substr($msg, $i, 2));
+			my $ID = unpack("S1", substr($msg, $i + 2, 2));
 			$invIndex = findIndex(\@{$chars[$config{char}]{inventory}}, "index", $index);
 			$invIndex = findIndex(\@{$chars[$config{char}]{inventory}}, "nameID", "") unless defined $invIndex;
 
@@ -6065,7 +6062,7 @@ sub parseMsg {
 		# Retrieve list of stackable storage items
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
+		my $msg = substr($msg, 0, 4).$newmsg;
 		undef %storage;
 		undef @storageID;
 
@@ -6089,7 +6086,7 @@ sub parseMsg {
 		# This packet is sent immediately after 00A5/01F0.
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
+		my $msg = substr($msg, 0, 4).$newmsg;
 
 		for (my $i = 4; $i < $msg_size; $i += 20) {
 			my $index = unpack("S1", substr($msg, $i, 2));
@@ -6137,12 +6134,11 @@ sub parseMsg {
 
 	} elsif ($switch eq "00AC") {
 		$conState = 5 if ($conState != 4 && $xkore);
-		$index = unpack("S1",substr($msg, 2, 2));
-		$type = unpack("S1",substr($msg, 4, 2));
-		undef $invIndex;
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = "";
-		message "You unequip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n", 'inventory';
+		my $index = unpack("S1",substr($msg, 2, 2));
+		my $type = unpack("S1",substr($msg, 4, 2));
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
+		$char->{inventory}[$invIndex]{equipped} = "";
+		message "You unequip $char->{inventory}[$invIndex]{name} ($invIndex) - $equipTypes_lut{$char->{inventory}[$invIndex]{type_equip}}\n", 'inventory';
 
 	} elsif ($switch eq "00AF") {
 		$conState = 5 if ($conState != 4 && $xkore);
@@ -6273,7 +6269,7 @@ sub parseMsg {
 				} else { 
 					$monsterBaseExp = $chars[$config{'char'}]{'exp'} - $chars[$config{'char'}]{'exp_last'}; 
 				} 
-			$totalBaseExp += $monsterBaseExp; 
+				$totalBaseExp += $monsterBaseExp; 
 				if ($bExpSwitch == 1) { 
 					$totalBaseExp += $monsterBaseExp; 
 					$bExpSwitch = 2; 
@@ -6338,9 +6334,10 @@ sub parseMsg {
 		undef $accountID;
 
 	} elsif ($switch eq "00B4") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
-		$msg = substr($msg, 0, 8).$newmsg;
-		$ID = substr($msg, 4, 4);
+		my $msg = substr($msg, 0, 8).$newmsg;
+		my $ID = substr($msg, 4, 4);
 		my ($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
 		$talk{'ID'} = $ID;
 		$talk{'nameID'} = unpack("L1", $ID);
@@ -6411,13 +6408,14 @@ sub parseMsg {
 		# 00b7: word len, long ID, string str
 		# A list of selections appeared on the NPC message dialog.
 		# Each item is divided with ':'
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
-		$msg = substr($msg, 0, 8).$newmsg;
-		$ID = substr($msg, 4, 4);
+		my $msg = substr($msg, 0, 8).$newmsg;
+		my $ID = substr($msg, 4, 4);
 		$talk{'ID'} = $ID;
 		my ($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
 		$talk = substr($msg, 8) if (!defined $talk);
-		@preTalkResponses = split /:/, $talk;
+		my @preTalkResponses = split /:/, $talk;
 		undef @{$talk{'responses'}};
 		foreach (@preTalkResponses) {
 			# Remove RO color codes
@@ -6453,8 +6451,8 @@ sub parseMsg {
 		message("$name: Type 'talk resp #' to choose a response.\n", "npc");
 
 	} elsif ($switch eq "00BC") {
-		$type = unpack("S1",substr($msg, 2, 2));
-		$val = unpack("C1",substr($msg, 5, 1));
+		my $type = unpack("S1",substr($msg, 2, 2));
+		my $val = unpack("C1",substr($msg, 5, 1));
 		if ($val == 207) {
 			error "Not enough stat points to add\n";
 		} else {
@@ -6546,8 +6544,8 @@ sub parseMsg {
 			."Status Points: $chars[$config{'char'}]{'points_free'}\n", "parseMsg";
 
 	} elsif ($switch eq "00BE") {
-		$type = unpack("S1",substr($msg, 2, 2));
-		$val = unpack("C1",substr($msg, 4, 1));
+		my $type = unpack("S1",substr($msg, 2, 2));
+		my $val = unpack("C1",substr($msg, 4, 1));
 		if ($type == 32) {
 			$chars[$config{'char'}]{'points_str'} = $val;
 			debug "Points needed for Strength: $val\n", "parseMsg";
@@ -6569,8 +6567,8 @@ sub parseMsg {
 		}
 		
 	} elsif ($switch eq "00C0") {
-		$ID = substr($msg, 2, 4);
-		$type = unpack("C*", substr($msg, 6, 1));
+		my $ID = substr($msg, 2, 4);
+		my $type = unpack("C*", substr($msg, 6, 1));
 		my $emotion = $emotions_lut{$type} || "<emotion #$type>";
 		if ($ID eq $accountID) {
 			message "$chars[$config{'char'}]{'name'} : $emotion\n", "emotion";
@@ -6661,34 +6659,34 @@ sub parseMsg {
 			}
 		}
 
-		if (0) {
-		my %parts = (
-			0 => 'Body',
-			2 => 'Right Hand',
-			3 => 'Low Head',
-			4 => 'Top Head',
-			5 => 'Middle Head',
-			8 => 'Left Hand'
-		);
-		if ($part == 3) {
-			$part = 'low';
-		} elsif ($part == 4) {
-			$part = 'top';
-		} elsif ($part == 5) {
-			$part = 'mid';
-		}
-
-		my $name = getActorName($ID);
-		if ($part == 3 || $part == 4 || $part == 5) {
-			my $actor = getActorHash($ID);
-			$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
-			my $itemName = $items_lut{$itemID};
-			$itemName = 'nothing' if (!$itemName);
-			debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
-		} else {
-			debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
-		}
-		}
+		#if (0) {
+		#my %parts = (
+		#	0 => 'Body',
+		#	2 => 'Right Hand',
+		#	3 => 'Low Head',
+		#	4 => 'Top Head',
+		#	5 => 'Middle Head',
+		#	8 => 'Left Hand'
+		#);
+		#if ($part == 3) {
+		#	$part = 'low';
+		#} elsif ($part == 4) {
+		#	$part = 'top';
+		#} elsif ($part == 5) {
+		#	$part = 'mid';
+		#}
+		#
+		#my $name = getActorName($ID);
+		#if ($part == 3 || $part == 4 || $part == 5) {
+		#	my $actor = getActorHash($ID);
+		#	$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
+		#	my $itemName = $items_lut{$itemID};
+		#	$itemName = 'nothing' if (!$itemName);
+		#	debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
+		#} else {
+		#	debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
+		#}
+		#}
 
 	} elsif ($switch eq "00C4") {
 		my $ID = substr($msg, 2, 4);
@@ -6711,17 +6709,18 @@ sub parseMsg {
 		message "$name: Type 'store' to start buying, or type 'sell' to start selling\n", "npc";
 
 	} elsif ($switch eq "00C6") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
+		my $msg = substr($msg, 0, 4).$newmsg;
 		undef @storeList;
 		my $storeList = 0;
 		undef $talk{'buyOrSell'};
 		for (my $i = 4; $i < $msg_size; $i += 11) {
-			$price = unpack("L1", substr($msg, $i, 4));
-			$type = unpack("C1", substr($msg, $i + 8, 1));
-			$ID = unpack("S1", substr($msg, $i + 9, 2));
+			my $price = unpack("L1", substr($msg, $i, 4));
+			my $type = unpack("C1", substr($msg, $i + 8, 1));
+			my $ID = unpack("S1", substr($msg, $i + 9, 2));
 			$storeList[$storeList]{'nameID'} = $ID;
-			$display = ($items_lut{$ID} ne "") 
+			my $display = ($items_lut{$ID} ne "") 
 				? $items_lut{$ID}
 				: "Unknown ".$ID;
 			$storeList[$storeList]{'name'} = $display;
@@ -6734,6 +6733,7 @@ sub parseMsg {
 
 		# Resolve the source name
 		my $name;
+		my $ID = $talk{ID};
 		if ($npcs{$ID}) {
 			$name = $npcs{$ID}{name};
 		} elsif ($monsters{$ID}) {
@@ -6749,8 +6749,9 @@ sub parseMsg {
 	} elsif ($switch eq "00C7") {
 		#sell list, similar to buy list
 		if (length($msg) > 4) {
+			my $newmsg;
 			decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-			$msg = substr($msg, 0, 4).$newmsg;
+			my $msg = substr($msg, 0, 4).$newmsg;
 		}
 		undef $talk{'buyOrSell'};
 		message "Ready to start selling items\n";
@@ -6785,9 +6786,10 @@ sub parseMsg {
 		message "Chat Room Created\n";
 
 	} elsif ($switch eq "00D7") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 17, length($msg)-17));
-		$msg = substr($msg, 0, 17).$newmsg;
-		$ID = substr($msg,8,4);
+		my $msg = substr($msg, 0, 17).$newmsg;
+		my $ID = substr($msg,8,4);
 		if (!%{$chatRooms{$ID}}) {
 			binAdd(\@chatRoomsID, $ID);
 		}
@@ -6798,12 +6800,12 @@ sub parseMsg {
 		$chatRooms{$ID}{'num_users'} = unpack("S1",substr($msg,14,2));
 		
 	} elsif ($switch eq "00D8") {
-		$ID = substr($msg,2,4);
+		my $ID = substr($msg,2,4);
 		binRemove(\@chatRoomsID, $ID);
 		delete $chatRooms{$ID};
 
 	} elsif ($switch eq "00DA") {
-		$type = unpack("C1",substr($msg, 2, 1));
+		my $type = unpack("C1",substr($msg, 2, 1));
 		if ($type == 1) {
 			message "Can't join Chat Room - Incorrect Password\n";
 		} elsif ($type == 2) {
@@ -6811,14 +6813,15 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00DB") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
-		$msg = substr($msg, 0, 8).$newmsg;
-		$ID = substr($msg,4,4);
+		my $msg = substr($msg, 0, 8).$newmsg;
+		my $ID = substr($msg,4,4);
 		$currentChatRoom = $ID;
 		$chatRooms{$currentChatRoom}{'num_users'} = 0;
-		for ($i = 8; $i < $msg_size; $i+=28) {
-			$type = unpack("C1",substr($msg,$i,1));
-			($chatUser) = substr($msg,$i + 4,24) =~ /([\s\S]*?)\000/;
+		for (my $i = 8; $i < $msg_size; $i+=28) {
+			my $type = unpack("C1",substr($msg,$i,1));
+			my ($chatUser) = substr($msg,$i + 4,24) =~ /([\s\S]*?)\000/;
 			if ($chatRooms{$currentChatRoom}{'users'}{$chatUser} eq "") {
 				binAdd(\@currentChatRoomUsers, $chatUser);
 				if ($type == 0) {
@@ -6833,8 +6836,8 @@ sub parseMsg {
 
 	} elsif ($switch eq "00DC") {
 		if ($currentChatRoom ne "") {
-			$num_users = unpack("S1", substr($msg,2,2));
-			($joinedUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
+			my $num_users = unpack("S1", substr($msg,2,2));
+			my ($joinedUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
 			binAdd(\@currentChatRoomUsers, $joinedUser);
 			$chatRooms{$currentChatRoom}{'users'}{$joinedUser} = 1;
 			$chatRooms{$currentChatRoom}{'num_users'} = $num_users;
@@ -6842,8 +6845,8 @@ sub parseMsg {
 		}
 	
 	} elsif ($switch eq "00DD") {
-		$num_users = unpack("S1", substr($msg,2,2));
-		($leaveUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
+		my $num_users = unpack("S1", substr($msg,2,2));
+		my ($leaveUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
 		$chatRooms{$currentChatRoom}{'users'}{$leaveUser} = "";
 		binRemove(\@currentChatRoomUsers, $leaveUser);
 		$chatRooms{$currentChatRoom}{'num_users'} = $num_users;
@@ -6858,10 +6861,11 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00DF") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 17, length($msg)-17));
-		$msg = substr($msg, 0, 17).$newmsg;
-		$ID = substr($msg,8,4);
-		$ownerID = substr($msg,4,4);
+		my $msg = substr($msg, 0, 17).$newmsg;
+		my $ID = substr($msg,8,4);
+		my $ownerID = substr($msg,4,4);
 		if ($ownerID eq $accountID) {
 			$chatRooms{'new'}{'title'} = substr($msg,17,$msg_size - 17);
 			$chatRooms{'new'}{'ownerID'} = $ownerID;
@@ -6878,13 +6882,13 @@ sub parseMsg {
 		message "Chat Room Properties Modified\n";
 		
 	} elsif ($switch eq "00E1") {
-		$type = unpack("C1",substr($msg, 2, 1));
-		($chatUser) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+		my $type = unpack("C1",substr($msg, 2, 1));
+		my ($chatUser) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 		if ($type == 0) {
 			if ($chatUser eq $chars[$config{'char'}]{'name'}) {
 				$chatRooms{$currentChatRoom}{'ownerID'} = $accountID;
 			} else {
-				$key = findKeyString(\%players, "name", $chatUser);
+				my $key = findKeyString(\%players, "name", $chatUser);
 				$chatRooms{$currentChatRoom}{'ownerID'} = $key;
 			}
 			$chatRooms{$currentChatRoom}{'users'}{$chatUser} = 2;
@@ -6894,7 +6898,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "00E5" || $switch eq "01F4") {
 		# Recieving deal request
-		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/; 
+		my ($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/; 
 		my $dealUserLevel = $switch eq "01F4" ?
 			unpack("S1",substr($msg, 30, 2)) :
 			'Unknown';
@@ -6904,7 +6908,7 @@ sub parseMsg {
 		message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal"; 
 
 	} elsif ($switch eq "00E7" || $switch eq "01F5") {
-		$type = unpack("C1", substr($msg, 2, 1));
+		my $type = unpack("C1", substr($msg, 2, 1));
 		
 		if ($type == 0) {
 			error "That person is too far from you to trade.\n";
@@ -6957,7 +6961,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "00EC") {
-		$type = unpack("C1", substr($msg, 2, 1));
+		my $type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
 			$currentDeal{'other_finalize'} = 1;
 			message "$currentDeal{'name'} finalized the Deal\n", "deal";
@@ -7012,7 +7016,7 @@ sub parseMsg {
 		writeStorageLog(0);
 
 	} elsif ($switch eq "00FA") {
-		$type = unpack("C1", substr($msg, 2, 1));
+		my $type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
 			warning "Can't organize party - party name exists\n";
 		} 
@@ -7056,7 +7060,7 @@ sub parseMsg {
 		$timeout{'ai_partyAutoDeny'}{'time'} = time;
 
 	} elsif ($switch eq "0101") {
-		$type = unpack("C1", substr($msg, 2, 1));
+		my $type = unpack("C1", substr($msg, 2, 1));
 		$chars[$config{'char'}]{'party'}{'share'} = $type;
 		if ($type == 0) {
 			message "Party EXP set to Individual Take\n", "party", 1;
@@ -7067,13 +7071,13 @@ sub parseMsg {
 		}
 		
 	} elsif ($switch eq "0104") {
-		$ID = substr($msg, 2, 4);
-		$x = unpack("S1", substr($msg,10, 2));
-		$y = unpack("S1", substr($msg,12, 2));
-		$type = unpack("C1",substr($msg, 14, 1));
-		($name) = substr($msg, 15, 24) =~ /([\s\S]*?)\000/;
-		($partyUser) = substr($msg, 39, 24) =~ /([\s\S]*?)\000/;
-		($map) = substr($msg, 63, 16) =~ /([\s\S]*?)\000/;
+		my $ID = substr($msg, 2, 4);
+		my $x = unpack("S1", substr($msg,10, 2));
+		my $y = unpack("S1", substr($msg,12, 2));
+		my $type = unpack("C1",substr($msg, 14, 1));
+		my ($name) = substr($msg, 15, 24) =~ /([\s\S]*?)\000/;
+		my ($partyUser) = substr($msg, 39, 24) =~ /([\s\S]*?)\000/;
+		my ($map) = substr($msg, 63, 16) =~ /([\s\S]*?)\000/;
 		if (!%{$chars[$config{'char'}]{'party'}{'users'}{$ID}}) {
 			binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 			if ($ID eq $accountID) {
@@ -7139,6 +7143,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0109") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		my $ID = substr($msg, 4, 4);
 		my $chat = substr($msg, 8, $msg_size - 8);
@@ -7198,8 +7203,9 @@ sub parseMsg {
 	} elsif ($switch eq "010F") {
 		# Character skill list
 		$conState = 5 if ($conState != 4 && $xkore);
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
+		my $msg = substr($msg, 0, 4).$newmsg;
 
 		undef @skillsID;
 		delete $char->{skills};
@@ -7256,7 +7262,7 @@ sub parseMsg {
 		$source->{cast_cancelled} = time;
 		my $skill = $source->{casting}->{skill};
 		my $skillName = $skill ? $skill->name : 'Unknown';
-		my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
+		my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
 		message "$source failed to cast $skillName\n", $domain;
 		delete $source->{casting};
 
@@ -7393,18 +7399,6 @@ sub parseMsg {
 			$char->{time_move} = 0;
 			$char->{time_move_calc} = 0;
 		}
-		if ($AI && $config{'autoResponseOnHeal'}) {
-			# Handle auto-response on heal
-			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
-				if ($targetID eq $accountID) {
-					chatLog("k", "***$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra***\n");
-					sendMessage(\$remote_socket, "pm", getResponse("skillgoodM"), $players{$sourceID}{'name'});
-				} elsif ($monsters{$targetID}) {
-					chatLog("k", "***$sourceDisplay $skillsID_lut{$skillID} on $targetDisplay$extra***\n");
-					sendMessage(\$remote_socket, "pm", getResponse("skillbadM"), $players{$sourceID}{'name'});
-				}
-			}
-		}
 
 		# Resolve source and target names
 		my $source = Actor::get($sourceID);
@@ -7424,6 +7418,19 @@ sub parseMsg {
   
 		my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 		message "$source $verb ".skillName($skillID)." on ".$target->nameString($source)."$extra\n", $domain;
+
+		if ($AI && $config{'autoResponseOnHeal'}) {
+			# Handle auto-response on heal
+			if ((%{$players{$sourceID}}) && (($skillID == 28) || ($skillID == 29) || ($skillID == 34))) {
+				if ($targetID eq $accountID) {
+					chatLog("k", "***$source ".skillName($skillID)." on $target$extra***\n");
+					sendMessage(\$remote_socket, "pm", getResponse("skillgoodM"), $players{$sourceID}{'name'});
+				} elsif ($monsters{$targetID}) {
+					chatLog("k", "***$source ".skillName($skillID)." on $target$extra***\n");
+					sendMessage(\$remote_socket, "pm", getResponse("skillbadM"), $players{$sourceID}{'name'});
+				}
+			}
+		}
 
 		Plugins::callHook('packet_skilluse', {
 			'skillID' => $skillID,
@@ -7492,7 +7499,7 @@ sub parseMsg {
 		$spells{$ID}{'sourceID'} = $sourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
 		$spells{$ID}{'pos'}{'y'} = $y;
-		$binID = binAdd(\@spellsID, $ID);
+		my $binID = binAdd(\@spellsID, $ID);
 		$spells{$ID}{'binID'} = $binID;
 		$spells{$ID}{'type'} = $type;
 		if ($type == 0x81) {
@@ -7605,7 +7612,7 @@ sub parseMsg {
 
 		$cart{'inventory'}[$index]{'amount'} -= $amount;
 		message "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n";
-		$itemChange{$item->{name}} -= $amount;
+		$itemChange{$cart{inventory}[$index]{name}} -= $amount;
 		if ($cart{'inventory'}[$index]{'amount'} <= 0) {
 			delete $cart{'inventory'}[$index];
 		}
@@ -7645,7 +7652,7 @@ sub parseMsg {
 		message("----------Vender Store List-----------\n", "list");
 		message("#  Name                                         Type           Amount Price\n", "list");
 		for (my $i = 8; $i < $msg_size; $i+=22) {
-			$number = unpack("S1", substr($msg, $i + 6, 2));
+			my $number = unpack("S1", substr($msg, $i + 6, 2));
 
 			my $item = $venderItemList[$number] = {};
 			$item->{price} = unpack("L1", substr($msg, $i, 4));
@@ -7658,7 +7665,7 @@ sub parseMsg {
 			$item->{cards} = substr($msg, $i + 14, 8);
 			$item->{name} = itemName($item);
 
-			debug("Item added to Vender Store: $item->{name} - $price z\n", "vending", 2);
+			debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
 
 			Plugins::callHook('packet_vender_store', {
 				venderID => $venderID,
@@ -7737,10 +7744,12 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0139") {
-		$ID = substr($msg, 2, 4);
-		$type = unpack("C1",substr($msg, 14, 1));
+		my $ID = substr($msg, 2, 4);
+		my $type = unpack("C1",substr($msg, 14, 1));
+		my %coords1;
 		$coords1{'x'} = unpack("S1",substr($msg, 6, 2));
 		$coords1{'y'} = unpack("S1",substr($msg, 8, 2));
+		my %coords2;
 		$coords2{'x'} = unpack("S1",substr($msg, 10, 2));
 		$coords2{'y'} = unpack("S1",substr($msg, 12, 2));
 		%{$monsters{$ID}{'pos_attack_info'}} = %coords1 if ($monsters{$ID});
@@ -7786,8 +7795,8 @@ sub parseMsg {
 		} 
 
 	} elsif ($switch eq "013D") {
-		$type = unpack("S1",substr($msg, 2, 2));
-		$amount = unpack("S1",substr($msg, 4, 2));
+		my $type = unpack("S1",substr($msg, 2, 2));
+		my $amount = unpack("S1",substr($msg, 4, 2));
 		if ($type == 5) {
 			$chars[$config{'char'}]{'hp'} += $amount;
 			$chars[$config{'char'}]{'hp'} = $chars[$config{'char'}]{'hp_max'} if ($chars[$config{'char'}]{'hp'} > $chars[$config{'char'}]{'hp_max'});
@@ -7890,9 +7899,9 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0141") {
-		$type = unpack("S1",substr($msg, 2, 2));
-		$val = unpack("S1",substr($msg, 6, 2));
-		$val2 = unpack("S1",substr($msg, 10, 2));
+		my $type = unpack("S1",substr($msg, 2, 2));
+		my $val = unpack("S1",substr($msg, 6, 2));
+		my $val2 = unpack("S1",substr($msg, 10, 2));
 		if ($type == 13) {
 			$chars[$config{'char'}]{'str'} = $val;
 			$chars[$config{'char'}]{'str_bonus'} = $val2;
@@ -7920,7 +7929,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0142") {
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
 
 		# Resolve the source name
 		my $name;
@@ -8050,10 +8059,9 @@ sub parseMsg {
 		my $ID = substr($msg, 2, 4);
 		my $TargetID =  substr($msg, 6, 4);
 		my $online = unpack("L1", substr($msg, 10, 4));
-		undef %nameRequest;
-		$nameRequest{type} = "g";
-		$nameRequest{ID} = $TargetID;
-		$nameRequest{online} = $online;
+		undef %guildNameRequest;
+		$guildNameRequest{ID} = $TargetID;
+		$guildNameRequest{online} = $online;
 		sendGuildMemberNameRequest(\$remote_socket, $TargetID);
 
 	} elsif ($switch eq "016F") {
@@ -8077,7 +8085,6 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		my $msg = substr($msg, 0, 4).$newmsg;
 		undef @identifyID;
-		undef $invIndex;
 		for (my $i = 4; $i < $msg_size; $i += 2) {
 			my $index = unpack("S1", substr($msg, $i, 2));
 			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
@@ -8087,12 +8094,11 @@ sub parseMsg {
 		message "Received Possible Identify List ($num item(s)) - type 'identify'\n", 'info';
 
 	} elsif ($switch eq "0179") {
-		$index = unpack("S*",substr($msg, 2, 2));
-		undef $invIndex;
-		$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		$chars[$config{'char'}]{'inventory'}[$invIndex]{'identified'} = 1;
-		$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'} = $itemSlots_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}};
-		message "Item Identified: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'}\n", "info";
+		my $index = unpack("S*",substr($msg, 2, 2));
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
+		$char->{inventory}[$invIndex]{identified} = 1;
+		$char->{inventory}[$invIndex]{type_equip} = $itemSlots_lut{$char->{inventory}[$invIndex]{nameID}};
+		message "Item Identified: $char->{inventory}[$invIndex]{name}\n", "info";
 		undef @identifyID;
 
 	} elsif ($switch eq "017B") {
@@ -8107,7 +8113,7 @@ sub parseMsg {
 
 		my $index;
 		my $invIndex;
-		for ($i = 4; $i < $len; $i += 2) {
+		for (my $i = 4; $i < $len; $i += 2) {
 			$index = unpack("S1", substr($msg, $i, 2));
 			$invIndex = findIndex($char->{inventory}, "index", $index);
 			binAdd(\@cardMergeItemsID,$invIndex);
@@ -8164,10 +8170,11 @@ sub parseMsg {
 		undef @cardMergeItemsID;
 		undef $cardMergeIndex;
 
-	} elsif ($switch eq "017F") { 
+	} elsif ($switch eq "017F") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
-		# there is no ID
+		my $msg = substr($msg, 0, 4).$newmsg;
+		# there is no ID sent
 		#my $ID = substr($msg, 4, 4);
 		my $chat = substr($msg, 4, $msg_size - 4);
 		$chat =~ s/\000+.*$//;
@@ -8215,9 +8222,7 @@ sub parseMsg {
 		my $ID = substr($msg, 2, 4);
 		my ($name) = unpack("Z*", substr($msg, 6, 24));
 		
-		if ($nameRequest{type} eq "g") {
-			message "Guild Member $name Log ".($nameRequest{online}?"In":"Out")."\n", 'guildchat';
-		}
+		message "Guild Member $name Log ".($guildNameRequest{online}?"In":"Out")."\n", 'guildchat';
 
 	} elsif ($switch eq "0195") {
 		my $ID = substr($msg, 2, 4);
@@ -8532,7 +8537,7 @@ sub parseMsg {
 	} elsif ($switch eq "01F4") {
 		# Recieving deal request
 		# 01DC: 24byte nick, long charID, word level
-		($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
+		my ($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		my $dealUserLevel = unpack("S1",substr($msg, 30, 2));
 		$incomingDeal{'name'} = $dealUser;
 		$timeout{'ai_dealAutoCancel'}{'time'} = time;
@@ -8556,11 +8561,12 @@ sub parseMsg {
 		undef %incomingDeal;
 
 	} elsif ($switch eq "01AD") {
+		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		$msg = substr($msg, 0, 4).$newmsg;
+		my $msg = substr($msg, 0, 4).$newmsg;
 		undef @arrowCraftID;
 		for (my $i = 4; $i < $msg_size; $i += 2) {
-			$ID = unpack("S1", substr($msg, $i, 2));
+			my $ID = unpack("S1", substr($msg, $i, 2));
 			my $index = findIndex($char->{inventory}, "nameID", $ID);
 			binAdd(\@arrowCraftID, $index);
 		}
@@ -8580,7 +8586,7 @@ sub parseMsg {
 		# Friend list
 		undef @friendsID;
 		undef %friends;
-		$ID = 0;
+		my $ID = 0;
 		for (my $i = 4; $i < $msg_size; $i += 32) {
 			binAdd(\@friendsID, $ID);
 			$friends{$ID}{'accountID'} = substr($msg, $i, 4);
