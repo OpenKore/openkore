@@ -2959,6 +2959,7 @@ sub AI {
 					last;
 				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"}) {
 					error "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n";
+					chatLog("k", "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n");
 					quit();
 				}
 			}
