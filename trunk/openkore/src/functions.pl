@@ -7249,6 +7249,7 @@ sub parseMsg {
 			10 => 'Requirement'
 			);
 		warning "Skill $skillsID_lut{$skillID} failed ($failtype{$type})\n", "skill";
+		Plugins::callHook('packet_skillfail', {'skillID' => $skillID, 'failType' => $failtype{$type}});
 
 	} elsif ($switch eq "01B9") {
 		# Cast is cancelled
