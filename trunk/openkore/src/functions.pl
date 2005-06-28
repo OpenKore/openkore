@@ -347,7 +347,7 @@ sub mainLoop {
 			message("Please start the Ragnarok Online client ($config{exeName})\n", "startup") unless $printed;
 			$printed = 1;
 			$interface->iterate;
-			if (defined($input = $interface->getInput(0))) {
+			if (defined(my $input = $interface->getInput(0))) {
 				if ($input eq "quit") {
 					$quit = 1;
 					last;
@@ -397,7 +397,7 @@ sub mainLoop {
 
 			if ($type eq "R") {
 				$msg .= $newMsg;
-				$msg_length = length($msg);
+				my $msg_length = length($msg);
 				while ($msg ne "") {
 					$msg = parseMsg($msg);
 					last if ($msg_length == length($msg));
@@ -423,7 +423,7 @@ sub mainLoop {
 
 		} else {
 			$msg .= $new;
-			$msg_length = length($msg);
+			my $msg_length = length($msg);
 			while ($msg ne "") {
 				$msg = parseMsg($msg);
 				return if ($msg_length == length($msg));
@@ -610,8 +610,6 @@ sub parseInput {
 
 
 sub AI {
-	my $i, $j;
-
 	if (timeOut($timeout{ai_wipe_check})) {
 		my $timeout = $timeout{ai_wipe_old}{timeout};
 
@@ -686,8 +684,8 @@ sub AI {
 		sendSync(\$remote_socket);
 	}
 
-	if (timeOut($mapdrt, $config{'intervalMapDrt'})) {
-		$mapdrt = time;
+	if (timeOut($AI::Timeouts::mapdrt, $config{'intervalMapDrt'})) {
+		$AI::Timeouts::mapdrt = time;
 		if ($field{name}) {
 			my $pos = calcPosition($char);
 			open(DATA, ">$Settings::logs_folder/walk.dat");
@@ -1523,7 +1521,6 @@ sub AI {
 				}
 
 				# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
-				message "$args->{warpedToSave}\n";
 				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
 				&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 					$args->{warpedToSave} = 1;
@@ -1782,7 +1779,7 @@ sub AI {
 
 			# Form list of 8 items to sell
 			my @sellItems;
-			for ($i = 0; $i < @{$char->{inventory}};$i++) {
+			for (my $i = 0; $i < @{$char->{inventory}};$i++) {
 				my $item = $char->{inventory}[$i];
 				next if (!%{$item} || $item->{equipped});
 				my $sell = $items_control{all}{sell};
@@ -1829,7 +1826,7 @@ sub AI {
 
 	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "follow") && timeOut(\%{$timeout{'ai_buyAuto'}}) && time > $ai_v{'inventory_time'}) {
 		undef $ai_v{'temp'}{'found'};
-		$i = 0;
+		my $i = 0;
 		while (1) {
 			last if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"});
 			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
@@ -1868,7 +1865,7 @@ sub AI {
 		}
 
 	} elsif ($ai_seq[0] eq "buyAuto" && timeOut(\%{$timeout{'ai_buyAuto_wait'}}) && timeOut(\%{$timeout{'ai_buyAuto_wait_buy'}})) {
-		$i = 0;
+		my $i = 0;
 		undef $ai_seq_args[0]{'index'};
 		
 		while (1) {
@@ -2511,7 +2508,6 @@ sub AI {
 		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
 			message "Target died\n", "ai_attack";
 			monKilled();
-			$monsters_Killed{$monsters_old{$ID}{'nameID'}}++;
 
 			# Pickup loot when monster's dead
 			if ($config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
@@ -2994,7 +2990,7 @@ sub AI {
 			my $smartHeal_lv = 1;
 			my $hp_diff = $char->{hp_max} - $char->{hp};
 			for ($i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
-				my $sp_req, $amount;
+				my ($sp_req, $amount);
 				
 				$smartHeal_lv = $i;
 				$sp_req = 10 + ($i * 3);
@@ -3062,8 +3058,8 @@ sub AI {
 			} else {
 				$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
 			}
-			for ($i = 1; $i <= $char->{skills}{$party_skill{skillID}}{lv}; $i++) {
-				my $sp_req, $amount;
+			for (my $i = 1; $i <= $char->{skills}{$party_skill{skillID}}{lv}; $i++) {
+				my ($sp_req, $amount);
 				
 				$smartHeal_lv = $i;
 				$sp_req = 10 + ($i * 3);
@@ -3093,7 +3089,7 @@ sub AI {
 		while ($config{$prefix}) {
 			# monsterSkill can be used on any monster that we could
 			# attackAuto
-			@monsterIDs = ai_getAggressives(1, 1);
+			my @monsterIDs = ai_getAggressives(1, 1);
 			for my $monsterID (@monsterIDs) {
 				my $monster = $monsters{$monsterID};
 				if (checkSelfCondition($prefix)
@@ -3249,7 +3245,7 @@ sub AI {
 
 				# Give an error if we don't actually possess this skill
 				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->handle ne $handle)) {
-					my $skill = new Skills(handle => $handle) if (!$skill); 
+					my $skill = new Skills(handle => $handle);
 					debug "Attempted to use skill (".$skill->name.") which you do not have.\n";
 				}
 
@@ -4049,7 +4045,7 @@ sub AI {
 			stand();
 
 		} elsif (( $dist = distance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
-			my %vec, %pos;
+			my (%vec, %pos);
 			getVector(\%vec, $items{$ID}{pos}, $myPos);
 			moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
 			move($pos{x}, $pos{y});
@@ -4088,7 +4084,7 @@ sub AI {
 			stand();
 
 		} elsif ($dist > 2) {
-			my %vec, %pos;
+			my (%vec, %pos);
 			getVector(\%vec, $items{$ID}{pos}, $myPos);
 			moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
 			move($pos{x}, $pos{y});
@@ -4322,11 +4318,11 @@ sub AI {
 sub parseSendMsg {
 	my $msg = shift;
 
-	$sendMsg = $msg;
+	my $sendMsg = $msg;
 	if (length($msg) >= 4 && $conState >= 4 && length($msg) >= unpack("S1", substr($msg, 0, 2))) {
 		decrypt(\$msg, $msg);
 	}
-	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{'debugPacket_ro_sent'} && !existsInList($config{'debugPacket_exclude'}, $switch)) {
 		my $label = $packetDescriptions{Send}{$switch} ?
 			" - $packetDescriptions{Send}{$switch})" : '';
@@ -4506,7 +4502,7 @@ sub parseMsg {
 	my $msg_size;
 
 	# Determine packet switch
-	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
+	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $conState >= 4 && $lastswitch ne $switch
 	 && length($msg) >= unpack("S1", substr($msg, 0, 2))) {
 		decrypt(\$msg, $msg);
@@ -4618,9 +4614,9 @@ sub parseMsg {
 			"----------------------------------", [undef],
 		), "connection");
 
-		$num = 0;
+		my $num = 0;
 		undef @servers;
-		for($i = 47; $i < $msg_size; $i+=32) {
+		for (my $i = 47; $i < $msg_size; $i+=32) {
 			$servers[$num]{'ip'} = makeIP(substr($msg, $i, 4));
 			$servers[$num]{'ip'} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 			$servers[$num]{'port'} = unpack("S1", substr($msg, $i+4, 2));
@@ -4631,7 +4627,7 @@ sub parseMsg {
 
 		message("--------- Servers ----------\n", "connection");
 		message("#         Name            Users  IP              Port\n", "connection");
-		for ($num = 0; $num < @servers; $num++) {
+		for (my $num = 0; $num < @servers; $num++) {
 			message(swrite(
 				"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
 				[$num, $servers[$num]{'name'}, $servers[$num]{'users'}, $servers[$num]{'ip'}, $servers[$num]{'port'}]
@@ -4782,7 +4778,7 @@ sub parseMsg {
 		$chars[$slot] = $char;
 
 		$conState = 3;
-		message "Character $char{name} ($slot) created.\n", "info";
+		message "Character $char->{name} ($slot) created.\n", "info";
 		if (charSelectScreen() == 1) {
 			$conState = 3;
 			$firstLoginMap = 1;
@@ -5677,6 +5673,7 @@ sub parseMsg {
 		}
 		$ai_v{'portalTrace_mapChanged'} = 1;
 
+		my %coords;
 		$coords{'x'} = unpack("S1", substr($msg, 18, 2));
 		$coords{'y'} = unpack("S1", substr($msg, 20, 2));
 		$chars[$config{char}]{pos} = {%coords};
@@ -5750,7 +5747,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $xkore);
-		$ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4);
 		if (%{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			$players{$ID}{'gotName'} = 1;
@@ -5897,11 +5894,11 @@ sub parseMsg {
 
 	} elsif ($switch eq "009E") {
 		$conState = 5 if ($conState != 4 && $xkore);
-		$ID = substr($msg, 2, 4);
-		$type = unpack("S1",substr($msg, 6, 2));
-		$x = unpack("S1", substr($msg, 9, 2));
-		$y = unpack("S1", substr($msg, 11, 2));
-		$amount = unpack("S1", substr($msg, 15, 2));
+		my $ID = substr($msg, 2, 4);
+		my $type = unpack("S1",substr($msg, 6, 2));
+		my $x = unpack("S1", substr($msg, 9, 2));
+		my $y = unpack("S1", substr($msg, 11, 2));
+		my $amount = unpack("S1", substr($msg, 15, 2));
 		my $item = $items{$ID} ||= {};
 		if (!%{$item}) {
 			binAdd(\@itemsID, $ID);
@@ -6344,7 +6341,7 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
 		$msg = substr($msg, 0, 8).$newmsg;
 		$ID = substr($msg, 4, 4);
-		($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
+		my ($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
 		$talk{'ID'} = $ID;
 		$talk{'nameID'} = unpack("L1", $ID);
 		$talk{'msg'} = $talk;
@@ -6418,7 +6415,7 @@ sub parseMsg {
 		$msg = substr($msg, 0, 8).$newmsg;
 		$ID = substr($msg, 4, 4);
 		$talk{'ID'} = $ID;
-		($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
+		my ($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
 		$talk = substr($msg, 8) if (!defined $talk);
 		@preTalkResponses = split /:/, $talk;
 		undef @{$talk{'responses'}};
@@ -6717,7 +6714,7 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		undef @storeList;
-		$storeList = 0;
+		my $storeList = 0;
 		undef $talk{'buyOrSell'};
 		for (my $i = 4; $i < $msg_size; $i += 11) {
 			$price = unpack("L1", substr($msg, $i, 4));
@@ -7641,55 +7638,54 @@ sub parseMsg {
 		delete $venderLists{$ID};
 
 	} elsif ($switch eq "0133") {
-			undef @venderItemList;
-			undef $venderID;
-			$venderID = substr($msg,4,4);
-			$venderItemList = 0;
+		undef @venderItemList;
+		undef $venderID;
+		$venderID = substr($msg,4,4);
 
-			message("----------Vender Store List-----------\n", "list");
-			message("#  Name                                         Type           Amount Price\n", "list");
-			for ($i = 8; $i < $msg_size; $i+=22) {
-				$number = unpack("S1", substr($msg, $i + 6, 2));
+		message("----------Vender Store List-----------\n", "list");
+		message("#  Name                                         Type           Amount Price\n", "list");
+		for (my $i = 8; $i < $msg_size; $i+=22) {
+			$number = unpack("S1", substr($msg, $i + 6, 2));
 
-				my $item = $venderItemList[$number] = {};
-				$item->{price} = unpack("L1", substr($msg, $i, 4));
-				$item->{amount} = unpack("S1", substr($msg, $i + 4, 2));
-				$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
-				$item->{nameID} = unpack("S1", substr($msg, $i + 9, 2));
-				$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
-				$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
-				$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
-				$item->{cards} = substr($msg, $i + 14, 8);
-				$item->{name} = itemName($item);
+			my $item = $venderItemList[$number] = {};
+			$item->{price} = unpack("L1", substr($msg, $i, 4));
+			$item->{amount} = unpack("S1", substr($msg, $i + 4, 2));
+			$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
+			$item->{nameID} = unpack("S1", substr($msg, $i + 9, 2));
+			$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
+			$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
+			$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
+			$item->{cards} = substr($msg, $i + 14, 8);
+			$item->{name} = itemName($item);
 
-				$venderItemList++;
-				debug("Item added to Vender Store: $item->{name} - $price z\n", "vending", 2);
+			debug("Item added to Vender Store: $item->{name} - $price z\n", "vending", 2);
 
-				Plugins::callHook('packet_vender_store', {
-					venderID => $venderID,
-					number => $number,
-					name => $item->{name},
-					amount => $item->{amount},
-					price => $item->{price}
-				});
-
-				message(swrite(
-					"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>z",
-					[$number, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, $item->{price}]),
-					"list");
-			}
-			message("--------------------------------------\n", "list");
-
-			Plugins::callHook('packet_vender_store2', {
+			Plugins::callHook('packet_vender_store', {
 				venderID => $venderID,
-				itemList => \@venderItemList
+				number => $number,
+				name => $item->{name},
+				amount => $item->{amount},
+				price => $item->{price}
 			});
+
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>z",
+				[$number, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, $item->{price}]),
+				"list");
+		}
+		message("--------------------------------------\n", "list");
+
+		Plugins::callHook('packet_vender_store2', {
+			venderID => $venderID,
+			itemList => \@venderItemList
+		});
 
 	} elsif ($switch eq "0136") {
 		$msg_size = unpack("S1",substr($msg,2,2));
 
 		#started a shop.
 		@articles = ();
+		# FIXME: why do we need a seperate variable to track how many items are left in the store?
 		$articles = 0;
 
 		# FIXME: Read the packet the server sends us to determine
@@ -8457,7 +8453,7 @@ sub parseMsg {
 			Plugins::callHook('packet_useitem', {
 				item => $item,
 				invIndex => $invIndex,
-				name => item->{name},
+				name => $item->{name},
 				amount => $amount
 			});
 
@@ -9083,7 +9079,7 @@ sub ai_route_getRoute {
 
 #sellAuto for items_control - chobit andy 20030210
 sub ai_sellAutoCheck {
-	for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
+	for (my $i = 0; $i < @{$chars[$config{'char'}]{'inventory'}};$i++) {
 		next if (!%{$chars[$config{'char'}]{'inventory'}[$i]} || $chars[$config{'char'}]{'inventory'}[$i]{'equipped'});
 		my $sell = $items_control{'all'}{'sell'};
 		$sell = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
@@ -9193,7 +9189,7 @@ sub ai_waypoint {
 		points => shift,
 		index => 0,
 		inc => 1,
-		whenDone => shift
+		whenDone => shift,
 		attackOnRoute => shift
 	);
 
@@ -9738,7 +9734,7 @@ sub getField {
 sub getGatField {
 	my $file = shift;
 	my $r_hash = shift;
-	my $i, $data;
+	my ($i, $data);
 	undef %{$r_hash};
 	($$r_hash{'name'}) = $file =~ /([\s\S]*)\./;
 	open FILE, $file;
@@ -9907,7 +9903,7 @@ sub avoidGM_near {
 			$j++;
 		}
 
-		if ($statusGM && ($players{$playersID[$i]}{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || $user =~ /$config{avoidGM_namePattern}/)) {
+		if ($statusGM && ($players{$playersID[$i]}{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || $players{$playersID[$i]}{name} =~ /$config{avoidGM_namePattern}/)) {
 			my %args = (
 				name => $players{$playersID[$i]}{name},
 				ID => $playersID[$i]
@@ -10481,7 +10477,7 @@ sub itemName {
 }
 
 sub checkSelfCondition {
-	$prefix = shift;
+	my $prefix = shift;
 
 	return 0 if ($config{$prefix . "_disabled"} > 0);
 

@@ -25,12 +25,12 @@ use base qw(Exporter);
 # Do not use any other Kore modules here. It will create circular dependancies.
 
 our %EXPORT_TAGS = (
-	config  => [qw(%arrowcraft_items %avoid @chatResponses %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %monsters_lut %npcs_lut %packetDescriptions %portals_lut %responses %sex_lut %shop %skills_lut %skills_rlut %skillsID_lut %skillsID_rlut %skillsDesc_lut %skillsLooks %skillsArea %skillsEncore %skillsSP_lut %spells_lut %emotions_lut %timeout $char %mon_control)],
+	config  => [qw(%arrowcraft_items %avoid @chatResponses %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %monsters_lut %npcs_lut %packetDescriptions %portals_lut %responses %sex_lut %shop %skills_lut %skills_rlut %skillsID_lut %skillsID_rlut %skillsDesc_lut %skillsLooks %skillsArea %skillsEncore %skillsSP_lut %spells_lut %emotions_lut %timeout $char %mon_control %priority %routeWeights %itemsPickup %rpackets %itemSlots_lut %skillsStatus %portals_los %skillsState %skillsAilments %elements_lut)],
 	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
-	state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID @portalsID_old %portals %portals_old @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownObjects $statChanged $skillChanged $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets @venderItemList $venderID @venderListsID @articles %venderLists)],
-	network => [qw($remote_socket $charServer $conState $conState_tries $encryptVal $ipc $lastPacketTime $masterServer $xkore $msg)],
+	state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID @portalsID_old %portals %portals_old @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownObjects $statChanged $skillChanged $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets @venderItemList $venderID @venderListsID @articles $articles %venderLists %monsters_old @monstersID_old %npcs_old %items_old %players_old @playersID_old @servers $sessionID $sessionID2 $accountSex $accountSex2 $map_ip $map_port $KoreStartTime $waitingForInput $secureLoginKey $initSync $lastConfChangeTime)],
+	network => [qw($remote_socket $charServer $conState $conState_tries $encryptVal $ipc $lastPacketTime $masterServer $xkore $msg $lastswitch)],
 	interface => [qw($interface)],
-	misc    => [qw($buildType $quit @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk $startTime_EXP $startingZenny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange)],
+	misc    => [qw($buildType $quit @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk $startTime_EXP $startingZenny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange %checkUpdate $XKore_dontRedirect $monkilltime $monstarttime $startedattack $firstLoginMap $sentWelcomeMessage $versionSearch)],
 );
 
 our @EXPORT = (
@@ -52,6 +52,7 @@ our %cities_lut;
 our %config;
 our %consoleColors;
 our %equipTypes_lut;
+our %elements_lut;
 our %directions_lut;
 our %haircolors;
 our @headgears_lut;
@@ -60,14 +61,19 @@ our %items_lut;
 our %itemSlotCount_lut;
 our %itemsDesc_lut;
 our %itemTypes_lut;
+our %itemSlots_lut;
 our %maps_lut;
 our %masterServers;
 our %mon_control;
 our %monsters_lut;
 our %npcs_lut;
 our %packetDescriptions;
+our %portals_los;
 our %portals_lut;
+our %priority;
 our %responses;
+our %routeWeights;
+our %rpackets;
 our %sex_lut;
 our %shop;
 our %skills_lut;
@@ -77,8 +83,11 @@ our %skillsID_rlut;
 our %skillsDesc_lut;
 our %skillsSP_lut;
 our %skillsLooks;
+our %skillsAilments;
 our %skillsArea;
 our %skillsEncore;
+our %skillsState;
+our %skillsStatus;
 our %spells_lut;
 our %timeout;
 our %jobs_lut = (
@@ -212,6 +221,25 @@ our @venderItemList;
 our $venderID;
 our @venderListsID;
 our @articles;
+our $articles;
+our %monsters_old;
+our @monstersID_old;
+our %npcs_old;
+our %items_old;
+our %players_old;
+our @playersID_old;
+our @servers;
+our $sessionID;
+our $sessionID2;
+our $accountSex;
+our $accountSex2;
+our $map_ip;
+our $map_port;
+our $KoreStartTime;
+our $waitingForInput;
+our $secureLoginKey;
+our $initSync;
+our $lastConfChangeTime;
 
 # Network
 our $remote_socket;
@@ -224,6 +252,7 @@ our $lastPacketTime;
 our $masterServer;
 our $xkore;
 our $msg;
+our $lastswitch;
 
 # Interface
 our $interface;
@@ -252,6 +281,14 @@ our $totalBaseExp;
 our $totalJobExp;
 our $shopEarned;
 our %itemChange;
+our %checkUpdate;
+our $XKore_dontRedirect;
+our $monkilltime;
+our $monstarttime;
+our $startedattack;
+our $firstLoginMap;
+our $sentWelcomeMessage;
+our $versionSearch;
 
 
 # Detect operating system
