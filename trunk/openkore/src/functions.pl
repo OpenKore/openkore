@@ -15,6 +15,7 @@ use Text::ParseWords;
 use Config;
 eval "no utf8;";
 use bytes;
+use strict;
 
 use Globals;
 use Modules;
@@ -958,7 +959,7 @@ sub AI {
 				}
 				$ai_seq_args[0]{'dmgFromYou_last'} = $monsters{$ai_seq_args[0]{'args'}[1]}{'dmgFromYou'};
 				$ai_seq_args[0]{'missedFromYou_last'} = $monsters{$ai_seq_args[0]{'args'}[1]}{'missedFromYou'};
-				if (%{$monsters{$ai_seq_args[0]{'args'}[1]}}) {
+				if ($monsters{$ai_seq_args[0]{'args'}[1]} && %{$monsters{$ai_seq_args[0]{'args'}[1]}}) {
 					$ai_seq_args[0]{'time'} = time;
 				} else {
 					$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
@@ -974,7 +975,7 @@ sub AI {
 				$ai_seq_args[0]{'forceGiveup'}{'timeout'} = 4;
 				$ai_seq_args[0]{'forceGiveup'}{'time'} = time;
 			}
-			if (%{$items{$ai_seq_args[0]{'args'}[0]}}) {
+			if ($items{$ai_seq_args[0]{'args'}[0]} && %{$items{$ai_seq_args[0]{'args'}[0]}}) {
 				$ai_seq_args[0]{'time'} = time;
 			} else {
 				$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
@@ -2345,7 +2346,7 @@ sub AI {
 			}
 		} else {
 			if ($ai_seq_args[$followIndex]{'follow_lost_portalID'} ne "") {
-				if (%{$portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}}} && !$ai_seq_args[$followIndex]{'follow_lost_portal_tried'}) {
+				if ($portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}} && %{$portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}}} && !$ai_seq_args[$followIndex]{'follow_lost_portal_tried'}) {
 					$ai_seq_args[$followIndex]{'follow_lost_portal_tried'} = 1;
 					%{$ai_v{'temp'}{'pos'}} = %{$portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}}{'pos'}};
 					ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
@@ -5343,7 +5344,7 @@ sub parseMsg {
 			$char->{dead} = 1;
 			$char->{dead_time} = time;
 
-		} elsif (%{$monsters{$ID}}) {
+		} elsif ($monsters{$ID} && %{$monsters{$ID}}) {
 			%{$monsters_old{$ID}} = %{$monsters{$ID}};
 			$monsters_old{$ID}{'gone_time'} = time;
 			if ($type == 0) {
@@ -5403,7 +5404,7 @@ sub parseMsg {
 				delete $venderLists{$ID};
 			}
 
-		} elsif (%{$players_old{$ID}}) {
+		} elsif ($players_old{$ID} && %{$players_old{$ID}}) {
 			if ($type == 2) {
 				debug "Player Disconnected: $players_old{$ID}{'name'}\n", "parseMsg_presence";
 				$players_old{$ID}{'disconnected'} = 1;
@@ -5412,7 +5413,7 @@ sub parseMsg {
 				$players_old{$ID}{'teleported'} = 1;
 			}
 
-		} elsif (%{$portals{$ID}}) {
+		} elsif ($portals{$ID} && %{$portals{$ID}}) {
 			debug "Portal Disappeared: $portals{$ID}{'name'} ($portals{$ID}{'binID'})\n", "parseMsg";
 			$portals_old{$ID} = {%{$portals{$ID}}};
 			$portals_old{$ID}{'disappeared'} = 1;
@@ -5420,7 +5421,7 @@ sub parseMsg {
 			binRemove(\@portalsID, $ID);
 			delete $portals{$ID};
 
-		} elsif (%{$npcs{$ID}}) {
+		} elsif ($npcs{$ID} && %{$npcs{$ID}}) {
 			debug "NPC Disappeared: $npcs{$ID}{'name'} ($npcs{$ID}{'binID'})\n", "parseMsg";
 			%{$npcs_old{$ID}} = %{$npcs{$ID}};
 			$npcs_old{$ID}{'disappeared'} = 1;
@@ -5429,7 +5430,7 @@ sub parseMsg {
 			objectRemoved('npc', $ID, $npcs{$ID});
 			delete $npcs{$ID};
 
-		} elsif (%{$pets{$ID}}) {
+		} elsif ($pets{$ID} && %{$pets{$ID}}) {
 			debug "Pet Disappeared: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 			binRemove(\@petsID, $ID);
 			delete $pets{$ID};
@@ -5586,7 +5587,7 @@ sub parseMsg {
 				calcStat($damage);
 			} elsif ($ID2 eq $accountID) {
 				# Check for monster with empty name
-				if (%{$monsters{$ID1}} && $monsters{$ID1}{'name'} eq "") {
+				if ($monsters{$ID1} && %{$monsters{$ID1}} && $monsters{$ID1}{'name'} eq "") {
 					if ($config{'teleportAuto_emptyName'} ne '0') {
 						message "Monster with empty name attacking you. Teleporting...\n";
 						useTeleport(1);
@@ -5743,13 +5744,13 @@ sub parseMsg {
 	} elsif ($switch eq "0095") {
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
-		if (%{$players{$ID}}) {
+		if ($players{$ID} && %{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			$players{$ID}{'gotName'} = 1;
 			my $binID = binFind(\@playersID, $ID);
 			debug "Player Info: $players{$ID}{'name'} ($binID)\n", "parseMsg_presence", 2;
 		}
-		if (%{$monsters{$ID}}) {
+		if ($monsters{$ID} && %{$monsters{$ID}}) {
 			my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			if ($config{'debug'} >= 2) {
 				my $binID = binFind(\@monstersID, $ID);
@@ -5761,7 +5762,7 @@ sub parseMsg {
 				updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monsters{$ID}{'nameID'}, $monsters{$ID}{'name'});
 			}
 		}
-		if (%{$npcs{$ID}}) {
+		if ($npcs{$ID} && %{$npcs{$ID}}) {
 			($npcs{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/; 
 			$npcs{$ID}{'gotName'} = 1;
 			if ($config{'debug'} >= 2) { 
@@ -5775,7 +5776,7 @@ sub parseMsg {
 				updateNPCLUT("$Settings::tables_folder/npcs.txt", $npcs{$ID}{'nameID'}, $field{'name'}, $npcs{$ID}{'pos'}{'x'}, $npcs{$ID}{'pos'}{'y'}, $npcs{$ID}{'name'}); 
 			}
 		}
-		if (%{$pets{$ID}}) {
+		if ($pets{$ID} && %{$pets{$ID}}) {
 			($pets{$ID}{'name_given'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			if ($config{'debug'} >= 2) {
 				my $binID = binFind(\@petsID, $ID);
@@ -5857,12 +5858,12 @@ sub parseMsg {
 			$chars[$config{'char'}]{'look'}{'body'} = $body;
 			debug "You look at $body, $head\n", "parseMsg", 2;
 
-		} elsif (%{$players{$ID}}) {
+		} elsif ($players{$ID} && %{$players{$ID}}) {
 			$players{$ID}{'look'}{'head'} = $head;
 			$players{$ID}{'look'}{'body'} = $body;
 			debug "Player $players{$ID}{'name'} ($players{$ID}{'binID'}) looks at $players{$ID}{'look'}{'body'}, $players{$ID}{'look'}{'head'}\n", "parseMsg";
 
-		} elsif (%{$monsters{$ID}}) {
+		} elsif ($monsters{$ID} && %{$monsters{$ID}}) {
 			$monsters{$ID}{'look'}{'head'} = $head;
 			$monsters{$ID}{'look'}{'body'} = $body;
 			debug "Monster $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) looks at $monsters{$ID}{'look'}{'body'}, $monsters{$ID}{'look'}{'head'}\n", "parseMsg";
@@ -5981,7 +5982,7 @@ sub parseMsg {
 	} elsif ($switch eq "00A1") {
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
-		if (%{$items{$ID}}) {
+		if ($items{$ID} && %{$items{$ID}}) {
 			debug "Item Disappeared: $items{$ID}{'name'} ($items{$ID}{'binID'})\n", "parseMsg_presence";
 			%{$items_old{$ID}} = %{$items{$ID}};
 			$items_old{$ID}{'disappeared'} = 1;
@@ -6573,7 +6574,7 @@ sub parseMsg {
 		if ($ID eq $accountID) {
 			message "$chars[$config{'char'}]{'name'} : $emotion\n", "emotion";
 			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
-		} elsif (%{$players{$ID}}) {
+		} elsif ($players{$ID} && %{$players{$ID}}) {
 			my $name = $players{$ID}{name} || "Unknown #".unpack("L", $ID);
 
 			my $dist = "unknown";
@@ -7977,7 +7978,7 @@ sub parseMsg {
 			undef $chars[$config{'char'}]{'dead_time'};
 			$chars[$config{'char'}]{'resurrected'} = 1;
 
-		} elsif (%{$players{$targetID}}) {
+		} elsif ($players{$targetID} && %{$players{$targetID}}) {
 			undef $players{$targetID}{'dead'};
 		}
 
@@ -8226,7 +8227,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0195") {
 		my $ID = substr($msg, 2, 4);
-		if (%{$players{$ID}}) {
+		if ($players{$ID} && %{$players{$ID}}) {
 			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			$players{$ID}{'gotName'} = 1;
 			($players{$ID}{'party'}{'name'}) = substr($msg, 30, 24) =~ /([\s\S]*?)\000/;
@@ -8337,7 +8338,7 @@ sub parseMsg {
 			$pets{$ID}{'name_given'} = "Unknown";
 			$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
 		}
-		if (%{$monsters{$ID}}) {
+		if ($monsters{$ID} && %{$monsters{$ID}}) {
 			binRemove(\@monstersID, $ID);
 			objectRemoved('monster', $ID, $monsters{$ID});
 			delete $monsters{$ID};
@@ -10332,9 +10333,9 @@ sub countCastOn {
 	if ($monsters{$sourceID}) {
 		if ($targetID eq $accountID) {
 			$monsters{$sourceID}{'castOnToYou'}++;
-		} elsif (%{$players{$targetID}}) {
+		} elsif ($players{$targetID} && %{$players{$targetID}}) {
 			$monsters{$sourceID}{'castOnToPlayer'}{$targetID}++;
-		} elsif (%{$monsters{$targetID}}) {
+		} elsif ($monsters{$targetID} && %{$monsters{$targetID}}) {
 			$monsters{$sourceID}{'castOnToMonster'}{$targetID}++;
 		}
 	}
@@ -10342,9 +10343,9 @@ sub countCastOn {
 	if ($monsters{$targetID}) {
 		if ($sourceID eq $accountID) {
 			$monsters{$targetID}{'castOnByYou'}++;
-		} elsif (%{$players{$sourceID}}) {
+		} elsif ($players{$sourceID} && %{$players{$sourceID}}) {
 			$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
-		} elsif (%{$monsters{$sourceID}}) {
+		} elsif ($monsters{$sourceID} && %{$monsters{$sourceID}}) {
 			$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
 		}
 	}
@@ -10352,7 +10353,7 @@ sub countCastOn {
 
 # return ID based on name if party member is online
 sub findPartyUserID {
-	if (%{$chars[$config{'char'}]{'party'}}) {
+	if ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}}) {
 		my $partyUserName = shift; 
 		for (my $j = 0; $j < @partyUsersID; $j++) {
 	        	next if ($partyUsersID[$j] eq "");
@@ -10374,7 +10375,7 @@ sub getNPCInfo {
 	undef %{$return_hash};
 	
 	if ($id =~ /^\d+$/) {
-		if (%{$npcs_lut{$id}}) {
+		if ($npcs_lut{$id} && %{$npcs_lut{$id}}) {
 			$$return_hash{id} = $id;
 			$$return_hash{map} = $npcs_lut{$id}{map};
 			$$return_hash{pos}{x} = $npcs_lut{$id}{pos}{x};
