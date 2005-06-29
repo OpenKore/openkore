@@ -5047,7 +5047,7 @@ sub parseMsg {
 			if (!$npcs{$ID} || !%{$npcs{$ID}}) {
 				$npcs{$ID}{'appear_time'} = time;
 				my $nameID = unpack("L1", $ID);
-				my $display = (%{$npcs_lut{$nameID}}) 
+				my $display = ($npcs_lut{$nameID} && %{$npcs_lut{$nameID}}) 
 					? $npcs_lut{$nameID}{'name'}
 					: "Unknown ".$nameID;
 				binAdd(\@npcsID, $ID);
