@@ -61,11 +61,16 @@ sub next {
   return;
 }
 
+# for debugging purposes: show queue contents
+sub list {
+  my $self = shift;
+  foreach (@{$self->{queue}}) {$cvs->debug("queue: $_",4)};
+}
+
 # prepends another macro to current queue
 sub addMacro {
   my ($self, $name) = @_;
   @{$self->{queue}} = (@{$macro{$name}}, @{$self->{queue}});
-  AI::queue('macro');
 }
 
 # sets timeout for next command
@@ -115,7 +120,7 @@ sub processQueue {
     my $command = $queue->next;
     if (defined $command) {
       if ($command ne "") {
-        $cvs->debug("processing $command)", 1);
+        $cvs->debug("processing $command", 1);
         if (!Commands::run($command)) {
           if (defined &main::parseCommand) {main::parseCommand($command)}
           else {
