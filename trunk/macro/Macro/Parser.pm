@@ -34,16 +34,16 @@ sub parseMacroFile {
     s/  +/ /g;         # trim down spaces
     next unless ($_);
 
-    if (!%block) {
-      if (/{$/) {      # line ending with {
-        s/\s*{$//;     # remove { at end of line
-        my ($key, $value) = $_ =~ /^(.*?) (.*)/;
-        if ($key eq 'macro') {
-          %block = (name => $value, type => "macro");
-          $macro{$value} = [];
-        } elsif ($key eq 'automacro') {
-          %block = (name => $value, type => "auto");
-        };
+    if (!%block && /{$/) {
+      # no need for an extra 'if' block.
+      # FIXME remove this comment
+      s/\s*{$//;     # remove { at end of line
+      my ($key, $value) = $_ =~ /^(.*?) (.*)/;
+      if ($key eq 'macro') {
+        %block = (name => $value, type => "macro");
+        $macro{$value} = [];
+      } elsif ($key eq 'automacro') {
+        %block = (name => $value, type => "auto");
       };
     } elsif ($block{type} eq "macro") {
       if ($_ eq "}") {
@@ -84,6 +84,7 @@ sub parseMacroFile {
 # TODO: it works, but I don't like it
 sub parseCmd {
   my $command = shift;
+  return "" unless $command;
   $cvs->debug("in parseCmd: parsing +$command+", 2);
   # shortcut commands that won't be executed
   if ($command =~ /^\@(log|call|release|pause|set)/) {
@@ -95,8 +96,7 @@ sub parseCmd {
       releaseAM($am);
     } elsif ($command =~ /\@call/) {
       my (undef, $macro, $times) = split(/ /, $command, 3);
-      # TODO parse $times?
-      pushMacro($macro, $times);
+      pushMacro($macro, parseCmd($times));
     } elsif ($command =~ /\@set/) {
       my ($var, $val) = $command =~ /^\@set +\((.*?)\) +(.*)$/;
       setVar(parseCmd($var), parseCmd($val));
@@ -138,7 +138,7 @@ sub pushMacro {
   if (!defined $macro{$arg}) {return}
   else {
     if (!$times) {$times = 1};
-    while (--$times > 0) {$queue->addMacro($arg)};
+    while (--$times >= 0) {$queue->addMacro($arg)};
   };
   return 0;
 };
