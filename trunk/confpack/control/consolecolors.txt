@@ -24,7 +24,7 @@ drop blue
 useItem blue
 
 skill green 
-skillSelf green
+selfSkill green
 
 success green
 system yellow
