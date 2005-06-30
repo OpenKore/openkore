@@ -1785,9 +1785,9 @@ sub cmdInventory {
 		for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
 			my $item = $chars[$config{'char'}]{'inventory'}[$i];
 			next unless $item && %{$item};
-			if ($item->{type} == 3 ||
-			    $item->{type} == 6 ||
-				$item->{type} == 10) {
+			if (($item->{type} == 3 ||
+			     $item->{type} == 6 ||
+				 $item->{type} == 10) && !$item->{equipped}) {
 				push @non_useable, $i;
 			} elsif ($item->{type} <= 2) {
 				push @useable, $i;
