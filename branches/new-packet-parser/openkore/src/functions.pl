@@ -9,6 +9,7 @@
 # See http://www.gnu.org/licenses/gpl.html for the full license.
 #########################################################################
 
+use strict;
 use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Text::ParseWords;
