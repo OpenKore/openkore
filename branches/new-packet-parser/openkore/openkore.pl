@@ -37,13 +37,13 @@ BEGIN {
 		my $libFound = 0;
 		foreach (@INC) {
 			if (-f "$_/$libName" || -f "$_/auto/XSTools/$libName") {
-				$found = 1;
+				$libFound = 1;
 				last;
 			}
 		}
-		if (!$found) {
+		if (!$libFound) {
 			# Attempt to compile XSTools.so if it isn't available
-			my $ret = system('gmake', '-C', 'src/auto/XSTools');
+			my $ret = system('gmake', '-C', "$RealBin/src/auto/XSTools");
 			if ($ret != 0) {
 				if (($ret & 127) == 2) {
 					# Ctrl+C pressed
@@ -177,6 +177,7 @@ use Utils;
 use Plugins;
 use FileParsers;
 use Network;
+use Network::Receive;
 use Network::Send;
 use Commands;
 use Misc;
@@ -191,8 +192,9 @@ use Actor::Unknown;
 use Interface;
 use ChatQueue;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Skills Interface ChatQueue
-	Actor Actor::Player Actor::Monster Actor::You Actor::Party Actor::Unknown/);
+	Network Network::Receive Network::Send Commands Misc AI Skills
+	Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
+	Actor::Party Actor::Unknown/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
@@ -292,6 +294,8 @@ if ($config{XKore} || $sys{XKore}) {
 		$interface->errorDialog($@);
 		exit 1;
 	}
+
+	$packetParser = Network::Receive->create($config{serverType});
 
 	# Redirect messages to the RO client
 	# I don't use a reference to redirectXKoreMessages here;

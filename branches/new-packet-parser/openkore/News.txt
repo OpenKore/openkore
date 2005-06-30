@@ -223,6 +223,10 @@ New config options:
 - storageAuto_useChatCommand (command)
   Use a specified chat command to open the storage instead of going
   to talk to the kafra.
+- partySkill: notPartyOnly (flag)
+  Use this skill on anybody, not just party members.
+- partySkill: target_isGuild (list)
+  Use this skill on the specified guilds.
 
 New control files:
 - control/sys.txt
