@@ -325,3 +325,9 @@ port 6900
 master_version 14
 version 0
 serverType 4
+
+[XileRO Private Server]
+ip 72.29.77.223
+port 6901
+master_version 17
+version 20
