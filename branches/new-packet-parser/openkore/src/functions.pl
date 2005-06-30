@@ -2123,7 +2123,7 @@ sub AI {
 					$char->{$st} += 1;
 					# Raise stat
 					sendAddStatusPoint(\$remote_socket, $ID);
-					message "Auto-adding stat $st\n";
+					message "Auto-adding stat $st ($char->{points_free} >= $char->{points_$st})\n";
 					# Save which stat was raised, so that when we received the
 					# "stat changed" packet (00BC?) we can changed $statChanged
 					# back to 0 so that kore will start checking again if stats
@@ -2962,7 +2962,7 @@ sub AI {
 					$timeout{ai_item_use_auto}{time} = time;
 					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
 					last;
-				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"}) {
+				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && @{$char->{inventory}} > 0) {
 					error "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n";
 					chatLog("k", "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n");
 					quit();
