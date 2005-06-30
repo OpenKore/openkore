@@ -143,8 +143,8 @@ chatLangCode 1
 field_payon old_payon.fld
 
 [Brazil - bRO]
-ip 200.229.49.10
-port 6900
+ip 200.229.50.68
+port 6000
 master_version 22
 version 1
 
