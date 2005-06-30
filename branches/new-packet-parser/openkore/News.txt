@@ -125,6 +125,8 @@ New features:
 - New message "Cannot pickup item (failure code #)" indicates when
   you can't pick up an item. (I think 2 always means overweight?)
 - New chat command "mag" for Magnificat.
+- Console::Unix interface no longer has "Press ENTER to continue"
+  prompt, since UNIX terminals generally don't close when openkore exits.
 
 New commands:
 - storage log
