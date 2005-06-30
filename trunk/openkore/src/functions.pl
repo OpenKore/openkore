@@ -1190,7 +1190,7 @@ sub AI {
 
 			# Cancel conversation only if NPC is still around; otherwise
 			# we could get disconnected.
-			sendTalkCancel(\$remote_socket, $args->{ID}) if $npcs{$args->{ID}};;
+			#sendTalkCancel(\$remote_socket, $args->{ID}) if $npcs{$args->{ID}};;
 			AI::dequeue;
 
 		} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
