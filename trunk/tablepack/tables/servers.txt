@@ -279,6 +279,19 @@ version 18
 serverType 4
 
 [aeRO Private Server]
+ip 66.118.142.17
+port 5000
+master_version 1
+version 20
+
+[aeRO2 Private Server]
+ip 66.118.142.17
+port 6900
+master_version 2
+version 20
+preLoginCode 1
+
+[aeRO 2 Private Server]
 ip 66.196.34.89
 port 6900
 master_version 2
@@ -312,4 +325,3 @@ port 6900
 master_version 14
 version 0
 serverType 4
-
