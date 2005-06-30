@@ -204,7 +204,7 @@ sub ai_partyfollow {
 	# be triggered to move to the NPC
 
 	my %master;
-	$master{id} = findPartyUserID($config{followTarget});
+	$master{id} = main::findPartyUserID($config{followTarget});
 	if ($master{id} ne "" && !AI::inQueue("storageAuto","storageGet","sellAuto","buyAuto")) {
 
 		$master{x} = $char->{party}{users}{$master{id}}{pos}{x};
