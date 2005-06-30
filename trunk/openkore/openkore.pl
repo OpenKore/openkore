@@ -37,13 +37,13 @@ BEGIN {
 		my $libFound = 0;
 		foreach (@INC) {
 			if (-f "$_/$libName" || -f "$_/auto/XSTools/$libName") {
-				$found = 1;
+				$libFound = 1;
 				last;
 			}
 		}
-		if (!$found) {
+		if (!$libFound) {
 			# Attempt to compile XSTools.so if it isn't available
-			my $ret = system('gmake', '-C', 'src/auto/XSTools');
+			my $ret = system('gmake', '-C', "$RealBin/src/auto/XSTools");
 			if ($ret != 0) {
 				if (($ret & 127) == 2) {
 					# Ctrl+C pressed
