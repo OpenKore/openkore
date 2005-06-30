@@ -2104,7 +2104,8 @@ sub AI {
 
 			if ($statAmount < $num && $char->{$st} < 99) {
 				# If char has enough stat points free to raise stat
-				if ($char->{points_free} >= $char->{"points_$st"}) {
+				if ($char->{points_free} &&
+				    $char->{points_free} >= $char->{"points_$st"}) {
 					my $ID;
 					if ($st eq "str") {
 						$ID = 0x0D;
@@ -2123,7 +2124,7 @@ sub AI {
 					$char->{$st} += 1;
 					# Raise stat
 					sendAddStatusPoint(\$remote_socket, $ID);
-					message "Auto-adding stat $st ($char->{points_free} >= $char->{points_$st})\n";
+					message "Auto-adding stat $st\n";
 					# Save which stat was raised, so that when we received the
 					# "stat changed" packet (00BC?) we can changed $statChanged
 					# back to 0 so that kore will start checking again if stats
