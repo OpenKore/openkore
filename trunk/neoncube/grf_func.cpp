@@ -51,6 +51,8 @@ BOOL ExtractGRF(LPCTSTR fname, LPCTSTR fpath)
     StatusMessage("Status: Extracting %s...\r\nInfo:------\r\nProgress:-----", fname);
     for(DWORD ctr = 0;ctr < grf->nfiles; ctr++) {
 
+	BOOL restarted = FALSE;
+restart:
 	TCHAR szPath[256];
 	int folders = 0;
 	int i;
@@ -68,26 +70,55 @@ BOOL ExtractGRF(LPCTSTR fname, LPCTSTR fpath)
 	} else {
 	    PostError(TRUE, "Invalid patch_list string: %s \n2nd flag must be: FLD or GRF", fpath);
 	}
-	GRF_normalize_path(szPath, szPath);
-		    
+	    
 	folders = CountFolders(szPath);
-	for(i = 0;i <= folders; i++) {
+	for(i = 1;i <= folders; i++) {
 	    
 	    TCHAR szCurrentFolder[256];
+
 	    _tcscpy(szCurrentFolder,GetFolder(szPath,i));
-			
 	    CreateDirectory(szCurrentFolder,NULL);
+	    
 	}
-    	
-	if(grf_index_extract(grf, ctr, szPath, &err) > 0) {
-			
-	    StatusMessage("Status: %s...\r\nInfo: %d of %d extracted\r\nProgress:-----", grf->files[ctr].name, ctr, grf->nfiles);
+
+    	GRF_normalize_path(szPath, szPath);
+
+	// if file doesn't contain a '.', we assume it is a directory
+	if(strchr(szPath, '.') == NULL) {
+
+	    CreateDirectory(szPath, NULL);
+
+	// else we extract it
 	} else {
+	
+	    if(grf_index_extract(grf, ctr, szPath, &err) > 0) {
+			    
+		StatusMessage("Status: %s...\r\nInfo: %d of %d extracted\r\nProgress:-----", grf->files[ctr].name, ctr, grf->nfiles);
+	    
+	    } else {
+		
+	    
+		if(!restarted) {
 
-	    AddErrorLog("Failed to extract %s [code: %d]\n", grf->files[ctr].name, err.type);
 
+    		    TCHAR buff[256];
+		    WCHAR wcBuff[256];
+		    MultiByteToWideChar(CP_ACP, 0, grf->files[ctr].name, -1, wcBuff, sizeof(wcBuff)/sizeof(wcBuff[0]));
+		    
+		    WideCharToMultiByte(CP_ACP, 0, wcBuff, -1, buff, sizeof(buff), NULL, NULL);
+		    _tcscpy(grf->files[ctr].name, buff);
+			    
+			restarted = TRUE;
+			
+			goto restart;
+
+		} else {
+
+		    AddErrorLog("Failed to extract %s [code: %d]\n", grf->files[ctr].name, err.type);
+		}
+		
+	    }
 	}
-
 	SendMessage(hwndProgress, PBM_SETPOS, (WPARAM)ctr+1, 0);
     }
 
