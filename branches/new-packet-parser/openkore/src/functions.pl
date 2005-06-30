@@ -4040,7 +4040,7 @@ sub AI {
 		AI::args->{suspended}{ai_items_gather_giveup}{time} += time - AI::args->{suspended};
 		delete AI::args->{suspended};
 	}
-	if (AI::action eq "items_gather" && !$items{AI::args->{ID}} && !%{$items{AI::args->{ID}}}) {
+	if (AI::action eq "items_gather" && !($items{AI::args->{ID}} && %{$items{AI::args->{ID}}})) {
 		my $ID = AI::args->{ID};
 		message "Failed to gather $items_old{$ID}{name} ($items_old{$ID}{binID}) : Lost target\n", "drop";
 		AI::dequeue;
