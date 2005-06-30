@@ -409,7 +409,7 @@ sub mainLoop {
 				parseSendMsg($newMsg);
 			}
 		}
-		
+
 		if (timeOut($timeout{'injectSync'})) {
 			$xkore->sync;
 			$timeout{'injectSync'}{'time'} = time;
@@ -672,10 +672,10 @@ sub AI {
 				last;
 			}
 		}
-		foreach (keys %pets) { 
-			if ($pets{$_}{'name_given'} =~ /Unknown/) { 
-				sendGetPlayerInfo(\$remote_socket, $_); 
-				last; 
+		foreach (keys %pets) {
+			if ($pets{$_}{'name_given'} =~ /Unknown/) {
+				sendGetPlayerInfo(\$remote_socket, $_);
+				last;
 			}
 		}
 		$timeout{'ai_getInfo'}{'time'} = time;
@@ -842,7 +842,7 @@ sub AI {
 			$portals_lut{$ID}{dest}{$destName}{map} = $field{name};
 			$portals_lut{$ID}{dest}{$destName}{x} = $destPos{x};
 			$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
-	
+
 			message "Recorded new portal (source): $sourceMap ($sourcePos{x}, $sourcePos{y}) -> $field{name} ($char->{pos}{x}, $char->{pos}{y})\n", "portalRecord";
 			updatePortalLUT("$Settings::tables_folder/portals.txt",
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
@@ -1460,7 +1460,7 @@ sub AI {
 			if ($config{"getAuto_${i}_minAmount"} ne "" && $config{"getAuto_${i}_maxAmount"} ne ""
 			   && !$config{"getAuto_${i}_passive"}
 			   && (!defined($invIndex)
-				|| ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"} 
+				|| ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"}
 				 && $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"}))
 			   && (findKeyString(\%storage, "name", $config{"getAuto_$i"}) ne "" || !$storage{opened})
 			) {
@@ -1551,7 +1551,7 @@ sub AI {
 					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
 						warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
 						$config{'storageAuto_npc_steps'} = "c r1 n";
-						debug "Using standard iRO npc storage steps.\n", "npc";				
+						debug "Using standard iRO npc storage steps.\n", "npc";
 					} elsif ($config{'storageAuto_npc_type'} eq "2") {
 						$config{'storageAuto_npc_steps'} = "c c r1 n";
 						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
@@ -1561,10 +1561,10 @@ sub AI {
 						error "Something is wrong with storageAuto_npc_type in your config.\n";
 					}
 
-					if (defined $args->{npc}{id}) { 
-						ai_talkNPC(ID => $args->{npc}{id}, $config{'storageAuto_npc_steps'}); 
+					if (defined $args->{npc}{id}) {
+						ai_talkNPC(ID => $args->{npc}{id}, $config{'storageAuto_npc_steps'});
 					} else {
-						ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'}); 
+						ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
 					}
 				}
 
@@ -1634,7 +1634,7 @@ sub AI {
 				$args->{retry} = 0;
 				last AUTOSTORAGE;
 			}
-			
+
 			if (defined($args->{getStart}) && $args->{done} != 1) {
 				while (exists $config{"getAuto_$ai_seq_args[0]{index}"}) {
 					if (!$config{"getAuto_$ai_seq_args[0]{index}"}) {
@@ -1755,7 +1755,7 @@ sub AI {
 				undef $ai_seq_args[0]{'warpedToSave'};
 			}
 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
+			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'}
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
 				message "Teleporting to auto-sell\n", "teleport";
@@ -1773,11 +1773,11 @@ sub AI {
 			getNPCInfo($config{'sellAuto_npc'}, $ai_seq_args[0]{'npc'});
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
 				$ai_seq_args[0]{'sentSell'} = 1;
-				
-				if (defined $ai_seq_args[0]{'npc'}{'id'}) { 
-					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "b"); 
+
+				if (defined $ai_seq_args[0]{'npc'}{'id'}) {
+					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "b");
 				} else {
-					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b"); 
+					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b");
 				}
 				last AUTOSELL;
 			}
@@ -1873,11 +1873,11 @@ sub AI {
 	} elsif ($ai_seq[0] eq "buyAuto" && timeOut($timeout{'ai_buyAuto_wait'}) && timeOut($timeout{'ai_buyAuto_wait_buy'})) {
 		my $i = 0;
 		undef $ai_seq_args[0]{'index'};
-		
+
 		while (1) {
 			last if (!$config{"buyAuto_$i"});
 			$ai_seq_args[0]{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
-			if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"buyAuto_$i"."_maxAmount"} ne "" && ($ai_seq_args[0]{'invIndex'} eq "" 
+			if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"buyAuto_$i"."_maxAmount"} ne "" && ($ai_seq_args[0]{'invIndex'} eq ""
 				|| $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"})) {
 
 				$ai_seq_args[0]{'npc'} = {};
@@ -1897,7 +1897,7 @@ sub AI {
 		}
 		undef $ai_v{'temp'}{'do_route'};
 		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
-			$ai_v{'temp'}{'do_route'} = 1;			
+			$ai_v{'temp'}{'do_route'} = 1;
 		} else {
 			$ai_v{'temp'}{'distance'} = distance($ai_seq_args[0]{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
 			$config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"} = 0 if ($config{"buyAuto_$i"."_standpoint"});
@@ -1910,7 +1910,7 @@ sub AI {
 				undef $ai_seq_args[0]{'warpedToSave'};
 			}
 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'} 
+			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'}
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
 				message "Teleporting to auto-buy\n", "teleport";
@@ -1949,10 +1949,10 @@ sub AI {
 			if (!defined($ai_seq_args[0]{'sentBuy'})) {
 				$ai_seq_args[0]{'sentBuy'} = 1;
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
-				if (defined $ai_seq_args[0]{'npc'}{'id'}) { 
-					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "b"); 
+				if (defined $ai_seq_args[0]{'npc'}{'id'}) {
+					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "b");
 				} else {
-					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b"); 
+					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b");
 				}
 				last AUTOBUY;
 			}
@@ -2044,7 +2044,7 @@ sub AI {
 		|| ($config{lockMap_x} ne '' && ($char->{pos_to}{x} < $config{lockMap_x} - $config{lockMap_randX} || $char->{pos_to}{x} > $config{lockMap_x} + $config{lockMap_randX}))
 		|| ($config{lockMap_y} ne '' && ($char->{pos_to}{y} < $config{lockMap_y} - $config{lockMap_randY} || $char->{pos_to}{y} > $config{lockMap_y} + $config{lockMap_randY}))
 	)) {
-		
+
 		if ($maps_lut{$config{lockMap}.'.rsw'} eq '') {
 			error "Invalid map specified for lockMap - map $config{lockMap} doesn't exist\n";
 			$config{lockMap} = '';
@@ -2134,7 +2134,7 @@ sub AI {
 					# sent when $statChanged is back to 0 (when the server has
 					# replied with a a stat change)
 					$statChanged = $st;
-					# After we raise a stat, exit loop				
+					# After we raise a stat, exit loop
 					last;
 				}
 				# If stat needs to be changed but char doesn't have enough stat points to raise it then
@@ -2144,7 +2144,7 @@ sub AI {
 		}
 	}
 
-	##### AUTO SKILLS #####	
+	##### AUTO SKILLS #####
 
 	if (!$skillChanged && $config{skillsAddAuto}) {
 		# Split list of skills and levels
@@ -2199,7 +2199,7 @@ sub AI {
 
 
 	##### FOLLOW #####
-	
+
 	# TODO: follow should be a 'mode' rather then a sequence, hence all
 	# var/flag about follow should be moved to %ai_v
 
@@ -2253,7 +2253,7 @@ sub AI {
 							distFromGoal => $config{followDistanceMin});
 					} else {
 						my (%vec, %pos);
-	
+
 						stand() if ($char->{sitting});
 						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
 						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
@@ -2262,12 +2262,12 @@ sub AI {
 					}
 				}
 			}
-			
+
 			if ($args->{following} && $player && %{$player}) {
 				if ($config{'followSitAuto'} && $players{$ai_seq_args[$followIndex]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
 					sit();
 				}
-	
+
 				my $dx = $ai_seq_args[$followIndex]{'last_pos_to'}{'x'} - $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'};
 				my $dy = $ai_seq_args[$followIndex]{'last_pos_to'}{'y'} - $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'};
 				$ai_seq_args[$followIndex]{'last_pos_to'}{'x'} = $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'};
@@ -2373,7 +2373,7 @@ sub AI {
 		ai_partyfollow();
 	}
 	} # end of FOLLOW block
-	
+
 
 	##### SITAUTO-IDLE #####
 	if ($config{sitAuto_idle}) {
@@ -2398,7 +2398,7 @@ sub AI {
 			# Send the 'sit' packet every x seconds until we're sitting
 			sendSit(\$remote_socket);
 			$timeout{ai_sit}{time} = time;
-			
+
 			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
 		}
 	}
@@ -3001,7 +3001,7 @@ sub AI {
 			my $hp_diff = $char->{hp_max} - $char->{hp};
 			for ($i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
 				my ($sp_req, $amount);
-				
+
 				$smartHeal_lv = $i;
 				$sp_req = 10 + ($i * 3);
 				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
@@ -3029,7 +3029,7 @@ sub AI {
 		}
 	}
 
-	##### PARTY-SKILL USE ##### 
+	##### PARTY-SKILL USE #####
 
 	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
 		my %party_skill;
@@ -3075,7 +3075,7 @@ sub AI {
 			}
 			for (my $i = 1; $i <= $char->{skills}{$party_skill{skillID}}{lv}; $i++) {
 				my ($sp_req, $amount);
-				
+
 				$smartHeal_lv = $i;
 				$sp_req = 10 + ($i * 3);
 				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
@@ -3166,19 +3166,19 @@ sub AI {
 				if (defined $index) {
 					sendEquip(\$remote_socket, $char->{inventory}[$index]{index}, $char->{inventory}[$index]{type_equip});
 					$timeout{ai_item_equip_auto}{time} = time;
-					
+
 					# this is a skilluse equip
-					if (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill))) { 
+					if (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill))) {
 						AI::args($ai_index_skill_use)->{ai_equipAuto_skilluse_giveup}{time} = time;
 						AI::args($ai_index_skill_use)->{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
-						
+
 					# this is a teleport equip
 					} elsif (!$config{"equipAuto_${i}_onTeleport"} || $ai_v{temp}{teleport}{lv}) {
 						$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
 						$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
 						warning "set timeout\n";
 					}
-					
+
 					debug "Auto-equip: $char->{inventory}[$index]{name} ($index)\n", "equipAuto";
 					last;
 				}
@@ -3313,7 +3313,7 @@ sub AI {
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
 		if ($config{'tankMode'}) {
-			foreach (@playersID) {	
+			foreach (@playersID) {
 				next if (!$_);
 				if ($config{'tankModeTarget'} eq $players{$_}{'name'}) {
 					$foundTankee = 1;
@@ -4088,14 +4088,14 @@ sub AI {
 		message "Failed to take $item->{name} ($item->{binID}) from ($char->{pos}{x}, $char->{pos}{y}) to ($item->{pos}{x}, $item->{pos}{y})\n";
 		$items{AI::args->{ID}}{take_failed}++;
 		AI::dequeue;
-		
+
 	} elsif (AI::action eq "take") {
 		my $ID = AI::args->{ID};
 		my $myPos = $char->{pos};
 		my $dist = distance($items{$ID}{pos}, $myPos);
 		my $item = $items{AI::args->{ID}};
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
-		
+
 		if ($char->{sitting}) {
 			stand();
 
@@ -4853,7 +4853,7 @@ sub parseMsg {
 		undef $conState_tries;
 		$charID = substr($msg, 2, 4);
 		my ($map_name) = substr($msg, 6, 16) =~ /([\s\S]*?)\000/;
-		
+
 		if ($xkore) {
 			undef $masterServer;
 			$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
@@ -4987,7 +4987,7 @@ sub parseMsg {
 			if ($pet) {
 				if (!$pets{$ID} || !%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
-					my $display = ($monsters_lut{$type} ne "") 
+					my $display = ($monsters_lut{$type} ne "")
 							? $monsters_lut{$type}
 							: "Unknown ".$type;
 					binAdd(\@petsID, $ID);
@@ -5014,7 +5014,7 @@ sub parseMsg {
 				if (!$monsters{$ID} || !%{$monsters{$ID}}) {
 					$monsters{$ID} = new Actor::Monster;
 					$monsters{$ID}{'appear_time'} = time;
-					my $display = ($monsters_lut{$type} ne "") 
+					my $display = ($monsters_lut{$type} ne "")
 							? $monsters_lut{$type}
 							: "Unknown ".$type;
 					binAdd(\@monstersID, $ID);
@@ -5060,7 +5060,7 @@ sub parseMsg {
 			if (!$npcs{$ID} || !%{$npcs{$ID}}) {
 				$npcs{$ID}{'appear_time'} = time;
 				my $nameID = unpack("L1", $ID);
-				my $display = ($npcs_lut{$nameID} && %{$npcs_lut{$nameID}}) 
+				my $display = ($npcs_lut{$nameID} && %{$npcs_lut{$nameID}})
 					? $npcs_lut{$nameID}{'name'}
 					: "Unknown ".$nameID;
 				binAdd(\@npcsID, $ID);
@@ -5206,7 +5206,7 @@ sub parseMsg {
 			if ($pet) {
 				if (!$pets{$ID} || !%{$pets{$ID}}) {
 					$pets{$ID}{'appear_time'} = time;
-					my $display = ($monsters_lut{$type} ne "") 
+					my $display = ($monsters_lut{$type} ne "")
 							? $monsters_lut{$type}
 							: "Unknown ".$type;
 					binAdd(\@petsID, $ID);
@@ -5238,7 +5238,7 @@ sub parseMsg {
 					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'appear_time'} = time;
 					$monsters{$ID}{'nameID'} = $type;
-					my $display = ($monsters_lut{$type} ne "") 
+					my $display = ($monsters_lut{$type} ne "")
 						? $monsters_lut{$type}
 						: "Unknown ".$type;
 					$monsters{$ID}{'name'} = $display;
@@ -5294,21 +5294,21 @@ sub parseMsg {
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
-				if (!$pets{$ID} || !%{$pets{$ID}}) { 
-					binAdd(\@petsID, $ID); 
-					$pets{$ID}{'nameID'} = $type; 
-					$pets{$ID}{'appear_time'} = time; 
-					my $display = ($monsters_lut{$pets{$ID}{'nameID'}} ne "") 
-					? $monsters_lut{$pets{$ID}{'nameID'}} 
-					: "Unknown ".$pets{$ID}{'nameID'}; 
-					$pets{$ID}{'name'} = $display; 
+				if (!$pets{$ID} || !%{$pets{$ID}}) {
+					binAdd(\@petsID, $ID);
+					$pets{$ID}{'nameID'} = $type;
+					$pets{$ID}{'appear_time'} = time;
+					my $display = ($monsters_lut{$pets{$ID}{'nameID'}} ne "")
+					? $monsters_lut{$pets{$ID}{'nameID'}}
+					: "Unknown ".$pets{$ID}{'nameID'};
+					$pets{$ID}{'name'} = $display;
 					$pets{$ID}{'name_given'} = "Unknown";
-					$pets{$ID}{'binID'} = binFind(\@petsID, $ID); 
+					$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
 				}
 				$pets{$ID}{look}{head} = 0;
 				$pets{$ID}{look}{body} = 0;
-				%{$pets{$ID}{'pos'}} = %coords; 
-				%{$pets{$ID}{'pos_to'}} = %coords; 
+				%{$pets{$ID}{'pos'}} = %coords;
+				%{$pets{$ID}{'pos_to'}} = %coords;
 				debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 
 				if ($monsters{$ID}) {
@@ -5324,7 +5324,7 @@ sub parseMsg {
 					$monsters{$ID}{ID} = $ID;
 					$monsters{$ID}{'nameID'} = $type;
 					$monsters{$ID}{'appear_time'} = time;
-					my $display = ($monsters_lut{$monsters{$ID}{'nameID'}} ne "") 
+					my $display = ($monsters_lut{$monsters{$ID}{'nameID'}} ne "")
 							? $monsters_lut{$monsters{$ID}{'nameID'}}
 							: "Unknown ".$monsters{$ID}{'nameID'};
 					$monsters{$ID}{'name'} = $display;
@@ -5343,7 +5343,7 @@ sub parseMsg {
 		} else {
 			debug "Unknown Spawned: $type - ".getHex($ID)."\n", "parseMsg_presence";
 		}
-		
+
 	} elsif ($switch eq "007F") {
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $time = unpack("L1",substr($msg, 2, 4));
@@ -5665,10 +5665,10 @@ sub parseMsg {
 		chatLog("c", "$chat\n") if ($config{'logChat'});
 		message "$chat\n", "selfchat";
 
-		Plugins::callHook('packet_selfChat', { 
-			user => $chatMsgUser, 
-			msg => $chatMsg 
-		}); 
+		Plugins::callHook('packet_selfChat', {
+			user => $chatMsgUser,
+			msg => $chatMsg
+		});
 
 
 	} elsif ($switch eq "0091") {
@@ -5781,17 +5781,17 @@ sub parseMsg {
 			}
 		}
 		if ($npcs{$ID} && %{$npcs{$ID}}) {
-			($npcs{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/; 
+			($npcs{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
 			$npcs{$ID}{'gotName'} = 1;
-			if ($config{'debug'} >= 2) { 
-				my $binID = binFind(\@npcsID, $ID); 
+			if ($config{'debug'} >= 2) {
+				my $binID = binFind(\@npcsID, $ID);
 				debug "NPC Info: $npcs{$ID}{'name'} ($binID)\n", "parseMsg", 2;
-			} 
-			if (!$npcs_lut{$npcs{$ID}{'nameID'}} || !%{$npcs_lut{$npcs{$ID}{'nameID'}}}) { 
+			}
+			if (!$npcs_lut{$npcs{$ID}{'nameID'}} || !%{$npcs_lut{$npcs{$ID}{'nameID'}}}) {
 				$npcs_lut{$npcs{$ID}{'nameID'}}{'name'} = $npcs{$ID}{'name'};
 				$npcs_lut{$npcs{$ID}{'nameID'}}{'map'} = $field{'name'};
 				%{$npcs_lut{$npcs{$ID}{'nameID'}}{'pos'}} = %{$npcs{$ID}{'pos'}};
-				updateNPCLUT("$Settings::tables_folder/npcs.txt", $npcs{$ID}{'nameID'}, $field{'name'}, $npcs{$ID}{'pos'}{'x'}, $npcs{$ID}{'pos'}{'y'}, $npcs{$ID}{'name'}); 
+				updateNPCLUT("$Settings::tables_folder/npcs.txt", $npcs{$ID}{'nameID'}, $field{'name'}, $npcs{$ID}{'pos'}{'x'}, $npcs{$ID}{'pos'}{'y'}, $npcs{$ID}{'name'});
 			}
 		}
 		if ($pets{$ID} && %{$pets{$ID}}) {
@@ -6066,7 +6066,7 @@ sub parseMsg {
 			$item->{type_equip} = unpack("S1", substr($msg, $i + 6, 2));
 			$item->{equipped} = unpack("S1", substr($msg, $i + 8, 2));
 			$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
-			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1)); 
+			$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
 			$item->{cards} = substr($msg, $i + 12, 8);
 			$item->{name} = itemName($item);
 
@@ -6259,8 +6259,8 @@ sub parseMsg {
 		} elsif ($type == 52) {
 			$chars[$config{'char'}]{'critical'} = $val;
 			debug "Critical: $val\n", "parseMsg", 2;
-		} elsif ($type == 53) { 
-			$chars[$config{'char'}]{'attack_speed'} = 200 - $val/10; 
+		} elsif ($type == 53) {
+			$chars[$config{'char'}]{'attack_speed'} = 200 - $val/10;
 			debug "Attack Speed: $chars[$config{'char'}]{'attack_speed'}\n", "parseMsg", 2;
 		} elsif ($type == 55) {
 			$chars[$config{'char'}]{'lv_job'} = $val;
@@ -6285,32 +6285,32 @@ sub parseMsg {
 			} else {
 				if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
 					$monsterBaseExp = 0;
-				} else { 
-					$monsterBaseExp = $chars[$config{'char'}]{'exp'} - $chars[$config{'char'}]{'exp_last'}; 
-				} 
-				$totalBaseExp += $monsterBaseExp; 
-				if ($bExpSwitch == 1) { 
-					$totalBaseExp += $monsterBaseExp; 
-					$bExpSwitch = 2; 
-				} 
+				} else {
+					$monsterBaseExp = $chars[$config{'char'}]{'exp'} - $chars[$config{'char'}]{'exp_last'};
+				}
+				$totalBaseExp += $monsterBaseExp;
+				if ($bExpSwitch == 1) {
+					$totalBaseExp += $monsterBaseExp;
+					$bExpSwitch = 2;
+				}
 			}
 		} elsif ($type == 2) {
 			$chars[$config{'char'}]{'exp_job_last'} = $chars[$config{'char'}]{'exp_job'};
 			$chars[$config{'char'}]{'exp_job'} = $val;
 			debug "Job Exp: $val\n", "parseMsg";
-			if ($jExpSwitch == 0) { 
-				$jExpSwitch = 1; 
-			} else { 
-				if ($chars[$config{'char'}]{'exp_job_last'} > $chars[$config{'char'}]{'exp_job'}) { 
-					$monsterJobExp = 0; 
-				} else { 
-					$monsterJobExp = $chars[$config{'char'}]{'exp_job'} - $chars[$config{'char'}]{'exp_job_last'}; 
-				} 
-				$totalJobExp += $monsterJobExp; 
-				if ($jExpSwitch == 1) { 
-					$totalJobExp += $monsterJobExp; 
-					$jExpSwitch = 2; 
-				} 
+			if ($jExpSwitch == 0) {
+				$jExpSwitch = 1;
+			} else {
+				if ($chars[$config{'char'}]{'exp_job_last'} > $chars[$config{'char'}]{'exp_job'}) {
+					$monsterJobExp = 0;
+				} else {
+					$monsterJobExp = $chars[$config{'char'}]{'exp_job'} - $chars[$config{'char'}]{'exp_job_last'};
+				}
+				$totalJobExp += $monsterJobExp;
+				if ($jExpSwitch == 1) {
+					$totalJobExp += $monsterJobExp;
+					$jExpSwitch = 2;
+				}
 			}
 			my $basePercent = $char->{exp_max} ?
 				($monsterBaseExp / $char->{exp_max} * 100) :
@@ -6584,7 +6584,7 @@ sub parseMsg {
 			$chars[$config{'char'}]{'points_luk'} = $val;
 			debug "Points needed for Luck: $val\n", "parseMsg";
 		}
-		
+
 	} elsif ($switch eq "00C0") {
 		my $ID = substr($msg, 2, 4);
 		my $type = unpack("C*", substr($msg, 6, 1));
@@ -6739,7 +6739,7 @@ sub parseMsg {
 			my $type = unpack("C1", substr($msg, $i + 8, 1));
 			my $ID = unpack("S1", substr($msg, $i + 9, 2));
 			$storeList[$storeList]{'nameID'} = $ID;
-			my $display = ($items_lut{$ID} ne "") 
+			my $display = ($items_lut{$ID} ne "")
 				? $items_lut{$ID}
 				: "Unknown ".$ID;
 			$storeList[$storeList]{'name'} = $display;
@@ -6764,7 +6764,7 @@ sub parseMsg {
 		message "$name: Check my store list by typing 'store'\n";
 		$ai_v{'npc_talk'}{'talk'} = 'store';
 		$ai_v{'npc_talk'}{'time'} = time;
-		
+
 	} elsif ($switch eq "00C7") {
 		#sell list, similar to buy list
 		if (length($msg) > 4) {
@@ -6817,7 +6817,7 @@ sub parseMsg {
 		$chatRooms{$ID}{'limit'} = unpack("S1",substr($msg,12,2));
 		$chatRooms{$ID}{'public'} = unpack("C1",substr($msg,16,1));
 		$chatRooms{$ID}{'num_users'} = unpack("S1",substr($msg,14,2));
-		
+
 	} elsif ($switch eq "00D8") {
 		my $ID = substr($msg,2,4);
 		binRemove(\@chatRoomsID, $ID);
@@ -6862,7 +6862,7 @@ sub parseMsg {
 			$chatRooms{$currentChatRoom}{'num_users'} = $num_users;
 			message "$joinedUser has joined the Chat Room\n";
 		}
-	
+
 	} elsif ($switch eq "00DD") {
 		my $num_users = unpack("S1", substr($msg,2,2));
 		my ($leaveUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
@@ -6899,7 +6899,7 @@ sub parseMsg {
 			$chatRooms{$ID}{'num_users'} = unpack("S1",substr($msg,14,2));
 		}
 		message "Chat Room Properties Modified\n";
-		
+
 	} elsif ($switch eq "00E1") {
 		my $type = unpack("C1",substr($msg, 2, 1));
 		my ($chatUser) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
@@ -6917,18 +6917,18 @@ sub parseMsg {
 
 	} elsif ($switch eq "00E5" || $switch eq "01F4") {
 		# Recieving deal request
-		my ($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/; 
+		my ($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
 		my $dealUserLevel = $switch eq "01F4" ?
 			unpack("S1",substr($msg, 30, 2)) :
 			'Unknown';
-		$incomingDeal{'name'} = $dealUser; 
-		$timeout{'ai_dealAutoCancel'}{'time'} = time; 
-		message "$dealUser (level $dealUserLevel) Requests a Deal\n", "deal"; 
-		message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal"; 
+		$incomingDeal{'name'} = $dealUser;
+		$timeout{'ai_dealAutoCancel'}{'time'} = time;
+		message "$dealUser (level $dealUserLevel) Requests a Deal\n", "deal";
+		message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal";
 
 	} elsif ($switch eq "00E7" || $switch eq "01F5") {
 		my $type = unpack("C1", substr($msg, 2, 1));
-		
+
 		if ($type == 0) {
 			error "That person is too far from you to trade.\n";
 		} elsif ($type == 3) {
@@ -6939,7 +6939,7 @@ sub parseMsg {
 				$currentDeal{'ID'} = $outgoingDeal{'ID'};
 				$currentDeal{'name'} = $players{$outgoingDeal{'ID'}}{'name'};
 				undef %outgoingDeal;
-			} 
+			}
 			message "Engaged Deal with $currentDeal{'name'}\n", "deal";
 		}
 
@@ -7038,7 +7038,7 @@ sub parseMsg {
 		my $type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
 			warning "Can't organize party - party name exists\n";
-		} 
+		}
 
 	} elsif ($switch eq "00FB") {
 		my $newmsg;
@@ -7088,7 +7088,7 @@ sub parseMsg {
 		} else {
 			error "Error setting party option\n";
 		}
-		
+
 	} elsif ($switch eq "0104") {
 		my $ID = substr($msg, 2, 4);
 		my $x = unpack("S1", substr($msg,10, 2));
@@ -7121,7 +7121,7 @@ sub parseMsg {
 		if ($config{'partyAutoShare'} && $char->{'party'} && $char->{'party'}{'users'}{$accountID}{'admin'}) {
 			sendPartyShareEXP(\$remote_socket, 1);
 		}
-	
+
 	} elsif ($switch eq "0105") {
 		my $ID = substr($msg, 2, 4);
 		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
@@ -7176,7 +7176,7 @@ sub parseMsg {
 
 		chatLog("p", "$chat\n") if ($config{'logPartyChat'});
 		ChatQueue::add('p', $ID, $chatMsgUser, $chatMsg);
-		
+
 		Plugins::callHook('packet_partyMsg', {
 		        MsgUser => $chatMsgUser,
 		        Msg => $chatMsg
@@ -7256,7 +7256,7 @@ sub parseMsg {
 		my $btype = unpack("S1", substr($msg, 4, 2));
 		my $fail = unpack("C1", substr($msg, 8, 1));
 		my $type = unpack("C1", substr($msg, 9, 1));
-		
+
 		my %failtype = (
 			0 => 'Basic',
 			1 => 'Insufficient SP',
@@ -7362,7 +7362,7 @@ sub parseMsg {
 		my $lv = unpack("S1", substr($msg, 8, 2));
 		my $x = unpack("S1", substr($msg, 10, 2));
 		my $y = unpack("S1", substr($msg, 12, 2));
-		
+
 		# Perform trigger actions
 		setSkillUseTimer($skillID) if $sourceID eq $accountID;
 
@@ -7434,7 +7434,7 @@ sub parseMsg {
 		} elsif ($amount != 65535) {
 			$extra = ": Lv $amount";
 		}
-  
+
 		my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
 		message "$source $verb ".skillName($skillID)." on ".$target->nameString($source)."$extra\n", $domain;
 
@@ -7789,8 +7789,8 @@ sub parseMsg {
 
 	# Hambo Arrow Equip
 	} elsif ($switch eq "013B") {
-		my $type = unpack("S1",substr($msg, 2, 2)); 
-		if ($type == 0) { 
+		my $type = unpack("S1",substr($msg, 2, 2));
+		if ($type == 0) {
 			delete $char->{'arrow'};
 			if ($config{'dcOnEmptyArrow'}) {
 				$interface->errorDialog("Please equip arrow first.");
@@ -7801,17 +7801,17 @@ sub parseMsg {
 
 		} elsif ($type == 3) {
 			debug "Arrow equipped\n";
-		} 
+		}
 
 	} elsif ($switch eq "013C") {
-		my $index = unpack("S1", substr($msg, 2, 2)); 
+		my $index = unpack("S1", substr($msg, 2, 2));
 		$char->{arrow} = $index;
 
-		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index); 
-		if ($invIndex ne "") { 
+		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		if ($invIndex ne "") {
 			$char->{inventory}[$invIndex]{equipped} = 32768;
 			message "Arrow equipped: $char->{inventory}[$invIndex]{name} ($invIndex)\n";
-		} 
+		}
 
 	} elsif ($switch eq "013D") {
 		my $type = unpack("S1",substr($msg, 2, 2));
@@ -7966,7 +7966,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0147") {
 		my $skillID = unpack("S*",substr($msg, 2, 2));
-		my $skillLv = unpack("S*",substr($msg, 8, 2)); 
+		my $skillLv = unpack("S*",substr($msg, 8, 2));
 		my $skillName = unpack("A*", substr($msg, 14, 24));
 
 		message "Permitted to use $skillsID_lut{$skillID} ($skillID), level $skillLv\n";
@@ -8207,7 +8207,7 @@ sub parseMsg {
 		chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 		message "[Guild] $chat\n", "guildchat";
 		ChatQueue::add('g', 0, $chatMsgUser, $chatMsg);
-		
+
 		Plugins::callHook('packet_guildMsg', {
 		        MsgUser => $chatMsgUser,
 		        Msg => $chatMsg
@@ -8240,7 +8240,7 @@ sub parseMsg {
 	} elsif ($switch eq "0194") {
 		my $ID = substr($msg, 2, 4);
 		my ($name) = unpack("Z*", substr($msg, 6, 24));
-		
+
 		message "Guild Member $name Log ".($guildNameRequest{online}?"In":"Out")."\n", 'guildchat';
 
 	} elsif ($switch eq "0195") {
@@ -8404,13 +8404,13 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "01B3") {
-		# NPC image 
-		my $npc_image = substr($msg, 2,64); 
-		($npc_image) = $npc_image =~ /(\S+)/; 
+		# NPC image
+		my $npc_image = substr($msg, 2,64);
+		($npc_image) = $npc_image =~ /(\S+)/;
 		debug "NPC image: $npc_image\n", "parseMsg";
 
 	} elsif ($switch eq "01B6") {
-		# Guild Info 
+		# Guild Info
 		$guild{'ID'}        = substr($msg, 2, 4);
 		$guild{'lvl'}       = unpack("L1", substr($msg,  6, 4));
 		$guild{'conMember'} = unpack("L1", substr($msg, 10, 4));
@@ -8452,13 +8452,13 @@ sub parseMsg {
 		message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
 		$itemChange{$item->{name}} += $amount;
 		Plugins::callHook('packet_storage_added');
-		
+
 	} elsif ($switch eq "01C8") {
 		my $index = unpack("S1",substr($msg, 2, 2));
 		my $ID = substr($msg, 6, 4);
 		my $itemType = unpack("S1", substr($msg, 4, 2));
 		my $amountleft = unpack("S1",substr($msg, 10, 2));
-		my $itemDisplay = ($items_lut{$itemType} ne "") 
+		my $itemDisplay = ($items_lut{$itemType} ne "")
 			? $items_lut{$itemType}
 			: "Unknown " . unpack("L*", $ID);
 
@@ -8549,7 +8549,7 @@ sub parseMsg {
 				$player->{shoes} = $ID1;
 			}
 		}
-      		
+
 	} elsif ($switch eq "01DC") {
 		$secureLoginKey = substr($msg, 4, $msg_size);
 
@@ -8620,7 +8620,7 @@ sub parseMsg {
 		my $friendAccountID = substr($msg, 2, 4);
 		my $friendCharID = substr($msg, 6, 4);
 		my $isNotOnline = unpack("C1",substr($msg, 10, 1));
-		
+
 		for (my $i = 0; $i < @friendsID; $i++) {
 			if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
 				$friends{$i}{'online'} = 1 - $isNotOnline;
@@ -8688,813 +8688,6 @@ sub parseMsg {
 
 
 
-#######################################
-#######################################
-#AI FUNCTIONS
-#######################################
-#######################################
-
-##
-# ai_clientSuspend(packet_switch, duration, args...)
-# initTimeout: a number of seconds.
-#
-# Freeze the AI for $duration seconds. $packet_switch and @args are only
-# used internally and are ignored unless XKore mode is turned on.
-sub ai_clientSuspend {
-	my ($type, $duration, @args) = @_;
-	my %args;
-	$args{type} = $type;
-	$args{time} = time;
-	$args{timeout} = $duration;
-	@{$args{args}} = @args;
-	AI::queue("clientSuspend", \%args);
-	debug "AI suspended by clientSuspend for $args{timeout} seconds\n";
-}
-
-##
-# ai_drop(items, max)
-# items: reference to an array of inventory item numbers.
-# max: the maximum amount to drop, for each item, or 0 for unlimited.
-#
-# Drop one or more items.
-#
-# Example:
-# # Drop inventory items 2 and 5.
-# ai_drop([2, 5]);
-# # Drop inventory items 2 and 5, but at most 30 of each item.
-# ai_drop([2, 5], 30);
-sub ai_drop {
-	my $r_items = shift;
-	my $max = shift;
-	my %seq = ();
-
-	if (@{$r_items} == 1) {
-		# Dropping one item; do it immediately
-		drop($r_items->[0], $max);
-	} else {
-		# Dropping multiple items; queue an AI sequence
-		$seq{items} = \@{$r_items};
-		$seq{max} = $max;
-		$seq{timeout} = 1;
-		AI::queue("drop", \%seq);
-	}
-}
-
-sub ai_follow {
-	my $name = shift;
-
-	if (binFind(\@ai_seq, "follow") eq "") {
-		my %args;
-		$args{name} = $name; 
-		push @ai_seq, "follow";
-		push @ai_seq_args, \%args;
-	}
-	
-	return 1;
-}
-
-sub ai_partyfollow {
-	# we have to enable re-calc of route based on master's possition regulary, even when it is
-	# on route and move, otherwise we have finaly moved to the possition and found that the master
-	# already teleported to another side of the map.
-
-	# This however will give problem on few seq such as storageAuto as 'move' and 'route' might
-	# be triggered to move to the NPC
-
-	my %master;
-	$master{id} = findPartyUserID($config{followTarget});
-	if ($master{id} ne "" && !AI::inQueue("storageAuto","storageGet","sellAuto","buyAuto")) {
-
-		$master{x} = $char->{party}{users}{$master{id}}{pos}{x};
-		$master{y} = $char->{party}{users}{$master{id}}{pos}{y};
-		($master{map}) = $char->{party}{users}{$master{id}}{map} =~ /([\s\S]*)\.gat/;
-
-		if ($master{map} ne $field{name} || $master{x} == 0 || $master{y} == 0) {
-			delete $master{x};
-			delete $master{y};
-		}
-
-		return unless ($master{map} ne $field{name} || exists $master{x});
-		
-		if ((exists $ai_v{master} && distance(\%master, $ai_v{master}) > 15)
-			|| $master{map} != $ai_v{master}{map}
-			|| (timeOut($ai_v{master}{time}, 15) && distance(\%master, $char->{pos_to}) > $config{followDistanceMax})) {
-
-			$ai_v{master}{x} = $master{x};
-			$ai_v{master}{y} = $master{y};
-			$ai_v{master}{map} = $master{map};
-			$ai_v{master}{time} = time; 
-
-			if ($ai_v{master}{map} ne $field{name}) {
-				message "Calculating route to find master: $ai_v{master}{map}\n", "follow";
-			} elsif (distance(\%master, $char->{pos_to}) > $config{followDistanceMax} ) {
-				message "Calculating route to find master: $ai_v{master}{map} ($ai_v{master}{x},$ai_v{master}{y})\n", "follow";
-			} else {
-				return;
-			}
-
-			AI::clear("move", "route", "mapRoute");
-			ai_route($ai_v{master}{map}, $ai_v{master}{x}, $ai_v{master}{y}, distFromGoal => $config{followDistanceMin});
-			
-			my $followIndex = AI::findAction("follow");
-			if (defined $followIndex) {
-				$ai_seq_args[$followIndex]{ai_follow_lost_end}{timeout} = $timeout{ai_follow_lost_end}{timeout};
-			}
-		}
-	}
-}
-
-##
-# ai_getAggressives([check_mon_control], [party])
-# Returns: an array of monster hashes.
-#
-# Get a list of all aggressive monsters on screen.
-# The definition of "aggressive" is: a monster who has hit or missed me.
-#
-# If $check_mon_control is set, then all monsters in mon_control.txt
-# with the 'attack_auto' flag set to 2, will be considered as aggressive.
-# See also the manual for more information about this.
-#
-# If $party is set, then monsters that have fought with party members
-# (not just you) will be considered as aggressive.
-sub ai_getAggressives {
-	my ($type, $party) = @_;
-	my $wantArray = wantarray;
-	my $num = 0;
-	my @agMonsters;
-
-	foreach (@monstersID) {
-		next if (!$_);
-		my $monster = $monsters{$_};
-		if ((($type && mon_control($monster->{name})->{attack_auto} == 2) || 
-		    $monster->{dmgToYou} || $monster->{missedYou} ||
-			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})))
-		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
-
-			if ($wantArray) {
-				# Function is called in array context
-				push @agMonsters, $_;
-
-			} else {
-				# Function is called in scalar context
-				if (mon_control($monster->{name})->{weight} > 0) {
-					$num += mon_control($monster->{name})->{weight};
-				} elsif (mon_control($monster->{name})->{weight} != -1) {
-					$num++;
-				}
-			}
-		}
-	}
-
-	if ($wantArray) {
-		return @agMonsters;
-	} else {
-		return $num;
-	}
-}
-
-sub ai_getPlayerAggressives {
-	my $ID = shift;
-	my @agMonsters;
-
-	foreach (@monstersID) {
-		next if ($_ eq "");
-		if ($monsters{$_}{dmgToPlayer}{$ID} > 0 || $monsters{$_}{missedToPlayer}{$ID} > 0 || $monsters{$_}{dmgFromPlayer}{$ID} > 0 || $monsters{$_}{missFromPlayer}{$ID} > 0) {
-			push @agMonsters, $_;
-		}
-	}
-	return @agMonsters;
-}
-
-##
-# ai_getMonstersAttacking($ID)
-#
-# Get the monsters who are attacking player $ID.
-sub ai_getMonstersAttacking {
-	my $ID = shift;
-	my @agMonsters;
-	foreach (@monstersID) {
-		next unless $_;
-		my $monster = $monsters{$_};
-		push @agMonsters, $_ if $monster->{target} eq $ID;
-	}
-	return @agMonsters;
-}
-
-##
-# ai_getSkillUseType(name)
-# name: the internal name of the skill (as found in skills.txt), such as
-# WZ_FIREPILLAR.
-# Returns: 1 if it's a location skill, 0 if it's an object skill.
-#
-# Determines whether a skill is a skill that's casted on a location, or one
-# that's casted on an object (monster/player/etc).
-# For example, Firewall is a location skill, while Cold Bolt is an object
-# skill.
-sub ai_getSkillUseType {
-	my $skill = shift;
-	return 1 if $skillsArea{$skill} == 1;
-	return 0;
-}
-
-sub ai_mapRoute_searchStep {
-	my $r_args = shift;
-
-	unless ($r_args->{openlist} && %{$r_args->{openlist}}) {
-		$r_args->{done} = 1;
-		$r_args->{found} = '';
-		return 0;
-	}
-
-	my $parent = (sort {$$r_args{'openlist'}{$a}{'walk'} <=> $$r_args{'openlist'}{$b}{'walk'}} keys %{$$r_args{'openlist'}})[0];
-	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
-	#foreach my $parent (keys %{$$r_args{'openlist'}})
-	{
-		my ($portal,$dest) = split /=/, $parent;
-		if ($$r_args{'budget'} ne '' && $$r_args{'openlist'}{$parent}{'zenny'} > $$r_args{'budget'}) {
-			#This link is too expensive
-			delete $$r_args{'openlist'}{$parent};
-			next;
-		} else {
-			#MOVE this entry into the CLOSELIST
-			$$r_args{'closelist'}{$parent}{'walk'}   = $$r_args{'openlist'}{$parent}{'walk'};
-			$$r_args{'closelist'}{$parent}{'zenny'}  = $$r_args{'openlist'}{$parent}{'zenny'};
-			$$r_args{'closelist'}{$parent}{'parent'} = $$r_args{'openlist'}{$parent}{'parent'};
-			#Then delete in from OPENLIST
-			delete $$r_args{'openlist'}{$parent};
-		}
-
-		if ($portals_lut{$portal}{'dest'}{$dest}{'map'} eq $$r_args{'dest'}{'map'}) {
-			if ($$r_args{'dest'}{'pos'}{'x'} eq '' && $$r_args{'dest'}{'pos'}{'y'} eq '') {
-				$$r_args{'found'} = $parent;
-				$$r_args{'done'} = 1;
-				undef @{$$r_args{'mapSolution'}};
-				my $this = $$r_args{'found'};
-				while ($this) {
-					my %arg;
-					$arg{'portal'} = $this;
-					my ($from,$to) = split /=/, $this;
-					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
-					($arg{dest_map}, $arg{dest_pos}{x}, $arg{dest_pos}{y}) = split(' ', $to);
-					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
-					$arg{'zenny'} = $$r_args{'closelist'}{$this}{'zenny'};
-					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
-					unshift @{$$r_args{'mapSolution'}},\%arg;
-					$this = $$r_args{'closelist'}{$this}{'parent'};
-				}
-				return;
-			} elsif ( ai_route_getRoute(\@{$$r_args{'solution'}}, $$r_args{'dest'}{'field'}, $portals_lut{$portal}{'dest'}{$dest}, $$r_args{'dest'}{'pos'}) ) {
-				my $walk = "$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}=$$r_args{'dest'}{'map'} $$r_args{'dest'}{'pos'}{'x'} $$r_args{'dest'}{'pos'}{'y'}";
-				$$r_args{'closelist'}{$walk}{'walk'} = scalar @{$$r_args{'solution'}} + $$r_args{'closelist'}{$parent}{$dest}{'walk'};
-				$$r_args{'closelist'}{$walk}{'parent'} = $parent;
-				$$r_args{'closelist'}{$walk}{'zenny'} = $$r_args{'closelist'}{$parent}{'zenny'};
-				$$r_args{'found'} = $walk;
-				$$r_args{'done'} = 1;
-				undef @{$$r_args{'mapSolution'}};
-				my $this = $$r_args{'found'};
-				while ($this) {
-					my %arg;
-					$arg{'portal'} = $this;
-					my ($from,$to) = split /=/, $this;
-					($arg{'map'},$arg{'pos'}{'x'},$arg{'pos'}{'y'}) = split / /,$from;
-					$arg{'walk'} = $$r_args{'closelist'}{$this}{'walk'};
-					$arg{'zenny'} = $$r_args{'closelist'}{$this}{'zenny'};
-					$arg{'steps'} = $portals_lut{$from}{'dest'}{$to}{'steps'};
-					unshift @{$$r_args{'mapSolution'}},\%arg;
-					$this = $$r_args{'closelist'}{$this}{'parent'};
-				}
-				return;
-			}
-		}
-		#get all children of each openlist
-		foreach my $child (keys %{$portals_los{$dest}}) {
-			next unless $portals_los{$dest}{$child};
-			foreach my $subchild (keys %{$portals_lut{$child}{'dest'}}) {
-				my $destID = $subchild;
-				my $mapName = $portals_lut{$child}{'source'}{'map'};
-				#############################################################
-				my $penalty = int($routeWeights{lc($mapName)}) + int(($portals_lut{$child}{'dest'}{$subchild}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
-				my $thisWalk = $penalty + $$r_args{'closelist'}{$parent}{'walk'} + $portals_los{$dest}{$child};
-				if (!exists $$r_args{'closelist'}{"$child=$subchild"}) {
-					if ( !exists $$r_args{'openlist'}{"$child=$subchild"} || $$r_args{'openlist'}{"$child=$subchild"}{'walk'} > $thisWalk ) {
-						$$r_args{'openlist'}{"$child=$subchild"}{'parent'} = $parent;
-						$$r_args{'openlist'}{"$child=$subchild"}{'walk'} = $thisWalk;
-						$$r_args{'openlist'}{"$child=$subchild"}{'zenny'} = $$r_args{'closelist'}{$parent}{'zenny'} + $portals_lut{$child}{'dest'}{$subchild}{'cost'};
-					}
-				}
-			}
-		}
-	}
-}
-
-sub ai_items_take {
-	my ($x1, $y1, $x2, $y2) = @_;
-	my %args;
-	$args{pos}{x} = $x1;
-	$args{pos}{y} = $y1;
-	$args{pos_to}{x} = $x2;
-	$args{pos_to}{y} = $y2;
-	$args{ai_items_take_end}{time} = time;
-	$args{ai_items_take_end}{timeout} = $timeout{ai_items_take_end}{timeout};
-	$args{ai_items_take_start}{time} = time;
-	$args{ai_items_take_start}{timeout} = $timeout{ai_items_take_start}{timeout};
-	AI::queue("items_take", \%args);
-}
-
-sub ai_route {
-	my $map = shift;
-	my $x = shift;
-	my $y = shift;
-	my %param = @_;
-	debug "On route to: $maps_lut{$map.'.rsw'}($map): $x, $y\n", "route";
-
-	my %args;
-	$x = int($x) if ($x ne "");
-	$y = int($y) if ($y ne "");
-	$args{'dest'}{'map'} = $map;
-	$args{'dest'}{'pos'}{'x'} = $x;
-	$args{'dest'}{'pos'}{'y'} = $y;
-	$args{'maxRouteDistance'} = $param{maxRouteDistance} if exists $param{maxRouteDistance};
-	$args{'maxRouteTime'} = $param{maxRouteTime} if exists $param{maxRouteTime};
-	$args{'attackOnRoute'} = $param{attackOnRoute} if exists $param{attackOnRoute};
-	$args{'distFromGoal'} = $param{distFromGoal} if exists $param{distFromGoal};
-	$args{'pyDistFromGoal'} = $param{pyDistFromGoal} if exists $param{pyDistFromGoal};
-	$args{'attackID'} = $param{attackID} if exists $param{attackID};
-	$args{'noSitAuto'} = $param{noSitAuto} if exists $param{noSitAuto};
-	$args{'noAvoidWalls'} = $param{noAvoidWalls} if exists $param{noAvoidWalls};
-	$args{notifyUponArrival} = $param{notifyUponArrival} if exists $param{notifyUponArrival};
-	$args{'tags'} = $param{tags} if exists $param{tags};
-	$args{'time_start'} = time;
-
-	if (!$param{'_internal'}) {
-		$args{'solution'} = [];
-		$args{'mapSolution'} = [];
-	} elsif (exists $param{'_solution'}) {
-		$args{'solution'} = $param{'_solution'};
-	}
-
-	# Destination is same map and isn't blocked by walls/water/whatever
-	my $pos = calcPosition($char);
-	if ($param{'_internal'} || ($field{'name'} eq $args{'dest'}{'map'} && ai_route_getRoute(\@{$args{solution}}, \%field, $pos, $args{dest}{pos}, $args{noAvoidWalls}))) {
-		# Since the solution array is here, we can start in "Route Solution Ready"
-		$args{'stage'} = 'Route Solution Ready';
-		debug "Route Solution Ready\n", "route";
-		AI::queue("route", \%args);
-		return 1;
-	} else {
-		return 0 if ($param{noMapRoute});
-		# Nothing is initialized so we start scratch
-		AI::queue("mapRoute", \%args);
-		return 1;
-	}
-}
-
-##
-# ai_route_getRoute(returnArray, r_field, r_start, r_dest, [noAvoidWalls])
-# returnArray: reference to an array. The solution will be stored in here.
-# r_field: reference to a field hash (usually \%field).
-# r_start: reference to a hash. This is the start coordinate.
-# r_dest: reference to a hash. This is the destination coordinate.
-# noAvoidWalls: 1 if you don't want to avoid walls on route.
-# Returns: 1 if the calculation succeeded, 0 if not.
-#
-# Calculates how to walk from $r_start to $r_dest.
-# The blocks you have to walk on in order to get to $r_dest are stored in
-# $returnArray. This function is a convenience wrapper function for the stuff
-# in PathFinding.pm
-sub ai_route_getRoute {
-	my ($returnArray, $r_field, $r_start, $r_dest, $noAvoidWalls) = @_;
-	undef @{$returnArray};
-	return 1 if ($r_dest->{x} eq '' || $r_dest->{y} eq '');
-
-	# The exact destination may not be a spot that we can walk on.
-	# So we find a nearby spot that is walkable.
-	my %start = %{$r_start};
-	my %dest = %{$r_dest};
-	closestWalkableSpot($r_field, \%start);
-	closestWalkableSpot($r_field, \%dest);
-
-	# Generate map weights (for wall avoidance)
-	my $weights;
-	if ($noAvoidWalls) {
-		$weights = chr(255) . (chr(1) x 255);
-	} else {
-		$weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
-		$weights .= chr(1) x (256 - length($weights));
-	}
-
-	# Calculate path
-	my $pathfinding = new PathFinding(
-		start => \%start,
-		dest => \%dest,
-		field => $r_field,
-		weights => $weights
-	);
-	return undef if !$pathfinding;
-
-	my $ret = $pathfinding->run($returnArray);
-	if ($ret <= 0) {
-		# Failure
-		return undef;
-	} else {
-		# Success
-		return $ret;
-	}
-}
-
-#sellAuto for items_control - chobit andy 20030210
-sub ai_sellAutoCheck {
-	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-		next if (!$char->{inventory}[$i] || !%{$char->{inventory}[$i]} || $char->{inventory}[$i]{equipped});
-		my $sell = $items_control{'all'}{'sell'};
-		$sell = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'sell'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
-		my $keep = $items_control{'all'}{'keep'};
-		$keep = $items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})}{'keep'} if ($items_control{lc($chars[$config{'char'}]{'inventory'}[$i]{'name'})});
-		if ($sell && $chars[$config{'char'}]{'inventory'}[$i]{'amount'} > $keep) {
-			return 1;
-		}
-	}
-}
-
-sub ai_setMapChanged {
-	my $index = shift;
-	$index = 0 if ($index eq "");
-	if ($index < @ai_seq_args) {
-		$ai_seq_args[$index]{'mapChanged'} = time;
-	}
-}
-
-sub ai_setSuspend {
-	my $index = shift;
-	$index = 0 if ($index eq "");
-	if ($index < @ai_seq_args) {
-		$ai_seq_args[$index]{'suspended'} = time;
-	}
-}
-
-sub ai_skillUse {
-	return if ($char->{muted});
-	my %args = (
-		skillHandle => shift,
-		lv => shift,
-		maxCastTime => { time => time, timeout => shift },
-		minCastTime => { time => time, timeout => shift },
-		target => shift,
-		y => shift,
-		tag => shift,
-		ret => shift,
-		waitBeforeUse => { time => time, timeout => shift }
-	);
-	$args{giveup}{time} = time;
-	$args{giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
-
-	if ($args{y} ne "") {
-		$args{x} = $args{target};
-		delete $args{target};
-	}
-	AI::queue("skill_use", \%args);
-}
-
-##
-# ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $target)
-#
-# Calls ai_skillUse(), resolving $target to ($x, $y) if $skillID is an
-# area skill.
-#
-# FIXME: All code of the following structure:
-#
-# if (!ai_getSkillUseType(...)) {
-#     ai_skillUse(..., $ID);
-# } else {
-#     ai_skillUse(..., $x, $y);
-# }
-#
-# should be converted to use this helper function. Note that this
-# function uses objects instead of IDs for the skill and target.
-sub ai_skillUse2 {
-	my ($skill, $lvl, $maxCastTime, $minCastTime, $target) = @_;
-
-	if (!ai_getSkillUseType($skill->handle)) {
-		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{ID});
-	} else {
-		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{pos_to}{x}, $target->{pos_to}{y});
-	}
-}
-
-##
-# ai_storageAutoCheck()
-#
-# Returns 1 if it is time to perform storageAuto sequence.
-# Returns 0 otherwise.
-sub ai_storageAutoCheck {
-	return 0 if ($char->{skills}{NV_BASIC}{lv} < 6);
-	for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
-		my $slot = $char->{inventory}[$i];
-		next if (!$slot || $slot->{equipped});
-		my $store = $items_control{'all'}{'storage'};
-		$store = $items_control{lc($slot->{name})}{'storage'} if ($items_control{lc($slot->{name})});
-		my $keep = $items_control{'all'}{'keep'};
-		$keep = $items_control{lc($slot->{name})}{'keep'} if ($items_control{lc($slot->{name})});
-		if ($store && $slot->{amount} > $keep) {
-			return 1;
-		}
-	}
-	return 0;
-}
-
-##
-# ai_waypoint(points, [whenDone, attackOnRoute])
-# points: reference to an array containing waypoint information. FileParsers::parseWaypoint() creates such an array.
-# whenDone: specifies what to do when the waypoint has finished. Possible values are: 'repeat' (repeat waypoint) or 'reverse' (repeat waypoint, but in opposite direction).
-# attackOnRoute: 0 (or not given) if you don't want to attack anything while walking, 1 if you want to attack aggressives, and 2 if you want to attack all monsters.
-#
-# Initialize a waypoint.
-sub ai_waypoint {
-	my %args = (
-		points => shift,
-		index => 0,
-		inc => 1,
-		whenDone => shift,
-		attackOnRoute => shift
-	);
-
-	if ($args{whenDone} && $args{whenDone} ne "repeat" && $args{whenDone} ne "reverse") {
-		error "Unknown waypoint argument: $args{whenDone}\n";
-		return;
-	}
-	AI::queue("waypoint", \%args);
-}
-
-##
-# cartGet(items)
-# items: a reference to an array of indices.
-#
-# Get one or more items from cart.
-# \@items is a list of hashes; each has must have an "index" key, and may optionally have an "amount" key.
-# "index" is the index of the cart inventory item number. If "amount" is given, only the given amount of
-# items will retrieved from cart.
-#
-# Example:
-# # You want to get 5 Apples (inventory item 2) and all
-# # Fly Wings (inventory item 5) from cart.
-# my @items;
-# push @items, {index => 2, amount => 5};
-# push @items, {index => 5};
-# cartGet(\@items);
-sub cartGet {
-	my $items = shift;
-	return unless ($items && @{$items});
-
-	my %args;
-	$args{items} = $items;
-	$args{timeout} = $timeout{ai_cartAuto} ? $timeout{ai_cartAuto}{timeout} : 0.15;
-	AI::queue("cartGet", \%args);
-}
-
-##
-# cartAdd(items)
-# items: a reference to an array of hashes.
-#
-# Put one or more items in cart.
-# \@items is a list of hashes; each has must have an "index" key, and may optionally have an "amount" key.
-# "index" is the index of the inventory item number. If "amount" is given, only the given amount of items will be put in cart.
-#
-# Example:
-# # You want to add 5 Apples (inventory item 2) and all
-# # Fly Wings (inventory item 5) to cart.
-# my @items;
-# push @items, {index => 2, amount => 5};
-# push @items, {index => 5};
-# cartAdd(\@items);
-sub cartAdd {
-	my $items = shift;
-	return unless ($items && @{$items});
-
-	my %args;
-	$args{items} = $items;
-	$args{timeout} = $timeout{ai_cartAuto} ? $timeout{ai_cartAuto}{timeout} : 0.15;
-	AI::queue("cartAdd", \%args);
-}
-
-##
-# ai_talkNPC( (x, y | ID => number), sequence)
-# x, y: the position of the NPC to talk to.
-# ID: the ID of the NPC to talk to.
-# sequence: A string containing the NPC talk sequences.
-#
-# Talks to an NPC. You can specify an NPC position, or an NPC ID.
-#
-# $sequence is a list of whitespace-separated commands:
-# ~l
-# c       : Continue
-# r#      : Select option # from menu.
-# n       : Stop talking to NPC.
-# b       : Send the "Show shop item list" (Buy) packet.
-# w#      : Wait # seconds.
-# x       : Initialize conversation with NPC. Useful to perform multiple transaction with a single NPC.
-# t="str" : send the text str to NPC, double quote is needed only if the string contains space 
-# ~l~
-#
-# Example:
-# # Sends "Continue", "Select option 0" to the NPC at (102, 300)
-# ai_talkNPC(102, 300, "c r0");
-# # Do the same thing with the NPC whose ID is 1337
-# ai_talkNPC(ID => 1337, "c r0");
-sub ai_talkNPC {
-	my %args;
-	if ($_[0] eq 'ID') {
-		shift;
-		$args{'nameID'} = shift;
-	} else {
-		$args{'pos'}{'x'} = shift;
-		$args{'pos'}{'y'} = shift;
-	}
-	$args{'sequence'} = shift;
-	$args{'sequence'} =~ s/^ +| +$//g;
-	unshift @ai_seq, "NPC";
-	unshift @ai_seq_args,\%args;
-}
-
-sub attack {
-	my $ID = shift;
-	my $priorityAttack = shift;
-	my %args;
-	$args{'ai_attack_giveup'}{'time'} = time;
-	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
-	$args{'ID'} = $ID;
-	$args{'unstuck'}{'timeout'} = ($timeout{'ai_attack_unstuck'}{'timeout'} || 1.5);
-	%{$args{'pos_to'}} = %{$monsters{$ID}{'pos_to'}};
-	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
-	AI::queue("attack", \%args);
-
-	if ($priorityAttack) {
-		message "Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
-	} else {
-		message "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
-	}
-
-	$startedattack = 1;
-
-	Plugins::callHook('attack_start', {ID => $ID});
-
-	#Mod Start
-	AUTOEQUIP: {
-		my $i = 0;
-		my ($Rdef,$Ldef,$Req,$Leq,$arrow,$j);
-		while (exists $config{"autoSwitch_$i"}) {
-			if (!$config{"autoSwitch_$i"}) {
-				$i++;
-				next;
-			}
-
-			if (existsInList($config{"autoSwitch_$i"}, $monsters{$ID}{'name'})) {
-				message "Encounter Monster : ".$monsters{$ID}{'name'}."\n";
-
-				$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_rightHand"}) if ($config{"autoSwitch_$i"."_rightHand"});
-				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_leftHand"}) if ($config{"autoSwitch_$i"."_leftHand"});
-				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
-
-				if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) { 
-					$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
-					sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "");
-					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_leftHand"}." ($Leq)\n", "equip";
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'}); 
-				}
-				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") {
-					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
-					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
-					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
-					if((!whenStatusActive("Twohand Quicken, Adrenaline, Spear Quicken") || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") && $Rdef ne ""){
-						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
-					}
-					if ($Req eq $Leq) {
-						for ($j=0; $j < @{$chars[$config{'char'}]{'inventory'}};$j++) {
-							next if (!$char->{inventory}[$j] || !%{$char->{inventory}[$j]});
-							if ($chars[$config{'char'}]{'inventory'}[$j]{'name'} eq $config{"autoSwitch_$i"."_rightHand"} && $j != $Leq) {
-								$Req = $j;
-								last;
-							}
-						}
-					}
-					if ($config{"autoSwitch_$i"."_rightHand"} ne "[NONE]") {
-						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_rightHand"}."($Req)\n", "equip"; 
-						sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
-					}
-				}
-				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) { 
-					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_arrow"}."\n", "equip";
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0); 
-				}
-				if ($config{"autoSwitch_$i"."_distance"} && $config{"autoSwitch_$i"."_distance"} != $config{'attackDistance'}) { 
-					$ai_v{'attackDistance'} = $config{'attackDistance'};
-					$config{'attackDistance'} = $config{"autoSwitch_$i"."_distance"};
-					message "Change Attack Distance to : ".$config{'attackDistance'}."\n", "equip";
-				}
-				if ($config{"autoSwitch_$i"."_useWeapon"} ne "") { 
-					$ai_v{'attackUseWeapon'} = $config{'attackUseWeapon'};
-					$config{'attackUseWeapon'} = $config{"autoSwitch_$i"."_useWeapon"};
-					message "Change Attack useWeapon to : ".$config{'attackUseWeapon'}."\n", "equip";
-				}
-				last AUTOEQUIP; 
-			}
-			$i++;
-		}
-		if ($config{'autoSwitch_default_leftHand'}) { 
-			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_leftHand'});
-			if($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
-				$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
-				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'});
-				message "Auto equiping default [L] :".$config{'autoSwitch_default_leftHand'}."\n", "equip";
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'});
-			}
-		}
-		if ($config{'autoSwitch_default_rightHand'}) { 
-			$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'}); 
-			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
-				message "Auto equiping default [R] :".$config{'autoSwitch_default_rightHand'}."\n", "equip"; 
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
-			}
-		}
-		if ($config{'autoSwitch_default_arrow'}) { 
-			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_arrow'}); 
-			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
-				message "Auto equiping default [A] :".$config{'autoSwitch_default_arrow'}."\n", "equip"; 
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0);
-			}
-		}
-		if ($ai_v{'attackDistance'} && $config{'attackDistance'} != $ai_v{'attackDistance'}) { 
-			$config{'attackDistance'} = $ai_v{'attackDistance'};
-			message "Change Attack Distance to Default : ".$config{'attackDistance'}."\n", "equip";
-		}
-		if ($ai_v{'attackUseWeapon'} ne "" && $config{'attackUseWeapon'} != $ai_v{'attackUseWeapon'}) { 
-			$config{'attackUseWeapon'} = $ai_v{'attackUseWeapon'};
-			message "Change Attack useWeapon to default : ".$config{'attackUseWeapon'}."\n", "equip";
-		}
-	} #END OF BLOCK AUTOEQUIP 
-}
-
-sub gather {
-	my $ID = shift;
-	my %args;
-	$args{ai_items_gather_giveup}{time} = time;
-	$args{ai_items_gather_giveup}{timeout} = $timeout{ai_items_gather_giveup}{timeout};
-	$args{ID} = $ID;
-	$args{pos} = { %{$items{$ID}{pos}} };
-	AI::queue("items_gather", \%args);
-	debug "Targeting for Gather: $items{$ID}{name} ($items{$ID}{binID})\n";
-}
-
-sub move {
-	my $x = shift;
-	my $y = shift;
-	my $attackID = shift;
-	my %args;
-	my $dist;
-	$args{move_to}{x} = $x;
-	$args{move_to}{y} = $y;
-	$args{attackID} = $attackID;
-	$args{time_move} = $char->{time_move};
-	$dist = distance($char->{pos}, $args{move_to});
-	$args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
-
-	debug sprintf("Sending move from (%d,%d) to (%d,%d) - distance %.2f\n",
-		$char->{pos}{x}, $char->{pos}{y}, $x, $y, $dist), "ai_move";
-	AI::queue("move", \%args);
-}
-
-sub sit {
-	$timeout{ai_sit_wait}{time} = time;
-	$timeout{ai_sit}{time} = time;
-
-	AI::clear("sitting", "standing");
-	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
-		AI::queue("sitting");
-		sendSit(\$remote_socket);
-		look($config{sitAuto_look}) if (defined $config{sitAuto_look});
-	}
-}
-
-sub stand {
-	$timeout{ai_stand_wait}{time} = time;
-	$timeout{ai_sit}{time} = time;
-
-	AI::clear("sitting", "standing");
-	if ($char->{skills}{NV_BASIC}{lv} >= 3) {
-		sendStand(\$remote_socket);
-		AI::queue("standing");
-	}
-}
-
-sub take {
-	my $ID = shift;
-	my %args;
-	$args{ai_take_giveup}{time} = time;
-	$args{ai_take_giveup}{timeout} = $timeout{ai_take_giveup}{timeout};
-	$args{ID} = $ID;
-	%{$args{pos}} = %{$items{$ID}{pos}};
-	AI::queue("take", \%args);
-	debug "Picking up: $items{$ID}{name} ($items{$ID}{binID})\n";
-}
 
 #######################################
 #######################################
@@ -9899,7 +9092,7 @@ sub compilePortals {
 				my %dest = %{$mapPortals{$map}{$portal}};
 				closestWalkableSpot(\%field, \%start);
 				closestWalkableSpot(\%field, \%dest);
-				
+
 				$pathfinding->reset(
 					start => \%start,
 					dest => \%dest,
@@ -9938,10 +9131,10 @@ sub portalExists {
 		    && $portals_lut{$_}{source}{x} == $r_pos->{x}
 		    && $portals_lut{$_}{source}{y} == $r_pos->{y}) {
 			return $_;
-		}       
-	}       
-	return; 
-}   
+		}
+	}
+	return;
+}
 
 sub portalExists2 {
 	my ($src, $src_pos, $dest, $dest_pos) = @_;
@@ -9978,9 +9171,9 @@ sub redirectXKoreMessages {
 sub monKilled {
 	$monkilltime = time();
 	# if someone kills it
-	if (($monstarttime == 0) || ($monkilltime < $monstarttime)) { 
+	if (($monstarttime == 0) || ($monkilltime < $monstarttime)) {
 		$monstarttime = 0;
-		$monkilltime = 0; 
+		$monkilltime = 0;
 	}
 	$elasped = $monkilltime - $monstarttime;
 	$totalelasped = $totalelasped + $elasped;
@@ -10052,7 +9245,7 @@ sub getActorNames {
 # return ID based on name if party member is online
 sub findPartyUserID {
 	if ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}}) {
-		my $partyUserName = shift; 
+		my $partyUserName = shift;
 		for (my $j = 0; $j < @partyUsersID; $j++) {
 	        	next if ($partyUsersID[$j] eq "");
 			if ($partyUserName eq $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$j]}{'name'}
@@ -10071,23 +9264,23 @@ sub getNPCInfo {
 	my $return_hash = shift;
 
 	undef %{$return_hash};
-	
+
 	if ($id =~ /^\d+$/) {
 		if ($npcs_lut{$id} && %{$npcs_lut{$id}}) {
 			$$return_hash{id} = $id;
 			$$return_hash{map} = $npcs_lut{$id}{map};
 			$$return_hash{pos}{x} = $npcs_lut{$id}{pos}{x};
-			$$return_hash{pos}{y} = $npcs_lut{$id}{pos}{y};		
+			$$return_hash{pos}{y} = $npcs_lut{$id}{pos}{y};
 		}
 	}
 	else {
 		my ($map, $x, $y) = split(/ +/, $id, 3);
-		
+
 		$$return_hash{map} = $map;
 		$$return_hash{pos}{x} = $x;
 		$$return_hash{pos}{y} = $y;
 	}
-	
+
 	if (defined($$return_hash{map}) && defined($$return_hash{pos}{x}) && defined($$return_hash{pos}{y})) {
 		$$return_hash{ok} = 1;
 	} else {
@@ -10164,7 +9357,7 @@ sub itemName {
 		# List cards in alphabetical order.
 		# Stack identical cards.
 		# e.g. "Hydra*2,Mummy*2", "Hydra*3,Mummy"
-		$suffix = join(',', map { 
+		$suffix = join(',', map {
 			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}
@@ -10189,13 +9382,13 @@ sub checkSelfCondition {
 
 	return 0 if $config{$prefix."_whenIdle"} && !AI::isIdle;
 
-	if ($config{$prefix . "_hp"}) { 
+	if ($config{$prefix . "_hp"}) {
 		return 0 unless (inRange(percent_hp($char), $config{$prefix . "_hp"}));
 	} elsif ($config{$prefix . "_hp_upper"}) { # backward compatibility with old config format
 		return 0 unless (percent_hp($char) <= $config{$prefix . "_hp_upper"} && percent_hp($char) >= $config{$prefix . "_hp_lower"});
 	}
 
-	if ($config{$prefix . "_sp"}) { 
+	if ($config{$prefix . "_sp"}) {
 		return 0 unless (inRange(percent_sp($char), $config{$prefix . "_sp"}));
 	} elsif ($config{$prefix . "_sp_upper"}) { # backward compatibility with old config format
 		return 0 unless (percent_sp($char) <= $config{$prefix . "_sp_upper"} && percent_sp($char) >= $config{$prefix . "_sp_lower"});
@@ -10313,7 +9506,7 @@ sub checkPlayerCondition {
 
 	# we will have player HP info (only) if we are in the same party
 	if ($chars[$config{char}]{party}{users}{$id}) {
-		if ($config{$prefix . "_hp"}) { 
+		if ($config{$prefix . "_hp"}) {
 			return 0 unless (inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $config{$prefix . "_hp"}));
 		} elsif ($config{$prefix . "Hp_upper"}) { # backward compatibility with old config format
 			return 0 unless (percent_hp($chars[$config{char}]{party}{users}{$id}) <= $config{$prefix . "Hp_upper"});
@@ -10573,7 +9766,7 @@ sub makeShop {
 		$item{name} = $cart_item->{name};
 		$item{index} = $index;
 		$item{price} = $sale->{price};
-		$item{amount} = 
+		$item{amount} =
 			$sale->{amount} && $sale->{amount} < $amount ?
 			$sale->{amount} : $amount;
 		push(@items, \%item);
