@@ -12,7 +12,7 @@ use Network::Send;
 use Misc;
 use Plugins;
 use Utils;
-
+use Skills;
 
 ###### Public methods ######
 
@@ -293,14 +293,15 @@ sub skill_use {
 	# Resolve source and target names
 	$args->{damage} ||= "Miss!";
 	my $verb = $source->verb('use', 'uses');
-	my $disp = "$source $verb ".skillName($args->{skillID});
-	$disp .= ' (lvl '.$$args->{level}.')' unless $$args->{level} == 65535;
+	my $skill = new Skills(id => $args->{skillID});
+	my $disp = "$source $verb ".$skill->name;
+	$disp .= ' (lvl '.$args->{level}.')' unless $args->{level} == 65535;
 	$disp .= " on $target";
-	$disp .= ' - Dmg: '.$$args->{damage} unless $$args->{damage} == -30000;
-	$disp .= " (delay ".($$args->{src_speed}/10).")";
+	$disp .= ' - Dmg: '.$args->{damage} unless $args->{damage} == -30000;
+	$disp .= " (delay ".($args->{src_speed}/10).")";
 	$disp .= "\n";
 
-	if ($$args->{damage} != -30000 &&
+	if ($args->{damage} != -30000 &&
 	    $args->{sourceID} eq $accountID &&
 		$args->{targetID} ne $accountID) {
 		calcStat($args->{damage});
@@ -319,7 +320,7 @@ sub skill_use {
 
 	if ((($args->{sourceID} eq $accountID) && ($args->{targetID} ne $accountID)) ||
 	    (($args->{sourceID} ne $accountID) && ($args->{targetID} eq $accountID))) {
-		my $status = sprintf("[%3d/%3d] ", percent_hp($char), percent_sp($char));
+		my $status = sprintf("[%3d/%3d] ", $char->hp_percent, $char->sp_percent);
 		$disp = $status.$disp;
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;

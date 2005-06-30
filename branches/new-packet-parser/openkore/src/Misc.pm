@@ -31,9 +31,7 @@ use Plugins;
 use FileParsers;
 use Settings;
 use Utils;
-use Network::Send qw(sendToClientByInject sendCharCreate sendCharDelete
-	sendCharLogin sendDrop sendMove sendChat sendPartyChat sendGuildChat
-	sendPrivateMsg sendStorageGet injectMessage);
+use Network::Send;
 
 our @EXPORT = (
 	# Config modifiers
@@ -73,6 +71,7 @@ our @EXPORT = (
 	qw/
 	avoidGM_talk
 	avoidList_talk
+	calcStat
 	center
 	charSelectScreen
 	chatLog_clear
@@ -101,9 +100,14 @@ our @EXPORT = (
 	quit
 	relog
 	sendMessage
+	setSkillUseTimer
+	setPartySkillTimer
+	countCastOn
 	stopAttack
 	stripLanguageCode
 	switchConfigFile
+	updateDamageTables
+	useTeleport
 	whenGroundStatus
 	whenStatusActive
 	whenStatusActiveMon
@@ -714,6 +718,11 @@ sub avoidList_talk {
 		return 1;
 	}
 	return 0;
+}
+
+sub calcStat {
+	my $damage = shift;
+    $totaldmg += $damage;
 }
 
 ##
@@ -1525,6 +1534,63 @@ sub sendMessage {
 	}
 }
 
+# Keep track of when we last cast a skill
+sub setSkillUseTimer {
+	my ($skillID, $targetID, $wait) = @_;
+	my $skill = new Skills(id => $skillID);
+	my $handle = $skill->handle;
+
+	$char->{skills}{$handle}{time_used} = time;
+	delete $char->{time_cast};
+	delete $char->{cast_cancelled};
+	$char->{last_skill_time} = time;
+	$char->{last_skill_used} = $skillID;
+	$char->{last_skill_target} = $targetID;
+
+	# increment monsterSkill maxUses counter
+	if ($monsters{$targetID}) {
+		$monsters{$targetID}{skillUses}{$skill->handle}++;
+	}
+
+	# Set encore skill if applicable
+	$char->{encoreSkill} = $skill if $targetID eq $accountID && $skillsEncore{$skill->handle};
+}
+
+sub setPartySkillTimer {
+	my ($skillID, $targetID) = @_;
+	my $skill = new Skills(id => $skillID);
+	my $handle = $skill->handle; 
+
+	# set partySkill target_time
+	my $i = $targetTimeout{$targetID}{$handle};
+	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
+}
+
+# Increment counter for monster being casted on
+sub countCastOn {
+	my ($sourceID, $targetID, $skillID, $x, $y) = @_;
+	return unless defined $targetID;
+
+	if ($monsters{$sourceID}) {
+		if ($targetID eq $accountID) {
+			$monsters{$sourceID}{'castOnToYou'}++;
+		} elsif ($players{$targetID} && %{$players{$targetID}}) {
+			$monsters{$sourceID}{'castOnToPlayer'}{$targetID}++;
+		} elsif ($monsters{$targetID} && %{$monsters{$targetID}}) {
+			$monsters{$sourceID}{'castOnToMonster'}{$targetID}++;
+		}
+	}
+
+	if ($monsters{$targetID}) {
+		if ($sourceID eq $accountID) {
+			$monsters{$targetID}{'castOnByYou'}++;
+		} elsif ($players{$sourceID} && %{$players{$sourceID}}) {
+			$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
+		} elsif ($monsters{$sourceID} && %{$monsters{$sourceID}}) {
+			$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
+		}
+	}
+}
 sub stopAttack {
 	my $pos = calcPosition($char);
 	sendMove($pos->{x}, $pos->{y});
@@ -1566,6 +1632,244 @@ sub switchConfigFile {
 	parseConfigFile($filename, \%config);
 	return 1;
 }
+
+sub updateDamageTables {
+	my ($ID1, $ID2, $damage) = @_;
+
+	# Track deltaHp
+	#
+	# A player's "deltaHp" initially starts at 0.
+	# When he takes damage, the damage is subtracted from his deltaHp.
+	# When he is healed, this amount is added to the deltaHp.
+	# If the deltaHp becomes positive, it is reset to 0.
+	#
+	# Someone with a lot of negative deltaHp is probably in need of healing.
+	# This allows us to intelligently heal non-party members.
+	if (my $target = Actor::get($ID2)) {
+		$target->{deltaHp} -= $damage;
+		$target->{deltaHp} = 0 if $target->{deltaHp} > 0;
+	}
+
+	if ($ID1 eq $accountID) {
+		if ($monsters{$ID2}) {
+			# You attack monster
+			$monsters{$ID2}{'dmgTo'} += $damage;
+			$monsters{$ID2}{'dmgFromYou'} += $damage;
+			$monsters{$ID2}{'numAtkFromYou'}++;
+			if ($damage <= ($config{missDamage} || 0)) {
+				$monsters{$ID2}{'missedFromYou'}++;
+				debug "Incremented missedFromYou count to $monsters{$ID2}{'missedFromYou'}\n", "attackMonMiss";
+				$monsters{$ID2}{'atkMiss'}++;
+			} else {
+				$monsters{$ID2}{'atkMiss'} = 0;
+			}
+			 if ($config{'teleportAuto_atkMiss'} && $monsters{$ID2}{'atkMiss'} >= $config{'teleportAuto_atkMiss'}) {
+				message "Teleporting because of attack miss\n", "teleport";
+				useTeleport(1);
+			}
+			if ($config{'teleportAuto_atkCount'} && $monsters{$ID2}{'numAtkFromYou'} >= $config{'teleportAuto_atkCount'}) {
+				message "Teleporting after attacking a monster $config{'teleportAuto_atkCount'} times\n", "teleport";
+				useTeleport(1);
+			}
+		}
+
+	} elsif ($ID2 eq $accountID) {
+		if ($monsters{$ID1}) {
+			# Monster attacks you
+			$monsters{$ID1}{'dmgFrom'} += $damage;
+			$monsters{$ID1}{'dmgToYou'} += $damage;
+			if ($damage == 0) {
+				$monsters{$ID1}{'missedYou'}++;
+			}
+			$monsters{$ID1}{'attackedYou'}++ unless (
+					scalar(keys %{$monsters{$ID1}{'dmgFromPlayer'}}) ||
+					scalar(keys %{$monsters{$ID1}{'dmgToPlayer'}}) ||
+					$monsters{$ID1}{'missedFromPlayer'} ||
+					$monsters{$ID1}{'missedToPlayer'}
+				);
+			$monsters{$ID1}{target} = $ID2;
+
+			if ($AI) {
+				my $teleport = 0;
+				if (mon_control($monsters{$ID1}{'name'})->{'teleport_auto'} == 2){
+					message "Teleporting due to attack from $monsters{$ID1}{'name'}\n", "teleport";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
+					message "Next $damage dmg could kill you. Teleporting...\n", "teleport";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_maxDmg'} && $damage >= $config{'teleportAuto_maxDmg'} && !whenStatusActive("Hallucination") && !($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'})) {
+					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmg'} dmg. Teleporting...\n", "teleport";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_maxDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $damage >= $config{'teleportAuto_maxDmgInLock'} && !whenStatusActive("Hallucination")) {
+					message "$monsters{$ID1}{'name'} hit you for more than $config{'teleportAuto_maxDmgInLock'} dmg in lockMap. Teleporting...\n", "teleport";
+					$teleport = 1;
+				} elsif (AI::inQueue("sitAuto") && $config{'teleportAuto_attackedWhenSitting'} && $damage > 0) {
+					message "$monsters{$ID1}{'name'} attacks you while you are sitting. Teleporting...\n", "teleport";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_totalDmg'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmg'} && !whenStatusActive("Hallucination") && !($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'})) {
+					message "$monsters{$ID1}{'name'} hit you for a total of more than $config{'teleportAuto_totalDmg'} dmg. Teleporting...\n", "teleport";
+					$teleport = 1;
+				} elsif ($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmgInLock'} && !whenStatusActive("Hallucination")) {
+					message "$monsters{$ID1}{'name'} hit you for a total of more than $config{'teleportAuto_totalDmgInLock'} dmg in lockMap. Teleporting...\n", "teleport";
+					$teleport = 1;
+				}
+				useTeleport(1) if ($teleport);
+			}
+		}
+
+	} elsif ($monsters{$ID1}) {
+		if ($players{$ID2}) {
+			# Monster attacks player
+			$monsters{$ID1}{'dmgFrom'} += $damage;
+			$monsters{$ID1}{'dmgToPlayer'}{$ID2} += $damage;
+			$players{$ID2}{'dmgFromMonster'}{$ID1} += $damage;
+			if ($damage == 0) {
+				$monsters{$ID1}{'missedToPlayer'}{$ID2}++;
+				$players{$ID2}{'missedFromMonster'}{$ID1}++;
+			}
+			if (existsInList($config{tankersList}, $players{$ID2}{name}) ||
+			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && $chars[$config{'char'}]{'party'}{'users'}{$ID2} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID2}})) {
+				# Monster attacks party member
+				$monsters{$ID1}{'dmgToParty'} += $damage;
+				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
+			}
+			$monsters{$ID1}{target} = $ID2;
+		}
+		
+	} elsif ($players{$ID1}) {
+		if ($monsters{$ID2}) {
+			# Player attacks monster
+			$monsters{$ID2}{'dmgTo'} += $damage;
+			$monsters{$ID2}{'dmgFromPlayer'}{$ID1} += $damage;
+			$monsters{$ID2}{'lastAttackFrom'} = $ID1;
+			$players{$ID1}{'dmgToMonster'}{$ID2} += $damage;
+
+			if ($damage == 0) {
+				$monsters{$ID2}{'missedFromPlayer'}{$ID1}++;
+				$players{$ID1}{'missedToMonster'}{$ID2}++;
+			}
+
+			if (existsInList($config{tankersList}, $players{$ID1}{name}) ||
+			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && $chars[$config{'char'}]{'party'}{'users'}{$ID1} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
+				$monsters{$ID2}{'dmgFromParty'} += $damage;
+			}
+		}
+	}
+}
+
+##
+# useTeleport(level)
+# level: 1 to teleport to a random spot, 2 to respawn.
+sub useTeleport {
+	my $use_lvl = shift;
+	my $internal = shift;
+
+	# for possible recursive calls
+	if (!defined $internal) {
+		$internal = $config{teleportAuto_useSkill};
+	}
+
+	# look if the character has the skill
+	my $sk_lvl = 0;
+	if ($char->{skills}{AL_TELEPORT}) {
+		$sk_lvl = $char->{skills}{AL_TELEPORT}{lv};
+	}
+
+	# only if we want to use skill ?
+	return if ($char->{muted});
+
+	if ($sk_lvl > 0 && $internal > 0) {
+		# We have the teleport skill, and should use it
+		my $skill = new Skills(handle => 'AL_TELEPORT');
+		if ($internal == 1 || ($internal == 2 && binSize(\@playersID))) {
+			# Send skill use packet to appear legitimate
+			sendSkillUse(\$remote_socket, $skill->id, $use_lvl, $accountID);
+			undef $char->{permitSkill};
+		}
+		
+		delete $ai_v{temp}{teleport};
+		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
+		if ($use_lvl == 1) {
+			sendTeleport(\$remote_socket, "Random");
+			return 1;
+		} elsif ($use_lvl == 2) {
+			# check for possible skill level abuse
+			message "Using Teleport Skill Level 2 though we not have it !\n", "useTeleport" if ($sk_lvl == 1);
+
+			# If saveMap is not set simply use a wrong .gat.
+			# eAthena servers ignore it, but this trick doesn't work
+			# on official servers.
+			my $telemap = "prontera.gat";
+			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
+
+			sendTeleport(\$remote_socket, $telemap);
+			return 1;
+		}
+	}
+
+	# else if $internal == 0 or $sk_lvl == 0
+	# try to use item
+
+	# could lead to problems if the ItemID would be different on some servers
+	my $invIndex = findIndex($char->{inventory}, "nameID", $use_lvl + 600);
+	if (defined $invIndex) {
+		# We have Fly Wing/Butterfly Wing.
+		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
+		if (timeOut($timeout{ai_teleport})) {
+			sendItemUse(\$remote_socket, $char->{inventory}[$invIndex]{index}, $accountID);
+			$timeout{ai_teleport}{time} = time;
+		}
+		return 1;
+	}
+
+	# no item, but skill is still available
+	if ( $sk_lvl > 0 ) {
+		message "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n", "useTeleport";
+		return useTeleport($use_lvl, 1);
+	}
+
+	# No skill and no wings; try to equip a Tele clip or something,
+	# if equipAuto_#_onTeleport is set
+	my $i = 0;
+	while (exists $config{"equipAuto_$i"}) {
+		if (!$config{"equipAuto_$i"}) {
+			$i++;
+			next;
+		}
+
+		if ($config{"equipAuto_${i}_onTeleport"}) {
+			# it is safe to always set this value, because $ai_v{temp} is always cleared after teleport
+			if (!$ai_v{temp}{teleport}{lv}) {
+				debug "Equipping " . $config{"equipAuto_$i"} . " to teleport\n", "useTeleport";
+				$ai_v{temp}{teleport}{lv} = $use_lvl;
+
+				# set a small timeout, will be overridden if related config in equipAuto is set
+				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
+				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
+				return 1;
+
+			} elsif (defined $ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut($ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup})) {
+				message "You don't have wing or skill to teleport/respawn or timeout elapsed\n", "teleport";
+				delete $ai_v{temp}{teleport};
+				return 0;
+
+			} else {
+				# Waiting for item to equip
+				return 1;
+			}
+		}
+		$i++;
+	}
+
+	if ($use_lvl == 1) {
+		message "You don't have the Teleport skill or a Fly Wing\n", "teleport";
+	} else {
+		message "You don't have the Teleport skill or a Butterfly Wing\n", "teleport";
+	}
+
+	return 0;
+}
+
 
 ##
 # whenGroundStatus(target, statuses)

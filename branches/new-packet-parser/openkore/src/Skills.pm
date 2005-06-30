@@ -40,6 +40,7 @@ package Skills;
 use strict;
 use vars qw(@skills %handles %names);
 
+use overload '""' => \&name;
 
 # use SelfLoader; 1;
 # __DATA__

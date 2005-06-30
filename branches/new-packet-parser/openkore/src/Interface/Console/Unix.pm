@@ -83,6 +83,13 @@ sub getInput {
 	return $line;
 }
 
+sub errorDialog {
+	# UNIX consoles don't close when the program exits,
+	# so don't block execution
+	my ($self, $message) = @_;
+	$self->writeOutput("error", "$message\n");
+}
+
 sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
 	my $code;
