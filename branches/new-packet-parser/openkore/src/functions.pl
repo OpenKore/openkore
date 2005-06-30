@@ -1141,7 +1141,8 @@ sub AI {
 				$args->{steps} = [];
 				@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
 				undef $args->{time};
-				undef $ai_v{'npc_talk'}{'time'};
+				undef $ai_v{npc_talk}{'time'};
+				undef $ai_v{npc_talk}{talk};
 
 				# look at the NPC
 				$args->{pos} = {};
@@ -1162,7 +1163,8 @@ sub AI {
 						$args->{steps} = [];
 						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
 						undef $args->{time};
-						undef $ai_v{'npc_talk'}{'time'};
+						undef $ai_v{npc_talk}{'time'};
+						undef $ai_v{npc_talk}{talk};
 						lookAtPosition($args->{pos});
 						last NPCTALK;
 					}
@@ -1187,7 +1189,7 @@ sub AI {
 			}
 
 
-		} elsif ($args->{mapChanged} || @{$args->{steps}} == 0) {
+		} elsif ($args->{mapChanged} || $ai_v{npc_talk}{talk} eq 'close') {
 			message "Done talking with $args->{name}.\n", "ai_npcTalk";
 
 			# Cancel conversation only if NPC is still around; otherwise
