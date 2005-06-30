@@ -20,6 +20,7 @@ DIRS=(.
 	src/Interface/Wx
 	src/Interface/Wx/DockNotebook
 	src/Network
+	src/Network/Receive
 	src/Utils
 	src/auto/XSTools
 	src/auto/XSTools/build
