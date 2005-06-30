@@ -181,7 +181,7 @@ sub readEvents {
 				}
 				$self->{out_con}->Cursor($self->{in_pos}, $self->{in_line});
 				$self->{out_con}->Write(chr($event[5]));
-				substr($self->{input_part}, $self->{in_pos}, 0, chr($event[5])) if ($self->{in_pos} < length($self->{input_part}));
+				substr($self->{input_part}, $self->{in_pos}, 0, chr($event[5])) if ($self->{in_pos} <= length($self->{input_part}));
 				$self->{in_pos}++;
 #			} elsif ($event[3] == 33) {
 #				__PACKAGE__->writeOutput("pgup\n");
