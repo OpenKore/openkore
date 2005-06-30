@@ -63,6 +63,8 @@ Bug fixes:
   a guild when you are not.
 - Fix avoidGM_namePattern, it should work now for nearby GMs.
 - 'i' command now displays equipped arrows under Equipment (Equipped).
+- Quick-and-dirty @{$char->{inventory}} > 0 fix for useSelf_item
+  dcOnEmpty. (Will fail if your bot doesn't carry anything at all.)
 
 New features:
 - Better support for detecting dead players.
