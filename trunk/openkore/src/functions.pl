@@ -3026,31 +3026,36 @@ sub AI {
 
 	##### PARTY-SKILL USE ##### 
 
-	if ($char->{party} && (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move)))){
+	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack move))){
 		my %party_skill;
 		for (my $i = 0; exists $config{"partySkill_$i"}; $i++) {
 			next if (!$config{"partySkill_$i"});
-
-			for (my $j = 0; $j < @partyUsersID; $j++) {
-				next if ($partyUsersID[$j] eq "" || $partyUsersID[$j] eq $accountID);
-				if ($players{$partyUsersID[$j]}
-					&& inRange(distance($char->{pos_to}, $players{$partyUsersID[$j]}{pos}), $config{partySkillDistance} || "1..8")
-					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $char->{party}{users}{$partyUsersID[$j]}{'name'}))
-					&& checkPlayerCondition("partySkill_$i"."_target", $partyUsersID[$j])
+			foreach my $ID (@playersID) {
+				next if ($ID eq "");
+				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
+				# messy way to find the best object
+				# but don't use object methods on this because we aren't sure if it's blessed
+				my $player = $char->{party} ? ($char->{party}{users}{$ID} || $players{$ID}) : $players{$ID};
+				if (inRange(distance($char->{pos_to}, $players{$ID}{pos}), $config{partySkillDistance} || "1..8")
+					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $player->{name}))
+					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 					&& checkSelfCondition("partySkill_$i")
 					){
 					$party_skill{skillID} = $skills_rlut{lc($config{"partySkill_$i"})};
 					$party_skill{skillLvl} = $config{"partySkill_$i"."_lvl"};
-					$party_skill{target} = $char->{party}{users}{$partyUsersID[$j]}{name};
-					$party_skill{targetID} = $partyUsersID[$j];
+					$party_skill{target} = $player->{name};
+					$party_skill{x} = $player->{pos}{x};
+					$party_skill{y} = $player->{pos}{y};
+					$party_skill{targetID} = $ID;
 					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
 					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
 					# This is used by setSkillUseTimer() to set
 					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
 					# when the skill is actually cast
-					$targetTimeout{$partyUsersID[$j]}{$party_skill{skillID}} = $i;
+					$targetTimeout{$ID}{$party_skill{skillID}} = $i;
 					last;
 				}
+
 			}
 			last if (defined $party_skill{targetID});
 		}
@@ -3058,7 +3063,7 @@ sub AI {
 		if ($config{useSelf_skill_smartHeal} && $party_skill{skillID} eq "AL_HEAL") {
 			my $smartHeal_lv = 1;
 			my $hp_diff;
-			if ($char->{party}{users}{$party_skill{targetID}}{hp}) {
+			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
 				$hp_diff = $char->{party}{users}{$party_skill{targetID}}{hp_max} - $char->{party}{users}{$party_skill{targetID}}{hp};
 			} else {
 				$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
@@ -3078,11 +3083,11 @@ sub AI {
 			$party_skill{skillLvl} = $smartHeal_lv;
 		}
 		if ($party_skill{skillLvl} > 0) {
-			debug qq~Party Skill used ($char->{party}{users}{$party_skill{targetID}}{name}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~, "skill";
+			debug qq~Party Skill used ($party_skill{target}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~, "skill";
 			if (!ai_getSkillUseType($party_skill{skillID})) {
 				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $party_skill{targetID});
 			} else {
-				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $char->{party}{users}{$party_skill{targetID}}{pos}{x}, $char->{party}{users}{$party_skill{targetID}}{pos}{y});
+				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $party_skill{x}, $party_skill{y});
 			}
 		}
 	}
@@ -10660,6 +10665,10 @@ sub checkPlayerCondition {
 
 	if ($config{$prefix."_whenShieldEquipped"}) {
 		return 0 unless $player->{shield};
+	}
+
+	if ($config{$prefix."_isGuild"}) {
+		return 0 unless ($player->{guild} && existsInList($config{$prefix . "_isGuild"}, $player->{guild}{name}));
 	}
 
 	return 1;
