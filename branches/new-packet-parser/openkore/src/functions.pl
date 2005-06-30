@@ -1475,7 +1475,8 @@ sub AI {
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
 
 		# Only autostorage when we're on an attack route, or not moving
-		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found) {
+		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found &&
+		    @{$char->{inventory}} > 0) {
 			message "Auto-storaging due to insufficient ".$config{"getAuto_$i"}."\n";
 			AI::queue("storageAuto");
 		}

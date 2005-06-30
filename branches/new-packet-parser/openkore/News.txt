@@ -65,6 +65,7 @@ Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
 - Quick-and-dirty @{$char->{inventory}} > 0 fix for useSelf_item
   dcOnEmpty. (Will fail if your bot doesn't carry anything at all.)
+- Same quick-and-dirty fix for "Auto-storaging due to insufficient ___".
 - Don't try to statsAddAuto before the stat point info has been received.
 
 New features:
