@@ -293,13 +293,13 @@ sub checkConnection {
 		initConnectVars();
 		Network::connectTo(\$remote_socket, $map_ip, $map_port);
 		sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		$timeout{'maplogin'}{'time'} = time;
+		$timeout_ex{master}{time} = time;
+		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
+		$timeout{maplogin}{time} = time;
 
-	} elsif ($conState == 4 && timeOut($timeout{'maplogin'})) {
+	} elsif ($conState == 4 && timeOut($timeout{maplogin})) {
 		message("Timeout on Map Server, connecting to Master Server...\n", "connection");
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 		Network::disconnect(\$remote_socket);
 		$conState = 1;
 		undef $conState_tries;
@@ -311,14 +311,13 @@ sub checkConnection {
 			error "exiting...\n", "connection";
 			$quit = 1;
 		} else {
-			error "connecting to Master Server in $timeout{reconnect}{timeout} seconds...\n", "connection";
+			error "connecting to Master Server in $timeout_ex{master}{timeout} seconds...\n", "connection";
 			$timeout_ex{master}{time} = time;
-			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			$conState = 1;
 			undef $conState_tries;
 		}
 
-	} elsif ($conState == 5 && timeOut($timeout{'play'})) {
+	} elsif ($conState == 5 && timeOut($timeout{play})) {
 		error "Timeout on Map Server, ", "connection";
 		if ($config{dcOnDisconnect}) {
 			error "exiting...\n", "connection";
@@ -4276,8 +4275,8 @@ sub AI {
 
 	##### AVOID GM OR PLAYERS #####
 	if (timeOut($timeout{ai_avoidcheck})) {
-		avoidGM_near() if ($config{'avoidGM_near'} && (!$cities_lut{$field{name}.'.rsw'} || $config{'avoidGM_near_inTown'}));
-		avoidList_near() if $config{'avoidList'};
+		avoidGM_near() if ($config{avoidGM_near} && (!$cities_lut{"$field{name}.rsw"} || $config{avoidGM_near_inTown}));
+		avoidList_near() if $config{avoidList};
 		$timeout{ai_avoidcheck}{time} = time;
 	}
 
@@ -9956,21 +9955,25 @@ sub avoidGM_near {
 # Checks if any of the surrounding players are on the avoid.txt avoid list.
 # Disconnects / teleports if a player is detected.
 sub avoidList_near {
-	return if ($config{'avoidList_inLockOnly'} && $field{'name'} ne $config{'lockMap'});
+	return if ($config{avoidList_inLockOnly} && $field{name} ne $config{lockMap});
 	for (my $i = 0; $i < @playersID; $i++) {
-		next if($playersID[$i] eq "");
-		if (($avoid{'Players'}{lc($players{$playersID[$i]}{'name'})}{'disconnect_on_sight'} || $avoid{'ID'}{$players{$playersID[$i]}{'nameID'}}{'disconnect_on_sight'}) && !$xkore) {
-			warning "$players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) is nearby, disconnecting...\n";
-			chatLog("k", "*** Found $players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) nearby and disconnected ***\n");
-			warning "Disconnect for $config{'avoidList_reconnect'} seconds...\n";
-			$timeout_ex{'master'}{'time'} = time;
-			$timeout_ex{'master'}{'timeout'} = $config{'avoidList_reconnect'};
+		my $player = $players{$playersID[$i]};
+		next if (!defined $player);
+
+		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
+		my $avoidID = $avoid{ID}{$player->{nameID}};
+		if (!$xkore && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
+			warning "$player->{name} ($player->{nameID}) is nearby, disconnecting...\n";
+			chatLog("k", "*** Found $player->{name} ($player->{nameID}) nearby and disconnected ***\n");
+			warning "Disconnect for $config{avoidList_reconnect} seconds...\n";
+			$timeout_ex{master}{time} = time;
+			$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
 			Network::disconnect(\$remote_socket);
 			return 1;
-		}
-		elsif ($avoid{'Players'}{lc($players{$playersID[$i]}{'name'})}{'teleport_on_sight'} || $avoid{'ID'}{$players{$playersID[$i]}{'nameID'}}{'teleport_on_sight'}) {
-			message "Teleporting to avoid player $players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'})\n", "teleport";
-			chatLog("k", "*** Found $players{$playersID[$i]}{'name'} ($players{$playersID[$i]}{'nameID'}) nearby and teleported ***\n");
+
+		} elsif (($avoidPlayer && $avoidPlayer->{teleport_on_sight}) || ($avoidID && $avoidID->{$player->{nameID}}{teleport_on_sight})) {
+			message "Teleporting to avoid player $player->{name} ($player->{nameID})\n", "teleport";
+			chatLog("k", "*** Found $player->{name} ($player->{nameID}) nearby and teleported ***\n");
 			useTeleport(1);
 			return 1;
 		}
