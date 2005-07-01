@@ -4037,7 +4037,7 @@ sub AI {
 	##### ITEMS GATHER #####
 
 	if (AI::action eq "items_gather" && AI::args->{suspended}) {
-		AI::args->{suspended}{ai_items_gather_giveup}{time} += time - AI::args->{suspended};
+		AI::args->{ai_items_gather_giveup}{time} += time - AI::args->{suspended};
 		delete AI::args->{suspended};
 	}
 	if (AI::action eq "items_gather" && !($items{AI::args->{ID}} && %{$items{AI::args->{ID}}})) {
