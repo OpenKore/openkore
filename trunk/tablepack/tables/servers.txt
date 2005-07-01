@@ -142,11 +142,12 @@ serverType 1
 chatLangCode 1
 field_payon old_payon.fld
 
-[Brazil - bRO]
-ip 200.229.50.68
-port 6000
-master_version 22
-version 1
+# unknown
+#[Brazil - bRO]
+#ip 200.229.50.68
+#port 6000
+#master_version 22
+#version 1
 
 [India - inRO]
 ip 202.92.9.35
@@ -331,3 +332,10 @@ ip 72.29.77.223
 port 6901
 master_version 17
 version 20
+
+[ChocoRO Private Server]
+ip 65.110.62.150
+port 6901
+master_version 14
+version 20
+serverType 3
