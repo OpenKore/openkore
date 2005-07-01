@@ -247,8 +247,7 @@ attackSkillSlot {
 	maxUses 0
 	target_whenStatusActive
 	target_whenStatusInactive
-	inInventory_name
-	inInventory_qty
+	inInventory
 }
 
 attackComboSlot {
@@ -279,8 +278,7 @@ useSelf_skill {
 	notInTown 0
 	timeout 0
 	disabled 0
-	inInventory_name
-	inInventory_qty
+	inInventory
 }
 
 useSelf_skill_smartHeal 1
@@ -316,8 +314,7 @@ partySkill {
 	target_monsters
 	target_timeout 0
 	target_dead 0
-	inInventory_name
-	inInventory_qty
+	inInventory
 }
 
 
@@ -358,8 +355,7 @@ equipAuto {
 	notInTown 0
 	timeout 0
 	disabled 0
-	inInventory_name
-	inInventory_qty
+	inInventory
 }
 
 useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
@@ -379,8 +375,7 @@ useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
 	notInTown 0
 	timeout
 	disabled 0
-	inInventory_name
-	inInventory_qty
+	inInventory
 }
 
 
