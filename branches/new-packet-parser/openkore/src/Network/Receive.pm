@@ -21,19 +21,22 @@ sub new {
 	my %self;
 
 	$self{packet_list} = {
-		'006C' => ['login_error'],
-		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'006C' => ['login_error_game_login_server'],
+		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 v1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'006A' => ['login_error', 'v1', [qw(type)]],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
 		'007A' => ['change_to_constate5'],
-		'007F' => ['received_sync', 'L1', [qw(time)]],
-		'0081' => ['errors', 'C1', [qw(type)]],
-		'011E' => ['memo_success', 'C1', [qw(fail)]],
-		'0114' => ['skill_use', 'S1 a4 a4 L1 L1 L1 s1 S1 S1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'007F' => ['received_sync', 'V1', [qw(time)]],
+		'0081' => ['errors', 'v1', [qw(type)]],
+		'011E' => ['memo_success', 'v1', [qw(fail)]],
+		'0114' => ['skill_use', 'S1 a4 a4 V1 V1 V1 s1 S1 S1 v1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_looks', 'a2 S1 S1 S1', [qw(ID param1 param2 param3)]],
-		'0121' => ['cart_info', 'S1 S1 L1 L1', [qw(items items_max weight weight_max)]],
-		'0124' => ['cart_item_added', 'S1 L1 S1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		'01DE' => ['skill_use', 'S1 a4 a4 L1 L1 L1 l1 S1 S1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'011A' => ['skill_used_no_damage', 'S1 S1 a4 a4', [qw(skillID amount targetID sourceID)]],
+		'011C' => ['warp_portal_list', 'S1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
+		'0121' => ['cart_info', 'S1 S1 V1 V1', [qw(items items_max weight weight_max)]],
+		'0124' => ['cart_item_added', 'S1 V1 S1 x v1 v1 v1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01DE' => ['skill_use', 'S1 a4 a4 V1 V1 V1 l1 S1 S1 v1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 	};
 
 	bless \%self, $class;
@@ -191,9 +194,10 @@ sub cart_item_added {
 sub change_to_constate5 {
 	$conState = 5 if ($conState != 4 && $xkore);
 }
+
 sub character_looks {
 	my ($self, $args) = @_;
-	main::setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 }
 
 sub memo_success {
@@ -206,6 +210,57 @@ sub memo_success {
 }
 
 sub login_error {
+	my ($self,$args) = @_;
+
+	Network::disconnect(\$remote_socket);
+	if ($args->{type} == 0) {
+		error("Account name doesn't exist\n", "connection");
+		if (!$xkore && !$config{'ignoreInvalidLogin'}) {
+			message("Enter Username Again: ", "input");
+			my $username = $interface->getInput(-1);
+			configModify('username', $username, 1);
+			$timeout_ex{'master'}{'time'} = 0;
+			$conState_tries = 0;
+		}
+	} elsif ($args->{type} == 1) {
+		error("Password Error\n", "connection");
+		if (!$xkore && !$config{'ignoreInvalidLogin'}) {
+			message("Enter Password Again: ", "input");
+			# Set -9 on getInput timeout field mean this is password field
+			my $password = $interface->getInput(-9);
+			configModify('password', $password, 1);
+			$timeout_ex{'master'}{'time'} = 0;
+			$conState_tries = 0;
+		}
+	} elsif ($args->{type} == 3) {
+		error("Server connection has been denied\n", "connection");
+	} elsif ($args->{type} == 4) {
+		$interface->errorDialog("Critical Error: Your account has been blocked.");
+		$quit = 1 if (!$xkore);
+	} elsif ($args->{type} == 5) {
+		my $master = $masterServer;
+		error("Version $master->{version} failed... trying to find version\n", "connection");
+		error("Master Version: $master->{master_version}\n", "connection");
+		$master->{master_version}++;
+		if (!$versionSearch) {
+			$master->{master_version} = 0 if ($master->{master_version} > 1);
+			$master->{version} = 0;
+			$versionSearch = 1;
+		} elsif ($master->{master_version} eq 60) {
+			$master->{master_version} = 0;
+			$master->{version}++;
+		}
+		relog(2);
+	} elsif ($args->{type} == 6) {
+		error("The server is temporarily blocking your connection\n", "connection");
+	}
+	if ($args->{type} != 5 && $versionSearch) {
+		$versionSearch = 0;
+		writeSectionedFileIntact("$Settings::tables_folder/servers.txt", \%masterServers);
+	}
+}
+
+sub login_error_game_login_server {
 	error("Error logging into Game Login Server (invalid character specified)...\n", 'connection');
 	$conState = 1;
 	undef $conState_tries;
@@ -327,6 +382,94 @@ sub skill_use {
 
 	message $disp, $domain, 1;
 
+}
+
+sub skill_used_no_damage {
+	my ($self,$args) = @_;
+	# Skill used on target, with no damage done
+	if (my $spell = $spells{$args->{sourceID}}) {
+		# Resolve source of area attack skill
+		$args->{sourceID} = $spell->{sourceID};
+	}
+
+	# Perform trigger actions
+	$conState = 5 if $conState != 4 && $xkore;
+	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
+	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
+			$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
+	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
+	if ($args->{sourceID} eq $accountID) {
+		my $pos = calcPosition($char);
+		$char->{pos_to} = $pos;
+		$char->{time_move} = 0;
+		$char->{time_move_calc} = 0;
+	}
+
+	# Resolve source and target names
+	my $source = Actor::get($args->{sourceID});
+	my $target = Actor::get($args->{targetID});
+	my $verb = $source->verb('use', 'uses');
+
+	delete $source->{casting};
+
+	# Print skill use message
+	my $extra = "";
+	if ($args->{skillID} == 28) {
+		$extra = ": $args->{amount} hp gained";
+		updateDamageTables($args->{sourceID}, $args->{targetID}, -$args->{amount});
+	} elsif ($args->{amount} != 65535) {
+		$extra = ": Lv $args->{amount}";
+	}
+
+	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
+	my $skill = new Skills($args->{skillID});
+	message "$source $verb ".$skill->name()." on ".$target->nameString($source)."$extra\n", $domain;
+
+	if ($AI && $config{'autoResponseOnHeal'}) {
+		# Handle auto-response on heal
+		if (($players{$args->{sourceID}} && %{$players{$args->{sourceID}}}) && (($args->{skillID} == 28) || ($args->{skillID} == 29) || ($args->{skillID} == 34))) {
+			if ($args->{targetID} eq $accountID) {
+				chatLog("k", "***$source ".skillName($args->{skillID})." on $target$extra***\n");
+				sendMessage(\$remote_socket, "pm", getResponse("skillgoodM"), $players{$args->{sourceID}}{'name'});
+			} elsif ($monsters{$args->{targetID}}) {
+				chatLog("k", "***$source ".skillName($args->{skillID})." on $target$extra***\n");
+				sendMessage(\$remote_socket, "pm", getResponse("skillbadM"), $players{$args->{sourceID}}{'name'});
+			}
+		}
+	}
+}
+
+sub warp_portal_list {
+	my ($self,$args) = @_;
+	($args->{memo1}) = $args->{memo1} =~ /([\s\S]*)\.gat/;
+	($args->{memo2}) = $args->{memo2} =~ /([\s\S]*)\.gat/;
+	($args->{memo3}) = $args->{memo3} =~ /([\s\S]*)\.gat/;
+	($args->{memo4}) = $args->{memo4} =~ /([\s\S]*)\.gat/;
+
+	# Auto-detect saveMap
+	if ($args->{type} == 26) {
+		configModify('saveMap', $args->{memo2}) if $args->{memo2};
+	} elsif ($args->{type} == 27) {
+		configModify('saveMap', $args->{memo1}) if $args->{memo1};
+	}
+
+	$char->{warp}{type} = $args->{type};
+	undef @{$char->{warp}{memo}};
+	push @{$char->{warp}{memo}}, $args->{memo1} if $args->{memo1} ne "";
+	push @{$char->{warp}{memo}}, $args->{memo2} if $args->{memo2} ne "";
+	push @{$char->{warp}{memo}}, $args->{memo3} if $args->{memo3} ne "";
+	push @{$char->{warp}{memo}}, $args->{memo4} if $args->{memo4} ne "";
+
+	message("----------------- Warp Portal --------------------\n", "list");
+	message("#  Place                           Map\n", "list");
+	for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
+		message(swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
+			[$i, $maps_lut{$char->{warp}{memo}[$i].'.rsw'},
+			$char->{warp}{memo}[$i]]),
+			"list");
+	}
+	message("--------------------------------------------------\n", "list");
 }
 
 1;
