@@ -339,3 +339,10 @@ port 6900
 master_version 18
 version 54
 serverType 3
+
+[DiscoveryRO Private Server]
+ip 66.111.53.60
+port 6900
+version 0
+master_version 18
+serverType 4
