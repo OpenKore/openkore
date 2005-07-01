@@ -8208,7 +8208,8 @@ sub parseMsg {
 
 		chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 		message "[Guild] $chat\n", "guildchat";
-		ChatQueue::add('g', 0, $chatMsgUser, $chatMsg);
+		# only queue this if it's a real chat message
+		ChatQueue::add('g', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
 
 		Plugins::callHook('packet_guildMsg', {
 		        MsgUser => $chatMsgUser,
