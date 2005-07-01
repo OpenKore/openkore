@@ -7098,7 +7098,7 @@ sub parseMsg {
 		my ($name) = substr($msg, 15, 24) =~ /([\s\S]*?)\000/;
 		my ($partyUser) = substr($msg, 39, 24) =~ /([\s\S]*?)\000/;
 		my ($map) = substr($msg, 63, 16) =~ /([\s\S]*?)\000/;
-		if (!$chars[$config{'char'}]{'party'}{'users'}{$ID} || !%{$chars[$config{'char'}]{'party'}{'users'}{$ID}}) {
+		if (!$char->{party} || !%{$char->{party}} || !$chars[$config{'char'}]{'party'}{'users'}{$ID} || !%{$chars[$config{'char'}]{'party'}{'users'}{$ID}}) {
 			binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 			if ($ID eq $accountID) {
 				message "You joined party '$name'\n", undef, 1;
