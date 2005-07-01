@@ -20,11 +20,18 @@ sub new {
 	my ($class) = @_;
 	my %self;
 
+	#If you are wondering about those funny strings like 'x2 v1' read http://perldoc.perl.org/functions/pack.html
+	#and http://perldoc.perl.org/perlpacktut.html
+
+	#Defines a list of Packet Handlers and decoding information
+	#'packetSwitch' => ['handler function','unpack string',[qw(argument names)]]
 	$self{packet_list} = {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 v1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'006A' => ['login_error', 'v1', [qw(type)]],
 		'006B' => ['received_characters', '', [qw()]],
 		'006C' => ['login_error_game_login_server'],
+		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 v1 v1 v1 v1 v1 v1 v1', [qw(ID zenny str agi vit int dex luk slot)]],
+		'006E' => ['character_creation_failed'],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
 		'007A' => ['change_to_constate5'],
@@ -196,6 +203,45 @@ sub cart_item_added {
 
 sub change_to_constate5 {
 	$conState = 5 if ($conState != 4 && $xkore);
+}
+
+sub character_creation_failed {
+	message "Character cannot be to created. If you didn't make any mistake, then the name you chose already exists.\n", "info";
+	if (charSelectScreen() == 1) {
+		$conState = 3;
+		$firstLoginMap = 1;
+		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$sentWelcomeMessage = 1;
+	}
+}
+
+sub character_creation_successful {
+	my ($self,$args) = @_;
+	my $char = new Actor::You;
+	$char->{ID} = $args->{ID};
+	$char->{name} = $args->{name};
+	$char->{zenny} = $args->{zenny};
+	$char->{str} = $args->{str};
+	$char->{agi} = $args->{agi};
+	$char->{vit} = $args->{vit};
+	$char->{int} = $args->{int};
+	$char->{dex} = $args->{dex};
+	$char->{luk} = $args->{luk};
+	my $slot = $args->{slot};
+
+	$char->{lv} = 1;
+	$char->{lv_job} = 1;
+	$char->{sex} = $accountSex2;
+	$chars[$slot] = $char;
+
+	$conState = 3;
+	message "Character $char->{name} ($slot) created.\n", "info";
+	if (charSelectScreen() == 1) {
+		$conState = 3;
+		$firstLoginMap = 1;
+		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$sentWelcomeMessage = 1;
+	}
 }
 
 sub character_looks {
