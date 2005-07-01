@@ -346,3 +346,10 @@ port 6900
 version 0
 master_version 18
 serverType 4
+
+[Kaz3RO Private Server]
+ip 12.158.191.43
+port 6900
+master_version 1
+version 17
+serverType 4
