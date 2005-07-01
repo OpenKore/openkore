@@ -21,9 +21,10 @@ sub new {
 	my %self;
 
 	$self{packet_list} = {
-		'006C' => ['login_error_game_login_server'],
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 v1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'006A' => ['login_error', 'v1', [qw(type)]],
+		'006B' => ['received_characters', '', [qw()]],
+		'006C' => ['login_error_game_login_server'],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
 		'007A' => ['change_to_constate5'],
@@ -69,6 +70,7 @@ sub parse {
 	my %args;
 	$args{switch} = $switch;
 	$args{RAW_MSG} = $msg;
+	$args{RAW_MSG_SIZE} = length($msg);
 	if ($handler->[1]) {
 		my @unpacked_data = unpack("x2 $handler->[1]", $msg);
 		my $keys = $handler->[2];
@@ -80,6 +82,7 @@ sub parse {
 	# TODO: this might be slow. We should pre-resolve function references.
 	my $callback = $self->can($handler->[0]);
 	if ($callback) {
+		Plugins::callHook("packet_pre/$handler->[0]", \%args);
 		$self->$callback(\%args);
 	} else {
 		debug "Packet Parser: Unhandled Packet: $switch\n", "packetParser", 2;
@@ -316,6 +319,60 @@ sub errors {
 		error("Error: You have been forced to disconnect by a GM\n", "connection");
 	} else {
 		error("Unknown error $args->{type}\n", "connection");
+	}
+}
+
+sub received_characters {
+	return if $conState == 5;
+	my ($self,$args) = @_;
+	message("Received characters from Game Login Server\n", "connection");
+	$conState = 3;
+	undef $conState_tries;
+	undef @chars;
+
+
+	if (exists $args->{options}{charServer}) {
+		$charServer = $args->{options}{charServer};
+	} else {
+		$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
+	}
+
+	my $num;
+	for (my $i = $args->{RAW_MSG_SIZE} % 106; $i < $args->{RAW_MSG_SIZE}; $i += 106) {
+		#exp display bugfix - chobit andy 20030129
+		$num = unpack("v1", substr($args->{RAW_MSG}, $i + 104, 1));
+		$chars[$num] = new Actor::You;
+		$chars[$num]{'exp'} = unpack("V1", substr($args->{RAW_MSG}, $i + 4, 4));
+		$chars[$num]{'zenny'} = unpack("V1", substr($args->{RAW_MSG}, $i + 8, 4));
+		$chars[$num]{'exp_job'} = unpack("V1", substr($args->{RAW_MSG}, $i + 12, 4));
+		$chars[$num]{'lv_job'} = unpack("v1", substr($args->{RAW_MSG}, $i + 16, 1));
+		$chars[$num]{'hp'} = unpack("S1", substr($args->{RAW_MSG}, $i + 42, 2));
+		$chars[$num]{'hp_max'} = unpack("S1", substr($args->{RAW_MSG}, $i + 44, 2));
+		$chars[$num]{'sp'} = unpack("S1", substr($args->{RAW_MSG}, $i + 46, 2));
+		$chars[$num]{'sp_max'} = unpack("S1", substr($args->{RAW_MSG}, $i + 48, 2));
+		$chars[$num]{'jobID'} = unpack("v1", substr($args->{RAW_MSG}, $i + 52, 1));
+		$chars[$num]{'ID'} = substr($args->{RAW_MSG}, $i, 4);
+		$chars[$num]{'lv'} = unpack("v1", substr($args->{RAW_MSG}, $i + 58, 1));
+		$chars[$num]{'hair_color'} = unpack("v1", substr($args->{RAW_MSG}, $i + 70, 1));
+		($chars[$num]{'name'}) = substr($args->{RAW_MSG}, $i + 74, 24) =~ /([\s\S]*?)\000/;
+		$chars[$num]{'str'} = unpack("v1", substr($args->{RAW_MSG}, $i + 98, 1));
+		$chars[$num]{'agi'} = unpack("v1", substr($args->{RAW_MSG}, $i + 99, 1));
+		$chars[$num]{'vit'} = unpack("v1", substr($args->{RAW_MSG}, $i + 100, 1));
+		$chars[$num]{'int'} = unpack("v1", substr($args->{RAW_MSG}, $i + 101, 1));
+		$chars[$num]{'dex'} = unpack("v1", substr($args->{RAW_MSG}, $i + 102, 1));
+		$chars[$num]{'luk'} = unpack("v1", substr($args->{RAW_MSG}, $i + 103, 1));
+		$chars[$num]{'sex'} = $accountSex2;
+	}
+
+	# gradeA says it's supposed to send this packet here, but
+	# it doesn't work...
+	#sendBanCheck(\$remote_socket) if (!$xkore && $config{serverType} == 2);
+	if (charSelectScreen(1) == 1) {
+		$firstLoginMap = 1;
+		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$sentWelcomeMessage = 1;
+	} else {
+		return;
 	}
 }
 
