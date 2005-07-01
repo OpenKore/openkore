@@ -863,7 +863,8 @@ sub onChatAdd {
 		$self->{chatLog}->add($msg, $params->{type});
 
 	} elsif ($hook eq "packet_selfChat") {
-		$self->{chatLog}->add("$params->{user} : $params->{msg}\n", "selfchat");
+		# only display this message if it's a real self-chat
+		$self->{chatLog}->add("$params->{user} : $params->{msg}\n", "selfchat") if ($params->{user});
 	} elsif ($hook eq "packet_privMsg") {
 		$self->{chatLog}->add("(From: $params->{privMsgUser}) : $params->{privMsg}\n", "pm");
 	} elsif ($hook eq "packet_sentPM") {
