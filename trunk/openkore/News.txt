@@ -62,6 +62,7 @@ Bug fixes:
 - Fix $char->{guild} autovivification causing the bot to think you're in
   a guild when you are not.
 - Fix avoidGM_namePattern, it should work now for nearby GMs.
+- Wx interface will no longer show blank messages in the chat viewer.
 
 New features:
 - Better support for detecting dead players.
