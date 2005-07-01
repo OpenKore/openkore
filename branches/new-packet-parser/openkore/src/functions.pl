@@ -9631,67 +9631,6 @@ sub checkMonsterCondition {
 }
 
 ##
-# setStatus(ID, param1, param2, param3)
-# ID: ID of a player or monster.
-# param1: the state information of the object.
-# param2: the ailment information of the object.
-# param3: the "look" information of the object.
-#
-# Sets the state, ailment, and "look" statuses of the object.
-# Does not include skillsstatus.txt items.
-sub setStatus {
-	my $ID = shift;
-	my $param1 = shift;
-	my $param2 = shift;
-	my $param3 = shift;
-	my $actorType;
-	my $actor = getActorHash($ID, \$actorType);
-
-	return if (!defined $actor);
-	my $name = getActorName($ID);
-	my $verbosity = ($actorType eq 'self') ? 1 : 2;
-	my $are = ($actorType eq 'self') ? 'are' : 'is';
-	my $have = ($actorType eq 'self') ? 'have' : 'has';
-
-	foreach (keys %skillsState) {
-		if ($param1 == $_) {
-			if (!$actor->{statuses}{$skillsState{$_}}) {
-				$actor->{statuses}{$skillsState{$_}} = 1;
-				message "$name $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
-			}
-		} elsif ($actor->{statuses}{$skillsState{$_}}) {
-			delete $actor->{statuses}{$skillsState{$_}};
-			message "$name $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
-		}
-	}
-
-	foreach (keys %skillsAilments) {
-		if (($param2 & $_) == $_) {
-			if (!$actor->{statuses}{$skillsAilments{$_}}) {
-				$actor->{statuses}{$skillsAilments{$_}} = 1;
-				message "$name $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
-			}
-		} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
-			delete $actor->{statuses}{$skillsAilments{$_}};
-			message "$name $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
-		}
-	}
-
-	foreach (keys %skillsLooks) {
-		if (($param3 & $_) == $_) {
-			if (!$actor->{statuses}{$skillsLooks{$_}}) {
-				$actor->{statuses}{$skillsLooks{$_}} = 1;
-				debug "$name $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
-			}
-		} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
-			delete $actor->{statuses}{$skillsLooks{$_}};
-			debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
-		}
-	}
-}
-
-
-##
 # findCartItemInit()
 #
 # Resets all "found" flags in the cart to 0.

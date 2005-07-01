@@ -102,6 +102,7 @@ our @EXPORT = (
 	sendMessage
 	setSkillUseTimer
 	setPartySkillTimer
+	setStatus
 	countCastOn
 	stopAttack
 	stripLanguageCode
@@ -134,7 +135,7 @@ sub auth {
 		message "Authorized user '$user' for admin\n", "success";
 	} else {
 		message "Revoked admin privilages for user '$user'\n", "success";
-	}	
+	}
 	$overallAuth{$user} = $flag;
 	writeDataFile("$Settings::control_folder/overallAuth.txt", \%overallAuth);
 }
@@ -238,7 +239,7 @@ sub visualDump {
 
 	my $labelStr = $label ? " ($label)" : '';
 	$dump = "================================================\n" .
-		getFormattedDate(int(time)) . "\n\n" . 
+		getFormattedDate(int(time)) . "\n\n" .
 		length($msg) . " bytes$labelStr\n\n";
 
 	for (my $i = 0; $i < length($msg); $i += 16) {
@@ -284,7 +285,7 @@ sub visualDump {
 sub calcRectArea {
 	my ($x, $y, $radius) = @_;
 	my (%topLeft, %topRight, %bottomLeft, %bottomRight);
-		
+
 	sub capX {
 		return 0 if ($_[0] < 0);
 		return $field{width} - 1 if ($_[0] >= $field{width});
@@ -920,7 +921,7 @@ sub charSelectScreen {
 }
 
 sub chatLog_clear {
-	if (-f $Settings::chat_file) { unlink($Settings::chat_file); } 
+	if (-f $Settings::chat_file) { unlink($Settings::chat_file); }
 }
 
 ##
@@ -947,7 +948,7 @@ sub checkAllowedMap {
 # Returns: 1 if in follow mode, 0 if not.
 #
 # Check whether we're current in follow mode.
-sub checkFollowMode { 	 
+sub checkFollowMode {
 	my $followIndex;
 	if ($config{follow} && defined($followIndex = binFind(\@ai_seq, "follow"))) {
 		return 1 if ($ai_seq_args[$followIndex]{following});
@@ -1087,7 +1088,7 @@ sub dumpData {
 	my $puncations = quotemeta '~!@#$%^&*()_+|\"\'';
 
 	$dump = "\n\n================================================\n" .
-		getFormattedDate(int(time)) . "\n\n" . 
+		getFormattedDate(int(time)) . "\n\n" .
 		length($msg) . " bytes\n\n";
 
 	for (my $i = 0; $i < length($msg); $i += 16) {
@@ -1166,7 +1167,7 @@ sub getResponse {
 	foreach my $key (keys %responses) {
 		if ($key =~ /^$type\_\d+$/) {
 			push @keys, $key;
-		} 
+		}
 	}
 
 	my $msg = $responses{$keys[int(rand(@keys))]};
@@ -1269,7 +1270,7 @@ sub headgearName {
 }
 
 sub itemLog_clear {
-	if (-f $Settings::item_log_file) { unlink($Settings::item_log_file); } 
+	if (-f $Settings::item_log_file) { unlink($Settings::item_log_file); }
 }
 
 ##
@@ -1467,8 +1468,8 @@ sub sendMessage {
 					}
 					if ($type eq "c") {
 						sendChat($r_socket, $msg);
-					} elsif ($type eq "g") { 
-						sendGuildChat($r_socket, $msg); 
+					} elsif ($type eq "g") {
+						sendGuildChat($r_socket, $msg);
 					} elsif ($type eq "p") {
 						sendPartyChat($r_socket, $msg);
 					} elsif ($type eq "pm") {
@@ -1498,8 +1499,8 @@ sub sendMessage {
 			} else {
 				if ($type eq "c") {
 					sendChat($r_socket, $msg);
-				} elsif ($type eq "g") { 
-					sendGuildChat($r_socket, $msg); 
+				} elsif ($type eq "g") {
+					sendGuildChat($r_socket, $msg);
 				} elsif ($type eq "p") {
 					sendPartyChat($r_socket, $msg);
 				} elsif ($type eq "pm") {
@@ -1516,8 +1517,8 @@ sub sendMessage {
 			if (length($msg) && $i == @msg - 1) {
 				if ($type eq "c") {
 					sendChat($r_socket, $msg);
-				} elsif ($type eq "g") { 
-					sendGuildChat($r_socket, $msg); 
+				} elsif ($type eq "g") {
+					sendGuildChat($r_socket, $msg);
 				} elsif ($type eq "p") {
 					sendPartyChat($r_socket, $msg);
 				} elsif ($type eq "pm") {
@@ -1559,12 +1560,74 @@ sub setSkillUseTimer {
 sub setPartySkillTimer {
 	my ($skillID, $targetID) = @_;
 	my $skill = new Skills(id => $skillID);
-	my $handle = $skill->handle; 
+	my $handle = $skill->handle;
 
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$handle};
 	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
 }
+
+
+##
+# setStatus(ID, param1, param2, param3)
+# ID: ID of a player or monster.
+# param1: the state information of the object.
+# param2: the ailment information of the object.
+# param3: the "look" information of the object.
+#
+# Sets the state, ailment, and "look" statuses of the object.
+# Does not include skillsstatus.txt items.
+sub setStatus {
+	my $ID = shift;
+	my $param1 = shift;
+	my $param2 = shift;
+	my $param3 = shift;
+	my $actorType;
+	my $actor = getActorHash($ID, \$actorType);
+
+	return if (!defined $actor);
+	my $name = getActorName($ID);
+	my $verbosity = ($actorType eq 'self') ? 1 : 2;
+	my $are = ($actorType eq 'self') ? 'are' : 'is';
+	my $have = ($actorType eq 'self') ? 'have' : 'has';
+
+	foreach (keys %skillsState) {
+		if ($param1 == $_) {
+			if (!$actor->{statuses}{$skillsState{$_}}) {
+				$actor->{statuses}{$skillsState{$_}} = 1;
+				message "$name $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+			}
+		} elsif ($actor->{statuses}{$skillsState{$_}}) {
+			delete $actor->{statuses}{$skillsState{$_}};
+			message "$name $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+		}
+	}
+
+	foreach (keys %skillsAilments) {
+		if (($param2 & $_) == $_) {
+			if (!$actor->{statuses}{$skillsAilments{$_}}) {
+				$actor->{statuses}{$skillsAilments{$_}} = 1;
+				message "$name $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+			}
+		} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
+			delete $actor->{statuses}{$skillsAilments{$_}};
+			message "$name $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+		}
+	}
+
+	foreach (keys %skillsLooks) {
+		if (($param3 & $_) == $_) {
+			if (!$actor->{statuses}{$skillsLooks{$_}}) {
+				$actor->{statuses}{$skillsLooks{$_}} = 1;
+				debug "$name $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+			}
+		} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
+			delete $actor->{statuses}{$skillsLooks{$_}};
+			debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+		}
+	}
+}
+
 
 # Increment counter for monster being casted on
 sub countCastOn {
@@ -1735,7 +1798,7 @@ sub updateDamageTables {
 			}
 			$monsters{$ID1}{target} = $ID2;
 		}
-		
+
 	} elsif ($players{$ID1}) {
 		if ($monsters{$ID2}) {
 			# Player attacks monster
@@ -1786,7 +1849,7 @@ sub useTeleport {
 			sendSkillUse(\$remote_socket, $skill->id, $use_lvl, $accountID);
 			undef $char->{permitSkill};
 		}
-		
+
 		delete $ai_v{temp}{teleport};
 		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
 		if ($use_lvl == 1) {
