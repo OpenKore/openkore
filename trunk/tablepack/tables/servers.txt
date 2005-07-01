@@ -142,12 +142,12 @@ serverType 1
 chatLangCode 1
 field_payon old_payon.fld
 
-# unknown
-#[Brazil - bRO]
-#ip 200.229.50.68
-#port 6000
-#master_version 22
-#version 1
+# not working
+[Brazil - bRO]
+ip 200.229.50.68
+port 6900
+master_version 22
+version 1
 
 [India - inRO]
 ip 202.92.9.35
@@ -285,13 +285,6 @@ port 5000
 master_version 1
 version 20
 
-[aeRO2 Private Server]
-ip 66.118.142.17
-port 6900
-master_version 2
-version 20
-preLoginCode 1
-
 [aeRO 2 Private Server]
 ip 66.196.34.89
 port 6900
@@ -338,4 +331,11 @@ ip 65.110.62.150
 port 6901
 master_version 14
 version 20
+serverType 3
+
+[AniRO: Chaos Private Server]
+ip 82.211.6.25
+port 6900
+master_version 18
+version 54
 serverType 3
