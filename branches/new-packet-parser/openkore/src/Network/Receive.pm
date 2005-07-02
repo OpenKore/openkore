@@ -389,27 +389,27 @@ sub received_characters {
 	my $num;
 	for (my $i = $args->{RAW_MSG_SIZE} % 106; $i < $args->{RAW_MSG_SIZE}; $i += 106) {
 		#exp display bugfix - chobit andy 20030129
-		$num = unpack("v1", substr($args->{RAW_MSG}, $i + 104, 1));
+		$num = unpack("C1", substr($args->{RAW_MSG}, $i + 104, 1));
 		$chars[$num] = new Actor::You;
 		$chars[$num]{'exp'} = unpack("V1", substr($args->{RAW_MSG}, $i + 4, 4));
 		$chars[$num]{'zenny'} = unpack("V1", substr($args->{RAW_MSG}, $i + 8, 4));
 		$chars[$num]{'exp_job'} = unpack("V1", substr($args->{RAW_MSG}, $i + 12, 4));
-		$chars[$num]{'lv_job'} = unpack("v1", substr($args->{RAW_MSG}, $i + 16, 1));
+		$chars[$num]{'lv_job'} = unpack("C1", substr($args->{RAW_MSG}, $i + 16, 1));
 		$chars[$num]{'hp'} = unpack("S1", substr($args->{RAW_MSG}, $i + 42, 2));
 		$chars[$num]{'hp_max'} = unpack("S1", substr($args->{RAW_MSG}, $i + 44, 2));
 		$chars[$num]{'sp'} = unpack("S1", substr($args->{RAW_MSG}, $i + 46, 2));
 		$chars[$num]{'sp_max'} = unpack("S1", substr($args->{RAW_MSG}, $i + 48, 2));
-		$chars[$num]{'jobID'} = unpack("v1", substr($args->{RAW_MSG}, $i + 52, 1));
+		$chars[$num]{'jobID'} = unpack("C1", substr($args->{RAW_MSG}, $i + 52, 1));
 		$chars[$num]{'ID'} = substr($args->{RAW_MSG}, $i, 4);
-		$chars[$num]{'lv'} = unpack("v1", substr($args->{RAW_MSG}, $i + 58, 1));
-		$chars[$num]{'hair_color'} = unpack("v1", substr($args->{RAW_MSG}, $i + 70, 1));
+		$chars[$num]{'lv'} = unpack("C1", substr($args->{RAW_MSG}, $i + 58, 1));
+		$chars[$num]{'hair_color'} = unpack("C1", substr($args->{RAW_MSG}, $i + 70, 1));
 		($chars[$num]{'name'}) = substr($args->{RAW_MSG}, $i + 74, 24) =~ /([\s\S]*?)\000/;
-		$chars[$num]{'str'} = unpack("v1", substr($args->{RAW_MSG}, $i + 98, 1));
-		$chars[$num]{'agi'} = unpack("v1", substr($args->{RAW_MSG}, $i + 99, 1));
-		$chars[$num]{'vit'} = unpack("v1", substr($args->{RAW_MSG}, $i + 100, 1));
-		$chars[$num]{'int'} = unpack("v1", substr($args->{RAW_MSG}, $i + 101, 1));
-		$chars[$num]{'dex'} = unpack("v1", substr($args->{RAW_MSG}, $i + 102, 1));
-		$chars[$num]{'luk'} = unpack("v1", substr($args->{RAW_MSG}, $i + 103, 1));
+		$chars[$num]{'str'} = unpack("C1", substr($args->{RAW_MSG}, $i + 98, 1));
+		$chars[$num]{'agi'} = unpack("C1", substr($args->{RAW_MSG}, $i + 99, 1));
+		$chars[$num]{'vit'} = unpack("C1", substr($args->{RAW_MSG}, $i + 100, 1));
+		$chars[$num]{'int'} = unpack("C1", substr($args->{RAW_MSG}, $i + 101, 1));
+		$chars[$num]{'dex'} = unpack("C1", substr($args->{RAW_MSG}, $i + 102, 1));
+		$chars[$num]{'luk'} = unpack("C1", substr($args->{RAW_MSG}, $i + 103, 1));
 		$chars[$num]{'sex'} = $accountSex2;
 	}
 
