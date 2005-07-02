@@ -46,8 +46,9 @@ sub new {
 		'007A' => ['change_to_constate5'],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
-		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a4 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
+		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
+		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_looks', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
@@ -55,6 +56,7 @@ sub new {
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		#'01D8' => ['character_appears', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
 		#'01D9' => ['player_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
@@ -884,6 +886,31 @@ sub skill_used_no_damage {
 			}
 		}
 	}
+}
+
+sub storage_item_added {
+	my ($self, $args) = @_;
+
+	my $index = $args->{index};
+	my $amount = $args->{amount};
+
+	my $item = $storage{$index} ||= {};
+	if ($item->{amount}) {
+		$item->{amount} += $amount;
+	} else {
+		binAdd(\@storageID, $index);
+		$item->{nameID} = $args->{ID};
+		$item->{index} = $index;
+		$item->{amount} = $amount;
+		$item->{identified} = $args->{identified};
+		$item->{broken} = $args->{broken};
+		$item->{upgrade} = $args->{upgrade};
+		$item->{cards} = $args->{cards};
+		$item->{name} = itemName($item);
+		$item->{binID} = binFind(\@storageID, $index);
+	}
+	message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
+	$itemChange{$item->{name}} += $amount;
 }
 
 sub warp_portal_list {
