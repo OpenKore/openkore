@@ -42,7 +42,7 @@ sub new {
 		'0081' => ['errors', 'C1', [qw(type)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
-		'0119' => ['character_looks', 'a2 v1 v1 v1', [qw(ID param1 param2 param3)]],
+		'0119' => ['character_looks', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4', [qw(skillID amount targetID sourceID)]],
 		'011C' => ['warp_portal_list', 'v1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
