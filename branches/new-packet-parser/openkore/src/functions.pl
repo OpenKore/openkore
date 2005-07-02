@@ -8345,37 +8345,6 @@ sub parseMsg {
 		($guild{'name'})    = substr($msg, 46, 24) =~ /([\s\S]*?)\000/;
 		($guild{'master'})  = substr($msg, 70, 24) =~ /([\s\S]*?)\000/;
 
-	} elsif ($switch eq "01C4" || $switch eq "00F4") {
-		my $index = unpack("S1", substr($msg, 2, 2));
-		my $amount = unpack("L1", substr($msg, 4, 4));
-		my $ID = unpack("S1", substr($msg, 8, 2));
-
-		my $item = $storage{$index} ||= {};
-		if ($item->{amount}) {
-			$item->{amount} += $amount;
-		} else {
-			binAdd(\@storageID, $index);
-			$item->{nameID} = $ID;
-			$item->{index} = $index;
-			$item->{amount} = $amount;
-			if ($switch eq "01C4") {
-				$item->{identified} = unpack("C1", substr($msg, 11, 1));
-				$item->{broken} = unpack("C1", substr($msg, 12, 1));
-				$item->{upgrade} = unpack("C1", substr($msg, 13, 1));
-				$item->{cards} = substr($msg, 14, 8);
-			} elsif ($switch eq "00F4") {
-				$item->{identified} = unpack("C1", substr($msg, 10, 1));
-				$item->{broken} = unpack("C1", substr($msg, 11, 1));
-				$item->{upgrade} = unpack("C1", substr($msg, 12, 1));
-				$item->{cards} = substr($msg, 13, 8);
-			}
-			$item->{name} = itemName($item);
-			$item->{binID} = binFind(\@storageID, $index);
-		}
-		message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
-		$itemChange{$item->{name}} += $amount;
-		Plugins::callHook('packet_storage_added');
-
 	} elsif ($switch eq "01C8") {
 		my $index = unpack("S1",substr($msg, 2, 2));
 		my $ID = substr($msg, 6, 4);
