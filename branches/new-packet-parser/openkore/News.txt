@@ -67,6 +67,7 @@ Bug fixes:
   dcOnEmpty. (Will fail if your bot doesn't carry anything at all.)
 - Same quick-and-dirty fix for "Auto-storaging due to insufficient ___".
 - Don't try to statsAddAuto before the stat point info has been received.
+- Equipped arrows will now show how many of them are left.
 
 New features:
 - Better support for detecting dead players.
