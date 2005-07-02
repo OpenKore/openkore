@@ -1777,9 +1777,9 @@ sub AI {
 				$ai_seq_args[0]{'sentSell'} = 1;
 
 				if (defined $ai_seq_args[0]{'npc'}{'id'}) {
-					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "b");
+					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "e");
 				} else {
-					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b");
+					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "e");
 				}
 				last AUTOSELL;
 			}
@@ -1952,9 +1952,9 @@ sub AI {
 				$ai_seq_args[0]{'sentBuy'} = 1;
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
 				if (defined $ai_seq_args[0]{'npc'}{'id'}) {
-					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "b");
+					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "e");
 				} else {
-					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "b");
+					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "e");
 				}
 				last AUTOBUY;
 			}
