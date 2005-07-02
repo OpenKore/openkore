@@ -8344,9 +8344,10 @@ sub parseMsg {
 		my $ID = substr($msg, 3, 4);
 		if (!$pets{$ID} || !%{$pets{$ID}}) {
 			binAdd(\@petsID, $ID);
+			$pets{$ID} = {};
 			%{$pets{$ID}} = %{$monsters{$ID}};
-			$pets{$ID}{'name_given'} = "Unknown";
-			$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
+			$pets{$ID}{name_given} = "Unknown";
+			$pets{$ID}{binID} = binFind(\@petsID, $ID);
 		}
 		if ($monsters{$ID} && %{$monsters{$ID}}) {
 			binRemove(\@monstersID, $ID);
