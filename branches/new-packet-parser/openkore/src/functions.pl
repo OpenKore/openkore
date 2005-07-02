@@ -1239,6 +1239,7 @@ sub AI {
 			} elsif ( $args->{steps}[0] =~ /b/i ) {
 				sendGetStoreList(\$remote_socket, $args->{ID});
 			} elsif ( $args->{steps}[0] =~ /e/i ) {
+				$ai_v{npc_talk}{talk} = 'close';
 			}
 			shift @{$args->{steps}};
 		}
