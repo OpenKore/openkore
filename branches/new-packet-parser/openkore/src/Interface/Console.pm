@@ -45,7 +45,7 @@ sub new {
 		eval "use Interface::Console::Win32;";
 		die $@ if $@;
 		Modules::register("Interface::Console::Win32");
-		return new Interface::Console::Win32;
+		return new Interface::Console::Win32();
 	} else {
 		# Linux/Unix
 		my $mod = 'Interface::Console::Other';
@@ -53,7 +53,7 @@ sub new {
 		eval ${\$str};
 		die $@ if $@;
 		Modules::register("$mod");
-		return new Interface::Console::Other;
+		return new Interface::Console::Other();
 	}
 }
 
