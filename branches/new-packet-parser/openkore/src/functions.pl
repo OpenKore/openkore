@@ -6699,7 +6699,7 @@ sub parseMsg {
 		#
 		#my $name = getActorName($ID);
 		#if ($part == 3 || $part == 4 || $part == 5) {
-		#	my $actor = getActorHash($ID);
+		#	my $actor = Actor::get($ID);
 		#	$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
 		#	my $itemName = $items_lut{$itemID};
 		#	$itemName = 'nothing' if (!$itemName);
@@ -8266,7 +8266,7 @@ sub parseMsg {
 		my $flag = unpack("C1", substr($msg, 8, 1));
 
 		my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
-		my $actor = getActorHash($ID);
+		my $actor = Actor::get($ID);
 
 		my ($name, $is) = getActorNames($ID, 0, 'are', 'is');
 		if ($flag) {
@@ -9188,28 +9188,6 @@ sub monKilled {
 		$dmgpsec = 0
 	} else {
 		$dmgpsec = $totaldmg / $totalelasped;
-	}
-}
-
-# Resolves a player or monster ID into a hash
-sub getActorHash {
-	my $id = shift;
-	my $r_type = shift;
-
-	if ($id eq $accountID) {
-		$$r_type = 'self' if ($r_type);
-		return $char;
-	} elsif (my $player = $players{$id}) {
-		$$r_type = 'player' if ($r_type);
-		return $player;
-	} elsif (my $monster = $monsters{$id}) {
-		$$r_type = 'monster' if ($r_type);
-		return $monster;
-	} elsif (my $item = $items{$id}) {
-		$$r_type = 'item' if ($r_type);
-		return $item;
-	} else {
-		return undef;
 	}
 }
 
