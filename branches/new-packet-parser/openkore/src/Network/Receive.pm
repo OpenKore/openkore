@@ -40,6 +40,7 @@ sub new {
 		'007A' => ['change_to_constate5'],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
+		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_looks', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
@@ -250,6 +251,26 @@ sub character_creation_successful {
 sub character_looks {
 	my ($self, $args) = @_;
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+}
+
+sub deal_add {
+	my ($self, $args) = @_;
+
+	if ($args->{fail}) {
+		error "That person is overweight; you cannot trade.\n", "deal";
+		return;
+	}
+
+	return unless $args->{index} > 0;
+
+	my $invIndex = findIndex(\@{$char->{inventory}}, 'index', $args->{index});
+	my $item = $char->{inventory}[$invIndex];
+	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
+	$item->{amount} -= $currentDeal{lastItemAmount};
+	message "You added Item to Deal: $item->{name} x $currentDeal{lastItemAmount}\n", "deal";
+	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
+	$currentDeal{you_items}++;
+	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
 }
 
 sub memo_success {

@@ -6964,23 +6964,6 @@ sub parseMsg {
 			message "$currentDeal{name} added $amount z to Deal\n", "deal";
 		}
 
-	} elsif ($switch eq "00EA") {
-		my $index = unpack("S1", substr($msg, 2, 2));
-		my $fail = unpack("C1", substr($msg, 4, 1));
-		if ($fail) {
-			error "That person is overweight; you cannot trade.\n", "deal";
-		} elsif ($index > 0) {
-			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-			$currentDeal{'you'}{$chars[$config{'char'}]{'inventory'}[$invIndex]{'nameID'}}{'amount'} += $currentDeal{'lastItemAmount'};
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} -= $currentDeal{'lastItemAmount'};
-			message "You added Item to Deal: $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} x $currentDeal{'lastItemAmount'}\n", "deal";
-			$itemChange{$char->{inventory}[$invIndex]{name}} -= $currentDeal{lastItemAmount};
-			$currentDeal{you_items}++;
-			if ($chars[$config{'char'}]{'inventory'}[$invIndex]{'amount'} <= 0) {
-				delete $chars[$config{'char'}]{'inventory'}[$invIndex];
-			}
-		}
-
 	} elsif ($switch eq "00EC") {
 		my $type = unpack("C1", substr($msg, 2, 1));
 		if ($type == 1) {
