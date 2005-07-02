@@ -43,7 +43,7 @@ sub new {
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_looks', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
-		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4', [qw(skillID amount targetID sourceID)]],
+		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
 		'011C' => ['warp_portal_list', 'v1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
@@ -528,7 +528,7 @@ sub skill_used_no_damage {
 	}
 
 	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
-	my $skill = new Skills($args->{skillID});
+	my $skill = new Skills(id => $args->{skillID});
 	message "$source $verb ".$skill->name()." on ".$target->nameString($source)."$extra\n", $domain;
 
 	if ($AI && $config{'autoResponseOnHeal'}) {
