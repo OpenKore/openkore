@@ -1578,28 +1578,23 @@ sub setPartySkillTimer {
 # Sets the state, ailment, and "look" statuses of the object.
 # Does not include skillsstatus.txt items.
 sub setStatus {
-	my $ID = shift;
-	my $param1 = shift;
-	my $param2 = shift;
-	my $param3 = shift;
-	my $actorType;
-	my $actor = getActorHash($ID, \$actorType);
+	my ($ID, $param1, $param2, $param3) = @_;
 
-	return if (!defined $actor);
-	my $name = getActorName($ID);
-	my $verbosity = ($actorType eq 'self') ? 1 : 2;
-	my $are = ($actorType eq 'self') ? 'are' : 'is';
-	my $have = ($actorType eq 'self') ? 'have' : 'has';
+	my $actor = Actor::get($ID);
+
+	my $verbosity = $ID eq $accountID ? 1 : 2;
+	my $are = $actor->verb('are', 'is');
+	my $have = $actor->verb('have', 'has');
 
 	foreach (keys %skillsState) {
 		if ($param1 == $_) {
 			if (!$actor->{statuses}{$skillsState{$_}}) {
 				$actor->{statuses}{$skillsState{$_}} = 1;
-				message "$name $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+				message "$actor $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
 			}
 		} elsif ($actor->{statuses}{$skillsState{$_}}) {
 			delete $actor->{statuses}{$skillsState{$_}};
-			message "$name $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+			message "$actor $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
 		}
 	}
 
@@ -1607,11 +1602,11 @@ sub setStatus {
 		if (($param2 & $_) == $_) {
 			if (!$actor->{statuses}{$skillsAilments{$_}}) {
 				$actor->{statuses}{$skillsAilments{$_}} = 1;
-				message "$name $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+				message "$actor $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
 			}
 		} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
 			delete $actor->{statuses}{$skillsAilments{$_}};
-			message "$name $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+			message "$actor $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
 		}
 	}
 
@@ -1619,11 +1614,11 @@ sub setStatus {
 		if (($param3 & $_) == $_) {
 			if (!$actor->{statuses}{$skillsLooks{$_}}) {
 				$actor->{statuses}{$skillsLooks{$_}} = 1;
-				debug "$name $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+				debug "$actor $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 			}
 		} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
 			delete $actor->{statuses}{$skillsLooks{$_}};
-			debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+			debug "$actor $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 		}
 	}
 }
