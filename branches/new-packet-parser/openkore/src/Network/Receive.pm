@@ -29,25 +29,25 @@ sub new {
 	#Defines a list of Packet Handlers and decoding information
 	#'packetSwitch' => ['handler function','unpack string',[qw(argument names)]]
 	$self{packet_list} = {
-		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 v1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
-		'006A' => ['login_error', 'v1', [qw(type)]],
+		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
+		'006A' => ['login_error', 'C1', [qw(type)]],
 		'006B' => ['received_characters', '', [qw()]],
 		'006C' => ['login_error_game_login_server'],
-		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 v1 v1 v1 v1 v1 v1 v1', [qw(ID zenny str agi vit int dex luk slot)]],
+		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 C1 C1 C1 C1 C1 C1 C1', [qw(ID zenny str agi vit int dex luk slot)]],
 		'006E' => ['character_creation_failed'],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
 		'007A' => ['change_to_constate5'],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
-		'0081' => ['errors', 'v1', [qw(type)]],
-		'011E' => ['memo_success', 'v1', [qw(fail)]],
-		'0114' => ['skill_use', 'S1 a4 a4 V1 V1 V1 s1 S1 S1 v1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
-		'0119' => ['character_looks', 'a2 S1 S1 S1', [qw(ID param1 param2 param3)]],
-		'011A' => ['skill_used_no_damage', 'S1 S1 a4 a4', [qw(skillID amount targetID sourceID)]],
-		'011C' => ['warp_portal_list', 'S1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
-		'0121' => ['cart_info', 'S1 S1 V1 V1', [qw(items items_max weight weight_max)]],
-		'0124' => ['cart_item_added', 'S1 V1 S1 x v1 v1 v1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		'01DE' => ['skill_use', 'S1 a4 a4 V1 V1 V1 l1 S1 S1 v1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'0081' => ['errors', 'C1', [qw(type)]],
+		'011E' => ['memo_success', 'C1', [qw(fail)]],
+		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'0119' => ['character_looks', 'a2 v1 v1 v1', [qw(ID param1 param2 param3)]],
+		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4', [qw(skillID amount targetID sourceID)]],
+		'011C' => ['warp_portal_list', 'v1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
+		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
+		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 	};
 
 	bless \%self, $class;
