@@ -8852,7 +8852,7 @@ sub ai_getPlayerAggressives {
 
 	foreach (@monstersID) {
 		next if ($_ eq "");
-		if ($monsters{$_}{dmgToPlayer}{$ID} > 0 || $monsters{$_}{missedToPlayer}{$ID} > 0 || $monsters{$_}{dmgFromPlayer}{$ID} > 0 || $monsters{$_}{missFromPlayer}{$ID} > 0) {
+		if ($monsters{$_}{dmgToPlayer}{$ID} > 0 || $monsters{$_}{missedToPlayer}{$ID} > 0 || $monsters{$_}{dmgFromPlayer}{$ID} > 0 || $monsters{$_}{missedFromPlayer}{$ID} > 0) {
 			push @agMonsters, $_;
 		}
 	}
