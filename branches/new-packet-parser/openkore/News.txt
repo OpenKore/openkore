@@ -1,4 +1,20 @@
 ==================
+### 1.6.3
+==================
+
+Bug fixes:
+- 'i' command now displays equipped arrows under Equipment (Equipped).
+- Quick-and-dirty @{$char->{inventory}} > 0 fix for useSelf_item
+  dcOnEmpty. (Will fail if your bot doesn't carry anything at all.)
+- Same quick-and-dirty fix for "Auto-storaging due to insufficient ___".
+- Don't try to statsAddAuto before the stat point info has been received.
+- Equipped arrows will now show how many of them are left.
+
+New features:
+- Console::Unix interface no longer has "Press ENTER to continue"
+  prompt, since UNIX terminals generally don't close when openkore exits.
+
+==================
 ### 1.6.2
 ==================
 
@@ -62,12 +78,7 @@ Bug fixes:
 - Fix $char->{guild} autovivification causing the bot to think you're in
   a guild when you are not.
 - Fix avoidGM_namePattern, it should work now for nearby GMs.
-- 'i' command now displays equipped arrows under Equipment (Equipped).
-- Quick-and-dirty @{$char->{inventory}} > 0 fix for useSelf_item
-  dcOnEmpty. (Will fail if your bot doesn't carry anything at all.)
-- Same quick-and-dirty fix for "Auto-storaging due to insufficient ___".
-- Don't try to statsAddAuto before the stat point info has been received.
-- Equipped arrows will now show how many of them are left.
+- Wx interface will no longer show blank messages in the chat viewer.
 
 New features:
 - Better support for detecting dead players.
@@ -130,8 +141,6 @@ New features:
 - New message "Cannot pickup item (failure code #)" indicates when
   you can't pick up an item. (I think 2 always means overweight?)
 - New chat command "mag" for Magnificat.
-- Console::Unix interface no longer has "Press ENTER to continue"
-  prompt, since UNIX terminals generally don't close when openkore exits.
 
 New commands:
 - storage log
