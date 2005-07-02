@@ -285,19 +285,17 @@ port 5000
 master_version 1
 version 20
 
-[aeRO 2 Private Server]
-ip 66.196.34.89
+[aeRO2 Private Server]
+ip 66.196.43.82
 port 6900
 master_version 2
 version 20
-preLoginCode 1
 
 [powRO Private Server]
 ip 64.69.46.56
 port 6900
 master_version 2
 version 0
-preLoginCode 1
 serverType 3
 
 [SonicRO Private Server]
