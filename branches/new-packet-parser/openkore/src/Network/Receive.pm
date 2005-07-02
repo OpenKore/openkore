@@ -35,6 +35,8 @@ sub new {
 		'006C' => ['login_error_game_login_server'],
 		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 C1 C1 C1 C1 C1 C1 C1', [qw(ID zenny str agi vit int dex luk slot)]],
 		'006E' => ['character_creation_failed'],
+		'006F' => ['character_deletion_successful'],
+		'0070' => ['character_deletion_failed'],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
 		'007A' => ['change_to_constate5'],
@@ -42,11 +44,11 @@ sub new {
 		'0081' => ['errors', 'C1', [qw(type)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a4 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
-		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_looks', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
 		'011C' => ['warp_portal_list', 'v1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
+		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
@@ -242,6 +244,37 @@ sub character_creation_successful {
 
 	$conState = 3;
 	message "Character $char->{name} ($slot) created.\n", "info";
+	if (charSelectScreen() == 1) {
+		$conState = 3;
+		$firstLoginMap = 1;
+		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$sentWelcomeMessage = 1;
+	}
+}
+
+sub character_deletion_successful {
+	if (defined $AI::temp::delIndex) {
+		message "Character $chars[$AI::temp::delIndex]{name} ($AI::temp::delIndex) deleted.\n", "info";
+		delete $chars[$AI::temp::delIndex];
+		undef $AI::temp::delIndex;
+		for (my $i = 0; $i < @chars; $i++) {
+			delete $chars[$i] if ($chars[$i] && !scalar(keys %{$chars[$i]}))
+		}
+	} else {
+		message "Character deleted.\n", "info";
+	}
+
+	if (charSelectScreen() == 1) {
+		$conState = 3;
+		$firstLoginMap = 1;
+		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
+		$sentWelcomeMessage = 1;
+	}
+}
+
+sub character_deletion_failed {
+	error "Character cannot be deleted. Your e-mail address was probably wrong.\n";
+	undef $AI::temp::delIndex;
 	if (charSelectScreen() == 1) {
 		$conState = 3;
 		$firstLoginMap = 1;
