@@ -14,6 +14,9 @@ New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
   prompt, since UNIX terminals generally don't close when openkore exits.
 
+Internal:
+- Obsolete getActorHash() function removed (use Actor::get() instead).
+
 ==================
 ### 1.6.2
 ==================
