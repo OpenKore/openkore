@@ -38,8 +38,10 @@ sub new {
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 a16 a4 v1', [qw(charID mapName mapIP mapPort)]],
+		'0073' => ['map_loaded'],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
+		'0078' => ['character_appears', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
 		'007A' => ['change_to_constate5'],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
@@ -52,6 +54,7 @@ sub new {
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01D8' => ['character_appears', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 	};
@@ -212,6 +215,156 @@ sub cart_item_added {
 
 sub change_to_constate5 {
 	$conState = 5 if ($conState != 4 && $xkore);
+}
+
+sub character_appears {
+	# 0078: long ID, word speed, word state, word ailment, word look, word
+	# class, word hair, word weapon, word head_option_bottom, word shield,
+	# word head_option_top, word head_option_mid, word hair_color, word ?,
+	# word head_dir, long guild, long emblem, word manner, byte karma, byte
+	# sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word
+	# level
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	my %coords;
+	makeCoords(\%coords, substr($msg, 46, 3));
+	my $added;
+
+	if ($jobs_lut{$args->{type}}) {
+		my $player = $players{$args->{ID}};
+		if (!UNIVERSAL::isa($player, 'Actor')) {
+			$player = $players{$args->{ID}} = new Actor::Player();
+			binAdd(\@playersID, $args->{ID});
+			$player->{appear_time} = time;
+			$player->{ID} = $args->{ID};
+			$player->{jobID} = $args->{type};
+			$player->{sex} = $args->{sex};
+			$player->{nameID} = unpack("L1", $args->{ID});
+			$player->{binID} = binFind(\@playersID, $args->{ID});
+			$added = 1;
+		}
+
+		$player->{walk_speed} = $args->{walk_speed};
+		$player->{headgear}{low} = $args->{lowhead};
+		$player->{headgear}{top} = $args->{tophead};
+		$player->{headgear}{mid} = $args->{midhead};
+		$player->{hair_color} = $args->{hair_color};
+		$player->{look}{body} = $args->{body_dir};
+		$player->{look}{head} = $args->{head_dir};
+		$player->{weapon} = $args->{weapon};
+		$player->{shield} = $args->{shield};
+		$player->{guildID} = $args->{guildID};
+		if ($args->{act} == 1) {
+			$player->{dead} = 1;
+		} elsif ($args->{act} == 2) {
+			$player->{sitting} = 1;
+		}
+		$player->{lv} = $args->{lv};
+		$player->{pos} = {%coords};
+		$player->{pos_to} = {%coords};
+		my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+		debug "Player Exists: ".$player->name." ($player->{binID}) Level $args->{lv} $args->{sex}_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
+		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
+
+		objectAdded('player', $args->{ID}, $player) if ($added);
+
+		Plugins::callHook('player', {player => $player});
+
+	} elsif ($args->{type} >= 1000) {
+		if ($args->{pet}) {
+			if (!$pets{$args->{ID}}{$args->{ID}} || !%{$pets{$args->{ID}}{$args->{ID}}}) {
+				$pets{$args->{ID}}{$args->{ID}}{'appear_time'} = time;
+				my $display = ($monsters_lut{$args->{type}} ne "")
+						? $monsters_lut{$args->{type}}
+						: "Unknown ".$args->{type};
+				binAdd(\@petsID, $args->{ID});
+				$pets{$args->{ID}}{$args->{ID}}{'nameID'} = $args->{type};
+				$pets{$args->{ID}}{$args->{ID}}{'name'} = $display;
+				$pets{$args->{ID}}{$args->{ID}}{'name_given'} = "Unknown";
+				$pets{$args->{ID}}{$args->{ID}}{'binID'} = binFind(\@petsID, $args->{ID});
+				$added = 1;
+			}
+			$pets{$args->{ID}}{$args->{ID}}{'walk_speed'} = $args->{walk_speed};
+			%{$pets{$args->{ID}}{$args->{ID}}{'pos'}} = %coords;
+			%{$pets{$args->{ID}}{$args->{ID}}{'pos_to'}} = %coords;
+			debug "Pet Exists: $pets{$args->{ID}}{$args->{ID}}{'name'} ($pets{$args->{ID}}{$args->{ID}}{'binID'})\n", "parseMsg";
+
+			if ($monsters{$args->{ID}}) {
+				binRemove(\@monstersID, $args->{ID});
+				objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
+				delete $monsters{$args->{ID}};
+			}
+
+			objectAdded('pet', $args->{ID}, $pets{$args->{ID}}{$args->{ID}}) if ($added);
+
+		} else {
+			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
+				$monsters{$args->{ID}} = new Actor::Monster();
+				$monsters{$args->{ID}}{'appear_time'} = time;
+				my $display = ($monsters_lut{$args->{type}} ne "")
+						? $monsters_lut{$args->{type}}
+						: "Unknown ".$args->{type};
+				binAdd(\@monstersID, $args->{ID});
+				$monsters{$args->{ID}}{ID} = $args->{ID};
+				$monsters{$args->{ID}}{'nameID'} = $args->{type};
+				$monsters{$args->{ID}}{'name'} = $display;
+				$monsters{$args->{ID}}{'binID'} = binFind(\@monstersID, $args->{ID});
+				$added = 1;
+			}
+			$monsters{$args->{ID}}{'walk_speed'} = $args->{walk_speed};
+			%{$monsters{$args->{ID}}{'pos'}} = %coords;
+			%{$monsters{$args->{ID}}{'pos_to'}} = %coords;
+
+			debug "Monster Exists: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence", 1;
+
+
+			# Monster state
+			$args->{param1} = 0 if $args->{param1} == 5; # 5 has got something to do with the monster being undead
+			setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
+
+			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
+		}
+
+	} elsif ($args->{type} == 45) {
+		if (!$portals{$args->{ID}} || !%{$portals{$args->{ID}}}) {
+			$portals{$args->{ID}}{'appear_time'} = time;
+			my $nameID = unpack("L1", $args->{ID});
+			my $exists = portalExists($field{'name'}, \%coords);
+			my $display = ($exists ne "")
+				? "$portals_lut{$exists}{'source'}{'map'} -> " . getPortalDestName($exists)
+				: "Unknown ".$nameID;
+			binAdd(\@portalsID, $args->{ID});
+			$portals{$args->{ID}}{'source'}{'map'} = $field{'name'};
+			$portals{$args->{ID}}{'type'} = $args->{type};
+			$portals{$args->{ID}}{'nameID'} = $nameID;
+			$portals{$args->{ID}}{'name'} = $display;
+			$portals{$args->{ID}}{'binID'} = binFind(\@portalsID, $args->{ID});
+		}
+		%{$portals{$args->{ID}}{'pos'}} = %coords;
+		message "Portal Exists: $portals{$args->{ID}}{'name'} ($coords{x}, $coords{y}) - ($portals{$args->{ID}}{'binID'})\n", "portals", 1;
+
+	} elsif ($args->{type} < 1000) {
+		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
+			$npcs{$args->{ID}}{'appear_time'} = time;
+			my $nameID = unpack("L1", $args->{ID});
+			my $display = ($npcs_lut{$nameID} && %{$npcs_lut{$nameID}})
+				? $npcs_lut{$nameID}{'name'}
+				: "Unknown ".$nameID;
+			binAdd(\@npcsID, $args->{ID});
+			$npcs{$args->{ID}}{'type'} = $args->{type};
+			$npcs{$args->{ID}}{'nameID'} = $nameID;
+			$npcs{$args->{ID}}{'name'} = $display;
+			$npcs{$args->{ID}}{'binID'} = binFind(\@npcsID, $args->{ID});
+			$added = 1;
+		}
+		$npcs{$args->{ID}}{'pos'} = {%coords};
+		message "NPC Exists: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{pos}->{x}, $npcs{$args->{ID}}{pos}->{y}) (ID $npcs{$args->{ID}}{'nameID'}) - ($npcs{$args->{ID}}{'binID'})\n", undef, 1;
+
+		objectAdded('npc', $args->{ID}, $npcs{$args->{ID}}) if ($added);
+
+	} else {
+		debug "Unknown Exists: $args->{type} - ".unpack("L*",$args->{ID})."\n", "parseMsg";
+	}
 }
 
 sub character_creation_failed {
@@ -421,6 +574,32 @@ sub errors {
 	} else {
 		error("Unknown error $args->{type}\n", "connection");
 	}
+}
+
+sub map_loaded {
+	$conState = 5;
+	undef $conState_tries;
+	$char = $chars[$config{'char'}];
+
+	if ($xkore) {
+		$conState = 4;
+		message("Waiting for map to load...\n", "connection");
+		ai_clientSuspend(0, 10);
+		initMapChangeVars();
+	} else {
+		message("You are now in the game\n", "connection");
+		sendMapLoaded(\$remote_socket);
+		sendSync(\$remote_socket, 1);
+		debug "Sent initial sync\n", "connection";
+		$timeout{'ai'}{'time'} = time;
+	}
+
+	$char->{pos} = {};
+	makeCoords($char->{pos}, substr($msg, 6, 3));
+	$char->{pos_to} = {%{$char->{pos}}};
+	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
+
+	sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
 }
 
 sub memo_success {
