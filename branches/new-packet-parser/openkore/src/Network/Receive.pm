@@ -37,6 +37,7 @@ sub new {
 		'006E' => ['character_creation_failed'],
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
+		'0071' => ['received_character_ID_and_Map', 'a4 a16 a4 v1', [qw(charID mapName mapIP mapPort)]],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
 		'007A' => ['change_to_constate5'],
@@ -543,6 +544,40 @@ sub received_characters {
 	} else {
 		return;
 	}
+}
+
+sub received_character_ID_and_Map {
+	my ($self,$args) = @_;
+	message "Received character ID and Map IP from Game Login Server\n", "connection";
+	$conState = 4;
+	undef $conState_tries;
+	$charID = $args->{charID};
+	($args->{mapName}) = $args->{mapName} =~ /([\s\S]*?)\000/;
+
+	if ($xkore) {
+		undef $masterServer;
+		$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
+	}
+
+	($ai_v{temp}{map}) = $args->{mapName} =~ /([\s\S]*)\./;
+	if ($ai_v{temp}{map} ne $field{name}) {
+		getField($ai_v{temp}{map}, \%field);
+	}
+
+	$map_ip = makeIP($args->{mapIP});
+	$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
+	$map_port = $args->{mapPort};
+	message "----------Game Info----------\n", "connection";
+	message "Char ID: ".getHex($charID)." (".unpack("L1", $charID).")\n", "connection";
+	message "MAP Name: $args->{mapName}\n", "connection";
+	message "MAP IP: $map_ip\n", "connection";
+	message "MAP Port: $map_port\n", "connection";
+	message "-----------------------------\n", "connection";
+	($ai_v{temp}{map}) = $args->{mapName} =~ /([\s\S]*)\./;
+	checkAllowedMap($ai_v{temp}{map});
+	message("Closing connection to Game Login Server\n", "connection") if (!$xkore);
+	Network::disconnect(\$remote_socket) if (!$xkore);
+	main::initStatVars();
 }
 
 sub received_sync {
