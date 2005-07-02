@@ -30,6 +30,7 @@ use Commands;
 use Misc;
 use Plugins;
 use Utils;
+use ChatQueue;
 
 
 # use SelfLoader; 1;
@@ -143,7 +144,7 @@ sub initMapChangeVars {
 	$timeout{ai_buyAuto}{time} = time + 5;
 
 	AI::clear("attack", "route", "move");
-	ChatQueue::clear();
+	ChatQueue::clear;
 
 	initOtherVars();
 	Plugins::callHook('packet_mapChange');
@@ -864,7 +865,7 @@ sub AI {
 		return;
 	}
 
-	ChatQueue::processFirst();
+	ChatQueue::processFirst;
 
 
 	##### MISC #####
