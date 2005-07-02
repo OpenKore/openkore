@@ -31,7 +31,7 @@ sub new {
 	$self{packet_list} = {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'006A' => ['login_error', 'C1', [qw(type)]],
-		'006B' => ['received_characters', '', [qw()]],
+		'006B' => ['received_characters'],
 		'006C' => ['login_error_game_login_server'],
 		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 C1 C1 C1 C1 C1 C1 C1', [qw(ID zenny str agi vit int dex luk slot)]],
 		'006E' => ['character_creation_failed'],
@@ -49,6 +49,7 @@ sub new {
 		'011C' => ['warp_portal_list', 'v1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 	};
 
@@ -133,10 +134,10 @@ sub account_server_info {
 
 	message(swrite(
 		"---------Account Info-------------", [undef],
-		"Account ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("L1",$accountID), getHex($accountID)],
+		"Account ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$accountID), getHex($accountID)],
 		"Sex:        @<<<<<<<<<<<<<<<<<<<<<", [$sex_lut{$accountSex}],
-		"Session ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("L1",$sessionID), getHex($sessionID)],
-		"            @<<<<<<<<< @<<<<<<<<<<", [unpack("L1",$sessionID2), getHex($sessionID2)],
+		"Session ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$sessionID), getHex($sessionID)],
+		"            @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$sessionID2), getHex($sessionID2)],
 		"----------------------------------", [undef],
 	), 'connection');
 
@@ -338,6 +339,56 @@ sub deal_add {
 	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
 }
 
+sub errors {
+	my ($self, $args) = @_;
+
+	if ($conState == 5 &&
+	    ($config{dcOnDisconnect} > 1 ||
+		($config{dcOnDisconnect} && $args->{type} != 3))) {
+		message "Lost connection; exiting\n";
+		$quit = 1;
+	}
+
+	$conState = 1;
+	undef $conState_tries;
+
+	$timeout_ex{'master'}{'time'} = time;
+	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+	Network::disconnect(\$remote_socket);
+
+	if ($args->{type} == 0) {
+		error("Server shutting down\n", "connection");
+	} elsif ($args->{type} == 1) {
+		error("Error: Server is closed\n", "connection");
+	} elsif ($args->{type} == 2) {
+		if ($config{'dcOnDualLogin'} == 1) {
+			$interface->errorDialog("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
+				"$Settings::NAME will now immediately disconnect.");
+			$quit = 1;
+		} elsif ($config{'dcOnDualLogin'} >= 2) {
+			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
+			message "Disconnect for $config{'dcOnDualLogin'} seconds...\n", "connection";
+			$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
+		} else {
+			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
+		}
+
+	} elsif ($args->{type} == 3) {
+		error("Error: Out of sync with server\n", "connection");
+	} elsif ($args->{type} == 6) {
+		$interface->errorDialog("Critical Error: You must pay to play this account!");
+		$quit = 1 if (!$xkore);
+	} elsif ($args->{type} == 8) {
+		error("Error: The server still recognizes your last connection\n", "connection");
+	} elsif ($args->{type} == 10) {
+		error("Error: You are out of available time paid for\n", "connection");
+	} elsif ($args->{type} == 15) {
+		error("Error: You have been forced to disconnect by a GM\n", "connection");
+	} else {
+		error("Unknown error $args->{type}\n", "connection");
+	}
+}
+
 sub memo_success {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
@@ -407,56 +458,6 @@ sub login_error_game_login_server {
 	Network::disconnect(\$remote_socket);
 }
 
-sub errors {
-	my ($self, $args) = @_;
-
-	if ($conState == 5 &&
-	    ($config{dcOnDisconnect} > 1 ||
-		($config{dcOnDisconnect} && $args->{type} != 3))) {
-		message "Lost connection; exiting\n";
-		$quit = 1;
-	}
-
-	$conState = 1;
-	undef $conState_tries;
-
-	$timeout_ex{'master'}{'time'} = time;
-	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-	Network::disconnect(\$remote_socket);
-
-	if ($args->{type} == 0) {
-		error("Server shutting down\n", "connection");
-	} elsif ($args->{type} == 1) {
-		error("Error: Server is closed\n", "connection");
-	} elsif ($args->{type} == 2) {
-		if ($config{'dcOnDualLogin'} == 1) {
-			$interface->errorDialog("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
-				"$Settings::NAME will now immediately disconnect.");
-			$quit = 1;
-		} elsif ($config{'dcOnDualLogin'} >= 2) {
-			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
-			message "Disconnect for $config{'dcOnDualLogin'} seconds...\n", "connection";
-			$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
-		} else {
-			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
-		}
-
-	} elsif ($args->{type} == 3) {
-		error("Error: Out of sync with server\n", "connection");
-	} elsif ($args->{type} == 6) {
-		$interface->errorDialog("Critical Error: You must pay to play this account!");
-		$quit = 1 if (!$xkore);
-	} elsif ($args->{type} == 8) {
-		error("Error: The server still recognizes your last connection\n", "connection");
-	} elsif ($args->{type} == 10) {
-		error("Error: You are out of available time paid for\n", "connection");
-	} elsif ($args->{type} == 15) {
-		error("Error: You have been forced to disconnect by a GM\n", "connection");
-	} else {
-		error("Unknown error $args->{type}\n", "connection");
-	}
-}
-
 sub received_characters {
 	return if $conState == 5;
 	my ($self,$args) = @_;
@@ -481,10 +482,10 @@ sub received_characters {
 		$chars[$num]{'zenny'} = unpack("V1", substr($args->{RAW_MSG}, $i + 8, 4));
 		$chars[$num]{'exp_job'} = unpack("V1", substr($args->{RAW_MSG}, $i + 12, 4));
 		$chars[$num]{'lv_job'} = unpack("C1", substr($args->{RAW_MSG}, $i + 16, 1));
-		$chars[$num]{'hp'} = unpack("S1", substr($args->{RAW_MSG}, $i + 42, 2));
-		$chars[$num]{'hp_max'} = unpack("S1", substr($args->{RAW_MSG}, $i + 44, 2));
-		$chars[$num]{'sp'} = unpack("S1", substr($args->{RAW_MSG}, $i + 46, 2));
-		$chars[$num]{'sp_max'} = unpack("S1", substr($args->{RAW_MSG}, $i + 48, 2));
+		$chars[$num]{'hp'} = unpack("v1", substr($args->{RAW_MSG}, $i + 42, 2));
+		$chars[$num]{'hp_max'} = unpack("v1", substr($args->{RAW_MSG}, $i + 44, 2));
+		$chars[$num]{'sp'} = unpack("v1", substr($args->{RAW_MSG}, $i + 46, 2));
+		$chars[$num]{'sp_max'} = unpack("v1", substr($args->{RAW_MSG}, $i + 48, 2));
 		$chars[$num]{'jobID'} = unpack("C1", substr($args->{RAW_MSG}, $i + 52, 1));
 		$chars[$num]{'ID'} = substr($args->{RAW_MSG}, $i, 4);
 		$chars[$num]{'lv'} = unpack("C1", substr($args->{RAW_MSG}, $i + 58, 1));
@@ -515,6 +516,11 @@ sub received_sync {
     $conState = 5 if ($conState != 4 && $xkore);
     debug "Received Sync\n", 'parseMsg', 2;
     $timeout{'play'}{'time'} = time;
+}
+
+sub secure_login_key {
+	my ($self,$args) = @_;
+	$secureLoginKey = $args->{secure_key};
 }
 
 sub skill_use {
