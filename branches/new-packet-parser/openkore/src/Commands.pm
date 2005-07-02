@@ -1081,16 +1081,15 @@ sub cmdDeal {
 		my $ID = $playersID[$arg[0]];
 		my $player = Actor::get($ID);
 		message "Attempting to deal $player\n";
-		$outgoingDeal{'ID'} = $ID;
-		sendDeal(\$remote_socket, $ID);
+		deal($player);
 
 	} elsif ($arg[0] eq "no" && !%incomingDeal && !%outgoingDeal && !%currentDeal) {
 		error	"Error in function 'deal' (Deal a Player)\n" .
 			"There is no incoming/current deal to cancel\n";
 	} elsif ($arg[0] eq "no" && (%incomingDeal || %outgoingDeal)) {
-		sendDealCancel(\$remote_socket);
+		sendDealCancel();
 	} elsif ($arg[0] eq "no" && %currentDeal) {
-		sendCurrentDealCancel(\$remote_socket);
+		sendCurrentDealCancel();
 
 	} elsif ($arg[0] eq "" && !%incomingDeal && !%currentDeal) {
 		error	"Error in function 'deal' (Deal a Player)\n" .
@@ -1102,14 +1101,14 @@ sub cmdDeal {
 		error	"Error in function 'deal' (Deal a Player)\n" .
 			"You already accepted the final deal\n";
 	} elsif ($arg[0] eq "" && %incomingDeal) {
-		sendDealAccept(\$remote_socket);
+		sendDealAccept();
 	} elsif ($arg[0] eq "" && $currentDeal{'you_finalize'} && $currentDeal{'other_finalize'}) {
-		sendDealTrade(\$remote_socket);
+		sendDealTrade();
 		$currentDeal{'final'} = 1;
 		message("You accepted the final Deal\n", "deal");
 	} elsif ($arg[0] eq "" && %currentDeal) {
-		sendDealAddItem(\$remote_socket, 0, $currentDeal{'you_zenny'});
-		sendDealFinalize(\$remote_socket);
+		sendDealAddItem(0, $currentDeal{'you_zenny'});
+		sendDealFinalize();
 		
 	} elsif ($arg[0] eq "add" && !%currentDeal) {
 		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
@@ -1128,8 +1127,7 @@ sub cmdDeal {
 			if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'}) {
 				$arg[2] = $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'};
 			}
-			$currentDeal{'lastItemAmount'} = $arg[2];
-			sendDealAddItem(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg[1]]{'index'}, $arg[2]);
+			dealAddItem($char->{inventory}[$arg[1]], $arg[2]);
 		} else {
 			error("You can't add any more items to the deal\n", "deal");
 		}
@@ -2760,7 +2758,7 @@ sub cmdStorage_add {
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
-	sendStorageAdd(\$remote_socket, $item->{index}, $amount);
+	sendStorageAdd($item->{index}, $amount);
 }
 
 sub cmdStorage_get {
@@ -2790,7 +2788,7 @@ sub cmdStorage_get {
 }
 
 sub cmdStorage_close {
-	sendStorageClose(\$remote_socket);
+	sendStorageClose();
 }
 
 sub cmdStorage_log {

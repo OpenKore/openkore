@@ -62,7 +62,13 @@ our @EXPORT = (
 	# Inventory management
 	qw/inInventory
 	inventoryItemRemoved
-	storageGet/,
+	storageGet
+	cardName
+	itemName
+	itemNameSimple/,
+
+	# Logging
+	qw/itemLog/,
 
 	# OS specific
 	qw/launchURL/,
@@ -79,6 +85,8 @@ our @EXPORT = (
 	checkFollowMode
 	checkMonsterCleanness
 	createCharacter
+	deal
+	dealAddItem
 	drop
 	dumpData
 	getIDFromChat
@@ -582,6 +590,20 @@ sub objectIsMovingTowardsPlayer {
 
 #########################################
 #########################################
+### CATEGORY: Logging
+#########################################
+#########################################
+
+sub itemLog {
+	my $crud = shift;
+	return if (!$config{'itemHistory'});
+	open ITEMLOG, ">> $Settings::item_log_file";
+	print ITEMLOG "[".getFormattedDate(int(time))."] $crud";
+	close ITEMLOG;
+}
+
+#########################################
+#########################################
 ### CATEGORY: Operating system specific
 #########################################
 #########################################
@@ -1068,6 +1090,28 @@ sub createCharacter {
 }
 
 ##
+# deal($player)
+#
+# Sends $player a deal request.
+sub deal {
+	my ($player) = @_;
+
+	$outgoingDeal{ID} = $player->{ID};
+	sendDeal($player->{ID});
+}
+
+##
+# dealAddItem($item, $amount)
+#
+# Adds $amount of $item to the current deal.
+sub dealAddItem {
+	my ($item, $amount) = @_;
+
+	sendDealAddItem($item->{index}, $amount);
+	$currentDeal{lastItemAmount} = $amount;
+}
+
+##
 # drop(item, amount)
 #
 # Drops $amount of $item. If $amount is not specified or too large, it defaults
@@ -1216,6 +1260,85 @@ sub inventoryItemRemoved {
 	$itemChange{$item->{name}} -= $amount;
 }
 
+# Resolve the name of a card
+sub cardName {
+	my $cardID = shift;
+
+	# If card name is unknown, just return ?number
+	my $card = $items_lut{$cardID};
+	return "?$cardID" if !$card;
+	$card =~ s/ Card$//;
+	return $card;
+}
+
+# Resolve the name of a simple item
+sub itemNameSimple {
+	my $ID = shift;
+	return 'Unknown' unless defined($ID);
+	return 'None' unless $ID;
+	return $items_lut{$ID} || "Unknown #$ID";
+}
+
+##
+# itemName($item)
+#
+# Resolve the name of an item. $item should be a hash with these keys:
+# nameID  => integer index into %items_lut
+# cards   => 8-byte binary data as sent by server
+# upgrade => integer upgrade level
+sub itemName {
+	my $item = shift;
+
+	my $name = itemNameSimple($item->{nameID});
+
+	# Resolve item prefix/suffix (carded or forged)
+	my $prefix = "";
+	my $suffix = "";
+	my @cards;
+	my %cards;
+	for (my $i = 0; $i < 4; $i++) {
+		my $card = unpack("S1", substr($item->{cards}, $i*2, 2));
+		last unless $card;
+		push(@cards, $card);
+		($cards{$card} ||= 0) += 1;
+	}
+	if ($cards[0] == 254) {
+		# Alchemist-made potion
+		#
+		# Ignore the "cards" inside.
+	} elsif ($cards[0] == 255) {
+		# Forged weapon
+		#
+		# Display e.g. "VVS Earth" or "Fire"
+		my $elementID = $cards[1] % 10;
+		my $elementName = $elements_lut{$elementID};
+		my $starCrumbs = ($cards[1] >> 8) / 5;
+		$prefix .= ('V'x$starCrumbs)."S " if $starCrumbs;
+		$prefix .= "$elementName " if ($elementName ne "");
+	} elsif (@cards) {
+		# Carded item
+		#
+		# List cards in alphabetical order.
+		# Stack identical cards.
+		# e.g. "Hydra*2,Mummy*2", "Hydra*3,Mummy"
+		$suffix = join(',', map {
+			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
+		} sort { cardName($a) cmp cardName($b) } keys %cards);
+	}
+
+	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
+
+	my $display = "";
+	$display .= "BROKEN " if $item->{broken};
+	$display .= "+$item->{upgrade} " if $item->{upgrade};
+	$display .= $prefix if $prefix;
+	$display .= $name;
+	$display .= " [$suffix]" if $suffix;
+	$display .= " [$numSlots]" if $numSlots;
+
+	return $display;
+}
+
 ##
 # storageGet(items, max)
 # items: reference to an array of storage item hashes.
@@ -1237,7 +1360,7 @@ sub storageGet {
 		if (!defined($max) || $max > $item->{amount}) {
 			$max = $item->{amount};
 		}
-		sendStorageGet(\$remote_socket, $item->{index}, $max);
+		sendStorageGet($item->{index}, $max);
 
 	} else {
 		my %args;

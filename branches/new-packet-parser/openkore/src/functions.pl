@@ -1341,7 +1341,7 @@ sub AI {
 		if (!$amount || $amount > $item->{amount}) {
 			$amount = $item->{amount};
 		}
-		sendStorageGet(\$remote_socket, $item->{index}, $amount) if $storage{opened};
+		sendStorageGet($item->{index}, $amount) if $storage{opened};
 		AI::args->{time} = time;
 		AI::dequeue if !@{AI::args->{items}};
 	}
@@ -1611,7 +1611,7 @@ sub AI {
 						}
 						undef $args->{done};
 						AI::args->{lastIndex} = $item->{index};
-						sendStorageAdd(\$remote_socket, $item->{index}, $item->{amount} - $keep);
+						sendStorageAdd($item->{index}, $item->{amount} - $keep);
 						$timeout{ai_storageAuto}{time} = time;
 						AI::args->{nextItem} = $i + 1;
 						last AUTOSTORAGE;
@@ -1661,7 +1661,7 @@ sub AI {
 					# Try at most 3 times to get the item
 					if (($item{amount_get} > 0) && ($ai_seq_args[0]{retry} < 3)) {
 						message "Attempt to get $item{amount_get} x $item{name} from storage, retry: $ai_seq_args[0]{retry}\n", "storage", 1;
-						sendStorageGet(\$remote_socket, $item{storage}{index}, $item{amount_get});
+						sendStorageGet($item{storage}{index}, $item{amount_get});
 						$timeout{ai_storageAuto}{time} = time;
 						$ai_seq_args[0]{retry}++;
 						last AUTOSTORAGE;
@@ -1692,7 +1692,7 @@ sub AI {
 				}
 			}
 
-			sendStorageClose(\$remote_socket);
+			sendStorageClose();
 			if ($config{'relogAfterStorage'}) {
 				writeStorageLog(0);
 				relog();
@@ -5934,71 +5934,6 @@ sub parseMsg {
 
 		message "Item Appeared: $item->{name} ($item->{binID}) x $item->{amount} ($x, $y)\n", "drop", 1;
 
-	} elsif ($switch eq "00A0") {
-		$conState = 5 if ($conState != 4 && $xkore);
-
-		my $index = unpack("S1", substr($msg, 2, 2));
-		my $amount = unpack("S1", substr($msg, 4, 2));
-		my $fail = unpack("C1", substr($msg, 22, 1));
-
-		if (!$fail) {
-			my $item;
-			my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-			if (!defined $invIndex) {
-				# Add new item
-				$invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "nameID", "");
-				$item = $chars[$config{'char'}]{'inventory'}[$invIndex] = {};
-				$item->{index} = $index;
-				$item->{nameID} = unpack("S1", substr($msg, 6, 2));
-				$item->{type} = unpack("C1", substr($msg, 21, 1));
-				$item->{type_equip} = unpack("S1", substr($msg, 19, 2));
-				$item->{amount} = $amount;
-				$item->{identified} = unpack("C1", substr($msg, 8, 1));
-				$item->{broken} = unpack("C1", substr($msg, 9, 1));
-				$item->{upgrade} = unpack("C1", substr($msg, 10, 1));
-				$item->{cards} = substr($msg, 11, 8);
-				$item->{name} = itemName($item);
-			} else {
-				# Add stackable item
-				$item = $chars[$config{'char'}]{'inventory'}[$invIndex];
-				$item->{amount} += $amount;
-			}
-			$item->{invIndex} = $invIndex;
-
-			$itemChange{$item->{name}} += $amount;
-			my $disp = "Item added to inventory: ";
-			$disp .= $item->{name};
-			$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
-			message "$disp\n", "drop";
-
-			$disp .= " ($field{name})\n";
-			itemLog($disp);
-
-			Plugins::callHook('packet_item_added',{item => $item});
-
-			# TODO: move this stuff to AI()
-			if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
-				$ai_v{'npc_talk'}{'talk'} = 'buy';
-				$ai_v{'npc_talk'}{'time'} = time;
-			}
-
-			if ($AI) {
-				# Auto-drop item
-				$item = $char->{inventory}[$invIndex];
-				if ($itemsPickup{lc($item->{name})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
-					sendDrop(\$remote_socket, $item->{index}, $amount);
-					message "Auto-dropping item: $item->{name} ($invIndex) x $amount\n", "drop";
-				}
-			}
-
-		} elsif ($fail == 6) {
-			message "Can't loot item...wait...\n", "drop";
-		} elsif ($fail == 2) {
-			message "Cannot pickup item (inventory full)\n", "drop";
-		} else {
-			message "Cannot pickup item (failure code $fail)\n", "drop";
-		}
-
 	} elsif ($switch eq "00A1") {
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
@@ -8752,14 +8687,6 @@ sub shopLog {
 	close SHOPLOG;
 }
 
-sub itemLog {
-	my $crud = shift;
-	return if (!$config{'itemHistory'});
-	open ITEMLOG, ">> $Settings::item_log_file";
-	print ITEMLOG "[".getFormattedDate(int(time))."] $crud";
-	close ITEMLOG;
-}
-
 sub monsterLog {
 	my $crud = shift;
 	return if (!$config{'monsterLog'});
@@ -9262,85 +9189,6 @@ sub skillName {
 	my $skillID = shift;
 
 	return $skillsID_lut{$skillID} || "Unknown $skillID";
-}
-
-# Resolve the name of a card
-sub cardName {
-	my $cardID = shift;
-
-	# If card name is unknown, just return ?number
-	my $card = $items_lut{$cardID};
-	return "?$cardID" if !$card;
-	$card =~ s/ Card$//;
-	return $card;
-}
-
-# Resolve the name of a simple item
-sub itemNameSimple {
-	my $ID = shift;
-	return 'Unknown' unless defined($ID);
-	return 'None' unless $ID;
-	return $items_lut{$ID} || "Unknown #$ID";
-}
-
-##
-# itemName($item)
-#
-# Resolve the name of an item. $item should be a hash with these keys:
-# nameID  => integer index into %items_lut
-# cards   => 8-byte binary data as sent by server
-# upgrade => integer upgrade level
-sub itemName {
-	my $item = shift;
-
-	my $name = itemNameSimple($item->{nameID});
-
-	# Resolve item prefix/suffix (carded or forged)
-	my $prefix = "";
-	my $suffix = "";
-	my @cards;
-	my %cards;
-	for (my $i = 0; $i < 4; $i++) {
-		my $card = unpack("S1", substr($item->{cards}, $i*2, 2));
-		last unless $card;
-		push(@cards, $card);
-		($cards{$card} ||= 0) += 1;
-	}
-	if ($cards[0] == 254) {
-		# Alchemist-made potion
-		#
-		# Ignore the "cards" inside.
-	} elsif ($cards[0] == 255) {
-		# Forged weapon
-		#
-		# Display e.g. "VVS Earth" or "Fire"
-		my $elementID = $cards[1] % 10;
-		my $elementName = $elements_lut{$elementID};
-		my $starCrumbs = ($cards[1] >> 8) / 5;
-		$prefix .= ('V'x$starCrumbs)."S " if $starCrumbs;
-		$prefix .= "$elementName " if ($elementName ne "");
-	} elsif (@cards) {
-		# Carded item
-		#
-		# List cards in alphabetical order.
-		# Stack identical cards.
-		# e.g. "Hydra*2,Mummy*2", "Hydra*3,Mummy"
-		$suffix = join(',', map {
-			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
-		} sort { cardName($a) cmp cardName($b) } keys %cards);
-	}
-
-	my $numSlots = $itemSlotCount_lut{$item->{nameID}} if ($prefix eq "");
-
-	my $display = "";
-	$display .= "BROKEN " if $item->{broken};
-	$display .= "+$item->{upgrade} " if $item->{upgrade};
-	$display .= $prefix if $prefix;
-	$display .= $name;
-	$display .= " [$suffix]" if $suffix;
-	$display .= " [$numSlots]" if $numSlots;
-
-	return $display;
 }
 
 sub checkSelfCondition {
