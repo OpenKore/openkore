@@ -644,61 +644,53 @@ sub sendCloseShop {
 }
 
 sub sendCurrentDealCancel {
-	my $r_socket = shift;
 	my $msg = pack("C*", 0xED, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
 }
 
 sub sendDeal {
-	my $r_socket = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xE4, 0x00) . $ID;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendDealAccept {
-	my $r_socket = shift;
 	my $msg = pack("C*", 0xE6, 0x00, 0x03);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Accept Deal\n", "sendPacket", 2;
 }
 
 sub sendDealAddItem {
-	my $r_socket = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xE8, 0x00) . pack("S*", $index) . pack("L*",$amount);	
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Deal Add Item: $index, $amount\n", "sendPacket", 2;
 }
 
 sub sendDealCancel {
-	my $r_socket = shift;
 	my $msg = pack("C*", 0xE6, 0x00, 0x04);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Cancel Deal\n", "sendPacket", 2;
 }
 
 sub sendDealFinalize {
-	my $r_socket = shift;
 	my $msg = pack("C*", 0xEB, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Deal OK\n", "sendPacket", 2;
 }
 
 sub sendDealOK {
-	my $r_socket = shift;
 	my $msg = pack("C*", 0xEB, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Deal OK\n", "sendPacket", 2;
 }
 
 sub sendDealTrade {
-	my $r_socket = shift;
 	my $msg = pack("C*", 0xEF, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Deal Trade\n", "sendPacket", 2;
 }
 
@@ -1507,7 +1499,6 @@ sub sendSkillUseLoc {
 }
 
 sub sendStorageAdd {
-	my $r_socket = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg;
@@ -1532,12 +1523,11 @@ sub sendStorageAdd {
 			pack("C", 0x30) .
 			pack("L", $amount);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendStorageClose {
-	my $r_socket = shift;
 	my $msg;
 	if ($config{serverType} == 3) {
 		$msg = pack("C*", 0x93, 0x01);
@@ -1545,12 +1535,11 @@ sub sendStorageClose {
 		$msg = pack("C*", 0xF7, 0x00);
 	}
 	
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
 sub sendStorageGet {
-	my $r_socket = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg;
@@ -1573,7 +1562,7 @@ sub sendStorageGet {
 			pack("C*", 0x35, 0x34, 0x3D, 0x67) .
 			pack("L*", $amount);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
 

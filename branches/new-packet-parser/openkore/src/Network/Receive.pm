@@ -40,6 +40,7 @@ sub new {
 		'007A' => ['change_to_constate5'],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
+		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a4 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -251,6 +252,70 @@ sub character_creation_successful {
 sub character_looks {
 	my ($self, $args) = @_;
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+}
+
+sub inventory_item_added {
+	my ($self, $args) = @_;
+
+	$conState = 5 if ($conState != 4 && $xkore);
+
+	my ($index, $amount, $fail) = ($args->{index}, $args->{amount}, $args->{fail});
+
+	if (!$fail) {
+		my $item;
+		my $invIndex = findIndex(\@{$char->{inventory}}, "index", $index);
+		if (!defined $invIndex) {
+			# Add new item
+			$invIndex = findIndex(\@{$char->{inventory}}, "nameID", "");
+			$item = $char->{inventory}[$invIndex] = {};
+			$item->{index} = $index;
+			$item->{nameID} = $args->{nameID};
+			$item->{type} = $args->{type};
+			$item->{type_equip} = $args->{type_equip};
+			$item->{amount} = $amount;
+			$item->{identified} = $args->{identified};
+			$item->{broken} = $args->{broken};
+			$item->{upgrade} = $args->{upgrade};
+			$item->{cards} = $args->{cards};
+			$item->{name} = itemName($item);
+		} else {
+			# Add stackable item
+			$item = $char->{inventory}[$invIndex];
+			$item->{amount} += $amount;
+		}
+		$item->{invIndex} = $invIndex;
+
+		$itemChange{$item->{name}} += $amount;
+		my $disp = "Item added to inventory: ";
+		$disp .= $item->{name};
+		$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
+		message "$disp\n", "drop";
+
+		$disp .= " ($field{name})\n";
+		itemLog($disp);
+
+		# TODO: move this stuff to AI()
+		if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
+			$ai_v{'npc_talk'}{'talk'} = 'buy';
+			$ai_v{'npc_talk'}{'time'} = time;
+		}
+
+		if ($AI) {
+			# Auto-drop item
+			$item = $char->{inventory}[$invIndex];
+			if ($itemsPickup{lc($item->{name})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
+				sendDrop(\$remote_socket, $item->{index}, $amount);
+				message "Auto-dropping item: $item->{name} ($invIndex) x $amount\n", "drop";
+			}
+		}
+
+	} elsif ($fail == 6) {
+		message "Can't loot item...wait...\n", "drop";
+	} elsif ($fail == 2) {
+		message "Cannot pickup item (inventory full)\n", "drop";
+	} else {
+		message "Cannot pickup item (failure code $fail)\n", "drop";
+	}
 }
 
 sub deal_add {
