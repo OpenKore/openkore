@@ -2,6 +2,9 @@
 ### 1.6.3
 ==================
 
+*** INCOMPATIBLE CHANGES ***:
+- NPC IDs are no longer supported, you must use the location syntax.
+
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
 - Quick-and-dirty @{$char->{inventory}} > 0 fix for useSelf_item
@@ -16,6 +19,7 @@ New features:
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
+- The format of $npcs_lut has changed, IDs are completely abandoned.
 
 ==================
 ### 1.6.2

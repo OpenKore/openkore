@@ -2713,33 +2713,23 @@ sub findPartyUserID {
 	return undef;
 }
 
-# fill in a hash of NPC information either base on ID or location ("map x y")
+# fill in a hash of NPC information either based on location ("map x y")
 sub getNPCInfo {
 	my $id = shift;
 	my $return_hash = shift;
 
 	undef %{$return_hash};
 
-	if ($id =~ /^\d+$/) {
-		if ($npcs_lut{$id} && %{$npcs_lut{$id}}) {
-			$$return_hash{id} = $id;
-			$$return_hash{map} = $npcs_lut{$id}{map};
-			$$return_hash{pos}{x} = $npcs_lut{$id}{pos}{x};
-			$$return_hash{pos}{y} = $npcs_lut{$id}{pos}{y};
-		}
-	}
-	else {
-		my ($map, $x, $y) = split(/ +/, $id, 3);
+	my ($map, $x, $y) = split(/ +/, $id, 3);
 
-		$$return_hash{map} = $map;
-		$$return_hash{pos}{x} = $x;
-		$$return_hash{pos}{y} = $y;
-	}
+	$$return_hash{map} = $map;
+	$$return_hash{pos}{x} = $x;
+	$$return_hash{pos}{y} = $y;
 
 	if (defined($$return_hash{map}) && defined($$return_hash{pos}{x}) && defined($$return_hash{pos}{y})) {
 		$$return_hash{ok} = 1;
 	} else {
-		error "Incomplete NPC info or ID not found in npcs.txt\n";
+		error "Incomplete NPC info found in npcs.txt\n";
 	}
 }
 
