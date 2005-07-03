@@ -1,11 +1,15 @@
 package Network::Receive;
 
 use strict;
+use Time::HiRes qw(time usleep);
 
 use Globals;
 use Actor;
 use Actor::You;
-use Time::HiRes qw(time usleep);
+use Actor::Player;
+use Actor::Monster;
+use Actor::Party;
+use Actor::Unknown;
 use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
