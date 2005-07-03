@@ -41,15 +41,15 @@ use Tk;
 use Tk::ROText;
 use Tk::BrowseEntry;
 
-# parse panelBottom_domains into a hash
-my %panelBottom_domains;
-$sys{panelBottom_domains} ||= "publicchat, pm, guildchat, partychat, pm/sent, list, info, selfchat, schat, error, warning";
-my @array = split / *, */, $sys{panelBottom_domains};
+# parse panelTwo_domains into a hash
+my %panelTwo_domains;
+$sys{panelTwo_domains} ||= "publicchat, pm, guildchat, partychat, pm/sent, list, info, selfchat, schat, error, warning";
+my @array = split / *, */, $sys{panelTwo_domains};
 foreach (@array) {
 	s/^\s+//;
 	s/\s+$//;
 	s/\s+/ /g;
-	$panelBottom_domains{$_} = 1;
+	$panelTwo_domains{$_} = 1;
 }
 
 # main interface functions
@@ -63,9 +63,9 @@ sub new {
 		default_font => "MS Sans Serif",
 		input_type => "Command",
 		input_pm => undef,
-		total_lines => {"panelTop" => 0, "panelBottom" => 0},
-		last_line_end => {"panelTop" => 0, "panelBottom" => 0},
-		lineLimit => {"panelTop" => $sys{panelTop_lineLimit} || 900, "panelBottom" => $sys{panelTop_lineLimit} || 100},
+		total_lines => {"panelOne" => 0, "panelTwo" => 0},
+		last_line_end => {"panelOne" => 0, "panelTwo" => 0},
+		lineLimit => {"panelOne" => $sys{panelOne_lineLimit} || 900, "panelTwo" => $sys{panelOne_lineLimit} || 100},
 		mapDir => 'map'
 	};
 
@@ -135,10 +135,10 @@ sub writeOutput {
 	my $panel;
 	# FIXME: you can put message types like error and warning in the list because I wanted to see them
 	# FIXME: a default list of domains should be given to the user if they didn't configure any
-	if ($panelBottom_domains{$domain} || ($domain eq 'console' && $panelBottom_domains{$type})) {
-		$panel = "panelBottom";
+	if ($panelTwo_domains{$domain} || ($domain eq 'console' && $panelTwo_domains{$type})) {
+		$panel = "panelTwo";
 	} else {
-		$panel = "panelTop";
+		$panel = "panelOne";
 	}
 
 	my $scroll = 0;
@@ -249,55 +249,67 @@ sub initTk {
 
 	# subclasses of main window
 
-	$self->{panelTop} = $self->{mw}->Scrolled('ROText',
-		-bg=>'black',
-		-fg=>'grey',
-		-scrollbars => 'e',
-		-height => $sys{panelTop_Height} || 8,
-		-wrap => 'word',
-		-insertontime => 0,
-		-background => 'black',
-		-foreground => 'grey',
-		-font=>[ -family => $panelFont ,-size=>10,],
-		-relief => 'sunken',
-	)->pack(
-		-expand => 1,
-		-fill => 'both',
-		-side => 'top',
+	# status frame
+
+	$self->{status_frame} = $self->{mw}->Frame()->pack(
+		-side => 'bottom',
+		-expand => 0,
+		-fill => 'x',
 	);
 
-	$self->{panelBottom} = $self->{mw}->Scrolled('ROText',
-		-bg=>'black',
-		-fg=>'grey',
-		-scrollbars => 'e',
-		-height => $sys{panelBottom_Height} || 4,
-		-wrap => 'word',
-		-insertontime => 0,
-		-background => 'black',
-		-foreground => 'grey',
-		-font=>[ -family => $panelFont ,-size=>10,],
+	#------ subclass in status frame
+
+	$self->{status_gen} = $self->{status_frame}->Label(
+		-anchor => 'w',
+		-text => 'Ready',
+		-font => [$sbarFont, 8],
+		-bd=>0,
 		-relief => 'sunken',
 	)->pack(
+		-side => 'left',
 		-expand => 1,
-		-fill => 'both',
-		-side => 'top',
+		-fill => 'x',
 	);
 
-	# button frame, removed
-	#$self->{btn_frame} = $self->{mw}->Frame(
-	#	#-bg=>'black'
-	#)->pack(
-	#	-side => 'right',
-	#	-expand => 0,
-	#	-fill => 'y',
-	#);
+	$self->{status_ai} = $self->{status_frame}->Label(
+		-text => 'Ai - Status',
+		-font => [$sbarFont, 8],
+		-width => 25,
+		-relief => 'ridge',
+	)->pack(
+		-side => 'left',
+		-expand => 0,
+		-fill => 'x',
+	);
+
+	$self->{status_posx} = $self->{status_frame}->Label(
+		-text => '0',
+		-font => [$sbarFont, 8],
+		-width => 4,
+		-relief => 'ridge',
+	)->pack(
+		-side => 'left',
+		-expand => 0,
+		-fill => 'x',
+	);
+
+	$self->{status_posy} = $self->{status_frame}->Label(
+		-text => '0',
+		-font => [$sbarFont, 8],
+		-width => 4,
+		-relief => 'ridge',
+	)->pack(
+		-side => 'left',
+		-expand => 0,
+		-fill => 'x',
+	);
 
 	# input frame
 
 	$self->{input_frame} = $self->{mw}->Frame(
 		-bg=>'black'
 	)->pack(
-		-side => 'top',
+		-side => 'bottom',
 		-expand => 0,
 		-fill => 'x',
 	);
@@ -350,60 +362,50 @@ sub initTk {
 	);
 	$self->{sinput}->insert("end", qw(Command Public Party Guild));
 
-	# status frame
-
-	$self->{status_frame} = $self->{mw}->Frame()->pack(
-		-side => 'top',
-		-expand => 0,
-		-fill => 'x',
-	);
-
-	#------ subclass in status frame
-
-	$self->{status_gen} = $self->{status_frame}->Label(
-		-anchor => 'w',
-		-text => 'Ready',
-		-font => [$sbarFont, 8],
-		-bd=>0,
+	### panelOne and panelTwo
+	
+	$self->{panelOne} = $self->{mw}->Scrolled('ROText',
+		-bg=>'black',
+		-fg=>'grey',
+		-scrollbars => 'e',
+		-height => $sys{panelOne_height} || 8,
+		-wrap => 'word',
+		-insertontime => 0,
+		-background => 'black',
+		-foreground => 'grey',
+		-font=>[ -family => $panelFont ,-size=>10,],
 		-relief => 'sunken',
 	)->pack(
-		-side => 'left',
 		-expand => 1,
-		-fill => 'x',
+		-fill => 'both',
+		-side => $sys{panelOne_side} || 'top',
 	);
 
-	$self->{status_ai} = $self->{status_frame}->Label(
-		-text => 'Ai - Status',
-		-font => [$sbarFont, 8],
-		-width => 25,
-		-relief => 'ridge',
+	$self->{panelTwo} = $self->{mw}->Scrolled('ROText',
+		-bg=>'black',
+		-fg=>'grey',
+		-scrollbars => 'e',
+		-height => $sys{panelTwo_height} || 4,
+		-wrap => 'word',
+		-insertontime => 0,
+		-background => 'black',
+		-foreground => 'grey',
+		-font=>[ -family => $panelFont ,-size=>10,],
+		-relief => 'sunken',
 	)->pack(
-		-side => 'left',
-		-expand => 0,
-		-fill => 'x',
+		-expand => 1,
+		-fill => 'both',
+		-side => $sys{panelTwo_side} || 'top',
 	);
 
-	$self->{status_posx} = $self->{status_frame}->Label(
-		-text => '0',
-		-font => [$sbarFont, 8],
-		-width => 4,
-		-relief => 'ridge',
-	)->pack(
-		-side => 'left',
-		-expand => 0,
-		-fill => 'x',
-	);
-
-	$self->{status_posy} = $self->{status_frame}->Label(
-		-text => '0',
-		-font => [$sbarFont, 8],
-		-width => 4,
-		-relief => 'ridge',
-	)->pack(
-		-side => 'left',
-		-expand => 0,
-		-fill => 'x',
-	);
+	# button frame, removed
+	#$self->{btn_frame} = $self->{mw}->Frame(
+	#	#-bg=>'black'
+	#)->pack(
+	#	-side => 'right',
+	#	-expand => 0,
+	#	-fill => 'y',
+	#);
 
 	### Binding ###
 	$self->{mw}->bind('all', '<Alt-p>' => 		[\&OnExit, $self]);
@@ -435,9 +437,9 @@ sub initTk {
 	$self->{input}->focus();
 
 	if ($buildType == 0) {
-		$self->{input}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k'), "panelBottom"]);
-		$self->{panelBottom}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k'), "panelBottom"]);
-		$self->{panelTop}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k'), "panelTop"]);
+		$self->{input}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k'), "panelTwo"]);
+		$self->{panelTwo}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k'), "panelTwo"]);
+		$self->{panelOne}->bind('<MouseWheel>' => [\&w32mWheel, $self, Ev('k'), "panelOne"]);
 
 		my $console;
 		eval 'use Win32::Console; $console = new Win32::Console(STD_OUTPUT_HANDLE);';
@@ -611,12 +613,12 @@ sub change_fontWeight {
 	my $self = shift;
 	my $panelFont = $sys{panelFont} || 'Verdana';
 	if ($self->{is_bold}) {
-		$self->{panelTop}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'bold']);
-		$self->{panelBottom}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'bold']);
+		$self->{panelOne}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'bold']);
+		$self->{panelTwo}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'bold']);
 		$self->{input}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'bold']);
 	}else{
-		$self->{panelTop}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'normal']);
-		$self->{panelBottom}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'normal']);
+		$self->{panelOne}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'normal']);
+		$self->{panelTwo}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'normal']);
 		$self->{input}->configure(-font=>[-family => $panelFont ,-size=>10,-weight=>'normal']);
 	}
 }
@@ -662,6 +664,10 @@ sub OpenMap {
 			,-outline=>'#ff0000');
 		$self->{map}->bind('<1>', [\&dblchk, $self, Ev('x') , Ev('y')]);
 		$self->{map}->bind('<Motion>', [\&pointchk, $self, Ev('x') , Ev('y')]); 
+	} else {
+		undef $self->{obj};
+		$self->{map}->destroy();
+		delete $self->{map};
 	}
 }
 
@@ -811,8 +817,8 @@ sub resetColors {
 	return unless $colors_loaded;
 	my %gdefault = (-foreground => 'grey', -background => 'black');
 	eval {
-		$self->{panelTop}->configure(%gdefault);
-		$self->{panelBottom}->configure(%gdefault);
+		$self->{panelOne}->configure(%gdefault);
+		$self->{panelTwo}->configure(%gdefault);
 		$self->{input}->configure(%gdefault);
 		$self->{pminput}->configure(%gdefault);
 		$self->{sinput}->configure(%gdefault);
@@ -835,8 +841,8 @@ sub resetColors {
 		}
 		eval {
 			# FIXME: loading colors for both panels is pointless
-			$self->{panelTop}->tagConfigure($type, %tdefault);
-			$self->{panelBottom}->tagConfigure($type, %tdefault);
+			$self->{panelOne}->tagConfigure($type, %tdefault);
+			$self->{panelTwo}->tagConfigure($type, %tdefault);
 		};
 		if ($@) {
 			if ($@ =~ /unknown color name "(.*)" at/) {
@@ -854,8 +860,8 @@ sub resetColors {
 			}
 			eval {
 				# FIXME: loading colors for both panels is pointless
-				$self->{panelTop}->tagConfigure("$type.$domain", %color);
-				$self->{panelBottom}->tagConfigure("$type.$domain", %color);
+				$self->{panelOne}->tagConfigure("$type.$domain", %color);
+				$self->{panelTwo}->tagConfigure("$type.$domain", %color);
 			};
 			if ($@) {
 				if ($@ =~ /unknown color name "(.*)" at/) {
@@ -869,8 +875,8 @@ sub resetColors {
 
 
 	# FIXME: find a better spot to fix the initial window scrolling
-	$self->{panelTop}->see('end');
-	$self->{panelBottom}->see('end');
+	$self->{panelOne}->see('end');
+	$self->{panelTwo}->see('end');
 }
 
 # packet parsing hook
