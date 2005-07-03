@@ -50,7 +50,7 @@ sub new {
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
-		'0119' => ['character_looks', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
+		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
 		'011C' => ['warp_portal_list', 'v1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
@@ -443,7 +443,7 @@ sub character_deletion_failed {
 	}
 }
 
-sub character_looks {
+sub character_status {
 	my ($self, $args) = @_;
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 }
