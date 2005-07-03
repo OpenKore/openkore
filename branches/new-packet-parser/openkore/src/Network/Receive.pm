@@ -38,11 +38,11 @@ sub new {
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
 		'0071' => ['received_character_ID_and_Map', 'a4 a16 a4 v1', [qw(charID mapName mapIP mapPort)]],
-		'0073' => ['map_loaded'],
+		'0073' => ['map_loaded','x4 a3',[qw(coords)]],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
-		#'0078' => ['character_exists', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
-		#'0079' => ['player_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
+		'0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color head_dir guildID sex coords act lv)]],
+		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
@@ -57,8 +57,8 @@ sub new {
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		#'01D8' => ['character_exists', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
-		#'01D9' => ['player_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
+		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
+		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 	};
@@ -189,39 +189,51 @@ sub account_server_info {
 	}
 }
 
-sub cart_info {
-	my ($self, $args) = @_;
-
-	$cart{items} = $args->{items};
-	$cart{items_max} = $args->{items_max};
-	$cart{weight} = int($args->{weight} / 10);
-	$cart{weight_max} = int($args->{weight_max} / 10);
-}
-
-sub cart_item_added {
-	my ($self, $args) = @_;
-
-	my $item = $cart{inventory}[$args->{index}] ||= {};
-	if ($item->{amount}) {
-		$item->{amount} += $args->{amount};
-	} else {
-		$item->{nameID} = $args->{ID};
-		$item->{amount} = $args->{amount};
-		$item->{identified} = $args->{identified};
-		$item->{broken} = $args->{broken};
-		$item->{upgrade} = $args->{upgrade};
-		$item->{cards} = $args->{cards};
-		$item->{name} = itemName($item);
-	}
-	message "Cart Item Added: $item->{name} ($args->{index}) x $args->{amount}\n";
-	$itemChange{$item->{name}} += $args->{amount};
-}
-
-sub change_to_constate5 {
+sub actor_connected {
+	my ($self,$args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
+	my %coords;
+	makeCoords(\%coords, $args->{coords});
+
+	if ($jobs_lut{$args->{type}}) {
+		my $added;
+		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
+			$players{$args->{ID}} = new Actor::Player;
+			$players{$args->{ID}}{'appear_time'} = time;
+			binAdd(\@playersID, $args->{ID});
+			$players{$args->{ID}}{'ID'} = $args->{ID};
+			$players{$args->{ID}}{'jobID'} = $args->{type};
+			$players{$args->{ID}}{'sex'} = $args->{sex};
+			$players{$args->{ID}}{'nameID'} = unpack("L1", $args->{ID});
+			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
+			$added = 1;
+		}
+
+		$players{$args->{ID}}{weapon} = $args->{weapon};
+		$players{$args->{ID}}{shield} = $args->{shield};
+		$players{$args->{ID}}{walk_speed} = $args->{walk_speed};
+		$players{$args->{ID}}{headgear}{low} = $args->{lowhead};
+		$players{$args->{ID}}{headgear}{top} = $args->{tophead};
+		$players{$args->{ID}}{headgear}{mid} = $args->{midhead};
+		$players{$args->{ID}}{hair_color} = $args->{hair_color};
+		$players{$args->{ID}}{guildID} = $args->{guildID};
+		$players{$args->{ID}}{look}{body} = 0;
+		$players{$args->{ID}}{look}{head} = 0;
+		$players{$args->{ID}}{lv} = $args->{lv};
+		$players{$args->{ID}}{pos} = {%coords};
+		$players{$args->{ID}}{pos_to} = {%coords};
+		my $domain = existsInList($config{friendlyAID}, unpack("L1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+		debug "Player Connected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", $domain;
+		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+
+		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
+
+	} else {
+		debug "Unknown Connected: $args->{type} - ", "parseMsg";
+	}
 }
 
-sub character_appears {
+sub actor_exists {
 	# 0078: long ID, word speed, word state, word ailment, word look, word
 	# class, word hair, word weapon, word head_option_bottom, word shield,
 	# word head_option_top, word head_option_mid, word hair_color, word ?,
@@ -232,6 +244,7 @@ sub character_appears {
 	$conState = 5 if ($conState != 4 && $xkore);
 	my %coords;
 	makeCoords(\%coords, substr($msg, 46, 3));
+	$args->{body_dir} = unpack("v", substr($args->{RAW_MSG}, 48, 1)) % 8;
 	my $added;
 
 	if ($jobs_lut{$args->{type}}) {
@@ -371,6 +384,38 @@ sub character_appears {
 	} else {
 		debug "Unknown Exists: $args->{type} - ".unpack("L*",$args->{ID})."\n", "parseMsg";
 	}
+}
+
+sub cart_info {
+	my ($self, $args) = @_;
+
+	$cart{items} = $args->{items};
+	$cart{items_max} = $args->{items_max};
+	$cart{weight} = int($args->{weight} / 10);
+	$cart{weight_max} = int($args->{weight_max} / 10);
+}
+
+sub cart_item_added {
+	my ($self, $args) = @_;
+
+	my $item = $cart{inventory}[$args->{index}] ||= {};
+	if ($item->{amount}) {
+		$item->{amount} += $args->{amount};
+	} else {
+		$item->{nameID} = $args->{ID};
+		$item->{amount} = $args->{amount};
+		$item->{identified} = $args->{identified};
+		$item->{broken} = $args->{broken};
+		$item->{upgrade} = $args->{upgrade};
+		$item->{cards} = $args->{cards};
+		$item->{name} = itemName($item);
+	}
+	message "Cart Item Added: $item->{name} ($args->{index}) x $args->{amount}\n";
+	$itemChange{$item->{name}} += $args->{amount};
+}
+
+sub change_to_constate5 {
+	$conState = 5 if ($conState != 4 && $xkore);
 }
 
 sub character_creation_failed {
@@ -583,6 +628,7 @@ sub errors {
 }
 
 sub map_loaded {
+	my ($self,$args) = @_;
 	$conState = 5;
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
@@ -601,7 +647,7 @@ sub map_loaded {
 	}
 
 	$char->{pos} = {};
-	makeCoords($char->{pos}, substr($msg, 6, 3));
+	makeCoords($char->{pos}, $args->{coords});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
 
