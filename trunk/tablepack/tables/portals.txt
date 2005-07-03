@@ -3,6 +3,7 @@ alberta 195 151 alb2trea 62 69 0 c c r0
 alb2trea 39 50 alberta 192 169 0 r0
 alberta 247 122 tur_dun01 157 39 10000 c r1 c r0 c c c 
 alberta 245 45 lou_fild01 190 101 10000 c r1 c c r0
+alberta 247 42 ayothaya 149 71 10000 c r1 c c r0 n
 lou_fild01 190 100 alberta 235 45 0 c r0
 tur_dun01 165 29 alberta 241 115 0 c r0 c c
 alberta 245 93 amatsu 197 83 10000 c r1 c c c r0 n
@@ -14,6 +15,7 @@ izlu2dun 108 27 izlude 176 182 0 c r0
 prt_fild05 270 212 prt_sewb1 135 248 0 c r0
 aldebaran 223 222 xmas_fild01 78 68 0 c r1 c c n
 moc_fild12 35 303 cmd_fild08 331 319 0 c r0 n
+ayothaya 152 68 alberta 247 42 0 c r0 n
 
 alb_ship 26 166 alberta 170 170
 alb_ship 37 174 alb_ship 68 99
@@ -220,6 +222,14 @@ anthell01 35 267 moc_fild04 219 327
 anthell01 253 32 anthell02 32 267
 anthell02 32 267 anthell01 253 32
 anthell02 171 169 moc_fild15 258 253
+ayothaya 276 176 ayo_fild01 32 240
+ayothaya 202 161 ayo_in01 31 108
+ayothaya 62 104 ayo_in01 191 183
+ayothaya 208 283 ayo_in02 100 152
+ayo_fild01 32 240 ayothaya 273 176
+ayo_in01 31 111 ayothaya 202 161
+ayo_in01 194 183 ayothaya 62 104
+ayo_in02 100 148 ayothaya 208 283
 beach_dun 276 67 comodo 24 214
 beach_dun2 154 13 comodo 176 358
 beach_dun2 258 244 um_fild01 31 274
