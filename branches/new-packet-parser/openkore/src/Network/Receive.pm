@@ -44,6 +44,7 @@ sub new {
 		'0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
+		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 x4 v1 v1 v1 v1 x4 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
@@ -59,6 +60,7 @@ sub new {
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
+		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 	};
@@ -383,6 +385,115 @@ sub actor_exists {
 
 	} else {
 		debug "Unknown Exists: $args->{type} - ".unpack("L*",$args->{ID})."\n", "parseMsg";
+	}
+}
+
+sub actor_moved {
+	my ($self,$args) = @_;
+
+	my (%coordsFrom, %coordsTo);
+	makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
+	makeCoords2(\%coordsTo, substr($args->{RAW_MSG}, 52, 3));
+
+	my $added;
+	my %vec;
+	getVector(\%vec, \%coordsTo, \%coordsFrom);
+	my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
+
+	if ($jobs_lut{$args->{type}}) {
+		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
+			$players{$args->{ID}} = new Actor::Player();
+			binAdd(\@playersID, $args->{ID});
+			$players{$args->{ID}}{'appear_time'} = time;
+			$players{$args->{ID}}{'sex'} = $args->{sex};
+			$players{$args->{ID}}{'ID'} = $args->{ID};
+			$players{$args->{ID}}{'jobID'} = $args->{type};
+			$players{$args->{ID}}{'nameID'} = unpack("L1", $args->{ID});
+			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
+			my $domain = existsInList($config{friendlyAID}, unpack("L1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			debug "Player Appeared: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $args->{sex}_lut{$args->{sex}} $jobs_lut{$args->{type}}\n", $domain;
+			$added = 1;
+			Plugins::callHook('player', {player => $players{$args->{ID}}});
+		}
+
+		$players{$args->{ID}}{weapon} = $args->{weapon};
+		$players{$args->{ID}}{shield} = $args->{shield};
+		$players{$args->{ID}}{walk_speed} = $args->{walk_speed};
+		$players{$args->{ID}}{look}{head} = 0;
+		$players{$args->{ID}}{look}{body} = $args->{direction};
+		$players{$args->{ID}}{headgear}{low} = $args->{lowhead};
+		$players{$args->{ID}}{headgear}{top} = $args->{tophead};
+		$players{$args->{ID}}{headgear}{mid} = $args->{midhead};
+		$players{$args->{ID}}{hair_color} = $args->{hair_color};
+		$players{$args->{ID}}{lv} = $args->{lv};
+		$players{$args->{ID}}{guildID} = $args->{guildID};
+		$players{$args->{ID}}{pos} = {%coordsFrom};
+		$players{$args->{ID}}{pos_to} = {%coordsTo};
+		$players{$args->{ID}}{time_move} = time;
+		$players{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
+		debug "Player Moved: $players{$args->{ID}}{'name'} ($players{$args->{ID}}{'binID'}) $args->{sex}_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg";
+                       setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+
+		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
+
+	} elsif ($args->{type} >= 1000) {
+		if ($args->{pet}) {
+			if (!$pets{$args->{ID}} || !%{$pets{$args->{ID}}}) {
+				$pets{$args->{ID}}{'appear_time'} = time;
+				my $display = ($monsters_lut{$args->{type}} ne "")
+						? $monsters_lut{$args->{type}}
+						: "Unknown ".$args->{type};
+				binAdd(\@petsID, $args->{ID});
+				$pets{$args->{ID}}{'nameID'} = $args->{type};
+				$pets{$args->{ID}}{'name'} = $display;
+				$pets{$args->{ID}}{'name_given'} = "Unknown";
+				$pets{$args->{ID}}{'binID'} = binFind(\@petsID, $args->{ID});
+			}
+			$pets{$args->{ID}}{look}{head} = 0;
+			$pets{$args->{ID}}{look}{body} = $direction;
+			$pets{$args->{ID}}{pos} = {%coordsFrom};
+			$pets{$args->{ID}}{pos_to} = {%coordsTo};
+			$pets{$args->{ID}}{time_move} = time;
+			$pets{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
+			$pets{$args->{ID}}{walk_speed} = $args->{walk_speed};
+
+			if ($monsters{$args->{ID}}) {
+				binRemove(\@monstersID, $args->{ID});
+				objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
+				delete $monsters{$args->{ID}};
+			}
+
+			debug "Pet Moved: $pets{$args->{ID}}{'name'} ($pets{$args->{ID}}{'binID'})\n", "parseMsg";
+
+		} else {
+			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
+				$monsters{$args->{ID}} = new Actor::Monster();
+				binAdd(\@monstersID, $args->{ID});
+				$monsters{$args->{ID}}{ID} = $args->{ID};
+				$monsters{$args->{ID}}{'appear_time'} = time;
+				$monsters{$args->{ID}}{'nameID'} = $args->{type};
+				my $display = ($monsters_lut{$args->{type}} ne "")
+					? $monsters_lut{$args->{type}}
+					: "Unknown ".$args->{type};
+				$monsters{$args->{ID}}{'name'} = $display;
+				$monsters{$args->{ID}}{'binID'} = binFind(\@monstersID, $args->{ID});
+				debug "Monster Appeared: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
+				$added = 1;
+			}
+			$monsters{$args->{ID}}{look}{head} = 0;
+			$monsters{$args->{ID}}{look}{body} = $direction;
+			$monsters{$args->{ID}}{pos} = {%coordsFrom};
+			$monsters{$args->{ID}}{pos_to} = {%coordsTo};
+			$monsters{$args->{ID}}{time_move} = time;
+			$monsters{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
+			$monsters{$args->{ID}}{walk_speed} = $args->{walk_speed};
+			debug "Monster Moved: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg", 2;
+                        setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+
+			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
+		}
+	} else {
+		debug "Unknown Moved: $args->{type} - ".getHex($args->{ID})."\n", "parseMsg";
 	}
 }
 
