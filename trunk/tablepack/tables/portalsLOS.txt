@@ -318,6 +318,7 @@ gef_fild06 218 17 gef_fild06 382 211 359 gef_fild06 18 304 488
 gef_fild06 382 211 gef_fild06 18 304 546 gef_fild06 218 17 359
 gef_fild07 18 191 gef_fild07 40 19 247 gef_fild07 64 363 219 gef_fild07 339 187 326
 gef_fild07 339 187 gef_fild07 40 19 468 gef_fild07 18 191 326 gef_fild07 64 363 460
+gef_fild07 40 19 gef_fild07 18 191 247 gef_fild07 64 363 381 gef_fild07 339 187 468
 gef_fild07 64 363 gef_fild07 40 19 381 gef_fild07 18 191 219 gef_fild07 339 187 460
 gef_fild08 200 355 gef_fild08 215 18 415 gef_fild08 360 187 329
 gef_fild08 215 18 gef_fild08 200 355 415 gef_fild08 360 187 315
