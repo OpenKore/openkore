@@ -8266,7 +8266,7 @@ sub parseMsg {
 		if (!$pets{$ID} || !%{$pets{$ID}}) {
 			binAdd(\@petsID, $ID);
 			$pets{$ID} = {};
-			%{$pets{$ID}} = %{$monsters{$ID}};
+			%{$pets{$ID}} = %{$monsters{$ID}} if ($monsters{$ID} && %{$monsters{$ID}});
 			$pets{$ID}{'name_given'} = "Unknown";
 			$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
 		}
@@ -8276,7 +8276,6 @@ sub parseMsg {
 			delete $monsters{$ID};
 		}
 		debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
-		#end of pet spawn code
 
 	} elsif ($switch eq "01AA") {
 		# 01aa: long ID, long emotion
