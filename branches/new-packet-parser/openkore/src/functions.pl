@@ -1132,24 +1132,6 @@ sub AI {
 				error "Could not find the NPC at the designated location.\n", "ai_npcTalk";
 				AI::dequeue;
 
-			} elsif ($args->{nameID}) {
-				# An NPC ID has been passed
-				my $npc = pack("L1", $args->{nameID});
-				last if (!$npcs{$npc} || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i);
-				$args->{ID} = $npc;
-				$args->{name} = $npcs{$npc}{'name'};
-				$args->{stage} = 'Talking to NPC';
-				$args->{steps} = [];
-				@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
-				undef $args->{time};
-				undef $ai_v{npc_talk}{'time'};
-				undef $ai_v{npc_talk}{talk};
-
-				# look at the NPC
-				$args->{pos} = {};
-				getNPCInfo($ai_seq_args[0]{'nameID'}, $args->{pos});
-				lookAtPosition($args->{pos});
-
 			} else {
 				# An x,y position has been passed
 				foreach my $npc (@npcsID) {
@@ -5056,25 +5038,30 @@ sub parseMsg {
 				$portals{$ID}{'name'} = $display;
 				$portals{$ID}{'binID'} = binFind(\@portalsID, $ID);
 			}
-			%{$portals{$ID}{'pos'}} = %coords;
+			$portals{$ID}{pos} = {};
+			%{$portals{$ID}{pos}} = %coords;
 			message "Portal Exists: $portals{$ID}{'name'} ($coords{x}, $coords{y}) - ($portals{$ID}{'binID'})\n", "portals", 1;
 
 		} elsif ($type < 1000) {
 			if (!$npcs{$ID} || !%{$npcs{$ID}}) {
-				$npcs{$ID}{'appear_time'} = time;
 				my $nameID = unpack("L1", $ID);
-				my $display = ($npcs_lut{$nameID} && %{$npcs_lut{$nameID}})
-					? $npcs_lut{$nameID}{'name'}
-					: "Unknown ".$nameID;
+				$npcs{$ID}{appear_time} = time;
+
+				$npcs{$ID}{pos} = {%coords};
+				my $location = "$field{name} $npcs{$ID}{pos}{x} $npcs{$ID}{pos}{y}";
+				my $display = $npcs_lut{$location} || "Unknown ".$nameID;
+
 				binAdd(\@npcsID, $ID);
 				$npcs{$ID}{'type'} = $type;
 				$npcs{$ID}{'nameID'} = $nameID;
 				$npcs{$ID}{'name'} = $display;
 				$npcs{$ID}{'binID'} = binFind(\@npcsID, $ID);
 				$added = 1;
+			} else {
+				# just update the coordinates
+				$npcs{$ID}{pos} = {%coords};
 			}
-			$npcs{$ID}{'pos'} = {%coords};
-			message "NPC Exists: $npcs{$ID}{'name'} ($npcs{$ID}{pos}->{x}, $npcs{$ID}{pos}->{y}) (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n", undef, 1;
+			message "NPC Exists: $npcs{$ID}{'name'} ($npcs{$ID}{pos}{x}, $npcs{$ID}{pos}{y}) (ID $npcs{$ID}{nameID}) - ($npcs{$ID}{binID})\n", undef, 1;
 
 			objectAdded('npc', $ID, $npcs{$ID}) if ($added);
 
@@ -5790,11 +5777,10 @@ sub parseMsg {
 				my $binID = binFind(\@npcsID, $ID);
 				debug "NPC Info: $npcs{$ID}{'name'} ($binID)\n", "parseMsg", 2;
 			}
-			if (!$npcs_lut{$npcs{$ID}{'nameID'}} || !%{$npcs_lut{$npcs{$ID}{'nameID'}}}) {
-				$npcs_lut{$npcs{$ID}{'nameID'}}{'name'} = $npcs{$ID}{'name'};
-				$npcs_lut{$npcs{$ID}{'nameID'}}{'map'} = $field{'name'};
-				%{$npcs_lut{$npcs{$ID}{'nameID'}}{'pos'}} = %{$npcs{$ID}{'pos'}};
-				updateNPCLUT("$Settings::tables_folder/npcs.txt", $npcs{$ID}{'nameID'}, $field{'name'}, $npcs{$ID}{'pos'}{'x'}, $npcs{$ID}{'pos'}{'y'}, $npcs{$ID}{'name'});
+			my $location = "$field{name} $npcs{$ID}{pos}{x} $npcs{$ID}{pos}{y}";
+			if (!$npcs_lut{$location}) {
+				$npcs_lut{$location} = $npcs{$ID}{name};
+				updateNPCLUT("$Settings::tables_folder/npcs.txt", $location, $npcs{$ID}{name});
 			}
 		}
 		if ($pets{$ID} && %{$pets{$ID}}) {

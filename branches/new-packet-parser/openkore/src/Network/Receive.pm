@@ -349,20 +349,22 @@ sub character_appears {
 
 	} elsif ($args->{type} < 1000) {
 		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
-			$npcs{$args->{ID}}{'appear_time'} = time;
 			my $nameID = unpack("L1", $args->{ID});
-			my $display = ($npcs_lut{$nameID} && %{$npcs_lut{$nameID}})
-				? $npcs_lut{$nameID}{'name'}
-				: "Unknown ".$nameID;
+			$npcs{$args->{ID}}{'appear_time'} = time;
+
+			$npcs{$args->{ID}}{pos} = {%coords};
+			my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
+			my $display = $npcs_lut{$location} || "Unknown ".$nameID;
 			binAdd(\@npcsID, $args->{ID});
 			$npcs{$args->{ID}}{'type'} = $args->{type};
 			$npcs{$args->{ID}}{'nameID'} = $nameID;
 			$npcs{$args->{ID}}{'name'} = $display;
 			$npcs{$args->{ID}}{'binID'} = binFind(\@npcsID, $args->{ID});
 			$added = 1;
+		} else {
+			$npcs{$args->{ID}}{pos} = {%coords};
 		}
-		$npcs{$args->{ID}}{'pos'} = {%coords};
-		message "NPC Exists: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{pos}->{x}, $npcs{$args->{ID}}{pos}->{y}) (ID $npcs{$args->{ID}}{'nameID'}) - ($npcs{$args->{ID}}{'binID'})\n", undef, 1;
+		message "NPC Exists: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}) (ID $npcs{$args->{ID}}{'nameID'}) - ($npcs{$args->{ID}}{'binID'})\n", undef, 1;
 
 		objectAdded('npc', $args->{ID}, $npcs{$args->{ID}}) if ($added);
 

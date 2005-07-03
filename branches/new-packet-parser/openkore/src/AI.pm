@@ -176,7 +176,7 @@ sub ai_drop {
 
 	if (@{$r_items} == 1) {
 		# Dropping one item; do it immediately
-		drop($r_items->[0], $max);
+		Misc::drop($r_items->[0], $max);
 	} else {
 		# Dropping multiple items; queue an AI sequence
 		$seq{items} = \@{$r_items};

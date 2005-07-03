@@ -391,24 +391,16 @@ sub parseNPCs {
 	my $r_hash = shift;
 	my ($i, $string);
 	undef %{$r_hash};
-	my ($key,$value);
+	my ($key,$value,@args);
 	open FILE, $file;
-	foreach (<FILE>) {
-		next if (/^#/);
-		s/[\r\n]//g;
-		s/\s+/ /g;
-		s/\s+$//g;
-		my @args = split /\s/, $_;
-		if (@args > 4) {
-			$$r_hash{$args[0]}{'map'} = $args[1];
-			$$r_hash{$args[0]}{'pos'}{'x'} = $args[2];
-			$$r_hash{$args[0]}{'pos'}{'y'} = $args[3];
-			$string = $args[4];
-			for ($i = 5; $i < @args; $i++) {
-				$string .= " $args[$i]";
-			}
-			$$r_hash{$args[0]}{'name'} = $string;
-		}
+	while (my $line = <FILE>) {
+		$line =~ s/\cM|\cJ//g;
+		$line =~ s/^\s+|\s+$//g;
+		next if $line =~ /^#/ || $line eq '';
+		#izlude 135 78 Charfri
+		my ($map,$x,$y,$name) = split /\s+/, $line,4;
+		next unless $name;
+		$$r_hash{"$map $x $y"} = $name;
 	}
 	close FILE;
 }
@@ -1163,10 +1155,10 @@ sub updatePortalLUT {
 }
 
 sub updateNPCLUT {
-	my ($file, $ID, $map, $x, $y, $name) = @_;
+	my ($file, $location, $name) = @_;
 	open FILE, ">> $file"; 
-	print FILE "$ID $map $x $y $name\n"; 
-	close FILE; 
+	print FILE "$location $name\n"; 
+	close FILE;
 }
 
 1;
