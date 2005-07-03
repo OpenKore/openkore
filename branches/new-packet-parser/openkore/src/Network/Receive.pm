@@ -41,7 +41,7 @@ sub new {
 		'0073' => ['map_loaded'],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
-		#'0078' => ['character_appears', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
+		#'0078' => ['character_exists', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
 		#'0079' => ['player_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
@@ -57,7 +57,7 @@ sub new {
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		#'01D8' => ['character_appears', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
+		#'01D8' => ['character_exists', 'a4 v1 v1 v1 v1 v1 C1 v1 v1 v1 v1 v1 v1 v1 V1 C1 a3 C1 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords body_dir act lv)]],
 		#'01D9' => ['player_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -74,7 +74,7 @@ sub create {
 	undef $@;
 	eval "use $class;";
 	if ($@) {
-		error "Cannot load packet parser for type '$type'.\n";
+		error "Cannot load packet parser for ServerType '$type'.\n";
 		return;
 	}
 
@@ -685,8 +685,8 @@ sub received_characters {
 	undef $conState_tries;
 	undef @chars;
 
-
-	if (exists $args->{options}{charServer}) {
+	Plugins::callHook('parseMsg/recvChars', $args->{options});
+	if ($args->{options} && exists $args->{options}{charServer}) {
 		$charServer = $args->{options}{charServer};
 	} else {
 		$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
@@ -726,8 +726,6 @@ sub received_characters {
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
-	} else {
-		return;
 	}
 }
 
@@ -831,6 +829,17 @@ sub skill_use {
 	}
 	$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $args->{damage} == 0;
 
+	Plugins::callHook('packet_skilluse', {
+			'skillID' => $args->{skillID},
+			'sourceID' => $args->{sourceID},
+			'targetID' => $args->{targetID},
+			'damage' => $args->{damage},
+			'amount' => 0,
+			'x' => 0,
+			'y' => 0,
+			'disp' => \$disp
+		});
+
 	message $disp, $domain, 1;
 
 }
@@ -888,6 +897,15 @@ sub skill_used_no_damage {
 			}
 		}
 	}
+	Plugins::callHook('packet_skilluse', {
+			'skillID' => $args->{skillID},
+			'sourceID' => $args->{sourceID},
+			'targetID' => $args->{targetID},
+			'damage' => 0,
+			'amount' => $args->{amount},
+			'x' => 0,
+			'y' => 0
+			});
 }
 
 sub storage_item_added {
