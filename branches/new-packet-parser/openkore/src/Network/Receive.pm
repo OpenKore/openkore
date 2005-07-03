@@ -45,7 +45,9 @@ sub new {
 		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
 		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 x4 v1 v1 v1 v1 x4 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
+		'007C' => ['actor_spawned', 'a4 x14 v1 C1 x12 C1 a3', [qw(ID type pet sex coords)]],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
+		'0080' => ['actor_died_or_disappeard', 'a4 C1', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
@@ -232,6 +234,112 @@ sub actor_connected {
 
 	} else {
 		debug "Unknown Connected: $args->{type} - ", "parseMsg";
+	}
+}
+
+sub actor_died_or_disappeard {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+
+	if ($args->{ID} eq $accountID) {
+		message "You have died\n";
+		closeShop() unless !$shopstarted || $config{'dcOnDeath'} == -1 || !$AI;
+		$char->{deathCount}++;
+		$char->{dead} = 1;
+		$char->{dead_time} = time;
+
+	} elsif ($monsters{$args->{ID}} && %{$monsters{$args->{ID}}}) {
+		%{$monsters_old{$args->{ID}}} = %{$monsters{$args->{ID}}};
+		$monsters_old{$args->{ID}}{'gone_time'} = time;
+		if ($args->{type} == 0) {
+			debug "Monster Disappeared: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
+			$monsters_old{$args->{ID}}{'disappeared'} = 1;
+
+		} elsif ($args->{type} == 1) {
+			debug "Monster Died: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_damage";
+			$monsters_old{$args->{ID}}{'dead'} = 1;
+
+			if ($config{itemsTakeAuto_party} &&
+			    ($monsters{$args->{ID}}{dmgFromParty} > 0 ||
+			     $monsters{$args->{ID}}{dmgFromYou} > 0)) {
+				AI::clear("items_take");
+				ai_items_take($monsters{$args->{ID}}{pos}{x}, $monsters{$args->{ID}}{pos}{y},
+					$monsters{$args->{ID}}{pos_to}{x}, $monsters{$args->{ID}}{pos_to}{y});
+			}
+
+		} elsif ($args->{type} == 2) { # What's this?
+			debug "Monster Disappeared: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
+			$monsters_old{$args->{ID}}{'disappeared'} = 1;
+
+		} elsif ($args->{type} == 3) {
+			debug "Monster Teleported: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
+			$monsters_old{$args->{ID}}{'teleported'} = 1;
+		}
+		binRemove(\@monstersID, $args->{ID});
+		objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
+		delete $monsters{$args->{ID}};
+
+	} elsif (UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
+		if ($args->{type} == 1) {
+			message "Player Died: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n";
+			$players{$args->{ID}}{'dead'} = 1;
+		} else {
+			if ($args->{type} == 0) {
+				debug "Player Disappeared: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
+				$players{$args->{ID}}{'disappeared'} = 1;
+			} elsif ($args->{type} == 2) {
+				debug "Player Disconnected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
+				$players{$args->{ID}}{'disconnected'} = 1;
+			} elsif ($args->{type} == 3) {
+				debug "Player Teleported: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
+				$players{$args->{ID}}{'teleported'} = 1;
+			} else {
+				debug "Player Disappeared in an unknown way: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
+				$players{$args->{ID}}{'disappeared'} = 1;
+			}
+
+			%{$players_old{$args->{ID}}} = %{$players{$args->{ID}}};
+			$players_old{$args->{ID}}{'gone_time'} = time;
+			binRemove(\@playersID, $args->{ID});
+			objectRemoved('player', $args->{ID}, $players{$args->{ID}});
+			delete $players{$args->{ID}};
+
+			binRemove(\@venderListsID, $args->{ID});
+			delete $venderLists{$args->{ID}};
+		}
+
+	} elsif ($players_old{$args->{ID}} && %{$players_old{$args->{ID}}}) {
+		if ($args->{type} == 2) {
+			debug "Player Disconnected: $players_old{$args->{ID}}{'name'}\n", "parseMsg_presence";
+			$players_old{$args->{ID}}{'disconnected'} = 1;
+		} elsif ($args->{type} == 3) {
+			debug "Player Teleported: $players_old{$args->{ID}}{'name'}\n", "parseMsg_presence";
+			$players_old{$args->{ID}}{'teleported'} = 1;
+		}
+
+	} elsif ($portals{$args->{ID}} && %{$portals{$args->{ID}}}) {
+		debug "Portal Disappeared: $portals{$args->{ID}}{'name'} ($portals{$args->{ID}}{'binID'})\n", "parseMsg";
+		$portals_old{$args->{ID}} = {%{$portals{$args->{ID}}}};
+		$portals_old{$args->{ID}}{'disappeared'} = 1;
+		$portals_old{$args->{ID}}{'gone_time'} = time;
+		binRemove(\@portalsID, $args->{ID});
+		delete $portals{$args->{ID}};
+
+	} elsif ($npcs{$args->{ID}} && %{$npcs{$args->{ID}}}) {
+		debug "NPC Disappeared: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{'binID'})\n", "parseMsg";
+		%{$npcs_old{$args->{ID}}} = %{$npcs{$args->{ID}}};
+		$npcs_old{$args->{ID}}{'disappeared'} = 1;
+		$npcs_old{$args->{ID}}{'gone_time'} = time;
+		binRemove(\@npcsID, $args->{ID});
+		objectRemoved('npc', $args->{ID}, $npcs{$args->{ID}});
+		delete $npcs{$args->{ID}};
+
+	} elsif ($pets{$args->{ID}} && %{$pets{$args->{ID}}}) {
+		debug "Pet Disappeared: $pets{$args->{ID}}{'name'} ($pets{$args->{ID}}{'binID'})\n", "parseMsg";
+		binRemove(\@petsID, $args->{ID});
+		delete $pets{$args->{ID}};
+	} else {
+		debug "Unknown Disappeared: ".getHex($args->{ID})."\n", "parseMsg";
 	}
 }
 
@@ -494,6 +602,86 @@ sub actor_moved {
 		}
 	} else {
 		debug "Unknown Moved: $args->{type} - ".getHex($args->{ID})."\n", "parseMsg";
+	}
+}
+
+sub actor_spawned {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	my %coords;
+	makeCoords(\%coords, $args->{coords});
+	my $added;
+
+	if ($jobs_lut{$args->{type}}) {
+		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
+			$players{$args->{ID}} = new Actor::Player;
+			binAdd(\@playersID, $args->{ID});
+			$players{$args->{ID}}{'jobID'} = $args->{type};
+			$players{$args->{ID}}{'sex'} = $args->{sex};
+			$players{$args->{ID}}{'ID'} = $args->{ID};
+			$players{$args->{ID}}{'nameID'} = unpack("L1", $args->{ID});
+			$players{$args->{ID}}{'appear_time'} = time;
+			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
+			$added = 1;
+		}
+		$players{$args->{ID}}{look}{head} = 0;
+		$players{$args->{ID}}{look}{body} = 0;
+		$players{$args->{ID}}{pos} = {%coords};
+		$players{$args->{ID}}{pos_to} = {%coords};
+		debug "Player Spawned: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $args->{sex}_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg";
+
+		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
+
+	} elsif ($args->{type} >= 1000) {
+		if ($args->{pet}) {
+			if (!$pets{$args->{ID}} || !%{$pets{$args->{ID}}}) {
+				binAdd(\@petsID, $args->{ID});
+				$pets{$args->{ID}}{'nameID'} = $args->{type};
+				$pets{$args->{ID}}{'appear_time'} = time;
+				my $display = ($monsters_lut{$pets{$args->{ID}}{'nameID'}} ne "")
+				? $monsters_lut{$pets{$args->{ID}}{'nameID'}}
+				: "Unknown ".$pets{$args->{ID}}{'nameID'};
+				$pets{$args->{ID}}{'name'} = $display;
+				$pets{$args->{ID}}{'name_given'} = "Unknown";
+				$pets{$args->{ID}}{'binID'} = binFind(\@petsID, $args->{ID});
+			}
+			$pets{$args->{ID}}{look}{head} = 0;
+			$pets{$args->{ID}}{look}{body} = 0;
+			%{$pets{$args->{ID}}{'pos'}} = %coords;
+			%{$pets{$args->{ID}}{'pos_to'}} = %coords;
+			debug "Pet Spawned: $pets{$args->{ID}}{'name'} ($pets{$args->{ID}}{'binID'})\n", "parseMsg";
+
+			if ($monsters{$args->{ID}}) {
+				binRemove(\@monstersID, $args->{ID});
+				objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
+				delete $monsters{$args->{ID}};
+			}
+
+		} else {
+			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
+				$monsters{$args->{ID}} = new Actor::Monster;
+				binAdd(\@monstersID, $args->{ID});
+				$monsters{$args->{ID}}{ID} = $args->{ID};
+				$monsters{$args->{ID}}{'nameID'} = $args->{type};
+				$monsters{$args->{ID}}{'appear_time'} = time;
+				my $display = ($monsters_lut{$monsters{$args->{ID}}{'nameID'}} ne "")
+						? $monsters_lut{$monsters{$args->{ID}}{'nameID'}}
+						: "Unknown ".$monsters{$args->{ID}}{'nameID'};
+				$monsters{$args->{ID}}{'name'} = $display;
+				$monsters{$args->{ID}}{'binID'} = binFind(\@monstersID, $args->{ID});
+				$added = 1;
+			}
+			$monsters{$args->{ID}}{look}{head} = 0;
+			$monsters{$args->{ID}}{look}{body} = 0;
+			%{$monsters{$args->{ID}}{'pos'}} = %coords;
+			%{$monsters{$args->{ID}}{'pos_to'}} = %coords;
+			debug "Monster Spawned: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
+
+			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
+		}
+
+	} else {
+		debug "Unknown Spawned: $args->{type} - ".getHex($args->{ID})."\n", "parseMsg_presence";
 	}
 }
 
