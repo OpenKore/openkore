@@ -49,6 +49,7 @@ sub new {
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeard', 'a4 C1', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
+		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
@@ -493,6 +494,49 @@ sub actor_exists {
 
 	} else {
 		debug "Unknown Exists: $args->{type} - ".unpack("L*",$args->{ID})."\n", "parseMsg";
+	}
+}
+
+sub actor_info {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	if ($players{$args->{ID}} && %{$players{$args->{ID}}}) {
+		($players{$args->{ID}}{'name'}) = $args->{name};
+		$players{$args->{ID}}{'gotName'} = 1;
+		my $binID = binFind(\@playersID, $args->{ID});
+		debug "Player Info: $players{$args->{ID}}{'name'} ($binID)\n", "parseMsg_presence", 2;
+	}
+	if ($monsters{$args->{ID}} && %{$monsters{$args->{ID}}}) {
+		my ($name) = $args->{name};
+		if ($config{'debug'} >= 2) {
+			my $binID = binFind(\@monstersID, $args->{ID});
+			debug "Monster Info: $name ($binID)\n", "parseMsg", 2;
+		}
+		if ($monsters_lut{$monsters{$args->{ID}}{'nameID'}} eq "") {
+			$monsters{$args->{ID}}{'name'} = $name;
+			$monsters_lut{$monsters{$args->{ID}}{'nameID'}} = $monsters{$args->{ID}}{'name'};
+			updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monsters{$args->{ID}}{'nameID'}, $monsters{$args->{ID}}{'name'});
+		}
+	}
+	if ($npcs{$args->{ID}} && %{$npcs{$args->{ID}}}) {
+		($npcs{$args->{ID}}{'name'}) = $args->{name};
+		$npcs{$args->{ID}}{'gotName'} = 1;
+		if ($config{'debug'} >= 2) {
+			my $binID = binFind(\@npcsID, $args->{ID});
+			debug "NPC Info: $npcs{$args->{ID}}{'name'} ($binID)\n", "parseMsg", 2;
+		}
+		my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
+		if (!$npcs_lut{$location}) {
+			$npcs_lut{$location} = $npcs{$args->{ID}}{name};
+			updateNPCLUT("$Settings::tables_folder/npcs.txt", $location, $npcs{$args->{ID}}{name});
+		}
+	}
+	if ($pets{$args->{ID}} && %{$pets{$args->{ID}}}) {
+		($pets{$args->{ID}}{'name_given'}) = $args->{name};
+		if ($config{'debug'} >= 2) {
+			my $binID = binFind(\@petsID, $args->{ID});
+			debug "Pet Info: $pets{$args->{ID}}{'name_given'} ($binID)\n", "parseMsg", 2;
+		}
 	}
 }
 
