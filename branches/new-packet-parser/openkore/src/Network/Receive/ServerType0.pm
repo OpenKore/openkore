@@ -25,6 +25,7 @@ sub new {
 }
 
 sub map_loaded {
+	my ($self,$args) = @_;
 	$conState = 5;
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
@@ -41,7 +42,7 @@ sub map_loaded {
 	}
 
 	$char->{pos} = {};
-	makeCoords($char->{pos}, substr($msg, 6, 3));
+	makeCoords($char->{pos}, $args->{coords});
 	$char->{pos_to} = {%{$char->{pos}}};
 	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
 

@@ -927,6 +927,7 @@ sub errors {
 }
 
 sub map_loaded {
+	#Note: ServerType0 overrides this function
 	my ($self,$args) = @_;
 	$conState = 5;
 	undef $conState_tries;
