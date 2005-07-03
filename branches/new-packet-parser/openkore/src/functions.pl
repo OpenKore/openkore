@@ -1152,14 +1152,15 @@ sub AI {
 						last NPCTALK;
 					}
 				}
-				foreach my $npc (@monstersID) {
-					next if !$npc;
-					if ( $monsters{$npc}{'pos'}{'x'} eq $args->{pos}{'x'} &&
-					     $monsters{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
-						debug "Target Monster-NPC $monsters{$npc}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
-						$args->{'nameID'} = $monsters{$npc}{'nameID'};
-				     		$args->{'ID'} = $npc;
-						$args->{'name'} = $monsters{$npc}{'name'};
+				foreach my $ID (@monstersID) {
+					next if !$ID;
+					if ( $monsters{$ID}{'pos'}{'x'} eq $args->{pos}{'x'} &&
+					     $monsters{$ID}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
+						debug "Target Monster-NPC $monsters{$ID}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
+						$args->{'nameID'} = $monsters{$ID}{'nameID'};
+				     		$args->{'ID'} = $ID;
+				     		$args->{monster} = 1;
+						$args->{'name'} = $monsters{$ID}{'name'};
 						$args->{'stage'} = 'Talking to NPC';
 						$args->{steps} = [];
 						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
@@ -1206,7 +1207,11 @@ sub AI {
 			} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
 				sendTalkNumber(\$remote_socket, $args->{ID}, $1);
 			} elsif ( $args->{steps}[0] =~ /x/i ) {
-				sendTalk(\$remote_socket, $args->{ID});
+				if (!$args->{monster}) {
+					sendTalk(\$remote_socket, $args->{ID});
+				} else {
+					sendAttack(\$remote_socket, $args->{ID}, 0);
+				}
 			} elsif ( $args->{steps}[0] =~ /c/i ) {
 				sendTalkContinue(\$remote_socket, $args->{ID});
 			} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
