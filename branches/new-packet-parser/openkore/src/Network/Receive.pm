@@ -88,7 +88,7 @@ sub parse {
 	my $handler = $self->{packet_list}{$switch};
 	return 0 unless $handler;
 
-	debug "Received packet: $switch\n", "packetParser", 2;
+	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 
 	my %args;
 	$args{switch} = $switch;
@@ -108,7 +108,7 @@ sub parse {
 		Plugins::callHook("packet_pre/$handler->[0]", \%args);
 		$self->$callback(\%args);
 	} else {
-		debug "Packet Parser: Unhandled Packet: $switch\n", "packetParser", 2;
+		debug "Packet Parser: Unhandled Packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 	}
 
 	Plugins::callHook("packet/$handler->[0]", \%args);
