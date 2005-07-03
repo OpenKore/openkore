@@ -2,7 +2,7 @@
 # If you want to run this Makefile in Windows, you need Cygwin:
 # http://sources.redhat.com/cygwin/
 
-VERSION=1.6.1
+VERSION=1.6.2
 FILENAME=confpack-$(VERSION).zip
 VERSIONFILE=control/ConfpackVersion.txt
 
