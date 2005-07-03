@@ -61,7 +61,7 @@
 # deal			Deal messages
 # drop			Monster drop related
 # emotion		Emoticon
-# equip		        Equipment Switching 
+# equip		        Equipment Switching
 # gmchat		GM chat message
 # guildchat		Guild chat message
 # info			View info that's requested by the user (status, guild info, etc.)
@@ -206,7 +206,7 @@ sub processMsg {
 			$message = "[$tmpdate[2]:$tmpdate[1]:$tmpdate[0]] $message";
 		};
 	};
-	
+
 	# Print to console if the current verbosity is high enough
 	if ($level <= $currentVerbosity) {
 		$consoleVar->{$domain} = 1 if (!defined($consoleVar->{$domain}));
@@ -226,7 +226,7 @@ sub processMsg {
 
 	# Print to files
 	foreach my $file (@{$files->{$domain}}) {
-		if (open(F, ">> $file")) {
+		if (open(F, ">> $Settings::logs_folder/$file")) {
 			print F '['. getFormattedDate(int(time)) .'] ' if ($logTimestamp);
 			print F $message;
 			close(F);
@@ -388,6 +388,40 @@ sub addHook {
 sub delHook {
 	my $ID = shift;
 	delete $hooks[$ID];
+}
+
+##
+# Log::parseLogToFile(args,hash)
+#
+# args has to look like domain=file
+# but can look like domain1=file1.txt;domain2=file2.txt,file3.txt
+#
+# The hash has to be a reference for the output hash.
+sub parseLogToFile {
+	my $args = shift;
+	my $list = shift;
+	$args =~ s/\s//g;
+	my @domains = split (';', $args);
+	my $files;
+	foreach my $domain (@domains) {
+		($domain,$files) = split ('=', $domain);
+		my @filesArray = split (',', $files);
+		$list->{$domain} = [];
+		foreach my $file (@filesArray) {
+			push(@{$list->{$domain}}, $file);
+		}
+	}
+}
+
+##
+# initLogFiles()
+#
+# This function should be called everytime config.txt is (re)loaded.
+sub initLogFiles {
+	parseLogToFile($config{logToFile_Messages}, \%messageFiles) if $config{logToFile_Messages};
+	parseLogToFile($config{logToFile_Warnings}, \%warningFiles) if $config{logToFile_Warnings};
+	parseLogToFile($config{logToFile_Errors}, \%errorFiles) if $config{logToFile_Errors};
+	parseLogToFile($config{logToFile_Debug}, \%debugFiles) if $config{logToFile_Debug};
 }
 
 
