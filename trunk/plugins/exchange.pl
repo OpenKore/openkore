@@ -18,7 +18,7 @@
 # 
 
 # See this thread for detailed config information:
-# http://openkore.sourceforge.net/forum/viewtopic.php?t=3497
+# http://openkore.sourceforge.net/forum/viewtopic.php?t=8668
 
 # Original itemExchange by xlr82xs
 # Modified by Joseph
