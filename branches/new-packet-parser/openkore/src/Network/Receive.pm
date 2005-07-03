@@ -66,6 +66,7 @@ sub new {
 		'011C' => ['warp_portal_list', 'v1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
+		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
@@ -850,6 +851,20 @@ sub cart_info {
 	$cart{items_max} = $args->{items_max};
 	$cart{weight} = int($args->{weight} / 10);
 	$cart{weight_max} = int($args->{weight_max} / 10);
+}
+
+sub cart_add_failed {
+	my ($self, $args) = @_;
+
+	my $reason;
+	if ($args->{fail} == 0) {
+		$reason = 'overweight';
+	} elsif ($args->{fail} == 1) {
+		$reason = 'too many items';
+	} else {
+		$reason = "Unknown code $args->{fail}";
+	}
+	error "Can't Add Cart Item ($reason)\n";
 }
 
 sub cart_item_added {
