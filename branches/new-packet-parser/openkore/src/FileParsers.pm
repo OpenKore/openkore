@@ -1156,8 +1156,9 @@ sub updatePortalLUT {
 
 sub updateNPCLUT {
 	my ($file, $location, $name) = @_;
-	open FILE, ">> $file"; 
-	print FILE "$location $name\n"; 
+	return unless $name;
+	open FILE, ">> $file";
+	print FILE "$location $name\n";
 	close FILE;
 }
 
