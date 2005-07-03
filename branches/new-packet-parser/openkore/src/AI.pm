@@ -9,7 +9,6 @@ use strict;
 use Globals;
 use Utils qw(binFind);
 use Log qw(message warning error debug);
-use Misc;
 use Network;
 use Network::Send;
 use Utils;
