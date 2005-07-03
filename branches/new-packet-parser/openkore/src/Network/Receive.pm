@@ -49,6 +49,9 @@ sub new {
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeard', 'a4 C1', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
+		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
+		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
+		'008A' => ['actor_action', 'a4 a4 a4 V1 V1 s1 v1 C1 v1', [qw(ID1 ID2 tick src_speed dst_speed damage param2 type param3)]],
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
@@ -190,6 +193,91 @@ sub account_server_info {
 
 		} else {
 			message("Server $config{server} selected\n", 'connection');
+		}
+	}
+}
+
+sub actor_action {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+
+	if ($args->{type} == 1) {
+		# Take item
+		my $source = Actor::get($args->{ID1});
+		my $verb = $source->verb('pick up', 'picks up');
+		#my $target = Actor::get($args->{ID2});
+		my $target = getActorName($args->{ID2});
+		debug "$source $verb $target\n", 'parseMsg_presence';
+		$items{$args->{ID2}}{takenBy} = $args->{ID1} if ($items{$args->{ID2}});
+	} elsif ($args->{type} == 2) {
+		# Sit
+		my ($source, $verb) = getActorNames($args->{ID1}, 0, 'are', 'is');
+		if ($args->{ID1} eq $accountID) {
+			message "You are sitting.\n";
+			$char->{sitting} = 1;
+		} else {
+			debug getActorName($args->{ID1})." is sitting.\n", 'parseMsg';
+			$players{$args->{ID1}}{sitting} = 1 if ($players{$args->{ID1}});
+		}
+	} elsif ($args->{type} == 3) {
+		# Stand
+		my ($source, $verb) = getActorNames($args->{ID1}, 0, 'are', 'is');
+		if ($args->{ID1} eq $accountID) {
+			message "You are standing.\n";
+			$char->{sitting} = 0;
+		} else {
+			debug getActorName($args->{ID1})." is standing.\n", 'parseMsg';
+			$players{$args->{ID1}}{sitting} = 0 if ($players{$args->{ID1}});
+		}
+	} else {
+		# Attack
+		my $dmgdisplay;
+		my $totalDamage = $args->{damage} + $args->{param3};
+		if ($totalDamage == 0) {
+			$dmgdisplay = "Miss!";
+			$dmgdisplay .= "!" if ($args->{type} == 11);
+		} else {
+			$dmgdisplay = $args->{damage};
+			$dmgdisplay .= "!" if ($args->{type} == 10);
+			$dmgdisplay .= " + $args->{param3}" if $args->{param3};
+		}
+
+		updateDamageTables($args->{ID1}, $args->{ID2}, $args->{damage});
+		my $source = Actor::get($args->{ID1});
+		my $target = Actor::get($args->{ID2});
+		my $verb = $source->verb('attack', 'attacks');
+
+		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
+
+		Plugins::callHook('packet_attack', {sourceID => $args->{ID1}, targetID => $args->{ID2}, msg => \$msg, dmg => $totalDamage});
+
+		my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($args->{src_speed}/10).")";
+
+		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
+
+		if ($args->{ID1} eq $accountID) {
+			message("$status $msg\n", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
+			if ($startedattack) {
+				$monstarttime = time();
+				$monkilltime = time();
+				$startedattack = 0;
+			}
+			calcStat($args->{damage});
+		} elsif ($args->{ID2} eq $accountID) {
+			# Check for monster with empty name
+			if ($monsters{$args->{ID1}} && %{$monsters{$args->{ID1}}} && $monsters{$args->{ID1}}{'name'} eq "") {
+				if ($config{'teleportAuto_emptyName'} ne '0') {
+					message "Monster with empty name attacking you. Teleporting...\n";
+					useTeleport(1);
+				} else {
+					# Delete monster from hash; monster will be
+					# re-added to the hash next time it moves.
+					delete $monsters{$args->{ID1}};
+				}
+			}
+			message("$status $msg\n", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+		} else {
+			debug("$msg\n", 'parseMsg_damage');
 		}
 	}
 }
@@ -649,6 +737,28 @@ sub actor_moved {
 	}
 }
 
+sub actor_movement_interrupted {
+	my ($self,$args) = @_;
+	my %coords;
+	$coords{x} = $args->{x};
+	$coords{y} = $args->{y};
+	if ($args->{ID} eq $accountID) {
+		%{$chars[$config{'char'}]{'pos'}} = %coords;
+		%{$chars[$config{'char'}]{'pos_to'}} = %coords;
+		$char->{sitting} = 0;
+		debug "Movement interrupted, your coordinates: $coords{x}, $coords{y}\n", "parseMsg_move";
+		AI::clear("move");
+	} elsif ($monsters{$args->{ID}}) {
+		%{$monsters{$args->{ID}}{pos}} = %coords;
+		%{$monsters{$args->{ID}}{pos_to}} = %coords;
+		$monsters{$args->{ID}}{sitting} = 0;
+	} elsif ($players{$args->{ID}}) {
+		%{$players{$args->{ID}}{pos}} = %coords;
+		%{$players{$args->{ID}}{pos_to}} = %coords;
+		$players{$args->{ID}}{sitting} = 0;
+	}
+}
+
 sub actor_spawned {
 	my ($self,$args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
@@ -829,6 +939,17 @@ sub character_deletion_failed {
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
 		$sentWelcomeMessage = 1;
 	}
+}
+
+sub character_moves {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
+	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
+	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
+	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist, unknown $args->{unknown}\n", "parseMsg_move";
+	$char->{time_move} = time;
+	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
 }
 
 sub character_status {
