@@ -20,120 +20,74 @@
 # See this thread for detailed config information:
 # http://openkore.sourceforge.net/forum/viewtopic.php?t=3497
 
-package itemexchange;
+# Original itemExchange by xlr82xs
+# Modified by Joseph
+# Modified again by kaliwanagan
 
+package itemExchange;
+ 
+#itemExchange Rough Oridecon {
+#	npc prt_in 63 69
+#	distance 5
+#	steps c r0 n
+#	requiredAmount 5
+#	triggerAmount 5
+#}
+ 
 use strict;
 use Plugins;
-use Commands;
 use Globals;
-use Log;
-use Utils;
-
-Plugins::register('itemexchange', 'exchanges items with NPCs using talk sequence', \&unload);
-my $mainLoopHook = Plugins::addHook('AI_pre', \&mainLoop);
-my $hookCommandPost = Plugins::addHook('Command_post', \&onCommandPost);
-
-sub unload {
-	Plugins::delHook('AI_pre', $mainLoopHook);
-	Plugins::delHook('Command_post', $hookCommandPost);
+use Log qw(message warning error);
+use AI;
+use Misc;
+ 
+Plugins::register('itemExchange', 'exchanges items with NPCs using talk sequence', \&Unload);
+my $hook1 = Plugins::addHook('AI_pre', \&AI_pre);
+ 
+sub Unload {
+	Plugins::delHook('AI_pre', $hook1);
 }
-
-sub onCommandPost {
-	my (undef, $args) = @_;
-	my ($cmd, $subcmd) = split(' ', $args->{input}, 2);
-
-	if ($cmd eq "itemexchange") {
-		AI::queue('itemExchange');
-		$args->{return} = 1;
-	}
-}
-
-sub mainLoop {
-	ITEMEXCHANGE: {
-
-	if ((AI::isIdle || AI::action eq 'route') && !AI::inQueue('itemExchange') && $::config{'itemExchange'} && $::config{'itemExchange_npc'} ne "" && itemexchange::check()) {
-		AI::queue('itemExchange');
-	}
-
-	if (AI::action eq "itemExchange" && AI::args->{done}) {
-		# Autoexchange finished
-		AI::dequeue;
-
-	} elsif (AI::action eq "itemExchange") {
-		# Main autoexchange block
+ 
+sub AI_pre {
+	if (AI::action eq "itemExchange") {
 		my $args = AI::args;
-
-		# Stop if itemExchange is not enabled, or if the specified NPC is invalid
-		$args->{npc} = {};
-		main::getNPCInfo($::config{'itemExchange_npc'}, $args->{npc});
-		if (!$::config{'itemExchange'} || !defined($args->{npc}{ok})) {
-			$args->{done} = 1;
-			return;
-		}
-
-		# Determine whether we have to move to the NPC
-		my $do_route = 0;
-		if ($::field{'name'} ne $args->{npc}{map}) {
-			$do_route = 1;
-		} else {
-			my $distance = Utils::distance($args->{npc}{pos}, $::char->{pos_to});
-			if ($distance > $::config{'itemExchange_distance'}) {
-				$do_route = 1;
-			}
-		}
-
-		if ($do_route) {
-			Log::message "Calculating auto-exchange route to: $::maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
-			main::ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
+		if ($args->{'stage'} eq 'end') {
+			AI::dequeue;
+		} elsif ($args->{'stage'} eq 'route') {
+			message "Calculating auto-exchange route \n", "route";
+			main::ai_route($args->{'npc'}{'map'}, $args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'},
 				attackOnRoute => 1,
-				distFromGoal => $::config{'itemExchange_distance'});
-		} else {
-			# Talk to NPC if we haven't done so
-			if (!defined($args->{queuedTalkSequence})) {
-				$args->{queuedTalkSequence} = 1;
-
-				if (defined $args->{npc}{id}) {
-					main::ai_talkNPC(ID => $args->{npc}{id}, $::config{'itemExchange_npc_steps'}); 
-				} else {
-					main::ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $::config{'itemExchange_npc_steps'}); 
-				}
-
-				return;
-			}
-
-			if (itemexchange::check(1)) {
-				undef $args->{queuedTalkSequence};
-			}
-			else {
-				$args->{done} = 1;
-			}
+				distFromGoal => $args->{'distFromGoal'});
+			$args->{'stage'} = 'talk';
+		} elsif ($args->{'stage'} eq 'talk') {
+			$args->{'stage'} = ($char->{'inventory'}[$args->{'invIndex'}]{'amount'} >= $args->{'requiredAmount'}) ? 'talk' : 'end';
+			main::ai_talkNPC($args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'}, $args->{'steps'}) if ($args->{'stage'} ne 'end');
 		}
 	}
-
-	} #END OF BLOCK ITEMEXCHANGE
+	exchange() if ((AI::isIdle || AI::action eq "route") && !AI::inQueue("itemExchange"));
 }
-
-sub check {
-	my $exchangeAlreadyActive = shift;
-	my $j = 0;
-
-	while ($::config{"itemExchange_item_$j"}) {
-		last if (!$::config{"itemExchange_item_$j"} || !$::config{"itemExchange_item_$j"."_requiredAmount"} || !$::config{"itemExchange_item_$j"."_triggerAmount"});
-		my $amount;
-
-		my $item = $::config{"itemExchange_item_$j"};
-		if ($exchangeAlreadyActive) {
-			$amount = $::config{"itemExchange_item_$j"."_requiredAmount"};
-		} else {
-			$amount = $::config{"itemExchange_item_$j"."_triggerAmount"};
+ 
+sub exchange {
+	my $prefix = "itemExchange_";
+	my $i = 0;
+ 
+	while (exists $config{$prefix.$i}) {
+		my $invIndex = main::findIndexStringList_lc($char->{'inventory'}, "name", $config{$prefix.$i});
+		my $item = $char->{'inventory'}[$invIndex];
+		if ((defined $invIndex) && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"})) {
+			my %args;
+			$args{'npc'} = {};
+			main::getNPCInfo($config{$prefix.$i."_npc"}, $args{'npc'});
+			$args{'distFromGoal'} = $config{$prefix.$i."_distance"};
+			$args{'steps'} = $config{$prefix.$i."_steps"};
+			$args{'requiredAmount'} = $config{$prefix.$i."_requiredAmount"};
+			$args{'invIndex'} = $invIndex;
+			$args{'stage'} = ($field{'name'} eq $args{'npc'}{'map'}) ? 'talk' : 'route';
+			AI::queue('itemExchange', \%args);
+			last;
 		}
-
-		my $index = Utils::findIndexStringList_lc($::char->{inventory}, "name", $::config{"itemExchange_item_$j"});
-		return 0 if (!defined $index || $::char->{'inventory'}[$index]{'amount'} < $amount);
-
-		$j++;
+		$i++;
 	}
-
-	return 1;
 }
+ 
 return 1;
