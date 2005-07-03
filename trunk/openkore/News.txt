@@ -288,6 +288,7 @@ Credits:
 - Hakore: avoidGM_near_inTown fix.
 - TJ09: Einbroch fields.
 - kaliwanagan: 'selfSkill' domain.
+- bijikucing: Ayothaya portals.
 
 ==================
 ### 1.6.1
