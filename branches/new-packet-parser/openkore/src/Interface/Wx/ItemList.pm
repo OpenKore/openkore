@@ -95,7 +95,11 @@ sub OnGetItemText {
 		my $f;
 
 		if ($objects && ref($objects) eq 'HASH' && $objects->{$ID} && ref($objects->{$ID}) eq 'HASH') {
-			return $self->{objects}{$ID}{name};
+			if (defined $objects->{$ID}{name}) {
+				return $objects->{$ID}{name};
+			} else {
+				return "Unknown";
+			}
 
 		} else {
 			my $file = File::Spec->catfile($Settings::logs_folder, "debug.txt");
@@ -119,15 +123,18 @@ sub OnGetItemText {
 sub OnGetItemAttr {
 	my ($self, $item) = @_;
 	my $ID = $self->{objectsID}[$item];
+	my $objects = $self->{objects};
 
 	my $attr = new Wx::ListItemAttr;
-	if (!$ID || !$self->{objects} || ref($self->{objects}) ne 'HASH' || !$self->{objects}{$ID} || ref($self->{objects}{$ID}) ne 'HASH') {
-		return $attr;
-	} elsif ($self->{objects}{$ID}{type} eq 'm') {
+	return $attr if (!$ID || !$objects || ref($objects) ne 'HASH');
+	return $attr if (!$objects->{$ID});
+	return $attr if (ref($objects->{$ID}) ne 'HASH');
+
+	if ($objects->{$ID}{type} eq 'm') {
 		$attr->SetTextColour($monsterColor);
-	} elsif ($self->{objects}{$ID}{type} eq 'i') {
+	} elsif ($objects->{$ID}{type} eq 'i') {
 		$attr->SetTextColour($itemColor);
-	} elsif ($self->{objects}{$ID}{type} eq 'n') {
+	} elsif ($objects->{$ID}{type} eq 'n') {
 		$attr->SetTextColour($npcColor);
 	}
 	return $attr;
