@@ -319,19 +319,21 @@ sub parseShopControl {
 	%{$shop} = ();
 	open(SHOP, $file);
 
-	# Read shop title
-	chomp($shop->{title} = <SHOP>);
-	$shop->{title} =~ s/[\r\n]//g;
-
 	# Read shop items
 	$shop->{items} = [];
-	my $linenum = 1;
+	my $linenum = 0;
 	my @errors = ();
+
 	foreach (<SHOP>) {
 		$linenum++;
 		chomp;
 		s/[\r\n]//g;
 		next if /^$/ || /^#/;
+
+		if (!$shop->{title}) {
+			$shop->{title} = $_;
+			next;
+		}
 
 		my ($name, $price, $amount) = split(/\t+/);
 		$price =~ s/^\s+//g;
