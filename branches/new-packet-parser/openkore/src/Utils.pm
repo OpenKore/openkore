@@ -11,7 +11,7 @@
 ##
 # MODULE DESCRIPTION: Utility functions
 #
-# This module contains various general-purpose and independant utility 
+# This module contains various general-purpose and independant utility
 # functions. Functions in this module should have <b>no</b> dependancies
 # on other Kore modules.
 
@@ -33,7 +33,7 @@ our @EXPORT = (
 	# Hash/array management
 	qw(binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
-	findKey findKeyString minHeapAdd shuffleArray),
+	findKey findKeyString hashCopyByKey minHeapAdd shuffleArray),
 	# Math
 	qw(calcPosition checkMovementDirection distance getVector moveAlongVector normalize vectorToDegree),
 	# OS-specific
@@ -382,7 +382,7 @@ sub findIndexString_lc_not_equip {
 	my $i;
 	for ($i = 0; $i < @{$r_array} ;$i++) {
 		if ((lc($$r_array[$i]{$match}) eq $ID && ($$r_array[$i]{'identified'}) && !($$r_array[$i]{'equipped'}))
-			 || (!$$r_array[$i] && $ID eq "")) {			  
+			 || (!$$r_array[$i] && $ID eq "")) {
 			return $i;
 		}
 	}
@@ -413,6 +413,24 @@ sub findKeyString {
 			return $_;
 		}
 	}
+}
+
+##
+# hashCopyByKey(target source keys)
+#
+# Copies each key from the target to the source.
+#
+# Example: hashCopyByKey(\%target,\%source,qw(some keys);
+# would copy 'some' and 'keys' from the source hash to the
+# target hash
+#
+sub hashCopyByKey {
+  my $target = shift;
+  my $source = shift;
+  my @keys = @_;
+  foreach (@keys){
+    $target->{$_} = $source->{$_} if $source->{$_};
+  }
 }
 
 sub minHeapAdd {
@@ -1013,7 +1031,7 @@ sub inRange {
 	} elsif (defined $max) {
 		return 1 if ($value <= $max);
 	}
-	
+
 	return 0;
 }
 
@@ -1045,14 +1063,14 @@ sub makeCoords {
 	my $r_hash = shift;
 	my $rawCoords = shift;
 	$$r_hash{'x'} = unpack("C", substr($rawCoords, 0, 1)) * 4 + (unpack("C", substr($rawCoords, 1, 1)) & 0xC0) / 64;
-	$$r_hash{'y'} = (unpack("C",substr($rawCoords, 1, 1)) & 0x3F) * 16 + 
+	$$r_hash{'y'} = (unpack("C",substr($rawCoords, 1, 1)) & 0x3F) * 16 +
 				(unpack("C",substr($rawCoords, 2, 1)) & 0xF0) / 16;
 }
 
 sub makeCoords2 {
 	my $r_hash = shift;
 	my $rawCoords = shift;
-	$$r_hash{'x'} = (unpack("C",substr($rawCoords, 1, 1)) & 0xFC) / 4 + 
+	$$r_hash{'x'} = (unpack("C",substr($rawCoords, 1, 1)) & 0xFC) / 4 +
 				(unpack("C",substr($rawCoords, 0, 1)) & 0x0F) * 64;
 	$$r_hash{'y'} = (unpack("C", substr($rawCoords, 1, 1)) & 0x03) * 256 + unpack("C", substr($rawCoords, 2, 1));
 }
