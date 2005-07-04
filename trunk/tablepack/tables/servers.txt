@@ -142,9 +142,8 @@ serverType 1
 chatLangCode 1
 field_payon old_payon.fld
 
-# not working
 [Brazil - bRO]
-ip 200.229.50.68
+ip 200.229.49.10
 port 6900
 master_version 22
 version 1
