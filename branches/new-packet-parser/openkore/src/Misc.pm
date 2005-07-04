@@ -2202,7 +2202,7 @@ sub useTeleport {
 		my $skill = new Skills(handle => 'AL_TELEPORT');
 		if ($internal == 1 || ($internal == 2 && binSize(\@playersID))) {
 			# Send skill use packet to appear legitimate
-			sendSkillUse(\$remote_socket, $skill->id, $use_lvl, $accountID);
+			sendSkillUse(\$remote_socket, $skill->id, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
 			undef $char->{permitSkill};
 		}
 
