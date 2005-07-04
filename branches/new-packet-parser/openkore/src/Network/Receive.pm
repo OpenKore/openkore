@@ -20,6 +20,7 @@ use Misc;
 use Plugins;
 use Utils;
 use Skills;
+use AI;
 
 ###### Public methods ######
 
