@@ -485,7 +485,7 @@ sub actor_exists {
 		$player->{pos} = {%coords};
 		$player->{pos_to} = {%coords};
 		my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-		debug "Player Exists: ".$player->name." ($player->{binID}) Level $args->{lv} $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
+		debug "Player Exists: ".$player->name." ($player->{binID}) Level $args->{lv} ".$sex_lut{$player->{sex}}." $jobs_lut{$player->{jobID}}\n", $domain, 1;
 		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
 
 		objectAdded('player', $args->{ID}, $player) if ($added);
