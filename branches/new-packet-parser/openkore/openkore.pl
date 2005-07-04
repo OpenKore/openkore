@@ -71,14 +71,14 @@ $SIG{__DIE__} = sub {
 		$err = sub { $Globals::interface->errorDialog($_[0]); };
 	}
 
-	# Extract file and line number from the die message 
-	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/; 
+	# Extract file and line number from the die message
+	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
 
-	# Get rid of the annoying "@INC contains:" 
-	my $dieMsg = $_[0]; 
+	# Get rid of the annoying "@INC contains:"
+	my $dieMsg = $_[0];
 	$dieMsg =~ s/ \(\@INC contains: .*\)//;
 
-	# Create error message and display it 
+	# Create error message and display it
 	my $msg = "Program terminated unexpectedly. Error message:\n" .
 		"$dieMsg\nA more detailed error report is saved to errors.txt";
 
@@ -410,6 +410,7 @@ our $startTime_EXP = time;
 initStatVars();
 initRandomRestart();
 initConfChange();
+Log::initLogFiles();
 $timeout{'injectSync'}{'time'} = time;
 
 Log::message("\n");
@@ -418,7 +419,7 @@ Log::message("\n");
 ##### MAIN LOOP #####
 
 Plugins::callHook('initialized');
-$interface->mainLoop;
+$interface->mainLoop();
 Plugins::unloadAll();
 
 # Shutdown everything else
