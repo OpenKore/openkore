@@ -296,7 +296,7 @@ sub actor_connected {
 	if ($jobs_lut{$args->{type}}) {
 		my $added;
 		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
-			$players{$args->{ID}} = new Actor::Player;
+			$players{$args->{ID}} = new Actor::Player();
 			$players{$args->{ID}}{'appear_time'} = time;
 			binAdd(\@playersID, $args->{ID});
 			$players{$args->{ID}}{'ID'} = $args->{ID};
@@ -484,7 +484,7 @@ sub actor_exists {
 		$player->{pos} = {%coords};
 		$player->{pos_to} = {%coords};
 		my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-		debug "Player Exists: ".$player->name." ($player->{binID}) Level $args->{lv} $args->{sex}_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
+		debug "Player Exists: ".$player->name." ($player->{binID}) Level $args->{lv} $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
 		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
 
 		objectAdded('player', $args->{ID}, $player) if ($added);
@@ -773,7 +773,7 @@ sub actor_spawned {
 
 	if ($jobs_lut{$args->{type}}) {
 		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
-			$players{$args->{ID}} = new Actor::Player;
+			$players{$args->{ID}} = new Actor::Player();
 			binAdd(\@playersID, $args->{ID});
 			$players{$args->{ID}}{'jobID'} = $args->{type};
 			$players{$args->{ID}}{'sex'} = $args->{sex};
@@ -818,7 +818,7 @@ sub actor_spawned {
 
 		} else {
 			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
-				$monsters{$args->{ID}} = new Actor::Monster;
+				$monsters{$args->{ID}} = new Actor::Monster();
 				binAdd(\@monstersID, $args->{ID});
 				$monsters{$args->{ID}}{ID} = $args->{ID};
 				$monsters{$args->{ID}}{'nameID'} = $args->{type};
