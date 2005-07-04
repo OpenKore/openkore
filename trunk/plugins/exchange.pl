@@ -42,12 +42,19 @@ use AI;
 use Misc;
  
 Plugins::register('itemExchange', 'exchanges items with NPCs using talk sequence', \&Unload);
-my $hook1 = Plugins::addHook('AI_pre', \&AI_pre);
- 
+my $hook1 = Plugins::addHooks(['AI_pre', \&AI_pre]);
+my $hook2 = Commands::register(['itemexchange', 'force an item exchange', \&itemexchange_command]);
+
 sub Unload {
-	Plugins::delHook('AI_pre', $hook1);
+	Commands::unregister($hook2);
+	Plugins::delHooks($hook1);
 }
- 
+
+sub itemexchange_command {
+	my ($switch, $args) = @_;
+	exchange('command') if ($switch eq "itemexchange");
+}
+
 sub AI_pre {
 	if (AI::action eq "itemExchange") {
 		my $args = AI::args;
@@ -64,17 +71,19 @@ sub AI_pre {
 			main::ai_talkNPC($args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'}, $args->{'steps'}) if ($args->{'stage'} ne 'end');
 		}
 	}
-	exchange() if ((AI::isIdle || AI::action eq "route") && !AI::inQueue("itemExchange"));
+	exchange('poll') if ((AI::isIdle || AI::action eq "route") && !AI::inQueue("itemExchange"));
 }
  
 sub exchange {
+	my $source = shift;
 	my $prefix = "itemExchange_";
 	my $i = 0;
  
 	while (exists $config{$prefix.$i}) {
 		my $invIndex = main::findIndexStringList_lc($char->{'inventory'}, "name", $config{$prefix.$i});
 		my $item = $char->{'inventory'}[$invIndex];
-		if ((defined $invIndex) && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"})) {
+		if (((defined $invIndex) && ($source eq 'poll') && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"})) ||
+			((defined $invIndex) && ($source eq 'command') && ($item->{'amount'} >= $config{$prefix.$i."_requiredAmount"}))) {
 			my %args;
 			$args{'npc'} = {};
 			main::getNPCInfo($config{$prefix.$i."_npc"}, $args{'npc'});
