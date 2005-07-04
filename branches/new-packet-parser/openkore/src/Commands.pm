@@ -412,7 +412,7 @@ sub complete {
 				last;
 			}
 		}
-		
+
 		my $new = substr($input, 0, $last_arg_pos) . $commonStr;
 		return $new if (length($new) > length($input));
 	}
@@ -578,7 +578,7 @@ sub cmdAttack {
 		}
 	} elsif ($arg1 eq "no") {
 		configModify("attackAuto", 1);
-		
+
 	} elsif ($arg1 eq "yes") {
 		configModify("attackAuto", 2);
 
@@ -1061,6 +1061,7 @@ sub cmdConf {
 			val => \$arg2
 		});
 		configModify($arg1, $arg2);
+		Log::initLogFiles();
 	}
 }
 
@@ -1109,7 +1110,7 @@ sub cmdDeal {
 	} elsif ($arg[0] eq "" && %currentDeal) {
 		sendDealAddItem(0, $currentDeal{'you_zenny'});
 		sendDealFinalize();
-		
+
 	} elsif ($arg[0] eq "add" && !%currentDeal) {
 		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
 			"No deal in progress\n";
@@ -1178,7 +1179,7 @@ sub cmdDealList {
 		$lastindex = @currentDealYou if (@currentDealYou > $lastindex);
 		for (my $i = 0; $i < $lastindex; $i++) {
 			if ($i < @currentDealYou) {
-				$display = ($items_lut{$currentDealYou[$i]} ne "") 
+				$display = ($items_lut{$currentDealYou[$i]} ne "")
 					? $items_lut{$currentDealYou[$i]}
 					: "Unknown ".$currentDealYou[$i];
 				$display .= " x $currentDeal{'you'}{$currentDealYou[$i]}{'amount'}";
@@ -1186,7 +1187,7 @@ sub cmdDealList {
 				$display = "";
 			}
 			if ($i < @currentDealOther) {
-				$display2 = ($items_lut{$currentDealOther[$i]} ne "") 
+				$display2 = ($items_lut{$currentDealOther[$i]} ne "")
 					? $items_lut{$currentDealOther[$i]}
 					: "Unknown ".$currentDealOther[$i];
 				$display2 .= " x $currentDeal{'other'}{$currentDealOther[$i]}{'amount'}";
@@ -1524,7 +1525,7 @@ sub cmdFriend {
 		}
 		message("--------------------------\n", "list");
 	}
-	
+
 }
 
 sub cmdGuild {
@@ -1802,7 +1803,7 @@ sub cmdInventory {
 				} else {
 					push @uequipment, \%eqp;
 				}
-			} 
+			}
 		}
 
 		my $msg = "-----------Inventory-----------\n";
@@ -2256,7 +2257,7 @@ sub cmdPlayerList {
 		$msg .= swrite(
 			"Lower headgear: @<<<<<<<<<<<<<<<<<<< Hair color:      @<<<<<<<<<<<<<<<<<<<",
 			[$headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})"]);
-		
+
 		$msg .= sprintf("Walk speed: %.2f secs per block\n", $player->{walk_speed});
 		if ($player->{dead}) {
 			$msg .= "Player is dead.\n";
@@ -2495,6 +2496,7 @@ sub cmdReload {
 
 	} else {
 		Settings::parseReload($args);
+		Log::initLogFiles();
 	}
 }
 
@@ -2883,7 +2885,7 @@ sub cmdStand {
 sub cmdStatAdd {
 	# Add status point
 	my (undef, $arg) = @_;
-	if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int" 
+	if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int"
 	 && $arg ne "dex" && $arg ne "luk") {
 		error	"Syntax Error in function 'stat_add' (Add Status Point)\n" .
 			"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
@@ -3142,7 +3144,7 @@ sub cmdTalk {
 		} else {
 			sendTalkText(\$remote_socket, $talk{'ID'}, $arg2);
 		}
-			
+
 	} elsif ($arg1 eq "cont" && !%talk) {
 		error	"Error in function 'talk cont' (Continue Talking to NPC)\n" .
 			"You are not talking to any NPC.\n";
@@ -3259,14 +3261,14 @@ sub cmdUnequip {
 		error "You must specify an item to unequip.\n";
 		return;
 	}
-	
+
 	my $item = Match::inventoryItem($arg1);
 
 	if (!$item) {
 		error "You don't have $arg1.\n";
 		return;
 	}
-	
+
 	if (!$item->{equipped} && $item->{type} != 10) {
 		error	"Error in function 'unequip' (Unequip Inventory Item)\n" .
 			"Inventory Item $arg1 is not equipped.\n";
@@ -3372,7 +3374,7 @@ sub cmdVenderList {
 		# autovivifies $obj->{pos_to} but it doesnt matter
 		message(sprintf(
 			"%3d %-36s (%3d, %3d) %-20s\n",
-			$i, $venderLists{$venderListsID[$i]}{'title'}, 
+			$i, $venderLists{$venderListsID[$i]}{'title'},
 			$player->{pos_to}{x} || '?', $player->{pos_to}{y} || '?', $player->name),
 			"list");
 	}
