@@ -12,6 +12,7 @@ Bug fixes:
 - Same quick-and-dirty fix for "Auto-storaging due to insufficient ___".
 - Don't try to statsAddAuto before the stat point info has been received.
 - Equipped arrows will now show how many of them are left.
+- Shop title in shop.txt is detected better.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
