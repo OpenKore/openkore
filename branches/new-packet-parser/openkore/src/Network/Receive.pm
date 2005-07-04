@@ -656,7 +656,7 @@ sub actor_moved {
 			$players{$args->{ID}}{'nameID'} = unpack("L1", $args->{ID});
 			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
 			my $domain = existsInList($config{friendlyAID}, unpack("L1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-			debug "Player Appeared: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $args->{sex}_lut{$args->{sex}} $jobs_lut{$args->{type}}\n", $domain;
+			debug "Player Appeared: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $sex_lut{$args->{sex}} $jobs_lut{$args->{type}}\n", $domain;
 			$added = 1;
 			Plugins::callHook('player', {player => $players{$args->{ID}}});
 		}
