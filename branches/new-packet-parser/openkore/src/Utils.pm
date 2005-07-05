@@ -425,11 +425,9 @@ sub findKeyString {
 # target hash
 #
 sub hashCopyByKey {
-  my $target = shift;
-  my $source = shift;
-  my @keys = @_;
+  my ($target, $source, @keys) = @_;
   foreach (@keys){
-    $target->{$_} = $source->{$_} if $source->{$_};
+    $target->{$_} = $source->{$_} if exists $source->{$_};
   }
 }
 
