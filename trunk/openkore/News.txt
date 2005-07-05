@@ -6,8 +6,11 @@
 - Items named e.g. "Unknown 1234" are now called "Unknown #1234" so that
   you can use their name in items_control.txt.
 - The syntax for chat room commands has been changed. See below.
-- The "whenStatusInactive" names for ASPD potions have been changed to
-  "Concentration Potion", "Awakening Potion" and "Berserk Potion".
+- Many "whenStatus(In)active" names have been changed, so that they're
+  consistent with the actual item or skill names.
+  For example, the status name for Concentration Potion has been renamed
+  from "Concent" to "Concentration Potion", and the status name
+  for Increase AGI has been renamed from "Inc Agi" to "Increase AGI".
 - dcOnDisconnect must be set to 2 if you want to disconnect when
   you get "Out of sync with server" error.
 
