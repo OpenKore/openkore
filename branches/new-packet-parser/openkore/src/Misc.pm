@@ -2760,6 +2760,14 @@ sub checkSelfCondition {
 		return 0 unless (percent_sp($char) <= $config{$prefix . "_sp_upper"} && percent_sp($char) >= $config{$prefix . "_sp_lower"});
 	}
 
+	if ($config{$prefix . "_hpAbsolute"}) {
+		return 0 unless (inRange($char->{hp}, $config{$prefix . "_hpAbsolute"}));
+	}
+
+	if ($config{$prefix . "_spAbsolute"}) {
+		return 0 unless (inRange($char->{sp}, $config{$prefix . "_spAbsolute"}));
+	}
+
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
 		return 0 unless ($char->{sp} >= $skillsSP_lut{$skills_rlut{lc($config{$prefix})}}{$config{$prefix . "_lvl"}})
