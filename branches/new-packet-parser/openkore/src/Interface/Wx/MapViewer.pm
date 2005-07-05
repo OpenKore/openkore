@@ -2,7 +2,7 @@
 #  OpenKore - WxWidgets Interface
 #  Map viewer control
 #
-#  Copyright (c) 2004 OpenKore development team 
+#  Copyright (c) 2004 OpenKore development team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -40,10 +40,12 @@ sub new {
 	$self->{playerBrush} = new Wx::Brush(new Wx::Colour(0, 200, 0), wxSOLID);
 	$self->{monsterBrush} = new Wx::Brush(new Wx::Colour(215, 0, 0), wxSOLID);
 	$self->{npcBrush} = new Wx::Brush(new Wx::Colour(180, 0, 255), wxSOLID);
+	$self->{portalBrush} = new Wx::Brush(new Wx::Colour(255, 128, 64), wxSOLID);
 	EVT_PAINT($self, \&_onPaint);
 	EVT_LEFT_DOWN($self, \&_onClick);
 	EVT_MOTION($self, \&_onMotion);
 	EVT_ERASE_BACKGROUND($self, \&_onErase);
+	$self->_parsePortals();
 	return $self;
 }
 
@@ -145,6 +147,12 @@ sub setMonsters {
 	}
 }
 
+sub setPortals {
+	my $self = shift;
+	$self->{portals} = shift;
+	$self->{needUpdate} = 1;
+}
+
 sub setPlayers {
 	my $self = shift;
 	my $players = shift;
@@ -213,6 +221,24 @@ sub setMapDir {
 
 
 #### Private ####
+
+sub _parsePortals {
+	my $self = shift;
+	open FILE, "< $Settings::tables_folder/portals.txt";
+	$self->{portals} = {};
+	while (my $line = <FILE>) {
+		next if $line =~ /^#/;
+		$line =~ s/\cM|\cJ//g;
+		$line =~ s/\s+/ /g;
+		$line =~ s/^\s+|\s+$//g;
+		my @args = split /\s/, $line, 8;
+		if (@args > 5) {
+			$self->{portals}->{$args[0]} = [] unless defined $self->{portals}->{$args[0]};
+			push (@{$self->{portals}->{$args[0]}},{x=>$args[1],y=>$args[2]});
+		}
+	}
+	close FILE;
+}
 
 sub _onClick {
 	my $self = shift;
@@ -341,6 +367,14 @@ sub _onPaint {
 	$dc->DrawRectangle(0, $h,
 		$w, $self->GetSize->GetHeight - $h);
 	$dc->DrawBitmap($self->{bitmap}, 0, 0, 1);
+
+	if ($self->{portals} && $self->{portals}->{$self->{field}{name}} && @{$self->{portals}->{$self->{field}{name}}}) {
+		$dc->SetBrush($self->{portalBrush});
+		foreach my $pos (@{$self->{portals}->{$self->{field}{name}}}) {
+			($x, $y) = $self->_posXYToView($pos->{x}, $pos->{y});
+			$dc->DrawEllipse($x - 3, $y - 3, 6, 6);
+		}
+	}
 
 	if ($self->{players} && @{$self->{players}}) {
 		$dc->SetBrush($self->{playerBrush});
