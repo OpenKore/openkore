@@ -27,7 +27,7 @@ Bug fixes:
   looting monsters that you killed without ever using attack ai_seq.)
 - inInventory was not working at all since its last update.
 - Bot should no longer wait 3 seconds needlessly when starting an NPC
-  conversation. http://openkore.sourceforge.net/forum/viewtopic.php?t=4743
+  conversation.
 - Don't say "Done talking with <NPC>." until after "<NPC> : Done talking".
 - Undo above change because NPCs don't always say "Done talking".
 - Fix where command.
@@ -42,20 +42,14 @@ Bug fixes:
 - Fixed dealAuto not working while dead.
 - Add the missing "timeout" chat command.
 - Fix equipAuto trying to equip unidentified items.
-- Fix crash with Actor::You when creating a new character in the bot.
 - Long-overdue fix to make a party that you joined in this session
   work properly (obscure variable sharing problem).
-- 'card merge' series commands actually works instead of disconnecting
-  you now, on non-encrypted servers. (But does it still work on
-  encrypted servers?)
 - Correctly set the field name on aliased novice training fields.
 - Give a warning if the user specifies an invalid "server" option in
   config.txt.
 - Job level flag in mon_control.txt was never actually implemented.
 - avoidGM_near_inTown fixed.
 - route_teleport through maps with inner warps should work now.
-  See http://openkore.sourceforge.net/forum/viewtopic.php?t=8267
-- Fix Segmentation fault bug with Actor::Unknown.nameString infinite loop.
 - Fix sitAuto_look. It's more reliable now.
 - Fix bug where monsters changing into other monsters overwrote
   $obj->{type}.
@@ -78,8 +72,6 @@ New features:
 - "Player Exists:" and "Player Appeared:" messages moved to domain
   parseMsg_presence/player so you can put it in beepDomains.
 - Server disconnections are now immediately detected.
-- New command "talknpc <x> <y> <sequence>" for sending a sequence of
-  commands to the NPC at <x> <y>. Useful in macros.
 - Messages about other players being muted moved to parseMsg_statuslook
   domain with verbosity 2.
 - "Unknown error 0" message changed to "Server shutting down".
@@ -187,6 +179,9 @@ New commands:
   List of chat rooms around you.
 - relog [delay]
   You can now specify a delay when relogging.
+- talknpc <x> <y> <sequence>
+  New command for sending a sequence of commands to the NPC at <x> <y>. Useful in macros.
+
 
 New config options:
 - partySkill: target_dead
