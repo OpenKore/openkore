@@ -964,28 +964,11 @@ sub getFormattedDate {
 }
 
 sub getHex {
-	my $data = shift;
-	my $i;
-	my $return;
-	for ($i = 0; $i < length($data); $i++) {
-		$return .= uc(unpack("H2",substr($data, $i, 1)));
-		if ($i + 1 < length($data)) {
-			$return .= " ";
-		}
-	}
-	return $return;
+	return uc(join (' ',unpack("(H2)*",shift)));
 }
 
 sub giveHex {
-	my $data = shift;
-	my @words = split(/ /, $data);
-	my $i = 0;
-	my $return;
-	while ($words[$i]) {
-		$return .= pack("H2",$words[$i]);
-		$i++;
-	}
-	return $return;
+	return pack("H*",split(' ',shift));
 }
 
 
@@ -1193,10 +1176,10 @@ sub old_makeDistMap {
 }
 
 sub makeIP {
-	my $raw = shift;
+	my @hex = unpack ("(H2)*",shift);
 	my $ret;
 	for (my $i = 0; $i < 4; $i++) {
-		$ret .= hex(getHex(substr($raw, $i, 1)));
+		$ret .= hex($hex[$i]);
 		if ($i + 1 < 4) {
 			$ret .= ".";
 		}
