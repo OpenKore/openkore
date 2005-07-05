@@ -282,9 +282,10 @@ sub ai_getAggressives {
 
 			} else {
 				# Function is called in scalar context
-				if (Misc::mon_control($monster->{name})->{weight} > 0) {
-					$num += mon_control($monster->{name})->{weight};
-				} elsif (Misc::mon_control($monster->{name})->{weight} != -1) {
+				my $mon_control = Misc::mon_control($monster->{name});
+				if ($mon_control->{weight} > 0) {
+					$num += $mon_control->{weight};
+				} elsif ($mon_control->{weight} != -1) {
 					$num++;
 				}
 			}
