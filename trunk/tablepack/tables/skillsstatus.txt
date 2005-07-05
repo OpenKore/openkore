@@ -10,25 +10,25 @@
 9 Angelus
 10 Blessing
 11 Crucis
-12 Inc Agi
-13 Dec Agi
+12 Increase AGI
+13 Decrease AGI
 14 Slow poison
 15 Impostio
 16 Suffragium
 17 Aspersio
 18 Benedictio
-19 Kyrie Guard
+19 Kyrie Eleison
 20 Magnificat
 21 Gloria
 22 Lex Aeterna
-23 Adrenaline
+23 Adrenaline Rush
 24 Weapon Perfection
-25 Over Thrust
-26 Maximize Power
+25 Power-Thrust
+26 Power Maximize
 27 Pecopeco
 28 Falcon
-29 Trick Dead
-30 Loud
+29 Play Dead
+30 Crazy Uproar
 31 Energy Coat
 32 Armor Damaged
 33 Weapon Damaged
