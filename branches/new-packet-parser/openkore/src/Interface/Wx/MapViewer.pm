@@ -45,7 +45,6 @@ sub new {
 	EVT_LEFT_DOWN($self, \&_onClick);
 	EVT_MOTION($self, \&_onMotion);
 	EVT_ERASE_BACKGROUND($self, \&_onErase);
-	$self->_parsePortals();
 	return $self;
 }
 
@@ -219,12 +218,11 @@ sub setMapDir {
 	$self->{mapDir} = shift;
 }
 
-
-#### Private ####
-
-sub _parsePortals {
+sub parsePortals {
 	my $self = shift;
-	open FILE, "< $Settings::tables_folder/portals.txt";
+	my $file = shift;
+	return unless (-r $file);
+	open FILE, "< $file";
 	$self->{portals} = {};
 	while (my $line = <FILE>) {
 		next if $line =~ /^#/;
@@ -239,6 +237,10 @@ sub _parsePortals {
 	}
 	close FILE;
 }
+
+
+#### Private ####
+
 
 sub _onClick {
 	my $self = shift;

@@ -479,6 +479,7 @@ sub createSplitterContent {
 	$mapView->onMouseMove(\&onMapMouseMove, $self);
 	$mapView->onClick(\&onMapClick, $self);
 	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
+	$mapView->parsePortals("$Settings::tables_folder/portals.txt");
 	if (%field && $char) {
 		$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
 	}
