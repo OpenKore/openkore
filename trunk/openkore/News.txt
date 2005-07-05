@@ -293,6 +293,7 @@ Credits:
 - kaliwanagan: 'selfSkill' domain.
 - bijikucing: Ayothaya portals.
 
+
 ==================
 ### 1.6.1
 ==================
