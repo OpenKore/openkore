@@ -4572,6 +4572,19 @@ sub parseMsg {
 		}
 	}
 
+	if ($config{debugPacket_include_dumpMethod} && existsInList($config{'debugPacket_include'}, $switch)) {
+		my $label = $packetDescriptions{Recv}{$switch} ?
+			" ($packetDescriptions{Recv}{$switch})" : '';
+		if ($config{debugPacket_include_dumpMethod} == 1) {
+			debug "Packet: $switch$label\n", "parseMsg", 0;
+		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
+			visualDump(substr($msg, 0, $msg_size), "$switch$label");
+		}
+		else {
+			dumpData($msg,1);
+		}
+	}
+
 	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
 
 	$lastPacketTime = time;
