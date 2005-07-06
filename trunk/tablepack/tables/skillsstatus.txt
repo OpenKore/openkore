@@ -12,7 +12,7 @@
 11 Crucis
 12 Increase AGI
 13 Decrease AGI
-14 Slow poison
+14 Slow Poison
 15 Impostio
 16 Suffragium
 17 Aspersio
