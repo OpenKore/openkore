@@ -962,7 +962,16 @@ sub getFormattedDate {
 }
 
 sub getHex {
-	return uc(join (' ',unpack("(H2)*",shift)));
+	my $data = shift;
+	my $i;
+	my $return;
+	for ($i = 0; $i < length($data); $i++) {
+		$return .= uc(unpack("H2",substr($data, $i, 1)));
+		if ($i + 1 < length($data)) {
+			$return .= " ";
+		}
+	}
+	return $return;
 }
 
 sub giveHex {
@@ -1174,16 +1183,16 @@ sub old_makeDistMap {
 }
 
 sub makeIP {
-	my @hex = unpack ("(H2)*",shift);
+	my $raw = shift;
 	my $ret;
 	for (my $i = 0; $i < 4; $i++) {
-		$ret .= hex($hex[$i]);
+		$ret .= hex(getHex(substr($raw, $i, 1)));
 		if ($i + 1 < 4) {
 			$ret .= ".";
-		}
-	}
+		}   
+	}   
 	return $ret;
-}
+} 
 
 ##
 # parseArgs(command, [max], [delimiters = ' '], [last_arg_pos])
