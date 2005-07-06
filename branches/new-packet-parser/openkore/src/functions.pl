@@ -6151,7 +6151,7 @@ sub parseMsg {
 			debug "Status Points: $val\n", "parseMsg", 2;
 		} elsif ($type == 11) {
 			$chars[$config{'char'}]{'lv'} = $val;
-			debug "Level: $val\n", "parseMsg", 2;
+			message "You are now level $val\n", "success";
 		} elsif ($type == 12) {
 			$chars[$config{'char'}]{'points_skill'} = $val;
 			debug "Skill Points: $val\n", "parseMsg", 2;
@@ -6206,7 +6206,7 @@ sub parseMsg {
 			debug "Attack Speed: $chars[$config{'char'}]{'attack_speed'}\n", "parseMsg", 2;
 		} elsif ($type == 55) {
 			$chars[$config{'char'}]{'lv_job'} = $val;
-			debug "Job Level: $val\n", "parseMsg", 2;
+			message "You are now job level $val\n", "success";
 		} elsif ($type == 124) {
 			debug "Something3: $val\n", "parseMsg", 2;
 		} else {
