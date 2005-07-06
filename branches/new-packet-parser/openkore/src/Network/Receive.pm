@@ -56,7 +56,7 @@ sub new {
 		'0081' => ['errors', 'C1', [qw(type)]],
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
-		'008A' => ['actor_action', 'a4 a4 a4 V1 V1 s1 v1 C1 v1', [qw(ID1 ID2 tick src_speed dst_speed damage param2 type param3)]],
+		'008A' => ['actor_action', 'a4 a4 a4 V1 V1 s1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
 		'008D' => ['public_message', 'a4 a*', [qw(ID message)]],
 		'008E' => ['self_chat', 'x2 a*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
@@ -65,6 +65,8 @@ sub new {
 		'0097' => ['private_message', 'x2 Z24', [qw(privMsgUser)]],
 		'0098' => ['private_message_sent', 'C1', [qw(type)]],
 		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
+		'009C' => ['actor_look_at', 'a4 C1 x1 C1', [qw(ID head body)]],
+		'009D' => ['item_exists', 'a4 v1 x1 v1 v1 v1', [qw(ID type x y amount)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
@@ -216,31 +218,31 @@ sub actor_action {
 
 	if ($args->{type} == 1) {
 		# Take item
-		my $source = Actor::get($args->{ID1});
+		my $source = Actor::get($args->{sourceID});
 		my $verb = $source->verb('pick up', 'picks up');
-		#my $target = Actor::get($args->{ID2});
-		my $target = getActorName($args->{ID2});
+		#my $target = Actor::get($args->{targetID});
+		my $target = getActorName($args->{targetID});
 		debug "$source $verb $target\n", 'parseMsg_presence';
-		$items{$args->{ID2}}{takenBy} = $args->{ID1} if ($items{$args->{ID2}});
+		$items{$args->{targetID}}{takenBy} = $args->{sourceID} if ($items{$args->{targetID}});
 	} elsif ($args->{type} == 2) {
 		# Sit
-		my ($source, $verb) = getActorNames($args->{ID1}, 0, 'are', 'is');
-		if ($args->{ID1} eq $accountID) {
+		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
+		if ($args->{sourceID} eq $accountID) {
 			message "You are sitting.\n";
 			$char->{sitting} = 1;
 		} else {
-			debug getActorName($args->{ID1})." is sitting.\n", 'parseMsg';
-			$players{$args->{ID1}}{sitting} = 1 if ($players{$args->{ID1}});
+			debug getActorName($args->{sourceID})." is sitting.\n", 'parseMsg';
+			$players{$args->{sourceID}}{sitting} = 1 if ($players{$args->{sourceID}});
 		}
 	} elsif ($args->{type} == 3) {
 		# Stand
-		my ($source, $verb) = getActorNames($args->{ID1}, 0, 'are', 'is');
-		if ($args->{ID1} eq $accountID) {
+		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
+		if ($args->{sourceID} eq $accountID) {
 			message "You are standing.\n";
 			$char->{sitting} = 0;
 		} else {
-			debug getActorName($args->{ID1})." is standing.\n", 'parseMsg';
-			$players{$args->{ID1}}{sitting} = 0 if ($players{$args->{ID1}});
+			debug getActorName($args->{sourceID})." is standing.\n", 'parseMsg';
+			$players{$args->{sourceID}}{sitting} = 0 if ($players{$args->{sourceID}});
 		}
 	} else {
 		# Attack
@@ -255,20 +257,20 @@ sub actor_action {
 			$dmgdisplay .= " + $args->{param3}" if $args->{param3};
 		}
 
-		updateDamageTables($args->{ID1}, $args->{ID2}, $args->{damage});
-		my $source = Actor::get($args->{ID1});
-		my $target = Actor::get($args->{ID2});
+		updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage});
+		my $source = Actor::get($args->{sourceID});
+		my $target = Actor::get($args->{targetID});
 		my $verb = $source->verb('attack', 'attacks');
 
 		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
 
 		my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($args->{src_speed}/10).")";
 
-		Plugins::callHook('packet_attack', {sourceID => $args->{ID1}, targetID => $args->{ID2}, msg => \$msg, dmg => $totalDamage});
+		Plugins::callHook('packet_attack', {sourceID => $args->{sourceID}, targetID => $args->{targetID}, msg => \$msg, dmg => $totalDamage});
 
 		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
 
-		if ($args->{ID1} eq $accountID) {
+		if ($args->{sourceID} eq $accountID) {
 			message("$status $msg\n", $totalDamage > 0 ? "attackMon" : "attackMonMiss");
 			if ($startedattack) {
 				$monstarttime = time();
@@ -276,16 +278,16 @@ sub actor_action {
 				$startedattack = 0;
 			}
 			calcStat($args->{damage});
-		} elsif ($args->{ID2} eq $accountID) {
+		} elsif ($args->{targetID} eq $accountID) {
 			# Check for monster with empty name
-			if ($monsters{$args->{ID1}} && %{$monsters{$args->{ID1}}} && $monsters{$args->{ID1}}{'name'} eq "") {
+			if ($monsters{$args->{sourceID}} && %{$monsters{$args->{sourceID}}} && $monsters{$args->{sourceID}}{'name'} eq "") {
 				if ($config{'teleportAuto_emptyName'} ne '0') {
 					message "Monster with empty name attacking you. Teleporting...\n";
 					useTeleport(1);
 				} else {
 					# Delete monster from hash; monster will be
 					# re-added to the hash next time it moves.
-					delete $monsters{$args->{ID1}};
+					delete $monsters{$args->{sourceID}};
 				}
 			}
 			message("$status $msg\n", $args->{damage} > 0 ? "attacked" : "attackedMiss");
@@ -638,6 +640,26 @@ sub actor_info {
 			my $binID = binFind(\@petsID, $args->{ID});
 			debug "Pet Info: $pets{$args->{ID}}{'name_given'} ($binID)\n", "parseMsg", 2;
 		}
+	}
+}
+
+sub actor_look_at {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	if ($args->{ID} eq $accountID) {
+		$chars[$config{'char'}]{'look'}{'head'} = $args->{head};
+		$chars[$config{'char'}]{'look'}{'body'} = $args->{body};
+		debug "You look at $args->{body}, $args->{head}\n", "parseMsg", 2;
+
+	} elsif ($players{$args->{ID}} && %{$players{$args->{ID}}}) {
+		$players{$args->{ID}}{'look'}{'head'} = $args->{head};
+		$players{$args->{ID}}{'look'}{'body'} = $args->{body};
+		debug "Player $players{$args->{ID}}{'name'} ($players{$args->{ID}}{'binID'}) looks at $players{$args->{ID}}{'look'}{'body'}, $players{$args->{ID}}{'look'}{'head'}\n", "parseMsg";
+
+	} elsif ($monsters{$args->{ID}} && %{$monsters{$args->{ID}}}) {
+		$monsters{$args->{ID}}{'look'}{'head'} = $args->{head};
+		$monsters{$args->{ID}}{'look'}{'body'} = $args->{body};
+		debug "Monster $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'}) looks at $monsters{$args->{ID}}{'look'}{'body'}, $monsters{$args->{ID}}{'look'}{'head'}\n", "parseMsg";
 	}
 }
 
@@ -1116,6 +1138,22 @@ sub errors {
 	} else {
 		error("Unknown error $args->{type}\n", "connection");
 	}
+}
+
+sub item_exists {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	if (!$items{$args->{ID}} || !%{$items{$args->{ID}}}) {
+		binAdd(\@itemsID, $args->{ID});
+		$items{$args->{ID}}{'appear_time'} = time;
+		$items{$args->{ID}}{'amount'} = $args->{amount};
+		$items{$args->{ID}}{'nameID'} = $args->{type};
+		$items{$args->{ID}}{'binID'} = binFind(\@itemsID, $args->{ID});
+		$items{$args->{ID}}{'name'} = itemName($items{$args->{ID}});
+	}
+	$items{$args->{ID}}{'pos'}{'x'} = $args->{x};
+	$items{$args->{ID}}{'pos'}{'y'} = $args->{y};
+	message "Item Exists: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'}) x $items{$args->{ID}}{'amount'}\n", "drop", 1;
 }
 
 sub login_error {
