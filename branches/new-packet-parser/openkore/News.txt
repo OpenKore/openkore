@@ -313,8 +313,7 @@ Credits:
 - TJ09: Einbroch fields.
 - kaliwanagan: 'selfSkill' domain.
 - bijikucing: Ayothaya portals.
-- ½ÃÀÌ¶ó: Juperos and Lighthalzen fields.
-
+- ì‹œì´ë¼: Juperos and Lighthalzen fields.
 
 
 ==================
