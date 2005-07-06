@@ -92,6 +92,7 @@ sub new {
 
 sub create {
 	my ($self, $type) = @_;
+	$type = 0 if $type eq '';
 	my $class = "Network::Receive::ServerType$type";
 
 	undef $@;
