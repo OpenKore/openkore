@@ -1,0 +1,17 @@
+First, you will need to install a <em>CVS client</em> in order to access CVS servers,
+just like you need a web browser to access HTTP servers.
+There are many CVS clients for Windows, but I recommend TortoiseCVS because of it's
+simplicity and integration with Windows Explorer: <a HREF="http://www.tortoisecvs.org/">http://www.tortoisecvs.org/</a>
+
+<p>
+This guide assumes that you use TortoiseCVS.
+
+<p>
+<b>Tip:</b> once you've installed TortoiseCVS, you should tell it to use
+compression when uploading/downloading stuff. Rightclick on an empty
+spot in any folder and choose <tt>"CVS-&gt;Preferences..."</tt>. Go
+to the <em>"Advanced"</em> tab and choose <em>"3 - Low"</em> for
+<en>Network compression</en>. <b>Do NOT choose a higher level of
+compression!</b> Anything higher than 3 won't give much better results,
+but will stress the server more. SourceForge already has to deal with
+lots of traffic, so please don't set compression higher than 3.
