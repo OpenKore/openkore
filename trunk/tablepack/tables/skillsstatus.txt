@@ -1,7 +1,7 @@
 0 Provoke
 1 Endure
 2 Twohand Quicken
-3 Concentration
+3 Improve Concentration
 4 Hide
 5 Cloaking
 6 Enchant Poison
@@ -9,11 +9,11 @@
 8 Quagmire
 9 Angelus
 10 Blessing
-11 Crucis
+11 Signum Crucis
 12 Increase AGI
 13 Decrease AGI
 14 Slow Poison
-15 Impostio
+15 Impositio Manus
 16 Suffragium
 17 Aspersio
 18 Benedictio
@@ -65,7 +65,7 @@
 100 Muted
 103 Aura Blade
 104 Parrying
-105 Concentrate
+105 Concentration
 106 Tension Relax
 107 Berserk
 108 Enchant Deadly Poison
