@@ -17,6 +17,7 @@ Bug fixes:
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
   prompt, since UNIX terminals generally don't close when openkore exits.
+- Your level/job level is now displayed when you level up.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
