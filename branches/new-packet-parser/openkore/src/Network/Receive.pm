@@ -257,7 +257,7 @@ sub actor_action {
 			$dmgdisplay .= " + $args->{param3}" if $args->{param3};
 		}
 
-		updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage});
+		updateDamageTables($args->{sourceID}, $args->{targetID}, $totalDamage);
 		my $source = Actor::get($args->{sourceID});
 		my $target = Actor::get($args->{targetID});
 		my $verb = $source->verb('attack', 'attacks');
