@@ -356,3 +356,10 @@ ip 66.111.61.90
 port 6900
 master_version 18
 version 0
+
+[dutchRO Private Server]
+ip 62.163.217.88
+port 6900
+master_version 14
+version 20
+private 1
