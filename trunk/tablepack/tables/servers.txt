@@ -350,3 +350,9 @@ port 6900
 master_version 1
 version 17
 serverType 4
+
+[AnimaRO Private Server]
+ip 66.111.61.90
+port 6900
+master_version 18
+version 0
