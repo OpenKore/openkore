@@ -57,7 +57,14 @@ sub new {
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V1 V1 s1 v1 C1 v1', [qw(ID1 ID2 tick src_speed dst_speed damage param2 type param3)]],
+		'008D' => ['public_message', 'a4 a*', [qw(ID message)]],
+		'008E' => ['self_chat', 'x2 a*', [qw(message)]],
+		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
+		'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
+		'0097' => ['private_message', 'x2 Z24', [qw(privMsgUser)]],
+		'0098' => ['private_message_sent', 'C1', [qw(type)]],
+		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
@@ -255,9 +262,9 @@ sub actor_action {
 
 		$target->{sitting} = 0 unless $args->{type} == 4 || $args->{type} == 9 || $totalDamage == 0;
 
-		Plugins::callHook('packet_attack', {sourceID => $args->{ID1}, targetID => $args->{ID2}, msg => \$msg, dmg => $totalDamage});
-
 		my $msg = "$source $verb $target - Dmg: $dmgdisplay (delay ".($args->{src_speed}/10).")";
+
+		Plugins::callHook('packet_attack', {sourceID => $args->{ID1}, targetID => $args->{ID2}, msg => \$msg, dmg => $totalDamage});
 
 		my $status = sprintf("[%3d/%3d]", percent_hp($char), percent_sp($char));
 
@@ -1111,43 +1118,6 @@ sub errors {
 	}
 }
 
-sub map_loaded {
-	#Note: ServerType0 overrides this function
-	my ($self,$args) = @_;
-	$conState = 5;
-	undef $conState_tries;
-	$char = $chars[$config{'char'}];
-
-	if ($xkore) {
-		$conState = 4;
-		message("Waiting for map to load...\n", "connection");
-		ai_clientSuspend(0, 10);
-		initMapChangeVars();
-	} else {
-		message("You are now in the game\n", "connection");
-		sendMapLoaded(\$remote_socket);
-		sendSync(\$remote_socket, 1);
-		debug "Sent initial sync\n", "connection";
-		$timeout{'ai'}{'time'} = time;
-	}
-
-	$char->{pos} = {};
-	makeCoords($char->{pos}, $args->{coords});
-	$char->{pos_to} = {%{$char->{pos}}};
-	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
-
-	sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
-}
-
-sub memo_success {
-	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		warning "Memo Failed\n";
-	} else {
-		message "Memo Succeeded\n", "success";
-	}
-}
-
 sub login_error {
 	my ($self,$args) = @_;
 
@@ -1206,6 +1176,219 @@ sub login_error_game_login_server {
 	$timeout_ex{master}{time} = time;
 	$timeout_ex{master}{timeout} = $timeout{'reconnect'}{'timeout'};
 	Network::disconnect(\$remote_socket);
+}
+
+sub map_change {
+	my ($self,$args) = @_;
+	$conState = 4 if ($conState != 4 && $xkore);
+
+	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
+	checkAllowedMap($ai_v{temp}{map});
+	if ($ai_v{temp}{map} ne $field{name}) {
+		getField($ai_v{temp}{map}, \%field);
+	}
+
+	main::initMapChangeVars();
+	for (my $i = 0; $i < @ai_seq; $i++) {
+		ai_setMapChanged($i);
+	}
+	$ai_v{'portalTrace_mapChanged'} = 1;
+
+	my %coords;
+	$coords{'x'} = $args->{x};
+	$coords{'y'} = $args->{y};
+	$chars[$config{char}]{pos} = {%coords};
+	$chars[$config{char}]{pos_to} = {%coords};
+	message "Map Change: $args->{map} ($chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'})\n", "connection";
+	if ($xkore) {
+		ai_clientSuspend(0, 10);
+	} else {
+		sendMapLoaded(\$remote_socket);
+		$timeout{'ai'}{'time'} = time;
+	}
+}
+
+sub map_changed {
+	my ($self,$args) = @_;
+	$conState = 4;
+
+	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
+	checkAllowedMap($ai_v{temp}{map});
+	if ($ai_v{temp}{map} ne $field{name}) {
+		getField($ai_v{temp}{map}, \%field);
+	}
+
+	undef $conState_tries;
+	for (my $i = 0; $i < @ai_seq; $i++) {
+		ai_setMapChanged($i);
+	}
+	$ai_v{'portalTrace_mapChanged'} = 1;
+
+	$map_ip = makeIP($args->{IP});
+	$map_port = $args->{port};
+	message(swrite(
+		"---------Map Change Info----------", [],
+		"MAP Name: @<<<<<<<<<<<<<<<<<<",
+		[$args->{map}],
+		"MAP IP: @<<<<<<<<<<<<<<<<<<",
+		[$map_ip],
+		"MAP Port: @<<<<<<<<<<<<<<<<<<",
+		[$map_port],
+		"-------------------------------", []),
+		"connection");
+
+	message("Closing connection to Map Server\n", "connection");
+	Network::disconnect(\$remote_socket) if (!$xkore);
+
+	# Reset item and skill times. The effect of items (like aspd potions)
+	# and skills (like Twohand Quicken) disappears when we change map server.
+	my $i = 0;
+	while (exists $config{"useSelf_item_$i"}) {
+		if (!$config{"useSelf_item_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"useSelf_item_$i"."_time"} = 0;
+		$i++;
+	}
+	$i = 0;
+	while (exists $config{"useSelf_skill_$i"}) {
+		if (!$config{"useSelf_skill_$i"}) {
+			$i++;
+			next;
+		}
+
+		$ai_v{"useSelf_skill_$i"."_time"} = 0;
+		$i++;
+	}
+	undef %{$chars[$config{char}]{statuses}} if ($chars[$config{char}]{statuses});
+	$char->{spirits} = 0;
+	undef $char->{permitSkill};
+	undef $char->{encoreSkill};
+}
+
+sub map_loaded {
+	#Note: ServerType0 overrides this function
+	my ($self,$args) = @_;
+	$conState = 5;
+	undef $conState_tries;
+	$char = $chars[$config{'char'}];
+
+	if ($xkore) {
+		$conState = 4;
+		message("Waiting for map to load...\n", "connection");
+		ai_clientSuspend(0, 10);
+		initMapChangeVars();
+	} else {
+		message("You are now in the game\n", "connection");
+		sendMapLoaded(\$remote_socket);
+		sendSync(\$remote_socket, 1);
+		debug "Sent initial sync\n", "connection";
+		$timeout{'ai'}{'time'} = time;
+	}
+
+	$char->{pos} = {};
+	makeCoords($char->{pos}, $args->{coords});
+	$char->{pos_to} = {%{$char->{pos}}};
+	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
+
+	sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
+}
+
+sub memo_success {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		warning "Memo Failed\n";
+	} else {
+		message "Memo Succeeded\n", "success";
+	}
+}
+
+sub public_message {
+	my ($self,$args) = @_;
+	$args->{message} =~ s/\000//g;
+	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
+	$args->{chatMsgUser} =~ s/ $//;
+
+	stripLanguageCode(\$args->{chatMsg});
+
+	my $dist = "unknown";
+	if ($players{$args->{ID}}) {
+		$dist = distance($char->{pos_to}, $players{$args->{ID}}{pos_to});
+		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+	}
+
+	$args->{chat} = "$args->{chatMsgUser} ($players{$args->{ID}}{binID}): $args->{chatMsg}";
+	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y}] [dist=$dist] " .
+		"$args->{message}\n") if ($config{logChat});
+	message "[dist=$dist] $args->{chat}\n", "publicchat";
+
+	ChatQueue::add('c', $args->{ID}, $args->{chatMsgUser}, $args->{chatMsg});
+	Plugins::callHook('packet_pubMsg', {
+		pubID => $args->{ID},
+		pubMsgUser => $args->{chatMsgUser},
+		pubMsg => $args->{chatMsg},
+		MsgUser => $args->{chatMsgUser},
+		Msg => $args->{chatMsg}
+	});
+}
+
+sub private_message {
+	my ($self,$args) = @_;
+	# Private message
+	$conState = 5 if ($conState != 4 && $xkore);
+	my $newmsg;
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 28, length($args->{RAW_MSG})-28));
+	my $msg = substr($args->{RAW_MSG}, 0, 28) . $newmsg;
+	my $args->{privMsg}= substr($msg, 28, $args->{RAW_MSG_SIZE} - 29);
+	if ($args->{privMsgUser} ne "" && binFind(\@privMsgUsers, $args->{privMsgUser}) eq "") {
+		push @privMsgUsers, $args->{privMsgUser};
+		Plugins::callHook('parseMsg/addPrivMsgUser', {
+			user => $args->{privMsgUser},
+			msg => $args->{privMsg},
+			userList => \@privMsgUsers
+		});
+	}
+
+	stripLanguageCode(\$args->{privMsg});
+	chatLog("pm", "(From: $args->{privMsgUser}) : $args->{privMsg}\n") if ($config{'logPrivateChat'});
+	message "(From: $args->{privMsgUser}) : $args->{privMsg}\n", "pm";
+
+	ChatQueue::add('pm', undef, $args->{privMsgUser}, $args->{privMsg});
+	Plugins::callHook('packet_privMsg', {
+		privMsgUser => $args->{privMsgUser},
+		privMsg => $args->{privMsg},
+		MsgUser => $args->{privMsgUser},
+		Msg => $args->{privMsg}
+	});
+
+	if ($config{dcOnPM} && $AI) {
+		chatLog("k", "*** You were PM'd, auto disconnect! ***\n");
+		message "Disconnecting on PM!\n";
+		quit();
+	}
+}
+
+sub private_message_sent {
+	my ($self,$args) = @_;
+	if ($args->{type} == 0) {
+		message "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n", "pm/sent";
+		chatLog("pm", "(To: $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n") if ($config{'logPrivateChat'});
+
+		Plugins::callHook('packet_sentPM', {
+			to => $lastpm[0]{user},
+			msg => $lastpm[0]{msg}
+		});
+
+	} elsif ($args->{type} == 1) {
+		warning "$lastpm[0]{'user'} is not online\n";
+	} elsif ($args->{type} == 2) {
+		warning "Player ignored your message\n";
+	} else {
+		warning "Player doesn't want to receive messages\n";
+	}
+	shift @lastpm;
 }
 
 sub received_characters {
@@ -1303,6 +1486,27 @@ sub received_sync {
 sub secure_login_key {
 	my ($self,$args) = @_;
 	$secureLoginKey = $args->{secure_key};
+}
+
+sub self_chat {
+	my ($self,$args) = @_;
+	$args->{message} =~ s/\000//g;
+	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
+	# Note: $chatMsgUser/Msg may be undefined. This is the case on
+	# eAthena servers: it uses this packet for non-chat server messages.
+
+	if (defined $args->{chatMsgUser}) {
+		stripLanguageCode(\$args->{chatMsg});
+		$args->{chatMsgUser} = "$args->{chatMsgUser} : $args->{chatMsg}";
+	}
+
+	chatLog("c", "$args->{message}\n") if ($config{'logChat'});
+	message "$args->{message}\n", "selfchat";
+
+	Plugins::callHook('packet_selfChat', {
+		user => $args->{chatMsgUser},
+		msg => $args->{chatMsg}
+	});
 }
 
 sub skill_use {
@@ -1462,6 +1666,17 @@ sub storage_item_added {
 	}
 	message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
 	$itemChange{$item->{name}} += $amount;
+}
+
+sub system_chat {
+	my ($self,$args) = @_;
+	#my $chat = substr($msg, 4, $msg_size - 4);
+	#$chat =~ s/\000$//;
+
+	stripLanguageCode(\$args->{message});
+	chatLog("s", "$args->{message}\n") if ($config{'logSystemChat'});
+	message "$args->{message}\n", "schat";
+	ChatQueue::add('gm', undef, undef, $args->{message});
 }
 
 sub warp_portal_list {
