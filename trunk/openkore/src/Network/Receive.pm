@@ -179,7 +179,6 @@ sub account_server_info {
 
 	my $num = 0;
 	undef @servers;
-	debug "PP: Server Info: msg_size: $msg_size, msg: $msg\n";
 	for (my $i = 0; $i < $msg_size; $i+=32) {
 		$servers[$num]{ip} = makeIP(substr($msg, $i, 4));
 		$servers[$num]{ip} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
