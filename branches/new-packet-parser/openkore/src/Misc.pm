@@ -2539,6 +2539,7 @@ sub compilePortals {
 	my %missingMap;
 	my $pathfinding;
 	my @solution;
+	my %field;
 
 	# Collect portal source and destination coordinates per map
 	foreach my $portal (keys %portals_lut) {
