@@ -1420,7 +1420,7 @@ sub private_message {
 	my $newmsg;
 	decrypt(\$newmsg, substr($args->{RAW_MSG}, 28, length($args->{RAW_MSG})-28));
 	my $msg = substr($args->{RAW_MSG}, 0, 28) . $newmsg;
-	my $args->{privMsg}= substr($msg, 28, $args->{RAW_MSG_SIZE} - 29);
+	$args->{privMsg} = substr($msg, 28, $args->{RAW_MSG_SIZE} - 29);
 	if ($args->{privMsgUser} ne "" && binFind(\@privMsgUsers, $args->{privMsgUser}) eq "") {
 		push @privMsgUsers, $args->{privMsgUser};
 		Plugins::callHook('parseMsg/addPrivMsgUser', {
