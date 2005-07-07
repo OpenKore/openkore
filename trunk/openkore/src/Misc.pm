@@ -70,7 +70,7 @@ our @EXPORT = (
 	itemName
 	itemNameSimple/,
 
-	#File Parsing and Writing
+	# File Parsing and Writing
 	qw/chatLog
 	shopLog
 	monsterLog
@@ -116,6 +116,7 @@ our @EXPORT = (
 	positionNearPlayer
 	positionNearPortal
 	printItemDesc
+	processNameRequestQueue
 	quit
 	relog
 	sendMessage
@@ -140,7 +141,7 @@ our @EXPORT = (
 	percent_sp
 	percent_weight/,
 
-	#Misc Functions
+	# Misc Functions
 	qw/avoidGM_near
 	avoidList_near
 	compilePortals
@@ -1686,8 +1687,10 @@ sub manualMove {
 sub objectAdded {
 	my ($type, $ID, $obj) = @_;
 
-	if ($type eq 'player' || $type eq 'npc') {
-		push @unknownObjects, $ID;
+	if ($type eq 'player') {
+		push @unknownPlayers, $ID;
+	} elsif ($type eq 'npc') {
+		push @unknownNPCs, $ID;
 	}
 
 	if ($type eq 'monster') {
@@ -1777,6 +1780,25 @@ sub printItemDesc {
 	message("Item: $items_lut{$itemID}\n\n", "info");
 	message($itemsDesc_lut{$itemID}, "info");
 	message("==============================================\n", "info");
+}
+
+sub processNameRequestQueue {
+	my ($queue, $objects) = @_;
+
+	while (@{$queue}) {
+		my $ID = $queue->[0];
+		my $object = $objects->{$ID};
+
+		if (!$object || $object->{gotName} || $object->{statuses}{"GM Perfect Hide"}) {
+			shift @{$queue};
+			next;
+		}
+
+		sendGetPlayerInfo(\$remote_socket, $ID);
+		$object = shift @{$queue};
+		push @{$queue}, $object if ($object);
+		last;
+	}
 }
 
 sub quit {

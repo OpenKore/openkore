@@ -132,11 +132,13 @@ sub initMapChangeVars {
 	undef %venderLists;
 	undef %guild;
 	undef %incomingGuild;
-	undef @unknownObjects;
 	undef @chatRoomsID;
 	undef %chatRooms;
 	undef @lastpm;
 	undef %incomingFriend;
+
+	@unknownPlayers = ();
+	@unknownNPCs = ();
 
 	$shopstarted = 0;
 	$timeout{ai_shop}{time} = time;
@@ -655,17 +657,8 @@ sub AI {
 	}
 
 	if (timeOut($timeout{ai_getInfo})) {
-		while (@unknownObjects) {
-			my $ID = $unknownObjects[0];
-			my $object = $players{$ID} || $npcs{$ID};
-			if (!$object || $object->{gotName}) {
-				shift @unknownObjects;
-				next;
-			}
-			sendGetPlayerInfo(\$remote_socket, $ID);
-			push(@unknownObjects, shift(@unknownObjects));
-			last;
-		}
+		processNameRequestQueue(\@unknownPlayers, \%players);
+		processNameRequestQueue(\@unknownNPCs, \%npcs);
 
 		foreach (keys %monsters) {
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
@@ -679,7 +672,7 @@ sub AI {
 				last;
 			}
 		}
-		$timeout{'ai_getInfo'}{'time'} = time;
+		$timeout{ai_getInfo}{time} = time;
 	}
 
 	if (!$xkore && timeOut($timeout{ai_sync})) {
@@ -4979,8 +4972,8 @@ sub parseMsg {
 			$player->{pos} = {%coords};
 			$player->{pos_to} = {%coords};
 			my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-			debug "Player Exists: ".$player->name." ($player->{binID}) Level $lv $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
-			setStatus($ID,$param1,$param2,$param3);
+			debug "Player Exists: " . $player->name . " ($player->{binID}) Level $lv $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
+			setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $player) if ($added);
 
@@ -5175,40 +5168,41 @@ sub parseMsg {
 		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
 
 		if ($jobs_lut{$type}) {
-			if (!UNIVERSAL::isa($players{$ID}, 'Actor')) {
-				$players{$ID} = new Actor::Player;
+			my $player = $players{$ID};
+			if (!UNIVERSAL::isa($player, 'Actor')) {
+				$players{$ID} = $player = new Actor::Player();
 				binAdd(\@playersID, $ID);
-				$players{$ID}{'appear_time'} = time;
-				$players{$ID}{'sex'} = $sex;
-				$players{$ID}{'ID'} = $ID;
-				$players{$ID}{'jobID'} = $type;
-				$players{$ID}{'nameID'} = unpack("L1", $ID);
-				$players{$ID}{'binID'} = binFind(\@playersID, $ID);
+				$player->{appear_time} = time;
+				$player->{sex} = $sex;
+				$player->{ID} = $ID;
+				$player->{jobID} = $type;
+				$player->{nameID} = unpack("L1", $ID);
+				$player->{binID} = binFind(\@playersID, $ID);
 				my $domain = existsInList($config{friendlyAID}, unpack("L1", $ID)) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-				debug "Player Appeared: ".$players{$ID}->name." ($players{$ID}{'binID'}) Level $lv $sex_lut{$sex} $jobs_lut{$type}\n", $domain;
+				debug "Player Appeared: " . $player->name . " ($player->{binID}) Level $lv $sex_lut{$sex} $jobs_lut{$type}\n", $domain;
 				$added = 1;
-				Plugins::callHook('player', {player => $players{$ID}});
+				Plugins::callHook('player', { player => $player });
 			}
 
-			$players{$ID}{weapon} = $weapon;
-			$players{$ID}{shield} = $shield;
-			$players{$ID}{walk_speed} = $walk_speed;
-			$players{$ID}{look}{head} = 0;
-			$players{$ID}{look}{body} = $direction;
-			$players{$ID}{headgear}{low} = $lowhead;
-			$players{$ID}{headgear}{top} = $tophead;
-			$players{$ID}{headgear}{mid} = $midhead;
-			$players{$ID}{hair_color} = $hair_color;
-			$players{$ID}{lv} = $lv;
-			$players{$ID}{guildID} = $guildID;
-			$players{$ID}{pos} = {%coordsFrom};
-			$players{$ID}{pos_to} = {%coordsTo};
-			$players{$ID}{time_move} = time;
-			$players{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
-			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
+			$player->{weapon} = $weapon;
+			$player->{shield} = $shield;
+			$player->{walk_speed} = $walk_speed;
+			$player->{look}{head} = 0;
+			$player->{look}{body} = $direction;
+			$player->{headgear}{low} = $lowhead;
+			$player->{headgear}{top} = $tophead;
+			$player->{headgear}{mid} = $midhead;
+			$player->{hair_color} = $hair_color;
+			$player->{lv} = $lv;
+			$player->{guildID} = $guildID;
+			$player->{pos} = {%coordsFrom};
+			$player->{pos_to} = {%coordsTo};
+			$player->{time_move} = time;
+			$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
+			debug "Player Moved: $player->{name} ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg";
                         setStatus($ID, $param1, $param2, $param3);
 
-			objectAdded('player', $ID, $players{$ID}) if ($added);
+			objectAdded('player', $ID, $player) if ($added);
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
@@ -5240,34 +5234,37 @@ sub parseMsg {
 				debug "Pet Moved: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 
 			} else {
-				if (!$monsters{$ID} || !%{$monsters{$ID}}) {
-					$monsters{$ID} = new Actor::Monster;
+				my $monster = $monsters{$ID};
+				if (!$monster || !%{$monster}) {
+					$monsters{$ID} = $monster = new Actor::Monster();
 					binAdd(\@monstersID, $ID);
-					$monsters{$ID}{ID} = $ID;
-					$monsters{$ID}{'appear_time'} = time;
-					$monsters{$ID}{'nameID'} = $type;
+					$monster->{ID} = $ID;
+					$monster->{appear_time} = time;
+					$monster->{nameID} = $type;
 					my $display = ($monsters_lut{$type} ne "")
 						? $monsters_lut{$type}
-						: "Unknown ".$type;
-					$monsters{$ID}{'name'} = $display;
-					$monsters{$ID}{'binID'} = binFind(\@monstersID, $ID);
-					debug "Monster Appeared: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
+						: "Unknown $type";
+					$monster->{name} = $display;
+					$monster->{binID} = binFind(\@monstersID, $ID);
+					debug "Monster Appeared: $monster->{name} ($monster->{binID})\n", "parseMsg_presence";
 					$added = 1;
 				}
-				$monsters{$ID}{look}{head} = 0;
-				$monsters{$ID}{look}{body} = $direction;
-				$monsters{$ID}{pos} = {%coordsFrom};
-				$monsters{$ID}{pos_to} = {%coordsTo};
-				$monsters{$ID}{time_move} = time;
-				$monsters{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
-				$monsters{$ID}{walk_speed} = $walk_speed;
-				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 2;
+
+				$monster->{look}{head} = 0;
+				$monster->{look}{body} = $direction;
+				$monster->{pos} = {%coordsFrom};
+				$monster->{pos_to} = {%coordsTo};
+				$monster->{time_move} = time;
+				$monster->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
+				$monster->{walk_speed} = $walk_speed;
+				debug "Monster Moved: $monster->{name} ($monster->{binID})\n", "parseMsg", 2;
 	                        setStatus($ID, $param1, $param2, $param3);
 
-				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
+				objectAdded('monster', $ID, $monster) if ($added);
 			}
+
 		} else {
-			debug "Unknown Moved: $type - ".getHex($ID)."\n", "parseMsg";
+			debug "Unknown Moved: $type - " . getHex($ID) . "\n", "parseMsg";
 		}
 
 	} elsif ($switch eq "007C") {
@@ -5639,12 +5636,14 @@ sub parseMsg {
 		stripLanguageCode(\$chatMsg);
 
 		my $dist = "unknown";
+		my $binID = '';
 		if ($players{$ID}) {
 			$dist = distance($char->{pos_to}, $players{$ID}{pos_to});
 			$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+			$binID = "($players{$ID}{binID})";
 		}
 
-		$chat = "$chatMsgUser ($players{$ID}{binID}): $chatMsg";
+		$chat = "$chatMsgUser$binID: $chatMsg";
 		chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$ID}{pos_to}{x}, $players{$ID}{pos_to}{y}] [dist=$dist] " .
 			"$chat\n") if ($config{logChat});
 		message "[dist=$dist] $chat\n", "publicchat";
