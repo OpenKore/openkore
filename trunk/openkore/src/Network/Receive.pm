@@ -38,7 +38,7 @@ sub new {
 		'006A' => ['login_error', 'C1', [qw(type)]],
 		'006B' => ['received_characters'],
 		'006C' => ['login_error_game_login_server'],
-		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 C1 C1 C1 C1 C1 C1 C1', [qw(ID zenny str agi vit int dex luk slot)]],
+		'006D' => ['character_creation_successful', 'a4 x4 V1 x62 Z24 C1 C1 C1 C1 C1 C1 C1', [qw(ID zenny name str agi vit int dex luk slot)]],
 		'006E' => ['character_creation_failed'],
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
