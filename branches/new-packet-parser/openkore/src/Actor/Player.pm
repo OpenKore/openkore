@@ -30,4 +30,10 @@ sub new {
 	return bless({type => 'Player'});
 }
 
+sub selfString {
+	my ($self) = @_;
+
+	return $self->{sex} ? 'himself' : 'herself';
+}
+
 1;
