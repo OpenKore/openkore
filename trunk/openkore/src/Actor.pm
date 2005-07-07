@@ -89,11 +89,20 @@ sub get {
 sub nameString {
 	my ($self, $otherActor) = @_;
 
-	return 'self' if $self->{ID} eq $otherActor->{ID};
+	return $self->selfString if $self->{ID} eq $otherActor->{ID};
 
 	my $nameString = "$self->{type} ".$self->name;
 	$nameString .= " ($self->{binID})" if defined $self->{binID};
 	return $nameString;
+}
+
+##
+# $actor->selfString()
+#
+# Returns 'itself' for monsters, or 'himself/herself' for players.
+# ('yourself' is handled by Actor::You.nameString.)
+sub selfString {
+	return 'itself';
 }
 
 ##

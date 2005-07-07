@@ -71,14 +71,14 @@ $SIG{__DIE__} = sub {
 		$err = sub { $Globals::interface->errorDialog($_[0]); };
 	}
 
-	# Extract file and line number from the die message 
-	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/; 
+	# Extract file and line number from the die message
+	my ($file, $line) = $_[0] =~ / at (.+?) line (\d+)\.$/;
 
-	# Get rid of the annoying "@INC contains:" 
-	my $dieMsg = $_[0]; 
+	# Get rid of the annoying "@INC contains:"
+	my $dieMsg = $_[0];
 	$dieMsg =~ s/ \(\@INC contains: .*\)//;
 
-	# Create error message and display it 
+	# Create error message and display it
 	my $msg = "Program terminated unexpectedly. Error message:\n" .
 		"$dieMsg\nA more detailed error report is saved to errors.txt";
 
@@ -177,6 +177,7 @@ use Utils;
 use Plugins;
 use FileParsers;
 use Network;
+use Network::Receive;
 use Network::Send;
 use Commands;
 use Misc;
@@ -191,8 +192,9 @@ use Actor::Unknown;
 use Interface;
 use ChatQueue;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Send Commands Misc AI Skills Interface ChatQueue
-	Actor Actor::Player Actor::Monster Actor::You Actor::Party Actor::Unknown/);
+	Network Network::Receive Network::Send Commands Misc AI Skills
+	Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
+	Actor::Party Actor::Unknown/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
@@ -292,6 +294,8 @@ if ($config{XKore} || $sys{XKore}) {
 		$interface->errorDialog($@);
 		exit 1;
 	}
+
+	$packetParser = Network::Receive->create($config{serverType});
 
 	# Redirect messages to the RO client
 	# I don't use a reference to redirectXKoreMessages here;
@@ -406,6 +410,7 @@ our $startTime_EXP = time;
 initStatVars();
 initRandomRestart();
 initConfChange();
+Log::initLogFiles();
 $timeout{'injectSync'}{'time'} = time;
 
 Log::message("\n");
@@ -414,7 +419,7 @@ Log::message("\n");
 ##### MAIN LOOP #####
 
 Plugins::callHook('initialized');
-$interface->mainLoop;
+$interface->mainLoop();
 Plugins::unloadAll();
 
 # Shutdown everything else
