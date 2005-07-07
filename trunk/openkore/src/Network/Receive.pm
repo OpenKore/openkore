@@ -67,7 +67,9 @@ sub new {
 		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
 		'009C' => ['actor_look_at', 'a4 C1 x1 C1', [qw(ID head body)]],
 		'009D' => ['item_exists', 'a4 v1 x1 v1 v1 v1', [qw(ID type x y amount)]],
+		'009E' => ['item_appeared', 'a4 v1 x1 v1 v1 x2 v1', [qw(ID type x y ammount)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
+		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -1142,6 +1144,30 @@ sub errors {
 	}
 }
 
+sub item_appeared {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	my $item = $items{$args->{ID}} ||= {};
+	if (!$item || !%{$item}) {
+		binAdd(\@itemsID, $args->{ID});
+		$item->{appear_time} = time;
+		$item->{amount} = $args->{amount};
+		$item->{nameID} = $args->{type};
+		$item->{binID} = binFind(\@itemsID, $args->{ID});
+		$item->{name} = itemName($item);
+	}
+	$item->{pos}{x} = $args->{x};
+	$item->{pos}{y} = $args->{y};
+
+	# Take item as fast as possible
+	if ($AI && $itemsPickup{lc($item->{name})} == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
+		sendTake(\$remote_socket, $args->{ID});
+	}
+
+	message "Item Appeared: $item->{name} ($item->{binID}) x $item->{amount} ($args->{x}, $args->{y})\n", "drop", 1;
+
+}
+
 sub item_exists {
 	my ($self,$args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
@@ -1156,6 +1182,19 @@ sub item_exists {
 	$items{$args->{ID}}{'pos'}{'x'} = $args->{x};
 	$items{$args->{ID}}{'pos'}{'y'} = $args->{y};
 	message "Item Exists: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'}) x $items{$args->{ID}}{'amount'}\n", "drop", 1;
+}
+
+sub item_disappeared {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	if ($items{$args->{ID}} && %{$items{$args->{ID}}}) {
+		debug "Item Disappeared: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'})\n", "parseMsg_presence";
+		%{$items_old{$args->{ID}}} = %{$items{$args->{ID}}};
+		$items_old{$args->{ID}}{'disappeared'} = 1;
+		$items_old{$args->{ID}}{'gone_time'} = time;
+		delete $items{$args->{ID}};
+		binRemove(\@itemsID, $args->{ID});
+	}
 }
 
 sub login_error {
