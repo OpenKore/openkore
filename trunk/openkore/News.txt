@@ -16,6 +16,7 @@ Bug fixes:
 - Don't try to statsAddAuto before the stat point info has been received.
 - Equipped arrows will now show how many of them are left.
 - Shop title in shop.txt is detected better.
+- Don't send name request for perfectly hidden players and NPCs.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
