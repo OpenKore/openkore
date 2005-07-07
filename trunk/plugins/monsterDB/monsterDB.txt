@@ -1,0 +1,423 @@
+abysmal knight 36140 7 7 2
+alarm 10647 0 0 1
+alice 10000 0 7 1
+alligator 6962 1 2 1
+am mut 12099 7 6 0
+ambernite 495 1 4 2
+amon ra 1214138 2 7 2
+anacondaq 1109 5 2 1
+ancient mummy 40599 9 1 1
+ancient worm 22598 5 4 2
+andre 688 2 4 0
+angeling 55000 6 8 1
+anolian 18960 1 5 1
+ant egg 420 0 0 0
+antique firelock 3852 9 1 1
+antonio 10 6 3 1
+anubis 12359 6 8 1
+apocalipse 22680 0 0 2
+apocalypse 22680 0 0 2
+arc angeling 79523 6 8 1
+archangeling 79523 6 8 1
+archer skeleton 3040 9 1 1
+arclouse 6075 2 4 1
+arclouze 6075 2 4 1
+argiope 4382 5 4 2
+argos 1117 5 4 2
+assaulter 15861 4 7 1
+assulter 11170 4 7 1
+aster 1372 2 5 0
+baby desert wolf 164 3 2 0
+baby leopard 2590 8 2 0
+bacsojin 218652 7 1 2
+baphomet 668000 7 6 2
+baphomet event 864960 7 6 2
+baphomet jr. 8578 7 6 0
+bathory 5415 7 7 1
+beetle 1874 2 4 0
+beetle king 1874 2 4 0
+bigfoot 1619 2 2 2
+black mushroom 15 2 3 0
+blazer 8252 3 6 1
+blood knight 57870 7 0 2
+bloody butterfly 8082 4 4 1
+bloody knight 57870 7 0 2
+bloody murderer 27521 7 7 2
+blue plant 10 2 3 0
+boa 471 2 2 1
+boiled rice 344 5 3 1
+bon gun 3520 9 1 1
+brilight 5562 3 4 0
+caramel 1424 2 2 0
+carat 5200 4 6 1
+cat o nine tails 64512 3 6 1
+cat o'nine tail 64512 3 6 1
+caterpillar 14439 2 4 0
+chepet 4950 3 7 1
+chimera 32600 3 2 2
+choco 4278 3 2 0
+chonchon 67 4 4 0
+chonchon 67 4 4 0
+christmas cookie 2090 6 7 0
+christmas goblin 1176 4 7 1
+christmas jakk 3581 3 0 1
+chung e 5628 1 6 1
+civil servant 14390 4 2 1
+clock 11050 2 0 1
+coco 817 2 2 0
+condor 92 4 2 1
+cookie 950 0 7 0
+cookie xmas 2090 6 7 0
+cornutus 1620 1 5 0
+crab 2451 1 5 0
+cramp 4720 5 2 0
+creamy 595 4 4 0
+creamy fear 13387 4 4 0
+cruiser 2820 0 0 1
+dancing dragon 9136 4 9 1
+dark frame 7500 7 6 1
+dark illusion 103631 9 6 2
+dark lord 360000 9 6 2
+dark priest 9660 7 7 1
+demon pungus 7259 5 6 0
+deniro 760 2 4 0
+desert wolf 1716 3 2 1
+desert wolf puppy 164 3 2 0
+deviace 19192 1 5 1
+deviling 50 1 3 1
+deviruchi 7360 7 6 0
+diabolic 9642 7 6 0
+disguise 7543 2 6 1
+dokebi 2697 7 6 0
+doppelganger 249000 7 6 1
+dracula 320096 7 6 2
+dragon fly 2400 4 4 0
+dragon tail 8368 4 4 1
+drainliar 1162 7 2 0
+drake 326666 9 1 1
+driller 7452 2 2 1
+drops 55 3 3 1
+dryad 8791 4 3 1
+dullahan 12437 9 1 1
+dumpling child 2098 0 7 0
+dustiness 1044 4 4 0
+earth deleter 15168 2 9 1
+earth petite 6881 2 9 1
+easter bunny 1800 0 2 0
+easter egg 300 0 0 0
+eclipse 1800 0 2 1
+eddga 152000 3 2 2
+eggyra 633 8 0 1
+elder 21592 0 7 2
+elder willow 693 3 3 1
+emperium 68430 2 4 0
+enchanted peach tree 8905 2 3 1
+evil druid 16506 9 1 2
+evil nymph 18029 7 6 1
+evil snake lord 254993 8 2 2
+executioner 28980 7 0 2
+explosion 8054 3 2 0
+fabre 63 2 4 0
+fake angel 16845 6 8 0
+false angel 16845 6 8 0
+familiar 155 7 2 0
+farmiliar 155 7 2 0
+female thief bug 170 7 4 1
+filamentous 6088 3 4 1
+fire poring 50 1 3 1
+firelock soldier 3852 9 1 1
+flora 2092 2 3 2
+freezer 8636 1 2 1
+frilldora 2023 3 2 1
+gajomart 13669 3 0 0
+galapago 9145 2 2 0
+gargoyle 3950 4 6 1
+garm 197000 1 2 2
+geographer 8071 2 3 1
+ghostring 73300 8 6 1
+ghoul 5118 9 1 1
+giant hornet 12834 4 4 0
+giant spider 11628 5 4 2
+giant whisper 5040 8 6 0
+gibbet 6841 7 6 2
+giearth 2252 2 6 0
+gig 8409 1 2 0
+goat 11077 3 2 1
+goblin (axe) 1034 5 7 1
+goblin (chain) 1034 3 7 1
+goblin (hammer) 1359 2 7 1
+goblin (knife) 1176 4 7 1
+goblin (morningstar) 1952 1 7 1
+goblin 1 1176 4 7 1
+goblin 2 1034 3 7 1
+goblin 3 1034 5 7 1
+goblin 4 1359 2 7 1
+goblin 5 1952 1 7 1
+goblin archer 1750 5 7 0
+goblin leader 19735 4 7 1
+goblin steamrider 2490 4 7 1
+goblin xmas 1176 4 7 1
+golden thief bug 126000 3 4 2
+golem 3900 0 0 2
+grand peco 8054 3 2 2
+greatest general 3632 3 0 1
+green plant 10 2 3 0
+grizzly 11733 3 2 2
+gryphon 27800 4 2 2
+gullinbursti 21331 2 2 2
+harpy 16599 4 6 1
+hatii 197000 1 2 2
+hatii baby 20119 1 2 1
+heater 11020 3 2 1
+heirozoist 7186 7 6 0
+hermit plant 6900 3 3 0
+high orc 6890 3 7 2
+hode 2282 2 2 1
+horn 659 2 4 1
+hornet 169 4 4 0
+horong 1939 3 0 0
+hugeling 5000 1 3 2
+hunter fly 5242 4 4 0
+hydra 660 1 3 0
+hyegun 9981 9 1 1
+hylozoist 7186 7 1 0
+incantation samurai 218652 7 7 2
+increase soil 8230 2 0 1
+incubus 17281 7 6 1
+injustice 7600 7 1 1
+iron fist 4221 0 4 1
+isis 4828 7 6 2
+jakk 3581 3 0 1
+joker 12450 4 7 2
+kaho 1141 3 6 1
+kapha 7892 1 5 1
+karakasa 3092 0 0 1
+khalitzburg 19276 9 1 2
+killer mantis 13183 2 4 1
+knight of abyss 36140 7 7 2
+kobold (axe) 3893 4 7 1
+kobold (hammer) 2179 5 7 1
+kobold (morningstar) 2179 3 7 1
+kobold 1 3893 4 7 1
+kobold 2 2179 5 7 1
+kobold 3 2179 3 7 1
+kobold 4 3503 1 7 1
+kobold 5 2462 2 7 1
+kobold archer 2560 3 7 0
+kobold leader 18313 4 7 1
+kraben 50 1 3 1
+kukre 507 1 5 0
+lava golem 24324 3 0 2
+leaf cat 50 1 3 1
+leib olmai 24233 2 2 2
+li me mang ryang 5920 2 6 1
+loli ruri 23470 7 6 2
+lord of death 303383 7 6 2
+lord of the dead 303383 7 6 2
+lude 3214 9 1 0
+lunatic 60 0 2 0
+magnolia 3195 1 6 0
+majoruros 57991 3 2 2
+male thief bug 583 7 4 1
+mandragora 405 2 3 1
+mantis 2472 2 4 1
+marc 6900 1 5 1
+marduk 4214 3 7 2
+marin 742 1 3 1
+marina 2087 1 3 0
+marine sphere 3518 1 3 0
+marionette 3222 8 6 0
+marse 5034 1 5 0
+martin 1109 2 2 0
+mastering 2415 1 3 1
+matyr 2585 7 2 1
+maya 169000 2 4 2
+maya purple 55479 2 4 2
+medusa 22408 0 6 1
+megalith 5300 0 0 2
+megalodon 1648 9 1 1
+merman 12300 1 7 1
+metaller 926 3 4 1
+mi gao 8230 2 0 1
+mime monkey 50 1 3 1
+mimic 6120 0 0 1
+mini demon 31865 7 6 0
+minorous 7431 3 2 2
+mistress 212000 4 4 0
+miyabi doll 6300 7 6 1
+mobster 11347 0 7 1
+moonlight flower 120000 3 6 1
+muka 570 2 3 2
+mummy 5176 9 1 1
+munak 2872 9 1 1
+mutant dragonoid 62600 3 9 2
+myst 3745 5 0 2
+myst case 3450 0 0 1
+mysteltainn 33350 7 0 2
+neraid 4120 2 2 0
+nereid 4120 2 2 0
+nightmare 4437 8 6 2
+nightmare terror 22605 7 6 2
+nine tail 9466 3 2 1
+nine-tail 9466 3 2 1
+obeaune 3952 1 5 1
+orc archer 7440 2 7 1
+orc hero 295700 2 7 2
+orc lady 2000 2 7 1
+orc lord 393000 2 7 2
+orc skeleton 2278 9 1 1
+orc warrior 1400 2 7 1
+orc zombie 1568 9 1 1
+osiris 415400 9 1 1
+owl baron 60746 0 6 2
+owl duke 26623 0 6 2
+panzer goblin 13838 4 7 1
+parasite 3090 4 3 1
+pasana 8289 3 7 1
+peco peco 531 3 2 2
+peco peco egg 420 0 0 0
+pecopeco 531 3 2 2
+pecopeco egg 420 0 0 0
+penomena 7256 5 5 1
+perimeter 8228 0 2 1
+permeter 8228 0 2 1
+pest 3240 7 2 0
+pharaoh 445997 7 7 2
+phen 3347 1 5 1
+phendark 22729 0 7 2
+phreeoni 188000 0 2 2
+picky 80 3 2 0
+piere 733 2 4 0
+pirate skeleton 1676 9 1 1
+plankton 354 1 3 0
+poison spore 665 5 3 1
+poison toad 6629 5 2 1
+poisonous toad 6629 5 2 1
+poporing 344 5 3 1
+poring 50 1 3 1
+punk 3620 4 3 0
+pupa 427 2 4 0
+quve 4559 9 1 0
+rafflesia 1950 2 3 0
+raggler 1020 4 2 0
+raptice 600 2 2 1
+raydric 8613 7 7 2
+raydric archer 5250 7 6 1
+red mushroom 15 2 3 0
+red plant 10 2 3 0
+requiem 3089 7 7 1
+rideword 11638 0 0 0
+rocker 198 2 4 1
+roda frog 133 1 5 1
+rotar zairo 1209 4 0 2
+rybio 9572 0 6 2
+sage worm 3850 0 2 0
+sageworm 3850 0 2 0
+samurai specter 218652 7 7 2
+sand man 3413 2 0 1
+sandman 3413 2 0 1
+santa poring 69 6 3 1
+sasquatch 3163 0 2 2
+savage 2092 2 2 2
+savage babe 182 2 2 0
+scorpion 1109 3 4 0
+scorpion king 6354 3 7 2
+sea otter 9999 1 2 1
+seahorse 1452 2 5 0
+seal 9114 1 2 1
+shell picky 83 3 2 0
+shellfish 920 1 5 0
+shining plant 20 6 3 0
+shinobi 12700 7 7 1
+side winder 4929 5 2 1
+sidewinder 4929 5 2 1
+skel prisoner 8691 9 1 1
+skel worker 2872 9 1 1
+skeleton 234 9 1 1
+skeleton archer 3040 9 1 1
+skeleton general 17402 9 1 1
+skeleton prisoner 8691 9 1 1
+skeleton soldier 2334 9 1 1
+skeleton worker 2872 9 1 1
+sky deleter 17292 4 9 1
+sky petite 5747 4 9 1
+sleeper 8237 2 0 1
+snake 471 2 2 1
+smokie 641 2 2 0
+smoking orc 1400 2 7 1
+sohee 5628 1 6 1
+soldier andre 1245 2 4 0
+soldier deniro 2047 2 4 0
+soldier piere 1217 2 4 0
+soldier skeleton 2334 9 1 1
+solider 12099 2 2 1
+spore 327 1 3 1
+spring rabbit 9045 2 2 1
+stainer 538 4 4 0
+stalactic golem 18700 0 0 2
+stalactite golem 18700 0 0 2
+steam goblin 2490 4 7 1
+steel chonchon 530 4 4 0
+steel chonchon 530 4 4 0
+stem worm 6136 4 3 1
+sting 9500 2 0 1
+stone shooter 4104 3 3 1
+stormy knight 240000 4 0 2
+strouf 9952 1 5 2
+succubus 16955 7 6 1
+swordfish 4299 1 5 2
+tamruan 50 1 3 1
+tao gunka 50 1 3 1
+taoist hermit 15003 0 0 2
+taoist hermit on the cloud 15003 0 0 2
+tarou 284 7 2 0
+tengu 16940 2 6 2
+thara frog 2152 1 5 1
+the paper 18557 0 0 1
+thief bug 126 0 4 0
+thief bug egg 48 7 4 0
+thief bug female 170 7 4 1
+thief bug larva 126 0 0 0
+thief bug male 583 7 4 1
+tirfing 29900 7 0 1
+toad 5065 1 5 1
+tower keeper 18600 0 0 2
+tri joint 2300 2 4 0
+tri-joint 2300 2 4 0
+turtle general 320700 2 2 2
+tyrfing 29900 7 0 1
+vadon 1017 1 5 0
+vagabond wolf 12240 2 2 1
+valaris 668000 7 7 0
+valariss worshipper 8578 7 7 0
+verit 5272 9 1 1
+violy 18257 0 7 1
+vitata 894 2 4 0
+vocal 3016 2 4 1
+wanderer 8170 4 6 1
+werewolf 28600 0 0 2
+whisper 1796 8 6 0
+white plant 10 2 3 0
+wild rose 2980 4 2 0
+willow 95 2 3 1
+wilow 95 2 3 1
+wind ghost 4820 4 6 1
+wolf 405 2 2 1
+wooden golem 9200 2 3 2
+wootan fighter 4457 3 7 1
+wootan shooter 3977 2 7 1
+worm tail 426 2 3 1
+wormtail 426 2 3 1
+wraith 10999 9 1 2
+wraith dead 43021 9 1 2
+yellow plant 10 2 3 0
+yoyo 879 2 2 0
+zealotus 18300 0 7 1
+zenorc 2585 7 7 1
+zerom 1026 3 7 1
+zherlthsh 18300 0 7 1
+zhu po long 9136 4 9 1
+zipper bear 2901 7 2 1
+zombie 534 9 1 1
+zombie master 14211 9 1 1
+zombie prisoner 11280 9 1 1
