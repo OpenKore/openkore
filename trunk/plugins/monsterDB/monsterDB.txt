@@ -57,7 +57,6 @@ chepet 4950 3 7 1
 chimera 32600 3 2 2
 choco 4278 3 2 0
 chonchon 67 4 4 0
-chonchon 67 4 4 0
 christmas cookie 2090 6 7 0
 christmas goblin 1176 4 7 1
 christmas jakk 3581 3 0 1
@@ -342,9 +341,9 @@ skeleton worker 2872 9 1 1
 sky deleter 17292 4 9 1
 sky petite 5747 4 9 1
 sleeper 8237 2 0 1
-snake 471 2 2 1
 smokie 641 2 2 0
 smoking orc 1400 2 7 1
+snake 471 2 2 1
 sohee 5628 1 6 1
 soldier andre 1245 2 4 0
 soldier deniro 2047 2 4 0
@@ -357,7 +356,6 @@ stainer 538 4 4 0
 stalactic golem 18700 0 0 2
 stalactite golem 18700 0 0 2
 steam goblin 2490 4 7 1
-steel chonchon 530 4 4 0
 steel chonchon 530 4 4 0
 stem worm 6136 4 3 1
 sting 9500 2 0 1
