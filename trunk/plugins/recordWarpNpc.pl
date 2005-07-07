@@ -6,7 +6,7 @@
 #
 # To use it just type 'warprec' before you talk to a warp npc. Don't do
 # anything between it. It'll record the NPC and the conversation seq and
-# destination. They'll be conbined in warpportals.txt.
+# destination. They'll be combined in warpportals.txt.
 #
 # This plugin should be in a subfolder of plugins like 'plugins/recordWarpNpc'.
 #
@@ -111,7 +111,7 @@ sub saveDest {
 	if ($config{recordWarpNpc_integrate}) {
 		integrate();
 		message "Warpnpcs added to portals.txt.\n",'recordWarpNpc';
-		if (0 && $config{recordWarpNpc_recompile}) {
+		if ($config{recordWarpNpc_recompile}) {
 			message "Recompiling Portals.\n",'recordWarpNpc';
 			Settings::parseReload("portals");
 			Misc::compilePortals() if Misc::compilePortals_check();
