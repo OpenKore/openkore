@@ -1,4 +1,33 @@
 ==================
+### 1.6.3
+==================
+
+TODO:
+- 'private 1' in servers.txt should also be effective when changing map server.
+
+*** INCOMPATIBLE CHANGES ***:
+- NPC IDs are no longer supported, you must use the location syntax.
+
+Bug fixes:
+- 'i' command now displays equipped arrows under Equipment (Equipped).
+- Quick-and-dirty @{$char->{inventory}} > 0 fix for useSelf_item
+  dcOnEmpty. (Will fail if your bot doesn't carry anything at all.)
+- Same quick-and-dirty fix for "Auto-storaging due to insufficient ___".
+- Don't try to statsAddAuto before the stat point info has been received.
+- Equipped arrows will now show how many of them are left.
+- Shop title in shop.txt is detected better.
+
+New features:
+- Console::Unix interface no longer has "Press ENTER to continue"
+  prompt, since UNIX terminals generally don't close when openkore exits.
+- Your level/job level is now displayed when you level up.
+
+Internal:
+- Obsolete getActorHash() function removed (use Actor::get() instead).
+- The format of $npcs_lut has changed, IDs are completely abandoned.
+
+
+==================
 ### 1.6.2
 ==================
 
@@ -1720,7 +1749,6 @@ Minor tweaks:
 
 Known bugs (will be fixed later):
 - equipAuto_#_skill doesn't seem to work at all.
-
 
 ==================
 ### 1.3.0 (beta)

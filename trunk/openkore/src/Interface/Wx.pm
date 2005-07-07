@@ -5,7 +5,7 @@
 #
 #  More information about WxWidgets here: http://www.wxwidgets.org/
 #
-#  Copyright (c) 2004 OpenKore development team 
+#  Copyright (c) 2004 OpenKore development team
 #
 #  This program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -479,6 +479,7 @@ sub createSplitterContent {
 	$mapView->onMouseMove(\&onMapMouseMove, $self);
 	$mapView->onClick(\&onMapClick, $self);
 	$mapView->onMapChange(\&onMap_MapChange, $mapDock);
+	$mapView->parsePortals("$Settings::tables_folder/portals.txt");
 	if (%field && $char) {
 		$mapView->set($field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, \%field);
 	}
@@ -889,8 +890,24 @@ sub onMapMouseMove {
 sub onMapClick {
 	# Clicked on map viewer control
 	my ($self, $x, $y) = @_;
+	my $checkPortal = 0;
 	delete $self->{mouseMapText};
-	$self->writeOutput("message", "Moving to $x, $y\n", "info");
+	if ($self->{mapViewer} && $self->{mapViewer}->{portals}
+		&& $self->{mapViewer}->{portals}->{$field{'name'}}
+		&& @{$self->{mapViewer}->{portals}->{$field{'name'}}}){
+
+		foreach my $portal (@{$self->{mapViewer}->{portals}->{$field{'name'}}}){
+			if (distance($portal,{x=>$x,y=>$y}) <= 5) {
+				$x = $portal->{x};
+				$y = $portal->{y};
+				$self->writeOutput("message", "Moving to Portal $x, $y\n", "info");
+				$checkPortal = 1;
+				last;
+			}
+		}
+	}
+
+	$self->writeOutput("message", "Moving to $x, $y\n", "info") unless $checkPortal;
 	AI::clear("mapRoute", "route", "move");
 	main::ai_route($field{name}, $x, $y, attackOnRoute => 1);
 	$self->{inputBox}->SetFocus;

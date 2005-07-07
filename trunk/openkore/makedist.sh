@@ -2,7 +2,7 @@
 # This script creates a source tarball.
 
 PACKAGE=openkore
-VERSION=1.6.2
+VERSION=1.6.3
 TYPE=bz2
 # Uncomment the next line if you want a tar.gz archive
 # TYPE=gz
@@ -20,6 +20,7 @@ DIRS=(.
 	src/Interface/Wx
 	src/Interface/Wx/DockNotebook
 	src/Network
+	src/Network/Receive
 	src/Utils
 	src/auto/XSTools
 	src/auto/XSTools/build
