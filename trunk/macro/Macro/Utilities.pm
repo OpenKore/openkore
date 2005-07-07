@@ -86,6 +86,10 @@ sub getVar {
 # sets and/or refreshes global variables
 sub refreshGlobal {
   my $var = shift;
+  if (!defined $var || $var eq '.map') {
+    $cvs->debug("refreshing globals: +$var+", 4);
+    setVar(".map", $field{name});
+  };
   if (!defined $var || $var eq '.pos') {
     $cvs->debug("refreshing globals: +$var+", 4);
     my $pos = calcPosition($char);
