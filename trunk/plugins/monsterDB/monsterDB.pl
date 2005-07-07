@@ -76,7 +76,7 @@ sub extendedCheck {
 
 	my $monsterName = lc($args->{monster}->{name});
 
-    if (!$monsterDB{$monsterName}[0]) {
+    if (!$monsterDB{$monsterName} || !$monsterDB{$monsterName}[0]) {
     	debug("monsterDB: Monster {$args->{monster}->{name}} not found\n", 'monsterDB', 2);
     	return 1;
     } #return if monster is not in DB
@@ -140,6 +140,7 @@ sub onPacketSkillUse {
 	my ($hookName,$args) = @_;
 	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{name};
 	my $monsterName = lc($monsters{$args->{targetID}}{name});
+	return 1 unless ($monsterDB{$monsterName} && $monsterDB{$monsterName}[0]);
 	message 'Monster has ['.($monsterDB{$monsterName}[0] + $monsters{$args->{targetID}}{deltaHp}).'/'.$monsterDB{$monsterName}[0]."] HP Left\n",'monsterDB';
 }
 
@@ -147,6 +148,7 @@ sub onPacketSkillUseNoDmg {
 	my ($hookName,$args) = @_;
 	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{name};
 	my $monsterName = lc($monsters{$args->{targetID}}{name});
+	return 1 unless ($monsterDB{$monsterName} && $monsterDB{$monsterName}[0]);
 	message 'Monster has ['.($monsterDB{$monsterName}[0] + $monsters{$args->{targetID}}{deltaHp}).'/'.$monsterDB{$monsterName}[0]."] HP Left\n",'monsterDB';
 	if (($args->{targetID} eq $args->{sourceID}) && ($args->{targetID} ne $accountID)){
 		if ($args->{skillID} eq 'NPC_CHANGEWATER'){
@@ -189,6 +191,7 @@ sub onPacketAttack {
 	return 1 unless $args->{type} == 0 || $args->{type} > 3;
 	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{name};
 	my $monsterName = lc($monsters{$args->{targetID}}{name});
+	return 1 unless ($monsterDB{$monsterName} && $monsterDB{$monsterName}[0]);
 	message 'Monster has ['.($monsterDB{$monsterName}[0] + $monsters{$args->{targetID}}{deltaHp}).'/'.$monsterDB{$monsterName}[0]."] HP Left\n",'monsterDB';
 
 }
