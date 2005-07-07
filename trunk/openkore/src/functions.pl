@@ -8171,14 +8171,15 @@ sub parseMsg {
 
 	} elsif ($switch eq "0195") {
 		my $ID = substr($msg, 2, 4);
-		if ($players{$ID} && %{$players{$ID}}) {
-			($players{$ID}{'name'}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
-			$players{$ID}{'gotName'} = 1;
-			($players{$ID}{'party'}{'name'}) = substr($msg, 30, 24) =~ /([\s\S]*?)\000/;
-			($players{$ID}{'guild'}{'name'}) = substr($msg, 54, 24) =~ /([\s\S]*?)\000/;
-			($players{$ID}{'guild'}{'title'}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
-			debug "Player Info: $players{$ID}{'name'} ($players{$ID}{'binID'})\n", "parseMsg_presence", 2;
-			Plugins::callHook('charNameUpdate');
+		my $player = $players{$ID};
+		if ($player && %{$player}) {
+			($player->{name}) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+			$player->{gotName} = 1;
+			($player->{party}{name}) = substr($msg, 30, 24) =~ /([\s\S]*?)\000/;
+			($player->{guild}{name}) = substr($msg, 54, 24) =~ /([\s\S]*?)\000/;
+			($player->{guild}{title}) = substr($msg, 78, 24) =~ /([\s\S]*?)\000/;
+			debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
+			Plugins::callHook('charNameUpdate', $player);
 		}
 
 	} elsif ($switch eq "0196") {
