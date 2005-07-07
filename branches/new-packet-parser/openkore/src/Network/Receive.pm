@@ -458,7 +458,8 @@ sub actor_exists {
 	my ($self,$args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my %coords;
-	makeCoords(\%coords, substr($msg, 46, 3));
+	makeCoords(\%coords, $args->{coords});
+	debug ("$coords{x}x$coords{y}\n");
 	$args->{body_dir} = unpack("v", substr($args->{RAW_MSG}, 48, 1)) % 8;
 	my $added;
 
