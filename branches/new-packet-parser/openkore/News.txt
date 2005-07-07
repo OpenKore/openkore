@@ -2,6 +2,9 @@
 ### 1.6.3
 ==================
 
+TODO:
+- 'private 1' in servers.txt should also be effective when changing map server.
+
 *** INCOMPATIBLE CHANGES ***:
 - NPC IDs are no longer supported, you must use the location syntax.
 
