@@ -480,18 +480,19 @@ sub mercDbFill{
 ###
 	
 sub charNameUpdate{
+	my (undef, $player) = @_;
 
 	$servername = $::servers[$::config{'server'}]{'name'};
 	$servername =~ s/\s+$//;
-	
+
 #	$dbh = DBI->connect($dsn, $dbUser, $dbPassword) or die $dbh->errstr;
 	my $datum	= strftime("%d.%m.%Y %T", localtime(time));
-	
-	my $shopOwnerID = unpack("L1",$::ID);
-	my $shopOwner = $::players{$::ID}{'name'};
+
+	my $shopOwnerID = $player->{ID};
+	my $shopOwner = $player->{name};
 	$shopOwner =~ s/\\/\\\\/g;
 	$shopOwner =~ s/'/\\'/g;
-	
+
 	if (($shopOwner ne "Unknown") && ($shopOwner ne "")){
 		my $updateQuery2 = "UPDATE shopcont SET shopOwner='$shopOwner'";
 		$updateQuery2 .= ", datum = '" . $datum ."'";
