@@ -26,7 +26,10 @@ our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 sub checkVar {
   my $arg = shift;
   my ($var, $cond, $val) = getArgs($arg);
-  return 1 if ($cond eq "unset" && !exists $varStack{$var});
+  if ($cond eq "unset") {
+    return 1 if !exists $varStack{$var};
+    return 0;
+  };
   if (exists $varStack{$var}) {
     refreshGlobal($var);
     $cvs->debug("comparing: $var ($varStack{$var}) $cond $val", 4);
