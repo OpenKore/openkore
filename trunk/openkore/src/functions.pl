@@ -8351,8 +8351,16 @@ sub parseMsg {
 	} elsif ($switch eq "01B3") {
 		# NPC image
 		my $npc_image = substr($msg, 2,64);
-		($npc_image) = $npc_image =~ /(\S+)/;
-		debug "NPC image: $npc_image\n", "parseMsg";
+		my $type = unpack("C1", substr($msg, 66, 1));
+
+		($npc_image) = $npc_image =~ /(\w+)/;
+		if ($type == 2) {
+			debug "Show NPC image: $npc_image\n", "parseMsg";
+		} elsif ($type == 255) {
+			debug "Hide NPC image: $npc_image\n", "parseMsg";
+		} else {
+			debug "NPC image: $npc_image ($type)\n", "parseMsg";
+		}
 
 	} elsif ($switch eq "01B6") {
 		# Guild Info
