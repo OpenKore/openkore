@@ -597,7 +597,7 @@ sub parseInput {
 
 	if ($printType) {
 		Log::delHook($hook);
-		if ($xkore && defined $msg && $conState == 5) {
+		if ($xkore && defined $msg && $conState == 5 && $config{XKore_silent}) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
 			sendMessage(\$remote_socket, "k", $msg);
