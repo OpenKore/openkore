@@ -689,11 +689,16 @@ sub actor_moved {
 	makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
 	makeCoords2(\%coordsTo, substr($args->{RAW_MSG}, 52, 3));
 
-	#my %statuses = {
-	#	1 => 'Twohand Quicken',
-	#	4 => 'Energy Coat'
-	#};
-	#debug "actor has status $statuses{$args->{skillstatus}}\n";
+	my %statuses = {
+		1 => 'Twohand Quicken',
+		4 => 'Energy Coat',
+		4 => 'Vigor Explosion'
+	};
+	if ($statuses{$args->{skillstatus}}) {
+		debug "actor has status $statuses{$args->{skillstatus}}\n";
+	} else {
+		debug "actor has unknown status $args->{skillstatus}\n" if ($args->{skillstatus});
+	}
 
 	my $added;
 	my %vec;
@@ -882,7 +887,7 @@ sub actor_spawned {
 			$pets{$args->{ID}}{look}{body} = 0;
 			%{$pets{$args->{ID}}{'pos'}} = %coords;
 			%{$pets{$args->{ID}}{'pos_to'}} = %coords;
-			debug "Pet Spawned: $pets{$args->{ID}}{'name'} ($pets{$args->{ID}}{'binID'})\n", "parseMsg";
+			debug "Pet Spawned: $pets{$args->{ID}}{'name'} ($pets{$args->{ID}}{'binID'}) Monster type: $args->{type}\n", "parseMsg";
 
 			if ($monsters{$args->{ID}}) {
 				binRemove(\@monstersID, $args->{ID});
@@ -1398,7 +1403,7 @@ sub map_loaded {
 		$conState = 4;
 		message("Waiting for map to load...\n", "connection");
 		ai_clientSuspend(0, 10);
-		initMapChangeVars();
+		main::initMapChangeVars();
 	} else {
 		message("You are now in the game\n", "connection");
 		sendMapLoaded(\$remote_socket);
