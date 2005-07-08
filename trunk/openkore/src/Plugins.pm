@@ -344,6 +344,7 @@ sub delHook {
 # See also: Plugins::addHooks(), Plugins::delHook()
 sub delHooks {
 	delHook($_->{name}, $_->{ID}) foreach (@{$_[0]});
+	@{$_[0]} = ();
 }
 
 

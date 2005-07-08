@@ -80,6 +80,7 @@ sub new {
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
@@ -457,7 +458,7 @@ sub actor_exists {
 	# word head_dir, long guild, long emblem, word manner, byte karma, byte
 	# sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word
 	# level
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my %coords;
 	makeCoords(\%coords, $args->{coords});
@@ -497,8 +498,9 @@ sub actor_exists {
 		$player->{lv} = $args->{lv};
 		$player->{pos} = {%coords};
 		$player->{pos_to} = {%coords};
+
 		my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-		debug "Player Exists: ".$player->name." ($player->{binID}) Level $args->{lv} ".$sex_lut{$player->{sex}}." $jobs_lut{$player->{jobID}}\n", $domain, 1;
+		debug "Player Exists: " . $player->name . " ($player->{binID}) Level $args->{lv} " . $sex_lut{$player->{sex}} . " $jobs_lut{$player->{jobID}}\n", $domain, 1;
 		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
 
 		objectAdded('player', $args->{ID}, $player) if ($added);
@@ -605,50 +607,59 @@ sub actor_exists {
 }
 
 sub actor_info {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
-	if ($players{$args->{ID}} && %{$players{$args->{ID}}}) {
-		($players{$args->{ID}}{'name'}) = $args->{name};
-		$players{$args->{ID}}{'gotName'} = 1;
+
+	my $player = $players{$args->{ID}};
+	if ($player && %{$player}) {
+		$player->{name} = $args->{name};
+		$player->{gotName} = 1;
 		my $binID = binFind(\@playersID, $args->{ID});
-		debug "Player Info: $players{$args->{ID}}{'name'} ($binID)\n", "parseMsg_presence", 2;
+		debug "Player Info: $player->{name} ($binID)\n", "parseMsg_presence", 2;
 	}
-	if ($monsters{$args->{ID}} && %{$monsters{$args->{ID}}}) {
-		my ($name) = $args->{name};
-		if ($config{'debug'} >= 2) {
+
+	my $monster = $monsters{$args->{ID}};
+	if ($monster && %{$monster}) {
+		my $name = $args->{name};
+		if ($config{debug} >= 2) {
 			my $binID = binFind(\@monstersID, $args->{ID});
 			debug "Monster Info: $name ($binID)\n", "parseMsg", 2;
 		}
-		if ($monsters_lut{$monsters{$args->{ID}}{'nameID'}} eq "") {
-			$monsters{$args->{ID}}{'name'} = $name;
-			$monsters_lut{$monsters{$args->{ID}}{'nameID'}} = $monsters{$args->{ID}}{'name'};
-			updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monsters{$args->{ID}}{'nameID'}, $monsters{$args->{ID}}{'name'});
+		if ($monsters_lut{$monster->{nameID}} eq "") {
+			$monster->{name} = $name;
+			$monsters_lut{$monster->{nameID}} = $name;
+			updateMonsterLUT("$Settings::tables_folder/monsters.txt", $monster->{nameID}, $name);
 		}
 	}
-	if ($npcs{$args->{ID}} && %{$npcs{$args->{ID}}}) {
-		($npcs{$args->{ID}}{'name'}) = $args->{name};
-		$npcs{$args->{ID}}{'gotName'} = 1;
-		if ($config{'debug'} >= 2) {
+
+	my $npc = $npcs{$args->{ID}};
+	if ($npc && %{$npc}) {
+		$npc->{name} = $args->{name};
+		$npc->{gotName} = 1;
+		if ($config{debug} >= 2) {
 			my $binID = binFind(\@npcsID, $args->{ID});
-			debug "NPC Info: $npcs{$args->{ID}}{'name'} ($binID)\n", "parseMsg", 2;
+			debug "NPC Info: $npc->{name} ($binID)\n", "parseMsg", 2;
 		}
-		my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
+
+		my $location = "$field{name} $npc->{pos}{x} $npc->{pos}{y}";
 		if (!$npcs_lut{$location}) {
-			$npcs_lut{$location} = $npcs{$args->{ID}}{name};
-			updateNPCLUT("$Settings::tables_folder/npcs.txt", $location, $npcs{$args->{ID}}{name});
+			$npcs_lut{$location} = $npc->{name};
+			updateNPCLUT("$Settings::tables_folder/npcs.txt", $location, $npc->{name});
 		}
 	}
-	if ($pets{$args->{ID}} && %{$pets{$args->{ID}}}) {
-		($pets{$args->{ID}}{'name_given'}) = $args->{name};
-		if ($config{'debug'} >= 2) {
+
+	my $pet = $pets{$args->{ID}};
+	if ($pet && %{$pet}) {
+		$pet->{name_given} = $args->{name};
+		if ($config{debug} >= 2) {
 			my $binID = binFind(\@petsID, $args->{ID});
-			debug "Pet Info: $pets{$args->{ID}}{'name_given'} ($binID)\n", "parseMsg", 2;
+			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
 		}
 	}
 }
 
 sub actor_look_at {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	if ($args->{ID} eq $accountID) {
 		$chars[$config{'char'}]{'look'}{'head'} = $args->{head};
@@ -806,8 +817,23 @@ sub actor_movement_interrupted {
 	}
 }
 
+sub actor_name_received {
+	my ($self, $args) = @_;
+
+	my $player = $players{$args->{ID}};
+	if ($player && %{$player}) {
+		$player->{name} = $args->{name};
+		$player->{gotName} = 1;
+		$player->{party}{name} = $args->{partyName};
+		$player->{guild}{name} = $args->{guildName};
+		$player->{guild}{title} = $args->{guildTitle};
+		debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
+		Plugins::callHook('charNameUpdate', $player);
+	}
+}
+
 sub actor_spawned {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my %coords;
 	makeCoords(\%coords, $args->{coords});
@@ -943,7 +969,7 @@ sub character_creation_failed {
 }
 
 sub character_creation_successful {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	my $char = new Actor::You;
 	$char->{ID} = $args->{ID};
 	$char->{name} = $args->{name};
@@ -1003,7 +1029,7 @@ sub character_deletion_failed {
 }
 
 sub character_moves {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
 	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
@@ -1153,7 +1179,7 @@ sub errors {
 }
 
 sub item_appeared {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my $item = $items{$args->{ID}} ||= {};
 	if (!$item || !%{$item}) {
@@ -1177,7 +1203,7 @@ sub item_appeared {
 }
 
 sub item_exists {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	if (!$items{$args->{ID}} || !%{$items{$args->{ID}}}) {
 		binAdd(\@itemsID, $args->{ID});
@@ -1193,7 +1219,7 @@ sub item_exists {
 }
 
 sub item_disappeared {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	if ($items{$args->{ID}} && %{$items{$args->{ID}}}) {
 		debug "Item Disappeared: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'})\n", "parseMsg_presence";
@@ -1206,7 +1232,7 @@ sub item_disappeared {
 }
 
 sub login_error {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 
 	Network::disconnect(\$remote_socket);
 	if ($args->{type} == 0) {
@@ -1266,7 +1292,7 @@ sub login_error_game_login_server {
 }
 
 sub map_change {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 4 if ($conState != 4 && $xkore);
 
 	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
@@ -1296,7 +1322,7 @@ sub map_change {
 }
 
 sub map_changed {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 4;
 
 	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
@@ -1357,7 +1383,7 @@ sub map_changed {
 
 sub map_loaded {
 	#Note: ServerType0 overrides this function
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$conState = 5;
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
@@ -1404,7 +1430,7 @@ sub npc_image {
 }
 
 sub public_message {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$args->{message} =~ s/\000//g;
 	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
 	$args->{chatMsgUser} =~ s/ $//;
@@ -1433,7 +1459,7 @@ sub public_message {
 }
 
 sub private_message {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	# Private message
 	$conState = 5 if ($conState != 4 && $xkore);
 	my $newmsg;
@@ -1469,7 +1495,7 @@ sub private_message {
 }
 
 sub private_message_sent {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
 		message "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n", "pm/sent";
 		chatLog("pm", "(To: $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n") if ($config{'logPrivateChat'});
@@ -1491,7 +1517,7 @@ sub private_message_sent {
 
 sub received_characters {
 	return if $conState == 5;
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	message("Received characters from Game Login Server\n", "connection");
 	$conState = 3;
 	undef $conState_tries;
@@ -1542,7 +1568,7 @@ sub received_characters {
 }
 
 sub received_character_ID_and_Map {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	message "Received character ID and Map IP from Game Login Server\n", "connection";
 	$conState = 4;
 	undef $conState_tries;
@@ -1582,12 +1608,12 @@ sub received_sync {
 }
 
 sub secure_login_key {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$secureLoginKey = $args->{secure_key};
 }
 
 sub self_chat {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	$args->{message} =~ s/\000//g;
 	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
 	# Note: $chatMsgUser/Msg may be undefined. This is the case on
@@ -1678,7 +1704,7 @@ sub skill_use {
 }
 
 sub skill_used_no_damage {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	# Skill used on target, with no damage done
 	if (my $spell = $spells{$args->{sourceID}}) {
 		# Resolve source of area attack skill
@@ -1767,7 +1793,7 @@ sub storage_item_added {
 }
 
 sub system_chat {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	#my $chat = substr($msg, 4, $msg_size - 4);
 	#$chat =~ s/\000$//;
 
@@ -1778,7 +1804,7 @@ sub system_chat {
 }
 
 sub warp_portal_list {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	($args->{memo1}) = $args->{memo1} =~ /([\s\S]*)\.gat/;
 	($args->{memo2}) = $args->{memo2} =~ /([\s\S]*)\.gat/;
 	($args->{memo3}) = $args->{memo3} =~ /([\s\S]*)\.gat/;
