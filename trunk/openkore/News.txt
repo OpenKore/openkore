@@ -30,6 +30,9 @@ New config options:
 - partySkill: isSelfSkill (flag)
   Use this skill on yourself after checking the party conditions.
   Useful for Magnificat or Gloria.
+- storageAuto_keepOpen (flag)
+  Set to true if you want to keep storage open after storageAuto sequence.
+  (Note: You cannot use items while storage is open.)
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).

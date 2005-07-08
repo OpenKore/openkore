@@ -1673,7 +1673,7 @@ sub AI {
 				}
 			}
 
-			sendStorageClose();
+			sendStorageClose() unless $config{storageAuto_keepOpen};
 			if ($config{'relogAfterStorage'}) {
 				writeStorageLog(0);
 				relog();
