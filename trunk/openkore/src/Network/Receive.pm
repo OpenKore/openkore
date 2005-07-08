@@ -80,6 +80,7 @@ sub new {
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
@@ -1381,6 +1382,17 @@ sub memo_success {
 		warning "Memo Failed\n";
 	} else {
 		message "Memo Succeeded\n", "success";
+	}
+}
+
+sub npc_image {
+	my ($self, $args) = @_;
+	if ($args->{type} == 2) {
+		debug "Show NPC image: $args->{npc_image}\n", "parseMsg";
+	} elsif ($args->{type} == 255) {
+		debug "Hide NPC image: $args->{npc_image}\n", "parseMsg";
+	} else {
+		debug "NPC image: $args->{npc_image} ($args->{type})\n", "parseMsg";
 	}
 }
 
