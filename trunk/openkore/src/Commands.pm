@@ -2114,7 +2114,7 @@ sub cmdParty {
 		sendPartyJoinRequest(\$remote_socket, $playersID[$arg2]);
 
 
-	} elsif ($arg1 eq "leave" && !%{$chars[$config{'char'}]{'party'}}) {
+	} elsif ($arg1 eq "leave" && (!$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} ) ) {
 		error	"Error in function 'party leave' (Leave Party)\n" .
 			"Can't leave party - you're not in a party.\n";
 	} elsif ($arg1 eq "leave") {
