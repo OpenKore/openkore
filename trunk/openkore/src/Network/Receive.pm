@@ -82,6 +82,7 @@ sub new {
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
+		'01A2' => ['pet_info', 'Z24 C1 S1 S1 S1 S1', [qw(name nameflag level hungry friendly accessory)]],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
@@ -1438,6 +1439,17 @@ sub npc_image {
 	} else {
 		debug "NPC image: $args->{npc_image} ($args->{type})\n", "parseMsg";
 	}
+}
+
+sub pet_info {
+	my ($self, $args) = @_;
+	$pet{name} = $args->{name};
+	$pet{nameflag} = $args->{nameflag};
+	$pet{level} = $args->{level};
+	$pet{hungry} = $args->{hungry};
+	$pet{friendly} = $args->{friendly};
+	$pet{accessory} = $args->{accessory};
+	debug "Pet status: level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly}\n", "pet";
 }
 
 sub public_message {
