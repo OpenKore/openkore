@@ -19,6 +19,7 @@ Bug fixes:
 - Shop title in shop.txt is detected better.
 - Don't send name request for perfectly hidden players and NPCs.
 - Fix autoTalkCont causing next step to happen too fast.
+- Don't redirect command output if XKore_silent is enabled.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
