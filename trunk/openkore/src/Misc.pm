@@ -1225,6 +1225,7 @@ sub checkFollowMode {
 sub checkMonsterCleanness {
 	return 1 if (!$config{attackAuto});
 	my $ID = shift;
+	return 1 if ($players{$ID});
 	my $monster = $monsters{$ID};
 
 	# If party attacked monster, or if monster attacked/missed party
@@ -1789,6 +1790,8 @@ sub processNameRequestQueue {
 		my $ID = $queue->[0];
 		my $object = $objects->{$ID};
 
+		# some private servers ban you if you request info for an object with
+		# GM Perfect Hide status
 		if (!$object || $object->{gotName} || $object->{statuses}{"GM Perfect Hide"}) {
 			shift @{$queue};
 			next;
@@ -2012,24 +2015,23 @@ sub countCastOn {
 	my ($sourceID, $targetID, $skillID, $x, $y) = @_;
 	return unless defined $targetID;
 
-	if ($monsters{$sourceID}) {
-		if ($targetID eq $accountID) {
-			$monsters{$sourceID}{'castOnToYou'}++;
-		} elsif ($players{$targetID} && %{$players{$targetID}}) {
-			$monsters{$sourceID}{'castOnToPlayer'}{$targetID}++;
-		} elsif ($monsters{$targetID} && %{$monsters{$targetID}}) {
-			$monsters{$sourceID}{'castOnToMonster'}{$targetID}++;
-		}
+	my $source = Actor::get($sourceID);
+	my $target = Actor::get($targetID);
+
+	if ($targetID eq $accountID) {
+		$source->{castOnToYou}++;
+	} elsif ($target->{type} eq 'Player') {
+		$source->{castOnToPlayer}{$targetID}++;
+	} elsif ($target->{type} eq 'Monster') {
+		$source->{castOnToMonster}{$targetID}++;
 	}
 
-	if ($monsters{$targetID}) {
-		if ($sourceID eq $accountID) {
-			$monsters{$targetID}{'castOnByYou'}++;
-		} elsif ($players{$sourceID} && %{$players{$sourceID}}) {
-			$monsters{$targetID}{'castOnByPlayer'}{$sourceID}++;
-		} elsif ($monsters{$sourceID} && %{$monsters{$sourceID}}) {
-			$monsters{$targetID}{'castOnByMonster'}{$sourceID}++;
-		}
+	if ($sourceID eq $accountID) {
+		$target->{castOnByYou}++;
+	} elsif ($source->{type} eq 'Player') {
+		$target->{castOnByPlayer}{$sourceID}++;
+	} elsif ($source->{type} eq 'Monster') {
+		$target->{castOnByMonster}{$sourceID}++;
 	}
 }
 sub stopAttack {
@@ -2966,6 +2968,10 @@ sub checkPlayerCondition {
 
 	if ($config{$prefix."_isGuild"}) {
 		return 0 unless ($player->{guild} && existsInList($config{$prefix . "_isGuild"}, $player->{guild}{name}));
+	}
+
+	if ($config{$prefix."_dist"}) {
+		return 0 unless inRange(distance(calcPosition($char), calcPosition($players{$id})), $config{$prefix."_dist"});
 	}
 
 	return 1;

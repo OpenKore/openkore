@@ -17,15 +17,25 @@ Bug fixes:
 - Equipped arrows will now show how many of them are left.
 - Shop title in shop.txt is detected better.
 - Don't send name request for perfectly hidden players and NPCs.
+  Some servers use this to detect bots.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
   prompt, since UNIX terminals generally don't close when openkore exits.
 - Your level/job level is now displayed when you level up.
 
+New config options:
+- partySkill: target_dist (range)
+  This is the same as target_dist for attackSkillSlot.
+  Only use the skill if the player is in the given range.
+- partySkill: isSelfSkill (flag)
+  Use this skill on yourself after checking the party conditions.
+  Useful for Magnificat or Gloria.
+
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
 - The format of $npcs_lut has changed, IDs are completely abandoned.
+- Attack AI routines should now support players as well.
 
 
 ==================
