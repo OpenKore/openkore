@@ -36,6 +36,7 @@
 	#define milisleep Sleep
 	#define yield SwitchToThread
 #else
+	#define __USE_GNU
 	#include <pthread.h>
 	#include <unistd.h>
 
