@@ -24,6 +24,7 @@ use strict;
 use Time::HiRes qw(time);
 use IO::Socket::INET;
 
+use Globals qw($interface);
 use Plugins;
 
 our ($sock);
@@ -31,11 +32,10 @@ our ($sock);
 
 Plugins::register("shared-data", "Shared Data");
 my $hooks = Plugins::addHooks(
+	["start", \&start],		      
 	["FileParsers::RODescLUT", \&parseRoOrDescLUT],
 	["FileParsers::ROLUT", \&parseRoOrDescLUT]		      
 );
-
-start() if (!$sock);
 
 
 sub start {
@@ -53,6 +53,12 @@ sub start {
 			Type => SOCK_STREAM,
 			Peer => "/tmp/kore-dataserver.socket"
 		);
+	}
+
+	if (!$sock) {
+		$interface->errorDialog("Unable to connect to the data server.\n" .
+					"Please start it if it isn't already started.");
+		exit;
 	}
 }
 
