@@ -1183,6 +1183,7 @@ sub AI {
 
 		} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
 			$args->{time} = time;
+			# this time will be reset once the NPC responds
 			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 
 			if ($config{autoTalkCont}) {
@@ -6351,14 +6352,17 @@ sub parseMsg {
 			$name = "Unknown #".unpack("L1", $ID);
 		}
 
+		$ai_v{'npc_talk'}{'talk'} = 'next';
+		$ai_v{'npc_talk'}{'time'} = time;
+
 		if ($config{autoTalkCont}) {
 			message "$name: Auto-continuing talking\n", "npc";
 			sendTalkContinue(\$remote_socket, $ID);
+			# this time will be reset once the NPC responds
+			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 		} else {
 			message "$name: Type 'talk cont' to continue talking\n", "npc";
 		}
-		$ai_v{'npc_talk'}{'talk'} = 'next';
-		$ai_v{'npc_talk'}{'time'} = time;
 
 	} elsif ($switch eq "00B6") {
 		# 00b6: long ID
