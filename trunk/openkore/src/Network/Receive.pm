@@ -322,7 +322,7 @@ sub actor_connected {
 
 		$players{$args->{ID}}{weapon} = $args->{weapon};
 		$players{$args->{ID}}{shield} = $args->{shield};
-		$players{$args->{ID}}{walk_speed} = $args->{walk_speed};
+		$players{$args->{ID}}{walk_speed} = $args->{walk_speed} / 1000;
 		$players{$args->{ID}}{headgear}{low} = $args->{lowhead};
 		$players{$args->{ID}}{headgear}{top} = $args->{tophead};
 		$players{$args->{ID}}{headgear}{mid} = $args->{midhead};
@@ -479,7 +479,7 @@ sub actor_exists {
 			$added = 1;
 		}
 
-		$player->{walk_speed} = $args->{walk_speed};
+		$player->{walk_speed} = $args->{walk_speed} / 1000;
 		$player->{headgear}{low} = $args->{lowhead};
 		$player->{headgear}{top} = $args->{tophead};
 		$player->{headgear}{mid} = $args->{midhead};
@@ -519,7 +519,7 @@ sub actor_exists {
 				$pets{$args->{ID}}{$args->{ID}}{'binID'} = binFind(\@petsID, $args->{ID});
 				$added = 1;
 			}
-			$pets{$args->{ID}}{$args->{ID}}{'walk_speed'} = $args->{walk_speed};
+			$pets{$args->{ID}}{$args->{ID}}{'walk_speed'} = $args->{walk_speed} / 1000;
 			%{$pets{$args->{ID}}{$args->{ID}}{'pos'}} = %coords;
 			%{$pets{$args->{ID}}{$args->{ID}}{'pos_to'}} = %coords;
 			debug "Pet Exists: $pets{$args->{ID}}{$args->{ID}}{'name'} ($pets{$args->{ID}}{$args->{ID}}{'binID'})\n", "parseMsg";
@@ -546,7 +546,7 @@ sub actor_exists {
 				$monsters{$args->{ID}}{'binID'} = binFind(\@monstersID, $args->{ID});
 				$added = 1;
 			}
-			$monsters{$args->{ID}}{'walk_speed'} = $args->{walk_speed};
+			$monsters{$args->{ID}}{'walk_speed'} = $args->{walk_speed} / 1000;
 			%{$monsters{$args->{ID}}{'pos'}} = %coords;
 			%{$monsters{$args->{ID}}{'pos_to'}} = %coords;
 
@@ -698,7 +698,7 @@ sub actor_moved {
 
 		$player->{weapon} = $args->{weapon};
 		$player->{shield} = $args->{shield};
-		$player->{walk_speed} = $args->{walk_speed};
+		$player->{walk_speed} = $args->{walk_speed} / 1000;
 		$player->{look}{head} = 0;
 		$player->{look}{body} = $args->{direction};
 		$player->{headgear}{low} = $args->{lowhead};
@@ -710,7 +710,7 @@ sub actor_moved {
 		$player->{pos} = {%coordsFrom};
 		$player->{pos_to} = {%coordsTo};
 		$player->{time_move} = time;
-		$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
+		$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * ($args->{walk_speed} / 1000);
 		debug "Player Moved: ".$player->name." ($player->{'binID'}) $sex_lut{$player->{'sex'}} $jobs_lut{$player->{'jobID'}}\n", "parseMsg";
 		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
@@ -734,8 +734,8 @@ sub actor_moved {
 			$pets{$args->{ID}}{pos} = {%coordsFrom};
 			$pets{$args->{ID}}{pos_to} = {%coordsTo};
 			$pets{$args->{ID}}{time_move} = time;
-			$pets{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
-			$pets{$args->{ID}}{walk_speed} = $args->{walk_speed};
+			$pets{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * ($args->{walk_speed} / 1000);
+			$pets{$args->{ID}}{walk_speed} = $args->{walk_speed} / 1000;
 
 			if ($monsters{$args->{ID}}) {
 				binRemove(\@monstersID, $args->{ID});
@@ -765,8 +765,8 @@ sub actor_moved {
 			$monsters{$args->{ID}}{pos} = {%coordsFrom};
 			$monsters{$args->{ID}}{pos_to} = {%coordsTo};
 			$monsters{$args->{ID}}{time_move} = time;
-			$monsters{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
-			$monsters{$args->{ID}}{walk_speed} = $args->{walk_speed};
+			$monsters{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * ($args->{walk_speed} / 1000);
+			$monsters{$args->{ID}}{walk_speed} = $args->{walk_speed} / 1000;
 			debug "Monster Moved: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg", 2;
 			setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
@@ -1003,7 +1003,7 @@ sub character_moves {
 	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
 	debug "You're moving from ($char->{pos}{x}, $char->{pos}{y}) to ($char->{pos_to}{x}, $char->{pos_to}{y}) - distance $dist, unknown $args->{unknown}\n", "parseMsg_move";
 	$char->{time_move} = time;
-	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * ($char->{walk_speed} || 0.12);
+	$char->{time_move_calc} = distance($char->{pos}, $char->{pos_to}) * (($char->{walk_speed} / 1000) || 0.12);
 }
 
 sub character_status {
