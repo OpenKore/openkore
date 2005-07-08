@@ -15,3 +15,4 @@ Blue sky future:
 
 	* Plugin support.
 	* On-the-fly data file reloading.
+	* Load data files only when needed.
