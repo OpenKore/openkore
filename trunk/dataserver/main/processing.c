@@ -54,7 +54,7 @@ send_reply (Client *client, const char *data)
 }
 
 
-/* Process data received from client. */
+/* Process packet contents. */
 static int
 process_data (ThreadData *thread_data, Client *client, unsigned char major, unsigned char minor, char *data, int size)
 {
@@ -70,8 +70,8 @@ process_data (ThreadData *thread_data, Client *client, unsigned char major, unsi
 			return 0;
 		} else
 			return send_reply (client, string_hash_get (hashFiles[(int) minor], data));
-
 	}
+
 	case 1: {
 		StringHashItem *item;
 		int fileIndex;
@@ -107,8 +107,8 @@ process_data (ThreadData *thread_data, Client *client, unsigned char major, unsi
 			       thread_data->ID, client, (int) minor);
 			return 0;
 		}
-
 	}
+
 	default:
 		/* Client requested invalid major/minor number. */
 		DEBUG ("Invalid major/minor number: %d/%d\n", (int) major, (int) minor);
@@ -117,7 +117,10 @@ process_data (ThreadData *thread_data, Client *client, unsigned char major, unsi
 }
 
 
-/* Process one client connection. */
+/*
+ * This function processes one client connection.
+ * It unserializes packets and takes care of input data buffering.
+ */
 int
 process_client (ThreadData *thread_data, Client *client, PrivateData *priv)
 {
@@ -172,6 +175,7 @@ process_client (ThreadData *thread_data, Client *client, PrivateData *priv)
 	memcpy (data, priv->buf + 4, size);
 	data[size] = 0;
 
+	/* Process the packet's content. */
 	if (!process_data (thread_data, client, major, minor, data, size)) {
 		free (data);
 		return 0;
