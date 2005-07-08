@@ -3107,7 +3107,7 @@ sub checkMonsterCondition {
 # Resets all "found" flags in the cart to 0.
 sub findCartItemInit {
 	for (@{$cart{inventory}}) {
-		next unless %{$_};
+		next unless $_ && %{$_};
 		undef $_->{found};
 	}
 }
