@@ -3481,8 +3481,6 @@ sub cmdKill {
 		return;
 	}
 
-	# The current attack code assumes that the target is a monster.
-	# So we must add the target into the %monsters hash.
 	attack($target);
 }
 
