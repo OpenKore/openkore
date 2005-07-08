@@ -101,6 +101,7 @@ our @EXPORT = (
 	drop
 	dumpData
 	getIDFromChat
+	getPlayerNameFromCache
 	getPortalDestName
 	getResponse
 	getSpellName
@@ -128,6 +129,7 @@ our @EXPORT = (
 	stripLanguageCode
 	switchConfigFile
 	updateDamageTables
+	updatePlayerNameCache
 	useTeleport
 	whenGroundStatus
 	whenStatusActive
@@ -135,7 +137,7 @@ our @EXPORT = (
 	whenStatusActivePL
 	writeStorageLog/,
 
-	#AI Math
+	# AI Math
 	qw/lineIntersection
 	percent_hp
 	percent_sp
@@ -1432,6 +1434,28 @@ sub getIDFromChat {
 	return undef;
 }
 
+##
+# getPlayerNameFromCache(player)
+# Returns: a player name, or undef if the name can't be retrieved from cache.
+sub getPlayerNameFromCache {
+	my ($player) = @_;
+
+	return if (!$config{cachePlayerNames});
+	my $entry = $playerNameCache{$player->{ID}};
+	return if (!$entry);
+
+	# Check whether the cache entry is too old or inconsistent.
+	# Default cache life time: 15 minutes.
+	if (timeOut($entry->{time}, $config{cachePlayerNames_duration}) || $player->{lv} != $entry->{lv} || $player->{jobID} != $entry->{jobID}) {
+		binRemove(\@playerNameCacheIDs, $player->{ID});
+		delete $playerNameCache{$player->{ID}};
+		compactArray(\@playerNameCacheIDs);
+		return;
+	}
+
+	return $entry->{name};
+}
+
 sub getPortalDestName {
 	my $ID = shift;
 	my %hash; # We only want unique names, so we use a hash
@@ -1689,7 +1713,15 @@ sub objectAdded {
 	my ($type, $ID, $obj) = @_;
 
 	if ($type eq 'player') {
-		push @unknownPlayers, $ID;
+		# Try to retrieve the player name from cache.
+		my $cachedName = getPlayerNameFromCache($obj);
+		if (defined $cachedName) {
+			$obj->{name} = $cachedName;
+			$obj->{gotName} = 1;
+		} else {
+			push @unknownPlayers, $ID;
+		}
+
 	} elsif ($type eq 'npc') {
 		push @unknownNPCs, $ID;
 	}
@@ -1784,7 +1816,7 @@ sub printItemDesc {
 }
 
 sub processNameRequestQueue {
-	my ($queue, $objects) = @_;
+	my ($queue, $objects, $isPlayer) = @_;
 
 	while (@{$queue}) {
 		my $ID = $queue->[0];
@@ -2197,6 +2229,48 @@ sub updateDamageTables {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
 			}
 		}
+	}
+}
+
+##
+# updatePlayerNameCache(player)
+# player: a player actor object.
+sub updatePlayerNameCache {
+	my ($player) = @_;
+
+	return if (!$config{cachePlayerNames});
+
+	# First, cleanup the cache. Remove entries that are too old.
+	# Default life time: 15 minutes
+	my $changed = 1;
+	for (my $i = 0; $i < @playerNameCacheIDs; $i++) {
+		my $ID = $playerNameCacheIDs[$i];
+		if (timeOut($playerNameCache{$ID}{time}, $config{cachePlayerNames_duration})) {
+			delete $playerNameCacheIDs[$i];
+			delete $playerNameCache{$ID};
+			$changed = 1;
+		}
+	}
+	compactArray(\@playerNameCacheIDs) if ($changed);
+
+	# Resize the cache if it's still too large.
+	# Default cache size: 100
+	while (@playerNameCacheIDs > $config{cachePlayerNames_maxSize}) {
+		my $ID = shift @playerNameCacheIDs;
+		delete $playerNameCache{$ID};
+	}
+
+	# Add this player name to the cache.
+	my $ID = $player->{ID};
+	if (!$playerNameCache{$ID}) {
+		push @playerNameCacheIDs, $ID;
+		my %entry = (
+			name => $player->{name},
+			time => time,
+			lv => $player->{lv},
+			jobID => $player->{jobID}
+		);
+		$playerNameCache{$ID} = \%entry;
 	}
 }
 

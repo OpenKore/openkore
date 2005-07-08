@@ -4,6 +4,7 @@
 
 TODO:
 - 'private 1' in servers.txt should also be effective when changing map server.
+- Write player name cache to file?
 
 *** INCOMPATIBLE CHANGES ***:
 - NPC IDs are no longer supported, you must use the location syntax.
@@ -22,6 +23,9 @@ New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
   prompt, since UNIX terminals generally don't close when openkore exits.
 - Your level/job level is now displayed when you level up.
+- Player names are now cached, so that they don't have to be re-retrieved
+  as often. This can save a lot of bandwidth, especially when you're
+  walking in town.
 
 New config options:
 - partySkill: target_dist (range)
@@ -30,8 +34,18 @@ New config options:
 - partySkill: isSelfSkill (flag)
   Use this skill on yourself after checking the party conditions.
   Useful for Magnificat or Gloria.
+- cachePlayerNames (flag)
+    Turns player name caching on or off.
+
+  cachePlayerNames_duration (seconds)
+    Cache player names for a maximum time of (seconds). The default is
+    900 seconds (15 minutes).
+
+  cachePlayerNames_maxSize (number)
+    Maximum cache size. The default is 100.
 - storageAuto_keepOpen (flag)
   Set to true if you want to keep storage open after storageAuto sequence.
+  Only enable this if you know what you're doing.
   (Note: You cannot use items while storage is open.)
 
 Internal:

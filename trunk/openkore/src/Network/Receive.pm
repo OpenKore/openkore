@@ -28,11 +28,12 @@ sub new {
 	my ($class) = @_;
 	my %self;
 
-	#If you are wondering about those funny strings like 'x2 v1' read http://perldoc.perl.org/functions/pack.html
-	#and http://perldoc.perl.org/perlpacktut.html
+	# If you are wondering about those funny strings like 'x2 v1' read http://perldoc.perl.org/functions/pack.html
+	# and http://perldoc.perl.org/perlpacktut.html
 
-	#Defines a list of Packet Handlers and decoding information
-	#'packetSwitch' => ['handler function','unpack string',[qw(argument names)]]
+	# Defines a list of Packet Handlers and decoding information
+	# 'packetSwitch' => ['handler function','unpack string',[qw(argument names)]]
+
 	$self{packet_list} = {
 		'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*', [qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 		'006A' => ['login_error', 'C1', [qw(type)]],
@@ -612,10 +613,13 @@ sub actor_info {
 
 	my $player = $players{$args->{ID}};
 	if ($player && %{$player}) {
+		# This packet tells us the names of players who aren't in a guild, as opposed to 0195.
 		$player->{name} = $args->{name};
 		$player->{gotName} = 1;
 		my $binID = binFind(\@playersID, $args->{ID});
 		debug "Player Info: $player->{name} ($binID)\n", "parseMsg_presence", 2;
+		updatePlayerNameCache($player);
+		Plugins::callHook('charNameUpdate', $player);
 	}
 
 	my $monster = $monsters{$args->{ID}};
@@ -822,11 +826,13 @@ sub actor_name_received {
 
 	my $player = $players{$args->{ID}};
 	if ($player && %{$player}) {
+		# Receive names of players who are in a guild.
 		$player->{name} = $args->{name};
 		$player->{gotName} = 1;
 		$player->{party}{name} = $args->{partyName};
 		$player->{guild}{name} = $args->{guildName};
 		$player->{guild}{title} = $args->{guildTitle};
+		updatePlayerNameCache($player);
 		debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
 		Plugins::callHook('charNameUpdate', $player);
 	}
