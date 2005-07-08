@@ -67,7 +67,7 @@ sub new {
 		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
 		'009C' => ['actor_look_at', 'a4 C1 x1 C1', [qw(ID head body)]],
 		'009D' => ['item_exists', 'a4 v1 x1 v1 v1 v1', [qw(ID type x y amount)]],
-		'009E' => ['item_appeared', 'a4 v1 x1 v1 v1 x2 v1', [qw(ID type x y ammount)]],
+		'009E' => ['item_appeared', 'a4 v1 x1 v1 v1 x2 v1', [qw(ID type x y amount)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
