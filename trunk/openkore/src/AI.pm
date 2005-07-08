@@ -768,18 +768,21 @@ sub attack {
 	my $ID = shift;
 	my $priorityAttack = shift;
 	my %args;
+
+	my $target = Actor::get($ID);
+
 	$args{'ai_attack_giveup'}{'time'} = time;
 	$args{'ai_attack_giveup'}{'timeout'} = $timeout{'ai_attack_giveup'}{'timeout'};
 	$args{'ID'} = $ID;
 	$args{'unstuck'}{'timeout'} = ($timeout{'ai_attack_unstuck'}{'timeout'} || 1.5);
-	%{$args{'pos_to'}} = %{$monsters{$ID}{'pos_to'}};
-	%{$args{'pos'}} = %{$monsters{$ID}{'pos'}};
+	%{$args{'pos_to'}} = %{$target->{'pos_to'}};
+	%{$args{'pos'}} = %{$target->{'pos'}};
 	AI::queue("attack", \%args);
 
 	if ($priorityAttack) {
-		message "Priority Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
+		message "Priority Attacking: $target\n";
 	} else {
-		message "Attacking: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'}) [$monsters{$ID}{'nameID'}]\n";
+		message "Attacking: $target\n";
 	}
 
 	$startedattack = 1;
@@ -788,6 +791,8 @@ sub attack {
 
 	#Mod Start
 	AUTOEQUIP: {
+		last AUTOEQUIP if ($target->{type} eq 'Player');
+
 		my $i = 0;
 		my ($Rdef,$Ldef,$Req,$Leq,$arrow,$j);
 		while (exists $config{"autoSwitch_$i"}) {

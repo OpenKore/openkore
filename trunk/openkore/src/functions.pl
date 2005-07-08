@@ -2453,7 +2453,8 @@ sub AI {
 		undef AI::args->{move_start};
 
 	} elsif (AI::action eq "attack" && AI::args->{avoiding}) {
-		AI::args->{ai_attack_giveup}{time} = time + $monsters{AI::args->{ID}}{time_move_calc} + 3;
+		my $target = Actor::get(AI::args->{attackID});
+		AI::args->{ai_attack_giveup}{time} = time + $target->{time_move_calc} + 3;
 		undef AI::args->{avoiding};
 
 	} elsif (((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
@@ -2461,10 +2462,10 @@ sub AI {
 		# We're on route to the monster; check whether the monster has moved
 		my $ID = AI::args->{attackID};
 		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
-		my $monster = $monsters{$ID};
+		my $target = Actor::get($ID);
 
-		if ($monster && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($monster), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
+		if ($attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
+		 && distance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster has moved; stop moving and let the attack AI readjust route
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -2472,8 +2473,8 @@ sub AI {
 			$attackSeq->{ai_attack_giveup}{time} = time;
 			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
 
-		} elsif ($monster && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($monster), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
+		} elsif ($attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
+		 && distance(calcPosition($target), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
 			# Monster is within attack range; stop moving
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "route");
@@ -2487,12 +2488,16 @@ sub AI {
 
 	if (AI::action eq "attack" && timeOut(AI::args->{ai_attack_giveup}) && !$config{attackNoGiveup}) {
 		my $ID = AI::args->{ID};
-		$monsters{$ID}{attack_failed} = time if ($monsters{$ID});
+		my $target = Actor::get($ID);
+		$target->{attack_failed} = time if ($monsters{$ID});
 		AI::dequeue;
 		message "Can't reach or damage target, dropping target\n", "ai_attack";
-		useTeleport(1) if ($config{'teleportAuto_dropTarget'});
+		if ($config{'teleportAuto_dropTarget'}) {
+			message "Teleport due to dropping attack target\n";
+			useTeleport(1);
+		}
 
-	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{ID}}) {
+	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{ID}} && !$players{$ai_seq_args[0]{ID}}) {
 		# Monster died or disappeared
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
 		my $ID = AI::args->{ID};
@@ -2551,13 +2556,14 @@ sub AI {
 		}
 
 		my $ID = $args->{ID};
+		my $target = Actor::get($ID);
 		my $myPos = $char->{pos_to};
-		my $monsterPos = $monsters{$ID}{pos_to};
+		my $monsterPos = $target->{pos_to};
 		my $monsterDist = distance($myPos, $monsterPos);
 
 		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
 		my $realMyPos = calcPosition($char);
-		my $realMonsterPos = calcPosition($monsters{$ID});
+		my $realMonsterPos = calcPosition($target);
 		my $realMonsterDist = distance($realMyPos, $realMonsterPos);
 		if (!$config{'runFromTarget'}) {
 			$myPos = $realMyPos;
@@ -2568,19 +2574,19 @@ sub AI {
 
 
 		# If the damage numbers have changed, update the giveup time so we don't timeout
-		if ($args->{dmgToYou_last}   != $monsters{$ID}{dmgToYou}
-		 || $args->{missedYou_last}  != $monsters{$ID}{missedYou}
-		 || $args->{dmgFromYou_last} != $monsters{$ID}{dmgFromYou}
+		if ($args->{dmgToYou_last}   != $target->{dmgToYou}
+		 || $args->{missedYou_last}  != $target->{missedYou}
+		 || $args->{dmgFromYou_last} != $target->{dmgFromYou}
 		 || $args->{lastSkillTime} != $char->{last_skill_time}) {
 			$args->{ai_attack_giveup}{time} = time;
 			debug "Update attack giveup time\n", "ai_attack", 2;
 		}
-		$hitYou = ($args->{dmgToYou_last} != $monsters{$ID}{dmgToYou}
-			|| $args->{missedYou_last} != $monsters{$ID}{missedYou});
-		$args->{dmgToYou_last} = $monsters{$ID}{dmgToYou};
-		$args->{missedYou_last} = $monsters{$ID}{missedYou};
-		$args->{dmgFromYou_last} = $monsters{$ID}{dmgFromYou};
-		$args->{missedFromYou_last} = $monsters{$ID}{missedFromYou};
+		$hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou}
+			|| $args->{missedYou_last} != $target->{missedYou});
+		$args->{dmgToYou_last} = $target->{dmgToYou};
+		$args->{missedYou_last} = $target->{missedYou};
+		$args->{dmgFromYou_last} = $target->{dmgFromYou};
+		$args->{missedFromYou_last} = $target->{missedFromYou};
 		$args->{lastSkillTime} = $char->{last_skill_time};
 
 
@@ -2598,9 +2604,9 @@ sub AI {
 			 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
 			 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
 			 && checkSelfCondition("attackComboSlot_$i")
-			 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $monsters{$ID}{name}))
-			 && (!$config{"attackComboSlot_${i}_notMonsters"} || !existsInList($config{"attackComboSlot_${i}_notMonsters"}, $monsters{$ID}{name}))
-			 && checkMonsterCondition("attackComboSlot_${i}_target", $monsters{$ID})) {
+			 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}))
+			 && (!$config{"attackComboSlot_${i}_notMonsters"} || !existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}))
+			 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
 
 				$args->{attackComboSlot_uses}{$i}++;
 				delete $char->{last_skill_used};
@@ -2636,12 +2642,12 @@ sub AI {
 				my $skill = Skills->new(name => $config{"attackSkillSlot_$i"});
 				if (checkSelfCondition("attackSkillSlot_$i")
 					&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
-					    $monsters{$ID}{skillUses}{$skill->handle} < $config{"attackSkillSlot_$i"."_maxUses"})
+					    $target->{skillUses}{$skill->handle} < $config{"attackSkillSlot_$i"."_maxUses"})
 					&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
-					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $monsters{$ID}{'name'}))
-					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $monsters{$ID}{'name'}))
-					&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($monsters{$ID}{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
-					&& checkMonsterCondition("attackSkillSlot_${i}_target", $monsters{$ID})
+					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}))
+					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}))
+					&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
+					&& checkMonsterCondition("attackSkillSlot_${i}_target", $target)
 				) {
 					$args->{attackSkillSlot_attempts}{$i}++;
 					$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
@@ -2792,13 +2798,13 @@ sub AI {
 			# Calculate where the monster would be when you've reached its
 			# previous position.
 			my $time_needed;
-			if (objectIsMovingTowards($monsters{$ID}, $char, 45)) {
+			if (objectIsMovingTowards($target, $char, 45)) {
 				$time_needed = $monsterDist * $char->{walk_speed};
 			} else {
 				# If monster is not moving towards you, then you need more time to walk
 				$time_needed = $monsterDist * $char->{walk_speed} + 2;
 			}
-			my $pos = calcPosition($monsters{$ID}, $time_needed);
+			my $pos = calcPosition($target, $time_needed);
 
 			my $dist = sprintf("%.1f", $monsterDist);
 			debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
@@ -2812,13 +2818,13 @@ sub AI {
 				noAvoidWalls => 1);
 			if (!$result) {
 				# Unable to calculate a route to target
-				$monsters{$ID}{attack_failed} = time if ($monsters{$ID});
+				$target->{attack_failed} = time;
 				AI::dequeue;
 				message "Unable to calculate a route to target, dropping target\n", "ai_attack";
 			}
 
 		} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
-		 && (!$config{'tankMode'} || !$monsters{$ID}{dmgFromYou})) {
+		 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
 			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
 			if (!AI::args->{firstAttack}) {
 				AI::args->{firstAttack} = 1;
@@ -2828,7 +2834,7 @@ sub AI {
 			}
 
 			$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
-			if (!$monsters{$ID}{dmgFromYou} && timeOut($args->{unstuck})) {
+			if (!$target->{dmgFromYou} && timeOut($args->{unstuck})) {
 				# We are close enough to the target, and we're trying to attack it,
 				# but some time has passed and we still haven't dealed any damage.
 				# Our recorded position might be out of sync, so try to unstuck
@@ -2858,7 +2864,7 @@ sub AI {
 						undef,
 						"attackSkill");
 				} else {
-					my $pos = ($config{"attackSkillSlot_${slot}_isSelfSkill"}) ? $char->{pos_to} : $monsters{$ID}{pos_to};
+					my $pos = ($config{"attackSkillSlot_${slot}_isSelfSkill"}) ? $char->{pos_to} : $target->{pos_to};
 					ai_skillUse(
 						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
 						$config{"attackSkillSlot_${slot}_lvl"},
@@ -2891,7 +2897,7 @@ sub AI {
 						undef,
 						$config{"attackComboSlot_${slot}_waitBeforeUse"});
 				} else {
-					my $pos = ($isSelfSkill) ? $char->{pos_to} : $monsters{$ID}{pos_to};
+					my $pos = ($isSelfSkill) ? $char->{pos_to} : $target->{pos_to};
 					ai_skillUse(
 						$skill,
 						$config{"attackComboSlot_${slot}_lvl"},
@@ -2907,10 +2913,10 @@ sub AI {
 			}
 
 		} elsif ($config{'tankMode'}) {
-			if ($ai_seq_args[0]{'dmgTo_last'} != $monsters{$ID}{'dmgTo'}) {
+			if ($ai_seq_args[0]{'dmgTo_last'} != $target->{'dmgTo'}) {
 				$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
 			}
-			$ai_seq_args[0]{'dmgTo_last'} = $monsters{$ID}{'dmgTo'};
+			$ai_seq_args[0]{'dmgTo_last'} = $target->{'dmgTo'};
 		}
 	}
 
@@ -3037,6 +3043,7 @@ sub AI {
 					$party_skill{targetID} = $ID;
 					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
 					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
+					$party_skill{isSelfSkill} = $config{"partySkill_$i"."_isSelfSkill"};
 					# This is used by setSkillUseTimer() to set
 					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
 					# when the skill is actually cast
@@ -3070,12 +3077,24 @@ sub AI {
 			}
 			$party_skill{skillLvl} = $smartHeal_lv;
 		}
-		if ($party_skill{skillLvl} > 0) {
+		if (defined $party_skill{targetID}) {
 			debug qq~Party Skill used ($party_skill{target}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~, "skill";
 			if (!ai_getSkillUseType($party_skill{skillID})) {
-				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $party_skill{targetID});
+				ai_skillUse(
+					$party_skill{skillID},
+					$party_skill{skillLvl},
+					$party_skill{maxCastTime},
+					$party_skill{minCastTime},
+					$party_skill{isSelfSkill} ? $accountID : $party_skill{targetID});
 			} else {
-				ai_skillUse($party_skill{skillID}, $party_skill{skillLvl}, $party_skill{maxCastTime}, $party_skill{minCastTime}, $party_skill{x}, $party_skill{y});
+				my $pos = ($party_skill{isSelfSkill}) ? $char->{pos_to} : \%party_skill;
+				ai_skillUse(
+					$party_skill{skillID},
+					$party_skill{skillLvl},
+					$party_skill{maxCastTime},
+					$party_skill{minCastTime},
+					$pos->{x},
+					$pos->{y});
 			}
 		}
 	}
@@ -5199,7 +5218,7 @@ sub parseMsg {
 			$player->{pos_to} = {%coordsTo};
 			$player->{time_move} = time;
 			$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
-			debug "Player Moved: $player->{name} ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg";
+			debug "Player Moved: ".$player->name." ($player->{binID}) $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", "parseMsg";
                         setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $player) if ($added);
