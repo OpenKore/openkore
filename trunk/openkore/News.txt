@@ -17,7 +17,6 @@ Bug fixes:
 - Equipped arrows will now show how many of them are left.
 - Shop title in shop.txt is detected better.
 - Don't send name request for perfectly hidden players and NPCs.
-  Some servers use this to detect bots.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
