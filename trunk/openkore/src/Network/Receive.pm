@@ -57,7 +57,7 @@ sub new {
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V1 V1 s1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
-		'008D' => ['public_message', 'a4 a*', [qw(ID message)]],
+		'008D' => ['public_message', 'x2 a4 a*', [qw(ID message)]],
 		'008E' => ['self_chat', 'x2 a*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
 		'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
@@ -679,40 +679,41 @@ sub actor_moved {
 	my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
 
 	if ($jobs_lut{$args->{type}}) {
+		my $player = $players{$args->{ID}};
 		if (!UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
-			$players{$args->{ID}} = new Actor::Player();
+			$players{$args->{ID}} = $player = new Actor::Player();
 			binAdd(\@playersID, $args->{ID});
-			$players{$args->{ID}}{'appear_time'} = time;
-			$players{$args->{ID}}{'sex'} = $args->{sex};
-			$players{$args->{ID}}{'ID'} = $args->{ID};
-			$players{$args->{ID}}{'jobID'} = $args->{type};
-			$players{$args->{ID}}{'nameID'} = unpack("L1", $args->{ID});
-			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
+			$player->{appear_time} = time;
+			$player->{sex} = $args->{sex};
+			$player->{ID} = $args->{ID};
+			$player->{jobID} = $args->{type};
+			$player->{nameID} = unpack("L1", $args->{ID});
+			$player->{binID} = binFind(\@playersID, $args->{ID});
 			my $domain = existsInList($config{friendlyAID}, unpack("L1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-			debug "Player Appeared: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $sex_lut{$args->{sex}} $jobs_lut{$args->{type}}\n", $domain;
+			debug "Player Appeared: ".$player->name." ($player->{'binID'}) Level $args->{lv} $sex_lut{$args->{sex}} $jobs_lut{$args->{type}}\n", $domain;
 			$added = 1;
-			Plugins::callHook('player', {player => $players{$args->{ID}}});
+			Plugins::callHook('player', {player => $player});
 		}
 
-		$players{$args->{ID}}{weapon} = $args->{weapon};
-		$players{$args->{ID}}{shield} = $args->{shield};
-		$players{$args->{ID}}{walk_speed} = $args->{walk_speed};
-		$players{$args->{ID}}{look}{head} = 0;
-		$players{$args->{ID}}{look}{body} = $args->{direction};
-		$players{$args->{ID}}{headgear}{low} = $args->{lowhead};
-		$players{$args->{ID}}{headgear}{top} = $args->{tophead};
-		$players{$args->{ID}}{headgear}{mid} = $args->{midhead};
-		$players{$args->{ID}}{hair_color} = $args->{hair_color};
-		$players{$args->{ID}}{lv} = $args->{lv};
-		$players{$args->{ID}}{guildID} = $args->{guildID};
-		$players{$args->{ID}}{pos} = {%coordsFrom};
-		$players{$args->{ID}}{pos_to} = {%coordsTo};
-		$players{$args->{ID}}{time_move} = time;
-		$players{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
-		debug "Player Moved: $players{$args->{ID}}{'name'} ($players{$args->{ID}}{'binID'}) $args->{sex}_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg";
-                       setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+		$player->{weapon} = $args->{weapon};
+		$player->{shield} = $args->{shield};
+		$player->{walk_speed} = $args->{walk_speed};
+		$player->{look}{head} = 0;
+		$player->{look}{body} = $args->{direction};
+		$player->{headgear}{low} = $args->{lowhead};
+		$player->{headgear}{top} = $args->{tophead};
+		$player->{headgear}{mid} = $args->{midhead};
+		$player->{hair_color} = $args->{hair_color};
+		$player->{lv} = $args->{lv};
+		$player->{guildID} = $args->{guildID};
+		$player->{pos} = {%coordsFrom};
+		$player->{pos_to} = {%coordsTo};
+		$player->{time_move} = time;
+		$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
+		debug "Player Moved: ".$player->name." ($player->{'binID'}) $sex_lut{$player->{'sex'}} $jobs_lut{$player->{'jobID'}}\n", "parseMsg";
+		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
-		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
+		objectAdded('player', $args->{ID}, $player) if ($added);
 
 	} elsif ($args->{type} >= 1000) {
 		if ($args->{pet}) {
@@ -766,7 +767,7 @@ sub actor_moved {
 			$monsters{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $args->{walk_speed};
 			$monsters{$args->{ID}}{walk_speed} = $args->{walk_speed};
 			debug "Monster Moved: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg", 2;
-                        setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+			setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
 		}
@@ -820,7 +821,7 @@ sub actor_spawned {
 		$players{$args->{ID}}{look}{body} = 0;
 		$players{$args->{ID}}{pos} = {%coords};
 		$players{$args->{ID}}{pos_to} = {%coords};
-		debug "Player Spawned: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $args->{sex}_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg";
+		debug "Player Spawned: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg";
 
 		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
 
