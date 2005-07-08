@@ -32,8 +32,8 @@ use Globals qw(%config);
 our @EXPORT = (
 	# Hash/array management
 	qw(binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
-	existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip findIndexStringList_lc
-	findKey findKeyString hashCopyByKey minHeapAdd shuffleArray),
+	compactArray existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip
+	findIndexStringList_lc findKey findKeyString hashCopyByKey minHeapAdd shuffleArray),
 	# Math
 	qw(calcPosition checkMovementDirection distance getVector moveAlongVector normalize vectorToDegree),
 	# OS-specific
@@ -204,6 +204,20 @@ sub binSize {
 		}
 	}
 	return $found;
+}
+
+##
+# compactArray(r_array)
+#
+# Resize an array by removing undefined items.
+sub compactArray {
+	my ($array) = @_;
+	my @new;
+
+	foreach my $item (@{$array}) {
+		push @new, $item if (defined $item);
+	}
+	@{$array} = @new;
 }
 
 ##
