@@ -292,19 +292,23 @@ usage (int retval)
 
 
 static StringHash *
-load_hash_file (const char *basename, StringHash * (*loader) (const char *filename))
+load_hash_file (const char *basename, StringHash * (*loader) (const char *filename), int required)
 {
 	char file[PATH_MAX];
 	StringHash *hash;
 
 	snprintf (file, sizeof (file), "%s/%s", options.tables, basename);
-	message ("Loading %s...\n", file);
+	message ("Loading %s... ", file);
 	hash = loader (file);
 	if (hash == NULL) {
-		error ("Error: cannot load %s\n", file);
-		error ("If your table files are somewhere else, then use the --tables parameter.\n");
-		exit (1);
-	}
+		message ("not found\n");
+		if (required) {
+			error ("Error: cannot load %s\n", file);
+			error ("If your table files are somewhere else, then use the --tables parameter.\n");
+			exit (1);
+		}
+	} else
+		message ("\n");
 	return hash;
 }
 
@@ -367,13 +371,13 @@ main (int argc, char *argv[])
 	}
 
 	/* Load data files. */
-	hashFiles[0] = load_hash_file ("itemsdescriptions.txt",  desc_info_load);
-	hashFiles[1] = load_hash_file ("skillsdescriptions.txt", desc_info_load);
-        hashFiles[2] = load_hash_file ("cities.txt",             rolut_load);
-	hashFiles[3] = load_hash_file ("elements.txt",           rolut_load);
-	hashFiles[4] = load_hash_file ("items.txt",              rolut_load);
-	hashFiles[5] = load_hash_file ("itemslotcounttable.txt", rolut_load);
-	hashFiles[6] = load_hash_file ("maps.txt",               rolut_load);
+	hashFiles[0] = load_hash_file ("itemsdescriptions.txt",  desc_info_load, 1);
+	hashFiles[1] = load_hash_file ("skillsdescriptions.txt", desc_info_load, 1);
+        hashFiles[2] = load_hash_file ("cities.txt",             rolut_load, 1);
+	hashFiles[3] = load_hash_file ("elements.txt",           rolut_load, 1);
+	hashFiles[4] = load_hash_file ("items.txt",              rolut_load, 1);
+	hashFiles[5] = load_hash_file ("itemslotcounttable.txt", rolut_load, 1);
+	hashFiles[6] = load_hash_file ("maps.txt",               rolut_load, 1);
 
 	/* Initialize threads for handling client connections. */
 	threads = malloc (options.threads * sizeof (ThreadData));
