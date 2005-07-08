@@ -84,7 +84,7 @@ sub new {
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
-		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
+		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x4 C1 x2 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 	};
@@ -674,6 +674,12 @@ sub actor_moved {
 	makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
 	makeCoords2(\%coordsTo, substr($args->{RAW_MSG}, 52, 3));
 
+	#my %statuses = {
+	#	1 => 'Twohand Quicken',
+	#	4 => 'Energy Coat'
+	#};
+	#debug "actor has status $statuses{$args->{skillstatus}}\n";
+
 	my $added;
 	my %vec;
 	getVector(\%vec, \%coordsTo, \%coordsFrom);
@@ -700,7 +706,7 @@ sub actor_moved {
 		$player->{shield} = $args->{shield};
 		$player->{walk_speed} = $args->{walk_speed} / 1000;
 		$player->{look}{head} = 0;
-		$player->{look}{body} = $args->{direction};
+		$player->{look}{body} = $direction;
 		$player->{headgear}{low} = $args->{lowhead};
 		$player->{headgear}{top} = $args->{tophead};
 		$player->{headgear}{mid} = $args->{midhead};
@@ -710,7 +716,7 @@ sub actor_moved {
 		$player->{pos} = {%coordsFrom};
 		$player->{pos_to} = {%coordsTo};
 		$player->{time_move} = time;
-		$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * ($args->{walk_speed} / 1000);
+		$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $player->{walk_speed};
 		debug "Player Moved: ".$player->name." ($player->{'binID'}) $sex_lut{$player->{'sex'}} $jobs_lut{$player->{'jobID'}}\n", "parseMsg";
 		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
@@ -718,24 +724,25 @@ sub actor_moved {
 
 	} elsif ($args->{type} >= 1000) {
 		if ($args->{pet}) {
-			if (!$pets{$args->{ID}} || !%{$pets{$args->{ID}}}) {
-				$pets{$args->{ID}}{'appear_time'} = time;
+			my $pet = $pets{$args->{ID}} ||= {};
+			if (!%{$pets{$args->{ID}}}) {
+				$pet->{'appear_time'} = time;
 				my $display = ($monsters_lut{$args->{type}} ne "")
 						? $monsters_lut{$args->{type}}
 						: "Unknown ".$args->{type};
 				binAdd(\@petsID, $args->{ID});
-				$pets{$args->{ID}}{'nameID'} = $args->{type};
-				$pets{$args->{ID}}{'name'} = $display;
-				$pets{$args->{ID}}{'name_given'} = "Unknown";
-				$pets{$args->{ID}}{'binID'} = binFind(\@petsID, $args->{ID});
+				$pet->{'nameID'} = $args->{type};
+				$pet->{'name'} = $display;
+				$pet->{'name_given'} = "Unknown";
+				$pet->{'binID'} = binFind(\@petsID, $args->{ID});
 			}
-			$pets{$args->{ID}}{look}{head} = 0;
-			$pets{$args->{ID}}{look}{body} = $direction;
-			$pets{$args->{ID}}{pos} = {%coordsFrom};
-			$pets{$args->{ID}}{pos_to} = {%coordsTo};
-			$pets{$args->{ID}}{time_move} = time;
-			$pets{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * ($args->{walk_speed} / 1000);
-			$pets{$args->{ID}}{walk_speed} = $args->{walk_speed} / 1000;
+			$pet->{look}{head} = 0;
+			$pet->{look}{body} = $direction;
+			$pet->{pos} = {%coordsFrom};
+			$pet->{pos_to} = {%coordsTo};
+			$pet->{time_move} = time;
+			$pet->{walk_speed} = $args->{walk_speed} / 1000;
+			$pet->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $pet->{walk_speed};
 
 			if ($monsters{$args->{ID}}) {
 				binRemove(\@monstersID, $args->{ID});
@@ -743,7 +750,7 @@ sub actor_moved {
 				delete $monsters{$args->{ID}};
 			}
 
-			debug "Pet Moved: $pets{$args->{ID}}{'name'} ($pets{$args->{ID}}{'binID'})\n", "parseMsg";
+			debug "Pet Moved: $pet->{name} ($pet->{binID})\n", "parseMsg";
 
 		} else {
 			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
