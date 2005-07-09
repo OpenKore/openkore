@@ -4064,10 +4064,17 @@ sub AI {
 			stand();
 
 		} elsif (( $dist = distance($items{$ID}{pos}, ( $myPos = calcPosition($char) )) > 2 )) {
-			my (%vec, %pos);
-			getVector(\%vec, $items{$ID}{pos}, $myPos);
-			moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-			move($pos{x}, $pos{y});
+			if (!$config{itemsTakeAuto_new}) {
+				my (%vec, %pos);
+				getVector(\%vec, $items{$ID}{pos}, $myPos);
+				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
+				move($pos{x}, $pos{y});
+			} else {
+				my $item = $items{$ID};
+				my $pos = $item->{pos};
+				message "Routing to ($pos->{x}, $pos->{y}) to take $item->{name} ($item->{binID}), distance $dist\n";
+				ai_route($field{name}, $pos->{x}, $pos->{y});
+			}
 
 		} else {
 			AI::dequeue;
@@ -4103,10 +4110,16 @@ sub AI {
 			stand();
 
 		} elsif ($dist > 2) {
-			my (%vec, %pos);
-			getVector(\%vec, $items{$ID}{pos}, $myPos);
-			moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-			move($pos{x}, $pos{y});
+			if (!$config{itemsTakeAuto_new}) {
+				my (%vec, %pos);
+				getVector(\%vec, $items{$ID}{pos}, $myPos);
+				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
+				move($pos{x}, $pos{y});
+			} else {
+				my $pos = $item->{pos};
+				message "Routing to ($pos->{x}, $pos->{y}) to take $item->{name} ($item->{binID}), distance $dist\n";
+				ai_route($field{name}, $pos->{x}, $pos->{y});
+			}
 
 		} elsif (timeOut($timeout{ai_take})) {
 			sendTake(\$remote_socket, $ID);
