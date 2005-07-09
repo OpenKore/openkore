@@ -2298,8 +2298,10 @@ sub useTeleport {
 	if ($sk_lvl > 0 && $internal > 0) {
 		# We have the teleport skill, and should use it
 		my $skill = new Skills(handle => 'AL_TELEPORT');
-		if ($internal == 1 || ($internal == 2 && binSize(\@playersID))) {
+		if ($sk_lvl == 2 || $internal == 1 || ($internal == 2 && binSize(\@playersID))) {
 			# Send skill use packet to appear legitimate
+			# (Always send skill use packet for level 2 so that saveMap
+			# autodetection works)
 			sendSkillUse(\$remote_socket, $skill->id, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
 			undef $char->{permitSkill};
 		}
