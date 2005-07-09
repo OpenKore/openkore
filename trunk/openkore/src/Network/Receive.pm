@@ -43,7 +43,7 @@ sub new {
 		'006E' => ['character_creation_failed'],
 		'006F' => ['character_deletion_successful'],
 		'0070' => ['character_deletion_failed'],
-		'0071' => ['received_character_ID_and_Map', 'a4 a16 a4 v1', [qw(charID mapName mapIP mapPort)]],
+		'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
 		'0073' => ['map_loaded','x4 a3',[qw(coords)]],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
@@ -58,8 +58,8 @@ sub new {
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V1 V1 s1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
-		'008D' => ['public_message', 'x2 a4 a*', [qw(ID message)]],
-		'008E' => ['self_chat', 'x2 a*', [qw(message)]],
+		'008D' => ['public_message', 'x2 a4 Z*', [qw(ID message)]],
+		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
 		'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
@@ -76,11 +76,13 @@ sub new {
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
-		'011C' => ['warp_portal_list', 'v1 a16 a16 a16 a16', [qw(type memo1 memo2 memo3 memo4)]],
+		'011C' => ['warp_portal_list', 'v1 Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
-		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
+		'017F' => ['guild_chat', 'x4 Z*', [qw(message)]],
+		'018F' => ['refine_result', 'x2 S1', [qw(fail)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'01A2' => ['pet_info', 'Z24 C1 S1 S1 S1 S1', [qw(name nameflag level hungry friendly accessory)]],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
@@ -187,7 +189,7 @@ sub account_server_info {
 		$servers[$num]{ip} = makeIP(substr($msg, $i, 4));
 		$servers[$num]{ip} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 		$servers[$num]{port} = unpack("S1", substr($msg, $i+4, 2));
-		($servers[$num]{name}) = substr($msg, $i + 6, 20) =~ /([\s\S]*?)\000/;
+		($servers[$num]{name}) = unpack("Z*", substr($msg, $i + 6, 20));
 		$servers[$num]{users} = unpack("L",substr($msg, $i + 26, 4));
 		$num++;
 	}
@@ -1190,6 +1192,27 @@ sub errors {
 	}
 }
 
+sub guild_chat {
+	my ($self, $args) = @_;
+	my ($chatMsgUser, $chatMsg);
+	my $chat = $args->{message};
+	if (($chatMsgUser, $chatMsg) = $args->{message} =~ /(.*?) : (.*)/) {
+		$chatMsgUser =~ s/ $//;
+		stripLanguageCode(\$chatMsg);
+		$chat = "$chatMsgUser : $chatMsg";
+	}
+
+	chatLog("g", "$chat\n") if ($config{'logGuildChat'});
+	message "[Guild] $chat\n", "guildchat";
+	# only queue this if it's a real chat message
+	ChatQueue::add('g', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
+
+	Plugins::callHook('packet_guildMsg', {
+	        MsgUser => $chatMsgUser,
+	        Msg => $chatMsg
+	});
+}
+
 sub item_appeared {
 	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
@@ -1454,7 +1477,6 @@ sub pet_info {
 
 sub public_message {
 	my ($self, $args) = @_;
-	$args->{message} =~ s/\000//g;
 	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
 	$args->{chatMsgUser} =~ s/ $//;
 
@@ -1570,7 +1592,7 @@ sub received_characters {
 		$chars[$num]{'ID'} = substr($args->{RAW_MSG}, $i, 4);
 		$chars[$num]{'lv'} = unpack("C1", substr($args->{RAW_MSG}, $i + 58, 1));
 		$chars[$num]{'hair_color'} = unpack("C1", substr($args->{RAW_MSG}, $i + 70, 1));
-		($chars[$num]{'name'}) = substr($args->{RAW_MSG}, $i + 74, 24) =~ /([\s\S]*?)\000/;
+		($chars[$num]{'name'}) = unpack("Z*", substr($args->{RAW_MSG}, $i + 74, 24));
 		$chars[$num]{'str'} = unpack("C1", substr($args->{RAW_MSG}, $i + 98, 1));
 		$chars[$num]{'agi'} = unpack("C1", substr($args->{RAW_MSG}, $i + 99, 1));
 		$chars[$num]{'vit'} = unpack("C1", substr($args->{RAW_MSG}, $i + 100, 1));
@@ -1596,7 +1618,6 @@ sub received_character_ID_and_Map {
 	$conState = 4;
 	undef $conState_tries;
 	$charID = $args->{charID};
-	($args->{mapName}) = $args->{mapName} =~ /([\s\S]*?)\000/;
 
 	if ($xkore) {
 		undef $masterServer;
@@ -1630,6 +1651,16 @@ sub received_sync {
     $timeout{'play'}{'time'} = time;
 }
 
+sub refine_result {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		message "You failed to refine a weapon!\n";
+	} else {
+		message "You successfully refined a weapon!\n";
+	}
+
+}
+
 sub secure_login_key {
 	my ($self, $args) = @_;
 	$secureLoginKey = $args->{secure_key};
@@ -1637,7 +1668,6 @@ sub secure_login_key {
 
 sub self_chat {
 	my ($self, $args) = @_;
-	$args->{message} =~ s/\000//g;
 	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
 	# Note: $chatMsgUser/Msg may be undefined. This is the case on
 	# eAthena servers: it uses this packet for non-chat server messages.
@@ -1828,11 +1858,6 @@ sub system_chat {
 
 sub warp_portal_list {
 	my ($self, $args) = @_;
-	($args->{memo1}) = $args->{memo1} =~ /([\s\S]*)\.gat/;
-	($args->{memo2}) = $args->{memo2} =~ /([\s\S]*)\.gat/;
-	($args->{memo3}) = $args->{memo3} =~ /([\s\S]*)\.gat/;
-	($args->{memo4}) = $args->{memo4} =~ /([\s\S]*)\.gat/;
-
 	# Auto-detect saveMap
 	if ($args->{type} == 26) {
 		configModify('saveMap', $args->{memo2}) if $args->{memo2};
