@@ -383,3 +383,10 @@ ip 209.51.216.242
 port 6900
 master_version 16
 version 0
+
+[RusRO Private Server]
+ip 213.219.220.20
+port 6956
+master_version 1
+version 20
+private 1
