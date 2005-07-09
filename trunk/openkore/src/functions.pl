@@ -1545,11 +1545,7 @@ sub AI {
 						error "Something is wrong with storageAuto_npc_type in your config.\n";
 					}
 
-					if (defined $args->{npc}{id}) {
-						ai_talkNPC(ID => $args->{npc}{id}, $config{'storageAuto_npc_steps'});
-					} else {
-						ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
-					}
+					ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
 				}
 
 				delete $ai_v{temp}{storage_opened};
@@ -1758,11 +1754,8 @@ sub AI {
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
 				$ai_seq_args[0]{'sentSell'} = 1;
 
-				if (defined $ai_seq_args[0]{'npc'}{'id'}) {
-					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "e");
-				} else {
-					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "e");
-				}
+				ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "e");
+
 				last AUTOSELL;
 			}
 			$ai_seq_args[0]{'done'} = 1;
@@ -1933,11 +1926,7 @@ sub AI {
 			if (!defined($ai_seq_args[0]{'sentBuy'})) {
 				$ai_seq_args[0]{'sentBuy'} = 1;
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
-				if (defined $ai_seq_args[0]{'npc'}{'id'}) {
-					ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "e");
-				} else {
-					ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "e");
-				}
+				ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "e");
 				last AUTOBUY;
 			}
 			if ($ai_seq_args[0]{'invIndex'} ne "") {

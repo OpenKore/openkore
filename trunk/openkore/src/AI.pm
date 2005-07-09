@@ -751,13 +751,8 @@ sub cartAdd {
 # ai_talkNPC(ID => 1337, "c r0");
 sub ai_talkNPC {
 	my %args;
-	if ($_[0] eq 'ID') {
-		shift;
-		$args{'nameID'} = shift;
-	} else {
-		$args{'pos'}{'x'} = shift;
-		$args{'pos'}{'y'} = shift;
-	}
+	$args{'pos'}{'x'} = shift;
+	$args{'pos'}{'y'} = shift;
 	$args{'sequence'} = shift;
 	$args{'sequence'} =~ s/^ +| +$//g;
 	unshift @ai_seq, "NPC";

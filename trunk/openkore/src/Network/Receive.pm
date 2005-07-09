@@ -1847,10 +1847,11 @@ sub system_chat {
 
 sub warp_portal_list {
 	my ($self, $args) = @_;
-	($args->{memo1}) = $args->{memo1} =~ /^(\w*)\.gat/;
-	($args->{memo2}) = $args->{memo2} =~ /^(\w*)\.gat/;
-	($args->{memo3}) = $args->{memo3} =~ /^(\w*)\.gat/;
-	($args->{memo4}) = $args->{memo4} =~ /^(\w*)\.gat/;
+	# strip gat extension
+	($args->{memo1}) = $args->{memo1} =~ /^(.*)\.gat/;
+	($args->{memo2}) = $args->{memo2} =~ /^(.*)\.gat/;
+	($args->{memo3}) = $args->{memo3} =~ /^(.*)\.gat/;
+	($args->{memo4}) = $args->{memo4} =~ /^(.*)\.gat/;
 	# Auto-detect saveMap
 	if ($args->{type} == 26) {
 		configModify('saveMap', $args->{memo2}) if $args->{memo2};
