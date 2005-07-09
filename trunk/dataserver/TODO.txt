@@ -1,11 +1,7 @@
-0.1:
-
-	* Document the version number somewhere.
-
 Future:
 
 	* Write portals(LOS).txt parser.
-	* Write some developer documentation.
+	* Write some more developer documentation.
 	* Use memory pools to avoid memory fragmentation and malloc()
 	  overhead.
 	* Configurable socket path/port.
@@ -15,4 +11,3 @@ Blue sky future:
 
 	* Plugin support.
 	* On-the-fly data file reloading.
-	* Load data files only when needed.
