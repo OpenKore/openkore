@@ -377,3 +377,9 @@ port 6900
 master_version 18
 version 20
 serverType 3
+
+[FunRO Private Server]
+ip 209.51.216.242
+port 6900
+master_version 16
+version 0
