@@ -30,6 +30,8 @@ New features:
 - Player names are now cached, so that they don't have to be re-retrieved
   as often. This can save a lot of bandwidth, especially when you're
   walking in town.
+- When teleportAuto_useSkill > 0, always cast Teleport skill if we are
+  trying to respawn to saveMap (lets us auto-detect it).
 
 New config options:
 - partySkill: target_dist (range)
