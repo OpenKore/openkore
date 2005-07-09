@@ -51,6 +51,9 @@ New config options:
   Set to true if you want to keep storage open after storageAuto sequence.
   Only enable this if you know what you're doing.
   (Note: You cannot use items while storage is open.)
+- itemsTakeAuto_new (flag)
+  Activates experimental new item taking code; might work better for
+  archers who keep failing to take items.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
