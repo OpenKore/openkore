@@ -89,7 +89,7 @@ sub new {
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
-		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x4 C1 x2 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID skillstatus sex coords lv)]],
+		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 	};
@@ -691,17 +691,6 @@ sub actor_moved {
 	my (%coordsFrom, %coordsTo);
 	makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
 	makeCoords2(\%coordsTo, substr($args->{RAW_MSG}, 52, 3));
-
-	my %statuses = {
-		1 => 'Twohand Quicken',
-		4 => 'Energy Coat',
-		4 => 'Vigor Explosion'
-	};
-	if ($statuses{$args->{skillstatus}}) {
-		debug "actor has status $statuses{$args->{skillstatus}}\n";
-	} else {
-		debug "actor has unknown status $args->{skillstatus}\n" if ($args->{skillstatus});
-	}
 
 	my $added;
 	my %vec;
