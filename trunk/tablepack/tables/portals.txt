@@ -1094,6 +1094,10 @@ payon_in02 64 56 pay_arche 145 165
 payon_in02 70 33 payon_in02 61 33
 payon_in02 75 67 payon_in02 10 25
 payon_in02 82 45 pay_arche 71 156
+payon 187 233 payon_in03 149 39
+payon_in03 172 33 payon_in03 160 14
+payon_in03 160 15 payon_in03 172 35
+payon_in03 147 39 payon 186 233
 prontera 22 203 prt_fild05 373 205
 prontera 42 67 prt_in 47 29
 prontera 45 346 prt_in 80 113
@@ -1552,6 +1556,8 @@ yuno_fild03 382 331 yuno_fild02 19 340
 yuno_fild04 231 288 yuno 158 13
 yuno_fild04 374 82 yuno_fild03 20 79
 yuno_fild04 374 149 yuno_fild03 21 162
+yuno_fild03 179 16 yuno_fild07 179 352
+yuno_fild07 179 353 yuno_fild03 179 17
 yuno_in01 32 36 yuno 196 138
 yuno_in01 32 182 yuno_in01 82 164
 yuno_in01 34 100 yuno 48 151
