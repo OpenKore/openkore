@@ -27,6 +27,7 @@ monk_test.rsw#Saint Capitolina Abbey#
 in_rogue.rsw#Inside the Rogue Guild#
 mag_dun02.rsw#Nogg Road#
 mag_dun01.rsw#Nogg Road#
+yuno_fild07.rsw#Yuno Field#
 yuno_fild04.rsw#El Mes Plateau#
 yuno_fild03.rsw#El Mes Plateau#
 yuno_fild02.rsw#Kiel Hyre's Cottage#
@@ -288,6 +289,7 @@ pay_arche.rsw#Archer Village#
 payon.rsw#Payon Town#
 payon_in01.rsw#Inside Payon#
 payon_in02.rsw#Inside Payon#
+payon_in03.rsw#Inside Payon#
 prontera.rsw#Prontera City#
 prt_in.rsw#Inside Prontera#
 prt_castle.rsw#Prontera Castle#
