@@ -4012,7 +4012,7 @@ sub AI {
 	##### ITEMS AUTO-GATHER #####
 
 	if ( (AI::isIdle || AI::action eq "follow"
-		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2) ))
+		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
 	  && $config{'itemsGatherAuto'}
 	  && ($config{'itemsGatherAuto'} >= 2 || !ai_getAggressives())
 	  && percent_weight($char) < $config{'itemsMaxWeight'}
