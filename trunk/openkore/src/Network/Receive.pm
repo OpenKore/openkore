@@ -81,7 +81,7 @@ sub new {
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
-		'017F' => ['guild_chat', 'x4 Z*', [qw(message)]],
+		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'018F' => ['refine_result', 'x2 S1', [qw(fail)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'01A2' => ['pet_info', 'Z24 C1 S1 S1 S1 S1', [qw(name nameflag level hungry friendly accessory)]],
