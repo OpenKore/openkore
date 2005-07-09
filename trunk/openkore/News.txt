@@ -21,6 +21,7 @@ Bug fixes:
 - Fix autoTalkCont causing next step to happen too fast.
 - Don't redirect command output if XKore_silent is enabled.
 - Fix "party leave" crash when not in party.
+- Only teleport-on-hit from monsters if they do not miss.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"

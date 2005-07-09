@@ -4534,6 +4534,7 @@ sub parseMsg {
 		if (length($msg) >= 4) {
 			$conState = 2;
 			$accountID = substr($msg, 0, 4);
+			debug "XKore switching character, new accountID: ".unpack("L", $accountID)."\n";
 			return substr($msg, 4);
 		} else {
 			return $msg;
@@ -7413,12 +7414,7 @@ sub parseMsg {
 
 		# $type: 26 = Teleport, 27 = Warp Portal
 		my ($type, $memo1, $memo2, $memo3, $memo4) =
-			unpack("x2 S1 a16 a16 a16 a16", $msg);
-
-		($memo1) = $memo1 =~ /([\s\S]*)\.gat/;
-		($memo2) = $memo2 =~ /([\s\S]*)\.gat/;
-		($memo3) = $memo3 =~ /([\s\S]*)\.gat/;
-		($memo4) = $memo4 =~ /([\s\S]*)\.gat/;
+			unpack("x2 S1 Z16 Z16 Z16 Z16", $msg);
 
 		# Auto-detect saveMap
 		if ($type == 26) {

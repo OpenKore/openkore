@@ -2166,7 +2166,7 @@ sub updateDamageTables {
 
 			if ($AI) {
 				my $teleport = 0;
-				if (mon_control($monsters{$ID1}{'name'})->{'teleport_auto'} == 2){
+				if (mon_control($monsters{$ID1}{'name'})->{'teleport_auto'} == 2 && $damage){
 					message "Teleporting due to attack from $monsters{$ID1}{'name'}\n", "teleport";
 					$teleport = 1;
 				} elsif ($config{'teleportAuto_deadly'} && $damage >= $chars[$config{'char'}]{'hp'} && !whenStatusActive("Hallucination")) {
