@@ -68,9 +68,12 @@
 105 Concentration
 106 Tension Relax
 107 Berserk
-108 Enchant Deadly Poison
+108 Fury
+109 Gospel
 110 Assumptio
+111 Basilica
 113 Magic Power
+114 Enchant Deadly Poison
 115 True Sight
 116 Wind Walk
 117 Meltdown
@@ -78,5 +81,6 @@
 119 Full Strip
 120 Reject Sword
 121 Marionette Control
+122 Marionette Control
 124 Head Crush
 125 Joint Beat

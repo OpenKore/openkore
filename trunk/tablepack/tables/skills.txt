@@ -358,7 +358,7 @@ LK_CONCENTRATION#Concentration#
 LK_TENSIONRELAX#Tension_Relax#
 LK_BERSERK#Berserk#
 LK_FURY#Fury#
-HP_ASSUMPTIO#Assumption#
+HP_ASSUMPTIO#Assumptio#
 HP_BASILICA#Basilica#
 HP_MEDITATIO#Meditation#
 HW_SOULDRAIN#Soul_Drain#
