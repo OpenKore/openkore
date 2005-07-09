@@ -363,3 +363,17 @@ port 6900
 master_version 14
 version 20
 private 1
+
+[PheyRO Private Server]
+ip 206.53.56.67
+port 6900
+master_version 18
+version 20
+serverType 3
+
+[FenixRO Private Server]
+ip 216.32.67.242
+port 6900
+master_version 18
+version 20
+serverType 3
