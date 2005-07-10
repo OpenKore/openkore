@@ -3084,6 +3084,10 @@ sub checkMonsterCondition {
 		return 0 unless inRange(distance(calcPosition($char), calcPosition($monster)), $config{$prefix."_dist"});
 	}
 
+	if ($config{$prefix."_deltaHp"}){
+		return 0 unless inRange($target->{deltaHp}, $config{$prefix."_deltaHp"});
+	}
+
 	# This is only supposed to make sense for players,
 	# but it has to be here for attackSkillSlot PVP to work
 	if ($config{$prefix."_whenWeaponEquipped"}) {
