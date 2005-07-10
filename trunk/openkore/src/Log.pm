@@ -79,6 +79,7 @@
 # route			Routing/pathfinding messages
 # sold			Item sold while vending.
 # skill			Skill use unrelated to attack
+#selfSkill		Skills used by yourself
 # startup		Messages that are printed during startup.
 # storage		Storage item added/removed
 # success		An operation succeeded
