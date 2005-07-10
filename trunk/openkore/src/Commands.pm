@@ -1797,6 +1797,7 @@ sub cmdInventory {
 				$eqp{name} = $item->{name};
 				$eqp{type} = $itemTypes_lut{$item->{type}};
 				$eqp{equipped} = ($item->{type} == 10) ? $item->{amount} . " left" : $equipTypes_lut{$item->{equipped}};
+				$eqp{equipped} .= " ($item->{equipped})";
 				$eqp{identified} = " -- Not Identified" if !$item->{identified};
 				if ($item->{equipped}) {
 					push @equipment, \%eqp;
