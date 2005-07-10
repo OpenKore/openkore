@@ -826,7 +826,7 @@ sub attack {
 						}
 					}
 					if ($config{"autoSwitch_$i"."_rightHand"} ne "[NONE]") {
-						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_rightHand"}."($Req)\n", "equip";
+						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_rightHand"}."\n", "equip";
 						sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
 					}
 				}
@@ -860,7 +860,9 @@ sub attack {
 		if ($config{'autoSwitch_default_rightHand'}) {
 			$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'});
 			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
-				message "Auto equiping default [R] :".$config{'autoSwitch_default_rightHand'}."\n", "equip";
+				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
+				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'});
+				message "Auto equiping default [R] :".$config{'autoSwitch_default_rightHand'}." (unequip $Rdef)\n", "equip";
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
 			}
 		}
