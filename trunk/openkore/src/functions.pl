@@ -6107,12 +6107,13 @@ sub parseMsg {
 		my $index = unpack("S1",substr($msg, 2, 2));
 		my $type = unpack("S1",substr($msg, 4, 2));
 		my $fail = unpack("C1",substr($msg, 6, 1));
-		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		my $invIndex = findIndex(\@{$char->{inventory}}, "index", $index);
+		my $item = $char->{inventory}[$invIndex];
 		if ($fail == 0) {
-			message "You can't put on $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex)\n";
+			message "You can't put on $item->{name} ($invIndex)\n";
 		} else {
-			$chars[$config{'char'}]{'inventory'}[$invIndex]{'equipped'} = $chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'};
-			message "You equip $chars[$config{'char'}]{'inventory'}[$invIndex]{'name'} ($invIndex) - $equipTypes_lut{$chars[$config{'char'}]{'inventory'}[$invIndex]{'type_equip'}}\n", 'inventory';
+			$item->{equipped} = $type;
+			message "You equip $item->{name} ($invIndex) - $equipTypes_lut{$item->{type_equip}} (type $type)\n", 'inventory';
 		}
 
 	} elsif ($switch eq "00AC") {
