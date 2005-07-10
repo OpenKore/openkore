@@ -3086,7 +3086,7 @@ sub checkMonsterCondition {
 	}
 
 	if ($config{$prefix."_deltaHp"}){
-		return 0 unless inRange($target->{deltaHp}, $config{$prefix."_deltaHp"});
+		return 0 unless inRange($monster->{deltaHp}, $config{$prefix."_deltaHp"});
 	}
 
 	# This is only supposed to make sense for players,
