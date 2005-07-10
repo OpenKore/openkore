@@ -33,8 +33,7 @@ Plugins::register('recordWarpNpc', 'Records Warp Npcs', \&onUnload);
 my $hooks = Plugins::addHooks(
 	['packet/map_change', \&onMapChange, undef],
 	['packet/map_changed', \&onMapChanged, undef],
-	['packet/map_loaded', \&onMapLoaded, undef],
-	['Command_post', \&onCommand, undef]
+	['packet/map_loaded', \&onMapLoaded, undef]
 );
 
 my $cmd = Commands::register(
