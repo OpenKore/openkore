@@ -619,9 +619,10 @@ sub objectIsMovingTowardsPlayer {
 
 		foreach (@playersID) {
 			next if (!$_ || ($ignore_party_members &&
-			                 ($char->{party} && $char->{party}{users}{$_}) ||
-							 (existsInList($config{tankersList}, $players{$_}{name}) &&
-							  $players{$_}{name} ne 'Unknown')));
+				($char->{party} && $char->{party}{users}{$_}) ||
+				(existsInList($config{tankersList}, $players{$_}{name}) &&
+					$players{$_}{name} ne 'Unknown')) ||
+				$players{$_}{statuses}{"GM Perfect Hide"});
 			if (checkMovementDirection($obj->{pos}, \%vec, $players{$_}{pos}, 15)) {
 				return 1;
 			}
