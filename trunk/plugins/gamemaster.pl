@@ -12,7 +12,8 @@ use Utils;
 Plugins::register('Game Master', 'Enables usage of GM commands', \&on_unload);
 my $commands = Commands::register(
 	['gmb',       'Broadcast a global message.', \&gmb],
-	['gmmapmove', 'Move to the specified map.',  \&gmmapmove]
+	['gmmapmove', 'Move to the specified map.',  \&gmmapmove],
+	['gmkillall', 'Disconnect all users.', \&gmkillall]
 );
 
 sub on_unload {
@@ -44,6 +45,12 @@ sub gmmapmove {
 	}
 
 	my $packet = pack("C*", 0x40, 0x01) . pack("a20", $args);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmkillall {
+	return unless ($conState == 5);
+	my $packet = pack("C*", 0xCE, 0x00);
 	sendMsgToServer(\$remote_socket, $packet);
 }
 
