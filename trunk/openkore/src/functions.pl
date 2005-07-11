@@ -4062,7 +4062,7 @@ sub AI {
 				my $item = $items{$ID};
 				my $pos = $item->{pos};
 				message "Routing to ($pos->{x}, $pos->{y}) to take $item->{name} ($item->{binID}), distance $dist\n";
-				ai_route($field{name}, $pos->{x}, $pos->{y});
+				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
 			}
 
 		} else {
@@ -4107,7 +4107,7 @@ sub AI {
 			} else {
 				my $pos = $item->{pos};
 				message "Routing to ($pos->{x}, $pos->{y}) to take $item->{name} ($item->{binID}), distance $dist\n";
-				ai_route($field{name}, $pos->{x}, $pos->{y});
+				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
 			}
 
 		} elsif (timeOut($timeout{ai_take})) {
