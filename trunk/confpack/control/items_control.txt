@@ -91,7 +91,6 @@ Diver Goggles 0 0 1
 Eye Patch 0 0 1
 Flower Ring 0 0 1
 Flu Mask 0 0 1
-Formal Suit [1] 0 0 1
 Full Plate 0 0 1
 Gangster Mask 0 0 1
 Gemmed Sallet 0 0 1
@@ -124,7 +123,6 @@ Shackles 0 0 1
 Shield 0 0 1
 Shoes 0 0 1
 Silk Robe 0 0 1
-Silk Robe [1] 0 0 1
 Silver Ring 0 0 1
 Silver Robe 0 0 1
 Silver Robe [1] 0 0 1
