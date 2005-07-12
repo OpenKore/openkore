@@ -5155,6 +5155,7 @@ sub parseMsg {
 			setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
+			Plugins::callHook('player', { player => $players{$ID} });
 
 		} else {
 			debug "Unknown Connected: $type - ", "parseMsg";

@@ -23,6 +23,7 @@ Bug fixes:
 - Fix "party leave" crash when not in party.
 - Only teleport-on-hit from monsters if they do not miss.
 - Hopefully fix daggersins' weapons ending up on the wrong hand.
+- "Player Connected" did not trigger 'player' plugin call.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
