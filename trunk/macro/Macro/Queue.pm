@@ -55,7 +55,14 @@ sub name {
 # returns: parsed command, undef if there was an error
 sub next {
   my $self = shift;
-  return parseCmd(shift(@{$self->{queue}})) if @{$self->{queue}};
+  # return parseCmd(shift(@{$self->{queue}})) if @{$self->{queue}};
+  if (@{$self->{queue}}) {
+    my $command = shift(@{$self->{queue}});
+    $cvs->debug("preparsed command: ($command)", $logfac{command_preparsed});
+    $command = parseCmd($command);
+    $cvs->debug("command: ($command)", $logfac{command_parsed});
+    return $command;
+  };
   $self->{finished} = 1;
   $self->{timeout} = 0;
   return;
@@ -111,7 +118,7 @@ sub processQueue {
   if (!defined $queue) {
     if (AI::is('macro')) { ## cut
     AI::dequeue if AI::is('macro');
-      $cvs->debug("in processQueue, \$queue is undef mit AI::is macro", 1);
+      $cvs->debug("in processQueue, \$queue is undef mit AI::is macro", $logfac{developers});
     } ## cut
     return
   }
@@ -120,7 +127,6 @@ sub processQueue {
     my $command = $queue->next;
     if (defined $command) {
       if ($command ne "") {
-        $cvs->debug("processing $command", 1);
         if (!Commands::run($command)) {
           if (defined &main::parseCommand) {main::parseCommand($command)}
           else {

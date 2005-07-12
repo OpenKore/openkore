@@ -32,6 +32,7 @@ sub between {
 };
 
 sub cmpr {
+  $cvs->debug("cmpr (@_)", $logfac{function_call_auto});
   my ($a, $cond, $b) = @_;
   if ($a =~ /^[\d.]*$/ && $b =~ /^[\d.]*$/) {
     if ($cond eq "="  && $a == $b) {return 1};
@@ -48,6 +49,7 @@ sub cmpr {
 };
 
 sub match {
+  $cvs->debug("match (@_)", $logfac{function_call_auto});
   my ($text, $kw) = @_;
   my $match;
   if ($kw =~ /^".*"$/)   {$match = 0};
@@ -69,14 +71,16 @@ sub getArgs {
 
 # adds variable and value to stack
 sub setVar {
+  $cvs->debug("setVar(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my ($var, $val) = @_;
-  $cvs->debug("setting +$var+ = +$val+", 3);
+  $cvs->debug("'$var' = '$val'", $logfac{variable_trace});
   $varStack{$var} = $val;
   return 1;
 };
 
 # gets variable's value from stack
 sub getVar {
+  $cvs->debug("getVar(@_)", $logfac{function_call_macro});
   my $var = shift;
   refreshGlobal($var);
   return unless $varStack{$var};
@@ -85,23 +89,20 @@ sub getVar {
 
 # sets and/or refreshes global variables
 sub refreshGlobal {
+  $cvs->debug("refreshGlobal(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $var = shift;
   if (!defined $var || $var eq '.map') {
-    $cvs->debug("refreshing globals: +$var+", 4);
     setVar(".map", $field{name});
   };
   if (!defined $var || $var eq '.pos') {
-    $cvs->debug("refreshing globals: +$var+", 4);
     my $pos = calcPosition($char);
     my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
     setVar(".pos", $val);
   };
   if (!defined $var || $var eq '.time') {
-    $cvs->debug("refreshing globals: +$var+", 4);
     setVar(".time", time);
   };
   if (!defined $var || $var eq '.datetime') {
-    $cvs->debug("refreshing globals: +$var+", 4);
     my $val = localtime;
     setVar(".datetime", $val);
   };
@@ -109,6 +110,7 @@ sub refreshGlobal {
 
 # get NPC array index
 sub getnpcID {
+  $cvs->debug("getnpcID(@_)", $logfac{function_call_macro});
   my ($tmpx, $tmpy) = split(/ /,$_[0]);
   for (my $id = 0; $id < @npcsID; $id++) {
     next unless $npcsID[$id];
@@ -120,6 +122,7 @@ sub getnpcID {
 
 # get player array index
 sub getPlayerID {
+  $cvs->debug("getPlayerID(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my ($name, $pool) = @_;
   for (my $id = 0; $id < @{$pool}; $id++) {
     next unless $$pool[$id];
@@ -130,6 +133,7 @@ sub getPlayerID {
 
 # get item array index
 sub getItemID {
+  $cvs->debug("getItemID(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my ($item, $pool) = @_;
   for (my $id = 0; $id < @{$pool}; $id++) {
     next unless $$pool[$id];
@@ -140,6 +144,7 @@ sub getItemID {
 
 # get storage array index
 sub getStorageID {
+  $cvs->debug("getStorageID(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
   for (my $id = 0; $id < @storageID; $id++) {
     next unless $storageID[$id];
@@ -150,6 +155,7 @@ sub getStorageID {
 
 # get amount of sold out slots
 sub getSoldOut {
+  $cvs->debug("getSoldOut(@_)", $logfac{function_call_auto});
   if (!$shopstarted) {return 0};
   my $soldout = 0;
   foreach my $aitem (@::articles) {
@@ -161,6 +167,7 @@ sub getSoldOut {
 
 # get amount of an item in inventory
 sub getInventoryAmount {
+  $cvs->debug("getInventoryAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
   return 0 unless $char->{inventory};
   my $id = getItemID($item, \@{$char->{inventory}});
@@ -170,6 +177,7 @@ sub getInventoryAmount {
 
 # get amount of an item in cart
 sub getCartAmount {
+  $cvs->debug("getCartAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
   return 0 unless $cart{inventory};
   my $id = getItemID($item, \@{$cart{inventory}});
@@ -179,6 +187,7 @@ sub getCartAmount {
 
 # get amount of an item in shop
 sub getShopAmount {
+  $cvs->debug("getShopAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
   foreach my $aitem (@::articles) {
     next unless $aitem;
@@ -191,6 +200,7 @@ sub getShopAmount {
 
 # get amount of an item in storage
 sub getStorageAmount {
+  $cvs->debug("getStorageAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
   return unless $::storage{opened};
   my $id = getStorageID($item);
@@ -200,6 +210,7 @@ sub getStorageAmount {
 
 # returns random item from argument list ##################
 sub getRandom {
+  $cvs->debug("getRandom(@_)", $logfac{function_call_macro});
   my $arg = shift;
   my @items;
   my $id = 0;
