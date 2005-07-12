@@ -85,6 +85,7 @@ sub new {
 		'018F' => ['refine_result', 'x2 S1', [qw(fail)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'01A2' => ['pet_info', 'Z24 C1 S1 S1 S1 S1', [qw(name nameflag level hungry friendly accessory)]],
+		'01A6' => ['egg_list'],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
@@ -1130,6 +1131,17 @@ sub deal_add {
 	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
 	$currentDeal{you_items}++;
 	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+}
+
+sub egg_list {
+	my ($self, $args) = @_;
+	message "-----Egg Hatch Candidates-----\n", "list";
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
+		my $index = unpack("S1", substr($args->{RAW_MSG}, $i, 2));
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
+		message "$invIndex $char->{inventory}[$invIndex]{name}\n", "list";
+	}
+	message "------------------------------\n", "list";
 }
 
 sub errors {

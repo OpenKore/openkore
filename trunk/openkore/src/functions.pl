@@ -1220,6 +1220,8 @@ sub AI {
 				sendBuy(\$remote_socket, $itemID, $2);
 			} elsif ( $args->{steps}[0] =~ /b/i ) {
 				sendGetStoreList(\$remote_socket, $args->{ID});
+			} elsif ( $args->{steps}[0] =~ /s/i ) {
+				sendGetSellList(\$remote_socket, $args->{ID});
 			} elsif ( $args->{steps}[0] =~ /e/i ) {
 				$ai_v{npc_talk}{talk} = 'close';
 			}
