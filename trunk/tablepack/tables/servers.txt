@@ -390,3 +390,10 @@ port 6956
 master_version 1
 version 20
 private 1
+
+[HopeRO Private Server]
+ip 66.199.253.146
+port 6900
+master_version 1
+version 20
+serverType 4
