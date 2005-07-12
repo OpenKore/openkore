@@ -17,6 +17,9 @@
 # target_notSize (list)
 # target_hpLeft (range)
 #
+# In equipAuto you have to leave the target_ part,
+# this is due some coding inconsistency in the funtions.pl
+#
 # For the element names just scroll a bit down and you'll find it.
 #
 ############################
