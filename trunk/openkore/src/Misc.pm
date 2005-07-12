@@ -3033,6 +3033,8 @@ sub checkPlayerCondition {
 	}
 	if ($config{$prefix."_dead"}) {
 		return 0 if !$players{$id}{dead};
+	} else {
+		return 0 if $players{$id}{dead};
 	}
 
 	if ($config{$prefix."_whenWeaponEquipped"}) {
