@@ -71,10 +71,24 @@ sub new {
 		'009E' => ['item_appeared', 'a4 v1 x1 v1 v1 x2 v1', [qw(ID type x y amount)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
-		'00BD' => ['stats_info', 'S1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 S1 S1 S1 S1 S1 S1 S1 S1 S1 S1 S1 S1', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical)]],
-		'00BE' => ['stats_points_needed', 'S1 C1', [qw(type val)]],
-		'00C2' => ['who_online', 'L1', [qw(users)]],
-		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
+		'00A3' => ['inventory_items_stackable'],
+		'00A4' => ['inventory_items_nonstackable'],
+		'00A5' => ['storage_items_stackable'],
+		'00A6' => ['storage_items_nonstackable'],
+		'00A8' => ['use_item', 'v1 x2 C1', [qw(index amount)]],
+		'00AA' => ['equip_item', 'v1 v1 C1', [qw(index type success)]],
+		'00AC' => ['unequip_item', 'v1 v1', [qw(index type)]],
+		'00AF' => ['inventory_item_removed', 'v1 v1', [qw(index amount)]],
+		'00B0' => ['stat_info', 'v1 V1', [qw(type val)]],
+		'00B1' => ['exp_zeny_info', 'v1 V1', [qw(type val)]],
+		'00B3' => ['change_to_constate25'],
+		'00B4' => ['npc_talk'],
+		'00B5' => ['npc_talk_continue'],
+		'00B6' => ['npc_talk_close'],
+		'00BD' => ['stats_info', 'v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical)]],
+		'00BE' => ['stats_points_needed', 'v1 C1', [qw(type val)]],
+		'00C2' => ['who_online', 'V1', [qw(users)]],
+		'00EA' => ['deal_add', 'v1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
@@ -96,6 +110,8 @@ sub new {
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'01EE' => ['inventory_item_info'],
+		'01F0' => ['storage_items_stackable'],
 	};
 
 	bless \%self, $class;
@@ -192,9 +208,9 @@ sub account_server_info {
 	for (my $i = 0; $i < $msg_size; $i+=32) {
 		$servers[$num]{ip} = makeIP(substr($msg, $i, 4));
 		$servers[$num]{ip} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
-		$servers[$num]{port} = unpack("S1", substr($msg, $i+4, 2));
+		$servers[$num]{port} = unpack("v1", substr($msg, $i+4, 2));
 		($servers[$num]{name}) = unpack("Z*", substr($msg, $i + 6, 20));
-		$servers[$num]{users} = unpack("L",substr($msg, $i + 26, 4));
+		$servers[$num]{users} = unpack("V",substr($msg, $i + 26, 4));
 		$num++;
 	}
 
@@ -962,6 +978,12 @@ sub cart_item_added {
 	$itemChange{$item->{name}} += $args->{amount};
 }
 
+sub change_to_constate25 {
+	# 00B3 - user is switching characters in XKore
+	$conState = 2.5;
+	undef $accountID;
+}
+
 sub change_to_constate5 {
 	$conState = 5 if ($conState != 4 && $xkore);
 }
@@ -1052,6 +1074,198 @@ sub character_status {
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 }
 
+sub deal_add {
+	my ($self, $args) = @_;
+
+	if ($args->{fail}) {
+		error "That person is overweight; you cannot trade.\n", "deal";
+		return;
+	}
+
+	return unless $args->{index} > 0;
+
+	my $invIndex = findIndex(\@{$char->{inventory}}, 'index', $args->{index});
+	my $item = $char->{inventory}[$invIndex];
+	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
+	$item->{amount} -= $currentDeal{lastItemAmount};
+	message "You added Item to Deal: $item->{name} x $currentDeal{lastItemAmount}\n", "deal";
+	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
+	$currentDeal{you_items}++;
+	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+}
+
+sub egg_list {
+	my ($self, $args) = @_;
+	message "-----Egg Hatch Candidates-----\n", "list";
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
+		my $index = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
+		message "$invIndex $char->{inventory}[$invIndex]{name}\n", "list";
+	}
+	message "------------------------------\n", "list";
+}
+
+sub equip_item {
+	my ($self, $args) = @_;
+	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
+	my $item = $char->{inventory}[$invIndex];
+	if (!$args->{success}) {
+		message "You can't put on $item->{name} ($invIndex)\n";
+	} else {
+		$item->{equipped} = $args->{type};
+		message "You equip $item->{name} ($invIndex) - $equipTypes_lut{$item->{type_equip}} (type $args->{type})\n", 'inventory';
+	}
+}
+
+sub errors {
+	my ($self, $args) = @_;
+
+	if ($conState == 5 &&
+	    ($config{dcOnDisconnect} > 1 ||
+		($config{dcOnDisconnect} && $args->{type} != 3))) {
+		message "Lost connection; exiting\n";
+		$quit = 1;
+	}
+
+	$conState = 1;
+	undef $conState_tries;
+
+	$timeout_ex{'master'}{'time'} = time;
+	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
+	Network::disconnect(\$remote_socket);
+
+	if ($args->{type} == 0) {
+		error("Server shutting down\n", "connection");
+	} elsif ($args->{type} == 1) {
+		error("Error: Server is closed\n", "connection");
+	} elsif ($args->{type} == 2) {
+		if ($config{'dcOnDualLogin'} == 1) {
+			$interface->errorDialog("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
+				"$Settings::NAME will now immediately disconnect.");
+			$quit = 1;
+		} elsif ($config{'dcOnDualLogin'} >= 2) {
+			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
+			message "Disconnect for $config{'dcOnDualLogin'} seconds...\n", "connection";
+			$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
+		} else {
+			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
+		}
+
+	} elsif ($args->{type} == 3) {
+		error("Error: Out of sync with server\n", "connection");
+	} elsif ($args->{type} == 6) {
+		$interface->errorDialog("Critical Error: You must pay to play this account!");
+		$quit = 1 if (!$xkore);
+	} elsif ($args->{type} == 8) {
+		error("Error: The server still recognizes your last connection\n", "connection");
+	} elsif ($args->{type} == 10) {
+		error("Error: You are out of available time paid for\n", "connection");
+	} elsif ($args->{type} == 15) {
+		error("Error: You have been forced to disconnect by a GM\n", "connection");
+	} else {
+		error("Unknown error $args->{type}\n", "connection");
+	}
+}
+
+sub exp_zeny_info {
+	my ($self, $args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+
+	if ($args->{type} == 1) {
+		$char->{exp_last} = $char->{exp};
+		$char->{exp} = $args->{val};
+		debug "Exp: $args->{val}\n", "parseMsg";
+		if (!$bExpSwitch) {
+			$bExpSwitch = 1;
+		} else {
+			if ($char->{exp_last} > $char->{exp}) {
+				$monsterBaseExp = 0;
+			} else {
+				$monsterBaseExp = $char->{exp} - $char->{exp_last};
+			}
+			$totalBaseExp += $monsterBaseExp;
+			if ($bExpSwitch == 1) {
+				$totalBaseExp += $monsterBaseExp;
+				$bExpSwitch = 2;
+			}
+		}
+
+	} elsif ($args->{type} == 2) {
+		$char->{exp_job_last} = $char->{exp_job};
+		$char->{exp_job} = $args->{val};
+		debug "Job Exp: $args->{val}\n", "parseMsg";
+		if ($jExpSwitch == 0) {
+			$jExpSwitch = 1;
+		} else {
+			if ($char->{exp_job_last} > $char->{exp_job}) {
+				$monsterJobExp = 0;
+			} else {
+				$monsterJobExp = $char->{exp_job} - $char->{exp_job_last};
+			}
+			$totalJobExp += $monsterJobExp;
+			if ($jExpSwitch == 1) {
+				$totalJobExp += $monsterJobExp;
+				$jExpSwitch = 2;
+			}
+		}
+		my $basePercent = $char->{exp_max} ?
+			($monsterBaseExp / $char->{exp_max} * 100) :
+			0;
+		my $jobPercent = $char->{exp_job_max} ?
+			($monsterJobExp / $char->{exp_job_max} * 100) :
+			0;
+		message sprintf("Exp gained: %d/%d (%.2f%%/%.2f%%)\n", $monsterBaseExp, $monsterJobExp, $basePercent, $jobPercent), "exp";
+
+	} elsif ($args->{type} == 20) {
+		my $change = $args->{val} - $char->{zenny};
+		if ($change > 0) {
+			message "You gained $change zeny.\n";
+		} elsif ($change < 0) {
+			message "You lost ".-$change." zeny.\n";
+			if ($config{dcOnZeny} && $args->{val} <= $config{dcOnZeny}) {
+				$interface->errorDialog("Disconnecting due to zeny lower than $config{dcOnZeny}.");
+				$quit = 1;
+			}
+		}
+		$char->{zenny} = $args->{val};
+		debug "Zenny: $args->{val}\n", "parseMsg";
+	} elsif ($args->{type} == 22) {
+		$char->{exp_max_last} = $char->{exp_max};
+		$char->{exp_max} = $args->{val};
+		debug "Required Exp: $args->{val}\n", "parseMsg";
+		if (!$xkore && $initSync && $config{serverType} == 2) {
+			sendSync(\$remote_socket, 1);
+			$initSync = 0;
+		}
+	} elsif ($args->{type} == 23) {
+		$char->{exp_job_max_last} = $char->{exp_job_max};
+		$char->{exp_job_max} = $args->{val};
+		debug "Required Job Exp: $args->{val}\n", "parseMsg";
+		message("BaseExp:$monsterBaseExp | JobExp:$monsterJobExp\n","info", 2) if ($monsterBaseExp);
+	}
+}
+
+sub guild_chat {
+	my ($self, $args) = @_;
+	my ($chatMsgUser, $chatMsg);
+	my $chat = $args->{message};
+	if (($chatMsgUser, $chatMsg) = $args->{message} =~ /(.*?) : (.*)/) {
+		$chatMsgUser =~ s/ $//;
+		stripLanguageCode(\$chatMsg);
+		$chat = "$chatMsgUser : $chatMsg";
+	}
+
+	chatLog("g", "$chat\n") if ($config{'logGuildChat'});
+	message "[Guild] $chat\n", "guildchat";
+	# only queue this if it's a real chat message
+	ChatQueue::add('g', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
+
+	Plugins::callHook('packet_guildMsg', {
+	        MsgUser => $chatMsgUser,
+	        Msg => $chatMsg
+	});
+}
+
 sub inventory_item_added {
 	my ($self, $args) = @_;
 
@@ -1116,106 +1330,82 @@ sub inventory_item_added {
 	}
 }
 
-sub deal_add {
+sub inventory_item_removed {
 	my ($self, $args) = @_;
-
-	if ($args->{fail}) {
-		error "That person is overweight; you cannot trade.\n", "deal";
-		return;
-	}
-
-	return unless $args->{index} > 0;
-
-	my $invIndex = findIndex(\@{$char->{inventory}}, 'index', $args->{index});
-	my $item = $char->{inventory}[$invIndex];
-	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
-	$item->{amount} -= $currentDeal{lastItemAmount};
-	message "You added Item to Deal: $item->{name} x $currentDeal{lastItemAmount}\n", "deal";
-	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
-	$currentDeal{you_items}++;
-	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+	$conState = 5 if ($conState != 4 && $xkore);
+	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
+	inventoryItemRemoved($invIndex, $args->{amount});
+	Plugins::callHook('packet_item_removed', {index => $invIndex});
 }
 
-sub egg_list {
+sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
-	message "-----Egg Hatch Candidates-----\n", "list";
-	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
-		my $index = unpack("S1", substr($args->{RAW_MSG}, $i, 2));
+	$conState = 5 if $conState != 4 && $xkore;
+	my $newmsg;
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4, $args->{RAW_MSG_SIZE}-4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
+	my $invIndex;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 20) {
+		my $index = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack("v1", substr($msg, $i + 2, 2));
+		$invIndex = findIndex($char->{inventory}, "index", $index);
+		$invIndex = findIndex($char->{inventory}, "nameID", "") unless defined $invIndex;
+
+		my $item = $char->{inventory}[$invIndex] = {};
+		$item->{index} = $index;
+		$item->{invIndex} = $invIndex;
+		$item->{nameID} = $ID;
+		$item->{amount} = 1;
+		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
+		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
+		$item->{type_equip} = unpack("v1", substr($msg, $i + 6, 2));
+		$item->{equipped} = unpack("v1", substr($msg, $i + 8, 2));
+		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
+		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
+		$item->{cards} = substr($msg, $i + 12, 8);
+		$item->{name} = itemName($item);
+
+		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $invIndex});
+	}
+
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
+}
+
+sub inventory_items_stackable {
+	my ($self, $args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	my $newmsg;
+	decrypt(\$newmsg, substr($msg, 4, $args->{RAW_MSG_SIZE}-4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+	my $psize = ($args->{switch} eq "00A3") ? 10 : 18;
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
+		my $index = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack("v1", substr($msg, $i + 2, 2));
 		my $invIndex = findIndex($char->{inventory}, "index", $index);
-		message "$invIndex $char->{inventory}[$invIndex]{name}\n", "list";
-	}
-	message "------------------------------\n", "list";
-}
-
-sub errors {
-	my ($self, $args) = @_;
-
-	if ($conState == 5 &&
-	    ($config{dcOnDisconnect} > 1 ||
-		($config{dcOnDisconnect} && $args->{type} != 3))) {
-		message "Lost connection; exiting\n";
-		$quit = 1;
-	}
-
-	$conState = 1;
-	undef $conState_tries;
-
-	$timeout_ex{'master'}{'time'} = time;
-	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-	Network::disconnect(\$remote_socket);
-
-	if ($args->{type} == 0) {
-		error("Server shutting down\n", "connection");
-	} elsif ($args->{type} == 1) {
-		error("Error: Server is closed\n", "connection");
-	} elsif ($args->{type} == 2) {
-		if ($config{'dcOnDualLogin'} == 1) {
-			$interface->errorDialog("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
-				"$Settings::NAME will now immediately disconnect.");
-			$quit = 1;
-		} elsif ($config{'dcOnDualLogin'} >= 2) {
-			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
-			message "Disconnect for $config{'dcOnDualLogin'} seconds...\n", "connection";
-			$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
-		} else {
-			error("Critical Error: Dual login prohibited - Someone trying to login!\n", "connection");
+		if ($invIndex eq "") {
+			$invIndex = findIndex($char->{inventory}, "nameID", "");
 		}
 
-	} elsif ($args->{type} == 3) {
-		error("Error: Out of sync with server\n", "connection");
-	} elsif ($args->{type} == 6) {
-		$interface->errorDialog("Critical Error: You must pay to play this account!");
-		$quit = 1 if (!$xkore);
-	} elsif ($args->{type} == 8) {
-		error("Error: The server still recognizes your last connection\n", "connection");
-	} elsif ($args->{type} == 10) {
-		error("Error: You are out of available time paid for\n", "connection");
-	} elsif ($args->{type} == 15) {
-		error("Error: You have been forced to disconnect by a GM\n", "connection");
-	} else {
-		error("Unknown error $args->{type}\n", "connection");
-	}
-}
+		$char->{inventory}[$invIndex]{invIndex} = $invIndex;
+		$char->{inventory}[$invIndex]{index} = $index;
+		$char->{inventory}[$invIndex]{nameID} = $ID;
+		$char->{inventory}[$invIndex]{amount} = unpack("v1", substr($msg, $i + 6, 2));
+		$char->{inventory}[$invIndex]{type} = unpack("C1", substr($msg, $i + 4, 1));
+		$char->{inventory}[$invIndex]{identified} = 1;
+		$char->{inventory}[$invIndex]{equipped} = 32768 if (defined $char->{arrow} && $index == $char->{arrow});
 
-sub guild_chat {
-	my ($self, $args) = @_;
-	my ($chatMsgUser, $chatMsg);
-	my $chat = $args->{message};
-	if (($chatMsgUser, $chatMsg) = $args->{message} =~ /(.*?) : (.*)/) {
-		$chatMsgUser =~ s/ $//;
-		stripLanguageCode(\$chatMsg);
-		$chat = "$chatMsgUser : $chatMsg";
+		my $display = itemNameSimple($char->{inventory}[$invIndex]{nameID});
+		$char->{inventory}[$invIndex]{name} = $display;
+		debug "Inventory: $char->{inventory}[$invIndex]{name} ($invIndex) x $char->{inventory}[$invIndex]{amount} - " .
+			"$itemTypes_lut{$char->{inventory}[$invIndex]{type}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $invIndex, item => $char->{inventory}[$invIndex]});
 	}
 
-	chatLog("g", "$chat\n") if ($config{'logGuildChat'});
-	message "[Guild] $chat\n", "guildchat";
-	# only queue this if it's a real chat message
-	ChatQueue::add('g', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
-
-	Plugins::callHook('packet_guildMsg', {
-	        MsgUser => $chatMsgUser,
-	        Msg => $chatMsg
-	});
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
 }
 
 sub item_appeared {
@@ -1466,6 +1656,86 @@ sub npc_image {
 		debug "Hide NPC image: $args->{npc_image}\n", "parseMsg";
 	} else {
 		debug "NPC image: $args->{npc_image} ($args->{type})\n", "parseMsg";
+	}
+}
+
+sub npc_talk {
+	my ($self, $args) = @_;
+	my $newmsg;
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8, $args->{RAW_MSG_SIZE}-8));
+	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
+	my $ID = substr($msg, 4, 4);
+	my $talk = unpack("Z*", substr($msg, 8, $args->{RAW_MSG_SIZE} - 8));
+	$talk{'ID'} = $ID;
+	$talk{'nameID'} = unpack("V1", $ID);
+	$talk{'msg'} = $talk;
+	# Remove RO color codes
+	$talk{'msg'} =~ s/\^[a-fA-F0-9]{6}//g;
+
+	# Resolve the source name
+	my $name;
+	if ($npcs{$ID}) {
+		$name = $npcs{$ID}{name};
+	} elsif ($monsters{$ID}) {
+		$name = $monsters{$ID}{name};
+	} else {
+		$name = "Unknown #$talk{nameID}";
+	}
+
+	message "$name: $talk{'msg'}\n", "npc";
+}
+
+sub npc_talk_close {
+	my ($self, $args) = @_;
+	# 00b6: long ID
+	# "Close" icon appreared on the NPC message dialog
+	my $ID = substr($args->{RAW_MSG}, 2, 4);
+	undef %talk;
+
+	# Resolve the source name
+	my $name;
+	if ($npcs{$ID}) {
+		$name = $npcs{$ID}{name};
+	} elsif ($monsters{$ID}) {
+		$name = $monsters{$ID}{name};
+	} else {
+		$name = "Unknown #".unpack("V1", $ID);
+	}
+
+	message "$name: Done talking\n", "npc";
+	$ai_v{'npc_talk'}{'talk'} = 'close';
+	$ai_v{'npc_talk'}{'time'} = time;
+	sendTalkCancel(\$remote_socket, $ID);
+
+	Plugins::callHook('npc_talk_done', {ID => $ID});
+}
+
+sub npc_talk_continue {
+	my ($self, $args) = @_;
+	# 00b5: long ID
+	# "Next" button appeared on the NPC message dialog
+	my $ID = substr($args->{RAW_MSG}, 2, 4);
+
+	# Resolve the source name
+	my $name;
+	if ($npcs{$ID}) {
+		$name = $npcs{$ID}{name};
+	} elsif ($monsters{$ID}) {
+		$name = $monsters{$ID}{name};
+	} else {
+		$name = "Unknown #".unpack("V1", $ID);
+	}
+
+	$ai_v{'npc_talk'}{'talk'} = 'next';
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	if ($config{autoTalkCont}) {
+		message "$name: Auto-continuing talking\n", "npc";
+		sendTalkContinue(\$remote_socket, $ID);
+		# this time will be reset once the NPC responds
+		$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
+	} else {
+		message "$name: Type 'talk cont' to continue talking\n", "npc";
 	}
 }
 
@@ -1873,6 +2143,111 @@ sub stats_info {
 		."Status Points: $char->{points_free}\n", "parseMsg";
 }
 
+sub stat_info {
+	my ($self,$args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	if ($args->{type} == 0) {
+		$char->{walk_speed} = $args->{val} / 1000;
+		debug "Walk speed: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 3) {
+		debug "Something2: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 4) {
+		if ($args->{val} == 0) {
+			delete $char->{muted};
+			delete $char->{mute_period};
+			message "Mute period expired.\n";
+		} else {
+			my $val = (0xFFFFFFFF - $args->{val}) + 1;
+			$char->{mute_period} = $val * 60;
+			$char->{muted} = time;
+			if ($config{dcOnMute}) {
+				message "You've been muted for $val minutes, auto disconnect!\n";
+				chatLog("k", "*** You have been muted for $val minutes, auto disconnect! ***\n");
+				quit();
+			} else {
+				message "You've been muted for $val minutes\n";
+			}
+		}
+	} elsif ($args->{type} == 5) {
+		$char->{hp} = $args->{val};
+		debug "Hp: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 6) {
+		$char->{hp_max} = $args->{val};
+		debug "Max Hp: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 7) {
+		$char->{sp} = $args->{val};
+		debug "Sp: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 8) {
+		$char->{sp_max} = $args->{val};
+		debug "Max Sp: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 9) {
+		$char->{points_free} = $args->{val};
+		debug "Status Points: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 11) {
+		$char->{lv} = $args->{val};
+		message "You are now level $args->{val}\n", "success";
+	} elsif ($args->{type} == 12) {
+		$char->{points_skill} = $args->{val};
+		debug "Skill Points: $args->{val}\n", "parseMsg", 2;
+		# Reset $skillChanged back to 0 to tell kore that a skill can be auto-raised again
+		if ($skillChanged == 2) {
+			$skillChanged = 0;
+		}
+	} elsif ($args->{type} == 24) {
+		$char->{weight} = int($args->{val} / 10);
+		debug "Weight: $char->{weight}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 25) {
+		$char->{weight_max} = int($args->{val} / 10);
+		debug "Max Weight: $char->{weight_max}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 41) {
+		$char->{attack} = $args->{val};
+		debug "Attack: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 42) {
+		$char->{attack_bonus} = $args->{val};
+		debug "Attack Bonus: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 43) {
+		$char->{attack_magic_min} = $args->{val};
+		debug "Magic Attack Min: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 44) {
+		$char->{attack_magic_max} = $args->{val};
+		debug "Magic Attack Max: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 45) {
+		$char->{def} = $args->{val};
+		debug "Defense: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 46) {
+		$char->{def_bonus} = $args->{val};
+		debug "Defense Bonus: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 47) {
+		$char->{def_magic} = $args->{val};
+		debug "Magic Defense: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 48) {
+		$char->{def_magic_bonus} = $args->{val};
+		debug "Magic Defense Bonus: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 49) {
+		$char->{hit} = $args->{val};
+		debug "Hit: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 50) {
+		$char->{flee} = $args->{val};
+		debug "Flee: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 51) {
+		$char->{flee_bonus} = $args->{val};
+		debug "Flee Bonus: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 52) {
+		$char->{critical} = $args->{val};
+		debug "Critical: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 53) {
+		$char->{attack_speed} = 200 - $args->{val}/10;
+		debug "Attack Speed: $char->{attack_speed}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 55) {
+		$char->{lv_job} = $args->{val};
+		message "You are now job level $args->{val}\n", "success";
+	} elsif ($args->{type} == 124) {
+		debug "Something3: $args->{val}\n", "parseMsg", 2;
+	} else {
+		debug "Something: $args->{val}\n", "parseMsg", 2;
+	}
+}
+
 sub stats_points_needed {
 	my ($self, $args) = @_;
 	if ($args->{type} == 32) {
@@ -1921,6 +2296,59 @@ sub storage_item_added {
 	$itemChange{$item->{name}} += $amount;
 }
 
+sub storage_items_nonstackable {
+	my ($self, $args) = @_;
+	# Retrieve list of non-stackable (weapons & armor) storage items.
+	# This packet is sent immediately after 00A5/01F0.
+	my $newmsg;
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4, $args->{RAW_MSG_SIZE}-4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 20) {
+		my $index = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack("v1", substr($msg, $i + 2, 2));
+
+		binAdd(\@storageID, $index);
+		my $item = $storage{$index} = {};
+		$item->{index} = $index;
+		$item->{nameID} = $ID;
+		$item->{amount} = 1;
+		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
+		$item->{identified} = unpack("C1", substr($msg, $i + 5, 1));
+		$item->{broken} = unpack("C1", substr($msg, $i + 10, 1));
+		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
+		$item->{cards} = substr($msg, $i + 12, 8);
+		$item->{name} = itemName($item);
+		$item->{binID} = binFind(\@storageID, $index);
+		debug "Storage: $item->{name} ($item->{binID})\n", "parseMsg";
+	}
+}
+
+sub storage_items_stackable {
+	my ($self, $args) = @_;
+	# Retrieve list of stackable storage items
+	my $newmsg;
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4, $args->{RAW_MSG_SIZE}-4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+	undef %storage;
+	undef @storageID;
+
+	my $psize = ($args->{switch} eq "00A5") ? 10 : 18;
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += $psize) {
+		my $index = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack("v1", substr($msg, $i + 2, 2));
+		binAdd(\@storageID, $index);
+		my $item = $storage{$index} = {};
+		$item->{index} = $index;
+		$item->{nameID} = $ID;
+		$item->{amount} = unpack("V1", substr($msg, $i + 6, 4)) & ~0x80000000;
+		$item->{name} = itemNameSimple($ID);
+		$item->{binID} = binFind(\@storageID, $index);
+		$item->{identified} = 1;
+		debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
+	}
+}
+
 sub system_chat {
 	my ($self, $args) = @_;
 	#my $chat = substr($msg, 4, $msg_size - 4);
@@ -1930,6 +2358,27 @@ sub system_chat {
 	chatLog("s", "$args->{message}\n") if ($config{'logSystemChat'});
 	message "$args->{message}\n", "schat";
 	ChatQueue::add('gm', undef, undef, $args->{message});
+}
+
+sub unequip_item {
+	my ($self, $args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
+	$char->{inventory}[$invIndex]{equipped} = "";
+	message "You unequip $char->{inventory}[$invIndex]{name} ($invIndex) - $equipTypes_lut{$char->{inventory}[$invIndex]{type_equip}}\n", 'inventory';
+}
+
+sub use_item {
+	my ($self, $args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
+	if (defined $invIndex) {
+		$char->{inventory}[$invIndex]{amount} -= $args->{amount};
+		message "You used Item: $char->{inventory}[$invIndex]{name} ($invIndex) x $args->{amount}\n", "useItem";
+		if ($char->{inventory}[$invIndex]{amount} <= 0) {
+			delete $char->{inventory}[$invIndex];
+		}
+	}
 }
 
 sub warp_portal_list {
