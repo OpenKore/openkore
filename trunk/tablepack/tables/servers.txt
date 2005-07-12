@@ -32,7 +32,7 @@ version 8
 ip 220.130.113.227
 port 6900
 master_version 16
-version 8
+version 10
 
 [Indonesia - idRO: Chaos/Loki/Iris/Fenrir]
 ip 202.43.167.66
