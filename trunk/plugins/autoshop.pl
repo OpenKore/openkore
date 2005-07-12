@@ -90,6 +90,9 @@ sub showVer {
 # manual search for a free place
 sub suggest_cmdline {
   clearVendermap(); buildVendermap();
+  if ($vendermap[$maxRad][$maxRad] <= $::config{autoshop_maxweight}) {
+    message "your current position is okay (weight $vendermap[$maxRad][$maxRad])";
+  };
   my ($x, $y, $success) = suggest($::config{autoshop_radius});
   if ($success) {
     message "this would be a nice place for a shop: $x $y\n", "list";
@@ -101,11 +104,11 @@ sub suggest_cmdline {
 # walk to arg1, arg2
 sub walkto {
   my %args;
-  $args{move_to}{x} = $_[0];
-  $args{move_to}{y} = $_[1];
+  $args{move_to}{x} = shift;
+  $args{move_to}{y} = shift;
   $args{time_move} = $char->{time_move};
   $args{ai_move_giveup}{timeout} = $timeout{ai_move_giveup}{timeout};
-  debug("moving to: $_[0] $_[1])");
+  debug("moving to: $args{move_to}{y} $args{move_to}{y})");
   AI::queue("move", \%args);
 };
 
@@ -197,7 +200,7 @@ sub addToVendermap {
   my ($posX, $posY, $type, $realX, $realY) = @_;
   return if (!$posX);
   if ($posX < 0 || $posY < 0) {
-    error "[autoshop] Player $type ($realX $realY) out of array ($posX $posY)\n";
+    error "[autoshop] $type ($realX $realY) out of array ($posX $posY)\n";
     return;
   };
 
