@@ -889,13 +889,14 @@ sub AI {
 	}
 
 	# dealAuto 1=refuse 2,3=accept
-	if ($config{'dealAuto'} && %incomingDeal && timeOut($timeout{'ai_dealAuto'})) {
-		if ($config{'dealAuto'} == 1) {
+	if ($config{'dealAuto'} && %incomingDeal) {
+		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
 			sendDealCancel(\$remote_socket);
-		} elsif ($config{'dealAuto'} >= 2) {
+			$timeout{'ai_dealAuto'}{'time'} = time;
+		} elsif ($config{'dealAuto'} >= 2 && timeOut($timeout{ai_dealAuto})) {
 			sendDealAccept(\$remote_socket);
+			$timeout{'ai_dealAuto'}{'time'} = time;
 		}
-		$timeout{'ai_dealAuto'}{'time'} = time;
 	}
 
 
