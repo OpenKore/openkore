@@ -343,6 +343,7 @@ sub actor_connected {
 		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
+		Plugins::callHook('player', {player => $players{$args->{ID}}});
 
 	} else {
 		debug "Unknown Connected: $args->{type} - ", "parseMsg";
