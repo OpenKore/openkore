@@ -110,7 +110,7 @@ sub new {
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
-		'01EE' => ['inventory_item_info'],
+		'01EE' => ['inventory_items_stackable'],
 		'01F0' => ['storage_items_stackable'],
 	};
 
@@ -487,7 +487,7 @@ sub actor_exists {
 	$conState = 5 if ($conState != 4 && $xkore);
 	my %coords;
 	makeCoords(\%coords, $args->{coords});
-	debug ("$coords{x}x$coords{y}\n");
+	#debug ("$coords{x}x$coords{y}\n");
 	$args->{body_dir} = unpack("v", substr($args->{RAW_MSG}, 48, 1)) % 8;
 	my $added;
 
