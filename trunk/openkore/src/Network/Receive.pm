@@ -82,9 +82,9 @@ sub new {
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
-		'018F' => ['refine_result', 'x2 S1', [qw(fail)]],
+		'018F' => ['refine_result', 'x2 v1', [qw(fail)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
-		'01A2' => ['pet_info', 'Z24 C1 S1 S1 S1 S1', [qw(name nameflag level hungry friendly accessory)]],
+		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
 		'01A6' => ['egg_list'],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
@@ -321,7 +321,7 @@ sub actor_connected {
 			$players{$args->{ID}}{'ID'} = $args->{ID};
 			$players{$args->{ID}}{'jobID'} = $args->{type};
 			$players{$args->{ID}}{'sex'} = $args->{sex};
-			$players{$args->{ID}}{'nameID'} = unpack("L1", $args->{ID});
+			$players{$args->{ID}}{'nameID'} = unpack("V1", $args->{ID});
 			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
 			$added = 1;
 		}
@@ -339,7 +339,7 @@ sub actor_connected {
 		$players{$args->{ID}}{lv} = $args->{lv};
 		$players{$args->{ID}}{pos} = {%coords};
 		$players{$args->{ID}}{pos_to} = {%coords};
-		my $domain = existsInList($config{friendlyAID}, unpack("L1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+		my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 		debug "Player Connected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", $domain;
 		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
@@ -481,7 +481,7 @@ sub actor_exists {
 			$player->{ID} = $args->{ID};
 			$player->{jobID} = $args->{type};
 			$player->{sex} = $args->{sex};
-			$player->{nameID} = unpack("L1", $args->{ID});
+			$player->{nameID} = unpack("V1", $args->{ID});
 			$player->{binID} = binFind(\@playersID, $args->{ID});
 			$added = 1;
 		}
@@ -505,7 +505,7 @@ sub actor_exists {
 		$player->{pos} = {%coords};
 		$player->{pos_to} = {%coords};
 
-		my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+		my $domain = existsInList($config{friendlyAID}, unpack("V1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 		debug "Player Exists: " . $player->name . " ($player->{binID}) Level $args->{lv} " . $sex_lut{$player->{sex}} . " $jobs_lut{$player->{jobID}}\n", $domain, 1;
 		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
 
@@ -571,7 +571,7 @@ sub actor_exists {
 	} elsif ($args->{type} == 45) {
 		if (!$portals{$args->{ID}} || !%{$portals{$args->{ID}}}) {
 			$portals{$args->{ID}}{'appear_time'} = time;
-			my $nameID = unpack("L1", $args->{ID});
+			my $nameID = unpack("V1", $args->{ID});
 			my $exists = portalExists($field{'name'}, \%coords);
 			my $display = ($exists ne "")
 				? "$portals_lut{$exists}{'source'}{'map'} -> " . getPortalDestName($exists)
@@ -588,7 +588,7 @@ sub actor_exists {
 
 	} elsif ($args->{type} < 1000) {
 		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
-			my $nameID = unpack("L1", $args->{ID});
+			my $nameID = unpack("V1", $args->{ID});
 			$npcs{$args->{ID}}{'appear_time'} = time;
 
 			$npcs{$args->{ID}}{pos} = {%coords};
@@ -708,9 +708,9 @@ sub actor_moved {
 			$player->{sex} = $args->{sex};
 			$player->{ID} = $args->{ID};
 			$player->{jobID} = $args->{type};
-			$player->{nameID} = unpack("L1", $args->{ID});
+			$player->{nameID} = unpack("V1", $args->{ID});
 			$player->{binID} = binFind(\@playersID, $args->{ID});
-			my $domain = existsInList($config{friendlyAID}, unpack("L1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Appeared: ".$player->name." ($player->{'binID'}) Level $args->{lv} $sex_lut{$args->{sex}} $jobs_lut{$args->{type}}\n", $domain;
 			$added = 1;
 			Plugins::callHook('player', {player => $player});
@@ -851,7 +851,7 @@ sub actor_spawned {
 			$players{$args->{ID}}{'jobID'} = $args->{type};
 			$players{$args->{ID}}{'sex'} = $args->{sex};
 			$players{$args->{ID}}{'ID'} = $args->{ID};
-			$players{$args->{ID}}{'nameID'} = unpack("L1", $args->{ID});
+			$players{$args->{ID}}{'nameID'} = unpack("V1", $args->{ID});
 			$players{$args->{ID}}{'appear_time'} = time;
 			$players{$args->{ID}}{'binID'} = binFind(\@playersID, $args->{ID});
 			$added = 1;
@@ -1474,7 +1474,7 @@ sub pet_info {
 	$pet{hungry} = $args->{hungry};
 	$pet{friendly} = $args->{friendly};
 	$pet{accessory} = $args->{accessory};
-	debug "Pet status: name: $pet{name} name set?: ". $pet{nameflag} ? 'yes' : 'no' ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})."\n", "pet";
+	debug "Pet status: name: $pet{name} name set?: ". ($pet{nameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})."\n", "pet";
 }
 
 sub public_message {
@@ -1635,7 +1635,7 @@ sub received_character_ID_and_Map {
 	$map_ip = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 	$map_port = $args->{mapPort};
 	message "----------Game Info----------\n", "connection";
-	message "Char ID: ".getHex($charID)." (".unpack("L1", $charID).")\n", "connection";
+	message "Char ID: ".getHex($charID)." (".unpack("V1", $charID).")\n", "connection";
 	message "MAP Name: $args->{mapName}\n", "connection";
 	message "MAP IP: $map_ip\n", "connection";
 	message "MAP Port: $map_port\n", "connection";

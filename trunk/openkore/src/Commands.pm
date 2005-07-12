@@ -109,6 +109,7 @@ sub initHandlers {
 	openshop	=> \&cmdOpenShop,
 	p		=> \&cmdPartyChat,
 	party		=> \&cmdParty,
+	#pet		=> \&cmdPet,
 	petl		=> \&cmdPetList,
 	pl		=> \&cmdPlayerList,
 	plugin		=> \&cmdPlugin,
@@ -152,14 +153,14 @@ sub initHandlers {
 	where		=> \&cmdWhere,
 	who		=> \&cmdWho,
 
-	north =>	\&cmdManualMove,
-	south =>	\&cmdManualMove,
-	east =>	\&cmdManualMove,
-	west =>	\&cmdManualMove,
-	northeast =>	\&cmdManualMove,
-	northwest =>	\&cmdManualMove,
-	southeast =>	\&cmdManualMove,
-	southwest =>	\&cmdManualMove,
+	north		=> \&cmdManualMove,
+	south		=> \&cmdManualMove,
+	east		=> \&cmdManualMove,
+	west		=> \&cmdManualMove,
+	northeast	=> \&cmdManualMove,
+	northwest	=> \&cmdManualMove,
+	southeast	=> \&cmdManualMove,
+	southwest	=> \&cmdManualMove,
 	);
 }
 
@@ -226,6 +227,7 @@ sub initDescriptions {
 	openshop	=> 'Open your vending shop.',
 	p		=> 'Chat in the party chat.',
 	party		=> 'Party management.',
+	pet		=> 'Pet management.',
 	petl		=> 'List pets that are on screen.',
 	pl		=> 'List players that are on screen.',
 	plugin		=> 'Control plugins.',
@@ -2157,6 +2159,19 @@ sub cmdPartyChat {
 			"Usage: p <message>\n";
 	} else {
 		sendMessage(\$remote_socket, "p", $arg1);
+	}
+}
+
+sub cmdPet {
+	my (undef, $subcmd) = @_;
+	if (!%pet) {
+		error	"Error in function 'pet' (Pet Management)\n" .
+			"You don't have a pet.";
+	} elsif ($subcmd eq "s" || $subcmd eq "status") {
+		message "-----------Pet Status-----------\n" .
+			swrite(
+			"Name: @<<<<<<<<<<<<<<<<<<<<<<< Accessory: @*",
+			[$pet{name}, itemNameSimple($pet{accessory})]), "list";
 	}
 }
 
