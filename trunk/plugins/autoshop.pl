@@ -21,6 +21,7 @@ use Log qw(message warning error);
 use AI;
 
 my $cvs = 1;
+our @vendermap;
 
 if (defined $cvs) {
   open(MF, "< $Plugins::current_plugin" )
@@ -91,7 +92,7 @@ sub showVer {
 sub suggest_cmdline {
   clearVendermap(); buildVendermap();
   if ($vendermap[$maxRad][$maxRad] <= $::config{autoshop_maxweight}) {
-    message "your current position is okay (weight $vendermap[$maxRad][$maxRad])";
+    message "your current position is okay (weight $vendermap[$maxRad][$maxRad])\n", "list";
   };
   my ($x, $y, $success) = suggest($::config{autoshop_radius});
   if ($success) {
@@ -117,7 +118,6 @@ sub suggest {
   my $radius = shift;
   if ($radius > $maxRad) {$radius = $maxRad};
   debug("looking for suitable coordinates, radius = $radius");
-  our @vendermap;
   my $pos = calcPosition($char);
   my ($randX, $randY, $realrandX, $realrandY);
   for (my $try = 0; $try <= $::config{autoshop_tries}; $try++) {
@@ -157,7 +157,6 @@ sub autoshop {
   if ($::config{autoshop} && AI::isIdle && $conState == 5 && timeOut($timeout{ai_autoshop}) &&
       !$shopstarted && !$char->{muted} && !$char->{sitting}) {
     clearVendermap(); buildVendermap();
-    our @vendermap;
     if ($vendermap[$maxRad][$maxRad] > $::config{autoshop_maxweight}) {
       debug("This place's weight is $vendermap[$maxRad][$maxRad]. Moving.");
       my ($x, $y, $success) = suggest($::config{autoshop_radius});
@@ -173,7 +172,6 @@ sub autoshop {
 # for those who are interested: dump the map to a file
 sub showmap {
   clearVendermap(); buildVendermap();
-  our @vendermap;
   my $pos = calcPosition($char);
   open SHOPMAP, "> $Settings::logs_folder/shopmap.txt";
   for (my $y = $maxRad*2; $y > 0; $y--) {
@@ -204,7 +202,6 @@ sub addToVendermap {
     return;
   };
 
-  our @vendermap;
   if ($type eq 'player') {$vendermap[$posX][$posY] += 5; return};
 
   for (my $a = 0; $a < 3; $a++) {
@@ -268,7 +265,7 @@ sub buildVendermap {
 };
 
 sub clearVendermap {
-  our @vendermap = ();
+  @vendermap = ();
   for (my $x = 0; $x <= $maxRad*2; $x++) {
     for (my $y = 0; $y <= $maxRad*2; $y++) {$vendermap[$x][$y] = 0};
   };
