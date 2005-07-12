@@ -53,6 +53,7 @@ ai_thanks_set 8
 ai_dealAuto 3
 ai_dealAutoCancel 5
 ai_partyAutoDeny 3
+ai_guildAutoDeny 3
 ai_dead_respawn 4
 ai_wipe_old 200
 ai_wipe_check 30
