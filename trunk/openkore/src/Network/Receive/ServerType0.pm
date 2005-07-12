@@ -17,6 +17,7 @@ use Misc;
 use Plugins;
 use Utils;
 use Skills;
+use AI;
 
 sub new {
 	my ($class) = @_;
@@ -34,7 +35,7 @@ sub map_loaded {
 		$conState = 4;
 		message("Waiting for map to load...\n", "connection");
 		ai_clientSuspend(0, 10);
-		initMapChangeVars();
+		main::initMapChangeVars();
 	} else {
 		message("You are now in the game\n", "connection");
 		sendMapLoaded(\$remote_socket);

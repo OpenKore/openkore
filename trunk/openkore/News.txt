@@ -58,6 +58,8 @@ New config options:
 - itemsTakeAuto_new (flag)
   Activates experimental new item taking code; might work better for
   archers who keep failing to take items.
+- "s" sequence for NPC talk steps; the client sends this when you click
+  "Sell" at a shop NPC.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).

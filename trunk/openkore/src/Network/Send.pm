@@ -1309,6 +1309,14 @@ sub sendPetGetInfo {
 	debug "Sent Pet Get Info\n", "sendPacket", 2;
 }
 
+sub sendPetHatch {
+	my $r_socket = shift;
+	my $index = shift;
+	my $msg = pack("C*", 0xA7, 0x01) . pack("S*", $index);
+	sendMsgToServer($r_socket, $msg);
+	debug "Sent Incubator hatch: $index\n", "sendPacket", 2;
+}
+
 sub sendPetPerformance {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xA1, 0x01, 0x02);
@@ -1331,6 +1339,7 @@ sub sendPetUnequipItem {
 }
 
 sub sendPreLoginCode {
+	# no server actually needs this, but we might need it in the future?
 	my $r_socket = shift;
 	my $type = shift;
 	my $msg;
