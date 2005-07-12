@@ -31,6 +31,7 @@ use Plugins;
 use Globals qw(%config %monsters $accountID);
 use Settings;
 use Log qw(message warning error debug);
+use Misc qw(whenStatusActiveMon);
 use Utils;
 
 
@@ -73,7 +74,7 @@ sub loadMonDB {
 }
 
 sub extendedCheck {
-    my ($hookName,$args) = @_;
+    my (undef,$args) = @_;
 
 	return 1 if !$args->{monster} || $args->{monster}->{name} eq '';
 
@@ -88,19 +89,19 @@ sub extendedCheck {
     my $race = $race_lut[$monsterDB{$monsterName}[2]];
     my $size = $size_lut[$monsterDB{$monsterName}[3]];
 
-	if (main::whenStatusActiveMon($args->{monster},'Petrified')) {
+	if ($args->{monster}->{element} && $args->{monster}->{element} ne '') {
+		$element = $args->{monster}->{element};
+		debug("monsterDB: Monster $args->{monster}->{name} has changed element to $args->{monster}->{element}\n", 'monsterDB', 3);
+	}
+
+	if (whenStatusActiveMon($args->{monster},'Petrified')) {
 		$element = 'Earth';
 		debug("monsterDB: Monster $args->{monster}->{name} is petrified changing element to Earth\n", 'monsterDB', 3);
 	}
 
-	if (main::whenStatusActiveMon($args->{monster},'Frozen')) {
+	if (whenStatusActiveMon($args->{monster},'Frozen')) {
 		$element = 'Water';
 		debug("monsterDB: Monster $args->{monster}->{name} is frozen changing element to Water\n", 'monsterDB', 3);
-	}
-
-	if ($args->{monster}->{element} && $args->{monster}->{element} ne '') {
-		$element = $args->{monster}->{element};
-		debug("monsterDB: Monster $args->{monster}->{name} has changed element to $args->{monster}->{element}\n", 'monsterDB', 3);
 	}
 
     if ($config{$args->{prefix} . '_Element'}
@@ -140,7 +141,7 @@ sub extendedCheck {
 }
 
 sub onPacketSkillUse {
-	my ($hookName,$args) = @_;
+	my (undef,$args) = @_;
 	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{name};
 	my $monsterName = lc($monsters{$args->{targetID}}{name});
 	return 1 unless ($monsterDB{$monsterName} && $monsterDB{$monsterName}[0]);
@@ -148,7 +149,7 @@ sub onPacketSkillUse {
 }
 
 sub onPacketSkillUseNoDmg {
-	my ($hookName,$args) = @_;
+	my (undef,$args) = @_;
 	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{name};
 	my $monsterName = lc($monsters{$args->{targetID}}{name});
 	return 1 unless ($monsterDB{$monsterName} && $monsterDB{$monsterName}[0]);
