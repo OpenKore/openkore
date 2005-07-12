@@ -71,6 +71,9 @@ sub new {
 		'009E' => ['item_appeared', 'a4 v1 x1 v1 v1 x2 v1', [qw(ID type x y amount)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
+		'00BD' => ['stats_info', 'S1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 S1 S1 S1 S1 S1 S1 S1 S1 S1 S1 S1 S1', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical)]],
+		'00BE' => ['stats_points_needed', 'S1 C1', [qw(type val)]],
+		'00C2' => ['who_online', 'L1', [qw(users)]],
 		'00EA' => ['deal_add', 'S1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -1822,6 +1825,77 @@ sub skill_used_no_damage {
 			});
 }
 
+sub stats_info {
+	my ($self, $args) = @_;
+	$char->{points_free} = $args->{points_free};
+	$char->{str} = $args->{str};
+	$char->{points_str} = $args->{points_str};
+	$char->{agi} = $args->{agi};
+	$char->{points_agi} = $args->{points_agi};
+	$char->{vit} = $args->{vit};
+	$char->{points_vit} = $args->{points_vit};
+	$char->{int} = $args->{int};
+	$char->{points_int} = $args->{points_int};
+	$char->{dex} = $args->{dex};
+	$char->{points_dex} = $args->{points_dex};
+	$char->{luk} = $args->{luk};
+	$char->{points_luk} = $args->{points_luk};
+	$char->{attack} = $args->{attack};
+	$char->{attack_bonus} = $args->{attack_bonus};
+	$char->{attack_magic_min} = $args->{attack_magic_min};
+	$char->{attack_magic_max} = $args->{attack_magic_max};
+	$char->{def} = $args->{def};
+	$char->{def_bonus} = $args->{def_bonus};
+	$char->{def_magic} = $args->{def_magic};
+	$char->{def_magic_bonus} = $args->{def_magic_bonus};
+	$char->{hit} = $args->{hit};
+	$char->{flee} = $args->{flee};
+	$char->{flee_bonus} = $args->{flee_bonus};
+	$char->{critical} = $args->{critical};
+	debug	"Strength: $char->{str} #$char->{points_str}\n"
+		."Agility: $char->{agi} #$char->{points_agi}\n"
+		."Vitality: $char->{vit} #$char->{points_vit}\n"
+		."Intelligence: $char->{int} #$char->{points_int}\n"
+		."Dexterity: $char->{dex} #$char->{points_dex}\n"
+		."Luck: $char->{luk} #$char->{points_luk}\n"
+		."Attack: $char->{attack}\n"
+		."Attack Bonus: $char->{attack_bonus}\n"
+		."Magic Attack Min: $char->{attack_magic_min}\n"
+		."Magic Attack Max: $char->{attack_magic_max}\n"
+		."Defense: $char->{def}\n"
+		."Defense Bonus: $char->{def_bonus}\n"
+		."Magic Defense: $char->{def_magic}\n"
+		."Magic Defense Bonus: $char->{def_magic_bonus}\n"
+		."Hit: $char->{hit}\n"
+		."Flee: $char->{flee}\n"
+		."Flee Bonus: $char->{flee_bonus}\n"
+		."Critical: $char->{critical}\n"
+		."Status Points: $char->{points_free}\n", "parseMsg";
+}
+
+sub stats_points_needed {
+	my ($self, $args) = @_;
+	if ($args->{type} == 32) {
+		$char->{points_str} = $args->{val};
+		debug "Points needed for Strength: $args->{val}\n", "parseMsg";
+	} elsif ($args->{type}  == 33) {
+		$char->{points_agi} = $args->{val};
+		debug "Points needed for Agility: $args->{val}\n", "parseMsg";
+	} elsif ($args->{type} == 34) {
+		$char->{points_vit} = $args->{val};
+		debug "Points needed for Vitality: $args->{val}\n", "parseMsg";
+	} elsif ($args->{type} == 35) {
+		$char->{points_int} = $args->{val};
+		debug "Points needed for Intelligence: $args->{val}\n", "parseMsg";
+	} elsif ($args->{type} == 36) {
+		$char->{points_dex} = $args->{val};
+		debug "Points needed for Dexterity: $args->{val}\n", "parseMsg";
+	} elsif ($args->{type} == 37) {
+		$char->{points_luk} = $args->{val};
+		debug "Points needed for Luck: $args->{val}\n", "parseMsg";
+	}
+}
+
 sub storage_item_added {
 	my ($self, $args) = @_;
 
@@ -1889,6 +1963,11 @@ sub warp_portal_list {
 			"list");
 	}
 	message("--------------------------------------------------\n", "list");
+}
+
+sub who_online {
+	my ($self, $args) = @_;
+	message "There are currently $args->{users} users online\n", "info";
 }
 
 1;
