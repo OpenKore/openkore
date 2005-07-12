@@ -1763,10 +1763,12 @@ sub public_message {
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 	}
 
-	$args->{chat} = "$args->{chatMsgUser} ($players{$args->{ID}}{binID}): $args->{chatMsg}";
+	my $message;
+	$message = "$args->{chatMsgUser} ($players{$args->{ID}}{binID}): $args->{chatMsg}";
+
 	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y}] [dist=$dist] " .
-		"$args->{message}\n") if ($config{logChat});
-	message "[dist=$dist] $args->{chat}\n", "publicchat";
+		"$message\n") if ($config{logChat});
+	message "[dist=$dist] $message\n", "publicchat";
 
 	ChatQueue::add('c', $args->{ID}, $args->{chatMsgUser}, $args->{chatMsg});
 	Plugins::callHook('packet_pubMsg', {
@@ -1947,13 +1949,16 @@ sub self_chat {
 	# Note: $chatMsgUser/Msg may be undefined. This is the case on
 	# eAthena servers: it uses this packet for non-chat server messages.
 
+	my $message;
 	if (defined $args->{chatMsgUser}) {
 		stripLanguageCode(\$args->{chatMsg});
-		$args->{chatMsgUser} = "$args->{chatMsgUser} : $args->{chatMsg}";
+		$message = "$args->{chatMsgUser} : $args->{chatMsg}";
+	} else {
+		$message = $args->{message};
 	}
 
-	chatLog("c", "$args->{message}\n") if ($config{'logChat'});
-	message "$args->{message}\n", "selfchat";
+	chatLog("c", "$message\n") if ($config{'logChat'});
+	message "$message\n", "selfchat";
 
 	Plugins::callHook('packet_selfChat', {
 		user => $args->{chatMsgUser},

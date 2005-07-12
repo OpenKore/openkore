@@ -70,6 +70,9 @@ Internal:
 - The format of $npcs_lut has changed, IDs are completely abandoned.
 - Attack AI routines should now support players as well.
 
+Credits:
+- doenet: chatLangCode bugfixes.
+
 
 ==================
 ### 1.6.2

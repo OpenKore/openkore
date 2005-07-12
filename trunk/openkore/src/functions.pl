@@ -5994,8 +5994,10 @@ sub parseMsg {
 		sendGuildMemberNameRequest(\$remote_socket, $TargetID);
 
 	} elsif ($switch eq "016F") {
-		my ($address) = substr($msg, 2, 60) =~ /([\s\S]*?)\000/;
-		my ($message) = substr($msg, 62, 120) =~ /([\s\S]*?)\000/;
+		my ($address) = unpack("Z*", substr($msg, 2, 60));
+		my ($message) = unpack("Z*", substr($msg, 62, 120));
+		stripLanguageCode(\$address);
+		stripLanguageCode(\$message);
 		message	"---Guild Notice---\n"
 			."$address\n\n"
 			."$message\n"
