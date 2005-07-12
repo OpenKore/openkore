@@ -44,7 +44,7 @@ sub DESTROY {
 
 sub debug {
   my ($self, $message, $level) = @_;
-  if ($self->{debug} >= $level) {warning "[$self->{name}] $message\n"};
+  if ($self->{debug} & $level) {warning "[$self->{name}] $message\n"};
 };
 
 sub setDebug {

@@ -35,8 +35,6 @@ sub parseMacroFile {
     next unless ($_);
 
     if (!%block && /{$/) {
-      # no need for an extra 'if' block.
-      # FIXME remove this comment
       s/\s*{$//;     # remove { at end of line
       my ($key, $value) = $_ =~ /^(.*?) (.*)/;
       if ($key eq 'macro') {
@@ -83,11 +81,12 @@ sub parseMacroFile {
 # returns undef if something went wrong, else the parsed command or "".
 # TODO: it works, but I don't like it
 sub parseCmd {
+  $cvs->debug("parseCmd (@_)", $logfac{function_call_macro});
   my $command = shift;
   return "" unless $command;
-  $cvs->debug("in parseCmd: parsing +$command+", 2);
   # shortcut commands that won't be executed
   if ($command =~ /^\@(log|call|release|pause|set)/) {
+    $cvs->debug("parsing ($command)", $logfac{parser_steps});
     if ($command =~ /\@log/) {
       $command =~ s/\@log //;
       logMessage(parseCmd($command));
@@ -107,7 +106,7 @@ sub parseCmd {
     return "";
   };
   while ($command =~ /\@/) {
-    $cvs->debug("parsing +$command+", 2);
+    $cvs->debug("parsing ($command)", $logfac{parser_steps});
     my $ret = "_%_";
     my ($kw, $arg) = $command =~ /\@([a-z]*) +\(([^@]*?)\)/i;
     return $command if (!defined $kw || !defined $arg);
@@ -134,6 +133,7 @@ sub parseCmd {
 
 # inserts another macro into queue
 sub pushMacro {
+  $cvs->debug("pushMacro(@_)", $logfac{function_call_macro});
   my ($arg, $times) = @_;
   if (!defined $macro{$arg}) {return}
   else {

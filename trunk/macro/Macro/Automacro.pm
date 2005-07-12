@@ -24,6 +24,7 @@ our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 
 # check for variable #######################################
 sub checkVar {
+  $cvs->debug("checkVar(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $arg = shift;
   my ($var, $cond, $val) = getArgs($arg);
   if ($cond eq "unset") {
@@ -40,6 +41,7 @@ sub checkVar {
 
 # check for a variable's variable ##########################
 sub checkVarVar {
+  $cvs->debug("checkVarVar(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $arg = shift;
   my ($varvar) = $arg =~ /^(.*?) /;
   if (exists $varStack{$varvar}) {
@@ -56,6 +58,7 @@ sub checkVarVar {
 #                           (x2|y2)=(lower right)
 # uses: calcPosition (Utils?)
 sub checkLoc {
+  $cvs->debug("checkLoc(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $arg = shift;
   my $neg = 0;
   if ($arg =~ /^not /) {$neg = 1;$arg =~ s/^not //g};
@@ -77,6 +80,7 @@ sub checkLoc {
 # checks for base/job level ################################
 # uses cmpr (Macro::Utils)
 sub checkLevel {
+  $cvs->debug("checkLevel(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($arg, $what) = @_;
   my ($cond, $level) = split(/ /, $arg);
   my $lvl;
@@ -89,6 +93,7 @@ sub checkLevel {
 
 # checks for player's jobclass #############################
 sub checkClass {
+  $cvs->debug("checkClass(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   if (lc($_[0]) eq lc($::jobs_lut{$char->{jobID}})) {return 1};
   return 0;
 };
@@ -96,6 +101,7 @@ sub checkClass {
 # checks for HP/SP/Weight ##################################
 # uses cmpr (Macro::Utils)
 sub checkPercent {
+  $cvs->debug("checkPercent(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($arg, $what) = @_;
   my ($cond, $amount) = split(/ /, $arg);
   if ($what =~ /^(hp|sp|weight)$/ && $char->{$what."_max"}) {
@@ -110,6 +116,7 @@ sub checkPercent {
 
 # checks for status #######################################
 sub checkStatus {
+  $cvs->debug("checkStatus(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $status = shift;
   my $not = 0;
   if ($status =~ /^not /) {$not = 1; $status =~ s/^not +//g}
@@ -132,6 +139,7 @@ sub checkStatus {
 # uses: getInventoryAmount, getCartAmount, getShopAmount,
 #       getStorageAmount (Macro::Utils?)
 sub checkItem {
+  $cvs->debug("checkItem(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $where = shift;
   my ($item, $cond, $amount) = getArgs($_[0]);
   my $what;
@@ -149,6 +157,7 @@ sub checkItem {
 
 # checks for near person ##################################
 sub checkPerson {
+  $cvs->debug("checkPerson(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $who = shift;
   if (getPlayerID($who, \@::playersID) >= 0) {return 1};
   return 0;
@@ -157,6 +166,7 @@ sub checkPerson {
 # checks arg1 for condition in arg2 #######################
 # uses: cmpr (Macro::Utils)
 sub checkCond {
+  $cvs->debug("checkCond(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $what = shift;
   my ($cond, $amount) = split(/ /, $_[0]);
   return 1 if cmpr($what, $cond, $amount);
@@ -165,6 +175,7 @@ sub checkCond {
 
 # checks for equipment ####################################
 sub checkEquip {
+  $cvs->debug("checkEquip(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $equip = shift;
   foreach my $item (@{$char->{inventory}}) {
      return 1 if ($item->{equipped} && lc($item->{name}) eq lc($equip));
@@ -175,6 +186,7 @@ sub checkEquip {
 # checks for a spell casted on us #########################
 # uses: distance, judgeSkillArea (Utils?)
 sub checkCast {
+  $cvs->debug("checkCast(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($cast, $args) = @_;
   my $pos = calcPosition($char);
   return 0 if $args->{sourceID} eq $accountID;
@@ -189,6 +201,7 @@ sub checkCast {
 # requires function.pl 1.998
 # uses calcPosition, distance (Utils?), setVar (Macro::Utils?)
 sub checkMsg {
+  $cvs->debug("checkMsg(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($var, $tmp, $arg) = @_;
   my $msg;
   if ($var eq '.lastpub') {
@@ -220,6 +233,7 @@ sub checkMsg {
 
 # removes an automacro from runonce list ##################
 sub releaseAM {
+  $cvs->debug("releaseAM(@_)", $logfac{function_call_macro});
   my $am = shift;
   if (defined $automacro{$am}) {
     if (defined $automacro{$am}->{disabled}) {

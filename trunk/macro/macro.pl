@@ -57,8 +57,17 @@ our $cfID = Settings::addConfigFile($file, \%macro, \&parseMacroFile);
 Settings::load($cfID);
 undef $file;
 
+sub parseDebug {
+  my @reqfac = split(/\|/, shift);
+  my $loglevel = 0;
+  foreach my $l (@reqfac) {
+    $loglevel = $loglevel | $logfac{$l};
+  };
+  return $loglevel;
+};
+
 sub postsetDebug {
-  $cvs->setDebug($::config{macro_debug}) if defined $::config{macro_debug};
+  $cvs->setDebug(parseDebug($::config{macro_debug})) if defined $::config{macro_debug};
 };
 
 sub Unload {
@@ -74,7 +83,7 @@ sub Unload {
 
 sub debuglevel {
   my (undef, $args) = @_;
-  if ($args->{key} eq 'macro_debug') {$cvs->setDebug($args->{val})};
+  if ($args->{key} eq 'macro_debug') {$cvs->setDebug(parseDebug($args->{val}))};
 };
 
 # just a facade for "macro"
