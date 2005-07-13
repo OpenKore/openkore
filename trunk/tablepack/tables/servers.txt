@@ -397,3 +397,9 @@ port 6900
 master_version 1
 version 20
 serverType 4
+
+[SuperRO Brasil Private Server]
+ip 201.30.187.6
+port 6901
+version 20
+master_version 1
