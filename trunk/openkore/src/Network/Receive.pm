@@ -1525,6 +1525,16 @@ sub item_disappeared {
 	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	if ($items{$args->{ID}} && %{$items{$args->{ID}}}) {
+		if ($config{attackLooters} && $itemsPickup{lc($items{$args->{ID}}{name})} != 0){
+			foreach my $looter (values %monsters) { #attack looter code
+				next if (!$looter || !%{$looter});
+				if (distance($items{$args->{ID}}{pos},$looter->{pos}) == 0) {
+					attack ($looter->{ID});
+					message "Attack Looter: $looter looted $items{$args->{ID}}{'name'}\n","looter";
+					last;
+				}
+			}
+		}
 		debug "Item Disappeared: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'})\n", "parseMsg_presence";
 		%{$items_old{$args->{ID}}} = %{$items{$args->{ID}}};
 		$items_old{$args->{ID}}{'disappeared'} = 1;
