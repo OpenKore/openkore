@@ -4630,214 +4630,6 @@ sub parseMsg {
 	} elsif ($packetParser && $packetParser->parse(substr($msg, 0, $msg_size))) {
 		# Use the new object-oriented packet parser
 
-	} elsif ($switch eq "00B7") {
-		# 00b7: word len, long ID, string str
-		# A list of selections appeared on the NPC message dialog.
-		# Each item is divided with ':'
-		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
-		my $msg = substr($msg, 0, 8).$newmsg;
-		my $ID = substr($msg, 4, 4);
-		$talk{'ID'} = $ID;
-		my ($talk) = substr($msg, 8, $msg_size - 8) =~ /([\s\S]*?)\000/;
-		$talk = substr($msg, 8) if (!defined $talk);
-		my @preTalkResponses = split /:/, $talk;
-		undef @{$talk{'responses'}};
-		foreach (@preTalkResponses) {
-			# Remove RO color codes
-			s/\^[a-fA-F0-9]{6}//g;
-
-			push @{$talk{'responses'}}, $_ if $_ ne "";
-		}
-		$talk{'responses'}[@{$talk{'responses'}}] = "Cancel Chat";
-
-		$ai_v{'npc_talk'}{'talk'} = 'select';
-		$ai_v{'npc_talk'}{'time'} = time;
-
-		my $list = "----------Responses-----------\n";
-		$list .=   "#  Response\n";
-		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
-			$list .= swrite(
-				"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$i, $talk{'responses'}[$i]]);
-		}
-		$list .= "-------------------------------\n";
-		message($list, "list");
-
-		# Resolve the source name
-		my $name;
-		if ($npcs{$ID}) {
-			$name = $npcs{$ID}{name};
-		} elsif ($monsters{$ID}) {
-			$name = $monsters{$ID}{name};
-		} else {
-			$name = "Unknown #".unpack("L1", $ID);
-		}
-
-		message("$name: Type 'talk resp #' to choose a response.\n", "npc");
-
-	} elsif ($switch eq "00BC") {
-		my $type = unpack("S1",substr($msg, 2, 2));
-		my $val = unpack("C1",substr($msg, 5, 1));
-		if ($val == 207) {
-			error "Not enough stat points to add\n";
-		} else {
-			if ($type == 13) {
-				$chars[$config{'char'}]{'str'} = $val;
-				debug "Strength: $val\n", "parseMsg";
-				# Reset $statChanged back to 0 to tell kore that a stat can be raised again
-				$statChanged = 0 if ($statChanged eq "str");
-
-			} elsif ($type == 14) {
-				$chars[$config{'char'}]{'agi'} = $val;
-				debug "Agility: $val\n", "parseMsg";
-				$statChanged = 0 if ($statChanged eq "agi");
-
-			} elsif ($type == 15) {
-				$chars[$config{'char'}]{'vit'} = $val;
-				debug "Vitality: $val\n", "parseMsg";
-				$statChanged = 0 if ($statChanged eq "vit");
-
-			} elsif ($type == 16) {
-				$chars[$config{'char'}]{'int'} = $val;
-				debug "Intelligence: $val\n", "parseMsg";
-				$statChanged = 0 if ($statChanged eq "int");
-
-			} elsif ($type == 17) {
-				$chars[$config{'char'}]{'dex'} = $val;
-				debug "Dexterity: $val\n", "parseMsg";
-				$statChanged = 0 if ($statChanged eq "dex");
-
-			} elsif ($type == 18) {
-				$chars[$config{'char'}]{'luk'} = $val;
-				debug "Luck: $val\n", "parseMsg";
-				$statChanged = 0 if ($statChanged eq "luk");
-
-			} else {
-				debug "Something: $val\n", "parseMsg";
-			}
-		}
-		Plugins::callHook('packet_charStats', {
-			type	=> $type,
-			val	=> $val,
-		});
-
-	} elsif ($switch eq "00C0") {
-		my $ID = substr($msg, 2, 4);
-		my $type = unpack("C*", substr($msg, 6, 1));
-		my $emotion = $emotions_lut{$type} || "<emotion #$type>";
-		if ($ID eq $accountID) {
-			message "$chars[$config{'char'}]{'name'} : $emotion\n", "emotion";
-			chatLog("e", "$chars[$config{'char'}]{'name'} : $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
-		} elsif ($players{$ID} && %{$players{$ID}}) {
-			my $name = $players{$ID}{name} || "Unknown #".unpack("L", $ID);
-
-			my $dist = "unknown";
-			if ($players{$ID}) {
-				$dist = distance($char->{pos_to}, $players{$ID}{pos_to});
-				$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
-			}
-
-			message "[dist=$dist] $name ($players{$ID}{binID}): $emotion\n", "emotion";
-			chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $type) || $config{'logEmoticons'} eq "all");
-
-			my $index = binFind(\@ai_seq, "follow");
-			if ($index ne "") {
-				my $masterID = $ai_seq_args[$index]{'ID'};
-				if ($config{'followEmotion'} && $masterID eq $ID &&
-			 	       distance($chars[$config{'char'}]{'pos_to'}, $players{$masterID}{'pos_to'}) <= $config{'followEmotion_distance'})
-				{
-					my %args = ();
-					$args{'timeout'} = time + rand (1) + 0.75;
-
-					if ($type == 30) {
-						$args{'emotion'} = 31;
-					} elsif ($type == 31) {
-						$args{'emotion'} = 30;
-					} else {
-						$args{'emotion'} = $type;
-					}
-
-					unshift @ai_seq, "sendEmotion";
-					unshift @ai_seq_args, \%args;
-				}
-			}
-		}
-
-	} elsif ($switch eq "00C3") {
-		$conState = 5 if ($conState != 4 && $xkore);
-		my $ID = substr($msg, 2, 4);
-		my $part = unpack("C1", substr($msg, 6, 1));
-		my $number = unpack("C1", substr($msg, 7, 1));
-
-		if ($part == 0) {
-			# Job change
-			my $msg;
-			if ($ID eq $accountID) {
-				$char->{jobID} = $number;
-				message "You changed job to: $jobs_lut{$number}\n", "parseMsg/job";
-			} elsif ($players{$ID}) {
-				$players{$ID}{jobID} = $number;
-				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed job to: $jobs_lut{$number}\n", "parseMsg/job", 2;
-			} else {
-				debug "Unknown #" . unpack("L", $ID) . " changed job to: $jobs_lut{$number}\n", "parseMsg/job", 2;
-			}
-
-		} elsif ($part == 3) {
-			# Bottom headgear change
-			message getActorName($ID)." changed bottom headgear to: ".headgearName($number)."\n", "parseMsg_statuslook", 2 unless $ID eq $accountID;
-			$players{$ID}{headgear}{low} = $number if $players{$ID};
-
-		} elsif ($part == 4) {
-			# Top headgear change
-			message getActorName($ID)." changed top headgear to: ".headgearName($number)."\n", "parseMsg_statuslook", 2 unless $ID eq $accountID;
-			$players{$ID}{headgear}{top} = $number if $players{$ID};
-
-		} elsif ($part == 5) {
-			# Middle headgear change
-			message getActorName($ID)." changed middle headgear to: ".headgearName($number)."\n", "parseMsg_statuslook", 2 unless $ID eq $accountID;
-			$players{$ID}{headgear}{mid} = $number if $players{$ID};
-
-		} elsif ($part == 6) {
-			# Hair color change
-			if ($ID eq $accountID) {
-				$char->{hair_color} = $number;
-				message "Your hair color changed to: $haircolors{$number} ($number)\n", "parseMsg/hairColor";
-			} elsif ($players{$ID}) {
-				$players{$ID}{hair_color} = $number;
-				message "Player $players{$ID}{name} ($players{$ID}{binID}) changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor", 2;
-			} else {
-				debug "Unknown #".unpack("L", $ID)." changed hair color to: $haircolors{$number} ($number)\n", "parseMsg/hairColor", 2;
-			}
-		}
-
-		#my %parts = (
-		#	0 => 'Body',
-		#	2 => 'Right Hand',
-		#	3 => 'Low Head',
-		#	4 => 'Top Head',
-		#	5 => 'Middle Head',
-		#	8 => 'Left Hand'
-		#);
-		#if ($part == 3) {
-		#	$part = 'low';
-		#} elsif ($part == 4) {
-		#	$part = 'top';
-		#} elsif ($part == 5) {
-		#	$part = 'mid';
-		#}
-		#
-		#my $name = getActorName($ID);
-		#if ($part == 3 || $part == 4 || $part == 5) {
-		#	my $actor = Actor::get($ID);
-		#	$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
-		#	my $itemName = $items_lut{$itemID};
-		#	$itemName = 'nothing' if (!$itemName);
-		#	debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
-		#} else {
-		#	debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
-		#}
-
 	} elsif ($switch eq "00C4") {
 		my $ID = substr($msg, 2, 4);
 		undef %talk;
@@ -5344,8 +5136,10 @@ sub parseMsg {
 		delete $char->{skills};
 		for (my $i = 4; $i < $msg_size; $i += 37) {
 			my $skillID = unpack("S1", substr($msg, $i, 2));
+			# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
+			my $targetType = unpack("S1", substr($msg, $i+2, 2));
 			my $level = unpack("S1", substr($msg, $i + 6, 2));
-			my ($skillName) = substr($msg, $i + 12, 24) =~ /([\s\S]*?)\000/;
+			my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
 			if (!$skillName) {
 				$skillName = Skills->new(id => $skillID)->handle;
 			}
@@ -6489,19 +6283,6 @@ sub parseMsg {
 				delete $friends{$i};
 				last;
 			}
-		}
-
-	} elsif ($switch eq "00CA") {
-		my $fail = unpack("x2 C1", $msg);
-
-		if ($fail == 0) {
-			message "Buy completed.\n", "success";
-		} elsif ($fail == 1) {
-			error "Buy failed (insufficient zeny).\n";
-		} elsif ($fail == 2) {
-			error "Buy failed (insufficient inventory capacity).\n";
-		} else {
-			error "Buy failed (failure code $fail).\n";
 		}
 	}
 

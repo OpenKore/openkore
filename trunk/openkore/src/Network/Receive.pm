@@ -85,9 +85,14 @@ sub new {
 		'00B4' => ['npc_talk'],
 		'00B5' => ['npc_talk_continue'],
 		'00B6' => ['npc_talk_close'],
+		'00B7' => ['npc_talk_responses'],
+		'00BC' => ['stats_added', 'v1 x1 C1', [qw(type val)]],
 		'00BD' => ['stats_info', 'v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical)]],
 		'00BE' => ['stats_points_needed', 'v1 C1', [qw(type val)]],
+		'00C0' => ['emoticon', 'V1 C1', [qw(ID type)]],
+		'00CA' => ['buy_result', 'C1', [qw(fail)]],
 		'00C2' => ['who_online', 'V1', [qw(users)]],
+		'00C3' => ['job_equipment_hair_change', 'V1 C1 C1', [qw(ID part number)]],
 		'00EA' => ['deal_add', 'v1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -936,6 +941,19 @@ sub actor_spawned {
 	}
 }
 
+sub buy_result {
+	my ($self, $args) = @_;
+	if ($args->{fail} == 0) {
+		message "Buy completed.\n", "success";
+	} elsif ($args->{fail} == 1) {
+		error "Buy failed (insufficient zeny).\n";
+	} elsif ($args->{fail} == 2) {
+		error "Buy failed (insufficient inventory capacity).\n";
+	} else {
+		error "Buy failed (failure code $args->{fail}).\n";
+	}
+}
+
 sub cart_info {
 	my ($self, $args) = @_;
 
@@ -1103,6 +1121,48 @@ sub egg_list {
 		message "$invIndex $char->{inventory}[$invIndex]{name}\n", "list";
 	}
 	message "------------------------------\n", "list";
+}
+
+sub emoticon {
+	my ($self, $args) = @_;
+	my $emotion = $emotions_lut{$args->{type}} || "<emotion #$args->{type}>";
+	if ($args->{ID} eq $accountID) {
+		message "$char->{name}: $emotion\n", "emotion";
+		chatLog("e", "$char->{name}: $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
+
+	} elsif ($players{$args->{ID}} && %{$players{$args->{ID}}}) {
+		my $player = $players{$args->{ID}};
+
+		my $name = $player->{name} || "Unknown #".unpack("L", $args->{ID});
+
+		#my $dist = "unknown";
+		my $dist = distance($char->{pos_to}, $player->{pos_to});
+		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
+
+		message "[dist=$dist] $name ($player->{binID}): $emotion\n", "emotion";
+		chatLog("e", "$name".": $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
+
+		my $index = AI::findAction("follow");
+		if ($index ne "") {
+			my $masterID = AI::args($index)->{ID};
+			if ($config{'followEmotion'} && $masterID eq $args->{ID} &&
+		 	       distance($char->{pos_to}, $player->{pos_to}) <= $config{'followEmotion_distance'})
+			{
+				my %args = ();
+				$args{timeout} = time + rand (1) + 0.75;
+
+				if ($args->{type} == 30) {
+					$args{emotion} = 31;
+				} elsif ($args->{type} == 31) {
+					$args{emotion} = 30;
+				} else {
+					$args{emotion} = $args->{type};
+				}
+
+				AI::queue("sendEmotion", \%args);
+			}
+		}
+	}
 }
 
 sub equip_item {
@@ -1461,6 +1521,66 @@ sub item_disappeared {
 	}
 }
 
+sub job_equipment_hair_change {
+	my ($self, $args) = @_;
+	$conState = 5 if ($conState != 4 && $xkore);
+
+	my $actor = Actor::get($args->{ID});
+	if ($args->{part} == 0) {
+		# Job change
+		$actor->{jobID} = $args->{number};
+		message "$actor changed job to: $jobs_lut{$args->{number}}\n", "parseMsg/job", ($actor->{type} eq 'You' ? 0 : 2);
+
+	} elsif ($args->{part} == 3) {
+		# Bottom headgear change
+		message "$actor changed bottom headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
+		$actor->{headgear}{low} = $args->{number} if $actor->{type} eq 'Player';
+
+	} elsif ($args->{part} == 4) {
+		# Top headgear change
+		message "$actor changed top headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
+		$actor->{headgear}{top} = $args->{number} if $actor->{type} eq 'Player';
+
+	} elsif ($args->{part} == 5) {
+		# Middle headgear change
+		message "$actor changed middle headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
+		$actor->{headgear}{mid} = $args->{number} if $actor->{type} eq 'Player';
+
+	} elsif ($args->{part} == 6) {
+		# Hair color change
+		$actor->{hair_color} = $args->{number};
+		message "$actor changed hair color to: $haircolors{$args->{number}} ($args->{number})\n", "parseMsg/hairColor", ($actor->{type} eq 'You' ? 0 : 2);
+	}
+
+	#my %parts = (
+	#	0 => 'Body',
+	#	2 => 'Right Hand',
+	#	3 => 'Low Head',
+	#	4 => 'Top Head',
+	#	5 => 'Middle Head',
+	#	8 => 'Left Hand'
+	#);
+	#if ($part == 3) {
+	#	$part = 'low';
+	#} elsif ($part == 4) {
+	#	$part = 'top';
+	#} elsif ($part == 5) {
+	#	$part = 'mid';
+	#}
+	#
+	#my $name = getActorName($ID);
+	#if ($part == 3 || $part == 4 || $part == 5) {
+	#	my $actor = Actor::get($ID);
+	#	$actor->{headgear}{$part} = $items_lut{$number} if ($actor);
+	#	my $itemName = $items_lut{$itemID};
+	#	$itemName = 'nothing' if (!$itemName);
+	#	debug "$name changes $parts{$part} ($part) equipment to $itemName\n", "parseMsg";
+	#} else {
+	#	debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
+	#}
+
+}
+
 sub login_error {
 	my ($self, $args) = @_;
 
@@ -1737,6 +1857,55 @@ sub npc_talk_continue {
 	} else {
 		message "$name: Type 'talk cont' to continue talking\n", "npc";
 	}
+}
+
+sub npc_talk_responses {
+	my ($self, $args) = @_;
+	# 00b7: word len, long ID, string str
+	# A list of selections appeared on the NPC message dialog.
+	# Each item is divided with ':'
+	my $newmsg;
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8, $args->{RAW_MSG_SIZE}-8));
+	my $msg = substr($msg, 0, 8).$newmsg;
+	my $ID = substr($msg, 4, 4);
+	$talk{'ID'} = $ID;
+	my $talk = unpack("Z*", substr($msg, 8, $args->{RAW_MSG_SIZE} - 8));
+	$talk = substr($msg, 8) if (!defined $talk);
+	my @preTalkResponses = split /:/, $talk;
+	undef @{$talk{'responses'}};
+	foreach (@preTalkResponses) {
+		# Remove RO color codes
+		s/\^[a-fA-F0-9]{6}//g;
+
+		push @{$talk{'responses'}}, $_ if $_ ne "";
+	}
+
+	$talk{'responses'}[@{$talk{'responses'}}] = "Cancel Chat";
+
+	$ai_v{'npc_talk'}{'talk'} = 'select';
+	$ai_v{'npc_talk'}{'time'} = time;
+
+	my $list = "----------Responses-----------\n";
+	$list .=   "#  Response\n";
+	for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+		$list .= swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+			[$i, $talk{'responses'}[$i]]);
+	}
+	$list .= "-------------------------------\n";
+	message($list, "list");
+
+	# Resolve the source name
+	my $name;
+	if ($npcs{$ID}) {
+		$name = $npcs{$ID}{name};
+	} elsif ($monsters{$ID}) {
+		$name = $monsters{$ID}{name};
+	} else {
+		$name = "Unknown #".unpack("L1", $ID);
+	}
+
+	message("$name: Type 'talk resp #' to choose a response.\n", "npc");
 }
 
 sub pet_info {
@@ -2098,6 +2267,52 @@ sub skill_used_no_damage {
 			'x' => 0,
 			'y' => 0
 			});
+}
+
+sub stats_added {
+	my ($self, $args) = @_;
+	if ($args->{val} == 207) {
+		error "Not enough stat points to add\n";
+	} else {
+		if ($args->{type} == 13) {
+			$char->{str} = $args->{val};
+			debug "Strength: $args->{val}\n", "parseMsg";
+			# Reset $statChanged back to 0 to tell kore that a stat can be raised again
+			$statChanged = 0 if ($statChanged eq "str");
+
+		} elsif ($args->{type} == 14) {
+			$char->{agi} = $args->{val};
+			debug "Agility: $args->{val}\n", "parseMsg";
+			$statChanged = 0 if ($statChanged eq "agi");
+
+		} elsif ($args->{type} == 15) {
+			$char->{vit} = $args->{val};
+			debug "Vitality: $args->{val}\n", "parseMsg";
+			$statChanged = 0 if ($statChanged eq "vit");
+
+		} elsif ($args->{type} == 16) {
+			$char->{int} = $args->{val};
+			debug "Intelligence: $args->{val}\n", "parseMsg";
+			$statChanged = 0 if ($statChanged eq "int");
+
+		} elsif ($args->{type} == 17) {
+			$char->{dex} = $args->{val};
+			debug "Dexterity: $args->{val}\n", "parseMsg";
+			$statChanged = 0 if ($statChanged eq "dex");
+
+		} elsif ($args->{type} == 18) {
+			$char->{luk} = $args->{val};
+			debug "Luck: $args->{val}\n", "parseMsg";
+			$statChanged = 0 if ($statChanged eq "luk");
+
+		} else {
+			debug "Something: $args->{val}\n", "parseMsg";
+		}
+	}
+	Plugins::callHook('packet_charStats', {
+		type	=> $args->{type},
+		val	=> $args->{val},
+	});
 }
 
 sub stats_info {
