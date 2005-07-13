@@ -26,6 +26,7 @@ Bug fixes:
 - "Player Connected" did not trigger 'player' plugin call.
 - Guild auto deny timeout was not included in timeouts.txt.
   Deal auto deny timeout was not being used.
+- Increase the maximum vending price to 99,990,000z.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
