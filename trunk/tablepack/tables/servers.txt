@@ -279,7 +279,7 @@ version 18
 serverType 4
 
 [aeRO Private Server]
-ip 66.118.142.13
+ip 66.118.142.17
 port 5000
 master_version 1
 version 20
