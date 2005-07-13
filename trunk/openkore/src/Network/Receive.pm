@@ -91,7 +91,7 @@ sub new {
 		'00BE' => ['stats_points_needed', 'v1 C1', [qw(type val)]],
 		'00C0' => ['emoticon', 'V1 C1', [qw(ID type)]],
 		'00CA' => ['buy_result', 'C1', [qw(fail)]],
-		'00C2' => ['who_online', 'V1', [qw(users)]],
+		'00C2' => ['users_online', 'V1', [qw(users)]],
 		'00C3' => ['job_equipment_hair_change', 'V1 C1 C1', [qw(ID part number)]],
 		'00EA' => ['deal_add', 'v1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
@@ -2619,6 +2619,11 @@ sub use_item {
 	}
 }
 
+sub users_online {
+	my ($self, $args) = @_;
+	message "There are currently $args->{users} users online\n", "info";
+}
+
 sub warp_portal_list {
 	my ($self, $args) = @_;
 	# strip gat extension
@@ -2650,11 +2655,6 @@ sub warp_portal_list {
 			"list");
 	}
 	message("--------------------------------------------------\n", "list");
-}
-
-sub who_online {
-	my ($self, $args) = @_;
-	message "There are currently $args->{users} users online\n", "info";
 }
 
 1;

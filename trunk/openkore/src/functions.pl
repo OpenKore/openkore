@@ -1698,8 +1698,7 @@ sub AI {
 			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
 		}
 		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && ai_sellAutoCheck()) {
-			unshift @ai_seq, "sellAuto";
-			unshift @ai_seq_args, {};
+			AI::queue("sellAuto");
 		}
 	}
 
@@ -1929,7 +1928,7 @@ sub AI {
 			if (!defined($ai_seq_args[0]{'sentBuy'})) {
 				$ai_seq_args[0]{'sentBuy'} = 1;
 				$timeout{'ai_buyAuto_wait'}{'time'} = time;
-				ai_talkNPC(ID => $ai_seq_args[0]{'npc'}{'id'}, "e");
+				ai_talkNPC($ai_seq_args[0]{'npc'}{x}, $ai_seq_args[0]{'npc'}{y}, "e");
 				last AUTOBUY;
 			}
 			if ($ai_seq_args[0]{'invIndex'} ne "") {

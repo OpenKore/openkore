@@ -726,9 +726,8 @@ sub cartAdd {
 }
 
 ##
-# ai_talkNPC( (x, y | ID => number), sequence)
+# ai_talkNPC(x, y, sequence)
 # x, y: the position of the NPC to talk to.
-# ID: the ID of the NPC to talk to.
 # sequence: A string containing the NPC talk sequences.
 #
 # Talks to an NPC. You can specify an NPC position, or an NPC ID.
@@ -747,16 +746,13 @@ sub cartAdd {
 # Example:
 # # Sends "Continue", "Select option 0" to the NPC at (102, 300)
 # ai_talkNPC(102, 300, "c r0");
-# # Do the same thing with the NPC whose ID is 1337
-# ai_talkNPC(ID => 1337, "c r0");
 sub ai_talkNPC {
 	my %args;
 	$args{'pos'}{'x'} = shift;
 	$args{'pos'}{'y'} = shift;
 	$args{'sequence'} = shift;
 	$args{'sequence'} =~ s/^ +| +$//g;
-	unshift @ai_seq, "NPC";
-	unshift @ai_seq_args,\%args;
+	AI::queue("NPC", \%args);
 }
 
 sub attack {
