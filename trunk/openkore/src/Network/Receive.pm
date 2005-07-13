@@ -1173,6 +1173,11 @@ sub equip_item {
 		message "You can't put on $item->{name} ($invIndex)\n";
 	} else {
 		$item->{equipped} = $args->{type};
+		foreach (%equipSlot_rlut){
+			if ($_ & $args->{type}){
+				$char->{equipment}{$equipSlot_lut{$_}} = $item;
+			}
+		}
 		message "You equip $item->{name} ($invIndex) - $equipTypes_lut{$item->{type_equip}} (type $args->{type})\n", 'inventory';
 	}
 }
@@ -1424,6 +1429,14 @@ sub inventory_items_nonstackable {
 		$item->{upgrade} = unpack("C1", substr($msg, $i + 11, 1));
 		$item->{cards} = substr($msg, $i + 12, 8);
 		$item->{name} = itemName($item);
+		if ($item->{equipped}) {
+			foreach (%equipSlot_rlut){
+				if ($_ & $item->{equipped}){
+					$char->{equipment}{$equipSlot_lut{$_}} = $item;
+				}
+			}
+		}
+
 
 		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - $itemTypes_lut{$item->{type}} - $equipTypes_lut{$item->{type_equip}}\n", "parseMsg";
 		Plugins::callHook('packet_inventory', {index => $invIndex});
@@ -2585,6 +2598,11 @@ sub unequip_item {
 	$conState = 5 if ($conState != 4 && $xkore);
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$char->{inventory}[$invIndex]{equipped} = "";
+	foreach (%equipSlot_rlut){
+		if ($_ & $args->{type}){
+			$char->{equipment}{$equipSlot_lut{$_}} = undef;
+		}
+	}
 	message "You unequip $char->{inventory}[$invIndex]{name} ($invIndex) - $equipTypes_lut{$char->{inventory}[$invIndex]{type_equip}}\n", 'inventory';
 }
 
