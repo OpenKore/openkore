@@ -1525,7 +1525,7 @@ sub item_disappeared {
 	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	if ($items{$args->{ID}} && %{$items{$args->{ID}}}) {
-		if ($config{attackLooters} && $itemsPickup{lc($items{$args->{ID}}{name})} != 0){
+		if ($config{attackLooters} && ( $itemsPickup{lc($items{$args->{ID}}{name})} ne '' ? $itemsPickup{lc($items{$args->{ID}}{name})} : $itemsPickup{'all'} ) ) {
 			foreach my $looter (values %monsters) { #attack looter code
 				next if (!$looter || !%{$looter});
 				if (distance($items{$args->{ID}}{pos},$looter->{pos}) == 0) {
