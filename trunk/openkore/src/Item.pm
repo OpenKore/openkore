@@ -51,9 +51,13 @@ sub new {
 ### Class Methods
 ###################
 
+################
+# getItem ( item )
+#
+#
+#
 sub getItem {
-	my ($item,$item2) = @_;
-	$item = $item2 if exists $item2; #enforce static behaivior
+	my $item = shift;
 
 	return $item if (UNIVERSAL::isa($item, 'Item'));
 
@@ -66,13 +70,43 @@ sub getItem {
 }
 
 sub bulkEquip {
-	my ($list,$list2) = @_;
-	$list = $list2 if $list2 && (UNIVERSAL::isa($list2, 'HASH')); #enforce static behaivior
+	$list = shift;
 
 	my $item;
 	foreach (keys $list) {
+		if (!$equipSlot_rlut{$_}) {
+			debug "Wrong Itemslot specified: $_\n",'Item';
+		}
 		$item->equipInSlot($_) if $item = getItem($list{$_});
 	}
+}
+
+sub scanConfigEquip {
+	my $prefix = shift;
+	my %eq_list;
+	foreach my $slot (%equipSlot_lut) {
+		if ($config{"${prefix}_$slot"}){
+			$eq_list{$slot} = $config{"${prefix}_$slot"};
+		}
+	}
+	bulkEquip(\%eq_list) if (%eq_list);
+}
+
+##########
+# Maybe this Method is not needed.
+sub UnEquipByType {
+	my $type = shift;
+
+	for (my $i = 0; $i < @{$char->{'inventory'}}; $i++) {
+		next if (!%{$char->{'inventory'}[$i]});
+
+		if ($char->{'inventory'}[$i]{'equipped'} & $type) {
+			$char->{'inventory'}[$i]->unequip();
+			return $i;
+		}
+	}
+
+	return undef;
 }
 
 ###################
@@ -86,15 +120,16 @@ sub nameString {
 
 sub equippedInSlot {
 	my ($self,$slot) = @_;
-	return ($self->{equipped} eq $slot);
+	return ($self->{equipped} & $equipSlot_rlut{$slot});
 }
 
-sub equippable {
-	my $self = shift;
-}
+#sub equippable {
+#	my $self = shift;
+#}
 
 sub equip {
 	my $self = shift;
+	return 1 if $self->{equipped};
 	sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
 }
 
@@ -105,32 +140,6 @@ sub unequip {
 
 sub equipInSlot {
 	my ($self,$slot) = @_;
-	$char->{equipment}{$slot} = $self;
+	#UnEquipByType($equipSlot_rlut{$slot});
+	sendEquip(\$remote_socket, $self->{index}, $equipSlot_rlut{$slot});
 }
-
-#%itemSlot_lut {
-#	'0'   => 'Item',
-#	'1'   => 'lowHead',
-#	'2'   => 'rightHand',
-#	'4'   => 'robe',
-#	'8'   => 'rightAccessory',
-#	'16'  => 'armor',
-#	'32'  => 'leftHand',
-#	'64'  => 'shoes',
-#	'128' => 'leftAccessory',
-#	'256' => 'topHead',
-#	'512' => 'midHead',
-#	#we need to extra check for Arrows
-#	'10'  => 'Arrow'
-#	#Combinations
-#	'34'  => 'Two-Handed Weapon',
-#	'136' => 'Accessory',
-#	'257' => 'Top-Lower Helm',
-#	'513' => 'Mid-Lower Mask',
-#	'769' => 'Full Helm'
-#}
-
-
-
-
-
