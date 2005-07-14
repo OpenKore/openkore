@@ -10,6 +10,7 @@ use Actor::Player;
 use Actor::Monster;
 use Actor::Party;
 use Actor::Unknown;
+use Item;
 use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
@@ -1344,7 +1345,7 @@ sub inventory_item_added {
 		if (!defined $invIndex) {
 			# Add new item
 			$invIndex = findIndex(\@{$char->{inventory}}, "nameID", "");
-			$item = $char->{inventory}[$invIndex] = {};
+			$item = $char->{inventory}[$invIndex] = new Item();
 			$item->{index} = $index;
 			$item->{nameID} = $args->{nameID};
 			$item->{type} = $args->{type};
@@ -1416,7 +1417,7 @@ sub inventory_items_nonstackable {
 		$invIndex = findIndex($char->{inventory}, "index", $index);
 		$invIndex = findIndex($char->{inventory}, "nameID", "") unless defined $invIndex;
 
-		my $item = $char->{inventory}[$invIndex] = {};
+		my $item = $char->{inventory}[$invIndex] = new Item();
 		$item->{index} = $index;
 		$item->{invIndex} = $invIndex;
 		$item->{nameID} = $ID;
@@ -1462,19 +1463,18 @@ sub inventory_items_stackable {
 			$invIndex = findIndex($char->{inventory}, "nameID", "");
 		}
 
-		$char->{inventory}[$invIndex]{invIndex} = $invIndex;
-		$char->{inventory}[$invIndex]{index} = $index;
-		$char->{inventory}[$invIndex]{nameID} = $ID;
-		$char->{inventory}[$invIndex]{amount} = unpack("v1", substr($msg, $i + 6, 2));
-		$char->{inventory}[$invIndex]{type} = unpack("C1", substr($msg, $i + 4, 1));
-		$char->{inventory}[$invIndex]{identified} = 1;
-		$char->{inventory}[$invIndex]{equipped} = 32768 if (defined $char->{arrow} && $index == $char->{arrow});
-
-		my $display = itemNameSimple($char->{inventory}[$invIndex]{nameID});
-		$char->{inventory}[$invIndex]{name} = $display;
-		debug "Inventory: $char->{inventory}[$invIndex]{name} ($invIndex) x $char->{inventory}[$invIndex]{amount} - " .
-			"$itemTypes_lut{$char->{inventory}[$invIndex]{type}}\n", "parseMsg";
-		Plugins::callHook('packet_inventory', {index => $invIndex, item => $char->{inventory}[$invIndex]});
+		my $item = $char->{inventory}[$invIndex] = new Item();
+		$item->{invIndex} = $invIndex;
+		$item->{index} = $index;
+		$item->{nameID} = $ID;
+		$item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
+		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
+		$item->{identified} = 1;
+		$item->{equipped} = 32768 if (defined $char->{arrow} && $index == $char->{arrow});
+		$item->{name} = itemNameSimple($item->{nameID});
+		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - " .
+			"$itemTypes_lut{$item->{type}}\n", "parseMsg";
+		Plugins::callHook('packet_inventory', {index => $invIndex, item => $item});
 	}
 
 	$ai_v{'inventory_time'} = time + 1;
