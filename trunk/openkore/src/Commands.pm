@@ -754,9 +754,7 @@ sub cmdCard {
 
 sub cmdCart {
 	my (undef, $input) = @_;
-	my ($arg1) = $input =~ /^(\w+)/;
-	my ($arg2) = $input =~ /^\w+ (\d+)/;
-	my ($arg3) = $input =~ /^\w+ \d+ (\d+)/;
+	my ($arg1, $arg2) = split(' ', $input, 2);
 
 	if (!defined $cart{'inventory'}) {
 		error "Cart inventory is not available.\n";
@@ -774,50 +772,12 @@ sub cmdCart {
 		$msg .= "\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n";
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
-
+	
 	} elsif ($arg1 eq "add") {
-		my $hasCart = 0;
-		if ($char->{statuses}) {
-			foreach (keys %{$char->{statuses}}) {
-				if ($_ =~ /^Level \d Cart$/) {
-					$hasCart = 1;
-					last;
-				}
-			}
-		}
-
-		if ($arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
-			error	"Error in function 'cart add' (Add Item to Cart)\n" .
-				"Inventory Item $arg2 does not exist.\n";
-
-		} elsif ($arg2 =~ /\d+/ && !$hasCart) {
-			error	"Error in function 'cart add' (Add Item to Cart)\n" .
-				"You do not have a cart.\n";
-
-		} elsif ($arg2 =~ /\d+/) {
-			if (!$arg3 || $arg3 > $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'}) {
-				$arg3 = $chars[$config{'char'}]{'inventory'}[$arg2]{'amount'};
-			}
-			sendCartAdd(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg2]{'index'}, $arg3);
-
-		} else {
-			error	"Syntax Error in function 'cart add' (Add Item to Cart)\n" .
-				"Usage: cart add <item #>\n";
-		}
+		cmdCart_add($arg2);
 
 	} elsif ($arg1 eq "get") {
-		if ($arg2 =~ /\d+/ && (!$cart{'inventory'}[$arg2] || !%{$cart{'inventory'}[$arg2]})) {
-			error	"Error in function 'cart get' (Get Item from Cart)\n" .
-				"Cart Item $arg2 does not exist.\n";
-		} elsif ($arg2 =~ /\d+/) {
-			if (!$arg3 || $arg3 > $cart{'inventory'}[$arg2]{'amount'}) {
-				$arg3 = $cart{'inventory'}[$arg2]{'amount'};
-			}
-			sendCartGet(\$remote_socket, $arg2, $arg3);
-		} elsif ($arg2 eq "") {
-			error	"Syntax Error in function 'cart get' (Get Item from Cart)\n" .
-				"Usage: cart get <cart item #>\n";
-		}
+		cmdCart_get($arg2);
 
 	} elsif ($arg1 eq "desc") {
 		if (!($arg2 =~ /\d+/)) {
@@ -835,6 +795,69 @@ sub cmdCart {
 			"Command '$arg1' is not a known command.\n";
 	}
 }
+
+sub cmdCart_add {
+	my ($name) = @_;
+
+	if (!defined $name) {
+		error	"Syntax Error in function 'cart add' (Add Item to Cart)\n" .
+			"Usage: cart add <item>\n";
+		return;
+	}
+
+	if (!hasCart()) {
+		error	"Error in function 'cart add' (Add Item to Cart)\n" .
+			"You do not have a cart.\n";
+		return;
+	}
+
+	my $amount;
+	if ($name =~ /^(.*?) (\d+)$/) {
+		$name = $1;
+		$amount = $2;
+	}
+
+	my $item = Match::inventoryItem($name);
+
+	if (!$item) {
+		error	"Error in function 'cart add' (Add Item to Cart)\n" .
+			"Inventory Item $name does not exist.\n";
+		return;
+	}
+
+	if (!$amount || $amount > $item->{amount}) {
+		$amount = $item->{amount};
+	}
+	sendCartAdd($item->{index}, $amount);
+}
+
+sub cmdCart_get {
+	my ($name) = @_;
+
+	if (!defined $name) {
+		error	"Syntax Error in function 'cart get' (Get Item from Cart)\n" .
+			"Usage: cart get <cart item>\n";
+		return;
+	}
+
+	my $amount;
+	if ($name =~ /^(.*?) (\d+)$/) {
+		$name = $1;
+		$amount = $2;
+	}
+
+	my $item = Match::cartItem($name);
+	if (!$item) {
+		error	"Error in function 'cart get' (Get Item from Cart)\n" .
+			"Cart Item $name does not exist.\n";
+	}
+
+	if (!$amount || $amount > $item->{amount}) {
+		$amount = $item->{amount};
+	}
+	sendCartGet($item->{index}, $amount);
+}
+
 
 sub cmdChat {
 	my (undef, $arg1) = @_;

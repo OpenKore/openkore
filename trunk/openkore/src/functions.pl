@@ -1343,7 +1343,7 @@ sub AI {
 		if (!$amount || $amount > $char->{inventory}[$i]{amount}) {
 			$amount = $char->{inventory}[$i]{amount};
 		}
-		sendCartAdd(\$remote_socket, $char->{inventory}[$i]{index}, $amount);
+		sendCartAdd($char->{inventory}[$i]{index}, $amount);
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{items}} <= 0);
@@ -1360,7 +1360,7 @@ sub AI {
 		if (!$amount || $amount > $cart{inventory}[$i]{amount}) {
 			$amount = $cart{inventory}[$i]{amount};
 		}
-		sendCartGet(\$remote_socket, $i, $amount);
+		sendCartGet($i, $amount);
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{items}} <= 0);
@@ -1946,17 +1946,7 @@ sub AI {
 	##### AUTO-CART ADD/GET ####
 
 	if ((AI::isIdle || AI::is(qw/route move autoBuy follow sitAuto items_take items_gather/)) && timeOut($AI::Timeouts::autoCart, 2)) {
-		my $hasCart = 0;
-		if ($char->{statuses}) {
-			foreach (keys %{$char->{statuses}}) {
-				if ($_ =~ /^Level \d Cart$/) {
-					$hasCart = 1;
-					last;
-				}
-			}
-		}
-
-		if ($hasCart) {
+		if (hasCart()) {
 			my @addItems;
 			my @getItems;
 			my $inventory = $char->{inventory};
@@ -5274,6 +5264,7 @@ sub parseMsg {
 			my $item = $cart{inventory}[$index] = {};
 			$item->{nameID} = $ID;
 			$item->{amount} = 1;
+			$item->{index} = $index;
 			$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
 			$item->{type_equip} = unpack("S1", substr($msg, $i+6, 2));
 			$item->{broken} = unpack("C1", substr($msg, $i+10, 1));
@@ -5303,6 +5294,7 @@ sub parseMsg {
 			if ($item->{amount}) {
 				$item->{amount} += $amount;
 			} else {
+				$item->{index} = $index;
 				$item->{nameID} = $ID;
 				$item->{amount} = $amount;
 				$item->{name} = itemNameSimple($ID);
@@ -5325,6 +5317,7 @@ sub parseMsg {
 		if ($item->{amount}) {
 			$item->{amount} += $amount;
 		} else {
+			$item->{index} = $index;
 			$item->{nameID} = $ID;
 			$item->{amount} = $amount;
 			$item->{identified} = unpack("C1", substr($msg, 10 + $psize, 1));

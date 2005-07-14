@@ -10,6 +10,8 @@ TODO:
 - NPC IDs are no longer supported, you must use the location syntax.
 - 'Cartboost' status renamed to 'Cart Boost' for consistency with the
   skill name.
+- \$remote_socket parameter removed from some Network/Send.pm functions:
+  sendCartAdd sendCartGet
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
@@ -29,6 +31,7 @@ Bug fixes:
 - Guild auto deny timeout was not included in timeouts.txt.
   Deal auto deny timeout was not being used.
 - Increase the maximum vending price to 99,990,000z.
+- Fix job_equipment_hair_change packet detecting actor incorrectly.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -46,6 +49,7 @@ New features:
   like Heal or Blessing on someone who is dead.
 - You can now attack looters even if the are normally ignored
   set attackLooters to 1 in config.txt
+- 'cart add' and 'cart get' commands now accept names.
 
 New config options:
 - partySkill: target_dist (range)
@@ -80,6 +84,7 @@ Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
 - The format of $npcs_lut has changed, IDs are completely abandoned.
 - Attack AI routines should now support players as well.
+- New Match::cartItem() function, similar to Match::inventoryItem().
 
 Credits:
 - doenet: chatLangCode bugfixes.
