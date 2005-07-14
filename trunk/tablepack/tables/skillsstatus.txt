@@ -77,7 +77,7 @@
 115 True Sight
 116 Wind Walk
 117 Meltdown
-118 Cartboost
+118 Cart Boost
 119 Full Strip
 120 Reject Sword
 121 Marionette Control
