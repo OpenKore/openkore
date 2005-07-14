@@ -81,7 +81,9 @@ sub get {
 # %list = (leftHand => 'Katar', rightHand => 10);
 sub bulkEquip {
 	my $list = shift;
+
 	return unless $list && %{$list};
+
 	my $item;
 	foreach (keys %{$list}) {
 		if (!$equipSlot_rlut{$_}) {
