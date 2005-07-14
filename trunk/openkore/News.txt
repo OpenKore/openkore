@@ -8,6 +8,8 @@ TODO:
 
 *** INCOMPATIBLE CHANGES ***:
 - NPC IDs are no longer supported, you must use the location syntax.
+- 'Cartboost' status renamed to 'Cart Boost' for consistency with the
+  skill name.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
