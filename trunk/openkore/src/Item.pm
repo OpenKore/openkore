@@ -37,6 +37,7 @@ package Item;
 use strict;
 use Globals;
 use Utils;
+use Log qw(message error warning debug);
 use Network::Send;
 
 use overload '""' => \&nameString;
@@ -53,12 +54,12 @@ sub new {
 ###################
 
 ##
-# getItem( item )
+# get( item )
 #
 # item can be either an object itself, an Id or a name
 # returns Item object
 #
-sub getItem {
+sub get {
 	my $item = shift;
 
 	return $item if (UNIVERSAL::isa($item, 'Item'));
@@ -74,28 +75,26 @@ sub getItem {
 ##
 # bulkEquip( list )
 #
-# list is a hash containing
-# slot => item
+# list: is a hash containing slot => item
 #
 # eg:
 # %list = (leftHand => 'Katar', rightHand => 10);
 sub bulkEquip {
-	$list = shift;
-
+	my $list = shift;
+	return unless $list && %{$list};
 	my $item;
-	foreach (keys $list) {
+	foreach (keys %{$list}) {
 		if (!$equipSlot_rlut{$_}) {
 			debug "Wrong Itemslot specified: $_\n",'Item';
 		}
-		$item->equipInSlot($_) if $item = getItem($list{$_});
+		$item->equipInSlot($_) if $item = get($list->{$_});
 	}
 }
 
 ##
 # scanConfigEquip( prefix )
 #
-# this function will take a prefix
-# and scan for slots
+# prefix: is used to scan for slots
 #
 # eg:
 # $prefix = equipAuto_1
@@ -145,7 +144,9 @@ sub nameString {
 ##
 # equippedInSlot( slot )
 #
-# returns wheter item is equipped in slot
+# slot: slot to check
+#
+# Returns: wheter item is equipped in slot
 sub equippedInSlot {
 	my ($self,$slot) = @_;
 	return ($self->{equipped} & $equipSlot_rlut{$slot});
@@ -156,7 +157,7 @@ sub equippedInSlot {
 #}
 
 ##
-# equip
+# equip()
 #
 # will simply equip the item
 # if you want more control use equipInSlot
@@ -177,9 +178,30 @@ sub unequip {
 }
 
 ##
+# use( [target] )
+#
+# target: ID of the target, in not set than accountID
+#         will be used
+#
+# uses item
+sub use {
+	my $self = shift;
+	my $target = shift;
+	return unless $self->{type} <= 2;
+	if (!$target || $target == $accountID) {
+		sendItemUse(\$remote_socket, $self->{'index'}, $accountID);
+	}
+	else {
+		sendItemUse(\$remote_socket, $self->{'index'}, $target);
+	}
+}
+
+##
 # equipInSlot( slot )
 #
-# equips item in slot
+# slot: where item should be equipped
+#
+# equips item in
 sub equipInSlot {
 	my ($self,$slot) = @_;
 	return 	if ($char->{equipment}{$slot} # return if Item is already equipped
@@ -187,3 +209,5 @@ sub equipInSlot {
 	#UnEquipByType($equipSlot_rlut{$slot});
 	sendEquip(\$remote_socket, $self->{index}, $equipSlot_rlut{$slot});
 }
+
+1;
