@@ -949,7 +949,9 @@ sub buy_result {
 	} elsif ($args->{fail} == 1) {
 		error "Buy failed (insufficient zeny).\n";
 	} elsif ($args->{fail} == 2) {
-		error "Buy failed (insufficient inventory capacity).\n";
+		error "Buy failed (insufficient weight capacity).\n";
+	} elsif ($args->{fail} == 3) {
+		error "Buy failed (too many different inventory items).\n";
 	} else {
 		error "Buy failed (failure code $args->{fail}).\n";
 	}
