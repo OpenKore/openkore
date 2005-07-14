@@ -63,6 +63,24 @@ sub inventoryItem {
 }
 
 ##
+# cartItem(name)
+# name: either a number in the cart list, or an item name.
+# Returns: the hash to the cart item matching $name, or undef.
+sub cartItem {
+	my ($name) = @_;
+
+	if ($name =~ /^\d+$/) {
+		# A number was provided
+		return $cart{inventory}[$name]; # will be undef if invalid
+	}
+
+	# A name was provided; match it
+	my $index = findIndexString_lc($cart{inventory}, 'name', $name);
+	return unless defined($index);
+	return $cart{inventory}[$index];
+}
+
+##
 # storageItem(name)
 # name: either a number in the storage list, or an item name.
 # Returns: the hash to the storage item matching $name, or undef.

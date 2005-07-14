@@ -92,7 +92,7 @@ sub new {
 		'00C0' => ['emoticon', 'V1 C1', [qw(ID type)]],
 		'00CA' => ['buy_result', 'C1', [qw(fail)]],
 		'00C2' => ['users_online', 'V1', [qw(users)]],
-		'00C3' => ['job_equipment_hair_change', 'V1 C1 C1', [qw(ID part number)]],
+		'00C3' => ['job_equipment_hair_change', 'a4 C1 C1', [qw(ID part number)]],
 		'00EA' => ['deal_add', 'v1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],

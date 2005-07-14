@@ -106,6 +106,7 @@ our @EXPORT = (
 	getResponse
 	getSpellName
 	headgearName
+	hasCart
 	itemLog_clear
 	look
 	lookAtPosition
@@ -1655,6 +1656,19 @@ sub headgearName {
 	}
 
 	return main::itemName({nameID => $itemID});
+}
+
+##
+# hasCart()
+#
+# Returns 1 if your character has a cart; 0 otherwise.
+sub hasCart {
+	return 0 unless $char->{statuses};
+
+	foreach (keys %{$char->{statuses}}) {
+		return 1 if /^Level \d Cart$/;
+	}
+	return 0;
 }
 
 sub itemLog_clear {

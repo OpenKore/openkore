@@ -501,20 +501,18 @@ sub sendCardMergeRequest {
 }
 
 sub sendCartAdd {
-	my $r_socket = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0x26, 0x01) . pack("v*", $index) . pack("V*", $amount);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Cart Add: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendCartGet {
-	my $r_socket = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0x27, 0x01) . pack("v*", $index) . pack("V*", $amount);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Cart Get: $index x $amount\n", "sendPacket", 2;
 }
 
