@@ -64,7 +64,7 @@ sub get {
 
 	return $item if (UNIVERSAL::isa($item, 'Item'));
 
-	if ($item =~ /\d+/) {
+	if ($item =~ /^\d+$/) {
 		return $char->{inventory}[$item];
 	} else {
 		my $index = findIndexStringList_lc ($char->{inventory}, 'name',$item);

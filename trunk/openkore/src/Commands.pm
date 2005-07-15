@@ -772,7 +772,7 @@ sub cmdCart {
 		$msg .= "\nCapacity: " . int($cart{'items'}) . "/" . int($cart{'items_max'}) . "  Weight: " . int($cart{'weight'}) . "/" . int($cart{'weight_max'}) . "\n";
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
-	
+
 	} elsif ($arg1 eq "add") {
 		cmdCart_add($arg2);
 
@@ -1329,14 +1329,32 @@ sub cmdEmotion {
 sub cmdEquip {
 	# Equip an item
 	my (undef, $args) = @_;
-	my $arg1 = $args;
+	my ($arg1,$arg2) = $args =~ /^(\w+)\s*(.*)/;
+	my $slot;
+	my $item;
+
+	message "1: $arg1 2: $arg2\n";
 
 	if ($arg1 eq "") {
 		error "You must specify an item to equip.\n";
 		return;
 	}
 
-	my $item = Match::inventoryItem($arg1);
+
+	if ($arg1 eq "slots") {
+		message "Slots:\ntopHead\nmidHead\nlowHead\n".
+				"leftHand\nrightHand\nleftAccessory\n".
+				"rightAccessory\nrobe\narmor\nshoes\n";
+		return;
+	}
+
+	if ($equipSlot_rlut{$arg1}) {
+		$slot = $arg1;
+	} else {
+		$arg1 .= " $arg2";
+	}
+
+	$item = (defined $slot) ? (Item::get($arg2)) : (Item::get($arg1));
 
 	if (!$item) {
 		error "You don't have $arg1.\n";
@@ -1347,8 +1365,12 @@ sub cmdEquip {
 		error "Inventory Item $item->{name} ($item->{invIndex}) can't be equipped.\n";
 		return;
 	}
-
-	sendEquip(\$remote_socket, $item->{index}, $item->{type_equip});
+	if ($slot) {
+		$item->equipInSlot($slot);
+	}
+	else {
+		$item->equip();
+	}
 }
 
 sub cmdEval {
