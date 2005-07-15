@@ -2666,6 +2666,10 @@ sub AI {
 			message "Dropping target - you will not kill steal others\n", "ai_attack";
 			sendMove($realMyPos->{x}, $realMyPos->{y});
 			AI::dequeue;
+			if ($config{teleportAuto_dropTargetKS}) {
+				message "Teleport due to dropping attack target\n";
+				useTeleport(1);
+			}
 
 		} elsif ($config{attackCheckLOS} &&
 		         $args->{attackMethod}{distance} > 2 &&
@@ -2922,6 +2926,10 @@ sub AI {
 			AI::dequeue;
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
+			if ($config{teleportAuto_dropTargetKS}) {
+				message "Teleport due to dropping attack target\n";
+				useTeleport(1);
+			}
 		}
 	}
 
