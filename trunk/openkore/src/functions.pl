@@ -298,8 +298,8 @@ sub checkConnection {
 		message("Connecting to Map Server...\n", "connection");
 		$conState_tries++;
 		initConnectVars();
-		if ($master->{private}) {
-			Network::connectTo(\$remote_socket, $config{forceMapIP} || $master->{ip}, $map_port);
+		if ($masterServer->{private}) {
+			Network::connectTo(\$remote_socket, $config{forceMapIP} || $masterServer->{ip}, $map_port);
 		} else {
 			Network::connectTo(\$remote_socket, $config{forceMapIP} || $map_ip, $map_port);
 		}
