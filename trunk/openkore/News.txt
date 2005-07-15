@@ -3,13 +3,12 @@
 ==================
 
 TODO:
-- 'private 1' in servers.txt should also be effective when changing map server.
 - Write player name cache to file?
 
 *** INCOMPATIBLE CHANGES ***:
 - NPC IDs are no longer supported, you must use the location syntax.
-- 'Cartboost' status renamed to 'Cart Boost' for consistency with the
-  skill name.
+- A few more statuses have been renamed such as 'Cartboost' status renamed to
+  'Cart Boost' for consistency with the skill name.
 - \$remote_socket parameter removed from some Network/Send.pm functions:
   sendCartAdd sendCartGet
 
@@ -35,6 +34,7 @@ Bug fixes:
 - Pythagorean distances are no longer used; we now go by number of
   steps. This should make openkore more efficient in determining whether
   it is in range to attack.
+- 'private 1' in servers.txt is also effective when changing map server.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"

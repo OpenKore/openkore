@@ -297,7 +297,11 @@ sub checkConnection {
 		message("Connecting to Map Server...\n", "connection");
 		$conState_tries++;
 		initConnectVars();
-		Network::connectTo(\$remote_socket, $config{forceMapIP} || $map_ip, $map_port);
+		if ($master->{private}) {
+			Network::connectTo(\$remote_socket, $config{forceMapIP} || $master->{ip}, $map_port);
+		} else {
+			Network::connectTo(\$remote_socket, $config{forceMapIP} || $map_ip, $map_port);
+		}
 		sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
