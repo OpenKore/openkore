@@ -4971,6 +4971,7 @@ sub parseMsg {
 			# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
 			my $targetType = unpack("S1", substr($msg, $i+2, 2));
 			my $level = unpack("S1", substr($msg, $i + 6, 2));
+			my $sp = unpack("S1", substr($msg, $i + 8, 2)); # we don't use this yet
 			my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
 			if (!$skillName) {
 				$skillName = Skills->new(id => $skillID)->handle;
@@ -4980,6 +4981,7 @@ sub parseMsg {
 			if (!$char->{skills}{$skillName}{lv}) {
 				$char->{skills}{$skillName}{lv} = $level;
 			}
+			message "$skillName $sp\n";
 			$skillsID_lut{$skillID} = $skills_lut{$skillName};
 			binAdd(\@skillsID, $skillName);
 
@@ -5504,8 +5506,10 @@ sub parseMsg {
 		$ai_v{'npc_talk'}{'time'} = time;
 
 	} elsif ($switch eq "0147") {
-		my $skillID = unpack("S*",substr($msg, 2, 2));
-		my $skillLv = unpack("S*",substr($msg, 8, 2));
+		my $skillID = unpack("v1",substr($msg, 2, 2));
+		my $targetType = unpack("v1",substr($msg, 4, 2));
+		my $skillLv = unpack("v1",substr($msg, 8, 2));
+		my $sp = unpack("v1",substr($msg, 10, 2)); # we don't use this yet
 		my $skillName = unpack("A*", substr($msg, 14, 24));
 
 		message "Permitted to use $skillsID_lut{$skillID} ($skillID), level $skillLv\n";
