@@ -94,6 +94,8 @@ sub new {
 		'00CA' => ['buy_result', 'C1', [qw(fail)]],
 		'00C2' => ['users_online', 'V1', [qw(users)]],
 		'00C3' => ['job_equipment_hair_change', 'a4 C1 C1', [qw(ID part number)]],
+		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]],
+		'00C6' => ['npc_store_info'],
 		'00EA' => ['deal_add', 'v1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -1410,7 +1412,7 @@ sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
 	$conState = 5 if $conState != 4 && $xkore;
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4, $args->{RAW_MSG_SIZE}-4));
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
 	my $invIndex;
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 20) {
@@ -1453,7 +1455,7 @@ sub inventory_items_stackable {
 	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my $newmsg;
-	decrypt(\$newmsg, substr($msg, 4, $args->{RAW_MSG_SIZE}-4));
+	decrypt(\$newmsg, substr($msg, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	my $psize = ($args->{switch} eq "00A3") ? 10 : 18;
 
@@ -1804,28 +1806,64 @@ sub npc_image {
 	}
 }
 
+sub npc_store_begin {
+	my ($self, $args) = @_;
+	undef %talk;
+	$talk{buyOrSell} = 1;
+	$talk{ID} = $args->{ID};
+	$ai_v{npc_talk}{talk} = 'buy';
+	$ai_v{npc_talk}{time} = time;
+
+	my $name = getNPCName($args->{ID});
+
+	message "$name: Type 'store' to start buying, or type 'sell' to start selling\n", "npc";
+}
+
+sub npc_store_info {
+	my ($self, $args) = @_;
+	my $newmsg;
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+	undef @storeList;
+	my $storeList = 0;
+	undef $talk{'buyOrSell'};
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
+		my $price = unpack("L1", substr($msg, $i, 4));
+		my $type = unpack("C1", substr($msg, $i + 8, 1));
+		my $ID = unpack("S1", substr($msg, $i + 9, 2));
+
+		my $store = $storeList[$storeList] = {};
+		my $display = ($items_lut{$ID} ne "")
+			? $items_lut{$ID}
+			: "Unknown ".$ID;
+		$store->{name} = $display;
+		$store->{nameID} = $ID;
+		$store->{type} = $type;
+		$store->{price} = $price;
+		debug "Item added to Store: $store->{name} - $price z\n", "parseMsg", 2;
+		$storeList++;
+	}
+
+	my $name = getNPCName($talk{ID});
+	message "$name: Check my store list by typing 'store'\n";
+	$ai_v{'npc_talk'}{'talk'} = 'store';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
 sub npc_talk {
 	my ($self, $args) = @_;
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8, $args->{RAW_MSG_SIZE}-8));
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
 	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
 	my $ID = substr($msg, 4, 4);
-	my $talk = unpack("Z*", substr($msg, 8, $args->{RAW_MSG_SIZE} - 8));
+	my $talk = unpack("Z*", substr($msg, 8));
 	$talk{'ID'} = $ID;
 	$talk{'nameID'} = unpack("V1", $ID);
 	$talk{'msg'} = $talk;
 	# Remove RO color codes
 	$talk{'msg'} =~ s/\^[a-fA-F0-9]{6}//g;
 
-	# Resolve the source name
-	my $name;
-	if ($npcs{$ID}) {
-		$name = $npcs{$ID}{name};
-	} elsif ($monsters{$ID}) {
-		$name = $monsters{$ID}{name};
-	} else {
-		$name = "Unknown #$talk{nameID}";
-	}
+	my $name = getNPCName($ID);
 
 	message "$name: $talk{'msg'}\n", "npc";
 }
@@ -1837,15 +1875,7 @@ sub npc_talk_close {
 	my $ID = substr($args->{RAW_MSG}, 2, 4);
 	undef %talk;
 
-	# Resolve the source name
-	my $name;
-	if ($npcs{$ID}) {
-		$name = $npcs{$ID}{name};
-	} elsif ($monsters{$ID}) {
-		$name = $monsters{$ID}{name};
-	} else {
-		$name = "Unknown #".unpack("V1", $ID);
-	}
+	my $name = getNPCName($ID);
 
 	message "$name: Done talking\n", "npc";
 	$ai_v{'npc_talk'}{'talk'} = 'close';
@@ -1861,18 +1891,10 @@ sub npc_talk_continue {
 	# "Next" button appeared on the NPC message dialog
 	my $ID = substr($args->{RAW_MSG}, 2, 4);
 
-	# Resolve the source name
-	my $name;
-	if ($npcs{$ID}) {
-		$name = $npcs{$ID}{name};
-	} elsif ($monsters{$ID}) {
-		$name = $monsters{$ID}{name};
-	} else {
-		$name = "Unknown #".unpack("V1", $ID);
-	}
+	my $name = getNPCName($ID);
 
-	$ai_v{'npc_talk'}{'talk'} = 'next';
-	$ai_v{'npc_talk'}{'time'} = time;
+	$ai_v{npc_talk}{talk} = 'next';
+	$ai_v{npc_talk}{time} = time;
 
 	if ($config{autoTalkCont}) {
 		message "$name: Auto-continuing talking\n", "npc";
@@ -1890,11 +1912,11 @@ sub npc_talk_responses {
 	# A list of selections appeared on the NPC message dialog.
 	# Each item is divided with ':'
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8, $args->{RAW_MSG_SIZE}-8));
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
 	my $msg = substr($msg, 0, 8).$newmsg;
 	my $ID = substr($msg, 4, 4);
 	$talk{'ID'} = $ID;
-	my $talk = unpack("Z*", substr($msg, 8, $args->{RAW_MSG_SIZE} - 8));
+	my $talk = unpack("Z*", substr($msg, 8));
 	$talk = substr($msg, 8) if (!defined $talk);
 	my @preTalkResponses = split /:/, $talk;
 	undef @{$talk{'responses'}};
@@ -1920,15 +1942,7 @@ sub npc_talk_responses {
 	$list .= "-------------------------------\n";
 	message($list, "list");
 
-	# Resolve the source name
-	my $name;
-	if ($npcs{$ID}) {
-		$name = $npcs{$ID}{name};
-	} elsif ($monsters{$ID}) {
-		$name = $monsters{$ID}{name};
-	} else {
-		$name = "Unknown #".unpack("L1", $ID);
-	}
+	my $name = getNPCName($ID);
 
 	message("$name: Type 'talk resp #' to choose a response.\n", "npc");
 }
@@ -1979,7 +1993,7 @@ sub private_message {
 	# Private message
 	$conState = 5 if ($conState != 4 && $xkore);
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 28, length($args->{RAW_MSG})-28));
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 28));
 	my $msg = substr($args->{RAW_MSG}, 0, 28) . $newmsg;
 	$args->{privMsg} = substr($msg, 28, $args->{RAW_MSG_SIZE} - 29);
 	if ($args->{privMsgUser} ne "" && binFind(\@privMsgUsers, $args->{privMsgUser}) eq "") {
@@ -2546,7 +2560,7 @@ sub storage_items_nonstackable {
 	# Retrieve list of non-stackable (weapons & armor) storage items.
 	# This packet is sent immediately after 00A5/01F0.
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4, $args->{RAW_MSG_SIZE}-4));
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 20) {
@@ -2573,7 +2587,7 @@ sub storage_items_stackable {
 	my ($self, $args) = @_;
 	# Retrieve list of stackable storage items
 	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4, $args->{RAW_MSG_SIZE}-4));
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
 	undef %storage;
 	undef @storageID;

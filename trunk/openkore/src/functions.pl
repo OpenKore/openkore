@@ -4624,69 +4624,11 @@ sub parseMsg {
 	} elsif ($packetParser && $packetParser->parse(substr($msg, 0, $msg_size))) {
 		# Use the new object-oriented packet parser
 
-	} elsif ($switch eq "00C4") {
-		my $ID = substr($msg, 2, 4);
-		undef %talk;
-		$talk{'buyOrSell'} = 1;
-		$talk{'ID'} = $ID;
-		$ai_v{'npc_talk'}{'talk'} = 'buy';
-		$ai_v{'npc_talk'}{'time'} = time;
-
-		# Resolve the source name
-		my $name;
-		if ($npcs{$ID}) {
-			$name = $npcs{$ID}{name};
-		} elsif ($monsters{$ID}) {
-			$name = $monsters{$ID}{name};
-		} else {
-			$name = "Unknown #".unpack("L1", $ID);
-		}
-
-		message "$name: Type 'store' to start buying, or type 'sell' to start selling\n", "npc";
-
-	} elsif ($switch eq "00C6") {
-		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
-		my $msg = substr($msg, 0, 4).$newmsg;
-		undef @storeList;
-		my $storeList = 0;
-		undef $talk{'buyOrSell'};
-		for (my $i = 4; $i < $msg_size; $i += 11) {
-			my $price = unpack("L1", substr($msg, $i, 4));
-			my $type = unpack("C1", substr($msg, $i + 8, 1));
-			my $ID = unpack("S1", substr($msg, $i + 9, 2));
-			$storeList[$storeList]{'nameID'} = $ID;
-			my $display = ($items_lut{$ID} ne "")
-				? $items_lut{$ID}
-				: "Unknown ".$ID;
-			$storeList[$storeList]{'name'} = $display;
-			$storeList[$storeList]{'nameID'} = $ID;
-			$storeList[$storeList]{'type'} = $type;
-			$storeList[$storeList]{'price'} = $price;
-			debug "Item added to Store: $storeList[$storeList]{'name'} - $price z\n", "parseMsg", 2;
-			$storeList++;
-		}
-
-		# Resolve the source name
-		my $name;
-		my $ID = $talk{ID};
-		if ($npcs{$ID}) {
-			$name = $npcs{$ID}{name};
-		} elsif ($monsters{$ID}) {
-			$name = $monsters{$ID}{name};
-		} else {
-			$name = "Unknown #".unpack("L1", $ID);
-		}
-
-		message "$name: Check my store list by typing 'store'\n";
-		$ai_v{'npc_talk'}{'talk'} = 'store';
-		$ai_v{'npc_talk'}{'time'} = time;
-
 	} elsif ($switch eq "00C7") {
 		#sell list, similar to buy list
 		if (length($msg) > 4) {
 			my $newmsg;
-			decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+			decrypt(\$newmsg, substr($msg, 4));
 			my $msg = substr($msg, 0, 4).$newmsg;
 		}
 		undef $talk{'buyOrSell'};
@@ -4723,7 +4665,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "00D7") {
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 17, length($msg)-17));
+		decrypt(\$newmsg, substr($msg, 17));
 		my $msg = substr($msg, 0, 17).$newmsg;
 		my $ID = substr($msg,8,4);
 		if (!$chatRooms{$ID} || !%{$chatRooms{$ID}}) {
@@ -4750,7 +4692,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "00DB") {
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
+		decrypt(\$newmsg, substr($msg, 8));
 		my $msg = substr($msg, 0, 8).$newmsg;
 		my $ID = substr($msg,4,4);
 		$currentChatRoom = $ID;
@@ -4798,7 +4740,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "00DF") {
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 17, length($msg)-17));
+		decrypt(\$newmsg, substr($msg, 17));
 		my $msg = substr($msg, 0, 17).$newmsg;
 		my $ID = substr($msg,8,4);
 		my $ownerID = substr($msg,4,4);
@@ -4942,7 +4884,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "00FB") {
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 28, length($msg)-28));
+		decrypt(\$newmsg, substr($msg, 28));
 		$msg = substr($msg, 0, 28).$newmsg;
 		($chars[$config{'char'}]{'party'}{'name'}) = substr($msg, 4, 24) =~ /([\s\S]*?)\000/;
 		for (my $i = 28; $i < $msg_size; $i += 46) {
@@ -5063,7 +5005,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0109") {
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 8, length($msg)-8));
+		decrypt(\$newmsg, substr($msg, 8));
 		my $ID = substr($msg, 4, 4);
 		my $chat = substr($msg, 8, $msg_size - 8);
 		$chat =~ s/\000//g;
@@ -5123,7 +5065,7 @@ sub parseMsg {
 		# Character skill list
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+		decrypt(\$newmsg, substr($msg, 4));
 		my $msg = substr($msg, 0, 4).$newmsg;
 
 		undef @skillsID;
@@ -5259,7 +5201,7 @@ sub parseMsg {
 		# "0122" sends non-stackable item info
 		# "0123" sends stackable item info
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+		decrypt(\$newmsg, substr($msg, 4));
 		$msg = substr($msg, 0, 4).$newmsg;
 
 		for (my $i = 4; $i < $msg_size; $i += 20) {
@@ -5286,7 +5228,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0123" || $switch eq "01EF") {
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+		decrypt(\$newmsg, substr($msg, 4));
 		$msg = substr($msg, 0, 4).$newmsg;
 		my $psize = ($switch eq "0123") ? 10 : 18;
 
@@ -5804,7 +5746,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0177") {
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+		decrypt(\$newmsg, substr($msg, 4));
 		my $msg = substr($msg, 0, 4).$newmsg;
 		undef @identifyID;
 		for (my $i = 4; $i < $msg_size; $i += 2) {
@@ -5826,8 +5768,9 @@ sub parseMsg {
 	} elsif ($switch eq "017B") {
 		# You just requested a list of possible items to merge a card into
 		# The RO client does this when you double click a card
-		#decrypt(\$msg, substr($msg, 4, length($msg)-4));
-		#$msg = substr($msg, 0, 4).$msg;
+		my $newmsg;
+		decrypt(\$newmsg, substr($msg, 4));
+		$msg = substr($msg, 0, 4).$newmsg;
 		my ($len) = unpack("x2 S1", $msg);
 
 		my $display;
@@ -6196,7 +6139,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "01AD") {
 		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 4, length($msg)-4));
+		decrypt(\$newmsg, substr($msg, 4));
 		my $msg = substr($msg, 0, 4).$newmsg;
 		undef @arrowCraftID;
 		for (my $i = 4; $i < $msg_size; $i += 2) {
