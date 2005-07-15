@@ -403,3 +403,24 @@ ip 201.30.187.6
 port 6901
 version 20
 master_version 1
+
+[Planet RO Private Server]
+ip 65.110.56.120
+port 6900
+master_version 2
+version 20
+serverType 4
+
+[PSIBlade Online Private Server]
+ip 72.36.139.114
+port 6900
+master_version 2
+version 0
+serverType 3
+
+[GPhase Networks Private Server]
+ip gpn.sytes.net
+port 6900
+master_version 20
+version 18
+serverType 3
