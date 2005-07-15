@@ -421,6 +421,6 @@ serverType 3
 [GPhase Networks Private Server]
 ip gpn.sytes.net
 port 6900
-master_version 20
-version 18
+master_version 18
+version 20
 serverType 3
