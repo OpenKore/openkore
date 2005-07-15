@@ -7,8 +7,8 @@ TODO:
 
 *** INCOMPATIBLE CHANGES ***:
 - NPC IDs are no longer supported, you must use the location syntax.
-- A few more statuses have been renamed such as 'Cartboost' status renamed to
-  'Cart Boost' for consistency with the skill name.
+- A few more statuses have been renamed such as 'Cartboost' status renamed
+  to 'Cart Boost' for consistency with the skill name.
 - \$remote_socket parameter removed from some Network/Send.pm functions:
   sendCartAdd sendCartGet
 
@@ -84,6 +84,9 @@ New config options:
 - attackLooters (flag)
   Enables Looter attack. (Warning attacks all monsters.).
   Will only attack if item_pickup is not 0
+- teleportAuto_dropTargetKS (flag)
+  Teleport if Kore drops target due to kill-steal. This is a workaround
+  for constantly dropping and selecting the same target.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
