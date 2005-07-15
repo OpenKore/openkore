@@ -53,6 +53,8 @@ New features:
 - You can now attack looters even if the are normally ignored
   set attackLooters to 1 in config.txt
 - 'cart add' and 'cart get' commands now accept names.
+- 'eq slots' displays list of slotnames
+  'eq slotname item' will try to equip item in slotname 
 
 New config options:
 - partySkill: target_dist (range)
