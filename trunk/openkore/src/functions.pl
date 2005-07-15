@@ -293,13 +293,13 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 4 && !($remote_socket && $remote_socket->connected()) && !$conState_tries) {
-		my $master = $masterServer;
 		sleep($config{pauseMapServer}) if ($config{pauseMapServer});
 		message("Connecting to Map Server...\n", "connection");
 		$conState_tries++;
 		initConnectVars();
-		if ($masterServer->{private}) {
-			Network::connectTo(\$remote_socket, $config{forceMapIP} || $masterServer->{ip}, $map_port);
+		my $master = $masterServer;
+		if ($master->{private}) {
+			Network::connectTo(\$remote_socket, $config{forceMapIP} || $master->{ip}, $map_port);
 		} else {
 			Network::connectTo(\$remote_socket, $config{forceMapIP} || $map_ip, $map_port);
 		}
