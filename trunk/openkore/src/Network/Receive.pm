@@ -85,7 +85,7 @@ sub new {
 		'00B3' => ['change_to_constate25'],
 		'00B4' => ['npc_talk'],
 		'00B5' => ['npc_talk_continue'],
-		'00B6' => ['npc_talk_close'],
+		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]],
 		'00B7' => ['npc_talk_responses'],
 		'00BC' => ['stats_added', 'v1 x1 C1', [qw(type val)]],
 		'00BD' => ['stats_info', 'v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical)]],
@@ -96,8 +96,18 @@ sub new {
 		'00C3' => ['job_equipment_hair_change', 'a4 C1 C1', [qw(ID part number)]],
 		'00C4' => ['npc_store_begin', 'a4', [qw(ID)]],
 		'00C6' => ['npc_store_info'],
+		'00C7' => ['npc_sell_list'],
+		'00D1' => ['ignore_player_result', 'C1 C1', [qw(type error)]],
+		'00D2' => ['ignore_all_result', 'C1 C1', [qw(type error)]],
+		'00D6' => ['chat_created'],
+		'00D7' => ['chat_info', 'x2 a4 a4 v1 v1 C1 a*', [qw(ownerID ID limit num_users public title)]],
+		'00DA' => ['chat_join_result', 'C1', [qw(type)]],
+		'00D8' => ['chat_removed', 'a4', [qw(ID)]],
+		'00DB' => ['chat_users'],
+		'00DC' => ['chat_user_join', 'v1 Z24', [qw(num_users joinedUser)]],
 		'00EA' => ['deal_add', 'v1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'00FA' => ['party_organize_result', 'C1', [qw(fail)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
@@ -1097,6 +1107,87 @@ sub character_status {
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 }
 
+sub chat_created {
+	my ($self, $args) = @_;
+	$currentChatRoom = "new";
+	$chatRooms{new} = {%createdChatRoom};
+	binAdd(\@chatRoomsID, "new");
+	binAdd(\@currentChatRoomUsers, $char->{name});
+	message "Chat Room Created\n";
+}
+
+sub chat_info {
+	my ($self, $args) = @_;
+
+	my $title;
+	decrypt(\$title, $args->{title});
+
+	my $chat = $chatRooms{$args->{ID}};
+	if (!$chat || !%{$chat}) {
+		$chat = $chatRooms{$args->{ID}} = {};
+		binAdd(\@chatRoomsID, $args->{ID});
+	}
+	$chat->{title} = $title;
+	$chat->{ownerID} = $args->{ownerID};
+	$chat->{limit} = $args->{limit};
+	$chat->{public} = $args->{public};
+	$chat->{num_users} = $args->{num_users};
+}
+
+sub chat_join_result {
+	my ($self, $args) = @_;
+	if ($args->{type} == 1) {
+		message "Can't join Chat Room - Incorrect Password\n";
+	} elsif ($args->{type} == 2) {
+		message "Can't join Chat Room - You're banned\n";
+	}
+}
+
+sub chat_user_join {
+	my ($self, $args) = @_;
+	if ($currentChatRoom ne "") {
+		binAdd(\@currentChatRoomUsers, $args->{joinedUser});
+		$chatRooms{$currentChatRoom}{users}{ $args->{joinedUser} } = 1;
+		$chatRooms{$currentChatRoom}{num_users} = $args->{num_users};
+		message "$args->{joinedUser} has joined the Chat Room\n";
+	}
+}
+
+sub chat_users {
+	my ($self, $args) = @_;
+
+	my $newmsg;
+	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
+	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
+
+	my $ID = substr($args->{RAW_MSG},4,4);
+	$currentChatRoom = $ID;
+
+	my $chat = $chatRooms{$currentChatRoom} ||= {};
+
+	$chat->{num_users} = 0;
+	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
+		my $type = unpack("C1",substr($msg,$i,1));
+		my ($chatUser) = unpack("Z*", substr($msg,$i + 4,24));
+		if ($chat->{users}{$chatUser} eq "") {
+			binAdd(\@currentChatRoomUsers, $chatUser);
+			if ($type == 0) {
+				$chat->{users}{$chatUser} = 2;
+			} else {
+				$chat->{users}{$chatUser} = 1;
+			}
+			$chat->{num_users}++;
+		}
+	}
+	message "You have joined the Chat Room $chat->{title}\n";
+}
+
+sub chat_removed {
+	my ($self, $args) = @_;
+	binRemove(\@chatRoomsID, $args->{ID});
+	delete $chatRooms{ $args->{ID} };
+}
+
 sub deal_add {
 	my ($self, $args) = @_;
 
@@ -1334,6 +1425,28 @@ sub guild_chat {
 	        MsgUser => $chatMsgUser,
 	        Msg => $chatMsg
 	});
+}
+
+sub ignore_all_result {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0) {
+		message "All Players ignored\n";
+	} elsif ($args->{type} == 1) {
+		if ($args->{error} == 0) {
+			message "All players unignored\n";
+		}
+	}
+}
+
+sub ignore_player_result {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0) {
+		message "Player ignored\n";
+	} elsif ($args->{type} == 1) {
+		if ($args->{error} == 0) {
+			message "Player unignored\n";
+		}
+	}
 }
 
 sub inventory_item_added {
@@ -1806,6 +1919,18 @@ sub npc_image {
 	}
 }
 
+sub npc_sell_list {
+	my ($self, $args) = @_;
+	#sell list, similar to buy list
+	if (length($args->{RAW_MSG}) > 4) {
+		my $newmsg;
+		decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
+		my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
+	}
+	undef $talk{buyOrSell};
+	message "Ready to start selling items\n";
+}
+
 sub npc_store_begin {
 	my ($self, $args) = @_;
 	undef %talk;
@@ -1872,7 +1997,7 @@ sub npc_talk_close {
 	my ($self, $args) = @_;
 	# 00b6: long ID
 	# "Close" icon appreared on the NPC message dialog
-	my $ID = substr($args->{RAW_MSG}, 2, 4);
+	my $ID = $args->{ID};
 	undef %talk;
 
 	my $name = getNPCName($ID);
@@ -1947,6 +2072,13 @@ sub npc_talk_responses {
 	message("$name: Type 'talk resp #' to choose a response.\n", "npc");
 }
 
+sub party_organize_result {
+	my ($self, $args) = @_;
+	if ($args->{fail}) {
+		warning "Can't organize party - party name exists\n";
+	}
+}
+
 sub pet_info {
 	my ($self, $args) = @_;
 	$pet{name} = $args->{name};
@@ -1995,7 +2127,7 @@ sub private_message {
 	my $newmsg;
 	decrypt(\$newmsg, substr($args->{RAW_MSG}, 28));
 	my $msg = substr($args->{RAW_MSG}, 0, 28) . $newmsg;
-	$args->{privMsg} = substr($msg, 28, $args->{RAW_MSG_SIZE} - 29);
+	$args->{privMsg} = substr($msg, 28, $args->{RAW_MSG_SIZE} - 29); # why doesn't it want the last byte?
 	if ($args->{privMsgUser} ne "" && binFind(\@privMsgUsers, $args->{privMsgUser}) eq "") {
 		push @privMsgUsers, $args->{privMsgUser};
 		Plugins::callHook('parseMsg/addPrivMsgUser', {

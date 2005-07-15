@@ -4624,104 +4624,6 @@ sub parseMsg {
 	} elsif ($packetParser && $packetParser->parse(substr($msg, 0, $msg_size))) {
 		# Use the new object-oriented packet parser
 
-	} elsif ($switch eq "00C7") {
-		#sell list, similar to buy list
-		if (length($msg) > 4) {
-			my $newmsg;
-			decrypt(\$newmsg, substr($msg, 4));
-			my $msg = substr($msg, 0, 4).$newmsg;
-		}
-		undef $talk{'buyOrSell'};
-		message "Ready to start selling items\n";
-
-	} elsif ($switch eq "00D1") {
-		my $type = unpack("C1", substr($msg, 2, 1));
-		my $error = unpack("C1", substr($msg, 3, 1));
-		if ($type == 0) {
-			message "Player ignored\n";
-		} elsif ($type == 1) {
-			if ($error == 0) {
-				message "Player unignored\n";
-			}
-		}
-
-	} elsif ($switch eq "00D2") {
-		my $type = unpack("C1", substr($msg, 2, 1));
-		my $error = unpack("C1", substr($msg, 3, 1));
-		if ($type == 0) {
-			message "All Players ignored\n";
-		} elsif ($type == 1) {
-			if ($error == 0) {
-				message "All players unignored\n";
-			}
-		}
-
-	} elsif ($switch eq "00D6") {
-		$currentChatRoom = "new";
-		%{$chatRooms{'new'}} = %createdChatRoom;
-		binAdd(\@chatRoomsID, "new");
-		binAdd(\@currentChatRoomUsers, $chars[$config{'char'}]{'name'});
-		message "Chat Room Created\n";
-
-	} elsif ($switch eq "00D7") {
-		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 17));
-		my $msg = substr($msg, 0, 17).$newmsg;
-		my $ID = substr($msg,8,4);
-		if (!$chatRooms{$ID} || !%{$chatRooms{$ID}}) {
-			binAdd(\@chatRoomsID, $ID);
-		}
-		$chatRooms{$ID}{'title'} = substr($msg,17,$msg_size - 17);
-		$chatRooms{$ID}{'ownerID'} = substr($msg,4,4);
-		$chatRooms{$ID}{'limit'} = unpack("S1",substr($msg,12,2));
-		$chatRooms{$ID}{'public'} = unpack("C1",substr($msg,16,1));
-		$chatRooms{$ID}{'num_users'} = unpack("S1",substr($msg,14,2));
-
-	} elsif ($switch eq "00D8") {
-		my $ID = substr($msg,2,4);
-		binRemove(\@chatRoomsID, $ID);
-		delete $chatRooms{$ID};
-
-	} elsif ($switch eq "00DA") {
-		my $type = unpack("C1",substr($msg, 2, 1));
-		if ($type == 1) {
-			message "Can't join Chat Room - Incorrect Password\n";
-		} elsif ($type == 2) {
-			message "Can't join Chat Room - You're banned\n";
-		}
-
-	} elsif ($switch eq "00DB") {
-		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 8));
-		my $msg = substr($msg, 0, 8).$newmsg;
-		my $ID = substr($msg,4,4);
-		$currentChatRoom = $ID;
-		$chatRooms{$currentChatRoom}{'num_users'} = 0;
-		for (my $i = 8; $i < $msg_size; $i+=28) {
-			my $type = unpack("C1",substr($msg,$i,1));
-			my ($chatUser) = substr($msg,$i + 4,24) =~ /([\s\S]*?)\000/;
-			if ($chatRooms{$currentChatRoom}{'users'}{$chatUser} eq "") {
-				binAdd(\@currentChatRoomUsers, $chatUser);
-				if ($type == 0) {
-					$chatRooms{$currentChatRoom}{'users'}{$chatUser} = 2;
-				} else {
-					$chatRooms{$currentChatRoom}{'users'}{$chatUser} = 1;
-				}
-				$chatRooms{$currentChatRoom}{'num_users'}++;
-			}
-		}
-		message qq~You have joined the Chat Room "$chatRooms{$currentChatRoom}{'title'}"\n~;
-
-	} elsif ($switch eq "00DC") {
-		if ($currentChatRoom ne "") {
-			my $num_users = unpack("S1", substr($msg,2,2));
-			my ($joinedUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
-			binAdd(\@currentChatRoomUsers, $joinedUser);
-			$chatRooms{$currentChatRoom}{'users'}{$joinedUser} = 1;
-			$chatRooms{$currentChatRoom}{'num_users'} = $num_users;
-			message "$joinedUser has joined the Chat Room\n";
-		}
-
 	} elsif ($switch eq "00DD") {
 		my $num_users = unpack("S1", substr($msg,2,2));
 		my ($leaveUser) = substr($msg,4,24) =~ /([\s\S]*?)\000/;
@@ -4875,12 +4777,6 @@ sub parseMsg {
 
 		# Storage log
 		writeStorageLog(0);
-
-	} elsif ($switch eq "00FA") {
-		my $type = unpack("C1", substr($msg, 2, 1));
-		if ($type == 1) {
-			warning "Can't organize party - party name exists\n";
-		}
 
 	} elsif ($switch eq "00FB") {
 		my $newmsg;
