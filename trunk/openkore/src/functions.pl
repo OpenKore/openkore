@@ -293,6 +293,7 @@ sub checkConnection {
 		undef $conState_tries;
 
 	} elsif ($conState == 4 && !($remote_socket && $remote_socket->connected()) && !$conState_tries) {
+		my $master = $masterServer;
 		sleep($config{pauseMapServer}) if ($config{pauseMapServer});
 		message("Connecting to Map Server...\n", "connection");
 		$conState_tries++;
