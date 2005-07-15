@@ -35,7 +35,7 @@ our @EXPORT = (
 	compactArray existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip
 	findIndexStringList_lc findKey findKeyString hashCopyByKey minHeapAdd shuffleArray),
 	# Math
-	qw(calcPosition checkMovementDirection distance getVector moveAlongVector normalize vectorToDegree),
+	qw(calcPosition checkMovementDirection distance getVector moveAlongVector normalize vectorToDegree max min),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
@@ -559,8 +559,10 @@ sub checkMovementDirection {
 # pos1, pos2: references to position hash tables.
 # Returns: the distance as integer, in blocks.
 #
-# Calculates the pythagorean (Euclidean) distance between ($pos1{x}, $pos1{y}) and
-# ($pos2{x}, $pos2{y}).
+# Calculates the number of steps (NOT pythagorean distance, which RO
+# doesn't go by; see
+# http://openkore.sourceforge.net/forum/viewtopic.php?t=9176) between
+# ($pos1->{x}, $pos1->{y}) and ($pos2->{x}, $pos2->{y}).
 #
 # Example:
 # # Calculates the distance between you and a monster
@@ -571,14 +573,8 @@ sub distance {
 	my $pos2 = shift;
 	return 0 if (!$pos1 && !$pos2);
 
-	my %line;
-	if (defined $pos2) {
-		$line{x} = abs($pos1->{x} - $pos2->{x});
-		$line{y} = abs($pos1->{y} - $pos2->{y});
-	} else {
-		%line = %{$pos1};
-	}
-	return sqrt($line{x} ** 2 + $line{y} ** 2);
+	return max(abs($pos1->{x} - $pos2->{x}),
+	           abs($pos1->{y} - $pos2->{y}));
 }
 
 ##
@@ -688,6 +684,26 @@ sub vectorToDegree {
 			return $ret;
 		}
 	}
+}
+
+##
+# max($a, $b)
+#
+# Returns the greater of $a or $b.
+sub max {
+	my ($a, $b) = @_;
+
+	return $a > $b ? $a : $b;
+}
+
+##
+# min($a, $b)
+#
+# Returns the lesser of $a or $b.
+sub min {
+	my ($a, $b) = @_;
+
+	return $a < $b ? $a : $b;
 }
 
 

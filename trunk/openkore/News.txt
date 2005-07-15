@@ -32,6 +32,9 @@ Bug fixes:
   Deal auto deny timeout was not being used.
 - Increase the maximum vending price to 99,990,000z.
 - Fix job_equipment_hair_change packet detecting actor incorrectly.
+- Pythagorean distances are no longer used; we now go by number of
+  steps. This should make openkore more efficient in determining whether
+  it is in range to attack.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
