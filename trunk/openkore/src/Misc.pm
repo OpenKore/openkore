@@ -101,6 +101,7 @@ our @EXPORT = (
 	drop
 	dumpData
 	getIDFromChat
+	getNPCName
 	getPlayerNameFromCache
 	getPortalDestName
 	getResponse
@@ -1434,6 +1435,23 @@ sub getIDFromChat {
 		}
 	}
 	return undef;
+}
+
+##
+# getNPCName(ID)
+# ID: the packed ID of the NPC
+# Returns: the name of the NPC
+#
+# Find the name of an NPC: could be NPC, monster, or unknown.
+sub getNPCName {
+	my $ID = shift;
+	if ($npcs{$ID}) {
+		return $npcs{$ID}{name};
+	} elsif ($monsters{$ID}) {
+		return $monsters{$ID}{name};
+	} else {
+		return "Unknown #".unpack("L1", $ID);
+	}
 }
 
 ##
