@@ -1351,7 +1351,7 @@ sub cmdEquip {
 	if ($equipSlot_rlut{$arg1}) {
 		$slot = $arg1;
 	} else {
-		$arg1 .= " $arg2";
+		$arg1 .= " $arg2" if $arg2;
 	}
 
 	$item = (defined $slot) ? (Item::get($arg2)) : (Item::get($arg1));
