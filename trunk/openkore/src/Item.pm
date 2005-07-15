@@ -31,6 +31,7 @@
 # robe
 # armor
 # shoes
+# arrow
 
 package Item;
 
@@ -94,7 +95,7 @@ sub bulkEquip {
 }
 
 ##
-# scanConfigEquip( prefix )
+# scanConfigAndEquip( prefix )
 #
 # prefix: is used to scan for slots
 #
@@ -102,7 +103,7 @@ sub bulkEquip {
 # $prefix = equipAuto_1
 # will equip
 # equipAuto_1_leftHand Sword
-sub scanConfigEquip {
+sub scanConfigAndEquip {
 	my $prefix = shift;
 	my %eq_list;
 	foreach my $slot (%equipSlot_lut) {
@@ -111,6 +112,34 @@ sub scanConfigEquip {
 		}
 	}
 	bulkEquip(\%eq_list) if (%eq_list);
+}
+
+##
+# scanConfigAndEquip( prefix )
+#
+# prefix: is used to scan for slots
+# Returns: whether there is a item
+#          that needs to be equipped
+#
+# similiar to scanConfigAndEquip but
+# only checks if a Item needs to be
+# equipped
+sub scanConfigAndCheck {
+	my $prefix = shift;
+	my %eq_list;
+	foreach my $slot (%equipSlot_lut) {
+		if ($config{"${prefix}_$slot"}){
+			$eq_list{$slot} = $config{"${prefix}_$slot"};
+		}
+	}
+	my $item;
+	foreach (%eq_list) {
+		$item = get($_);
+		if ($item) {
+			return 1 unless $item->{equipped}; # one or more Items need to be equipped
+		}
+	}
+	return 0; # All Items are equipped
 }
 
 ##########
@@ -176,7 +205,7 @@ sub equip {
 sub unequip {
 	my $self = shift;
 	return unless $self->{equipped};
-	sendUnequip(\$remote_socket, $self->{'index'});
+	sendUnequip(\$remote_socket, $self->{index});
 }
 
 ##
@@ -209,7 +238,13 @@ sub equipInSlot {
 	return 	if ($char->{equipment}{$slot} # return if Item is already equipped
 			&& $char->{equipment}{$slot}{name} eq $self->{name});
 	#UnEquipByType($equipSlot_rlut{$slot});
-	sendEquip(\$remote_socket, $self->{index}, $equipSlot_rlut{$slot});
+	if ($equipSlot_rlut{$slot} ^ $self->{type_equip}) {
+		#checks whether item uses multiple slots
+		sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
+	}
+	else {
+		sendEquip(\$remote_socket, $self->{index}, $equipSlot_rlut{$slot});
+	}
 }
 
 1;
