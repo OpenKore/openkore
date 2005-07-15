@@ -3318,7 +3318,6 @@ sub AI {
 			my $portalDist = $config{'attackMinPortalDistance'} || 4;
 			my $playerDist = $config{'attackMinPlayerDistance'};
 			$playerDist = 1 if ($playerDist < 1);
-			eval $OpenKoreMod::autoAttack if defined($OpenKoreMod::autoAttack);
 
 			# Detect whether we are currently in follow mode
 			my $following;
@@ -3363,6 +3362,7 @@ sub AI {
 
 
 				my $pos = calcPosition($monster);
+				OpenKoreMod::autoAttack($monster) if (defined &OpenKoreMod::autoAttack);
 
 				# List monsters that party members are attacking
 				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
