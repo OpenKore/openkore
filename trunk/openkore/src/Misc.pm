@@ -3246,6 +3246,8 @@ sub closeShop {
 }
 
 
-OpenKoreMod::initMisc() if defined(&OpenKoreMod::initMisc);
+sub MODINIT {
+	OpenKoreMod::initMisc() if (defined(&OpenKoreMod::initMisc));
+}
 
 return 1;
