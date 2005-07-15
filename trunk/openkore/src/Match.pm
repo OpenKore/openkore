@@ -71,7 +71,8 @@ sub cartItem {
 
 	if ($name =~ /^\d+$/) {
 		# A number was provided
-		return $cart{inventory}[$name]; # will be undef if invalid
+		return unless $cart{inventory}[$name] && %{$cart{inventory}[$name]};
+		return $cart{inventory}[$name];
 	}
 
 	# A name was provided; match it

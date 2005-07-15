@@ -850,6 +850,7 @@ sub cmdCart_get {
 	if (!$item) {
 		error	"Error in function 'cart get' (Get Item from Cart)\n" .
 			"Cart Item $name does not exist.\n";
+		return;
 	}
 
 	if (!$amount || $amount > $item->{amount}) {
