@@ -4989,7 +4989,6 @@ sub parseMsg {
 			if (!$char->{skills}{$skillName}{lv}) {
 				$char->{skills}{$skillName}{lv} = $level;
 			}
-			message "$skillName $sp\n";
 			$skillsID_lut{$skillID} = $skills_lut{$skillName};
 			binAdd(\@skillsID, $skillName);
 
