@@ -175,6 +175,7 @@ teleportAuto_atkCount 0
 teleportAuto_atkMiss 10
 teleportAuto_unstuck 0
 teleportAuto_dropTarget 0
+teleportAuto_dropTargetKS 0
 teleportAuto_attackedWhenSitting 0
 teleportAuto_totalDmg 0
 teleportAuto_totalDmgInLock 0
