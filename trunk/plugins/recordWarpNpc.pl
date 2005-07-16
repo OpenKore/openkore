@@ -51,9 +51,15 @@ sub onUnload {
 }
 
 sub cmdWarprec {
+	my ($self,$args) = @_;
+	my ($arg1) = $args =~ /^(\w+)/;
 	if ($info{recording}){
-		message "Warpnpc Recording OFF.\n",'recordWarpNpc';
-		%info = undef;
+		if ($arg1 eq 'save') {
+			saveDest({map=>$field{name},x=>$char->{pos}{x},y=>$char->{pos}{y}});
+		} else {
+			message "Warpnpc Recording OFF.\n",'recordWarpNpc';
+			%info = undef;
+		}
 	} else {
 		$info{recording} = 1;
 		message "Warpnpc Recording ON.\n",'recordWarpNpc';
