@@ -1527,6 +1527,8 @@ sub inventory_item_added {
 		message "Can't loot item...wait...\n", "drop";
 	} elsif ($fail == 2) {
 		message "Cannot pickup item (inventory full)\n", "drop";
+	} elsif ($fail == 1) {
+		message "Cannot pickup item (you're Frozen?)\n", "drop";
 	} else {
 		message "Cannot pickup item (failure code $fail)\n", "drop";
 	}
