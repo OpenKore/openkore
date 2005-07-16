@@ -277,7 +277,7 @@ sub actor_action {
 			message "You are sitting.\n";
 			$char->{sitting} = 1;
 		} else {
-			debug getActorName($args->{sourceID})." is sitting.\n", 'parseMsg';
+			message getActorName($args->{sourceID})." is sitting.\n", 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 1 if ($players{$args->{sourceID}});
 		}
 	} elsif ($args->{type} == 3) {
@@ -287,7 +287,7 @@ sub actor_action {
 			message "You are standing.\n";
 			$char->{sitting} = 0;
 		} else {
-			debug getActorName($args->{sourceID})." is standing.\n", 'parseMsg';
+			message getActorName($args->{sourceID})." is standing.\n", 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 0 if ($players{$args->{sourceID}});
 		}
 	} else {
