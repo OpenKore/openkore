@@ -2069,7 +2069,7 @@ sub AI {
 			($num, $st) = $item =~ /(\d+) (str|vit|dex|int|luk|agi)/i;
 			$st = lc $st;
 			# If stat needs to be raised to match desired amount
-                        $statAmount = $char->{$st};
+			$statAmount = $char->{$st};
 			$statAmount += $char->{"${st}_bonus"} if (!$config{statsAddAuto_dontUseBonus});
 
 			if ($statAmount < $num && $char->{$st} < 99) {
@@ -5349,16 +5349,6 @@ sub parseMsg {
 
 		} elsif ($type == 3) {
 			debug "Arrow equipped\n";
-		}
-
-	} elsif ($switch eq "013C") {
-		my $index = unpack("S1", substr($msg, 2, 2));
-		$char->{arrow} = $index;
-
-		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
-		if ($invIndex ne "") {
-			$char->{inventory}[$invIndex]{equipped} = 32768;
-			message "Arrow equipped: $char->{inventory}[$invIndex]{name} ($invIndex)\n";
 		}
 
 	} elsif ($switch eq "013D") {
