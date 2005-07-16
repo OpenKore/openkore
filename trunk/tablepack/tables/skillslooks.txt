@@ -1,6 +1,6 @@
 1 Sight
-2 Hide
-4 Cloak
+2 Hiding
+4 Cloaking
 8 Level 1 Cart
 16 Falcon
 32 Pecopeco
