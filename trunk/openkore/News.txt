@@ -87,6 +87,8 @@ New config options:
 - teleportAuto_dropTargetKS (flag)
   Teleport if Kore drops target due to kill-steal. This is a workaround
   for constantly dropping and selecting the same target.
+- logConsole (flag)
+  Log everything that openkore prints on the console to logs\console.txt.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).

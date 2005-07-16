@@ -214,11 +214,19 @@ sub processMsg {
 		if ($consoleVar->{$domain}) {
 			if ($interface) {
 				$message = "[$domain] " . $message if ($config{showDomain});
+				my (undef, $microseconds) = Time::HiRes::gettimeofday;
+				my $message2 = "[".getFormattedDate(int(time)).".$microseconds] ".$message;
 				if ($config{showTime}) {
-					my ($seconds, $microseconds) = Time::HiRes::gettimeofday;
-					$message = "[$seconds.$microseconds] ".$message;
+					$interface->writeOutput($type, $message2, $domain);
+				} else {
+					$interface->writeOutput($type, $message, $domain);
 				}
-				$interface->writeOutput($type, $message, $domain);
+
+				if ($config{logConsole} &&
+				    open(F, ">> $Settings::logs_folder/console.txt")) {
+					print F $message2;
+					close(F);
+				}
 			} else {
 				print $message;
 			}
