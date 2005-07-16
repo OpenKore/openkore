@@ -61,7 +61,7 @@ sub checkLoc {
   $cvs->debug("checkLoc(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $arg = shift;
   my $neg = 0;
-  if ($arg =~ /^not /) {$neg = 1;$arg =~ s/^not //g};
+  if ($arg =~ /^not /) {$neg = 1; $arg =~ s/^not //g};
   my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
   if ($map eq $field{name}) {
     if ($x1 && $y1) {
@@ -69,11 +69,12 @@ sub checkLoc {
       if ($x2 && $y2) {
         if (between($x1, $pos->{x}, $x2) && between($y2, $pos->{y}, $y1)) {return $neg?0:1};
         return $neg?1:0;
-      };
+      }
       if ($x1 == $pos->{x} && $y1 == $pos->{y}) {return $neg?0:1};
-    } else {return return $neg?0:1};
+      return $neg?1:0;
+    }
     return $neg?0:1;
-  };
+  }
   return $neg?1:0;
 };
 
