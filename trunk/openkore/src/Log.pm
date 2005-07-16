@@ -215,6 +215,7 @@ sub processMsg {
 			if ($interface) {
 				$message = "[$domain] " . $message if ($config{showDomain});
 				my (undef, $microseconds) = Time::HiRes::gettimeofday;
+				$microseconds = substr($microseconds, 0, 2);
 				my $message2 = "[".getFormattedDate(int(time)).".$microseconds] ".$message;
 				if ($config{showTime}) {
 					$interface->writeOutput($type, $message2, $domain);
