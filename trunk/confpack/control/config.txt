@@ -198,6 +198,7 @@ logPartyChat 1
 logGuildChat 1
 logSystemChat 1
 logEmoticons
+logConsole 0
 
 chatTitleOversize 0
 shopTitleOversize 0
