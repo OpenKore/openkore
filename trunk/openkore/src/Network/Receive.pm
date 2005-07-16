@@ -116,6 +116,7 @@ sub new {
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
+		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
@@ -954,6 +955,18 @@ sub actor_spawned {
 	}
 }
 
+sub arrow_equipped {
+	my ($self,$args) = @_;
+	$char->{arrow} = $args->{index};
+
+	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $args->{index});
+	if ($invIndex ne "") {
+		$char->{equipment}{arrow} = $char->{inventory}[$invIndex];
+		$char->{inventory}[$invIndex]{equipped} = 32768;
+		message "Arrow equipped: $char->{inventory}[$invIndex]{name} ($invIndex)\n";
+	}
+}
+
 sub buy_result {
 	my ($self, $args) = @_;
 	if ($args->{fail} == 0) {
@@ -1269,9 +1282,15 @@ sub equip_item {
 		message "You can't put on $item->{name} ($invIndex)\n";
 	} else {
 		$item->{equipped} = $args->{type};
-		foreach (%equipSlot_rlut){
-			if ($_ & $args->{type}){
-				$char->{equipment}{$equipSlot_lut{$_}} = $item;
+		if ($args->{type} == 10) {
+			$char->{equipment}{arrow} = $item;
+		}
+		else {
+			foreach (%equipSlot_rlut){
+				if ($_ & $args->{type}){
+					next if $_ == 10; # work around Arrow bug
+					$char->{equipment}{$equipSlot_lut{$_}} = $item;
+				}
 			}
 		}
 		message "You equip $item->{name} ($invIndex) - $equipTypes_lut{$item->{type_equip}} (type $args->{type})\n", 'inventory';
@@ -1550,6 +1569,7 @@ sub inventory_items_nonstackable {
 		if ($item->{equipped}) {
 			foreach (%equipSlot_rlut){
 				if ($_ & $item->{equipped}){
+					next if $_ == 10; #work around Arrow bug
 					$char->{equipment}{$equipSlot_lut{$_}} = $item;
 				}
 			}
@@ -1587,7 +1607,10 @@ sub inventory_items_stackable {
 		$item->{amount} = unpack("v1", substr($msg, $i + 6, 2));
 		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 		$item->{identified} = 1;
-		$item->{equipped} = 32768 if (defined $char->{arrow} && $index == $char->{arrow});
+		if (defined $char->{arrow} && $index == $char->{arrow}) {
+			$item->{equipped} = 32768;
+			$char->{equipment}{arrow} = $item;
+		}
 		$item->{name} = itemNameSimple($item->{nameID});
 		debug "Inventory: $item->{name} ($invIndex) x $item->{amount} - " .
 			"$itemTypes_lut{$item->{type}}\n", "parseMsg";
@@ -2756,9 +2779,14 @@ sub unequip_item {
 	$conState = 5 if ($conState != 4 && $xkore);
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$char->{inventory}[$invIndex]{equipped} = "";
-	foreach (%equipSlot_rlut){
-		if ($_ & $args->{type}){
-			$char->{equipment}{$equipSlot_lut{$_}} = undef;
+	if ($args->{type} == 10) {
+		$char->{equipment}{arrow} = undef;
+	} else {
+		foreach (%equipSlot_rlut){
+			if ($_ & $args->{type}){
+				next if $_ == 10; #work around Arrow bug
+				$char->{equipment}{$equipSlot_lut{$_}} = undef;
+			}
 		}
 	}
 	message "You unequip $char->{inventory}[$invIndex]{name} ($invIndex) - $equipTypes_lut{$char->{inventory}[$invIndex]{type_equip}}\n", 'inventory';
