@@ -5968,11 +5968,12 @@ sub parseMsg {
 		my $spirits = unpack("S1", substr($msg, 6, 2));
 
 		if ($sourceID eq $accountID) {
+			message "You have $spirits spirit(s) now\n", "parseMsg_statuslook", 1 if $spirits != $char->{spirits};
 			$char->{spirits} = $spirits;
-			message "You have $spirits spirit(s) now\n", "parseMsg_statuslook", 1;
 
-		} elsif ($players{$sourceID}) {
-			$players{$sourceID}{spirits} = $spirits;
+		} elsif (my $actor = Actor::get($sourceID)) {
+			$actor->{spirits} = $spirits;
+			message "$actor has $spirits spirit(s) now\n", "parseMsg_statuslook", 2 if $spirits != $actor->{spirits};
 		}
 
 	} elsif ($switch eq "01D4") {
