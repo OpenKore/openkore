@@ -62,13 +62,17 @@ sub new {
 #
 sub get {
 	my $item = shift;
+	my $skipIndex = shift;
 
 	return $item if (UNIVERSAL::isa($item, 'Item'));
 
 	if ($item =~ /^\d+$/) {
-		return $char->{inventory}[$item];
+
+		return $char->{inventory}[$item] if $char->{inventory}[$item];
+		return undef;
 	} else {
-		my $index = findIndexStringList_lc ($char->{inventory}, 'name',$item);
+		my $index = findIndexStringList_lc ($char->{inventory}, 'name',$item,$skipIndex);
+		return undef if $index == undef;
 		return $char->{inventory}[$index];
 	}
 }
@@ -85,12 +89,21 @@ sub bulkEquip {
 
 	return unless $list && %{$list};
 
-	my $item;
+	my ($item,$rightHand,$rightAccessory);
 	foreach (keys %{$list}) {
 		if (!$equipSlot_rlut{$_}) {
 			debug "Wrong Itemslot specified: $_\n",'Item';
 		}
-		$item->equipInSlot($_) if $item = get($list->{$_});
+		if ($_ eq 'leftHand' && $rightHand) {
+			$item->equipInSlot($_) if $item = get($list->{$_},$rightHand);
+		} elsif ($_ eq 'leftAccessory' && $rightAccessory) {
+			$item->equipInSlot($_) if $item = get($list->{$_},$rightAccessory);
+		} else {
+			$item->equipInSlot($_) if $item = get($list->{$_});
+		}
+
+		$rightHand = $item->{invIndex} if $item && $_ eq 'rightHand';
+		$rightAccessory = $item->{invIndex} if $item && $_ eq 'rightAccessory';
 	}
 }
 
@@ -132,11 +145,13 @@ sub scanConfigAndCheck {
 			$eq_list{$slot} = $config{"${prefix}_$slot"};
 		}
 	}
+	return 0 unless %eq_list;
 	my $item;
 	foreach (%eq_list) {
 		$item = get($_);
 		if ($item) {
-			return 1 unless $item->{equipped}; # one or more Items need to be equipped
+			return 1 unless ($char->{equipment}{$_} # return if Item is already equipped
+				&& $char->{equipment}{$_}{name} eq $item->{name}); # one or more Items need to be equipped
 		}
 	}
 	return 0; # All Items are equipped
@@ -196,6 +211,7 @@ sub equip {
 	my $self = shift;
 	return 1 if $self->{equipped};
 	sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
+	return 0;
 }
 
 ##
@@ -204,8 +220,9 @@ sub equip {
 # unequips the item
 sub unequip {
 	my $self = shift;
-	return unless $self->{equipped};
+	return 1 unless $self->{equipped};
 	sendUnequip(\$remote_socket, $self->{index});
+	return 0;
 }
 
 ##
@@ -218,13 +235,14 @@ sub unequip {
 sub use {
 	my $self = shift;
 	my $target = shift;
-	return unless $self->{type} <= 2;
+	return 0 unless $self->{type} <= 2;
 	if (!$target || $target == $accountID) {
 		sendItemUse(\$remote_socket, $self->{'index'}, $accountID);
 	}
 	else {
 		sendItemUse(\$remote_socket, $self->{'index'}, $target);
 	}
+	return 1;
 }
 
 ##
@@ -235,8 +253,8 @@ sub use {
 # equips item in
 sub equipInSlot {
 	my ($self,$slot) = @_;
-	return 	if ($char->{equipment}{$slot} # return if Item is already equipped
-			&& $char->{equipment}{$slot}{name} eq $self->{name});
+	return 1 if ($char->{equipment}{$slot} # return if Item is already equipped
+				&& $char->{equipment}{$slot}{name} eq $self->{name});
 	#UnEquipByType($equipSlot_rlut{$slot});
 	if ($equipSlot_rlut{$slot} ^ $self->{type_equip}) {
 		#checks whether item uses multiple slots
@@ -245,6 +263,7 @@ sub equipInSlot {
 	else {
 		sendEquip(\$remote_socket, $self->{index}, $equipSlot_rlut{$slot});
 	}
+	return 0;
 }
 
 1;
