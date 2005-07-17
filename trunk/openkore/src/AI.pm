@@ -589,7 +589,8 @@ sub ai_skillUse {
 		y => shift,
 		tag => shift,
 		ret => shift,
-		waitBeforeUse => { time => time, timeout => shift }
+		waitBeforeUse => { time => time, timeout => shift },
+		prefix => shift
 	);
 	$args{giveup}{time} = time;
 	$args{giveup}{timeout} = $timeout{ai_skill_use_giveup}{timeout};
@@ -618,12 +619,12 @@ sub ai_skillUse {
 # should be converted to use this helper function. Note that this
 # function uses objects instead of IDs for the skill and target.
 sub ai_skillUse2 {
-	my ($skill, $lvl, $maxCastTime, $minCastTime, $target) = @_;
+	my ($skill, $lvl, $maxCastTime, $minCastTime, $target,$prefix) = @_;
 
 	if (!ai_getSkillUseType($skill->handle)) {
-		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{ID});
+		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{ID}, undef, undef, undef, undef, $prefix);
 	} else {
-		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{pos_to}{x}, $target->{pos_to}{y});
+		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{pos_to}{x}, $target->{pos_to}{y}, undef, undef, undef, $prefix);
 	}
 }
 
