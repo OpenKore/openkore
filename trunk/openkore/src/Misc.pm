@@ -2904,7 +2904,16 @@ sub checkSelfCondition {
 
 	# check skill use SP if this is a 'use skill' condition
 	if ($prefix =~ /skill/i) {
-		return 0 unless ($char->{sp} >= $skillsSP_lut{$skills_rlut{lc($config{$prefix})}}{$config{$prefix . "_lvl"}})
+		my $skill_handle = $skills_rlut{lc($config{$prefix})};
+		return 0 unless (($char->{skills}{$skill_handle} && $char->{skills}{$skill_handle}{lv} >= 1)
+						|| ($char->{permitSkill} &&	$char->{permitSkill}->name eq $config{$prefix})
+						|| $config{$prefix."_equip_leftAccessory"}
+						|| $config{$prefix."_equip_rightAccessory"}
+						|| $config{$prefix."_equip_leftHand"}
+						|| $config{$prefix."_equip_rightHand"}
+						|| $config{$prefix."_equip_robe"}
+						);
+		return 0 unless ($char->{sp} >= $skillsSP_lut{$skill_handle}{$config{$prefix . "_lvl"}});
 	}
 
 	if (defined $config{$prefix . "_aggressives"}) {
