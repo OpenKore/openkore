@@ -2036,16 +2036,19 @@ sub setStatus {
 	my $verbosity = $ID eq $accountID ? 1 : 2;
 	my $are = $actor->verb('are', 'is');
 	my $have = $actor->verb('have', 'has');
+	my $changed = 0;
 
 	foreach (keys %skillsState) {
 		if ($param1 == $_) {
 			if (!$actor->{statuses}{$skillsState{$_}}) {
 				$actor->{statuses}{$skillsState{$_}} = 1;
 				message "$actor $are in $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsState{$_}}) {
 			delete $actor->{statuses}{$skillsState{$_}};
 			message "$actor $are out of $skillsState{$_} state\n", "parseMsg_statuslook", $verbosity;
+			$changed = 1;
 		}
 	}
 
@@ -2054,10 +2057,12 @@ sub setStatus {
 			if (!$actor->{statuses}{$skillsAilments{$_}}) {
 				$actor->{statuses}{$skillsAilments{$_}} = 1;
 				message "$actor $have ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsAilments{$_}}) {
 			delete $actor->{statuses}{$skillsAilments{$_}};
 			message "$actor $are out of ailments: $skillsAilments{$_}\n", "parseMsg_statuslook", $verbosity;
+			$changed = 1;
 		}
 	}
 
@@ -2066,12 +2071,16 @@ sub setStatus {
 			if (!$actor->{statuses}{$skillsLooks{$_}}) {
 				$actor->{statuses}{$skillsLooks{$_}} = 1;
 				debug "$actor $have look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+				$changed = 1;
 			}
 		} elsif ($actor->{statuses}{$skillsLooks{$_}}) {
 			delete $actor->{statuses}{$skillsLooks{$_}};
 			debug "$actor $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
+			$changed = 1;
 		}
 	}
+
+	Plugins::callHook('changed_status',{actor => $actor, changed => $changed});
 }
 
 
