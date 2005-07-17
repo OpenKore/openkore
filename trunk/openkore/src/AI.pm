@@ -804,7 +804,7 @@ sub attack {
 					$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
 					sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "");
 					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_leftHand"}." ($Leq)\n", "equip";
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'});
+					$chars[$config{'char'}]{'inventory'}[$Leq]->equip();
 				}
 				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") {
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
@@ -824,12 +824,12 @@ sub attack {
 					}
 					if ($config{"autoSwitch_$i"."_rightHand"} ne "[NONE]") {
 						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_rightHand"}."\n", "equip";
-						sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
+						$chars[$config{'char'}]{'inventory'}[$Req]->equip();
 					}
 				}
 				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
 					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_arrow"}."\n", "equip";
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0);
+					$chars[$config{'char'}]{'inventory'}->equip();
 				}
 				if ($config{"autoSwitch_$i"."_distance"} && $config{"autoSwitch_$i"."_distance"} != $config{'attackDistance'}) {
 					$ai_v{'attackDistance'} = $config{'attackDistance'};
@@ -851,7 +851,7 @@ sub attack {
 				$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
 				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'});
 				message "Auto equiping default [L] :".$config{'autoSwitch_default_leftHand'}."\n", "equip";
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'});
+				$chars[$config{'char'}]{'inventory'}[$Leq]->equip();
 			}
 		}
 		if ($config{'autoSwitch_default_rightHand'}) {
@@ -860,14 +860,14 @@ sub attack {
 				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
 				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'});
 				message "Auto equiping default [R] :".$config{'autoSwitch_default_rightHand'}." (unequip $Rdef)\n", "equip";
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
+				$chars[$config{'char'}]{'inventory'}[$Req]->equip();
 			}
 		}
 		if ($config{'autoSwitch_default_arrow'}) {
 			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_arrow'});
 			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
 				message "Auto equiping default [A] :".$config{'autoSwitch_default_arrow'}."\n", "equip";
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arrow]{'index'},0);
+				$chars[$config{'char'}]{'inventory'}[$arrow]->equip();
 			}
 		}
 		if ($ai_v{'attackDistance'} && $config{'attackDistance'} != $ai_v{'attackDistance'}) {

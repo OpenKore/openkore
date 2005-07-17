@@ -3183,7 +3183,7 @@ sub AI {
 			) {
 				my $index = findIndexString_lc_not_equip(\@{$char->{inventory}}, "name", $config{"equipAuto_$i"});
 				if (defined $index) {
-					sendEquip(\$remote_socket, $char->{inventory}[$index]{index}, $char->{inventory}[$index]{type_equip});
+					$char->{inventory}[$index]->equip();
 					$timeout{ai_item_equip_auto}{time} = time;
 
 					# this is a skilluse equip
@@ -3205,7 +3205,7 @@ sub AI {
 			} elsif ($config{"equipAuto_${i}_def"} && !$char->{sitting} && !$config{"equipAuto_${i}_disabled"}) {
 				my $index = findIndexString_lc_not_equip(\@{$char->{inventory}}, "name", $config{"equipAuto_${i}_def"});
 				if (defined $index) {
-					sendEquip(\$remote_socket, $char->{inventory}[$index]{index}, $char->{inventory}[$index]{type_equip});
+					$char->{inventory}[$index]->equip();
 					$timeout{ai_item_equip_auto}{time} = time;
 					debug "Auto-equip: $char->{inventory}[$index]{name} ($index)\n", "equipAuto";
 				}
