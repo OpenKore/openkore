@@ -20,15 +20,36 @@
 # In equipAuto you have to leave the target_ part,
 # this is due some coding inconsistency in the funtions.pl
 #
+# You can use monsterEquip if you think that equipAuto is to slow.
+# It supports the new equip syntax. It is event-driven and is called
+# when a monster: is attacked, changes status, changes element
+#
+# Note: It will check all monsterEquip blocks but it respects priority.
+# If you check in the first block for element fire and in the second
+# for race Demi-Human and in both you use different arrows but in the
+# Demi-Human block you use a bow, it will take the arrows form the first
+# matching block and equip the bow since the fire block didn't specified it.
+#
+# Be careful with right and leftHand those slots will not be checked for
+# two-handed weapons that may conflict.
+#
+# Example:
+# monsterEquip {
+# 	target_Element Earth
+# 	equip_arrow Fire Arrow
+# }
+#
 # For the element names just scroll a bit down and you'll find it.
 #
+# $Revision$
+# $Id$
 ############################
 
 package monsterDB;
 
 use strict;
 use Plugins;
-use Globals qw(%config %monsters $accountID);
+use Globals qw(%config %monsters $accountID %equipSlot_lut);
 use Settings;
 use Log qw(message warning error debug);
 use Misc qw(whenStatusActiveMon);
@@ -40,7 +61,9 @@ my $hooks = Plugins::addHooks(
 	['checkMonsterCondition', \&extendedCheck, undef],
 	['packet/skill_use', \&onPacketSkillUse, undef],
 	['packet/skill_use_no_damage', \&onPacketSkillUseNoDamage, undef],
-	['packet/actor_action', \&onPacketAttack,undef]
+	['packet/actor_action', \&onPacketAttack,undef],
+	['attack_start', \&onAttackStart,undef],
+	['changed_status', \&onStatusChange,undef]
 );
 
 
@@ -67,7 +90,7 @@ sub loadMonDB {
 	error ("MonsterDB: cannot load $Settings::tables_folder/monsterDB.txt\n",'monsterDB',0) unless (-r "$Settings::tables_folder/monsterDB.txt");
 	open MDB ,"<$Settings::tables_folder/monsterDB.txt";
 	foreach my $line (<MDB>) {
-		$line =~ /([\w\s]+?)\s*(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/;
+		$line =~ /([\w\s]+?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/;
 		$monsterDB{$1} = [$2,$3,$4,$5];
 	}
 	close MDB;
@@ -76,13 +99,13 @@ sub loadMonDB {
 sub extendedCheck {
     my (undef,$args) = @_;
 
-	return 1 if !$args->{monster} || $args->{monster}->{name} eq '';
+	return 0 if !$args->{monster} || $args->{monster}->{name} eq '';
 
 	my $monsterName = lc($args->{monster}->{name});
 
     if (!$monsterDB{$monsterName} || !$monsterDB{$monsterName}[0]) {
     	debug("monsterDB: Monster {$args->{monster}->{name}} not found\n", 'monsterDB', 2);
-    	return 1;
+    	return 0;
     } #return if monster is not in DB
 
     my $element = $element_lut[$monsterDB{$monsterName}[1]];
@@ -138,6 +161,8 @@ sub extendedCheck {
     && !inRange(($monsterDB{$monsterName}[0] + $args->{monster}->{deltaHp}),$config{$args->{prefix} . '_hpLeft'})) {
 		return $args->{return} = 0;
     }
+
+    return 1;
 }
 
 sub onPacketSkillUse {
@@ -157,34 +182,42 @@ sub onPacketSkillUseNoDmg {
 	if (($args->{targetID} eq $args->{sourceID}) && ($args->{targetID} ne $accountID)){
 		if ($args->{skillID} eq 'NPC_CHANGEWATER'){
 			$monsters{$args->{targetID}}{element} = 'Water';
+			monsterEquip($monsters{$args->{targetID}});
 			return 1;
 		}
 		elsif ($args->{skillID} eq 'NPC_CHANGEGROUND'){
 			$monsters{$args->{targetID}}{element} = 'Earth';
+			monsterEquip($monsters{$args->{targetID}});
 			return 1;
 		}
 		elsif ($args->{skillID} eq 'NPC_CHANGEFIRE'){
 			$monsters{$args->{targetID}}{element} = 'Fire';
+			monsterEquip($monsters{$args->{targetID}});
 			return 1;
 		}
 		elsif ($args->{skillID} eq 'NPC_CHANGEWIND'){
 			$monsters{$args->{targetID}}{element} = 'Wind';
+			monsterEquip($monsters{$args->{targetID}});
 			return 1;
 		}
 		elsif ($args->{skillID} eq 'NPC_CHANGEPOISON'){
 			$monsters{$args->{targetID}}{element} = 'Poison';
+			monsterEquip($monsters{$args->{targetID}});
 			return 1;
 		}
 		elsif ($args->{skillID} eq 'NPC_CHANGEHOLY'){
 			$monsters{$args->{targetID}}{element} = 'Holy';
+			monsterEquip($monsters{$args->{targetID}});
 			return 1;
 		}
 		elsif ($args->{skillID} eq 'NPC_CHANGEDARKNESS'){
 			$monsters{$args->{targetID}}{element} = 'Dark';
+			monsterEquip($monsters{$args->{targetID}});
 			return 1;
 		}
 		elsif ($args->{skillID} eq 'NPC_CHANGETELEKINESIS'){
 			$monsters{$args->{targetID}}{element} = 'Sense';
+			monsterEquip($monsters{$args->{targetID}});
 			return 1;
 		}
 	}
@@ -200,5 +233,39 @@ sub onPacketAttack {
 
 }
 
+sub onAttackStart {
+	my (undef,$args) = @_;
+	monsterEquip($monsters{$args->{ID}});
+}
+
+sub onStatusChange {
+	my (undef,$args) = @_;
+	return unless $args->{changed};
+	my $actor = $args->{actor};
+	return unless (UNIVERSAL::isa($actor, 'Actor::Monster'));
+	monsterEquip($actor);
+}
+
+sub monsterEquip {
+	my $monster = shift;
+	return unless $monster;
+	my %equip_list;
+
+	my %args = ('monster' => $monster);
+
+	for (my $i=0;exists $config{"monsterEquip_$i"};$i++) {
+		$args{prefix} = "monsterEquip_${i}_target";
+		if (extendedCheck(undef,\%args)) {
+			foreach my $slot (%equipSlot_lut) {
+				if ($config{"monsterEquip_${i}_equip_$slot"}
+				&& !$equip_list{$slot}) {
+					$equip_list{$slot} = $config{"monsterEquip_${i}_equip_$slot"};
+				}
+			}
+		}
+	}
+	debug %equip_list."\n",'monsterDB';
+	Item::bulkEquip(\%equip_list) if (%equip_list);
+}
 
 1;
