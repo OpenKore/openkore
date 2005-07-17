@@ -963,6 +963,7 @@ sub arrow_equipped {
 	if ($invIndex ne "") {
 		$char->{equipment}{arrow} = $char->{inventory}[$invIndex];
 		$char->{inventory}[$invIndex]{equipped} = 32768;
+		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 		message "Arrow equipped: $char->{inventory}[$invIndex]{name} ($invIndex)\n";
 	}
 }
