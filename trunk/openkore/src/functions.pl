@@ -2853,7 +2853,10 @@ sub AI {
 						$config{"attackSkillSlot_${slot}_minCastTime"},
 						$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $accountID : $ID,
 						undef,
-						"attackSkill");
+						"attackSkill",
+						undef,
+						undef,
+						"attackSkillSlot_${slot}");
 				} else {
 					my $pos = ($config{"attackSkillSlot_${slot}_isSelfSkill"}) ? $char->{pos_to} : $target->{pos_to};
 					ai_skillUse(
@@ -2863,7 +2866,10 @@ sub AI {
 						$config{"attackSkillSlot_${slot}_minCastTime"},
 						$pos->{x},
 						$pos->{y},
-						"attackSkill");
+						"attackSkill",
+						undef,
+						undef,
+						"attackSkillSlot_${slot}");
 				}
 				$args->{monsterID} = $ID;
 
@@ -3006,9 +3012,9 @@ sub AI {
 		if ($self_skill{lvl} > 0) {
 			debug qq~Auto-skill on self: $skills_lut{$self_skill{ID}} (lvl $self_skill{lvl})\n~, "ai";
 			if (!ai_getSkillUseType($self_skill{ID})) {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID);
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID, undef, undef, undef, undef, "useSelf_skill_$i");
 			} else {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y});
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y}, undef, undef, undef,"useSelf_skill_$i");
 			}
 		}
 	}
@@ -3039,6 +3045,7 @@ sub AI {
 					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
 					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};
 					$party_skill{isSelfSkill} = $config{"partySkill_$i"."_isSelfSkill"};
+					$party_skill{prefix} = "partySkill_$i";
 					# This is used by setSkillUseTimer() to set
 					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
 					# when the skill is actually cast
@@ -3080,7 +3087,12 @@ sub AI {
 					$party_skill{skillLvl},
 					$party_skill{maxCastTime},
 					$party_skill{minCastTime},
-					$party_skill{isSelfSkill} ? $accountID : $party_skill{targetID});
+					$party_skill{isSelfSkill} ? $accountID : $party_skill{targetID},
+					undef,
+					undef,
+					undef,
+					undef,
+					$party_skill{prefix});
 			} else {
 				my $pos = ($party_skill{isSelfSkill}) ? $char->{pos_to} : \%party_skill;
 				ai_skillUse(
@@ -3089,7 +3101,11 @@ sub AI {
 					$party_skill{maxCastTime},
 					$party_skill{minCastTime},
 					$pos->{x},
-					$pos->{y});
+					$pos->{y},
+					undef,
+					undef,
+					undef,
+					$party_skill{prefix});
 			}
 		}
 	}
@@ -3115,7 +3131,7 @@ sub AI {
 					my $maxCastTime = $config{"${prefix}_maxCastTime"};
 					my $minCastTime = $config{"${prefix}_minCastTime"};
 					debug "Auto-monsterSkill on $monster->{name} ($monster->{binID}): ".$skill->name." (lvl $lvl)\n", "monsterSkill";
-					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $monster);
+					ai_skillUse2($skill, $lvl, $maxCastTime, $minCastTime, $monster, $prefix);
 					$ai_v{$prefix . "_time"}{$monsterID} = time;
 					last;
 				}
@@ -3216,6 +3232,9 @@ sub AI {
 			warning "Timeout equiping for skill\n";
 			AI::dequeue;
 			${$args->{ret}} = 'equip timeout' if ($args->{ret});
+		} elsif (Item::scanConfigAndCheck($args->{prefix})) {
+			#check if item needs to be equipped
+			Item::scanConfigAndEquip($args->{prefix});
 
 		} elsif (timeOut($args->{waitBeforeUse})) {
 			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
