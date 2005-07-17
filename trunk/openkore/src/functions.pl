@@ -3232,10 +3232,11 @@ sub AI {
 			warning "Timeout equiping for skill\n";
 			AI::dequeue;
 			${$args->{ret}} = 'equip timeout' if ($args->{ret});
-		} elsif (Item::scanConfigAndCheck("$args->{prefix}_equip")) {
+		} elsif ($ai_v{temp}{waitForEquip} && !timeOut($timeout{ai_equip_giveup})) {
+		} elsif ($ai_v{temp}{waitForEquip} = Item::scanConfigAndCheck("$args->{prefix}_equip")) {
 			#check if item needs to be equipped
 			Item::scanConfigAndEquip("$args->{prefix}_equip");
-
+			$timeout{ai_equip_giveup}{time} = time;
 		} elsif (timeOut($args->{waitBeforeUse})) {
 			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
 				# This skill is supposed to be used for attacking a monster, but that monster has died

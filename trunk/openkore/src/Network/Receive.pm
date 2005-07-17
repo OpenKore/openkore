@@ -1293,6 +1293,7 @@ sub equip_item {
 				}
 			}
 		}
+		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 		message "You equip $item->{name} ($invIndex) - $equipTypes_lut{$item->{type_equip}} (type $args->{type})\n", 'inventory';
 	}
 }
