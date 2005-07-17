@@ -2835,11 +2835,17 @@ sub AI {
 			}
 
 			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
-				sendAttack(\$remote_socket, $ID,
-					($config{'tankMode'}) ? 0 : 7);
-				$timeout{ai_attack}{time} = time;
-				delete $args->{attackMethod};
-
+				if ($ai_v{temp}{waitForEquip} && !timeOut($timeout{ai_equip_giveup})) {
+				} elsif ($ai_v{temp}{waitForEquip} = Item::scanConfigAndCheck("attackEquip")) {
+					#check if item needs to be equipped
+					Item::scanConfigAndEquip("attackEquip");
+					$timeout{ai_equip_giveup}{time} = time;
+				} else {
+					sendAttack(\$remote_socket, $ID,
+						($config{'tankMode'}) ? 0 : 7);
+					$timeout{ai_attack}{time} = time;
+					delete $args->{attackMethod};
+				}
 			} elsif ($args->{attackMethod}{type} eq "skill") {
 				my $slot = $args->{attackMethod}{skillSlot};
 				delete $args->{attackMethod};
