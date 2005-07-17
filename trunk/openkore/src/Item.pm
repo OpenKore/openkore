@@ -139,7 +139,11 @@ sub scanConfigAndEquip {
 # equipped
 sub scanConfigAndCheck {
 	my $prefix = shift;
+	return 0 unless $prefix;
+
 	my %eq_list;
+	my $count = 0;
+
 	foreach my $slot (%equipSlot_lut) {
 		if ($config{"${prefix}_$slot"}){
 			$eq_list{$slot} = $config{"${prefix}_$slot"};
@@ -147,14 +151,14 @@ sub scanConfigAndCheck {
 	}
 	return 0 unless %eq_list;
 	my $item;
-	foreach (%eq_list) {
-		$item = get($_);
+	foreach (keys %eq_list) {
+		$item = get($eq_list{$_});
 		if ($item) {
-			return 1 unless ($char->{equipment}{$_} # return if Item is already equipped
+			$count++ unless ($char->{equipment}{$_} # return if Item is already equipped
 				&& $char->{equipment}{$_}{name} eq $item->{name}); # one or more Items need to be equipped
 		}
 	}
-	return 0; # All Items are equipped
+	return $count; # All Items are equipped
 }
 
 ##########
