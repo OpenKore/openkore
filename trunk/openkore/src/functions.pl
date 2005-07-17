@@ -2667,7 +2667,7 @@ sub AI {
 			sendMove($realMyPos->{x}, $realMyPos->{y});
 			AI::dequeue;
 			if ($config{teleportAuto_dropTargetKS}) {
-				message "Teleport due to dropping attack target\n";
+				message "Teleporting due to dropping attack target\n", "teleport";
 				useTeleport(1);
 			}
 
