@@ -357,6 +357,7 @@ sub findIndexStringList_lc {
 	return undef if !defined $r_array;
 	my $match = shift;
 	my $ID = shift;
+	my $skipID = shift;
 
 	my $max = @{$r_array};
 	my ($i, $arr);
@@ -371,6 +372,7 @@ sub findIndexStringList_lc {
 
 	foreach (@{$arr}) {
 		for ($i = 0; $i < $max; $i++) {
+			next if $i == $skipID;
 			if (lc($r_array->[$i]{$match}) eq $_) {
 				return $i;
 			}
@@ -1219,10 +1221,10 @@ sub makeIP {
 		$ret .= hex(getHex(substr($raw, $i, 1)));
 		if ($i + 1 < 4) {
 			$ret .= ".";
-		}   
-	}   
+		}
+	}
 	return $ret;
-} 
+}
 
 ##
 # parseArgs(command, [max], [delimiters = ' '], [last_arg_pos])
