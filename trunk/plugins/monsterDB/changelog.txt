@@ -1,3 +1,10 @@
+Revision 1.10
++new DB format
++300 new monsters
++ID matching instead of name matching
++event-driven monsterEquip
++Element Level support
+
 v0.07
 +fully new-packet-parser compliant
 +Case-insensitve monstername matching
