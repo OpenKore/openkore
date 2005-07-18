@@ -44,6 +44,7 @@
 # }
 #
 # For the element names just scroll a bit down and you'll find it.
+# You can check for element Lvls too, eg. target_Element Dark4
 #
 # $Revision$
 # $Id$
@@ -60,7 +61,7 @@ use Misc qw(whenStatusActiveMon);
 use Utils;
 
 
-Plugins::register('monsterDB', 'extends Monster infos', \&onUnload,\&onReload);
+Plugins::register('monsterDB', 'extends Monster infos', \&onUnload);
 my $hooks = Plugins::addHooks(
 	['checkMonsterCondition', \&extendedCheck, undef],
 	['packet/skill_use', \&onPacketSkillUse, undef],
@@ -71,7 +72,7 @@ my $hooks = Plugins::addHooks(
 );
 
 
-my %monsterDB;
+my @monsterDB;
 my @element_lut = ('Neutral','Water','Earth','Fire','Wind','Poison','Holy','Dark','Sense','Undead');
 my @race_lut = ('Formless','Undead','Brute','Plant','Insect','Fish','Demon','Demi-Human','Angel','Dragon');
 my @size_lut = ('Small','Medium','Large');
@@ -80,41 +81,41 @@ loadMonDB(); # Load MonsterDB into Memory
 
 sub onUnload {
     Plugins::delHooks($hooks);
-    %monsterDB = undef;
-}
-
-sub onReload {
-	onUnload();
-	loadMonDB();
+    @monsterDB = undef;
 }
 
 sub loadMonDB {
-	%monsterDB = undef;
+	@monsterDB = undef;
+	my @temp;
 	debug ("MonsterDB: Loading DataBase\n",'monsterDB',2);
 	error ("MonsterDB: cannot load $Settings::tables_folder/monsterDB.txt\n",'monsterDB',0) unless (-r "$Settings::tables_folder/monsterDB.txt");
 	open MDB ,"<$Settings::tables_folder/monsterDB.txt";
-	foreach my $line (<MDB>) {
-		$line =~ /([\w\s]+?)\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)/;
-		$monsterDB{$1} = [$2,$3,$4,$5];
+	@temp = <MDB>;
+	foreach my $line (@temp) {
+		next unless ($line =~ /(\d{4})\s+(\d+)\s+(\d)\s+(\d)\s+(\d+)/);
+		$monsterDB[(int($1) - 1000)] = [$2,$3,$4,$5];
 	}
+	message "MonsterDB: loaded ".(scalar @monsterDB)." Monsters\n",'monsterDB';
 	close MDB;
 }
 
 sub extendedCheck {
     my (undef,$args) = @_;
 
-	return 0 if !$args->{monster} || $args->{monster}->{name} eq '';
+	return 0 if !$args->{monster} || $args->{monster}->{nameID} eq '';
 
-	my $monsterName = lc($args->{monster}->{name});
+	my $monsterInfo = $monsterDB[(int($args->{monster}->{nameID}) - 1000)];
 
-    if (!$monsterDB{$monsterName} || !$monsterDB{$monsterName}[0]) {
+    if (!defined $monsterInfo) {
     	debug("monsterDB: Monster {$args->{monster}->{name}} not found\n", 'monsterDB', 2);
     	return 0;
     } #return if monster is not in DB
 
-    my $element = $element_lut[$monsterDB{$monsterName}[1]];
-    my $race = $race_lut[$monsterDB{$monsterName}[2]];
-    my $size = $size_lut[$monsterDB{$monsterName}[3]];
+
+    my $element = $element_lut[($monsterInfo->[3] % 10)];
+    my $element_lvl = $monsterInfo->[3] / 20;
+    my $race = $race_lut[$monsterInfo->[2]];
+    my $size = $size_lut[$monsterInfo->[1]];
 
 	if ($args->{monster}->{element} && $args->{monster}->{element} ne '') {
 		$element = $args->{monster}->{element};
@@ -132,12 +133,14 @@ sub extendedCheck {
 	}
 
     if ($config{$args->{prefix} . '_Element'}
-    && !existsInList($config{$args->{prefix} . '_Element'},$element)) {
+    && (!existsInList($config{$args->{prefix} . '_Element'},$element)
+    	&& !existsInList($config{$args->{prefix} . '_Element'},$element.$element_lvl))) {
 		return $args->{return} = 0;
     }
 
     if ($config{$args->{prefix} . '_notElement'}
-    && existsInList($config{$args->{prefix} . '_notElement'},$element)) {
+    && (existsInList($config{$args->{prefix} . '_notElement'},$element)
+    	|| existsInList($config{$args->{prefix} . '_notElement'},$element.$element_lvl))) {
 		return $args->{return} = 0;
     }
 
@@ -162,7 +165,7 @@ sub extendedCheck {
     }
 
     if ($config{$args->{prefix} . '_hpLeft'}
-    && !inRange(($monsterDB{$monsterName}[0] + $args->{monster}->{deltaHp}),$config{$args->{prefix} . '_hpLeft'})) {
+    && !inRange(($monsterInfo->[0] + $args->{monster}->{deltaHp}),$config{$args->{prefix} . '_hpLeft'})) {
 		return $args->{return} = 0;
     }
 
@@ -171,18 +174,14 @@ sub extendedCheck {
 
 sub onPacketSkillUse {
 	my (undef,$args) = @_;
-	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{name};
-	my $monsterName = lc($monsters{$args->{targetID}}{name});
-	return 1 unless ($monsterDB{$monsterName} && $monsterDB{$monsterName}[0]);
-	message 'Monster has ['.($monsterDB{$monsterName}[0] + $monsters{$args->{targetID}}{deltaHp}).'/'.$monsterDB{$monsterName}[0]."] HP Left\n",'monsterDB';
+	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{nameID};
+	monsterHp ($monsters{$args->{targetID}});
 }
 
 sub onPacketSkillUseNoDmg {
 	my (undef,$args) = @_;
-	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{name};
-	my $monsterName = lc($monsters{$args->{targetID}}{name});
-	return 1 unless ($monsterDB{$monsterName} && $monsterDB{$monsterName}[0]);
-	message 'Monster has ['.($monsterDB{$monsterName}[0] + $monsters{$args->{targetID}}{deltaHp}).'/'.$monsterDB{$monsterName}[0]."] HP Left\n",'monsterDB';
+	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{nameID};
+	monsterHp ($monsters{$args->{targetID}});
 	if (($args->{targetID} eq $args->{sourceID}) && ($args->{targetID} ne $accountID)){
 		if ($args->{skillID} eq 'NPC_CHANGEWATER'){
 			$monsters{$args->{targetID}}{element} = 'Water';
@@ -230,11 +229,17 @@ sub onPacketSkillUseNoDmg {
 sub onPacketAttack {
 	my (undef,$args) = @_;
 	return 1 unless $args->{type} == 0 || $args->{type} > 3;
-	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{name};
-	my $monsterName = lc($monsters{$args->{targetID}}{name});
-	return 1 unless ($monsterDB{$monsterName} && $monsterDB{$monsterName}[0]);
-	message 'Monster has ['.($monsterDB{$monsterName}[0] + $monsters{$args->{targetID}}{deltaHp}).'/'.$monsterDB{$monsterName}[0]."] HP Left\n",'monsterDB';
+	return 1 unless $monsters{$args->{targetID}} && $monsters{$args->{targetID}}{nameID};
+	monsterHp ($monsters{$args->{targetID}});
 
+}
+
+sub monsterHp {
+	my $monster = shift;
+	return 1 unless $monster && $monster->{nameID};
+	my $monsterInfo = $monsterDB[(int($monster->{nameID}) - 1000)];
+	return 1 unless defined $monsterInfo;
+	message 'Monster has ['.($monsterInfo->[0] + $monster->{deltaHp}).'/'.$monsterInfo->[0]."] HP Left\n",'attackMon';
 }
 
 sub onAttackStart {
