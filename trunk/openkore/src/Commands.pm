@@ -463,7 +463,7 @@ sub cmdAI {
 		undef @ai_seq;
 		undef @ai_seq_args;
 		delete $ai_v{temp};
-		undef $chars[$config{char}]{dead};
+		undef $char->{dead};
 		message "AI sequences cleared\n", "success";
 
 	} elsif ($args eq 'print') {
@@ -991,7 +991,7 @@ sub cmdChatRoom {
 			"list");
 		for (my $i = 0; $i < @chatRoomsID; $i++) {
 			next if ($chatRoomsID[$i] eq "");
-			my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $chars[$config{'char'}]{'name'};
+			my $owner_string = ($chatRooms{$chatRoomsID[$i]}{'ownerID'} ne $accountID) ? $players{$chatRooms{$chatRoomsID[$i]}{'ownerID'}}{'name'} : $char->{'name'};
 			my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
 			my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
 			message(swrite(
@@ -1144,7 +1144,7 @@ sub cmdDeal {
 	} elsif ($arg[0] eq "add" && $currentDeal{'you_finalize'}) {
 		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
 			"Can't add any Items - You already finalized the deal\n";
-	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && ( !$chars[$config{'char'}]{'inventory'}[$arg[1]] || !%{$chars[$config{'char'}]{'inventory'}[$arg[1]]} )) {
+	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/ && ( !$char->{'inventory'}[$arg[1]] || !%{$char->{'inventory'}[$arg[1]]} )) {
 		error	"Error in function 'deal_add' (Add Item to Deal)\n" .
 			"Inventory Item $arg[1] does not exist.\n";
 	} elsif ($arg[0] eq "add" && $arg[2] && $arg[2] !~ /\d+/) {
@@ -1152,16 +1152,16 @@ sub cmdDeal {
 			"Amount must either be a number, or not specified.\n";
 	} elsif ($arg[0] eq "add" && $arg[1] =~ /\d+/) {
 		if ($currentDeal{you_items} < 10) {
-			if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'}) {
-				$arg[2] = $chars[$config{'char'}]{'inventory'}[$arg[1]]{'amount'};
+			if (!$arg[2] || $arg[2] > $char->{'inventory'}[$arg[1]]{'amount'}) {
+				$arg[2] = $char->{'inventory'}[$arg[1]]{'amount'};
 			}
 			dealAddItem($char->{inventory}[$arg[1]], $arg[2]);
 		} else {
 			error("You can't add any more items to the deal\n", "deal");
 		}
 	} elsif ($arg[0] eq "add" && $arg[1] eq "z") {
-		if (!$arg[2] || $arg[2] > $chars[$config{'char'}]{'zenny'}) {
-			$arg[2] = $chars[$config{'char'}]{'zenny'};
+		if (!$arg[2] || $arg[2] > $char->{'zenny'}) {
+			$arg[2] = $char->{'zenny'};
 		}
 		$currentDeal{'you_zenny'} = $arg[2];
 		message("You put forward $arg[2] z to Deal\n", "deal");
@@ -1435,7 +1435,7 @@ sub cmdExp {
 			if ($char->{exp_job_max} && $jExpPerHour){
 				$percentJ = "(".sprintf("%.2f",$totalJobExp * 100 / $char->{exp_job_max})."%)";
 				$percentJhr = "(".sprintf("%.2f",$jExpPerHour * 100 / $char->{exp_job_max})."%)";
-				$EstJ_sec = int(($chars[$config{'char'}]{'exp_job_max'} - $char->{exp_job})/($jExpPerHour/3600));
+				$EstJ_sec = int(($char->{'exp_job_max'} - $char->{exp_job})/($jExpPerHour/3600));
 			}
 		}
 		$char->{deathCount} = 0 if (!defined $char->{deathCount});
@@ -1449,7 +1449,7 @@ sub cmdExp {
 		"Zenny/Hour   : " . formatNumber($zennyPerHour) . "\n" .
 		"Base Levelup Time Estimation : " . timeConvert($EstB_sec) . "\n" .
 		"Job Levelup Time Estimation  : " . timeConvert($EstJ_sec) . "\n" .
-		"Died : $chars[$config{'char'}]{'deathCount'}\n", "info");
+		"Died : $char->{'deathCount'}\n", "info");
 
 		message("-[Monster Killed Count]-----------\n" .
 			"#   ID   Name                Count\n",
@@ -1770,7 +1770,7 @@ sub cmdIdentify {
 			error	"Error in function 'identify' (Identify Item)\n" .
 				"Identify Item $arg1 does not exist\n";
 		} else {
-			sendIdentify(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$identifyID[$arg1]]{'index'});
+			sendIdentify(\$remote_socket, $char->{'inventory'}[$identifyID[$arg1]]{'index'});
 		}
 
 	} else {
@@ -1845,7 +1845,7 @@ sub cmdInventory {
 	my ($arg1) = $args =~ /^(\w+)/;
 	my ($arg2) = $args =~ /^\w+ (\d+)/;
 
-	if (!$chars[$config{'char'}]{'inventory'}) {
+	if (!$char->{'inventory'}) {
 		error "Inventory is empty\n";
 		return;
 	}
@@ -1857,8 +1857,8 @@ sub cmdInventory {
 		my @non_useable;
 		my ($i, $display, $index);
 
-		for ($i = 0; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
-			my $item = $chars[$config{'char'}]{'inventory'}[$i];
+		for ($i = 0; $i < @{$char->{'inventory'}}; $i++) {
+			my $item = $char->{'inventory'}[$i];
 			next unless $item && %{$item};
 			if (($item->{type} == 3 ||
 			     $item->{type} == 6 ||
@@ -1900,8 +1900,8 @@ sub cmdInventory {
 			$msg .= "-- Non-Usable --\n";
 			for ($i = 0; $i < @non_useable; $i++) {
 				$index = $non_useable[$i];
-				$display = $chars[$config{'char'}]{'inventory'}[$index]{'name'};
-				$display .= " x $chars[$config{'char'}]{'inventory'}[$index]{'amount'}";
+				$display = $char->{'inventory'}[$index]{'name'};
+				$display .= " x $char->{'inventory'}[$index]{'amount'}";
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
 					[$index, $display]);
@@ -1910,8 +1910,8 @@ sub cmdInventory {
 		if ($arg1 eq "" || $arg1 eq "u") {
 			$msg .= "-- Usable --\n";
 			for ($i = 0; $i < @useable; $i++) {
-				$display = $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'name'};
-				$display .= " x $chars[$config{'char'}]{'inventory'}[$useable[$i]]{'amount'}";
+				$display = $char->{'inventory'}[$useable[$i]]{'name'};
+				$display .= " x $char->{'inventory'}[$useable[$i]]{'amount'}";
 				$index = $useable[$i];
 				$msg .= swrite(
 					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
@@ -1921,11 +1921,11 @@ sub cmdInventory {
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
 
-	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $chars[$config{'char'}]{'inventory'}[$arg2] eq "") {
+	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $char->{'inventory'}[$arg2] eq "") {
 		error	"Error in function 'i' (Inventory Item Desciption)\n" .
 			"Inventory Item $arg2 does not exist\n";
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-		printItemDesc($chars[$config{'char'}]{'inventory'}[$arg2]{'nameID'});
+		printItemDesc($char->{'inventory'}[$arg2]{'nameID'});
 
 	} else {
 		error	"Syntax Error in function 'i' (Inventory List)\n" .
@@ -2012,7 +2012,7 @@ sub cmdMonsterList {
 		$dmgFrom = ($monsters{$monstersID[$i]}{'dmgFrom'} ne "")
 			? $monsters{$monstersID[$i]}{'dmgFrom'}
 			: 0;
-		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
+		$dist = distance(\%{$char->{'pos_to'}}, \%{$monsters{$monstersID[$i]}{'pos_to'}});
 		$dist = sprintf("%.1f", $dist) if (index($dist, '.') > -1);
 		$pos = '(' . $monsters{$monstersID[$i]}{'pos_to'}{'x'} . ', ' . $monsters{$monstersID[$i]}{'pos_to'}{'y'} . ')';
 
@@ -2121,39 +2121,39 @@ sub cmdParty {
 	my ($arg1) = $args =~ /^(\w*)/;
 	my ($arg2) = $args =~ /^\w* (\d+)\b/;
 
-	if ($arg1 eq "" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
+	if ($arg1 eq "" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 		error	"Error in function 'party' (Party Functions)\n" .
 			"Can't list party - you're not in a party.\n";
 	} elsif ($arg1 eq "") {
 		message("----------Party-----------\n", "list");
-		message($chars[$config{'char'}]{'party'}{'name'}."\n", "list");
+		message($char->{'party'}{'name'}."\n", "list");
 		message("#      Name                  Map                    Online    HP\n", "list");
 		for (my $i = 0; $i < @partyUsersID; $i++) {
 			next if ($partyUsersID[$i] eq "");
 			my $coord_string = "";
 			my $hp_string = "";
-			my $name_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'name'};
-			my $admin_string = ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "(A)" : "";
+			my $name_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'name'};
+			my $admin_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'admin'}) ? "(A)" : "";
 			my $online_string;
 			my $map_string;
 
 			if ($partyUsersID[$i] eq $accountID) {
 				$online_string = "Yes";
 				($map_string) = $field{name};
-				$coord_string = $chars[$config{'char'}]{'pos'}{'x'}. ", ".$chars[$config{'char'}]{'pos'}{'y'};
-				$hp_string = $chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}
-						." (".int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
+				$coord_string = $char->{'pos'}{'x'}. ", ".$char->{'pos'}{'y'};
+				$hp_string = $char->{'hp'}."/".$char->{'hp_max'}
+						." (".int($char->{'hp'}/$char->{'hp_max'} * 100)
 						."%)";
 			} else {
-				$online_string = ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'online'}) ? "Yes" : "No";
-				($map_string) = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'map'} =~ /([\s\S]*)\.gat/;
-				$coord_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'}
-					. ", ".$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'y'}
-					if ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'} ne ""
-						&& $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'online'});
-				$hp_string = $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp'}."/".$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'}
-					." (".int($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100)
-					."%)" if ($chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$i]}{'online'});
+				$online_string = ($char->{'party'}{'users'}{$partyUsersID[$i]}{'online'}) ? "Yes" : "No";
+				($map_string) = $char->{'party'}{'users'}{$partyUsersID[$i]}{'map'} =~ /([\s\S]*)\.gat/;
+				$coord_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'}
+					. ", ".$char->{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'y'}
+					if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'pos'}{'x'} ne ""
+						&& $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
+				$hp_string = $char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}."/".$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'}
+					." (".int($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp'}/$char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} * 100)
+					."%)" if ($char->{'party'}{'users'}{$partyUsersID[$i]}{'hp_max'} && $char->{'party'}{'users'}{$partyUsersID[$i]}{'online'});
 			}
 			message(swrite(
 				"@< @<< @<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<< @<<<<<<< @<<       @<<<<<<<<<<<<<<<<<<",
@@ -2181,7 +2181,7 @@ sub cmdParty {
 		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $arg2);
 		undef %incomingParty;
 
-	} elsif ($arg1 eq "request" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
+	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 		error	"Error in function 'party request' (Request to Join Party)\n" .
 			"Can't request a join - you're not in a party.\n";
 	} elsif ($arg1 eq "request" && $playersID[$arg2] eq "") {
@@ -2191,14 +2191,14 @@ sub cmdParty {
 		sendPartyJoinRequest(\$remote_socket, $playersID[$arg2]);
 
 
-	} elsif ($arg1 eq "leave" && (!$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} ) ) {
+	} elsif ($arg1 eq "leave" && (!$char->{'party'} || !%{$char->{'party'}} ) ) {
 		error	"Error in function 'party leave' (Leave Party)\n" .
 			"Can't leave party - you're not in a party.\n";
 	} elsif ($arg1 eq "leave") {
 		sendPartyLeave(\$remote_socket);
 
 
-	} elsif ($arg1 eq "share" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
+	} elsif ($arg1 eq "share" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 		error	"Error in function 'party share' (Set Party Share EXP)\n" .
 			"Can't set share - you're not in a party.\n";
 	} elsif ($arg1 eq "share" && $arg2 ne "1" && $arg2 ne "0") {
@@ -2208,7 +2208,7 @@ sub cmdParty {
 		sendPartyShareEXP(\$remote_socket, $arg2);
 
 
-	} elsif ($arg1 eq "kick" && ( !$chars[$config{'char'}]{'party'} || !%{$chars[$config{'char'}]{'party'}} )) {
+	} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
 		error	"Error in function 'party kick' (Kick Party Member)\n" .
 			"Can't kick member - you're not in a party.\n";
 	} elsif ($arg1 eq "kick" && $arg2 eq "") {
@@ -2219,7 +2219,7 @@ sub cmdParty {
 			"Can't kick member - member $arg2 doesn't exist.\n";
 	} elsif ($arg1 eq "kick") {
 		sendPartyKick(\$remote_socket, $partyUsersID[$arg2]
-				,$chars[$config{'char'}]{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
+				,$char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
 	} else {
 		error	"Syntax Error in function 'party' (Party Management)\n" .
 			"Usage: party [<create|join|request|leave|share|kick>]\n";
@@ -2374,7 +2374,7 @@ sub cmdPlayerList {
 		if ($player->{guild} && %{$player->{guild}}) {
 			$name .= " [$player->{guild}{name}]";
 		}
-		$dist = distance(\%{$chars[$config{'char'}]{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
+		$dist = distance(\%{$char->{'pos_to'}}, \%{$players{$playersID[$i]}{'pos_to'}});
 		$dist = sprintf("%.1f", $dist) if (index ($dist, '.') > -1);
 		$pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
 
@@ -2980,11 +2980,11 @@ sub cmdStatAdd {
 		error	"Syntax Error in function 'stat_add' (Add Status Point)\n" .
 			"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
 
-	} elsif ($chars[$config{'char'}]{'$arg'} >= 99) {
+	} elsif ($char->{'$arg'} >= 99) {
 		error	"Error in function 'stat_add' (Add Status Point)\n" .
 			"You cannot add more stat points than 99\n";
 
-	} elsif ($chars[$config{'char'}]{"points_$arg"} > $chars[$config{'char'}]{'points_free'}) {
+	} elsif ($char->{"points_$arg"} > $char->{'points_free'}) {
 			error	"Error in function 'stat_add' (Add Status Point)\n" .
 				"Not enough status points to increase $arg\n";
 
@@ -3004,7 +3004,7 @@ sub cmdStatAdd {
 			$ID = 0x12;
 		}
 
-		$chars[$config{'char'}]{$arg} += 1;
+		$char->{$arg} += 1;
 		sendAddStatusPoint(\$remote_socket, $ID);
 	}
 }
@@ -3013,17 +3013,17 @@ sub cmdStats {
 	my $msg = "-----------Char Stats-----------\n";
 	$msg .= swrite(
 		"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<",
-		[$chars[$config{'char'}]{'str'}, $chars[$config{'char'}]{'str_bonus'}, $chars[$config{'char'}]{'points_str'}, $chars[$config{'char'}]{'attack'}, $chars[$config{'char'}]{'attack_bonus'}, $chars[$config{'char'}]{'def'}, $chars[$config{'char'}]{'def_bonus'}],
+		[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'}],
 		"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<",
-		[$chars[$config{'char'}]{'agi'}, $chars[$config{'char'}]{'agi_bonus'}, $chars[$config{'char'}]{'points_agi'}, $chars[$config{'char'}]{'attack_magic_min'}, '~', $chars[$config{'char'}]{'attack_magic_max'}, $chars[$config{'char'}]{'def_magic'}, $chars[$config{'char'}]{'def_magic_bonus'}],
+		[$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'}],
 		"Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<",
-		[$chars[$config{'char'}]{'vit'}, $chars[$config{'char'}]{'vit_bonus'}, $chars[$config{'char'}]{'points_vit'}, $chars[$config{'char'}]{'hit'}, $chars[$config{'char'}]{'flee'}, $chars[$config{'char'}]{'flee_bonus'}],
+		[$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'}],
 		"Int: @<<+@<< #@< Critical: @<< Aspd: @<<",
-		[$chars[$config{'char'}]{'int'}, $chars[$config{'char'}]{'int_bonus'}, $chars[$config{'char'}]{'points_int'}, $chars[$config{'char'}]{'critical'}, $chars[$config{'char'}]{'attack_speed'}],
+		[$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'}],
 		"Dex: @<<+@<< #@< Status Points: @<<<",
-		[$chars[$config{'char'}]{'dex'}, $chars[$config{'char'}]{'dex_bonus'}, $chars[$config{'char'}]{'points_dex'}, $chars[$config{'char'}]{'points_free'}],
+		[$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'}],
 		"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
-		[$chars[$config{'char'}]{'luk'}, $chars[$config{'char'}]{'luk_bonus'}, $chars[$config{'char'}]{'points_luk'}, $char->{guild} ? $char->{guild}{name} : 'None']);
+		[$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $char->{guild} ? $char->{guild}{name} : 'None']);
 	$msg .= "--------------------------------\n";
 
 	$msg .= swrite(
@@ -3041,64 +3041,64 @@ sub cmdStatus {
 	my $msg;
 	my ($baseEXPKill, $jobEXPKill);
 
-	if ($chars[$config{'char'}]{'exp_last'} > $chars[$config{'char'}]{'exp'}) {
-		$baseEXPKill = $chars[$config{'char'}]{'exp_max_last'} - $chars[$config{'char'}]{'exp_last'} + $chars[$config{'char'}]{'exp'};
-	} elsif ($chars[$config{'char'}]{'exp_last'} == 0 && $chars[$config{'char'}]{'exp_max_last'} == 0) {
+	if ($char->{'exp_last'} > $char->{'exp'}) {
+		$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
+	} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
 		$baseEXPKill = 0;
 	} else {
-		$baseEXPKill = $chars[$config{'char'}]{'exp'} - $chars[$config{'char'}]{'exp_last'};
+		$baseEXPKill = $char->{'exp'} - $char->{'exp_last'};
 	}
-	if ($chars[$config{'char'}]{'exp_job_last'} > $chars[$config{'char'}]{'exp_job'}) {
-		$jobEXPKill = $chars[$config{'char'}]{'exp_job_max_last'} - $chars[$config{'char'}]{'exp_job_last'} + $chars[$config{'char'}]{'exp_job'};
-	} elsif ($chars[$config{'char'}]{'exp_job_last'} == 0 && $chars[$config{'char'}]{'exp_job_max_last'} == 0) {
+	if ($char->{'exp_job_last'} > $char->{'exp_job'}) {
+		$jobEXPKill = $char->{'exp_job_max_last'} - $char->{'exp_job_last'} + $char->{'exp_job'};
+	} elsif ($char->{'exp_job_last'} == 0 && $char->{'exp_job_max_last'} == 0) {
 		$jobEXPKill = 0;
 	} else {
-		$jobEXPKill = $chars[$config{'char'}]{'exp_job'} - $chars[$config{'char'}]{'exp_job_last'};
+		$jobEXPKill = $char->{'exp_job'} - $char->{'exp_job_last'};
 	}
 
 
 	my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
 
-	$hp_string = $chars[$config{'char'}]{'hp'}."/".$chars[$config{'char'}]{'hp_max'}." ("
-		.int($chars[$config{'char'}]{'hp'}/$chars[$config{'char'}]{'hp_max'} * 100)
-		."%)" if $chars[$config{'char'}]{'hp_max'};
-	$sp_string = $chars[$config{'char'}]{'sp'}."/".$chars[$config{'char'}]{'sp_max'}." ("
-		.int($chars[$config{'char'}]{'sp'}/$chars[$config{'char'}]{'sp_max'} * 100)
-		."%)" if $chars[$config{'char'}]{'sp_max'};
-	$base_string = $chars[$config{'char'}]{'exp'}."/".$chars[$config{'char'}]{'exp_max'}." /$baseEXPKill ("
-			.sprintf("%.2f",$chars[$config{'char'}]{'exp'}/$chars[$config{'char'}]{'exp_max'} * 100)
+	$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
+		.int($char->{'hp'}/$char->{'hp_max'} * 100)
+		."%)" if $char->{'hp_max'};
+	$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
+		.int($char->{'sp'}/$char->{'sp_max'} * 100)
+		."%)" if $char->{'sp_max'};
+	$base_string = $char->{'exp'}."/".$char->{'exp_max'}." /$baseEXPKill ("
+			.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
 			."%)"
-			if $chars[$config{'char'}]{'exp_max'};
-	$job_string = $chars[$config{'char'}]{'exp_job'}."/".$chars[$config{'char'}]{'exp_job_max'}." /$jobEXPKill ("
-			.sprintf("%.2f",$chars[$config{'char'}]{'exp_job'}/$chars[$config{'char'}]{'exp_job_max'} * 100)
+			if $char->{'exp_max'};
+	$job_string = $char->{'exp_job'}."/".$char->{'exp_job_max'}." /$jobEXPKill ("
+			.sprintf("%.2f",$char->{'exp_job'}/$char->{'exp_job_max'} * 100)
 			."%)"
-			if $chars[$config{'char'}]{'exp_job_max'};
-	$weight_string = $chars[$config{'char'}]{'weight'}."/".$chars[$config{'char'}]{'weight_max'} .
-			" (" . sprintf("%.1f", $chars[$config{'char'}]{'weight'}/$chars[$config{'char'}]{'weight_max'} * 100)
+			if $char->{'exp_job_max'};
+	$weight_string = $char->{'weight'}."/".$char->{'weight_max'} .
+			" (" . sprintf("%.1f", $char->{'weight'}/$char->{'weight_max'} * 100)
 			. "%)"
-			if $chars[$config{'char'}]{'weight_max'};
-	$job_name_string = "$jobs_lut{$chars[$config{'char'}]{'jobID'}} $sex_lut{$chars[$config{'char'}]{'sex'}}";
-	$zeny_string = formatNumber($chars[$config{'char'}]{'zenny'}) if (defined($chars[$config{'char'}]{'zenny'}));
+			if $char->{'weight_max'};
+	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
+	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
 
 	$msg = "-----------------Status-----------------\n" .
 		swrite(
 		"@<<<<<<<<<<<<<<<<<<<<<<<<<<   HP: @<<<<<<<<<<<<<<<<<<",
-		[$chars[$config{'char'}]{'name'}, $hp_string],
+		[$char->{'name'}, $hp_string],
 		"@<<<<<<<<<<<<<<<<<<<<<<<<<<   SP: @<<<<<<<<<<<<<<<<<<",
 		[$job_name_string, $sp_string],
 		"Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-		[$chars[$config{'char'}]{'lv'}, $base_string],
+		[$char->{'lv'}, $base_string],
 		"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-		[$chars[$config{'char'}]{'lv_job'}, $job_string],
+		[$char->{'lv_job'}, $job_string],
 		"Weight: @>>>>>>>>>>>>>>>>>>   Zenny: @<<<<<<<<<<<<<<",
 		[$weight_string, $zeny_string]);
 
 	my $statuses = 'none';
-	if (defined $chars[$config{char}]{statuses} && %{$chars[$config{char}]{statuses}}) {
-		$statuses = join(", ", keys %{$chars[$config{char}]{statuses}});
+	if (defined $char->{statuses} && %{$char->{statuses}}) {
+		$statuses = join(", ", keys %{$char->{statuses}});
 	}
 	$msg .= "Statuses: $statuses\n";
-	$msg .= "Spirits: $chars[$config{char}]{spirits}\n" if (exists $chars[$config{char}]{spirits});
+	$msg .= "Spirits: $char->{spirits}\n" if (exists $char->{spirits});
 	$msg .= "----------------------------------------\n";
 
 
@@ -3375,17 +3375,17 @@ sub cmdUseItemOnMonster {
 	if ($arg1 eq "" || $arg2 eq "") {
 		error	"Syntax Error in function 'im' (Use Item on Monster)\n" .
 			"Usage: im <item #> <monster #>\n";
-	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
+	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
 		error	"Error in function 'im' (Use Item on Monster)\n" .
 			"Inventory Item $arg1 does not exist.\n";
-	} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
+	} elsif ($char->{'inventory'}[$arg1]{'type'} > 2) {
 		error	"Error in function 'im' (Use Item on Monster)\n" .
 			"Inventory Item $arg1 is not of type Usable.\n";
 	} elsif ($monstersID[$arg2] eq "") {
 		error	"Error in function 'im' (Use Item on Monster)\n" .
 			"Monster $arg2 does not exist.\n";
 	} else {
-		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $monstersID[$arg2]);
+		$char->{'inventory'}[$arg1]->use($monstersID[$arg2]);
 	}
 }
 
@@ -3396,17 +3396,17 @@ sub cmdUseItemOnPlayer {
 	if ($arg1 eq "" || $arg2 eq "") {
 		error	"Syntax Error in function 'ip' (Use Item on Player)\n" .
 			"Usage: ip <item #> <player #>\n";
-	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
+	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
 		error	"Error in function 'ip' (Use Item on Player)\n" .
 			"Inventory Item $arg1 does not exist.\n";
-	} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
+	} elsif ($char->{'inventory'}[$arg1]{'type'} > 2) {
 		error	"Error in function 'ip' (Use Item on Player)\n" .
 			"Inventory Item $arg1 is not of type Usable.\n";
 	} elsif ($playersID[$arg2] eq "") {
 		error	"Error in function 'ip' (Use Item on Player)\n" .
 			"Player $arg2 does not exist.\n";
 	} else {
-		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $playersID[$arg2]);
+		$char->{'inventory'}[$arg1]->use($playersID[$arg2]);
 	}
 }
 
@@ -3416,14 +3416,14 @@ sub cmdUseItemOnSelf {
 	if ($arg1 eq "") {
 		error	"Syntax Error in function 'is' (Use Item on Yourself)\n" .
 			"Usage: is <item #>\n";
-	} elsif (!$chars[$config{'char'}]{'inventory'}[$arg1] || !%{$chars[$config{'char'}]{'inventory'}[$arg1]}) {
+	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
 		error	"Error in function 'is' (Use Item on Yourself)\n" .
 			"Inventory Item $arg1 does not exist.\n";
-	} elsif ($chars[$config{'char'}]{'inventory'}[$arg1]{'type'} > 2) {
+	} elsif ($char->{'inventory'}[$arg1]{'type'} > 2) {
 		error	"Error in function 'is' (Use Item on Yourself)\n" .
 			"Inventory Item $arg1 is not of type Usable.\n";
 	} else {
-		sendItemUse(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$arg1]{'index'}, $accountID);
+		$char->{'inventory'}[$arg1]->use();
 	}
 }
 
