@@ -243,11 +243,9 @@ sub onStatusChange {
 
 	return unless $args->{changed};
 	my $actor = $args->{actor};
-	return unless UNIVERSAL::isa($actor, 'Actor::Monster');
-	my $index = binFind(\@ai_seq, 'attack');
-	return unless defined($index) &&
-		$ai_seq_args[$index]{target} == $actor->{ID};
-
+	return unless (UNIVERSAL::isa($actor, 'Actor::Monster'));
+	my $index = binFind(@ai_seq,'attack');
+	return unless $ai_seq_args[$index]->{target} == $actor->{ID};
 	monsterEquip($actor);
 }
 
