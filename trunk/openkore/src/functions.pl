@@ -1854,94 +1854,117 @@ sub AI {
 			unshift @ai_seq_args, {forcedByBuy => 1};
 		}
 
-	} elsif ($ai_seq[0] eq "buyAuto" && timeOut($timeout{'ai_buyAuto_wait'}) && timeOut($timeout{'ai_buyAuto_wait_buy'})) {
-		my $i = 0;
-		undef $ai_seq_args[0]{'index'};
+	} elsif (AI::action eq "buyAuto" && timeOut($timeout{ai_buyAuto_wait}) && timeOut($timeout{ai_buyAuto_wait_buy})) {
+		my $args = AI::args;
+		undef $args->{index};
 
-		while (1) {
-			last if (!$config{"buyAuto_$i"});
-			$ai_seq_args[0]{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
-			if (!$ai_seq_args[0]{'index_failed'}{$i} && $config{"buyAuto_$i"."_maxAmount"} ne "" && ($ai_seq_args[0]{'invIndex'} eq ""
-				|| $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"})) {
+		for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
+			next if (!$config{"buyAuto_$i"});
+			# did we already fail to do this buyAuto slot?
+			next if ($args->{index_failed}{$i});
 
-				$ai_seq_args[0]{'npc'} = {};
-				($config{"buyAuto_$i"."_standpoint"}) ? getNPCInfo($config{"buyAuto_$i"."_standpoint"}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'});
-				if (defined $ai_seq_args[0]{'npc'}{'ok'}) {
-					$ai_seq_args[0]{'index'} = $i;
+			$args->{invIndex} = findIndexString_lc($char->{inventory}, "name", $config{"buyAuto_$i"});
+			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && ($args->{invIndex} eq "" || $char->{inventory}[$args->{invIndex}]{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
+
+				# get NPC info, use standpoint if provided
+				$args->{npc} = {};
+				($config{"buyAuto_$i"."_standpoint"} ? getNPCInfo($config{"buyAuto_$i"."_standpoint"}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'}));
+
+				# did we succeed to load NPC info from this slot?
+				if ($args->{npc}{ok}) {
+					$args->{index} = $i;
 				}
 				last;
 			}
-			$i++;
+
+
+
 		}
-		if ($ai_seq_args[0]{'index'} eq ""
-			|| ($ai_seq_args[0]{'lastIndex'} ne "" && $ai_seq_args[0]{'lastIndex'} == $ai_seq_args[0]{'index'}
-			&& timeOut($timeout{'ai_buyAuto_giveup'}))) {
+
+		# failed to load any slots for buyAuto (we're done or they're all invalid)
+		# what does the second check do here?
+		if ($args->{index} eq "" || ($args->{lastIndex} ne "" && $args->{lastIndex} == $args->{index} && timeOut($timeout{'ai_buyAuto_giveup'}))) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOBUY;
 		}
-		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
-			$ai_v{'temp'}{'do_route'} = 1;
+
+		my $do_route;
+
+		if ($field{name} ne $args->{npc}{map}) {
+			# we definitely need to route if we're on the wrong map
+			$do_route = 1;
 		} else {
-			$ai_v{'temp'}{'distance'} = distance($ai_seq_args[0]{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
-			$config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"} = 0 if ($config{"buyAuto_$i"."_standpoint"});
-			if ($ai_v{'temp'}{'distance'} > $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"}) {
-				$ai_v{'temp'}{'do_route'} = 1;
+			my $distance = distance($args->{npc}{pos}, $char->{pos_to});
+			# move exactly to the given spot if we specified a standpoint
+			my $talk_distance = ($config{"buyAuto_$args->{index}"."_standpoint"} ? 0 : $config{"buyAuto_$args->{index}"."_distance"});
+			if ($distance > $talk_distance) {
+				$do_route = 1;
 			}
 		}
-		if ($ai_v{'temp'}{'do_route'}) {
-			if ($ai_seq_args[0]{'warpedToSave'} && !$ai_seq_args[0]{'mapChanged'}) {
-				undef $ai_seq_args[0]{'warpedToSave'};
+		if ($do_route) {
+			if ($args->{warpedToSave} && !$args->{mapChanged}) {
+				undef $args->{warpedToSave};
 			}
 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'}
+			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
-				$ai_seq_args[0]{'warpedToSave'} = 1;
+				$args->{warpedToSave} = 1;
 				message "Teleporting to auto-buy\n", "teleport";
 				useTeleport(2);
-				$timeout{'ai_buyAuto_wait'}{'time'} = time;
+				$timeout{ai_buyAuto_wait}{time} = time;
 			} else {
-				message qq~Calculating auto-buy route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n~, "route";
-				ai_route($ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'},
+				message "Calculating auto-buy route to: $maps_lut{$args->{npc}{map}.'.rsw'} ($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
+				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 					attackOnRoute => 1,
-					distFromGoal => $config{"buyAuto_$ai_seq_args[0]{'index'}"."_distance"});
+					distFromGoal => $config{"buyAuto_$args->{index}"."_distance"});
 			}
 		} else {
-			$ai_seq_args[0]{'npc'} = {};
-			getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'});
-			if ($ai_seq_args[0]{'lastIndex'} eq "" || $ai_seq_args[0]{'lastIndex'} != $ai_seq_args[0]{'index'}) {
-				undef $ai_seq_args[0]{'itemID'};
-				if ($config{"buyAuto_$ai_seq_args[0]{'index'}"."_npc"} != $config{"buyAuto_$ai_seq_args[0]{'lastIndex'}"."_npc"}) {
-					undef $ai_seq_args[0]{'sentBuy'};
+			if ($args->{lastIndex} eq "" || $args->{lastIndex} != $args->{index}) {
+				# if this is a different item than last loop, get new info for itemID and resend buy
+				undef $args->{itemID};
+				if ($config{"buyAuto_$args->{index}"."_npc"} != $config{"buyAuto_$args->{lastIndex}"."_npc"}) {
+					undef $args->{sentBuy};
 				}
-				$timeout{'ai_buyAuto_giveup'}{'time'} = time;
+				$timeout{ai_buyAuto_giveup}{time} = time;
 			}
-			$ai_seq_args[0]{'lastIndex'} = $ai_seq_args[0]{'index'};
-			if ($ai_seq_args[0]{'itemID'} eq "") {
-				foreach (keys %items_lut) {
-					if (lc($items_lut{$_}) eq lc($config{"buyAuto_$ai_seq_args[0]{'index'}"})) {
-						$ai_seq_args[0]{'itemID'} = $_;
+			$args->{lastIndex} = $args->{index};
+
+			# find the item ID if we don't know it yet
+			if ($args->{itemID} eq "") {
+				if ($args->{invIndex} && $char->{inventory}[$args->{invIndex}]) {
+					# if we have the item in our inventory, we can quickly get the nameID
+					$args->{itemID} = $char->{inventory}[$args->{invIndex}]{nameID};
+				} else {
+					# scan the entire items.txt file (this is slow)
+					foreach (keys %items_lut) {
+						if (lc($items_lut{$_}) eq lc($config{"buyAuto_$args->{index}"})) {
+							$args->{itemID} = $_;
+						}
 					}
 				}
-				if ($ai_seq_args[0]{'itemID'} eq "") {
-					$ai_seq_args[0]{'index_failed'}{$ai_seq_args[0]{'index'}} = 1;
-					debug "autoBuy index $ai_seq_args[0]{'index'} failed\n", "npc";
+				if ($args->{itemID} eq "") {
+					# the specified item doesn't even exist
+					# don't try this index again
+					$args->{index_failed}{$args->{index}} = 1;
+					debug "buyAuto index $args->{index} failed, item doesn't exist\n", "npc";
 					last AUTOBUY;
 				}
 			}
 
-			if (!defined($ai_seq_args[0]{'sentBuy'})) {
-				$ai_seq_args[0]{'sentBuy'} = 1;
-				$timeout{'ai_buyAuto_wait'}{'time'} = time;
-				ai_talkNPC($ai_seq_args[0]{'npc'}{x}, $ai_seq_args[0]{'npc'}{y}, "e");
+			if (!$args->{sentBuy}) {
+				$args->{sentBuy} = 1;
+				$timeout{ai_buyAuto_wait}{time} = time;
+				ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, "e");
 				last AUTOBUY;
 			}
-			if ($ai_seq_args[0]{'invIndex'} ne "") {
-				sendBuy(\$remote_socket, $ai_seq_args[0]{'itemID'}, $config{"buyAuto_$ai_seq_args[0]{'index'}"."_maxAmount"} - $chars[$config{'char'}]{'inventory'}[$ai_seq_args[0]{'invIndex'}]{'amount'});
+			if ($args->{invIndex} ne "") {
+				# this item is in the inventory already, get what we need
+				sendBuy(\$remote_socket, $ai_seq_args[0]{'itemID'}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->{inventory}[$args->{invIndex}]{amount});
 			} else {
-				sendBuy(\$remote_socket, $ai_seq_args[0]{'itemID'}, $config{"buyAuto_$ai_seq_args[0]{'index'}"."_maxAmount"});
+				# get the full amount
+				sendBuy(\$remote_socket, $args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
 			}
-			$timeout{'ai_buyAuto_wait_buy'}{'time'} = time;
+			$timeout{ai_buyAuto_wait_buy}{time} = time;
 		}
 	}
 
@@ -5003,7 +5026,7 @@ sub parseMsg {
 		for (my $i = 4; $i < $msg_size; $i += 37) {
 			my $skillID = unpack("S1", substr($msg, $i, 2));
 			# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
-			my $targetType = unpack("S1", substr($msg, $i+2, 2));
+			my $targetType = unpack("S1", substr($msg, $i+2, 2)); # we don't use this yet
 			my $level = unpack("S1", substr($msg, $i + 6, 2));
 			my $sp = unpack("S1", substr($msg, $i + 8, 2)); # we don't use this yet
 			my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
@@ -5530,7 +5553,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0147") {
 		my $skillID = unpack("v1",substr($msg, 2, 2));
-		my $targetType = unpack("v1",substr($msg, 4, 2));
+		my $targetType = unpack("v1",substr($msg, 4, 2)); # we don't use this yet
 		my $skillLv = unpack("v1",substr($msg, 8, 2));
 		my $sp = unpack("v1",substr($msg, 10, 2)); # we don't use this yet
 		my $skillName = unpack("A*", substr($msg, 14, 24));
