@@ -71,8 +71,8 @@ sub get {
 		return $char->{inventory}[$item] if $char->{inventory}[$item];
 		return undef;
 	} else {
-		my $index = findIndexStringList_lc ($char->{inventory}, 'name',$item,$skipIndex);
-		return undef if $index == undef;
+		my $index = findIndexStringList_lc($char->{inventory}, 'name', $item, $skipIndex);
+		return undef if !defined($index);
 		return $char->{inventory}[$index];
 	}
 }
