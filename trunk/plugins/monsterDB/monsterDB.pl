@@ -49,7 +49,7 @@ package monsterDB;
 
 use strict;
 use Plugins;
-use Globals qw(%config %monsters $accountID %equipSlot_lut @ai_seq);
+use Globals qw(%config %monsters $accountID %equipSlot_lut @ai_seq @ai_seq_args);
 use Settings;
 use Log qw(message warning error debug);
 use Misc qw(whenStatusActiveMon);
@@ -239,12 +239,15 @@ sub onAttackStart {
 }
 
 sub onStatusChange {
-	my (undef,$args) = @_;
+	my (undef, $args) = @_;
+
 	return unless $args->{changed};
 	my $actor = $args->{actor};
-	return unless (UNIVERSAL::isa($actor, 'Actor::Monster'));
-	my $index = binFind(@ai_seq,'attack');
-	return unless @ai_seq_args[$index]->{target} && @ai_seq_args[$index]->{target} == $actor->{ID};
+	return unless UNIVERSAL::isa($actor, 'Actor::Monster');
+	my $index = binFind(\@ai_seq, 'attack');
+	return unless defined($index) &&
+		$ai_seq_args[$index]{target} == $actor->{ID};
+
 	monsterEquip($actor);
 }
 
