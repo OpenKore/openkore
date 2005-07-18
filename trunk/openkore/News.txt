@@ -36,6 +36,8 @@ Bug fixes:
   it is in range to attack.
 - 'private 1' in servers.txt is also effective when changing map server.
 - Reverted Pythagorean distances; causes bots to walk around drunk.
+- openkore could not useSelf_item items in inventory index 0 due to
+  (0 == '') being true (affecting $skipID in findIndexStringList_lc).
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
