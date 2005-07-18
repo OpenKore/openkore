@@ -3310,6 +3310,7 @@ sub AI {
 					debug "Attempted to use skill (".$skill->name.") which you do not have.\n";
 				}
 
+				$args->{maxCastTime}{time} = time;
 				if ($skillsArea{$handle} == 2) {
 					sendSkillUse(\$remote_socket, $skillID, $args->{lv}, $accountID);
 				} elsif ($args->{x} ne "") {
