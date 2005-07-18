@@ -571,12 +571,18 @@ sub checkMovementDirection {
 # my $dist = distance($char->{pos_to},
 #                     $monsters{$ID}{pos_to});
 sub distance {
-	my $pos1 = shift;
-	my $pos2 = shift;
-	return 0 if (!$pos1 && !$pos2);
-
-	return max(abs($pos1->{x} - $pos2->{x}),
-	           abs($pos1->{y} - $pos2->{y}));
+    my $pos1 = shift;
+    my $pos2 = shift;
+    return 0 if (!$pos1 && !$pos2);
+    
+    my %line;
+    if (defined $pos2) {
+        $line{x} = abs($pos1->{x} - $pos2->{x});
+        $line{y} = abs($pos1->{y} - $pos2->{y});
+    } else {
+        %line = %{$pos1};
+    }
+    return sqrt($line{x} ** 2 + $line{y} ** 2);
 }
 
 ##
