@@ -30,6 +30,10 @@
 # Demi-Human block you use a bow, it will take the arrows form the first
 # matching block and equip the bow since the fire block didn't specified it.
 #
+#
+# Note: monsterEquip will modify your attackEquip_{slot} so don't be surprised
+# about having other attackEquips as you set before.
+#
 # Be careful with right and leftHand those slots will not be checked for
 # two-handed weapons that may conflict.
 #
@@ -255,11 +259,12 @@ sub monsterEquip {
 	my %equip_list;
 
 	my %args = ('monster' => $monster);
+	my $slot;
 
 	for (my $i=0;exists $config{"monsterEquip_$i"};$i++) {
 		$args{prefix} = "monsterEquip_${i}_target";
 		if (extendedCheck(undef,\%args)) {
-			foreach my $slot (%equipSlot_lut) {
+			foreach $slot (%equipSlot_lut) {
 				if ($config{"monsterEquip_${i}_equip_$slot"}
 				&& !$equip_list{$slot}) {
 					$equip_list{$slot} = $config{"monsterEquip_${i}_equip_$slot"};
@@ -267,7 +272,11 @@ sub monsterEquip {
 			}
 		}
 	}
-	Item::bulkEquip(\%equip_list) if (%equip_list);
+	if (%equip_list) {
+		foreach $slot (keys %equip_list) {
+			configModify("attackEquip_$slot", $equip_list{$slot}, 1);
+		}
+	}
 }
 
 1;
