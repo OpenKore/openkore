@@ -49,7 +49,7 @@ package monsterDB;
 
 use strict;
 use Plugins;
-use Globals qw(%config %monsters $accountID %equipSlot_lut);
+use Globals qw(%config %monsters $accountID %equipSlot_lut @ai_seq);
 use Settings;
 use Log qw(message warning error debug);
 use Misc qw(whenStatusActiveMon);
@@ -243,6 +243,8 @@ sub onStatusChange {
 	return unless $args->{changed};
 	my $actor = $args->{actor};
 	return unless (UNIVERSAL::isa($actor, 'Actor::Monster'));
+	my $index = binFind(@ai_seq,'attack');
+	return unless @ai_seq_args[$index]->{target} && @ai_seq_args[$index]->{target} == $actor->{ID};
 	monsterEquip($actor);
 }
 
@@ -264,7 +266,6 @@ sub monsterEquip {
 			}
 		}
 	}
-	debug %equip_list."\n",'monsterDB';
 	Item::bulkEquip(\%equip_list) if (%equip_list);
 }
 
