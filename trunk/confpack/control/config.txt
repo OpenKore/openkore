@@ -52,6 +52,19 @@ attackUseWeapon 1
 attackNoGiveup 0
 attackCanSnipe 0
 attackCheckLOS 0
+attackLooters 0
+
+attackEquip_topHead
+attackEquip_midHead
+attackEquip_lowHead
+attackEquip_leftHand
+attackEquip_rightHand
+attackEquip_leftAccessory
+attackEquip_rightAccessory
+attackEquip_robe
+attackEquip_armor
+attackEquip_shoes
+attackEquip_arrow
 
 autoBreakTime {
 	startTime
@@ -250,6 +263,17 @@ attackSkillSlot {
 	target_whenStatusActive
 	target_whenStatusInactive
 	inInventory
+	equip_topHead
+	equip_midHead
+	equip_lowHead
+	equip_leftHand
+	equip_rightHand
+	equip_leftAccessory
+	equip_rightAccessory
+	equip_robe
+	equip_armor
+	equip_shoes
+	equip_arrow
 }
 
 attackComboSlot {
@@ -418,4 +442,6 @@ debugPacket_received 0
 debugPacket_ro_sent 0
 debugPacket_sent 0
 debugPacket_exclude
+debugPacket_include
+debugPacket_include_dumpMethod
 debugDomains
