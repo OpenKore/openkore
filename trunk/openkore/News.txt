@@ -35,6 +35,7 @@ Bug fixes:
   steps. This should make openkore more efficient in determining whether
   it is in range to attack.
 - 'private 1' in servers.txt is also effective when changing map server.
+- Reverted Pythagorean distances; causes bots to walk around drunk.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
