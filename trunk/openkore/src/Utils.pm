@@ -372,7 +372,7 @@ sub findIndexStringList_lc {
 
 	foreach (@{$arr}) {
 		for ($i = 0; $i < $max; $i++) {
-			next if $i == $skipID;
+			next if $i eq $skipID;
 			if (lc($r_array->[$i]{$match}) eq $_) {
 				return $i;
 			}
