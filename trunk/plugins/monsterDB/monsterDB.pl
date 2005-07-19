@@ -281,7 +281,8 @@ sub monsterEquip {
 			}
 		}
 	}
-	bulkConfigModify(\%equip_list, 1) ;
+	bulkConfigModify(\%equip_list, 1);
+	Item::scanConfigAndEquip('attackEquip');
 }
 
 1;
