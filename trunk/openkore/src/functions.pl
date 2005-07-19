@@ -4957,27 +4957,6 @@ sub parseMsg {
 			$item->{name} = itemName($item);
 		}
 
-	} elsif ($switch eq "0109") {
-		my $newmsg;
-		decrypt(\$newmsg, substr($msg, 8));
-		my $ID = substr($msg, 4, 4);
-		my $chat = substr($msg, 8, $msg_size - 8);
-		$chat =~ s/\000//g;
-		my ($chatMsgUser, $chatMsg) = $chat =~ /([\s\S]*?) : ([\s\S]*)/;
-		$chatMsgUser =~ s/ $//;
-
-		stripLanguageCode(\$chatMsg);
-		$chat = "$chatMsgUser : $chatMsg";
-		message "[Party] $chat\n", "partychat";
-
-		chatLog("p", "$chat\n") if ($config{'logPartyChat'});
-		ChatQueue::add('p', $ID, $chatMsgUser, $chatMsg);
-
-		Plugins::callHook('packet_partyMsg', {
-		        MsgUser => $chatMsgUser,
-		        Msg => $chatMsg
-		});
-
 	# Hambo Started
 	# 3 Packets About MVP
 	} elsif ($switch eq "010A") {

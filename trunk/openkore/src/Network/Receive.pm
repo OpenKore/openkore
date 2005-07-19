@@ -108,6 +108,7 @@ sub new {
 		'00EA' => ['deal_add', 'v1 C1', [qw(index fail)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'00FA' => ['party_organize_result', 'C1', [qw(fail)]],
+		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
@@ -2140,6 +2141,26 @@ sub npc_talk_responses {
 	my $name = getNPCName($ID);
 
 	message("$name: Type 'talk resp #' to choose a response.\n", "npc");
+}
+
+sub party_chat {
+	my ($self, $args) = @_;
+	my $msg;
+	decrypt(\$msg, $args->{message});
+	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
+	$chatMsgUser =~ s/ $//;
+
+	stripLanguageCode(\$chatMsg);
+	my $chat = "$chatMsgUser : $chatMsg";
+	message "[Party] $chat\n", "partychat";
+
+	chatLog("p", "$chat\n") if ($config{'logPartyChat'});
+	ChatQueue::add('p', $args->{ID}, $chatMsgUser, $chatMsg);
+
+	Plugins::callHook('packet_partyMsg', {
+	        MsgUser => $chatMsgUser,
+	        Msg => $chatMsg
+	});
 }
 
 sub party_organize_result {
