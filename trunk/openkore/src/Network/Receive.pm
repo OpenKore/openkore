@@ -125,6 +125,7 @@ sub new {
 		'01A6' => ['egg_list'],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID skillstatus sex coords lv)]],
@@ -494,6 +495,14 @@ sub actor_died_or_disappeard {
 	} else {
 		debug "Unknown Disappeared: ".getHex($args->{ID})."\n", "parseMsg";
 	}
+}
+
+sub combo_delay {
+	my ($self, $args) = @_;
+
+	$args->{actor} = Actor::get($args->{ID});
+	my $verb = $args->{actor}->verb('have', 'has');
+	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
 }
 
 sub actor_exists {
@@ -882,7 +891,9 @@ sub actor_status_active {
 	my ($type, $ID, $flag) = @{$args}{qw(type ID flag)};
 
 	my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
+	$args->{skillName} = $skillName;
 	my $actor = Actor::get($ID);
+	$args->{actor} = $actor;
 
 	my ($name, $is) = getActorNames($ID, 0, 'are', 'is');
 	if ($flag) {
@@ -2371,6 +2382,8 @@ sub skill_use {
 
 	my $source = Actor::get($args->{sourceID});
 	my $target = Actor::get($args->{targetID});
+	$args->{source} = $source;
+	$args->{target} = $target;
 	delete $source->{casting};
 
 	# Perform trigger actions
@@ -2385,6 +2398,7 @@ sub skill_use {
 	$args->{damage} ||= "Miss!";
 	my $verb = $source->verb('use', 'uses');
 	my $skill = new Skills(id => $args->{skillID});
+	$args->{skill} = $skill;
 	my $disp = "$source $verb ".$skill->name;
 	$disp .= ' (lvl '.$args->{level}.')' unless $args->{level} == 65535;
 	$disp .= " on $target";
