@@ -57,7 +57,7 @@ use Plugins;
 use Globals qw(%config %monsters $accountID %equipSlot_lut @ai_seq @ai_seq_args);
 use Settings;
 use Log qw(message warning error debug);
-use Misc qw(whenStatusActiveMon);
+use Misc qw(whenStatusActiveMon bulkConfigModify);
 use Utils;
 
 
@@ -91,12 +91,14 @@ sub loadMonDB {
 	error ("MonsterDB: cannot load $Settings::tables_folder/monsterDB.txt\n",'monsterDB',0) unless (-r "$Settings::tables_folder/monsterDB.txt");
 	open MDB ,"<$Settings::tables_folder/monsterDB.txt";
 	@temp = <MDB>;
+	close MDB;
+	my $i = 0;
 	foreach my $line (@temp) {
 		next unless ($line =~ /(\d{4})\s+(\d+)\s+(\d)\s+(\d)\s+(\d+)/);
 		$monsterDB[(int($1) - 1000)] = [$2,$3,$4,$5];
+		$i++;
 	}
-	message "MonsterDB: loaded ".(scalar @monsterDB)." Monsters\n",'monsterDB';
-	close MDB;
+	message "MonsterDB: loaded $i Monsters\n",'monsterDB';
 }
 
 sub extendedCheck {
@@ -271,17 +273,15 @@ sub monsterEquip {
 		if (extendedCheck(undef,\%args)) {
 			foreach $slot (%equipSlot_lut) {
 				if ($config{"monsterEquip_${i}_equip_$slot"}
-				&& !$equip_list{$slot}) {
-					$equip_list{$slot} = $config{"monsterEquip_${i}_equip_$slot"};
+				&& !$equip_list{"attackEquip_$slot"}
+				&& defined Item::get($config{"monsterEquip_${i}_equip_$slot"})) {
+					$equip_list{"attackEquip_$slot"} = $config{"monsterEquip_${i}_equip_$slot"};
+					debug "monsterDB: using ".$config{"monsterEquip_${i}_equip_$slot"}."\n",'monsterDB';
 				}
 			}
 		}
 	}
-	if (%equip_list) {
-		foreach $slot (keys %equip_list) {
-			configModify("attackEquip_$slot", $equip_list{$slot}, 1);
-		}
-	}
+	bulkConfigModify(\%equip_list, 1) ;
 }
 
 1;
