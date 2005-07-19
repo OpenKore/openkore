@@ -89,6 +89,7 @@ sub initHandlers {
 	follow		=> \&cmdFollow,
 	friend		=> \&cmdFriend,
 	g			=> \&cmdGuildChat,
+	getplayerinfo		=> \&cmdGetPlayerInfo,
 	guild		=> \&cmdGuild,
 	i			=> \&cmdInventory,
 	identify	=> \&cmdIdentify,
@@ -1602,6 +1603,11 @@ sub cmdFriend {
 		message("--------------------------\n", "list");
 	}
 
+}
+
+sub cmdGetPlayerInfo {
+	my (undef, $args) = @_;
+	sendGetPlayerInfo(\$remote_socket, pack("V", $args));
 }
 
 sub cmdGuild {

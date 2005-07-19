@@ -59,6 +59,11 @@ New features:
 - 'eq slots' displays list of slotnames
   'eq slotname item' will try to equip item in slotname 
 
+New commands:
+- getplayerinfo (number)
+  Ask the server for the name of the object with that ID. You will not
+  see the reply unless you have debug level 2.
+
 New config options:
 - partySkill: target_dist (range)
   This is the same as target_dist for attackSkillSlot.

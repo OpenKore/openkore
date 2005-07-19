@@ -664,6 +664,8 @@ sub actor_info {
 	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 
+	debug "Received object info: $args->{name}\n", "parseMsg_presence/name", 2;
+
 	my $player = $players{$args->{ID}};
 	if ($player && %{$player}) {
 		# This packet tells us the names of players who aren't in a guild, as opposed to 0195.
@@ -882,6 +884,8 @@ sub actor_name_received {
 		updatePlayerNameCache($player);
 		debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
 		Plugins::callHook('charNameUpdate', $player);
+	} else {
+		debug "Player Info for ".unpack("V", $args->{ID})." (not on screen): $args->{name}\n", "parseMsg_presence", 2;
 	}
 }
 
