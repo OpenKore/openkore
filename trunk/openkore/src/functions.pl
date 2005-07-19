@@ -5804,34 +5804,6 @@ sub parseMsg {
 
 		message "Guild Member $name Log ".($guildNameRequest{online}?"In":"Out")."\n", 'guildchat';
 
-	} elsif ($switch eq "0196") {
-		# 0196 - type: word, ID: long, flag: bool
-		# This packet tells you about character statuses (such as when blessing or poison is (de)activated)
-		my $type = unpack("S1", substr($msg, 2, 2));
-		my $ID = substr($msg, 4, 4);
-		my $flag = unpack("C1", substr($msg, 8, 1));
-
-		my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
-		my $actor = Actor::get($ID);
-
-		my ($name, $is) = getActorNames($ID, 0, 'are', 'is');
-		if ($flag) {
-			# Skill activated
-			my $again = 'now';
-			if ($actor) {
-				$again = 'again' if $actor->{statuses}{$skillName};
-				$actor->{statuses}{$skillName} = 1;
-			}
-			message "$name $is $again: $skillName\n", "parseMsg_statuslook",
-				$ID eq $accountID ? 1 : 2;
-
-		} else {
-			# Skill de-activated (expired)
-			delete $actor->{statuses}{$skillName} if $actor;
-			message "$name $is no longer: $skillName\n", "parseMsg_statuslook",
-				$ID eq $accountID ? 1 : 2;
-		}
-
 	} elsif ($switch eq "0199") {
 		# 99 01 - 4 bytes, used by eAthena and < EP5 Aegis
 		my $type = unpack("x2 S1", $msg);
