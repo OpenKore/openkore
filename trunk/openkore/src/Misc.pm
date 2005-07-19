@@ -40,6 +40,7 @@ our @EXPORT = (
 	# Config modifiers
 	qw/auth
 	configModify
+	bulkConfigModify
 	setTimeout
 	saveConfigFile/,
 
@@ -214,6 +215,28 @@ sub configModify {
 
 	message("Config '$key' set to $val (was $config{$key})\n", "info") unless ($silent);
 	$config{$key} = $val;
+	saveConfigFile();
+}
+
+##
+# bulkConfigModify (r_hash, [silent])
+# r_hash: key => value to change
+# silent: if set to 1, do not print a message to the console.
+#
+# like configModify but for more than one value at the same time.
+sub bulkConfigModify {
+	my $r_hash = shift;
+	my $silent = shift;
+
+	foreach my $key (keys %{$r_hash}) {
+		Plugins::callHook('configModify', {
+			key => $key,
+			val => $r_hash->{$key},
+			silent => $silent
+		});
+		$config{$key} = $r_hash->{$key};
+		message("Config '$key' set to $r_hash->{$key} (was $config{$key})\n", "info") unless ($silent);
+	}
 	saveConfigFile();
 }
 
