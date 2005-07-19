@@ -89,15 +89,15 @@ sub bulkEquip {
 
 	return unless $list && %{$list};
 
-	my ($item,$rightHand,$rightAccessory);
+	my ($item, $rightHand, $rightAccessory);
 	foreach (keys %{$list}) {
 		if (!$equipSlot_rlut{$_}) {
 			debug "Wrong Itemslot specified: $_\n",'Item';
 		}
 		if ($_ eq 'leftHand' && $rightHand) {
-			$item->equipInSlot($_) if $item = get($list->{$_},$rightHand);
+			$item->equipInSlot($_) if $item = get($list->{$_}, $rightHand);
 		} elsif ($_ eq 'leftAccessory' && $rightAccessory) {
-			$item->equipInSlot($_) if $item = get($list->{$_},$rightAccessory);
+			$item->equipInSlot($_) if $item = get($list->{$_}, $rightAccessory);
 		} else {
 			$item->equipInSlot($_) if $item = get($list->{$_});
 		}
@@ -154,8 +154,7 @@ sub scanConfigAndCheck {
 	foreach (keys %eq_list) {
 		$item = get($eq_list{$_});
 		if ($item) {
-			$count++ unless ($char->{equipment}{$_} # return if Item is already equipped
-				&& $char->{equipment}{$_}{name} eq $item->{name}); # one or more Items need to be equipped
+			$count++ unless ($char->{equipment}{$_}	&& $char->{equipment}{$_}{name} eq $item->{name});
 		}
 	}
 	return $count; # All Items are equipped
@@ -257,6 +256,7 @@ sub use {
 # equips item in
 sub equipInSlot {
 	my ($self,$slot) = @_;
+	return 1 unless defined $equipSlot_rlut{$slot};
 	return 1 if ($char->{equipment}{$slot} # return if Item is already equipped
 				&& $char->{equipment}{$slot}{name} eq $self->{name});
 	#UnEquipByType($equipSlot_rlut{$slot});
