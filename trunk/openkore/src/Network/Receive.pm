@@ -120,6 +120,7 @@ sub new {
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
+		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
 		'01A6' => ['egg_list'],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
@@ -872,6 +873,33 @@ sub actor_name_received {
 		updatePlayerNameCache($player);
 		debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
 		Plugins::callHook('charNameUpdate', $player);
+	}
+}
+
+sub actor_status_active {
+	my ($self, $args) = @_;
+
+	my ($type, $ID, $flag) = @{$args}{qw(type ID flag)};
+
+	my $skillName = (defined($skillsStatus{$type})) ? $skillsStatus{$type} : "Unknown $type";
+	my $actor = Actor::get($ID);
+
+	my ($name, $is) = getActorNames($ID, 0, 'are', 'is');
+	if ($flag) {
+		# Skill activated
+		my $again = 'now';
+		if ($actor) {
+			$again = 'again' if $actor->{statuses}{$skillName};
+			$actor->{statuses}{$skillName} = 1;
+		}
+		message "$name $is $again: $skillName\n", "parseMsg_statuslook",
+			$ID eq $accountID ? 1 : 2;
+
+	} else {
+		# Skill de-activated (expired)
+		delete $actor->{statuses}{$skillName} if $actor;
+		message "$name $is no longer: $skillName\n", "parseMsg_statuslook",
+			$ID eq $accountID ? 1 : 2;
 	}
 }
 
