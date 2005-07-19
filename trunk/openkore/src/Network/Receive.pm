@@ -1490,6 +1490,9 @@ sub guild_chat {
 	        MsgUser => $chatMsgUser,
 	        Msg => $chatMsg
 	});
+
+	$args->{chatMsgUser} = $chatMsgUser;
+	$args->{chatMsg} = $chatMsg;
 }
 
 sub ignore_all_result {
@@ -2161,6 +2164,9 @@ sub party_chat {
 	        MsgUser => $chatMsgUser,
 	        Msg => $chatMsg
 	});
+
+	$args->{chatMsgUser} = $chatMsgUser;
+	$args->{chatMsg} = $chatMsg;
 }
 
 sub party_organize_result {
