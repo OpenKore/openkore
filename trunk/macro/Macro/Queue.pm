@@ -30,7 +30,7 @@ sub new {
   my $self = {
     name => $name,
     queue => [@{$macro{$name}}],
-    timeout => $timeout{macro_delay}{timeout} || 2,
+    timeout => $timeout{macro_delay}{timeout} || 1,
     time => time,
     finished => 0,
     overrideAI => 0
@@ -135,7 +135,7 @@ sub processQueue {
             return;
           }
         }
-        $queue->setTimeout($timeout{macro_delay}{timeout} || 2);
+        $queue->setTimeout($timeout{macro_delay}{timeout} || 1);
       }
     } else {
       if (!$queue->finished) {
