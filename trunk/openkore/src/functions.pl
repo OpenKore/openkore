@@ -5036,6 +5036,7 @@ sub parseMsg {
 			}
 
 			$char->{skills}{$skillName}{ID} = $skillID;
+			$char->{skills}{$skillName}{targetType} = $targetType;
 			if (!$char->{skills}{$skillName}{lv}) {
 				$char->{skills}{$skillName}{lv} = $level;
 			}
