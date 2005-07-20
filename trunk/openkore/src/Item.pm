@@ -39,6 +39,7 @@ use strict;
 use Globals;
 use Utils;
 use Log qw(message error warning debug);
+use Time::HiRes qw(time);
 use Network::Send;
 
 use overload '""' => \&nameString;
@@ -86,6 +87,7 @@ sub get {
 # %list = (leftHand => 'Katar', rightHand => 10);
 sub bulkEquip {
 	my $list = shift;
+	my $count = 0;
 
 	return unless $list && %{$list};
 
@@ -101,6 +103,8 @@ sub bulkEquip {
 		} else {
 			$item->equipInSlot($_) if $item = get($list->{$_});
 		}
+
+		$count++ if $item;
 
 		$rightHand = $item->{invIndex} if $item && $_ eq 'rightHand';
 		$rightAccessory = $item->{invIndex} if $item && $_ eq 'rightAccessory';
@@ -157,7 +161,21 @@ sub scanConfigAndCheck {
 			$count++ unless ($char->{equipment}{$_}	&& $char->{equipment}{$_}{name} eq $item->{name});
 		}
 	}
-	return $count; # All Items are equipped
+	return $count;
+}
+
+
+##
+# queueEquip( count )
+# count: how many items need to be equipped
+#
+# queues equip sequence.
+sub queueEquip {
+	my $count = shift;
+	return unless $count;
+	$ai_v{temp}{waitForEquip} += $count;
+	AI::queue('equip') unless $ai_seq[0] eq 'equip';
+	$timeout{ai_equip_giveup}{time} = time;
 }
 
 ##########
@@ -214,6 +232,7 @@ sub equip {
 	my $self = shift;
 	return 1 if $self->{equipped};
 	sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
+	queueEquip(1);
 	return 0;
 }
 
@@ -249,7 +268,7 @@ sub use {
 }
 
 ##
-# equipInSlot( slot )
+# equipInSlot( slot dontqueue )
 #
 # slot: where item should be equipped
 #
@@ -267,6 +286,7 @@ sub equipInSlot {
 	else {
 		sendEquip(\$remote_socket, $self->{index}, $equipSlot_rlut{$slot});
 	}
+	queueEquip(1);
 	return 0;
 }
 
