@@ -868,6 +868,14 @@ sub AI {
 
 	##### MISC #####
 
+	if ($ai_seq[0] eq "equip") {
+		#just wait until everything is equipped or timedOut
+		if (!$ai_v{temp}{waitForEquip} || timeOut($timeout{ai_equip_giveup})) {
+			AI::dequeue;
+			delete $ai_v{temp}{waitForEquip};
+		}
+	}
+
 	if ($ai_seq[0] eq "look" && timeOut($timeout{'ai_look'})) {
 		$timeout{'ai_look'}{'time'} = time;
 		sendLook(\$remote_socket, $ai_seq_args[0]{'look_body'}, $ai_seq_args[0]{'look_head'});
@@ -2858,11 +2866,9 @@ sub AI {
 			}
 
 			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
-				if ($ai_v{temp}{waitForEquip} && !timeOut($timeout{ai_equip_giveup})) {
-				} elsif ($ai_v{temp}{waitForEquip} = Item::scanConfigAndCheck("attackEquip")) {
+				if (Item::scanConfigAndCheck("attackEquip")) {
 					#check if item needs to be equipped
 					Item::scanConfigAndEquip("attackEquip");
-					$timeout{ai_equip_giveup}{time} = time;
 				} else {
 					sendAttack(\$remote_socket, $ID,
 						($config{'tankMode'}) ? 0 : 7);
@@ -3261,11 +3267,9 @@ sub AI {
 			warning "Timeout equiping for skill\n";
 			AI::dequeue;
 			${$args->{ret}} = 'equip timeout' if ($args->{ret});
-		} elsif ($ai_v{temp}{waitForEquip} && !timeOut($timeout{ai_equip_giveup})) {
-		} elsif ($ai_v{temp}{waitForEquip} = Item::scanConfigAndCheck("$args->{prefix}_equip")) {
+		} elsif (Item::scanConfigAndCheck("$args->{prefix}_equip")) {
 			#check if item needs to be equipped
 			Item::scanConfigAndEquip("$args->{prefix}_equip");
-			$timeout{ai_equip_giveup}{time} = time;
 		} elsif (timeOut($args->{waitBeforeUse})) {
 			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
 				# This skill is supposed to be used for attacking a monster, but that monster has died
