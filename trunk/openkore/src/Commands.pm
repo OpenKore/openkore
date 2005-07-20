@@ -194,7 +194,7 @@ sub initDescriptions {
 	cil			=> 'Clear the item log.',
 	cl			=> 'Clear the chat log.',
 	closeshop	=> 'Close your vending shop.',
-	conf		=> 'Change a configuration key.',
+	conf		=> ['Change a configuration key.','<key> displays value of key','<key> <value> sets key to value','<key> "none" key will be set empty'],
 	deal		=> 'Trade items with another player.',
 	debug		=> 'Toggle debug on/off.',
 	dl			=> 'List items in the deal.',
@@ -210,6 +210,7 @@ sub initDescriptions {
 	friend		=> 'Friend management.',
 	g			=> 'Chat in the guild chat.',
 	guild		=> 'Guild management.',
+	help		=> ['Help displays commands','<command>* displays detailed information about command','Syntax:','<command> is needed'],
 	i			=> 'Display inventory items.',
 	identify	=> 'Identify an unindentified item.',
 	ignore		=> 'Ignore a user (block his messages).',
@@ -1331,7 +1332,7 @@ sub cmdEmotion {
 sub cmdEquip {
 	# Equip an item
 	my (undef, $args) = @_;
-	my ($arg1,$arg2) = $args =~ /^(\w+)\s*(.*)/;
+	my ($arg1,$arg2) = $args =~ /^(\S+)\s*(.*)/;
 	my $slot;
 	my $item;
 
@@ -1718,31 +1719,62 @@ sub cmdGuildChat {
 sub cmdHelp {
 	# Display help message
 	my (undef, $args) = @_;
-	my @commands = split(/ +/, $args);
+	my @commands_req = split(/ +/, $args);
 	my @unknown;
+	my @found;
 
 	initDescriptions if (!%descriptions);
-	@commands = sort keys %descriptions if (!@commands);
+	my @commands = (@commands_req)? @commands_req : (sort keys %descriptions);
 
-	my $message;
+	my ($message,$cmd);
 
 	$message .= "--------------- Available commands ---------------\n";
 	foreach my $switch (@commands) {
 		if ($descriptions{$switch}) {
-			$message .= sprintf("%-11s  %s\n", $switch, $descriptions{$switch});
+			if (ref($descriptions{$switch}) eq 'ARRAY') {
+				if (@commands_req) {
+					$cmd = $switch;
+					foreach (@{$descriptions{$switch}}) {
+						$message .= sprintf("%-11s  %s\n", $cmd, $_);
+						$cmd = '';
+					}
+				} else {
+					$message .= sprintf("%-11s  %s\n",$switch, $descriptions{$switch}->[0]);
+				}
+			}
+			else {
+				$message .= sprintf("%-11s  %s\n", $switch, $descriptions{$switch});
+			}
+			push @found, $switch;
 		} else {
 			push @unknown, $switch;
 		}
 	}
 
-	@commands = sort keys %customCommands;
+	@commands = (@commands_req)? @commands_req : (sort keys %customCommands);
 	foreach my $switch (@commands) {
 		if ($customCommands{$switch}) {
-			$message .= sprintf("%-10s  %s\n", $switch, $customCommands{$switch}{desc});
-			@unknown = ();
+			if (ref($customCommands{$switch}{desc}) eq 'ARRAY') {
+				if (@commands_req) {
+					$cmd = $switch;
+					foreach (@{$customCommands{$switch}{desc}}) {
+						$message .= sprintf("%-11s  %s\n", $cmd, $_);
+						$cmd = '';
+					}
+				} else {
+					$message .= sprintf("%-11s  %s\n",$switch, $customCommands{$switch}{desc}->[0]);
+				}
+			} else {
+				$message .= sprintf("%-11s  %s\n", $switch, $customCommands{$switch}{desc});
+			}
+			push @found, $switch;
 		} else {
-			push @unknown, $switch;
+			push @unknown, $switch unless defined binFind(\@unknown,$switch);
 		}
+	}
+
+	foreach (@found) {
+		binRemoveAndShift(\@unknown,$_);
 	}
 
 	if (@unknown) {
