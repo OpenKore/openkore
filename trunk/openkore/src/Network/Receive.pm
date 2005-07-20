@@ -886,7 +886,7 @@ sub actor_name_received {
 		debug "Player Info: $player->{name} ($player->{binID})\n", "parseMsg_presence", 2;
 		Plugins::callHook('charNameUpdate', $player);
 	} else {
-		debug "Player Info for ".unpack("V", $args->{ID})." (not on screen): $args->{name}\n", "parseMsg_presence", 2;
+		debug "Player Info for ".unpack("V", $args->{ID})." (not on screen): $args->{name}\n", "parseMsg_presence/remote", 2;
 	}
 }
 
