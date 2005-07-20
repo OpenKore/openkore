@@ -58,6 +58,7 @@ New features:
 - 'cart add' and 'cart get' commands now accept names.
 - 'eq slots' displays list of slotnames
   'eq slotname item' will try to equip item in slotname 
+- Fractional weight in inventory is now displayed.
 
 New commands:
 - getplayerinfo (number)
