@@ -424,3 +424,10 @@ port 6900
 master_version 18
 version 20
 serverType 3
+
+[Ragnarok Frontier Private Server]
+ip 70.68.0.160
+port 6901
+master_version 20
+version 1
+private 1
