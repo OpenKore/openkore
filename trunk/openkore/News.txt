@@ -98,6 +98,8 @@ New config options:
   for constantly dropping and selecting the same target.
 - logConsole (flag)
   Log everything that openkore prints on the console to logs\console.txt.
+- attackAuto_notInTown (flag)
+  Don't attack monsters while inside a town.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
