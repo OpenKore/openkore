@@ -115,7 +115,7 @@ sub extendedCheck {
 
 
     my $element = $element_lut[($monsterInfo->[3] % 10)];
-    my $element_lvl = $monsterInfo->[3] / 20;
+    my $element_lvl = int($monsterInfo->[3] / 20);
     my $race = $race_lut[$monsterInfo->[2]];
     my $size = $size_lut[$monsterInfo->[1]];
 
@@ -256,6 +256,7 @@ sub onStatusChange {
 	my $actor = $args->{actor};
 	return unless (UNIVERSAL::isa($actor, 'Actor::Monster'));
 	my $index = binFind(\@ai_seq, 'attack');
+	return unless defined $index;
 	return unless $ai_seq_args[$index]->{target} == $actor->{ID};
 	monsterEquip($actor);
 }
