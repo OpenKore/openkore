@@ -2685,7 +2685,7 @@ sub stat_info {
 			$skillChanged = 0;
 		}
 	} elsif ($args->{type} == 24) {
-		$char->{weight} = int($args->{val} / 10);
+		$char->{weight} = $args->{val} / 10;
 		debug "Weight: $char->{weight}\n", "parseMsg", 2;
 	} elsif ($args->{type} == 25) {
 		$char->{weight_max} = int($args->{val} / 10);
