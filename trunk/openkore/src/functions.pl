@@ -3355,7 +3355,8 @@ sub AI {
 	  && !($config{'itemsTakeAuto'} >= 2 && AI::is("take", "items_take"))
 	  && !($config{'itemsGatherAuto'} >= 2 && AI::is("take", "items_gather"))
 	  && timeOut($timeout{ai_attack_auto})
-	  && (!$config{teleportAuto_search} || $ai_v{temp}{searchMonsters} > 0)) {
+	  && (!$config{teleportAuto_search} || $ai_v{temp}{searchMonsters} > 0)
+	  && checkSelfCondition('attackAuto')) {
 
 		# If we're in tanking mode, only attack something if the person we're tanking for is on screen.
 		my $foundTankee;
