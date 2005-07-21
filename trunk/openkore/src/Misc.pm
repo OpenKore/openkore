@@ -2918,7 +2918,7 @@ sub checkSelfCondition {
 		if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
 			return 0 if (!inRange($char->{hp}, $1));
 		} else {
-			return 0 if (!inRange($char->percent_sp, $config{$prefix."_hp"}));
+			return 0 if (!inRange($char->hp_percent, $config{$prefix."_hp"}));
 		}
 	}
 
@@ -2926,7 +2926,7 @@ sub checkSelfCondition {
 		if ($config{$prefix."_sp"} =~ /^(.*)\%$/) {
 			return 0 if (!inRange($char->{sp}, $1));
 		} else {
-			return 0 if (!inRange($char->percent_sp, $config{$prefix."_sp"}));
+			return 0 if (!inRange($char->sp_percent, $config{$prefix."_sp"}));
 		}
 	}
 
