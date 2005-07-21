@@ -14,8 +14,8 @@ TODO:
 - hp, sp options now have a new format.
   hp > 50  - means more than 50hp
   hp > 50% - means more than 50 percent of you hp.
-- hp_upper,sp_upper removed use hp sp instead
-- minAggressive, may Aggressives removed use aggressives instead
+- Old hp_upper,sp_upper removed use hp sp instead
+  Old minAggressives, maxAggressives options removed use aggressives instead
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
@@ -45,6 +45,7 @@ Bug fixes:
   (0 == '') being true (affecting $skipID in findIndexStringList_lc).
 - Fix crash with the weight command.
 - Give an error if someone tries to storage an equipped item.
+- Show unknown for public chat distance if player is off screen.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
