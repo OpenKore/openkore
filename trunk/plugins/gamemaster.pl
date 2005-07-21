@@ -16,6 +16,8 @@ my $commands = Commands::register(
 	['gmcreate',  'Create items or monsters.',   \&gmcreate],
 	['gmhide',    'Toggle perfect GM hide.',     \&gmhide],
 	['gmwarpto',  'Warp to a player.',           \&gmwarpto],
+	['gmsummon',  'Summon a player to you.',     \&gmsummon],
+	['gmdc',      'Disconnect a player AID.',    \&gmdc],
 	['gmkillall', 'Disconnect all users.',       \&gmkillall]
 );
 
@@ -52,6 +54,32 @@ sub gmmapmove {
 	}
 
 	my $packet = pack("C*", 0x40, 0x01) . pack("a16", $map_name) . pack("v1 v1", $x, $y);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmsummon {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	if ($args eq '') {
+		error "Usage: gmsummon <player_name>\n";
+		return;
+	}
+
+	my $packet = pack("C*", 0xBD, 0x01).pack("a24", $args);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmdc {
+	my (undef, $args) = @_;
+	return unless ($conState == 5);
+
+	if ($args !~ /^\d+$/) {
+		error "Usage: gmdc <player_AID>\n";
+		return;
+	}
+
+	my $packet = pack("C*", 0xCC, 0x00).pack("V1", $args);
 	sendMsgToServer(\$remote_socket, $packet);
 }
 
