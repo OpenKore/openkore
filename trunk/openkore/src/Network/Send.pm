@@ -120,6 +120,7 @@ our @EXPORT = qw(
 	sendPreLoginCode
 	sendQuit
 	sendRaw
+	sendRepairItem
 	sendRespawn
 	sendPrivateMsg
 	sendSell
@@ -131,6 +132,8 @@ our @EXPORT = qw(
 	sendStorageClose
 	sendStorageGet
 	sendStand
+	sendSuperNoviceDoriDori
+	sendSuperNoviceExplosion
 	sendSync
 	sendTake
 	sendTalk
@@ -787,7 +790,11 @@ sub sendFriendRemove {
 sub sendForgeItem {
 	my $r_socket = shift;
 	my $ID = shift;
-	my $msg = pack("C*", 0x8E, 0x01) . pack("v*", $ID) . pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+	# nameIDs for added items such as Star Crumb or Flame Heart
+	my $item1 = shift;
+	my $item2 = shift;
+	my $item3 = shift;
+	my $msg = pack("C*", 0x8E, 0x01) . pack("v1 v1 v1 v1", $ID, $item1, $item2, $item3);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Forge Item: $ID\n" , 2;
 }
@@ -1368,6 +1375,7 @@ sub sendRepairItem {
 	my $index = shift;
 	my $msg = pack("C*", 0xFE, 0x01) . pack("v1", $index) . pack("C*", 0x00);
 	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent repair item: $index\n", "sendPacket", 2;
 }
 
 sub sendRespawn {
@@ -1596,6 +1604,18 @@ sub sendStand {
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Standing\n", "sendPacket", 2;
+}
+
+sub sendSuperNoviceDoriDori {
+	my $msg = pack("C*", 0xE7, 0x01);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Super Novice dori dori\n", "sendPacket", 2;
+}
+
+sub sendSuperNoviceExplosion {
+	my $msg = pack("C*", 0xED, 0x01);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Super Novice Explosion\n", "sendPacket", 2;
 }
 
 sub sendSync {
