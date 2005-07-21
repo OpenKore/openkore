@@ -25,7 +25,7 @@ no warnings qw(redefine uninitialized);
 use Time::HiRes qw(time);
 
 use Globals;
-use Log qw(message error warning);
+use Log qw(message debug error warning);
 use Network::Send;
 use Settings;
 use Plugins;
@@ -38,11 +38,9 @@ use Match;
 
 our %handlers;
 our %completions;
-our %descriptions;
 
 undef %handlers;
 undef %completions;
-undef %descriptions;
 
 our %customCommands;
 
@@ -171,109 +169,6 @@ sub initCompletions {
 	sp		=> \&cmdPlayerSkill,
 	);
 }
-
-sub initDescriptions {
-	%descriptions = (
-	a			=> 'Attack a monster.',
-	ai			=> 'Enable/disable AI.',
-	aiv			=> 'Display current AI sequences.',
-	al			=> 'Display information about your vending store.',
-	arrowcraft	=> 'Create Arrows.',
-	as			=> 'Stop attacking a monster.',
-	autobuy		=> 'Initiate auto-buy AI sequence.',
-	autosell	=> 'Initiate auto-sell AI sequence.',
-	autostorage	=> 'Initiate auto-storage AI sequence.',
-	auth		=> '(Un)authorize a user for using Kore chat commands.',
-	bangbang	=> 'Does a bangbang body turn.',
-	bingbing	=> 'Does a bingbing body turn.',
-	buy			=> 'Buy an item from the current NPC shop',
-	c			=> 'Chat in the public chat.',
-	cart		=> 'Cart management',
-	chat		=> 'Chat room management.',
-	chist		=> 'Display last few entries from the chat log.',
-	cil			=> 'Clear the item log.',
-	cl			=> 'Clear the chat log.',
-	closeshop	=> 'Close your vending shop.',
-	conf		=> ['Change a configuration key.','<key> displays value of key','<key> <value> sets key to value','<key> "none" key will be set empty'],
-	deal		=> 'Trade items with another player.',
-	debug		=> 'Toggle debug on/off.',
-	dl			=> 'List items in the deal.',
-	doridori	=> 'Does a doridori head turn.',
-	drop		=> 'Drop an item from the inventory.',
-	#dump		=> 'Dump the current packet recieve buffer.',
-	#dumpnow	=> 'Dump the current packet recieve buffer without quitting.',
-	e			=> 'Show emotion.',
-	eq			=> 'Equip an item.',
-	#eval		=> 'Evaluable a Perl expression (developers only).',
-	exp			=> 'Experience report.',
-	follow		=> 'Follow another player.',
-	friend		=> 'Friend management.',
-	g			=> 'Chat in the guild chat.',
-	guild		=> 'Guild management.',
-	help		=> ['Help displays commands','<command>* displays detailed information about command','Syntax:','<command> is needed'],
-	i			=> 'Display inventory items.',
-	identify	=> 'Identify an unindentified item.',
-	ignore		=> 'Ignore a user (block his messages).',
-	il			=> 'Display items on the ground.',
-	ihist		=> 'Displays last few entries of the item log.',
-	im			=> 'Use item on monster.',
-	ip			=> 'Use item on player.',
-	is			=> 'Use item on yourself.',
-	kill		=> 'Attack another player (PVP/GVG only).',
-	look		=> 'Look in a certain direction.',
-	lookp		=> 'Look at a certain player.',
-	reload		=> 'Reload configuration files.',
-	memo		=> 'Save current position for warp portal.',
-	ml			=> 'List monsters that are on screen.',
-	move		=> 'Move your character.',
-	nl			=> 'List NPCs that are on screen.',
-	openshop	=> 'Open your vending shop.',
-	p			=> 'Chat in the party chat.',
-	party		=> 'Party management.',
-	pet			=> 'Pet management.',
-	petl		=> 'List pets that are on screen.',
-	pl			=> 'List players that are on screen.',
-	plugin		=> 'Control plugins.',
-	pm			=> 'Send a private message.',
-	pml			=> 'Quick PM list.',
-	portals		=> 'List portals that are on screen.',
-	quit		=> 'Exit this program.',
-	#rc			=> 'Reload source code files.',
-	relog		=> 'Log out then log in again.',
-	respawn		=> 'Respawn back to the save point.',
-	s			=> 'Display character status.',
-	sell		=> 'Sell items to an NPC.',
-	send		=> 'Send a raw packet to the server.',
-	sit			=> 'Sit down.',
-	skills		=> 'Show skills or add skill point.',
-	storage		=> 'Handle items in Kafra storage.',
-	store		=> 'Buy items from an NPC.',
-	sl			=> 'Use skill on location.',
-	sm			=> 'Use skill on monster.',
-	sp			=> 'Use skill on player.',
-	ss			=> 'Use skill on self.',
-	st			=> 'Display stats.',
-	stand		=> 'Stand up.',
-	stat_add	=> 'Add status point.',
-	switchconf	=> 'Switch configuration file.',
-	take		=> 'Take an item from the ground.',
-	talk		=> 'Manually talk to an NPC.',
-	talknpc		=> 'Send a sequence of responses to an NPC.',
-	tank		=> 'Tank for a player.',
-	tele		=> 'Teleport to a random location.',
-	testshop	=> 'Show what your vending shop would well.',
-	timeout		=> 'Set a timeout.',
-	vender		=> 'Buy items from vending shops.',
-	verbose		=> 'Toggle verbose on/off.',
-	version		=> 'Display the version of openkore.',
-	vl			=> 'List nearby vending shops.',
-	warp		=> 'Open warp portal.',
-	weight		=> 'Gives a report about your inventory weight.',
-	where		=> 'Shows your current location.',
-	who			=> 'Display the number of people on the current server.',
-	);
-}
-
 
 ##
 # Commands::run(input)
@@ -1723,27 +1618,19 @@ sub cmdHelp {
 	my @unknown;
 	my @found;
 
-	initDescriptions if (!%descriptions);
 	my @commands = (@commands_req)? @commands_req : (sort keys %descriptions);
 
 	my ($message,$cmd);
 
-	$message .= "--------------- Available commands ---------------\n";
+	$message .= "--------------- Available commands ---------------\n" unless @commands_req;
 	foreach my $switch (@commands) {
 		if ($descriptions{$switch}) {
 			if (ref($descriptions{$switch}) eq 'ARRAY') {
 				if (@commands_req) {
-					$cmd = $switch;
-					foreach (@{$descriptions{$switch}}) {
-						$message .= sprintf("%-11s  %s\n", $cmd, $_);
-						$cmd = '';
-					}
+					helpIndent($switch,$descriptions{$switch});
 				} else {
 					$message .= sprintf("%-11s  %s\n",$switch, $descriptions{$switch}->[0]);
 				}
-			}
-			else {
-				$message .= sprintf("%-11s  %s\n", $switch, $descriptions{$switch});
 			}
 			push @found, $switch;
 		} else {
@@ -1756,16 +1643,10 @@ sub cmdHelp {
 		if ($customCommands{$switch}) {
 			if (ref($customCommands{$switch}{desc}) eq 'ARRAY') {
 				if (@commands_req) {
-					$cmd = $switch;
-					foreach (@{$customCommands{$switch}{desc}}) {
-						$message .= sprintf("%-11s  %s\n", $cmd, $_);
-						$cmd = '';
-					}
+					helpIndent($switch,$customCommands{$switch}{desc});
 				} else {
 					$message .= sprintf("%-11s  %s\n",$switch, $customCommands{$switch}{desc}->[0]);
 				}
-			} else {
-				$message .= sprintf("%-11s  %s\n", $switch, $customCommands{$switch}{desc});
 			}
 			push @found, $switch;
 		} else {
@@ -1785,8 +1666,49 @@ sub cmdHelp {
 		}
 		error("Type 'help' to see a list of all available commands.\n");
 	}
-	$message .= "--------------------------------------------------\n";
+	$message .= "--------------------------------------------------\n"unless @commands_req;
 
+	message $message, "list" unless @commands_req;
+}
+
+sub helpIndent {
+	my $cmd = shift;
+	my $desc = shift;
+	my $message;
+	my $messageTmp;
+	my @words;
+	my $length = 0;
+
+	$message = "------------ Help for $cmd ------------\n";
+	$message .= shift (@{$desc})."\n";
+
+	foreach (@{$desc}) {
+		$length = length ($_->[0]) if length ($_->[0]) > $length;
+	}
+	my $pattern = "$cmd %-${length}s    -%s\n";
+	my $padsize = length($cmd) + $length + 5;
+	my $pad = sprintf("%-${padsize}s",'');
+
+	foreach (@{$desc}) {
+		if ($padsize + length($_->[1]) > 79) {
+			@words = split (/ /,$_->[1]);
+			$message .= sprintf ("$cmd %-${length}s    ",$_->[0]);
+			$messageTmp = '';
+			foreach my $word (@words) {
+				if ($padsize + length($messageTmp) + length($word) + 1 > 79) {
+					$message .= $messageTmp . "\n$pad";
+					$messageTmp = '';
+				} else {
+					$messageTmp .= "$word ";
+				}
+			}
+			$message .= $messageTmp."\n";
+		}
+		else {
+			$message .= sprintf ($pattern,$_->[0],$_->[1]);
+		}
+	}
+	$message .= "--------------------------------------------------\n";
 	message $message, "list";
 }
 

@@ -224,6 +224,7 @@ addConfigFile("$Settings::control_folder/routeweights.txt", \%routeWeights, \&pa
 addConfigFile("$Settings::control_folder/arrowcraft.txt", \%arrowcraft_items, \&parseDataFile_lc);
 
 addConfigFile("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT);
+addConfigFile("$Settings::tables_folder/commanddescriptions.txt", \%descriptions, \&parseCommandsDescription);
 addConfigFile("$Settings::tables_folder/directions.txt", \%directions_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
 addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
