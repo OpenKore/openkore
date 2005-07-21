@@ -5013,13 +5013,14 @@ sub parseMsg {
 			# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
 			my $targetType = unpack("S1", substr($msg, $i+2, 2)); # we don't use this yet
 			my $level = unpack("S1", substr($msg, $i + 6, 2));
-			my $sp = unpack("S1", substr($msg, $i + 8, 2)); # we don't use this yet
+			my $sp = unpack("S1", substr($msg, $i + 8, 2));
 			my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
 			if (!$skillName) {
 				$skillName = Skills->new(id => $skillID)->handle;
 			}
 
 			$char->{skills}{$skillName}{ID} = $skillID;
+			$char->{skills}{$skillName}{sp} = $sp;
 			$char->{skills}{$skillName}{targetType} = $targetType;
 			if (!$char->{skills}{$skillName}{lv}) {
 				$char->{skills}{$skillName}{lv} = $level;
