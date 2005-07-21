@@ -34,6 +34,7 @@ our @EXPORT = qw(
 	parseArrayFile
 	parseAvoidControl
 	parseChatResp
+	parseCommandsDescription
 	parseConfigFile
 	parseDataFile
 	parseDataFile_lc
@@ -148,6 +149,49 @@ sub parseChatResp {
 				responses => \@responses
 			);
 			push @{$r_array}, \%args;
+		}
+	}
+	close FILE;
+}
+
+sub parseCommandsDescription {
+	my $file = shift;
+	my $r_hash = shift;
+	my $no_undef = shift;
+
+	undef %{$r_hash} unless $no_undef;
+	my ($key, $commentBlock, $description);
+
+	open FILE, "< $file";
+	foreach (<FILE>) {
+		next if (/^[\s\t]*#/);
+		s/[\r\n]//g;	# Remove line endings
+		s/^[\t\s]*//;	# Remove leading tabs and whitespace
+		s/\s+$//g;	# Remove trailing whitespace
+		next if ($_ eq "");
+
+		if (!defined $commentBlock && /^\/\*/) {
+			$commentBlock = 1;
+			next;
+
+		} elsif (m/\*\/$/) {
+			undef $commentBlock;
+			next;
+
+		} elsif (defined $commentBlock) {
+			next;
+
+		} elsif ($description) {
+			$description = 0;
+			push @{$r_hash->{$key}}, $_;
+
+		} elsif (/^\[(\w+)\]$/) {
+			$key = $1;
+			$description = 1;
+			$r_hash->{$key} = [];
+
+		} elsif (/^(.*?)\t+(.*)$/) {
+			push @{$r_hash->{$key}}, [$1, $2];
 		}
 	}
 	close FILE;
