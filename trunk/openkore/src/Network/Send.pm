@@ -129,8 +129,10 @@ our @EXPORT = qw(
 	sendSkillUse
 	sendSkillUseLoc
 	sendStorageAdd
+	sendStorageAddFromCart
 	sendStorageClose
 	sendStorageGet
+	sendStorageGetFromCart
 	sendStand
 	sendSuperNoviceDoriDori
 	sendSuperNoviceExplosion
@@ -1544,6 +1546,15 @@ sub sendStorageAdd {
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
 
+sub sendStorageAddFromCart {
+	my $index = shift;
+	my $amount = shift;
+	my $msg;
+	$msg = pack("C*", 0x29, 0x01) . pack("v*", $index) . pack("V*", $amount);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Storage Add From Cart: $index x $amount\n", "sendPacket", 2;
+}
+
 sub sendStorageClose {
 	my $msg;
 	if ($config{serverType} == 3) {
@@ -1581,6 +1592,15 @@ sub sendStorageGet {
 	}
 	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendStorageGetFromCart {
+	my $index = shift;
+	my $amount = shift;
+	my $msg;
+	$msg = pack("C*", 0x28, 0x01) . pack("v*", $index) . pack("V*", $amount);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Storage Get From Cart: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendStand {
