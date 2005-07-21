@@ -452,3 +452,5 @@ einbech.rsw#Einbech, mining village#
 einbroch.rsw#Einbroch, the Steel City#
 lhz_fild02.rsw#Lighthalzen Field#
 lhz_fild03.rsw#Lighthalzen Field#
+ayothaya.rsw#Ayothaya#
+ayo_in01.rsw#Inside Ayothaya#
