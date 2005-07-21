@@ -134,6 +134,8 @@ sub new {
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'01EE' => ['inventory_items_stackable'],
 		'01F0' => ['storage_items_stackable'],
+		'01FC' => ['repair_list'],
+		'01FE' => ['repair_result', 'v1 C1', [qw(nameID flag)]],
 	};
 
 	bless \%self, $class;
@@ -2373,6 +2375,34 @@ sub refine_result {
 		message "You successfully refined a weapon (ID $args->{nameID})!\n";
 	}
 
+}
+
+sub repair_list {
+	my ($self, $args) = @_;
+	my $msg;
+	$msg .= "--------Repair List--------\n";
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 13) {
+		my $index = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		my $nameID = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
+		# what are these  two?
+		my $status = unpack("V1", substr($args->{RAW_MSG}, $i+4, 4));
+		my $status2 = unpack("V1", substr($args->{RAW_MSG}, $i+8, 4));
+		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
+		my $name = itemNameSimple($nameID);
+		$msg .= "$index $name\n";
+	}
+	$msg .= "---------------------------\n";
+	message $msg, "list";
+}
+
+sub repair_result {
+	my ($self, $args) = @_;
+	my $itemName = itemNameSimple($args->{nameID});
+	if ($args->{flag}) {
+		message "Repair of $itemName failed.\n";
+	} else {
+		message "Successfully repaired $itemName.\n";
+	}
 }
 
 sub secure_login_key {

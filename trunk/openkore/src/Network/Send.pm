@@ -1155,11 +1155,11 @@ sub sendMasterSecureLogin {
 	}
 	$md5->add($salt);
 	if ($type < 3 ) {
-		$msg = pack("C*", 0xDD, 0x01) . pack("V1", $version) . $username . chr(0) x (24 - length($username)) .
+		$msg = pack("C*", 0xDD, 0x01) . pack("V1", $version) . pack("a24", $username) .
 					 $md5->digest . pack("C*", $master_version);
 	}else{
 		$account = ($account>0) ? $account -1 : 0;
-		$msg = pack("C*", 0xFA, 0x01) . pack("V1", $version) . $username . chr(0) x (24 - length($username)) .
+		$msg = pack("C*", 0xFA, 0x01) . pack("V1", $version) . pack("a24", $username) .
 					 $md5->digest . pack("C*", $master_version). pack("C1", $account);
 	}
 	sendMsgToServer($r_socket, $msg);
