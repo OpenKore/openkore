@@ -2196,16 +2196,19 @@ sub public_message {
 
 	stripLanguageCode(\$args->{chatMsg});
 
+	my $actor = Actor::get($args->{ID});
+
 	my $dist = "unknown";
-	if ($players{$args->{ID}}) {
-		$dist = distance($char->{pos_to}, $players{$args->{ID}}{pos_to});
+	if ($actor->{type} ne 'Unknown') {
+		$dist = distance($char->{pos_to}, $actor->{pos_to});
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 	}
 
 	my $message;
-	$message = "$args->{chatMsgUser} ($players{$args->{ID}}{binID}): $args->{chatMsg}";
+	$message = "$args->{chatMsgUser} ($actor->{binID}): $args->{chatMsg}";
 
-	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y}] [dist=$dist] " .
+	# this code autovivifies $actor->{pos_to} but it doesnt matter
+	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$actor->{pos_to}{x}, $actor->{pos_to}{y}] [dist=$dist] " .
 		"$message\n") if ($config{logChat});
 	message "[dist=$dist] $message\n", "publicchat";
 
