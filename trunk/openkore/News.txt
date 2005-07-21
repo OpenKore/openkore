@@ -61,6 +61,7 @@ New features:
 - 'eq slots' displays list of slotnames
   'eq slotname item' will try to equip item in slotname 
 - Fractional weight in inventory is now displayed.
+- Show proper SP for all skills (auto-detected).
 
 New commands:
 - getplayerinfo (number)
