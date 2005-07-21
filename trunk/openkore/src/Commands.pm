@@ -2885,6 +2885,11 @@ sub cmdStorage_add {
 		return;
 	}
 
+	if ($item->{equipped}) {
+		error "Inventory Item '$name' is equipped.\n";
+		return;
+	}
+
 	if (!defined($amount) || $amount > $item->{amount}) {
 		$amount = $item->{amount};
 	}
@@ -3574,6 +3579,13 @@ sub cmdWeight {
 	my (undef, $itemWeight) = @_;
 
 	$itemWeight ||= 1;
+
+	if ($itemWeight !~ /^\d$/) {
+		error	"Error in function 'weight' (Inventory Weight Info)\n" .
+			"Usage: weight [item weight]\n";
+		return;
+	}
+
 	my $itemString = $itemWeight == 1 ? '' : "*$itemWeight";
 	message "Weight: $char->{weight}/$char->{weight_max} (".
 		sprintf("%.02f", $char->weight_percent)."%)\n", "list";
