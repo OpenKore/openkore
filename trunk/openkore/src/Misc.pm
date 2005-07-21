@@ -2915,23 +2915,19 @@ sub checkSelfCondition {
 	return 0 if $config{$prefix."_whenIdle"} && !AI::isIdle();
 
 	if ($config{$prefix . "_hp"}) {
-		return 0 unless (inRange(percent_hp($char), $config{$prefix . "_hp"}));
-	} elsif ($config{$prefix . "_hp_upper"}) { # backward compatibility with old config format
-		return 0 unless (percent_hp($char) <= $config{$prefix . "_hp_upper"} && percent_hp($char) >= $config{$prefix . "_hp_lower"});
+		if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{hp}, $1));
+		} else {
+			return 0 if (!inRange($char->percent_sp, $config{$prefix."_hp"}));
+		}
 	}
 
-	if ($config{$prefix . "_sp"}) {
-		return 0 unless (inRange(percent_sp($char), $config{$prefix . "_sp"}));
-	} elsif ($config{$prefix . "_sp_upper"}) { # backward compatibility with old config format
-		return 0 unless (percent_sp($char) <= $config{$prefix . "_sp_upper"} && percent_sp($char) >= $config{$prefix . "_sp_lower"});
-	}
-
-	if ($config{$prefix . "_hpAbsolute"}) {
-		return 0 unless (inRange($char->{hp}, $config{$prefix . "_hpAbsolute"}));
-	}
-
-	if ($config{$prefix . "_spAbsolute"}) {
-		return 0 unless (inRange($char->{sp}, $config{$prefix . "_spAbsolute"}));
+	if ($config{$prefix."_sp"}) {
+		if ($config{$prefix."_sp"} =~ /^(.*)\%$/) {
+			return 0 if (!inRange($char->{sp}, $1));
+		} else {
+			return 0 if (!inRange($char->percent_sp, $config{$prefix."_sp"}));
+		}
 	}
 
 	# check skill use SP if this is a 'use skill' condition
@@ -2950,9 +2946,6 @@ sub checkSelfCondition {
 
 	if (defined $config{$prefix . "_aggressives"}) {
 		return 0 unless (inRange(scalar ai_getAggressives(), $config{$prefix . "_aggressives"}));
-	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
-		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getAggressives());
-		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getAggressives());
 	}
 
 	if (defined $config{$prefix . "_partyAggressives"}) {
@@ -3056,10 +3049,12 @@ sub checkPlayerCondition {
 	# we will have player HP info (only) if we are in the same party
 	if ($chars[$config{char}]{party}{users}{$id}) {
 		if ($config{$prefix . "_hp"}) {
-			return 0 unless (inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $config{$prefix . "_hp"}));
-		} elsif ($config{$prefix . "Hp_upper"}) { # backward compatibility with old config format
-			return 0 unless (percent_hp($chars[$config{char}]{party}{users}{$id}) <= $config{$prefix . "Hp_upper"});
-			return 0 unless (percent_hp($chars[$config{char}]{party}{users}{$id}) >= $config{$prefix . "Hp_lower"});
+			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
+				return 0 if (!inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $1));
+			} else {
+				return 0 if (!inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $config{$prefix . "_hp"}));
+			}
+
 		}
 	}
 
@@ -3071,9 +3066,6 @@ sub checkPlayerCondition {
 
 	if ($config{$prefix . "_aggressives"}) {
 		return 0 unless (inRange(scalar ai_getPlayerAggressives($id), $config{$prefix . "_aggressives"}));
-	} elsif ($config{$prefix . "_maxAggressives"}) { # backward compatibility with old config format
-		return 0 unless ($config{$prefix . "_minAggressives"} <= ai_getPlayerAggressives($id));
-		return 0 unless ($config{$prefix . "_maxAggressives"} >= ai_getPlayerAggressives($id));
 	}
 
 	if ($config{$prefix . "_defendMonsters"}) {

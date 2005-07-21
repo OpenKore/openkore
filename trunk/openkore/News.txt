@@ -1,5 +1,5 @@
 ==================
-### 1.6.3
+### 1.7.0
 ==================
 
 TODO:
@@ -11,6 +11,11 @@ TODO:
   to 'Cart Boost' for consistency with the skill name.
 - \$remote_socket parameter removed from some Network/Send.pm functions:
   sendCartAdd sendCartGet
+- hp, sp options now have a new format.
+  hp > 50  - means more than 50hp
+  hp > 50% - means more than 50 percent of you hp.
+- hp_upper,sp_upper removed use hp sp instead
+- minAggressive, may Aggressives removed use aggressives instead
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
@@ -59,7 +64,7 @@ New features:
   set attackLooters to 1 in config.txt
 - 'cart add' and 'cart get' commands now accept names.
 - 'eq slots' displays list of slotnames
-  'eq slotname item' will try to equip item in slotname 
+  'eq slotname item' will try to equip item in slotname
 - Fractional weight in inventory is now displayed.
 - Show proper SP for all skills (auto-detected).
 
