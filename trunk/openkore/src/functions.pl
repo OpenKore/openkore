@@ -5663,10 +5663,15 @@ sub parseMsg {
 		my ($message) = unpack("Z*", substr($msg, 62, 120));
 		stripLanguageCode(\$address);
 		stripLanguageCode(\$message);
-		message	"---Guild Notice---\n"
-			."$address\n\n"
-			."$message\n"
-			."------------------\n", "guildnotice";
+		# don't show the huge guildmessage notice if there is none
+		# the client does something similar to this...
+		if ($address || $message) {
+			my $msg = "---Guild Notice---\n";
+			$msg .= "$address\n\n";
+			$msg .= "$message\n";
+			$msg .= "------------------\n";
+			message $msg, "guildnotice";
+		}
 
 	} elsif ($switch eq "0171") {
 		my $ID = substr($msg, 2, 4);

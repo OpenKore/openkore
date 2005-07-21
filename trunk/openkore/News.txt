@@ -38,6 +38,8 @@ Bug fixes:
 - Reverted Pythagorean distances; causes bots to walk around drunk.
 - openkore could not useSelf_item items in inventory index 0 due to
   (0 == '') being true (affecting $skipID in findIndexStringList_lc).
+- Fix crash with the weight command.
+- Give an error if someone tries to storage an equipped item.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
