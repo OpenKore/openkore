@@ -1364,6 +1364,12 @@ sub sendRaw {
 	debug "Sent Raw Packet: @raw\n", "sendPacket", 2;
 }
 
+sub sendRepairItem {
+	my $index = shift;
+	my $msg = pack("C*", 0xFE, 0x01) . pack("v1", $index) . pack("C*", 0x00);
+	sendMsgToServer(\$remote_socket, $msg);
+}
+
 sub sendRespawn {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0xB2, 0x00, 0x00);
