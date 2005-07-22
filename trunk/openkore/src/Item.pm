@@ -97,15 +97,15 @@ sub bulkEquip {
 			debug "Wrong Itemslot specified: $_\n",'Item';
 		}
 		if ($_ eq 'leftHand' && $rightHand) {
-			if ($item = get($list->{$_}, $rightHand) && !$item->{equipped}) {
+			if ( ( $item = get($list->{$_}, $rightHand) ) && !$item->{equipped}) {
 				$item->equipInSlot($_);
 			}
 		} elsif ($_ eq 'leftAccessory' && $rightAccessory) {
-			if ($item = get($list->{$_}, $rightAccessory) && !$item->{equipped}) {
+			if ( ( $item = get($list->{$_}, $rightAccessory) ) && !$item->{equipped}) {
 				$item->equipInSlot($_);
 			}
 		} else {
-			if ($item = get($list->{$_}) && !$item->{equipped}) {
+			if ( ( $item = get($list->{$_}) ) && !$item->{equipped}) {
 				$item->equipInSlot($_);
 			}
 		}
