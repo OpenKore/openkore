@@ -2890,6 +2890,7 @@ sub storage_items_stackable {
 		my $item = $storage{$index} = {};
 		$item->{index} = $index;
 		$item->{nameID} = $ID;
+		$item->{type} = unpack("C1", substr($msg, $i + 4, 1));
 		$item->{amount} = unpack("V1", substr($msg, $i + 6, 4)) & ~0x80000000;
 		$item->{name} = itemNameSimple($ID);
 		$item->{binID} = binFind(\@storageID, $index);
