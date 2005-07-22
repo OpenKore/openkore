@@ -2916,17 +2916,17 @@ sub checkSelfCondition {
 
 	if ($config{$prefix . "_hp"}) {
 		if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
-			return 0 if (!inRange($char->hp_percent, $config{$prefix."_hp"}));
+			return 0 if (!inRange($char->hp_percent, $1));
 		} else {
-			return 0 if (!inRange($char->{hp}, $1));
+			return 0 if (!inRange($char->{hp}, $config{$prefix."_hp"}));
 		}
 	}
 
 	if ($config{$prefix."_sp"}) {
 		if ($config{$prefix."_sp"} =~ /^(.*)\%$/) {
-			return 0 if (!inRange($char->sp_percent, $config{$prefix."_sp"}));
+			return 0 if (!inRange($char->sp_percent, $1));
 		} else {
-			return 0 if (!inRange($char->{sp}, $1));
+			return 0 if (!inRange($char->{sp}, $config{$prefix."_sp"}));
 		}
 	}
 
@@ -3052,7 +3052,7 @@ sub checkPlayerCondition {
 			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
 				return 0 if (!inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $1));
 			} else {
-				return 0 if (!inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $config{$prefix . "_hp"}));
+				return 0 if (!inRange($chars[$config{char}]{party}{users}{$id}{hp}, $config{$prefix . "_hp"}));
 			}
 
 		}
