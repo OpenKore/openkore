@@ -1214,11 +1214,12 @@ sub cmdDumpNow {
 sub cmdEmotion {
 	# Show emotion
 	my (undef, $args) = @_;
-	my ($num) = $args =~ /^(\d+)$/;
 
-	if (!defined $emotions_lut{$num}) {
+	my $num = getEmotionByCommand($args);
+
+	if (!defined $num) {
 		error	"Syntax Error in function 'e' (Emotion)\n" .
-			"Usage: e <emotion #>\n";
+			"Usage: e <command>\n";
 	} else {
 		sendEmotion(\$remote_socket, $num);
 	}

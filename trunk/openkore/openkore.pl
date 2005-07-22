@@ -227,7 +227,7 @@ addConfigFile("$Settings::tables_folder/cities.txt", \%cities_lut, \&parseROLUT)
 addConfigFile("$Settings::tables_folder/commanddescriptions.txt", \%descriptions, \&parseCommandsDescription);
 addConfigFile("$Settings::tables_folder/directions.txt", \%directions_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/elements.txt", \%elements_lut, \&parseROLUT);
-addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseDataFile2);
+addConfigFile("$Settings::tables_folder/emotions.txt", \%emotions_lut, \&parseEmotionsFile);
 addConfigFile("$Settings::tables_folder/equiptypes.txt", \%equipTypes_lut, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/haircolors.txt", \%haircolors, \&parseDataFile2);
 addConfigFile("$Settings::tables_folder/headgears.txt", \@headgears_lut, \&parseArrayFile);

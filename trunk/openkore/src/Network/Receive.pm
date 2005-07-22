@@ -90,7 +90,7 @@ sub new {
 		'00BC' => ['stats_added', 'v1 x1 C1', [qw(type val)]],
 		'00BD' => ['stats_info', 'v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1', [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic def_magic_bonus hit flee flee_bonus critical)]],
 		'00BE' => ['stats_points_needed', 'v1 C1', [qw(type val)]],
-		'00C0' => ['emoticon', 'V1 C1', [qw(ID type)]],
+		'00C0' => ['emoticon', 'a4 C1', [qw(ID type)]],
 		'00CA' => ['buy_result', 'C1', [qw(fail)]],
 		'00C2' => ['users_online', 'V1', [qw(users)]],
 		'00C3' => ['job_equipment_hair_change', 'a4 C1 C1', [qw(ID part number)]],
@@ -111,7 +111,7 @@ sub new {
 		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]],
 		'010A' => ['mvp_item', 'v1', [qw(itemID)]],
 		'010B' => ['mvp_you', 'V1', [qw(expAmount)]],
-		'010C' => ['mvp_other', 'V', [qw(ID)]],
+		'010C' => ['mvp_other', 'V1', [qw(ID)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
@@ -1285,7 +1285,7 @@ sub egg_list {
 
 sub emoticon {
 	my ($self, $args) = @_;
-	my $emotion = $emotions_lut{$args->{type}} || "<emotion #$args->{type}>";
+	my $emotion = $emotions_lut{$args->{type}}{display} || "<emotion #$args->{type}>";
 	if ($args->{ID} eq $accountID) {
 		message "$char->{name}: $emotion\n", "emotion";
 		chatLog("e", "$char->{name}: $emotion\n") if (existsInList($config{'logEmoticons'}, $args->{type}) || $config{'logEmoticons'} eq "all");
@@ -1293,7 +1293,7 @@ sub emoticon {
 	} elsif ($players{$args->{ID}} && %{$players{$args->{ID}}}) {
 		my $player = $players{$args->{ID}};
 
-		my $name = $player->{name} || "Unknown #".unpack("L", $args->{ID});
+		my $name = $player->{name} || "Unknown #".unpack("V", $args->{ID});
 
 		#my $dist = "unknown";
 		my $dist = distance($char->{pos_to}, $player->{pos_to});

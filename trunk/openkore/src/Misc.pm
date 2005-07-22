@@ -101,6 +101,7 @@ our @EXPORT = (
 	dealAddItem
 	drop
 	dumpData
+	getEmotionByCommand
 	getIDFromChat
 	getNPCName
 	getPlayerNameFromCache
@@ -1434,6 +1435,16 @@ sub dumpData {
 
 	debug "$dump\n", "parseMsg", 2;
 	message "Message Dumped into DUMP.txt!\n", undef, 1 unless ($silent);
+}
+
+sub getEmotionByCommand {
+	my $command = shift;
+	foreach (keys %emotions_lut) {
+		if (existsInList($emotions_lut{$_}{command}, $command)) {
+			return $_;
+		}
+	}
+	return undef;
 }
 
 sub getIDFromChat {
