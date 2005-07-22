@@ -1873,7 +1873,7 @@ sub AI {
 
 			$args->{invIndex} = findIndexString_lc($char->{inventory}, "name", $config{"buyAuto_$i"});
 			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && ($args->{invIndex} eq "" || $char->{inventory}[$args->{invIndex}]{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
-
+				next if ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zenny}, $config{"buyAuto_$i"."_zeny"}));
 				# get NPC info, use standpoint if provided
 				$args->{npc} = {};
 				($config{"buyAuto_$i"."_standpoint"} ? getNPCInfo($config{"buyAuto_$i"."_standpoint"}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'}));

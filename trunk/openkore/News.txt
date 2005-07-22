@@ -111,6 +111,8 @@ New config options:
   Log everything that openkore prints on the console to logs\console.txt.
 - attackAuto_notInTown (flag)
   Don't attack monsters while inside a town.
+- new option in buyAuto: zeny (range)
+  only buy if you have the specified Zeny
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
