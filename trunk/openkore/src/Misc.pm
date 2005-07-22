@@ -2916,17 +2916,17 @@ sub checkSelfCondition {
 
 	if ($config{$prefix . "_hp"}) {
 		if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
-			return 0 if (!inRange($char->{hp}, $1));
-		} else {
 			return 0 if (!inRange($char->hp_percent, $config{$prefix."_hp"}));
+		} else {
+			return 0 if (!inRange($char->{hp}, $1));
 		}
 	}
 
 	if ($config{$prefix."_sp"}) {
 		if ($config{$prefix."_sp"} =~ /^(.*)\%$/) {
-			return 0 if (!inRange($char->{sp}, $1));
-		} else {
 			return 0 if (!inRange($char->sp_percent, $config{$prefix."_sp"}));
+		} else {
+			return 0 if (!inRange($char->{sp}, $1));
 		}
 	}
 
