@@ -20,6 +20,8 @@ my $commands = Commands::register(
 	['gmdc',         'Disconnect a player AID.',    \&gmdc],
 	['gmresetskill', 'Reset your skills.',          \&gmresetskill],
 	['gmresetstate', 'Reset your stats.',           \&gmresetstate],
+	['gmmute',       'Increase player mute time.',  \&gmmute],
+	['gmunmute',     'Decrease player mute time.',  \&gmunmute],
 	['gmkillall',    'Disconnect all users.',       \&gmkillall]
 );
 
@@ -117,6 +119,28 @@ sub gmresetstate {
 
 sub gmresetskill {
 	my $packet = pack("C1 C1 v1", 0x97, 0x01, 1);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmmute {
+	my (undef, $args) = @_;
+	my ($ID, $time) = $args =~ /^(\d+) (\d+)/;
+	if (!$ID) {
+		error "Usage: gmmute <ID> <minutes>\n";
+		return;
+	}
+	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 1, $time);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmunmute {
+	my (undef, $args) = @_;
+	my ($ID, $time) = $args =~ /^(\d+) (\d+)/;
+	if (!$ID) {
+		error "Usage: gmunmute <ID> <minutes>\n";
+		return;
+	}
+	my $packet = pack("C1 C1 V1 C1 v1", 0x49, 0x01, $ID, 0, $time);
 	sendMsgToServer(\$remote_socket, $packet);
 }
 
