@@ -3056,7 +3056,7 @@ sub cmdStatus {
 		[$char->{'lv'}, $base_string],
 		"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
 		[$char->{'lv_job'}, $job_string],
-		"Weight: @>>>>>>>>>>>>>>>>>>   Zenny: @<<<<<<<<<<<<<<",
+		"Weight: @>>>>>>>>>>>>>>>>>>   Zeny: @<<<<<<<<<<<<<<",
 		[$weight_string, $zeny_string]);
 
 	my $statuses = 'none';
