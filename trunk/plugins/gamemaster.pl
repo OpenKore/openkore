@@ -11,14 +11,16 @@ use Utils;
 
 Plugins::register('Game Master', 'Enables usage of GM commands', \&on_unload);
 my $commands = Commands::register(
-	['gmb',       'Broadcast a global message.', \&gmb],
-	['gmmapmove', 'Move to the specified map.',  \&gmmapmove],
-	['gmcreate',  'Create items or monsters.',   \&gmcreate],
-	['gmhide',    'Toggle perfect GM hide.',     \&gmhide],
-	['gmwarpto',  'Warp to a player.',           \&gmwarpto],
-	['gmsummon',  'Summon a player to you.',     \&gmsummon],
-	['gmdc',      'Disconnect a player AID.',    \&gmdc],
-	['gmkillall', 'Disconnect all users.',       \&gmkillall]
+	['gmb',          'Broadcast a global message.', \&gmb],
+	['gmmapmove',    'Move to the specified map.',  \&gmmapmove],
+	['gmcreate',     'Create items or monsters.',   \&gmcreate],
+	['gmhide',       'Toggle perfect GM hide.',     \&gmhide],
+	['gmwarpto',     'Warp to a player.',           \&gmwarpto],
+	['gmsummon',     'Summon a player to you.',     \&gmsummon],
+	['gmdc',         'Disconnect a player AID.',    \&gmdc],
+	['gmresetskill', 'Reset your skills.',          \&gmresetskill],
+	['gmresetstate', 'Reset your stats.',           \&gmresetstate],
+	['gmkillall',    'Disconnect all users.',       \&gmkillall]
 );
 
 sub on_unload {
@@ -105,6 +107,16 @@ sub gmcreate {
 sub gmhide {
 	return unless ($conState == 5);
 	my $packet = pack("C*", 0x9D, 0x01, 0x40, 0x00, 0x00, 0x00);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmresetstate {
+	my $packet = pack("C1 C1 v1", 0x97, 0x01, 0);
+	sendMsgToServer(\$remote_socket, $packet);
+}
+
+sub gmresetskill {
+	my $packet = pack("C1 C1 v1", 0x97, 0x01, 1);
 	sendMsgToServer(\$remote_socket, $packet);
 }
 
