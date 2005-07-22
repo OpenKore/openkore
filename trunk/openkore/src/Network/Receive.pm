@@ -1003,6 +1003,7 @@ sub actor_spawned {
 
 sub arrow_equipped {
 	my ($self,$args) = @_;
+	return unless $args->{index};
 	$char->{arrow} = $args->{index};
 
 	my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $args->{index});
