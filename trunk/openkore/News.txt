@@ -16,6 +16,8 @@ TODO:
   hp > 50% - means more than 50 percent of you hp.
 - Old hp_upper,sp_upper removed use hp sp instead
   Old minAggressives, maxAggressives options removed use aggressives instead
+- You must use the new tables/emotions.txt or emotions won't work.
+  The "e" command now uses the RO client commands instead of the number.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
@@ -71,6 +73,8 @@ New features:
 - Fractional weight in inventory is now displayed.
 - Show proper SP for all skills (auto-detected).
 - Improved storage list, sorts the items by category like the real client.
+- Emotion command now uses the real commands from the RO client.
+  Example: e thx
 
 New commands:
 - getplayerinfo (number)

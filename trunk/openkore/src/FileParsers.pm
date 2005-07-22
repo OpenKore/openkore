@@ -39,6 +39,7 @@ our @EXPORT = qw(
 	parseDataFile
 	parseDataFile_lc
 	parseDataFile2
+	parseEmotionsFile
 	parseItemsControl
 	parseList
 	parseNPCs
@@ -273,6 +274,29 @@ sub parseConfigFile {
 	}
 	close FILE;
 }
+
+sub parseEmotionsFile {
+	my $file = shift;
+	my $r_hash = shift;
+	undef %{$r_hash};
+	my ($line, $key, $word, $name);
+	open FILE, $file;
+	foreach (<FILE>) {
+		next if (/^#/);
+		s/[\r\n]//g;
+		s/\s+$//g;
+
+		$line = $_;
+		($key, $word, $name) = $line =~ /^(\d+) (\S+) (.*)$/;
+
+		if ($key ne "") {
+			$$r_hash{$key}{command} = $word;
+			$$r_hash{$key}{display} = $name;
+		}
+	}
+	close FILE;
+}
+
 
 sub parseDataFile {
 	my $file = shift;

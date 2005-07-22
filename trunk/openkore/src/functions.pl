@@ -5861,7 +5861,7 @@ sub parseMsg {
 		# 01aa: long ID, long emotion
 		# pet emotion
 		my ($ID, $type) = unpack("x2 a4 L1", $msg);
-		my $emote = $emotions_lut{$type} || "/e$type";
+		my $emote = $emotions_lut{$type}{display} || "/e$type";
 		if ($pets{$ID}) {
 			my $name = $pets{$ID}{name} || "Unknown Pet #".unpack("V", $ID);
 			message "$pets{$ID}{name} : $emote\n", "emotion";
