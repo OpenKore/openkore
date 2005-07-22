@@ -114,6 +114,8 @@ our @EXPORT = qw(
 	sendPetCapture
 	sendPetFeed
 	sendPetGetInfo
+	sendPetHatch
+	sendPetName
 	sendPetPerformance
 	sendPetReturnToEgg
 	sendPetUnequipItem
@@ -1314,11 +1316,17 @@ sub sendPetGetInfo {
 }
 
 sub sendPetHatch {
-	my $r_socket = shift;
 	my $index = shift;
 	my $msg = pack("C*", 0xA7, 0x01) . pack("v*", $index);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Incubator hatch: $index\n", "sendPacket", 2;
+}
+
+sub sendPetName {
+	my $name = shift;
+	my $msg = pack("C1 C1 a24", 0xA5, 0x01, $name);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
 
 sub sendPetPerformance {
