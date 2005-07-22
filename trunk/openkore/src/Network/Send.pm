@@ -120,6 +120,7 @@ our @EXPORT = qw(
 	sendPreLoginCode
 	sendQuit
 	sendRaw
+	sendRemoveAttachments
 	sendRepairItem
 	sendRespawn
 	sendPrivateMsg
@@ -1371,6 +1372,13 @@ sub sendRaw {
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Raw Packet: @raw\n", "sendPacket", 2;
+}
+
+sub sendRemoveAttachments {
+	# remove peco, falcon, cart
+	my $msg = pack("C*", 0x2A, 0x01);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent remove attachments\n", "sendPacket", 2;
 }
 
 sub sendRepairItem {
