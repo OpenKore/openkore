@@ -4962,27 +4962,6 @@ sub parseMsg {
 			$item->{name} = itemName($item);
 		}
 
-	# Hambo Started
-	# 3 Packets About MVP
-	} elsif ($switch eq "010A") {
-		my $ID = unpack("S1", substr($msg, 2, 2));
-		my $display = itemName({nameID => $ID});
-		message "Get MVP item $display\n";
-		chatLog("k", "Get MVP item $display\n");
-
-	} elsif ($switch eq "010B") {
-		my $expAmount = unpack("L1", substr($msg, 2, 4));
-		my $msg = "Congratulations, you are the MVP! Your reward is $expAmount exp!\n";
-		message $msg;
-		chatLog("k", $msg);
-
-	} elsif ($switch eq "010C") {
-		my $ID = substr($msg, 2, 4);
-		my $display = getActorName($ID);
-		message "$display become MVP!\n";
-		chatLog("k", "$display become MVP!\n");
-		# Hambo Ended
-
 	} elsif ($switch eq "010E") {
 		my $ID = unpack("S1",substr($msg, 2, 2));
 		my $lv = unpack("S1",substr($msg, 4, 2));
@@ -5867,19 +5846,24 @@ sub parseMsg {
 			$pets{$ID}{'name_given'} = "Unknown";
 			$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
 		}
-		if ($monsters{$ID} && %{$monsters{$ID}}) {
+		if ($monsters{$ID}) {
+			if (%{$monsters{$ID}}) {
+				objectRemoved('monster', $ID, $monsters{$ID});
+			}
+			# always clear these in case
 			binRemove(\@monstersID, $ID);
-			objectRemoved('monster', $ID, $monsters{$ID});
 			delete $monsters{$ID};
 		}
+
 		debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 
 	} elsif ($switch eq "01AA") {
 		# 01aa: long ID, long emotion
 		# pet emotion
-		my ($ID, $type) = unpack "x2 a4 L1", $msg;
+		my ($ID, $type) = unpack("x2 a4 L1", $msg);
 		my $emote = $emotions_lut{$type} || "/e$type";
 		if ($pets{$ID}) {
+			my $name = $pets{$ID}{name} || "Unknown Pet #".unpack("V", $ID);
 			message "$pets{$ID}{name} : $emote\n", "emotion";
 		}
 
