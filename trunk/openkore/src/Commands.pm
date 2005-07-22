@@ -2779,20 +2779,59 @@ _
 
 sub cmdStorage_list {
 	if ($storage{opened}) {
-		my $list = "----------Storage-----------\n";
-		$list .= "#  Name\n";
+		my @useable;
+		my @equipment;
+		my @non_useable;
+
 		for (my $i = 0; $i < @storageID; $i++) {
 			next if ($storageID[$i] eq "");
-
-			my $display = "$storage{$storageID[$i]}{'name'}";
-			$display .= " x $storage{$storageID[$i]}{'amount'}";
-			$display .= " -- Not Identified" if !$storage{$storageID[$i]}{identified};
-
-			$list .= sprintf("%2d %s\n", $i, $display);
+			my $item = $storage{$storageID[$i]};
+			if ($item->{type} == 3 ||
+			    $item->{type} == 6 ||
+			    $item->{type} == 10) {
+				push @non_useable, $item;
+			} elsif ($item->{type} <= 2) {
+				push @useable, $item;
+			} else {
+				my %eqp;
+				$eqp{binID} = $i;
+				$eqp{name} = $item->{name};
+				$eqp{type} = $itemTypes_lut{$item->{type}};
+				$eqp{identified} = " -- Not Identified" if !$item->{identified};
+				push @equipment, \%eqp;
+			}
 		}
-		$list .= "\nCapacity: $storage{'items'}/$storage{'items_max'}\n";
-		$list .= "-------------------------------\n";
-		message($list, "list");
+
+		my $msg = "-----------Storage-------------\n";
+		$msg .= "-- Equipment --\n";
+		foreach my $item (@equipment) {
+			$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
+		}
+		$msg .= "-- Non-Usable --\n";
+		for (my $i = 0; $i < @non_useable; $i++) {
+			my $item = $non_useable[$i];
+			my $index = $item->{index};
+			my $display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $display]);
+		}
+		$msg .= "-- Usable --\n";
+		for (my $i = 0; $i < @useable; $i++) {
+			my $item = $useable[$i];
+			my $index = $item->{index};
+			my $display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$index, $display]);
+		}
+		$msg .= "-------------------------------\n";
+		$msg .= "Capacity: $storage{items}/$storage{items_max}\n";
+		$msg .= "-------------------------------\n";
+		message($msg, "list");
+
 	} else {
 		error "No information about storage; it has not been opened before in this session\n";
 	}
