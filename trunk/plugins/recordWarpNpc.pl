@@ -8,7 +8,7 @@
 # anything between it. It'll record the NPC and the conversation seq and
 # destination. They'll be combined in warpportals.txt.
 #
-# You can use 'warprec save' to trigger the save routin. You may need this
+# You can use 'warprec save' to trigger the save routine. You may need this
 # if you only warp on the same map. Eg. Guild Warp
 #
 # This plugin should be in a subfolder of plugins like 'plugins/recordWarpNpc'.
@@ -40,7 +40,7 @@ my $hooks = Plugins::addHooks(
 );
 
 my $cmd = Commands::register(
-	["warprec", "Records Warpnpc and conversation seq", \&cmdWarprec],
+	["warprec", ['Records Warpnpc and conversation seq.',['','toggles record on/off'],['save','triggers save routine']], \&cmdWarprec],
 	["talk", "extends the Talk command", \&cmdTalk]
 );
 
