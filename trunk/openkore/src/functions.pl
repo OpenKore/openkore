@@ -5828,7 +5828,9 @@ sub parseMsg {
 		    $num != $ai_v{temp}{pvp_num}) {
 			$ai_v{temp}{pvp_rank} = $rank;
 			$ai_v{temp}{pvp_num} = $num;
-			message "Your PvP rank is: $rank/$num\n", "map_event";
+			if ($ai_v{temp}{pvp}) {
+				message "Your PvP rank is: $rank/$num\n", "map_event";
+			}
 		}
 
 	} elsif ($switch eq "019B") {
