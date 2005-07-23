@@ -1124,6 +1124,9 @@ sub sendMasterLogin {
 		# This is used on the RuRO private server.
 		# A lot of packets are different so I gave up,
 		# but I'll keep this code around in case anyone ever needs it.
+
+		# I'm not sure if serverType 4 actually needs this whacko login
+
 		$username = substr($username, 0, 23) if (length($username) > 23);
 		$password = substr($password, 0, 23) if (length($password) > 23);
 
@@ -1136,11 +1139,11 @@ sub sendMasterLogin {
 		substr($tmp, 0, length($password) + 1, $password . chr(0));
 		$password = $tmp;
 
-		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
+		$msg = pack("C1 C1 V", 0x64, 0x00, $version) .
 			$username . $password .
 			pack("C*", $master_version);
 	} else {
-		$msg = pack("C*", 0x64, 0x00, $version, 0, 0, 0) .
+		$msg = pack("C1 C1 V", 0x64, 0x00, $version) .
 			pack("a24", $username) .
 			pack("a24", $password) .
 			pack("C*", $master_version);
