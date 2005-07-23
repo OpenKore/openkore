@@ -258,7 +258,7 @@ CR_DEFENDER#Defender#
 CR_SPEARQUICKEN#Spear_Quicken#
 MO_IRONHAND#Iron_Hand#
 MO_SPIRITSRECOVERY#Vigor_Recovery#
-MO_CALLSPIRITS#Vigor_condensation#
+MO_CALLSPIRITS#Vigor_Condensation#
 MO_ABSORBSPIRITS#Vigor_Absorption#
 MO_TRIPLEATTACK#Triple_Attack#
 MO_BODYRELOCATION#Body_Relocation#
