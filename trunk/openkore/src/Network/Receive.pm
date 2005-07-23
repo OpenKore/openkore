@@ -59,7 +59,7 @@ sub new {
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V1 V1 s1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
-		'008D' => ['public_message', 'x2 a4 Z*', [qw(ID message)]],
+		'008D' => ['public_chat', 'x2 a4 Z*', [qw(ID message)]],
 		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
 		'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
@@ -2214,7 +2214,7 @@ sub pet_info {
 	debug "Pet status: name: $pet{name} name set?: ". ($pet{nameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})."\n", "pet";
 }
 
-sub public_message {
+sub public_chat {
 	my ($self, $args) = @_;
 	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
 	$args->{chatMsgUser} =~ s/ $//;
