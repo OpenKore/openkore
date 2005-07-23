@@ -387,10 +387,11 @@ sub actor_connected {
 		$players{$args->{ID}}{pos_to} = {%coords};
 		my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 		debug "Player Connected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", $domain;
-		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
 		Plugins::callHook('player', {player => $players{$args->{ID}}});
+
+		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 	} else {
 		debug "Unknown Connected: $args->{type} - ", "parseMsg";
@@ -561,11 +562,12 @@ sub actor_exists {
 
 		my $domain = existsInList($config{friendlyAID}, unpack("V1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 		debug "Player Exists: " . $player->name . " ($player->{binID}) Level $args->{lv} " . $sex_lut{$player->{sex}} . " $jobs_lut{$player->{jobID}}\n", $domain, 1;
-		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
 
 		objectAdded('player', $args->{ID}, $player) if ($added);
 
 		Plugins::callHook('player', {player => $player});
+
+		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
 
 	} elsif ($args->{type} >= 1000) {
 		if ($args->{pet}) {
@@ -614,12 +616,11 @@ sub actor_exists {
 
 			debug "Monster Exists: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence", 1;
 
+			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
 
 			# Monster state
 			$args->{param1} = 0 if $args->{param1} == 5; # 5 has got something to do with the monster being undead
 			setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
-
-			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
 		}
 
 	} elsif ($args->{type} == 45) {
@@ -660,6 +661,8 @@ sub actor_exists {
 		message "NPC Exists: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}) (ID $npcs{$args->{ID}}{'nameID'}) - ($npcs{$args->{ID}}{'binID'})\n", undef, 1;
 
 		objectAdded('npc', $args->{ID}, $npcs{$args->{ID}}) if ($added);
+
+		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 	} else {
 		debug "Unknown Exists: $args->{type} - ".unpack("L*",$args->{ID})."\n", "parseMsg";
@@ -788,9 +791,10 @@ sub actor_moved {
 		$player->{time_move} = time;
 		$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $player->{walk_speed};
 		debug "Player Moved: ".$player->name." ($player->{'binID'}) $sex_lut{$player->{'sex'}} $jobs_lut{$player->{'jobID'}}\n", "parseMsg";
-		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 		objectAdded('player', $args->{ID}, $player) if ($added);
+
+		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 	} elsif ($args->{type} >= 1000) {
 		if ($args->{pet}) {
@@ -845,9 +849,10 @@ sub actor_moved {
 			$monsters{$args->{ID}}{walk_speed} = $args->{walk_speed} / 1000;
 			$monsters{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $monsters{$args->{ID}}{walk_speed};
 			debug "Monster Moved: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg", 2;
-			setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
+
+			setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 		}
 	} else {
 		debug "Unknown Moved: $args->{type} - ".getHex($args->{ID})."\n", "parseMsg";
@@ -948,9 +953,10 @@ sub actor_spawned {
 		$players{$args->{ID}}{pos} = {%coords};
 		$players{$args->{ID}}{pos_to} = {%coords};
 		debug "Player Spawned: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg";
-		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
+
+		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 	} elsif ($args->{type} >= 1000) {
 		if ($args->{pet}) {
@@ -996,10 +1002,36 @@ sub actor_spawned {
 			%{$monsters{$args->{ID}}{'pos'}} = %coords;
 			%{$monsters{$args->{ID}}{'pos_to'}} = %coords;
 			debug "Monster Spawned: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
-			setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-
 			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
+
+			setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 		}
+
+	# portals don't spawn
+	#} elsif ($args->{type} == 45) {
+
+	} elsif ($args->{type} < 1000) {
+		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
+			my $nameID = unpack("V1", $args->{ID});
+			$npcs{$args->{ID}}{'appear_time'} = time;
+
+			$npcs{$args->{ID}}{pos} = {%coords};
+			my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
+			my $display = $npcs_lut{$location} || "Unknown ".$nameID;
+			binAdd(\@npcsID, $args->{ID});
+			$npcs{$args->{ID}}{'type'} = $args->{type};
+			$npcs{$args->{ID}}{'nameID'} = $nameID;
+			$npcs{$args->{ID}}{'name'} = $display;
+			$npcs{$args->{ID}}{'binID'} = binFind(\@npcsID, $args->{ID});
+			$added = 1;
+		} else {
+			$npcs{$args->{ID}}{pos} = {%coords};
+		}
+		message "NPC Spawned: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}) (ID $npcs{$args->{ID}}{'nameID'}) - ($npcs{$args->{ID}}{'binID'})\n", undef, 1;
+
+		objectAdded('npc', $args->{ID}, $npcs{$args->{ID}}) if ($added);
+
+		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 	} else {
 		debug "Unknown Spawned: $args->{type} - ".getHex($args->{ID})."\n", "parseMsg_presence";
