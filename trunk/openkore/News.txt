@@ -50,6 +50,7 @@ Bug fixes:
 - Show unknown for public chat distance if player is off screen.
 - Don't display PVP rank if you're not in PVP. (Workaround for server-side
   bug that still sends you your PVP rank for some reason.)
+- Fix autoSwitch arrow crash bug introduced with Item.pm.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"

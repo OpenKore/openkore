@@ -829,7 +829,7 @@ sub attack {
 				}
 				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
 					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_arrow"}."\n", "equip";
-					$chars[$config{'char'}]{'inventory'}->equip();
+					$chars[$config{'char'}]{'inventory'}[$arrow]->equip();
 				}
 				if ($config{"autoSwitch_$i"."_distance"} && $config{"autoSwitch_$i"."_distance"} != $config{'attackDistance'}) {
 					$ai_v{'attackDistance'} = $config{'attackDistance'};
