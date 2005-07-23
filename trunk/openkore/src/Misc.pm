@@ -2115,6 +2115,21 @@ sub setStatus {
 	}
 
 	Plugins::callHook('changed_status',{actor => $actor, changed => $changed});
+
+	# remove perfectly hidden objects
+	if ($actor->{statuses}{'GM Perfect Hide'}) {
+		message "Remove perfectly hidden $actor\n";
+		if ($players{$ID}) {
+			binRemove(\@playersID, $ID);
+			objectRemoved('player', $ID, $players{$ID});
+			delete $players{$ID};
+		}
+		if ($monsters{$ID}) {
+			binRemove(\@monstersID, $ID);
+			objectRemoved('monster', $ID, $monsters{$ID});
+			delete $monsters{$ID};
+		}
+	}
 }
 
 

@@ -51,6 +51,7 @@ Bug fixes:
 - Don't display PVP rank if you're not in PVP. (Workaround for server-side
   bug that still sends you your PVP rank for some reason.)
 - Fix autoSwitch arrow crash bug introduced with Item.pm.
+- Don't attack perfectly hidden monsters, caused auto-ban.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
