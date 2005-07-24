@@ -3080,7 +3080,7 @@ sub checkPlayerCondition {
 	if ($config{$prefix . "_notWhileSitting"} > 0) { return 0 if ($players{$id}{sitting}); }
 
 	# we will have player HP info (only) if we are in the same party
-	if ($chars[$config{char}]{party}{users}{$id}) {
+	if ($chars[$config{char}]{party} && $chars[$config{char}]{party}{users}{$id}) {
 		if ($config{$prefix . "_hp"}) {
 			if ($config{$prefix."_hp"} =~ /^(.*)\%$/) {
 				return 0 if (!inRange(percent_hp($chars[$config{char}]{party}{users}{$id}), $1));
