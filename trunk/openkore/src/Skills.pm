@@ -38,6 +38,8 @@
 package Skills;
 
 use strict;
+use Globals qw($accountID $remote_socket);
+use Network::Send qw(sendSkillUse);
 use vars qw(@skills %handles %names);
 
 use overload '""' => \&name;
@@ -119,6 +121,16 @@ sub new {
 	return \%self;
 }
 
+##############################
+### CATEGORY: Class Methods
+##############################
+
+sub useSkill {
+	my ($skillName,$target,$lvl) = @_;
+
+	my $skill = new Skills(auto => $skillName);
+	$skill->use($target,$lvl);
+}
 
 ##############################
 ### CATEGORY: Methods
@@ -160,6 +172,13 @@ sub complete {
 		}
 	}
 	return @matches;
+}
+
+sub use {
+	my ($self,$target,$lvl) = @_;
+	$target = $accountID unless $target;
+	$lvl = 10 unless $lvl;
+	sendSkillUse(\$remote_socket, $self->id, $lvl, $target);
 }
 
 1;
