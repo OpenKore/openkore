@@ -137,7 +137,7 @@ sub recv {
 sub sync {
 	my $client = $_[0]->{client};
 	if (defined $client) {
-		$client->send("K" . pack("S", 0));
+		$client->send("K" . pack("v", 0));
 	}
 }
 

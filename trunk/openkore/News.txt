@@ -127,6 +127,8 @@ Internal:
 - The format of $npcs_lut has changed, IDs are completely abandoned.
 - Attack AI routines should now support players as well.
 - New Match::cartItem() function, similar to Match::inventoryItem().
+- The S and L pack types have been completely removed. Do not use these
+  anymore, use v and V respectively.
 
 Credits:
 - doenet: chatLangCode bugfixes.

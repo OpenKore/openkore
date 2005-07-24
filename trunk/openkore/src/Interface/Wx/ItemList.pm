@@ -107,7 +107,7 @@ sub OnGetItemText {
 				# Wrong type; why?? Write to debugging log.
 				require Data::Dumper;
 				print $f "index = $item\n";
-				print $f "ID = " . unpack("L", $ID) . "\n";
+				print $f "ID = " . unpack("V", $ID) . "\n";
 				print $f "\n";
 				print $f Data::Dumper::Dumper($objects);
 				print $f "\n--------------------------\n\n";

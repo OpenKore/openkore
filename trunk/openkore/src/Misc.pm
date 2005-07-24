@@ -274,7 +274,7 @@ sub debug_showSpots {
 
 	if ($debug_showSpots_list{$ID}) {
 		foreach (@{$debug_showSpots_list{$ID}}) {
-			my $msg = pack("C*", 0x20, 0x01) . pack("L", $_);
+			my $msg = pack("C*", 0x20, 0x01) . pack("V", $_);
 			sendToClientByInject(\$remote_socket, $msg);
 		}
 	}
@@ -284,8 +284,8 @@ sub debug_showSpots {
 	foreach (@{$spots}) {
 		next if !defined $_;
 		my $msg = pack("C*", 0x1F, 0x01)
-			. pack("L*", $i, 1550)
-			. pack("S*", $_->{x}, $_->{y})
+			. pack("V*", $i, 1550)
+			. pack("v*", $_->{x}, $_->{y})
 			. pack("C*", 0x93, 0);
 		sendToClientByInject(\$remote_socket, $msg);
 		sendToClientByInject(\$remote_socket, $msg);
@@ -295,8 +295,8 @@ sub debug_showSpots {
 
 	if ($special) {
 		my $msg = pack("C*", 0x1F, 0x01)
-			. pack("L*", 1553, 1550)
-			. pack("S*", $special->{x}, $special->{y})
+			. pack("V*", 1553, 1550)
+			. pack("v*", $special->{x}, $special->{y})
 			. pack("C*", 0x83, 0);
 		sendToClientByInject(\$remote_socket, $msg);
 		sendToClientByInject(\$remote_socket, $msg);
@@ -692,7 +692,7 @@ sub convertGatField {
 	my $i;
 	open FILE, "+> $file";
 	binmode(FILE);
-	print FILE pack("S*", $$r_hash{'width'}, $$r_hash{'height'});
+	print FILE pack("v*", $$r_hash{'width'}, $$r_hash{'height'});
 	print FILE $$r_hash{'rawMap'};
 	close FILE;
 }
@@ -790,7 +790,7 @@ sub getField {
 		local($/);
 		$data = <FILE>;
 		close FILE;
-		@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
+		@$r_hash{'width', 'height'} = unpack("v1 v1", substr($data, 0, 4, ''));
 		$r_hash->{rawMap} = $data;
 	}
 
@@ -807,10 +807,10 @@ sub getField {
 		close FILE;
 		my $dversion = 0;
 		if (substr($dist_data, 0, 2) eq "V#") {
-			$dversion = unpack("xx S1", substr($dist_data, 0, 4, ''));
+			$dversion = unpack("xx v1", substr($dist_data, 0, 4, ''));
 		}
 
-		my ($dw, $dh) = unpack("S1 S1", substr($dist_data, 0, 4, ''));
+		my ($dw, $dh) = unpack("v1 v1", substr($dist_data, 0, 4, ''));
 		if (
 			#version 0 files had a bug when height != width
 			#version 1 files did not treat walkable water as walkable, all version 0 and 1 maps need to be rebuilt
@@ -826,8 +826,8 @@ sub getField {
 		$r_hash->{dstMap} = makeDistMap($r_hash->{rawMap}, $r_hash->{width}, $r_hash->{height});
 		open FILE, "> $dist_file" or die "Could not write dist cache file: $!\n";
 		binmode(FILE);
-		print FILE pack("a2 S1", 'V#', 2);
-		print FILE pack("S1 S1", @$r_hash{'width', 'height'});
+		print FILE pack("a2 v1", 'V#', 2);
+		print FILE pack("v1 v1", @$r_hash{'width', 'height'});
 		print FILE $r_hash->{dstMap};
 		close FILE;
 	}
@@ -844,8 +844,8 @@ sub getGatField {
 	open FILE, $file;
 	binmode(FILE);
 	read(FILE, $data, 16);
-	my $width = unpack("L1", substr($data, 6,4));
-	my $height = unpack("L1", substr($data, 10,4));
+	my $width = unpack("V1", substr($data, 6,4));
+	my $height = unpack("V1", substr($data, 10,4));
 	$$r_hash{'width'} = $width;
 	$$r_hash{'height'} = $height;
 	while (read(FILE, $data, 20)) {
@@ -1484,7 +1484,7 @@ sub getNPCName {
 	} elsif ($monsters{$ID}) {
 		return $monsters{$ID}{name};
 	} else {
-		return "Unknown #".unpack("L1", $ID);
+		return "Unknown #".unpack("V1", $ID);
 	}
 }
 
@@ -1615,7 +1615,7 @@ sub itemName {
 	my @cards;
 	my %cards;
 	for (my $i = 0; $i < 4; $i++) {
-		my $card = unpack("S1", substr($item->{cards}, $i*2, 2));
+		my $card = unpack("v1", substr($item->{cards}, $i*2, 2));
 		last unless $card;
 		push(@cards, $card);
 		($cards{$card} ||= 0) += 1;

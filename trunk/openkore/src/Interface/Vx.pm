@@ -913,7 +913,7 @@ sub packet {
 		#0078 mainly is monster , portal
 		#01D8 = npc + player for episode 4+
 		my $ID = substr($msg, 2, 4);
-		my $type = unpack("S*",substr($msg, 14,  2));
+		my $type = unpack("v*",substr($msg, 14,  2));
 		my $pet = unpack("C*",substr($msg, 16,  1));
 		my %coords;
 		makeCoords(\%coords, substr($msg, 46, 3));
@@ -955,7 +955,7 @@ sub packet {
 		makeCoords(\%coordsFrom, substr($msg, 50, 3));
 		my %coordsTo;
 		makeCoords2(\%coordsTo, substr($msg, 52, 3));
-		my $type = unpack("S1",substr($msg, 14,  2));
+		my $type = unpack("v1",substr($msg, 14,  2));
 		my $pet = unpack("C1",substr($msg, 16,  1));
 
 		if ($jobs_lut{$type}) {
@@ -981,7 +981,7 @@ sub packet {
 		my $ID = substr($msg, 2, 4);
 		my %coords;
 		makeCoords(\%coords, substr($msg, 36, 3));
-		my $type = unpack("S*",substr($msg, 20,  2));
+		my $type = unpack("v*",substr($msg, 20,  2));
 		if ($jobs_lut{$type}) {
 				$self->addObj($ID,"p");
 		} elsif ($type >= 1000) {
@@ -1019,8 +1019,8 @@ sub packet {
 			$self->loadMap() if ($self->mapIsShown());
 		}
 		#my %coords;
-		#$coords{x} = unpack("S1", substr($msg, 18, 2));
-		#$coords{y} = unpack("S1", substr($msg, 20, 2));
+		#$coords{x} = unpack("v1", substr($msg, 18, 2));
+		#$coords{y} = unpack("v1", substr($msg, 20, 2));
 		#$self->updatePos($coords{x},$coords{y});
 		$self->removeAllObj();
 
