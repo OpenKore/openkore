@@ -201,7 +201,7 @@ sub use {
 sub level {
 	my $self = shift;
 	return 0 unless $char->{skills}{$self->handle};
-	return $char->{skills}{$self->handl}{lv};
+	return $char->{skills}{$self->handle}{lv};
 }
 
 ##
