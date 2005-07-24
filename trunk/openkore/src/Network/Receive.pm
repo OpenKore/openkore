@@ -52,7 +52,7 @@ sub new {
 		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
 		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 x4 v1 v1 v1 v1 x4 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
-		'007C' => ['actor_spawned', 'a4 x2 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID param1 param2 param3 type pet sex coords)]],
+		'007C' => ['actor_spawned', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeard', 'a4 C1', [qw(ID type)]],
 		'0081' => ['errors', 'C1', [qw(type)]],
