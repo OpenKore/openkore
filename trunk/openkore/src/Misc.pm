@@ -2118,16 +2118,23 @@ sub setStatus {
 
 	# remove perfectly hidden objects
 	if ($actor->{statuses}{'GM Perfect Hide'}) {
-		message "Remove perfectly hidden $actor\n";
 		if ($players{$ID}) {
+			message "Remove perfectly hidden $actor\n";
 			binRemove(\@playersID, $ID);
 			objectRemoved('player', $ID, $players{$ID});
 			delete $players{$ID};
 		}
 		if ($monsters{$ID}) {
+			message "Remove perfectly hidden $actor\n";
 			binRemove(\@monstersID, $ID);
 			objectRemoved('monster', $ID, $monsters{$ID});
 			delete $monsters{$ID};
+		}
+		if ($npcs{$ID}) {
+			message "Remove perfectly hidden $actor\n";
+			binRemove(\@npcsID, $ID);
+			objectRemoved('npc', $ID, $npcs{$ID});
+			delete $npcs{$ID};
 		}
 	}
 }
