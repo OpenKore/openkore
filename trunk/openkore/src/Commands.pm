@@ -2811,22 +2811,22 @@ sub cmdStorage_list {
 		$msg .= "-- Non-Usable --\n";
 		for (my $i = 0; $i < @non_useable; $i++) {
 			my $item = $non_useable[$i];
-			my $index = $item->{index};
+			my $binID = $item->{binID};
 			my $display = $item->{name};
 			$display .= " x $item->{amount}";
 			$msg .= swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$index, $display]);
+				[$binID, $display]);
 		}
 		$msg .= "-- Usable --\n";
 		for (my $i = 0; $i < @useable; $i++) {
 			my $item = $useable[$i];
-			my $index = $item->{index};
+			my $binID = $item->{binID};
 			my $display = $item->{name};
 			$display .= " x $item->{amount}";
 			$msg .= swrite(
 				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$index, $display]);
+				[$binID, $display]);
 		}
 		$msg .= "-------------------------------\n";
 		$msg .= "Capacity: $storage{items}/$storage{items_max}\n";

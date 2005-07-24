@@ -215,7 +215,13 @@ sub sp {
 	$lvl = $self->level unless $lvl;
 
 	return 0 unless $lvl;
-	return $skillsSP_lut{$self->handle}{$lvl};
+
+	my $handle = $self->handle;
+	if ($skillsSP_lut{$handle}) {
+		return $skillsSP_lut{$handle}{$lvl};
+	} else {
+		return $char->{skills}{$handle}{sp};
+	}
 }
 
 ##
