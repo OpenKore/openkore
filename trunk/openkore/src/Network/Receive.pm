@@ -111,7 +111,7 @@ sub new {
 		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]],
 		'010A' => ['mvp_item', 'v1', [qw(itemID)]],
 		'010B' => ['mvp_you', 'V1', [qw(expAmount)]],
-		'010C' => ['mvp_other', 'V1', [qw(ID)]],
+		'010C' => ['mvp_other', 'a4', [qw(ID)]],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
