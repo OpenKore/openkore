@@ -38,7 +38,7 @@
 package Skills;
 
 use strict;
-use Globals qw($accountID $remote_socket);
+use Globals qw($accountID $remote_socket $char %skillsSP_lut);
 use Network::Send qw(sendSkillUse);
 use vars qw(@skills %handles %names);
 
@@ -132,6 +132,13 @@ sub useSkill {
 	$skill->use($target,$lvl);
 }
 
+sub checkLevel {
+	my $skillName = shift;
+
+	my $skill = new Skills(auto => $skillName);
+	return $skill->level();
+}
+
 ##############################
 ### CATEGORY: Methods
 ##############################
@@ -174,11 +181,53 @@ sub complete {
 	return @matches;
 }
 
+##
+# use([target] [lvl])
+# target: skill target
+# lvl: level of the skill
+#
+# uses skill on target
 sub use {
 	my ($self,$target,$lvl) = @_;
 	$target = $accountID unless $target;
 	$lvl = 10 unless $lvl;
 	sendSkillUse(\$remote_socket, $self->id, $lvl, $target);
+}
+
+##
+# level()
+# Return: SkillLvl
+#
+sub level {
+	my $self = shift;
+	return 0 unless $char->{skills}{$self->handle};
+	return $char->{skills}{$self->handl}{lv};
+}
+
+##
+# sp([lvl])
+# lvl: of the skill
+# Return: sp cost
+#
+sub sp {
+	my ($self,$lvl) = @_;
+
+	$lvl = $self->level unless $lvl;
+
+	return 0 unless $lvl;
+	return $skillsSP_lut{$self->handle}{$lvl};
+}
+
+##
+# checkSp([lvl])
+# lvl: of the skill
+# Return: can use or not
+#
+# checks whether the char can use the skill
+# right now
+sub checkSp {
+	my ($self,$lvl) = @_;
+	return $char->{sp} >= $self->sp($lvl);
 }
 
 1;
