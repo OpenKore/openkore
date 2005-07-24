@@ -82,7 +82,7 @@ sub processFirst {
 	my $msg = $cmd->{msg};
 
 	return if ( $user ne ""
-		&& (avoidGM_talk($user, $msg) || avoidList_talk($user, $msg, unpack("L1", $cmd->{userID}))) );
+		&& (avoidGM_talk($user, $msg) || avoidList_talk($user, $msg, unpack("V1", $cmd->{userID}))) );
 
 
 	# If the user is not authorized to use chat commands,

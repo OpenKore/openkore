@@ -28,7 +28,7 @@ sub new {
 	return bless({
 		type => 'Unknown',
 		ID => $ID,
-		nameID => unpack("L1", $ID)
+		nameID => unpack("V1", $ID)
 	});
 }
 

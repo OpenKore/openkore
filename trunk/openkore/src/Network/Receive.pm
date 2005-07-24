@@ -665,7 +665,7 @@ sub actor_exists {
 		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 	} else {
-		debug "Unknown Exists: $args->{type} - ".unpack("L*",$args->{ID})."\n", "parseMsg";
+		debug "Unknown Exists: $args->{type} - ".unpack("V*",$args->{ID})."\n", "parseMsg";
 	}
 }
 
@@ -2088,9 +2088,9 @@ sub npc_store_info {
 	my $storeList = 0;
 	undef $talk{'buyOrSell'};
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 11) {
-		my $price = unpack("L1", substr($msg, $i, 4));
+		my $price = unpack("V1", substr($msg, $i, 4));
 		my $type = unpack("C1", substr($msg, $i + 8, 1));
-		my $ID = unpack("S1", substr($msg, $i + 9, 2));
+		my $ID = unpack("v1", substr($msg, $i + 9, 2));
 
 		my $store = $storeList[$storeList] = {};
 		my $display = ($items_lut{$ID} ne "")

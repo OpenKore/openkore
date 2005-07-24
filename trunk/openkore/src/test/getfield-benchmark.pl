@@ -32,20 +32,20 @@ sub getField {
 	if ($dist_only) {
 		if (-e $dist_file) {
 			read(FILE, $data, 4);
-			@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
+			@$r_hash{'width', 'height'} = unpack("v1 v1", substr($data, 0, 4, ''));
 			close FILE;
 		} else {
 			local($/);
 			$data = <FILE>;
 			close FILE;
-			@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
+			@$r_hash{'width', 'height'} = unpack("v1 v1", substr($data, 0, 4, ''));
 			$$r_hash{'rawMap'} = $data;
 		}
 	} else {
 		local($/);
 		$data = <FILE>;
 		close FILE;
-		@$r_hash{'width', 'height'} = unpack("S1 S1", substr($data, 0, 4, ''));
+		@$r_hash{'width', 'height'} = unpack("v1 v1", substr($data, 0, 4, ''));
 		$$r_hash{'rawMap'} = $data;
 		$$r_hash{'field'} = [unpack("C*", $data)];
 	}
@@ -63,10 +63,10 @@ sub getField {
 		close FILE;
 		my $dversion = 0;
 		if (substr($dist_data, 0, 2) eq "V#") {
-			$dversion = unpack("xx S1", substr($dist_data, 0, 4, ''));
+			$dversion = unpack("xx v1", substr($dist_data, 0, 4, ''));
 		}
 
-		my ($dw, $dh) = unpack("S1 S1", substr($dist_data, 0, 4, ''));
+		my ($dw, $dh) = unpack("v1 v1", substr($dist_data, 0, 4, ''));
 		if (
 			#version 0 files had a bug when height != width, so keep version 0 files not effected by the bug.
 			   $dversion == 0 && $dw == $dh && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
@@ -82,8 +82,8 @@ sub getField {
 		$$r_hash{'dstMap'} = makeDistMap(@$r_hash{'rawMap', 'width', 'height'});
 		open FILE, ">", $dist_file or die "Could not write dist cache file: $!\n";
 		binmode(FILE);
-		print FILE pack("a2 S1", 'V#', 1);
-		print FILE pack("S1 S1", @$r_hash{'width', 'height'});
+		print FILE pack("a2 v1", 'V#', 1);
+		print FILE pack("v1 v1", @$r_hash{'width', 'height'});
 		print FILE $$r_hash{'dstMap'};
 		close FILE;
 	}
