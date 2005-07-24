@@ -104,10 +104,31 @@ sub new {
 		'00DA' => ['chat_join_result', 'C1', [qw(type)]],
 		'00D8' => ['chat_removed', 'a4', [qw(ID)]],
 		'00DB' => ['chat_users'],
-		'00DC' => ['chat_user_join', 'v1 Z24', [qw(num_users joinedUser)]],
-		'00EA' => ['deal_add', 'v1 C1', [qw(index fail)]],
+		'00DC' => ['chat_user_join', 'v1 Z24', [qw(num_users user)]],
+		'00DD' => ['chat_user_leave', 'v1 Z24', [qw(num_users user)]],
+		'00DF' => ['chat_modified', 'x2 a4 a4 v1 v1 C1 a*', [qw(ownerID ID limit num_users public title)]],
+		'00E1' => ['chat_newowner', 'C1 x3 Z24', [qw(type user)]],
+		'00E5' => ['deal_request', 'Z24', [qw(user)]],
+		'00E7' => ['deal_begin', 'C1', [qw(type)]],
+		'00E9' => ['deal_add_other', 'V1 v1 C1 C1 C1 a8', [qw(amount nameID identified broken upgrade cards)]],
+		'00EA' => ['deal_add_you', 'v1 C1', [qw(index fail)]],
+		'00EC' => ['deal_finalize', 'C1', [qw(type)]],
+		'00EE' => ['deal_cancelled'],
+		'00F0' => ['deal_complete'],
+		'00F2' => ['storage_opened', 'v1 v1', [qw(items items_max)]],
 		'00F4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'00F6' => ['storage_item_removed', 'v1 V1', [qw(index amount)]],
+		'00F8' => ['storage_closed'],
 		'00FA' => ['party_organize_result', 'C1', [qw(fail)]],
+		'00FB' => ['party_users_info', 'x2 Z24', [qw(party_name)]],
+		'00FD' => ['party_invite_result', 'Z24 C1', [qw(name type)]],
+		'00FE' => ['party_invite', 'a4 Z24', [qw(ID name)]],
+		'0101' => ['party_exp', 'C1', [qw(type)]],
+		'0104' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16', [qw(ID x y type name user map)]],
+		'0105' => ['party_leave', 'a4 Z24', [qw(ID name)]],
+		'0106' => ['party_hp_info', 'a4 v1 v1', [qw(ID hp hp_max)]],
+		'0107' => ['party_location', 'a4 v1 v1', [qw(ID x y)]],
+		'0108' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
 		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]],
 		'010A' => ['mvp_item', 'v1', [qw(itemID)]],
 		'010B' => ['mvp_you', 'V1', [qw(expAmount)]],
@@ -121,7 +142,9 @@ sub new {
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
+		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
+		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
@@ -136,6 +159,8 @@ sub new {
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'01EE' => ['inventory_items_stackable'],
+		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
+		'01F5' => ['deal_begin', 'C1', [qw(type)]],
 		'01F0' => ['storage_items_stackable'],
 		'01FC' => ['repair_list'],
 		'01FE' => ['repair_result', 'v1 C1', [qw(nameID flag)]],
@@ -1241,13 +1266,68 @@ sub chat_join_result {
 	}
 }
 
+sub chat_modified {
+	my ($self, $args) = @_;
+	my $title;
+	decrypt(\$title, $args->{title});
+
+	my ($ownerID, $ID, $limit, $public, $num_users) = @{$args}{qw(ownerID ID limit public num_users)};
+
+	if ($ownerID eq $accountID) {
+		$chatRooms{new}{title} = $title;
+		$chatRooms{new}{ownerID} = $ownerID;
+		$chatRooms{new}{limit} = $limit;
+		$chatRooms{new}{public} = $public;
+		$chatRooms{new}{num_users} = $num_users;
+	} else {
+		$chatRooms{$ID}{title} = $title;
+		$chatRooms{$ID}{ownerID} = $ownerID;
+		$chatRooms{$ID}{limit} = $limit;
+		$chatRooms{$ID}{public} = $public;
+		$chatRooms{$ID}{num_users} = $num_users;
+	}
+	message "Chat Room Properties Modified\n";
+}
+
+sub chat_newowner {
+	my ($self, $args) = @_;
+
+	if ($args->{type} == 0) {
+		if ($args->{user} eq $char->{name}) {
+			$chatRooms{$currentChatRoom}{ownerID} = $accountID;
+		} else {
+			my $key = findKeyString(\%players, "name", $args->{user});
+			$chatRooms{$currentChatRoom}{ownerID} = $key;
+		}
+		$chatRooms{$currentChatRoom}{users}{ $args->{user} } = 2;
+	} else {
+		$chatRooms{$currentChatRoom}{users}{ $args->{user} } = 1;
+	}
+}
+
 sub chat_user_join {
 	my ($self, $args) = @_;
 	if ($currentChatRoom ne "") {
-		binAdd(\@currentChatRoomUsers, $args->{joinedUser});
-		$chatRooms{$currentChatRoom}{users}{ $args->{joinedUser} } = 1;
+		binAdd(\@currentChatRoomUsers, $args->{user});
+		$chatRooms{$currentChatRoom}{users}{ $args->{user} } = 1;
 		$chatRooms{$currentChatRoom}{num_users} = $args->{num_users};
-		message "$args->{joinedUser} has joined the Chat Room\n";
+		message "$args->{user} has joined the Chat Room\n";
+	}
+}
+
+sub chat_user_leave {
+	my ($self, $args) = @_;
+	delete $chatRooms{$currentChatRoom}{users}{ $args->{user} };
+	binRemove(\@currentChatRoomUsers, $args->{user});
+	$chatRooms{$currentChatRoom}{num_users} = $args->{num_users};
+	if ($args->{user} eq $char->{name}) {
+		binRemove(\@chatRoomsID, $currentChatRoom);
+		delete $chatRooms{$currentChatRoom};
+		undef @currentChatRoomUsers;
+		$currentChatRoom = "";
+		message "You left the Chat Room\n";
+	} else {
+		message "$args->{user} has left the Chat Room\n";
 	}
 }
 
@@ -1286,7 +1366,26 @@ sub chat_removed {
 	delete $chatRooms{ $args->{ID} };
 }
 
-sub deal_add {
+sub deal_add_other {
+	my ($self, $args) = @_;
+	if ($args->{nameID} > 0) {
+		my $item = $currentDeal{other}{ $args->{ID} } ||= {};
+		$item->{amount} += $args->{amount};
+		$item->{nameID} = $args->{nameID};
+		$item->{identified} = $args->{identified};
+		$item->{broken} = $args->{broken};
+		$item->{upgrade} = $args->{upgrade};
+		$item->{cards} = $args->{cards};
+		$item->{name} = itemName($item);
+		message "$currentDeal{name} added Item to Deal: $item->{name} x $args->{amount}\n", "deal";
+	} elsif ($args->{amount} > 0) {
+		$currentDeal{other_zenny} += $args->{amount};
+		my $amount = formatNumber($args->{amount});
+		message "$currentDeal{name} added $args->{amount} z to Deal\n", "deal";
+	}
+}
+
+sub deal_add_you {
 	my ($self, $args) = @_;
 
 	if ($args->{fail}) {
@@ -1304,6 +1403,60 @@ sub deal_add {
 	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
 	$currentDeal{you_items}++;
 	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
+}
+
+sub deal_begin {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0) {
+		error "That person is too far from you to trade.\n";
+	} elsif ($args->{type} == 3) {
+		if (%incomingDeal) {
+			$currentDeal{name} = $incomingDeal{name};
+			undef %incomingDeal;
+		} else {
+			$currentDeal{ID} = $outgoingDeal{ID};
+			$currentDeal{name} = $players{$outgoingDeal{ID}}{name};
+			undef %outgoingDeal;
+		}
+		message "Engaged Deal with $currentDeal{name}\n", "deal";
+	}
+}
+
+sub deal_cancelled {
+	undef %incomingDeal;
+	undef %outgoingDeal;
+	undef %currentDeal;
+	message "Deal Cancelled\n", "deal";
+}
+
+sub deal_complete {
+	undef %outgoingDeal;
+	undef %incomingDeal;
+	undef %currentDeal;
+	message "Deal Complete\n", "deal";
+}
+
+sub deal_finalize {
+	my ($self, $args) = @_;
+	if ($args->{type} == 1) {
+		$currentDeal{other_finalize} = 1;
+		message "$currentDeal{name} finalized the Deal\n", "deal";
+
+	} else {
+		$currentDeal{you_finalize} = 1;
+		# FIXME: shouldn't we do this when we actually complete the deal?
+		$char->{zenny} -= $currentDeal{you_zenny};
+		message "You finalized the Deal\n", "deal";
+	}
+}
+
+sub deal_request {
+	my ($self, $args) = @_;
+	my $level = $args->{level} || 'Unknown';
+	$incomingDeal{name} = $args->{user};
+	$timeout{ai_dealAutoCancel}{time} = time;
+	message "$args->{user} (level $level) Requests a Deal\n", "deal";
+	message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal";
 }
 
 sub egg_list {
@@ -1775,6 +1928,20 @@ sub item_disappeared {
 	}
 }
 
+sub item_upgrade {
+	my ($self, $args) = @_;
+
+	my ($type, $index, $upgrade) = @{$args}{qw(type index upgrade)};
+
+	my $invIndex = findIndex($char->{inventory}, "index", $index);
+	if (defined $invIndex) {
+		my $item = $char->{inventory}[$invIndex];
+		$item->{upgrade} = $upgrade;
+		message "Item $item->{name} has been upgraded to +$upgrade\n", "parseMsg/upgrade";
+		$item->{name} = itemName($item);
+	}
+}
+
 sub job_equipment_hair_change {
 	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
@@ -2230,11 +2397,129 @@ sub party_chat {
 	$args->{chatMsg} = $chatMsg;
 }
 
+sub party_exp {
+	my ($self, $args) = @_;
+	$chars[$config{char}]{party}{share} = $args->{type};
+	if ($args->{type} == 0) {
+		message "Party EXP set to Individual Take\n", "party", 1;
+	} elsif ($args->{type} == 1) {
+		message "Party EXP set to Even Share\n", "party", 1;
+	} else {
+		error "Error setting party option\n";
+	}
+}
+
+sub party_hp_info {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	$chars[$config{char}]{party}{users}{$ID}{hp} = $args->{hp};
+	$chars[$config{char}]{party}{users}{$ID}{hp_max} = $args->{hp_max};
+}
+
+sub party_invite {
+	my ($self, $args) = @_;
+	message "Incoming Request to join party '$args->{name}'\n";
+	$incomingParty{ID} = $args->{ID};
+	$timeout{ai_partyAutoDeny}{time} = time;
+}
+
+sub party_invite_result {
+	my ($self, $args) = @_;
+	if ($args->{type} == 0) {
+		warning "Join request failed: $args->{name} is already in a party\n";
+	} elsif ($args->{type} == 1) {
+		warning "Join request failed: $args->{name} denied request\n";
+	} elsif ($args->{type} == 2) {
+		message "$args->{name} accepted your request\n", "info";
+	}
+}
+
+sub party_join {
+	my ($self, $args) = @_;
+
+	my ($ID, $x, $y, $type, $name, $user, $map) = @{$args}{qw(ID x y type name user map)};
+
+	if (!$char->{party} || !%{$char->{party}} || !$chars[$config{char}]{party}{users}{$ID} || !%{$chars[$config{char}]{party}{users}{$ID}}) {
+		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
+		if ($ID eq $accountID) {
+			message "You joined party '$name'\n", undef, 1;
+			$char->{party} = {};
+		} else {
+			message "$user joined your party '$name'\n", undef, 1;
+		}
+	}
+	$chars[$config{char}]{party}{users}{$ID} = new Actor::Party;
+	if ($type == 0) {
+		$chars[$config{char}]{party}{users}{$ID}{online} = 1;
+	} elsif ($type == 1) {
+		$chars[$config{char}]{party}{users}{$ID}{online} = 0;
+	}
+	$chars[$config{char}]{party}{name} = $name;
+	$chars[$config{char}]{party}{users}{$ID}{pos}{x} = $x;
+	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $y;
+	$chars[$config{char}]{party}{users}{$ID}{map} = $map;
+	$chars[$config{char}]{party}{users}{$ID}{name} = $user;
+
+	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
+		sendPartyShareEXP(\$remote_socket, 1);
+	}
+}
+
+sub party_leave {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	delete $chars[$config{char}]{party}{users}{$ID};
+	binRemove(\@partyUsersID, $ID);
+	if ($ID eq $accountID) {
+		message "You left the party\n";
+		delete $chars[$config{char}]{party} if ($chars[$config{char}]{party});
+		undef @partyUsersID;
+	} else {
+		message "$args->{name} left the party\n";
+	}
+}
+
+sub party_location {
+	my ($self, $args) = @_;
+	my $ID = $args->{ID};
+	$chars[$config{char}]{party}{users}{$ID}{pos}{x} = $args->{x};
+	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $args->{y};
+	$chars[$config{char}]{party}{users}{$ID}{online} = 1;
+	debug "Party member location: $chars[$config{char}]{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
+}
+
 sub party_organize_result {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
 		warning "Can't organize party - party name exists\n";
 	}
+}
+
+sub party_users_info {
+	my ($self, $args) = @_;
+
+	my $msg;
+	decrypt(\$msg, substr($args->{RAW_MSG}, 28));
+	$msg = substr($args->{RAW_MSG}, 0, 28).$msg;
+	$char->{party}{name} = $args->{party_name};
+
+	for (my $i = 28; $i < $args->{RAW_MSG_SIZE}; $i += 46) {
+		my $ID = substr($msg, $i, 4);
+		my $num = unpack("C1", substr($msg, $i + 44, 1));
+		if (binFind(\@partyUsersID, $ID) eq "") {
+			binAdd(\@partyUsersID, $ID);
+		}
+		$chars[$config{char}]{party}{users}{$ID} = new Actor::Party;
+		$chars[$config{char}]{party}{users}{$ID}{name} = unpack("Z24", substr($msg, $i + 4, 24));
+		message "Party Member: $chars[$config{char}]{party}{users}{$ID}{name}\n", undef, 1;
+		$chars[$config{char}]{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
+		$chars[$config{char}]{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
+		$chars[$config{char}]{party}{users}{$ID}{admin} = 1 if ($num == 0);
+	}
+
+	sendPartyShareEXP(\$remote_socket, 1) if ($config{partyAutoShare} && $chars[$config{char}]{party} && %{$chars[$config{char}]{party}});
+
 }
 
 sub pet_info {
@@ -2250,7 +2535,7 @@ sub pet_info {
 
 sub public_chat {
 	my ($self, $args) = @_;
-	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
+	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /(.*?) : (.*)/;
 	$args->{chatMsgUser} =~ s/ $//;
 
 	stripLanguageCode(\$args->{chatMsg});
@@ -2831,6 +3116,36 @@ sub stat_info {
 	}
 }
 
+sub stat_info2 {
+	my ($self, $args) = @_;
+	my ($type, $val, $val2) = @{$args}{qw(type val val2)};
+	if ($type == 13) {
+		$char->{str} = $val;
+		$char->{str_bonus} = $val2;
+		debug "Strength: $val + $val2\n", "parseMsg";
+	} elsif ($type == 14) {
+		$char->{agi} = $val;
+		$char->{agi_bonus} = $val2;
+		debug "Agility: $val + $val2\n", "parseMsg";
+	} elsif ($type == 15) {
+		$char->{vit} = $val;
+		$char->{vit_bonus} = $val2;
+		debug "Vitality: $val + $val2\n", "parseMsg";
+	} elsif ($type == 16) {
+		$char->{int} = $val;
+		$char->{int_bonus} = $val2;
+		debug "Intelligence: $val + $val2\n", "parseMsg";
+	} elsif ($type == 17) {
+		$char->{dex} = $val;
+		$char->{dex_bonus} = $val2;
+		debug "Dexterity: $val + $val2\n", "parseMsg";
+	} elsif ($type == 18) {
+		$char->{luk} = $val;
+		$char->{luk_bonus} = $val2;
+		debug "Luck: $val + $val2\n", "parseMsg";
+	}
+}
+
 sub stats_points_needed {
 	my ($self, $args) = @_;
 	if ($args->{type} == 32) {
@@ -2852,6 +3167,15 @@ sub stats_points_needed {
 		$char->{points_luk} = $args->{val};
 		debug "Points needed for Luck: $args->{val}\n", "parseMsg";
 	}
+}
+
+sub storage_closed {
+	message "Storage closed.\n", "storage";
+	delete $ai_v{temp}{storage_opened};
+	Plugins::callHook('packet_storage_close');
+
+	# Storage log
+	writeStorageLog(0);
 }
 
 sub storage_item_added {
@@ -2877,6 +3201,20 @@ sub storage_item_added {
 	}
 	message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
 	$itemChange{$item->{name}} += $amount;
+}
+
+sub storage_item_removed {
+	my ($self, $args) = @_;
+
+	my ($index, $amount) = @{$args}{qw(index amount)};
+
+	$storage{$index}{amount} -= $amount;
+	message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
+	$itemChange{$storage{$index}{name}} -= $amount;
+	if ($storage{$index}{amount} <= 0) {
+		delete $storage{$index};
+		binRemove(\@storageID, $index);
+	}
 }
 
 sub storage_items_nonstackable {
@@ -2930,6 +3268,19 @@ sub storage_items_stackable {
 		$item->{binID} = binFind(\@storageID, $index);
 		$item->{identified} = 1;
 		debug "Storage: $item->{name} ($item->{binID}) x $item->{amount}\n", "parseMsg";
+	}
+}
+
+sub storage_opened {
+	my ($self, $args) = @_;
+	$storage{items} = $args->{items};
+	$storage{items_max} = $args->{items_max};
+
+	$ai_v{temp}{storage_opened} = 1;
+	if (!$storage{opened}) {
+		$storage{opened} = 1;
+		message "Storage opened.\n", "storage";
+		Plugins::callHook('packet_storage_open');
 	}
 }
 
