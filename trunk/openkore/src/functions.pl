@@ -1591,6 +1591,7 @@ sub AI {
 					my $item = $char->{inventory}[$i];
 					next unless ($item && %{$item});
 					next if $item->{equipped};
+					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
 
 					my $control = items_control($item->{name});
 					my $store = $control->{storage};
@@ -1775,7 +1776,7 @@ sub AI {
 			}
 			$ai_seq_args[0]{'done'} = 1;
 
-			# Form list of 8 items to sell
+			# Form list of items to sell
 			my @sellItems;
 			for (my $i = 0; $i < @{$char->{inventory}};$i++) {
 				my $item = $char->{inventory}[$i];
