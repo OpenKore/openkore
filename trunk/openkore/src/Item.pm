@@ -56,23 +56,35 @@ sub new {
 ###################
 
 ##
-# get( item )
+# get( item, skipIndex, notEquipped )
 #
 # item can be either an object itself, an Id or a name
 # returns Item object
 #
+# skipIndex tells get to not select a certain item
+# (used for getting another item with the same name)
+#
+# notEquipped tells get to get an unequipped item
 sub get {
 	my $item = shift;
 	my $skipIndex = shift;
+	my $notEquipped = shift;
 
 	return $item if (UNIVERSAL::isa($item, 'Item'));
 
+	# user supplied an inventory index
 	if ($item =~ /^\d+$/) {
-
 		return $char->{inventory}[$item] if $char->{inventory}[$item];
 		return undef;
+
+	# user supplied an item name
 	} else {
-		my $index = findIndexStringList_lc($char->{inventory}, 'name', $item, $skipIndex);
+		my $index;
+		if ($notEquipped) {
+			$index = findIndexString_lc_not_equip($char->{inventory}, 'name', $item, $skipIndex);
+		} else {
+			$index = findIndexStringList_lc($char->{inventory}, 'name', $item, $skipIndex);
+		}
 		return undef if !defined($index);
 		return $char->{inventory}[$index];
 	}
@@ -87,7 +99,6 @@ sub get {
 # %list = (leftHand => 'Katar', rightHand => 10);
 sub bulkEquip {
 	my $list = shift;
-	my $count = 0;
 
 	return unless $list && %{$list};
 
@@ -96,24 +107,18 @@ sub bulkEquip {
 		if (!$equipSlot_rlut{$_}) {
 			debug "Wrong Itemslot specified: $_\n",'Item';
 		}
-		if ($_ eq 'leftHand' && $rightHand) {
-			if ( ( $item = get($list->{$_}, $rightHand) ) && !$item->{equipped}) {
-				$item->equipInSlot($_);
-			}
-		} elsif ($_ eq 'leftAccessory' && $rightAccessory) {
-			if ( ( $item = get($list->{$_}, $rightAccessory) ) && !$item->{equipped}) {
-				$item->equipInSlot($_);
-			}
-		} else {
-			if ( ( $item = get($list->{$_}) ) && !$item->{equipped}) {
-				$item->equipInSlot($_);
-			}
-		}
 
-		$count++ if $item;
+		my $skipIndex;
+		$skipIndex = $rightHand if ($_ eq 'leftHand');
+		$skipIndex = $rightAccessory if ($_ eq 'leftAccessory');
+		$item = Item::get($list->{$_}, $skipIndex, 1);
 
-		$rightHand = $item->{invIndex} if $item && $_ eq 'rightHand';
-		$rightAccessory = $item->{invIndex} if $item && $_ eq 'rightAccessory';
+		next if !$item;
+
+		$item->equipInSlot($_);
+
+		$rightHand = $item->{invIndex} if $_ eq 'rightHand';
+		$rightAccessory = $item->{invIndex} if $_ eq 'rightAccessory';
 	}
 }
 
@@ -138,7 +143,7 @@ sub scanConfigAndEquip {
 }
 
 ##
-# scanConfigAndEquip( prefix )
+# scanConfigAndCheck( prefix )
 #
 # prefix: is used to scan for slots
 # Returns: whether there is a item
