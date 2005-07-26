@@ -3316,7 +3316,10 @@ sub cmdTank {
 }
 
 sub cmdTeleport {
-	main::useTeleport(1);
+	my (undef, $args) = @_;
+	my ($arg1) = $args =~ /^(\d)/;
+	$arg1 = 1 unless $arg1;
+	main::useTeleport($arg1);
 }
 
 sub cmdTestShop {
