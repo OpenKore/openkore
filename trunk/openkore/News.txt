@@ -55,6 +55,7 @@ Bug fixes:
 - Automatically remove perfectly hidden objects, caused auto-ban.
 - Detect NPC spawning. (possibly picking up weird stuff now)
 - Don't storage pets if they are in use.
+- Show full class name in the pl # command.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
