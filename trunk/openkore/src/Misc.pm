@@ -2424,6 +2424,17 @@ sub useTeleport {
 		}
 	}
 
+	# No skill try to equip a Tele clip or something,
+	# if teleportAuto_equip_* is set
+	if (Item::scanConfigAndCheck('teleportAuto_equip') && $use_lvl == 1){
+		if (!$ai_v{temp}{teleport}{lv}) {
+				debug "Equipping Accessory to teleport\n", "useTeleport";
+				$ai_v{temp}{teleport}{lv} = $use_lvl;
+		}
+		Item::scanConfigAndEquip('teleportAuto_equip');
+		return;
+	}
+
 	# else if $internal == 0 or $sk_lvl == 0
 	# try to use item
 
@@ -2445,38 +2456,6 @@ sub useTeleport {
 		return useTeleport($use_lvl, 1);
 	}
 
-	# No skill and no wings; try to equip a Tele clip or something,
-	# if equipAuto_#_onTeleport is set
-	my $i = 0;
-	while (exists $config{"equipAuto_$i"}) {
-		if (!$config{"equipAuto_$i"}) {
-			$i++;
-			next;
-		}
-
-		if ($config{"equipAuto_${i}_onTeleport"}) {
-			# it is safe to always set this value, because $ai_v{temp} is always cleared after teleport
-			if (!$ai_v{temp}{teleport}{lv}) {
-				debug "Equipping " . $config{"equipAuto_$i"} . " to teleport\n", "useTeleport";
-				$ai_v{temp}{teleport}{lv} = $use_lvl;
-
-				# set a small timeout, will be overridden if related config in equipAuto is set
-				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
-				$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = 5;
-				return 1;
-
-			} elsif (defined $ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup} && timeOut($ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup})) {
-				message "You don't have wing or skill to teleport/respawn or timeout elapsed\n", "teleport";
-				delete $ai_v{temp}{teleport};
-				return 0;
-
-			} else {
-				# Waiting for item to equip
-				return 1;
-			}
-		}
-		$i++;
-	}
 
 	if ($use_lvl == 1) {
 		message "You don't have the Teleport skill or a Fly Wing\n", "teleport";

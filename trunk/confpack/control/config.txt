@@ -192,6 +192,8 @@ teleportAuto_dropTargetKS 0
 teleportAuto_attackedWhenSitting 0
 teleportAuto_totalDmg 0
 teleportAuto_totalDmgInLock 0
+teleportAuto_equip_leftAccessory
+teleportAuto_equip_rightAccessory
 
 dealAuto 1
 partyAuto 1
