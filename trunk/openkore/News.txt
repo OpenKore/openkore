@@ -19,6 +19,7 @@ TODO:
 - You must use the new tables/emotions.txt or emotions won't work.
   The "e" command now uses the RO client commands instead of the number.
 - Vigor condensation renamed to Vigor Condensation for consistency
+- equipAuto onTeleport changed to teleportAuto_equip_{slot}
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
@@ -125,6 +126,10 @@ New config options:
   Don't attack monsters while inside a town.
 - new option in buyAuto: zeny (range)
   only buy if you have the specified Zeny
+- teleportAuto_equip_{slot} 
+  use this instead of equipAuto onTeleport
+  you can use all slots but it is recommended to
+  use only either right or left Accessory slot
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).

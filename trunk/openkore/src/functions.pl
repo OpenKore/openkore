@@ -1394,7 +1394,7 @@ sub AI {
 
 	##### DELAYED-TELEPORT #####
 
-	if ($ai_v{temp}{teleport}{lv}) {
+	if ($ai_v{temp}{teleport}{lv} && $ai_seq[0] ne 'equip') {
 		useTeleport($ai_v{temp}{teleport}{lv});
 	}
 
