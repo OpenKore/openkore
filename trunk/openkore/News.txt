@@ -81,6 +81,7 @@ New features:
 - Improved storage list, sorts the items by category like the real client.
 - Emotion command now uses the real commands from the RO client.
   Example: e thx
+- _whenWater should work now?
 
 New commands:
 - getplayerinfo (number)

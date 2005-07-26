@@ -463,8 +463,8 @@ sub checkFieldWalkable {
 #
 # Check whether ($x, $y) on field $r_field is (walkable) water.
 sub checkFieldWater {
-	# FIXME: not implemented
-	return 0;
+	my $p = getFieldPoint(@_);
+	return ($p == 3);
 }
 
 ##
