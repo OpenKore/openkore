@@ -3291,7 +3291,7 @@ sub system_chat {
 
 	stripLanguageCode(\$args->{message});
 	chatLog("s", "$args->{message}\n") if ($config{'logSystemChat'});
-	message "$args->{message}\n", "schat";
+	message "[GM] $args->{message}\n", "schat";
 	ChatQueue::add('gm', undef, undef, $args->{message});
 }
 

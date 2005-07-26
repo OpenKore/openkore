@@ -2289,7 +2289,7 @@ sub cmdPlayerList {
 			"Level: @<<      Distance: @<<<<<<<<<<<<<<<<<",
 			[$player->{lv}, $dist]);
 		$msg .= swrite(
-			"Sex: @<<<<<<    Class: @<<<<<<<<<<<",
+			"Sex: @<<<<<<    Class: @*",
 			[$sex_lut{$player->{sex}}, $jobs_lut{$player->{jobID}}]);
 
 		my $headTop = headgearName($player->{headgear}{top});

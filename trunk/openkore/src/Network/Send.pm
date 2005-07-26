@@ -1320,7 +1320,7 @@ sub sendPetGetInfo {
 
 sub sendPetHatch {
 	my $index = shift;
-	my $msg = pack("C*", 0xA7, 0x01) . pack("v*", $index);
+	my $msg = pack("C*", 0xA7, 0x01) . pack("v1", $index);
 	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Incubator hatch: $index\n", "sendPacket", 2;
 }
