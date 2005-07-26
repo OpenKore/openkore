@@ -282,7 +282,9 @@ sub monsterEquip {
 			}
 		}
 	}
-	bulkConfigModify(\%equip_list, 1);
+	foreach (keys %equip_list) {
+		$config{$_} = $equip_list{$_};
+	}
 	Item::scanConfigAndEquip('attackEquip');
 }
 
