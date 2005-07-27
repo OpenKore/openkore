@@ -290,13 +290,15 @@ sub equipInSlot {
 	return 1 if ($char->{equipment}{$slot} # return if Item is already equipped
 				&& $char->{equipment}{$slot}{name} eq $self->{name});
 	#UnEquipByType($equipSlot_rlut{$slot});
-	if ($equipSlot_rlut{$slot} ^ $self->{type_equip}) {
-		#checks whether item uses multiple slots
-		sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
-	}
-	else {
+
+	# this is not needed, it screws up clips (can be equipped in multiple (two) slots)
+	#if ($equipSlot_rlut{$slot} ^ $self->{type_equip}) {
+	#	#checks whether item uses multiple slots
+	#	sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
+	#}
+	#else {
 		sendEquip(\$remote_socket, $self->{index}, $equipSlot_rlut{$slot});
-	}
+	#}
 	queueEquip(1);
 	return 0;
 }
