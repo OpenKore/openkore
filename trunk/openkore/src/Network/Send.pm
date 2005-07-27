@@ -135,7 +135,7 @@ our @EXPORT = qw(
 	sendStorageAddFromCart
 	sendStorageClose
 	sendStorageGet
-	sendStorageGetFromCart
+	sendStorageGetToCart
 	sendStand
 	sendSuperNoviceDoriDori
 	sendSuperNoviceExplosion
@@ -1613,7 +1613,7 @@ sub sendStorageGet {
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
 
-sub sendStorageGetFromCart {
+sub sendStorageGetToCart {
 	my $index = shift;
 	my $amount = shift;
 	my $msg;
