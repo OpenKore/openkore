@@ -4229,6 +4229,7 @@ sub AI {
 				&& $field{name} eq $config{'lockMap'}
 			)
 		  )
+		  && !$char->{dead}
 		) {
 			message "Teleporting due to insufficient HP/SP or too many aggressives\n", "teleport";
 			$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
