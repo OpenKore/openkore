@@ -24,6 +24,7 @@ TODO:
 - equipAuto onTeleport changed to teleportAuto_equip_{slot}
   equipAuto skills is no longer used, use <skill slot>_equip_<slot>
   equipAuto syntax is changed, read below.
+  equipAuto_def is removed.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
