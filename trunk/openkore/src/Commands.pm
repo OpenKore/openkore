@@ -3202,9 +3202,9 @@ sub cmdTalk {
 		message("NPC: $display\n", "list");
 		message("#  Response\n", "list");
 		for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
-			message(swrite(
-				"@< @<<<<<<<<<<<<<<<<<<<<<<",
-				[$i, $talk{'responses'}[$i]]),
+			message(sprintf(
+				"%2s %s\n",
+				$i, $talk{'responses'}[$i]),
 				"list");
 		}
 		message("-------------------------------\n", "list");
