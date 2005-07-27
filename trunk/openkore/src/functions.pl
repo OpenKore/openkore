@@ -3182,13 +3182,6 @@ sub AI {
 	  && timeOut($timeout{ai_item_equip_auto}) && time > $ai_v{'inventory_time'}) {
 
 		my $ai_index_attack = AI::findAction("attack");
-		my $ai_index_skill_use = AI::findAction("skill_use");
-
-		my $currentSkill;
-		if (defined $ai_index_skill_use) {
-			my $skillHandle = AI::args($ai_index_skill_use)->{skillHandle};
-			$currentSkill = $skills_lut{$skillHandle};
-		}
 
 		my $monster;
 		if (defined $ai_index_attack) {
@@ -3196,51 +3189,31 @@ sub AI {
 			$monster = $monsters{$ID};
 		}
 
-		my $i = 0;
-		while (exists $config{"equipAuto_$i"}) {
-			if (!$config{"equipAuto_$i"}) {
-				$i++;
-				next;
-			}
+		# we will create a list of items to equip
+		my %eq_list;
 
-			if (checkSelfCondition("equipAuto_$i")
+		for (my $i = 0; exists $config{"equipAuto_$i"}; $i++) {
+			if (Item::scanConfigAndCheck("equipAuto_$i")
+			 && checkSelfCondition("equipAuto_$i")
 			 && checkMonsterCondition("equipAuto_$i", $monster)
 			 && (!$config{"equipAuto_${i}_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
-			 && (!$config{"equipAuto_${i}_onTeleport"} || $ai_v{temp}{teleport}{lv})
 			 && (!$config{"equipAuto_${i}_whileSitting"} || ($config{"equipAuto_${i}_whileSitting"} && $char->{sitting}))
 			 && (!$config{"equipAuto_${i}_monsters"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_monsters"}, $monster->{name})))
-			 && (!$config{"equipAuto_${i}_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill)))
 			) {
-				my $index = findIndexString_lc_not_equip(\@{$char->{inventory}}, "name", $config{"equipAuto_$i"});
-				if (defined $index) {
-					$char->{inventory}[$index]->equip();
-					$timeout{ai_item_equip_auto}{time} = time;
 
-					# this is a skilluse equip
-					if (!$config{"equipAuto_$i" . "_skills"} || (defined $currentSkill && existsInList($config{"equipAuto_$i" . "_skills"}, $currentSkill))) {
-						AI::args($ai_index_skill_use)->{ai_equipAuto_skilluse_giveup}{time} = time;
-						AI::args($ai_index_skill_use)->{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
-
-					# this is a teleport equip
-					} elsif (!$config{"equipAuto_${i}_onTeleport"} || $ai_v{temp}{teleport}{lv}) {
-						$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{time} = time;
-						$ai_v{temp}{teleport}{ai_equipAuto_skilluse_giveup}{timeout} = $timeout{ai_equipAuto_skilluse_giveup}{timeout};
-						warning "set timeout\n";
+				foreach my $slot (%equipSlot_lut) {
+					if ($config{"equipAuto_$i"."_$slot"}) {
+						debug "equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
+						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"};
 					}
-
-					debug "Auto-equip: $char->{inventory}[$index]{name} ($index)\n", "equipAuto";
-					last;
-				}
-
-			} elsif ($config{"equipAuto_${i}_def"} && !$char->{sitting} && !$config{"equipAuto_${i}_disabled"}) {
-				my $index = findIndexString_lc_not_equip(\@{$char->{inventory}}, "name", $config{"equipAuto_${i}_def"});
-				if (defined $index) {
-					$char->{inventory}[$index]->equip();
-					$timeout{ai_item_equip_auto}{time} = time;
-					debug "Auto-equip: $char->{inventory}[$index]{name} ($index)\n", "equipAuto";
 				}
 			}
-			$i++;
+		}
+
+		if (%eq_list) {
+				$timeout{ai_item_equip_auto}{time} = time;
+				debug "Auto-equipping items\n", "equipAuto";
+				Item::bulkEquip(\%eq_list);
 		}
 	}
 
