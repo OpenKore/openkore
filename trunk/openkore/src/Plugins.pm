@@ -118,6 +118,11 @@ sub load {
 	$current_plugin_folder = $file;
 	$current_plugin_folder =~ s/(.*)[\/\\].*/$1/;
 
+	if (!-e $file) {
+		Log::error("Unable to load plugin $file: does not exist", "plugins");
+		return 0;
+	}
+
 	undef $@;
 	if (!do $file) {
 		$@ = "cannot open file" if (!defined $@);
