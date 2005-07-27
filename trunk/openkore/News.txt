@@ -4,6 +4,8 @@
 
 TODO:
 - Write player name cache to file?
+- Remove \$remote_socket from all Send.pm functions.
+- Convert the rest of the packets to Receive.pm.
 
 *** INCOMPATIBLE CHANGES ***:
 - NPC IDs are no longer supported, you must use the location syntax.
@@ -20,6 +22,8 @@ TODO:
   The "e" command now uses the RO client commands instead of the number.
 - Vigor condensation renamed to Vigor Condensation for consistency
 - equipAuto onTeleport changed to teleportAuto_equip_{slot}
+  equipAuto skills is no longer used, use <skill slot>_equip_<slot>
+  equipAuto syntax is changed, read below.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
