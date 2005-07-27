@@ -3205,7 +3205,7 @@ sub AI {
 				foreach my $slot (%equipSlot_lut) {
 					if ($config{"equipAuto_$i"."_$slot"}) {
 						debug "equip $slot with ".$config{"equipAuto_$i"."_$slot"}."\n";
-						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"};
+						$eq_list{$slot} = $config{"equipAuto_$i"."_$slot"} if (!$eq_list{$slot});
 					}
 				}
 			}
