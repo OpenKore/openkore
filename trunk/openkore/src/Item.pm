@@ -104,7 +104,7 @@ sub bulkEquip {
 
 	my ($item, $rightHand, $rightAccessory);
 	foreach (keys %{$list}) {
-		if (!$equipSlot_rlut{$_}) {
+		if (!exists $equipSlot_rlut{$_}) {
 			debug "Wrong Itemslot specified: $_\n",'Item';
 		}
 
@@ -293,7 +293,7 @@ sub equipInSlot {
 
 	# this is not needed, it screws up clips (can be equipped in multiple (two) slots)
 	#if ($equipSlot_rlut{$slot} ^ $self->{type_equip}) {
-	#	#checks whether item uses multiple slots
+		#checks whether item uses multiple slots
 	#	sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
 	#}
 	#else {

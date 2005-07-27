@@ -65,7 +65,7 @@ our %equipSlot_lut = (
 	'256'  => 'topHead',
 	'512'  => 'midHead',
 	'1024' => 'carry', #used in messyKore don't know if it actually exists
-	'10'   => 'arrow'
+	'32768'   => 'arrow' #just use an made up ID since arrow doesn't have any
 );
 our %equipSlot_rlut = (
 	'Item'           => 0,
@@ -80,7 +80,7 @@ our %equipSlot_rlut = (
 	'topHead'        => 256,
 	'midHead'        => 512,
 	'carry' 		 => 1024,
-	'arrow'          => 10
+	'arrow'          => '' #arrow seems not to have any ID
 );
 our %elements_lut;
 our %directions_lut;
