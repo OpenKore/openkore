@@ -146,6 +146,9 @@ New config options:
     hp < 20%
     inInventory Red Potion <5, Yellow Potion <2
   }
+- inCart
+  much like its inInventory counterpart and uses the same syntax. Use this to
+  check cart inventory before executing a config block.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
