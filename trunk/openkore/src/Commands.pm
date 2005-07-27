@@ -2776,7 +2776,7 @@ Syntax Error in function 'storage' (Storage Functions)
 Usage: storage
        storage close
        storage add <inventory_item> [<amount>]
-       storage addfromcart <inventory_item> [<amount>]
+       storage addfromcart <cart_item> [<amount>]
        storage get <storage_item> [<amount>]
        storage gettocart <storage_item> [<amount>]
        storage log
