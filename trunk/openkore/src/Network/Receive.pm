@@ -2272,9 +2272,22 @@ sub npc_store_info {
 	}
 
 	my $name = getNPCName($talk{ID});
-	message "$name: Check my store list by typing 'store'\n";
 	$ai_v{'npc_talk'}{'talk'} = 'store';
 	$ai_v{'npc_talk'}{'time'} = time;
+
+	if ($ai_seq[0] ne 'buyAuto') {
+		message("----------$name's Store List-----------\n", "list");
+		message("#  Name                    Type           Price\n", "list");
+		my $display;
+		for (my $i = 0; $i < @storeList; $i++) {
+			$display = $storeList[$i]{'name'};
+			message(swrite(
+				"@< @<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>>>>z",
+				[$i, $display, $itemTypes_lut{$storeList[$i]{'type'}}, $storeList[$i]{'price'}]),
+				"list");
+		}
+		message("-------------------------------\n", "list");
+	}
 }
 
 sub npc_talk {
