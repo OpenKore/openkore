@@ -2760,8 +2760,12 @@ sub cmdStorage {
 		cmdStorage_list();
 	} elsif ($switch eq 'add') {
 		cmdStorage_add($items);
+	} elsif ($switch eq 'addfromcart') {
+		cmdStorage_addfomcart($items);
 	} elsif ($switch eq 'get') {
 		cmdStorage_get($items);
+	} elsif ($switch eq 'gettocart') {
+		cmdStorage_gettocart($items);
 	} elsif ($switch eq 'close') {
 		cmdStorage_close();
 	} elsif ($switch eq 'log') {
@@ -2772,7 +2776,9 @@ Syntax Error in function 'storage' (Storage Functions)
 Usage: storage
        storage close
        storage add <inventory_item> [<amount>]
+       storage addfromcart <inventory_item> [<amount>]
        storage get <storage_item> [<amount>]
+       storage gettocart <storage_item> [<amount>]
        storage log
 _
 	}
@@ -2859,6 +2865,22 @@ sub cmdStorage_add {
 	sendStorageAdd($item->{index}, $amount);
 }
 
+sub cmdStorage_addfromcart {
+	my $items = shift;
+
+	my ($name, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
+	my $item = Match::cartItem($name);
+	if (!$item) {
+		error "Cart Item '$name' does not exist.\n";
+		return;
+	}
+
+	if (!defined($amount) || $amount > $item->{amount}) {
+		$amount = $item->{amount};
+	}
+	sendStorageAddFromCart($item->{index}, $amount);
+}
+
 sub cmdStorage_get {
 	my $items = shift;
 
@@ -2883,6 +2905,32 @@ sub cmdStorage_get {
 	}
 
 	storageGet(\@items, $amount) if @items;
+}
+
+sub cmdStorage_gettocart {
+	my $items = shift;
+
+	my ($names, $amount) = $items =~ /^(.*?)(?: (\d+))?$/;
+	my @names = split(',', $names);
+	my @items;
+
+	for my $name (@names) {
+		if ($name =~ /^(\d+)\-(\d+)$/) {
+			for my $i ($1..$2) {
+				push @items, $storage{$storageID[$i]} if ($storage{$storageID[$i]});
+			}
+
+		} else {
+			my $item = Match::storageItem($name);
+			if (!$item) {
+				error "Storage Item '$name' does not exist.\n";
+				next;
+			}
+			push @items, $item;
+		}
+	}
+
+	storageGetToCart(\@items, $amount) if @items;
 }
 
 sub cmdStorage_close {
