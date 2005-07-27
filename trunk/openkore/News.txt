@@ -143,8 +143,8 @@ New config options:
     distance 5
     minAmount 0
     maxAmount 100
-	hp < 20
-	inInventory Red Potion <5, Yellow Potion <2
+    hp < 20%
+    inInventory Red Potion <5, Yellow Potion <2
   }
 
 Internal:
