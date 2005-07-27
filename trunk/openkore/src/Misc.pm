@@ -3020,9 +3020,18 @@ sub checkSelfCondition {
  			return 0 if !inRange(!defined $iX ? 0 : $char->{inventory}[$iX]{amount}, $count);		}
 	}
 
+	if ($config{$prefix."_inCart"}) {
+		foreach my $input (split / *, */, $config{$prefix."_inCart"}) {
+			my ($item,$count) = $input =~ /(.*?)(\s+[><= 0-9]+)?$/;
+			$count = '>0' if $count eq '';
+			my $iX = findIndexString_lc($cart{inventory}, "name", $item);
+ 			return 0 if !inRange(!defined $iX ? 0 : $cart{inventory}[$iX]{amount}, $count);		}
+	}
+
 	if ($config{$prefix."_whenGround"}) {
 		return 0 unless whenGroundStatus(calcPosition($char), $config{$prefix."_whenGround"});
 	}
+	
 	if ($config{$prefix."_whenNotGround"}) {
 		return 0 if whenGroundStatus(calcPosition($char), $config{$prefix."_whenNotGround"});
 	}
