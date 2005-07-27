@@ -135,6 +135,17 @@ New config options:
   use this instead of equipAuto onTeleport
   you can use all slots but it is recommended to
   use only either right or left Accessory slot
+- buyAuto now uses checkSelfCondition. This means you can now specify options
+  like hp, sp, and other options in useSelf* in your buyAuto config block e.g.
+
+  buyAuto Monster's Feed {
+    npc prontera 64 125
+    distance 5
+    minAmount 0
+    maxAmount 100
+	hp < 20
+	inInventory Red Potion <5, Yellow Potion <2
+  }
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
