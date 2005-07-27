@@ -93,7 +93,7 @@ New commands:
 - getplayerinfo (number)
   Ask the server for the name of the object with that ID. You will not
   see the reply unless you have debug level 2.
-- storage addfromcart <inventory_item> [<amount>]
+- storage addfromcart <cart_item> [<amount>]
   storage gettocart <storage_item> [<amount>]
   Support for adding/getting items directly to/from merchant cart
 
