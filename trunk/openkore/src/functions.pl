@@ -2517,7 +2517,7 @@ sub AI {
 			useTeleport(1);
 		}
 
-	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{ID}} && !$players{$ai_seq_args[0]{ID}}) {
+	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{ID}} && (!$players{$ai_seq_args[0]{ID}} || $players{$ai_seq_args[0]{ID}}{dead})) {
 		# Monster died or disappeared
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
 		my $ID = AI::args->{ID};

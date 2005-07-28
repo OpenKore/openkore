@@ -492,7 +492,7 @@ sub cmdAttackStop {
 	my $index = AI::findAction("attack");
 	if ($index ne "") {
 		my $args = AI::args($index);
-		my $monster = $monsters{$args->{ID}};
+		my $monster = Actor::get($args->{ID});
 		if ($monster) {
 			$monster->{ignore} = 1;
 			stopAttack();
