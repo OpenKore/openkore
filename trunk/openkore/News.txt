@@ -64,6 +64,8 @@ Bug fixes:
 - Show full class name in the pl # command.
 - 'as' command works now when attacking players.
 - "attack" ai_seq will be dequeued when a targeted player dies.
+- Fix cartAuto crash bug for Perl 5.6 caused by:
+      delete $cart{'inventory'}[$index];
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -155,6 +157,9 @@ New config options:
 - inCart
   much like its inInventory counterpart and uses the same syntax. Use this to
   check cart inventory before executing a config block.
+- dcOnStorageFull (flag)
+  If the character's weight >= itemsMaxWeight_sellOrStore just after having
+  completed storageAuto, then log out because something is wrong.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
