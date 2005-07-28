@@ -2130,12 +2130,13 @@ sub setStatus {
 			objectRemoved('monster', $ID, $monsters{$ID});
 			delete $monsters{$ID};
 		}
-		if ($npcs{$ID}) {
-			message "Remove perfectly hidden $actor\n";
-			binRemove(\@npcsID, $ID);
-			objectRemoved('npc', $ID, $npcs{$ID});
-			delete $npcs{$ID};
-		}
+		# NPCs do this on purpose (who knows why)
+		#if ($npcs{$ID}) {
+		#	message "Remove perfectly hidden $actor\n";
+		#	binRemove(\@npcsID, $ID);
+		#	objectRemoved('npc', $ID, $npcs{$ID});
+		#	delete $npcs{$ID};
+		#}
 	}
 }
 
