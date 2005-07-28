@@ -104,6 +104,10 @@ avoidList 1
 avoidList_inLockOnly 0
 avoidList_reconnect 1800
 
+cachePlayerNames 1
+cachePlayerNames_duration 900
+cachePlayerNames_maxSize 100
+
 dcOnDeath 0
 dcOnDualLogin 0
 dcOnDisconnect 0
