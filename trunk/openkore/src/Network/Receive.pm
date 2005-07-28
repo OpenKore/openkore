@@ -152,7 +152,7 @@ sub new {
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
 		'01A6' => ['egg_list'],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
-		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID identified type broken upgrade cards)]],
+		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
@@ -3206,8 +3206,8 @@ sub storage_item_added {
 		$item->{nameID} = $args->{ID};
 		$item->{index} = $index;
 		$item->{amount} = $amount;
-		$item->{identified} = $args->{identified};
 		$item->{type} = $args->{type};
+		$item->{identified} = $args->{identified};
 		$item->{broken} = $args->{broken};
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
