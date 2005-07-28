@@ -2761,7 +2761,7 @@ sub cmdStorage {
 	} elsif ($switch eq 'add') {
 		cmdStorage_add($items);
 	} elsif ($switch eq 'addfromcart') {
-		cmdStorage_addfomcart($items);
+		cmdStorage_addfromcart($items);
 	} elsif ($switch eq 'get') {
 		cmdStorage_get($items);
 	} elsif ($switch eq 'gettocart') {
