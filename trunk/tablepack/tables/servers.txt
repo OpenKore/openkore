@@ -9,36 +9,42 @@ ip 38.144.194.2
 port 6900
 master_version 1
 version 18
+serverType 0
 
 [International - iRO: Sakray]
 ip 38.144.194.2
 port 6900
 master_version 14
 version 18
+serverType 0
 
 [Malaysia - mRO: Main Server]
 ip 61.220.63.248
 port 6900
 master_version 16
 version 8
+serverType 0
 
 [Malaysia - mRO (English): Iris/Penril/Odin/Thor/Freyia]
 ip 61.220.63.129
 port 6900
 master_version 17
 version 8
+serverType 0
 
 [Malaysia - mRO: Sakray]
 ip 220.130.113.227
 port 6900
 master_version 16
 version 10
+serverType 0
 
 [Indonesia - idRO: Chaos/Loki/Iris/Fenrir]
 ip 202.43.167.66
 port 6900
 master_version 12
 version 2
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -47,8 +53,9 @@ secureLogin_account 0
 [Indonesia - idRO: Sakray]
 ip 202.93.18.250
 port 6900
-version 2
 master_version 13
+version 2
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_account 0
@@ -147,12 +154,14 @@ ip 200.229.49.10
 port 6900
 master_version 22
 version 1
+serverType 0
 
 [India - inRO]
 ip 202.92.9.35
 port 6900
 version 1
 master_version 21
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -163,6 +172,7 @@ ip 203.144.244.10
 port 6900
 master_version 7
 version 24
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -173,6 +183,7 @@ ip 203.144.244.121
 port 6900
 master_version 7
 version 24
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -183,6 +194,7 @@ ip 203.144.244.5
 port 6900
 master_version 7
 version 24
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -193,6 +205,7 @@ ip 203.144.244.122
 port 6900
 master_version 7
 version 24
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -203,6 +216,7 @@ ip 203.144.244.7
 port 6900
 master_version 7
 version 24
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -213,6 +227,7 @@ ip 203.144.244.123
 port 6900
 master_version 7
 version 24
+serverType 0
 secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
@@ -223,6 +238,7 @@ ip 70.85.47.148
 port 6900
 version 18
 master_version 1
+serverType 0
 field_payon old_payon.fld
 
 [qRO Private Server]
@@ -230,12 +246,14 @@ ip 70.85.26.148
 port 6822
 master_version 18
 version 20
+serverType 0
 
 [ProjectRO Private Server]
 ip 66.111.48.190
 port 6900
 master_version 0
 version 1
+serverType 0
 
 [VanRO: Medium Rate Private Server]
 ip 66.111.51.160
@@ -256,6 +274,7 @@ ip 63.246.131.80
 port 6900
 master_version 13
 version 20
+serverType 0
 
 [XaosRO Private Server]
 ip 67.18.209.218
@@ -283,12 +302,14 @@ ip 66.118.142.17
 port 5000
 master_version 1
 version 20
+serverType 0
 
 [aeRO2 Private Server]
 ip 66.196.43.82
 port 6900
 master_version 2
 version 20
+serverType 0
 
 [powRO Private Server]
 ip 64.69.46.56
@@ -302,6 +323,7 @@ ip 70.84.81.42
 port 6901
 master_version 18
 version 20
+serverType 0
 
 [ExcaliburRO Private Server]
 ip 62.234.144.199
@@ -322,6 +344,7 @@ ip 72.29.77.223
 port 6901
 master_version 17
 version 20
+serverType 0
 
 [ChocoRO Private Server]
 ip 65.110.62.150
@@ -356,6 +379,7 @@ ip 66.111.61.90
 port 6900
 master_version 18
 version 0
+serverType 0
 
 [dutchRO Private Server]
 ip 62.163.217.88
@@ -363,6 +387,7 @@ port 6900
 master_version 14
 version 20
 private 1
+serverType 0
 
 [PheyRO Private Server]
 ip 206.53.56.67
@@ -383,6 +408,7 @@ ip 209.51.216.242
 port 6900
 master_version 16
 version 0
+serverType 0
 
 [RusRO Private Server]
 ip 213.219.220.20
@@ -390,6 +416,7 @@ port 6956
 master_version 1
 version 20
 private 1
+serverType 0
 
 [HopeRO Private Server]
 ip 66.199.253.146
@@ -431,3 +458,4 @@ port 6901
 master_version 20
 version 1
 private 1
+serverType 0
