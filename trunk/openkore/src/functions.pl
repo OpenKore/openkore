@@ -1688,6 +1688,14 @@ sub AI {
 			}
 
 			sendStorageClose() unless $config{storageAuto_keepOpen};
+			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) {
+				error "Character is still overweight after storageAuto (storage is full?)\n";
+				if ($config{dcOnStorageFull}) {
+					error "Disconnecting on storage full!\n";
+					chatLog("k", "Disconnecting on storage full!\n");
+					quit();
+				}
+			}
 			if ($config{'relogAfterStorage'}) {
 				writeStorageLog(0);
 				relog();
@@ -4905,7 +4913,7 @@ sub parseMsg {
 		message "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n";
 		$itemChange{$cart{inventory}[$index]{name}} -= $amount;
 		if ($cart{'inventory'}[$index]{'amount'} <= 0) {
-			delete $cart{'inventory'}[$index];
+			$cart{'inventory'}[$index] = undef;
 		}
 
 	} elsif ($switch eq "012D") {
