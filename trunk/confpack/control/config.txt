@@ -111,6 +111,7 @@ dcOnEmptyArrow 0
 dcOnMute 0
 dcOnPM 0
 dcOnZeny 0
+dcOnStorageFull 1
 
 follow 0
 followTarget
