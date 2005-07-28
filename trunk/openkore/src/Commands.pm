@@ -3520,7 +3520,7 @@ sub cmdVenderList {
 		my $player = Actor::get($venderListsID[$i]);
 		# autovivifies $obj->{pos_to} but it doesnt matter
 		message(sprintf(
-			"%3d %-36s (%3d, %3d) %-20s\n",
+			"%3d %-36s (%3s, %3s) %-20s\n",
 			$i, $venderLists{$venderListsID[$i]}{'title'},
 			$player->{pos_to}{x} || '?', $player->{pos_to}{y} || '?', $player->name),
 			"list");
