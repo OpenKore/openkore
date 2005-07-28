@@ -58,7 +58,7 @@ Bug fixes:
 - Don't display PVP rank if you're not in PVP. (Workaround for server-side
   bug that still sends you your PVP rank for some reason.)
 - Fix autoSwitch arrow crash bug introduced with Item.pm.
-- Automatically remove perfectly hidden objects, caused auto-ban.
+- Automatically remove perfectly hidden monsters, caused auto-ban.
 - Detect NPC spawning. (possibly picking up weird stuff now)
 - Don't storage pets if they are in use.
 - Show full class name in the pl # command.
