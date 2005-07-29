@@ -2232,6 +2232,9 @@ sub npc_sell_list {
 	}
 	undef $talk{buyOrSell};
 	message "Ready to start selling items\n";
+
+	# continue talk sequence now
+	$ai_v{npc_talk}{time} = time;
 }
 
 sub npc_store_begin {
@@ -2273,7 +2276,8 @@ sub npc_store_info {
 	}
 
 	my $name = getNPCName($talk{ID});
-	$ai_v{'npc_talk'}{'talk'} = 'store';
+	$ai_v{npc_talk}{talk} = 'store';
+	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
 
 	if ($ai_seq[0] ne 'buyAuto') {
