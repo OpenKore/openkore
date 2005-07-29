@@ -91,6 +91,7 @@ sub initMapChangeVars {
 	delete $chars[$config{'char'}]{'sitting'};
 	delete $chars[$config{'char'}]{'dead'};
 	delete $chars[$config{'char'}]{'warp'};
+	delete $char->{casting};
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
 	$timeout{ai_sit_idle}{time} = time;
@@ -4057,7 +4058,8 @@ sub AI {
 				|| $itemsPickup{lc($items{$item}{name})} eq "0"
 				|| $itemsPickup{lc($items{$item}{name})} == -1
 				|| ( !$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})} ) );
-			if (!positionNearPlayer($items{$item}{pos}, 12)) {
+			if (!positionNearPlayer($items{$item}{pos}, 12) &&
+			    !positionNearPortal($items{$item}{pos}, 10)) {
 				message "Gathering: $items{$item}{name} ($items{$item}{binID})\n";
 				gather($item);
 				last;
