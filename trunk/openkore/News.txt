@@ -67,6 +67,8 @@ Bug fixes:
 - Fix cartAuto crash bug for Perl 5.6 caused by:
       delete $cart{'inventory'}[$index];
 - Don't show warnings when "vl" command has weird shops.
+- Don't attempt to gather items near portals lest they suck you in.
+- Delete $char->{casting} upon Map Change.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
