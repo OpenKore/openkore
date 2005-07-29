@@ -70,6 +70,8 @@ Bug fixes:
 - Don't attempt to gather items near portals lest they suck you in.
 - Delete $char->{casting} upon Map Change.
 - Fix avoid player ID near.
+- Use steps "b e" and "s e" instead of just "e" for buy/sellAuto. Almost
+  as fast and may support private servers better.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"

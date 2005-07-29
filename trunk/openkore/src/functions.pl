@@ -1779,7 +1779,7 @@ sub AI {
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
 				$ai_seq_args[0]{'sentSell'} = 1;
 
-				ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, "e");
+				ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, 's e');
 
 				last AUTOSELL;
 			}
@@ -1973,7 +1973,7 @@ sub AI {
 			if (!$args->{sentBuy}) {
 				$args->{sentBuy} = 1;
 				$timeout{ai_buyAuto_wait}{time} = time;
-				ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, "e");
+				ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, 'b e');
 				last AUTOBUY;
 			}
 			if ($args->{invIndex} ne "") {
