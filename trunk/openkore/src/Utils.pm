@@ -964,8 +964,9 @@ sub _find_x_top {
 sub getCoordString {
 	my $x = int(shift);
 	my $y = int(shift);
-	if (($config{serverType} == 0) || ($config{serverType} == 3)) {
+	if (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5)) {
  		return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
+		
 	} else {
 		# Old method
 		#return pack("C*", _find_x($x, $y),
