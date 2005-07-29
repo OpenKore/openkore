@@ -367,13 +367,30 @@ autoSwitch {
 	useWeapon
 }
 
+# Slots:
+# topHead
+# midHead
+# lowHead
+# leftHand
+# rightHand
+# leftAccessory
+# rightAccessory
+# robe
+# armor
+# shoes
+# arrow
+
+#teleportAuto_equip_{slot} {item}
+#attackEquip_{slot} {item}
+
 equipAuto {
-	def
+	# {slot} {item} ex:
+	#leftAccessory Clip [Vitata] [1]
+	#rightAccessory Clip [Zerom] [1]
+
 	monsters
-	skills
 	weight 0
 	whileSitting 0
-	onTeleport 0
 	hp
 	sp
 	onAction
