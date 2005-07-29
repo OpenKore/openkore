@@ -1047,13 +1047,13 @@ sub sendMapLogin {
 		# A lot of packets are different so I gave up,
 		# but I'll keep this code around in case anyone ever needs it.
 		$msg = pack("C*", 0xF5, 0x00, 0xFF, 0xFF, 0xFF) .
-                        $accountID .
-                        pack("C*", 0xFF, 0xFF, 0xFF, 0xFF, 0xFF) .
-                        $charID .
-                        pack("C*", 0xFF, 0xFF) .
-                        $sessionID .
-                        pack("V1", getTickCount()) .
-                        pack("C*", $sex);
+						$accountID .
+						pack("C*", 0xFF, 0xFF, 0xFF, 0xFF, 0xFF) .
+						$charID .
+						pack("C*", 0xFF, 0xFF) .
+						$sessionID .
+						pack("V1", getTickCount()) .
+						pack("C*", $sex);
 
 	} elsif ($config{serverType} == 5) {
 					$msg = pack("C*", 0x9b, 0, 0, 0x10) .
@@ -1200,7 +1200,7 @@ sub sendMove {
 	my $y = int scalar shift;
 	my $msg;
 
-	if ($config{serverType} == 3) {
+	if (($config{serverType} == 3)) {
 		$msg = pack("C*", 0xA7, 0x00, 0x60, 0x00, 0x00, 0x00) .
 			# pack("C*", 0x0A, 0x01, 0x00, 0x00)
 			pack("C*", 0xC7, 0x00, 0x00, 0x00) .
@@ -1209,6 +1209,10 @@ sub sendMove {
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x89, 0x00) . getCoordString($x, $y);
 
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0xa7, 0x00, 0x62, 0x13, 0x18, 0x13, 0x97, 0x11) .
+		getCoordString($x, $y);
+		
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 	}
