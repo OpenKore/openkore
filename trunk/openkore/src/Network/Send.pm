@@ -1697,6 +1697,13 @@ sub sendSync {
 		$msg .= pack("C*", 0x61, 0x62) if (!$initialSync);
 		$msg .= pack("V", getTickCount());
 		$msg .= pack("C*", 0x0B);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x89, 0x00);
+		$msg .= pack("C*", 0x00, 0x00, 0x40) if ($initialSync);
+		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
+		$msg .= pack("C*", 0x00, 0x00, 0x00, 0x10);
+		$msg .= pack("V", getTickCount());
 	}
 
 	sendMsgToServer($r_socket, $msg);
