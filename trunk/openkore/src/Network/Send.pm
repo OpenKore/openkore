@@ -1032,18 +1032,15 @@ sub sendMapLogin {
 		$msg = pack("C*", 0x72,0) . $accountID . $charID . $sessionID . pack("V1", getTickCount()) . pack("C*",$sex);
 
 	} elsif ($config{serverType} == 3) {
-		my $key = pack("C*", 0x50, 0x92, 0x61, 0x00);
-
 		$msg = pack("C*", 0x9b, 0, 0) .
-			$accountID .
-			pack("C*", 0, 0, 0, 0, 0) .
-			$charID .
-			pack("C*", 0x50, 0x92, 0x61, 0x00) . #not sure what this is yet (maybe $key?)
-			#$key .
-			pack("C*", 0xff, 0xff, 0xff) .
-			$sessionID .
-			pack("V", getTickCount()) .
-			pack("C*", $sex);
+						$accountID .
+						pack("C*", 0, 0, 0, 0, 0) .
+						$charID .
+						pack("C*", 0x50, 0x92, 0x61, 0x00) . #not sure what this is yet (maybe $key?)
+						pack("C*", 0xff, 0xff, 0xff) .
+						$sessionID .
+						pack("V", getTickCount()) .
+						pack("C*", $sex);
 
 	} elsif ($config{serverType} == 4) {
 		# This is used on the RuRO private server.
@@ -1057,6 +1054,17 @@ sub sendMapLogin {
                         $sessionID .
                         pack("V1", getTickCount()) .
                         pack("C*", $sex);
+
+	} elsif ($config{serverType} == 5) {
+					$msg = pack("C*", 0x9b, 0, 0, 0x10) .
+						pack("C*", 0, 0, 0, 0, 0) .
+						$accountID .
+						pack("C*", 0xfc, 0x12) .
+						$charID .
+						pack("C*", 0x00, 0xff, 0xff, 0xff) .
+						$sessionID .
+						pack("V", getTickCount()) .
+						pack("C*", $sex);
 
 	} else {
 		# $config{serverType} == 1 || $config{serverType} == 2
