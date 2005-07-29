@@ -69,6 +69,7 @@ Bug fixes:
 - Don't show warnings when "vl" command has weird shops.
 - Don't attempt to gather items near portals lest they suck you in.
 - Delete $char->{casting} upon Map Change.
+- Fix avoid player ID near.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"

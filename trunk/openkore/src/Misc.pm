@@ -2699,7 +2699,7 @@ sub avoidList_near {
 			Network::disconnect(\$remote_socket);
 			return 1;
 
-		} elsif (($avoidPlayer && $avoidPlayer->{teleport_on_sight}) || ($avoidID && $avoidID->{$player->{nameID}}{teleport_on_sight})) {
+		} elsif (($avoidPlayer && $avoidPlayer->{teleport_on_sight}) || ($avoidID && $avoidID->{teleport_on_sight})) {
 			message "Teleporting to avoid player $player->{name} ($player->{nameID})\n", "teleport";
 			chatLog("k", "*** Found $player->{name} ($player->{nameID}) nearby and teleported ***\n");
 			useTeleport(1);
