@@ -3072,6 +3072,11 @@ sub stat_info {
 	} elsif ($args->{type} == 11) {
 		$char->{lv} = $args->{val};
 		message "You are now level $args->{val}\n", "success";
+		if ($config{dcOnLevel} && $char->{lv} >= $config{dcOnLevel}) {
+			message "Disconnecting on level $config{dcOnLevel}!\n";
+			chatLog("k", "Disconnecting on level $config{dcOnLevel}!\n");
+			quit();
+		}
 	} elsif ($args->{type} == 12) {
 		$char->{points_skill} = $args->{val};
 		debug "Skill Points: $args->{val}\n", "parseMsg", 2;

@@ -106,6 +106,8 @@ New commands:
 - storage addfromcart <cart_item> [<amount>]
   storage gettocart <storage_item> [<amount>]
   Support for adding/getting items directly to/from merchant cart
+- whoami
+  Displays your character and account ID.
 
 
 New config options:
@@ -166,6 +168,12 @@ New config options:
 - dcOnStorageFull (flag)
   If the character's weight >= itemsMaxWeight_sellOrStore just after having
   completed storageAuto, then log out because something is wrong.
+- getAuto: dcOnEmpty (flag)
+  If true, kore will disconnect if the amount of the item in inventory plus
+  storage is below minAmount.
+- dcOnLevel (level)
+  If true, then when you gain a level, kore will log out if you are now
+  >= the specified level.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
@@ -174,6 +182,7 @@ Internal:
 - New Match::cartItem() function, similar to Match::inventoryItem().
 - The S and L pack types have been completely removed. Do not use these
   anymore, use v and V respectively.
+- 'ai print' command should mangle less characters into '.'.
 
 Credits:
 - doenet: chatLangCode bugfixes.
