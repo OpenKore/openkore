@@ -145,16 +145,26 @@ sub onTimer {
 
 	($ipcInfo{host}, $ipcInfo{port}, $ipcInfo{ID}) = split / /, $lines[3];
 
-	my @monsters;
+	my (@monsters, @players, @npcs);
 	for (my $i = 4; $i < @lines; $i++) {
 		my ($type, $x, $y) = split / /, $lines[$i];
 		if ($type eq "ML") {
 			my %monster;
 			$monster{pos_to} = {x => $x, y => $y};
 			push @monsters, \%monster;
+		} elsif ($type eq "PL") {
+			my %player;
+			$player{pos_to} = {x => $x, y => $y};
+			push @players, \%player;
+		} elsif ($type eq "NL" ) {
+			my %npc;
+			$npc{pos} = {x => $x, y => $y};
+			push @npcs, \%npc;
 		}
 	}
 	$mapview->setMonsters(\@monsters);
+	$mapview->setPlayers(\@players);
+	$mapview->setNPCs(\@npcs);
 
 	$mapview->update;
 	$status->SetStatusText("$lines[1], $lines[2]", 0);
