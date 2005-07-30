@@ -1457,14 +1457,21 @@ sub AI {
 		my $i = 0;
 		while ($config{"getAuto_$i"}) {
 			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
-			if ($config{"getAuto_${i}_minAmount"} ne "" && $config{"getAuto_${i}_maxAmount"} ne ""
-			   && !$config{"getAuto_${i}_passive"}
-			   && (!defined($invIndex)
-				|| ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"}
-				 && $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"}))
-			   && (findKeyString(\%storage, "name", $config{"getAuto_$i"}) ne "" || !$storage{opened})
-			) {
-				$found = 1;
+			if ($config{"getAuto_${i}_minAmount"} ne "" &&
+			    $config{"getAuto_${i}_maxAmount"} ne "" &&
+				!$config{"getAuto_${i}_passive"} &&
+					(!defined($invIndex) ||
+					 ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"} &&
+					  $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"}))) {
+				if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
+					if ($config{"getAuto_${i}_dcOnEmpty"}) {
+						message "Disconnecting on empty ".$config{"getAuto_$i"}."!\n";
+						chatLog("k", "Disconnecting on empty ".$config{"getAuto_$i"}."!\n");
+						quit();
+					}
+				} else {
+					$found = 1;
+				}
 				last;
 			}
 			$i++;

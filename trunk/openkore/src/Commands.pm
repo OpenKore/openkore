@@ -152,6 +152,7 @@ sub initHandlers {
 	weight		=> \&cmdWeight,
 	where		=> \&cmdWhere,
 	who			=> \&cmdWho,
+	whoami		=> \&cmdWhoAmI,
 
 	north		=> \&cmdManualMove,
 	south		=> \&cmdManualMove,
@@ -3624,6 +3625,14 @@ sub cmdWhere {
 
 sub cmdWho {
 	sendWho(\$remote_socket);
+}
+
+sub cmdWhoAmI {
+	my $GID = unpack("L1", $charID);
+	my $AID = unpack("L1", $accountID);
+	message "Name:    $char->{name} (Level $char->{lv} $sex_lut{$char->{sex}} $jobs_lut{$char->{jobID}})\n", "list";
+	message "Char ID: $GID\n", "list";
+	message "Acct ID: $AID\n", "list";
 }
 
 sub cmdKill {

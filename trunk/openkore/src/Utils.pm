@@ -876,7 +876,7 @@ sub dumpHash {
 	my $buf = $_[0];
 	if (ref($buf) eq "") {
 		$buf =~ s/'/\\'/gs;
-		$buf =~ s/\W/\./gs;
+		$buf =~ s/[\000-\037]/\./gs;
 		$out .= "'$buf'";
 	} elsif (ref($buf) eq "HASH") {
 		$out .= "{";
