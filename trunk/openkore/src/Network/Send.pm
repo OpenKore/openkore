@@ -559,7 +559,7 @@ sub sendChat {
 	my $message = shift;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
 	my $msg;
-	if ($config{serverType} == 3) {
+	if (($config{serverType} == 3) || ($config{serverType} == 5)) {
 		$msg = pack("C*", 0xf3, 0x00) .
 			pack("v*", length($char->{name}) + length($message) + 8) .
 			$char->{name} . " : $message" . chr(0);
@@ -825,12 +825,13 @@ sub sendGetPlayerInfo {
 	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
 
-	} elsif ($config{serverType} == 3) {
+	} elsif (($config{serverType} == 3) || ($config{serverType} == 5)) {
 		$msg = pack("C*", 0x8c, 0x00, 0x12, 0x00) . $ID;
 
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x9B, 0x00) . pack("C*", 0x66, 0x3C, 0x61, 0x62) . $ID;
 	}
+
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
@@ -980,6 +981,12 @@ sub sendItemUse {
 	} elsif ($config{serverType} == 4) {
 		# I have gotten various packets here but this one works well for me
 		$msg = pack("C*", 0x72, 0x00, 0x65, 0x36, 0x65).pack("v*", $ID).pack("C*", 0x64, 0x37).$targetID;
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x9f, 0x00, 0x12, 0x00, 0x00, 0xab ,0xca ,0x11 ,0x5c) .
+			pack("v*", $ID) .
+			pack("C*", 0x00, 0x18, 0xfb, 0x12) .
+			$targetID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
@@ -1588,7 +1595,7 @@ sub sendStorageAddFromCart {
 
 sub sendStorageClose {
 	my $msg;
-	if ($config{serverType} == 3) {
+	if (($config{serverType} == 3) || ($config{serverType} == 5)) {
 		$msg = pack("C*", 0x93, 0x01);
 	} else {
 		$msg = pack("C*", 0xF7, 0x00);
@@ -1702,7 +1709,7 @@ sub sendSync {
 		$msg = pack("C*", 0x89, 0x00);
 		$msg .= pack("C*", 0x00, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
-		$msg .= pack("C*", 0x00, 0x00, 0x00, 0x10);
+		$msg .= pack("C*", 0x00, 0x00, 0x00, 0x90);
 		$msg .= pack("V", getTickCount());
 	}
 
