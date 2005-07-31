@@ -80,6 +80,8 @@ ai_teleport_portal 2
 ai_teleport_hp 3
 ai_teleport_safe_force 120
 
+ai_teleport_retry 0.5
+ai_teleport_delay 0.5
 
 # You probably don't ever have to change the following timeouts.
 ai_route_calcRoute 1
