@@ -3139,6 +3139,11 @@ sub stat_info {
 	} elsif ($args->{type} == 55) {
 		$char->{lv_job} = $args->{val};
 		message "You are now job level $args->{val}\n", "success";
+		if ($config{dcOnJobLevel} && $char->{lv_job} >= $config{dcOnJobLevel}) {
+			message "Disconnecting on job level $config{dcOnJobLevel}!\n";
+			chatLog("k", "Disconnecting on job level $config{dcOnJobLevel}!\n");
+			quit();
+		}
 	} elsif ($args->{type} == 124) {
 		debug "Something3: $args->{val}\n", "parseMsg", 2;
 	} else {

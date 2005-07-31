@@ -179,6 +179,8 @@ New config options:
 - dcOnLevel (level)
   If true, then when you gain a level, kore will log out if you are now
   >= the specified level.
+- dcOnJobLevel (level)
+  Like dcOnLevel, but for job levels.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
