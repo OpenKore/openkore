@@ -401,7 +401,7 @@ equipAuto {
 }
 
 useSelf_item Meat,Apple,Banana,Sweet Potato,Carrot,Red Potion {
-	hp <= 50
+	hp <= 50%
 	sp
 	onAction
 	whenStatusActive
