@@ -35,6 +35,7 @@ use Network::Send;
 use AI;
 use Actor;
 use Actor::You;
+use Time::HiRes qw(time usleep);
 
 our @EXPORT = (
 	# Config modifiers
@@ -2287,7 +2288,7 @@ sub updateDamageTables {
 					message "$monsters{$ID1}{'name'} hit you for a total of more than $config{'teleportAuto_totalDmgInLock'} dmg in lockMap. Teleporting...\n", "teleport";
 					$teleport = 1;
 				}
-				useTeleport(1) if ($teleport);
+				useTeleport(1, undef, 1) if ($teleport);
 			}
 		}
 
@@ -2377,8 +2378,7 @@ sub updatePlayerNameCache {
 # useTeleport(level)
 # level: 1 to teleport to a random spot, 2 to respawn.
 sub useTeleport {
-	my $use_lvl = shift;
-	my $internal = shift;
+	my ($use_lvl, $internal, $emergency) = @_;
 
 	# for possible recursive calls
 	if (!defined $internal) {
@@ -2403,6 +2403,12 @@ sub useTeleport {
 			# autodetection works)
 			sendSkillUse(\$remote_socket, $skill->id, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
 			undef $char->{permitSkill};
+
+			if (!$emergency && $use_lvl == 1) {
+				$timeout{ai_teleport_retry}{time} = time;
+				AI::queue('teleport');
+				return 1;
+			}
 		}
 
 		delete $ai_v{temp}{teleport};
@@ -2429,8 +2435,9 @@ sub useTeleport {
 	# if teleportAuto_equip_* is set
 	if (Item::scanConfigAndCheck('teleportAuto_equip') && $use_lvl == 1){
 		if (!$ai_v{temp}{teleport}{lv}) {
-				debug "Equipping Accessory to teleport\n", "useTeleport";
-				$ai_v{temp}{teleport}{lv} = $use_lvl;
+			debug "Equipping Accessory to teleport\n", "useTeleport";
+			$ai_v{temp}{teleport}{lv} = $use_lvl;
+			$ai_v{temp}{teleport}{emergency} = $emergency;
 		}
 		Item::scanConfigAndEquip('teleportAuto_equip');
 		return;
@@ -2454,7 +2461,7 @@ sub useTeleport {
 	# no item, but skill is still available
 	if ( $sk_lvl > 0 ) {
 		message "No Fly Wing or Butterfly Wing, fallback to Teleport Skill\n", "useTeleport";
-		return useTeleport($use_lvl, 1);
+		return useTeleport($use_lvl, 1, $emergency);
 	}
 
 
