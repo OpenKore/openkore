@@ -98,6 +98,11 @@ New features:
 - Emotion command now uses the real commands from the RO client.
   Example: e thx
 - _whenWater should work now?
+- When casting the Teleport skill, openkore will wait for the skill to
+  be successfuly cast before actually teleporting, unless this is an
+  emergency teleport (e.g. teleportAuto_deadly). (Looks less bot-like.)
+  Be sure to update timeouts.txt to get ai_teleport_retry and
+  ai_teleport_delay.
 
 New commands:
 - getplayerinfo (number)

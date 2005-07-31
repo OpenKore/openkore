@@ -2073,6 +2073,8 @@ sub map_change {
 		getField($ai_v{temp}{map}, \%field);
 	}
 
+	AI::clear if $ai_v{temp}{clear_aiQueue};
+
 	main::initMapChangeVars();
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
@@ -2911,6 +2913,11 @@ sub skill_used_no_damage {
 	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
 	my $skill = new Skills(id => $args->{skillID});
 	message "$source $verb ".$skill->name()." on ".$target->nameString($source)."$extra\n", $domain;
+
+	# Set teleport time
+	if ($args->{sourceID} eq $accountID && $skill->handle eq 'AL_TELEPORT') {
+		$timeout{ai_teleport_delay}{time} = time;
+	}
 
 	if ($AI && $config{'autoResponseOnHeal'}) {
 		# Handle auto-response on heal

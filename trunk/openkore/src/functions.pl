@@ -99,6 +99,9 @@ sub initMapChangeVars {
 	$timeout{ai_teleport_idle}{time} = time;
 	$timeout{ai_teleport_safe_force}{time} = time;
 
+	delete $timeout{ai_teleport_retry}{time};
+	delete $timeout{ai_teleport_delay}{time};
+
 	undef %incomingDeal;
 	undef %outgoingDeal;
 	undef %currentDeal;
@@ -1396,7 +1399,20 @@ sub AI {
 	##### DELAYED-TELEPORT #####
 
 	if ($ai_v{temp}{teleport}{lv} && $ai_seq[0] ne 'equip') {
-		useTeleport($ai_v{temp}{teleport}{lv});
+		useTeleport($ai_v{temp}{teleport}{lv}, undef, $ai_v{temp}{teleport}{emergency});
+	}
+
+	if (AI::action eq 'teleport') {
+		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
+			# We have already successfully used the Teleport skill,
+			# and the ai_teleport_delay timeout has elapsed
+			sendTeleport(\$remote_socket, "Random");
+			AI::dequeue;
+		} elsif (!$timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_retry})) {
+			# We are still trying to use the Teleport skill
+			sendSkillUse(\$remote_socket, 26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
+			$timeout{ai_teleport_retry}{time} = time;
+		}
 	}
 
 
@@ -4249,7 +4265,7 @@ sub AI {
 		  && !$char->{dead}
 		) {
 			message "Teleporting due to insufficient HP/SP or too many aggressives\n", "teleport";
-			$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
+			$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
 			$timeout{ai_teleport_hp}{time} = time;
 			last TELEPORT;
 		}
@@ -4260,7 +4276,7 @@ sub AI {
 				next unless $_;
 				if (mon_control($monsters{$_}{name})->{teleport_auto} == 1) {
 					message "Teleporting to avoid $monsters{$_}{name}\n", "teleport";
-					$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
+					$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
 					$timeout{ai_teleport_away}{time} = time;
 					last TELEPORT;
 				}
@@ -4373,11 +4389,6 @@ sub AI {
 		$ai_v{time} = time;
 	}
 	$ai_v{'AI_last_finished'} = time;
-
-	if ($ai_v{temp}{clear_aiQueue}) {
-		delete $ai_v{temp}{clear_aiQueue};
-		AI::clear;
-	}
 
 	Plugins::callHook('AI_post');
 }
@@ -5111,8 +5122,9 @@ sub parseMsg {
 		my $target = Actor::get($targetID);
 		my $verb = $source->verb('are casting', 'is casting');
 
+		my $skill = new Skills(id => $skillID);
 		$source->{casting} = {
-			skill => new Skills(id => $skillID),
+			skill => $skill,
 			target => $target,
 			x => $x,
 			y => $y,
@@ -5148,6 +5160,7 @@ sub parseMsg {
 			sourceID => $sourceID,
 			targetID => $targetID,
 			skillID => $skillID,
+			skill => $skill,
 			x => $x,
 			y => $y
 		});
