@@ -193,6 +193,7 @@ Internal:
 - 'ai print' command should mangle less characters into '.'.
 - Moved packets to Network/Receive.pm:
       cart_item_added
+	  cart_item_removed
 
 Credits:
 - doenet: chatLangCode bugfixes.

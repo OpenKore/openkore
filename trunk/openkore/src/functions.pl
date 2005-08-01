@@ -4903,17 +4903,6 @@ sub parseMsg {
 		$ai_v{'inventory_time'} = time + 1;
 		$ai_v{'cart_time'} = time + 1;
 
-	} elsif ($switch eq "0125") {
-		my $index = unpack("v1", substr($msg, 2, 2));
-		my $amount = unpack("V1", substr($msg, 4, 4));
-
-		$cart{'inventory'}[$index]{'amount'} -= $amount;
-		message "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n";
-		$itemChange{$cart{inventory}[$index]{name}} -= $amount;
-		if ($cart{'inventory'}[$index]{'amount'} <= 0) {
-			$cart{'inventory'}[$index] = undef;
-		}
-
 	} elsif ($switch eq "012D") {
 		# Used the shop skill.
 		my $number = unpack("v1",substr($msg, 2, 2));

@@ -140,7 +140,7 @@ sub new {
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
-		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'0125' => ['cart_item_removed', 'v1 V1', [qw(index amount)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
@@ -154,6 +154,7 @@ sub new {
 		'01A6' => ['egg_list'],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
+		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
@@ -1137,6 +1138,19 @@ sub cart_item_added {
 	}
 	message "Cart Item Added: $item->{name} ($args->{index}) x $args->{amount}\n";
 	$itemChange{$item->{name}} += $args->{amount};
+}
+
+sub cart_item_removed {
+	my ($self, $args) = @_;
+
+	my ($index, $amount) = @{$args}{qw(index amount)};
+
+	$cart{'inventory'}[$index]{'amount'} -= $amount;
+	message "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n";
+	$itemChange{$cart{inventory}[$index]{name}} -= $amount;
+	if ($cart{'inventory'}[$index]{'amount'} <= 0) {
+		$cart{'inventory'}[$index] = undef;
+	}
 }
 
 sub change_to_constate25 {
