@@ -1420,7 +1420,7 @@ sub sendRemoveAttachments {
 
 sub sendRepairItem {
 	my $index = shift;
-	my $msg = pack("C*", 0xFE, 0x01) . pack("v1", $index) . pack("C*", 0x00);
+	my $msg = pack("C*", 0xFD, 0x01) . pack("v1", $index);
 	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent repair item: $index\n", "sendPacket", 2;
 }
