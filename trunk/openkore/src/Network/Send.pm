@@ -82,6 +82,7 @@ our @EXPORT = qw(
 	sendGetStoreList
 	sendGetSellList
 	sendGuildAlly
+	sendGuildBreak
 	sendGuildChat
 	sendGuildCreate
 	sendGuildInfoRequest
@@ -869,6 +870,14 @@ sub sendGuildAlly {
 	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
 }
 
+sub sendGuildBreak {
+	# guild name
+	my $name = shift;
+	my $msg = pack("C C a40", 0x5D, 0x01, $name);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Guild Break: $name\n", "sendPacket", 2;
+}
+
 sub sendGuildChat {
 	my $r_socket = shift;
 	my $message = shift;
@@ -882,7 +891,7 @@ sub sendGuildCreate {
 	my $name = shift;
 	my $msg = pack("C*", 0x65, 0x01, 0x4D, 0x8B, 0x01, 0x00).pack("a24", $name);
 	sendMsgToServer(\$remote_socket, $msg);
-	debug "Sent Guild Create: $name", "sendPacket", 2;
+	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
 
 sub sendGuildInfoRequest {
