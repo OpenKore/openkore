@@ -2501,19 +2501,26 @@ sub cmdPrivateMessage {
 }
 
 sub cmdPortalList {
-	message("-----------Portal List-----------\n" .
-		"#    Name                                Coordinates\n",
-		"list");
-	for (my $i = 0; $i < @portalsID; $i++) {
-		next if $portalsID[$i] eq "";
-		my $portal = $portals{$portalsID[$i]};
-		my $coords = "($portal->{pos}{x}, $portal->{pos}{y})";
-		message(swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
-			[$i, $portal->{name}, $coords]),
+	my (undef, $args) = @_;
+	my ($arg) = parseArgs($args,1);
+	if ($arg eq '') {
+		message("-----------Portal List-----------\n" .
+			"#    Name                                Coordinates\n",
 			"list");
+		for (my $i = 0; $i < @portalsID; $i++) {
+			next if $portalsID[$i] eq "";
+			my $portal = $portals{$portalsID[$i]};
+			my $coords = "($portal->{pos}{x}, $portal->{pos}{y})";
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
+				[$i, $portal->{name}, $coords]),
+				"list");
+		}
+		message("---------------------------------\n", "list");
+	} elsif ($arg eq 'recompile') {
+		Settings::parseReload("portals");
+		Misc::compilePortals() if Misc::compilePortals_check();
 	}
-	message("---------------------------------\n", "list");
 }
 
 sub cmdQuit {
