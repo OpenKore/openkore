@@ -64,7 +64,7 @@ sub getArgs {
   my $arg = shift;
   if ($arg =~ /".*"/) {
     my @ret = $arg =~ /^"(.*?)" +(.*?)( .*)?$/;
-    $ret[2] =~ s/^ *//g; return @ret;
+    $ret[2] =~ s/^ +//g; return @ret;
   }
   else {return split(/ /, $arg, 3)};
 };
