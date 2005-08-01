@@ -2622,66 +2622,58 @@ sub percent_weight {
 sub avoidGM_near {
 	for (my $i = 0; $i < @playersID; $i++) {
 		next if ($playersID[$i] eq "");
+		my $player = $players{$playersID[$i]};
+
+		# skip this person if we dont know the name
+		next if (!$player->{name});
 
 		# Check whether this "GM" is on the ignore list
 		# in order to prevent false matches
-		my $statusGM = 1;
-		my $j = 0;
-		while (exists $config{"avoid_ignore_$j"}) {
-			if (!$config{"avoid_ignore_$j"}) {
-				$j++;
-				next;
-			}
+		last if (existsInList($config{avoidGM_ignoreList}, $player->{name}));
 
-			if ($players{$playersID[$i]}{name} eq $config{"avoid_ignore_$j"}) {
-				$statusGM = 0;
-				last;
-			}
-			$j++;
+		# check if this name matches the GM filter
+		last unless ($config{avoidGM_namePattern} ? $player->{name} =~ /$config{avoidGM_namePattern}/ : $player->{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i);
+
+		my %args = (
+			name => $player->{name},
+			ID => $playersID[$i]
+		);
+		Plugins::callHook('avoidGM_near', \%args);
+		return 1 if ($args{return});
+
+		my $msg = "GM $player->{name} is nearby, ";
+		if ($config{avoidGM_near} == 1) {
+			# Mode 1: teleport & disconnect
+			useTeleport(1);
+			my $tmp = $config{avoidGM_reconnect};
+			$msg .= "teleport & disconnect for $tmp seconds";
+			$timeout_ex{master}{time} = time;
+			$timeout_ex{master}{timeout} = $tmp;
+			Network::disconnect(\$remote_socket);
+
+		} elsif ($config{avoidGM_near} == 2) {
+			# Mode 2: disconnect
+			my $tmp = $config{avoidGM_reconnect};
+			$msg .= "disconnect for $tmp seconds";
+			$timeout_ex{master}{time} = time;
+			$timeout_ex{master}{timeout} = $tmp;
+			Network::disconnect(\$remote_socket);
+
+		} elsif ($config{avoidGM_near} == 3) {
+			# Mode 3: teleport
+			useTeleport(1);
+			$msg .= "teleporting";
+
+		} elsif ($config{avoidGM_near} >= 4) {
+			# Mode 4: respawn
+			useTeleport(2);
+			$msg .= "respawning";
 		}
 
-		if ($statusGM && ($players{$playersID[$i]}{name} =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || $players{$playersID[$i]}{name} =~ /$config{avoidGM_namePattern}/)) {
-			my %args = (
-				name => $players{$playersID[$i]}{name},
-				ID => $playersID[$i]
-			);
-			Plugins::callHook('avoidGM_near', \%args);
-			return 1 if ($args{return});
+		warning "$msg\n";
+		chatLog("k", "*** $msg ***\n");
 
-			my $msg = "GM $players{$playersID[$i]}{'name'} is nearby, ";
-			if ($config{avoidGM_near} == 1) {
-				# Mode 1: teleport & disconnect
-				useTeleport(1);
-				my $tmp = $config{avoidGM_reconnect};
-				$msg .= "teleport & disconnect for $tmp seconds";
-				$timeout_ex{master}{time} = time;
-				$timeout_ex{master}{timeout} = $tmp;
-				Network::disconnect(\$remote_socket);
-
-			} elsif ($config{avoidGM_near} == 2) {
-				# Mode 2: disconnect
-				my $tmp = $config{avoidGM_reconnect};
-				$msg .= "disconnect for $tmp seconds";
-				$timeout_ex{master}{time} = time;
-				$timeout_ex{master}{timeout} = $tmp;
-				Network::disconnect(\$remote_socket);
-
-			} elsif ($config{avoidGM_near} == 3) {
-				# Mode 3: teleport
-				useTeleport(1);
-				$msg .= "teleporting";
-
-			} elsif ($config{avoidGM_near} >= 4) {
-				# Mode 4: respawn
-				useTeleport(2);
-				$msg .= "respawning";
-			}
-
-			warning "$msg\n";
-			chatLog("k", "*** $msg ***\n");
-
-			return 1;
-		}
+		return 1;
 	}
 	return 0;
 }

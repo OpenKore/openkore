@@ -16,8 +16,9 @@ TODO:
 - hp, sp options now have a new format.
   hp > 50  - means more than 50hp
   hp > 50% - means more than 50 percent of you hp.
-- Old hp_upper,sp_upper removed use hp sp instead
-  Old minAggressives, maxAggressives options removed use aggressives instead
+- Old hp_upper,sp_upper removed, use hp sp instead
+  Old minAggressives, maxAggressives skill block options removed.
+  Use aggressives instead.
 - You must use the new tables/emotions.txt or emotions won't work.
   The "e" command now uses the RO client commands instead of the number.
 - Vigor condensation renamed to Vigor Condensation for consistency
@@ -25,6 +26,7 @@ TODO:
   equipAuto skills is no longer used, use <skill slot>_equip_<slot>
   equipAuto syntax is changed, read below.
   equipAuto_def is removed.
+- avoid_ignore_# is replaced with avoidGM_ignoreList (see below)
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
@@ -73,6 +75,7 @@ Bug fixes:
 - Use steps "b e" and "s e" instead of just "e" for buy/sellAuto. Almost
   as fast and may support private servers better.
 - teleportAuto_hp is now also checked whenever you get attacked.
+- avoidGM was always happening if avoidGM_namePattern was blank.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -114,7 +117,6 @@ New commands:
   Support for adding/getting items directly to/from merchant cart
 - whoami
   Displays your character and account ID.
-
 
 New config options:
 - partySkill: target_dist (range)
@@ -182,6 +184,8 @@ New config options:
   >= the specified level.
 - dcOnJobLevel (level)
   Like dcOnLevel, but for job levels.
+- avoidGM_ignoreList (list of names)
+  Ignore any player on this list when checking for GMs nearby.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
