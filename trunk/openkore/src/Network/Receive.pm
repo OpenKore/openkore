@@ -165,6 +165,8 @@ sub new {
 		'01F0' => ['storage_items_stackable'],
 		'01FC' => ['repair_list'],
 		'01FE' => ['repair_result', 'v1 C1', [qw(nameID flag)]],
+		#'023A' => ['storage_password_unknown', 'v1', [qw(flag)]],
+		#'023C' => ['storage_password_unknown2', 'v1 v1', [qw(type val)]],
 	};
 
 	bless \%self, $class;
