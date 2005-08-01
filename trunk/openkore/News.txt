@@ -192,8 +192,9 @@ Internal:
   anymore, use v and V respectively.
 - 'ai print' command should mangle less characters into '.'.
 - Moved packets to Network/Receive.pm:
-      cart_item_added
+	  cart_item_added
 	  cart_item_removed
+	  item_used
 
 Credits:
 - doenet: chatLangCode bugfixes.

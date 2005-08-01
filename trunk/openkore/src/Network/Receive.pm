@@ -155,6 +155,7 @@ sub new {
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
@@ -1138,6 +1139,38 @@ sub cart_item_added {
 	}
 	message "Cart Item Added: $item->{name} ($args->{index}) x $args->{amount}\n";
 	$itemChange{$item->{name}} += $args->{amount};
+}
+
+sub item_used {
+	my ($self, $args) = @_;
+
+	my ($index, $itemID, $ID, $remaining) =
+		@{$args}{qw(index itemID ID remaining)};
+
+	if ($ID eq $accountID) {
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
+		my $item = $char->{inventory}[$invIndex];
+		my $amount = $item->{amount} - $remaining;
+		$item->{amount} -= $amount;
+
+		message("You used Item: $item->{name} ($invIndex) x $amount - $remaining left\n", "useItem", 1);
+		$itemChange{$item->{name}}--;
+		if ($item->{amount} <= 0) {
+			delete $char->{inventory}[$invIndex];
+		}
+
+		Plugins::callHook('packet_useitem', {
+			item => $item,
+			invIndex => $invIndex,
+			name => $item->{name},
+			amount => $amount
+		});
+
+	} else {
+		my $actor = Actor::get($ID);
+		my $itemDisplay = itemNameSimple($itemID);
+		message "$actor used Item: $itemDisplay - $remaining left\n", "useItem", 2;
+	}
 }
 
 sub cart_item_removed {
