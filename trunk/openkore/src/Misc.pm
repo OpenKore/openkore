@@ -2287,6 +2287,9 @@ sub updateDamageTables {
 				} elsif ($config{'teleportAuto_totalDmgInLock'} && $field{'name'} eq $config{'lockMap'} && $monsters{$ID1}{'dmgToYou'} >= $config{'teleportAuto_totalDmgInLock'} && !whenStatusActive("Hallucination")) {
 					message "$monsters{$ID1}{'name'} hit you for a total of more than $config{'teleportAuto_totalDmgInLock'} dmg in lockMap. Teleporting...\n", "teleport";
 					$teleport = 1;
+				} elsif ($config{teleportAuto_hp} && percent_hp($char) <= $config{teleportAuto_hp}) {
+					message "$monsters{$ID1}{name} hit you when your HP is too low. Teleporting...\n", "teleport";
+					$teleport = 1;
 				}
 				useTeleport(1, undef, 1) if ($teleport);
 			}
