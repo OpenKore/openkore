@@ -136,6 +136,7 @@ our @EXPORT = qw(
 	sendStorageClose
 	sendStorageGet
 	sendStorageGetToCart
+	sendStoragePass
 	sendStand
 	sendSuperNoviceDoriDori
 	sendSuperNoviceExplosion
@@ -1046,38 +1047,38 @@ sub sendMapLogin {
 
 	} elsif ($config{serverType} == 3) {
 		$msg = pack("C*", 0x9b, 0, 0) .
-						$accountID .
-						pack("C*", 0, 0, 0, 0, 0) .
-						$charID .
-						pack("C*", 0x50, 0x92, 0x61, 0x00) . #not sure what this is yet (maybe $key?)
-						pack("C*", 0xff, 0xff, 0xff) .
-						$sessionID .
-						pack("V", getTickCount()) .
-						pack("C*", $sex);
+			$accountID .
+			pack("C*", 0, 0, 0, 0, 0) .
+			$charID .
+			pack("C*", 0x50, 0x92, 0x61, 0x00) . #not sure what this is yet (maybe $key?)
+			pack("C*", 0xff, 0xff, 0xff) .
+			$sessionID .
+			pack("V", getTickCount()) .
+			pack("C*", $sex);
 
 	} elsif ($config{serverType} == 4) {
 		# This is used on the RuRO private server.
 		# A lot of packets are different so I gave up,
 		# but I'll keep this code around in case anyone ever needs it.
 		$msg = pack("C*", 0xF5, 0x00, 0xFF, 0xFF, 0xFF) .
-						$accountID .
-						pack("C*", 0xFF, 0xFF, 0xFF, 0xFF, 0xFF) .
-						$charID .
-						pack("C*", 0xFF, 0xFF) .
-						$sessionID .
-						pack("V1", getTickCount()) .
-						pack("C*", $sex);
+			$accountID .
+			pack("C*", 0xFF, 0xFF, 0xFF, 0xFF, 0xFF) .
+			$charID .
+			pack("C*", 0xFF, 0xFF) .
+			$sessionID .
+			pack("V1", getTickCount()) .
+			pack("C*", $sex);
 
 	} elsif ($config{serverType} == 5) {
-					$msg = pack("C*", 0x9b, 0, 0, 0x10) .
-						pack("C*", 0, 0, 0, 0, 0) .
-						$accountID .
-						pack("C*", 0xfc, 0x12) .
-						$charID .
-						pack("C*", 0x00, 0xff, 0xff, 0xff) .
-						$sessionID .
-						pack("V", getTickCount()) .
-						pack("C*", $sex);
+		$msg = pack("C*", 0x9b, 0, 0, 0x10) .
+			pack("C*", 0, 0, 0, 0, 0) .
+			$accountID .
+			pack("C*", 0xfc, 0x12) .
+			$charID .
+			pack("C*", 0x00, 0xff, 0xff, 0xff) .
+			$sessionID .
+			pack("V", getTickCount()) .
+			pack("C*", $sex);
 
 	} else {
 		# $config{serverType} == 1 || $config{serverType} == 2
@@ -1542,7 +1543,7 @@ sub sendSkillUseLoc {
 			pack("V*", 0, 0, 0) .
 			pack("v*", $x) . chr(0) . pack("v*", $y);
 
-	} elsif ($config{serverType} == 3) {
+	} elsif ($config{serverType} == 3 || $config{serverType} == 5) {
 		$msg = pack("C*", 0x13, 0x01, 0xbe, 0x44, 0x00, 0x00, 0xa0, 0xc0, 0x00, 0x00) .
 			pack("v*", $lv) .
 			pack("C*", 0x00, 0x00, 0xa0, 0x40, 0x00, 0x00) .
@@ -1551,6 +1552,7 @@ sub sendSkillUseLoc {
 			pack("v*", $x) .
 			pack("C*", 0x00, 0x00, 0xa0, 0x40, 0xe0, 0x80, 0x09, 0xc2) .
 			pack("v*", $y);
+
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0xA7, 0x00, 0x37, 0x65, 0x66, 0x60) . pack("v*", $lv) .
 			pack("C*", 0x32) . pack("v*", $ID) .
@@ -1645,6 +1647,16 @@ sub sendStorageGetToCart {
 	$msg = pack("C*", 0x28, 0x01) . pack("v*", $index) . pack("V*", $amount);
 	sendMsgToServer(\$remote_socket, $msg);
 	debug "Sent Storage Get From Cart: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendStoragePass {
+	# 16 byte hex string
+	my $pass = shift;
+	# 2 = set password ?
+	# 3 = give password ?
+	my $type = 3;
+	my $msg = pack("C C v", 0x3B, 0x02, $type).pack("H*", $pass).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+	sendMsgToServer(\$remote_socket, $msg);
 }
 
 sub sendStand {
