@@ -213,10 +213,10 @@ sub checkMsg {
     return 0 unless distance($mypos, $pos) <= $distance;
   } elsif ($var eq '.lastpm') {
     ($msg, my $allowed) = $tmp =~ /([\/"].*?[\/"]),?(.*)/;
-    my @tfld = split(/,/, $allowed);
     my $auth;
     if (!$allowed) {$auth = 1}
     else {
+      my @tfld = split(/,/, $allowed);
       for (my $i = 0; $i < @tfld; $i++) {
         next unless $tfld[$i];
         if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last};

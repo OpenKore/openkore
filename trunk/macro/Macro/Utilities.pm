@@ -52,11 +52,17 @@ sub match {
   $cvs->debug("match (@_)", $logfac{function_call_auto});
   my ($text, $kw) = @_;
   my $match;
+
+  no warnings;
+
   if ($kw =~ /^".*"$/)   {$match = 0};
   if ($kw =~ /^\/.*\/$/) {$match = 1};
   $kw =~ s/^[\/"](.*)[\/"]/$1/g;
   if ($match == 0 && $text eq $kw)   {return 1};
   if ($match == 1 && $text =~ /$kw/) {return 1};
+
+  use warnings;
+
   return 0;
 };
 
