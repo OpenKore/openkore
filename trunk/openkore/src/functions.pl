@@ -5155,15 +5155,7 @@ sub parseMsg {
 	} elsif ($switch eq "0142") {
 		my $ID = substr($msg, 2, 4);
 
-		# Resolve the source name
-		my $name;
-		if ($npcs{$ID}) {
-			$name = $npcs{$ID}{name};
-		} elsif ($monsters{$ID}) {
-			$name = $monsters{$ID}{name};
-		} else {
-			$name = "Unknown #".unpack("V1", $ID);
-		}
+		my $name = getNPCName($ID);
 
 		message("$name: Type 'talk num <number #>' to input a number.\n", "input");
 		$ai_v{'npc_talk'}{'talk'} = 'num';
@@ -5422,7 +5414,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0194") {
 		my $ID = substr($msg, 2, 4);
-		my ($name) = unpack("Z*", substr($msg, 6, 24));
+		my ($name) = unpack("Z24", substr($msg, 6, 24));
 
 		message "Guild Member $name Log ".($guildNameRequest{online}?"In":"Out")."\n", 'guildchat';
 
@@ -5509,16 +5501,6 @@ sub parseMsg {
 
 		debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 
-	} elsif ($switch eq "01AA") {
-		# 01aa: long ID, long emotion
-		# pet emotion
-		my ($ID, $type) = unpack("x2 a4 V1", $msg);
-		my $emote = $emotions_lut{$type}{display} || "/e$type";
-		if ($pets{$ID}) {
-			my $name = $pets{$ID}{name} || "Unknown Pet #".unpack("V", $ID);
-			message "$pets{$ID}{name} : $emote\n", "emotion";
-		}
-
 	} elsif ($switch eq "01AB") {
 		my ($ID, $duration) = unpack "x2 a4 x2 L1", $msg;
 		if ($duration > 0) {
@@ -5544,19 +5526,6 @@ sub parseMsg {
 			$monsters{$ID}{missedToParty} = 0;
 		}
 
-	} elsif ($switch eq "01B6") {
-		# Guild Info
-		$guild{'ID'}        = substr($msg, 2, 4);
-		$guild{'lvl'}       = unpack("V1", substr($msg,  6, 4));
-		$guild{'conMember'} = unpack("V1", substr($msg, 10, 4));
-		$guild{'maxMember'} = unpack("V1", substr($msg, 14, 4));
-		$guild{'average'}   = unpack("V1", substr($msg, 18, 4));
-		$guild{'exp'}       = unpack("V1", substr($msg, 22, 4));
-		$guild{'next_exp'}  = unpack("V1", substr($msg, 26, 4));
-		$guild{'members'}   = unpack("V1", substr($msg, 42, 4)) + 1;
-		$guild{'name'}      = unpack("Z24", substr($msg, 46, 24));
-		$guild{'master'}    = unpack("Z24", substr($msg, 70, 24));
-
 	} elsif ($switch eq "01CD") {
 		# Sage Autospell - list of spells availible sent from server
 		if ($config{autoSpell}) {
@@ -5577,24 +5546,6 @@ sub parseMsg {
 			$actor->{spirits} = $spirits;
 			message "$actor has $spirits spirit(s) now\n", "parseMsg_statuslook", 2 if $spirits != $actor->{spirits};
 		}
-
-	} elsif ($switch eq "01D4") {
-		# NPC requested a text string reply
-		my $ID = substr($msg, 2, 4);
-
-		# Resolve the source name
-		my $name;
-		if ($npcs{$ID}) {
-			$name = $npcs{$ID}{name};
-		} elsif ($monsters{$ID}) {
-			$name = $monsters{$ID}{name};
-		} else {
-			$name = "Unknown #".unpack("V1", $ID);
-		}
-
-		message "$name: Type 'talk text' (Respond to NPC)\n", "npc";
-		$ai_v{'npc_talk'}{'talk'} = 'text';
-		$ai_v{'npc_talk'}{'time'} = time;
 
 	} elsif ($switch eq "01D7") {
 		# Weapon Display (type - 2:hand eq, 9:foot eq)
@@ -5621,16 +5572,6 @@ sub parseMsg {
 				$player->{shoes} = $ID1;
 			}
 		}
-
-	} elsif ($switch eq "01F4") {
-		# Recieving deal request
-		# 01DC: 24byte nick, long charID, word level
-		my $dealUser = unpack("Z24", substr($msg, 2, 24));
-		my $dealUserLevel = unpack("v1",substr($msg, 30, 2));
-		$incomingDeal{'name'} = $dealUser;
-		$timeout{'ai_dealAutoCancel'}{'time'} = time;
-		message "$dealUser (level $dealUserLevel) Requests a Deal\n", "deal";
-		message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal";
 
 	} elsif ($switch eq "01F5") {
 		# The deal you request has been accepted
@@ -5659,16 +5600,6 @@ sub parseMsg {
 			binAdd(\@arrowCraftID, $index);
 		}
 		message "Received Possible Arrow Craft List - type 'arrowcraft'\n";
-
-	} elsif ($switch eq "0169") {
-		my $type = unpack("C1", substr($msg, 2, 1));
-		my %types = (
-			0 => 'Target is already in a guild.',
-			1 => 'Target has denied.',
-			2 => 'Target has accepted.',
-			3 => 'Your guild is full.'
-		);
-		message "Guild join request: ".($types{$type} || "Unknown $type")."\n";
 
 	} elsif ($switch eq "0201") {
 		# Friend list

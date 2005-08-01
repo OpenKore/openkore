@@ -145,6 +145,7 @@ sub new {
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
+		'0169' => ['guild_invite_result', 'C1', [qw(type)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
@@ -153,12 +154,15 @@ sub new {
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
 		'01A6' => ['egg_list'],
+		'01AA' => ['pet_emotion', 'a4 V1', [qw(ID type)]],
 		#'01AC' => ['actor_trapped', 'V', [qw(ID)]], # Indicates that an object is trapped, but ID is not a valid monster or player ID.
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
+		'01B6' => ['guild_info', 'a4 V1 V1 V1 V1 V1 V1 x12 V1 Z24 Z24', [qw(ID lvl conMember maxMember average exp next_exp members name master)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
+		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID skillstatus sex coords lv)]],
@@ -1742,6 +1746,28 @@ sub guild_chat {
 	$args->{chatMsg} = $chatMsg;
 }
 
+sub guild_info {
+	my ($self, $args) = @_;
+	# Guild Info
+	hashCopyByKey(\%guild, $args, qw(ID lvl conMember maxMember average exp next_exp members name master));
+	$guild{members}++;
+}
+
+sub guild_invite_result {
+	my ($self, $args) = @_;
+
+	my $type = $args->{type};
+
+	my %types = (
+		0 => 'Target is already in a guild.',
+		1 => 'Target has denied.',
+		2 => 'Target has accepted.',
+		3 => 'Your guild is full.'
+	);
+	message "Guild join request: ".($types{$type} || "Unknown $type")."\n";
+
+}
+
 sub ignore_all_result {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
@@ -2447,6 +2473,17 @@ sub npc_talk_responses {
 	message("$name: Type 'talk resp #' to choose a response.\n", "npc");
 }
 
+sub npc_talk_text {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+
+	my $name = getNPCName($ID);
+	message "$name: Type 'talk text' (Respond to NPC)\n", "npc";
+	$ai_v{npc_talk}{talk} = 'text';
+	$ai_v{npc_talk}{time} = time;
+}
+
 sub party_chat {
 	my ($self, $args) = @_;
 	my $msg;
@@ -2593,6 +2630,18 @@ sub party_users_info {
 
 	sendPartyShareEXP(\$remote_socket, 1) if ($config{partyAutoShare} && $chars[$config{char}]{party} && %{$chars[$config{char}]{party}});
 
+}
+
+sub pet_emotion {
+	my ($self, $args) = @_;
+
+	my ($ID, $type) = ($args->{ID}, $args->{type});
+
+	my $emote = $emotions_lut{$type}{display} || "/e$type";
+	if ($pets{$ID}) {
+		my $name = $pets{$ID}{name} || "Unknown Pet #".unpack("V1", $ID);
+		message "$pets{$ID}{name} : $emote\n", "emotion";
+	}
 }
 
 sub pet_info {
