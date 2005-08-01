@@ -72,6 +72,7 @@ Bug fixes:
 - Fix avoid player ID near.
 - Use steps "b e" and "s e" instead of just "e" for buy/sellAuto. Almost
   as fast and may support private servers better.
+- teleportAuto_hp is now also checked whenever you get attacked.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -190,7 +191,6 @@ Internal:
 - The S and L pack types have been completely removed. Do not use these
   anymore, use v and V respectively.
 - 'ai print' command should mangle less characters into '.'.
-- teleportAuto_hp is now also checked whenever you get attacked.
 
 Credits:
 - doenet: chatLangCode bugfixes.
