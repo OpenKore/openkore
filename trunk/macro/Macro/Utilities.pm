@@ -120,16 +120,13 @@ sub getnpcID {
   return;
 };
 
+## getPlayerID(name, r_array)
 # get player array index
 sub getPlayerID {
   $cvs->debug("getPlayerID(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my ($name, $pool) = @_;
-  for (my $id = 0; $id < @{$pool}; $id++) {
-    next unless $$pool[$id];
-    if ($players{$$pool[$id]}->{name} eq $name) {return $id};
-  };
-  return;
-};
+  return findIndexString_lc($pool, 'name', $name);
+}
 
 # get item array index
 sub getItemID {

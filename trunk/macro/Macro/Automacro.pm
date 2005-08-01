@@ -160,9 +160,9 @@ sub checkItem {
 sub checkPerson {
   $cvs->debug("checkPerson(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $who = shift;
-  if (getPlayerID($who, \@::playersID) >= 0) {return 1};
+  if (defined getPlayerID($who, \@playersID)) {return 1};
   return 0;
-};
+}
 
 # checks arg1 for condition in arg2 #######################
 # uses: cmpr (Macro::Utils)
@@ -337,7 +337,7 @@ sub automacroCheck {
       $queue = new Macro::Queue($automacro{$am}->{call});
       if (defined $queue) {
         $queue->setOverrideAI if $automacro{$am}->{overrideAI};
-        $queue->setTimeOut($automacro{$am}->{delay}) if $automacro{$am}->{delay};
+        $queue->setTimeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
       } else {
         error "[macro] unable to create macro queue.\n";
       };
