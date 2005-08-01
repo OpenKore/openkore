@@ -133,6 +133,7 @@ sub new {
 		'010A' => ['mvp_item', 'v1', [qw(itemID)]],
 		'010B' => ['mvp_you', 'V1', [qw(expAmount)]],
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
+		'010E' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range/up = ???
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
@@ -152,6 +153,7 @@ sub new {
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
 		'01A6' => ['egg_list'],
+		#'01AC' => ['actor_trapped', 'V', [qw(ID)]], # Indicates that an object is trapped, but ID is not a valid monster or player ID.
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
@@ -2849,6 +2851,25 @@ sub self_chat {
 		user => $args->{chatMsgUser},
 		msg => $args->{chatMsg}
 	});
+}
+
+sub skill_update {
+	my ($self, $args) = @_;
+
+	my ($ID, $lv, $sp) = ($args->{skillID}, $args->{lv}, $args->{sp});
+
+	my $skill = new Skills(id => $ID);
+	my $handle = $skill->handle;
+	my $name = $skill->name;
+	$char->{skills}{$handle}{lv} = $lv;
+	$char->{skills}{$handle}{sp} = $sp;
+
+	# Set $skillchanged to 2 so it knows to unset it when skill points are updated
+	if ($skillChanged eq $handle) {
+		$skillChanged = 2;
+	}
+
+	debug "Skill $name: $lv\n", "parseMsg";
 }
 
 sub skill_use {

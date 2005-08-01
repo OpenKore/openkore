@@ -4691,22 +4691,6 @@ sub parseMsg {
 	} elsif ($packetParser && $packetParser->parse(substr($msg, 0, $msg_size))) {
 		# Use the new object-oriented packet parser
 
-	} elsif ($switch eq "010E") {
-		my $ID = unpack("v1",substr($msg, 2, 2));
-		my $lv = unpack("v1",substr($msg, 4, 2));
-
-		my $skill = new Skills(id => $ID);
-		my $handle = $skill->handle;
-		my $name = $skill->name;
-		$char->{skills}{$handle}{lv} = $lv;
-
-		# Set $skillchanged to 2 so it knows to unset it when skill points are updated
-		if ($skillChanged eq $handle) {
-			$skillChanged = 2;
-		}
-
-		debug "Skill $name: $lv\n", "parseMsg";
-
 	} elsif ($switch eq "010F") {
 		# Character skill list
 		$conState = 5 if ($conState != 4 && $xkore);
@@ -5269,7 +5253,7 @@ sub parseMsg {
 			$guild{'member'}[$c]{'online'} = unpack("v1", substr($msg, $i + 22, 2));
 			my $gtIndex = unpack("V1", substr($msg, $i + 26, 4));
 			$guild{'member'}[$c]{'title'} = $guild{'title'}[$gtIndex];
-			($guild{'member'}[$c]{'name'}) = substr($msg, $i + 80, 24) =~ /([\s\S]*?)\000/;
+			$guild{'member'}[$c]{'name'} = unpack("Z24", substr($msg, $i + 80, 24));
 			$c++;
 		}
 
@@ -5280,13 +5264,13 @@ sub parseMsg {
 		my $gtIndex;
 		for (my $i = 4; $i < $msg_size; $i+=28) {
 			$gtIndex = unpack("V1", substr($msg, $i, 4));
-			($guild{'title'}[$gtIndex]) = substr($msg, $i + 4, 24) =~ /([\s\S]*?)\000/;
+			$guild{'title'}[$gtIndex] = unpack("Z24", substr($msg, $i + 4, 24));
 		}
 
 	} elsif ($switch eq "016A") {
 		# Guild request
 		my $ID = substr($msg, 2, 4);
-		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+		my $name = unpack("Z24", substr($msg, 6, 24));
 		message "Incoming Request to join Guild '$name'\n";
 		$incomingGuild{'ID'} = $ID;
 		$incomingGuild{'Type'} = 1;
@@ -5323,7 +5307,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "0171") {
 		my $ID = substr($msg, 2, 4);
-		my ($name) = substr($msg, 6, 24) =~ /([\s\S]*?)\000/;
+		my $name = unpack("Z24", substr($msg, 6, 24));
 		message "Incoming Request to Ally Guild '$name'\n";
 		$incomingGuild{'ID'} = $ID;
 		$incomingGuild{'Type'} = 2;
@@ -5544,11 +5528,6 @@ sub parseMsg {
 			message getActorName($ID) . " is no longer muted\n", "parseMsg_statuslook", 2;
 		}
 
-	} elsif ($switch eq "01AC") {
-		# 01AC: long ID
-		# Indicates that an object is trapped, but ID is not a
-		# valid monster or player ID.
-
 	} elsif ($switch eq "01B0") {
 		# Class change / monster type change
 		# 01B0 : long ID, byte WhateverThisIs, long type
@@ -5575,8 +5554,8 @@ sub parseMsg {
 		$guild{'exp'}       = unpack("V1", substr($msg, 22, 4));
 		$guild{'next_exp'}  = unpack("V1", substr($msg, 26, 4));
 		$guild{'members'}   = unpack("V1", substr($msg, 42, 4)) + 1;
-		($guild{'name'})    = substr($msg, 46, 24) =~ /([\s\S]*?)\000/;
-		($guild{'master'})  = substr($msg, 70, 24) =~ /([\s\S]*?)\000/;
+		$guild{'name'}      = unpack("Z24", substr($msg, 46, 24));
+		$guild{'master'}    = unpack("Z24", substr($msg, 70, 24));
 
 	} elsif ($switch eq "01CD") {
 		# Sage Autospell - list of spells availible sent from server
@@ -5646,7 +5625,7 @@ sub parseMsg {
 	} elsif ($switch eq "01F4") {
 		# Recieving deal request
 		# 01DC: 24byte nick, long charID, word level
-		my ($dealUser) = substr($msg, 2, 24) =~ /([\s\S]*?)\000/;
+		my $dealUser = unpack("Z24", substr($msg, 2, 24));
 		my $dealUserLevel = unpack("v1",substr($msg, 30, 2));
 		$incomingDeal{'name'} = $dealUser;
 		$timeout{'ai_dealAutoCancel'}{'time'} = time;
