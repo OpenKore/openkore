@@ -119,6 +119,7 @@ sub initHandlers {
 	quit		=> \&cmdQuit,
 	rc			=> \&cmdReloadCode,
 	relog		=> \&cmdRelog,
+	repair		=> \&cmdRepair,
 	respawn		=> \&cmdRespawn,
 	s			=> \&cmdStatus,
 	sell		=> \&cmdSell,
@@ -2556,6 +2557,16 @@ sub cmdReload {
 	} else {
 		Settings::parseReload($args);
 		Log::initLogFiles();
+	}
+}
+
+sub cmdRepair {
+	my (undef, $args) = @_;
+	if ($args =~ /^\d+$/) {
+		sendRepairItem($args);
+	} else {
+		error	"Syntax Error in function 'repair' (Repair player's items.)\n" .
+			"Usage: repair [item number]\n";
 	}
 }
 
