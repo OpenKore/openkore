@@ -140,6 +140,7 @@ sub new {
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
+		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
@@ -1125,6 +1126,7 @@ sub cart_item_added {
 	if ($item->{amount}) {
 		$item->{amount} += $args->{amount};
 	} else {
+		$item->{index} = $args->{index};
 		$item->{nameID} = $args->{ID};
 		$item->{amount} = $args->{amount};
 		$item->{identified} = $args->{identified};

@@ -191,6 +191,8 @@ Internal:
 - The S and L pack types have been completely removed. Do not use these
   anymore, use v and V respectively.
 - 'ai print' command should mangle less characters into '.'.
+- Moved packets to Network/Receive.pm:
+      cart_item_added
 
 Credits:
 - doenet: chatLangCode bugfixes.

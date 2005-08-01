@@ -4903,28 +4903,6 @@ sub parseMsg {
 		$ai_v{'inventory_time'} = time + 1;
 		$ai_v{'cart_time'} = time + 1;
 
-	} elsif ($switch eq "0124" || $switch eq "01C5") {
-		my $index = unpack("v1", substr($msg, 2, 2));
-		my $amount = unpack("V1", substr($msg, 4, 4));
-		my $ID = unpack("v1", substr($msg, 8, 2));
-		my $psize = $switch eq "0124" ? 0 : 1;
-
-		my $item = $cart{inventory}[$index] ||= {};
-		if ($item->{amount}) {
-			$item->{amount} += $amount;
-		} else {
-			$item->{index} = $index;
-			$item->{nameID} = $ID;
-			$item->{amount} = $amount;
-			$item->{identified} = unpack("C1", substr($msg, 10 + $psize, 1));
-			$item->{broken} = unpack("C1", substr($msg, 11 + $psize, 1));
-			$item->{upgrade} = unpack("C1", substr($msg, 12 + $psize, 1));
-			$item->{cards} = substr($msg, 13 + $psize, 8);
-			$item->{name} = itemName($item);
-		}
-		message "Cart Item Added: $item->{name} ($index) x $amount\n";
-		$itemChange{$item->{name}} += $amount;
-
 	} elsif ($switch eq "0125") {
 		my $index = unpack("v1", substr($msg, 2, 2));
 		my $amount = unpack("V1", substr($msg, 4, 4));
