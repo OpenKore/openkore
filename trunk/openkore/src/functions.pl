@@ -5578,39 +5578,6 @@ sub parseMsg {
 		($guild{'name'})    = substr($msg, 46, 24) =~ /([\s\S]*?)\000/;
 		($guild{'master'})  = substr($msg, 70, 24) =~ /([\s\S]*?)\000/;
 
-	} elsif ($switch eq "01C8") {
-		my $index = unpack("v1",substr($msg, 2, 2));
-		my $ID = substr($msg, 6, 4);
-		my $itemType = unpack("v1", substr($msg, 4, 2));
-		my $amountleft = unpack("v1",substr($msg, 10, 2));
-		my $itemDisplay = ($items_lut{$itemType} ne "")
-			? $items_lut{$itemType}
-			: "Unknown " . unpack("V*", $ID);
-
-		if ($ID eq $accountID) {
-			my $invIndex = findIndex($char->{inventory}, "index", $index);
-			my $item = $char->{inventory}[$invIndex];
-			my $amount = $item->{amount} - $amountleft;
-			$item->{amount} -= $amount;
-
-			message("You used Item: $item->{name} ($invIndex) x $amount - $amountleft left\n", "useItem", 1);
-			$itemChange{$item->{name}}--;
-			if ($item->{amount} <= 0) {
-				delete $char->{inventory}[$invIndex];
-			}
-
-			Plugins::callHook('packet_useitem', {
-				item => $item,
-				invIndex => $invIndex,
-				name => $item->{name},
-				amount => $amount
-			});
-
-		} else {
-			my $actor = Actor::get($ID);
-			message "$actor used Item: $itemDisplay - $amountleft left\n", "useItem", 2;
-		}
-
 	} elsif ($switch eq "01CD") {
 		# Sage Autospell - list of spells availible sent from server
 		if ($config{autoSpell}) {
