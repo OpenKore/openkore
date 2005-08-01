@@ -83,6 +83,7 @@ our @EXPORT = qw(
 	sendGetSellList
 	sendGuildAlly
 	sendGuildChat
+	sendGuildCreate
 	sendGuildInfoRequest
 	sendGuildJoin
 	sendGuildJoinRequest
@@ -875,6 +876,13 @@ sub sendGuildChat {
 	my $msg = pack("C*",0x7E, 0x01) . pack("v*",length($char->{name}) + length($message) + 8) .
 	$char->{name} . " : " . $message . chr(0);
 	sendMsgToServer($r_socket, $msg);
+}
+
+sub sendGuildCreate {
+	my $name = shift;
+	my $msg = pack("C*", 0x65, 0x01, 0x4D, 0x8B, 0x01, 0x00).pack("a24", $name);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Guild Create: $name", "sendPacket", 2;
 }
 
 sub sendGuildInfoRequest {
