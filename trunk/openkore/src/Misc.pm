@@ -2479,18 +2479,20 @@ sub useTeleport {
 
 
 ##
-# whenGroundStatus(target, statuses)
+# whenGroundStatus(target, statuses, mine)
 # target: coordinates hash
 # statuses: a comma-separated list of ground effects e.g. Safety Wall,Pneuma
+# mine: if true, only consider ground effects that originated from me
 #
 # Returns 1 if $target has one of the ground effects specified by $statuses.
 sub whenGroundStatus {
-	my ($pos, $statuses) = @_;
+	my ($pos, $statuses, $mine) = @_;
 
 	my ($x, $y) = ($pos->{x}, $pos->{y});
 	for my $ID (@spellsID) {
 		my $spell;
-		next unless ($spell = $spells{$ID});
+		next unless $spell = $spells{$ID};
+		next if $mine && $spell->{sourceID} ne $accountID;
 		if ($x == $spell->{pos}{x} &&
 		    $y == $spell->{pos}{y}) {
 			return 1 if existsInList($statuses, getSpellName($spell->{type}));
@@ -3047,6 +3049,13 @@ sub checkSelfCondition {
 	if ($config{$prefix."_whenNotPermitSkill"}) {
 		return 0 if $char->{permitSkill} &&
 			$char->{permitSkill}->name eq $config{$prefix."_whenNotPermitSkill"};
+	}
+
+	if ($config{$prefix."_whenFlag"}) {
+		return 0 unless $flags{$config{$prefix."_whenFlag"}};
+	}
+	if ($config{$prefix."_whenNotFlag"}) {
+		return 0 unless !$flags{$config{$prefix."_whenNotFlag"}};
 	}
 
 	if ($config{$prefix."_onlyWhenSafe"}) {
