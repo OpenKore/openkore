@@ -2867,6 +2867,7 @@ sub repair_list {
 		my $listID = unpack("C1", substr($args->{RAW_MSG}, $i+12, 1));
 		my $name = itemNameSimple($nameID);
 		$msg .= "$index $name\n";
+		sendRepairItem($index) if ($config{repairAuto});
 	}
 	$msg .= "---------------------------\n";
 	message $msg, "list";
