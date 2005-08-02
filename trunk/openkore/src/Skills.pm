@@ -219,7 +219,7 @@ sub sp {
 	my $handle = $self->handle;
 	if ($skillsSP_lut{$handle}) {
 		return $skillsSP_lut{$handle}{$lvl};
-	} else {
+	} elsif ($char->{skills}{$handle}) {
 		return $char->{skills}{$handle}{sp};
 	}
 }
