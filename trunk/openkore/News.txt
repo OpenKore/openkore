@@ -187,6 +187,8 @@ New config options:
   Like dcOnLevel, but for job levels.
 - avoidGM_ignoreList (list of names)
   Ignore any player on this list when checking for GMs nearby.
+- repairAuto (flag)
+  Automatically repair items when using the repair skill on players.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
