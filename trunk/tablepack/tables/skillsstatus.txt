@@ -78,7 +78,7 @@
 116 Wind Walk
 117 Meltdown
 118 Cart Boost
-119 Full Strip
+119 Chase Walk
 120 Reject Sword
 121 Marionette Control
 122 Marionette Control
