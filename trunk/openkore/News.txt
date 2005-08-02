@@ -26,6 +26,7 @@ TODO:
   equipAuto skills is no longer used, use <skill slot>_equip_<slot>
   equipAuto syntax is changed, read below.
   equipAuto_def is removed.
+- spells.txt "Big Magic (SG/LoV/MS/GX)" renamed to "Big Magic".
 - avoid_ignore_# is replaced with avoidGM_ignoreList (see below)
 
 Bug fixes:
@@ -193,12 +194,20 @@ Internal:
 - Attack AI routines should now support players as well.
 - New Match::cartItem() function, similar to Match::inventoryItem().
 - The S and L pack types have been completely removed. Do not use these
-  anymore, use v and V respectively.
+  anymore; use v and V respectively.
 - 'ai print' command should mangle less characters into '.'.
 - Moved packets to Network/Receive.pm:
 	  cart_item_added
 	  cart_item_removed
 	  item_used
+- New whenFlag/whenNotFlag condition references %flags in checkSelfCondition.
+  Currently, only plugins or 'eval' command could change %flags so this is
+  only useful to developers (you can turn on/off groups of skill blocks easily
+  using %flags now).
+- whenGroundStatus() now takes a third argument $mine which will make it only
+  check for spells originating from you.
+- inventory/storage/cart item added/removed packets now set $args->{item}
+  so that plugins can access it.
 
 Credits:
 - doenet: chatLangCode bugfixes.

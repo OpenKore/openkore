@@ -1145,6 +1145,7 @@ sub cart_item_added {
 	}
 	message "Cart Item Added: $item->{name} ($args->{index}) x $args->{amount}\n";
 	$itemChange{$item->{name}} += $args->{amount};
+	$args->{item} = $item;
 }
 
 sub item_used {
@@ -1171,6 +1172,7 @@ sub item_used {
 			name => $item->{name},
 			amount => $amount
 		});
+		$args->{item} = $item;
 
 	} else {
 		my $actor = Actor::get($ID);
@@ -1184,12 +1186,14 @@ sub cart_item_removed {
 
 	my ($index, $amount) = @{$args}{qw(index amount)};
 
-	$cart{'inventory'}[$index]{'amount'} -= $amount;
-	message "Cart Item Removed: $cart{'inventory'}[$index]{'name'} ($index) x $amount\n";
-	$itemChange{$cart{inventory}[$index]{name}} -= $amount;
-	if ($cart{'inventory'}[$index]{'amount'} <= 0) {
+	my $item = $cart{inventory}[$index];
+	$item->{amount} -= $amount;
+	message "Cart Item Removed: $item->{name} ($index) x $amount\n";
+	$itemChange{$item->{name}} -= $amount;
+	if ($item->{amount} <= 0) {
 		$cart{'inventory'}[$index] = undef;
 	}
+	$args->{item} = $item;
 }
 
 sub change_to_constate25 {
@@ -1460,6 +1464,7 @@ sub deal_add_you {
 	message "You added Item to Deal: $item->{name} x $currentDeal{lastItemAmount}\n", "deal";
 	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
 	$currentDeal{you_items}++;
+	$args->{item} = $item;
 	delete $char->{inventory}[$invIndex] if $item->{amount} <= 0;
 }
 
@@ -1830,6 +1835,8 @@ sub inventory_item_added {
 		$disp .= " ($field{name})\n";
 		itemLog($disp);
 
+		$args->{item} = $item;
+
 		# TODO: move this stuff to AI()
 		if ($ai_v{npc_talk}{itemID} eq $item->{nameID}) {
 			$ai_v{'npc_talk'}{'talk'} = 'buy';
@@ -1860,6 +1867,7 @@ sub inventory_item_removed {
 	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
+	$args->{item} = $char->{inventory}[$invIndex];
 	inventoryItemRemoved($invIndex, $args->{amount});
 	Plugins::callHook('packet_item_removed', {index => $invIndex});
 }
@@ -3358,6 +3366,7 @@ sub storage_item_added {
 	}
 	message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
 	$itemChange{$item->{name}} += $amount;
+	$args->{item} = $item;
 }
 
 sub storage_item_removed {
@@ -3365,10 +3374,12 @@ sub storage_item_removed {
 
 	my ($index, $amount) = @{$args}{qw(index amount)};
 
-	$storage{$index}{amount} -= $amount;
-	message "Storage Item Removed: $storage{$index}{name} ($storage{$index}{binID}) x $amount\n", "storage";
-	$itemChange{$storage{$index}{name}} -= $amount;
-	if ($storage{$index}{amount} <= 0) {
+	my $item = $storage{$index};
+	$item->{amount} -= $amount;
+	message "Storage Item Removed: $item->{name} ($item->{binID}) x $amount\n", "storage";
+	$itemChange{$item->{name}} -= $amount;
+	$args->{item} = $item;
+	if ($item->{amount} <= 0) {
 		delete $storage{$index};
 		binRemove(\@storageID, $index);
 	}

@@ -350,6 +350,7 @@ our %guildNameRequest;
 our $monsterBaseExp;
 our $monsterJobExp;
 our %descriptions;
+our %flags;
 
 
 # Detect operating system
