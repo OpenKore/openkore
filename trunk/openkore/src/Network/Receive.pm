@@ -161,6 +161,7 @@ sub new {
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
+		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
@@ -1520,6 +1521,23 @@ sub deal_request {
 	$timeout{ai_dealAutoCancel}{time} = time;
 	message "$args->{user} (level $level) Requests a Deal\n", "deal";
 	message "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n", "deal";
+}
+
+sub devotion {
+	my ($self, $args) = @_;
+
+	my $source = Actor::get($args->{sourceID});
+	my $msg = "$source is using devotion on:";
+
+	for (my $i=0; $i<5; $i++) {
+		my $ID = substr($args->{data},$i*4,4);
+		last if (!$ID);
+
+		my $actor = Actor::get($ID);
+		$msg .= " $actor";
+	}
+
+	message $msg;
 }
 
 sub egg_list {
