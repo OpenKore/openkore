@@ -30,6 +30,7 @@ use strict;
 use Globals;
 use Utils;
 use Log qw(message error debug);
+use Misc;
 
 # Make it so that
 #     print $actor;
@@ -157,6 +158,16 @@ sub distance {
 
 	$otherActor ||= $char;
 	return Utils::distance($self->position, $otherActor->position);
+}
+
+##
+# $actor->snipable
+#
+# Returns whether or not you have snipable LOS to the actor.
+sub snipable {
+	my ($self) = @_;
+
+	return checkLineSnipable($char->position, $self->position);
 }
 
 1;

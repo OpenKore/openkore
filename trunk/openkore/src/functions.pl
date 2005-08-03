@@ -5110,6 +5110,8 @@ sub parseMsg {
 		Plugins::callHook('is_casting', {
 			sourceID => $sourceID,
 			targetID => $targetID,
+			source => $source,
+			target => $target,
 			skillID => $skillID,
 			skill => $skill,
 			x => $x,
@@ -5422,26 +5424,26 @@ sub parseMsg {
 		# 99 01 - 4 bytes, used by eAthena and < EP5 Aegis
 		my $type = unpack("x2 v1", $msg);
 		if ($type == 0) {
-			$ai_v{temp}{pvp} = 0;
+			$pvp = 0;
 		} elsif ($type == 1) {
 			message "PvP Display Mode\n", "map_event";
-			$ai_v{temp}{pvp} = 1;
+			$pvp = 1;
 		} elsif ($type == 3) {
 			message "GvG Display Mode\n", "map_event";
-			$ai_v{temp}{pvp} = 2;
+			$pvp = 2;
 		}
 
 	} elsif ($switch eq "01D6") {
 		# D6 01 - 4 bytes, used by Aegis 8.5
 		my $type = unpack("x2 v1", $msg);
 		if ($type == 0) {
-			$ai_v{temp}{pvp} = 0;
+			$pvp = 0;
 		} elsif ($type == 6) {
 			message "PvP Display Mode\n", "map_event";
-			$ai_v{temp}{pvp} = 1;
+			$pvp = 1;
 		} elsif ($type == 8) {
 			message "GvG Display Mode\n", "map_event";
-			$ai_v{temp}{pvp} = 2;
+			$pvp = 2;
 		}
 
 	} elsif ($switch eq "019A") {

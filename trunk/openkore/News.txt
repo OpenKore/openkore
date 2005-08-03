@@ -214,6 +214,10 @@ Internal:
   check for spells originating from you.
 - inventory/storage/cart item added/removed packets now set $args->{item}
   so that plugins can access it.
+- $ai_v{temp}{pvp} moved to $pvp because the former seems to get erroneously
+  cleared sometimes.
+- New Actor#snipable method; boolean whether you have snipable LOS to the
+  actor.
 
 Credits:
 - doenet: chatLangCode bugfixes.
