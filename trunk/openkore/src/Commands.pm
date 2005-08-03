@@ -2949,7 +2949,7 @@ sub cmdStorage_gettocart {
 		}
 	}
 
-	storageGetToCart(\@items, $amount) if @items;
+	sendStorageGetToCart(\@items, $amount) if @items;
 }
 
 sub cmdStorage_close {
