@@ -189,6 +189,10 @@ New config options:
   Ignore any player on this list when checking for GMs nearby.
 - repairAuto (flag)
   Automatically repair items when using the repair skill on players.
+- teleportAuto_search (number)
+  Previously this was a flag. Now, set it to the minimum number of
+  search-monsters that must be on the screen (area attack bots can
+  use this to find mobs).
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
