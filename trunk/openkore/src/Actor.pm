@@ -36,6 +36,18 @@ use Log qw(message error debug);
 # acts the same as
 #     print $actor->nameString;
 use overload '""' => \&_nameString;
+use overload 'eq' => \&_eq;
+use overload 'ne' => \&_ne;
+
+sub _eq {
+	my ($self, $other) = @_;
+	return $self->{ID} eq $other->{ID};
+}
+
+sub _ne {
+	my ($self, $other) = @_;
+	return $self->{ID} ne $other->{ID};
+}
 
 # This function is needed to make the operator overload respect inheritance.
 sub _nameString {

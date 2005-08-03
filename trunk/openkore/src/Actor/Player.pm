@@ -23,6 +23,7 @@ package Actor::Player;
 
 use strict;
 use Actor;
+use Globals;
 
 our @ISA = qw(Actor);
 
@@ -34,6 +35,16 @@ sub selfString {
 	my ($self) = @_;
 
 	return $self->{sex} ? 'himself' : 'herself';
+}
+
+##
+# $actor->job
+#
+# Returns the job string (e.g. "Knight") of the actor.
+sub job {
+	my ($self) = @_;
+
+	return $jobs_lut{$self->{jobID}};
 }
 
 1;
