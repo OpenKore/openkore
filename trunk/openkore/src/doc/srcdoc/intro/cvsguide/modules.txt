@@ -24,7 +24,7 @@ A module is a subfolder on the CVS server. These modules are currently available
 </tr>
 <tr>
 	<td><tt>plugins</tt></td>
-	<td>Simple example plugins for OpenKore.</td>
+	<td>Plugins for OpenKore. <b>Don't download</b> unless you know what you're doing.</td>
 </tr>
 <tr>
 	<td><tt>extract</tt></td>
