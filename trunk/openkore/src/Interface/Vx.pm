@@ -65,7 +65,7 @@ sub new {
 		input_pm => undef,
 		total_lines => {"panelOne" => 0, "panelTwo" => 0},
 		last_line_end => {"panelOne" => 0, "panelTwo" => 0},
-		lineLimit => {"panelOne" => $sys{panelOne_lineLimit} || 900, "panelTwo" => $sys{panelOne_lineLimit} || 100},
+		lineLimit => {"panelOne" => $sys{panelOne_lineLimit} || 900, "panelTwo" => $sys{panelTwo_lineLimit} || 100},
 		mapDir => 'map'
 	};
 
