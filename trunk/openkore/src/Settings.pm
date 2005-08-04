@@ -281,7 +281,7 @@ sub load {
 	foreach (@array) {
 		if (-f $_->{file}) {
 			Log::message("Loading $_->{file}...\n", "load");
-		} elsif ($_->{file} !~ /portalsLOS\.txt$/i) {
+		} elsif ($_->{file} !~ /(portalsLOS|npcs)\.txt$/i) {
 			Log::error("Error: Couldn't load $_->{file}\n", "load");
 			return 0;
 		}

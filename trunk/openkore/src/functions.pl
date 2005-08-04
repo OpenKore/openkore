@@ -4659,8 +4659,7 @@ sub parseMsg {
 			debug "Packet: $switch$label\n", "parseMsg", 0;
 		} elsif ($config{debugPacket_include_dumpMethod} == 2) {
 			visualDump(substr($msg, 0, $msg_size), "$switch$label");
-		}
-		else {
+		} else {
 			dumpData($msg,1);
 		}
 	}
