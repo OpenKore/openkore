@@ -2,7 +2,7 @@
 1 Endure
 2 Twohand Quicken
 3 Improve Concentration
-4 Hide
+4 Hiding
 5 Cloaking
 6 Enchant Poison
 7 Poison React
