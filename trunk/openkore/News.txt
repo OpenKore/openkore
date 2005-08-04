@@ -11,6 +11,7 @@ TODO:
 - NPC IDs are no longer supported, you must use the location syntax.
 - A few more statuses have been renamed such as 'Cartboost' status renamed
   to 'Cart Boost' for consistency with the skill name.
+  'Hide' to 'Hiding', too.
 - \$remote_socket parameter removed from some Network/Send.pm functions:
   sendCartAdd sendCartGet
 - hp, sp options now have a new format.
