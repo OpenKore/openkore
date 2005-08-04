@@ -158,6 +158,7 @@ sub new {
 		#'01AC' => ['actor_trapped', 'V', [qw(ID)]], # Indicates that an object is trapped, but ID is not a valid monster or player ID.
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01B6' => ['guild_info', 'a4 V1 V1 V1 V1 V1 V1 x12 V1 Z24 Z24', [qw(ID lvl conMember maxMember average exp next_exp members name master)]],
+		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
@@ -2106,6 +2107,11 @@ sub job_equipment_hair_change {
 	#	debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
 	#}
 
+}
+
+sub local_broadcast {
+	my ($self, $args) = @_;
+	message "$args->{message}\n", "schat";
 }
 
 sub login_error {
