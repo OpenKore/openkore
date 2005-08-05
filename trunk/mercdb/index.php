@@ -21,10 +21,8 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-	// setlocale(LC_MONETARY, 'en_US');
-	setlocale(LC_MONETARY, 'de_DE');
-	$mform = "%!.0n";
-
+	$mform = "%01.2f"; //now the win kompatibel version. but its missing the seperator for thousands...
+	
 	$datum 		= getdate(time());
 	$debug 		= 0;	
 	$user		= "roshop";
@@ -36,8 +34,8 @@
 	import_request_variables('g', 'g_');
 	$image_path	= "items/";
 	$ext_info_url	= "http://www.roempire.com/database/?page=items&act=view&iid=";
-	if (!isset($p_ROserver)) $p_ROserver = "Chaos";
-	if ($p_ROserver == "") $p_ROserver = "Chaos";
+	if (!isset($p_ROserver)) $p_ROserver = "Loki";
+	if ($p_ROserver == "") $p_ROserver = "Loki";
 
 	if (!$link = mysql_connect("$server:$port", $user, $pass))
 		echo mysql_errno().": ".mysql_error()."<BR>";
@@ -140,10 +138,10 @@ if ($p_name<>""){
 				echo "V";
 			echo " " . $d_search[element] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[crafted_by] . "&nbsp;</td>\n";
-			echo "<td align='right'>" . money_format($mform, $d_search[min]) . "&nbsp;</td>\n";
-			echo "<td align='right'>" . money_format($mform, $d_search[max]) . "&nbsp;</td>\n";
-			echo "<td align='right'>" . money_format($mform, $d_search[mid]) . "</td>";
-			echo "<td align='right'>&plusmn;&nbsp;" . money_format($mform, $d_search[dev]) . "&nbsp;</td>\n";
+			echo "<td align='right'>" . sprintf($mform, $d_search[min]) . "&nbsp;</td>\n";
+			echo "<td align='right'>" . sprintf($mform, $d_search[max]) . "&nbsp;</td>\n";
+			echo "<td align='right'>" . sprintf($mform, $d_search[mid]) . "</td>";
+			echo "<td align='right'>&plusmn;&nbsp;" . sprintf($mform, $d_search[dev]) . "&nbsp;</td>\n";
 			$hot_deal = $d_search[mid] - $d_search[dev];
 			echo "<td align='right'";
 			if ($hot_deal > $d_search[min]){
@@ -152,7 +150,7 @@ if ($p_name<>""){
 				echo "";
 			}
 			echo ">";
-			echo money_format($mform,  $hot_deal);
+			echo sprintf($mform,  $hot_deal);
 			echo "&nbsp;</td>\n";
 			echo "</tr>\n";
 		}
@@ -249,7 +247,7 @@ if ($g_iid > 0){
 			echo "<td>" . $d_search[element] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[crafted_by] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[amount] . "&nbsp;</td>\n";
-			echo "<td align='right'>" . money_format($mform, $d_search[price]) . "&nbsp;</td>\n";
+			echo "<td align='right'>" . sprintf($mform, $d_search[price]) . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[map] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[posx] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[posy] . "&nbsp;</td>\n";
@@ -339,7 +337,7 @@ if ($g_sid>0){
 			echo "<td>" . $d_search[card3] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[card4] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[amount] . "&nbsp;</td>\n";
-            		echo "<td align='right'>" . money_format($mform, $d_search[price]) . "&nbsp;</td>\n";
+      echo "<td align='right'>" . sprintf($mform, $d_search[price]) . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[map] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[posx] . "</td>\n";
 			echo "<td>" . $d_search[posy] . "</td>\n";
