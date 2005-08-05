@@ -1,5 +1,5 @@
 The idea: 
-running around an manually checking prices from other mercs 
+running around and manually checking prices from other mercs 
 is a pain. let a bot do the job. check on a web-site what he found.
 when the bot finds very cheap offers (hot-deals) let him buy it.
 
@@ -30,8 +30,9 @@ offered which items. and so on. should be self explaining.
 requirements:
 - any, even a new born RO char :)
 - openkore cvs
-- mysql database (can probably be changed to another database due to Mysql)
-- webserver with php-4 support
+- mysql database (can probably be changed to another database due to DBI)
+- webserver with php support (eq: XAMPP - http://www.apachefriends.org/en/)
+- perl (windows user might want to choose Active Perl: www.activestate.com)
 - perl modules: TimeDate, DBD::mysql, DBI
 
 <quote=tofu_soldier>
@@ -40,24 +41,57 @@ in win32, get to ppm and have these installed:
 install CGI::Enurl (doesnt look like it is needed. if you have problems with win, add it)
 (not sure if you need to do this as well)install CGI
 install TimeDate
-install Mysql
 install DBD::mysql
 </quote>
 
+here are some tipps for win (xp) users:
+i saw many problems with installing the plugin on a WinXp system. so i tried it for my self, 
+and had really a hard time. but i got it together. here is what it took me to install 
+everything on a winXP SP2 system.
+
+1. install openkore - the cvs isn't needed.
+2. install activeperl 5.8.7.813 - http://downloads.activestate.com/ActivePerl/Windows/5.8/ActivePerl-5.8.7.813-MSWin32-x86-148120.msi
+3. install with ppm (thats the Perl Package Manager) the following packages:
+- install Time-Hires
+- install TimeDate
+- install dbd-mysql
+when you start the ppm, you get a command line interface. just type in (or paste in)
+the commands starting with "install...". (dbd-mysql installs also dbi.)
+
+i didn't need any of the other perl-libs.
+
+4. to evoid errors like "Unable to load plugin plugins/mercdb.pl: Can't locate DBI.pm in @INC ..."
+add this to openkore.pl at the beginning, after the other lines with "use lib". 
+change C:/Perl to where ever you installed Active Perl.
+
+use lib 'C:/Perl/lib/';
+use lib 'C:/Perl/site/lib/';
+
+5. for a webserver (win, linux, osx, ...) with mysql, and php look here:
+XAMPP - http://www.apachefriends.org/en/
+
 Installation:
-- copy this file into the plugin folder of openkore
+- make folder "plugins" in the openkore folder (if it doesn't already exists)
+- copy mercdb.pl into the plugin folder of openkore
 - create a mysql database ($database)
 - create a new mysql-user that can read and write the roshop tables 
   ($dbUser and $dbPassword)
-- set up the mysql tables with the roshop.sql file
-- change the mysql access informations here and in the index.php
+- set up the mysql tables with the roshop.sql file (i.e. with phpmyadmin)
+- change the mysql access informations in mercdb.pl and index.php
+my $dbUser			= "roshop";				# the name of the mysql user that has read/write access to database $database
+my $dbPassword	= "roshop";				# his password
+my $database		= "ro_shop";			# the used database
+my $dbHostname	= "192.168.6.1";	# mysql server 
+my $dbPort			= "3306";					# mysql server port
+
 - put the following into your config.txt
   merchantDB 1
-  merchantDB_shoppinglist Aquamarine, Red Potion, +6 Stiletto [Drops*2] [2]
+  merchantDB_shoppinglist 
 	merchantDB_myHotDeal 0.9
+
 - copy the index.php on your webserver 
 - send your char into a city or other place where merchants are
-- have it walk around the merchants
+- have it walk around the merchants (i.e. with a macro)
 - check index.php for the results
 
 To-do:
@@ -72,15 +106,12 @@ Fixed:
 - update existing entries in the database (price changes etc.)
 - the number of slots is correct now
 - it works with the changed vender store list in cvs (openkore 1.3.0pre)
-- didn't occure to me for 2 weeks: after some time running, openkore crashes 
-  with an "segmentation fault" i can't tell if it is an problem caused by my 
-  plugin or a general openkore problem. parallel running bots not using this 
-  plugin do crash as well.
+- updated to work with openkore 1.6.2
 
 Known bugs:
+- autobuy isnt working
 
 Planned features:
-- waypoint plugin: the bots walks along a predefined route
 - upload a store.txt to the web-frontend and get a version with best / 
   average prices from the database
 - check the prices in-game via chat-commands send to the bot
@@ -100,7 +131,7 @@ i tested this only on linux 2.6.5-7.95-default with mysql MySQL 4.0.18-Max,
 PHP Version 4.3.4 so your mileage may vary.
 
 Thanks:
-- my RO-playing, non-botting friends who love the results of what i do with openkore ;)
+- my RO-playing and bot-hateing friends who love the results of what i do with openkore ;)
 - the developers of openkore, without i would have stopped playing RO a long time ago
 - the members of the openkore-forum for theire support and feedback
 
