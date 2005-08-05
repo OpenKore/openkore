@@ -1,4 +1,4 @@
-==================
+﻿==================
 ### 1.7.0
 ==================
 
@@ -78,6 +78,7 @@ Bug fixes:
   as fast and may support private servers better.
 - teleportAuto_hp is now also checked whenever you get attacked.
 - avoidGM was always happening if avoidGM_namePattern was blank.
+- attackComboSlot fixed with Tiger Knuckle Fist and Chain Crush Combo.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -194,6 +195,8 @@ New config options:
   Previously this was a flag. Now, set it to the minimum number of
   search-monsters that must be on the screen (area attack bots can
   use this to find mobs).
+- attackComboSlot: autoCombo (flag)
+  This will automatically calculate the waitBeforeUse time for you.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
@@ -222,6 +225,7 @@ Internal:
 
 Credits:
 - doenet: chatLangCode bugfixes.
+- isieo: attackComboSlot fixes/improvements.
 
 
 ==================
