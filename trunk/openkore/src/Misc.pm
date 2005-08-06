@@ -2554,6 +2554,8 @@ sub writeStorageLog {
 		print $f "-------------------------------\n";
 		close $f;
 
+		message "Storage logged\n", "success";
+
 	} elsif ($show_error_on_fail) {
 		error "Unable to write to $Settings::storage_file\n";
 	}

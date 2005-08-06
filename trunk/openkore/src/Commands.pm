@@ -2632,15 +2632,15 @@ sub cmdShopInfoSelf {
 	# FIXME: Read the packet the server sends us to determine
 	# the shop title instead of using $shop{title}.
 	message(center(" $shop{title} ", 79, '-')."\n", "list");
-	message("#  Name                                     Type         Qty     Price   Sold\n", "list");
+	message("#  Name                                     Type         Qty       Price   Sold\n", "list");
 
 	my $priceAfterSale=0;
 	my $i = 1;
 	for my $item (@articles) {
 		next unless $item;
 		message(swrite(
-			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>z @>>>>>",
-			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, $item->{price}, $item->{sold}]),
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>> @>>>>>>>>>z @>>>>>",
+			[$i++, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price}), $item->{sold}]),
 			"list");
 		$priceAfterSale += ($item->{quantity} * $item->{price});
 	}
