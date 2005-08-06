@@ -129,6 +129,20 @@ sub name {
 }
 
 ##
+# $actor->nameIdx()
+#
+# Returns the name and index of an actor, e.g. "pmak (0)" or "Unknown #300001 (1)".
+sub nameIdx {
+	my ($self) = @_;
+
+	my $nameIdx = $self->name;
+	$nameIdx .= " ($self->{binID})" if defined $self->{binID};
+	return $nameIdx;
+
+#	return $self->{name} || "Unknown #".unpack("V1", $self->{ID});
+}
+
+##
 # $actor->verb($you, $other)
 #
 # Returns $you if $actor is you; $other otherwise.

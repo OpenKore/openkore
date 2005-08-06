@@ -110,6 +110,8 @@ New features:
   emergency teleport (e.g. teleportAuto_deadly). (Looks less bot-like.)
   Be sure to update timeouts.txt to get ai_teleport_retry and
   ai_teleport_delay.
+- Shop prices are now formatted with thousands separators.
+- The 'vender' command now shows vender's name and index.
 
 New commands:
 - getplayerinfo (number)
