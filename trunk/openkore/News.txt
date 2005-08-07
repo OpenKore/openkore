@@ -1318,7 +1318,7 @@ New config options:
 
   statsAddAuto_list (stats)
   Example:
-  statsAuddAuto_list 10 vit, 20 str, 25dex, 30 vit, 30 str, 50 vit, 40 str
+  statsAddAuto_list 10 vit, 20 str, 25 dex, 30 vit, 30 str, 50 vit, 40 str
 
 
 New timeouts.txt options:
