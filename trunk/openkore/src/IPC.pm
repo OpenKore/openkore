@@ -251,9 +251,10 @@ sub iterate {
 				$self->send("HELLO",
 					"userAgent" => $self->{userAgent},
 					"wantGlobals" => $self->{wantGlobals});
-				$self->send("JOIN",
-					"ID" => $self->{ID},
-					"userName" => $::config{username});
+
+				my %args =  (ID => $self->{ID});
+				$args{userName} = $::config{username} if (defined $::config{username});
+				$self->send("JOIN", \%args);
 			}
 		}
 	}
