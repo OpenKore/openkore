@@ -885,8 +885,8 @@ sub cmdChatRoom {
 		}
 
 	} elsif ($arg1 eq "list") {
-		message("-----------Chat Room List-----------\n" .
-			"#   Title                     Owner                Users   Public/Private\n",
+		message("------------------------------- Chat Room List --------------------------------\n" .
+			"#   Title                                  Owner                Users   Type\n",
 			"list");
 		for (my $i = 0; $i < @chatRoomsID; $i++) {
 			next if ($chatRoomsID[$i] eq "");
@@ -894,11 +894,11 @@ sub cmdChatRoom {
 			my $public_string = ($chatRooms{$chatRoomsID[$i]}{'public'}) ? "Public" : "Private";
 			my $limit_string = $chatRooms{$chatRoomsID[$i]}{'num_users'}."/".$chatRooms{$chatRoomsID[$i]}{'limit'};
 			message(swrite(
-				"@<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<          @<<<<<< @<<<<<<<<<",
+				"@<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<<<<< @<<<<<< @<<<<<<",
 				[$i, $chatRooms{$chatRoomsID[$i]}{'title'}, $owner_string, $limit_string, $public_string]),
 				"list");
 		}
-		message("------------------------------------\n", "list");
+		message("-------------------------------------------------------------------------------\n", "list");
 
 	} elsif ($arg1 eq "info") {
 		if ($currentChatRoom eq "") {
