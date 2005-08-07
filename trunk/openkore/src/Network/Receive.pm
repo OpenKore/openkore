@@ -1532,15 +1532,15 @@ sub devotion {
 	my $source = Actor::get($args->{sourceID});
 	my $msg = "$source is using devotion on:";
 
-	for (my $i=0; $i<5; $i++) {
-		my $ID = substr($args->{data},$i*4,4);
-		last if (!$ID);
+	for (my $i = 0; $i < 5; $i++) {
+		my $ID = substr($args->{data}, $i*4, 4);
+		last if unpack("L1", $ID) == 0;
 
 		my $actor = Actor::get($ID);
 		$msg .= " $actor";
 	}
 
-	message $msg;
+	message "$msg\n";
 }
 
 sub egg_list {
