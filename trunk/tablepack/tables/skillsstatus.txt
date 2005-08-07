@@ -84,3 +84,4 @@
 122 Marionette Control
 124 Head Crush
 125 Joint Beat
+188 Maximum Power Thrust
