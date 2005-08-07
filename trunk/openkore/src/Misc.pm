@@ -2436,13 +2436,13 @@ sub useTeleport {
 
 	# No skill try to equip a Tele clip or something,
 	# if teleportAuto_equip_* is set
-	if (Item::scanConfigAndCheck('teleportAuto_equip') && $use_lvl == 1){
+	if (Item::scanConfigAndCheck('teleportAuto_equip')) {
 		if (!$ai_v{temp}{teleport}{lv}) {
 			debug "Equipping Accessory to teleport\n", "useTeleport";
 			$ai_v{temp}{teleport}{lv} = $use_lvl;
 			$ai_v{temp}{teleport}{emergency} = $emergency;
+			Item::scanConfigAndEquip('teleportAuto_equip');
 		}
-		Item::scanConfigAndEquip('teleportAuto_equip');
 		return;
 	}
 
