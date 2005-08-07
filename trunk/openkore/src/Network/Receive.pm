@@ -544,13 +544,13 @@ sub actor_died_or_disappeard {
 }
 
 sub combo_delay {
-        my ($self, $args) = @_;
+	my ($self, $args) = @_;
  
-        $char->{combo_packet} = ($args->{delay} * 15) / 100000;
+	$char->{combo_packet} = ($args->{delay} * 15) / 100000;
  
-        $args->{actor} = Actor::get($args->{ID});
-        my $verb = $args->{actor}->verb('have', 'has');
-        debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
+	$args->{actor} = Actor::get($args->{ID});
+	my $verb = $args->{actor}->verb('have', 'has');
+	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
 }
 
 sub actor_exists {
@@ -2973,7 +2973,9 @@ sub skill_use {
 	# Perform trigger actions
 	$conState = 5 if $conState != 4 && $xkore;
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
-	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
+	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
+		&& $args->{skillID} != 371
+		&& $args->{skillID} != 372 ); # ignore these skills because they screw up monk comboing
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
 		$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
