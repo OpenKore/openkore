@@ -65,7 +65,7 @@ sub broadcast {
 	my $msg;
 
 	$msg = encode($msgID, $hash);
-	foreach my $client ($self->{clients}) {
+	foreach my $client (@{$self->{clients}}) {
 		next if (!defined $client || (defined($exclude) && $client->{ID} eq $exclude));
 		$self->sendData($client, $msg);
 	}
