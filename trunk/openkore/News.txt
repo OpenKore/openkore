@@ -79,6 +79,7 @@ Bug fixes:
 - teleportAuto_hp is now also checked whenever you get attacked.
 - avoidGM was always happening if avoidGM_namePattern was blank.
 - attackComboSlot fixed with Tiger Knuckle Fist and Chain Crush Combo.
+- teleportAuto_equip should work for Teleport lv2 now too.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"

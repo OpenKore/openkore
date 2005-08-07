@@ -3051,8 +3051,8 @@ sub skill_used_no_damage {
 	}
 
 	# Resolve source and target names
-	my $source = Actor::get($args->{sourceID});
-	my $target = Actor::get($args->{targetID});
+	my $source = $args->{source} = Actor::get($args->{sourceID});
+	my $target = $args->{target} = Actor::get($args->{targetID});
 	my $verb = $source->verb('use', 'uses');
 
 	delete $source->{casting};
@@ -3067,7 +3067,7 @@ sub skill_used_no_damage {
 	}
 
 	my $domain = ($args->{sourceID} eq $accountID) ? "selfSkill" : "skill";
-	my $skill = new Skills(id => $args->{skillID});
+	my $skill = $args->{skill} = new Skills(id => $args->{skillID});
 	message "$source $verb ".$skill->name()." on ".$target->nameString($source)."$extra\n", $domain;
 
 	# Set teleport time
