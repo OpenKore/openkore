@@ -114,6 +114,7 @@ New features:
 - Shop prices are now formatted with thousands separators.
 - The 'vender' command now shows vender's name and index.
 - Support for eAthena servers using sakexe628. Use serverType 5 for these.
+- Support "That person is in another deal." error.
 
 New commands:
 - getplayerinfo (number)
