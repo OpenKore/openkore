@@ -31,6 +31,7 @@ CREATE TABLE `shopcont` (
   `server` varchar(40) NOT NULL default 'Chaos',
   UNIQUE KEY `id` (`id`)
 ) TYPE=MyISAM COMMENT='RO Shop Database';
+    
 
 # --------------------------------------------------------
 
