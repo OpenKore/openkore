@@ -1476,6 +1476,8 @@ sub deal_begin {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
 		error "That person is too far from you to trade.\n";
+	} elsif ($args->{type} == 2) {
+		error "That person is in another deal.\n";
 	} elsif ($args->{type} == 3) {
 		if (%incomingDeal) {
 			$currentDeal{name} = $incomingDeal{name};
@@ -1486,6 +1488,8 @@ sub deal_begin {
 			undef %outgoingDeal;
 		}
 		message "Engaged Deal with $currentDeal{name}\n", "deal";
+	} else {
+		error "Deal request failed (unknown error $args->{type}).\n";
 	}
 }
 
