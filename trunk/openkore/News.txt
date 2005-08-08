@@ -203,6 +203,7 @@ New config options:
   use this to find mobs).
 - attackComboSlot: autoCombo (flag)
   This will automatically calculate the waitBeforeUse time for you.
+- notOnAction condition (opposite of onAction)
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
