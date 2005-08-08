@@ -3,7 +3,7 @@
 ############################################################
 #
 # merchantdb - Frontend
-# version 0.1.3.4
+# version 0.1.3.8
 # Copyright (C) 2004 nic0nac
 #
 # This program is free software; you can redistribute it and/or
@@ -21,8 +21,6 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
-	$mform = "%01.2f"; //now the win kompatibel version. but its missing the seperator for thousands...
-	
 	$datum 		= getdate(time());
 	$debug 		= 0;	
 	$user		= "roshop";
@@ -69,10 +67,10 @@
 	 
 if ($p_name<>""){
 	echo "Search for: " . $p_name . "<br>\n";
-	$query_search = "SELECT name, MIN( price ) AS min, MAX( price ) AS max, AVG( price ) AS mid, STD( price ) AS dev, slots, card1, card2, card3, card4, card1ID, card2ID, card3ID, card4ID, itemID, custom, element, star_crumb FROM shopcont WHERE name LIKE '%$p_name%' AND server = '$p_ROserver'";
+	$query_search = "SELECT name, MIN( price ) AS min, MAX( price ) AS max, AVG( price ) AS mid, STD( price ) AS dev, slots, card1, card2, card3, card4, card1ID, card2ID, card3ID, card4ID, itemID, custom, broken, element, star_crumb FROM shopcont WHERE name LIKE '%$p_name%' AND server = '$p_ROserver'";
 	if ($p_map<>"-") $query_search .= " AND map = '$p_map'";
 	if ($p_cards) $query_search .= " OR card1 LIKE '%$p_name%' OR card2 LIKE '%$p_name%' OR card3 LIKE '%$p_name%' OR card4 LIKE '%$p_name%'";
-	$query_search .= " GROUP BY itemID, custom, slots, card1, card2, card3, card4, element, star_crumb";
+	$query_search .= " GROUP BY itemID, custom, broken, slots, card1, card2, card3, card4, element, star_crumb";
 
 #	echo $query_search . "<br>";
 	$res_search = mysql_query($query_search, $link); 
@@ -85,7 +83,7 @@ if ($p_name<>""){
 		echo "Hits: '$rows_search'<br>\n";
 		echo "Server: '$p_ROserver'<br>\n";
 		echo "<table border=1 width='100%'>\n";
-		echo "<tr><td></td><td></td><td>Count</td><td>Name</td><td>slots</td><td>custom</td><td>card</td><td>card</td><td>card</td><td>card</td><td>element</td><td>creator</td><td>min Zenny</td><td>max Zenny</td><td>avg Zenny</td><td>Std. Dev.</td><td>Hot-Deal under</td></tr>\n";
+		echo "<tr><td></td><td></td><td>Count</td><td>Name</td><td>slots</td><td>custom</td><td>broken</td><td>card</td><td>card</td><td>card</td><td>card</td><td>element</td><td>creator</td><td>min Zenny</td><td>max Zenny</td><td>avg Zenny</td><td>Std. Dev.</td><td>Hot-Deal under</td></tr>\n";
 		while($d_search = mysql_fetch_array($res_search))
 		{
 			$query_count = "SELECT * FROM shopcont WHERE slots = '" . $d_search[slots] . "' AND card1ID = '" . $d_search[card1ID] . "' AND card2ID = '" . $d_search[card2ID] . "' AND card3ID = '" . $d_search[card3ID] . "' AND card4ID = '" . $d_search[card4ID] . "' AND custom = '" . $d_search[custom] . "' AND element = '" . $d_search[element] . "' AND star_crumb = '" . $d_search[star_crumb] . "' AND itemID = '" . $d_search[itemID] . "' AND server = '$p_ROserver'";
@@ -104,6 +102,7 @@ if ($p_name<>""){
 			echo "<td>$rows_count</td>\n";
 			echo "<td><a href='" . basename(__FILE__) ."?iid=" . $d_search[itemID];
 			echo "&custom=" . $d_search[custom];
+			echo "&broken=" . $d_search[broken];
 			echo "&element=" . $d_search[element];
 			echo "&star_crumb=" . $d_search[star_crumb];
 			echo "&card1ID=" . $d_search[card1ID];
@@ -129,6 +128,12 @@ if ($p_name<>""){
 			} else {
 				echo "<td>-</td>\n";
 			}
+			if ($d_search[broken]>0){
+				echo "<td>+</td>\n";
+			} else {
+				echo "<td>-</td>\n";
+			}
+
 			echo "<td>" . $d_search[card1] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[card2] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[card3] . "&nbsp;</td>\n";
@@ -138,10 +143,10 @@ if ($p_name<>""){
 				echo "V";
 			echo " " . $d_search[element] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[crafted_by] . "&nbsp;</td>\n";
-			echo "<td align='right'>" . sprintf($mform, $d_search[min]) . "&nbsp;</td>\n";
-			echo "<td align='right'>" . sprintf($mform, $d_search[max]) . "&nbsp;</td>\n";
-			echo "<td align='right'>" . sprintf($mform, $d_search[mid]) . "</td>";
-			echo "<td align='right'>&plusmn;&nbsp;" . sprintf($mform, $d_search[dev]) . "&nbsp;</td>\n";
+			echo "<td align='right'>" . number_format($d_search[min]) . "&nbsp;</td>\n";
+			echo "<td align='right'>" . number_format($d_search[max]) . "&nbsp;</td>\n";
+			echo "<td align='right'>" . number_format($d_search[mid]) . "</td>";
+			echo "<td align='right'>&plusmn;&nbsp;" . number_format($d_search[dev]) . "&nbsp;</td>\n";
 			$hot_deal = $d_search[mid] - $d_search[dev];
 			echo "<td align='right'";
 			if ($hot_deal > $d_search[min]){
@@ -150,7 +155,7 @@ if ($p_name<>""){
 				echo "";
 			}
 			echo ">";
-			echo sprintf($mform,  $hot_deal);
+			echo number_format( $hot_deal);
 			echo "&nbsp;</td>\n";
 			echo "</tr>\n";
 		}
@@ -247,7 +252,7 @@ if ($g_iid > 0){
 			echo "<td>" . $d_search[element] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[crafted_by] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[amount] . "&nbsp;</td>\n";
-			echo "<td align='right'>" . sprintf($mform, $d_search[price]) . "&nbsp;</td>\n";
+			echo "<td align='right'>" . number_format($d_search[price]) . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[map] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[posx] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[posy] . "&nbsp;</td>\n";
@@ -337,7 +342,7 @@ if ($g_sid>0){
 			echo "<td>" . $d_search[card3] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[card4] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[amount] . "&nbsp;</td>\n";
-      echo "<td align='right'>" . sprintf($mform, $d_search[price]) . "&nbsp;</td>\n";
+      echo "<td align='right'>" . number_format($d_search[price]) . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[map] . "&nbsp;</td>\n";
 			echo "<td>" . $d_search[posx] . "</td>\n";
 			echo "<td>" . $d_search[posy] . "</td>\n";

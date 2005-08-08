@@ -109,7 +109,7 @@ Fixed:
 - updated to work with openkore 1.6.2
 
 Known bugs:
-- autobuy isnt working
+- some items are written multiple times into the DB. same shop, same item, same specs...
 
 Planned features:
 - upload a store.txt to the web-frontend and get a version with best / 
@@ -126,9 +126,6 @@ config.txt variables:
   a modifier for HotDeals; look for cheaper items ie: 0.90 = hotdeal-range * 90% 
 
 
-Note: 
-i tested this only on linux 2.6.5-7.95-default with mysql MySQL 4.0.18-Max, 
-PHP Version 4.3.4 so your mileage may vary.
 
 Thanks:
 - my RO-playing and bot-hateing friends who love the results of what i do with openkore ;)
