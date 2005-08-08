@@ -1,8 +1,8 @@
 ############################################################
 #
 # merchantdb
-# version 0.1.3.7
-# Copyright (C) 2004, 2005 nic0nac 
+# version 0.1.3.8
+# Copyright (C) 2004 nic0nac 
 # 
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License
@@ -57,7 +57,7 @@ my $dsn		= "DBI:mysql:database=$database;host=$dbHostname;port=$dbPort";
 my $dbh;
 
 my $elementName;
-my $starCrumbs;
+my $starCrumb;
 my $insertTemp;
 my $servername;
 
@@ -147,10 +147,10 @@ sub mercDbFill{
 	my $card2ID = 0;
 	my $card3ID = 0;
 	my $card4ID = 0;
-	my $avg_price;
-	my $std_price;
-	$elementName = "";
-	$starCrumbs = "";
+	my $avg_price = 0;
+	my $std_price = 0;
+	my $elementName = "";
+	my $starCrumb = "";
 	
 	$servername = $::servers[$::config{'server'}]{'name'};
 	$servername =~ s/\s+$//;
@@ -210,7 +210,7 @@ sub mercDbFill{
 				#
 				my $elementID = $cards[1] % 10;
 				$elementName = $::elements_lut{$elementID};
-				$starCrumbs = ($cards[1] >> 8) / 5;	
+				$starCrumb = ($cards[1] >> 8) / 5;	
 			} elsif (@cards) {
 				# Carded item
 				#
@@ -239,7 +239,7 @@ sub mercDbFill{
 			$avg_std_query .= " AND card3ID = '$card3ID'";
 			$avg_std_query .= " AND card4ID = '$card4ID'";
 			$avg_std_query .= " AND element = '$elementName'";
-			$avg_std_query .= " AND star_crumb = '$starCrumbs'";
+			$avg_std_query .= " AND star_crumb = '$starCrumb'";
 			$avg_std_query .= " GROUP BY itemID;";
 			
 	#		print $avg_std_query . "\n";
@@ -272,6 +272,7 @@ sub mercDbFill{
 				my $buyresult = 0;
 				my $onlist = 0;
 				my $itemNameLong;
+				my $buyShopNumber;
 				$itemNameLong = $myItemList->{itemList}[$idx]{name};
 				foreach $buyitem(@shoppinglist){
 					$buyitem =~ s/^ +//;
@@ -282,7 +283,8 @@ sub mercDbFill{
 						$onlist = -1;
 						if ($chars[$config{'char'}]{'zenny'} >= $myItemList->{itemList}[$idx]{'price'}){
 							# ... and we have the money to buy it, let's go shopping
-							::sendBuyVender(\$::remote_socket, $::venderID, $::number, 1);
+							# buy it
+							::sendBuyVender(\$::remote_socket, $myItemList->{venderID}, $idx, 1);
 							Log::message(" ... buy it!\n");
 							$buyresult = -1;
 						} else {
@@ -311,7 +313,7 @@ sub mercDbFill{
 			$selectQuery .= " AND card3ID = '$card3ID'";
 			$selectQuery .= " AND card4ID = '$card4ID'";
 			$selectQuery .= " AND element = '$elementName' \n";
-			$selectQuery .= " AND star_crumb = '$starCrumbs' \n";
+			$selectQuery .= " AND star_crumb = '$starCrumb' \n";
 			
 	#		print $selectQuery . "\n";
 			my $sth = $dbh->prepare($selectQuery);
@@ -329,12 +331,12 @@ sub mercDbFill{
 				# Display e.g. "VVS Earth" or "Fire"
 				my $elementID = $cards[1] % 10;
 				$elementName = $::elements_lut{$elementID};
-				$starCrumbs = ($cards[1] >> 8) / 5;
-				$suffix .= ('V'x$starCrumbs)."S " if $starCrumbs;
+				$starCrumb = ($cards[1] >> 8) / 5;
+				$suffix .= ('V'x$starCrumb)."S " if $starCrumb;
 				$suffix .= $elementName;
 				
 				$insertTemp .= " element = '$elementName', \n";
-				$insertTemp .= " star_crumb = '$starCrumbs', \n";
+				$insertTemp .= " star_crumb = '$starCrumb', \n";
 				
 				# the second card slot holds the user_id of the BS who crafted the weapon
 				#$insertQuery2 .= " crafted_by = '" . $cards[3] . "', \n";
