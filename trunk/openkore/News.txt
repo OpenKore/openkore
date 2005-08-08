@@ -113,6 +113,7 @@ New features:
   ai_teleport_delay.
 - Shop prices are now formatted with thousands separators.
 - The 'vender' command now shows vender's name and index.
+- Support for eAthena servers using sakexe628. Use serverType 5 for these.
 
 New commands:
 - getplayerinfo (number)
@@ -140,6 +141,7 @@ New config options:
 
   cachePlayerNames_maxSize (number)
     Maximum cache size. The default is 100.
+
 - storageAuto_keepOpen (flag)
   Set to true if you want to keep storage open after storageAuto sequence.
   Only enable this if you know what you're doing.
@@ -176,6 +178,7 @@ New config options:
     hp < 20%
     inInventory Red Potion <5, Yellow Potion <2
   }
+
 - inCart
   much like its inInventory counterpart and uses the same syntax. Use this to
   check cart inventory before executing a config block.
@@ -229,6 +232,7 @@ Internal:
 Credits:
 - doenet: chatLangCode bugfixes.
 - isieo: attackComboSlot fixes/improvements.
+- dorky, BoNeS, piroJOKE: help in serverType 5 support
 
 
 ==================
