@@ -1491,15 +1491,15 @@ sub cmdFriend {
 			"Usage: friend [request|remove|accept|reject|pm]\n";
 
 	} else {
-		message("---------Friends----------\n", "list");
+		message("------------- Friends --------------\n", "list");
 		message("#   Name                      Online\n", "list");
 		for (my $i = 0; $i < @friendsID; $i++) {
 			message(swrite(
-				"@<  @<<<<<<<<<<<<<<<<<<<<<<<  @<",
+				"@<  @<<<<<<<<<<<<<<<<<<<<<<<  @",
 				[$i + 1, $friends{$i}{'name'}, $friends{$i}{'online'}? 'X':'']),
 				"list");
 		}
-		message("--------------------------\n", "list");
+		message("----------------------------------\n", "list");
 	}
 
 }
@@ -2775,8 +2775,8 @@ sub cmdStorage {
 	my (undef, $args) = @_;
 
 	my ($switch, $items) = split(' ', $args, 2);
-	if (!$switch) {
-		cmdStorage_list();
+	if (!$switch || $switch eq 'eq' || $switch eq 'u' || $switch eq 'nu') {
+		cmdStorage_list($switch);
 	} elsif ($switch eq 'add') {
 		cmdStorage_add($items);
 	} elsif ($switch eq 'addfromcart') {
@@ -2792,7 +2792,7 @@ sub cmdStorage {
 	} else {
 		error <<"_";
 Syntax Error in function 'storage' (Storage Functions)
-Usage: storage
+Usage: storage [<eq|u|nu>]
        storage close
        storage add <inventory_item> [<amount>]
        storage addfromcart <cart_item> [<amount>]
@@ -2805,6 +2805,9 @@ _
 
 sub cmdStorage_list {
 	if ($storage{opened}) {
+		my $type = shift;
+		message "$type\n";
+		
 		my @useable;
 		my @equipment;
 		my @non_useable;
@@ -2829,30 +2832,40 @@ sub cmdStorage_list {
 		}
 
 		my $msg = "-----------Storage-------------\n";
-		$msg .= "-- Equipment --\n";
-		foreach my $item (@equipment) {
-			$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
+		
+		if (!$type || $type eq 'eq') {
+			$msg .= "-- Equipment --\n";
+			foreach my $item (@equipment) {
+				$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
+			}
 		}
-		$msg .= "-- Non-Usable --\n";
-		for (my $i = 0; $i < @non_useable; $i++) {
-			my $item = $non_useable[$i];
-			my $binID = $item->{binID};
-			my $display = $item->{name};
-			$display .= " x $item->{amount}";
-			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$binID, $display]);
+		
+		if (!$type || $type eq 'nu') {
+			$msg .= "-- Non-Usable --\n";
+			for (my $i = 0; $i < @non_useable; $i++) {
+				my $item = $non_useable[$i];
+				my $binID = $item->{binID};
+				my $display = $item->{name};
+				$display .= " x $item->{amount}";
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$binID, $display]);
+			}
 		}
-		$msg .= "-- Usable --\n";
-		for (my $i = 0; $i < @useable; $i++) {
-			my $item = $useable[$i];
-			my $binID = $item->{binID};
-			my $display = $item->{name};
-			$display .= " x $item->{amount}";
-			$msg .= swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-				[$binID, $display]);
+		
+		if (!$type || $type eq 'u') {
+			$msg .= "-- Usable --\n";
+			for (my $i = 0; $i < @useable; $i++) {
+				my $item = $useable[$i];
+				my $binID = $item->{binID};
+				my $display = $item->{name};
+				$display .= " x $item->{amount}";
+				$msg .= swrite(
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+					[$binID, $display]);
+			}
 		}
+		
 		$msg .= "-------------------------------\n";
 		$msg .= "Capacity: $storage{items}/$storage{items_max}\n";
 		$msg .= "-------------------------------\n";
@@ -3138,11 +3151,11 @@ sub cmdStatus {
 	$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
 		.int($char->{'sp'}/$char->{'sp_max'} * 100)
 		."%)" if $char->{'sp_max'};
-	$base_string = $char->{'exp'}."/".$char->{'exp_max'}." /$baseEXPKill ("
+	$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
 			.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
 			."%)"
 			if $char->{'exp_max'};
-	$job_string = $char->{'exp_job'}."/".$char->{'exp_job_max'}." /$jobEXPKill ("
+	$job_string = formatNumber($char->{'exp_job'})."/".formatNumber($char->{'exp_job_max'})." /$jobEXPKill ("
 			.sprintf("%.2f",$char->{'exp_job'}/$char->{'exp_job_max'} * 100)
 			."%)"
 			if $char->{'exp_job_max'};
@@ -3153,18 +3166,18 @@ sub cmdStatus {
 	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
 	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
 
-	$msg = "-----------------Status-----------------\n" .
+	$msg = "---------------------- Status ----------------------\n" .
 		swrite(
-		"@<<<<<<<<<<<<<<<<<<<<<<<<<<   HP: @<<<<<<<<<<<<<<<<<<",
+		"@<<<<<<<<<<<<<<<<<<<<<<<      HP: @>>>>>>>>>>>>>>>>>",
 		[$char->{'name'}, $hp_string],
-		"@<<<<<<<<<<<<<<<<<<<<<<<<<<   SP: @<<<<<<<<<<<<<<<<<<",
+		"@<<<<<<<<<<<<<<<<<<<<<<<      SP: @>>>>>>>>>>>>>>>>>",
 		[$job_name_string, $sp_string],
-		"Base: @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+		"Base: @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
 		[$char->{'lv'}, $base_string],
-		"Job:  @<< @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+		"Job : @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
 		[$char->{'lv_job'}, $job_string],
-		"Weight: @>>>>>>>>>>>>>>>>>>   Zeny: @<<<<<<<<<<<<<<",
-		[$weight_string, $zeny_string]);
+		"Zeny: @<<<<<<<<<<<<<<<<<  Weight: @>>>>>>>>>>>>>>>>>",
+		[$zeny_string, $weight_string]);
 
 	my $statuses = 'none';
 	if (defined $char->{statuses} && %{$char->{statuses}}) {
@@ -3172,7 +3185,7 @@ sub cmdStatus {
 	}
 	$msg .= "Statuses: $statuses\n";
 	$msg .= "Spirits: $char->{spirits}\n" if (exists $char->{spirits});
-	$msg .= "----------------------------------------\n";
+	$msg .= "----------------------------------------------------\n";
 
 
 	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
@@ -3186,7 +3199,7 @@ sub cmdStatus {
 		[$totalelasped_string],
 		"Last Monster took (sec): @>>>>>>>",
 		[$elasped_string]);
-	$msg .= "----------------------------------------\n";
+	$msg .= "----------------------------------------------------\n";
 	message($msg, "info");
 }
 
