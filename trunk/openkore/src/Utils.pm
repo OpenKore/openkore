@@ -1022,7 +1022,8 @@ sub getRange {
 	my $param = shift;
 	return if (!defined $param);
 
-	if (($param =~ /(\d+)\s*-\s*(\d+)/) || ($param =~ /(\d+)\s*\.\.\s*(\d+)/)) {
+	# remove % from the first number here (i.e. hp 50%..60%) because it's easiest
+	if (($param =~ /(\d+)\%*\s*-\s*(\d+)/) || ($param =~ /(\d+)\%*\s*\.\.\s*(\d+)/)) {
 		return ($1, $2);
 	} elsif ($param =~ />\s*(\d+)/) {
 		return ($1+1, undef);
