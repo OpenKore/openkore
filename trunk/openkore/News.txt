@@ -123,6 +123,8 @@ New commands:
 - storage addfromcart <cart_item> [<amount>]
   storage gettocart <storage_item> [<amount>]
   Support for adding/getting items directly to/from merchant cart
+- storage [<eq|u|nu>]
+  Only list equipments (eq), usable (u), or non usable (nu) items.
 - whoami
   Displays your character and account ID.
 
