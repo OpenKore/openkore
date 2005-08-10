@@ -2699,9 +2699,10 @@ sub cmdSkills {
 			error	"Error in function 'skills desc' (Skill Description)\n" .
 				"Skill $arg2 does not exist.\n";
 		} else {
+			my $description = $skillsDesc_lut{$skill->handle} || 'Error: No description availible.\n';
 			message("===============Skill Description===============\n", "info");
 			message("Skill: ".$skill->name."\n\n", "info");
-			message($skillsDesc_lut{$skill->handle}, "info");
+			message($description, "info");
 			message("==============================================\n", "info");
 		}
 	} else {
