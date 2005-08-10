@@ -80,6 +80,8 @@ Bug fixes:
 - avoidGM was always happening if avoidGM_namePattern was blank.
 - attackComboSlot fixed with Tiger Knuckle Fist and Chain Crush Combo.
 - teleportAuto_equip should work for Teleport lv2 now too.
+- Give a more descriptive error when we are missing skill or item
+  descriptions.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
