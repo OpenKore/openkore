@@ -209,6 +209,7 @@ New config options:
 - attackComboSlot: autoCombo (flag)
   This will automatically calculate the waitBeforeUse time for you.
 - notOnAction condition (opposite of onAction)
+- logAppendUsername (flag) this will add _username_char# to your log files
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).

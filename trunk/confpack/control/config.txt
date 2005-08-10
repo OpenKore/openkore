@@ -218,6 +218,7 @@ logGuildChat 1
 logSystemChat 1
 logEmoticons
 logConsole 0
+logAppendUsername 1
 
 chatTitleOversize 0
 shopTitleOversize 0
