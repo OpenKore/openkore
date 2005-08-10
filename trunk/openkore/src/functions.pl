@@ -71,10 +71,10 @@ sub initConfChange {
 # Initialize variables when you start a connection to a map server
 sub initConnectVars {
 	initMapChangeVars();
-	undef %{$chars[$config{'char'}]{'skills'}} if ($chars[$config{'char'}]{'skills'});
+	undef %{$char->{'skills'}} if ($char->{'skills'});
 	undef @skillsID;
-	delete $chars[$config{'char'}]{'mute_period'};
-	delete $chars[$config{'char'}]{'muted'};
+	delete $char->{'mute_period'};
+	delete $char->{'muted'};
 	$useArrowCraft = 1;
 }
 
@@ -88,9 +88,9 @@ sub initMapChangeVars {
 	}
 
 	$char->{old_pos_to} = {%{$char->{pos_to}}} if ($char->{pos_to});
-	delete $chars[$config{'char'}]{'sitting'};
-	delete $chars[$config{'char'}]{'dead'};
-	delete $chars[$config{'char'}]{'warp'};
+	delete $char->{'sitting'};
+	delete $char->{'dead'};
+	delete $char->{'warp'};
 	delete $char->{casting};
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
@@ -129,7 +129,7 @@ sub initMapChangeVars {
 	$ai_v{inventory_time} = time + 60;
 	$ai_v{temp} = {};
 	$cart{inventory} = [];
-	$chars[$config{char}]{inventory} = [];
+	$char->{inventory} = [];
 	undef @venderItemList;
 	undef $venderID;
 	undef @venderListsID;
@@ -154,6 +154,15 @@ sub initMapChangeVars {
 
 	initOtherVars();
 	Plugins::callHook('packet_mapChange');
+	
+	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
+	if ($config{logAppendUsername} && !($Settings::storage_file =~ /$logAppend/)) {
+		$Settings::chat_file     = substr($Settings::chat_file,0,length($Settings::chat_file)-4)."$logAppend.txt";
+		$Settings::monster_log 	 = substr($Settings::monster_log,0,length($Settings::monster_log)-4)."$logAppend.txt";
+		$Settings::item_log_file = substr($Settings::item_log_file,0,length($Settings::item_log_file)-4)."$logAppend.txt";
+		$Settings::storage_file  = substr($Settings::storage_file,0,length($Settings::storage_file)-4)."$logAppend.txt";
+		$Settings::shop_log_file = substr($Settings::shop_log_file,0,length($Settings::shop_log_file)-4)."$logAppend.txt";
+	}
 }
 
 # Initialize variables when your character logs in
