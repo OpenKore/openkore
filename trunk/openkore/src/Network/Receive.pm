@@ -385,6 +385,10 @@ sub actor_action {
 				}
 			}
 			message("$status $msg\n", $args->{damage} > 0 ? "attacked" : "attackedMiss");
+
+			if ($args->{damage} > 0) {
+				$damageTaken{$source->{name}}{attack} += $args->{damage};
+			}
 		} else {
 			debug("$msg\n", 'parseMsg_damage');
 		}
@@ -3033,6 +3037,9 @@ sub skill_use {
 
 	message $disp, $domain, 1;
 
+	if ($args->{targetID} eq $accountID && $args->{damage} > 0) {
+		$damageTaken{$source->{name}}{$skill->name} += $args->{damage};
+	}
 }
 
 sub skill_used_no_damage {
