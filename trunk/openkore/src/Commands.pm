@@ -72,6 +72,7 @@ sub initHandlers {
 	cl			=> \&cmdChatLogClear,
 	closeshop	=> \&cmdCloseShop,
 	conf		=> \&cmdConf,
+	damage		=> \&cmdDamage,
 	deal		=> \&cmdDeal,
 	debug		=> \&cmdDebug,
 	dl			=> \&cmdDealList,
@@ -991,6 +992,31 @@ sub cmdConf {
 	}
 }
 
+sub cmdDamage {
+	my (undef, $args) = @_;
+	
+	if ($args eq "") {
+		my $total = 0;
+		message("Damage Taken Report:\n", "list");
+		message(sprintf("%-40s %-20s %-10s\n", 'Name', 'Skill', 'Damage'), "list");
+		for my $monsterName (sort keys %damageTaken) {
+			my $monsterHref = $damageTaken{$monsterName};
+			for my $skillName (sort keys %{$monsterHref}) {
+				message sprintf("%-40s %-20s %10d\n", $monsterName, $skillName, $monsterHref->{$skillName}), "list";
+				$total += $monsterHref->{$skillName};
+			}
+		}
+		message("Total Damage Taken: $total\n", "list");
+		message("End of report.\n", "list");
+
+	} elsif ($args eq "reset") {
+		undef %damageTaken;
+		message "Damage Taken Report reset.\n", "success";
+	} else {
+		error "Error in function 'damage' (Damage Report)\n" .
+			"Usage: damage [reset]\n";
+	}
+}
 sub cmdDeal {
 	my (undef, $args) = @_;
 	my @arg = split / /, $args;
