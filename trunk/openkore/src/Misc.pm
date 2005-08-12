@@ -1625,6 +1625,12 @@ sub itemName {
 		# Alchemist-made potion
 		#
 		# Ignore the "cards" inside.
+	} elsif ($cards[0] == 65280) {
+		# Pet egg
+		# cards[0] == 65280
+		# substr($item->{cards}, 2, 4) = packed pet ID
+		# cards[3] == 1 if named, 0 if not named
+
 	} elsif ($cards[0] == 255) {
 		# Forged weapon
 		#
