@@ -70,16 +70,18 @@ sub initConfChange {
 
 # Initialize variables when you start a connection to a map server
 sub initConnectVars {
+	# we must use $chars[$config{char}] here because $char may not be set
 	initMapChangeVars();
-	undef %{$char->{'skills'}} if ($char->{'skills'});
+	$chars[$config{char}]{skills} = {} if ($chars[$config{char}]{skills});
 	undef @skillsID;
-	delete $char->{'mute_period'};
-	delete $char->{'muted'};
+	delete $chars[$config{char}]{mute_period};
+	delete $chars[$config{char}]{muted};
 	$useArrowCraft = 1;
 }
 
 # Initialize variables when you change map (after a teleport or after you walked into a portal)
 sub initMapChangeVars {
+	# we must use $chars[$config{char}] here because $char may not be set
 	@portalsID_old = @portalsID;
 	%portals_old = %portals;
 	foreach (@portalsID_old) {
@@ -87,11 +89,12 @@ sub initMapChangeVars {
 		$portals_old{$_}{gone_time} = time if (!$portals_old{$_}{gone_time});
 	}
 
-	$char->{old_pos_to} = {%{$char->{pos_to}}} if ($char->{pos_to});
-	delete $char->{'sitting'};
-	delete $char->{'dead'};
-	delete $char->{'warp'};
-	delete $char->{casting};
+	# this is just used for portalRecord (add opposite portal by guessing method)
+	$chars[$config{char}]{old_pos_to} = {%{$chars[$config{char}]{pos_to}}} if ($chars[$config{char}]{pos_to});
+	delete $chars[$config{char}]{sitting};
+	delete $chars[$config{char}]{dead};
+	delete $chars[$config{char}]{warp};
+	delete $chars[$config{char}]{casting};
 	$timeout{play}{time} = time;
 	$timeout{ai_sync}{time} = time;
 	$timeout{ai_sit_idle}{time} = time;
@@ -129,7 +132,7 @@ sub initMapChangeVars {
 	$ai_v{inventory_time} = time + 60;
 	$ai_v{temp} = {};
 	$cart{inventory} = [];
-	$char->{inventory} = [];
+	$chars[$config{char}]{inventory} = [];
 	undef @venderItemList;
 	undef $venderID;
 	undef @venderListsID;
