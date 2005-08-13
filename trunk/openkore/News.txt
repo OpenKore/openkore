@@ -83,6 +83,8 @@ Bug fixes:
 - Give a more descriptive error when we are missing skill or item
   descriptions.
 - Don't check cards on pet eggs.
+- Check storageAuto more reliably now (a bot logging in with insufficient
+  supplies will now storageAuto before lockMap).
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
