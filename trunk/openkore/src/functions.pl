@@ -1478,7 +1478,7 @@ sub AI {
 	} elsif (AI::is("", "route", "attack") &&
 	         $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand}) &&
 		 !AI::inQueue("storageAuto") &&
-		 timeOut($timeout{'ai_storageAuto'})) {
+		 @{$char->{inventory}} > 0) {
 
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found;
