@@ -2354,7 +2354,7 @@ sub cmdPlayerList {
 	}
 
 	$msg =  "-----------Player List-----------\n" .
-		"#    Name                                    Sex   Job         Dist  Coord\n";
+		"#    Name                                Sex   Lv  Job         Dist  Coord\n";
 	for (my $i = 0; $i < @playersID; $i++) {
 		my $player = $players{$playersID[$i]};
 		next unless UNIVERSAL::isa($player, 'Actor');
@@ -2368,8 +2368,8 @@ sub cmdPlayerList {
 		$pos = '(' . $players{$playersID[$i]}{'pos_to'}{'x'} . ', ' . $players{$playersID[$i]}{'pos_to'}{'y'} . ')';
 
 		$msg .= swrite(
-			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @<<<<<<<<<< @<<<< @<<<<<<<<<<",
-			[$i, $name, $sex_lut{$players{$playersID[$i]}{'sex'}}, $jobs_lut{$players{$playersID[$i]}{'jobID'}}, $dist, $pos]);
+			"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<< @>> @<<<<<<<<<< @<<<< @<<<<<<<<<<",
+			[$i, $name, $sex_lut{$players{$playersID[$i]}{'sex'}}, $players{$playersID[$i]}{lv}, $jobs_lut{$players{$playersID[$i]}{'jobID'}}, $dist, $pos]);
 	}
 	$msg .= "---------------------------------\n";
 	message($msg, "list");
