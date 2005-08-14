@@ -120,6 +120,7 @@ New features:
 - The 'vender' command now shows vender's name and index.
 - Support for eAthena servers using sakexe628. Use serverType 5 for these.
 - Support "That person is in another deal." error.
+- 'pl' command now displays everyone's level.
 
 New commands:
 - getplayerinfo (number)
