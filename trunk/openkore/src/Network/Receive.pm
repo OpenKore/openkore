@@ -149,7 +149,7 @@ sub new {
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
-		#'0192' => ['location_msg'], #finish me 
+		#'0192' => ['location_msg'], #finish me, same as area skill but with extra string info for message
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
@@ -176,8 +176,8 @@ sub new {
 		'01F0' => ['storage_items_stackable'],
 		'01FC' => ['repair_list'],
 		'01FE' => ['repair_result', 'v1 C1', [qw(nameID flag)]],
-		#'023A' => ['storage_password_unknown', 'v1', [qw(flag)]],
-		#'023C' => ['storage_password_unknown2', 'v1 v1', [qw(type val)]],
+		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
+		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 	};
 
 	bless \%self, $class;
@@ -3490,6 +3490,24 @@ sub storage_opened {
 		message "Storage opened.\n", "storage";
 		Plugins::callHook('packet_storage_open');
 	}
+}
+
+sub storage_password_request {
+	my ($self, $args) = @_;
+	# $args->{flag}
+	# 0: this might mean we are going to set the password
+	# 1: this probably means we are just going to give a password
+}
+
+sub storage_password_result {
+	my ($self, $args) = @_;
+	# $args->{type}
+	# 4: password was successfully set(/changed?)
+	# 5: you fail, incorrect password
+	# 6: bing, correct password!
+
+	# $args->{val}
+	# unknown, does this do anything???
 }
 
 sub system_chat {
