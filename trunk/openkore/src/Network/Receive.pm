@@ -48,10 +48,10 @@ sub new {
 		'0073' => ['map_loaded','x4 a3',[qw(coords)]],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
-		'0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color head_dir guildID sex coords act lv)]],
-		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
+		'0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 a4 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
+		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 a4 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
-		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 x4 v1 v1 v1 v1 x4 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color guildID sex coords lv)]],
+		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 x4 v1 v1 v1 v1 v1 v1 a4 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007C' => ['actor_spawned', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeard', 'a4 C1', [qw(ID type)]],
@@ -165,9 +165,9 @@ sub new {
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
-		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 v1 v1 v1 x2 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color head_dir guildID sex coords act lv)]],
-		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 x4 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type weapon shield lowhead tophead midhead hair_color guildID sex coords lv)]],
-		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 x4 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color guildID skillstatus sex coords lv)]],
+		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 a4 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
+		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 a4 x4 v1 x1 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 a4 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'01EE' => ['inventory_items_stackable'],
@@ -3494,20 +3494,33 @@ sub storage_opened {
 
 sub storage_password_request {
 	my ($self, $args) = @_;
-	# $args->{flag}
-	# 0: this might mean we are going to set the password
-	# 1: this probably means we are just going to give a password
+	return;
+
+	if ($args->{flag} == 0) {
+		message "Please enter a new storage password:\n";
+	elsif ($args->{flag} == 1) {
+		message "Please enter your storage password:\n";
+	} else {
+		message "Storage password: unknown flag $args->{flag}\n";
+	}
 }
 
 sub storage_password_result {
 	my ($self, $args) = @_;
-	# $args->{type}
-	# 4: password was successfully set(/changed?)
-	# 5: you fail, incorrect password
-	# 6: bing, correct password!
+	return;
+
+	if ($args->{type} == 4) {
+		message "Successfully changed storage password.\n", "success";
+	elsif ($args->{type} == 5) {
+		error "Error: Incorrect storage password.\n";
+	elsif ($args->{type} == 6) {
+		message "Successfully entered storage password.\n", "success";
+	} else {
+		message "Storage password: unknown type $args->{type}\n";
+	}
 
 	# $args->{val}
-	# unknown, does this do anything???
+	# unknown, what is this for?
 }
 
 sub system_chat {
