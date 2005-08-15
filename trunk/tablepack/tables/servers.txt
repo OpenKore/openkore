@@ -459,3 +459,17 @@ master_version 20
 version 1
 private 1
 serverType 0
+
+[Anti-GravityRO Private Server]
+ip 63.246.131.80
+port 6900
+master_version 18
+version 0
+serverType 0
+
+[XileRO Private Server]
+ip xilero.no-ip.info
+port 6901
+master_version 17
+version 20
+serverType 4
