@@ -3498,7 +3498,7 @@ sub storage_password_request {
 
 	if ($args->{flag} == 0) {
 		message "Please enter a new storage password:\n";
-	elsif ($args->{flag} == 1) {
+	} elsif ($args->{flag} == 1) {
 		message "Please enter your storage password:\n";
 	} else {
 		message "Storage password: unknown flag $args->{flag}\n";
@@ -3511,9 +3511,9 @@ sub storage_password_result {
 
 	if ($args->{type} == 4) {
 		message "Successfully changed storage password.\n", "success";
-	elsif ($args->{type} == 5) {
+	} elsif ($args->{type} == 5) {
 		error "Error: Incorrect storage password.\n";
-	elsif ($args->{type} == 6) {
+	} elsif ($args->{type} == 6) {
 		message "Successfully entered storage password.\n", "success";
 	} else {
 		message "Storage password: unknown type $args->{type}\n";
