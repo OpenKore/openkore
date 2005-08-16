@@ -11,6 +11,7 @@ Settings
 Modules
 Plugins
 Utils
+Utils::Crypton
 Skills
 Match
 Misc
