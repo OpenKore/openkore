@@ -246,6 +246,7 @@ Credits:
 - doenet: chatLangCode bugfixes.
 - isieo: attackComboSlot fixes/improvements.
 - dorky, BoNeS, piroJOKE: help in serverType 5 support
+- Harry: Perl implementation of the Crypton encyrption algorithm.
 
 
 ==================
