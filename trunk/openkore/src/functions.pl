@@ -5487,19 +5487,14 @@ sub parseMsg {
 			message "$name successfully refined a weapon!\n", "refine";
 		}
 
-	} elsif ($switch eq "01A0") {
-		# Catch pet - result
-		my $success = unpack("C1", substr($msg, 2, 1));
-		if ($success) {
-			message "Pet capture success\n";
-		} else {
-			message "Pet capture failed\n";
-		}
-
 	} elsif ($switch eq "01A4") {
-		#pet spawn
+		# receive information about your pet
 		my $type = unpack("C1",substr($msg, 2, 1));
 		my $ID = substr($msg, 3, 4);
+		my $value = unpack("V1", substr($msg, 7, 4));
+
+		# these should never happen, pets should spawn like normal actors (at least on Freya)
+		# this isn't even very useful, do we want random pets with no location info?
 		if (!$pets{$ID} || !%{$pets{$ID}}) {
 			binAdd(\@petsID, $ID);
 			$pets{$ID} = {};
@@ -5515,8 +5510,21 @@ sub parseMsg {
 			binRemove(\@monstersID, $ID);
 			delete $monsters{$ID};
 		}
+		debug "Pet spawned (unusually): $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
 
-		debug "Pet Spawned: $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
+		if ($type == 0) {
+			# value is always 0
+			# what does this do for the client?
+		} elsif ($type == 1) {
+			$pet{friendly} = $value;
+			debug "Pet friendly: $value\n";
+		} elsif ($type == 2) {
+			$pet{hungry} = $value;
+			debug "Pet hungry: $value\n";
+		} elsif ($type == 5) {
+			# value is always 0x14
+			# what does this do for the client?
+		}
 
 	} elsif ($switch eq "01AB") {
 		my ($ID, $duration) = unpack "x2 a4 x2 L1", $msg;
