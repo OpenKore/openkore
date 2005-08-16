@@ -3515,20 +3515,25 @@ sub storage_opened {
 
 sub storage_password_request {
 	my ($self, $args) = @_;
-	return;
 
 	if ($args->{flag} == 0) {
 		message "Please enter a new storage password:\n";
 	} elsif ($args->{flag} == 1) {
 		message "Please enter your storage password:\n";
+
+		my $crypton = new Utils::Crypton(pack("L*", 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9), 32);
+		my $num = $config{storageAuto_password};
+		$num = sprintf("%d%08d", length($num), $num);
+		my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
+		sendStoragePassword($ciphertextBlock,3);
+
 	} else {
-		message "Storage password: unknown flag $args->{flag}\n";
+		#message "Storage password: unknown flag $args->{flag}\n";
 	}
 }
 
 sub storage_password_result {
 	my ($self, $args) = @_;
-	return;
 
 	if ($args->{type} == 4) {
 		message "Successfully changed storage password.\n", "success";
@@ -3537,7 +3542,7 @@ sub storage_password_result {
 	} elsif ($args->{type} == 6) {
 		message "Successfully entered storage password.\n", "success";
 	} else {
-		message "Storage password: unknown type $args->{type}\n";
+		#message "Storage password: unknown type $args->{type}\n";
 	}
 
 	# $args->{val}
