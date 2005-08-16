@@ -39,6 +39,7 @@ sub makeupText {
 	$text =~ s/^`l$/<ul>/gm;
 	$text =~ s/^`l`$/<\/ul>/gm;
 	$text =~ s/<ul>(.*?)<\/ul>/&list($1)/gse;
+	$text =~ s/(^| |\n)(http:\/\/.*?)($| |\n)/$1<a href="$2">$2<\/a>$3/gs;
 
 
 	sub createFuncLink {
