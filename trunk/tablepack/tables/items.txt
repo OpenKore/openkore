@@ -1888,3 +1888,8 @@
 12022#Ribs#
 12023#2nd_Anniversary_Giftbox#
 12024#Red_Pouch#
+
+// pRO
+
+12025#Dragon boat festival egg#
+12026#Dragon boat festival egg#
