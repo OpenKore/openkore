@@ -3511,7 +3511,7 @@ sub storage_password_request {
 	} elsif ($args->{flag} == 1) {
 		message "Please enter your storage password:\n";
 
-		my @key = $masterServer->{passwordKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
+		my @key = $masterServer->{encryptKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
 		if (!@key) {
 			error "Cannot use storage password, passwordKey missing or incorrectly set in servers.txt\n";
 		}
