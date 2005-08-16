@@ -1,6 +1,8 @@
 #########################################################################
 #  OpenKore - Utility Functions
 #
+#  Copyright (c) 2004,2005 OpenKore Development Team
+#
 #  This software is open source, licensed under the GNU General Public
 #  License, version 2.
 #  Basically, this means that you're allowed to modify and distribute
