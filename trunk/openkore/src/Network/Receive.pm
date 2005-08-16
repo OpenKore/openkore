@@ -249,10 +249,6 @@ sub account_server_info {
 
 	$conState = 2;
 	undef $conState_tries;
-	if ($versionSearch) {
-		$versionSearch = 0;
-		Misc::saveConfigFile();
-	}
 	$sessionID = $args->{sessionID};
 	$accountID = $args->{accountID};
 	$sessionID2 = $args->{sessionID2};
@@ -2165,18 +2161,11 @@ sub login_error {
 		$quit = 1 if (!$xkore);
 	} elsif ($args->{type} == 5) {
 		my $master = $masterServer;
-		error("Version $master->{version} failed... trying to find version\n", "connection");
-		error("Master Version: $master->{master_version}\n", "connection");
-		$master->{master_version}++;
-		if (!$versionSearch) {
-			$master->{master_version} = 0 if ($master->{master_version} > 1);
-			$master->{version} = 0;
-			$versionSearch = 1;
-		} elsif ($master->{master_version} eq 60) {
-			$master->{master_version} = 0;
-			$master->{version}++;
-		}
-		relog(2);
+		error("Connect failed, something is wrong with the login settings:\n" .
+			"version: $master->{version}\n" .
+			"master_version: $master->{master_version}\n" .
+			"serverType: $master->{serverType}\n", "connection");
+		relog(30);
 	} elsif ($args->{type} == 6) {
 		error("The server is temporarily blocking your connection\n", "connection");
 	}
