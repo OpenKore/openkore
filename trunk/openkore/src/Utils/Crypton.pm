@@ -1,4 +1,4 @@
-#  OpenKore - HTTP downloader
+#  OpenKore - Crypton encryption algorithm implementation.
 #
 #  Copyright (c) 2005 OpenKore Development Team
 #
