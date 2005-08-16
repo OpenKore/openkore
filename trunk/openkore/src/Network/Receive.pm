@@ -22,6 +22,7 @@ use Plugins;
 use Utils;
 use Skills;
 use AI;
+use Utils::Crypton;
 
 ###### Public methods ######
 
@@ -3510,7 +3511,11 @@ sub storage_password_request {
 	} elsif ($args->{flag} == 1) {
 		message "Please enter your storage password:\n";
 
-		my $crypton = new Utils::Crypton(pack("L*", 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9), 32);
+		my @key = $masterServer->{passwordKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
+		if (!@key) {
+			error "Cannot use storage password, passwordKey missing or incorrectly set in servers.txt\n";
+		}
+		my $crypton = new Utils::Crypton(pack("L*", @key), 32);
 		my $num = $config{storageAuto_password};
 		$num = sprintf("%d%08d", length($num), $num);
 		my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
