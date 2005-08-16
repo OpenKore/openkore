@@ -22,14 +22,14 @@ serverType 0
 ip 61.220.63.248
 port 6900
 master_version 16
-version 8
+version 10
 serverType 0
 
 [Malaysia - mRO (English): Iris/Penril/Odin/Thor/Freyia]
 ip 61.220.63.129
 port 6900
 master_version 17
-version 8
+version 10
 serverType 0
 
 [Malaysia - mRO: Sakray]
@@ -268,13 +268,6 @@ port 6900
 master_version 1
 version 20
 serverType 4
-
-[agRO Private Server]
-ip 63.246.131.80
-port 6900
-master_version 13
-version 20
-serverType 0
 
 [XaosRO Private Server]
 ip 67.18.209.218
