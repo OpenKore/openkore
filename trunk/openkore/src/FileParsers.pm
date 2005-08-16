@@ -437,20 +437,29 @@ sub parseItemsControl {
 	my $file = shift;
 	my $r_hash = shift;
 	undef %{$r_hash};
-	my ($key,@args,$args);
+	my ($key, $args_text, %cache);
+
 	open FILE, "< $file";
 	foreach (<FILE>) {
 		next if (/^#/);
 		s/[\r\n]//g;
 		s/\s+$//g;
-		($key, $args) = lc($_) =~ /([\s\S]+?) (\d+[\s\S]*)/;
-		@args = split / /,$args;
-		if ($key ne "") {
-			$$r_hash{$key}{'keep'} = $args[0];
-			$$r_hash{$key}{'storage'} = $args[1];
-			$$r_hash{$key}{'sell'} = $args[2];
-			$$r_hash{$key}{'cart_add'} = $args[3];
-			$$r_hash{$key}{'cart_get'} = $args[4];
+		($key, $args_text) = lc($_) =~ /([\s\S]+?) (\d+[\s\S]*)/;
+		next if ($key eq "");
+
+		if ($cache{$args_text}) {
+			$r_hash->{$key} = $cache{$args_text};
+		} else {
+			my @args = split / /, $args_text;
+			my %item = (
+				keep => $args[0],
+				storage => $args[1],
+				sell => $args[2],
+				cart_add => $args[3],
+				cart_get => $args[4]
+			);
+			# Cache similar entries to save memory.
+			$r_hash->{$key} = $cache{$args_text} = \%item;
 		}
 	}
 	close FILE;
