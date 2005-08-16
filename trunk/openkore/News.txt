@@ -85,6 +85,8 @@ Bug fixes:
 - Don't check cards on pet eggs.
 - Check storageAuto more reliably now (a bot logging in with insufficient
   supplies will now storageAuto before lockMap).
+- Give a more correct message when you fail to connect due to incorrect
+  serverType, instead of "master version # failed."
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -121,6 +123,7 @@ New features:
 - Support for eAthena servers using sakexe628. Use serverType 5 for these.
 - Support "That person is in another deal." error.
 - 'pl' command now displays everyone's level.
+- Storage kafra password. See storageAuto_password below.
 
 New commands:
 - getplayerinfo (number)
@@ -216,6 +219,13 @@ New config options:
   This will automatically calculate the waitBeforeUse time for you.
 - notOnAction condition (opposite of onAction)
 - logAppendUsername (flag) this will add _username_char# to your log files
+- storageAuto_password (number)
+  If your server is using a storage password, put the password here.
+
+  In servers.txt you need to set encryptKey:
+  encryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+  It may change in the future.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
