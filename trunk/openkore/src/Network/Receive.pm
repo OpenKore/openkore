@@ -152,10 +152,13 @@ sub new {
 		#'0192' => ['location_msg'], #finish me, same as area skill but with extra string info for message
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
+		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
+		#'01A3' => ['pet_unknown'], # clif_pet_food
+		#'01A4' => ['pet_unknown'], # clif_pet_equip clif_pet_performance clif_send_petdata - limited implementation already in functions.pl
 		'01A6' => ['egg_list'],
 		'01AA' => ['pet_emotion', 'a4 V1', [qw(ID type)]],
-		#'01AC' => ['actor_trapped', 'V', [qw(ID)]], # Indicates that an object is trapped, but ID is not a valid monster or player ID.
+		'01AC' => ['actor_trapped', 'a4', [qw(ID)]],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01B6' => ['guild_info', 'a4 V1 V1 V1 V1 V1 V1 x12 V1 Z24 Z24', [qw(ID lvl conMember maxMember average exp next_exp members name master)]],
 		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]],
@@ -1081,6 +1084,14 @@ sub actor_spawned {
 	} else {
 		debug "Unknown Spawned: $args->{type} - ".getHex($args->{ID})."\n", "parseMsg_presence";
 	}
+}
+
+sub actor_trapped {
+	my ($self,$args) = @_;
+	# original comment was that ID is not a valid ID
+	# but it seems to be, at least on eAthena/Freya
+	my $actor = Actor::get($args->{ID});
+	debug "$actor is trapped.\n";
 }
 
 sub arrow_equipped {
@@ -2672,6 +2683,16 @@ sub party_users_info {
 
 	sendPartyShareEXP(\$remote_socket, 1) if ($config{partyAutoShare} && $chars[$config{char}]{party} && %{$chars[$config{char}]{party}});
 
+}
+
+sub pet_capture_result {
+	my ($self, $args) = @_;
+
+	if ($args->{success}) {
+		message "Pet capture success\n";
+	} else {
+		message "Pet capture failed\n";
+	}
 }
 
 sub pet_emotion {
