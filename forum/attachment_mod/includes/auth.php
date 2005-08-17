@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group        
  *   email                : support@phpbb.com                           
  *                                                          
- *   $Id: auth.php,v 1.37.2.5 2004/03/01 16:49:03 psotfx Exp $                                                           
+ *   $Id: auth.php,v 1.1 2005/02/28 18:24:08 acydburn Exp $                                                           
  *                                                            
  * 
  ***************************************************************************/ 
@@ -108,6 +108,7 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 		default:
 			break;
 	}
+	attach_setup_basic_auth($type, $auth_fields, $a_sql);
 
 	//
 	// If f_access has been passed, or auth is needed to return an array of forums
