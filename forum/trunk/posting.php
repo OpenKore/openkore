@@ -91,6 +91,15 @@ init_userprefs($userdata);
 // End session management
 //
 
+$my_user_time = localtime($userdata['user_regdate'], 1);
+if ($my_user_time['tm_year'] > 103) {
+	// User is registered after 2004
+	if ($_COOKIE['openkore_forum_read_rules2'] != '1' && $_GET['f'] == '4') {
+		header("Location: /forum.php?redirect=" . urlencode($_SERVER['REQUEST_URI']));
+		exit;
+	}
+}
+
 //
 // Was cancel pressed? If so then redirect to the appropriate
 // page, no point in continuing with any further checks
