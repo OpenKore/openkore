@@ -1020,6 +1020,13 @@ $lang['A_critical_error'] = 'A Critical Error Occurred';
 
 $lang['Admin_reauthenticate'] = 'To administer the board you must re-authenticate yourself.';
 
+// Advanced Quick Reply Mod
+$lang['Quick_Reply'] = 'Quick Reply';
+$lang['Quick_quote'] = 'Quote the last message';
+$lang['QuoteSelelected'] = 'Quote selected';
+$lang['QuoteSelelectedEmpty'] = 'Select a text anywhere on a page and try again';
+$lang['Quick_Reply_smilies'] = 'all';
+
 //
 // That's all, Folks!
 // -------------------------------------------------
