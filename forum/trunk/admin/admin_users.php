@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_users.php,v 1.57.2.27 2005/07/19 20:01:07 acydburn Exp $
+ *   $Id: admin_users.php,v 1.2 2005/08/08 14:24:50 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -59,6 +59,7 @@ else
 //
 if ( $mode == 'edit' || $mode == 'save' && ( isset($HTTP_POST_VARS['username']) || isset($HTTP_GET_VARS[POST_USERS_URL]) || isset( $HTTP_POST_VARS[POST_USERS_URL]) ) )
 {
+	attachment_quota_settings('user', $HTTP_POST_VARS['submit'], $mode);
 	//
 	// Ok, the profile has been modified and submitted, let's update
 	//

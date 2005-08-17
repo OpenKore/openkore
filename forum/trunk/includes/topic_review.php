@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: topic_review.php,v 1.5.2.4 2005/05/06 20:50:12 acydburn Exp $
+ *   $Id: topic_review.php,v 1.1 2005/02/28 18:24:08 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -42,6 +42,8 @@ function topic_review($topic_id, $is_inline_review)
 			FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f 
 			WHERE t.topic_id = $topic_id
 				AND f.forum_id = t.forum_id";
+		$tmp = '';
+		attach_setup_viewtopic_auth($tmp, $sql);
 		if ( !($result = $db->sql_query($sql)) )
 		{
 			message_die(GENERAL_ERROR, 'Could not obtain topic information', '', __LINE__, __FILE__, $sql);
@@ -115,6 +117,7 @@ function topic_review($topic_id, $is_inline_review)
 		message_die(GENERAL_ERROR, 'Could not obtain post/user information', '', __LINE__, __FILE__, $sql);
 	}
 
+	init_display_review_attachments($is_auth);
 	//
 	// Okay, let's do the loop, yeah come on baby let's do the loop
 	// and it goes like this ...
@@ -200,6 +203,7 @@ function topic_review($topic_id, $is_inline_review)
 					
 				'L_MINI_POST_ALT' => $mini_post_alt)
 			);
+			display_review_attachments($row['post_id'], $row['post_attachment'], $is_auth);
 
 			$i++;
 		}
