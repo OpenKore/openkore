@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: posting.php,v 1.159.2.23 2005/05/06 20:50:10 acydburn Exp $
+ *   $Id: posting.php,v 1.1 2005/02/28 18:20:02 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -419,6 +419,7 @@ else
 }
 
 $attach_sig = ( $submit || $refresh ) ? ( ( !empty($HTTP_POST_VARS['attach_sig']) ) ? TRUE : 0 ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? 0 : $userdata['user_attachsig'] );
+execute_posting_attachment_handling();
 
 // --------------------
 //  What shall we do?
@@ -577,6 +578,7 @@ else if ( $submit || $confirm )
 			$user_id = ( $mode == 'reply' || $mode == 'newtopic' ) ? $userdata['user_id'] : $post_data['poster_id'];
 			update_post_stats($mode, $post_data, $forum_id, $topic_id, $post_id, $user_id);
 		}
+		$attachment_mod['posting']->insert_attachment($post_id);
 
 		if ($error_msg == '' && $mode != 'poll_delete')
 		{
@@ -713,6 +715,7 @@ if( $refresh || isset($HTTP_POST_VARS['del_poll_option']) || $error_msg != '' )
 		$template->set_filenames(array(
 			'preview' => 'posting_preview.tpl')
 		);
+		$attachment_mod['posting']->preview_attachments();
 
 		$template->assign_vars(array(
 			'TOPIC_TITLE' => $preview_subject,
