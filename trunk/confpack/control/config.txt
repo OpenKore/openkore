@@ -27,6 +27,7 @@ secureLogin_requestCode
 message_length_max 80
 # If you play oRO or euRO, you should set chatLangCode to 1
 chatLangCode 0
+storageEncryptKey
 
 
 ######## Main configuration ########
@@ -441,6 +442,7 @@ storageAuto_npc
 storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
+storageAuto_password
 relogAfterStorage 1
 
 getAuto {
