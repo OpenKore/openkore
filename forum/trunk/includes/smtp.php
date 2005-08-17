@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: smtp.php,v 1.16.2.9 2003/07/18 16:34:01 acydburn Exp $
+ *   $Id: smtp.php,v 1.16.2.10 2005/05/06 20:50:11 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -106,7 +106,7 @@ function smtpmail($mail_to, $subject, $message, $headers = '')
 
 	// Ok we have error checked as much as we can to this point let's get on
 	// it already.
-	if( !$socket = fsockopen($board_config['smtp_host'], 25, $errno, $errstr, 20) )
+	if( !$socket = @fsockopen($board_config['smtp_host'], 25, $errno, $errstr, 20) )
 	{
 		message_die(GENERAL_ERROR, "Could not connect to smtp host : $errno : $errstr", "", __LINE__, __FILE__);
 	}

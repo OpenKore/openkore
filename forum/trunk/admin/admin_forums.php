@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_forums.php,v 1.40.2.11 2004/03/25 15:57:19 acydburn Exp $
+ *   $Id: admin_forums.php,v 1.40.2.12 2005/05/07 22:18:10 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -233,6 +233,7 @@ if( isset($HTTP_POST_VARS['addforum']) || isset($HTTP_POST_VARS['addcategory']) 
 	if( $mode == "addforum" )
 	{
 		list($cat_id) = each($HTTP_POST_VARS['addforum']);
+		$cat_id = intval($cat_id);
 		// 
 		// stripslashes needs to be run on this because slashes are added when the forum name is posted
 		//

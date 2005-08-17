@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_styles.php,v 1.27.2.13 2004/07/15 17:57:50 acydburn Exp $
+ *   $Id: admin_styles.php,v 1.27.2.14 2005/03/17 17:33:30 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -75,7 +75,7 @@ switch( $mode )
 		if( isset($install_to) )
 		{
 
-			include($phpbb_root_path. "templates/" . $install_to . "/theme_info.cfg");
+			include($phpbb_root_path. "templates/" . basename($install_to) . "/theme_info.cfg");
 
 			$template_name = $$install_to;
 			$found = FALSE; 
@@ -739,7 +739,7 @@ switch( $mode )
 			
 			@umask(0111);
 
-			$fp = @fopen($phpbb_root_path . 'templates/' . $template_name . '/theme_info.cfg', 'w');
+			$fp = @fopen($phpbb_root_path . 'templates/' . basename($template_name) . '/theme_info.cfg', 'w');
 
 			if( !$fp )
 			{

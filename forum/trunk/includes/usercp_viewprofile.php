@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: usercp_viewprofile.php,v 1.5.2.3 2004/11/18 17:49:45 acydburn Exp $
+ *   $Id: usercp_viewprofile.php,v 1.5.2.5 2005/07/19 20:01:16 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -32,6 +32,11 @@ if ( empty($HTTP_GET_VARS[POST_USERS_URL]) || $HTTP_GET_VARS[POST_USERS_URL] == 
 	message_die(GENERAL_MESSAGE, $lang['No_user_id_specified']);
 }
 $profiledata = get_userdata($HTTP_GET_VARS[POST_USERS_URL]);
+
+if (!$profiledata)
+{
+	message_die(GENERAL_MESSAGE, $lang['No_user_id_specified']);
+}
 
 $sql = "SELECT *
 	FROM " . RANKS_TABLE . "
@@ -160,8 +165,8 @@ $yim_img = ( $profiledata['user_yim'] ) ? '<a href="http://edit.yahoo.com/config
 $yim = ( $profiledata['user_yim'] ) ? '<a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $profiledata['user_yim'] . '&amp;.src=pg">' . $lang['YIM'] . '</a>' : '';
 
 $temp_url = append_sid("search.$phpEx?search_author=" . urlencode($profiledata['username']) . "&amp;showresults=posts");
-$search_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_search'] . '" alt="' . $lang['Search_user_posts'] . '" title="' . $lang['Search_user_posts'] . '" border="0" /></a>';
-$search = '<a href="' . $temp_url . '">' . $lang['Search_user_posts'] . '</a>';
+$search_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_search'] . '" alt="' . $lang['Search_user_posts'] . '" title="' . sprintf($lang['Search_user_posts'], $profiledata['username']) . '" border="0" /></a>';
+$search = '<a href="' . $temp_url . '">' . sprintf($lang['Search_user_posts'], $profiledata['username']) . '</a>';
 
 //
 // Generate page

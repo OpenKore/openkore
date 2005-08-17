@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions_validate.php,v 1.6.2.12 2003/06/09 19:13:05 psotfx Exp $
+ *   $Id: functions_validate.php,v 1.6.2.13 2005/07/19 20:01:15 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -30,11 +30,9 @@ function validate_username($username)
 	global $db, $lang, $userdata;
 
 	// Remove doubled up spaces
-	$username = preg_replace('#\s+#', ' ', $username); 
-	// Limit username length
-	$username = substr(str_replace("\'", "'", $username), 0, 25);
-	$username = str_replace("'", "''", $username);
-
+	$username = preg_replace('#\s+#', ' ', trim($username)); 
+	$username = phpbb_clean_username($username);
+	
 	$sql = "SELECT username 
 		FROM " . USERS_TABLE . " 
 		WHERE LOWER(username) = '" . strtolower($username) . "'";
