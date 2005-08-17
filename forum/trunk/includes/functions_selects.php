@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions_selects.php,v 1.3.2.4 2002/12/22 12:20:35 psotfx Exp $
+ *   $Id: functions_selects.php,v 1.3.2.5 2005/05/06 20:50:11 acydburn Exp $
  *
  *
  ***************************************************************************/

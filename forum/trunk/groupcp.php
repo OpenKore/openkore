@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: groupcp.php,v 1.58.2.22 2004/11/18 17:49:34 acydburn Exp $
+ *   $Id: groupcp.php,v 1.58.2.23 2005/05/06 20:50:10 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -337,7 +337,7 @@ else if ( isset($HTTP_POST_VARS['unsub']) || isset($HTTP_POST_VARS['unsubpending
 				message_die(GENERAL_ERROR, 'Could not obtain moderator status', '', __LINE__, __FILE__, $sql);
 			}
 
-			if ( !($row = $db->sql_fetchrow($result)) )
+			if ( !($row = $db->sql_fetchrow($result)) || $row['is_auth_mod'] == 0 )
 			{
 				$sql = "UPDATE " . USERS_TABLE . " 
 					SET user_level = " . USER . " 

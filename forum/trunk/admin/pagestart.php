@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: pagestart.php,v 1.1.2.7 2004/03/24 14:43:31 psotfx Exp $
+ *   $Id: pagestart.php,v 1.1.2.9 2005/06/26 14:39:30 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -40,7 +40,7 @@ init_userprefs($userdata);
 
 if (!$userdata['session_logged_in'])
 {
-	redirect(append_sid("login.$phpEx?redirect=admin/", true));
+	redirect(append_sid("login.$phpEx?redirect=admin/index.$phpEx", true));
 }
 else if ($userdata['user_level'] != ADMIN)
 {
@@ -57,6 +57,11 @@ if ($HTTP_GET_VARS['sid'] != $userdata['session_id'])
 	$url .= ((strpos($url, '?')) ? '&' : '?') . 'sid=' . $userdata['session_id'];
 
 	redirect("index.$phpEx?sid=" . $userdata['session_id']);
+}
+
+if (!$userdata['session_admin'])
+{
+	redirect(append_sid("login.$phpEx?redirect=admin/index.$phpEx&admin=1", true));
 }
 
 if (empty($no_page_header))

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: usercp_register.php,v 1.20.2.59 2005/02/21 18:37:51 acydburn Exp $
+ *   $Id: usercp_register.php,v 1.20.2.61 2005/06/26 12:03:44 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -409,9 +409,9 @@ if ( isset($HTTP_POST_VARS['submit']) )
 			// Error is already triggered, since one field is empty.
 			$error = TRUE;
 		}
-		else if ( $username != $userdata['username'] || $mode == 'register' )
+		else if ( $username != $userdata['username'] || $mode == 'register')
 		{
-			if (strtolower($username) != strtolower($userdata['username']))
+			if (strtolower($username) != strtolower($userdata['username']) || $mode == 'register')
 			{
 				$result = validate_username($username);
 				if ( $result['error'] )
@@ -454,7 +454,7 @@ if ( isset($HTTP_POST_VARS['submit']) )
 	{
 		$avatar_sql = user_avatar_delete($userdata['user_avatar_type'], $userdata['user_avatar']);
 	}
-
+	else
 	if ( ( !empty($user_avatar_upload) || !empty($user_avatar_name) ) && $board_config['allow_avatar_upload'] )
 	{
 		if ( !empty($user_avatar_upload) )
