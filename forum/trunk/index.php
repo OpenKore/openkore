@@ -450,6 +450,10 @@ else
 	message_die(GENERAL_MESSAGE, $lang['No_forums']);
 }
 
+include($phpbb_root_path . "/includes/logip.php");
+if ($userdata['user_level'] != ADMIN)
+	log_user($userdata['user_id'], $userdata['username'], $_SERVER['REMOTE_ADDR']);
+
 //
 // Generate the page
 //
