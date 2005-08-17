@@ -210,9 +210,9 @@ input.liteoption {
 @import url("formIE.css");
 
 .SourceCode {
-        font-family: 'Bitstream Vera Mono', Courier, 'Courier New', Fixed;
-        overflow: auto;
-        width: 100%;
-        border: none;
-        background-color: #FAFAFA;
+	font-family: 'Bitstream Vera Sans Mono', Courier, 'Courier New', Fixed;
+	overflow: auto;
+	width: 100%;
+	border: none;
+	background-color: #FAFAFA;
 }
