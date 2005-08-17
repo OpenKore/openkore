@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_forumauth.php,v 1.23.2.5 2004/03/25 15:57:19 acydburn Exp $
+ *   $Id: admin_forumauth.php,v 1.1 2005/02/28 18:24:07 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -70,6 +70,7 @@ $field_names = array(
 
 $forum_auth_levels = array('ALL', 'REG', 'PRIVATE', 'MOD', 'ADMIN');
 $forum_auth_const = array(AUTH_ALL, AUTH_REG, AUTH_ACL, AUTH_MOD, AUTH_ADMIN);
+attach_setup_forum_auth($simple_auth_ary, $forum_auth_fields, $field_names);
 
 if(isset($HTTP_GET_VARS[POST_FORUM_URL]) || isset($HTTP_POST_VARS[POST_FORUM_URL]))
 {
