@@ -1209,6 +1209,8 @@ for($i = 0; $i < $total_posts; $i++)
 	);
 }
 
+include($phpbb_root_path . 'quick_reply.'.$phpEx);
+
 $template->pparse('body');
 
 include($phpbb_root_path . 'includes/page_tail.'.$phpEx);
