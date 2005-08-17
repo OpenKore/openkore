@@ -1023,3 +1023,4 @@ $lang['A_critical_error'] = 'A Critical Error Occurred';
 // -------------------------------------------------
 
 ?>
+
