@@ -208,3 +208,11 @@ input.liteoption {
 
 /* Import the fancy styles for IE only (NS4.x doesn't use the @import function) */
 @import url("formIE.css");
+
+.SourceCode {
+        font-family: 'Bitstream Vera Mono', Courier, 'Courier New', Fixed;
+        overflow: auto;
+        width: 100%;
+        border: none;
+        background-color: #FAFAFA;
+}

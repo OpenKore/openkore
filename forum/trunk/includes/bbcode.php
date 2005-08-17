@@ -559,8 +559,8 @@ function bbencode_second_pass_code($text, $uid, $bbcode_tpl)
 {
 	global $lang;
 
-	$code_start_html = $bbcode_tpl['code_open'];
-	$code_end_html =  $bbcode_tpl['code_close'];
+	$code_start_html = $bbcode_tpl['code_open'] . "<pre class=\"SourceCode\">";
+	$code_end_html =  "</pre>" . $bbcode_tpl['code_close'];
 
 	// First, do all the 1st-level matches. These need an htmlspecialchars() run,
 	// so they have to be handled differently.
@@ -577,12 +577,15 @@ function bbencode_second_pass_code($text, $uid, $bbcode_tpl)
 		$after_replace = str_replace("  ", " &nbsp;", $after_replace);
 
 		// Replace tabs with "&nbsp; &nbsp;" so tabbed code indents sorta right without making huge long lines.
-		$after_replace = str_replace("\t", "&nbsp; &nbsp;", $after_replace);
+//		$after_replace = str_replace("\t", "&nbsp; &nbsp;", $after_replace);
 
 		// now Replace space occurring at the beginning of a line
 		$after_replace = preg_replace("/^ {1}/m", '&nbsp;', $after_replace);
 
 		$str_to_match = "[code:1:$uid]" . $before_replace . "[/code:1:$uid]";
+
+		$after_replace = str_replace("\r\n", "\n", $after_replace);
+		$after_replace = str_replace("\n", "<realbr/>", $after_replace);
 
 		$replacement = $code_start_html;
 		$replacement .= $after_replace;

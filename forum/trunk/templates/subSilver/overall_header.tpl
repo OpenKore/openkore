@@ -228,7 +228,7 @@ input.liteoption {
 	<tr> 
 		<td class="bodyline"><table width="100%" cellspacing="0" cellpadding="0" border="0">
 			<tr> 
-				<td><a href="{U_INDEX}"><img src="templates/subSilver/images/logo_phpBB.gif" border="0" alt="{L_INDEX}" vspace="1" /></a></td>
+				<td><a href="/"><img src="/images/logo.jpg" border="0" alt="The OpenKore Website" vspace="1" /></a></td>
 				<td align="center" width="100%" valign="middle"><span class="maintitle">{SITENAME}</span><br /><span class="gen">{SITE_DESCRIPTION}<br />&nbsp; </span> 
 				<table cellspacing="0" cellpadding="2" border="0">
 					<tr> 

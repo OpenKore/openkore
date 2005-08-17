@@ -1134,7 +1134,10 @@ for($i = 0; $i < $total_posts; $i++)
 		$user_sig = '<br />_________________<br />' . str_replace("\n", "\n<br />\n", $user_sig);
 	}
 
-	$message = str_replace("\n", "\n<br />\n", $message);
+	$message = str_replace("\r\n", "\n", $message);
+	$message = str_replace("\n", "<br />\n", $message);
+	$message = str_replace("<realbr/>", "\n", $message);
+	$message = str_replace("\n", "\r\n", $message);
 
 	//
 	// Editing information
