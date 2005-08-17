@@ -3508,21 +3508,34 @@ sub storage_password_request {
 
 	if ($args->{flag} == 0) {
 		message "Please enter a new storage password:\n";
-	} elsif ($args->{flag} == 1) {
-		message "Please enter your storage password:\n";
 
-		my @key = $masterServer->{encryptKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
-		if (!@key) {
-			error "Cannot use storage password, passwordKey missing or incorrectly set in servers.txt\n";
+	} elsif ($args->{flag} == 1) {
+		while ($config{storageAuto_password} eq '' && !$quit) {
+			message "Please enter your storage password:\n";
+			my $input = $interface->getInput(-1);
+			if ($input ne '') {
+				configModify('storageAuto_password', $input, 1);
+				message "Storage password set to: $input\n", "success";
+				last;
+			}
 		}
-		my $crypton = new Utils::Crypton(pack("L*", @key), 32);
+		return if ($quit);
+
+		#my @key = $config{storageEncryptKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
+		my @key = split /[, ]+/, $config{storageEncryptKey};
+		if (!@key) {
+			error "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n";
+			return;
+		}
+
+		my $crypton = new Utils::Crypton(pack("V*", @key), 32);
 		my $num = $config{storageAuto_password};
 		$num = sprintf("%d%08d", length($num), $num);
 		my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
-		sendStoragePassword($ciphertextBlock,3);
+		sendStoragePassword($ciphertextBlock, 3);
 
 	} else {
-		#message "Storage password: unknown flag $args->{flag}\n";
+		debug "Storage password: unknown flag $args->{flag}\n";
 	}
 }
 

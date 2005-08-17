@@ -214,6 +214,9 @@ sub checkConnection {
 		if ($master->{chatLangCode} ne '' && $config{chatLangCode} != $master->{chatLangCode}) {
 			configModify('chatLangCode', $master->{chatLangCode});
 		}
+		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} != $master->{storageEncryptKey}) {
+			configModify('storageEncryptKey', $master->{storageEncryptKey});
+		}
 
 		message("Connecting to Master Server...\n", "connection");
 		$shopstarted = 1;
