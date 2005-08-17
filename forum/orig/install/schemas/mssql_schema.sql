@@ -2,7 +2,7 @@
 
   mssql_schema.sql for phpBB2 (c) 2001, phpBB Group
 
- $Id: mssql_schema.sql,v 1.1.2.7 2003/06/30 17:18:37 acydburn Exp $
+ $Id: mssql_schema.sql,v 1.1.2.8 2005/05/06 20:50:13 acydburn Exp $
 
 */
 
@@ -190,7 +190,8 @@ CREATE TABLE [phpbb_sessions] (
 	[session_time] [int] NULL ,
 	[session_ip] [char] (8) NOT NULL ,
 	[session_page] [int] NULL ,
-	[session_logged_in] [smallint] NULL
+	[session_logged_in] [smallint] NULL,
+	[session_admin] [smallint] NULL
 ) ON [PRIMARY]
 GO
 

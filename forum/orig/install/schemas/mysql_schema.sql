@@ -1,7 +1,7 @@
 #
 # phpBB2 - MySQL schema
 #
-# $Id: mysql_schema.sql,v 1.35.2.7 2003/06/10 12:42:31 psotfx Exp $
+# $Id: mysql_schema.sql,v 1.35.2.8 2005/05/06 20:50:13 acydburn Exp $
 #
 
 #
@@ -305,6 +305,7 @@ CREATE TABLE phpbb_sessions (
    session_ip char(8) DEFAULT '0' NOT NULL,
    session_page int(11) DEFAULT '0' NOT NULL,
    session_logged_in tinyint(1) DEFAULT '0' NOT NULL,
+   session_admin tinyint(2) DEFAULT '0' NOT NULL,
    PRIMARY KEY (session_id),
    KEY session_user_id (session_user_id),
    KEY session_id_ip_user_id (session_id, session_ip, session_user_id)

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: posting.php,v 1.159.2.22 2004/07/11 16:46:16 acydburn Exp $
+ *   $Id: posting.php,v 1.159.2.23 2005/05/06 20:50:10 acydburn Exp $
  *
  *
  ***************************************************************************/
