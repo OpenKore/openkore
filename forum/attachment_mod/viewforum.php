@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: viewforum.php,v 1.1 2005/02/28 18:20:02 acydburn Exp $
+ *   $Id: viewforum.php,v 1.139.2.12 2004/03/13 15:08:23 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -368,7 +368,6 @@ $s_auth_can .= ( ( $is_auth['auth_reply'] ) ? $lang['Rules_reply_can'] : $lang['
 $s_auth_can .= ( ( $is_auth['auth_edit'] ) ? $lang['Rules_edit_can'] : $lang['Rules_edit_cannot'] ) . '<br />';
 $s_auth_can .= ( ( $is_auth['auth_delete'] ) ? $lang['Rules_delete_can'] : $lang['Rules_delete_cannot'] ) . '<br />';
 $s_auth_can .= ( ( $is_auth['auth_vote'] ) ? $lang['Rules_vote_can'] : $lang['Rules_vote_cannot'] ) . '<br />';
-attach_build_auth_levels($is_auth, $s_auth_can);
 
 if ( $is_auth['auth_mod'] )
 {
@@ -646,7 +645,6 @@ if( $total_topics )
 			'GOTO_PAGE' => $goto_page,
 			'REPLIES' => $replies,
 			'NEWEST_POST_IMG' => $newest_post_img, 
-			'TOPIC_ATTACHMENT_IMG' => topic_attachment_image($topic_rowset[$i]['topic_attachment']),
 			'TOPIC_TITLE' => $topic_title,
 			'TOPIC_TYPE' => $topic_type,
 			'VIEWS' => $views,

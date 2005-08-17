@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_forums.php,v 1.2 2005/05/09 16:23:09 acydburn Exp $
+ *   $Id: admin_forums.php,v 1.40.2.12 2005/05/07 22:18:10 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -49,8 +49,6 @@ $forum_auth_ary = array(
 	"auth_pollcreate" => AUTH_REG
 );
 
-$forum_auth_ary['auth_attachments'] = AUTH_REG;
-$forum_auth_ary['auth_download'] = AUTH_REG;
 //
 // Mode setting
 //

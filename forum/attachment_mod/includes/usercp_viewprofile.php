@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: usercp_viewprofile.php,v 1.3 2005/08/08 14:24:51 acydburn Exp $
+ *   $Id: usercp_viewprofile.php,v 1.5.2.5 2005/07/19 20:01:16 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -173,7 +173,6 @@ $search = '<a href="' . $temp_url . '">' . sprintf($lang['Search_user_posts'], $
 //
 $page_title = $lang['Viewing_profile'];
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
-display_upload_attach_box_limits($profiledata['user_id']);
 
 if (function_exists('get_html_translation_table'))
 {

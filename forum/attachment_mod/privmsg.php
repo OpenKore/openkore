@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: privmsg.php,v 1.3 2005/08/08 14:24:51 acydburn Exp $
+ *   $Id: privmsg.php,v 1.96.2.40 2005/07/19 20:01:19 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -128,7 +128,6 @@ $sentbox_url = ( $folder != 'sentbox' || $mode != '' ) ? '<a href="' . append_si
 $savebox_img = ( $folder != 'savebox' || $mode != '' ) ? '<a href="' . append_sid("privmsg.$phpEx?folder=savebox") . '"><img src="' . $images['pm_savebox'] . '" border="0" alt="' . $lang['Savebox'] . '" /></a>' : '<img src="' . $images['pm_savebox'] . '" border="0" alt="' . $lang['Savebox'] . '" />';
 $savebox_url = ( $folder != 'savebox' || $mode != '' ) ? '<a href="' . append_sid("privmsg.$phpEx?folder=savebox") . '">' . $lang['Savebox'] . '</a>' : $lang['Savebox'];
 
-execute_privmsgs_attachment_handling($mode);
 // ----------
 // Start main
 //
@@ -347,7 +346,6 @@ else if ( $mode == 'read' )
 		}
 	}
 
-	$attachment_mod['pm']->duplicate_attachment_pm($privmsg['privmsgs_attachment'], $privmsg['privmsgs_id'], $privmsg_sent_id);
 	//
 	// Pick a folder, any folder, so long as it's one below ...
 	//
@@ -488,7 +486,6 @@ else if ( $mode == 'read' )
 	$user_id_from = $privmsg['user_id_1'];
 	$username_to = $privmsg['username_2'];
 	$user_id_to = $privmsg['user_id_2'];
-	init_display_pm_attachments($privmsg['privmsgs_attachment']);
 
 	$post_date = create_date($board_config['default_dateformat'], $privmsg['privmsgs_date'], $board_config['board_timezone']);
 
@@ -751,7 +748,6 @@ else if ( ( $delete && $mark_list ) || $delete_all )
 		}
 
 		unset($delete_type);
-		$attachment_mod['pm']->delete_all_pm_attachments($mark_list);
 
 		if ( count($mark_list) )
 		{
@@ -1291,7 +1287,6 @@ else if ( $submit || $refresh || $mode != '' )
 			message_die(GENERAL_ERROR, "Could not insert/update private message sent text.", "", __LINE__, __FILE__, $sql_info);
 		}
 
-		$attachment_mod['pm']->insert_attachment_pm($privmsg_id);
 		if ( $mode != 'edit' )
 		{
 			//
@@ -1599,7 +1594,6 @@ else if ( $submit || $refresh || $mode != '' )
 		$template->set_filenames(array(
 			"preview" => 'privmsgs_preview.tpl')
 		);
-		$attachment_mod['pm']->preview_attachments();
 
 		$template->assign_vars(array(
 			'TOPIC_TITLE' => $preview_subject,
@@ -2144,7 +2138,6 @@ if ( $row = $db->sql_fetchrow($result) )
 			'FROM' => $msg_username,
 			'SUBJECT' => $msg_subject,
 			'DATE' => $msg_date,
-			'PRIVMSG_ATTACHMENTS_IMG' => privmsgs_attachment_image($privmsg_id),
 			'PRIVMSG_FOLDER_IMG' => $icon_flag,
 
 			'L_PRIVMSG_FOLDER_ALT' => $icon_flag_alt, 

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_groups.php,v 1.1 2005/02/28 18:24:07 acydburn Exp $
+ *   $Id: admin_groups.php,v 1.25.2.9 2004/03/25 15:57:20 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -56,7 +56,6 @@ else
 	$mode = '';
 }
 
-attachment_quota_settings('group', $HTTP_POST_VARS['group_update'], $mode);
 if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_POST_VARS['new']) )
 {
 	//

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: viewtopic.php,v 1.5 2005/08/08 14:24:52 acydburn Exp $
+ *   $Id: viewtopic.php,v 1.186.2.43 2005/07/19 20:01:21 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -150,7 +150,6 @@ $sql = "SELECT t.topic_id, t.topic_title, t.topic_status, t.topic_replies, t.top
 	WHERE $join_sql
 		AND f.forum_id = t.forum_id
 		$order_sql";
-attach_setup_viewtopic_auth($order_sql, $sql);
 if ( !($result = $db->sql_query($sql)) )
 {
 	message_die(GENERAL_ERROR, "Could not obtain topic information", '', __LINE__, __FILE__, $sql);
@@ -584,7 +583,6 @@ $s_auth_can .= ( ( $is_auth['auth_reply'] ) ? $lang['Rules_reply_can'] : $lang['
 $s_auth_can .= ( ( $is_auth['auth_edit'] ) ? $lang['Rules_edit_can'] : $lang['Rules_edit_cannot'] ) . '<br />';
 $s_auth_can .= ( ( $is_auth['auth_delete'] ) ? $lang['Rules_delete_can'] : $lang['Rules_delete_cannot'] ) . '<br />';
 $s_auth_can .= ( ( $is_auth['auth_vote'] ) ? $lang['Rules_vote_can'] : $lang['Rules_vote_cannot'] ) . '<br />';
-attach_build_auth_levels($is_auth, $s_auth_can);
 
 $topic_mod = '';
 
@@ -813,7 +811,6 @@ if ( !empty($forum_topic_data['topic_vote']) )
 	}
 }
 
-init_display_post_attachments($forum_topic_data['topic_attachment']);
 //
 // Update the topic view counter
 //
@@ -1210,7 +1207,6 @@ for($i = 0; $i < $total_posts; $i++)
 		'U_MINI_POST' => $mini_post_url,
 		'U_POST_ID' => $postrow[$i]['post_id'])
 	);
-	display_post_attachments($postrow[$i]['post_id'], $postrow[$i]['post_attachment']);
 }
 
 $template->pparse('body');

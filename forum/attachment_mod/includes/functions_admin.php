@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions_admin.php,v 1.1 2005/02/28 18:24:08 acydburn Exp $
+ *   $Id: functions_admin.php,v 1.5.2.3 2002/07/19 17:03:47 psotfx Exp $
  *
  *
  ***************************************************************************/
@@ -146,7 +146,6 @@ function sync($type, $id = false)
 					message_die(GENERAL_ERROR, 'Could not update topic', '', __LINE__, __FILE__, $sql);
 				}
 			}
-			attachment_sync_topic($id);
 			break;
 	}
 	

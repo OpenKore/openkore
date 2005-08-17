@@ -6,7 +6,7 @@
 *   copyright            : (C) 2001 The phpBB Group
 *   email                : support@phpbb.com
 *
-*   $Id: prune.php,v 1.1 2005/02/28 18:24:08 acydburn Exp $
+*   $Id: prune.php,v 1.19.2.6 2003/03/18 23:23:57 acydburn Exp $
 *
 *
 ***************************************************************************/
@@ -111,7 +111,6 @@ function prune($forum_id, $prune_date, $prune_all = false)
 			}
 
 			remove_search_post($sql_post);
-			prune_attachments($sql_post);
 
 			return array ('topics' => $pruned_topics, 'posts' => $pruned_posts);
 		}

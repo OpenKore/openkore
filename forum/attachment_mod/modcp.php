@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: modcp.php,v 1.3 2005/07/16 14:40:30 acydburn Exp $
+ *   $Id: modcp.php,v 1.71.2.26 2005/06/26 12:03:46 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -346,7 +346,6 @@ switch( $mode )
 				}
 
 				remove_search_post($post_id_sql);
-				delete_attachment(explode(', ', $post_id_sql));
 			}
 
 			if ( $vote_id_sql != '' )
@@ -1220,7 +1219,6 @@ switch( $mode )
 				'REPLIES' => $topic_replies,
 				'LAST_POST_TIME' => $last_post_time,
 				'TOPIC_ID' => $topic_id,
-				'TOPIC_ATTACHMENT_IMG' => topic_attachment_image($row['topic_attachment']),
 					
 				'L_TOPIC_FOLDER_ALT' => $folder_alt)
 			);
