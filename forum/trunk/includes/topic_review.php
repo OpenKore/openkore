@@ -179,6 +179,7 @@ function topic_review($topic_id, $is_inline_review)
 			}
 
 			$message = str_replace("\n", '<br />', $message);
+			$message = str_replace("<realbr/>", "\n", $message);
 
 			//
 			// Again this will be handled by the templating

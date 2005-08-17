@@ -696,7 +696,10 @@ if( $refresh || isset($HTTP_POST_VARS['del_poll_option']) || $error_msg != '' )
 			$preview_message = $preview_message . '<br /><br />_________________<br />' . $user_sig;
 		}
 
-		$preview_message = str_replace("\n", '<br />', $preview_message);
+		$preview_message = str_replace("\r\n", "\n", $preview_message);
+		$preview_message = str_replace("\n", '<br/>', $preview_message);
+		$preview_message = str_replace("<realbr/>", "\n", $preview_message);
+		$preview_message = str_replace("\n", "\r\n", $preview_message);
 
 		$template->set_filenames(array(
 			'preview' => 'posting_preview.tpl')

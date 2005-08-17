@@ -227,7 +227,7 @@ $lang['Display_topics'] = 'Display topics from previous';
 $lang['All_Topics'] = 'All Topics';
 
 $lang['Topic_Announcement'] = '<b>Announcement:</b>';
-$lang['Topic_Sticky'] = '<b>Sticky:</b>';
+$lang['Topic_Sticky'] = '<b>Please Read:</b>';
 $lang['Topic_Moved'] = '<b>Moved:</b>';
 $lang['Topic_Poll'] = '<b>[ Poll ]</b>';
 
@@ -316,7 +316,7 @@ $lang['Edit_Post'] = 'Edit post';
 $lang['Options'] = 'Options';
 
 $lang['Post_Announcement'] = 'Announcement';
-$lang['Post_Sticky'] = 'Sticky';
+$lang['Post_Sticky'] = 'Please Read';
 $lang['Post_Normal'] = 'Normal';
 
 $lang['Confirm_delete'] = 'Are you sure you want to delete this post?';
@@ -609,7 +609,7 @@ $lang['Username_taken'] = 'Sorry, but this username has already been taken.';
 $lang['Username_invalid'] = 'Sorry, but this username contains an invalid character such as \'.';
 $lang['Username_disallowed'] = 'Sorry, but this username has been disallowed.';
 $lang['Email_taken'] = 'Sorry, but that e-mail address is already registered to a user.';
-$lang['Email_banned'] = 'Sorry, but this e-mail address has been banned.';
+$lang['Email_banned'] = 'This forum has been closed until further notice.';
 $lang['Email_invalid'] = 'Sorry, but this e-mail address is invalid.';
 $lang['Signature_too_long'] = 'Your signature is too long.';
 $lang['Fields_empty'] = 'You must fill in the required fields.';
@@ -816,7 +816,7 @@ $lang['Auth_Administrators'] = '<b>administrators</b>';
 $lang['Not_Moderator'] = 'You are not a moderator of this forum.';
 $lang['Not_Authorised'] = 'Not Authorised';
 
-$lang['You_been_banned'] = 'You have been banned from this forum.<br />Please contact the webmaster or board administrator for more information.';
+$lang['You_been_banned'] = 'This forum has been shutdown until further notice.';
 
 
 //
