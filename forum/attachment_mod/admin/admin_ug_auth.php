@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_ug_auth.php,v 1.4 2005/08/08 14:24:50 acydburn Exp $
+ *   $Id: admin_ug_auth.php,v 1.13.2.9 2005/07/19 20:01:05 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -87,8 +87,6 @@ $field_names = array(
 	'auth_announce' => $lang['Announce'], 
 	'auth_vote' => $lang['Vote'], 
 	'auth_pollcreate' => $lang['Pollcreate']);
-
-attach_setup_usergroup_auth($forum_auth_fields, $auth_field_match, $field_names);
 
 // ---------------
 // Start Functions

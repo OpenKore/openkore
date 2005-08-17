@@ -267,14 +267,6 @@
 	  <td class="row1" colspan="2"><span class="gensmall">{L_SPECIAL_EXPLAIN}</span></td>
 	</tr>
 	<tr> 
-	  <td class="row1"><span class="gen">{L_UPLOAD_QUOTA}</span></td>
-	  <td class="row2">{S_SELECT_UPLOAD_QUOTA}</td>
-	</tr>
-	<tr> 
-	  <td class="row1"><span class="gen">{L_PM_QUOTA}</span></td>
-	  <td class="row2">{S_SELECT_PM_QUOTA}</td>
-	</tr>
-	<tr> 
 	  <td class="row1"><span class="gen">{L_USER_ACTIVE}</span></td>
 	  <td class="row2"> 
 		<input type="radio" name="user_status" value="1" {USER_ACTIVE_YES} />

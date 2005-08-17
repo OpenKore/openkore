@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions.php,v 1.2 2005/08/08 14:24:51 acydburn Exp $
+ *   $Id: functions.php,v 1.133.2.35 2005/07/19 20:01:11 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -287,7 +287,6 @@ function init_userprefs($userdata)
 		include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin.' . $phpEx);
 	}
 
-	include_attach_lang();
 	//
 	// Set up style
 	//
