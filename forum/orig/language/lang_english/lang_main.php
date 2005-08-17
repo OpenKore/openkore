@@ -6,7 +6,7 @@
  *     copyright            : (C) 2001 The phpBB Group
  *     email                : support@phpbb.com
  *
- *     $Id: lang_main.php,v 1.85.2.15 2003/06/10 00:31:19 psotfx Exp $
+ *     $Id: lang_main.php,v 1.85.2.16 2005/05/06 20:50:13 acydburn Exp $
  *
  ****************************************************************************/
 
@@ -1017,6 +1017,8 @@ $lang['General_Error'] = 'General Error';
 $lang['Critical_Error'] = 'Critical Error';
 $lang['An_error_occured'] = 'An Error Occurred';
 $lang['A_critical_error'] = 'A Critical Error Occurred';
+
+$lang['Admin_reauthenticate'] = 'To administer the board you must re-authenticate yourself.';
 
 //
 // That's all, Folks!

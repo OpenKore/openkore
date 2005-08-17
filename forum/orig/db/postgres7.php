@@ -6,7 +6,7 @@
    *   copyright            : (C) 2001 The phpBB Group
    *   email                : supportphpbb.com
    *
-   *   $Id: postgres7.php,v 1.19 2002/03/05 02:19:38 psotfx Exp $
+   *   $Id: postgres7.php,v 1.19.2.3 2005/05/06 20:50:10 acydburn Exp $
    *
    ***************************************************************************/
 

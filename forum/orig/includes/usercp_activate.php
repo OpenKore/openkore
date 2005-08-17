@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: usercp_activate.php,v 1.6.2.7 2003/05/03 23:24:02 acydburn Exp $
+ *   $Id: usercp_activate.php,v 1.6.2.8 2005/07/19 20:01:16 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -47,6 +47,11 @@ if ( $row = $db->sql_fetchrow($result) )
 	}
 	else if ((trim($row['user_actkey']) == trim($HTTP_GET_VARS['act_key'])) && (trim($row['user_actkey']) != ''))
 	{
+		if (intval($board_config['require_activation']) == USER_ACTIVATION_ADMIN && $userdata['user_level'] != ADMIN)
+		{
+			message_die(GENERAL_MESSAGE, $lang['Not_Authorised']);
+		}
+
 		$sql_update_pass = ( $row['user_newpasswd'] != '' ) ? ", user_password = '" . str_replace("\'", "''", $row['user_newpasswd']) . "', user_newpasswd = ''" : '';
 
 		$sql = "UPDATE " . USERS_TABLE . "

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: update_to_latest.php,v 1.1.2.1 2005/02/21 18:38:40 acydburn Exp $
+ *   $Id: update_to_latest.php,v 1.1.2.7 2005/07/19 20:01:18 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -59,7 +59,7 @@ include($phpbb_root_path . 'includes/db.'.$phpEx);
 //
 //
 //
-$updates_to_version = '.0.12';
+$updates_to_version = '.0.17';
 //
 //
 //
@@ -420,6 +420,8 @@ switch ($row['config_value'])
 			
 		}
 
+	case '.0.2':
+
 	case '.0.3':
 
 		switch (SQL_LAYER)
@@ -510,6 +512,45 @@ switch ($row['config_value'])
 
 			case 'postgresql':
 				$sql[] = 'CREATE TABLE ' . $table_prefix . 'confirm (confirm_id char(32) DEFAULT \'\' NOT NULL,  session_id char(32) DEFAULT \'\' NOT NULL, code char(6) DEFAULT \'\' NOT NULL, CONSTRAINT phpbb_confirm_pkey PRIMARY KEY (session_id, confirm_id))';
+				break;
+		}
+
+	case '.0.5':
+	case '.0.6':
+	case '.0.7':
+	case '.0.8':
+	case '.0.9':
+	case '.0.10':
+	case '.0.11':
+	case '.0.12':
+	case '.0.13':
+	case '.0.14':
+
+		switch (SQL_LAYER)
+		{
+			case 'mysql':
+			case 'mysql4':
+				$sql[] = "ALTER TABLE " . SESSIONS_TABLE . "
+					ADD COLUMN session_admin tinyint(2) DEFAULT '0' NOT NULL";
+				break;
+
+			case 'postgresql':
+				$sql[] = "ALTER TABLE " . SESSIONS_TABLE . "
+					ADD COLUMN session_admin int2";
+				$sql[] = "ALTER TABLE " . SESSIONS_TABLE . "
+					ALTER COLUMN session_admin SET DEFAULT '0'";
+				break;
+
+			case 'mssql-odbc':
+			case 'mssql':
+				$sql[] = "ALTER TABLE " . SESSIONS_TABLE . " ADD
+					session_admin smallint NOT NULL,
+					CONSTRAINT [DF_" . $table_prefix . "sessions_session_admin] DEFAULT (0) FOR [session_admin]";
+				break;
+
+			case 'msaccess':
+				$sql[] = "ALTER TABLE " . SESSIONS_TABLE . " ADD
+					session_admin smallint NOT NULL";
 				break;
 		}
 
@@ -900,6 +941,23 @@ switch ($row['config_value'])
 		}
 		$db->sql_freeresult($result);
 		
+	case '.0.6':
+	case '.0.7':
+	case '.0.8':
+	case '.0.9':
+	case '.0.10':
+	case '.0.11':
+	case '.0.12':
+	case '.0.13':
+	case '.0.14':
+
+		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_allowhtml = 1 WHERE user_id = ' . ANONYMOUS;
+		_sql($sql, $errored, $error_ary);
+
+		// We reset those having autologin enabled and forcing the re-assignment of a session id
+		$sql = 'DELETE FROM ' . SESSIONS_TABLE;
+		_sql($sql, $errored, $error_ary);
+
 		break;
 
 	default:

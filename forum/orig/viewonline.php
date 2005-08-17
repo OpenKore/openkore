@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: viewonline.php,v 1.54.2.3 2004/07/11 16:46:17 acydburn Exp $
+ *   $Id: viewonline.php,v 1.54.2.4 2005/05/06 20:50:10 acydburn Exp $
  *
  *
  ***************************************************************************/
