@@ -1216,6 +1216,8 @@ for($i = 0; $i < $total_posts; $i++)
 	display_post_attachments($postrow[$i]['post_id'], $postrow[$i]['post_attachment']);
 }
 
+include($phpbb_root_path . 'quick_reply.'.$phpEx);
+
 $template->pparse('body');
 
 include($phpbb_root_path . 'includes/page_tail.'.$phpEx);
