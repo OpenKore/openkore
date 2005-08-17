@@ -221,11 +221,13 @@ New config options:
 - logAppendUsername (flag) this will add _username_char# to your log files
 - storageAuto_password (number)
   If your server is using a storage password, put the password here.
+  You must also set storageEncryptKey!
 
-  In servers.txt you need to set encryptKey:
-  encryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+- storageEncryptKey (key)
+  Put your server's encryption key here. For mRO, it is:
+  0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 
-  It may change in the future.
+  The key may change in the future.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).

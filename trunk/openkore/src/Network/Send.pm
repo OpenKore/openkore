@@ -138,7 +138,7 @@ our @EXPORT = qw(
 	sendStorageClose
 	sendStorageGet
 	sendStorageGetToCart
-	sendStoragePass
+	sendStoragePassword
 	sendStand
 	sendSuperNoviceDoriDori
 	sendSuperNoviceExplosion
@@ -1717,7 +1717,7 @@ sub sendStorageGetToCart {
 	debug "Sent Storage Get From Cart: $index x $amount\n", "sendPacket", 2;
 }
 
-sub sendStoragePass {
+sub sendStoragePassword {
 	# 16 byte hex string
 	my $pass = shift;
 	# 2 = set password ?
