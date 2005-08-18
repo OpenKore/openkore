@@ -909,7 +909,8 @@ sub AI {
 			if (!$currentDeal{you_finalize} && timeOut($timeout{ai_dealAuto}) &&
 			    ($config{dealAuto} == 2 ||
 				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
-				sendDealFinalize(\$remote_socket);
+				sendDealAddItem(0, $currentDeal{'you_zenny'});
+				sendDealFinalize();
 				$timeout{ai_dealAuto}{time} = time;
 			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2) {
 				sendDealTrade(\$remote_socket);

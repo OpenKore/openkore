@@ -87,6 +87,8 @@ Bug fixes:
   supplies will now storageAuto before lockMap).
 - Give a more correct message when you fail to connect due to incorrect
   serverType, instead of "master version # failed."
+- Zeny added to a deal via 'deal add z <#>' will now be correctly added
+  when the deal is finalized automatically by dealAuto.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
