@@ -132,6 +132,41 @@ class emailer
 		$this->vars = (empty($this->vars)) ? $vars : $this->vars . $vars;
 	}
 
+	function savemail($db, $to, $subject, $body, $extra_headers)
+	{
+		/*
+CREATE TABLE mailer (
+   `id` INT UNSIGNED AUTO_INCREMENT,
+   `mailto` VARCHAR(255) NOT NULL,
+   `subject` VARCHAR(255) NOT NULL,
+   `body` TEXT NOT NULL,
+   `extra_headers` TEXT NOT NULL,
+   `time` TIMESTAMP,
+   PRIMARY KEY (`id`)
+);
+		 */
+
+		if (strlen($to) == 1)
+			$to = "";
+		$matches = Array();
+		preg_match('/^Bcc: (.*)$/m', $extra_headers, $matches);
+		if (count($matches) > 0) {
+			if ($to == "")
+				$to = $matches[1];
+			else
+				$to .= ", $matches[1]";
+		}
+
+		$sql = sprintf("INSERT INTO mailer VALUES(NULL, '%s', '%s', '%s', '%s', NOW());",
+			mysql_escape_string($to),
+			mysql_escape_string($subject),
+			mysql_escape_string($body),
+			mysql_escape_string($extra_headers)
+			);
+		$db->sql_query($sql);
+		return 1;
+	}
+
 	// Send the mail out to the recipients set previously in var $this->address
 	function send()
 	{
@@ -209,7 +244,7 @@ class emailer
 			$empty_to_header = ($to == '') ? TRUE : FALSE;
 			$to = ($to == '') ? (($board_config['sendmail_fix']) ? ' ' : 'Undisclosed-recipients:;') : $to;
 	
-			$result = @mail($to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->extra_headers);
+			$result = $this->savemail($db, $to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->extra_headers);
 			
 			if (!$result && !$board_config['sendmail_fix'] && $empty_to_header)
 			{
