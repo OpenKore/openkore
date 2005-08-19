@@ -9,7 +9,7 @@
 
 /* Overall syntax block styles (should be like code block styles */
 .syntax-code {
-	font-family: Courier, 'Courier New', sans-serif;
+	font-family: 'Bitstream Vera Sans Mono', Courier, 'Courier New', sans-serif;
 	font-size: 12px;
 	color: #111111;
 	background-color: #FAFAFA;
