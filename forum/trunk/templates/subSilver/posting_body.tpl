@@ -35,9 +35,11 @@ w_help = "{L_BBCODE_W_HELP}";
 a_help = "{L_BBCODE_A_HELP}";
 s_help = "{L_BBCODE_S_HELP}";
 f_help = "{L_BBCODE_F_HELP}";
-<!-- BEGIN MultiBB -->
-{MultiBB.VALUE}_help = "{MultiBB.HELP}";
-<!-- END MultiBB -->
+<!-- BEGIN XBBcode -->
+<!-- BEGIN BB -->
+{XBBcode.BB.VALUE}_help = "{XBBcode.BB.HELP}";
+<!-- END BB -->
+<!-- END XBBcode -->
 
 // Define the bbCode tags
 bbcode = new Array();
@@ -359,6 +361,17 @@ function storeCaret(textEl) {
 			  </span></td>
 			<!-- END MultiBB -->
 		  </tr>
+
+		  <!-- BEGIN XBBcode -->
+		  <tr align="center" valign="middle"> 
+			<!-- BEGIN BB -->
+			<td><span class="genmed">
+			  <input type="button" class="button" accesskey="{XBBcode.BB.KEY}" name="{XBBcode.BB.NAME}" value="{XBBcode.BB.VALUE}" style="width: {XBBcode.BB.WIDTH}px" onClick="{XBBcode.BB.STYLE}" onMouseOver="helpline('{XBBcode.BB.VALUE}')" />
+			  </span></td>
+			<!-- END BB -->
+		  </tr>
+		  <!-- END XBBcode -->
+
 		  <tr> 
 			<td colspan="9"> 
 			  <table width="100%" border="0" cellspacing="0" cellpadding="0">
