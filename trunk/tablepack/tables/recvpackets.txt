@@ -1,4 +1,4 @@
-# Packet lengths for iRO Ayothaya (July 6 2005)
+# Packet lengths for iRO Ayothaya (July 6 2005) and mRO (August 19 2005)
 0064 55
 0065 17
 0066 3
@@ -450,7 +450,7 @@
 022C 64
 022D 5
 022E 67
-# Note: mRO's length is 71
+# Note: mRO's length for 022E is 71
 022F 5
 0230 12
 0231 26
