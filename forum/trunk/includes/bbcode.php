@@ -31,6 +31,34 @@ define("BBCODE_UID_LEN", 10);
 
 $bbcode_tpl = null;
 
+// MULTI BBCODE-begin
+function Multi_BBCode()
+{
+	global $template, $lang;
+
+	// DO NOT CHANGE THIS ARRAY
+	$hotkeys = array('', 'd', 'e', 'g', 'h', 'j', 'k', 'm', 'n', 'r', 't', 'v', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0');
+
+	//NOTE: the first element of each array must be ''   Add new elements AFTER the ''
+	$EMBB_widths = array('') ;
+	$EMBB_values = array('') ;
+	for ($i=1; $i<count($EMBB_values); $i++)
+	{
+		// load BBcode MODs info
+		$val = ($i*2)+16 ;
+		$help_lang = ( !empty($lang['bbcode_help'][(strtolower($EMBB_values[$i]))]) ) ? $lang['bbcode_help'][(strtolower($EMBB_values[$i]))] : $lang['bbcode_help'][$EMBB_values[$i]];
+		$template->assign_block_vars('MultiBB', array(
+			'KEY' => $hotkeys[$i],
+			'NAME' => "addbbcode$val",
+			'HELP' => sprintf($help_lang, $hotkeys[$i]),
+			'WIDTH' => $EMBB_widths[$i],
+			'VALUE' => $EMBB_values[$i],
+			'STYLE' => "bbstyle($val)")
+		);
+	}
+}
+// MULTI BBCODE-end
+
 /**
  * Loads bbcode templates from the bbcode.tpl file of the current template set.
  * Creates an array, keys are bbcode names like "b_open" or "url", values

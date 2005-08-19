@@ -35,6 +35,9 @@ w_help = "{L_BBCODE_W_HELP}";
 a_help = "{L_BBCODE_A_HELP}";
 s_help = "{L_BBCODE_S_HELP}";
 f_help = "{L_BBCODE_F_HELP}";
+<!-- BEGIN MultiBB -->
+{MultiBB.VALUE}_help = "{MultiBB.HELP}";
+<!-- END MultiBB -->
 
 // Define the bbCode tags
 bbcode = new Array();
@@ -350,13 +353,18 @@ function storeCaret(textEl) {
 			<td><span class="genmed"> 
 			  <input type="button" class="button" accesskey="w" name="addbbcode16" value="URL" style="text-decoration: underline; width: 40px" onClick="bbstyle(16)" onMouseOver="helpline('w')" />
 			  </span></td>
+			  <!-- BEGIN MultiBB -->
+			<td><span class="genmed">
+			  <input type="button" class="button" accesskey="{MultiBB.KEY}" name="{MultiBB.NAME}" value="{MultiBB.VALUE}" style="width: {MultiBB.WIDTH}px" onClick="{MultiBB.STYLE}" onMouseOver="helpline('{MultiBB.VALUE}')" />
+			  </span></td>
+			<!-- END MultiBB -->
 		  </tr>
 		  <tr> 
 			<td colspan="9"> 
 			  <table width="100%" border="0" cellspacing="0" cellpadding="0">
 				<tr> 
 				  <td><span class="genmed"> &nbsp;{L_FONT_COLOR}: 
-					<select name="addbbcode18" onChange="bbfontstyle('[color=' + this.form.addbbcode18.options[this.form.addbbcode18.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onMouseOver="helpline('s')">
+					<select name="addbbcodefontcolor" onChange="bbfontstyle('[color=' + this.form.addbbcodefontcolor.options[this.form.addbbcodefontcolor.selectedIndex].value + ']', '[/color]');this.selectedIndex=0;" onMouseOver="helpline('s')">
 					  <option style="color:black; background-color: {T_TD_COLOR1}" value="{T_FONTCOLOR1}" class="genmed">{L_COLOR_DEFAULT}</option>
 					  <option style="color:darkred; background-color: {T_TD_COLOR1}" value="darkred" class="genmed">{L_COLOR_DARK_RED}</option>
 					  <option style="color:red; background-color: {T_TD_COLOR1}" value="red" class="genmed">{L_COLOR_RED}</option>
@@ -372,7 +380,7 @@ function storeCaret(textEl) {
 					  <option style="color:violet; background-color: {T_TD_COLOR1}" value="violet" class="genmed">{L_COLOR_VIOLET}</option>
 					  <option style="color:white; background-color: {T_TD_COLOR1}" value="white" class="genmed">{L_COLOR_WHITE}</option>
 					  <option style="color:black; background-color: {T_TD_COLOR1}" value="black" class="genmed">{L_COLOR_BLACK}</option>
-					</select> &nbsp;{L_FONT_SIZE}:<select name="addbbcode20" onChange="bbfontstyle('[size=' + this.form.addbbcode20.options[this.form.addbbcode20.selectedIndex].value + ']', '[/size]')" onMouseOver="helpline('f')">
+					</select> &nbsp;{L_FONT_SIZE}:<select name="addbbcodefontsize" onChange="bbfontstyle('[size=' + this.form.addbbcodefontsize.options[this.form.addbbcodefontsize.selectedIndex].value + ']', '[/size]')" onMouseOver="helpline('f')">
 					  <option value="7" class="genmed">{L_FONT_TINY}</option>
 					  <option value="9" class="genmed">{L_FONT_SMALL}</option>
 					  <option value="12" selected class="genmed">{L_FONT_NORMAL}</option>

@@ -966,6 +966,7 @@ $template->set_filenames(array(
 	'reviewbody' => 'posting_topic_review.tpl')
 );
 make_jumpbox('viewforum.'.$phpEx);
+Multi_BBCode();
 
 $template->assign_vars(array(
 	'FORUM_NAME' => $forum_name,
