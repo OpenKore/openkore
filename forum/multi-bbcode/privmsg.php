@@ -1716,6 +1716,7 @@ else if ( $submit || $refresh || $mode != '' )
 	// Send smilies to template
 	//
 	generate_smilies('inline', PAGE_PRIVMSGS);
+	Multi_BBCode();
 
 	$privmsg_subject = preg_replace($html_entities_match, $html_entities_replace, $privmsg_subject);
 	$privmsg_subject = str_replace('"', '&quot;', $privmsg_subject);
