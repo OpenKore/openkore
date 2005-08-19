@@ -202,8 +202,8 @@ function Multi_BBCode()
 			'STYLE' => "bbstyle($val)")
 		);
 	}
+	*/
 }
-*/
 
 
 $max_rows = ((count($EMBB_values)-1)/9) ;
