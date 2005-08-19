@@ -1,0 +1,519 @@
+/**
+ * geshi-light.css
+ * ---------------
+ * GeSHi stylesheet for phpBB.
+ *
+ * For each language you add, make sure you add the appropriate stylesheet info
+ * into the geshi stylesheet for each style you have installed.
+ */
+
+/* Overall syntax block styles (should be like code block styles */
+.syntax-code {
+	font-family: Courier, 'Courier New', sans-serif;
+	font-size: 12px;
+	color: #111111;
+	background-color: #FAFAFA;
+	border: #D1D7DC;
+	border-style: solid;
+	border-left-width: 1px;
+	border-width: 1px;
+}
+.syntax-code ol {
+	margin: 0;
+	color: #808080;
+}
+.syntax-code ol li {
+	margin-left: 0;
+}
+.syntax-code ol li .de1, .syntax-code ol li .de2 {
+	color: #000000;
+}
+.syntax-code .ln-xtra {
+	background-color: #ffc;
+	color: #cc0;
+}
+
+/* php */
+
+.php .kw1 {
+color: #b1b100;
+}
+.php .kw2 {
+color: #000000; font-weight: bold;
+}
+.php .kw3 {
+color: #000066;
+}
+.php .co1 {
+color: #808080; font-style: italic;
+}
+.php .co2 {
+color: #808080; font-style: italic;
+}
+.php .coMULTI {
+color: #808080; font-style: italic;
+}
+.php .es0 {
+color: #000099; font-weight: bold;
+}
+.php .br0 {
+color: #66cc66;
+}
+.php .st0 {
+color: #ff0000;
+}
+.php .nu0 {
+color: #cc66cc;
+}
+.php .me0 {
+color: #006600;
+}
+.php .sc0 {
+
+}
+.php .sc1 {
+
+}
+.php .sc2 {
+
+}
+.php .sc3 {
+
+}
+.php .re0 {
+color: #0000ff;
+}
+
+/* html */
+
+.html .kw1 {
+color: #b1b100;
+}
+.html .kw2 {
+color: #000000; font-weight: bold;
+}
+.html .kw3 {
+color: #000066;
+}
+.html .coMULTI {
+color: #808080; font-style: italic;
+}
+.html .es0 {
+color: #000099; font-weight: bold;
+}
+.html .br0 {
+color: #66cc66;
+}
+.html .st0 {
+color: #ff0000;
+}
+.html .nu0 {
+color: #cc66cc;
+}
+.html .me0 {
+color: #006600;
+}
+.html .sc0 {
+color: #00bbdd;
+}
+.html .sc1 {
+color: #ddbb00;
+}
+.html .sc2 {
+color: #009900;
+}
+
+/* java */
+
+.java .kw1 {
+color: #b1b100;
+}
+.java .kw2 {
+color: #000000; font-weight: bold;
+}
+.java .kw3 {
+color: #aaaadd; font-weight: bold;
+}
+.java .kw4 {
+color: #993333;
+}
+.java .co1 {
+color: #808080; font-style: italic;
+}
+.java .co2 {
+color: #a1a100;
+}
+.java .coMULTI {
+color: #808080; font-style: italic;
+}
+.java .es0 {
+color: #000099; font-weight: bold;
+}
+.java .br0 {
+color: #66cc66;
+}
+.java .st0 {
+color: #ff0000;
+}
+.java .nu0 {
+color: #cc66cc;
+}
+.java .me0 {
+color: #006600;
+}
+
+/* c */
+
+.c .kw1 {
+color: #b1b100;
+}
+.c .kw2 {
+color: #000000; font-weight: bold;
+}
+.c .kw3 {
+
+}
+.c .kw4 {
+color: #993333;
+}
+.c .co1 {
+color: #808080; font-style: italic;
+}
+.c .co2 {
+color: #339933;
+}
+.c .coMULTI {
+color: #808080; font-style: italic;
+}
+.c .es0 {
+color: #000099; font-weight: bold;
+}
+.c .br0 {
+color: #66cc66;
+}
+.c .st0 {
+color: #ff0000;
+}
+.c .nu0 {
+color: #cc66cc;
+}
+.c .me0 {
+color: #202020;
+}
+
+/* css */
+
+.css .kw1 {
+color: #000000; font-weight: bold;
+}
+.css .kw2 {
+color: #993333;
+}
+.css .co1 {
+color: #a1a100;
+}
+.css .coMULTI {
+color: #808080; font-style: italic;
+}
+.css .es0 {
+color: #000099; font-weight: bold;
+}
+.css .br0 {
+color: #66cc66;
+}
+.css .st0 {
+color: #ff0000;
+}
+.css .nu0 {
+color: #cc66cc;
+}
+.css .me0 {
+
+}
+.css .re0 {
+color: #cc00cc;
+}
+.css .re1 {
+color: #6666ff;
+}
+.css .re2 {
+color: #3333ff;
+}
+
+/* ada */
+
+.ada .kw1 {
+color: #00007f;
+}
+.ada .kw2 {
+color: #0000ff;
+}
+.ada .kw3 {
+color: #46aa03; font-weight:bold;
+}
+.ada .co1 {
+color: #adadad; font-style: italic;
+}
+.ada .coMULTI {
+color: #808080; font-style: italic;
+}
+.ada .es0 {
+color: #000099; font-weight: bold;
+}
+.ada .br0 {
+color: #66cc66;
+}
+.ada .st0 {
+color: #7f007f;
+}
+.ada .nu0 {
+color: #ff0000;
+}
+.ada .me0 {
+color: #202020;
+}
+
+/* apache */
+
+.apache .kw1 {
+color: #00007f;
+}
+.apache .kw2 {
+color: #0000ff;
+}
+.apache .co1 {
+color: #adadad; font-style: italic;
+}
+.apache .es0 {
+color: #000099; font-weight: bold;
+}
+.apache .br0 {
+color: #66cc66;
+}
+.apache .st0 {
+color: #7f007f;
+}
+.apache .nu0 {
+color: #ff0000;
+}
+
+/* asm */
+
+.asm .kw1 {
+color: #00007f;
+}
+.asm .kw2 {
+color: #0000ff;
+}
+.asm .kw3 {
+color: #46aa03; font-weight:bold;
+}
+.asm .kw4 {
+color: #0000ff;
+}
+.asm .kw5 {
+color: #0000ff;
+}
+.asm .co1 {
+color: #adadad; font-style: italic;
+}
+.asm .es0 {
+color: #000099; font-weight: bold;
+}
+.asm .br0 {
+color: #66cc66;
+}
+.asm .st0 {
+color: #7f007f;
+}
+.asm .nu0 {
+color: #ff0000;
+}
+
+/* nsis */
+.nsis .kw1 {
+color: #00007f;
+}
+.nsis .kw2 {
+color: #0000ff;
+}
+.nsis .kw3 {
+color: #46aa03; font-weight:bold;
+}
+.nsis .kw4 {
+color: #0000ff;
+}
+.nsis .co1 {
+color: #adadad; font-style: italic;
+}
+.nsis .es0 {
+color: #000099; font-weight: bold;
+}
+.nsis .br0 {
+color: #66cc66;
+}
+.nsis .st0 {
+color: #7f007f;
+}
+.nsis .nu0 {
+color: #ff0000;
+}
+.nsis .me0 {
+color: #202020;
+}
+
+/* qbasic */
+
+.qbasic .kw1 {
+color: #a1a100;
+}
+.qbasic .kw3 {
+color: #000066;
+}
+.qbasic .co1 {
+color: #808080;
+}
+.qbasic .co2 {
+color: #808080;
+}
+.qbasic .es0 {
+color: #000099;
+}
+.qbasic .br0 {
+color: #66cc66;
+}
+.qbasic .st0 {
+color: #ff0000;
+}
+.qbasic .nu0 {
+color: #cc66cc;
+}
+.qbasic .me0 {
+
+}
+
+/* sql */
+
+.sql .kw1 {
+color: #993333; font-weight: bold;
+}
+.sql .co1 {
+color: #808080; font-style: italic;
+}
+.sql .es0 {
+color: #000099; font-weight: bold;
+}
+.sql .br0 {
+color: #66cc66;
+}
+.sql .st0 {
+color: #ff0000;
+}
+.sql .nu0 {
+color: #cc66cc;
+}
+.sql .me0 {
+color: #202020;
+}
+
+/* pascal */
+
+.pascal .kw1 {
+color: #b1b100;
+}
+.pascal .kw2 {
+color: #000000; font-weight: bold;
+}
+.pascal .kw3 {
+
+}
+.pascal .kw4 {
+color: #993333;
+}
+.pascal .co1 {
+color: #808080; font-style: italic;
+}
+.pascal .co2 {
+color: #339933;
+}
+.pascal .coMULTI {
+color: #808080; font-style: italic;
+}
+.pascal .es0 {
+color: #000099; font-weight: bold;
+}
+.pascal .br0 {
+color: #66cc66;
+}
+.pascal .st0 {
+color: #ff0000;
+}
+.pascal .nu0 {
+color: #cc66cc;
+}
+.pascal .me0 {
+color: #202020;
+}
+
+.ada .kw1, .apache .kw1, .asm .kw1, .nsis .kw1 {color: #00007f;}
+.ada .kw2, .apache .kw2, .asm .kw2, .asm .kw4, .asm .kw5, .nsis .kw2, .nsis .kw4, .php .re0, .bash .re0, .bash .re1, .bash .re2, .perl .re0, .php-brief .re0 {color: #0000ff;}
+.ada .kw3, .asm .kw3, .nsis .kw3 {color: #46aa03; font-weight:bold;}
+.ada .br0, .ada .sy0, .apache .br0, .apache .sy0, .asm .br0, .asm .sy0, .c .br0, .c .sy0, .css .br0, .css .sy0, .html4strict .br0, .html4strict .sy0, .java .br0, .java .sy0, .nsis .br0, .nsis .sy0, .pascal .br0, .pascal .sy0, .php .br0, .php .sy0, .qbasic .br0, .qbasic .sy0, .sql .br0, .sql .sy0, .actionscript .br0, .actionscript .sy0, .delphi .br0, .delphi .sy0, .javascript .br0, .javascript .sy0, .bash .br0, .bash .sy0, .perl .br0, .perl .sy0, .xml .br0, .xml .sy0, .caddcl .br0, .caddcl .sy0, .cadlisp .br0, .cadlisp .sy0, .lisp .br0, .lisp .sy0, .lua .br0, .lua .sy0, .oobas .br0, .oobas .sy0, .python .br0, .python .sy0, .vb .br0, .vb .me0, .vb .sy0, .cpp .br0, .cpp .sy0, .php-brief .br0, .php-brief .sy0 {color: #66cc66;}
+.ada .co1, .apache .co1, .asm .co1, .nsis .co1 {color: #adadad; font-style: italic;}
+.ada .coMULTI, .c .co1, .c .coMULTI, .css .coMULTI, .html4strict .coMULTI, .java .co1, .java .coMULTI, .pascal .co1, .pascal .coMULTI, .php .co1, .php .co2, .php .coMULTI, .sql .co1, .sql .co2, .actionscript .co1, .actionscript .co2, .actionscript .coMULTI, .delphi .co1, .delphi .coMULTI, .bash .co1, .perl .co1, .perl .coMULTI, .xml .coMULTI, .caddcl .co1, .caddcl .coMULTI, .cadlisp .co1, .cadlisp .coMULTI, .lisp .co1, .lisp .coMULTI, .lua .co1, .lua .coMULTI, .python .co1, .python .coMULTI, .cpp .co1, .cpp .coMULTI, .php-brief .co1, .php-brief .co2, .php-brief .coMULTI, .visualfoxpro .coMULTI {color: #808080; font-style: italic;}
+.ada .es0, .apache .es0, .asm .es0, .c .es0, .css .es0, .html4strict .es0, .java .es0, .nsis .es0, .pascal .es0, .php .es0, .sql .es0, .actionscript .es0, .asp .es0, .javascript .es0, .bash .es0, .perl .es0, .xml .es0, .caddcl .es0, .cadlisp .es0, .lisp .es0, .lua .es0, .python .es0, .cpp .es0, .php-brief .es0, .visualfoxpro .es0 {color: #000099; font-weight: bold;}
+.ada .st0, .apache .st0, .asm .st0, .nsis .st0 {color: #7f007f;}
+.ada .nu0, .apache .nu0, .asm .nu0, .asm .re0, .asm .re1, .c .st0, .css .st0, .html4strict .st0, .java .st0, .nsis .nu0, .pascal .st0, .php .st0, .qbasic .st0, .sql .st0, .actionscript .st0, .delphi .st0, .bash .st0, .perl .st0, .xml .st0, .caddcl .st0, .cadlisp .st0, .lisp .st0, .lua .st0, .oobas .st0, .python .st0, .vb .st0, .cpp .st0, .php-brief .st0, .visualfoxpro .st0 {color: #ff0000;}
+.ada .me0, .c .me0, .nsis .me0, .pascal .me0, .sql .me0, .caddcl .me0, .cadlisp .me0, .lisp .me0, .lua .me0, .python .me0, .cpp .me0 {color: #202020;}
+.c .kw1, .html4strict .kw1, .java .kw1, .pascal .kw1, .php .kw1, .actionscript .kw1, .bash .kw1, .perl .kw1, .caddcl .kw1, .cadlisp .kw1, .lisp .kw1, .lua .kw1, .oobas .kw1, .python .kw1, .vb .kw1, .cpp .kw1, .php-brief .kw1 {color: #b1b100;}
+.c .kw2, .css .kw1, .html4strict .kw2, .java .kw2, .pascal .kw2, .php .kw2, .actionscript .kw2, .delphi .kw1, .delphi .kw2, .perl .kw2, .cpp .kw2, .php-brief .kw2 {color: #000000; font-weight: bold;}
+.c .kw3, .html4strict .kw3, .php .kw3, .qbasic .kw3, .delphi .kw3, .javascript .kw3, .bash .kw3, .perl .kw3, .xml .re0, .php-brief .kw3 {color: #000066;}
+.c .kw4, .css .kw2, .java .kw4, .pascal .kw4, .delphi .kw4, .cpp .kw4 {color: #993333;}
+.c .co2, .pascal .co2, .xml .sc2, .cpp .co2 {color: #339933;}
+.c .nu0, .css .nu0, .html4strict .nu0, .java .nu0, .pascal .nu0, .php .nu0, .qbasic .nu0, .sql .nu0, .actionscript .nu0, .delphi .nu0, .bash .nu0, .perl .nu0, .xml .nu0, .caddcl .nu0, .cadlisp .nu0, .lisp .nu0, .lua .nu0, .oobas .nu0, .python .nu0, .vb .nu0, .cpp .nu0, .php-brief .nu0, .visualfoxpro .nu0 {color: #cc66cc;}
+.css .co1, .java .co2, .qbasic .kw1 {color: #a1a100;}
+.css .re0 {color: #cc00cc;}
+.css .re1 {color: #6666ff;}
+.css .re2 {color: #3333ff;}
+.html4strict .me0, .java .me0, .php .me0, .actionscript .me0, .delphi .me0, .javascript .me0, .bash .me0, .perl .me0, .xml .me0, .php-brief .me0, .visualfoxpro .me0 {color: #006600;}
+.html4strict .sc0, .xml .sc0 {color: #00bbdd;}
+.html4strict .sc1, .xml .sc1 {color: #ddbb00;}
+.html4strict .sc2, .xml .sc3 {color: #009900;}
+.java .kw3 {color: #aaaadd; font-weight: bold;}
+.qbasic .co1, .qbasic .co2, .oobas .co1, .vb .co1 {color: #808080;}
+.qbasic .es0, .oobas .es0, .vb .es0 {color: #000099;}
+.sql .kw1 {color: #993333; font-weight: bold;}
+.actionscript .kw3 {color: #0066CC;}
+.asp .kw1 {color: #990099; font-weight: bold;}
+.asp .kw2 {color: #0000ff; font-weight: bold;}
+.asp .kw3 {color: #330066;}
+.asp .co1, .asp .coMULTI {color: #008000;}
+.asp .co2 {color: #ff6600;}
+.asp .br0 {color: #006600; font-weight:bold}
+.asp .st0 {color: #cc0000;}
+.asp .nu0 {color: #800000;}
+.asp .me0 {color: #9900cc;}
+.asp .sy0 {color: #006600; font-weight: bold}
+.javascript .kw1 {color: #000066; font-weight: bold;}
+.javascript .kw2 {color: #003366; font-weight: bold;}
+.javascript .co1, .javascript .coMULTI {color: #009900; font-style: italic;}
+.javascript .st0 {color: #3366CC;}
+.javascript .nu0 {color: #CC0000;}
+.javascript .re0 {color: #0066FF;}
+.perl .re4 {color: #009999;}
+.xml .re1, .xml .re2 {font-weight: bold; color: black;}
+.visualfoxpro .kw1, .visualfoxpro .kw2, .visualfoxpro .kw3, .visualfoxpro .kw4, .visualfoxpro .br0, .visualfoxpro .sy0 {color: blue;}
+.visualfoxpro .co1 {color: green; font-style: italic;}
+.visualfoxpro .co2 {color: green font-style: italic;}
+
+.c_mac .de1, .c_mac .de2, .csharp .de1, .csharp .de2, .d .de1, .d .de2, .diff .de1, .diff .de2, .div .de1, .div .de2, .eiffel .de1, .eiffel .de2, .gml .de1, .gml .de2, .matlab .de1, .matlab .de2, .mpasm .de1, .mpasm .de2, .objc .de1, .objc .de2, .oracle8 .de1, .oracle8 .de2, .vbnet .de1, .vbnet .de2, .vhdl .de1, .vhdl .de2 {font-weight:normal;background:transparent;color:#000; padding-left: 5px;}
+.c_mac .kw1, .csharp .kw1, .d .kw1, .diff .kw1, .div .kw1, .eiffel .kw1, .gml .kw1, .matlab .kw1, .mpasm .kw1, .objc .kw1, .oracle8 .kw1, .vbnet .kw1, .vhdl .kw1 {color: #a1a100;}
+.c_mac .kw2, .csharp .kw2, .d .kw2, .diff .kw2, .div .kw2, .eiffel .kw2, .gml .kw2, .matlab .kw2, .mpasm .kw2, .objc .kw2, .oracle8 .kw2, .vbnet .kw2, .vhdl .kw2 {color: #000; font-weight: bold;}
+.c_mac .kw3, .csharp .kw3, .d .kw3, .diff .kw3, .div .kw3, .eiffel .kw3, .gml .kw3, .matlab .kw3, .mpasm .kw3, .objc .kw3, .oracle8 .kw3, .vbnet .kw3, .vhdl .kw3 {color: #000066;}
+.c_mac .kw4, .csharp .kw4, .d .kw4, .diff .kw4, .div .kw4, .eiffel .kw4, .gml .kw4, .matlab .kw4, .mpasm .kw4, .objc .kw4, .oracle8 .kw4, .vbnet .kw4, .vhdl .kw4 {color: #f63333;}
+.c_mac .co1, .c_mac .co2, .c_mac .coMULTI, .csharp .co1, .csharp .co2, .csharp .coMULTI, .d .co1, .d .co2, .d .coMULTI, .diff .co1, .diff .co2, .diff .coMULTI, .div .co1, .div .co2, .div .coMULTI, .eiffel .co1, .eiffel .co2, .eiffel .coMULTI, .gml .co1, .gml .co2, .gml .coMULTI, .matlab .co1, .matlab .co2, .matlab .coMULTI, .mpasm .co1, .mpasm .co2, .mpasm .coMULTI, .objc .co1, .objc .co2, .objc .coMULTI, .oracle8 .co1, .oracle8 .co2, .oracle8 .coMULTI, .vbnet .co1, .vbnet .co2, .vbnet .coMULTI, .vhdl .co1, .vhdl .co2, .vhdl .coMULTI {color: #808080;}
+.c_mac .es0, .csharp .es0, .d .es0, .diff .es0, .div .es0, .eiffel .es0, .gml .es0, .matlab .es0, .mpasm .es0, .objc .es0, .oracle8 .es0, .vbnet .es0, .vhdl .es0 {color: #000033; font-weight: bold;}
+.c_mac .br0, .csharp .br0, .d .br0, .diff .br0, .div .br0, .eiffel .br0, .gml .br0, .matlab .br0, .mpasm .br0, .objc .br0, .oracle8 .br0, .vbnet .br0, .vhdl .br0 {color: #66cc66;}
+.c_mac .st0, .csharp .st0, .d .st0, .diff .st0, .div .st0, .eiffel .st0, .gml .st0, .matlab .st0, .mpasm .st0, .objc .st0, .oracle8 .st0, .vbnet .st0, .vhdl .st0 {color: #ff0000;}
+.c_mac .nu0, .csharp .nu0, .d .nu0, .diff .nu0, .div .nu0, .eiffel .nu0, .gml .nu0, .matlab .nu0, .mpasm .nu0, .objc .nu0, .oracle8 .nu0, .vbnet .nu0, .vhdl .nu0 {color: #ff33ff;}
+.c_mac .me0, .csharp .me0, .d .me0, .diff .me0, .div .me0, .eiffel .me0, .gml .me0, .matlab .me0, .mpasm .me0, .objc .me0, .oracle8 .me0, .vbnet .me0, .vhdl .me0 {color: #006600;}
