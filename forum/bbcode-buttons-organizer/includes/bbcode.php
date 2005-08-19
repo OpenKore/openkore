@@ -42,6 +42,7 @@ function Multi_BBCode()
 	//NOTE: the first element of each array must be ''   Add new elements AFTER the ''
 	$EMBB_widths = array('') ;
 	$EMBB_values = array('') ;
+	/* ///// removed for BBCode Buttons Mod /////
 	for ($i=1; $i<count($EMBB_values); $i++)
 	{
 		// load BBcode MODs info
@@ -55,6 +56,36 @@ function Multi_BBCode()
 			'VALUE' => $EMBB_values[$i],
 			'STYLE' => "bbstyle($val)")
 		);
+	}
+}
+*/
+
+
+$max_rows = ((count($EMBB_values)-1)/9) ;
+$max_rows = ($max_rows*9 == count($EMBB_values)) ? $max_rows : $max_rows+1 ;
+$code_count = 1 ;
+for ($i=1; $i<=$max_rows; $i++)
+{
+	$template->assign_block_vars('XBBcode', array(
+		'ROW_ID' => $i)
+	);
+	
+	for ($element=0; $element<9; $element++)
+	{
+		$val = ($code_count*2)+16 ;
+		if ( $code_count < count($EMBB_values))
+		{
+			$help_lang = ( !empty($lang['bbcode_help'][(strtolower($EMBB_values[$code_count]))]) ) ? $lang['bbcode_help'][(strtolower($EMBB_values[$code_count]))] : $lang['bbcode_help'][$EMBB_values[$code_count]];
+			$template->assign_block_vars('XBBcode.BB', array(
+				'KEY' => $hotkeys[$code_count],
+				'NAME' => "addbbcode$val",
+				'HELP' => sprintf($help_lang, $hotkeys[$code_count]), 
+				'WIDTH' => $EMBB_widths[$code_count],
+				'VALUE' => $EMBB_values[$code_count],
+				'STYLE' => "bbstyle($val)")
+			);
+		}
+		$code_count++ ;
 	}
 }
 // MULTI BBCODE-end
