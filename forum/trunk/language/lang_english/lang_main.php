@@ -388,6 +388,14 @@ $lang['bbcode_w_help'] = 'Insert URL: [url]http://url[/url] or [url=http://url]U
 $lang['bbcode_a_help'] = 'Close all open bbCode tags';
 $lang['bbcode_s_help'] = 'Font color: [color=red]text[/color]  Tip: you can also use color=#FF0000';
 $lang['bbcode_f_help'] = 'Font size: [size=x-small]small text[/size]';
+//
+// bbcode help format goes like this
+// $lang['bbcode_help']['value'] = 'BBCode Name: Info (Alt+%s)';
+//
+// value is what you put in $EMBB_values in posting.php
+// %s gets replaced with the automatic hotkey that the bbcode gets assigned
+//
+$lang['bbcode_help']['value'] = 'BBCode Name: Info (Alt+%s)';
 
 $lang['Emoticons'] = 'Emoticons';
 $lang['More_emoticons'] = 'View more Emoticons';
