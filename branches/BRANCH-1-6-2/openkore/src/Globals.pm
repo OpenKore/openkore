@@ -89,7 +89,6 @@ our %skillsEncore;
 our %skillsState;
 our %skillsStatus;
 our %spells_lut;
-our %timeout;
 our %jobs_lut = (
 	0 => 'Novice',
 	1 => 'Swordsman',
@@ -159,7 +158,30 @@ our %jobs_lut = (
 	4019 => 'Creator',
 	4020 => 'Clown',
 	4021 => 'Gypsy',
-	4022 => 'Peco Paladin'
+	4022 => 'Peco Paladin',
+	4023 => 'Baby Novice',
+	4024 => 'Baby Swordsman',
+	4025 => 'Baby Magician',
+	4026 => 'Baby Archer',
+	4027 => 'Baby Acolyte',
+	4028 => 'Baby Merchant',
+	4029 => 'Baby Thief',
+	4030 => 'Baby Knight',
+	4031 => 'Baby Priest',
+	4032 => 'Baby Wizard',
+	4033 => 'Baby Blacksmith',
+	4034 => 'Baby Hunter',
+	4035 => 'Baby Assassin',
+	4036 => 'Baby Peco Knight',
+	4037 => 'Baby Crusader',
+	4038 => 'Baby Monk',
+	4039 => 'Baby Sage',
+	4040 => 'Baby Rogue',
+	4041 => 'Baby Alchemist',
+	4042 => 'Baby Bard',
+	4043 => 'Baby Dancer',
+	4044 => 'Baby Peco Crusader',
+	4045 => 'Super Baby' # or Baby Super Novice, I like the way eAthena calls it though
 );
 
 # AI

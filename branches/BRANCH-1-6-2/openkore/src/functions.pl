@@ -28,6 +28,7 @@ use Commands;
 use Misc;
 use Plugins;
 use Utils;
+use Utils::Crypton;
 
 
 # use SelfLoader; 1;
@@ -192,6 +193,9 @@ sub checkConnection {
 		}
 		if ($master->{chatLangCode} ne '' && $config{chatLangCode} != $master->{chatLangCode}) {
 			configModify('chatLangCode', $master->{chatLangCode});
+		}
+		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} != $master->{storageEncryptKey}) {
+			configModify('storageEncryptKey', $master->{storageEncryptKey});
 		}
 
 		message("Connecting to Master Server...\n", "connection");
@@ -8672,6 +8676,58 @@ sub parseMsg {
 		} else {
 			error "Buy failed (failure code $fail).\n";
 		}
+
+	} elsif ($switch eq '023A') {
+		my $flag = unpack("v1", substr($msg, 2, 2));
+		if ($flag == 0) {
+			message "Please enter a new storage password:\n";
+		} elsif ($flag == 1) {
+
+			while ($config{storageAuto_password} eq '' && !$quit) {
+				message "Please enter your storage password:\n";
+				my $input = $interface->getInput(-1);
+				if ($input ne '') {
+					configModify('storageAuto_password', $input, 1);
+					message "Storage password set to: $input\n", "success";
+					last;
+				}
+			}
+			return if ($quit);
+
+			#my @key = $config{storageEncryptKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
+			my @key = split /[, ]+/, $config{storageEncryptKey};
+			if (!@key) {
+				error "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n";
+				return;
+			}
+
+			my $crypton = new Utils::Crypton(pack("V*", @key), 32);
+			my $num = $config{storageAuto_password};
+			$num = sprintf("%d%08d", length($num), $num);
+			my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
+			sendStoragePassword(unpack("H*",$ciphertextBlock), 3);
+
+		} else {
+			message "Storage password: unknown flag $flag\n";
+		}
+
+	} elsif ($switch eq '023C') {
+		my $type = unpack("v1", substr($msg, 2, 2));
+		my $val = unpack("v1", substr($msg, 4, 2));
+
+		if ($type == 4) {
+			message "Successfully changed storage password.\n", "success";
+		} elsif ($type == 5) {
+			error "Error: Incorrect storage password.\n";
+		} elsif ($type == 6) {
+			message "Successfully entered storage password.\n", "success";
+		} else {
+			message "Storage password: unknown type $args->{type}\n";
+		}
+
+		# $args->{val}
+		# unknown, what is this for?
+
 	}
 
 	$msg = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
