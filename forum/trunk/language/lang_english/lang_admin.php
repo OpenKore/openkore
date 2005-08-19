@@ -737,6 +737,83 @@ $lang['Mailing_list_subscribe_reminder'] = 'For the latest information on update
 $lang['Version_information'] = 'Version Information';
 
 //
+// Begin Syntax Highlighting Mod
+//
+$lang['Syntax_Highlighting'] = 'Syntax Highlighting';
+$lang['syntax_explain'] = 'Here you can control the syntax highlighting of posts, using the [syntax] BBCode. Syntax Highlighting is powered by <a href="http://qbnz.com/highlighter">GeSHi</a>, for which the documentation is <a href="http://qbnz.com/highlighter/documentation.php">here</a> if you\'d like to extend this mod yourself.';
+$lang['Syntax_highlighting_advanced_mode'] = 'Syntax Highlighting is in <span style="color: green;">advanced</span> mode. This means that you will have full access to all of the abilities of this mod.';
+$lang['Syntax_highlighting_simple_mode'] = 'Syntax Highlighting is in <span style="color: #FF6600;">simple</span> mode. To go to advanced mode, you need to run the script <code>install_syntax.php</code> included with the Syntax Highlighter mod, or the SQL specified in the MOD file.';
+$lang['Syntax_main_control'] = 'Main Control';
+$lang['Syntax_main_control_explain'] = '<p>Here you can control highlighting on a very basic level. You can choose from one of three options:</p>
+
+<ul class="gen">
+    <li><p><strong>Enable Syntax Highlighting</strong>: If you choose this mode, syntax highlighting on your board will be enabled. Users will be able to turn syntax highlighting off for themselves if they wish.</p></li>
+    <li><p><strong>Disable Syntax Highlighting, but parse [syntax] blocks as [code]</strong>: Choosing this mode will mean that [syntax] bbcode will be interpreted as if it was a [code] block. Users will not be able to enable syntax highlighting for themselves if you choose this mode.</p></li>
+    <li><p><strong>Disable Syntax Highlighting</strong>: The [syntax] bbcode will be disabled, the BBCode help dropdown for [syntax] will disappear and no mention of this MOD will be made in the FAQ. Effectively hides the fact this MOD is installed. Users will not be able to enable syntax highlighting for themselves.</p></li>
+</ul>';
+$lang['Syntax_cache_control'] = 'Cache Control';
+$lang['Syntax_enabled'] = 'Enable syntax highlighting';
+$lang['Syntax_partial'] = 'Disable syntax highlighting, but parse [syntax] blocks as [code]';
+$lang['Syntax_disabled'] = 'Disable syntax highlighting';
+$lang['Syntax_update_status'] = 'Update Status';
+$lang['Syntax_main_control_disabled'] = 'Since you are running in simple mode, you cannot change the status of the syntax highlighter from the admin panel. If you wish to enable/disable the syntax highlighter, go into <code>includes/bbcode.php</code>, and edit the relevant fields. In addition, if you are using a cache directory, you should clear the cache (see the cache control below).';
+$lang['Syntax_cache_control_disabled'] = 'Since you are running in simple mode, you cannot change whether the cache is to be used or not. If you wish to enable/disable the cache, go into <code>includes/bbcode.php</code>, and edit the relevant fields. In addition, you should clear the cache after any change to this option (see below).';
+$lang['Syntax_enable_cache'] = 'Enable cache';
+$lang['Syntax_update_cache_enabled'] = 'Update Cache Status';
+$lang['Syntax_clear_the_cache'] = 'Clear the Cache';
+$lang['Syntax_clear_cache_yes_no'] = 'Clear cache?';
+$lang['Syntax_clear_cache'] = 'Clear Cache';
+$lang['Syntax_cache_options'] = 'Cache Options';
+$lang['Syntax_bytes'] = 'Bytes';
+$lang['Syntax_kilobytes'] = 'Kilobytes';
+$lang['Syntax_megabytes'] = 'Megabytes';
+$lang['Syntax_gigabytes'] = 'Gigabytes';
+$lang['Syntax_cache_dir_size'] = 'Maximum size of the cache directory allowed (0 for unlimited, otherwise at least 1K). It is recommended that you leave this at unlimited or a large number, and use time-purging (below) to control cache size.';
+$lang['Syntax_set_cache_options'] = 'Set Cache Options';
+$lang['Syntax_cache_options_disabled'] = 'Since you are running in simple mode, you cannot change cache options. By default, the cache is 20 megs maximum size, and items older than 30 days will expire. If you wish to change cache options, go into <code>includes/bbcode.php</code>, and edit the relevant fields. In addition, you should clear the cache after any changes to this option (see above).';
+$lang['Syntax_seconds'] = 'Seconds';
+$lang['Syntax_minutes'] = 'Minutes';
+$lang['Syntax_hours'] = 'Hours';
+$lang['Syntax_days'] = 'Days';
+$lang['Syntax_months'] = 'Months';
+$lang['Syntax_years'] = 'Years';
+$lang['Syntax_cache_expiry_time'] = 'How long before a syntax file becomes invalid and purged from the cache (0 for unlimited, though this is not recommended).';
+$lang['Syntax_line_numbers_enabled'] = 'Whether line numbering is enabled or not (will trigger a purge of the cache if changed)';
+$lang['Syntax_function_urls_enabled'] = 'Whether functions are turned into URLs to appropriate documentation (will trigger a purge of the cache if changed, and only applies to some languages that have documentation available).';
+$lang['Syntax_general_options'] = 'General Options';
+$lang['Syntax_change_general_options'] = 'Change General Options';
+$lang['Syntax_language_control'] = 'Language Control';
+$lang['Syntax_advanced_language_control_explain'] = 'Use this form to control what languages will be highlighted, what name they are referred to in the [syntax="..."] BBCode, and what name is displayed for them. Changing these options will clear the cache.';
+$lang['Syntax_simple_language_control_explain'] = 'Use this form to control what languages will be highlighted. Changing these options will clear the cache';
+$lang['Syntax_language_name'] = 'Language Name';
+$lang['Syntax_language_name_explain'] = 'This is the name of the GeSHi language file';
+$lang['Syntax_language_enabled'] = 'Language Enabled?';
+$lang['Syntax_language_enabled_explain'] = 'Check the box to enable the language';
+$lang['Syntax_language_code'] = 'Language Code';
+$lang['Syntax_language_code_explain'] = 'What needs to be put in [syntax=&quot;...&quot;] to highlight with this language';
+$lang['Syntax_language_display_name'] = 'Language Display Name';
+$lang['Syntax_language_display_name_explain'] = 'The name the language is displayed as on your forum';
+$lang['Syntax_update_language_options'] = 'Update Language Options';
+$lang['Syntax_reset_language_form'] = 'Reset Language Form';
+
+$lang['Syntax_click_return_syntaxadmin'] = 'Click %shere%s to return to Syntax Highlighter administration';
+
+$lang['Syntax_cache_cleared_successfully'] = 'Syntax Highlighter cache cleared successfully';
+$lang['Syntax_cache_not_cleared'] = 'Syntax Highlighter cache not cleared';
+$lang['Syntax_status_updated_successfully'] = 'Syntax Highlighter status updated successfully. As a result, the cache has been cleared.';
+$lang['Syntax_status_not_updated'] = 'Syntax Highlighter status not updated, as it was not changed.';
+
+$lang['Syntax_installer_new_install'] = 'Welcome to the Syntax Highlighting MOD SQL installer. This script can be used to automatically run the SQL required to install this MOD.<br /><br />Please be aware that this MOD is <strong>ALPHA software</strong>. You are advised to back up your database before installing this MOD!';
+$lang['Syntax_installer_install_mod'] = 'Install MOD';
+$lang['Syntax_installer_install_files_first'] = 'You should perform the file modifications and additions for this MOD before you run the DB install SQL.';
+$lang['Syntax_installer_sql_failed'] = 'Oops!. For some reason, one of the SQL queries for this MOD failed. The query that failed is below.<br /><br />As this software is alpha, no error-correction is taking place. If you need to run the SQL, either fix the problem or look inside the .mod file for the remaining SQL commands that need to be run and run them some other way.';
+$lang['Syntax_installer_mod_installed'] = 'Congratulations! The SQL for this MOD has successfully installed.<br /><br />Please now delete this script, and make sure you have CHMODed the cache/syntax directory to 777 (and the cache/syntax/cache.txt file to 666).';
+$lang['Syntax_installer_previous_install'] = 'If you\'re viewing this message, this MOD has been installed OK. Delete this file!';
+//
+// End Syntax Highlighting Mod
+//
+
+//
 // That's all Folks!
 // -------------------------------------------------
 
