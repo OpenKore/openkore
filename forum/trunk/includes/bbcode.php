@@ -26,6 +26,151 @@ if ( !defined('IN_PHPBB') )
 
 define("BBCODE_UID_LEN", 10);
 
+//
+// Begin Syntax Highlighting Mod
+//
+if ( !isset($board_config['syntax_status']) )
+{
+	/** TODO: Put this config information into a separate file */
+    /*
+     * There's no config information from the DB: Better set it
+     * 
+     * If you're using simple mode, here is where you set the configuration
+     * information. If you edit these options after your board has been
+     * using syntax highlighting for a while, and you are using the cache
+     * (and thus your cache will have some files in it), you need to clear
+     * the cache. You can clear the cache by visiting the administration panel.
+     *  
+     */
+
+    /*
+     * Syntax highlighting status
+     * --------------------------
+     * The allowed values for this option are:
+     * 
+     *   * SYNTAX_NO_PARSE: [syntax] blocks will not be parsed, and will
+     *                      display as normal text @todo Better message here
+     *   * SYNTAX_PARSE_AS_CODE: @todo Better comment
+     *   * SYNTAX_PARSE_ON: @todo Better comment
+     * 
+     * Don't forget to clear the cache if you change this value!
+     */
+    $board_config['syntax_status'] = SYNTAX_PARSE_ON;
+    
+    /*
+     * Cache Usage
+     * -----------
+     * Whether to enable the cache directory or not (recommended). The
+     * directory used can be set below, but the default is generally fine.
+     * 
+     * Allowed values for this option are true (enable) or false (disable)
+     * 
+     * *** Make sure you CHMOD the cache directory to 777! ***
+     */
+    $board_config['syntax_enable_cache'] = true;
+    
+    /*
+     * Cache Directory
+     * ---------------
+     * What directory should be used for the cache directory. The default is
+     * normally just fine, and is where the mod will set the cache directory
+     * to be.
+     * 
+     * If you change this value in here, you will have to remove the old cache
+     * directory by hand.
+     * 
+     * And if you do change this from the default, make sure you put all of
+     * the files that were in included in this MOD that were meant for the
+     * cache directory indo that directory, else it won't function properly!
+     * 
+     * The files that should go in this directory are:
+     *   @todo put file list here
+     * 
+     * And lastly:
+     *       *** Make sure you CHMOD this directory to 777! ***
+     */
+    $board_config['syntax_cache_dir'] = $phpbb_root_path . 'cache/syntax/';
+    
+    /*
+     * Cache Directory Maintenance Time
+     * --------------------------------
+     * How often to check the cache dir (in seconds) - best to leave this
+     * quite large.
+     * 
+     * When the cache directory is checked, it removes files that are older
+     * than the expiry time (you can set this below), and if the directory
+     * is larger than the maximum size (you can also set this below), it
+     * removes files from it to bring it down to size.
+     * 
+     * You don't have to refresh the cache if you change this value.
+     */
+    $board_config['syntax_cache_check_time'] = 5000;
+    
+    /*
+     * Cache Directory Max Size
+     * ------------------------
+     * The maximum size that the cache directory is allowed to be before files
+     * are deleted from it. This is measured in bytes.
+     * 
+     * It's best to leave this reasonably large, otherwise your forum members
+     * will complain about slow response times as the same code is highlighted
+     * again and again...
+     * 
+     * The default is 20 megs, but in reality I have little idea on how big it
+     * should be for a big board.
+     * 
+     * You can set this to 0 also - this means unlimited. If you want to disable
+     * the cache, use the "Cache Usage" option above instead.
+     */
+    $board_config['syntax_cache_dir_size'] = 20 * 1024 * 1024;
+    
+    /*
+     * Cache Directory Max File Age
+     * ----------------------------
+     * The maximum age that files in the cache can be before they expire and are
+     * removed. This is measured in seconds.
+     * 
+     * In combination with the Max Cache Size of the cache directory, this is a
+     * good way to ensure the cache never gets too large while keeping your forum
+     * resonsive.
+     * 
+     * The default is 30 days, set this to 0 to turn age checking off.
+     */
+    $board_config['syntax_cache_files_expire'] = 60 * 60 * 24 * 30;
+    
+    /*
+     * Line Numbers
+     * ------------
+     * Whether to enable line numbers for [syntax] blocks.
+     *
+     * Allowed values for this are true (enabled) or false (disabled).
+     * 
+     * The default is to enable line numbers. 
+     * @todo (only works if mod is fully enabled) WHY?
+     * @todo Does it give line numbers to stuff parsed as code blocks?
+     */
+    $board_config['syntax_enable_line_numbers'] = false;
+    
+    /*
+     * Function to URL Conversion
+     * --------------------------
+     * Whether to enable function to URL conversion for [syntax] blocks.
+     * 
+     * Allowed values for this are true (enabled) or false (disabled).
+     * 
+     * The default is to enable function to URL conversion.
+     * @todo (only works if mod is fully enabled) WHY?
+     */
+    $board_config['syntax_enable_urls'] = true;
+}
+
+// Get syntax mod functions and information
+include($phpbb_root_path . 'includes/functions_syntax.php');
+
+//
+// End Syntax Highlighting Mod
+//
+
 // global that holds loaded-and-prepared bbcode templates, so we only have to do
 // that stuff once.
 
@@ -57,8 +202,8 @@ function Multi_BBCode()
 			'STYLE' => "bbstyle($val)")
 		);
 	}
+	*/
 }
-*/
 
 
 $max_rows = ((count($EMBB_values)-1)/9) ;
@@ -151,6 +296,14 @@ function prepare_bbcode_template($bbcode_tpl)
 
 	$bbcode_tpl['code_open'] = str_replace('{L_CODE}', $lang['Code'], $bbcode_tpl['code_open']);
 
+	//
+	// Begin Syntax Highlighting mod
+	//
+	$bbcode_tpl['syntax_open'] = str_replace('{L_LANGUAGE}', '\' . get_lang_name(\'\\1\') . \'', $bbcode_tpl['syntax_open']);
+	//
+	// End Syntax Highlighting mod
+	//
+
 	$bbcode_tpl['img'] = str_replace('{URL}', '\\1', $bbcode_tpl['img']);
 
 	// We do URLs in several different ways..
@@ -183,6 +336,14 @@ function bbencode_second_pass($text, $uid)
 {
 	global $lang, $bbcode_tpl;
 
+	//
+	// Begin Syntax Highlighting Mod
+	//
+	global $board_config;
+	//
+	// End Syntax Highlighting Mod
+	//
+
 	$text = preg_replace('#(script|about|applet|activex|chrome):#is', "\\1&#058;", $text);
 
 	// pad it with a space so we can distinguish between FALSE and matching the 1st char (index 0).
@@ -209,6 +370,26 @@ function bbencode_second_pass($text, $uid)
 
 	// [CODE] and [/CODE] for posting code (HTML, PHP, C etc etc) in your posts.
 	$text = bbencode_second_pass_code($text, $uid, $bbcode_tpl);
+
+    //
+    // Begin Syntax Highlighting Mod
+    //
+    // [SYNTAX="language"] and [/SYNTAX] for posting syntax highlighted code
+    // @todo Take into account user preferences
+    // @todo Maybe use U modifier to prevent nesting problems?
+    // @todo Maybe problem with geshi_highlight function name?
+    // @todo Take into account the parse as code possibility?
+    if ( $board_config['syntax_status'] != SYNTAX_NO_PARSE )
+    {
+        $text = preg_replace("/\[syntax:$uid=\"?([a-zA-Z0-9\-_\+\#\$\%]+)\"?\](.*?)\[\/syntax:$uid\]/sie", "'{$bbcode_tpl['syntax_open']}' . geshi_highlight('\\2', '\\1', '$uid') . '{$bbcode_tpl['syntax_close']}'", $text);
+    }
+    else
+    {
+        $text = preg_replace("/\[syntax:$uid=(\"?[a-zA-Z0-9\-_\+\#\$\%]+\"?)\](.*?)\[\/syntax:$uid\]/si", "[syntax=\\1]\\2[/syntax]", $text);
+    }
+    //
+    // End Syntax Highlighting Mod
+    //
 
 	// [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.
 	$text = str_replace("[quote:$uid]", $bbcode_tpl['quote_open'], $text);
@@ -308,6 +489,15 @@ function bbencode_first_pass($text, $uid)
 
 	// [CODE] and [/CODE] for posting code (HTML, PHP, C etc etc) in your posts.
 	$text = bbencode_first_pass_pda($text, $uid, '[code]', '[/code]', '', true, '');
+
+    //
+    // Begin Syntax Highlighting Mod
+    //
+    // [SYNTAX="language"] and [/SYNTAX] for posting syntax highlighted code
+    $text = bbencode_first_pass_pda($text, $uid, '#\[syntax=(\\\"[a-zA-Z0-9\-_]+\\\")\]#is', '[/syntax]', '', false, '', "[syntax:$uid=\\1]");
+    //
+    // End Syntax Highlighting Mod
+    //
 
 	// [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.
 	$text = bbencode_first_pass_pda($text, $uid, '[quote]', '[/quote]', '', false, '');

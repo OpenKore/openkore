@@ -168,6 +168,9 @@ define('SEARCH_WORD_TABLE', $table_prefix.'search_wordlist');
 define('SEARCH_MATCH_TABLE', $table_prefix.'search_wordmatch');
 define('SESSIONS_TABLE', $table_prefix.'sessions');
 define('SMILIES_TABLE', $table_prefix.'smilies');
+// Begin Syntax Highlighter Mod
+define('SYNTAX_LANGUAGE_CONFIG_TABLE', $table_prefix.'syntax_language_config');
+// End Syntax Highlighter Mod
 define('THEMES_TABLE', $table_prefix.'themes');
 define('THEMES_NAME_TABLE', $table_prefix.'themes_name');
 define('TOPICS_TABLE', $table_prefix.'topics');
@@ -178,5 +181,17 @@ define('WORDS_TABLE', $table_prefix.'words');
 define('VOTE_DESC_TABLE', $table_prefix.'vote_desc');
 define('VOTE_RESULTS_TABLE', $table_prefix.'vote_results');
 define('VOTE_USERS_TABLE', $table_prefix.'vote_voters');
+
+//
+// Begin Syntax Highlighting Mod
+//
+define('SYNTAX_HIGHLIGHTER_VERSION', '0.4.0');
+
+define('SYNTAX_NO_PARSE', 0);
+define('SYNTAX_PARSE_AS_CODE', 1);
+define('SYNTAX_PARSE_ON', 2);
+//
+// End Syntax Highlighting Mod
+//
 
 ?>

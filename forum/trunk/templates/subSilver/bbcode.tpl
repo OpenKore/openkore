@@ -25,6 +25,18 @@
 </table>
 <span class="postbody"><!-- END quote_close -->
 
+<!-- BEGIN syntax_open --></span>
+<table width="90%" cellspacing="1" cellpadding="3" border="0" align="center">
+<tr>
+	  <td><span class="genmed"><b><span style="color: #933;">{L_LANGUAGE}:</font></b></span></td>
+	</tr>
+	<tr>
+	  <td class="syntax-code"><!-- END syntax_open -->
+<!-- BEGIN syntax_close --></td>
+	</tr>
+</table>
+<span class="postbody"><!-- END syntax_close -->
+
 <!-- BEGIN code_open --></span>
 <table width="90%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr> 
