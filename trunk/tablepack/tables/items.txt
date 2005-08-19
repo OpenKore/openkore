@@ -1,3 +1,7 @@
+// do not use these item names when configuring your bot!
+// check how the item appears in the bot, not here
+// underscores are never used in your config!
+
 2101#Guard#
 2102#Guard#
 2103#Buckler#
