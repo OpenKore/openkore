@@ -1,3 +1,27 @@
+﻿==================
+### 1.6.3
+==================
+
+New features:
+- Support for baby classes! Kore will now be able to identify these
+  classes correctly.
+- Storage kafra password. See storageAuto_password below.
+
+New config options:
+- storageAuto_password (number)
+  If your server is using a storage password, put the password here.
+  You must also set storageEncryptKey!
+
+- storageEncryptKey (key)
+  Put your server's encryption key here. For mRO, it is:
+  0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
+
+  The key may change in the future.
+
+Credits:
+- Harry: Perl implementation of the Crypton encyrption algorithm.
+
+
 ==================
 ### 1.6.2
 ==================

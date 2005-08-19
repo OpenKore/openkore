@@ -130,6 +130,7 @@ our @EXPORT = qw(
 	sendStorageAdd
 	sendStorageClose
 	sendStorageGet
+	sendStoragePassword
 	sendStand
 	sendSync
 	sendTake
@@ -1575,6 +1576,16 @@ sub sendStorageGet {
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
+}
+
+sub sendStoragePassword {
+	# 16 byte hex string
+	my $pass = shift;
+	# 2 = set password ?
+	# 3 = give password ?
+	my $type = 3;
+	my $msg = pack("C C v", 0x3B, 0x02, $type).pack("H*", $pass).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+	sendMsgToServer(\$remote_socket, $msg);
 }
 
 sub sendStand {
