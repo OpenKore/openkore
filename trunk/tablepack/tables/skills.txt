@@ -1,3 +1,5 @@
+// make sure you dont use underscores if you are using this file
+// to configure your skill names
 NV_BASIC#Basic_Skill#
 SM_SWORD#Sword_Mastery#
 SM_TWOHAND#Two-Handed_Sword_Mastery#
