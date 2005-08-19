@@ -231,6 +231,9 @@ input.liteoption {
 @import url("templates/subSilver/formIE.css"); 
 -->
 </style>
+<!-- Begin Syntax Highlighting Mod -->
+<link rel="stylesheet" href="templates/subSilver/geshi.css" type="text/css">
+<!-- End Syntax Highlighting Mod -->
 </head>
 
 <body bgcolor="{T_BODY_BGCOLOR}" text="{T_BODY_TEXT}" link="{T_BODY_LINK}" vlink="{T_BODY_VLINK}">
