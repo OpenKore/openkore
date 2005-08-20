@@ -2992,9 +2992,7 @@ sub skill_use {
 	# Perform trigger actions
 	$conState = 5 if $conState != 4 && $xkore;
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
-	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
-		&& $args->{skillID} != 371
-		&& $args->{skillID} != 372 ); # ignore these skills because they screw up monk comboing
+	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
 		$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
@@ -3063,7 +3061,9 @@ sub skill_used_no_damage {
 
 	# Perform trigger actions
 	$conState = 5 if $conState != 4 && $xkore;
-	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
+	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
+		&& $args->{skillID} != 371
+		&& $args->{skillID} != 372 ); # ignore these skills because they screw up monk comboing
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
 			$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
