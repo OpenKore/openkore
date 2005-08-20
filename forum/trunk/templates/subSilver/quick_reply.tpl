@@ -73,8 +73,10 @@
         <textarea name="message" rows="10" cols="80" wrap="virtual" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);" style="width: 100%;"></textarea><br>
 
         <!-- BEGIN user_logged_in -->
-        <input type='hidden' name='attach_sig' {quick_reply.user_logged_in.ATTACH_SIGNATURE}>
-        <input type='hidden' name='notify' {quick_reply.user_logged_in.NOTIFY_ON_REPLY}>
+	<div style="display: none;">
+        <input type='checkbox' name='attach_sig' {quick_reply.user_logged_in.ATTACH_SIGNATURE}>{L_ATTACH_SIGNATURE}<br>
+        <input type='checkbox' name='notify' {quick_reply.user_logged_in.NOTIFY_ON_REPLY}>{L_NOTIFY_ON_REPLY}
+	</div>
         <!-- END user_logged_in -->
 
         <input type='hidden' name='mode' value='reply'>
