@@ -1579,12 +1579,12 @@ sub sendStorageGet {
 }
 
 sub sendStoragePassword {
-	# 16 byte hex string
+	# 16 byte packed hex data
 	my $pass = shift;
 	# 2 = set password ?
 	# 3 = give password ?
 	my $type = 3;
-	my $msg = pack("C C v", 0x3B, 0x02, $type).pack("H*", $pass).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+	my $msg = pack("C C v", 0x3B, 0x02, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	sendMsgToServer(\$remote_socket, $msg);
 }
 
