@@ -658,7 +658,7 @@ sub AI {
 		while (@unknownObjects) {
 			my $ID = $unknownObjects[0];
 			my $object = $players{$ID} || $npcs{$ID};
-			if (!$object || $object->{gotName}) {
+			if (!$object || $object->{gotName} || $object->{statuses}{"GM Perfect Hide"}) {
 				shift @unknownObjects;
 				next;
 			}
@@ -674,7 +674,7 @@ sub AI {
 			}
 		}
 		foreach (keys %pets) { 
-			if ($pets{$_}{'name_given'} =~ /Unknown/) { 
+			if ($pets{$_}{'name_given'} =~ /Unknown/ && !$pets{$_}{statuses}{"GM Perfect Hide"}) { 
 				sendGetPlayerInfo(\$remote_socket, $_); 
 				last; 
 			}
@@ -3328,7 +3328,6 @@ sub AI {
 			my $portalDist = $config{'attackMinPortalDistance'} || 4;
 			my $playerDist = $config{'attackMinPlayerDistance'};
 			$playerDist = 1 if ($playerDist < 1);
-			eval $OpenKoreMod::autoAttack if defined($OpenKoreMod::autoAttack);
 
 			# Detect whether we are currently in follow mode
 			my $following;
@@ -4972,11 +4971,12 @@ sub parseMsg {
 			$player->{pos_to} = {%coords};
 			my $domain = existsInList($config{friendlyAID}, unpack("L1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: ".$player->name." ($player->{binID}) Level $lv $sex_lut{$player->{sex}} $jobs_lut{$player->{jobID}}\n", $domain, 1;
-			setStatus($ID,$param1,$param2,$param3);
 
 			objectAdded('player', $ID, $player) if ($added);
 
 			Plugins::callHook('player', {player => $player});
+
+			setStatus($ID,$param1,$param2,$param3);
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
@@ -5025,12 +5025,12 @@ sub parseMsg {
 
 				debug "Monster Exists: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence", 1;
 
+				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
 
 				# Monster state
 				$param1 = 0 if $param1 == 5; # 5 has got something to do with the monster being undead
 				setStatus($ID,$param1,$param2,$param3);
 
-				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
 			}
 
 		} elsif ($type == 45) {
@@ -5069,6 +5069,8 @@ sub parseMsg {
 			message "NPC Exists: $npcs{$ID}{'name'} ($npcs{$ID}{pos}->{x}, $npcs{$ID}{pos}->{y}) (ID $npcs{$ID}{'nameID'}) - ($npcs{$ID}{'binID'})\n", undef, 1;
 
 			objectAdded('npc', $ID, $npcs{$ID}) if ($added);
+
+			setStatus($ID, $param1, $param2, $param3);
 
 		} else {
 			debug "Unknown Exists: $type - ".unpack("L*",$ID)."\n", "parseMsg";
@@ -5123,9 +5125,10 @@ sub parseMsg {
 			$players{$ID}{pos_to} = {%coords};
 			my $domain = existsInList($config{friendlyAID}, unpack("L1", $ID)) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Connected: ".$players{$ID}->name." ($players{$ID}{'binID'}) Level $lv $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", $domain;
-			setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
+
+			setStatus($ID, $param1, $param2, $param3);
 
 		} else {
 			debug "Unknown Connected: $type - ", "parseMsg";
@@ -5193,9 +5196,10 @@ sub parseMsg {
 			$players{$ID}{time_move} = time;
 			$players{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 			debug "Player Moved: $players{$ID}{'name'} ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
-                        setStatus($ID, $param1, $param2, $param3);
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
+
+                        setStatus($ID, $param1, $param2, $param3);
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
@@ -5249,9 +5253,10 @@ sub parseMsg {
 				$monsters{$ID}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $walk_speed;
 				$monsters{$ID}{walk_speed} = $walk_speed;
 				debug "Monster Moved: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg", 2;
-	                        setStatus($ID, $param1, $param2, $param3);
 
 				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
+
+	                        setStatus($ID, $param1, $param2, $param3);
 			}
 		} else {
 			debug "Unknown Moved: $type - ".getHex($ID)."\n", "parseMsg";
@@ -5260,6 +5265,9 @@ sub parseMsg {
 	} elsif ($switch eq "007C") {
 		$conState = 5 if ($conState != 4 && $xkore);
 		my $ID = substr($msg, 2, 4);
+		my $param1 = unpack("S1", substr($msg,  8, 2));
+		my $param2 = unpack("S1", substr($msg, 10, 2));
+		my $param3 = unpack("S1", substr($msg, 12, 2));
 		my %coords;
 		makeCoords(\%coords, substr($msg, 36, 3));
 		my $type = unpack("S*",substr($msg, 20,  2));
@@ -5286,6 +5294,8 @@ sub parseMsg {
 			debug "Player Spawned: ".$players{$ID}->name." ($players{$ID}{'binID'}) $sex_lut{$players{$ID}{'sex'}} $jobs_lut{$players{$ID}{'jobID'}}\n", "parseMsg";
 
 			objectAdded('player', $ID, $players{$ID}) if ($added);
+
+			setStatus($ID, $param1, $param2, $param3);
 
 		} elsif ($type >= 1000) {
 			if ($pet) {
@@ -5333,6 +5343,8 @@ sub parseMsg {
 				debug "Monster Spawned: $monsters{$ID}{'name'} ($monsters{$ID}{'binID'})\n", "parseMsg_presence";
 
 				objectAdded('monster', $ID, $monsters{$ID}) if ($added);
+
+				setStatus($ID, $param1, $param2, $param3);
 			}
 
 		} else {
@@ -9908,6 +9920,7 @@ sub updateDamageTables {
 				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
 			}
 			$monsters{$ID1}{target} = $ID2;
+			OpenKoreMod::updateDamageTables($monsters{$ID1}) if (defined &OpenKoreMod::updateDamageTables);
 		}
 		
 	} elsif ($players{$ID1}) {
@@ -9927,6 +9940,7 @@ sub updateDamageTables {
 			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && $chars[$config{'char'}]{'party'}{'users'}{$ID1} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
 			}
+			OpenKoreMod::updateDamageTables($monsters{$ID2}) if (defined &OpenKoreMod::updateDamageTables);
 		}
 	}
 }
@@ -10842,6 +10856,29 @@ sub setStatus {
 			delete $actor->{statuses}{$skillsLooks{$_}};
 			debug "$name $are out of look: $skillsLooks{$_}\n", "parseMsg_statuslook", $verbosity;
 		}
+	}
+
+	# remove perfectly hidden objects
+	if ($actor->{statuses}{'GM Perfect Hide'}) {
+		if ($players{$ID}) {
+			message "Remove perfectly hidden $actor\n";
+			binRemove(\@playersID, $ID);
+			objectRemoved('player', $ID, $players{$ID});
+			delete $players{$ID};
+		}
+		if ($monsters{$ID}) {
+			message "Remove perfectly hidden $actor\n";
+			binRemove(\@monstersID, $ID);
+			objectRemoved('monster', $ID, $monsters{$ID});
+			delete $monsters{$ID};
+		}
+		# NPCs do this on purpose (who knows why)
+		#if ($npcs{$ID}) {
+		#	message "Remove perfectly hidden $actor\n";
+		#	binRemove(\@npcsID, $ID);
+		#	objectRemoved('npc', $ID, $npcs{$ID});
+		#	delete $npcs{$ID};
+		#}
 	}
 }
 
