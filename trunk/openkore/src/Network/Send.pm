@@ -88,7 +88,9 @@ our @EXPORT = qw(
 	sendGuildInfoRequest
 	sendGuildJoin
 	sendGuildJoinRequest
+	sendGuildMemberKick
 	sendGuildMemberNameRequest
+	sendGuildNotice
 	sendGuildLeave
 	sendGuildRequest
 	sendIdentify
@@ -921,6 +923,16 @@ sub sendGuildJoinRequest {
 	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
 }
 
+sub sendGuildMemberKick {
+	my $guildID = shift;
+	my $accountID = shift;
+	my $charID = shift;
+	my $cause = shift;
+	my $msg = pack("C*", 0x59, 0x01).$guildID.$accountID.$charID.pack("a40", $cause);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
+}
+
 sub sendGuildMemberNameRequest {
 	my $r_socket = shift;
 	my $ID = shift;
@@ -942,6 +954,39 @@ sub sendGuildMemberNameRequest {
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Guild Member Name Request : ".getHex($ID)."\n", "sendPacket", 2;
+}
+
+sub sendGuildMemberTitleChange {
+	# change the title for a certain index
+	# i would  guess 0 is the top rank, but i dont know
+	my $index = shift;
+	my $title = shift;
+
+	# copied from MessyKoreXP, not sure if this actually works
+	my $msg = pack("C*", 0x61, 0x01).pack("v1",44).pack("V1",$index).pack("V1",1).pack("V1",$index).pack("V1",0).pack("a24", $title);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Set Guild title: $index $title\n", "sendPacket", 2;
+}
+
+sub sendGuildMemberTitleSelect {
+	# set the title for a member
+	my $accountID = shift;
+	my $charID = shift;
+	my $index = shift;
+
+	my $msg = pack("C*", 0x55, 0x01).pack("v1",16).$accountID.$charID.pack("V1",$index);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Change Guild title: ".getHex($charID)." $index\n", "sendPacket", 2;
+}
+
+sub sendGuildNotice {
+	# sets the notice/announcement for the guild
+	my $guildID = shift;
+	my $name = shift;
+	my $notice = shift;
+	my $msg = pack("C*", 0x6E, 0x01).$guildID.pack("a60 a120",$name,$notice);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
 }
 
 sub sendGuildLeave {
@@ -1718,12 +1763,12 @@ sub sendStorageGetToCart {
 }
 
 sub sendStoragePassword {
-	# 16 byte hex string
+	# 16 byte packed hex data
 	my $pass = shift;
 	# 2 = set password ?
 	# 3 = give password ?
 	my $type = 3;
-	my $msg = pack("C C v", 0x3B, 0x02, $type).pack("H*", $pass).pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
+	my $msg = pack("C C v", 0x3B, 0x02, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
 	sendMsgToServer(\$remote_socket, $msg);
 }
 

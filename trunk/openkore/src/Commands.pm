@@ -1558,6 +1558,14 @@ sub cmdGuild {
 			message "You denied the guild join request.\n", "info";
 		}
 
+	} elsif ($arg1 eq "create") {
+		if (!$arg2) {
+			error	"Syntax Error in function 'guild create' (Create Guild)\n" .
+				"Usage: guild create <name>\n";
+		} else {
+			sendGuildCreate($arg2);
+		}
+
 	} elsif (!defined $char->{guild}) {
 		error "You are not in a guild.\n";
 
@@ -1568,6 +1576,19 @@ sub cmdGuild {
 		} else {
 			sendGuildJoinRequest($player->{ID});
 			message "Sent guild join request to $player->{name}\n";
+		}
+
+	} elsif ($arg1 eq "leave") {
+		sendGuildLeave($arg2);
+		message "Sending guild leave: $arg2\n";
+
+	} elsif ($arg1 eq "break") {
+		if (!$arg2) {
+			error	"Syntax Error in function 'guild break' (Break Guild)\n" .
+				"Usage: guild break <guild name>\n";
+		} else {
+			sendGuildBreak($arg2);
+			message "Sending guild break: $arg2\n";
 		}
 
 	} elsif ($arg1 eq "" || !%guild) {
@@ -1586,10 +1607,6 @@ sub cmdGuild {
 			message	"Type 'guild $args' again to view the information.\n", "info";
 		}
 
-	} elsif ($arg1 eq "leave") {
-		sendGuildLeave($arg2);
-		message "Sending guild leave: $arg2\n";
-
 	} elsif ($arg1 eq "info") {
 		message("---------- Guild Information ----------\n", "info");
 		message(swrite(
@@ -1600,6 +1617,27 @@ sub cmdGuild {
 			"Connect : @>>/@<<",			[$guild{conMember}, $guild{maxMember}]),
 			"info");
 		message("---------------------------------------\n", "info");
+
+	} elsif ($arg1 eq "kick") {
+		if (!$guild{member}) {
+			error "No guild member information available.\n";
+			return;
+		}
+		my @params = split(' ', $arg2, 2);
+		if ($params[0] =~ /^\d+$/) {
+			if ($guild{'member'}[$params[0]]) {
+				sendGuildMemberKick($char->{guildID},
+					$guild{member}[$params[0]]{ID},
+					$guild{member}[$params[0]]{charID},
+					$params[1]);
+			} else {
+				error	"Error in function 'guild kick' (Kick Guild Member)\n" .
+					"Invalid guild member '$params[0]' specified.\n";
+			}
+		} else {
+			error	"Syntax Error in function 'guild kick' (Kick Guild Member)\n" .
+				"Usage: guild kick <number> <reason>\n";
+		}
 
 	} elsif ($arg1 eq "member") {
 		if (!$guild{member}) {

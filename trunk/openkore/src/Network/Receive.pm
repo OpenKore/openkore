@@ -3532,7 +3532,7 @@ sub storage_password_request {
 		my $num = $config{storageAuto_password};
 		$num = sprintf("%d%08d", length($num), $num);
 		my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
-		sendStoragePassword(unpack("H*",$ciphertextBlock), 3);
+		sendStoragePassword($ciphertextBlock, 3);
 
 	} else {
 		debug "Storage password: unknown flag $args->{flag}\n";
