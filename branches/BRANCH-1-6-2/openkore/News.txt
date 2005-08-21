@@ -6,6 +6,10 @@ New features:
 - Support for baby classes! Kore will now be able to identify these
   classes correctly.
 - Storage kafra password. See storageAuto_password below.
+- Ability to evade Freya's anti-bot system.
+
+Bug fixes:
+- Vending zeny limit is no longer limited to 10 million.
 
 New config options:
 - storageAuto_password (number)
