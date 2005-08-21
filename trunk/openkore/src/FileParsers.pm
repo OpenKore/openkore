@@ -718,6 +718,7 @@ sub parseSkills {
 
 	open(FILE, "<$file");
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		my ($handle, $name) = split(/#/);
 		$name =~ s/_/ /g;
 		$name =~ s/ *$//;

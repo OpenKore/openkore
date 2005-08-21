@@ -137,6 +137,12 @@ New commands:
   Displays your character and account ID.
 - damage
   Displays the monsters and skills that damaged you.
+- guild break <guild name>
+  Disband your guild.
+- guild create <name>
+  Create a guild.
+- guild kick <list number> <reason>
+  Kick a guild member out of the guild.
 
 New config options:
 - partySkill: target_dist (range)
