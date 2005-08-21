@@ -10,8 +10,7 @@
 0079 Unit Connected
 007B Unit Move
 007C Unit Spawned
-007F Recieved Sync
-007F Recieved Sync
+007F Received Sync
 0080 Unit Lost (Died, Disappeared, Disconnected)
 0081 Disconnected from Server
 0087 You Move
