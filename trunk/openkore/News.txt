@@ -137,6 +137,9 @@ New commands:
   Displays your character and account ID.
 - damage
   Displays the monsters and skills that damaged you.
+- help [command]
+  not new but updated and more usefull
+  you get now all options for a specific command
 - guild break <guild name>
   Disband your guild.
 - guild create <name>
@@ -254,6 +257,7 @@ Credits:
 - doenet: chatLangCode bugfixes.
 - isieo: attackComboSlot fixes/improvements.
 - dorky, BoNeS, piroJOKE: help in serverType 5 support
+- hakore: commanddescriptions.txt
 
 
 ==================
@@ -282,6 +286,7 @@ New config options:
 
 Credits:
 - Harry: Perl implementation of the Crypton encyrption algorithm.
+- hakore: fixing commanddescriptions for the new help command
 
 
 ==================
