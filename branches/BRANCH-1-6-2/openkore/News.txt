@@ -7,6 +7,7 @@ New features:
   classes correctly.
 - Storage kafra password. See storageAuto_password below.
 - Ability to evade Freya's anti-bot system.
+- Support for eAthena servers using sakexe628. Use serverType 5 for these.
 
 Bug fixes:
 - Vending zeny limit is no longer limited to 10 million.
@@ -24,6 +25,7 @@ New config options:
 
 Credits:
 - Harry: Perl implementation of the Crypton encyrption algorithm.
+- dorky, BoNeS, piroJOKE: help in serverType 5 support
 
 
 ==================

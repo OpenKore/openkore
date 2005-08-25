@@ -433,6 +433,10 @@ sub sendAttack {
 		$msg = pack("C*", 0x85, 0x00, 0x60, 0x60) . 
 		$monID .
 		pack("C*", 0x64, 0x64, 0x3E, 0x63, 0x67, 0x37, $flag);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x90, 0x01, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x08, 0xb0, 0x58) .
+		$monID . pack("C*", 0x3f, 0x74, 0xfb, 0x12, 0x00, 0xd0, 0xda, 0x63, $flag);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
@@ -558,9 +562,9 @@ sub sendChat {
 	my $message = shift;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
 	my $msg;
-	if ($config{serverType} == 3) {
+	if (($config{serverType} == 3) || ($config{serverType} == 5)) {
 		$msg = pack("C*", 0xf3, 0x00) .
-			pack("S*", length($char->{name}) + length($message) + 8) .
+			pack("v*", length($char->{name}) + length($message) + 8) .
 			$char->{name} . " : $message" . chr(0);
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x9F, 0x00) .
@@ -732,6 +736,12 @@ sub sendDrop {
 			pack("S*", $index) .
 			pack("C*", 0x67, 0x64) .
 			pack("S*", $amount);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x16, 0x01, 0x4b) .
+			pack("v*", $index) .
+			pack("C*", 0x60, 0x13, 0x14, 0x82, 0x21) .
+			pack("v*", $amount);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
@@ -828,7 +838,7 @@ sub sendGetPlayerInfo {
 	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
 
-	} elsif ($config{serverType} == 3) {
+	} elsif (($config{serverType} == 3) || ($config{serverType} == 5)) {
 		$msg = pack("C*", 0x8c, 0x00, 0x12, 0x00) . $ID;
 
 	} elsif ($config{serverType} == 4) {
@@ -905,6 +915,10 @@ sub sendGuildMemberNameRequest {
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0xA2, 0x00, 0x39, 0x33, 0x68, 0x3B, 0x68, 0x3B, 0x6E, 0x0A, 0xE4, 0x16) .
 				$ID;
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0xa2, 0x00, 0x00, 0x00, 0x00) .
+				$ID;
+
 	} else {
 		$msg = pack("C*", 0x93, 0x01) . $ID;
 	}
@@ -983,6 +997,12 @@ sub sendItemUse {
 	} elsif ($config{serverType} == 4) {
 		# I have gotten various packets here but this one works well for me
 		$msg = pack("C*", 0x72, 0x00, 0x65, 0x36, 0x65).pack("S*", $ID).pack("C*", 0x64, 0x37).$targetID;
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x9f, 0x00, 0x12, 0x00, 0x00, 0xab ,0xca ,0x11 ,0x5c) .
+			pack("v*", $ID) .
+			pack("C*", 0x00, 0x18, 0xfb, 0x12) .
+			$targetID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
@@ -1008,6 +1028,11 @@ sub sendLook {
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0xF3, 0x00, 0x62, 0x32, 0x31, 0x33, $head,
 			0x00, 0x60, 0x30, 0x33, 0x31, 0x31, 0x31, $body);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x85, 0x00, 0x54, 0x00, 0xD8, 0x5D, 0x2E, 0x14) .
+			pack("C*", $head, 0x00, 0x00, 0x00, 0x08, 0x60, 0x13, 0x14) .
+			pack("C*", $body);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
@@ -1060,6 +1085,17 @@ sub sendMapLogin {
                         $sessionID .
                         pack("L1", getTickCount()) .
                         pack("C*", $sex);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x9b, 0, 0, 0x10) .
+			pack("C*", 0, 0, 0, 0, 0) .
+			$accountID .
+			pack("C*", 0xfc, 0x12) .
+			$charID .
+			pack("C*", 0x00, 0xff, 0xff, 0xff) .
+			$sessionID .
+			pack("V", getTickCount()) .
+			pack("C*", $sex);
 
 	} else {
 		# $config{serverType} == 1 || $config{serverType} == 2
@@ -1200,6 +1236,10 @@ sub sendMove {
 
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x89, 0x00) . getCoordString($x, $y);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0xa7, 0x00, 0x62, 0x13, 0x18, 0x13, 0x97, 0x11) .
+		getCoordString($x, $y);
 
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
@@ -1430,6 +1470,10 @@ sub sendSit {
 		# but it doesn't seem to matter which one we send
 		$msg = pack("C*", 0x85, 0x00, 0x61, 0x32, 0x00, 0x00, 0x00 ,0x00 ,0x65,
   				  0x36, 0x37, 0x34, 0x32, 0x35, 0x02);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x90, 0x01, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x08, 0xb0, 0x58,
+			0x00, 0x00, 0x00, 0x00, 0x3f, 0x74, 0xfb, 0x12, 0x00, 0xd0, 0xda, 0x63, 0x02);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sitting\n", "sendPacket", 2;
@@ -1467,6 +1511,14 @@ sub sendSkillUse {
 			pack("S*", $ID) .
 			pack("C*", 0x6C, 0x6B, 0x68, 0x69, 0x3D, 0x6E, 0x3C, 0x0A, 0x95, 0xE3) .
 			$targetID;
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x72, 0x00, 0x0d, 0x01, 0x32, 0x07) .
+			pack("v*", $lv) .
+			pack("C*", 0x07, 0x00, 0x00, 0x00, 0xd8, 0x07, 0x0d, 0x01, 0x00) .
+			pack("v*", $ID) .
+			pack("C*", 0x8e, 0x00, 0x01, 0xa8, 0x9a, 0x2b, 0x16, 0x12, 0x00, 0x00, 0x00) .
+			$targetID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
@@ -1502,6 +1554,16 @@ sub sendSkillUseLoc {
 			pack("C*", 0x32) . pack("S*", $ID) .
 			pack("C*", 0x3F, 0x6D, 0x6E, 0x68, 0x3D, 0x68, 0x6F, 0x0C, 0x0C, 0x93, 0xE5, 0x5C) .
 			pack("S*", $x) . chr(0) . pack("S*", $y);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x13, 0x01, 0x37, 0x65, 0x66, 0x60, 0x1C, 0xa0, 0xc0, 0x32, 0xBF, 0x00) .
+			pack("v*", $lv) .
+			pack("C*", 0x32) .
+			pack("v*", $ID) .
+			pack("C*", 0x3F) .
+			pack("v*", $x) .
+			pack("C*", 0x6D, 0x6E, 0x68, 0x3D, 0x68, 0x6F, 0x0C, 0x0C, 0x93, 0xE5, 0x5C) .
+			pack("v*", $y);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
@@ -1532,6 +1594,13 @@ sub sendStorageAdd {
 			pack("S", $index) .
 			pack("C", 0x30) .
 			pack("L", $amount);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x94, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
+			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
+			pack("v*", $index) .
+			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7b, 0x01, 0x00) .
+			pack("V*", $amount);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
@@ -1540,7 +1609,7 @@ sub sendStorageAdd {
 sub sendStorageClose {
 	my $r_socket = shift;
 	my $msg;
-	if ($config{serverType} == 3) {
+	if (($config{serverType} == 3) || ($config{serverType} == 5)) {
 		$msg = pack("C*", 0x93, 0x01);
 	} else {
 		$msg = pack("C*", 0xF7, 0x00);
@@ -1568,11 +1637,19 @@ sub sendStorageGet {
 				pack("S*", $index) .
 				pack("C*", 0x00, 0x00, 0x00, 0x00) .
 				pack("L*", $amount);
+
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x93, 0x01, 0x3B, 0x3A, 0x33, 0x69, 0x3B, 0x3B, 0x3E, 0x3A, 0x0A, 0x0A) .
 			pack("S*", $index) .
 			pack("C*", 0x35, 0x34, 0x3D, 0x67) .
 			pack("L*", $amount);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0xf7, 0x00, 0x00, 0x00) .
+			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
+			pack("v*", $index) .
+			pack("C*", 0x00) .
+			pack("V*", $amount);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
@@ -1606,6 +1683,10 @@ sub sendStand {
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x85, 0x00, 0x61, 0x32, 0x00, 0x00, 0x00, 0x00,
 			0x65, 0x36, 0x30, 0x63, 0x35, 0x3F, 0x03);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x90, 0x01, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x08, 0xb0, 0x58,
+			0x00, 0x00, 0x00, 0x00, 0x3f, 0x74, 0xfb, 0x12, 0x00, 0xd0, 0xda, 0x63, 0x03);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Standing\n", "sendPacket", 2;
@@ -1639,6 +1720,13 @@ sub sendSync {
 		$msg .= pack("C*", 0x61, 0x62) if (!$initialSync);
 		$msg .= pack("L", getTickCount());
 		$msg .= pack("C*", 0x0B);
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0x89, 0x00);
+		$msg .= pack("C*", 0x00, 0x00, 0x40) if ($initialSync);
+		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
+		$msg .= pack("C*", 0x00, 0x00, 0x00, 0x90);
+		$msg .= pack("V", getTickCount());
 	}
 
 	sendMsgToServer($r_socket, $msg);
@@ -1660,6 +1748,9 @@ sub sendTake {
 
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x13, 0x01, 0x61, 0x60, 0x3B) . $itemID;
+
+	} elsif ($config{serverType} == 5) {
+		$msg = pack("C*", 0xf5, 0x00, 0x66, 0x00, 0xff, 0xff, 0xff, 0xff, 0x5c) . $itemID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent take\n", "sendPacket", 2;
