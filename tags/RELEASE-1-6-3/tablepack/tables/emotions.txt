@@ -1,0 +1,48 @@
+0 *!*
+1 *?*
+2 *Whistling*
+3 *Heart*
+4 *Sweat*
+5 *Idea*
+6 *$!@#*
+7 *Grumble*
+8 *Zenny!*
+9 *...*
+10 *Peace*
+11 *Fist*
+12 *Wave*
+13 *Flag 1*
+14 *Love*
+15 *Thanks*
+16 *Wah*
+17 *Sorry*
+18 *Heh*
+19 *Sweat*
+20 *Hmm*
+21 *Nice One*
+22 *??*
+23 *Omg*
+24 *Oh*
+25 *X*
+26 *Help*
+27 *Go*
+28 *Sob*
+29 *Good Game*
+30 *Kiss*
+31 *Kiss 2*
+32 *Pfft*
+33 *Ok*
+35 *Flag 2*
+36 *Angry*
+37 *Drool*
+38 *2 Hearts*
+39 *Bleks*
+40 *Na-ah*
+41 *Pat Pat*
+42 *SP*
+43 *Horny*
+44 *Come Here*
+45 *Yawn*
+46 *Congratulations*
+47 *HP*
+48 *Flag 3*
