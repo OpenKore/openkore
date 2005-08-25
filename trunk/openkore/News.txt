@@ -120,7 +120,6 @@ New features:
   ai_teleport_delay.
 - Shop prices are now formatted with thousands separators.
 - The 'vender' command now shows vender's name and index.
-- Support for eAthena servers using sakexe628. Use serverType 5 for these.
 - Support "That person is in another deal." error.
 - 'pl' command now displays everyone's level.
 
@@ -256,7 +255,6 @@ Internal:
 Credits:
 - doenet: chatLangCode bugfixes.
 - isieo: attackComboSlot fixes/improvements.
-- dorky, BoNeS, piroJOKE: help in serverType 5 support
 - hakore: commanddescriptions.txt
 
 
@@ -269,6 +267,7 @@ New features:
   classes correctly.
 - Storage kafra password. See storageAuto_password below.
 - Ability to evade Freya's anti-bot system.
+- Support for eAthena servers using sakexe628. Use serverType 5 for these.
 
 Bug fixes:
 - Vending zeny limit is no longer limited to 10 million.
@@ -286,7 +285,7 @@ New config options:
 
 Credits:
 - Harry: Perl implementation of the Crypton encyrption algorithm.
-- hakore: fixing commanddescriptions for the new help command
+- dorky, BoNeS, piroJOKE: help in serverType 5 support
 
 
 ==================

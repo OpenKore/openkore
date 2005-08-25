@@ -88,10 +88,12 @@ our @EXPORT = qw(
 	sendGuildInfoRequest
 	sendGuildJoin
 	sendGuildJoinRequest
+	sendGuildLeave
 	sendGuildMemberKick
 	sendGuildMemberNameRequest
+	sendGuildMemberTitleSelect
 	sendGuildNotice
-	sendGuildLeave
+	sendGuildRankChange
 	sendGuildRequest
 	sendIdentify
 	sendIgnore
@@ -923,6 +925,14 @@ sub sendGuildJoinRequest {
 	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
 }
 
+sub sendGuildLeave {
+	my ($reason) = @_;
+	my $mess = pack("Z40", $reason);
+	my $msg = pack("C*", 0x59, 0x01).$guild{ID}.$accountID.$charID.$mess;
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
+}
+
 sub sendGuildMemberKick {
 	my $guildID = shift;
 	my $accountID = shift;
@@ -956,18 +966,6 @@ sub sendGuildMemberNameRequest {
 	debug "Sent Guild Member Name Request : ".getHex($ID)."\n", "sendPacket", 2;
 }
 
-sub sendGuildMemberTitleChange {
-	# change the title for a certain index
-	# i would  guess 0 is the top rank, but i dont know
-	my $index = shift;
-	my $title = shift;
-
-	# copied from MessyKoreXP, not sure if this actually works
-	my $msg = pack("C*", 0x61, 0x01).pack("v1",44).pack("V1",$index).pack("V1",1).pack("V1",$index).pack("V1",0).pack("a24", $title);
-	sendMsgToServer(\$remote_socket, $msg);
-	debug "Sent Set Guild title: $index $title\n", "sendPacket", 2;
-}
-
 sub sendGuildMemberTitleSelect {
 	# set the title for a member
 	my $accountID = shift;
@@ -989,12 +987,23 @@ sub sendGuildNotice {
 	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
 }
 
-sub sendGuildLeave {
-	my ($reason) = @_;
-	my $mess = pack("Z40", $reason);
-	my $msg = pack("C*", 0x59, 0x01).$guild{ID}.$accountID.$charID.$mess;
+sub sendGuildRankChange {
+	# change the title for a certain index
+	# i would  guess 0 is the top rank, but i dont know
+	my $index = shift;
+	my $permissions = shift;
+	my $tax = shift;
+	my $title = shift;
+
+	my $msg = pack("C*", 0x61, 0x01) .
+		pack("v1", 44) . # packet length, we can actually send multiple titles in the same packet if we wanted to
+		pack("V1", $index) . # index of this rank in the list
+		pack("V1", $permissions) . # this is their abilities, not sure what format
+		pack("V1", $index) . # isnt even used on emulators, but leave in case Aegis wants this
+		pack("V1", $tax) . # guild tax amount, not sure what format
+		pack("a24", $title);
 	sendMsgToServer(\$remote_socket, $msg);
-	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
+	debug "Sent Set Guild title: $index $title\n", "sendPacket", 2;
 }
 
 sub sendGuildRequest {
@@ -1657,7 +1666,8 @@ sub sendSkillUseLoc {
 			pack("v*", $x) .
 			pack("C*", 0x6D, 0x6E, 0x68, 0x3D, 0x68, 0x6F, 0x0C, 0x0C, 0x93, 0xE5, 0x5C) .
 			pack("v*", $y);
-	}	sendMsgToServer($r_socket, $msg);
+	}
+	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
