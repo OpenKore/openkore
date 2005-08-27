@@ -10,12 +10,12 @@ our @EXPORT_OK = qw(ai_isIdle between cmpr match getArgs
                  setVar getVar refreshGlobal getnpcID getPlayerID
                  getItemID getStorageID getSoldOut getInventoryAmount
                  getCartAmount getShopAmount getStorageAmount
-                 getRandom);
+                 getRandom callMacro);
 
 use Utils;
 use Globals;
 use AI;
-use Log qw(warning);
+use Log qw(warning error);
 use Macro::Data;
 
 our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
@@ -24,29 +24,29 @@ our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 sub ai_isIdle {
   return 1 if $queue->overrideAI;
   return AI::is('macro', 'deal');
-};
+}
 
 sub between {
-  if ($_[0] <= $_[1] && $_[1] <= $_[2]) {return 1};
+  if ($_[0] <= $_[1] && $_[1] <= $_[2]) {return 1}
   return 0;
-};
+}
 
 sub cmpr {
   $cvs->debug("cmpr (@_)", $logfac{function_call_auto});
   my ($a, $cond, $b) = @_;
   if ($a =~ /^[\d.]*$/ && $b =~ /^[\d.]*$/) {
-    if ($cond eq "="  && $a == $b) {return 1};
-    if ($cond eq ">=" && $a >= $b) {return 1};
-    if ($cond eq "<=" && $a <= $b) {return 1};
-    if ($cond eq ">"  && $a > $b)  {return 1};
-    if ($cond eq "<"  && $a < $b)  {return 1};
-    if ($cond eq "!=" && $a != $b) {return 1};
+    if ($cond eq "="  && $a == $b) {return 1}
+    if ($cond eq ">=" && $a >= $b) {return 1}
+    if ($cond eq "<=" && $a <= $b) {return 1}
+    if ($cond eq ">"  && $a > $b)  {return 1}
+    if ($cond eq "<"  && $a < $b)  {return 1}
+    if ($cond eq "!=" && $a != $b) {return 1}
     return 0;
-  };
-  if ($cond eq "="  && $a eq $b) {return 1};
-  if ($cond eq "!=" && $a ne $b) {return 1};
+  }
+  if ($cond eq "="  && $a eq $b) {return 1}
+  if ($cond eq "!=" && $a ne $b) {return 1}
   return 0;
-};
+}
 
 sub match {
   $cvs->debug("match (@_)", $logfac{function_call_auto});
@@ -55,16 +55,16 @@ sub match {
 
   no warnings;
 
-  if ($kw =~ /^".*"$/)   {$match = 0};
-  if ($kw =~ /^\/.*\/$/) {$match = 1};
+  if ($kw =~ /^".*"$/)   {$match = 0}
+  if ($kw =~ /^\/.*\/$/) {$match = 1}
   $kw =~ s/^[\/"](.*)[\/"]/$1/g;
-  if ($match == 0 && $text eq $kw)   {return 1};
-  if ($match == 1 && $text =~ /$kw/) {return 1};
+  if ($match == 0 && $text eq $kw)   {return 1}
+  if ($match == 1 && $text =~ /$kw/) {return 1}
 
   use warnings;
 
   return 0;
-};
+}
 
 sub getArgs {
   my $arg = shift;
@@ -72,8 +72,8 @@ sub getArgs {
     my @ret = $arg =~ /^"(.*?)" +(.*?)( .*)?$/;
     $ret[2] =~ s/^ +//g; return @ret;
   }
-  else {return split(/ /, $arg, 3)};
-};
+  else {return split(/ /, $arg, 3)}
+}
 
 # adds variable and value to stack
 sub setVar {
@@ -82,16 +82,16 @@ sub setVar {
   $cvs->debug("'$var' = '$val'", $logfac{variable_trace});
   $varStack{$var} = $val;
   return 1;
-};
+}
 
 # gets variable's value from stack
 sub getVar {
   $cvs->debug("getVar(@_)", $logfac{function_call_macro});
   my $var = shift;
   refreshGlobal($var);
-  return unless $varStack{$var};
+  return unless defined $varStack{$var};
   return $varStack{$var};
-};
+}
 
 # sets and/or refreshes global variables
 sub refreshGlobal {
@@ -99,20 +99,20 @@ sub refreshGlobal {
   my $var = shift;
   if (!defined $var || $var eq '.map') {
     setVar(".map", $field{name});
-  };
+  }
   if (!defined $var || $var eq '.pos') {
     my $pos = calcPosition($char);
     my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
     setVar(".pos", $val);
-  };
+  }
   if (!defined $var || $var eq '.time') {
     setVar(".time", time);
-  };
+  }
   if (!defined $var || $var eq '.datetime') {
     my $val = localtime;
     setVar(".datetime", $val);
-  };
-};
+  }
+}
 
 # get NPC array index
 sub getnpcID {
@@ -121,10 +121,10 @@ sub getnpcID {
   for (my $id = 0; $id < @npcsID; $id++) {
     next unless $npcsID[$id];
     if ($npcs{$npcsID[$id]}{pos}{x} == $tmpx &&
-        $npcs{$npcsID[$id]}{pos}{y} == $tmpy) {return $id};
-  };
+        $npcs{$npcsID[$id]}{pos}{y} == $tmpy) {return $id}
+  }
   return;
-};
+}
 
 ## getPlayerID(name, r_array)
 # get player array index
@@ -140,10 +140,10 @@ sub getItemID {
   my ($item, $pool) = @_;
   for (my $id = 0; $id < @{$pool}; $id++) {
     next unless $$pool[$id];
-    if (lc($$pool[$id]{name}) eq lc($item)) {return $id};
-  };
+    if (lc($$pool[$id]{name}) eq lc($item)) {return $id}
+  }
   return;
-};
+}
 
 # get storage array index
 sub getStorageID {
@@ -151,10 +151,10 @@ sub getStorageID {
   my $item = shift;
   for (my $id = 0; $id < @storageID; $id++) {
     next unless $storageID[$id];
-    if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {return $id};
-  };
+    if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {return $id}
+  }
   return;
-};
+}
 
 # get amount of sold out slots
 sub getSoldOut {
@@ -163,10 +163,10 @@ sub getSoldOut {
   my $soldout = 0;
   foreach my $aitem (@::articles) {
     next unless $aitem;
-    if ($aitem->{quantity} == 0) {$soldout++};
-  };
+    if ($aitem->{quantity} == 0) {$soldout++}
+  }
   return $soldout;
-};
+}
 
 # get amount of an item in inventory
 sub getInventoryAmount {
@@ -176,7 +176,7 @@ sub getInventoryAmount {
   my $id = getItemID($item, \@{$char->{inventory}});
   return $char->{inventory}[$id]{amount} if defined $id;
   return 0;
-};
+}
 
 # get amount of an item in cart
 sub getCartAmount {
@@ -186,7 +186,7 @@ sub getCartAmount {
   my $id = getItemID($item, \@{$cart{inventory}});
   return $cart{inventory}[$id]{amount} if defined $id;
   return 0;
-};
+}
 
 # get amount of an item in shop
 sub getShopAmount {
@@ -196,10 +196,10 @@ sub getShopAmount {
     next unless $aitem;
     if (lc($aitem->{name}) eq lc($item)) {
       return $aitem->{quantity}
-    };
-  };
+    }
+  }
   return 0;
-};
+}
 
 # get amount of an item in storage
 sub getStorageAmount {
@@ -209,7 +209,7 @@ sub getStorageAmount {
   my $id = getStorageID($item);
   return $storage{$storageID[$id]}{amount} if defined $id;
   return 0;
-};
+}
 
 # returns random item from argument list ##################
 sub getRandom {
@@ -220,12 +220,35 @@ sub getRandom {
   while ($arg ne '') {
     ($items[$id++]) = $arg =~ /^[, ]*"(.*?)"/;
     $arg =~ s/^[, ]*".*?"//g;
-  };
+  }
   if (!@items) {
     warning "[macro] wrong syntax in \@random\n";
     return;
-  };
+  }
   return $items[rand @items];
-};
+}
+
+# macro/script
+sub callMacro {
+  return unless defined $queue;
+  my %tmptime = $queue->timeout;
+  if (timeOut(\%tmptime) && ai_isIdle()) {
+    my $command = $queue->next;
+    if (defined $command) {
+      if ($command ne '') {
+        if (!Commands::run($command)) {
+          error(sprintf("[macro] %s failed with %s\n", $queue->name, $command));
+          undef $queue;
+          return;
+        }
+      }
+      if ($queue->finished) {undef $queue};
+    } else {
+      error(sprintf("[macro] %s error: %s\n", $queue->name, $queue->error));
+      warning "the line number may be incorrect if you called the macro with the <times> parameter.\n";
+      undef $queue;
+    }
+  }
+}
 
 1;

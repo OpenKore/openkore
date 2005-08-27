@@ -11,7 +11,6 @@ our @EXPORT = qw(parseMacroFile parseCmd);
 use Globals;
 use Log qw(message error);
 use Macro::Data;
-use Macro::Automacro qw(releaseAM);
 use Macro::Utilities qw(setVar getVar getnpcID getItemID getStorageID
     getPlayerID getRandom getInventoryAmount getCartAmount getShopAmount
     getStorageAmount);
@@ -42,20 +41,20 @@ sub parseMacroFile {
         $macro{$value} = [];
       } elsif ($key eq 'automacro') {
         %block = (name => $value, type => "auto");
-      };
+      }
     } elsif ($block{type} eq "macro") {
       if ($_ eq "}") {
         undef %block;
       } else {
         push(@{$macro{$block{name}}}, $_);
-      };
+      }
     } elsif ($block{type} eq "auto") {
       if ($_ eq "}") {
         if ($block{loadmacro}) {
           undef $block{loadmacro};
         } else {
           undef %block;
-        };
+        }
       } elsif ($_ eq "call {") {
         $block{loadmacro} = 1;
         $block{loadmacro_name} = "tempMacro".$tempmacro++;
@@ -70,41 +69,24 @@ sub parseMacroFile {
           push(@{$automacro{$block{name}}->{$key}}, $value);
         } else {
           $automacro{$block{name}}->{$key} = $value;
-        };
-      };
-    };
-  };
+        }
+      }
+    }
+  }
   close FILE;
 }
 
 # command line parser for macro
 # returns undef if something went wrong, else the parsed command or "".
-# TODO: it works, but I don't like it
 sub parseCmd {
   $cvs->debug("parseCmd (@_)", $logfac{function_call_macro});
   my $command = shift;
-  return "" unless $command;
-  # shortcut commands that won't be executed
-  if ($command =~ /^\@(log|call|release|pause|set)/) {
-    $cvs->debug("parsing ($command)", $logfac{parser_steps});
-    if ($command =~ /\@log/) {
-      $command =~ s/\@log //;
-      logMessage(parseCmd($command));
-    } elsif ($command =~ /\@release/) {
-      my (undef, $am) = split(/ /, $command);
-      releaseAM($am);
-    } elsif ($command =~ /\@call/) {
-      my (undef, $macro, $times) = split(/ /, $command, 3);
-      pushMacro($macro, parseCmd($times));
-    } elsif ($command =~ /\@set/) {
-      my ($var, $val) = $command =~ /^\@set +\((.*?)\) +(.*)$/;
-      setVar(parseCmd($var), parseCmd($val));
-    } elsif ($command =~ /\@pause/) {
-      my (undef, $timeout) = split(/ /, $command);
-      if (defined $timeout) {$queue->setTimeout($timeout)};
-    };
-    return "";
-  };
+  return "" unless defined $command;
+  while ($command =~ /\$\.?[a-zA-Z]/) {
+    $cvs->debug("scanning for variables in $command", $logfac{parser_steps});
+    my ($var) = $command =~ /\$(\.?[a-zA-Z][a-zA-Z\d]*)/;
+    if (defined $var) {my $tmp = getVar($var);$command =~ s/\$$var/$tmp/g;}
+  }
   while ($command =~ /\@/) {
     $cvs->debug("parsing ($command)", $logfac{parser_steps});
     my $ret = "_%_";
@@ -117,7 +99,6 @@ sub parseCmd {
     elsif ($kw eq 'storage')    {$ret = getStorageID($arg)}
     elsif ($kw eq 'player')     {$ret = getPlayerID($arg, \@::playersID)}
     elsif ($kw eq 'vender')     {$ret = getPlayerID($arg, \@::venderListsID)}
-    elsif ($kw eq 'var')        {$ret = getVar($arg)}
     elsif ($kw eq 'random')     {$ret = getRandom($arg)}
     elsif ($kw eq 'invamount')  {$ret = getInventoryAmount($arg)}
     elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
@@ -126,28 +107,9 @@ sub parseCmd {
     elsif ($kw eq 'eval')       {$ret = eval($arg)};
     return $command if $ret eq '_%_';
     if (defined $ret) {$arg = quotemeta $arg; $command =~ s/\@$kw +\($arg\)/$ret/g}
-    else {error "[macro] command $command failed.\n"; return};
-  };
+    else {error "[macro] command $command failed.\n"; return}
+  }
   return $command;
-};
-
-# inserts another macro into queue
-sub pushMacro {
-  $cvs->debug("pushMacro(@_)", $logfac{function_call_macro});
-  my ($arg, $times) = @_;
-  if (!defined $macro{$arg}) {return}
-  else {
-    if (!$times) {$times = 1};
-    while (--$times >= 0) {$queue->addMacro($arg)};
-  };
-  return 0;
-};
-
-# logs message to console
-sub logMessage {
-  my $message = shift;
-  $message =~ s/^\@log //;
-  message "[macro][log] $message\n";
-};
+}
 
 1;
