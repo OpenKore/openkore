@@ -25,7 +25,7 @@ sub new {
   bless ($self, $class);
   warning "[$self->{name}] cvsdebug initialized\n";
   return $self;
-};
+}
 
 sub DESTROY {
   my $self = shift;
@@ -39,22 +39,22 @@ sub DESTROY {
     elsif (ref($dmp) eq 'HASH') {dumpHash(\%{$dmp})}
     else {message "$$dmp\n"};
     message "--\n", "list";
-  };
-};
+  }
+}
 
 sub debug {
   my ($self, $message, $level) = @_;
-  if ($self->{debug} & $level) {warning "[$self->{name}] $message\n"};
-};
+  if ($self->{debug} & $level) {warning "[$self->{name}] $message\n"}
+}
 
 sub setDebug {
   my $self = shift; $self->{debug} = shift if @_;
   warning "[$self->{name}] debug level: $self->{debug}\n";
-};
+}
 
 sub revision {
-  my $self = shift; return $self->{revision};
-};
+  my $self = shift; return $self->{revision}
+}
 
 sub dumpHash {
   my ($hash, $level) = @_; $level = 0 unless defined $level;
@@ -62,13 +62,13 @@ sub dumpHash {
     message "  "x$level."-> $h\n", "list";
     if (ref($$hash{$h}) eq 'ARRAY') {dumpArray(\@{$$hash{$h}}, $level+1)}
     elsif (ref($$hash{$h}) eq 'HASH') {dumpHash(\%{$$hash{$h}}, $level+1)}
-    else {message "  "x($level+1)."  $$hash{$h}\n"};
-  };
-};
+    else {message "  "x($level+1)."  $$hash{$h}\n"}
+  }
+}
 
 sub dumpArray {
-  foreach my $a (@{$_[0]}) {message "  "x$_[1]." $a\n"};
-};
+  foreach my $a (@{$_[0]}) {message "  "x$_[1]." $a\n"}
+}
 
 sub getRevision {
   my $fname = shift;
@@ -77,10 +77,10 @@ sub getRevision {
     if (/Header:/) {
        my ($rev) = $_ =~ /.pl,v (.*?) [0-9]{4}/i;
        close F; return $rev;
-    };
-  };
+    }
+  }
   close F;
-};
+}
 
 1;
 
