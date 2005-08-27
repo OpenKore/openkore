@@ -1,4 +1,5 @@
 # $Header$
+# obsoleted by Macro::Script
 
 package Macro::Queue;
 
