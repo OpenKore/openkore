@@ -2763,7 +2763,7 @@ sub cmdSkills {
 			error	"Error in function 'skills desc' (Skill Description)\n" .
 				"Skill $arg2 does not exist.\n";
 		} else {
-			my $description = $skillsDesc_lut{$skill->handle} || 'Error: No description availible.\n';
+			my $description = $skillsDesc_lut{$skill->handle} || "Error: No description available.\n";
 			message("===============Skill Description===============\n", "info");
 			message("Skill: ".$skill->name."\n\n", "info");
 			message($description, "info");
