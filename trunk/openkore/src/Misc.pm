@@ -1884,7 +1884,7 @@ sub positionNearPortal {
 sub printItemDesc {
 	my $itemID = shift;
 	my $itemName = itemNameSimple($itemID);
-	my $description = $itemsDesc_lut{$itemID} || 'Error: No description availible.\n';
+	my $description = $itemsDesc_lut{$itemID} || "Error: No description available.\n";
 	message("===============Item Description===============\n", "info");
 	message("Item: $itemName\n\n", "info");
 	message($description, "info");
