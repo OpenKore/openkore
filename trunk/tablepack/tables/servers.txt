@@ -330,7 +330,7 @@ version 0
 serverType 3
 
 [AvalonRO Private Server]
-ip 70.85.200.114
+ip 206.222.29.186
 port 6900
 master_version 14
 version 0
