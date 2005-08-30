@@ -358,10 +358,10 @@ version 54
 serverType 3
 
 [DiscoveryRO Private Server]
-ip 66.111.53.60
+ip 72.36.206.226
 port 6900
 version 0
-master_version 18
+master_version 1
 serverType 4
 
 [Kaz3RO Private Server]
@@ -471,7 +471,7 @@ master_version 17
 version 20
 serverType 4
 
-[LegendRO]
+[LegendRO Private Server]
 ip 64.147.163.114
 port 6900
 version 0
