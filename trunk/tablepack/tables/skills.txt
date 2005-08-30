@@ -260,7 +260,7 @@ CR_DEFENDER#Defender#
 CR_SPEARQUICKEN#Spear_Quicken#
 MO_IRONHAND#Iron_Hand#
 MO_SPIRITSRECOVERY#Vigor_Recovery#
-MO_CALLSPIRITS#Vigor_Condensation#
+MO_CALLSPIRITS#Vigor_condensation#
 MO_ABSORBSPIRITS#Vigor_Absorption#
 MO_TRIPLEATTACK#Triple_Attack#
 MO_BODYRELOCATION#Body_Relocation#
@@ -330,30 +330,30 @@ DC_HUMMING#Humming#
 DC_DONTFORGETME#Forget_Me_Not#
 DC_FORTUNEKISS#Fortune's_Kiss#
 DC_SERVICEFORYOU#At_Your_Service#
-SA_BARRENZONE#Barren_Zone#
-NPC_SPEEDUP#Speed Up#
-NPC_REVENGE#Revenge#
+NPC_SELFDESTRUCTION2#Self_Destruction#
+UNKNOWN_SKILL_332#UNKNOWN_SKILL_332#
+UNKNOWN_SKILL_333#UNKNOWN_SKILL_333#
 WE_MALE#I'll_save_you#
 WE_FEMALE#I'll_sacrifice_myself_for_you#
 WE_CALLPARTNER#I'm_missing_you#
-ITM_TOMAHAWK#Tomahawk#
-NPC_DARKCROSS#Dark Cross#
-NPC_GRANDDARKNESS#Grand Dark Cross#
-NPC_DARKSTRIKE#Dark Strike#
-NPC_DARKTHUNDER#Dark Thunder#
-NPC_STOP#Stop#
-NPC_BREAKWEAPON#Break Weapon#
-NPC_BREAKARMOR#Break Armor#
-NPC_BREAKHELM#Break Helm#
-NPC_BREAKSHIELD#Break Shield#
-NPC_UNDEADATTACK#Undead Attack#
-NPC_CHANGEUNDEAD#Change To Undead#
-NPC_POWERUP#Powerup#
-NPC_AGIUP#Agi-Up#
-NPC_SIEGEMODE#Seige Mode#
-NPC_CALLSLAVE#Call Slave#
-NPC_INVISIBLE#Invisible#
-NPC_RUN#Run#
+ITM_TOMAHAWK#Throw_Tomahawk#
+NPC_DARKCROSS#Dark_Cross#
+NPC_DARKGRANDCROSS#Dark_Grand_Cross#
+NPC_DARKSOULSTRIKE#Dark_Soul_Strike#
+NPC_DARKJUPITEL#Dark_Jupitel#
+NPC_BIND#Bind#
+NPC_BREAKWEAPON#Break_Weapon#
+NPC_BREAKARMOR#Break_Armor#
+NPC_BREAKHELM#Break_Helm#
+NPC_BREAKSHIELD#Break_Shield#
+NPC_UNDEADATTACK#Undead_Attack#
+UNKNOWN_SKILL_348#UNKNOWN_SKILL_348#
+NPC_EXPLOSIONSPIRITS#Explosion_Spirits#
+NPC_INCAGI#Increase_AGI#
+UNKNOWN_SKILL_351#UNKNOWN_SKILL_351#
+UNKNOWN_SKILL_352#UNKNOWN_SKILL_352#
+UNKNOWN_SKILL_353#UNKNOWN_SKILL_353#
+UNKNOWN_SKILL_354#UNKNOWN_SKILL_354#
 LK_AURABLADE#Aura_Blade#
 LK_PARRYING#Parrying#
 LK_CONCENTRATION#Concentration#
@@ -376,7 +376,7 @@ PF_HPCONVERSION#Health_Conversion#
 PF_SOULCHANGE#Soul_Change#
 PF_SOULBURN#Soul_Burn#
 ASC_KATAR#Advanced_Katar_Research#
-ASC_ENCHANTPOISON#Advance_Enchant#
+ASC_HALLUCINATION#Hallucination_Walk#
 ASC_EDP#Enchant_Deadly_Poison#
 ASC_BREAKER#Soul_Breaker#
 SN_SIGHT#True_Sight#
@@ -410,8 +410,72 @@ ASC_CDP#Create_Deadly_Poison_#
 WE_BABY#Dad,_Mom,_I_love_you#
 WE_CALLPARENT#Come_here,_baby#
 WE_CALLBABY#Dad,_Mom._I_miss_you#
-GD_APPROVAL#Official_Guild_Approval#
-GD_KAFRACONTRACT#Contract_with_Kapra#
-GD_GUARDRESEARCH#Guardian_Research#
-GD_CHARISMA#Charisma#
-GD_EXTENSION#Guild_Extension#
+TK_RUN#Run#
+TK_READYSTORM#Ready_Storm#
+TK_STORMKICK#Storm_Kick#
+TK_READYDOWN#Ready_Down#
+TK_DOWNKICK#Down_Kick#
+TK_READYTURN#Ready_Turn#
+TK_TURNKICK#Turn_Kick#
+TK_READYCOUNTER#Ready_Counter#
+TK_COUNTER#Counter#
+TK_DODGE#Dodge#
+TK_JUMPKICK#Jump_Kick#
+TK_HPTIME#HP_Time#
+TK_SPTIME#SP_Time#
+TK_POWER#Power#
+TK_SEVENWIND#Seven_Wind#
+TK_HIGHJUMP#High_Jump#
+SG_FEEL#Feel#
+SG_SUN_WARM#Sun_Warm#
+SG_MOON_WARM#Moon_Warm#
+SG_STAR_WARM#Star_Warm#
+SG_SUN_COMFORT#Sun_Comfort#
+SG_MOON_COMFORT#Moon_Comfort#
+SG_STAR_COMFORT#Star_Comfort#
+SG_HATE#Hate#
+SG_SUN_ANGER#Sun_Anger#
+SG_MOON_ANGER#Moon_Anger#
+SG_STAR_ANGER#Star_Anger#
+SG_SUN_BLESS#Sun_Bless#
+SG_MOON_BLESS#Moon_Bless#
+SG_STAR_BLESS#Star_Bless#
+SG_DEVIL#Devil#
+SG_FRIEND#Friend#
+SG_KNOWLEDGE#Knowledge#
+SG_FUSION#Fusion#
+SL_ALCHEMIST#Alchemist#
+AM_BERSERKPITCHER#Beserk_Pitcher#
+SL_MONK#Monk#
+SL_STAR#Star#
+SL_SAGE#Sage#
+SL_CRUSADER#Crusader#
+SL_SUPERNOVICE#Super_Novice#
+SL_KNIGHT#Knight#
+SL_WIZARD#Wizard#
+SL_PRIEST#Priest#
+SL_BARDDANCER#Bard_Dancer#
+SL_ROGUE#Rogue#
+SL_ASSASIN#Assassin#
+SL_BLACKSMITH#Blacksmith#
+BS_ADRENALINE2#Adrenaline2#
+SL_HUNTER#Hunter#
+SL_SOULLINKER#Soul_Linker#
+SL_KAIZEL#Kaizel#
+SL_KAAHI#Kaahi#
+SL_KAUPE#Kaupe#
+SL_KAITE#Kaite#
+SL_KAINA#Kaina#
+SL_STIN#Stin#
+SL_STUN#Stun#
+SL_SMA#Sma#
+SL_SWOO#Swoo#
+SL_SKE#Ske#
+SL_SKA#Ska#
+UNKNOWN_SKILL_473#UNKNOWN_SKILL_473#
+UNKNOWN_SKILL_474#UNKNOWN_SKILL_474#
+ST_PRESERVE#Preserve#
+ST_FULLSTRIP#Full_Strip#
+WS_WEAPONREFINE#Weapon_Refine#
+CR_SLIMPITCHER#Slim_Pitcher#
+CR_FULLPROTECTION#Full_Chemical_Protection#
