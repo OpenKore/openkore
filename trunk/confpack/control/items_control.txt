@@ -104,6 +104,7 @@ High Heels 0 0 1
 Hood 0 0 1
 Hood [1] 0 0 1
 Jacket 0 0 1
+Jacket [1] 0 0 1
 Manteau 0 0 1
 Mantle 0 0 1
 Mantle [1] 0 0 1
@@ -267,7 +268,6 @@ Rod [4] 0 0 1
 Rope [3] 0 0 1
 Rope [4] 0 0 1
 Saber [2] 0 0 1
-Saber [3] 0 0 1
 Scimiter [2] 0 0 1
 Scimiter [3] 0 0 1
 Slayer 0 0 1

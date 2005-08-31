@@ -271,6 +271,7 @@ attackSkillSlot {
 	target_whenStatusActive
 	target_whenStatusInactive
 	inInventory
+	isSelfSkill 0
 	equip_topHead
 	equip_midHead
 	equip_lowHead
@@ -349,6 +350,7 @@ partySkill {
 	target_timeout 0
 	target_dead 0
 	inInventory
+	isSelfSkill 0
 }
 
 
