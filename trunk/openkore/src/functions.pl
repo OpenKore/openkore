@@ -1626,8 +1626,10 @@ sub AI {
 
 			if (!$args->{getStart}) {
 				$args->{done} = 1;
+
+				# inventory to storage
 				$args->{nextItem} = 0 unless $args->{nextItem};
-				for (my $i = $ai_seq_args[0]{'nextItem'}; $i < @{$chars[$config{'char'}]{'inventory'}}; $i++) {
+				for (my $i = $args->{nextItem}; $i < @{$char->{inventory}}; $i++) {
 					my $item = $char->{inventory}[$i];
 					next unless ($item && %{$item});
 					next if $item->{equipped};
@@ -1638,17 +1640,46 @@ sub AI {
 					my $keep = $control->{keep};
 					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
 					if ($store && $item->{amount} > $keep) {
-						if (AI::args->{lastIndex} == $item->{index} &&
+						if ($args->{lastIndex} == $item->{index} &&
 						    timeOut($timeout{'ai_storageAuto_giveup'})) {
 							last AUTOSTORAGE;
 						} elsif (AI::args->{lastIndex} != $item->{index}) {
 							$timeout{ai_storageAuto_giveup}{time} = time;
 						}
 						undef $args->{done};
-						AI::args->{lastIndex} = $item->{index};
+						$args->{lastIndex} = $item->{index};
 						sendStorageAdd($item->{index}, $item->{amount} - $keep);
 						$timeout{ai_storageAuto}{time} = time;
-						AI::args->{nextItem} = $i + 1;
+						$args->{nextItem} = $i + 1;
+						last AUTOSTORAGE;
+					}
+				}
+
+				# cart to storage
+				# we don't really need to check if we have a cart
+				# if we don't have one it will not find any items to loop through
+				$args->{cartNextItem} = 0 unless $args->{cartNextItem};
+				for (my $i = $args->{cartNextItem}; $i < @{$cart{inventory}}; $i++) {
+					my $item = $cart{inventory}[$i];
+					next unless ($item && %{$item});
+
+					my $control = items_control($item->{name});
+					my $store = $control->{storage};
+					my $keep = $control->{keep};
+					debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
+					# store from cart as well as inventory if the flag is equal to 2
+					if ($store == 2 && $item->{amount} > $keep) {
+						if ($args->{cartLastIndex} == $item->{index} &&
+						    timeOut($timeout{'ai_storageAuto_giveup'})) {
+							last AUTOSTORAGE;
+						} elsif (AI::args->{cartLastIndex} != $item->{index}) {
+							$timeout{ai_storageAuto_giveup}{time} = time;
+						}
+						undef $args->{done};
+						$args->{cartLastIndex} = $item->{index};
+						sendStorageAddFromCart($item->{index}, $item->{amount} - $keep);
+						$timeout{ai_storageAuto}{time} = time;
+						$args->{cartNextItem} = $i + 1;
 						last AUTOSTORAGE;
 					}
 				}
