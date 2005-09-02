@@ -122,6 +122,7 @@ New features:
 - The 'vender' command now shows vender's name and index.
 - Support "That person is in another deal." error.
 - 'pl' command now displays everyone's level.
+- tables/skills.txt: updated for almost all advanced class skills now.
 
 New commands:
 - getplayerinfo (number)
