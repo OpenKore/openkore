@@ -2070,23 +2070,25 @@ sub AI {
 			my $cartInventory = $cart{inventory};
 			my $max;
 
-			$max = @{$inventory};
-			for (my $i = 0; $i < $max; $i++) {
-				my $item = $inventory->[$i];
-				next unless ($item);
+			if ($config{cartMaxWeight} && $cart{weight} < $config{cartMaxWeight}) {
+				$max = @{$inventory};
+				for (my $i = 0; $i < $max; $i++) {
+					my $item = $inventory->[$i];
+					next unless ($item);
 
-				my $control = $items_control{'all'};
-				$control = $items_control{lc($item->{name})} if ($items_control{lc($item->{name})});
+					my $control = $items_control{'all'};
+					$control = $items_control{lc($item->{name})} if ($items_control{lc($item->{name})});
 
-				if ($control->{cart_add} && $item->{amount} > $control->{keep} && !$item->{equipped}) {
-					my %obj;
-					$obj{index} = $i;
-					$obj{amount} = $item->{amount} - $control->{keep};
-					push @addItems, \%obj;
-					debug "Scheduling $item->{name} ($i) x $obj{amount} for adding to cart\n", "ai_autoCart";
+					if ($control->{cart_add} && $item->{amount} > $control->{keep} && !$item->{equipped}) {
+						my %obj;
+						$obj{index} = $i;
+						$obj{amount} = $item->{amount} - $control->{keep};
+						push @addItems, \%obj;
+						debug "Scheduling $item->{name} ($i) x $obj{amount} for adding to cart\n", "ai_autoCart";
+					}
 				}
+				cartAdd(\@addItems);
 			}
-			cartAdd(\@addItems);
 
 			$max = @{$cartInventory};
 			for (my $i = 0; $i < $max; $i++) {
