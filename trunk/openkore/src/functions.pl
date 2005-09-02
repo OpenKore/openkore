@@ -2062,8 +2062,9 @@ sub AI {
 
 	##### AUTO-CART ADD/GET ####
 
-	if ((AI::isIdle || AI::is(qw/route move autoBuy follow sitAuto items_take items_gather/)) && timeOut($AI::Timeouts::autoCart, 2)) {
-		if (hasCart()) {
+	if ((AI::isIdle || AI::is(qw/route move buyAuto follow sitAuto items_take items_gather/))) {
+		my $timeout = $timeout{ai_cartAutoCheck}{timeout} || 2;
+		if (timeOut($AI::Timeouts::autoCart, $timeout) && hasCart()) {
 			my @addItems;
 			my @getItems;
 			my $inventory = $char->{inventory};

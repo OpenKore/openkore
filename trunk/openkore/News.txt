@@ -235,6 +235,9 @@ New config options:
 - cartMaxWeight (weight amount)
   Once the cart weight is above this amount, no longer auto add to cart.
   Default in config.txt is 7900, 100 less than the maximum.
+- timeouts.txt:
+  ai_cartAutoCheck 2
+  Check if we need to do cartAuto functions every x seconds.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
