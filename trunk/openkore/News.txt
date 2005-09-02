@@ -232,6 +232,9 @@ New config options:
   your cart into storage as well as from the inventory. Example:
   Zargon 0 2 0 1
   Automatically put Zargon into the cart while leveling, then storage later.
+- cartMaxWeight (weight amount)
+  Once the cart weight is above this amount, no longer auto add to cart.
+  Default in config.txt is 7900, 100 less than the maximum.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
