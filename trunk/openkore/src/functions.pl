@@ -4820,6 +4820,8 @@ sub parseMsg {
 		my $y = unpack("v1", substr($msg, 12, 2));
 		my $type = unpack("C1", substr($msg, 14, 1));
 		my $fail = unpack("C1", substr($msg, 15, 1));
+		# graffiti message, might only be for one of these switches
+		#my $message = unpack("Z80", substr($msg, 17, 80));
 
 		$spells{$ID}{'sourceID'} = $sourceID;
 		$spells{$ID}{'pos'}{'x'} = $x;
