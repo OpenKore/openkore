@@ -2075,11 +2075,13 @@ sub AI {
 				for (my $i = 0; $i < $max; $i++) {
 					my $item = $inventory->[$i];
 					next unless ($item);
+					next if ($item->{broken} && $item->{type} == 7); # dont auto-cart add pet eggs in use
+					next if ($item->{equipped});
 
 					my $control = $items_control{'all'};
 					$control = $items_control{lc($item->{name})} if ($items_control{lc($item->{name})});
 
-					if ($control->{cart_add} && $item->{amount} > $control->{keep} && !$item->{equipped}) {
+					if ($control->{cart_add} && $item->{amount} > $control->{keep}) {
 						my %obj;
 						$obj{index} = $i;
 						$obj{amount} = $item->{amount} - $control->{keep};

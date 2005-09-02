@@ -64,7 +64,7 @@ Bug fixes:
 - Fix autoSwitch arrow crash bug introduced with Item.pm.
 - Automatically remove perfectly hidden monsters, caused auto-ban.
 - Detect NPC spawning. (possibly picking up weird stuff now)
-- Don't storage pets if they are in use.
+- Don't storage or cart-add pets if they are in use.
 - Show full class name in the pl # command.
 - 'as' command works now when attacking players.
 - "attack" ai_seq will be dequeued when a targeted player dies.
