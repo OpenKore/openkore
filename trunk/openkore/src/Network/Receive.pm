@@ -149,8 +149,9 @@ sub new {
 		'0169' => ['guild_invite_result', 'C1', [qw(type)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
+		#'018C' => ['sense_result'], # wizard sense skill
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
-		#'0192' => ['location_msg'], #finish me, same as area skill but with extra string info for message
+		#'0191' => ['talkie_box'], # talkie box message
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],
