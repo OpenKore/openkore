@@ -227,6 +227,11 @@ New config options:
   This will automatically calculate the waitBeforeUse time for you.
 - notOnAction condition (opposite of onAction)
 - logAppendUsername (flag) this will add _username_char# to your log files
+- items_control.txt: store flag 2
+  If you set the store flag to 2, it will automatically transfer items out of
+  your cart into storage as well as from the inventory. Example:
+  Zargon 0 2 0 1
+  Automatically put Zargon into the cart while leveling, then storage later.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
