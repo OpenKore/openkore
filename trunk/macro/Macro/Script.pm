@@ -233,6 +233,11 @@ sub next {
   # returns command: do whatever
   } elsif ($line =~ /^do\s/) {
     my ($tmp) = $line =~ /^do\s+(.*)/;
+    if ($tmp =~ /^macro\s+/) {
+      my ($arg) = $tmp =~ /^macro\+s(.*)/;
+      $self->{error} = "error in ".$self->{line}.": use 'call $arg' instead of 'macro $arg'";
+      return;
+    }
     $self->{line}++;
     return parseCmd($tmp);
   ##########################################
