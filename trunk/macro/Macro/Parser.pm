@@ -82,15 +82,15 @@ sub parseCmd {
   $cvs->debug("parseCmd (@_)", $logfac{function_call_macro});
   my $command = shift;
   return "" unless defined $command;
-  while ($command =~ /\$\.?[a-zA-Z]/) {
-    $cvs->debug("scanning for variables in $command", $logfac{parser_steps});
-    my ($var) = $command =~ /\$(\.?[a-zA-Z][a-zA-Z\d]*)/;
-    if (defined $var) {my $tmp = getVar($var);$command =~ s/\$$var/$tmp/g;}
+  my $var;
+  while (($var) = $command =~ /[^\\]\$(\.?[a-z][a-z\d]*)/i) {
+    $cvs->debug("found variable $var in $command", $logfac{parser_steps});
+    my $tmp = getVar($var);$command =~ s/\$$var/$tmp/g;
   }
-  while ($command =~ /\@/) {
+  while ($command =~ /\@[a-z]+/i) {
     $cvs->debug("parsing ($command)", $logfac{parser_steps});
     my $ret = "_%_";
-    my ($kw, $arg) = $command =~ /\@([a-z]*) +\(([^@]*?)\)/i;
+    my ($kw, $arg) = $command =~ /\@([a-z]+) +\(([^@]*?)\)/i;
     return $command if (!defined $kw || !defined $arg);
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
     elsif ($kw eq 'cart')       {$ret = getItemID($arg, \@{$cart{inventory}})}
