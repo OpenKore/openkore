@@ -175,6 +175,7 @@ sub new {
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
 		'01F5' => ['deal_begin', 'C1', [qw(type)]],
@@ -1908,6 +1909,13 @@ sub inventory_item_removed {
 	$args->{item} = $char->{inventory}[$invIndex];
 	inventoryItemRemoved($invIndex, $args->{amount});
 	Plugins::callHook('packet_item_removed', {index => $invIndex});
+}
+
+sub married {
+	my ($self, $args) = @_;
+
+	my $actor = Actor::get($args->{ID});
+	message "$actor got married!\n"
 }
 
 sub inventory_items_nonstackable {

@@ -123,6 +123,7 @@ New features:
 - Support "That person is in another deal." error.
 - 'pl' command now displays everyone's level.
 - tables/skills.txt: updated for almost all advanced class skills now.
+- New "<player> got married!" message.
 
 New commands:
 - getplayerinfo (number)
