@@ -218,7 +218,7 @@ sub checkConnection {
 			configModify('storageEncryptKey', $master->{storageEncryptKey});
 		}
 
-		message("Connecting to Master Server...\n", "connection");
+		message("Connecting to Account Server...\n", "connection");
 		$shopstarted = 1;
 		$conState_tries++;
 		$initSync = 1;
@@ -263,7 +263,7 @@ sub checkConnection {
 		undef $secureLoginKey;
 
 	} elsif ($conState == 1 && timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
-		error "Timeout on Master Server, reconnecting...\n", "connection";
+		error "Timeout on Account Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
@@ -273,7 +273,7 @@ sub checkConnection {
 	  && ($config{'server'} ne "" || $masterServer->{charServer_ip})
 	  && !$conState_tries) {
 		my $master = $masterServer;
-		message("Connecting to Game Login Server...\n", "connection");
+		message("Connecting to Character Server...\n", "connection");
 		$conState_tries++;
 
 		if ($master->{charServer_ip}) {
@@ -289,7 +289,7 @@ sub checkConnection {
 
 	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'})
 	  && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
-		error "Timeout on Game Login Server, reconnecting...\n", "connection";
+		error "Timeout on Character Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
@@ -328,7 +328,7 @@ sub checkConnection {
 		$timeout{maplogin}{time} = time;
 
 	} elsif ($conState == 4 && timeOut($timeout{maplogin})) {
-		message("Timeout on Map Server, connecting to Master Server...\n", "connection");
+		message("Timeout on Map Server, connecting to Account Server...\n", "connection");
 		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 		Network::disconnect(\$remote_socket);
 		$conState = 1;
@@ -341,7 +341,7 @@ sub checkConnection {
 			error "exiting...\n", "connection";
 			$quit = 1;
 		} else {
-			error "connecting to Master Server in $timeout_ex{master}{timeout} seconds...\n", "connection";
+			error "connecting to Account Server in $timeout_ex{master}{timeout} seconds...\n", "connection";
 			$timeout_ex{master}{time} = time;
 			$conState = 1;
 			undef $conState_tries;
@@ -353,7 +353,7 @@ sub checkConnection {
 			error "exiting...\n", "connection";
 			$quit = 1;
 		} else {
-			error "connecting to Master Server in $timeout{reconnect}{timeout} seconds...\n", "connection";
+			error "connecting to Account Server in $timeout{reconnect}{timeout} seconds...\n", "connection";
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			Network::disconnect(\$remote_socket);
