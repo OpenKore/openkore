@@ -124,6 +124,8 @@ New features:
 - 'pl' command now displays everyone's level.
 - tables/skills.txt: updated for almost all advanced class skills now.
 - New "<player> got married!" message.
+- Taekwon, Star Gladiator, Flying Star Gladiator and Soul Linker jobs
+  are now recognized.
 
 New commands:
 - getplayerinfo (number)

@@ -212,7 +212,11 @@ our %jobs_lut = (
 	4042 => 'Baby Bard',
 	4043 => 'Baby Dancer',
 	4044 => 'Baby Peco Crusader',
-	4045 => 'Super Baby' # or Baby Super Novice, I like the way eAthena calls it though
+	4045 => 'Super Baby', # or Baby Super Novice, I like the way eAthena calls it though
+	4046 => 'Taekwon',
+	4047 => 'Star Gladiator',
+	4048 => 'Flying Star Gladiator',
+	4049 => 'Soul Linker'
 );
 
 # AI
