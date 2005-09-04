@@ -292,7 +292,7 @@ sub account_server_info {
 	message("-------------------------------\n", 'connection');
 
 	if (!$xkore) {
-		message("Closing connection to Master Server\n", 'connection');
+		message("Closing connection to Account Server\n", 'connection');
 		Network::disconnect(\$remote_socket);
 		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
 			message("Choose your server.  Enter the server number: ", "input");
@@ -2178,7 +2178,7 @@ sub login_error {
 }
 
 sub login_error_game_login_server {
-	error("Error logging into Game Login Server (invalid character specified)...\n", 'connection');
+	error("Error logging into Character Server (invalid character specified)...\n", 'connection');
 	$conState = 1;
 	undef $conState_tries;
 	$timeout_ex{master}{time} = time;
@@ -2802,7 +2802,7 @@ sub private_message_sent {
 sub received_characters {
 	return if $conState == 5;
 	my ($self, $args) = @_;
-	message("Received characters from Game Login Server\n", "connection");
+	message("Received characters from Character Server\n", "connection");
 	$conState = 3;
 	undef $conState_tries;
 	undef @chars;
@@ -2853,7 +2853,7 @@ sub received_characters {
 
 sub received_character_ID_and_Map {
 	my ($self, $args) = @_;
-	message "Received character ID and Map IP from Game Login Server\n", "connection";
+	message "Received character ID and Map IP from Character Server\n", "connection";
 	$conState = 4;
 	undef $conState_tries;
 	$charID = $args->{charID};
@@ -2879,7 +2879,7 @@ sub received_character_ID_and_Map {
 	message "-----------------------------\n", "connection";
 	($ai_v{temp}{map}) = $args->{mapName} =~ /([\s\S]*)\./;
 	checkAllowedMap($ai_v{temp}{map});
-	message("Closing connection to Game Login Server\n", "connection") if (!$xkore);
+	message("Closing connection to Character Server\n", "connection") if (!$xkore);
 	Network::disconnect(\$remote_socket) if (!$xkore);
 	main::initStatVars();
 }
