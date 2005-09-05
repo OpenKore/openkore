@@ -31,61 +31,42 @@ TODO:
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
-- Quick-and-dirty @{$char->{inventory}} > 0 fix for useSelf_item
-  dcOnEmpty. (Will fail if your bot doesn't carry anything at all.)
-- Same quick-and-dirty fix for "Auto-storaging due to insufficient ___".
+- Fix useSelf_item dcOnEmpty and getAuto buggyness caused by lag.
 - Don't try to statsAddAuto before the stat point info has been received.
-- Equipped arrows will now show how many of them are left.
 - Shop title in shop.txt is detected better.
-- Don't send name request for perfectly hidden players and NPCs.
-- Fix autoTalkCont causing next step to happen too fast.
+- Fix autoTalkCont (caused next step to happen too fast).
 - Don't redirect command output if XKore_silent is enabled.
 - Fix "party leave" crash when not in party.
 - Only teleport-on-hit from monsters if they do not miss.
 - Hopefully fix daggersins' weapons ending up on the wrong hand.
-- "Player Connected" did not trigger 'player' plugin call.
 - Guild auto deny timeout was not included in timeouts.txt.
   Deal auto deny timeout was not being used.
-- Increase the maximum vending price to 99,990,000z.
-- Fix job_equipment_hair_change packet detecting actor incorrectly.
-- Pythagorean distances are no longer used; we now go by number of
-  steps. This should make openkore more efficient in determining whether
-  it is in range to attack.
 - 'private 1' in servers.txt is also effective when changing map server.
-- Reverted Pythagorean distances; causes bots to walk around drunk.
-- openkore could not useSelf_item items in inventory index 0 due to
-  (0 == '') being true (affecting $skipID in findIndexStringList_lc).
 - Fix crash with the weight command.
 - Give an error if someone tries to storage an equipped item.
 - Show unknown for public chat distance if player is off screen.
 - Don't display PVP rank if you're not in PVP. (Workaround for server-side
   bug that still sends you your PVP rank for some reason.)
-- Fix autoSwitch arrow crash bug introduced with Item.pm.
-- Automatically remove perfectly hidden monsters, caused auto-ban.
-- Detect NPC spawning. (possibly picking up weird stuff now)
-- Don't storage or cart-add pets if they are in use.
+- Detect NPC spawning (only happens when server first loads).
+- Don't storage or cart-add pets if they are in use (caused disconnect).
 - Show full class name in the pl # command.
 - 'as' command works now when attacking players.
-- "attack" ai_seq will be dequeued when a targeted player dies.
-- Fix cartAuto crash bug for Perl 5.6 caused by:
+- Detect when a targeted player dies ("attack" ai_seq will be dequeued).
+- Fix cartAuto crash bug for Perl 5.6. Caused by:
       delete $cart{'inventory'}[$index];
 - Don't show warnings when "vl" command has weird shops.
 - Don't attempt to gather items near portals lest they suck you in.
-- Delete $char->{casting} upon Map Change.
-- Fix avoid player ID near.
-- Use steps "b e" and "s e" instead of just "e" for buy/sellAuto. Almost
-  as fast and may support private servers better.
-- teleportAuto_hp is now also checked whenever you get attacked.
+- Fix avoid list for playerIDs near you.
+- Faster buy/sellAuto conversation (Use steps "b e" and "s e" instead of "b").
+- teleportAuto_hp responds faster now (is checked whenever you get attacked.)
 - avoidGM was always happening if avoidGM_namePattern was blank.
 - attackComboSlot fixed with Tiger Knuckle Fist and Chain Crush Combo.
 - teleportAuto_equip should work for Teleport lv2 now too.
-- Give a more descriptive error when we are missing skill or item
-  descriptions.
-- Don't check cards on pet eggs.
+- Fix error message for if we are missing skill or item descriptions.
+- Don't check cards on pet eggs (caused weirdly named eggs).
 - Check storageAuto more reliably now (a bot logging in with insufficient
   supplies will now storageAuto before lockMap).
-- Give a more correct message when you fail to connect due to incorrect
-  serverType, instead of "master version # failed."
+- Replace "version # failed." with a better error message.
 - Zeny added to a deal via 'deal add z <#>' will now be correctly added
   when the deal is finalized automatically by dealAuto.
 - Standpoint option in buyAuto and sellAuto did not work.
@@ -266,6 +247,7 @@ Internal:
   cleared sometimes.
 - New Actor#snipable method; boolean whether you have snipable LOS to the
   actor.
+- "Player Connected" did not trigger 'player' plugin call.
 
 Credits:
 - doenet: chatLangCode bugfixes.
