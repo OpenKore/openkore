@@ -221,7 +221,6 @@ Javelin 0 0 1
 Javelin [3] 0 0 1
 Javelin [4] 0 0 1
 Jur [2] 0 0 1
-Kaiser Knuckle 0 0 1
 Katana 0 0 1
 Katana [3] 0 0 1
 Katana [4] 0 0 1
@@ -253,13 +252,11 @@ Partizan [1] 0 0 1
 Partizan [2] 0 0 1
 Pike 0 0 1
 Pike [3] 0 0 1
-Poll Axe [1] 0 0 1
 Rante Whip 0 0 1
 Rante Whip [1] 0 0 1
 Rapier 0 0 1
 Rapier [2] 0 0 1
 Rapier [3] 0 0 1
-Rapture Rose 0 0 1
 Repeating Crossbow [1] 0 0 1
 Ring Pommel Saber [2] 0 0 1
 Rod 0 0 1
@@ -356,7 +353,6 @@ Burnt Tree 0 0 1
 Cactus Needle 0 0 1
 Carrot 0 0 1
 Carrot Juice 0 0 1
-Cat Tread 0 0 1
 Cheese 0 0 1
 China 0 0 1
 Chonchon Doll 0 0 1
@@ -513,7 +509,6 @@ Shining Spear Blade 0 0 1
 Shoot 0 0 1
 Short Daenggie 0 0 1
 Silk Mat 0 0 1
-Sinew of Bear 0 0 1
 Single Cell 0 0 1
 Skel-Bone 0 0 1
 Skin of Poisonous Toad 0 0 1
@@ -526,9 +521,7 @@ Solid Shell 0 0 1
 Solid Trunk 0 0 1
 Songpyun 0 0 1
 Spawn 0 0 1
-Spirit of Fish 0 0 1
 Spore Doll 0 0 1
-Sputum of Bird 0 0 1
 Squid Ink 0 0 1
 Stem 0 0 1
 Sticky Mucus 0 0 1
