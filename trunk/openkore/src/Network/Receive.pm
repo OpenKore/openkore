@@ -156,8 +156,8 @@ sub new {
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
-		#'01A3' => ['pet_unknown'], # clif_pet_food
-		#'01A4' => ['pet_unknown'], # clif_pet_equip clif_pet_performance clif_send_petdata - limited implementation already in functions.pl
+		'01A3' => ['pet_food', 'C1 v1', [qw(success foodID)]],
+		'01A4' => ['pet_info2', 'C1 a4 V1', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
 		'01AA' => ['pet_emotion', 'a4 V1', [qw(ID type)]],
 		'01AC' => ['actor_trapped', 'a4', [qw(ID)]],
@@ -2706,6 +2706,15 @@ sub pet_emotion {
 	}
 }
 
+sub pet_food {
+	my ($self, $args) = @_;
+	if ($args->{success}) {
+		message "Fed pet with ".itemNameSimple($args->{foodID}).".", "pet";
+	} else {
+		error "Failed to feed pet with ".itemNameSimple($args->{foodID}).": no food in inventory.";
+	}
+}
+
 sub pet_info {
 	my ($self, $args) = @_;
 	$pet{name} = $args->{name};
@@ -2715,6 +2724,59 @@ sub pet_info {
 	$pet{friendly} = $args->{friendly};
 	$pet{accessory} = $args->{accessory};
 	debug "Pet status: name: $pet{name} name set?: ". ($pet{nameflag} ? 'yes' : 'no') ." level=$pet{level} hungry=$pet{hungry} intimacy=$pet{friendly} accessory=".itemNameSimple($pet{accessory})."\n", "pet";
+}
+
+sub pet_info2 {
+	my ($self, $args) = @_;
+	my ($type, $ID, $value) = @{$args}{qw(type ID value)};
+
+	# receive information about your pet
+
+	# related freya functions: clif_pet_equip clif_pet_performance clif_send_petdata
+
+	# these should never happen, pets should spawn like normal actors (at least on Freya)
+	# this isn't even very useful, do we want random pets with no location info?
+	#if (!$pets{$ID} || !%{$pets{$ID}}) {
+	#	binAdd(\@petsID, $ID);
+	#	$pets{$ID} = {};
+	#	%{$pets{$ID}} = %{$monsters{$ID}} if ($monsters{$ID} && %{$monsters{$ID}});
+	#	$pets{$ID}{'name_given'} = "Unknown";
+	#	$pets{$ID}{'binID'} = binFind(\@petsID, $ID);
+	#	debug "Pet spawned (unusually): $pets{$ID}{'name'} ($pets{$ID}{'binID'})\n", "parseMsg";
+	#}
+	#if ($monsters{$ID}) {
+	#	if (%{$monsters{$ID}}) {
+	#		objectRemoved('monster', $ID, $monsters{$ID});
+	#	}
+	#	# always clear these in case
+	#	binRemove(\@monstersID, $ID);
+	#	delete $monsters{$ID};
+	#}
+
+	if ($type == 0) {
+		# $value is always 0
+		# what does this do for the client?
+
+	} elsif ($type == 1) {
+		$pet{friendly} = $value;
+		debug "Pet friendly: $value\n";
+
+	} elsif ($type == 2) {
+		$pet{hungry} = $value;
+		debug "Pet hungry: $value\n";
+
+	} elsif ($type == 3) {
+		# accessory info for any pet in range
+		#debug "Pet accessory info: $value\n";
+
+	} elsif ($type == 4) {
+		# performance info for any pet in range
+		#debug "Pet performance info: $value\n";
+
+	} elsif ($type == 5) {
+		# $value is always 0x14
+		# what does this do for the client?
+	}
 }
 
 sub public_chat {

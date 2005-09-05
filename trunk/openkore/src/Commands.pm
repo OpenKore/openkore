@@ -2268,11 +2268,21 @@ sub cmdPet {
 	if (!%pet) {
 		error	"Error in function 'pet' (Pet Management)\n" .
 			"You don't have a pet.";
+
 	} elsif ($subcmd eq "s" || $subcmd eq "status") {
 		message "-----------Pet Status-----------\n" .
 			swrite(
 			"Name: @<<<<<<<<<<<<<<<<<<<<<<< Accessory: @*",
 			[$pet{name}, itemNameSimple($pet{accessory})]), "list";
+
+	} elsif ($subcmd eq "p" || $subcmd eq "performance") {
+		sendPetPerformance(\$remote_socket);
+
+	} elsif ($subcmd eq "r" || $subcmd eq "return") {
+		sendPetReturnToEgg(\$remote_socket);
+
+	} elsif ($subcmd eq "u" || $subcmd eq "unequip") {
+		sendPetUnequipItem(\$remote_socket);
 	}
 }
 
