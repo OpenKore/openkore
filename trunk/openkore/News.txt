@@ -3,7 +3,6 @@
 ==================
 
 TODO:
-- Write player name cache to file?
 - Remove \$remote_socket from all Send.pm functions.
 - Convert the rest of the packets to Receive.pm.
 
@@ -271,6 +270,7 @@ Internal:
 Credits:
 - doenet: chatLangCode bugfixes.
 - isieo: attackComboSlot fixes/improvements.
+- piroJOKE: new emotions, new fields.
 - hakore: commanddescriptions.txt, avoidGM_ignore/deltaHp fix, standpoint bug
 
 
