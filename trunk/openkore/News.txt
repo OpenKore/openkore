@@ -89,6 +89,7 @@ Bug fixes:
   serverType, instead of "master version # failed."
 - Zeny added to a deal via 'deal add z <#>' will now be correctly added
   when the deal is finalized automatically by dealAuto.
+- Standpoint option in buyAuto and sellAuto did not work.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -270,7 +271,7 @@ Internal:
 Credits:
 - doenet: chatLangCode bugfixes.
 - isieo: attackComboSlot fixes/improvements.
-- hakore: commanddescriptions.txt
+- hakore: commanddescriptions.txt, avoidGM_ignore/deltaHp fix, standpoint bug
 
 
 ==================

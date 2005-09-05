@@ -1809,7 +1809,8 @@ sub AI {
 		}
 	} elsif ($ai_seq[0] eq "sellAuto" && timeOut($timeout{'ai_sellAuto'})) {
 		$ai_seq_args[0]{'npc'} = {};
-		($config{sellAuto_standpoint}) ? getNPCInfo($config{'sellAuto_standpoint'}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{'sellAuto_npc'}, $ai_seq_args[0]{'npc'});
+		my $destination = $config{sellAuto_standpoint} || $config{sellAuto_npc};
+		getNPCInfo($destination, $ai_seq_args[0]{'npc'});
 		if (!defined($ai_seq_args[0]{'npc'}{'ok'})) {
 			$ai_seq_args[0]{'done'} = 1;
 			last AUTOSELL;
@@ -1849,7 +1850,11 @@ sub AI {
 			if (!defined($ai_seq_args[0]{'sentSell'})) {
 				$ai_seq_args[0]{'sentSell'} = 1;
 
-				ai_talkNPC($ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}, 's e');
+				# load the real npc location just in case we used standpoint
+				my $realpos = {};
+				getNPCInfo($config{"sellAuto_npc"}, $realpos);
+
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 's e');
 
 				last AUTOSELL;
 			}
@@ -1949,17 +1954,20 @@ sub AI {
 
 		for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
 			next if (!$config{"buyAuto_$i"});
-			# did we already fail to do this buyAuto slot?
+			# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
 			next if ($args->{index_failed}{$i});
 
 			$args->{invIndex} = findIndexString_lc($char->{inventory}, "name", $config{"buyAuto_$i"});
 			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && ($args->{invIndex} eq "" || $char->{inventory}[$args->{invIndex}]{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
 				next if ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zenny}, $config{"buyAuto_$i"."_zeny"}));
+
 				# get NPC info, use standpoint if provided
 				$args->{npc} = {};
-				($config{"buyAuto_$i"."_standpoint"} ? getNPCInfo($config{"buyAuto_$i"."_standpoint"}, $ai_seq_args[0]{'npc'}) : getNPCInfo($config{"buyAuto_$i"."_npc"}, $ai_seq_args[0]{'npc'}));
+				my $destination = $config{"buyAuto_$i"."_standpoint"} || $config{"buyAuto_$i"."_npc"};
+				getNPCInfo($destination, $args->{npc});
 
 				# did we succeed to load NPC info from this slot?
+				# (doesnt check validity of _npc if we used _standpoint...)
 				if ($args->{npc}{ok}) {
 					$args->{index} = $i;
 				}
@@ -1985,7 +1993,7 @@ sub AI {
 		} else {
 			my $distance = distance($args->{npc}{pos}, $char->{pos_to});
 			# move exactly to the given spot if we specified a standpoint
-			my $talk_distance = ($config{"buyAuto_$args->{index}"."_standpoint"} ? 0 : $config{"buyAuto_$args->{index}"."_distance"});
+			my $talk_distance = ($config{"buyAuto_$args->{index}"."_standpoint"} ? 1 : $config{"buyAuto_$args->{index}"."_distance"});
 			if ($distance > $talk_distance) {
 				$do_route = 1;
 			}
@@ -2043,7 +2051,12 @@ sub AI {
 			if (!$args->{sentBuy}) {
 				$args->{sentBuy} = 1;
 				$timeout{ai_buyAuto_wait}{time} = time;
-				ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, 'b e');
+
+				# load the real npc location just in case we used standpoint
+				my $realpos = {};
+				getNPCInfo($config{"buyAuto_$args->{index}"."_npc"}, $realpos);
+
+				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 'b e');
 				last AUTOBUY;
 			}
 			if ($args->{invIndex} ne "") {
