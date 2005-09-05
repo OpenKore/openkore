@@ -44,5 +44,20 @@
 44 e9,com *Come Here*
 45 e10,yawn *Yawn*
 46 e11,grat *Congratulations*
-47 e12,hp *HP*
+47 e12 *HP*
 48 flg3 *Flag 3*
+49 flg4 *Flag 4*
+50 flg5 *Flag 5*
+51 flg6 *Flag 6*
+52 fsh *FlashEyes(?!)*
+53 spin *SpinEyes(?!)*
+54 sigh *'o'(?!)*
+55 dum *Dumb(?!)*
+56 crwd *( . )(?!)*
+57 desp *Down(?!)*
+58 dice1 *Dice#1*
+59 dice2 *Dice#2*
+60 dice3 *Dice#3*
+61 dice4 *Dice#4*
+62 dice5 *Dice#5*
+63 dice6 *Dice#6*
