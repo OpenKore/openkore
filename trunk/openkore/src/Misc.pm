@@ -968,13 +968,7 @@ sub avoidGM_talk {
 
 	# Check whether this "GM" is on the ignore list
 	# in order to prevent false matches
-	my $j = 0;
-	while ($config{"avoid_ignore_$j"} ne "") {
-		if ($user eq $config{"avoid_ignore_$j"}) {
-			return 0;
-		}
-		$j++;
-	}
+	return 0 if (existsInList($config{avoidGM_ignoreList}, $user));
 
 	if ($user =~ /^([a-z]?ro)?-?(Sub)?-?\[?GM\]?/i || $user =~ /$config{avoidGM_namePattern}/) {
 		my %args = (
@@ -3102,7 +3096,9 @@ sub checkPlayerCondition {
 		}
 	}
 
-	return 0 if $config{$prefix."_deltaHp"} && $players{$id}{deltaHp} > $config{$prefix."_deltaHp"};
+	if ($config{$prefix."_deltaHp"}){
+		return 0 unless inRange($player->{deltaHp}, $config{$prefix."_deltaHp"});
+	}
 
 	# check player job class
 	if ($config{$prefix . "_isJob"}) { return 0 unless (existsInList($config{$prefix . "_isJob"}, $jobs_lut{$players{$id}{jobID}})); }

@@ -126,12 +126,13 @@ our @EXPORT = qw(
 	sendPetReturnToEgg
 	sendPetUnequipItem
 	sendPreLoginCode
+	sendPrivateMsg
 	sendQuit
+	sendQuitToCharSelect
 	sendRaw
 	sendRemoveAttachments
 	sendRepairItem
 	sendRespawn
-	sendPrivateMsg
 	sendSell
 	sendSellBulk
 	sendSit
@@ -1477,11 +1478,27 @@ sub sendPreLoginCode {
 	debug "Sent pre-login packet $type\n", "sendPacket", 2;
 }
 
+sub sendPrivateMsg {
+	my $r_socket = shift;
+	my $user = shift;
+	my $message = shift;
+	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
+	my $msg = pack("C*",0x96, 0x00) . pack("v*",length($message) + 29) . $user . chr(0) x (24 - length($user)) .
+			$message . chr(0);
+	sendMsgToServer($r_socket, $msg);
+}
+
 sub sendQuit {
 	my $r_socket = shift;
 	my $msg = pack("C*", 0x8A, 0x01, 0x00, 0x00);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Quit\n", "sendPacket", 2;
+}
+
+sub sendQuitToCharSelect {
+	my $msg = pack("C*", 0xB2, 0x00, 0x01);
+	sendMsgToServer(\$remote_socket, $msg);
+	debug "Sent Quit To Char Selection\n", "sendPacket", 2;
 }
 
 sub sendRaw {
@@ -1516,16 +1533,6 @@ sub sendRespawn {
 	my $msg = pack("C*", 0xB2, 0x00, 0x00);
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Respawn\n", "sendPacket", 2;
-}
-
-sub sendPrivateMsg {
-	my $r_socket = shift;
-	my $user = shift;
-	my $message = shift;
-	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
-	my $msg = pack("C*",0x96, 0x00) . pack("v*",length($message) + 29) . $user . chr(0) x (24 - length($user)) .
-			$message . chr(0);
-	sendMsgToServer($r_socket, $msg);
 }
 
 sub sendSell {
