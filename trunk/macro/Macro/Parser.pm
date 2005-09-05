@@ -83,10 +83,11 @@ sub parseCmd {
   my $command = shift;
   return "" unless defined $command;
   my $var;
-  while (($var) = $command =~ /[^\\]\$(\.?[a-z][a-z\d]*)/i) {
+  while ((undef, $var) = $command =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
     $cvs->debug("found variable $var in $command", $logfac{parser_steps});
-    my $tmp = getVar($var);$command =~ s/\$$var/$tmp/g;
+    my $tmp = getVar($var);$command =~ s/(^|[^\\])\$$var/\1$tmp/g;
   }
+
   while ($command =~ /\@[a-z]+/i) {
     $cvs->debug("parsing ($command)", $logfac{parser_steps});
     my $ret = "_%_";
