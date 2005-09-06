@@ -156,7 +156,7 @@ sub new {
 		#'0181' => ['guild_opposition_result', 'C1', [qw(flag)]], # clif_guild_oppositionack
 		#'0184' => ['guild_unally', 'a4 V1', [qw(guildID flag)]], # clif_guild_delalliance
 		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
-		#'018C' => ['sense_result'], # wizard sense skill
+		'018C' => ['sense_result', 'v1 v1 v1 V1 v1 v1 v1 v1 C1 C1 C1 C1 C1 C1 C1 C1 C1', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
 		#'018D' => ['forge_list'], # clif_skill_produce_mix_list
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
 		#'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
@@ -3048,6 +3048,27 @@ sub self_chat {
 		user => $args->{chatMsgUser},
 		msg => $args->{chatMsg}
 	});
+}
+
+sub sense_result {
+	my ($self, $args) = @_;
+	# nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead
+	my @race_lut = qw(Formless Undead Beast Plant Insect Fish Demon Demi-Human Angel Dragon Boss Non-Boss);
+	my @size_lut = qw(Small Medium Large);
+	message sprintf("=====================Sense========================\n" .
+			"Monster: %-16s Level: %-12s\n" .
+			"Size:    %-16s Race:  %-12s\n" .
+			"Def:     %-16s MDef:  %-12s\n" .
+			"Element: %-16s HP:    %-12s\n" .
+			"=================Damage Modifiers=================\n" .
+			"Ice: %-3s     Earth: %-3s  Fire: %-3s  Wind: %-3s\n" .
+			"Poison: %-3s  Holy: %-3s   Dark: %-3s  Spirit: %-3s\n" .
+			"Undead: %-3s\n" .
+			"==================================================\n",
+			$monsters_lut{$args->{nameID}}, $args->{level}, $size_lut[$args->{size}], $race_lut[$args->{race}], $args->{def},
+			$args->{mdef}, $elements_lut{$args->{element}}, $args->{hp},
+			$args->{ice}, $args->{earth}, $args->{fire}, $args->{wind}, $args->{poison}, $args->{holy}, $args->{dark},
+			$args->{spirit}, $args->{undead}), "list";
 }
 
 sub skill_update {
