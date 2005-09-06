@@ -1759,7 +1759,7 @@ sub AI {
 			}
 
 			sendStorageClose() unless $config{storageAuto_keepOpen};
-			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) {
+			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
 				error "Character is still overweight after storageAuto (storage is full?)\n";
 				if ($config{dcOnStorageFull}) {
 					error "Disconnecting on storage full!\n";
