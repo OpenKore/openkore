@@ -1089,7 +1089,7 @@ sub cmdDeal {
 			$arg[2] = $char->{'zenny'};
 		}
 		$currentDeal{'you_zenny'} = $arg[2];
-		message("You put forward $arg[2] z to Deal\n", "deal");
+		message("You put forward " . formatNumber($arg[2]) . "z to Deal\n", "deal");
 
 	} else {
 		error	"Syntax Error in function 'deal' (Deal a player)\n" .
@@ -1157,7 +1157,7 @@ sub cmdDealList {
 
 		message(swrite(
 			"Zenny: @<<<<<<<<<<<<<            Zenny: @<<<<<<<<<<<<<",
-			[$you_string, $other_string]),
+			[formatNumber($you_string), formatNumber($other_string)]),
 			"list");
 		message("----------------------------------\n", "list");
 	}
