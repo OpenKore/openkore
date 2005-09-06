@@ -5370,7 +5370,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "0171") {
-		my $ID = substr($msg, 2, 4);
+		my $ID = substr($msg, 2, 4); # is this a guild ID or account ID? Freya calls it an account ID
 		my $name = unpack("Z24", substr($msg, 6, 24));
 		message "Incoming Request to Ally Guild '$name'\n";
 		$incomingGuild{'ID'} = $ID;

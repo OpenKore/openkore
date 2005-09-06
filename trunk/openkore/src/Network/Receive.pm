@@ -134,7 +134,7 @@ sub new {
 		'010A' => ['mvp_item', 'v1', [qw(itemID)]],
 		'010B' => ['mvp_you', 'V1', [qw(expAmount)]],
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
-		'010E' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range/up = ???
+		'010E' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
@@ -146,12 +146,20 @@ sub new {
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
+		#'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
+		#'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
+		#'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
+		'0163' => ['guild_expulsionlist'],
 		'0169' => ['guild_invite_result', 'C1', [qw(type)]],
+		#'0173' => ['guild_alliance', 'V1', [qw(flag)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
+		#'0181' => ['guild_opposition_result', 'C1', [qw(flag)]], # clif_guild_oppositionack
+		#'0184' => ['guild_unally', 'a4 V1', [qw(guildID flag)]], # clif_guild_delalliance
 		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
 		#'018C' => ['sense_result'], # wizard sense skill
+		#'018D' => ['forge_list'], # clif_skill_produce_mix_list
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
-		#'0191' => ['talkie_box'], # talkie box message
+		#'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],
@@ -175,13 +183,18 @@ sub new {
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
+		#'01E4' => ['marriage_unknown'], clif_marriage_process
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
 		'01F5' => ['deal_begin', 'C1', [qw(type)]],
+		#'01F6' => ['adopt_unknown'], # clif_parse_ReqAdopt
+		#'01F8' => ['adopt_unknown'], # clif_adopt_process
 		'01F0' => ['storage_items_stackable'],
 		'01FC' => ['repair_list'],
 		'01FE' => ['repair_result', 'v1 C1', [qw(nameID flag)]],
+		#'0205' => ['divorce_unknown', 'Z24', [qw(name)]], # clif_divorced
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 	};
@@ -1790,11 +1803,21 @@ sub guild_chat {
 	$args->{chatMsg} = $chatMsg;
 }
 
+sub guild_expulsionlist {
+	my ($self, $args) = @_;
+
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 88) {
+		my $name = unpack("Z24", substr($args->{RAW_MSG}, $i*88 + 4, 24));
+		my $acc = unpack("Z24", substr($args->{RAW_MSG}, $i*88 + 28, 24));
+		my $mes = unpack("Z44", substr($args->{RAW_MSG}, $i*88 + 52, 44));
+	}
+}
+
 sub guild_info {
 	my ($self, $args) = @_;
 	# Guild Info
 	hashCopyByKey(\%guild, $args, qw(ID lvl conMember maxMember average exp next_exp members name master));
-	$guild{members}++;
+	$guild{members}++; # count ourselves in the guild members count
 }
 
 sub guild_invite_result {
@@ -3037,6 +3060,9 @@ sub skill_update {
 	my $name = $skill->name;
 	$char->{skills}{$handle}{lv} = $lv;
 	$char->{skills}{$handle}{sp} = $sp;
+
+	# values not used right now:
+	# range = skill range, up = this skill can be leveled up further
 
 	# Set $skillchanged to 2 so it knows to unset it when skill points are updated
 	if ($skillChanged eq $handle) {
