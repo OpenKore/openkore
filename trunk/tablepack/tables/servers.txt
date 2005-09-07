@@ -394,9 +394,9 @@ version 20
 serverType 3
 
 [FenixRO Private Server]
-ip 216.32.67.242
-port 6900
-master_version 18
+ip 72.36.216.219
+port 5001
+master_version 14
 version 20
 serverType 3
 
