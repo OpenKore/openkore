@@ -1485,7 +1485,10 @@ sub getNPCName {
 
 ##
 # getPlayerNameFromCache(player)
-# Returns: a player name, or undef if the name can't be retrieved from cache.
+# player: an Actor::Player object.
+# Returns: 1 on success, 0 if the player isn't in cache.
+#
+# Retrieve a player's name from cache and modify the player object.
 sub getPlayerNameFromCache {
 	my ($player) = @_;
 
@@ -1499,10 +1502,13 @@ sub getPlayerNameFromCache {
 		binRemove(\@playerNameCacheIDs, $player->{ID});
 		delete $playerNameCache{$player->{ID}};
 		compactArray(\@playerNameCacheIDs);
-		return;
+		return 0;
 	}
 
-	return $entry->{name};
+	$player->{name} = $entry->{name};
+	$player->{guild} = $entry->{guild} if ($entry->{guild});
+	$player->{gotName} = 1;
+	return 1;
 }
 
 sub getPortalDestName {
@@ -1782,11 +1788,7 @@ sub objectAdded {
 
 	if ($type eq 'player') {
 		# Try to retrieve the player name from cache.
-		my $cachedName = getPlayerNameFromCache($obj);
-		if (defined $cachedName) {
-			$obj->{name} = $cachedName;
-			$obj->{gotName} = 1;
-		} else {
+		if (!getPlayerNameFromCache($obj)) {
 			push @unknownPlayers, $ID;
 		}
 
@@ -2371,6 +2373,7 @@ sub updatePlayerNameCache {
 		push @playerNameCacheIDs, $ID;
 		my %entry = (
 			name => $player->{name},
+			guild => $player->{guild},
 			time => time,
 			lv => $player->{lv},
 			jobID => $player->{jobID}
