@@ -1503,7 +1503,8 @@ umbala 106 285 um_dun01 42 27
 umbala 107 130 um_in 99 63
 umbala 138 129 um_in 99 111
 umbala 125 157 um_in 155 111
-umbala 140 197 nif_in 68 14
+# bunjy jump
+#umbala 140 197 nif_in 68 14
 um_dun01 42 27 umbala 106 285
 um_dun01 149 198 um_dun02 52 22
 um_dun02 52 22 um_dun01 149 198
