@@ -477,3 +477,10 @@ port 6900
 version 0
 master_version 1
 serverType 5
+
+[AxionRO Private Server]
+ip axionro.no-ip.org
+port 6900
+master_version 14
+version 20
+serverType 4
