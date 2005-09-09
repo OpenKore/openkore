@@ -11,7 +11,6 @@ char
 sex
 
 bindIp
-encrypt 0
 # 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya, 4 = new Freya
 serverType 0
 
