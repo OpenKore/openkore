@@ -436,9 +436,9 @@ version 20
 master_version 1
 
 [Planet RO Private Server]
-ip 65.110.56.120
+ip 66.111.58.180
 port 6900
-master_version 2
+master_version 10
 version 20
 serverType 4
 
