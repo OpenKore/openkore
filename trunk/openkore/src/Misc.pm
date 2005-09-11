@@ -3070,9 +3070,19 @@ sub checkSelfCondition {
 		return 0 if binSize(\@playersID);
 	}
 
-	my $pos = calcPosition($char);
-	return 0 if $config{$prefix."_whenWater"} &&
-		!checkFieldWater(\%field, $pos->{x}, $pos->{y});
+	if ($config{$prefix."_onMap"}) {
+		return 0 unless (existsInList($config{$prefix . "_onMap"}, $field{name}));
+	}
+
+	if ($config{$prefix."_notOnMap"}) {
+		return 0 if (existsInList($config{$prefix . "_notOnMap"}, $field{name}));
+	}
+
+	# not working yet
+	if ($config{$prefix."_whenWater"}) {
+		my $pos = calcPosition($char);
+		return 0 if !checkFieldWater(\%field, $pos->{x}, $pos->{y});
+	}
 
 	return 1;
 }

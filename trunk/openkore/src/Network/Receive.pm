@@ -2197,7 +2197,7 @@ sub login_error {
 		error("Connect failed, something is wrong with the login settings:\n" .
 			"version: $master->{version}\n" .
 			"master_version: $master->{master_version}\n" .
-			"serverType: $master->{serverType}\n", "connection");
+			"serverType: $config{serverType}\n", "connection");
 		relog(30);
 	} elsif ($args->{type} == 6) {
 		error("The server is temporarily blocking your connection\n", "connection");
