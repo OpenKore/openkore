@@ -93,7 +93,6 @@ New features:
 - Improved storage list, sorts the items by category like the real client.
 - Emotion command now uses the real commands from the RO client.
   Example: e thx
-- _whenWater should work now?
 - When casting the Teleport skill, openkore will wait for the skill to
   be successfuly cast before actually teleporting, unless this is an
   emergency teleport (e.g. teleportAuto_deadly). (Looks less bot-like.)
@@ -222,6 +221,9 @@ New config options:
 - timeouts.txt:
   ai_cartAutoCheck 2
   Check if we need to do cartAuto functions every x seconds.
+- onMap and notOnMap (list)
+  These shared block options are for using a block when you're (not) on a
+  certain map.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
