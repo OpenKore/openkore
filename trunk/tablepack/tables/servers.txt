@@ -371,6 +371,13 @@ version 0
 master_version 18
 serverType 3
 
+[DiscoveryRO: Revolution Private Server]
+ip 66.111.53.60
+port 6900
+version 0
+master_version 18
+serverType 3
+
 [Kaz3RO Private Server]
 ip 12.158.191.43
 port 6900
