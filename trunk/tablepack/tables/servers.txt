@@ -116,9 +116,9 @@ patchserver wpatch.ragnarok.com.ph
 patchpath /patch50
 
 [Philippines - pRO: Sakray]
-ip 210.1.70.69
+ip 202.57.118.232
 port 6900
-master_version 27
+master_version 18
 version 1
 secureLogin 1
 secureLogin_type 0
@@ -484,6 +484,11 @@ port 6901
 master_version 17
 version 20
 serverType 4
+
+[Localhost]
+ip 127.0.0.1
+port 6900
+serverType 3
 
 [LegendRO Private Server]
 ip 64.147.163.114
