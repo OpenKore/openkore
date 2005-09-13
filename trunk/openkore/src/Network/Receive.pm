@@ -1474,7 +1474,7 @@ sub deal_add_other {
 	} elsif ($args->{amount} > 0) {
 		$currentDeal{other_zenny} += $args->{amount};
 		my $amount = formatNumber($args->{amount});
-		message "$currentDeal{name} added $args->{amount} z to Deal\n", "deal";
+		message "$currentDeal{name} added $amount z to Deal\n", "deal";
 	}
 }
 
