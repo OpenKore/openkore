@@ -375,7 +375,9 @@ sub sendMsgToServer {
 	my $msg = shift;
 
 	return if (!$$r_socket || !$$r_socket->connected());
-	encrypt(\$msg, $msg);
+	if ($config{serverType} != 2) {
+		encrypt(\$msg, $msg);
+	}
 	if ($xkore) {
 		sendToServerByInject(\$remote_socket, $msg);
 	} else {
