@@ -465,3 +465,65 @@ hu_fild01.rsw#hu_fild#
 hu_fild04.rsw#hu_fild#
 hu_fild05.rsw#hu_fild#
 hu_fild07.rsw#hu_fild#
+
+// these files are included in the tablepack but have no correct entry here yet
+// this will allow people to use these maps until we add correct map names
+alde_tt02.rsw#Map Name Unknown#
+ayo_dun01.rsw#Map Name Unknown#
+ayo_dun02.rsw#Map Name Unknown#
+ayo_fild01.rsw#Map Name Unknown#
+ayo_fild02.rsw#Map Name Unknown#
+ayo_in02.rsw#Map Name Unknown#
+force_map1.rsw#Map Name Unknown#
+force_map2.rsw#Map Name Unknown#
+force_map3.rsw#Map Name Unknown#
+gefenia01.rsw#Map Name Unknown#
+gefenia02.rsw#Map Name Unknown#
+gefenia03.rsw#Map Name Unknown#
+gefenia04.rsw#Map Name Unknown#
+guild_vs4.rsw#Map Name Unknown#
+guild_vs5.rsw#Map Name Unknown#
+jawaii.rsw#Map Name Unknown#
+jawaii_in.rsw#Map Name Unknown#
+job_hunter.rsw#Map Name Unknown#
+job_knight.rsw#Map Name Unknown#
+job_priest.rsw#Map Name Unknown#
+job_soul.rsw#Map Name Unknown#
+job_star.rsw#Map Name Unknown#
+job_sword1.rsw#Map Name Unknown#
+job_wizard.rsw#Map Name Unknown#
+juperos_01.rsw#Map Name Unknown#
+juperos_02.rsw#Map Name Unknown#
+jupe_area1.rsw#Map Name Unknown#
+jupe_area2.rsw#Map Name Unknown#
+jupe_cave.rsw#Map Name Unknown#
+jupe_core.rsw#Map Name Unknown#
+jupe_ele.rsw#Map Name Unknown#
+jupe_ele_r.rsw#Map Name Unknown#
+jupe_gate.rsw#Map Name Unknown#
+lhz_cube.rsw#Map Name Unknown#
+lhz_dun01.rsw#Map Name Unknown#
+lhz_dun02.rsw#Map Name Unknown#
+lhz_dun03.rsw#Map Name Unknown#
+lhz_fild01.rsw#Map Name Unknown#
+lhz_in01.rsw#Map Name Unknown#
+lhz_in02.rsw#Map Name Unknown#
+lhz_in03.rsw#Map Name Unknown#
+lhz_que01.rsw#Map Name Unknown#
+lighthalzen.rsw#Map Name Unknown#
+mjolnir_04_1.rsw#Map Name Unknown#
+nif_in.rsw#Map Name Unknown#
+n_castle.rsw#Map Name Unknown#
+old_payon.rsw#Map Name Unknown#
+ordeal_a00.rsw#Map Name Unknown#
+ordeal_a02.rsw#Map Name Unknown#
+pvp_room.rsw#Map Name Unknown#
+que_god01.rsw#Map Name Unknown#
+que_god02.rsw#Map Name Unknown#
+que_sign01.rsw#Map Name Unknown#
+quiz_02.rsw#Map Name Unknown#
+siege_test.rsw#Map Name Unknown#
+turbo_room.rsw#Map Name Unknown#
+um_in.rsw#Map Name Unknown#
+valkyrie.rsw#Map Name Unknown#
+yuno_pre.rsw#Map Name Unknown#
