@@ -1519,7 +1519,7 @@ um_fild02 373 148 um_fild03 32 145
 um_fild02 373 329 um_fild03 19 334
 um_fild02 22 272 um_fild01 369 277
 um_fild02 373 148 um_fild03 32 145
-um_fild03 19 334 um_fild 02 373 329
+um_fild03 19 334 um_fild02 373 329
 um_fild03 32 145 um_fild02 373 148
 um_fild03 114 50 cmd_fild01 77 366
 um_fild03 243 26 cmd_fild01 178 370
