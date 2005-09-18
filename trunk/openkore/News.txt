@@ -221,7 +221,7 @@ New config options:
 - timeouts.txt:
   ai_cartAutoCheck 2
   Check if we need to do cartAuto functions every x seconds.
-- onMap and notOnMap (list)
+- inMap and notInMap (list)
   These shared block options are for using a block when you're (not) on a
   certain map.
 - itemsMaxNum_sellOrStore

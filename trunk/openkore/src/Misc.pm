@@ -3070,11 +3070,11 @@ sub checkSelfCondition {
 		return 0 if binSize(\@playersID);
 	}
 
-	if ($config{$prefix."_onMap"}) {
+	if ($config{$prefix."_inMap"}) {
 		return 0 unless (existsInList($config{$prefix . "_onMap"}, $field{name}));
 	}
 
-	if ($config{$prefix."_notOnMap"}) {
+	if ($config{$prefix."_notInMap"}) {
 		return 0 if (existsInList($config{$prefix . "_notOnMap"}, $field{name}));
 	}
 
