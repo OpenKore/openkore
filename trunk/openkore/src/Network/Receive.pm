@@ -157,7 +157,7 @@ sub new {
 		#'0184' => ['guild_unally', 'a4 V1', [qw(guildID flag)]], # clif_guild_delalliance
 		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
 		'018C' => ['sense_result', 'v1 v1 v1 V1 v1 v1 v1 v1 C1 C1 C1 C1 C1 C1 C1 C1 C1', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
-		#'018D' => ['forge_list'], # clif_skill_produce_mix_list
+		'018D' => ['forge_list'],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
 		#'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
@@ -1777,6 +1777,20 @@ sub exp_zeny_info {
 		debug "Required Job Exp: $args->{val}\n", "parseMsg";
 		message("BaseExp:$monsterBaseExp | JobExp:$monsterJobExp\n","info", 2) if ($monsterBaseExp);
 	}
+}
+
+sub forge_list {
+	my ($self, $args) = @_;
+	message "========Forge List========\n";
+	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
+		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
+		message "$viewID $items_lut{$viewID}";
+		# always 0x0012
+		#my $unknown = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
+		# ???
+		#my $charID = substr($args->{RAW_MSG}, $i+4, 4);
+	}
+	message "=========================\n";
 }
 
 sub guild_chat {
