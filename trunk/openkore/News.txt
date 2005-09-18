@@ -224,6 +224,10 @@ New config options:
 - onMap and notOnMap (list)
   These shared block options are for using a block when you're (not) on a
   certain map.
+- itemsMaxNum_sellOrStore
+  Trigger the autosell AI sequence when the total amount of items in inventory is
+  equal to or exceeds the specified amount. Similar to itemsMaxWeight_sellOrStore
+  but uses amounts instead of weight percentage.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
