@@ -1782,10 +1782,14 @@ sub AI {
 
 	AUTOSELL: {
 
-	if (($ai_seq[0] eq "" || $ai_seq[0] eq "route" || $ai_seq[0] eq "sitAuto" || $ai_seq[0] eq "follow") && $config{'sellAuto'} && $config{'sellAuto_npc'} ne ""
-	  && (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-	      || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-	  )) {
+	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
+		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+			|| ($config{'itemsMaxNum_sellOrStore'} && @{$char->{inventory}} >= $config{'itemsMaxNum_sellOrStore'})
+			|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
+			)
+		&& $config{'sellAuto'}
+		&& $config{'sellAuto_npc'} ne ""
+	  ) {
 		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
 			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
