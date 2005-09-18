@@ -120,7 +120,9 @@ sub Fit {
 
 			my @timers;
 			my $set = sub {
-				$self->{dialog}->SetClientSize($w, $h);
+				if ($self->{dialog}) {
+					$self->{dialog}->SetClientSize($w, $h);
+				}
 				foreach (@timers) {
 					$_->Stop();
 				}
