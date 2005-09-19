@@ -132,6 +132,7 @@ itemsTakeAuto_party 0
 itemsGatherAuto 2
 itemsMaxWeight 89
 itemsMaxWeight_sellOrStore 48
+itemsMaxNum_sellOrStore 99
 cartMaxWeight 7900
 
 lockMap
