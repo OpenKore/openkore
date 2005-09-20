@@ -69,10 +69,10 @@ sub match {
 sub getArgs {
   my $arg = shift;
   if ($arg =~ /".*"/) {
-    my @ret = $arg =~ /^"(.*?)" +(.*?)( .*)?$/;
-    $ret[2] =~ s/^ +//g; return @ret;
+    my @ret = $arg =~ /^"(.*?)"\s+(.*?)( .*)?$/;
+    $ret[2] =~ s/^\s+//g; return @ret;
   }
-  else {return split(/ /, $arg, 3)}
+  else {return split(/\s/, $arg, 3)}
 }
 
 # adds variable and value to stack
@@ -131,7 +131,11 @@ sub getnpcID {
 sub getPlayerID {
   $cvs->debug("getPlayerID(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my ($name, $pool) = @_;
-  return findIndexString_lc($pool, 'name', $name);
+  for (my $id = 0; $id < @{$pool}; $id++) {
+    next unless $$pool[$id];
+    if ($players{$$pool[$id]}->{name} eq $name) {return $id}
+  }
+  return;
 }
 
 # get item array index
