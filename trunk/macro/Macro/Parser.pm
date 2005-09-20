@@ -83,16 +83,20 @@ sub parseCmd {
   my $command = shift;
   return "" unless defined $command;
   my $var;
+  # substitute variables
   while ((undef, $var) = $command =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
     $cvs->debug("found variable $var in $command", $logfac{parser_steps});
-    my $tmp = getVar($var);$command =~ s/(^|[^\\])\$$var/\1$tmp/g;
+    my $tmp = getVar($var);$command =~ s/(^|[^\\])\$$var/$1$tmp/g;
   }
-
-  while ($command =~ /\@[a-z]+/i) {
-    $cvs->debug("parsing ($command)", $logfac{parser_steps});
+  # substitute doublevars
+  while (($var) = $command =~ /\$\{(.*?)\}/i) {
+    $cvs->debug("found doublevar $var in $command", $logfac{parser_steps});
+    my $tmp = getVar("#".$var);$command =~ s/\$\{$var\}/$tmp/g;
+  }
+  while (my ($kw, $arg) = $command =~
+      /\@(npc|cart|inventory|store|storage|player|vender|random|invamount|cartamount|shopamount|eval)\s*\(([^@]+?)\)/i) {
+    $cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
     my $ret = "_%_";
-    my ($kw, $arg) = $command =~ /\@([a-z]+) +\(([^@]*?)\)/i;
-    return $command if (!defined $kw || !defined $arg);
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
     elsif ($kw eq 'cart')       {$ret = getItemID($arg, \@{$cart{inventory}})}
     elsif ($kw eq 'inventory')  {$ret = getItemID($arg, \@{$char->{inventory}})}

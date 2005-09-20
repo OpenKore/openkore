@@ -210,19 +210,30 @@ sub next {
     }
   ##########################################
   # set variable: $variable = value
-  } elsif ($line =~ /^\$[a-zA-Z]/) {
-    my ($var, $val) = $line =~ /^\$([a-zA-Z][a-zA-Z\d]*?)\s+=\s+(.*)$/;
-    if (defined $var && defined $val) {
-      $val = parseCmd($val);
-      setVar($var, $val);
+  } elsif ($line =~ /^\$[a-z]/i) {
+    my ($var, $val);
+    if (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)\s+=\s+(.*)$/i) {
+      setVar($var, parseCmd($val));
+    } elsif (($var, $val) = $line =~ /^\$([a-z][a-z\d]*?)([+-]{2})$/i) {
+      if ($val eq '++') {setVar($var, getVar($var)+1)}
+      else {setVar($var, getVar($var)-1)}
     } else {
-      ($var, $val) = $line =~ /^\$([a-zA-Z][a-zA-Z\d]*?)([+-]{2})$/;
-      if (defined $var && defined $val) {
-        if ($val eq '++') {setVar($var, getVar($var)+1)}
-        else {setVar($var, getVar($var)-1)}
-      } else {
-        $self->{error} = "error in ".$self->{line}.": unrecognized assignment";
-      }
+      $self->{error} = "error in ".$self->{line}.": unrecognized assignment";
+    }
+    $self->{line}++;
+  ##########################################
+  # set doublevar: ${$variable} = value
+  } elsif ($line =~ /^\$\{\$[.a-z]/i) {
+    my ($dvar, $val);
+    if (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}\s+=\s+(.*)$/i) {
+      my $var = getVar($dvar);
+      setVar("#".$var, parseCmd($val));
+    } elsif (($dvar, $val) = $line =~ /^\$\{\$([.a-z][a-z\d]*?)\}([+-]{2})$/i) {
+      my $var = getVar($dvar);
+      if ($val eq '++') {setVar("#".$var, getVar("#".$var)+1)}
+      else {setVar("#".$var, getVar("#".$var)-1)}
+    } else {
+        $self->{error} = "error in ".$self->{line}.": unrecognized assignment.";
     }
     $self->{line}++;
   ##########################################

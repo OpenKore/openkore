@@ -45,7 +45,7 @@ sub checkVarVar {
   my $arg = shift;
   my ($varvar) = $arg =~ /^(.*?) /;
   if (exists $varStack{$varvar}) {
-    $arg =~ s/$varvar/"$varStack{$varvar}"/g;
+    $arg =~ s/$varvar/"#$varStack{$varvar}"/g;
     return checkVar($arg);
   }
   return 0;
