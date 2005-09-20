@@ -41,6 +41,7 @@ my $hooks = Plugins::addHooks(
             ['Command_post',    \&commandHandler, undef],
             ['configModify',    \&debuglevel, undef],
             ['start3',          \&postsetDebug, undef],
+            ['start3',          \&checkConfig, undef],
             ['AI_pre',          \&callMacro, undef]
 );
 my $autohooks;
@@ -73,6 +74,10 @@ sub hookOnDemand {
     message "[macro] hooking to $l\n";
     push(@{$autohooks}, Plugins::addHook($l, \&automacroCheck))
   }
+}
+
+sub checkConfig {
+  if (!defined $timeout{macro_delay}) {$timeout{macro_delay} = 1}
 }
 
 sub parseDebug {
