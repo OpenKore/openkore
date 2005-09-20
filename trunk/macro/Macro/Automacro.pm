@@ -159,9 +159,14 @@ sub checkItem {
 # checks for near person ##################################
 sub checkPerson {
   $cvs->debug("checkPerson(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
-  my $who = shift;
-  if (defined getPlayerID($who, \@playersID)) {return 1}
-  return 0;
+  my ($who, $dist) = $_[0] =~ /^"(.*?)",?\s?(.*)/;
+  return 0 unless defined $who;
+  my $r_id = getPlayerID($who, \@playersID);
+  return 0 unless defined $r_id;
+  return 1 unless defined $dist;
+  my $mypos = calcPosition($char);
+  my $pos = calcPosition($::players{$::playersID[$r_id]});
+  return distance($mypos, $pos) <= $dist ?1:0;
 }
 
 # checks arg1 for condition in arg2 #######################
@@ -206,13 +211,13 @@ sub checkMsg {
   my ($var, $tmp, $arg) = @_;
   my $msg;
   if ($var eq '.lastpub') {
-    ($msg, my $distance) = $tmp =~ /([\/"].*?[\/"]),?(.*)/;
+    ($msg, my $distance) = $tmp =~ /^([\/"].*?[\/"]),?(.*)/;
     $distance = 15 if ($distance eq '');
     my $mypos = calcPosition($char);
     my $pos = calcPosition($::players{$arg->{pubID}});
     return 0 unless distance($mypos, $pos) <= $distance;
   } elsif ($var eq '.lastpm') {
-    ($msg, my $allowed) = $tmp =~ /([\/"].*?[\/"]),?(.*)/;
+    ($msg, my $allowed) = $tmp =~ /^([\/"].*?[\/"]),?(.*)/;
     my $auth;
     if (!$allowed) {$auth = 1}
     else {
