@@ -309,7 +309,12 @@ if ($sys{ipc}) {
 	require IPC;
 	require IPC::Processors;
 	Modules::register("IPC", "IPC::Processors");
-	$ipc = new IPC;
+
+	my $host = $sys{ipc_manager_host};
+	my $port = $sys{ipc_manager_port};
+	$host = undef if ($host eq '');
+	$port = undef if ($port eq '');
+	$ipc = new IPC(undef, $host, $port);
 	if (!$ipc && $@) {
 		Log::error("Unable to initialize the IPC subsystem: $@\n");
 		undef $@;

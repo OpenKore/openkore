@@ -60,7 +60,7 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 ################################
 
 ##
-# IPC->new([userAgent = 'openkore', host = 'localhost', port, wantGlobals = 1])
+# IPC->new([userAgent = 'openkore', host = 'localhost', port = undef, wantGlobals = 1])
 # userAgent: a name to identify yourself.
 # host: host address of the manager server.
 # port: port number of the manager server.
