@@ -328,7 +328,7 @@ Manually talk to an NPC.
 <NPC #>				talk to an NPC
 cont				continue talking to NPC
 resp				lists response options to NPC
-resp <reponse #>		select a response to NPC
+resp <response #>		select a response to NPC
 num <number>			send a number to NPC
 text <string>			send text to NPC
 no				ends/cancels conversation with NPC
@@ -391,4 +391,3 @@ Move 5 steps northwest.
 Move 5 steps southeast.
 [southwest]
 Move 5 steps southwest.
-
