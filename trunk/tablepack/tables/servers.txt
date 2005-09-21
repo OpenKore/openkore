@@ -252,6 +252,13 @@ master_version 18
 serverType 0
 private 1
 
+[qRO: High Rate Private Server]
+ip 209.172.35.91
+port 6822
+version 20
+master_version 18
+serverType 0
+
 [ProjectRO Private Server]
 ip 66.111.48.190
 port 6900
@@ -344,11 +351,18 @@ version 0
 serverType 4
 
 [XileRO Private Server]
-ip 72.29.77.223
+ip 65.254.61.29
 port 6901
 master_version 17
 version 20
 serverType 0
+
+[XileRO PK Private Server]
+ip 65.254.61.19
+port 6901
+master_version 17
+version 20
+serverType 3
 
 [ChocoRO Private Server]
 ip 65.110.62.150
