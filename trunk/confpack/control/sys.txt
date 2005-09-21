@@ -1,2 +1,4 @@
 wxHideConsole 1
 ipc 0
+ipc_manager_host
+ipc_manager_port
