@@ -291,34 +291,27 @@ sub automacroCheck {
         next CHKAM if !checkMsg(".lastguild", $automacro{$am}->{guild}, $args);
       } else {next CHKAM}
     }
-    next CHKAM if (defined $automacro{$am}->{map} && $automacro{$am}->{map} ne $field{name});
-    if (defined $automacro{$am}->{location}) {
-      foreach my $i (@{$automacro{$am}->{location}}) {next CHKAM unless checkLoc($i)}
-    }
-    if (defined $automacro{$am}->{var}) {
-      foreach my $i (@{$automacro{$am}->{var}}) {next CHKAM unless checkVar($i)}
-    }
-    if (defined $automacro{$am}->{varvar}) {
-      foreach my $i (@{$automacro{$am}->{varvar}}) {next CHKAM unless checkVarVar($i)}
-    }
-
     if (defined $automacro{$am}->{timeout}) {
       $automacro{$am}->{time} = 0 unless $automacro{$am}->{time};
       my %tmptimer = (timeout => $automacro{$am}->{timeout}, time => $automacro{$am}->{time});
       next CHKAM unless timeOut(\%tmptimer);
       $automacro{$am}->{time} = time;
     }
-    next CHKAM if (defined $automacro{$am}->{base}     && !checkLevel($automacro{$am}->{base}, "base"));
-    next CHKAM if (defined $automacro{$am}->{job}      && !checkLevel($automacro{$am}->{job}, "job"));
-    next CHKAM if (defined $automacro{$am}->{class}    && !checkClass($automacro{$am}->{class}));
-    next CHKAM if (defined $automacro{$am}->{hp}       && !checkPercent($automacro{$am}->{hp}, "hp"));
-    next CHKAM if (defined $automacro{$am}->{sp}       && !checkPercent($automacro{$am}->{sp}, "sp"));
-    next CHKAM if (defined $automacro{$am}->{spirit}   && !checkCond($char->{spirits}, $automacro{$am}->{spirit}));
-    next CHKAM if (defined $automacro{$am}->{weight}   && !checkPercent($automacro{$am}->{weight}, "weight"));
-    next CHKAM if (defined $automacro{$am}->{cartweight} && !checkPercent($automacro{$am}->{cartweight}, "cweight"));
-    next CHKAM if (defined $automacro{$am}->{soldout}  && !checkCond(getSoldOut(), $automacro{$am}->{soldout}));
-    next CHKAM if (defined $automacro{$am}->{player}   && !checkPerson($automacro{$am}->{player}));
-    next CHKAM if (defined $automacro{$am}->{zeny}     && !checkCond($char->{zenny}, $automacro{$am}->{zeny}));
+    next CHKAM if (defined $automacro{$am}->{map}   && $automacro{$am}->{map} ne $field{name});
+    next CHKAM if (defined $automacro{$am}->{class} && !checkClass($automacro{$am}->{class}));
+    foreach my $i (@{$automacro{$am}->{location}})  {next CHKAM unless checkLoc($i)}
+    foreach my $i (@{$automacro{$am}->{var}})       {next CHKAM unless checkVar($i)}
+    foreach my $i (@{$automacro{$am}->{varvar}})    {next CHKAM unless checkVarVar($i)}
+    foreach my $i (@{$automacro{$am}->{base}})      {next CHKAM unless checkLevel($i, "base")}
+    foreach my $i (@{$automacro{$am}->{job}})       {next CHKAM unless checkLevel($i, "job")}
+    foreach my $i (@{$automacro{$am}->{hp}})        {next CHKAM unless checkPercent($i, "hp")}
+    foreach my $i (@{$automacro{$am}->{sp}})        {next CHKAM unless checkPercent($i, "sp")}
+    foreach my $i (@{$automacro{$am}->{spirit}})    {next CHKAM unless checkCond($char->{spirits}, $i)}
+    foreach my $i (@{$automacro{$am}->{weight}})    {next CHKAM unless checkPercent($i, "weight")}
+    foreach my $i (@{$automacro{$am}->{cartweight}}){next CHKAM unless checkPercent($i, "cweight")}
+    foreach my $i (@{$automacro{$am}->{soldout}})   {next CHKAM unless checkCond(getSoldOut(), $i)}
+    foreach my $i (@{$automacro{$am}->{zeny}})      {next CHKAM unless checkCond($char->{zenny}, $i)}
+    foreach my $i (@{$automacro{$am}->{player}})    {next CHKAM unless checkPerson($i)}
     foreach my $i (@{$automacro{$am}->{equipped}})  {next CHKAM unless checkEquip($i)}
     foreach my $i (@{$automacro{$am}->{status}})    {next CHKAM unless checkStatus($i)}
     foreach my $i (@{$automacro{$am}->{inventory}}) {next CHKAM unless checkItem("inv", $i)}
