@@ -65,10 +65,10 @@ sub parseMacroFile {
       } else {
         my ($key, $value) = $_ =~ /^(.*?) (.*)/;
         next unless $key;
-        if ($key =~ /^(inventory|storage|cart|shop|equipped|var|status|location|set)+$/) {
-          push(@{$automacro{$block{name}}->{$key}}, $value);
-        } else {
+        if ($key =~ /^(map|class|timeout|disabled|call|spell|pm|pubm|guild|party|)$/) {
           $automacro{$block{name}}->{$key} = $value;
+        } else {
+          push(@{$automacro{$block{name}}->{$key}}, $value);
         }
       }
     }
