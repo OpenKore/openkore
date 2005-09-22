@@ -70,7 +70,8 @@ sub getArgs {
   my $arg = shift;
   if ($arg =~ /".*"/) {
     my @ret = $arg =~ /^"(.*?)"\s+(.*?)( .*)?$/;
-    $ret[2] =~ s/^\s+//g; return @ret;
+    $ret[2] =~ s/^\s+//g if defined $ret[2];
+    return @ret;
   }
   else {return split(/\s/, $arg, 3)}
 }
