@@ -6,10 +6,7 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(checkVar checkVarVar checkLoc checkLevel checkClass
-                   checkPercent checkStatus checkItem checkPerson
-                   checkCond checkEquip checkCast checkMsg releaseAM
-                   automacroCheck);
+our @EXPORT_OK = qw(releaseAM automacroCheck);
 
 use Utils;
 use Globals;
@@ -238,6 +235,23 @@ sub checkMsg {
   return 0;
 }
 
+# checks for monster, credits to illusionist
+sub checkMonster {
+  $cvs->debug("checkMonsters(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+  my $monsterList = shift;
+  foreach (@monstersID) {
+    next unless $_;
+    if (existsInList($monsterList, $monsters{$_}->{name})) {
+      my $pos = calcPosition($monsters{$_});
+      my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
+      setVar(".lastMonster", $monsters{$_}->{name});
+      setVar(".lastMonsterPos", $val);
+      return 1;
+    }
+  }
+  return 0;
+}
+
 # removes an automacro from runonce list ##################
 sub releaseAM {
   $cvs->debug("releaseAM(@_)", $logfac{function_call_macro});
@@ -297,8 +311,9 @@ sub automacroCheck {
       next CHKAM unless timeOut(\%tmptimer);
       $automacro{$am}->{time} = time;
     }
-    next CHKAM if (defined $automacro{$am}->{map}   && $automacro{$am}->{map} ne $field{name});
-    next CHKAM if (defined $automacro{$am}->{class} && !checkClass($automacro{$am}->{class}));
+    next CHKAM if (defined $automacro{$am}->{map}     && $automacro{$am}->{map} ne $field{name});
+    next CHKAM if (defined $automacro{$am}->{class}   && !checkClass($automacro{$am}->{class}));
+    next CHKAM if (defined $automacro{$am}->{monster} && !checkMonster($automacro{$am}->{monsters}));
     foreach my $i (@{$automacro{$am}->{location}})  {next CHKAM unless checkLoc($i)}
     foreach my $i (@{$automacro{$am}->{var}})       {next CHKAM unless checkVar($i)}
     foreach my $i (@{$automacro{$am}->{varvar}})    {next CHKAM unless checkVarVar($i)}
