@@ -1755,7 +1755,7 @@ sub exp_zeny_info {
 		if ($change > 0) {
 			message "You gained " . formatNumber($change) . " zeny.\n";
 		} elsif ($change < 0) {
-			message "You lost " . formatNumber($change) . " zeny.\n";
+			message "You lost " . formatNumber(-$change) . " zeny.\n";
 			if ($config{dcOnZeny} && $args->{val} <= $config{dcOnZeny}) {
 				$interface->errorDialog("Disconnecting due to zeny lower than $config{dcOnZeny}.");
 				$quit = 1;
