@@ -166,7 +166,7 @@ sub checkPerson {
   return distance($mypos, $pos) <= $dist ?1:0;
 }
 
-# checks arg1 for condition in arg2 #######################
+# checks arg1 for condition in arg3 #######################
 # uses: cmpr (Macro::Utils)
 sub checkCond {
   $cvs->debug("checkCond(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
@@ -220,7 +220,7 @@ sub checkMsg {
     else {
       my @tfld = split(/,/, $allowed);
       for (my $i = 0; $i < @tfld; $i++) {
-        next unless $tfld[$i];
+        next unless defined $tfld[$i];
         if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last}
       }
     }
@@ -240,7 +240,7 @@ sub checkMonster {
   $cvs->debug("checkMonsters(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $monsterList = shift;
   foreach (@monstersID) {
-    next unless $_;
+    next unless defined $_;
     if (existsInList($monsterList, $monsters{$_}->{name})) {
       my $pos = calcPosition($monsters{$_});
       my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
@@ -321,7 +321,10 @@ sub automacroCheck {
     foreach my $i (@{$automacro{$am}->{job}})       {next CHKAM unless checkLevel($i, "job")}
     foreach my $i (@{$automacro{$am}->{hp}})        {next CHKAM unless checkPercent($i, "hp")}
     foreach my $i (@{$automacro{$am}->{sp}})        {next CHKAM unless checkPercent($i, "sp")}
-    foreach my $i (@{$automacro{$am}->{spirit}})    {next CHKAM unless checkCond($char->{spirits}, $i)}
+    foreach my $i (@{$automacro{$am}->{spirit}})    {
+      if (!defined $char->{spirits}) {$char->{spirits} = 0}
+      next CHKAM unless checkCond($char->{spirits}, $i)
+    }
     foreach my $i (@{$automacro{$am}->{weight}})    {next CHKAM unless checkPercent($i, "weight")}
     foreach my $i (@{$automacro{$am}->{cartweight}}){next CHKAM unless checkPercent($i, "cweight")}
     foreach my $i (@{$automacro{$am}->{soldout}})   {next CHKAM unless checkCond(getSoldOut(), $i)}
