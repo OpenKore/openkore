@@ -242,7 +242,7 @@ sub pmHandler {
     if (defined $level && defined $pass && $pass eq $acl{$level}->{passwd}) {
       $auth{$arg->{privMsgUser}} = $level;
       reply($arg->{privMsgUser}, "access to level $level granted");
-    } else {reply($arg->{privMsgUser}, "err.. what?!")};
+    }
   } elsif ($arg->{privMsg} =~ /^$trigger/) {
     my $level = getACL($arg->{privMsgUser});
     if (defined $level) {
