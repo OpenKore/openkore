@@ -271,11 +271,36 @@ sub ai_getAggressives {
 	foreach (@monstersID) {
 		next if (!$_);
 		my $monster = $monsters{$_};
+
 		if ((($type && Misc::mon_control($monster->{name})->{attack_auto} == 2) ||
 		    $monster->{dmgToYou} || $monster->{missedYou} ||
 			($party && ($monster->{dmgToParty} || $monster->{missedToParty} || $monster->{dmgFromParty})))
 		  && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
 
+			# Remove monsters that are considered forced agressive (when set to 2 on Mon_Control)
+			# but has not yet been damaged or attacked by party AND currently has no LOS
+			# if this is not done, Kore will keep trying infinitely attack targets set to aggro but who
+			# has no Line of Sight (ex.: GH Cemitery when on a higher position seeing an aggro monster in lower levels).
+			# The other parameters are re-checked along, so you can continue to attack a monster who has 
+			# already been hit but lost the line for some reason.
+			# Also, check if the forced aggressive is a clean target when it has not marked as "yours".
+			my $pos = calcPosition($monster);
+
+			if ($config{'attackCanSnipe'}) {
+				next if (($type && Misc::mon_control($monster->{name})->{attack_auto} == 2) && 
+					(!Misc::checkLineSnipable($char->{pos_to}, $pos)) && 
+					!$monster->{dmgToYou} && !$monster->{missedYou} &&
+				    ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty})));
+			} else {
+				next if (($type && Misc::mon_control($monster->{name})->{attack_auto} == 2) && 
+					(!Misc::checkLineWalkable($char->{pos_to}, $pos)) && 
+					!$monster->{dmgToYou} && !$monster->{missedYou} &&
+				    ($party && (!$monster->{dmgToParty} && !$monster->{missedToParty} && !$monster->{dmgFromParty})));
+			}
+			
+			# Continuing, check whether the forced Agro is really a clean monster;
+			next if (($type && Misc::mon_control($monster->{name})->{attack_auto} == 2) && !Misc::checkMonsterCleanness($_));
+			  
 			if ($wantArray) {
 				# Function is called in array context
 				push @agMonsters, $_;
@@ -619,7 +644,7 @@ sub ai_skillUse {
 # should be converted to use this helper function. Note that this
 # function uses objects instead of IDs for the skill and target.
 sub ai_skillUse2 {
-	my ($skill, $lvl, $maxCastTime, $minCastTime, $target,$prefix) = @_;
+	my ($skill, $lvl, $maxCastTime, $minCastTime, $target, $prefix) = @_;
 
 	if (!ai_getSkillUseType($skill->handle)) {
 		ai_skillUse($skill->handle, $lvl, $maxCastTime, $minCastTime, $target->{ID}, undef, undef, undef, undef, $prefix);
@@ -945,3 +970,4 @@ sub take {
 }
 
 return 1;
+
