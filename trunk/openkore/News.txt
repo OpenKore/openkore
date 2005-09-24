@@ -70,6 +70,10 @@ Bug fixes:
 - Zeny added to a deal via 'deal add z <#>' will now be correctly added
   when the deal is finalized automatically by dealAuto.
 - Standpoint option in buyAuto and sellAuto did not work.
+- Fixed mon_control <attack> syntax for monsters marked as Always 
+  Aggressive (2). The bot won't attack anymore if the monster is 
+  impossible to attack (blocked by walls) or if it is being already 
+  attacked by someone else.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -262,6 +266,7 @@ Credits:
 - isieo: attackComboSlot fixes/improvements.
 - piroJOKE: new emotions, new fields.
 - hakore: commanddescriptions.txt, avoidGM_ignore/deltaHp fix, standpoint bug
+- illusionist: fix for force-aggressive monsters not being dropped when no LOS
 
 
 ==================
