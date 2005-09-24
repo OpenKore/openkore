@@ -3446,6 +3446,7 @@ sub stat_info {
 		$char->{critical} = $args->{val};
 		debug "Critical: $args->{val}\n", "parseMsg", 2;
 	} elsif ($args->{type} == 53) {
+		$char->{attack_delay} = $args->{val};
 		$char->{attack_speed} = 200 - $args->{val}/10;
 		debug "Attack Speed: $char->{attack_speed}\n", "parseMsg", 2;
 	} elsif ($args->{type} == 55) {

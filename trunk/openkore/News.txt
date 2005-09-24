@@ -254,6 +254,8 @@ Internal:
 - New Actor#snipable method; boolean whether you have snipable LOS to the
   actor.
 - "Player Connected" did not trigger 'player' plugin call.
+- Store $char->{attack_delay}. You attack once every
+  $char->{attack_delay}/500 seconds.
 
 Credits:
 - doenet: chatLangCode bugfixes.
