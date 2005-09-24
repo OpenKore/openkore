@@ -16,23 +16,8 @@
 
 package acl;
 
-our $Version = "0.1";
-my $cvs = 1;
-
-if (defined $cvs) {
-  open(MF, "< $Plugins::current_plugin" )
-      or die "Can't open $Plugins::current_plugin: $!";
-  while (<MF>) {
-    if (/Header:/) {
-      my ($rev) = $_ =~ /\.pl,v (.*?) [0-9]{4}/i;
-      $Version .= "cvs rev ".$rev;
-      last;
-    }
-  }
-  close MF;
-};
-
-undef $cvs if defined $cvs;
+my $Version = "0.1";
+$Version .= sprintf(" rev%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 
 use strict;
 use Plugins;
@@ -45,6 +30,7 @@ use Misc;
 
 our %acl;
 our %auth;
+our $trigger;
 
 Plugins::register('acl', 'allow commands based on access control lists', \&Unload, \&Unload);
 
@@ -62,7 +48,7 @@ sub Unload {
   delConfigFile($cfID);
   Plugins::delHooks($hooks);
   message "[acl] cleaning up.\n";
-};
+}
 
 sub parseACL {
   my ($file, $r_hash) = @_;
@@ -80,9 +66,9 @@ sub parseACL {
       $cBlock = 1; next;
     } elsif (m/\*\/$/) {
       undef $cBlock;
-      next;
+      next
     } elsif (defined $cBlock) {
-      next;
+      next
     } elsif (!defined $block && /{$/) {
       s/\s*{$//;
       my ($level, $passwd) = $_ =~ /^level ([0-9]+) (.*)/;
@@ -90,15 +76,15 @@ sub parseACL {
       $block = $level;
     } elsif (defined $block && $_ eq "}") {
       undef $block;
-      next;
+      next
     } elsif (defined $block) {
       push(@{$r_hash->{$block}->{cmds}}, $_);
     } else {
-      next;
-    };
-  };
-  close FILE;
-};
+      next
+    }
+  }
+  close FILE
+}
 
 sub commandHandler {
   my (undef, $arg) = @_;
@@ -108,14 +94,14 @@ sub commandHandler {
     elsif ($param eq 'version') {showVersion()}
     elsif ($param eq 'edit') {editACL(@args)}
     elsif ($param eq 'save') {saveACL()}
-    else {usage()};
+    else {usage()}
     $arg->{return} = 1;
-  };
-};
+  }
+}
 
 sub showVersion {
   message "ACL plugin version $Version\n", "list";
-};
+}
 
 sub usage {
   message "usage: acl [show|edit|save|version]\n", "list";
@@ -129,32 +115,32 @@ sub usage {
   message "acl save: saves the current acl to acl.txt\n";
   message "acl version: shows version info\n";
   message "---\n", "list";
-};
+}
 
 sub editACL {
   my ($level, $cmd, $arg) = @_;
   if ($level =~ /^[0-9]+$/ && defined $arg) {
-    if ($cmd eq 'passwd') {chPass($level, $arg)};
-    if ($cmd eq 'add') {addCmd($level, $arg)};
-    if ($cmd eq 'del') {delCmd($level, $arg)};
+    if ($cmd eq 'passwd') {chPass($level, $arg)}
+    if ($cmd eq 'add') {addCmd($level, $arg)}
+    if ($cmd eq 'del') {delCmd($level, $arg)}
     warning "Use \"acl save\" to write $file\n";
-    return;
+    return
   } else {
     warning "[acl] edit: wrong syntax.\n"; usage();
-  };
-};
+  }
+}
 
 sub saveACL {
   my $level = 0;
   open FILE, "> $file" or return;
   while (exists $acl{$level}) {
     print FILE "level $level $acl{$level}->{passwd} {\n";
-    foreach (@{$acl{$level++}->{cmds}}) {print FILE "\t$_\n"};
+    foreach (@{$acl{$level++}->{cmds}}) {print FILE "\t$_\n"}
     print FILE "}\n\n";
-  };
+  }
   close FILE;
   message "[acl] acl written to $file\n";
-};
+}
 
 sub chPass {
   my ($level, $pass) = @_;
@@ -162,9 +148,9 @@ sub chPass {
     $acl{$level}->{passwd} = $pass;
     message "[acl] changed password for level $level\n";
     return;
-  };
+  }
   warning "[acl] there's no access level $level\n";
-};
+}
 
 sub addCmd {
   my ($level, $cmd) = @_;
@@ -172,10 +158,10 @@ sub addCmd {
     warning "[acl] there's no access level $level, adding it with dummy password \"acl\"\n";
     warning "[acl] type \"acl edit $level passwd {new password}\" to edit\n";
     $acl{$level}->{passwd} = "acl";
-  };
+  }
   foreach (@{$acl{$level}->{cmds}}) {
-    if ($_ eq $cmd) {warning "[acl] command $cmd already exists in level $level\n"; return};
-  };
+    if ($_ eq $cmd) {warning "[acl] command $cmd already exists in level $level\n"; return}
+  }
   push(@{$acl{$level}->{cmds}}, $cmd);
   message "[acl] added $cmd to level $level\n";
   
@@ -184,25 +170,25 @@ sub addCmd {
        if (${$acl{$l}->{cmds}}[$i] eq $cmd) {
          splice(@{$acl{$l}->{cmds}}, $i);
          message "[acl] -> removed $cmd from $l\n";
-       };
-    };
-  };
-};
+       }
+    }
+  }
+}
 
 sub delCmd {
   my ($level, $cmd) = @_;
   if (!defined $acl{$level}) {
     warning "[acl] there's no access level $level.\n";
     return;
-  };
+  }
   for (my $i = @{$acl{$level}->{cmds}}; $i >= 0; $i--) {
     if (${$acl{$level}->{cmds}}[$i] eq $cmd) {
       splice(@{$acl{$level}->{cmds}}, $i);
       message "[acl] removed $cmd from $level\n";
       return;
-    };
-  };
-};
+    }
+  }
+}
 
 sub listACLwrapper {
   my $extra = shift;
@@ -213,64 +199,65 @@ sub listACLwrapper {
   } else {
     my $level = 0; while (exists $acl{$level}) {
       message "level $level: $acl{$level}->{passwd}\n", "list";
-      if (!defined $extra) {listACL($level)};
+      if (!defined $extra) {listACL($level)}
       $level++;
     }
-  };
+  }
   message "---\n", "list";
-};
+}
 
 sub listACL {
   my $level = shift;
   return unless $acl{$level};
-  foreach (@{$acl{$level}->{cmds}}) {message "+ $_\n"};
-};
+  foreach (@{$acl{$level}->{cmds}}) {message "+ $_\n"}
+}
 
 sub getACL {
   my $nick = shift;
   return $auth{$nick} if exists $auth{$nick};
   return;
-};
+}
 
 sub checkCmd {
   my ($level, $pm) = @_;
-  $pm =~ s/^\$\s*//g;
+  $pm =~ s/^$trigger\s*//g;
   my ($cmd, $args) = $pm =~ /^(.*?) +(.*)$/;
   $cmd = $pm unless defined $cmd;
   for (my $l = 0; $l <= $level; $l++) {
     foreach (@{$acl{$l}->{cmds}}) {
       if ($_ eq $cmd) {
         Commands::run($cmd." ".$args) || ::parseCommand($cmd." ".$args);
-        return 1;
-      };
-    };
-  };
-  return 0;
-};
+        return 1
+      }
+    }
+  }
+  return 0
+}
 
 sub pmHandler {
   my (undef, $arg) = @_;
+  $trigger = quotemeta $::config{acltrigger};
   if ($arg->{privMsg} =~ /^auth /) {
     my ($level, $pass) = $arg->{privMsg} =~ /^auth +([0-9]+) +(.*)/;
-    if ($pass eq $acl{$level}->{passwd}) {
+    if (defined $level && defined $pass && $pass eq $acl{$level}->{passwd}) {
       $auth{$arg->{privMsgUser}} = $level;
       reply($arg->{privMsgUser}, "access to level $level granted");
     } else {reply($arg->{privMsgUser}, "err.. what?!")};
-  } elsif ($arg->{privMsg} =~ /^\$/) {
+  } elsif ($arg->{privMsg} =~ /^$trigger/) {
     my $level = getACL($arg->{privMsgUser});
     if (defined $level) {
       if (checkCmd($level, $arg->{privMsg})) {
         reply($arg->{privMsgUser}, "ok.");
       } else {
         reply($arg->{privMsgUser}, "access denied");
-      };
-    };
-  };
-};
+      }
+    }
+  }
+}
 
 sub reply {
   my ($nick, $msg) = @_;
   Misc::sendMessage(\$remote_socket, "pm", $msg, $nick);
-};
+}
 
 1;
