@@ -77,7 +77,10 @@ sub hookOnDemand {
 }
 
 sub checkConfig {
-  if (!defined $timeout{macro_delay}) {$timeout{macro_delay} = 1}
+  if (!defined $timeout{macro_delay}) {
+    warning "[macro] you did not specify 'macro_delay' in timeouts.txt. Assuming 1s\n";
+    $timeout{macro_delay}{timeout} = 1
+  }
 }
 
 sub parseDebug {
