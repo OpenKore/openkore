@@ -5,11 +5,11 @@
 # This server keeps track of all clients. A client can query
 # a list of all other clients, or broadcast a message.
 #################################################
-
 use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin/..";
 use Time::HiRes qw(sleep);
+use Getopt::Long;
 
 use Globals qw(%config);
 use IPC::Manager::Core;
@@ -21,46 +21,56 @@ my $server;
 $config{debug} = 1;
 
 
-sub __start {
-	my $feedback;
-	my $port = 0;
+sub usage {
+	print "Usage: manager.pl [OPTIONS]\n\n";
+	print "Options:\n";
+	print " --port=PORT      Start the manager at the specified port. Leave empty to use\n" .
+	      "                  the first available port.\n";
+	print " --feedback=PORT  Send startup information to the TCP socket localhost:PORT.\n" .
+	      "                  Sends the port on which the manager is running, or an error\n" .
+	      "                  message if startup failed.\n";
+	print " --quiet          Don't print status messages.\n";
+	print " --help           Display this help message.\n";
+}
 
-	if ($ARGV[0] eq "--quiet") {
-		shift @ARGV;
-		close(STDOUT);
-		close(STDERR);
+sub __start {
+	my %options;
+	my $feedback;
+
+	$options{port} = 0;
+	if (!GetOptions(
+		"port=i"     => \$options{port},
+		"quiet"      => \$options{quiet},
+		"feedback=i" => \$options{feedback},
+		"help"       => \$options{help}
+	)) {
+		usage();
+		exit 1;
+	} elsif ($options{help}) {
+		usage();
+		exit 0;
 	}
 
-	# There are two ways to launch this manager server.
-	if ($ARGV[0] =~ /^--feedback=(\d+)$/) {
-		# 1. Automatically launched by IPC.pm
-		# We must tell IPC.pm the port of our server.
-		$feedback = new IO::Socket::INET("localhost:$1");
+	if (defined $options{feedback}) {
+		$feedback = new IO::Socket::INET("localhost:$options{feedback}");
 		if (!$feedback) {
-			print STDERR "Unable to connect to feedback server at port $1\n";
+			my $error = $@;
+			$error =~ s/^IO::Socket::INET: //;
+			print STDERR "Unable to connect to feedback server at port $options{feedback}: $error\n";
 			exit 2;
 		}
-
-	} else {
-		# 2. Manually launched
-		if (!$ARGV[0] || $ARGV[0] !~ /^\d+$/) {
-			print STDERR "Usage: manager.pl <PORT>\n" .
-				"Start a manager server at the specified port.\n";
-			exit 1;
-		}
-		$port = $ARGV[0];
 	}
 
 
 	#### Start server ####
-	$server = new IPC::Manager::Server($port);
+	$server = new IPC::Manager::Server($options{port});
 	if (!$server) {
 		# Failure
 		if ($feedback) {
 			$feedback->send($@, 0);
 			undef $feedback;
 		} else {
-			print STDERR "Unable to start a manager server at port $port.\n" . 
+			print STDERR "Unable to start a manager server at port $options{port}.\n" . 
 				"$@\n";
 		}
 		exit 3;
@@ -85,8 +95,13 @@ sub __start {
 
 	if ($feedback) {
 		$feedback->send($server->port);
-	} elsif ($port == 0) {
+	} elsif ($options{port} == 0) {
 		printf "Server started at port %d\n", $server->port;
+	}
+
+	if ($options{quiet}) {
+		close(STDOUT);
+		close(STDERR);
 	}
 
 

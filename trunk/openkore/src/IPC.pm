@@ -60,11 +60,12 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 ################################
 
 ##
-# IPC->new([userAgent = 'openkore', host = 'localhost', port = undef, wantGlobals = 1])
+# IPC->new([userAgent = 'openkore', host = 'localhost', port = undef, wantGlobals = 1, startAtPort = undef])
 # userAgent: a name to identify yourself.
 # host: host address of the manager server.
 # port: port number of the manager server.
 # wantGlobals: Whether you are interested in receiving global messages.
+# startAtPort: start the IPC manager at the specified port, if it should be auto-started.
 # Returns: an IPC object, or undef if unable to connect.
 #
 # Connect to an IPC manager server. This gives you access to the IPC network.
@@ -77,12 +78,13 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 # communication with the manager server. You must call $ipc->iterate() in a loop,
 # until $ipc->ready() returns 1.
 sub new {
-	my ($class, $userAgent, $host, $port, $wantGlobals) = @_;
+	my ($class, $userAgent, $host, $port, $wantGlobals, $startAtPort) = @_;
 	my %self;
 
 	$host = "localhost" if (!defined($host) || $host eq "127.0.0.1");
 	$self{userAgent} = defined($userAgent) ? $userAgent : 'openkore';
 	$self{wantGlobals} = defined($wantGlobals) ? $wantGlobals : 1;
+	$self{startAtPort} = $startAtPort;
 
 	if ($host eq "localhost" && !$port) {
 		$self{host} = $host;
@@ -198,9 +200,14 @@ sub iterate {
 			$manager->{state} = 'Launch the manager server';
 
 		} elsif ($manager->{state} eq 'Launch the manager server') {
+			my @args;
+
 			debug "Launching manager server\n", "ipc";
+			@args = ('--quiet', '--feedback=' . $manager->{server}->sockport);
+			push @args, "--port=$self->{startAtPort}" if ($self->{startAtPort});
 			$manager->{pid} = launchScript(1, undef, 'src/IPC/manager.pl',
-				'--quiet', '--feedback=' . $manager->{server}->sockport);
+				@args);
+
 			$manager->{time} = time;
 			$manager->{state} = 'Connect to the manager server';
 

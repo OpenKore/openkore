@@ -793,8 +793,8 @@ sub launchApp {
 			}
 		} else {
 			if ($pid == 0) {
-				open(STDOUT, "> /dev/null");
-				open(STDERR, "> /dev/null");
+				#open(STDOUT, "> /dev/null");
+				#open(STDERR, "> /dev/null");
 				POSIX::setsid();
 				exec(@_);
 				POSIX::_exit(1);
