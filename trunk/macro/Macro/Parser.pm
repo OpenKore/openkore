@@ -13,7 +13,7 @@ use Log qw(message error);
 use Macro::Data;
 use Macro::Utilities qw(setVar getVar getnpcID getItemID getStorageID
     getPlayerID getRandom getInventoryAmount getCartAmount getShopAmount
-    getStorageAmount);
+    getStorageAmount getWord);
 
 our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 
@@ -65,7 +65,7 @@ sub parseMacroFile {
       } else {
         my ($key, $value) = $_ =~ /^(.*?) (.*)/;
         next unless $key;
-        if ($key =~ /^(map|class|timeout|disabled|call|spell|pm|pubm|guild|party|)$/) {
+        if ($key =~ /^(map|class|timeout|disabled|call|spell|pm|pubm|guild|party|console)$/) {
           $automacro{$block{name}}->{$key} = $value;
         } else {
           push(@{$automacro{$block{name}}->{$key}}, $value);
@@ -94,7 +94,7 @@ sub parseCmd {
     my $tmp = getVar("#".$var);$command =~ s/\$\{$var\}/$tmp/g;
   }
   my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
-                 "invamount|cartamount|shopamount|storamount|eval";
+                 "invamount|cartamount|shopamount|storamount|eval|arg";
   while (my ($kw, $arg) = $command =~ /\@($keywords)\s*\(([^@]+?)\)/i) {
     $cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
     my $ret = "_%_";
@@ -110,6 +110,7 @@ sub parseCmd {
     elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
     elsif ($kw eq 'shopamount') {$ret = getShopAmount($arg)}
     elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
+    elsif ($kw eq 'arg')        {$ret = getWord($arg)}
     elsif ($kw eq 'eval')       {$ret = eval($arg)};
     return $command if $ret eq '_%_';
     if (defined $ret) {$arg = quotemeta $arg; $command =~ s/\@$kw +\($arg\)/$ret/g}

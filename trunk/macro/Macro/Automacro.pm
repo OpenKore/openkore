@@ -6,7 +6,7 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(releaseAM automacroCheck);
+our @EXPORT_OK = qw(releaseAM automacroCheck consoleCheckWrapper);
 
 use Utils;
 use Globals;
@@ -230,6 +230,7 @@ sub checkMsg {
   }
   if (match($arg->{Msg},$msg)){
     setVar($var, $arg->{MsgUser});
+    setVar($var."Msg", $arg->{Msg});
     return 1;
   }
   return 0;
@@ -250,6 +251,27 @@ sub checkMonster {
     }
   }
   return 0;
+}
+
+# checks for console message
+sub checkConsole {
+  $cvs->debug("checkConsole(@_)", $logfac{function_call_auto} | $logfac{automacro_checks}) if defined $cvs;
+  my ($msg, $arg) = @_;
+  if (match($$arg[4],$msg)){
+    $$arg[4] =~ s/\n$//g;
+    setVar(".lastLogMsg", $$arg[4]);
+    return 1;
+  }
+  return 0;
+}
+
+sub consoleCheckWrapper {
+  return unless defined $conState;
+  return unless $_[0] eq 'message';
+  # skip "selfchat" and "macro" domains to avoid loops
+  return if $_[1] =~ /^(selfchat|macro)/;
+  my @args = @_;
+  automacroCheck("log", \@args);
 }
 
 # removes an automacro from runonce list ##################
@@ -279,6 +301,11 @@ sub automacroCheck {
     if (defined $automacro{$am}->{call} && !defined $macro{$automacro{$am}->{call}}) {
       error "[macro] automacro $am: macro ".$automacro{$am}->{call}." not found.\n";
       $automacro{$am}->{disabled} = 1; return;
+    }
+    if (defined $automacro{$am}->{console}) {
+      if ($trigger eq 'log') {
+        next CHKAM if !checkConsole($automacro{$am}->{console}, $args);
+      } else {next CHKAM}
     }
     if (defined $automacro{$am}->{spell}) {
       if ($trigger =~ /^(is_casting|packet_skilluse)$/) {
@@ -337,7 +364,7 @@ sub automacroCheck {
     foreach my $i (@{$automacro{$am}->{shop}})      {next CHKAM unless checkItem("shop", $i)}
     foreach my $i (@{$automacro{$am}->{cart}})      {next CHKAM unless checkItem("cart", $i)}
 
-    message "[macro] automacro $am triggered.\n";
+    message "[macro] automacro $am triggered.\n", "macro";
 
     if (!defined $automacro{$am}->{call} && !$::config{macro_nowarn}) {
       warning "[macro] automacro $am: call not defined.\n";
