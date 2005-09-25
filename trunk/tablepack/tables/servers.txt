@@ -149,7 +149,7 @@ ip 202.168.25.142
 port 6900
 master_version 23
 version 2
-serverType 1
+serverType 0
 chatLangCode 1
 field_payon old_payon.fld
 
