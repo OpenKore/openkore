@@ -30,6 +30,8 @@ TODO:
 - avoid_ignore_# is replaced with avoidGM_ignoreList (see below)
 - equipAuto misses changed to target_misses
   equipAuto totalMisses changed to target_totalMisses
+- 'party create "<party_name>"' command renamed to
+  'party create <party_name>'.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
