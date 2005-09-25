@@ -93,8 +93,9 @@ sub parseCmd {
     $cvs->debug("found doublevar $var in $command", $logfac{parser_steps});
     my $tmp = getVar("#".$var);$command =~ s/\$\{$var\}/$tmp/g;
   }
-  while (my ($kw, $arg) = $command =~
-      /\@(npc|cart|inventory|store|storage|player|vender|random|invamount|cartamount|shopamount|eval)\s*\(([^@]+?)\)/i) {
+  my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
+                 "invamount|cartamount|shopamount|storamount|eval";
+  while (my ($kw, $arg) = $command =~ /\@($keywords)\s*\(([^@]+?)\)/i) {
     $cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
     my $ret = "_%_";
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
