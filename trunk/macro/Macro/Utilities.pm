@@ -10,7 +10,7 @@ our @EXPORT_OK = qw(ai_isIdle between cmpr match getArgs
                  setVar getVar refreshGlobal getnpcID getPlayerID
                  getItemID getStorageID getSoldOut getInventoryAmount
                  getCartAmount getShopAmount getStorageAmount
-                 getRandom callMacro);
+                 getRandom getWord callMacro);
 
 use Utils;
 use Globals;
@@ -74,6 +74,19 @@ sub getArgs {
     return @ret;
   }
   else {return split(/\s/, $arg, 3)}
+}
+
+# gets word from message
+sub getWord {
+  my $arg = shift;
+  my ($message, $wordno) = $arg =~ /^"(.*?)",\s?(\d+)$/;
+  my @words = split(/[ ,.:;"'!?]/, $message);
+  my $no = 1;
+  foreach (@words) {
+    next if /^$/;
+    return $_ if ($no == $wordno);
+    $no++;
+  }
 }
 
 # adds variable and value to stack

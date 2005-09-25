@@ -21,7 +21,7 @@ use lib $Plugins::current_plugin_folder;
 use Macro::Data;
 use Macro::Script;
 use Macro::Parser qw(parseMacroFile);
-use Macro::Automacro qw(automacroCheck releaseAM);
+use Macro::Automacro qw(automacroCheck consoleCheckWrapper releaseAM);
 use Macro::Utilities qw(setVar callMacro);
 
 if (!$stable) {
@@ -45,6 +45,7 @@ my $hooks = Plugins::addHooks(
             ['AI_pre',          \&callMacro, undef]
 );
 my $autohooks;
+my $loghook;
 
 my $file = "$Settings::control_folder/macros.txt";
 our $cfID = Settings::addConfigFile($file, \%macro, \&parseAndHook);
@@ -57,8 +58,10 @@ sub parseAndHook {
 }
 
 sub hookOnDemand {
-  Plugins::delHooks($autohooks);
+  Plugins::delHooks($autohooks) if defined $autohooks;
+  Log::delHook($loghook) if defined $loghook;
   my %load = ('AI_pre' => 1);
+  my $hookToLog;
   foreach my $a (keys %automacro) {
     next if $automacro{$a}->{disabled};
     if (defined $automacro{$a}->{spell}) {
@@ -69,11 +72,13 @@ sub hookOnDemand {
     if (defined $automacro{$a}->{pubm} && !defined $load{'packet_pubMsg'}) {$load{'packet_pubMsg'} = 1}
     if (defined $automacro{$a}->{party} && !defined $load{'packet_partyMsg'}) {$load{'packet_partyMsg'} = 1}
     if (defined $automacro{$a}->{guild} && !defined $load{'packet_guildMsg'}) {$load{'packet_guildMsg'} = 1}
+    if (defined $automacro{$a}->{console} && !defined $hookToLog) {$hookToLog = 1}
   }
   foreach my $l (keys %load) {
-    message "[macro] hooking to $l\n";
+    message "[macro] hooking to $l\n", "macro";
     push(@{$autohooks}, Plugins::addHook($l, \&automacroCheck))
   }
+  if ($hookToLog) {$loghook = Log::addHook(\&consoleCheckWrapper)}
 }
 
 sub checkConfig {
@@ -97,7 +102,7 @@ sub postsetDebug {
 }
 
 sub Unload {
-  message "macro unloading, cleaning up.\n";
+  message "macro unloading, cleaning up.\n", "macro";
   undef $cvs;
   Settings::delConfigFile($cfID);
   Plugins::delHooks($hooks);
@@ -155,10 +160,10 @@ sub cmdSetVar {
   my ($var, $val) = split(/ /, $arg, 2);
   if (defined $val) {
     setVar($var, $val);
-    message "[macro] $var set to $val\n";
+    message "[macro] $var set to $val\n", "macro";
   } else {
     delete $varStack{$var};
-    message "[macro] $var removed\n";
+    message "[macro] $var removed\n", "macro";
   }
 }
 
@@ -183,7 +188,7 @@ sub list_macros {
 # clears macro queue
 sub clearMacro {
   undef $queue;
-  message "[macro] queue cleared.\n";
+  message "[macro] queue cleared.\n", "macro";
 }
 
 # clears automacro runonce list ###########################
@@ -191,12 +196,12 @@ sub automacroReset {
   my $arg = shift;
   if (!$arg) {
     foreach my $am (keys %automacro) {undef $automacro{$am}->{disabled}};
-    message "[macro] automacro runonce list cleared.\n";
+    message "[macro] automacro runonce list cleared.\n", "macro";
     return;
   }
   my $ret = releaseAM($arg);
   if ($ret == 0) {warning "[macro] automacro $arg wasn't disabled.\n"}
-  elsif ($ret == 1) {message "[macro] automacro $arg reenabled.\n"}
+  elsif ($ret == 1) {message "[macro] automacro $arg reenabled.\n", "macro"}
   else {error "[macro] automacro $arg not found.\n"}
 }
 

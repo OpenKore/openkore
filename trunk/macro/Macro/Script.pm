@@ -256,7 +256,7 @@ sub next {
   } elsif ($line =~ /^log\s+/) {
     my ($tmp) = $line =~ /^log\s+(.*)/;
     $tmp = parseCmd($tmp);
-    message "[macro][log] $tmp\n";
+    message "[macro][log] $tmp\n", "macro";
     $self->{line}++;
   ##########################################
   # pause command
