@@ -3300,10 +3300,10 @@ sub AI {
 		for (my $i = 0; exists $config{"equipAuto_$i"}; $i++) {
 			if (Item::scanConfigAndCheck("equipAuto_$i")
 			 && checkSelfCondition("equipAuto_$i")
-			 && checkMonsterCondition("equipAuto_$i", $monster)
+			 && checkMonsterCondition("equipAuto_${i}_target", $monster)
 			 && (!$config{"equipAuto_${i}_weight"} || $char->{percent_weight} >= $config{"equipAuto_$i" . "_weight"})
 			 && (!$config{"equipAuto_${i}_whileSitting"} || ($config{"equipAuto_${i}_whileSitting"} && $char->{sitting}))
-			 && (!$config{"equipAuto_${i}_monsters"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_monsters"}, $monster->{name})))
+			 && (!$config{"equipAuto_${i}_target"} || (defined $monster && existsInList($config{"equipAuto_$i" . "_target"}, $monster->{name})))
 			) {
 
 				foreach my $slot (%equipSlot_lut) {

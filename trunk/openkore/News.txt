@@ -28,6 +28,8 @@ TODO:
   equipAuto_def is removed.
 - spells.txt "Big Magic (SG/LoV/MS/GX)" renamed to "Big Magic".
 - avoid_ignore_# is replaced with avoidGM_ignoreList (see below)
+- equipAuto misses changed to target_misses
+  equipAuto totalMisses changed to target_totalMisses
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
@@ -74,6 +76,8 @@ Bug fixes:
   Aggressive (2). The bot won't attack anymore if the monster is 
   impossible to attack (blocked by walls) or if it is being already 
   attacked by someone else.
+- Fixed monsters listed in the monsters condition of equipAuton now
+  doesn't necessarily have to be your attack target.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -232,7 +236,20 @@ New config options:
   Trigger the autosell AI sequence when the total amount of items in inventory is
   equal to or exceeds the specified amount. Similar to itemsMaxWeight_sellOrStore
   but uses amounts instead of weight percentage.
-
+- equipAuto: target (monsters)
+  If this option is set, auto-equip when you are attacking any of the
+  specified comma-separated list of monsters.
+- equipAuto:
+  target_deltaHp
+  target_dist
+  target_timeout
+  target_whenGround
+  target_whenNotGround
+  target_whenStatusActive
+  target_whenStatusInactive
+  These conditions are the same as those used in partySkill,
+  but tested on your target monster.
+  
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
 - The format of $npcs_lut has changed, IDs are completely abandoned.
@@ -265,7 +282,8 @@ Credits:
 - doenet: chatLangCode bugfixes.
 - isieo: attackComboSlot fixes/improvements.
 - piroJOKE: new emotions, new fields.
-- hakore: commanddescriptions.txt, avoidGM_ignore/deltaHp fix, standpoint bug
+- hakore: commanddescriptions.txt, avoidGM_ignore/deltaHp fix,
+  standpoint bug, equipAuto bug
 - illusionist: fix for force-aggressive monsters not being dropped when no LOS
 
 
