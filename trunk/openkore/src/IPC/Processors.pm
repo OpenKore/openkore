@@ -117,12 +117,12 @@ sub ipcWhereAreYou {
 
 sub ipcClientNotFound {
 	my ($ipc, $ID, $args) = @_;
-	debug "Unable to deliver IPC message to client: $args->{ID}", "ipc";
+	debug "Unable to deliver IPC message to client: $args->{ID}\n", "ipc";
 }
 
 sub ipcLeave {
 	my ($ipc, $ID, $args) = @_;
-	debug "IPC client left network: $args->{ID}", "ipc";
+	debug "IPC client left network: $args->{ID}\n", "ipc";
 }
 
 1;

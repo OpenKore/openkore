@@ -28,17 +28,18 @@ use IO::Socket::INET;
 ################################
 
 ##
-# Base::Server->new([port])
+# Base::Server->new([port, bind])
 #
 # Start a server at the specified port.
 sub new {
 	my $class = shift;
 	my $port = (shift || 0);
+	my $bind = (shift || 'localhost');
 	my %self;
 
 	$self{server} = IO::Socket::INET->new(
 		Listen		=> 5,
-		LocalAddr	=> 'localhost',
+		LocalAddr	=> $bind,
 		LocalPort	=> $port,
 		Proto		=> 'tcp',
 		ReuseAddr	=> 1);

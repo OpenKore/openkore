@@ -33,16 +33,17 @@ use IPC::Messages qw(encode decode);
 
 
 ##
-# IPC::Server->new([port])
+# IPC::Server->new([port, bind])
 # port: Start the server at the specified port.
+# bind: Bind the server at the specified IP.
 # Returns: an IPC::Server object.
 #
 # Initializes an IPC server.
 sub new {
-	my ($class, $port) = @_;
+	my ($class, $port, $bind) = @_;
 	my $self;
 
-	$self = $class->SUPER::new($port);
+	$self = $class->SUPER::new($port, $bind);
 	return if (!$self);
 
 	$self->{listeners} = [];

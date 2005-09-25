@@ -60,11 +60,12 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 ################################
 
 ##
-# IPC->new([userAgent = 'openkore', host = 'localhost', port = undef, wantGlobals = 1, startAtPort = undef])
+# IPC->new([userAgent = 'openkore', host = 'localhost', port = undef, wantGlobals = 1, bind = undef, startAtPort = undef])
 # userAgent: a name to identify yourself.
 # host: host address of the manager server.
 # port: port number of the manager server.
 # wantGlobals: Whether you are interested in receiving global messages.
+# bind: if the IPC manager should be auto-started, then bind it to the specified IP.
 # startAtPort: start the IPC manager at the specified port, if it should be auto-started.
 # Returns: an IPC object, or undef if unable to connect.
 #
@@ -78,12 +79,13 @@ use Utils qw(timeOut dataWaiting launchScript checkLaunchedApp);
 # communication with the manager server. You must call $ipc->iterate() in a loop,
 # until $ipc->ready() returns 1.
 sub new {
-	my ($class, $userAgent, $host, $port, $wantGlobals, $startAtPort) = @_;
+	my ($class, $userAgent, $host, $port, $wantGlobals, $bind, $startAtPort) = @_;
 	my %self;
 
 	$host = "localhost" if (!defined($host) || $host eq "127.0.0.1");
 	$self{userAgent} = defined($userAgent) ? $userAgent : 'openkore';
 	$self{wantGlobals} = defined($wantGlobals) ? $wantGlobals : 1;
+	$self{bind} = $bind;
 	$self{startAtPort} = $startAtPort;
 
 	if ($host eq "localhost" && !$port) {
@@ -100,7 +102,8 @@ sub new {
 	if ($port) {
 		$self{host} = $host;
 		$self{port} = $port;
-		$self{client} = new IPC::Client($host, $port);
+		$self{host} = $self{bind} if ($self{bind});
+		$self{client} = new IPC::Client($self{host}, $port);
 		return undef if (!$self{client});
 	}
 
@@ -205,6 +208,7 @@ sub iterate {
 			debug "Launching manager server\n", "ipc";
 			@args = ('--quiet', '--feedback=' . $manager->{server}->sockport);
 			push @args, "--port=$self->{startAtPort}" if ($self->{startAtPort});
+			push @args, "--bind=$self->{bind}" if ($self->{bind});
 			$manager->{pid} = launchScript(1, undef, 'src/IPC/manager.pl',
 				@args);
 
@@ -229,6 +233,7 @@ sub iterate {
 				if ($data =~ /^\d+$/) {
 					# We got the manager server's port!
 					debug "Manager server started at port $data\n", "ipc";
+					$self->{host} = $self->{bind} if ($self->{bind});
 					$self->{port} = $data;
 					$self->{client} = new IPC::Client($self->{host}, $self->{port});
 					return defined $self->{client};

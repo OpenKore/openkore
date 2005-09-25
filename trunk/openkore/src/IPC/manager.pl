@@ -29,6 +29,7 @@ sub usage {
 	print " --feedback=PORT  Send startup information to the TCP socket localhost:PORT.\n" .
 	      "                  Sends the port on which the manager is running, or an error\n" .
 	      "                  message if startup failed.\n";
+	print " --bind=IP        Bind the server at the specified IP.\n";
 	print " --quiet          Don't print status messages.\n";
 	print " --help           Display this help message.\n";
 }
@@ -42,6 +43,7 @@ sub __start {
 		"port=i"     => \$options{port},
 		"quiet"      => \$options{quiet},
 		"feedback=i" => \$options{feedback},
+		"bind=s"     => \$options{bind},
 		"help"       => \$options{help}
 	)) {
 		usage();
@@ -63,7 +65,7 @@ sub __start {
 
 
 	#### Start server ####
-	$server = new IPC::Manager::Server($options{port});
+	$server = new IPC::Manager::Server($options{port}, $options{bind});
 	if (!$server) {
 		# Failure
 		if ($feedback) {
