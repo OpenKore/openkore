@@ -2190,10 +2190,10 @@ sub cmdParty {
 		message("--------------------------\n", "list");
 
 	} elsif ($arg1 eq "create") {
-		my ($arg2) = $args =~ /^\w* \"([\s\S]*)\"/;
+		my ($arg2) = $args =~ /^\w* ([\s\S]*)/;
 		if ($arg2 eq "") {
 			error	"Syntax Error in function 'party create' (Organize Party)\n" .
-				"Usage: party create \"<party name>\"\n";
+				"Usage: party create <party name>\n";
 		} else {
 			sendPartyOrganize(\$remote_socket, $arg2);
 		}
