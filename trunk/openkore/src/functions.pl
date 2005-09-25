@@ -4662,7 +4662,8 @@ sub parseMsg {
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $conState >= 4 && $lastswitch ne $switch
 	 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
-		decrypt(\$msg, $msg);
+		# The decrypt below casued annoying unparsed errors (at least in serverType  2)
+		if ($config{serverType} != 2) { decrypt(\$msg, $msg) };
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
