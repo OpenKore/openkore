@@ -314,7 +314,8 @@ if ($sys{ipc}) {
 	my $port = $sys{ipc_manager_port};
 	$host = undef if ($host eq '');
 	$port = undef if ($port eq '');
-	$ipc = new IPC(undef, $host, $port, 1, $sys{ipc_manager_startAtPort});
+	$ipc = new IPC(undef, $host, $port, 1,
+		       $sys{ipc_manager_bind}, $sys{ipc_manager_startAtPort});
 	if (!$ipc && $@) {
 		Log::error("Unable to initialize the IPC subsystem: $@\n");
 		undef $@;
