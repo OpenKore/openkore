@@ -78,6 +78,9 @@ Bug fixes:
   attacked by someone else.
 - Fixed monsters listed in the monsters condition of equipAuton now
   doesn't necessarily have to be your attack target.
+- encrypt/decrypt was mangling some packets (at least on serverType 2; 
+  I'm not sure for the other RO's) causing disconnections and
+  unparsed erros.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
