@@ -1376,8 +1376,8 @@ sub cmdExp {
 		"Base Levelup Time Estimation : " . timeConvert($EstB_sec) . "\n" .
 		"Job Levelup Time Estimation  : " . timeConvert($EstJ_sec) . "\n" .
 		"Died : $char->{'deathCount'}\n" .
-		"Bytes Sent:  : " . formatNumber($bytesSent) . "\n" .
-		"Bytes Rcvd:  : " . formatNumber($bytesReceived) . "\n", "info");
+		"Bytes Sent   : " . formatNumber($bytesSent) . "\n" .
+		"Bytes Rcvd   : " . formatNumber($bytesReceived) . "\n", "info");
 
 		message("-[Monster Killed Count]-----------\n" .
 			"#   ID   Name                Count\n",
@@ -1413,6 +1413,8 @@ sub cmdExp {
 		$elasped = 0;
 		$totalelasped = 0;
 		undef %itemChange;
+		$bytesSent = 0;
+		$bytesReceived = 0;
 		message "Exp counter reset.\n", "success";
 	} else {
 		error "Error in function 'exp' (Exp Report)\n" .
