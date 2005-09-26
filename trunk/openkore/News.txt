@@ -290,6 +290,7 @@ Credits:
 - hakore: commanddescriptions.txt, avoidGM_ignore/deltaHp fix,
   standpoint bug, equipAuto bug
 - illusionist: fix for force-aggressive monsters not being dropped when no LOS
+- clovanzo: Louyang portals
 
 
 ==================
