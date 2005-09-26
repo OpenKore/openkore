@@ -28,7 +28,7 @@ our %EXPORT_TAGS = (
 	config  => [qw(%arrowcraft_items %avoid @chatResponses %cities_lut %config %consoleColors %directions_lut %equipTypes_lut %equipSlot_rlut %equipSlot_lut %haircolors @headgears_lut %items_control %items_lut %itemSlotCount_lut %itemsDesc_lut %itemTypes_lut %jobs_lut %maps_lut %masterServers %monsters_lut %npcs_lut %packetDescriptions %portals_lut %responses %sex_lut %shop %skills_lut %skills_rlut %skillsID_lut %skillsID_rlut %skillsDesc_lut %skillsLooks %skillsArea %skillsEncore %skillsSP_lut %spells_lut %emotions_lut %timeout $char %mon_control %priority %routeWeights %itemsPickup %rpackets %itemSlots_lut %skillsStatus %portals_los %skillsState %skillsAilments %elements_lut)],
 	ai      => [qw(@ai_seq @ai_seq_args %ai_v $AI $AI_forcedOff %targetTimeout)],
 	state   => [qw($accountID $cardMergeIndex @cardMergeItemsID $charID @chars @chars_old %cart @friendsID %friends %incomingFriend %field @itemsID %items @monstersID %monsters @npcsID %npcs @playersID %players @portalsID @portalsID_old %portals %portals_old @storeList $currentChatRoom @currentChatRoomUsers @chatRoomsID %createdChatRoom %chatRooms @skillsID %storage @storageID @arrowCraftID %guild %incomingGuild @spellsID %spells @unknownPlayers @unknownNPCs $statChanged $skillChanged $useArrowCraft %currentDeal %incomingDeal %outgoingDeal @identifyID @partyUsersID %incomingParty @petsID %pets @venderItemList $venderID @venderListsID @articles $articles %venderLists %monsters_old @monstersID_old %npcs_old %items_old %players_old @playersID_old @servers $sessionID $sessionID2 $accountSex $accountSex2 $map_ip $map_port $KoreStartTime $waitingForInput $secureLoginKey $initSync $lastConfChangeTime @playerNameCacheIDs %playerNameCache %pet $pvp)],
-	network => [qw($remote_socket $charServer $conState $conState_tries $encryptVal $ipc $lastPacketTime $masterServer $xkore $msg $lastswitch $packetParser)],
+	network => [qw($remote_socket $charServer $conState $conState_tries $encryptVal $ipc $lastPacketTime $masterServer $xkore $msg $lastswitch $packetParser $bytesSent $bytesReceived)],
 	interface => [qw($interface)],
 	misc    => [qw($buildType $quit @lastpm %lastpm @privMsgUsers %timeout_ex $shopstarted $dmgpsec $totalelasped $elasped $totaldmg %overallAuth %responseVars %talk $startTime_EXP $startingZenny @monsters_Killed $bExpSwitch $jExpSwitch $totalBaseExp $totalJobExp $shopEarned %itemChange %checkUpdate $XKore_dontRedirect $monkilltime $monstarttime $startedattack $firstLoginMap $sentWelcomeMessage $versionSearch %guildNameRequest $monsterBaseExp $monsterJobExp %descriptions %flags %damageTaken $logAppend)],
 );
@@ -359,6 +359,8 @@ our %descriptions;
 our %flags;
 our $logAppend;
 
+our $bytesSent = 0;
+our $bytesReceived = 0;
 
 # Detect operating system
 if ($^O eq 'MSWin32' || $^O eq 'cygwin') {

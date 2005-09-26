@@ -21,7 +21,7 @@ use Digest::MD5;
 use Exporter;
 use base qw(Exporter);
 
-use Globals qw($accountID $char $charID %config $conState $encryptVal %guild $remote_socket @chars %packetDescriptions $xkore);
+use Globals qw($accountID $char $charID %config $conState $encryptVal %guild $remote_socket @chars %packetDescriptions $xkore $bytesSent);
 use Log qw(message warning error debug);
 use Utils;
 
@@ -383,6 +383,7 @@ sub sendMsgToServer {
 	} else {
 		$$r_socket->send($msg) if ($$r_socket && $$r_socket->connected());
 	}
+	$bytesSent += length($msg);
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{debugPacket_sent} && !existsInList($config{debugPacket_exclude}, $switch)) {

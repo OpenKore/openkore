@@ -1375,7 +1375,9 @@ sub cmdExp {
 		"Zenny/Hour   : " . formatNumber($zennyPerHour) . "\n" .
 		"Base Levelup Time Estimation : " . timeConvert($EstB_sec) . "\n" .
 		"Job Levelup Time Estimation  : " . timeConvert($EstJ_sec) . "\n" .
-		"Died : $char->{'deathCount'}\n", "info");
+		"Died : $char->{'deathCount'}\n" .
+		"Bytes Sent:  : " . formatNumber($bytesSent) . "\n" .
+		"Bytes Rcvd:  : " . formatNumber($bytesReceived) . "\n", "info");
 
 		message("-[Monster Killed Count]-----------\n" .
 			"#   ID   Name                Count\n",

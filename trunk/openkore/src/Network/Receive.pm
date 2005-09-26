@@ -221,6 +221,7 @@ sub create {
 sub parse {
 	my ($self, $msg) = @_;
 
+	$bytesReceived += length($msg);
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	my $handler = $self->{packet_list}{$switch};
 	return 0 unless $handler;
