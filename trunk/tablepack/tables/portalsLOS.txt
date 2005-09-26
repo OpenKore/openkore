@@ -662,7 +662,10 @@ izlude_in 172 158 izlude_in 148 127 0 izlude_in 74 158 0 izlude_in 171 97 0 izlu
 izlude_in 65 84 izlude_in 148 127 0 izlude_in 74 158 0 izlude_in 171 97 0 izlude_in 87 169 0 izlude_in 116 46 0 izlude_in 172 158 0 izlude_in 172 139 0 izlude_in 108 169 0 izlude_in 172 116 0
 izlude_in 74 158 izlude_in 148 127 0 izlude_in 171 97 0 izlude_in 87 169 25 izlude_in 116 46 0 izlude_in 65 84 0 izlude_in 172 158 0 izlude_in 172 139 0 izlude_in 108 169 0 izlude_in 172 116 0
 izlude_in 87 169 izlude_in 148 127 0 izlude_in 74 158 25 izlude_in 171 97 0 izlude_in 116 46 0 izlude_in 65 84 0 izlude_in 172 158 0 izlude_in 172 139 0 izlude_in 108 169 0 izlude_in 172 116 0
-lou_dun01 218 195 lou_dun01 221 195 4
+lou_dun01 218 195 lou_dun01 221 195 4 lou_dun01 40 201 521
+lou_dun01 40 201 lou_dun01 221 195 524
+lou_dun02 165 269 lou_dun02 288 18 1281
+lou_dun02 288 18 lou_dun02 165 269 1281
 lou_fild01 190 101 lou_fild01 190 100 2 lou_fild01 233 356 309
 lou_fild01 233 356 lou_fild01 190 100 310
 lou_in01 101 122 lou_in01 101 119 4
