@@ -119,6 +119,8 @@ New features:
 - New "<player> got married!" message.
 - Taekwon, Star Gladiator, Flying Star Gladiator and Soul Linker jobs
   are now recognized.
+- 'exp' command will now display number of bytes sent and received.
+  Helpful if you need to know your bandwidth usage.
 
 New commands:
 - getplayerinfo (number)
