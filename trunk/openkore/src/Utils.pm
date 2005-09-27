@@ -561,12 +561,13 @@ sub checkMovementDirection {
 ##
 # distance(r_hash1, r_hash2)
 # pos1, pos2: references to position hash tables.
-# Returns: the distance as integer, in blocks.
+# Returns: the distance as a floating point number.
 #
-# Calculates the number of steps (NOT pythagorean distance, which RO
-# doesn't go by; see
-# http://openkore.sourceforge.net/forum/viewtopic.php?t=9176) between
-# ($pos1->{x}, $pos1->{y}) and ($pos2->{x}, $pos2->{y}).
+# Calculates the pythagorean distance between pos1 and pos2.
+#
+# FIXME: Some things in RO should use block distance instead.
+# Discussion at
+# http://openkore.sourceforge.net/forum/viewtopic.php?t=9176
 #
 # Example:
 # # Calculates the distance between you and a monster
