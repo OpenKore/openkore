@@ -37,7 +37,7 @@ our @EXPORT = (
 	compactArray existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip
 	findIndexStringList_lc findKey findKeyString hashCopyByKey minHeapAdd shuffleArray),
 	# Math
-	qw(calcPosition checkMovementDirection distance getVector moveAlongVector normalize vectorToDegree max min),
+	qw(calcPosition checkMovementDirection distance blockDistance getVector moveAlongVector normalize vectorToDegree max min),
 	# OS-specific
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
@@ -586,6 +586,19 @@ sub distance {
         %line = %{$pos1};
     }
     return sqrt($line{x} ** 2 + $line{y} ** 2);
+}
+
+##
+# blockDistance(pos1, pos2)
+# pos1, pos2: references to position hash tables.
+# Returns: the distance in number of blocks (integer).
+#
+# Calculates the distance in number of blocks between pos1 and pos2.
+# This is used for e.g. weapon range calculation.
+sub blockDistance {
+	my ($pos1, $pos2) = @_;
+
+	return max($pos1->{x} - $pos2->{x}, $pos1->{y} - $pos2->{y});
 }
 
 ##
