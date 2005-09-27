@@ -83,7 +83,7 @@ sub get {
 		if ($notEquipped) {
 			$index = findIndexString_lc_not_equip($char->{inventory}, 'name', $item, $skipIndex);
 		} else {
-			$index = findIndexStringList_lc($char->{inventory}, 'name', $item, $skipIndex);
+			$index = findIndexString_lc($char->{inventory}, 'name', $item, $skipIndex);
 		}
 		return undef if !defined($index);
 		return $char->{inventory}[$index];
