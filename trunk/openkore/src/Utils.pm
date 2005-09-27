@@ -598,7 +598,8 @@ sub distance {
 sub blockDistance {
 	my ($pos1, $pos2) = @_;
 
-	return max($pos1->{x} - $pos2->{x}, $pos1->{y} - $pos2->{y});
+	return max(abs($pos1->{x} - $pos2->{x}),
+	           abs($pos1->{y} - $pos2->{y}));
 }
 
 ##
