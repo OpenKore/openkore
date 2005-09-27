@@ -86,7 +86,7 @@ sub parseCmd {
   # substitute variables
   while ((undef, $var) = $command =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
     $cvs->debug("found variable $var in $command", $logfac{parser_steps});
-    my $tmp = getVar($var);$command =~ s/(^|[^\\])\$$var/$1$tmp/g;
+    my $tmp = getVar($var);$command =~ s/(^|[^\\])\$$var([^a-z\d]?)/$1$tmp$2/g;
   }
   # substitute doublevars
   while (($var) = $command =~ /\$\{(.*?)\}/i) {
