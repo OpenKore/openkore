@@ -83,6 +83,8 @@ Bug fixes:
 - encrypt/decrypt was mangling some packets (at least on serverType 2; 
   I'm not sure for the other RO's) causing disconnections and
   unparsed erros.
+- useSelf_skill equip_rightHand and similar constructs will now
+  correctly equip items whose names have commas in them.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
