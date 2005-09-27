@@ -108,7 +108,6 @@ sub new {
 	}
 
 	$self{connected} = 1;
-	$self{ip} = $self{client}->{ip};
 	bless \%self, $class;
 	return \%self;
 }
