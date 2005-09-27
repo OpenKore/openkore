@@ -108,6 +108,7 @@ sub new {
 	}
 
 	$self{connected} = 1;
+	$self{ip} = $self{client}->{ip};
 	bless \%self, $class;
 	return \%self;
 }
@@ -266,6 +267,7 @@ sub iterate {
 
 				my %args =  (ID => $self->{ID});
 				$args{userName} = $::config{username} if (defined $::config{username});
+				$args{ip} = $self->{client}->{sock}->sockhost;
 				$self->send("JOIN", \%args);
 			}
 		}
