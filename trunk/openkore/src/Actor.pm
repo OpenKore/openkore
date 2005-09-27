@@ -175,6 +175,17 @@ sub distance {
 }
 
 ##
+# $actor->blockDistance([$otherActor])
+#
+# Returns the block distance to another actor (defaults to yourself).
+sub blockDistance {
+	my ($self, $otherActor) = @_;
+
+	$otherActor ||= $char;
+	return Utils::blockDistance($self->position, $otherActor->position);
+}
+
+##
 # $actor->snipable
 #
 # Returns whether or not you have snipable LOS to the actor.
