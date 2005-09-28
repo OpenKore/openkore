@@ -63,9 +63,10 @@ sub onIPCData {
 	} elsif (exists $args->{TO}) {
 		# Deliver private message
 		my $failed;
+		my $to = $args->{TO};
 
 		if ($self->{ipc_clients}{$args->{TO}}) {
-			my $to = $self->{ipc_clients}{$args->{TO}}{name};
+			$to = $self->{ipc_clients}{$args->{TO}}{name};
 			print "Delivering message from $client->{name} to $to\n";
 			$args->{FROM} = $client->{ID};
 
