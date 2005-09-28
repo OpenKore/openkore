@@ -742,6 +742,7 @@ sub parseSkillsLUT {
 	open(FILE, "<$file");
 	$i = 1;
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
 		$stuff[1] =~ s/ *$//;
@@ -763,6 +764,7 @@ sub parseSkillsIDLUT {
 	open(FILE, "<$file");
 	$i = 1;
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
@@ -782,6 +784,7 @@ sub parseSkillsReverseIDLUT_lc {
 	open(FILE, "<$file");
 	$i = 1;
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
@@ -801,6 +804,7 @@ sub parseSkillsReverseLUT_lc {
 	open(FILE, "< $file");
 	$i = 1;
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
 		$stuff[1] =~ s/ *$//;
