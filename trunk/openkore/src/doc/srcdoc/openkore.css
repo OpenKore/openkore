@@ -177,3 +177,14 @@ h2:hover {
 	padding: 0;
 	margin: 0;
 }
+
+.hashkeys {
+	background: #ffe5bc;
+	margin-left: 0.2cm;
+	padding: 0.2cm;
+}
+
+.hashkeys dt {
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monospace;
+	font-weight: bold;
+}

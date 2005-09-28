@@ -14,6 +14,73 @@
 #########################################################################
 ##
 # MODULE DESCRIPTION: Basic implementation of a TCP/IP server
+#
+# When writing TCP servers, a significant amount of time is spent in
+# handling connection issues (such as establishing connections, client
+# multiplexing, etc). This class makes it easier to write a TCP server
+# by handling all connection issues for you, so you can concentrate
+# on handling the protocol.
+#
+# You are supposed to create a class which is derived from Base::Server.
+# Override the abstract methods onClientNew(), onClientExit() and
+# onClientData() (see the API specification).
+#
+# <h3>Example</h3>
+# Here is an example of how to use Base::Server (MyServer.pm):
+# <pre class="example">
+# package MyServer;
+#
+# use strict;
+# use Base::Server;
+# use base qw(Base::Server);
+#
+# sub onClientNew {
+#     my ($client, $index) = @;
+#     print "Client $index connected.\n";
+# }
+#
+# sub onClientExit {
+#     my ($client, $index) = @_;
+#     print "Client $index disconnected.\n";
+# }
+#
+# sub onClientData {
+#     my ($client, $data, $index) = @_;
+#     print "Client $index sent the following data: $data\n";
+# }
+#
+# 1;
+# </pre>
+# And in the main script you write:
+# <pre class="example">
+# use strict;
+# use MyServer;
+#
+# my $port = 1234;
+# my $server = new MyServer($port);
+# while (1) {
+#     # Main loop
+#     $server->iterate;
+# }
+# </pre>
+#
+# <h3>The client object</h3>
+# The client object is a reference to a hash with the following members:
+# <dl class="hashkeys">
+# <dt>sock</dt>
+# <dd>The client's socket.</dd>
+#
+# <dt>host</dt>
+# <dd>The client's IP address in text form.</dd>
+#
+# <dt>fd</dt>
+# <dd>The file descriptor of sock, as returned by fileno().</dd>
+#
+# <dt>index</dt>
+# <dd>An ID for this client. This ID is unique for this Base::Server object.
+# In other words, the same Base::Server object will not have two clients with the
+# same index.</dd>
+# </dl>
 
 package Base::Server;
 
@@ -81,9 +148,11 @@ sub port {
 
 ##
 # $server->sendData(client, data)
+# client: a client object (see overview).
+# data: the data to send.
 # Returns: 1 on success, 0 on failure.
 #
-# Send data to client.
+# Send data to $client.
 sub sendData {
 	my ($self, $client) = @_;
 
@@ -143,7 +212,7 @@ sub iterate {
 
 ##
 # $server->onClientNew(client, index)
-# client: a reference to a hash which contains the client information.
+# client: a client object (see overview).
 # index: the index of this client hash in the internal client list.
 #
 # This method is called when a new client has connected to the server.
@@ -152,7 +221,7 @@ sub onClientNew {
 
 ##
 # $server->onClientExit(client, index)
-# client: a reference to a hash which contains the client information.
+# client: a client object (see overview).
 # index: the index of this client hash in the internal client list.
 #
 # This method is called when a client has disconnected from the server.
@@ -161,7 +230,7 @@ sub onClientExit {
 
 ##
 # $server->onClientData(client, data, index)
-# client: a reference to a hash which contains the client information.
+# client: a client object (see overview).
 # data: the data this client received.
 # index: the index of this client hash in the internal client list.
 #
