@@ -62,17 +62,28 @@ sub onIPCData {
 
 	} elsif (exists $args->{TO}) {
 		# Deliver private message
-		my $to = $self->{ipc_clients}{$args->{TO}}{name};
-		print "Delivering message from $client->{name} to $to\n";
-		$args->{FROM} = $client->{ID};
+		my $failed;
 
-		if ($self->send($args->{TO}, $msgID, $args) == -1) {
+		if ($self->{ipc_clients}{$args->{TO}}) {
+			my $to = $self->{ipc_clients}{$args->{TO}}{name};
+			print "Delivering message from $client->{name} to $to\n";
+			$args->{FROM} = $client->{ID};
+
+			if ($self->send($args->{TO}, $msgID, $args) == -1) {
+				$failed = 1;
+			}
+		} else {
+			$failed = 1;
+		}
+
+		if ($failed) {
 			# Unable to deliver the message because the specified client doesn't exist.
 			# Notify the sender.
 			my %args = (
 				ID => $client->{ID}
 			);
 			$self->send($client->{ID}, 'CLIENT_NOT_FOUND', \%args);
+			print "Failed to deliver message from $client->{name} to client $args->{TO}\n";
 		}
 
 	} else {

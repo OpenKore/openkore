@@ -35,7 +35,7 @@
 # use base qw(Base::Server);
 #
 # sub onClientNew {
-#     my ($client, $index) = @;
+#     my ($client, $index) = @_;
 #     print "Client $index connected.\n";
 # }
 #
@@ -185,6 +185,7 @@ sub iterate {
 	}
 
 	foreach my $client (@{$self->{clients}}) {
+		next if (!$client);
 		$bits = '';
 		vec($bits, $client->{fd}, 1) = 1;
 		if (select($bits, undef, undef, 0) > 0) {
@@ -213,7 +214,7 @@ sub iterate {
 ##
 # $server->onClientNew(client, index)
 # client: a client object (see overview).
-# index: the index of this client hash in the internal client list.
+# index: the client's index (same as $client->{index}).
 #
 # This method is called when a new client has connected to the server.
 sub onClientNew {
@@ -222,7 +223,7 @@ sub onClientNew {
 ##
 # $server->onClientExit(client, index)
 # client: a client object (see overview).
-# index: the index of this client hash in the internal client list.
+# index: the client's index (same as $client->{index}).
 #
 # This method is called when a client has disconnected from the server.
 sub onClientExit {
@@ -232,7 +233,7 @@ sub onClientExit {
 # $server->onClientData(client, data, index)
 # client: a client object (see overview).
 # data: the data this client received.
-# index: the index of this client hash in the internal client list.
+# index: the client's index (same as $client->{index}).
 #
 # This method is called when a client has received data.
 sub onClientData {
