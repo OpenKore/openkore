@@ -34,12 +34,20 @@ sub makeupText {
 		}
 		return $text;
 	}
+	sub preformatted {
+		my $text = shift;
+		# Remove auto-generated tags inside <pre> blocks.
+		$text =~ s/\n<{.*?}>//sg;
+		return $text;
+	}
 
-	$text =~ s/\n\n/\n<p>\n\n/sg;
+	$text =~ s/\n\n/\n<{p}>\n\n/sg;
+	$text =~ s/(<\/dd>)\n<{p}>(\n*<dt>)/$1$2/sg;
 	$text =~ s/^`l$/<ul>/gm;
 	$text =~ s/^`l`$/<\/ul>/gm;
 	$text =~ s/<ul>(.*?)<\/ul>/&list($1)/gse;
 	$text =~ s/(^| |\n)(http:\/\/.*?)($| |\n)/$1<a href="$2">$2<\/a>$3/gs;
+	$text =~ s/(<pre( .*?)?>.*?<\/pre>)/&preformatted($1)/gse;
 
 
 	sub createFuncLink {
@@ -54,15 +62,17 @@ sub makeupText {
 			$file =~ s/::/--/g;
 			return "<a href=\"$file.html#$name\"><code>$func</code></a>";
 		}
-		return "<code>$func<\/code>";
+		return "<{code}>$func<{\/code}>";
 	}
 
 	# Functions
 	$text =~ s/(\$?[a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
 	# Variables
-	$text =~ s/(^|\n| )([\$\%\@][a-z0-9_{\'}:]+)/$1<code>$2<\/code>/gis;
+	$text =~ s/(^|\n| )([\$\%\@][a-z0-9_{\'}:]+)/$1<{code}>$2<{\/code}>/gis;
 	# Links to modules
 	$text =~ s/([a-z0-9_:]+\.pm)/&linkModule($1)/gie;
+
+	$text =~ s/<{(.*?)}>/<$1>/gs;
 	return $text;
 }
 
