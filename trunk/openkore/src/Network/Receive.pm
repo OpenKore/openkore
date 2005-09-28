@@ -198,9 +198,11 @@ sub new {
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 
-		'022C' => ['actor_exists', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x15 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead  head_dir guildID sex coords act lv)]], # remaining prblems: detect shoes, hair color, and sex; all the rest work now
+		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 
-		'022B' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]], # FIXME: not working yet
+		'022C' => ['actor_exists', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x15 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords act lv)]], # remaining prblems: detect shoes, hair color, and sex; all the rest work now
+
+		'022B' => ['actor_connected', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x8 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords lv)]], # FIXME: not working yet
 		};
 
 	bless \%self, $class;
@@ -419,7 +421,11 @@ sub actor_connected {
 	my ($self,$args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my %coords;
-	makeCoords(\%coords, $args->{coords});
+	if ($args->{switch} eq '022B') {
+		makeCoords2(\%coords, $args->{coords});
+	} else {
+		makeCoords(\%coords, $args->{coords});
+	}
 
 	if ($jobs_lut{$args->{type}}) {
 		my $added;
@@ -587,9 +593,9 @@ sub actor_exists {
 	my ($self, $args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my %coords;
-	if ($config{master} eq 'Malaysia - mRO: Sakray') { 	# FIXME: make a better condition to support this
-		makeCoords2(\%coords, $args->{coords}); 		# mRO Sakray uses makeCoords2, even if it is using
-	} else {											# serverType 0.
+	if ($args->{switch} eq '022C') {
+		makeCoords2(\%coords, $args->{coords}); 
+	} else {
 		makeCoords(\%coords, $args->{coords});
 	}
 	#debug ("$coords{x}x$coords{y}\n");
