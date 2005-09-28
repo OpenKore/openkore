@@ -199,10 +199,12 @@ sub new {
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 
 		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
+		
+		'022A' => ['actor_spawned', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x9 C1 a3 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords lv)]], # still some problems remaining
 
-		'022C' => ['actor_exists', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x15 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords act lv)]], # remaining prblems: detect shoes, hair color, and sex; all the rest work now
+		'022B' => ['actor_connected', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x9 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords lv)]], # still some problems remaining
 
-		'022B' => ['actor_connected', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x8 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords lv)]], # FIXME: not working yet
+		'022C' => ['actor_exists', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x15 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords act lv)]], # still someproblems remaining
 		};
 
 	bless \%self, $class;
@@ -421,11 +423,7 @@ sub actor_connected {
 	my ($self,$args) = @_;
 	$conState = 5 if ($conState != 4 && $xkore);
 	my %coords;
-	if ($args->{switch} eq '022B') {
-		makeCoords2(\%coords, $args->{coords});
-	} else {
-		makeCoords(\%coords, $args->{coords});
-	}
+	makeCoords(\%coords, $args->{coords});
 
 	if ($jobs_lut{$args->{type}}) {
 		my $added;
