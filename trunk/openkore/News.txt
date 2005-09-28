@@ -32,6 +32,8 @@ TODO:
   equipAuto totalMisses changed to target_totalMisses
 - 'party create "<party_name>"' command renamed to
   'party create <party_name>'.
+- 'Pink Spring' renamed to "Roki's Weil" to match the skill name
+  in spells.txt (for whenGround/whenNotGround).
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
