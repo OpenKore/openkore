@@ -39,6 +39,7 @@ sub initHandlers {
 		'move to'          => \&ipcMoveTo,
 
 		'CLIENT_NOT_FOUND' => \&ipcClientNotFound,
+		'JOIN',            => \&ipcJoin,
 		'LEAVE'            => \&ipcLeave
 	);
 }
@@ -117,12 +118,17 @@ sub ipcWhereAreYou {
 
 sub ipcClientNotFound {
 	my ($ipc, $ID, $args) = @_;
-	debug "Unable to deliver IPC message to client: $args->{ID}\n", "ipc";
+	debug "Unable to deliver IPC message to client: $args->{recepient}\n", "ipc";
+}
+
+sub ipcJoin {
+	my ($ipc, $ID, $args) = @_;
+	debug "IPC client joined network: $args->{name}\n";
 }
 
 sub ipcLeave {
 	my ($ipc, $ID, $args) = @_;
-	debug "IPC client left network: $args->{ID}\n", "ipc";
+	debug "IPC client left network: $args->{name}\n", "ipc";
 }
 
 1;

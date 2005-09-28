@@ -77,9 +77,7 @@
 # <dd>The file descriptor of sock, as returned by fileno().</dd>
 #
 # <dt>index</dt>
-# <dd>An ID for this client. This ID is unique for this Base::Server object.
-# In other words, the same Base::Server object will not have two clients with the
-# same index.</dd>
+# <dd>The index of this object in the Base::Server object's internal array.</dd>
 # </dl>
 
 package Base::Server;

@@ -320,6 +320,8 @@ if ($sys{ipc}) {
 		Log::error("Unable to initialize the IPC subsystem: $@\n");
 		undef $@;
 	}
+
+	$ipc->send("new bot", userName => $config{username});
 }
 
 

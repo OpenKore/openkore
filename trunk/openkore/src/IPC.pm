@@ -263,11 +263,6 @@ sub iterate {
 				$self->send("HELLO",
 					"userAgent" => $self->{userAgent},
 					"wantGlobals" => $self->{wantGlobals});
-
-				my %args =  (ID => $self->{ID});
-				$args{userName} = $::config{username} if (defined $::config{username});
-				$args{ip} = $self->{client}->{sock}->sockhost;
-				$self->send("JOIN", \%args);
 			}
 		}
 	}
