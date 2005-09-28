@@ -188,3 +188,7 @@ h2:hover {
 	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monospace;
 	font-weight: bold;
 }
+
+dd.requires, dd.ensures {
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monospace;
+}

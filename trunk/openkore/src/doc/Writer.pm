@@ -177,9 +177,17 @@ sub writeModuleHTML {
 				}
 			}
 
+			if ($func->{requires} ne '') {
+				$text .= "\t\t<dt class=\"requires\"><strong>Requires:</strong></dt>\n" .
+					"\t\t\t<dd class=\"requires\">" . $func->{requires} . "</dd>\n";
+			}
+			if ($func->{ensures} ne '') {
+				$text .= "\t\t<dt class=\"ensures\"><strong>Ensures:</strong></dt>\n" .
+					"\t\t\t<dd class=\"ensures\">" . $func->{ensures} . "</dd>\n";
+			}
 			if ($func->{returns} ne '') {
 				$text .= "\t\t<dt class=\"returns\"><strong>Returns:</strong></dt>\n" .
-					"\t\t\t<dd>" . $func->{returns} . "</dd>\n";
+					"\t\t\t<dd class=\"returns\">" . $func->{returns} . "</dd>\n";
 			}
 
 			if ($write_bluelist) {

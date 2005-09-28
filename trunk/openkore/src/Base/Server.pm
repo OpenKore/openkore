@@ -96,8 +96,10 @@ use IO::Socket::INET;
 
 ##
 # Base::Server->new([port, bind])
+# port: the port to bind the server socket to. If unspecified, the first available port (as returned by the operating system) will be used.
+# bind: the IP address to bind the server socket to. If unspecified, the socket will be bound to "localhost". Specify "0.0.0.0" to not bind to any address.
 #
-# Start a server at the specified port.
+# Start a server at the specified port and IP address.
 sub new {
 	my $class = shift;
 	my $port = (shift || 0);
@@ -150,6 +152,7 @@ sub port {
 # $server->sendData(client, data)
 # client: a client object (see overview).
 # data: the data to send.
+# Requires: defined(client) && defined(data)
 # Returns: 1 on success, 0 on failure.
 #
 # Send data to $client.
@@ -215,6 +218,7 @@ sub iterate {
 # $server->onClientNew(client, index)
 # client: a client object (see overview).
 # index: the client's index (same as $client->{index}).
+# Ensures: defined($client) && defined(index)
 #
 # This method is called when a new client has connected to the server.
 sub onClientNew {
@@ -224,6 +228,7 @@ sub onClientNew {
 # $server->onClientExit(client, index)
 # client: a client object (see overview).
 # index: the client's index (same as $client->{index}).
+# Ensures: defined($client) && defined(index)
 #
 # This method is called when a client has disconnected from the server.
 sub onClientExit {
@@ -234,6 +239,7 @@ sub onClientExit {
 # client: a client object (see overview).
 # data: the data this client received.
 # index: the client's index (same as $client->{index}).
+# Ensures: defined($client) && defined(index)
 #
 # This method is called when a client has received data.
 sub onClientData {

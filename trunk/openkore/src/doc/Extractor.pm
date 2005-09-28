@@ -17,6 +17,8 @@ sub initItem {
 	$hash->{name} = '';
 	$hash->{desc} = '';
 	$hash->{example} = '';
+	$hash->{requires} = '';
+	$hash->{ensures} = '';
 	$hash->{returns} = '';
 }
 
@@ -108,16 +110,21 @@ sub addModule {
 				# The next line is the function description.
 				$state = 'function-description';
 
-				# The "Returns" parameter deserves special treatment.
-				my $i = 0;
+				# The "Returns", "Requires" and "Ensures" parameters deserve
+				# special treatment.
+				my @newParams;
 				foreach my $param (@{$item{params}}) {
 					if ($param->[0] eq 'Returns') {
 						$item{returns} = $param->[1];
-						delete $item{params}[$i];
-						last;
+					} elsif ($param->[0] eq 'Requires') {
+						$item{requires} = $param->[1];
+					} elsif ($param->[0] eq 'Ensures') {
+						$item{ensures} = $param->[1];
+					} else {
+						push @newParams, $param;
 					}
-					$i++;
 				}
+				$item{params} = \@newParams;
 
 			} else {
 				# Process parameter
