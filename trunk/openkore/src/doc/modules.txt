@@ -17,6 +17,7 @@ Skills
 Match
 Misc
 IPC
+IPC::Server
 IPC::Messages
 Interface::Wx::DockNotebook
 Interface::Wx::DockNotebook::Page

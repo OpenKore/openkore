@@ -23,11 +23,12 @@ sub onClientNew {
 # A client disconnected
 sub onClientExit {
 	my ($self, $client) = @_;
-	$self->SUPER::onClientExit($client);
-
 	my %args = (
-		ID => $client->{ID},
+		id => $client->{ID},
+		name => $client->{name},
+		userAgent => $client->{userAgent}
 	);
+	$self->SUPER::onClientExit($client);
 	$self->broadcast(undef, 'LEAVE', \%args);
 }
 
@@ -47,6 +48,16 @@ sub onIPCData {
 		$client->{ready} = 1;
 		$client->{name} = $args->{userAgent} . ":" . $client->{ID};
 
+		# Broadcast a JOIN message about this client
+		print "Client identified as $client->{name}; broadcasting JOIN\n";
+		my %args = (
+			    id => $client->{ID},
+			    name => $client->{name},
+			    userAgent => $client->{userAgent},
+			    ip => $client->{host}
+		);
+		$self->broadcast(undef, "JOIN", \%args, $client);
+
 	} elsif ($msgID eq "_LIST-CLIENTS") {
 		my %args;
 		my $i = 0;
@@ -63,11 +74,12 @@ sub onIPCData {
 	} elsif (exists $args->{TO}) {
 		# Deliver private message
 		my $failed;
-		my $to = $args->{TO};
+		my $recepient = $self->{ipc_clients}{$args->{TO}};
+		my $recepientName;
 
-		if ($self->{ipc_clients}{$args->{TO}}) {
-			$to = $self->{ipc_clients}{$args->{TO}}{name};
-			print "Delivering message from $client->{name} to $to\n";
+		if ($recepient) {
+			$recepientName = $recepient->{name};
+			print "Delivering message from $client->{name} to $recepientName\n";
 			$args->{FROM} = $client->{ID};
 
 			if ($self->send($args->{TO}, $msgID, $args) == -1) {
@@ -75,28 +87,32 @@ sub onIPCData {
 			}
 		} else {
 			$failed = 1;
+			$recepientName = "client $args->{TO}";
 		}
 
 		if ($failed) {
 			# Unable to deliver the message because the specified client doesn't exist.
 			# Notify the sender.
-			my %args = (
-				ID => $client->{ID}
-			);
+			my %args = (msgID => $msgID, recepient => $args->{TO});
 			$self->send($client->{ID}, 'CLIENT_NOT_FOUND', \%args);
-			print "Failed to deliver message from $client->{name} to client $args->{TO}\n";
+			print "Failed to deliver message from $client->{name} to $recepientName\n";
 		}
 
 	} else {
-		# Broadcast global messages to all clients except:
-		# - The sender.
-		# - Clients that aren't done with handshaking yet.
+		# Broadcast global messages:
+		$self->broadcast($client, $msgID, $args);
+	}
+}
 
-		foreach my $c (@{$self->{clients}}) {
-			next if (!$c || $c eq $client || !$c->{ready} || !$c->{wantGlobals});
-			$args->{FROM} = $client->{ID};
-			$self->send($c->{ID}, $msgID, $args);
-		}
+# Broadcast a message (which comes from $sender) to other clients on the network,
+# except clients that aren't done with handshaking yet, or don't want to have
+# global messages. Set $sender to undef if the message is from the IPC manager.
+sub broadcast {
+	my ($self, $sender, $msgID, $args, $exclude) = @_;
+	$args->{FROM} = $sender->{ID} if ($sender);
+	foreach my $c (@{$self->{clients}}) {
+		next if (!$c || (defined($sender) && $c eq $sender) || (defined($exclude) && $c eq $exclude) || !$c->{ready} || !$c->{wantGlobals});
+		$self->send($c->{ID}, $msgID, $args);
 	}
 }
 

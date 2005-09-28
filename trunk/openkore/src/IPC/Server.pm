@@ -19,6 +19,18 @@
 # messages, but knows nothing about the actual protocol.
 # This module is used by the official IPC manager implementation and
 # should not be used directly.
+#
+# This class is derived from Base::Server.pm and extends the client object
+# with the following members:
+# <dl class="hashkeys">
+# <dt>ID</dt>
+# <dd>An ID for this client (<b>client ID</b>). This ID is unique for this IPC::Server object.
+# In other words, the same IPC::Server object will not have two clients with the
+# same ID.</dd>
+#
+# <dt>buffer</dt>
+# <dd>A buffer for network data. Don't use this.</dd>
+# </dl>
 
 package IPC::Server;
 
@@ -38,7 +50,7 @@ use IPC::Messages qw(encode decode);
 # bind: Bind the server at the specified IP.
 # Returns: an IPC::Server object.
 #
-# Initializes an IPC server.
+# Starts an IPC server. See Base::Server->new() for a description of the parameters.
 sub new {
 	my ($class, $port, $bind) = @_;
 	my $self;
@@ -55,25 +67,7 @@ sub new {
 }
 
 ##
-# $ipc->broadcast(excludeClient, msgID, hash)
-# excludeClient: A client ID. The message will be broadcasted to all clients, except this one. Pass undef if you want to broadcast to all clients.
-# msgID: The ID of this message.
-# hash: A reference to a hash, containing the arguments for this message.
-#
-# Send a message to all connected clients.
-sub broadcast {
-	my ($self, $exclude, $msgID, $hash) = @_;
-	my $msg;
-
-	$msg = encode($msgID, $hash);
-	foreach my $client (@{$self->{clients}}) {
-		next if (!defined $client || (defined($exclude) && $client->{ID} eq $exclude));
-		$self->sendData($client, $msg);
-	}
-}
-
-##
-# $ipc->send(clientID, msgID, hash)
+# $ipcserver->send(clientID, msgID, hash)
 # Returns: 1 on success, 0 when failed to send data through the socket, -1 if the specified client doesn't exist.
 #
 # Send a message to the specified client.
@@ -89,7 +83,15 @@ sub send {
 	}
 }
 
-# Process IPC message
+
+#######################################
+### CATEGORY: Abstract methods
+#######################################
+
+##
+# $ipcserver->onIPCData($client, $msgID, $args)
+#
+# Process an IPC message.
 sub onIPCData {
 }
 
