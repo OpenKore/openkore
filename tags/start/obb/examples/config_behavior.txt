@@ -1,0 +1,100 @@
+####################################
+# Bot management
+####################################
+# Manage Bot with PM
+secureAdminPassword 1
+adminPassword 
+callSign ;
+
+# Default map
+lockMap 
+lockMap_x
+lockMap_y
+lockMap_randX
+lockMap_randY
+
+# Save map
+saveMap 
+saveMap_warpToBuyOrSell 
+
+####################################
+# Bot behavior
+####################################
+# Walking
+route_randomWalk 0
+route_randomWalk_maxRouteTime 75
+route_maxWarpFee
+route_step 15
+route_teleport 0
+route_teleport_minDistance 150
+route_teleport_maxTries 8
+
+# Sitting
+sitAuto_hp_lower 80
+sitAuto_hp_upper 100
+sitAuto_sp_lower 80
+sitAuto_sp_upper 100
+sitAuto_over_50 0
+sitAuto_idle 1
+
+# Attacking
+attackAuto 0
+attackAuto_party 0
+attackAuto_onlyWhenSafe 0
+attackAuto_followTarget 1
+attackAuto_inLockOnly 1
+attackDistance 1.5
+attackMaxRouteDistance 100
+attackMaxRouteTime 4
+attackMinPortalDistance 7
+attackUseWeapon 1
+attackNoGiveup 0
+attackCanSnipe 0
+attackCheckLOS 0
+
+# Running
+runFromTarget 0
+runFromTarget_dist 5
+
+# Following
+follow 0
+followTarget
+followDistanceMax 5
+followDistanceMin 2
+followEmotion 1
+followEmotion_distance 4
+followFaceDirection 1
+followLostStep 12
+followSitAuto 1
+followBot 0
+
+# Tanking
+tankMode 0
+tankModeTarget none
+
+# Teleporting
+teleportAuto_hp 10
+teleportAuto_atkMiss 10
+teleportAuto_dropTarget 1
+teleportAuto_idle 0
+teleportAuto_portal 0
+teleportAuto_search 0
+teleportAuto_minAggressives 0
+teleportAuto_onlyWhenSafe 0
+teleportAuto_maxDmg 500
+teleportAuto_deadly 1
+teleportAuto_useItem 1
+teleportAuto_useSP 0
+teleportAuto_allPlayers 0
+teleportAuto_emptyName 1
+teleportAuto_unstuck 1
+
+# Looting
+itemsTakeAuto 1
+itemsGatherAuto 0
+itemsMaxWeight 89
+itemsMaxWeight_sellOrStore 48
+
+# Shopping
+shopAuto_open 0
+shop_random 0

@@ -1,0 +1,13 @@
+#control\shop.txt
+
+# shop_title
+shop_title 
+
+name_0 
+quantity_0 0
+price_0 0
+
+name_1 
+quantity_1 0
+price_1 0
+

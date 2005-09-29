@@ -1,0 +1,66 @@
+50639 prt_fild05 270 212 Culvert Guardian
+51064 prt_fild05 290 221 Tool Dealer
+51131 prt_fild05 290 224 Kafra Employee
+51144 pay_arche 55 123 Kafra Employee
+50958 payon 166 140 Woman
+50959 payon 163 142 Woman
+50952 payon 163 139 Lady
+51161 pay_arche 85 30 Guide
+51141 payon 99 116 Kafra Employee
+51170 payon 97 116 Kafra Employee
+51160 payon 82 116 Guide
+51104 payon 79 124 Tool Dealer
+51155 prontera 160 29 Guide
+51127 prontera 151 29 Kafra Employee
+51166 prontera 146 87 Kafra Employee
+51126 prontera 146 89 Kafra Employee
+51171 prontera 73 140 Milk Merchant
+51178 prontera 78 150 Dairenne
+51055 prontera 73 134 Milk Merchant
+51059 prontera 58 182 Flower Girl
+51154 prontera 29 200 Guide
+51129 prontera 29 207 Kafra Employee
+51257 in_moc_16 14 83 Mohamed
+50624 prontera 54 240 Tono
+51134 geffen 203 123 Kafra Employee
+51158 geffen 203 116 Guide
+51393 morocc 158 97 Smile Assistance
+51138 morocc 156 97 Kafra Employee
+51080 morocc 170 101 Item Collector
+51168 morocc 154 97 Kafra Employee
+51137 morocc 160 258 Kafra Employee
+51079 morocc 151 243 Tool Dealer
+51078 morocc 147 102 Tool Dealer
+51088 morocc 157 72 Butcher
+51082 morocc 166 51 Jeweller
+51083 morocc 145 44 Jeweller
+50799 morocc 150 50 Towner
+50687 izlude 58 126 Cebalis
+51071 izlude 94 98 Fruit Merchant
+51073 izlude 105 92 Milk Merchant
+51072 izlude 105 99 Butcher
+51157 izlude 121 87 Guide
+50682 izlude 135 78 Charfri
+51132 izlude 134 88 Kafra Employee
+50688 izlude_in 125 164 Aaron
+54077 izlude_in 74 172 Swordman
+54078 izlude_in 62 170 Swordman
+50686 izlude 56 126 Red
+51156 izlude 121 87 Guide
+51128 prontera 29 207 Kafra Employee
+51153 prontera 29 200 Guide
+50683 izlude 119 121 Cuskoal
+51398 izlude 129 118 Smile Assistance
+51105 payon 142 104 Pet Merchant
+51097 geffen 193 152 Pet Merchant
+51145 moc_ruins 59 157 Kafra Employee
+50797 morocc 116 266 Towner
+51081 morocc 206 250 Item Collector
+50806 morocc 277 213 Uncle Morroc
+51392 morocc 158 97 Smile Assistance
+51167 morocc 154 97 Kafra Employee
+51140 payon 99 116 Kafra Employee
+51169 payon 97 116 Kafra Employee
+52887 moc_ruins 91 150 Ponka-Hontas
+51136 morocc 160 258 Kafra Employee
+54049 prt_fild03 365 255 Ascetic

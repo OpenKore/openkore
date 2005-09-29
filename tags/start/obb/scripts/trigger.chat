@@ -1,0 +1,5 @@
+\[PM] \[GM]	play gm_pm.mp3
+\[C]	bell 3
+[bB][oO0]{1,5}[tT].*	play botter.mp3
+:.*:.*:.*Bot Name	echo red_h , bell 3
+

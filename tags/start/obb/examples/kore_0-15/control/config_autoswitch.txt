@@ -1,0 +1,40 @@
+####################################
+# Weapon Switching
+####################################
+autoSwitch_default_rightHand Knife
+autoSwitch_default_leftHand none
+autoSwitch_default_arrow
+
+autoSwitch Black Mushroom,Red Mushroom,Thief Mushroom,Red Plant,Green Plant,Blue Plant,White Plant,Shinning Plant,Yellow Plant,Orange Plant {
+	rightHand none
+	leftHand none
+	arrow
+	distance 1
+	useWeapon 0
+}
+
+equipAuto {
+	def
+	monster
+	skills
+	weight
+	whileSitting
+	onTeleport
+	hp
+	sp
+	onAction
+	whenStatusActive
+	whenStatusInactive
+	whenFollowing
+	spirit
+	aggressives
+	stopWhenHit 0
+	inLockOnly 0
+	notWhileSitting 0
+	notInTown 0
+	timeout 0
+	disabled 0
+	inInventory_name
+	inInventory_qty
+}
+

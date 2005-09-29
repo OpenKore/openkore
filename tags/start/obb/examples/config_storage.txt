@@ -1,0 +1,27 @@
+####################################
+# Storage Options (kafras)
+####################################
+storageAuto 0
+storageAuto_distance 5
+storageAuto_npc 
+storageAuto_npc_type 1
+storageAuto_npc_steps c r1 n
+
+# Kafra items
+getAuto Red Potion {
+	minAmount 0
+	maxAmount 30
+	passive
+}
+
+getAuto Fly Wing {
+	minAmount 0
+	maxAmount 15
+	passive 
+}
+
+getAuto Butterfly Wing {
+	minAmount 0
+	maxAmount 5
+	passive
+}

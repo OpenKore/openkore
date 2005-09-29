@@ -1,0 +1,213 @@
+OpenKore Developers Notes
+    November 6, 2003
+=========================
+
+
+1. Introduction
+---------------
+OpenKore is written in Perl, a scripting language. Although Perl is a fine
+language, due to the language's extreme flexibility, many developers
+(including Kura, the original author of Kore, and many modders) make coding
+mistakes.
+The goal of this document is to inform developers about how to properly
+write code for (Open)Kore.
+
+
+
+2. Coding style
+---------------
+a) Use Tabs, not spaces.
+b) Put the bracket immediately after a statement or subroutine definition.
+c) Do not put a space between a function name and the argument list.
+d) Do not capitalize the first character of a name. Like: "$helloWorld",
+   not "$HelloWorld".
+
+Correct example for the above points:
+	sub foo {
+		my $canProceed = $_[0];
+
+		if ($canProceed) {
+			bar(1);
+		} else {
+			bar(0);
+		}
+	}
+
+Wrong example:
+	sub
+	foo()
+	{
+		my $CanProceed = $_[0];
+		if ($CanProceed)
+		{ bar(1); }
+		else
+		    {
+			bar(0);
+		    }
+	}
+
+
+
+3. Variable definitions
+-----------------------
+Avoid global variables as much as possible. They are not automatically
+destroyed when not needed anymore, so they hog memory. A lot of memory
+leaks in Kore are caused by the use of global variables that really should
+have been local.
+
+(!!) If the variable is only used temporary (only within one function or
+statement), make the variable local by defining it with "my". Example:
+
+	# Defines multiple local variables:
+	my ($switch, $msg);
+
+	$msg = "01";
+	$switch = "ABCD";
+
+	if ($switch eq "ABCD") {
+		my $level = unpack("S1", substr($msg, 0, 2));
+
+		print "/me uses Dummy Skill lv $level\n";
+	}
+
+(!!) Within the AI() function, you may want to use shared variables
+between two blocks. Even so, try to avoid using global variables. Instead,
+use the $ai_v{'temp'} hash. This hash is destroyed every time you change a
+map or re-login, so it's still better than using global variables.
+You shouldn't forget to manually destroy your variable when no longer needed.
+
+Example:
+
+	# An imaginary block within the AI() function
+	if ($mobbed) {
+		if ($ai_v{'temp'}{'escape_chance'} >= 0.5) {
+			# We tried running away before, but the chance
+			# was too low
+			useTeleport(1);
+
+			# Now we really don't need this variable anymore
+			undef $ai_v{'temp'}{'escape_chance'};
+
+		} else {
+			# Calculate the chance to run away
+			$ai_v{'temp'}{'escape_chance'} = rand(1);
+			unshift @ai_seq, "escape";
+		}
+	}
+
+	if ($ai_seq[0] eq "escape") {
+		if ($ai_v{'temp'}{'escape_chance'} < 0.5) {
+			print "Running away!\n";
+			runAway();
+
+			# We don't need it anymore, so destroy it
+			undef $ai_v{'temp'}{'escape_chance'};
+		}
+
+		# The chance to run away is too low. The current value
+		# of escape_chance is used next time "if ($mobbed)" is
+		# called, so we don't destroy it.
+	}
+
+
+
+4. Comment your code
+---------------------
+Comments are important and often underestimated. In the long run, good
+comments will help you and potential contributors.
+
+a) Write a brief description for complex or confusing blocks of code.
+Example:
+
+	} elsif ($switch eq "DEFG") {
+		# Someone used SuperBlessing lv 99 on you. All your stats
+		# are boosted by +99. Take advantage of this while we
+		# still can.
+		# (describe algorithm if you're doing something really
+		#  complex)
+
+		...
+		(hundreds of lines follow)
+		...
+
+
+b) You should put a comment before every function definition, describing
+what the function does, what parameters it accepts, and the function's
+return value. If the function's complex, add an example.
+
+Examples:
+
+	# configModify(key, val)
+	# key: a key name.
+	# val: the new value.
+	#
+	# Changes the value of configuration key $key to $val. Both
+	# $config and config.txt are modified.
+	sub configModify {
+		...
+
+
+	# decrypt(r_msg, themsg)
+	# r_msg: a reference to a scalar.
+	# themsg: the message to decrypt.
+	#
+	# Decrypts the packets in $themsg and put the result in the scalar
+	# referenced by $r_msg.
+	#
+	# Example:
+	# } elsif ($switch eq "ABCD") {
+	# 	my $level;
+	# 	decrypt(\$level, substr($msg, 0, 2));
+	sub decrypt {
+		...
+
+
+	# distance(r_hash1, r_hash2)
+	# r_hash1, r_hash2: references to position hash tables.
+	# Returns: the distance as integer.
+	#
+	# Calculates the distance between r_hash1 and r_hash2.
+	#
+	# Example:
+	# my $dist = distance(\%{$chars[$config{'char'}]{'pos_to'}},
+	#                     \%{$monsters{$ID}{'pos_to'}});
+	sub distance {
+		...
+
+
+5. Write a ChangeLog and NEWS entry
+-----------------------------------
+Most open source projects have a ChangeLog and a NEWS file.
+
+In the ChangeLog, you write down technical descriptions about your changes.
+That may include the files you changed, the functions you changed or added,
+new global variables, new AI sequences and how they work, etc.
+The ChangeLog is intended for *developers*, so everybody can see who wrote
+what. This is useful if we need to revert or recall something in the future.
+
+Example ChangeLog entry:
+
+	07 November 2003  FBW:
+
+		* skore.pl: new AI sequence "escape".
+		* encrypt(): support the new GravitySuperSecret encryption
+		  algorithm.
+		* control/timeouts.txt: new entry ai_escape_timeout.
+		* tools.cpp (DlLMain): check for correct DLL handle.
+
+
+In NEWS, you write down a brief, high-level overview of changes. NEWS
+is intended for users, who want to read what has changed in each release.
+You should also write down new config options so users can update their 
+config files correctly.
+
+Example NEWS entry:
+
+	Release 1.0.1:
+	* Support PVP packets.
+	* Bugfixes in the pathfinding algorithm.
+	* Support for Gravity's new GravitySuperSecret encryption algorithm.
+	* New config option: useSecretEncryption.
+
+	Release 1.0:
+	* First release. Renamed skore-revamped to OpenKore.

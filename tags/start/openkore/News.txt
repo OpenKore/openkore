@@ -1,0 +1,119 @@
+November 12, 2003:
+* OpenKore 1.0 released.
+
+
+----------- November 10, 2003: Renamed to OpenKore ------------
+
+
+ChangeLog for skore-revamped
+=============================
+
+
+skore-revamped was based on the latest skore build (http://ro.horoy.com/download.html)
+
+
+October 1st:
+
+1  - Changed dump config so it dumps automatically to dump.txt
+2  - Fixed packet lengths
+3  - Added 01D8, 01D9, 01DA, 01DE packets
+[ TESTED -- STILL UNPARSED PACKET ]
+4  - Added unparsed packet 01D7
+[ TESTED -- WORKS]
+5  - Added SIT>ATTACK>SIT fix (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=880&highlight=sit+attack)
+6  - Fixed Teleport code (No more free teleports) (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=2037&start=0&postdays=0&postorder=asc&highlight=)
+[ TESTED -- WORKS | Teleport UNTESTED ]
+7  - Added Long Distance Fix (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1306&start=0&postdays=0&postorder=asc&highlight=spekids)
+
+--[ Done for the night. ]--
+
+October 3rd:
+
+[ TESTED -- WORKS IN MIDS 2 | Teleport UNTESTED ]
+1  - 'chist' bug fixed (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1360&start=0&postdays=0&postorder=asc&highlight=chist)
+2  - added item timeout code (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=709&start=0&postdays=0&postorder=asc&highlight=item timeout)
+3  - added Monster Count code (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1490&start=15&postdays=0&postorder=asc&highlight=item timeout)
+[ TESTED -- chist, Monster Count works | item timeout untested ]
+[ MORE TESTING -- BUGS -- Teleport doesn't work & Does respawn when dead ]
+4  - Went through code and fixed teleport code. It now works. Also respawns correctly when dead.
+5  - Added Item History Code (Extracted from http://xlr82xs.shacknet.nu/diff)
+6  - Added MVP packets (Extracted from http://xlr82xs.shacknet.nu/diff)
+7  - Added packets 0108 & 0188 (Extracted from http://xlr82xs.shacknet.nu/diff)
+8  - Fixed pet spawn packet 01A4 (Extracted from http://xlr82xs.shacknet.nu/diff)
+9  - Added auto-switch shield code (Extracted from http://xlr82xs.shacknet.nu/diff)
+[ TESTED -- Item History works | Everything else untested ]
+10 - Added 'cil' command to clear item history and fixed 'ihist' for when item log is empty
+[ TESTED -- 'cil' and 'ihist' work in accordance to each other ]
+11 - Added code to show location of where item is picked up in items.txt
+[ TESTED -- map name shows properly ]
+[ TESTED -- Auto-switch command works, 'petl' displays good ]
+12 - Added code for updated mapview
+13 - Added code for avoidTeleport
+14 - Modified GM string search method (tested and works GREAT!)
+15 - Added avoid AID code
+[ TESTED -- LOTS OF TESTING for GM search. Works flawlessly, Mapview works great too ]
+16 - Added 'IgnoreAll' switch for config.txt
+[ TESTED -- works ]
+17 - Changed killsteal methods (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1820&start=0&postdays=0&postorder=asc&highlight=kill steal)
+[ TESTED -- no errors so far | tested in payon dungeon ]
+18 - Added MOD to teleport when over ### damage is dealt (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=2065)
+
+--[ Done for the night. ]--
+
+--------------------------------------------------------------------------------------------------------------------------------
+Released: skore-revamped (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=2467&start=0&postdays=0&postorder=asc&highlight=)
+--------------------------------------------------------------------------------------------------------------------------------
+
+October 4th:
+
+1  - Added autoResponseOnHeal code
+2  - Changed avoidGM method to disconnect on sight of GM AND avoid.txt
+[ TESTED - AvoidGM works with people in avoid.txt wonderfully ]
+
+
+3  - Added "Monster attacks: ()" bug fix (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=2131&start=0&postdays=0&postorder=asc&highlight=)
+4  - Made new script: fld2xbm.pl  (converts .fld to .xbm, necessary for new maps in mapview)
+5  - Updated portals.txt, maps.txt, cities.txt, portalsLOS.txt, Maps folder, responses.txt, and config.txt
+6  - Made a skore-revamped.rar containing EVERYTHING you need to get the bot working except a configured config.txt file
+
+--[ Done for the night. ]--
+
+October 8th:
+
+1  - Added 01AC unparsed packet
+2  - Added Weight overflow fix 
+
+--[ Done for the night. ]--
+
+October 8th:
+
+1  - Added 016A & 0148 unparsed packets
+2  - Fixed bug where bot would disconnect if GM would send a broadcast message
+3  - Added length checker for every packet in the bot
+4  - Added packet debugger found here (http://kore.sourceforge.net/phpBB2/viewtopic.php?t=2964&start=0&postdays=0&postorder=asc&highlight=)
+
+--[ Done for the night. ]--
+
+-------------------------------------------------------------------------------------
+Uploaded updated skore-revamped
+-------------------------------------------------------------------------------------
+
+October 9th:
+
+1  - Added 013B unparsed packet
+2  - Added 0128 unparsed packet
+
+-------------------------------------------------------------------------------------
+Still Alive Guys
+-------------------------------------------------------------------------------------
+
+October 23rd:
+
+1  - Updated Anti-KS logic (http://skore.sourceforge.net/phpBB2/viewtopic.php?t=1820)
+2  - Added following unparsed packets: 01AD, 01CB, 01B6, 01E0, 0157, 018C, 0182, 01BF
+3  - Applied 1 and 2 to kRO version
+
+November 7th:
+
+1  - Updated mapview to display HP/SP/Name/etc - from junq
+2  - Added Auto-Heal NPC code
