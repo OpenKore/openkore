@@ -22,7 +22,9 @@ use lib "$RealBin/../src";
 use Interface::Console;
 use bytes;
 
-use XKore::Variables qw($xConnectionStatus $tempMsg $tempIp $tempPort $programEnder $localServ $port $xkoreSock $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket $recordSock $recordPacket);
+use XKore::Variables qw($xConnectionStatus $tempMsg $tempIp $tempPort $programEnder $localServ $port 
+	$xkoreSock $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort
+	$recordSocket $recordSock $recordPacket);	
 use Thread::Queue;
 use Globals;
 use Modules;
@@ -42,26 +44,26 @@ addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDat
 #########################
 #VARIABLES
 #########################
-  $serverNumber = 0; # the server number TODO: parse username to get this value.
-  $serverIp = '66.111.61.90'; #ipaddress of the server TODO put this in a file.. OR read from servers.txt
-  $serverPort = 6900; #PORT of the server TODO same as above
+	$serverNumber = 0; # the server number TODO: parse username to get this value.
+	$serverIp = '66.111.61.90'; #ipaddress of the server TODO put this in a file.. OR read from servers.txt
+	$serverPort = 6900; #PORT of the server TODO same as above
 
 ######################
 #The Recorder...
 ######################
-  $record;
-  $ghostPort = 6901;
-  $recordSocket = new XKore::GhostServer($ghostPort);
-  $recordSock;
-  $recordPacket = new Thread::Queue;
-  $clientFeed = 0;
-  $xkoreSock;
-  $port = 6900; #Controler client's listener port
+	$record;
+	$ghostPort = 6901;
+	$recordSocket = new XKore::GhostServer($ghostPort);
+	$recordSock;
+	$recordPacket = new Thread::Queue;
+	$clientFeed = 0;
+	$xkoreSock;
+	$port = 6900; #Controler client's listener port
 
- $localServ = new XKore::Server($port);
+	$localServ = new XKore::Server($port);
 
-  $programEnder = 0;
-   $xConnectionStatus = 0 ;
+	$programEnder = 0;
+	$xConnectionStatus = 0 ;
 #########################
 #Connection stuffs..
 #########################
@@ -73,40 +75,36 @@ use XKore::GhostServer;
 #Main Loop
 ######################
 my $msgSend;
-while (!$programEnder){
-    $localServ->iterate;
-    $recordSocket->iterate;
+while (!$programEnder) {
+	$localServ->iterate;
+	$recordSocket->iterate;
 
-                 if (defined($socketOut) && dataWaiting(\$socketOut)) {
-                   #sleep 1;
-                   usleep 501000;
-                   $socketOut->recv($msg,3000);
+	if (defined($socketOut) && dataWaiting(\$socketOut)) {
+		#sleep 1;
+		usleep 501000;
+		$socketOut->recv($msg,3000);
 
-                  if ($msg eq '') {
-                     Network::disconnect(\$socketOut);
-                        #$xConnectionStatus = 0;
-                       #last;
-                     }else{
-                       $msgSend = $msg;
-                       my $msg_length = length($msgSend);
+		if ($msg eq '') {
+		 Network::disconnect(\$socketOut);
+			#$xConnectionStatus = 0;
+			#last;
+		} else {
+			$msgSend = $msg;
+			my $msg_length = length($msgSend);
 
-                       printf "Client Id $localServ->{index} \n"  ;
-                       while ($msgSend ne "") {
-                         $recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1);
-                         #$localServ->sendData($localServ->{clients}[$localServ->{index}],$msgSend);
-                         $msgSend = XKore::Functions::forwardToClient ($localServ,$msgSend,$localServ->{clients}[$tempMsg]);
-                         last if ($msg_length == length($msgSend));
-                         $msg_length = length($msgSend);
-                       }
-                       #sendMsgToServer(\$localServ,$msg);
-                     }
-                 }else{
-                   usleep 10000;
-                 }
-
-
-
-
+			printf "Client Id $localServ->{index} \n"	;
+			while ($msgSend ne "") {
+			 $recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1);
+			 #$localServ->sendData($localServ->{clients}[$localServ->{index}],$msgSend);
+			 $msgSend = XKore::Functions::forwardToClient ($localServ,$msgSend,$localServ->{clients}[$tempMsg]);
+			 last if ($msg_length == length($msgSend));
+			 $msg_length = length($msgSend);
+			}
+			#sendMsgToServer(\$localServ,$msg);
+		}
+	} else {
+		usleep 10000;
+	}
 }
 
 
