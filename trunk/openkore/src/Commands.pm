@@ -2851,25 +2851,28 @@ sub cmdPlayerSkill {
 }
 
 sub cmdStorage {
-	my (undef, $args) = @_;
+	if ($storage{opened}) {
+		my (undef, $args) = @_;
 
-	my ($switch, $items) = split(' ', $args, 2);
-	if (!$switch || $switch eq 'eq' || $switch eq 'u' || $switch eq 'nu') {
-		cmdStorage_list($switch);
-	} elsif ($switch eq 'add') {
-		cmdStorage_add($items);
-	} elsif ($switch eq 'addfromcart') {
-		cmdStorage_addfromcart($items);
-	} elsif ($switch eq 'get') {
-		cmdStorage_get($items);
-	} elsif ($switch eq 'gettocart') {
-		cmdStorage_gettocart($items);
-	} elsif ($switch eq 'close') {
-		cmdStorage_close();
-	} elsif ($switch eq 'log') {
-		cmdStorage_log();
-	} else {
-		error <<"_";
+		my ($switch, $items) = split(' ', $args, 2);
+		if (!$switch || $switch eq 'eq' || $switch eq 'u' || $switch eq 'nu') {
+			cmdStorage_list($switch);
+		} elsif ($switch eq 'add') {
+			cmdStorage_add($items);
+		} elsif ($switch eq 'addfromcart') {
+			cmdStorage_addfromcart($items);
+		} elsif ($switch eq 'get') {
+			cmdStorage_get($items);
+		} elsif ($switch eq 'gettocart') {
+			cmdStorage_gettocart($items);
+		} elsif ($switch eq 'close') {
+			cmdStorage_close();
+		} elsif ($switch eq 'log') {
+			cmdStorage_log();
+		} elsif ($switch eq 'desc') {
+			cmdStorage_desc($items);
+		} else {
+			error <<"_";
 Syntax Error in function 'storage' (Storage Functions)
 Usage: storage [<eq|u|nu>]
        storage close
@@ -2877,82 +2880,81 @@ Usage: storage [<eq|u|nu>]
        storage addfromcart <cart_item> [<amount>]
        storage get <storage_item> [<amount>]
        storage gettocart <storage_item> [<amount>]
+       storage desc <storage_item_#>
        storage log
 _
+		}
+	} else {
+		error "No information about storage; it has not been opened before in this session\n";
 	}
 }
 
 sub cmdStorage_list {
-	if ($storage{opened}) {
-		my $type = shift;
-		message "$type\n";
-		
-		my @useable;
-		my @equipment;
-		my @non_useable;
-
-		for (my $i = 0; $i < @storageID; $i++) {
-			next if ($storageID[$i] eq "");
-			my $item = $storage{$storageID[$i]};
-			if ($item->{type} == 3 ||
-			    $item->{type} == 6 ||
-			    $item->{type} == 10) {
-				push @non_useable, $item;
-			} elsif ($item->{type} <= 2) {
-				push @useable, $item;
-			} else {
-				my %eqp;
-				$eqp{binID} = $i;
-				$eqp{name} = $item->{name};
-				$eqp{type} = $itemTypes_lut{$item->{type}};
-				$eqp{identified} = " -- Not Identified" if !$item->{identified};
-				push @equipment, \%eqp;
-			}
+	my $type = shift;
+	message "$type\n";
+	
+	my @useable;
+	my @equipment;
+	my @non_useable;
+	
+	for (my $i = 0; $i < @storageID; $i++) {
+		next if ($storageID[$i] eq "");
+		my $item = $storage{$storageID[$i]};
+		if ($item->{type} == 3 ||
+		    $item->{type} == 6 ||
+		    $item->{type} == 10) {
+			push @non_useable, $item;
+		} elsif ($item->{type} <= 2) {
+			push @useable, $item;
+		} else {
+			my %eqp;
+			$eqp{binID} = $i;
+			$eqp{name} = $item->{name};
+			$eqp{type} = $itemTypes_lut{$item->{type}};
+			$eqp{identified} = " -- Not Identified" if !$item->{identified};
+			push @equipment, \%eqp;
 		}
-
-		my $msg = "-----------Storage-------------\n";
-		
-		if (!$type || $type eq 'eq') {
-			$msg .= "-- Equipment --\n";
-			foreach my $item (@equipment) {
-				$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
-			}
-		}
-		
-		if (!$type || $type eq 'nu') {
-			$msg .= "-- Non-Usable --\n";
-			for (my $i = 0; $i < @non_useable; $i++) {
-				my $item = $non_useable[$i];
-				my $binID = $item->{binID};
-				my $display = $item->{name};
-				$display .= " x $item->{amount}";
-				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$binID, $display]);
-			}
-		}
-		
-		if (!$type || $type eq 'u') {
-			$msg .= "-- Usable --\n";
-			for (my $i = 0; $i < @useable; $i++) {
-				my $item = $useable[$i];
-				my $binID = $item->{binID};
-				my $display = $item->{name};
-				$display .= " x $item->{amount}";
-				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$binID, $display]);
-			}
-		}
-		
-		$msg .= "-------------------------------\n";
-		$msg .= "Capacity: $storage{items}/$storage{items_max}\n";
-		$msg .= "-------------------------------\n";
-		message($msg, "list");
-
-	} else {
-		error "No information about storage; it has not been opened before in this session\n";
 	}
+	
+	my $msg = "-----------Storage-------------\n";
+	
+	if (!$type || $type eq 'eq') {
+		$msg .= "-- Equipment --\n";
+		foreach my $item (@equipment) {
+			$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
+		}
+	}
+	
+	if (!$type || $type eq 'nu') {
+		$msg .= "-- Non-Usable --\n";
+		for (my $i = 0; $i < @non_useable; $i++) {
+			my $item = $non_useable[$i];
+			my $binID = $item->{binID};
+			my $display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$binID, $display]);
+		}
+	}
+	
+	if (!$type || $type eq 'u') {
+		$msg .= "-- Usable --\n";
+		for (my $i = 0; $i < @useable; $i++) {
+			my $item = $useable[$i];
+			my $binID = $item->{binID};
+			my $display = $item->{name};
+			$display .= " x $item->{amount}";
+			$msg .= swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+				[$binID, $display]);
+		}
+	}
+	
+	$msg .= "-------------------------------\n";
+	$msg .= "Capacity: $storage{items}/$storage{items_max}\n";
+	$msg .= "-------------------------------\n";
+	message($msg, "list");
 }
 
 sub cmdStorage_add {
@@ -3049,10 +3051,17 @@ sub cmdStorage_close {
 }
 
 sub cmdStorage_log {
-	if ($storage{opened}) {
-		writeStorageLog(1);
+	writeStorageLog(1);
+}
+
+sub cmdStorage_desc {
+	my $items = shift;
+	my $item = Match::storageItem($items);
+	if (!$item) {
+		error	"Error in function 'storage desc' (Show Storage Item Description)\n" .
+			"Storage Item $items does not exist.\n";
 	} else {
-		error "No information about storage; it has not been opened before in this session\n";
+		printItemDesc($item->{nameID});
 	}
 }
 
