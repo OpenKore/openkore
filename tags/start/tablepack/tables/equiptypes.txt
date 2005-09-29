@@ -1,0 +1,12 @@
+0 Item
+1 Lower Mask
+2 One-Handed Weapon
+4 Cape
+16 Armour
+32 Shield
+34 Two-Handed Weapon
+64 Foot Wear
+136 Accessory
+256 Helmet
+512 Eye Mask
+513 Mid-Lower Mask

@@ -1,0 +1,61 @@
+######################################
+# Logging/history
+######################################
+logChat 1
+logPrivateChat 1
+logPartyChat 1
+logGuildChat 1
+logSystemChat 1
+logEmoticons 1
+itemHistory 1
+
+###########################################
+# Timeouts and miscs (don't touch this)
+###########################################
+# Disconnect cases
+dcOnDeath 0
+dcOnDualLogin 13000
+dcOnDisconnect 60
+dcOnEmptyArrow 0
+dcOnMute 0
+
+# Restart if crashes occur
+autoRestart 0
+autoRestartMin 14400
+autoRestartSeed 3600
+autoRestartSleep 0
+autoSleepMin 60
+autoSleepSeed 300
+
+# To change config at random time
+# usefull to change lvls
+autoConfChange {
+	minTime
+	varTime
+	lvl
+	joblvl
+}
+
+# Timing control
+seconds_per_block 0.12
+sleepTime 50000
+
+# Mapfile control
+intervalMapDrt 1
+
+# Packet management
+verbose 0
+debug 0
+debugPacket_unparsed 1
+debugPacket_received 0
+debugPacket_ro_sent 0
+debugPacket_sent 0
+debugPacket_exclude
+debugDomains
+squelchDomains
+
+message_length_max 80
+chatLangCode
+
+autoTalkCont 0
+noAutoSkill 0

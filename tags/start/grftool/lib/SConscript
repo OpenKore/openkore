@@ -1,0 +1,11 @@
+Import('*')
+
+lib = env.Copy()
+
+if WIN32:
+	lib['CPPDEFINES'] = ['GRF_STATIC', 'SPR_STATIC', 'WIN32']
+
+Default(lib.StaticLibrary(
+	'static-grf',
+	['grf.c', 'sprite.c'],
+	CPPPATH=['$CPPPATH', '.', 'zlib']))

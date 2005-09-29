@@ -1,0 +1,29 @@
+# Party sharing
+partyAutoShare 0
+
+# Incoming PMs
+ignoreAll 0
+beepOnChat 0
+
+# Offers
+dealAuto 1
+partyAuto 1
+guildAutoDeny 1
+
+# Auto Responses
+autoEmote_word_0 
+autoEmote_num_0 
+
+autoResponseOnHeal 0
+autoResponse 0
+
+# Avoiding (fear the bosses)
+avoidGM_near 1
+avoidGM_near_inTown 1
+avoidGM_talk 0
+avoidGM_reconnect 1800
+avoid_ignore_0
+avoidList 1
+avoidList_inLockOnly 0
+avoidList_reconnect 1800
+

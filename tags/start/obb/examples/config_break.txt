@@ -1,0 +1,28 @@
+#################################
+# Stop in comercial hours
+#################################
+autoBreakTime Mon {
+	startTime 19:00
+	stopTime 08:00
+}
+
+autoBreakTime Tue {
+	startTime 19:00
+	stopTime 08:00
+}
+
+autoBreakTime Wed {
+	startTime 19:00
+	stopTime 08:00
+}
+
+autoBreakTime Thu {
+	startTime 19:00
+	stopTime 08:00
+}
+
+autoBreakTime Fri {
+	startTime 19:00
+	stopTime 08:00
+}
+

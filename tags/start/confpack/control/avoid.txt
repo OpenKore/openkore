@@ -1,0 +1,80 @@
+#control\avoid.txt
+
+avoid_0 Sir Kills A Lot 
+avoid_1 GOD-POING 
+avoid_2 Petite Christy 
+avoid_3 My Christy 
+avoid_4 iroSubGM 
+avoid_5 iroSubGM1 
+avoid_6 iroSubGM2 
+avoid_7 iroSubGM3 
+avoid_8 iroSubGM4 
+avoid_9 iroSubGM5 
+avoid_10 iroSubGM6 
+avoid_11 iroSubGM7 
+avoid_12 iroSubGM8 
+avoid_13 iroSubGM9 
+avoid_14 iroSubGM01 
+avoid_15 iroSubGM02 
+avoid_16 iroSubGM03 
+avoid_17 iroSubGM04 
+avoid_18 iroSubGM05 
+avoid_19 iroSubGM06 
+avoid_20 iroSubGM07 
+avoid_21 iroSubGM08 
+avoid_22 iroSubGM09 
+avoid_23 GMSuppport 
+avoid_24 GMSupport01 
+avoid_25 GMSupport02 
+avoid_26 GMSupport03 
+avoid_27 GMSupport04 
+avoid_28 GMSupport05 
+avoid_29 GMSupport06 
+avoid_30 GMSupport07 
+avoid_31 GMSupport08 
+avoid_32 GMSupport09 
+avoid_33 GMSupport1 
+avoid_34 GMSupport2 
+avoid_35 GMSupport3 
+avoid_36 GMSupport4 
+avoid_37 GMSupport5 
+avoid_38 GMSupport6 
+avoid_39 GMSupport7 
+avoid_40 GMSupport8 
+avoid_41 GMSupport9
+avoid_42 iro-gm
+
+#known bot hunters
+avoid_43 patato pusher 
+avoid_44 Aerok 
+avoid_45 Rabid Newbie 
+avoid_46 Queenstown 
+avoid_47 karlina 
+avoid_48 5 Style 
+avoid_49 -Aerok- 
+avoid_50 Shin Kross 
+avoid_51 ~Jinx~ 
+avoid_52 Rabi en Rose 
+avoid_53 Ebi-chu 
+avoid_54 MeloColmECA 
+avoid_55 Leileil 
+avoid_56 Bamboula Angel
+
+
+#GM AIDs extracted from clienttable.xml
+avoid_aid_0 100001
+avoid_aid_1 231656
+avoid_aid_2 100002
+avoid_aid_3 100003
+avoid_aid_4 209560
+avoid_aid_5 483461
+avoid_aid_6 483471
+avoid_aid_7 483486
+avoid_aid_8 483502
+avoid_aid_9 483513
+avoid_aid_10 483527
+avoid_aid_11 527195
+avoid_aid_12 527205
+avoid_aid_13 527197
+avoid_aid_14 527206
+avoid_aid_15 527210

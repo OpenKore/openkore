@@ -1,0 +1,70 @@
+# Main configuration file
+# Uncomment to enable some configurations
+# You should take a look in each file before
+# run your bot.
+
+# Server configuration
+!include config_server.txt
+
+# Default bot behavior
+!include config_behavior.txt
+
+# Aliases to normal commands
+#!include config_aliases_comms.txt
+
+# Aliases to normal pmed people
+#!include config_aliases_friends.txt
+
+# Switching weapons
+#!include config_autoswitch.txt
+
+# Break time
+#!include config_break.txt
+
+# Builds
+# Hibrid Knight
+#!include config_build_hibkni.txt
+# Vitality Knight
+#!include config_build_vitkni.txt
+
+# Item usage
+#!include config_item_usage.txt
+
+# Skills
+# Novice
+#!include config_nov_skills.txt
+# Swordman
+#!include config_swd_skills.txt
+
+# Skill combos
+#!include config_combos.txt
+
+# Storage usage
+#!include config_storage.txt
+
+# Buying/selling
+#!include config_npc_buy.txt
+#!include config_npc_sell.txt
+
+# Relations with others players
+#!include config_relations.txt
+
+# Timeouts and disconetion cases
+!include config_timings.txt
+
+# This should stay in end. You will like to touch in these
+# choose only one to use.
+
+# Custom
+#!include config_useful.txt
+# Berseker
+#!include config_berseker.txt
+# No ai (just follow commands)
+#!include config_noai.txt
+# Follow a master
+#!include config_squire.txt
+# Tank to someone
+#!include config_tank.txt
+
+
+
