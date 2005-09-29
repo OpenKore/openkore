@@ -1,0 +1,76 @@
+package XKore::GhostServer;
+
+#use strict;
+use Time::HiRes qw(time usleep);
+use XKore::Functions;
+use Base::Server;
+use base qw(Base::Server);
+use XKore::Variables qw($xConnectionStatus $currLocationPacket $tempMsg $tempIp $tempPort $programEnder $localServ $port $xkoreSock $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket $recordSock $recordPacket);
+
+
+#sub new {
+ #       my ($class, $port) = @_;
+# 3       my $self;
+
+#        $self = $class->SUPER::new($port);
+#        return if (!$self);
+
+#        $self->{listeners} = [];
+#        $self->{maxID} = 0;
+##        $self->{messages} = [];
+
+#        return $self;
+#}
+
+
+sub onClientNew {
+    my ($self, $client, $index) = @_;
+    $record = 0; #Do not REcord
+    print "Accepting on-the-fly Client\n";
+    #$playbackPacket = $recordPacket;
+}
+
+sub onClientExit {
+    my ($self, $client, $index) = @_;
+    print "on-the-fly Client Disconnected\n";
+}
+
+sub onClientData {
+    my ($self, $client, $data, $index) = @_;
+            ########   NOT WORKING PROPERLY!!! NEED TO CONVERT TO IPC!!!
+
+           my $switch = uc(unpack("H2", substr($data, 1, 1))) . uc(unpack("H2", substr($data, 0, 1)));
+
+                      if ($switch eq '007E') {
+                            $recordSocket->sendData($client,pack("c*",0x7F,0x00,0xD7,0xD0,0xA4,0x59));
+                           $data = '' ;
+                      }elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066' || $switch eq '0072' ) {
+                           $data = '' ;
+                      }
+                      if ($recordPacket->pending){
+                       my $stkData = $recordPacket->dequeue_nb;
+                      printf "Received on-the-fly Client data $switch\n";
+                      if ($switch eq '0073'){
+                            $data = $currLocationPacket;
+                       }
+                      $switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
+                      printf "Sending $switch data to on-the-fly Client\n";
+                      #sleep 1;
+                       $recordSocket->sendData($client,$stkData);  ### Queue is not sending the full data!!
+                       if ($switch eq '0069' && $recordPacket->pending){
+                                #close($client->{sock});
+                                $stkData = $recordPacket->dequeue_nb;
+                                $recordSocket->sendData($client,$stkData);
+                       }
+                      }else{
+                        #$recordSock = $new;
+                        $clientFeed = 1;
+                      }
+
+                 ####
+               xkoreFunctions::forwardToServer ($localServ,$data) if ($clientFeed == 1 && $data ne '');
+    #print "Client $index sent the following data: $data\n";
+}
+
+
+1;
