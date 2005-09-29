@@ -80,13 +80,14 @@ Bug fixes:
   Aggressive (2). The bot won't attack anymore if the monster is 
   impossible to attack (blocked by walls) or if it is being already 
   attacked by someone else.
-- Fixed monsters listed in the monsters condition of equipAuton now
+- Fixed monsters listed in the monsters condition of equipAuto now
   doesn't necessarily have to be your attack target.
 - encrypt/decrypt was mangling some packets (at least on serverType 2; 
   I'm not sure for the other RO's) causing disconnections and
   unparsed erros.
 - useSelf_skill equip_rightHand and similar constructs will now
   correctly equip items whose names have commas in them.
+- Command storage will now check first if the storage has been opened.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -148,6 +149,8 @@ New commands:
   Create a guild.
 - guild kick <list number> <reason>
   Kick a guild member out of the guild.
+- storage desc <storage item #>
+  Display storage item description.
 
 New config options:
 - partySkill: target_dist (range)
@@ -294,7 +297,7 @@ Credits:
 - isieo: attackComboSlot fixes/improvements.
 - piroJOKE: new emotions, new fields.
 - hakore: commanddescriptions.txt, avoidGM_ignore/deltaHp fix,
-  standpoint bug, equipAuto bug
+  standpoint bug, equipAuto bug, storage desc command
 - illusionist: fix for force-aggressive monsters not being dropped when no LOS
 - clovanzo: Louyang portals
 
