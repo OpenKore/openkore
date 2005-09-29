@@ -46,6 +46,10 @@ A module is a subfolder on the CVS server. These modules are currently available
 	<td><tt>dataserver</tt></td>
 	<td>The Shared Data Server project.</td>
 </tr>
+<tr>
+	<td><tt>xkore2</tt></td>
+	<td>A prototype of the <a href="http://openkore.sourceforge.net/forum/viewtopic.php?t=11481">X-Kore 2</a> project.</td>
+</tr>
 </table>
 
 <p>
