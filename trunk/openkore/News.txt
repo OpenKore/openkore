@@ -126,6 +126,7 @@ New features:
   are now recognized.
 - 'exp' command will now display number of bytes sent and received.
   Helpful if you need to know your bandwidth usage.
+- Error message when you specify an unknown skill name in skillsAddAuto.
 
 New commands:
 - getplayerinfo (number)

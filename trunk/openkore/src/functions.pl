@@ -2258,6 +2258,13 @@ sub AI {
 			# Split each skill/level pair
 			my ($sk, $num) = $item =~ /(.*) (\d+)/;
 			my $skill = new Skills(auto => $sk);
+
+			if (!$skill->id) {
+				error "Unknown skill '$sk'; disabling skillsAddAuto\n";
+				$config{skillsAddAuto} = 0;
+				last;
+			}
+
 			my $handle = $skill->handle;
 
 			# If skill needs to be raised to match desired amount && skill points are available
