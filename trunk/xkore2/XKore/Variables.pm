@@ -2,7 +2,7 @@ package XKore::Variables;
 use Exporter 'import';
 use base qw(Exporter);
 
-@EXPORT_OK =qw(%rpackets $xConnectionStatus $currLocationPacket $tempMsg $tempIp $tempPort
+@EXPORT_OK =qw(%rpackets $xConnectionStatus $currLocationPacket $svrObjIndex $tempIp $tempPort
 	$programEnder $localServ $tempRecordQueue $port $xkoreSock $clientFeed $socketOut $serverNumber
 	$serverIp $serverPort $record $ghostPort $recordSocket $recordSock $recordPacket);
 
@@ -25,7 +25,7 @@ our $xConnectionStatus;
 our $localServ;
 our $tempIp;
 our $tempPort;
-our $tempMsg;
+our $svrObjIndex;
 our $programEnder;
 our $currLocationPacket;
 1;

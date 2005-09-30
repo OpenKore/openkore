@@ -1,7 +1,7 @@
 package XKore::Server;
 
 use strict;
-use XKore::Variables qw($xConnectionStatus $tempMsg $tempIp $tempPort $programEnder
+use XKore::Variables qw($xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder
 	$localServ $port $xkoreSock $clientFeed $socketOut $serverNumber $serverIp
 	$serverPort $record $ghostPort $recordSocket $recordSock $recordPacket);
 
@@ -17,33 +17,32 @@ sub client {
 
 sub onClientNew {
 	my ($self, $client, $index) = @_;
-	if ($xConnectionStatus == 0){
+	if ($xConnectionStatus == 0){	# client's first conenction to the server
 		Network::disconnect(\$socketOut);
-		Network::connectTo(\$socketOut, $serverIp, $serverPort);
-		$record = 1;
-		#$xConnectionStatus = 1;
-
-		#$xConnectionStatus[$index] = 1;
+		Network::connectTo(\$socketOut, $serverIp, $serverPort); # connects to the login server
+		$record = 1; #start all recording
 	}elsif ($xConnectionStatus == 1){
 		Network::disconnect(\$socketOut);
-		Network::connectTo(\$socketOut, $tempIp, $tempPort);
+		Network::connectTo(\$socketOut, $tempIp, $tempPort); #connects to the char server
 	}elsif ($xConnectionStatus == 2){
 		Network::disconnect(\$socketOut);
-		Network::connectTo(\$socketOut, $tempIp, $tempPort);
+		Network::connectTo(\$socketOut, $tempIp, $tempPort); #same as $xConnectionStatus == 1 but saperated for future use.
 	}
-	$tempMsg = $index;
+	$svrObjIndex = $index;
 }
 
 sub onClientExit {
 	my ($self, $client, $index) = @_;
 	##print "Client $index disconnected with connection status = $xConnectionStatus .\n";
-
+	if ($xConnectionStatus == 3){
+		Network::disconnect(\$socketOut);
+		$xConnectionStatus = 0 ;   #sets conection to 0 again so that it can be relogable..
+	}
 }
 
 sub onClientData {
 	my ($self, $client, $data, $index) = @_;
-	#sendMsgToServer(\$socketOut,$data);
-	XKore::Functions::forwardToServer ($localServ,$data);
+	XKore::Functions::forwardToServer ($localServ,$data); #forwards data to the RO server..
 	##print "Client ($client->{host}) $index sent the following data: $data \n";
 }
 
