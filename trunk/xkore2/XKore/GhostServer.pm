@@ -36,7 +36,7 @@ sub onClientData {
 			|| $switch eq '007D' ) {
 			$data = '' ;
 		}
-		if ($recordPacket->pending){
+		if ($recordPacket->pending && !$clientFeed){
 			my $stkData = $recordPacket->dequeue_nb;
 			printf "Received on-the-fly Client data $switch\n";
 			if ($switch eq '0073'){

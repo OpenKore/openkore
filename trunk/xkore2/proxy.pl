@@ -22,7 +22,7 @@ use lib "$RealBin/../src";
 use Interface::Console;
 use bytes;
 
-use XKore::Variables qw(%rpackets $xConnectionStatus $tempMsg $tempIp $tempPort $programEnder $localServ $port
+use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $tempMsg $tempIp $tempPort $programEnder $localServ $port
 	$xkoreSock $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort
 	$recordSocket $recordSock $recordPacket);	
 use Thread::Queue;
@@ -57,14 +57,15 @@ Settings::load($loadID);
 	$recordSocket = new XKore::GhostServer($ghostPort);
 	$recordSock;
 	$recordPacket = new Thread::Queue;
+	$tempRecordQueue = new Thread::Queue;
 	$clientFeed = 0;
 	$xkoreSock;
 	$port = 6900; #Controler client's listener port
 
 	$localServ = new XKore::Server($port);
 
-	$programEnder = 0;
-	$xConnectionStatus = 0 ;
+	$programEnder = 0; # this is to end the loop main loop
+	$xConnectionStatus = 0 ; #used for
 #########################
 #Connection stuffs..
 #########################
@@ -77,6 +78,7 @@ use XKore::GhostServer;
 ######################
 my $msgSend;
 my $msg_length;
+message "---XKore2---\nWaiting For Controller Client...\n" ;
 while (!$programEnder) {
 	$localServ->iterate;
 	$recordSocket->iterate;
