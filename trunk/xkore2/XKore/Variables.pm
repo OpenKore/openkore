@@ -1,10 +1,10 @@
 package XKore::Variables;
 use Exporter 'import';
 use base qw(Exporter);
-#our %EXPORT_TAGS = (
-     @EXPORT_OK =qw($xConnectionStatus $currLocationPacket $tempMsg $tempIp $tempPort $programEnder $localServ $port $xkoreSock $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket $recordSock $recordPacket);#]
-#     );
-#our @EXPORT = {@EXPORT_TAGS{variables}};
+
+@EXPORT_OK =qw($xConnectionStatus $currLocationPacket $tempMsg $tempIp $tempPort
+	$programEnder $localServ $port $xkoreSock $clientFeed $socketOut $serverNumber
+	$serverIp $serverPort $record $ghostPort $recordSocket $recordSock $recordPacket);
 
 our $socketOut; #the out going connection handle
 our $serverNumber; # the server number TODO: parse username to get this value.
