@@ -28,7 +28,8 @@ sub onClientData {
 		if ($switch eq '007E') {
 			$recordSocket->sendData($client,pack("c*",0x7F,0x00,0xD7,0xD0,0xA4,0x59));
 			$data = '' ;
-		}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066' || $switch eq '0072' ) {
+		}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066' || $switch eq '0072'
+			|| $switch eq '007D' ) {
 			$data = '' ;
 		}
 		if ($recordPacket->pending){
