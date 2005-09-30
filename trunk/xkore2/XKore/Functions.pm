@@ -5,7 +5,7 @@ use Time::HiRes qw(time usleep);
 use Interface::Console;
 use bytes;
 
-use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $currLocationPacket $tempMsg
+use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $currLocationPacket $svrObjIndex
 	$tempIp $tempPort $programEnder $localServ $port $xkoreSock $clientFeed
 	$socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket
 	 $recordSock $recordPacket);
@@ -28,7 +28,11 @@ use Log qw(message warning error debug);
 ######################
 # Functions
 ######################
+
+#forwardToServer ( Socket , Data );
+#sends data to the RO servers
 sub forwardToServer {
+
 	my ($roServer,$msgSend) = @_;
 	my $switch = uc(unpack("H2", substr($msgSend, 1, 1))) . uc(unpack("H2", substr($msgSend, 0, 1)));
 
@@ -41,11 +45,8 @@ sub forwardToServer {
 	}
 }
 
-sub forwardToServer1 {
-   my ($roSendToServ,$msgSend,$indexsu) = @_;
-  $roSendToServ->sendData($indexsu,"hello");
-}
-
+#forwardToClient ( Server Object , Data , $Client Number );
+#sends data to the RO Client
 sub forwardToClient {
 	my ($roSendToServ,$msgSend,$client) = @_;
 	my $msg_size;
@@ -54,9 +55,9 @@ sub forwardToClient {
 	my $accountID;
 	my $sessionID2;
 	my $accountSex;
+
 	my $switch = uc(unpack("H2", substr($msgSend, 1, 1))) . uc(unpack("H2", substr($msgSend, 0, 1)));
 	message "Received packet $switch from Server\n";
-
 
 	#######Currently not doing anything...
 	######### Checks for complete packets by comparing the length in recvpackets.txt
@@ -82,23 +83,15 @@ sub forwardToClient {
 			return $msgSend;
 		}
 	 } else {
-		# Unknown packet - ignore it
-		if (!existsInList($config{'debugPacket_exclude'}, $switch)) {
-			warning("Unknown packet - $switch Forwarding it anyway\n");
-			dumpData($msgSend) if ($config{'debugPacket_unparsed'});
-		}
-		#return $msgSend;
 		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
 		$roSendToServ->sendData($client,$msgSend);
 		return "";
 	 }
-	########
+
 	message "Forwarding packet $switch length:".length($msgSend)." to the Client\n";
 	if ($switch eq '0069'){
-	     #	 if (length($msgSend) < 47) {
-		#	 return $msgSend;
-	       # }
+	  #Intecepts the login packet
 		$sessionID = substr($msgSend, 4, 4);
 		$accountID = substr($msgSend, 8, 4);
 		$sessionID2 = substr($msgSend, 12, 4);
@@ -115,69 +108,67 @@ sub forwardToClient {
 			$servers[$num]{'users'} = unpack("L",substr($msgSend, $i + 26, 4));
 			$num++;
 		}
-		#debug "packet size = $msg_size \n";
+
+		# Store The ipAddress and port so that it can be used in Server::onClientNew
 		$tempIp = $servers[$serverNumber]{'ip'};
 		$tempPort = $servers[$serverNumber]{'port'};
 
-		$msgSend =substr($msgSend, 0, 47);#.pack("C1",0);
-		#$roSendToServ->sendData($client,$msgSend);
+		$msgSend =substr($msgSend, 0, 47); #cuts off the "real" server information
 
 		my $fakeMsgSend = $msgSend . pack("C*",127,0,0,1) . pack("S1",$ghostPort) .
 			"Ghosting Mode" .
 			pack("C*",,0x00,0x00,0x00,0x00,
 			0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00);
 
-		$recordPacket->enqueue($fakeMsgSend) if ($record == 1);
+		$recordPacket->enqueue($fakeMsgSend) if ($record == 1); #records the "Ghost Mode's" Fake Login.
 
 
-		$msgSend .= pack("C*",127,0,0,1) . pack("S1",$port) .
-			"Xkore2 On " .$servers[$serverNumber]{'name'}.
+		$msgSend .= pack("C*",127,0,0,1) . pack("S1",$port) .	 #Fakes the ipaddress that the client suppose
+			"Xkore2 On " .$servers[$serverNumber]{'name'}.	 # to login with.
 			pack("C*",,0x00,0x00,0x00,0x00,
 			0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00);
 
-		$roSendToServ->sendData($client,$msgSend);
+		$roSendToServ->sendData($client,$msgSend); #sends the faked data to the client.
 
-		$xConnectionStatus = 1;
-		printf $xConnectionStatus."\n";
-
-	       # return "";
+		$xConnectionStatus = 1;  #see Server::onClientNew for more infomation on this
 
 	}elsif ($switch eq '0071'){
 	 #'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
 
-		$tempIp = makeIP(substr($msgSend,22,4));
-		$tempPort = unpack("S1", substr($msg, 26, 2));
+		$tempIp = makeIP(substr($msgSend,22,4)); #get the ipaddress of the mapserver
+		$tempPort = unpack("S1", substr($msg, 26, 2)); #get the port of the mapserver
 
-		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$port);
+		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$port); #fake the mapserv data.
 
 		$roSendToServ->sendData($client,$msgSend);
-		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$ghostPort);
 
-		$recordPacket->enqueue($msgSend) if ($record == 1);
-		$xConnectionStatus = 2;
-	       # $localServ->iterate;
-	       # sleep 1;
-	      #  return "";
+		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$ghostPort); #fake ghost mapserver data
+
+		$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
+
+		$xConnectionStatus = 2; #see Server::onClientNew for more infomation on this
 
 	}elsif ($switch eq '0073'){
 		$recordPacket->enqueue($msgSend) if ($record == 1);
-		$record = 0;
-		$tempRecordQueue = $recordPacket;
+		$record = 0; #stop the recording
+		$tempRecordQueue = $recordPacket;  #stores the faked data in another queue...( for multiple logins)
+		$xConnectionStatus = 3; #change the connection status
 		$roSendToServ->sendData($client,$msgSend);
 
 	}elsif ($switch eq '0087') {
-		$currLocationPacket = $msgSend;
+		$currLocationPacket = $msgSend; #keeps track of the character's position in the map
 		$roSendToServ->sendData($client,$msgSend);
 
 	}elsif ($switch eq '0187') {
+		#do not record this packet
 		$roSendToServ->sendData($client,$msgSend);
 	}else{
-		$recordPacket->enqueue($msgSend) if ($record == 1);
-		$roSendToServ->sendData($client,$msgSend);
+		$recordPacket->enqueue($msgSend) if ($record == 1); #record all other datas not intercepted
+		$roSendToServ->sendData($client,$msgSend); #sends all data not intercepted to the client
 	}
 	$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
 	$msgSend = (length($msgSend) >= $msg_size) ? substr($msgSend, $msg_size, length($msgSend) - $msg_size) : "";
-	return $msgSend;
+	return $msgSend; #returns the extra traling data if it's not a part of the curent packet.
 }
 
 1;

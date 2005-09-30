@@ -22,7 +22,7 @@ use lib "$RealBin/../src";
 use Interface::Console;
 use bytes;
 
-use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $tempMsg $tempIp $tempPort $programEnder $localServ $port
+use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
 	$xkoreSock $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort
 	$recordSocket $recordSock $recordPacket);	
 use Thread::Queue;
@@ -78,34 +78,33 @@ use XKore::GhostServer;
 ######################
 my $msgSend;
 my $msg_length;
+my $prevPacket;
 message "---XKore2---\nWaiting For Controller Client...\n" ;
 while (!$programEnder) {
 	$localServ->iterate;
 	$recordSocket->iterate;
 	usleep 10000;
 	if (defined($socketOut) && dataWaiting(\$socketOut)) {
-		#sleep 1;
-		#usleep 502000;
+
 		$socketOut->recv($msg,$Settings::MAX_READ);
 
 		if ($msg eq '') {
 		 Network::disconnect(\$socketOut);
-			#$xConnectionStatus = 0;
-			#last;
+
 		} else {
 			$msgSend .= $msg;
 			$msg_length = length($msgSend);
+			#this loop is used to check for the packet length
+
 			while ($msgSend ne "") {
-			#if ($msgSend ne "") {
-				#$localServ->sendData($localServ->{clients}[$localServ->{index}],$msgSend);
-				$msgSend = XKore::Functions::forwardToClient ($localServ,$msgSend,$localServ->{clients}[$tempMsg]);
+				$msgSend = XKore::Functions::forwardToClient ($localServ,$msgSend,$localServ->{clients}[$svrObjIndex]);
 				last if ($msg_length == length($msgSend));
 				$msg_length = length($msgSend);
 			}
-			#sendMsgToServer(\$localServ,$msg);
-		}
-	}
 
+		}
+
+	}
 
 }
 
