@@ -56,7 +56,7 @@ sub forwardToClient {
 	my $accountSex;
 	my $switch = uc(unpack("H2", substr($msgSend, 1, 1))) . uc(unpack("H2", substr($msgSend, 0, 1)));
 	message "Received packet $switch from Server\n";
-	$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
+
 
 	#######Currently not doing anything...
 	######### Checks for complete packets by comparing the length in recvpackets.txt
@@ -88,6 +88,7 @@ sub forwardToClient {
 			dumpData($msgSend) if ($config{'debugPacket_unparsed'});
 		}
 		#return $msgSend;
+		$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
 		$roSendToServ->sendData($client,$msgSend);
 		return "";
 	 }
@@ -154,8 +155,8 @@ sub forwardToClient {
 
 		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$xConnectionStatus = 2;
-		$localServ->iterate;
-		sleep 1;
+	       # $localServ->iterate;
+	       # sleep 1;
 	      #  return "";
 
 	}elsif ($switch eq '0073'){
@@ -167,10 +168,13 @@ sub forwardToClient {
 		$currLocationPacket = $msgSend;
 		$roSendToServ->sendData($client,$msgSend);
 
+	}elsif ($switch eq '0187') {
+		$roSendToServ->sendData($client,$msgSend);
 	}else{
 		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$roSendToServ->sendData($client,$msgSend);
 	}
+	$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
 	$msgSend = (length($msgSend) >= $msg_size) ? substr($msgSend, $msg_size, length($msgSend) - $msg_size) : "";
 	return $msgSend;
 }
