@@ -16,12 +16,12 @@ sub onClientNew {
 
 sub onClientExit {
 	my ($self, $client, $index) = @_;
+	$clientFeed = 0;
 	print "on-the-fly Client Disconnected\n";
 }
 
 sub onClientData {
 	my ($self, $client, $data, $index) = @_;
-	########   NOT WORKING PROPERLY!!! NEED TO CONVERT TO IPC!!!
 
 	my $switch = uc(unpack("H2", substr($data, 1, 1))) . uc(unpack("H2", substr($data, 0, 1)));
 
@@ -40,12 +40,7 @@ sub onClientData {
 			$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
 			printf "Sending $switch data to on-the-fly Client\n";
 			#sleep 1;
-			$recordSocket->sendData($client,$stkData);  ### Queue is not sending the full data!!
-			if ($switch eq '0069' && $recordPacket->pending){
-				#close($client->{sock});
-				$stkData = $recordPacket->dequeue_nb;
-				$recordSocket->sendData($client,$stkData);
-			}
+			$recordSocket->sendData($client,$stkData);
 		}else{
 			#$recordSock = $new;
 			$clientFeed = 1;
