@@ -92,6 +92,7 @@ sub parseArrayFile {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseAvoidControl {
@@ -124,6 +125,7 @@ sub parseAvoidControl {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseChatResp {
@@ -153,6 +155,7 @@ sub parseChatResp {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseCommandsDescription {
@@ -196,6 +199,7 @@ sub parseCommandsDescription {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseConfigFile {
@@ -272,7 +276,14 @@ sub parseConfigFile {
 			}
 		}
 	}
+
 	close FILE;
+
+	if ($inBlock) {
+		error "$file: Unclosed { at EOF\n";
+		return 0;
+	}
+	return 1;
 }
 
 sub parseEmotionsFile {
@@ -295,6 +306,7 @@ sub parseEmotionsFile {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 
@@ -314,6 +326,7 @@ sub parseDataFile {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseDataFile_lc {
@@ -332,6 +345,7 @@ sub parseDataFile_lc {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseDataFile2 {
@@ -348,6 +362,7 @@ sub parseDataFile2 {
 		$r_hash->{$key} = $value;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseList {
@@ -362,6 +377,7 @@ sub parseList {
 		$r_hash->{$_} = 1;
 	}
 	close FILE;
+	return 1;
 }
 
 ##
@@ -425,12 +441,12 @@ sub parseShopControl {
 	close(SHOP);
 
 	if (@errors) {
-		%{$shop} = ();
-
 		error("Errors were found in $file:\n");
 		foreach (@errors) { error("$_\n"); }
 		error("Please correct the above errors and type 'reload $file'.\n");
+		return 0;
 	}
+	return 1;
 }
 
 sub parseItemsControl {
@@ -463,6 +479,7 @@ sub parseItemsControl {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseNPCs {
@@ -482,6 +499,7 @@ sub parseNPCs {
 		$$r_hash{"$map $x $y"} = $name;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseMonControl {
@@ -516,6 +534,7 @@ sub parseMonControl {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parsePortals {
@@ -543,6 +562,7 @@ sub parsePortals {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parsePortalsLOS {
@@ -567,6 +587,7 @@ sub parsePortalsLOS {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parsePriority {
@@ -583,6 +604,7 @@ sub parsePriority {
 		$pri--;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseResponses {
@@ -605,6 +627,7 @@ sub parseResponses {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseROLUT {
@@ -630,6 +653,7 @@ sub parseROLUT {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseRODescLUT {
@@ -661,6 +685,7 @@ sub parseRODescLUT {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseROSlotsLUT {
@@ -678,6 +703,7 @@ sub parseROSlotsLUT {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseSectionedFile {
@@ -708,6 +734,7 @@ sub parseSectionedFile {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseSkills {
@@ -731,6 +758,7 @@ sub parseSkills {
 	# FIXME: global variable abuse; this assumes that $r_array is
 	# \@Skills::skills
 	Skills->init();
+	return 1;
 }
 
 sub parseSkillsLUT {
@@ -752,6 +780,7 @@ sub parseSkillsLUT {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 
@@ -773,6 +802,7 @@ sub parseSkillsIDLUT {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseSkillsReverseIDLUT_lc {
@@ -793,6 +823,7 @@ sub parseSkillsReverseIDLUT_lc {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseSkillsReverseLUT_lc {
@@ -814,6 +845,7 @@ sub parseSkillsReverseLUT_lc {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseSkillsSPLUT {
@@ -835,6 +867,7 @@ sub parseSkillsSPLUT {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseTimeouts {
@@ -852,6 +885,7 @@ sub parseTimeouts {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseWaypoint {
@@ -873,6 +907,7 @@ sub parseWaypoint {
 		push @{$r_array}, \%point;
 	}
 	close FILE;
+	return 1;
 }
 
 
@@ -1052,6 +1087,7 @@ sub processUltimate {
 		print $f join("\n", @lines) . "\n";
 		close $f;
 	}
+	return 1;
 }
 
 
