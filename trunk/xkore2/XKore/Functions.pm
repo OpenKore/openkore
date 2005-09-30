@@ -5,7 +5,7 @@ use Time::HiRes qw(time usleep);
 use Interface::Console;
 use bytes;
 
-use XKore::Variables qw(%rpackets $xConnectionStatus $currLocationPacket $tempMsg
+use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $currLocationPacket $tempMsg
 	$tempIp $tempPort $programEnder $localServ $port $xkoreSock $clientFeed
 	$socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket
 	 $recordSock $recordPacket);
@@ -88,6 +88,7 @@ sub forwardToClient {
 			dumpData($msgSend) if ($config{'debugPacket_unparsed'});
 		}
 		#return $msgSend;
+		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
 		$roSendToServ->sendData($client,$msgSend);
 		return "";
@@ -162,6 +163,7 @@ sub forwardToClient {
 	}elsif ($switch eq '0073'){
 		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$record = 0;
+		$tempRecordQueue = $recordPacket;
 		$roSendToServ->sendData($client,$msgSend);
 
 	}elsif ($switch eq '0087') {
