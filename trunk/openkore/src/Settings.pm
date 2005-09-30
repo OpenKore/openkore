@@ -287,7 +287,7 @@ sub load {
 		}
 
 		Plugins::callHook('loadfiles', {files => \@array, current => $i});
-		$_->{func}->($_->{file}, $_->{hash});
+		return 0 unless $_->{func}->($_->{file}, $_->{hash});
 		$i++;
 	}
 	Plugins::callHook('postloadfiles', {files => \@array});

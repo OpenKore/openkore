@@ -34,6 +34,8 @@ TODO:
   'party create <party_name>'.
 - 'Pink Spring' renamed to "Roki's Weil" to match the skill name
   in spells.txt (for whenGround/whenNotGround).
+- All FileParsers must return 1 if the file was parsed successfully.
+  Otherwise, kore will bail out with an error.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
@@ -88,6 +90,8 @@ Bug fixes:
 - useSelf_skill equip_rightHand and similar constructs will now
   correctly equip items whose names have commas in them.
 - Command storage will now check first if the storage has been opened.
+- Use sane default for $config{sleepTime} when it is missing from
+  Interface.pm.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
