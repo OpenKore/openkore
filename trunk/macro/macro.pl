@@ -55,6 +55,7 @@ undef $file;
 sub parseAndHook {
   &parseMacroFile;
   &hookOnDemand;
+  return 1;
 }
 
 sub hookOnDemand {
