@@ -5,7 +5,7 @@ use Time::HiRes qw(time usleep);
 use XKore::Functions;
 use Base::Server;
 use base qw(Base::Server);
-use XKore::Variables qw($xConnectionStatus $tempRecordQueue $currLocationPacket
+use XKore::Variables qw($xConnectionStatus %rpackets $tempRecordQueue $currLocationPacket
 	$svrObjIndex $tempIp $tempPort $programEnder $localServ $port $xkoreSock
 	$clientFeed $socketOut $serverNumber $serverIp $serverPort $record
 	$ghostPort $recordSocket $recordSock $recordPacket);

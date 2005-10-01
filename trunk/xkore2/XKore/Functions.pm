@@ -59,7 +59,6 @@ sub forwardToClient {
 	my $switch = uc(unpack("H2", substr($msgSend, 1, 1))) . uc(unpack("H2", substr($msgSend, 0, 1)));
 	message "Received packet $switch from Server\n";
 
-	#######Currently not doing anything...
 	######### Checks for complete packets by comparing the length in recvpackets.txt
 	if ($rpackets{$switch} eq "-" || $switch eq "0070") {
 	  # Complete packet; the size of this packet is equal
@@ -83,7 +82,7 @@ sub forwardToClient {
 			return $msgSend;
 		}
 	 } else {
-		$recordPacket->enqueue($msgSend) if ($record == 1);
+		$recordPacket->enqueue($msgSend) if ($record == 1 && $switch ne '0000');
 		$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
 		$roSendToServ->sendData($client,$msgSend);
 		return "";
@@ -149,7 +148,7 @@ sub forwardToClient {
 
 		$xConnectionStatus = 2; #see Server::onClientNew for more infomation on this
 
-	}elsif ($switch eq '0073'){
+	}elsif ($switch eq '00B0'){
 		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$record = 0; #stop the recording
 		$tempRecordQueue = $recordPacket;  #stores the faked data in another queue...( for multiple logins)
@@ -160,7 +159,7 @@ sub forwardToClient {
 		$currLocationPacket = $msgSend; #keeps track of the character's position in the map
 		$roSendToServ->sendData($client,$msgSend);
 
-	}elsif ($switch eq '0187') {
+	}elsif ($switch eq '0187' || $switch eq '0081' ) {
 		#do not record this packet
 		$roSendToServ->sendData($client,$msgSend);
 	}else{
@@ -176,35 +175,40 @@ sub forwardToGhost {
 	my ($client,$data,$index) = @_;
 
 	my $switch = uc(unpack("H2", substr($data, 1, 1))) . uc(unpack("H2", substr($data, 0, 1)));
-		if ($switch eq '007E') {
-		  #intercepts the send sync packet and send a "receive" sync packet to the ghost client
-			$recordSocket->sendData($client,pack("c*",0x7F,0x00,0xD7,0xD0,0xA4,0x59));
-			$data = '' ; # empties the $data so that it won't send to the server..
-		}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066' || $switch eq '0072'
-			|| $switch eq '007D' ) {
-			$data = '' ;  #do not send those packets to the server
-		}
+	if ($switch eq '007E') {
+	#intercepts the send sync packet and send a "receive" sync packet to the ghost client
+		$recordSocket->sendData($client,pack("c*",0x7F,0x00,0xD7,0xD0,0xA4,0x59));
+		$data = '' ; # empties the $data so that it won't send to the server..
+	}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066'){ #|| $switch eq '0072'
+	      #  || $switch eq '007D' ) {
+		$data = '' ;  #do not send those packets to the server
+	}
 
+	if ($recordPacket->pending && !$clientFeed){
+	       my $stkData = $recordPacket->dequeue_nb; #unqueue the last data and put it in $stkData
+		message "Received on-the-fly Client data $switch\n";
 
-		if ($recordPacket->pending && !$clientFeed){
-			my $stkData = $recordPacket->dequeue_nb; #unqueue the last data and put it in $stkData
-			printf "Received on-the-fly Client data $switch\n";
+		if ($switch eq '0073'){
+			$data = $currLocationPacket;  #this is the 'You Move' packet.. this is used to tell the
+			$clientFeed = 1;
+		}						#ghost client where it is now.
 
-			if ($switch eq '0073'){
-				$data = $currLocationPacket;  #this is the 'You Move' packet.. this is used to tell the
-								#ghost client where it is now.
-			}
+		$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
+		message "Sending $switch data to on-the-fly Client\n";
+		$recordSocket->sendData($client,$stkData); #sends the queued stuff to the client.
 
+		if (!defined($rpackets{$switch}) && $recordPacket->pending && $switch ne '0071'){
+		  #sends the next packet if it's not in the recvpackets.txt
+			$stkData = $recordPacket->dequeue_nb;
 			$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
-			printf "Sending $switch data to on-the-fly Client\n";
-
-			$recordSocket->sendData($client,$stkData); #sends the queued stuff to the client.
-
-		}else{
-			$recordPacket = $tempRecordQueue; # reload the queue after it's empty
-			#$recordSock = $new;
-			$clientFeed = 1; # start diverting data received from the server to the client
+			message "Sending $switch data to on-the-fly Client\n";
+			$recordSocket->sendData($client,$stkData);
 		}
+	}else{
+		$recordPacket = $tempRecordQueue; # reload the queue after it's empty
+		#$recordSock = $new;
+		$clientFeed = 1; # start diverting data received from the server to the client
+	}
 
 		 # Sends the data to the server.
 		XKore::Functions::forwardToServer ($localServ,$data) if ($clientFeed == 1 && $data ne '');
