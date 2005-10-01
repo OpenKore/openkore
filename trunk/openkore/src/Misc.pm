@@ -2316,6 +2316,7 @@ sub updateDamageTables {
 				$monsters{$ID1}{'missedToParty'}++ if ($damage == 0);
 			}
 			$monsters{$ID1}{target} = $ID2;
+			OpenKoreMod::updateDamageTables($monsters{$ID1}) if (defined &OpenKoreMod::updateDamageTables);
 		}
 
 	} elsif ($players{$ID1}) {
@@ -2335,6 +2336,7 @@ sub updateDamageTables {
 			    ($chars[$config{'char'}]{'party'} && %{$chars[$config{'char'}]{'party'}} && $chars[$config{'char'}]{'party'}{'users'}{$ID1} && %{$chars[$config{'char'}]{'party'}{'users'}{$ID1}})) {
 				$monsters{$ID2}{'dmgFromParty'} += $damage;
 			}
+			OpenKoreMod::updateDamageTables($monsters{$ID2}) if (defined &OpenKoreMod::updateDamageTables);
 		}
 	}
 }
