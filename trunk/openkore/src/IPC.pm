@@ -18,7 +18,11 @@
 # The IPC framework allows different instances of OpenKore to communicate with
 # each other, and allow other programs to communicate with OpenKore.
 #
-# <h3>Network design</h3>
+# <h3>Network design overview</h3>
+# <img src="ipc-network.png" width="427" height="333" alt="IPC network overview">
+# <br><i>An overview of the network</i>
+#
+# <p>
 # All OpenKore instances (and other programs that wish to communicate with OpenKore)
 # form a <em>network</em>, and are the <em>clients</em>. In the center of this network
 # is the <em>IPC manager server</em>, or the <em>manager</em> in short.
@@ -29,8 +33,8 @@
 #
 # Although the binary format is the same, there are two kinds of messages:
 # `l
-# - Global messages, that are broadcasted to all clients.
-# - Private messages, that are only delivered to a specific client.
+# - <i>Global messages</i>, that are broadcasted to all clients.
+# - <i>Private messages</i>, that are only delivered to a specific client.
 #   The only difference with global messages is that these messages
 #   have the 'TO' argument, which contains the ID of the recipient client.
 # `l`
