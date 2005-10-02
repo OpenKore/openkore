@@ -5,10 +5,10 @@ use Time::HiRes qw(time usleep);
 use Interface::Console;
 use bytes;
 
-use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $currLocationPacket $svrObjIndex
+use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus %currLocationPacket $svrObjIndex
 	$tempIp $tempPort $programEnder $localServ $port $xkoreSock $clientFeed
 	$socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket
-	 $recordSock $recordPacket);
+	 $recordSock $recordPacket $firstLogin);
 use IO::Socket;
 use Thread::Queue;
 use Globals;
@@ -20,7 +20,6 @@ use Utils;
 use Network;
 use Globals;
 use Log qw(message warning error debug);
-
 
 
 
@@ -148,7 +147,37 @@ sub forwardToClient {
 
 		$xConnectionStatus = 2; #see Server::onClientNew for more infomation on this
 
-	}elsif ($switch eq '00B0'){
+	}elsif ($switch eq '0073') {
+		$currLocationPacket{spawn} = $msgSend; #Force Change map packet
+		$roSendToServ->sendData($client,$msgSend);
+		$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
+
+	}elsif ($switch eq '007D') {  ##HACK to make client stop sending so many rubbish...
+		$currLocationPacket{spawn} = $msgSend; #Force Change map packet
+		$roSendToServ->sendData($client,$msgSend);
+		$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
+		$msgSend = "";
+
+	}elsif ($switch eq '0091') {
+		$currLocationPacket{mapis} = $msgSend; #Force Change map packet
+		$roSendToServ->sendData($client,$msgSend);
+
+	}elsif ($switch eq '0092') {
+	#'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
+
+		$tempIp = makeIP(substr($msgSend,22,4)); #get the ipaddress of the mapserver
+		$tempPort = unpack("S1", substr($msg, 26, 4)); #get the port of the mapserver
+
+		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$port); #fake the mapserv data.
+
+		$roSendToServ->sendData($client,$msgSend);
+
+		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$ghostPort); #fake ghost mapserver data
+
+		#$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
+
+		$xConnectionStatus = 2; #see Server::onClientNew for more infomation on this
+	}elsif ($switch eq '00B0') {
 		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$record = 0; #stop the recording
 		$tempRecordQueue = $recordPacket;  #stores the faked data in another queue...( for multiple logins)
@@ -156,7 +185,7 @@ sub forwardToClient {
 		$roSendToServ->sendData($client,$msgSend);
 
 	}elsif ($switch eq '0087') {
-		$currLocationPacket = $msgSend; #keeps track of the character's position in the map
+		$currLocationPacket{position} = $msgSend; #keeps track of the character's position in the map
 		$roSendToServ->sendData($client,$msgSend);
 
 	}elsif ($switch eq '0187' || $switch eq '0081' ) {
@@ -179,6 +208,9 @@ sub forwardToGhost {
 	#intercepts the send sync packet and send a "receive" sync packet to the ghost client
 		$recordSocket->sendData($client,pack("c*",0x7F,0x00,0xD7,0xD0,0xA4,0x59));
 		$data = '' ; # empties the $data so that it won't send to the server..
+      #  }elsif ($switch eq '0085') {
+       #	 $recordSocket->sendData($client,$currLocationPacket{mapis}.$currLocationPacket{spawn}) if ($firstLogin == 1);
+       #	 $firstLogin = 0;
 	}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066'){ #|| $switch eq '0072'
 	      #  || $switch eq '007D' ) {
 		$data = '' ;  #do not send those packets to the server
@@ -189,9 +221,8 @@ sub forwardToGhost {
 		message "Received on-the-fly Client data $switch\n";
 
 		if ($switch eq '0073'){
-			$data = $currLocationPacket;  #this is the 'You Move' packet.. this is used to tell the
-			$clientFeed = 1;
-		}						#ghost client where it is now.
+			$clientFeed = 1; #stop replaying packets when it's 0073
+		}
 
 		$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
 		message "Sending $switch data to on-the-fly Client\n";
@@ -204,7 +235,9 @@ sub forwardToGhost {
 			message "Sending $switch data to on-the-fly Client\n";
 			$recordSocket->sendData($client,$stkData);
 		}
-	}else{
+	}else {
+		#$recordSocket->sendData($client,$currLocationPacket{position});
+		$firstLogin = 1;
 		$recordPacket = $tempRecordQueue; # reload the queue after it's empty
 		#$recordSock = $new;
 		$clientFeed = 1; # start diverting data received from the server to the client

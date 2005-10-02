@@ -2,9 +2,9 @@ package XKore::Variables;
 use Exporter 'import';
 use base qw(Exporter);
 
-@EXPORT_OK =qw(%rpackets $xConnectionStatus $currLocationPacket $svrObjIndex $tempIp $tempPort
+@EXPORT_OK =qw(%rpackets $xConnectionStatus %currLocationPacket $svrObjIndex $tempIp $tempPort
 	$programEnder $localServ $tempRecordQueue $port $xkoreSock $clientFeed $socketOut $serverNumber
-	$serverIp $serverPort $record $ghostPort $recordSocket $recordSock $recordPacket);
+	$serverIp $serverPort $record $ghostPort $recordSocket $recordSock $recordPacket $firstLogin);
 
 our $socketOut; #the out going connection handle
 our $serverNumber; # the server number TODO: parse username to get this value.
@@ -27,5 +27,6 @@ our $tempIp;
 our $tempPort;
 our $svrObjIndex;
 our $programEnder;
-our $currLocationPacket;
+our %currLocationPacket;
+our $firstLogin;
 1;
