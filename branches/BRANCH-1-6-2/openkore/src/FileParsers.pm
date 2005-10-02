@@ -647,6 +647,7 @@ sub parseSkills {
 
 	open(FILE, "<$file");
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		my ($handle, $name) = split(/#/);
 		$name =~ s/_/ /g;
 		$name =~ s/ *$//;
@@ -659,6 +660,7 @@ sub parseSkills {
 	# FIXME: global variable abuse; this assumes that $r_array is
 	# \@Skills::skills
 	Skills->init();
+	return 1;
 }
 
 sub parseSkillsLUT {
@@ -670,6 +672,7 @@ sub parseSkillsLUT {
 	open(FILE, "<$file");
 	$i = 1;
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
 		$stuff[1] =~ s/ *$//;
@@ -679,6 +682,7 @@ sub parseSkillsLUT {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 
@@ -691,6 +695,7 @@ sub parseSkillsIDLUT {
 	open(FILE, "<$file");
 	$i = 1;
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
@@ -699,6 +704,7 @@ sub parseSkillsIDLUT {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseSkillsReverseIDLUT_lc {
@@ -710,6 +716,7 @@ sub parseSkillsReverseIDLUT_lc {
 	open(FILE, "<$file");
 	$i = 1;
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
 		if ($stuff[0] ne "" && $stuff[1] ne "") {
@@ -718,6 +725,7 @@ sub parseSkillsReverseIDLUT_lc {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseSkillsReverseLUT_lc {
@@ -729,6 +737,7 @@ sub parseSkillsReverseLUT_lc {
 	open(FILE, "< $file");
 	$i = 1;
 	foreach (<FILE>) {
+		next if (/^\/\//);
 		@stuff = split /#/, $_;
 		$stuff[1] =~ s/_/ /g;
 		$stuff[1] =~ s/ *$//;
@@ -738,6 +747,7 @@ sub parseSkillsReverseLUT_lc {
 		$i++;
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseSkillsSPLUT {
@@ -759,6 +769,7 @@ sub parseSkillsSPLUT {
 		}
 	}
 	close FILE;
+	return 1;
 }
 
 sub parseTimeouts {
