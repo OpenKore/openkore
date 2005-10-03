@@ -19,19 +19,6 @@
 # All members in $char->{inventory} are of the Item class.
 #
 # TODO: move the item functions from Misc.pm to Item.pm
-#
-# Slots:
-# topHead
-# midHead
-# lowHead
-# leftHand
-# rightHand
-# leftAccessory
-# rightAccessory
-# robe
-# armor
-# shoes
-# arrow
 
 package Item;
 
@@ -43,6 +30,14 @@ use Time::HiRes qw(time);
 use Network::Send;
 
 use overload '""' => \&nameString;
+
+our @slots = qw(
+	topHead midHead lowHead
+	leftHand rightHand
+	robe armor shoes
+	leftAccessory rightAccessory
+	arrow
+);
 
 sub new {
 	my $class = shift;

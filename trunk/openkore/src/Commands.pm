@@ -1261,15 +1261,12 @@ sub cmdEquip {
 	my $item;
 
 	if ($arg1 eq "") {
-		error "You must specify an item to equip.\n";
+		cmdEquip_list();
 		return;
 	}
 
-
 	if ($arg1 eq "slots") {
-		message "Slots:\ntopHead\nmidHead\nlowHead\n".
-				"leftHand\nrightHand\nleftAccessory\n".
-				"rightAccessory\nrobe\narmor\nshoes\n";
+		message "Slots:\n".join("\n", @Item::slots)."\n", "list";
 		return;
 	}
 
@@ -1295,6 +1292,14 @@ sub cmdEquip {
 	}
 	else {
 		$item->equip();
+	}
+}
+
+sub cmdEquip_list {
+	for my $slot (@Item::slots) {
+		my $item = $char->{equipment}{$slot};
+		my $name = $item ? $item->nameString." ($item->{invIndex})" : '-';
+		message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
 }
 
