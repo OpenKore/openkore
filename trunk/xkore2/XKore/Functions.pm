@@ -6,7 +6,7 @@ use Interface::Console;
 use bytes;
 
 use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus %currLocationPacket $svrObjIndex
-	$tempIp $tempPort $programEnder $localServ $port $xkoreSock $clientFeed
+	$tempIp $tempPort $programEnder $localServ $port $ghostIndex $clientFeed $mapchange
 	$socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket
 	 $recordSock $recordPacket $firstLogin);
 use IO::Socket;
@@ -87,6 +87,9 @@ sub forwardToClient {
 		return "";
 	 }
 
+
+	my $extraData = (length($msgSend) >= $msg_size) ? substr($msgSend, $msg_size, length($msgSend) - $msg_size) : "";
+	   $msgSend = substr($msgSend, 0, $msg_size);
 	message "Forwarding packet $switch length:".length($msgSend)." to the Client\n";
 	if ($switch eq '0069'){
 	  #Intecepts the login packet
@@ -146,25 +149,29 @@ sub forwardToClient {
 		$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
 
 		$xConnectionStatus = 2; #see Server::onClientNew for more infomation on this
+		$mapchange = 1;
 
 	}elsif ($switch eq '0073') {
 		$currLocationPacket{spawn} = $msgSend; #Force Change map packet
 		$roSendToServ->sendData($client,$msgSend);
 		$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
+		$mapchange = 1;
 
-	}elsif ($switch eq '007D') {  ##HACK to make client stop sending so many rubbish...
+	}elsif ($switch eq '007D') {
 		$currLocationPacket{spawn} = $msgSend; #Force Change map packet
 		$roSendToServ->sendData($client,$msgSend);
 		$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
-		$msgSend = "";
 
 	}elsif ($switch eq '0091') {
+		$mapchange = 1;
 		$currLocationPacket{mapis} = $msgSend; #Force Change map packet
+		$recordSocket->sendData($recordSocket->{clients}[$ghostIndex],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
 		$roSendToServ->sendData($client,$msgSend);
+		$msgSend = "";
 
 	}elsif ($switch eq '0092') {
 	#'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
-
+		$mapchange = 1;
 		$tempIp = makeIP(substr($msgSend,22,4)); #get the ipaddress of the mapserver
 		$tempPort = unpack("S1", substr($msg, 26, 4)); #get the port of the mapserver
 
@@ -177,7 +184,7 @@ sub forwardToClient {
 		#$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
 
 		$xConnectionStatus = 2; #see Server::onClientNew for more infomation on this
-	}elsif ($switch eq '00B0') {
+	}elsif ($switch eq '0119') {
 		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$record = 0; #stop the recording
 		$tempRecordQueue = $recordPacket;  #stores the faked data in another queue...( for multiple logins)
@@ -191,13 +198,16 @@ sub forwardToClient {
 	}elsif ($switch eq '0187' || $switch eq '0081' ) {
 		#do not record this packet
 		$roSendToServ->sendData($client,$msgSend);
+		$msgSend = '';
 	}else{
+		$mapchange = 0;
 		$recordPacket->enqueue($msgSend) if ($record == 1); #record all other datas not intercepted
 		$roSendToServ->sendData($client,$msgSend); #sends all data not intercepted to the client
 	}
-	$recordSocket->sendData($recordSocket->{clients}[0],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
-	$msgSend = (length($msgSend) >= $msg_size) ? substr($msgSend, $msg_size, length($msgSend) - $msg_size) : "";
-	return $msgSend; #returns the extra traling data if it's not a part of the curent packet.
+	message "Sending Ghost Data $switch\n";
+       $recordSocket->sendData($recordSocket->{clients}[$ghostIndex],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
+
+	return $extraData; #returns the extra traling data if it's not a part of the curent packet.
 }
 
 sub forwardToGhost {
@@ -208,37 +218,45 @@ sub forwardToGhost {
 	#intercepts the send sync packet and send a "receive" sync packet to the ghost client
 		$recordSocket->sendData($client,pack("c*",0x7F,0x00,0xD7,0xD0,0xA4,0x59));
 		$data = '' ; # empties the $data so that it won't send to the server..
-      #  }elsif ($switch eq '0085') {
-       #	 $recordSocket->sendData($client,$currLocationPacket{mapis}.$currLocationPacket{spawn}) if ($firstLogin == 1);
-       #	 $firstLogin = 0;
-	}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066'){ #|| $switch eq '0072'
+
+	}elsif ($switch eq '0085') {
+		$clientFeed = 1;
+		#$recordSocket->sendData($client,$currLocationPacket{mapis}.$currLocationPacket{spawn}) if ($firstLogin == 1);
+		$firstLogin = 0;
+
+	}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066' || $switch eq '018A' || $switch eq '007D'){ #|| $switch eq '0072'
 	      #  || $switch eq '007D' ) {
 		$data = '' ;  #do not send those packets to the server
 	}
-
 	if ($recordPacket->pending && !$clientFeed){
 	       my $stkData = $recordPacket->dequeue_nb; #unqueue the last data and put it in $stkData
 		message "Received on-the-fly Client data $switch\n";
 
-		if ($switch eq '0073'){
+		if ($switch eq '0119'){
 			$clientFeed = 1; #stop replaying packets when it's 0073
 		}
 
 		$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
 		message "Sending $switch data to on-the-fly Client\n";
 		$recordSocket->sendData($client,$stkData); #sends the queued stuff to the client.
-
+		$tempRecordQueue->enqueue($stkData);
 		if (!defined($rpackets{$switch}) && $recordPacket->pending && $switch ne '0071'){
 		  #sends the next packet if it's not in the recvpackets.txt
 			$stkData = $recordPacket->dequeue_nb;
 			$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
 			message "Sending $switch data to on-the-fly Client\n";
 			$recordSocket->sendData($client,$stkData);
+			$tempRecordQueue->enqueue($stkData);
 		}
 	}else {
 		#$recordSocket->sendData($client,$currLocationPacket{position});
 		$firstLogin = 1;
-		$recordPacket = $tempRecordQueue; # reload the queue after it's empty
+	       # reload the queue after it's empty
+	       $recordPacket = '';
+	       $recordPacket = new Thread::Queue;
+		for ($tempRecordQueue->pending) {
+			$recordPacket->enqueue($tempRecordQueue->dequeue_nb);
+		}
 		#$recordSock = $new;
 		$clientFeed = 1; # start diverting data received from the server to the client
 	}
