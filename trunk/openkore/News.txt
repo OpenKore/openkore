@@ -131,6 +131,7 @@ New features:
 - 'exp' command will now display number of bytes sent and received.
   Helpful if you need to know your bandwidth usage.
 - Error message when you specify an unknown skill name in skillsAddAuto.
+- 'eq <item>' command now only matches unequipped items.
 
 New commands:
 - getplayerinfo (number)
