@@ -2,8 +2,8 @@ package XKore::Server;
 
 use strict;
 use XKore::Variables qw($xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder
-	$localServ $port $xkoreSock $clientFeed $socketOut $serverNumber $serverIp
-	$serverPort $record $ghostPort $recordSocket $recordSock $recordPacket);
+	$localServ $port $ghostIndex $clientFeed $socketOut $serverNumber $serverIp
+	$serverPort $record $ghostPort $recordSocket $recordSock $recordPacket $mapchange);
 
 use Network::Send;
 use XKore::Functions;

@@ -23,7 +23,7 @@ use Interface::Console;
 use bytes;
 
 use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
-	$xkoreSock $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort
+	$ghostIndex $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort
 	$recordSocket $recordSock $recordPacket);	
 use Thread::Queue;
 use Globals;
@@ -59,7 +59,7 @@ Settings::load($loadID);
 	$recordPacket = new Thread::Queue;
 	$tempRecordQueue = new Thread::Queue;
 	$clientFeed = 0;
-	$xkoreSock;
+	$ghostIndex;
 	$port = 6900; #Controler client's listener port
 
 	$localServ = new XKore::Server($port);
