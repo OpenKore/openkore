@@ -251,12 +251,6 @@ sub forwardToGhost {
 	}else {
 		#$recordSocket->sendData($client,$currLocationPacket{position});
 		$firstLogin = 1;
-	       # reload the queue after it's empty
-	       $recordPacket = '';
-	       $recordPacket = new Thread::Queue;
-		for ($tempRecordQueue->pending) {
-			$recordPacket->enqueue($tempRecordQueue->dequeue_nb);
-		}
 		#$recordSock = $new;
 		$clientFeed = 1; # start diverting data received from the server to the client
 	}
