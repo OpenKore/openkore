@@ -1276,7 +1276,7 @@ sub cmdEquip {
 		$arg1 .= " $arg2" if $arg2;
 	}
 
-	$item = (defined $slot) ? (Item::get($arg2)) : (Item::get($arg1));
+	$item = Item::get(defined $slot ? $arg2 : $arg1, undef, 1);
 
 	if (!$item) {
 		error "You don't have $arg1.\n";
