@@ -84,4 +84,5 @@
 122 Marionette Control
 124 Head Crush
 125 Joint Beat
+132 Auto Berserk
 188 Maximum Power Thrust
