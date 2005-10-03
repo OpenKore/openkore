@@ -308,6 +308,7 @@ Credits:
   standpoint bug, equipAuto bug, storage desc command
 - illusionist: fix for force-aggressive monsters not being dropped when no LOS
 - clovanzo: Louyang portals
+- h4rry84: Auto Berserk skill and status support.
 
 
 ==================
