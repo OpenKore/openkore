@@ -132,6 +132,7 @@ New features:
   Helpful if you need to know your bandwidth usage.
 - Error message when you specify an unknown skill name in skillsAddAuto.
 - 'eq <item>' command now only matches unequipped items.
+- When an item is identified, you will see its inventory index now.
 
 New commands:
 - getplayerinfo (number)

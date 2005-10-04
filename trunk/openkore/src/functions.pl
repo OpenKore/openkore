@@ -5405,9 +5405,10 @@ sub parseMsg {
 	} elsif ($switch eq "0179") {
 		my $index = unpack("v*",substr($msg, 2, 2));
 		my $invIndex = findIndex($char->{inventory}, "index", $index);
-		$char->{inventory}[$invIndex]{identified} = 1;
-		$char->{inventory}[$invIndex]{type_equip} = $itemSlots_lut{$char->{inventory}[$invIndex]{nameID}};
-		message "Item Identified: $char->{inventory}[$invIndex]{name}\n", "info";
+		my $item = $char->{inventory}[$invIndex];
+		$item->{identified} = 1;
+		$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
+		message "Item Identified: $item->{name} ($invIndex)\n", "info";
 		undef @identifyID;
 
 	} elsif ($switch eq "017B") {
