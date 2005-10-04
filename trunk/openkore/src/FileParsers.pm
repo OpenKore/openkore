@@ -269,7 +269,13 @@ sub parseConfigFile {
 						$f = $value;
 					}
 				}
-				parseConfigFile($f, $r_hash, 1) if (-f $f);
+				if (-f $f) {
+					my $ret = parseConfigFile($f, $r_hash, 1);
+					return $ret unless $ret;
+				} else {
+					error "$file: Include file not found: $f\n";
+					return 0;
+				}
 
 			} else {
 				$r_hash->{$key} = $value;
