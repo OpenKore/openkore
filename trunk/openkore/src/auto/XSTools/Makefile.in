@@ -5,7 +5,7 @@ CXX=g++
 OBJ=pathfinding/*.o misc/*.o
 #if unix
 OBJ+=unix/*.o
-LIBS=-lreadline -ltermcap -pthread
+LIBS=-L/usr/lib/termcap -lreadline -ltermcap -pthread
 #endif
 #if win32
 OBJ+=win32/wrapper.o win32/utils.o
