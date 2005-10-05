@@ -187,7 +187,7 @@ sub forwardToClient {
 	}elsif ($switch eq '0119') {
 		$recordPacket->enqueue($msgSend) if ($record == 1);
 		$record = 0; #stop the recording
-		$tempRecordQueue = $recordPacket;  #stores the faked data in another queue...( for multiple logins)
+		#$tempRecordQueue = $recordPacket;  #stores the faked data in another queue...( for multiple logins)
 		$xConnectionStatus = 3; #change the connection status
 		$roSendToServ->sendData($client,$msgSend);
 
@@ -219,9 +219,9 @@ sub forwardToGhost {
 		$recordSocket->sendData($client,pack("c*",0x7F,0x00,0xD7,0xD0,0xA4,0x59));
 		$data = '' ; # empties the $data so that it won't send to the server..
 
-	}elsif ($switch eq '0085') {
+	}elsif ($switch eq '0085' && $firstLogin) {
 		$clientFeed = 1;
-		#$recordSocket->sendData($client,$currLocationPacket{mapis}.$currLocationPacket{spawn}) if ($firstLogin == 1);
+		$recordSocket->sendData($client,$currLocationPacket{mapis}.$currLocationPacket{spawn}) if ($firstLogin == 1);
 		$firstLogin = 0;
 
 	}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066' || $switch eq '018A' || $switch eq '007D'){ #|| $switch eq '0072'
@@ -248,9 +248,9 @@ sub forwardToGhost {
 			$recordSocket->sendData($client,$stkData);
 			$tempRecordQueue->enqueue($stkData);
 		}
+		$firstLogin = 1;
 	}else {
 		#$recordSocket->sendData($client,$currLocationPacket{position});
-		$firstLogin = 1;
 		#$recordSock = $new;
 		$clientFeed = 1; # start diverting data received from the server to the client
 	}
