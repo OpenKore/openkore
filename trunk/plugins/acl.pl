@@ -226,7 +226,9 @@ sub checkCmd {
   for (my $l = 0; $l <= $level; $l++) {
     foreach (@{$acl{$l}->{cmds}}) {
       if ($_ eq $cmd) {
-        Commands::run($cmd." ".$args) || ::parseCommand($cmd." ".$args);
+        if (!Commands::run($cmd." ".$args)) {
+          error "command '$cmd $args' failed.\n";
+        }
         return 1
       }
     }
