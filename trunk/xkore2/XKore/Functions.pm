@@ -204,7 +204,7 @@ sub forwardToClient {
 		$recordPacket->enqueue($msgSend) if ($record == 1); #record all other datas not intercepted
 		$roSendToServ->sendData($client,$msgSend); #sends all data not intercepted to the client
 	}
-	message "Sending Ghost Data $switch\n";
+	message "Sending Ghost Data $switch\n" if ($clientFeed == 1);
        $recordSocket->sendData($recordSocket->{clients}[$ghostIndex],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
 
 	return $extraData; #returns the extra traling data if it's not a part of the curent packet.
