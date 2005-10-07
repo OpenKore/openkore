@@ -1486,8 +1486,7 @@ sub AI {
 
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found;
-		my $i = 0;
-		while ($config{"getAuto_$i"}) {
+		for (my $i = 0; exists $config{"getAuto_$i"}; $i++) {
 			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
@@ -1506,7 +1505,6 @@ sub AI {
 				}
 				last;
 			}
-			$i++;
 		}
 
 		my $routeIndex = AI::findAction("route");
@@ -3162,7 +3160,7 @@ sub AI {
 			if (!ai_getSkillUseType($self_skill{ID})) {
 				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID, undef, undef, undef, undef, "useSelf_skill_$i");
 			} else {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y}, undef, undef, undef,"useSelf_skill_$i");
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y}, undef, undef, undef, "useSelf_skill_$i");
 			}
 		}
 	}
