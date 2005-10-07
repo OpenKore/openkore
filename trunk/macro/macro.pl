@@ -8,8 +8,8 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $Version = "1.0";
-my $stable = 0;
+my $vMajor = "1.0";
+my $Version = sprintf("%s rev%d.%02d", $vMajor, q$Revision$ =~ /(\d+)\.(\d+)/);
 
 use strict;
 use Plugins;
@@ -18,46 +18,58 @@ use Globals;
 use Utils;
 use Log qw(message error warning);
 use lib $Plugins::current_plugin_folder;
+use cvsdebug;
 use Macro::Data;
 use Macro::Script;
 use Macro::Parser qw(parseMacroFile);
 use Macro::Automacro qw(automacroCheck consoleCheckWrapper releaseAM);
 use Macro::Utilities qw(setVar callMacro);
 
-if (!$stable) {
-  $Version .= sprintf(" rev%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
-  eval {require cvsdebug};
-  $cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]) unless $@;
-} else {undef $stable}
+$cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]) unless $@;
 
-if (!defined $cvs) {
-  sub dummy {my $self = {}; bless($self); return $self};
-  sub debug {}; sub setDebug {}; $cvs = dummy();
-}
-
+#########
+# startup
 Plugins::register('macro', 'allows usage of macros', \&Unload);
 
 my $hooks = Plugins::addHooks(
-            ['Command_post',    \&commandHandler, undef],
             ['configModify',    \&debuglevel, undef],
             ['start3',          \&postsetDebug, undef],
             ['start3',          \&checkConfig, undef],
             ['AI_pre',          \&callMacro, undef]
+);
+my $chooks = Commands::register(
+            ['macro', "Macro plugin", \&commandHandler]
 );
 my $autohooks;
 my $loghook;
 
 my $file = "$Settings::control_folder/macros.txt";
 our $cfID = Settings::addConfigFile($file, \%macro, \&parseAndHook);
-Settings::load($cfID);
 undef $file;
+#########
 
-sub parseAndHook {
-  &parseMacroFile;
-  &hookOnDemand;
-  return 1;
+# onUnload
+sub Unload {
+  message "macro unloading, cleaning up.\n", "macro";
+  undef $cvs;
+  Settings::delConfigFile($cfID);
+  Plugins::delHooks($hooks);
+  Plugins::delHooks($autohooks);
+  Commands::unregister($chooks);
+  undef $queue;
+  undef %macro;
+  undef %automacro;
+  undef %varStack;
 }
 
+# onFile(Re)load
+sub parseAndHook {
+  if (parseMacroFile($_[0])) {&hookOnDemand; return 1}
+  error "error loading macros.txt. Please check your macros.txt for unclosed blocks\n";
+  return 0;
+}
+
+# only adds hooks that are needed
 sub hookOnDemand {
   Plugins::delHooks($autohooks) if defined $autohooks;
   Log::delHook($loghook) if defined $loghook;
@@ -82,6 +94,7 @@ sub hookOnDemand {
   if ($hookToLog) {$loghook = Log::addHook(\&consoleCheckWrapper)}
 }
 
+# onHook: start3
 sub checkConfig {
   if (!defined $timeout{macro_delay}) {
     warning "[macro] you did not specify 'macro_delay' in timeouts.txt. Assuming 1s\n";
@@ -89,121 +102,85 @@ sub checkConfig {
   }
 }
 
+# parser for macro_debug config line
 sub parseDebug {
-  my @reqfac = split(/\|/, shift);
+  my @reqfac = split(/[\|\s]+/, shift);
   my $loglevel = 0;
-  foreach my $l (@reqfac) {
-    $loglevel = $loglevel | $logfac{$l};
-  }
+  foreach my $l (@reqfac) {$loglevel = $loglevel | $logfac{$l}}
   return $loglevel;
 }
 
+# onHook: start3
 sub postsetDebug {
   $cvs->setDebug(parseDebug($::config{macro_debug})) if defined $::config{macro_debug};
 }
 
-sub Unload {
-  message "macro unloading, cleaning up.\n", "macro";
-  undef $cvs;
-  Settings::delConfigFile($cfID);
-  Plugins::delHooks($hooks);
-  Plugins::delHooks($autohooks);
-  undef $queue;
-  undef %macro;
-  undef %automacro;
-  undef %varStack;
-}
-
+# onHook: configModify
 sub debuglevel {
   my (undef, $args) = @_;
   if ($args->{key} eq 'macro_debug') {$cvs->setDebug(parseDebug($args->{val}))}
 }
 
-# just a facade for "macro"
+# macro command handler
 sub commandHandler {
-  my (undef, $arg) = @_;
-  my ($cmd, $param, $paramt) = split(/ /, $arg->{input}, 3);
-  if ($cmd eq 'macro') {
-    if ($param eq 'list') {list_macros()}
-    elsif ($param eq 'stop') {clearMacro()}
-    elsif ($param eq 'reset') {automacroReset($paramt)}
-    elsif ($param eq 'set') {cmdSetVar($paramt)}
-    elsif ($param eq 'version') {showVersion()}
-    elsif ($param eq '') {usage()}
-    else {runMacro($param, $paramt)}
-    $arg->{return} = 1;
+  $cvs->debug("commandHandler (@_)", $logfac{developers});
+  ### no parameter given
+  if (!defined $_[1]) {
+    message "usage: macro [MACRO|list|stop|set|version|reset] [automacro]\n", "list";
+    message "macro MACRO: run macro MACRO\n".
+      "macro list: list available macros\n".
+      "macro stop: stop current macro\n".
+      "macro set {variable} {value}: set/change variable to value\n".
+      "macro version: print macro plugin version\n".
+      "macro reset [automacro]: resets run-once status for all or given automacro(s)\n";
+    return
   }
-}
-
-# prints macro version
-sub showVersion {
-  message "macro plugin version $Version\n", "list";
-  message "Macro::Automacro ".$Macro::Automacro::Version."\n";
-  message "Macro::Script ".$Macro::Script::Version."\n";
-  message "Macro::Parser ".$Macro::Parser::Version."\n";
-  message "Macro::Utilities ".$Macro::Utilities::Version."\n";
-}
-
-# prints a little usage text
-sub usage {
-  message "usage: macro [MACRO|list|stop|set|version|reset] [automacro]\n", "list";
-  message "macro MACRO: run macro MACRO\n".
-    "macro list: list available macros\n".
-    "macro stop: stop current macro\n".
-    "macro set {variable} {value}: set/change variable to value\n".
-    "macro version: print macro plugin version\n".
-    "macro reset [automacro]: resets run-once status for all or given automacro(s)\n";
-}
-
-# set variable using command line
-sub cmdSetVar {
-  my $arg = shift;
-  my ($var, $val) = split(/ /, $arg, 2);
-  if (defined $val) {
-    setVar($var, $val);
-    message "[macro] $var set to $val\n", "macro";
+  my ($arg, $argt) = split(/\s+/, $_[1], 2);
+  ### parameter: list
+  if ($arg eq 'list') {
+    message(sprintf("The following macros are available:\n%smacros%s\n","-"x10,"-"x9), "list");
+    foreach my $m (keys %macro) {message "$m\n" unless $m =~ /^tempMacro/}
+    message(sprintf("%sautomacros%s\n", "-"x8, "-"x7), "list");
+    foreach my $a (keys %automacro) {message "$a\n"}
+    message(sprintf("%s\n","-"x25), "list");
+  ### parameter: stop
+  } elsif ($arg eq 'stop') {
+    undef $queue;
+    message "[macro] queue cleared.\n", "macro";
+  ### parameter: set
+  } elsif ($arg eq 'set')  {
+    my ($var, $val) = split(/\s+/, $argt, 2);
+    if (defined $val) {
+      setVar($var, $val);
+      message "[macro] $var set to $val\n", "macro";
+    } else {
+      delete $varStack{$var};
+      message "[macro] $var removed\n", "macro";
+    }
+  ### parameter: reset
+  } elsif ($arg eq 'reset') {
+    if (!defined $argt) {
+      foreach my $am (keys %automacro) {undef $automacro{$am}->{disabled}};
+      message "[macro] automacro runonce list cleared.\n", "macro";
+      return;
+    }
+    my $ret = releaseAM($argt);
+    if ($ret == 1)    {message "[macro] automacro $argt reenabled.\n", "macro"}
+    elsif ($ret == 0) {warning "[macro] automacro $argt wasn't disabled.\n"}
+    else              {error "[macro] automacro $argt not found.\n"}
+  ### parameter: version
+  } elsif ($arg eq 'version') {
+    message "macro plugin version $Version\n", "list";
+    message "Macro::Automacro ".$Macro::Automacro::Version."\n";
+    message "Macro::Script ".$Macro::Script::Version."\n";
+    message "Macro::Parser ".$Macro::Parser::Version."\n";
+    message "Macro::Utilities ".$Macro::Utilities::Version."\n";
+  ### parameter: probably a macro
   } else {
-    delete $varStack{$var};
-    message "[macro] $var removed\n", "macro";
+    $queue = new Macro::Script($arg, $argt);
+    if (!defined $queue) {error "[macro] $arg not found or error in queue\n"}
+    else {$cvs->debug("macro $arg selected.", $logfac{'function_call_macro'})}
   }
-}
-
-# macro wrapper
-sub runMacro {
-  my ($arg, $times) = @_;
-  $queue = new Macro::Script($arg, $times);
-  if (!defined $queue) {error "[macro] $arg not found or error in queue\n"}
-  else {$cvs->debug("macro $arg selected.", $logfac{'function_call_macro'})}
-}
-
-# lists available macros
-sub list_macros {
-  my $index = 0;
-  message(sprintf("The following macros are available:\n%smacros%s\n","-"x10,"-"x10), "list");
-  foreach my $m (keys %macro) {message "$m\n" unless $m =~ /^tempMacro/}
-  message(sprintf("%s\n%sautomacros%s\n", "-"x25, "-"x8, "-"x7), "list");
-  foreach my $a (keys %automacro) {message "$a\n"}
-  message(sprintf("%s\n","-"x25), "list");
-}
-
-# clears macro queue
-sub clearMacro {
-  undef $queue;
-  message "[macro] queue cleared.\n", "macro";
-}
-
-# clears automacro runonce list ###########################
-sub automacroReset {
-  my $arg = shift;
-  if (!$arg) {
-    foreach my $am (keys %automacro) {undef $automacro{$am}->{disabled}};
-    message "[macro] automacro runonce list cleared.\n", "macro";
-    return;
-  }
-  my $ret = releaseAM($arg);
-  if ($ret == 0) {warning "[macro] automacro $arg wasn't disabled.\n"}
-  elsif ($ret == 1) {message "[macro] automacro $arg reenabled.\n", "macro"}
-  else {error "[macro] automacro $arg not found.\n"}
 }
 
 1;

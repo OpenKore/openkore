@@ -11,7 +11,6 @@ our @ISA = qw(Exporter);
 use Utils;
 use Globals;
 use AI;
-use Commands;
 use Macro::Data;
 use Macro::Parser qw(parseCmd);
 use Macro::Utilities qw(setVar getVar cmpr);

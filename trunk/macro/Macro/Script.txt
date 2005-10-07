@@ -32,7 +32,8 @@ macro script syntax (bnf):
 
 <keyword> ::= '@npc' | '@cart' | '@inventory' | '@store' | '@storage' |
               '@player' | '@vender' | '@var' | '@random' | '@invamount' |
-              '@cartamount' | '@shopamount' | '@storamount' | '@eval'
+              '@cartamount' | '@shopamount' | '@storamount' | '@eval' |
+              '@arg'
 
 <argument> ::= '(' <string> ')' | '(' <expression> ')'
 
