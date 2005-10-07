@@ -1,7 +1,7 @@
 126 Safety Wall
 127 Fire Wall
-128 Portal hiraki-chuu
-129 Portal hiraki-naoru
+128 Warp Portal Opening
+129 Warp Portal
 130 Holy Communion?
 131 Sanctuary
 132 Magnus Exorcismus
