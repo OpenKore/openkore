@@ -25,7 +25,7 @@ sub parseMacroFile {
 
   my %block;
   my $tempmacro = 0;
-  open FILE, "< $file";
+  open FILE, "< $file" or return 0;
   foreach (<FILE>) {
     next if (/^\s*#/); # skip comments
     s/^\s*//g;         # remove leading whitespaces
@@ -74,6 +74,8 @@ sub parseMacroFile {
     }
   }
   close FILE;
+  return 0 if %block;
+  return 1;
 }
 
 # command line parser for macro
