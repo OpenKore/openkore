@@ -378,7 +378,7 @@ sub ai_mapRoute_searchStep {
 	}
 
 	my $parent = (sort {$$r_args{'openlist'}{$a}{'walk'} <=> $$r_args{'openlist'}{$b}{'walk'}} keys %{$$r_args{'openlist'}})[0];
-	message "$parent, $$r_args{'openlist'}{$parent}{'walk'}\n";
+	debug "$parent, $$r_args{'openlist'}{$parent}{'walk'}\n", "route/path";
 	# Uncomment this if you want minimum MAP count. Otherwise use the above for minimum step count
 	#foreach my $parent (keys %{$$r_args{'openlist'}})
 	{
