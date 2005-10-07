@@ -478,8 +478,6 @@ siege_test.rsw#Map Name Unknown#
 sword_1-1.rsw#Swordman Test Hall#
 sword_2-1.rsw#Swordman Test Hall#
 sword_3-1.rsw#Swordman Test Hall#
-// these files are included in the tablepack but have no correct entry here yet
-// this will allow people to use these maps until we add correct map names
 treasure01.rsw#Sunken Ship#
 treasure02.rsw#Sunken Ship#
 turbo_room.rsw#Map Name Unknown#
