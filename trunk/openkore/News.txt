@@ -36,6 +36,7 @@ TODO:
   in spells.txt (for whenGround/whenNotGround).
 - All FileParsers must return 1 if the file was parsed successfully.
   Otherwise, kore will bail out with an error.
+- Warp Portal-related spells.txt entries translated from Japanese.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
