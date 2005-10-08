@@ -137,7 +137,6 @@ sub initMapChangeVars {
 	undef $venderID;
 	undef @venderListsID;
 	undef %venderLists;
-	undef %guild;
 	undef %incomingGuild;
 	undef @chatRoomsID;
 	undef %chatRooms;
