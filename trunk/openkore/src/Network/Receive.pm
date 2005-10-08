@@ -900,28 +900,28 @@ sub actor_moved {
 			debug "Pet Moved: $pet->{name} ($pet->{binID})\n", "parseMsg";
 
 		} else {
-			my $monster = $monsters{$args->{ID}};
 			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
-				$monster = new Actor::Monster();
+				$monsters{$args->{ID}} = new Actor::Monster();
 				binAdd(\@monstersID, $args->{ID});
-				$monster->{ID} = $args->{ID};
-				$monster->{'appear_time'} = time;
-				$monster->{'nameID'} = $args->{type};
-				my $display = $monsters_lut{$args->{type}} ||
-					"Unknown ".$args->{type};
-				$monster->{'name'} = $display;
-				$monster->{'binID'} = binFind(\@monstersID, $args->{ID});
-				debug "Monster Appeared: $monster->{'name'} ($monster->{'binID'})\n", "parseMsg_presence";
+				$monsters{$args->{ID}}{ID} = $args->{ID};
+				$monsters{$args->{ID}}{'appear_time'} = time;
+				$monsters{$args->{ID}}{'nameID'} = $args->{type};
+				my $display = ($monsters_lut{$args->{type}} ne "")
+					? $monsters_lut{$args->{type}}
+					: "Unknown ".$args->{type};
+				$monsters{$args->{ID}}{'name'} = $display;
+				$monsters{$args->{ID}}{'binID'} = binFind(\@monstersID, $args->{ID});
+				debug "Monster Appeared: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg_presence";
 				$added = 1;
 			}
-			$monster->{look}{head} = 0;
-			$monster->{look}{body} = $direction;
-			$monster->{pos} = {%coordsFrom};
-			$monster->{pos_to} = {%coordsTo};
-			$monster->{time_move} = time;
-			$monster->{walk_speed} = $args->{walk_speed} / 1000;
-			$monster->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $monsters{$args->{ID}}{walk_speed};
-			debug "Monster Moved: $monster->{'name'} ($monster->{'binID'})\n", "parseMsg", 2;
+			$monsters{$args->{ID}}{look}{head} = 0;
+			$monsters{$args->{ID}}{look}{body} = $direction;
+			$monsters{$args->{ID}}{pos} = {%coordsFrom};
+			$monsters{$args->{ID}}{pos_to} = {%coordsTo};
+			$monsters{$args->{ID}}{time_move} = time;
+			$monsters{$args->{ID}}{walk_speed} = $args->{walk_speed} / 1000;
+			$monsters{$args->{ID}}{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $monsters{$args->{ID}}{walk_speed};
+			debug "Monster Moved: $monsters{$args->{ID}}{'name'} ($monsters{$args->{ID}}{'binID'})\n", "parseMsg", 2;
 
 			objectAdded('monster', $args->{ID}, $monsters{$args->{ID}}) if ($added);
 
