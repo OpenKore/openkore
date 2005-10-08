@@ -2405,7 +2405,41 @@ sub AI {
 			message "My master disconnected\n", "follow";
 
 		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'teleported'}) {
-			message "My master teleported\n", "follow", 1;
+			delete $ai_seq_args[$followIndex]{'ai_follow_lost_warped'};
+			delete $ai_v{'temp'}{'warp_pos'};
+
+			# Check to see if the player went through a warp portal and follow him through it.
+			my $pos = calcPosition($players_old{$ai_seq_args[$followIndex]{'ID'}});
+			my $oldPos = $players_old{$ai_seq_args[$followIndex]{'ID'}}->{pos};
+			my (@blocks, $found);
+			my %vec;
+			
+			debug "Last time i saw, master was moving from ($oldPos->{x}, $oldPos->{y}) to ($pos->{x}, $pos->{y})\n", "follow";
+			
+			# We must check the ground about 9x9 area of where we last saw our master. That's the only way
+			# to ensure he walked through a warp portal. The range is because of lag in some situations.
+			@blocks = calcRectArea2($pos->{x}, $pos->{y}, 4, 0);
+			foreach (@blocks) {
+				next unless (whenGroundStatus($_, "Warp Portal"));
+				# We must certify that our master was walking towards that portal.
+				getVector(\%vec, $_, $oldPos);
+				next unless (checkMovementDirection($oldPos, \%vec, $_, 15));
+				$found = $_;
+				last;
+			}
+			
+			if ($found) {
+				%{$ai_v{'temp'}{'warp_pos'}} = %{$found};
+				$ai_seq_args[$followIndex]{'ai_follow_lost_warped'} = 1;
+				$ai_seq_args[$followIndex]{'ai_follow_lost'} = 1;
+				$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
+				$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'time'} = time;
+				$ai_seq_args[$followIndex]{'ai_follow_lost_vec'} = {};
+				getVector($ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
+				
+			} else {
+				message "My master teleported\n", "follow", 1;
+			}
 
 		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disappeared'}) {
 			message "Trying to find lost master\n", "follow", 1;
@@ -2453,6 +2487,30 @@ sub AI {
 		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disconnected'}) {
 			delete $ai_seq_args[0]{'ai_follow_lost'};
 			message "My master disconnected\n", "follow";
+			
+		} elsif ($ai_seq_args[$followIndex]{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
+			my $pos = $ai_v{'temp'}{'warp_pos'};
+			
+			if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
+				ai_route($field{name}, $pos->{x}, $pos->{y},
+					attackOnRoute => 0); #distFromGoal => 0);
+			} else { 
+				my (%vec, %pos_to);
+				my $dist = distance($char->{pos_to}, $pos);
+
+				stand() if ($char->{sitting});
+				getVector(\%vec, $pos, $char->{pos_to});
+				moveAlongVector(\%pos_to, $char->{pos_to}, \%vec, $dist);
+				$timeout{ai_sit_idle}{time} = time;
+				move($pos_to{x}, $pos_to{y});
+				$pos->{x} = int $pos_to{x};
+				$pos->{y} = int $pos_to{y};
+
+			}
+			delete $ai_seq_args[$followIndex]{'ai_follow_lost_warped'};
+			delete $ai_v{'temp'}{'warp_pos'};
+			
+			message "My master warped at ($pos->{x}, $pos->{y}) - moving to warp point\n", "follow";
 
 		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'teleported'}) {
 			delete $ai_seq_args[0]{'ai_follow_lost'};
