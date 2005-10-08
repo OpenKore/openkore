@@ -3259,18 +3259,13 @@ sub cmdStatus {
 	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
 	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
 
-	$msg = "---------------------- Status ----------------------\n" .
+	$msg = "----------------------- Status -------------------------\n" .
 		swrite(
-		"@<<<<<<<<<<<<<<<<<<<<<<<      HP: @>>>>>>>>>>>>>>>>>",
-		[$char->{'name'}, $hp_string],
-		"@<<<<<<<<<<<<<<<<<<<<<<<      SP: @>>>>>>>>>>>>>>>>>",
-		[$job_name_string, $sp_string],
-		"Base: @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-		[$char->{'lv'}, $base_string],
-		"Job : @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
-		[$char->{'lv_job'}, $job_string],
-		"Zeny: @<<<<<<<<<<<<<<<<<  Weight: @>>>>>>>>>>>>>>>>>",
-		[$zeny_string, $weight_string]);
+		"@<<<<<<<<<<<<<<<<<<<<<<<          HP: @>>>>>>>>>>>>>>>>>", [$char->{'name'}, $hp_string],
+		"@<<<<<<<<<<<<<<<<<<<<<<<          SP: @>>>>>>>>>>>>>>>>>", [$job_name_string, $sp_string],
+		"Base: @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv'}, $base_string],
+		"Job : @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv_job'}, $job_string],
+		"Zeny: @<<<<<<<<<<<<<<<<<      Weight: @>>>>>>>>>>>>>>>>>", [$zeny_string, $weight_string]);
 
 	my $statuses = 'none';
 	if (defined $char->{statuses} && %{$char->{statuses}}) {
@@ -3278,7 +3273,7 @@ sub cmdStatus {
 	}
 	$msg .= "Statuses: $statuses\n";
 	$msg .= "Spirits: $char->{spirits}\n" if (exists $char->{spirits});
-	$msg .= "----------------------------------------------------\n";
+	$msg .= "--------------------------------------------------------\n";
 
 
 	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
@@ -3292,7 +3287,7 @@ sub cmdStatus {
 		[$totalelasped_string],
 		"Last Monster took (sec): @>>>>>>>",
 		[$elasped_string]);
-	$msg .= "----------------------------------------------------\n";
+	$msg .= "--------------------------------------------------------\n";
 	message($msg, "info");
 }
 
