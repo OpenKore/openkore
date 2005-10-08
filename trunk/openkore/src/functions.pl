@@ -1486,7 +1486,8 @@ sub AI {
 
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found;
-		for (my $i = 0; exists $config{"getAuto_$i"}; $i++) {
+		my $i;
+		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
 			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
 			if ($config{"getAuto_${i}_minAmount"} ne "" &&
 			    $config{"getAuto_${i}_maxAmount"} ne "" &&
