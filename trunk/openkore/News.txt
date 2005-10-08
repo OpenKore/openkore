@@ -137,6 +137,7 @@ New features:
 - openkore will now return a fatal error if an !include file is missing
   in config.txt.
 - Bot will now follow its master through warp portals.
+- 'guild info' command now displays ally list.
 
 New commands:
 - getplayerinfo (number)
