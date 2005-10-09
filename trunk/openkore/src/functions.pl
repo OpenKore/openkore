@@ -3984,11 +3984,12 @@ sub AI {
 				# If current solution has conversation steps specified
 				if ( $ai_seq_args[0]{'substage'} eq 'Waiting for Warp' ) {
 					$ai_seq_args[0]{'timeout'} = time unless $ai_seq_args[0]{'timeout'};
-					if (timeOut($ai_seq_args[0]{'timeout'}, 10)) {
+					if (timeOut($ai_seq_args[0]{'timeout'}, $timeout{ai_route_npcTalk}{timeout} || 10) ||
+					    $ai_v{npc_talk}{talk} eq 'close') {
 						# We waited for 10 seconds and got nothing
 						delete $ai_seq_args[0]{'substage'};
 						delete $ai_seq_args[0]{'timeout'};
-						if (++$ai_seq_args[0]{'mapSolution'}[0]{'retry'} > 5) {
+						if (++$ai_seq_args[0]{'mapSolution'}[0]{'retry'} >= ($config{route_maxNpcTries} || 5)) {
 							# NPC sequence is a failure
 							# We delete that portal and try again
 							delete $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"};

@@ -93,6 +93,8 @@ Bug fixes:
 - Command storage will now check first if the storage has been opened.
 - Use sane default for $config{sleepTime} when it is missing from
   Interface.pm.
+- openkore will now realize immediately when a portals.txt NPC conversation
+  terminated prematurely.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -277,7 +279,14 @@ New config options:
   target_whenStatusInactive
   These conditions are the same as those used in partySkill,
   but tested on your target monster.
-  
+- route_maxNpcTries
+  Default 5. If an NPC conversation is used to reach your destination,
+  this is the maximum number of times it will try to talk to that NPC before
+  giving up and plotting an alternate path.
+- timeouts.txt: ai_route_npcTalk
+  Default 10. If an NPC conversation used to reach your destination takes
+  longer than this, it will assume failure.
+
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
 - The format of $npcs_lut has changed, IDs are completely abandoned.
