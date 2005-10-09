@@ -144,6 +144,7 @@ lockMap_randY
 route_randomWalk 1
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
+route_maxNpcTries 5
 route_teleport 0
 route_teleport_minDistance 150
 route_teleport_maxTries 8
