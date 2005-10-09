@@ -438,8 +438,8 @@ sub parseShopControl {
 			push(@errors, "$loc has incorrect comma placement in price: $price");
 		} elsif ($real_price < 0) {
 			push(@errors, "$loc has non-positive price: $price");
-		} elsif ($real_price > 99990000) {
-			push(@errors, "$loc has price over 99,990,000: $price");
+		} elsif ($real_price > 1000000000) {
+			push(@errors, "$loc has price over 1,000,000,000: $price");
 		}
 
 		push(@{$shop->{items}}, {name => $name, price => $real_price, amount => $amount});

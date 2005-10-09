@@ -140,6 +140,7 @@ New features:
   in config.txt.
 - Bot will now follow its master through warp portals.
 - 'guild info' command now displays ally list.
+- The vending limit has been increased to 1 billion (1,000,000,000) zeny.
 
 New commands:
 - getplayerinfo (number)
