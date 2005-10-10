@@ -35,17 +35,17 @@
 # use base qw(Base::Server);
 #
 # sub onClientNew {
-#     my ($client, $index) = @_;
+#     my ($self, $client, $index) = @_;
 #     print "Client $index connected.\n";
 # }
 #
 # sub onClientExit {
-#     my ($client, $index) = @_;
+#     my ($self, $client, $index) = @_;
 #     print "Client $index disconnected.\n";
 # }
 #
 # sub onClientData {
-#     my ($client, $data, $index) = @_;
+#     my ($self, $client, $data, $index) = @_;
 #     print "Client $index sent the following data: $data\n";
 # }
 #
