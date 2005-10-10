@@ -5372,6 +5372,7 @@ sub parseMsg {
 		decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
 		my $msg = substr($msg, 0, 4) . $newmsg;
 		my $c = 0;
+		delete $guild{member};
 		for (my $i = 4; $i < $msg_size; $i+=104){
 			$guild{'member'}[$c]{'ID'}    = substr($msg, $i, 4);
 			$guild{'member'}[$c]{'charID'}    = substr($msg, $i+4, 4);
