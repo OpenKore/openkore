@@ -10,45 +10,59 @@
 [a]
 Attack a monster.
 <monster #>	attack the specified monster
+
 [ai]
 Enable/disable AI.
-				toggles AI on/off
-on				enables AI
-off				disables AI
-ai_v				displays the contents of the %ai_v hash, for debugging purposes
-clear				clears AI sequences
-print				displays detailed info about current AI sequence
+				Toggles AI on/off.
+on				Enables AI.
+off				Disables AI.
+ai_v				Displays the contents of the %ai_v hash, for debugging purposes.
+clear				Clears AI sequences.
+print				Displays detailed info about current AI sequence.
+
 [aiv]
 Display current AI sequences.
+
 [al]
 Display the status of your vending shop.
+
 [arrowcraft]
 Create Arrows.
-				lists available arrow-crafting items
-use				use the Archer's Arrow Craft skill
-<arrowcraft #>			create arrows using an item from the 'arrowcraft' list
-forceuse <inventory item #>	craft arrows immediately from an item without using the skill
+				Lists available arrow-crafting items.
+use				Use the Archer's Arrow Craft skill.
+<arrowcraft #>			Create arrows using an item from the 'arrowcraft' list.
+forceuse <inventory item #>	Craft arrows immediately from an item without using the skill.
+
 [as]
 Stop attacking a monster.
+
 [auth]
 (Un)authorize a user for using Kore chat commands.
 <player name> <flag>		authorize <player name> if <flag> is 1, unauthorize if 0
+
 [autobuy]
 Initiate auto-buy AI sequence.
+
 [autosell]
 Initiate auto-sell AI sequence.
+
 [autostorage]
 Initiate auto-storage AI sequence.
+
 [bangbang]
 Does a bangbang body turn.
+
 [bingbing]
 Does a bingbing body turn.
+
 [buy]
 Buy an item from the current NPC shop
 <store item #> [<amount>]	buy <amount> items from the 'store' list
+
 [c]
 Chat in the public chat.
 <message>			send <message> to public chat
+
 [card]
 Card compounding.
 list				lists cards in the inventory
@@ -57,12 +71,14 @@ mergelist			lists items to merge card with
 mergecancel			cancel a card merge request
 merge <card merge #>		merge card with item and finalize card compounding
 forceuse <card #> <inventory item #>	instantly merge the card with an item
+
 [cart]
 Cart management
 				lists items in cart.
 add <inventory item #> [<amount>]	add <amount> items from inventory to cart
 get <cart item #> [<amount>]	get <amount> items from cart to inventory
 desc <cart item #> [<amount>]	displays cart item description
+
 [chat]
 Chat room management.
 list				lists chat rooms on screen
@@ -265,35 +281,49 @@ Log out then log in again.
 <seconds>			logout and login after <seconds>
 [respawn]
 Respawn back to the save point.
+
 [s]
 Display character status.
+
 [sell]
 Sell items to an NPC.
-<inventory item #> [<amount>]	sells inventory items to NPC
+<inventory item #> [<amount>]	Put inventory items in sell list.
+list				Show items in the sell list.
+done				Sell everything in the sell list.
+cancel				Clear the sell list.
+
 [send]
 Send a raw packet to the server.
-<hex string>			sends a raw packet to connected server
+<hex string>			Sends a raw packet to connected server.
+
 [sit]
 Sit down.
+
 [spells]
 List area effect spells on screen.
+
 [skills]
 Show skills or add skill point.
-				lists available skills
-add <skill #>			add a skill point
-desc <skill #>			displays skill description
+				Lists available skills.
+add <skill #>			Add a skill point.
+desc <skill #>			Displays skill description.
+
 [sl]
 Use skill on location.
-<skill #> <x> <y> [<level>]	use skill on location
+<skill #> <x> <y> [<level>]	Use skill on location.
+
 [sm]
 Use skill on monster.
-<skill #> <monster #> [<level>]	use skill on monster
+<skill #> <monster #> [<level>]	Use skill on monster.
+
 [sp]
 Use skill on player.
-<skill #> <player #> [<level>]	use skill on player
+<skill #> <player #> [<level>]	Use skill on player.
+
 [ss]
 Use skill on self.
-<skill #> [<level>]		use skill on self
+<skill #> [<level>]		Use skill on self.
+
 [st]
 Display stats.
 [stand]
