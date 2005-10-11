@@ -146,6 +146,9 @@ New features:
 - Bot will now follow its master through warp portals.
 - 'guild info' command now displays ally list.
 - The vending limit has been increased to 1 billion (1,000,000,000) zeny.
+- Support for bulk-selling items with the 'sell' command. Items
+  are now put in a sell list instead of sold immediately.
+  See the 'New commands' section.
 
 New commands:
 - getplayerinfo (number)
@@ -173,6 +176,19 @@ New commands:
   Display storage item description.
 - eq
   Lists what you are wearing in each equipment slot.
+- The sell commands have been changed. The new sell commands are:
+
+  sell <inventory item #> [<amount>]
+      Put inventory items in sell list.
+
+  sell list
+     Show items in the sell list.
+
+  sell done
+     Sell everything in the sell list.
+
+  sell cancel
+     Clear the sell list.
 
 New config options:
 - partySkill: target_dist (range)

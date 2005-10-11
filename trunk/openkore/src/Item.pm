@@ -14,7 +14,7 @@
 #
 #########################################################################
 ##
-# MODULE DESCRIPTION: Item object
+# MODULE DESCRIPTION: Inventory item object
 #
 # All members in $char->{inventory} are of the Item class.
 #
@@ -46,20 +46,21 @@ sub new {
 	return \%self;
 }
 
-###################
-### Class Methods
-###################
+
+##############################
+### CATEGORY: Class Methods
+##############################
 
 ##
-# get( item, skipIndex, notEquipped )
+# Item::get(item, skipIndex, notEquipped)
+# item: can be either an object itself, an ID or a name.
+# skipIndex: tells this function to not select a certain item (used for getting another item with the same name).
+# notEquipped: do not select unequipped items.
+# Returns: an Item object, or undef if not found.
 #
-# item can be either an object itself, an Id or a name
-# returns Item object
+# Find an item in the inventory, based on the search criteria specified by the parameters.
 #
-# skipIndex tells get to not select a certain item
-# (used for getting another item with the same name)
-#
-# notEquipped tells get to get an unequipped item
+# See also: Item::getMultiple()
 sub get {
 	my $item = shift;
 	my $skipIndex = shift;
@@ -86,12 +87,41 @@ sub get {
 }
 
 ##
-# bulkEquip( list )
+# Item::getMultiple(searchPattern)
+# searchString: a search pattern.
+# Returns: an array of Item objects.
 #
-# list: is a hash containing slot => item
+# Select one or more items in the inventory. $searchPattern has the following syntax:
+# <pre>index1,index2,...,indexN</pre>
+# You can also use '-' to indicate a range, like:
+# <pre>1-5,7,9</pre>
+sub getMultiple {
+	my @temp = split /,+/, $_[0];
+	my @items;
+
+	foreach my $index (@temp) {
+		if ($index =~ /(\d+)-(\d+)/) {
+			for ($1..$2) {
+				my $item = Item::get($_);
+				push(@items, $item) if ($item);
+			}
+		} else {
+			my $item = Item::get($index);
+			push @items, $item if ($item);
+		}
+	}
+	return @items;
+}
+
+##
+# Item::bulkEquip(list)
+# list: a hash containing slot => item, where slot is "leftHand" or "rightHand", and item is an item identifier as recognized by Item::get().
 #
-# eg:
+# Equip many items in one batch.
+#
+# Example:
 # %list = (leftHand => 'Katar', rightHand => 10);
+# Item::bulkEquip(\%list);
 sub bulkEquip {
 	my $list = shift;
 
@@ -118,14 +148,16 @@ sub bulkEquip {
 }
 
 ##
-# scanConfigAndEquip( prefix )
+# Item::scanConfigAndEquip(prefix)
 #
 # prefix: is used to scan for slots
 #
-# eg:
+# e.g.:
+# <pre>
 # $prefix = equipAuto_1
 # will equip
 # equipAuto_1_leftHand Sword
+# </pre>
 sub scanConfigAndEquip {
 	my $prefix = shift;
 	my %eq_list;
@@ -141,15 +173,11 @@ sub scanConfigAndEquip {
 }
 
 ##
-# scanConfigAndCheck( prefix )
+# Item::scanConfigAndCheck(prefix)
+# prefix: is used to scan for slots.
+# Returns: whether there is a item that needs to be equipped.
 #
-# prefix: is used to scan for slots
-# Returns: whether there is a item
-#          that needs to be equipped
-#
-# similiar to scanConfigAndEquip but
-# only checks if a Item needs to be
-# equipped
+# Similiar to Item::scanConfigAndEquip() but only checks if a Item needs to be equipped.
 sub scanConfigAndCheck {
 	my $prefix = shift;
 	return 0 unless $prefix;
@@ -175,10 +203,10 @@ sub scanConfigAndCheck {
 
 
 ##
-# queueEquip( count )
-# count: how many items need to be equipped
+# Item::queueEquip(count)
+# count: how many items need to be equipped.
 #
-# queues equip sequence.
+# Queues equip sequence.
 sub queueEquip {
 	my $count = shift;
 	return unless $count;
@@ -204,25 +232,23 @@ sub UnEquipByType {
 	return undef;
 }
 
-###################
-### Public Methods
-###################
+
+################################
+### CATEGORY: Public Methods
+################################
 
 ##
-# nameString()
-#
-# Returns the item name
+# $item->nameString()
+# Returns: the item name, in the form of "My Item [number of slots]".
 sub nameString {
 	my $self = shift;
 	return $self->{name};
 }
 
 ##
-# equippedInSlot( slot )
-#
+# $item->equippedInSlot(slot)
 # slot: slot to check
-#
-# Returns: wheter item is equipped in slot
+# Returns: wheter item is equipped in $slot
 sub equippedInSlot {
 	my ($self,$slot) = @_;
 	return ($self->{equipped} & $equipSlot_rlut{$slot});
@@ -233,10 +259,9 @@ sub equippedInSlot {
 #}
 
 ##
-# equip()
+# $item->equip()
 #
-# will simply equip the item
-# if you want more control use equipInSlot
+# Will simply equip the item. If you want more control, use $item->equipInSlot()
 sub equip {
 	my $self = shift;
 	return 1 if $self->{equipped};
@@ -246,9 +271,9 @@ sub equip {
 }
 
 ##
-# unequip()
+# $item->unequip()
 #
-# unequips the item
+# Unequips the item.
 sub unequip {
 	my $self = shift;
 	return 1 unless $self->{equipped};
@@ -257,31 +282,28 @@ sub unequip {
 }
 
 ##
-# use( [target] )
+# $item->use([target])
+# target: ID of the target, if not set then $accountID will be used.
 #
-# target: ID of the target, in not set than accountID
-#         will be used
-#
-# uses item
+# Uses this item on yourself or on a target.
 sub use {
 	my $self = shift;
 	my $target = shift;
 	return 0 unless $self->{type} <= 2;
 	if (!$target || $target == $accountID) {
-		sendItemUse(\$remote_socket, $self->{'index'}, $accountID);
+		sendItemUse(\$remote_socket, $self->{index}, $accountID);
 	}
 	else {
-		sendItemUse(\$remote_socket, $self->{'index'}, $target);
+		sendItemUse(\$remote_socket, $self->{index}, $target);
 	}
 	return 1;
 }
 
 ##
-# equipInSlot( slot dontqueue )
+# $item->equipInSlot(slot dontqueue)
+# slot: where item should be equipped.
 #
-# slot: where item should be equipped
-#
-# equips item in
+# Equips item in $slot.
 sub equipInSlot {
 	my ($self,$slot) = @_;
 	return 1 unless defined $equipSlot_rlut{$slot};

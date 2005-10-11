@@ -145,6 +145,7 @@ sub initMapChangeVars {
 
 	@unknownPlayers = ();
 	@unknownNPCs = ();
+	@sellList = ();
 
 	$shopstarted = 0;
 	$timeout{ai_shop}{time} = time;
