@@ -282,11 +282,11 @@ version 20
 serverType 4
 
 [EuphRO Private Server]
-ip euphro.game-server.cc
+ip euphro2.game-server.cc
 port 6900
-master_version 1
-version 20
-serverType 4
+master_version 20
+version 14
+serverType 5
 
 [XaosRO Private Server]
 ip 67.18.209.218
