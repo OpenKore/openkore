@@ -99,6 +99,7 @@ Bug fixes:
   Previously, if you left a guild and joined another guild with less players,
   then some of the players from the old guild would falsely show up in the
   roster.
+- Display walk speed in 'pl <#>' command at correct resolution.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"

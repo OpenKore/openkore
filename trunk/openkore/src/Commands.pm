@@ -2397,7 +2397,7 @@ sub cmdPlayerList {
 			"Lower headgear: @<<<<<<<<<<<<<<<<<<< Hair color:      @<<<<<<<<<<<<<<<<<<<",
 			[$headLow, "$haircolors{$player->{hair_color}} ($player->{hair_color})"]);
 
-		$msg .= sprintf("Walk speed: %.2f secs per block\n", $player->{walk_speed});
+		$msg .= sprintf("Walk speed: %s secs per block\n", $player->{walk_speed});
 		if ($player->{dead}) {
 			$msg .= "Player is dead.\n";
 		} elsif ($player->{sitting}) {
