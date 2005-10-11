@@ -1882,7 +1882,7 @@ sub cmdInventory {
 	# Display inventory items
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^(\w+)/;
-	my ($arg2) = $args =~ /^\w+ (\d+)/;
+	my ($arg2) = $args =~ /^\w+ (.+)/;
 
 	if (!$char->{'inventory'}) {
 		error "Inventory is empty\n";
@@ -1966,16 +1966,26 @@ sub cmdInventory {
 		$msg .= "-------------------------------\n";
 		message($msg, "list");
 
-	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && $char->{'inventory'}[$arg2] eq "") {
-		error	"Error in function 'i' (Inventory Item Desciption)\n" .
-			"Inventory Item $arg2 does not exist\n";
-	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
-		printItemDesc($char->{'inventory'}[$arg2]{'nameID'});
+	} elsif ($arg1 eq "desc") {
+		cmdInventory_desc($arg2);
 
 	} else {
 		error	"Syntax Error in function 'i' (Inventory List)\n" .
-			"Usage: i [<u|eq|neq|nu|desc>] [<inventory #>]\n";
+			"Usage: i [<u|eq|neq|nu|desc>] [<inventory item>]\n";
 	}
+}
+
+sub cmdInventory_desc {
+	my ($name) = @_;
+
+	my $item = Match::inventoryItem($name);
+	if (!$item) {
+		error	"Error in function 'i' (Inventory Item Desciption)\n" .
+			"Inventory Item $name does not exist\n";
+		return;
+	}
+
+	printItemDesc($item->{nameID});
 }
 
 #sub cmdJudge {
