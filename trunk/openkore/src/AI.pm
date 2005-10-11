@@ -551,7 +551,8 @@ sub ai_route_getRoute {
 	if ($noAvoidWalls) {
 		$weights = chr(255) . (chr(1) x 255);
 	} else {
-		$weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
+		#$weights = join '', map chr $_, (255, 8, 7, 6, 5, 4, 3, 2, 1);
+		$weights = join('', (map chr($_), (255, 3, 2, 1)));
 		$weights .= chr(1) x (256 - length($weights));
 	}
 

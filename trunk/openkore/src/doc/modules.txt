@@ -2,6 +2,7 @@ Actor
 Actor::Monster
 Actor::Player
 Actor::You
+Item
 Base::Server
 Interface
 Network

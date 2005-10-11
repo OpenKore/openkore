@@ -1,3 +1,18 @@
+#########################################################################
+#  OpenKore - Item object
+#  Copyright (c) 2005 OpenKore Team
+#
+#  This software is open source, licensed under the GNU General Public
+#  License, version 2.
+#  Basically, this means that you're allowed to modify and distribute
+#  this software. However, if you distribute modified versions, you MUST
+#  also distribute the source code.
+#  See http://www.gnu.org/licenses/gpl.html for the full license.
+#
+#  $Revision$
+#  $Id$
+#
+#########################################################################
 ##
 # MODULE DESCRIPTION: Entity lookup and matching
 #
@@ -18,9 +33,11 @@ use Utils;
 
 
 ##
-# player(ID, [partial_match])
+# Match::player(ID, [partial_match])
 # ID: either a number in the player list, or a player name.
 # Returns: a player hash, or undef if not found.
+#
+# Find an item in the player list.
 sub player {
 	my $ID = shift;
 	my $partial = shift;
@@ -45,9 +62,11 @@ sub player {
 }
 
 ##
-# inventoryItem(name)
+# Match::inventoryItem(name)
 # name: either a number in the inventory list, or an item name.
 # Returns: the hash to the inventory item matching $name, or undef.
+#
+# Find an item in the inventory. Item::get() does the same thing, but allows more search criteria.
 sub inventoryItem {
 	my ($name) = @_;
 
@@ -63,9 +82,11 @@ sub inventoryItem {
 }
 
 ##
-# cartItem(name)
+# Match::cartItem(name)
 # name: either a number in the cart list, or an item name.
 # Returns: the hash to the cart item matching $name, or undef.
+#
+# Find an item in cart.
 sub cartItem {
 	my ($name) = @_;
 
@@ -82,9 +103,11 @@ sub cartItem {
 }
 
 ##
-# storageItem(name)
+# Match::storageItem(name)
 # name: either a number in the storage list, or an item name.
 # Returns: the hash to the storage item matching $name, or undef.
+#
+# Find an item in storage.
 sub storageItem {
 	my ($name) = lc shift;
 

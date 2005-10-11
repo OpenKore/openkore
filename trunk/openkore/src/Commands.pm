@@ -50,120 +50,120 @@ our %customCommands;
 
 sub initHandlers {
 	%handlers = (
-	a			=> \&cmdAttack,
-	ai			=> \&cmdAI,
-	aiv			=> \&cmdAIv,
-	al			=> \&cmdShopInfoSelf,
-	arrowcraft	=> \&cmdArrowCraft,
-	as			=> \&cmdAttackStop,
-	autobuy		=> \&cmdAutoBuy,
-	autosell	=> \&cmdAutoSell,
-	autostorage	=> \&cmdAutoStorage,
-	auth		=> \&cmdAuthorize,
-	bangbang	=> \&cmdBangBang,
-	bingbing	=> \&cmdBingBing,
-	buy			=> \&cmdBuy,
-	c			=> \&cmdChat,
-	card		=> \&cmdCard,
-	cart		=> \&cmdCart,
-	chat		=> \&cmdChatRoom,
-	chist		=> \&cmdChist,
-	cil			=> \&cmdItemLogClear,
-	cl			=> \&cmdChatLogClear,
-	closeshop	=> \&cmdCloseShop,
-	conf		=> \&cmdConf,
-	damage		=> \&cmdDamage,
-	deal		=> \&cmdDeal,
-	debug		=> \&cmdDebug,
-	dl			=> \&cmdDealList,
-	doridori	=> \&cmdDoriDori,
-	drop		=> \&cmdDrop,
-	dump		=> \&cmdDump,
-	dumpnow		=> \&cmdDumpNow,
-	e			=> \&cmdEmotion,
-	eq			=> \&cmdEquip,
-	equipment	=> \&cmdEquipment,
-	eval		=> \&cmdEval,
-	exp			=> \&cmdExp,
-	follow		=> \&cmdFollow,
-	friend		=> \&cmdFriend,
-	g			=> \&cmdGuildChat,
-	getplayerinfo		=> \&cmdGetPlayerInfo,
-	guild		=> \&cmdGuild,
-	i			=> \&cmdInventory,
-	identify	=> \&cmdIdentify,
-	ignore		=> \&cmdIgnore,
-	ihist		=> \&cmdIhist,
-	il			=> \&cmdItemList,
-	im			=> \&cmdUseItemOnMonster,
-	ip			=> \&cmdUseItemOnPlayer,
-	is			=> \&cmdUseItemOnSelf,
-	kill		=> \&cmdKill,
-	look		=> \&cmdLook,
-	lookp		=> \&cmdLookPlayer,
-	help		=> \&cmdHelp,
-	reload		=> \&cmdReload,
-	memo		=> \&cmdMemo,
-	ml			=> \&cmdMonsterList,
-	move		=> \&cmdMove,
-	nl			=> \&cmdNPCList,
-	openshop	=> \&cmdOpenShop,
-	p			=> \&cmdPartyChat,
-	party		=> \&cmdParty,
-	#pet		=> \&cmdPet,
-	petl		=> \&cmdPetList,
-	pl			=> \&cmdPlayerList,
-	plugin		=> \&cmdPlugin,
-	pm			=> \&cmdPrivateMessage,
-	pml			=> \&cmdPMList,
-	portals		=> \&cmdPortalList,
-	quit		=> \&cmdQuit,
-	rc			=> \&cmdReloadCode,
-	relog		=> \&cmdRelog,
-	repair		=> \&cmdRepair,
-	respawn		=> \&cmdRespawn,
-	s			=> \&cmdStatus,
-	sell		=> \&cmdSell,
-	send		=> \&cmdSendRaw,
-	sit			=> \&cmdSit,
-	skills		=> \&cmdSkills,
-	spells		=> \&cmdSpells,
-	storage		=> \&cmdStorage,
-	store		=> \&cmdStore,
-	sl			=> \&cmdUseSkill,
-	sm			=> \&cmdUseSkill,
-	sp			=> \&cmdPlayerSkill,
-	ss			=> \&cmdUseSkill,
-	st			=> \&cmdStats,
-	stand		=> \&cmdStand,
-	stat_add	=> \&cmdStatAdd,
-	switchconf	=> \&cmdSwitchConf,
-	take		=> \&cmdTake,
-	talk		=> \&cmdTalk,
-	talknpc		=> \&cmdTalkNPC,
-	tank		=> \&cmdTank,
-	tele		=> \&cmdTeleport,
-	testshop	=> \&cmdTestShop,
-	timeout		=> \&cmdTimeout,
-	uneq		=> \&cmdUnequip,
-	vender		=> \&cmdVender,
-	verbose		=> \&cmdVerbose,
-	version		=> \&cmdVersion,
-	vl			=> \&cmdVenderList,
-	warp		=> \&cmdWarp,
-	weight		=> \&cmdWeight,
-	where		=> \&cmdWhere,
-	who			=> \&cmdWho,
-	whoami		=> \&cmdWhoAmI,
+	a                  => \&cmdAttack,
+	ai                 => \&cmdAI,
+	aiv                => \&cmdAIv,
+	al                 => \&cmdShopInfoSelf,
+	arrowcraft         => \&cmdArrowCraft,
+	as                 => \&cmdAttackStop,
+	autobuy            => \&cmdAutoBuy,
+	autosell           => \&cmdAutoSell,
+	autostorage        => \&cmdAutoStorage,
+	auth               => \&cmdAuthorize,
+	bangbang           => \&cmdBangBang,
+	bingbing           => \&cmdBingBing,
+	buy                => \&cmdBuy,
+	c                  => \&cmdChat,
+	card               => \&cmdCard,
+	cart               => \&cmdCart,
+	chat               => \&cmdChatRoom,
+	chist              => \&cmdChist,
+	cil                => \&cmdItemLogClear,
+	cl                 => \&cmdChatLogClear,
+	closeshop          => \&cmdCloseShop,
+	conf               => \&cmdConf,
+	damage             => \&cmdDamage,
+	deal               => \&cmdDeal,
+	debug              => \&cmdDebug,
+	dl                 => \&cmdDealList,
+	doridori           => \&cmdDoriDori,
+	drop               => \&cmdDrop,
+	dump               => \&cmdDump,
+	dumpnow            => \&cmdDumpNow,
+	e                  => \&cmdEmotion,
+	eq                 => \&cmdEquip,
+	equipment          => \&cmdEquipment,
+	eval               => \&cmdEval,
+	exp                => \&cmdExp,
+	follow             => \&cmdFollow,
+	friend             => \&cmdFriend,
+	g                  => \&cmdGuildChat,
+	getplayerinfo      => \&cmdGetPlayerInfo,
+	guild              => \&cmdGuild,
+	i                  => \&cmdInventory,
+	identify           => \&cmdIdentify,
+	ignore             => \&cmdIgnore,
+	ihist              => \&cmdIhist,
+	il                 => \&cmdItemList,
+	im                 => \&cmdUseItemOnMonster,
+	ip                 => \&cmdUseItemOnPlayer,
+	is                 => \&cmdUseItemOnSelf,
+	kill               => \&cmdKill,
+	look               => \&cmdLook,
+	lookp              => \&cmdLookPlayer,
+	help               => \&cmdHelp,
+	reload             => \&cmdReload,
+	memo               => \&cmdMemo,
+	ml                 => \&cmdMonsterList,
+	move               => \&cmdMove,
+	nl                 => \&cmdNPCList,
+	openshop           => \&cmdOpenShop,
+	p                  => \&cmdPartyChat,
+	party              => \&cmdParty,
+	#pet               => \&cmdPet,
+	petl               => \&cmdPetList,
+	pl                 => \&cmdPlayerList,
+	plugin             => \&cmdPlugin,
+	pm                 => \&cmdPrivateMessage,
+	pml                => \&cmdPMList,
+	portals            => \&cmdPortalList,
+	quit               => \&cmdQuit,
+	rc                 => \&cmdReloadCode,
+	relog              => \&cmdRelog,
+	repair             => \&cmdRepair,
+	respawn            => \&cmdRespawn,
+	s                  => \&cmdStatus,
+	sell               => \&cmdSell,
+	send               => \&cmdSendRaw,
+	sit                => \&cmdSit,
+	skills             => \&cmdSkills,
+	spells             => \&cmdSpells,
+	storage            => \&cmdStorage,
+	store              => \&cmdStore,
+	sl                 => \&cmdUseSkill,
+	sm                 => \&cmdUseSkill,
+	sp                 => \&cmdPlayerSkill,
+	ss                 => \&cmdUseSkill,
+	st                 => \&cmdStats,
+	stand              => \&cmdStand,
+	stat_add           => \&cmdStatAdd,
+	switchconf         => \&cmdSwitchConf,
+	take               => \&cmdTake,
+	talk               => \&cmdTalk,
+	talknpc            => \&cmdTalkNPC,
+	tank               => \&cmdTank,
+	tele               => \&cmdTeleport,
+	testshop           => \&cmdTestShop,
+	timeout            => \&cmdTimeout,
+	uneq               => \&cmdUnequip,
+	vender             => \&cmdVender,
+	verbose            => \&cmdVerbose,
+	version            => \&cmdVersion,
+	vl                 => \&cmdVenderList,
+	warp               => \&cmdWarp,
+	weight             => \&cmdWeight,
+	where              => \&cmdWhere,
+	who                => \&cmdWho,
+	whoami             => \&cmdWhoAmI,
 
-	north		=> \&cmdManualMove,
-	south		=> \&cmdManualMove,
-	east		=> \&cmdManualMove,
-	west		=> \&cmdManualMove,
-	northeast	=> \&cmdManualMove,
-	northwest	=> \&cmdManualMove,
-	southeast	=> \&cmdManualMove,
-	southwest	=> \&cmdManualMove,
+	north              => \&cmdManualMove,
+	south              => \&cmdManualMove,
+	east               => \&cmdManualMove,
+	west               => \&cmdManualMove,
+	northeast          => \&cmdManualMove,
+	northwest          => \&cmdManualMove,
+	southeast          => \&cmdManualMove,
+	southwest          => \&cmdManualMove,
 	);
 }
 
@@ -1758,20 +1758,20 @@ sub helpIndent {
 	my @words;
 	my $length = 0;
 
-	$message = "------------ Help for $cmd ------------\n";
-	$message .= shift (@{$desc})."\n";
+	$message = "------------ Help for '$cmd' ------------\n";
+	$message .= shift(@{$desc}) . "\n";
 
 	foreach (@{$desc}) {
-		$length = length ($_->[0]) if length ($_->[0]) > $length;
+		$length = length($_->[0]) if length($_->[0]) > $length;
 	}
-	my $pattern = "$cmd %-${length}s    -%s\n";
+	my $pattern = "$cmd %-${length}s    %s\n";
 	my $padsize = length($cmd) + $length + 5;
-	my $pad = sprintf("%-${padsize}s",'');
+	my $pad = sprintf("%-${padsize}s", '');
 
 	foreach (@{$desc}) {
 		if ($padsize + length($_->[1]) > 79) {
-			@words = split (/ /,$_->[1]);
-			$message .= sprintf ("$cmd %-${length}s    ",$_->[0]);
+			@words = split(/ /, $_->[1]);
+			$message .= sprintf("$cmd %-${length}s    ", $_->[0]);
 			$messageTmp = '';
 			foreach my $word (@words) {
 				if ($padsize + length($messageTmp) + length($word) + 1 > 79) {
@@ -1784,7 +1784,7 @@ sub helpIndent {
 			$message .= $messageTmp."\n";
 		}
 		else {
-			$message .= sprintf ($pattern,$_->[0],$_->[1]);
+			$message .= sprintf($pattern, $_->[0], $_->[1]);
 		}
 	}
 	$message .= "--------------------------------------------------\n";
@@ -1894,7 +1894,7 @@ sub cmdInventory {
 		my @equipment;
 		my @uequipment;
 		my @non_useable;
-		my ($i, $display, $index);
+		my ($i, $display, $index, $sell);
 
 		for ($i = 0; $i < @{$char->{'inventory'}}; $i++) {
 			my $item = $char->{'inventory'}[$i];
@@ -1926,35 +1926,41 @@ sub cmdInventory {
 		if ($arg1 eq "" || $arg1 eq "eq") {
 			$msg .= "-- Equipment (Equipped) --\n";
 			foreach my $item (@equipment) {
-				$msg .= sprintf("%-3d  %s -- %s\n", $item->{binID}, $item->{name}, $item->{equipped});
+				$sell = defined(findIndex(\@sellList, "invIndex", $item->{invIndex})) ? "Will be sold" : "";
+				$display = sprintf("%-3d  %s -- %s", $item->{binID}, $item->{name}, $item->{equipped});
+				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "neq") {
 			$msg .= "-- Equipment (Not Equipped) --\n";
 			foreach my $item (@uequipment) {
-				$msg .= sprintf("%-3d  %s (%s) %s\n", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
+				$sell = defined(findIndex(\@sellList, "invIndex", $item->{invIndex})) ? "Will be sold" : "";
+				$display = sprintf("%-3d  %s (%s) %s", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
+				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "nu") {
 			$msg .= "-- Non-Usable --\n";
 			for ($i = 0; $i < @non_useable; $i++) {
 				$index = $non_useable[$i];
-				$display = $char->{'inventory'}[$index]{'name'};
-				$display .= " x $char->{'inventory'}[$index]{'amount'}";
+				$display = $char->{inventory}[$index]{name};
+				$display .= " x $char->{inventory}[$index]{amount}";
+				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? "Will be sold" : "";
 				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$index, $display]);
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
+					[$index, $display, $sell]);
 			}
 		}
 		if ($arg1 eq "" || $arg1 eq "u") {
 			$msg .= "-- Usable --\n";
 			for ($i = 0; $i < @useable; $i++) {
-				$display = $char->{'inventory'}[$useable[$i]]{'name'};
-				$display .= " x $char->{'inventory'}[$useable[$i]]{'amount'}";
 				$index = $useable[$i];
+				$display = $char->{inventory}[$index]{name};
+				$display .= " x $char->{inventory}[$index]{amount}";
+				$sell = defined(findIndex(\@sellList, "invIndex", $index)) ? "Will be sold" : "";
 				$msg .= swrite(
-					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-					[$index, $display]);
+					"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<",
+					[$index, $display, $sell]);
 			}
 		}
 		$msg .= "-------------------------------\n";
@@ -2665,23 +2671,69 @@ sub cmdRespawn {
 }
 
 sub cmdSell {
-	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\d+)/;
-	my ($arg2) = $args =~ /^\d+ (\d+)$/;
-	if ($arg1 eq "" && $talk{'buyOrSell'}) {
-		sendGetSellList(\$remote_socket, $talk{'ID'});
+	my @args = parseArgs($_[1]);
 
-	} elsif ($arg1 eq "") {
-		error	"Syntax Error in function 'sell' (Sell Inventory Item)\n" .
-			"Usage: sell <item #> [<amount>]\n";
-	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
-		error	"Error in function 'sell' (Sell Inventory Item)\n" .
-			"Inventory Item $arg1 does not exist.\n";
-	} else {
-		if (!$arg2 || $arg2 > $char->{inventory}[$arg1]{amount}) {
-			$arg2 = $char->{inventory}[$arg1]{amount};
+	if ($args[0] eq "" && $talk{buyOrSell}) {
+		sendGetSellList(\$remote_socket, $talk{ID});
+
+	} elsif ($args[0] eq "list") {
+		if (@sellList == 0) {
+			message("Your sell list is empty.\n", "info");
+		} else {
+			my $text = '';
+			$text .= "------------- Sell list -------------\n";
+			$text .= "#   Item                           Amount\n";
+			foreach my $item (@sellList) {
+				$text .= sprintf("%-3d %-30s %d\n", $item->{invIndex}, $item->{name}, $item->{amount});
+			}
+			$text .= "-------------------------------------\n";
+			message($text, "list");
 		}
-		sendSell(\$remote_socket, $char->{inventory}[$arg1]{index}, $arg2);
+
+	} elsif ($args[0] eq "done") {
+		sendSellBulk(\$remote_socket, \@sellList);
+		message "Sold " . @sellList . " items.\n", "success";
+		@sellList = ();
+
+	} elsif ($args[0] eq "cancel") {
+		@sellList = ();
+		message "Sell list has been cleared.\n", "info";
+
+	} elsif ($args[0] eq "" || ($args[0] !~ /^\d+$/ && $args[0] !~ /[,\-]/)) {
+		error	"Syntax Error in function 'sell' (Sell Inventory Item)\n" .
+			"Usage: sell <inventory item index #> [<amount>]\n" .
+			"       sell list\n" .
+			"       sell done\n" .
+			"       sell cancel\n";
+
+	} else {
+		my @items = Item::getMultiple($args[0]);
+		if (@items > 0) {
+			foreach my $item (@items) {
+				my %obj;
+
+				if (defined(findIndex(\@sellList, "invIndex", $item->{invIndex}))) {
+					error $item->nameString . " ($item->{invIndex}) is already in the sell list.\n";
+					next;
+				}
+
+				$obj{name} = $item->nameString();
+				$obj{index} = $item->{index};
+				$obj{invIndex} = $item->{invIndex};
+				if (!$args[1] || $args[1] > $item->{amount}) {
+					$obj{amount} = $item->{amount};
+				} else {
+					$obj{amount} = $args[1];
+				}
+				push @sellList, \%obj;
+				message "Added to sell list: $obj{name} ($obj{invIndex}) x $obj{amount}\n", "info";
+			}
+			message "Type 'sell done' to sell everything in your sell list.\n", "info";
+
+		} else {
+			error	"Error in function 'sell' (Sell Inventory Item)\n" .
+				"'$args[0]' is not a valid item index #; no item has been added to the sell list.\n";
+		}
 	}
 }
 
