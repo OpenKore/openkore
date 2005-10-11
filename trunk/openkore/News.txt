@@ -149,6 +149,7 @@ New features:
 - Support for bulk-selling items with the 'sell' command. Items
   are now put in a sell list instead of sold immediately.
   See the 'New commands' section.
+- 'i desc' command now accepts item names.
 
 New commands:
 - getplayerinfo (number)
