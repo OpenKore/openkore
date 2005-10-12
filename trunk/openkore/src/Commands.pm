@@ -1896,9 +1896,10 @@ sub cmdInventory {
 		my @non_useable;
 		my ($i, $display, $index, $sell);
 
-		for ($i = 0; $i < @{$char->{'inventory'}}; $i++) {
-			my $item = $char->{'inventory'}[$i];
+		for ($i = 0; $i < @{$char->{inventory}}; $i++) {
+			my $item = $char->{inventory}[$i];
 			next unless $item && %{$item};
+
 			if (($item->{type} == 3 ||
 			     $item->{type} == 6 ||
 				 $item->{type} == 10) && !$item->{equipped}) {
@@ -1926,7 +1927,7 @@ sub cmdInventory {
 		if ($arg1 eq "" || $arg1 eq "eq") {
 			$msg .= "-- Equipment (Equipped) --\n";
 			foreach my $item (@equipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{invIndex})) ? "Will be sold" : "";
+				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? "Will be sold" : "";
 				$display = sprintf("%-3d  %s -- %s", $item->{binID}, $item->{name}, $item->{equipped});
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
@@ -1934,7 +1935,7 @@ sub cmdInventory {
 		if ($arg1 eq "" || $arg1 eq "neq") {
 			$msg .= "-- Equipment (Not Equipped) --\n";
 			foreach my $item (@uequipment) {
-				$sell = defined(findIndex(\@sellList, "invIndex", $item->{invIndex})) ? "Will be sold" : "";
+				$sell = defined(findIndex(\@sellList, "invIndex", $item->{binID})) ? "Will be sold" : "";
 				$display = sprintf("%-3d  %s (%s) %s", $item->{binID}, $item->{name}, $item->{type}, $item->{identified});
 				$msg .= sprintf("%-57s %s\n", $display, $sell);
 			}
