@@ -385,7 +385,7 @@ class GeSHi
      * The encoding to use for entity encoding
      * @var string
      */
-	var $encoding = 'ISO-8859-1';
+	var $encoding = 'UTF-8';
 
 	/**
      * Unused (planned for future)
