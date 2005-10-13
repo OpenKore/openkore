@@ -8755,8 +8755,10 @@ sub parseMsg {
 			#my @key = $config{storageEncryptKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
 			my @key = split /[, ]+/, $config{storageEncryptKey};
 			if (!@key) {
-				error "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n";
-				return;
+				# Default key for mRO and pRO
+				@key = ('0x050B6F79', '0x0202C179', '0x00E20120', '0x04FA43E3', '0x0179B6C8', '0x05973DF2', '0x07D8D6B', '0x08CB9ED9');
+				#error "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n";
+				#return;
 			}
 
 			my $crypton = new Utils::Crypton(pack("V*", @key), 32);
