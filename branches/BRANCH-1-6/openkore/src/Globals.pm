@@ -89,6 +89,7 @@ our %skillsEncore;
 our %skillsState;
 our %skillsStatus;
 our %spells_lut;
+our %timeout;
 our %jobs_lut = (
 	0 => 'Novice',
 	1 => 'Swordsman',
