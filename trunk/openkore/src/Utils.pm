@@ -981,30 +981,17 @@ sub _find_x_top {
 sub getCoordString {
 	my $x = int(shift);
 	my $y = int(shift);
-	if (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5)) {
- 		return pack("C*", int($x / 4), ($x % 4) * 64 + int($y / 16), ($y % 16) * 16);
-		
-	} else {
-		# Old method
-		#return pack("C*", _find_x($x, $y),
-		#	(64 * (($x + $y) % 4) + 31 - int($y / 16)),
-		#	(($y - int(($y - 8 ) / 16) * 16 - 8 ) *16));
-
-		# Slow new method
-		#my $b0 = 0x00; #unknown
-		#my $b1 = ($x & 0x3FC)>>2;
-		#my $b2 = (($x & 0x03)<<6) | (($y & 0x3F0)>>4);
-		#my $b3 = ($y & 0x0F)<<4;
-		#return pack("C*",$b0,$b1,$b2,$b3);
-
-		# Faster (i think) new method
-		# I don't know how this first byte is generated
-		my $dw = 0x44000000 | (($x & 0x3FF) << 14) | (($y & 0x3FF) << 4);
-		# Reorder the 4-bytes (oops! i forgot about endians!)
-		return pack("C*", ($dw & 0xFF000000) >> 24, ($dw & 0xFF0000) >> 16, ($dw & 0xFF00) >> 8, $dw & 0xFF);
-	}
+	my $coords = "";
+ 
+	shiftPack(\$coords, 0x44, 8)
+		unless (($config{serverType} == 0) || ($config{serverType} == 3) || ($config{serverType} == 5));
+	shiftPack(\$coords, $x, 10);
+	shiftPack(\$coords, $y, 10);
+	shiftPack(\$coords, 0, 4);
+	
+	return $coords;
 }
-
+ 
 sub getFormattedDate {
         my $thetime = shift;
         my $r_date = shift;
@@ -1106,20 +1093,105 @@ sub judgeSkillArea {
 	}
 }
 
+##
+# The maximum value for either coordinate (x or y) is 1023, 
+# thus making the number of bits for each coordinate 10. 
+# When both coordinates are packed together, 
+# the bit usage becomes double that, 20 -- or 2.5 bytes
 sub makeCoords {
 	my $r_hash = shift;
 	my $rawCoords = shift;
-	$$r_hash{'x'} = unpack("C", substr($rawCoords, 0, 1)) * 4 + (unpack("C", substr($rawCoords, 1, 1)) & 0xC0) / 64;
-	$$r_hash{'y'} = (unpack("C",substr($rawCoords, 1, 1)) & 0x3F) * 16 +
-				(unpack("C",substr($rawCoords, 2, 1)) & 0xF0) / 16;
+ 
+	unShiftPack(\$rawCoords, undef, 4);
+	makeCoords2($r_hash, $rawCoords);
 }
-
+ 
 sub makeCoords2 {
 	my $r_hash = shift;
 	my $rawCoords = shift;
-	$$r_hash{'x'} = (unpack("C",substr($rawCoords, 1, 1)) & 0xFC) / 4 +
-				(unpack("C",substr($rawCoords, 0, 1)) & 0x0F) * 64;
-	$$r_hash{'y'} = (unpack("C", substr($rawCoords, 1, 1)) & 0x03) * 256 + unpack("C", substr($rawCoords, 2, 1));
+ 
+	unShiftPack(\$rawCoords, \$$r_hash{'y'}, 10);
+	unShiftPack(\$rawCoords, \$$r_hash{'x'}, 10);
+}
+ 
+sub makeCoords3 {
+	my ($r_hashFrom, $r_hashTo, $rawCoords) = @_;
+ 
+	unShiftPack(\$rawCoords, \$$r_hashTo{'y'}, 10);
+	unShiftPack(\$rawCoords, \$$r_hashTo{'x'}, 10);
+	unShiftPack(\$rawCoords, \$$r_hashFrom{'y'}, 10);
+	unShiftPack(\$rawCoords, \$$r_hashFrom{'x'}, 10);
+}
+ 
+##
+# shiftPack(data, value, bits)
+# data: reference to existing data in which to pack onto
+# value: value to pack
+# bits: maximum number of bits used by value
+#
+# Packs a value onto a set of data using bitwise shifts
+sub shiftPack {
+	my ($data, $value, $bits) = @_;
+ 	my ($newdata, $dw1, $dw2, $i, $mask, $done);
+ 
+	$mask = 2 ** (32 - $bits) - 1;
+	$i = length($$data);
+ 
+	$newdata = "";
+	$done = 0;
+ 
+	$dw1 = $value & (2 ** $bits - 1);
+ 	do {
+		$i -= 4;
+		$dw2 = ($i > 0) ?
+			unpack('N', substr($$data, $i, 4)) :
+			unpack('N', pack('x' . abs($i)) . substr($$data, 0, 4 + $i));
+
+		$dw1 = $dw1 | (($dw2 & $mask) << $bits);
+		$newdata = pack('N', $dw1) . $newdata;
+		$dw1 = $dw2 >> (32 - $bits);
+	} while ($i + 4 > 0);
+ 
+	$newdata = substr($newdata, 1) while (substr($newdata, 0, 1) eq pack('C', 0) && length($newdata));
+	$$data = $newdata;
+}
+ 
+##
+# unShiftPack(data, reference, bits)
+# data: data to unpack a value from
+# reference: reference to store the value in
+# bits: number of bits value requires
+#
+# This is the reverse operation of shiftPack.
+sub unShiftPack {
+	my ($data, $reference, $bits) = @_;
+	my ($newdata, $dw1, $dw2, $i, $mask, $done);
+	
+	$mask = 2 ** $bits - 1;
+	$i = length($$data);
+	
+	$newdata = "";
+	$done = 0;
+	
+	do {
+		$i -= 4;
+		$dw2 = ($i > 0) ?
+			unpack('N', substr($$data, $i, 4)) :
+			unpack('N', pack('x' . abs($i)) . substr($$data, 0, 4 + $i));
+ 
+		unless ($done) {
+			$$reference = $dw2 & (2 ** $bits - 1) if (defined $reference);
+			$done = 1;
+		} else {
+			$dw1 = $dw1 | (($dw2 & $mask) << (32 - $bits));
+			$newdata = pack('N', $dw1) . $newdata;
+		}
+		
+		$dw1 = $dw2 >> $bits;
+	} while ($i + 4 > 0);
+	
+	$newdata = substr($newdata, 1) while (substr($newdata, 0, 1) eq pack('C', 0) && length($newdata));
+	$$data = $newdata;
 }
 
 ##
