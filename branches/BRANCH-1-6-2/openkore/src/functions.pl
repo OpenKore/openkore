@@ -5298,7 +5298,7 @@ sub parseMsg {
 			debug "Unknown Moved: $type - ".getHex($ID)."\n", "parseMsg";
 		}
 
-	} elsif ($switch eq "007C" || $switch eq "002A") {
+	} elsif ($switch eq "007C" || $switch eq "022A") {
 		$conState = 5 if ($conState != 4 && $xkore);
 		my ($ID, $param1, $param2, $param3, $type, $pet, $sex, $added, %coords);
 		if ($switch eq "007C") {
