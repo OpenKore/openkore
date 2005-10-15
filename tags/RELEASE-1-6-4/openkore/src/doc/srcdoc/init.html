@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Initialization and main loop : OpenKore source code documentation</title>
+	<link rel="stylesheet" type="text/css" href="openkore.css">
+	<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+	<!--[if gte IE 5.5000]>
+	<script type="text/javascript" src="pngfix.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+
+<div id="title">OpenKore source code documentation</div>
+
+<div id="navigation">
+	<ul>
+	<li><a href="http://openkore.sourceforge.net/">Main website</a></li>
+	<li><a href="index.html">Table of contents</a></li>
+	<li><b>Initialization &amp; main loop</b></li>
+	</ul>
+</div>
+
+<div id="main">
+
+
+<h1>Initialization &amp; main loop</h1>
+
+
+<h2>High-level description of what Kore does</h2>
+
+When you start Kore, it first loads configuration and table files. Then 
+it connects to the Ragnarok Online server. It will now process all 
+data received from the server, and calculate what to do (walking,
+attacking monsters, etc.), in an infinite loop (until the user tells
+Kore to quit).
+
+
+<h2>Initialization</h2>
+
+<b>openkore.pl</b> is the main source file. The following image
+describes what happens when openkore.pl is run:
+<p><img src="overview.png" alt="Overview" width="496" height="500">
+<p>
+After this, Kore will enter the main loop.
+
+
+<h2>Main loop</h2>
+
+Every loop in the main loop lasts very shortly (exception: when it's calculating
+a route it can take a while).
+In each loop, the following things are performed:
+
+<ol>
+<li>
+	<h4>Re-initialize X-Kore if necessary</h4>
+	<small>TODO: document how X-Kore works.</small>
+</li>
+<li>
+	<h4>Parse command input</h4>
+	If there is keyboard input available, then Kore will read the keyboard input and
+	process the data.
+	<ul>
+	<li><a href="Interface.html">The Interface module</a> is the module that checks whether there is keyboard input.</li>
+	<li>The main loop retrieves the keyboard input data, and passes that data to the <a href="Commands.html">Commands module</a>, where it is processed.</li>
+	</ul>
+</li>
+<li>
+	<h4>Process and handle data from RO server</h4>
+	<small>TODO</small>
+</li>
+<li>
+	<h4>Process AI</h4>
+
+	The AI ("Artificial Intelligence") function calculates what
+	actions to perform, when, and in what way. See also
+	<a href="artificial-intelligence.html">the page that describes the AI in detail</a>.
+</li>
+<li>
+	<h4>Handle connection states</h4>
+	The function <a href="Network.html#Network::checkConnection"><code>Network::checkConnection()</code></a> handles connection issues.
+	See <a href="Network.html"> the Network module</a> for more information.
+	Do not confuse this step with step 3, which handles network <em>data</em>, not network connection issues.
+</li>
+<li>
+	<h4>Misc other stuff</h4>
+	
+</li>
+</ol>
+
+
+<p><hr><p>
+
+<div id="footer">
+	<ul>
+	<li><a href="http://validator.w3.org/check?uri=referer" title="Valid HTML 4.01!"><img src="http://www.w3.org/Icons/valid-html401" alt="Valid HTML 4.01!" height="31" width="88"></a></li>
+	<li><a href="http://www.mozilla.org/products/firefox/" title="Get Firefox - Take Back the Web"><img width="104" height="32" src="http://www.mozilla.org/products/firefox/buttons/getfirefox_small.png" alt="Get Firefox - Take Back the Web"></a></li>
+	<li><a href="http://www.mozilla.org/products/firefox/" title="If you were looking at this page in any browser but Microsoft Internet Explorer, it would look and run better and faster"><img width="45" height="45" src="http://linuxart.com/img/noIE-small.png" alt="If you were looking at this page in any browser but Microsoft Internet Explorer, it would look and run better and faster"></a></li>
+	</ul>
+</div>
+
+</div>
+
+</body>
+</html>

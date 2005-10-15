@@ -1,0 +1,2703 @@
+NV_BASIC#
+Basic Skill
+^777777Enables to apply Basic Interface Skills.^000000
+[Level 1] : Enable to Trade
+^777777Allows the trading of items with another Character.^000000
+[Level 2] : Enables to express Emotions
+^777777Using Alt+0~9 keys,  Allow to express one's emotions.^000000
+[Level 3] : Enables to Sit
+^777777Allows the character to sit, making the HP/SP regenerate two times faster.^000000
+^990000Comand:/sit^000000
+[Level 4] : Enables to create one's own Chat Room.^000000
+^777777Allows the character to Open a Chat Room.^000000
+[Level 5] : Enables to join a Party
+^777777Allows a Character to join a party.^000000
+^990000Command:/join [Party Name]^000000
+[Level 6] : Enables to use Storage
+^777777Allows the use of extra inventory.^000000
+[Level 7] : Enables to organize one's own Party
+^777777Allows a Character to organize a party.^000000
+^990000Command:/organize [Party Name]^000000
+[Level 8] : Enables to join the Alignment System
+^777777Allows the character to judge others with the Alignment System.^000000
+^990000You can judge one account only 1 time a day.^000000
+[Level 9] : Enables to Transform into the 1st profession 
+^777777Allows one character to change one's Job into the 1st profession.^000000
+#
+SM_SWORD#
+Sword Mastery
+Skill Form : ^000099Passive^000000
+Contents: ^777777Increases One-Handed Sword Damage.^000000
+[Level 1] : ^777777Attack STR +5^000000
+[Level 2] : ^777777Attack STR +10^000000
+[Level 3] : ^777777Attack STR +15^000000
+[Level 4] : ^777777Attack STR +20^000000
+[Level 5] : ^777777Attack STR +25^000000
+[Level 6] : ^777777Attack STR +30^000000
+[Level 7] : ^777777Attack STR +35^000000
+[Level 8] : ^777777Attack STR +40^000000
+[Level 9] : ^777777Attack STR +45^000000
+[Level 10] : ^777777Attack STR +50^000000
+#
+SM_TWOHAND#
+Two Handed Sword Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increases Two-Handed Sword Damage.^000000
+[Level 1] : ^777777Attack STR +5^000000
+[Level 2] : ^777777Attack STR +10^000000
+[Level 3] : ^777777Attack STR +15^000000
+[Level 4] : ^777777Attack STR +20^000000
+[Level 5] : ^777777Attack STR +25^000000
+[Level 6] : ^777777Attack STR +30^000000
+[Level 7] : ^777777Attack STR +35^000000
+[Level 8] : ^777777Attack STR +40^000000
+[Level 9] : ^777777Attack STR +45^000000
+[Level 10] : ^777777Attack STR +50^000000
+#
+SM_RECOVERY#
+Increase HP Recovery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increases HP Regeneration.^000000
+[Level 1] : ^777777Every 10 secs/HP +5^000000
+[Level 2] : ^777777Every 10 secs/HP +10^000000
+[Level 3] : ^777777Every 10 secs/HP +15^000000
+[Level 4] : ^777777Every 10 secs/HP +20^000000
+[Level 5] : ^777777Every 10 secs/HP +25^000000
+[Level 6] : ^777777Every 10 secs/HP +30^000000
+[Level 7] : ^777777Every 10 secs/HP +35^000000
+[Level 8] : ^777777Every 10 secs/HP +40^000000
+[Level 9] : ^777777Every 10 secs/HP +45^000000
+[Level 10] : ^777777Every 10 secs/HP +50^000000
+#
+SM_BASH#
+Bash
+Skill Form : ^777777Offensive^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Hit the enemy with Great Might.^000000
+[Level 1] : ^777777+130% ATK, +5 Hit Probability, Consumes 8sp^000000
+[Level 2] : ^777777+160% ATK, +10 Hit Probability, Consumes 8sp^000000
+[Level 3] : ^777777+190% ATK, +15 Hit Probability, Consumes 8sp^000000
+[Level 4] : ^777777+220% ATK, +20 Hit Probability, Consumes 8sp^000000
+[Level 5] : ^777777+250% ATK, +25 Hit Probability, Consumes 8sp^000000
+[Level 6] : ^777777+280% ATK, +30 Hit Probability, Consumes 15sp^000000
+[Level 7] : ^777777+310% ATK, +35 Hit Probability, Consumes 15sp^000000
+[Level 8] : ^777777+340% ATK, +40 Hit Probability, Consumes 15sp^000000
+[Level 9] : ^777777+370% ATK, +45 Hit Probability, Consumes 15sp^000000
+[Level 10] : ^777777+400% ATK, +50 Hit Probability, Consumes 15sp^000000
+#
+SM_MAGNUM#
+Magnum Break
+Skill Form : ^777777Offensive^bb0000(Fire)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Area Effect Splashed Damage for 9 cells around the player. When used it consumes 15 SP and some HP.^000000
+[Level 1] : ^777777+115% ATK^000000
+[Level 2] : ^777777+130% ATK^000000
+[Level 3] : ^777777+145% ATK^000000
+[Level 4] : ^777777+160% ATK^000000
+[Level 5] : ^777777+175% ATK^000000
+[Level 6] : ^777777+190% ATK^000000
+[Level 7] : ^777777+205% ATK^000000
+[Level 8] : ^777777+220% ATK^000000
+[Level 9] : ^777777+235% ATK^000000
+[Level 10] : ^777777+250% ATK^000000
+#
+SM_PROVOKE#
+Provoke
+Skill Form : ^777777Supportive^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Decrease an Enemy's Defence and increase its Attack Strength at the same time. Not appliable for the Undead.^000000
+[Level 1] : ^777777+2% Enemy's ATK, +6% Enemy's DEF, 53% Success Rate, Consumes 4sp^000000
+[Level 2] : ^777777+4% Enemy's ATK, +12% Enemy's DEF, 56% Success Rate, Consumes 5sp^000000
+[Level 3] : ^777777+6% Enemy's ATK, +18% Enemy's DEF, 59% Success Rate, Consumes 6sp^000000
+[Level 4] : ^777777+8% Enemy's ATK, +24% Enemy's DEF, 62% Success Rate, Consumes 7sp^000000
+[Level 5] : ^777777+10% Enemy's ATK, +30% Enemy's DEF, 65% Success Rate, Consumes 8sp^000000
+[Level 6] : ^777777+12% Enemy's ATK, +36% Enemy's DEF, 68% Success Rate, Consumes 9sp^000000
+[Level 7] : ^777777+14% Enemy's ATK, +42% Enemy's DEF, 71% Success Rate, Consumes 10sp^000000
+[Level 8] : ^777777+16% Enemy's ATK, +48% Enemy's DEF, 74% Success Rate, Consumes 11sp^000000
+[Level 9] : ^777777+18% Enemy's ATK, +54% Enemy's DEF, 77% Success Rate, Consumes 12sp^000000
+[Level 10] : ^777777+20% Enemy's ATK, +60% Enemy's DEF, 80% Success Rate, Consumes 13sp^000000
+#
+SM_ENDURE#
+Endure
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Reduces Delay when hit by enemy.^000000
+[Level 1] : ^777777Lasts for 10secs^000000
+[Level 2] : ^777777Lasts for 13secs^000000
+[Level 3] : ^777777Lasts for 16secs^000000
+[Level 4] : ^777777Lasts for 19secs^000000
+[Level 5] : ^777777Lasts for 22secs^000000
+[Level 6] : ^777777Lasts for 25secs^000000
+[Level 7] : ^777777Lasts for 28secs^000000
+[Level 8] : ^777777Lasts for 31secs^000000
+[Level 9] : ^777777Lasts for 34secs^000000
+[Level 10] : ^777777Lasts for 37secs^000000
+#
+MG_SRECOVERY#
+Increase SP Recovery
+Skill Form : ^000099Passive^000000
+Contents : Increase SP Regeneration.
+[Level 1] : ^777777Every 10secs/SP +3^000000
+[Level 2] : ^777777Every 10secs/SP +6^000000
+[Level 3] : ^777777Every 10secs/SP +9^000000
+[Level 4] : ^777777Every 10secs/SP +12^000000
+[Level 5] : ^777777Every 10secs/SP+15^000000
+[Level 6] : ^777777Every 10secs/SP +18^000000
+[Level 7] : ^777777Every 10secs/SP +21^000000
+[Level 8] : ^777777Every 10secs/SP+24^000000
+[Level 9] : ^777777Every 10secs/SP+27^000000
+[Level 10] : ^777777Every 10secs/SP+30^000000
+#
+MG_SIGHT#
+Sight
+Skill Form : ^777777Supportive^bb0000(Fire)^000000
+Contents : ^777777Detects Nearby Hidden Enemies.^000000
+#
+MG_FIREBOLT#
+Fire Bolt
+Skill Form : ^777777Offensive^bb0000(Fire)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Attack an Enemy with Fire Spears that fall from the Sky.^000000
+[Level 1] : ^777777Hits 1 time, Cast delay 0.7secs, Consumes 12sp^000000
+[Level 2] : ^777777Hits 2 times, Cast delay 1.4secs, Consumes 14sp^000000
+[Level 3] : ^777777Hits 3 times, Cast delay 2.1secs, Consumes 16sp^000000
+[Level 4] : ^777777Hits 4 times, Cast delay 2.8secs, Consumes 18sp^000000
+[Level 5] : ^777777Hits 5 times, Cast delay 3.5secs, Consumes 20sp^000000
+[Level 6] : ^777777Hits 6 times, Cast delay 4.2secs, Consumes 22sp^000000
+[Level 7] : ^777777Hits 7 times, Cast delay 4.9secs, Consumes 24sp^000000
+[Level 8] : ^777777Hits 8 times, Cast delay 5.6secs, Consumes 26sp^000000
+[Level 9] : ^777777Hits 9 times, Cast delay 6.3secs, Consumes 28sp^000000
+[Level 10] : ^777777Hits 10 times, Cast delay 7secs, Consumes 30sp^000000
+#
+MG_FIREBALL#
+Fire Ball
+Skill Form : ^777777Offensive^bb0000(Fire)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Attack with a Fire Ball. Does Splash Damage to Nearby Enemies.^000000
+[Level 1] : ^777777+95% MATK, Cast Delay of 1.5secs, Consumes 25sp^000000
+[Level 2] : ^777777+100% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+[Level 3] : ^777777+105% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+[Level 4] : ^777777+110% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+[Level 5] : ^777777+115% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+[Level 6] : ^777777+120% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+[Level 7] : ^777777+125% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+[Level 8] : ^777777+130% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+[Level 9] : ^777777+135% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+[Level 10] : ^777777+140% MATK, Cast Delay of 1.5secs, Consumes 25sp^00000
+#
+MG_FIREWALL#
+Fire Wall
+Skill Form : ^777777Active^bb0000(Fire)^000000
+Target: ^777777Ground^000000
+Contents : ^777777Sets the Ground on Fire to give Damage to Enemies while walking through.^000000
+[Level 1] : ^777777Repels Enemy 3 times, Lasts for 4secs, Cast Delay of 2secs, Consumes 40sp^000000
+[Level 2] : ^777777Repels Enemy 4 times, Lasts for 8secs, Cast Delay of 1.85secs, Consumes 40sp^000000
+[Level 3] : ^777777Repels Enemy 5 times, Lasts for 12secs, Cast Delay of 1.7secs, Consumes 40sp^000000
+[Level 4] : ^777777Repels Enemy 6 times, Lasts for 16secs, Cast Delay of 1.55secs, Consumes 40sp^000000
+[Level 5] : ^777777Repels Enemy 7 times, Lasts for 20secs, Cast Delay of 1.4secs, Consumes 40sp^000000
+[Level 6] : ^777777Repels Enemy 8 times, Lasts for 24secs, Cast Delay of 1.25secs, Consumes 40sp^000000
+[Level 7] : ^777777Repels Enemy 9 times, Lasts for 28secs, Cast Delay of 1.1secs, Consumes 40sp^000000
+[Level 8] : ^777777Repels Enemy 10 times, Lasts for 32secs, Cast Delay of .95secs, Consumes 40sp^000000
+[Level 9] : ^777777Repels Enemy 11 times, Lasts for 36secs, Cast Delay of .8secs, Consumes 40sp^000000
+[Level 10] : ^777777Repels Enemy 12 times, Lasts for 40secs, Cast Delay of .65secs, Consumes 40sp^000000
+#
+MG_COLDBOLT#
+Cold Bolt
+Skill Form : ^777777Offensive^0000bb(Water)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Attacks an Enemy with Icy Spears that fall from the Sky.^000000
+[Level 1] : ^777777Hits 1 time, Cast delay .7secs, Consumes 12sp^000000
+[Level 2] : ^777777Hits 2 times, Cast delay 1.4secs, Consumes 14sp^000000
+[Level 3] : ^777777Hits 3 times, Cast delay 2.1secs, Consumes 16sp^000000
+[Level 4] : ^777777Hits 4 times, Cast delay 2.8secs, Consumes 18sp^000000
+[Level 5] : ^777777Hits 5 times, Cast delay 3.5secs, Consumes 20sp^000000
+[Level 6] : ^777777Hits 6 times, Cast delay 4.2secs, Consumes 22sp^000000
+[Level 7] : ^777777Hits 7 times, Cast delay 4.9secs, Consumes 24sp^000000
+[Level 8] : ^777777Hits 8 times, Cast delay 5.6secs, Consumes 26sp^000000
+[Level 9] : ^777777Hits 9 times, Cast delay 6.3secs, Consumes 28sp^000000
+[Level 10] : ^777777Hits 10 times, Cast delay 7secs, Consumes 30sp^000000
+#
+MG_FROSTDIVER#
+Frost Diver
+Skill Form : ^777777Offensive^0000bb(Water)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Chance to Freeze an Enemy for a set duration.^000000
+[Level 1] : ^777777+110% MATK, Holds Enemy for 3secs, 38% Chance of Freezing, Consumes 25sp^000000
+[Level 2] : ^777777+120% MATK, Holds Enemy for 6secs, 41% Chance of Freezing, Consumes 24sp^000000
+[Level 3] : ^777777+130% MATK, Holds Enemy for 9secs, 44% Chance of Freezing, Consumes 23sp^000000
+[Level 4] : ^777777+140% MATK, Holds Enemy for 12secs, 47% Chance of Freezing, Consumes 22sp^000000
+[Level 5] : ^777777+150% MATK, Holds Enemy for 15secs, 50% Chance of Freezing, Consumes 21sp^000000
+[Level 6] : ^777777+160% MATK, Holds Enemy for 18secs, 53% Chance of Freezing, Consumes 20sp^000000
+[Level 7] : ^777777+170% MATK, Holds Enemy for 21secs, 56% Chance of Freezing, Consumes 19sp^000000
+[Level 8] : ^777777+180% MATK, Holds Enemy for 24secs, 59% Chance of Freezing, Consumes 18sp^000000
+[Level 9] : ^777777+190% MATK, Holds Enemy for 27secs, 62% Chance of Freezing, Consumes 17sp^000000
+[Level 10] : ^777777+200% MATK, Holds Enemy for 30secs, 65% Chance of Freezing, Consumes 16sp^0000000
+#
+MG_STONECURSE#
+Stone curse
+Skill Form : ^777777Curse^00bb00(Earth)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Chance to Curse an Enemy by turning them to Stone. Requires ^00bb00Red Gemstone^777777.^000000
+[Level 1] : ^77777724% Chance of Curse, Consumes 25sp^000000
+[Level 2] : ^77777728% Chance of Curse, Consumes 24sp^000000
+[Level 3] : ^77777732% Chance of Curse, Consumes 23sp^000000
+[Level 4] : ^77777736% Chance of Curse, Consumes 22sp^000000
+[Level 5] : ^77777740% Chance of Curse, Consumes 21sp^000000
+[Level 6] : ^77777744% Chance of Curse, Consumes 20sp^000000
+[Level 7] : ^77777748% Chance of Curse, Consumes 19sp^000000
+[Level 8] : ^77777752% Chance of Curse, Consumes 18sp^000000
+[Level 9] : ^77777756% Chance of Curse, Consumes 17sp^000000
+[Level 10] : ^77777760% Chance of Curse, Consumes 16sp^000000
+#
+MG_LIGHTNINGBOLT#
+Lightning Bolt
+Skill Form : ^777777Offensive^bbbb00(Lightening)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Strike an Enemy with a Lightening bolt.^000000
+[Level 1] : ^777777Hits 1 time, Cast delay .7secs, Consumes 12sp^000000
+[Level 2] : ^777777Hits 2 times, Cast delay 1.4secs, Consumes 14sp^000000
+[Level 3] : ^777777Hits 3 times, Cast delay 2.1secs, Consumes 16sp^000000
+[Level 4] : ^777777Hits 4 times, Cast delay 2.8secs, Consumes 18sp^000000
+[Level 5] : ^777777Hits 5 times, Cast delay 3.5secs, Consumes 20sp^000000
+[Level 6] : ^777777Hits 6 times, Cast delay 4.2secs, Consumes 22sp^000000
+[Level 7] : ^777777Hits 7 times, Cast delay 4.9secs, Consumes 24sp^000000
+[Level 8] : ^777777Hits 8 times, Cast delay 5.6secs, Consumes 26sp^000000
+[Level 9] : ^777777Hits 9 times, Cast delay 6.3secs, Consumes 28sp^000000
+[Level 10] : ^777777Hits 10 times, Cast delay 7secs, Consumes 30sp^000000
+#
+MG_THUNDERSTORM#
+Thunder Storm
+Skill Form : ^777777Offensive^bbbb00(Lightening))^000000
+Target: ^777777Ground^000000
+Contents : ^777777Drops a Lightening Storm on a Chosen Spot to give damage to Enemies around.^000000
+[Level 1] : ^777777Casting Time of 1sec, Consumes 29sp^000000
+[Level 2] : ^777777Casting Time of 2secs, Consumes 34sp^000000
+[Level 3] : ^777777Casting Time of 3secs, Consumes 35sp^000000
+[Level 4] : ^777777Casting Time of 4secs, Consumes 44sp^000000
+[Level 5] : ^777777Casting Time of 5secs, Consumes 49sp^000000
+[Level 6] : ^777777Casting Time of 6secs, Consumes 54sp^000000
+[Level 7] : ^777777Casting Time of 7secs, Consumes 59sp^000000
+[Level 8] : ^777777Casting Time of 8secs, Consumes 64sp^000000
+[Level 9] : ^777777Casting Time of 9secs, Consumes 69sp^000000
+[Level 10] : ^777777Casting Time of 10secs, Consumes 74sp^000000
+#
+MG_NAPALMBEAT#
+Napalm Beat
+Skill Form : ^777777Offensive^bb00bb(Spiritual)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Burst an enemies within the optimum distance by Psycokinesis. Impossible to pierce any obstacles.^000000
+[Level 1] : ^7777770.8 times to MATK, Consumes 9sp^000000
+[Level 2] : ^7777770.9 times to MATK, Consumes 9sp^000000
+[Level 3] : ^7777771 times to MATK, Consumes 9sp^000000
+[Level 4] : ^7777771.1 times to MATK, Consumes 9sp^000000
+[Level 5] : ^7777771.2 times to MATK, Consumes 9sp^000000
+[Level 6] : ^7777771.3 times to MATK, Consumes 9sp^000000
+[Level 7] : ^7777771.4 times to MATK, Consumes 9sp^000000
+[Level 8] : ^7777771.5 times to MATK, Consumes 9sp^000000
+[Level 9] : ^7777771.6 times to MATK, Consumes 9sp^000000
+[Level 10] : ^7777771.7 times to MATK, Consumes 9sp^000000
+#
+MG_SOULSTRIKE#
+Soul Strike
+Skill Form : ^777777Active^bb00bb(Spiritual)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Summon Numerous Ancient Spirits to attack enemies. Effective for the Undead.^000000
+[Level 1] : ^777777Hits Enemy 1 time, Casting Delay of 1.2secs, Consumes 15sp^000000
+[Level 2] : ^777777Hits Enemy 1 time, Casting Delay of 1.4secs, Consumes 18sp^000000
+[Level 3] : ^777777Hits Enemy 2 times, Casting Delay of 1.6secs, Consumes 21sp^000000
+[Level 4] : ^777777Hits Enemy 2 times, Casting Delay of 1.8secs, Consumes 24sp^000000
+[Level 5] : ^777777Hits Enemy 3 times, Casting Delay of 2secs, Consumes 27sp^000000
+[Level 6] : ^777777Hits Enemy 3 times, Casting Delay of 2.2secs, Consumes 30sp^000000
+[Level 7] : ^777777Hits Enemy 4 times, Casting Delay of 2.4secs, Consumes 33sp^000000
+[Level 8] : ^777777Hits Enemy 4 times, Casting Delay of 2.6secs, Consumes 36sp^000000
+[Level 9] : ^777777Hits Enemy 5 times, Casting Delay of 2.8secs, Consumes 39sp^000000
+[Level 10] : ^777777Hits Enemy 5 times, Casting Delay of 2.7secs, Consumes 42sp^000000
+#
+MG_SAFETYWALL#
+Safety Wall
+Skill Form : ^777777Supportive^bb00bb(Spiritual)^000000
+Target: ^777777Ground^000000
+Contents : ^777777Forms a Magic Shield on a Chosen Spot to Block the attack of enemies for a set period.^bb00bb1 Blue Gemstone^777777 required.^000000
+[Level 1] : ^777777Withstands 2 hits, Casting Time of 4secs, Consumes 30sp^000000
+[Level 2] : ^777777Withstands 3 hits, Casting Time of 3.5secs, Consumes 30sp^000000
+[Level 3] : ^777777Withstands 4 hits, Casting Time of 3secs, Consumes 30sp^000000
+[Level 4] : ^777777Withstands 5 hits, Casting Time of 2.5secs, Consumes 35sp^000000
+[Level 5] : ^777777Withstands 6 hits, Casting Time of 2secs, Consumes 35sp^000000
+[Level 6] : ^777777Withstands 7 hits, Casting Time of 1.5secs, Consumes 35sp^000000
+[Level 7] : ^777777Withstands 8 hits, Casting Time of 1secs, Consumes 40sp^000000
+[Level 8] : ^777777Withstands 9 hits, Casting Time of 1secs, Consumes 40sp^000000
+[Level 9] : ^777777Withstands 10 hits, Casting Time of 1secs, Consumes 40sp^000000
+[Level 10] : ^777777Withstands 11 hits, Casting Time of 1secs, Consumes 40sp^000000
+#
+AL_DP#
+Divine Protection
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Defense against Undead or Ghosts.^000000
+[Level 1] : ^777777DEF +3^000000
+[Level 2] : ^777777DEF +6^000000
+[Level 3] : ^777777DEF +9^000000
+[Level 4] : ^777777DEF +12^000000
+[Level 5] : ^777777DEF +15^000000
+[Level 6] : ^777777DEF +18^000000
+[Level 7] : ^777777DEF +21^000000
+[Level 8] : ^777777DEF +24^000000
+[Level 9] : ^777777DEF +27^000000
+[Level 10] : ^777777DEF +30^000000
+#
+AL_DEMONBANE#
+Demon Bane
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Attack Strength against Undead or Ghosts.^000000
+[Level 1] : ^777777Attack STR +3^000000
+[Level 2] : ^777777Attack STR +6^000000
+[Level 3] : ^777777Attack STR +9^000000
+[Level 4] : ^777777Attack STR +12^000000
+[Level 5] : ^777777Attack STR +15^000000
+[Level 6] : ^777777Attack STR +18^000000
+[Level 7] : ^777777Attack STR +21^000000
+[Level 8] : ^777777Attack STR +24^000000
+[Level 9] : ^777777Attack STR +27^000000
+[Level 10] : ^777777Attack STR +30^000000
+#
+AL_ANGELUS#
+Angelus
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Increase the whole party's Defense (including the caster) for a while.^000000
+[Level 1] : ^777777+105% VIT, Lasting for 30 secs, Consumes 23sp^000000
+[Level 2] : ^777777+110% VIT, Lasting for 60 secs, Consumes 26sp^000000
+[Level 3] : ^777777+115% VIT, Lasting for 90 secs, Consumes 29sp^000000
+[Level 4] : ^777777+120% VIT, Lasting for 120 secs, Consumes 32sp^000000
+[Level 5] : ^777777+125% VIT, Lasting for 150 secs, Consumes 35sp^000000
+[Level 6] : ^777777+130% VIT, Lasting for 180 secs, Consumes 38sp^000000
+[Level 7] : ^777777+135% VIT, Lasting for 210 secs, Consumes 41sp^000000
+[Level 8] : ^777777+140% VIT, Lasting for 240 secs, Consumes 44sp^000000
+[Level 9] : ^777777+145% VIT, Lasting for 270 secs, Consumes 47sp^000000
+[Level 10] : ^777777+150% VIT, Lasting for 300 secs, Consumes 50sp^000000
+#
+AL_CRUCIS#
+Signum Crucis
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Weaken the defenses of Undead on a player's Screen. Lasts untill affected Enemy is dead. Applicable for the Undead or Ghosts. ^000000
+[Level 1] : ^777777Enemy's Defense -12, 27% Chance of Success^000000
+[Level 2] : ^777777Enemy's Defense -14, 29% Chance of Success^000000
+[Level 3] : ^777777Enemy's Defense -16, 31% Chance of Success^000000
+[Level 4] : ^777777Enemy's Defense -18, 33% Chance of Success^000000
+[Level 5] : ^777777Enemy's Defense -20, 35% Chance of Success^000000
+[Level 6] : ^777777Enemy's Defense -22, 37% Chance of Success^000000
+[Level 7] : ^777777Enemy's Defense -24, 39% Chance of Success^000000
+[Level 8] : ^777777Enemy's Defense -26, 41% Chance of Success^000000
+[Level 9] : ^777777Enemy's Defense -28, 43% Chance of Success^000000
+[Level 10] : ^777777Enemy's Defense -30, 45% Chance of Success^000000
+#
+AL_BLESSING#
+Blessing
+Skill Form : ^777777Supportive^000000
+Target : ^777777Player^000000
+Contents : ^777777Increase DEX, INT, STR of one player for a set time. Recover abnormal Status of a character and Curse the Undead.^000000
+[Level 1] : ^777777+1 to STR/DEX/INT, Lasts for 60secs, Consumes 28sp^000000
+[Level 2] : ^777777+2 to STR/DEX/INT, Lasts for 80secs, Consumes 32sp^000000
+[Level 3] : ^777777+3 to STR/DEX/INT, Lasts for 100secs, Consumes 36sp^000000
+[Level 4] : ^777777+4 to STR/DEX/INT, Lasts for 120secs, Consumes 40sp^000000
+[Level 5] : ^777777+5 to STR/DEX/INT, Lasts for 140secs, Consumes 44sp^000000
+[Level 6] : ^777777+6 to STR/DEX/INT, Lasts for 160secs, Consumes 48sp^000000
+[Level 7] : ^777777+7 to STR/DEX/INT, Lasts for 180secs, Consumes 52sp^000000
+[Level 8] : ^777777+8 to STR/DEX/INT, Lasts for 200secs, Consumes 56sp^000000
+[Level 9] : ^777777+9 to STR/DEX/INT, Lasts for 220secs, Consumes 60sp^000000
+[Level 10] : ^777777+10 to STR/DEX/INT, Lasts for 240secs, Consumes 64sp^000000
+#
+AL_HEAL#
+Heal
+Skill Form : ^777777Recovery^000000
+Target : ^777777Player^000000
+Contents : ^777777Recover one player's HP.^000000
+[Level 1] : ^777777Consumes 13sp^000000
+[Level 2] : ^777777Consumes 16sp^000000
+[Level 3] : ^777777Consumes 19sp^000000
+[Level 4] : ^777777Consumes 22sp^000000
+[Level 5] : ^777777Consumes 25sp^000000
+[Level 6] : ^777777Consumes 28sp^000000
+[Level 7] : ^777777Consumes 31sp^000000
+[Level 8] : ^777777Consumes 34sp^000000
+[Level 9] : ^777777Consumes 37sp^000000
+[Level 10] : ^777777Consumes 40sp^000000
+#
+AL_HOLYWATER#
+Aqua Benedicta
+Skill Form : ^777777Recovery^000000
+Contents : ^777777Create Holy Water with an Empty Bottle while standing in Water.^000000
+#
+AL_CURE#
+Cure
+Skill Form : ^777777Recovery^000000
+Target : ^777777Player^000000
+Contents : ^777777Recover Abnormal Status of a Character. Curse `Chaos' when used against the Undead.^000000
+#
+AL_INCAGI#
+Increase AGI
+Skill Form : ^777777Supportive^000000
+Target : ^777777Player^000000
+Contents : ^777777Increase Moving/Attack Speed of a character for a while. Consumes a little HP & SP^000000
+[Level 1] : ^777777+3 to AGI, Lasts for 60secs, Consumes 18sp^000000
+[Level 2] : ^777777+4 to AGI, Lasts for 80secs, Consumes 21sp^000000
+[Level 3] : ^777777+5 to AGI, Lasts for 100secs, Consumes 24sp^000000
+[Level 4] : ^777777+6 to AGI, Lasts for 120secs, Consumes 27sp^000000
+[Level 5] : ^777777+7 to AGI, Lasts for 140secs, Consumes 30sp^000000
+[Level 6] : ^777777+8 to AGI, Lasts for 160secs, Consumes 33sp^000000
+[Level 7] : ^777777+9 to AGI, Lasts for 180secs, Consumes 36sp^000000
+[Level 8] : ^777777+10 to AGI, Lasts for 200secs, Consumes 39sp^000000
+[Level 9] : ^777777+11 to AGI, Lasts for 220secs, Consumes 42sp^000000
+[Level 10] : ^777777+12 to AGI, Lasts for 240secs, Consumes 45sp^000000
+#
+AL_DECAGI#
+Decrease AGI
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Decrease Moving/Attack Speed of an Enemy for a while.^000000
+[Level 1] : ^777777-3 to AGI, Lasts for 40secs, Consumes 18sp^000000
+[Level 2] : ^777777-4 to AGI, Lasts for 50secs, Consumes 21sp^000000
+[Level 3] : ^777777-5 to AGI, Lasts for 60secs, Consumes 24sp^000000
+[Level 4] : ^777777-6 to AGI, Lasts for 70secs, Consumes 27sp^000000
+[Level 5] : ^777777-7 to AGI, Lasts for 80secs, Consumes 30sp^000000
+[Level 6] : ^777777-8 to AGI, Lasts for 90secs, Consumes 33sp^000000
+[Level 7] : ^777777-9 to AGI, Lasts for 100secs, Consumes 36sp^000000
+[Level 8] : ^777777-10 to AGI, Lasts for 110secs, Consumes 39sp^000000
+[Level 9] : ^777777-11 to AGI, Lasts for 1200secs, Consumes 42sp^000000
+[Level 10] : ^777777-12 to AGI, Lasts for 130secs, Consumes 45sp^000000
+#
+AL_RUWACH#
+Ruwach
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Detect Hidden Enemies and Giving Sacred Force damage to them.^000000
+#
+AL_PNEUMA#
+Pneuma
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Shield a Certain Area against Missile Attacks for a while.^000000
+#
+AL_TELEPORT#
+Teleport
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Teleport to a certain area.^000000
+[Level 1] : ^777777Teleport to a random area on the map.^000000
+[Level 2] : ^777777Teleport to the Character's Save Point.^000000
+#
+AL_WARP#
+Warp Portal
+Skill Form : ^777777Supportive^000000
+Target: ^777777Ground^000000
+Contents : ^777777Open a Dimensional Gate to teleport to another area. It needs a ^000099Blue Gemstone^777777.^000000
+[Level 1] : ^777777Warp to the Save Point.^000000
+[Level 2] : ^777777Enable to Use 1 Memo point.^000000
+[Level 3] : ^777777Enable to Use 2 Memo point.^000000
+[Level 4] : ^777777Enable to Use 3 Memo point.^000000
+^990000[Memo Point] : ^777777Specific Area memorized for Warp. Command is /memo.^000000
+#
+MC_INCCARRY#
+Enlarge Weight Limit
+Skill Form : ^000099Passive^000000
+Contents : ^777777Improve Maximum Weight Limit.^000000
+[Level 1] : ^777777Enlarge Weight +100^000000
+[Level 2] : ^777777Enlarge Weight +200^000000
+[Level 3] : ^777777Enlarge Weight +300^000000
+[Level 4] : ^777777Enlarge Weight +400^000000
+[Level 5] : ^777777Enlarge Weight +500^000000
+[Level 6] : ^777777Enlarge Weight +600^000000
+[Level 7] : ^777777Enlarge Weight +700^000000
+[Level 8] : ^777777Enlarge Weight +800^000000
+[Level 9] : ^777777Enlarge Weight +900^000000
+[Level 10] : ^777777Enlarge Weight +1000^000000
+#
+MC_DISCOUNT#
+Discount
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enable to purchase items at a Lower Price from NPC Shops.^000000
+[Level 1] : ^777777Reduce Rate by 7%^000000
+[Level 2] : ^777777Reduce Rate by 9%^000000
+[Level 3] : ^777777Reduce Rate by 11%^000000
+[Level 4] : ^777777Reduce Rate by 13%^000000
+[Level 5] : ^777777Reduce Rate by 15%^000000
+[Level 6] : ^777777Reduce Rate by 17%^000000
+[Level 7] : ^777777Reduce Rate by 19%^000000
+[Level 8] : ^777777Reduce Rate by 21%^000000
+[Level 9] : ^777777Reduce Rate by 23%^000000
+[Level 10] : ^777777Reduce Rate by 24%^000000
+#
+MC_OVERCHARGE#
+Overcharge
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enable to Sell items at a higher price to NPC Shops.^000000
+[Level 1] : ^777777Increase Rate by 7%^000000
+[Level 2] : ^777777Increase Rate by 9%^000000
+[Level 3] : ^777777Increase Rate by 11%^000000
+[Level 4] : ^777777Increase Rate by 13%^000000
+[Level 5] : ^777777Increase Rate by 15%^000000
+[Level 6] : ^777777Increase Rate by 17%^000000
+[Level 7] : ^777777Increase Rate by 19%^000000
+[Level 8] : ^777777Increase Rate by 21%^000000
+[Level 9] : ^777777Increase Rate by 23%^000000
+[Level 10] : ^777777Increase Rate by 24%^000000
+#
+MC_PUSHCART#
+Pushcart
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enable to Carry a Pushcart, the special inventory for the Merchant Class.^000000
+^777777Kafra Employees Provide a Pushcart Using ^000099Alt-W^777777key.^000000
+^777777Unable to Use items from Pushcart Directly.^000000
+#
+MC_IDENTIFY#
+Item Appraisal
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Identify Unknown Items.^000000
+#
+MC_VENDING#
+Vending
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Open a Street Shop, setting one's Own Prices for Items.^000000
+^777777Able to Sell more Items by each Skill Level.^000000
+[Level 1] : ^777777Sell up to 3 items^000000
+[Level 2] : ^777777Sell up to 4 items^000000
+[Level 3] : ^777777Sell up to 5 items^000000
+[Level 4] : ^777777Sell up to 6 items^000000
+[Level 5] : ^777777Sell up to 7 items^000000
+[Level 6] : ^777777Sell up to 8 items^000000
+[Level 7] : ^777777Sell up to 9 items^000000
+[Level 8] : ^777777Sell up to 10 items^000000
+[Level 9] : ^777777Sell up to 11 items^000000
+[Level 10] : ^777777Sell up to 12 items^000000
+#
+MC_MAMMONITE#
+Mammonite
+Skill Form : ^777777Offensive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Give an Enemy Surprising Damage at the cost of Zeny.^000000
+[Level 2] : ^777777Attack STR 200%, 200Z spent^000000
+[Level 3] : ^777777Attack STR 250%, 300Z spent^000000
+[Level 4] : ^777777Attack STR 300%, 400Z spent^000000
+[Level 5] : ^777777Attack STR 350%, 500Z spent^000000
+[Level 6] : ^777777Attack STR 400%, 600Z spent^000000
+[Level 7] : ^777777Attack STR 450%, 700Z spent^000000
+[Level 8] : ^777777Attack STR 500%, 800Z spent^000000
+[Level 9] : ^777777Attack STR 550%, 900Z spent^000000
+[Level 10] : ^777777Attack STR 600%, 1000Z spent^000000
+#
+AC_OWL#
+Owl's Eye
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase DEX.^000000
+[Level 1] : ^777777DEX +1^000000
+[Level 2] : ^777777DEX +2^000000
+[Level 3] : ^777777DEX +3^000000
+[Level 4] : ^777777DEX +4^000000
+[Level 5] : ^777777DEX +5^000000
+[Level 6] : ^777777DEX +6^000000
+[Level 7] : ^777777DEX +7^000000
+[Level 8] : ^777777DEX +8^000000
+[Level 9] : ^777777DEX +9^000000
+[Level 10] : ^777777DEX +10^000000
+#
+AC_VULTURE#
+Vulture's Eye
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Bow Range and Accuracy Rate.^000000
+[Level 1] : ^777777Range +1, Accuracy +1^000000
+[Level 2] : ^777777Range +2, Accuracy +2^000000
+[Level 3] : ^777777Range +3, Accuracy +3^000000
+[Level 4] : ^777777Range +4, Accuracy +4^000000
+[Level 5] : ^777777Range +5, Accuracy +5^000000
+[Level 6] : ^777777Range +6, Accuracy +6^000000
+[Level 7] : ^777777Range +7, Accuracy +7^000000
+[Level 8] : ^777777Range +8, Accuracy +8^000000
+[Level 9] : ^777777Range +9, Accuracy +9^000000
+[Level 10] : ^777777Range +10, Accuracy +10^000000
+#
+AC_CONCENTRATION#
+Improve Concentration
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Increase DEX and AGI temporarily, Detects Hidden Nearby Enemies.^000000
+[Level 1] : ^777777+3 to AGI/DEX, Last for 60secs, Consumes 25sp^000000
+[Level 2] : ^777777+4 to AGI/DEX, Last for 80secs, Consumes 30sp^000000
+[Level 3] : ^777777+5 to AGI/DEX, Last for 100secs, Consumes 35sp^000000
+[Level 4] : ^777777+6 to AGI/DEX, Last for 120secs, Consumes 40sp^000000
+[Level 5] : ^777777+7 to AGI/DEX, Last for 140secs, Consumes 45sp^000000
+[Level 6] : ^777777+8 to AGI/DEX, Last for 160secs, Consumes 50sp^000000
+[Level 7] : ^777777+9 to AGI/DEX, Last for 180secs, Consumes 55sp^000000
+[Level 8] : ^777777+10 to AGI/DEX, Last for 200secs, Consumes 60sp^000000
+[Level 9] : ^777777+11 to AGI/DEX, Last for 220secs, Consumes 65sp^000000
+[Level 10] : ^777777+12 to AGI/DEX, Last for 240secs, Consumes 70sp^000000
+#
+AC_DOUBLE#
+Double Strafe
+Skill Form : ^777777Offensive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Double hit an Enemy with 1 shot.^000000
+[Level 1] : ^777777Attack Strength 100% x 2^000000
+[Level 2] : ^777777Attack Strength 110% x 2^000000
+[Level 3] : ^777777Attack Strength 120% x 2^000000
+[Level 4] : ^777777Attack Strength 130% x 2^000000
+[Level 5] : ^777777Attack Strength 140% x 2^000000
+[Level 6] : ^777777Attack Strength 150% x 2^000000
+[Level 7] : ^777777Attack Strength 160% x 2^000000
+[Level 8] : ^777777Attack Strength 170% x 2^000000
+[Level 9] : ^777777Attack Strength 180% x 2^000000
+[Level 10] : ^777777Attack Strength 190% x 2^000000
+#
+AC_SHOWER#
+Arrow Shower
+Skill Form : ^777777Offensive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Attacks one enemy with 9 shots giving Splashed Damage at the same time.^000000
+[Level 1] : ^777777+80% to Attack Strength^000000
+[Level 2] : ^777777+85% to Attack Strength^000000
+[Level 3] : ^777777+90% to Attack Strength^000000
+[Level 4] : ^777777+95% to Attack Strength^000000
+[Level 5] : ^777777+100% to Attack Strength^000000
+[Level 6] : ^777777+105% to Attack Strength^000000
+[Level 7] : ^777777+110% to Attack Strength^000000
+[Level 8] : ^777777+115% to Attack Strength^000000
+[Level 9] : ^777777+120% to Attack Strength^000000
+[Level 10] : ^777777+125% to Attack Strength^000000
+#
+TF_DOUBLE#
+Double Attack
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increases the Chance of Double Attack with Dagger Class Weapons.^000000
+[Level 1] : ^7777775% Chance^000000
+[Level 2] : ^77777710% Chance%^000000
+[Level 3] : ^77777715% Chance%^000000
+[Level 4] : ^77777720% Chance^000000
+[Level 5] : ^77777725% Chance^000000
+[Level 6] : ^77777730% Chance^000000
+[Level 7] : ^77777735% Chance^000000
+[Level 8] : ^77777740% Chance^000000
+[Level 9] : ^77777745% Chance^000000
+[Level 10] : ^77777750% Chance^000000
+#
+TF_MISS#
+Improve Dodge
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increases Evasion Rate.^000000
+[Level 1] : ^777777Dodge +3%^000000
+[Level 2] : ^777777Dodge +6%^000000
+[Level 3] : ^777777Dodge +9%^000000
+[Level 4] : ^777777Dodge +12%^000000
+[Level 5] : ^777777Dodge +15%^000000
+[Level 6] : ^777777Dodge +18%^000000
+[Level 7] : ^777777Dodge +21%^000000
+[Level 8] : ^777777Dodge +24%^000000
+[Level 9] : ^777777Dodge +27%^000000
+[Level 10] : ^777777Dodge +30%^000000
+#
+TF_STEAL#
+Steal
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Chance to Steal items from an Enemy.^000000
+[Level 1] : ^77777713% Chance of Success^000000
+[Level 2] : ^77777716% Chance of Success^000000
+[Level 3] : ^77777719% Chance of Success^000000
+[Level 4] : ^77777722% Chance of Success^000000
+[Level 5] : ^77777725% Chance of Success^000000
+[Level 6] : ^77777728% Chance of Success^000000
+[Level 7] : ^77777731% Chance of Success^000000
+[Level 8] : ^77777734% Chance of Success^000000
+[Level 9] : ^77777737% Chance of Success^000000
+[Level 10] : ^77777740% Chance of Success^000000
+#
+TF_HIDING#
+Hiding
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Protect oneself by hiding underground. Possible to be Detected by Certain Skills as Sight, the Mage Skill.^000000
+[Level 1] : ^777777Lasts for 30 secs, Consumes 1sp/5secs^000000
+[Level 2] : ^777777Lasts for 60 secs, Consumes 1sp/6secs^000000
+[Level 3] : ^777777Lasts for 90 secs, Consumes 1sp/7secs^000000
+[Level 4] : ^777777Lasts for 120 secs, Consumes 1sp/8secs^000000
+[Level 5] : ^777777Lasts for 150 secs, Consumes 1sp/9secs^000000
+[Level 6] : ^777777Lasts for 180 secs, Consumes 1sp/10secs^000000
+[Level 7] : ^777777Lasts for 210 secs, Consumes 1sp/11secs^000000
+[Level 8] : ^777777Lasts for 240 secs, Consumes 1sp/12secs^000000
+[Level 9] : ^777777Lasts for 270 secs, Consumes 1sp/13secs^000000
+[Level 10] : ^777777Lasts for 300 secs, Consumes 1sp/14secs^000000
+#
+TF_POISON#
+Envenom
+Skill Form : ^777777Offensive(Poison)^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Give Poisonous Damage to an Enemy.^000000
+[Level 1] : ^777777+14% Success Chance, +15 ATK^000000
+[Level 2] : ^777777+18% Success Chance, +30 ATK^000000
+[Level 3] : ^777777+22% Success Chance, +45 ATK^000000
+[Level 4] : ^777777+26% Success Chance, +60 ATK^000000
+[Level 5] : ^777777+30% Success Chance, +75 ATK^000000
+[Level 6] : ^777777+34% Success Chance, +90 ATK^000000
+[Level 7] : ^777777+38% Success Chance, +105 ATK^000000
+[Level 8] : ^777777+42% Success Chance, +120 ATK2^000000
+[Level 9] : ^777777+46% Success Chance, +135 ATK^000000
+[Level 10] : ^777777+50% Success Chance, +150 ATK^000000
+#
+TF_DETOXIFY#
+Detoxify
+Skill Form : ^777777Supportive(Poison)^000000
+Target : ^777777Player^000000
+Contents : ^777777Cure Poisoned Status.^000000
+#
+KN_SPEARMASTERY#
+Spear Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Spear Damage.^000000
+[Level 1] : ^777777Attack STR +4, Attack STR on PecoPeco +5^000000
+[Level 2] : ^777777Attack STR +8, Attack STR on PecoPeco +10^000000
+[Level 3] : ^777777Attack STR +12, Attack STR on PecoPeco +15^000000
+[Level 4] : ^777777Attack STR +16, Attack STR on PecoPeco +20^000000
+[Level 5] : ^777777Attack STR +20, Attack STR on PecoPeco +25^000000
+[Level 6] : ^777777Attack STR +24, Attack STR on PecoPeco +30^000000
+[Level 7] : ^777777Attack STR +28, Attack STR on PecoPeco +35^000000
+[Level 8] : ^777777Attack STR +32, Attack STR on PecoPeco +40^000000
+[Level 9] : ^777777Attack STR +36, Attack STR on PecoPeco +45^000000
+[Level 10] : ^777777Attack STR +40, Attack STR on PecoPeco +50^000000
+#
+KN_PIERCE#
+Pierce
+Skill Form : ^777777Offensive^000000
+Target : ^777777Enemy^000000 
+Contents : ^777777Attack an Enemy with Lancing. Strike repeatedly depending on a monster Size. Only Activated with ^00bb00Spear Class Weapons^777777.^000000
+[Level 1] : ^777777+110% ATK, +5 Hit Probabilty, Consumes 7sp^000000
+[Level 2] : ^777777+120% ATK, +10 Hit Probabilty, Consumes 7sp^000000
+[Level 3] : ^777777+130% ATK, +15 Hit Probabilty, Consumes 7sp^000000
+[Level 4] : ^777777+140% ATK, +20 Hit Probabilty, Consumes 7sp^000000
+[Level 5] : ^777777+150% ATK, +25 Hit Probabilty, Consumes 7sp^000000
+[Level 6] : ^777777+160% ATK, +30 Hit Probabilty, Consumes 7sp^000000
+[Level 7] : ^777777+170% ATK, +35 Hit Probabilty, Consumes 7sp^000000
+[Level 8] : ^777777+180% ATK, +40 Hit Probabilty, Consumes 7sp^000000
+[Level 9] : ^777777+190% ATK, +45 Hit Probabilty, Consumes 7sp^000000
+[Level 10] : ^777777+200% ATK, +50 Hit Probabilty, Consumes 7sp^000000
+#
+KN_BRANDISHSPEAR#
+Brandish Spear
+Skill Form : ^777777Offensive^000000
+Target : ^777777Enemy^000000 
+Contents : ^777777A Powerful Lancing Strike while riding Peco peco. Only Activated with ^00bb00Spear Class Weapons and ^777777riding a ^00bb00Peco Peco at the same time^777777.^000000
+[Level 1] : ^777777+120% ATK, Range +1, Consumes 12sp^000000
+[Level 2] : ^777777+140% ATK, Range +1, Consumes 12sp^000000
+[Level 3] : ^777777+160% ATK, Range +1, Consumes 12sp^000000
+[Level 4] : ^777777+180% ATK, Range +2, Consumes 12sp^000000
+[Level 5] : ^777777+200% ATK, Range +2, Consumes 12sp^000000
+[Level 6] : ^777777+220% ATK, Range +2, Consumes 12sp^000000
+[Level 7] : ^777777+240% ATK, Range +3, Consumes 12sp^000000
+[Level 8] : ^777777+260% ATK, Range +3, Consumes 12sp^000000
+[Level 9] : ^777777+280% ATK, Range +3, Consumes 12sp^000000
+[Level 10] : ^777777+300% ATK, Range +4, Consumes 12sp^000000
+#	
+KN_SPEARSTAB#
+Spear Stab
+Skill Form : ^777777Offensive^000000
+Target : ^777777Enemy^000000 
+Contents : ^777777Knock back an Enemy using Spear. Enable to do splash damages onto Enemies at the same time, only activated with ^00bb00Spear Class Weapons^777777.^000000
+[Level 1] : ^777777+120% ATK, Range +6, Consumes 9sp^000000
+[Level 2] : ^777777+140% ATK, Range +6, Consumes 9sp^000000
+[Level 3] : ^777777+160% ATK, Range +6, Consumes 9sp^000000
+[Level 4] : ^777777+180% ATK, Range +6, Consumes 9sp^000000
+[Level 5] : ^777777+200% ATK, Range +6, Consumes 9sp^000000
+[Level 6] : ^777777+220% ATK, Range +6, Consumes 9sp^000000
+[Level 7] : ^777777+240% ATK, Range +6, Consumes 9sp^000000
+[Level 8] : ^777777+260% ATK, Range +6, Consumes 9sp^000000
+[Level 9] : ^777777+280% ATK, Range +6, Consumes 9sp^000000
+[Level 10] : ^777777+300% ATK, Range +6, Consumes 9sp^000000
+#
+KN_SPEARBOOMERANG#
+Spear Boomerang
+Skill Form : ^777777Offensive^000000
+Target: ^777777Enemy^000000 
+Contents : ^777777Attack an Enemy from a distance using a Spear. Only Activated with ^00bb00Spear Class Weapons^777777.^000000
+[Level 1] : ^777777+150% ATK, Range +3, Consumes 10sp^000000
+[Level 2] : ^777777+200% ATK, Range +5, Consumes 10sp^000000
+[Level 3] : ^777777+250% ATK, Range +7, Consumes 10sp^000000
+[Level 4] : ^777777+300% ATK, Range +9, Consumes 10sp^000000
+[Level 5] : ^777777+350% ATK, Range +11, Consumes 10sp^000000
+#
+KN_TWOHANDQUICKEN#
+Two Hand Quicken
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Improve Attack Speed of Two-Handed Sword.^000000
+[Level 1] : ^777777Lasting Time 30Secs, Consumes 14sp^000000
+[Level 2] : ^777777Lasting Time 60Secs, Consumes 18sp^000000
+[Level 3] : ^777777Lasting Time 90Secs, Consumes 26sp^000000
+[Level 4] : ^777777Lasting Time 120Secs, Consumes 28sp^000000
+[Level 5] : ^777777Lasting Time 150Secs, Consumes 30sp^000000
+[Level 6] : ^777777Lasting Time 180Secs, Consumes 34sp^000000
+[Level 7] : ^777777Lasting Time 210Secs, Consumes 38sp^000000
+[Level 8] : ^777777Lasting Time 240Secs, Consumes 42sp^000000
+[Level 9] : ^777777Lasting Time 270Secs, Consumes 46sp^000000
+[Level 10] : ^777777Lasting Time 300Secs, Consumes 50sp^000000
+#
+KN_AUTOCOUNTER#
+Counter Attack
+Skill Form : ^777777Offensive^000000
+Target : ^777777Enemy^000000 
+Contents : ^777777Strike back enemy with normal damamge that ignores monsters defense. Improved Accuracy and Doubled CRIT rate during cast time.^000000
+[Level 1] : ^777777Lasts for 0.4sec, Consumes 3sp^000000
+[Level 2] : ^777777Lasts for 0.8sec, Consumes 3sp^000000
+[Level 3] : ^777777Lasts for 1.2secs, Consumes 3sp^000000
+[Level 4] : ^777777Lasts for 1.6secs, Consumes 3sp^000000
+[Level 5] : ^777777Lases for 2secs, Consumes 3sp^000000
+#
+KN_BOWLINGBASH#
+Bowling Bash
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000 
+Contents : ^777777Attack enemy with a strong force causing the enemy to bounce off other enemies inflicting damage.^000000
+[Level 1] : ^777777+150% ATK, Repels Enemy 1 cell, Consumes 13sp^000000
+[Level 2] : ^777777+200% ATK, Repels Enemy 1 cell, Consumes 14sp^000000
+[Level 3] : ^777777+250% ATK, Repels Enemy 2 cell, Consumes 15sp^000000
+[Level 4] : ^777777+300% ATK, Repels Enemy 2 cell, Consumes 16sp^000000
+[Level 5] : ^777777+350% ATK, Repels Enemy 3 cell, Consumes 17sp^000000
+[Level 6] : ^777777+400% ATK, Repels Enemy 3 cell, Consumes 18sp^000000
+[Level 7] : ^777777+450% ATK, Repels Enemy 4 cell, Consumes 19sp^000000
+[Level 8] : ^777777+500% ATK, Repels Enemy 4 cell, Consumes 20sp^000000
+[Level 9] : ^777777+550% ATK, Repels Enemy 5 cell, Consumes 21sp^000000
+[Level 10] : ^777777+600% ATK, Repels Enemy 5 cell, Consumes 22sp^000000
+#
+KN_RIDING#
+Peco Peco Riding
+Skill Form : ^000099Passive^000000
+Contents : ^777777Albe Ride a Tamed Peco Peco.^000000
+#
+KN_CAVALIERMASTERY#
+Cavalier Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Improve Attack Speed when Riding.^000000
+[Level 1] : ^777777+60% Attack Speed^000000
+[Level 2] : ^777777+70% Attack Speed^000000
+[Level 3] : ^777777+80% Attack Speed^000000
+[Level 4] : ^777777+90% Attack Speed^000000
+[Level 5] : ^777777+100% Attack Speed^000000
+#
+PR_MACEMASTERY#
+Mace Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Damage when using Mace Class Weapons.^000000
+[Level 1] : ^777777Attack STR +3^000000
+[Level 2] : ^777777Attack STR +6^000000
+[Level 3] : ^777777Attack STR +9^000000
+[Level 4] : ^777777Attack STR +12^000000
+[Level 5] : ^777777Attack STR +15^000000
+[Level 6] : ^777777Attack STR +18^000000
+[Level 7] : ^777777Attack STR +21^000000
+[Level 8] : ^777777Attack STR +24^000000
+[Level 9] : ^777777Attack STR +27^000000
+[Level 10] : ^777777Attack STR +30^000000
+#
+PR_IMPOSITIO#
+Impositio Manus
+Skill Form : ^777777Blessing^000000
+Target : ^777777Player^000000
+Contents : ^777777Bless a person with the Laying on of the Hands. Increase Weapon Damage for 60 Secs.^000000
+[Level 1] : ^777777Attack STR +5, consumes 13SP^000000
+[Level 2] : ^777777Attack STR +10, consumes 16SP^000000
+[Level 3] : ^777777Attack STR +15, consumes 19SP^000000
+[Level 4] : ^777777Attack STR +20, consumes 22SP^000000
+[Level 5] : ^777777Attack STR +25, consumes 25SP^000000
+#
+PR_SUFFRAGIUM#
+Suffragium
+Skill Form : ^777777Blessing^000000
+Target : ^777777Player(Excluding the Caster)^000000
+Contents : ^777777The invocation for Other people. Reduce a Skill Casting Time for one time. Consumes 8 SP.^000000
+[Level 1] : ^77777715% Reduced, Lasting 30 secs^000000
+[Level 2] : ^77777730% Reduced, Lasting 20 secs^000000
+[Level 3] : ^77777745% Reduced, Lasting 10 secs^000000
+#
+PR_ASPERSIO#
+Aspersio
+Skill Form : ^777777Blessing^000000
+Target : ^777777Player(Excluding the Caster)^000000
+Contents : ^777777Baptize the applicant with Holy Water on the forehead. Endow a Weapon with the Holy Property for the Spell Duration. ^00bb00Holy Water^777777 is Necessary.^000000
+[Level 1] : ^777777Lasting Time 60Secs, consumes 12SP^000000
+[Level 2] : ^777777Lasting Time 90secs, consumes 14SP^000000
+[Level 3] : ^777777Lasting Time 120Secs, consumes 16SP^000000
+[Level 4] : ^777777Lasting Time 150Secs, consumes 18SP^000000
+[Level 5] : ^777777Lasting Time 180Secs, consumes 20SP^000000
+#
+PR_BENEDICTIO#
+B.S Sacramenti
+Skill Form : ^777777Blessing^000000
+Target : ^777777Ground^000000
+Contents : ^777777Benedictio Sanctissimi Sacramenti(Benediction of the Blessed Sacrament). Endow Armors with the Holy Property for Entire members on One screen. But, for Blessing ^00bb00Another priest in the Same Party^777777 Should Pray together. Caster consumes 20SP, support party member consumes 10SP.^000000
+[Level 1] : ^777777Lasting Time 40Secs^000000
+[Level 2] : ^777777Lasting Time 80secs^000000
+[Level 3] : ^777777Lasting Time 120Secs^000000
+[Level 4] : ^777777Lasting Time 160Secs^000000
+[Level 5] : ^777777Lasting Time 200Secs^000000
+#
+PR_SANCTUARY#
+Sanctuary
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create a Holy Area on the Ground. Enable to Restore HP Continuously in this zone for a duration.^000000
+[Level 1] : ^777777Lasts 4secs, max people 4, gain 100HP/1sec, consumes 15SP^000000
+[Level 2] : ^777777Lasts 7secs, max people 5, gain 200HP/1sec, consumes 18SP^000000
+[Level 3] : ^777777Lasts 10secs, max people 6, gain 300HP/1sec, consumes 21SP^000000
+[Level 4] : ^777777Lasts 13secs, max people 7, gain 400HP/1sec, consumes 24SP^000000
+[Level 5] : ^777777Lasts 16secs, max people 8, gain 500HP/1sec, consumes 27SP^000000
+[Level 6] : ^777777Lasts 19secs, max people 9, gain 600HP/1sec, consumes 30SP^000000
+[Level 7] : ^777777Lasts 22secs, max people 10, gain 777HP/1sec, consumes 33SP^000000
+[Level 8] : ^777777Lasts 25secs, max people 11, gain 777HP/1sec, consumes 36SP^000000
+[Level 9] : ^777777Lasts 28secs, max people 12, gain 777HP/1sec, consumes 39SP^000000
+[Level 10] : ^777777Lasts 31secs, max people 13, gain 777HP/1sec, consumes 42SP^000000
+#
+PR_STRECOVERY#
+Status Recovery
+Skill Form : ^777777Supportive^000000
+Target : ^777777Player^000000
+Contents : ^777777Recover Serious Abnormal Status as Undead, Frozen, Stone Cursed. Curse `Darkened' when Used against the Undead. Consumes 5SP.^000000
+#
+PR_SLOWPOISON#
+Slow Poison
+Skill Form : ^777777Supportive^000000
+Target : ^777777Player^000000
+Contents : ^777777When Poisoned, Make it progress Slower for a while.^000000
+[Level 1] : ^777777Lasting for 10secs, consumes 6SP^000000
+[Level 2] : ^777777Lasting for 20secs, consumes 8SP^000000
+[Level 3] : ^777777Lasting for 30secs, consumes 10SP^000000
+[Level 4] : ^777777Lasting for 40secs, consumes 12SP^000000
+#
+ALL_RESURRECTION#
+Resurrection
+Skill Form : ^777777Supportive^000000
+Target : ^777777The Fainted^000000
+Contents : ^777777Cure the Fainted. Consumes 60SP.^000000
+[Level 1] : ^777777Revive with 1 HP^000000
+[Level 2] : ^777777Recover HP by 15% when revived^000000
+[Level 3] : ^777777Recover HP by 30% when revived^000000
+[Level 4] : ^777777Recover HP by 50% when revived^000000
+#
+PR_KYRIE#
+Kyrie Eleison
+Skill Form : ^777777Eulogy^000000
+Contents : ^777777Create a perfect Barrier around a Player for 120 seconds.^000000
+[Level 1] : ^777777Block 5 times, consumes 20SP^000000
+[Level 2] : ^777777Block 6 times, consumes 20SP^000000
+[Level 3] : ^777777Block 6 times, consumes 20SP^000000
+[Level 4] : ^777777Block 7 times, consumes 25SP^000000
+[Level 5] : ^777777Block 7 times, consumes 25SP^000000
+[Level 6] : ^777777Block 8 times, consumes 35SP^000000
+[Level 7] : ^777777Block 8 times, consumes 30SP^000000
+[Level 8] : ^777777Block 9 times, consumes 30SP^000000
+[Level 9] : ^777777Block 9 times, consumes 30SP^000000
+[Level 10] : ^777777Block 10 times, consumes 40SP^000000
+#
+PR_MAGNIFICAT#
+Magnificat
+Skill Form : ^777777Eulogy^000000
+Contents : ^777777Speed Up the Party Members' HP/SP regeneration Two Times Faster. Consumes 40SP^000000
+[Level 1] : ^777777Lasts 30secs^000000
+[Level 2] : ^777777Lasts 45secs^000000
+[Level 3] : ^777777Lasts 60secs^000000
+[Level 4] : ^777777Lasts 75secs^000000
+[Level 5] : ^777777Lasts 90secs^000000
+#
+PR_GLORIA#
+Gloria
+Skill Form : ^777777Eulogy^000000
+Contents : ^777777Increase the Party Memebrs' LUK by 30 for a spell duration. Consumes 20SP^000000
+[Level 1] : ^777777Lasts 10secs^000000
+[Level 2] : ^777777Lasts 15secs^000000
+[Level 3] : ^777777Lasts 20secs^000000
+[Level 4] : ^777777Lasts 25secs^000000
+[Level 5] : ^777777Lasts 30secs^000000
+#
+PR_LEXDIVINA#
+Lex Divina
+Skill Form : ^777777Exorcising^000000
+Target: ^777777Enemy^000000 
+Contents : ^777777Silence an Enemy for a while.^000000
+[Level 1] : ^777777Lasts 30secs, consumes 20SP^000000
+[Level 2] : ^777777Lasts 35secs, consumes 20SP^000000
+[Level 3] : ^777777Lasts 40secs, consumes 20SP^000000
+[Level 4] : ^777777Lasts 45secs, consumes 20SP^000000
+[Level 5] : ^777777Lasts 50secs, consumes 20SP^000000
+[Level 6] : ^777777Lasts 60secs, consumes 18SP^000000
+[Level 7] : ^777777Lasts 60secs, consumes 16SP^000000
+[Level 8] : ^777777Lasts 60secs, consumes 14SP^000000
+[Level 9] : ^777777Lasts 60secs, consumes 12SP^000000
+[Level 10] : ^777777Lasts 60secs, consumes 10SP^000000
+#
+PR_TURNUNDEAD#
+Turn Undead
+Skill Form : ^777777Exorcising^000000
+Target: ^777777Enemy^000000 
+Contents : ^777777Eliminate the Undead. Consumes 20SP.^000000
+#
+PR_LEXAETERNA#
+Lex Aeterna
+Skill Form : ^777777Exorcising^000000
+Target: ^777777Enemy^000000 
+Contents : ^777777Weaken Enemy to take Double Damages at one time. Consumes 10SP^000000
+#
+PR_MAGNUS#
+Magnus Exorcismus
+Skill Form : ^777777Exorcising^000000
+Target: ^777777Ground^000000
+Contents : ^777777Summon the Grand Cross on the Ground to terminate the Demon or the Undead. It needs ^00bb00Blue Gemstone^777777.^000000
+[Level 1] : ^777777Damage enemy 1 time, consumes 40SP^000000
+[Level 2] : ^777777Damage enemy 2 times, consumes 42SP^000000
+[Level 3] : ^777777Damage enemy 3 times, consumes 44SP^000000
+[Level 4] : ^777777Damage enemy 4 times, consumes 46SP^000000
+[Level 5] : ^777777Damage enemy 5 times, consumes 48SP^000000
+[Level 6] : ^777777Damage enemy 6 times, consumes 50SP^000000
+[Level 7] : ^777777Damage enemy 7 times, consumes 52SP^000000
+[Level 8] : ^777777Damage enemy 8 times, consumes 54SP^000000
+[Level 9] : ^777777Damage enemy 9 times, consumes 56SP^000000
+[Level 10] : ^777777Damage enemy 10 times, consumes 58SP^000000
+#
+WZ_FIREPILLAR#
+Fire Pillar
+Skill Form : ^777777Offensive^bb0000(Fire)^000000
+Target: ^777777Ground^000000
+Contents : ^777777Summon a Pillar of Flames to Attack enemies. Consumes 25SP.^000000
+[Level 1] : ^777777Damage enemy 3 times^000000
+[Level 2] : ^777777Damage enemy 4 times^000000
+[Level 3] : ^777777Damage enemy 5 times^000000
+[Level 4] : ^777777Damage enemy 6 times^000000
+[Level 5] : ^777777Damage enemy 7 times^000000
+[Level 6] : ^777777Damage enemy 8 times^000000
+[Level 7] : ^777777Damage enemy 9 times^000000
+[Level 8] : ^777777Damage enemy 10 times^000000
+[Level 9] : ^777777Damage enemy 11 times^000000
+[Level 10] : ^777777Damage enemy 12 times^000000
+#
+WZ_SIGHTRASHER#
+Sightrasher
+Skill Form : ^777777Offensive^bb0000(Fire)^000000
+Contents : Spread Fire Balls of ^00bb00Sight^777777 around the Caster. Must be used with the skill ^00bb00Sight^777777.^000000
+[Level 1] : ^777777Damage 120%, +1 cell range, consume 35SP^000000
+[Level 2] : ^777777Damage 140%, +1 cell range, consume 37SP^000000
+[Level 3] : ^777777Damage 160%, +2 cell range, consume 39SP^000000
+[Level 4] : ^777777Damage 180%, +2 cell range, consume 41SP^000000
+[Level 5] : ^777777Damage 200%, +3 cell range, consume 43SP^000000
+[Level 6] : ^777777Damage 220%, +3 cell range, consume 45SP^000000
+[Level 7] : ^777777Damage 240%, +4 cell range, consume 47SP^000000
+[Level 8] : ^777777Damage 260%, +4 cell range, consume 49SP^000000
+[Level 9] : ^777777Damage 280%, +5 cell range, consume 51SP^000000
+[Level 10] : ^777777Damage 300%, +5 cell range, consume 53SP^000000
+#
+WZ_FIREIVY#
+Fire Ivy
+Skill Form : ^777777Offensive^bb0000(Fire)^000000
+Target: ^777777Ground^000000
+Contents : ^777777Summon Ivy Vines of Flames.^000000
+#
+WZ_METEOR#
+Meteor Storm
+Skill Form : ^777777Offensive^bb0000(Fire)^000000
+Target : ^777777Enemy^000000 
+Contents : ^777777Drop Numerous Meteors on and around the Chosen Enemy. Cast time delay 15 seconds.^000000
+[Level 1] : ^7777772 Meteors/1 hits 1 time, consumes 20SP^000000
+[Level 2] : ^7777773 Meteors/1 hits 1 time, consumes 24SP^000000
+[Level 3] : ^7777773 Meteors/1 hits 2 time, consumes 30SP^000000
+[Level 4] : ^7777774 Meteors/1 hits 2 time, consumes 24SP^000000
+[Level 5] : ^7777774 Meteors/1 hits 3 time, consumes 40SP^000000
+[Level 6] : ^7777775 Meteors/1 hits 3 time, consumes 44SP^000000
+[Level 7] : ^7777775 Meteors/1 hits 4 time, consumes 50SP^000000
+[Level 8] : ^7777776 Meteors/1 hits 4 time, consumes 54SP^000000
+[Level 9] : ^7777776 Meteors/1 hits 5 time, consumes 60SP^000000
+[Level 10] : ^7777777 Meteors/1 hits 5 time, consumes 64SP^000000
+#
+WZ_JUPITEL#
+Jupitel Thunder
+Skill Form : ^777777Offensive^bbbb00(Lightening)^000000
+Target : ^777777Enemy^000000 
+Contents : ^777777Lightening from the Caster strikes and pushes back an enemy.^000000
+[Level 1] : ^777777Hits 3 times, consumes 20SP, cast delay 2.5secs^000000
+[Level 2] : ^777777Hits 4 times, consumes 23SP, cast delay 3secs^000000
+[Level 3] : ^777777Hits 5 times, consumes 26SP, cast delay 3.5secs^000000
+[Level 4] : ^777777Hits 6 times, consumes 29SP, cast delay 4secs^000000
+[Level 5] : ^777777Hits 7 times, consumes 32SP, cast delay 4.5secs^000000
+[Level 6] : ^777777Hits 8 times, consumes 35SP, cast delay 5secs^000000
+[Level 7] : ^777777Hits 9 times, consumes 38SP, cast delay 5.5secs^000000
+[Level 8] : ^777777Hits 10 times, consumes 41SP, cast delay 6secs^000000
+[Level 9] : ^777777Hits 11 times, consumes 44SP, cast delay 6.5secs^000000
+[Level 10] : ^777777Hits 12 times, consumes 47SP, cast delay 7secs^000000
+#
+WZ_VERMILION#
+Lord of Vermilion
+Skill Form : ^777777Offensive^bbbb00(Lightening)^000000
+Target : ^777777Ground^000000
+Contents : ^777777Drop Numerous Thunderbolts on the Chosen Ground. Attack Strength won't be increased by Levelup, but Casting Time will be reduced.^000000
+[Level 1] : ^777777Cast delay 15secs, consumes 45sp^000000
+[Level 2] : ^777777Cast delay 14.5secs, consumes 48sp^000000
+[Level 3] : ^777777Cast delay 14secs, consumes 51sp^000000
+[Level 4] : ^777777Cast delay 13.5secs, consumes 54sp^000000
+[Level 5] : ^777777Cast delay 13secs, consumes 57sp^000000
+[Level 6] : ^777777Cast delay 12.5secs, consumes 60sp^000000
+[Level 7] : ^777777Cast delay 12secs, consumes 63sp^000000
+[Level 8] : ^777777Cast delay 11.5secs, consumes 66sp^000000
+[Level 9] : ^777777Cast delay 11secs, consumes 69sp^000000
+[Level 10] : ^777777Cast delay 10.5secs, consumes 72sp^000000
+#
+WZ_WATERBALL#
+Waterball
+Skill Form : ^777777Offensive^0000bb(Ice)^000000
+Target : ^777777Enemy^000000 
+Contents : ^777777Attack Enemy Using Water around the Caster. Caster must stand in water to cast.^000000
+[Level 1] : ^777777Cast 1 cell from water, cast delay 1secs, +130% MATK, consumes 5sp^000000
+[Level 2] : ^777777Cast 9 cell from water, cast delay 2secs, +160% MATK, consumes 10sp^000000
+[Level 3] : ^777777Cast 9 cell from water, cast delay 3secs, +190% MATK, consumes 15sp^000000
+[Level 4] : ^777777Cast 25 cell from water, cast delay 4secs, +220% MATK, consumes 20sp^000000
+[Level 5] : ^777777Cast 25 cell from water, cast delay 5secs, +250% MATK, consumes 25sp^000000
+#
+WZ_ICEWALL#
+Icewall
+Skill Form : ^777777Supportive^0000bb(Ice)^000000
+Target : ^777777Ground^000000
+Contents : ^777777Creates a Frozen Barrier to block the way of Enemies.^000000
+[Level 1] : ^777777Withstands up to 400 points of damage, consumes 20sp^000000
+[Level 2] : ^777777Withstands up to 600 points of damage, consumes 20sp^000000
+[Level 3] : ^777777Withstands up to 800 points of damage, consumes 20sp^000000
+[Level 4] : ^777777Withstands up to 1000 points of damage, consumes 20sp^000000
+[Level 5] : ^777777Withstands up to 1200 points of damage, consumes 20sp^000000
+[Level 6] : ^777777Withstands up to 1400 points of damage, consumes 20sp^000000
+[Level 7] : ^777777Withstands up to 1600 points of damage, consumes 20sp^000000
+[Level 8] : ^777777Withstands up to 1800 points of damage, consumes 20sp^000000
+[Level 9] : ^777777Withstands up to 2000 points of damage, consumes 20sp^000000
+[Level 10] : ^777777Withstands up to 2200 points of damage, consumes 20sp^000000
+ #
+WZ_FROSTNOVA#
+Frost Nova
+Skill Form : ^777777Supportive^0000bb(Ice)^000000
+Target : ^777777Player^000000
+Contents : ^777777Freezes Many Enemies around the Caster.^000000
+[Level 1] : ^777777Cast delay 5secs, comsumes 45sp^000000
+[Level 2] : ^777777Cast delay 4.7secs, consumes 43sp^000000
+[Level 3] : ^777777Cast delay 4.4secs, consumes 41sp^000000
+[Level 4] : ^777777Cast delay 4.1secs, consumes 39sp^000000
+[Level 5] : ^777777Cast delay 3.8secs, consumes 37sp^000000
+[Level 6] : ^777777Cast delay 3.5secs, consumes 35sp^000000
+[Level 7] : ^777777Cast delay 3.2secs, consumes 33sp^000000
+[Level 8] : ^777777Cast delay 2.9secs, consumes 31sp^000000
+[Level 9] : ^777777Cast delay 2.7secs, consumes 29sp^000000
+[Level 10] : ^777777Cast delay 2.5secs, consumes 27sp^000000
+#
+WZ_STORMGUST#
+Storm Gust
+Skill Form : ^777777Offensive^0000bb(Ice)^000000
+Target : ^777777Ground^000000
+Contents : ^777777Brings a Blizzard to Attack Enemies.^000000
+[Level 1] : ^777777+140% MATK, Cast delay 6 secs, consumes 78sp^000000
+[Level 2] : ^777777+180% MATK, Cast delay 7 secs, consumes 78sp^000000
+[Level 3] : ^777777+220% MATK, Cast delay 8 secs, consumes 78sp^000000
+[Level 4] : ^777777+260% MATK, Cast delay 9 secs, consumes 78sp^000000
+[Level 5] : ^777777+300% MATK, Cast delay 10 secs, consumes 78sp^000000
+[Level 6] : ^777777+340% MATK, Cast delay 11 secs, consumes 78sp^000000
+[Level 7] : ^777777+380% MATK, Cast delay 12 secs, consumes 78sp^000000
+[Level 8] : ^777777+420% MATK, Cast delay 13 secs, consumes 78sp^000000
+[Level 9] : ^777777+460% MATK, Cast delay 14 secs, consumes 78sp^000000
+[Level 10] : ^777777+500% MATK, Cast delay 15 secs, consumes 78sp^000000
+#
+WZ_EARTHSPIKE#
+Earth Spike
+Skill Form : ^777777Offensive^00bb00(Earth)^000000
+Target: ^777777Enemy^000000 
+Contents : ^777777Raises the Ground of Which an Enemy is Standing Upon.^000000
+[Level 1] : ^777777Hits 1 time, Cast delay 1sec, consumes 12sp^000000
+[Level 2] : ^777777Hits 2 times, Cast delay 2secs, consumes 14sp^000000
+[Level 3] : ^777777Hits 3 times, Cast delay 3secs, consumes 16sp^000000
+[Level 4] : ^777777Hits 4 times, Cast delay 4secs, consumes 18sp^000000
+[Level 5] : ^777777Hits 5 times, Cast delay 5secs, consumes 20sp^000000
+#
+WZ_HEAVENDRIVE#
+Heaven's Drive
+Skill Form : ^777777Offensive^00bb00(Earth)^000000
+Target: ^777777Ground^000000
+Contents : ^777777Raises the Ground of Which an Enemy is Standing Upon.^000000
+[Level 1] : ^777777Hits 1 time, Cast delay 1sec, consumes 28sp^000000
+[Level 2] : ^777777Hits 2 time, Cast delay 2secs, consumes 32sp^000000
+[Level 3] : ^777777Hits 3 time, Cast delay 3secs, consumes 36sp^000000
+[Level 4] : ^777777Hits 4 time, Cast delay 4secs, consumes 40sp^000000
+[Level 5] : ^777777Hits 5 time, Cast delay 5secs, consumes 44sp^000000
+#
+WZ_QUAGMIRE#
+Quagmire
+Skill Form : ^777777Supportive^00bb00(Earth)^000000
+Target: ^777777Ground^000000
+Contents : ^777777Creates a Marsh on a selected area on the ground to decrease Moving, AGI and DEX of all enemies(Applicable for Party Members as well).^000000
+[Level 1] : ^777777Skill Duration 5secs, consumes 25sp^000000
+[Level 2] : ^777777Skill Duration 10secs, consumes 25sp^000000
+[Level 3] : ^777777Skill Duration 15secs, consumes 25sp^000000
+[Level 4] : ^777777Skill Duration 20secs, consumes 25sp^000000
+[Level 5] : ^777777Skill Duration 25secs, consumes 25sp^000000
+#
+WZ_ESTIMATION#
+Sense
+Skill Form : ^777777Supportive^000000
+Target: ^777777Monster^000000
+Contents : ^777777Shows Detailed Information of a Monster.^000000
+#
+BS_IRON#
+Iron Tempering
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Temper Iron.  Success Rate will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 26%^000000
+[Level 2] : ^777777Success Rate of 32%^000000
+[Level 3] : ^777777Success Rate of 38%^000000
+[Level 4] : ^777777Success Rate of 44%^000000
+[Level 5] : ^777777Success Rate of 50%^000000
+#
+BS_STEEL#
+Steel Tempering
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Temper Steel. Success Rate will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 15%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 25%^000000
+[Level 4] : ^777777Success Rate of 30%^000000
+[Level 5] : ^777777Success Rate of 35%^000000
+#
+BS_ENCHANTEDSTONE#
+Enchanted Stone Craft
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to make 4 kinds of Enchanted Stones.Success Rate will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 15%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 25%^000000
+[Level 4] : ^777777Success Rate of 30%^000000
+[Level 5] : ^777777Success Rate of 35%^000000
+#
+BS_ORIDEOCON#
+Research Oridecon
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Construct Level 3 Weaponry using ^00bb00Oridecon^777777.Success Rate will increase with each Level.^000000
+#
+BS_DAGGER#
+Smith Dagger
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Construct Dagger Class Weapon. Success Rate will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 10%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 30%^000000
+#
+BS_SWORD#
+Smith Sword
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Construct Sword Class Weapon. Success Rate will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 10%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 30%^000000
+#
+BS_TWOHANDSWORD#
+Smith Two-handed Sword
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Construct Two-Handed Class Weapon. Success Rate will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 10%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 30%^000000
+#
+BS_AXE#
+Smith Axe
+Skill Form : ^000099Passive^000000
+Contents :^777777Enable to Construct Axe Class Weapon. Success Rate will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 10%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 30%^000000
+#
+BS_MACE#
+Smith Mace
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Construct Mace Class Weapon. Success Rate will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 10%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 30%^000000
+#
+BS_KNUCKLE#
+Smith Brass Knuckle
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Construct Knuckle Class Weapon. Success Chance will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 10%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 30%^000000
+#
+BS_SPEAR#
+Smith Spear
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enables to Construct Spear Class Weapon. Success Chance will increase with each Level.^000000
+[Level 1] : ^777777Success Rate of 10%^000000
+[Level 2] : ^777777Success Rate of 20%^000000
+[Level 3] : ^777777Success Rate of 30%^000000
+#
+BS_HILTBINDING#
+Hilt Biding
+Skill Form : ^000099Passive^000000
+Contents : ^777777Prevents Weapon from not dropping When defeated by an Enemy.^000000
+[Level 1] : ^777777DEF +5%^000000
+[Level 2] : ^777777DEF +10%^000000
+[Level 3] : ^777777DEF +15%^000000
+[Level 4] : ^777777DEF +20%^000000
+[Level 5] : ^777777DEF +25%^000000
+[Level 6] : ^777777DEF +5%^000000
+[Level 7] : ^777777DEF +10%^000000
+[Level 8] : ^777777DEF +15%^000000
+[Level 9] : ^777777DEF +20%^000000
+[Level 10] : ^777777DEF +25%^000000
+#
+BS_FINDINGORE#
+Ore Discovery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Success Rate of Finding Ores from Monsters.^000000
+#
+BS_WEAPONRESEARCH#
+Weaponry Research
+Skill Form : ^000099Passive^000000
+Contents : ^777777Improves Weapon knowledge to Construct Better Arms.^000000
+
+#
+BS_REPAIRWEAPON#
+Repair Weapon
+Skill Form : ^000099Supportive^000000
+Target: ^777777Weaponry^000000
+Contents : ^777777Repair Damaged Weapons. Requires 5sp and 1 steel.^000000
+#
+BS_SKINTEMPER#
+Skin Tempering
+Skill Form : ^000099Passive^000000
+Contents : ^777777Forms Fire Resistance to increase Defense.^000000
+[Level 1] : ^777777DEF +5%^000000
+[Level 2] : ^777777DEF +10%^000000
+[Level 3] : ^777777DEF +15%^000000
+[Level 4] : ^777777DEF +20%^000000
+[Level 5] : ^777777DEF +25%^000000
+#
+BS_HAMMERFALL#
+Hammerfall
+Skill Form : ^000099Supportive^000000
+Target: ^777777Ground^000000
+Contents : ^777777Shakes the Selected Area to Stun Enemies Around.^000000
+[Level 1] : ^777777Stun Chance of 30%^000000
+[Level 2] : ^777777Stun Chance of 40%^000000
+[Level 3] : ^777777Stun Chance of 50%^000000
+[Level 4] : ^777777Stun Chance of 60%^000000
+[Level 5] : ^777777Stun Chance of 70%^000000
+#
+BS_ADRENALINE#
+Adrenaline Rush
+Skill Form : ^000099Supportive^000000
+Contents : ^777777Quicken Attack Speed Two Times Faster for a while. Only Limited to Axe Class or Mace Class.^000000
+[Level 1] : ^777777Lasts for 30 secs, consumes 20sp^000000
+[Level 2] : ^777777Lasts for 60 secs, consumes 23sp^000000
+[Level 3] : ^777777Lasts for 90 secs, consumes 26sp^000000
+[Level 4] : ^777777Lasts for 120 secs, consumes 29sp^000000
+[Level 5] : ^777777Lasts for 150 secs, consumes 32sp^000000
+#
+BS_WEAPONPERFECT#
+Weapon Perfection
+Skill Form : ^000099Supportive^000000
+Contents : ^777777Enable to Do perfect Damages on Every Sized monsters.^000000
+[Level 1] : ^777777Lasts for 10 secs, consumes 18sp^000000
+[Level 2] : ^777777Lasts for 20 secs, consumes 16sp^000000
+[Level 3] : ^777777Lasts for 30 secs, consumes 14sp^000000
+[Level 4] : ^777777Lasts for 40 secs, consumes 12sp^000000
+[Level 5] : ^777777Lasts for 50 secs, consumes 10sp^000000
+#
+BS_OVERTHRUST#
+Power Thrust
+Skill Form : ^000099Supportive^000000
+Contents : ^777777Improve Weapon Damage and Exhaust the Weapon at the same time.^000000
+[Level 1] : ^777777+105% ATK, Lasts for 20secs, 0.2% Chance Breaking Weapon, Consumes 18sp^000000
+[Level 2] : ^777777+110% ATK, Lasts for 40secs, 0.4% Chance Breaking Weapon, Consumes 16sp^000000
+[Level 3] : ^777777+115% ATK, Lasts for 60secs, 0.6% Chance Breaking Weapon, Consumes 14sp^000000
+[Level 4] : ^777777+120% ATK, Lasts for 80secs, 0.8% Chance Breaking Weapon, Consumes 12sp^000000
+[Level 5] : ^777777+125% ATK, Lasts for 100secs, 1% Chance Breaking Weapon, Consumes 10sp^000000
+#
+BS_MAXIMIZE#
+Maximize Power
+Skill Form : ^000099Supportive^000000
+Contents : ^777777Amplify Weapon Damage.This skill Keeps Consuming SP for the Duration, Need to be Activated again When Canceled.^000000
+[Level 1] : ^777777Uses 10sp, Consumes 1sp Every 1 sec^000000
+[Level 2] : ^777777Uses 10sp, Consumes 1sp Every 2 sec^000000
+[Level 3] : ^777777Uses 10sp, Consumes 1sp Every 3 sec^000000
+[Level 4] : ^777777Uses 10sp, Consumes 1sp Every 4 sec^000000
+[Level 5] : ^777777Uses 10sp, Consumes 1sp Every 5 sec^000000
+#
+HT_SKIDTRAP#
+Skid Trap
+Skill Form : ^000099Hidden Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap to Slide an Enemy toward a Certain Direction. Uses 10sp at all times.^00bb001 Trap^777777 Needed.^000000
+[Level 1] : ^777777Slides Enemy away by 6cell,  Setting Time 300secs^000000
+[Level 2] : ^777777Slides Enemy away by 7cell,  Setting Time 240secs^000000
+[Level 3] : ^777777Slides Enemy away by 8cell,  Setting Time 180secs^000000
+[Level 4] : ^777777Slides Enemy away by 9cell,  Setting Time 120secs^000000
+[Level 5] : ^777777Slides Enemy away by 10cell,  Setting Time 60secs^000000
+#
+HT_LANDMINE#
+Land Mine
+Skill Form : ^000099Hidden Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap explodes when an Enemy Steps on it. Uses 10sp at all times.^00bb001 Trap^777777Needed.^000000
+[Level 1] : ^777777Attack STR 50%, Setting Time 200secs^000000
+[Level 2] : ^777777Attack STR 75%, Setting Time 160secs^000000
+[Level 3] : ^777777Attack STR 100%, Setting Time 120secs^000000
+[Level 4] : ^777777Attack STR 125%, Setting Time 80secs^000000
+[Level 5] : ^777777Attack STR 150%, Setting Time 40secs^000000
+#
+HT_ANKLESNARE#
+Anklesnare
+Skill Form : ^000099Hidden Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap which makes an Enemy cannot Move for a while. Uses 12sp at all times.^00bb001 Trap^777777Needed.^000000
+[Level 1] : ^777777Setting Time 250secs, Holds Enemy for 4secs^000000
+[Level 2] : ^777777Setting Time200secs, Holds Enemy for 8secs^000000
+[Level 3] : ^777777Setting Time150secs, Holds Enemy for 12secs^000000
+[Level 4] : ^777777Setting Time100secs, Holds Enemy for 16secs^000000
+[Level 5] : ^777777Setting Time50secs, Holds Enemy for 20secs^000000
+#
+HT_FLASHER#
+Flasher
+Skill Form : ^000099Hidden Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap which Blinds an Enemy by emitting a Light.^00bb001 Trap^777777Needed.^000000
+[Level 1] : ^777777Setting Time150secs^000000	
+[Level 2] : ^777777Setting Time120secs^000000
+[Level 3] : ^777777Setting Time90secs^000000
+[Level 4] : ^777777Setting Time60secs^000000
+[Level 5] : ^777777Setting Time30secs^000000
+#
+HT_SHOCKWAVE#
+Shockwave Trap
+Skill Form : ^000099Hidden Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap which Drains an Enemy's SP. Uses 45sp at all times.^00bb002 Traps^777777Needed.^000000
+[Level 1] : ^777777SP Consumes 20% of enemy's SP, Setting Time 200secs^000000
+[Level 2] : ^777777SP Consumes 35% of enemy's SP, Setting Time 160secs^000000
+[Level 3] : ^777777SP Consumes 50% of enemy's SP, Setting Time 120secs^000000
+[Level 4] : ^777777SP Consumes 65% of enemy's SP, Setting Time 80secs^000000
+[Level 5] : ^777777SP Consumes 80% of enemy's SP, Setting Time 40secs^000000
+#
+HT_SANDMAN#
+Sandman
+Skill Form : ^000099Hidden Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap which makes an enemy stepping on it and Near Enemies Falling Asleep. Uses 12sp at all times.^00bb001 Trap^777777 Needed.^000000
+[Level 1] : ^777777Setting Time150secs^000000
+[Level 2] : ^777777Setting Time120secs^000000
+[Level 3] : ^777777Setting Time90secs^000000
+[Level 4] : ^777777Setting Time60secs^000000
+[Level 5] : ^777777Setting Time30secs^000000
+#
+HT_FREEZINGTRAP#
+Freezing Trap
+Skill Form : ^000099Hidden Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap which Freezes an Enemy stepping on it. Uses 10sp at all times.^00bb001 Trap^777777 Needed.^000000
+[Level 1] : ^777777Setting Time150secs^000000
+[Level 2] : ^777777Setting Time120secs^000000
+[Level 3] : ^777777Setting Time90secs^000000
+[Level 4] : ^777777Setting Time60secs^000000
+[Level 5] : ^777777Setting Time30secs^000000
+#
+HT_BLASTMINE#
+Blast Mine
+Skill Form : ^000099Visible Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap which Explodes Automatically. Uses 10sp at all times.^00bb001 Trap^777777 Needed.^000000
+[Level 1] : ^777777Explode after 25secs^000000
+[Level 2] : ^777777Explode after 20secs^000000
+[Level 3] : ^777777Explode after 15secs^000000
+[Level 4] : ^777777Explode after 10secs^000000
+[Level 5] : ^777777Explode after 5secs^000000
+#
+HT_CLAYMORETRAP#
+Claymore Trap
+Skill Form : ^000099Visible Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap which Gives Splashed Damages around when an Enemy Steps on it. Uses 15sp al all times.^00bb00 1 Trap^777777 Needed.^000000
+[Level 1] : ^777777Setting Time20secs^000000
+[Level 2] : ^777777Setting Time40secs^000000
+[Level 3] : ^777777Setting Time60secs^000000
+[Level 4] : ^777777Setting Time80secs^000000
+[Level 5] : ^777777Setting Time100secs^000000
+#
+HT_REMOVETRAP#
+Remove Trap
+Skill Form : ^000099Supportive^000000
+Target: ^777777Trap^000000
+Contents : ^777777Remove a Trap Installed.Uses 5sp. After removing, Can Regain a^00bb001 Trap^777777.^000000
+#
+HT_TALKIEBOX#
+Talkie Box
+Skill Form : ^000099Hidden Trap^000000
+Target: ^777777Ground^000000
+Contents : ^777777Install a Trap which Play the Memorized messages when Somebody(Including Player and the Party) Steps on it. Setting Time is 600secs and ^00bb001 Trap^777777 Needed.^000000
+#
+HT_BEASTBANE#
+Beastbane
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increases Attack Strength when Fighting with a Brute Monster.^000000
+[Level 1] : ^777777Attack STR +4^000000
+[Level 2] : ^777777Attack STR +8^000000
+[Level 3] : ^777777Attack STR +12^000000
+[Level 4] : ^777777Attack STR +16^000000
+[Level 5] : ^777777Attack STR +20^000000
+[Level 6] : ^777777Attack STR +24^000000
+[Level 7] : ^777777Attack STR +28^000000
+[Level 8] : ^777777Attack STR +32^000000
+[Level 9] : ^777777Attack STR +36^000000
+[Level 10] : ^777777Attack STR +40^000000
+#
+HT_FALCON#
+Falconry Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enable to Hire a Falcon out from the Hunter Guild. ^000000
+#
+HT_STEELCROW#
+Steel Crow
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Falcon's Damage.^000000
+[Level 1] : ^777777Attack STR +3^000000
+[Level 2] : ^777777Attack STR +6^000000
+[Level 3] : ^777777Attack STR +9^000000
+[Level 4] : ^777777Attack STR +12^000000
+[Level 5] : ^777777Attack STR +15^000000
+[Level 6] : ^777777Attack STR +18^000000
+[Level 7] : ^777777Attack STR +21^000000
+[Level 8] : ^777777Attack STR +24^000000
+[Level 9] : ^777777Attack STR +27^000000
+[Level 10] : ^777777Attack STR +30^000000
+#
+HT_BLITZBEAT#
+Blitz Beat
+Skill Form : ^777777Active^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Manage a Falcon to Attack an Enemy. Attack Range : 3+(Vulture's Eye Lv)^000000
+[Level 1] : ^777777Attacks 1 time, Consumes 10sp^000000
+[Level 2] : ^777777Attacks 2 times, Consumes 13sp^000000
+[Level 3] : ^777777Attacks 3 times, Consumes 16sp^000000
+[Level 4] : ^777777Attacks 4 times, Consumes 19sp^000000
+[Level 5] : ^777777Attacks 5 times, Consumes 22sp^000000
+#
+HT_DETECTING#
+Detect
+Skill Form : ^777777Supportive^000000
+Target: ^777777Ground^000000
+Contents : ^777777Manage a Falcon to Detect hidden Enemies from a Distance.^000000
+[Level 1] : ^777777Detects Hidden Enemies up to 3 cells^000000
+[Level 2] : ^777777Detects Hidden Enemies up to 5 cells^000000
+[Level 3] : ^777777Detects Hidden Enemies up to 7 cells^000000
+[Level 4] : ^777777Detects Hidden Enemies up to 9 cells^000000
+#
+HT_SPRINGTRAP#
+Spring Trap
+Skill Form : ^777777Supportive^000000
+Target: ^777777Trap^000000
+Contents : ^777777Manage a Falcon to Destroy a installed Trap.^000000
+[Level 1] : ^777777Destroys up to 4 cells^000000
+[Level 2] : ^777777Destroys up to 5 cells^000000
+[Level 3] : ^777777Destroys up to 6 cells^000000
+[Level 4] : ^777777Destroys up to 7 cells^000000
+[Level 5] : ^777777Destroys up to 8 cells^000000
+#
+AS_RIGHT#
+Righthand Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Right-Handed Weapon Damage when Equip Two Weapons. In this case the Right-Handed Weapon gives 55% of Attack Damages in the first place.^000000
+[Level 1] : ^777777Attack STR 60%^000000
+[Level 2] : ^777777Attack STR 70%^000000
+[Level 3] : ^777777Attack STR 80%^000000
+[Level 4] : ^777777Attack STR 90%^000000
+[Level 5] : ^777777Attack STR 100%^000000
+#
+AS_LEFT#
+Lefthand Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Left-Handed Weapon Damage when Equip Two Weapons. In this case the Left-Handed Weapon Gives 35% of Attack Damages in the first place.^000000
+[Level 1] : ^777777Attack STR 40%^000000
+[Level 2] : ^777777Attack STR 50%^000000
+[Level 3] : ^777777Attack STR 60%^000000
+[Level 4] : ^777777Attack STR 70%^000000
+[Level 5] : ^777777Attack STR 80%^000000
+#
+AS_KATAR#
+Katar Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Katar Damage.^000000
+[Level 1] : ^777777Attack STR +3^000000
+[Level 2] : ^777777Attack STR +6^000000
+[Level 3] : ^777777Attack STR +9^000000
+[Level 4] : ^777777Attack STR +12^000000
+[Level 5] : ^777777Attack STR +15^000000
+[Level 6] : ^777777Attack STR +18^000000
+[Level 7] : ^777777Attack STR +21^000000
+[Level 8] : ^777777Attack STR +24^000000
+[Level 9] : ^777777Attack STR +27^000000
+[Level 10] : ^777777Attack STR +30^000000
+#
+AS_CLOAKING#
+Cloaking
+Skill Form : ^000099Supportive^000000
+Contents : ^777777Enable to move in the Invisible Status. Only allows to Move clinging to the Wall when Cloaking, This Mode will cancel when seperated from the wall.^000000
+[Level 1] : ^77777715sp to Cloak, Consumes 1sp/4secs^000000
+[Level 2] : ^77777715sp to Cloak, Consumes 1sp/5secs^000000
+[Level 3] : ^77777715sp to Cloak, Consumes 1sp/6secs^000000
+[Level 4] : ^77777715sp to Cloak, Consumes 1sp/7secs^000000
+[Level 5] : ^77777715sp to Cloak, Consumes 1sp/8secs^000000
+#
+AS_SONICBLOW#
+Sonic_Blow
+Skill Form : ^777777Active^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Increase Atack Speed using Katar.^000000
+[Level 1] : ^777777Attack STR 340%, Stun Chance 12%, Consumes 16sp^000000
+[Level 2] : ^777777Attack STR 380%, Stun Chance 14%, Consumes 18sp^000000
+[Level 3] : ^777777Attack STR 420%, Stun Chance 16%, Consumes 20sp^000000
+[Level 4] : ^777777Attack STR 480%, Stun Chance 18%, Consumes 22sp^000000
+[Level 5] : ^777777Attack STR 550%, Stun Chance 20%, Consumes 24sp^000000
+[Level 6] : ^777777Attack STR 600%, Stun Chance 22%, Consumes 26sp^000000
+[Level 7] : ^777777Attack STR 650%, Stun Chance 24%, Consumes 28sp^000000
+[Level 8] : ^777777Attack STR 700%, Stun Chance 26%, Consumes 30sp^000000
+[Level 9] : ^777777Attack STR 750%, Stun Chance 28%, Consumes 32sp^000000
+[Level 10] : ^777777Attack STR 800%, Stun Chance 30%, Consumes 34sp^000000
+#
+AS_GRIMTOOTH#
+Grimtooth
+Skill Form : ^777777Active^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Attack a Near Enemy with Katar When Hide. Cannot Attack an enemy from a distance.^000000
+[Level 1] : ^777777Attacks up to 3cells away, Consumes 2sp^000000
+[Level 2] : ^777777Attacks up to 4cells away, Consumes 2sp^000000
+[Level 3] : ^777777Attacks up to 5cells away, Consumes 2sp^000000
+[Level 4] : ^777777Attacks up to 6cells away, Consumes 2sp^000000
+[Level 5] : ^777777Attacks up to 7cells away, Consumes 2sp^000000
+#
+AS_ENCHANTPOISON#
+Enchant Poison
+Skill Form : ^777777Supportive(Poison)^000000
+Target: ^777777Player^000000
+Contents : ^777777Enchant a Weapon with the Poison property for the Selected Player.^000000
+[Level 1] : ^777777Lasts for 30sec, Poision Chance 3%, Consumes 20sp^000000
+[Level 2] : ^777777Lasts for 45sec, Poision Chance 3%, Consumes 20sp^000000
+[Level 3] : ^777777Lasts for 60sec, Poision Chance 4%, Consumes 20sp^000000
+[Level 4] : ^777777Lasts for 75sec, Poision Chance 4%, Consumes 20sp^000000
+[Level 5] : ^777777Lasts for 90sec, Poision Chance 5%, Consumes 20sp^000000
+[Level 6] : ^777777Lasts for 105sec, Poision Chance 5%, Consumes 20sp^000000
+[Level 7] : ^777777Lasts for 120sec, Poision Chance 6%, Consumes 20sp^000000
+[Level 8] : ^777777Lasts for 135sec, Poision Chance 6%, Consumes 20sp^000000
+[Level 9] : ^777777Lasts for 150sec, Poision Chance 7%, Consumes 20sp^000000
+[Level 10] : ^777777Lasts for 165sec, Poision Chance 7%, Consumes 20sp^000000
+#
+AS_POISONREACT#
+Poison React
+Skill Form : ^777777Supportive(Poison)^000000
+Target: ^777777Player^000000
+Contents : ^777777Enable to Counter for one time when the Selected player hit by a Poisonous attack.^000000
+[Level 1] : ^777777Lasts for 30sec, Consumes 30sp^000000
+[Level 2] : ^777777Lasts for 30sec, Consumes 30sp^000000
+[Level 3] : ^777777Lasts for 30sec, Consumes 27sp^000000
+[Level 4] : ^777777Lasts for 30sec, Consumes 27sp^000000
+[Level 5] : ^777777Lasts for 30sec, Consumes 24sp^000000
+[Level 6] : ^777777Lasts for 30sec, Consumes 24sp^000000
+[Level 7] : ^777777Lasts for 30sec, Consumes 21sp^000000
+[Level 8] : ^777777Lasts for 30sec, Consumes 21sp^000000
+[Level 9] : ^777777Lasts for 30sec, Consumes 18sp^000000
+[Level 10] : ^777777Lasts for 30sec, Consumes 18sp^000000
+#
+AS_VENOMDUST#
+Venom Dust
+Skill Form : ^777777Supportive(Poison)^000000
+Target: ^777777Ground^000000
+Contents : ^777777Spread Poison on the Chosen Place. ^00bb00Red Gemstone^777777 Needed.^000000
+[Level 1] : ^777777Lasts for 5sec, Consumes 20sp^000000
+[Level 2] : ^777777Lasts for 10sec, Consumes 20sp^000000
+[Level 3] : ^777777Lasts for 15sec, Consumes 20sp^000000
+[Level 4] : ^777777Lasts for 20sec, Consumes 20sp^000000
+[Level 5] : ^777777Lasts for 25sec, Consumes 20sp^000000
+[Level 6] : ^777777Lasts for 30sec, Consumes 20sp^000000
+[Level 7] : ^777777Lasts for 35sec, Consumes 20sp^000000
+[Level 8] : ^777777Lasts for 40sec, Consumes 20sp^000000
+[Level 9] : ^777777Lasts for 45sec, Consumes 20sp^000000
+[Level 10] : ^777777Lasts for 50sec, Consumes 20sp^000000
+#
+AS_SPLASHER#
+Venom Splasher
+Skill Form : ^777777Offensive(Poison)^000000
+Target: ^777777Enemy^000000
+Contents : ^777777Make the enemy contagious by Poison and Exploded to Take Damages around. But Only applicable for the Situation when the Poisoned Enemy have HP at least by 1/3.^000000
+[Level 1] : ^777777+220% ATK, Consumes 33sp^000000
+[Level 2] : ^777777+240% ATK, Consumes 36sp^000000
+[Level 3] : ^777777+260% ATK, Consumes 39sp^000000
+[Level 4] : ^777777+280% ATK, Consumes 42sp^000000
+[Level 5] : ^777777+300% ATK, Consumes 45sp^000000
+[Level 6] : ^777777+320% ATK, Consume  48sp^000000
+[Level 7] : ^777777+340% ATK, Consumes 51sp^000000
+[Level 8] : ^777777+360% ATK, Consumes 54sp^000000
+[Level 9] : ^777777+380% ATK, Consumes 57sp^000000
+[Level 10] : ^777777+400% ATK, Consumes 60sp^000000
+#
+NV_FIRSTAID#
+First Aid
+Skill Form : ^777777Supportive(Heal)^000000
+Target : ^777777Caster^000000
+Contents : ^777777Consume 3 SP to restore 5 HP.^000000
+#
+SM_MOVINGRECOVERY#
+HP Recovery While Moving
+Skill Form : ^000099Passive^000000
+Contents : ^777777Enable to restore HP even while moving. However only 25% of normal HP recovery can be recovered by this skill and normal HP recovery doesn't affect on it either.^000000
+#
+AC_MAKINGARROW#
+Arrow Crafting
+Skill Form : ^777777Supportive^000000
+Target : ^777777Item^000000
+Contents : ^777777Transform target items into arrows. Class of arrow or the numbers of amount is affected by sort of target items.^000000
+#
+TF_SPRINKLESAND#
+Sand Attack
+Skill Form : ^777777Offensive(Ground)^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Attack targets sprinkling sands. When used,this skill enables to do 125% of damage dealt by normal attack, can blind targets by chance at the same time.^000000
+#
+MC_CARTREVOLUTION#
+Cart_Revolution
+Skill Form : ^777777Attack^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Hit a target hard using cart,doing splashed damage at the same time. Usually it does 150% of damage dealt by normal attack, but the weight of cart affects on the amount of damage.^000000
+#
+AL_HOLYLIGHT#
+Holy Light
+Skill Form : ^777777Offensive(Holy)^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Summons a Holy light to counter evil.^000000
+#
+MG_ENERGYCOAT#
+Energy Coat
+Skill Form : ^777777Supportive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Wrap the oneself with Spiritual energy to reduce damage being taken by enemies around. Amount of remained SP affects on the amount of damage reduced by the skill, however it requires more and more SP everytime getting attacked.^000000
+#
+NV_TRICKDEAD#
+Play Dead
+Skill Form : ^777777Supportive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Pretend being dead, to avoid menace from strong enemies near. Double use cancels the mode.^000000
+#
+SM_FATALBLOW#
+Fatal Blow
+Skill Form : ^000099Passive^000000
+Contents : ^777777Endow Stun effect by chance when the one uses Bash level 6 or above. The chance of stun is affected by Bash level.^000000
+#
+AC_CHARGEARROW#
+Arrow Repel
+Skill Form : ^777777Attack^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Draw a bow to the fullest to give more power on the arrow. Target will be shoved off 6 cells behind whens attacked by this skill.^000000
+#
+TF_BACKSLIDING#
+Back Slide
+Skill Form : ^777777Supportive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Move back to avoid a threat from enemy safely.^000000
+#
+MC_CHANGECART#
+Change Cart
+Skill Form : ^777777Supportive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Change the appearance of cart among 5 kinds, suited by the level of character.^000000
+#
+SM_AUTOBERSERK#
+Berserk
+Skill Form : ^000099Passive^000000
+Contents : ^777777Makes one furious when the amount of remained HP reaches under 25% of full HP. At this moment, the status of character gets to equal the one being attacked by "Provoke Lv 10" and it lasts until more than 25% of HP is restored or until certain skills or situation forces "being provoked status" to be canceled.^000000
+#
+TF_PICKSTONE#
+Find Stone
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Pick up stones from the ground.^000000
+#
+TF_THROWSTONE#
+Stone Fling
+Skill Form : ^777777Attack^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Does 30 damage which pierces defence rate of the target, using a stone. This skill requires one stone, stuns enemy by chance.^000000
+#
+MC_LOUD#
+Crazy Uproar
+Skill Form : ^777777Supportive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Shout oneself hoarse. Increase STR 4 points more for 5 minutes.^000000
+#
+GD_APPROVAL#
+Official Guild Approval
+Skill Form : ^777777Passive^000000
+Target : ^777777The Guild^000000
+Contents : ^777777Receive a certification as an official guild of the Rune Midgard Kindom. Members in the official guild are authorized to attack an emperium of another guild, who owns a guild territory.^000000
+#
+GD_KAFRACONTRACT#
+Contract With Kafra
+Skill Form : ^777777Passive^000000
+Target : ^777777The Guild^000000
+Contents : ^777777Sign a contract with the Kafra Headquarter, Al De Baran. Through the contract, the guild can hire a Kafra employee for their territory.^000000
+#
+GD_GUARDRESEARCH#
+Guardian Research
+Skill Form : ^777777Passive^000000
+Target : ^777777The Guild^000000
+Contents : ^777777Study then technology of a Guardian. Through the research, the guild can hire guardians for their territory.^000000
+#
+GD_CHARISMA#
+Charisma
+Skill Form : ^777777Passive^000000
+Target : ^777777The Guild Master^000000
+Contents : ^777777Guild master gains charisma through this skill. Master of Charisma can increase the accuracy and flee rate of members in guild wars.^000000
+#
+GD_EXTENSION#
+Guild Extension
+Skill Form : ^777777Passive^000000
+Target : ^777777The Guild^000000
+Contents : ^777777Increase the maximum capacity of guildsmen.^000000
+[Level 1] : ^777777+2 people^000000
+[Level 2] : ^777777+4 people^000000
+[Level 3] : ^777777+6 people^000000
+[Level 4] : ^777777+8 people^000000
+[Level 5] : ^777777+10 people^000000
+[Level 6] : ^777777+12 people^000000
+[Level 7] : ^777777+14 people^000000
+[Level 8] : ^777777+16 people^000000
+[Level 9] : ^777777+18 people^000000
+[Level 10] : ^777777+20 people^000000
+#
+RG_SNATCHER#
+Gank
+Skill Form : ^000099Passive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Steal items from target while attacking. Success rate is affected by the level of Thief skill ^00bb00Steal^777777.^000000
+#
+RG_STEALCOIN#
+Mug
+Skill Form : ^777777Supportive^000000
+Target : ^777777Monster^000000
+Contents : ^777777Steal zeny from target monsters. Impossible to steal again from one monster after a success. Skill level affects the success rate and the amount of zeny stolen.^000000
+#
+RG_BACKSTAP#
+Back Stab
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Only usable when the caster is facing the back of an enemy. Always hit the target without failure.^000000
+^777777Usable while hiding, the status will be canceled by casting this skill.^000000
+#
+RG_TUNNELDRIVE#
+Stalk
+Skill Form : ^000099Passive^000000
+Target : ^777777Caster^000000
+Contents : ^777777Allows its caster to move slowly while hiding.^000000
+#
+RG_RAID#
+Sightless Mind
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Only usable while hiding. Curse ^880000Blind^777777 and ^880000Stun^777777 on a target by low chance. Hiding is canceled when used.^000000
+#
+RG_STRIPWEAPON#
+Divest Weapon
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Forcibly strip the weapon off a target. While used in PvP, the target cannot re-equip the weapon for period of time. Decreases Attack of a monster by 10% for a short amount of time.^000000
+^777777DEX difference between the caster and the target affects on the success chance.^000000
+#
+RG_STRIPSHIELD#
+Divest Shield
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Forcibly strip the shield off a target. While used in PvP, the target cannot re-equip the shield for period of time. For monsters, this skill decreases DEF of a monster by 10% for a short amount of time.^000000
+^777777DEX difference between the caster and the target affects on the success chance.^000000
+#
+RG_STRIPARMOR#
+Divest Armor
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Forcibly strip the armor off a target. While used in PvP, the target cannot re-equip the armor for period of time. For monsters, this skill decreases DEF of a monster by 10% for a short amount of time.^000000
+^777777DEX difference between the caster and the target affects on the success chance.^000000
+#
+RG_STRIPHELM#
+Divest Helm
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Forcibly strip the helmet off a target. While used in PvP, the target cannot re-equip the helmet for period of time.  For monsters, this skill decreases DEF of a monster by 10% for a short amount of time.^000000
+^777777DEX difference between the caster and the target affects on the success chance.^000000
+#
+RG_INTIMIDATE#
+Snatch
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Warps both the target and caster to a random location. Not usable on Boss Monsters. As higher level the caster is, as lower level the target is, the success rate will be increased.^000000
+#
+RG_GRAFFITI#
+Scribble
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Paint graffiti around a chosen cell within a limit of 20 characters.^000000
+^777777Impossible to double the skill on the chosen cell before the graffiti's gone. ^0000991 Big Paint Brush^777777 is required. (Not implemented yet)^000000
+#
+RG_FLAGGRAFFITI#
+Piece
+Skill Form : ^777777Supportive^000000
+Target : ^777777Guild Flag^000000
+Contents : ^777777Paint a graffiti piece on a guild flag. The graffiti will be shown on the guild flag instead of the emblem.^000000
+^777777Skill level affects on the amount of graffiti. ^0000991 Paint Brush^777777 is required. (Not implemented yet)^000000
+#
+RG_CLEANER#
+Remover
+Skill Form : ^777777Supportive^000000
+Target : ^777777Guild Flag^000000
+Contents : ^777777Remove graffiti from a guild flag. ^0000991 Wet Duster^777777 is required. (Not implemented yet)^000000
+#
+RG_GANGSTER#
+Slyness
+Skill Form : ^000099Passive^000000
+Contents : ^777777When more than 2 rogues sit beside each other, monsters will not attack them. Not usable on Boss Monsters.^000000
+#
+RG_COMPULSION#
+Haggle
+Skill Form : ^000099Passive^000000
+Contents : ^777777Purchase items from NPC shops at lower prices.^000000
+[Level 1] : ^777777Discount 9%^000000
+[Level 2] : ^777777Discount 13%^000000
+[Level 3] : ^777777Discount 17%^000000
+[Level 4] : ^777777Discount 21%^000000
+[Level 5] : ^777777Discount 25%^000000
+#
+RG_PLAGIARISM#
+Intimidate
+Skill Form : ^000099Passive^000000
+Contents : ^777777Use the last skill from the last enemy dealt with. Skill level affects the level of skill the caster can remember.^000000
+#
+AM_AXEMASTERY#
+Axe Mastery
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Axe damage.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+AM_LEARNINGPOTION#
+Potion Research
+Skill Form : ^000099Passive^000000
+Contents : ^777777Improve potion value, aid in manufacturing potions at the same time.^000000
+#
+AM_PHARMACY#
+Prepare Potion
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Manufacture potions or chemicals. ^0000991 Medicine Bowl^777777 is required for a skill use, for creating potions each ^000099Potion Creation Guide^777777 is required.^000000
+#
+AM_DEMONSTRATION#
+Bomb
+Skill Form : ^777777Active^bb0000(Fire)^000000
+Target : ^777777Ground^000000
+Contents : ^777777Set the ground on fire with a bottle grenade. This skill damages the weapon of target by a low chance, ^0000991 Bottle Grenade^777777 is required.^000000
+#
+AM_ACIDTERROR#
+Acid Terror
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Attack a target by throwing an acid bottle. This skill damages the armor of target by a low chance. ^0000991 Acid Bottle^777777 is required.^000000
+^777777Skill level affects the success chance of damaging the armor of a target.^000000
+#
+AM_POTIONPITCHER#
+Aid Potion
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Restore HP by throwing a potion to the character. Skill level affects the value and type of potion the caster can use.^000000
+[Level 1] : ^777777Red Potion Usable^000000
+[Level 2] : ^777777Orange Potion Usable^000000
+[Level 3] : ^777777Yellow Potion Usable^000000
+[Level 4] : ^777777White Potion Usable^000000
+[Level 5] : ^777777Blue Potion Usable^000000
+#
+AM_CANNIBALIZE#
+Summon Flora
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Summon ^000099Flora^777777 on a chosen cell for a skill duration. Skill level affects on the maximum HP of Flora. ^0000991 Maneater Bottle^777777 is required.^000000
+^777777Unable to summon more than 3 Flora at a time.^000000
+#
+AM_SPHEREMINE#
+Summon Marine Sphere
+Skill Form : ^777777Support^000000
+Target : ^777777Ground^000000
+Contents : ^777777Summon ^000099Marine Sphere^777777 on a chosen cell. The Marine Spheres will cast ^000099self-destruct^777777 when being attacked. ^0000991 Marine Sphere Bottle^777777is required.^000000
+#
+AM_CP_WEAPON#
+Alchemical Weapon
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Protect a weapon of a party member from being damaged. ^0000991 Glistening Coat^777777 is required.^000000
+^777777Skill level affects on a skill duration.^000000
+#
+AM_CP_SHIELD#
+Synthesized Shield
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Protect a shield of a party member from being damaged. ^0000991 Glistening Coat^777777 is required.^000000
+^777777Skill level affects on a skill duration.^000000
+#
+AM_CP_ARMOR#
+Synthetic Armor
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Protect an armor of a party member from being damaged. ^0000991 Glistening Coat^777777 is required.^000000
+^777777Skill level affects on a skill duration.^000000
+#
+AM_CP_HELM#
+Biochemical Helm
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 Party member^000000
+Contents : ^777777Protect a helm of a party member from being damaged. ^0000991 Glistening Coat^777777 is required.^000000
+^777777Skill level affects on a skill duration.^000000
+#
+AM_BIOETHICS#
+Bioethics
+Skill Form : ^000099Passive^000000
+Contents : ^777777Fundamental skill for creating homunculus.^000000
+#
+AM_BIOTECHNOLOGY#
+Biotechnology
+Skill Form : ^000099Passive^000000
+Contents : ^777777Study biotechnology. Increase the success chance of creating homunculus and the maximum HP of homunculus.^000000
+#
+AM_CREATECREATURE#
+Creature Creation
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Create 1 ^000099Embryo^777777. Skill level affects on the success chance.^000000
+#
+AM_CULTIVATION#
+Cultivation
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Develop an embryo into a homunculus. Skill level affects on the success chance. If the caster already has a homunculus, this skill is not usable.^000000
+#
+AM_FLAMECONTROL#
+Flame Control
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase the success chance of Cultivation skill and fire resistance of the caster.^000000
+#
+AM_CALLHOMUN#
+Call Homunculus
+Skill Form : ^777777Support^000000
+Contents : ^777777Summon or cancel summoning homunculus by consuming a certain amount of SP.^000000
+#
+AM_REST#
+Vaporize
+Skill Form : ^777777Support^000000
+Contents : ^777777Kill current homunculus.^000000
+#
+AM_DRILLMASTER#
+Drillmaster
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase homunculus damage.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+AM_HEALHOMUN#
+Heal Homunculus
+Skill Form : ^777777Supportive^000000
+Target : ^777777Homunculus^000000
+Contents : ^777777Restore HP of honumculus.^000000
+#
+AM_RESURRECTHOMUN#
+Homunculus Resurrection
+Skill Form : ^777777Support^000000
+Target : ^777777Homunculus^000000
+Contents : ^777777Resurrect Homunculus.^000000
+#
+CR_TRUST#
+Faith
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase the maximum HP and holy resistance of the caster.^000000
+#
+CR_AUTOGUARD#
+Guard
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Guard physical attacks including long ranged by a low chance. After use, the caster can not move for 0.3 seconds.^000000
+^777777Guard skill requires a shield. Double casting cancels this skill.^000000
+#
+CR_SHIELDCHARGE#
+Smite
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Smite an enemy with a shield. Target will be forced back and be stunned by a low chance.^000000
+^777777Requires a shield.^000000
+#
+CR_SHIELDBOOMERANG#
+Shield Boomerang
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Attack an enemy from a distance by throwing a shield.^000000
+^777777Damage is affected by the upgrade status and the weight of the shield equipped. Requires a shield.^000000
+#
+CR_REFLECTSHIELD#
+Shield Reflect
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Reflect damage taken from an enemy back to the enemy for the skill duration.^000000
+^777777Applicable only for short range attacks, requires a shield.^000000
+#
+CR_HOLYCROSS#
+Holy Cross
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Deliver double blows to an enemy. The enemy will be cursed with ^880000blind^777777 by a low chance.^000000
+#
+CR_GRANDCROSS#
+Grand Cross
+Skill Form : ^777777Active^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground which automatically attacks enemies around the caster. This skill consumes 20% of HP, also continues to drain the caster's HP for the skill duration.^000000
+^777777This skill cannot be interrupted while casting even when hit by an enemy. Undead and Demon class monsters will go ^880000Blind^777777 with exception to Boss Monsters.^000000
+#
+CR_DEVOTION#
+Sacrifice
+Skill Form : ^777777Supportive^000000
+Target : ^7777771 party member^000000
+Contents : ^777777Revive HP of all members of a party, only works for members with a 10 level difference from the caster. Party members must be in range to benefit from this skill.^000000
+^777777Crusader party members cannot receive this skill effect.^000000
+#
+CR_PROVIDENCE#
+Resistant Souls
+Skill Form : ^777777Supportive^000000
+Target : ^777777Party^000000
+Contents : ^777777Increase party members resistance to demon or holy monsters.^000000
+#
+CR_DEFENDER#
+Defending Aura
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Reduce the caster's damage amount taken from long ranged attacks. The amount damage is affected by the skill level, the caster's attack and movement slow down when using this skill.^000000
+^777777Double casting cancels this skill. Requires a shield.^000000
+#
+CR_SPEARQUICKEN#
+Spear Quicken
+Skill Form : ^777777Active^000000
+Contents : ^777777Increase spear attack speed. Skill level affects on the speed and the duration.^000000
+^777777Requires a spear.^000000
+#
+MO_IRONHAND#
+Iron Fists
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase knuckle and bare hand damage.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+MO_SPIRITSRECOVERY#
+Spiritual Cadence
+Skill Form : ^000099Passive^000000
+Contents : ^777777Restore extra HP and SP every 10 seconds when sitting. Extra HP and SP regeneration have a 20 second delay when weight is over 50%.^000000
+#
+MO_CALLSPIRITS#
+Summon Spirit Sphere
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Summon a spirit sphere. The spirit sphere aids the caster by amplifing skill abilities.^000000
+#
+MO_ABSORBSPIRITS#
+Spiritual Sphere Absorption
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Absorb SP from a spirit sphere. 1 spirit sphere restores 10 SP. Spirit sphere's can be stolen in PvP areas.^000000
+#
+MO_TRIPLEATTACK#
+Raging Trifecta Blow
+Skill Form : ^000099Passive^000000
+Contents : ^777777Deliver 3 blows by a low chance. Can be used in conjunction with ^008800Raging Quadruple Blow^777777.^000000
+#
+MO_BODYRELOCATION#
+Snap
+Skill Form : ^777777Support^000000
+Target : ^777777Ground^000000
+Contents : ^777777Instantly teleport to a chosen location if there is no obstacle between the caster and the location.^000000
+^777777Requires 1 spirit sphere.^000000
+#
+MO_DODGE#
+Flee
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase flee rate.^000000
+#
+MO_INVESTIGATE#
+Occult Impaction
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Deliver a massive psychic impact to an enemy. The higher the defense of an enemy, more damage is dealt. The lower the defense of an enemy, less damage is dealt.^000000
+^777777Requires 1 spirit sphere.^000000
+#
+MO_FINGEROFFENSIVE#
+Throw Spirit Sphere
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Attack an enemy in a distance by throwing a spirit sphere. Skill level affects on the number of Spirit Spheres the caster can use at once.^000000
+^777777Requires Spirit Sphere.^000000
+#
+MO_STEELBODY#
+Mental Strength
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Keep the caster's defense and magic defense at a high rate for the skills duration. Movement and speed become slower. The caster can not use any skill during this skills duration.^000000
+^777777Requires 5 Spirit Spheres.^000000
+#
+MO_BLADESTOP#
+Root
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Stop both the enemy and the caster's movement for the skill duration. Both the enemy and caster become paralyzed until either dies. Higher skill level allows the caster to use certain skills for this skills duration. ^000000
+^777777Impossible to use on Boss Monsters. Requires 1 spirit sphere.^000000
+[Level 1] : ^777777Last 20 seconds^000000
+[Level 2] : ^777777Last 30 seconds, ^008800Throw Spirit Sphere^000000
+[Level 3] : ^777777Last 40 seconds, ^008800Occult Impaction^000000
+[Level 4] : ^777777Last 50 seconds, ^008800Raging Quadruple Blow^000000
+[Level 5] : ^777777Last 60 seconds, ^008800Guillotine Fist^000000
+^777777Guillotine Fist is only usable in Fury status with 4 Spirit Spheres.^000000
+#
+MO_EXPLOSIONSPIRITS#
+Fury
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Increase critical attack rate for the skill duration. SP will not be restored during the skill duration.^000000
+^777777Requires 5 Spirit Spheres.^000000
+#
+MO_EXTREMITYFIST#
+Guillotine Fist
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Only usable during Raging Thrust delay time. Deal a devastating amount of damage by consuming all SP of the caster. Remaining SP amount of the caster affects on the amount of damage the enemy receives. Fury status will be automatically canceled after using this skill.^000000
+^777777SP will not be restored for 5 minutes after skill use. Requires 5 Spirit Spheres.^000000
+#
+MO_CHAINCOMBO#
+Raging Quadruple Blow
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Only usable during Raging Trifecta Blow delay time. Spins a target while delivering 4 blows. Can be used in conjunction with ^008800Raging Thrust^777777.^000000
+#
+MO_COMBOFINISH#
+Raging Thrust
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Only usable during Raging Quadruple Blow delay time. Force back a target by delivering a thrusting blow. Can be used in conjunction with ^008800Guillotine Fist^777777.^000000
+#
+SA_ADVANCEDBOOK#
+Study
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase Book damage.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+SA_CASTCANCEL#
+Cast Cancel
+Skill Form : ^777777Support^000000
+Contents : ^777777Only usable while casting a magic spell. This skill immediately cancels the spell and allows the caster to take an action without a delay. Skill level affects the SP consumption of the spell casted.^000000
+#
+SA_FREECAST#
+Free Cast
+Skill Form : ^000099Passive^000000
+Contents : ^777777Allow the caster to move or to attack during casting a magic spell. Skill level affects on the movement and attack speed.^000000
+#
+SA_SPELLBREAKER#
+Spell Breaker
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Interrupt an enemy casting a magic spell and receive the SP of the spell that enemy was casting.^000000
+#
+SA_AUTOSPELL#
+Hindsight
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Allows casting of a spell while physically attacking an enemy. Spells consume 2/3 the amount of the required SP.^000000
+[Level 1] : ^777777lvl 3^008800 Napalm Beat ^000000
+[Level 2] : ^777777lvl 1^008800 Cold Bolt^777777,^008800 Fire Bolt^777777, ^008800Lightening Bolt^000000
+[Level 3] : ^777777lvl 2^008800 Cold Bolt^777777,^008800 Fire Bolt^777777, ^008800Lightening Bolt ^000000
+[Level 4] : ^777777lvl 3^008800 Cold Bolt^777777,^008800 Fire Bolt^777777, ^008800Lightening Bolt^000000
+[Level 5] : ^777777lvl 1^008800 Soul Strike^000000
+[Level 6] : ^777777lvl 2^008800 Soul Strike^000000
+[Level 7] : ^777777lvl 3^008800 Soul Strike^000000
+[Level 8] : ^777777lvl 1^008800 Fire Ball^000000
+[Level 9] : ^777777lvl 2^008800 Fire Ball^000000
+[Level 10] : ^777777lvl 1^008800 Frost Diver^000000
+^777777Spell skill levels are used within the limit of the skill level the caster has learned.^000000
+#
+SA_MAGICROD#
+Magic Rod
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Consume the SP amount an enemy uses for their skill instead of damage.^000000
+^777777Countering Break Spell with this skill will decrease the targets SP by 20%.^000000
+#
+SA_VOLCANO#
+Volcano
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground which magnetically amplifies all fire attacks. ^008800Ice Wall^777777 can not be casted in this area, ground skills can not be double casted within the area.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777.^000000
+#
+SA_DELUGE#
+Deluge
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground which magnetically amplifies all the water attacks and increases the maximum HP of water attribute characters. Allows use of ^008800Water Ball^777777 and ^008800Aqua Benedicta^777777. Other ground skills can not be doubled within the area.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777.^000000
+#
+SA_VIOLENTGALE#
+Whirlwind
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground which magnetically amplifies all the wind attacks and increases the flee rate of wind attribute characters.^008800Fire Wall^777777 lasts 1.5 times longer within this area. Other ground skills can not be doubled within the area.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777.^000000
+#
+SA_BARRENZONE#
+Barren Zone
+#
+SA_LANDPROTECTOR#
+Magnetic Earth
+Skill Form : ^777777Supportive^000000
+Target : ^777777Ground^000000
+Contents : ^777777Create an area on the ground that blocks all magic spells in which target the ground. Cancels previous ground magic already casted within the targeted area. Other ground skills can not be doubled within the area.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777,^000099 1 Blue Gemstone^777777.^000000
+#
+SA_FLAMELAUNCHER#
+Endow Blaze
+Skill Form : ^777777Supportive^000000
+Property : ^880000Fire^000000
+Target : ^777777Party members^000000
+Contents : ^777777Endow the Fire property on a weapon of a party member. Skill level affects skill failure chance, weapon is destroyed on failure.^000000
+^777777Requires ^0000991 Red Blood^777777.^000000
+#
+SA_FROSTWEAPON#
+Endow Tsunami
+Skill Form : ^777777Supportive^000000
+Property : ^000088Water^000000
+Target : ^777777Party members^000000
+Contents : ^777777Endow the Water property on a weapon of a party member. Skill level affects skill failure chance, weapon is destroyed on failure.^000000
+^777777Requires ^0000991 Crystal Blue^777777.^000000
+#
+SA_LIGHTNINGLOADER#
+Endow Tornado
+Skill Form : ^777777Supportive^000000
+Property : ^00CCCCWind^000000
+Target : ^777777Party members^000000
+Contents : ^777777Endow the Wind property on a weapon of a party member. Skill level affects skill failure chance, weapon is destroyed on failure.^000000
+^777777Requires ^0000991 Wind of Verdure^777777.^000000
+#
+SA_SEISMICWEAPON#
+Endow Quake
+Skill Form : ^777777Supportive^000000
+Property : ^008800Earth^000000
+Target : ^777777Party members^000000
+Contents : ^777777Endow the Earth property on a weapon of a party member. Skill level affects skill failure chance, weapon is destroyed on failure.^000000
+^777777Requires ^0000991 Green Live^777777.^000000
+#
+SA_DRAGONOLOGY#
+Dragonology
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase resistance and damage against Dragon class monsters.^000000
+#
+SA_DISPELL#
+Dispell
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Cancel all magical effects on the caster by a low chance.^000000
+^777777Requires^000099 1 Yellow Gemstone^777777,^000099 1 Red Gemstone^777777.^000000
+#
+SA_ABRACADABRA#
+Hocus-pocus
+Skill Form : ^777777Supportive^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Cast a random skill. Skill level affects the number of skills that can be casted.^000000
+^777777Requires^000099 2 Yellow Gemstone^777777.^000000
+#
+SA_MONOCELL#
+Mono Cell
+Skill Form	 : Active
+Target	 : Enemy
+Contents	 : Change an enemy into a Poring for the skill duration.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_CLASSCHANGE#
+Class Change
+Skill Form	 : Active
+Target	 : Enemy 
+Contents	 : Change an enemy into a Boss Monster for the skill duration.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_SUMMONMONSTER#
+Monster Chant
+Skill Form	 : Active
+Target	 : NA
+Contents	 : Same ability as the Dead Branch
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_REVERSEORCISH#
+Grampus Morph
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Change target's face into a Orc for the skill duration.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_DEATH#
+Grim Reaper
+Skill Form	 : Active
+Target	 : Enemy
+Contents	 : Deliver instant death to a target. The target will not give EXP or Items.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_FORTUNE#
+Gold Digger
+Skill Form	 : Active
+Target	 : Enemy 
+Contents	 : Gain as much zeny as a target's lvl.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_TAMINGMONSTER#
+Beastly Hypnosis
+Skill Form	 : Active
+Target	 : Enemy 
+Contents	 : Tame a tamable monster without the required taming item.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_QUESTION#
+Questioning
+Skill Form	 : Active
+Target	 : Enemy 
+Contents	 : Target shows a emotion.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_GRAVITY#
+Gravity
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Gravity logo shows on the head of target. 
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_LEVELUP#
+Leveling
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Allows the caster to level up.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_INSTANTDEATH#
+Suicide
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Kills the caster. EXP will be lost.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_FULLRECOVERY#
+Rejuvenation
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Recover full HP and SP, also recover from all abnormal status.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+SA_COMA#
+Coma
+Skill Form	 : Active
+Target	 : Caster
+Contents	 : Drop down the caster's HP and SP as 1.
+Etc	 : Exclusive skill can be casted by Hocus-pocus.
+#
+BD_ADAPTATION#
+Amp
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Quit dancing or singing when casting. Can not Encore this skill.^000000
+#
+BD_ENCORE#
+Encore
+Skill Form : ^777777Supportive^000000
+Contents : ^777777Recast the last skill casted. Requires half the SP of the recasted skill.^000000
+#
+BD_LULLABY#
+Lullaby
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that curses ^880000Sleep^777777 by a low chance. Boss Monsters can not be cursed by this skill.^000000
+#
+BD_RICHMANKIM#
+Mental Sensing
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that increases the EXP amount the characters receive. Skill level affects on the amount of increased EXP.^000000
+#
+BD_ETERNALCHAOS#
+Down Tempo
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area where the defense of all the characters within the area drop down to 0.^000000
+#
+BD_DRUMBATTLEFIELD#
+Battle Theme
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Create an area where the attack and defense of party members are increased for the skill duration.^000000
+#
+BD_RINGNIBELUNGEN#
+Harmonic Lick
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that amplifies level 4 weapon damage of party members for the skill duration.^000000
+#
+BD_ROKISWEIL#
+Classical Pluck
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area where all skills and magic are not allowed. Boss Monsters can not be effected by this skill.^000000
+#
+BD_INTOABYSS#
+Power Cord
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that allows party members of the caster to use any skills without required items such as gemstones or traps.^000000
+#
+BD_SIEGFRIED#
+Acoustic Rhythm
+Skill Form : ^000099Ensemble Skill^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that gives Fire and Water resistance to party members.^000000
+[Level 1] : ^880000Fire^777777, ^000088Water^777777 resistance 75%^000000
+[Level 2] : ^880000Fire^777777, ^000088Water^777777 resistance 80%^000000
+[Level 3] : ^880000Fire^777777, ^000088Water^777777 resistance 85%^000000
+[Level 4] : ^880000Fire^777777, ^000088Water^777777 resistance 90%^000000
+[Level 5] : ^880000Fire^777777, ^000088Water^777777 resistance 95%^000000
+#
+BD_RAGNAROK#
+Ragnarok
+#
+BA_MUSICALLESSON#
+Music Lessons
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase the damage of musical instruments and the quality of ^000088Play Skills^777777.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+BA_MUSICALSTRIKE#
+Melody Strike
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Shoot arrows with might. Usable while playing a musical skill.^000000
+^777777Requires a musical instrument, the property of arrow affects the attack property.^000000
+#
+BA_DISSONANCE#
+Unchained Serenade
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area that continually damages enemies within it's range.^000000
+#
+BA_FROSTJOKE#
+Unbarring Octave
+Skill Form : ^777777Active^000000
+Range : ^777777Caster's View^000000
+Contents : ^777777Freeze all enemies withen the caster's view, skill level affects on the chance of freezing enemies. Party members of the caster could be frozen by this skill by a low chance.^000000
+#
+BA_WHISTLE#
+Perfect Tablature
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases the flee rate and perfect dodge rate within it's range.^000000
+#
+BA_ASSASSINCROSS#
+Impressive Riff
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases attack speed within it's range. Cannot increase skills Two-hand Quicken, Adrenalin Rush or long range attack.^000000
+#
+BA_POEMBRAGI#
+Magic Strings
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which reduces magic casting time and delay within it's range.^000000
+#
+BA_APPLEIDUN#
+Song of Lutie
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases the maximum HP of party members and regenerates HP overtime within it's area.^000000
+#
+DC_DANCINGLESSON#
+Dance Lessons
+Skill Form : ^000099Passive^000000
+Contents : ^777777Increase whip damage and the quality of ^000088dancing skills^777777.^000000
+[Level 1] : ^777777Damage +3^000000
+[Level 2] : ^777777Damage +6^000000
+[Level 3] : ^777777Damage +9^000000
+[Level 4] : ^777777Damage +12^000000
+[Level 5] : ^777777Damage +15^000000
+[Level 6] : ^777777Damage +18^000000
+[Level 7] : ^777777Damage +21^000000
+[Level 8] : ^777777Damage +24^000000
+[Level 9] : ^777777Damage +27^000000
+[Level 10] : ^777777Damage +30^000000
+#
+DC_THROWARROW#
+Slinging Arrow
+Skill Form : ^777777Active^000000
+Target : ^777777Enemy^000000
+Contents : ^777777Throw arrows using a whip. Usable while playing musical skills.^000000
+^777777Requires a whip, arrow property affects the attack property.^000000
+#
+DC_UGLYDANCE#
+Hip Shaker
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which continually damages SP of enemies within it's range.^000000
+#
+DC_SCREAM#
+Dazzler
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^880000Stun^777777 all enemies in view, skill level affects on the chance of stunning. Party members could be stunned by a even chance.^000000
+#
+DC_HUMMING#
+Focus Ballet
+Skill Form : ^777777Active^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases accuracy rate within it's range.^000000
+#
+DC_DONTFORGETME#
+Slow Grace
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which decreases movement and attack speed of enemies within it's range. Cancels any skills that increase movement or attack speed.^000000
+#
+DC_FORTUNEKISS#
+Lady Luck
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases the critical attack rate within it's range.^000000
+#
+DC_SERVICEFORYOU#
+Gypsy's Kiss
+Skill Form : ^777777Supportive^000000
+Range : ^7777779 cells around the caster^000000
+Contents : ^777777Cast an area which increases the maximum SP and reduces the SP used for skills of party members.^000000
+#
