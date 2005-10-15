@@ -1094,6 +1094,10 @@ payon_in02 64 56 pay_arche 145 165
 payon_in02 70 33 payon_in02 61 33
 payon_in02 75 67 payon_in02 10 25
 payon_in02 82 45 pay_arche 71 156
+payon 187 233 payon_in03 149 39
+payon_in03 172 33 payon_in03 160 14
+payon_in03 160 15 payon_in03 172 35
+payon_in03 147 39 payon 186 233
 prontera 22 203 prt_fild05 373 205
 prontera 42 67 prt_in 47 29
 prontera 45 346 prt_in 80 113
@@ -1499,7 +1503,8 @@ umbala 106 285 um_dun01 42 27
 umbala 107 130 um_in 99 63
 umbala 138 129 um_in 99 111
 umbala 125 157 um_in 155 111
-umbala 140 197 nif_in 68 14
+# bunjy jump
+#umbala 140 197 nif_in 68 14
 um_dun01 42 27 umbala 106 285
 um_dun01 149 198 um_dun02 52 22
 um_dun02 52 22 um_dun01 149 198
@@ -1508,13 +1513,12 @@ um_fild01 31 374 beach_dun2 258 244
 um_fild01 366 277 um_fild02 22 272
 um_fild01 369 277 um_fild02 22 272
 um_fild01 31 274 beach_dun2 258 244
-um_fild02 22 272 um_fild01 369 277
 um_fild02 188 374 um_fild04 182 13
 um_fild02 373 148 um_fild03 32 145
 um_fild02 373 329 um_fild03 19 334
 um_fild02 22 272 um_fild01 369 277
 um_fild02 373 148 um_fild03 32 145
-um_fild03 19 334 um_fild 02 373 329
+um_fild03 19 334 um_fild02 373 329
 um_fild03 32 145 um_fild02 373 148
 um_fild03 114 50 cmd_fild01 77 366
 um_fild03 243 26 cmd_fild01 178 370
@@ -1552,6 +1556,8 @@ yuno_fild03 382 331 yuno_fild02 19 340
 yuno_fild04 231 288 yuno 158 13
 yuno_fild04 374 82 yuno_fild03 20 79
 yuno_fild04 374 149 yuno_fild03 21 162
+yuno_fild03 179 16 yuno_fild07 179 352
+yuno_fild07 179 353 yuno_fild03 179 17
 yuno_in01 32 36 yuno 196 138
 yuno_in01 32 182 yuno_in01 82 164
 yuno_in01 34 100 yuno 48 151
@@ -1656,3 +1662,8 @@ lou_in02 126 165 louyang 145 174
 louyang 145 174 lou_in02 126 168
 lou_in01 101 119 louyang 218 255
 louyang 218 255 lou_in01 101 122
+lou_dun01 40 201 lou_dun02 288 18
+lou_dun02 288 18 lou_dun01 40 201
+lou_dun02 165 269 lou_dun03 165 35
+lou_dun03 165 35 lou_dun02 165 269
+
