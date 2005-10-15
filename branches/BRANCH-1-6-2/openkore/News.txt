@@ -4,6 +4,7 @@
 
 Bug fixes:
 - Fixed mRO support.
+- Fixed iRO Sakray support.
 
 
 ==================
