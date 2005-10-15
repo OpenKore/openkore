@@ -347,12 +347,16 @@ log				logs storage items to logs\storage.txt
 Display shop items from NPC.
 				lists available shop items from NPC
 desc <store item #>		displays store item description
+
 [switchconf]
 Switch configuration file.
-<filename>			switches configuration file to <filename>
+<filename>			Switches configuration file to <filename>.
+
 [take]
 Take an item from the ground.
-<item #>			take an item from the ground
+<item #>			Take an item from the ground.
+first				Take the first item on the ground.
+
 [talk]
 Manually talk to an NPC.
 <NPC #>				talk to an NPC
