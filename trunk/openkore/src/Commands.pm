@@ -3412,7 +3412,13 @@ sub cmdTake {
 	if ($arg1 eq "") {
 		error	"Syntax Error in function 'take' (Take Item)\n" .
 			"Usage: take <item #>\n";
-	} elsif ($itemsID[$arg1] eq "") {
+	} elsif ($arg1 eq "first" && scalar(keys(%items)) == 0) {
+		error	"Error in function 'take first' (Take Item)\n" .
+			"There are no items near.\n";
+	} elsif ($arg1 eq "first") {
+		my @keys = keys %items;
+		AI::take($keys[0]);
+	} elsif (!$itemsID[$arg1]) {
 		error	"Error in function 'take' (Take Item)\n" .
 			"Item $arg1 does not exist.\n";
 	} else {
