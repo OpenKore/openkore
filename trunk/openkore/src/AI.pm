@@ -963,10 +963,11 @@ sub stand {
 sub take {
 	my $ID = shift;
 	my %args;
+	return if (!$items{$ID});
 	$args{ai_take_giveup}{time} = time;
 	$args{ai_take_giveup}{timeout} = $timeout{ai_take_giveup}{timeout};
 	$args{ID} = $ID;
-	%{$args{pos}} = %{$items{$ID}{pos}};
+	$args{pos} = {%{$items{$ID}{pos}}};
 	AI::queue("take", \%args);
 	debug "Picking up: $items{$ID}{name} ($items{$ID}{binID})\n";
 }

@@ -177,6 +177,8 @@ New commands:
   Display storage item description.
 - eq
   Lists what you are wearing in each equipment slot.
+- take first
+  Takes the first item on the ground.
 - The sell commands have been changed. The new sell commands are:
 
   sell <inventory item #> [<amount>]

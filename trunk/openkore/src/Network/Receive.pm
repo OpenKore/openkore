@@ -2104,7 +2104,7 @@ sub item_disappeared {
 			}
 		}
 		debug "Item Disappeared: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'})\n", "parseMsg_presence";
-		%{$items_old{$args->{ID}}} = %{$items{$args->{ID}}};
+		$items_old{$args->{ID}} = {%{$items{$args->{ID}}}};
 		$items_old{$args->{ID}}{'disappeared'} = 1;
 		$items_old{$args->{ID}}{'gone_time'} = time;
 		delete $items{$args->{ID}};

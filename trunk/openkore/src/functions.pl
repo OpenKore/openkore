@@ -560,6 +560,37 @@ sub mainLoop {
 		$AI::Timeouts::autoConfChangeTime = time;
 	}
 
+	# Update walk.dat
+	if ($conState == 5 && timeOut($AI::Timeouts::mapdrt, $config{intervalMapDrt})) {
+		$AI::Timeouts::mapdrt = time;
+		if ($field{name}) {
+			my $pos = calcPosition($char);
+			open(DATA, ">$Settings::logs_folder/walk.dat");
+			print DATA "$field{name} $field{baseName}\n";
+			print DATA "$pos->{x}\n$pos->{y}\n";
+			if ($ipc && $ipc->connected && $ipc->ready) {
+				print DATA $ipc->host . " " . $ipc->port . " " . $ipc->ID . "\n";
+			} else {
+				print DATA "\n";
+			}
+
+			for (my $i = 0; $i < @npcsID; $i++) {
+				next if ($npcsID[$i] eq "");
+				print DATA "NL " . $npcs{$npcsID[$i]}{pos}{x} . " " . $npcs{$npcsID[$i]}{pos}{y} . "\n";
+			}
+			for (my $i = 0; $i < @playersID; $i++) {
+				next if ($playersID[$i] eq "");
+				print DATA "PL " . $players{$playersID[$i]}{pos_to}{x} . " " . $players{$playersID[$i]}{pos_to}{y} . "\n";
+			}
+			for (my $i = 0; $i < @monstersID; $i++) {
+				next if ($monstersID[$i] eq "");
+				print DATA "ML " . $monsters{$monstersID[$i]}{pos_to}{x} . " " . $monsters{$monstersID[$i]}{pos_to}{y} . "\n";
+			}
+
+			close(DATA);
+		}
+	}
+
 	# Set interface title
 	my $charName = $chars[$config{'char'}]{'name'};
 	$charName .= ': ' if defined $charName;
@@ -702,36 +733,6 @@ sub AI {
 	if (!$xkore && timeOut($timeout{ai_sync})) {
 		$timeout{ai_sync}{time} = time;
 		sendSync(\$remote_socket);
-	}
-
-	if (timeOut($AI::Timeouts::mapdrt, $config{'intervalMapDrt'})) {
-		$AI::Timeouts::mapdrt = time;
-		if ($field{name}) {
-			my $pos = calcPosition($char);
-			open(DATA, ">$Settings::logs_folder/walk.dat");
-			print DATA "$field{name} $field{baseName}\n";
-			print DATA "$pos->{x}\n$pos->{y}\n";
-			if ($ipc && $ipc->connected && $ipc->ready) {
-				print DATA $ipc->host . " " . $ipc->port . " " . $ipc->ID . "\n";
-			} else {
-				print DATA "\n";
-			}
-
-			for (my $i = 0; $i < @npcsID; $i++) {
-				next if ($npcsID[$i] eq "");
-				print DATA "NL " . $npcs{$npcsID[$i]}{pos}{x} . " " . $npcs{$npcsID[$i]}{pos}{y} . "\n";
-			}
-			for (my $i = 0; $i < @playersID; $i++) {
-				next if ($playersID[$i] eq "");
-				print DATA "PL " . $players{$playersID[$i]}{pos_to}{x} . " " . $players{$playersID[$i]}{pos_to}{y} . "\n";
-			}
-			for (my $i = 0; $i < @monstersID; $i++) {
-				next if ($monstersID[$i] eq "");
-				print DATA "ML " . $monsters{$monstersID[$i]}{pos_to}{x} . " " . $monsters{$monstersID[$i]}{pos_to}{y} . "\n";
-			}
-
-			close(DATA);
-		}
 	}
 
 	if (timeOut($char->{muted}, $char->{mute_period})) {
