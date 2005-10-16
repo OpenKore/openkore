@@ -353,6 +353,16 @@ Credits:
 - illusionist: Follow master through warp portal.
 - faithful: Bit-shift packing code
 
+
+==================
+### 1.6.4
+==================
+
+Bug fixes:
+- Fixed mRO support.
+- Fixed iRO Sakray support.
+
+
 ==================
 ### 1.6.3
 ==================
