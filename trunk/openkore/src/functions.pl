@@ -5273,15 +5273,15 @@ sub parseMsg {
 			if ($dist > 0) {
 				# Calculate X axis
 				if ($char->{pos_to}{x} - $monsters{$ID}{pos_to}{x} < 0) {
-					$coords{x} = $monsters{$ID}{pos_to}{x} + 2;
+					$coords{x} = $monsters{$ID}{pos_to}{x} + 3;
 				} else {
-					$coords{x} = $monsters{$ID}{pos_to}{x} - 2;
+					$coords{x} = $monsters{$ID}{pos_to}{x} - 3;
 				}
 				# Calculate Y axis
 				if ($char->{pos_to}{y} - $monsters{$ID}{pos_to}{y} < 0) {
-					$coords{y} = $monsters{$ID}{pos_to}{y} + 2;
+					$coords{y} = $monsters{$ID}{pos_to}{y} + 3;
 				} else {
-					$coords{y} = $monsters{$ID}{pos_to}{y} - 2;
+					$coords{y} = $monsters{$ID}{pos_to}{y} - 3;
 				}
 
 				my (%vec, %pos);

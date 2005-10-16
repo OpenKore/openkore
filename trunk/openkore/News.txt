@@ -100,6 +100,8 @@ Bug fixes:
   then some of the players from the old guild would falsely show up in the
   roster.
 - Display walk speed in 'pl <#>' command at correct resolution.
+- Avoid skill will move (3,3) instead of (2,2) blocks, e.g. for
+  avoiding Minorous' Hammer Fall. Hopefully this will work better.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
