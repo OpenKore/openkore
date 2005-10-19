@@ -72,7 +72,8 @@ sub inventoryItem {
 
 	if ($name =~ /^\d+$/) {
 		# A number was provided
-		return $char->{inventory}[$name]; # will be undef if invalid
+		my $item = $char->{inventory}[$name];
+		return UNIVERSAL::isa($item, 'Item') ? $item : undef;
 	}
 
 	# A name was provided; match it
