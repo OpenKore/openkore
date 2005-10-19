@@ -1384,29 +1384,29 @@ sub cmdExp {
 		"Bytes Sent   : " . formatNumber($bytesSent) . "\n" .
 		"Bytes Rcvd   : " . formatNumber($bytesReceived) . "\n", "info");
 
-		message("-[Monster Killed Count]-----------\n" .
-			"#   ID   Name                Count\n",
+		message("-[Monster Killed Count]-----------------------\n" .
+			"#   ID     Name                      Count\n",
 			"list");
 		for (my $i = 0; $i < @monsters_Killed; $i++) {
 			next if ($monsters_Killed[$i] eq "");
 			message(swrite(
-				"@<< @<<<< @<<<<<<<<<<<<<       @<<< ",
-				[$i, $monsters_Killed[$i]{'nameID'}, $monsters_Killed[$i]{'name'}, $monsters_Killed[$i]{'count'}]),
+				"@<< @<<<<< @<<<<<<<<<<<<<<<<<<<<<<<< @<<< ",
+				[$i, $monsters_Killed[$i]{nameID}, $monsters_Killed[$i]{name}, $monsters_Killed[$i]{count}]),
 				"list");
-			$total += $monsters_Killed[$i]{'count'};
+			$total += $monsters_Killed[$i]{count};
 		}
-		message("----------------------------------\n" .
+		message("----------------------------------------------\n" .
 			"Total number of killed monsters: $total\n" .
-			"----------------------------------\n",
+			"----------------------------------------------\n",
 			"list");
 
-		message("-[Item Change Count]-------------\n", "list");
+		message("-[Item Change Count]--------------------------\n", "list");
 		message(sprintf("%-40s %s\n", 'Name', 'Count'), "list");
 		for my $item (sort keys %itemChange) {
 			next unless $itemChange{$item};
 			message(sprintf("%-40s %5d\n", $item, $itemChange{$item}), "list");
 		}
-		message("---------------------------------\n", "list");
+		message("----------------------------------------------\n", "list");
 
 	} elsif ($arg1 eq "reset") {
 		($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
