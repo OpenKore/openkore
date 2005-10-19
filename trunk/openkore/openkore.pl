@@ -194,7 +194,7 @@ use ChatQueue;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	Network Network::Receive Network::Send Commands Misc AI Skills
 	Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
-	Actor::Party Actor::Unknown Item/);
+	Actor::Party Actor::Unknown Item Match/);
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
