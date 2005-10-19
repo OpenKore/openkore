@@ -104,6 +104,8 @@ Bug fixes:
   avoiding Minorous' Hammer Fall. Hopefully this will work better.
 - Match.pm can now be reloaded via 'rc' command (it wasn't registered properly
   in openkore.pl).
+- Match::inventoryItem() will no longer return false items in holes
+  in the inventory array.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
