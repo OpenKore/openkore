@@ -175,6 +175,17 @@ sub new {
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
+##
+#01C9 97 Skill Area : 011F
+#01CF 28 - <----- ??? - ??????????
+#01D0 8 Vigor condensation 
+#	} elsif ($switch eq "01D0" || $switch eq "01E1") {
+#		$ID = substr($msg, 2, 4);
+#		$count = unpack("S1",substr($msg, 6, 2));
+#		if ($ID eq $accountID) {
+#			$chars[$config{'char'}]{'skills'}{'MO_CALLSPIRITS'}{'count'} = $count;
+#			PrintMessage("Vigor condensation [".$count."]", "pink");
+#		}
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
@@ -185,6 +196,10 @@ sub new {
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
+##
+#01E6 26 Some Player Name.
+#01E9 81 -
+#01EB 10 Party move checksum : 0107. 
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
@@ -3680,6 +3695,9 @@ sub storage_password_request {
 		my $ciphertextBlock = $crypton->encrypt(pack("V*", $num, 0, 0, 0));
 		sendStoragePassword($ciphertextBlock, 3);
 
+	} elsif ($args->{flag} == 8) {	# apparently this flag means that you have entered the wrong password
+									# too many times, and now the server is blocking you from using storage
+		debug "Storage password: unknown flag $args->{flag}\n";
 	} else {
 		debug "Storage password: unknown flag $args->{flag}\n";
 	}
