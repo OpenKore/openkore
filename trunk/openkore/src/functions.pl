@@ -160,8 +160,8 @@ sub initMapChangeVars {
 	
 	$logAppend = ($config{logAppendUsername}) ? "_$config{username}_$config{char}" : '';
 	if ($config{logAppendUsername} && !($Settings::storage_file =~ /$logAppend/)) {
-		$Settings::chat_file     = substr($Settings::chat_file,0,length($Settings::chat_file)-4)."$logAppend.txt";
-		$Settings::monster_log 	 = substr($Settings::monster_log,0,length($Settings::monster_log)-4)."$logAppend.txt";
+		$Settings::chat_file	 = substr($Settings::chat_file,0,length($Settings::chat_file)-4)."$logAppend.txt";
+		$Settings::monster_log	 = substr($Settings::monster_log,0,length($Settings::monster_log)-4)."$logAppend.txt";
 		$Settings::item_log_file = substr($Settings::item_log_file,0,length($Settings::item_log_file)-4)."$logAppend.txt";
 		$Settings::storage_file  = substr($Settings::storage_file,0,length($Settings::storage_file)-4)."$logAppend.txt";
 		$Settings::shop_log_file = substr($Settings::shop_log_file,0,length($Settings::shop_log_file)-4)."$logAppend.txt";
@@ -195,7 +195,7 @@ sub initOtherVars {
 
 # $conState contains the connection state:
 # 1: Not connected to anything		(next step -> connect to master server).
-# 2: Connected to master server		(next step -> connect to login server)
+# 2: Connected to master server 	(next step -> connect to login server)
 # 3: Connected to login server		(next step -> connect to character server)
 # 4: Connected to character server	(next step -> connect to map server)
 # 5: Connected to map server; ready and functional.
@@ -1044,7 +1044,7 @@ sub AI {
 				PeerHost	=> 'openkore.sourceforge.net',
 				PeerPort	=> 80,
 				Proto		=> 'tcp',
-				Timeout		=> 4
+				Timeout 	=> 4
 			);
 			if (!$sock) {
 				$checkUpdate{checked} = 1;
@@ -1168,7 +1168,7 @@ sub AI {
 					     $npcs{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
 						debug "Target NPC $npcs{$npc}{'name'} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
 						$args->{'nameID'} = $npcs{$npc}{'nameID'};
-				     		$args->{'ID'} = $npc;
+						$args->{'ID'} = $npc;
 						$args->{'name'} = $npcs{$npc}{'name'};
 						$args->{'stage'} = 'Talking to NPC';
 						$args->{steps} = [];
@@ -1186,8 +1186,8 @@ sub AI {
 					     $monsters{$ID}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
 						debug "Target Monster-NPC $monsters{$ID}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
 						$args->{'nameID'} = $monsters{$ID}{'nameID'};
-				     		$args->{'ID'} = $ID;
-				     		$args->{monster} = 1;
+						$args->{'ID'} = $ID;
+						$args->{monster} = 1;
 						$args->{'name'} = $monsters{$ID}{'name'};
 						$args->{'stage'} = 'Talking to NPC';
 						$args->{steps} = [];
@@ -1248,7 +1248,7 @@ sub AI {
 			} elsif ( $args->{steps}[0] =~ /n/i ) {
 				sendTalkCancel(\$remote_socket, $args->{ID});
 				$ai_v{'npc_talk'}{'time'} = time;
-				$args->{time}   = time;
+				$args->{time}	= time;
 			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^b(\d+),(\d+)/i ) {
 				my $itemID = $storeList[$1]{nameID};
 				$ai_v{npc_talk}{itemID} = $itemID;
@@ -1481,7 +1481,7 @@ sub AI {
 		}
 
 	} elsif (AI::is("", "route", "attack") &&
-	         $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand}) &&
+		 $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand}) &&
 		 !AI::inQueue("storageAuto") &&
 		 @{$char->{inventory}} > 0) {
 
@@ -2166,8 +2166,8 @@ sub AI {
 						$lockX = int($config{lockMap_x}) if ($config{lockMap_x} ne '');
 						$lockX = int(rand($field{width}) + 1) if (!$config{lockMap_x} && $config{lockMap_y});
 						$lockX += (int(rand($config{lockMap_randX}))+1) if ($config{lockMap_randX} ne '');
-					    	$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
-					    	$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
+						$lockY = int($config{lockMap_y}) if ($config{lockMap_y} ne '');
+						$lockY = int(rand($field{width}) + 1) if (!$config{lockMap_y} && $config{lockMap_x});
 						$lockY += (int(rand($config{lockMap_randY}))+1) if ($config{lockMap_randY} ne '');
 					} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
 				}
@@ -2874,14 +2874,14 @@ sub AI {
 			}
 
 		} elsif ($config{attackCheckLOS} &&
-		         $args->{attackMethod}{distance} > 2 &&
-		         !checkLineSnipable($realMyPos, $realMonsterPos)) {
+			 $args->{attackMethod}{distance} > 2 &&
+			 !checkLineSnipable($realMyPos, $realMonsterPos)) {
 			# We are a ranged attacker without LOS
 
 			# Calculate squares around monster within shooting range, but not
 			# closer than runFromTarget_dist
 			my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
-			                          $args->{attackMethod}{distance},
+						  $args->{attackMethod}{distance},
 									  $config{runFromTarget} ? $config{runFromTarget_dist} : 0);
 
 			my ($master, $masterPos);
@@ -4394,7 +4394,7 @@ sub AI {
 				$config{teleportAuto_minAggressives}
 				&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressives}
 				&& !($config{teleportAuto_minAggressivesInLock} && $field{name} eq $config{'lockMap'})
-		 	) || (
+			) || (
 				$config{teleportAuto_minAggressivesInLock}
 				&& scalar(ai_getAggressives()) >= $config{teleportAuto_minAggressivesInLock}
 				&& $field{name} eq $config{'lockMap'}
@@ -4562,7 +4562,7 @@ sub parseSendMsg {
 	# of time using ai_clientSuspend().
 
 	if ($switch eq "0066") {
- 		# Login character selected
+		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
 
 	} elsif ($switch eq "0072") {
@@ -4680,7 +4680,8 @@ sub parseSendMsg {
 	#}
 
 	if ($sendMsg ne "") {
-		sendToServerByInject(\$remote_socket, $sendMsg);
+		sendMsgToServer(\$remote_socket, $sendMsg);
+		#sendToServerByInject(\$remote_socket, $sendMsg); This sendMsgToServer does the same thing.
 	}
 }
 
@@ -5053,7 +5054,7 @@ sub parseMsg {
 		my $player = Actor::get($venderID);
 		
 		message(center(' Vender: ' . $player->nameIdx . ' ', 79, '-')."\n", "list");
-		message("#  Name                                       Type           Amount       Price\n", "list");
+		message("#  Name				       Type	      Amount	   Price\n", "list");
 		for (my $i = 8; $i < $msg_size; $i+=22) {
 			my $number = unpack("v1", substr($msg, $i + 6, 2));
 
@@ -5101,7 +5102,7 @@ sub parseMsg {
 		# FIXME: Read the packet the server sends us to determine
 		# the shop title instead of using $shop{title}.
 		message(center(" $shop{title} ", 79, '-')."\n", "list");
-		message("#  Name                                          Type        Amount       Price\n", "list");
+		message("#  Name					  Type	      Amount	   Price\n", "list");
 		for (my $i = 8; $i < $msg_size; $i += 22) {
 			my $number = unpack("v1", substr($msg, $i + 4, 2));
 			my $item = $articles[$number] = {};
@@ -5377,7 +5378,7 @@ sub parseMsg {
 		delete $guild{member};
 		for (my $i = 4; $i < $msg_size; $i+=104){
 			$guild{'member'}[$c]{'ID'}    = substr($msg, $i, 4);
-			$guild{'member'}[$c]{'charID'}    = substr($msg, $i+4, 4);
+			$guild{'member'}[$c]{'charID'}	  = substr($msg, $i+4, 4);
 			$jobID = unpack("v1", substr($msg, $i + 14, 2));
 			if ($jobID =~ /^40/) {
 				$jobID =~ s/^40/1/;
@@ -5419,7 +5420,7 @@ sub parseMsg {
 
 	} elsif ($switch eq "016D") {
 		my $ID = substr($msg, 2, 4);
-		my $TargetID =  substr($msg, 6, 4);
+		my $TargetID =	substr($msg, 6, 4);
 		my $online = unpack("V1", substr($msg, 10, 4));
 		undef %guildNameRequest;
 		$guildNameRequest{ID} = $TargetID;
