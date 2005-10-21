@@ -146,6 +146,7 @@ sub new {
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
+#'0144' => ['minimap_indicator', '??????'
 		#'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
 		#'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
 		#'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
@@ -302,9 +303,9 @@ sub account_server_info {
 	message(swrite(
 		"---------Account Info-------------", [undef],
 		"Account ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$accountID), getHex($accountID)],
-		"Sex:        @<<<<<<<<<<<<<<<<<<<<<", [$sex_lut{$accountSex}],
+		"Sex:	     @<<<<<<<<<<<<<<<<<<<<<", [$sex_lut{$accountSex}],
 		"Session ID: @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$sessionID), getHex($sessionID)],
-		"            @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$sessionID2), getHex($sessionID2)],
+		"	     @<<<<<<<<< @<<<<<<<<<<", [unpack("V1",$sessionID2), getHex($sessionID2)],
 		"----------------------------------", [undef],
 	), 'connection');
 
@@ -320,7 +321,7 @@ sub account_server_info {
 	}
 
 	message("--------- Servers ----------\n", 'connection');
-	message("#         Name            Users  IP              Port\n", 'connection');
+	message("#	   Name 	   Users  IP		  Port\n", 'connection');
 	for (my $num = 0; $num < @servers; $num++) {
 		message(swrite(
 			"@<< @<<<<<<<<<<<<<<<<<<<< @<<<<< @<<<<<<<<<<<<<< @<<<<<",
@@ -1636,7 +1637,7 @@ sub emoticon {
 		if ($index ne "") {
 			my $masterID = AI::args($index)->{ID};
 			if ($config{'followEmotion'} && $masterID eq $args->{ID} &&
-		 	       distance($char->{pos_to}, $player->{pos_to}) <= $config{'followEmotion_distance'})
+			       distance($char->{pos_to}, $player->{pos_to}) <= $config{'followEmotion_distance'})
 			{
 				my %args = ();
 				$args{timeout} = time + rand (1) + 0.75;
@@ -1837,8 +1838,8 @@ sub guild_chat {
 	ChatQueue::add('g', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
 
 	Plugins::callHook('packet_guildMsg', {
-	        MsgUser => $chatMsgUser,
-	        Msg => $chatMsg
+		MsgUser => $chatMsgUser,
+		Msg => $chatMsg
 	});
 
 	$args->{chatMsgUser} = $chatMsgUser;
@@ -2480,7 +2481,7 @@ sub npc_store_info {
 
 	if ($ai_seq[0] ne 'buyAuto') {
 		message("----------$name's Store List-----------\n", "list");
-		message("#  Name                    Type           Price\n", "list");
+		message("#  Name		    Type	   Price\n", "list");
 		my $display;
 		for (my $i = 0; $i < @storeList; $i++) {
 			$display = $storeList[$i]{'name'};
@@ -2616,8 +2617,8 @@ sub party_chat {
 	ChatQueue::add('p', $args->{ID}, $chatMsgUser, $chatMsg);
 
 	Plugins::callHook('packet_partyMsg', {
-	        MsgUser => $chatMsgUser,
-	        Msg => $chatMsg
+		MsgUser => $chatMsgUser,
+		Msg => $chatMsg
 	});
 
 	$args->{chatMsgUser} = $chatMsgUser;
@@ -3099,12 +3100,12 @@ sub sense_result {
 	my @size_lut = qw(Small Medium Large);
 	message sprintf("=====================Sense========================\n" .
 			"Monster: %-16s Level: %-12s\n" .
-			"Size:    %-16s Race:  %-12s\n" .
-			"Def:     %-16s MDef:  %-12s\n" .
+			"Size:	  %-16s Race:  %-12s\n" .
+			"Def:	  %-16s MDef:  %-12s\n" .
 			"Element: %-16s HP:    %-12s\n" .
 			"=================Damage Modifiers=================\n" .
-			"Ice: %-3s     Earth: %-3s  Fire: %-3s  Wind: %-3s\n" .
-			"Poison: %-3s  Holy: %-3s   Dark: %-3s  Spirit: %-3s\n" .
+			"Ice: %-3s     Earth: %-3s  Fire: %-3s	Wind: %-3s\n" .
+			"Poison: %-3s  Holy: %-3s   Dark: %-3s	Spirit: %-3s\n" .
 			"Undead: %-3s\n" .
 			"==================================================\n",
 			$monsters_lut{$args->{nameID}}, $args->{level}, $size_lut[$args->{size}], $race_lut[$args->{race}], $args->{def},
@@ -3527,7 +3528,7 @@ sub stats_points_needed {
 	if ($args->{type} == 32) {
 		$char->{points_str} = $args->{val};
 		debug "Points needed for Strength: $args->{val}\n", "parseMsg";
-	} elsif ($args->{type}  == 33) {
+	} elsif ($args->{type}	== 33) {
 		$char->{points_agi} = $args->{val};
 		debug "Points needed for Agility: $args->{val}\n", "parseMsg";
 	} elsif ($args->{type} == 34) {
@@ -3789,7 +3790,7 @@ sub warp_portal_list {
 	push @{$char->{warp}{memo}}, $args->{memo4} if $args->{memo4} ne "";
 
 	message("----------------- Warp Portal --------------------\n", "list");
-	message("#  Place                           Map\n", "list");
+	message("#  Place			    Map\n", "list");
 	for (my $i = 0; $i < @{$char->{warp}{memo}}; $i++) {
 		message(swrite(
 			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<<<<",
