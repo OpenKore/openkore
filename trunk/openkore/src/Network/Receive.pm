@@ -176,17 +176,7 @@ sub new {
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
-##
-#01C9 97 Skill Area : 011F
 #01CF 28 - <----- ??? - ??????????
-#01D0 8 Vigor condensation 
-#	} elsif ($switch eq "01D0" || $switch eq "01E1") {
-#		$ID = substr($msg, 2, 4);
-#		$count = unpack("S1",substr($msg, 6, 2));
-#		if ($ID eq $accountID) {
-#			$chars[$config{'char'}]{'skills'}{'MO_CALLSPIRITS'}{'count'} = $count;
-#			PrintMessage("Vigor condensation [".$count."]", "pink");
-#		}
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
