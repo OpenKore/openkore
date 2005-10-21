@@ -1,5 +1,4 @@
 package Network::Receive;
-package Network::Receive;
 
 use strict;
 use Time::HiRes qw(time usleep);
