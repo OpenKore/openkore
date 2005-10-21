@@ -1,4 +1,5 @@
 package Network::Receive;
+package Network::Receive;
 
 use strict;
 use Time::HiRes qw(time usleep);
@@ -146,7 +147,7 @@ sub new {
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
-#'0144' => ['minimap_indicator', '??????'
+		'0144' => ['minimap_indicator', 'V1 V1 V1 V1 v1 x3', [qw(ID clear x y color)]],
 		#'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
 		#'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
 		#'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
@@ -200,6 +201,7 @@ sub new {
 ##
 #01E6 26 Some Player Name.
 #01E9 81 -
+		'01E9' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16', [qw(ID x y type name user map)]],
 #01EB 10 Party move checksum : 0107. 
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
@@ -2389,6 +2391,19 @@ sub memo_success {
 	}
 }
 
+sub minimap_indicator {
+	my ($self, $args) = @_;
+	if ($args->{clear}) {
+		message "Minimap indicator at location $args->{x}, $args->{y} " .
+		"with the color $args->{color} cleared\n",
+		"info";
+	} else {
+		message "Minimap indicator at location $args->{x}, $args->{y} ".
+		"with the color $args->{color} shown\n",
+		"info";
+	}
+}
+	
 sub mvp_item {
 	my ($self, $args) = @_;
 	my $display = itemNameSimple($args->{itemID});
