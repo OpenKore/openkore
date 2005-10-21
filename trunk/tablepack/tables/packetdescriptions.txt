@@ -122,6 +122,7 @@
 013D Your HP/SP Changed
 013E Skill Cast
 0141 Your Status Changed (Str, Agi, Vit, Int, Dex, Luk, Bonus)
+0144 Mini Map Indicator
 0145 NPC Image
 0147 Skill Use
 0148 Resurrection
