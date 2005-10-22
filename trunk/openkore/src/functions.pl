@@ -4778,6 +4778,7 @@ sub parseMsg {
 				warning("Unknown packet - $switch\n", "connection");
 				dumpData($msg) if ($config{'debugPacket_unparsed'});
 			}
+			Plugins::callHook('parseMsg/unknown', {switch => $switch, msg => $msg});
 			return "";
 		}
 	}
