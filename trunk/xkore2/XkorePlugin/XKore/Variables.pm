@@ -1,4 +1,4 @@
-package $Plugins::current_plugin_folder::XKore::Variables;
+package XKore::Variables;
 use Exporter 'import';
 use base qw(Exporter);
 

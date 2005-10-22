@@ -1,11 +1,11 @@
-package $Plugins::current_plugin_folder::XKore::Functions;
+package XKore::Functions;
 
 use strict;
 use Time::HiRes qw(time usleep);
 use Interface::Console;
 use bytes;
 
-use $Plugins::current_plugin_folder::XKore::Variables qw($tempRecordQueue $xConnectionStatus %currLocationPacket $svrObjIndex
+use XKore::Variables qw($tempRecordQueue $xConnectionStatus %currLocationPacket $svrObjIndex
 	$tempIp $tempPort $programEnder $localServ $port $ghostIndex $clientFeed $mapchange
 	$socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket
 	 $recordSock $recordPacket $firstLogin);
