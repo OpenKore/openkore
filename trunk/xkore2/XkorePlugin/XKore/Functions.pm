@@ -1,11 +1,11 @@
-package XKore::Functions;
+package XkorePlugin::XKore::Functions;
 
 use strict;
 use Time::HiRes qw(time usleep);
 use Interface::Console;
 use bytes;
 
-use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus %currLocationPacket $svrObjIndex
+use XkorePlugin::XKore::Variables qw($tempRecordQueue $xConnectionStatus %currLocationPacket $svrObjIndex
 	$tempIp $tempPort $programEnder $localServ $port $ghostIndex $clientFeed $mapchange
 	$socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket
 	 $recordSock $recordPacket $firstLogin);
@@ -38,9 +38,9 @@ sub forwardToServer {
 	message "Forwarding $switch to the Server\n";
 	if ($switch eq '007D'){
 	# $msgSend =pack("C*", 0x65,0) . $accountID . $sessionID . $sessionID2 . $accountSex;
-		sendMsgToServer(\$socketOut,$msgSend);
+	       sendMsgToServer(\$socketOut,$msgSend);
 	}else{
-		 sendMsgToServer(\$socketOut,$msgSend);
+	       sendMsgToServer(\$socketOut,$msgSend);
 	}
 }
 
@@ -55,17 +55,17 @@ sub forwardToClient {
 	my $accountSex;
 
 	my $extraData = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
-	   $msgSend = substr($msg, 0, $msg_size);
-	message "Forwarding packet $switch length:".length($msgSend)." to the Client\n";
+	my $msgSend = substr($msg, 0, $msg_size);
+	message "Forwarding packet $switch length:".$msg_size." to the Client\n";
 	if ($switch eq '0069'){
 
 		## TODO: REMOVE all the Hexes.. Join using the existing packets.
-		my $fakeMsgSend = $msgSend . pack("C*",127,0,0,1) . pack("S1",$ghostPort) .
+		$msgSend = substr($msgSend, 0, 47).pack("C*",127,0,0,1) . pack("S1",$ghostPort) .
 			"Ghosting Mode" .
 			pack("C*",,0x00,0x00,0x00,0x00,
 			0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00);
 
-		$recordPacket->enqueue($fakeMsgSend) if ($record == 1); #records the "Ghost Mode's" Fake Login.
+		$recordPacket->enqueue($msgSend) if ($record == 1); #records the "Ghost Mode's" Fake Login.
 
 	}elsif ($switch eq '0071'){
 	 #'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
@@ -91,6 +91,7 @@ sub forwardToClient {
 	#'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
 		$mapchange = 1;
 		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$ghostPort); #fake ghost mapserver data
+		$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
 
 	}elsif ($switch eq '0119') {
 		$recordPacket->enqueue($msgSend) if ($record == 1);
@@ -142,6 +143,7 @@ sub forwardToGhost {
 		message "Sending $switch data to on-the-fly Client\n";
 		$recordSocket->sendData($client,$stkData); #sends the queued stuff to the client.
 		$tempRecordQueue->enqueue($stkData);
+		message ("hoe\n") if (!defined($rpackets{$switch})) ;
 		if (!defined($rpackets{$switch}) && $recordPacket->pending && $switch ne '0071'){
 		  #sends the next packet if it's not in the recvpackets.txt
 			$stkData = $recordPacket->dequeue_nb;

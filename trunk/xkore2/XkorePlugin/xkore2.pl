@@ -16,15 +16,14 @@ package xkore2;
 use strict;
 use Time::HiRes qw(time usleep);
 use FindBin qw($RealBin);
-use lib "$RealBin/src";
-use lib "$RealBin/../.../openkore/src";
-use lib "$RealBin/../.../src";
-use Interface::Console;
-use bytes;
+#use lib "$RealBin/src";
+use lib "$RealBin/../src";
 
-use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
+
+use XkorePlugin::XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
 	$ghostIndex $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort
-	$recordSocket $recordSock $recordPacket);	
+	$recordSocket $recordSock $recordPacket);
+use bytes;
 use Thread::Queue;
 use Globals;
 use Modules;
@@ -37,20 +36,16 @@ use Log qw(message warning error debug);
 use Plugins;
 
 my $hooks = Plugins::addHooks(
+       ['mainLoop_pre', \&MainLoop],
+       ['parseMsg/unknown', \&RecvPackets],
        ['parseMsg/pre', \&RecvPackets],
-       ['RO_sendMsg_pre', \&RecvPackets]
+       ['RO_sendMsg_pre', \&SndPackets]
 );
-#########################
-#Files
-#########################
-import Settings qw(addConfigFile);
-my $loadID = addConfigFile("$Settings::tables_folder/recvpackets.txt", \%rpackets, \&parseDataFile2);
-Settings::load($loadID);
 
 ######################
 #The Recorder...
 ######################
-	$record;
+	$record = 1;
 	$ghostPort = 6901;
 	$recordSocket = new XKore::GhostServer($ghostPort);
 	$recordSock;
@@ -65,49 +60,29 @@ Settings::load($loadID);
 #########################
 #Connection stuffs..
 #########################
-use XKore::Functions;
-use XKore::GhostServer;
+use XkorePlugin::XKore::Functions;
+use XkorePlugin::XKore::GhostServer;
 #use variables;
 ######################
 #Main Loop
 ######################
 #Line:4747 Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
+
+sub MainLoop {
+    $recordSocket->iterate;
+}
+
 sub RecvPackets {
-	$switch = shift;
-	$msg = shift;
-	$msg_size = shift;
-	forwardToClient($switch,$msg,$msg_size);
+	my $hookName = shift;
+	my $args = shift;
+	my $switch = $args->{switch};
+	my $msg = $args->{msg};
+	my $msg_size = ($hookName eq 'parseMsg/unknown') ? length($msg) : $args->{msg_size};
+	message "received unknown $switch\n" if ($hookName eq 'parseMsg/unknown');
+	XkorePlugin::XKore::Functions::forwardToClient($switch,$msg,$msg_size);
 
 }
 
-/*
-message "---XKore2---\nWaiting For Controller Client...\n" ;
-while (!$programEnder) {
-	$localServ->iterate;
-	$recordSocket->iterate;
-	usleep 10000;
-	if (defined($socketOut) && dataWaiting(\$socketOut)) {
 
-		$socketOut->recv($msg,$Settings::MAX_READ);
 
-		if ($msg eq '') {
-		 Network::disconnect(\$socketOut);
-
-		} else {
-			$msgSend .= $msg;
-			$msg_length = length($msgSend);
-			#this loop is used to check for the packet length
-
-			while ($msgSend ne "") {
-				$msgSend = XKore::Functions::forwardToClient ($localServ,$msgSend,$localServ->{clients}[$svrObjIndex]);
-				last if ($msg_length == length($msgSend));
-				$msg_length = length($msgSend);
-			}
-
-		}
-
-	}
-
-}
-*/
 1;
