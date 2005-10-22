@@ -20,7 +20,7 @@ use FindBin qw($RealBin);
 use lib "$RealBin/../src";
 
 
-use XkorePlugin::XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
+use $Plugins::current_plugin_folder::XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
 	$ghostIndex $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort
 	$recordSocket $recordSock $recordPacket);
 use bytes;
@@ -47,7 +47,7 @@ my $hooks = Plugins::addHooks(
 ######################
 	$record = 1;
 	$ghostPort = 6901;
-	$recordSocket = new XKore::GhostServer($ghostPort);
+	$recordSocket = new $Plugins::current_plugin_folder::XKore::GhostServer($ghostPort);
 	$recordSock;
 	$recordPacket = new Thread::Queue;
 	$tempRecordQueue = new Thread::Queue;

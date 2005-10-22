@@ -2,10 +2,10 @@ package XKore::GhostServer;
 
 use strict;
 use Time::HiRes qw(time usleep);
-use XkorePlugin::XKore::Functions;
+use $Plugins::current_plugin_folder::XKore::Functions;
 use Base::Server;
 use base qw(Base::Server);
-use XkorePlugin::XKore::Variables qw($xConnectionStatus %rpackets $tempRecordQueue %currLocationPacket
+use $Plugins::current_plugin_folder::XKore::Variables qw($xConnectionStatus %rpackets $tempRecordQueue %currLocationPacket
 	$svrObjIndex $tempIp $tempPort $programEnder $localServ $port $ghostIndex
 	$clientFeed $socketOut $serverNumber $serverIp $serverPort $record $mapchange
 	$ghostPort $recordSocket $recordSock $recordPacket);
@@ -38,7 +38,7 @@ sub onClientExit {
 sub onClientData {
 	my ($self, $client, $data, $index) = @_;
 
-       XkorePlugin::XKore::Functions::forwardToGhost ($client,$data,$ghostIndex);
+       $Plugins::current_plugin_folder::XKore::Functions::forwardToGhost ($client,$data,$ghostIndex);
     #print "Client $index sent the following data: $data\n";
 }
 
