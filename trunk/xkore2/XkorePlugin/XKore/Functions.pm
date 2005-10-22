@@ -36,11 +36,13 @@ sub forwardToServer {
 	my $switch = uc(unpack("H2", substr($msgSend, 1, 1))) . uc(unpack("H2", substr($msgSend, 0, 1)));
 
 	message "Forwarding $switch to the Server\n";
-	if ($switch eq '007D'){
+	if ($switch eq '0065'){
 	# $msgSend =pack("C*", 0x65,0) . $accountID . $sessionID . $sessionID2 . $accountSex;
-	       sendMsgToServer(\$socketOut,$msgSend);
+	       sendMsgToServer(\$remote_socket,$msgSend);
 	}else{
-	       sendMsgToServer(\$socketOut,$msgSend);
+	# is there a way to use the parseSendMsg function in function.pl ?
+	       sendMsgToServer(\$remote_socket,$msgSend);
+
 	}
 }
 
@@ -59,7 +61,6 @@ sub forwardToClient {
 	message "Forwarding packet $switch length:".$msg_size." to the Client\n";
 	if ($switch eq '0069'){
 
-		## TODO: REMOVE all the Hexes.. Join using the existing packets.
 		$msgSend = substr($msgSend, 0, 47).pack("C*",127,0,0,1) . pack("S1",$ghostPort) .
 			"Ghosting Mode" .
 			pack("C*",,0x00,0x00,0x00,0x00,
@@ -72,12 +73,12 @@ sub forwardToClient {
 
 		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$ghostPort); #fake ghost mapserver data
 
-		$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
+		$recordPacket->enqueue($msgSend.$extraData) if ($record == 1); #queue up the faked data
 		$mapchange = 1;
 
 	}elsif ($switch eq '0073') {
 		$currLocationPacket{spawn} = $msgSend; #Force Change map packet
-		$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
+		$recordPacket->enqueue($msgSend.$extraData) if ($record == 1); #queue up the faked data
 		$mapchange = 1;
 
 	}elsif ($switch eq '007D') {
@@ -91,7 +92,7 @@ sub forwardToClient {
 	#'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
 		$mapchange = 1;
 		$msgSend = substr($msgSend,0,22).pack("C*",127,0,0,1) . pack("S1",$ghostPort); #fake ghost mapserver data
-		$recordPacket->enqueue($msgSend) if ($record == 1); #queue up the faked data
+		$recordPacket->enqueue($msgSend.$extraData) if ($record == 1); #queue up the faked data
 
 	}elsif ($switch eq '0119') {
 		$recordPacket->enqueue($msgSend) if ($record == 1);
@@ -105,7 +106,7 @@ sub forwardToClient {
 		$msgSend = '';
 	}else{
 		$mapchange = 0;
-		$recordPacket->enqueue($msgSend) if ($record == 1); #record all other datas not intercepted
+		$recordPacket->enqueue($msgSend.$extraData) if ($record == 1); #record all other datas not intercepted
 	}
 	message "Sending Ghost Data $switch\n" if ($clientFeed == 1);
        $recordSocket->sendData($recordSocket->{clients}[$ghostIndex],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
@@ -144,7 +145,7 @@ sub forwardToGhost {
 		$recordSocket->sendData($client,$stkData); #sends the queued stuff to the client.
 		$tempRecordQueue->enqueue($stkData);
 		message ("hoe\n") if (!defined($rpackets{$switch})) ;
-		if (!defined($rpackets{$switch}) && $recordPacket->pending && $switch ne '0071'){
+		while ((!defined($rpackets{$switch}) && $recordPacket->pending)){
 		  #sends the next packet if it's not in the recvpackets.txt
 			$stkData = $recordPacket->dequeue_nb;
 			$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
