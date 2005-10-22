@@ -36,14 +36,9 @@ sub forwardToServer {
 	my $switch = uc(unpack("H2", substr($msgSend, 1, 1))) . uc(unpack("H2", substr($msgSend, 0, 1)));
 
 	message "Forwarding $switch to the Server\n";
-	if ($switch eq '0065'){
-	# $msgSend =pack("C*", 0x65,0) . $accountID . $sessionID . $sessionID2 . $accountSex;
-	       sendMsgToServer(\$remote_socket,$msgSend);
-	}else{
-	# is there a way to use the parseSendMsg function in function.pl ?
-	       sendMsgToServer(\$remote_socket,$msgSend);
 
-	}
+	       main::parseSendMsg($msgSend);
+
 }
 
 #forwardToClient ( Server Object , Data , $Client Number );
