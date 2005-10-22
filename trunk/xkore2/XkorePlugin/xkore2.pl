@@ -16,11 +16,11 @@ package xkore2;
 use strict;
 use Time::HiRes qw(time usleep);
 use FindBin qw($RealBin);
-#use lib "$RealBin/src";
-use lib "$RealBin/../src";
+use lib "$RealBin/$Plugins::current_plugin_folder";
+#use lib "$RealBin/../src";
 
 
-use $Plugins::current_plugin_folder::XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
+use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
 	$ghostIndex $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort
 	$recordSocket $recordSock $recordPacket);
 use bytes;
@@ -47,7 +47,7 @@ my $hooks = Plugins::addHooks(
 ######################
 	$record = 1;
 	$ghostPort = 6901;
-	$recordSocket = new $Plugins::current_plugin_folder::XKore::GhostServer($ghostPort);
+	$recordSocket = new XKore::GhostServer($ghostPort);
 	$recordSock;
 	$recordPacket = new Thread::Queue;
 	$tempRecordQueue = new Thread::Queue;
@@ -60,8 +60,8 @@ my $hooks = Plugins::addHooks(
 #########################
 #Connection stuffs..
 #########################
-use XkorePlugin::XKore::Functions;
-use XkorePlugin::XKore::GhostServer;
+use XKore::Functions;
+use XKore::GhostServer;
 #use variables;
 ######################
 #Main Loop
@@ -79,7 +79,7 @@ sub RecvPackets {
 	my $msg = $args->{msg};
 	my $msg_size = ($hookName eq 'parseMsg/unknown') ? length($msg) : $args->{msg_size};
 	message "received unknown $switch\n" if ($hookName eq 'parseMsg/unknown');
-	XkorePlugin::XKore::Functions::forwardToClient($switch,$msg,$msg_size);
+	XKore::Functions::forwardToClient($switch,$msg,$msg_size);
 
 }
 
