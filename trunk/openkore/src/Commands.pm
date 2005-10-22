@@ -201,8 +201,15 @@ sub run {
 	$handler = $handlers{$switch} if (!$handler && $handlers{$switch});
 
 	if ($handler) {
+		my %params;
+
+		$params{switch} = $switch;
+		$params{args} = $args;
+		Plugins::callHook("Commands::run/pre", \%params);
 		$handler->($switch, $args);
+		Plugins::callHook("Commands::run/post", \%params);
 		return 1;
+
 	} else {
 		my %params = ( switch => $switch, input => $input );
 		Plugins::callHook('Command_post', \%params);
