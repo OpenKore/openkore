@@ -189,9 +189,7 @@ sub new {
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 ##
 #01E6 26 Some Player Name.
-#01E9 81 -
 		'01E9' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16', [qw(ID x y type name user map)]],
-#01EB 10 Party move checksum : 0107. 
 		'01EB' => ['party_location', 'a4 v1 v1', [qw(ID x y)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
