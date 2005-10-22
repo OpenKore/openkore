@@ -1,11 +1,11 @@
-package XkorePlugin::XKore::Functions;
+package $Plugins::current_plugin_folder::XKore::Functions;
 
 use strict;
 use Time::HiRes qw(time usleep);
 use Interface::Console;
 use bytes;
 
-use XkorePlugin::XKore::Variables qw($tempRecordQueue $xConnectionStatus %currLocationPacket $svrObjIndex
+use $Plugins::current_plugin_folder::XKore::Variables qw($tempRecordQueue $xConnectionStatus %currLocationPacket $svrObjIndex
 	$tempIp $tempPort $programEnder $localServ $port $ghostIndex $clientFeed $mapchange
 	$socketOut $serverNumber $serverIp $serverPort $record $ghostPort $recordSocket
 	 $recordSock $recordPacket $firstLogin);
@@ -35,7 +35,7 @@ sub forwardToServer {
 	my ($roServer,$msgSend) = @_;
 	my $switch = uc(unpack("H2", substr($msgSend, 1, 1))) . uc(unpack("H2", substr($msgSend, 0, 1)));
 
-	message "Forwarding $switch to the Server\n";
+	debug "Forwarding $switch to the Server\n";
 
 	       main::parseSendMsg($msgSend);
 
@@ -53,7 +53,7 @@ sub forwardToClient {
 
 	my $extraData = (length($msg) >= $msg_size) ? substr($msg, $msg_size, length($msg) - $msg_size) : "";
 	my $msgSend = substr($msg, 0, $msg_size);
-	message "Forwarding packet $switch length:".$msg_size." to the Client\n";
+	debug "Forwarding packet $switch length:".$msg_size." to the Client\n";
 	if ($switch eq '0069'){
 
 		$msgSend = substr($msgSend, 0, 47).pack("C*",127,0,0,1) . pack("S1",$ghostPort) .
@@ -103,8 +103,8 @@ sub forwardToClient {
 		$mapchange = 0;
 		$recordPacket->enqueue($msgSend.$extraData) if ($record == 1); #record all other datas not intercepted
 	}
-	message "Sending Ghost Data $switch\n" if ($clientFeed == 1);
-       $recordSocket->sendData($recordSocket->{clients}[$ghostIndex],$msgSend) if ($clientFeed == 1); #Sends message to the Ghost client when it's ready..
+	debug "Sending Ghost Data $switch\n" if ($clientFeed == 1);
+       $recordSocket->sendData($recordSocket->{clients}[$ghostIndex],$msgSend) if ($clientFeed == 1); #Sends debug to the Ghost client when it's ready..
 
 	return 1;
 }
@@ -129,22 +129,22 @@ sub forwardToGhost {
 	}
 	if ($recordPacket->pending && !$clientFeed){
 	       my $stkData = $recordPacket->dequeue_nb; #unqueue the last data and put it in $stkData
-		message "Received on-the-fly Client data $switch\n";
+		debug "Received on-the-fly Client data $switch\n";
 
 		if ($switch eq '0119'){
 			$clientFeed = 1; #stop replaying packets when it's 0073
 		}
 
 		$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
-		message "Sending $switch data to on-the-fly Client\n";
+		debug "Sending $switch data to on-the-fly Client\n";
 		$recordSocket->sendData($client,$stkData); #sends the queued stuff to the client.
 		$tempRecordQueue->enqueue($stkData);
-		message ("hoe\n") if (!defined($rpackets{$switch})) ;
+		debug ("hoe\n") if (!defined($rpackets{$switch})) ;
 		while ((!defined($rpackets{$switch}) && $recordPacket->pending)){
 		  #sends the next packet if it's not in the recvpackets.txt
 			$stkData = $recordPacket->dequeue_nb;
 			$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
-			message "Sending $switch data to on-the-fly Client\n";
+			debug "Sending $switch data to on-the-fly Client\n";
 			$recordSocket->sendData($client,$stkData);
 			$tempRecordQueue->enqueue($stkData);
 		}

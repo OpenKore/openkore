@@ -1,12 +1,12 @@
-package XkorePlugin::XKore::Server;
+package $Plugins::current_plugin_folder::XKore::Server;
 
 use strict;
-use XkorePlugin::XKore::Variables qw($xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder
+use $Plugins::current_plugin_folder::XKore::Variables qw($xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder
 	$localServ $port $ghostIndex $clientFeed $socketOut $serverNumber $serverIp
 	$serverPort $record $ghostPort $recordSocket $recordSock $recordPacket $mapchange);
 
-use XkorePlugin::Network::Send;
-use XkorePlugin::XKore::Functions;
+use $Plugins::current_plugin_folder::Network::Send;
+use $Plugins::current_plugin_folder::XKore::Functions;
 use Base::Server;
 use base qw(Base::Server);
 
@@ -42,7 +42,7 @@ sub onClientExit {
 
 sub onClientData {
 	my ($self, $client, $data, $index) = @_;
-	XkorePlugin::XKore::Functions::forwardToServer ($localServ,$data); #forwards data to the RO server..
+	$Plugins::current_plugin_folder::XKore::Functions::forwardToServer ($localServ,$data); #forwards data to the RO server..
 	##print "Client ($client->{host}) $index sent the following data: $data \n";
 }
 
