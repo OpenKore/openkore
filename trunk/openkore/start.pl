@@ -15,10 +15,10 @@
 # our $quit = 0;
 #
 # sub __start {
-# 	print "Hello world initialized.\n";
-# 	while (!$quit) {
-# 		...
-# 	}
+#	print "Hello world initialized.\n";
+#	while (!$quit) {
+#		...
+#	}
 # }
 #
 # __start() unless defined $ENV{INTERPRETER};
@@ -59,6 +59,7 @@ if (0) {
 	require Win32;
 	require Win32::Console;
 	require Win32::Process;
+	require Thread::Queue; #for xkore2
 	require XSTools;
 }
 
