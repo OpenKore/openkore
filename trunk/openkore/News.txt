@@ -106,6 +106,8 @@ Bug fixes:
   in openkore.pl).
 - Match::inventoryItem() will no longer return false items in holes
   in the inventory array.
+- On servers with the new party packet (01E9) follower bot will now correctly
+  follow its master through portals.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
@@ -346,6 +348,8 @@ Internal:
 - Store $char->{attack_delay}. You attack once every
   $char->{attack_delay}/500 seconds.
 - Use bitshift-packing/unpacking to deal with coordinates in the protocol.
+- Support new packets 0229, 022A, 022B, 022C, 01E9 which caused some official
+  servers (like mRO and pRO) to not handle actors correctly.
 
 Credits:
 - doenet: chatLangCode bugfixes.
