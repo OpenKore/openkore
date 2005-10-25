@@ -88,12 +88,16 @@ sub parseCmd {
   # substitute variables
   while ((undef, $var) = $command =~ /(^|[^\\])\$(\.?[a-z][a-z\d]*)/i) {
     $cvs->debug("found variable $var in $command", $logfac{parser_steps});
-    my $tmp = getVar($var);$command =~ s/(^|[^\\])\$$var([^a-z\d]?)/$1$tmp$2/g;
+    my $tmp = getVar($var); $tmp = "" if !defined $tmp;
+    $var = quotemeta $var;
+    $command =~ s/(^|[^\\])\$$var([^a-z\d]?)/$1$tmp$2/g;
   }
   # substitute doublevars
   while (($var) = $command =~ /\$\{(.*?)\}/i) {
     $cvs->debug("found doublevar $var in $command", $logfac{parser_steps});
-    my $tmp = getVar("#".$var);$command =~ s/\$\{$var\}/$tmp/g;
+    my $tmp = getVar("#".$var); $tmp = "" if !defined $tmp;
+    $var = quotemeta $var;
+    $command =~ s/\$\{$var\}/$tmp/g;
   }
   my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
                  "invamount|cartamount|shopamount|storamount|eval|arg";
