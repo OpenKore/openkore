@@ -175,6 +175,9 @@ sub commandHandler {
     message "Macro::Script ".$Macro::Script::Version."\n";
     message "Macro::Parser ".$Macro::Parser::Version."\n";
     message "Macro::Utilities ".$Macro::Utilities::Version."\n";
+  ### parameter: dump (hidden)
+  } elsif ($arg eq 'dump') {
+    $cvs->dump;
   ### parameter: probably a macro
   } else {
     $queue = new Macro::Script($arg, $argt);

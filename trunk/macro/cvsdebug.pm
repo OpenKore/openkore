@@ -33,6 +33,11 @@ sub DESTROY {
   warning "[$self->{name}] unloading $self->{file} ".
                "debug level was $self->{debug}, have a nice day.\n";
   message "dumping ..\n", "list";
+  dump($self);
+}
+
+sub dump {
+  my $self = shift;
   foreach my $dmp (@{$self->{examine}}) {
     message "parsing $dmp\n", "list";
     if (ref($dmp) eq 'ARRAY') {dumpArray(\@{$dmp})}
