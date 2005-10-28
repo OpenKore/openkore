@@ -158,6 +158,8 @@ New features:
   are now put in a sell list instead of sold immediately.
   See the 'New commands' section.
 - 'i desc' command now accepts item names.
+- (partial) support for oRO commercial servers. Use serverType 6 for this.
+- New Win32::GUI interface. Run 'openkore --interface=Win32' to enable.
 
 New commands:
 - getplayerinfo (number)
@@ -357,11 +359,12 @@ Credits:
 - piroJOKE: new emotions, new fields.
 - hakore: commanddescriptions.txt, avoidGM_ignore/deltaHp fix,
   standpoint bug, equipAuto bug, storage desc command
-- illusionist: fix for force-aggressive monsters not being dropped when no LOS
+- illusionist: fix for force-aggressive monsters not being dropped when no LOS,
+  Follow master through warp portal.
 - clovanzo: Louyang portals
 - h4rry84: Auto Berserk/Preserve status support.
-- illusionist: Follow master through warp portal.
-- faithful: Bit-shift packing code
+- jojobaoil: Bit-shift packing code
+- amacc_boy: Win32::GUI interface
 
 
 ==================
