@@ -176,7 +176,6 @@ sub new {
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
-#01CF 28 - <----- ??? - ??????????
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],

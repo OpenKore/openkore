@@ -455,7 +455,11 @@ sub sendAttack {
 	} elsif ($config{serverType} == 5) {
 		$msg = pack("C*", 0x90, 0x01, 0x00, 0x40, 0x00, 0x00, 0x00, 0x00, 0x08, 0xb0, 0x58) .
 		$monID . pack("C*", 0x3f, 0x74, 0xfb, 0x12, 0x00, 0xd0, 0xda, 0x63, $flag);
+
+	} elsif ($config{serverType} == 6) {
+		$msg = pack("C*", 0x89, 0x00) . $monID . pack("C*", $flag); #broken
 	}
+	
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
@@ -851,6 +855,9 @@ sub sendGetPlayerInfo {
 
 	} elsif ($config{serverType} == 4) {
 		$msg = pack("C*", 0x9B, 0x00) . pack("C*", 0x66, 0x3C, 0x61, 0x62) . $ID;
+		
+	} 	if ($config{serverType} == 6) {
+		$msg = pack("C*", 0x94, 0x00, 0x54, 0x00, 0x44, 0xc1, 0x4b, 0x02, 0x44) . $ID;
 	}
 
 	sendMsgToServer($r_socket, $msg);
@@ -1169,6 +1176,16 @@ sub sendMapLogin {
 			$sessionID .
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
+			
+	} elsif ($config{serverType} == 6) {
+		$msg = pack("C*",0x72, 0x00, 0x00) .
+			$accountID .
+			pack("C*", 0x00, 0xe8, 0xfa) .
+			$charID .
+			pack ("C*", 0x65, 0x00, 0xff, 0xff, 0xff, 0xff) .
+			$sessionID .
+			pack("V", getTickCount()) .
+			pack("C*", $sex);
 
 	} else {
 		# $config{serverType} == 1 || $config{serverType} == 2
@@ -1316,6 +1333,9 @@ sub sendMove {
 	} elsif ($config{serverType} == 5) {
 		$msg = pack("C*", 0xa7, 0x00, 0x62, 0x13, 0x18, 0x13, 0x97, 0x11) .
 		getCoordString($x, $y);
+		
+	} elsif ($config{serverType} == 6) {
+		$msg = pack("C*", 0x85, 0x00, 0x4b) . getCoordString($x, $y);
 		
 	} else {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
