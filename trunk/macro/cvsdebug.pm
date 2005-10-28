@@ -11,7 +11,7 @@
 package cvsdebug;
 
 use strict;
-use Log qw(message warning error);
+use Log qw(message);
 
 sub new {
   my ($class, $file, $debug, @ex) = @_;
@@ -23,38 +23,38 @@ sub new {
                examine => @ex
              };
   bless ($self, $class);
-  warning "[$self->{name}] cvsdebug initialized\n";
+  message "[$self->{name}] cvsdebug initialized\n", "cvsdebug";
   return $self;
 }
 
 sub DESTROY {
   my $self = shift;
   return unless $self->{debug};
-  warning "[$self->{name}] unloading $self->{file} ".
-               "debug level was $self->{debug}, have a nice day.\n";
-  message "dumping ..\n", "list";
-  dump($self);
+  message "[$self->{name}] unloading $self->{file} ".
+               "debug level was $self->{debug}, have a nice day.\n", "cvsdebug";
+  $self->dump();
 }
 
 sub dump {
   my $self = shift;
+  message "dumping ..\n", "cvsdebug";
   foreach my $dmp (@{$self->{examine}}) {
-    message "parsing $dmp\n", "list";
+    message "parsing $dmp\n", "cvsdebug";
     if (ref($dmp) eq 'ARRAY') {dumpArray(\@{$dmp})}
     elsif (ref($dmp) eq 'HASH') {dumpHash(\%{$dmp})}
-    else {message "$$dmp\n"};
-    message "--\n", "list";
+    else {message "$$dmp\n", "cvsdebug"};
+    message "--\n", "cvsdebug";
   }
 }
 
 sub debug {
   my ($self, $message, $level) = @_;
-  if ($self->{debug} & $level) {warning "[$self->{name}] $message\n"}
+  if ($self->{debug} & $level) {message "[$self->{name}] $message\n", "cvsdebug"}
 }
 
 sub setDebug {
   my $self = shift; $self->{debug} = shift if @_;
-  warning "[$self->{name}] debug level: $self->{debug}\n";
+  message "[$self->{name}] debug level: $self->{debug}\n", "cvsdebug";
 }
 
 sub revision {
@@ -64,15 +64,15 @@ sub revision {
 sub dumpHash {
   my ($hash, $level) = @_; $level = 0 unless defined $level;
   foreach my $h (keys %{$hash}) {
-    message "  "x$level."-> $h\n", "list";
+    message "  "x$level."-> $h\n", "cvsdebug";
     if (ref($$hash{$h}) eq 'ARRAY') {dumpArray(\@{$$hash{$h}}, $level+1)}
     elsif (ref($$hash{$h}) eq 'HASH') {dumpHash(\%{$$hash{$h}}, $level+1)}
-    else {message "  "x($level+1)."  $$hash{$h}\n"}
+    else {message "  "x($level+1)."  $$hash{$h}\n", "cvsdebug"}
   }
 }
 
 sub dumpArray {
-  foreach my $a (@{$_[0]}) {message "  "x$_[1]." $a\n"}
+  foreach my $a (@{$_[0]}) {message "  "x$_[1]." $a\n", "cvsdebug"}
 }
 
 sub getRevision {
@@ -111,6 +111,8 @@ $Revision$
     );
     ...
     $cvs->debug "message", $level;
+    ...
+    $cvs->dump();
     ...
     $cvs->setDebug($level);
     ...
@@ -156,6 +158,10 @@ the hashes or arrays you want to dump when destructor is called
 
 Sends I<$message> to console if I<$level> is greater or equal to the level specified
 either when the object was created or C<setDebug($level)> was called.
+
+=item C<dump()>
+
+Dumps the content of the hashes or arrays specified with C<new>
 
 =item C<setDebug($level)>
 
