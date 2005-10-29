@@ -110,6 +110,8 @@ Bug fixes:
   in the inventory array.
 - On servers with the new party packet (01E9) follower bot will now correctly
   follow its master through portals.
+- Bot should no longer cast teleport non-stop when teleportAuto_useSkill is 2,
+  teleportAuto_equip is set, and another player is on screen.
 
 New features:
 - Console::Unix interface no longer has "Press ENTER to continue"
