@@ -1086,6 +1086,10 @@ sub sendItemUse {
 			pack("v*", $ID) .
 			pack("C*", 0x00, 0x18, 0xfb, 0x12) .
 			$targetID;
+	} elsif ($cofig{serverType} == 6) {
+	#a7 00 49 0a 00 fa 12 00  dc f9 12 c6 cf 02 00
+	#a7 00 9b 0b 00 fa 12 00  dc f9 12 c6 cf 02 00
+		$msg = pack("C*", 0xA7, 0x00, 0x49, 0x0a, 0x00,0xfa, 0x12).pack("v*", $ID, 0).$targetID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
@@ -1650,6 +1654,12 @@ sub sendSkillUse {
 			pack("v*", $ID) .
 			pack("C*", 0x8e, 0x00, 0x01, 0xa8, 0x9a, 0x2b, 0x16, 0x12, 0x00, 0x00, 0x00) .
 			$targetID;
+	} elsif ($config{serverType} == 6) {
+	#13 01, 00 00, 45 00, 00 00, 01 00, 00 00, 1a 00, 00 00, 60 00, c6 cf 02 00
+		$msg = pack("v*", 0x0113, 0x0000, 0x0045, 0x00, $lv) .
+			pack("v", 0) .
+			pack("v*", $ID, 0) .
+			pack("v", 0x0060) . $targetID;
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
