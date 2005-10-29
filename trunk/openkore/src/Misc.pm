@@ -1646,7 +1646,7 @@ sub itemName {
 		# List cards in alphabetical order.
 		# Stack identical cards.
 		# e.g. "Hydra*2,Mummy*2", "Hydra*3,Mummy"
-		$suffix = join(',', map {
+		$suffix = join(':', map {
 			cardName($_).($cards{$_} > 1 ? "*$cards{$_}" : '')
 		} sort { cardName($a) cmp cardName($b) } keys %cards);
 	}

@@ -37,6 +37,8 @@ TODO:
 - All FileParsers must return 1 if the file was parsed successfully.
   Otherwise, kore will bail out with an error.
 - Warp Portal-related spells.txt entries translated from Japanese.
+- Cards in item names are now separated by ':' instead of ',', because
+  ',' is also used as a separator in a list of items.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
