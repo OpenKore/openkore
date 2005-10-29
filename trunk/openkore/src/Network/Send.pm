@@ -458,9 +458,9 @@ sub sendAttack {
 
 	} elsif ($config{serverType} == 6) {
 	#89 00 00 00 00 25 B3 C6 00 00 03 04 01 B7 39 03 00 07
-		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00) .
+		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x25) .
 		$monID .
-		pack("C*", 0x00, 0x03, 0x04, 0x01, 0xb7, 0x03, 0x00, $flag);
+		pack("C*", 0x03, 0x04, 0x01, 0xb7, 0x39, 0x03, 0x00, $flag);
 	}
 	
 	sendMsgToServer($r_socket, $msg);
@@ -1909,8 +1909,15 @@ sub sendSync {
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x00, 0x90);
 		$msg .= pack("V", getTickCount());
-	}
 
+	} elsif ($config{serverType} == 6) {
+	#7E 00 94 BF CC 80 42
+		$msg = pack("C*", 0x7E, 0x00);
+		$msg .= pack("C*", 0x30) if ($initialSync);
+		$msg .= pack("C*", 0x94) if (!$initialSync);
+		$msg .= pack("V", getTickCount());
+	}
+	
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }
