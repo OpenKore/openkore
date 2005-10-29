@@ -1415,15 +1415,11 @@ sub AI {
 
 	##### DELAYED-TELEPORT #####
 
-	if ($ai_v{temp}{teleport}{lv} && $ai_seq[0] ne 'equip') {
-		useTeleport($ai_v{temp}{teleport}{lv}, undef, $ai_v{temp}{teleport}{emergency});
-	}
-
 	if (AI::action eq 'teleport') {
 		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
 			# We have already successfully used the Teleport skill,
 			# and the ai_teleport_delay timeout has elapsed
-			sendTeleport(\$remote_socket, "Random");
+			sendTeleport(\$remote_socket, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
 			AI::dequeue;
 		} elsif (!$timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_retry})) {
 			# We are still trying to use the Teleport skill
@@ -3348,7 +3344,7 @@ sub AI {
 	}
 
 	##### AUTO-EQUIP #####
-	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto skill_use take items_gather items_take attack)) || $ai_v{temp}{teleport}{lv})
+	if ((AI::isIdle || AI::is(qw(route mapRoute follow sitAuto skill_use take items_gather items_take attack)))
 	  && timeOut($timeout{ai_item_equip_auto}) && time > $ai_v{'inventory_time'}) {
 
 		my $ai_index_attack = AI::findAction("attack");

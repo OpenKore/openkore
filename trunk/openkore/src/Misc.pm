@@ -2444,12 +2444,15 @@ sub useTeleport {
 	# No skill try to equip a Tele clip or something,
 	# if teleportAuto_equip_* is set
 	if (Item::scanConfigAndCheck('teleportAuto_equip')) {
-		if (!$ai_v{temp}{teleport}{lv}) {
-			debug "Equipping Accessory to teleport\n", "useTeleport";
-			$ai_v{temp}{teleport}{lv} = $use_lvl;
-			$ai_v{temp}{teleport}{emergency} = $emergency;
-			Item::scanConfigAndEquip('teleportAuto_equip');
+		return if AI::inQueue('teleport');
+		debug "Equipping Accessory to teleport\n", "useTeleport";
+		AI::queue('teleport', {lv => $use_lvl});
+		if ($emergency ||
+		    !$config{teleportAuto_useSkill} ||
+		    $config{teleportAuto_useSkill} == 2 && !binSize(\@playersID)) {
+			$timeout{ai_teleport_delay}{time} = 1;
 		}
+		Item::scanConfigAndEquip('teleportAuto_equip');
 		return;
 	}
 
