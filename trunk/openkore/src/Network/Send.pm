@@ -1717,6 +1717,14 @@ sub sendSkillUseLoc {
 			pack("v*", $x) .
 			pack("C*", 0x6D, 0x6E, 0x68, 0x3D, 0x68, 0x6F, 0x0C, 0x0C, 0x93, 0xE5, 0x5C) .
 			pack("v*", $y);
+
+	} elsif ($config{serverType} == 6) {
+#0000  16 01, 00 00, 02 00, 7F 00, 08 15, 00 00 AF FD, 53 00    ..............S.
+#0010  88 FA, 18 05 30 9C, 3C 00, D8 1A B4 76, 26 00          ....0.<....v&.
+		$msg = pack("v*", 0x0116, 0x0000, 0x0000, $lv) .
+			pack("v*", $ID, 0x1508) .
+			pack("V*", 0, 0, 0) .
+			pack("v*", $x, 0x0000, 0x0000, $y);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
