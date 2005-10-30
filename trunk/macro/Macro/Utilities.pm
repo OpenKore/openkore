@@ -78,6 +78,7 @@ sub getArgs {
 
 # gets word from message
 sub getWord {
+  $cvs->debug("getWord(@_)", $logfac{function_call_macro});
   my $arg = shift;
   my ($message, $wordno) = $arg =~ /^"(.*?)",\s?(\d+)$/;
   my @words = split(/[ ,.:;"'!?]/, $message);
