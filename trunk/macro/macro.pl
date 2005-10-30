@@ -25,17 +25,17 @@ use Macro::Parser qw(parseMacroFile);
 use Macro::Automacro qw(automacroCheck consoleCheckWrapper releaseAM);
 use Macro::Utilities qw(setVar callMacro);
 
-$cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]) unless $@;
+$cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]);
 
 #########
 # startup
 Plugins::register('macro', 'allows usage of macros', \&Unload);
 
 my $hooks = Plugins::addHooks(
-            ['configModify',    \&debuglevel, undef],
-            ['start3',          \&postsetDebug, undef],
-            ['start3',          \&checkConfig, undef],
-            ['AI_pre',          \&callMacro, undef]
+            ['configModify', \&debuglevel, undef],
+            ['start3',       \&postsetDebug, undef],
+            ['start3',       \&checkConfig, undef],
+            ['AI_pre',       \&callMacro, undef]
 );
 my $chooks = Commands::register(
             ['macro', "Macro plugin", \&commandHandler]
@@ -53,6 +53,7 @@ sub Unload {
   message "macro unloading, cleaning up.\n", "macro";
   undef $cvs;
   Settings::delConfigFile($cfID);
+  Log::delHook($loghook);
   Plugins::delHooks($hooks);
   Plugins::delHooks($autohooks);
   Commands::unregister($chooks);
