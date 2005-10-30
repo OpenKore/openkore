@@ -101,6 +101,10 @@ sub checkConfig {
     warning "[macro] you did not specify 'macro_delay' in timeouts.txt. Assuming 1s\n";
     $timeout{macro_delay}{timeout} = 1
   }
+  if (!defined $::config{macro_read10608}) {
+    warning "[macro] you should read this thread before using macro cvs: http://openkore.sourceforge.net/forum/viewtopic.php?t=10608\n";
+    Unload;
+  }
 }
 
 # parser for macro_debug config line
