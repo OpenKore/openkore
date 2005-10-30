@@ -11,6 +11,7 @@ our @EXPORT_OK = qw(releaseAM automacroCheck consoleCheckWrapper);
 use Utils;
 use Globals;
 use AI;
+use Item;
 use Log qw(message error warning);
 use Macro::Data;
 use Macro::Utilities qw(between cmpr match getArgs setVar getVar
@@ -57,6 +58,11 @@ sub checkVarVar {
 sub checkLoc {
   $cvs->debug("checkLoc(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $arg = shift;
+  if ($arg =~ /,/) {
+    my @locs = split(/\s*,\s*/, $arg);
+    foreach my $l (@locs) {return 1 if checkLoc($l)}
+    return 0;
+  }
   my $not = 0;
   if ($arg =~ /^not /) {$not = 1; $arg =~ s/^not //g}
   my ($map, $x1, $y1, $x2, $y2) = split(/ /, $arg);
@@ -116,9 +122,14 @@ sub checkPercent {
 sub checkStatus {
   $cvs->debug("checkStatus(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $status = shift;
+  if ($status =~ /,/) {
+    my @statuses = split(/\s*,\s*/, $status);
+    foreach my $s (@statuses) {return 1 if checkStatus($s)}
+    return 0;
+  }
   my $not = 0;
   if ($status =~ /^not /) {$not = 1; $status =~ s/^not +//g}
-   if ($status eq 'muted') {
+  if ($status eq 'muted') {
     if ($char->{muted}) {return $not?0:1}
     else {return $not?1:0}
   }
@@ -138,19 +149,25 @@ sub checkStatus {
 #       getStorageAmount (Macro::Utils?)
 sub checkItem {
   $cvs->debug("checkItem(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
-  my $where = shift;
-  my ($item, $cond, $amount) = getArgs($_[0]);
+  my ($where, $check) = @_;
+  if ($check =~ /,/) {
+    my @checks = split(/\s*,\s*/, $check);
+    foreach my $c (@checks) {return 1 if checkItem($where, $c)}
+    return 0;
+  }
+  my ($item, $cond, $amount) = getArgs($check);
   my $what;
   if ($where eq 'inv')  {$what = getInventoryAmount($item)};
   if ($where eq 'cart') {$what = getCartAmount($item)};
   if ($where eq 'shop') {
-    return 0 unless $shopstarted; $what = getShopAmount($item);
+    return 0 unless $shopstarted;
+    $what = getShopAmount($item);
   }
   if ($where eq 'stor') {
-    return 0 unless $::storage{opened}; $what = getStorageAmount($item);
+    return 0 unless $::storage{opened};
+    $what = getStorageAmount($item);
   }
-  return 1 if cmpr($what, $cond, $amount);
-  return 0;
+  return cmpr($what, $cond, $amount)?1:0;
 }
 
 # checks for near person ##################################
@@ -172,16 +189,36 @@ sub checkCond {
   $cvs->debug("checkCond(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my $what = shift;
   my ($cond, $amount) = split(/ /, $_[0]);
-  return 1 if cmpr($what, $cond, $amount);
-  return 0;
+  return cmpr($what, $cond, $amount)?1:0;
 }
 
 # checks for equipment ####################################
+# equipped <item>, <item2>, ... # equipped item or item2 or ..
+# equipped rightHand <item>, rightAccessory <item2>, ... # equipped <item> on righthand etc.
+# equipped leftHand none, .. # equipped nothing on lefthand etc.
+# see @Item::slots
 sub checkEquip {
   $cvs->debug("checkEquip(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
-  my $equip = shift;
+  my $arg = shift; $arg = quotemeta $arg;
+  if ($arg =~ /,/) {
+    my @equip = split(/\s*,\s*/, $arg);
+    foreach my $e (@equip) {return 1 if checkEquip($e)}
+    return 0;
+  }
+  # check whether or not a slot is given (equipped rightHand whatever)
+  foreach my $slot (@Item::slots) {
+    if ($arg =~ /^$slot\s+/) {
+      $arg =~ s/^$slot\s+//;
+      if (my $item = $char->{equipment}{$slot}{name}) {
+        return lc($item) eq lc($arg)?1:0
+      } else {
+        return $arg eq 'none'?1:0
+      }
+    }
+  }
+  # check for item (equipped whatever)
   foreach my $item (@{$char->{inventory}}) {
-     return 1 if ($item->{equipped} && lc($item->{name}) eq lc($equip));
+     return 1 if ($item->{equipped} && lc($item->{name}) eq lc($arg));
   }
   return 0;
 };
@@ -268,8 +305,8 @@ sub checkConsole {
 sub consoleCheckWrapper {
   return unless defined $conState;
   return unless $_[0] eq 'message';
-  # skip "selfchat" and "macro" domains to avoid loops
-  return if $_[1] =~ /^(selfchat|macro)/;
+  # skip "selfchat", "macro" and "cvsdebug" domains to avoid loops
+  return if $_[1] =~ /^(selfchat|macro|cvsdebug)/;
   my @args = @_;
   automacroCheck("log", \@args);
 }
@@ -282,9 +319,10 @@ sub releaseAM {
     if (defined $automacro{$am}->{disabled}) {
       undef $automacro{$am}->{disabled};
       return 1;
-    } else {return 0}
+    } else {
+      return 0
+    }
   }
-  return;
 }
 
 # parses automacros and checks conditions #################
