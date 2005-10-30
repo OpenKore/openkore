@@ -753,6 +753,12 @@ sub sendDrop {
 			pack("v*", $index) .
 			pack("C*", 0x60, 0x13, 0x14, 0x82, 0x21) .
 			pack("v*", $amount);
+
+	} elsif ($config{serverType} == 6) {
+		$msg = pack("C*", 0xA2, 0x00, 0, 0) .
+			pack("v*", $index) .
+			pack("C*", 0x7f, 0x03, 0xD2, 0xf2) .
+			pack("v*", $amount);
 	}
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
@@ -1919,7 +1925,7 @@ sub sendSync {
 
 sub sendTake {
 	my $r_socket = shift;
-	my $itemID = shift;
+	my $itemID = shift; # $itemID = long
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x9F, 0x00) . $itemID;
@@ -1935,7 +1941,11 @@ sub sendTake {
 
 	} elsif ($config{serverType} == 5) {
 		$msg = pack("C*", 0xf5, 0x00, 0x66, 0x00, 0xff, 0xff, 0xff, 0xff, 0x5c) . $itemID;
+
+	} elsif ($config{serverType} == 6) {
+		$msg = pack("C*", 0x9F, 0x00, 0x7f,) . $itemID;
 	}
+
 	sendMsgToServer($r_socket, $msg);
 	debug "Sent take\n", "sendPacket", 2;
 }
