@@ -119,7 +119,7 @@ sub parseCmd {
     elsif ($kw eq 'arg')        {$ret = getWord($arg)}
     elsif ($kw eq 'eval')       {$ret = eval($arg)};
     return $command if $ret eq '_%_';
-    if (defined $ret) {$arg = quotemeta $arg; $command =~ s/\@$kw +\($arg\)/$ret/g}
+    if (defined $ret) {$arg = quotemeta $arg; $command =~ s/\@$kw\s*\($arg\)/$ret/g}
     else {error "[macro] command $command failed.\n"; return}
   }
   return $command;
