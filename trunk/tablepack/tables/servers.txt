@@ -363,11 +363,11 @@ version 20
 serverType 0
 
 [XileRO PK Private Server]
-ip 65.254.61.19
+ip xilero2.no-ip.info
 port 6901
-master_version 17
+master_version 1
 version 20
-serverType 3
+serverType 4
 
 [ChocoRO Private Server]
 ip 65.110.62.150
