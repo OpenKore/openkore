@@ -577,6 +577,7 @@ sub cmdCard {
 		if ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
 			sendCardMerge(\$remote_socket, -1, -1);
+			message "Cancelling card merge.\n";
 		} else {
 			error	"Error in function 'card mergecancel' (Cancel a card merge request)\n" .
 				"You are not currently in a card merge session.\n";
