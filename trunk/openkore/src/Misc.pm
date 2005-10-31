@@ -478,22 +478,45 @@ sub checkFieldWater {
 sub checkLineSnipable {
 	my $from = shift;
 	my $to = shift;
+	# FIXME: This is not being used anywhere. Is it really necessary?
 	my $min_obstacle_size = shift;
 	$min_obstacle_size = 5 if (!defined $min_obstacle_size);
-
-	my $dist = distance($from, $to);
-	my %vec;
-
-	getVector(\%vec, $to, $from);
-	# Simulate walking from $from to $to
-	for (my $i = 1; $i < $dist; $i++) {
-		my %p;
-		moveAlongVector(\%p, $from, \%vec, $i);
-		$p{x} = int $p{x};
-		$p{y} = int $p{y};
-		return 0 if (!checkFieldSnipable(\%field, $p{x}, $p{y}));
+ 
+	# Simulate tracing a line to the location (Bresenham's algorithm)
+	my ($x0, $y0, $x1, $y1) = ($from->{x}, $from->{y}, $to->{x}, $to->{y});
+	my ($dx, $dy) = ($x1 - $x0, $y1 - $y0);
+	my ($stepx, $stepy);
+	
+	if ($dy < 0) {$dy = -$dy; $stepy = -1;} else {$stepy = 1;}
+	if ($dx < 0) {$dx = -$dx; $stepx = -1;} else {$stepx = 1;}
+	$dy <<= 1;
+	$dx <<= 1;
+	
+	if ($dx > $dy) {
+		my $fraction = $dy - ($dx >> 1);
+		while ($x0 != $x1) {
+			if ($fraction >= 0) {
+				$y0 += $stepy;
+				$fraction -= $dx;
+			}
+			$x0 += $stepx;
+			$fraction += $dy;
+			return 0 if (!checkFieldSnipable(\%field, $x0, $y0));
+		}
+	} else {
+		my $fraction = $dx - ($dy >> 1);
+		while ($y0 != $y1) {
+			if ($fraction >= 0) {
+				$x0 += $stepx;
+				$fraction -= $dy;
+			}
+			$y0 += $stepy;
+			$fraction += $dx;
+			return 0 if (!checkFieldSnipable(\%field, $x0, $y0));
+		}
 	}
 	return 1;
+	
 }
 
 ##

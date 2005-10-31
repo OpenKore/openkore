@@ -2668,7 +2668,10 @@ sub AI {
 		$AI::Temp::attack_route_adjust = time;
 	}
 
-	if (AI::action eq "attack" && timeOut(AI::args->{ai_attack_giveup}) && !$config{attackNoGiveup}) {
+	if (AI::action eq "attack" &&
+	    (timeOut(AI::args->{ai_attack_giveup}) ||
+		 AI::args->{unstuck}{count} > 5) &&
+		!$config{attackNoGiveup}) {
 		my $ID = AI::args->{ID};
 		my $target = Actor::get($ID);
 		$target->{attack_failed} = time if ($monsters{$ID});
@@ -3030,6 +3033,7 @@ sub AI {
 				$args->{unstuck}{time} = time;
 				debug("Attack - trying to unstuck\n", "ai_attack");
 				move($myPos->{x}, $myPos->{y});
+				$args->{unstuck}{count}++;
 			}
 
 			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {

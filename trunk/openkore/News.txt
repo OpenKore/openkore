@@ -164,6 +164,11 @@ New features:
 - 'i desc' command now accepts item names.
 - (partial) support for oRO commercial servers. Use serverType 6 for this.
 - New Win32::GUI interface. Run 'openkore --interface=Win32' to enable.
+- New Brehensam checkLineSnipable() algorithm. Maybe it'll work better
+  in some cases, though it's still not perfect.
+- Hunters that keep trying to shoot at something they don't really have
+  LOS to will now "Cannot reach or damage target, dropping target"
+  correctly (AI::args->{unstuck}{count}).
 
 New commands:
 - getplayerinfo (number)
