@@ -311,6 +311,13 @@ sub consoleCheckWrapper {
   automacroCheck("log", \@args);
 }
 
+# checks for map change
+sub checkMapChange {
+  $cvs->debug("checkMapChange(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
+  my $map = shift;
+  return ($map eq '*' || existsInList($map, $field{name}))?1:0;
+}
+
 # removes an automacro from runonce list ##################
 sub releaseAM {
   $cvs->debug("releaseAM(@_)", $logfac{function_call_macro});
@@ -332,13 +339,14 @@ sub automacroCheck {
 
   # do not run an automacro if there's already a macro running
   return 0 if (AI::is('macro') || defined $queue);
+  $lockAMC = 1; # to avoid checking two events at the same time
 
   CHKAM: foreach my $am (keys %automacro) {
     next CHKAM if $automacro{$am}->{disabled};
 
     if (defined $automacro{$am}->{call} && !defined $macro{$automacro{$am}->{call}}) {
       error "[macro] automacro $am: macro ".$automacro{$am}->{call}." not found.\n";
-      $automacro{$am}->{disabled} = 1; return;
+      $automacro{$am}->{disabled} = 1; undef $lockAMC; return;
     }
     if (defined $automacro{$am}->{console}) {
       if ($trigger eq 'log') {
@@ -368,6 +376,11 @@ sub automacroCheck {
     if (defined $automacro{$am}->{guild}) {
       if ($trigger eq 'packet_guildMsg') {
         next CHKAM if !checkMsg(".lastguild", $automacro{$am}->{guild}, $args);
+      } else {next CHKAM}
+    }
+    if (defined $automacro{$am}->{mapchange}) {
+      if ($trigger eq 'packet_mapChange') {
+        next CHKAM if !checkMapChange($automacro{$am}->{mapchange});
       } else {next CHKAM}
     }
     if (defined $automacro{$am}->{timeout}) {
@@ -411,7 +424,7 @@ sub automacroCheck {
     $automacro{$am}->{disabled} = 1 if $automacro{$am}->{'run-once'};
 
     foreach my $i (@{$automacro{$am}->{set}}) {
-       my ($var, $val) = $i =~ /^(.*?) +(.*)$/;
+       my ($var, $val) = $i =~ /^(.*?)\s+(.*)$/;
        setVar($var, $val);
     }
 
@@ -425,8 +438,10 @@ sub automacroCheck {
       }
     }
 
+    undef $lockAMC;
     return; # don't execute multiple macros at once
   }
+  undef $lockAMC;
 }
 
 

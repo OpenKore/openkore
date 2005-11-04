@@ -35,7 +35,7 @@ sub parseMacroFile {
 
     if (!%block && /{$/) {
       s/\s*{$//;     # remove { at end of line
-      my ($key, $value) = $_ =~ /^(.*?) (.*)/;
+      my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
       if ($key eq 'macro') {
         %block = (name => $value, type => "macro");
         $macro{$value} = [];
@@ -63,9 +63,9 @@ sub parseMacroFile {
       } elsif ($block{loadmacro}) {
         push(@{$macro{$block{loadmacro_name}}}, $_);
       } else {
-        my ($key, $value) = $_ =~ /^(.*?) (.*)/;
+        my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
         next unless $key;
-        if ($key =~ /^(map|class|timeout|disabled|call|spell|pm|pubm|guild|party|console)$/) {
+        if ($key =~ /^(map|mapchange|class|timeout|disabled|call|spell|pm|pubm|guild|party|console)$/) {
           $automacro{$block{name}}->{$key} = $value;
         } else {
           push(@{$automacro{$block{name}}->{$key}}, $value);
