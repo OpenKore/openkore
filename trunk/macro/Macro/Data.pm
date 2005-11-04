@@ -6,13 +6,14 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac);
+our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac $lockAMC);
 
 our %macro;
 our %automacro;
 our %varStack;
 our $queue;
 our $cvs;
+our $lockAMC;
 
 our %logfac = (
   "variable_trace"      => 1,    # tracks variables
