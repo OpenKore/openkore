@@ -88,7 +88,7 @@ fill_filelist ()
 {
 	long i;
 	unsigned long num = 0;
-	GtkTreeIter iter = {};
+	GtkTreeIter iter;
 	gchar *search;
 	GPatternSpec *pattern = NULL;
 

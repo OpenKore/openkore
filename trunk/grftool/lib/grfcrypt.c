@@ -316,8 +316,9 @@ DES_ProcessBlock(uint8_t rounds, uint8_t *dst, const uint8_t *src, const char *k
 	DES_Permutation(dst, DES_IP);
 
 	if (rounds>0) {
-		for(i=0;i<rounds;i++) {
-			DES_RawProcessBlock(dst,ks+(dir==GRFCRYPT_DECRYPT? 0xF-i:i)*8);
+		for(i = 0; i < rounds; i++) {
+			int j = (dir == GRFCRYPT_DECRYPT ? 0xF - i : i);
+			DES_RawProcessBlock (dst, (const uint8_t *) (ks + j * 8));
 
 			/* Swap L and R */
 			memcpy(tmp,dst,4);

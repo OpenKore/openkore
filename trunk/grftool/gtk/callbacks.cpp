@@ -25,11 +25,11 @@ extract_cb ()
 	GList *list, *l;
 	GtkTreePath *path;
 	GtkTreeIter iter;
-	char *fname, *display;
-	unsigned long size, index;
-	void *data;
+	char *display;
+	unsigned long index;
 
-	if (!document.grf) return;
+	if (!document.grf)
+		return;
 
 	if (!savesel) {
 		gchar *tmp, *dir;
@@ -196,7 +196,7 @@ filelist_selection_changed_cb (GtkTreeSelection *selection, GtkTreeView *tree)
 	list = gtk_tree_selection_get_selected_rows (selection, NULL);
 	len = g_list_length (list);
 	if (list && !list->next) { /* 1 file selected */
-		char *fname, *display;
+		char *display;
 
 		thisPath = (GtkTreePath *) list->data;
 		if (current_selection) {

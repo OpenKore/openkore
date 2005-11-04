@@ -7,7 +7,7 @@ animate (SpriteViewer *viewer)
 		viewer->frames[viewer->currentFrame]);
 
 	viewer->currentFrame++;
-	if (viewer->currentFrame >= viewer->frames.size ())
+	if (viewer->currentFrame >= (int) viewer->frames.size ())
 		viewer->currentFrame = 0;
 	return TRUE;
 }
