@@ -28,6 +28,7 @@
 #include <errno.h>		/* errno */
 #include <string.h>		/* strerror, strcoll */
 #include <zlib.h>		/* gzerror */
+#include <ctype.h>
 
 GRFEXTERN_BEGIN
 
@@ -126,7 +127,7 @@ GRF_NameHash(const char *name)
 	tmp = 0;
 	while( *pch != 0 )
 	{
-		tmp = (tmp<<5)+tmp+toupper(*pch);
+		tmp = (tmp << 5) + tmp + toupper (*pch);
 		pch++;
 	}
 	return tmp;

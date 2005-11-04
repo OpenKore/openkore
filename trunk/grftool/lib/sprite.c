@@ -33,7 +33,7 @@
 /* StrBuf implements a string buffer that can dynamically grow. */
 typedef struct {
 	unsigned char *str;
-	int len;
+	unsigned int len;
 } StrBuf;
 
 
@@ -119,7 +119,8 @@ rle_decode(unsigned char *data, int datalen, int width, int *decoded_size)
 	retbuf = strbuf_new ();
 
 	extra = 4 - (width % 4);
-	if (extra == 4) extra = 0;
+	if (extra == 4)
+		extra = 0;
 
 	for (x = 0; x < datalen; x++) {
 		if (data[x] == 0) {
@@ -131,7 +132,7 @@ rle_decode(unsigned char *data, int datalen, int width, int *decoded_size)
 			strbuf_append (buf, &(data[x]), 1);
 	}
 
-	for (x = 0; x < buf->len; x += width) {
+	for (x = 0; x < (int) buf->len; x += width) {
 		if (extra > 0) {
 			tmp = (unsigned char *) strrepeat ("", 1, extra);
 			strbuf_prepend (retbuf, tmp, extra);
@@ -249,7 +250,7 @@ sprite_open_from_data (const unsigned char *data, unsigned int size, SpriteError
 	/* Now read the actual sprite data */
 	sprite->images = (SpriteImage *) calloc (sizeof (SpriteImage), sprite->nimages);
 	pos = 8;
-	for (i = 0; i < sprite->nimages; i++) {
+	for (i = 0; i < (int) sprite->nimages; i++) {
 		int width, height, compressed_len, pixels_size;
 		unsigned char *pixels;
 
@@ -285,17 +286,18 @@ SPREXPORT void
 sprite_free (Sprite *sprite)
 {
 	if (sprite) {
-		int i;
+		unsigned int i;
 
 		if (sprite->filename)
 			free (sprite->filename);
-		if (sprite->images)
-		{
+
+		if (sprite->images) {
 			for (i = 0; i < sprite->nimages; i++)
 				if (sprite->images[i].data)
 					free (sprite->images[i].data);
 			free (sprite->images);
 		}
+
 		if (sprite->palette)
 			free (sprite->palette);
 		free (sprite);
@@ -317,8 +319,9 @@ sprite_to_bmp (Sprite *sprite, int i, int *size, SpriteError *error)
 		return NULL;
 	}
 
-	if (i >= sprite->nimages) {
-		if (error) *error = SE_INDEX;
+	if (i >= (int) sprite->nimages) {
+		if (error)
+			*error = SE_INDEX;
 		return NULL;
 	}
 
@@ -406,7 +409,7 @@ sprite_to_rgb (Sprite *sprite, int i, int *size, SpriteError *error)
 		return NULL;
 	}
 
-	if (i >= sprite->nimages) {
+	if (i >= (int) sprite->nimages) {
 		if (error) *error = SE_INDEX;
 		return NULL;
 	}

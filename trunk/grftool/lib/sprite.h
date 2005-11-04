@@ -66,9 +66,9 @@ typedef struct {
 
 typedef struct {
 	char *filename;
-	int nimages;
+	unsigned int nimages;
 	SpriteImage *images;
-	int palette_size;
+	unsigned int palette_size;
 	SpritePalette *palette;
 } Sprite;
 

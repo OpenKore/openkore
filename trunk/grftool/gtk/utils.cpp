@@ -31,7 +31,7 @@ load_glade (gchar *basename)
 {
 	GladeXML *xml = NULL;
 	char self[PATH_MAX + 1];
-	int i;
+	unsigned int i;
 	vector<String> searchDirs;
 	String filename;
 
@@ -44,8 +44,7 @@ load_glade (gchar *basename)
 
 	searchDirs.push_back (".");
 
-	for (i = 0; i < searchDirs.size(); i++) {
-
+	for (i = 0; i < searchDirs.size (); i++) {
 		String fn = searchDirs[i] + "/" + basename;
 		if (g_file_test (fn, G_FILE_TEST_IS_REGULAR)) {
 			filename = fn;
@@ -118,6 +117,7 @@ show_error (gchar *format, ...)
 		GTK_DIALOG_MODAL,
 		GTK_MESSAGE_ERROR,
 		GTK_BUTTONS_OK,
+		"%s",
 		msg);
 	gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 	gtk_dialog_run (GTK_DIALOG (dialog));
@@ -135,7 +135,7 @@ str_to_utf8 (char *str, gsize *bytes_written)
 		"ISO-2022-KR", "ISO646-KR", "ISO2022KR",
 		"ISO8859-1", "UTF-8"
 	};
-	int j;
+	unsigned int j;
 	char *ret = NULL;
 	gsize written = 0;
 

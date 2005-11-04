@@ -267,7 +267,7 @@ GRF_GenerateDataKey(char *key, const char *src)
  */
 static int GRF_readVer1_info(Grf *grf, GrfError *error, GrfOpenCallback callback) {
 	int callbackRet;
-	uint32_t i,offset,len,len2;
+	uint32_t i, offset, len, len2;
 	char namebuf[GRF_NAMELEN], keyschedule[0x80], *buf;
 
 #ifdef GRF_FIXED_KEYSCHEDULE
@@ -300,11 +300,13 @@ static int GRF_readVer1_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 		GRF_SETERR(error,GE_ERRNO,malloc);
 		return 1;
 	}
-	if (fseek(grf->f,offset,SEEK_SET)) {
+
+	if (fseek (grf->f, (long) offset, SEEK_SET)) {
 		free(buf);
 		GRF_SETERR(error,GE_ERRNO,fseek);
 		return 1;
 	}
+
 	if (!fread(buf,len,1,grf->f)) {
 		free(buf);
 		if (feof(grf->f))
@@ -341,7 +343,7 @@ static int GRF_readVer1_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 	#endif /* GRF_FIXED_KEYSCHEDULE */
 	) {
 		/* Get the name length */
-		len = LittleEndian32(buf + offset);
+		len = LittleEndian32((uint8_t *) (buf + offset));
 		offset += 4;
 
 		/* Decide how to decode the name */
@@ -409,11 +411,11 @@ static int GRF_readVer1_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 			 */
 
 			/* Generate key schedule */
-			DES_CreateKeySchedule(keyschedule, key);
+			DES_CreateKeySchedule (keyschedule, key);
 #endif /* GRF_FIXED_KEYSCHEDULE */
 
 			/* Decrypt the name */
-			GRF_MixedProcess(grf->files[i].name, namebuf, len2, 1, keyschedule, GRFCRYPT_DECRYPT);
+			GRF_MixedProcess (grf->files[i].name, namebuf, len2, 1, keyschedule, GRFCRYPT_DECRYPT);
 
 			/* Subtract 2 from len for the 2 bytes we skipped
 			 * over
@@ -422,15 +424,15 @@ static int GRF_readVer1_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 		}
 
 		/* Skip past the name */
-		offset+=len;
+		offset += len;
 
 		/* Grab the rest of the file information */
-		grf->files[i].compressed_len=LittleEndian32(buf+offset)-LittleEndian32(buf+offset+8)-0x02CB;
-		grf->files[i].compressed_len_aligned=LittleEndian32(buf+offset+4)-0x92CB;
-		grf->files[i].real_len=LittleEndian32(buf+offset+8);
-		grf->files[i].flags=*(uint8_t*)(buf+offset+0xC);
-		grf->files[i].pos=LittleEndian32(buf+offset+0xD)+GRF_HEADER_FULL_LEN;
-		grf->files[i].hash=GRF_NameHash(grf->files[i].name);
+		grf->files[i].compressed_len = LittleEndian32 ((uint8_t *) (buf + offset)) - LittleEndian32 ((uint8_t *) (buf + offset + 8)) - 0x02CB;
+		grf->files[i].compressed_len_aligned = LittleEndian32((uint8_t *) (buf + offset + 4)) - 0x92CB;
+		grf->files[i].real_len = LittleEndian32 ((uint8_t *) (buf + offset + 8));
+		grf->files[i].flags =* (uint8_t *) (buf + offset + 0xC);
+		grf->files[i].pos = LittleEndian32 ((uint8_t *) (buf + offset + 0xD)) + GRF_HEADER_FULL_LEN;
+		grf->files[i].hash = GRF_NameHash (grf->files[i].name);
 
 		/* Check if the file is a special file */
 		if (GRF_CheckExt(grf->files[i].name,specialExts))
@@ -506,10 +508,11 @@ static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 	}
 
 	/* Allocate memory and read the compressed file table */
-	len=LittleEndian32(buf);
-	if ((zbuf=(char*)malloc(len))==NULL) {
-		free(buf);
-		GRF_SETERR(error,GE_ERRNO,malloc);
+	len = LittleEndian32 ((uint8_t *) buf);
+	zbuf = (char *) malloc (len);
+	if (zbuf == NULL) {
+		free (buf);
+		GRF_SETERR (error, GE_ERRNO, malloc);
 		return 1;
 	}
 	if (!fread(zbuf,len,1,grf->f)) {
@@ -522,16 +525,20 @@ static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 		return 1;
 	}
 
-	if (0==(len2=LittleEndian32(buf+4))) {
-		free(zbuf);
+	len2 = LittleEndian32 ((uint8_t *) buf + 4);
+	if (len2 == 0) {
+		free (zbuf);
 		return 0;
 	}
+
 	/* Allocate memory and uncompress the compressed file table */
-	if ((buf=(char*)realloc(buf,len2))==NULL) {
-		free(zbuf);
-		GRF_SETERR(error, GE_ERRNO, realloc);
+	buf = (char *) realloc (buf, len2);
+	if (buf == NULL) {
+		free (zbuf);
+		GRF_SETERR (error, GE_ERRNO, realloc);
 		return 1;
 	}
+
 	zlen = len2;
 	z = uncompress((Bytef*) buf, &zlen, (const Bytef *) zbuf, (uLong) len);
 	if (z != Z_OK) {
@@ -557,19 +564,19 @@ static int GRF_readVer2_info(Grf *grf, GrfError *error, GrfOpenCallback callback
 		}
 
 		/* Grab filename */
-		memcpy(grf->files[i].name,buf+offset,len);
-		offset+=len;
+		memcpy (grf->files[i].name, buf + offset, len);
+		offset += len;
 
 		/* Grab the rest of the information */
-		grf->files[i].compressed_len=LittleEndian32(buf+offset);
-		grf->files[i].compressed_len_aligned=LittleEndian32(buf+offset+4);
-		grf->files[i].real_len=LittleEndian32(buf+offset+8);
-		grf->files[i].flags=*(uint8_t*)(buf+offset+0xC);
-		grf->files[i].pos=LittleEndian32(buf+offset+0xD)+GRF_HEADER_FULL_LEN;
-		grf->files[i].hash=GRF_NameHash(grf->files[i].name);
+		grf->files[i].compressed_len = LittleEndian32 ((uint8_t *) (buf + offset));
+		grf->files[i].compressed_len_aligned = LittleEndian32 ((uint8_t *) (buf + offset + 4));
+		grf->files[i].real_len = LittleEndian32 ((uint8_t *) (buf + offset + 8));
+		grf->files[i].flags =* (uint8_t *) (buf + offset + 0xC);
+		grf->files[i].pos = LittleEndian32 ((uint8_t *) buf + offset + 0xD) + GRF_HEADER_FULL_LEN;
+		grf->files[i].hash = GRF_NameHash (grf->files[i].name);
 
 		/* Advance to the next file */
-		offset+=0x11;
+		offset += 0x11;
 
 		/* Run the callback, if we have one */
 		if (callback) {
@@ -703,7 +710,7 @@ GRF_find_unused (Grf *grf, uint32_t len)
  * \return Number of files compressed, encrypted, and written
  */
 static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
-	Bytef *comp_dat,*enc_dat=0,*write_dat;
+	Bytef *comp_dat, *enc_dat = 0, *write_dat;
 	uLong size_bound;
 	uLongf comp_len;
 	char keyschedule[0x80], key[8];
@@ -747,12 +754,14 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 		DES_CreateKeySchedule(keyschedule,GRF_GenerateDataKey(key,grf->files[i].name));
 		
 		/* Encrypt the data */
-		GRF_Process(enc_dat,comp_dat,grf->files[i].compressed_len_aligned,grf->files[i].flags,grf->files[i].compressed_len,keyschedule,GRFCRYPT_ENCRYPT);
+		GRF_Process ((char *) enc_dat, (const char *) comp_dat,
+			     grf->files[i].compressed_len_aligned,
+			     grf->files[i].flags, grf->files[i].compressed_len,
+			     keyschedule, GRFCRYPT_ENCRYPT);
 		
 		write_dat = enc_dat;
-	}
-	else
-	{
+
+	} else {
 		write_dat = comp_dat;
 	}
 
@@ -864,7 +873,6 @@ static int GRF_flushFile(Grf *grf, uint32_t i, GrfError *error) {
 		}
 	}
 	
-proceedFlushWrite:
 	/* Write the data to its spot */
 	if (fwrite(write_dat, grf->files[i].compressed_len_aligned, 1U, grf->f) < 1U) {
 		free(comp_dat);
@@ -1563,13 +1571,14 @@ grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpen
 	 */
 
 	/* Set the type of archive this is */
-	grf->type=GRF_TYPE_GRF;
+	grf->type = GRF_TYPE_GRF;
 
 	/* Read the version */
-	grf->version=LittleEndian32(buf+GRF_HEADER_MID_LEN+0xC);
+	grf->version = LittleEndian32 ((uint8_t *) (buf + GRF_HEADER_MID_LEN + 0xC));
 
 	/* Read the number of files */
-	grf->nfiles=LittleEndian32(buf+GRF_HEADER_MID_LEN+8)-LittleEndian32(buf+GRF_HEADER_MID_LEN+4)-7;
+	grf->nfiles = LittleEndian32 ((uint8_t *) (buf + GRF_HEADER_MID_LEN + 8))
+		- LittleEndian32 ((uint8_t *) (buf + GRF_HEADER_MID_LEN + 4)) - 7;
 
 	/* Create the array of files */
 	if (grf->nfiles) {
@@ -1591,10 +1600,10 @@ grf_callback_open (const char *fname, const char *mode, GrfError *error, GrfOpen
 		GRF_SETERR(error,GE_ERRNO,ftell);
 		return NULL;
 	}
-	grf->len=ftell(grf->f);
+	grf->len = ftell (grf->f);
 
 	/* Seek to the offset of the file tables */
-	if (fseek(grf->f, LittleEndian32(buf+GRF_HEADER_MID_LEN)+GRF_HEADER_FULL_LEN, SEEK_SET)) {
+	if (fseek (grf->f, LittleEndian32 ((uint8_t *) (buf + GRF_HEADER_MID_LEN)) + GRF_HEADER_FULL_LEN, SEEK_SET)) {
 		grf_free(grf);
 		GRF_SETERR(error,GE_ERRNO,fseek);
 		return NULL;
