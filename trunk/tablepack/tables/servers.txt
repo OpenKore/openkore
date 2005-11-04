@@ -383,9 +383,9 @@ master_version 18
 version 54
 serverType 3
 
-[DiscoveryRO Private Server]
+[DiscoveryRO: Low Rate Private Server]
 ip 72.36.206.226
-port 6900
+port 6901
 version 0
 master_version 18
 serverType 3
