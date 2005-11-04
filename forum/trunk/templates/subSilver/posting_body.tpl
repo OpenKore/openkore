@@ -35,6 +35,7 @@ w_help = "{L_BBCODE_W_HELP}";
 a_help = "{L_BBCODE_A_HELP}";
 s_help = "{L_BBCODE_S_HELP}";
 f_help = "{L_BBCODE_F_HELP}";
+syn_help = '[syntax="language"]code[/syntax]';
 <!-- BEGIN XBBcode -->
 <!-- BEGIN BB -->
 {XBBcode.BB.VALUE}_help = "{XBBcode.BB.HELP}";
@@ -399,6 +400,49 @@ function storeCaret(textEl) {
 					  <option value="12" selected class="genmed">{L_FONT_NORMAL}</option>
 					  <option value="18" class="genmed">{L_FONT_LARGE}</option>
 					  <option  value="24" class="genmed">{L_FONT_HUGE}</option>
+					</select>
+					&nbsp;Syntax:<select name="addbbcode99" onChange="bbfontstyle('[syntax=' + this.form.addbbcode99.options[this.form.addbbcode99.selectedIndex].value + ']', '[/syntax]');this.selectedIndex=0;" onMouseOver="helpline('syn')">					
+					  <option class="genmed" value='"perl"' selected>Syntax</option>
+					  <option class="genmed" value='"perl"'>Perl</option>
+					  <option class="genmed" value='"actionscript"'>ActionScript</option>
+					  <option class="genmed" value='"ada"'>Ada</option>
+					  <option class="genmed" value='"apache"'>Apache Log File</option>
+					  <option class="genmed" value='"asm"'>ASM (NASM based)</option>
+					  <option class="genmed" value='"asp"'>ASP</option>
+					  <option class="genmed" value='"bash"'>Bash</option>
+					  <option class="genmed" value='"c"'>C</option>
+					  <option class="genmed" value='"c_mac"'>C for Macs</option>
+					  <option class="genmed" value='"caddcl"'>CAD DCL</option>
+					  <option class="genmed" value='"cadlisp"'>CAD Lisp</option>
+					  <option class="genmed" value='"cpp"'>C++</option>
+					  <option class="genmed" value='"csharp"'>C#</option>
+					  <option class="genmed" value='"css"'>CSS</option>
+					  <option class="genmed" value='"d"'>D</option>
+					  <option class="genmed" value='"delphi"'>Delphi</option>
+					  <option class="genmed" value='"diff"'>Diff Output</option>
+					  <option class="genmed" value='"html4strict"'>HTML (4.0.1)</option>
+					  <option class="genmed" value='"java"'>Java</option>
+					  <option class="genmed" value='"javascript"'>Javascript</option>
+					  <option class="genmed" value='"lisp"'>Lisp</option>
+					  <option class="genmed" value='"lua"'>Lua</option>
+					  <option class="genmed" value='"matlab"'>Matlab</option>
+					  <option class="genmed" value='"mpasm"'>MPASM</option>
+					  <option class="genmed" value='"nsis"'>NullSoft Installer</option>
+					  <option class="genmed" value='"objc"'>Objective C</option>
+					  <option class="genmed" value='"oobas"'>Openoffice.org BASIC</option>
+					  <option class="genmed" value='"oracle8"'>Oracle 8</option>
+					  <option class="genmed" value='"pascal"'>Pascal</option>
+					  <option class="genmed" value='"php"'>PHP</option>
+					  <option class="genmed" value='"php-brief" class="sublang"'>&nbsp;&nbsp;PHP (Brief version)</option>
+					  <option class="genmed" value='"python"'>Python</option>
+					  <option class="genmed" value='"qbasic"'>QBasic/QuickBASIC</option>
+					  <option class="genmed" value='"smarty"'>Smarty</option>
+					  <option class="genmed" value='"sql"'>SQL</option>
+					  <option class="genmed" value='"vb"'>VisualBasic</option>
+					  <option class="genmed" value='"vbnet"'>VB.NET</option>
+					  <option class="genmed" value='"vhdl"'>VHDL</option>
+					  <option class="genmed" value='"visualfoxpro"'>VisualFoxPro</option>
+					  <option class="genmed" value='"xml"'>XML</option>
 					</select>
 					</span></td>
 				  <td nowrap="nowrap" align="right"><span class="gensmall"><a href="javascript:bbstyle(-1)" class="genmed" onMouseOver="helpline('a')">{L_BBCODE_CLOSE_TAGS}</a></span></td>
