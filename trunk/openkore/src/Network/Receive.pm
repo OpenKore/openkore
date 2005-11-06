@@ -189,7 +189,7 @@ sub new {
 ##
 #01E6 26 Some Player Name.
 		'01E9' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16', [qw(ID x y type name user map)]],
-		'01EB' => ['party_location', 'a4 v1 v1', [qw(ID x y)]],
+		'01EB' => ['guild_location', 'a4 v1 v1', [qw(ID x y)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
@@ -2717,6 +2717,10 @@ sub party_location {
 	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $args->{y};
 	$chars[$config{char}]{party}{users}{$ID}{online} = 1;
 	debug "Party member location: $chars[$config{char}]{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
+}
+
+sub guild_location {
+	# FIXME: not implemented
 }
 
 sub party_organize_result {
