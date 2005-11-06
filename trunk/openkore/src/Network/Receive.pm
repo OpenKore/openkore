@@ -1802,7 +1802,7 @@ sub forge_list {
 	message "========Forge List========\n";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
 		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
-		message "$viewID $items_lut{$viewID}";
+		message "$viewID $items_lut{$viewID}\n";
 		# always 0x0012
 		#my $unknown = unpack("v1", substr($args->{RAW_MSG}, $i+2, 2));
 		# ???
@@ -3030,12 +3030,15 @@ sub received_sync {
 
 sub refine_result {
 	my ($self, $args) = @_;
-	if ($args->{fail}) {
-		message "You failed to refine a weapon (ID $args->{nameID})!\n";
-	} else {
+	if ($args->{fail} == 0) {
 		message "You successfully refined a weapon (ID $args->{nameID})!\n";
+	} elsif ($args->{fail} == 1) {
+		message "You failed to refine a weapon (ID $args->{nameID})!\n";
+	} elsif ($args->{fail} == 2) {
+		message "You successfully made a potion (ID $args->{nameID})!\n";
+	} else {
+		message "You tried to refine a weapon (ID $args->{nameID}); result: unknown $args->{fail}\n";
 	}
-
 }
 
 sub repair_list {
