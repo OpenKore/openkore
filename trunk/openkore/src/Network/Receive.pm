@@ -3036,6 +3036,8 @@ sub refine_result {
 		message "You failed to refine a weapon (ID $args->{nameID})!\n";
 	} elsif ($args->{fail} == 2) {
 		message "You successfully made a potion (ID $args->{nameID})!\n";
+	} elsif ($args->{fail} == 3) {
+		message "You failed to make a potion (ID $args->{nameID})!\n";
 	} else {
 		message "You tried to refine a weapon (ID $args->{nameID}); result: unknown $args->{fail}\n";
 	}
