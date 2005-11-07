@@ -526,3 +526,11 @@ port 6900
 master_version 14
 version 20
 serverType 4
+
+[Japan - jRO: Verdandi]
+ip 61.215.212.13
+port 6900
+master_version 3
+version 10
+serverType 7
+secureLogin 1

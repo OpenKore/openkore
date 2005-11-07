@@ -1189,7 +1189,7 @@ sub sendMapLogin {
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
 			
-	} elsif ($config{serverType} == 6) {
+	} elsif ($config{serverType} == 6) { #oRO
 		$msg = pack("C*",0x72, 0x00, 0x00) .
 			$accountID .
 			pack("C*", 0x00, 0xe8, 0xfa) .
@@ -1199,7 +1199,17 @@ sub sendMapLogin {
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
 
-	} else {
+	} elsif ($config{serverType} == 7) { #jRO
+		$msg = pack("C*", 0x72, 0x00, 0x00, 0x00, 0x00) .
+		    $accountID .
+		    pack("C*", 0xFA, 0x12, 0x00, 0x80, 0x49) .
+		    $charID .
+		    pack("C*", 0xFF, 0xFF) .
+		    $sessionID,
+		    pack("V", getTickCount()) .
+		    pack("C*", $sex);
+
+	} else { #oRO and pRO
 		# $config{serverType} == 1 || $config{serverType} == 2
 
 		my $key;
