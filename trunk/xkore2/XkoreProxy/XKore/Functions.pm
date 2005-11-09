@@ -240,7 +240,7 @@ sub forwardToGhost {
 		message "Sending $switch data to on-the-fly Client\n";
 		$recordSocket->sendData($client,$stkData); #sends the queued stuff to the client.
 		$tempRecordQueue->enqueue($stkData);
-		if (!defined($rpackets{$switch}) && $recordPacket->pending && $switch ne '0071'){
+		if ((!defined($rpackets{$switch}) && $recordPacket->pending && $switch ne '0071')){
 		  #sends the next packet if it's not in the recvpackets.txt
 			$stkData = $recordPacket->dequeue_nb;
 			$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
