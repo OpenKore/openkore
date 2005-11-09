@@ -9,7 +9,7 @@
 # VCL - for telling me about Base::Server ..
 # kaliwanagan - Fakeserver.pl which helped alot here...
 #
-# PROTOTYPE VERSION 2.0! Rewrite of Prototype 1 using base::server
+# Plugin VERSION
 #
 package xkore2;
 
