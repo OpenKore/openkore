@@ -458,7 +458,7 @@ sub actor_connected {
 		$players{$args->{ID}}{pos} = {%coords};
 		$players{$args->{ID}}{pos_to} = {%coords};
 		my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-		debug "Player Connected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", $domain;
+		debug "Player Connected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) Level $args->{lv} $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}} ($coords{x}, $coords{y})\n", $domain;
 
 		objectAdded('player', $args->{ID}, $players{$args->{ID}}) if ($added);
 		Plugins::callHook('player', {player => $players{$args->{ID}}});
@@ -518,13 +518,13 @@ sub actor_died_or_disappeard {
 			$players{$args->{ID}}{'dead'} = 1;
 		} else {
 			if ($args->{type} == 0) {
-				debug "Player Disappeared: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
+				debug "Player Disappeared: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}} ($players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y})\n", "parseMsg_presence";
 				$players{$args->{ID}}{'disappeared'} = 1;
 			} elsif ($args->{type} == 2) {
-				debug "Player Disconnected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
+				debug "Player Disconnected: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}} ($players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y})\n", "parseMsg_presence";
 				$players{$args->{ID}}{'disconnected'} = 1;
 			} elsif ($args->{type} == 3) {
-				debug "Player Teleported: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
+				debug "Player Teleported: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}} ($players{$args->{ID}}{pos_to}{x}, $players{$args->{ID}}{pos_to}{y})\n", "parseMsg_presence";
 				$players{$args->{ID}}{'teleported'} = 1;
 			} else {
 				debug "Player Disappeared in an unknown way: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n", "parseMsg_presence";
@@ -639,7 +639,7 @@ sub actor_exists {
 		$player->{pos_to} = {%coords};
 
 		my $domain = existsInList($config{friendlyAID}, unpack("V1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-		debug "Player Exists: " . $player->name . " ($player->{binID}) Level $args->{lv} " . $sex_lut{$player->{sex}} . " $jobs_lut{$player->{jobID}}\n", $domain, 1;
+		debug "Player Exists: " . $player->name . " ($player->{binID}) Level $args->{lv} " . $sex_lut{$player->{sex}} . " $jobs_lut{$player->{jobID}} ($coords{x}, $coords{y})\n", $domain, 1;
 
 		objectAdded('player', $args->{ID}, $player) if ($added);
 
@@ -848,7 +848,7 @@ sub actor_moved {
 			$player->{nameID} = unpack("V1", $args->{ID});
 			$player->{binID} = binFind(\@playersID, $args->{ID});
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
-			debug "Player Appeared: ".$player->name." ($player->{'binID'}) Level $args->{lv} $sex_lut{$args->{sex}} $jobs_lut{$args->{type}}\n", $domain;
+			debug "Player Appeared: ".$player->name." ($player->{'binID'}) Level $args->{lv} $sex_lut{$args->{sex}} $jobs_lut{$args->{type}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 			$added = 1;
 			Plugins::callHook('player', {player => $player});
 		}

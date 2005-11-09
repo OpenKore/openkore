@@ -169,6 +169,8 @@ New features:
 - Hunters that keep trying to shoot at something they don't really have
   LOS to will now "Cannot reach or damage target, dropping target"
   correctly (AI::args->{unstuck}{count}).
+- Show coordinates of players when they are added/removed from 'pl'.
+  (TODO: Do this for monsters too.)
 
 New commands:
 - getplayerinfo (number)
