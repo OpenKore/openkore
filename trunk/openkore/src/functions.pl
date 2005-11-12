@@ -392,7 +392,7 @@ sub mainLoop {
 		# Inject DLL
 		message("Ragnarok Online client found\n", "startup");
 		sleep 1 if $printed;
-		if (!$xkore->inject($pid)) {
+		if (!$xkore->inject($pid, $config{XKore_bypassBotDetection})) {
 			# Failed to inject
 			$interface->errorDialog($@);
 			exit 1;

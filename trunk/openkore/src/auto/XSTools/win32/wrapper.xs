@@ -82,3 +82,108 @@ FlashWindow(handle)
 CODE:
 	if (GetActiveWindow() != (HWND) handle)
 		FlashWindow((HWND) handle, TRUE);
+
+unsigned long
+OpenProcess(Access, ProcID)
+		unsigned long Access
+		unsigned long ProcID
+	CODE:
+		RETVAL = ((DWORD) OpenProcess((DWORD)Access, 0, (DWORD)ProcID));
+	OUTPUT:
+		RETVAL
+
+unsigned long
+SystemInfo_PageSize()
+	INIT:
+		SYSTEM_INFO si;
+	CODE:
+		GetSystemInfo((LPSYSTEM_INFO)&si);
+		RETVAL = si.dwPageSize;
+	OUTPUT:
+		RETVAL
+
+unsigned long
+SystemInfo_MinAppAddress()
+	INIT:
+		SYSTEM_INFO si;
+	CODE:
+		GetSystemInfo((LPSYSTEM_INFO)&si);
+		RETVAL = ((DWORD) si.lpMinimumApplicationAddress);
+	OUTPUT:
+		RETVAL
+
+unsigned long
+SystemInfo_MaxAppAddress()
+	INIT:
+		SYSTEM_INFO si;
+	CODE:
+		GetSystemInfo((LPSYSTEM_INFO)&si);
+		RETVAL = ((DWORD) si.lpMaximumApplicationAddress);
+	OUTPUT:
+		RETVAL
+
+unsigned long
+VirtualProtectEx(ProcHND, lpAddr, dwSize, dwProtection)
+		unsigned long ProcHND
+		unsigned long lpAddr
+		unsigned long dwSize
+		unsigned long dwProtection
+	INIT:
+		DWORD old;
+	CODE:
+		if (0 == VirtualProtectEx((HANDLE)ProcHND, (LPVOID)lpAddr, (SIZE_T)dwSize, (DWORD)dwProtection, (PDWORD)&old)) {
+			RETVAL = 0;
+		} else {
+			RETVAL = old;
+		}
+	OUTPUT:
+		RETVAL
+
+SV *
+ReadProcessMemory(ProcHND, lpAddr, dwSize)
+		unsigned long ProcHND
+		unsigned long lpAddr
+		unsigned long dwSize
+	INIT:
+		DWORD bytesRead;
+		LPVOID buffer;
+	CODE:
+		buffer = malloc(dwSize);
+		if (0 == ReadProcessMemory((HANDLE)ProcHND, (LPCVOID)lpAddr, buffer, (SIZE_T)dwSize, (SIZE_T*)&bytesRead)) {
+			XSRETURN_UNDEF;
+		} else {
+			RETVAL = newSVpvn((char *)buffer, bytesRead);
+		}
+		free(buffer);
+	OUTPUT:
+		RETVAL
+
+unsigned long
+WriteProcessMemory(ProcHND, lpAddr, svData)
+		unsigned long ProcHND
+		unsigned long lpAddr
+		SV *svData
+	INIT:
+		LPCVOID lpBuffer;
+		int dwSize;
+		DWORD bytesWritten;
+	CODE:
+		if (0 == SvPOK(svData)) {
+			RETVAL = 0;
+		} else {
+			lpBuffer = (LPCVOID)SvPV(svData, dwSize);
+			if (0 == WriteProcessMemory((HANDLE)ProcHND, (LPVOID)lpAddr, lpBuffer, (SIZE_T)dwSize, (SIZE_T*)&bytesWritten)) {
+				RETVAL = 0;
+			} else {
+				RETVAL = bytesWritten;
+			}
+		}
+	OUTPUT:
+		RETVAL
+
+void
+CloseProcess(Handle)
+		unsigned long Handle
+	CODE:
+		CloseHandle((HANDLE)Handle);
+

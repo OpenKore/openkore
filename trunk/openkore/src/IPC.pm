@@ -53,6 +53,7 @@ use base qw(Exporter);
 use File::Spec;
 use Fcntl ':flock';
 use Time::HiRes qw(time sleep);
+use FindBin;
 
 use Log qw(debug);
 use IPC::Client;
@@ -213,7 +214,7 @@ sub iterate {
 			@args = ('--quiet', '--feedback=' . $manager->{server}->sockport);
 			push @args, "--port=$self->{startAtPort}" if ($self->{startAtPort});
 			push @args, "--bind=$self->{bind}" if ($self->{bind});
-			$manager->{pid} = launchScript(1, undef, 'src/IPC/manager.pl',
+			$manager->{pid} = launchScript(1, undef, "$FindBin::RealBin/src/IPC/manager.pl",
 				@args);
 
 			$manager->{time} = time;
