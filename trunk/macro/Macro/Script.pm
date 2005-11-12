@@ -245,8 +245,10 @@ sub next {
     my ($tmp) = $line =~ /^do\s+(.*)/;
     if ($tmp =~ /^macro\s+/) {
       my ($arg) = $tmp =~ /^macro\+s(.*)/;
-      $self->{error} = "error in ".$self->{line}.": use 'call $arg' instead of 'macro $arg'";
-      return;
+      if ($arg ne 'stop') {
+        $self->{error} = "error in ".$self->{line}.": use 'call $arg' instead of 'macro $arg'";
+        return
+      }
     }
     $self->{line}++;
     return parseCmd($tmp);
@@ -263,6 +265,10 @@ sub next {
     my ($tmp) = $line =~ /^pause\s+(\d+)/;
     if (defined $tmp) {$self->{timeout} = $tmp}
     $self->{line}++
+  ##########################################
+  # stop command
+  } elsif ($line =~ /^stop$/) {
+    $self->{error} = "macro stopped in line ".$self->{line};
   ##########################################
   # release command
   } elsif ($line =~ /^release\s+/) {

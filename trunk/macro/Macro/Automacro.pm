@@ -230,10 +230,10 @@ sub checkCast {
   my ($cast, $args) = @_;
   my $pos = calcPosition($char);
   return 0 if $args->{sourceID} eq $accountID;
-  if (($args->{targetID} eq $accountID ||
-     ($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
+  if (($args->{targetID} eq $accountID ||(
+     $pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
      distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
-     lc($cast) eq lc($skillsID_lut{$args->{skillID}})) {return 1}
+     existsInList(lc($cast), lc($skillsID_lut{$args->{skillID}}))) {return 1}
   return 0;
 }
 
