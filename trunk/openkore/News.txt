@@ -171,6 +171,8 @@ New features:
   correctly (AI::args->{unstuck}{count}).
 - Show coordinates of players when they are added/removed from 'pl'.
   (TODO: Do this for monsters too.)
+- Ability to bypass the RO client's bot detection (the "Do not use bots!"
+  message).
 
 New commands:
 - getplayerinfo (number)
@@ -329,6 +331,10 @@ New config options:
   Default 5. If an NPC conversation is used to reach your destination,
   this is the maximum number of times it will try to talk to that NPC before
   giving up and plotting an alternate path.
+- XKore_bypassBotDetection
+  Set to 1 if you want Kore to try to bypass the RO client's bot detection.
+  This feature is experimental and has only been tested with the iRO client,
+  so enable this at your own risk!
 - timeouts.txt: ai_route_npcTalk
   Default 10. If an NPC conversation used to reach your destination takes
   longer than this, it will assume failure.
@@ -374,7 +380,7 @@ Credits:
   Follow master through warp portal.
 - clovanzo: Louyang portals
 - h4rry84: Auto Berserk/Preserve status support.
-- jojobaoil: Bit-shift packing code
+- jojobaoil: Bit-shift packing code, RO client bot detection bypassing
 - amacc_boy: Win32::GUI interface
 
 

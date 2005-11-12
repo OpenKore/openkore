@@ -20,7 +20,7 @@ use base qw(Exporter);
 use Win32;
 use Time::HiRes qw(time usleep);
 
-use Log qw(message);
+use Log qw(message error);
 use WinUtils;
 use Utils qw(dataWaiting);
 
@@ -55,17 +55,19 @@ sub new {
 }
 
 ##
-# $xkore->inject(pid)
+# $xkore->inject(pid, [bypassBotDetection])
 # pid: a process ID.
-# error: reference to a scalar. The error message will be stored here, if this function fails (returns 0).
+# bypassBotDetection: set to 1 if you want Kore to try to bypass the RO client's bot detection. This feature has only been tested with the iRO client, so use with care.
 # Returns: 1 on success, 0 on failure.
 #
 # Inject NetRedirect.dll into an external process. On failure, $@ is set.
 sub inject {
-	my $self = shift;
-	my $pid = shift;
+	my ($self, $pid, $bypassBotDetection) = @_;
 	my $cwd = Win32::GetCwd();
 	my $dll;
+
+	# Patch the client to remove bot detection
+	$self->hackClient($pid) if ($bypassBotDetection);
 
 	undef $@;
 	foreach ("$cwd\\src\\auto\\XSTools\\win32\\NetRedirect.dll", "$cwd\\NetRedirect.dll", "$cwd\\Inject.dll") {
@@ -141,6 +143,89 @@ sub sync {
 	}
 }
 
+##
+# $xkore->hackClient(pid)
+# pid: Process ID of a running (and official) Ragnarok Online client
+#
+# Hacks the client (non-nProtect GameGuard version) to remove bot detection.
+# If the code is in the RO Client, it should find it fairly quick and patch, but
+# if not it will spend a bit of time scanning through Ragnarok's memory. Perhaps
+# there should be a config option to disable/enable this?
+#
+# Code Note: $original is a regexp match, and since 0x7C is '|', its escaped.
+sub hackClient {
+	my $self = shift;
+	my $pid = shift;
+	my $handle;
+
+	my $pageSize = WinUtils::SystemInfo_PageSize();
+	my $minAddr = WinUtils::SystemInfo_MinAppAddress();
+	my $maxAddr = WinUtils::SystemInfo_MaxAppAddress();
+
+	my $patchFind = pack('C*', 0x66, 0xA3) . '....'	# mov word ptr [xxxx], ax
+		. pack('C*', 0xA0) . '....'		# mov al, byte ptr [xxxx]
+		. pack('C*', 0x3C, 0x0A,		# cmp al, 0A
+			0x66, 0x89, 0x0D) . '....';	# mov word ptr [xxxx], cx
+
+	my $original = '\\' . pack('C*', 0x7C, 0x6D);	# jl 6D
+							# (to be replaced by)
+	my $patched = pack('C*', 0xEB, 0x6D);		# jmp 6D
+
+	my $patchFind2 = pack('C*', 0xA1) . '....'	# mov eax, dword ptr [xxxx]
+		. pack('C*', 0x8D, 0x4D, 0xF4,		# lea ecx, dword ptr [ebp+var_0C]
+			0x51);				# push ecx
+
+	$original = $patchFind . $original . $patchFind2;
+
+	message "Patching client to remove bot detection...\n", "startup";
+
+	# Open Ragnarok's process
+	my $hnd = WinUtils::OpenProcess(0x638, $pid);
+
+	# Loop through Ragnarok's memory
+	for (my $i = $minAddr; $i < $maxAddr; $i += $pageSize) {
+		# Ensure we can read/write the memory
+		my $oldprot = WinUtils::VirtualProtectEx($hnd, $i, $pageSize, 0x40);
+
+		if ($oldprot) {
+			# Read the page
+			my $data = WinUtils::ReadProcessMemory($hnd, $i, $pageSize);
+
+			# Is the patched code in there?
+			if ($data =~ m/($original)/) {
+				# It is!
+				my $matched = $1;
+				message "Found detection code, replacing... ", "startup";
+
+				# Generate the new code, based on the old.
+				$patched = substr($matched, 0, length($patchFind)) . $patched;
+				$patched = $patched . substr($matched, length($patchFind) + 2, length($patchFind2));
+
+				# Patch the data
+				$data =~ s/$original/$patched/;
+
+				# Write the new code
+				if (WinUtils::WriteProcessMemory($hnd, $i, $data)) {
+					message "success.\n", "startup";
+
+					# Stop searching, we should be done.
+					WinUtils::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
+					last;
+				} else {
+					error "failed.\n", "startup";
+				}
+			}
+
+		# Undo the protection change
+		WinUtils::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
+		}
+	}
+
+	# Close Ragnarok's process
+	WinUtils::CloseProcess($hnd);
+
+	message "Client patching finished.\n", "startup";
+}
 
 #
 # XKore::redirect([enabled])
