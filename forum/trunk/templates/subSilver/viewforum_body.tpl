@@ -1,3 +1,8 @@
+<!-- BEGIN important_announcement -->
+<div style="margin: 0.5cm; background: #ffaaaa; padding: 0.25cm;">
+    {IMPORTANT_ANNOUNCEMENT}
+</div>
+<!-- END important_announcement -->
 
 <form method="post" action="{S_POST_DAYS_ACTION}">
   <table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
