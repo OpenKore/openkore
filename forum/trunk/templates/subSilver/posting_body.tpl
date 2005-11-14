@@ -261,6 +261,12 @@ function storeCaret(textEl) {
 <br clear="all" />
 <!-- END privmsg_extensions -->
 
+<!-- BEGIN important_announcement -->
+<div style="margin: 0.5cm; background: #ffaaaa; padding: 0.25cm;">
+    {IMPORTANT_ANNOUNCEMENT}
+</div>
+<!-- END important_announcement -->
+
 <form action="{S_POST_ACTION}" method="post" name="post" onsubmit="return checkForm(this)" {S_FORM_ENCTYPE}>
 
 {POST_PREVIEW_BOX}

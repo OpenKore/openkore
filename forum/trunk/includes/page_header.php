@@ -461,6 +461,17 @@ else
 	}
 }
 
+
+// OpenKore options
+require_once('./includes/openkore.' . $phpEx);
+$options = load_openkore_options();
+$template->assign_vars(array(
+	'IMPORTANT_ANNOUNCEMENT' => $options['important_announcement']
+));
+if ($options['important_announcement'] != '')
+	$template->assign_block_vars('important_announcement', array());
+
+
 // Add no-cache control for cookies if they are set
 //$c_no_cache = (isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_sid']) || isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_data'])) ? 'no-cache="set-cookie", ' : '';
 

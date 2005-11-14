@@ -1105,6 +1105,7 @@ if( ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['edit_poll']) )
 	$template->assign_var_from_handle('POLLBOX', 'pollbody');
 }
 
+
 //
 // Topic review
 //
