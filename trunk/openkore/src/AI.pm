@@ -813,6 +813,7 @@ sub attack {
 		last AUTOEQUIP if ($target->{type} eq 'Player');
 
 		my $i = 0;
+		my $Lequip = 0;
 		my ($Rdef,$Ldef,$Req,$Leq,$arrow,$j);
 		while (exists $config{"autoSwitch_$i"}) {
 			if (!$config{"autoSwitch_$i"}) {
@@ -827,17 +828,22 @@ sub attack {
 				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_leftHand"}) if ($config{"autoSwitch_$i"."_leftHand"});
 				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
 
-				if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
-					$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
-					sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "");
+				if ($Leq ne "" && !$char->{inventory}[$Leq]{equipped}) {
 					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_leftHand"}." ($Leq)\n", "equip";
-					$chars[$config{'char'}]{'inventory'}[$Leq]->equip();
+					$Lequip = 1;
 				}
 				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") {
+					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
+					if ($Ldef eq "") {
+						$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
+						$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34) if ($Ldef eq "");
+						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if ($Ldef ne "");
+					}
+
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
 					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
-					if((!main::whenStatusActive("Twohand Quicken, Adrenaline, Spear Quicken") || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") && $Rdef ne ""){
+					if((!Misc::whenStatusActive("Twohand Quicken, Adrenaline, Spear Quicken") || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") && $Rdef ne "" && $Rdef ne $Ldef) {
 						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
 					}
 					if ($Req eq $Leq) {
@@ -851,9 +857,17 @@ sub attack {
 					}
 					if ($config{"autoSwitch_$i"."_rightHand"} ne "[NONE]") {
 						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_rightHand"}."\n", "equip";
-						$chars[$config{'char'}]{'inventory'}[$Req]->equip();
+						$char->{inventory}[$Req]->equip();
+						if ($Lequip == 0) {
+							if ($config{'autoSwitch_default_leftHand'}) {
+								$Leq = findIndexString_lc($char->{inventory}, "name", $config{'autoSwitch_default_leftHand'});
+								$Lequip = 1;
+							}
+						}
 					}
 				}
+				$char->{inventory}[$Leq]->equip() if ($Leq ne "" && $Lequip == 1);
+
 				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
 					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_arrow"}."\n", "equip";
 					$chars[$config{'char'}]{'inventory'}[$arrow]->equip();
@@ -872,24 +886,42 @@ sub attack {
 			}
 			$i++;
 		}
+
+		$Lequip = 0;
+		$Leq = "";
+		$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'}); 
 		if ($config{'autoSwitch_default_leftHand'}) {
 			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_leftHand'});
-			if($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
-				$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
-				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'});
+			if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
 				message "Auto equiping default [L] :".$config{'autoSwitch_default_leftHand'}."\n", "equip";
-				$chars[$config{'char'}]{'inventory'}[$Leq]->equip();
+				$Lequip = 1;
 			}
 		}
 		if ($config{'autoSwitch_default_rightHand'}) {
-			$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'});
+			#$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'});
 			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
 				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
 				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'});
+
+				$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 32);
+				if ($Ldef eq "") {
+					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
+					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34) if ($Ldef eq "");
+					if ($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'}) {
+						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'});
+						$Lequip = 1;
+					}
+				}
+
+				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 34);
+				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped", 2) if ($Rdef eq "");
+				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'} && $Rdef ne $Ldef);
+
 				message "Auto equiping default [R] :".$config{'autoSwitch_default_rightHand'}." (unequip $Rdef)\n", "equip";
 				$chars[$config{'char'}]{'inventory'}[$Req]->equip();
 			}
 		}
+		$chars[$config{'char'}]{'inventory'}[$Leq]->equip() if ($Lequip == 1 && $Leq ne "");
 		if ($config{'autoSwitch_default_arrow'}) {
 			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_arrow'});
 			if($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) {
