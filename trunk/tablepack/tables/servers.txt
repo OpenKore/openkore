@@ -534,3 +534,11 @@ master_version 3
 version 10
 serverType 7
 secureLogin 1
+
+[Symphonia RO Private Server]
+ip 68.127.114.140
+port 6900
+master_version 18
+version 20
+private 1
+serverType 0
