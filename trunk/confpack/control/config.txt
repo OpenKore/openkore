@@ -11,7 +11,7 @@ char
 sex
 
 bindIp
-# 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya, 4 = new Freya
+# 0 = normal server, 1 = oRO, 2 = pRO, 3 = eAthena/Freya, 4 = new Freya, 5 = new eAthena
 serverType 0
 
 XKore 0
