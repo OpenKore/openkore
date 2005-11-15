@@ -35,7 +35,7 @@ our @EXPORT = (
 	# Hash/array management
 	qw(binAdd binFind binFindReverse binRemove binRemoveAndShift binRemoveAndShiftByIndex binSize
 	compactArray existsInList findIndex findIndexString findIndexString_lc findIndexString_lc_not_equip
-	findIndexStringList_lc findKey findKeyString hashCopyByKey minHeapAdd shuffleArray),
+	findIndexStringList_lc findLastIndex findKey findKeyString hashCopyByKey minHeapAdd shuffleArray),
 	# Math
 	qw(calcPosition checkMovementDirection distance blockDistance getVector moveAlongVector normalize vectorToDegree max min),
 	# OS-specific
@@ -408,6 +408,28 @@ sub findIndexString_lc_not_equip {
 		return $i;
 	} else {
 		return undef;
+	}
+}
+
+sub findLastIndex {
+	my $r_array = shift;
+	return undef if !$r_array;
+	my $key = shift;
+	my $num = shift;
+
+	if ($num ne "") {
+		my $max = @{$r_array};
+		for (my $i = $max-1; $i > -1; $i--) {
+			return $i if ($r_array->[$i]{$key} == $num);
+		}
+		return undef;
+	} else {
+		my $max = @{$r_array};
+		my $i;
+		for ($i = $max-1; $i > -1; $i--) {
+			return $i if (!$r_array->[$i] || !keys(%{$r_array->[$i]}));
+		}
+		return $i;
 	}
 }
 
