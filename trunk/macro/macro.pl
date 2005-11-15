@@ -102,8 +102,9 @@ sub checkConfig {
     warning "[macro] you did not specify 'macro_delay' in timeouts.txt. Assuming 1s\n";
     $timeout{macro_delay}{timeout} = 1
   }
-  if (!defined $::config{macro_read10608}) {
-    warning "[macro] you should read this thread before using macro cvs: http://openkore.sourceforge.net/forum/viewtopic.php?t=10608\n";
+  if ($::config{macro_readmanual} ne 'red/chili') {
+    warning "[macro] you should read the documentation before using this plugin: ".
+            "http://openkore.sourceforge.net/macro/\n";
     Unload;
   }
 }
@@ -186,6 +187,10 @@ sub commandHandler {
     $cvs->dump;
   ### parameter: probably a macro
   } else {
+    if (defined $queue) {
+      warning "[macro] a macro is already running. Wait until the macro has finished or call 'macro stop'\n";
+      return;
+    }
     $queue = new Macro::Script($arg, $argt);
     if (!defined $queue) {error "[macro] $arg not found or error in queue\n"}
     else {$cvs->debug("macro $arg selected.", $logfac{'function_call_macro'})}

@@ -42,7 +42,8 @@ macro script syntax (bnf):
 <macro command> ::= 'log' <parseable> |
                     'release' <automacro name> |
                     'pause' [<u_int>] |
-                    'call' <macro name> [<u_int> | <parseable>]
+                    'call' <macro name> [<u_int> | <parseable>] |
+                    'stop'
 
 <openkore command> ::= (see openkore manual for console commands)
 

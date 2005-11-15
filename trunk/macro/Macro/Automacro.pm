@@ -7,6 +7,9 @@ use warnings;
 require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(releaseAM automacroCheck consoleCheckWrapper);
+our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
+    checkPercent checkStatus checkItem checkPerson checkCond checkEquip checkCast
+    checkEquip checkMsg checkMonster checkConsole checkMapChange);
 
 use Utils;
 use Globals;
