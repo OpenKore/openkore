@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions.php,v 1.2 2005/08/08 14:24:51 acydburn Exp $
+ *   $Id: functions.php,v 1.133.2.37 2005/10/30 15:17:14 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -78,10 +78,39 @@ function get_db_stat($mode)
 function phpbb_clean_username($username)
 {
 	$username = substr(htmlspecialchars(str_replace("\'", "'", trim($username))), 0, 25);
-	$username = phpbb_rtrim($username, "\\");	
+	$username = phpbb_rtrim($username, "\\");
 	$username = str_replace("'", "\'", $username);
 
 	return $username;
+}
+
+/**
+* This function is a wrapper for ltrim, as charlist is only supported in php >= 4.1.0
+* Added in phpBB 2.0.18
+*/
+function phpbb_ltrim($str, $charlist = false)
+{
+	if ($charlist === false)
+	{
+		return ltrim($str);
+	}
+	
+	$php_version = explode('.', PHP_VERSION);
+
+	// php version < 4.1.0
+	if ((int) $php_version[0] < 4 || ((int) $php_version[0] == 4 && (int) $php_version[1] < 1))
+	{
+		while ($str{0} == $charlist)
+		{
+			$str = substr($str, 1);
+		}
+	}
+	else
+	{
+		$str = ltrim($str, $charlist);
+	}
+
+	return $str;
 }
 
 // added at phpBB 2.0.12 to fix a bug in PHP 4.3.10 (only supporting charlist in php >= 4.1.0)
@@ -540,7 +569,7 @@ function obtain_word_list(&$orig_word, &$replacement_word)
 	{
 		do 
 		{
-			$orig_word[] = '#\b(' . str_replace('\*', '\w*?', phpbb_preg_quote($row['word'], '#')) . ')\b#i';
+			$orig_word[] = '#\b(' . str_replace('\*', '\w*?', preg_quote($row['word'], '#')) . ')\b#i';
 			$replacement_word[] = $row['replacement'];
 		}
 		while ( $row = $db->sql_fetchrow($result) );

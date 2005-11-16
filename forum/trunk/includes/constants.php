@@ -6,7 +6,7 @@
  *   copyright            : ('C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: constants.php,v 1.47.2.5 2004/11/18 17:49:42 acydburn Exp $
+ *   $Id: constants.php,v 1.47.2.6 2005/10/30 15:17:14 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -167,6 +167,7 @@ define('SEARCH_TABLE', $table_prefix.'search_results');
 define('SEARCH_WORD_TABLE', $table_prefix.'search_wordlist');
 define('SEARCH_MATCH_TABLE', $table_prefix.'search_wordmatch');
 define('SESSIONS_TABLE', $table_prefix.'sessions');
+define('SESSIONS_KEYS_TABLE', $table_prefix.'sessions_keys');
 define('SMILIES_TABLE', $table_prefix.'smilies');
 // Begin Syntax Highlighter Mod
 define('SYNTAX_LANGUAGE_CONFIG_TABLE', $table_prefix.'syntax_language_config');

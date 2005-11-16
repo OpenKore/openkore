@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: login.php,v 1.47.2.18 2005/05/06 20:50:10 acydburn Exp $
+ *   $Id: login.php,v 1.47.2.20 2005/10/30 15:17:13 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -131,6 +131,12 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 	}
 	else if( ( isset($HTTP_GET_VARS['logout']) || isset($HTTP_POST_VARS['logout']) ) && $userdata['session_logged_in'] )
 	{
+		// session id check
+		if ($sid == '' || $sid != $userdata['session_id'])
+		{
+			message_die(GENERAL_ERROR, 'Invalid_session');
+		}
+
 		if( $userdata['session_logged_in'] )
 		{
 			session_end($userdata['session_id'], $userdata['user_id']);
@@ -168,6 +174,8 @@ else
 			'body' => 'login_body.tpl')
 		);
 
+		$forward_page = '';
+
 		if( isset($HTTP_POST_VARS['redirect']) || isset($HTTP_GET_VARS['redirect']) )
 		{
 			$forward_to = $HTTP_SERVER_VARS['QUERY_STRING'];
@@ -179,8 +187,6 @@ else
 
 				if(count($forward_match) > 1)
 				{
-					$forward_page = '';
-
 					for($i = 1; $i < count($forward_match); $i++)
 					{
 						if( !ereg("sid=", $forward_match[$i]) )
@@ -200,17 +206,13 @@ else
 				}
 			}
 		}
-		else
-		{
-			$forward_page = '';
-		}
 
 		$username = ( $userdata['user_id'] != ANONYMOUS ) ? $userdata['username'] : '';
 
 		$s_hidden_fields = '<input type="hidden" name="redirect" value="' . $forward_page . '" />';
 		$s_hidden_fields .= (isset($HTTP_GET_VARS['admin'])) ? '<input type="hidden" name="admin" value="1" />' : '';
 
-		make_jumpbox('viewforum.'.$phpEx, $forum_id);
+		make_jumpbox('viewforum.'.$phpEx);
 		$template->assign_vars(array(
 			'USERNAME' => $username,
 
