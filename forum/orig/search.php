@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: search.php,v 1.72.2.16 2005/03/15 18:34:34 acydburn Exp $
+ *   $Id: search.php,v 1.72.2.17 2005/09/14 18:14:30 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -257,7 +257,9 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			$synonym_array = @file($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/search_synonyms.txt'); 
 
 			$split_search = array();
-			$split_search = ( !strstr($multibyte_charset, $lang['ENCODING']) ) ?  split_words(clean_words('search', stripslashes($search_keywords), $stopword_array, $synonym_array), 'search') : split(' ', $search_keywords);	
+			$stripped_keywords = stripslashes($search_keywords);
+			$split_search = ( !strstr($multibyte_charset, $lang['ENCODING']) ) ?  split_words(clean_words('search', $stripped_keywords, $stopword_array, $synonym_array), 'search') : split(' ', $search_keywords);	
+			unset($stripped_keywords);
 
 			$search_msg_only = ( !$search_fields ) ? "AND m.title_match = 0" : ( ( strstr($multibyte_charset, $lang['ENCODING']) ) ? '' : '' );
 
@@ -1301,7 +1303,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 $sql = "SELECT c.cat_title, c.cat_id, f.forum_name, f.forum_id  
 	FROM " . CATEGORIES_TABLE . " c, " . FORUMS_TABLE . " f
 	WHERE f.cat_id = c.cat_id 
-	ORDER BY c.cat_id, f.forum_order";
+	ORDER BY c.cat_order, f.forum_order";
 $result = $db->sql_query($sql);
 if ( !$result )
 {

@@ -6,7 +6,7 @@
 *     copyright            : (C) 2001 The phpBB Group
 *     email                : support@phpbb.com
 *
-*     $Id: admin_smilies.php,v 1.22.2.14 2005/05/06 20:50:09 acydburn Exp $
+*     $Id: admin_smilies.php,v 1.22.2.16 2005/10/30 15:17:13 acydburn Exp $
 *
 ****************************************************************************/
 
@@ -404,13 +404,14 @@ else if ( $mode != "" )
 			//
 			$smile_code = ( isset($HTTP_POST_VARS['smile_code']) ) ? trim($HTTP_POST_VARS['smile_code']) : trim($HTTP_GET_VARS['smile_code']);
 			$smile_url = ( isset($HTTP_POST_VARS['smile_url']) ) ? trim($HTTP_POST_VARS['smile_url']) : trim($HTTP_GET_VARS['smile_url']);
+			$smile_url = phpbb_ltrim(basename($smile_url), "'");
 			$smile_emotion = ( isset($HTTP_POST_VARS['smile_emotion']) ) ? trim($HTTP_POST_VARS['smile_emotion']) : trim($HTTP_GET_VARS['smile_emotion']);
 			$smile_id = ( isset($HTTP_POST_VARS['smile_id']) ) ? intval($HTTP_POST_VARS['smile_id']) : intval($HTTP_GET_VARS['smile_id']);
 
 			// If no code was entered complain ...
 			if ($smile_code == '' || $smile_url == '')
 			{
-				message_die(MESSAGE, $lang['Fields_empty']);
+				message_die(GENERAL_MESSAGE, $lang['Fields_empty']);
 			}
 
 			//
@@ -446,6 +447,7 @@ else if ( $mode != "" )
 			//
 			$smile_code = ( isset($HTTP_POST_VARS['smile_code']) ) ? $HTTP_POST_VARS['smile_code'] : $HTTP_GET_VARS['smile_code'];
 			$smile_url = ( isset($HTTP_POST_VARS['smile_url']) ) ? $HTTP_POST_VARS['smile_url'] : $HTTP_GET_VARS['smile_url'];
+			$smile_url = phpbb_ltrim(basename($smile_url), "'");
 			$smile_emotion = ( isset($HTTP_POST_VARS['smile_emotion']) ) ? $HTTP_POST_VARS['smile_emotion'] : $HTTP_GET_VARS['smile_emotion'];
 			$smile_code = trim($smile_code);
 			$smile_url = trim($smile_url);
@@ -454,7 +456,7 @@ else if ( $mode != "" )
 			// If no code was entered complain ...
 			if ($smile_code == '' || $smile_url == '')
 			{
-				message_die(MESSAGE, $lang['Fields_empty']);
+				message_die(GENERAL_MESSAGE, $lang['Fields_empty']);
 			}
 
 			//

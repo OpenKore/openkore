@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: usercp_register.php,v 1.20.2.61 2005/06/26 12:03:44 acydburn Exp $
+ *   $Id: usercp_register.php,v 1.20.2.67 2005/10/31 06:40:27 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -73,6 +73,7 @@ function show_coppa()
 // ---------------------------------------
 
 $error = FALSE;
+$error_msg = '';
 $page_title = ( $mode == 'editprofile' ) ? $lang['Edit_profile'] : $lang['Register'];
 
 if ( $mode == 'register' && !isset($HTTP_POST_VARS['agreed']) && !isset($HTTP_GET_VARS['agreed']) )
@@ -152,7 +153,7 @@ if (
 	}
 	else
 	{
-		$attachsig = ( isset($HTTP_POST_VARS['attachsig']) ) ? ( ($HTTP_POST_VARS['attachsig']) ? TRUE : 0 ) : 0;
+		$attachsig = ( isset($HTTP_POST_VARS['attachsig']) ) ? ( ($HTTP_POST_VARS['attachsig']) ? TRUE : 0 ) : $userdata['user_attachsig'];
 
 		$allowhtml = ( isset($HTTP_POST_VARS['allowhtml']) ) ? ( ($HTTP_POST_VARS['allowhtml']) ? TRUE : 0 ) : $userdata['user_allowhtml'];
 		$allowbbcode = ( isset($HTTP_POST_VARS['allowbbcode']) ) ? ( ($HTTP_POST_VARS['allowbbcode']) ? TRUE : 0 ) : $userdata['user_allowbbcode'];
@@ -192,6 +193,7 @@ if (
 	$user_dateformat = ( !empty($HTTP_POST_VARS['dateformat']) ) ? trim(htmlspecialchars($HTTP_POST_VARS['dateformat'])) : $board_config['default_dateformat'];
 
 	$user_avatar_local = ( isset($HTTP_POST_VARS['avatarselect']) && !empty($HTTP_POST_VARS['submitavatar']) && $board_config['allow_avatar_local'] ) ? htmlspecialchars($HTTP_POST_VARS['avatarselect']) : ( ( isset($HTTP_POST_VARS['avatarlocal'])  ) ? htmlspecialchars($HTTP_POST_VARS['avatarlocal']) : '' );
+	$user_avatar_category = ( isset($HTTP_POST_VARS['avatarcatname']) && $board_config['allow_avatar_local'] ) ? htmlspecialchars($HTTP_POST_VARS['avatarcatname']) : '' ;
 
 	$user_avatar_remoteurl = ( !empty($HTTP_POST_VARS['avatarremoteurl']) ) ? trim(htmlspecialchars($HTTP_POST_VARS['avatarremoteurl'])) : '';
 	$user_avatar_upload = ( !empty($HTTP_POST_VARS['avatarurl']) ) ? trim($HTTP_POST_VARS['avatarurl']) : ( ( $HTTP_POST_FILES['avatar']['tmp_name'] != "none") ? $HTTP_POST_FILES['avatar']['tmp_name'] : '' );
@@ -199,8 +201,8 @@ if (
 	$user_avatar_size = ( !empty($HTTP_POST_FILES['avatar']['size']) ) ? $HTTP_POST_FILES['avatar']['size'] : 0;
 	$user_avatar_filetype = ( !empty($HTTP_POST_FILES['avatar']['type']) ) ? $HTTP_POST_FILES['avatar']['type'] : '';
 
-	$user_avatar = ( empty($user_avatar_loc) && $mode == 'editprofile' ) ? $userdata['user_avatar'] : '';
-	$user_avatar_type = ( empty($user_avatar_loc) && $mode == 'editprofile' ) ? $userdata['user_avatar_type'] : '';
+	$user_avatar = ( empty($user_avatar_local) && $mode == 'editprofile' ) ? $userdata['user_avatar'] : '';
+	$user_avatar_type = ( empty($user_avatar_local) && $mode == 'editprofile' ) ? $userdata['user_avatar_type'] : '';
 
 	if ( (isset($HTTP_POST_VARS['avatargallery']) || isset($HTTP_POST_VARS['submitavatar']) || isset($HTTP_POST_VARS['cancelavatar'])) && (!isset($HTTP_POST_VARS['submit'])) )
 	{
@@ -219,14 +221,14 @@ if (
 		$location = stripslashes($location);
 		$occupation = stripslashes($occupation);
 		$interests = stripslashes($interests);
-		$signature = stripslashes($signature);
+		$signature = htmlspecialchars(stripslashes($signature));
 
 		$user_lang = stripslashes($user_lang);
 		$user_dateformat = stripslashes($user_dateformat);
 
 		if ( !isset($HTTP_POST_VARS['cancelavatar']))
 		{
-			$user_avatar = $user_avatar_local;
+			$user_avatar = $user_avatar_category . '/' . $user_avatar_local;
 			$user_avatar_type = USER_AVATAR_GALLERY;
 		}
 	}
@@ -436,7 +438,7 @@ if ( isset($HTTP_POST_VARS['submit']) )
 			$error_msg .= ( ( isset($error_msg) ) ? '<br />' : '' ) . $lang['Signature_too_long'];
 		}
 
-		if ( $signature_bbcode_uid == '' )
+		if ( !isset($signature_bbcode_uid) || $signature_bbcode_uid == '' )
 		{
 			$signature_bbcode_uid = ( $allowbbcode ) ? make_bbcode_uid() : '';
 		}
@@ -472,19 +474,13 @@ if ( isset($HTTP_POST_VARS['submit']) )
 	}
 	else if ( $user_avatar_remoteurl != '' && $board_config['allow_avatar_remote'] )
 	{
-		if ( @file_exists(@phpbb_realpath('./' . $board_config['avatar_path'] . '/' . $userdata['user_avatar'])) )
-		{
-			@unlink(@phpbb_realpath('./' . $board_config['avatar_path'] . '/' . $userdata['user_avatar']));
-		}
+		user_avatar_delete($userdata['user_avatar_type'], $userdata['user_avatar']);
 		$avatar_sql = user_avatar_url($mode, $error, $error_msg, $user_avatar_remoteurl);
 	}
 	else if ( $user_avatar_local != '' && $board_config['allow_avatar_local'] )
 	{
-		if ( @file_exists(@phpbb_realpath('./' . $board_config['avatar_path'] . '/' . $userdata['user_avatar'])) )
-		{
-			@unlink(@phpbb_realpath('./' . $board_config['avatar_path'] . '/' . $userdata['user_avatar']));
-		}
-		$avatar_sql = user_avatar_gallery($mode, $error, $error_msg, $user_avatar_local);
+		user_avatar_delete($userdata['user_avatar_type'], $userdata['user_avatar']);
+		$avatar_sql = user_avatar_gallery($mode, $error, $error_msg, $user_avatar_local, $user_avatar_category);
 	}
 
 	if ( !$error )
@@ -532,22 +528,56 @@ if ( isset($HTTP_POST_VARS['submit']) )
 				include($phpbb_root_path . 'includes/emailer.'.$phpEx);
 				$emailer = new emailer($board_config['smtp_delivery']);
 
-				$emailer->from($board_config['board_email']);
-				$emailer->replyto($board_config['board_email']);
-
-				$emailer->use_template('user_activate', stripslashes($user_lang));
-				$emailer->email_address($email);
-				$emailer->set_subject($lang['Reactivate']);
-
-				$emailer->assign_vars(array(
-					'SITENAME' => $board_config['sitename'],
-					'USERNAME' => preg_replace($unhtml_specialchars_match, $unhtml_specialchars_replace, substr(str_replace("\'", "'", $username), 0, 25)),
-					'EMAIL_SIG' => (!empty($board_config['board_email_sig'])) ? str_replace('<br />', "\n", "-- \n" . $board_config['board_email_sig']) : '',
-
-					'U_ACTIVATE' => $server_url . '?mode=activate&' . POST_USERS_URL . '=' . $user_id . '&act_key=' . $user_actkey)
-				);
-				$emailer->send();
-				$emailer->reset();
+ 				if ( $board_config['require_activation'] != USER_ACTIVATION_ADMIN )
+ 				{
+ 					$emailer->from($board_config['board_email']);
+ 					$emailer->replyto($board_config['board_email']);
+ 
+ 					$emailer->use_template('user_activate', stripslashes($user_lang));
+ 					$emailer->email_address($email);
+ 					$emailer->set_subject($lang['Reactivate']);
+  
+ 					$emailer->assign_vars(array(
+ 						'SITENAME' => $board_config['sitename'],
+ 						'USERNAME' => preg_replace($unhtml_specialchars_match, $unhtml_specialchars_replace, substr(str_replace("\'", "'", $username), 0, 25)),
+ 						'EMAIL_SIG' => (!empty($board_config['board_email_sig'])) ? str_replace('<br />', "\n", "-- \n" . $board_config['board_email_sig']) : '',
+  
+ 						'U_ACTIVATE' => $server_url . '?mode=activate&' . POST_USERS_URL . '=' . $user_id . '&act_key=' . $user_actkey)
+ 					);
+ 					$emailer->send();
+ 					$emailer->reset();
+ 				}
+ 				else if ( $board_config['require_activation'] == USER_ACTIVATION_ADMIN )
+ 				{
+ 					$sql = 'SELECT user_email, user_lang 
+ 						FROM ' . USERS_TABLE . '
+ 						WHERE user_level = ' . ADMIN;
+ 					
+ 					if ( !($result = $db->sql_query($sql)) )
+ 					{
+ 						message_die(GENERAL_ERROR, 'Could not select Administrators', '', __LINE__, __FILE__, $sql);
+ 					}
+ 					
+ 					while ($row = $db->sql_fetchrow($result))
+ 					{
+ 						$emailer->from($board_config['board_email']);
+ 						$emailer->replyto($board_config['board_email']);
+ 						
+ 						$emailer->email_address(trim($row['user_email']));
+ 						$emailer->use_template("admin_activate", $row['user_lang']);
+ 						$emailer->set_subject($lang['Reactivate']);
+ 
+ 						$emailer->assign_vars(array(
+ 							'USERNAME' => preg_replace($unhtml_specialchars_match, $unhtml_specialchars_replace, substr(str_replace("\'", "'", $username), 0, 25)),
+ 							'EMAIL_SIG' => str_replace('<br />', "\n", "-- \n" . $board_config['board_email_sig']),
+ 
+ 							'U_ACTIVATE' => $server_url . '?mode=activate&' . POST_USERS_URL . '=' . $user_id . '&act_key=' . $user_actkey)
+ 						);
+ 						$emailer->send();
+ 						$emailer->reset();
+ 					}
+ 					$db->sql_freeresult($result);
+ 				}
 
 				$message = $lang['Profile_updated_inactive'] . '<br /><br />' . sprintf($lang['Click_return_index'],  '<a href="' . append_sid("index.$phpEx") . '">', '</a>');
 			}
@@ -818,7 +848,7 @@ if( isset($HTTP_POST_VARS['avatargallery']) && !$error )
 
 	$allowviewonline = !$allowviewonline;
 
-	display_avatar_gallery($mode, $avatar_category, $user_id, $email, $current_email, $coppa, $username, $email, &$new_password, &$cur_password, $password_confirm, $icq, $aim, $msn, $yim, $website, $location, $occupation, $interests, $signature, $viewemail, $notifypm, $popup_pm, $notifyreply, $attachsig, $allowhtml, $allowbbcode, $allowsmilies, $allowviewonline, $user_style, $user_lang, $user_timezone, $user_dateformat, $userdata['session_id']);
+	display_avatar_gallery($mode, $avatar_category, $user_id, $email, $current_email, $coppa, $username, $email, $new_password, $cur_password, $password_confirm, $icq, $aim, $msn, $yim, $website, $location, $occupation, $interests, $signature, $viewemail, $notifypm, $popup_pm, $notifyreply, $attachsig, $allowhtml, $allowbbcode, $allowsmilies, $allowviewonline, $user_style, $user_lang, $user_timezone, $user_dateformat, $userdata['session_id']);
 }
 else
 {
@@ -829,9 +859,9 @@ else
 		$coppa = FALSE;
 	}
 
-	if ( !isset($user_template) )
+	if ( !isset($user_style) )
 	{
-		$selected_template = $board_config['system_template'];
+		$user_style = $board_config['default_style'];
 	}
 
 	$avatar_img = '';
@@ -864,7 +894,7 @@ else
 
 	if ( !empty($user_avatar_local) )
 	{
-		$s_hidden_fields .= '<input type="hidden" name="avatarlocal" value="' . $user_avatar_local . '" />';
+		$s_hidden_fields .= '<input type="hidden" name="avatarlocal" value="' . $user_avatar_local . '" /><input type="hidden" name="avatarcatname" value="' . $user_avatar_category . '" />';
 	}
 
 	$html_status =  ( $userdata['user_allowhtml'] && $board_config['allow_html'] ) ? $lang['HTML_is_ON'] : $lang['HTML_is_OFF'];

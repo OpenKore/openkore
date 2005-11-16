@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: mysql.php,v 1.16 2002/03/19 01:07:36 psotfx Exp $
+ *   $Id: mysql.php,v 1.16.2.1 2005/09/18 16:17:20 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -259,7 +259,7 @@ class sql_db
 				{
 					if($this->rowset[$query_id])
 					{
-						$result = $this->rowset[$query_id][$field];
+						$result = $this->rowset[$query_id][0][$field];
 					}
 					else if($this->row[$query_id])
 					{

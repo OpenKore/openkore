@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions_post.php,v 1.9.2.37 2004/11/18 17:49:44 acydburn Exp $
+ *   $Id: functions_post.php,v 1.9.2.39 2005/09/18 16:17:20 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -213,7 +213,7 @@ function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on,
 //
 // Post a new topic/reply/poll or edit existing post/poll
 //
-function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, &$post_username, &$post_subject, &$post_message, &$poll_title, &$poll_options, &$poll_length)
+function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length)
 {
 	global $board_config, $lang, $db, $phpbb_root_path, $phpEx;
 	global $userdata, $user_ip;
@@ -578,16 +578,7 @@ function user_notification($mode, &$post_data, &$topic_title, &$forum_id, &$topi
 
 	$current_time = time();
 
-	if ($mode == 'delete')
-	{
-		$delete_sql = (!$post_data['first_post'] && !$post_data['last_post']) ? " AND user_id = " . $userdata['user_id'] : '';
-		$sql = "DELETE FROM " . TOPICS_WATCH_TABLE . " WHERE topic_id = $topic_id" . $delete_sql;
-		if (!$db->sql_query($sql))
-		{
-			message_die(GENERAL_ERROR, 'Could not change topic notify data', '', __LINE__, __FILE__, $sql);
-		}
-	}
-	else 
+	if ($mode != 'delete')
 	{
 		if ($mode == 'reply')
 		{
@@ -769,7 +760,7 @@ function generate_smilies($mode, $page_id)
 
 		$gen_simple_header = TRUE;
 
-		$page_title = $lang['Emoticons'] . " - $topic_title";
+		$page_title = $lang['Emoticons'];
 		include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
 		$template->set_filenames(array(

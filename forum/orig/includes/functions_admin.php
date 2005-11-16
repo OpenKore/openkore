@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions_admin.php,v 1.5.2.3 2002/07/19 17:03:47 psotfx Exp $
+ *   $Id: functions_admin.php,v 1.5.2.5 2005/09/14 19:16:21 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -30,9 +30,10 @@ function make_forum_select($box_name, $ignore_forum = false, $select_forum = '')
 
 	$is_auth_ary = auth(AUTH_READ, AUTH_LIST_ALL, $userdata);
 
-	$sql = "SELECT forum_id, forum_name
-		FROM " . FORUMS_TABLE . " 
-		ORDER BY cat_id, forum_order";
+	$sql = 'SELECT f.forum_id, f.forum_name
+		FROM ' . CATEGORIES_TABLE . ' c, ' . FORUMS_TABLE . ' f
+		WHERE f.cat_id = c.cat_id 
+		ORDER BY c.cat_order, f.forum_order';
 	if ( !($result = $db->sql_query($sql)) )
 	{
 		message_die(GENERAL_ERROR, 'Couldn not obtain forums information', '', __LINE__, __FILE__, $sql);
@@ -140,10 +141,45 @@ function sync($type, $id = false)
 
 			if ( $row = $db->sql_fetchrow($result) )
 			{
-				$sql = ( $row['total_posts'] ) ? "UPDATE " . TOPICS_TABLE . " SET topic_replies = " . ( $row['total_posts'] - 1 ) . ", topic_first_post_id = " . $row['first_post'] . ", topic_last_post_id = " . $row['last_post'] . " WHERE topic_id = $id" : "DELETE FROM " . TOPICS_TABLE . " WHERE topic_id = $id";
-				if ( !$db->sql_query($sql) )
+				if ($row['total_posts'])
 				{
-					message_die(GENERAL_ERROR, 'Could not update topic', '', __LINE__, __FILE__, $sql);
+					// Correct the details of this topic
+					$sql = 'UPDATE ' . TOPICS_TABLE . ' 
+						SET topic_replies = ' . ($row['total_posts'] - 1) . ', topic_first_post_id = ' . $row['first_post'] . ', topic_last_post_id = ' . $row['last_post'] . "
+						WHERE topic_id = $id";
+
+					if (!$db->sql_query($sql))
+					{
+						message_die(GENERAL_ERROR, 'Could not update topic', '', __LINE__, __FILE__, $sql);
+					}
+				}
+				else
+				{
+					// There are no replies to this topic
+					// Check if it is a move stub
+					$sql = 'SELECT topic_moved_id 
+						FROM ' . TOPICS_TABLE . " 
+						WHERE topic_id = $id";
+
+					if (!($result = $db->sql_query($sql)))
+					{
+						message_die(GENERAL_ERROR, 'Could not get topic ID', '', __LINE__, __FILE__, $sql);
+					}
+
+					if ($row = $db->sql_fetchrow($result))
+					{
+						if (!$row['topic_moved_id'])
+						{
+							$sql = 'DELETE FROM ' . TOPICS_TABLE . " WHERE topic_id = $id";
+			
+							if (!$db->sql_query($sql))
+							{
+								message_die(GENERAL_ERROR, 'Could not remove topic', '', __LINE__, __FILE__, $sql);
+							}
+						}
+					}
+
+					$db->sql_freeresult($result);
 				}
 			}
 			break;
