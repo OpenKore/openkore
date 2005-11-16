@@ -21,7 +21,8 @@
 
 // Do not display the quick reply box for people who have less than 50 posts,
 // in order to avoid n00b replies.
-if ($userdata['user_posts'] < 50)
+require_once($phpbb_root_path . 'includes/openkore.' . $phpEx);
+if ($userdata['user_posts'] < OPENKORE_MIN_USER_POSTS)
 	return;
 
 //

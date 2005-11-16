@@ -1,8 +1,11 @@
 <?php
-if ( !defined('IN_PHPBB') )
-{
+if ( !defined('IN_PHPBB') ) {
 	die("Hacking attempt");
 }
+
+// Users who have more than x posts are considered good citizen.
+// Users with less than this number of posts will be shown all kinds of warnings.
+define('OPENKORE_MIN_USER_POSTS', 7);
 
 function load_openkore_options()
 {

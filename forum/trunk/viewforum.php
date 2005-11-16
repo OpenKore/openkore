@@ -24,6 +24,7 @@ define('IN_PHPBB', true);
 $phpbb_root_path = './';
 include($phpbb_root_path . 'extension.inc');
 include($phpbb_root_path . 'common.'.$phpEx);
+include($phpbb_root_path . 'includes/functions_separate.'.$phpEx);
 
 //
 // Start initial var setup
@@ -340,6 +341,7 @@ $db->sql_freeresult($result);
 // Total topics ...
 //
 $total_topics += $total_announcements;
+$dividers = get_dividers($topic_rowset);
 
 //
 // Define censored word matches
@@ -659,6 +661,12 @@ if( $total_topics )
 
 			'U_VIEW_TOPIC' => $view_topic_url)
 		);
+		if ( array_key_exists($i, $dividers) )
+		{
+			$template->assign_block_vars('topicrow.divider', array(
+							     'L_DIV_HEADERS' => $dividers[$i])
+				);
+		}
 	}
 
 	$topics_count -= $total_announcements;
