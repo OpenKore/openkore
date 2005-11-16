@@ -1030,6 +1030,10 @@ $lang['QuoteSelelected'] = 'Quote selected';
 $lang['QuoteSelelectedEmpty'] = 'Select a text anywhere on a page and try again';
 $lang['Quick_Reply_smilies'] = 'all';
 
+$lang['Global_Announcements'] = 'Global Announcements';
+$lang['Announcements'] = 'Announcements';
+$lang['Sticky_Topics'] = 'Read these topics first!';
+
 //
 // That's all, Folks!
 // -------------------------------------------------
