@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: modcp.php,v 1.3 2005/07/16 14:40:30 acydburn Exp $
+ *   $Id: modcp.php,v 1.71.2.27 2005/09/14 18:14:30 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -222,7 +222,7 @@ switch( $mode )
 	case 'delete':
 		if (!$is_auth['auth_delete'])
 		{
-			message_die(MESSAGE, sprintf($lang['Sorry_auth_delete'], $is_auth['auth_delete_type']));
+			message_die(GENERAL_MESSAGE, sprintf($lang['Sorry_auth_delete'], $is_auth['auth_delete_type']));
 		}
 
 		$page_title = $lang['Mod_CP'];
@@ -1086,7 +1086,7 @@ switch( $mode )
 					'L_SEARCH_POSTS' => sprintf($lang['Search_user_posts'], $username), 
 
 					'U_PROFILE' => ($id == ANONYMOUS) ? "modcp.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $post_id . "&amp;" . POST_TOPIC_URL . "=" . $topic_id . "&amp;sid=" . $userdata['session_id'] : append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$id"),
-					'U_SEARCHPOSTS' => append_sid("search.$phpEx?search_author=" . urlencode($username) . "&amp;showresults=topics"))
+					'U_SEARCHPOSTS' => append_sid("search.$phpEx?search_author=" . (($id == ANONYMOUS) ? 'Anonymous' : urlencode($username)) . "&amp;showresults=topics"))
 				);
 
 				$i++; 

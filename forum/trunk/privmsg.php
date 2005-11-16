@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: privmsg.php,v 1.3 2005/08/08 14:24:51 acydburn Exp $
+ *   $Id: privmsg.php,v 1.96.2.43 2005/10/30 15:17:14 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -296,7 +296,7 @@ else if ( $mode == 'read' )
 
 		if ( $sent_info = $db->sql_fetchrow($result) )
 		{
-			if ( $sent_info['sent_items'] >= $board_config['max_sentbox_privmsgs'] )
+			if ($board_config['max_sentbox_privmsgs'] && $sent_info['sent_items'] >= $board_config['max_sentbox_privmsgs'])
 			{
 				$sql = "SELECT privmsgs_id FROM " . PRIVMSGS_TABLE . " 
 					WHERE privmsgs_type = " . PRIVMSGS_SENT_MAIL . " 
@@ -540,8 +540,8 @@ else if ( $mode == 'read' )
 	$yim = ( $privmsg['user_yim'] ) ? '<a href="http://edit.yahoo.com/config/send_webmesg?.target=' . $privmsg['user_yim'] . '&amp;.src=pg">' . $lang['YIM'] . '</a>' : '';
 
 	$temp_url = append_sid("search.$phpEx?search_author=" . urlencode($username_from) . "&amp;showresults=posts");
-	$search_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_search'] . '" alt="' . $lang['Search_user_posts'] . '" title="' . $lang['Search_user_posts'] . '" border="0" /></a>';
-	$search = '<a href="' . $temp_url . '">' . $lang['Search_user_posts'] . '</a>';
+	$search_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_search'] . '" alt="' . sprintf($lang['Search_user_posts'], $username_from) . '" title="' . sprintf($lang['Search_user_posts'], $username_from) . '" border="0" /></a>';
+	$search = '<a href="' . $temp_url . '">' . sprintf($lang['Search_user_posts'], $username_from) . '</a>';
 
 	//
 	// Processing of post
@@ -916,7 +916,7 @@ else if ( $save && $mark_list && $folder != 'savebox' && $folder != 'outbox' )
 
 		if ( $saved_info = $db->sql_fetchrow($result) )
 		{
-			if ( $saved_info['savebox_items'] >= $board_config['max_savebox_privmsgs'] )
+			if ($board_config['max_savebox_privmsgs'] && $saved_info['savebox_items'] >= $board_config['max_savebox_privmsgs'] )
 			{
 				$sql = "SELECT privmsgs_id FROM " . PRIVMSGS_TABLE . " 
 					WHERE ( ( privmsgs_to_userid = " . $userdata['user_id'] . " 
@@ -1143,6 +1143,27 @@ else if ( $submit || $refresh || $mode != '' )
 		//
 	}
 
+	if ($submit && $mode == 'edit')
+	{
+		$sql = 'SELECT privmsgs_from_userid
+			FROM ' . PRIVMSGS_TABLE . '
+			WHERE privmsgs_id = ' . (int) $privmsg_id . '
+				AND privmsgs_from_userid = ' . $userdata['user_id'];
+
+		if (!($result = $db->sql_query($sql)))
+		{
+			message_die(GENERAL_ERROR, "Could not obtain message details", "", __LINE__, __FILE__, $sql);
+		}
+
+		if (!($row = $db->sql_fetchrow($result)))
+		{
+			message_die(GENERAL_MESSAGE, $lang['No_such_post']);
+		}
+		$db->sql_freeresult($result);
+
+		unset($row);
+	}
+
 	if ( $submit )
 	{
 		if ( !empty($HTTP_POST_VARS['username']) )
@@ -1159,7 +1180,11 @@ else if ( $submit || $refresh || $mode != '' )
 				$error_msg = $lang['No_such_user'];
 			}
 
-			$to_userdata = $db->sql_fetchrow($result);
+			if (!($to_userdata = $db->sql_fetchrow($result)))
+			{
+				$error = TRUE;
+				$error_msg = $lang['No_such_user'];
+			}
 		}
 		else
 		{
@@ -1227,7 +1252,7 @@ else if ( $submit || $refresh || $mode != '' )
 
 			if ( $inbox_info = $db->sql_fetchrow($result) )
 			{
-				if ( $inbox_info['inbox_items'] >= $board_config['max_inbox_privmsgs'] )
+				if ($board_config['max_inbox_privmsgs'] && $inbox_info['inbox_items'] >= $board_config['max_inbox_privmsgs'])
 				{
 					$sql = "SELECT privmsgs_id FROM " . PRIVMSGS_TABLE . " 
 						WHERE ( privmsgs_type = " . PRIVMSGS_NEW_MAIL . " 
@@ -1325,7 +1350,7 @@ else if ( $submit || $refresh || $mode != '' )
 				$emailer->set_subject($lang['Notification_subject']);
 					
 				$emailer->assign_vars(array(
-					'USERNAME' => $to_username, 
+					'USERNAME' => stripslashes($to_username), 
 					'SITENAME' => $board_config['sitename'],
 					'EMAIL_SIG' => (!empty($board_config['board_email_sig'])) ? str_replace('<br />', "\n", "-- \n" . $board_config['board_email_sig']) : '', 
 
@@ -1430,8 +1455,7 @@ else if ( $submit || $refresh || $mode != '' )
 				$to_username = $row['username'];
 			}
 		}
-
-		if ( $mode == 'edit' )
+		else if ( $mode == 'edit' )
 		{
 			$sql = "SELECT pm.*, pmt.privmsgs_bbcode_uid, pmt.privmsgs_text, u.username, u.user_id, u.user_sig 
 				FROM " . PRIVMSGS_TABLE . " pm, " . PRIVMSGS_TEXT_TABLE . " pmt, " . USERS_TABLE . " u
@@ -1512,7 +1536,7 @@ else if ( $submit || $refresh || $mode != '' )
 		}
 		else
 		{
-			$privmsg_subject = $privmsg_message = '';
+			$privmsg_subject = $privmsg_message = $to_username = '';
 		}
 	}
 
@@ -1808,7 +1832,6 @@ else if ( $submit || $refresh || $mode != '' )
 		'S_BBCODE_CHECKED' => ( !$bbcode_on ) ? ' checked="checked"' : '', 
 		'S_SMILIES_CHECKED' => ( !$smilies_on ) ? ' checked="checked"' : '', 
 		'S_SIGNATURE_CHECKED' => ( $attach_sig ) ? ' checked="checked"' : '', 
-		'S_NAMES_SELECT' => $user_names_select,
 		'S_HIDDEN_FORM_FIELDS' => $s_hidden_fields,
 		'S_POST_ACTION' => append_sid("privmsg.$phpEx"),
 			

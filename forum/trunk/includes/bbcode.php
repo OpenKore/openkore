@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: bbcode.php,v 1.36.2.35 2005/07/19 20:01:10 acydburn Exp $
+ *   $Id: bbcode.php,v 1.36.2.36 2005/10/05 17:42:04 grahamje Exp $
  *
  ***************************************************************************/
 
@@ -681,7 +681,7 @@ function bbencode_first_pass_pda($text, $uid, $open_tag, $close_tag, $close_tag_
 				// We have an opening tag.
 				// Push its position, the text we matched, and its index in the open_tag array on to the stack, and then keep going to the right.
 				$match = array("pos" => $curr_pos, "tag" => $which_start_tag, "index" => $start_tag_index);
-				bbcode_array_push($stack, $match);
+				array_push($stack, $match);
 				//
 				// Rather than just increment $curr_pos
 				// Set it to the ending of the tag we just found
@@ -703,7 +703,7 @@ function bbencode_first_pass_pda($text, $uid, $open_tag, $close_tag, $close_tag_
 						// There exists a starting tag.
 						$curr_nesting_depth = sizeof($stack);
 						// We need to do 2 replacements now.
-						$match = bbcode_array_pop($stack);
+						$match = array_pop($stack);
 						$start_index = $match['pos'];
 						$start_tag = $match['tag'];
 						$start_length = strlen($start_tag);
@@ -769,7 +769,7 @@ function bbencode_first_pass_pda($text, $uid, $open_tag, $close_tag, $close_tag_
 						// otherwise, we go back to the start.
 						if (sizeof($stack) > 0)
 						{
-							$match = bbcode_array_pop($stack);
+							$match = array_pop($stack);
 							$curr_pos = $match['pos'];
 //							bbcode_array_push($stack, $match);
 //							++$curr_pos;
@@ -952,6 +952,7 @@ function escape_slashes($input)
  * This function does exactly what the PHP4 function array_push() does
  * however, to keep phpBB compatable with PHP 3 we had to come up with our own
  * method of doing it.
+ * This function was deprecated in phpBB 2.0.18
  */
 function bbcode_array_push(&$stack, $value)
 {
@@ -963,6 +964,7 @@ function bbcode_array_push(&$stack, $value)
  * This function does exactly what the PHP4 function array_pop() does
  * however, to keep phpBB compatable with PHP 3 we had to come up with our own
  * method of doing it.
+ * This function was deprecated in phpBB 2.0.18
  */
 function bbcode_array_pop(&$stack)
 {
@@ -1013,7 +1015,7 @@ function smilies_pass($message)
 
 		for ($i = 0; $i < count($smilies); $i++)
 		{
-			$orig[] = "/(?<=.\W|\W.|^\W)" . phpbb_preg_quote($smilies[$i]['code'], "/") . "(?=.\W|\W.|\W$)/";
+			$orig[] = "/(?<=.\W|\W.|^\W)" . preg_quote($smilies[$i]['code'], "/") . "(?=.\W|\W.|\W$)/";
 			$repl[] = '<img src="'. $board_config['smilies_path'] . '/' . $smilies[$i]['smile_url'] . '" alt="' . $smilies[$i]['emoticon'] . '" border="0" />';
 		}
 	}
