@@ -288,7 +288,7 @@ serverType 4
 [EuphRO Private Server]
 ip euphro.game-server.cc
 port 6900
-master_version 20
+master_version 14
 version 14
 serverType 5
 
