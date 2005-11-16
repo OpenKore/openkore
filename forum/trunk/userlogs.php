@@ -15,19 +15,9 @@ init_userprefs($userdata);
 
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
-if ($userdata['user_level'] != ADMIN) {
+if ($userdata['user_level'] != ADMIN)
 	message_die(GENERAL_MESSAGE, "You are not an administrator.");
-	exit;
-}
 
-
-// Connect to database
-if ( !($link = mysql_connect($dbhost, $dbuser, $dbpasswd)) )
-	message_die(GENERAL_MESSAGE, "Cannot connect to database: " . mysql_error());
-if (!mysql_select_db($dbname)) {
-	mysql_close($link);
-	message_die(GENERAL_MESSAGE, "Cannot select database: " . mysql_error());
-}
 
 if ($HTTP_GET_VARS['type'] == 'Username')
 	$sql = "SELECT * FROM userlogs WHERE INSTR(username, '" . mysql_escape_string($HTTP_GET_VARS['search']) . "') ORDER BY last_time DESC LIMIT 20";
@@ -38,14 +28,12 @@ else {
 	$normal = 1;
 }
 
-$result = mysql_query($sql);
-if (!$result) {
-	mysql_close($link);
-	message_die(GENERAL_MESSAGE, "Cannot query: " . mysql_error());
-}
+$result = $db->sql_query($sql);
+if (!$result)
+	message_die(GENERAL_MESSAGE, "Cannot query database.", 'Error', __LINE__, __FILE__, $sql);
 
 $num = 0;
-while ($row = mysql_fetch_assoc($result)) {
+while ($row = $db->sql_fetchrow($result)) {
 	if ($num % 2 == 0)
 		$class = 'row1';
 	else
@@ -94,8 +82,6 @@ echo "<table class=\"forumline\" width=\"85%\">
 </tr>
 $data
 </table>";
-
-mysql_close($link);
 
 
 include($phpbb_root_path . 'includes/page_tail.'.$phpEx);
