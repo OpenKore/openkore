@@ -1015,6 +1015,10 @@ $lang['A_critical_error'] = 'A Critical Error Occurred';
 
 $lang['Admin_reauthenticate'] = 'To administer the board you must re-authenticate yourself.';
 
+$lang['Global_Announcements'] = 'Global Announcements';
+$lang['Announcements'] = 'Announcements';
+$lang['Sticky_Topics'] = 'Sticky Topics';
+
 //
 // That's all, Folks!
 // -------------------------------------------------
