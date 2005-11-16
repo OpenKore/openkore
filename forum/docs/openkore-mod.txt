@@ -1,0 +1,1 @@
+INSERT INTO phpbb_config VALUES('important_announcement', '');
