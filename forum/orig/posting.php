@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: posting.php,v 1.159.2.23 2005/05/06 20:50:10 acydburn Exp $
+ *   $Id: posting.php,v 1.159.2.27 2005/10/30 15:17:13 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -59,11 +59,13 @@ while( list($var, $param) = @each($params) )
 }
 
 $refresh = $preview || $poll_add || $poll_edit || $poll_delete;
+$orig_word = $replacement_word = array();
 
 //
 // Set topic type
 //
 $topic_type = ( !empty($HTTP_POST_VARS['topictype']) ) ? intval($HTTP_POST_VARS['topictype']) : POST_NORMAL;
+$topic_type = ( in_array($topic_type, array(POST_NORMAL, POST_STICKY, POST_ANNOUNCE)) ) ? $topic_type : POST_NORMAL;
 
 //
 // If the mode is set to topic review then output
@@ -189,7 +191,7 @@ switch ( $mode )
 			message_die(GENERAL_MESSAGE, $lang['No_topic_id']);
 		}
 
-		$sql = "SELECT f.*, t.topic_status, t.topic_title  
+		$sql = "SELECT f.*, t.topic_status, t.topic_title, t.topic_type  
 			FROM " . FORUMS_TABLE . " f, " . TOPICS_TABLE . " t
 			WHERE t.topic_id = $topic_id
 				AND f.forum_id = t.forum_id";
@@ -204,7 +206,7 @@ switch ( $mode )
 			message_die(GENERAL_MESSAGE, $lang['No_post_id']);
 		}
 
-		$select_sql = ( !$submit ) ? ", t.topic_title, p.enable_bbcode, p.enable_html, p.enable_smilies, p.enable_sig, p.post_username, pt.post_subject, pt.post_text, pt.bbcode_uid, u.username, u.user_id, u.user_sig" : '';
+		$select_sql = (!$submit) ? ', t.topic_title, p.enable_bbcode, p.enable_html, p.enable_smilies, p.enable_sig, p.post_username, pt.post_subject, pt.post_text, pt.bbcode_uid, u.username, u.user_id, u.user_sig, u.user_sig_bbcode_uid' : '';
 		$from_sql = ( !$submit ) ? ", " . POSTS_TEXT_TABLE . " pt, " . USERS_TABLE . " u" : '';
 		$where_sql = ( !$submit ) ? "AND pt.post_id = p.post_id AND u.user_id = p.poster_id" : '';
 
@@ -312,11 +314,19 @@ if ( $result = $db->sql_query($sql) )
 		{
 			$topic_id = $post_info['topic_id'];
 		}
+		if ( $mode == 'newtopic' )
+		{
+			$post_data['topic_type'] = POST_NORMAL;
+		}
 
 		$post_data['first_post'] = ( $mode == 'newtopic' ) ? true : 0;
 		$post_data['last_post'] = false;
 		$post_data['has_poll'] = false;
 		$post_data['edit_poll'] = false;
+	}
+	if ( $mode == 'poll_delete' && !isset($poll_id) )
+	{
+		message_die(GENERAL_MESSAGE, $lang['No_such_post']);
 	}
 }
 else
@@ -634,6 +644,7 @@ if( $refresh || isset($HTTP_POST_VARS['del_poll_option']) || $error_msg != '' )
 	else if ( $mode == 'editpost' )
 	{
 		$user_sig = ( $post_info['user_sig'] != '' && $board_config['allow_sig'] ) ? $post_info['user_sig'] : '';
+		$userdata['user_sig_bbcode_uid'] = $post_info['user_sig_bbcode_uid'];
 	}
 	
 	if( $preview )

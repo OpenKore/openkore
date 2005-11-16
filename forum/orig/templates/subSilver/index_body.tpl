@@ -41,7 +41,11 @@
 
 <table width="100%" cellspacing="0" border="0" align="center" cellpadding="2">
   <tr> 
-	<td align="left"><span class="gensmall"><a href="{U_MARK_READ}" class="gensmall">{L_MARK_FORUMS_READ}</a></span></td>
+ 	<td align="left">
+ 	<!-- BEGIN switch_user_logged_in -->
+ 		<span class="gensmall"><a href="{U_MARK_READ}" class="gensmall">{L_MARK_FORUMS_READ}</a></span>
+ 	<!-- END switch_user_logged_in -->
+ 	</td>
 	<td align="right"><span class="gensmall">{S_TIMEZONE}</span></td>
   </tr>
 </table>
@@ -77,8 +81,10 @@
 		<input class="post" type="text" name="username" size="10" />
 		&nbsp;&nbsp;&nbsp;{L_PASSWORD}: 
 		<input class="post" type="password" name="password" size="10" maxlength="32" />
+		<!-- BEGIN switch_allow_autologin -->
 		&nbsp;&nbsp; &nbsp;&nbsp;{L_AUTO_LOGIN} 
 		<input class="text" type="checkbox" name="autologin" />
+		<!-- END switch_allow_autologin -->
 		&nbsp;&nbsp;&nbsp; 
 		<input type="submit" class="mainoption" name="login" value="{L_LOGIN}" />
 		</span> </td>

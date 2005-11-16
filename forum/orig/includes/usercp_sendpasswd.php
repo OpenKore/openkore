@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: usercp_sendpasswd.php,v 1.6.2.12 2004/11/18 17:49:45 acydburn Exp $
+ *   $Id: usercp_sendpasswd.php,v 1.6.2.13 2005/09/14 18:14:30 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -50,7 +50,7 @@ if ( isset($HTTP_POST_VARS['submit']) )
 
 			$user_actkey = gen_rand_string(true);
 			$key_len = 54 - strlen($server_url);
-			$key_len = ( $str_len > 6 ) ? $key_len : 6;
+			$key_len = ($key_len > 6) ? $key_len : 6;
 			$user_actkey = substr($user_actkey, 0, $key_len);
 			$user_password = gen_rand_string(false);
 			

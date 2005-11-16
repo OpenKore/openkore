@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: page_tail.php,v 1.27.2.3 2004/12/22 02:04:00 psotfx Exp $
+ *   $Id: page_tail.php,v 1.27.2.4 2005/09/14 18:14:30 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -25,6 +25,8 @@ if ( !defined('IN_PHPBB') )
 	die('Hacking attempt');
 }
 
+global $do_gzip_compress;
+
 //
 // Show the overall footer.
 //
@@ -35,7 +37,7 @@ $template->set_filenames(array(
 );
 
 $template->assign_vars(array(
-	'TRANSLATION_INFO' => ( isset($lang['TRANSLATION_INFO']) ) ? $lang['TRANSLATION_INFO'] : '',
+	'TRANSLATION_INFO' => (isset($lang['TRANSLATION_INFO'])) ? $lang['TRANSLATION_INFO'] : ((isset($lang['TRANSLATION'])) ? $lang['TRANSLATION'] : ''),
 	'ADMIN_LINK' => $admin_link)
 );
 

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: index.php,v 1.99.2.3 2004/07/11 16:46:15 acydburn Exp $
+ *   $Id: index.php,v 1.99.2.6 2005/10/30 15:17:13 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -183,8 +183,14 @@ if( ( $total_categories = count($category_rows) ) )
 	// Obtain a list of topic ids which contain
 	// posts made since user last visited
 	//
-	if ( $userdata['session_logged_in'] )
+	if ($userdata['session_logged_in'])
 	{
+		// 60 days limit
+		if ($userdata['user_lastvisit'] < (time() - 5184000))
+		{
+			$userdata['user_lastvisit'] = time() - 5184000;
+		}
+
 		$sql = "SELECT t.forum_id, t.topic_id, p.post_time 
 			FROM " . TOPICS_TABLE . " t, " . POSTS_TABLE . " p 
 			WHERE p.post_id = t.topic_last_post_id 

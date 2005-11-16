@@ -7,7 +7,7 @@
  *     copyright            : (C) 2001 The phpBB Group
  *     email                : support@phpbb.com
  *
- *     $Id: lang_admin.php,v 1.35.2.10 2005/02/21 18:38:17 acydburn Exp $
+ *     $Id: lang_admin.php,v 1.35.2.12 2005/10/30 15:17:14 acydburn Exp $
  *
  ****************************************************************************/
 
@@ -335,6 +335,12 @@ $lang['Session_length'] = 'Session length [ seconds ]';
 $lang['Visual_confirm'] = 'Enable Visual Confirmation';
 $lang['Visual_confirm_explain'] = 'Requires users enter a code defined by an image when registering.';
 
+// Autologin Keys - added 2.0.18
+$lang['Allow_autologin'] = 'Allow automatic logins';
+$lang['Allow_autologin_explain'] = 'Determines whether users are allowed to select to be automatically logged in when visiting the forum';
+$lang['Autologin_time'] = 'Automatic login key expiry';
+$lang['Autologin_time_explain'] = 'How long a autologin key is valid for in days if the user does not visit the board. Set to zero to disable expiry.';
+
 //
 // Forum Management
 //
@@ -621,6 +627,7 @@ $lang['Value'] = 'Value';
 $lang['Save_Settings'] = 'Save Settings';
 
 $lang['Stylesheet'] = 'CSS Stylesheet';
+$lang['Stylesheet_explain'] = 'Filename for CSS stylesheet to use for this theme.';
 $lang['Background_image'] = 'Background Image';
 $lang['Background_color'] = 'Background Colour';
 $lang['Theme_name'] = 'Theme Name';
