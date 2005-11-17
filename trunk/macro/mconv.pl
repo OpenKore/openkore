@@ -43,10 +43,10 @@ foreach my $am (keys %automacro) {
           print "\t$cnt $c\n"
         }
       } else {
-        print "\t".$automacro{$am}->{$cnt}[0]."\n";
+        print "\t$cnt ".$automacro{$am}->{$cnt}[0]."\n";
       }
     } else {
-      print "\t".$automacro{$am}->{$cnt}."\n";
+      print "\t$cnt ".$automacro{$am}->{$cnt}."\n";
     }
   }
   print "}\n\n";
