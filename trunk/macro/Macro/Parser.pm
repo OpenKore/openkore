@@ -42,13 +42,13 @@ sub parseMacroFile {
       } elsif ($key eq 'automacro') {
         %block = (name => $value, type => "auto");
       }
-    } elsif ($block{type} eq "macro") {
+    } elsif (%block && $block{type} eq "macro") {
       if ($_ eq "}") {
         undef %block;
       } else {
         push(@{$macro{$block{name}}}, $_);
       }
-    } elsif ($block{type} eq "auto") {
+    } elsif (%block && $block{type} eq "auto") {
       if ($_ eq "}") {
         if ($block{loadmacro}) {
           undef $block{loadmacro};
