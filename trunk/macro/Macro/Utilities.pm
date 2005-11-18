@@ -261,7 +261,7 @@ sub callMacro {
           return;
         }
       }
-      if ($queue->finished) {undef $queue};
+      if (defined $queue && $queue->finished) {undef $queue};
     } else {
       error(sprintf("[macro] %s error: %s\n", $queue->name, $queue->error));
       warning "the line number may be incorrect if you called a sub-macro.\n";

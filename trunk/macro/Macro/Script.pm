@@ -244,7 +244,7 @@ sub next {
   } elsif ($line =~ /^do\s/) {
     my ($tmp) = $line =~ /^do\s+(.*)/;
     if ($tmp =~ /^macro\s+/) {
-      my ($arg) = $tmp =~ /^macro\+s(.*)/;
+      my ($arg) = $tmp =~ /^macro\s+(.*)/;
       if ($arg ne 'stop') {
         $self->{error} = "error in ".$self->{line}.": use 'call $arg' instead of 'macro $arg'";
         return
