@@ -157,7 +157,7 @@
 0185 Guild Ally / Enemy Set Status
 0187 Request Sync Packet
 0188 Upgrade 
-0189 Skill Failed
+0189 No Teleporting
 018B Exit
 018C Sense
 018D Mixture List
