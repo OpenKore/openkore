@@ -25,7 +25,7 @@ use Macro::Parser qw(parseMacroFile);
 use Macro::Automacro qw(automacroCheck consoleCheckWrapper releaseAM);
 use Macro::Utilities qw(setVar callMacro);
 
-$cvs = new cvsdebug($Plugins::current_plugin, 0, [\%varStack]);
+$cvs = new cvsdebug($Plugins::current_plugin, 0, []);
 
 #########
 # startup
@@ -93,7 +93,10 @@ sub hookOnDemand {
     message "[macro] hooking to $l\n", "macro";
     push(@{$autohooks}, Plugins::addHook($l, \&automacroCheck))
   }
-  if ($hookToLog) {$loghook = Log::addHook(\&consoleCheckWrapper)}
+  if ($hookToLog) {
+    message "[macro] hooking to log\n", "macro";
+    $loghook = Log::addHook(\&consoleCheckWrapper)
+  }
 }
 
 # onHook: start3
