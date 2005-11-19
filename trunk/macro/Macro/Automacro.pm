@@ -14,7 +14,7 @@ our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
 use Utils;
 use Globals;
 use AI;
-use Item;
+#use Item;
 use Log qw(message error warning);
 use Macro::Data;
 use Macro::Utilities qw(between cmpr match getArgs setVar getVar
@@ -23,6 +23,15 @@ use Macro::Utilities qw(between cmpr match getArgs setVar getVar
 
 our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 
+# taken from Item.pm
+my @slots = qw(
+      topHead midHead lowHead
+      leftHand rightHand
+      robe armor shoes
+      leftAccessory rightAccessory
+      arrow
+);
+                                        
 # check for variable #######################################
 sub checkVar {
   $cvs->debug("checkVar(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
@@ -32,8 +41,8 @@ sub checkVar {
     return 1 if !exists $varStack{$var};
     return 0;
   }
+  refreshGlobal($var);
   if (exists $varStack{$var}) {
-    refreshGlobal($var);
     $cvs->debug("comparing: $var ($varStack{$var}) $cond $val", 4);
     return 1 if cmpr($varStack{$var}, $cond, $val);
   }
@@ -209,7 +218,7 @@ sub checkEquip {
     return 0;
   }
   # check whether or not a slot is given (equipped rightHand whatever)
-  foreach my $slot (@Item::slots) {
+  foreach my $slot (@slots) {
     if ($arg =~ /^$slot\s+/) {
       $arg =~ s/^$slot\s+//;
       if (my $item = $char->{equipment}{$slot}{name}) {
