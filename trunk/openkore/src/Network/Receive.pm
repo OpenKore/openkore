@@ -157,6 +157,7 @@ sub new {
 		#'0181' => ['guild_opposition_result', 'C1', [qw(flag)]], # clif_guild_oppositionack
 		#'0184' => ['guild_unally', 'a4 V1', [qw(guildID flag)]], # clif_guild_delalliance
 		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
+		'0189' => ['no_teleport', 'v1', [qw(fail)]],
 		'018C' => ['sense_result', 'v1 v1 v1 V1 v1 v1 v1 v1 C1 C1 C1 C1 C1 C1 C1 C1 C1', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
 		'018D' => ['forge_list'],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
@@ -3102,6 +3103,20 @@ sub self_chat {
 		user => $args->{chatMsgUser},
 		msg => $args->{chatMsg}
 	});
+}
+
+sub no_teleport {
+	my ($self, $args) = @_;
+	my $fail = $args->{fail};
+
+	if ($fail == 0) {
+		error "Unavailable Area To Teleport\n";
+		AI::clear(qw/teleport/);
+	} elsif ($fail == 1) {
+		error "Unavailable Area To Memo\n";
+	} else {
+		error "Unavailable Area To Teleport (fail code $fail)\n";
+	}
 }
 
 sub sense_result {
