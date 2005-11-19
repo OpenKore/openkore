@@ -1634,7 +1634,7 @@ sub cmdGuild {
 			"Connect : @>>/@<<",			[$guild{conMember}, $guild{maxMember}]),
 			"info");
 		for my $ally (keys %{$guild{ally}}) {
-			message "Ally    : $guild{ally}{$ally} ($ally}\n", "info";
+			message "Ally    : $guild{ally}{$ally} ($ally)\n", "info";
 		}
 		message("---------------------------------------\n", "info");
 
