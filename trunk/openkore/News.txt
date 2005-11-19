@@ -173,6 +173,8 @@ New features:
   (TODO: Do this for monsters too.)
 - Ability to bypass the RO client's bot detection (the "Do not use bots!"
   message).
+- Implemented 0189 no_teleport packet so that "Unavailable Area To
+  Teleport/Memo" message is now displayed.
 
 New commands:
 - getplayerinfo (number)
