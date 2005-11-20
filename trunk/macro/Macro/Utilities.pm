@@ -117,7 +117,7 @@ sub refreshGlobal {
   }
   if (!defined $var || $var eq '.pos') {
     my $pos = calcPosition($char);
-    my $val = sprintf("%d %d %s", $pos->{x}, $pos->{y}, $field{name});
+    my $val = sprintf("%d %d", $pos->{x}, $pos->{y});
     setVar(".pos", $val);
   }
   if (!defined $var || $var eq '.time') {
