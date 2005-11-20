@@ -211,7 +211,7 @@ sub checkCond {
 # see @Item::slots
 sub checkEquip {
   $cvs->debug("checkEquip(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
-  my $arg = shift; $arg = quotemeta $arg;
+  my $arg = shift;
   if ($arg =~ /,/) {
     my @equip = split(/\s*,\s*/, $arg);
     foreach my $e (@equip) {return 1 if checkEquip($e)}
