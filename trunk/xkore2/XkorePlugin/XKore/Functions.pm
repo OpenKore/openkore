@@ -77,7 +77,7 @@ sub forwardToClient {
 		$mapchange = 1;
 
 	}elsif ($switch eq '007D') {
-		$currLocationPacket{spawn} = $msgSend; #Force Change map packet
+		$currLocationPacket{posi} = $msgSend; #Force Change map packet
 
 	}elsif ($switch eq '0091') {
 		$mapchange = 1;
@@ -118,14 +118,17 @@ sub forwardToGhost {
 		$recordSocket->sendData($client,pack("c*",0x7F,0x00,0xD7,0xD0,0xA4,0x59));
 		$data = '' ; # empties the $data so that it won't send to the server..
 
-	}elsif ($switch eq '0085' && $firstLogin) {
+	}elsif ($switch eq '0085' ) {
 		$clientFeed = 1;
-		$recordSocket->sendData($client,$currLocationPacket{mapis}.$currLocationPacket{spawn}) if ($firstLogin == 1);
-		$firstLogin = 0;
+		#$recordSocket->sendData($client,$currLocationPacket{mapis}.$currLocationPacket{spawn}) if ($firstLogin == 1);
+
 
 	}elsif ($switch eq '0064' || $switch eq '0065' || $switch eq '0066' || $switch eq '018A' || $switch eq '007D'){ #|| $switch eq '0072'
 	      #  || $switch eq '007D' ) {
 		$data = '' ;  #do not send those packets to the server
+	}elsif ($mapchange == 1 && $firstLogin){
+		$recordSocket->sendData($client,$currLocationPacket{mapis}.$currLocationPacket{spawn}) if ($firstLogin == 1);
+		$firstLogin = 0;
 	}
 	if ($recordPacket->pending && !$clientFeed){
 	       my $stkData = $recordPacket->dequeue_nb; #unqueue the last data and put it in $stkData
@@ -137,6 +140,13 @@ sub forwardToGhost {
 
 		$switch = uc(unpack("H2", substr($stkData, 1, 1))) . uc(unpack("H2", substr($stkData, 0, 1)));
 		debug "Sending $switch data to on-the-fly Client\n";
+		if ($switch eq '0073'){
+			$stkData = $currLocationPacket{spawn};
+		}elsif ($switch eq '007D') {
+			$stkData = $currLocationPacket{posi};
+		}elsif ($switch eq '0091') {
+			$stkData = $currLocationPacket{mapis};
+		}
 		$recordSocket->sendData($client,$stkData); #sends the queued stuff to the client.
 		$tempRecordQueue->enqueue($stkData);
 		debug ("hoe\n") if (!defined($rpackets{$switch})) ;
