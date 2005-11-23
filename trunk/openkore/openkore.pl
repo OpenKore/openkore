@@ -176,7 +176,6 @@ use Log;
 use Utils;
 use Plugins;
 use FileParsers;
-use Network;
 use Network::Receive;
 use Network::Send;
 use Commands;
@@ -192,7 +191,7 @@ use Actor::Unknown;
 use Interface;
 use ChatQueue;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
-	Network Network::Receive Network::Send Commands Misc AI Skills
+	Network::Receive Network::Send Commands Misc AI Skills
 	Interface ChatQueue Actor Actor::Player Actor::Monster Actor::You
 	Actor::Party Actor::Unknown Item Match/);
 
@@ -287,24 +286,29 @@ Log::message("\n");
 ##### INITIALIZE X-KORE ######
 
 our $XKore_dontRedirect = 0;
-if ($config{XKore} || $sys{XKore}) {
+my $XKore_version = $config{XKore}? $config{XKore} : $sys{XKore};
+if ($XKore_version == 1) {
+	# Inject DLL to running Ragnarok process
 	require XKore;
 	Modules::register("XKore");
-	$xkore = new XKore;
-	if (!$xkore) {
-		$interface->errorDialog($@);
-		exit 1;
-	}
-
-	$packetParser = Network::Receive->create($config{serverType});
-
-	# Redirect messages to the RO client
-	# I don't use a reference to redirectXKoreMessages here;
-	# otherwise dynamic code reloading won't have any effect
-	Log::addHook(sub { &redirectXKoreMessages; });
+	$net = new XKore;
+} elsif ($XKore_version == 2) {
+	# Run as a proxy bot, allowing Ragnarok to connect while botting
+	require XKore2;
+	Modules::register("XKore2");
+	$net = new XKore2;
+} else {
+	# Run as a standalone bot, with no interface to the official RO client
+	require Network;
+	Modules::register("Network");
+	$net = new Network;
+}
+if (!$net) {
+	# Problem with networking
+	$interface->errorDialog($@);
+	exit 1;
 }
 
-our $remote_socket = new IO::Socket::INET;
 if ($sys{ipc}) {
 	require IPC;
 	require IPC::Processors;
@@ -349,7 +353,7 @@ if (compilePortals_check()) {
 
 ### PROMPT USERNAME AND PASSWORD IF NECESSARY ###
 
-if (!$xkore) {
+if ($net->version != 1) {
 	my $msg;
 	if (!$config{'username'}) {
 		Log::message("Enter Username: ");
@@ -401,12 +405,13 @@ if (!$xkore) {
 		}
 	}
 
-} elsif (!$xkore && (!$config{'username'} || !$config{'password'})) {
+} elsif ($net->version != 1 && (!$config{'username'} || !$config{'password'})) {
 	$interface->errorDialog("No username or password set.");
 	exit 1;
 }
 
 undef $msg;
+undef $msgOut;
 our $KoreStartTime = time;
 our $conState = 1;
 our $nextConfChangeTime;
@@ -432,8 +437,7 @@ $interface->mainLoop();
 Plugins::unloadAll();
 
 # Shutdown everything else
-close($remote_socket);
-Network::disconnect(\$remote_socket);
+undef $net;
 
 Log::message("Bye!\n");
 Log::message($Settings::versionText);

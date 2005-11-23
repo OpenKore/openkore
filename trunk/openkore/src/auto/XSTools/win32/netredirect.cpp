@@ -50,7 +50,7 @@ static string xkoreSendBuf("");	// Data to send to the X-Kore server
 // Process a packet that the X-Kore server sent us
 static void
 processPacket (Packet *packet)
-{
+{	
 	switch (packet->ID) {
 	case 'S': // Send a packet to the RO server
 		EnterCriticalSection (&CS_ro);
@@ -308,51 +308,73 @@ MyRecv (SOCKET s, char* buf, int len, int flags)
 	roServer = s;
 	LeaveCriticalSection (&CS_ro);
 
+	// Is Kore running?
+	EnterCriticalSection (&CS_koreClientIsAlive);
+	bool isAlive = koreClientIsAlive;
+	LeaveCriticalSection (&CS_koreClientIsAlive);
 
-	// Data that Kore sent to the client
-	EnterCriticalSection (&CS_rosend);
-	if (roSendBuf.size ()) {
-		memcpy (buf, (char *) roSendBuf.c_str (), roSendBuf.size ());
-		ret = roSendBuf.size ();
-		roSendBuf.erase ();
+	if (isAlive) {
+		// Data that the RO server sent
+		if (dataWaiting(s)) {
+			// Grab data
+			ret2 = OriginalRecvProc(s, buf, len, flags);
+			if (ret2 != SOCKET_ERROR && ret2 > 0) {
+				// Redirect it to Kore
+				char *newbuf = (char *) malloc (ret2 + 3);
+				unsigned short sLen = (unsigned short) ret2;
+				memcpy (newbuf, "R", 1);
+				memcpy (newbuf + 1, &sLen, 2);
+				memcpy (newbuf + 3, buf, ret2);
+
+				EnterCriticalSection(&CS_send);
+				xkoreSendBuf.append (newbuf, ret2 + 3);
+				LeaveCriticalSection(&CS_send);
+
+				free (newbuf);
+
+			} else if (ret2 == 0 || (ret2 == SOCKET_ERROR && WSAGetLastError () != WSAEWOULDBLOCK)) {
+				// Connection with RO server closed
+				EnterCriticalSection(&CS_ro);
+				roServer = INVALID_SOCKET;
+				LeaveCriticalSection(&CS_ro);
+			}
+		}
+
+		// Pass data from Kore to RO Client
+		EnterCriticalSection (&CS_rosend);
+		int roSendBufsize = roSendBuf.size();
+		if (roSendBufsize) {
+			ret = roSendBufsize < len? roSendBufsize : len;
+			memcpy (buf, (char *) roSendBuf.c_str (), ret);
+			roSendBuf.erase (0, ret);
+		} else {
+			WSASetLastError (WSAEWOULDBLOCK);
+			ret = SOCKET_ERROR;
+		}
+		LeaveCriticalSection (&CS_rosend);
+	} else {
+		EnterCriticalSection (&CS_rosend);
+		int roSendBufsize = roSendBuf.size();
+		LeaveCriticalSection (&CS_rosend);
+		if (roSendBufsize) {
+			// Flush out anything left thats kore->ROclient
+			ret = roSendBufsize < len? roSendBufsize : len;
+			EnterCriticalSection (&CS_rosend);
+			memcpy (buf, (char *) roSendBuf.c_str(), ret);
+			roSendBuf.erase(0, ret);
+			LeaveCriticalSection (&CS_rosend);
+		} else {
+			ret2 = OriginalRecvProc(s, buf, len, flags);
+			if (ret2 == 0 || (ret2 == SOCKET_ERROR && WSAGetLastError () != WSAEWOULDBLOCK)) {
+				EnterCriticalSection(&CS_ro);
+				roServer = INVALID_SOCKET;
+				LeaveCriticalSection(&CS_ro);
+			}
+			ret = ret2;
+		}
 	}
-	LeaveCriticalSection (&CS_rosend);
 
-	if (ret)
-		// Return immediately if Kore sent data
-		// This is to prevent putting too much data in RO's buffer,
-		// which may not be big enough
-		return ret;
-
-
-	// Data that the RO server sent
-	if (!dataWaiting (s)) {
-		WSASetLastError (WSAEWOULDBLOCK);
-		return SOCKET_ERROR;
-	}
-
-	ret2 = OriginalRecvProc (s, buf, len, flags);
-	if (ret2 != SOCKET_ERROR && ret2 > 0) {
-		// Send a copy of this packet to the X-Kore server
-		char *newbuf = (char *) malloc (ret2 + 3);
-		unsigned short sLen = (unsigned short) ret2;
-		memcpy (newbuf, "R", 1);
-		memcpy (newbuf + 1, &sLen, 2);
-		memcpy (newbuf + 3, buf, ret2);
-
-		EnterCriticalSection (&CS_send);
-		xkoreSendBuf.append (newbuf, ret2 + 3);
-		LeaveCriticalSection (&CS_send);
-
-		free (newbuf);
-
-	} else if (ret2 == 0 || (ret2 == SOCKET_ERROR && WSAGetLastError () != WSAEWOULDBLOCK)) {
-		// Connection with RO server closed
-		EnterCriticalSection (&CS_ro);
-		roServer = INVALID_SOCKET;
-		LeaveCriticalSection (&CS_ro);
-	}
-	return ret2;
+	return ret;
 }
 
 int WINAPI
@@ -401,7 +423,7 @@ MyGetProcAddress (HMODULE hModule, LPCSTR lpProcName)
 		} else if (stricmp (lpProcName, "WSARecvFrom") == 0) {
 			OriginalWSARecvFromProc = (MyWSARecvFromProc) ret;
 			ret = (FARPROC) MyWSARecvFrom;
-	
+
 		} else if (stricmp (lpProcName, "send") == 0) {
 			OriginalSendProc = (MySendProc) ret;
 			ret = (FARPROC) MySend;
@@ -441,7 +463,7 @@ DoHookProcs ()
 
 	OriginalWSASendProc = (MyWSASendProc)
 			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "WSASend", (PROC)MyWSASend);
-	
+
 	OriginalWSASendToProc = (MyWSASendToProc)
 			HookImportedFunction( GetModuleHandle(0), "WS2_32.DLL", "WSASendTo", (PROC)MyWSASendTo);
 

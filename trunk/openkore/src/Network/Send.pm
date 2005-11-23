@@ -21,7 +21,7 @@ use Digest::MD5;
 use Exporter;
 use base qw(Exporter);
 
-use Globals qw($accountID $char $charID %config $conState $encryptVal %guild $remote_socket @chars %packetDescriptions $xkore $bytesSent);
+use Globals qw($accountID $char $charID %config $conState $encryptVal %guild $net @chars %packetDescriptions $bytesSent);
 use Log qw(message warning error debug);
 use Utils;
 
@@ -30,9 +30,6 @@ our @EXPORT = qw(
 	encrypt
 	injectMessage
 	injectAdminMessage
-	sendToClientByInject
-	sendToServerByInject
-	sendSyncInject
 	sendMsgToServer
 
 	sendAddSkillPoint
@@ -343,46 +340,25 @@ sub injectMessage {
 	encrypt(\$msg, $msg);
 	$msg = pack("C*",0x09, 0x01) . pack("v*", length($name) + length($message) + 12) . pack("C*",0,0,0,0) . $msg;
 	encrypt(\$msg, $msg);
-	sendToClientByInject(\$remote_socket, $msg);
+	$net->clientSend($msg);
 }
 
 sub injectAdminMessage {
 	my $message = shift;
 	my $msg = pack("C*",0x9A, 0x00) . pack("v*", length($message)+5) . $message .chr(0);
 	encrypt(\$msg, $msg);
-	sendToClientByInject(\$remote_socket, $msg);
-}
-
-sub sendToClientByInject {
-	my $r_socket = shift;
-	my $msg = shift;
-	$$r_socket->send("R".pack("v", length($msg)).$msg) if $$r_socket && $$r_socket->connected();
-}
-
-sub sendToServerByInject {
-	my $r_socket = shift;
-	my $msg = shift;
-	$$r_socket->send("S".pack("v", length($msg)).$msg) if $$r_socket && $$r_socket->connected();
-}
-
-sub sendSyncInject {
-	my $r_socket = shift;
-	$$r_socket->send("K".pack("v", 0)) if $$r_socket && $$r_socket->connected();
+	$net->clientSend($msg);
 }
 
 sub sendMsgToServer {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = shift;
 
-	return if (!$$r_socket || !$$r_socket->connected());
+	return unless ($r_net->serverAlive);
 	if ($config{serverType} != 2) {
 		encrypt(\$msg, $msg);
 	}
-	if ($xkore) {
-		sendToServerByInject(\$remote_socket, $msg);
-	} else {
-		$$r_socket->send($msg) if ($$r_socket && $$r_socket->connected());
-	}
+	$r_net->serverSend($msg);
 	$bytesSent += length($msg);
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
@@ -400,38 +376,38 @@ sub sendMsgToServer {
 #######################
 
 sub sendAddSkillPoint {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $skillID = shift;
 	my $msg = pack("C*", 0x12, 0x01) . pack("v*", $skillID);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendAddStatusPoint {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $statusID = shift;
 	my $msg = pack("C*", 0xBB, 0) . pack("v*", $statusID) . pack("C*", 0x01);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendAlignment {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $alignment = shift;
 	my $msg = pack("C*", 0x49, 0x01) . $ID . pack("C*", $alignment);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Alignment: ".getHex($ID).", $alignment\n", "sendPacket", 2;
 }
 
 sub sendArrowCraft {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $index = shift;
 	my $msg = pack("C*", 0xAE, 0x01) . pack("v*", $index);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Arrowmake: $index\n", "sendPacket", 2;
 }
 
 sub sendAttack {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $monID = shift;
 	my $flag = shift;
 	my $msg;
@@ -462,13 +438,13 @@ sub sendAttack {
 		$monID .
 		pack("C*", 0x03, 0x04, 0x01, 0xb7, 0x39, 0x03, 0x00, $flag);
 	}
-	
-	sendMsgToServer($r_socket, $msg);
+
+	sendMsgToServer($r_net, $msg);
 	debug "Sent attack: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
 sub sendAttackStop {
-	my $r_socket = shift;
+	my $r_net = shift;
 	#my $msg = pack("C*", 0x18, 0x01);
 	# Apparently this packet is wrong. The server disconnects us if we do this.
 	# Sending a move command to the current position seems to be able to emulate
@@ -480,53 +456,53 @@ sub sendAttackStop {
 }
 
 sub sendAutoSpell {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xce, 0x01, $ID, 0x00, 0x00, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendBanCheck {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0x87, 0x01) . $ID;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Account Ban Check Request : " . getHex($ID) . "\n", "sendPacket", 2;
 }
 
 sub sendBuy {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xC8, 0x00, 0x08, 0x00) . pack("v*", $amount, $ID);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent buy: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendBuyVender {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $venderID = shift;
 	my $ID = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0x34, 0x01, 0x0C, 0x00) . $venderID . pack("v*", $amount, $ID);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Vender Buy: ".getHex($ID)."\n", "sendPacket";
 }
 
 sub sendCardMerge {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $card_index = shift;
 	my $item_index = shift;
 	my $msg = pack("C*", 0x7C, 0x01) . pack("v*", $card_index, $item_index);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Card Merge: $card_index, $item_index\n", "sendPacket";
 }
 
 sub sendCardMergeRequest {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $card_index = shift;
 	my $msg = pack("C*", 0x7A, 0x01) . pack("v*", $card_index);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Card Merge Request: $card_index\n", "sendPacket";
 }
 
@@ -534,7 +510,7 @@ sub sendCartAdd {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0x26, 0x01) . pack("v*", $index) . pack("V*", $amount);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Cart Add: $index x $amount\n", "sendPacket", 2;
 }
 
@@ -542,12 +518,12 @@ sub sendCartGet {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0x27, 0x01) . pack("v*", $index) . pack("V*", $amount);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Cart Get: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendCharCreate {
-	my ($r_socket, $slot, $name,
+	my ($r_net, $slot, $name,
 	    $str, $agi, $vit, $int, $dex, $luk,
 		$hair_style, $hair_color) = @_;
 	$hair_color ||= 1;
@@ -557,27 +533,27 @@ sub sendCharCreate {
 		pack("a24", $name) .
 		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
 		pack("v*", $hair_style, $hair_color);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendCharDelete {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $charID = shift;
 	my $email = shift;
 	my $msg = pack("C*", 0x68, 0x00) .
 			$charID . pack("a40", $email);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendCharLogin {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $char = shift;
 	my $msg = pack("C*", 0x66,0) . pack("C*",$char);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendChat {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $message = shift;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
 	my $msg;
@@ -594,21 +570,21 @@ sub sendChat {
 			pack("v*", length($char->{name}) + length($message) + 8) .
 			$char->{name} . " : $message" . chr(0);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendChatRoomBestow {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $name = shift;
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00).$name;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
 }
 
 sub sendChatRoomChange {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $title = shift;
 	my $limit = shift;
 	my $public = shift;
@@ -616,12 +592,12 @@ sub sendChatRoomChange {
 	$password = substr($password, 0, 8) if (length($password) > 8);
 	$password = $password . chr(0) x (8 - length($password));
 	my $msg = pack("C*", 0xDE, 0x00).pack("v*", length($title) + 15, $limit).pack("C*",$public).$password.$title;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Change Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
 
 sub sendChatRoomCreate {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $title = shift;
 	my $limit = shift;
 	my $public = shift;
@@ -629,60 +605,61 @@ sub sendChatRoomCreate {
 	$password = substr($password, 0, 8) if (length($password) > 8);
 	$password = $password . chr(0) x (8 - length($password));
 	my $msg = pack("C*", 0xD5, 0x00).pack("v*", length($title) + 15, $limit).pack("C*",$public).$password.$title;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
 
 sub sendChatRoomJoin {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $password = shift;
 	$password = substr($password, 0, 8) if (length($password) > 8);
 	$password = $password . chr(0) x (8 - length($password));
 	my $msg = pack("C*", 0xD9, 0x00).$ID.$password;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Join Chat Room: ".getHex($ID)." $password\n", "sendPacket", 2;
 }
 
 sub sendChatRoomKick {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $name = shift;
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0xE2, 0x00).$name;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Chat Room Kick: $name\n", "sendPacket", 2;
 }
 
 sub sendChatRoomLeave {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0xE3, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Leave Chat Room\n", "sendPacket", 2;
 }
 
 sub sendCloseShop {
+	my $r_net = shift;
 	my $msg = pack("C*", 0x2E, 0x01);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Shop Closed\n", "sendPacket", 2;
 }
 
 sub sendCurrentDealCancel {
 	my $msg = pack("C*", 0xED, 0x00);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Cancel Current Deal\n", "sendPacket", 2;
 }
 
 sub sendDeal {
 	my $ID = shift;
 	my $msg = pack("C*", 0xE4, 0x00) . $ID;
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Initiate Deal: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendDealAccept {
 	my $msg = pack("C*", 0xE6, 0x00, 0x03);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Accept Deal\n", "sendPacket", 2;
 }
 
@@ -690,36 +667,36 @@ sub sendDealAddItem {
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xE8, 0x00) . pack("v*", $index) . pack("V*",$amount);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Deal Add Item: $index, $amount\n", "sendPacket", 2;
 }
 
 sub sendDealCancel {
 	my $msg = pack("C*", 0xE6, 0x00, 0x04);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Cancel Deal\n", "sendPacket", 2;
 }
 
 sub sendDealFinalize {
 	my $msg = pack("C*", 0xEB, 0x00);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Deal OK\n", "sendPacket", 2;
 }
 
 sub sendDealOK {
 	my $msg = pack("C*", 0xEB, 0x00);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Deal OK\n", "sendPacket", 2;
 }
 
 sub sendDealTrade {
 	my $msg = pack("C*", 0xEF, 0x00);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Deal Trade\n", "sendPacket", 2;
 }
 
 sub sendDrop {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg;
@@ -760,96 +737,96 @@ sub sendDrop {
 			pack("C*", 0x7f, 0x03, 0xD2, 0xf2) .
 			pack("v*", $amount);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent drop: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendEmotion {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xBF, 0x00).pack("C1",$ID);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Emotion\n", "sendPacket", 2;
 }
 
 sub sendEnteringVender {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0x30, 0x01) . $ID;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Entering Vender: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendEquip {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $index = shift;
 	my $type = shift;
 	my $msg = pack("C*", 0xA9, 0x00) . pack("v*", $index) .  pack("v*", $type);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Equip: $index Type: $type\n" , 2;
 }
 
 sub sendFriendAccept {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $accountID = shift;
 	my $charID = shift;
 	my $msg = pack("C*", 0x08, 0x02) . $accountID . $charID . pack("C*", 0x01, 0x00, 0x00, 0x00);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Accept friend request\n", "sendPacket";
 }
 
 sub sendFriendReject {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $accountID = shift;
 	my $charID = shift;
 	my $msg = pack("C*", 0x08, 0x02) . $accountID . $charID . pack("C*", 0x00, 0x00, 0x00, 0x00);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Reject friend request\n", "sendPacket";
 }
 
 sub sendFriendRequest {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $name = shift;
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0x02, 0x02).$name;
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Request to be a friend: $name\n", "sendPacket";
 }
 
 sub sendFriendRemove {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $accountID = shift;
 	my $charID = shift;
 	my $msg = pack("C*", 0x03, 0x02) . $accountID . $charID;
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Remove a friend\n", "sendPacket";
 }
 
 sub sendForgeItem {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	# nameIDs for added items such as Star Crumb or Flame Heart
 	my $item1 = shift;
 	my $item2 = shift;
 	my $item3 = shift;
 	my $msg = pack("C*", 0x8E, 0x01) . pack("v1 v1 v1 v1", $ID, $item1, $item2, $item3);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Forge Item: $ID\n" , 2;
 }
 
 sub sendGameLogin {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $accountID = shift;
 	my $sessionID = shift;
 	my $sessionID2 = shift;
 	my $sex = shift;
 	my $msg = pack("C*", 0x65,0) . $accountID . $sessionID . $sessionID2 . pack("C*", 0,0,$sex);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendGetPlayerInfo {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg;
 
@@ -869,32 +846,32 @@ sub sendGetPlayerInfo {
 		$msg = pack("C*", 0x94, 0x00, 0x54, 0x00, 0x44, 0xc1, 0x4b, 0x02, 0x44) . $ID;
 	}
 
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent get player info: ID - ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendGetStoreList {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xC5, 0x00) . $ID . pack("C*",0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent get store list: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendGetSellList {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xC5, 0x00) . $ID . pack("C*",0x01);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent sell to NPC: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendGuildAlly {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $flag = shift;
 	my $msg = pack("C*", 0x72, 0x01).$ID.pack("V1", $flag);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Ally Guild : ".getHex($ID).", $flag\n", "sendPacket", 2;
 }
 
@@ -902,46 +879,46 @@ sub sendGuildBreak {
 	# guild name
 	my $name = shift;
 	my $msg = pack("C C a40", 0x5D, 0x01, $name);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Guild Break: $name\n", "sendPacket", 2;
 }
 
 sub sendGuildChat {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $message = shift;
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
 	my $msg = pack("C*",0x7E, 0x01) . pack("v*",length($char->{name}) + length($message) + 8) .
 	$char->{name} . " : " . $message . chr(0);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendGuildCreate {
 	my $name = shift;
 	my $msg = pack("C*", 0x65, 0x01, 0x4D, 0x8B, 0x01, 0x00).pack("a24", $name);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
 
 sub sendGuildInfoRequest {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0x4d, 0x01);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Guild Information Request\n", "sendPacket";
 }
 
 sub sendGuildJoin {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $flag = shift;
 	my $msg = pack("C*", 0x6B, 0x01).$ID.pack("V1", $flag);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Join Guild : ".getHex($ID).", $flag\n", "sendPacket";
 }
 
 sub sendGuildJoinRequest {
 	my $ID = shift;
 	my $msg = pack("C*", 0x68, 0x01).$ID.$accountID.$charID;
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Request Join Guild: ".getHex($ID)."\n", "sendPacket";
 }
 
@@ -949,7 +926,7 @@ sub sendGuildLeave {
 	my ($reason) = @_;
 	my $mess = pack("Z40", $reason);
 	my $msg = pack("C*", 0x59, 0x01).$guild{ID}.$accountID.$charID.$mess;
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
 }
 
@@ -959,12 +936,12 @@ sub sendGuildMemberKick {
 	my $charID = shift;
 	my $cause = shift;
 	my $msg = pack("C*", 0x59, 0x01).$guildID.$accountID.$charID.pack("a40", $cause);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
 }
 
 sub sendGuildMemberNameRequest {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg;
 	if ($config{serverType} == 3) {
@@ -982,7 +959,7 @@ sub sendGuildMemberNameRequest {
 	} else {
 		$msg = pack("C*", 0x93, 0x01) . $ID;
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Guild Member Name Request : ".getHex($ID)."\n", "sendPacket", 2;
 }
 
@@ -993,7 +970,7 @@ sub sendGuildMemberTitleSelect {
 	my $index = shift;
 
 	my $msg = pack("C*", 0x55, 0x01).pack("v1",16).$accountID.$charID.pack("V1",$index);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Change Guild title: ".getHex($charID)." $index\n", "sendPacket", 2;
 }
 
@@ -1003,7 +980,7 @@ sub sendGuildNotice {
 	my $name = shift;
 	my $notice = shift;
 	my $msg = pack("C*", 0x6E, 0x01).$guildID.pack("a60 a120",$name,$notice);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Change Guild Notice: $notice\n", "sendPacket", 2;
 }
 
@@ -1022,55 +999,55 @@ sub sendGuildRankChange {
 		pack("V1", $index) . # isnt even used on emulators, but leave in case Aegis wants this
 		pack("V1", $tax) . # guild tax amount, not sure what format
 		pack("a24", $title);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Set Guild title: $index $title\n", "sendPacket", 2;
 }
 
 sub sendGuildRequest {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $page = shift;
 	my $msg = pack("C*", 0x4f, 0x01).pack("V1", $page);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Guild Request Page : ".$page."\n", "sendPacket";
 }
 
 sub sendIdentify {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $index = shift;
 	my $msg = pack("C*", 0x78, 0x01) . pack("v*", $index);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Identify: $index\n", "sendPacket", 2;
 }
 
 sub sendIgnore {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $name = shift;
 	my $flag = shift;
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0xCF, 0x00).$name.pack("C*", $flag);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Ignore: $name, $flag\n", "sendPacket", 2;
 }
 
 sub sendIgnoreAll {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $flag = shift;
 	my $msg = pack("C*", 0xD0, 0x00).pack("C*", $flag);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Ignore All: $flag\n", "sendPacket", 2;
 }
 
 sub sendIgnoreListGet {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $flag = shift;
 	my $msg = pack("C*", 0xD3, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent get Ignore List: $flag\n", "sendPacket", 2;
 }
 
 sub sendItemUse {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $targetID = shift;
 	my $msg;
@@ -1099,12 +1076,12 @@ sub sendItemUse {
 		$msg = pack("C*", 0xA7, 0x00, 0x49).pack("v*", $ID).
 		pack("C*", 0xfa, 0x12, 0x00, 0xdc, 0xf9, 0x12).$targetID;
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Item Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendLook {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $body = shift;
 	my $head = shift;
 	my $msg;
@@ -1129,21 +1106,21 @@ sub sendLook {
 			pack("C*", $head, 0x00, 0x00, 0x00, 0x08, 0x60, 0x13, 0x14) .
 			pack("C*", $body);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent look: $body $head\n", "sendPacket", 2;
 	$char->{look}{head} = $head;
 	$char->{look}{body} = $body;
 }
 
 sub sendMapLoaded {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0x7D,0x00);
 	debug "Sending Map Loaded\n", "sendPacket";
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendMapLogin {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $accountID = shift;
 	my $charID = shift;
 	my $sessionID = shift;
@@ -1231,11 +1208,11 @@ sub sendMapLogin {
 			pack("C", $sex);
 	}
 
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendMasterCodeRequest {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $type = shift;
 	my $code = shift;
 	my $msg;
@@ -1260,11 +1237,11 @@ sub sendMasterCodeRequest {
 		}
 	}
 	$msg .= pack("C*", 0xDB, 0x01);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendMasterLogin {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $username = shift;
 	my $password = shift;
 	my $master_version = shift;
@@ -1299,11 +1276,11 @@ sub sendMasterLogin {
 			pack("a24", $password) .
 			pack("C*", $master_version);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendMasterSecureLogin {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $username = shift;
 	my $password = shift;
 	my $salt = shift;
@@ -1328,17 +1305,18 @@ sub sendMasterSecureLogin {
 		$msg = pack("C*", 0xFA, 0x01) . pack("V1", $version) . pack("a24", $username) .
 					 $md5->digest . pack("C*", $master_version). pack("C1", $account);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendMemo {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0x1D, 0x01);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Memo\n", "sendPacket", 2;
 }
 
 sub sendMove {
+	#my $r_net = shift;
 	my $x = int scalar shift;
 	my $y = int scalar shift;
 	my $msg;
@@ -1363,7 +1341,7 @@ sub sendMove {
 		$msg = pack("C*", 0x85, 0x00) . getCoordString($x, $y);
 	}
 
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent move to: $x, $y\n", "sendPacket", 2;
 }
 
@@ -1382,172 +1360,172 @@ sub sendOpenShop {
 			pack("V1", $item->{price});
 	}
 
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 }
 
 sub sendOpenWarp {
-	my ($r_socket, $map) = @_;
+	my ($r_net, $map) = @_;
 	my $msg = pack("C*", 0x1b, 0x01, 0x1b, 0x00) . $map .
 		chr(0) x (16 - length($map));
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendPartyChat {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $message = shift;
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
 	my $msg = pack("C*",0x08, 0x01) . pack("v*",length($char->{name}) + length($message) + 8) .
 		$char->{name} . " : " . $message . chr(0);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendPartyJoin {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $flag = shift;
 	my $msg = pack("C*", 0xFF, 0x00).$ID.pack("V", $flag);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Join Party: ".getHex($ID).", $flag\n", "sendPacket", 2;
 }
 
 sub sendPartyJoinRequest {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xFC, 0x00).$ID;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Request Join Party: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendPartyKick {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $name = shift;
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0x03, 0x01).$ID.$name;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Kick Party: ".getHex($ID).", $name\n", "sendPacket", 2;
 }
 
 sub sendPartyLeave {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0x00, 0x01);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Leave Party\n", "sendPacket", 2;
 }
 
 sub sendPartyOrganize {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $name = shift;
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
 	my $msg = pack("C*", 0xF9, 0x00).$name;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
 }
 
 sub sendPartyShareEXP {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $flag = shift;
 	my $msg = pack("C*", 0x02, 0x01).pack("V", $flag);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Party Share: $flag\n", "sendPacket", 2;
 }
 
 sub sendPetCapture {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $monID = shift;
 	my $msg = pack("C*", 0x9F, 0x01) . $monID . pack("C*", 0x00, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent pet capture: ".getHex($monID)."\n", "sendPacket", 2;
 }
 
 sub sendPetFeed {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0xA1, 0x01, 0x01);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Pet Feed\n", "sendPacket", 2;
 }
 
 sub sendPetGetInfo {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0xA1, 0x01, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Pet Get Info\n", "sendPacket", 2;
 }
 
 sub sendPetHatch {
 	my $index = shift;
 	my $msg = pack("C*", 0xA7, 0x01) . pack("v1", $index);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Incubator hatch: $index\n", "sendPacket", 2;
 }
 
 sub sendPetName {
 	my $name = shift;
 	my $msg = pack("C1 C1 a24", 0xA5, 0x01, $name);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Pet Rename: $name\n", "sendPacket", 2;
 }
 
 sub sendPetPerformance {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0xA1, 0x01, 0x02);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Pet Performance\n", "sendPacket", 2;
 }
 
 sub sendPetReturnToEgg {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0xA1, 0x01, 0x03);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Pet Return to Egg\n", "sendPacket", 2;
 }
 
 sub sendPetUnequipItem {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0xA1, 0x01, 0x04);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Pet Unequip Item\n", "sendPacket", 2;
 }
 
 sub sendPreLoginCode {
 	# no server actually needs this, but we might need it in the future?
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $type = shift;
 	my $msg;
 	if ($type == 1) {
 		$msg = pack("C*", 0x04, 0x02, 0x82, 0xD1, 0x2C, 0x91, 0x4F, 0x5A, 0xD4, 0x8F, 0xD9, 0x6F, 0xCF, 0x7E, 0xF4, 0xCC, 0x49, 0x2D);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent pre-login packet $type\n", "sendPacket", 2;
 }
 
 sub sendPrivateMsg {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $user = shift;
 	my $message = shift;
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
 	my $msg = pack("C*",0x96, 0x00) . pack("v*",length($message) + 29) . $user . chr(0) x (24 - length($user)) .
 			$message . chr(0);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendQuit {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0x8A, 0x01, 0x00, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Quit\n", "sendPacket", 2;
 }
 
 sub sendQuitToCharSelect {
 	my $msg = pack("C*", 0xB2, 0x00, 0x01);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Quit To Char Selection\n", "sendPacket", 2;
 }
 
 sub sendRaw {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $raw = shift;
 	my @raw;
 	my $msg;
@@ -1555,42 +1533,42 @@ sub sendRaw {
 	foreach (@raw) {
 		$msg .= pack("C", hex($_));
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Raw Packet: @raw\n", "sendPacket", 2;
 }
 
 sub sendRemoveAttachments {
 	# remove peco, falcon, cart
 	my $msg = pack("C*", 0x2A, 0x01);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent remove attachments\n", "sendPacket", 2;
 }
 
 sub sendRepairItem {
 	my $index = shift;
 	my $msg = pack("C*", 0xFD, 0x01) . pack("v1", $index);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent repair item: $index\n", "sendPacket", 2;
 }
 
 sub sendRespawn {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0xB2, 0x00, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Respawn\n", "sendPacket", 2;
 }
 
 sub sendSell {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $index = shift;
 	my $amount = shift;
 	my $msg = pack("C*", 0xC9, 0x00, 0x08, 0x00) . pack("v*", $index, $amount);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent sell: $index x $amount\n", "sendPacket", 2;
 }
 
 sub sendSellBulk {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $r_array = shift;
 	my $sellMsg = "";
 
@@ -1600,11 +1578,11 @@ sub sendSellBulk {
 	}
 
 	my $msg = pack("C*", 0xC9, 0x00) . pack("v*", length($sellMsg) + 4) . $sellMsg;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 }
 
 sub sendSit {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
@@ -1632,12 +1610,12 @@ sub sendSit {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sitting\n", "sendPacket", 2;
 }
 
 sub sendSkillUse {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $lv = shift;
 	my $targetID = shift;
@@ -1682,12 +1660,12 @@ sub sendSkillUse {
 			pack("v*", $ID, 0) .
 			pack("v", 0x0060) . $targetID;
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
 }
 
 sub sendSkillUseLoc {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $lv = shift;
 	my $x = shift;
@@ -1740,7 +1718,7 @@ sub sendSkillUseLoc {
 			pack("V*", 0, 0, 0) .
 			pack("v*", $x, 0x1ad8, 0x76b4, $y);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
 }
 
@@ -1776,7 +1754,7 @@ sub sendStorageAdd {
 			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7b, 0x01, 0x00) .
 			pack("V*", $amount);
 	}
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
 }
 
@@ -1785,7 +1763,7 @@ sub sendStorageAddFromCart {
 	my $amount = shift;
 	my $msg;
 	$msg = pack("C*", 0x29, 0x01) . pack("v*", $index) . pack("V*", $amount);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Storage Add From Cart: $index x $amount\n", "sendPacket", 2;
 }
 
@@ -1797,7 +1775,7 @@ sub sendStorageClose {
 		$msg = pack("C*", 0xF7, 0x00);
 	}
 
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Storage Done\n", "sendPacket", 2;
 }
 
@@ -1832,7 +1810,7 @@ sub sendStorageGet {
 			pack("C*", 0x00) .
 			pack("V*", $amount);
 	}
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
 }
 
@@ -1841,7 +1819,7 @@ sub sendStorageGetToCart {
 	my $amount = shift;
 	my $msg;
 	$msg = pack("C*", 0x28, 0x01) . pack("v*", $index) . pack("V*", $amount);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Storage Get From Cart: $index x $amount\n", "sendPacket", 2;
 }
 
@@ -1852,11 +1830,11 @@ sub sendStoragePassword {
 	# 3 = give password ?
 	my $type = 3;
 	my $msg = pack("C C v", 0x3B, 0x02, $type).$pass.pack("H*", "EC62E539BB6BBC811A60C06FACCB7EC8");
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 }
 
 sub sendStand {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg;
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
@@ -1882,24 +1860,24 @@ sub sendStand {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03);
 	}
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Standing\n", "sendPacket", 2;
 }
 
 sub sendSuperNoviceDoriDori {
 	my $msg = pack("C*", 0xE7, 0x01);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Super Novice dori dori\n", "sendPacket", 2;
 }
 
 sub sendSuperNoviceExplosion {
 	my $msg = pack("C*", 0xED, 0x01);
-	sendMsgToServer(\$remote_socket, $msg);
+	sendMsgToServer($net, $msg);
 	debug "Sent Super Novice Explosion\n", "sendPacket", 2;
 }
 
 sub sendSync {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $initialSync = shift;
 	my $msg;
 
@@ -1940,13 +1918,14 @@ sub sendSync {
 		$msg .= pack("C*", 0x94) if (!$initialSync);
 		$msg .= pack("V", getTickCount());
 	}
+
 	
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Sync\n", "sendPacket", 2;
 }
 
 sub sendTake {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $itemID = shift; # $itemID = long
 	my $msg;
 	if ($config{serverType} == 0) {
@@ -1968,84 +1947,84 @@ sub sendTake {
 		$msg = pack("C*", 0x9F, 0x00, 0x7f,) . $itemID;
 	}
 
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent take\n", "sendPacket", 2;
 }
 
 sub sendTalk {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0x90, 0x00) . $ID . pack("C*",0x01);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent talk: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendTalkCancel {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0x46, 0x01) . $ID;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent talk cancel: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendTalkContinue {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $msg = pack("C*", 0xB9, 0x00) . $ID;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent talk continue: ".getHex($ID)."\n", "sendPacket", 2;
 }
 
 sub sendTalkResponse {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $response = shift;
 	my $msg = pack("C*", 0xB8, 0x00) . $ID. pack("C1",$response);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent talk respond: ".getHex($ID).", $response\n", "sendPacket", 2;
 }
 
 sub sendTalkNumber {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $number = shift;
 	my $msg = pack("C*", 0x43, 0x01) . $ID .
 			pack("V1", $number);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent talk number: ".getHex($ID).", $number\n", "sendPacket", 2;
 }
 
 sub sendTalkText {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $ID = shift;
 	my $input = shift;
 	my $msg = pack("C*", 0xD5, 0x01) . pack("v*", length($input)+length($ID)+5) . $ID . $input . chr(0);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	warning "Sent talk text: ".getHex($ID).", $input\n", "sendPacket", 2;
 }
 
 sub sendTeleport {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $location = shift;
 	$location = substr($location, 0, 16) if (length($location) > 16);
 	$location .= chr(0) x (16 - length($location));
 	my $msg = pack("C*", 0x1B, 0x01, 0x1A, 0x00) . $location;
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Teleport: $location\n", "sendPacket", 2;
 }
 
 sub sendUnequip {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $index = shift;
 	my $msg = pack("C*", 0xAB, 0x00) . pack("v*", $index);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Unequip: $index\n", "sendPacket", 2;
 }
 
 sub sendWho {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $msg = pack("C*", 0xC1, 0x00);
-	sendMsgToServer($r_socket, $msg);
+	sendMsgToServer($r_net, $msg);
 	debug "Sent Who\n", "sendPacket", 2;
 }
 

@@ -42,8 +42,8 @@ our @EXPORT = (
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
-	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP parseArgs swrite timeConvert timeOut
-	vocalString)
+	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP parseArgs shiftPack swrite timeConvert timeOut
+	unShiftPack vocalString)
 	);
 
 
@@ -1123,7 +1123,7 @@ sub judgeSkillArea {
 sub makeCoords {
 	my $r_hash = shift;
 	my $rawCoords = shift;
- 
+
 	unShiftPack(\$rawCoords, undef, 4);
 	makeCoords2($r_hash, $rawCoords);
 }
@@ -1131,7 +1131,7 @@ sub makeCoords {
 sub makeCoords2 {
 	my $r_hash = shift;
 	my $rawCoords = shift;
- 
+
 	unShiftPack(\$rawCoords, \$$r_hash{'y'}, 10);
 	unShiftPack(\$rawCoords, \$$r_hash{'x'}, 10);
 }

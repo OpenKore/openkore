@@ -23,7 +23,6 @@ use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
-use Network;
 use Network::Receive;
 use Network::Send;
 use Commands;
@@ -127,6 +126,7 @@ sub initMapChangeVars {
 	undef %spells;
 	undef %incomingParty;
 	undef $msg;
+	undef $msgOut;
 	undef %talk;
 	$ai_v{cart_time} = time + 60;
 	$ai_v{inventory_time} = time + 60;
@@ -185,290 +185,47 @@ sub initOtherVars {
 	$timeout{ai_shop}{time} = time;
 }
 
-
-#######################################
-#######################################
-#Check Connection
-#######################################
-#######################################
-
-
-# $conState contains the connection state:
-# 1: Not connected to anything		(next step -> connect to master server).
-# 2: Connected to master server 	(next step -> connect to login server)
-# 3: Connected to login server		(next step -> connect to character server)
-# 4: Connected to character server	(next step -> connect to map server)
-# 5: Connected to map server; ready and functional.
-#
-# Special state:
-# 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be the account ID
-sub checkConnection {
-	return if ($xkore || $Settings::no_connect);
-
-	if ($conState == 1 && (!$remote_socket || !$remote_socket->connected) && timeOut($timeout_ex{'master'}) && !$conState_tries) {
-		my $master = $masterServer = $masterServers{$config{'master'}};
-
-		if ($master->{serverType} ne '' && $config{serverType} != $master->{serverType}) {
-			configModify('serverType', $master->{serverType});
-		}
-		if ($master->{chatLangCode} ne '' && $config{chatLangCode} != $master->{chatLangCode}) {
-			configModify('chatLangCode', $master->{chatLangCode});
-		}
-		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} != $master->{storageEncryptKey}) {
-			configModify('storageEncryptKey', $master->{storageEncryptKey});
-		}
-
-		message("Connecting to Account Server...\n", "connection");
-		$shopstarted = 1;
-		$conState_tries++;
-		$initSync = 1;
-		undef $msg;
-		$packetParser = Network::Receive->create($config{serverType});
-		Network::connectTo(\$remote_socket, $master->{ip}, $master->{port});
-
-		if ($remote_socket && $remote_socket->connected && $master->{secureLogin} >= 1) {
-			my $code;
-
-			message("Secure Login...\n", "connection");
-			undef $secureLoginKey;
-
-			if ($master->{secureLogin_requestCode} ne '') {
-				$code = $master->{secureLogin_requestCode};
-			} elsif ($config{secureLogin_requestCode} ne '') {
-				$code = $config{secureLogin_requestCode};
-			}
-
-			if ($code ne '') {
-				sendMasterCodeRequest(\$remote_socket, 'code', $code);
-			} else {
-				sendMasterCodeRequest(\$remote_socket, 'type', $master->{secureLogin_type});
-			}
-
-		} elsif ($remote_socket && $remote_socket->connected) {
-			sendPreLoginCode(\$remote_socket, $master->{preLoginCode}) if ($master->{preLoginCode});
-			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'},
-				$master->{master_version}, $master->{version});
-		}
-
-		$timeout{'master'}{'time'} = time;
-
-	} elsif ($conState == 1 && $masterServer->{secureLogin} >= 1 && $secureLoginKey ne ""
-	   && !timeOut($timeout{'master'}) && $conState_tries) {
-
-		my $master = $masterServer;
-		message("Sending encoded password...\n", "connection");
-		sendMasterSecureLogin(\$remote_socket, $config{'username'}, $config{'password'}, $secureLoginKey,
-				$master->{version}, $master->{master_version},
-				$master->{secureLogin}, $master->{secureLogin_account});
-		undef $secureLoginKey;
-
-	} elsif ($conState == 1 && timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
-		error "Timeout on Account Server, reconnecting...\n", "connection";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		Network::disconnect(\$remote_socket);
-		undef $conState_tries;
-
-	} elsif ($conState == 2 && !($remote_socket && $remote_socket->connected())
-	  && ($config{'server'} ne "" || $masterServer->{charServer_ip})
-	  && !$conState_tries) {
-		my $master = $masterServer;
-		message("Connecting to Character Server...\n", "connection");
-		$conState_tries++;
-
-		if ($master->{charServer_ip}) {
-			Network::connectTo(\$remote_socket, $master->{charServer_ip}, $master->{charServer_port});
-		} elsif ($servers[$config{'server'}]) {
-			Network::connectTo(\$remote_socket, $servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
-		} else {
-			error "Invalid server specified, server $config{server} does not exist...\n", "connection";
-		}
-
-		sendGameLogin(\$remote_socket, $accountID, $sessionID, $sessionID2, $accountSex);
-		$timeout{'gamelogin'}{'time'} = time;
-
-	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'})
-	  && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
-		error "Timeout on Character Server, reconnecting...\n", "connection";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		Network::disconnect(\$remote_socket);
-		undef $conState_tries;
-		$conState = 1;
-
-	} elsif ($conState == 3 && !($remote_socket && $remote_socket->connected()) && $config{'char'} ne "" && !$conState_tries) {
-		message("Connecting to Character Select Server...\n", "connection");
-		$conState_tries++;
-		Network::connectTo(\$remote_socket, $servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
-		sendCharLogin(\$remote_socket, $config{'char'});
-		$timeout{'charlogin'}{'time'} = time;
-
-	} elsif ($conState == 3 && timeOut($timeout{'charlogin'}) && $config{'char'} ne "") {
-		error "Timeout on Character Select Server, reconnecting...\n", "connection";
-		$timeout_ex{'master'}{'time'} = time;
-		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-		Network::disconnect(\$remote_socket);
-		$conState = 1;
-		undef $conState_tries;
-
-	} elsif ($conState == 4 && !($remote_socket && $remote_socket->connected()) && !$conState_tries) {
-		sleep($config{pauseMapServer}) if ($config{pauseMapServer});
-		message("Connecting to Map Server...\n", "connection");
-		$conState_tries++;
-		initConnectVars();
-		my $master = $masterServer;
-		if ($master->{private}) {
-			Network::connectTo(\$remote_socket, $config{forceMapIP} || $master->{ip}, $map_port);
-		} else {
-			Network::connectTo(\$remote_socket, $config{forceMapIP} || $map_ip, $map_port);
-		}
-		sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
-		$timeout_ex{master}{time} = time;
-		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
-		$timeout{maplogin}{time} = time;
-
-	} elsif ($conState == 4 && timeOut($timeout{maplogin})) {
-		message("Timeout on Map Server, connecting to Account Server...\n", "connection");
-		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
-		Network::disconnect(\$remote_socket);
-		$conState = 1;
-		undef $conState_tries;
-
-	} elsif ($conState == 5 && !($remote_socket && $remote_socket->connected())) {
-		error "Disconnected from Map Server, ", "connection";
-		if ($config{dcOnDisconnect}) {
-			chatLog("k", "*** You disconnected, auto quit! ***\n");
-			error "exiting...\n", "connection";
-			$quit = 1;
-		} else {
-			error "connecting to Account Server in $timeout_ex{master}{timeout} seconds...\n", "connection";
-			$timeout_ex{master}{time} = time;
-			$conState = 1;
-			undef $conState_tries;
-		}
-
-	} elsif ($conState == 5 && timeOut($timeout{play})) {
-		error "Timeout on Map Server, ", "connection";
-		if ($config{dcOnDisconnect}) {
-			error "exiting...\n", "connection";
-			$quit = 1;
-		} else {
-			error "connecting to Account Server in $timeout{reconnect}{timeout} seconds...\n", "connection";
-			$timeout_ex{master}{time} = time;
-			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
-			Network::disconnect(\$remote_socket);
-			$conState = 1;
-			undef $conState_tries;
-		}
-	}
-}
-
 sub mainLoop {
 	Plugins::callHook('mainLoop_pre');
-
-	if ($xkore && !$xkore->alive) {
-		# (Re-)initialize X-Kore if necessary
-		$conState = 1;
-		my $printed;
-		my $pid;
-		# Wait until the RO client has started
-		while (!($pid = WinUtils::GetProcByName($config{exeName}))) {
-			message("Please start the Ragnarok Online client ($config{exeName})\n", "startup") unless $printed;
-			$printed = 1;
-			$interface->iterate;
-			if (defined(my $input = $interface->getInput(0))) {
-				if ($input eq "quit") {
-					$quit = 1;
-					last;
-				} else {
-					message("Error: You cannot type anything except 'quit' right now.\n");
-				}
-			}
-			usleep 20000;
-			last if $quit;
-		}
-		return if $quit;
-
-		# Inject DLL
-		message("Ragnarok Online client found\n", "startup");
-		sleep 1 if $printed;
-		if (!$xkore->inject($pid, $config{XKore_bypassBotDetection})) {
-			# Failed to inject
-			$interface->errorDialog($@);
-			exit 1;
-		}
-
-		# Wait until the RO client has connected to us
-		$remote_socket = $xkore->waitForClient;
-		message("You can login with the Ragnarok Online client now.\n", "startup");
-		$timeout{'injectSync'}{'time'} = time;
-	}
 
 	# Parse command input
 	my $input;
 	if (defined($input = $interface->getInput(0))) {
 		parseInput($input);
 	}
+	
+	# Handle connection states
+	$net->checkConnection();
 
 	# Receive and handle data from the RO server
-	if ($xkore) {
-		my $injectMsg = $xkore->recv;
-		while ($injectMsg ne "") {
-			if (length($injectMsg) < 3) {
-				undef $injectMsg;
-				return;
-			}
-
-			my $type = substr($injectMsg, 0, 1);
-			my $len = unpack("v",substr($injectMsg, 1, 2));
-			my $newMsg = substr($injectMsg, 3, $len);
-			$injectMsg = (length($injectMsg) >= $len+3) ? substr($injectMsg, $len+3, length($injectMsg) - $len - 3) : "";
-
-			if ($type eq "R") {
-				$msg .= $newMsg;
-				my $msg_length = length($msg);
-				while ($msg ne "") {
-					$msg = parseMsg($msg);
-					last if ($msg_length == length($msg));
-					$msg_length = length($msg);
-				}
-			} elsif ($type eq "S") {
-				parseSendMsg($newMsg);
-			}
-		}
-
-		if (timeOut($timeout{'injectSync'})) {
-			$xkore->sync;
-			$timeout{'injectSync'}{'time'} = time;
-		}
-
-	} elsif (dataWaiting(\$remote_socket)) {
-		my $new;
-
-		$remote_socket->recv($new, $Settings::MAX_READ);
-		if ($new eq '') {
-			# Connection from server closed
-			close($remote_socket);
-
-		} else {
-			$msg .= $new;
-			my $msg_length = length($msg);
-			while ($msg ne "") {
-				$msg = parseMsg($msg);
-				return if ($msg_length == length($msg));
-				$msg_length = length($msg);
-			}
+	my $servMsg = $net->serverRecv;
+	if ($servMsg && length($servMsg)) {
+		$msg .= $servMsg;
+		my $msg_length = length($msg);
+		while ($msg ne "") {
+			$msg = parseMsg($msg);
+			last if ($msg_length == length($msg));
+			$msg_length = length($msg);
 		}
 	}
-
+	
+	# Receive and handle data from the RO client
+	my $cliMsg = $net->clientRecv;
+	if ($cliMsg && length($cliMsg)) {
+		$msgOut .= $cliMsg;
+		my $msg_length = length($msgOut);
+		while ($msgOut ne "") {
+			$msgOut = parseSendMsg($msgOut);
+			last if ($msg_length == length($msgOut));
+			$msg_length = length($msgOut);
+		}
+	}
+	
 	# Process AI
-	if ($conState == 5 && timeOut($timeout{ai}) && $remote_socket && $remote_socket->connected) {
+	if ($conState == 5 && timeOut($timeout{ai}) && $net->serverAlive()) {
 		AI();
 		return if $quit;
 	}
-
-	# Handle connection states
-	checkConnection();
 
 	# Process messages from the IPC network
 	if ($ipc && $ipc->connected) {
@@ -501,7 +258,7 @@ sub mainLoop {
 		$KoreStartTime = time + $timeout_ex{'master'}{'timeout'};
 		AI::clear();
 		undef %ai_v;
-		Network::disconnect(\$remote_socket);
+		$net->serverDisconnect;
 		$conState = 1;
 		undef $conState_tries;
 		initRandomRestart();
@@ -541,7 +298,7 @@ sub mainLoop {
 			switchConfigFile($file);
 
 			my $master = $masterServer = $masterServers{$config{'master'}};
-			if (!$xkore
+			if ($net->version != 1
 			 && $oldMaster->{ip} ne $master->{ip}
 			 || $oldMaster->{port} ne $master->{port}
 			 || $oldMaster->{master_version} ne $master->{master_version}
@@ -627,7 +384,7 @@ sub parseInput {
 	my $input = shift;
 	my $printType;
 	my ($hook, $msg);
-	$printType = shift if ($xkore);
+	$printType = shift if ($net->clientAlive);
 
 	debug("Input: $input\n", "parseInput", 2);
 
@@ -639,10 +396,10 @@ sub parseInput {
 		$hook = Log::addHook($hookOutput);
 		$interface->writeOutput("console", "$input\n");
 	}
-	$XKore_dontRedirect = 1 if ($xkore);
+	$XKore_dontRedirect = 1;
 
 	# Check if in special state
-	if (!$xkore && $conState == 2 && $waitingForInput) {
+	if ($net->version != 1 && $conState == 2 && $waitingForInput) {
 		configModify('server', $input, 1);
 		$waitingForInput = 0;
 
@@ -652,13 +409,13 @@ sub parseInput {
 
 	if ($printType) {
 		Log::delHook($hook);
-		if ($xkore && defined $msg && $conState == 5 && $config{XKore_silent}) {
+		if (defined $msg && $conState == 5 && $config{XKore_silent}) {
 			$msg =~ s/\n*$//s;
 			$msg =~ s/\n/\\n/g;
-			sendMessage(\$remote_socket, "k", $msg);
+			sendMessage($net, "k", $msg);
 		}
 	}
-	$XKore_dontRedirect = 0 if ($xkore);
+	$XKore_dontRedirect = 0;
 }
 
 #######################################
@@ -717,22 +474,22 @@ sub AI {
 
 		foreach (keys %monsters) {
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
-				sendGetPlayerInfo(\$remote_socket, $_);
+				sendGetPlayerInfo($net, $_);
 				last;
 			}
 		}
 		foreach (keys %pets) {
 			if ($pets{$_}{'name_given'} =~ /Unknown/) {
-				sendGetPlayerInfo(\$remote_socket, $_);
+				sendGetPlayerInfo($net, $_);
 				last;
 			}
 		}
 		$timeout{ai_getInfo}{time} = time;
 	}
 
-	if (!$xkore && timeOut($timeout{ai_sync})) {
+	if (!$net->clientAlive && timeOut($timeout{ai_sync})) {
 		$timeout{ai_sync}{time} = time;
-		sendSync(\$remote_socket);
+		sendSync($net);
 	}
 
 	if (timeOut($char->{muted}, $char->{mute_period})) {
@@ -898,7 +655,7 @@ sub AI {
 
 	if ($ai_seq[0] eq "look" && timeOut($timeout{'ai_look'})) {
 		$timeout{'ai_look'}{'time'} = time;
-		sendLook(\$remote_socket, $ai_seq_args[0]{'look_body'}, $ai_seq_args[0]{'look_head'});
+		sendLook($net, $ai_seq_args[0]{'look_body'}, $ai_seq_args[0]{'look_head'});
 		shift @ai_seq;
 		shift @ai_seq_args;
 	}
@@ -914,7 +671,7 @@ sub AI {
 				sendDealFinalize();
 				$timeout{ai_dealAuto}{time} = time;
 			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2) {
-				sendDealTrade(\$remote_socket);
+				sendDealTrade($net);
 				$timeout{ai_dealAuto}{time} = time;
 			}
 		} else {
@@ -925,10 +682,10 @@ sub AI {
 	# dealAuto 1=refuse 2,3=accept
 	if ($config{'dealAuto'} && %incomingDeal) {
 		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
-			sendDealCancel(\$remote_socket);
+			sendDealCancel($net);
 			$timeout{'ai_dealAuto'}{'time'} = time;
 		} elsif ($config{'dealAuto'} >= 2 && timeOut($timeout{ai_dealAuto})) {
-			sendDealAccept(\$remote_socket);
+			sendDealAccept($net);
 			$timeout{'ai_dealAuto'}{'time'} = time;
 		}
 	}
@@ -941,20 +698,20 @@ sub AI {
 		} else {
 			message "Auto-accepting party request\n";
 		}
-		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
+		sendPartyJoin($net, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
 		$timeout{'ai_partyAuto'}{'time'} = time;
 		undef %incomingParty;
 	}
 
 	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut($timeout{'ai_guildAutoDeny'})) {
-		sendGuildJoin(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
-		sendGuildAlly(\$remote_socket, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
+		sendGuildJoin($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
+		sendGuildAlly($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
 		$timeout{'ai_guildAutoDeny'}{'time'} = time;
 		undef %incomingGuild;
 	}
 
 
-	if ($xkore && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
+	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
 		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
 		$sentWelcomeMessage = 1;
 	}
@@ -967,7 +724,7 @@ sub AI {
 	if (AI::action eq 'clientSuspend' && timeOut(AI::args)) {
 		debug "AI suspend by clientSuspend dequeued\n";
 		AI::dequeue;
-	} elsif (AI::action eq "clientSuspend" && $xkore) {
+	} elsif (AI::action eq "clientSuspend" && $net->clientAlive()) {
 		# When XKore mode is turned on, clientSuspend will increase it's timeout
 		# every time the user tries to do something manually.
 
@@ -1083,7 +840,7 @@ sub AI {
 
 				debug "Update check - least version: $data\n";
 				unless (($Settings::VERSION cmp $data) >= 0) {
-					Network::disconnect(\$remote_socket);
+					$net->serverDisconnect();
 					$interface->errorDialog("Your version of $Settings::NAME " .
 						"(${Settings::VERSION}${Settings::CVS}) is too old.\n" .
 						"Please upgrade to at least version $data\n");
@@ -1134,7 +891,7 @@ sub AI {
 					$timeout_ex{'master'}{'timeout'} = $reconnect_time;
 					$timeout_ex{'master'}{'time'} = time;
 					$KoreStartTime = time;
-					Network::disconnect(\$remote_socket);
+					$net->serverDisconnect();
 					AI::clear();
 					undef %ai_v;
 					$conState = 1;
@@ -1206,14 +963,14 @@ sub AI {
 
 			# Cancel conversation only if NPC is still around; otherwise
 			# we could get disconnected.
-			sendTalkCancel(\$remote_socket, $args->{ID}) if $npcs{$args->{ID}};;
+			sendTalkCancel($net, $args->{ID}) if $npcs{$args->{ID}};;
 			AI::dequeue;
 
 		} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
 			# If NPC does not respond before timing out, then by default, it's
 			# a failure
 			error "NPC did not respond.\n", "ai_npcTalk";
-			sendTalkCancel(\$remote_socket, $args->{ID});
+			sendTalkCancel($net, $args->{ID});
 			AI::dequeue;
 
 		} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
@@ -1232,31 +989,31 @@ sub AI {
 				$ai_v{'npc_talk'}{'time'} = time + $time;
 				$args->{time} = time + $time;
 			} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
-				sendTalkText(\$remote_socket, $args->{ID}, $1);
+				sendTalkText($net, $args->{ID}, $1);
 			} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
-				sendTalkNumber(\$remote_socket, $args->{ID}, $1);
+				sendTalkNumber($net, $args->{ID}, $1);
 			} elsif ( $args->{steps}[0] =~ /x/i ) {
 				if (!$args->{monster}) {
-					sendTalk(\$remote_socket, $args->{ID});
+					sendTalk($net, $args->{ID});
 				} else {
-					sendAttack(\$remote_socket, $args->{ID}, 0);
+					sendAttack($net, $args->{ID}, 0);
 				}
 			} elsif ( $args->{steps}[0] =~ /c/i ) {
-				sendTalkContinue(\$remote_socket, $args->{ID});
+				sendTalkContinue($net, $args->{ID});
 			} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
-				sendTalkResponse(\$remote_socket, $args->{ID}, $1+1);
+				sendTalkResponse($net, $args->{ID}, $1+1);
 			} elsif ( $args->{steps}[0] =~ /n/i ) {
-				sendTalkCancel(\$remote_socket, $args->{ID});
+				sendTalkCancel($net, $args->{ID});
 				$ai_v{'npc_talk'}{'time'} = time;
 				$args->{time}	= time;
 			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^b(\d+),(\d+)/i ) {
 				my $itemID = $storeList[$1]{nameID};
 				$ai_v{npc_talk}{itemID} = $itemID;
-				sendBuy(\$remote_socket, $itemID, $2);
+				sendBuy($net, $itemID, $2);
 			} elsif ( $args->{steps}[0] =~ /b/i ) {
-				sendGetStoreList(\$remote_socket, $args->{ID});
+				sendGetStoreList($net, $args->{ID});
 			} elsif ( $args->{steps}[0] =~ /s/i ) {
-				sendGetSellList(\$remote_socket, $args->{ID});
+				sendGetSellList($net, $args->{ID});
 			} elsif ( $args->{steps}[0] =~ /e/i ) {
 				$ai_v{npc_talk}{talk} = 'close';
 			}
@@ -1340,7 +1097,7 @@ sub AI {
 	}
 
 	if (AI::action eq "dead" && $config{dcOnDeath} != -1 && time - $char->{dead_time} >= $timeout{ai_dead_respawn}{timeout}) {
-		sendRespawn(\$remote_socket);
+		sendRespawn($net);
 		$char->{'dead_time'} = time;
 	}
 
@@ -1419,11 +1176,11 @@ sub AI {
 		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
 			# We have already successfully used the Teleport skill,
 			# and the ai_teleport_delay timeout has elapsed
-			sendTeleport(\$remote_socket, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
+			sendTeleport($net, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
 			AI::dequeue;
 		} elsif (!$timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_retry})) {
 			# We are still trying to use the Teleport skill
-			sendSkillUse(\$remote_socket, 26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
+			sendSkillUse($net, 26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
 			$timeout{ai_teleport_retry}{time} = time;
 		}
 	}
@@ -1437,7 +1194,7 @@ sub AI {
 			my $item = $char->{inventory}[$arrowCraftID[$i]];
 			next if (!$item);
 			if ($arrowcraft_items{lc($item->{name})}) {
-				sendArrowCraft(\$remote_socket, $item->{nameID});
+				sendArrowCraft($net, $item->{nameID});
 				debug "Making item\n", "ai_makeItem";
 				last;
 			}
@@ -1582,7 +1339,7 @@ sub AI {
 			# Talk to NPC if we haven't done so
 			if (!defined($args->{sentStore})) {
 				if ($config{storageAuto_useChatCommand}) {
-					sendMessage(\$remote_socket, "c", $config{storageAuto_useChatCommand});
+					sendMessage($net, "c", $config{storageAuto_useChatCommand});
 				} else {
 					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
 						warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
@@ -1887,7 +1644,7 @@ sub AI {
 					$timeout{ai_sellAuto}{time} = time;
 				}
 			}
-			sendSellBulk(\$remote_socket, \@sellItems) if (@sellItems);
+			sendSellBulk($net, \@sellItems) if (@sellItems);
 
 			if (AI::args->{done}) {
 				# plugins can hook here and decide to keep sell going longer
@@ -2061,10 +1818,10 @@ sub AI {
 			}
 			if ($args->{invIndex} ne "") {
 				# this item is in the inventory already, get what we need
-				sendBuy(\$remote_socket, $ai_seq_args[0]{'itemID'}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->{inventory}[$args->{invIndex}]{amount});
+				sendBuy($net, $ai_seq_args[0]{'itemID'}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->{inventory}[$args->{invIndex}]{amount});
 			} else {
 				# get the full amount
-				sendBuy(\$remote_socket, $args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
+				sendBuy($net, $args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
 			}
 			$timeout{ai_buyAuto_wait_buy}{time} = time;
 		}
@@ -2223,7 +1980,7 @@ sub AI {
 
 					$char->{$st} += 1;
 					# Raise stat
-					sendAddStatusPoint(\$remote_socket, $ID);
+					sendAddStatusPoint($net, $ID);
 					message "Auto-adding stat $st\n";
 					# Save which stat was raised, so that when we received the
 					# "stat changed" packet (00BC?) we can changed $statChanged
@@ -2266,7 +2023,7 @@ sub AI {
 			# If skill needs to be raised to match desired amount && skill points are available
 			if ($skill->id && $char->{points_skill} > 0 && $char->{skills}{$handle}{lv} < $num) {
 				# raise skill
-				sendAddSkillPoint(\$remote_socket, $skill->id);
+				sendAddSkillPoint($net, $skill->id);
 				message "Auto-adding skill ".$skill->name."\n";
 
 				# save which skill was raised, so that when we received the
@@ -2393,7 +2150,7 @@ sub AI {
 		message "I lost my master\n", "follow";
 		if ($config{'followBot'}) {
 			message "Trying to get him back\n", "follow";
-			sendMessage(\$remote_socket, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
+			sendMessage($net, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
 
 		delete $ai_seq_args[$followIndex]{'following'};
@@ -2561,7 +2318,7 @@ sub AI {
 
 		} elsif (!$char->{sitting} && timeOut($timeout{ai_sit}) && timeOut($timeout{ai_sit_wait})) {
 			# Send the 'sit' packet every x seconds until we're sitting
-			sendSit(\$remote_socket);
+			sendSit($net);
 			$timeout{ai_sit}{time} = time;
 
 			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
@@ -2575,7 +2332,7 @@ sub AI {
 			AI::dequeue;
 
 		} elsif (timeOut($timeout{ai_sit}) && timeOut($timeout{ai_stand_wait})) {
-			sendStand(\$remote_socket);
+			sendStand($net);
 			$timeout{ai_sit}{time} = time;
 		}
 	}
@@ -3041,7 +2798,7 @@ sub AI {
 					#check if item needs to be equipped
 					Item::scanConfigAndEquip("attackEquip");
 				} else {
-					sendAttack(\$remote_socket, $ID,
+					sendAttack($net, $ID,
 						($config{'tankMode'}) ? 0 : 7);
 					$timeout{ai_attack}{time} = time;
 					delete $args->{attackMethod};
@@ -3154,7 +2911,7 @@ sub AI {
 			if ($config{"useSelf_item_$i"} && checkSelfCondition("useSelf_item_$i")) {
 				my $index = findIndexStringList_lc($char->{inventory}, "name", $config{"useSelf_item_$i"});
 				if (defined $index) {
-					sendItemUse(\$remote_socket, $char->{inventory}[$index]{index}, $accountID);
+					sendItemUse($net, $char->{inventory}[$index]{index}, $accountID);
 					$ai_v{"useSelf_item_$i"."_time"} = time;
 					$timeout{ai_item_use_auto}{time} = time;
 					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
@@ -3460,11 +3217,11 @@ sub AI {
 
 				$args->{maxCastTime}{time} = time;
 				if ($skillsArea{$handle} == 2) {
-					sendSkillUse(\$remote_socket, $skillID, $args->{lv}, $accountID);
+					sendSkillUse($net, $skillID, $args->{lv}, $accountID);
 				} elsif ($args->{x} ne "") {
-					sendSkillUseLoc(\$remote_socket, $skillID, $args->{lv}, $args->{x}, $args->{y});
+					sendSkillUseLoc($net, $skillID, $args->{lv}, $args->{x}, $args->{y});
 				} else {
-					sendSkillUse(\$remote_socket, $skillID, $args->{lv}, $args->{target});
+					sendSkillUse($net, $skillID, $args->{lv}, $args->{target});
 				}
 				undef $char->{permitSkill};
 				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
@@ -4317,7 +4074,7 @@ sub AI {
 			}
 
 		} elsif (timeOut($timeout{ai_take})) {
-			sendTake(\$remote_socket, $ID);
+			sendTake($net, $ID);
 			$timeout{ai_take}{time} = time;
 		}
 	}
@@ -4482,9 +4239,9 @@ sub AI {
 			AI::dequeue;
 		} elsif (timeOut($args)) {
 			if ($args->{type} eq "c") {
-				sendMessage(\$remote_socket, "c", $args->{reply});
+				sendMessage($net, "c", $args->{reply});
 			} elsif ($args->{type} eq "pm") {
-				sendMessage(\$remote_socket, "pm", $args->{reply}, $args->{from});
+				sendMessage($net, "pm", $args->{reply}, $args->{from});
 			}
 			AI::dequeue;
 		}
@@ -4503,7 +4260,7 @@ sub AI {
 	SENDEMOTION: {
 		my $ai_sendemotion_index = AI::findAction("sendEmotion");
 		last SENDEMOTION if (!defined $ai_sendemotion_index || time < AI::args->{timeout});
-		sendEmotion(\$remote_socket, AI::args->{emotion});
+		sendEmotion($net, AI::args->{emotion});
 		AI::clear("sendEmotion");
 	}
 
@@ -4680,9 +4437,12 @@ sub parseSendMsg {
 	#}
 
 	if ($sendMsg ne "") {
-		sendMsgToServer(\$remote_socket, $sendMsg);
-		#sendToServerByInject(\$remote_socket, $sendMsg); This sendMsgToServer does the same thing.
+		$net->serverSend($sendMsg);
 	}
+	
+	# This should be changed to packets that haven't been parsed yet, in a similar manner
+	# as parseMsg
+	return "";
 }
 
 
@@ -4724,6 +4484,7 @@ sub parseSendMsg {
 sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
+	my $realMsg;
 
 	# Determine packet switch
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
@@ -4741,6 +4502,7 @@ sub parseMsg {
 			$conState = 2;
 			$accountID = substr($msg, 0, 4);
 			debug "XKore switching character, new accountID: ".unpack("V", $accountID)."\n";
+			$net->clientSend($accountID);
 			return substr($msg, 4);
 		} else {
 			return $msg;
@@ -4778,6 +4540,10 @@ sub parseMsg {
 				warning("Unknown packet - $switch\n", "connection");
 				dumpData($msg) if ($config{'debugPacket_unparsed'});
 			}
+
+			# Pass it along to the client, whatever it is
+			$net->clientSend($msg);
+			
 			Plugins::callHook('parseMsg/unknown', {switch => $switch, msg => $msg});
 			return "";
 		}
@@ -4806,10 +4572,13 @@ sub parseMsg {
 	}
 
 	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
+	
+	# Continue the message to the client
+	$net->clientSend(substr($msg, 0, $msg_size)) if ($msg_size > 0);
 
 	$lastPacketTime = time;
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
-	 || ($xkore && !$accountID && length($msg) == 4)) {
+	 || ($net->version == 1 && !$accountID && length($msg) == 4)) {
 		$accountID = substr($msg, 0, 4);
 		$AI = 1 if (!$AI_forcedOff);
 		if ($config{'encrypt'} && $conState == 4) {
@@ -4827,13 +4596,16 @@ sub parseMsg {
 			$msg_size = 4;
 		}
 		debug "Received account ID\n", "parseMsg", 0 if ($config{debugPacket_received});
+		
+		# Continue the message to the client
+		$net->clientSend(substr($msg, 0, $msg_size));
 
 	} elsif ($packetParser && $packetParser->parse(substr($msg, 0, $msg_size))) {
 		# Use the new object-oriented packet parser
 
 	} elsif ($switch eq "010F") {
 		# Character skill list
-		$conState = 5 if ($conState != 4 && $xkore);
+		Network::Receive::change_to_constate5();
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4));
 		my $msg = substr($msg, 0, 4).$newmsg;
@@ -5201,7 +4973,7 @@ sub parseMsg {
 		}
 
 	} elsif ($switch eq "013E") {
-		$conState = 5 if ($conState != 4 && $xkore);
+		Network::Receive::change_to_constate5();
 		my $sourceID = substr($msg, 2, 4);
 		my $targetID = substr($msg, 6, 4);
 		my $x = unpack("v1", substr($msg, 10, 2));
@@ -5317,7 +5089,7 @@ sub parseMsg {
 		my $skill = Skills->new(id => $skillID);
 
 		unless ($config{noAutoSkill}) {
-			sendSkillUse(\$remote_socket, $skillID, $skillLv, $accountID);
+			sendSkillUse($net, $skillID, $skillLv, $accountID);
 			undef $char->{permitSkill};
 		} else {
 			$char->{permitSkill} = $skill;
@@ -5426,7 +5198,7 @@ sub parseMsg {
 		undef %guildNameRequest;
 		$guildNameRequest{ID} = $TargetID;
 		$guildNameRequest{online} = $online;
-		sendGuildMemberNameRequest(\$remote_socket, $TargetID);
+		sendGuildMemberNameRequest($net, $TargetID);
 
 	} elsif ($switch eq "016F") {
 		my ($address) = unpack("Z*", substr($msg, 2, 60));
@@ -5552,7 +5324,7 @@ sub parseMsg {
 			my $ID = substr($msg, 2, 4);
 			if ($ID == $accountID) {
 				$timeout{ai_sync}{time} = time;
-				sendSync(\$remote_socket) if (!$xkore);
+				sendSync($net) unless ($net->clientAlive);
 				debug "Sync packet requested\n", "connection";
 			} else {
 				warning "Sync packet requested for wrong ID\n";
@@ -5646,7 +5418,7 @@ sub parseMsg {
 		# Sage Autospell - list of spells availible sent from server
 		if ($config{autoSpell}) {
 			my $skill = Skills->new(name => $config{autoSpell});
-			sendAutoSpell(\$remote_socket,$skill->id);
+			sendAutoSpell($net,$skill->id);
 		}
 
 	} elsif ($switch eq "01D0" || $switch eq "01E1") {

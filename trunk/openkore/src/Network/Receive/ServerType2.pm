@@ -11,7 +11,6 @@ use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
-use Network;
 use Network::Send;
 use Misc;
 use Plugins;

@@ -461,14 +461,14 @@ sub cmdArrowCraft {
 		}
 	} elsif ($arg1 eq "forceuse") {
 		if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
-			sendArrowCraft(\$remote_socket, $char->{inventory}[$arg2]{nameID});
+			sendArrowCraft($net, $char->{inventory}[$arg2]{nameID});
 		} else {
 			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item $arg2 in your inventory.\n";
 		}
 	} else {
 		if ($arrowCraftID[$arg1] ne "") {
-			sendArrowCraft(\$remote_socket, $char->{inventory}[$arrowCraftID[$arg1]]{nameID});
+			sendArrowCraft($net, $char->{inventory}[$arrowCraftID[$arg1]]{nameID});
 		} else {
 			error	"Error in function 'arrowcraft' (Create Arrows)\n" .
 				"Usage: arrowcraft [<identify #>]",
@@ -541,12 +541,12 @@ sub cmdAutoStorage {
 sub cmdBangBang {
 	my $bodydir = $char->{look}{body} - 1;
 	$bodydir = 7 if ($bodydir == -1);
-	sendLook(\$remote_socket, $bodydir, $char->{look}{head});
+	sendLook($net, $bodydir, $char->{look}{head});
 }
 
 sub cmdBingBing {
 	my $bodydir = ($char->{look}{body} + 1) % 8;
-	sendLook(\$remote_socket, $bodydir, $char->{look}{head});
+	sendLook($net, $bodydir, $char->{look}{head});
 }
 
 sub cmdBuy {
@@ -563,7 +563,7 @@ sub cmdBuy {
 		if ($arg2 <= 0) {
 			$arg2 = 1;
 		}
-		sendBuy(\$remote_socket, $storeList[$arg1]{'nameID'}, $arg2);
+		sendBuy($net, $storeList[$arg1]{'nameID'}, $arg2);
 	}
 }
 
@@ -576,7 +576,7 @@ sub cmdCard {
 	if ($arg1 eq "mergecancel") {
 		if ($cardMergeIndex ne "") {
 			undef $cardMergeIndex;
-			sendCardMerge(\$remote_socket, -1, -1);
+			sendCardMerge($net, -1, -1);
 			message "Cancelling card merge.\n";
 		} else {
 			error	"Error in function 'card mergecancel' (Cancel a card merge request)\n" .
@@ -604,7 +604,7 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			my $found = binFind(\@cardMergeItemsID, $arg2);
 			if (defined $found) {
-				sendCardMerge(\$remote_socket, $char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$arg2]{index});
+				sendCardMerge($net, $char->{inventory}[$cardMergeIndex]{index}, $char->{inventory}[$arg2]{index});
 			} else {
 				if ($cardMergeIndex ne "") {
 					error	"Error in function 'card merge' (Finalize card merging onto item)\n" .
@@ -623,7 +623,7 @@ sub cmdCard {
 		if ($arg2 =~ /^\d+$/) {
 			if ($char->{inventory}[$arg2] && %{$char->{inventory}[$arg2]}) {
 				$cardMergeIndex = $arg2;
-				sendCardMergeRequest(\$remote_socket, $char->{inventory}[$cardMergeIndex]{index});
+				sendCardMergeRequest($net, $char->{inventory}[$cardMergeIndex]{index});
 				message "Sending merge list request for $char->{inventory}[$cardMergeIndex]{name}...\n";
 			} else {
 				error	"Error in function 'card use' (Request list of items for merging with card)\n" .
@@ -653,7 +653,7 @@ sub cmdCard {
 			error	"Error in function 'arrowcraft forceuse #' (Create Arrows)\n" .
 				"You don't have item $arg3 in your inventory.\n";
 		} else {
-			sendCardMerge(\$remote_socket, $char->{inventory}[$arg2]{index}, $char->{inventory}[$arg3]{index});
+			sendCardMerge($net, $char->{inventory}[$arg2]{index}, $char->{inventory}[$arg3]{index});
 		}
 	} else {
 		error	"Syntax Error in function 'card' (Card Compounding)\n" .
@@ -775,7 +775,7 @@ sub cmdChat {
 		error	"Syntax Error in function 'c' (Chat)\n" .
 			"Usage: c <message>\n";
 	} else {
-		sendMessage(\$remote_socket, "c", $arg1);
+		sendMessage($net, "c", $arg1);
 	}
 }
 
@@ -801,7 +801,7 @@ sub cmdChatRoom {
 			error	"Error in function 'chat bestow' (Bestow Admin in Chat)\n" .
 				"Chat Room User $arg2 doesn't exist; type 'chat info' to see the list of users\n";
 		} else {
-			sendChatRoomBestow(\$remote_socket, $currentChatRoomUsers[$arg2]);
+			sendChatRoomBestow($net, $currentChatRoomUsers[$arg2]);
 		}
 
 	} elsif ($arg1 eq "modify") {
@@ -820,7 +820,7 @@ sub cmdChatRoom {
 			if ($public eq "") {
 				$public = 1;
 			}
-			sendChatRoomChange(\$remote_socket, $title, $users, $public, $password);
+			sendChatRoomChange($net, $title, $users, $public, $password);
 		}
 
 	} elsif ($arg1 eq "kick") {
@@ -836,7 +836,7 @@ sub cmdChatRoom {
 			error	"Error in function 'chat kick' (Kick from Chat)\n" .
 				"Chat Room User $arg2 doesn't exist\n";
 		} else {
-			sendChatRoomKick(\$remote_socket, $currentChatRoomUsers[$arg2]);
+			sendChatRoomKick($net, $currentChatRoomUsers[$arg2]);
 		}
 
 	} elsif ($arg1 eq "join") {
@@ -853,7 +853,7 @@ sub cmdChatRoom {
 			error	"Error in function 'chat join' (Join Chat Room)\n" .
 				"Chat Room $arg2 does not exist.\n";
 		} else {
-			sendChatRoomJoin(\$remote_socket, $chatRoomsID[$arg2], $arg3);
+			sendChatRoomJoin($net, $chatRoomsID[$arg2], $arg3);
 		}
 
 	} elsif ($arg1 eq "leave") {
@@ -861,7 +861,7 @@ sub cmdChatRoom {
 			error	"Error in function 'chat leave' (Leave Chat Room)\n" .
 				"You are not in a Chat Room.\n";
 		} else {
-			sendChatRoomLeave(\$remote_socket);
+			sendChatRoomLeave($net);
 		}
 
 	} elsif ($arg1 eq "create") {
@@ -884,7 +884,7 @@ sub cmdChatRoom {
 				$public = 1;
 			}
 			$title = ($config{chatTitleOversize}) ? $title : substr($title,0,36);
-			sendChatRoomCreate(\$remote_socket, $title, $users, $public, $password);
+			sendChatRoomCreate($net, $title, $users, $public, $password);
 			$createdChatRoom{'title'} = $title;
 			$createdChatRoom{'ownerID'} = $accountID;
 			$createdChatRoom{'limit'} = $users;
@@ -1183,7 +1183,8 @@ sub cmdDebug {
 		configModify("debug", 2);
 
 	} elsif ($arg1 eq "info") {
-		my $connected = ($remote_socket && $remote_socket->connected()) ? "yes" : "no";
+		my $connected = "server=".($net->serverAlive ? "yes" : "no").
+			",client=".($net->clientAlive ? "yes" : "no");
 		my $time = sprintf("%.2f", time - $lastPacketTime);
 		my $ai_timeout = sprintf("%.2f", time - $timeout{'ai'}{'time'});
 		my $ai_time = sprintf("%.4f", time - $ai_v{'AI_last_finished'});
@@ -1206,7 +1207,7 @@ sub cmdDoriDori {
 	} else {
 		$headdir = 2;
 	}
-	sendLook(\$remote_socket, $char->{look}{body}, $headdir);
+	sendLook($net, $char->{look}{body}, $headdir);
 }
 
 sub cmdDrop {
@@ -1257,7 +1258,7 @@ sub cmdEmotion {
 		error	"Syntax Error in function 'e' (Emotion)\n" .
 			"Usage: e <command>\n";
 	} else {
-		sendEmotion(\$remote_socket, $num);
+		sendEmotion($net, $num);
 	}
 }
 
@@ -1485,7 +1486,7 @@ sub cmdFriend {
 				error "$player->{name} is already your friend\n";
 			} else {
 				message "Requesting $player->{name} to be your friend\n";
-				sendFriendRequest(\$remote_socket, $players{$playersID[$arg2]}{name});
+				sendFriendRequest($net, $players{$playersID[$arg2]}{name});
 			}
 		}
 
@@ -1495,7 +1496,7 @@ sub cmdFriend {
 		} else {
 			$arg2--;
 			message "Attempting to remove $friends{$arg2}{'name'} from your friend list\n";
-			sendFriendRemove(\$remote_socket, $friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
+			sendFriendRemove($net, $friends{$arg2}{'accountID'}, $friends{$arg2}{'charID'});
 		}
 
 	} elsif ($arg1 eq "accept") {
@@ -1503,7 +1504,7 @@ sub cmdFriend {
 			error "Can't accept the friend request, no incoming request\n";
 		} else {
 			message "Accepting the friend request from $incomingFriend{'name'}\n";
-			sendFriendAccept(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			sendFriendAccept($net, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
 		}
 
@@ -1512,7 +1513,7 @@ sub cmdFriend {
 			error "Can't reject the friend request - no incoming request\n";
 		} else {
 			message "Rejecting the friend request from $incomingFriend{'name'}\n";
-			sendFriendReject(\$remote_socket, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
+			sendFriendReject($net, $incomingFriend{'accountID'}, $incomingFriend{'charID'});
 			undef %incomingFriend;
 		}
 
@@ -1549,7 +1550,7 @@ sub cmdFriend {
 
 sub cmdGetPlayerInfo {
 	my (undef, $args) = @_;
-	sendGetPlayerInfo(\$remote_socket, pack("V", $args));
+	sendGetPlayerInfo($net, pack("V", $args));
 }
 
 sub cmdGuild {
@@ -1567,7 +1568,7 @@ sub cmdGuild {
 			return;
 		}
 
-		sendGuildJoin(\$remote_socket, $incomingGuild{ID}, $arg2);
+		sendGuildJoin($net, $incomingGuild{ID}, $arg2);
 		undef %incomingGuild;
 		if ($arg2) {
 			message "You accepted the guild join request.\n", "success";
@@ -1610,13 +1611,13 @@ sub cmdGuild {
 
 	} elsif ($arg1 eq "" || !%guild) {
 		message	"Requesting guild information...\n", "info";
-		sendGuildInfoRequest(\$remote_socket);
+		sendGuildInfoRequest($net);
 
 		# Replies 01B6 (Guild Info) and 014C (Guild Ally/Enemy List)
-		sendGuildRequest(\$remote_socket, 0);
+		sendGuildRequest($net, 0);
 
 		# Replies 0166 (Guild Member Titles List) and 0154 (Guild Members List)
-		sendGuildRequest(\$remote_socket, 1);
+		sendGuildRequest($net, 1);
 
 		if ($arg1 eq "") {
 			message "Enter command to view guild information: guild < info | member >\n", "info";
@@ -1694,7 +1695,7 @@ sub cmdGuildChat {
 		error 	"Syntax Error in function 'g' (Guild Chat)\n" .
 			"Usage: g <message>\n";
 	} else {
-		sendMessage(\$remote_socket, "g", $arg1);
+		sendMessage($net, "g", $arg1);
 	}
 }
 
@@ -1817,7 +1818,7 @@ sub cmdIdentify {
 			error	"Error in function 'identify' (Identify Item)\n" .
 				"Identify Item $arg1 does not exist\n";
 		} else {
-			sendIdentify(\$remote_socket, $char->{'inventory'}[$identifyID[$arg1]]{'index'});
+			sendIdentify($net, $char->{'inventory'}[$identifyID[$arg1]]{'index'});
 		}
 
 	} else {
@@ -1834,9 +1835,9 @@ sub cmdIgnore {
 			"Usage: ignore <flag> <name | all>\n";
 	} else {
 		if ($arg2 eq "all") {
-			sendIgnoreAll(\$remote_socket, !$arg1);
+			sendIgnoreAll($net, !$arg1);
 		} else {
-			sendIgnore(\$remote_socket, $arg2, !$arg1);
+			sendIgnore($net, $arg2, !$arg1);
 		}
 	}
 }
@@ -2009,7 +2010,7 @@ sub cmdInventory_desc {
 #			"Player $arg1 does not exist.\n";
 #	} else {
 #		$arg2 = ($arg2 >= 1);
-#		sendAlignment(\$remote_socket, $playersID[$arg1], $arg2);
+#		sendAlignment($net, $playersID[$arg1], $arg2);
 #	}
 #}
 
@@ -2060,7 +2061,7 @@ sub cmdManualMove {
 }
 
 sub cmdMemo {
-	sendMemo(\$remote_socket);
+	sendMemo($net);
 }
 
 sub cmdMonsterList {
@@ -2232,7 +2233,7 @@ sub cmdParty {
 			error	"Syntax Error in function 'party create' (Organize Party)\n" .
 				"Usage: party create <party name>\n";
 		} else {
-			sendPartyOrganize(\$remote_socket, $arg2);
+			sendPartyOrganize($net, $arg2);
 		}
 
 	} elsif ($arg1 eq "join" && $arg2 ne "1" && $arg2 ne "0") {
@@ -2242,7 +2243,7 @@ sub cmdParty {
 		error	"Error in function 'party join' (Join/Request to Join Party)\n" .
 			"Can't accept/deny party request - no incoming request.\n";
 	} elsif ($arg1 eq "join") {
-		sendPartyJoin(\$remote_socket, $incomingParty{'ID'}, $arg2);
+		sendPartyJoin($net, $incomingParty{'ID'}, $arg2);
 		undef %incomingParty;
 
 	} elsif ($arg1 eq "request" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
@@ -2252,14 +2253,14 @@ sub cmdParty {
 		error	"Error in function 'party request' (Request to Join Party)\n" .
 			"Can't request to join party - player $arg2 does not exist.\n";
 	} elsif ($arg1 eq "request") {
-		sendPartyJoinRequest(\$remote_socket, $playersID[$arg2]);
+		sendPartyJoinRequest($net, $playersID[$arg2]);
 
 
 	} elsif ($arg1 eq "leave" && (!$char->{'party'} || !%{$char->{'party'}} ) ) {
 		error	"Error in function 'party leave' (Leave Party)\n" .
 			"Can't leave party - you're not in a party.\n";
 	} elsif ($arg1 eq "leave") {
-		sendPartyLeave(\$remote_socket);
+		sendPartyLeave($net);
 
 
 	} elsif ($arg1 eq "share" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
@@ -2269,7 +2270,7 @@ sub cmdParty {
 		error	"Syntax Error in function 'party share' (Set Party Share EXP)\n" .
 			"Usage: party share <flag>\n";
 	} elsif ($arg1 eq "share") {
-		sendPartyShareEXP(\$remote_socket, $arg2);
+		sendPartyShareEXP($net, $arg2);
 
 
 	} elsif ($arg1 eq "kick" && ( !$char->{'party'} || !%{$char->{'party'}} )) {
@@ -2282,7 +2283,7 @@ sub cmdParty {
 		error	"Error in function 'party kick' (Kick Party Member)\n" .
 			"Can't kick member - member $arg2 doesn't exist.\n";
 	} elsif ($arg1 eq "kick") {
-		sendPartyKick(\$remote_socket, $partyUsersID[$arg2]
+		sendPartyKick($net, $partyUsersID[$arg2]
 				,$char->{'party'}{'users'}{$partyUsersID[$arg2]}{'name'});
 	} else {
 		error	"Syntax Error in function 'party' (Party Management)\n" .
@@ -2296,7 +2297,7 @@ sub cmdPartyChat {
 		error	"Syntax Error in function 'p' (Party Chat)\n" .
 			"Usage: p <message>\n";
 	} else {
-		sendMessage(\$remote_socket, "p", $arg1);
+		sendMessage($net, "p", $arg1);
 	}
 }
 
@@ -2313,13 +2314,13 @@ sub cmdPet {
 			[$pet{name}, itemNameSimple($pet{accessory})]), "list";
 
 	} elsif ($subcmd eq "p" || $subcmd eq "performance") {
-		sendPetPerformance(\$remote_socket);
+		sendPetPerformance($net);
 
 	} elsif ($subcmd eq "r" || $subcmd eq "return") {
-		sendPetReturnToEgg(\$remote_socket);
+		sendPetReturnToEgg($net);
 
 	} elsif ($subcmd eq "u" || $subcmd eq "unequip") {
-		sendPetUnequipItem(\$remote_socket);
+		sendPetUnequipItem($net);
 	}
 }
 
@@ -2597,7 +2598,7 @@ sub cmdPrivateMessage {
 			error	"Error in function 'pm' (Private Message)\n" .
 				"You have not pm-ed anyone before\n";
 		} else {
-			sendMessage(\$remote_socket, "pm", $msg, $privMsgUsers[$user - 1]);
+			sendMessage($net, "pm", $msg, $privMsgUsers[$user - 1]);
 			$lastpm{msg} = $msg;
 			$lastpm{user} = $privMsgUsers[$user - 1];
 		}
@@ -2606,7 +2607,7 @@ sub cmdPrivateMessage {
 		if (!defined binFind(\@privMsgUsers, $user)) {
 			push @privMsgUsers, $user;
 		}
-		sendMessage(\$remote_socket, "pm", $msg, $user);
+		sendMessage($net, "pm", $msg, $user);
 		$lastpm{msg} = $msg;
 		$lastpm{user} = $user;
 	}
@@ -2683,7 +2684,7 @@ sub cmdRepair {
 
 sub cmdRespawn {
 	if ($char->{dead}) {
-		sendRespawn(\$remote_socket);
+		sendRespawn($net);
 	} else {
 		main::useTeleport(2);
 	}
@@ -2693,7 +2694,7 @@ sub cmdSell {
 	my @args = parseArgs($_[1]);
 
 	if ($args[0] eq "" && $talk{buyOrSell}) {
-		sendGetSellList(\$remote_socket, $talk{ID});
+		sendGetSellList($net, $talk{ID});
 
 	} elsif ($args[0] eq "list") {
 		if (@sellList == 0) {
@@ -2710,7 +2711,7 @@ sub cmdSell {
 		}
 
 	} elsif ($args[0] eq "done") {
-		sendSellBulk(\$remote_socket, \@sellList);
+		sendSellBulk($net, \@sellList);
 		message "Sold " . @sellList . " items.\n", "success";
 		@sellList = ();
 
@@ -2758,7 +2759,7 @@ sub cmdSell {
 
 sub cmdSendRaw {
 	my (undef, $args) = @_;
-	sendRaw(\$remote_socket, $args);
+	sendRaw($net, $args);
 }
 
 sub cmdSit {
@@ -2852,7 +2853,7 @@ sub cmdSkills {
 			error	"Error in function 'skills add' (Add Skill Point)\n" .
 				"Not enough skill points to increase ".$skill->name.".\n";
 		} else {
-			sendAddSkillPoint(\$remote_socket, $skill->id);
+			sendAddSkillPoint($net, $skill->id);
 		}
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/) {
@@ -3263,7 +3264,7 @@ sub cmdStatAdd {
 		}
 
 		$char->{$arg} += 1;
-		sendAddStatusPoint(\$remote_socket, $ID);
+		sendAddStatusPoint($net, $ID);
 	}
 }
 
@@ -3387,7 +3388,7 @@ sub cmdStore {
 		}
 		message("-------------------------------\n", "list");
 	} elsif ($arg1 eq "" && $talk{'buyOrSell'}) {
-		sendGetStoreList(\$remote_socket, $talk{'ID'});
+		sendGetStoreList($net, $talk{'ID'});
 
 	} elsif ($arg1 eq "desc" && $arg2 =~ /\d+/ && !$storeList[$arg2]) {
 		error	"Error in function 'store desc' (Store Item Description)\n" .
@@ -3443,7 +3444,7 @@ sub cmdTalk {
 		error	"Error in function 'talk' (Talk to NPC)\n" .
 			"NPC $arg1 does not exist\n";
 	} elsif ($arg1 =~ /^\d+$/) {
-		sendTalk(\$remote_socket, $npcsID[$arg1]);
+		sendTalk($net, $npcsID[$arg1]);
 
 	} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
 		error	"Error in function 'talk resp' (Respond to NPC)\n" .
@@ -3472,7 +3473,7 @@ sub cmdTalk {
 		} else {
 			$arg2 += 1;
 		}
-		sendTalkResponse(\$remote_socket, $talk{'ID'}, $arg2);
+		sendTalkResponse($net, $talk{'ID'}, $arg2);
 
 	} elsif ($arg1 eq "num" && $arg2 eq "") {
 		error "Error in function 'talk num' (Respond to NPC)\n" .
@@ -3483,7 +3484,7 @@ sub cmdTalk {
 			"$arg2 is not a valid number.\n";
 
 	} elsif ($arg1 eq "num" && $arg2 =~ /^\d+$/) {
-		sendTalkNumber(\$remote_socket, $talk{'ID'}, $arg2);
+		sendTalkNumber($net, $talk{'ID'}, $arg2);
 
 	} elsif ($arg1 eq "text") {
 		my ($arg2) = $args =~ /^\w+ (.*)/;
@@ -3491,7 +3492,7 @@ sub cmdTalk {
 			error "Error in function 'talk text' (Respond to NPC)\n" .
 				"You must specify a string.\n";
 		} else {
-			sendTalkText(\$remote_socket, $talk{'ID'}, $arg2);
+			sendTalkText($net, $talk{'ID'}, $arg2);
 		}
 
 	} elsif ($arg1 eq "cont" && !%talk) {
@@ -3499,13 +3500,13 @@ sub cmdTalk {
 			"You are not talking to any NPC.\n";
 
 	} elsif ($arg1 eq "cont") {
-		sendTalkContinue(\$remote_socket, $talk{'ID'});
+		sendTalkContinue($net, $talk{'ID'});
 
 	} elsif ($arg1 eq "no") {
 		if (!%talk) {
 			error "You are not talking to any NPC.\n";
 		} else {
-			sendTalkCancel(\$remote_socket, $talk{'ID'});
+			sendTalkCancel($net, $talk{'ID'});
 		}
 
 	} else {
@@ -3626,7 +3627,7 @@ sub cmdUnequip {
 			"Inventory Item $arg1 is not equipped.\n";
 		return;
 	}
-	sendUnequip(\$remote_socket, $item->{index});
+	sendUnequip($net, $item->{index});
 }
 
 sub cmdUseItemOnMonster {
@@ -3704,7 +3705,7 @@ sub cmdVender {
 		error	"Error in function 'vender' (Vender Shop)\n" .
 			"Vender $arg1 does not exist.\n";
 	} elsif ($arg2 eq "") {
-		sendEnteringVender(\$remote_socket, $venderListsID[$arg1]);
+		sendEnteringVender($net, $venderListsID[$arg1]);
 	} elsif ($venderListsID[$arg1] ne $venderID) {
 		error	"Error in function 'vender' (Vender Shop)\n" .
 			"Vender ID is wrong.\n";
@@ -3712,7 +3713,7 @@ sub cmdVender {
 		if ($arg3 <= 0) {
 			$arg3 = 1;
 		}
-		sendBuyVender(\$remote_socket, $venderID, $arg2, $arg3);
+		sendBuyVender($net, $venderID, $arg2, $arg3);
 	}
 }
 
@@ -3764,7 +3765,7 @@ sub cmdWarp {
 			my $name = $char->{warp}{memo}[$map];
 			my $rsw = "$name.rsw";
 			message "Attempting to open a warp portal to $maps_lut{$rsw} ($name)\n", "info";
-			sendOpenWarp(\$remote_socket, "$name.gat");
+			sendOpenWarp($net, "$name.gat");
 		}
 
 	} elsif ($map eq 'list') {
@@ -3790,7 +3791,7 @@ sub cmdWarp {
 	} else {
 		my $rsw = "$map.rsw";
 		message "Attempting to open a warp portal to $maps_lut{$rsw} ($map)\n", "info";
-		sendOpenWarp(\$remote_socket, "$map.gat");
+		sendOpenWarp($net, "$map.gat");
 	}
 }
 
@@ -3828,7 +3829,7 @@ sub cmdWhere {
 }
 
 sub cmdWho {
-	sendWho(\$remote_socket);
+	sendWho($net);
 }
 
 sub cmdWhoAmI {
