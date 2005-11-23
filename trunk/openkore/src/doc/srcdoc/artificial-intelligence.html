@@ -226,7 +226,7 @@ Then two seconds later, it sends a "choose NPC menu item 2" packet.
                 <b>if</b> ($ai_seq_args[0]{stage} <b>eq</b> <span class="cstr">'Just started'</span>) {
                         <span class="comment"># This AI sequence just started
                         # Initialize a conversation with NPC 1337</span>
-                        sendTalk(\$remote_socket, 1337);
+                        sendTalk($net, 1337);
 
                         <span class="comment"># Store the current time in a variable</span>
                         $ai_seq_args[0]{waitTwoSecs}{time} = <b>time</b>;
@@ -241,7 +241,7 @@ Then two seconds later, it sends a "choose NPC menu item 2" packet.
                       && timeOut( $ai_seq_args[0]{waitTwoSecs} )
                 ) {
                         <span class="comment"># Two seconds have now passed</span>
-                        sendTalkResponse(\$remote_socket, 1337, 2);
+                        sendTalkResponse($net, 1337, 2);
 
                         <span class="comment"># We're done; remove this AI sequence</span>
                         <b>shift</b> @ai_seq;
