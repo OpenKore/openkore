@@ -931,7 +931,7 @@ sub AI {
 						$args->{steps} = [];
 						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
 						undef $args->{time};
-						undef $ai_v{npc_talk}{'time'};
+						undef $ai_v{npc_talk}{time};
 						undef $ai_v{npc_talk}{talk};
 						lookAtPosition($args->{pos});
 						last NPCTALK;
@@ -4053,7 +4053,7 @@ sub AI {
 
 	} elsif (AI::action eq "take") {
 		my $ID = AI::args->{ID};
-		my $myPos = $char->{pos};
+		my $myPos = $char->{pos_to};
 		my $dist = distance($items{$ID}{pos}, $myPos);
 		my $item = $items{AI::args->{ID}};
 		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
