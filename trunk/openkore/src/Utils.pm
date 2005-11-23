@@ -1116,6 +1116,8 @@ sub judgeSkillArea {
 }
 
 ##
+# makeCoords(r_hash, rawCoords)
+#
 # The maximum value for either coordinate (x or y) is 1023, 
 # thus making the number of bits for each coordinate 10. 
 # When both coordinates are packed together, 
