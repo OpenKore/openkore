@@ -651,13 +651,13 @@ sub onInputEnter {
 	}
 
 	if ($self->{targetBox}->GetValue ne "") {
-		sendMessage(\$remote_socket, "pm", $text, $self->{targetBox}->GetValue);
+		sendMessage($net, "pm", $text, $self->{targetBox}->GetValue);
 	} elsif ($n == 1) { # Public chat
-		sendMessage(\$remote_socket, "c", $text);
+		sendMessage($net, "c", $text);
 	} elsif ($n == 2) { # Party chat
-		sendMessage(\$remote_socket, "p", $text);
+		sendMessage($net, "p", $text);
 	} else { # Guild chat
-		sendMessage(\$remote_socket, "g", $text);
+		sendMessage($net, "g", $text);
 	}
 }
 

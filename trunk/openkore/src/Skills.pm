@@ -38,7 +38,7 @@
 package Skills;
 
 use strict;
-use Globals qw($accountID $remote_socket $char %skillsSP_lut);
+use Globals qw($accountID $net $char %skillsSP_lut);
 use Network::Send qw(sendSkillUse);
 use vars qw(@skills %handles %names);
 
@@ -191,7 +191,7 @@ sub use {
 	my ($self,$target,$lvl) = @_;
 	$target = $accountID unless $target;
 	$lvl = 10 unless $lvl;
-	sendSkillUse(\$remote_socket, $self->id, $lvl, $target);
+	sendSkillUse($net, $self->id, $lvl, $target);
 }
 
 ##

@@ -18,7 +18,7 @@ package ChatQueue;
 use strict;
 use Time::HiRes qw(time);
 
-use Globals qw($remote_socket %config %players $char %ai_v %timeout
+use Globals qw($net %config %players $char %ai_v %timeout
 		%responseVars %field %overallAuth %maps_lut %skillsSP_lut
 		@chatResponses $AI %cities_lut);
 use AI;
@@ -90,7 +90,7 @@ sub processFirst {
 	if (( $type eq "pm" || $type eq "p" || $type eq "g" ) && !$overallAuth{$user}) {
 		if ($msg eq $config{adminPassword}) {
 			auth($user, 1);
-			sendMessage(\$remote_socket, "pm", getResponse("authS"), $user);
+			sendMessage($net, "pm", getResponse("authS"), $user);
 		}
 		# We don't notify the user if login failed; people use it
 		# to check whether you're a bot.
@@ -121,27 +121,27 @@ sub processChatCommand {
 
 	if ($switch eq "sit") {
 		Commands::run("sit");
-		sendMessage(\$remote_socket, $type, getResponse("sitS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("sitS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "stand") {
 		Commands::run("stand");
-		sendMessage(\$remote_socket, $type, getResponse("standS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("standS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "relog") {
 		relog($args[0]);
-		sendMessage(\$remote_socket, $type, getResponse("relogS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("relogS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "logout") {
 		quit();
-		sendMessage(\$remote_socket, $type, getResponse("quitS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("quitS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "reload") {
 		Settings::parseReload($after);
-		sendMessage(\$remote_socket, $type, getResponse("reloadS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("reloadS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "status") {
@@ -158,78 +158,78 @@ sub processChatCommand {
 		$vars->{char_weight} = $char->{weight};
 		$vars->{char_weight_max} = $char->{weight_max};
 		$vars->{zenny} = $char->{zenny};
-		sendMessage(\$remote_socket, $type, getResponse("statusS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("statusS"), $user) if $config{verbose};
 
 	} elsif ($switch eq "conf") {
 		if ($args[0] eq "") {
-			sendMessage(\$remote_socket, $type, getResponse("confF1"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("confF1"), $user) if $config{verbose};
 
 		} elsif (!exists $config{$args[0]}) {
-			sendMessage(\$remote_socket, $type, getResponse("confF2"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("confF2"), $user) if $config{verbose};
 
 		} elsif ($args[1] eq "") {
 			if (lc($args[0]) eq "username" || lc($args[0] eq "password")) {
-				sendMessage(\$remote_socket, $type, getResponse("confF3"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("confF3"), $user) if $config{verbose};
 			} else {
 				$vars->{key} = $args[0];
 				$vars->{value} = $config{$args[0]};
-				sendMessage(\$remote_socket, $type, getResponse("confS1"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("confS1"), $user) if $config{verbose};
 				$timeout{ai_thanks_set}{time} = time;
 			}
 
 		} else {
 			$args[1] = "" if ($args[1] eq "none");
 			configModify($args[0], $args[1]);
-			sendMessage(\$remote_socket, $type, getResponse("confS2"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("confS2"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 		}
 
 	} elsif ($switch eq "timeout") {
 		if ($args[0] eq "") {
-			sendMessage(\$remote_socket, $type, getResponse("timeoutF1"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("timeoutF1"), $user) if $config{verbose};
 
 		} elsif (!exists $timeout{$args[0]}{timeout}) {
-			sendMessage(\$remote_socket, $type, getResponse("timeoutF2"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("timeoutF2"), $user) if $config{verbose};
 
 		} elsif ($args[1] eq "") {
 			$vars->{key} = $args[0];
 			$vars->{value} = $timeout{$args[0]}{timeout};
-			sendMessage(\$remote_socket, $type, getResponse("timeoutS1"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("timeoutS1"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 
 		} else {
 			$args[1] = "" if ($args[1] eq "none");
 			setTimeout($args[0], $args[1]);
-			sendMessage(\$remote_socket, $type, getResponse("timeoutS2"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("timeoutS2"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 		}
 
 	} elsif ($msg =~ /\bshut[\s\S]*up\b/) {
 		if ($config{verbose}) {
 			configModify("verbose", 0);
-			sendMessage(\$remote_socket, $type, getResponse("verboseOffS"), $user);
+			sendMessage($net, $type, getResponse("verboseOffS"), $user);
 			$timeout{ai_thanks_set}{time} = time;
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("verboseOffF"), $user);
+			sendMessage($net, $type, getResponse("verboseOffF"), $user);
 		}
 
 	} elsif ($switch eq "speak") {
 		if (!$config{verbose}) {
 			configModify("verbose", 1);
-			sendMessage(\$remote_socket, $type, getResponse("verboseOnS"), $user);
+			sendMessage($net, $type, getResponse("verboseOnS"), $user);
 			$timeout{ai_thanks_set}{time} = time;
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("verboseOnF"), $user);
+			sendMessage($net, $type, getResponse("verboseOnF"), $user);
 		}
 
 	} elsif ($switch eq "date") {
 		$vars->{date} = getFormattedDate(int(time));
-		sendMessage(\$remote_socket, $type, getResponse("dateS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("dateS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif (($switch eq "move" && $args[0] eq "stop") || $switch eq "stop") {
 		AI::clear("move", "route", "mapRoute");
-		sendMessage(\$remote_socket, $type, getResponse("moveS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("moveS"), $user) if $config{verbose};
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "move") {
@@ -258,27 +258,27 @@ sub processChatCommand {
 				} else {
 					message "Calculating route to: $maps_lut{$rsw}($map)\n", "route";
 				}
-				sendMessage(\$remote_socket, $type, getResponse("moveS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("moveS"), $user) if $config{verbose};
 				main::ai_route($map, $x, $y, attackOnRoute => 1);
 				$timeout{ai_thanks_set}{time} = time;
 
 			} else {
 				error "Map $map does not exist\n";
-				sendMessage(\$remote_socket, $type, getResponse("moveF"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("moveF"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("moveF"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("moveF"), $user) if $config{verbose};
 		}
 
 	} elsif ($switch eq "look") {
 		my ($body, $head) = @args;
 		if ($body ne "") {
 			look($body, $head);
-			sendMessage(\$remote_socket, $type, getResponse("lookS"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("lookS"), $user) if $config{verbose};
 			$timeout{ai_thanks_set}{time} = time;
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("lookF"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("lookF"), $user) if $config{verbose};
 		}	
 
 	} elsif ($switch eq "follow") {
@@ -286,10 +286,10 @@ sub processChatCommand {
 			if ($config{follow}) {
 				AI::clear("follow");
 				configModify("follow", 0);
-				sendMessage(\$remote_socket, $type, getResponse("followStopS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("followStopS"), $user) if $config{verbose};
 				$timeout{ai_thanks_set}{time} = time;
 			} else {
-				sendMessage(\$remote_socket, $type, getResponse("followStopF"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("followStopF"), $user) if $config{verbose};
 			}
 
 		} else {
@@ -299,19 +299,19 @@ sub processChatCommand {
 				main::ai_follow($players{$targetID}{name});
 				configModify("follow", 1);
 				configModify("followTarget", $players{$targetID}{name});
-				sendMessage(\$remote_socket, $type, getResponse("followS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("followS"), $user) if $config{verbose};
 				$timeout{ai_thanks_set}{time} = time;
 			} else {
-				sendMessage(\$remote_socket, $type, getResponse("followF"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("followF"), $user) if $config{verbose};
 			}
 		}
 
 	} elsif ($switch eq "tank") {
 		if ($args[0] eq "stop") {
 			if (!$config{tankMode}) {
-				sendMessage(\$remote_socket, $type, getResponse("tankStopF"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("tankStopF"), $user) if $config{verbose};
 			} else {
-				sendMessage(\$remote_socket, $type, getResponse("tankStopS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("tankStopS"), $user) if $config{verbose};
 				configModify("tankMode", 0);
 				$timeout{ai_thanks_set}{time} = time;
 			}
@@ -319,17 +319,17 @@ sub processChatCommand {
 		} else {
 			my $targetID = getIDFromChat(\%players, $user, $after);
 			if ($targetID ne "") {
-				sendMessage(\$remote_socket, $type, getResponse("tankS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("tankS"), $user) if $config{verbose};
 				configModify("tankMode", 1);
 				configModify("tankModeTarget", $players{$targetID}{name});
 				$timeout{ai_thanks_set}{time} = time;
 			} else {
-				sendMessage(\$remote_socket, $type, getResponse("tankF"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("tankF"), $user) if $config{verbose};
 			}
 		}
 
 	} elsif ($switch eq "town") {
-		sendMessage(\$remote_socket, $type, getResponse("moveS"), $user);
+		sendMessage($net, $type, getResponse("moveS"), $user);
 		main::useTeleport(2);
 		
 	} elsif ($switch eq "where") {
@@ -338,7 +338,7 @@ sub processChatCommand {
 		$vars->{y} = $char->{pos_to}{y};
 		$vars->{map} = "$maps_lut{$rsw} ($field{name})";
 		$timeout{ai_thanks_set}{time} = time;
-		sendMessage(\$remote_socket, $type, getResponse("whereS"), $user) if $config{verbose};
+		sendMessage($net, $type, getResponse("whereS"), $user) if $config{verbose};
 
 	# Heal
 	} elsif ($switch eq "heal") {
@@ -353,7 +353,7 @@ sub processChatCommand {
 		}
 
 		if ($targetID eq "") {
-			sendMessage(\$remote_socket, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{AL_HEAL}{lv} > 0) {
 			my $amount_healed;
@@ -399,20 +399,20 @@ sub processChatCommand {
 					unshift @skillCasts, \%skill;
 				} else {
 					$vars->{char_sp} = $char->{sp} - $sp_used;
-					sendMessage(\$remote_socket, $type, getResponse("healF2"), $user) if $config{verbose};
+					sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
 					$failed = 1;
 				}
 			}
 
 			if (!$failed) {
-				sendMessage(\$remote_socket, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
 			}
 			foreach (@skillCasts) {
 				main::ai_skillUse($_->{skill}, $_->{lv}, $_->{maxCastTime}, $_->{minCastTime}, $_->{ID});
 			}
 
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("healF3"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 
 	# Inc Agi
@@ -428,7 +428,7 @@ sub processChatCommand {
 		}
 
 		if ($targetID eq "") {
-			sendMessage(\$remote_socket, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{AL_INCAGI}{lv} > 0) {
 			my $failed = 1;
@@ -440,13 +440,13 @@ sub processChatCommand {
 				}
 			}
 			if (!$failed) {
-				sendMessage(\$remote_socket, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
 			}else{
-				sendMessage(\$remote_socket, $type, getResponse("healF2"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("healF3"), $user) if $config{'verbose'};
+			sendMessage($net, $type, getResponse("healF3"), $user) if $config{'verbose'};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
@@ -454,7 +454,7 @@ sub processChatCommand {
 	} elsif ($switch eq "bless" || $switch eq "blessing"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
 		if ($targetID eq "") {
-			sendMessage(\$remote_socket, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{AL_BLESSING}{lv} > 0) {
 			my $failed = 1;
@@ -466,13 +466,13 @@ sub processChatCommand {
 				}
 			}
 			if (!$failed) {
-				sendMessage(\$remote_socket, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
 			}else{
-				sendMessage(\$remote_socket, $type, getResponse("healF2"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("healF3"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
@@ -480,7 +480,7 @@ sub processChatCommand {
 	} elsif ($switch eq "kyrie"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
 		if ($targetID eq "") {
-			sendMessage(\$remote_socket, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{PR_KYRIE}{lv} > 0) {
 			my $failed = 1;
@@ -493,13 +493,13 @@ sub processChatCommand {
 			}
 
 			if (!$failed) {
-				sendMessage(\$remote_socket, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
 			}else{
-				sendMessage(\$remote_socket, $type, getResponse("healF2"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("healF3"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
@@ -507,7 +507,7 @@ sub processChatCommand {
 	} elsif ($switch eq "mag"){
 		my $targetID = getIDFromChat(\%players, $user, $after);
 		if ($targetID eq "") {
-			sendMessage(\$remote_socket, $type, getResponse("healF1"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
 
 		} elsif ($char->{skills}{PR_MAGNIFICAT}{lv} > 0) {
 			my $failed = 1;
@@ -520,20 +520,20 @@ sub processChatCommand {
 			}
 
 			if (!$failed) {
-				sendMessage(\$remote_socket, $type, getResponse("healS"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healS"), $user) if $config{verbose};
 			}else{
-				sendMessage(\$remote_socket, $type, getResponse("healF2"), $user) if $config{verbose};
+				sendMessage($net, $type, getResponse("healF2"), $user) if $config{verbose};
 			}
 
 		} else {
-			sendMessage(\$remote_socket, $type, getResponse("healF3"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("healF3"), $user) if $config{verbose};
 		}
 		$timeout{ai_thanks_set}{time} = time;
 
 	} elsif ($switch eq "thank" || $switch eq "thn" || $switch eq "thx") {
 		if (!timeOut($timeout{ai_thanks_set})) {
 			$timeout{ai_thanks_set}{time} -= $timeout{ai_thanks_set}{timeout};
-			sendMessage(\$remote_socket, $type, getResponse("thankS"), $user) if $config{verbose};
+			sendMessage($net, $type, getResponse("thankS"), $user) if $config{verbose};
 		}
 
 	} else {

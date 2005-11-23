@@ -268,7 +268,7 @@ sub setTimeout {
 our %debug_showSpots_list;
 
 sub debug_showSpots {
-	return unless $xkore;
+	return unless $net->clientAlive();
 	my $ID = shift;
 	my $spots = shift;
 	my $special = shift;
@@ -276,7 +276,7 @@ sub debug_showSpots {
 	if ($debug_showSpots_list{$ID}) {
 		foreach (@{$debug_showSpots_list{$ID}}) {
 			my $msg = pack("C*", 0x20, 0x01) . pack("V", $_);
-			sendToClientByInject(\$remote_socket, $msg);
+			$net->clientSend($msg);
 		}
 	}
 
@@ -288,8 +288,8 @@ sub debug_showSpots {
 			. pack("V*", $i, 1550)
 			. pack("v*", $_->{x}, $_->{y})
 			. pack("C*", 0x93, 0);
-		sendToClientByInject(\$remote_socket, $msg);
-		sendToClientByInject(\$remote_socket, $msg);
+		$net->clientSend($msg);
+		$net->clientSend($msg);
 		push @{$debug_showSpots_list{$ID}}, $i;
 		$i++;
 	}
@@ -299,8 +299,8 @@ sub debug_showSpots {
 			. pack("V*", 1553, 1550)
 			. pack("v*", $special->{x}, $special->{y})
 			. pack("C*", 0x83, 0);
-		sendToClientByInject(\$remote_socket, $msg);
-		sendToClientByInject(\$remote_socket, $msg);
+		$net->clientSend($msg);
+		$net->clientSend($msg);
 		push @{$debug_showSpots_list{$ID}}, 1553;
 	}
 }
@@ -986,7 +986,7 @@ sub launchURL {
 
 
 sub avoidGM_talk {
-	return 0 if ($xkore || !$config{avoidGM_talk});
+	return 0 if ($net->clientAlive() || !$config{avoidGM_talk});
 	my ($user, $msg) = @_;
 
 	# Check whether this "GM" is on the ignore list
@@ -1007,14 +1007,14 @@ sub avoidGM_talk {
 		warning "Disconnect for $tmp seconds...\n";
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $tmp;
-		Network::disconnect(\$remote_socket);
+		$net->serverDisconnect();
 		return 1;
 	}
 	return 0;
 }
 
 sub avoidList_talk {
-	return 0 if ($xkore || !$config{avoidList});
+	return 0 if ($net->clientAlive() || !$config{avoidList});
 	my ($user, $msg, $ID) = @_;
 
 	if ($avoid{Players}{lc($user)}{disconnect_on_chat} || $avoid{ID}{$ID}{disconnect_on_chat}) {
@@ -1023,7 +1023,7 @@ sub avoidList_talk {
 		warning "Disconnect for $config{avoidList_reconnect} seconds...\n";
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
-		Network::disconnect(\$remote_socket);
+		$net->serverDisconnect();
 		return 1;
 	}
 	return 0;
@@ -1100,13 +1100,13 @@ sub charSelectScreen {
 			"------------------------------------------------------------\n",
 			"connection";
 	}
-	return 1 if $xkore;
+	return 1 if $net->clientAlive;
 
 	Plugins::callHook('charSelectScreen', \%plugin_args);
 	return $plugin_args{return} if ($plugin_args{return});
 
 	if ($plugin_args{autoLogin} && @chars && $config{'char'} ne "" && $chars[$config{'char'}]) {
-		sendCharLogin(\$remote_socket, $config{'char'});
+		$net->sendCharLogin($config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 		return 1;
 	}
@@ -1138,7 +1138,7 @@ sub charSelectScreen {
 				error "Character #$input does not exist.\n";
 			} else {
 				configModify('char', $input, 1);
-				sendCharLogin(\$remote_socket, $config{'char'});
+				$net->sendCharLogin($config{'char'});
 				$timeout{'charlogin'}{'time'} = time;
 				return 1;
 			}
@@ -1214,7 +1214,7 @@ sub charSelectScreen {
 			warning "Are you ABSOLUTELY SURE you want to delete $chars[$args[0]]{name} ($args[0])? (y/n) ";
 			$input = $interface->getInput(-1);
 			if ($input eq "y") {
-				sendCharDelete(\$remote_socket, $chars[$args[0]]{ID}, $args[1]);
+				$net->sendCharDelete($chars[$args[0]]{ID}, $args[1]);
 				message "Deleting character $chars[$args[0]]{name}...\n", "connection";
 				$AI::temp::delIndex = $args[0];
 			} else {
@@ -1369,7 +1369,7 @@ sub createCharacter {
 			}
 		}
 
-		sendCharCreate(\$remote_socket, $slot, $name,
+		$net->sendCharCreate($slot, $name,
 			$str, $agi, $vit, $int, $dex, $luk,
 			$hair_style, $hair_color);
 		return 1;
@@ -1409,7 +1409,7 @@ sub drop {
 	if (!$amount || $amount > $char->{inventory}[$item]{amount}) {
 		$amount = $char->{inventory}[$item]{amount};
 	}
-	sendDrop(\$remote_socket, $char->{inventory}[$item]{index}, $amount);
+	$net->sendDrop($char->{inventory}[$item]{index}, $amount);
 }
 
 sub dumpData {
@@ -1924,7 +1924,7 @@ sub processNameRequestQueue {
 			next;
 		}
 
-		sendGetPlayerInfo(\$remote_socket, $ID);
+		$net->sendGetPlayerInfo($ID);
 		$object = shift @{$queue};
 		push @{$queue}, $object if ($object);
 		last;
@@ -1942,12 +1942,12 @@ sub relog {
 	undef $conState_tries;
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout;
-	Network::disconnect(\$remote_socket);
+	$net->serverDisconnect();
 	message "Relogging in $timeout seconds...\n", "connection";
 }
 
 sub sendMessage {
-	my $r_socket = shift;
+	my $r_net = shift;
 	my $type = shift;
 	my $msg = shift;
 	my $user = shift;
@@ -1980,18 +1980,18 @@ sub sendMessage {
 						$msg .= substr($msg[$i], 0, $amount);
 					}
 					if ($type eq "c") {
-						sendChat($r_socket, $msg);
+						sendChat($r_net, $msg);
 					} elsif ($type eq "g") {
-						sendGuildChat($r_socket, $msg);
+						sendGuildChat($r_net, $msg);
 					} elsif ($type eq "p") {
-						sendPartyChat($r_socket, $msg);
+						sendPartyChat($r_net, $msg);
 					} elsif ($type eq "pm") {
-						sendPrivateMsg($r_socket, $user, $msg);
+						sendPrivateMsg($r_net, $user, $msg);
 						undef %lastpm;
 						$lastpm{'msg'} = $msg;
 						$lastpm{'user'} = $user;
 						push @lastpm, {%lastpm};
-					} elsif ($type eq "k" && $xkore) {
+					} elsif ($type eq "k") {
 						injectMessage($msg);
 	 				}
 					$msg[$i] = substr($msg[$i], $amount - length($oldmsg), length($msg[$i]) - $amount - length($oldmsg));
@@ -2011,36 +2011,36 @@ sub sendMessage {
 				}
 			} else {
 				if ($type eq "c") {
-					sendChat($r_socket, $msg);
+					sendChat($r_net, $msg);
 				} elsif ($type eq "g") {
-					sendGuildChat($r_socket, $msg);
+					sendGuildChat($r_net, $msg);
 				} elsif ($type eq "p") {
-					sendPartyChat($r_socket, $msg);
+					sendPartyChat($r_net, $msg);
 				} elsif ($type eq "pm") {
-					sendPrivateMsg($r_socket, $user, $msg);
+					sendPrivateMsg($r_net, $user, $msg);
 					undef %lastpm;
 					$lastpm{'msg'} = $msg;
 					$lastpm{'user'} = $user;
 					push @lastpm, {%lastpm};
-				} elsif ($type eq "k" && $xkore) {
+				} elsif ($type eq "k") {
 					injectMessage($msg);
 				}
 				$msg = $msg[$i];
 			}
 			if (length($msg) && $i == @msg - 1) {
 				if ($type eq "c") {
-					sendChat($r_socket, $msg);
+					sendChat($r_net, $msg);
 				} elsif ($type eq "g") {
-					sendGuildChat($r_socket, $msg);
+					sendGuildChat($r_net, $msg);
 				} elsif ($type eq "p") {
-					sendPartyChat($r_socket, $msg);
+					sendPartyChat($r_net, $msg);
 				} elsif ($type eq "pm") {
-					sendPrivateMsg($r_socket, $user, $msg);
+					sendPrivateMsg($r_net, $user, $msg);
 					undef %lastpm;
 					$lastpm{'msg'} = $msg;
 					$lastpm{'user'} = $user;
 					push @lastpm, {%lastpm};
-				} elsif ($type eq "k" && $xkore) {
+				} elsif ($type eq "k") {
 					injectMessage($msg);
 				}
 			}
@@ -2434,7 +2434,7 @@ sub useTeleport {
 			# Send skill use packet to appear legitimate
 			# (Always send skill use packet for level 2 so that saveMap
 			# autodetection works)
-			sendSkillUse(\$remote_socket, $skill->id, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
+			sendSkillUse($net, $skill->id, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
 			undef $char->{permitSkill};
 
 			if (!$emergency && $use_lvl == 1) {
@@ -2447,7 +2447,7 @@ sub useTeleport {
 		delete $ai_v{temp}{teleport};
 		debug "Sending Teleport using Level $use_lvl\n", "useTeleport";
 		if ($use_lvl == 1) {
-			sendTeleport(\$remote_socket, "Random");
+			sendTeleport($net, "Random");
 			return 1;
 		} elsif ($use_lvl == 2) {
 			# check for possible skill level abuse
@@ -2459,7 +2459,7 @@ sub useTeleport {
 			my $telemap = "prontera.gat";
 			$telemap = "$config{saveMap}.gat" if ($config{saveMap} ne "");
 
-			sendTeleport(\$remote_socket, $telemap);
+			sendTeleport($net, $telemap);
 			return 1;
 		}
 	}
@@ -2488,7 +2488,7 @@ sub useTeleport {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
 		if (timeOut($timeout{ai_teleport})) {
-			sendItemUse(\$remote_socket, $char->{inventory}[$invIndex]{index}, $accountID);
+			sendItemUse($net, $char->{inventory}[$invIndex]{index}, $accountID);
 			$timeout{ai_teleport}{time} = time;
 		}
 		return 1;
@@ -2686,7 +2686,7 @@ sub avoidGM_near {
 			$msg .= "teleport & disconnect for $tmp seconds";
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $tmp;
-			Network::disconnect(\$remote_socket);
+			$net->serverDisconnect();
 
 		} elsif ($config{avoidGM_near} == 2) {
 			# Mode 2: disconnect
@@ -2694,7 +2694,7 @@ sub avoidGM_near {
 			$msg .= "disconnect for $tmp seconds";
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $tmp;
-			Network::disconnect(\$remote_socket);
+			$net->serverDisconnect();
 
 		} elsif ($config{avoidGM_near} == 3) {
 			# Mode 3: teleport
@@ -2729,13 +2729,13 @@ sub avoidList_near {
 
 		my $avoidPlayer = $avoid{Players}{lc($player->{name})};
 		my $avoidID = $avoid{ID}{$player->{nameID}};
-		if (!$xkore && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
+		if (!$net->clientAlive() && ( ($avoidPlayer && $avoidPlayer->{disconnect_on_sight}) || ($avoidID && $avoidID->{disconnect_on_sight}) )) {
 			warning "$player->{name} ($player->{nameID}) is nearby, disconnecting...\n";
 			chatLog("k", "*** Found $player->{name} ($player->{nameID}) nearby and disconnected ***\n");
 			warning "Disconnect for $config{avoidList_reconnect} seconds...\n";
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $config{avoidList_reconnect};
-			Network::disconnect(\$remote_socket);
+			$net->serverDisconnect();
 			return 1;
 
 		} elsif (($avoidPlayer && $avoidPlayer->{teleport_on_sight}) || ($avoidID && $avoidID->{teleport_on_sight})) {
@@ -2860,7 +2860,7 @@ sub redirectXKoreMessages {
 
 	$message =~ s/\n*$//s;
 	$message =~ s/\n/\\n/g;
-	sendMessage(\$remote_socket, "k", $message);
+	sendMessage($net, "k", $message);
 }
 
 sub monKilled {
@@ -3370,7 +3370,7 @@ sub closeShop {
 		return;
 	}
 
-	sendCloseShop();
+	sendCloseShop($net);
 
 	$shopstarted = 0;
 	$timeout{'ai_shop'}{'time'} = time;

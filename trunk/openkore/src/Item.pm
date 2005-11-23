@@ -265,7 +265,7 @@ sub equippedInSlot {
 sub equip {
 	my $self = shift;
 	return 1 if $self->{equipped};
-	sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
+	sendEquip($net, $self->{index}, $self->{type_equip});
 	queueEquip(1);
 	return 0;
 }
@@ -277,7 +277,7 @@ sub equip {
 sub unequip {
 	my $self = shift;
 	return 1 unless $self->{equipped};
-	sendUnequip(\$remote_socket, $self->{index});
+	sendUnequip($net, $self->{index});
 	return 0;
 }
 
@@ -291,10 +291,10 @@ sub use {
 	my $target = shift;
 	return 0 unless $self->{type} <= 2;
 	if (!$target || $target == $accountID) {
-		sendItemUse(\$remote_socket, $self->{index}, $accountID);
+		sendItemUse($net, $self->{index}, $accountID);
 	}
 	else {
-		sendItemUse(\$remote_socket, $self->{index}, $target);
+		sendItemUse($net, $self->{index}, $target);
 	}
 	return 1;
 }
@@ -314,10 +314,10 @@ sub equipInSlot {
 	# this is not needed, it screws up clips (can be equipped in multiple (two) slots)
 	#if ($equipSlot_rlut{$slot} ^ $self->{type_equip}) {
 		#checks whether item uses multiple slots
-	#	sendEquip(\$remote_socket, $self->{index}, $self->{type_equip});
+	#	sendEquip($net, $self->{index}, $self->{type_equip});
 	#}
 	#else {
-		sendEquip(\$remote_socket, $self->{index}, $equipSlot_rlut{$slot});
+		sendEquip($net, $self->{index}, $equipSlot_rlut{$slot});
 	#}
 	queueEquip(1);
 	return 0;

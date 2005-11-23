@@ -15,7 +15,6 @@ use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
-use Network;
 use Network::Send;
 use Misc;
 use Plugins;
@@ -320,9 +319,9 @@ sub account_server_info {
 	}
 	message("-------------------------------\n", 'connection');
 
-	if (!$xkore) {
+	if ($net->version != 1) {
 		message("Closing connection to Account Server\n", 'connection');
-		Network::disconnect(\$remote_socket);
+		$net->serverDisconnect();
 		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
 			message("Choose your server.  Enter the server number: ", "input");
 			$waitingForInput = 1;
@@ -338,7 +337,7 @@ sub account_server_info {
 
 sub actor_action {
 	my ($self,$args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 
 	if ($args->{type} == 1) {
 		# Take item
@@ -427,7 +426,7 @@ sub actor_action {
 
 sub actor_connected {
 	my ($self,$args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my %coords;
 	makeCoords(\%coords, $args->{coords});
 
@@ -473,7 +472,7 @@ sub actor_connected {
 
 sub actor_died_or_disappeard {
 	my ($self,$args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 
 	if ($args->{ID} eq $accountID) {
 		message "You have died\n";
@@ -595,7 +594,7 @@ sub actor_exists {
 	# sex, 3byte coord, byte body_dir, byte ?, byte ?, byte sitting, word
 	# level
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my %coords;
 	if ($args->{switch} eq '022C') {
 		makeCoords2(\%coords, $args->{coords}); 
@@ -750,7 +749,7 @@ sub actor_exists {
 
 sub actor_info {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 
 	debug "Received object info: $args->{name}\n", "parseMsg_presence/name", 2;
 
@@ -807,7 +806,7 @@ sub actor_info {
 
 sub actor_look_at {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	if ($args->{ID} eq $accountID) {
 		$chars[$config{'char'}]{'look'}{'head'} = $args->{head};
 		$chars[$config{'char'}]{'look'}{'body'} = $args->{body};
@@ -1010,7 +1009,7 @@ sub actor_status_active {
 
 sub actor_spawned {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my %coords;
 	makeCoords(\%coords, $args->{coords});
 	my $added;
@@ -1253,7 +1252,7 @@ sub change_to_constate25 {
 }
 
 sub change_to_constate5 {
-	$conState = 5 if ($conState != 4 && $xkore);
+	$conState = 5 if ($conState != 4 && $net->version == 1);
 }
 
 sub character_creation_failed {
@@ -1328,7 +1327,7 @@ sub character_deletion_failed {
 
 sub character_moves {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
 	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
 	my $dist = sprintf("%.1f", distance($char->{pos}, $char->{pos_to}));
@@ -1685,7 +1684,7 @@ sub errors {
 
 	$timeout_ex{'master'}{'time'} = time;
 	$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
-	Network::disconnect(\$remote_socket);
+	$net->serverDisconnect();
 
 	if ($args->{type} == 0) {
 		error("Server shutting down\n", "connection");
@@ -1706,11 +1705,17 @@ sub errors {
 
 	} elsif ($args->{type} == 3) {
 		error("Error: Out of sync with server\n", "connection");
+	} elsif ($args->{type} == 4) {
+		error("Error: Server is jammed due to over-population.\n", "connection");
+	} elsif ($args->{type} == 5) {
+		error("Error: You are underaged and cannot join this server.\n", "connection");
 	} elsif ($args->{type} == 6) {
 		$interface->errorDialog("Critical Error: You must pay to play this account!");
-		$quit = 1 if (!$xkore);
+		$quit = 1 unless ($net->version == 1);
 	} elsif ($args->{type} == 8) {
 		error("Error: The server still recognizes your last connection\n", "connection");
+	} elsif ($args->{type} == 9) {
+		error("Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?", "connection");
 	} elsif ($args->{type} == 10) {
 		error("Error: You are out of available time paid for\n", "connection");
 	} elsif ($args->{type} == 15) {
@@ -1722,7 +1727,7 @@ sub errors {
 
 sub exp_zeny_info {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 
 	if ($args->{type} == 1) {
 		$char->{exp_last} = $char->{exp};
@@ -1786,8 +1791,8 @@ sub exp_zeny_info {
 		$char->{exp_max_last} = $char->{exp_max};
 		$char->{exp_max} = $args->{val};
 		debug "Required Exp: $args->{val}\n", "parseMsg";
-		if (!$xkore && $initSync && $config{serverType} == 2) {
-			sendSync(\$remote_socket, 1);
+		if (!$net->clientAlive() && $initSync && $config{serverType} == 2) {
+			sendSync($net, 1);
 			$initSync = 0;
 		}
 	} elsif ($args->{type} == 23) {
@@ -1893,7 +1898,7 @@ sub ignore_player_result {
 sub inventory_item_added {
 	my ($self, $args) = @_;
 
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 
 	my ($index, $amount, $fail) = ($args->{index}, $args->{amount}, $args->{fail});
 
@@ -1942,7 +1947,7 @@ sub inventory_item_added {
 			# Auto-drop item
 			$item = $char->{inventory}[$invIndex];
 			if ($itemsPickup{lc($item->{name})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
-				sendDrop(\$remote_socket, $item->{index}, $amount);
+				sendDrop($net, $item->{index}, $amount);
 				message "Auto-dropping item: $item->{name} ($invIndex) x $amount\n", "drop";
 			}
 		}
@@ -1960,7 +1965,7 @@ sub inventory_item_added {
 
 sub inventory_item_removed {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$args->{item} = $char->{inventory}[$invIndex];
 	inventoryItemRemoved($invIndex, $args->{amount});
@@ -1976,7 +1981,7 @@ sub married {
 
 sub inventory_items_nonstackable {
 	my ($self, $args) = @_;
-	$conState = 5 if $conState != 4 && $xkore;
+	change_to_constate5();
 	my $newmsg;
 	decrypt(\$newmsg, substr($args->{RAW_MSG}, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4) . $newmsg;
@@ -2020,7 +2025,7 @@ sub inventory_items_nonstackable {
 
 sub inventory_items_stackable {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my $newmsg;
 	decrypt(\$newmsg, substr($msg, 4));
 	my $msg = substr($args->{RAW_MSG}, 0, 4).$newmsg;
@@ -2057,7 +2062,7 @@ sub inventory_items_stackable {
 
 sub item_appeared {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my $item = $items{$args->{ID}} ||= {};
 	if (!$item || !%{$item}) {
 		binAdd(\@itemsID, $args->{ID});
@@ -2072,7 +2077,7 @@ sub item_appeared {
 
 	# Take item as fast as possible
 	if ($AI && $itemsPickup{lc($item->{name})} == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
-		sendTake(\$remote_socket, $args->{ID});
+		sendTake($net, $args->{ID});
 	}
 
 	message "Item Appeared: $item->{name} ($item->{binID}) x $item->{amount} ($args->{x}, $args->{y})\n", "drop", 1;
@@ -2081,7 +2086,7 @@ sub item_appeared {
 
 sub item_exists {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	if (!$items{$args->{ID}} || !%{$items{$args->{ID}}}) {
 		binAdd(\@itemsID, $args->{ID});
 		$items{$args->{ID}}{'appear_time'} = time;
@@ -2097,7 +2102,7 @@ sub item_exists {
 
 sub item_disappeared {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	if ($items{$args->{ID}} && %{$items{$args->{ID}}}) {
 		if ($config{attackLooters} && AI::action ne "sitAuto" && ( $itemsPickup{lc($items{$args->{ID}}{name})} ne '' ? $itemsPickup{lc($items{$args->{ID}}{name})} : $itemsPickup{'all'} ) ) {
 			foreach my $looter (values %monsters) { #attack looter code
@@ -2134,7 +2139,7 @@ sub item_upgrade {
 
 sub job_equipment_hair_change {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 
 	my $actor = Actor::get($args->{ID});
 	if ($args->{part} == 0) {
@@ -2200,10 +2205,10 @@ sub local_broadcast {
 sub login_error {
 	my ($self, $args) = @_;
 
-	Network::disconnect(\$remote_socket);
+	$net->serverDisconnect();
 	if ($args->{type} == 0) {
 		error("Account name doesn't exist\n", "connection");
-		if (!$xkore && !$config{'ignoreInvalidLogin'}) {
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'}) {
 			message("Enter Username Again: ", "input");
 			my $username = $interface->getInput(-1);
 			configModify('username', $username, 1);
@@ -2212,7 +2217,7 @@ sub login_error {
 		}
 	} elsif ($args->{type} == 1) {
 		error("Password Error\n", "connection");
-		if (!$xkore && !$config{'ignoreInvalidLogin'}) {
+		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'}) {
 			message("Enter Password Again: ", "input");
 			# Set -9 on getInput timeout field mean this is password field
 			my $password = $interface->getInput(-9);
@@ -2224,7 +2229,7 @@ sub login_error {
 		error("Server connection has been denied\n", "connection");
 	} elsif ($args->{type} == 4) {
 		$interface->errorDialog("Critical Error: Your account has been blocked.");
-		$quit = 1 if (!$xkore);
+		$quit = 1 unless ($net->clientAlive());
 	} elsif ($args->{type} == 5) {
 		my $master = $masterServer;
 		error("Connect failed, something is wrong with the login settings:\n" .
@@ -2247,12 +2252,12 @@ sub login_error_game_login_server {
 	undef $conState_tries;
 	$timeout_ex{master}{time} = time;
 	$timeout_ex{master}{timeout} = $timeout{'reconnect'}{'timeout'};
-	Network::disconnect(\$remote_socket);
+	$net->serverDisconnect();
 }
 
 sub map_change {
 	my ($self, $args) = @_;
-	$conState = 4 if ($conState != 4 && $xkore);
+	change_to_constate5();
 
 	($ai_v{temp}{map}) = $args->{map} =~ /([\s\S]*)\./;
 	checkAllowedMap($ai_v{temp}{map});
@@ -2274,10 +2279,10 @@ sub map_change {
 	$chars[$config{char}]{pos} = {%coords};
 	$chars[$config{char}]{pos_to} = {%coords};
 	message "Map Change: $args->{map} ($chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'})\n", "connection";
-	if ($xkore) {
+	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
-		sendMapLoaded(\$remote_socket);
+		sendMapLoaded($net);
 		$timeout{'ai'}{'time'} = time;
 	}
 }
@@ -2312,7 +2317,7 @@ sub map_changed {
 		"connection");
 
 	message("Closing connection to Map Server\n", "connection");
-	Network::disconnect(\$remote_socket) if (!$xkore);
+	$net->serverDisconnect unless ($net->version == 1);
 
 	# Reset item and skill times. The effect of items (like aspd potions)
 	# and skills (like Twohand Quicken) disappears when we change map server.
@@ -2349,15 +2354,15 @@ sub map_loaded {
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
 
-	if ($xkore) {
+	if ($net->version == 1) {
 		$conState = 4;
 		message("Waiting for map to load...\n", "connection");
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
 		message("You are now in the game\n", "connection");
-		sendMapLoaded(\$remote_socket);
-		sendSync(\$remote_socket, 1);
+		sendMapLoaded($net);
+		sendSync($net, 1);
 		debug "Sent initial sync\n", "connection";
 		$timeout{'ai'}{'time'} = time;
 	}
@@ -2367,7 +2372,7 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
 
-	sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
+	sendIgnoreAll($net, "all") if ($config{'ignoreAll'});
 }
 
 sub memo_success {
@@ -2527,7 +2532,7 @@ sub npc_talk_close {
 	message "$name: Done talking\n", "npc";
 	$ai_v{'npc_talk'}{'talk'} = 'close';
 	$ai_v{'npc_talk'}{'time'} = time;
-	sendTalkCancel(\$remote_socket, $ID);
+	sendTalkCancel($net, $ID);
 
 	Plugins::callHook('npc_talk_done', {ID => $ID});
 }
@@ -2545,7 +2550,7 @@ sub npc_talk_continue {
 
 	if ($config{autoTalkCont}) {
 		message "$name: Auto-continuing talking\n", "npc";
-		sendTalkContinue(\$remote_socket, $ID);
+		sendTalkContinue($net, $ID);
 		# this time will be reset once the NPC responds
 		$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 	} else {
@@ -2692,7 +2697,7 @@ sub party_join {
 	$chars[$config{char}]{party}{users}{$ID}{name} = $user;
 
 	if ($config{partyAutoShare} && $char->{party} && $char->{party}{users}{$accountID}{admin}) {
-		sendPartyShareEXP(\$remote_socket, 1);
+		sendPartyShareEXP($net, 1);
 	}
 }
 
@@ -2753,7 +2758,7 @@ sub party_users_info {
 		$chars[$config{char}]{party}{users}{$ID}{admin} = 1 if ($num == 0);
 	}
 
-	sendPartyShareEXP(\$remote_socket, 1) if ($config{partyAutoShare} && $chars[$config{char}]{party} && %{$chars[$config{char}]{party}});
+	sendPartyShareEXP($net, 1) if ($config{partyAutoShare} && $chars[$config{char}]{party} && %{$chars[$config{char}]{party}});
 
 }
 
@@ -2888,7 +2893,7 @@ sub public_chat {
 sub private_message {
 	my ($self, $args) = @_;
 	# Private message
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my $newmsg;
 	decrypt(\$newmsg, substr($args->{RAW_MSG}, 28));
 	my $msg = substr($args->{RAW_MSG}, 0, 28) . $newmsg;
@@ -2954,7 +2959,7 @@ sub received_characters {
 	if ($args->{options} && exists $args->{options}{charServer}) {
 		$charServer = $args->{options}{charServer};
 	} else {
-		$charServer = $remote_socket->peerhost . ":" . $remote_socket->peerport;
+		$charServer = $net->serverPeerHost . ":" . $net->serverPeerPort;
 	}
 
 	my $num;
@@ -2986,7 +2991,7 @@ sub received_characters {
 
 	# gradeA says it's supposed to send this packet here, but
 	# it doesn't work...
-	#sendBanCheck(\$remote_socket) if (!$xkore && $config{serverType} == 2);
+	#sendBanCheck($net) if (!$net->clientAlive && $config{serverType} == 2);
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
@@ -3001,7 +3006,7 @@ sub received_character_ID_and_Map {
 	undef $conState_tries;
 	$charID = $args->{charID};
 
-	if ($xkore) {
+	if ($net->version == 1) {
 		undef $masterServer;
 		$masterServer = $masterServers{$config{master}} if ($config{master} ne "");
 	}
@@ -3022,13 +3027,13 @@ sub received_character_ID_and_Map {
 	message "-----------------------------\n", "connection";
 	($ai_v{temp}{map}) = $args->{mapName} =~ /([\s\S]*)\./;
 	checkAllowedMap($ai_v{temp}{map});
-	message("Closing connection to Character Server\n", "connection") if (!$xkore);
-	Network::disconnect(\$remote_socket) if (!$xkore);
+	message("Closing connection to Character Server\n", "connection") unless ($net->version == 1);
+	$net->serverDisconnect();
 	main::initStatVars();
 }
 
 sub received_sync {
-    $conState = 5 if ($conState != 4 && $xkore);
+    change_to_constate5();
     debug "Received Sync\n", 'parseMsg', 2;
     $timeout{'play'}{'time'} = time;
 }
@@ -3177,7 +3182,7 @@ sub skill_use {
 	delete $source->{casting};
 
 	# Perform trigger actions
-	$conState = 5 if $conState != 4 && $xkore;
+	change_to_constate5();
 	updateDamageTables($args->{sourceID}, $args->{targetID}, $args->{damage}) if ($args->{damage} != -30000);
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID);
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
@@ -3247,7 +3252,7 @@ sub skill_used_no_damage {
 	}
 
 	# Perform trigger actions
-	$conState = 5 if $conState != 4 && $xkore;
+	change_to_constate5();
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
 		&& $args->{skillID} != 371
 		&& $args->{skillID} != 372 ); # ignore these skills because they screw up monk comboing
@@ -3291,10 +3296,10 @@ sub skill_used_no_damage {
 		if (($players{$args->{sourceID}} && %{$players{$args->{sourceID}}}) && (($args->{skillID} == 28) || ($args->{skillID} == 29) || ($args->{skillID} == 34))) {
 			if ($args->{targetID} eq $accountID) {
 				chatLog("k", "***$source ".skillName($args->{skillID})." on $target$extra***\n");
-				sendMessage(\$remote_socket, "pm", getResponse("skillgoodM"), $players{$args->{sourceID}}{'name'});
+				sendMessage($net, "pm", getResponse("skillgoodM"), $players{$args->{sourceID}}{'name'});
 			} elsif ($monsters{$args->{targetID}}) {
 				chatLog("k", "***$source ".skillName($args->{skillID})." on $target$extra***\n");
-				sendMessage(\$remote_socket, "pm", getResponse("skillbadM"), $players{$args->{sourceID}}{'name'});
+				sendMessage($net, "pm", getResponse("skillbadM"), $players{$args->{sourceID}}{'name'});
 			}
 		}
 	}
@@ -3405,7 +3410,7 @@ sub stats_info {
 
 sub stat_info {
 	my ($self,$args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	if ($args->{type} == 0) {
 		$char->{walk_speed} = $args->{val} / 1000;
 		debug "Walk speed: $args->{val}\n", "parseMsg", 2;
@@ -3760,7 +3765,7 @@ sub system_chat {
 
 sub unequip_item {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$char->{inventory}[$invIndex]{equipped} = "";
 	if ($args->{type} == 10) {
@@ -3778,7 +3783,7 @@ sub unequip_item {
 
 sub use_item {
 	my ($self, $args) = @_;
-	$conState = 5 if ($conState != 4 && $xkore);
+	change_to_constate5();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	if (defined $invIndex) {
 		$char->{inventory}[$invIndex]{amount} -= $args->{amount};

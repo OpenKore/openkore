@@ -15,14 +15,17 @@
 package XKore;
 
 use strict;
-use Exporter;
 use base qw(Exporter);
-use Win32;
+use Exporter;
+use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
+use Win32;
 
+use Globals;
 use Log qw(message error);
 use WinUtils;
-use Utils qw(dataWaiting);
+use Network::Send;
+use Utils qw(dataWaiting timeOut);
 
 
 ##
@@ -47,6 +50,12 @@ sub new {
 			"And make sure no other servers are running on port $port.";
 		return undef;
 	}
+	
+	$self{incomingPackets} = "";
+	$self{serverPackets} = "";
+	$self{clientPackets} = "";
+	
+	$packetParser = Network::Receive->create($config{serverType});
 
 	message "X-Kore mode intialized.\n", "startup";
 
@@ -55,12 +64,231 @@ sub new {
 }
 
 ##
-# $xkore->inject(pid, [bypassBotDetection])
+# $net->version
+# Returns: XKore mode
+#
+sub version {
+	return 1;
+}
+
+##
+# $net->DESTROY()
+#
+# Shutdown function. Turn everything off.
+sub DESTROY {
+	my $self = shift;
+	
+	close($self->{client});
+}
+
+######################
+## Server Functions ##
+######################
+
+##
+# $net->serverAlive()
+# Returns: a boolean.
+#
+# Check whether the connection with the server (thru the client) is still alive.
+sub serverAlive {
+	return $_[0]->{client} && $_[0]->{client}->connected;
+}
+
+##
+# $net->serverConnect
+#
+# Not used with XKore mode 1
+sub serverConnect {
+	return undef;
+}
+
+##
+# $net->serverPeerHost
+#
+sub serverPeerHost {
+	return undef;
+}
+
+##
+# $net->serverPeerPort
+#
+sub serverPeerPort {
+	return undef;
+}
+
+##
+# $net->serverRecv()
+# Returns: the messages sent from the server, or undef if there are no pending messages.
+sub serverRecv {
+	my $self = shift;
+	$self->recv();
+	
+	return undef unless length($self->{serverPackets});
+
+	my $packets = $self->{serverPackets};
+	$self->{serverPackets} = "";
+	
+	return $packets;
+}
+
+##
+# $net->serverSend(msg)
+# msg: A scalar to send to the RO server
+#
+sub serverSend {
+	my $self = shift;
+	my $msg = shift;
+	$self->{client}->send("S".pack("v", length($msg)).$msg) if ($self->serverAlive);
+}
+
+##
+# $net->serverDisconnect
+#
+# This isn't used with XKore mode 1.
+sub serverDisconnect {
+	return undef;
+}
+
+######################
+## Client Functions ##
+######################
+
+##
+# $net->clientAlive()
+# Returns: a boolean.
+#
+# Check whether the connection with the client is still alive.
+sub clientAlive {
+	return $_[0]->serverAlive();
+}
+
+##
+# $net->clientConnect
+#
+# Not used with XKore mode 1
+sub clientConnect {
+	return undef;
+}
+
+##
+# $net->clientPeerHost
+#
+sub clientPeerHost {
+	return $_[0]->{client}->peerhost if ($_[0]->clientAlive);
+	return undef;
+}
+
+##
+# $net->clientPeerPort
+#
+sub clientPeerPort {
+	return $_[0]->{client}->peerport if ($_[0]->clientAlive);
+	return undef;
+}
+
+##
+# $net->clientRecv()
+# Returns: the message sent from the client (towards the server), or undef if there are no pending messages.
+sub clientRecv {
+	my $self = shift;
+	$self->recv();
+	
+	return undef unless length($self->{clientPackets});
+	
+	my $packets = $self->{clientPackets};
+	$self->{clientPackets} = "";
+	
+	return $packets;
+}
+
+##
+# $net->clientSend(msg)
+# msg: A scalar to be sent to the RO client
+#
+sub clientSend {
+	my $self = shift;
+	my $msg = shift;
+	$self->{client}->send("R".pack("v", length($msg)).$msg) if ($self->clientAlive);
+}
+
+sub clientDisconnect {
+	return undef;
+}
+
+#######################
+## Utility Functions ##
+#######################
+
+##
+# $net->injectSync()
+#
+# Send a keep-alive packet to the injected DLL.
+sub injectSync {
+	my $self = shift;
+	$self->{client}->send("K" . pack("v", 0)) if ($self->serverAlive);
+}
+
+##
+# $net->checkConnection()
+#
+# Handles any connection issues. Based on the current situation, this function may
+# re-connect to the RO server, disconnect, do nothing, etc.
+#
+# This function is meant to be run in the Kore main loop.
+sub checkConnection {
+	my $self = shift;
+	
+	return if ($self->serverAlive);
+	
+	# (Re-)initialize X-Kore if necessary
+	$conState = 1;
+	my $printed;
+	my $pid;
+	# Wait until the RO client has started
+	while (!($pid = WinUtils::GetProcByName($config{exeName}))) {
+		message("Please start the Ragnarok Online client ($config{exeName})\n", "startup") unless $printed;
+		$printed = 1;
+		$interface->iterate;
+		if (defined(my $input = $interface->getInput(0))) {
+			if ($input eq "quit") {
+				$quit = 1;
+				last;
+			} else {
+				message("Error: You cannot type anything except 'quit' right now.\n");
+			}
+		}
+		usleep 20000;
+		last if $quit;
+	}
+	return if $quit;
+
+	# Inject DLL
+	message("Ragnarok Online client found\n", "startup");
+	sleep 1 if $printed;
+	if (!$self->inject($pid, $config{XKore_bypassBotDetection})) {
+		# Failed to inject
+		$interface->errorDialog($@);
+		exit 1;
+	}
+	
+	# Patch client
+	$self->hackClient($pid);
+
+	# Wait until the RO client has connected to us
+	$self->waitForClient;
+	message("You can login with the Ragnarok Online client now.\n", "startup");
+	$timeout{'injectSync'}{'time'} = time;
+}
+
+##
+# $net->inject(pid)
 # pid: a process ID.
 # bypassBotDetection: set to 1 if you want Kore to try to bypass the RO client's bot detection. This feature has only been tested with the iRO client, so use with care.
 # Returns: 1 on success, 0 on failure.
 #
 # Inject NetRedirect.dll into an external process. On failure, $@ is set.
+#
+# This function is meant to be used internally only.
 sub inject {
 	my ($self, $pid, $bypassBotDetection) = @_;
 	my $cwd = Win32::GetCwd();
@@ -91,10 +319,12 @@ sub inject {
 }
 
 ##
-# $xkore->waitForClient()
+# $net->waitForClient()
 # Returns: the socket which connects X-Kore to the client.
 #
 # Wait until the client has connected the X-Kore server.
+#
+# This function is meant to be used internally only.
 sub waitForClient {
 	my $self = shift;
 
@@ -105,46 +335,62 @@ sub waitForClient {
 }
 
 ##
-# $xkore->alive()
-# Returns: a boolean.
+# $net->recv()
+# Returns: Nothing
 #
-# Check whether the connection with the client is still alive.
-sub alive {
-	return defined $_[0]->{client};
-}
-
-##
-# $xkore->recv()
-# Returns: the messages as a scalar, or undef if there are no pending messages.
+# Receive packets from the client. Then sort them into server-bound or client-bound;
 #
-# Receive messages from the client. This function immediately returns if there are no pending messages.
+# This is meant to be used internally only.
 sub recv {
 	my $self = shift;
-	my $client = $self->{client};
 	my $msg;
 
-	return undef unless dataWaiting(\$client);
+	return undef unless dataWaiting(\$self->{client});
 	undef $@;
 	eval {
-		$client->recv($msg, 32 * 1024);
+		$self->{client}->recv($msg, 32 * 1024);
 	};
 	if (!defined $msg || length($msg) == 0 || $@) {
 		delete $self->{client};
 		return undef;
-	} else {
-		return $msg;
 	}
-}
-
-sub sync {
-	my $client = $_[0]->{client};
-	if (defined $client) {
-		$client->send("K" . pack("v", 0));
+	
+	$self->{incomingPackets} .= $msg;
+	
+	while ($self->{incomingPackets} ne "") {
+		last if (!length($self->{incomingPackets}));
+		
+		my $type = substr($self->{incomingPackets}, 0, 1);
+		my $len = unpack("v",substr($self->{incomingPackets}, 1, 2));
+		
+		last if ($len > length($self->{incomingPackets}));
+		
+		$msg = substr($self->{incomingPackets}, 3, $len);
+		$self->{incomingPackets} = (length($self->{incomingPackets}) - $len - 3)?
+			substr($self->{incomingPackets}, $len + 3, length($self->{incomingPackets}) - $len - 3)
+			: "";
+		if ($type eq "R") {
+			# Client-bound (or "from server") packets
+			$self->{serverPackets} .= $msg;
+		} elsif ($type eq "S") {
+			# Server-bound (or "to server") packets
+			$self->{clientPackets} .= $msg;
+		} elsif ($type eq "K") {
+			# Keep-alive... useless.
+		}
 	}
+	
+	# Check if we need to send our sync
+	if (timeOut($timeout{'injectSync'})) {
+		$self->injectSync;
+		$timeout{'injectSync'}{'time'} = time;
+	}
+	
+	return 1;
 }
 
 ##
-# $xkore->hackClient(pid)
+# $net->hackClient(pid)
 # pid: Process ID of a running (and official) Ragnarok Online client
 #
 # Hacks the client (non-nProtect GameGuard version) to remove bot detection.
@@ -174,40 +420,41 @@ sub hackClient {
 	my $patchFind2 = pack('C*', 0xA1) . '....'	# mov eax, dword ptr [xxxx]
 		. pack('C*', 0x8D, 0x4D, 0xF4,		# lea ecx, dword ptr [ebp+var_0C]
 			0x51);				# push ecx
-
+	
+	
 	$original = $patchFind . $original . $patchFind2;
-
+	
 	message "Patching client to remove bot detection...\n", "startup";
-
+	
 	# Open Ragnarok's process
 	my $hnd = WinUtils::OpenProcess(0x638, $pid);
-
+	
 	# Loop through Ragnarok's memory
 	for (my $i = $minAddr; $i < $maxAddr; $i += $pageSize) {
 		# Ensure we can read/write the memory
 		my $oldprot = WinUtils::VirtualProtectEx($hnd, $i, $pageSize, 0x40);
-
+		
 		if ($oldprot) {
 			# Read the page
 			my $data = WinUtils::ReadProcessMemory($hnd, $i, $pageSize);
-
+			
 			# Is the patched code in there?
 			if ($data =~ m/($original)/) {
 				# It is!
 				my $matched = $1;
 				message "Found detection code, replacing... ", "startup";
-
+				
 				# Generate the new code, based on the old.
 				$patched = substr($matched, 0, length($patchFind)) . $patched;
 				$patched = $patched . substr($matched, length($patchFind) + 2, length($patchFind2));
-
+				
 				# Patch the data
 				$data =~ s/$original/$patched/;
-
+				
 				# Write the new code
 				if (WinUtils::WriteProcessMemory($hnd, $i, $data)) {
 					message "success.\n", "startup";
-
+				
 					# Stop searching, we should be done.
 					WinUtils::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
 					last;
@@ -215,15 +462,15 @@ sub hackClient {
 					error "failed.\n", "startup";
 				}
 			}
-
+			
 		# Undo the protection change
 		WinUtils::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
 		}
 	}
-
+	
 	# Close Ragnarok's process
 	WinUtils::CloseProcess($hnd);
-
+		
 	message "Client patching finished.\n", "startup";
 }
 
@@ -251,7 +498,7 @@ sub hackClient {
 #
 #	$message =~ s/\n*$//s;
 #	$message =~ s/\n/\\n/g;
-#	main::sendMessage(\$remote_socket, "k", $message);
+#	main::sendMessage($net, "k", $message);
 #}
 
 return 1;

@@ -11,7 +11,6 @@ use Settings;
 use Log qw(message warning error debug);
 use FileParsers;
 use Interface;
-use Network;
 use Network::Send;
 use Misc;
 use Plugins;
@@ -31,14 +30,14 @@ sub map_loaded {
 	undef $conState_tries;
 	$char = $chars[$config{'char'}];
 
-	if ($xkore) {
+	if ($net->version == 1) {
 		$conState = 4;
 		message("Waiting for map to load...\n", "connection");
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
 		message("You are now in the game\n", "connection");
-		sendMapLoaded(\$remote_socket);
+		$net->sendMapLoaded();
 		$timeout{'ai'}{'time'} = time;
 	}
 
@@ -47,7 +46,7 @@ sub map_loaded {
 	$char->{pos_to} = {%{$char->{pos}}};
 	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
 
-	sendIgnoreAll(\$remote_socket, "all") if ($config{'ignoreAll'});
+	$net->sendIgnoreAll("all") if ($config{'ignoreAll'});
 }
 
 1;
