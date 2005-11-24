@@ -163,7 +163,9 @@ if (!defined &XSTools::majorVersion) {
 		"Please download the correct version, or upgrade (wx)start.exe.");
 	exit 1;
 } elsif (XSTools::minorVersion() < 3) {
-	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.");
+	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.\n" .
+		"You can get a precompiled Windows binaries here: http://openkore.sourceforge.net/misc/XSTools.zip. \n".
+		"For Linux users, do a make clean && make to upgrade your XSTools.so");
 	exit 1;
 }
 require PathFinding;
