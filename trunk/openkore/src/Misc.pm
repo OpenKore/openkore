@@ -2062,9 +2062,8 @@ sub setSkillUseTimer {
 	$char->{last_skill_target} = $targetID;
 
 	# increment monsterSkill maxUses counter
-	if ($monsters{$targetID}) {
-		$monsters{$targetID}{skillUses}{$skill->handle}++;
-	}
+	my $actor = Actor::get($targetID);
+	$actor->{skillUses}{$skill->handle}++;
 
 	# Set encore skill if applicable
 	$char->{encoreSkill} = $skill if $targetID eq $accountID && $skillsEncore{$skill->handle};
