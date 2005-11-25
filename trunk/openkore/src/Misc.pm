@@ -3112,7 +3112,7 @@ sub checkSelfCondition {
 	}
 
 	my %args;
-	$args->{prefix} = $prefix;
+	$args{prefix} = $prefix;
 	Plugins::callHook("checkSelfCondition", \%args);
 	return 0 if (!$args{return});
 
