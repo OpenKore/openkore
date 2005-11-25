@@ -97,6 +97,12 @@ sub name {
   return $self->{name};
 }
 
+# returns the current line number
+sub line {
+  my $self = shift;
+  return $self->{line};
+}
+
 # returns the error line
 sub error {
   my $self = shift;
