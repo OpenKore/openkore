@@ -3157,8 +3157,7 @@ sub checkPlayerCondition {
 		my $exists;
 		foreach (ai_getMonstersAttacking($id)) {
 			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
-				$exists = 1;			Plugins::callHook("AI/lockMap", \%args);
-
+				$exists = 1;
 				last;
 			}
 		}
