@@ -3111,6 +3111,11 @@ sub checkSelfCondition {
 		return 0 if !checkFieldWater(\%field, $pos->{x}, $pos->{y});
 	}
 
+	my %args;
+	$args->{prefix} = $prefix;
+	Plugins::callHook("checkSelfCondition", \%args);
+	return 0 if (!$args->{return});
+
 	return 1;
 }
 
@@ -3152,7 +3157,8 @@ sub checkPlayerCondition {
 		my $exists;
 		foreach (ai_getMonstersAttacking($id)) {
 			if (existsInList($config{$prefix . "_defendMonsters"}, $monsters{$_}{name})) {
-				$exists = 1;
+				$exists = 1;			Plugins::callHook("AI/lockMap", \%args);
+
 				last;
 			}
 		}
