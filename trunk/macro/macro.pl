@@ -139,6 +139,7 @@ sub commandHandler {
     message "usage: macro [MACRO|list|stop|set|version|reset] [automacro]\n", "list";
     message "macro MACRO: run macro MACRO\n".
       "macro list: list available macros\n".
+      "macro status: shows current status\n".
       "macro stop: stop current macro\n".
       "macro set {variable} {value}: set/change variable to value\n".
       "macro version: print macro plugin version\n".
@@ -153,6 +154,16 @@ sub commandHandler {
     message(sprintf("%sautomacros%s\n", "-"x8, "-"x7), "list");
     foreach my $a (keys %automacro) {message "$a\n"}
     message(sprintf("%s\n","-"x25), "list");
+  ### parameter: status
+  } elsif ($arg eq 'status') {
+    if (defined $queue) {
+      message(sprintf("macro %s\n", $queue->name), "list");
+      message(sprintf("status: running (line %d)\n", $queue->line));
+      message(sprintf("override AI: %s\n", $queue->overrideAI?"yes":"no"));
+      message(sprintf("finished: %s\n", $queue->finished?"yes":"no"));    
+    } else {
+      message "There's no macro currently running.\n";
+    }
   ### parameter: stop
   } elsif ($arg eq 'stop') {
     undef $queue;
