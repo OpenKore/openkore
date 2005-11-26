@@ -117,7 +117,6 @@ sub mainLoop {
 			$timer->Start($sleepTime / 1000);
 		}
 		main::mainLoop();
-		main::checkConnection();
 
 		$self->{iterating}--;
 	};
