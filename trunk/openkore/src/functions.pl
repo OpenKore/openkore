@@ -950,7 +950,8 @@ sub AI {
 						$args->{steps} = [];
 						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
 						undef $args->{time};
-						undef $ai_v{'npc_talk'}{'time'};
+						undef $ai_v{npc_talk}{time};
+						undef $ai_v{npc_talk}{talk};
 						lookAtPosition($args->{pos});
 						last NPCTALK;
 					}
