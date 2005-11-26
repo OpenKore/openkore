@@ -1,3 +1,4 @@
+#!/usr/bin/env perl
 # Win32 Perl script launcher
 # This file is meant to be compiled by PerlApp. It acts like a mini-Perl interpreter.
 #
@@ -23,6 +24,13 @@
 #
 # __start() unless defined $ENV{INTERPRETER};
 use strict;
+
+if ($^O ne 'MSWin32') {
+	# We are not on Windows, so tell the user about it
+	print "\nThis file is meant to be compiled by PerlApp.\n";
+	print "To run kore, execute openkore.pl instead.\n\n"
+}
+
 
 # PerlApp 6's @INC doesn't contain '.', so add it
 my $hasCurrentDir;
