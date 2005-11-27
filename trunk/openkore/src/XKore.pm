@@ -50,11 +50,11 @@ sub new {
 			"And make sure no other servers are running on port $port.";
 		return undef;
 	}
-	
+
 	$self{incomingPackets} = "";
 	$self{serverPackets} = "";
 	$self{clientPackets} = "";
-	
+
 	$packetParser = Network::Receive->create($config{serverType});
 
 	message "X-Kore mode intialized.\n", "startup";
@@ -265,14 +265,14 @@ sub checkConnection {
 	# Inject DLL
 	message("Ragnarok Online client found\n", "startup");
 	sleep 1 if $printed;
-	if (!$self->inject($pid, $config{XKore_bypassBotDetection})) {
+	if (!$self->inject($pid)) {
 		# Failed to inject
 		$interface->errorDialog($@);
 		exit 1;
 	}
 	
 	# Patch client
-	$self->hackClient($pid);
+	$self->hackClient($pid) if ($config{XKore_bypassBotDetection});
 
 	# Wait until the RO client has connected to us
 	$self->waitForClient;
@@ -283,19 +283,15 @@ sub checkConnection {
 ##
 # $net->inject(pid)
 # pid: a process ID.
-# bypassBotDetection: set to 1 if you want Kore to try to bypass the RO client's bot detection. This feature has only been tested with the iRO client, so use with care.
 # Returns: 1 on success, 0 on failure.
 #
 # Inject NetRedirect.dll into an external process. On failure, $@ is set.
 #
 # This function is meant to be used internally only.
 sub inject {
-	my ($self, $pid, $bypassBotDetection) = @_;
+	my ($self, $pid) = @_;
 	my $cwd = Win32::GetCwd();
 	my $dll;
-
-	# Patch the client to remove bot detection
-	$self->hackClient($pid) if ($bypassBotDetection);
 
 	undef $@;
 	foreach ("$cwd\\src\\auto\\XSTools\\win32\\NetRedirect.dll", "$cwd\\NetRedirect.dll", "$cwd\\Inject.dll") {
@@ -423,14 +419,32 @@ sub hackClient {
 	
 	
 	$original = $patchFind . $original . $patchFind2;
-	
-	message "Patching client to remove bot detection...\n", "startup";
-	
+
+	message "Patching client to remove bot detection:\n", "startup";
+
 	# Open Ragnarok's process
 	my $hnd = WinUtils::OpenProcess(0x638, $pid);
-	
+
 	# Loop through Ragnarok's memory
+	my ($nextUpdate, $updateChar, $patchCount) = (0, '.', 0);
 	for (my $i = $minAddr; $i < $maxAddr; $i += $pageSize) {
+		# Status update...
+		my $percent = int($i / ($maxAddr - $minAddr) * 100);
+		if ($percent >= $nextUpdate) {
+			if ($nextUpdate % 25 == 0) {
+				if ($updateChar eq '.') {
+					message $percent . '%';
+				} else {
+					message $updateChar . $percent . '%' . $updateChar;
+				}
+			} else {
+				message $updateChar;
+			}
+
+			$updateChar = '.';
+			$nextUpdate += 5;
+		}
+
 		# Ensure we can read/write the memory
 		my $oldprot = WinUtils::VirtualProtectEx($hnd, $i, $pageSize, 0x40);
 		
@@ -442,8 +456,7 @@ sub hackClient {
 			if ($data =~ m/($original)/) {
 				# It is!
 				my $matched = $1;
-				message "Found detection code, replacing... ", "startup";
-				
+
 				# Generate the new code, based on the old.
 				$patched = substr($matched, 0, length($patchFind)) . $patched;
 				$patched = $patched . substr($matched, length($patchFind) + 2, length($patchFind2));
@@ -453,13 +466,10 @@ sub hackClient {
 				
 				# Write the new code
 				if (WinUtils::WriteProcessMemory($hnd, $i, $data)) {
-					message "success.\n", "startup";
-				
-					# Stop searching, we should be done.
-					WinUtils::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
-					last;
+					$updateChar = '*';
+					$patchCount++;
 				} else {
-					error "failed.\n", "startup";
+					$updateChar = '!';
 				}
 			}
 			
@@ -467,11 +477,12 @@ sub hackClient {
 		WinUtils::VirtualProtectEx($hnd, $i, $pageSize, $oldprot);
 		}
 	}
-	
+	message "\n";
+
 	# Close Ragnarok's process
 	WinUtils::CloseProcess($hnd);
-		
-	message "Client patching finished.\n", "startup";
+
+	message "Client modified in $patchCount places.\n", "startup";
 }
 
 #
