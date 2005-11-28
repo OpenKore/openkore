@@ -3484,11 +3484,11 @@ sub stat_info {
 		$char->{attack_bonus} = $args->{val};
 		debug "Attack Bonus: $args->{val}\n", "parseMsg", 2;
 	} elsif ($args->{type} == 43) {
-		$char->{attack_magic_min} = $args->{val};
-		debug "Magic Attack Min: $args->{val}\n", "parseMsg", 2;
-	} elsif ($args->{type} == 44) {
 		$char->{attack_magic_max} = $args->{val};
 		debug "Magic Attack Max: $args->{val}\n", "parseMsg", 2;
+	} elsif ($args->{type} == 44) {
+		$char->{attack_magic_min} = $args->{val};
+		debug "Magic Attack Min: $args->{val}\n", "parseMsg", 2;
 	} elsif ($args->{type} == 45) {
 		$char->{def} = $args->{val};
 		debug "Defense: $args->{val}\n", "parseMsg", 2;
