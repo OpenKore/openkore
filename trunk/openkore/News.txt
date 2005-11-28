@@ -1,4 +1,4 @@
-﻿==================
+==================
 ### 1.7.0
 ==================
 
@@ -217,6 +217,23 @@ New commands:
 
   sell cancel
      Clear the sell list.
+
+- The exp commands have been changed. The new exp commands are:
+
+	exp
+		only shows exp
+		
+	exp report
+		shows the old exp report (shows everything)
+	
+	exp monster
+		shows monster killed count only
+	
+	exp item
+		shows item change count only
+	
+	exp reset
+		resets the exp report
 
 New config options:
 - partySkill: target_dist (range)
