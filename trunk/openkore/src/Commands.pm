@@ -1356,10 +1356,14 @@ sub cmdEval {
 
 sub cmdExp {
 	my (undef, $args) = @_;
+	my $knownArg;
+	
 	# exp report
 	my ($arg1) = $args =~ /^(\w+)/;
-	if ($arg1 eq ""){
-		my ($endTime_EXP,$w_sec,$total,$bExpPerHour,$jExpPerHour,$EstB_sec,$percentB,$percentJ,$zennyMade,$zennyPerHour,$EstJ_sec,$percentJhr,$percentBhr);
+	
+	if (($arg1 eq "") || ($arg1 eq "report")) {
+		$knownArg = 1;
+		my ($endTime_EXP, $w_sec, $bExpPerHour, $jExpPerHour, $EstB_sec, $percentB, $percentJ, $zennyMade, $zennyPerHour, $EstJ_sec, $percentJhr, $percentBhr);
 		$endTime_EXP = time;
 		$w_sec = int($endTime_EXP - $startTime_EXP);
 		if ($w_sec > 0) {
@@ -1392,6 +1396,15 @@ sub cmdExp {
 		"Died : $char->{'deathCount'}\n" .
 		"Bytes Sent   : " . formatNumber($bytesSent) . "\n" .
 		"Bytes Rcvd   : " . formatNumber($bytesReceived) . "\n", "info");
+		if ($arg1 eq "") {
+			message("---------------------------------\n", "list");
+		}
+	}
+	
+	if (($arg1 eq "monster") || ($arg1 eq "report")) {
+		my $total;
+ 
+		$knownArg = 1;
 
 		message("-[Monster Killed Count]-----------------------\n" .
 			"#   ID     Name                      Count\n",
@@ -1408,6 +1421,10 @@ sub cmdExp {
 			"Total number of killed monsters: $total\n" .
 			"----------------------------------------------\n",
 			"list");
+	}
+
+	if (($arg1 eq "item") || ($arg1 eq "report")) {
+		$knownArg = 1;
 
 		message("-[Item Change Count]--------------------------\n", "list");
 		message(sprintf("%-40s %s\n", 'Name', 'Count'), "list");
@@ -1417,7 +1434,10 @@ sub cmdExp {
 		}
 		message("----------------------------------------------\n", "list");
 
-	} elsif ($arg1 eq "reset") {
+	}
+	
+	if ($arg1 eq "reset") {
+		$knownArg = 1;
 		($bExpSwitch,$jExpSwitch,$totalBaseExp,$totalJobExp) = (2,2,0,0);
 		$startTime_EXP = time;
 		$startingZenny = $char->{zenny};
@@ -1430,9 +1450,11 @@ sub cmdExp {
 		$bytesSent = 0;
 		$bytesReceived = 0;
 		message "Exp counter reset.\n", "success";
-	} else {
+	}
+	
+	if (!$knownArg) {
 		error "Error in function 'exp' (Exp Report)\n" .
-			"Usage: exp [reset]\n";
+			"Usage: exp [<report | monster | item | reset>]\n";
 	}
 }
 
