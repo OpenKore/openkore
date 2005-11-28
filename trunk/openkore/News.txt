@@ -358,6 +358,10 @@ New config options:
 - timeouts.txt: ai_route_npcTalk
   Default 10. If an NPC conversation used to reach your destination takes
   longer than this, it will assume failure.
+- removeActorWithDistance
+  Some private servers like Freya will send actor packets from a ridiculous
+  distance from the bot, and use this for automated banning. This config option
+  will make Kore ignore those actors and hopefully avoid auto-bans.
 
 Internal:
 - Obsolete getActorHash() function removed (use Actor::get() instead).
@@ -405,6 +409,7 @@ Credits:
 - amacc_boy: Win32::GUI interface
 - woeisiong: improvement in exp command
 - punkpudding: factor meditatio in smartHeal
+- mondlicht: removeActorWithDistance
 
 
 ==================
