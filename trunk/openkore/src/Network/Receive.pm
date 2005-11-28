@@ -602,6 +602,16 @@ sub actor_exists {
 		makeCoords(\%coords, $args->{coords});
 	}
 	#debug ("$coords{x}x$coords{y}\n");
+	
+	# Remove actors with a distance greater than removeActorWithDistance or 20
+	if (abs($char->{pos_to}{x} - $coords{x}) > ($config{removeActorWithDistance} || 20) ||
+		abs($char->{pos_to}{y} - $coords{y}) > ($config{removeActorWithDistance} || 20)) {
+		my $nameIdTmp = unpack("V1", $args->{ID});
+		my $dist1 = distance($char->{pos_to}, {%coords});
+		message("Removed out of sight actor $nameIdTmp at $coords{x} $coords{y} (distance: $dist1)\n");
+		return;
+	}
+	
 	$args->{body_dir} = unpack("v", substr($args->{RAW_MSG}, 48, 1)) % 8;
 	my $added;
 
