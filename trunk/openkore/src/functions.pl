@@ -2953,12 +2953,14 @@ sub AI {
 		if ($config{useSelf_skill_smartHeal} && $self_skill{ID} eq "AL_HEAL") {
 			my $smartHeal_lv = 1;
 			my $hp_diff = $char->{hp_max} - $char->{hp};
+			my $meditatioBonus = 1;
+			$meditatioBonus = 1 + int(($char->{skills}{HP_MEDITATIO}{lv} * 2) / 100) if ($char->{skills}{HP_MEDITATIO});
 			for ($i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
 				my ($sp_req, $amount);
 
 				$smartHeal_lv = $i;
 				$sp_req = 10 + ($i * 3);
-				$amount = int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8);
+				$amount = (int(($char->{lv} + $char->{int}) / 8) * (4 + $i * 8)) * $meditatioBonus;
 				if ($char->{sp} < $sp_req) {
 					$smartHeal_lv--;
 					last;
