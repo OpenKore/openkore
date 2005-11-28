@@ -2107,6 +2107,14 @@ sub item_disappeared {
 		if ($config{attackLooters} && AI::action ne "sitAuto" && ( $itemsPickup{lc($items{$args->{ID}}{name})} ne '' ? $itemsPickup{lc($items{$args->{ID}}{name})} : $itemsPickup{'all'} ) ) {
 			foreach my $looter (values %monsters) { #attack looter code
 				next if (!$looter || !%{$looter});
+				if (my $monCtrl = mon_control(lc($monster->{name}))) {
+					next if ( ($monCtrl->{attack_auto} ne "" && $monCtrl->{attack_auto} == -1)
+						|| ($monCtrl->{attack_lvl} ne "" && $monCtrl->{attack_lvl} > $char->{lv})
+						|| ($monCtrl->{attack_jlvl} ne "" && $monCtrl->{attack_jlvl} > $char->{lv_job})
+						|| ($monCtrl->{attack_hp}  ne "" && $monCtrl->{attack_hp} > $char->{hp})
+						|| ($monCtrl->{attack_sp}  ne "" && $monCtrl->{attack_sp} > $char->{sp})
+						);
+				}
 				if (distance($items{$args->{ID}}{pos},$looter->{pos}) == 0) {
 					attack ($looter->{ID});
 					message "Attack Looter: $looter looted $items{$args->{ID}}{'name'}\n","looter";
