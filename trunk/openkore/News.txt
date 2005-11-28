@@ -208,33 +208,33 @@ New commands:
 - The sell commands have been changed. The new sell commands are:
 
   sell <inventory item #> [<amount>]
-      Put inventory items in sell list.
+    Put inventory items in sell list.
 
   sell list
-     Show items in the sell list.
+    Show items in the sell list.
 
   sell done
-     Sell everything in the sell list.
+    Sell everything in the sell list.
 
   sell cancel
-     Clear the sell list.
+    Clear the sell list.
 
 - The exp commands have been changed. The new exp commands are:
 
-	exp
-		only shows exp
-		
-	exp report
-		shows the old exp report (shows everything)
-	
-	exp monster
-		shows monster killed count only
-	
-	exp item
-		shows item change count only
-	
-	exp reset
-		resets the exp report
+  exp
+    only shows exp
+
+  exp report
+    shows the old exp report (shows everything)
+
+  exp monster
+    shows monster killed count only
+
+  exp item
+    shows item change count only
+
+  exp reset
+    resets the exp report
 
 New config options:
 - partySkill: target_dist (range)
@@ -403,7 +403,8 @@ Credits:
 - jojobaoil: Bit-shift packing code, RO client bot detection bypassing,
   network & XKore stack overhaul.
 - amacc_boy: Win32::GUI interface
-- woeisiong - improvement in exp command
+- woeisiong: improvement in exp command
+- punkpudding: factor meditatio in smartHeal
 
 
 ==================
