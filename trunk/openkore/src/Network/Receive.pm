@@ -604,8 +604,10 @@ sub actor_exists {
 	#debug ("$coords{x}x$coords{y}\n");
 	
 
-	# Remove actors with a distance greater than removeActorWithDistance or 38 (Freya anti-bot system)
-	if ((my $block_dist = blockDistance($char->{pos_to}, {%coords})) > ($config{removeActorWithDistance} || 37)) {
+	# Remove actors with a distance greater than clientSight or 15. Some private servers (notably Freya) use
+	# a technique where they send actor_exists packets with ridiculous distances in order to automatically
+	# ban bots. By removingthose actors, we eliminate that possibility and emulate the client more closely.
+	if ((my $block_dist = blockDistance($char->{pos_to}, {%coords})) > ($config{clientSight} || 15)) {
 			my $nameIdTmp = unpack("V1", $args->{ID});
 			debug "Remove out of sight actor $nameIdTmp at $coords{x} $coords{y} (distance: $block_dist)\n";
 			return;
