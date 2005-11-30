@@ -449,6 +449,7 @@ storageAuto_distance 5
 storageAuto_npc_type 1
 storageAuto_npc_steps
 storageAuto_password
+storageAuto_keepOpen 0
 relogAfterStorage 1
 
 getAuto {
