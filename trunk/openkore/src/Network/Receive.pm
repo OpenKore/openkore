@@ -179,6 +179,7 @@ sub new {
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
+		'01D7' => ['player_equipment', 'a4 C1 v1 v1', [qw(sourceID type ID1 ID2)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
@@ -584,6 +585,30 @@ sub combo_delay {
 	$args->{actor} = Actor::get($args->{ID});
 	my $verb = $args->{actor}->verb('have', 'has');
 	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
+}
+
+sub player_equipment {
+	my ($self, $args) = @_;
+
+	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
+	my $player = $players{$sourceID};
+	return unless $player;
+
+	if ($type == 2) {
+		if ($ID1 ne $player->{weapon}) {
+			message "$player changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
+			$player->{weapon} = $ID1;
+		}
+		if ($ID2 ne $player->{shield}) {
+			message "$player changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook", 2;
+			$player->{shield} = $ID2;
+		}
+	} elsif ($type == 9) {
+		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
+			message "$player changed Shoes to: ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
+		}
+		$player->{shoes} = $ID1;
+	}
 }
 
 sub actor_exists {
