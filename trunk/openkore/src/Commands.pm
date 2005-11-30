@@ -3697,19 +3697,23 @@ sub cmdUseItemOnPlayer {
 
 sub cmdUseItemOnSelf {
 	my (undef, $args) = @_;
-	my ($arg1) = $args =~ /^(\d+)/;
-	if ($arg1 eq "") {
+	if ($args eq "") {
 		error	"Syntax Error in function 'is' (Use Item on Yourself)\n" .
-			"Usage: is <item #>\n";
-	} elsif (!$char->{'inventory'}[$arg1] || !%{$char->{'inventory'}[$arg1]}) {
-		error	"Error in function 'is' (Use Item on Yourself)\n" .
-			"Inventory Item $arg1 does not exist.\n";
-	} elsif ($char->{'inventory'}[$arg1]{'type'} > 2) {
-		error	"Error in function 'is' (Use Item on Yourself)\n" .
-			"Inventory Item $arg1 is not of type Usable.\n";
-	} else {
-		$char->{'inventory'}[$arg1]->use();
+			"Usage: is <item>\n";
+		return;
 	}
+	my $item = Item::get($args);
+	if (!$item) {
+		error	"Error in function 'is' (Use Item on Yourself)\n" .
+			"Inventory Item $args does not exist.\n";
+		return;
+	}
+	if ($item->{type} > 2) {
+		error	"Error in function 'is' (Use Item on Yourself)\n" .
+			"Inventory Item $item is not of type Usable.\n";
+		return;
+	}
+	$item->use;
 }
 
 sub cmdVender {
