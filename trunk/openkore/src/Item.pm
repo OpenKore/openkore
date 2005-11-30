@@ -242,7 +242,7 @@ sub UnEquipByType {
 # Returns: the item name, in the form of "My Item [number of slots]".
 sub nameString {
 	my $self = shift;
-	return $self->{name};
+	return "$self->{name} ($self->{invIndex})";
 }
 
 ##
