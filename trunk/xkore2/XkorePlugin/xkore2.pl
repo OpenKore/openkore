@@ -15,10 +15,7 @@ package xkore2;
 
 use strict;
 use Time::HiRes qw(time usleep);
-use FindBin qw($RealBin);
-use lib "$RealBin/$Plugins::current_plugin_folder";
-#use lib "$RealBin/../src";
-
+use lib $Plugins::current_plugin_folder;
 
 use XKore::Variables qw(%rpackets $tempRecordQueue $xConnectionStatus $svrObjIndex $tempIp $tempPort $programEnder $localServ $port
 	$ghostIndex $clientFeed $socketOut $serverNumber $serverIp $serverPort $record $ghostPort

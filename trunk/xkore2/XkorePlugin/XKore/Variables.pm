@@ -1,5 +1,5 @@
 package XKore::Variables;
-use Exporter 'import';
+use Exporter;
 use base qw(Exporter);
 
 @EXPORT_OK =qw(%rpackets $xConnectionStatus %currLocationPacket $svrObjIndex $tempIp $tempPort $mapchange
