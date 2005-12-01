@@ -158,7 +158,10 @@ sub commandHandler {
   } elsif ($arg eq 'status') {
     if (defined $queue) {
       message(sprintf("macro %s\n", $queue->name), "list");
-      message(sprintf("status: running (line %d)\n", $queue->line));
+      message(sprintf("status: %s\n", $queue->registered?"running":"waiting"));
+      my %tmp = $queue->timeout;
+      message(sprintf("delay: %ds\n", $tmp{timeout}));
+      message(sprintf("line: %d\n", $queue->line));
       message(sprintf("override AI: %s\n", $queue->overrideAI?"yes":"no"));
       message(sprintf("finished: %s\n", $queue->finished?"yes":"no"));    
     } else {

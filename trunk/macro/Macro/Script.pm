@@ -25,6 +25,7 @@ sub new {
   return unless defined $macro{$name};
   my $self = {
     name => $name,
+    registered => 0,
     script => [@{$macro{$name}}],
     timeout => $timeout{macro_delay}{timeout},
     time => time,
@@ -36,7 +37,6 @@ sub new {
     subcall => undef,
     error => undef
   };
-  AI::queue('macro');
   bless ($self, $class);
   return $self;
 }
@@ -44,6 +44,19 @@ sub new {
 # destructor
 sub DESTROY {
   AI::dequeue() if AI::is('macro');
+}
+
+# registers to AI queue
+sub register {
+  my $self = shift;
+  AI::queue('macro');
+  $self->{registered} = 1;
+}
+
+# checks register status
+sub registered {
+  my $self = shift;
+  return $self->{registered};
 }
 
 # sets repeat
@@ -69,8 +82,7 @@ sub setTimeout {
 # gets timeout for next command
 sub timeout {
   my $self = shift;
-  my %tmp = (time => $self->{time}, timeout => $self->{timeout});
-  return %tmp;
+  return (time => $self->{time}, timeout => $self->{timeout});
 }
 
 # sets override AI
