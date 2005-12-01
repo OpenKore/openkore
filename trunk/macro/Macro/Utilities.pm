@@ -23,6 +23,14 @@ our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
   return 1 if $queue->overrideAI;
+  # now check for orphaned script object
+  # may happen with activeperl
+  if (defined $queue && !AI::inQueue('macro')) {
+    error "[macro] orphaned macro!\n";
+    warning(sprintf("found an active macro '%s' but no 'macro' record in ai queue\n",$queue->name));
+    undef $queue;
+    return 0;
+  }
   return AI::is('macro', 'deal');
 }
 
@@ -251,6 +259,10 @@ sub getRandom {
 sub callMacro {
   return unless defined $queue;
   my %tmptime = $queue->timeout;
+  if (!$queue->registered) {
+    if (timeOut(\%tmptime)) {$queue->register}
+    else {return}
+  }
   if (timeOut(\%tmptime) && ai_isIdle()) {
     my $command = $queue->next;
     if (defined $command) {
