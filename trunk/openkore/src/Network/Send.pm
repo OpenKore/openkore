@@ -354,6 +354,10 @@ sub sendMsgToServer {
 	my $r_net = shift;
 	my $msg = shift;
 
+	# Old plugins still send a non-existant $remote_socket. Unless we fix this,
+	# it'll cause unblessed reference errors and halt openkore.
+	$r_net = $net if (ref($r_net) eq "");
+
 	return unless ($r_net->serverAlive);
 	if ($config{serverType} != 2) {
 		encrypt(\$msg, $msg);
