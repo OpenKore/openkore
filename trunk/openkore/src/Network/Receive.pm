@@ -629,13 +629,15 @@ sub actor_exists {
 	#debug ("$coords{x}x$coords{y}\n");
 	
 
-	# Remove actors with a distance greater than clientSight or 15. Some private servers (notably Freya) use
-	# a technique where they send actor_exists packets with ridiculous distances in order to automatically
-	# ban bots. By removingthose actors, we eliminate that possibility and emulate the client more closely.
-	if ((my $block_dist = blockDistance($char->{pos_to}, {%coords})) > ($config{clientSight} || 15)) {
-			my $nameIdTmp = unpack("V1", $args->{ID});
-			debug "Remove out of sight actor $nameIdTmp at $coords{x} $coords{y} (distance: $block_dist)\n";
-			return;
+	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
+	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
+	# beyond removeActorWithDistance.
+	if ($config{removeActorWithDistance}) {
+		if ((my $block_dist = blockDistance($char->{pos_to}, {%coords})) > ($config{removeActorWithDistance})) {
+				my $nameIdTmp = unpack("V1", $args->{ID});
+				debug "Removed out of sight actor $nameIdTmp at $coords{x} $coords{y} (distance: $block_dist)\n";
+				return;
+		}
 	}
 
 	$args->{body_dir} = unpack("v", substr($args->{RAW_MSG}, 48, 1)) % 8;
