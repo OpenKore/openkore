@@ -39,6 +39,7 @@ TODO:
 - Warp Portal-related spells.txt entries translated from Japanese.
 - Cards in item names are now separated by ':' instead of ',', because
   ',' is also used as a separator in a list of items.
+- Obsolete command 'equipment' removed; use 'eq' instead.
 
 Bug fixes:
 - 'i' command now displays equipped arrows under Equipment (Equipped).
