@@ -82,7 +82,6 @@ sub initHandlers {
 	dumpnow            => \&cmdDumpNow,
 	e                  => \&cmdEmotion,
 	eq                 => \&cmdEquip,
-	equipment          => \&cmdEquipment,
 	eval               => \&cmdEval,
 	exp                => \&cmdExp,
 	follow             => \&cmdFollow,
@@ -1307,38 +1306,9 @@ sub cmdEquip {
 sub cmdEquip_list {
 	for my $slot (@Item::slots) {
 		my $item = $char->{equipment}{$slot};
-		my $name = $item ? $item->nameString." ($item->{invIndex})" : '-';
+		my $name = $item ? $item->nameString : '-';
 		message sprintf("%-15s: %s\n", $slot, $name), "list";
 	}
-}
-
-sub cmdEquipment {
-	message(swrite(
-	"    / \\   topHead:   @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{topHead})?"$char->{equipment}{topHead}{name} ($char->{equipment}{topHead}{invIndex})":''],
-	"    | |   midHead:   @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{midHead})?"$char->{equipment}{midHead}{name} ($char->{equipment}{midHead}{invIndex})":''],
-	"    \\ /   lowHead:   @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{lowHead})?"$char->{equipment}{lowHead}{name} ($char->{equipment}{lowHead}{invIndex})":''],
-	"     |    robe:      @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{robe})?"$char->{equipment}{robe}{name} ($char->{equipment}{robe}{invIndex})":''],
-	"   / | \\  armor:     @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{armor})?"$char->{equipment}{armor}{name} ($char->{equipment}{armor}{invIndex})":''],
-	"  /  |  \\ leftHand:  @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{leftHand})?"$char->{equipment}{leftHand}{name} ($char->{equipment}{leftHand}{invIndex})":''],
-	" /   |   \\rightHand: @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{rightHand})?"$char->{equipment}{rightHand}{name} ($char->{equipment}{rightHand}{invIndex})":''],
-	"     |    leftAcc:   @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{leftAccessory})?"$char->{equipment}{leftAccessory}{name} ($char->{equipment}{leftAccessory}{invIndex})":''],
-	"    / \\   rightAcc:  @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{rightAccessory})?"$char->{equipment}{rightAccessory}{name} ($char->{equipment}{rightAccessory}{invIndex})":''],
-	"   /   \\  arrow:     @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{arrow})?"$char->{equipment}{arrow}{name} ($char->{equipment}{arrow}{invIndex})":''],
-	"  /     \\ shoes:     @<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-	[($char->{equipment}{shoes})?"$char->{equipment}{shoes}{name} ($char->{equipment}{shoes}{invIndex})":''],
-	" /       \\",
-	[]
-	));
 }
 
 sub cmdEval {
