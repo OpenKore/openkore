@@ -1537,8 +1537,14 @@ sub deal_add_other {
 sub deal_add_you {
 	my ($self, $args) = @_;
 
-	if ($args->{fail}) {
+	if ($args->{fail} == 1) {
 		error "That person is overweight; you cannot trade.\n", "deal";
+		return;
+	} elsif ($args->{fail} == 2) {
+		error "This item cannot be traded.\n", "deal";
+		return;
+	} elsif ($args->{fail}) {
+		error "You cannot trade (fail code $args->{fail}).\n", "deal";
 		return;
 	}
 
