@@ -178,6 +178,8 @@ New features:
 - Implemented 0189 no_teleport packet so that "Unavailable Area To
   Teleport/Memo" message is now displayed.
 - 'is' command now accepts item names.
+- Implement fail code 2 in packet deal_add_you. (happens when you try to
+  trade wedding rings)
 
 New commands:
 - getplayerinfo (number)
