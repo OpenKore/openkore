@@ -406,7 +406,7 @@ PF_MEMORIZE#Memorize#
 PF_FOGWALL#Wall_of_Fog#
 PF_SPIDERWEB#Spider_Web#
 ASC_METEORASSAULT#Meteor_Assault#
-ASC_CDP#Create_Deadly_Poison_#
+ASC_CDP#Create_Deadly_Poison#
 WE_BABY#Dad,_Mom,_I_love_you#
 WE_CALLPARENT#Come_here,_baby#
 WE_CALLBABY#Dad,_Mom._I_miss_you#
