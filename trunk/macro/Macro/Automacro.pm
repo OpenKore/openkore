@@ -270,6 +270,7 @@ sub checkMsg {
       my @tfld = split(/,/, $allowed);
       for (my $i = 0; $i < @tfld; $i++) {
         next unless defined $tfld[$i];
+        $tfld[$i] =~ s/^ +//g; $tfld[$i] =~ s/ +$//g;
         if ($arg->{privMsgUser} eq $tfld[$i]) {$auth = 1; last}
       }
     }
