@@ -127,9 +127,9 @@ Does a doridori head turn.
 Drop an item from the inventory.
 <inventory item #> [<amount>]	drop an item from inventory
 [dump]
-Dump the current packet recieve buffer and quit.
+Dump the current packet receive buffer and quit.
 [dumpnow]
-Dump the current packet recieve buffer without quitting.
+Dump the current packet receive buffer without quitting.
 [e]
 Show emotion.
 <emotion>			show specified emotion (see tables\emotions.txt)
