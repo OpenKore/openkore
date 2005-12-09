@@ -2,10 +2,6 @@
 ### 1.9.0
 ==================
 
-TODO:
-- Remove \$remote_socket from all Send.pm functions.
-- Convert the rest of the packets to Receive.pm.
-
 *** INCOMPATIBLE CHANGES ***:
 - NPC IDs are no longer supported, you must use the location syntax.
 - A few more statuses have been renamed such as 'Cartboost' status renamed
