@@ -404,7 +404,7 @@ sub automacroCheck {
     }
     next CHKAM if (defined $automacro{$am}->{map}     && $automacro{$am}->{map} ne $field{name});
     next CHKAM if (defined $automacro{$am}->{class}   && !checkClass($automacro{$am}->{class}));
-    next CHKAM if (defined $automacro{$am}->{monster} && !checkMonster($automacro{$am}->{monsters}));
+    foreach my $i (@{$automacro{$am}->{monster}})   {next CHKAM unless checkMonster($i)};
     foreach my $i (@{$automacro{$am}->{location}})  {next CHKAM unless checkLoc($i)}
     foreach my $i (@{$automacro{$am}->{var}})       {next CHKAM unless checkVar($i)}
     foreach my $i (@{$automacro{$am}->{varvar}})    {next CHKAM unless checkVarVar($i)}
