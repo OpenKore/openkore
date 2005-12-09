@@ -5,11 +5,13 @@ Actor.pm
 AI.pm
 ChatQueue.pm
 Commands.pm
+Deal.pm
 FastUtils.pm
 FileParsers.pm
 Globals.pm
 Interface.pm
 IPC.pm
+Item.pm
 Log.pm
 Match.pm
 Misc.pm
@@ -24,4 +26,5 @@ UnixUtils.pm
 Utils.pm
 WinUtils.pm
 XKore.pm
+XKore2.pm
 XSTools.pm
