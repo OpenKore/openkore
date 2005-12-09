@@ -1,0 +1,427 @@
+#Here are the command descriptions stored.
+#
+#[command] -is the name of the command
+#the first line is a short description
+#<key>		description
+#
+#option		description they are divided by tabs
+#You can use as many tabs as you want
+#
+[a]
+Attack a monster.
+<monster #>	attack the specified monster
+
+[ai]
+Enable/disable AI.
+				Toggles AI on/off.
+on				Enables AI.
+off				Disables AI.
+ai_v				Displays the contents of the %ai_v hash, for debugging purposes.
+clear				Clears AI sequences.
+print				Displays detailed info about current AI sequence.
+
+[aiv]
+Display current AI sequences.
+
+[al]
+Display the status of your vending shop.
+
+[arrowcraft]
+Create Arrows.
+				Lists available arrow-crafting items.
+use				Use the Archer's Arrow Craft skill.
+<arrowcraft #>			Create arrows using an item from the 'arrowcraft' list.
+forceuse <inventory item #>	Craft arrows immediately from an item without using the skill.
+
+[as]
+Stop attacking a monster.
+
+[auth]
+(Un)authorize a user for using Kore chat commands.
+<player name> <flag>		authorize <player name> if <flag> is 1, unauthorize if 0
+
+[autobuy]
+Initiate auto-buy AI sequence.
+
+[autosell]
+Initiate auto-sell AI sequence.
+
+[autostorage]
+Initiate auto-storage AI sequence.
+
+[bangbang]
+Does a bangbang body turn.
+
+[bingbing]
+Does a bingbing body turn.
+
+[buy]
+Buy an item from the current NPC shop
+<store item #> [<amount>]	buy <amount> items from the 'store' list
+
+[c]
+Chat in the public chat.
+<message>			send <message> to public chat
+
+[card]
+Card compounding.
+list				lists cards in the inventory
+use <card #>			initiate card compounding using the specified card
+mergelist			lists items to merge card with
+mergecancel			cancel a card merge request
+merge <card merge #>		merge card with item and finalize card compounding
+forceuse <card #> <inventory item #>	instantly merge the card with an item
+
+[cart]
+Cart management
+				lists items in cart.
+add <inventory item #> [<amount>]	add <amount> items from inventory to cart
+get <cart item #> [<amount>]	get <amount> items from cart to inventory
+desc <cart item #> [<amount>]	displays cart item description
+
+[chat]
+Chat room management.
+list				lists chat rooms on screen
+join <chat room #>		join a chat room
+info				displays info about the current chat room
+leave				leave the current chat room
+create \"<title>\" [<limit #> <public flag> <password>]	create a chat room
+modify \"<title>\" [<limit #> <public flag> <password>]	modify the current chat room
+bestow <user #>			bestow admin to chat room user
+kick <user #>			kick a chat room user
+[chist]
+Display last few entries from the chat log.
+				display last 5 entries
+<number>			display last <number> entries
+[cil]
+Clear the item log.
+[cl]
+Clear the chat log.
+[closeshop]
+Close your vending shop.
+[conf]
+Change a configuration key
+<key>				displays value of <key>
+<key> <value>			sets value of <key> to <value>
+<key> none			unsets <key>
+[damage]
+Damage taken report
+				displays the damage taken report
+reset				resets the damage taken report
+[deal]
+Trade items with another player.
+				accept an incoming deal/finalize the current deal/trade
+<player #>			request a deal with player
+add <inventory item #> [<amount>]	add items to current deal
+add z [<amount>]		add zenny to current deal
+no				deny an incoming deal/cancel the current deal
+[debug]
+Toggle debug on/off.
+<level>				sets debug level to <level>
+info				displays debug information
+[dl]
+List items in the current deal.
+[doridori]
+Does a doridori head turn.
+[drop]
+Drop an item from the inventory.
+<inventory item #> [<amount>]	drop an item from inventory
+[dump]
+Dump the current packet receive buffer and quit.
+[dumpnow]
+Dump the current packet receive buffer without quitting.
+[e]
+Show emotion.
+<emotion>			show specified emotion (see tables\emotions.txt)
+[eq]
+Equip an item.
+<inventory item #>		equips the specified item
+<slotname> <inventory item #>	equips the specified item on the specified slot
+slots				lists slot names
+[eval]
+Evaluate a Perl expression (developers only).
+<expression>			evaluate a Perl expression
+[exp]
+Experience report.
+				displays the experience report
+reset				resets the experience report
+[follow]
+Follow another player.
+<player name|player #>		follow the specified player
+stop				stop following
+[friend]
+Friend management.
+				lists friends
+request <player name|player #>	requests player to be your friend
+accept				accepts a friend request
+reject				rejects a friend request
+pm <friend #>			pm a friend
+remove <friend #>		remove a friend from friends list
+[g]
+Chat in the guild chat.
+<message>			send <message> to guild chat
+[getplayerinfo]
+Get the name of the object with specified ID
+<player ID>			show the name of the specified ID (needs debug 2)
+[guild]
+Guild management.
+				request guild info
+info				displays guild info
+members				displays guild member info
+request <player name|player #>	request player to join your guild
+join <flag>			accepts a guild join request if <flag> is 1, deny if 0
+leave				leave the guild
+[help]
+Help displays commands
+				lists available commands
+<command>*			displays detailed information about a command
+[i]
+Display inventory items.
+				display all inventory items.
+eq				lists equipped items
+neq				lists unequipped items
+nu				lists non-usable items
+u				lists usable items
+desc <inventory item #>		displays inventory item description
+[identify]
+Identify an unindentified item.
+				lists items to be identified
+<identify #>			identify an item
+[ignore]
+Ignore a user (block his messages).
+<flag> <player name>		ignores a player if <flag> is 1, unignore if 0
+<flag> all			ignores all players if <flag> is 1, unignore if 0
+[il]
+Display items on the ground.
+[ihist]
+Displays last few entries of the item log.
+				display last 5 entries
+<number>			display last <number> entries
+[im]
+Use item on monster.
+<inventory item #> <monster #>	use item on monster
+[ip]
+Use item on player.
+<inventory item #> <player #>	use item on player
+[is]
+Use item on yourself.
+<inventory item #>		use item on yourself
+[kill]
+Attack another player (PVP/GVG only).
+<player #>			attack the specified player
+[look]
+Look in a certain direction.
+<body dir> [<head dir>]		look at <body dir> (0-7) with head at <head dir> (0-2)
+[lookp]
+Look at a certain player.
+<player #>			look at player
+[memo]
+Save current position for warp portal.
+[ml]
+List monsters that are on screen.
+[move]
+Move your character.
+<x> <y> [<map name>]		move to the coordinates on a map
+<map name> 			move to map
+<portal #>			move to nearby portal
+stop				stop all movement
+[nl]
+List NPCs that are on screen.
+[openshop]
+Open your vending shop.
+[p]
+Chat in the party chat.
+<message>			send <message> to party chat
+[party]
+Party management.
+				displays party member info
+create \"<party name>\"		organize a party
+share <flag>			sets party exp sharing to even if flag is 1, individual take if 0
+request <player #>		request player to join your party
+join <flag>			accept a party join request if <flag> is 1, deny if 0
+kick <party member #>		kick party member from party
+leave				leave the party
+#[pet]
+#Pet management.
+#s				displays pet status
+[petl]
+List pets that are on screen.
+[pl]
+List players that are on screen.
+				lists players on screen
+<player #>			displays detailed info about a player
+[plugin]
+Control plugins.
+				lists loaded plugins
+load <filename>			loads a plugin file
+reload <plugin name|plugin #>	reloads a loaded plugin
+unload <plugin name|plugin #>	unloads a loaded plugin
+help				displays plugin help
+[pm]
+Send a private message.
+<player name|PM list #> <message>	send <message> to player through PM
+[pml]
+Quick PM list.
+[portals]
+List portals that are on screen.
+[quit]
+Exit this program.
+[rc]
+Reload source code files.
+				reload functions.pl
+<module names>			reload module files in the space-separated <module names>
+[reload]
+Reload configuration files.
+all				reload all config and table files
+<names>				reload config files in the list of <names>
+all except <names>		reload all files except those in the list of <names>
+[relog]
+Log out then log in again.
+				logout and login after 5 seconds
+<seconds>			logout and login after <seconds>
+[respawn]
+Respawn back to the save point.
+
+[s]
+Display character status.
+
+[sell]
+Sell items to an NPC.
+<inventory item #> [<amount>]	Put inventory items in sell list.
+list				Show items in the sell list.
+done				Sell everything in the sell list.
+cancel				Clear the sell list.
+
+[send]
+Send a raw packet to the server.
+<hex string>			Sends a raw packet to connected server.
+
+[sit]
+Sit down.
+
+[spells]
+List area effect spells on screen.
+
+[skills]
+Show skills or add skill point.
+				Lists available skills.
+add <skill #>			Add a skill point.
+desc <skill #>			Displays skill description.
+
+[sl]
+Use skill on location.
+<skill #> <x> <y> [<level>]	Use skill on location.
+
+[sm]
+Use skill on monster.
+<skill #> <monster #> [<level>]	Use skill on monster.
+
+[sp]
+Use skill on player.
+<skill #> <player #> [<level>]	Use skill on player.
+
+[ss]
+Use skill on self.
+<skill #> [<level>]		Use skill on self.
+
+[st]
+Display stats.
+[stand]
+Stand up.
+[stat_add]
+Add status point.
+str|agi|int|vit|dex|luk		add status points to a stat
+[storage]
+Handle items in Kafra storage.
+				lists items in storage
+eq				lists equipments in storage
+nu				lists non-usable items in storage
+u				lists usable items in storage
+add <inventory item #> [<amount>]	adds inventory item to storage
+addfromcart <cart item #> [<amount>]	adds cart item to storage
+get <storage item #> [<amount>]	gets item from storage to inventory
+gettocart <storage item #> [<amount>]	gets item from storage to cart
+close				close storage
+log				logs storage items to logs\storage.txt
+[store]
+Display shop items from NPC.
+				lists available shop items from NPC
+desc <store item #>		displays store item description
+
+[switchconf]
+Switch configuration file.
+<filename>			Switches configuration file to <filename>.
+
+[take]
+Take an item from the ground.
+<item #>			Take an item from the ground.
+first				Take the first item on the ground.
+
+[talk]
+Manually talk to an NPC.
+<NPC #>				talk to an NPC
+cont				continue talking to NPC
+resp				lists response options to NPC
+resp <response #>		select a response to NPC
+num <number>			send a number to NPC
+text <string>			send text to NPC
+no				ends/cancels conversation with NPC
+[talknpc]
+Send a sequence of responses to an NPC.
+<x> <y> <NPC talk codes>	talk to the NPC standing at <x> <y> and use <NPC talk codes>
+[tank]
+Tank for a player.
+<player name|player #>		starts tank mode with player as tankModeTarget
+stop				stops tank mode
+[tele]
+Teleport to a random location.
+[testshop]
+Show what your vending shop would sell.
+[timeout]
+Set a timeout.
+<type>				displays value of <type>
+<type> <second>			sets value of <type> to <seconds>
+[uneq]
+Unequp an item.
+<inventory item #>		unequips the specified item
+[vender]
+Buy items from vending shops.
+<vender #>			enter vender shop
+<vender #> <vender item #> [<amount>]	buy items from vender shop
+end				leave current vender shop
+[verbose]
+Toggle verbose on/off.
+[version]
+Display the version of openkore.
+[vl]
+List nearby vending shops.
+[warp]
+Open warp portal.
+list				lists available warp portals to open
+<warp portal #|map name>	opens a warp portal to a map
+[weight]
+Gives a report about your inventory weight.
+				displays info about current weight
+<item weight>			calculates how much more items of specified weight can be carried
+[where]
+Shows your current location.
+[who]
+Display the number of people on the current server.
+[who]
+Display your character and account ID.
+[north]
+Move 5 steps north.
+[south]
+Move 5 steps south.
+[east]
+Move 5 steps east.
+[west]
+Move 5 steps west.
+[northeast]
+Move 5 steps northeast.
+[northwest]
+Move 5 steps northwest.
+[southeast]
+Move 5 steps southeast.
+[southwest]
+Move 5 steps southwest.
