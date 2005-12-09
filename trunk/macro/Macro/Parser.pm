@@ -90,7 +90,7 @@ sub parseCmd {
     $cvs->debug("found variable $var in $command", $logfac{parser_steps});
     my $tmp = getVar($var); $tmp = "" if !defined $tmp;
     $var = quotemeta $var;
-    $command =~ s/(^|[^\\])\$$var([^a-z\d]?)/$1$tmp$2/g;
+    $command =~ s/(^|[^\\])\$$var([^a-zA-Z\d]|$)/$1$tmp$2/g;
   }
   # substitute doublevars
   while (($var) = $command =~ /\$\{(.*?)\}/i) {
