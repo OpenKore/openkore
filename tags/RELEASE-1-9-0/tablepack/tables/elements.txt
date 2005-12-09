@@ -1,0 +1,9 @@
+1#Ice#
+2#Earth#
+3#Fire#
+4#Wind#
+5#Poison#
+6#Holy#
+7#Dark#
+8#Spirit#
+9#Undead#

@@ -1,0 +1,63 @@
+0 ! *!*
+1 ? *?*
+2 ho *Whistling*
+3 lv *Heart*
+4 swt *Sweat*
+5 ic *Idea*
+6 an *$!@#*
+7 ag *Grumble*
+8 $ *Zeny!*
+9 ... *...*
+10 pea *Peace*
+11 fst *Fist*
+12 wav *Wave*
+13 flg *Flag 1*
+14 lv2 *Love*
+15 thx *Thanks*
+16 wah *Wah*
+17 sry *Sorry*
+18 heh *Heh*
+19 swt2 *Sweat*
+20 hmm *Hmm*
+21 no1 *Nice One*
+22 ?? *??*
+23 omg *Omg*
+24 o,oh *O*
+25 x *X*
+26 hp *Help*
+27 go *Go*
+28 sob *Sob*
+29 gg *Good Game*
+30 kis *Kiss*
+31 kis2 *Kiss 2*
+32 pif *Pfft*
+33 ok *Ok*
+35 flg2 *Flag 2*
+36 e1,bzz *Angry*
+37 e2,rice *Drool*
+38 e3,awsm *2 Hearts*
+39 e4,meh *Bleks*
+40 e5,shy *Na-ah*
+41 e6,pat *Pat Pat*
+42 e7,mp *SP*
+43 e8,slur *Horny*
+44 e9,com *Come Here*
+45 e10,yawn *Yawn*
+46 e11,grat *Congratulations*
+47 e12 *HP*
+48 flg3 *Flag 3*
+49 flg4 *Flag 4*
+50 flg5 *Flag 5*
+51 flg6 *Flag 6*
+52 fsh *FlashEyes(?!)*
+53 spin *SpinEyes(?!)*
+54 sigh *'o'(?!)*
+55 dum *Dumb(?!)*
+56 crwd *( . )(?!)*
+57 desp *Down(?!)*
+58 dice1 *Dice#1*
+59 dice2 *Dice#2*
+60 dice3 *Dice#3*
+61 dice4 *Dice#4*
+62 dice5 *Dice#5*
+63 dice6 *Dice#6*
