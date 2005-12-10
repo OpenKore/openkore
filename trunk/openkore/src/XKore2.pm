@@ -427,7 +427,7 @@ sub checkClient {
 		undef $self->{client};
 		# Begin listening...
 		$self->{client_listen} = new IO::Socket::INET(
-			LocalAddr	=> $config{xkore_listenIp} || undef,
+			LocalAddr	=> $config{xkore_listenIp} || '127.0.0.1',
 			LocalPort	=> $self->{client_listenPort},
 			Listen		=> 1,
 			Proto		=> 'tcp');
@@ -600,9 +600,7 @@ sub checkClient {
 		# TODO: Inventory, dropped items, player genders, vendors
 
 		# Show all the skills
-		# FIXME: This is currently a hack that just regurgitates
-		# $ai_v{skillsPacket} without understanding it.
-		$msg .= $ai_v{skillsPacket};
+		$msg .= $self->{client_saved}{skills};
 		
 		# Show all the portals
 		foreach my $ID (@portalsID) {
@@ -727,6 +725,10 @@ sub modifyPacketIn {
 	} elsif ($switch eq "0071") {
 		# Save the mapname for client login
 		$self->{client_saved}{'map'} = substr($msg, 6, 16);
+
+	} elsif ($switch eq "010F") {
+		# Save the skills for client login
+		$self->{client_saved}{'skills'} = $msg;
 
 	} elsif ($switch eq "0073") {
 		# Once we've connected to the new zone, send the mapchange packet to
