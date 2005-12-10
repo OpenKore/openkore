@@ -20,7 +20,7 @@ use base qw(Exporter);
 use IO::Socket::INET;
 
 use Globals;
-use Log qw(message error);
+use Log qw(message error warning);
 use Utils qw(dataWaiting vocalString timeOut shiftPack unShiftPack);
 
 use Network::Send;
@@ -431,6 +431,7 @@ sub checkClient {
 			LocalPort	=> $self->{client_listenPort},
 			Listen		=> 1,
 			Proto		=> 'tcp');
+		die $@ unless $self->{client_listen};
 
 		return;
 	}
@@ -590,13 +591,13 @@ sub checkClient {
 
 		message "Packet 021D.\n", "connection";
 
-	} elsif ($$c_state == 4 && $switch eq "007D") {
+	} elsif ($$c_state == 4 && ($switch eq "007D" || $switch eq "01C0")) {
 		# Client sent MapLoaded
 
 		$msg = "";
 		
 		# TODO: Player/monster statuses, pets, character stats,
-		# TODO: Inventory, dropped items, player genders, vendors
+		# TODO: Inventory, dropped items, player genders, vendors, skills
 		
 		# Show all the portals
 		foreach my $ID (@portalsID) {
