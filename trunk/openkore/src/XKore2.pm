@@ -431,7 +431,7 @@ sub checkClient {
 			LocalPort	=> $self->{client_listenPort},
 			Listen		=> 1,
 			Proto		=> 'tcp');
-		die $@ unless $self->{client_listen};
+		die "Unable to listen on XKore2 port ($config{xkore_listenIp}:$self->{client_listenPort}): $@" unless $self->{client_listen};
 
 		return;
 	}
@@ -597,7 +597,12 @@ sub checkClient {
 		$msg = "";
 		
 		# TODO: Player/monster statuses, pets, character stats,
-		# TODO: Inventory, dropped items, player genders, vendors, skills
+		# TODO: Inventory, dropped items, player genders, vendors
+
+		# Show all the skills
+		# FIXME: This is currently a hack that just regurgitates
+		# $ai_v{skillsPacket} without understanding it.
+		$msg .= $ai_v{skillsPacket};
 		
 		# Show all the portals
 		foreach my $ID (@portalsID) {

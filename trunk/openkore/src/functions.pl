@@ -4612,6 +4612,7 @@ sub parseMsg {
 		my $newmsg;
 		decrypt(\$newmsg, substr($msg, 4));
 		my $msg = substr($msg, 0, 4).$newmsg;
+		$ai_v{skillsPacket} = $msg; # FIXME: see XKore2.pm 'Show all the skills'
 
 		undef @skillsID;
 		delete $char->{skills};
