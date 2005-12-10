@@ -21,7 +21,7 @@ use IO::Socket::INET;
 
 use Globals;
 use Log qw(message error warning);
-use Utils qw(dataWaiting vocalString timeOut shiftPack unShiftPack);
+use Utils qw(dataWaiting timeOut shiftPack unShiftPack);
 
 use Network::Send;
 
@@ -45,7 +45,7 @@ sub new {
 	return undef unless $self{server};
 
 	$self{tracker_state} = 0;
-	$self{tracker_name} = $config{xkore_ID} || vocalString(8);
+	$self{tracker_name} = $config{xkore_ID} || "XKore2";
 
 	$self{client_state} = 0;
 	$self{client_listenPort} = $config{xkore_listenPort} ||
