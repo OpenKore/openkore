@@ -2,6 +2,12 @@
 ### 1.9.1
 ==================
 
+Bug fixes:
+- Fixed partySkill_0 block ignoring timeouts due to the a bug in
+  setPartySkillTimer.
+
+Credits:
+- id-mardi: fix for setPartySkillTimer
 
 
 ==================
