@@ -5340,32 +5340,6 @@ sub parseMsg {
 
 		message "Guild Member $name Log ".($guildNameRequest{online}?"In":"Out")."\n", 'guildchat';
 
-	} elsif ($switch eq "0199") {
-		# 99 01 - 4 bytes, used by eAthena and < EP5 Aegis
-		my $type = unpack("x2 v1", $msg);
-		if ($type == 0) {
-			$pvp = 0;
-		} elsif ($type == 1) {
-			message "PvP Display Mode\n", "map_event";
-			$pvp = 1;
-		} elsif ($type == 3) {
-			message "GvG Display Mode\n", "map_event";
-			$pvp = 2;
-		}
-
-	} elsif ($switch eq "01D6") {
-		# D6 01 - 4 bytes, used by Aegis 8.5
-		my $type = unpack("x2 v1", $msg);
-		if ($type == 0) {
-			$pvp = 0;
-		} elsif ($type == 6) {
-			message "PvP Display Mode\n", "map_event";
-			$pvp = 1;
-		} elsif ($type == 8) {
-			message "GvG Display Mode\n", "map_event";
-			$pvp = 2;
-		}
-
 	} elsif ($switch eq "019A") {
 		# 9A 01 - 14 bytes long
 		my ($ID, $rank, $num) = unpack("x2 V1 V1 V1", $msg);
