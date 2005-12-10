@@ -158,7 +158,7 @@ chatLangCode 1
 field_payon old_payon.fld
 
 [Brazil - bRO]
-ip 200.229.49.10
+ip 200.229.49.5
 port 6900
 master_version 22
 version 1
@@ -278,6 +278,7 @@ port 6800
 master_version 20
 version 18
 serverType 4
+clientSight 20
 
 [VanRO: High Rate Private Server]
 ip 70.84.205.242
@@ -355,6 +356,7 @@ port 6900
 master_version 14
 version 0
 serverType 4
+clientSight 16
 
 [XileRO Private Server]
 ip 65.254.61.29
