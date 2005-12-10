@@ -430,7 +430,8 @@ sub checkClient {
 			LocalAddr	=> $config{xkore_listenIp} || '127.0.0.1',
 			LocalPort	=> $self->{client_listenPort},
 			Listen		=> 1,
-			Proto		=> 'tcp');
+			Proto		=> 'tcp',
+			ReuseAddr   => 1);
 		die "Unable to listen on XKore2 port ($config{xkore_listenIp}:$self->{client_listenPort}): $@" unless $self->{client_listen};
 
 		return;
