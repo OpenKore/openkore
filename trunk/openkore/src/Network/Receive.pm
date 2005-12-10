@@ -163,6 +163,7 @@ sub new {
 		#'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
+		'0199' => ['pvp_mode1', 'v1', [qw(type)]],
 		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
 		'01A3' => ['pet_food', 'C1 v1', [qw(success foodID)]],
@@ -184,6 +185,7 @@ sub new {
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
+		'01D6' => ['pvp_mode2', 'v1', [qw(type)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
@@ -3882,6 +3884,36 @@ sub warp_portal_list {
 			"list");
 	}
 	message("--------------------------------------------------\n", "list");
+}
+
+sub pvp_mode1 {
+	my (undef, $args) = @_;
+	my $type = $args->{type};
+
+	if ($type == 0) {
+		$pvp = 0;
+	} elsif ($type == 1) {
+		message "PvP Display Mode\n", "map_event";
+		$pvp = 1;
+	} elsif ($type == 3) {
+		message "GvG Display Mode\n", "map_event";
+		$pvp = 2;
+	}
+}
+
+sub pvp_mode2 {
+	my (undef, $args) = @_;
+	my $type = $args->{type};
+
+	if ($type == 0) {
+		$pvp = 0;
+	} elsif ($type == 6) {
+		message "PvP Display Mode\n", "map_event";
+		$pvp = 1;
+	} elsif ($type == 8) {
+		message "GvG Display Mode\n", "map_event";
+		$pvp = 2;
+	}
 }
 
 1;
