@@ -123,7 +123,8 @@ sub DESTROY {
 
 	# Disconnect all clients and close the server
 	foreach my $client (@{$self->{clientsID}}) {
-		$client->{sock}->close if ($client);
+		$client->{sock}->close if ($client && $client->{sock}
+					   && $client->{sock}->connected);
 	}
 	$self->{server}->close if ($self->{server});
 }
@@ -187,6 +188,12 @@ sub iterate {
 
 	foreach my $client (@{$self->{clients}}) {
 		next if (!$client);
+		if (!$client->{sock} || !$client->{sock}->connected) {
+			# A client disconnected
+			$self->_exitClient($client, $client->{index});
+			next;
+		}
+
 		$bits = '';
 		vec($bits, $client->{fd}, 1) = 1;
 		if (select($bits, undef, undef, 0) > 0) {
@@ -283,7 +290,7 @@ sub _exitClient {
 	my ($self, $client, $i) = @_;
 
 	$self->onClientExit($client, $i);
-	$client->{sock}->close;
+	$client->{sock}->close if ($client->{sock} && $client->{sock}->connected);
 	delete $self->{clients}[$i];
 }
 
