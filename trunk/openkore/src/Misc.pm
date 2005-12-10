@@ -2085,7 +2085,7 @@ sub setPartySkillTimer {
 
 	# set partySkill target_time
 	my $i = $targetTimeout{$targetID}{$handle};
-	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i;
+	$ai_v{"partySkill_${i}_target_time"}{$targetID} = time if $i ne "";
 }
 
 
