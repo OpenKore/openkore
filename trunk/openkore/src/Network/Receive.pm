@@ -3767,7 +3767,8 @@ sub storage_password_request {
 			}
 		}
 		return if ($quit);
-
+		$config{storageEncryptKey} = $masterServers{storageEncryptKey} if exists($masterServers{storageEncryptKey});
+		# is this the correct way to access the entries in servers.txt?
 		#my @key = $config{storageEncryptKey} =~ /(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)[, ]+(.+)/;
 		my @key = split /[, ]+/, $config{storageEncryptKey};
 		if (!@key) {
