@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use FindBin;
 use Extractor;
+use CGI qw(escapeHTML);
 
 
 sub error {
@@ -35,10 +36,11 @@ sub makeupText {
 		return $text;
 	}
 	sub preformatted {
-		my $text = shift;
+		my ($attrs, $text) = @_;
+		$attrs = '' if (!defined($attrs));
 		# Remove auto-generated tags inside <pre> blocks.
 		$text =~ s/\n<{.*?}>//sg;
-		return $text;
+		return "<pre${attrs}>" . escapeHTML($text) . "</pre>";
 	}
 
 	$text =~ s/\n\n/\n<{p}>\n\n/sg;
@@ -47,7 +49,7 @@ sub makeupText {
 	$text =~ s/^`l`$/<\/ul>/gm;
 	$text =~ s/<ul>(.*?)<\/ul>/&list($1)/gse;
 	$text =~ s/(^| |\n)(http:\/\/.*?)($| |\n)/$1<a href="$2">$2<\/a>$3/gs;
-	$text =~ s/(<pre( .*?)?>.*?<\/pre>)/&preformatted($1)/gse;
+	$text =~ s/(<pre( .*?)?>(.*?)<\/pre>)/&preformatted($2, $3)/gse;
 
 
 	sub createFuncLink {
@@ -203,7 +205,7 @@ sub writeModuleHTML {
 				$text .= "\n\t\t<dl class=\"example\">\n" .
 					"\t\t\t<dt><strong>Example</strong>:</dt>\n" .
 					"\t\t\t<dd><pre>";
-				$text .= $example;
+				$text .= escapeHTML($example);
 				$text .= "</pre></dd>\n\t\t</dl>\n";
 			}
 
