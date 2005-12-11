@@ -15,6 +15,7 @@ if( !empty($setmodules) )
 $phpbb_root_path = './../';
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
+require_once($phpbb_root_path . 'includes/openkore.' . $phpEx);
 
 $template->set_filenames(array(
 	'body' => 'admin/admin_openkore.tpl'
@@ -28,8 +29,9 @@ $template->set_filenames(array(
 function set_option($name, $value)
 {
 	global $db;
-	$sql = sprintf("UPDATE " . CONFIG_TABLE . " SET config_value = '%s' " .
+	$sql = sprintf("UPDATE %s SET config_value = '%s' " .
 		       "WHERE config_name = '%s';",
+		       OPENKORE_FORUM_CONFIG_TABLE,
 		       $value, $name);
 	if (!($result = $db->sql_query($sql)))
 		message_die(GENERAL_ERROR, "Could not update config option $name.", 'Error', __LINE, __FILE__, $sql);
@@ -44,7 +46,6 @@ if ($HTTP_POST_VARS['submit'] == "Submit") {
 //
 // Display the default admin screen
 //
-require_once($phpbb_root_path . 'includes/openkore.' . $phpEx);
 $options = load_openkore_options();
 while ($row = $db->sql_fetchrow($result)) {
 	$options[$row['config_name']] = $row['config_value'];

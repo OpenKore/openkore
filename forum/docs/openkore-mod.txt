@@ -1,1 +1,6 @@
-INSERT INTO phpbb_config VALUES('important_announcement', '');
+CREATE TABLE openkore_forum_config (
+    config_name VARCHAR(255) NOT NULL,
+    config_value TEXT
+);
+
+INSERT INTO openkore_forum_config VALUES('important_announcement', '');
