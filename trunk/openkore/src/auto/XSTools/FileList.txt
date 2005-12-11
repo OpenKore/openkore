@@ -1,0 +1,26 @@
+Introduction
+------------
+This folder contains the parts of OpenKore that are written in C and C++,
+as well as Perl XS wrappers which allows Perl programs to be able to use
+those C and C++ APIs.
+
+
+Subfolders
+----------
+pathfinding/
+	Contains:
+	- C and C++ source files for the OpenKore pathfinding algorithm.
+	- Perl XS wrapper for the C/C++ pathfinding API.
+
+unix/
+	Contains Unix-specific functions and their associated Perl XS
+	wrappers.
+
+win32/
+	Contains:
+	- Win32-specific functions.
+	- Their associated Perl XS wrappers.
+	- The source code for NetRedirect.dll
+
+misc/
+	Contains all kinds of misc functions.
