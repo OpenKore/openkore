@@ -24,17 +24,6 @@ sub makeupText {
 		$text =~ s/<li><\/li>//sg;
 		return "<ul>$text\n</ul>";
 	}
-	sub linkModule {
-		my $text = shift;
-		my $package = $text;
-		$package =~ s/\.pm$//;
-
-		if ($Extractor::modules{$package}) {
-			$package =~ s/::/--/g;
-			$text = "<a href=\"${package}.html\">$text</a>";
-		}
-		return $text;
-	}
 	sub preformatted {
 		my ($attrs, $text) = @_;
 		$attrs = '' if (!defined($attrs));
@@ -66,13 +55,35 @@ sub makeupText {
 		}
 		return "<{code}>$func<{\/code}>";
 	}
+	sub linkModule {
+		my $text = shift;
+		my $package = $text;
+		$package =~ s/\.pm$//;
 
+		if ($Extractor::modules{$package}) {
+			$package =~ s/::/--/g;
+			$text = "<a href=\"${package}.html\">$text</a>";
+		}
+		return $text;
+	}
+	sub processModuleTag {
+		my ($module) = @_;
+		if ($Extractor::modules{$module}) {
+			my $link = $module;
+			$link =~ s/::/--/g;
+			return "<a href=\"$link.html\"><code>$module</code></a>";
+		} else {
+			return "<code>$module</code>";
+		}
+	}
+
+	# Links to modules
+	$text =~ s/([a-z0-9_:]+\.pm)/&linkModule($1)/gie;
+	$text =~ s/\@MODULE\((.*?)\)/&processModuleTag($1)/gse;
 	# Functions
 	$text =~ s/(\$?[a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
 	# Variables
 	$text =~ s/(^|\n| )([\$\%\@][a-z0-9_{\'}:]+)/$1<{code}>$2<{\/code}>/gis;
-	# Links to modules
-	$text =~ s/([a-z0-9_:]+\.pm)/&linkModule($1)/gie;
 
 	$text =~ s/<{(.*?)}>/<$1>/gs;
 	return $text;
@@ -175,7 +186,8 @@ sub writeModuleHTML {
 			if (@{$func->{params}}) {
 				$text .= "\t\t<dt class=\"params\"><strong>Parameters:</strong></dt>\n";
 				foreach my $param (@{$func->{params}}) {
-					$text .= "\t\t\t<dd class=\"param\"><code>" . $param->[0] . "</code> : " . $param->[1] . "</dd>\n";
+					my $desc = makeupText($param->[1]);
+					$text .= "\t\t\t<dd class=\"param\"><code>" . $param->[0] . "</code> : $desc</dd>\n";
 				}
 			}
 

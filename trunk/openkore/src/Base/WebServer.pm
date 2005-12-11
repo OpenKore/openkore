@@ -20,7 +20,12 @@
 # This class implements a basic HTTP 1.1 server. It is probably not entirely
 # RFC 2616-compliant, but it works well, especially with modern browsers.
 # This implementation can be easily integrated into Perl applications.
-# Persistent connections and pipelining are supported.
+# Persistent connections and pipelining are supported. HTTP 1.0 and 0.9 are
+# <i>not</i> supported.
+#
+# You are supposed to create a child class of this class, and override the
+# request() function. That is the function in which you handle all HTTP requests.
+# See $webserver->request().
 #
 # <h3>Example</h3>
 # First, create a child class derived from Base::WebServer (MyWebServer.pm):
@@ -71,6 +76,7 @@ use strict;
 use Time::HiRes qw(time);
 use Base::Server;
 use base qw(Base::Server);
+use Base::WebServer::Process;
 
 # Maximum size of a HTTP request header.
 use constant MAX_REQUEST_LEN  => 1024 * 32;
@@ -123,11 +129,14 @@ sub onClientData {
 
 ##
 # $webserver->request(process)
-# process: the Base::WebServer::Process object associated with this request. This object contains information about the current request (like the file the client requested, or the HTTP headers sent byt he client), and allows you to send responses to the client (with a PHP-like API).
+# process: the @MODULE(Base::WebServer::Process) object associated with this request. This object contains information about the current request (like the file the client requested, or the HTTP headers sent byt he client), and allows you to send responses to the client (with a PHP-like API).
+# Requires: defined($process)
 #
 # This virtual method will be called every time a web browser requests
 # a page from this web server. You should override this function in a
-# child class.
+# child class. This is where you respond to requests.
+#
+# See also: @MODULE(Base::WebServer::Process)
 sub request {
 	my ($self, $process) = @_;
 	my $content = "<title>Hello World</title>\n" .
@@ -147,7 +156,7 @@ sub request {
 sub _processRequest {
 	my ($self, $client) = @_;
 	my $state = $client->{http}; # Type: HTTPState
-	my ($httpVersion, $uri);
+	my ($httpVersion, $file);
 
 	# HTTP/1.1 spec says we should ignore leading newlines.
 	$state->{request} =~ s/^(\x0D\x0A)*//s;
@@ -160,7 +169,7 @@ sub _processRequest {
 		$self->_rejectClient($client, 405, "Method Not Allowed");
 		return;
 	}
-	$uri = $1;
+	$file = $1;
 	$httpVersion = $2;
 
 	if ($httpVersion ne '1.1') {
@@ -181,7 +190,7 @@ sub _processRequest {
 	}
 
 	my $process = new Base::WebServer::Process($client->{sock},
-						   $uri, \%headers);
+						   $file, \%headers);
 	$self->request($process);
 }
 
@@ -223,140 +232,5 @@ sub _dateString {
 	return "$weekday, $date $time GMT"
 }
 
-
-###############################################
-
-
-package Base::WebServer::Process;
-
-use strict;
-use IO::Socket::INET;
-
-sub new {
-	my ($class, $socket, $uri, $headers) = @_;
-	my $self = {
-		socket => $socket,
-		uri => $uri,
-		headers => $headers || {},
-		buffer => '',
-		outHeaders => {},
-		outHeadersLC => {}
-	};
-	bless $self, $class;
-
-	$self->status(200, "OK");
-	$self->header("Content-Type", "text/html; charset=utf-8");
-	$self->header("Date", Base::WebServer::_dateString(time()));
-	$self->header("Server", "OpenKore Web Server");
-	return $self;
-}
-
-sub DESTROY {
-	my ($self) = @_;
-	$self->_sendHeaders;
-
-	my $key = $self->{outHeadersLC}{connection};
-	if ($key && $self->{outHeaders}{$key} eq 'close'
-	    && $self->{socket} && $self->{socket}->connected) {
-		$self->{socket}->close;
-	}
-}
-
-sub shortResponse {
-	my ($self, $body) = @_;
-	$self->header("Content-Length", length($body));
-	$self->print($body);
-}
-
-# Send a HTTP request status.
-sub status {
-	my ($self, $statusCode, $statusMsg) = @_;
-
-	if ($self->{sentHeaders}) {
-		warn "Cannot send HTTP response status - content already sent";
-	} else {
-		$self->{outStatus} = "HTTP/1.1 $statusCode $statusMsg";
-	}
-}
-
-# Send a HTTP header.
-sub header {
-	my ($self, $key, $value) = @_;
-
-	if ($self->{sentHeaders}) {
-		warn "Cannot send HTTP header - content already sent";
-
-	} else {
-		# outHeadersLC maps lowercase key names to actual key names.
-		# This prevents us from sending duplicate header keys.
-		my $actualKey = $self->{outHeadersLC}{lc($key)} || $key;
-		$self->{outHeaders}{$actualKey} = $value;
-		$self->{outHeadersLC}{lc($actualKey)} = $actualKey;
-	}
-}
-
-# Send a HTTP message body.
-sub print {
-	my $self = shift;
-
-	if (!$self->{sentHeaders}) {
-		# This is the first time print is called, and we haven't sent
-		# headers yet, so do so.
-
-		if (!$self->{outHeadersLC}{'content-length'}
-		    || $self->{headers}{connection} eq 'close') {
-			# We don't know the content length. According to the
-			# HTTP specs, we cannot maintain a persistent
-			# connection.
-			#   -OR-
-			# The client specifically requested that it doesn't
-			# want a persistent connection.
-			$self->header("Connection", "close");
-		}
-
-		$self->_sendHeaders;
-	}
-
-	eval {
-		$self->{socket}->send($_[0]);
-		$self->{socket}->flush;
-	};
-	undef $@;
-}
-
-sub uri {
-	my ($self) = @_;
-	return $self->{uri};
-}
-
-# Send a HTTP error and disconnect the client.
-sub _killClient {
-	my ($self, $errorID, $errorMsg) = @_;
-	if (!$self->{sentHeaders}) {
-		$self->status($errorID, $errorMsg);
-		$self->print("<h1>HTTP $errorID - $errorMsg</h1>\n");
-		$self->{socket}->close if ($self->{socket} && $self->{socket}->connected);
-	}
-}
-
-sub _sendHeaders {
-	my ($self) = @_;
-	return if ($self->{sentHeaders});
-
-	my $text = "$self->{outStatus}\r\n";
-	foreach my $key (keys %{$self->{outHeaders}}) {
-		$text .= "$key: $self->{outHeaders}{$key}\r\n";
-	}
-	$text .= "\r\n";
-
-	#print "Response:\n$text";
-
-	eval {
-		$self->{socket}->send($text);
-		$self->{socket}->flush;
-	};
-	undef $@;
-	$self->{sentHeaders} = 1;
-}
 
 1;
