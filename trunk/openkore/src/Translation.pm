@@ -27,10 +27,22 @@ use strict;
 use Exporter;
 use base qw(Exporter);
 use FindBin qw($RealBin);
+use Encode;
+use Encode::Alias;
 use XSTools;
+use Globals qw(%config);
+
 XSTools::bootModule("Translation");
+define_alias('Western'  => 'ISO-8859-1');
+define_alias('Tagalog'  => 'ISO-8859-1');
+define_alias('Chinese'  => 'GB18030');
+define_alias('Korean'   => 'EUC-KR');
+define_alias('Russian'  => 'ISO-8859-5');
+define_alias('Cyrillic' => 'ISO-8859-5');
+define_alias('Japanese' => 'Shift_JIS');
 
 our @EXPORT = qw(T);
+our @EXPORT_OK = qw(serverStrToUTF8);
 
 
 # Note: some of the functions in this module are implemented in
@@ -65,10 +77,24 @@ sub autodetect {
 		return undef;
 
 	} else {
-		require POSIX;
-		my $locale = POSIX::setlocale('LC_MESSAGES', undef);
+		my $locale;
+
+		sub empty { return !defined($_[0]) || length($_[0]) == 0; }
+
+		if (!empty($ENV{LC_ALL})) {
+			$locale = $ENV{LC_ALL};
+		} elsif (!empty($ENV{LC_MESSAGES})) {
+			$locale = $ENV{LC_MESSAGES};
+		} elsif (!empty($ENV{LANG})) {
+			$locale = $ENV{LANG};
+		} else {
+			unload();
+			return undef;
+		}
+
 		# $locale is in a format like this: en_US.UTF-8
 		# Remove everything after the dot and all slashes.
+
 		$locale =~ s/\..*//;
 		$locale =~ s/\///g;
 
@@ -92,6 +118,7 @@ sub autodetect {
 
 ##
 # Translation::T(message)
+# message: The message to translate.
 # Returns: the translated message, or the original message if it cannot be translated.
 # Requires: $message is encoded in UTF-8.
 # Ensures: the return value is encoded in UTF-8.
@@ -108,6 +135,21 @@ sub T {
 	my ($message) = @_;
 	_translate(\$message);
 	return $message;
+}
+
+##
+# Translation::serverStrToUTF8(str)
+# str: the string to convert.
+# Returns: the return value, encoded in UTF-8.
+#
+# Convert a human-readable string, sent by the RO server, into UTF-8.
+# This function uses $config{serverEncoding} to determine the encoding.
+#
+# This function should only be used for strings sent by the RO server.
+sub serverStrToUTF8 {
+	my ($str) = @_;
+	Encode::from_to($str, $config{serverEncoding}, "utf8");
+	return $str;
 }
 
 1;

@@ -7,6 +7,20 @@ Bug fixes:
   setPartySkillTimer.
 - Fixed 'unblessed reference' error messages when using some old plugins.
 
+New config options:
+- serverEncoding
+  Specifies the server's character encoding (language). Should be one of:
+     Western
+     Tagalog
+     Chinese
+     Korean
+     Russian
+     Cyrillic
+     Japanese
+
+Internal:
+- Implemented the beginning of a localization framework.
+
 Credits:
 - id-mardi: fix for setPartySkillTimer
 
