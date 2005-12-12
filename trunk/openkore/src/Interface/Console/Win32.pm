@@ -263,7 +263,7 @@ sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
 
 	# Convert text from UTF-8 to the current codepage
-	Encode::from_to($message, "utf8", "cp$self->{codepage}");
+	Encode::from_to($message, "utf8", "cp$self->{codepage}") if ($sys{translation});
 
 	#wrap the text
 	local($Text::Wrap::columns) = $self->{right} - $self->{left} + 1;
