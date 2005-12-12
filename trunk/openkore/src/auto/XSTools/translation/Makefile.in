@@ -1,0 +1,33 @@
+CC=gcc
+CXX=g++
+CFLAGS=-Wall -O2 -funroll-loops -finline-functions $(CYGWIN)
+CXXFLAGS=$(CFLAGS)
+@HEADER@
+
+#if win32
+NATIVEFILEREADER=winfilereader
+#endif
+#if unix
+NATIVEFILEREADER=unixfilereader
+#endif
+OBJ=translator.o filereader.o $(NATIVEFILEREADER).o wrapper.o
+
+.PHONY: all clean
+
+all: $(OBJ)
+
+translator.o: translator.h filereader.h translator.cpp $(NATIVEFILEREADER).h
+	$(CXX) $(CXXFLAGS) -c translator.cpp -o translator.o
+
+filereader.o: filereader.h
+	$(CXX) $(CXXFLAGS) -c filereader.cpp -o filereader.o
+
+$(NATIVEFILEREADER).o: $(NATIVEFILEREADER).h $(NATIVEFILEREADER).cpp filereader.h
+	$(CXX) $(CXXFLAGS) -c $(NATIVEFILEREADER).cpp -o $(NATIVEFILEREADER).o
+
+wrapper.o: wrapper.xs translator.h
+	$(XSUBPP) -C++ -typemap "$(TYPEMAP)" wrapper.xs > wrapper.cpp
+	$(CXX) -I. $(CXXFLAGS) wrapper.cpp -c $(PERLCFLAGS) -o wrapper.o -I$(COREDIR)
+
+clean:
+	rm -f $(OBJ) wrapper.cpp Makefile.real

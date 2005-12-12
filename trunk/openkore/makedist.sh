@@ -28,6 +28,7 @@ DIRS=(.
 	src/auto/XSTools/pathfinding
 	src/auto/XSTools/unix
 	src/auto/XSTools/win32
+	src/auto/XSTools/translation
 )
 PACKAGEDIR=$PACKAGE-$VERSION
 

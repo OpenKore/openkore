@@ -1,7 +1,7 @@
 .PHONY: all exe start.exe wxstart.exe dist bindist
 
 all clean:
-	make -C src/auto/XSTools $@
+	@make -C src/auto/XSTools $@ || echo -e "\e[1;31mCompilation failed. Did you read http://openkore.sourceforge.net/docs.php#linux ?\e[0m"
 
 exe:
 	strip --strip-all src/auto/XSTools/XSTools.dll
