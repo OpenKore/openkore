@@ -357,7 +357,7 @@ sub sendMsgToServer {
 	# Old plugins still send a non-existant $remote_socket. Unless we fix
 	# this, it'll cause unblessed reference errors and halt openkore.
 	$r_net = $net if (!defined($r_net) || ref($r_net) eq ""
-			  || !defined($$r_net));
+			  || ref($r_net) eq 'SCALAR');
 
 	return unless ($r_net->serverAlive);
 	if ($config{serverType} != 2) {
