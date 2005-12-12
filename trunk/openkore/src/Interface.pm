@@ -109,6 +109,7 @@ sub getInput {
 
 ##
 # $interface->writeOutput(type, message, domain)
+# Requires: $message must be encoded in UTF-8.
 # 
 # Writes a message to the interface's console.
 # This method should not be used directly, use Log::message() instead.

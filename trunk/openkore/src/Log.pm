@@ -260,6 +260,7 @@ sub processMsg {
 
 ##
 # Log::message(message, [domain], [level])
+# Requires: $message must be encoded in UTF-8.
 #
 # Prints a normal message. See the description for Log.pm for more details
 # about the parameters.
@@ -295,6 +296,7 @@ sub warning {
 
 ##
 # Log::error(message, [domain], [level])
+# Requires: $message must be encoded in UTF-8.
 #
 # Prints an error message. It tells the user that a non-recoverable error has
 # occured.  A "non-recoverable error" could either be a fatal error, or an
@@ -322,6 +324,7 @@ sub error {
 
 ##
 # Log::debug(message, [domain], [level])
+# Requires: $message must be encoded in UTF-8.
 #
 # Prints a debugging message. See the description for Log.pm for more details about the parameters.
 sub debug {

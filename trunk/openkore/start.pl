@@ -69,6 +69,7 @@ if (0) {
 	require Win32::Process;
 	require Thread::Queue; #for xkore2
 	require XSTools;
+	require Encode;
 }
 
 $0 = PerlApp::exe() if ($PerlApp::TOOL eq "PerlApp");

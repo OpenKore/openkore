@@ -156,18 +156,15 @@ if (-f "$RealBin/Misc.pm") {
 require XSTools;
 if (!defined &XSTools::majorVersion) {
 	$interface->errorDialog("Your version of the XSTools library is too old.\n" .
-		"Please download the latest version, or upgrade (wx)start.exe.\n" .
-		"Refer to this post: http://openkore.sourceforge.net/forum/viewtopic.php?t=13501");
+		"Please read http://openkore.sourceforge.net/problems/XSTools.php");
 	exit 1;
 } elsif (XSTools::majorVersion() != 2) {
 	$interface->errorDialog("Your version of XSTools library is incompatible.\n" .
-		"Please download the correct version, or upgrade (wx)start.exe." .
-		"Refer to this post: http://openkore.sourceforge.net/forum/viewtopic.php?p=13501");
+		"Please read http://openkore.sourceforge.net/problems/XSTools.php");
 	exit 1;
-} elsif (XSTools::minorVersion() < 3) {
+} elsif (XSTools::minorVersion() < 4) {
 	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.\n" .
-		"Refer to this post: http://openkore.sourceforge.net/forum/viewtopic.php?p=13501.\n".
-		"For Linux users, do a make clean && make to upgrade your XSTools library.");
+		"Please read http://openkore.sourceforge.net/problems/XSTools.php");
 	exit 1;
 }
 require PathFinding;
