@@ -5,6 +5,7 @@
 Bug fixes:
 - Fixed partySkill_0 block ignoring timeouts due to the a bug in
   setPartySkillTimer.
+- Fixed 'unblessed reference' error messages when using some old plugins.
 
 Credits:
 - id-mardi: fix for setPartySkillTimer
