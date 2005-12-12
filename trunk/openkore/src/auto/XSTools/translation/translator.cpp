@@ -63,7 +63,7 @@ Translator::getTranslationMessage (unsigned int index, unsigned int &len)
 	msgOffset = reader->readInt (translationTableOffset + index * 8 + 4);
 	return reader->readStr (msgOffset);
 }
-
+#include <stdio.h>
 const char *
 Translator::translate (const char *message, unsigned int &retlen)
 {
@@ -83,7 +83,7 @@ Translator::translate (const char *message, unsigned int &retlen)
 			low = mid + 1;
 		else
 			// Translation found.
-			return getTranslationMessage (low, retlen);
+			return getTranslationMessage (mid, retlen);
 	}
 
 	// Translation not found.

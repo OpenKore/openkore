@@ -22,6 +22,7 @@ use Utils;
 use Skills;
 use AI;
 use Utils::Crypton;
+use Translation;
 
 ###### Public methods ######
 
@@ -354,7 +355,7 @@ sub actor_action {
 		# Sit
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
 		if ($args->{sourceID} eq $accountID) {
-			message "You are sitting.\n";
+			message T("You are sitting.\n");
 			$char->{sitting} = 1;
 		} else {
 			message getActorName($args->{sourceID})." is sitting.\n", 'parseMsg_statuslook', 2;
@@ -364,7 +365,7 @@ sub actor_action {
 		# Stand
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
 		if ($args->{sourceID} eq $accountID) {
-			message "You are standing.\n";
+			message T("You are standing.\n");
 			$char->{sitting} = 0;
 		} else {
 			message getActorName($args->{sourceID})." is standing.\n", 'parseMsg_statuslook', 2;

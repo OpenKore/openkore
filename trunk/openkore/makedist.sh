@@ -10,6 +10,7 @@ TYPE=bz2
 DIRS=(.
 	src
 	src/build
+	src/po
 	src/Actor
 	src/Base
 	src/IPC

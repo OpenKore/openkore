@@ -286,6 +286,11 @@ sub checkConnection {
 		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} != $master->{storageEncryptKey}) {
 			main::configModify('storageEncryptKey', $master->{storageEncryptKey});
 		}
+		if ($master->{serverEncoding} ne '' && $config{serverEncoding} != $master->{serverEncoding}) {
+			main::configModify('serverEncoding', $master->{serverEncoding});
+		} elsif ($config{serverEncoding} eq '') {
+			main::configModify('serverEncoding', 'Western');
+		}
 
 		message("Connecting to Account Server...\n", "connection");
 		$shopstarted = 1;
