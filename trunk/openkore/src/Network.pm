@@ -38,6 +38,7 @@ use Network::Send;
 use Plugins;
 use Settings;
 use Utils qw(dataWaiting timeOut);
+use Misc qw(chatLog);
 
 ##
 # Network->new()
