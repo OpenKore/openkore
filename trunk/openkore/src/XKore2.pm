@@ -284,7 +284,7 @@ sub checkConnection {
 	$self->{server}->checkConnection();
 
 	# Check connection to the tracker/emulated master server
-	$self->checkTracker() if ($config{'xkore_tracker'});
+	$self->checkTracker() if ($config{xkore_tracker});
 }
 
 ##
@@ -299,7 +299,7 @@ sub checkTracker {
 
 	return unless (defined $self->{client_listen} && $self->serverAlive && $conState == 5);
 
-	if ($$t_state == 0 && timeOut($timeout{'xkore-tracker'})) {
+	if ($$t_state == 0 && timeOut($timeout{xkore_tracker})) {
 		message("Connecting to XKore2 master ($host:$port)... ", "connection");
 		# Make a connection to the tracker/master server
 		$self->{tracker} = new IO::Socket::INET(
@@ -314,7 +314,7 @@ sub checkTracker {
 		} else {
 			error("couldn't connect: $!\n", "connection");
 		}
-		$timeout{'xkore-tracker'}{'time'} = time;
+		$timeout{xkore_tracker}{time} = time;
 	} elsif ($$t_state == 1 && $self->trackerAlive) {
 		# Send kore ID/name
 		$self->{tracker}->send("N".pack('v',length($self->{tracker_name})).$self->{tracker_name});
@@ -327,7 +327,7 @@ sub checkTracker {
 		# Send listening port
 		$self->{tracker}->send("P".pack('v', $self->{server}->sockport));
 
-		$timeout{'injectSync'}{'time'} = time;
+		$timeout{injectSync}{time} = time;
 		$$t_state = 2;
 	} elsif ($$t_state == 2 && $self->trackerAlive) {
 		if (dataWaiting(\$self->{tracker})) {
@@ -344,23 +344,23 @@ sub checkTracker {
 			my $len = unpack('v',substr($msg,1,3));
 
 			if ($switch eq "A") {
-				$self->{client_fakeInfo}{'accountID'} = substr($msg,3,$len);
+				$self->{client_fakeInfo}{accountID} = substr($msg,3,$len);
 			} elsif ($switch eq "S") {
-				$self->{client_fakeInfo}{'sessionID'} = substr($msg,3,$len);
+				$self->{client_fakeInfo}{sessionID} = substr($msg,3,$len);
 			} elsif ($switch eq "G") {
-				$self->{client_fakeInfo}{'sex'} = substr($msg,3,$len);
+				$self->{client_fakeInfo}{sex} = substr($msg,3,$len);
 			} elsif ($switch eq "T") {
-				$self->{client_fakeInfo}{'sessionID2'} = substr($msg,3,$len);
+				$self->{client_fakeInfo}{sessionID2} = substr($msg,3,$len);
 			}
 
-			$timeout{'xkore-tracker'}{'time'} = time;
+			$timeout{'xkore_tracker'}{time} = time;
 		}
-		if ($self->trackerAlive && timeOut($timeout{'xkore-tracker'})) {
+		if ($self->trackerAlive && timeOut($timeout{'xkore_tracker'})) {
 			$self->{tracker}->send("K".pack('v',0));
 		}
-	} elsif (!$self->trackerAlive && timeOut($timeout{'xkore-tracker'})) {
+	} elsif (!$self->trackerAlive && timeOut($timeout{xkore_tracker})) {
 		message "Lost connection to XKore2 master, reconnecting...\n", "connection";
-		$timeout{'xkore-tracker'}{'time'} = time;
+		$timeout{'xkore_tracker'}{time} = time;
 		$$t_state = 0;
 	}
 }
@@ -413,7 +413,7 @@ sub checkClient {
 			undef $self->{client_listen};
 
 			# Shutdown the connection with the tracker.
-			if ($config{'xkore_tracker'} && $self->trackerAlive) {
+			if ($config{xkore_tracker} && $self->trackerAlive) {
 				$self->{client_state} = 1 if ($self->{client_state} == 0);
 				close($self->{tracker});
 				undef $self->{tracker};
@@ -474,26 +474,33 @@ sub checkClient {
 
 	message "RO Client ($host:$port) -> ", "connection";
 
-	if ($$c_state == 0 && $switch eq "0064") {
+	# Allow the login packet for any of the connection states
+	# 0 = waiting for connection to login "server"
+	# 1 = waiting for connection to character "server"
+	# 3 = waiting for connection to map "server"
+	if (($$c_state == 0 || $$c_state == 1 || $$c_state == 3)
+		&& $switch eq "0064") {
 		# Client sent MasterLogin
 		my ($version, $username, $password, $master_version) = unpack("x2 V Z24 Z24 C1", $msg);
 
 		# Check password against adminPassword
-		if ($password ne $config{'adminPassword'}) {
+		if ($password ne $config{adminPassword}) {
 			error "Bad Password.\n", "connection";
 			$self->clientSend(pack('C3 x20', 0x6A, 00, 1),1);
 		} else {
 			# Send out the login packet
 			#'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*',
 			#[qw(sessionID accountID sessionID2 accountSex serverInfo)]],
-			$msg = pack('a4 a4 a4 x30 C1 C4 v Z20 C1 C1 x15', $sessionID, $accountID, $sessionID2, $accountSex2,
-					127, 0, 0, 1, $self->{client_listenPort}, $self->{tracker_name}, 0, 0);
+			$msg = pack('a4 a4 a4 x30 C1 C4 v Z20 v C1 x14', $sessionID, $accountID, $sessionID2, $accountSex2,
+				# IP ------->	Port --------------------->	Name ---------------->	# players -->	display
+				127, 0, 0, 1,	$self->{client_listenPort},	$self->{tracker_name},	0,		5);
 			$msg = pack('C2 v', 0x69, 00, length($msg)+4) . $msg;
 			$self->clientSend($msg,1);
 			message "Master Login.\n", "connection";
 
 			$$c_state = 1;
 		}
+
 	} elsif ($$c_state == 1 && $switch eq "0065") {
 		# Client sent GameLogin
 		#my $msg = pack("C*", 0x65,0) . $accountID . $sessionID . $sessionID2 . pack("C*", 0,0,$sex);
@@ -501,20 +508,35 @@ sub checkClient {
 		# Send the account ID
 		$self->clientSend($accountID,1);
 
-		# Send the characters packet.
-		if ($config{serverType} == 0) {
-			$msg = substr($self->{client_saved}{'chars'},4);
-			for (my ($i, $j) = (0, 0); $i < (length($msg)/106); $i++) {
-				$msg = substr($msg, $j+106) . pack('x104 C1 x', 255) unless (substr($msg, 0, 4) eq $charID);
-				if (substr($msg, 0, 4) eq $charID) {
-					$j = 106;
-					$msg = substr($msg, 0, 106); #104) . pack ('C1 x', 0);
-				}
-			}
-			$msg = pack('C2 v', 0x6B, 0, length($msg)+4) . $msg;
-		} else {
-			$msg = $self->{client_saved}{'chars'};
-		}
+		# Update the character information
+		my $charMsg = $self->{client_saved}{char};
+		my $charMsgPad = $self->{client_saved}{char_pad};
+
+		# Exp count
+		substr($charMsg, 4, 4) = pack('V', $char->{exp});
+
+		# Zeny
+		substr($charMsg, 8, 4) = pack('V', $char->{zenny});
+		
+		# Job Level
+		substr($charMsg, 16, 1) = pack('C', $char->{lv_job});
+
+		# Job ID
+		substr($charMsg, 52, 1) = pack('C', $char->{jobID});
+
+		# Base Level
+		substr($charMsg, 58, 1) = pack('C', $char->{lv});
+
+		# Stats
+		substr($charMsg, 98, 6) = pack('C6', $char->{str}, $char->{agi}, $char->{vit}, $char->{int},
+			$char->{dex}, $char->{luk});
+
+		# Character slot 0 always
+		substr($charMsg, 104, 1) = pack('C', 0);
+
+		# Send the character info packet
+		$msg = pack("C2 v", 0x6B, 0x00, length($charMsg) + length($charMsgPad) + 4) . $charMsgPad . $charMsg;
+
 		$self->clientSend($msg,1);
 
 		message "Game Login.\n", "connection";
@@ -525,7 +547,7 @@ sub checkClient {
 
 		# Send character and map info packet
 		#'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
-		$msg = pack('C2 a4 Z16 C4 v1', 0x71, 0, $charID, $self->{client_saved}{'map'},
+		$msg = pack('C2 a4 Z16 C4 v1', 0x71, 0, $charID, $self->{client_saved}{map},
 				127, 0, 0, 1, $self->{client_listenPort});
 		$self->clientSend($msg,1);
 
@@ -574,8 +596,8 @@ sub checkClient {
 
 		# Generate the coords info
 		my $coords = "";
-		shiftPack(\$coords, $char->{pos_to}{'x'}, 10);
-		shiftPack(\$coords, $char->{pos_to}{'y'}, 10);
+		shiftPack(\$coords, $char->{pos_to}{x}, 10);
+		shiftPack(\$coords, $char->{pos_to}{y}, 10);
 		shiftPack(\$coords, 0, 4);
 
 		# Send map info
@@ -596,35 +618,68 @@ sub checkClient {
 		# Client sent MapLoaded
 
 		$msg = "";
-		
-		# TODO: Player/monster statuses, pets, character stats,
+
+		# TODO: Player/monster statuses, finish character stats,
 		# TODO: Inventory, dropped items, player genders, vendors
 
-		# Show all the skills
-		$msg .= $self->{client_saved}{skills};
+		# Send player stats
+
+		#'00BD' => ['stats_info', 'v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1',
+		# [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex
+		# luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic
+		# def_magic_bonus hit flee flee_bonus critical)]],
+		$msg .= pack('C2 v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 x4', 0xBD, 0x00,
+			$char->{points_free}, $char->{str}, $char->{points_str}, $char->{agi}, $char->{points_agi},
+			$char->{vit}, $char->{points_vit}, $char->{int}, $char->{points_int}, $char->{dex},
+			$char->{points_dex}, $char->{luk}, $char->{points_luk}, $char->{attack}, $char->{attack_bonus},
+			$char->{attack_magic_min}, $char->{attack_magic_max}, $char->{def}, $char->{def_bonus},
+			$char->{def_magic}, $char->{def_magic_bonus}, $char->{hit}, $char->{flee}, $char->{flee_bonus},
+			$char->{critical});
 		
-		# Show all the portals
+		# More stats
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 0, $char->{walk_speed}*1000);	# Walk speed
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 5, $char->{hp});			# Current HP
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 6, $char->{hp_max});		# Max HP
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 7, $char->{sp});			# Current SP
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 8, $char->{sp_max});		# Max SP
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 12, $char->{points_skill});	# Skill points left
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 24, $char->{weight}*10);		# Current weight
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 25, $char->{weight_max}*10);	# Max weight
+		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 53, $char->{attack_delay});	# Attack speed
+
+		# Send skill information
+		my $skillInfo = "";
+		foreach my $ID (@skillsID) {
+			$skillInfo .= pack('v2 x2 v2 x2 a24 C', $char->{skills}{$ID}{ID}, $char->{skills}{$ID}{targetType},
+				$char->{skills}{$ID}{lv}, $char->{skills}{$ID}{sp}, $ID,
+
+				# What does this last number do?
+				1);
+		}
+		$msg .= pack('C2 v', 0x0F, 0x01, length($skillInfo) + 4) . $skillInfo;
+
+		# Send all portal info
 		foreach my $ID (@portalsID) {
 			my $coords = "";
-			shiftPack(\$coords, $portals{$ID}{pos}{'x'}, 10);
-			shiftPack(\$coords, $portals{$ID}{pos}{'y'}, 10);
+			shiftPack(\$coords, $portals{$ID}{pos}{x}, 10);
+			shiftPack(\$coords, $portals{$ID}{pos}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
 			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 				0x78, 0x00, $ID, 0, 0, 0, 0, $portals{$ID}{type}, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, $coords, 0, 0);
-			
+
 			$msg = $msg . $actorMsg;
 		}
 
-		# Show all the NPCs
+		# Send all NPC info
 		foreach my $ID (@npcsID) {
 			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
 			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
 			my $coords = "";
-			shiftPack(\$coords, $npcs{$ID}{pos}{'x'}, 10);
-			shiftPack(\$coords, $npcs{$ID}{pos}{'y'}, 10);
+			shiftPack(\$coords, $npcs{$ID}{pos}{x}, 10);
+			shiftPack(\$coords, $npcs{$ID}{pos}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
 			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
@@ -634,14 +689,14 @@ sub checkClient {
 			$msg = $msg . $actorMsg;
 		}
 
-		# Show all the monsters
+		# Send all monster info
 		foreach my $ID (@monstersID) {
 			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
 			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
 			my $coords = "";
-			shiftPack(\$coords, $monsters{$ID}{pos_to}{'x'}, 10);
-			shiftPack(\$coords, $monsters{$ID}{pos_to}{'y'}, 10);
+			shiftPack(\$coords, $monsters{$ID}{pos_to}{x}, 10);
+			shiftPack(\$coords, $monsters{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
 			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
@@ -650,15 +705,15 @@ sub checkClient {
 
 			$msg = $msg . $actorMsg;
 		}
-		
-		# Show all the pets
+
+		# Send info about pets
 		foreach my $ID (@petsID) {
 			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
 			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
 			my $coords = "";
-			shiftPack(\$coords, $pets{$ID}{pos_to}{'x'}, 10);
-			shiftPack(\$coords, $pets{$ID}{pos_to}{'y'}, 10);
+			shiftPack(\$coords, $pets{$ID}{pos_to}{x}, 10);
+			shiftPack(\$coords, $pets{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
 			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
@@ -668,23 +723,23 @@ sub checkClient {
 			$msg = $msg . $actorMsg;
 		}
 
-		# Show all the players
+		# Send info about surrounding players
 		foreach my $ID (@playersID) {
 			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 C1 x1 C1 v1',
 			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
 			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
 			my $coords = "";
-			shiftPack(\$coords, $players{$ID}{pos_to}{'x'}, 10);
-			shiftPack(\$coords, $players{$ID}{pos_to}{'y'}, 10);
+			shiftPack(\$coords, $players{$ID}{pos_to}{x}, 10);
+			shiftPack(\$coords, $players{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
 			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 C1 x1 C1 v1',
 				0x78, 0x00, $ID, $players{$ID}{walk_speed} * 1000, 0, 0, 0, $players{$ID}{jobID}, 0, $players{$ID}{weapon},
 				$players{$ID}{headgear}{low}, $players{$ID}{shield}, $players{$ID}{headgear}{top}, $players{$ID}{headgear}{mid},
-				$players{$ID}{hair_color}, 0, $players{$ID}{look}{head}, $players{$ID}{guild}, 0, $coords, $players{$ID}{look}{body}, 
+				$players{$ID}{hair_color}, 0, $players{$ID}{look}{head}, $players{$ID}{guild}, 0, $coords, $players{$ID}{look}{body},
 				($players{$ID}{dead}? 1 : ($players{$ID}{sitting}? 2 : 0)), $players{$ID}{lv});
 
-			$msg = $msg . $actorMsg;			
+			$msg = $msg . $actorMsg;
 		}
 
 		$self->clientSend($msg,1);
@@ -720,16 +775,22 @@ sub modifyPacketIn {
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
 	if ($switch eq "006B") {
-		# Save the characters for client login
-		$self->{client_saved}{'chars'} = $msg;
+		# Save the character info for client login
+		$self->{client_saved}{char_pad} = substr($msg, 4, (length($msg) % 106) - 4);
 
+		$msg = substr($msg, (length($msg) % 106));
+
+		for (my $i = 0; $i < length($msg); $i+=106) {
+			if ((substr($msg, $i, 4) eq $charID && $charID ne "") ||
+				(($i / 106) == $config{char} && $charID eq "")) {
+				$self->{client_saved}{char} = substr($msg, $i, 106);
+				last;
+			}
+		}
+		
 	} elsif ($switch eq "0071") {
 		# Save the mapname for client login
-		$self->{client_saved}{'map'} = substr($msg, 6, 16);
-
-	} elsif ($switch eq "010F") {
-		# Save the skills for client login
-		$self->{client_saved}{'skills'} = $msg;
+		$self->{client_saved}{map} = substr($msg, 6, 16);
 
 	} elsif ($switch eq "0073") {
 		# Once we've connected to the new zone, send the mapchange packet to
@@ -743,17 +804,17 @@ sub modifyPacketIn {
 		unShiftPack(\$coords, \$x, 10);
 
 		# Generate a map-change packet (rather than a zone-change)
-		$msg = pack('C2 Z16 v2', 0x91, 0, $self->{client_saved}{'map'},
+		$msg = pack('C2 Z16 v2', 0x91, 0, $self->{client_saved}{map},
 			$x, $y);
 
 	} elsif ($switch eq "0091") {
 		# Save the mapname for client login
-		$self->{client_saved}{'map'} = substr($msg, 2, 16);
+		$self->{client_saved}{map} = substr($msg, 2, 16);
 
 	} elsif ($switch eq "0092") {
 		# Save the mapname, and drop the packet until we connect to new
 		# zone server (to make mapchanges fluid for our connected client)
-		$self->{client_saved}{'map'} = substr($msg, 2, 16);
+		$self->{client_saved}{map} = substr($msg, 2, 16);
 		$msg = "";
 
 	}
@@ -780,8 +841,8 @@ sub modifyPacketOut {
 
 		# Generate the coords info
 		my $coords = "";
-		shiftPack(\$coords, $char->{pos_to}{'x'}, 10);
-		shiftPack(\$coords, $char->{pos_to}{'y'}, 10);
+		shiftPack(\$coords, $char->{pos_to}{x}, 10);
+		shiftPack(\$coords, $char->{pos_to}{y}, 10);
 		shiftPack(\$coords, 0, 4);
 
 		# Send map info
