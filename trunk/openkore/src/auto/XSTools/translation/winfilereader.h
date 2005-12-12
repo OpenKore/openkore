@@ -6,10 +6,10 @@
 
 class WinFileReader: public FileReader {
 private:
-	HFILE hFile;
+	HANDLE hFile;
 	HANDLE hMapFile;
 	DWORD size;
-	LPVOID addr;
+	char *addr;
 public:
 	WinFileReader (const char *filename);
 	~WinFileReader ();
