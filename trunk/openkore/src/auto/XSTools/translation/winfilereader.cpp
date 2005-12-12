@@ -1,4 +1,5 @@
 #include "winfilereader.h"
+#include <windows.h>
 
 
 WinFileReader::WinFileReader (const char *filename)
@@ -6,8 +7,9 @@ WinFileReader::WinFileReader (const char *filename)
 	OFSTRUCT buf;
 
 	buf.cBytes = sizeof (OFSTRUCT);
-	hFile = OpenFile (filename, &buf, OF_READ | OF_SHARE_DENY_NONE);
-	if (hFile == HFILE_ERROR)
+	hFile = CreateFile (filename, FILE_READ_DATA, FILE_SHARE_READ,
+		NULL, OPEN_EXISTING, 0, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
 		throw 0;
 
 	size = GetFileSize (hFile, NULL);
@@ -18,7 +20,7 @@ WinFileReader::WinFileReader (const char *filename)
 		throw 1;
 	}
 
-	addr = MapViewOfFile (hMapFile, FILE_MAP_READ, 0, 0, size);
+	addr = (char *) MapViewOfFile (hMapFile, FILE_MAP_READ, 0, 0, size);
 	if (addr == NULL) {
 		CloseHandle (hMapFile);
 		CloseHandle (hFile);
