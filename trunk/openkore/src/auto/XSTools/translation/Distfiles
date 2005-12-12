@@ -1,0 +1,7 @@
+translator.h
+translator.cpp
+filereader.h
+unixfilereader.h
+unixfilereader.cpp
+winfilereader.h
+winfilereader.cpp

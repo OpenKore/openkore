@@ -12,6 +12,7 @@ ChatQueue
 Commands
 Log
 Settings
+Translation
 Modules
 Plugins
 Utils

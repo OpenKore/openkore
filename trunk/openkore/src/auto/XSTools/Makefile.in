@@ -2,7 +2,7 @@ CXX=g++
 @HEADER@
 .PHONY: sub clean
 
-OBJ=pathfinding/*.o misc/*.o
+OBJ=pathfinding/*.o misc/*.o translation/*.o
 #if unix
 OBJ+=unix/*.o
 LIBS=-L/usr/lib/termcap -lreadline -ltermcap -pthread
@@ -21,6 +21,7 @@ XSTools.$(DLLEXT): sub
 sub:
 	make -C pathfinding
 	make -C misc
+	make -C translation
 #if unix
 	make -C unix
 #endif
