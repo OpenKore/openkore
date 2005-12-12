@@ -7,7 +7,7 @@ WinFileReader::WinFileReader (const char *filename)
 	OFSTRUCT buf;
 
 	buf.cBytes = sizeof (OFSTRUCT);
-	hFile = CreateFile (filename, FILE_READ_DATA, FILE_SHARE_READ,
+	hFile = CreateFile (filename, GENERIC_READ, FILE_SHARE_READ,
 		NULL, OPEN_EXISTING, 0, NULL);
 	if (hFile == INVALID_HANDLE_VALUE)
 		throw 0;

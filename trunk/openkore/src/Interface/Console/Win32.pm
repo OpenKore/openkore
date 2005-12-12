@@ -35,6 +35,7 @@ use Carp;
 use Time::HiRes qw/time sleep/;
 use Text::Wrap;
 use Win32::Console;
+use Encode;
 
 use Globals;
 use base qw(Interface::Console);
@@ -59,6 +60,7 @@ sub new {
 	$self->setWinDim();
 	
 	$self->{out_con}->Cursor(0, $self->{in_line});
+	$self->{codepage} = $self->{out_con}->OutputCP;
 	return $self;
 }
 
@@ -258,11 +260,11 @@ sub readEvents {
 
 
 sub writeOutput {
-	my $self = shift;
-	my $type = shift;
-	my $message = shift;
-	my $domain = shift;
-	
+	my ($self, $type, $message, $domain) = @_;
+
+	# Convert text from UTF-8 to the current codepage
+	Encode::from_to($message, "utf8", "cp$self->{codepage}");
+
 	#wrap the text
 	local($Text::Wrap::columns) = $self->{right} - $self->{left} + 1;
 	my ($endspace) = $message =~ /(\s*)$/; #Save trailing whitespace: wrap kills spaces near wraps, especialy at the end of stings, so "\n" becomes "", not what we want

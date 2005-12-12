@@ -4,7 +4,7 @@
 #include "filereader.h"
 
 /**
- * The Translator class looks up translations stored in .gmo files.
+ * The Translator class looks up translations stored in .mo files.
  * See http://www.gnu.org/software/gettext/manual/html_chapter/gettext_8.html#SEC136
  * for file format description.
  */

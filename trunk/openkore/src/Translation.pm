@@ -18,7 +18,9 @@
 # This module provides functions for translating messages in the user's
 # native language. Translations are stored in
 # <a href="http://www.gnu.org/software/gettext/">GNU gettext</a> translation
-# files (*.gmo).
+# files (*.mo).
+#
+# <b>Note:</b> translation files MUST be encoded in UTF-8 (without BOM).
 package Translation;
 
 use strict;
@@ -30,6 +32,7 @@ XSTools::bootModule("Translation");
 
 our @EXPORT = qw(T);
 
+
 # Note: some of the functions in this module are implemented in
 # src/auto/XSTools/translation/wrapper.xs
 
@@ -38,7 +41,7 @@ our @EXPORT = qw(T);
 # filename: the filename to a translation file.
 # Returns: 1 if the translation file was successfully loaded, undef otherwise.
 #
-# Load a translation file (.gmo file). If the translation file cannot be
+# Load a translation file (.mo file). If the translation file cannot be
 # loaded, then no translation file will be used, even if you successfully
 # loaded a translation file before.
 
@@ -52,11 +55,11 @@ our @EXPORT = qw(T);
 # Returns: 1 if the translation file was successfully loaded, undef otherwise.
 #
 # Autodetect the operating system's language, and load the correct
-# translation (.gmo) file. If the translation file cannot be
+# translation (.mo) file. If the translation file cannot be
 # loaded, then no translation file will be used, even if you successfully
 # loaded a translation file before.
 sub autodetect {
-	if ($^O eq 'win32') {
+	if ($^O eq 'MSWin32') {
 		# ???
 		unload();
 		return undef;
@@ -69,16 +72,16 @@ sub autodetect {
 		$locale =~ s/\..*//;
 		$locale =~ s/\///g;
 
-		# Load the .gmo file.
+		# Load the .mo file.
 		my $podir = "$RealBin/src/po";
-		if (-f "$podir/$locale.gmo") {
-			return load("$podir/$locale.gmo");
+		if (-f "$podir/$locale.mo") {
+			return load("$podir/$locale.mo");
 		}
 
 		# That didn't work. Try removing the _US part.
 		$locale =~ s/_.*//;
-		if (-f "$podir/$locale.gmo") {
-			return load("$podir/$locale.gmo");
+		if (-f "$podir/$locale.mo") {
+			return load("$podir/$locale.mo");
 		}
 
 		# Give up.
@@ -90,6 +93,8 @@ sub autodetect {
 ##
 # Translation::T(message)
 # Returns: the translated message, or the original message if it cannot be translated.
+# Requires: $message is encoded in UTF-8.
+# Ensures: the return value is encoded in UTF-8.
 #
 # Translate $message using the currently loaded translation file.
 #
