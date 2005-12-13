@@ -43,37 +43,62 @@ define_alias('Japanese' => 'Shift_JIS');
 
 our @EXPORT = qw(T);
 our @EXPORT_OK = qw(serverStrToUTF8);
+our $_translation;
+
+use constant DEFAULT_PODIR => "$RealBin/src/po";
 
 
 # Note: some of the functions in this module are implemented in
 # src/auto/XSTools/translation/wrapper.xs
 
 ##
-# Translation::load(filename)
-# filename: the filename to a translation file.
-# Returns: 1 if the translation file was successfully loaded, undef otherwise.
+# Translation::initDefault([podir])
+# Ensures: Translation::T() will be usable.
 #
-# Load a translation file (.mo file). If the translation file cannot be
-# loaded, then no translation file will be used, even if you successfully
-# loaded a translation file before.
+# Initialize the default translation object. Translation::T() will
+# only be usable after calling this function.
+sub initDefault {
+	my ($podir) = @_;
+	$podir = DEFAULT_PODIR if (!defined $podir);
+	$_translation = _load(_autodetect($podir));
+}
 
 ##
-# Translation::unload()
+# Translation->new([podir])
+# podir: the directory which contains translation files.
+# Returns: a Translation object.
+# Ensures: defined(result)
 #
-# Unload the currently loaded translation file.
+# Create a new Translation object. The operating system's locale will
+# be automatically detected, and a suitable language file will be loaded
+# from $podir. If $podir is not specified, it will default to OpenKore's
+# own translation files folder.
+sub new {
+	my ($class, $podir) = @_;
+	my %self;
 
-##
-# Translation::autodetect()
-# Returns: 1 if the translation file was successfully loaded, undef otherwise.
+	$podir = DEFAULT_PODIR if (!defined $podir);
+	$self{pofile} = _autodetect($podir);
+	$self{trans} = _load($self{pofile});
+
+	bless \%self, $class;
+	return \%self;
+}
+
+sub DESTROY {
+	my ($self) = @_;
+	_unload($self->{trans});
+}
+
+# _autodetect(podir)
 #
-# Autodetect the operating system's language, and load the correct
-# translation (.mo) file. If the translation file cannot be
-# loaded, then no translation file will be used, even if you successfully
-# loaded a translation file before.
-sub autodetect {
+# Autodetect the operating system's language, and return the filename for
+# the suitable translation file (.mo) from $podir. Returns undef if
+# there is no suitable translation file.
+sub _autodetect {
+	my ($podir) = @_;
+
 	if ($^O eq 'MSWin32') {
-		# ???
-		unload();
 		return undef;
 
 	} else {
@@ -88,7 +113,7 @@ sub autodetect {
 		} elsif (!empty($ENV{LANG})) {
 			$locale = $ENV{LANG};
 		} else {
-			unload();
+			# Can't autodetect the locale.
 			return undef;
 		}
 
@@ -97,43 +122,56 @@ sub autodetect {
 
 		$locale =~ s/\..*//;
 		$locale =~ s/\///g;
-
 		# Load the .mo file.
-		my $podir = "$RealBin/src/po";
-		if (-f "$podir/$locale.mo") {
-			return load("$podir/$locale.mo");
-		}
+		return "$podir/$locale.mo" if (-f "$podir/$locale.mo");
 
 		# That didn't work. Try removing the _US part.
 		$locale =~ s/_.*//;
-		if (-f "$podir/$locale.mo") {
-			return load("$podir/$locale.mo");
-		}
+		return "$podir/$locale.mo" if (-f "$podir/$locale.mo");
 
 		# Give up.
-		unload();
 		return undef;
 	}
+}
+
+##
+# $translation->translate(message)
+# message: The message to translate.
+# Returns: the translated message, or the original message if it cannot be translated.
+# Requires: $message is encoded in UTF-8.
+# Ensures: the return value is encoded in UTF-8.
+#
+# Translate $message using the translation file defined by this class.
+#
+# See also: Translation::T()
+#
+# Example:
+# my $t = new Translation;
+# print($t->translate("hello world\n"));
+sub translate {
+	my ($self, $message) = @_;
+	_translate($self->{trans}, \$message);
+	return $message;
 }
 
 ##
 # Translation::T(message)
 # message: The message to translate.
 # Returns: the translated message, or the original message if it cannot be translated.
-# Requires: $message is encoded in UTF-8.
+# Requires: Translation::initDefault() must have been called once; $message is encoded in UTF-8.
 # Ensures: the return value is encoded in UTF-8.
 #
-# Translate $message using the currently loaded translation file.
+# Translate $message.
 #
 # This symbol is automatically exported.
 #
 # Example:
 # use Translation;
-# Translation::autodetect();
+# Translation::initDefault();
 # print(T("hello world\n"));
 sub T {
 	my ($message) = @_;
-	_translate(\$message);
+	_translate($_translation, \$message);
 	return $message;
 }
 
@@ -141,6 +179,7 @@ sub T {
 # Translation::serverStrToUTF8(str)
 # str: the string to convert.
 # Returns: the return value, encoded in UTF-8.
+# Requires: $config{serverEncoding} must be a correct encoding name.
 #
 # Convert a human-readable string, sent by the RO server, into UTF-8.
 # This function uses $config{serverEncoding} to determine the encoding.
@@ -148,7 +187,7 @@ sub T {
 # This function should only be used for strings sent by the RO server.
 sub serverStrToUTF8 {
 	my ($str) = @_;
-	Encode::from_to($str, $config{serverEncoding}, "utf8");
+	Encode::from_to($str, $config{serverEncoding} || 'Western', "utf8");
 	return $str;
 }
 
