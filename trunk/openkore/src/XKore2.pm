@@ -619,8 +619,9 @@ sub checkClient {
 
 		$msg = "";
 
-		# TODO: Player/monster statuses, finish character stats,
-		# TODO: Inventory, dropped items, player genders, vendors
+		# TODO: Player/monster statuses, active ground effect skills,
+		# TODO: finish nonstackable inventory items
+		# TODO: dropped items, player genders, vendors
 
 		# Send player stats
 
@@ -646,6 +647,14 @@ sub checkClient {
 		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 24, $char->{weight}*10);		# Current weight
 		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 25, $char->{weight_max}*10);	# Max weight
 		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 53, $char->{attack_delay});	# Attack speed
+		
+		# Resend base stat info (str, agi, vit, int, dex, luk) this time with bonus
+		$msg .= pack('C2 V3', 0x41, 0x01, 13, $char->{str}, $char->{str_bonus});
+		$msg .= pack('C2 V3', 0x41, 0x01, 14, $char->{agi}, $char->{agi_bonus});
+		$msg .= pack('C2 V3', 0x41, 0x01, 15, $char->{vit}, $char->{vit_bonus});
+		$msg .= pack('C2 V3', 0x41, 0x01, 16, $char->{int}, $char->{int_bonus});
+		$msg .= pack('C2 V3', 0x41, 0x01, 17, $char->{dex}, $char->{dex_bonus});
+		$msg .= pack('C2 V3', 0x41, 0x01, 18, $char->{luk}, $char->{luk_bonus});
 
 		# Send skill information
 		my $skillInfo = "";
@@ -657,6 +666,32 @@ sub checkClient {
 				1);
 		}
 		$msg .= pack('C2 v', 0x0F, 0x01, length($skillInfo) + 4) . $skillInfo;
+		
+		# Sort items into stackable and non-stackable
+		my @stackable;
+		my @nonstackable;
+		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
+			my $item = $char->{inventory}[$i];
+			next unless $item && %{$item};
+			
+			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10) {
+				push @stackable, $i;
+			} else {
+				push @nonstackable, $i;
+			}
+		}
+		
+		# Send stackable item information
+		my $stackableInfo = "";
+		for (my $i = 0; $i < @stackable; $i++) {
+			my $item = $char->{inventory}[$stackable[$i]];
+			
+			$stackableInfo .= pack('v2 C2 v1 x2', $item->{index}, $item->{nameID}, $item->{type}, 1, #(identified)
+				$item->{amount});
+		}
+		$msg .= pack('C2 v1', 0xA3, 0x00, length($stackableInfo) + 4) . $stackableInfo;
+		
+		# Send non-stackable item (mostly equipment) information
 
 		# Send all portal info
 		foreach my $ID (@portalsID) {
@@ -733,10 +768,13 @@ sub checkClient {
 			shiftPack(\$coords, $players{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
+			# Note: Until Receive.pm's 022C is fixed, hair_color is going to zeroed.
+			# Its unpacking hair color from the wrong location, and as such causes RO to crash when we
+			# feed it the bad value.
 			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 C1 x1 C1 v1',
 				0x78, 0x00, $ID, $players{$ID}{walk_speed} * 1000, 0, 0, 0, $players{$ID}{jobID}, 0, $players{$ID}{weapon},
 				$players{$ID}{headgear}{low}, $players{$ID}{shield}, $players{$ID}{headgear}{top}, $players{$ID}{headgear}{mid},
-				$players{$ID}{hair_color}, 0, $players{$ID}{look}{head}, $players{$ID}{guild}, 0, $coords, $players{$ID}{look}{body},
+				$players{$ID}{hair_color} * 0, 0, $players{$ID}{look}{head}, $players{$ID}{guild}, 0, $coords, $players{$ID}{look}{body},
 				($players{$ID}{dead}? 1 : ($players{$ID}{sitting}? 2 : 0)), $players{$ID}{lv});
 
 			$msg = $msg . $actorMsg;
