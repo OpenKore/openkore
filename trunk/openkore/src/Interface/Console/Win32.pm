@@ -38,6 +38,7 @@ use Win32::Console;
 use Encode;
 
 use Globals;
+use Settings qw(%sys);
 use base qw(Interface::Console);
 
 our %fgcolors;
