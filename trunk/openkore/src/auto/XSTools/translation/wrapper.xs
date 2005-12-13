@@ -6,49 +6,45 @@
 
 #include "translator.h"
 
-static Translator *translator = NULL;
-
 
 MODULE = Translation     PACKAGE = Translation
 PROTOTYPES: ENABLE
 
-bool
-load(file)
+UV
+_load(file)
 	char *file
+INIT:
+	Translator *translator;
 CODE:
-	if (translator != NULL)
-		delete translator;
 	try {
 		translator = new Translator (file);
-		XSRETURN_YES;
+		XSRETURN_UV ((UV) translator);
 	} catch (...) {
-		translator = NULL;
-		XSRETURN_NO;
+		XSRETURN_UNDEF;
 	}
 
 void
-unload()
+_unload(translator)
+	UV translator
 CODE:
-	if (translator != NULL) {
-		delete translator;
-		translator = NULL;
-	}
+	delete (Translator *) translator;
 
 void
-_translate(message)
+_translate(translator, message)
+	UV translator
 	SV *message
 INIT:
 	SV *msg;
 	const char *translation;
 	unsigned int len;
 CODE:
-	if (!message || !SvOK (message) || SvTYPE (message) != SVt_RV || translator == NULL)
+	if (!message || !SvOK (message) || SvTYPE (message) != SVt_RV || translator == 0)
 		XSRETURN_EMPTY;
 
 	msg = SvRV (message);
 	if (!msg || !SvOK (msg))
 		XSRETURN_EMPTY;
 
-	translation = translator->translate (SvPV_nolen (msg), len);
+	translation = ((Translator *) translator)->translate (SvPV_nolen (msg), len);
 	if (translation != NULL)
 		sv_setpvn (msg, translation, len);
