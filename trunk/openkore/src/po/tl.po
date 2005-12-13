@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-12 20:10+0100\n"
+"POT-Creation-Date: 2005-12-13 23:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Tagalog\n"
@@ -23,3 +23,93 @@ msgstr "Ikaw ay nakaupo.\n"
 #: ../Network/Receive.pm:368
 msgid "You are standing.\n"
 msgstr "Ikaw ay nakatayo.\n"
+
+#: ../../openkore.pl:161
+#, perl-format
+msgid ""
+"Your version of the XSTools library is too old.\n"
+"Please read %s"
+msgstr ""
+
+#: ../../openkore.pl:165
+#, perl-format
+msgid ""
+"Your version of XSTools library is incompatible.\n"
+"Please read %s"
+msgstr ""
+
+#: ../../openkore.pl:169
+#, perl-format
+msgid ""
+"Your version of the XSTools library is too old. Please upgrade it.\n"
+"Please read %s"
+msgstr ""
+
+#: ../../openkore.pl:204
+msgid "One or more plugins failed to load."
+msgstr ""
+
+#: ../../openkore.pl:328
+#, perl-format
+msgid "Unable to initialize the IPC subsystem: %s\n"
+msgstr ""
+
+#: ../../openkore.pl:338
+msgid "Checking for new portals... "
+msgstr ""
+
+#: ../../openkore.pl:340
+msgid "found new portals!\n"
+msgstr ""
+
+#: ../../openkore.pl:341
+#, perl-format
+msgid "Auto-compile in %d seconds...\n"
+msgstr ""
+
+#: ../../openkore.pl:342
+msgid "Compile portals now? (Y/n) "
+msgstr ""
+
+#: ../../openkore.pl:347
+msgid "compiling portals"
+msgstr ""
+
+#: ../../openkore.pl:350
+msgid "skipping compile"
+msgstr ""
+
+#: ../../openkore.pl:354
+msgid ""
+"none found\n"
+"\n"
+msgstr ""
+
+#: ../../openkore.pl:363
+msgid "Enter Username: "
+msgstr ""
+
+#: ../../openkore.pl:368
+msgid "Enter Password: "
+msgstr ""
+
+#: ../../openkore.pl:377
+msgid "Master Servers"
+msgstr ""
+
+#: ../../openkore.pl:378
+msgid "#         Name\n"
+msgstr ""
+
+#: ../../openkore.pl:392
+#, perl-format
+msgid "'%s' is not a valid server.\n"
+msgstr ""
+
+#: ../../openkore.pl:394
+msgid "Enter the number of your master server: "
+msgstr ""
+
+#: ../../openkore.pl:413
+msgid "No username or password set."
+msgstr ""

@@ -4,9 +4,10 @@ set -e
 LANGUAGES="tl"
 
 echo "Extracting messages from source..."
-xgettext -L perl --force-po -o openkore.pot --keyword=T \
+xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	../*.pm \
 	../Network/*.pm \
+	../../openkore.pl \
 	../functions.pl
 
 for LANG in $LANGUAGES; do

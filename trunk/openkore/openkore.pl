@@ -158,16 +158,16 @@ if (-f "$RealBin/Misc.pm") {
 # Use 'require' here because XSTools.so might not be compiled yet at startup
 require XSTools;
 if (!defined &XSTools::majorVersion) {
-	$interface->errorDialog("Your version of the XSTools library is too old.\n" .
-		"Please read http://openkore.sourceforge.net/problems/XSTools.php");
+	$interface->errorDialog(TF("Your version of the XSTools library is too old.\n" .
+		"Please read %s", "http://openkore.sourceforge.net/problems/XSTools.php"));
 	exit 1;
 } elsif (XSTools::majorVersion() != 3) {
-	$interface->errorDialog("Your version of XSTools library is incompatible.\n" .
-		"Please read http://openkore.sourceforge.net/problems/XSTools.php");
+	$interface->errorDialog(TF("Your version of XSTools library is incompatible.\n" .
+		"Please read %s", "http://openkore.sourceforge.net/problems/XSTools.php"));
 	exit 1;
 } elsif (XSTools::minorVersion() < 0) {
-	$interface->errorDialog("Your version of the XSTools library is too old. Please upgrade it.\n" .
-		"Please read http://openkore.sourceforge.net/problems/XSTools.php");
+	$interface->errorDialog(TF("Your version of the XSTools library is too old. Please upgrade it.\n" .
+		"Please read %s", "http://openkore.sourceforge.net/problems/XSTools.php"));
 	exit 1;
 }
 require PathFinding;
@@ -201,7 +201,7 @@ Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 
 Log::message("$Settings::versionText\n");
 if (!Plugins::loadAll()) {
-	$interface->errorDialog('One or more plugins failed to load.');
+	$interface->errorDialog(T("One or more plugins failed to load."));
 	exit 1;
 }
 Log::message("\n");
@@ -325,7 +325,7 @@ if ($sys{ipc}) {
 	$ipc = new IPC(undef, $host, $port, 1,
 		       $sys{ipc_manager_bind}, $sys{ipc_manager_startAtPort});
 	if (!$ipc && $@) {
-		Log::error("Unable to initialize the IPC subsystem: $@\n");
+		Log::error(TF("Unable to initialize the IPC subsystem: %s\n", $@));
 		undef $@;
 	}
 
@@ -335,23 +335,23 @@ if ($sys{ipc}) {
 
 ### COMPILE PORTALS ###
 
-Log::message("Checking for new portals... ");
+Log::message(T("Checking for new portals... "));
 if (compilePortals_check()) {
-	Log::message("found new portals!\n");
-	Log::message("Auto-compile in $timeout{'compilePortals_auto'}{'timeout'} seconds...\n");
-	Log::message("Compile portals now? (Y/n) ");
-	$timeout{'compilePortals_auto'}{'time'} = time;
+	Log::message(T("found new portals!\n"));
+	Log::message(TF("Auto-compile in %d seconds...\n", $timeout{compilePortals_auto}{timeout}));
+	Log::message(T("Compile portals now? (Y/n) "));
+	$timeout{compilePortals_auto}{time} = time;
 
-	my $msg = $interface->getInput($timeout{'compilePortals_auto'}{'timeout'});
+	my $msg = $interface->getInput($timeout{compilePortals_auto}{timeout});
 	if ($msg =~ /y/i || $msg eq "") {
-		Log::message("compiling portals\n\n");
+		Log::message(T("compiling portals") . "\n\n");
 		compilePortals();
 	} else {
-		Log::message("skipping compile\n\n");
+		Log::message(T("skipping compile") . "\n\n");
 	}
 	undef $msg;
 } else {
-	Log::message("none found\n\n");
+	Log::message(T("none found\n\n"));
 }
 
 
@@ -360,12 +360,12 @@ if (compilePortals_check()) {
 if ($net->version != 1) {
 	my $msg;
 	if (!$config{'username'}) {
-		Log::message("Enter Username: ");
+		Log::message(T("Enter Username: "));
 		$msg = $interface->getInput(-1);
 		configModify('username', $msg, 1);
 	}
 	if (!$config{'password'}) {
-		Log::message("Enter Password: ");
+		Log::message(T("Enter Password: "));
 		# Set -9 on getInput timeout field mean this is password field
 		$msg = $interface->getInput(-9);
 		configModify('password', $msg, 1);
@@ -374,8 +374,8 @@ if ($net->version != 1) {
 	if ($config{'master'} eq "" || $config{'master'} =~ /^\d+$/ || !exists $masterServers{$config{'master'}}) {
 		my $err;
 		while (!$quit) {
-			Log::message("------- Master Servers --------\n", "connection");
-			Log::message("#         Name\n", "connection");
+			Log::message(sprintf("------- %s --------\n", T("Master Servers")), "connection");
+			Log::message(T("#         Name\n"), "connection");
 
 			my $i = 0;
 			my @servers = sort(keys %masterServers);
@@ -389,9 +389,9 @@ if ($net->version != 1) {
 			Log::message("-------------------------------\n", "connection");
 
 			if (defined $err) {
-				Log::error("'$err' is not a valid server.\n");
+				Log::error(TF("'%s' is not a valid server.\n", $err));
 			}
-			Log::message("Enter the number of your master server: ");
+			Log::message(T("Enter the number of your master server: "));
 			$msg = $interface->getInput(-1);
 
 			my $serverName;
@@ -410,7 +410,7 @@ if ($net->version != 1) {
 	}
 
 } elsif ($net->version != 1 && (!$config{'username'} || !$config{'password'})) {
-	$interface->errorDialog("No username or password set.");
+	$interface->errorDialog(T("No username or password set."));
 	exit 1;
 }
 

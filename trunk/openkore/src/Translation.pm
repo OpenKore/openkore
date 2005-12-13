@@ -35,13 +35,13 @@ use Globals qw(%config);
 XSTools::bootModule("Translation");
 define_alias('Western'  => 'ISO-8859-1');
 define_alias('Tagalog'  => 'ISO-8859-1');
-define_alias('Chinese'  => 'GB18030');
+define_alias('Chinese'  => 'EUC-CN');
 define_alias('Korean'   => 'EUC-KR');
 define_alias('Russian'  => 'ISO-8859-5');
 define_alias('Cyrillic' => 'ISO-8859-5');
 define_alias('Japanese' => 'Shift_JIS');
 
-our @EXPORT = qw(T);
+our @EXPORT = qw(T TF);
 our @EXPORT_OK = qw(serverStrToUTF8);
 our $_translation;
 
@@ -53,10 +53,10 @@ use constant DEFAULT_PODIR => "$RealBin/src/po";
 
 ##
 # Translation::initDefault([podir])
-# Ensures: Translation::T() will be usable.
+# Ensures: Translation::T() and Translation::TF() will be usable.
 #
-# Initialize the default translation object. Translation::T() will
-# only be usable after calling this function.
+# Initialize the default translation object. Translation::T() and
+# Translation::TF() will only be usable after calling this function once.
 sub initDefault {
 	my ($podir) = @_;
 	$podir = DEFAULT_PODIR if (!defined $podir);
@@ -161,14 +161,14 @@ sub translate {
 # Translation::T(message)
 # message: The message to translate.
 # Returns: the translated message, or the original message if it cannot be translated.
-# Requires: Translation::initDefault() must have been called once; $message is encoded in UTF-8.
+# Requires: Translation::initDefault() must have been called once; $message must be encoded in UTF-8.
 # Ensures: the return value is encoded in UTF-8.
 #
 # Translate $message.
 #
 # This symbol is automatically exported.
 #
-# See also: $translation->translate()
+# See also: $translation->translate() and Translation::TF()
 #
 # Example:
 # use Translation;
@@ -181,12 +181,31 @@ sub T {
 }
 
 ##
+# Translation::TF(format, ...)
+# Requires: Translation::initDefault() must have been called once; $format must be encoded in UTF-8.
+# Ensures: the return value is encoded in UTF-8.
+#
+# Translate $format, and perform sprintf() formatting using the specified parameters.
+# This function is just a convenient way to write:<br>
+# <code>sprintf(T($format), ...);</code>
+#
+# This symbol is automatically exported.
+#
+# Example:
+# print(TF("Go to %s for more information", $url));
+sub TF {
+	my $message = shift;
+	_translate($_translation, \$message);
+	return sprintf($message, $_[0], $_[1], $_[2], $_[3], $_[4]);
+}
+
+##
 # Translation::serverStrToUTF8(str)
 # str: the string to convert.
 # Returns: the return value, encoded in UTF-8.
 # Requires: $config{serverEncoding} must be a correct encoding name.
 #
-# Convert a human-readable string, sent by the RO server, into UTF-8.
+# Convert a human-readable string (sent by the RO server) into UTF-8.
 # This function uses $config{serverEncoding} to determine the encoding.
 #
 # This function should only be used for strings sent by the RO server.
