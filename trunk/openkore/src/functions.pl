@@ -4125,7 +4125,7 @@ sub AI {
 		 && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
 		 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
 			message "Teleporting to avoid all players\n", "teleport";
-			useTeleport(1);
+			useTeleport(1, undef, 1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$AI::Temp::Teleport_allPlayers = time;
 		}
