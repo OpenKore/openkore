@@ -6,6 +6,8 @@ Bug fixes:
 - Fixed partySkill_0 block ignoring timeouts due to the a bug in
   setPartySkillTimer.
 - Fixed 'unblessed reference' error messages when using some old plugins.
+- Fixed a bug in teleportAuto_allPlayers which causes the bot to do nothing
+  after a teleport.
 
 New config options:
 - serverEncoding
@@ -23,6 +25,7 @@ Internal:
 
 Credits:
 - id-mardi: fix for setPartySkillTimer
+- mondlicht: teleportAuto_avoidAllPlayers bugfix.
 
 
 ==================
