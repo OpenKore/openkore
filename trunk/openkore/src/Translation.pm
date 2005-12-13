@@ -73,6 +73,9 @@ sub initDefault {
 # be automatically detected, and a suitable language file will be loaded
 # from $podir. If $podir is not specified, it will default to OpenKore's
 # own translation files folder.
+#
+# You're probably looking for Translation::T() instead. See
+# $translation->translate() for rationale.
 sub new {
 	my ($class, $podir) = @_;
 	my %self;
@@ -143,7 +146,9 @@ sub _autodetect {
 #
 # Translate $message using the translation file defined by this class.
 #
-# See also: Translation::T()
+# This function is meant for plugin developers, who have their translation files
+# stored in a different folder than OpenKore's. If you want to translate strings
+# in OpenKore, then you should use Translation::T() instead.
 #
 # Example:
 # my $t = new Translation;
@@ -164,6 +169,8 @@ sub translate {
 # Translate $message.
 #
 # This symbol is automatically exported.
+#
+# See also: $translation->translate()
 #
 # Example:
 # use Translation;

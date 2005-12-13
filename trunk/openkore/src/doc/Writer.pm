@@ -178,7 +178,8 @@ sub writeModuleHTML {
 				"\t<dd>\n";
 
 			my $write_bluelist = 0;
-			if (@{$func->{params}} || $func->{returns} ne '') {
+			if (@{$func->{params}} || $func->{returns} ne '' ||
+			    $func->{requires} ne '' || $func->{ensures} ne '') {
 				$write_bluelist = 1;
 				$text .= "\t\t<dl class=\"params_and_returns\">\n";
 			}
@@ -197,7 +198,8 @@ sub writeModuleHTML {
 			}
 			if ($func->{ensures} ne '') {
 				$text .= "\t\t<dt class=\"ensures\"><strong>Ensures:</strong></dt>\n" .
-					"\t\t\t<dd class=\"ensures\">" . $func->{ensures} . "</dd>\n";
+					 "\t\t\t<dd class=\"ensures\">" . makeupText($func->{ensures})
+					 . "</dd>\n";
 			}
 			if ($func->{returns} ne '') {
 				$text .= "\t\t<dt class=\"returns\"><strong>Returns:</strong></dt>\n" .

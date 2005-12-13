@@ -17,7 +17,7 @@ CODE:
 	/* The major version number indicates compatibility.
 	   If this number is increased, then that means it's no longer
 	   compatible with the previous interface. */
-	RETVAL = 2;
+	RETVAL = 3;
 OUTPUT:
 	RETVAL
 
@@ -28,6 +28,6 @@ CODE:
 	   If this number is increased, then that means new functions
 	   have been added. The library is still compatible with the
 	   previous interface. */
-	RETVAL = 6;
+	RETVAL = 0;
 OUTPUT:
 	RETVAL
