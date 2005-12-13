@@ -60,14 +60,16 @@ sub match {
   $cvs->debug("match (@_)", $logfac{function_call_auto});
   my ($text, $kw) = @_;
   my $match;
-
+  my $flag;
+  
   no warnings;
 
-  if ($kw =~ /^".*"$/)   {$match = 0}
-  if ($kw =~ /^\/.*\/$/) {$match = 1}
-  $kw =~ s/^[\/"](.*)[\/"]/$1/g;
-  if ($match == 0 && $text eq $kw)   {return 1}
-  if ($match == 1 && $text =~ /$kw/) {return 1}
+  if ($kw =~ /^".*"$/)      {$match = 0}
+  if ($kw =~ /^\/.*\/\w?$/) {$match = 1}
+  ($kw, $flag) = $kw =~ /^[\/"](.*?)[\/"](\w?)/;
+  
+  if ($match == 0 && $text eq $kw) {return 1}
+  if ($match == 1 && ($text =~ /$kw/ || ($flag eq 'i' && $text =~ /$kw/i))) {return 1}
 
   use warnings;
 

@@ -257,13 +257,13 @@ sub checkMsg {
   my ($var, $tmp, $arg) = @_;
   my $msg;
   if ($var eq '.lastpub') {
-    ($msg, my $distance) = $tmp =~ /^([\/"].*?[\/"]),?(.*)/;
+    ($msg, my $distance) = $tmp =~ /^([\/"].*?[\/"]\w*),?(.*)/;
     $distance = 15 if ($distance eq '');
     my $mypos = calcPosition($char);
     my $pos = calcPosition($::players{$arg->{pubID}});
     return 0 unless distance($mypos, $pos) <= $distance;
   } elsif ($var eq '.lastpm') {
-    ($msg, my $allowed) = $tmp =~ /^([\/"].*?[\/"]),?(.*)/;
+    ($msg, my $allowed) = $tmp =~ /^([\/"].*?[\/"]\w*),?(.*)/;
     my $auth;
     if (!$allowed) {$auth = 1}
     else {
@@ -278,6 +278,7 @@ sub checkMsg {
   } else {
     $msg = $tmp;
   }
+  $arg->{Msg} =~ s/[\r\n]*$//g;
   if (match($arg->{Msg},$msg)){
     setVar($var, $arg->{MsgUser});
     setVar($var."Msg", $arg->{Msg});
@@ -307,6 +308,7 @@ sub checkMonster {
 sub checkConsole {
   $cvs->debug("checkConsole(@_)", $logfac{function_call_auto} | $logfac{automacro_checks}) if defined $cvs;
   my ($msg, $arg) = @_;
+  $$arg[4] =~ s/[\r\n]*$//;
   if (match($$arg[4],$msg)){
     $$arg[4] =~ s/\n$//g;
     setVar(".lastLogMsg", $$arg[4]);
