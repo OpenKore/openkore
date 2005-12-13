@@ -5,6 +5,7 @@
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
+#include "locale.c"
 
 DWORD GetProcByName (char * name);
 int InjectDLL(DWORD ProcID, LPCTSTR dll);
@@ -187,3 +188,6 @@ CloseProcess(Handle)
 	CODE:
 		CloseHandle((HANDLE)Handle);
 
+
+char *
+getLanguageName()

@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "EXTERN.h"
 #include "perl.h"

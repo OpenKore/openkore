@@ -100,41 +100,39 @@ sub DESTROY {
 # there is no suitable translation file.
 sub _autodetect {
 	my ($podir) = @_;
+	my $locale;
 
-	if ($^O eq 'MSWin32') {
-		return undef;
-
-	} else {
-		my $locale;
-
-		sub empty { return !defined($_[0]) || length($_[0]) == 0; }
-
-		if (!empty($ENV{LC_ALL})) {
-			$locale = $ENV{LC_ALL};
-		} elsif (!empty($ENV{LC_MESSAGES})) {
-			$locale = $ENV{LC_MESSAGES};
-		} elsif (!empty($ENV{LANG})) {
-			$locale = $ENV{LANG};
-		} else {
-			# Can't autodetect the locale.
-			return undef;
-		}
-
-		# $locale is in a format like this: en_US.UTF-8
-		# Remove everything after the dot and all slashes.
-
-		$locale =~ s/\..*//;
-		$locale =~ s/\///g;
-		# Load the .mo file.
-		return "$podir/$locale.mo" if (-f "$podir/$locale.mo");
-
-		# That didn't work. Try removing the _US part.
-		$locale =~ s/_.*//;
-		return "$podir/$locale.mo" if (-f "$podir/$locale.mo");
-
-		# Give up.
-		return undef;
+	sub empty { return !defined($_[0]) || length($_[0]) == 0; }
+	if (!empty($ENV{LC_ALL})) {
+		$locale = $ENV{LC_ALL};
+	} elsif (!empty($ENV{LC_MESSAGES})) {
+		$locale = $ENV{LC_MESSAGES};
+	} elsif (!empty($ENV{LANG})) {
+		$locale = $ENV{LANG};
 	}
+
+	if (!defined($locale) && $^O eq 'MSWin32') {
+		require WinUtils;
+		$locale = WinUtils::getLanguageName();
+		return undef if ($locale eq 'C');
+	}
+
+	return undef if (!defined $locale);
+
+	# $locale is in a format like this: en_US.UTF-8
+	# Remove everything after the dot and all slashes.
+
+	$locale =~ s/\..*//;
+	$locale =~ s/\///g;
+	# Load the .mo file.
+	return "$podir/$locale.mo" if (-f "$podir/$locale.mo");
+
+	# That didn't work. Try removing the _US part.
+	$locale =~ s/_.*//;
+	return "$podir/$locale.mo" if (-f "$podir/$locale.mo");
+
+	# Give up.
+	return undef;
 }
 
 ##
