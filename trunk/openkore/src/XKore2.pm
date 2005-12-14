@@ -666,11 +666,12 @@ sub checkClient {
 		# Send skill information
 		my $skillInfo = "";
 		foreach my $ID (@skillsID) {
-			$skillInfo .= pack('v2 x2 v2 x2 a24 C', $char->{skills}{$ID}{ID}, $char->{skills}{$ID}{targetType},
-				$char->{skills}{$ID}{lv}, $char->{skills}{$ID}{sp}, $ID,
-
-				# What does this last number do?
-				1);
+			$skillInfo .= pack('v2 x2 v2 v1 a24 C',
+				$char->{skills}{$ID}{ID}, $char->{skills}{$ID}{targetType},
+				$char->{skills}{$ID}{lv}, $char->{skills}{$ID}{sp},
+				$char->{skills}{$ID}{range},
+				$ID,
+				$char->{skills}{$ID}{up});
 		}
 		$msg .= pack('C2 v', 0x0F, 0x01, length($skillInfo) + 4) . $skillInfo;
 		

@@ -3255,13 +3255,15 @@ sub sense_result {
 sub skill_update {
 	my ($self, $args) = @_;
 
-	my ($ID, $lv, $sp) = ($args->{skillID}, $args->{lv}, $args->{sp});
+	my ($ID, $lv, $sp, $range, $up) = ($args->{skillID}, $args->{lv}, $args->{sp}, $args->{range}, $args->{up});
 
 	my $skill = new Skills(id => $ID);
 	my $handle = $skill->handle;
 	my $name = $skill->name;
 	$char->{skills}{$handle}{lv} = $lv;
 	$char->{skills}{$handle}{sp} = $sp;
+	$char->{skills}{$handle}{range} = $range;
+	$char->{skills}{$handle}{up} = $up;
 
 	# values not used right now:
 	# range = skill range, up = this skill can be leveled up further
