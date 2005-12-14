@@ -3,7 +3,7 @@
 # updates openkore.pot and *.po, and compiles *.po to .mo.
 set -e
 
-LANGUAGES="tl"
+LANGUAGES="tl id"
 
 echo "Extracting messages from source..."
 xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
@@ -12,7 +12,7 @@ xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	../../openkore.pl \
 	../functions.pl
 
-sed 's/charset=CHARSET/charset=UTF-8/' openkore.pot > openkore.pot.2
+sed 's/charset=CHARSET/charset=UTF-8/; s/^# SOME DESCRIPTIVE TITLE\.$/# LANGUAGE translation for OpenKore/; s/# This file is distributed under the same license as the PACKAGE package\./# This file is distributed under the same license as OpenKore./' openkore.pot > openkore.pot.2
 mv openkore.pot.2 openkore.pot
 
 for LANG in $LANGUAGES; do

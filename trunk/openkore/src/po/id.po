@@ -1,17 +1,17 @@
-# LANGUAGE translation for OpenKore
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Indonesian translation for OpenKore.
+# Copyright (C) h4rry84
 # This file is distributed under the same license as OpenKore.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# h4rry84 <h4rry84@telkom.net>, 2005.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-14 18:25+0100\n"
+"POT-Creation-Date: 2005-12-14 18:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Last-Translator: h4rry84 <h4rry84@telkom.net>\n"
+"Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -26,11 +26,11 @@ msgstr ""
 
 #: ../Network/Receive.pm:358
 msgid "You are sitting.\n"
-msgstr ""
+msgstr "Anda duduk.\n"
 
 #: ../Network/Receive.pm:368
 msgid "You are standing.\n"
-msgstr ""
+msgstr "Anda berdiri.\n"
 
 #: ../../openkore.pl:160
 #, perl-format
@@ -38,6 +38,8 @@ msgid ""
 "Your version of the XSTools library is too old.\n"
 "Please read %s"
 msgstr ""
+"Versi library XSTools anda sudah terlalu lama.\n"
+"Silahkan lihat %s"
 
 #: ../../openkore.pl:164
 #, perl-format
@@ -45,6 +47,8 @@ msgid ""
 "Your version of XSTools library is incompatible.\n"
 "Please read %s"
 msgstr ""
+"Versi library XSTools anda tidak kompatibel.\n"
+"Silahkan lihat %s"
 
 #: ../../openkore.pl:168
 #, perl-format
@@ -52,72 +56,76 @@ msgid ""
 "Your version of the XSTools library is too old. Please upgrade it.\n"
 "Please read %s"
 msgstr ""
+"Versi library XSTools anda sudah terlalu lama. Silahkan upgrade.\n"
+"Silahkan Lihat %s"
 
 #: ../../openkore.pl:203
 msgid "One or more plugins failed to load."
-msgstr ""
+msgstr "Satu atau lebih dari plugin yang disertakan gagal untuk dijalankan."
 
 #: ../../openkore.pl:327
 #, perl-format
 msgid "Unable to initialize the IPC subsystem: %s\n"
-msgstr ""
+msgstr "Tidak dapat menginisialisasikan IPC Subsystem : %s\n"
 
 #: ../../openkore.pl:337
 msgid "Checking for new portals... "
-msgstr ""
+msgstr "Melakukan cek untuk portal baru... "
 
 #: ../../openkore.pl:339
 msgid "found new portals!\n"
-msgstr ""
+msgstr "Menemukan portal baru!\n"
 
 #: ../../openkore.pl:340
 #, perl-format
 msgid "Auto-compile in %d seconds...\n"
-msgstr ""
+msgstr "Melakukan auto-compile dalam %d detik...\n"
 
 #: ../../openkore.pl:341
 msgid "Compile portals now? (Y/n) "
-msgstr ""
+msgstr "Compile portal sekarang? (Y/n) "
 
 #: ../../openkore.pl:346
 msgid "compiling portals"
-msgstr ""
+msgstr "sedang meng-compile portal"
 
 #: ../../openkore.pl:349
 msgid "skipping compile"
-msgstr ""
+msgstr "Melewati compile"
 
 #: ../../openkore.pl:353
 msgid ""
 "none found\n"
 "\n"
 msgstr ""
+"Tidak ditemukan\n"
+"\n"
 
 #: ../../openkore.pl:362
 msgid "Enter Username: "
-msgstr ""
+msgstr "Masukkan Username: "
 
 #: ../../openkore.pl:367
 msgid "Enter Password: "
-msgstr ""
+msgstr "Masukkan password:"
 
 #: ../../openkore.pl:376
 msgid "Master Servers"
-msgstr ""
+msgstr "master server"
 
 #: ../../openkore.pl:377
 msgid "#         Name\n"
-msgstr ""
+msgstr "#         Nama\n"
 
 #: ../../openkore.pl:391
 #, perl-format
 msgid "'%s' is not a valid server.\n"
-msgstr ""
+msgstr "'%s' bukan merupakan server yang benar.\n"
 
 #: ../../openkore.pl:393
 msgid "Enter the number of your master server: "
-msgstr ""
+msgstr "Masukkan nomer dari master server anda: "
 
 #: ../../openkore.pl:412
 msgid "No username or password set."
-msgstr ""
+msgstr "Username atau password tidak di-set."
