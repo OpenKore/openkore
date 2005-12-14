@@ -20,7 +20,11 @@
 # <a href="http://www.gnu.org/software/gettext/">GNU gettext</a> translation
 # files (*.mo).
 #
-# <b>Note:</b> translation files MUST be encoded in UTF-8 (without BOM).
+# <b>Notes:</b>
+# `l
+# - Translation files MUST be encoded in UTF-8 (without BOM).
+# - We use short locale names, as defined by http://www.loc.gov/standards/iso639-2/englangn.html
+# `l`
 package Translation;
 
 use strict;
@@ -53,36 +57,37 @@ use constant DEFAULT_PODIR => "$RealBin/src/po";
 # src/auto/XSTools/translation/wrapper.xs
 
 ##
-# Translation::initDefault([podir])
+# Translation::initDefault([podir, locale])
 # Ensures: Translation::T() and Translation::TF() will be usable.
 #
 # Initialize the default translation object. Translation::T() and
 # Translation::TF() will only be usable after calling this function once.
 sub initDefault {
-	my ($podir) = @_;
+	my ($podir, $locale) = @_;
 	$podir = DEFAULT_PODIR if (!defined $podir);
-	$_translation = _load(_autodetect($podir));
+	$_translation = _load(_autodetect($podir, $locale));
 }
 
 ##
-# Translation->new([podir])
+# Translation->new([podir, locale])
 # podir: the directory which contains translation files.
+# locale: the name of a locale.
 # Returns: a Translation object.
 # Ensures: defined(result)
 #
-# Create a new Translation object. The operating system's locale will
-# be automatically detected, and a suitable language file will be loaded
-# from $podir. If $podir is not specified, it will default to OpenKore's
-# own translation files folder.
+# Create a new Translation object. A suitable language file will be loaded
+# from $podir. If $locale is not defined, then the operating system's locale
+# will be automatically detected. If $podir is not specified, it will default
+# to OpenKore's own translation files folder.
 #
 # You're probably looking for Translation::T() instead. See
 # $translation->translate() for rationale.
 sub new {
-	my ($class, $podir) = @_;
+	my ($class, $podir, $locale) = @_;
 	my %self;
 
 	$podir = DEFAULT_PODIR if (!defined $podir);
-	$self{pofile} = _autodetect($podir);
+	$self{pofile} = _autodetect($podir, $locale);
 	$self{trans} = _load($self{pofile});
 
 	bless \%self, $class;
@@ -94,31 +99,35 @@ sub DESTROY {
 	_unload($self->{trans});
 }
 
-# _autodetect(podir)
+# _autodetect(podir, [requested_locale])
 #
 # Autodetect the operating system's language, and return the filename for
 # the suitable translation file (.mo) from $podir. Returns undef if
 # there is no suitable translation file.
 sub _autodetect {
-	my ($podir) = @_;
+	my ($podir, $requested_locale) = @_;
 	my $locale;
 
-	sub empty { return !defined($_[0]) || length($_[0]) == 0; }
-	if (!empty($ENV{LC_ALL})) {
-		$locale = $ENV{LC_ALL};
-	} elsif (!empty($ENV{LC_MESSAGES})) {
-		$locale = $ENV{LC_MESSAGES};
-	} elsif (!empty($ENV{LANG})) {
-		$locale = $ENV{LANG};
-	}
+	if ($requested_locale eq '') {
+		sub empty { return !defined($_[0]) || length($_[0]) == 0; }
+		if (!empty($ENV{LC_ALL})) {
+			$locale = $ENV{LC_ALL};
+		} elsif (!empty($ENV{LC_MESSAGES})) {
+			$locale = $ENV{LC_MESSAGES};
+		} elsif (!empty($ENV{LANG})) {
+			$locale = $ENV{LANG};
+		}
 
-	if (!defined($locale) && $^O eq 'MSWin32') {
-		require WinUtils;
-		$locale = WinUtils::getLanguageName();
-		return undef if ($locale eq 'C');
-	}
+		if (!defined($locale) && $^O eq 'MSWin32') {
+			require WinUtils;
+			$locale = WinUtils::getLanguageName();
+			return undef if ($locale eq 'C');
+		}
+		return undef if (!defined $locale);
 
-	return undef if (!defined $locale);
+	} else {
+		$locale = $requested_locale;
+	}
 
 	# $locale is in a format like this: en_US.UTF-8
 	# Remove everything after the dot and all slashes.
