@@ -22,6 +22,7 @@ use IO::Socket::INET;
 use Globals;
 use Log qw(message error warning);
 use Utils qw(dataWaiting timeOut shiftPack unShiftPack);
+use Misc;
 
 use Network::Send;
 
@@ -206,6 +207,9 @@ sub clientSend {
 	my $dontMod = shift;
 
 	$msg = $self->modifyPacketIn($msg) unless ($dontMod);
+	if ($config{debugPacket_ro_received}) {
+		visualDump($msg, 'clientSend');
+	}
 	$self->{client}->send($msg) if (($self->clientAlmostAlive && $dontMod) || $self->clientAlive);
 }
 

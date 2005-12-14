@@ -220,6 +220,58 @@ sub new {
 	return \%self;
 }
 
+##
+# ->willMangle($switch)
+#
+# Return 1 if a packet with the given switch would be mangled.
+# Return 0 otherwise.
+sub willMangle {
+	my ($self, $switch) = @_;
+
+	my $packet = $self->{packet_list}{$switch};
+	my $name = $packet->[0];
+
+	return 1 if $Plugins::hooks{"packet_mangle/$name"};
+	return 0;
+}
+
+##
+# ->mangle($args)
+#
+# Calls the appropriate plugin function to mangle the packet, which
+# destructively modifies $args.
+# Returns false if the packet should be suppressed.
+sub mangle {
+	my ($self, $args) = @_;
+
+	my $switch = $args->{switch};
+	my $packet = $self->{packet_list}{$switch};
+	my $name = $packet->[0];
+	my $hookname = "packet_mangle/$name";
+	my $hook = $Plugins::hooks{$hookname}->[0];
+	return unless $hook && $hook->{r_func};
+	return $hook->{r_func}($hookname, $args, $hook->{user_data});
+}
+
+##
+# ->reconstruct($args)
+#
+# Reconstructs a raw packet from $args using $self->{packet_list}.
+sub reconstruct {
+	my ($self, $args) = @_;
+
+	my $switch = $args->{switch};
+	my $packet = $self->{packet_list}{$switch};
+	my ($name, $packString, $varNames) = @{$packet};
+
+	my @vars = ();
+	for my $varName (@{$varNames}) {
+		push(@vars, $args->{$varName});
+	}
+	my $packet = pack("H2 H2 $packString", substr($switch, 2, 2), substr($switch, 0, 2), @vars);
+	return $packet;
+}
+
 sub create {
 	my ($self, $type) = @_;
 	$type = 0 if $type eq '';
@@ -267,7 +319,7 @@ sub parse {
 	}
 
 	Plugins::callHook("packet/$handler->[0]", \%args);
-	return 1;
+	return \%args;
 }
 
 
