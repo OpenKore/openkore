@@ -4439,6 +4439,13 @@ sub parseSendMsg {
 	#	dumpData($msg);
 	#}
 
+	my $hookname = "packet_outMangle/$switch";
+	my $hook = $Plugins::hooks{$hookname}->[0];
+	if ($hook && $hook->{r_func} &&
+	    $hook->{r_func}($hookname, {data => substr($sendMsg, 2)}, $hook->{user_data})) {
+		undef $sendMsg;
+	}
+
 	if ($sendMsg ne "") {
 		$net->serverSend($sendMsg);
 	}
@@ -4635,13 +4642,17 @@ sub parseMsg {
 			my $targetType = unpack("v1", substr($msg, $i+2, 2)); # we don't use this yet
 			my $level = unpack("v1", substr($msg, $i + 6, 2));
 			my $sp = unpack("v1", substr($msg, $i + 8, 2));
+			my $range = unpack("v1", substr($msg, $i + 10, 2));
 			my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
 			if (!$skillName) {
 				$skillName = Skills->new(id => $skillID)->handle;
 			}
+			my $up = unpack("C1", substr($msg, $i+36, 1));
 
 			$char->{skills}{$skillName}{ID} = $skillID;
 			$char->{skills}{$skillName}{sp} = $sp;
+			$char->{skills}{$skillName}{range} = $range;
+			$char->{skills}{$skillName}{up} = $up;
 			$char->{skills}{$skillName}{targetType} = $targetType;
 			if (!$char->{skills}{$skillName}{lv}) {
 				$char->{skills}{$skillName}{lv} = $level;
