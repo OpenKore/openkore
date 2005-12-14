@@ -1,4 +1,6 @@
 #!/bin/sh
+# This script extracts strings from the OpenKore source code,
+# updates openkore.pot and *.po, and compiles *.po to .mo.
 set -e
 
 LANGUAGES="tl"
