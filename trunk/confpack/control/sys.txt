@@ -1,5 +1,12 @@
+###### Localization settings ######
+locale
+
+
+###### Wx interface settings ######
 wxHideConsole 1
 
+
+###### IPC framework settings ######
 # Whether to enable the IPC framework.
 ipc 0
 # Specify the IPC manager's host and port. Only useful if you're running
@@ -7,7 +14,6 @@ ipc 0
 # start an IPC manager on localhost when necessary.
 ipc_manager_host
 ipc_manager_port
-
 
 # The following two options only has effect if you're not using a remote IPC
 # manager. (if you let Kore automatically start the local IPC manager)
@@ -17,8 +23,8 @@ ipc_manager_bind
 # And start the IPC manager at this port.
 ipc_manager_startAtPort
 
-##
-# Vx interface settings
+
+###### Vx interface settings ######
 panelTwo_domains publicchat, pm, guildchat, partychat, pm/sent, list, info, selfchat, schat, error, warning
 panelOne_lineLimit 900
 panelTwo_lineLimit 100
