@@ -40,6 +40,7 @@ define_alias('Korean'   => 'EUC-KR');
 define_alias('Russian'  => 'ISO-8859-5');
 define_alias('Cyrillic' => 'ISO-8859-5');
 define_alias('Japanese' => 'Shift_JIS');
+define_alias('Thai'     => 'ISO-8859-11');
 
 our @EXPORT = qw(T TF);
 our @EXPORT_OK = qw(serverStrToUTF8);
