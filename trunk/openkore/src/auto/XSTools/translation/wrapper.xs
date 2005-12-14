@@ -9,7 +9,7 @@
 MODULE = Translation     PACKAGE = Translation
 PROTOTYPES: ENABLE
 
-UV
+IV
 _load(file)
 	char *file
 INIT:
@@ -17,20 +17,20 @@ INIT:
 CODE:
 	try {
 		translator = new Translator (file);
-		XSRETURN_UV ((UV) translator);
+		XSRETURN_IV ((IV) translator);
 	} catch (...) {
 		XSRETURN_UNDEF;
 	}
 
 void
 _unload(translator)
-	UV translator
+	IV translator
 CODE:
 	delete (Translator *) translator;
 
 void
 _translate(translator, message)
-	UV translator
+	IV translator
 	SV *message
 INIT:
 	SV *msg;
