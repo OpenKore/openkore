@@ -620,8 +620,8 @@ sub checkClient {
 		$msg = "";
 
 		# TODO: Player/monster statuses, active ground effect skills,
-		# TODO: finish nonstackable inventory items
-		# TODO: dropped items, player genders, vendors
+		# TODO: Cart Items, Friends list, fix pets
+		# TODO: dropped items, player genders
 
 		# Send player stats
 
@@ -655,6 +655,9 @@ sub checkClient {
 		$msg .= pack('C2 V3', 0x41, 0x01, 16, $char->{int}, $char->{int_bonus});
 		$msg .= pack('C2 V3', 0x41, 0x01, 17, $char->{dex}, $char->{dex_bonus});
 		$msg .= pack('C2 V3', 0x41, 0x01, 18, $char->{luk}, $char->{luk_bonus});
+		
+		# Send attack range
+		$msg .= pack('C2 v', 0x3A, 0x01, $char->{attack_range});
 
 		# Send skill information
 		my $skillInfo = "";
@@ -692,6 +695,15 @@ sub checkClient {
 		$msg .= pack('C2 v1', 0xA3, 0x00, length($stackableInfo) + 4) . $stackableInfo;
 		
 		# Send non-stackable item (mostly equipment) information
+		my $nonstackableInfo = "";
+		for (my $i = 0; $i < @nonstackable; $i++) {
+			my $item = $char->{inventory}[$nonstackable[$i]];
+			
+			$nonstackableInfo .= pack('v2 C2 v2 C2 a8', $item->{index}, $item->{nameID}, $item->{type},
+				$item->{identified}, $item->{type_equip}, $item->{equipped}, $item->{broken},
+				$item->{upgrade}, $item->{cards});
+		}
+		$msg .= pack('C2 v1', 0xA4, 0x00, length($nonstackableInfo) + 4) . $nonstackableInfo;
 
 		# Send all portal info
 		foreach my $ID (@portalsID) {
@@ -700,11 +712,9 @@ sub checkClient {
 			shiftPack(\$coords, $portals{$ID}{pos}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
-			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
+			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 				0x78, 0x00, $ID, 0, 0, 0, 0, $portals{$ID}{type}, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, $coords, 0, 0);
-
-			$msg = $msg . $actorMsg;
 		}
 
 		# Send all NPC info
@@ -717,11 +727,9 @@ sub checkClient {
 			shiftPack(\$coords, $npcs{$ID}{pos}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
-			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
+			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 				0x78, 0x00, $ID, 0, 0, 0, 0, $npcs{$ID}{type}, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, $coords, 0, 0);
-
-			$msg = $msg . $actorMsg;
 		}
 
 		# Send all monster info
@@ -734,29 +742,25 @@ sub checkClient {
 			shiftPack(\$coords, $monsters{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
-			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
+			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 				0x78, 0x00, $ID, $monsters{$ID}{walk_speed} * 1000, 0, 0, 0, $monsters{$ID}{nameID}, 0, 0, 0, 0, 0, 0,
 				0, 0, 0, 0, 0, $coords, 0, 0);
-
-			$msg = $msg . $actorMsg;
 		}
 
 		# Send info about pets
-		foreach my $ID (@petsID) {
+		#foreach my $ID (@petsID) {
 			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
 			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
-			my $coords = "";
-			shiftPack(\$coords, $pets{$ID}{pos_to}{x}, 10);
-			shiftPack(\$coords, $pets{$ID}{pos_to}{y}, 10);
-			shiftPack(\$coords, 0, 4);
+		#	my $coords = "";
+		#	shiftPack(\$coords, $pets{$ID}{pos_to}{x}, 10);
+		#	shiftPack(\$coords, $pets{$ID}{pos_to}{y}, 10);
+		#	shiftPack(\$coords, 0, 4);
 
-			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-				0x78, 0x00, $ID, $pets{$ID}{walk_speed} * 1000, 0, 0, 0, $pets{$ID}{nameID}, 1, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, $coords, 0, 0);
-
-			$msg = $msg . $actorMsg;
-		}
+		#	$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
+		#		0x78, 0x00, $ID, $pets{$ID}{$ID}{walk_speed} * 1000, 0, 0, 0, $pets{$ID}{$ID}{nameID}, 1, 0, 0, 0, 0, 0,
+		#		0, 0, 0, 0, 0, $coords, 0, 0);
+		#}
 
 		# Send info about surrounding players
 		foreach my $ID (@playersID) {
@@ -771,13 +775,27 @@ sub checkClient {
 			# Note: Until Receive.pm's 022C is fixed, hair_color is going to zeroed.
 			# Its unpacking hair color from the wrong location, and as such causes RO to crash when we
 			# feed it the bad value.
-			my $actorMsg = pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 C1 x1 C1 v1',
+			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 C1 x1 C1 v1',
 				0x78, 0x00, $ID, $players{$ID}{walk_speed} * 1000, 0, 0, 0, $players{$ID}{jobID}, 0, $players{$ID}{weapon},
 				$players{$ID}{headgear}{low}, $players{$ID}{shield}, $players{$ID}{headgear}{top}, $players{$ID}{headgear}{mid},
 				$players{$ID}{hair_color} * 0, 0, $players{$ID}{look}{head}, $players{$ID}{guild}, 0, $coords, $players{$ID}{look}{body},
 				($players{$ID}{dead}? 1 : ($players{$ID}{sitting}? 2 : 0)), $players{$ID}{lv});
-
-			$msg = $msg . $actorMsg;
+		}
+		
+		# Send vendor list
+		foreach my $ID (@venderListsID) {
+			$msg .= pack('C2 a4 a30 x50', 0x31, 0x01, $ID, $venderLists{$ID}{title});
+		}
+		
+		# Send chatrooms
+		foreach my $ID (@chatRoomsID) {
+			next if (! $chatRooms{$ID}{ownerID});
+			
+			# '00D7' => ['chat_info', 'x2 a4 a4 v1 v1 C1 a*', [qw(ownerID ID limit num_users public title)]],
+			my $chatMsg = pack('a4 a4 v2 C1 a* x1', $chatRooms{$ID}{ownerID}, $ID, $chatRooms{$ID}{limit},
+				$chatRooms{$ID}{num_users}, $chatRooms{$ID}{public}, $chatRooms{$ID}{title});
+			
+			$msg .= pack('C2 v', 0xD7, 0x00, length($chatMsg) + 4) . $chatMsg;
 		}
 
 		$self->clientSend($msg,1);
