@@ -35,6 +35,7 @@ use Globals;
 use Plugins;
 use Utils;
 use Log qw(warning error);
+use Translation;
 
 our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys);
 
@@ -44,8 +45,8 @@ our $NAME = 'OpenKore';
 our $VERSION = '1.9.1';
 our $CVS = ' (CVS version)';
 our $WEBSITE = 'http://openkore.sourceforge.net';
-our $versionText = "*** $NAME ${VERSION}${CVS} - Custom Ragnarok Online client ***\n***   $WEBSITE   ***\n";
-our $welcomeText = "Welcome to X-$NAME.";
+our $versionText = "*** $NAME ${VERSION}${CVS} - " . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
+our $welcomeText = T("Welcome to ") . "X-$NAME.";
 our $MAX_READ = 30000;
 
 # Commandline arguments

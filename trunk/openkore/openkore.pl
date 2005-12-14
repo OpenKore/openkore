@@ -130,7 +130,7 @@ eval "use OpenKoreMod;";
 undef $@;
 my $parseArgResult = Settings::parseArguments();
 Settings::parseSysConfig();
-Translation::initDefault();
+Translation::initDefault(undef, $sys{locale});
 
 use Interface;
 $interface = Interface->switchInterface($Settings::default_interface, 1);
