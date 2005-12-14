@@ -19,6 +19,7 @@ New config options:
      Russian
      Cyrillic
      Japanese
+     Thai
 
 Internal:
 - Implemented the beginning of a localization framework.

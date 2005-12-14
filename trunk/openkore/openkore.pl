@@ -126,12 +126,11 @@ use Carp;
 use Translation;
 use Settings qw(%sys);
 
-Translation::initDefault();
-
 eval "use OpenKoreMod;";
 undef $@;
 my $parseArgResult = Settings::parseArguments();
 Settings::parseSysConfig();
+Translation::initDefault();
 
 use Interface;
 $interface = Interface->switchInterface($Settings::default_interface, 1);
