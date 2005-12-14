@@ -194,6 +194,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverEncoding Thai
 
 [Thailand - tRO Account 1: Fenrir, Lydia, Sarah]
 ip 203.144.244.121
@@ -205,6 +206,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverEncoding Thai
 
 [Thailand - tRO Account 2: Frigg, Freya, Baldur, Heimdal]
 ip 203.144.244.5
@@ -216,6 +218,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverEncoding Thai
 
 [Thailand - tRO Account 2: Honir, Odin, Thor]
 ip 203.144.244.122
@@ -227,6 +230,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverEncoding Thai
 
 [Thailand - tRO Account 3: Isa, Tyr, Idun]
 ip 203.144.244.7
@@ -238,6 +242,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverEncoding Thai
 
 [Thailand - tRO Account 3: Bijou, Grimnir, Bragi]
 ip 203.144.244.123
@@ -249,6 +254,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+serverEncoding Thai
 
 [Japan - jRO: Verdandi]
 ip 61.215.212.13
