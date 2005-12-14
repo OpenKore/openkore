@@ -31,6 +31,8 @@ function prune($forum_id, $prune_date, $prune_all = false)
 {
 	global $db, $lang;
 
+	$db->sql_query("SET SQL_BIG_SELECTS=1");
+
 	$prune_all = ($prune_all) ? '' : 'AND t.topic_vote = 0 AND t.topic_type <> ' . POST_ANNOUNCE;
 	//
 	// Those without polls and announcements ... unless told otherwise!
