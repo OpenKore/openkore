@@ -8,12 +8,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-13 23:03+0100\n"
+"POT-Creation-Date: 2005-12-14 14:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../Network/Receive.pm:358
@@ -24,92 +24,92 @@ msgstr ""
 msgid "You are standing.\n"
 msgstr ""
 
-#: ../../openkore.pl:161
+#: ../../openkore.pl:160
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
 "Please read %s"
 msgstr ""
 
-#: ../../openkore.pl:165
+#: ../../openkore.pl:164
 #, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
 "Please read %s"
 msgstr ""
 
-#: ../../openkore.pl:169
+#: ../../openkore.pl:168
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old. Please upgrade it.\n"
 "Please read %s"
 msgstr ""
 
-#: ../../openkore.pl:204
+#: ../../openkore.pl:203
 msgid "One or more plugins failed to load."
 msgstr ""
 
-#: ../../openkore.pl:328
+#: ../../openkore.pl:327
 #, perl-format
 msgid "Unable to initialize the IPC subsystem: %s\n"
 msgstr ""
 
-#: ../../openkore.pl:338
+#: ../../openkore.pl:337
 msgid "Checking for new portals... "
 msgstr ""
 
-#: ../../openkore.pl:340
+#: ../../openkore.pl:339
 msgid "found new portals!\n"
 msgstr ""
 
-#: ../../openkore.pl:341
+#: ../../openkore.pl:340
 #, perl-format
 msgid "Auto-compile in %d seconds...\n"
 msgstr ""
 
-#: ../../openkore.pl:342
+#: ../../openkore.pl:341
 msgid "Compile portals now? (Y/n) "
 msgstr ""
 
-#: ../../openkore.pl:347
+#: ../../openkore.pl:346
 msgid "compiling portals"
 msgstr ""
 
-#: ../../openkore.pl:350
+#: ../../openkore.pl:349
 msgid "skipping compile"
 msgstr ""
 
-#: ../../openkore.pl:354
+#: ../../openkore.pl:353
 msgid ""
 "none found\n"
 "\n"
 msgstr ""
 
-#: ../../openkore.pl:363
+#: ../../openkore.pl:362
 msgid "Enter Username: "
 msgstr ""
 
-#: ../../openkore.pl:368
+#: ../../openkore.pl:367
 msgid "Enter Password: "
 msgstr ""
 
-#: ../../openkore.pl:377
+#: ../../openkore.pl:376
 msgid "Master Servers"
 msgstr ""
 
-#: ../../openkore.pl:378
+#: ../../openkore.pl:377
 msgid "#         Name\n"
 msgstr ""
 
-#: ../../openkore.pl:392
+#: ../../openkore.pl:391
 #, perl-format
 msgid "'%s' is not a valid server.\n"
 msgstr ""
 
-#: ../../openkore.pl:394
+#: ../../openkore.pl:393
 msgid "Enter the number of your master server: "
 msgstr ""
 
-#: ../../openkore.pl:413
+#: ../../openkore.pl:412
 msgid "No username or password set."
 msgstr ""
