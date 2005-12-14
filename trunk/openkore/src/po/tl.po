@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-13 23:03+0100\n"
+"POT-Creation-Date: 2005-12-14 14:50+0100\n"
 "PO-Revision-Date: 2005-12-13 23:03+0100\n"
 "Last-Translator: kaliwanagan <kaliwanagan@users.sourceforge.net>\n"
 "Language-Team: Tagalog\n"
@@ -23,7 +23,7 @@ msgstr "Ikaw ay nakaupo.\n"
 msgid "You are standing.\n"
 msgstr "Ikaw ay nakatayo.\n"
 
-#: ../../openkore.pl:161
+#: ../../openkore.pl:160
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old.\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Luma na ang XSTools library mo.\n"
 "Kung maari ay pakibasa ito %s"
 
-#: ../../openkore.pl:165
+#: ../../openkore.pl:164
 #, perl-format
 msgid ""
 "Your version of XSTools library is incompatible.\n"
@@ -41,7 +41,7 @@ msgstr ""
 "Hindi tugma ang XSTools library mo.\n"
 "Kung maari ay pakibasa ito %s"
 
-#: ../../openkore.pl:169
+#: ../../openkore.pl:168
 #, perl-format
 msgid ""
 "Your version of the XSTools library is too old. Please upgrade it.\n"
@@ -50,41 +50,41 @@ msgstr ""
 "Luma na ang XSTools library mo.\n"
 "Kung maari ay pakibasa ito %s"
 
-#: ../../openkore.pl:204
+#: ../../openkore.pl:203
 msgid "One or more plugins failed to load."
 msgstr "Isa o marami pang plugins ang hindi nagload."
 
-#: ../../openkore.pl:328
+#: ../../openkore.pl:327
 #, perl-format
 msgid "Unable to initialize the IPC subsystem: %s\n"
 msgstr "Hindi ma-initialize ang IPC subsystem: %s\n"
 
-#: ../../openkore.pl:338
+#: ../../openkore.pl:337
 msgid "Checking for new portals... "
 msgstr "Naghahanap ng mga bagong portal... "
 
-#: ../../openkore.pl:340
+#: ../../openkore.pl:339
 msgid "found new portals!\n"
 msgstr "nakatagpo ng mga bagong portal!\n"
 
-#: ../../openkore.pl:341
+#: ../../openkore.pl:340
 #, perl-format
 msgid "Auto-compile in %d seconds...\n"
 msgstr "Sisimulan ang auto-compile sa loob ng %d segundo...\n"
 
-#: ../../openkore.pl:342
+#: ../../openkore.pl:341
 msgid "Compile portals now? (Y/n) "
 msgstr "Ngayon na ba ang pagcompile ng portals? (Y/n) "
 
-#: ../../openkore.pl:347
+#: ../../openkore.pl:346
 msgid "compiling portals"
 msgstr "kinocompile na ang mga portal"
 
-#: ../../openkore.pl:350
+#: ../../openkore.pl:349
 msgid "skipping compile"
 msgstr "nilalagpasan ang pagcomple"
 
-#: ../../openkore.pl:354
+#: ../../openkore.pl:353
 msgid ""
 "none found\n"
 "\n"
@@ -92,31 +92,31 @@ msgstr ""
 "walang natagpuan\n"
 "\n"
 
-#: ../../openkore.pl:363
+#: ../../openkore.pl:362
 msgid "Enter Username: "
 msgstr "Pakitype ang Username: "
 
-#: ../../openkore.pl:368
+#: ../../openkore.pl:367
 msgid "Enter Password: "
 msgstr "Pakitype ang password:"
 
-#: ../../openkore.pl:377
+#: ../../openkore.pl:376
 msgid "Master Servers"
 msgstr "Mga master server"
 
-#: ../../openkore.pl:378
+#: ../../openkore.pl:377
 msgid "#         Name\n"
 msgstr "#         Pangalan\n"
 
-#: ../../openkore.pl:392
+#: ../../openkore.pl:391
 #, perl-format
 msgid "'%s' is not a valid server.\n"
 msgstr "'%s' ay hindi isang balidong server.\n"
 
-#: ../../openkore.pl:394
+#: ../../openkore.pl:393
 msgid "Enter the number of your master server: "
 msgstr "Pakitype ang bilang ng iyong master server: "
 
-#: ../../openkore.pl:413
+#: ../../openkore.pl:412
 msgid "No username or password set."
 msgstr "Walang username o password ang nakaset."

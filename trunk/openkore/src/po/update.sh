@@ -12,6 +12,9 @@ xgettext -L perl --force-po -o openkore.pot --keyword=T --keyword=TF \
 	../../openkore.pl \
 	../functions.pl
 
+sed 's/charset=CHARSET/charset=UTF-8/' openkore.pot > openkore.pot.2
+mv openkore.pot.2 openkore.pot
+
 for LANG in $LANGUAGES; do
 	FILE="$LANG.po"
 	if [[ ! -f "$FILE" ]]; then
