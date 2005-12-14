@@ -4576,8 +4576,10 @@ sub parseMsg {
 
 	Plugins::callHook('parseMsg/pre', {switch => $switch, msg => $msg, msg_size => $msg_size});
 	
-	# Continue the message to the client
-	$net->clientSend(substr($msg, 0, $msg_size)) if ($msg_size > 0);
+	if ($msg_size > 0 && !$packetParser->willMangle($switch)) {
+		# Continue the message to the client
+		$net->clientSend(substr($msg, 0, $msg_size));
+	}
 
 	$lastPacketTime = time;
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
@@ -4603,9 +4605,21 @@ sub parseMsg {
 		# Continue the message to the client
 		$net->clientSend(substr($msg, 0, $msg_size));
 
-	} elsif ($packetParser && $packetParser->parse(substr($msg, 0, $msg_size))) {
+	} elsif ($packetParser &&
+	         (my $args = $packetParser->parse(substr($msg, 0, $msg_size)))) {
 		# Use the new object-oriented packet parser
-
+		if ($packetParser->willMangle($switch)) {
+			my $ret = $packetParser->mangle($args);
+			if (!$ret) {
+				# Packet was not mangled
+				$net->clientSend($args->{RAW_MSG});
+			} elsif ($ret == 1) {
+				# Packet was mangled
+				$net->clientSend($packetParser->reconstruct($args));
+			} else {
+				# Packet was suppressed
+			}
+		}
 	} elsif ($switch eq "010F") {
 		# Character skill list
 		Network::Receive::change_to_constate5();
