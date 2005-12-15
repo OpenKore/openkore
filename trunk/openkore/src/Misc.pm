@@ -3120,11 +3120,11 @@ sub checkSelfCondition {
 		return 0 if !checkFieldWater(\%field, $pos->{x}, $pos->{y});
 	}
 
-	my %args;
-	$args{prefix} = $prefix;
-	$args{return} = 1;
-	Plugins::callHook("checkSelfCondition", \%args);
-	return 0 if (!$args{return});
+	my %hookArgs;
+	$hookArgs{prefix} = $prefix;
+	$hookArgs{return} = 1;
+	Plugins::callHook("checkSelfCondition", \%hookArgs);
+	return 0 if (!$hookArgs{return});
 
 	return 1;
 }
