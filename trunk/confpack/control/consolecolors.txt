@@ -32,6 +32,7 @@ pm yellow
 pm/sent yellow
 publicchat green
 guildchat darkgreen
+partychat brown
 selfchat green
 schat yellow
 list white
