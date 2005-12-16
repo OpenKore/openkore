@@ -516,12 +516,9 @@ sub checkClient {
 		my $charMsg = $self->{client_saved}{char};
 		my $charMsgPad = $self->{client_saved}{char_pad};
 
-		# Exp count
-		substr($charMsg, 4, 4) = pack('V', $char->{exp});
+		# Exp count, zeny
+		substr($charMsg, 4, 8) = pack('V2', $char->{exp}, $char->{zenny});
 
-		# Zeny
-		substr($charMsg, 8, 4) = pack('V', $char->{zenny});
-		
 		# Job Level
 		substr($charMsg, 16, 1) = pack('C', $char->{lv_job});
 
@@ -531,12 +528,9 @@ sub checkClient {
 		# Base Level
 		substr($charMsg, 58, 1) = pack('C', $char->{lv});
 
-		# Stats
-		substr($charMsg, 98, 6) = pack('C6', $char->{str}, $char->{agi}, $char->{vit}, $char->{int},
-			$char->{dex}, $char->{luk});
-
-		# Character slot 0 always
-		substr($charMsg, 104, 1) = pack('C', 0);
+		# STR, AGI, VIT, INT, DEX, LUK, Character slot
+		substr($charMsg, 98, 7) = pack('C7', $char->{str}, $char->{agi}, $char->{vit}, $char->{int},
+			$char->{dex}, $char->{luk}, 0);
 
 		# Send the character info packet
 		$msg = pack("C2 v", 0x6B, 0x00, length($charMsg) + length($charMsgPad) + 4) . $charMsgPad . $charMsg;
@@ -545,6 +539,14 @@ sub checkClient {
 
 		message "Game Login.\n", "connection";
 		$$c_state = 2;
+
+		# Bypass client_state 2, send the character and map info packet
+		# WARNING: This doesn't work here? Character shows up as a novice with a name of random data.
+		#$msg = pack('C2 a4 Z16 C4 v1', 0x71, 0, $charID, $self->{client_saved}{map},
+		#		127, 0, 0, 1, $self->{client_listenPort});
+		#$self->clientSend($msg,1);
+
+		#$$c_state = 3;
 
 	} elsif ($$c_state == 2 && $switch eq "0066") {
 		# Client sent CharLogin
@@ -640,7 +642,7 @@ sub checkClient {
 			$char->{attack_magic_min}, $char->{attack_magic_max}, $char->{def}, $char->{def_bonus},
 			$char->{def_magic}, $char->{def_magic_bonus}, $char->{hit}, $char->{flee}, $char->{flee_bonus},
 			$char->{critical});
-		
+
 		# More stats
 		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 0, $char->{walk_speed}*1000);	# Walk speed
 		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 5, $char->{hp});			# Current HP
@@ -651,7 +653,7 @@ sub checkClient {
 		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 24, $char->{weight}*10);		# Current weight
 		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 25, $char->{weight_max}*10);	# Max weight
 		$msg .= pack('C2 v1 V1', 0xB0, 0x00, 53, $char->{attack_delay});	# Attack speed
-		
+
 		# Resend base stat info (str, agi, vit, int, dex, luk) this time with bonus
 		$msg .= pack('C2 V3', 0x41, 0x01, 13, $char->{str}, $char->{str_bonus});
 		$msg .= pack('C2 V3', 0x41, 0x01, 14, $char->{agi}, $char->{agi_bonus});
@@ -659,7 +661,7 @@ sub checkClient {
 		$msg .= pack('C2 V3', 0x41, 0x01, 16, $char->{int}, $char->{int_bonus});
 		$msg .= pack('C2 V3', 0x41, 0x01, 17, $char->{dex}, $char->{dex_bonus});
 		$msg .= pack('C2 V3', 0x41, 0x01, 18, $char->{luk}, $char->{luk_bonus});
-		
+
 		# Send attack range
 		$msg .= pack('C2 v', 0x3A, 0x01, $char->{attack_range});
 
@@ -674,36 +676,36 @@ sub checkClient {
 				$char->{skills}{$ID}{up});
 		}
 		$msg .= pack('C2 v', 0x0F, 0x01, length($skillInfo) + 4) . $skillInfo;
-		
+
 		# Sort items into stackable and non-stackable
 		my @stackable;
 		my @nonstackable;
 		for (my $i = 0; $i < @{$char->{inventory}}; $i++) {
 			my $item = $char->{inventory}[$i];
 			next unless $item && %{$item};
-			
+
 			if ($item->{type} <= 3 || $item->{type} == 6 || $item->{type} == 10) {
 				push @stackable, $i;
 			} else {
 				push @nonstackable, $i;
 			}
 		}
-		
+
 		# Send stackable item information
 		my $stackableInfo = "";
 		for (my $i = 0; $i < @stackable; $i++) {
 			my $item = $char->{inventory}[$stackable[$i]];
-			
+
 			$stackableInfo .= pack('v2 C2 v1 x2', $item->{index}, $item->{nameID}, $item->{type}, 1, #(identified)
 				$item->{amount});
 		}
 		$msg .= pack('C2 v1', 0xA3, 0x00, length($stackableInfo) + 4) . $stackableInfo;
-		
+
 		# Send non-stackable item (mostly equipment) information
 		my $nonstackableInfo = "";
 		for (my $i = 0; $i < @nonstackable; $i++) {
 			my $item = $char->{inventory}[$nonstackable[$i]];
-			
+
 			$nonstackableInfo .= pack('v2 C2 v2 C2 a8', $item->{index}, $item->{nameID}, $item->{type},
 				$item->{identified}, $item->{type_equip}, $item->{equipped}, $item->{broken},
 				$item->{upgrade}, $item->{cards});
@@ -786,20 +788,20 @@ sub checkClient {
 				$players{$ID}{hair_color} * 0, 0, $players{$ID}{look}{head}, $players{$ID}{guild}, 0, $coords, $players{$ID}{look}{body},
 				($players{$ID}{dead}? 1 : ($players{$ID}{sitting}? 2 : 0)), $players{$ID}{lv});
 		}
-		
+
 		# Send vendor list
 		foreach my $ID (@venderListsID) {
 			$msg .= pack('C2 a4 a30 x50', 0x31, 0x01, $ID, $venderLists{$ID}{title});
 		}
-		
+
 		# Send chatrooms
 		foreach my $ID (@chatRoomsID) {
 			next if (! $chatRooms{$ID}{ownerID});
-			
+
 			# '00D7' => ['chat_info', 'x2 a4 a4 v1 v1 C1 a*', [qw(ownerID ID limit num_users public title)]],
 			my $chatMsg = pack('a4 a4 v2 C1 a* x1', $chatRooms{$ID}{ownerID}, $ID, $chatRooms{$ID}{limit},
 				$chatRooms{$ID}{num_users}, $chatRooms{$ID}{public}, $chatRooms{$ID}{title});
-			
+
 			$msg .= pack('C2 v', 0xD7, 0x00, length($chatMsg) + 4) . $chatMsg;
 		}
 
@@ -848,7 +850,7 @@ sub modifyPacketIn {
 				last;
 			}
 		}
-		
+
 	} elsif ($switch eq "0071") {
 		# Save the mapname for client login
 		$self->{client_saved}{map} = substr($msg, 6, 16);
@@ -924,7 +926,7 @@ sub modifyPacketOut {
 		($switch eq "0116" && $config{serverType} == 4) ||
 		($switch eq "0089" && $config{serverType} == 5) ||
 		($switch eq "007E" && $config{serverType} == 6)) {
-		# Replace RO Client's Sync with our sync
+		# Intercept the RO client's sync
 
 		$msg = "";
 		$self->sendSync();
