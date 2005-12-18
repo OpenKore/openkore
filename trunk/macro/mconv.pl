@@ -12,7 +12,7 @@ use lib "src";
 use Macro::Parser;
 use Macro::Data;
 
-my $Version = sprintf("%d.%02d", q$Revision 1.1.1.1$ =~ /(\d+)\.(\d+)/);
+my $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 
 if (!defined $ARGV[0]) {
   print "macro converter\n\tconvert 0.8.x and 0.9.x macros to 1.0.x.\n\trelease $Version\n";

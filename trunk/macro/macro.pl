@@ -16,6 +16,7 @@ use Plugins;
 use Settings;
 use Globals;
 use Utils;
+use Misc;
 use Log qw(message error warning);
 use lib $Plugins::current_plugin_folder;
 use cvsdebug;
@@ -104,6 +105,15 @@ sub checkConfig {
   if (!defined $timeout{macro_delay}) {
     warning "[macro] you did not specify 'macro_delay' in timeouts.txt. Assuming 1s\n";
     $timeout{macro_delay}{timeout} = 1
+  }
+  if (!defined $::config{macro_orphans}) {
+    warning "[macro] you did not specify 'macro_orphans' in config.txt. Assuming 'terminate'\n";
+    configModify('macro_orphans', 'terminate');
+  } elsif ($::config{macro_orphans} ne 'terminate' &&
+           $::config{macro_orphans} ne 'reregister' &&
+           $::config{macro_orphans} ne 'reregister_safe') {
+    warning "[macro] macro_orphans ".$::config{macro_orphans}." is not a valid option.\n";
+    configModify('macro_orphans', 'terminate');
   }
   if ($::config{macro_readmanual} ne 'red/chili') {
     warning "[macro] you should read the documentation before using this plugin: ".

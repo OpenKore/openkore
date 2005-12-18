@@ -19,17 +19,46 @@ use Log qw(warning error);
 use Macro::Data;
 
 our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
+my $orphanWarn = 1;
 
 # own ai_Isidle check that excludes deal
 sub ai_isIdle {
   return 1 if $queue->overrideAI;
   # now check for orphaned script object
-  # may happen with activeperl
+  # may happen when messing around with "ai clear" and stuff.
   if (defined $queue && !AI::inQueue('macro')) {
-    error "[macro] orphaned macro!\n";
-    warning(sprintf("found an active macro '%s' but no 'macro' record in ai queue\n",$queue->name));
-    undef $queue;
-    return 0;
+    my $method = $queue->orphan;
+    if ($orphanWarn) {
+      error "[macro] orphaned macro!\n";
+      warning "found an active macro '".$queue->name."' but no 'macro' record in ai queue\n";
+      warning "using method '$method' to solve this problem\n";
+      $orphanWarn = 0;
+    }
+    # 'terminate' undefs the macro object and returns "ai is not idle"
+    if ($method eq 'terminate') {
+      undef $queue;
+      $orphanWarn = 1;
+      return 0
+    # 'reregister' re-inserts "macro" in ai_queue at the first position
+    } elsif ($method eq 'reregister') {
+      $queue->register;
+      $orphanWarn = 1;
+      return 1
+    # 'reregister_safe' waits until AI is idle then re-inserts "macro"
+    } elsif ($method eq 'reregister_safe') {
+      if (AI::isIdle || AI::is('deal')) {
+        $queue->register;
+        $orphanWarn = 1;
+        return 1
+      }
+      return 0;
+    # everything else terminates the macro (default behaviour)
+    } else {
+      warning "unknown method. terminating macro\n";
+      undef $queue;
+      $orphanWarn = 1;
+      return 0
+    }
   }
   return AI::is('macro', 'deal');
 }

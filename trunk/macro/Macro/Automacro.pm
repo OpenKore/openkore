@@ -120,12 +120,22 @@ sub checkPercent {
   $cvs->debug("checkPercent(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
   my ($arg, $what) = @_;
   my ($cond, $amount) = split(/ /, $arg);
-  if ($what =~ /^(hp|sp|weight)$/ && $char->{$what."_max"}) {
-    my $percent = $char->{$what} / $char->{$what."_max"} * 100;
-    return 1 if cmpr($percent, $cond, $amount);
-  } elsif ($what eq 'cweight' && $cart{weight_max}) {
-    my $percent = $cart{weight} / $cart{weight_max} * 100;
-    return 1 if cmpr($percent, $cond, $amount);
+  if ($what =~ /^(hp|sp|weight)$/) {
+    if ($amount =~ /\d+%$/ && $char->{$what."_max"}) {
+      $amount =~ s/%$//;
+      my $percent = $char->{$what} / $char->{$what."_max"} * 100;
+      return 1 if cmpr($percent, $cond, $amount);
+    } else {
+      return 1 if cmpr($char->{$what}, $cond, $amount);
+    }
+  } elsif ($what eq 'cweight') {
+    if ($amount =~ /\d+%$/ && $cart{weight_max}) {
+      $amount =~ s/%$//;
+      my $percent = $cart{weight} / $cart{weight_max} * 100;
+      return 1 if cmpr($percent, $cond, $amount);
+    } else {
+      return 1 if cmpr($cart{weight}, $cond, $amount);
+    }
   }
   return 0;
 }
@@ -353,7 +363,7 @@ sub automacroCheck {
   my ($trigger, $args) = @_;
 
   # do not run an automacro if there's already a macro running
-  return 0 if (AI::is('macro') || defined $queue);
+  return 0 if (AI::inQueue('macro') || defined $queue);
   $lockAMC = 1; # to avoid checking two events at the same time
 
   CHKAM: foreach my $am (keys %automacro) {
@@ -447,6 +457,7 @@ sub automacroCheck {
       $queue = new Macro::Script($automacro{$am}->{call});
       if (defined $queue) {
         $queue->setOverrideAI if $automacro{$am}->{overrideAI};
+        $queue->orphan($automacro{$am}->{orphan}) if defined $automacro{$am}->{orphan};
         $queue->setTimeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
       } else {
         error "[macro] unable to create macro queue.\n";
