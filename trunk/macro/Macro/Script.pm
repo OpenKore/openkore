@@ -35,7 +35,8 @@ sub new {
     label => {scanLabels($macro{$name})},
     repeat => $repeat,
     subcall => undef,
-    error => undef
+    error => undef,
+    orphan => $::config{macro_orphan}
   };
   bless ($self, $class);
   return $self;
@@ -57,6 +58,13 @@ sub register {
 sub registered {
   my $self = shift;
   return $self->{registered};
+}
+
+# sets and gets method for orphaned macros
+sub orphan {
+  my ($self, $method) = @_;
+  if (defined $method) {$self->{orphan} = $method}
+  else {return $self->{orphan}}
 }
 
 # sets repeat
@@ -267,6 +275,9 @@ sub next {
         $self->{error} = "error in ".$self->{line}.": use 'call $arg' instead of 'macro $arg'";
         return
       }
+    } elsif ($tmp =~ /^ai\s+clear$/) {
+      $self->{error} = "error in ".$self->{line}.": do not mess around with ai in macros";
+      return;
     }
     $self->{line}++;
     return parseCmd($tmp);
