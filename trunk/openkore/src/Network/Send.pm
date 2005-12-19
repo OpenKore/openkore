@@ -1886,6 +1886,9 @@ sub sendSync {
 	my $initialSync = shift;
 	my $msg;
 
+	# XKore mode 1 lets the client take care of syncing.
+	return if ($r_net->version == 1);
+
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x7E, 0x00) . pack("V1", getTickCount());
 
