@@ -275,15 +275,14 @@ sub getRandom {
   my $arg = shift;
   my @items;
   my $id = 0;
-  while ($arg ne '') {
-    ($items[$id++]) = $arg =~ /^[, ]*"(.*?)"/;
+  while (($items[$id++]) = $arg =~ /^[, ]*"(.*?)"/) {
     $arg =~ s/^[, ]*".*?"//g;
   }
   if (!@items) {
     warning "[macro] wrong syntax in \@random\n";
     return;
   }
-  return $items[rand @items];
+  return $items[rand $id-1];
 }
 
 # macro/script
