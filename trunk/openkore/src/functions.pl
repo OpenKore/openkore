@@ -487,7 +487,7 @@ sub AI {
 		$timeout{ai_getInfo}{time} = time;
 	}
 
-	if (!$net->clientAlive && timeOut($timeout{ai_sync})) {
+	if (!$net->version != 1 && timeOut($timeout{ai_sync})) {
 		$timeout{ai_sync}{time} = time;
 		sendSync($net);
 	}

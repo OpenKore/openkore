@@ -49,10 +49,10 @@ sub new {
 		'0073' => ['map_loaded','x4 a3',[qw(coords)]],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
-		'0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
-		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		'0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
+		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
-		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 x4 v1 v1 v1 v1 v1 v1 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 x4 v1 v1 v1 v1 v1 v1 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007C' => ['actor_spawned', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeard', 'a4 C1', [qw(ID type)]],
@@ -182,9 +182,9 @@ sub new {
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D7' => ['player_equipment', 'a4 C1 v1 v1', [qw(sourceID type ID1 ID2)]],
-		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
-		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
-		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
+		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v1', [qw(type)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -209,11 +209,11 @@ sub new {
 
 		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		
-		'022A' => ['actor_spawned', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x9 C1 a3 x3 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords lv)]], # still some problems remaining
+		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v V2 x5 C a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem sex coords act lv)]],
 
-		'022B' => ['actor_connected', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x9 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords lv)]], # still some problems remaining
+		'022B' => ['actor_connected', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x9 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords lv)]], # still some problems remaining
 
-		'022C' => ['actor_exists', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x15 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type pet weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords act lv)]], # still someproblems remaining
+		'022C' => ['actor_display', 'a4 v4 x2 v5 V1 v3 x4 V2 x5 C a5 x3 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem sex coords lv)]],
 		};
 
 	bless \%self, $class;
@@ -666,6 +666,215 @@ sub player_equipment {
 	}
 }
 
+# This packet is a merge of actor_exists, actor_connected, actor_moved, etc...
+sub actor_display {
+	my ($self, $args) = @_;
+	change_to_constate5();
+	
+	my ($actor, $type);
+	
+	# Initialize
+	my $nameID = unpack("V1", $args->{ID});
+	
+	my (%coordsFrom, %coordsTo);
+	if (length($args->{coords}) >= 5) {
+		unShiftPack(\$args->{coords}, \$coordsTo{y}, 10);
+		unShiftPack(\$args->{coords}, \$coordsTo{x}, 10);
+		unShiftPack(\$args->{coords}, \$coordsFrom{y}, 10);
+		unShiftPack(\$args->{coords}, \$coordsFrom{x}, 10);
+	} else {
+		unShiftPack(\$args->{coords}, \$args->{body_dir}, 4);
+		unShiftPack(\$args->{coords}, \$coordsTo{y}, 10);
+		unShiftPack(\$args->{coords}, \$coordsTo{x}, 10);
+		%{coordsFrom} = %coordsTo;
+	}
+	
+	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
+	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
+	# beyond removeActorWithDistance.
+	if ($config{removeActorWithDistance}) {
+		if ((my $block_dist = blockDistance($char->{pos_to}, {%coordsTo})) > ($config{removeActorWithDistance})) {
+				my $nameIdTmp = unpack("V1", $args->{ID});
+				debug "Removed out of sight actor $nameIdTmp at ($coordsTo{x}, $coordsTo{y}) (distance: $block_dist)\n";
+				return;
+		}
+	}
+	
+	if ($jobs_lut{$args->{type}}) {
+		# Actor is a player
+		$actor = $players{$args->{ID}};
+		$type = "Player";
+		if (!UNIVERSAL::isa($actor, 'Actor')) {
+			$actor = $players{$args->{ID}} = new Actor::Player();
+			binAdd(\@playersID, $args->{ID});
+			$actor->{binID} = binFind(\@playersID, $args->{ID});
+			$actor->{appear_time} = time;
+			
+			objectAdded('player', $args->{ID}, $actor);
+		}
+		
+		$actor->{nameID} = $nameID;
+	
+	} elsif ($args->{type} == 45) {
+		# Actor is a portal
+		$type = "Portal";
+		if (!$portals{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
+			binAdd(\@portalsID, $args->{ID});
+			$portals{$args->{ID}}{binID} = binFind(\@portalsID, $args->{ID});
+			$portals{$args->{ID}}{appear_time} = time;
+			
+			my $exists = portalExists($field{name}, \%coordsTo);
+			$portals{$args->{ID}}{source}{map} = $field{name};
+			$portals{$args->{ID}}{name} = ($exists ne "")
+				? "$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists)
+				: "Unknown $nameID";
+		}
+		$actor = $portals{$args->{ID}};
+		
+		$actor->{nameID} = $nameID;
+
+	} elsif ($args->{type} >= 1000) {
+		# Actor is a monster
+		if ($args->{hair_style} == 0x64) {
+			# Actor is a pet
+			$type = "Pet";
+			if (!$pets{$args->{ID}} || !%{$pets{$args->{ID}}}) {
+				binAdd(\@petsID, $args->{ID});
+				$pets{$args->{ID}}{binID} = binFind(\@petsID, $args->{ID});
+				$pets{$args->{ID}}{appear_time} = time;
+
+				$pets{$args->{ID}}{name} = ($monsters_lut{$args->{type}} ne "")
+						? $monsters_lut{$args->{type}}
+						: "Unknown $args->{type}";
+				$pets{$args->{ID}}{name_given} = "Unknown";
+				
+				if ($monsters{$args->{ID}}) {
+					binRemove(\@monstersID, $args->{ID});
+					objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
+					delete $monsters{$args->{ID}};
+				}
+				
+				objectAdded('pet', $args->{ID}, $pets{$args->{ID}}{$args->{ID}});
+			}
+			$actor = $pets{$args->{ID}};
+
+		} else {
+			# Actor really is a monster
+			$type = "Monster";
+			if (!$monsters{$args->{ID}} || !%{$monsters{$args->{ID}}}) {
+				$actor = $monsters{$args->{ID}} = new Actor::Monster();
+				binAdd(\@monstersID, $args->{ID});
+				$actor->{binID} = binFind(\@monstersID, $args->{ID});
+				$actor->{appear_time} = time;
+				
+				$actor->{name} = ($monsters_lut{$args->{type}} ne "")
+						? $monsters_lut{$args->{type}}
+						: "Unknown ".$args->{type};
+				
+				objectAdded('monster', $args->{ID}, $monsters{$args->{ID}});
+			}
+			$actor = $monsters{$args->{ID}};
+
+		}
+		
+		# Why do monsters use nameID as type?
+		$actor->{nameID} = $args->{type};
+		
+	} else {	# ($args->{type} < 1000 && $args->{type} != 45 && !$jobs_lut{$args->{type}})
+		# Actor is an NPC
+		$type = "NPC";
+		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
+			binAdd(\@npcsID, $args->{ID});
+			$npcs{$args->{ID}}{binID} = binFind(\@npcsID, $args->{ID});
+			$npcs{$args->{ID}}{appear_time} = time;
+			
+			my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
+			$npcs{$args->{ID}}{name} = $npcs_lut{$location} || "Unknown $nameID";
+			
+			objectAdded('npc', $args->{ID}, $npcs{$args->{ID}});
+		}
+		$actor = $npcs{$args->{ID}};
+		
+		$actor->{nameID} = $nameID;
+
+	}
+	
+	$actor->{ID} = $args->{ID};
+	$actor->{jobID} = $actor->{type} = $args->{type};
+	$actor->{guildID} = $args->{guildID};
+	$actor->{guildEmblem} = $args->{guildEmblem};
+	
+	$actor->{lv} = $args->{lv};
+	$actor->{sex} = $args->{sex};
+	
+	%{$actor->{pos_to}} = %coordsTo;
+	%{$actor->{pos}} = %coordsFrom;
+	$actor->{walk_speed} = $args->{walk_speed} / 1000;
+	$actor->{time_move} = time;
+	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+	
+	$actor->{headgear}{low} = $args->{lowhead};
+	$actor->{headgear}{mid} = $args->{midhead};
+	$actor->{headgear}{top} = $args->{tophead};
+	$actor->{weapon} = $args->{weapon};
+	$actor->{shield} = $args->{shield};
+	
+	$actor->{hair_style} = $args->{hair_style};
+	$actor->{hair_color} = $args->{hair_color};
+	
+	$actor->{look}{body} = $args->{body_dir};
+	$actor->{look}{head} = $args->{head_dir};
+	
+	if ($args->{act} == 1) {
+		$actor->{dead} = 1;
+	} elsif ($args->{act} == 2) {
+		$actor->{sitting} = 1;
+	}
+	
+	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
+	
+	# Packet specific
+	if ($args->{switch} eq "0078" ||
+		$args->{switch} eq "01D8" ||
+		$args->{switch} eq "022A") {
+		# Actor Exists
+		
+		if ($type eq "Player") {
+			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			debug "Player Exists: " . $actor->name . " ($actor->{binID})\n", $domain;
+			
+			# Shouldn't this have a more specific hook name?
+			Plugins::callHook('player', {player => $actor});
+		} else {
+			debug "$type Exists: $actor->{name} ($actor->{binID})\n", "parseMsg_presence";
+		}
+	
+	} elsif ($args->{switch} eq "0079" ||
+		$args->{switch} eq "01DB" ||
+		$args->{switch} eq "022B") {
+		# Actor Connected
+
+	} elsif ($args->{switch} eq "007B" ||
+		$args->{switch} eq "01DA" ||
+		$args->{switch} eq "022C") {
+		# Actor Moved
+		
+		# Correct the direction in which they're looking
+		my %vec;
+		getVector(\%vec, \%coordsTo, \%coordsFrom);
+		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
+		
+		$actor->{look}{body} = $direction;
+		$actor->{look}{head} = 0;
+		
+		if ($type eq "Player") {
+			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		} else {
+			debug "$type Moved: $actor->{name} ($actor->{binID}) - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
+		}
+	}
+}
+
 sub actor_exists {
 	# 0078: long ID, word speed, word state, word ailment, word look, word
 	# class, word hair, word weapon, word head_option_bottom, word shield,
@@ -676,8 +885,12 @@ sub actor_exists {
 	my ($self, $args) = @_;
 	change_to_constate5();
 	my %coords;
+	my %coords_from;
 	if ($args->{switch} eq '022C') {
-		makeCoords2(\%coords, $args->{coords}); 
+		unShiftPack(\$args->{coords}, \$coords{'y'}, 10);
+		unShiftPack(\$args->{coords}, \$coords{'x'}, 10);
+		unShiftPack(\$args->{coords}, \$coords_from{'y'}, 10);
+		unShiftPack(\$args->{coords}, \$coords_from{'x'}, 10);
 	} else {
 		makeCoords(\%coords, $args->{coords});
 	}
@@ -704,18 +917,20 @@ sub actor_exists {
 			$player = $players{$args->{ID}} = new Actor::Player();
 			binAdd(\@playersID, $args->{ID});
 			$player->{appear_time} = time;
-			$player->{ID} = $args->{ID};
-			$player->{jobID} = $args->{type};
-			$player->{sex} = $args->{sex};
-			$player->{nameID} = unpack("V1", $args->{ID});
 			$player->{binID} = binFind(\@playersID, $args->{ID});
 			$added = 1;
 		}
+
+		$player->{ID} = $args->{ID};
+		$player->{jobID} = $args->{type};
+		$player->{sex} = $args->{sex};
+		$player->{nameID} = unpack("V1", $args->{ID});
 
 		$player->{walk_speed} = $args->{walk_speed} / 1000;
 		$player->{headgear}{low} = $args->{lowhead};
 		$player->{headgear}{top} = $args->{tophead};
 		$player->{headgear}{mid} = $args->{midhead};
+		$player->{hair_style} = $args->{hair_style};
 		$player->{hair_color} = $args->{hair_color};
 		$player->{look}{body} = $args->{body_dir};
 		$player->{look}{head} = $args->{head_dir};
@@ -728,7 +943,7 @@ sub actor_exists {
 			$player->{sitting} = 1;
 		}
 		$player->{lv} = $args->{lv};
-		$player->{pos} = {%coords};
+		$player->{pos} = ($args->{switch} eq "022C")? {%coords_from} : {%coords};
 		$player->{pos_to} = {%coords};
 
 		my $domain = existsInList($config{friendlyAID}, unpack("V1", $player->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
@@ -741,7 +956,7 @@ sub actor_exists {
 		setStatus($args->{ID},$args->{param1},$args->{param2},$args->{param3});
 
 	} elsif ($args->{type} >= 1000) {
-		if ($args->{pet}) {
+		if ($args->{hair_style}) {
 			if (!$pets{$args->{ID}}{$args->{ID}} || !%{$pets{$args->{ID}}{$args->{ID}}}) {
 				$pets{$args->{ID}}{$args->{ID}}{'appear_time'} = time;
 				my $display = ($monsters_lut{$args->{type}} ne "")
@@ -968,7 +1183,7 @@ sub actor_moved {
 		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 	} elsif ($args->{type} >= 1000) {
-		if ($args->{pet}) {
+		if ($args->{hair_style}) {
 			my $pet = $pets{$args->{ID}} ||= {};
 			if (!%{$pets{$args->{ID}}}) {
 				$pet->{'appear_time'} = time;
@@ -1130,7 +1345,7 @@ sub actor_spawned {
 		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 
 	} elsif ($args->{type} >= 1000) {
-		if ($args->{pet}) {
+		if ($args->{hair_style}) {
 			if (!$pets{$args->{ID}} || !%{$pets{$args->{ID}}}) {
 				binAdd(\@petsID, $args->{ID});
 				$pets{$args->{ID}}{'nameID'} = $args->{type};
