@@ -526,7 +526,7 @@ sub checkClient {
 		substr($charMsg, 52, 1) = pack('C', $char->{jobID});
 
 		# Base Level
-		substr($charMsg, 58, 1) = pack('C', $char->{lv});
+		substr($charMsg, 58, 2) = pack('v', $char->{lv});
 
 		# STR, AGI, VIT, INT, DEX, LUK, Character slot
 		substr($charMsg, 98, 7) = pack('C7', $char->{str}, $char->{agi}, $char->{vit}, $char->{int},
@@ -755,19 +755,19 @@ sub checkClient {
 		}
 
 		# Send info about pets
-		#foreach my $ID (@petsID) {
+		foreach my $ID (@petsID) {
 			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
 			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
 			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
-		#	my $coords = "";
-		#	shiftPack(\$coords, $pets{$ID}{pos_to}{x}, 10);
-		#	shiftPack(\$coords, $pets{$ID}{pos_to}{y}, 10);
-		#	shiftPack(\$coords, 0, 4);
+			my $coords = "";
+			shiftPack(\$coords, $pets{$ID}{pos_to}{x}, 10);
+			shiftPack(\$coords, $pets{$ID}{pos_to}{y}, 10);
+			shiftPack(\$coords, 0, 4);
 
-		#	$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-		#		0x78, 0x00, $ID, $pets{$ID}{$ID}{walk_speed} * 1000, 0, 0, 0, $pets{$ID}{$ID}{nameID}, 1, 0, 0, 0, 0, 0,
-		#		0, 0, 0, 0, 0, $coords, 0, 0);
-		#}
+			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
+				0x78, 0x00, $ID, $pets{$ID}{$ID}{walk_speed} * 1000, 0, 0, 0, $pets{$ID}{$ID}{nameID}, 0x64, 0, 0, 0, 0, 0,
+				0, 0, 0, 0, 0, $coords, 0, 0);
+		}
 
 		# Send info about surrounding players
 		foreach my $ID (@playersID) {
@@ -777,15 +777,13 @@ sub checkClient {
 			my $coords = "";
 			shiftPack(\$coords, $players{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $players{$ID}{pos_to}{y}, 10);
-			shiftPack(\$coords, 0, 4);
+			shiftPack(\$coords, $players{$ID}{look}{body}, 4);
 
-			# Note: Until Receive.pm's 022C is fixed, hair_color is going to zeroed.
-			# Its unpacking hair color from the wrong location, and as such causes RO to crash when we
-			# feed it the bad value.
-			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 C1 x1 C1 v1',
-				0x78, 0x00, $ID, $players{$ID}{walk_speed} * 1000, 0, 0, 0, $players{$ID}{jobID}, 0, $players{$ID}{weapon},
-				$players{$ID}{headgear}{low}, $players{$ID}{shield}, $players{$ID}{headgear}{top}, $players{$ID}{headgear}{mid},
-				$players{$ID}{hair_color} * 0, 0, $players{$ID}{look}{head}, $players{$ID}{guild}, 0, $coords, $players{$ID}{look}{body},
+			$msg .= pack('C2 a4 v4 x2 v8 x2 v V2 x5 C a3 x2 C v', 0x2A, 0x02, $ID, $players{$ID}{walk_speed} * 1000,
+				0, 0, 0, $players{$ID}{jobID}, $players{$ID}{hair_style}, $players{$ID}{weapon}, $players{$ID}{shield},
+				$players{$ID}{headgear}{low}, $players{$ID}{headgear}{top}, $players{$ID}{headgear}{mid},
+				$players{$ID}{hair_color}, $players{$ID}{look}{head},
+				$players{$ID}{guildID}, $players{$ID}{guildEmblem}, $players{$ID}{sex}, $coords,
 				($players{$ID}{dead}? 1 : ($players{$ID}{sitting}? 2 : 0)), $players{$ID}{lv});
 		}
 
@@ -929,7 +927,7 @@ sub modifyPacketOut {
 		# Intercept the RO client's sync
 
 		$msg = "";
-		$self->sendSync();
+		#$self->sendSync();
 
 	} elsif ($switch eq "00B2") {
 		if (unpack('C1', substr($msg, 2, 1)) == 1) {
