@@ -35,7 +35,7 @@ sub new {
 	my $class = shift;
 	my %self;
 
-	$@ = "Kore Mode 2 not implemented yet.";
+	#$@ = "Kore Mode 2 not implemented yet.";
 	#return undef;
 
 	# Reuse code from Network to keep the connection to the server
@@ -625,9 +625,11 @@ sub checkClient {
 
 		$msg = "";
 
-		# TODO: Player/monster statuses, active ground effect skills,
-		# TODO: Cart Items, Friends list, fix pets
-		# TODO: dropped items, player genders
+		# TODO: Active ground effect skills,
+		# TODO: Cart Items, Friends list, Guild Notice/Guild Info? (to be able to open guild window)
+		# TODO: dropped items, pet info (to know that you have a pet, and can feed/egg/performance it)
+		#
+		# TODO: Fix walking speed? Might that be part of the map login packet? Or 00BD?
 
 		# Send player stats
 
@@ -635,7 +637,7 @@ sub checkClient {
 		# [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex
 		# luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic
 		# def_magic_bonus hit flee flee_bonus critical)]],
-		$msg .= pack('C2 v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 x4', 0xBD, 0x00,
+		$msg .= pack('C2 v1 C12 v12 x4', 0xBD, 0x00,
 			$char->{points_free}, $char->{str}, $char->{points_str}, $char->{agi}, $char->{points_agi},
 			$char->{vit}, $char->{points_vit}, $char->{int}, $char->{points_int}, $char->{dex},
 			$char->{points_dex}, $char->{luk}, $char->{points_luk}, $char->{attack}, $char->{attack_bonus},
@@ -668,12 +670,10 @@ sub checkClient {
 		# Send skill information
 		my $skillInfo = "";
 		foreach my $ID (@skillsID) {
-			$skillInfo .= pack('v2 x2 v2 v1 a24 C',
+			$skillInfo .= pack('v2 x2 v3 a24 C',
 				$char->{skills}{$ID}{ID}, $char->{skills}{$ID}{targetType},
 				$char->{skills}{$ID}{lv}, $char->{skills}{$ID}{sp},
-				$char->{skills}{$ID}{range},
-				$ID,
-				$char->{skills}{$ID}{up});
+				$char->{skills}{$ID}{range}, $ID, $char->{skills}{$ID}{up});
 		}
 		$msg .= pack('C2 v', 0x0F, 0x01, length($skillInfo) + 4) . $skillInfo;
 
@@ -719,71 +719,56 @@ sub checkClient {
 			shiftPack(\$coords, $portals{$ID}{pos}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
-			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-				0x78, 0x00, $ID, 0, 0, 0, 0, $portals{$ID}{type}, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, $coords, 0, 0);
+			$msg .= pack('C2 a4 x8 v1 x30 a3 x5', 0x78, 0x00, $ID, $portals{$ID}{type}, $coords);
 		}
 
 		# Send all NPC info
 		foreach my $ID (@npcsID) {
-			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
-			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
 			my $coords = "";
 			shiftPack(\$coords, $npcs{$ID}{pos}{x}, 10);
 			shiftPack(\$coords, $npcs{$ID}{pos}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
-			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-				0x78, 0x00, $ID, 0, 0, 0, 0, $npcs{$ID}{type}, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, $coords, 0, 0);
+			$msg .= pack('C2 a4 x8 v1 x30 a3 x5', 0x78, 0x00, $ID, $npcs{$ID}{type}, $coords);
 		}
 
 		# Send all monster info
 		foreach my $ID (@monstersID) {
-			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
-			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
 			my $coords = "";
 			shiftPack(\$coords, $monsters{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $monsters{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
-			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-				0x78, 0x00, $ID, $monsters{$ID}{walk_speed} * 1000, 0, 0, 0, $monsters{$ID}{nameID}, 0, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, $coords, 0, 0);
+			$msg .= pack('C2 a4 v5 x32 a3 x3 v1',
+				0x78, 0x00, $ID, $monsters{$ID}{walk_speed} * 1000,
+					$monsters{$ID}{param1}, $monsters{$ID}{param2}, $monsters{$ID}{param3},
+					$monsters{$ID}{nameID}, $coords, $monsters{$ID}{lv});
 		}
 
 		# Send info about pets
 		foreach my $ID (@petsID) {
-			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
-			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
 			my $coords = "";
 			shiftPack(\$coords, $pets{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $pets{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, 0, 4);
 
-			$msg .= pack('C2 a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1',
-				0x78, 0x00, $ID, $pets{$ID}{$ID}{walk_speed} * 1000, 0, 0, 0, $pets{$ID}{$ID}{nameID}, 0x64, 0, 0, 0, 0, 0,
-				0, 0, 0, 0, 0, $coords, 0, 0);
+			$msg .= pack('C2 a4 v x6 v2 x28 a3 x3 v', 0x78, 0x00, $ID, $pets{$ID}{walk_speed} * 1000,
+				$pets{$ID}{nameID}, $pets{$ID}{hair_style}, $coords, $pets{$ID}{lv});
 		}
 
 		# Send info about surrounding players
 		foreach my $ID (@playersID) {
-			# '0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 C1 x1 C1 v1',
-			# [qw(ID walk_speed param1 param2 param3 type pet weapon lowhead shield tophead midhead
-			#     hair_color clothes_color head_dir guildID sex coords act lv)]],
 			my $coords = "";
 			shiftPack(\$coords, $players{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $players{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, $players{$ID}{look}{body}, 4);
 
-			$msg .= pack('C2 a4 v4 x2 v8 x2 v V2 x5 C a3 x2 C v', 0x2A, 0x02, $ID, $players{$ID}{walk_speed} * 1000,
-				0, 0, 0, $players{$ID}{jobID}, $players{$ID}{hair_style}, $players{$ID}{weapon}, $players{$ID}{shield},
+			$msg .= pack('C2 a4 v4 x2 v8 x2 v V2 v x2 C2 a3 x2 C v', 0x2A, 0x02, $ID, $players{$ID}{walk_speed} * 1000,
+				$players{$ID}{param1}, $players{$ID}{param2}, $players{$ID}{param3},
+				$players{$ID}{jobID}, $players{$ID}{hair_style}, $players{$ID}{weapon}, $players{$ID}{shield},
 				$players{$ID}{headgear}{low}, $players{$ID}{headgear}{top}, $players{$ID}{headgear}{mid},
-				$players{$ID}{hair_color}, $players{$ID}{look}{head},
-				$players{$ID}{guildID}, $players{$ID}{guildEmblem}, $players{$ID}{sex}, $coords,
+				$players{$ID}{hair_color}, $players{$ID}{look}{head}, $players{$ID}{guildID}, $players{$ID}{guildEmblem},
+				$players{$ID}{visual_effects}, $players{$ID}{stance}, $players{$ID}{sex}, $coords,
 				($players{$ID}{dead}? 1 : ($players{$ID}{sitting}? 2 : 0)), $players{$ID}{lv});
 		}
 

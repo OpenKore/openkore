@@ -49,7 +49,7 @@ sub new {
 		'0073' => ['map_loaded','x4 a3',[qw(coords)]],
 		'0075' => ['change_to_constate5'],
 		'0077' => ['change_to_constate5'],
-		'0078' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
+		'0078' => ['actor_display', 'a4 v14 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
 		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
 		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 x4 v1 v1 v1 v1 v1 v1 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
@@ -208,12 +208,10 @@ sub new {
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 
 		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
-		
-		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v V2 x5 C a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem sex coords act lv)]],
 
-		'022B' => ['actor_connected', 'a4 v1 v1 v1 v1 x2 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x9 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead hair_color clothes_color tophead midhead head_dir guildID sex coords lv)]], # still some problems remaining
-
-		'022C' => ['actor_display', 'a4 v4 x2 v5 V1 v3 x4 V2 x5 C a5 x3 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem sex coords lv)]],
+		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v V2 v x2 C2 a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
+		'022B' => ['actor_display', 'a4 v4 x2 v8 x2 v V2 v x2 C2 a3 x2 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords lv)]],
+		'022C' => ['actor_display', 'a4 v4 x2 v5 V1 v3 x4 V2 v x2 C2 a5 x3 v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead timestamp tophead midhead hair_color guildID guildEmblem visual_effects stance sex coords lv)]],
 		};
 
 	bless \%self, $class;
@@ -634,9 +632,9 @@ sub actor_died_or_disappeard {
 
 sub combo_delay {
 	my ($self, $args) = @_;
- 
+
 	$char->{combo_packet} = ($args->{delay} * 15) / 100000;
- 
+
 	$args->{actor} = Actor::get($args->{ID});
 	my $verb = $args->{actor}->verb('have', 'has');
 	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
@@ -667,28 +665,33 @@ sub player_equipment {
 }
 
 # This packet is a merge of actor_exists, actor_connected, actor_moved, etc...
+#
+# Tested with packets:
+# 0078, 022A, 022B, 022C
 sub actor_display {
 	my ($self, $args) = @_;
 	change_to_constate5();
-	
+
 	my ($actor, $type);
-	
+
 	# Initialize
 	my $nameID = unpack("V1", $args->{ID});
-	
+
 	my (%coordsFrom, %coordsTo);
 	if (length($args->{coords}) >= 5) {
-		unShiftPack(\$args->{coords}, \$coordsTo{y}, 10);
-		unShiftPack(\$args->{coords}, \$coordsTo{x}, 10);
-		unShiftPack(\$args->{coords}, \$coordsFrom{y}, 10);
-		unShiftPack(\$args->{coords}, \$coordsFrom{x}, 10);
+		my $coordsArg = $args->{coords};
+		unShiftPack(\$coordsArg, \$coordsTo{y}, 10);
+		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
+		unShiftPack(\$coordsArg, \$coordsFrom{y}, 10);
+		unShiftPack(\$coordsArg, \$coordsFrom{x}, 10);
 	} else {
-		unShiftPack(\$args->{coords}, \$args->{body_dir}, 4);
-		unShiftPack(\$args->{coords}, \$coordsTo{y}, 10);
-		unShiftPack(\$args->{coords}, \$coordsTo{x}, 10);
+		my $coordsArg = $args->{coords};
+		unShiftPack(\$coordsArg, \$args->{body_dir}, 4);
+		unShiftPack(\$coordsArg, \$coordsTo{y}, 10);
+		unShiftPack(\$coordsArg, \$coordsTo{x}, 10);
 		%{coordsFrom} = %coordsTo;
 	}
-	
+
 	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
 	# beyond removeActorWithDistance.
@@ -699,7 +702,7 @@ sub actor_display {
 				return;
 		}
 	}
-	
+
 	if ($jobs_lut{$args->{type}}) {
 		# Actor is a player
 		$actor = $players{$args->{ID}};
@@ -709,12 +712,12 @@ sub actor_display {
 			binAdd(\@playersID, $args->{ID});
 			$actor->{binID} = binFind(\@playersID, $args->{ID});
 			$actor->{appear_time} = time;
-			
+
 			objectAdded('player', $args->{ID}, $actor);
 		}
-		
+
 		$actor->{nameID} = $nameID;
-	
+
 	} elsif ($args->{type} == 45) {
 		# Actor is a portal
 		$type = "Portal";
@@ -722,15 +725,20 @@ sub actor_display {
 			binAdd(\@portalsID, $args->{ID});
 			$portals{$args->{ID}}{binID} = binFind(\@portalsID, $args->{ID});
 			$portals{$args->{ID}}{appear_time} = time;
-			
+
 			my $exists = portalExists($field{name}, \%coordsTo);
 			$portals{$args->{ID}}{source}{map} = $field{name};
 			$portals{$args->{ID}}{name} = ($exists ne "")
 				? "$portals_lut{$exists}{source}{map} -> " . getPortalDestName($exists)
 				: "Unknown $nameID";
+
+			# Strangely enough, portals (like all other actors) have names, too.
+			# We _could_ send a "actor_info_request" packet to find the names of each portal,
+			# however I see no gain from this. (And it might even provide another way of private
+			# servers to auto-ban bots.)
 		}
 		$actor = $portals{$args->{ID}};
-		
+
 		$actor->{nameID} = $nameID;
 
 	} elsif ($args->{type} >= 1000) {
@@ -740,6 +748,11 @@ sub actor_display {
 			$type = "Pet";
 			if (!$pets{$args->{ID}} || !%{$pets{$args->{ID}}}) {
 				binAdd(\@petsID, $args->{ID});
+				# WARNING: In the actor_exists function, pets are referred to
+				#	using their ID twice (example: $pets{$args->{ID}}{$args->{ID}}{binID}).
+				#	As I find this to be a waste of memory and harder to read, I've not
+				#	continued it. Perhaps it is a bug that'll be eliminated? Or perhaps
+				#	I'll be creating a bug... This should be watched.
 				$pets{$args->{ID}}{binID} = binFind(\@petsID, $args->{ID});
 				$pets{$args->{ID}}{appear_time} = time;
 
@@ -747,13 +760,13 @@ sub actor_display {
 						? $monsters_lut{$args->{type}}
 						: "Unknown $args->{type}";
 				$pets{$args->{ID}}{name_given} = "Unknown";
-				
+
 				if ($monsters{$args->{ID}}) {
 					binRemove(\@monstersID, $args->{ID});
 					objectRemoved('monster', $args->{ID}, $monsters{$args->{ID}});
 					delete $monsters{$args->{ID}};
 				}
-				
+
 				objectAdded('pet', $args->{ID}, $pets{$args->{ID}}{$args->{ID}});
 			}
 			$actor = $pets{$args->{ID}};
@@ -766,20 +779,20 @@ sub actor_display {
 				binAdd(\@monstersID, $args->{ID});
 				$actor->{binID} = binFind(\@monstersID, $args->{ID});
 				$actor->{appear_time} = time;
-				
+
 				$actor->{name} = ($monsters_lut{$args->{type}} ne "")
 						? $monsters_lut{$args->{type}}
 						: "Unknown ".$args->{type};
-				
+
 				objectAdded('monster', $args->{ID}, $monsters{$args->{ID}});
 			}
 			$actor = $monsters{$args->{ID}};
 
 		}
-		
+
 		# Why do monsters use nameID as type?
 		$actor->{nameID} = $args->{type};
-		
+
 	} else {	# ($args->{type} < 1000 && $args->{type} != 45 && !$jobs_lut{$args->{type}})
 		# Actor is an NPC
 		$type = "NPC";
@@ -787,86 +800,156 @@ sub actor_display {
 			binAdd(\@npcsID, $args->{ID});
 			$npcs{$args->{ID}}{binID} = binFind(\@npcsID, $args->{ID});
 			$npcs{$args->{ID}}{appear_time} = time;
-			
+
 			my $location = "$field{name} $npcs{$args->{ID}}{pos}{x} $npcs{$args->{ID}}{pos}{y}";
 			$npcs{$args->{ID}}{name} = $npcs_lut{$location} || "Unknown $nameID";
-			
+
 			objectAdded('npc', $args->{ID}, $npcs{$args->{ID}});
 		}
 		$actor = $npcs{$args->{ID}};
-		
+
 		$actor->{nameID} = $nameID;
 
 	}
-	
+
 	$actor->{ID} = $args->{ID};
-	$actor->{jobID} = $actor->{type} = $args->{type};
-	$actor->{guildID} = $args->{guildID};
-	$actor->{guildEmblem} = $args->{guildEmblem};
-	
-	$actor->{lv} = $args->{lv};
-	$actor->{sex} = $args->{sex};
-	
-	%{$actor->{pos_to}} = %coordsTo;
-	%{$actor->{pos}} = %coordsFrom;
-	$actor->{walk_speed} = $args->{walk_speed} / 1000;
-	$actor->{time_move} = time;
-	$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
-	
-	$actor->{headgear}{low} = $args->{lowhead};
-	$actor->{headgear}{mid} = $args->{midhead};
-	$actor->{headgear}{top} = $args->{tophead};
-	$actor->{weapon} = $args->{weapon};
-	$actor->{shield} = $args->{shield};
-	
-	$actor->{hair_style} = $args->{hair_style};
-	$actor->{hair_color} = $args->{hair_color};
-	
-	$actor->{look}{body} = $args->{body_dir};
-	$actor->{look}{head} = $args->{head_dir};
-	
-	if ($args->{act} == 1) {
-		$actor->{dead} = 1;
-	} elsif ($args->{act} == 2) {
-		$actor->{sitting} = 1;
+	$actor->{jobID} = $args->{type};
+
+	# I do wish $actor->{type} would be consistent, but this is
+	# how the old functions were. I do this to not break anything >.>
+	if ($type eq "Player" || $type eq "Monster") {
+		$actor->{type} = $type;
+	} else {
+		$actor->{type} = $args->{type};
 	}
-	
+
+	$actor->{lv} = $args->{lv};
+
+	%{$actor->{pos_to}} = %coordsTo;
+	if (length($args->{coords}) >= 5) {
+		%{$actor->{pos}} = %coordsFrom;
+		$actor->{walk_speed} = $args->{walk_speed} / 1000;
+		$actor->{time_move} = time;
+		$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
+	} else {
+		%{$actor->{pos}} = %coordsTo;
+	}
+
+	if ($type eq "Player") {
+		# None of this stuff should matter if the actor isn't a player...
+
+		# Interesting note about guildEmblem. If it is 0 (or none), the Ragnarok
+		# client will display "Send (Player) a guild invitation" (assuming one has
+		# invitation priveledges), regardless of whether or not guildID is set.
+		# I bet that this is yet another brilliant "feature" by GRAVITY's good programmers.
+		$actor->{guildEmblem} = $args->{guildEmblem} if (exists $args->{guildEmblem});
+		$actor->{guildID} = $args->{guildID};
+
+		$actor->{headgear}{low} = $args->{lowhead};
+		$actor->{headgear}{mid} = $args->{midhead};
+		$actor->{headgear}{top} = $args->{tophead};
+		$actor->{weapon} = $args->{weapon};
+		$actor->{shield} = $args->{shield};
+
+		$actor->{sex} = $args->{sex};
+
+		if ($args->{act} == 1) {
+			$actor->{dead} = 1;
+		} elsif ($args->{act} == 2) {
+			$actor->{sitting} = 1;
+		}
+
+		# Monsters don't have hair colors or heads to look around...
+		$actor->{hair_color} = $args->{hair_color};
+		$actor->{look}{head} = $args->{head_dir};
+	}
+
+	# But hair_style is used for pets, and their bodies can look different ways...
+	$actor->{hair_style} = $args->{hair_style};
+	$actor->{look}{body} = $args->{body_dir};
+
+	# When stance is non-zero, character is bobbing as if they had just got hit,
+	# but the cursor also turns to a sword when they are mouse-overed.
+	$actor->{stance} = $args->{stance} if (exists $args->{stance});
+
+	# Visual effects are a set of flags
+	$actor->{visual_effects} = $args->{visual_effects} if (exists $args->{visual_effects});
+
+	# Known visual effects:
+	# 0x0001 = Yellow tint (eg, a quicken skill)
+	# 0x0002 = Red tint (eg, power-thrust)
+	# 0x0004 = Gray tint (eg, energy coat)
+	# 0x0008 = Slow lightning (eg, mental strength)
+	# 0x0010 = Fast lightning (eg, MVP fury)
+	# 0x0020 = Black non-moving statue (eg, stone curse)
+	# 0x0040 = Translucent weapon
+	# 0x0080 = Translucent red sprite (eg, marionette control?)
+	# 0x0100 = Spaztastic weapon image (eg, mystical amplification)
+	# 0x0200 = Gigantic glowy sphere-thing
+	# 0x0400 = Translucent pink sprite (eg, marionette control?)
+	# 0x0800 = Glowy sprite outline (eg, assumptio)
+	# 0x1000 = Bright red sprite, slowly moving red lightning (eg, MVP fury?)
+	# 0x2000 = Vortex-type effect
+
+	# Note that these are flags, and you can mix and match them
+	# Example: 0x000C (0x0008 & 0x0004) = gray tint with slow lightning
+
+	# Save these parameters ...
+	$actor->{param1} = $args->{param1};
+	$actor->{param2} = $args->{param2};
+	$actor->{param3} = $args->{param3};
+
+	# And use them to set status flags.
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
-	
+
 	# Packet specific
 	if ($args->{switch} eq "0078" ||
 		$args->{switch} eq "01D8" ||
 		$args->{switch} eq "022A") {
 		# Actor Exists
-		
+
 		if ($type eq "Player") {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $actor->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Exists: " . $actor->name . " ($actor->{binID})\n", $domain;
-			
+
 			# Shouldn't this have a more specific hook name?
 			Plugins::callHook('player', {player => $actor});
+		} elsif ($type eq "NPC") {
+			message "NPC Exists: $actor->{name} ($actor->{pos}{x}, $actor->{pos}{y}) (ID $actor->{nameID}) - ($actor->{binID})\n", "parseMsg_presence", 1;
+		} elsif ($type eq "Portal") {
+			message "Portal Exists: $actor->{name} ($coordsTo{x}, $coordsTo{y}) - ($actor->{binID})\n", "portals", 1;
 		} else {
-			debug "$type Exists: $actor->{name} ($actor->{binID})\n", "parseMsg_presence";
+			debug "$type Exists: $actor->{name} ($actor->{binID})\n", "parseMsg_presence", 1;
 		}
-	
+
 	} elsif ($args->{switch} eq "0079" ||
 		$args->{switch} eq "01DB" ||
 		$args->{switch} eq "022B") {
 		# Actor Connected
 
+		if ($type eq "Player") {
+			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
+			debug "Player Connected: ".$actor->name." ($actor->{binID}) Level $args->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} ($coordsTo{x}, $coordsTo{y})\n", $domain;
+
+			# Again, this hook name isn't very specific.
+			Plugins::callHook('player', {player => $players{$args->{ID}}});
+		} else {
+			debug "Unknown Connected: $args->{type} - ", "parseMsg";
+		}
+
 	} elsif ($args->{switch} eq "007B" ||
 		$args->{switch} eq "01DA" ||
 		$args->{switch} eq "022C") {
 		# Actor Moved
-		
+
 		# Correct the direction in which they're looking
 		my %vec;
 		getVector(\%vec, \%coordsTo, \%coordsFrom);
 		my $direction = int sprintf("%.0f", (360 - vectorToDegree(\%vec)) / 45);
-		
+
 		$actor->{look}{body} = $direction;
 		$actor->{look}{head} = 0;
-		
+
 		if ($type eq "Player") {
 			debug "Player Moved: " . $actor->name . " ($actor->{binID}) Level $actor->{lv} $sex_lut{$actor->{sex}} $jobs_lut{$actor->{jobID}} - ($coordsFrom{x}, $coordsFrom{y}) -> ($coordsTo{x}, $coordsTo{y})\n", "parseMsg";
 		} else {
@@ -895,7 +978,7 @@ sub actor_exists {
 		makeCoords(\%coords, $args->{coords});
 	}
 	#debug ("$coords{x}x$coords{y}\n");
-	
+
 
 	# Remove actors with a distance greater than removeActorWithDistance. Useful for vending (so you don't spam
 	# too many packets in prontera and cause server lag). As a side effect, you won't be able to "see" actors
@@ -2718,7 +2801,7 @@ sub minimap_indicator {
 		"info";
 	}
 }
-	
+
 sub mvp_item {
 	my ($self, $args) = @_;
 	my $display = itemNameSimple($args->{itemID});
