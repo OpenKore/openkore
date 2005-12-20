@@ -195,7 +195,7 @@ sub checkItem {
 # checks for near person ##################################
 sub checkPerson {
   $cvs->debug("checkPerson(@_)", $logfac{function_call_auto} | $logfac{automacro_checks});
-  my ($who, $dist) = $_[0] =~ /^"(.*?)"\s*,?\s*(.*)/;
+  my ($who, $dist) = $_[0] =~ /^"(.*)"\s*,?\s*(.*)/;
   return 0 unless defined $who;
   my $r_id = getPlayerID($who, \@playersID);
   return 0 unless defined $r_id;
