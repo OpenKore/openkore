@@ -297,7 +297,7 @@ sub next {
   ##########################################
   # stop command
   } elsif ($line =~ /^stop$/) {
-    $self->{error} = "macro stopped in line ".$self->{line};
+    $self->{finished} = 1;
   ##########################################
   # release command
   } elsif ($line =~ /^release\s+/) {
@@ -310,6 +310,7 @@ sub next {
     my ($tmp) = $line =~ /^call\s+(.*)/;
     if ($tmp =~ /\s/) {
       my ($name, $times) = $tmp =~ /(.*?)\s+(.*)/;
+      $times = parseCmd($times);
       $self->{subcall} = new Macro::Script($name, $times);
     } else {
       $self->{subcall} = new Macro::Script($tmp);
