@@ -1059,7 +1059,7 @@ sub sendItemUse {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xA7, 0x00).pack("v*",$ID).$targetID;
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
 		$msg = pack("C*", 0xA7, 0x00, 0x9A, 0x12, 0x1C).pack("v*", $ID, 0).$targetID;
 
 	} elsif ($config{serverType} == 3) {
