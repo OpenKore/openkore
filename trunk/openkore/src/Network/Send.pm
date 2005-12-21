@@ -838,7 +838,7 @@ sub sendGetPlayerInfo {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x94, 0x00) . $ID;
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
 
 	} elsif (($config{serverType} == 3) || ($config{serverType} == 5)) {
@@ -1181,22 +1181,12 @@ sub sendMapLogin {
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
 
-	} elsif ($config{serverType} == 7) { #jRO
-		$msg = pack("C*", 0x72, 0x00, 0x00, 0x00, 0x00) .
-		    $accountID .
-		    pack("C*", 0xFA, 0x12, 0x00, 0x80, 0x49) .
-		    $charID .
-		    pack("C*", 0xFF, 0xFF) .
-		    $sessionID,
-		    pack("V", getTickCount()) .
-		    pack("C*", $sex);
-
-	} else { #oRO and pRO
+	} else { #oRO and pRO and idRO
 		# $config{serverType} == 1 || $config{serverType} == 2
 
 		my $key;
 
-		if ($config{serverType} == 1) {
+		if ($config{serverType} == 1 || $config{serverType} == 7) {
 			$key = pack("C*",0xFC,0x2B,0x8B,0x01,0x00);
 			#	0xFA,0x12,0x00,0xE0,0x5D
 			#	0xFA,0x12,0x00,0xD0,0x7B
@@ -1614,7 +1604,14 @@ sub sendSit {
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("C*", 0x89, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00) .
 		pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02);
+
+	} elsif ($config{serverType} == 7) { #idRO - not tested
+		$msg = pack("C*", 0x89, 0x00, 0x3B, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFB, 0x00) .
+			pack("C*", 0x00, 0x00, 0x00, 0xFF, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00) .
+			pack("C*", 0x00, 0x00, 0x00, 0xFD, 0xFF, 0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x00) .
+			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0xFE, 0xFF, 0x02, 0x00, 0x00, 0x00);
 	}
+
 	sendMsgToServer($r_net, $msg);
 	debug "Sitting\n", "sendPacket", 2;
 }
@@ -1892,7 +1889,7 @@ sub sendSync {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x7E, 0x00) . pack("V1", getTickCount());
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
 		$msg = pack("C*", 0x7E, 0x00);
 		$msg .= pack("C*", 0x30, 0x00, 0x40) if ($initialSync);
 		$msg .= pack("C*", 0x00, 0x00, 0x1F) if (!$initialSync);
