@@ -1093,7 +1093,7 @@ sub sendLook {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x9B, 0x00, $head, 0x00, $body);
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
 		$msg = pack("C*", 0x9B, 0x00, 0xF2, 0x04, 0xC0, 0xBD, $head,
 			0x00, 0xA0, 0x71, 0x75, 0x12, 0x88, 0xC1, $body);
 
