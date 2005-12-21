@@ -1656,11 +1656,15 @@ sub sendSkillUse {
 			pack("v*", $ID) .
 			pack("C*", 0x8e, 0x00, 0x01, 0xa8, 0x9a, 0x2b, 0x16, 0x12, 0x00, 0x00, 0x00) .
 			$targetID;
+
 	} elsif ($config{serverType} == 6) {
 		$msg = pack("v*", 0x0113, 0x0000, 0x0045, 0x00, $lv) .
 			pack("v", 0) .
 			pack("v*", $ID, 0) .
 			pack("v", 0x0060) . $targetID;
+
+	} elsif ($config{serverType} == 7) {
+		# place holder
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Skill Use: $ID\n", "sendPacket", 2;
@@ -1719,6 +1723,9 @@ sub sendSkillUseLoc {
 			pack("v*", $ID, 0x1508) .
 			pack("V*", 0, 0, 0) .
 			pack("v*", $x, 0x1ad8, 0x76b4, $y);
+
+	} elsif ($config{serverType} == 7) {
+		# place holder
 	}
 	sendMsgToServer($r_net, $msg);
 	debug "Skill Use on Location: $ID, ($x, $y)\n", "sendPacket", 2;
@@ -1731,7 +1738,7 @@ sub sendStorageAdd {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xF3, 0x00) . pack("v*", $index) . pack("V*", $amount);
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
 		$msg = pack("C*", 0xF3, 0x00) . pack("C*", 0x12, 0x00, 0x40, 0x73) .
 			pack("v", $index) .
 			pack("C", 0xFF) .
@@ -1755,6 +1762,9 @@ sub sendStorageAdd {
 			pack("v*", $index) .
 			pack("C*", 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7b, 0x01, 0x00) .
 			pack("V*", $amount);
+
+	} elsif ($config{serverType} == 6) {
+		# place holder
 	}
 	sendMsgToServer($net, $msg);
 	debug "Sent Storage Add: $index x $amount\n", "sendPacket", 2;
@@ -1788,7 +1798,7 @@ sub sendStorageGet {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xF5, 0x00) . pack("v*", $index) . pack("V*", $amount);
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
 		$msg = pack("v*", 0x00F5, 0, 0, 0, 0, 0, $index, 0, 0) . pack("V*", $amount);
 
 	} elsif ($config{serverType} == 3) {
@@ -1811,6 +1821,12 @@ sub sendStorageGet {
 			pack("v*", $index) .
 			pack("C*", 0x00) .
 			pack("V*", $amount);
+
+	} elsif ($config{serverType} == 6) {
+		# place holder
+
+	} elsif ($config{serverType} == 7) {
+		# place holder
 	}
 	sendMsgToServer($net, $msg);
 	debug "Sent Storage Get: $index x $amount\n", "sendPacket", 2;
