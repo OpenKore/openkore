@@ -47,7 +47,7 @@ sub commandHandler {
   if (!defined $arg) {
     message "Macro recorder\n", "list";
     message "start recording with 'record NAME', end with 'record stop'\n";
-    message "save to file with 'record save FILENAME'\n";
+    message "save to file with 'record save'\n";
   } elsif ($arg eq 'stop') {
     if ($current{recording}) {
       message "stopped recording ".$current{name}."\n", "list";
