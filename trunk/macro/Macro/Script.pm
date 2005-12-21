@@ -200,7 +200,7 @@ sub next {
   ##########################################
   # if statement: if (foo = bar) goto label?
   } elsif ($line =~ /^if\s/) {
-    my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*(.*?)\s+([<>=!]+?)\s+(.*?)\s*\)\s+(.*?)$/;
+    my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*(.*?)\s+([<>=!]+?)\s+(.*)\s*\)\s+(.*?)$/;
     if (!defined $first || !defined $cond || !defined $last || !defined $then || $then !~ /^(goto\s|stop)/) {
       $self->{error} = "error in ".$self->{line}.": syntax error in if statement";
     } else {
