@@ -708,7 +708,7 @@ sub sendDrop {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0xA2, 0x00) . pack("v*", $index, $amount);
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
 		$msg = pack("C*", 0xA2, 0x00) .
 			pack("C*", 0xFF, 0xFF, 0x08, 0x10) .
 			pack("v*", $index) .
@@ -1942,7 +1942,7 @@ sub sendTake {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x9F, 0x00) . $itemID;
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || $config{serverType} == 7) {
 		$msg = pack("C*", 0x9F, 0x00, 0x00, 0x00, 0x68) . $itemID;
 
 	} elsif ($config{serverType} == 3) {
