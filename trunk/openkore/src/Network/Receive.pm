@@ -3192,9 +3192,9 @@ sub pet_emotion {
 sub pet_food {
 	my ($self, $args) = @_;
 	if ($args->{success}) {
-		message "Fed pet with ".itemNameSimple($args->{foodID}).".", "pet";
+		message "Fed pet with ".itemNameSimple($args->{foodID}).".\n", "pet";
 	} else {
-		error "Failed to feed pet with ".itemNameSimple($args->{foodID}).": no food in inventory.";
+		error "Failed to feed pet with ".itemNameSimple($args->{foodID}).": no food in inventory.\n";
 	}
 }
 
