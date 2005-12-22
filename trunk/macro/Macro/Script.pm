@@ -36,7 +36,7 @@ sub new {
     repeat => $repeat,
     subcall => undef,
     error => undef,
-    orphan => $::config{macro_orphan}
+    orphan => $::config{macro_orphans}
   };
   bless ($self, $class);
   return $self;

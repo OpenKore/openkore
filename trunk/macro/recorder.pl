@@ -58,7 +58,7 @@ sub commandHandler {
       error "nothing to do.\n";
     }
   } elsif ($arg =~ /^save/) {
-    my $filename = $Settings::control_folder."/macro-".time.".rec";
+    my $filename = $Settings::control_folder."/macros-".time.".rec";
     open MACRO, "> $filename";
     foreach my $m (keys %macros) {
       print MACRO "macro $m {\n";
