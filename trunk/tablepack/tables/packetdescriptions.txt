@@ -6,9 +6,9 @@
 006C Error logging into Game Login Server (invalid character specified)...
 0071 Received character ID and Map IP from Game Login Server
 0073 Enter Map
-0078 Unit Exists
+0078 actor_display (actor exists)
 0079 Unit Connected
-007B Unit Move
+007B actor_display (actor moved)
 007C Unit Spawned
 007F Received Sync
 0080 Unit Lost (Died, Disappeared, Disconnected)
@@ -192,9 +192,10 @@
 01D0 Vigor condensation
 01D2 Combo Attack
 01D7 Weapon / Shield Display
-01D8 Unit Exists : 0078
+01D8 actor_display (actor exists)
 01D9 Unit Connected : 0079
-01DA Unit Move : 007B
+01DA actor_display (actor moved)
+01DB actor_display (actor connected)
 01DC Login Code
 01DE Skill Damage : 0114
 01E1 Vigor condensation : 01D0
@@ -210,6 +211,10 @@
 0207 Friend Request Receive
 0209 Friend Request Response
 020A Friend Removed
+0227 gameguard_sync
+022A actor_display (actor exists)
+022B actor_display (actor connected
+022C actor_display (actor moved)
 
 [Send]
 0064 Master Login
@@ -313,3 +318,4 @@
 0202 Friend Request
 0203 Friend Remove
 0208 Friend Request Accept/Reject
+0228 gameguard_sync
