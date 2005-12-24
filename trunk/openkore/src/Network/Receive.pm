@@ -407,6 +407,7 @@ sub actor_action {
 		if ($args->{sourceID} eq $accountID) {
 			message T("You are sitting.\n");
 			$char->{sitting} = 1;
+			AI::queue("sitAuto");
 		} else {
 			message getActorName($args->{sourceID})." is sitting.\n", 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 1 if ($players{$args->{sourceID}});
