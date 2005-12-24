@@ -8,6 +8,17 @@ Bug fixes:
 - Fixed 'unblessed reference' error messages when using some old plugins.
 - Fixed a bug in teleportAuto_allPlayers which causes the bot to do nothing
   after a teleport.
+- Fixed Tension Relax skill deactivating. Previously kore would attempt to
+  stand up whenever the skill activates (the skill forces the character to
+  sit down). It now queues the ai sequence "sitAuto" - as a side effect,
+  the config option sitAuto_hp_upper needs to be set. Example:
+
+  sitAuto_hp_upper 90
+  useSelf_skill Tension Relax {
+    whenStatusInactive Tension Relax
+    hp < 70%
+    sp > 80%
+  }
 
 New config options:
 - serverEncoding
