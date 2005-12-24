@@ -3114,6 +3114,11 @@ sub checkSelfCondition {
 		return 0 if (existsInList($config{$prefix . "_notInMap"}, $field{name}));
 	}
 
+	if ($config{$prefix."_whenEquipped"}) {
+		my $item = Item::get($config{$prefix."_whenEquipped"});
+		return 0 unless $item && $item->{equipped};
+	}
+
 	# not working yet
 	if ($config{$prefix."_whenWater"}) {
 		my $pos = calcPosition($char);

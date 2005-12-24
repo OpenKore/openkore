@@ -2822,7 +2822,7 @@ sub AI {
 						undef,
 						"attackSkillSlot_${slot}");
 				} else {
-					my $pos = ($config{"attackSkillSlot_${slot}_isSelfSkill"}) ? $char->{pos_to} : $target->{pos_to};
+					my $pos = calcPosition($config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target);
 					ai_skillUse(
 						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
 						$config{"attackSkillSlot_${slot}_lvl"},
@@ -4321,6 +4321,13 @@ sub parseSendMsg {
 	# If the player tries to manually do something in the RO client, disable AI for a small period
 	# of time using ai_clientSuspend().
 
+	my $hookname = "packet_outMangle/$switch";
+	my $hook = $Plugins::hooks{$hookname}->[0];
+	if ($hook && $hook->{r_func} &&
+	    $hook->{r_func}($hookname, {$switch => $switch, data => $sendMsg}, $hook->{user_data})) {
+		undef $sendMsg;
+	}
+
 	if ($switch eq "0066") {
 		# Login character selected
 		configModify("char", unpack("C*",substr($msg, 2, 1)));
@@ -4438,13 +4445,6 @@ sub parseSendMsg {
 	#	close F;
 	#	dumpData($msg);
 	#}
-
-	my $hookname = "packet_outMangle/$switch";
-	my $hook = $Plugins::hooks{$hookname}->[0];
-	if ($hook && $hook->{r_func} &&
-	    $hook->{r_func}($hookname, {data => substr($sendMsg, 2)}, $hook->{user_data})) {
-		undef $sendMsg;
-	}
 
 	if ($sendMsg ne "") {
 		$net->serverSend($sendMsg);

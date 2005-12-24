@@ -19,6 +19,8 @@ Bug fixes:
     hp < 70%
     sp > 80%
   }
+- Location-based skills are now casted on a target's present location
+  rather than their pos_to in attackSkillSlot.
 
 New config options:
 - serverEncoding
@@ -31,9 +33,16 @@ New config options:
      Cyrillic
      Japanese
      Thai
+- New checkSelfCondition _whenEquipped <item>. True iff the named item
+  is equipped.
 
 Internal:
 - Implemented the beginning of a localization framework.
+- Actor::get($ID) now returns $players{$ID} instead of $monsters{$ID}
+  when both exist (which shouldn't happen, but this is a workaround for
+  players being incorrectly detected as monsters).
+- packet_outMangle/$switch hook is now called before openkore's built-in
+  mangling, to give plugins more freedom.
 
 Credits:
 - id-mardi: fix for setPartySkillTimer
