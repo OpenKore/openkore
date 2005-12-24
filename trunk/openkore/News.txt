@@ -43,6 +43,7 @@ Internal:
   players being incorrectly detected as monsters).
 - packet_outMangle/$switch hook is now called before openkore's built-in
   mangling, to give plugins more freedom.
+- packet_attack hook now has extra 'type' argument.
 
 Credits:
 - id-mardi: fix for setPartySkillTimer
