@@ -46,11 +46,11 @@ sub new {
 	return undef unless $self{server};
 
 	$self{tracker_state} = 0;
-	$self{tracker_name} = $config{xkore_ID} || "XKore2";
+	$self{tracker_name} = $config{XKore_ID} || "XKore2";
 
 	$self{client_state} = 0;
-	$self{client_listenPort} = $config{xkore_listenPort} ||
-		($config{xkore_tracker}?6902+int(rand(98)) : 6900);
+	$self{client_listenPort} = $config{XKore_listenPort} ||
+		($config{XKore_tracker}?6902+int(rand(98)) : 6900);
 
 	bless \%self, $class;
 	return \%self;
@@ -288,7 +288,7 @@ sub checkConnection {
 	$self->{server}->checkConnection();
 
 	# Check connection to the tracker/emulated master server
-	$self->checkTracker() if ($config{xkore_tracker});
+	$self->checkTracker() if ($config{XKore_tracker});
 }
 
 ##
@@ -298,8 +298,8 @@ sub checkConnection {
 sub checkTracker {
 	my $self = shift;
 	my $t_state = \$self->{tracker_state};
-	my $host = $config{xkore_trackerIp} || 'localhost';
-	my $port = $config{xkore_trackerPort} || 6901;
+	my $host = $config{XKore_trackerIp} || 'localhost';
+	my $port = $config{XKore_trackerPort} || 6901;
 
 	return unless (defined $self->{client_listen} && $self->serverAlive && $conState == 5);
 
@@ -324,8 +324,8 @@ sub checkTracker {
 		$self->{tracker}->send("N".pack('v',length($self->{tracker_name})).$self->{tracker_name});
 
 		# Send listening address
-		if ($config{xkore_listenIp}) {
-			$self->{tracker}->send("A".pack('v',length($config{xkore_listenIp})).$config{xkore_listenIp});
+		if ($config{XKore_listenIp}) {
+			$self->{tracker}->send("A".pack('v',length($config{XKore_listenIp})).$config{XKore_listenIp});
 		}
 
 		# Send listening port
@@ -357,7 +357,7 @@ sub checkTracker {
 				$self->{client_fakeInfo}{sessionID2} = substr($msg,3,$len);
 			}
 
-			$timeout{'xkore_tracker'}{time} = time;
+			$timeout{xkore_tracker}{time} = time;
 		}
 		if ($self->trackerAlive && timeOut($timeout{'xkore_tracker'})) {
 			$self->{tracker}->send("K".pack('v',0));
@@ -417,7 +417,7 @@ sub checkClient {
 			undef $self->{client_listen};
 
 			# Shutdown the connection with the tracker.
-			if ($config{xkore_tracker} && $self->trackerAlive) {
+			if ($config{XKore_tracker} && $self->trackerAlive) {
 				$self->{client_state} = 1 if ($self->{client_state} == 0);
 				close($self->{tracker});
 				undef $self->{tracker};
@@ -431,12 +431,12 @@ sub checkClient {
 		undef $self->{client};
 		# Begin listening...
 		$self->{client_listen} = new IO::Socket::INET(
-			LocalAddr	=> $config{xkore_listenIp} || '127.0.0.1',
+			LocalAddr	=> $config{XKore_listenIp} || '127.0.0.1',
 			LocalPort	=> $self->{client_listenPort},
 			Listen		=> 1,
 			Proto		=> 'tcp',
 			ReuseAddr   => 1);
-		die "Unable to listen on XKore2 port ($config{xkore_listenIp}:$self->{client_listenPort}): $@" unless $self->{client_listen};
+		die "Unable to listen on XKore2 port ($config{XKore_listenIp}:$self->{client_listenPort}): $@" unless $self->{client_listen};
 
 		return;
 	}
@@ -512,28 +512,23 @@ sub checkClient {
 		# Send the account ID
 		$self->clientSend($accountID,1);
 
-		# Update the character information
-		my $charMsg = $self->{client_saved}{char};
-		my $charMsgPad = $self->{client_saved}{char_pad};
+		# Generate the character information
+		my $charMsg = pack('x106');
 
-		# Exp count, zeny
-		substr($charMsg, 4, 8) = pack('V2', $char->{exp}, $char->{zenny});
+		# ID, Base exp, zeny, job exp, job level
+		substr($charMsg, 0, 18) = pack('a4 V3 v', $charID, $char->{exp}, $char->{zenny}, $char->{exp_job},
+			$char->{lv_job});
 
-		# Job Level
-		substr($charMsg, 16, 1) = pack('C', $char->{lv_job});
-
-		# Job ID
-		substr($charMsg, 52, 1) = pack('C', $char->{jobID});
-
-		# Base Level
-		substr($charMsg, 58, 2) = pack('v', $char->{lv});
+		# HP/HP max, SP/SP max, walk speed, job ID, hair style, ??, level
+		substr($charMsg, 42, 18) = pack('v7 x2 v', $char->{hp}, $char->{hp_max}, $char->{sp}, $char->{sp_max},
+			$char->{walk_speed} * 1000, $char->{jobID}, $char->{hair_style}, $char->{lv});
 
 		# STR, AGI, VIT, INT, DEX, LUK, Character slot
-		substr($charMsg, 98, 7) = pack('C7', $char->{str}, $char->{agi}, $char->{vit}, $char->{int},
-			$char->{dex}, $char->{luk}, 0);
+		substr($charMsg, 74, 31) = pack('Z24 C7', $char->{name}, $char->{str}, $char->{agi},
+			$char->{vit}, $char->{int}, $char->{dex}, $char->{luk}, 0);
 
 		# Send the character info packet
-		$msg = pack("C2 v", 0x6B, 0x00, length($charMsg) + length($charMsgPad) + 4) . $charMsgPad . $charMsg;
+		$msg = pack("C2 v", 0x6B, 0x00, length($charMsg) + 4) . $charMsg;
 
 		$self->clientSend($msg,1);
 
@@ -625,7 +620,7 @@ sub checkClient {
 
 		$msg = "";
 
-		# TODO: Active ground effect skills,
+		# TODO: Active ground effect skills, Character vending, character in chat
 		# TODO: Cart Items, Friends list, Guild Notice/Guild Info? (to be able to open guild window)
 		# TODO: dropped items, pet info (to know that you have a pet, and can feed/egg/performance it)
 		#
@@ -633,10 +628,6 @@ sub checkClient {
 
 		# Send player stats
 
-		#'00BD' => ['stats_info', 'v1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 C1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1',
-		# [qw(points_free str points_str agi points_agi vit points_vit int points_int dex points_dex
-		# luk points_luk attack attack_bonus attack_magic_min attack_magic_max def def_bonus def_magic
-		# def_magic_bonus hit flee flee_bonus critical)]],
 		$msg .= pack('C2 v1 C12 v12 x4', 0xBD, 0x00,
 			$char->{points_free}, $char->{str}, $char->{points_str}, $char->{agi}, $char->{points_agi},
 			$char->{vit}, $char->{points_vit}, $char->{int}, $char->{points_int}, $char->{dex},
@@ -676,6 +667,7 @@ sub checkClient {
 				$char->{skills}{$ID}{range}, $ID, $char->{skills}{$ID}{up});
 		}
 		$msg .= pack('C2 v', 0x0F, 0x01, length($skillInfo) + 4) . $skillInfo;
+		undef $skillInfo;
 
 		# Sort items into stackable and non-stackable
 		my @stackable;
@@ -711,6 +703,20 @@ sub checkClient {
 				$item->{upgrade}, $item->{cards});
 		}
 		$msg .= pack('C2 v1', 0xA4, 0x00, length($nonstackableInfo) + 4) . $nonstackableInfo;
+
+		# Clear old variables
+		#@stackable = ();
+		#@nonstackable = ();
+		#$stackableInfo = "";
+		#$nonstackableInfo = "";
+
+		# Do the cart items now
+		#for (my $i = 0; $i < @{$cart{inventory}}; $i++) {
+		#	my $item = $cart{inventory}[$i];
+		#	next unless $item && %{$item};
+
+			#if ($item->{
+		#}
 
 		# Send all portal info
 		foreach my $ID (@portalsID) {
@@ -820,21 +826,7 @@ sub modifyPacketIn {
 	my ($self, $msg) = @_;
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
-	if ($switch eq "006B") {
-		# Save the character info for client login
-		$self->{client_saved}{char_pad} = substr($msg, 4, (length($msg) % 106) - 4);
-
-		$msg = substr($msg, (length($msg) % 106));
-
-		for (my $i = 0; $i < length($msg); $i+=106) {
-			if ((substr($msg, $i, 4) eq $charID && $charID ne "") ||
-				(($i / 106) == $config{char} && $charID eq "")) {
-				$self->{client_saved}{char} = substr($msg, $i, 106);
-				last;
-			}
-		}
-
-	} elsif ($switch eq "0071") {
+	if ($switch eq "0071") {
 		# Save the mapname for client login
 		$self->{client_saved}{map} = substr($msg, 6, 16);
 
