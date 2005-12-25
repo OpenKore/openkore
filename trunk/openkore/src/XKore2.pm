@@ -431,7 +431,7 @@ sub checkClient {
 		undef $self->{client};
 		# Begin listening...
 		$self->{client_listen} = new IO::Socket::INET(
-			LocalAddr	=> $config{XKore_listenIp} || '127.0.0.1',
+			LocalAddr	=> $config{XKore_listenIp} || '0.0.0.0',
 			LocalPort	=> $self->{client_listenPort},
 			Listen		=> 1,
 			Proto		=> 'tcp',
@@ -479,10 +479,11 @@ sub checkClient {
 	message "RO Client ($host:$port) -> ", "connection";
 
 	# Allow the login packet for any of the connection states
+	# -1= kicked out because of a lost connection to server
 	# 0 = waiting for connection to login "server"
 	# 1 = waiting for connection to character "server"
 	# 3 = waiting for connection to map "server"
-	if (($$c_state == 0 || $$c_state == 1 || $$c_state == 3)
+	if (($$c_state == -1 || $$c_state == 0 || $$c_state == 1 || $$c_state == 3)
 		&& $switch eq "0064") {
 		# Client sent MasterLogin
 		my ($version, $username, $password, $master_version) = unpack("x2 V Z24 Z24 C1", $msg);
@@ -492,12 +493,15 @@ sub checkClient {
 			error "Bad Password.\n", "connection";
 			$self->clientSend(pack('C3 x20', 0x6A, 00, 1),1);
 		} else {
+			# Determine public IP
+			my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIP} || '127.0.0.1'));
+
 			# Send out the login packet
-			#'0069' => ['account_server_info', 'x2 a4 a4 a4 x30 C1 a*',
-			#[qw(sessionID accountID sessionID2 accountSex serverInfo)]],
 			$msg = pack('a4 a4 a4 x30 C1 C4 v Z20 v C1 x14', $sessionID, $accountID, $sessionID2, $accountSex2,
-				# IP ------->	Port --------------------->	Name ---------------->	# players -->	display
-				127, 0, 0, 1,	$self->{client_listenPort},	$self->{tracker_name},	0,		5);
+				# IP -------------------------------->	Port --------------------->
+				$host[0], $host[1], $host[2], $host[3],	$self->{client_listenPort},
+				# Name ---------------->	Number of Players -->	Display (5 = "don't show number of players")
+				$self->{tracker_name},		0,			5);
 			$msg = pack('C2 v', 0x69, 00, length($msg)+4) . $msg;
 			$self->clientSend($msg,1);
 			message "Master Login.\n", "connection";
@@ -545,11 +549,13 @@ sub checkClient {
 
 	} elsif ($$c_state == 2 && $switch eq "0066") {
 		# Client sent CharLogin
+		
+		# Determine public IP
+		my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIP} || '127.0.0.1'));
 
 		# Send character and map info packet
-		#'0071' => ['received_character_ID_and_Map', 'a4 Z16 a4 v1', [qw(charID mapName mapIP mapPort)]],
 		$msg = pack('C2 a4 Z16 C4 v1', 0x71, 0, $charID, $self->{client_saved}{map},
-				127, 0, 0, 1, $self->{client_listenPort});
+				$host[0], $host[1], $host[2], $host[3], $self->{client_listenPort});
 		$self->clientSend($msg,1);
 
 		message "Selected character.\n", "connection";
