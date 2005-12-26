@@ -22,7 +22,7 @@ serverType 0
 8.Enjoy
 
 ------------------
-Plugin Version
+Plugin Version (obsolete)
 ------------------
 4.Execute Kore.
 5.Wait till you are fully logged in.
