@@ -3381,7 +3381,7 @@ sub received_characters {
 		$chars[$num]{'hp_max'} = unpack("v1", substr($args->{RAW_MSG}, $i + 44, 2));
 		$chars[$num]{'sp'} = unpack("v1", substr($args->{RAW_MSG}, $i + 46, 2));
 		$chars[$num]{'sp_max'} = unpack("v1", substr($args->{RAW_MSG}, $i + 48, 2));
-		$chars[$num]{'jobID'} = unpack("C1", substr($args->{RAW_MSG}, $i + 52, 1));
+		$chars[$num]{jobID} = unpack("v", substr($args->{RAW_MSG}, $i + 52, 2));
 		$chars[$num]{'ID'} = substr($args->{RAW_MSG}, $i, 4);
 		$chars[$num]{'lv'} = unpack("C1", substr($args->{RAW_MSG}, $i + 58, 1));
 		$chars[$num]{'hair_color'} = unpack("C1", substr($args->{RAW_MSG}, $i + 70, 1));
