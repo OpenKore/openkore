@@ -2368,6 +2368,7 @@ sub AI {
 			|| ($action eq "mapRoute" && !AI::args->{noSitAuto})
 			) {
 				if (!AI::inQueue("attack") && !ai_getAggressives()
+				&& !AI::inQueue("sitAuto")  # do not queue sitAuto if there is an existing sitAuto sequence
 				&& (percent_hp($char) < $config{'sitAuto_hp_lower'} || percent_sp($char) < $config{'sitAuto_sp_lower'})) {
 					AI::queue("sitAuto");
 					debug "Auto-sitting\n", "sitAuto";
