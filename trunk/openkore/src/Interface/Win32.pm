@@ -4,7 +4,7 @@
 #
 #########################################################################
 
-package Interface::GUI;
+package Interface::Win32;
 use strict;
 use warnings;
 
@@ -18,7 +18,7 @@ use Settings;
 use Misc;
 
 use Win32::GUI;
-use Interface::GUI::Map; #Map Viewer
+use Interface::Win32::Map; #Map Viewer
 
 
 our ($currentHP, $currentSP, $currentLvl, $currentJob, $currentStatus);
@@ -41,7 +41,7 @@ sub new {
 		r_field => undef,
 	};
 
-	$map = new Interface::GUI::Map();
+	$map = new Interface::Win32::Map();
 	
 	bless $self, $class;
 	$self->initGUI;
