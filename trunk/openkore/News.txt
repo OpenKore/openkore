@@ -19,8 +19,10 @@ Bug fixes:
     hp < 70%
     sp > 80%
   }
+
 - Location-based skills are now casted on a target's present location
   rather than their pos_to in attackSkillSlot.
+- Fixed multiple sitAuto sequences being queued.
 
 New config options:
 - serverEncoding
