@@ -4,7 +4,7 @@
 #
 #########################################################################
 
-package Interface::Win32;
+package Interface::GUI;
 use strict;
 use warnings;
 
@@ -18,7 +18,8 @@ use Settings;
 use Misc;
 
 use Win32::GUI;
-use Interface::Win32::Map; #Map Viewer
+use Interface::GUI::Map; #Map Viewer
+
 
 our ($currentHP, $currentSP, $currentLvl, $currentJob, $currentStatus);
 our $map;
@@ -40,7 +41,7 @@ sub new {
 		r_field => undef,
 	};
 
-	$map = new Interface::Win32::Map();
+	$map = new Interface::GUI::Map();
 	
 	bless $self, $class;
 	$self->initGUI;
@@ -207,14 +208,28 @@ sub initGUI {
 	 				  "Down" 		=> \&inputDown,
  				      "Ctrl-X" 		=> \&onExit,
  				      "Tab" 		=> sub { $self->{input}->SetFocus(); },
+					"Alt+V"		=> \&comstatus,
+					"Alt+A"		=> \&comstat,
+					"Alt+I"		=> \&comitems,
+					"Alt+S"		=> \&comskills,
+					"Alt+E"		=> \&comstatus,
  				      );
 
 	$self->{Menu} = Win32::GUI::MakeMenu (
 	    "Open&Kore" => "Kore",
+	    "   > &Pause" => { -name => "pause", -onclick => \&compause },
+	    "	  > &Resume" => { -name => "resume", -onclick => \&comresume },
 	    "   > E&xit" 	=> { -name => "Kore_Exit", -onClick => \&onExit },
-	    "&Options" => "Option",
+	    "&View" => "View",
 	    "   > View &Map" 	=> { -name => "View_Map", -onClick => \&openMap },
-	);
+	    "&Info" => "Info",
+	    "	  > &Status		Alt+V"	=> { -name => "Status", -onClick => \&comstatus },
+	    "   > S&tatistics	Alt+A"	=> { -name => "Statistics", -onClick => \&comstat },
+	    "	  > &Inventory	Alt+I"	=> { -name => "Inventory", -onClick => \&comitems },
+	    "   > S&kills		Alt+S"	=> { -name => "Skills", -onClick => \&comskills },
+	    "   > &Experience	Alt+E"	=> { -name => "Experience", -onClick => \&comerooo },
+	    
+);
 
 	$self->{icon} = new Win32::GUI::Icon('SRC/BUILD/openkore.ICO');
 	
@@ -222,14 +237,14 @@ sub initGUI {
 	    -name     => "mw",
 	    -title    => "Ragnarok Online Bot Client",
 	    -pos      => [308, 220],
-	    -size     => [435, 405],
+	    -size     => [950, 690],
 	    -icon	=> $self->{icon},
 	    -menu     => $self->{Menu},
 	    -accel	 => $self->{AccTable},
-	    -maximizebox => 0,
+	    -maximizebox => 1,
 	    -resizable => 0,
 		-onMinimize => \&OnMinimize,
-	    -onTerminate => \&OnExit, 
+	    -onTerminate => \&onExit, 
 		);
 		
 	$self->{mw}->ChangeIcon($self->{icon});
@@ -247,7 +262,7 @@ sub initGUI {
 	       -name    => "name",
 	       -font	=> $nameFont,
 	       -left    => 4,
-	       -top     => 2,
+	       -top     => 102, #2,
 	       -width   => 100,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -257,7 +272,7 @@ sub initGUI {
 	       -text    => "job",
 	       -name    => "class",
 	       -left    => 4,
-	       -top     => 16,
+	       -top     => 116, #16,
 	       -width   => 100,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -267,7 +282,7 @@ sub initGUI {
 	       -text    => "gender",
 	       -name    => "gender",
 	       -left    => 4,
-	       -top     => 30,
+	       -top     => 130, #30,
 	       -width   => 40,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -277,7 +292,7 @@ sub initGUI {
 	       -text    => "",
 	       -name    => "hp_bar",
 	       -left    => 140,
-	       -top     => 4,
+	       -top     => 104, #4,
 	       -width   => 185,
 	       -height  => 10,
 	       -smooth   => 1,
@@ -287,7 +302,7 @@ sub initGUI {
 	       -text    => "HP",
 	       -name    => "hp_label",
 	       -left    => 120,
-	       -top     => 17,
+	       -top     => 117, #17,
 	       -width   => 15,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -297,7 +312,7 @@ sub initGUI {
 	       -text    => "",
 	       -name    => "sp_bar",
 	       -left    => 140,
-	       -top     => 32,
+	       -top     => 132, #32,
 	       -width   => 185,
 	       -height  => 10,
 	       -smooth   => 1,
@@ -307,7 +322,7 @@ sub initGUI {
 	       -text    => "SP",
 	       -name    => "sp_label",
 	       -left    => 120,
-	       -top     => 45,
+	       -top     => 145, #45,
 	       -width   => 14,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -317,7 +332,7 @@ sub initGUI {
 	       -text    => "0 / 0",
 	       -name    => "hp_val",
 	       -left    => 140,
-	       -top     => 17,
+	       -top     => 117, #17,
 	       -width   => 185,
 	       -height  => 13,
 	       -align    => "center",
@@ -328,7 +343,7 @@ sub initGUI {
 	       -text    => "0 / 0",
 	       -name    => "sp_val",
 	       -left    => 140,
-	       -top     => 45,
+	       -top     => 145, #45,
 	       -width   => 185,
 	       -height  => 13,
 	       -align    => "center",
@@ -339,7 +354,7 @@ sub initGUI {
 	       -text    => "Base Lv.",
 	       -name    => "b_label",
 	       -left    => 7,
-	       -top     => 70,
+	       -top     => 170, #70,
 	       -width   => 45,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -349,7 +364,7 @@ sub initGUI {
 	       -text    => "1",
 	       -name    => "base",
 	       -left    => 50,
-	       -top     => 70,
+	       -top     => 170, #70,
 	       -width   => 20,
 	       -height  => 20,
 	       -foreground    => 0,
@@ -359,7 +374,7 @@ sub initGUI {
 	       -text    => "",
 	       -name    => "b_bar",
 	       -left    => 70,
-	       -top     => 73,
+	       -top     => 173, #73,
 	       -width   => 235,
 	       -height  => 10,
 	       -smooth   => 1,
@@ -369,7 +384,7 @@ sub initGUI {
 	       -text    => "0%",
 	       -name    => "b_percent",
 	       -left    => 307,
-	       -top     => 70,
+	       -top     => 170, #70,
 	       -width   => 28,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -379,7 +394,7 @@ sub initGUI {
 	       -text    => "  Job Lv.",
 	       -name    => "j_label",
 	       -left    => 7,
-	       -top     => 85,
+	       -top     => 185, #85,
 	       -width   => 45,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -389,7 +404,7 @@ sub initGUI {
 	       -text    => "1",
 	       -name    => "job",
 	       -left    => 50,
-	       -top     => 85,
+	       -top     => 185, #85,
 	       -width   => 20,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -399,7 +414,7 @@ sub initGUI {
 	       -text    => "",
 	       -name    => "j_bar",
 	       -left    => 70,
-	       -top     => 88,
+	       -top     => 188, #88,
 	       -width   => 235,
 	       -height  => 10,
 	       -smooth   => 1,
@@ -409,7 +424,7 @@ sub initGUI {
 	       -text    => "0%",
 	       -name    => "j_percent",
 	       -left    => 307,
-	       -top     => 85,
+	       -top     => 185, #85,
 	       -width   => 28,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -419,7 +434,7 @@ sub initGUI {
 	       -text    => "Exp",
 	       -name    => "exp_group",
 	       -left    => 4,
-	       -top     => 58,
+	       -top     => 158, #58,
 	       -width   => 335,
 	       -height  => 48,
 	       -style   => WS_CHILD | WS_VISIBLE | 7,  # GroupBox
@@ -430,7 +445,7 @@ sub initGUI {
 	       -text    => "Status:",
 	       -name    => "status_label",
 	       -left    => 4,
-	       -top     => 108,
+	       -top     => 208, #108,
 	       -width   => 32,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -440,7 +455,7 @@ sub initGUI {
 	       -text    => "None",
 	       -name    => "status",
 	       -left    => 40,
-	       -top     => 108,
+	       -top     => 208, #108,
 	       -width   => 300,
 	       -height  => 13,
 	       -foreground    => 0,
@@ -451,9 +466,9 @@ sub initGUI {
 	       -name    => "console",
 	       -font	=> $consoleFont,
 	       -left    => 4,
-	       -top     => 125,
+	       -top     => 225, #125,
 	       -width   => 419,
-	       -height  => 120,
+	       -height  => 361,
            -style   => WS_CHILD | WS_VISIBLE | ES_LEFT
                        | ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL | ES_READONLY,
 	      );
@@ -461,10 +476,10 @@ sub initGUI {
 	$self->{chat} = $self->{mw}->AddRichEdit(
 	       -text    => "",
 	       -name    => "chat",
-	       -left    => 4,
-	       -top     => 250,
+	       -left    => 428,
+	       -top     => 5, #250,
 	       -width   => 419,
-	       -height  => 70,
+	       -height  => 591,
            -style   => WS_CHILD | WS_VISIBLE | ES_LEFT
                        | ES_MULTILINE | ES_AUTOVSCROLL | WS_VSCROLL | ES_READONLY,
 	      );
@@ -472,8 +487,8 @@ sub initGUI {
 	$self->{pm_list} = $self->{mw}->AddCombobox(
 	       -text    => "",
 	       -name    => "pm_list",
-	       -left    => 4,
-	       -top     => 325,
+	       -left    => 417,
+	       -top     => 596, #325,
 	       -width   => 95,
 	       -height  => 80,
 	       -dropdown => 1,
@@ -483,8 +498,8 @@ sub initGUI {
 	$self->{input} = $self->{mw}->AddTextfield(
 	       -text    => "",
 	       -name    => "input",
-	       -left    => 99,
-	       -top     => 324,
+	       -left    => 512,
+	       -top     => 596, #324,
 	       -width   => 245,
 	       -height  => 23,
 	      );
@@ -492,8 +507,8 @@ sub initGUI {
 	$self->{say_type} = $self->{mw}->AddCombobox(
 	       -text    => "",
 	       -name    => "say_type",
-	       -left    => 345,
-	       -top     => 325,
+	       -left    => 758,
+	       -top     => 596, #325,
 	       -width   => 80,
 	       -height  => 80,
 	       -dropdownlist => 1,
@@ -510,6 +525,35 @@ sub initGUI {
 	       -foreground => 0,
 	       -onClick => \&openMap,
 	      );
+	$self->{mw}->AddButton(
+	       -text    => "Sit",
+	       -name    => "sit command",
+	       -left    => 4,
+	       -top     => 5,
+	       -width   => 50,
+	       -height  => 20,
+	       -foreground => 0,
+	       -onClick => sub { Commands::run("sit"); },
+	      );
+	
+	$self->{mw}->AddButton(
+	       -text    => "complete report",
+	       -name    => "Report",
+	       -left    => 60,
+	       -top     => 5,
+	       -width   => 100,
+	       -height  => 20,
+	       -foreground => 0,
+	       -onClick => sub { Commands::run("exp report"); },
+	      );
+
+
+
+
+
+
+
+#
 	
 	$self->{say_type}->Add("Command","Public","Party","Guild");
 	$self->{say_type}->Select(0);
@@ -606,7 +650,7 @@ sub errorDialog {
 	Win32::GUI::MessageBox($msg,"Error",MB_ICONERROR | MB_OK,);
 }
 
-sub OnExit {
+sub onExit {
 	my $self = shift;
 	if ($conState) {
 		push @input_que, "\n";
@@ -615,15 +659,35 @@ sub OnExit {
 }
 
 sub openMap {
-	if (!$map->mapIsShown()) {
+
 		$map->initMapGUI();
 		$map->paintMap();
 		$map->paintMiscPos();		
 		$map->paintPos();
-	} else {
-		$map->Repaint();
 	}
+
+sub compause {
+	$AI = 0;
 }
+sub comresume {
+	$AI = 1;
+}
+sub comstatus {
+Commands::run("s"); 
+}
+sub comstat {
+Commands::run("st"); 
+}
+sub comitems {
+Commands::run("i");
+}
+sub comskills {
+Commands::run("skills");
+}
+sub comerooo {
+Commands::run("exp");
+}
+
 
 sub UpdateCharacter {
 	my $self = shift;
@@ -721,4 +785,6 @@ sub UpdateCharacter {
 	'white'		=> [192,192,192],
 );
 
+
 1;
+
