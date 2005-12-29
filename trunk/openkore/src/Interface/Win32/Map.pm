@@ -4,7 +4,7 @@
 #	by: amacc_boy (koreadvance@yahoo.com)
 #
 #########################################################################
-package Interface::GUI::Map;
+package Interface::Win32::Map;
 
 use strict;
 use Win32::GUI;
