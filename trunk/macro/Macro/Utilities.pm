@@ -187,6 +187,7 @@ sub getPlayerID {
   my ($name, $pool) = @_;
   for (my $id = 0; $id < @{$pool}; $id++) {
     next unless $$pool[$id];
+    next unless $players{$$pool[$id]}->{name};
     if ($players{$$pool[$id]}->{name} eq $name) {return $id}
   }
   return;

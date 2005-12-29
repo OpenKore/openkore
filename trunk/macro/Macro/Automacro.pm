@@ -199,7 +199,7 @@ sub checkPerson {
   return 0 unless defined $who;
   my $r_id = getPlayerID($who, \@playersID);
   return 0 unless defined $r_id;
-  return 1 unless defined $dist;
+  return 1 unless $dist;
   my $mypos = calcPosition($char);
   my $pos = calcPosition($::players{$::playersID[$r_id]});
   return distance($mypos, $pos) <= $dist ?1:0;
