@@ -3373,26 +3373,31 @@ sub received_characters {
 		#exp display bugfix - chobit andy 20030129
 		$num = unpack("C1", substr($args->{RAW_MSG}, $i + 104, 1));
 		$chars[$num] = new Actor::You;
-		$chars[$num]{'exp'} = unpack("V1", substr($args->{RAW_MSG}, $i + 4, 4));
-		$chars[$num]{'zenny'} = unpack("V1", substr($args->{RAW_MSG}, $i + 8, 4));
-		$chars[$num]{'exp_job'} = unpack("V1", substr($args->{RAW_MSG}, $i + 12, 4));
-		$chars[$num]{'lv_job'} = unpack("C1", substr($args->{RAW_MSG}, $i + 16, 1));
-		$chars[$num]{'hp'} = unpack("v1", substr($args->{RAW_MSG}, $i + 42, 2));
-		$chars[$num]{'hp_max'} = unpack("v1", substr($args->{RAW_MSG}, $i + 44, 2));
-		$chars[$num]{'sp'} = unpack("v1", substr($args->{RAW_MSG}, $i + 46, 2));
-		$chars[$num]{'sp_max'} = unpack("v1", substr($args->{RAW_MSG}, $i + 48, 2));
+		$chars[$num]{ID} = substr($args->{RAW_MSG}, $i, 4);
+		$chars[$num]{exp} = unpack("V", substr($args->{RAW_MSG}, $i + 4, 4));
+		$chars[$num]{zenny} = unpack("V", substr($args->{RAW_MSG}, $i + 8, 4));
+		$chars[$num]{exp_job} = unpack("V", substr($args->{RAW_MSG}, $i + 12, 4));
+		$chars[$num]{lv_job} = unpack("v", substr($args->{RAW_MSG}, $i + 16, 2));
+		$chars[$num]{hp} = unpack("v", substr($args->{RAW_MSG}, $i + 42, 2));
+		$chars[$num]{hp_max} = unpack("v", substr($args->{RAW_MSG}, $i + 44, 2));
+		$chars[$num]{sp} = unpack("v", substr($args->{RAW_MSG}, $i + 46, 2));
+		$chars[$num]{sp_max} = unpack("v", substr($args->{RAW_MSG}, $i + 48, 2));
 		$chars[$num]{jobID} = unpack("v", substr($args->{RAW_MSG}, $i + 52, 2));
-		$chars[$num]{'ID'} = substr($args->{RAW_MSG}, $i, 4);
-		$chars[$num]{'lv'} = unpack("C1", substr($args->{RAW_MSG}, $i + 58, 1));
-		$chars[$num]{'hair_color'} = unpack("C1", substr($args->{RAW_MSG}, $i + 70, 1));
-		($chars[$num]{'name'}) = unpack("Z*", substr($args->{RAW_MSG}, $i + 74, 24));
-		$chars[$num]{'str'} = unpack("C1", substr($args->{RAW_MSG}, $i + 98, 1));
-		$chars[$num]{'agi'} = unpack("C1", substr($args->{RAW_MSG}, $i + 99, 1));
-		$chars[$num]{'vit'} = unpack("C1", substr($args->{RAW_MSG}, $i + 100, 1));
-		$chars[$num]{'int'} = unpack("C1", substr($args->{RAW_MSG}, $i + 101, 1));
-		$chars[$num]{'dex'} = unpack("C1", substr($args->{RAW_MSG}, $i + 102, 1));
-		$chars[$num]{'luk'} = unpack("C1", substr($args->{RAW_MSG}, $i + 103, 1));
-		$chars[$num]{'sex'} = $accountSex2;
+		$chars[$num]{hair_style} = unpack("v", substr($args->{RAW_MSG}, $i + 54, 2));
+		$chars[$num]{lv} = unpack("v", substr($args->{RAW_MSG}, $i + 58, 2));
+		$chars[$num]{headgear}{low} = unpack("v", substr($args->{RAW_MSG}, $i + 62, 2));
+		$chars[$num]{headgear}{top} = unpack("v", substr($args->{RAW_MSG}, $i + 66, 2));
+		$chars[$num]{headgear}{mid} = unpack("v", substr($args->{RAW_MSG}, $i + 68, 2));
+		$chars[$num]{hair_color} = unpack("v", substr($args->{RAW_MSG}, $i + 70, 2));
+		$chars[$num]{clothes_color} = unpack("v", substr($args->{RAW_MSG}, $i + 72, 2));
+		($chars[$num]{name}) = unpack("Z*", substr($args->{RAW_MSG}, $i + 74, 24));
+		$chars[$num]{str} = unpack("C1", substr($args->{RAW_MSG}, $i + 98, 1));
+		$chars[$num]{agi} = unpack("C1", substr($args->{RAW_MSG}, $i + 99, 1));
+		$chars[$num]{vit} = unpack("C1", substr($args->{RAW_MSG}, $i + 100, 1));
+		$chars[$num]{int} = unpack("C1", substr($args->{RAW_MSG}, $i + 101, 1));
+		$chars[$num]{dex} = unpack("C1", substr($args->{RAW_MSG}, $i + 102, 1));
+		$chars[$num]{luk} = unpack("C1", substr($args->{RAW_MSG}, $i + 103, 1));
+		$chars[$num]{sex} = $accountSex2;
 	}
 
 	# gradeA says it's supposed to send this packet here, but
