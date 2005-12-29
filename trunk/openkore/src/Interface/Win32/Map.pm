@@ -1,19 +1,21 @@
+
 #########################################################################
 #	Win32::GUI Map Viewer for OpenKore
 #	by: amacc_boy (koreadvance@yahoo.com)
 #
 #########################################################################
-package Interface::Win32::Map;
+package Interface::GUI::Map;
 
 use strict;
 use Win32::GUI;
-
 use Globals;
 use Misc;
 
 my ($r_field,$W,$H,$DC,$bit,$DC2);
 our $map_name;
 our $mapOpened = 0;
+
+our @input_que;
 
 sub new {
 	my $class = shift;
@@ -41,6 +43,7 @@ sub initMapGUI {
 	    -text   => "Map Viewer: ",
 	    -maximizebox => 0,
 	    -minimizebox => 0,
+	    -onTerminate => \&onexit, 
 	    -resizable => 0,
 	    -topmost => 1,
 	);
@@ -49,7 +52,6 @@ sub initMapGUI {
 	
 	$self->{mw}->Show();
 }
-
 #Paint map in temporary dc before painting to window
 sub paintMap {
 	my $self = shift;
@@ -86,6 +88,11 @@ sub paintMap {
 	$DC->BitBlt(0, 0, $W,$H,$DC2, 0, 0);
     #We now delete the DC
     #$DC2->DeleteDC(); #Dont delete need for repainting
+}
+
+sub onexit {
+	my $self = shift;
+	
 }
 
 sub mapIsShown {
@@ -188,5 +195,6 @@ sub paintMiscPos {
 		}
 	}
 }
+
 
 1;
