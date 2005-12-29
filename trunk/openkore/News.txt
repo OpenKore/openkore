@@ -23,6 +23,7 @@ Bug fixes:
 - Location-based skills are now casted on a target's present location
   rather than their pos_to in attackSkillSlot.
 - Fixed multiple sitAuto sequences being queued.
+- Fix the Win32 GUI interface.
 
 New config options:
 - serverEncoding
@@ -46,10 +47,13 @@ Internal:
 - packet_outMangle/$switch hook is now called before openkore's built-in
   mangling, to give plugins more freedom.
 - packet_attack hook now has extra 'type' argument.
+- all receive packets have been moved to Receive.pm now.
 
 Credits:
-- id-mardi: fix for setPartySkillTimer
-- mondlicht: teleportAuto_avoidAllPlayers bugfix.
+- id-mardi: fix for setPartySkillTimer, move the rest of the receive packets
+  to Receive.pm
+- mondlicht: teleportAuto_avoidAllPlayers bugfix
+- Lor_Balmon: fix for the Win32 GUI interface
 
 
 ==================
