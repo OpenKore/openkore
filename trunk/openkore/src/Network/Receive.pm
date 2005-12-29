@@ -276,6 +276,8 @@ sub new {
 # Return 0 otherwise.
 sub willMangle {
 	my ($self, $switch) = @_;
+	
+	return 1 if $Plugins::hooks{"packet_mangle/$switch"};
 
 	my $packet = $self->{packet_list}{$switch};
 	my $name = $packet->[0];
@@ -294,9 +296,12 @@ sub mangle {
 	my ($self, $args) = @_;
 
 	my $switch = $args->{switch};
-	my $packet = $self->{packet_list}{$switch};
-	my $name = $packet->[0];
-	my $hookname = "packet_mangle/$name";
+	my $hookname = "packet_mangle/$switch";
+	unless ($Plugins::hooks{$hookname}) {
+		my $packet = $self->{packet_list}{$switch};
+		my $name = $packet->[0];
+		$hookname = "packet_mangle/$name";
+	}
 	my $hook = $Plugins::hooks{$hookname}->[0];
 	return unless $hook && $hook->{r_func};
 	return $hook->{r_func}($hookname, $args, $hook->{user_data});
