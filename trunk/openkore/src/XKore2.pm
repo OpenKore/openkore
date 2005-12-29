@@ -72,8 +72,12 @@ sub DESTROY {
 	my $self = shift;
 
 	$self->serverDisconnect;
-	$self->clientDisconnect if ($self->clientAlive);
-	close($self->{client_listen}) unless ($self->clientAlive);
+	if ($self->clientAlmostAlive) {
+		$self->clientSend(pack('C3', 0x81, 0, 1));
+		$self->clientDisconnect;
+	} else {
+		close($self->{client_listen});
+	}
 	close($self->{tracker}) if ($self->trackerAlive);
 	undef $self->{server};
 }
@@ -523,13 +527,10 @@ sub checkClient {
 		substr($charMsg, 0, 18) = pack('a4 V3 v', $charID, $char->{exp}, $char->{zenny}, $char->{exp_job},
 			$char->{lv_job});
 
-		# HP/HP max, SP/SP max, walk speed, job ID, hair style, ??, level
-		substr($charMsg, 42, 18) = pack('v7 x2 v', $char->{hp}, $char->{hp_max}, $char->{sp}, $char->{sp_max},
-			$char->{walk_speed} * 1000, $char->{jobID}, $char->{hair_style}, $char->{lv});
-
-		# STR, AGI, VIT, INT, DEX, LUK, Character slot
-		substr($charMsg, 74, 31) = pack('Z24 C7', $char->{name}, $char->{str}, $char->{agi},
-			$char->{vit}, $char->{int}, $char->{dex}, $char->{luk}, 0);
+		substr($charMsg, 42, 64) = pack('v7 x2 v x2 v x2 v4 Z24 C6 v', $char->{hp}, $char->{hp_max}, $char->{sp}, $char->{sp_max},
+			$char->{walk_speed} * 1000, $char->{jobID}, $char->{hair_style}, $char->{lv}, $char->{headgear}{low},
+			$char->{headgear}{top}, $char->{headgear}{mid}, $char->{hair_color}, $char->{clothes_color},
+			$char->{name}, $char->{str}, $char->{agi}, $char->{vit}, $char->{int}, $char->{dex}, $char->{luk}, 0);
 
 		# Send the character info packet
 		$msg = pack("C2 v", 0x6B, 0x00, length($charMsg) + 4) . $charMsg;
@@ -549,7 +550,7 @@ sub checkClient {
 
 	} elsif ($$c_state == 2 && $switch eq "0066") {
 		# Client sent CharLogin
-		
+
 		# Determine public IP
 		my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIP} || '127.0.0.1'));
 
@@ -739,7 +740,7 @@ sub checkClient {
 			my $coords = "";
 			shiftPack(\$coords, $npcs{$ID}{pos}{x}, 10);
 			shiftPack(\$coords, $npcs{$ID}{pos}{y}, 10);
-			shiftPack(\$coords, 0, 4);
+			shiftPack(\$coords, $npcs{$ID}{look}{body}, 4);
 
 			$msg .= pack('C2 a4 x8 v1 x30 a3 x5', 0x78, 0x00, $ID, $npcs{$ID}{type}, $coords);
 		}
@@ -749,7 +750,7 @@ sub checkClient {
 			my $coords = "";
 			shiftPack(\$coords, $monsters{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $monsters{$ID}{pos_to}{y}, 10);
-			shiftPack(\$coords, 0, 4);
+			shiftPack(\$coords, $monsters{$ID}{look}{body}, 4);
 
 			$msg .= pack('C2 a4 v5 x32 a3 x3 v1',
 				0x78, 0x00, $ID, $monsters{$ID}{walk_speed} * 1000,
@@ -762,7 +763,7 @@ sub checkClient {
 			my $coords = "";
 			shiftPack(\$coords, $pets{$ID}{pos_to}{x}, 10);
 			shiftPack(\$coords, $pets{$ID}{pos_to}{y}, 10);
-			shiftPack(\$coords, 0, 4);
+			shiftPack(\$coords, $pets{$ID}{look}{body}, 4);
 
 			$msg .= pack('C2 a4 v x6 v2 x28 a3 x3 v', 0x78, 0x00, $ID, $pets{$ID}{walk_speed} * 1000,
 				$pets{$ID}{nameID}, $pets{$ID}{hair_style}, $coords, $pets{$ID}{lv});
