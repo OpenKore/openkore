@@ -131,54 +131,98 @@ sub new {
 		'0107' => ['party_location', 'a4 v1 v1', [qw(ID x y)]],
 		'0108' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
 		'0109' => ['party_chat', 'x2 a4 Z*', [qw(ID message)]],
+		'0110' => ['skill_use_failed', 'v1 v1 v1 C1 C1', [qw(skillID btype unknown fail type)]],
 		'010A' => ['mvp_item', 'v1', [qw(itemID)]],
 		'010B' => ['mvp_you', 'V1', [qw(expAmount)]],
 		'010C' => ['mvp_other', 'a4', [qw(ID)]],
 		'010E' => ['skill_update', 'v1 v1 v1 v1 C1', [qw(skillID lv sp range up)]], # range = skill range, up = this skill can be leveled up further
+		'010F' => ['skills_list'],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'0117' => ['skill_use_location', 'v1 a4 v1 v1 v1', [qw(skillID sourceID lv x y)]],
 		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
 		'011C' => ['warp_portal_list', 'v1 Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
+		'011F' => ['area_spell', 'a4 a4 v1 v1 C1 C1', [qw(ID sourceID x y type fail)]],
+		'0120' => ['area_spell_disappears', 'a4', [qw(ID)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
+		'0122' => ['cart_equip_list'],
+		'0123' => ['cart_items_list'],
 		'0124' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'0125' => ['cart_item_removed', 'v1 V1', [qw(index amount)]],
 		'012C' => ['cart_add_failed', 'C1', [qw(fail)]],
+		'012D' => ['shop_skill', 'v1', [qw(number)]],
+		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]],
+		'0132' => ['vender_lost', 'a4', [qw(ID)]],
+		'0133' => ['vender_items_list'],
+		'0136' => ['vending_start'],
+		'0137' => ['shop_sold', 'v1 v1', [qw(number amount)]],
+		'0139' => ['monster_ranged_attack', 'a4 v1 v1 v1 v1 C1', [qw(ID sourceX sourceY targetX targetY type)]],
+		'013A' => ['attack_range', 'v1', [qw(type)]],
+		'013B' => ['arrow_none', 'v1', [qw(type)]],
+		'013D' => ['hp_sp_changed', 'v1 v1', [qw(type amount)]],
+		'013E' => ['skill_cast', 'a4 a4 v1 v1 v1 v1 v1 V1', [qw(sourceID targetID x y skillID unknown type wait)]],		
 		'013C' => ['arrow_equipped', 'v1', [qw(index)]],
 		'0141' => ['stat_info2', 'v1 x2 v1 x2 v1', [qw(type val val2)]],
+		'0142' => ['npc_talk_number', 'a4', [qw(ID)]],
 		'0144' => ['minimap_indicator', 'V1 V1 V1 V1 v1 x3', [qw(ID clear x y color)]],
+		'0147' => ['item_skill', 'v1 v1 v1 v1 v1 v1 A*', [qw(skillID targetType unknown skillLv sp unknown2 skillName)]],
+		'0148' => ['resurrection', 'a4 v1', [qw(targetID type)]],
+		'014C' => ['guild_allies_enemy_list'],
+		'0154' => ['guild_members_list'],
 		#'015A' => ['guild_leave', 'Z24 Z40', [qw(name message)]],
 		#'015C' => ['guild_expulsion', 'Z24 Z40 Z24', [qw(name message unknown)]],
 		#'015E' => ['guild_broken', 'V1', [qw(flag)]], # clif_guild_broken
 		'0163' => ['guild_expulsionlist'],
+		'0166' => ['guild_members_title_list'],
 		'0169' => ['guild_invite_result', 'C1', [qw(type)]],
+		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]],
+		'016C' => ['guild_name', 'x2 V V V x5 Z24', [qw(guildID emblemID mode guildName)]],
+		'016D' => ['guild_name_request', 'a4 a4 V1', [qw(ID targetID online)]],
+		'016F' => ['guild_notice'],
+		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID name)]],
 		#'0173' => ['guild_alliance', 'V1', [qw(flag)]],
+		'0177' => ['identify_list'],
+		'0179' => ['identify', 'v*', [qw(index)]],
+		'017B' => ['card_merge_list'],
+		'017D' => ['card_merge_status', 'v1 v1 C1', [qw(item_index card_index fail)]],
 		'017F' => ['guild_chat', 'x2 Z*', [qw(message)]],
 		#'0181' => ['guild_opposition_result', 'C1', [qw(flag)]], # clif_guild_oppositionack
 		#'0184' => ['guild_unally', 'a4 V1', [qw(guildID flag)]], # clif_guild_delalliance
+		'0187' => ['sync_request', 'a4', [qw(ID)]],
 		'0188' => ['item_upgrade', 'v1 v1 v1', [qw(type index upgrade)]],
 		'0189' => ['no_teleport', 'v1', [qw(fail)]],
 		'018C' => ['sense_result', 'v1 v1 v1 V1 v1 v1 v1 v1 C1 C1 C1 C1 C1 C1 C1 C1 C1', [qw(nameID level size hp def race mdef element ice earth fire wind poison holy dark spirit undead)]],
 		'018D' => ['forge_list'],
 		'018F' => ['refine_result', 'v1 v1', [qw(fail nameID)]],
 		#'0191' => ['talkie_box', 'a4 Z80', [qw(ID message)]], # talkie box message
+		'0194' => ['guild_logon', 'a4 Z24', [qw(ID name)]],
 		'0195' => ['actor_name_received', 'a4 Z24 Z24 Z24 Z24', [qw(ID name partyName guildName guildTitle)]],
 		'0196' => ['actor_status_active', 'v1 a4 C1', [qw(type ID flag)]],
 		'0199' => ['pvp_mode1', 'v1', [qw(type)]],
+		'019A' => ['pvp_rank', 'x2 V1 V1 V1', [qw(ID rank num)]],
+		'019B' => ['unit_levelup', 'a4 V1', [qw(ID type)]],
 		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],
 		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
 		'01A3' => ['pet_food', 'C1 v1', [qw(success foodID)]],
 		'01A4' => ['pet_info2', 'C1 a4 V1', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
 		'01AA' => ['pet_emotion', 'a4 V1', [qw(ID type)]],
+		'01AB' => ['actor_muted', 'x2 a4 x2 L1', [qw(ID duration)]],
 		'01AC' => ['actor_trapped', 'a4', [qw(ID)]],
+		'01AD' => ['arrowcraft_list'],
+		'01B0' => ['monster_typechange', 'a4 a1 V1', [qw(ID unknown type)]],
 		'01B3' => ['npc_image', 'Z63 C1', [qw(npc_image type)]],
 		'01B6' => ['guild_info', 'a4 V1 V1 V1 V1 V1 V1 x12 V1 Z24 Z24', [qw(ID lvl conMember maxMember average exp next_exp members name master)]],
+		'01B9' => ['cast_cancelled', 'a4', [qw(ID)]],
 		'01C3' => ['local_broadcast', 'x2 a3 x9 Z*', [qw(color message)]],
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
+		'01C9' => ['area_spell', 'a4 a4 v1 v1 C1 C1', [qw(ID sourceID x y type fail)]],
+		'01CD' => ['sage_autospell'],
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
+		'01D0' => ['monk_spirits', 'a4 v1', [qw(sourceID spirits)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D7' => ['player_equipment', 'a4 C1 v1 v1', [qw(sourceID type ID1 ID2)]],
@@ -188,6 +232,7 @@ sub new {
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v1', [qw(type)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
+		'01E1' => ['monk_spirits', 'a4 v1', [qw(sourceID spirits)]],
 		#'01E2' => ['marriage_unknown'], clif_parse_ReqMarriage
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 ##
@@ -196,14 +241,20 @@ sub new {
 		'01EB' => ['guild_location', 'a4 v1 v1', [qw(ID x y)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
+		'01EF' => ['cart_items_list'],
 		'01F4' => ['deal_request', 'Z24 x4 v1', [qw(user level)]],
-		'01F5' => ['deal_begin', 'C1', [qw(type)]],
+		'01F5' => ['deal_begin', 'C1 a4 v1', [qw(type targetID level)]],
 		#'01F6' => ['adopt_unknown'], # clif_parse_ReqAdopt
 		#'01F8' => ['adopt_unknown'], # clif_adopt_process
 		'01F0' => ['storage_items_stackable'],
 		'01FC' => ['repair_list'],
 		'01FE' => ['repair_result', 'v1 C1', [qw(nameID flag)]],
+		'0201' => ['friend_list'],
 		#'0205' => ['divorce_unknown', 'Z24', [qw(name)]], # clif_divorced
+		'0206' => ['friend_logon', 'a4 a4 C1', [qw(friendAccountID friendCharID isNotOnline)]],
+		'0207' => ['friend_request', 'a4 a4 Z24', [qw(accountID charID name)]],
+		'0209' => ['friend_response', 'C1 Z24', [qw(type name)]],
+		'020A' => ['friend_removed', 'a4 a4', [qw(friendAccountID friendCharID)]],
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 
@@ -628,40 +679,6 @@ sub actor_died_or_disappeard {
 		delete $pets{$args->{ID}};
 	} else {
 		debug "Unknown Disappeared: ".getHex($args->{ID})."\n", "parseMsg";
-	}
-}
-
-sub combo_delay {
-	my ($self, $args) = @_;
-
-	$char->{combo_packet} = ($args->{delay} * 15) / 100000;
-
-	$args->{actor} = Actor::get($args->{ID});
-	my $verb = $args->{actor}->verb('have', 'has');
-	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
-}
-
-sub player_equipment {
-	my ($self, $args) = @_;
-
-	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
-	my $player = $players{$sourceID};
-	return unless $player;
-
-	if ($type == 2) {
-		if ($ID1 ne $player->{weapon}) {
-			message "$player changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
-			$player->{weapon} = $ID1;
-		}
-		if ($ID2 ne $player->{shield}) {
-			message "$player changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook", 2;
-			$player->{shield} = $ID2;
-		}
-	} elsif ($type == 9) {
-		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
-			message "$player changed Shoes to: ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
-		}
-		$player->{shoes} = $ID1;
 	}
 }
 
@@ -1217,7 +1234,7 @@ sub actor_look_at {
 }
 
 sub actor_moved {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 
 	my (%coordsFrom, %coordsTo);
 	makeCoords(\%coordsFrom, substr($args->{RAW_MSG}, 50, 3));
@@ -1330,7 +1347,7 @@ sub actor_moved {
 }
 
 sub actor_movement_interrupted {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	my %coords;
 	$coords{x} = $args->{x};
 	$coords{y} = $args->{y};
@@ -1348,6 +1365,19 @@ sub actor_movement_interrupted {
 		%{$players{$args->{ID}}{pos}} = %coords;
 		%{$players{$args->{ID}}{pos_to}} = %coords;
 		$players{$args->{ID}}{sitting} = 0;
+	}
+}
+
+sub actor_muted {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	my $duration = $args->{duration};
+	if ($duration > 0) {
+		$duration = 0xFFFFFFFF - $duration + 1;
+		message getActorName($ID) . " is muted for $duration minutes\n", "parseMsg_statuslook", 2;
+	} else {
+		message getActorName($ID) . " is no longer muted\n", "parseMsg_statuslook", 2;
 	}
 }
 
@@ -1509,15 +1539,59 @@ sub actor_spawned {
 }
 
 sub actor_trapped {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	# original comment was that ID is not a valid ID
 	# but it seems to be, at least on eAthena/Freya
 	my $actor = Actor::get($args->{ID});
 	debug "$actor is trapped.\n";
 }
 
+sub area_spell {
+	my ($self, $args) = @_;
+
+	# Area effect spell; including traps!
+	my $ID = $args->{ID};
+	my $sourceID = $args->{sourceID};
+	my $x = $args->{x};
+	my $y = $args->{y};
+	my $type = $args->{type};
+	my $fail = $args->{fail};
+	# graffiti message, might only be for one of these switches
+	#my $message = unpack("Z80", substr($msg, 17, 80));
+
+	$spells{$ID}{'sourceID'} = $sourceID;
+	$spells{$ID}{'pos'}{'x'} = $x;
+	$spells{$ID}{'pos'}{'y'} = $y;
+	my $binID = binAdd(\@spellsID, $ID);
+	$spells{$ID}{'binID'} = $binID;
+	$spells{$ID}{'type'} = $type;
+	if ($type == 0x81) {
+		message getActorName($sourceID)." opened Warp Portal on ($x, $y)\n", "skill";
+	}
+	debug "Area effect ".getSpellName($type)." ($binID) from ".getActorName($sourceID)." appeared on ($x, $y)\n", "skill", 2;
+
+	Plugins::callHook('packet_areaSpell', {
+		fail => $fail,
+		sourceID => $sourceID,
+		type => $type,
+		x => $x,
+		y => $y
+	});
+}
+
+sub area_spell_disappears {
+	my ($self, $args) = @_;
+
+	# The area effect spell with ID dissappears
+	my $ID = $args->{ID};
+	my $spell = $spells{$ID};
+	debug "Area effect ".getSpellName($spell->{type})." ($spell->{binID}) from ".getActorName($spell->{sourceID})." disappeared from ($spell->{pos}{x}, $spell->{pos}{y})\n", "skill", 2;
+	delete $spells{$ID};
+	binRemove(\@spellsID, $ID);
+}
+
 sub arrow_equipped {
-	my ($self,$args) = @_;
+	my ($self, $args) = @_;
 	return unless $args->{index};
 	$char->{arrow} = $args->{index};
 
@@ -1528,6 +1602,56 @@ sub arrow_equipped {
 		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 		message "Arrow equipped: $char->{inventory}[$invIndex]{name} ($invIndex)\n";
 	}
+}
+
+sub arrow_none {
+	my ($self, $args) = @_;
+	
+	my $type = $args->{type};
+	if ($type == 0) {
+		delete $char->{'arrow'};
+		if ($config{'dcOnEmptyArrow'}) {
+			$interface->errorDialog("Please equip arrow first.");
+			quit();
+		} else {
+			error "Please equip arrow first.\n";
+		}
+	} elsif ($type == 3) {
+		debug "Arrow equipped\n";
+	}
+	
+}
+
+sub arrowcraft_list {
+	my ($self, $args) = @_;
+
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+	
+	undef @arrowCraftID;
+	for (my $i = 4; $i < $msg_size; $i += 2) {
+		my $ID = unpack("v1", substr($msg, $i, 2));
+		my $index = findIndex($char->{inventory}, "nameID", $ID);
+		binAdd(\@arrowCraftID, $index);
+	}
+	
+	message "Received Possible Arrow Craft List - type 'arrowcraft'\n";
+}
+
+sub attack_range {
+	my ($self, $args) = @_;
+	
+	my $type = $args->{type};
+	debug "Your attack range is: $type\n";
+	$char->{attack_range} = $type;
+	if ($config{attackDistanceAuto} && $config{attackDistance} != $type) {
+		message "Autodetected attackDistance = $type\n", "success";
+		configModify('attackDistance', $type, 1);
+		configModify('attackMaxDistance', $type, 1);
+	}	
 }
 
 sub buy_result {
@@ -1543,6 +1667,83 @@ sub buy_result {
 	} else {
 		error "Buy failed (failure code $args->{fail}).\n";
 	}
+}
+
+sub card_merge_list {
+	my ($self, $args) = @_;
+	
+	# You just requested a list of possible items to merge a card into
+	# The RO client does this when you double click a card
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+	my ($len) = unpack("x2 v1", $msg);
+
+	my $display;
+	$display .= "-----Card Merge Candidates-----\n";
+
+	my $index;
+	my $invIndex;
+	for (my $i = 4; $i < $len; $i += 2) {
+		$index = unpack("v1", substr($msg, $i, 2));
+		$invIndex = findIndex($char->{inventory}, "index", $index);
+		binAdd(\@cardMergeItemsID,$invIndex);
+		$display .= "$invIndex $char->{inventory}[$invIndex]{name}\n";
+	}
+
+	$display .= "-------------------------------\n";
+	message $display, "list";	
+}
+
+sub card_merge_status {
+	my ($self, $args) = @_;
+		
+	# something about successful compound?
+	my $item_index = $args->{item_index};
+	my $card_index = $args->{card_index};
+	my $fail = $args->{fail};
+
+	if ($fail) {
+		message "Card merging failed\n";
+	} else {
+		my $item_invindex = findIndex($char->{inventory}, "index", $item_index);
+		my $card_invindex = findIndex($char->{inventory}, "index", $card_index);
+		message "$char->{inventory}[$card_invindex]{name} has been successfully merged into $char->{inventory}[$item_invindex]{name}\n", "success";
+
+		# get the ID so we can pack this into the weapon cards
+		my $nameID = $char->{inventory}[$card_invindex]{nameID};
+
+		# remove one of the card
+		my $item = $char->{inventory}[$card_invindex];
+		$item->{amount} -= 1;
+		if ($item->{amount} <= 0) {
+			delete $char->{inventory}[$card_invindex];
+		}
+
+		# rename the slotted item now
+		my $item = $char->{inventory}[$item_invindex];
+		# put the card into the item
+		# FIXME: this is unoptimized
+		my $newcards;
+		my $addedcard;
+		for (my $i = 0; $i < 4; $i++) {
+			my $card = substr($item->{cards}, $i*2, 2);
+			if (unpack("v1", $card)) {
+				$newcards .= $card;
+			} elsif (!$addedcard) {
+				$newcards .= pack("v1", $nameID);
+				$addedcard = 1;
+			} else {
+				$newcards .= pack("v1", 0);
+			}
+		}
+		$item->{cards} = $newcards;
+		$item->{name} = itemName($item);
+	}
+
+	undef @cardMergeItemsID;
+	undef $cardMergeIndex;	
 }
 
 sub cart_info {
@@ -1568,6 +1769,40 @@ sub cart_add_failed {
 	error "Can't Add Cart Item ($reason)\n";
 }
 
+sub cart_equip_list {
+	my ($self, $args) = @_;
+	
+	# "0122" sends non-stackable item info
+	# "0123" sends stackable item info
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+
+	for (my $i = 4; $i < $msg_size; $i += 20) {
+		my $index = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack("v1", substr($msg, $i+2, 2));
+		my $type = unpack("C1",substr($msg, $i+4, 1));
+		my $item = $cart{inventory}[$index] = {};
+		$item->{nameID} = $ID;
+		$item->{amount} = 1;
+		$item->{index} = $index;
+		$item->{identified} = unpack("C1", substr($msg, $i+5, 1));
+		$item->{type_equip} = unpack("v1", substr($msg, $i+6, 2));
+		$item->{broken} = unpack("C1", substr($msg, $i+10, 1));
+		$item->{upgrade} = unpack("C1", substr($msg, $i+11, 1));
+		$item->{cards} = substr($msg, $i+12, 8);
+		$item->{name} = itemName($item);
+
+		debug "Non-Stackable Cart Item: $item->{name} ($index) x 1\n", "parseMsg";
+		Plugins::callHook('packet_cart', {index => $index});
+	}
+
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;	
+}
+
 sub cart_item_added {
 	my ($self, $args) = @_;
 
@@ -1589,37 +1824,50 @@ sub cart_item_added {
 	$args->{item} = $item;
 }
 
-sub item_used {
+sub cart_items_list {
+	my ($self, $args) = @_;
+	
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	my $switch = $args->{switch};
+	
+	decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+	my $psize = ($switch eq "0123") ? 10 : 18;
+
+	for (my $i = 4; $i < $msg_size; $i += $psize) {
+		my $index = unpack("v1", substr($msg, $i, 2));
+		my $ID = unpack("v1", substr($msg, $i+2, 2));
+		my $amount = unpack("v1", substr($msg, $i+6, 2));
+
+		my $item = $cart{inventory}[$index] ||= {};
+		if ($item->{amount}) {
+			$item->{amount} += $amount;
+		} else {
+			$item->{index} = $index;
+			$item->{nameID} = $ID;
+			$item->{amount} = $amount;
+			$item->{name} = itemNameSimple($ID);
+			$item->{identified} = 1;
+		}
+		debug "Stackable Cart Item: $item->{name} ($index) x $amount\n", "parseMsg";
+		Plugins::callHook('packet_cart', {index => $index});
+	}
+
+	$ai_v{'inventory_time'} = time + 1;
+	$ai_v{'cart_time'} = time + 1;
+	
+}
+
+sub combo_delay {
 	my ($self, $args) = @_;
 
-	my ($index, $itemID, $ID, $remaining) =
-		@{$args}{qw(index itemID ID remaining)};
+	$char->{combo_packet} = ($args->{delay} * 15) / 100000;
 
-	if ($ID eq $accountID) {
-		my $invIndex = findIndex($char->{inventory}, "index", $index);
-		my $item = $char->{inventory}[$invIndex];
-		my $amount = $item->{amount} - $remaining;
-		$item->{amount} -= $amount;
-
-		message("You used Item: $item->{name} ($invIndex) x $amount - $remaining left\n", "useItem", 1);
-		$itemChange{$item->{name}}--;
-		if ($item->{amount} <= 0) {
-			delete $char->{inventory}[$invIndex];
-		}
-
-		Plugins::callHook('packet_useitem', {
-			item => $item,
-			invIndex => $invIndex,
-			name => $item->{name},
-			amount => $amount
-		});
-		$args->{item} = $item;
-
-	} else {
-		my $actor = Actor::get($ID);
-		my $itemDisplay = itemNameSimple($itemID);
-		message "$actor used Item: $itemDisplay - $remaining left\n", "useItem", 2;
-	}
+	$args->{actor} = Actor::get($args->{ID});
+	my $verb = $args->{actor}->verb('have', 'has');
+	debug "$args->{actor} $verb combo delay $args->{delay}\n", "parseMsg_comboDelay";
 }
 
 sub cart_item_removed {
@@ -1659,6 +1907,7 @@ sub character_creation_failed {
 
 sub character_creation_successful {
 	my ($self, $args) = @_;
+	
 	my $char = new Actor::You;
 	$char->{ID} = $args->{ID};
 	$char->{name} = $args->{name};
@@ -1719,6 +1968,7 @@ sub character_deletion_failed {
 
 sub character_moves {
 	my ($self, $args) = @_;
+	
 	change_to_constate5();
 	makeCoords($char->{pos}, substr($args->{RAW_MSG}, 6, 3));
 	makeCoords2($char->{pos_to}, substr($args->{RAW_MSG}, 8, 3));
@@ -1730,11 +1980,13 @@ sub character_moves {
 
 sub character_status {
 	my ($self, $args) = @_;
+	
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 }
 
 sub chat_created {
 	my ($self, $args) = @_;
+	
 	$currentChatRoom = "new";
 	$chatRooms{new} = {%createdChatRoom};
 	binAdd(\@chatRoomsID, "new");
@@ -1762,6 +2014,7 @@ sub chat_info {
 
 sub chat_join_result {
 	my ($self, $args) = @_;
+	
 	if ($args->{type} == 1) {
 		message "Can't join Chat Room - Incorrect Password\n";
 	} elsif ($args->{type} == 2) {
@@ -1771,6 +2024,7 @@ sub chat_join_result {
 
 sub chat_modified {
 	my ($self, $args) = @_;
+	
 	my $title;
 	decrypt(\$title, $args->{title});
 
@@ -1810,6 +2064,7 @@ sub chat_newowner {
 
 sub chat_user_join {
 	my ($self, $args) = @_;
+	
 	if ($currentChatRoom ne "") {
 		binAdd(\@currentChatRoomUsers, $args->{user});
 		$chatRooms{$currentChatRoom}{users}{ $args->{user} } = 1;
@@ -1820,6 +2075,7 @@ sub chat_user_join {
 
 sub chat_user_leave {
 	my ($self, $args) = @_;
+	
 	delete $chatRooms{$currentChatRoom}{users}{ $args->{user} };
 	binRemove(\@currentChatRoomUsers, $args->{user});
 	$chatRooms{$currentChatRoom}{num_users} = $args->{num_users};
@@ -1863,14 +2119,31 @@ sub chat_users {
 	message "You have joined the Chat Room $chat->{title}\n";
 }
 
+sub cast_cancelled {
+	my ($self, $args) = @_;
+
+	# Cast is cancelled
+	my $ID = $args->{ID};
+
+	my $source = Actor::get($ID);
+	$source->{cast_cancelled} = time;
+	my $skill = $source->{casting}->{skill};
+	my $skillName = $skill ? $skill->name : 'Unknown';
+	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
+	message "$source failed to cast $skillName\n", $domain;
+	delete $source->{casting};
+}
+
 sub chat_removed {
 	my ($self, $args) = @_;
+	
 	binRemove(\@chatRoomsID, $args->{ID});
 	delete $chatRooms{ $args->{ID} };
 }
 
 sub deal_add_other {
 	my ($self, $args) = @_;
+	
 	if ($args->{nameID} > 0) {
 		my $item = $currentDeal{other}{ $args->{ID} } ||= {};
 		$item->{amount} += $args->{amount};
@@ -1917,6 +2190,7 @@ sub deal_add_you {
 
 sub deal_begin {
 	my ($self, $args) = @_;
+	
 	if ($args->{type} == 0) {
 		error "That person is too far from you to trade.\n";
 	} elsif ($args->{type} == 2) {
@@ -2203,6 +2477,7 @@ sub exp_zeny_info {
 
 sub forge_list {
 	my ($self, $args) = @_;
+	
 	message "========Forge List========\n";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 8) {
 		my $viewID = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
@@ -2215,8 +2490,130 @@ sub forge_list {
 	message "=========================\n";
 }
 
+sub friend_list {
+	my ($self, $args) = @_;
+
+	# Friend list
+	undef @friendsID;
+	undef %friends;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	
+	my $ID = 0;
+	for (my $i = 4; $i < $msg_size; $i += 32) {
+		binAdd(\@friendsID, $ID);
+		$friends{$ID}{'accountID'} = substr($msg, $i, 4);
+		$friends{$ID}{'charID'} = substr($msg, $i + 4, 4);
+		$friends{$ID}{'name'} = unpack("Z24", substr($msg, $i + 8 , 24));
+		$friends{$ID}{'online'} = 0;
+		$ID++;
+	}
+}
+
+sub friend_logon {
+	my ($self, $args) = @_;
+
+	# Friend In/Out
+	my $friendAccountID = $args->{friendAccountID};
+	my $friendCharID = $args->{friendCharID};
+	my $isNotOnline = $args->{isNotOnline};
+
+	for (my $i = 0; $i < @friendsID; $i++) {
+		if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
+			$friends{$i}{'online'} = 1 - $isNotOnline;
+			message "Friend $friends{$i}{'name'} has " .
+				($isNotOnline? 'disconnected' : 'connected') . "\n", undef, 1;
+			last;
+		}
+	}	
+}
+
+sub friend_request {
+	my ($self, $args) = @_;
+	
+	# Incoming friend request
+	$incomingFriend{'accountID'} = $args->{accountID};
+	$incomingFriend{'charID'} = $args->{charID};
+	$incomingFriend{'name'} = $args->{name};
+	message "$incomingFriend{'name'} wants to be your friend\n";
+	message "Type 'friend accept' to be friend with $incomingFriend{'name'}, otherwise type 'friend reject'\n";
+}
+
+sub friend_removed {
+	my ($self, $args) = @_;
+
+	# Friend removed
+	my $friendAccountID =  $args->{friendAccountID};
+	my $friendCharID =  $args->{friendCharID};
+	for (my $i = 0; $i < @friendsID; $i++) {
+		if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
+			message "$friends{$i}{'name'} is no longer your friend\n";
+			binRemove(\@friendsID, $i);
+			delete $friends{$i};
+			last;
+		}
+	}	
+}
+
+sub friend_response {
+	my ($self, $args) = @_;
+		
+	# Response to friend request
+	my $type = $args->{type};
+	my $name = $args->{name};
+	if ($type) {
+		message "$name rejected to be your friend\n";
+	} else {
+		my $ID = @friendsID;
+		binAdd(\@friendsID, $ID);
+		$friends{$ID}{'accountID'} = substr($msg, 4, 4);
+		$friends{$ID}{'charID'} = substr($msg, 8, 4);
+		$friends{$ID}{'name'} = $name;
+		$friends{$ID}{'online'} = 1;
+		message "$name is now your friend\n";
+	}	
+}
+
+sub guild_allies_enemy_list {
+	my ($self, $args) = @_;
+	
+	# Guild Allies/Enemy List
+	# <len>.w (<type>.l <guildID>.l <guild name>.24B).*
+	# type=0 Ally
+	# type=1 Enemy
+
+	# This is the length of the entire packet
+	my $msg = $args->{RAW_MSG};
+	my $len = unpack("v", substr($msg, 2, 2));
+
+	for (my $i = 4; $i < $len; $i += 32) {
+		my ($type, $guildID, $guildName) = unpack("V1 V1 Z24", substr($msg, $i, 32));
+		if ($type) {
+			# Enemy guild
+			$guild{enemy}{$guildID} = $guildName;
+		} else {
+			# Allied guild
+			$guild{ally}{$guildID} = $guildName;
+		}
+		debug "Your guild is ".($type ? 'enemy' : 'ally')." with guild $guildID ($guildName)\n", "guild";
+	}
+}
+
+sub guild_ally_request {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID}; # is this a guild ID or account ID? Freya calls it an account ID
+	my $name = $args->{name};
+
+	message "Incoming Request to Ally Guild '$name'\n";
+	$incomingGuild{'ID'} = $ID;
+	$incomingGuild{'Type'} = 2;
+	$timeout{'ai_guildAutoDeny'}{'time'} = time;
+}
+
 sub guild_chat {
 	my ($self, $args) = @_;
+	
 	my ($chatMsgUser, $chatMsg);
 	my $chat = $args->{message};
 	if (($chatMsgUser, $chatMsg) = $args->{message} =~ /(.*?) : (.*)/) {
@@ -2269,6 +2666,154 @@ sub guild_invite_result {
 	);
 	message "Guild join request: ".($types{$type} || "Unknown $type")."\n";
 
+}
+
+sub guild_location {
+	# FIXME: not implemented
+}
+
+sub guild_logon {
+	my ($self, $args) = @_;
+	
+	my $ID = $args->{ID};
+	my ($name) = $args->{name};
+
+	message "Guild Member $name Log ".($guildNameRequest{online}?"In":"Out")."\n", 'guildchat';
+}
+
+sub guild_members_list {
+	my ($self, $args) = @_;
+
+	my $newmsg;
+	my $jobID;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
+	$msg = substr($msg, 0, 4) . $newmsg;
+	
+	my $c = 0;
+	delete $guild{member};
+	for (my $i = 4; $i < $msg_size; $i+=104){
+		$guild{'member'}[$c]{'ID'}    = substr($msg, $i, 4);
+		$guild{'member'}[$c]{'charID'}	  = substr($msg, $i+4, 4);
+		$jobID = unpack("v1", substr($msg, $i + 14, 2));
+		if ($jobID =~ /^40/) {
+			$jobID =~ s/^40/1/;
+			$jobID += 60;
+		}
+		$guild{'member'}[$c]{'jobID'} = $jobID;
+		$guild{'member'}[$c]{'lvl'}   = unpack("v1", substr($msg, $i + 16, 2));
+		$guild{'member'}[$c]{'contribution'} = unpack("V1", substr($msg, $i + 18, 4));
+		$guild{'member'}[$c]{'online'} = unpack("v1", substr($msg, $i + 22, 2));
+		my $gtIndex = unpack("V1", substr($msg, $i + 26, 4));
+		$guild{'member'}[$c]{'title'} = $guild{'title'}[$gtIndex];
+		$guild{'member'}[$c]{'name'} = unpack("Z24", substr($msg, $i + 80, 24));
+		$c++;
+	}
+	
+}
+
+sub guild_members_title_list {
+	my ($self, $args) = @_;
+	
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	
+	decrypt(\$newmsg, substr($msg, 4, length($msg) - 4));
+	$msg = substr($msg, 0, 4) . $newmsg;
+	my $gtIndex;
+	for (my $i = 4; $i < $msg_size; $i+=28) {
+		$gtIndex = unpack("V1", substr($msg, $i, 4));
+		$guild{'title'}[$gtIndex] = unpack("Z24", substr($msg, $i + 4, 24));
+	}
+}
+
+sub guild_name {
+	my ($self, $args) = @_;
+	
+	my $guildID = $args->{guildID};
+	my $emblemID = $args->{emblemID};
+	my $mode = $args->{mode};
+	my $guildName = $args->{guildName};
+	$char->{guild}{name} = $guildName;
+	$char->{guildID} = $guildID;
+}
+
+sub guild_name_request {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	my $TargetID =	$args->{TargetID};
+	my $online = $args->{online};
+	undef %guildNameRequest;
+	$guildNameRequest{ID} = $TargetID;
+	$guildNameRequest{online} = $online;
+	sendGuildMemberNameRequest($net, $TargetID);
+}
+
+sub guild_notice {
+	my ($self, $args) = @_;
+	
+	my $msg = $args->{RAW_MSG};
+	my ($address) = unpack("Z*", substr($msg, 2, 60));
+	my ($message) = unpack("Z*", substr($msg, 62, 120));
+	stripLanguageCode(\$address);
+	stripLanguageCode(\$message);
+	
+	# don't show the huge guildmessage notice if there is none
+	# the client does something similar to this...
+	if ($address || $message) {
+		my $msg = "---Guild Notice---\n";
+		$msg .= "$address\n\n";
+		$msg .= "$message\n";
+		$msg .= "------------------\n";
+		message $msg, "guildnotice";
+	}
+}
+
+sub guild_request {
+	my ($self, $args) = @_;
+	
+	# Guild request
+	my $ID = $args->{ID};
+	my $name = $args->{name};
+	message "Incoming Request to join Guild '$name'\n";
+	$incomingGuild{'ID'} = $ID;
+	$incomingGuild{'Type'} = 1;
+	$timeout{'ai_guildAutoDeny'}{'time'} = time;	
+}
+
+sub identify {
+	my ($self, $args) = @_;
+	
+	my $index = $args->{index};
+	my $invIndex = findIndex($char->{inventory}, "index", $index);
+	my $item = $char->{inventory}[$invIndex];
+	$item->{identified} = 1;
+	$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
+	message "Item Identified: $item->{name} ($invIndex)\n", "info";
+	undef @identifyID;
+}
+
+sub identify_list {
+	my ($self, $args) = @_;
+	
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+	
+	undef @identifyID;
+	for (my $i = 4; $i < $msg_size; $i += 2) {
+		my $index = unpack("v1", substr($msg, $i, 2));
+		my $invIndex = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "index", $index);
+		binAdd(\@identifyID, $invIndex);
+	}
+	
+	my $num = @identifyID;
+	message "Received Possible Identify List ($num item(s)) - type 'identify'\n", 'info';
 }
 
 sub ignore_all_result {
@@ -2370,11 +2915,61 @@ sub inventory_item_removed {
 	Plugins::callHook('packet_item_removed', {index => $invIndex});
 }
 
+sub item_used {
+	my ($self, $args) = @_;
+
+	my ($index, $itemID, $ID, $remaining) =
+		@{$args}{qw(index itemID ID remaining)};
+
+	if ($ID eq $accountID) {
+		my $invIndex = findIndex($char->{inventory}, "index", $index);
+		my $item = $char->{inventory}[$invIndex];
+		my $amount = $item->{amount} - $remaining;
+		$item->{amount} -= $amount;
+
+		message("You used Item: $item->{name} ($invIndex) x $amount - $remaining left\n", "useItem", 1);
+		$itemChange{$item->{name}}--;
+		if ($item->{amount} <= 0) {
+			delete $char->{inventory}[$invIndex];
+		}
+
+		Plugins::callHook('packet_useitem', {
+			item => $item,
+			invIndex => $invIndex,
+			name => $item->{name},
+			amount => $amount
+		});
+		$args->{item} = $item;
+
+	} else {
+		my $actor = Actor::get($ID);
+		my $itemDisplay = itemNameSimple($itemID);
+		message "$actor used Item: $itemDisplay - $remaining left\n", "useItem", 2;
+	}
+}
+
 sub married {
 	my ($self, $args) = @_;
 
 	my $actor = Actor::get($args->{ID});
 	message "$actor got married!\n"
+}
+
+sub monk_spirits {
+	my ($self, $args) = @_;
+	
+	# Monk Spirits
+	my $sourceID = $args->{sourceID};
+	my $spirits = $args->{spirits};
+	
+	if ($sourceID eq $accountID) {
+		message "You have $spirits spirit(s) now\n", "parseMsg_statuslook", 1 if $spirits != $char->{spirits};
+		$char->{spirits} = $spirits;
+	} elsif (my $actor = Actor::get($sourceID)) {
+		$actor->{spirits} = $spirits;
+		message "$actor has $spirits spirit(s) now\n", "parseMsg_statuslook", 2 if $spirits != $actor->{spirits};
+	}
+	
 }
 
 sub inventory_items_nonstackable {
@@ -2529,6 +3124,32 @@ sub item_disappeared {
 	}
 }
 
+sub item_skill {
+	my ($self, $args) = @_;
+
+	my $skillID = $args->{skillID};
+	my $targetType = $args->{targetType}; # we don't use this yet
+	my $skillLv = $args->{skillLv};
+	my $sp = $args->{sp}; # we don't use this yet
+	my $skillName = $args->{skillName};
+
+	message "Permitted to use $skillsID_lut{$skillID} ($skillID), level $skillLv\n";
+	my $skill = Skills->new(id => $skillID);
+
+	unless ($config{noAutoSkill}) {
+		sendSkillUse($net, $skillID, $skillLv, $accountID);
+		undef $char->{permitSkill};
+	} else {
+		$char->{permitSkill} = $skill;
+	}
+
+	Plugins::callHook('item_skill', {
+		ID => $skillID,
+		level => $skillLv,
+		name => $skillName
+	});	
+}
+
 sub item_upgrade {
 	my ($self, $args) = @_;
 
@@ -2601,6 +3222,20 @@ sub job_equipment_hair_change {
 	#	debug "$name changes $parts{$part} ($part) equipment to item #$number\n", "parseMsg";
 	#}
 
+}
+
+sub hp_sp_changed {
+	my ($self, $args) = @_;
+		
+	my $type = $args->{type};
+	my $amount = $args->{amount};
+	if ($type == 5) {
+		$chars[$config{'char'}]{'hp'} += $amount;
+		$chars[$config{'char'}]{'hp'} = $chars[$config{'char'}]{'hp_max'} if ($chars[$config{'char'}]{'hp'} > $chars[$config{'char'}]{'hp_max'});
+	} elsif ($type == 7) {
+		$chars[$config{'char'}]{'sp'} += $amount;
+		$chars[$config{'char'}]{'sp'} = $chars[$config{'char'}]{'sp_max'} if ($chars[$config{'char'}]{'sp'} > $chars[$config{'char'}]{'sp_max'});
+	}	
 }
 
 sub local_broadcast {
@@ -2792,6 +3427,7 @@ sub memo_success {
 
 sub minimap_indicator {
 	my ($self, $args) = @_;
+	
 	if ($args->{clear}) {
 		message "Minimap indicator at location $args->{x}, $args->{y} " .
 		"with the color $args->{color} cleared\n",
@@ -2801,6 +3437,44 @@ sub minimap_indicator {
 		"with the color $args->{color} shown\n",
 		"info";
 	}
+}
+
+sub monster_typechange {
+	my ($self, $args) = @_;
+	
+	# Class change / monster type change
+	# 01B0 : long ID, byte WhateverThisIs, long type
+	my $ID = $args->{ID};
+	my $type = $args->{type};
+
+	if ($monsters{$ID}) {
+		my $name = $monsters_lut{$type} || "Unknown $type";
+		message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) changed to $name\n";
+		$monsters{$ID}{nameID} = $type;
+		$monsters{$ID}{name} = $name;
+		$monsters{$ID}{dmgToParty} = 0;
+		$monsters{$ID}{dmgFromParty} = 0;
+		$monsters{$ID}{missedToParty} = 0;
+	}
+}
+
+sub monster_ranged_attack {
+	my ($self, $args) = @_;
+	
+	my $ID = $args->{ID};
+	my $type = $args->{type};
+	
+	my %coords1;
+	$coords1{'x'} = $args->{sourceX};
+	$coords1{'y'} = $args->{sourceY};
+	my %coords2;
+	$coords2{'x'} = $args->{targetX};
+	$coords2{'y'} = $args->{targetY};
+	%{$monsters{$ID}{'pos_attack_info'}} = %coords1 if ($monsters{$ID});
+	%{$chars[$config{'char'}]{'pos'}} = %coords2;
+	%{$chars[$config{'char'}]{'pos_to'}} = %coords2;
+	debug "Received attack location - monster: $coords1{'x'},$coords1{'y'} - " .
+		"you: $coords2{'x'},$coords2{'y'}\n", "parseMsg_move", 2;	
 }
 
 sub mvp_item {
@@ -2964,6 +3638,18 @@ sub npc_talk_continue {
 	}
 }
 
+sub npc_talk_number {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+
+	my $name = getNPCName($ID);
+
+	message("$name: Type 'talk num <number #>' to input a number.\n", "input");
+	$ai_v{'npc_talk'}{'talk'} = 'num';
+	$ai_v{'npc_talk'}{'time'} = time;
+}
+
 sub npc_talk_responses {
 	my ($self, $args) = @_;
 	# 00b7: word len, long ID, string str
@@ -3124,15 +3810,12 @@ sub party_leave {
 
 sub party_location {
 	my ($self, $args) = @_;
+	
 	my $ID = $args->{ID};
 	$chars[$config{char}]{party}{users}{$ID}{pos}{x} = $args->{x};
 	$chars[$config{char}]{party}{users}{$ID}{pos}{y} = $args->{y};
 	$chars[$config{char}]{party}{users}{$ID}{online} = 1;
 	debug "Party member location: $chars[$config{char}]{party}{users}{$ID}{name} - $args->{x}, $args->{y}\n", "parseMsg";
-}
-
-sub guild_location {
-	# FIXME: not implemented
 }
 
 sub party_organize_result {
@@ -3260,6 +3943,30 @@ sub pet_info2 {
 	} elsif ($type == 5) {
 		# $value is always 0x14
 		# what does this do for the client?
+	}
+}
+
+sub player_equipment {
+	my ($self, $args) = @_;
+
+	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
+	my $player = $players{$sourceID};
+	return unless $player;
+
+	if ($type == 2) {
+		if ($ID1 ne $player->{weapon}) {
+			message "$player changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
+			$player->{weapon} = $ID1;
+		}
+		if ($ID2 ne $player->{shield}) {
+			message "$player changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook", 2;
+			$player->{shield} = $ID2;
+		}
+	} elsif ($type == 9) {
+		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
+			message "$player changed Shoes to: ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
+		}
+		$player->{shoes} = $ID1;
 	}
 }
 
@@ -3485,12 +4192,43 @@ sub repair_list {
 
 sub repair_result {
 	my ($self, $args) = @_;
+	
 	my $itemName = itemNameSimple($args->{nameID});
 	if ($args->{flag}) {
 		message "Repair of $itemName failed.\n";
 	} else {
 		message "Successfully repaired $itemName.\n";
 	}
+}
+
+sub resurrection {
+	my ($self, $args) = @_;
+	
+	my $targetID = $args->{targetID};
+	my $type = $args->{type};
+
+	if ($targetID eq $accountID) {
+		message("You have been resurrected\n", "info");
+		undef $chars[$config{'char'}]{'dead'};
+		undef $chars[$config{'char'}]{'dead_time'};
+		$chars[$config{'char'}]{'resurrected'} = 1;
+
+	} elsif ($players{$targetID} && %{$players{$targetID}}) {
+		undef $players{$targetID}{'dead'};
+	}
+
+	if ($targetID ne $accountID) {
+		message(getActorName($targetID)." has been resurrected\n", "info");
+		$players{$targetID}{deltaHp} = 0;
+	}	
+}
+
+sub sage_autospell {
+	# Sage Autospell - list of spells availible sent from server
+	if ($config{autoSpell}) {
+		my $skill = Skills->new(name => $config{autoSpell});
+		sendAutoSpell($net, $skill->id);
+	}	
 }
 
 sub secure_login_key {
@@ -3521,6 +4259,25 @@ sub self_chat {
 	});
 }
 
+sub sync_request {
+	my ($self, $args) = @_;
+
+	# 0187 - long ID
+	# I'm not sure what this is. In inRO this seems to have something
+	# to do with logging into the game server, while on
+	# oRO it has got something to do with the sync packet.
+	if ($config{serverType} == 1) {
+		my $ID = $args->{ID};
+		if ($ID == $accountID) {
+			$timeout{ai_sync}{time} = time;
+			sendSync($net) unless ($net->clientAlive);
+			debug "Sync packet requested\n", "connection";
+		} else {
+			warning "Sync packet requested for wrong ID\n";
+		}
+	}		
+}
+
 sub no_teleport {
 	my ($self, $args) = @_;
 	my $fail = $args->{fail};
@@ -3533,6 +4290,53 @@ sub no_teleport {
 	} else {
 		error "Unavailable Area To Teleport (fail code $fail)\n";
 	}
+}
+
+sub pvp_mode1 {
+	my ($self, $args) = @_;
+	my $type = $args->{type};
+
+	if ($type == 0) {
+		$pvp = 0;
+	} elsif ($type == 1) {
+		message "PvP Display Mode\n", "map_event";
+		$pvp = 1;
+	} elsif ($type == 3) {
+		message "GvG Display Mode\n", "map_event";
+		$pvp = 2;
+	}
+}
+
+sub pvp_mode2 {
+	my ($self, $args) = @_;
+	my $type = $args->{type};
+
+	if ($type == 0) {
+		$pvp = 0;
+	} elsif ($type == 6) {
+		message "PvP Display Mode\n", "map_event";
+		$pvp = 1;
+	} elsif ($type == 8) {
+		message "GvG Display Mode\n", "map_event";
+		$pvp = 2;
+	}
+}
+
+sub pvp_rank {
+	my ($self, $args) = @_;
+
+	# 9A 01 - 14 bytes long
+	my $ID = $args->{ID};
+	my $rank = $args->{rank};
+	my $num = $args->{num};;
+	if ($rank != $ai_v{temp}{pvp_rank} ||
+	    $num != $ai_v{temp}{pvp_num}) {
+		$ai_v{temp}{pvp_rank} = $rank;
+		$ai_v{temp}{pvp_num} = $num;
+		if ($ai_v{temp}{pvp}) {
+			message "Your PvP rank is: $rank/$num\n", "map_event";
+		}
+	}	
 }
 
 sub sense_result {
@@ -3554,6 +4358,135 @@ sub sense_result {
 			$args->{mdef}, $elements_lut{$args->{element}}, $args->{hp},
 			$args->{ice}, $args->{earth}, $args->{fire}, $args->{wind}, $args->{poison}, $args->{holy}, $args->{dark},
 			$args->{spirit}, $args->{undead}), "list";
+}
+
+sub shop_sold {
+	my ($self, $args) = @_;
+	
+	# sold something
+	my $number = $args->{number};
+	my $amount = $args->{amount};
+	
+	$articles[$number]{sold} += $amount;
+	my $earned = $amount * $articles[$number]{price};
+	$shopEarned += $earned;
+	$articles[$number]{quantity} -= $amount;
+	my $msg = "sold: $amount $articles[$number]{name} - $earned z\n";
+	shopLog($msg);
+	message($msg, "sold");
+	if ($articles[$number]{quantity} < 1) {
+		message("sold out: $articles[$number]{name}\n", "sold");
+		#$articles[$number] = "";
+		if (!--$articles){
+			message("Items have been sold out.\n", "sold");
+			closeShop();
+		}
+	}
+}
+
+sub shop_skill {
+	my ($self, $args) = @_;
+
+	# Used the shop skill.
+	my $number = $args->{number};
+	message "You can sell $number items!\n";
+}
+
+sub skill_cast {
+	my ($self, $args) = @_;
+
+	change_to_constate5();
+	my $sourceID = $args->{sourceID};
+	my $targetID = $args->{targetID};
+	my $x = $args->{x};
+	my $y = $args->{y};
+	my $skillID = $args->{skillID};
+	my $type = $args->{type};
+	my $wait = $args->{wait};
+	my ($dist, %coords);
+
+	# Resolve source and target
+	my $source = Actor::get($sourceID);
+	my $target = Actor::get($targetID);
+	my $verb = $source->verb('are casting', 'is casting');
+
+	my $skill = new Skills(id => $skillID);
+	$source->{casting} = {
+		skill => $skill,
+		target => $target,
+		x => $x,
+		y => $y,
+		startTime => time,
+		castTime => $wait
+	};
+
+	my $targetString;
+	if ($x != 0 || $y != 0) {
+		# If $dist is positive we are in range of the attack?
+		$coords{x} = $x;
+		$coords{y} = $y;
+		$dist = judgeSkillArea($skillID) - distance($char->{pos_to}, \%coords);
+			$targetString = "location ($x, $y)";
+		undef $targetID;
+	} else {
+		$targetString = $target->nameString($source);
+	}
+		# Perform trigger actions
+	if ($sourceID eq $accountID) {
+		$char->{time_cast} = time;
+		$char->{time_cast_wait} = $wait / 1000;
+		delete $char->{cast_cancelled};
+	}
+	countCastOn($sourceID, $targetID, $skillID, $x, $y);
+
+	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
+	message "$source $verb ".skillName($skillID)." on $targetString (time ${wait}ms)\n", $domain, 1;
+		Plugins::callHook('is_casting', {
+		sourceID => $sourceID,
+		targetID => $targetID,
+		source => $source,
+		target => $target,
+		skillID => $skillID,
+		skill => $skill,
+		x => $x,
+		y => $y
+	});
+
+	# Skill Cancel
+	if ($AI && $monsters{$sourceID} && %{$monsters{$sourceID}} && mon_control($monsters{$sourceID}{'name'})->{'skillcancel_auto'}) {
+		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
+			message "Monster Skill - switch Target to : $monsters{$sourceID}{name} ($monsters{$sourceID}{binID})\n";
+			stopAttack();
+			AI::dequeue;
+			attack($sourceID);
+		}
+		
+		# Skill area casting -> running to monster's back
+		my $ID = AI::args->{ID};
+		if ($dist > 0) {
+			# Calculate X axis
+			if ($char->{pos_to}{x} - $monsters{$ID}{pos_to}{x} < 0) {
+				$coords{x} = $monsters{$ID}{pos_to}{x} + 3;
+			} else {
+				$coords{x} = $monsters{$ID}{pos_to}{x} - 3;
+			}
+			# Calculate Y axis
+			if ($char->{pos_to}{y} - $monsters{$ID}{pos_to}{y} < 0) {
+				$coords{y} = $monsters{$ID}{pos_to}{y} + 3;
+			} else {
+				$coords{y} = $monsters{$ID}{pos_to}{y} - 3;
+			}
+			
+			my (%vec, %pos);
+			getVector(\%vec, \%coords, $char->{pos_to});
+			moveAlongVector(\%pos, $char->{pos_to}, \%vec, distance($char->{'pos_to'}, \%coords));
+			ai_route($field{name}, $pos{x}, $pos{y},
+				maxRouteDistance => $config{'attackMaxRouteDistance'},
+				maxRouteTime => $config{'attackMaxRouteTime'},
+				noMapRoute => 1);
+			message "Avoid casting Skill - switch position to : $pos{x},$pos{y}\n", 1;
+		}
+	}		
 }
 
 sub skill_update {
@@ -3656,6 +4589,66 @@ sub skill_use {
 	}
 }
 
+sub skill_use_failed {
+	my ($self, $args) = @_;
+
+	# skill fail/delay
+	my $skillID = $args->{skillID};
+	my $btype = $args->{btype};
+	my $fail = $args->{fail};
+	my $type = $args->{type};
+
+	my %failtype = (
+		0 => 'Basic',
+		1 => 'Insufficient SP',
+		2 => 'Insufficient HP',
+		3 => 'No Memo',
+		4 => 'Mid-Delay',
+		5 => 'No Zeny',
+		6 => 'Wrong Weapon Type',
+		7 => 'Red Gem Needed',
+		8 => 'Blue Gem Needed',
+		9 => '90% Overweight',
+		10 => 'Requirement'
+		);
+	warning "Skill $skillsID_lut{$skillID} failed ($failtype{$type})\n", "skill";
+	Plugins::callHook('packet_skillfail', {'skillID' => $skillID, 'failType' => $failtype{$type}});
+}
+
+sub skill_use_location {
+	my ($self, $args) = @_;
+
+	# Skill used on coordinates
+	my $skillID = $args->{skillID};
+	my $sourceID = $args->{sourceID};
+	my $lv = $args->{lv};
+	my $x = $args->{x};
+	my $y = $args->{y};
+
+	# Perform trigger actions
+	setSkillUseTimer($skillID) if $sourceID eq $accountID;
+
+	# Resolve source name
+	my ($source, $uses) = getActorNames($sourceID, 0, 'use', 'uses');
+	my $disp = "$source $uses ".skillName($skillID);
+	$disp .= " (lvl $lv)" unless $lv == 65535;
+	$disp .= " on location ($x, $y)\n";
+
+	# Print skill use message
+	my $domain = ($sourceID eq $accountID) ? "selfSkill" : "skill";
+	message $disp, $domain;
+
+	Plugins::callHook('packet_skilluse', {
+		'skillID' => $skillID,
+		'sourceID' => $sourceID,
+		'targetID' => '',
+		'damage' => 0,
+		'amount' => $lv,
+		'x' => $x,
+		'y' => $y
+	});
+}
+
 sub skill_used_no_damage {
 	my ($self, $args) = @_;
 	# Skill used on target, with no damage done
@@ -3727,8 +4720,55 @@ sub skill_used_no_damage {
 			});
 }
 
+sub skills_list {
+	my ($self, $args) = @_;
+
+	# Character skill list
+	change_to_constate5();
+	my $newmsg;
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	
+	decrypt(\$newmsg, substr($msg, 4));
+	$msg = substr($msg, 0, 4).$newmsg;
+
+	undef @skillsID;
+	delete $char->{skills};
+	for (my $i = 4; $i < $msg_size; $i += 37) {
+		my $skillID = unpack("v1", substr($msg, $i, 2));
+		# target type is 0 for novice skill, 1 for enemy, 2 for place, 4 for immediate invoke, 16 for party member
+		my $targetType = unpack("v1", substr($msg, $i+2, 2)); # we don't use this yet
+		my $level = unpack("v1", substr($msg, $i + 6, 2));
+		my $sp = unpack("v1", substr($msg, $i + 8, 2));
+		my $range = unpack("v1", substr($msg, $i + 10, 2));
+		my ($skillName) = unpack("Z*", substr($msg, $i + 12, 24));
+		if (!$skillName) {
+			$skillName = Skills->new(id => $skillID)->handle;
+		}
+		my $up = unpack("C1", substr($msg, $i+36, 1));
+
+		$char->{skills}{$skillName}{ID} = $skillID;
+		$char->{skills}{$skillName}{sp} = $sp;
+		$char->{skills}{$skillName}{range} = $range;
+		$char->{skills}{$skillName}{up} = $up;
+		$char->{skills}{$skillName}{targetType} = $targetType;
+		if (!$char->{skills}{$skillName}{lv}) {
+			$char->{skills}{$skillName}{lv} = $level;
+		}
+		$skillsID_lut{$skillID} = $skills_lut{$skillName};
+		binAdd(\@skillsID, $skillName);
+
+		Plugins::callHook('packet_charSkills', {
+			'ID' => $skillID,
+			'skillName' => $skillName,
+			'level' => $level,
+			});
+	}		
+}
+
 sub stats_added {
 	my ($self, $args) = @_;
+	
 	if ($args->{val} == 207) {
 		error "Not enough stat points to add\n";
 	} else {
@@ -4179,6 +5219,7 @@ sub system_chat {
 
 sub unequip_item {
 	my ($self, $args) = @_;
+	
 	change_to_constate5();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	$char->{inventory}[$invIndex]{equipped} = "";
@@ -4195,8 +5236,26 @@ sub unequip_item {
 	message "You unequip $char->{inventory}[$invIndex]{name} ($invIndex) - $equipTypes_lut{$char->{inventory}[$invIndex]{type_equip}}\n", 'inventory';
 }
 
+sub unit_levelup {
+	my ($self, $args) = @_;
+	
+	my $ID = $args->{ID};
+	my $type = $args->{type};
+	my $name = getActorName($ID);
+	if ($type == 0) {
+		message "$name gained a level!\n";
+	} elsif ($type == 1) {
+		message "$name gained a job level!\n";
+	} elsif ($type == 2) {
+		message "$name failed to refine a weapon!\n", "refine";
+	} elsif ($type == 3) {
+		message "$name successfully refined a weapon!\n", "refine";
+	}
+}
+
 sub use_item {
 	my ($self, $args) = @_;
+	
 	change_to_constate5();
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	if (defined $invIndex) {
@@ -4210,11 +5269,125 @@ sub use_item {
 
 sub users_online {
 	my ($self, $args) = @_;
+	
 	message "There are currently $args->{users} users online\n", "info";
+}
+
+sub vender_found {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	my $title = $args->{title};
+	
+	if (!$venderLists{$ID} || !%{$venderLists{$ID}}) {
+		binAdd(\@venderListsID, $ID);
+		Plugins::callHook('packet_vender', {ID => $ID});
+	}
+	$venderLists{$ID}{'title'} = $title;
+	$venderLists{$ID}{'id'} = $ID;	
+}
+
+sub vender_items_list {
+	my ($self, $args) = @_;
+
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = $args->{RAW_MSG_SIZE};
+	
+	undef @venderItemList;
+	undef $venderID;
+	$venderID = substr($msg,4,4);
+	my $player = Actor::get($venderID);
+		
+	message(center(' Vender: ' . $player->nameIdx . ' ', 79, '-')."\n", "list");
+	message("#  Name				       Type	      Amount	   Price\n", "list");
+	for (my $i = 8; $i < $msg_size; $i+=22) {
+		my $number = unpack("v1", substr($msg, $i + 6, 2));
+
+		my $item = $venderItemList[$number] = {};
+		$item->{price} = unpack("V1", substr($msg, $i, 4));
+		$item->{amount} = unpack("v1", substr($msg, $i + 4, 2));
+		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
+		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
+		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
+		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
+		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
+		$item->{cards} = substr($msg, $i + 14, 8);
+		$item->{name} = itemName($item);
+
+		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
+
+		Plugins::callHook('packet_vender_store', {
+			venderID => $venderID,
+			number => $number,
+			name => $item->{name},
+			amount => $item->{amount},
+			price => $item->{price}
+		});
+
+		message(swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<<<<< @>>>>> @>>>>>>>>>z",
+			[$number, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{amount}, formatNumber($item->{price})]),
+			"list");
+	}
+	message("-------------------------------------------------------------------------------\n", "list");
+
+	Plugins::callHook('packet_vender_store2', {
+		venderID => $venderID,
+		itemList => \@venderItemList
+	});	
+}
+
+sub vender_lost {
+	my ($self, $args) = @_;
+
+	my $ID = $args->{ID};
+	binRemove(\@venderListsID, $ID);
+	delete $venderLists{$ID};
+}
+
+sub vending_start {
+	my ($self, $args) = @_;
+		
+	my $msg = $args->{RAW_MSG};
+	my $msg_size = unpack("v1",substr($msg, 2, 2));
+
+	#started a shop.
+	@articles = ();
+	# FIXME: why do we need a seperate variable to track how many items are left in the store?
+	$articles = 0;
+
+	# FIXME: Read the packet the server sends us to determine
+	# the shop title instead of using $shop{title}.
+	message(center(" $shop{title} ", 79, '-')."\n", "list");
+	message("#  Name					  Type	      Amount	   Price\n", "list");
+	for (my $i = 8; $i < $msg_size; $i += 22) {
+		my $number = unpack("v1", substr($msg, $i + 4, 2));
+		my $item = $articles[$number] = {};
+		$item->{nameID} = unpack("v1", substr($msg, $i + 9, 2));
+		$item->{quantity} = unpack("v1", substr($msg, $i + 6, 2));
+		$item->{type} = unpack("C1", substr($msg, $i + 8, 1));
+		$item->{identified} = unpack("C1", substr($msg, $i + 11, 1));
+		$item->{broken} = unpack("C1", substr($msg, $i + 12, 1));
+		$item->{upgrade} = unpack("C1", substr($msg, $i + 13, 1));
+		$item->{cards} = substr($msg, $i + 14, 8);
+		$item->{price} = unpack("V1", substr($msg, $i, 4));
+		$item->{name} = itemName($item);
+		$articles++;
+
+		debug("Item added to Vender Store: $item->{name} - $item->{price} z\n", "vending", 2);
+
+		message(swrite(
+			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<< @>>>>> @>>>>>>>>>z",
+			[$articles, $item->{name}, $itemTypes_lut{$item->{type}}, $item->{quantity}, formatNumber($item->{price})]),
+			"list");
+	}
+	message(('-'x79)."\n", "list");
+	$shopEarned ||= 0;
 }
 
 sub warp_portal_list {
 	my ($self, $args) = @_;
+	
 	# strip gat extension
 	($args->{memo1}) = $args->{memo1} =~ /^(.*)\.gat/;
 	($args->{memo2}) = $args->{memo2} =~ /^(.*)\.gat/;
@@ -4246,34 +5419,5 @@ sub warp_portal_list {
 	message("--------------------------------------------------\n", "list");
 }
 
-sub pvp_mode1 {
-	my (undef, $args) = @_;
-	my $type = $args->{type};
-
-	if ($type == 0) {
-		$pvp = 0;
-	} elsif ($type == 1) {
-		message "PvP Display Mode\n", "map_event";
-		$pvp = 1;
-	} elsif ($type == 3) {
-		message "GvG Display Mode\n", "map_event";
-		$pvp = 2;
-	}
-}
-
-sub pvp_mode2 {
-	my (undef, $args) = @_;
-	my $type = $args->{type};
-
-	if ($type == 0) {
-		$pvp = 0;
-	} elsif ($type == 6) {
-		message "PvP Display Mode\n", "map_event";
-		$pvp = 1;
-	} elsif ($type == 8) {
-		message "GvG Display Mode\n", "map_event";
-		$pvp = 2;
-	}
-}
-
 1;
+
