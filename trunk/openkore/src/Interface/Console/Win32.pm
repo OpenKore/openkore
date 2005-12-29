@@ -340,68 +340,68 @@ sub title {
 #8421
 
 %fgcolors = (
-	'reset'		=> $main::FG_GRAY,
-	'default'	=> $main::FG_GRAY,
+	'reset'		=> $main::FG_GRAY || $FG_GRAY,
+	'default'	=> $main::FG_GRAY || $FG_GRAY,
 
-	'black'		=> $main::FG_BLACK,
+	'black'		=> $main::FG_BLACK || $FG_BLACK,
 	'darkgray'	=> FOREGROUND_INTENSITY(),
 	'darkgrey'	=> FOREGROUND_INTENSITY(),
 
-	'darkred'	=> $main::FG_RED,
-	'red'		=> $main::FG_LIGHTRED,
+	'darkred'	=> $main::FG_RED || $FG_RED,
+	'red'		=> $main::FG_LIGHTRED || $FG_LIGHTRED,
 
-	'darkgreen'	=> $main::FG_GREEN,
-	'green'		=> $main::FG_LIGHTGREEN,
+	'darkgreen'	=> $main::FG_GREEN || $FG_GREEN,
+	'green'		=> $main::FG_LIGHTGREEN || $FG_LIGHTGREEN,
 
-	'brown'		=> $main::FG_BROWN,
-	'yellow'	=> $main::FG_YELLOW,
+	'brown'		=> $main::FG_BROWN || $FG_BROWN,
+	'yellow'	=> $main::FG_YELLOW || $FG_YELLOW,
 	
-	'darkblue'	=> $main::FG_BLUE,
-	'blue'		=> $main::FG_LIGHTBLUE,
+	'darkblue'	=> $main::FG_BLUE || $FG_BLUE,
+	'blue'		=> $main::FG_LIGHTBLUE || $FG_LIGHTBLUE,
 
-	'darkmagenta'	=> $main::FG_MAGENTA,
-	'magenta'	=> $main::FG_LIGHTMAGENTA,
+	'darkmagenta'	=> $main::FG_MAGENTA || $FG_MAGENTA,
+	'magenta'	=> $main::FG_LIGHTMAGENTA || $FG_LIGHTMAGENTA,
 	
-	'darkcyan'	=> $main::FG_CYAN,
-	'cyan'		=> $main::FG_LIGHTCYAN,
+	'darkcyan'	=> $main::FG_CYAN || $FG_CYAN,
+	'cyan'		=> $main::FG_LIGHTCYAN || $FG_LIGHTCYAN,
 
-	'gray'		=> $main::FG_GRAY,
-	'grey'		=> $main::FG_GRAY,
-	'white'		=> $main::FG_WHITE,
+	'gray'		=> $main::FG_GRAY || $FG_LIGHTGRAY,
+	'grey'		=> $main::FG_GRAY || $FG_LIGHTGRAY,
+	'white'		=> $main::FG_WHITE || $FG_WHITE,
 );
 
 #  I  R  G  B
 #128 64 32 16
 
 %bgcolors = (
-	''			=> $main::BG_BLACK,
-	'default'	=> $main::BG_BLACK,
+	''		=> $main::BG_BLACK || $BG_BLACK,
+	'default'	=> $main::BG_BLACK || $BG_BLACK,
 
-	'black'		=> $main::BG_BLACK,
+	'black'		=> $main::BG_BLACK  || $BG_BLACK,
 	'darkgray'	=> BACKGROUND_INTENSITY(),
 	'darkgrey'	=> BACKGROUND_INTENSITY(),
 
-	'darkred'	=> $main::BG_RED,
-	'red'		=> $main::BG_LIGHTRED,
+	'darkred'	=> $main::BG_RED || $BG_RED,
+	'red'		=> $main::BG_LIGHTRED || $BG_LIGHTRED,
 
-	'darkgreen'	=> $main::BG_GREEN,
-	'green'		=> $main::BG_LIGHTGREEN,
+	'darkgreen'	=> $main::BG_GREEN || $BG_GREEN,
+	'green'		=> $main::BG_LIGHTGREEN || $BG_LIGHTGREEN,
 
-	'brown'		=> $main::BG_BROWN,
-	'yellow'	=> $main::BG_YELLOW,
+	'brown'		=> $main::BG_BROWN || $BG_BROWN,
+	'yellow'	=> $main::BG_YELLOW || $BG_YELLOW,
 	
-	'darkblue'	=> $main::BG_BLUE,
-	'blue'		=> $main::BG_LIGHTBLUE,
+	'darkblue'	=> $main::BG_BLUE || $BG_BLUE,
+	'blue'		=> $main::BG_LIGHTBLUE || $BG_LIGHTBLUE,
 
-	'darkmagenta'	=> $main::BG_MAGENTA,
-	'magenta'	=> $main::BG_LIGHTMAGENTA,
+	'darkmagenta'	=> $main::BG_MAGENTA || $BG_MAGENTA,
+	'magenta'	=> $main::BG_LIGHTMAGENTA || $BG_LIGHTMAGENTA,
 	
-	'darkcyan'	=> $main::BG_CYAN,
-	'cyan'		=> $main::BG_LIGHTCYAN,
+	'darkcyan'	=> $main::BG_CYAN || $BG_CYAN,
+	'cyan'		=> $main::BG_LIGHTCYAN || $BG_LIGHTCYAN,
 
-	'gray'		=> $main::BG_GRAY,
-	'grey'		=> $main::BG_GRAY,
-	'white'		=> $main::BG_WHITE,
+	'gray'		=> $main::BG_GRAY || $BG_GRAY,
+	'grey'		=> $main::BG_GRAY || $BG_GRAY,
+	'white'		=> $main::BG_WHITE || $BG_WHITE,
 );
 
 1 #end of module
