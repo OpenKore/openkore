@@ -24,6 +24,7 @@ Bug fixes:
   rather than their pos_to in attackSkillSlot.
 - Fixed multiple sitAuto sequences being queued.
 - Fix the Win32 GUI interface.
+- Fixed a bug where the weight command only allows a single digit parameter.
 
 New config options:
 - serverEncoding
@@ -55,6 +56,7 @@ Credits:
 - mondlicht: teleportAuto_avoidAllPlayers bugfix
 - Lord_Balmon: fix for the Win32 GUI interface
 - h4rry84: Indonesian translation
+- hakore: fix for weight command
 
 
 ==================
