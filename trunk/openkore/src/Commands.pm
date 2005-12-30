@@ -3796,7 +3796,7 @@ sub cmdWeight {
 
 	$itemWeight ||= 1;
 
-	if ($itemWeight !~ /^\d$/) {
+	if ($itemWeight !~ /^\d+$/) {
 		error	"Error in function 'weight' (Inventory Weight Info)\n" .
 			"Usage: weight [item weight]\n";
 		return;
