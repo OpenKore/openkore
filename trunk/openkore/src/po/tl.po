@@ -1,13 +1,14 @@
 # Tagalog translation for OpenKore.
 # Copyright (C) 2005 OpenKore Team
 # This file is distributed under the same license as OpenKore.
+# kaliwanagan <kaliwanagan@users.sourceforge.net>, 2005.
 #
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-14 14:59+0100\n"
+"POT-Creation-Date: 2005-12-30 13:43+0800\n"
 "PO-Revision-Date: 2005-12-13 23:03+0100\n"
 "Last-Translator: kaliwanagan <kaliwanagan@users.sourceforge.net>\n"
 "Language-Team: Tagalog\n"
@@ -23,13 +24,19 @@ msgstr ""
 msgid "Welcome to "
 msgstr ""
 
-#: ../Network/Receive.pm:358
+#: ../Network/Receive.pm:459
 msgid "You are sitting.\n"
 msgstr "Ikaw ay nakaupo.\n"
 
-#: ../Network/Receive.pm:368
+#: ../Network/Receive.pm:470
 msgid "You are standing.\n"
 msgstr "Ikaw ay nakatayo.\n"
+
+#: ../../openkore.pl:151
+msgid ""
+"You have old files in the OpenKore folder, which may cause conflicts.\n"
+"Please delete your entire OpenKore source folder, and redownload everything."
+msgstr ""
 
 #: ../../openkore.pl:160
 #, perl-format
@@ -61,6 +68,24 @@ msgstr ""
 #: ../../openkore.pl:203
 msgid "One or more plugins failed to load."
 msgstr "Isa o marami pang plugins ang hindi nagload."
+
+#: ../../openkore.pl:274
+msgid ""
+"\n"
+"Auto-generating Admin Password due to default...\n"
+msgstr ""
+
+#: ../../openkore.pl:278
+msgid ""
+"\n"
+"Auto-generating Admin Password due to blank...\n"
+msgstr ""
+
+#: ../../openkore.pl:282
+msgid ""
+"\n"
+"Generating session Admin Password...\n"
+msgstr ""
 
 #: ../../openkore.pl:327
 #, perl-format

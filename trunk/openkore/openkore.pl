@@ -148,8 +148,8 @@ if ($parseArgResult eq '2') {
 # user is still using the old (pre-CVS cleanup) source tree.
 # So bail out to prevent weird errors.
 if (-f "$RealBin/Misc.pm") {
-	$interface->errorDialog("You have old files in the OpenKore folder, which may cause conflicts.\n" .
-		"Please delete your entire OpenKore source folder, and redownload everything.");
+	$interface->errorDialog(T("You have old files in the OpenKore folder, which may cause conflicts.\n" .
+		"Please delete your entire OpenKore source folder, and redownload everything."));
 	exit 1;
 }
 
@@ -271,15 +271,15 @@ Plugins::callHook('start3');
 
 
 if ($config{'adminPassword'} eq 'x' x 10) {
-	Log::message("\nAuto-generating Admin Password due to default...\n");
+	Log::message(T("\nAuto-generating Admin Password due to default...\n"));
 	configModify("adminPassword", vocalString(8));
 } elsif ($config{'adminPassword'} eq '') {
 	# This is where we protect the stupid from having a blank admin password
-	Log::message("\nAuto-generating Admin Password due to blank...\n");
+	Log::message(T("\nAuto-generating Admin Password due to blank...\n"));
 	configModify("adminPassword", vocalString(8));
 } elsif ($config{'secureAdminPassword'} eq '1') {
 	# This is where we induldge the paranoid and let them have session generated admin passwords
-	Log::message("\nGenerating session Admin Password...\n");
+	Log::message(T("\nGenerating session Admin Password...\n"));
 	configModify("adminPassword", vocalString(8));
 }
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-14 18:25+0100\n"
+"POT-Creation-Date: 2005-12-30 13:43+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,12 +24,18 @@ msgstr ""
 msgid "Welcome to "
 msgstr ""
 
-#: ../Network/Receive.pm:358
+#: ../Network/Receive.pm:459
 msgid "You are sitting.\n"
 msgstr ""
 
-#: ../Network/Receive.pm:368
+#: ../Network/Receive.pm:470
 msgid "You are standing.\n"
+msgstr ""
+
+#: ../../openkore.pl:151
+msgid ""
+"You have old files in the OpenKore folder, which may cause conflicts.\n"
+"Please delete your entire OpenKore source folder, and redownload everything."
 msgstr ""
 
 #: ../../openkore.pl:160
@@ -55,6 +61,24 @@ msgstr ""
 
 #: ../../openkore.pl:203
 msgid "One or more plugins failed to load."
+msgstr ""
+
+#: ../../openkore.pl:274
+msgid ""
+"\n"
+"Auto-generating Admin Password due to default...\n"
+msgstr ""
+
+#: ../../openkore.pl:278
+msgid ""
+"\n"
+"Auto-generating Admin Password due to blank...\n"
+msgstr ""
+
+#: ../../openkore.pl:282
+msgid ""
+"\n"
+"Generating session Admin Password...\n"
 msgstr ""
 
 #: ../../openkore.pl:327
