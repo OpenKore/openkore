@@ -57,6 +57,7 @@ Credits:
 - Lord_Balmon: fix for the Win32 GUI interface
 - h4rry84: Indonesian translation
 - hakore: fix for weight command
+- illusionist: move receive packets to receive.pm
 
 
 ==================
