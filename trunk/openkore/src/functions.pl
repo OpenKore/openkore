@@ -125,8 +125,8 @@ sub initMapChangeVars {
 	undef %npcs;
 	undef %spells;
 	undef %incomingParty;
-	undef $msg;
-	undef $msgOut;
+	#undef $msg;		# Why're these undefined?
+	#undef $msgOut;
 	undef %talk;
 	$ai_v{cart_time} = time + 60;
 	$ai_v{inventory_time} = time + 60;
@@ -4423,6 +4423,33 @@ sub parseSendMsg {
 			$lastpm{'user'} = $user;
 			push @lastpm, {%lastpm};
 		}
+		
+	} elsif (($switch eq "009B" && $config{serverType} == 0) ||
+		($switch eq "009B" && $config{serverType} == 1) ||
+		($switch eq "009B" && $config{serverType} == 2) ||
+		($switch eq "0085" && $config{serverType} == 3) ||
+		($switch eq "00F3" && $config{serverType} == 4) ||
+		($switch eq "0085" && $config{serverType} == 5) ||
+		#($switch eq "009B" && $config{serverType} == 6) || serverType 6 uses what?
+		($switch eq "009B" && $config{serverType} == 7)) {
+		# Look
+		
+		if ($config{serverType} == 0) {
+			$char->{look}{head} = unpack("C", substr($msg, 2, 1));
+			$char->{look}{body} = unpack("C", substr($msg, 4, 1));
+		} elsif ($config{serverType} == 1 ||
+			$config{serverType} == 2 ||
+			$config{serverType} == 4 ||
+			$config{serverType} == 7) {
+			$char->{look}{head} = unpack("C", substr($msg, 6, 1));
+			$char->{look}{body} = unpack("C", substr($msg, 14, 1));
+		} elsif ($config{serverType} == 3) {
+			$char->{look}{head} = unpack("C", substr($msg, 12, 1));
+			$char->{look}{body} = unpack("C", substr($msg, 22, 1));
+		} elsif ($config{serverType} == 5) {
+			$char->{look}{head} = unpack("C", substr($msg, 8, 1));
+			$char->{look}{body} = unpack("C", substr($msg, 16, 1));
+		}	
 
 	} elsif ($switch eq "009F") {
 		if ($config{serverType} == 0) {
@@ -4506,6 +4533,9 @@ sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
 	my $realMsg;
+	
+	# A packet is going to be at least 2 bytes long
+	return $msg if (length($msg) < 2);
 
 	# Determine packet switch
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));

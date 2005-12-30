@@ -59,7 +59,7 @@ sub new {
 		'0081' => ['errors', 'C1', [qw(type)]],
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
-		'008A' => ['actor_action', 'a4 a4 a4 V1 V1 s1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
+		'008A' => ['actor_action', 'a4 a4 a4 V2 s1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
 		'008D' => ['public_chat', 'x2 a4 Z*', [qw(ID message)]],
 		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
@@ -177,7 +177,7 @@ sub new {
 		'0166' => ['guild_members_title_list'],
 		'0169' => ['guild_invite_result', 'C1', [qw(type)]],
 		'016A' => ['guild_request', 'a4 Z24', [qw(ID name)]],
-		'016C' => ['guild_name', 'x2 V V V x5 Z24', [qw(guildID emblemID mode guildName)]],
+		'016C' => ['guild_name', 'V3 x5 Z24', [qw(guildID emblemID mode guildName)]],
 		'016D' => ['guild_name_request', 'a4 a4 V1', [qw(ID targetID online)]],
 		'016F' => ['guild_notice'],
 		'0171' => ['guild_ally_request', 'a4 Z24', [qw(ID name)]],
@@ -225,7 +225,7 @@ sub new {
 		'01D0' => ['monk_spirits', 'a4 v1', [qw(sourceID spirits)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
-		'01D7' => ['player_equipment', 'a4 C1 v1 v1', [qw(sourceID type ID1 ID2)]],
+		'01D7' => ['player_equipment', 'a4 C1 v2', [qw(sourceID type ID1 ID2)]],
 		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
@@ -237,7 +237,7 @@ sub new {
 		#'01E4' => ['marriage_unknown'], clif_marriage_process
 ##
 #01E6 26 Some Player Name.
-		'01E9' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16', [qw(ID x y type name user map)]],
+		'01E9' => ['party_join', 'a4 x4 v1 v1 C1 Z24 Z24 Z16 v C2', [qw(ID x y type name user map lv item_pickup item_share)]],
 		'01EB' => ['guild_location', 'a4 v1 v1', [qw(ID x y)]],
 		'01EA' => ['married', 'a4', [qw(ID)]],
 		'01EE' => ['inventory_items_stackable'],
@@ -2743,6 +2743,7 @@ sub guild_name {
 	my $guildName = $args->{guildName};
 	$char->{guild}{name} = $guildName;
 	$char->{guildID} = $guildID;
+	$char->{guild}{emblem} = $emblemID;
 }
 
 sub guild_name_request {
@@ -3827,6 +3828,8 @@ sub party_organize_result {
 	my ($self, $args) = @_;
 	if ($args->{fail}) {
 		warning "Can't organize party - party name exists\n";
+	} else {
+		$char->{party}{users}{$accountID}{admin} = 1;
 	}
 }
 
@@ -3955,7 +3958,7 @@ sub player_equipment {
 	my ($self, $args) = @_;
 
 	my ($sourceID, $type, $ID1, $ID2) = @{$args}{qw(sourceID type ID1 ID2)};
-	my $player = $players{$sourceID};
+	my $player = ($sourceID ne $accountID)? $players{$sourceID} : $char;
 	return unless $player;
 
 	if ($type == 2) {
