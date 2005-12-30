@@ -53,7 +53,8 @@ Credits:
 - id-mardi: fix for setPartySkillTimer, move the rest of the receive packets
   to Receive.pm
 - mondlicht: teleportAuto_avoidAllPlayers bugfix
-- Lor_Balmon: fix for the Win32 GUI interface
+- Lord_Balmon: fix for the Win32 GUI interface
+- h4rry84: Indonesian translation
 
 
 ==================

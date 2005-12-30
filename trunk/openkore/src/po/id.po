@@ -3,14 +3,13 @@
 # This file is distributed under the same license as OpenKore.
 # h4rry84 <h4rry84@telkom.net>, 2005.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-14 18:22+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: h4rry84 <h4rry84@telkom.net>\n"
+"POT-Creation-Date: 2005-12-30 13:43+0800\n"
+"PO-Revision-Date: 2005-12-30 12:19+0700\n"
+"Last-Translator: Richard <h4rry84@telkom.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,13 +23,22 @@ msgstr ""
 msgid "Welcome to "
 msgstr ""
 
-#: ../Network/Receive.pm:358
+#: ../Network/Receive.pm:459
 msgid "You are sitting.\n"
 msgstr "Anda duduk.\n"
 
-#: ../Network/Receive.pm:368
+#: ../Network/Receive.pm:470
 msgid "You are standing.\n"
 msgstr "Anda berdiri.\n"
+
+#: ../../openkore.pl:151
+msgid ""
+"You have old files in the OpenKore folder, which may cause conflicts.\n"
+"Please delete your entire OpenKore source folder, and redownload everything."
+msgstr ""
+"Anda memiliki file data-data lama dalam folder Openkore yang mungkin dapat "
+"menyebabkan adanya konflik.\n"
+"Hapus seluruh folder Openkore, dan download ulang seluruhnya."
 
 #: ../../openkore.pl:160
 #, perl-format
@@ -62,6 +70,30 @@ msgstr ""
 #: ../../openkore.pl:203
 msgid "One or more plugins failed to load."
 msgstr "Satu atau lebih dari plugin yang disertakan gagal untuk dijalankan."
+
+#: ../../openkore.pl:274
+msgid ""
+"\n"
+"Auto-generating Admin Password due to default...\n"
+msgstr ""
+"\n"
+"Auto-Generate Password Admin dikarenakan kelalaian...\n"
+
+#: ../../openkore.pl:278
+msgid ""
+"\n"
+"Auto-generating Admin Password due to blank...\n"
+msgstr ""
+"\n"
+"Auto-Generate Password Admin dikarenakan kosong...\n"
+
+#: ../../openkore.pl:282
+msgid ""
+"\n"
+"Generating session Admin Password...\n"
+msgstr ""
+"\n"
+"Sesi generate Admin Password...\n"
 
 #: ../../openkore.pl:327
 #, perl-format
