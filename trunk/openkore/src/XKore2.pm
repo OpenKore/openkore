@@ -494,7 +494,7 @@ sub checkClient {
 			$self->clientSend(pack('C3 x20', 0x6A, 00, 1),1);
 		} else {
 			# Determine public IP
-			my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIP} || '127.0.0.1'));
+			my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIp} || '127.0.0.1'));
 
 			# Send out the login packet
 			$msg = pack('a4 a4 a4 x30 C1 C4 v Z20 v C1 x14', $sessionID, $accountID, $sessionID2, $accountSex2,
@@ -548,7 +548,7 @@ sub checkClient {
 		# Client sent CharLogin
 
 		# Determine public IP
-		my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIP} || '127.0.0.1'));
+		my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIp} || '127.0.0.1'));
 
 		# Send character and map info packet
 		$msg = pack('C2 a4 Z16 C4 v1', 0x71, 0, $charID, $self->{client_saved}{map},
