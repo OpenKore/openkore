@@ -4117,7 +4117,8 @@ sub received_characters {
 
 	# gradeA says it's supposed to send this packet here, but
 	# it doesn't work...
-	#sendBanCheck($net) if (!$net->clientAlive && $config{serverType} == 2);
+	# 30 Dec 2005: it didn't work before because it wasn't sending the accountiD -> fixed (kaliwanagan)
+	$net->sendBanCheck($accountID) if (!$net->clientAlive && $config{serverType} == 2);
 	if (charSelectScreen(1) == 1) {
 		$firstLoginMap = 1;
 		$startingZenny = $chars[$config{'char'}]{'zenny'} unless defined $startingZenny;
