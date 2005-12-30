@@ -4372,8 +4372,18 @@ sub parseSendMsg {
 			}
 		}
 
-	} elsif ($switch eq "008C" || $switch eq "0108" || $switch eq "017E" || ($switch eq "00F3" && $config{serverType} == 3)) {
-		# Public, party and guild chat
+	} elsif (($switch eq "008C" && $config{serverType} == 0) ||	# Public chat
+		($switch eq "008C" && $config{serverType} == 1) ||
+		($switch eq "008C" && $config{serverType} == 2) ||
+		($switch eq "00F3" && $config{serverType} == 3) ||
+		($switch eq "009F" && $config{serverType} == 4) ||
+		($switch eq "00F3" && $config{serverType} == 5) ||
+		($switch eq "008C" && $config{serverType} == 6) ||
+
+		$switch eq "0108" ||	# Party chat
+
+		$switch eq "017E") {	# Guild chat
+
 		my $length = unpack("v",substr($msg,2,2));
 		my $message = substr($msg, 4, $length - 4);
 		my ($chat) = $message =~ /^[\s\S]*? : ([\s\S]*)\000?/;
