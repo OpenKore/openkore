@@ -20,7 +20,7 @@ use base qw(Exporter);
 use IO::Socket::INET;
 
 use Globals;
-use Log qw(message error warning);
+use Log qw(message debug error warning);
 use Utils qw(dataWaiting timeOut shiftPack unShiftPack);
 use Misc;
 
@@ -376,25 +376,21 @@ sub checkTracker {
 sub checkClient {
 	my $self = shift;
 
-	# Check if the client is active, but the server is not.
+	# Check if the client is active when the server is not.
 	if ($conState < 4 && $self->clientAlmostAlive) {
-		# Have we kicked the client?
-		if ($self->{client_state} != -1) {
-			# Kick them
-			unless ($self->{client_state} == 5) {
-				# "Blocked from server until ______"
-				$self->clientSend(pack('C3 Z20', 0x6A, 0, 6, "OpenKore connects"),1);
-			} else {
-				# Kick the user to the login screen immediately (GM kick)
-				$self->clientSend(pack('C3', 0x81, 0, 15));
-			}
-			$self->{client_state} = -1;
-			$self->{client_msgIn} = "";
-		} elsif (!$self->clientAlmostAlive) {
-			# Flush the buffer, so the client data doesn't get sent to server.
-			$self->realClientRecv();
-			$self->{client_state} = 0;
+		# Kick the client
+		unless ($self->{client_state} == 5) {
+			# "Blocked from server until ______"
+			$self->clientSend(pack('C3 Z20', 0x6A, 0, 6, "OpenKore connects"),1);
+		} else {
+			# Kick the user to the login screen immediately (GM kick)
+			$self->clientSend(pack('C3', 0x81, 0, 15));
 		}
+		$self->{client_state} = 0;
+		$self->{client_msgIn} = "";
+
+		# Flush the buffer, so the client data doesn't get sent to server.
+		$self->realClientRecv();
 		return;
 	}
 
@@ -410,7 +406,7 @@ sub checkClient {
 			# Tell 'em about the new client
 			my $host = $self->clientPeerHost;
 			my $port = $self->clientPeerPort;
-			message "RO Client connection from ($host:$port).\n", "connection";
+			debug "RO Client connection from ($host:$port).\n", "connection";
 
 			# Determine the client state
 			$self->{client_state} = 0 if ($self->{client_state} != 1
@@ -434,13 +430,14 @@ sub checkClient {
 
 		undef $self->{client};
 		# Begin listening...
+		my $ip = $config{XKore_listenIp} || '0.0.0.0';
 		$self->{client_listen} = new IO::Socket::INET(
-			LocalAddr	=> $config{XKore_listenIp} || '0.0.0.0',
+			LocalAddr	=> $ip,
 			LocalPort	=> $self->{client_listenPort},
 			Listen		=> 1,
 			Proto		=> 'tcp',
 			ReuseAddr   => 1);
-		die "Unable to listen on XKore2 port ($config{XKore_listenIp}:$self->{client_listenPort}): $@" unless $self->{client_listen};
+		die "Unable to listen on XKore2 port ($ip:$self->{client_listenPort}): $@" unless $self->{client_listen};
 
 		return;
 	}
@@ -480,21 +477,20 @@ sub checkClient {
 
 	my $msg = substr($$msgIn,0,$msg_size);
 
-	message "RO Client ($host:$port) -> ", "connection";
+	debug "RO Client ($host:$port) -> ", "connection";
 
 	# Allow the login packet for any of the connection states
-	# -1= kicked out because of a lost connection to server
 	# 0 = waiting for connection to login "server"
 	# 1 = waiting for connection to character "server"
 	# 3 = waiting for connection to map "server"
-	if (($$c_state == -1 || $$c_state == 0 || $$c_state == 1 || $$c_state == 3)
+	if (($$c_state == 0 || $$c_state == 1 || $$c_state == 3)
 		&& $switch eq "0064") {
 		# Client sent MasterLogin
 		my ($version, $username, $password, $master_version) = unpack("x2 V Z24 Z24 C1", $msg);
 
 		# Check password against adminPassword
 		if ($password ne $config{adminPassword}) {
-			error "Bad Password.\n", "connection";
+			error "XKore 2 failed login: Bad Password.\n", "connection";
 			$self->clientSend(pack('C3 x20', 0x6A, 00, 1),1);
 		} else {
 			# Determine public IP
@@ -508,7 +504,7 @@ sub checkClient {
 				$self->{tracker_name},		0,			5);
 			$msg = pack('C2 v', 0x69, 00, length($msg)+4) . $msg;
 			$self->clientSend($msg,1);
-			message "Master Login.\n", "connection";
+			debug "Master Login.\n", "connection";
 
 			$$c_state = 1;
 		}
@@ -537,7 +533,7 @@ sub checkClient {
 
 		$self->clientSend($msg,1);
 
-		message "Game Login.\n", "connection";
+		debug "Game Login.\n", "connection";
 		$$c_state = 2;
 
 		# Bypass client_state 2, send the character and map info packet
@@ -559,7 +555,7 @@ sub checkClient {
 				$host[0], $host[1], $host[2], $host[3], $self->{client_listenPort});
 		$self->clientSend($msg,1);
 
-		message "Selected character.\n", "connection";
+		debug "Selected character.\n", "connection";
 		$$c_state = 3;
 
 
@@ -570,7 +566,7 @@ sub checkClient {
 		$msg = pack('C3', 0x6E, 0, 2);
 		$self->clientSend($msg,1);
 
-		message "Attempted char create.\n", "connection";
+		debug "Attempted char create.\n", "connection";
 
 	} elsif ($$c_state == 2 && $switch eq "0068") {
 		# Character Delete
@@ -579,7 +575,7 @@ sub checkClient {
 		$msg = pack('C3', 0x70, 0, 1);
 		$self->clientSend($msg,1);
 
-		message "Attempted char delete.\n", "connection";
+		debug "Attempted char delete.\n", "connection";
 
 	} elsif ($$c_state == 2 && $switch eq "0187") {
 		# Ban Check/Sync
@@ -587,7 +583,7 @@ sub checkClient {
 		# Do nothing...?
 		# Seems to work.
 
-		message "Wanted to sync.\n", "connection";
+		debug "Wanted to sync.\n", "connection";
 
 	} elsif ($$c_state == 3 && (
 		($switch eq "0072" && $config{serverType} == 0) ||
@@ -613,14 +609,14 @@ sub checkClient {
 		$msg = pack('C2 V a3 x2', 0x73, 0, time, $coords);
 		$self->clientSend($msg,1);
 
-		message "Map Login.\n", "connection";
+		debug "Map Login.\n", "connection";
 
 		$$c_state = 4;
 
 	} elsif ($$c_state == 4 && $switch eq "021D") {
 		# This does what?
 
-		message "Packet 021D.\n", "connection";
+		debug "Packet 021D.\n", "connection";
 
 	} elsif ($$c_state == 4 && ($switch eq "007D" || $switch eq "01C0")) {
 		# Client sent MapLoaded
@@ -628,13 +624,12 @@ sub checkClient {
 		$msg = "";
 
 		# TODO: Active ground effect skills, Character vending, character in chat
-		# TODO: Cart Items, Friends list, Guild Notice/Guild Info? (to be able to open guild window)
+		# TODO: Cart Items, Guild Notice, Player statuses
 		# TODO: dropped items, pet info (to know that you have a pet, and can feed/egg/performance it)
 		#
 		# TODO: Fix walking speed? Might that be part of the map login packet? Or 00BD?
 
 		# Send player stats
-
 		$msg .= pack('C2 v1 C12 v12 x4', 0xBD, 0x00,
 			$char->{points_free}, $char->{str}, $char->{points_str}, $char->{agi}, $char->{points_agi},
 			$char->{vit}, $char->{points_vit}, $char->{int}, $char->{points_int}, $char->{dex},
@@ -664,6 +659,9 @@ sub checkClient {
 
 		# Send attack range
 		$msg .= pack('C2 v', 0x3A, 0x01, $char->{attack_range});
+
+		# Send weapon/shield appearance
+		$msg .= pack('C2 a4 C v2', 0xD7, 0x01, $accountID, 2, $char->{weapon}, $char->{shield});
 
 		# Send skill information
 		my $skillInfo = "";
@@ -801,9 +799,47 @@ sub checkClient {
 			$msg .= pack('C2 v', 0xD7, 0x00, length($chatMsg) + 4) . $chatMsg;
 		}
 
+		# Send friend list
+		my ($friendMsg, $friendOnlineMsg);
+		foreach my $ID (@friendsID) {
+			$friendMsg .= pack('a4 a4 Z24', $friends{$ID}{accountID}, $friends{$ID}{charID}, $friends{$ID}{name});
+			$friendOnlineMsg .= pack('C2 a4 a4 C', 0x06, 0x02, $friends{$ID}{accountID}, $friends{$ID}{charID},
+				0) if ($friends{$ID}{online});
+		}
+		$msg .= pack('C2 v', 0x01, 0x02, length($friendMsg) + 4) . $friendMsg . $friendOnlineMsg;
+		undef $friendMsg;
+		undef $friendOnlineMsg;
+
+		# Send party list
+		if ($char->{party}) {
+			my ($partyMsg, $num);
+			foreach my $ID (@partyUsersID) {
+				$num++ unless ($char->{party}{users}{$ID}{admin});
+				$partyMsg .= pack("a4 Z24 Z16 C2", $ID, $char->{party}{users}{$ID}{name}, $char->{party}{users}{$ID}{map},
+					$char->{party}{users}{$ID}{admin}? 0 : $num, 1 - $char->{party}{users}{$ID}{online});
+			}
+			$msg .= pack('C2 v Z24', 0xFB, 0x00, length($partyMsg) + 28, $char->{party}{name}) . $partyMsg;
+			undef $partyMsg;
+			undef $num;
+		}
+
+		# Send guild info
+		if ($char->{guildID}) {
+			$msg .= pack('C2 V3 x5 Z24', 0x6C, 0x01, $char->{guildID}, $char->{guild}{emblem}, $char->{guild}{mode},
+				$char->{guild}{name});
+		}
+
+		# Send "sitting" if the char is sitting
+		if ($char->{sitting}) {
+			$msg .= pack('C2 a4 x20 C1 x2', 0x8A, 0x00, $accountID, 2);
+		}
+
+		# Make the character face the correct direction
+		$msg .= pack('C2 a4 C1 x1 C1', 0x9C, 0x00, $accountID, $char->{look}{head}, $char->{look}{body});
+
 		$self->clientSend($msg,1);
 
-		message "Map Loaded.\n", "connection";
+		debug "Map Loaded.\n", "connection";
 
 		$$c_state = 5;
 
@@ -812,7 +848,7 @@ sub checkClient {
 		# (this should never be reached)
 	} else {
 		# Something wasn't right, kick the client
-		error "Unknown/unexpected packet: $switch (state: $$c_state).\n", "connection";
+		error "Unknown/unexpected XKore 2 packet: $switch (state: $$c_state).\n", "connection";
 
 		main::visualDump($msg);
 
