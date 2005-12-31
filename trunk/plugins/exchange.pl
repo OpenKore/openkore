@@ -1,6 +1,6 @@
 ############################################################
 #
-# itemexchange
+# itemExchange
 # 
 # This software is open source, licensed under the 
 # GNU General Public License, version 2.
@@ -20,7 +20,15 @@ package itemExchange;
 #	steps c r0 n
 #	requiredAmount 5
 #	triggerAmount 5
-#	inInventory Rough Elunium > 5
+#}
+
+#itemExchange Grape {
+#	npc payon xx yy
+#	distance 5
+#	steps c c r0 r1 n
+#	requiredAmount 1
+#	triggerAmount 20
+#	inInventory Empty Bottle > 0
 #}
  
 use strict;
