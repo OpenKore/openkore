@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-30 13:43+0800\n"
+"POT-Creation-Date: 2005-12-31 19:06+0800\n"
 "PO-Revision-Date: 2005-12-13 23:03+0100\n"
 "Last-Translator: kaliwanagan <kaliwanagan@users.sourceforge.net>\n"
 "Language-Team: Tagalog\n"
@@ -24,13 +24,30 @@ msgstr ""
 msgid "Welcome to "
 msgstr ""
 
-#: ../Network/Receive.pm:459
+#: ../Network/Receive.pm:433
+msgid "Closing connection to Account Server\n"
+msgstr ""
+
+#: ../Network/Receive.pm:436
+msgid "Choose your server.  Enter the server number: "
+msgstr ""
+
+#: ../Network/Receive.pm:443
+#, perl-format
+msgid "Server %s selected\n"
+msgstr ""
+
+#: ../Network/Receive.pm:464
 msgid "You are sitting.\n"
 msgstr "Ikaw ay nakaupo.\n"
 
-#: ../Network/Receive.pm:470
+#: ../Network/Receive.pm:475
 msgid "You are standing.\n"
 msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Network/Receive.pm:519
+msgid "Monster with empty name attacking you. Teleporting...\n"
+msgstr ""
 
 #: ../../openkore.pl:151
 msgid ""
@@ -153,3 +170,55 @@ msgstr "Pakitype ang bilang ng iyong master server: "
 #: ../../openkore.pl:412
 msgid "No username or password set."
 msgstr "Walang username o password ang nakaset."
+
+#: ../functions.pl:246
+msgid ""
+"\n"
+"Auto-restarting!!\n"
+msgstr ""
+
+#: ../functions.pl:697
+msgid "Auto-denying party request\n"
+msgstr ""
+
+#: ../functions.pl:699
+msgid "Auto-accepting party request\n"
+msgstr ""
+
+#: ../functions.pl:963
+#, perl-format
+msgid "Done talking with %s.\n"
+msgstr ""
+
+#: ../functions.pl:1032
+#, perl-format
+msgid "Arrived at waypoint %s\n"
+msgstr ""
+
+#: ../functions.pl:1090
+msgid "Auto-storaging due to death\n"
+msgstr ""
+
+#: ../functions.pl:1106
+msgid "Disconnecting on death!\n"
+msgstr ""
+
+#: ../functions.pl:1233
+msgid "Auto-storaging due to excess weight\n"
+msgstr ""
+
+#: ../functions.pl:1327
+msgid "Teleporting to auto-storage\n"
+msgstr ""
+
+#: ../functions.pl:1559
+msgid "Auto-sell sequence completed.\n"
+msgstr ""
+
+#: ../functions.pl:1595
+msgid "Teleporting to auto-sell\n"
+msgstr ""
+
+#: ../functions.pl:1767
+msgid "Teleporting to auto-buy\n"
+msgstr ""
