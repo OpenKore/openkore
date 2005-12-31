@@ -2491,7 +2491,15 @@ sub useTeleport {
 	# try to use item
 
 	# could lead to problems if the ItemID would be different on some servers
-	my $invIndex = findIndex($char->{inventory}, "nameID", $use_lvl + 600);
+	# 1 Jan 2006 - instead of nameID, search for *wing in the inventory and return
+	# the $invIndex (kaliwanagan)
+	my $invIndex;
+	if ($use_lvl == 1) {
+		$invIndex = findIndexString_lc($char->{'inventory'}, "name", "Fly Wing");
+	} elsif ($use_lvl == 2) {
+		$invIndex = findIndexString_lc($char->{'inventory'}, "name", "Butterfly Wing");
+	}
+	
 	if (defined $invIndex) {
 		# We have Fly Wing/Butterfly Wing.
 		# Don't spam the "use fly wing" packet, or we'll end up using too many wings.
