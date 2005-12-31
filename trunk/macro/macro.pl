@@ -151,6 +151,8 @@ sub commandHandler {
       "macro list: list available macros\n".
       "macro status: shows current status\n".
       "macro stop: stop current macro\n".
+      "macro pause: interrupt current macro\n".
+      "macro resume: resume interrupted macro\n".
       "macro set {variable} {value}: set/change variable to value\n".
       "macro version: print macro plugin version\n".
       "macro reset [automacro]: resets run-once status for all or given automacro(s)\n";
@@ -173,7 +175,8 @@ sub commandHandler {
       message(sprintf("delay: %ds\n", $tmp{timeout}));
       message(sprintf("line: %d\n", $queue->line));
       message(sprintf("override AI: %s\n", $queue->overrideAI?"yes":"no"));
-      message(sprintf("finished: %s\n", $queue->finished?"yes":"no"));    
+      message(sprintf("paused: %s\n", $onHold?"yes":"no"));
+      message(sprintf("finished: %s\n", $queue->finished?"yes":"no"));
     } else {
       message "There's no macro currently running.\n";
     }
@@ -181,6 +184,22 @@ sub commandHandler {
   } elsif ($arg eq 'stop') {
     undef $queue;
     message "[macro] queue cleared.\n", "macro";
+  ### parameter: pause
+  } elsif ($arg eq 'pause') {
+    if (defined $queue) {
+      $onHold = 1;
+      message "macro ".$queue->name." paused.\n"
+    } else {
+      warning "There's no macro currently running.\n";
+    }
+  ### parameter: resume
+  } elsif ($arg eq 'resume') {
+    if (defined $queue) {
+      $onHold = 0;
+      message "macro ".$queue->name." resumed.\n"
+    } else {
+      warning "There's no macro currently running.\n";
+    }
   ### parameter: set
   } elsif ($arg eq 'set')  {
     my ($var, $val) = split(/\s+/, $argt, 2);
@@ -220,7 +239,7 @@ sub commandHandler {
     }
     $queue = new Macro::Script($arg, $argt);
     if (!defined $queue) {error "[macro] $arg not found or error in queue\n"}
-    else {$cvs->debug("macro $arg selected.", $logfac{'function_call_macro'})}
+    else {$cvs->debug("macro $arg selected.", $logfac{'function_call_macro'}); $onHold = 0}
   }
 }
 

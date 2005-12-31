@@ -289,6 +289,7 @@ sub getRandom {
 # macro/script
 sub callMacro {
   return unless defined $queue;
+  return if $onHold;
   my %tmptime = $queue->timeout;
   if (!$queue->registered) {
     if (timeOut(\%tmptime)) {$queue->register}
