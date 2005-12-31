@@ -14,6 +14,7 @@ our %varStack;
 our $queue;
 our $cvs;
 our $lockAMC;
+our $onHold;
 
 our %logfac = (
   "variable_trace"      => 1,    # tracks variables
