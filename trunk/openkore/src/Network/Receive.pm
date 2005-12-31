@@ -139,7 +139,7 @@ sub new {
 		'010F' => ['skills_list'],
 		'0114' => ['skill_use', 'v1 a4 a4 V1 V1 V1 s1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
 		'0117' => ['skill_use_location', 'v1 a4 v1 v1 v1', [qw(skillID sourceID lv x y)]],
-		'0119' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
+		'0119' => ['character_status', 'a4 v3 x', [qw(ID param1 param2 param3)]],
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
 		'011C' => ['warp_portal_list', 'v1 Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
@@ -1986,6 +1986,12 @@ sub character_moves {
 sub character_status {
 	my ($self, $args) = @_;
 	
+	if ($args->{ID} eq $accountID) {
+		$char->{param1} = $args->{param1};
+		$char->{param2} = $args->{param2};
+		$char->{param3} = $args->{param3};
+	}
+
 	setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
 }
 
