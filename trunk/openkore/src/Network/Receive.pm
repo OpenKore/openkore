@@ -430,17 +430,17 @@ sub account_server_info {
 	message("-------------------------------\n", 'connection');
 
 	if ($net->version != 1) {
-		message("Closing connection to Account Server\n", 'connection');
+		message(T("Closing connection to Account Server\n"), 'connection');
 		$net->serverDisconnect();
 		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
-			message("Choose your server.  Enter the server number: ", "input");
+			message(T("Choose your server.  Enter the server number: "), "input");
 			$waitingForInput = 1;
 
 		} elsif ($masterServer->{charServer_ip}) {
 			message("Forcing connect to char server $masterServer->{charServer_ip}:$masterServer->{charServer_port}\n", 'connection');
 
 		} else {
-			message("Server $config{server} selected\n", 'connection');
+			message(TF("Server %s selected\n",$config{server}), 'connection');
 		}
 	}
 }
@@ -516,7 +516,7 @@ sub actor_action {
 			# Check for monster with empty name
 			if ($monsters{$args->{sourceID}} && %{$monsters{$args->{sourceID}}} && $monsters{$args->{sourceID}}{'name'} eq "") {
 				if ($config{'teleportAuto_emptyName'} ne '0') {
-					message "Monster with empty name attacking you. Teleporting...\n";
+					message T("Monster with empty name attacking you. Teleporting...\n");
 					useTeleport(1);
 				} else {
 					# Delete monster from hash; monster will be
