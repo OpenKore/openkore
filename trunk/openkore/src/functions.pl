@@ -243,7 +243,7 @@ sub mainLoop {
 
 	if ($config{'autoRestart'} && time - $KoreStartTime > $config{'autoRestart'}
 	 && $conState == 5 && !AI::inQueue(qw/attack take items_take/)) {
-		message "\nAuto-restarting!!\n", "system";
+		message T("\nAuto-restarting!!\n"), "system";
 
 		if ($config{'autoRestartSleep'}) {
 			my $sleeptime = $config{'autoSleepMin'} + int(rand $config{'autoSleepSeed'});
@@ -694,9 +694,9 @@ sub AI {
 	# partyAuto 1=refuse 2=accept
 	if ($config{'partyAuto'} && %incomingParty && timeOut($timeout{'ai_partyAuto'})) {
 		if ($config{partyAuto} == 1) {
-			message "Auto-denying party request\n";
+			message T("Auto-denying party request\n");
 		} else {
-			message "Auto-accepting party request\n";
+			message T("Auto-accepting party request\n");
 		}
 		sendPartyJoin($net, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
 		$timeout{'ai_partyAuto'}{'time'} = time;
@@ -960,7 +960,7 @@ sub AI {
 
 
 		} elsif ($args->{mapChanged} || $ai_v{npc_talk}{talk} eq 'close') {
-			message "Done talking with $args->{name}.\n", "ai_npcTalk";
+			message TF("Done talking with %s.\n",$args->{name}), "ai_npcTalk";
 
 			# Cancel conversation only if NPC is still around; otherwise
 			# we could get disconnected.
@@ -1029,7 +1029,7 @@ sub AI {
 		my $args = AI::args;
 
 		if (defined $args->{walkedTo}) {
-			message "Arrived at waypoint $args->{walkedTo}\n", "waypoint";
+			message TF("Arrived at waypoint %s\n",$args->{walkedTo}), "waypoint";
 			Plugins::callHook('waypoint/arrived', {
 				points => $args->{points},
 				index => $args->{walkedTo}
@@ -1087,7 +1087,7 @@ sub AI {
 		} else {
 			# Force storage after death
 			if ($config{storageAuto} && !$config{storageAuto_notAfterDeath}) {
-				message "Auto-storaging due to death\n";
+				message T("Auto-storaging due to death\n");
 				AI::queue("storageAuto");
 			}
 		}
@@ -1103,7 +1103,7 @@ sub AI {
 	}
 
 	if (AI::action eq "dead" && $config{dcOnDeath} && $config{dcOnDeath} != -1) {
-		message "Disconnecting on death!\n";
+		message T("Disconnecting on death!\n");
 		chatLog("k", "*** You died, auto disconnect! ***\n");
 		$quit = 1;
 	}
@@ -1230,7 +1230,7 @@ sub AI {
 		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
 		# Only autostorage when we're on an attack route, or not moving
 		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
-			message "Auto-storaging due to excess weight\n";
+			message T("Auto-storaging due to excess weight\n");
 			AI::queue("storageAuto");
 		}
 
@@ -1324,7 +1324,7 @@ sub AI {
 					$args->{warpedToSave} = 1;
 					# If we still haven't warped after a certain amount of time, fallback to walking
 					$args->{warpStart} = time unless $args->{warpStart};
-					message "Teleporting to auto-storage\n", "teleport";
+					message T("Teleporting to auto-storage\n"), "teleport";
 					useTeleport(2);
 					$timeout{'ai_storageAuto'}{'time'} = time;
 				} else {
@@ -1556,7 +1556,7 @@ sub AI {
 	if ($ai_seq[0] eq "sellAuto" && $ai_seq_args[0]{'done'}) {
 		my $var = $ai_seq_args[0]{'forcedByBuy'};
 		my $var2 = $ai_seq_args[0]{'forcedByStorage'};
-		message "Auto-sell sequence completed.\n", "success";
+		message T("Auto-sell sequence completed.\n"), "success";
 		AI::dequeue;
 		if ($var2) {
 			unshift @ai_seq, "buyAuto";
@@ -1592,7 +1592,7 @@ sub AI {
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'}
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$ai_seq_args[0]{'warpedToSave'} = 1;
-				message "Teleporting to auto-sell\n", "teleport";
+				message T("Teleporting to auto-sell\n"), "teleport";
 				useTeleport(2);
 				$timeout{'ai_sellAuto'}{'time'} = time;
 			} else {
@@ -1764,7 +1764,7 @@ sub AI {
 			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
 			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
 				$args->{warpedToSave} = 1;
-				message "Teleporting to auto-buy\n", "teleport";
+				message T("Teleporting to auto-buy\n"), "teleport";
 				useTeleport(2);
 				$timeout{ai_buyAuto_wait}{time} = time;
 			} else {
