@@ -20,6 +20,7 @@ package itemExchange;
 #	steps c r0 n
 #	requiredAmount 5
 #	triggerAmount 5
+#	inInventory Rough Elunium > 5
 #}
  
 use strict;
@@ -70,8 +71,10 @@ sub exchange {
 	while (exists $config{$prefix.$i}) {
 		my $invIndex = main::findIndexStringList_lc($char->{'inventory'}, "name", $config{$prefix.$i});
 		my $item = $char->{'inventory'}[$invIndex];
-		if (((defined $invIndex) && ($source eq 'poll') && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"})) ||
-			((defined $invIndex) && ($source eq 'command') && ($item->{'amount'} >= $config{$prefix.$i."_requiredAmount"}))) {
+		if (
+		((defined $invIndex) && ($source eq 'poll') && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"}) && (checkSelfCondition($prefix.$i))) ||
+		((defined $invIndex) && ($source eq 'command') && ($item->{'amount'} >= $config{$prefix.$i."_requiredAmount"}))
+		) {
 			my %args;
 			$args{'npc'} = {};
 			main::getNPCInfo($config{$prefix.$i."_npc"}, $args{'npc'});
