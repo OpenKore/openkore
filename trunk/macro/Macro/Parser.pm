@@ -101,7 +101,9 @@ sub parseCmd {
   }
   my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
                  "invamount|cartamount|shopamount|storamount|eval|arg";
-  while (my ($kw, $arg) = $command =~ /\@($keywords)\s*\(\s*("[^@]+?")\s*\)/i) {
+  # FIXME: \(\s*("[^@]+?")\s\) for @random (to allow brackets in arguments)
+  # FIXME: \(\s*([^@]+?)\s\) for everything else
+  while (my ($kw, $arg) = $command =~ /\@($keywords)\s*\(\s*([^@]+?)\s*\)/i) {
     $cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
     my $ret = "_%_";
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
