@@ -6,7 +6,7 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac $lockAMC);
+our @EXPORT = qw(%macro %automacro %varStack $queue $cvs %logfac $lockAMC $onHold);
 
 our %macro;
 our %automacro;

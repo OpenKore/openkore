@@ -101,7 +101,7 @@ sub parseCmd {
   }
   my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
                  "invamount|cartamount|shopamount|storamount|eval|arg";
-  while (my ($kw, $arg) = $command =~ /\@($keywords)\s*\(([^@]+?)\)/i) {
+  while (my ($kw, $arg) = $command =~ /\@($keywords)\s*\(\s*("[^@]+?")\s*\)/i) {
     $cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
     my $ret = "_%_";
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
@@ -119,7 +119,7 @@ sub parseCmd {
     elsif ($kw eq 'arg')        {$ret = getWord($arg)}
     elsif ($kw eq 'eval')       {$ret = eval($arg)};
     return $command if $ret eq '_%_';
-    if (defined $ret) {$arg = quotemeta $arg; $command =~ s/\@$kw\s*\($arg\)/$ret/g}
+    if (defined $ret) {$arg = quotemeta $arg; $command =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g}
     else {error "[macro] command $command failed.\n"; return}
   }
   return $command;
