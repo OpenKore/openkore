@@ -586,13 +586,9 @@ sub checkClient {
 		debug "Wanted to sync.\n", "connection";
 
 	} elsif ($$c_state == 3 && (
-		($switch eq "0072" && $config{serverType} == 0) ||
-		($switch eq "0072" && $config{serverType} == 1) ||
-		($switch eq "0072" && $config{serverType} == 2) ||
-		($switch eq "009B" && $config{serverType} == 3) ||
-		($switch eq "00F5" && $config{serverType} == 4) ||
-		($switch eq "009B" && $config{serverType} == 5) ||
-		($switch eq "0072" && $config{serverType} == 6))) {
+		$switch eq "0072" ||	# serverTypes: 0, 1, 2
+		$switch eq "009B" ||	# serverTypes: 3, 5
+		$switch eq "00F5")) {	# serverTypes: 4
 		# Client sent MapLogin
 
 		# Send account ID
