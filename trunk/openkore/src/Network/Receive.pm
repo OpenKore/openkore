@@ -437,7 +437,7 @@ sub account_server_info {
 			$waitingForInput = 1;
 
 		} elsif ($masterServer->{charServer_ip}) {
-			message("Forcing connect to char server $masterServer->{charServer_ip}:$masterServer->{charServer_port}\n", 'connection');	
+			message(TF("Forcing connect to char server %s:%s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection');	
 			
 		} else {
 			message(TF("Server %s selected\n",$config{server}), 'connection');
@@ -465,8 +465,7 @@ sub actor_action {
 			$char->{sitting} = 1;
 			AI::queue("sitAuto") unless (AI::inQueue("sitAuto"));
 		} else {
-			message getActorName($args->{sourceID})." is sitting.\n", 'parseMsg_statuslook', 2;
-			#message((TF('%s'." is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook'), 2);
+			message TF("%s is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 1 if ($players{$args->{sourceID}});
 		}
 	} elsif ($args->{type} == 3) {
@@ -476,8 +475,7 @@ sub actor_action {
 			message T("You are standing.\n");
 			$char->{sitting} = 0;
 		} else {
-			message getActorName($args->{sourceID})." is standing.\n", 'parseMsg_statuslook', 2;
-			#message((TF('%s'." is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook'), 2);
+			message TF("%s is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 0 if ($players{$args->{sourceID}});
 		}
 	} else {
@@ -627,7 +625,9 @@ sub actor_died_or_disappeard {
 
 	} elsif (UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
 		if ($args->{type} == 1) {
-			message "Player Died: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n";
+			#stil unsure since i can't test it. who's gonna die for my test lol... but it's gives me no error
+			#message "Player Died: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n";
+			message TF("Player Died: ".'%s'. "(%s) %s %s\n". $players{$args->{ID}}->name, $players{$args->{ID}}{'binID'}, $sex_lut{$players{$args->{ID}}{'sex'}}, $jobs_lut{$players{$args->{ID}}{'jobID'}});
 			$players{$args->{ID}}{'dead'} = 1;
 		} else {
 			if ($args->{type} == 0) {
