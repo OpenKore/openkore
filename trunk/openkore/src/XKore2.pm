@@ -662,6 +662,9 @@ sub checkClient {
 		# Send status info
 		$msg .= pack('C2 a4 v3 x', 0x19, 0x01, $accountID, $char->{param1}, $char->{param2}, $char->{param3});
 
+		# Send status info
+		$msg .= pack('C2 a4 v3 x', 0x19, 0x01, $accountID, $char->{param1}, $char->{param2}, $char->{param3});
+
 		# Send skill information
 		my $skillInfo = "";
 		foreach my $ID (@skillsID) {
