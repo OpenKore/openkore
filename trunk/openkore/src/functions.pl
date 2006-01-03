@@ -1090,6 +1090,13 @@ sub AI {
 				message T("Auto-storaging due to death\n");
 				AI::queue("storageAuto");
 			}
+
+			if ($config{autoMoveOnDeath} && $config{autoMoveOnDeath_x} && $config{autoMoveOnDeath_y} && $config{autoMoveOnDeath_map}) {
+				message T("Moving to ".$config{autoMoveOnDeath_map}." - ".$config{autoMoveOnDeath_x}.",".$config{autoMoveOnDeath_x}."\n");
+				AI::queue("sitAuto");
+				ai_route($config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
+				}
+
 		}
 
 	} elsif (AI::action ne "dead" && AI::action ne "deal" && $char->{'dead'}) {

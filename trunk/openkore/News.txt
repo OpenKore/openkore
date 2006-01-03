@@ -27,6 +27,11 @@ Bug fixes:
 - Fixed a bug where the weight command only allows a single digit parameter.
 
 New config options:
+- autoMoveOnDeath set:
+	autoMoveOnDeath <0/1>
+	autoMoveOnDeath_x <INT>
+	autoMoveOnDeath_y <INT>
+	autoMoveOnDeath_map <MAP>
 - serverEncoding
   Specifies the server's character encoding (language). Should be one of:
      Western
@@ -39,6 +44,11 @@ New config options:
      Thai
 - New checkSelfCondition _whenEquipped <item>. True iff the named item
   is equipped.
+- XKore 2: (manual at http://openkore.sourceforge.net/manual/xkore2.php )
+	XKore_ID
+	XKore_publicIp
+	XKore_listenIp
+	XKore_listenPort
 
 Internal:
 - Implemented the beginning of a localization framework.
@@ -58,6 +68,9 @@ Credits:
 - h4rry84: Indonesian translation
 - hakore: fix for weight command
 - illusionist: move receive packets to receive.pm
+- vivi: autoMoveOnDeath
+- jojobaoil: XKore 2 built-in work
+- pmak: XKore 2 built-in work, packet mangling
 
 
 ==================
