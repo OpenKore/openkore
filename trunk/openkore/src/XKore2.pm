@@ -868,7 +868,11 @@ sub modifyPacketIn {
 	my ($self, $msg) = @_;
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
-	if ($switch eq "0071") {
+	if ($msg eq $accountID) {
+		# Don't send the account ID
+		$msg = "";
+
+	} elsif ($switch eq "0071") {
 		# Save the mapname for client login
 		$self->{client_saved}{map} = substr($msg, 6, 16);
 
