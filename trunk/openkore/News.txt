@@ -69,8 +69,6 @@ Credits:
 - hakore: fix for weight command
 - illusionist: move receive packets to receive.pm
 - vivi: autoMoveOnDeath
-- jojobaoil: XKore 2 built-in work
-- pmak: XKore 2 built-in work, packet mangling
 
 
 ==================
