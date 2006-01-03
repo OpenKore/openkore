@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-03 00:52+0800\n"
+"POT-Creation-Date: 2006-01-03 22:48+0800\n"
 "PO-Revision-Date: 2005-12-13 23:03+0100\n"
 "Last-Translator: kaliwanagan <kaliwanagan@users.sourceforge.net>\n"
 "Language-Team: Tagalog\n"
@@ -37,6 +37,11 @@ msgstr ""
 msgid "Choose your server.  Enter the server number: "
 msgstr ""
 
+#: ../Network/Receive.pm:440
+#, perl-format
+msgid "Forcing connect to char server %s:%s\n"
+msgstr ""
+
 #: ../Network/Receive.pm:443
 #, perl-format
 msgid "Server %s selected\n"
@@ -46,18 +51,33 @@ msgstr ""
 msgid "You are sitting.\n"
 msgstr "Ikaw ay nakaupo.\n"
 
-#: ../Network/Receive.pm:476
+#: ../Network/Receive.pm:468
+#, fuzzy, perl-format
+msgid "%s is sitting.\n"
+msgstr "Ikaw ay nakaupo.\n"
+
+#: ../Network/Receive.pm:475
 msgid "You are standing.\n"
 msgstr "Ikaw ay nakatayo.\n"
 
-#: ../Network/Receive.pm:521
+#: ../Network/Receive.pm:478
+#, fuzzy, perl-format
+msgid "%s is standing.\n"
+msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Network/Receive.pm:519
 msgid "Monster with empty name attacking you. Teleporting...\n"
 msgstr ""
 
-#: ../Network/Receive.pm:591
+#: ../Network/Receive.pm:589
 #, fuzzy
 msgid "You have died\n"
 msgstr "Ikaw ay nakatayo.\n"
+
+#: ../Network/Receive.pm:630
+#, perl-format
+msgid "Player Died: %s(%s) %s %s\n"
+msgstr ""
 
 #: ../Network/Receive.pm:1621
 msgid "Please equip arrow first."
@@ -816,26 +836,30 @@ msgstr ""
 msgid "Auto-storaging due to death\n"
 msgstr ""
 
-#: ../functions.pl:1106
+#: ../functions.pl:1095
+msgid "Moving to "
+msgstr ""
+
+#: ../functions.pl:1113
 msgid "Disconnecting on death!\n"
 msgstr ""
 
-#: ../functions.pl:1233
+#: ../functions.pl:1240
 msgid "Auto-storaging due to excess weight\n"
 msgstr ""
 
-#: ../functions.pl:1327
+#: ../functions.pl:1334
 msgid "Teleporting to auto-storage\n"
 msgstr ""
 
-#: ../functions.pl:1559
+#: ../functions.pl:1566
 msgid "Auto-sell sequence completed.\n"
 msgstr ""
 
-#: ../functions.pl:1595
+#: ../functions.pl:1602
 msgid "Teleporting to auto-sell\n"
 msgstr ""
 
-#: ../functions.pl:1767
+#: ../functions.pl:1774
 msgid "Teleporting to auto-buy\n"
 msgstr ""

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-02 11:10+0700\n"
-"PO-Revision-Date: 2006-01-02 11:15+0700\n"
+"POT-Creation-Date: 2006-01-03 22:48+0800\n"
+"PO-Revision-Date: 2006-01-03 08:44+0700\n"
 "Last-Translator: Richard <h4rry84@telkom.net>\n"
 "Language-Team: Indonesian\n"
 "MIME-Version: 1.0\n"
@@ -36,6 +36,11 @@ msgstr "Mengakhiri koneksi ke Account server\n"
 msgid "Choose your server.  Enter the server number: "
 msgstr "Pilih Server anda. Masukkan nomer server:"
 
+#: ../Network/Receive.pm:440
+#, perl-format
+msgid "Forcing connect to char server %s:%s\n"
+msgstr "Memaksa untuk melakukan koneksi ke char server %s:%s\n"
+
 #: ../Network/Receive.pm:443
 #, perl-format
 msgid "Server %s selected\n"
@@ -45,17 +50,32 @@ msgstr "Server %s dipilih\n"
 msgid "You are sitting.\n"
 msgstr "Anda duduk.\n"
 
-#: ../Network/Receive.pm:476
+#: ../Network/Receive.pm:468
+#, perl-format
+msgid "%s is sitting.\n"
+msgstr "%s duduk.\n"
+
+#: ../Network/Receive.pm:475
 msgid "You are standing.\n"
 msgstr "Anda berdiri.\n"
 
-#: ../Network/Receive.pm:521
+#: ../Network/Receive.pm:478
+#, perl-format
+msgid "%s is standing.\n"
+msgstr "%s berdiri.\n"
+
+#: ../Network/Receive.pm:519
 msgid "Monster with empty name attacking you. Teleporting...\n"
 msgstr "Monster dengan nama kosong menyerang anda. Teleport...\n"
 
-#: ../Network/Receive.pm:591
+#: ../Network/Receive.pm:589
 msgid "You have died\n"
 msgstr "Anda baru saja mati.\n"
+
+#: ../Network/Receive.pm:630
+#, perl-format
+msgid "Player Died: %s(%s) %s %s\n"
+msgstr "Player Mati: %s(%s) %s %s\n"
 
 #: ../Network/Receive.pm:1621
 msgid "Please equip arrow first."
@@ -197,7 +217,8 @@ msgstr "Anda selesai melakukan Transaksi\n"
 
 #: ../Network/Receive.pm:2260
 msgid "Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"
-msgstr "Ketik 'deal' untuk mulai Transaksi, atau 'deal no' untuk menolak Transaksi.\n"
+msgstr ""
+"Ketik 'deal' untuk mulai Transaksi, atau 'deal no' untuk menolak Transaksi.\n"
 
 #: ../Network/Receive.pm:2282
 msgid "-----Egg Hatch Candidates-----\n"
@@ -222,14 +243,16 @@ msgid ""
 "\n"
 "%s will now immediately disconnect."
 msgstr ""
-"Critical Error: Tidak diperbolehkan Dual Login - Seseorang mencoba untuk login!\n"
+"Critical Error: Tidak diperbolehkan Dual Login - Seseorang mencoba untuk "
+"login!\n"
 "\n"
 "%s sekarang akan segera disconnect."
 
-#: ../Network/Receive.pm:2384
-#: ../Network/Receive.pm:2388
+#: ../Network/Receive.pm:2384 ../Network/Receive.pm:2388
 msgid "Critical Error: Dual login prohibited - Someone trying to login!\n"
-msgstr "Critical Error: Tidak diperbolehkan Dual Login - Seseorang mencoba untuk login!\n"
+msgstr ""
+"Critical Error: Tidak diperbolehkan Dual Login - Seseorang mencoba untuk "
+"login!\n"
 
 #: ../Network/Receive.pm:2385
 #, perl-format
@@ -246,23 +269,30 @@ msgstr "Error : Gangguan pada server dikarenakan kelebihan populasi.\n"
 
 #: ../Network/Receive.pm:2396
 msgid "Error: You are underaged and cannot join this server.\n"
-msgstr "Error : Anda tidak cukup umur dan tidak dapat bergabung dengan server ini.\n"
+msgstr ""
+"Error : Anda tidak cukup umur dan tidak dapat bergabung dengan server ini.\n"
 
 #: ../Network/Receive.pm:2398
 msgid "Critical Error: You must pay to play this account!"
-msgstr "Critical Error : Anda harus membayar untuk dapat memainkan account ini! "
+msgstr ""
+"Critical Error : Anda harus membayar untuk dapat memainkan account ini! "
 
 #: ../Network/Receive.pm:2401
 msgid "Error: The server still recognizes your last connection\n"
 msgstr "Error : Server masih mengenali login terakhir anda\n"
 
 #: ../Network/Receive.pm:2403
-msgid "Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?"
-msgstr "Error : Kapasitas IP Internet Cafe ini sudah penuh. Apakah anda mau membayar untuk tempat sendiri?"
+msgid ""
+"Error: IP capacity of this Internet Cafe is full. Would you like to pay the "
+"personal base?"
+msgstr ""
+"Error : Kapasitas IP Internet Cafe ini sudah penuh. Apakah anda mau membayar "
+"untuk tempat sendiri?"
 
 #: ../Network/Receive.pm:2405
 msgid "Error: You are out of available time paid for\n"
-msgstr "Error : Anda sudah melewati batas waktu yang dibayarkan untuk bermain\n"
+msgstr ""
+"Error : Anda sudah melewati batas waktu yang dibayarkan untuk bermain\n"
 
 #: ../Network/Receive.pm:2407
 msgid "Error: You have been forced to disconnect by a GM\n"
@@ -289,8 +319,11 @@ msgstr "%s ingin menjadi temanmu\n"
 
 #: ../Network/Receive.pm:2552
 #, perl-format
-msgid "Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
-msgstr "Ketik 'friend accept' untuk menjadi teman %s, untuk kebalikannya ketik 'friend reject'\n"
+msgid ""
+"Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n"
+msgstr ""
+"Ketik 'friend accept' untuk menjadi teman %s, untuk kebalikannya ketik "
+"'friend reject'\n"
 
 #: ../Network/Receive.pm:2578
 #, perl-format
@@ -375,7 +408,9 @@ msgstr "Server ini sementara memblokir koneksi anda\n"
 
 #: ../Network/Receive.pm:3305
 msgid "Error logging into Character Server (invalid character specified)...\n"
-msgstr "Gagal menuju ke Character Server (Kesalahan pada character yang dispesifikan)...\n"
+msgstr ""
+"Gagal menuju ke Character Server (Kesalahan pada character yang "
+"dispesifikan)...\n"
 
 #: ../Network/Receive.pm:3374
 msgid "Closing connection to Map Server\n"
@@ -414,7 +449,9 @@ msgstr "Bersiap untuk mulai menjual item\n"
 #: ../Network/Receive.pm:3551
 #, perl-format
 msgid "%s: Type 'store' to start buying, or type 'sell' to start selling\n"
-msgstr "%s: Ketik 'store' untuk mulai membeli, atau ketik 'sell' untuk mulai menjual\n"
+msgstr ""
+"%s: Ketik 'store' untuk mulai membeli, atau ketik 'sell' untuk mulai "
+"menjual\n"
 
 #: ../Network/Receive.pm:3585
 #, perl-format
@@ -543,13 +580,11 @@ msgstr "Area ini tidak dapat digunakan untuk Memo\n"
 msgid "Unavailable Area To Teleport (fail code %s)\n"
 msgstr "Area ini tidak dapat digunakan untuk Teleport (fail code %s)\n"
 
-#: ../Network/Receive.pm:4319
-#: ../Network/Receive.pm:4334
+#: ../Network/Receive.pm:4319 ../Network/Receive.pm:4334
 msgid "PvP Display Mode\n"
 msgstr "Mode PvP Display\n"
 
-#: ../Network/Receive.pm:4322
-#: ../Network/Receive.pm:4337
+#: ../Network/Receive.pm:4322 ../Network/Receive.pm:4337
 msgid "GvG Display Mode\n"
 msgstr "Mode GvG Display\n"
 
@@ -573,7 +608,8 @@ msgstr "Periode dibisukan sudah lewat.\n"
 #: ../Network/Receive.pm:4899
 #, perl-format
 msgid "You've been muted for %s minutes, auto disconnect!\n"
-msgstr "Anda baru saja dibisukan selama %s menit, disconnect secara otomatis!\n"
+msgstr ""
+"Anda baru saja dibisukan selama %s menit, disconnect secara otomatis!\n"
 
 #: ../Network/Receive.pm:4903
 #, perl-format
@@ -622,8 +658,12 @@ msgid "Storage password set to: %s\n"
 msgstr "Password Storage di-set menjadi : %s\n"
 
 #: ../Network/Receive.pm:5191
-msgid "Unable to send storage password. You must set the 'storageEncryptKey' option in config.txt or servers.txt.\n"
-msgstr "Tidak dapat mengirimkan password storage. Anda harus menseting 'storageEncryptKey' di config.txt atau server.txt.\n"
+msgid ""
+"Unable to send storage password. You must set the 'storageEncryptKey' option "
+"in config.txt or servers.txt.\n"
+msgstr ""
+"Tidak dapat mengirimkan password storage. Anda harus menseting "
+"'storageEncryptKey' di config.txt atau server.txt.\n"
 
 #: ../Network/Receive.pm:5213
 msgid "Successfully changed storage password.\n"
@@ -667,7 +707,8 @@ msgid ""
 "You have old files in the OpenKore folder, which may cause conflicts.\n"
 "Please delete your entire OpenKore source folder, and redownload everything."
 msgstr ""
-"Anda memiliki file data-data lama dalam folder Openkore yang mungkin dapat menyebabkan adanya konflik.\n"
+"Anda memiliki file data-data lama dalam folder Openkore yang mungkin dapat "
+"menyebabkan adanya konflik.\n"
 "Hapus seluruh folder Openkore, dan download ulang seluruhnya."
 
 #: ../../openkore.pl:160
@@ -822,26 +863,30 @@ msgstr "Tiba di waypoint %s\n"
 msgid "Auto-storaging due to death\n"
 msgstr "Storage secara otomatis dikarenakan mati\n"
 
-#: ../functions.pl:1106
+#: ../functions.pl:1095
+msgid "Moving to "
+msgstr ""
+
+#: ../functions.pl:1113
 msgid "Disconnecting on death!\n"
 msgstr "Disconnecting saat mati!\n"
 
-#: ../functions.pl:1233
+#: ../functions.pl:1240
 msgid "Auto-storaging due to excess weight\n"
 msgstr "Storage secara otomatis dikarenakan kelebihan berat\n"
 
-#: ../functions.pl:1327
+#: ../functions.pl:1334
 msgid "Teleporting to auto-storage\n"
 msgstr "Teleport untuk auto-storage\n"
 
-#: ../functions.pl:1559
+#: ../functions.pl:1566
 msgid "Auto-sell sequence completed.\n"
 msgstr "Sequence menjual secara otomatis Selesai.\n"
 
-#: ../functions.pl:1595
+#: ../functions.pl:1602
 msgid "Teleporting to auto-sell\n"
 msgstr "Teleport untuk menjual secara otomatis\n"
 
-#: ../functions.pl:1767
+#: ../functions.pl:1774
 msgid "Teleporting to auto-buy\n"
 msgstr "Teleport untuk membeli secara otomatis\n"
