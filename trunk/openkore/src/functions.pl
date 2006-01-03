@@ -1092,7 +1092,7 @@ sub AI {
 			}
 
 			if ($config{autoMoveOnDeath} && $config{autoMoveOnDeath_x} && $config{autoMoveOnDeath_y} && $config{autoMoveOnDeath_map}) {
-				message T("Moving to ".$config{autoMoveOnDeath_map}." - ".$config{autoMoveOnDeath_x}.",".$config{autoMoveOnDeath_x}."\n");
+				message T("Moving to ".$config{autoMoveOnDeath_map}." - ".$config{autoMoveOnDeath_x}.",".$config{autoMoveOnDeath_y}."\n");
 				AI::queue("sitAuto");
 				ai_route($config{autoMoveOnDeath_map}, $config{autoMoveOnDeath_x}, $config{autoMoveOnDeath_y});
 				}
