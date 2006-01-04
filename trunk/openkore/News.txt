@@ -59,6 +59,7 @@ Internal:
   mangling, to give plugins more freedom.
 - packet_attack hook now has extra 'type' argument.
 - all receive packets have been moved to Receive.pm now.
+- $item->{ID} is now stored.
 
 Credits:
 - id-mardi: fix for setPartySkillTimer, move the rest of the receive packets
