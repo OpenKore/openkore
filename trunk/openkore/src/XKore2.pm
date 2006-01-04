@@ -20,7 +20,7 @@ use base qw(Exporter);
 use IO::Socket::INET;
 
 use Globals;
-use Log qw(message debug error warning);
+use Log qw(debug error);
 use Utils qw(dataWaiting timeOut shiftPack unShiftPack);
 use Misc;
 
@@ -259,12 +259,12 @@ sub realClientRecv {
 sub clientDisconnect {
 	my $self = shift;
 	if ($self->clientAlmostAlive) {
-		message("Disconnecting RO client (".$self->{client}->peerhost().":".$self->{client}->peerport().
+		debug("Disconnecting RO client (".$self->{client}->peerhost().":".$self->{client}->peerport().
 			")... ", "connection");
 		close($self->{client});
 		!$self->clientAlive() ?
-			message("disconnected\n", "connection") :
-			error("couldn't disconnect\n", "connection");
+			debug("disconnected\n", "connection") :
+			debug("couldn't disconnect\n", "connection");
 	}
 }
 
@@ -308,7 +308,7 @@ sub checkTracker {
 	return unless (defined $self->{client_listen} && $self->serverAlive && $conState == 5);
 
 	if ($$t_state == 0 && timeOut($timeout{xkore_tracker})) {
-		message("Connecting to XKore2 master ($host:$port)... ", "connection");
+		debug("Connecting to XKore2 master ($host:$port)... ", "connection");
 		# Make a connection to the tracker/master server
 		$self->{tracker} = new IO::Socket::INET(
 			PeerAddr	=> $host,
@@ -317,7 +317,7 @@ sub checkTracker {
 			Timeout		=> 4);
 
 		if ($self->{tracker} && inet_aton($self->{tracker}->peerhost()) eq inet_aton($host)) {
-			message("connected\n", "connection");
+			debug("connected\n", "connection");
 			$$t_state = 1;
 		} else {
 			error("couldn't connect: $!\n", "connection");
@@ -367,7 +367,7 @@ sub checkTracker {
 			$self->{tracker}->send("K".pack('v',0));
 		}
 	} elsif (!$self->trackerAlive && timeOut($timeout{xkore_tracker})) {
-		message "Lost connection to XKore2 master, reconnecting...\n", "connection";
+		debug "Lost connection to XKore2 master, reconnecting...\n", "connection";
 		$timeout{'xkore_tracker'}{time} = time;
 		$$t_state = 0;
 	}
@@ -377,20 +377,26 @@ sub checkClient {
 	my $self = shift;
 
 	# Check if the client is active when the server is not.
-	if ($conState < 4 && $self->clientAlmostAlive) {
-		# Kick the client
+	if ($conState < 4 && $self->clientAlmostAlive && $self->{client_state} > 0) {
+		# Kick the client if they haven't logged in before
 		unless ($self->{client_state} == 5) {
+			error "$self->{client_state}\n";
 			# "Blocked from server until ______"
 			$self->clientSend(pack('C3 Z20', 0x6A, 0, 6, "OpenKore connects"),1);
-		} else {
-			# Kick the user to the login screen immediately (GM kick)
-			$self->clientSend(pack('C3', 0x81, 0, 15));
-		}
-		$self->{client_state} = 0;
-		$self->{client_msgIn} = "";
 
-		# Flush the buffer, so the client data doesn't get sent to server.
-		$self->realClientRecv();
+			$self->{client_state} = 0;
+			$self->{client_msgIn} = "";
+
+			# Flush the buffer, so the client data doesn't get sent to server.
+			$self->realClientRecv();
+
+		} else {
+			# Plunk the user down in novice-land, and give them a warning that we got disconnected
+			$msg = pack('C2 Z16 v2', 0x91, 0, "new_1-1.gat", 53, 109);
+			$self->clientSend($msg,1);
+			$self->{client_state} = -2;
+		}
+		
 		return;
 	}
 
@@ -427,6 +433,9 @@ sub checkClient {
 		return;
 	} elsif (!$self->clientAlmostAlive) {
 		# Client disconnected... (or never existed)
+
+		# Didn't give an error to the client yet...
+		$self->{client_saved}{gave_error} = 0;
 
 		undef $self->{client};
 		# Begin listening...
@@ -585,10 +594,25 @@ sub checkClient {
 
 		debug "Wanted to sync.\n", "connection";
 
-	} elsif ($$c_state == 3 && (
-		$switch eq "0072" ||	# serverTypes: 0, 1, 2
-		$switch eq "009B" ||	# serverTypes: 3, 5
-		$switch eq "00F5")) {	# serverTypes: 4
+	} elsif ($$c_state == 3 && ((
+		# Ignore invalid serverTypes
+		($config{XKore_ignoreInvalidServerType} && (
+			$switch eq "0072" ||
+			$switch eq "009B" ||
+			$switch eq "00F5" )) ||
+		# serverType 0 - 2
+		($switch eq "0072" && (
+			$config{serverType} == 0 ||
+			$config{serverType} == 1 ||
+			$config{serverType} == 2 )) ||
+		# serverType 3, 5
+		($switch eq "009B" && (
+			$config{serverType} == 3 ||
+			$config{serverType} == 5 )) ||
+		# serverType 4
+		($switch eq "00F5" &&
+			$config{serverType} == 4 ))
+		)) {
 		# Client sent MapLogin
 
 		# Send account ID
@@ -608,6 +632,32 @@ sub checkClient {
 		debug "Map Login.\n", "connection";
 
 		$$c_state = 4;
+
+	} elsif ($$c_state == 3 && (
+		$switch eq "0072" ||
+		$switch eq "009B" ||
+		$switch eq "00F5")) {
+		# MapLogin for the wrong serverType
+
+		$self->clientSend($accountID,1);
+
+		# Generate the coords info
+		my $coords = "";
+		shiftPack(\$coords, $char->{pos_to}{x}, 10);
+		shiftPack(\$coords, $char->{pos_to}{y}, 10);
+		shiftPack(\$coords, 0, 4);
+
+		# Send map info
+		#'0073' => ['map_loaded','x4 a3',[qw(coords)]],
+		$msg = pack('C2 V a3 x2', 0x73, 0, time, $coords);
+		$self->clientSend($msg,1);
+
+		# Redirect them to the novice map
+		$msg = pack('C2 Z16 v2', 0x91, 0, "new_1-1.gat", 53, 109);
+		$self->clientSend($msg,1);
+
+		# Set to a special client_state
+		$$c_state = -1;
 
 	} elsif ($$c_state == 4 && $switch eq "021D") {
 		# This does what?
@@ -848,6 +898,75 @@ sub checkClient {
 	} elsif ($$c_state == 5) {
 		# Done!
 		# (this should never be reached)
+
+	} elsif ($$c_state < 0) {
+		# Error while logging in, or disconnected from server...
+
+		$msg = "";
+
+		if ($switch eq "007D" && !$self->{client_saved}{gave_error}) {
+			# Client sent map login
+
+			my $errMsg;
+			if ($$c_state == -1) {
+				# Inform the client that they are using an invalid serverType-ed client,
+				# and how to remedy it.
+				$errMsg = "Warning: You are using a version of the Ragnarok Online client that " .
+					"does not match the serverType indicated by $Settings::NAME. " .
+					"This is caused either by using the wrong RO client, or by using " .
+					"an incorrect serverType value (found in tables/servers.txt and control/config.txt). " .
+					"You may also set the config.txt option named \"XKore_ignoreInvalidServerType\" in order " .
+					"to bypass this warning, but doing so may cause unexpected behavior. ".
+					"Also, please note that some private servers allow more than one serverType, so " .
+					"please try adjusting the serverType, exiting $Settings::NAME completely, and retrying ".
+					"for each serverType before submitting a support request.";
+
+			} elsif ($$c_state == -2) {
+				# Inform the client that the connection to the server was lost
+				$errMsg = "blueConnection to server lost. " .
+					"Please wait while the connection is reestablished.";
+
+			} else {
+				$errMsg = "Unknown error within XKore 2";
+			}
+
+
+			$msg = pack('C2 v Z'.(length($errMsg)+1).' x', 0x9A, 0x00, length($errMsg) + 6, $errMsg);
+
+			$self->clientSend($msg,1);
+			$self->{client_saved}{gave_error} = 1;
+
+		} elsif ($switch eq "00B2") {
+			# If they want to character select/respawn, kick them to the login screen
+			# immediately (GM kick)
+			$self->clientSend(pack('C3', 0x81, 0, 15),1);
+			$self->{client_state} = 0;
+
+		} elsif ($switch eq "018A") {
+			# Client wants to quit...
+			$msg = "";
+
+			$self->clientSend(pack('C*', 0x8B, 0x01, 0, 0),1);
+			$self->{client_state} = 0;
+		}
+		
+		# Check if we've reestablished the connection with the server
+		if ($conState > 4 && $$c_state == -2) {
+			# Plunk the character back down in the regular map they're on, and
+			# tell them that we've reconnected.
+			$msg = "blueConnection reestablished. Enjoy. =)";
+			$msg = pack('C2 Z16 v2', 0x91, 0, $self->{client_saved}{map},
+				$char->{pos_to}{x}, $char->{pos_to}{y}) .
+				pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
+			$self->clientSend($msg,1);
+			$$c_state = 4;
+			$self->{client_saved}{gave_error} = 0;
+		} else {
+			$msg = "blueStill trying to connect...";
+			$msg = pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
+			$self->clientSend($msg,1);
+		}
+
 	} else {
 		# Something wasn't right, kick the client
 		error "Unknown/unexpected XKore 2 packet: $switch (state: $$c_state).\n", "connection";
@@ -875,6 +994,10 @@ sub modifyPacketIn {
 		# Don't send the account ID
 		$msg = "";
 
+	} elsif ($switch eq "006A") {
+		# Don't send disconnect signals to the RO client
+		#$msg = "";
+
 	} elsif ($switch eq "0071") {
 		# Save the mapname for client login
 		$self->{client_saved}{map} = substr($msg, 6, 16);
@@ -893,6 +1016,10 @@ sub modifyPacketIn {
 		# Generate a map-change packet (rather than a zone-change)
 		$msg = pack('C2 Z16 v2', 0x91, 0, $self->{client_saved}{map},
 			$x, $y);
+
+	} elsif ($switch eq "0081") {
+		# Don't send ban signals to the client
+		#$msg = "";
 
 	} elsif ($switch eq "0091") {
 		# Save the mapname for client login
