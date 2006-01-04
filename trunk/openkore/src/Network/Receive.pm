@@ -625,9 +625,7 @@ sub actor_died_or_disappeard {
 
 	} elsif (UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
 		if ($args->{type} == 1) {
-			#stil unsure since i can't test it. who's gonna die for my test lol... but it's gives me no error
-			#message "Player Died: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n";
-			message TF("Player Died: ".'%s'. "(%s) %s %s\n". $players{$args->{ID}}->name, $players{$args->{ID}}{'binID'}, $sex_lut{$players{$args->{ID}}{'sex'}}, $jobs_lut{$players{$args->{ID}}{'jobID'}});
+			message "Player Died: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n";
 			$players{$args->{ID}}{'dead'} = 1;
 		} else {
 			if ($args->{type} == 0) {
@@ -2462,9 +2460,9 @@ sub exp_zeny_info {
 	} elsif ($args->{type} == 20) {
 		my $change = $args->{val} - $char->{zenny};
 		if ($change > 0) {
-			message "You gained " . formatNumber($change) . " zeny.\n";
+			message TF("You gained %s zeny.\n", formatNumber($change));
 		} elsif ($change < 0) {
-			message "You lost " . formatNumber(-$change) . " zeny.\n";
+			message TF("You lost %s zeny.\n", formatNumber(-$change));
 			if ($config{dcOnZeny} && $args->{val} <= $config{dcOnZeny}) {
 				$interface->errorDialog(TF("Disconnecting due to zeny lower than %s.", $config{dcOnZeny}));
 				$quit = 1;
@@ -2475,7 +2473,7 @@ sub exp_zeny_info {
 	} elsif ($args->{type} == 22) {
 		$char->{exp_max_last} = $char->{exp_max};
 		$char->{exp_max} = $args->{val};
-		debug "Required Exp: $args->{val}\n", "parseMsg";
+		debug(TF("Required Exp: %s\n", $args->{val}), "parseMsg");
 		if (!$net->clientAlive() && $initSync && $config{serverType} == 2) {
 			sendSync($net, 1);
 			$initSync = 0;
@@ -2483,7 +2481,7 @@ sub exp_zeny_info {
 	} elsif ($args->{type} == 23) {
 		$char->{exp_job_max_last} = $char->{exp_job_max};
 		$char->{exp_job_max} = $args->{val};
-		debug "Required Job Exp: $args->{val}\n", "parseMsg";
+		debug(TF("Required Job Exp: %s\n", $args->{val}), "parseMsg");
 		message("BaseExp:$monsterBaseExp | JobExp:$monsterJobExp\n","info", 2) if ($monsterBaseExp);
 	}
 }
@@ -2549,7 +2547,7 @@ sub friend_request {
 	$incomingFriend{'charID'} = $args->{charID};
 	$incomingFriend{'name'} = $args->{name};
 	message TF("%s wants to be your friend\n", $incomingFriend{'name'});
-	message TF("Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n", );
+	message TF("Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n", $incomingFriend{'name'});
 }
 
 sub friend_removed {
@@ -2583,7 +2581,7 @@ sub friend_response {
 		$friends{$ID}{'charID'} = substr($msg, 8, 4);
 		$friends{$ID}{'name'} = $name;
 		$friends{$ID}{'online'} = 1;
-		message TF("%s is now your friend\n", $name);
+		message TF("%s is now your friend\n", $incomingFriend{'name'});
 	}	
 }
 
@@ -2884,7 +2882,7 @@ sub inventory_item_added {
 		$item->{invIndex} = $invIndex;
 
 		$itemChange{$item->{name}} += $amount;
-		my $disp = "Item added to inventory: ";
+		my $disp = T("Item added to inventory: ");
 		$disp .= $item->{name};
 		$disp .= " ($invIndex) x $amount - $itemTypes_lut{$item->{type}}";
 		message "$disp\n", "drop";
@@ -2941,7 +2939,7 @@ sub item_used {
 		my $amount = $item->{amount} - $remaining;
 		$item->{amount} -= $amount;
 
-		message("You used Item: $item->{name} ($invIndex) x $amount - $remaining left\n", "useItem", 1);
+		message((TF("You used Item: %s (%s) x %s - %s left\n", $item->{name}, $invIndex, $amount, $remaining), "useItem"), 1);
 		$itemChange{$item->{name}}--;
 		if ($item->{amount} <= 0) {
 			delete $char->{inventory}[$invIndex];
@@ -2958,7 +2956,7 @@ sub item_used {
 	} else {
 		my $actor = Actor::get($ID);
 		my $itemDisplay = itemNameSimple($itemID);
-		message "$actor used Item: $itemDisplay - $remaining left\n", "useItem", 2;
+		message((TF("%s used Item: %s - %s left\n", $actor, $itemDisplay, $remaining), "useItem"), 2);
 	}
 }
 
@@ -3088,7 +3086,7 @@ sub item_appeared {
 		sendTake($net, $args->{ID});
 	}
 
-	message "Item Appeared: $item->{name} ($item->{binID}) x $item->{amount} ($args->{x}, $args->{y})\n", "drop", 1;
+	message((TF("Item Appeared: %s (%s) x %s (%s, %s)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop"), 1);
 
 }
 
@@ -3106,7 +3104,7 @@ sub item_exists {
 	}
 	$items{$args->{ID}}{'pos'}{'x'} = $args->{x};
 	$items{$args->{ID}}{'pos'}{'y'} = $args->{y};
-	message "Item Exists: $items{$args->{ID}}{'name'} ($items{$args->{ID}}{'binID'}) x $items{$args->{ID}}{'amount'}\n", "drop", 1;
+	message((TF("Item Exists: %s (%s) x %s\n", $items{$args->{ID}}{'name'}, $items{$args->{ID}}{'binID'}, $items{$args->{ID}}{'amount'}), "drop"), 1);
 }
 
 sub item_disappeared {
@@ -3335,7 +3333,7 @@ sub map_change {
 	$coords{'y'} = $args->{y};
 	$chars[$config{char}]{pos} = {%coords};
 	$chars[$config{char}]{pos_to} = {%coords};
-	message "Map Change: $args->{map} ($chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'})\n", "connection";
+	message(TF("Map Change: %s (%s, %s)\n", $args->{map}, $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}), "connection");
 	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
