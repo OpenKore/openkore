@@ -3078,6 +3078,7 @@ sub item_appeared {
 		$item->{nameID} = $args->{type};
 		$item->{binID} = binFind(\@itemsID, $args->{ID});
 		$item->{name} = itemName($item);
+		$item->{ID} = $args->{ID};
 	}
 	$item->{pos}{x} = $args->{x};
 	$item->{pos}{y} = $args->{y};
@@ -3101,6 +3102,7 @@ sub item_exists {
 		$items{$args->{ID}}{'nameID'} = $args->{type};
 		$items{$args->{ID}}{'binID'} = binFind(\@itemsID, $args->{ID});
 		$items{$args->{ID}}{'name'} = itemName($items{$args->{ID}});
+		$items{$args->{ID}}{'ID'} = $args->{ID};
 	}
 	$items{$args->{ID}}{'pos'}{'x'} = $args->{x};
 	$items{$args->{ID}}{'pos'}{'y'} = $args->{y};
