@@ -281,7 +281,7 @@ ip 209.172.35.90
 port 6822
 version 20
 master_version 18
-serverType 0
+serverType 3
 private 1
 serverEncoding Western
 
@@ -290,7 +290,7 @@ ip 209.172.35.91
 port 6822
 version 20
 master_version 18
-serverType 0
+serverType 3
 serverEncoding Western
 
 [ProjectRO Private Server]
