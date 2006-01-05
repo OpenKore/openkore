@@ -69,7 +69,7 @@ Credits:
 - h4rry84: Indonesian translation
 - hakore: fix for weight command
 - illusionist: move receive packets to receive.pm
-- vivi: autoMoveOnDeath
+- vivi: autoMoveOnDeath, check XKore 2 username
 
 
 ==================
