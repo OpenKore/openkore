@@ -69,7 +69,7 @@ sub new {
 		'0098' => ['private_message_sent', 'C1', [qw(type)]],
 		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
 		'009C' => ['actor_look_at', 'a4 C1 x1 C1', [qw(ID head body)]],
-		'009D' => ['item_exists', 'a4 v1 x1 v1 v1 v1', [qw(ID type x y amount)]],
+		'009D' => ['item_exists', 'a4 v1 x1 v3', [qw(ID type x y amount)]],
 		'009E' => ['item_appeared', 'a4 v1 x1 v1 v1 x2 v1', [qw(ID type x y amount)]],
 		'00A0' => ['inventory_item_added', 'v1 v1 v1 C1 C1 C1 a8 v1 C1 C1', [qw(index amount nameID identified broken upgrade cards type_equip type fail)]],
 		'00A1' => ['item_disappeared', 'a4', [qw(ID)]],
@@ -143,7 +143,7 @@ sub new {
 		'011A' => ['skill_used_no_damage', 'v1 v1 a4 a4 C1', [qw(skillID amount targetID sourceID fail)]],
 		'011C' => ['warp_portal_list', 'v1 Z16 Z16 Z16 Z16', [qw(type memo1 memo2 memo3 memo4)]],
 		'011E' => ['memo_success', 'C1', [qw(fail)]],
-		'011F' => ['area_spell', 'a4 a4 v1 v1 C1 C1', [qw(ID sourceID x y type fail)]],
+		'011F' => ['area_spell', 'a4 a4 v2 C2', [qw(ID sourceID x y type fail)]],
 		'0120' => ['area_spell_disappears', 'a4', [qw(ID)]],
 		'0121' => ['cart_info', 'v1 v1 V1 V1', [qw(items items_max weight weight_max)]],
 		'0122' => ['cart_equip_list'],
@@ -203,9 +203,9 @@ sub new {
 		'019A' => ['pvp_rank', 'x2 V1 V1 V1', [qw(ID rank num)]],
 		'019B' => ['unit_levelup', 'a4 V1', [qw(ID type)]],
 		'01A0' => ['pet_capture_result', 'C1', [qw(type)]],
-		'01A2' => ['pet_info', 'Z24 C1 v1 v1 v1 v1', [qw(name nameflag level hungry friendly accessory)]],
+		'01A2' => ['pet_info', 'Z24 C1 v4', [qw(name nameflag level hungry friendly accessory)]],
 		'01A3' => ['pet_food', 'C1 v1', [qw(success foodID)]],
-		'01A4' => ['pet_info2', 'C1 a4 V1', [qw(type ID value)]],
+		'01A4' => ['pet_info2', 'C a4 V', [qw(type ID value)]],
 		'01A6' => ['egg_list'],
 		'01AA' => ['pet_emotion', 'a4 V1', [qw(ID type)]],
 		'01AB' => ['actor_muted', 'x2 a4 x2 L1', [qw(ID duration)]],
@@ -219,10 +219,10 @@ sub new {
 		'01C4' => ['storage_item_added', 'v1 V1 v1 C1 C1 C1 C1 a8', [qw(index amount ID type identified broken upgrade cards)]],
 		'01C5' => ['cart_item_added', 'v1 V1 v1 x C1 C1 C1 a8', [qw(index amount ID identified broken upgrade cards)]],
 		'01C8' => ['item_used', 'v1 v1 a4 v1', [qw(index itemID ID remaining)]],
-		'01C9' => ['area_spell', 'a4 a4 v1 v1 C1 C1', [qw(ID sourceID x y type fail)]],
+		'01C9' => ['area_spell', 'a4 a4 v2 C2 C Z80', [qw(ID sourceID x y type fail scribbleLen scribbleMsg)]],
 		'01CD' => ['sage_autospell'],
 		'01CF' => ['devotion', 'a4 a20', [qw(sourceID data)]],
-		'01D0' => ['monk_spirits', 'a4 v1', [qw(sourceID spirits)]],
+		'01D0' => ['monk_spirits', 'a4 v', [qw(sourceID spirits)]],
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D7' => ['player_equipment', 'a4 C1 v2', [qw(sourceID type ID1 ID2)]],
@@ -3937,8 +3937,8 @@ sub pet_info2 {
 	#}
 
 	if ($type == 0) {
-		# $value is always 0
-		# what does this do for the client?
+		# You own no pet.
+		undef $pet{ID};
 
 	} elsif ($type == 1) {
 		$pet{friendly} = $value;
@@ -3957,8 +3957,8 @@ sub pet_info2 {
 		#debug "Pet performance info: $value\n";
 
 	} elsif ($type == 5) {
-		# $value is always 0x14
-		# what does this do for the client?
+		# You own pet with this ID
+		$pet{ID} = $ID;
 	}
 }
 
