@@ -382,7 +382,7 @@ sub checkClient {
 		unless ($self->{client_state} == 5) {
 			error "$self->{client_state}\n";
 			# "Blocked from server until ______"
-			$self->clientSend(pack('C3 Z20', 0x6A, 0, 6, "OpenKore connects"),1);
+			$self->clientSend(pack('C3 Z20', 0x6A, 0, 6, "$Settings::NAME connects"),1);
 
 			$self->{client_state} = 0;
 			$self->{client_msgIn} = "";
@@ -396,7 +396,7 @@ sub checkClient {
 			$self->clientSend($msg,1);
 			$self->{client_state} = -2;
 		}
-		
+
 		return;
 	}
 
@@ -498,17 +498,20 @@ sub checkClient {
 		my ($version, $username, $password, $master_version) = unpack("x2 V Z24 Z24 C1", $msg);
 
 		# Check password against adminPassword
-		if ($password ne $config{adminPassword}) {
-			error "XKore 2 failed login: Bad Password.\n", "connection";
+		if ($password ne $config{adminPassword} || $username ne $config{username}) {
+			error "XKore 2 failed login: Invalid Username and/or Password.\n", "connection";
 			$self->clientSend(pack('C3 x20', 0x6A, 00, 1),1);
 		} else {
 			# Determine public IP
-			my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIp} || '127.0.0.1'));
+			my $host = gethostbyname(($self->clientPeerHost eq '127.0.0.1')?
+				'127.0.0.1' :
+				($config{XKore_publicIp} || '127.0.0.1'));
+			$host = inet_ntoa('127.0.0.1') unless (defined $host);
 
 			# Send out the login packet
-			$msg = pack('a4 a4 a4 x30 C1 C4 v Z20 v C1 x14', $sessionID, $accountID, $sessionID2, $accountSex2,
-				# IP -------------------------------->	Port --------------------->
-				$host[0], $host[1], $host[2], $host[3],	$self->{client_listenPort},
+			$msg = pack('a4 a4 a4 x30 C1 a4 v Z20 v C1 x14', $sessionID, $accountID, $sessionID2, $accountSex2,
+				# IP ->	Port --------------------->
+				$host,	$self->{client_listenPort},
 				# Name ---------------->	Number of Players -->	Display (5 = "don't show number of players")
 				$self->{tracker_name},		0,			5);
 			$msg = pack('C2 v', 0x69, 00, length($msg)+4) . $msg;
@@ -557,11 +560,14 @@ sub checkClient {
 		# Client sent CharLogin
 
 		# Determine public IP
-		my @host = split(/\Q.\E/, ($self->clientPeerHost eq '127.0.0.1')? '127.0.0.1' : ($config{XKore_publicIp} || '127.0.0.1'));
+		my $host = gethostbyname(($self->clientPeerHost eq '127.0.0.1')?
+			'127.0.0.1' :
+			($config{XKore_publicIp} || '127.0.0.1'));
+		$host = inet_ntoa('127.0.0.1') unless (defined $host);
 
 		# Send character and map info packet
-		$msg = pack('C2 a4 Z16 C4 v1', 0x71, 0, $charID, $self->{client_saved}{map},
-				$host[0], $host[1], $host[2], $host[3], $self->{client_listenPort});
+		$msg = pack('C2 a4 Z16 a4 v1', 0x71, 0, $charID, $self->{client_saved}{map},
+				$host, $self->{client_listenPort});
 		$self->clientSend($msg,1);
 
 		debug "Selected character.\n", "connection";
@@ -792,7 +798,9 @@ sub checkClient {
 			shiftPack(\$coords, $npcs{$ID}{pos}{y}, 10);
 			shiftPack(\$coords, $npcs{$ID}{look}{body}, 4);
 
-			$msg .= pack('C2 a4 x8 v1 x30 a3 x5', 0x78, 0x00, $ID, $npcs{$ID}{type}, $coords);
+			$msg .= pack('C2 a4 x2 v4 x30 a3 x5', 0x78, 0x00, $ID,
+				$npcs{$ID}{param1}, $npcs{$ID}{param2}, $npcs{$ID}{param3},
+				$npcs{$ID}{type}, $coords);
 		}
 
 		# Send all monster info
@@ -948,23 +956,25 @@ sub checkClient {
 
 			$self->clientSend(pack('C*', 0x8B, 0x01, 0, 0),1);
 			$self->{client_state} = 0;
-		}
-		
-		# Check if we've reestablished the connection with the server
-		if ($conState > 4 && $$c_state == -2) {
-			# Plunk the character back down in the regular map they're on, and
-			# tell them that we've reconnected.
-			$msg = "blueConnection reestablished. Enjoy. =)";
-			$msg = pack('C2 Z16 v2', 0x91, 0, $self->{client_saved}{map},
-				$char->{pos_to}{x}, $char->{pos_to}{y}) .
-				pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
-			$self->clientSend($msg,1);
-			$$c_state = 4;
-			$self->{client_saved}{gave_error} = 0;
 		} else {
-			$msg = "blueStill trying to connect...";
-			$msg = pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
-			$self->clientSend($msg,1);
+
+			# Check if we've reestablished the connection with the server
+			if ($conState > 4 && $$c_state == -2) {
+				# Plunk the character back down in the regular map they're on, and
+				# tell them that we've reconnected.
+				$msg = "blueConnection reestablished. Enjoy. =)";
+				$msg = pack('C2 Z16 v2', 0x91, 0, $self->{client_saved}{map},
+					$char->{pos_to}{x}, $char->{pos_to}{y}) .
+					pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
+				$self->clientSend($msg,1);
+				$$c_state = 4;
+				$self->{client_saved}{gave_error} = 0;
+			} else {
+				$msg = "blueStill trying to connect...";
+				$msg = pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
+				$self->clientSend($msg,1);
+			}
+		
 		}
 
 	} else {
@@ -996,7 +1006,7 @@ sub modifyPacketIn {
 
 	} elsif ($switch eq "006A") {
 		# Don't send disconnect signals to the RO client
-		#$msg = "";
+		$msg = "";
 
 	} elsif ($switch eq "0071") {
 		# Save the mapname for client login
@@ -1019,7 +1029,7 @@ sub modifyPacketIn {
 
 	} elsif ($switch eq "0081") {
 		# Don't send ban signals to the client
-		#$msg = "";
+		$msg = "";
 
 	} elsif ($switch eq "0091") {
 		# Save the mapname for client login
