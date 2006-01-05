@@ -20,7 +20,7 @@ use base qw(Exporter);
 use IO::Socket::INET;
 
 use Globals;
-use Log qw(debug error);
+use Log qw(message debug error);
 use Utils qw(dataWaiting timeOut shiftPack unShiftPack);
 use Misc;
 
@@ -675,9 +675,8 @@ sub checkClient {
 
 		$msg = "";
 
-		# TODO: Active ground effect skills, Character vending, character in chat
-		# TODO: Cart Items, Guild Notice, Player statuses
-		# TODO: dropped items, pet info (to know that you have a pet, and can feed/egg/performance it)
+		# TODO: Character vending, character in chat, character in deal
+		# TODO: Cart Items, Guild Notice
 		#
 		# TODO: Fix walking speed? Might that be part of the map login packet? Or 00BD?
 
@@ -717,9 +716,19 @@ sub checkClient {
 
 		# Send status info
 		$msg .= pack('C2 a4 v3 x', 0x19, 0x01, $accountID, $char->{param1}, $char->{param2}, $char->{param3});
-
-		# Send status info
-		$msg .= pack('C2 a4 v3 x', 0x19, 0x01, $accountID, $char->{param1}, $char->{param2}, $char->{param3});
+		
+		# Send more status information
+		# TODO: Find a faster/better way of doing this? This seems cumbersome.
+		foreach my $ID (keys %{$char->{statuses}}) {
+			while (my ($statusID, $statusName) = each %skillsStatus) {
+				if ($ID eq $statusName) {
+					$msg .= pack('C2 v a4 C', 0x96, 0x01, $statusID, $accountID, 1);
+				}
+			}
+		}
+		
+		# Send spirit sphere information
+		$msg .= pack('C2 a4 v', 0xD0, 0x01, $accountID, $char->{spirits}) if ($char->{spirits});
 
 		# Send skill information
 		my $skillInfo = "";
@@ -780,6 +789,12 @@ sub checkClient {
 
 			#if ($item->{
 		#}
+		
+		# Send info about items on the ground
+		foreach my $ID (@itemsID) {
+			$msg .= pack('C2 a4 v1 x1 v3 x2', 0x9D, 0x00, $ID, $items{$ID}{nameID},
+				$items{$ID}{pos}{x}, $items{$ID}{pos}{y}, $items{$ID}{amount});
+		}
 
 		# Send all portal info
 		foreach my $ID (@portalsID) {
@@ -858,6 +873,13 @@ sub checkClient {
 
 			$msg .= pack('C2 v', 0xD7, 0x00, length($chatMsg) + 4) . $chatMsg;
 		}
+		
+		# Send active ground effect skills
+		foreach my $ID (@skillsID) {
+			$msg .= pack('C2 a4 a4 v2 C2 x81', 0xC9, 0x01, $ID, $spells{$ID}{sourceID},
+				$spells{$ID}{pos}{x}, $spells{$ID}{pos}{y}, $spells{$ID}{type},
+				$spells{$ID}{fail});
+		}
 
 		# Send friend list
 		my ($friendMsg, $friendOnlineMsg);
@@ -881,6 +903,14 @@ sub checkClient {
 			$msg .= pack('C2 v Z24', 0xFB, 0x00, length($partyMsg) + 28, $char->{party}{name}) . $partyMsg;
 			undef $partyMsg;
 			undef $num;
+		}
+		
+		# Send pet information
+		if (defined $pet{ID}) {
+			$msg .= pack('C2 C a4 V', 0xA4, 0x01, 0, $pet{ID}, 0);
+			$msg .= pack('C2 C a4 V', 0xA4, 0x01, 5, $pet{ID}, 0x64);
+			$msg .= pack('C2 Z24 C v4', 0xA2, 0x01, $pet{name}, $pet{nameflag}, $pet{level}, $pet{hungry},
+				$pet{friendly}, $pet{accessory});
 		}
 
 		# Send guild info
