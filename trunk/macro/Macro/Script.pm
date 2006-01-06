@@ -271,7 +271,21 @@ sub next {
     my ($tmp) = $line =~ /^do\s+(.*)/;
     if ($tmp =~ /^macro\s+/) {
       my ($arg) = $tmp =~ /^macro\s+(.*)/;
-      if ($arg ne 'stop') {
+      if ($arg =~ /^reset/) {
+        $self->{error} = "error in ".$self->{line}.": use 'release' instead of 'macro reset'";
+        return
+      }
+      if ($arg eq 'pause' || $arg eq 'resume') {
+        $self->{error} = "error in ".$self->{line}.": do not use 'macro pause' or 'macro resume' within a macro";
+        return
+      }
+      if ($arg =~ /^set\s/) {
+        $self->{error} = "error in ".$self->{line}.": do not use 'macro set'. Use \$foo = bar";
+        return
+      }
+      if ($arg =~ /^(list|status|stop)$/) {
+        # that's okay
+      } else {
         $self->{error} = "error in ".$self->{line}.": use 'call $arg' instead of 'macro $arg'";
         return
       }

@@ -40,7 +40,7 @@ macro script syntax (bnf):
 <parseable> ::= <string> | <keyword> <argument>
 
 <macro command> ::= 'log' <parseable> |
-                    'release' <automacro name> |
+                    'release' [<automacro name> | 'all' ] |
                     'pause' [<u_int>] |
                     'call' <macro name> [<u_int> | <parseable>] |
                     'stop'
