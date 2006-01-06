@@ -347,10 +347,14 @@ sub checkMapChange {
 sub releaseAM {
   $cvs->debug("releaseAM(@_)", $logfac{function_call_macro});
   my $am = shift;
-  if (defined $automacro{$am}) {
+  if ($am eq 'all') {
+    foreach my $am (keys %automacro) {
+      undef $automacro{$am}->{disabled}
+    }
+  } elsif (defined $automacro{$am}) {
     if (defined $automacro{$am}->{disabled}) {
       undef $automacro{$am}->{disabled};
-      return 1;
+      return 1
     } else {
       return 0
     }
