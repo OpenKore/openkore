@@ -153,29 +153,7 @@ sub request {
 	my $markF = '\$';	# marker front
 	my $markB = '\$';	# marker back
 
-	if ($process->file eq '/') {
-		# Initialize some variables and the templates
-		my @index;
-		my $indexTemplate = "plugins/webMonitor/index.template";
-		if (open (TEMPLATE, "<$indexTemplate")) {
-			@index = <TEMPLATE>;
-			close (TEMPLATE);
-		} else {
-			die "Unable to find $indexTemplate";
-		}
-
-		# We are going to be using chunk encoding, so make sure the proper
-		# headers are sent
-		$process->header("Transfer-Encoding", "chunked");
-
-		foreach my $line (@index) {
-			# Here we inspect each line of the template, and replace the
-			# keywords with their proper content.
-			# Then we chunk send the line to the browser
-			chunkSend($process, replace($line, \%keywords, $markF, $markB));
-		}
-		
-	} elsif ($process->file eq '/variables') {
+	if ($process->file eq '/variables') {
 		# Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>';
 		
@@ -207,26 +185,40 @@ sub request {
 		$process->shortResponse($content);
 
 	} else {
-		# See first if the file being requested exists in the file system.
-		# This is useful for static stuff like style sheets and graphics.
-		if (open (FILE, "<" . "plugins/webMonitor/" . $process->file)) {
-			# Figure out the content-type of the file and send a header to the
-			# client containing that information. Well-behaved clients should
-			# respect this header.
-			$process->header("Content-Type", contentType($process->file));
-			# TODO: enable the file to be templated if a corresponding
-			# template is found as well
+		my $filename = $process->file;
+		$filename .= 'index.html' if ($filename eq '/' || $filename eq 'index.htm');
+		# Figure out the content-type of the file and send a header to the
+		# client containing that information. Well-behaved clients should
+		# respect this header.
+		$process->header("Content-Type", contentType($filename));
+		# We are going to be using chunk encoding, so make sure the proper
+		# headers are sent
+		$process->header("Transfer-Encoding", "chunked");
+
+		# The file requested has an associated template. Do a replacement.
+		if (open (TEMPLATE, "<" . "plugins/webMonitor" . $filename . '.template')) {
+			my @template = <TEMPLATE>;
+			close (TEMPLATE);
+
+			foreach my $line (@template) {
+				# Here we inspect each line of the template, and replace the
+				# keywords with their proper content. Then we chunk send the line to
+				# the browser
+				chunkSend($process, replace($line, \%keywords, $markF, $markB));
+			}
+
+		# See if the file being requested exists in the file system. This is
+		# useful for static stuff like style sheets and graphics.
+		} elsif (open (FILE, "<" . "plugins/webMonitor" . $filename)) {
 			while (read FILE, my $buffer, 1024) {
-				$content .= $buffer;
+				chunkSend($process, $buffer);
 			}
 			close FILE;
-			# TODO: chunk encode this also
-			$process->print($content);
 			
 		} else {
 			# our custom 404 message
 			$process->status(404, "File Not Found");
-			$content .= "<h1>File " . $process->file . " not found.</h1>";
+			$content .= "<h1>File " . $filename . " not found.</h1>";
 			$process->shortResponse($content);
 		}
 	}
