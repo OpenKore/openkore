@@ -278,37 +278,37 @@ sub contentType {
 	
 	my @parts = split /\./, $filename;
 	my $extension = $parts[-1];
-	if ($extension eq "asf") {
+	if (lc($extension) eq "asf") {
 		return "video/x-ms-asf";
-	} elsif ($extension eq "avi") {
+	} elsif (lc($extension) eq "avi") {
 		return "video/avi";
-	} elsif ($extension eq "doc") {
+	} elsif (lc($extension) eq "doc") {
 		return "application/msword";
-	} elsif ($extension eq "zip") {
+	} elsif (lc($extension) eq "zip") {
 		return "application/zip";
-	} elsif ($extension eq "xls") {
+	} elsif (lc($extension) eq "xls") {
 		return "application/vnd.ms-excel";
-	} elsif ($extension eq "gif") {
+	} elsif (lc($extension) eq "gif") {
 		return "image/gif";
-	} elsif ($extension eq "png") {
+	} elsif (lc($extension) eq "png") {
 		return "image/png";
-	} elsif ($extension eq "jpg" || $extension eq "jpeg") {
+	} elsif (lc($extension) eq "jpg" || lc($extension) eq "jpeg") {
 		return "image/jpeg";
-	} elsif ($extension eq "wav") {
+	} elsif (lc($extension) eq "wav") {
 		return "audio/wav";
-	} elsif ($extension eq "mp3") {
+	} elsif (lc($extension) eq "mp3") {
 		return "audio/mpeg3";
-	} elsif ($extension eq "mpg"|| $extension eq "mpeg") {
+	} elsif (lc($extension) eq "mpg"|| lc($extension) eq "mpeg") {
 		return "video/mpeg";
-	} elsif ($extension eq "rtf") {
+	} elsif (lc($extension) eq "rtf") {
 		return "application/rtf";
-	} elsif ($extension eq "htm"|| $extension eq "html") {
+	} elsif (lc($extension) eq "htm"|| lc($extension) eq "html") {
 		return "text/html";
-	} elsif ($extension eq "txt") {
+	} elsif (lc($extension) eq "txt") {
 		return "text/plain";
-	} elsif ($extension eq "css") {
+	} elsif (lc($extension) eq "css") {
 		return "text/css";
-	} elsif ($extension eq "pdf") {
+	} elsif (lc($extension) eq "pdf") {
 		return "application/pdf";
 	} else {
 		return "application/x-unknown";
