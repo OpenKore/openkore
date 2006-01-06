@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="content-type" content="application/xhtml+xml" />
+	<link rel="styleSheet" type="text/css" href="styles.css" />
+	<link rel="stylesheet" type="text/css" href="color-scheme.css" />	
+	<title>$characterName$: B$characterLevel$ ($characterBasePercent$%), J$characterJobLevel$ ($characterJobPercent$%), : w$characterWeightPercent$% : $characterLocationX$,$characterLocationY$ $characterLocationMap$- OpenKore webMonitor</title>
+</head>
+
+<body>
+<h1>$characterName$</h1>
+<div class = "LHS">
+Level: $characterLevel$<br>
+Job Level: $characterJobLevel$<br>
+Zeny: $characterZeny$<br>
+Str: $characterStr$<br>
+Agi: $characterAgi$<br>
+Vit: $characterVit$<br>
+Int: $characterInt$<br>
+Dex: $characterDex$<br>
+Luk: $characterLuk$<br>
+</div>
+<div class = "RHS">
+<p>
+Base experience: $characterBaseExp$<br>
+Job experience: $characterJobExp$<br>
+Base experience(%): $characterBasePercent$%<br>
+Job experience(%): $characterJobPercent$%<br>
+<p>
+HP percent: $characterHPPercent$%<br>
+SP percent: $characterSPPercent$%<br>
+<p>
+Location: $characterLocationX$, $characterLocationY$<br>
+</div>
+<IFRAME name="console" src="console" frameborder=0 scrolling=auto width=625 height=400></IFRAME>
+</body>

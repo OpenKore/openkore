@@ -1,0 +1,223 @@
+/***************************************************************
+ * TITLE: Common Stylesheet for Blue Haze                      * 
+ * URI  : http://www.oswd.org/design/xxx/bluehaze/bluehaze.css *
+ * MODIF: 2003-01-05 1608 +0800                                *
+ ***************************************************************/
+
+
+/* ###### Browser-specific Styles ###### */
+
+/* For IE & Mozilla-based browsers: */
+
+.LHS {
+  margin-left: 2.5mm;
+  float: left;
+  clear: left;
+}
+
+.RHS {
+  margin-right: 2.5mm;
+  float: right;
+  clear: right;
+}
+
+/* For Mozilla-based (CSS2-fully complaint) browsers only: */
+
+[class~="LHS"] {
+  margin-left: 5mm;
+}
+
+[class~="RHS"] {
+  margin-right: 5mm;
+}
+
+
+/* ###### Body Text ###### */
+
+body {
+  background-color: white;
+  color: black;
+  font-family: verdana, tahoma, helvetica, arial, sans-serif;
+  font-size: 95%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+}
+
+h1, h2, h3 {
+  font-family: "trebuchet ms", tahoma, sans-serif;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 150%;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  padding-bottom: 0.5ex;
+  text-decoration: none;
+}
+
+
+img {
+  border: none;
+}
+
+q {
+  font-family: tahoma, verdana, helvetica, arial, sans-serif;
+  font-weight: bold;
+  border-style: dotted;
+  border-width: 2px;
+  margin: 0 1em 1ex 1em;
+  padding: 0.5ex 0.5ex 0.5ex 1ex;
+  width: 9em;
+  float: left;
+}
+
+acronym {
+  border-bottom-style: dotted;
+  border-bottom-width: 1px;
+  cursor: help;
+}
+
+code {
+  font-family: "lucida console", monospace;
+  font-size: 90%;
+}
+
+dt {
+  font-weight: bold;
+}
+
+dd {
+  padding-bottom: 1.5em;
+}
+
+#bodyText {
+  text-align: justify;
+  line-height: 1.5em;
+  margin: 10mm 5mm 0 14em;
+  padding: 0 1em 1ex 1em;
+}
+
+#bodyText p {
+  padding-bottom: 1ex;
+}
+
+#bodyText a {
+  text-decoration: none;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}
+
+#bodyText a:hover {
+  border-bottom: none;
+}
+
+#bodyText .topOfPage {
+  font-size: 90%;
+  font-weight: bold;
+  font-variant: small-caps;
+  text-decoration: none;
+  border: none;
+  padding-left: 1ex;
+  padding-right: 1ex;
+  float: right;
+}
+
+.smallCaps {
+  font-variant: small-caps;
+}
+
+
+/* ###### Header ###### */
+
+#header {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  height: 7.5em;
+  margin-bottom: 5mm;
+  padding: 0 2.5mm 0 5mm;
+  background-repeat: no-repeat;
+}
+
+.headerTitle {
+  font-size: 300%;
+  font-weight: bold;
+  line-height: 2em;
+}
+
+.menuBar {
+  float: left;
+}
+
+.locBar {
+  float: right;
+}
+
+.menuBar *, .locBar * {
+  text-decoration: none;
+#  font-weight: bold;
+  padding-right: 1ex;
+}
+
+.menuBar a:hover, .locBar a:hover {
+  text-decoration: underline;
+}
+
+
+/* ###### Side Box ###### */
+
+.sideBox {
+  border-style: solid none solid none;
+  border-width: 2px 0 2px 0;
+  width: 11em;
+  margin-top: 5mm;
+}
+
+.sideBox div {
+  font-weight: bold;
+  border-bottom-style: dashed;
+  border-bottom-width: 1px;
+  padding: 0.5ex 0.5em 0.5ex 0.75em;
+}
+
+.sideBox a, .sideBox a:hover, .sideBox span {
+  color: black;
+  text-decoration: none;
+  line-height: 1.25em;
+  display: block;
+  padding: 1.25ex 0.5em 1.25ex 0.75em;
+}
+
+.sideBox .thisPage {
+  font-weight: bold;
+}
+
+.thisPage {
+  font-weight: bold;
+}
+
+/* ###### Footer ###### */
+
+#footer {
+  padding-top: 0.75ex;
+  padding-bottom: 0.75ex;
+  clear: left;
+}
+
+#footer div {
+  font-size: 85%;
+  line-height: 1.25em;
+  text-align: right;
+  padding-right: 3mm;
+}
+
+#footer a:hover {
+  text-decoration: none;
+}
+
+.footerLHS {
+  float: left;
+  clear: left;
+  padding-left: 3mm;
+}
