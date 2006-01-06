@@ -35,5 +35,6 @@ SP percent: $characterSPPercent$%<br>
 <p>
 Location: $characterLocationX$, $characterLocationY$<br>
 </div>
+<img src="logo.jpg" />
 <IFRAME name="console" src="console" frameborder=0 scrolling=auto width=625 height=400></IFRAME>
 </body>

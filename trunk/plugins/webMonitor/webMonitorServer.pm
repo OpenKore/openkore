@@ -287,6 +287,8 @@ sub contentType {
 		return "application/vnd.ms-excel";
 	} elsif ($extension eq "gif") {
 		return "image/gif";
+	} elsif ($extension eq "png") {
+		return "image/png";
 	} elsif ($extension eq "jpg" || $extension eq "jpeg") {
 		return "image/jpeg";
 	} elsif ($extension eq "wav") {
