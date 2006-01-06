@@ -167,18 +167,12 @@ sub request {
 		# We are going to be using chunk encoding, so make sure the proper
 		# headers are sent
 		$process->header("Transfer-Encoding", "chunked");
+
 		foreach my $line (@index) {
-			# TODO: find a more optimized way of reading and replacing template
-			# variables
-			while ((my $key, my $value) = each %keywords) {
-				# Here we inspect each line of the template, and replace the
-				# keywords with their proper content.
-				# TODO: find a way to iterate through marked keywords and replace
-				# an array variable with multiple instances of itself.
-				$line =~ s/$markF$key$markB/$value/;
-			}
+			# Here we inspect each line of the template, and replace the
+			# keywords with their proper content.
 			# Then we chunk send the line to the browser
-			chunkSend($process, $line);
+			chunkSend($process, replace($line, \%keywords, $markF, $markB));
 		}
 		
 	} elsif ($process->file eq '/variables') {
@@ -239,6 +233,28 @@ sub request {
 }
 
 ###
+# replace (source, keywords, markF, markB)
+# source: the string to do replacements on
+# keywords: a hash containing the keyword and the replacement string
+# markF: front delimiter to identify a keyword
+# markB: back delimiter to identify a keyword
+sub replace {
+	my $source = shift;
+	my $keywords = shift;
+	my $markF = shift;
+	my $markB = shift;
+
+	# TODO: find a more optimized way of reading and replacing template
+	# variables
+	while ((my $key, my $value) = each %{$keywords}) {
+		# TODO: find a way to iterate through marked keywords and replace
+		# an array variable with multiple instances of itself.
+		$source =~ s/$markF$key$markB/$value/;
+	}
+	return $source;
+}
+
+###
 # chunkSend (process, data, [parameters])
 # process: a process object from Base::Server::Webserver
 # data: data to be chunk encoded
@@ -274,6 +290,8 @@ sub chunkSend {
 }	
 
 sub contentType {
+	# TODO: make it so we don't depend on the filename extension for the content
+	# type. Instead, look in the file to determine the content-type.
 	my $filename = shift;
 	
 	my @parts = split /\./, $filename;
