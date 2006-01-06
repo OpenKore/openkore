@@ -93,8 +93,12 @@ sub request {
 		# Remove the filename from the header, as well as the ?
 		$resource =~ s/$process->file//;
 		$resource =~ s/\?//;
-		# TODO: separate the resource into key-value pairs and place those into
-		# %resources
+		my @resources = split '&', $resource;
+		foreach my $item (@resources) {
+			$item =~ s/\+//;
+			my ($key, $value) = split '=', $item;
+			$resources{$key} = $value;
+		}
 
 	} elsif ($process->clientHeader('POST')) {
 		# Looks like the Base::Server::Webserver doesn't support the POST
@@ -147,7 +151,7 @@ sub request {
 	# are going to be using regexp, make sure to escape any non-alphanumeric
 	# characters in the marker string.
 	my $markF = '\$';	# marker front
-	my $markB = '\$';		# marker back
+	my $markB = '\$';	# marker back
 
 	if ($process->file eq '/') {
 		# Initialize some variables and the templates
@@ -176,7 +180,6 @@ sub request {
 			# Then we chunk send the line to the browser
 			chunkSend($process, $line);
 		}
-#		$process->print("0\n");
 		
 	} elsif ($process->file eq '/variables') {
 		# Reload the page every 5 seconds
