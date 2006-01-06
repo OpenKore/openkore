@@ -7,7 +7,7 @@
 	<meta http-equiv="content-type" content="application/xhtml+xml" />
 	<link rel="styleSheet" type="text/css" href="styles.css" />
 	<link rel="stylesheet" type="text/css" href="color-scheme.css" />	
-	<title>$characterName$: B$characterLevel$ ($characterBasePercent$%), J$characterJobLevel$ ($characterJobPercent$%), : w$characterWeightPercent$% : $characterLocationX$,$characterLocationY$ $characterLocationMap$- OpenKore webMonitor</title>
+	<title>$characterName$: B$characterLevel$ ($characterBasePercent$%), J$characterJobLevel$ ($characterJobPercent$%), : w$characterWeightPercent$% : $characterLocationX$,$characterLocationY$ $characterLocationMap$ - OpenKore webMonitor</title>
 </head>
 
 <body>
