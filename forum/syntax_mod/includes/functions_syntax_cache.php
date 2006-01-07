@@ -6,7 +6,7 @@
  *   copyright            : (C) 2005 Nigel McNie
  *   email                : nigel@geshi.org
  *
- *   $Id: functions_syntax_cache.php,v 1.1 2005/06/08 02:01:25 oracleshinoda Exp $
+ *   $Id: functions_syntax_cache.php,v 1.2 2005/08/22 22:46:08 oracleshinoda Exp $
  *
  *
  ***************************************************************************/
@@ -98,7 +98,7 @@ function get_dir_size ( $dir )
 
     while ( $file !== false )
     {
-        if ( is_dir($file) || $file == 'index.html' || $file == 'cache.txt' )
+        if ( is_dir($file) || $file == 'index.htm' || $file == 'cache.txt' )
         {
             $file = readdir($dh);
             continue;
@@ -131,4 +131,29 @@ function do_syntax_cache_maintenance ()
     return false;
 }
 
+/**
+ * Clear the cache
+ */
+function clear_cache ()
+{
+    global $phpbb_root_path;
+    
+    $dh = @opendir($phpbb_root_path . 'cache/syntax') or message_die(GENERAL_ERROR, 'clear_cache: Syntax Highlighter cache could not be cleared: make sure directory cache/syntax exists');
+
+    $file = readdir($dh);
+
+    while ( $file !== false )
+    {
+        if ( is_dir($file) || $file == 'index.htm' || $file == 'cache.txt' )
+        {
+            $file = readdir($dh);
+            continue;
+        }
+        @unlink($phpbb_root_path . 'cache/syntax/' . $file);
+        $file = readdir($dh);
+    }
+
+    closedir($dh);
+}
+    
 ?>
