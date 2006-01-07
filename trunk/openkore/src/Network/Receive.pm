@@ -1264,7 +1264,6 @@ sub actor_moved {
 			my $domain = existsInList($config{friendlyAID}, unpack("V1", $args->{ID})) ? 'parseMsg_presence' : 'parseMsg_presence/player';
 			debug "Player Appeared: ".$player->name." ($player->{'binID'}) Level $args->{lv} $sex_lut{$args->{sex}} $jobs_lut{$args->{type}} ($coordsFrom{x}, $coordsFrom{y})\n", $domain;
 			$added = 1;
-			Plugins::callHook('player', {player => $player});
 		}
 
 		$player->{weapon} = $args->{weapon};
@@ -1284,6 +1283,7 @@ sub actor_moved {
 		$player->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $player->{walk_speed};
 		debug "Player Moved: ".$player->name." ($player->{'binID'}) $sex_lut{$player->{'sex'}} $jobs_lut{$player->{'jobID'}}\n", "parseMsg";
 
+		Plugins::callHook('player', {player => $player}) if $added;
 		objectAdded('player', $args->{ID}, $player) if ($added);
 
 		setStatus($args->{ID}, $args->{param1}, $args->{param2}, $args->{param3});
