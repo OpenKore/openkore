@@ -4663,6 +4663,18 @@ sub parseMsg {
 	} elsif ($packetParser &&
 	         (my $args = $packetParser->parse(substr($msg, 0, $msg_size)))) {
 		# Use the new object-oriented packet parser
+		if ($config{debugPacket_received} > 2 &&
+		    !existsInList($config{'debugPacket_exclude'}, $switch)) {
+			my $switch = $args->{switch};
+			my $packet = $packetParser->{packet_list}{$switch};
+			my ($name, $packString, $varNames) = @{$packet};
+
+			my @vars = ();
+			for my $varName (@{$varNames}) {
+				message "$varName = $args->{$varName}\n";
+			}
+		}
+
 		if ($packetParser->willMangle($switch)) {
 			my $ret = $packetParser->mangle($args);
 			if (!$ret) {

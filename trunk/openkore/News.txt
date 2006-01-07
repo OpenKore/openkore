@@ -44,6 +44,8 @@ New config options:
      Thai
 - New checkSelfCondition _whenEquipped <item>. True iff the named item
   is equipped.
+- debugPacket_received 3 will print what openkore interpreted each parameter
+  in the packet as.
 - XKore 2: (manual at http://openkore.sourceforge.net/manual/xkore2.php )
 	XKore_ID
 	XKore_publicIp
@@ -58,6 +60,8 @@ Internal:
 - packet_outMangle/$switch hook is now called before openkore's built-in
   mangling, to give plugins more freedom.
 - packet_attack hook now has extra 'type' argument.
+- 'player' plugin hook, when called by 'Player Exists', is now called
+  after all $player->{...} have been set to give more accurate information.
 - all receive packets have been moved to Receive.pm now.
 - $item->{ID} is now stored.
 
