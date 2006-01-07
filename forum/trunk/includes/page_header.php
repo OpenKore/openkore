@@ -495,6 +495,7 @@ else
 }
 header ('Expires: 0');
 header ('Pragma: no-cache');
+header ("Content-Type: text/html; charset=$lang[ENCODING]");
 
 $template->pparse('overall_header');
 
