@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_ranks.php,v 1.13.2.4 2004/03/25 15:57:20 acydburn Exp $
+ *   $Id: admin_ranks.php,v 1.13.2.5 2005/12/18 13:57:50 grahamje Exp $
  *
  ***************************************************************************/
 
@@ -24,7 +24,7 @@ define('IN_PHPBB', 1);
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);
-	$module['Users']['Ranks'] = "$file";
+	$module['Users']['Ranks'] = $file;
 	return;
 }
 

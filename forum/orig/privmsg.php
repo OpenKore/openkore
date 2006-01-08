@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: privmsg.php,v 1.96.2.43 2005/10/30 15:17:14 acydburn Exp $
+ *   $Id: privmsg.php,v 1.96.2.44 2005/12/22 12:54:56 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -35,8 +35,8 @@ if ( !empty($board_config['privmsg_disable']) )
 	message_die(GENERAL_MESSAGE, 'PM_disabled');
 }
 
-$html_entities_match = array('#&(?!(\#[0-9]+;))#', '#<#', '#>#');
-$html_entities_replace = array('&amp;', '&lt;', '&gt;');
+$html_entities_match = array('#&(?!(\#[0-9]+;))#', '#<#', '#>#', '#"#');
+$html_entities_replace = array('&amp;', '&lt;', '&gt;', '&quot;');
 
 //
 // Parameters
