@@ -398,9 +398,14 @@ $template->set_filenames(array(
 make_jumpbox('viewforum.'.$phpEx);
 
 // timeblock by d3adpool
+/*
+ * Disable this. We want to display a 'New topic' button so that the user
+ * will click on it so he can see the 'you cannot post' message.
+
 if ( $userdata['user_timeblock'] == '1' && time() - $userdata['user_regdate'] <= 86400*$board_config['user_block_time'] ) {
 	$forum_row['forum_status'] = FORUM_LOCKED;
 }
+*/
 // timeblock by d3adpool
 
 $template->assign_vars(array(
