@@ -43,7 +43,7 @@ our @EXPORT = (
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
 	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP parseArgs shiftPack swrite timeConvert timeOut
-	unShiftPack vocalString)
+	urldecode unShiftPack vocalString)
 	);
 
 
@@ -1179,7 +1179,28 @@ sub shiftPack {
 	$newdata = substr($newdata, 1) while (substr($newdata, 0, 1) eq pack('C', 0) && length($newdata));
 	$$data = $newdata;
 }
- 
+
+##
+# urldecode(encoded_string)
+#
+# Decode an URL-encoded string.
+sub urldecode {
+	my ($str) = @_;
+	$str =~ tr/+?/  /;
+	$str =~ s/%([0-9a-fA-F]{2})/pack('H2',$1)/ge;
+	return $str;
+}
+
+##
+# urlencode(str)
+#
+# URL-encodes a string.
+sub urlencode {
+	my ($str) = @_;
+	$str =~ s/([\W])/"%" . uc(sprintf("%2.2x", ord($1)))/eg;
+	return $str;
+}
+
 ##
 # unShiftPack(data, reference, bits)
 # data: data to unpack a value from
