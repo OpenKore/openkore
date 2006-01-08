@@ -110,6 +110,8 @@ cachePlayerNames 1
 cachePlayerNames_duration 900
 cachePlayerNames_maxSize 100
 
+clientSight 20
+
 dcOnDeath 0
 dcOnDualLogin 0
 dcOnDisconnect 0
@@ -244,6 +246,8 @@ tankersList
 secureAdminPassword 0
 adminPassword
 callSign
+
+removeActorWithDistance
 
 
 ######## Block options ########
