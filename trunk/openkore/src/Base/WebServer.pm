@@ -39,10 +39,10 @@
 # sub request {
 #     my ($self, $process) = @_;
 #
-#     if ($process->uri eq '/') {
+#     if ($process->file eq '/') {
 #         $process->shortResponse("<b>Hello browser.</b> You requested the toplevel file.");
 #
-#     } elsif ($process->uri eq '/random.txt') {
+#     } elsif ($process->file eq '/random.txt') {
 #         $process->header("Content-Type", "text/plain");
 #         for (my $i = 0; $i < 100; $i++) {
 #             $process->print(rand() . "\n");
@@ -50,7 +50,7 @@
 #
 #     } else {
 #         $process->status(404, "File Not Found");
-#         $process->shortResponse("<h1>File " . $process->uri . " not found.</h1>");
+#         $process->shortResponse("<h1>File " . $process->file . " not found.</h1>");
 #     }
 # }
 #
@@ -189,7 +189,7 @@ sub _processRequest {
 		$headers{lc($key)} = $value;
 	}
 
-	my $process = new Base::WebServer::Process($client->{sock},
+	my $process = new Base::WebServer::Process($client->getSocket(),
 						   $file, \%headers);
 	$self->request($process);
 }

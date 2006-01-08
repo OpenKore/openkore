@@ -77,7 +77,7 @@ sub send {
 	my $client = $self->{ipc_clients}{$clientID};
 	if ($client) {
 		my $msg = encode($msgID, $hash);
-		return $self->sendData($client, $msg);
+		return $client->send($msg);
 	} else {
 		return -1;
 	}
