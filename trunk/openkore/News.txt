@@ -58,6 +58,11 @@ New config options:
 - clientSight
 - removeActorWithDistance
 
+New commands:
+- cart release: remove cart status
+- falcon [release]: Display or remove falcon status
+- pecopeco [release]: Display or remove pecopeco status
+
 Internal:
 - Implemented the beginning of a localization framework.
 - Actor::get($ID) now returns $players{$ID} instead of $monsters{$ID}
@@ -78,7 +83,8 @@ Credits:
 - Lord_Balmon: fix for the Win32 GUI interface
 - h4rry84: Indonesian translation
 - hakore: fix for weight command
-- illusionist: move receive packets to receive.pm
+- illusionist: move receive packets to Receive.pm, falcon and peco release
+  support.
 - vivi: autoMoveOnDeath, check XKore 2 username
 
 
