@@ -23,19 +23,33 @@ package Base::WebServer::Process;
 
 use strict;
 use IO::Socket::INET;
+use Utils qw(urldecode);
 
 # Internal function; do not use directly!
 sub new {
-	my ($class, $socket, $file, $headers) = @_;
+	my ($class, $socket, $query, $headers) = @_;
 	my $self = {
 		socket => $socket,
-		file => $file,
+		query => $query,
 		headers => $headers || {},
 		buffer => '',
 		outHeaders => {},
 		outHeadersLC => {}
 	};
 	bless $self, $class;
+
+	$self->{file} = $query;
+	$self->{file} =~ s/\?.*//;
+
+	my $vars = $query;
+	my %GET;
+	$vars =~ s/.*?\?//;
+	foreach my $entry (split /&/, $vars) {
+		my ($key, $value) = split /=/, $entry, 2;
+		$key = urldecode($key);
+		$GET{$key} = urldecode($value);
+	}
+	$self->{GET} = \%GET;
 
 	$self->status(200, "OK");
 	$self->header("Content-Type", "text/html; charset=utf-8");
@@ -175,10 +189,20 @@ sub print {
 # $process->file()
 #
 # Returns the name of the file that the web browser requested.
-# The return value does not include the host name, so it will be something like "/foo/bar.html".
+# The return value does not include the host name and does not include everythign after '?', so it will be something like "/foo/bar.html".
 sub file {
 	my ($self) = @_;
 	return $self->{file};
+}
+
+##
+# $process->GET()
+# Returns: a reference to a hash.
+#
+# Returns a reference to a hash, which contains variables provided via
+# the URL query string.
+sub GET {
+	return $_[0]->{GET};
 }
 
 ##
