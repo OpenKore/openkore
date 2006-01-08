@@ -1,4 +1,4 @@
-# Packet Miner v1.1
+# Packet Miner v1.2
 # By Jojobaoil
 #
 
@@ -8,12 +8,24 @@ use strict;
 use Time::HiRes qw(time);
 use Globals;
 use Plugins;
-use Log qw(debug message warning error);
+use Log qw(debug message error);
 
-my @minePacketsOut = ("007E", "0089","0085","0090","00A7","0113","0116");
-my @minePacketsIn = ("received_sync");
+# Change these to the packets to be mined
+my @minePacketsOut = ("007E", "0089", "0085", "0090", "00A7", "0113", "0116");
+my @minePacketsIn = ("007F");
 
-Plugins::register('packetMiner', 'PacketMiner by jojo', \&onUnload, \&onReload);
+# Make sure we're using a version of OpenKore we can use
+my @koreVersion = split /\./, $Settings::VERSION;
+if ($koreVersion[0] < 1 ||
+	$koreVersion[1] < 9 ||
+	$koreVersion[2] < 1) {
+	
+	# Bad version.
+	error "Packet Miner requires use a newer version of $Settings::NAME.\n";
+	return 0;
+}
+
+Plugins::register('packetMiner', 'PacketMiner by Jojoba Oil', \&onUnload, \&onReload);
 
 message "Packet Miner plugin loaded.\n", "success";
 
@@ -46,7 +58,11 @@ sub onReload {
 sub minePacket {
 	my ($hookName, $args) = @_;
 
-	return 0 unless ($net->version == 1);
+	unless ($net->version == 1) {
+		error "Packet Miner must be used with XKore mode 1. Disabling plugin...\n";
+		onUnload;
+		return 0;
+	}
 
 	my $dump;
 	my $msg = (substr($hookName, 0, 13) eq "packet_mangle")? substr($args->{RAW_MSG}, 2) : $args->{data};
@@ -82,53 +98,51 @@ sub minePacket {
 	}
 
 	# Find information
-	foreach my $ID (@monstersID) {
-		my $name = (defined $monsters{$ID})? $monsters{$ID}->name : 'unknown';
-		$name .= " (" . main::getHex($ID) . ")";
-		undef pos($msg);
-		if ($msg =~ m/\Q$ID\E/g && length($ID) > 0) {
-			my $loc = pos($msg) - length($ID);
-			$dump .= "Monster reference to $name found at byte: $loc\n";
-			last;
+	findIDList(\@monstersID, \%monsters, \$dump, 1);
+	findIDList(\@playersID, \%players, \$dump, 1);
+	findIDList(\@npcsID, \%npcs, \$dump, 0);
+	
+	if (defined $accountID && length($accountID) > 0) {
+		pos($msg) = 0;
+		while ($msg =~ m/\Q$accountID\E/g) {
+			my $loc = pos($msg) - length($accountID);
+			$dump .= "Account ID reference (" . main::getHex($accountID) . ") found at offset: $loc\n";
 		}
 	}
-	foreach my $ID (@playersID) {
-		my $name = (defined $players{ID})? $players{$ID}->name : 'unknown';
-		$name .= " (" . main::getHex($ID) . ")";
-		undef pos($msg);
-		if ($msg =~ m/\Q$ID\E/g && length($ID) > 0) {
-			my $loc = pos($msg) - length($ID);
-			$dump .= "Player reference of $name found at byte: $loc\n";
-			last;
+	if (defined $charID && length($charID) > 0) {
+		pos($msg) = 0;
+		while ($msg =~ m/\Q$charID\E/g) {
+			my $loc = pos($msg) - length($charID);
+			$dump .= "Character ID reference (" . main::getHex($charID) . ") found at offset: $loc\n";
 		}
-	}
-	foreach my $ID (@npcsID) {
-		my $name = (defined $npcs{ID})? $npcs{$ID}{name} : 'unknown';
-		$name .= " (" . main::getHex($ID) . ")";
-		undef pos($msg);
-		if ($msg =~ m/\Q$ID\E/g) {
-			my $loc = pos($msg) - length($ID);
-			$dump .= "NPC reference of $name found at byte: $loc\n";
-			last;
-		}
-	}
-	undef pos($msg);
-	if ($msg =~ m/\Q$accountID\E/g && defined($accountID) && length($accountID) > 0) {
-		my $loc = pos($msg) - length($accountID);
-		$dump .= "Account ID reference (" . main::getHex($accountID) . ") found at byte: $loc\n";
-	}
-	undef pos($msg);
-	if ($msg =~ m/\Q$charID\E/g && defined($charID) && length($charID) > 0) {
-		my $loc = pos($msg) - length($charID);
-		$dump .= "Character ID reference (" . main::getHex($charID) . ") found at byte: $loc\n";
 	}
 
+	# Append the mined packet to the log.
 	if (open (FILE, ">> $logfile")) {
 		print FILE $dump;
 		close(FILE);
 	}
 
 	return 0;
+}
+
+sub findIDList {
+	my ($rarray, $rhash, $rdump, $isActor) = @_;
+	
+	foreach my $ID (@$rarray) {
+		my $name = (defined $rhash->{$ID})
+			? ($isActor? $rhash->{$ID}->name
+				: $rhash->{$ID}{name})
+			: 'Unknown';
+		$name .= " (" . main::getHex($ID) . ")";
+		if (length($ID) > 0) {
+			pos($msg) = 0;
+			while ($msg =~ m/\Q$ID\E/g) {
+				my $loc = pos($msg) - length($ID);
+				$$rdump .= "$name referenced at offset: $loc.\n";
+			}
+		}
+	}
 }
 
 
