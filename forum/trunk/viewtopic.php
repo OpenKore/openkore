@@ -526,6 +526,12 @@ $nav_links['up'] = array(
 	'title' => $forum_name
 );
 
+// timeblock by d3adpool
+if ( $userdata['user_timeblock'] == '1' && time() - $userdata['user_regdate'] <= 86400*intval($board_config['user_block_time']) ) {
+	$forum_topic_data['forum_status'] = FORUM_LOCKED;
+}
+// timeblock by d3adpool
+
 $reply_img = ( $forum_topic_data['forum_status'] == FORUM_LOCKED || $forum_topic_data['topic_status'] == TOPIC_LOCKED ) ? $images['reply_locked'] : $images['reply_new'];
 $reply_alt = ( $forum_topic_data['forum_status'] == FORUM_LOCKED || $forum_topic_data['topic_status'] == TOPIC_LOCKED ) ? $lang['Topic_locked'] : $lang['Reply_to_topic'];
 $post_img = ( $forum_topic_data['forum_status'] == FORUM_LOCKED ) ? $images['post_locked'] : $images['post_new'];

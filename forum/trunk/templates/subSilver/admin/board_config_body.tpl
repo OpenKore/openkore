@@ -95,6 +95,10 @@
 		<td class="row1">{L_ENABLE_PRUNE}</td>
 		<td class="row2"><input type="radio" name="prune_enable" value="1" {PRUNE_YES} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="prune_enable" value="0" {PRUNE_NO} /> {L_NO}</td>
 	</tr>
+<tr>
+<td class="row1">{L_USERBLOCKTIME}</td>
+<td class="row2"><input class="post" type="text" name="user_block_time" size="5" value="{USERBLOCKTIME}" /></td>
+</tr>
 	<tr>
 		<th class="thHead" colspan="2">{L_COOKIE_SETTINGS}</th>
 	</tr>

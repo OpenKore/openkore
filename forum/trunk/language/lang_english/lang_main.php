@@ -1038,4 +1038,8 @@ $lang['Sticky_Topics'] = 'Read these topics first!';
 // That's all, Folks!
 // -------------------------------------------------
 
+//Time Block add
+$lang['User_timeblock'] = 'User can be timeblocked';
+$lang['Timeblock'] = 'You have registered very recently. Please wait '. round($board_config['user_block_time']-((time()-$userdata['user_regdate'])/86400)) .' days before posting.<br>Take this time to search the forum, read the manual and read the FAQ.';
+//End Time Block
 ?>
