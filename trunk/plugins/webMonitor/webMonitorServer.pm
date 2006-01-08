@@ -88,7 +88,7 @@ sub request {
 	my %resources;
 	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
 	my $filename = $process->file;
-	$filename = '/index.html' if ($filename eq '/' || $filename eq 'index.htm');
+	$filename .= 'index.html' if ($filename =~ /\/$/);
 	if ($filename =~ /\?/) {
 		# The get method simply tacks the resource at the end of the resource
 		# request. We manipulate the header to extract the resource sent.
@@ -155,6 +155,7 @@ sub request {
 		'characterDefMagicBonus' => $char->{def_magic_bonus},
 		'characterFlee' => $char->{flee},
 		'characterFleeBonus' => $char->{flee_bonus},
+		'characterSpirits' => $char->{spirits},
 		
 		'characterBaseExp' => $char->{exp},
 		'characterBaseMax' => $char->{exp_max},
@@ -179,6 +180,7 @@ sub request {
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field{name},
 		'lastConsoleMessage' => $messages[-1],
+		'skin' => 'default', # replace with config.txt entry for the skin
 	);
 	
 	# Markers signal the parser that the word encountered is a keyword. Since we
