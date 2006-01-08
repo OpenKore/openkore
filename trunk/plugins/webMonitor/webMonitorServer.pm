@@ -86,7 +86,9 @@ sub request {
 	# We then inspect the headers the client sent us to see if there are any
 	# resources that was sent
 	my %resources;
+	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
 	my $filename = $process->file;
+	$filename = '/index.html' if ($filename eq '/' || $filename eq 'index.htm');
 	if ($filename =~ /\?/) {
 		# The get method simply tacks the resource at the end of the resource
 		# request. We manipulate the header to extract the resource sent.
@@ -94,21 +96,20 @@ sub request {
 		# Remove the filename from the request, as well as the ?
 		my @temp = split '\?', $resource;
 		$filename = $temp[0];
-		$filename .= 'index.html' if ($filename eq '/' || $filename eq 'index.htm');
 		my @resources = split '\&', $temp[1];
 		foreach my $item (@resources) {
 			$item =~ s/\+//;
 			my ($key, $value) = split '=', $item;
+			$item =~ s/\+/\s/; # replace + with 
 			$resources{$key} = $value;
 		}
 
-	} elsif ($process->clientHeader('POST')) {
+	} elsif (my $resourceLength = $process->clientHeader('Content-Length')) {
 		# Looks like the Base::Server::Webserver doesn't support the POST
 		# method, however we still include this portion just in case support
 		# for POST gets written :)
-		my $resourceLength = $process->clientHeader('Content-Length');
 		# FIXME: how read the resource?
-	} else { message $process->file }
+	}
 
 	# Keywords are specific fields in the template that will eventually get
 	# replaced by dynamic content.
@@ -195,6 +196,7 @@ sub request {
 		$content .= '<hr>';
 		$process->shortResponse($content);
 
+	# TODO: will be removed later
 	} elsif ($filename eq '/variables') {
 		# Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>';
@@ -213,6 +215,7 @@ sub request {
 		$content .= '<hr>';
 		$process->shortResponse($content);
 
+	# TODO: will be removed later
 	} elsif ($filename eq '/console') {
 		# Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>' . "\n";
@@ -286,7 +289,7 @@ sub replace {
 	while ((my $key, my $value) = each %{$keywords}) {
 		# TODO: find a way to iterate through marked keywords and replace
 		# an array variable with multiple instances of itself.
-		$source =~ s/$markF$key$markB/$value/;
+		$source =~ s/$markF$key$markB/$value/sg;
 	}
 	return $source;
 }
