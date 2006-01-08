@@ -13,6 +13,8 @@ DIRS=(.
 	src/po
 	src/Actor
 	src/Base
+	src/Base/Server
+	src/Base/WebServer
 	src/IPC
 	src/IPC/Manager
 	src/Interface

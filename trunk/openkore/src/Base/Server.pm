@@ -65,20 +65,7 @@
 # </pre>
 #
 # <h3>The client object</h3>
-# The client object is a reference to a hash with the following members:
-# <dl class="hashkeys">
-# <dt>sock</dt>
-# <dd>The client's socket.</dd>
-#
-# <dt>host</dt>
-# <dd>The client's IP address in text form.</dd>
-#
-# <dt>fd</dt>
-# <dd>The file descriptor of sock, as returned by fileno().</dd>
-#
-# <dt>index</dt>
-# <dd>The index of this object in the Base::Server object's internal array.</dd>
-# </dl>
+# See @MODULE(Base::Server::Client) for more information about how to use $client.
 
 package Base::Server;
 
@@ -86,6 +73,7 @@ use strict;
 use warnings;
 no warnings 'redefine';
 use IO::Socket::INET;
+use Base::Server::Client;
 
 
 ################################
@@ -141,34 +129,11 @@ sub clients {
 ##
 # $server->port()
 # Returns: a port number.
+# Ensure: result > 0
 #
 # Get the port on which the server is started.
 sub port {
 	return $_[0]->{port};
-}
-
-##
-# $server->sendData(client, data)
-# client: a client object (see overview).
-# data: the data to send.
-# Requires: defined(client) && defined(data)
-# Returns: 1 on success, 0 on failure.
-#
-# Send data to $client.
-sub sendData {
-	my ($self, $client) = @_;
-
-	undef $@;
-	eval {
-		$client->{sock}->send($_[2], 0);
-		$client->{sock}->flush;
-	};
-	if ($@) {
-		# Client disconnected
-		$self->_exitClient($client, $client->{index});
-		return 0;
-	}
-	return 1;
 }
 
 ##
@@ -214,6 +179,15 @@ sub iterate {
 	}
 }
 
+##
+# $server->sendData(client, data)
+#
+# This function is obsolete. Use $client->send() instead.
+sub sendData {
+	my ($self, $client) = @_;
+	return $client->send($_[2]);
+}
+
 
 ####################################
 ### CATEGORY: Abstract methods
@@ -223,7 +197,7 @@ sub iterate {
 # $server->onClientNew(client, index)
 # client: a client object (see overview).
 # index: the client's index (same as $client->{index}).
-# Ensures: defined($client) && defined(index)
+# Ensures: $client->isa("Base::Server::Client") && defined(index)
 #
 # This method is called when a new client has connected to the server.
 sub onClientNew {
@@ -233,7 +207,7 @@ sub onClientNew {
 # $server->onClientExit(client, index)
 # client: a client object (see overview).
 # index: the client's index (same as $client->{index}).
-# Ensures: defined($client) && defined(index)
+# Ensures: $client->isa("Base::Server::Client") && defined(index)
 #
 # This method is called when a client has disconnected from the server.
 sub onClientExit {
@@ -244,7 +218,7 @@ sub onClientExit {
 # client: a client object (see overview).
 # data: the data this client received.
 # index: the client's index (same as $client->{index}).
-# Ensures: defined($client) && defined(index)
+# Ensures: $client->isa("Base::Server::Client") && defined(index)
 #
 # This method is called when a client has received data.
 sub onClientData {
@@ -258,31 +232,23 @@ sub onClientData {
 # Accept connection from new client
 sub _newClient {
 	my $self = shift;
-	my $sock;
-	my %client;
+	my ($sock, $client, $index);
 
 	$sock = $self->{server}->accept;
 	$sock->autoflush(0);
-	$client{sock} = $sock;
-	$client{host} = $sock->peerhost;
-	$client{fd} = fileno($sock);
 
-	my $index;
-	# Insert hash into an empty slot in the array
+	# Find an empty slot in the client list
+	$index = @{$self->{clients}};
 	for (my $i = 0; $i < @{$self->{clients}}; $i++) {
 		if (!$self->{clients}[$i]) {
-			$self->{clients}[$i] = \%client;
 			$index = $i;
 			last;
 		}
 	}
 
-	if (!defined $index) {
-		$index = @{$self->{clients}};
-		push @{$self->{clients}}, \%client;
-	}
-	$client{index} = $index;
-	$self->onClientNew(\%client, $index);
+	$client = new Base::Server::Client($sock, $sock->peerhost, fileno($sock), $index);
+	$self->{clients}[$index] = $client;
+	$self->onClientNew($client, $index);
 }
 
 # A client disconnected
@@ -290,7 +256,6 @@ sub _exitClient {
 	my ($self, $client, $i) = @_;
 
 	$self->onClientExit($client, $i);
-	$client->{sock}->close if ($client->{sock} && $client->{sock}->connected);
 	delete $self->{clients}[$i];
 }
 
