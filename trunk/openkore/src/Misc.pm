@@ -1924,10 +1924,10 @@ sub processNameRequestQueue {
 			next;
 		}
 
-	# Remove actors with a distance greater than clientSight. Some private servers (notably Freya) use
-	# a technique where they send actor_exists packets with ridiculous distances in order to automatically
-	# ban bots. By removingthose actors, we eliminate that possibility and emulate the client more closely.
-	if (defined $object->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $object->{pos_to})) >= ($config{clientSight} || 15)) {
+		# Remove actors with a distance greater than clientSight. Some private servers (notably Freya) use
+		# a technique where they send actor_exists packets with ridiculous distances in order to automatically
+		# ban bots. By removingthose actors, we eliminate that possibility and emulate the client more closely.
+		if (defined $object->{pos_to} && (my $block_dist = blockDistance($char->{pos_to}, $object->{pos_to})) >= ($config{clientSight} || 16)) {
 			debug "Removed actor at $object->{pos_to}{x} $object->{pos_to}{y} (distance: $block_dist)\n";
 			shift @{$queue};
 			next;

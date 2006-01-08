@@ -369,7 +369,7 @@ sub sendMsgToServer {
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 	if ($config{debugPacket_sent} && !existsInList($config{debugPacket_exclude}, $switch)) {
 		my $label = $packetDescriptions{Send}{$switch} ?
-			" - $packetDescriptions{Send}{$switch})" : '';
+			" - $packetDescriptions{Send}{$switch}" : '';
 		if ($config{debugPacket_sent} == 1) {
 			debug("Packet Switch SENT: $switch$label\n", "sendPacket", 0);
 		} else {
