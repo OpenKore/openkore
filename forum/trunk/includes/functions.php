@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions.php,v 1.133.2.37 2005/10/30 15:17:14 acydburn Exp $
+ *   $Id: functions.php,v 1.133.2.38 2005/12/19 18:01:36 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -158,7 +158,7 @@ function get_userdata($user, $force_str = false)
 	$sql = "SELECT *
 		FROM " . USERS_TABLE . " 
 		WHERE ";
-	$sql .= ( ( is_integer($user) ) ? "user_id = $user" : "username = '" .  $user . "'" ) . " AND user_id <> " . ANONYMOUS;
+	$sql .= ( ( is_integer($user) ) ? "user_id = $user" : "username = '" .  str_replace("\'", "''", $user) . "'" ) . " AND user_id <> " . ANONYMOUS;
 	if ( !($result = $db->sql_query($sql)) )
 	{
 		message_die(GENERAL_ERROR, 'Tried obtaining data for a non-existent user', '', __LINE__, __FILE__, $sql);

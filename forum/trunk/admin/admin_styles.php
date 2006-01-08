@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_styles.php,v 1.27.2.15 2005/10/04 21:45:02 grahamje Exp $
+ *   $Id: admin_styles.php,v 1.27.2.16 2005/12/18 13:57:50 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -27,7 +27,7 @@ if( !empty($setmodules) )
 	$file = basename(__FILE__);
 	$module['Styles']['Add_new'] = "$file?mode=addnew";
 	$module['Styles']['Create_new'] = "$file?mode=create";
-	$module['Styles']['Manage'] = "$file";
+	$module['Styles']['Manage'] = $file;
 	$module['Styles']['Export'] = "$file?mode=export";
 	return;
 }

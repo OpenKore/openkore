@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: common.php,v 1.74.2.21 2005/10/31 07:31:06 acydburn Exp $
+ *   $Id: common.php,v 1.74.2.22 2005/12/30 09:51:01 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -221,7 +221,7 @@ include($phpbb_root_path . 'attach_mod/attachment_mod.'.$phpEx);
 
 if (file_exists('install') || file_exists('contrib'))
 {
-	message_die(GENERAL_MESSAGE, 'Please ensure both the install/ and contrib/ directories are deleted');
+	message_die(GENERAL_MESSAGE, 'Please_remove_install_contrib');
 }
 
 //

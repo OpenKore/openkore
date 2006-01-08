@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: index.php,v 1.40.2.8 2005/09/18 16:17:20 acydburn Exp $
+ *   $Id: index.php,v 1.40.2.10 2005/12/04 12:55:28 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -60,7 +60,7 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 	{
 		if( preg_match("/^admin_.*?\." . $phpEx . "$/", $file) )
 		{
-			include($file);
+			include('./' . $file);
 		}
 	}
 
@@ -234,9 +234,9 @@ elseif( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'right' )
 			$row = $db->sql_fetchrow($result);
 			$version = $row['mysql_version'];
 
-			if( preg_match("/^(3\.23|4\.)/", $version) )
+			if( preg_match("/^(3\.23|4\.|5\.)/", $version) )
 			{
-				$db_name = ( preg_match("/^(3\.23\.[6-9])|(3\.23\.[1-9][1-9])|(4\.)/", $version) ) ? "`$dbname`" : $dbname;
+				$db_name = ( preg_match("/^(3\.23\.[6-9])|(3\.23\.[1-9][1-9])|(4\.)|(5\.)/", $version) ) ? "`$dbname`" : $dbname;
 
 				$sql = "SHOW TABLE STATUS 
 					FROM " . $db_name;
