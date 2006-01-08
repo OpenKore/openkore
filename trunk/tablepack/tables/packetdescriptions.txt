@@ -279,6 +279,7 @@
 0127 Cart Get
 0128 Cart Get (Shop)
 0129 Cart Storage Add
+012A Companion Release
 012E Shop Close
 012F Shop Open
 0130 Vender Items List
