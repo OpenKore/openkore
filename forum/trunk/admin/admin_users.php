@@ -267,6 +267,7 @@ if ( $mode == 'edit' || $mode == 'save' && ( isset($HTTP_POST_VARS['username']) 
 		$user_avatar = ( empty($user_avatar_loc) ) ? $this_userdata['user_avatar'] : '';
 		$user_avatar_type = ( empty($user_avatar_loc) ) ? $this_userdata['user_avatar_type'] : '';		
 
+		$user_timeblock = ( !empty($HTTP_POST_VARS['user_timeblock']) ) ? intval( $HTTP_POST_VARS['user_timeblock'] ) : 0;
 		$user_status = ( !empty($HTTP_POST_VARS['user_status']) ) ? intval( $HTTP_POST_VARS['user_status'] ) : 0;
 		$user_allowpm = ( !empty($HTTP_POST_VARS['user_allowpm']) ) ? intval( $HTTP_POST_VARS['user_allowpm'] ) : 0;
 		$user_rank = ( !empty($HTTP_POST_VARS['user_rank']) ) ? intval( $HTTP_POST_VARS['user_rank'] ) : 0;
@@ -656,7 +657,7 @@ if ( $mode == 'edit' || $mode == 'save' && ( isset($HTTP_POST_VARS['username']) 
 		if( !$error )
 		{
 			$sql = "UPDATE " . USERS_TABLE . "
-				SET " . $username_sql . $passwd_sql . "user_email = '" . str_replace("\'", "''", $email) . "', user_icq = '" . str_replace("\'", "''", $icq) . "', user_website = '" . str_replace("\'", "''", $website) . "', user_occ = '" . str_replace("\'", "''", $occupation) . "', user_from = '" . str_replace("\'", "''", $location) . "', user_interests = '" . str_replace("\'", "''", $interests) . "', user_sig = '" . str_replace("\'", "''", $signature) . "', user_viewemail = $viewemail, user_aim = '" . str_replace("\'", "''", $aim) . "', user_yim = '" . str_replace("\'", "''", $yim) . "', user_msnm = '" . str_replace("\'", "''", $msn) . "', user_attachsig = $attachsig, user_sig_bbcode_uid = '$signature_bbcode_uid', user_allowsmile = $allowsmilies, user_allowhtml = $allowhtml, user_allowavatar = $user_allowavatar, user_allowbbcode = $allowbbcode, user_allow_viewonline = $allowviewonline, user_notify = $notifyreply, user_allow_pm = $user_allowpm, user_notify_pm = $notifypm, user_popup_pm = $popuppm, user_lang = '" . str_replace("\'", "''", $user_lang) . "', user_style = $user_style, user_timezone = $user_timezone, user_dateformat = '" . str_replace("\'", "''", $user_dateformat) . "', user_active = $user_status, user_rank = $user_rank" . $avatar_sql . "
+				SET " . $username_sql . $passwd_sql . "user_email = '" . str_replace("\'", "''", $email) . "', user_icq = '" . str_replace("\'", "''", $icq) . "', user_website = '" . str_replace("\'", "''", $website) . "', user_occ = '" . str_replace("\'", "''", $occupation) . "', user_from = '" . str_replace("\'", "''", $location) . "', user_interests = '" . str_replace("\'", "''", $interests) . "', user_sig = '" . str_replace("\'", "''", $signature) . "', user_viewemail = $viewemail, user_aim = '" . str_replace("\'", "''", $aim) . "', user_yim = '" . str_replace("\'", "''", $yim) . "', user_msnm = '" . str_replace("\'", "''", $msn) . "', user_attachsig = $attachsig, user_sig_bbcode_uid = '$signature_bbcode_uid', user_allowsmile = $allowsmilies, user_allowhtml = $allowhtml, user_allowavatar = $user_allowavatar, user_allowbbcode = $allowbbcode, user_allow_viewonline = $allowviewonline, user_notify = $notifyreply, user_allow_pm = $user_allowpm, user_notify_pm = $notifypm, user_popup_pm = $popuppm, user_lang = '" . str_replace("\'", "''", $user_lang) . "', user_style = $user_style, user_timezone = $user_timezone, user_dateformat = '" . str_replace("\'", "''", $user_dateformat) . "', user_active = $user_status, user_timeblock = $user_timeblock, user_rank = $user_rank" . $avatar_sql . "
 				WHERE user_id = $user_id";
 
 			if( $result = $db->sql_query($sql) )
@@ -787,6 +788,7 @@ if ( $mode == 'edit' || $mode == 'save' && ( isset($HTTP_POST_VARS['username']) 
 		$user_timezone = $this_userdata['user_timezone'];
 		$user_dateformat = htmlspecialchars($this_userdata['user_dateformat']);
 		
+		$user_timeblock = $this_userdata['user_timeblock'];
 		$user_status = $this_userdata['user_active'];
 		$user_allowavatar = $this_userdata['user_allowavatar'];
 		$user_allowpm = $this_userdata['user_allow_pm'];
@@ -908,6 +910,7 @@ if ( $mode == 'edit' || $mode == 'save' && ( isset($HTTP_POST_VARS['username']) 
 			$s_hidden_fields .= '<input type="hidden" name="timezone" value="' . $user_timezone . '" />';
 			$s_hidden_fields .= '<input type="hidden" name="dateformat" value="' . str_replace("\"", "&quot;", $user_dateformat) . '" />';
 
+			$s_hidden_fields .= '<input type="hidden" name="user_timeblock" value="' . $user_timeblock . '" />';
 			$s_hidden_fields .= '<input type="hidden" name="user_status" value="' . $user_status . '" />';
 			$s_hidden_fields .= '<input type="hidden" name="user_allowpm" value="' . $user_allowpm . '" />';
 			$s_hidden_fields .= '<input type="hidden" name="user_allowavatar" value="' . $user_allowavatar . '" />';
@@ -1023,6 +1026,8 @@ if ( $mode == 'edit' || $mode == 'save' && ( isset($HTTP_POST_VARS['username']) 
 			'TIMEZONE_SELECT' => tz_select($user_timezone),
 			'STYLE_SELECT' => style_select($user_style, 'style'),
 			'DATE_FORMAT' => $user_dateformat,
+			'USER_TIMEBLOCK_YES' => ($user_timeblock) ? 'checked="checked"' : '',
+			'USER_TIMEBLOCK_NO' => (!$user_timeblock) ? 'checked="checked"' : '',
 			'ALLOW_PM_YES' => ($user_allowpm) ? 'checked="checked"' : '',
 			'ALLOW_PM_NO' => (!$user_allowpm) ? 'checked="checked"' : '',
 			'ALLOW_AVATAR_YES' => ($user_allowavatar) ? 'checked="checked"' : '',
@@ -1061,6 +1066,7 @@ if ( $mode == 'edit' || $mode == 'save' && ( isset($HTTP_POST_VARS['username']) 
 			'L_HIDE_USER' => $lang['Hide_user'],
 			'L_ALWAYS_ADD_SIGNATURE' => $lang['Always_add_sig'],
 			
+			'L_USER_TIMEBLOCK' => $lang['User_timeblock'],
 			'L_SPECIAL' => $lang['User_special'],
 			'L_SPECIAL_EXPLAIN' => $lang['User_special_explain'],
 			'L_USER_ACTIVE' => $lang['User_status'],

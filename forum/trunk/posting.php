@@ -241,6 +241,12 @@ if ( $result = $db->sql_query($sql) )
 
 	$is_auth = auth(AUTH_ALL, $forum_id, $userdata, $post_info);
 
+// timeblock by d3adpool
+if ( $userdata['user_timeblock'] == '1' && time() - $userdata['user_regdate'] <= 86400*$board_config['user_block_time'] ) {
+	message_die(GENERAL_MESSAGE, $lang['Timeblock']);
+}
+// timeblock by d3adpool
+
 	if ( $post_info['forum_status'] == FORUM_LOCKED && !$is_auth['auth_mod']) 
 	{ 
 	   message_die(GENERAL_MESSAGE, $lang['Forum_locked']); 

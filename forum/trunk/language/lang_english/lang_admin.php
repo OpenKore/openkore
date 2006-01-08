@@ -820,6 +820,8 @@ $lang['Syntax_installer_previous_install'] = 'If you\'re viewing this message, t
 // End Syntax Highlighting Mod
 //
 
+$lang['User_blocktime'] = "Time (in days) user is blocked after registration:";
+
 //
 // That's all Folks!
 // -------------------------------------------------
