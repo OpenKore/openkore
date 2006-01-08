@@ -1,4 +1,15 @@
 ==================
+### 1.6.5
+==================
+
+Bug fixes:
+- AutoSwitch fixed.
+- Work around some servers' anti-bot detection.
+
+Credits:
+- pyronix: autoswitch bugfix
+
+==================
 ### 1.6.4
 ==================
 

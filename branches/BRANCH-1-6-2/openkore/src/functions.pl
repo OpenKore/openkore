@@ -655,11 +655,27 @@ sub AI {
 	}
 
 	if (timeOut($timeout{ai_getInfo})) {
+		sub isSuspicious {
+			# Check whether this actor is used to detect bots.
+			my ($object) = @_;
+			return $object->{statuses}{"GM Perfect Hide"} || distance($char->{pos_to}, $object->{pos_to}) > 16;
+		}
+
 		while (@unknownObjects) {
 			my $ID = $unknownObjects[0];
 			my $object = $players{$ID} || $npcs{$ID};
-			if (!$object || $object->{gotName} || $object->{statuses}{"GM Perfect Hide"}) {
+
+			if (!$object || $object->{gotName} || isSuspicious($object)) {
 				shift @unknownObjects;
+				if (isSuspicious($object)) {
+					if ($players{$ID}) {
+						delete $players{$ID};
+						binRemove(\@playersID, $ID);
+					} elsif ($npcs{$ID}) {
+						delete $npcs{$ID};
+						binRemove(\@npcsID, $ID);
+					}
+				}
 				next;
 			}
 			sendGetPlayerInfo(\$remote_socket, $ID);
@@ -669,14 +685,24 @@ sub AI {
 
 		foreach (keys %monsters) {
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
-				sendGetPlayerInfo(\$remote_socket, $_);
-				last;
+				if (isSuspicious($monsters{$_})) {
+					delete $monsters{$_};
+					binRemove(\@monstersID, $_);
+				} else {
+					sendGetPlayerInfo(\$remote_socket, $_);
+					last;
+				}
 			}
 		}
 		foreach (keys %pets) { 
-			if ($pets{$_}{'name_given'} =~ /Unknown/ && !$pets{$_}{statuses}{"GM Perfect Hide"}) { 
-				sendGetPlayerInfo(\$remote_socket, $_); 
-				last; 
+			if ($pets{$_}{'name_given'} =~ /Unknown/) { 
+				if (isSuspicious($pets{$_})) {
+					delete $pets{$_};
+					binRemove(\@petsID, $_);
+				} else {
+					sendGetPlayerInfo(\$remote_socket, $_);
+					last;
+				}
 			}
 		}
 		$timeout{'ai_getInfo'}{'time'} = time;
@@ -9449,6 +9475,7 @@ sub attack {
 	#Mod Start
 	AUTOEQUIP: {
 		my $i = 0;
+		my $Lequip = 0;
 		my ($Rdef,$Ldef,$Req,$Leq,$arrow,$j);
 		while (exists $config{"autoSwitch_$i"}) {
 			if (!$config{"autoSwitch_$i"}) {
@@ -9463,17 +9490,22 @@ sub attack {
 				$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_leftHand"}) if ($config{"autoSwitch_$i"."_leftHand"});
 				$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"autoSwitch_$i"."_arrow"}) if ($config{"autoSwitch_$i"."_arrow"});
 
-				if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) { 
-					$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
-					sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "");
+				if ($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}){ 
 					message "Auto Equiping [L] :".$config{"autoSwitch_$i"."_leftHand"}." ($Leq)\n", "equip";
-					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'}); 
+					$Lequip = 1;
 				}
 				if ($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'} || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") {
+					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
+					if ($Ldef eq ""){
+						$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
+						$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34) if($Ldef eq "");
+						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "");
+					}
+
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
 					$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
 					#Debug for 2hand Quicken and Bare Hand attack with 2hand weapon
-					if((!whenStatusActive("Twohand Quicken, Adrenaline, Spear Quicken") || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") && $Rdef ne ""){
+					if((!whenStatusActive("Twohand Quicken, Adrenaline, Spear Quicken") || $config{"autoSwitch_$i"."_rightHand"} eq "[NONE]") && $Rdef ne "" && $Rdef ne $Ldef){
 						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'});
 					}
 					if ($Req eq $Leq) {
@@ -9488,7 +9520,16 @@ sub attack {
 					if ($config{"autoSwitch_$i"."_rightHand"} ne "[NONE]") {
 						message "Auto Equiping [R] :".$config{"autoSwitch_$i"."_rightHand"}."($Req)\n", "equip"; 
 						sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
+						if ($Lequip==0){
+							if ($config{'autoSwitch_default_leftHand'}) { 
+								$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_leftHand'});
+								$Lequip = 1;
+							}
+						}
 					}
+				}
+				if ($Lequip == 1){
+					sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'}) if ($Leq ne ""); 
 				}
 				if ($arrow ne "" && !$chars[$config{'char'}]{'inventory'}[$arrow]{'equipped'}) { 
 					message "Auto Equiping [A] :".$config{"autoSwitch_$i"."_arrow"}."\n", "equip";
@@ -9508,21 +9549,38 @@ sub attack {
 			}
 			$i++;
 		}
+		$Lequip = 0;
+		$Leq = "";
+		$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'}); 
 		if ($config{'autoSwitch_default_leftHand'}) { 
 			$Leq = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_leftHand'});
-			if($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}) {
-				$Ldef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
-				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'}) if($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'});
+			if($Leq ne "" && !$chars[$config{'char'}]{'inventory'}[$Leq]{'equipped'}){
 				message "Auto equiping default [L] :".$config{'autoSwitch_default_leftHand'}."\n", "equip";
-				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'});
+				$Lequip=1;
 			}
 		}
 		if ($config{'autoSwitch_default_rightHand'}) { 
-			$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'}); 
+			#$Req = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_rightHand'}); 
 			if($Req ne "" && !$chars[$config{'char'}]{'inventory'}[$Req]{'equipped'}) {
+				$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",32);
+				if ($Ldef eq ""){
+					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2);
+					$Ldef = findLastIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34) if($Ldef eq "");
+					if($Ldef ne "" && $chars[$config{'char'}]{'inventory'}[$Ldef]{'equipped'}) {
+						sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Ldef]{'index'});
+						$Lequip=1;
+					}
+				}
+
+				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",34);
+				$Rdef = findIndex(\@{$chars[$config{'char'}]{'inventory'}}, "equipped",2) if($Rdef eq "");
+				sendUnequip(\$remote_socket,$chars[$config{'char'}]{'inventory'}[$Rdef]{'index'}) if($Rdef ne "" && $chars[$config{'char'}]{'inventory'}[$Rdef]{'equipped'} && $Rdef ne $Ldef);
 				message "Auto equiping default [R] :".$config{'autoSwitch_default_rightHand'}."\n", "equip"; 
 				sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Req]{'index'},$chars[$config{'char'}]{'inventory'}[$Req]{'type_equip'});
 			}
+		}
+		if ($Lequip == 1){
+			sendEquip(\$remote_socket, $chars[$config{'char'}]{'inventory'}[$Leq]{'index'},$chars[$config{'char'}]{'inventory'}[$Leq]{'type_equip'}) if ($Leq ne ""); ;
 		}
 		if ($config{'autoSwitch_default_arrow'}) { 
 			$arrow = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{'autoSwitch_default_arrow'}); 
