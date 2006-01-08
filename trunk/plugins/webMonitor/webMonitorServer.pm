@@ -111,6 +111,7 @@ sub request {
 	# Keywords are specific fields in the template that will eventually get
 	# replaced by dynamic content.
 	my %keywords =	(
+		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
 		'characterSex' => $sex_lut{$char->{sex}},
@@ -119,11 +120,39 @@ sub request {
 		'characterID' => unpack("V", $char->{ID}),
 		'characterZeny' => $char->{zenny},
 		'characterStr' => $char->{str},
+		'characterStrBonus' => $char->{str_bonus},
+		'characterStrPoints' => $char->{points_str},
 		'characterAgi' => $char->{agi},
+		'characterAgiBonus' => $char->{agi_bonus},
+		'characterAgiPoints' => $char->{points_agi},
 		'characterVit' => $char->{vit},
+		'characterVitBonus' => $char->{vit_bonus},
+		'characterVitPoints' => $char->{points_vit},
 		'characterInt' => $char->{int},
+		'characterIntBonus' => $char->{int_bonus},
+		'characterIntPoints' => $char->{points_int},
 		'characterDex' => $char->{dex},
+		'characterDexBonus' => $char->{dex_bonus},
+		'characterDexPoints' => $char->{points_dex},
 		'characterLuk' => $char->{luk},
+		'characterLukBonus' => $char->{luk_bonus},
+		'characterLukPoints' => $char->{points_luk},
+		'characterFreePoints' => $char->{points_free},
+		'characterAttack' => $char->{attack},
+		'characterAttackBonus' => $char->{attack_bonus},
+		'characterAttackMagicMax' => $char->{attack_magic_max},
+		'characterAttackMagicMin' => $char->{attack_magic_min},
+		'characterAttackRange' => $char->{attack_range},
+		'characterAttackSpeed' => $char->{attack_speed},
+		'characterHit' => $char->{hit},
+		'characterCritical' => $char->{critical},
+		'characterDef' => $char->{def},
+		'characterDefBonus' => $char->{def_bonus},
+		'characterDefMagic' => $char->{def_magic},
+		'characterDefMagicBonus' => $char->{def_magic_bonus},
+		'characterFlee' => $char->{flee},
+		'characterFleeBonus' => $char->{flee_bonus},
+		
 		'characterBaseExp' => $char->{exp},
 		'characterBaseMax' => $char->{exp_max},
 		'characterBasePercent' => $char->{exp_max} ?
@@ -140,6 +169,8 @@ sub request {
 		'characterSP' => $char->{sp},
 		'characterSPMax' => $char->{sp_max},
 		'characterSPPercent' => sprintf("%.2f", $char->sp_percent()),
+		'characterWeight' => $char->{weight},
+		'characterWeightMax' => $char->{weight_max},
 		'characterWeightPercent' => sprintf("%.0f", $char->weight_percent()),
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
@@ -196,7 +227,7 @@ sub request {
 		$process->header("Transfer-Encoding", "chunked");
 
 		# The file requested has an associated template. Do a replacement.
-		if (open (TEMPLATE, "<" . "plugins/webMonitor" . $filename . '.template')) {
+		if (open (TEMPLATE, "<" . "plugins/webMonitor/WWW" . $filename . '.template')) {
 			my @template = <TEMPLATE>;
 			close (TEMPLATE);
 
@@ -206,14 +237,16 @@ sub request {
 				# the browser
 				chunkSend($process, replace($line, \%keywords, $markF, $markB));
 			}
+			$process->print('0' . "\x0D\x0A");
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
-		} elsif (open (FILE, "<" . "plugins/webMonitor" . $filename)) {
+		} elsif (open (FILE, "<" . "plugins/webMonitor/WWW" . $filename)) {
 			while (read FILE, my $buffer, 1024) {
 				chunkSend($process, $buffer);
 			}
 			close FILE;
+			$process->print('0' . "\x0D\x0A");
 			
 		} else {
 			# our custom 404 message
