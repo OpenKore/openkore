@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_disallow.php,v 1.9.2.3 2005/09/14 18:14:29 acydburn Exp $
+ *   $Id: admin_disallow.php,v 1.9.2.4 2005/12/18 13:57:50 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -25,7 +25,7 @@ define('IN_PHPBB', 1);
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
-	$module['Users']['Disallow'] = append_sid($filename);
+	$module['Users']['Disallow'] = $filename;
 
 	return;
 }

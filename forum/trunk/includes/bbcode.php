@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: bbcode.php,v 1.36.2.36 2005/10/05 17:42:04 grahamje Exp $
+ *   $Id: bbcode.php,v 1.36.2.39 2005/12/29 15:12:20 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -440,11 +440,11 @@ function bbencode_second_pass($text, $uid)
 	$replacements[] = $bbcode_tpl['img'];
 
 	// matches a [url]xxxx://www.phpbb.com[/url] code..
-	$patterns[] = "#\[url\]([\w]+?://[\w\#$%&~/.\-;:=,?@\[\]+]*?)\[/url\]#is";
+	$patterns[] = "#\[url\]([\w]+?://([\w\#$%&~/.\-;:=,?@\]+]|\[(?!url=))*?)\[/url\]#is";
 	$replacements[] = $bbcode_tpl['url1'];
 
 	// [url]www.phpbb.com[/url] code.. (no xxxx:// prefix).
-	$patterns[] = "#\[url\]((www|ftp)\.[\w\#$%&~/.\-;:=,?@\[\]+]*?)\[/url\]#is";
+	$patterns[] = "#\[url\]((www|ftp)\.([\w\#$%&~/.\-;:=,?@\]+]|\[(?!url=))*?)\[/url\]#is";
 	$replacements[] = $bbcode_tpl['url2'];
 
 	// [url=xxxx://www.phpbb.com]phpBB[/url] code..
@@ -501,7 +501,7 @@ function bbencode_first_pass($text, $uid)
 
 	// [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.
 	$text = bbencode_first_pass_pda($text, $uid, '[quote]', '[/quote]', '', false, '');
-	$text = bbencode_first_pass_pda($text, $uid, '/\[quote=(\\\".*?\\\")\]/is', '[/quote]', '', false, '', "[quote:$uid=\\1]");
+	$text = bbencode_first_pass_pda($text, $uid, '/\[quote=\\\\&quot;(.*?)\\\\&quot;\]/is', '[/quote]', '', false, '', "[quote:$uid=\\\"\\1\\\"]");
 
 	// [list] and [list=x] for (un)ordered lists.
 	$open_tag = array();
@@ -638,15 +638,15 @@ function bbencode_first_pass_pda($text, $uid, $open_tag, $close_tag, $close_tag_
 				//
 				// We're going to try and catch usernames with "[' characters.
 				//
-				if( preg_match('#\[quote=\\\"#si', $possible_start, $match) && !preg_match('#\[quote=\\\"(.*?)\\\"\]#si', $possible_start) )
+				if( preg_match('#\[quote=\\\&quot;#si', $possible_start, $match) && !preg_match('#\[quote=\\\&quot;(.*?)\\\&quot;\]#si', $possible_start) )
 				{
 					// OK we are in a quote tag that probably contains a ] bracket.
 					// Grab a bit more of the string to hopefully get all of it..
-					if ($close_pos = strpos($text, '"]', $curr_pos + 9))
+					if ($close_pos = strpos($text, '&quot;]', $curr_pos + 14))
 					{
-						if (strpos(substr($text, $curr_pos + 9, $close_pos - ($curr_pos + 9)), '[quote') === false)
+						if (strpos(substr($text, $curr_pos + 14, $close_pos - ($curr_pos + 14)), '[quote') === false)
 						{
-							$possible_start = substr($text, $curr_pos, $close_pos - $curr_pos + 2);
+							$possible_start = substr($text, $curr_pos, $close_pos - $curr_pos + 7);
 						}
 					}
 				}
