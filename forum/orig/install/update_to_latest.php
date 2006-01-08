@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: update_to_latest.php,v 1.1.2.7 2005/07/19 20:01:18 acydburn Exp $
+ *   $Id: update_to_latest.php,v 1.1.2.11 2005/12/29 11:51:11 acydburn Exp $
  *
  ***************************************************************************/
 
@@ -59,7 +59,7 @@ include($phpbb_root_path . 'includes/db.'.$phpEx);
 //
 //
 //
-$updates_to_version = '.0.17';
+$updates_to_version = '.0.19';
 //
 //
 //
@@ -465,7 +465,7 @@ switch ($row['config_value'])
 					AS SELECT group_id, group_name, group_type, group_description, group_moderator, group_single_user 
 						FROM " . GROUPS_TABLE;
 				$sql[] = "DROP TABLE " . GROUPS_TABLE;
-				$sql[] = "CREATE TABLE phpbb_groups (group_id int DEFAULT nextval('" . GROUPS_TABLE . "_id_seq'::text) NOT NULL, group_name varchar(40) NOT NULL, group_type int2 DEFAULT '1' NOT NULL, group_description varchar(255) NOT NULL, group_moderator int4 DEFAULT '0' NOT NULL, group_single_user int2 DEFAULT '0' NOT NULL, CONSTRAINT phpbb_groups_pkey PRIMARY KEY (group_id))";
+				$sql[] = "CREATE TABLE {$table_prefix}groups (group_id int DEFAULT nextval('" . GROUPS_TABLE . "_id_seq'::text) NOT NULL, group_name varchar(40) NOT NULL, group_type int2 DEFAULT '1' NOT NULL, group_description varchar(255) NOT NULL, group_moderator int4 DEFAULT '0' NOT NULL, group_single_user int2 DEFAULT '0' NOT NULL, CONSTRAINT {$table_prefix}groups_pkey PRIMARY KEY (group_id))";
 				$sql[] = "INSERT INTO " . GROUPS_TABLE . " (group_id, group_name, group_type, group_description, group_moderator, group_single_user) 
 					SELECT group_id, group_name, group_type, group_description, group_moderator, group_single_user 
 						FROM tmp_" . GROUPS_TABLE;
@@ -511,7 +511,7 @@ switch ($row['config_value'])
 				break;
 
 			case 'postgresql':
-				$sql[] = 'CREATE TABLE ' . $table_prefix . 'confirm (confirm_id char(32) DEFAULT \'\' NOT NULL,  session_id char(32) DEFAULT \'\' NOT NULL, code char(6) DEFAULT \'\' NOT NULL, CONSTRAINT phpbb_confirm_pkey PRIMARY KEY (session_id, confirm_id))';
+				$sql[] = 'CREATE TABLE ' . $table_prefix . 'confirm (confirm_id char(32) DEFAULT \'\' NOT NULL,  session_id char(32) DEFAULT \'\' NOT NULL, code char(6) DEFAULT \'\' NOT NULL, CONSTRAINT {$table_prefix}confirm_pkey PRIMARY KEY (session_id, confirm_id))';
 				break;
 		}
 
@@ -551,6 +551,78 @@ switch ($row['config_value'])
 			case 'msaccess':
 				$sql[] = "ALTER TABLE " . SESSIONS_TABLE . " ADD
 					session_admin smallint NOT NULL";
+				break;
+		}
+
+	case '.0.15':
+	case '.0.16':
+	case '.0.17':
+		// Add tables for session keys
+		switch (SQL_LAYER)
+		{
+			case 'mysql':
+			case 'mysql4':
+				$sql[] = 'CREATE TABLE ' . $table_prefix . 'sessions_keys (key_id varchar(32) DEFAULT \'0\' NOT NULL, user_id mediumint(8) DEFAULT \'0\' NOT NULL, last_ip varchar(8) DEFAULT \'0\' NOT NULL, last_login int(11) DEFAULT \'0\' NOT NULL, PRIMARY KEY (key_id, user_id), KEY last_login (last_login))';
+				break;
+
+			case 'mssql':
+			case 'mssql-odbc':
+				$sql[] = 'CREATE TABLE [' . $table_prefix . 'sessions_keys] ([key_id] [char] (32) NOT NULL , [user_id] [int] NOT NULL , [last_ip] [char] (8) NOT NULL , [last_login] [int] NOT NULL) ON [PRIMARY]';
+
+				$sql[] = 'CREATE INDEX [IX_' . $table_prefix . 'sessions_keys] ON [' . $table_prefix . 'sessions_keys]([key_id], [user_id]) ON [PRIMARY]';
+				$sql[] = 'CREATE  INDEX [IX_' . $table_prefix . 'sessions_keys_1] ON [' . $table_prefix . 'sessions_keys]([last_login]) ON [PRIMARY]';
+				break;
+
+			case 'msaccess':
+				$sql[] = 'CREATE TABLE ' . $table_prefix . 'sessions_keys (key_id char(32) NOT NULL, user_id int NOT NULL, last_ip char(8) NOT NULL, last_login int NOT NULL)';
+				$sql[] = 'ALTER TABLE ' . $table_prefix . 'sessions_keys ADD PRIMARY KEY (key_id, user_id)';
+				break;
+
+			case 'postgresql':
+				$sql[] = 'CREATE TABLE ' . $table_prefix . 'sessions_keys (key_id char(32) DEFAULT \'0\' NOT NULL, user_id int4 DEFAULT \'0\' NOT NULL, last_ip char(8) DEFAULT \'0\' NOT NULL, last_login int4 DEFAULT \'0\' NOT NULL, CONSTRAINT ' . $table_prefix . 'sessions_keys_pkey PRIMARY KEY (key_id, user_id))';
+				$sql[] = 'CREATE INDEX last_login_' . $table_prefix . 'sessions_keys_index ON ' . $table_prefix . 'sessions_keys (last_login)';
+				break;
+		}
+
+	case '.0.18':
+
+		// Add login columns to user table
+		switch (SQL_LAYER)
+		{
+			case 'mysql':
+			case 'mysql4':
+				$sql[] = "ALTER TABLE " . USERS_TABLE . "
+					ADD COLUMN user_login_tries smallint(5) UNSIGNED DEFAULT '0' NOT NULL";
+				$sql[] = "ALTER TABLE " . USERS_TABLE . "
+					ADD COLUMN user_last_login_try int(11) DEFAULT '0' NOT NULL";
+				break;
+
+			case 'postgresql':
+				$sql[] = "ALTER TABLE " . USERS_TABLE . "
+					ADD COLUMN user_login_tries int2";
+				$sql[] = "ALTER TABLE " . USERS_TABLE . "
+					ALTER COLUMN user_login_tries SET DEFAULT '0'";
+				$sql[] = "ALTER TABLE " . USERS_TABLE . "
+					ADD COLUMN user_last_login_try int4";
+				$sql[] = "ALTER TABLE " . USERS_TABLE . "
+					ALTER COLUMN user_last_login_try SET DEFAULT '0'";
+				break;
+
+			case 'mssql-odbc':
+			case 'mssql':
+				$sql[] = "ALTER TABLE " . USERS_TABLE . " ADD
+					user_login_tries smallint NOT NULL,
+					CONSTRAINT [DF_" . $table_prefix . "users_user_login_tries] DEFAULT (0) FOR [user_login_tries]";
+				$sql[] = "ALTER TABLE " . USERS_TABLE . " ADD
+					user_last_login_try int NOT NULL,
+					CONSTRAINT [DF_" . $table_prefix . "users_user_last_login_try] DEFAULT (0) FOR [user_last_login_try]";
+				break;
+
+			case 'msaccess':
+				$sql[] = "ALTER TABLE " . USERS_TABLE . " ADD
+					user_login_tries smallint NOT NULL";
+				$sql[] = "ALTER TABLE " . USERS_TABLE . " ADD
+					user_last_login_try int NOT NULL";
 				break;
 		}
 
@@ -954,8 +1026,33 @@ switch ($row['config_value'])
 		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_allowhtml = 1 WHERE user_id = ' . ANONYMOUS;
 		_sql($sql, $errored, $error_ary);
 
+	case '.0.15':
+	case '.0.16':
+	case '.0.17':
+
+		$sql = 'UPDATE ' . USERS_TABLE . ' SET user_active = 0 WHERE user_id = ' . ANONYMOUS;
+		_sql($sql, $errored, $error_ary);
+
+		$sql = 'INSERT INTO ' . CONFIG_TABLE . " (config_name, config_value)
+			VALUES ('allow_autologin', '1')";
+		_sql($sql, $errored, $error_ary);
+
+		$sql = 'INSERT INTO ' . CONFIG_TABLE . " (config_name, config_value)
+			VALUES ('max_autologin_time', '0')";
+		_sql($sql, $errored, $error_ary);
+		
 		// We reset those having autologin enabled and forcing the re-assignment of a session id
 		$sql = 'DELETE FROM ' . SESSIONS_TABLE;
+		_sql($sql, $errored, $error_ary);
+
+	case '.0.18':
+
+		$sql = 'INSERT INTO ' . CONFIG_TABLE . " (config_name, config_value)
+			VALUES ('max_login_attempts', '5')";
+		_sql($sql, $errored, $error_ary);
+
+		$sql = 'INSERT INTO ' . CONFIG_TABLE . " (config_name, config_value)
+			VALUES ('login_reset_time', '30')";
 		_sql($sql, $errored, $error_ary);
 
 		break;

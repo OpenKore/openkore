@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: admin_words.php,v 1.10.2.3 2004/03/25 15:57:20 acydburn Exp $
+ *   $Id: admin_words.php,v 1.10.2.4 2005/12/18 13:57:51 grahamje Exp $
  *
  *
  ***************************************************************************/
@@ -25,7 +25,7 @@ define('IN_PHPBB', 1);
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);
-	$module['General']['Word_Censor'] = "$file";
+	$module['General']['Word_Censor'] = $file;
 	return;
 }
 

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2001 The phpBB Group
  *   email                : support@phpbb.com
  *
- *   $Id: functions_post.php,v 1.9.2.39 2005/09/18 16:17:20 acydburn Exp $
+ *   $Id: functions_post.php,v 1.9.2.40 2005/12/22 11:34:02 acydburn Exp $
  *
  *
  ***************************************************************************/
@@ -25,8 +25,8 @@ if (!defined('IN_PHPBB'))
 	die('Hacking attempt');
 }
 
-$html_entities_match = array('#&(?!(\#[0-9]+;))#', '#<#', '#>#');
-$html_entities_replace = array('&amp;', '&lt;', '&gt;');
+$html_entities_match = array('#&(?!(\#[0-9]+;))#', '#<#', '#>#', '#"#');
+$html_entities_replace = array('&amp;', '&lt;', '&gt;', '&quot;');
 
 $unhtml_specialchars_match = array('#&gt;#', '#&lt;#', '#&quot;#', '#&amp;#');
 $unhtml_specialchars_replace = array('>', '<', '"', '&');
