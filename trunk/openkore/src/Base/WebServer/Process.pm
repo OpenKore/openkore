@@ -62,10 +62,20 @@ sub DESTROY {
 	my ($self) = @_;
 	$self->_sendHeaders;
 
-	my $key = $self->{outHeadersLC}{connection};
-	if ($key && $self->{outHeaders}{$key} eq 'close'
-	    && $self->{socket} && $self->{socket}->connected) {
-		$self->{socket}->close;
+	if ($self->{socket} && $self->{socket}->connected) {
+		if ($self->{chunkedEncoding}) {
+			# Finish sending chunked encoded data.
+			eval {
+				$self->{socket}->send("0\x0D\x0A\x0D\x0A", 0);
+				$self->{socket}->flush;
+			};
+			undef $@;
+		}
+
+		my $key = $self->{outHeadersLC}{connection};
+		if ($key && $self->{outHeaders}{$key} eq 'close') {
+			$self->{socket}->close;
+		}
 	}
 }
 
@@ -164,22 +174,28 @@ sub print {
 		# This is the first time print is called, and we haven't sent
 		# headers yet, so do so.
 
-		if (!$self->{outHeadersLC}{'content-length'}
-		    || $self->{headers}{connection} eq 'close') {
-			# We don't know the content length. According to the
-			# HTTP specs, we cannot maintain a persistent
-			# connection.
-			#   -OR-
-			# The client specifically requested that it doesn't
-			# want a persistent connection.
+		# The client specifically requested that it doesn't
+		# want a persistent connection.
+		if ($self->{headers}{connection} eq 'close') {
 			$self->header("Connection", "close");
+		}
+
+		# We don't know the content length, so send in chuncked
+		# encoding.
+		if (!$self->{outHeadersLC}{'content-length'}) {
+			$self->{chunkedEncoding} = 1;
+			$self->header("Transfer-Encoding", "chunked");
 		}
 
 		$self->_sendHeaders;
 	}
 
 	eval {
-		$self->{socket}->send($_[0]);
+		if ($self->{chunkedEncoding}) {
+			$self->{socket}->send(_encodeChunk($_[0]));
+		} else {
+			$self->{socket}->send($_[0]);
+		}
 		$self->{socket}->flush;
 	};
 	undef $@;
@@ -244,6 +260,11 @@ sub _sendHeaders {
 	};
 	undef $@;
 	$self->{sentHeaders} = 1;
+}
+
+# Encode a string using HTTP chunked encoding.
+sub _encodeChunk {
+	return sprintf("%X", length($_[0])) . "\x0D\x0A$_[0]\x0D\x0A";
 }
 
 1;
