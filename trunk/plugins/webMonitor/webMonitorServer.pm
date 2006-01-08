@@ -49,7 +49,7 @@ sub cHook {
 		$microseconds = substr($microseconds, 0, 2);
 		my $message = "[".getFormattedDate(int(time)).".$microseconds] ".$messages;	
 	
-		push(@messages, $messages);
+		push(@messages, $message);
 
 		# Make sure we don't let @messages grow too large
 		# TODO: make the message size configurable
@@ -86,14 +86,16 @@ sub request {
 	# We then inspect the headers the client sent us to see if there are any
 	# resources that was sent
 	my %resources;
-	if ($process->clientHeader('GET')) {
+	my $filename = $process->file;
+	if ($filename =~ /\?/) {
 		# The get method simply tacks the resource at the end of the resource
 		# request. We manipulate the header to extract the resource sent.
-		my $resource = $process->clientHeader('GET');
-		# Remove the filename from the header, as well as the ?
-		$resource =~ s/$process->file//;
-		$resource =~ s/\?//;
-		my @resources = split '&', $resource;
+		my $resource = $process->file;
+		# Remove the filename from the request, as well as the ?
+		my @temp = split '\?', $resource;
+		$filename = $temp[0];
+		$filename .= 'index.html' if ($filename eq '/' || $filename eq 'index.htm');
+		my @resources = split '\&', $temp[1];
 		foreach my $item (@resources) {
 			$item =~ s/\+//;
 			my ($key, $value) = split '=', $item;
@@ -106,7 +108,7 @@ sub request {
 		# for POST gets written :)
 		my $resourceLength = $process->clientHeader('Content-Length');
 		# FIXME: how read the resource?
-	}
+	} else { message $process->file }
 
 	# Keywords are specific fields in the template that will eventually get
 	# replaced by dynamic content.
@@ -178,13 +180,22 @@ sub request {
 		'lastConsoleMessage' => $messages[-1],
 	);
 	
-	# Marks signal the parser that the word encountered is a keyword. Since we
+	# Markers signal the parser that the word encountered is a keyword. Since we
 	# are going to be using regexp, make sure to escape any non-alphanumeric
 	# characters in the marker string.
-	my $markF = '\$';	# marker front
-	my $markB = '\$';	# marker back
+	my $keywordF = '\$';	# keyword front
+	my $keywordB = '\$';	# keyword back
+	my $arrayF = '\@';		# array front
+	my $arrayB = '\@';		# array back
 
-	if ($process->file eq '/variables') {
+	if ($filename eq '/handler') {
+		foreach my $key (sort keys %resources) {
+			$content .= "$key => " . $resources{$key} . '<br>';
+		}
+		$content .= '<hr>';
+		$process->shortResponse($content);
+
+	} elsif ($filename eq '/variables') {
 		# Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>';
 		
@@ -202,7 +213,7 @@ sub request {
 		$content .= '<hr>';
 		$process->shortResponse($content);
 
-	} elsif ($process->file eq '/console') {
+	} elsif ($filename eq '/console') {
 		# Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>' . "\n";
 		$content .= '<pre>' . "\n";
@@ -216,18 +227,16 @@ sub request {
 		$process->shortResponse($content);
 
 	} else {
-		my $filename = $process->file;
-		$filename .= 'index.html' if ($filename eq '/' || $filename eq 'index.htm');
 		# Figure out the content-type of the file and send a header to the
 		# client containing that information. Well-behaved clients should
 		# respect this header.
 		$process->header("Content-Type", contentType($filename));
-		# We are going to be using chunk encoding, so make sure the proper
-		# headers are sent
-		$process->header("Transfer-Encoding", "chunked");
 
 		# The file requested has an associated template. Do a replacement.
-		if (open (TEMPLATE, "<" . "plugins/webMonitor/WWW" . $filename . '.template')) {
+		if (open (TEMPLATE, "<" . "plugins/webMonitor/WWW/" . $filename . '.template')) {
+			# We are going to be using chunk encoding, so make sure the proper
+			# headers are sent
+			$process->header("Transfer-Encoding", "chunked");
 			my @template = <TEMPLATE>;
 			close (TEMPLATE);
 
@@ -235,13 +244,16 @@ sub request {
 				# Here we inspect each line of the template, and replace the
 				# keywords with their proper content. Then we chunk send the line to
 				# the browser
-				chunkSend($process, replace($line, \%keywords, $markF, $markB));
+				chunkSend($process, replace($line, \%keywords, $keywordF, $keywordB));
 			}
 			$process->print('0' . "\x0D\x0A");
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
-		} elsif (open (FILE, "<" . "plugins/webMonitor/WWW" . $filename)) {
+		} elsif (open (FILE, "<" . "plugins/webMonitor/WWW/" . $filename)) {
+			# We are going to be using chunk encoding, so make sure the proper
+			# headers are sent
+			$process->header("Transfer-Encoding", "chunked");
 			while (read FILE, my $buffer, 1024) {
 				chunkSend($process, $buffer);
 			}
@@ -354,7 +366,7 @@ sub contentType {
 	} elsif (lc($extension) eq "pdf") {
 		return "application/pdf";
 	} else {
-		return "application/x-unknown";
+		return "text/html";
 	}
 }
 
