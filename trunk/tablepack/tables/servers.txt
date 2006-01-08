@@ -277,8 +277,8 @@ serverType 0
 field_payon old_payon.fld
 serverEncoding Western
 
-[qRO Private Server]
-ip 209.172.35.90
+[qRO (Low Rate) Private Server]
+ip 207.150.191.52
 port 6822
 version 20
 master_version 18
@@ -286,8 +286,8 @@ serverType 3
 private 1
 serverEncoding Western
 
-[qRO: High Rate Private Server]
-ip 209.172.35.91
+[qRO (High Rate) Private Server]
+ip 207.150.184.26
 port 6822
 version 20
 master_version 18
