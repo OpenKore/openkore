@@ -498,8 +498,9 @@ sub checkClient {
 		my ($version, $username, $password, $master_version) = unpack("x2 V Z24 Z24 C1", $msg);
 
 		# Check password against adminPassword
-		if ($password ne $config{adminPassword} || $username ne $config{username}) {
-			error "XKore 2 failed login: Invalid Username and/or Password.\n", "connection";
+		if ($password ne $config{adminPassword} ||
+		    lc($username) ne lc($config{username})) {
+			error "XKore 2 failed login: Invalid Username (expected '$config{username}') and/or Password (expected '$config{adminPassword}').\n", "connection";
 			$self->clientSend(pack('C3 x20', 0x6A, 00, 1),1);
 		} else {
 			# Determine public IP
