@@ -15,6 +15,12 @@ body {
 	scrollbar-arrow-color:  #006699;
 	scrollbar-track-color: #EFEFEF;
 	scrollbar-darkshadow-color: #98AAB1;
+	margin: 0;
+	padding: 0;
+}
+
+#openkore_forum_inner {
+	padding: 0.2cm;
 }
 
 /* General font families for common tags */

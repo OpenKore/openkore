@@ -15,5 +15,7 @@ Powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">php
 	</tr>
 </table>
 
+</div><!-- openkore_forum_inner -->
+
 </body>
 </html>
