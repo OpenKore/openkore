@@ -219,19 +219,18 @@ sub request {
 			my @template = <TEMPLATE>;
 			close (TEMPLATE);
 
-			foreach my $line (@template) {
-				# Here we inspect each line of the template, and replace the
-				# keywords with their proper content. Then we chunk send the line to
-				# the browser
-
-				$process->print($process, replace($line, \%keywords, $keywordF, $keywordB));
+			# Here we inspect each line of the template, and replace the
+			# keywords with their proper content. Then we chunk send the line to
+			# the browser
+			foreach my $line (@{replaceArray(\@template, \%keywords, $keywordF, $keywordB)}) {
+				$process->print($line);
 			}
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
 		} elsif (open (FILE, "<" . "plugins/webMonitor/WWW/" . $filename)) {
 			while (read FILE, my $buffer, 1024) {
-				$process->print($process, $buffer);
+				$process->print($buffer);
 			}
 			close FILE;
 			
@@ -250,7 +249,7 @@ sub request {
 # keywords: a hash containing the keyword and the replacement string
 # markF: front delimiter to identify a keyword
 # markB: back delimiter to identify a keyword
-sub replace {
+sub replaceLine {
 	my $source = shift;
 	my $keywords = shift;
 	my $markF = shift;
@@ -273,8 +272,9 @@ sub replaceArray {
 	my $markB = shift;
 
 	foreach my $line (@{$source}) {
-		$line = replace($line, $keywords, $markF, $markB);
+		$line = replaceLine($line, $keywords, $markF, $markB);
 	}
+	return $source;
 }
 
 sub handle {
