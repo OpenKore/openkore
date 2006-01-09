@@ -85,31 +85,11 @@ sub request {
 	
 	# We then inspect the headers the client sent us to see if there are any
 	# resources that was sent
-	my %resources;
+	my %resources = $process->{GET};
+	
 	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
 	my $filename = $process->file;
 	$filename .= 'index.html' if ($filename =~ /\/$/);
-	if ($filename =~ /\?/) {
-		# The get method simply tacks the resource at the end of the resource
-		# request. We manipulate the header to extract the resource sent.
-		my $resource = $process->file;
-		# Remove the filename from the request, as well as the ?
-		my @temp = split '\?', $resource;
-		$filename = $temp[0];
-		my @resources = split '\&', $temp[1];
-		foreach my $item (@resources) {
-			$item =~ s/\+//;
-			my ($key, $value) = split '=', $item;
-			$item =~ s/\+/\s/; # replace + with 
-			$resources{$key} = $value;
-		}
-
-	} elsif (my $resourceLength = $process->clientHeader('Content-Length')) {
-		# Looks like the Base::Server::Webserver doesn't support the POST
-		# method, however we still include this portion just in case support
-		# for POST gets written :)
-		# FIXME: how read the resource?
-	}
 
 	# Keywords are specific fields in the template that will eventually get
 	# replaced by dynamic content.
@@ -176,11 +156,12 @@ sub request {
 		'characterWeight' => $char->{weight},
 		'characterWeightMax' => $char->{weight_max},
 		'characterWeightPercent' => sprintf("%.0f", $char->weight_percent()),
+		'characterWalkSpeed' => $char->{walk_speed},
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field{name},
 		'lastConsoleMessage' => $messages[-1],
-		'skin' => 'default', # replace with config.txt entry for the skin
+		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 	);
 	
 	# Markers signal the parser that the word encountered is a keyword. Since we
@@ -192,11 +173,7 @@ sub request {
 	my $arrayB = '\@';		# array back
 
 	if ($filename eq '/handler') {
-		foreach my $key (sort keys %resources) {
-			$content .= "$key => " . $resources{$key} . '<br>';
-		}
-		$content .= '<hr>';
-		$process->shortResponse($content);
+		handle(\%resources, $process);
 
 	# TODO: will be removed later
 	} elsif ($filename eq '/variables') {
@@ -212,7 +189,7 @@ sub request {
 
 		$content .= '<hr><h1>$char</h1><hr>';
 		foreach my $key (sort keys %{$char}) {
-			$content .= "$key => " . ${%{$char}}{$key} . '<br>';
+			$content .= "$key => " . $char->{$key} . '<br>';
 		}
 		$content .= '<hr>';
 		$process->shortResponse($content);
@@ -239,9 +216,6 @@ sub request {
 
 		# The file requested has an associated template. Do a replacement.
 		if (open (TEMPLATE, "<" . "plugins/webMonitor/WWW/" . $filename . '.template')) {
-			# We are going to be using chunk encoding, so make sure the proper
-			# headers are sent
-			$process->header("Transfer-Encoding", "chunked");
 			my @template = <TEMPLATE>;
 			close (TEMPLATE);
 
@@ -249,21 +223,17 @@ sub request {
 				# Here we inspect each line of the template, and replace the
 				# keywords with their proper content. Then we chunk send the line to
 				# the browser
-				chunkSend($process, replace($line, \%keywords, $keywordF, $keywordB));
+
+				$process->print($process, replace($line, \%keywords, $keywordF, $keywordB));
 			}
-			$process->print('0' . "\x0D\x0A");
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
 		} elsif (open (FILE, "<" . "plugins/webMonitor/WWW/" . $filename)) {
-			# We are going to be using chunk encoding, so make sure the proper
-			# headers are sent
-			$process->header("Transfer-Encoding", "chunked");
 			while (read FILE, my $buffer, 1024) {
-				chunkSend($process, $buffer);
+				$process->print($process, $buffer);
 			}
 			close FILE;
-			$process->print('0' . "\x0D\x0A");
 			
 		} else {
 			# our custom 404 message
@@ -296,40 +266,28 @@ sub replace {
 	return $source;
 }
 
-###
-# chunkSend (process, data, [parameters])
-# process: a process object from Base::Server::Webserver
-# data: data to be chunk encoded
-# parameters: optional parameters
-#
-# If the server wants to start sending a response before knowing its total
-# length, the data can be chunk-encoded. Make sure the header "Transfer-Enconding:
-# chunked" is scheduled before calling this function. That is:
-#
-# $process->header("Transfer-Encoding", "chunked");
-#
-# must have been called before any calls to this funuction.
-#
-# Example:
-# $process->header("Transfer-Encoding", "chunked");
-# my $data = "abcdefghijklmnopqrstuvwxyz"
-# chunkSend($process, $data, "part one of two");
-# ... (do some other stuff here that adds to $data) ...
-# chunkSend($process, $data, "part two of two");
-sub chunkSend {
+sub replaceArray {
+	my $source = shift;
+	my $keywords = shift;
+	my $markF = shift;
+	my $markB = shift;
+
+	foreach my $line (@{$source}) {
+		$line = replace($line, $keywords, $markF, $markB);
+	}
+}
+
+sub handle {
+	my $resources = shift;
 	my $process = shift;
-	my $data = shift;
-	my $parameters = shift;
+	my $content;
 
-	# The specs for chunk encoding call for sending the size of the chunk data
-	# in hexadecimal, followed by a semicolon, followed by parameters (which is
-	# usually ignored but included here for completion), followed by CRLF
-	my $dataHex = uc(sprintf "%lx", length $data);
-	$process->print($dataHex . ";$parameters\x0D\x0A");
-
-	# The data itself is then sent, followed by CRLF
-	$process->print($data . "\x0D\x0A");
-}	
+	foreach my $key (sort keys %{$resources}) {
+		$content .= "$key => " . $resources->{$key} . '<br>';
+	}
+	$content .= '<hr>';
+	$process->print($content);
+}
 
 sub contentType {
 	# TODO: make it so we don't depend on the filename extension for the content
