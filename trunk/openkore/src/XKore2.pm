@@ -210,7 +210,7 @@ sub clientSend {
 	my $msg = shift;
 	my $dontMod = shift;
 
-	$msg = $self->modifyPacketIn($msg) unless ($dontMod);
+	$msg = $self->modifyPacketIn($msg) unless ($dontMod || $self->{client_saved}{bypass_inMod});
 	if ($config{debugPacket_ro_received}) {
 		visualDump($msg, 'clientSend');
 	}
@@ -379,7 +379,7 @@ sub checkClient {
 	# Check if the client is active when the server is not.
 	if ($conState < 4 && $self->clientAlmostAlive && $self->{client_state} > 0) {
 		# Kick the client if they haven't logged in before
-		unless ($self->{client_state} == 5) {
+		unless ($self->{client_state} == 5 && !$self->{client_saved}{custom}) {
 			error "$self->{client_state}\n";
 			# "Blocked from server until ______"
 			$self->clientSend(pack('C3 Z20', 0x6A, 0, 6, "$Settings::NAME connects"),1);
@@ -392,7 +392,12 @@ sub checkClient {
 
 		} else {
 			# Plunk the user down in novice-land, and give them a warning that we got disconnected
-			$msg = pack('C2 Z16 v2', 0x91, 0, "new_1-1.gat", 53, 109);
+
+			# Allow the plugins to change the map
+			my ($map, $x, $y) = ('new_1-1.gat', 53, 109);
+			Plugins::callHook('XKore/map', {r_map => \$map, r_x => \$x, r_y => \$y});
+
+			$msg = pack('C2 Z16 v2', 0x91, 0, $map, $x, $y);
 			$self->clientSend($msg,1);
 			$self->{client_state} = -2;
 		}
@@ -436,6 +441,7 @@ sub checkClient {
 
 		# Didn't give an error to the client yet...
 		$self->{client_saved}{gave_error} = 0;
+		$self->{client_saved}{bypass_inMod} = 0;
 
 		undef $self->{client};
 		# Begin listening...
@@ -497,9 +503,19 @@ sub checkClient {
 		# Client sent MasterLogin
 		my ($version, $username, $password, $master_version) = unpack("x2 V Z24 Z24 C1", $msg);
 
-		# Check password against adminPassword
-		if ($password ne $config{adminPassword} ||
-		    lc($username) ne lc($config{username})) {
+		# Allow custom plugins to take over
+		$self->{client_saved}{custom} = 0;
+		Plugins::callHook('XKore/master_login', {version => $version,
+			username => $username,
+			password => $password,
+			master_version => $master_version,
+			r_customXKore => \$self->{client_saved}{custom}});
+
+		# Check login information
+		if (!$self->{client_saved}{custom} &&
+			($password ne $config{adminPassword} ||
+			lc($username) ne lc($config{username}))) {
+
 			error "XKore 2 failed login: Invalid Username and/or Password.\n", "connection";
 			$self->clientSend(pack('C3 x20', 0x6A, 00, 1),1);
 		} else {
@@ -544,6 +560,9 @@ sub checkClient {
 		# Send the character info packet
 		$msg = pack("C2 v", 0x6B, 0x00, length($charMsg) + 4) . $charMsg;
 
+		# Give any custom plugins a chance to change the packet before we send it.
+		Plugins::callHook('XKore/characters', {r_packet => \$msg});
+
 		$self->clientSend($msg,1);
 
 		debug "Game Login.\n", "connection";
@@ -566,8 +585,11 @@ sub checkClient {
 			($config{XKore_publicIp} || '127.0.0.1'));
 		$host = inet_ntoa('127.0.0.1') unless (defined $host);
 
+		my $map = $self->{client_saved}{map};
+		Plugins::callHook('XKore/map', {r_map => \$map});
+
 		# Send character and map info packet
-		$msg = pack('C2 a4 Z16 a4 v1', 0x71, 0, $charID, $self->{client_saved}{map},
+		$msg = pack('C2 a4 Z16 a4 v1', 0x71, 0, $charID, $map,
 				$host, $self->{client_listenPort});
 		$self->clientSend($msg,1);
 
@@ -609,9 +631,8 @@ sub checkClient {
 			$switch eq "00F5" )) ||
 		# serverType 0 - 2
 		($switch eq "0072" && (
-			$config{serverType} == 0 ||
-			$config{serverType} == 1 ||
-			$config{serverType} == 2 )) ||
+			$config{serverType} >= 0 &&
+			$config{serverType} <= 2 )) ||
 		# serverType 3, 5
 		($switch eq "009B" && (
 			$config{serverType} == 3 ||
@@ -625,10 +646,16 @@ sub checkClient {
 		# Send account ID
 		$self->clientSend($accountID,1);
 
+		my $x = $char->{pos_to}{x};
+		my $y = $char->{pos_to}{y};
+
+		# Allow an XKore plugin to change the coords
+		Plugins::callHook('XKore/map', {r_x => \$x, r_y => \$y});
+
 		# Generate the coords info
 		my $coords = "";
-		shiftPack(\$coords, $char->{pos_to}{x}, 10);
-		shiftPack(\$coords, $char->{pos_to}{y}, 10);
+		shiftPack(\$coords, $x, 10);
+		shiftPack(\$coords, $y, 10);
 		shiftPack(\$coords, 0, 4);
 
 		# Send map info
@@ -659,8 +686,14 @@ sub checkClient {
 		$msg = pack('C2 V a3 x2', 0x73, 0, time, $coords);
 		$self->clientSend($msg,1);
 
-		# Redirect them to the novice map
-		$msg = pack('C2 Z16 v2', 0x91, 0, "new_1-1.gat", 53, 109);
+		# Default to novice map
+		my ($map, $x, $y) = ('new_1-1.gat', 53, 109);
+
+		# Allow a custom plugin to change the map and coords
+		Plugins::callHook('XKore/map', {r_map => \$map, r_x => \$x, r_y => \$y});
+
+		# Redirect them to the map
+		$msg = pack('C2 Z16 v2', 0x91, 0, $map, $x, $y);
 		$self->clientSend($msg,1);
 
 		# Set to a special client_state
@@ -673,6 +706,9 @@ sub checkClient {
 
 	} elsif ($$c_state == 4 && ($switch eq "007D" || $switch eq "01C0")) {
 		# Client sent MapLoaded
+
+		# Save the original incoming message
+		my $msgIn = $msg;
 
 		$msg = "";
 
@@ -717,7 +753,7 @@ sub checkClient {
 
 		# Send status info
 		$msg .= pack('C2 a4 v3 x', 0x19, 0x01, $accountID, $char->{param1}, $char->{param2}, $char->{param3});
-		
+
 		# Send more status information
 		# TODO: Find a faster/better way of doing this? This seems cumbersome.
 		foreach my $ID (keys %{$char->{statuses}}) {
@@ -727,7 +763,7 @@ sub checkClient {
 				}
 			}
 		}
-		
+
 		# Send spirit sphere information
 		$msg .= pack('C2 a4 v', 0xD0, 0x01, $accountID, $char->{spirits}) if ($char->{spirits});
 
@@ -790,7 +826,7 @@ sub checkClient {
 
 			#if ($item->{
 		#}
-		
+
 		# Send info about items on the ground
 		foreach my $ID (@itemsID) {
 			$msg .= pack('C2 a4 v1 x1 v3 x2', 0x9D, 0x00, $ID, $items{$ID}{nameID},
@@ -874,7 +910,7 @@ sub checkClient {
 
 			$msg .= pack('C2 v', 0xD7, 0x00, length($chatMsg) + 4) . $chatMsg;
 		}
-		
+
 		# Send active ground effect skills
 		foreach my $ID (@skillsID) {
 			$msg .= pack('C2 a4 a4 v2 C2 x81', 0xC9, 0x01, $ID, $spells{$ID}{sourceID},
@@ -905,7 +941,7 @@ sub checkClient {
 			undef $partyMsg;
 			undef $num;
 		}
-		
+
 		# Send pet information
 		if (defined $pet{ID}) {
 			$msg .= pack('C2 C a4 V', 0xA4, 0x01, 0, $pet{ID}, 0);
@@ -932,6 +968,9 @@ sub checkClient {
 
 		debug "Map Loaded.\n", "connection";
 
+		# Continue the packet on to a plugin
+		Plugins::callHook('XKore/packet/out', {switch => $switch, r_packet => \$msgIn});
+
 		$$c_state = 5;
 
 	} elsif ($$c_state == 5) {
@@ -940,6 +979,9 @@ sub checkClient {
 
 	} elsif ($$c_state < 0) {
 		# Error while logging in, or disconnected from server...
+
+		# Save the msgIn for later use
+		my $msgIn = $msg;
 
 		$msg = "";
 
@@ -989,24 +1031,35 @@ sub checkClient {
 			$self->{client_state} = 0;
 		} else {
 
-			# Check if we've reestablished the connection with the server
-			if ($conState > 4 && $$c_state == -2) {
-				# Plunk the character back down in the regular map they're on, and
-				# tell them that we've reconnected.
-				$msg = "blueConnection reestablished. Enjoy. =)";
-				$msg = pack('C2 Z16 v2', 0x91, 0, $self->{client_saved}{map},
-					$char->{pos_to}{x}, $char->{pos_to}{y}) .
-					pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
-				$self->clientSend($msg,1);
-				$$c_state = 4;
-				$self->{client_saved}{gave_error} = 0;
-			} else {
-				$msg = "blueStill trying to connect...";
-				$msg = pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
-				$self->clientSend($msg,1);
+			# Do state-specific checks
+			if ($$c_state == -2) {
+				# Check if we've reestablished the check with the server
+				if ($conState > 4) {
+					# Plunk the character back down in the regular map they're on, and
+					# tell them that we've reconnected.
+					$msg = "blueConnection reestablished. Enjoy. =)";
+
+					# Allow client to change map and coords
+					my ($map, $x, $y) = ($self->{client_saved}{map}, $char->{pos_to}{x}, $char->{pos_to}{y});
+
+					Plugins::callHook('XKore/map', {r_map => \$map, r_x => \$x, r_y => \$y});
+
+					$msg = pack('C2 Z16 v2', 0x91, 0, $map, $x, $y) .
+						pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
+					$self->clientSend($msg,1);
+					$$c_state = 4;
+					$self->{client_saved}{gave_error} = 0;
+				} else {
+					$msg = "blueStill trying to connect...";
+					$msg = pack('C2 v Z'.(length($msg)+1).' x', 0x9A, 0x00, length($msg) + 6, $msg);
+					$self->clientSend($msg,1);
+				}
 			}
-		
+
 		}
+
+		# Continue the packet on to a plugin
+		Plugins::callHook('XKore/packet/out', {switch => $switch, r_packet => \$msgIn});
 
 	} else {
 		# Something wasn't right, kick the client
@@ -1029,6 +1082,9 @@ sub checkClient {
 #
 sub modifyPacketIn {
 	my ($self, $msg) = @_;
+	
+	return undef if (length($msg) < 1);
+	
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
 	if ($msg eq $accountID) {
@@ -1054,17 +1110,38 @@ sub modifyPacketIn {
 		unShiftPack(\$coords, \$y, 10);
 		unShiftPack(\$coords, \$x, 10);
 
+		# Allow a plugin to change the map information
+		my $map = $self->{client_saved}{map};
+
+		Plugins::callHook('XKore/map', {r_map => \$map, r_x => \$x, r_y => \$y});
+
 		# Generate a map-change packet (rather than a zone-change)
 		$msg = pack('C2 Z16 v2', 0x91, 0, $self->{client_saved}{map},
 			$x, $y);
+
+		# Don't send this packet to the plugins
+		return $msg;
 
 	} elsif ($switch eq "0081") {
 		# Don't send ban signals to the client
 		$msg = "";
 
 	} elsif ($switch eq "0091") {
-		# Save the mapname for client login
-		$self->{client_saved}{map} = substr($msg, 2, 16);
+		# Grab map and coordinates
+		my ($map, $x, $y) = unpack('x2 Z16 v2', $msg);
+
+		# Save the map name for client login
+		$self->{client_saved}{map} = $map;
+
+		# Allow plugins to change the map information
+		Plugins::callHook('XKore/map', {r_map => \$map, r_x => \$x, r_y => \$y});
+
+		# Generate the new map-change packet
+		$msg = pack('C2 Z16 v2', 0x91, 0, $map,
+			$x, $y);
+
+		# Don't send this packet to the plugin
+		return $msg;
 
 	} elsif ($switch eq "0092") {
 		# Save the mapname, and drop the packet until we connect to new
@@ -1072,6 +1149,13 @@ sub modifyPacketIn {
 		$self->{client_saved}{map} = substr($msg, 2, 16);
 		$msg = "";
 
+	}
+
+	# Continue the packet on to a plugin
+	if (length($msg) > 0) {
+		$self->{client_saved}{bypass_inMod} = 1;
+		Plugins::callHook('XKore/packet/in', {switch => $switch, r_packet => \$msg});
+		$self->{client_saved}{bypass_inMod} = 0;
 	}
 
 	return $msg;
@@ -1083,16 +1167,25 @@ sub modifyPacketIn {
 #
 sub modifyPacketOut {
 	my ($self, $msg) = @_;
+	
+	return undef if (length($msg) < 1);
+	
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
-	if (($switch eq "0072" && $config{serverType} == 0) ||
-		($switch eq "0072" && $config{serverType} == 1) ||
-		($switch eq "0072" && $config{serverType} == 2) ||
-		($switch eq "009B" && $config{serverType} == 3) ||
-		($switch eq "00F5" && $config{serverType} == 4) ||
-		($switch eq "009B" && $config{serverType} == 5) ||
-		($switch eq "0072" && $config{serverType} == 6)) {
+	if (($switch eq "0072" && (
+			$config{serverType} == 0 ||
+			$config{serverType} == 1 ||
+			$config{serverType} == 2 ||
+			$config{serverType} == 6 )) ||
+		($switch eq "009B" && (
+			$config{serverType} == 3 ||
+			$config{serverType} == 5 )) ||
+		($switch eq "00F5" &&
+			$config{serverType} == 4 )) {
 		# Fake the map login
+
+		# Looking over this again, I don't believe this part ever gets reached...
+		# TODO: Remove this section if it is unused.
 
 		# Generate the coords info
 		my $coords = "";
@@ -1111,13 +1204,16 @@ sub modifyPacketOut {
 		#
 		$msg = "";
 
-	} elsif (($switch eq "007E" && $config{serverType} == 0) ||
-		($switch eq "007E" && $config{serverType} == 1) ||
-		($switch eq "007E" && $config{serverType} == 2) ||
-		($switch eq "0089" && $config{serverType} == 3) ||
-		($switch eq "0116" && $config{serverType} == 4) ||
-		($switch eq "0089" && $config{serverType} == 5) ||
-		($switch eq "007E" && $config{serverType} == 6)) {
+	} elsif (($switch eq "007E" && (
+			$config{serverType} == 0 ||
+			$config{serverType} == 1 ||
+			$config{serverType} == 2 ||
+			$config{serverType} == 6 )) ||
+		($switch eq "0089" && (
+			$config{serverType} == 3 ||
+			$config{serverType} == 5 )) ||
+		($switch eq "0116" &&
+			$config{serverType} == 4 )) {
 		# Intercept the RO client's sync
 
 		$msg = "";
@@ -1137,6 +1233,10 @@ sub modifyPacketOut {
 
 		$self->clientSend(pack('C*', 0x8B, 0x01, 0, 0));
 	}
+
+	# Continue the packet on to a plugin
+	Plugins::callHook('XKore/packet/out', {switch => $switch, r_packet => \$msg})
+		if (length($msg) > 0);
 
 	return $msg;
 }
