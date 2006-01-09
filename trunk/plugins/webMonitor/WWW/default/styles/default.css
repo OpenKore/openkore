@@ -12,7 +12,7 @@ table.menu {
  text-align: center;
 }
 td.odd {
- background-image: url(/images/menu_bevel.jpg);
+ background-image: url(../images/menu_bevel.jpg);
  background-color: #a5b3b9;
 }
 

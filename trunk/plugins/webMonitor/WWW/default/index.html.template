@@ -6,7 +6,7 @@
 <!-- Template made by Bibian A.K.A. ViVi -->
 </HEAD>
 <BODY>
-<div id ="menu" style = "position:absolute; left:5px; top:5px; width:140px; height:524px; z-index:1"> 
+<div id ="menu" style = "position:absolute; left:5px; top:5px; width:100px; height:524px; z-index:1"> 
 	<table width="100px" class="menu">
 		<tr><td class="odd"><a href="status.html" target="data">Status</a></td></tr>
 		<tr><td class="even">Inventory</td></tr>
@@ -18,7 +18,7 @@
 		<tr><td class="even">Monsters</td></tr>
 		<tr><td class="odd">Items</td></tr>
 		<tr><td class="even">NPC's</td></tr>
-		<tr><td class="odd">???</td></tr>
+		<tr><td class="odd">Skills</td></tr>
 		<tr><td class="even">???</td></tr>
 		<tr><td class="odd">???</td></tr>
 		<tr><td class="even">???</td></tr>
