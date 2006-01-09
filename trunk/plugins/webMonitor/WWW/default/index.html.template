@@ -5,8 +5,8 @@
 
 <head>
 	<meta http-equiv="content-type" content="application/xhtml+xml" />
-	<link rel="styleSheet" type="text/css" href="styles.css" />
-	<link rel="stylesheet" type="text/css" href="color-scheme.css" />	
+	<link rel="styleSheet" type="text/css" href="styles/styles.css" />
+	<link rel="stylesheet" type="text/css" href="styles/color-scheme.css" />	
 	<title>$characterName$: B$characterLevel$ ($characterBasePercent$%), J$characterJobLevel$ ($characterJobPercent$%), : w$characterWeightPercent$% : $characterLocationX$,$characterLocationY$ $characterLocationMap$ - OpenKore webMonitor</title>
 </head>
 
@@ -35,6 +35,8 @@ SP percent: $characterSPPercent$%<br>
 <p>
 Location: $characterLocationX$, $characterLocationY$<br>
 </div>
-<img src="logo.jpg" />
-<IFRAME name="console" src="console" frameborder=0 scrolling=auto width=625 height=400></IFRAME>
+<img src="images/logo.jpg" />
+<h3>$version$<br>
+Note: this console thing is only proof of concept! Do not use this URL!</h3>
+<IFRAME name="console" src="/console" frameborder=0 scrolling=auto width=625 height=400></IFRAME>
 </body>
