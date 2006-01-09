@@ -79,9 +79,42 @@ sub cHook {
 sub request {
 	my ($self, $process) = @_;
 	my $content = '';
+
+	# We then inspect the headers the client sent us to see if there are any
+	# resources that was sent
+	my %resources = %{$process->{GET}};
 	
+	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
+	my $filename = $process->file;
+	$filename .= 'index.html' if ($filename =~ /\/$/);
+
+	my (@unusable, @usable, @equipment, @uequipment);
+	for (my $i; $i < @{$char->{inventory}}; $i++) {
+		my $item = $char->{inventory}[$i];
+		next unless $item && %{$item};
+		
+		if (($item->{type} == 3 || $item->{type} == 6 ||
+			$item->{type} == 10) && !$item->{equipped})
+		{
+			push @unusable, $item->{name};
+		} elsif ($item->{type} <= 2) {
+			push @usable, $item->{name};
+		} else {
+			if ($item->{equipped}) {
+				push @equipment, $item->{name};
+			} else {
+				push @uequipment, $item->{name};
+			}
+		}
+	}
+
 	%keywords =	(
-		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
+		"\@inventoryEquipped" => \@equipment,
+		"\@inventoryUnequipped" => \@uequipment,
+		"\@inventoryUsable" => \@usable,
+		"\@inventoryUnusable" => \@unusable,
+		"\@consoleMessages" => \@messages,
+		"\@characterStatuses" => (keys %{$char->{statuses}}) || 'none',
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
 		'characterSex' => $sex_lut{$char->{sex}},
@@ -160,21 +193,13 @@ sub request {
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field{name},
-		'lastConsoleMessage' => quotemeta $messages[-1],
+		'lastConsoleMessage' => $messages[-1],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
 		'startLoop' => '',
 		'endLoop' => '',
-		#'\@consoleMessages' => @messages,
+		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 	);
-
-	# We then inspect the headers the client sent us to see if there are any
-	# resources that was sent
-	my %resources = %{$process->{GET}};
 	
-	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
-	my $filename = $process->file;
-	$filename .= 'index.html' if ($filename =~ /\/$/);
-
 	if ($filename eq '/handler') {
 		handle(\%resources, $process);
 		return;
@@ -233,6 +258,7 @@ sub request {
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
 		} elsif (open (FILE, "<" . "plugins/webMonitor/WWW/" . $filename)) {
+			binmode FILE;
 			while (read FILE, my $buffer, 1024) {
 				$process->print($buffer);
 			}
@@ -240,6 +266,7 @@ sub request {
 			
 		} else {
 			# our custom 404 message
+			$process->header("Content-Type", 'text/html');
 			$process->status(404, "File Not Found");
 			$content .= "<h1>File " . $filename . " not found.</h1>";
 			$process->shortResponse($content);
@@ -291,11 +318,13 @@ sub handle {
 		$process->print($keywords{$resources->{requestVar}});
 	}
 
+	# make sure this is the last resource to be checked
 	if ($resources->{page}) {
 		my $filename = $resources->{page};
 		$filename .= 'index.html' if ($filename =~ /\/$/);
 
-		$process->header('Location', $filename);
+		# hooray for standards-compliance
+ 		$process->header('Location', $filename);
 		$process->status(303, "See Other");
 		$process->print();
 	}
@@ -341,7 +370,7 @@ sub contentType {
 	} elsif (lc($extension) eq "pdf") {
 		return "application/pdf";
 	} else {
-		return "text/html";
+		return "application/x-unknown";
 	}
 }
 
