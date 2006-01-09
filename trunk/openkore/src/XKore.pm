@@ -245,8 +245,8 @@ sub checkConnection {
 	my $printed;
 	my $pid;
 	# Wait until the RO client has started
-	while (!($pid = WinUtils::GetProcByName($config{exeName}))) {
-		message("Please start the Ragnarok Online client ($config{exeName})\n", "startup") unless $printed;
+	while (!($pid = WinUtils::GetProcByName($config{XKore_exeName}))) {
+		message("Please start the Ragnarok Online client ($config{XKore_exeName})\n", "startup") unless $printed;
 		$printed = 1;
 		$interface->iterate;
 		if (defined(my $input = $interface->getInput(0))) {
