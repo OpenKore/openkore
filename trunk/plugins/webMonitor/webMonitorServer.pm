@@ -24,6 +24,7 @@ use Globals;
 use Log qw(message debug);
 use Utils;
 use Log;
+use Commands;
 
 ###
 # cHook
@@ -85,7 +86,7 @@ sub request {
 	
 	# We then inspect the headers the client sent us to see if there are any
 	# resources that was sent
-	my %resources = $process->{GET};
+	my %resources = %{$process->{GET}};
 	
 	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
 	my $filename = $process->file;
@@ -161,7 +162,7 @@ sub request {
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field{name},
 		'lastConsoleMessage' => $messages[-1],
-		'skin' => 'default', # TODO: replace with config.txt entry for the skin
+		'skin' => 'bibian', # TODO: replace with config.txt entry for the skin
 	);
 	
 	# Markers signal the parser that the word encountered is a keyword. Since we
@@ -173,10 +174,20 @@ sub request {
 	my $arrayB = '\@';		# array back
 
 	if ($filename eq '/handler') {
-		handle(\%resources, $process);
-
+		$filename = handle(\%resources) || '/';
+		$process->print('<HTML>');
+		$process->print('<HEAD>');
+		$process->print('<META HTTP-EQUIV="refresh" content="0;URL='.$filename.'">');
+		$process->print('<TITLE>Redirecting</TITLE>');
+		$process->print('</HEAD>');
+		$process->print('<BODY>');
+		$process->print('Request received for processing. Redirecting you to: '.$filename);
+		$process->print('</BODY>');
+		$process->print('</HTML>');
+		return;
+	}
 	# TODO: will be removed later
-	} elsif ($filename eq '/variables') {
+	if ($filename eq '/variables') {
 		# Reload the page every 5 seconds
 		$content .= '<head><meta http-equiv="refresh" content="5"></head>';
 		
@@ -279,14 +290,14 @@ sub replaceArray {
 
 sub handle {
 	my $resources = shift;
-	my $process = shift;
 	my $content;
 
 	foreach my $key (sort keys %{$resources}) {
-		$content .= "$key => " . $resources->{$key} . '<br>';
+		if ($key eq 'command') {
+			Commands::run($resources->{command});
+		}
 	}
-	$content .= '<hr>';
-	$process->print($content);
+	return $resources->{page};
 }
 
 sub contentType {
