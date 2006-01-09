@@ -1,42 +1,32 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-
-<head>
-	<meta http-equiv="content-type" content="application/xhtml+xml" />
-	<link rel="styleSheet" type="text/css" href="styles/styles.css" />
-	<link rel="stylesheet" type="text/css" href="styles/color-scheme.css" />	
-	<title>$characterName$: B$characterLevel$ ($characterBasePercent$%), J$characterJobLevel$ ($characterJobPercent$%), : w$characterWeightPercent$% : $characterLocationX$,$characterLocationY$ $characterLocationMap$ - OpenKore webMonitor</title>
-</head>
-
-<body>
-<h1>$characterName$</h1>
-<div class = "LHS">
-Level: $characterLevel$<br>
-Job Level: $characterJobLevel$<br>
-Zeny: $characterZeny$<br>
-Str: $characterStr$<br>
-Agi: $characterAgi$<br>
-Vit: $characterVit$<br>
-Int: $characterInt$<br>
-Dex: $characterDex$<br>
-Luk: $characterLuk$<br>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+<LINK href="styles/default.css" type=text/css rel=stylesheet>
+<title>Botmonitor $version$ monitoring: $characterName$ - $characterJob$ $characterSex$ </title>
+<!-- Template made by Bibian A.K.A. ViVi -->
+</HEAD>
+<BODY>
+<div id ="menu" style = "position:absolute; left:5px; top:5px; width:140px; height:524px; z-index:1"> 
+	<table width="100px" class="menu">
+		<tr><td class="odd"><a href="status.html" target="data">Status</a></td></tr>
+		<tr><td class="even">Inventory</td></tr>
+		<tr><td class="odd">Report</td></tr>
+		<tr><td class="even">Chatlog</td></tr>
+		<tr><td class="odd">Guild</td></tr>
+		<tr><td class="even">Shop</td></tr>
+		<tr><td class="odd">Players</td></tr>
+		<tr><td class="even">Monsters</td></tr>
+		<tr><td class="odd">Items</td></tr>
+		<tr><td class="even">NPC's</td></tr>
+		<tr><td class="odd">???</td></tr>
+		<tr><td class="even">???</td></tr>
+		<tr><td class="odd">???</td></tr>
+		<tr><td class="even">???</td></tr>
+		<tr><td class="odd">Advanced</td></tr>
+	</table>
 </div>
-<div class = "RHS">
-<p>
-Base experience: $characterBaseExp$<br>
-Job experience: $characterJobExp$<br>
-Base experience(%): $characterBasePercent$%<br>
-Job experience(%): $characterJobPercent$%<br>
-<p>
-HP percent: $characterHPPercent$%<br>
-SP percent: $characterSPPercent$%<br>
-<p>
-Location: $characterLocationX$, $characterLocationY$<br>
-</div>
-<img src="images/logo.jpg" />
-<h3>$version$<br>
-Note: this console thing is only proof of concept! Do not use this URL!</h3>
-<IFRAME name="console" src="/console" frameborder=0 scrolling=auto width=625 height=400></IFRAME>
-</body>
+<div id ="data" style = "position:absolute; left:150px; top:5px; width:800px; height:524px; z-index:2"> 
+	<IFRAME name="data" src="status.html" frameborder=0 scrolling=auto width=800 height=524></IFRAME>
+</div>	
+</BODY>
+</HTML>
