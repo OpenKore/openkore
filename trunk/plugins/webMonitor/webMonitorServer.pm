@@ -26,6 +26,16 @@ use Utils;
 use Log;
 use Commands;
 
+# Keywords are specific fields in the template that will eventually get
+# replaced by dynamic content.
+my %keywords;
+
+# Markers signal the parser that the word encountered is a keyword. Since we
+# are going to be using regexp, make sure to escape any non-alphanumeric
+# characters in the marker string.
+my $keywordF = '\$';	# keyword front
+my $keywordB = '\$';	# keyword back
+
 ###
 # cHook
 #
@@ -50,7 +60,8 @@ sub cHook {
 		$microseconds = substr($microseconds, 0, 2);
 		my $message = "[".getFormattedDate(int(time)).".$microseconds] ".$messages;	
 	
-		push(@messages, $message);
+		# TODO: make this configurable (doesn't prepend the time for now)
+		push(@messages, $messages);
 
 		# Make sure we don't let @messages grow too large
 		# TODO: make the message size configurable
@@ -69,32 +80,7 @@ sub request {
 	my ($self, $process) = @_;
 	my $content = '';
 	
-	# We inspect the headers sent by the browser.
-	# In order to comply with HTTP 1.1 specs, we need to require the Host header
-	# from the client's request. This really isn't a problem, as most modern
-	# browsers will send the host header by default; also we don't really have
-	# much use for this information either.
-	if (!$process->clientHeader('Host')) {
-		$process->status(400, "Bad Request");
-		$content .= '<html><body>\n';
-		$content .= '<h2>No Host: header received</h2>\n';
-		$content .= 'HTTP 1.1 requests must include the Host: header.\n';
-		$content .= '</body></html>';
-		$process->shortResponse($content);
-		return;
-	}
-	
-	# We then inspect the headers the client sent us to see if there are any
-	# resources that was sent
-	my %resources = %{$process->{GET}};
-	
-	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
-	my $filename = $process->file;
-	$filename .= 'index.html' if ($filename =~ /\/$/);
-
-	# Keywords are specific fields in the template that will eventually get
-	# replaced by dynamic content.
-	my %keywords =	(
+	%keywords =	(
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
@@ -161,29 +147,23 @@ sub request {
 		'characterLocationX' => $char->position()->{x},
 		'characterLocationY' => $char->position()->{y},
 		'characterLocationMap' => $field{name},
-		'lastConsoleMessage' => $messages[-1],
-		'skin' => 'bibian', # TODO: replace with config.txt entry for the skin
+		'lastConsoleMessage' => quotemeta $messages[-1],
+		'skin' => 'default', # TODO: replace with config.txt entry for the skin
+		'startLoop' => '',
+		'endLoop' => '',
+		#'\@consoleMessages' => @messages,
 	);
+
+	# We then inspect the headers the client sent us to see if there are any
+	# resources that was sent
+	my %resources = %{$process->{GET}};
 	
-	# Markers signal the parser that the word encountered is a keyword. Since we
-	# are going to be using regexp, make sure to escape any non-alphanumeric
-	# characters in the marker string.
-	my $keywordF = '\$';	# keyword front
-	my $keywordB = '\$';	# keyword back
-	my $arrayF = '\@';		# array front
-	my $arrayB = '\@';		# array back
+	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
+	my $filename = $process->file;
+	$filename .= 'index.html' if ($filename =~ /\/$/);
 
 	if ($filename eq '/handler') {
-		$filename = handle(\%resources) || '/';
-		$process->print('<HTML>');
-		$process->print('<HEAD>');
-		$process->print('<META HTTP-EQUIV="refresh" content="0;URL='.$filename.'">');
-		$process->print('<TITLE>Redirecting</TITLE>');
-		$process->print('</HEAD>');
-		$process->print('<BODY>');
-		$process->print('Request received for processing. Redirecting you to: '.$filename);
-		$process->print('</BODY>');
-		$process->print('</HTML>');
+		handle(\%resources, $process);
 		return;
 	}
 	# TODO: will be removed later
@@ -233,7 +213,7 @@ sub request {
 			# Here we inspect each line of the template, and replace the
 			# keywords with their proper content. Then we chunk send the line to
 			# the browser
-			foreach my $line (@{replaceArray(\@template, \%keywords, $keywordF, $keywordB)}) {
+			foreach my $line (@{replaceArray(\@template, $keywordF, $keywordB)}) {
 				$process->print($line);
 			}
 
@@ -255,22 +235,18 @@ sub request {
 }
 
 ###
-# replace (source, keywords, markF, markB)
+# replaceLine (source, keywords, markF, markB)
 # source: the string to do replacements on
-# keywords: a hash containing the keyword and the replacement string
 # markF: front delimiter to identify a keyword
 # markB: back delimiter to identify a keyword
 sub replaceLine {
 	my $source = shift;
-	my $keywords = shift;
 	my $markF = shift;
 	my $markB = shift;
 
 	# TODO: find a more optimized way of reading and replacing template
 	# variables
-	while ((my $key, my $value) = each %{$keywords}) {
-		# TODO: find a way to iterate through marked keywords and replace
-		# an array variable with multiple instances of itself.
+	while ((my $key, my $value) = each %keywords) {
 		$source =~ s/$markF$key$markB/$value/sg;
 	}
 	return $source;
@@ -278,26 +254,38 @@ sub replaceLine {
 
 sub replaceArray {
 	my $source = shift;
-	my $keywords = shift;
 	my $markF = shift;
 	my $markB = shift;
 
 	foreach my $line (@{$source}) {
-		$line = replaceLine($line, $keywords, $markF, $markB);
+		# TODO: find a way to iterate through marked keywords and replace
+		# an array variable with multiple instances of itself.
+		$line = replaceLine($line, $markF, $markB);
 	}
 	return $source;
 }
 
 sub handle {
 	my $resources = shift;
-	my $content;
+	my $process = shift;
+	my $retval;
 
-	foreach my $key (sort keys %{$resources}) {
-		if ($key eq 'command') {
-			Commands::run($resources->{command});
-		}
+	if ($resources->{command}) {
+		Commands::run($resources->{command});
 	}
-	return $resources->{page};
+	
+	if ($resources->{requestVar}) {
+		$process->print($keywords{$resources->{requestVar}});
+	}
+
+	if ($resources->{page}) {
+		my $filename = $resources->{page};
+		$filename .= 'index.html' if ($filename =~ /\/$/);
+
+		$process->header('Location', $filename);
+		$process->status(303, "See Other");
+		$process->print();
+	}
 }
 
 sub contentType {
