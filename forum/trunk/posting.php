@@ -96,8 +96,8 @@ init_userprefs($userdata);
 $my_user_time = localtime($userdata['user_regdate'], 1);
 if ($my_user_time['tm_year'] > 103) {
 	// User is registered after 2004
-	if ($_COOKIE['openkore_forum_read_rules2'] != '1' && $_GET['f'] == '4') {
-		header("Location: /forum.php?redirect=" . urlencode($_SERVER['REQUEST_URI']));
+	if ($_COOKIE['openkore_forum_read_rules'] != '1' && $_GET['f'] == '4') {
+		header("Location: /enter.php?redirect=" . urlencode($_SERVER['REQUEST_URI']));
 		exit;
 	}
 }

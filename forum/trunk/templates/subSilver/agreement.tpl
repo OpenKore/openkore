@@ -1,1 +1,1 @@
-<a href="/forum.php?redirect=%2Fforum%2Fprofile.php%3Fmode%3Dregister%26agreed%3Dtrue">Click here.</a>
+<a href="/enter.php?redirect=%2Fprofile.php%3Fmode%3Dregister%26agreed%3Dtrue">Click here.</a>

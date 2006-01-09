@@ -244,7 +244,8 @@ CREATE TABLE mailer (
 			$empty_to_header = ($to == '') ? TRUE : FALSE;
 			$to = ($to == '') ? (($board_config['sendmail_fix']) ? ' ' : 'Undisclosed-recipients:;') : $to;
 	
-			$result = $this->savemail($db, $to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->extra_headers);
+			#$result = $this->savemail($db, $to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->extra_headers);
+			$result = @mail($to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->extra_headers);
 			
 			if (!$result && !$board_config['sendmail_fix'] && $empty_to_header)
 			{
