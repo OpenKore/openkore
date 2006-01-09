@@ -5,6 +5,7 @@
 *** INCOMPATIBLE CHANGES ***:
 - Typo'd packet name actor_died_or_disappeard renamed to
   actor_died_or_disappeared.
+- Config option 'exeName' renamed to 'XKore_exeName'.
 
 Bug fixes:
 - Fixed partySkill_0 block ignoring timeouts due to the a bug in
