@@ -658,7 +658,7 @@ sub AI {
 		sub isSuspicious {
 			# Check whether this actor is used to detect bots.
 			my ($object) = @_;
-			return $object->{statuses}{"GM Perfect Hide"} || distance($char->{pos_to}, $object->{pos_to}) > 16;
+			return $object->{statuses}{"GM Perfect Hide"} || distance($char->{pos_to}, $object->{pos_to}) > 19;
 		}
 
 		while (@unknownObjects) {
