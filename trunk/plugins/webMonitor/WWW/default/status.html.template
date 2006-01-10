@@ -206,7 +206,7 @@
 	<table class="status" width="50%">
 	<CAPTION>Statusses</CAPTION>
 	<tr>
-		<td class="status">Some statusses $startLoop$$@characterStatuses$ $endLoop$</td>
+		<td class="status">Some statusses $characterStatuses$</td>
 	</tr>
 	</table>
 </div>

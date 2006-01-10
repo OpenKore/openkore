@@ -25,6 +25,7 @@ use Log qw(message debug);
 use Utils;
 use Log;
 use Commands;
+use template;
 
 # Keywords are specific fields in the template that will eventually get
 # replaced by dynamic content.
@@ -110,12 +111,12 @@ sub request {
 	my @statuses = (keys %{$char->{statuses}});
 
 	%keywords =	(
-		"\@inventoryEquipped" => \@equipment,
-		"\@inventoryUnequipped" => \@uequipment,
-		"\@inventoryUsable" => \@usable,
-		"\@inventoryUnusable" => \@unusable,
-		"\@consoleMessages" => \@messages,
-		"\@characterStatuses" => \@statuses,
+		'inventoryEquipped' => \@equipment,
+		'inventoryUnequipped' => \@uequipment,
+		'inventoryUsable' => \@usable,
+		'inventoryUnusable' => \@unusable,
+		'consoleMessages' => \@messages,
+		'characterStatuses' => \@statuses,
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
 		'characterSex' => $sex_lut{$char->{sex}},
@@ -170,7 +171,7 @@ sub request {
 		'characterFlee' => $char->{flee},
 		'characterFleeBonus' => $char->{flee_bonus},
 		'characterSpirits' => $char->{spirits} || 'none',
-		
+	
 		'characterBaseExp' => $char->{exp},
 		'characterBaseMax' => $char->{exp_max},
 		'characterBasePercent' => $char->{exp_max} ?
@@ -244,18 +245,12 @@ sub request {
 		# respect this header.
 		$process->header("Content-Type", contentType($filename));
 
-		# The file requested has an associated template. Do a replacement.
-		if (open (TEMPLATE, "<" . "plugins/webMonitor/WWW/" . $filename . '.template')) {
-			my @template = <TEMPLATE>;
-			close (TEMPLATE);
+		my $file = new template("plugins/webMonitor/WWW/" . $filename . '.template');
 
-			# Here we inspect each line of the template, and replace the
-			# keywords with their proper content. Then we chunk send the line to
-			# the browser
-			foreach my $line (@{replaceArray(\@template, $keywordF, $keywordB)}) {
-				$process->print($line);
-			}
-			$process->print('0');
+		# The file requested has an associated template. Do a replacement.
+		if ($file->{template}) {
+			$content = $file->replace(\%keywords, '\$', '\$');
+			$process->shortResponse($content);
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
@@ -275,37 +270,6 @@ sub request {
 			$process->shortResponse($content);
 		}
 	}
-}
-
-###
-# replaceLine (source, keywords, markF, markB)
-# source: the string to do replacements on
-# markF: front delimiter to identify a keyword
-# markB: back delimiter to identify a keyword
-sub replaceLine {
-	my $source = shift;
-	my $markF = shift;
-	my $markB = shift;
-
-	# TODO: find a more optimized way of reading and replacing template
-	# variables
-	while ((my $key, my $value) = each %keywords) {
-		$source =~ s/$markF$key$markB/$value/sg;
-	}
-	return $source;
-}
-
-sub replaceArray {
-	my $source = shift;
-	my $markF = shift;
-	my $markB = shift;
-
-	foreach my $line (@{$source}) {
-		# TODO: find a way to iterate through marked keywords and replace
-		# an array variable with multiple instances of itself.
-		$line = replaceLine($line, $markF, $markB);
-	}
-	return $source;
 }
 
 sub handle {
