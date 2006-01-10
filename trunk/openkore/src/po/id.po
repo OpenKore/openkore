@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-10 12:38+0800\n"
+"POT-Creation-Date: 2006-01-10 22:39+0800\n"
 "PO-Revision-Date: 2006-01-05 23:21+0700\n"
 "Last-Translator: Richard <h4rry84@telkom.net>\n"
 "Language-Team: Indonesian\n"
@@ -1058,52 +1058,52 @@ msgstr ""
 "\n"
 "Auto-restart!!\n"
 
-#: ../functions.pl:697
-msgid "Auto-denying party request\n"
-msgstr "Menolak secara otomatis Permintaan party\n"
-
-#: ../functions.pl:699
-msgid "Auto-accepting party request\n"
-msgstr "Menerima secara otomatis permintaan party\n"
-
-#: ../functions.pl:963
+#: ../functions.pl:761
 #, perl-format
 msgid "Done talking with %s.\n"
 msgstr "Selesai berbicara dengan %s.\n"
 
-#: ../functions.pl:1032
+#: ../functions.pl:2078
+msgid "Auto-denying party request\n"
+msgstr "Menolak secara otomatis Permintaan party\n"
+
+#: ../functions.pl:2080
+msgid "Auto-accepting party request\n"
+msgstr "Menerima secara otomatis permintaan party\n"
+
+#: ../functions.pl:2234
 #, perl-format
 msgid "Arrived at waypoint %s\n"
 msgstr "Tiba di waypoint %s\n"
 
-#: ../functions.pl:1090
+#: ../functions.pl:2292
 msgid "Auto-storaging due to death\n"
 msgstr "Storage secara otomatis dikarenakan mati\n"
 
-#: ../functions.pl:1095
+#: ../functions.pl:2297
 msgid "Moving to "
 msgstr "Berjalan ke"
 
-#: ../functions.pl:1113
+#: ../functions.pl:2315
 msgid "Disconnecting on death!\n"
 msgstr "Disconnecting saat mati!\n"
 
-#: ../functions.pl:1240
+#: ../functions.pl:2414
 msgid "Auto-storaging due to excess weight\n"
 msgstr "Storage secara otomatis dikarenakan kelebihan berat\n"
 
-#: ../functions.pl:1334
+#: ../functions.pl:2508
 msgid "Teleporting to auto-storage\n"
 msgstr "Teleport untuk auto-storage\n"
 
-#: ../functions.pl:1566
+#: ../functions.pl:2740
 msgid "Auto-sell sequence completed.\n"
 msgstr "Sequence menjual secara otomatis Selesai.\n"
 
-#: ../functions.pl:1602
+#: ../functions.pl:2776
 msgid "Teleporting to auto-sell\n"
 msgstr "Teleport untuk menjual secara otomatis\n"
 
-#: ../functions.pl:1774
+#: ../functions.pl:2948
 msgid "Teleporting to auto-buy\n"
 msgstr "Teleport untuk membeli secara otomatis\n"
