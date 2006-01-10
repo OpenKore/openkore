@@ -56,6 +56,7 @@ sub new {
 
 sub DESTROY {
 	my $self = shift;
+
 	Plugins::delHooks($self->{hooks});
 }
 
@@ -217,8 +218,9 @@ sub initGUI {
 
 	$self->{Menu} = Win32::GUI::MakeMenu (
 	    "Open&Kore" => "Kore",
-	    "   > &Pause" => { -name => "pause", -onclick => \&compause },
-	    "	  > &Resume" => { -name => "resume", -onclick => \&comresume },
+	    "   > &Pause" => { -name => "pause", -onClick => \&compause },
+	    "	  > &Manual" => { -name => "manual", -onClick => \&commanual },
+	    "	  > &Resume" => { -name => "resume", -onClick => \&comresume },
 	    "   > E&xit" 	=> { -name => "Kore_Exit", -onClick => \&onExit },
 	    "&View" => "View",
 	    "   > View &Map" 	=> { -name => "View_Map", -onClick => \&openMap },
@@ -669,8 +671,11 @@ sub openMap {
 sub compause {
 	$AI = 0;
 }
-sub comresume {
+sub commanual {
 	$AI = 1;
+}
+sub comresume {
+	$AI = 2;
 }
 sub comstatus {
 Commands::run("s"); 
