@@ -430,17 +430,17 @@ sub account_server_info {
 	message("-------------------------------\n", 'connection');
 
 	if ($net->version != 1) {
-		message(T("Closing connection to Account Server\n"), 'connection');
+		message T("Closing connection to Account Server\n"), 'connection';
 		$net->serverDisconnect();
 		if (!$masterServer->{charServer_ip} && $config{server} eq "") {
-			message(T("Choose your server.  Enter the server number: "), "input");
+			message T("Choose your server.  Enter the server number: "), "input";
 			$waitingForInput = 1;
 
 		} elsif ($masterServer->{charServer_ip}) {
-			message(TF("Forcing connect to char server %s:%s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection');	
+			message TF("Forcing connect to char server %s:%s\n", $masterServer->{charServer_ip}, $masterServer->{charServer_port}), 'connection';	
 			
 		} else {
-			message(TF("Server %s selected\n",$config{server}), 'connection');
+			message TF("Server %s selected\n",$config{server}), 'connection';
 		}
 	}
 }
@@ -938,11 +938,11 @@ sub actor_display {
 			# Shouldn't this have a more specific hook name?
 			Plugins::callHook('player', {player => $actor});
 		} elsif ($type eq "NPC") {
-			message "NPC Exists: $actor->{name} ($actor->{pos}{x}, $actor->{pos}{y}) (ID $actor->{nameID}) - ($actor->{binID})\n", "parseMsg_presence", 1;
+			message TF("NPC Exists: %s (%s, %s) (ID %s) - (%s)\n", $actor->{name}, $actor->{pos}{x}, $actor->{pos}{y}, $actor->{nameID}, $actor->{binID}), "parseMsg_presence", 1;
 		} elsif ($type eq "Portal") {
-			message "Portal Exists: $actor->{name} ($coordsTo{x}, $coordsTo{y}) - ($actor->{binID})\n", "portals", 1;
+			message TF("Portal Exists: %s (%s, %s) - (%s)\n", $actor->{name}, $coordsTo{x}, $coordsTo{y}, $actor->{binID}), "portals", 1;
 		} else {
-			debug "$type Exists: $actor->{name} ($actor->{binID})\n", "parseMsg_presence", 1;
+			debug TF("%s Exists: %s (%s)\n", $type, $actor->{name}, $actor->{binID}), "parseMsg_presence", 1;
 		}
 
 	} elsif ($args->{switch} eq "0079" ||
@@ -1131,7 +1131,7 @@ sub actor_exists {
 			$portals{$args->{ID}}{'binID'} = binFind(\@portalsID, $args->{ID});
 		}
 		%{$portals{$args->{ID}}{'pos'}} = %coords;
-		message "Portal Exists: $portals{$args->{ID}}{'name'} ($coords{x}, $coords{y}) - ($portals{$args->{ID}}{'binID'})\n", "portals", 1;
+		message TF("Portal Exists: %s (%s, %s) - (%s)\n", $portals{$args->{ID}}{'name'}, $coords{x}, $coords{y}, $portals{$args->{ID}}{'binID'}), "portals", 1;
 
 	} elsif ($args->{type} < 1000) {
 		if (!$npcs{$args->{ID}} || !%{$npcs{$args->{ID}}}) {
@@ -1150,7 +1150,7 @@ sub actor_exists {
 		} else {
 			$npcs{$args->{ID}}{pos} = {%coords};
 		}
-		message "NPC Exists: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}) (ID $npcs{$args->{ID}}{'nameID'}) - ($npcs{$args->{ID}}{'binID'})\n", undef, 1;
+		message TF("NPC Exists: %s (%s, %s) (ID %s) - (%s)\n", $npcs{$args->{ID}}{'name'}, $npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}, $npcs{$args->{ID}}{'nameID'}, $npcs{$args->{ID}}{'binID'}), undef, 1;
 
 		objectAdded('npc', $args->{ID}, $npcs{$args->{ID}}) if ($added);
 
@@ -1532,7 +1532,7 @@ sub actor_spawned {
 		} else {
 			$npcs{$args->{ID}}{pos} = {%coords};
 		}
-		message "NPC Spawned: $npcs{$args->{ID}}{'name'} ($npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}) (ID $npcs{$args->{ID}}{'nameID'}) - ($npcs{$args->{ID}}{'binID'})\n", undef, 1;
+		message TF("NPC Spawned: %s (%s, %s) (ID %s) - (%s)\n", $npcs{$args->{ID}}{'name'}, $npcs{$args->{ID}}{pos}{x}, $npcs{$args->{ID}}{pos}{y}, $npcs{$args->{ID}}{'nameID'}, $npcs{$args->{ID}}{'binID'}), undef, 1;
 
 		objectAdded('npc', $args->{ID}, $npcs{$args->{ID}}) if ($added);
 
@@ -1605,7 +1605,7 @@ sub arrow_equipped {
 		$char->{equipment}{arrow} = $char->{inventory}[$invIndex];
 		$char->{inventory}[$invIndex]{equipped} = 32768;
 		$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
-		message "Arrow equipped: $char->{inventory}[$invIndex]{name} ($invIndex)\n";
+		message TF("Arrow equipped: %s (%s)\n", $char->{inventory}[$invIndex]{name}, $invIndex);
 	}
 }
 
@@ -1643,7 +1643,7 @@ sub arrowcraft_list {
 		binAdd(\@arrowCraftID, $index);
 	}
 	
-	message "Received Possible Arrow Craft List - type 'arrowcraft'\n";
+	message T("Received Possible Arrow Craft List - type 'arrowcraft'\n");
 }
 
 sub attack_range {
@@ -1653,7 +1653,7 @@ sub attack_range {
 	debug "Your attack range is: $type\n";
 	$char->{attack_range} = $type;
 	if ($config{attackDistanceAuto} && $config{attackDistance} != $type) {
-		message(TF("Autodetected attackDistance = %s\n", $type), "success");
+		message TF("Autodetected attackDistance = %s\n", $type), "success";
 		configModify('attackDistance', $type, 1);
 		configModify('attackMaxDistance', $type, 1);
 	}	
@@ -1662,7 +1662,7 @@ sub attack_range {
 sub buy_result {
 	my ($self, $args) = @_;
 	if ($args->{fail} == 0) {
-		message(T("Buy completed.\n"), "success");
+		message T("Buy completed.\n"), "success";
 	} elsif ($args->{fail} == 1) {
 		error T("Buy failed (insufficient zeny).\n");
 	} elsif ($args->{fail} == 2) {
@@ -1714,7 +1714,7 @@ sub card_merge_status {
 	} else {
 		my $item_invindex = findIndex($char->{inventory}, "index", $item_index);
 		my $card_invindex = findIndex($char->{inventory}, "index", $card_index);
-		message "$char->{inventory}[$card_invindex]{name} has been successfully merged into $char->{inventory}[$item_invindex]{name}\n", "success";
+		message TF("%s has been successfully merged into %s\n", $char->{inventory}[$card_invindex]{name}, $char->{inventory}[$item_invindex]{name}), "success";
 
 		# get the ID so we can pack this into the weapon cards
 		my $nameID = $char->{inventory}[$card_invindex]{nameID};
@@ -1824,7 +1824,7 @@ sub cart_item_added {
 		$item->{cards} = $args->{cards};
 		$item->{name} = itemName($item);
 	}
-	message "Cart Item Added: $item->{name} ($args->{index}) x $args->{amount}\n";
+	message TF("Cart Item Added: %s (%s) x %s\n", $item->{name}, $args->{index}, $args->{amount});
 	$itemChange{$item->{name}} += $args->{amount};
 	$args->{item} = $item;
 }
@@ -1882,7 +1882,7 @@ sub cart_item_removed {
 
 	my $item = $cart{inventory}[$index];
 	$item->{amount} -= $amount;
-	message "Cart Item Removed: $item->{name} ($index) x $amount\n";
+	message TF("Cart Item Removed: %s (%s) x %s\n", $item->{name}, $index, $amount);
 	$itemChange{$item->{name}} -= $amount;
 	if ($item->{amount} <= 0) {
 		$cart{'inventory'}[$index] = undef;
@@ -1931,7 +1931,7 @@ sub character_creation_successful {
 	$chars[$slot] = $char;
 
 	$conState = 3;
-	message "Character $char->{name} ($slot) created.\n", "info";
+	message TF("Character %s (%s) created.\n", $char->{name}, $slot), "info";
 	if (charSelectScreen() == 1) {
 		$conState = 3;
 		$firstLoginMap = 1;
@@ -1949,7 +1949,7 @@ sub character_deletion_successful {
 			delete $chars[$i] if ($chars[$i] && !scalar(keys %{$chars[$i]}))
 		}
 	} else {
-		message(T("Character deleted.\n"), "info");
+		message T("Character deleted.\n"), "info";
 	}
 
 	if (charSelectScreen() == 1) {
@@ -2164,11 +2164,11 @@ sub deal_add_other {
 		$item->{upgrade} = $args->{upgrade};
 		$item->{cards} = $args->{cards};
 		$item->{name} = itemName($item);
-		message "$currentDeal{name} added Item to Deal: $item->{name} x $args->{amount}\n", "deal";
+		message TF("%s added Item to Deal: %s x %s\n", $currentDeal{name}, $item->{name}, $args->{amount}), "deal";
 	} elsif ($args->{amount} > 0) {
 		$currentDeal{other_zenny} += $args->{amount};
 		my $amount = formatNumber($args->{amount});
-		message "$currentDeal{name} added $amount z to Deal\n", "deal";
+		message TF("%s added %s z to Deal\n", $currentDeal{name}, $amount), "deal";
 	}
 }
 
@@ -2176,13 +2176,13 @@ sub deal_add_you {
 	my ($self, $args) = @_;
 
 	if ($args->{fail} == 1) {
-		error(T("That person is overweight; you cannot trade.\n"), "deal");
+		error T("That person is overweight; you cannot trade.\n"), "deal";
 		return;
 	} elsif ($args->{fail} == 2) {
-		error(T("This item cannot be traded.\n"), "deal");
+		error T("This item cannot be traded.\n"), "deal";
 		return;
 	} elsif ($args->{fail}) {
-		error(TF("You cannot trade (fail code %s).\n", $args->{fail}), "deal");
+		error TF("You cannot trade (fail code %s).\n", $args->{fail}), "deal";
 		return;
 	}
 
@@ -2192,7 +2192,7 @@ sub deal_add_you {
 	my $item = $char->{inventory}[$invIndex];
 	$currentDeal{you}{$item->{nameID}}{amount} += $currentDeal{lastItemAmount};
 	$item->{amount} -= $currentDeal{lastItemAmount};
-	message "You added Item to Deal: $item->{name} x $currentDeal{lastItemAmount}\n", "deal";
+	message TF("You added Item to Deal: %s x %s\n", $item->{name}, $currentDeal{lastItemAmount}), "deal";
 	$itemChange{$item->{name}} -= $currentDeal{lastItemAmount};
 	$currentDeal{you_items}++;
 	$args->{item} = $item;
@@ -2215,7 +2215,7 @@ sub deal_begin {
 			$currentDeal{name} = $players{$outgoingDeal{ID}}{name};
 			undef %outgoingDeal;
 		}
-		message(TF("Engaged Deal with %s\n", $currentDeal{name}), "deal");
+		message TF("Engaged Deal with %s\n", $currentDeal{name}), "deal";
 	} else {
 		error TF("Deal request failed (unknown error %s).\n", $args->{type});
 	}
@@ -2225,27 +2225,27 @@ sub deal_cancelled {
 	undef %incomingDeal;
 	undef %outgoingDeal;
 	undef %currentDeal;
-	message(T("Deal Cancelled\n"), "deal");
+	message T("Deal Cancelled\n"), "deal";
 }
 
 sub deal_complete {
 	undef %outgoingDeal;
 	undef %incomingDeal;
 	undef %currentDeal;
-	message(T("Deal Complete\n"), "deal");
+	message T("Deal Complete\n"), "deal";
 }
 
 sub deal_finalize {
 	my ($self, $args) = @_;
 	if ($args->{type} == 1) {
 		$currentDeal{other_finalize} = 1;
-		message(TF("%s finalized the Deal\n", $currentDeal{name}), "deal");
+		message TF("%s finalized the Deal\n", $currentDeal{name}), "deal";
 
 	} else {
 		$currentDeal{you_finalize} = 1;
 		# FIXME: shouldn't we do this when we actually complete the deal?
 		$char->{zenny} -= $currentDeal{you_zenny};
-		message(T("You finalized the Deal\n"), "deal");
+		message T("You finalized the Deal\n"), "deal";
 	}
 }
 
@@ -2254,8 +2254,8 @@ sub deal_request {
 	my $level = $args->{level} || 'Unknown';
 	$incomingDeal{name} = $args->{user};
 	$timeout{ai_dealAutoCancel}{time} = time;
-	message "$args->{user} (level $level) Requests a Deal\n", "deal";
-	message(T("Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"), "deal");
+	message TF("%s (level %s) Requests a Deal\n", $args->{user}, $level), "deal";
+	message T("Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"), "deal";
 }
 
 sub devotion {
@@ -2277,7 +2277,7 @@ sub devotion {
 
 sub egg_list {
 	my ($self, $args) = @_;
-	message(T("-----Egg Hatch Candidates-----\n"), "list");
+	message T("-----Egg Hatch Candidates-----\n"), "list";
 	for (my $i = 4; $i < $args->{RAW_MSG_SIZE}; $i += 2) {
 		my $index = unpack("v1", substr($args->{RAW_MSG}, $i, 2));
 		my $invIndex = findIndex($char->{inventory}, "index", $index);
@@ -2333,7 +2333,7 @@ sub equip_item {
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	my $item = $char->{inventory}[$invIndex];
 	if (!$args->{success}) {
-		message "You can't put on $item->{name} ($invIndex)\n";
+		message TF("You can't put on %s (%s)\n", $item->{name}, $invIndex);
 	} else {
 		$item->{equipped} = $args->{type};
 		if ($args->{type} == 10) {
@@ -2347,7 +2347,7 @@ sub equip_item {
 				}
 			}
 		}
-		message "You equip $item->{name} ($invIndex) - $equipTypes_lut{$item->{type_equip}} (type $args->{type})\n", 'inventory';
+		message TF("You equip %s (%s) - %s (type %s)\n", $item->{name}, $invIndex, $equipTypes_lut{$item->{type_equip}}, $args->{type}), 'inventory';
 	}
 	$ai_v{temp}{waitForEquip}-- if $ai_v{temp}{waitForEquip};
 }
@@ -2371,41 +2371,41 @@ sub errors {
 	$net->serverDisconnect();
 
 	if ($args->{type} == 0) {
-		error(T("Server shutting down\n"), "connection");
+		error T("Server shutting down\n"), "connection";
 	} elsif ($args->{type} == 1) {
-		error(T("Error: Server is closed\n"), "connection");
+		error T("Error: Server is closed\n"), "connection";
 	} elsif ($args->{type} == 2) {
 		if ($config{'dcOnDualLogin'} == 1) {
 			$interface->errorDialog(TF("Critical Error: Dual login prohibited - Someone trying to login!\n\n" .
 				"%s will now immediately disconnect.", $Settings::NAME));
 			$quit = 1;
 		} elsif ($config{'dcOnDualLogin'} >= 2) {
-			error(T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection");
-			message(TF("Disconnect for %s seconds...\n", $config{'dcOnDualLogin'}), "connection");
+			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
+			message TF("Disconnect for %s seconds...\n", $config{'dcOnDualLogin'}), "connection";
 			$timeout_ex{'master'}{'timeout'} = $config{'dcOnDualLogin'};
 		} else {
-			error(T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection");
+			error T("Critical Error: Dual login prohibited - Someone trying to login!\n"), "connection";
 		}
 
 	} elsif ($args->{type} == 3) {
-		error(T("Error: Out of sync with server\n"), "connection");
+		error T("Error: Out of sync with server\n"), "connection";
 	} elsif ($args->{type} == 4) {
-		error(T("Error: Server is jammed due to over-population.\n"), "connection");
+		error T("Error: Server is jammed due to over-population.\n"), "connection";
 	} elsif ($args->{type} == 5) {
-		error(T("Error: You are underaged and cannot join this server.\n"), "connection");
+		error T("Error: You are underaged and cannot join this server.\n"), "connection";
 	} elsif ($args->{type} == 6) {
 		$interface->errorDialog(T("Critical Error: You must pay to play this account!"));
 		$quit = 1 unless ($net->version == 1);
 	} elsif ($args->{type} == 8) {
-		error(T("Error: The server still recognizes your last connection\n"), "connection");
+		error T("Error: The server still recognizes your last connection\n"), "connection";
 	} elsif ($args->{type} == 9) {
-		error(T("Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?"), "connection");
+		error T("Error: IP capacity of this Internet Cafe is full. Would you like to pay the personal base?"), "connection";
 	} elsif ($args->{type} == 10) {
-		error(T("Error: You are out of available time paid for\n"), "connection");
+		error T("Error: You are out of available time paid for\n"), "connection";
 	} elsif ($args->{type} == 15) {
-		error(T("Error: You have been forced to disconnect by a GM\n"), "connection");
+		error T("Error: You have been forced to disconnect by a GM\n"), "connection";
 	} else {
-		error(TF("Unknown error %s\n", $args->{type}), "connection");
+		error TF("Unknown error %s\n", $args->{type}), "connection";
 	}
 }
 
@@ -2559,7 +2559,7 @@ sub friend_removed {
 	my $friendCharID =  $args->{friendCharID};
 	for (my $i = 0; $i < @friendsID; $i++) {
 		if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
-			message "$friends{$i}{'name'} is no longer your friend\n";
+			message TF("%s is no longer your friend\n", $friends{$i}{'name'});
 			binRemove(\@friendsID, $i);
 			delete $friends{$i};
 			last;
@@ -2791,7 +2791,7 @@ sub guild_request {
 	# Guild request
 	my $ID = $args->{ID};
 	my $name = $args->{name};
-	message "Incoming Request to join Guild '$name'\n";
+	message TF("Incoming Request to join Guild '%s'\n", $name);
 	$incomingGuild{'ID'} = $ID;
 	$incomingGuild{'Type'} = 1;
 	$timeout{'ai_guildAutoDeny'}{'time'} = time;	
@@ -2805,7 +2805,7 @@ sub identify {
 	my $item = $char->{inventory}[$invIndex];
 	$item->{identified} = 1;
 	$item->{type_equip} = $itemSlots_lut{$item->{nameID}};
-	message "Item Identified: $item->{name} ($invIndex)\n", "info";
+	message TF("Item Identified: %s (%s)\n", $item->{name}, $invIndex), "info";
 	undef @identifyID;
 }
 
@@ -2826,7 +2826,7 @@ sub identify_list {
 	}
 	
 	my $num = @identifyID;
-	message "Received Possible Identify List ($num item(s)) - type 'identify'\n", 'info';
+	message TF("Received Possible Identify List (%s item(s)) - type 'identify'\n", $num), 'info';
 }
 
 sub ignore_all_result {
@@ -2904,18 +2904,18 @@ sub inventory_item_added {
 			$item = $char->{inventory}[$invIndex];
 			if ($itemsPickup{lc($item->{name})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
 				sendDrop($net, $item->{index}, $amount);
-				message "Auto-dropping item: $item->{name} ($invIndex) x $amount\n", "drop";
+				message TF("Auto-dropping item: %s (%s) x %s\n", $item->{name}, $invIndex, $amount), "drop";
 			}
 		}
 
 	} elsif ($fail == 6) {
-		message(T("Can't loot item...wait...\n"), "drop");
+		message T("Can't loot item...wait...\n"), "drop";
 	} elsif ($fail == 2) {
-		message(T("Cannot pickup item (inventory full)\n"), "drop");
+		message T("Cannot pickup item (inventory full)\n"), "drop";
 	} elsif ($fail == 1) {
-		message(T("Cannot pickup item (you're Frozen?)\n"), "drop");
+		message T("Cannot pickup item (you're Frozen?)\n"), "drop";
 	} else {
-		message(TF("Cannot pickup item (failure code %s)\n", $fail), "drop");
+		message TF("Cannot pickup item (failure code %s)\n", $fail), "drop";
 	}
 }
 
@@ -2940,7 +2940,7 @@ sub item_used {
 		my $amount = $item->{amount} - $remaining;
 		$item->{amount} -= $amount;
 
-		message((TF("You used Item: %s (%s) x %s - %s left\n", $item->{name}, $invIndex, $amount, $remaining), "useItem"), 1);
+		message TF("You used Item: %s (%s) x %s - %s left\n", $item->{name}, $invIndex, $amount, $remaining), "useItem", 1;
 		$itemChange{$item->{name}}--;
 		if ($item->{amount} <= 0) {
 			delete $char->{inventory}[$invIndex];
@@ -2957,7 +2957,7 @@ sub item_used {
 	} else {
 		my $actor = Actor::get($ID);
 		my $itemDisplay = itemNameSimple($itemID);
-		message((TF("%s used Item: %s - %s left\n", $actor, $itemDisplay, $remaining), "useItem"), 2);
+		message TF("%s used Item: %s - %s left\n", $actor, $itemDisplay, $remaining), "useItem", 2;
 	}
 }
 
@@ -3087,7 +3087,7 @@ sub item_appeared {
 		sendTake($net, $args->{ID});
 	}
 
-	message((TF("Item Appeared: %s (%s) x %s (%s, %s)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop"), 1);
+	message TF("Item Appeared: %s (%s) x %s (%s, %s)\n", $item->{name}, $item->{binID}, $item->{amount}, $args->{x}, $args->{y}), "drop", 1;
 
 }
 
@@ -3105,7 +3105,7 @@ sub item_exists {
 	}
 	$items{$args->{ID}}{'pos'}{'x'} = $args->{x};
 	$items{$args->{ID}}{'pos'}{'y'} = $args->{y};
-	message((TF("Item Exists: %s (%s) x %s\n", $items{$args->{ID}}{'name'}, $items{$args->{ID}}{'binID'}, $items{$args->{ID}}{'amount'}), "drop"), 1);
+	message TF("Item Exists: %s (%s) x %s\n", $items{$args->{ID}}{'name'}, $items{$args->{ID}}{'binID'}, $items{$args->{ID}}{'amount'}), "drop", 1;
 }
 
 sub item_disappeared {
@@ -3125,7 +3125,7 @@ sub item_disappeared {
 				}
 				if (distance($items{$args->{ID}}{pos},$looter->{pos}) == 0) {
 					attack ($looter->{ID});
-					message "Attack Looter: $looter looted $items{$args->{ID}}{'name'}\n","looter";
+					message TF("Attack Looter: %s looted %s\n", $looter, $items{$args->{ID}}{'name'}),"looter";
 					last;
 				}
 			}
@@ -3148,7 +3148,7 @@ sub item_skill {
 	my $sp = $args->{sp}; # we don't use this yet
 	my $skillName = $args->{skillName};
 
-	message "Permitted to use $skillsID_lut{$skillID} ($skillID), level $skillLv\n";
+	message TF("Permitted to use %s (%s), level %s\n", $skillsID_lut{$skillID}, $skillID, $skillLv);
 	my $skill = Skills->new(id => $skillID);
 
 	unless ($config{noAutoSkill}) {
@@ -3174,7 +3174,7 @@ sub item_upgrade {
 	if (defined $invIndex) {
 		my $item = $char->{inventory}[$invIndex];
 		$item->{upgrade} = $upgrade;
-		message "Item $item->{name} has been upgraded to +$upgrade\n", "parseMsg/upgrade";
+		message TF("Item %s has been upgraded to +%s\n", $item->{name}, $upgrade), "parseMsg/upgrade";
 		$item->{name} = itemName($item);
 	}
 }
@@ -3263,18 +3263,18 @@ sub login_error {
 
 	$net->serverDisconnect();
 	if ($args->{type} == 0) {
-		error(T("Account name doesn't exist\n"), "connection");
+		error T("Account name doesn't exist\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'}) {
-			message(T("Enter Username Again: "), "input");
+			message T("Enter Username Again: "), "input";
 			my $username = $interface->getInput(-1);
 			configModify('username', $username, 1);
 			$timeout_ex{'master'}{'time'} = 0;
 			$conState_tries = 0;
 		}
 	} elsif ($args->{type} == 1) {
-		error(T("Password Error\n"), "connection");
+		error T("Password Error\n"), "connection";
 		if (!$net->clientAlive() && !$config{'ignoreInvalidLogin'}) {
-			message(T("Enter Password Again: "), "input");
+			message T("Enter Password Again: "), "input";
 			# Set -9 on getInput timeout field mean this is password field
 			my $password = $interface->getInput(-9);
 			configModify('password', $password, 1);
@@ -3282,7 +3282,7 @@ sub login_error {
 			$conState_tries = 0;
 		}
 	} elsif ($args->{type} == 3) {
-		error(T("Server connection has been denied\n"), "connection");
+		error T("Server connection has been denied\n"), "connection";
 	} elsif ($args->{type} == 4) {
 		$interface->errorDialog(T("Critical Error: Your account has been blocked."));
 		$quit = 1 unless ($net->clientAlive());
@@ -3294,7 +3294,7 @@ sub login_error {
 			"serverType: $config{serverType}\n", "connection");
 		relog(30);
 	} elsif ($args->{type} == 6) {
-		error(T("The server is temporarily blocking your connection\n"), "connection");
+		error T("The server is temporarily blocking your connection\n"), "connection";
 	}
 	if ($args->{type} != 5 && $versionSearch) {
 		$versionSearch = 0;
@@ -3303,7 +3303,7 @@ sub login_error {
 }
 
 sub login_error_game_login_server {
-	error(T("Error logging into Character Server (invalid character specified)...\n"), 'connection');
+	error T("Error logging into Character Server (invalid character specified)...\n"), 'connection';
 	$conState = 1;
 	undef $conState_tries;
 	$timeout_ex{master}{time} = time;
@@ -3334,7 +3334,7 @@ sub map_change {
 	$coords{'y'} = $args->{y};
 	$chars[$config{char}]{pos} = {%coords};
 	$chars[$config{char}]{pos_to} = {%coords};
-	message(TF("Map Change: %s (%s, %s)\n", $args->{map}, $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}), "connection");
+	message TF("Map Change: %s (%s, %s)\n", $args->{map}, $chars[$config{'char'}]{'pos'}{'x'}, $chars[$config{'char'}]{'pos'}{'y'}), "connection";
 	if ($net->version == 1) {
 		ai_clientSuspend(0, 10);
 	} else {
@@ -3372,7 +3372,7 @@ sub map_changed {
 		"-------------------------------", []),
 		"connection");
 
-	message(T("Closing connection to Map Server\n"), "connection");
+	message T("Closing connection to Map Server\n"), "connection";
 	$net->serverDisconnect unless ($net->version == 1);
 
 	# Reset item and skill times. The effect of items (like aspd potions)
@@ -3412,11 +3412,11 @@ sub map_loaded {
 
 	if ($net->version == 1) {
 		$conState = 4;
-		message(T("Waiting for map to load...\n"), "connection");
+		message T("Waiting for map to load...\n"), "connection";
 		ai_clientSuspend(0, 10);
 		main::initMapChangeVars();
 	} else {
-		message(T("You are now in the game\n"), "connection");
+		message T("You are now in the game\n"), "connection";
 		sendMapLoaded($net);
 		sendSync($net, 1);
 		debug "Sent initial sync\n", "connection";
@@ -3426,7 +3426,7 @@ sub map_loaded {
 	$char->{pos} = {};
 	makeCoords($char->{pos}, $args->{coords});
 	$char->{pos_to} = {%{$char->{pos}}};
-	message("Your Coordinates: $char->{pos}{x}, $char->{pos}{y}\n", undef, 1);
+	message TF("Your Coordinates: %s, %s\n", $char->{pos}{x}, $char->{pos}{y}), undef, 1;
 
 	sendIgnoreAll($net, "all") if ($config{'ignoreAll'});
 }
@@ -3436,7 +3436,7 @@ sub memo_success {
 	if ($args->{fail}) {
 		warning T("Memo Failed\n");
 	} else {
-		message(T("Memo Succeeded\n"), "success");
+		message T("Memo Succeeded\n"), "success";
 	}
 }
 
@@ -3549,7 +3549,7 @@ sub npc_store_begin {
 
 	my $name = getNPCName($args->{ID});
 
-	message(TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $name), "npc");
+	message TF("%s: Type 'store' to start buying, or type 'sell' to start selling\n", $name), "npc";
 }
 
 sub npc_store_info {
@@ -3583,7 +3583,7 @@ sub npc_store_info {
 	$ai_v{'npc_talk'}{'time'} = time;
 
 	if ($ai_seq[0] ne 'buyAuto') {
-		message(TF("----------%s's Store List-----------\n", $name), "list");
+		message TF("----------%s's Store List-----------\n", $name), "list";
 		message("#  Name		    Type	   Price\n", "list");
 		my $display;
 		for (my $i = 0; $i < @storeList; $i++) {
@@ -3624,7 +3624,7 @@ sub npc_talk_close {
 
 	my $name = getNPCName($ID);
 
-	message(TF("%s: Done talking\n", $name), "npc");
+	message TF("%s: Done talking\n", $name), "npc";
 	$ai_v{'npc_talk'}{'talk'} = 'close';
 	$ai_v{'npc_talk'}{'time'} = time;
 	sendTalkCancel($net, $ID);
@@ -3644,12 +3644,12 @@ sub npc_talk_continue {
 	$ai_v{npc_talk}{time} = time;
 
 	if ($config{autoTalkCont}) {
-		message(TF("%s: Auto-continuing talking\n", $name), "npc");
+		message TF("%s: Auto-continuing talking\n", $name), "npc";
 		sendTalkContinue($net, $ID);
 		# this time will be reset once the NPC responds
 		$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
 	} else {
-		message(TF("%s: Type 'talk cont' to continue talking\n", $name), "npc");
+		message TF("%s: Type 'talk cont' to continue talking\n", $name), "npc";
 	}
 }
 
@@ -3660,7 +3660,7 @@ sub npc_talk_number {
 
 	my $name = getNPCName($ID);
 
-	message("$name: Type 'talk num <number #>' to input a number.\n", "input");
+	message TF("%s: Type 'talk num <number #>' to input a number.\n", $name), "input";
 	$ai_v{'npc_talk'}{'talk'} = 'num';
 	$ai_v{'npc_talk'}{'time'} = time;
 }
@@ -3703,7 +3703,7 @@ sub npc_talk_responses {
 
 	my $name = getNPCName($ID);
 
-	message(TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc");
+	message TF("%s: Type 'talk resp #' to choose a response.\n", $name), "npc";
 }
 
 sub npc_talk_text {
@@ -3712,7 +3712,7 @@ sub npc_talk_text {
 	my $ID = $args->{ID};
 
 	my $name = getNPCName($ID);
-	message(TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc");
+	message TF("%s: Type 'talk text' (Respond to NPC)\n", $name), "npc";
 	$ai_v{npc_talk}{talk} = 'text';
 	$ai_v{npc_talk}{time} = time;
 }
@@ -3744,9 +3744,9 @@ sub party_exp {
 	my ($self, $args) = @_;
 	$chars[$config{char}]{party}{share} = $args->{type};
 	if ($args->{type} == 0) {
-		message "Party EXP set to Individual Take\n", "party", 1;
+		message T("Party EXP set to Individual Take\n"), "party", 1;
 	} elsif ($args->{type} == 1) {
-		message "Party EXP set to Even Share\n", "party", 1;
+		message T("Party EXP set to Even Share\n"), "party", 1;
 	} else {
 		error T("Error setting party option\n");
 	}
@@ -3773,7 +3773,7 @@ sub party_invite_result {
 	} elsif ($args->{type} == 1) {
 		warning TF("Join request failed: %s denied request\n", $args->{name});
 	} elsif ($args->{type} == 2) {
-		message(TF("%s accepted your request\n", $args->{name}), "info");
+		message TF("%s accepted your request\n", $args->{name}), "info";
 	}
 }
 
@@ -3785,10 +3785,10 @@ sub party_join {
 	if (!$char->{party} || !%{$char->{party}} || !$chars[$config{char}]{party}{users}{$ID} || !%{$chars[$config{char}]{party}{users}{$ID}}) {
 		binAdd(\@partyUsersID, $ID) if (binFind(\@partyUsersID, $ID) eq "");
 		if ($ID eq $accountID) {
-			message "You joined party '$name'\n", undef, 1;
+			message TF("You joined party '%s'\n", $name), undef, 1;
 			$char->{party} = {};
 		} else {
-			message "$user joined your party '$name'\n", undef, 1;
+			message TF("%s joined your party '%s'\n", $user, $name), undef, 1;
 		}
 	}
 	$chars[$config{char}]{party}{users}{$ID} = new Actor::Party;
@@ -3893,9 +3893,9 @@ sub pet_emotion {
 sub pet_food {
 	my ($self, $args) = @_;
 	if ($args->{success}) {
-		message "Fed pet with ".itemNameSimple($args->{foodID}).".\n", "pet";
+		message TF("Fed pet with %s\n", itemNameSimple($args->{foodID})), "pet";
 	} else {
-		error "Failed to feed pet with ".itemNameSimple($args->{foodID}).": no food in inventory.\n";
+		error TF("Failed to feed pet with %s: no food in inventory.\n", itemNameSimple($args->{foodID}));
 	}
 }
 
@@ -4080,7 +4080,7 @@ sub private_message_sent {
 sub received_characters {
 	return if $conState == 5;
 	my ($self, $args) = @_;
-	message(T("Received characters from Character Server\n"), "connection");
+	message T("Received characters from Character Server\n"), "connection";
 	$conState = 3;
 	undef $conState_tries;
 	undef @chars;
@@ -4137,7 +4137,7 @@ sub received_characters {
 
 sub received_character_ID_and_Map {
 	my ($self, $args) = @_;
-	message(T("Received character ID and Map IP from Character Server\n"), "connection");
+	message T("Received character ID and Map IP from Character Server\n"), "connection";
 	$conState = 4;
 	undef $conState_tries;
 	$charID = $args->{charID};
@@ -4226,7 +4226,7 @@ sub resurrection {
 	my $type = $args->{type};
 
 	if ($targetID eq $accountID) {
-		message("You have been resurrected\n", "info");
+		message T("You have been resurrected\n"), "info";
 		undef $chars[$config{'char'}]{'dead'};
 		undef $chars[$config{'char'}]{'dead_time'};
 		$chars[$config{'char'}]{'resurrected'} = 1;
@@ -4236,7 +4236,7 @@ sub resurrection {
 	}
 
 	if ($targetID ne $accountID) {
-		message(getActorName($targetID)." has been resurrected\n", "info");
+		message TF("%s has been resurrected\n", getActorName($targetID)), "info";
 		$players{$targetID}{deltaHp} = 0;
 	}	
 }
@@ -4317,10 +4317,10 @@ sub pvp_mode1 {
 	if ($type == 0) {
 		$pvp = 0;
 	} elsif ($type == 1) {
-		message(T("PvP Display Mode\n"), "map_event");
+		message T("PvP Display Mode\n"), "map_event";
 		$pvp = 1;
 	} elsif ($type == 3) {
-		message(T("GvG Display Mode\n"), "map_event");
+		message T("GvG Display Mode\n"), "map_event";
 		$pvp = 2;
 	}
 }
@@ -4332,10 +4332,10 @@ sub pvp_mode2 {
 	if ($type == 0) {
 		$pvp = 0;
 	} elsif ($type == 6) {
-		message(T("PvP Display Mode\n"), "map_event");
+		message T("PvP Display Mode\n"), "map_event";
 		$pvp = 1;
 	} elsif ($type == 8) {
-		message(T("GvG Display Mode\n"), "map_event");
+		message T("GvG Display Mode\n"), "map_event";
 		$pvp = 2;
 	}
 }
@@ -4393,10 +4393,10 @@ sub shop_sold {
 	shopLog($msg);
 	message($msg, "sold");
 	if ($articles[$number]{quantity} < 1) {
-		message("sold out: $articles[$number]{name}\n", "sold");
+		message TF("sold out: %s\n", $articles[$number]{name}), "sold";
 		#$articles[$number] = "";
 		if (!--$articles){
-			message(T("Items have been sold out.\n"), "sold");
+			message T("Items have been sold out.\n"), "sold";
 			closeShop();
 		}
 	}
@@ -4921,7 +4921,7 @@ sub stat_info {
 		debug "Status Points: $args->{val}\n", "parseMsg", 2;
 	} elsif ($args->{type} == 11) {
 		$char->{lv} = $args->{val};
-		message(TF("You are now level %s\n", $args->{val}), "success");
+		message TF("You are now level %s\n", $args->{val}), "success";
 		if ($config{dcOnLevel} && $char->{lv} >= $config{dcOnLevel}) {
 			message TF("Disconnecting on level %s!\n", $config{dcOnLevel});
 			chatLog("k", "Disconnecting on level $config{dcOnLevel}!\n");
@@ -4982,7 +4982,7 @@ sub stat_info {
 		debug "Attack Speed: $char->{attack_speed}\n", "parseMsg", 2;
 	} elsif ($args->{type} == 55) {
 		$char->{lv_job} = $args->{val};
-		message(TF("You are now job level %s\n", $args->{val}), "success");
+		message TF("You are now job level %s\n", $args->{val}), "success";
 		if ($config{dcOnJobLevel} && $char->{lv_job} >= $config{dcOnJobLevel}) {
 			message TF("Disconnecting on job level %s!\n", $config{dcOnJobLevel});
 			chatLog("k", "Disconnecting on job level $config{dcOnJobLevel}!\n");
@@ -5049,7 +5049,7 @@ sub stats_points_needed {
 }
 
 sub storage_closed {
-	message(T("Storage closed.\n"), "storage");
+	message T("Storage closed.\n"), "storage";
 	delete $ai_v{temp}{storage_opened};
 	Plugins::callHook('packet_storage_close');
 
@@ -5079,7 +5079,7 @@ sub storage_item_added {
 		$item->{name} = itemName($item);
 		$item->{binID} = binFind(\@storageID, $index);
 	}
-	message("Storage Item Added: $item->{name} ($item->{binID}) x $amount\n", "storage", 1);
+	message TF("Storage Item Added: %s (%s) x %s\n", $item->{name}, $item->{binID}, $amount), "storage", 1;
 	$itemChange{$item->{name}} += $amount;
 	$args->{item} = $item;
 }
@@ -5162,7 +5162,7 @@ sub storage_opened {
 	$ai_v{temp}{storage_opened} = 1;
 	if (!$storage{opened}) {
 		$storage{opened} = 1;
-		message(T("Storage opened.\n"), "storage");
+		message T("Storage opened.\n"), "storage";
 		Plugins::callHook('packet_storage_open');
 	}
 }
@@ -5179,7 +5179,7 @@ sub storage_password_request {
 			my $input = $interface->getInput(-1);
 			if ($input ne '') {
 				configModify('storageAuto_password', $input, 1);
-				message(TF("Storage password set to: %s\n", $input), "success");
+				message TF("Storage password set to: %s\n", $input), "success";
 				last;
 			}
 		}
@@ -5211,11 +5211,11 @@ sub storage_password_result {
 	my ($self, $args) = @_;
 
 	if ($args->{type} == 4) {
-		message(T("Successfully changed storage password.\n"), "success");
+		message T("Successfully changed storage password.\n"), "success";
 	} elsif ($args->{type} == 5) {
 		error T("Error: Incorrect storage password.\n");
 	} elsif ($args->{type} == 6) {
-		message(T("Successfully entered storage password.\n"), "success");
+		message T("Successfully entered storage password.\n"), "success";
 	} else {
 		#message "Storage password: unknown type $args->{type}\n";
 	}
@@ -5265,9 +5265,9 @@ sub unit_levelup {
 	} elsif ($type == 1) {
 		message TF("%s gained a job level!\n", $name);
 	} elsif ($type == 2) {
-		message(TF("%s failed to refine a weapon!\n", $name), "refine");
+		message TF("%s failed to refine a weapon!\n", $name), "refine";
 	} elsif ($type == 3) {
-		message(TF("%s successfully refined a weapon!\n", $name), "refine");
+		message TF("%s successfully refined a weapon!\n", $name), "refine";
 	}
 }
 
@@ -5288,7 +5288,7 @@ sub use_item {
 sub users_online {
 	my ($self, $args) = @_;
 	
-	message(TF("There are currently %s users online\n", $args->{users}), "info");
+	message TF("There are currently %s users online\n", $args->{users}), "info";
 }
 
 sub vender_found {
