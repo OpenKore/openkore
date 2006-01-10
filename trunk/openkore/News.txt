@@ -31,6 +31,11 @@ Bug fixes:
 - Fix the Win32 GUI interface.
 - Fixed a bug where the weight command only allows a single digit parameter.
 
+New features:
+- dcOnDisconnect 2 will not disconnect when you run out of paid time
+  now, because this is an intermittent error condition that happens on
+  some buggy private servers.
+
 New config options:
 - autoMoveOnDeath set:
 	autoMoveOnDeath <0/1>
