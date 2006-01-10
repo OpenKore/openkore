@@ -204,9 +204,13 @@
 
 <div id ="status_points_table" style = "position:absolute; left:5px; top:375px;">
 	<table class="status" width="50%">
-	<CAPTION>Statusses</CAPTION>
+	<CAPTION>Arrays</CAPTION>
 	<tr>
-		<td class="status">Some statusses $characterStatuses$</td>
+		<td class="status">characterStatuses: $characterStatuses$</td>
+		<td class="status">inventoryEquipped: $inventoryEquipped$</td>
+		<td class="status">inventoryUnequipped: $inventoryUnequipped$</td>
+		<td class="status">inventoryUnusable: $inventoryUnusable$</td>
+		<td class="status">inventoryUsable: $inventoryUsable$</td>
 	</tr>
 	</table>
 </div>

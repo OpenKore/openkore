@@ -47,7 +47,23 @@ sub replace {
 	my @keys = keys %{$keywords};
 	foreach my $key (@keys) {
 		my $value = $keywords->{$key};
-		$replacement =~ s/$markF$key$markB/$value/sg;
+		if (ref($value) eq 'ARRAY') {
+			my $array;
+
+			# kludge until proper looping is written
+			foreach my $val (@{$value}) {
+				$array .= $val . ' ';
+			}
+			if ($array) {
+				$replacement =~ s/$markF$key$markB/$array/sg;
+			} else {
+				$array = 'none';
+				$replacement =~ s/$markF$key$markB/$array/sg;
+			}
+
+		} else {			
+			$replacement =~ s/$markF$key$markB/$value/sg;
+		}
 	}
 	
 	return $replacement;
