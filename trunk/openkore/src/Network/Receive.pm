@@ -2899,7 +2899,7 @@ sub inventory_item_added {
 			$ai_v{'npc_talk'}{'time'} = time;
 		}
 
-		if ($AI) {
+		if ($AI == 2) {
 			# Auto-drop item
 			$item = $char->{inventory}[$invIndex];
 			if ($itemsPickup{lc($item->{name})} == -1 && !AI::inQueue('storageAuto', 'buyAuto')) {
@@ -3083,7 +3083,7 @@ sub item_appeared {
 	$item->{pos}{y} = $args->{y};
 
 	# Take item as fast as possible
-	if ($AI && $itemsPickup{lc($item->{name})} == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
+	if ($AI == 2 && $itemsPickup{lc($item->{name})} == 2 && distance($item->{pos}, $char->{pos_to}) <= 5) {
 		sendTake($net, $args->{ID});
 	}
 
@@ -4049,7 +4049,7 @@ sub private_message {
 		Msg => $args->{privMsg}
 	});
 
-	if ($config{dcOnPM} && $AI) {
+	if ($config{dcOnPM} && $AI == 2) {
 		chatLog("k", "*** You were PM'd, auto disconnect! ***\n");
 		message T("Disconnecting on PM!\n");
 		quit();
@@ -4471,7 +4471,7 @@ sub skill_cast {
 	});
 
 	# Skill Cancel
-	if ($AI && $monsters{$sourceID} && %{$monsters{$sourceID}} && mon_control($monsters{$sourceID}{'name'})->{'skillcancel_auto'}) {
+	if ($AI == 2 && $monsters{$sourceID} && %{$monsters{$sourceID}} && mon_control($monsters{$sourceID}{'name'})->{'skillcancel_auto'}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
 			message "Monster Skill - switch Target to : $monsters{$sourceID}{name} ($monsters{$sourceID}{binID})\n";
 			stopAttack();
@@ -4715,7 +4715,7 @@ sub skill_used_no_damage {
 		$timeout{ai_teleport_delay}{time} = time;
 	}
 
-	if ($AI && $config{'autoResponseOnHeal'}) {
+	if ($AI == 2 && $config{'autoResponseOnHeal'}) {
 		# Handle auto-response on heal
 		if (($players{$args->{sourceID}} && %{$players{$args->{sourceID}}}) && (($args->{skillID} == 28) || ($args->{skillID} == 29) || ($args->{skillID} == 34))) {
 			if ($args->{targetID} eq $accountID) {

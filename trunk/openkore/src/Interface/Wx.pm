@@ -291,7 +291,8 @@ sub createMenuBar {
 	# Program menu
 	my $opMenu = new Wx::Menu;
 	$self->{mPause}  = $self->addMenu($opMenu, '&Pause Botting', \&onDisableAI, 'Pause all automated botting activity');
-	$self->{mResume} = $self->addMenu($opMenu, '&Resume Botting', \&onEnableAI, 'Resume all automated botting activity');
+	$self->{mManual} = $self->addMenu($opMenu, '&Manual Botting', \&onManualAI, 'Pause automated botting and allow manual control');
+	$self->{mResume} = $self->addMenu($opMenu, '&Automatic Botting', \&onEnableAI, 'Resume all automated botting activity');
 	$opMenu->AppendSeparator;
 	if ($^O eq 'MSWin32') {
 		$self->addMenu($opMenu, 'Minimize to &Tray', \&onMinimizeToTray, 'Minimize to a small task bar tray icon');
@@ -663,7 +664,8 @@ sub onInputEnter {
 sub onMenuOpen {
 	my $self = shift;
 	$self->{mPause}->Enable($AI);
-	$self->{mResume}->Enable(!$AI);
+	$self->{mManual}->Enable($AI != 1);
+	$self->{mResume}->Enable($AI != 2);
 	$self->{infoBarToggle}->Check($self->{infoPanel}->IsShown);
 	$self->{chatLogToggle}->Check(defined $self->{notebook}->hasPage('Chat Log') ? 1 : 0);
 }
@@ -678,6 +680,10 @@ sub onLoadFiles {
 }
 
 sub onEnableAI {
+	$AI = 2;
+}
+
+sub onManualAI {
 	$AI = 1;
 }
 
