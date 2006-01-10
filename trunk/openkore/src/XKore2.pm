@@ -766,6 +766,11 @@ sub checkClient {
 
 		# Send spirit sphere information
 		$msg .= pack('C2 a4 v', 0xD0, 0x01, $accountID, $char->{spirits}) if ($char->{spirits});
+		
+		# Send exp-required-to-level-up info
+		$msg .= pack('C2 v V', 0xB1, 0x00, 22, $char->{exp_max}) .
+			pack('C2 v V', 0xB1, 0x00, 23, $char->{exp_job_max}};
+		
 
 		# Send skill information
 		my $skillInfo = "";
@@ -862,7 +867,7 @@ sub checkClient {
 			shiftPack(\$coords, $monsters{$ID}{pos_to}{y}, 10);
 			shiftPack(\$coords, $monsters{$ID}{look}{body}, 4);
 
-			$msg .= pack('C2 a4 v5 x32 a3 x3 v1',
+			$msg .= pack('C2 a4 v5 x30 a3 x3 v1',
 				0x78, 0x00, $ID, $monsters{$ID}{walk_speed} * 1000,
 					$monsters{$ID}{param1}, $monsters{$ID}{param2}, $monsters{$ID}{param3},
 					$monsters{$ID}{nameID}, $coords, $monsters{$ID}{lv});
@@ -1186,6 +1191,8 @@ sub modifyPacketOut {
 
 		# Looking over this again, I don't believe this part ever gets reached...
 		# TODO: Remove this section if it is unused.
+		
+		message "\$"."net->modifyPacketOut(0072) was called!\n";
 
 		# Generate the coords info
 		my $coords = "";
