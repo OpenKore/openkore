@@ -494,7 +494,7 @@ function bbencode_first_pass($text, $uid)
     // Begin Syntax Highlighting Mod
     //
     // [SYNTAX="language"] and [/SYNTAX] for posting syntax highlighted code
-    $text = bbencode_first_pass_pda($text, $uid, '#\[syntax=(\\\"[a-zA-Z0-9\-_]+\\\")\]#is', '[/syntax]', '', false, '', "[syntax:$uid=\\1]");
+    $text = bbencode_first_pass_pda($text, $uid, '/\[syntax=\\\\&quot;(.*?)\\\\&quot;\]/is', '[/syntax]', '', false, '', "[syntax:$uid=\\\"\\1\\\"]");
     //
     // End Syntax Highlighting Mod
     //
