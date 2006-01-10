@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: openkore 1.9.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-01-10 12:38+0800\n"
+"POT-Creation-Date: 2006-01-10 22:39+0800\n"
 "PO-Revision-Date: 2005-12-13 23:03+0100\n"
 "Last-Translator: kaliwanagan <kaliwanagan@users.sourceforge.net>\n"
 "Language-Team: Tagalog\n"
@@ -1030,52 +1030,52 @@ msgid ""
 "Auto-restarting!!\n"
 msgstr ""
 
-#: ../functions.pl:697
-msgid "Auto-denying party request\n"
-msgstr ""
-
-#: ../functions.pl:699
-msgid "Auto-accepting party request\n"
-msgstr ""
-
-#: ../functions.pl:963
+#: ../functions.pl:761
 #, perl-format
 msgid "Done talking with %s.\n"
 msgstr ""
 
-#: ../functions.pl:1032
+#: ../functions.pl:2078
+msgid "Auto-denying party request\n"
+msgstr ""
+
+#: ../functions.pl:2080
+msgid "Auto-accepting party request\n"
+msgstr ""
+
+#: ../functions.pl:2234
 #, perl-format
 msgid "Arrived at waypoint %s\n"
 msgstr ""
 
-#: ../functions.pl:1090
+#: ../functions.pl:2292
 msgid "Auto-storaging due to death\n"
 msgstr ""
 
-#: ../functions.pl:1095
+#: ../functions.pl:2297
 msgid "Moving to "
 msgstr ""
 
-#: ../functions.pl:1113
+#: ../functions.pl:2315
 msgid "Disconnecting on death!\n"
 msgstr ""
 
-#: ../functions.pl:1240
+#: ../functions.pl:2414
 msgid "Auto-storaging due to excess weight\n"
 msgstr ""
 
-#: ../functions.pl:1334
+#: ../functions.pl:2508
 msgid "Teleporting to auto-storage\n"
 msgstr ""
 
-#: ../functions.pl:1566
+#: ../functions.pl:2740
 msgid "Auto-sell sequence completed.\n"
 msgstr ""
 
-#: ../functions.pl:1602
+#: ../functions.pl:2776
 msgid "Teleporting to auto-sell\n"
 msgstr ""
 
-#: ../functions.pl:1774
+#: ../functions.pl:2948
 msgid "Teleporting to auto-buy\n"
 msgstr ""
