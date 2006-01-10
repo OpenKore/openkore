@@ -1,4 +1,4 @@
-==================
+﻿==================
 ### 1.9.1
 ==================
 
@@ -35,6 +35,8 @@ New features:
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
   now, because this is an intermittent error condition that happens on
   some buggy private servers.
+- Added 'manual' AI mode, so you can still use most console commands while
+  automatic AI is off.
 
 New config options:
 - autoMoveOnDeath set:
@@ -68,6 +70,8 @@ New commands:
 - cart release: remove cart status
 - falcon [release]: Display or remove falcon status
 - pecopeco [release]: Display or remove pecopeco status
+- ai manual: Pause automated botting and allow manual control
+- ai auto: Same as 'ai on'
 
 Internal:
 - Implemented the beginning of a localization framework.
@@ -81,6 +85,7 @@ Internal:
   after all $player->{...} have been set to give more accurate information.
 - all receive packets have been moved to Receive.pm now.
 - $item->{ID} is now stored.
+- New modes for $AI: 0 = off, 1 = manual, 2 = auto.
 
 Credits:
 - id-mardi: fix for setPartySkillTimer, move the rest of the receive packets
@@ -88,7 +93,7 @@ Credits:
 - mondlicht: teleportAuto_avoidAllPlayers bugfix
 - Lord_Balmon: fix for the Win32 GUI interface
 - h4rry84: Indonesian translation
-- hakore: fix for weight command
+- hakore: fix for weight command, manual AI mode
 - illusionist: move receive packets to Receive.pm, falcon and peco release
   support.
 - vivi: autoMoveOnDeath, check XKore 2 username
