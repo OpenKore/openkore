@@ -107,6 +107,7 @@ sub request {
 			}
 		}
 	}
+	my @statuses = (keys %{$char->{statuses}});
 
 	%keywords =	(
 		"\@inventoryEquipped" => \@equipment,
@@ -114,7 +115,7 @@ sub request {
 		"\@inventoryUsable" => \@usable,
 		"\@inventoryUnusable" => \@unusable,
 		"\@consoleMessages" => \@messages,
-		"\@characterStatuses" => (keys %{$char->{statuses}}) || 'none',
+		"\@characterStatuses" => \@statuses,
 		'characterName' => $char->name(),
 		'characterJob' => $jobs_lut{$char->{jobID}},
 		'characterSex' => $sex_lut{$char->{sex}},
@@ -254,6 +255,7 @@ sub request {
 			foreach my $line (@{replaceArray(\@template, $keywordF, $keywordB)}) {
 				$process->print($line);
 			}
+			$process->print('0');
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
@@ -263,6 +265,7 @@ sub request {
 				$process->print($buffer);
 			}
 			close FILE;
+			$process->print('0');
 			
 		} else {
 			# our custom 404 message
