@@ -657,17 +657,23 @@ sub AI {
 	if (timeOut($timeout{ai_getInfo})) {
 		sub isSuspicious {
 			# Check whether this actor is used to detect bots.
-			my ($object) = @_;
-			return $object->{statuses}{"GM Perfect Hide"} || distance($char->{pos_to}, $object->{pos_to}) > 19;
+			my ($object, $pos_name) = @_;
+			return $object->{statuses}{"GM Perfect Hide"} || distance($char->{pos_to}, $object->{$pos_name}) > 19;
 		}
 
 		while (@unknownObjects) {
 			my $ID = $unknownObjects[0];
 			my $object = $players{$ID} || $npcs{$ID};
+			my $pos_name;
 
-			if (!$object || $object->{gotName} || isSuspicious($object)) {
+			if ($players{$ID}) {
+				$pos_name = 'pos_to';
+			} else {
+				$pos_name = 'pos';
+			}
+			if (!$object || $object->{gotName} || isSuspicious($object, $pos_name)) {
 				shift @unknownObjects;
-				if (isSuspicious($object)) {
+				if (isSuspicious($object, $pos_name)) {
 					if ($players{$ID}) {
 						delete $players{$ID};
 						binRemove(\@playersID, $ID);
@@ -685,7 +691,7 @@ sub AI {
 
 		foreach (keys %monsters) {
 			if ($monsters{$_}{'name'} =~ /Unknown/) {
-				if (isSuspicious($monsters{$_})) {
+				if (isSuspicious($monsters{$_}, 'pos_to')) {
 					delete $monsters{$_};
 					binRemove(\@monstersID, $_);
 				} else {
@@ -696,7 +702,7 @@ sub AI {
 		}
 		foreach (keys %pets) { 
 			if ($pets{$_}{'name_given'} =~ /Unknown/) { 
-				if (isSuspicious($pets{$_})) {
+				if (isSuspicious($pets{$_}, 'pos_to')) {
 					delete $pets{$_};
 					binRemove(\@petsID, $_);
 				} else {
