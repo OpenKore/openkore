@@ -386,14 +386,23 @@ sub cmdAI {
 	} elsif ($args eq 'ai_v') {
 		message dumpHash(\%ai_v) . "\n", "list";
 
-	} elsif ($args eq 'on') {
-		# Turn AI on
-		if ($AI) {
-			message "AI is already on\n", "success";
+	} elsif ($args eq 'on' || $args eq 'auto') {
+		# Set AI to auto mode
+		if ($AI == 2) {
+			message "AI is already set to auto mode\n", "success";
+		} else {
+			$AI = 2;
+			undef $AI_forcedOff;
+			message "AI set to auto mode\n", "success";
+		}
+	} elsif ($args eq 'manual') {
+		# Set AI to manual mode
+		if ($AI == 1) {
+			message "AI is already set to manual mode\n", "success";
 		} else {
 			$AI = 1;
-			undef $AI_forcedOff;
-			message "AI turned on\n", "success";
+			$AI_forcedOff = 1;
+			message "AI set to manual mode\n", "success";
 		}
 	} elsif ($args eq 'off') {
 		# Turn AI off
@@ -407,25 +416,36 @@ sub cmdAI {
 
 	} elsif ($args eq '') {
 		# Toggle AI
-		if ($AI) {
+		if ($AI == 2) {
 			undef $AI;
 			$AI_forcedOff = 1;
 			message "AI turned off\n", "success";
-		} else {
+		} elsif (!$AI) {
 			$AI = 1;
+			$AI_forcedOff = 1;
+			message "AI set to manual mode\n", "success";
+		} elsif ($AI == 1) {
+			$AI = 2;
 			undef $AI_forcedOff;
-			message "AI turned on\n", "success";
+			message "AI set to auto mode\n", "success";
 		}
 
 	} else {
 		error	"Syntax Error in function 'ai' (AI Commands)\n" .
-			"Usage: ai [ clear | print | ai_v | on | off ]\n";
+			"Usage: ai [ clear | print | ai_v | auto | manual | off ]\n";
 	}
 }
 
 sub cmdAIv {
 	# Display current AI sequences
-	my $on = $AI ? 'on' : 'off';
+	my $on;
+	if (!$AI) {
+		$on = 'off';
+	} elsif ($AI == 1) {
+		$on = 'manual';
+	} elsif ($AI == 2) {
+		$on = 'auto';
+	}
 	message("ai_seq ($on) = @ai_seq\n", "list");
 	message("solution\n", "list") if ($ai_seq_args[0]{'solution'});
 }

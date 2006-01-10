@@ -224,7 +224,7 @@ our @ai_seq;
 our @ai_seq_args;
 our %ai_v;
 our %targetTimeout;
-our $AI = 1;
+our $AI = 2;
 our $AI_forcedOff;
 
 # Game state

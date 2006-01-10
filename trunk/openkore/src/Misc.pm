@@ -1240,7 +1240,7 @@ sub chatLog_clear {
 sub checkAllowedMap {
 	my $map = shift;
 
-	return unless $AI;
+	return unless $AI == 2;
 	return unless $config{allowedMaps};
 	return if existsInList($config{allowedMaps}, $map);
 	return if $config{allowedMaps_reaction} == 0;
@@ -2299,7 +2299,7 @@ sub updateDamageTables {
 				);
 			$monsters{$ID1}{target} = $ID2;
 
-			if ($AI) {
+			if ($AI == 2) {
 				my $teleport = 0;
 				if (mon_control($monsters{$ID1}{'name'})->{'teleport_auto'} == 2 && $damage){
 					message "Teleporting due to attack from $monsters{$ID1}{'name'}\n", "teleport";

@@ -545,7 +545,7 @@ sub processChatCommand {
 
 # Automatically reply to a chat message
 sub processChatResponse {
-	return unless ($AI);
+	return unless ($AI == 2);
 	my $cmd = shift;
 	my $msg = lc $cmd->{msg};
 	my $reply;

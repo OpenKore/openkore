@@ -630,90 +630,15 @@ sub AI {
 
 
 
-	##### REAL AI STARTS HERE #####
+	##### MANUAL AI STARTS HERE #####
 
-	Plugins::callHook('AI_pre');
-
-	if (!$accountID) {
-		$AI = 0;
-		injectAdminMessage("Please relogin to enable X-${Settings::NAME}.") if ($config{'verbose'});
-		return;
-	}
-
-	ChatQueue::processFirst;
-
-
-	##### MISC #####
-
-	if ($ai_seq[0] eq "equip") {
-		#just wait until everything is equipped or timedOut
-		if (!$ai_v{temp}{waitForEquip} || timeOut($timeout{ai_equip_giveup})) {
-			AI::dequeue;
-			delete $ai_v{temp}{waitForEquip};
-		}
-	}
+	Plugins::callHook('AI_pre/manual');
 
 	if ($ai_seq[0] eq "look" && timeOut($timeout{'ai_look'})) {
 		$timeout{'ai_look'}{'time'} = time;
 		sendLook($net, $ai_seq_args[0]{'look_body'}, $ai_seq_args[0]{'look_head'});
 		shift @ai_seq;
 		shift @ai_seq_args;
-	}
-
-	if ($ai_seq[0] ne "deal" && %currentDeal) {
-		AI::queue('deal');
-	} elsif ($ai_seq[0] eq "deal") {
-		if (%currentDeal) {
-			if (!$currentDeal{you_finalize} && timeOut($timeout{ai_dealAuto}) &&
-			    ($config{dealAuto} == 2 ||
-				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
-				sendDealAddItem(0, $currentDeal{'you_zenny'});
-				sendDealFinalize();
-				$timeout{ai_dealAuto}{time} = time;
-			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2) {
-				sendDealTrade($net);
-				$timeout{ai_dealAuto}{time} = time;
-			}
-		} else {
-			AI::dequeue();
-		}
-	}
-
-	# dealAuto 1=refuse 2,3=accept
-	if ($config{'dealAuto'} && %incomingDeal) {
-		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
-			sendDealCancel($net);
-			$timeout{'ai_dealAuto'}{'time'} = time;
-		} elsif ($config{'dealAuto'} >= 2 && timeOut($timeout{ai_dealAuto})) {
-			sendDealAccept($net);
-			$timeout{'ai_dealAuto'}{'time'} = time;
-		}
-	}
-
-
-	# partyAuto 1=refuse 2=accept
-	if ($config{'partyAuto'} && %incomingParty && timeOut($timeout{'ai_partyAuto'})) {
-		if ($config{partyAuto} == 1) {
-			message T("Auto-denying party request\n");
-		} else {
-			message T("Auto-accepting party request\n");
-		}
-		sendPartyJoin($net, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
-		$timeout{'ai_partyAuto'}{'time'} = time;
-		undef %incomingParty;
-	}
-
-	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut($timeout{'ai_guildAutoDeny'})) {
-		sendGuildJoin($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
-		sendGuildAlly($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
-		$timeout{'ai_guildAutoDeny'}{'time'} = time;
-		undef %incomingGuild;
-	}
-
-
-	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
-		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
-		$sentWelcomeMessage = 1;
 	}
 
 
@@ -774,6 +699,1402 @@ sub AI {
 
 		# Client suspended, do not continue with AI
 		return;
+	}
+
+
+	##### TALK WITH NPC ######
+	NPCTALK: {
+		last NPCTALK if (AI::action ne "NPC");
+		my $args = AI::args;
+		$args->{time} = time unless $args->{time};
+
+		if ($args->{stage} eq '') {
+			unless (timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
+				# Wait for us to stop moving before talking
+			} elsif (timeOut($args->{time}, $timeout{ai_npcTalk}{timeout})) {
+				error "Could not find the NPC at the designated location.\n", "ai_npcTalk";
+				AI::dequeue;
+
+			} else {
+				# An x,y position has been passed
+				foreach my $npc (@npcsID) {
+					next if !$npc || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i;
+					if ( $npcs{$npc}{'pos'}{'x'} eq $args->{pos}{'x'} &&
+					     $npcs{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
+						debug "Target NPC $npcs{$npc}{'name'} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
+						$args->{'nameID'} = $npcs{$npc}{'nameID'};
+						$args->{'ID'} = $npc;
+						$args->{'name'} = $npcs{$npc}{'name'};
+						$args->{'stage'} = 'Talking to NPC';
+						$args->{steps} = [];
+						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
+						undef $args->{time};
+						undef $ai_v{npc_talk}{time};
+						undef $ai_v{npc_talk}{talk};
+						lookAtPosition($args->{pos});
+						last NPCTALK;
+					}
+				}
+				foreach my $ID (@monstersID) {
+					next if !$ID;
+					if ( $monsters{$ID}{'pos'}{'x'} eq $args->{pos}{'x'} &&
+					     $monsters{$ID}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
+						debug "Target Monster-NPC $monsters{$ID}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
+						$args->{'nameID'} = $monsters{$ID}{'nameID'};
+						$args->{'ID'} = $ID;
+						$args->{monster} = 1;
+						$args->{'name'} = $monsters{$ID}{'name'};
+						$args->{'stage'} = 'Talking to NPC';
+						$args->{steps} = [];
+						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
+						undef $args->{time};
+						undef $ai_v{npc_talk}{time};
+						undef $ai_v{npc_talk}{talk};
+						lookAtPosition($args->{pos});
+						last NPCTALK;
+					}
+				}
+			}
+
+
+		} elsif ($args->{mapChanged} || $ai_v{npc_talk}{talk} eq 'close') {
+			message TF("Done talking with %s.\n",$args->{name}), "ai_npcTalk";
+
+			# Cancel conversation only if NPC is still around; otherwise
+			# we could get disconnected.
+			sendTalkCancel($net, $args->{ID}) if $npcs{$args->{ID}};;
+			AI::dequeue;
+
+		} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
+			# If NPC does not respond before timing out, then by default, it's
+			# a failure
+			error "NPC did not respond.\n", "ai_npcTalk";
+			sendTalkCancel($net, $args->{ID});
+			AI::dequeue;
+
+		} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
+			$args->{time} = time;
+			# this time will be reset once the NPC responds
+			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
+
+			if ($config{autoTalkCont}) {
+				while ($args->{steps}[0] =~ /c/i) {
+					shift @{$args->{steps}};
+				}
+			}
+
+			if ($args->{steps}[0] =~ /w(\d+)/i) {
+				my $time = $1;
+				$ai_v{'npc_talk'}{'time'} = time + $time;
+				$args->{time} = time + $time;
+			} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
+				sendTalkText($net, $args->{ID}, $1);
+			} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
+				sendTalkNumber($net, $args->{ID}, $1);
+			} elsif ( $args->{steps}[0] =~ /x/i ) {
+				if (!$args->{monster}) {
+					sendTalk($net, $args->{ID});
+				} else {
+					sendAttack($net, $args->{ID}, 0);
+				}
+			} elsif ( $args->{steps}[0] =~ /c/i ) {
+				sendTalkContinue($net, $args->{ID});
+			} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
+				sendTalkResponse($net, $args->{ID}, $1+1);
+			} elsif ( $args->{steps}[0] =~ /n/i ) {
+				sendTalkCancel($net, $args->{ID});
+				$ai_v{'npc_talk'}{'time'} = time;
+				$args->{time}	= time;
+			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^b(\d+),(\d+)/i ) {
+				my $itemID = $storeList[$1]{nameID};
+				$ai_v{npc_talk}{itemID} = $itemID;
+				sendBuy($net, $itemID, $2);
+			} elsif ( $args->{steps}[0] =~ /b/i ) {
+				sendGetStoreList($net, $args->{ID});
+			} elsif ( $args->{steps}[0] =~ /s/i ) {
+				sendGetSellList($net, $args->{ID});
+			} elsif ( $args->{steps}[0] =~ /e/i ) {
+				$ai_v{npc_talk}{talk} = 'close';
+			}
+			shift @{$args->{steps}};
+		}
+	}
+
+	##### DROPPING #####
+	# Drop one or more items from inventory.
+
+	if (AI::action eq "drop" && timeOut(AI::args)) {
+		my $item = AI::args->{'items'}[0];
+		my $amount = AI::args->{max};
+
+		drop($item, $amount);
+		shift @{AI::args->{items}};
+		AI::args->{time} = time;
+		AI::dequeue if (@{AI::args->{'items'}} <= 0);
+	}
+
+	##### DELAYED-TELEPORT #####
+
+	if (AI::action eq 'teleport') {
+		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
+			# We have already successfully used the Teleport skill,
+			# and the ai_teleport_delay timeout has elapsed
+			sendTeleport($net, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
+			AI::dequeue;
+		} elsif (!$timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_retry})) {
+			# We are still trying to use the Teleport skill
+			sendSkillUse($net, 26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
+			$timeout{ai_teleport_retry}{time} = time;
+		}
+	}
+
+	##### SITTING #####
+	if (AI::action eq "sitting") {
+		if ($char->{sitting} || $char->{skills}{NV_BASIC}{lv} < 3) {
+			# Stop if we're already sitting
+			AI::dequeue;
+			$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
+
+		} elsif (!$char->{sitting} && timeOut($timeout{ai_sit}) && timeOut($timeout{ai_sit_wait})) {
+			# Send the 'sit' packet every x seconds until we're sitting
+			sendSit($net);
+			$timeout{ai_sit}{time} = time;
+
+			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
+		}
+	}
+
+	##### STANDING #####
+	# Same logic as the 'sitting' AI
+	if (AI::action eq "standing") {
+		if (!$char->{sitting}) {
+			AI::dequeue;
+
+		} elsif (timeOut($timeout{ai_sit}) && timeOut($timeout{ai_stand_wait})) {
+			sendStand($net);
+			$timeout{ai_sit}{time} = time;
+		}
+	}
+
+
+	##### ATTACK #####
+
+	if (AI::action eq "attack" && AI::args->{suspended}) {
+		AI::args->{ai_attack_giveup}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+
+	if (AI::action eq "attack" && AI::args->{move_start}) {
+		# We've just finished moving to the monster.
+		# Don't count the time we spent on moving
+		AI::args->{ai_attack_giveup}{time} += time - AI::args->{move_start};
+		undef AI::args->{unstuck}{time};
+		undef AI::args->{move_start};
+
+	} elsif (AI::action eq "attack" && AI::args->{avoiding}) {
+		my $target = Actor::get(AI::args->{attackID});
+		AI::args->{ai_attack_giveup}{time} = time + $target->{time_move_calc} + 3;
+		undef AI::args->{avoiding};
+
+	} elsif (((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
+	   && AI::args->{attackID} && timeOut($AI::Temp::attack_route_adjust, 1)) {
+		# We're on route to the monster; check whether the monster has moved
+		my $ID = AI::args->{attackID};
+		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
+		my $target = Actor::get($ID);
+
+		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
+		 && distance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
+			# Monster has moved; stop moving and let the attack AI readjust route
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "route");
+
+			$attackSeq->{ai_attack_giveup}{time} = time;
+			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
+
+		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
+		 && distance(calcPosition($target), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
+			# Monster is within attack range; stop moving
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "route");
+
+			$attackSeq->{ai_attack_giveup}{time} = time;
+			debug "Target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
+				"$attackSeq->{attackMethod}{maxDistance} blocks; stop moving\n", "ai_attack";
+		}
+		$AI::Temp::attack_route_adjust = time;
+	}
+
+	if (AI::action eq "attack" &&
+	    (timeOut(AI::args->{ai_attack_giveup}) ||
+		 AI::args->{unstuck}{count} > 5) &&
+		!$config{attackNoGiveup}) {
+		my $ID = AI::args->{ID};
+		my $target = Actor::get($ID);
+		$target->{attack_failed} = time if ($monsters{$ID});
+		AI::dequeue;
+		message "Can't reach or damage target, dropping target\n", "ai_attack";
+		if ($config{'teleportAuto_dropTarget'}) {
+			message "Teleport due to dropping attack target\n";
+			useTeleport(1);
+		}
+
+	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{ID}} && (!$players{$ai_seq_args[0]{ID}} || $players{$ai_seq_args[0]{ID}}{dead})) {
+		# Monster died or disappeared
+		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
+		my $ID = AI::args->{ID};
+		AI::dequeue;
+
+		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
+			message "Target died\n", "ai_attack";
+			monKilled();
+
+			# Pickup loot when monster's dead
+			if ($AI == 2 && $config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
+				AI::clear("items_take");
+				ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
+					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
+			} elsif (!ai_getAggressives()) {
+				# Cheap way to suspend all movement to make it look real
+				ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
+			}
+
+			## kokal start
+			## mosters counting
+			my $i = 0;
+			my $found = 0;
+			while ($monsters_Killed[$i]) {
+				if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ID}{'nameID'}) {
+					$monsters_Killed[$i]{'count'}++;
+					monsterLog($monsters_Killed[$i]{'name'});
+					$found = 1;
+					last;
+				}
+				$i++;
+			}
+			if (!$found) {
+				$monsters_Killed[$i]{'nameID'} = $monsters_old{$ID}{'nameID'};
+				$monsters_Killed[$i]{'name'} = $monsters_old{$ID}{'name'};
+				$monsters_Killed[$i]{'count'} = 1;
+				monsterLog($monsters_Killed[$i]{'name'})
+			}
+			## kokal end
+
+		} else {
+			message "Target lost\n", "ai_attack";
+		}
+
+	} elsif (AI::action eq "attack") {
+		# The attack sequence hasn't timed out and the monster is on screen
+
+		# Update information about the monster and the current situation
+		my $args = AI::args;
+		my $followIndex = AI::findAction("follow");
+		my $following;
+		my $followID;
+		if (defined $followIndex) {
+			$following = AI::args($followIndex)->{following};
+			$followID = AI::args($followIndex)->{ID};
+		}
+
+		my $ID = $args->{ID};
+		my $target = Actor::get($ID);
+		my $myPos = $char->{pos_to};
+		my $monsterPos = $target->{pos_to};
+		my $monsterDist = distance($myPos, $monsterPos);
+
+		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
+		my $realMyPos = calcPosition($char);
+		my $realMonsterPos = calcPosition($target);
+		my $realMonsterDist = distance($realMyPos, $realMonsterPos);
+		if (!$config{'runFromTarget'}) {
+			$myPos = $realMyPos;
+			$monsterPos = $realMonsterPos;
+		}
+
+		my $cleanMonster = checkMonsterCleanness($ID);
+
+
+		# If the damage numbers have changed, update the giveup time so we don't timeout
+		if ($args->{dmgToYou_last}   != $target->{dmgToYou}
+		 || $args->{missedYou_last}  != $target->{missedYou}
+		 || $args->{dmgFromYou_last} != $target->{dmgFromYou}
+		 || $args->{lastSkillTime} != $char->{last_skill_time}) {
+			$args->{ai_attack_giveup}{time} = time;
+			debug "Update attack giveup time\n", "ai_attack", 2;
+		}
+		$hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou}
+			|| $args->{missedYou_last} != $target->{missedYou});
+		$args->{dmgToYou_last} = $target->{dmgToYou};
+		$args->{missedYou_last} = $target->{missedYou};
+		$args->{dmgFromYou_last} = $target->{dmgFromYou};
+		$args->{missedFromYou_last} = $target->{missedFromYou};
+		$args->{lastSkillTime} = $char->{last_skill_time};
+
+
+		# Determine what combo skill to use
+		delete $args->{attackMethod};
+		my $lastSkill = Skills->new(id => $char->{last_skill_used})->name;
+		my $i = 0;
+		while (exists $config{"attackComboSlot_$i"}) {
+			if (!$config{"attackComboSlot_$i"}) {
+				$i++;
+				next;
+			}
+
+			if ($config{"attackComboSlot_${i}_afterSkill"} eq $lastSkill
+			 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
+			 && ( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) )
+			 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
+			 && checkSelfCondition("attackComboSlot_$i")
+			 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}))
+			 && (!$config{"attackComboSlot_${i}_notMonsters"} || !existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}))
+			 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
+ 
+				$args->{attackComboSlot_uses}{$i}++;
+				delete $char->{last_skill_used};
+				$config{"attackComboSlot_${i}_waitBeforeUse"} = $char->{combo_packet} if $config{"attackComboSlot_${i}_autoCombo"};
+				delete $char->{combo_packet};
+				$args->{attackMethod}{type} = "combo";
+				$args->{attackMethod}{comboSlot} = $i;
+				$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
+				$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_dist"};
+				$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
+				last;
+			}
+			$i++;
+		}
+
+		# Determine what skill to use to attack
+		if (!$args->{attackMethod}{type}) {
+			if ($config{'attackUseWeapon'}) {
+				$args->{attackMethod}{distance} = $config{'attackDistance'};
+				$args->{attackMethod}{maxDistance} = $config{'attackMaxDistance'};
+				$args->{attackMethod}{type} = "weapon";
+			} else {
+				$args->{attackMethod}{distance} = 30;
+				$args->{attackMethod}{maxDistance} = 30;
+				undef $args->{attackMethod}{type};
+			}
+
+			$i = 0;
+			while (exists $config{"attackSkillSlot_$i"}) {
+				if (!$config{"attackSkillSlot_$i"}) {
+					$i++;
+					next;
+				}
+
+				my $skill = Skills->new(name => $config{"attackSkillSlot_$i"});
+				if (checkSelfCondition("attackSkillSlot_$i")
+					&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
+					    $target->{skillUses}{$skill->handle} < $config{"attackSkillSlot_$i"."_maxUses"})
+					&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
+					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}))
+					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}))
+					&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
+					&& checkMonsterCondition("attackSkillSlot_${i}_target", $target)
+				) {
+					$args->{attackSkillSlot_attempts}{$i}++;
+					$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
+					$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_dist"};
+					$args->{attackMethod}{type} = "skill";
+					$args->{attackMethod}{skillSlot} = $i;
+					last;
+				}
+				$i++;
+			}
+
+			if ($config{'runFromTarget'} && $config{'runFromTarget_dist'} > $args->{attackMethod}{distance}) {
+				$args->{attackMethod}{distance} = $config{'runFromTarget_dist'};
+			}
+		}
+
+		$args->{attackMethod}{maxDistance} ||= $config{attackMaxDistance};
+		$args->{attackMethod}{distance} ||= $config{attackDistance};
+		if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
+			$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
+		}
+
+		if ($char->{sitting}) {
+			ai_setSuspend(0);
+			stand();
+
+		} elsif (!$cleanMonster) {
+			# Drop target if it's already attacked by someone else
+			message "Dropping target - you will not kill steal others\n", "ai_attack";
+			sendMove($realMyPos->{x}, $realMyPos->{y});
+			AI::dequeue;
+			if ($config{teleportAuto_dropTargetKS}) {
+				message "Teleporting due to dropping attack target\n", "teleport";
+				useTeleport(1);
+			}
+
+		} elsif ($config{attackCheckLOS} &&
+			 $args->{attackMethod}{distance} > 2 &&
+			 !checkLineSnipable($realMyPos, $realMonsterPos)) {
+			# We are a ranged attacker without LOS
+
+			# Calculate squares around monster within shooting range, but not
+			# closer than runFromTarget_dist
+			my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
+						  $args->{attackMethod}{distance},
+									  $config{runFromTarget} ? $config{runFromTarget_dist} : 0);
+
+			my ($master, $masterPos);
+			if ($config{follow}) {
+				foreach (keys %players) {
+					if ($players{$_}{name} eq $config{followTarget}) {
+						$master = $players{$_};
+						last;
+					}
+				}
+				$masterPos = calcPosition($master) if $master;
+			}
+
+			# Determine which of these spots are snipable
+			my $best_spot;
+			my $best_dist;
+			for my $spot (@stand) {
+				# Is this spot acceptable?
+				# 1. It must have LOS to the target ($realMonsterPos).
+				# 2. It must be within $config{followDistanceMax} of
+				#    $masterPos, if we have a master.
+				if (checkLineSnipable($spot, $realMonsterPos) &&
+				    (!$master || distance($spot, $masterPos) <= $config{followDistanceMax})) {
+					# FIXME: use route distance, not pythagorean distance
+					my $dist = distance($realMyPos, $spot);
+					if (!defined($best_dist) || $dist < $best_dist) {
+						$best_dist = $dist;
+						$best_spot = $spot;
+					}
+				}
+			}
+
+			# Move to the closest spot
+			my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
+			if ($best_spot) {
+				message "$msg; moving to ($best_spot->{x}, $best_spot->{y})\n";
+				ai_route($field{name}, $best_spot->{x}, $best_spot->{y});
+			} else {
+				warning "$msg; no acceptable place to stand\n";
+				AI::dequeue;
+			}
+
+		} elsif ($config{'runFromTarget'} && ($monsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
+			#my $begin = time;
+			# Get a list of blocks that we can run to
+			my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
+				# If the monster hit you while you're running, then your recorded
+				# location may be out of date. So we use a smaller distance so we can still move.
+				($hitYou) ? $config{'runFromTarget_dist'} / 2 : $config{'runFromTarget_dist'});
+
+			# Find the distance value of the block that's farthest away from a wall
+			my $highest;
+			foreach (@blocks) {
+				my $dist = ord(substr($field{dstMap}, $_->{y} * $field{width} + $_->{x}));
+				if (!defined $highest || $dist > $highest) {
+					$highest = $dist;
+				}
+			}
+
+			# Get rid of rediculously large route distances (such as spots that are on a hill)
+			# Get rid of blocks that are near a wall
+			my $pathfinding = new PathFinding;
+			use constant AVOID_WALLS => 4;
+			for (my $i = 0; $i < @blocks; $i++) {
+				# We want to avoid walls (so we don't get cornered), if possible
+				my $dist = ord(substr($field{dstMap}, $blocks[$i]{y} * $field{width} + $blocks[$i]{x}));
+				if ($highest >= AVOID_WALLS && $dist < AVOID_WALLS) {
+					delete $blocks[$i];
+					next;
+				}
+
+				$pathfinding->reset(
+					field => \%field,
+					start => $myPos,
+					dest => $blocks[$i]);
+				my $ret = $pathfinding->runcount;
+				if ($ret <= 0 || $ret > $config{'runFromTarget_dist'} * 2) {
+					delete $blocks[$i];
+					next;
+				}
+			}
+
+			# Find the block that's farthest to us
+			my $largestDist;
+			my $bestBlock;
+			foreach (@blocks) {
+				next unless defined $_;
+				my $dist = distance($monsterPos, $_);
+				if (!defined $largestDist || $dist > $largestDist) {
+					$largestDist = $dist;
+					$bestBlock = $_;
+				}
+			}
+
+			#message "Time spent: " . (time - $begin) . "\n";
+			#debug_showSpots('runFromTarget', \@blocks, $bestBlock);
+			AI::args->{avoiding} = 1;
+			move($bestBlock->{x}, $bestBlock->{y}, $ID);
+
+		} elsif (!$config{'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
+		  && timeOut($args->{ai_attack_giveup}, 0.5)) {
+			# The target monster moved; move to target
+			$args->{move_start} = time;
+			$args->{monsterPos} = {%{$monsterPos}};
+
+			# Calculate how long it would take to reach the monster.
+			# Calculate where the monster would be when you've reached its
+			# previous position.
+			my $time_needed;
+			if (objectIsMovingTowards($target, $char, 45)) {
+				$time_needed = $monsterDist * $char->{walk_speed};
+			} else {
+				# If monster is not moving towards you, then you need more time to walk
+				$time_needed = $monsterDist * $char->{walk_speed} + 2;
+			}
+			my $pos = calcPosition($target, $time_needed);
+
+			my $dist = sprintf("%.1f", $monsterDist);
+			debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
+				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
+
+			my $result = ai_route($field{'name'}, $pos->{x}, $pos->{y},
+				distFromGoal => $args->{attackMethod}{distance},
+				maxRouteTime => $config{'attackMaxRouteTime'},
+				attackID => $ID,
+				noMapRoute => 1,
+				noAvoidWalls => 1);
+			if (!$result) {
+				# Unable to calculate a route to target
+				$target->{attack_failed} = time;
+				AI::dequeue;
+				message "Unable to calculate a route to target, dropping target\n", "ai_attack";
+			}
+
+		} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
+		 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
+			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
+			if (!AI::args->{firstAttack}) {
+				AI::args->{firstAttack} = 1;
+				my $dist = sprintf("%.1f", $monsterDist);
+				my $pos = "$myPos->{x},$myPos->{y}";
+				debug "Ready to attack target (which is $dist blocks away); we're at ($pos)\n", "ai_attack";
+			}
+
+			$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
+			if (!$target->{dmgFromYou} && timeOut($args->{unstuck})) {
+				# We are close enough to the target, and we're trying to attack it,
+				# but some time has passed and we still haven't dealed any damage.
+				# Our recorded position might be out of sync, so try to unstuck
+				$args->{unstuck}{time} = time;
+				debug("Attack - trying to unstuck\n", "ai_attack");
+				move($myPos->{x}, $myPos->{y});
+				$args->{unstuck}{count}++;
+			}
+
+			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
+				if (Item::scanConfigAndCheck("attackEquip")) {
+					#check if item needs to be equipped
+					Item::scanConfigAndEquip("attackEquip");
+				} else {
+					sendAttack($net, $ID,
+						($config{'tankMode'}) ? 0 : 7);
+					$timeout{ai_attack}{time} = time;
+					delete $args->{attackMethod};
+				}
+			} elsif ($args->{attackMethod}{type} eq "skill") {
+				my $slot = $args->{attackMethod}{skillSlot};
+				delete $args->{attackMethod};
+
+				ai_setSuspend(0);
+				if (!ai_getSkillUseType($skills_rlut{lc($config{"attackSkillSlot_$slot"})})) {
+					ai_skillUse(
+						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
+						$config{"attackSkillSlot_${slot}_lvl"},
+						$config{"attackSkillSlot_${slot}_maxCastTime"},
+						$config{"attackSkillSlot_${slot}_minCastTime"},
+						$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $accountID : $ID,
+						undef,
+						"attackSkill",
+						undef,
+						undef,
+						"attackSkillSlot_${slot}");
+				} else {
+					my $pos = calcPosition($config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target);
+					ai_skillUse(
+						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
+						$config{"attackSkillSlot_${slot}_lvl"},
+						$config{"attackSkillSlot_${slot}_maxCastTime"},
+						$config{"attackSkillSlot_${slot}_minCastTime"},
+						$pos->{x},
+						$pos->{y},
+						"attackSkill",
+						undef,
+						undef,
+						"attackSkillSlot_${slot}");
+				}
+				$args->{monsterID} = $ID;
+
+				debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $config{"attackSkillSlot_${slot}_lvl"})\n~, "ai_attack";
+
+			} elsif ($args->{attackMethod}{type} eq "combo") {
+				my $slot = $args->{attackMethod}{comboSlot};
+				my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
+				my $skill = Skills->new(name => $config{"attackComboSlot_$slot"})->handle;
+				delete $args->{attackMethod};
+
+				if (!ai_getSkillUseType($skill)) {
+					my $targetID = ($isSelfSkill) ? $accountID : $ID;
+					ai_skillUse(
+						$skill,
+						$config{"attackComboSlot_${slot}_lvl"},
+						$config{"attackComboSlot_${slot}_maxCastTime"},
+						$config{"attackComboSlot_${slot}_minCastTime"},
+						$targetID,
+						undef,
+						undef,
+						undef,
+						$config{"attackComboSlot_${slot}_waitBeforeUse"});
+				} else {
+					my $pos = ($isSelfSkill) ? $char->{pos_to} : $target->{pos_to};
+					ai_skillUse(
+						$skill,
+						$config{"attackComboSlot_${slot}_lvl"},
+						$config{"attackComboSlot_${slot}_maxCastTime"},
+						$config{"attackComboSlot_${slot}_minCastTime"},
+						$pos->{x},
+						$pos->{y},
+						undef,
+						undef,
+						$config{"attackComboSlot_${slot}_waitBeforeUse"});
+				}
+				$args->{monsterID} = $ID;
+			}
+
+		} elsif ($config{'tankMode'}) {
+			if ($ai_seq_args[0]{'dmgTo_last'} != $target->{'dmgTo'}) {
+				$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
+			}
+			$ai_seq_args[0]{'dmgTo_last'} = $target->{'dmgTo'};
+		}
+	}
+
+	# Check for kill steal while moving
+	if (AI::is("move", "route") && AI::args->{attackID} && AI::inQueue("attack")) {
+		my $ID = AI::args->{attackID};
+		if ($monsters{$ID} && !checkMonsterCleanness($ID)) {
+			message "Dropping target - you will not kill steal others\n";
+			stopAttack();
+			$monsters{$ID}{ignore} = 1;
+
+			# Right now, the queue is either
+			#   move, route, attack
+			# -or-
+			#   route, attack
+			AI::dequeue;
+			AI::dequeue;
+			AI::dequeue if (AI::action eq "attack");
+			if ($config{teleportAuto_dropTargetKS}) {
+				message "Teleport due to dropping attack target\n";
+				useTeleport(1);
+			}
+		}
+	}
+
+
+	##### SKILL USE #####
+	#FIXME: need to move closer before using skill on player,
+	#there might be line of sight problem too
+	#or the player disappers from the area
+
+	if (AI::action eq "skill_use" && AI::args->{suspended}) {
+		AI::args->{giveup}{time} += time - AI::args->{suspended};
+		AI::args->{minCastTime}{time} += time - AI::args->{suspended};
+		AI::args->{maxCastTime}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+
+	SKILL_USE: {
+		last SKILL_USE if (AI::action ne "skill_use");
+		my $args = AI::args;
+
+		if ($args->{monsterID} && $skillsArea{$args->{skillHandle}} == 2) {
+			delete $args->{monsterID};
+		}
+
+		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skillHandle}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
+			warning "Timeout equiping for skill\n";
+			AI::dequeue;
+			${$args->{ret}} = 'equip timeout' if ($args->{ret});
+		} elsif (Item::scanConfigAndCheck("$args->{prefix}_equip")) {
+			#check if item needs to be equipped
+			Item::scanConfigAndEquip("$args->{prefix}_equip");
+		} elsif (timeOut($args->{waitBeforeUse})) {
+			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
+				# This skill is supposed to be used for attacking a monster, but that monster has died
+				AI::dequeue;
+				${$args->{ret}} = 'target gone' if ($args->{ret});
+
+			} elsif ($char->{sitting}) {
+				AI::suspend;
+				stand();
+
+			# Use skill if we haven't done so yet
+			} elsif (!$args->{skill_used}) {
+				my $handle = $args->{skillHandle};
+				if (!defined $args->{skillID}) {
+					my $skill = new Skills(handle => $handle);
+					$args->{skillID} = $skill->id;
+				}
+				my $skillID = $args->{skillID};
+
+				if ($handle eq 'AL_TELEPORT') {
+					${$args->{ret}} = 'ok' if ($args->{ret});
+					AI::dequeue;
+					useTeleport($args->{lv});
+					last SKILL_USE;
+				}
+
+				$args->{skill_used} = 1;
+				$args->{giveup}{time} = time;
+
+				# Stop attacking, otherwise skill use might fail
+				my $attackIndex = AI::findAction("attack");
+				if (defined($attackIndex) && AI::args($attackIndex)->{attackMethod}{type} eq "weapon") {
+					# 2005-01-24 pmak: Commenting this out since it may
+					# be causing bot to attack slowly when a buff runs
+					# out.
+					#stopAttack();
+				}
+
+				# Give an error if we don't actually possess this skill
+				my $skill = new Skills(handle => $handle);
+				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->handle ne $handle)) {
+					debug "Attempted to use skill (".$skill->name.") which you do not have.\n";
+				}
+
+				$args->{maxCastTime}{time} = time;
+				if ($skillsArea{$handle} == 2) {
+					sendSkillUse($net, $skillID, $args->{lv}, $accountID);
+				} elsif ($args->{x} ne "") {
+					sendSkillUseLoc($net, $skillID, $args->{lv}, $args->{x}, $args->{y});
+				} else {
+					sendSkillUse($net, $skillID, $args->{lv}, $args->{target});
+				}
+				undef $char->{permitSkill};
+				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
+
+				delete $char->{cast_cancelled};
+
+			} elsif (timeOut($args->{minCastTime})) {
+				if ($args->{skill_use_last} != $char->{skills}{$args->{skillHandle}}{time_used}) {
+					AI::dequeue;
+					${$args->{ret}} = 'ok' if ($args->{ret});
+
+				} elsif ($char->{cast_cancelled} > $char->{time_cast}) {
+					AI::dequeue;
+					${$args->{ret}} = 'cancelled' if ($args->{ret});
+
+				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
+				  && ( (timeOut($args->{giveup}) && (!$char->{time_cast} || !$args->{maxCastTime}{timeout}) )
+				      || ( $args->{maxCastTime}{timeout} && timeOut($args->{maxCastTime})) )
+				) {
+					AI::dequeue;
+					${$args->{ret}} = 'timeout' if ($args->{ret});
+				}
+			}
+		}
+	}
+
+
+	####### ROUTE #######
+
+	if (AI::action eq "route" && AI::args->{suspended}) {
+		AI::args->{time_start} += time - AI::args->{suspended};
+		AI::args->{time_step} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+
+	if (AI::action eq "route" && $field{'name'} && $char->{pos_to}{x} ne '' && $char->{pos_to}{y} ne '') {
+		my $args = AI::args;
+
+		if ( $args->{maxRouteTime} && timeOut($args->{time_start}, $args->{maxRouteTime})) {
+			# We spent too much time
+			debug "Route - we spent too much time; bailing out.\n", "route";
+			AI::dequeue;
+
+		} elsif ($field{name} ne $args->{dest}{map} || $args->{mapChanged}) {
+			debug "Map changed: $field{name} $args->{dest}{map}\n", "route";
+			AI::dequeue;
+
+		} elsif ($args->{stage} eq '') {
+			my $pos = calcPosition($char);
+			$args->{solution} = [];
+			if (ai_route_getRoute($args->{solution}, \%field, $pos, $args->{dest}{pos})) {
+				$args->{stage} = 'Route Solution Ready';
+				debug "Route Solution Ready\n", "route";
+			} else {
+				debug "Something's wrong; there is no path to $field{name}($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
+				AI::dequeue;
+			}
+
+		} elsif ($args->{stage} eq 'Route Solution Ready') {
+			my $solution = $args->{solution};
+			if ($args->{maxRouteDistance} > 0 && $args->{maxRouteDistance} < 1) {
+				# Fractional route motion
+				$args->{maxRouteDistance} = int($args->{maxRouteDistance} * scalar(@{$solution}));
+			}
+			splice(@{$solution}, 1 + $args->{maxRouteDistance}) if $args->{maxRouteDistance} && $args->{maxRouteDistance} < @{$solution};
+
+			# Trim down solution tree for pyDistFromGoal or distFromGoal
+			if ($args->{pyDistFromGoal}) {
+				my $trimsteps = 0;
+				$trimsteps++ while ($trimsteps < @{$solution}
+						 && distance($solution->[@{$solution} - 1 - $trimsteps], $solution->[@{$solution} - 1]) < $args->{pyDistFromGoal}
+					);
+				debug "Route - trimming down solution by $trimsteps steps for pyDistFromGoal $ai_seq_args[0]{'pyDistFromGoal'}\n", "route";
+				splice(@{$ai_seq_args[0]{'solution'}}, -$trimsteps) if ($trimsteps);
+			} elsif ($args->{distFromGoal}) {
+				my $trimsteps = $ai_seq_args[0]{distFromGoal};
+				$trimsteps = @{$ai_seq_args[0]{'solution'}} if $trimsteps > @{$ai_seq_args[0]{'solution'}};
+				debug "Route - trimming down solution by $trimsteps steps for distFromGoal $ai_seq_args[0]{'distFromGoal'}\n", "route";
+				splice(@{$args->{solution}}, -$trimsteps) if ($trimsteps);
+			}
+
+			undef $args->{mapChanged};
+			undef $args->{index};
+			undef $args->{old_x};
+			undef $args->{old_y};
+			undef $args->{new_x};
+			undef $args->{new_y};
+			$args->{time_step} = time;
+			$args->{stage} = 'Walk the Route Solution';
+
+		} elsif ($args->{stage} eq 'Walk the Route Solution') {
+
+			my $pos = calcPosition($char);
+			my ($cur_x, $cur_y) = ($pos->{x}, $pos->{y});
+
+			unless (@{$args->{solution}}) {
+				# No more points to cover; we've arrived at the destination
+				if (AI::args->{notifyUponArrival}) {
+					message "Destination reached.\n", "success";
+				} else {
+					debug "Destination reached.\n", "route";
+				}
+				AI::dequeue;
+
+			} elsif ($args->{old_x} == $cur_x && $args->{old_y} == $cur_y && timeOut($args->{time_step}, 3)) {
+				# We tried to move for 3 seconds, but we are still on the same spot,
+				# decrease step size.
+				# However, if $args->{index} was already 0, then that means
+				# we were almost at the destination (only 1 more step is needed).
+				# But we got interrupted (by auto-attack for example). Don't count that
+				# as stuck.
+				my $wasZero = $args->{index} == 0;
+				$args->{index} = int($args->{index} * 0.8);
+				if ($args->{index}) {
+					debug "Route - not moving, decreasing step size to $args->{index}\n", "route";
+					if (@{$args->{solution}}) {
+						# If we still have more points to cover, walk to next point
+						$args->{index} = @{$args->{solution}} - 1 if $args->{index} >= @{$args->{solution}};
+						$args->{new_x} = $args->{solution}[$args->{index}]{x};
+						$args->{new_y} = $args->{solution}[$args->{index}]{y};
+						$args->{time_step} = time;
+						move($args->{new_x}, $args->{new_y}, $args->{attackID});
+					}
+				} elsif (!$wasZero) {
+					# We're stuck
+					my $msg = "Stuck at $field{name} ($char->{pos_to}{x},$char->{pos_to}{y}), while walking from ($cur_x,$cur_y) to ($args->{dest}{pos}{x},$args->{dest}{pos}{y}).";
+					$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
+					$msg .= "\n";
+					warning $msg, "route";
+					useTeleport(1) if $config{teleportAuto_unstuck};
+					AI::dequeue;
+				} else {
+					$args->{time_step} = time;
+				}
+
+			} else {
+				# We're either starting to move or already moving, so send out more
+				# move commands periodically to keep moving and updating our position
+				my $solution = $args->{solution};
+				$args->{index} = $config{'route_step'} unless $args->{index};
+				$args->{index}++ if ($args->{index} < $config{'route_step'});
+
+				if (defined($args->{old_x}) && defined($args->{old_y})) {
+					# See how far we've walked since the last move command and
+					# trim down the soultion tree by this distance.
+					# Only remove the last step if we reached the destination
+					my $trimsteps = 0;
+					# If position has changed, we must have walked at least one step
+					$trimsteps++ if ($cur_x != $args->{'old_x'} || $cur_y != $args->{'old_y'});
+					# Search the best matching entry for our position in the solution
+					while ($trimsteps < @{$solution}
+							 && distance( { x => $cur_x, y => $cur_y }, $solution->[$trimsteps + 1])
+							    < distance( { x => $cur_x, y => $cur_y }, $solution->[$trimsteps])
+						) {
+						$trimsteps++;
+					}
+					# Remove the last step also if we reached the destination
+					$trimsteps = @{$solution} - 1 if ($trimsteps >= @{$solution});
+					#$trimsteps = @{$solution} if ($trimsteps <= $args->{'index'} && $args->{'new_x'} == $cur_x && $args->{'new_y'} == $cur_y);
+					$trimsteps = @{$solution} if ($cur_x == $solution->[$#{$solution}]{x} && $cur_y == $solution->[$#{$solution}]{y});
+					debug "Route - trimming down solution (" . @{$solution} . ") by $trimsteps steps\n", "route";
+					splice(@{$solution}, 0, $trimsteps) if ($trimsteps > 0);
+				}
+
+				my $stepsleft = @{$solution};
+				if ($stepsleft > 0) {
+					# If we still have more points to cover, walk to next point
+					$args->{index} = $stepsleft - 1 if ($args->{index} >= $stepsleft);
+					$args->{new_x} = $args->{solution}[$args->{index}]{x};
+					$args->{new_y} = $args->{solution}[$args->{index}]{y};
+
+					# But first, check whether the distance of the next point isn't abnormally large.
+					# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
+					# for example.
+					my %nextPos = (x => $args->{new_x}, y => $args->{new_y});
+					if (distance(\%nextPos, $pos) > $config{'route_step'}) {
+						debug "Route - movement interrupted: reset route\n", "route";
+						$args->{stage} = '';
+
+					} else {
+						$args->{old_x} = $cur_x;
+						$args->{old_y} = $cur_y;
+						$args->{time_step} = time if ($cur_x != $args->{old_x} || $cur_y != $args->{old_y});
+						debug "Route - next step moving to ($args->{new_x}, $args->{new_y}), index $args->{index}, $stepsleft steps left\n", "route";
+						move($args->{new_x}, $args->{new_y}, $args->{attackID});
+					}
+				} else {
+					# No more points to cover
+					if (AI::args->{notifyUponArrival}) {
+						message "Destination reached.\n", "success";
+					} else {
+						debug "Destination reached.\n", "route";
+					}
+					AI::dequeue;
+				}
+			}
+
+		} else {
+			debug "Unexpected route stage [$args->{stage}] occured.\n", "route";
+			AI::dequeue;
+		}
+	}
+
+
+	####### MAPROUTE #######
+	if ( AI::action eq "mapRoute" && $field{name} && $char->{pos_to}{x} ne '' && $char->{pos_to}{y} ne '' ) {
+		my $args = AI::args;
+
+		if ($args->{stage} eq '') {
+			$ai_seq_args[0]{'budget'} = $config{'route_maxWarpFee'} eq '' ?
+				'' :
+				$config{'route_maxWarpFee'} > $chars[$config{'char'}]{'zenny'} ?
+					$chars[$config{'char'}]{'zenny'} :
+					$config{'route_maxWarpFee'};
+			delete $ai_seq_args[0]{'done'};
+			delete $ai_seq_args[0]{'found'};
+			delete $ai_seq_args[0]{'mapChanged'};
+			delete $ai_seq_args[0]{'openlist'};
+			delete $ai_seq_args[0]{'closelist'};
+			undef @{$ai_seq_args[0]{'mapSolution'}};
+			$ai_seq_args[0]{'dest'}{'field'} = {};
+			getField($ai_seq_args[0]{dest}{map}, $ai_seq_args[0]{dest}{field});
+
+			# Initializes the openlist with portals walkable from the starting point
+			foreach my $portal (keys %portals_lut) {
+				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
+				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}}) ) {
+					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
+						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
+						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$ai_seq_args[0]{'solution'}};
+						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'zenny'} = $portals_lut{$portal}{'dest'}{$dest}{'cost'};
+					}
+				}
+			}
+			$ai_seq_args[0]{'stage'} = 'Getting Map Solution';
+
+		} elsif ( $args->{stage} eq 'Getting Map Solution' ) {
+			$timeout{'ai_route_calcRoute'}{'time'} = time;
+			while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
+				ai_mapRoute_searchStep($args);
+			}
+			if ($ai_seq_args[0]{'found'}) {
+				$ai_seq_args[0]{'stage'} = 'Traverse the Map Solution';
+				delete $ai_seq_args[0]{'openlist'};
+				delete $ai_seq_args[0]{'solution'};
+				delete $ai_seq_args[0]{'closelist'};
+				delete $ai_seq_args[0]{'dest'}{'field'};
+				debug "Map Solution Ready for traversal.\n", "route";
+			} elsif ($ai_seq_args[0]{'done'}) {
+				my $destpos = "$args->{dest}{pos}{x},$args->{dest}{pos}{y}";
+				$destpos = "($destpos)" if ($destpos ne "");
+				warning "Unable to calculate how to walk from [$field{name}($char->{pos_to}{x},$char->{pos_to}{y})] " .
+					"to [$args->{dest}{map}${destpos}] (no map solution).\n", "route";
+				AI::dequeue;
+			}
+
+		} elsif ( $args->{stage} eq 'Traverse the Map Solution' ) {
+
+			my @solution;
+			unless (@{$ai_seq_args[0]{'mapSolution'}}) {
+				# mapSolution is now empty
+				AI::dequeue;
+				debug "Map Router is finish traversing the map solution\n", "route";
+
+			} elsif ( $field{'name'} ne $ai_seq_args[0]{'mapSolution'}[0]{'map'}
+				|| ( $args->{mapChanged} && !$args->{teleport} ) ) {
+				# Solution Map does not match current map
+				debug "Current map $field{'name'} does not match solution [ $ai_seq_args[0]{'mapSolution'}[0]{'portal'} ].\n", "route";
+				delete $ai_seq_args[0]{'substage'};
+				delete $ai_seq_args[0]{'timeout'};
+				delete $ai_seq_args[0]{'mapChanged'};
+				shift @{$ai_seq_args[0]{'mapSolution'}};
+
+			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'steps'} ) {
+				# If current solution has conversation steps specified
+				if ( $ai_seq_args[0]{'substage'} eq 'Waiting for Warp' ) {
+					$ai_seq_args[0]{'timeout'} = time unless $ai_seq_args[0]{'timeout'};
+					if (timeOut($ai_seq_args[0]{'timeout'}, $timeout{ai_route_npcTalk}{timeout} || 10) ||
+					    $ai_v{npc_talk}{talk} eq 'close') {
+						# We waited for 10 seconds and got nothing
+						delete $ai_seq_args[0]{'substage'};
+						delete $ai_seq_args[0]{'timeout'};
+						if (++$ai_seq_args[0]{'mapSolution'}[0]{'retry'} >= ($config{route_maxNpcTries} || 5)) {
+							# NPC sequence is a failure
+							# We delete that portal and try again
+							delete $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"};
+							warning "Unable to talk to NPC at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+							$ai_seq_args[0]{'stage'} = '';	# redo MAP router
+						}
+					}
+
+				} elsif (distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}) <= 10) {
+					my ($from,$to) = split /=/, $ai_seq_args[0]{'mapSolution'}[0]{'portal'};
+					if ($chars[$config{'char'}]{'zenny'} >= $portals_lut{$from}{'dest'}{$to}{'cost'}) {
+						#we have enough money for this service
+						$ai_seq_args[0]{'substage'} = 'Waiting for Warp';
+						$ai_seq_args[0]{'old_x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
+						$ai_seq_args[0]{'old_y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
+						$ai_seq_args[0]{'old_map'} = $field{'name'};
+						ai_talkNPC($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}, $ai_seq_args[0]{'mapSolution'}[0]{'steps'} );
+					} else {
+						error "Insufficient zenny to pay for service at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+						$ai_seq_args[0]{'stage'} = ''; #redo MAP router
+					}
+
+				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
+					# we spent too long a time
+					debug "We spent too much time; bailing out.\n", "route";
+					shift @ai_seq;
+					shift @ai_seq_args;
+
+				} elsif ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
+					# NPC is reachable from current position
+					# >> Then "route" to it
+					debug "Walking towards the NPC\n", "route";
+					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
+						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+						distFromGoal => 10,
+						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
+						_solution => \@solution,
+						_internal => 1);
+
+				} else {
+					#Error, NPC is not reachable from current pos
+					debug "CRTICAL ERROR: NPC is not reachable from current location.\n", "route";
+					error "Unable to walk from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to NPC at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+					shift @{$ai_seq_args[0]{'mapSolution'}};
+				}
+
+			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'portal'} eq "$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}=$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}" ) {
+				# This solution points to an X,Y coordinate
+				my $distFromGoal = $ai_seq_args[0]{'pyDistFromGoal'} ? $ai_seq_args[0]{'pyDistFromGoal'} : ($ai_seq_args[0]{'distFromGoal'} ? $ai_seq_args[0]{'distFromGoal'} : 0);
+				if ( $distFromGoal + 2 > distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'})) {
+					#We need to specify +2 because sometimes the exact spot is occupied by someone else
+					shift @{$ai_seq_args[0]{'mapSolution'}};
+
+				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
+					#we spent too long a time
+					debug "We spent too much time; bailing out.\n", "route";
+					shift @ai_seq;
+					shift @ai_seq_args;
+
+				} elsif ( ai_route_getRoute( \@solution, \%field, $chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'} ) ) {
+					# X,Y is reachable from current position
+					# >> Then "route" to it
+					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
+						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+						distFromGoal => $ai_seq_args[0]{'distFromGoal'},
+						pyDistFromGoal => $ai_seq_args[0]{'pyDistFromGoal'},
+						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
+						_solution => \@solution,
+						_internal => 1);
+
+				} else {
+					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Final Destination at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+					error "Cannot reach ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) from current position.\n", "route";
+					shift @{$ai_seq_args[0]{'mapSolution'}};
+				}
+
+			} elsif ( $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"}{'source'} ) {
+				# This is a portal solution
+
+				if ( 2 > distance($char->{pos_to}, $args->{mapSolution}[0]{pos}) ) {
+					# Portal is within 'Enter Distance'
+					$timeout{'ai_portal_wait'}{'timeout'} = $timeout{'ai_portal_wait'}{'timeout'} || 0.5;
+					if ( timeOut($timeout{'ai_portal_wait'}) ) {
+						sendMove(int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}), int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) );
+						$timeout{'ai_portal_wait'}{'time'} = time;
+					}
+
+				} else {
+					my $walk = 1;
+
+					# Teleport until we're close enough to the portal
+					$args->{teleport} = $config{route_teleport} if (!defined $args->{teleport});
+
+					if ($args->{teleport} && !$cities_lut{"$field{name}.rsw"}
+					&& !existsInList($config{route_teleport_notInMaps}, $field{name})
+					&& ( !$config{route_teleport_maxTries} || $args->{teleportTries} <= $config{route_teleport_maxTries} )) {
+						my $minDist = $config{route_teleport_minDistance};
+
+						if ($args->{mapChanged}) {
+							undef $args->{sentTeleport};
+							undef $args->{mapChanged};
+						}
+
+						if (!$args->{sentTeleport}) {
+							# Find first inter-map portal
+							my $portal;
+							for my $x (@{$args->{mapSolution}}) {
+								$portal = $x;
+								last unless $x->{map} eq $x->{dest_map};
+							}
+
+							my $dist = new PathFinding(
+								start => $char->{pos_to},
+								dest => $portal->{pos},
+								field => \%field
+							)->runcount;
+							debug "Distance to portal ($portal->{portal}) is $dist\n", "route_teleport";
+
+							if ($dist <= 0 || $dist > $minDist) {
+								if ($dist > 0 && $config{route_teleport_maxTries} && $args->{teleportTries} >= $config{route_teleport_maxTries}) {
+									debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route_teleport";
+								} else {
+									message "Attempting to teleport near portal, try #".($args->{teleportTries} + 1)."\n", "route_teleport";
+									if (!useTeleport(1)) {
+										$args->{teleport} = 0;
+									} else {
+										$walk = 0;
+										$args->{sentTeleport} = 1;
+										$args->{teleportTime} = time;
+										$args->{teleportTries}++;
+									}
+								}
+							}
+
+						} elsif (timeOut($args->{teleportTime}, 4)) {
+							debug "Unable to teleport; falling back to walking.\n", "route_teleport";
+							$args->{teleport} = 0;
+						} else {
+							$walk = 0;
+						}
+					}
+
+					if ($walk) {
+						if ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
+							debug "portal within same map\n", "route";
+							# Portal is reachable from current position
+							# >> Then "route" to it
+							debug "Portal route attackOnRoute = $args->{attackOnRoute}\n", "route";
+							$args->{teleportTries} = 0;
+							ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+								attackOnRoute => $args->{attackOnRoute},
+								maxRouteTime => $args->{maxRouteTime},
+								noSitAuto => $args->{noSitAuto},
+								tags => $args->{tags},
+								_solution => \@solution,
+								_internal => 1);
+
+						} else {
+							warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+							error "Cannot reach portal from current position\n", "route";
+							shift @{$args->{mapSolution}};
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	##### TAKE #####
+
+	if (AI::action eq "take" && AI::args->{suspended}) {
+		AI::args->{ai_take_giveup}{time} += time - AI::args->{suspended};
+		delete AI::args->{suspended};
+	}
+
+	if (AI::action eq "take" && ( !$items{AI::args->{ID}} || !%{$items{AI::args->{ID}}} )) {
+		AI::dequeue;
+
+	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
+		my $item = $items{AI::args->{ID}};
+		message "Failed to take $item->{name} ($item->{binID}) from ($char->{pos}{x}, $char->{pos}{y}) to ($item->{pos}{x}, $item->{pos}{y})\n";
+		$items{AI::args->{ID}}{take_failed}++;
+		AI::dequeue;
+
+	} elsif (AI::action eq "take") {
+		my $ID = AI::args->{ID};
+		my $myPos = $char->{pos_to};
+		my $dist = distance($items{$ID}{pos}, $myPos);
+		my $item = $items{AI::args->{ID}};
+		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
+
+		if ($char->{sitting}) {
+			stand();
+
+		} elsif ($dist > 2) {
+			if (!$config{itemsTakeAuto_new}) {
+				my (%vec, %pos);
+				getVector(\%vec, $items{$ID}{pos}, $myPos);
+				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
+				move($pos{x}, $pos{y});
+			} else {
+				my $pos = $item->{pos};
+				message "Routing to ($pos->{x}, $pos->{y}) to take $item->{name} ($item->{binID}), distance $dist\n";
+				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
+			}
+
+		} elsif (timeOut($timeout{ai_take})) {
+			sendTake($net, $ID);
+			$timeout{ai_take}{time} = time;
+		}
+	}
+
+
+	##### MOVE #####
+
+	if (AI::action eq "move") {
+		AI::args->{ai_move_giveup}{time} = time unless AI::args->{ai_move_giveup}{time};
+
+		# Wait until we've stand up, if we're sitting
+		if ($char->{sitting}) {
+			AI::args->{ai_move_giveup}{time} = 0;
+			stand();
+
+		# Stop if the map changed
+		} elsif (AI::args->{mapChanged}) {
+			debug "Move - map change detected\n", "ai_move";
+			AI::dequeue;
+
+		# Stop if we've moved
+		} elsif (AI::args->{time_move} != $char->{time_move}) {
+			debug "Move - moving\n", "ai_move";
+			AI::dequeue;
+
+		# Stop if we've timed out
+		} elsif (timeOut(AI::args->{ai_move_giveup})) {
+			debug "Move - timeout\n", "ai_move";
+			AI::dequeue;
+
+		} elsif (timeOut($AI::Timeouts::move_retry, 0.5)) {
+			# No update yet, send move request again.
+			# We do this every 0.5 secs
+			$AI::Timeouts::move_retry = time;
+			sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
+		}
+	}
+
+
+	return if ($AI != 2);
+
+
+
+	##### REAL AI STARTS HERE #####
+
+	Plugins::callHook('AI_pre');
+
+	if (!$accountID) {
+		$AI = 0;
+		injectAdminMessage("Please relogin to enable X-${Settings::NAME}.") if ($config{'verbose'});
+		return;
+	}
+
+	ChatQueue::processFirst;
+
+
+	##### MISC #####
+
+	if ($ai_seq[0] eq "equip") {
+		#just wait until everything is equipped or timedOut
+		if (!$ai_v{temp}{waitForEquip} || timeOut($timeout{ai_equip_giveup})) {
+			AI::dequeue;
+			delete $ai_v{temp}{waitForEquip};
+		}
+	}
+
+	if ($ai_seq[0] ne "deal" && %currentDeal) {
+		AI::queue('deal');
+	} elsif ($ai_seq[0] eq "deal") {
+		if (%currentDeal) {
+			if (!$currentDeal{you_finalize} && timeOut($timeout{ai_dealAuto}) &&
+			    ($config{dealAuto} == 2 ||
+				 $config{dealAuto} == 3 && $currentDeal{other_finalize})) {
+				sendDealAddItem(0, $currentDeal{'you_zenny'});
+				sendDealFinalize();
+				$timeout{ai_dealAuto}{time} = time;
+			} elsif ($currentDeal{other_finalize} && $currentDeal{you_finalize} &&timeOut($timeout{ai_dealAuto}) && $config{dealAuto} >= 2) {
+				sendDealTrade($net);
+				$timeout{ai_dealAuto}{time} = time;
+			}
+		} else {
+			AI::dequeue();
+		}
+	}
+
+	# dealAuto 1=refuse 2,3=accept
+	if ($config{'dealAuto'} && %incomingDeal) {
+		if ($config{'dealAuto'} == 1 && timeOut($timeout{ai_dealAutoCancel})) {
+			sendDealCancel($net);
+			$timeout{'ai_dealAuto'}{'time'} = time;
+		} elsif ($config{'dealAuto'} >= 2 && timeOut($timeout{ai_dealAuto})) {
+			sendDealAccept($net);
+			$timeout{'ai_dealAuto'}{'time'} = time;
+		}
+	}
+
+
+	# partyAuto 1=refuse 2=accept
+	if ($config{'partyAuto'} && %incomingParty && timeOut($timeout{'ai_partyAuto'})) {
+		if ($config{partyAuto} == 1) {
+			message T("Auto-denying party request\n");
+		} else {
+			message T("Auto-accepting party request\n");
+		}
+		sendPartyJoin($net, $incomingParty{'ID'}, $config{'partyAuto'} - 1);
+		$timeout{'ai_partyAuto'}{'time'} = time;
+		undef %incomingParty;
+	}
+
+	if ($config{'guildAutoDeny'} && %incomingGuild && timeOut($timeout{'ai_guildAutoDeny'})) {
+		sendGuildJoin($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 1);
+		sendGuildAlly($net, $incomingGuild{'ID'}, 0) if ($incomingGuild{'Type'} == 2);
+		$timeout{'ai_guildAutoDeny'}{'time'} = time;
+		undef %incomingGuild;
+	}
+
+
+	if ($net->clientAlive() && !$sentWelcomeMessage && timeOut($timeout{'welcomeText'})) {
+		injectAdminMessage($Settings::welcomeText) if ($config{'verbose'} && !$config{'XKore_silent'});
+		$sentWelcomeMessage = 1;
 	}
 
 
@@ -901,125 +2222,6 @@ sub AI {
 			}
 		}
 		$AI::Timeouts::autoBreakTime = time;
-	}
-
-
-	##### TALK WITH NPC ######
-	NPCTALK: {
-		last NPCTALK if (AI::action ne "NPC");
-		my $args = AI::args;
-		$args->{time} = time unless $args->{time};
-
-		if ($args->{stage} eq '') {
-			unless (timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
-				# Wait for us to stop moving before talking
-			} elsif (timeOut($args->{time}, $timeout{ai_npcTalk}{timeout})) {
-				error "Could not find the NPC at the designated location.\n", "ai_npcTalk";
-				AI::dequeue;
-
-			} else {
-				# An x,y position has been passed
-				foreach my $npc (@npcsID) {
-					next if !$npc || $npcs{$npc}{'name'} eq '' || $npcs{$npc}{'name'} =~ /Unknown/i;
-					if ( $npcs{$npc}{'pos'}{'x'} eq $args->{pos}{'x'} &&
-					     $npcs{$npc}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
-						debug "Target NPC $npcs{$npc}{'name'} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
-						$args->{'nameID'} = $npcs{$npc}{'nameID'};
-						$args->{'ID'} = $npc;
-						$args->{'name'} = $npcs{$npc}{'name'};
-						$args->{'stage'} = 'Talking to NPC';
-						$args->{steps} = [];
-						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
-						undef $args->{time};
-						undef $ai_v{npc_talk}{time};
-						undef $ai_v{npc_talk}{talk};
-						lookAtPosition($args->{pos});
-						last NPCTALK;
-					}
-				}
-				foreach my $ID (@monstersID) {
-					next if !$ID;
-					if ( $monsters{$ID}{'pos'}{'x'} eq $args->{pos}{'x'} &&
-					     $monsters{$ID}{'pos'}{'y'} eq $args->{pos}{'y'} ) {
-						debug "Target Monster-NPC $monsters{$ID}{name} at ($args->{pos}{x},$args->{pos}{y}) found.\n", "ai_npcTalk";
-						$args->{'nameID'} = $monsters{$ID}{'nameID'};
-						$args->{'ID'} = $ID;
-						$args->{monster} = 1;
-						$args->{'name'} = $monsters{$ID}{'name'};
-						$args->{'stage'} = 'Talking to NPC';
-						$args->{steps} = [];
-						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
-						undef $args->{time};
-						undef $ai_v{npc_talk}{time};
-						undef $ai_v{npc_talk}{talk};
-						lookAtPosition($args->{pos});
-						last NPCTALK;
-					}
-				}
-			}
-
-
-		} elsif ($args->{mapChanged} || $ai_v{npc_talk}{talk} eq 'close') {
-			message TF("Done talking with %s.\n",$args->{name}), "ai_npcTalk";
-
-			# Cancel conversation only if NPC is still around; otherwise
-			# we could get disconnected.
-			sendTalkCancel($net, $args->{ID}) if $npcs{$args->{ID}};;
-			AI::dequeue;
-
-		} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
-			# If NPC does not respond before timing out, then by default, it's
-			# a failure
-			error "NPC did not respond.\n", "ai_npcTalk";
-			sendTalkCancel($net, $args->{ID});
-			AI::dequeue;
-
-		} elsif (timeOut($ai_v{'npc_talk'}{'time'}, 0.25)) {
-			$args->{time} = time;
-			# this time will be reset once the NPC responds
-			$ai_v{'npc_talk'}{'time'} = time + $timeout{'ai_npcTalk'}{'timeout'} + 5;
-
-			if ($config{autoTalkCont}) {
-				while ($args->{steps}[0] =~ /c/i) {
-					shift @{$args->{steps}};
-				}
-			}
-
-			if ($args->{steps}[0] =~ /w(\d+)/i) {
-				my $time = $1;
-				$ai_v{'npc_talk'}{'time'} = time + $time;
-				$args->{time} = time + $time;
-			} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
-				sendTalkText($net, $args->{ID}, $1);
-			} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
-				sendTalkNumber($net, $args->{ID}, $1);
-			} elsif ( $args->{steps}[0] =~ /x/i ) {
-				if (!$args->{monster}) {
-					sendTalk($net, $args->{ID});
-				} else {
-					sendAttack($net, $args->{ID}, 0);
-				}
-			} elsif ( $args->{steps}[0] =~ /c/i ) {
-				sendTalkContinue($net, $args->{ID});
-			} elsif ( $args->{steps}[0] =~ /r(\d+)/i ) {
-				sendTalkResponse($net, $args->{ID}, $1+1);
-			} elsif ( $args->{steps}[0] =~ /n/i ) {
-				sendTalkCancel($net, $args->{ID});
-				$ai_v{'npc_talk'}{'time'} = time;
-				$args->{time}	= time;
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^b(\d+),(\d+)/i ) {
-				my $itemID = $storeList[$1]{nameID};
-				$ai_v{npc_talk}{itemID} = $itemID;
-				sendBuy($net, $itemID, $2);
-			} elsif ( $args->{steps}[0] =~ /b/i ) {
-				sendGetStoreList($net, $args->{ID});
-			} elsif ( $args->{steps}[0] =~ /s/i ) {
-				sendGetSellList($net, $args->{ID});
-			} elsif ( $args->{steps}[0] =~ /e/i ) {
-				$ai_v{npc_talk}{talk} = 'close';
-			}
-			shift @{$args->{steps}};
-		}
 	}
 
 
@@ -1163,34 +2365,6 @@ sub AI {
 		shift @{AI::args->{items}};
 		AI::args->{time} = time;
 		AI::dequeue if (@{AI::args->{items}} <= 0);
-	}
-
-	##### DROPPING #####
-	# Drop one or more items from inventory.
-
-	if (AI::action eq "drop" && timeOut(AI::args)) {
-		my $item = AI::args->{'items'}[0];
-		my $amount = AI::args->{max};
-
-		drop($item, $amount);
-		shift @{AI::args->{items}};
-		AI::args->{time} = time;
-		AI::dequeue if (@{AI::args->{'items'}} <= 0);
-	}
-
-	##### DELAYED-TELEPORT #####
-
-	if (AI::action eq 'teleport') {
-		if ($timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_delay})) {
-			# We have already successfully used the Teleport skill,
-			# and the ai_teleport_delay timeout has elapsed
-			sendTeleport($net, AI::args->{lv} == 2 ? "$config{saveMap}.gat" : "Random");
-			AI::dequeue;
-		} elsif (!$timeout{ai_teleport_delay}{time} && timeOut($timeout{ai_teleport_retry})) {
-			# We are still trying to use the Teleport skill
-			sendSkillUse($net, 26, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
-			$timeout{ai_teleport_retry}{time} = time;
-		}
 	}
 
 
@@ -2317,34 +3491,6 @@ sub AI {
 		}
 	}
 
-	##### SITTING #####
-	if (AI::action eq "sitting") {
-		if ($char->{sitting} || $char->{skills}{NV_BASIC}{lv} < 3) {
-			# Stop if we're already sitting
-			AI::dequeue;
-			$timeout{ai_sit}{time} = $timeout{ai_sit_wait}{time} = 0;
-
-		} elsif (!$char->{sitting} && timeOut($timeout{ai_sit}) && timeOut($timeout{ai_sit_wait})) {
-			# Send the 'sit' packet every x seconds until we're sitting
-			sendSit($net);
-			$timeout{ai_sit}{time} = time;
-
-			look($config{sitAuto_look}) if (defined $config{sitAuto_look});
-		}
-	}
-
-	##### STANDING #####
-	# Same logic as the 'sitting' AI
-	if (AI::action eq "standing") {
-		if (!$char->{sitting}) {
-			AI::dequeue;
-
-		} elsif (timeOut($timeout{ai_sit}) && timeOut($timeout{ai_stand_wait})) {
-			sendStand($net);
-			$timeout{ai_sit}{time} = time;
-		}
-	}
-
 
 	##### SIT AUTO #####
 	SITAUTO: {
@@ -2384,532 +3530,6 @@ sub AI {
 		}
 	}
 
-
-
-	##### ATTACK #####
-
-	if (AI::action eq "attack" && AI::args->{suspended}) {
-		AI::args->{ai_attack_giveup}{time} += time - AI::args->{suspended};
-		delete AI::args->{suspended};
-	}
-
-	if (AI::action eq "attack" && AI::args->{move_start}) {
-		# We've just finished moving to the monster.
-		# Don't count the time we spent on moving
-		AI::args->{ai_attack_giveup}{time} += time - AI::args->{move_start};
-		undef AI::args->{unstuck}{time};
-		undef AI::args->{move_start};
-
-	} elsif (AI::action eq "attack" && AI::args->{avoiding}) {
-		my $target = Actor::get(AI::args->{attackID});
-		AI::args->{ai_attack_giveup}{time} = time + $target->{time_move_calc} + 3;
-		undef AI::args->{avoiding};
-
-	} elsif (((AI::action eq "route" && AI::action(1) eq "attack") || (AI::action eq "move" && AI::action(2) eq "attack"))
-	   && AI::args->{attackID} && timeOut($AI::Temp::attack_route_adjust, 1)) {
-		# We're on route to the monster; check whether the monster has moved
-		my $ID = AI::args->{attackID};
-		my $attackSeq = (AI::action eq "route") ? AI::args(1) : AI::args(2);
-		my $target = Actor::get($ID);
-
-		if ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($target), $attackSeq->{monsterPos}) > $attackSeq->{attackMethod}{maxDistance}) {
-			# Monster has moved; stop moving and let the attack AI readjust route
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "route");
-
-			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Target has moved more than $attackSeq->{attackMethod}{maxDistance} blocks; readjusting route\n", "ai_attack";
-
-		} elsif ($target->{type} ne 'Unknown' && $attackSeq->{monsterPos} && %{$attackSeq->{monsterPos}}
-		 && distance(calcPosition($target), calcPosition($char)) <= $attackSeq->{attackMethod}{maxDistance}) {
-			# Monster is within attack range; stop moving
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "route");
-
-			$attackSeq->{ai_attack_giveup}{time} = time;
-			debug "Target at ($attackSeq->{monsterPos}{x},$attackSeq->{monsterPos}{y}) is now within " .
-				"$attackSeq->{attackMethod}{maxDistance} blocks; stop moving\n", "ai_attack";
-		}
-		$AI::Temp::attack_route_adjust = time;
-	}
-
-	if (AI::action eq "attack" &&
-	    (timeOut(AI::args->{ai_attack_giveup}) ||
-		 AI::args->{unstuck}{count} > 5) &&
-		!$config{attackNoGiveup}) {
-		my $ID = AI::args->{ID};
-		my $target = Actor::get($ID);
-		$target->{attack_failed} = time if ($monsters{$ID});
-		AI::dequeue;
-		message "Can't reach or damage target, dropping target\n", "ai_attack";
-		if ($config{'teleportAuto_dropTarget'}) {
-			message "Teleport due to dropping attack target\n";
-			useTeleport(1);
-		}
-
-	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{ID}} && (!$players{$ai_seq_args[0]{ID}} || $players{$ai_seq_args[0]{ID}}{dead})) {
-		# Monster died or disappeared
-		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
-		my $ID = AI::args->{ID};
-		AI::dequeue;
-
-		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
-			message "Target died\n", "ai_attack";
-			monKilled();
-
-			# Pickup loot when monster's dead
-			if ($config{'itemsTakeAuto'} && $monsters_old{$ID}{dmgFromYou} > 0 && !$monsters_old{$ID}{ignore}) {
-				AI::clear("items_take");
-				ai_items_take($monsters_old{$ID}{pos}{x}, $monsters_old{$ID}{pos}{y},
-					$monsters_old{$ID}{pos_to}{x}, $monsters_old{$ID}{pos_to}{y});
-			} elsif (!ai_getAggressives()) {
-				# Cheap way to suspend all movement to make it look real
-				ai_clientSuspend(0, $timeout{'ai_attack_waitAfterKill'}{'timeout'});
-			}
-
-			## kokal start
-			## mosters counting
-			my $i = 0;
-			my $found = 0;
-			while ($monsters_Killed[$i]) {
-				if ($monsters_Killed[$i]{'nameID'} eq $monsters_old{$ID}{'nameID'}) {
-					$monsters_Killed[$i]{'count'}++;
-					monsterLog($monsters_Killed[$i]{'name'});
-					$found = 1;
-					last;
-				}
-				$i++;
-			}
-			if (!$found) {
-				$monsters_Killed[$i]{'nameID'} = $monsters_old{$ID}{'nameID'};
-				$monsters_Killed[$i]{'name'} = $monsters_old{$ID}{'name'};
-				$monsters_Killed[$i]{'count'} = 1;
-				monsterLog($monsters_Killed[$i]{'name'})
-			}
-			## kokal end
-
-		} else {
-			message "Target lost\n", "ai_attack";
-		}
-
-	} elsif (AI::action eq "attack") {
-		# The attack sequence hasn't timed out and the monster is on screen
-
-		# Update information about the monster and the current situation
-		my $args = AI::args;
-		my $followIndex = AI::findAction("follow");
-		my $following;
-		my $followID;
-		if (defined $followIndex) {
-			$following = AI::args($followIndex)->{following};
-			$followID = AI::args($followIndex)->{ID};
-		}
-
-		my $ID = $args->{ID};
-		my $target = Actor::get($ID);
-		my $myPos = $char->{pos_to};
-		my $monsterPos = $target->{pos_to};
-		my $monsterDist = distance($myPos, $monsterPos);
-
-		my ($realMyPos, $realMonsterPos, $realMonsterDist, $hitYou);
-		my $realMyPos = calcPosition($char);
-		my $realMonsterPos = calcPosition($target);
-		my $realMonsterDist = distance($realMyPos, $realMonsterPos);
-		if (!$config{'runFromTarget'}) {
-			$myPos = $realMyPos;
-			$monsterPos = $realMonsterPos;
-		}
-
-		my $cleanMonster = checkMonsterCleanness($ID);
-
-
-		# If the damage numbers have changed, update the giveup time so we don't timeout
-		if ($args->{dmgToYou_last}   != $target->{dmgToYou}
-		 || $args->{missedYou_last}  != $target->{missedYou}
-		 || $args->{dmgFromYou_last} != $target->{dmgFromYou}
-		 || $args->{lastSkillTime} != $char->{last_skill_time}) {
-			$args->{ai_attack_giveup}{time} = time;
-			debug "Update attack giveup time\n", "ai_attack", 2;
-		}
-		$hitYou = ($args->{dmgToYou_last} != $target->{dmgToYou}
-			|| $args->{missedYou_last} != $target->{missedYou});
-		$args->{dmgToYou_last} = $target->{dmgToYou};
-		$args->{missedYou_last} = $target->{missedYou};
-		$args->{dmgFromYou_last} = $target->{dmgFromYou};
-		$args->{missedFromYou_last} = $target->{missedFromYou};
-		$args->{lastSkillTime} = $char->{last_skill_time};
-
-
-		# Determine what combo skill to use
-		delete $args->{attackMethod};
-		my $lastSkill = Skills->new(id => $char->{last_skill_used})->name;
-		my $i = 0;
-		while (exists $config{"attackComboSlot_$i"}) {
-			if (!$config{"attackComboSlot_$i"}) {
-				$i++;
-				next;
-			}
-
-			if ($config{"attackComboSlot_${i}_afterSkill"} eq $lastSkill
-			 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
-			 && ( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) )
-			 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
-			 && checkSelfCondition("attackComboSlot_$i")
-			 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}))
-			 && (!$config{"attackComboSlot_${i}_notMonsters"} || !existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}))
-			 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
- 
-				$args->{attackComboSlot_uses}{$i}++;
-				delete $char->{last_skill_used};
-				$config{"attackComboSlot_${i}_waitBeforeUse"} = $char->{combo_packet} if $config{"attackComboSlot_${i}_autoCombo"};
-				delete $char->{combo_packet};
-				$args->{attackMethod}{type} = "combo";
-				$args->{attackMethod}{comboSlot} = $i;
-				$args->{attackMethod}{distance} = $config{"attackComboSlot_${i}_dist"};
-				$args->{attackMethod}{maxDistance} = $config{"attackComboSlot_${i}_dist"};
-				$args->{attackMethod}{isSelfSkill} = $config{"attackComboSlot_${i}_isSelfSkill"};
-				last;
-			}
-			$i++;
-		}
-
-		# Determine what skill to use to attack
-		if (!$args->{attackMethod}{type}) {
-			if ($config{'attackUseWeapon'}) {
-				$args->{attackMethod}{distance} = $config{'attackDistance'};
-				$args->{attackMethod}{maxDistance} = $config{'attackMaxDistance'};
-				$args->{attackMethod}{type} = "weapon";
-			} else {
-				$args->{attackMethod}{distance} = 30;
-				$args->{attackMethod}{maxDistance} = 30;
-				undef $args->{attackMethod}{type};
-			}
-
-			$i = 0;
-			while (exists $config{"attackSkillSlot_$i"}) {
-				if (!$config{"attackSkillSlot_$i"}) {
-					$i++;
-					next;
-				}
-
-				my $skill = Skills->new(name => $config{"attackSkillSlot_$i"});
-				if (checkSelfCondition("attackSkillSlot_$i")
-					&& (!$config{"attackSkillSlot_$i"."_maxUses"} ||
-					    $target->{skillUses}{$skill->handle} < $config{"attackSkillSlot_$i"."_maxUses"})
-					&& (!$config{"attackSkillSlot_$i"."_maxAttempts"} || $args->{attackSkillSlot_attempts}{$i} < $config{"attackSkillSlot_$i"."_maxAttempts"})
-					&& (!$config{"attackSkillSlot_$i"."_monsters"} || existsInList($config{"attackSkillSlot_$i"."_monsters"}, $target->{'name'}))
-					&& (!$config{"attackSkillSlot_$i"."_notMonsters"} || !existsInList($config{"attackSkillSlot_$i"."_notMonsters"}, $target->{'name'}))
-					&& (!$config{"attackSkillSlot_$i"."_previousDamage"} || inRange($target->{dmgTo}, $config{"attackSkillSlot_$i"."_previousDamage"}))
-					&& checkMonsterCondition("attackSkillSlot_${i}_target", $target)
-				) {
-					$args->{attackSkillSlot_attempts}{$i}++;
-					$args->{attackMethod}{distance} = $config{"attackSkillSlot_$i"."_dist"};
-					$args->{attackMethod}{maxDistance} = $config{"attackSkillSlot_$i"."_dist"};
-					$args->{attackMethod}{type} = "skill";
-					$args->{attackMethod}{skillSlot} = $i;
-					last;
-				}
-				$i++;
-			}
-
-			if ($config{'runFromTarget'} && $config{'runFromTarget_dist'} > $args->{attackMethod}{distance}) {
-				$args->{attackMethod}{distance} = $config{'runFromTarget_dist'};
-			}
-		}
-
-		$args->{attackMethod}{maxDistance} ||= $config{attackMaxDistance};
-		$args->{attackMethod}{distance} ||= $config{attackDistance};
-		if ($args->{attackMethod}{maxDistance} < $args->{attackMethod}{distance}) {
-			$args->{attackMethod}{maxDistance} = $args->{attackMethod}{distance};
-		}
-
-		if ($char->{sitting}) {
-			ai_setSuspend(0);
-			stand();
-
-		} elsif (!$cleanMonster) {
-			# Drop target if it's already attacked by someone else
-			message "Dropping target - you will not kill steal others\n", "ai_attack";
-			sendMove($realMyPos->{x}, $realMyPos->{y});
-			AI::dequeue;
-			if ($config{teleportAuto_dropTargetKS}) {
-				message "Teleporting due to dropping attack target\n", "teleport";
-				useTeleport(1);
-			}
-
-		} elsif ($config{attackCheckLOS} &&
-			 $args->{attackMethod}{distance} > 2 &&
-			 !checkLineSnipable($realMyPos, $realMonsterPos)) {
-			# We are a ranged attacker without LOS
-
-			# Calculate squares around monster within shooting range, but not
-			# closer than runFromTarget_dist
-			my @stand = calcRectArea2($realMonsterPos->{x}, $realMonsterPos->{y},
-						  $args->{attackMethod}{distance},
-									  $config{runFromTarget} ? $config{runFromTarget_dist} : 0);
-
-			my ($master, $masterPos);
-			if ($config{follow}) {
-				foreach (keys %players) {
-					if ($players{$_}{name} eq $config{followTarget}) {
-						$master = $players{$_};
-						last;
-					}
-				}
-				$masterPos = calcPosition($master) if $master;
-			}
-
-			# Determine which of these spots are snipable
-			my $best_spot;
-			my $best_dist;
-			for my $spot (@stand) {
-				# Is this spot acceptable?
-				# 1. It must have LOS to the target ($realMonsterPos).
-				# 2. It must be within $config{followDistanceMax} of
-				#    $masterPos, if we have a master.
-				if (checkLineSnipable($spot, $realMonsterPos) &&
-				    (!$master || distance($spot, $masterPos) <= $config{followDistanceMax})) {
-					# FIXME: use route distance, not pythagorean distance
-					my $dist = distance($realMyPos, $spot);
-					if (!defined($best_dist) || $dist < $best_dist) {
-						$best_dist = $dist;
-						$best_spot = $spot;
-					}
-				}
-			}
-
-			# Move to the closest spot
-			my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
-			if ($best_spot) {
-				message "$msg; moving to ($best_spot->{x}, $best_spot->{y})\n";
-				ai_route($field{name}, $best_spot->{x}, $best_spot->{y});
-			} else {
-				warning "$msg; no acceptable place to stand\n";
-				AI::dequeue;
-			}
-
-		} elsif ($config{'runFromTarget'} && ($monsterDist < $config{'runFromTarget_dist'} || $hitYou)) {
-			#my $begin = time;
-			# Get a list of blocks that we can run to
-			my @blocks = calcRectArea($myPos->{x}, $myPos->{y},
-				# If the monster hit you while you're running, then your recorded
-				# location may be out of date. So we use a smaller distance so we can still move.
-				($hitYou) ? $config{'runFromTarget_dist'} / 2 : $config{'runFromTarget_dist'});
-
-			# Find the distance value of the block that's farthest away from a wall
-			my $highest;
-			foreach (@blocks) {
-				my $dist = ord(substr($field{dstMap}, $_->{y} * $field{width} + $_->{x}));
-				if (!defined $highest || $dist > $highest) {
-					$highest = $dist;
-				}
-			}
-
-			# Get rid of rediculously large route distances (such as spots that are on a hill)
-			# Get rid of blocks that are near a wall
-			my $pathfinding = new PathFinding;
-			use constant AVOID_WALLS => 4;
-			for (my $i = 0; $i < @blocks; $i++) {
-				# We want to avoid walls (so we don't get cornered), if possible
-				my $dist = ord(substr($field{dstMap}, $blocks[$i]{y} * $field{width} + $blocks[$i]{x}));
-				if ($highest >= AVOID_WALLS && $dist < AVOID_WALLS) {
-					delete $blocks[$i];
-					next;
-				}
-
-				$pathfinding->reset(
-					field => \%field,
-					start => $myPos,
-					dest => $blocks[$i]);
-				my $ret = $pathfinding->runcount;
-				if ($ret <= 0 || $ret > $config{'runFromTarget_dist'} * 2) {
-					delete $blocks[$i];
-					next;
-				}
-			}
-
-			# Find the block that's farthest to us
-			my $largestDist;
-			my $bestBlock;
-			foreach (@blocks) {
-				next unless defined $_;
-				my $dist = distance($monsterPos, $_);
-				if (!defined $largestDist || $dist > $largestDist) {
-					$largestDist = $dist;
-					$bestBlock = $_;
-				}
-			}
-
-			#message "Time spent: " . (time - $begin) . "\n";
-			#debug_showSpots('runFromTarget', \@blocks, $bestBlock);
-			AI::args->{avoiding} = 1;
-			move($bestBlock->{x}, $bestBlock->{y}, $ID);
-
-		} elsif (!$config{'runFromTarget'} && $monsterDist > $args->{attackMethod}{maxDistance}
-		  && timeOut($args->{ai_attack_giveup}, 0.5)) {
-			# The target monster moved; move to target
-			$args->{move_start} = time;
-			$args->{monsterPos} = {%{$monsterPos}};
-
-			# Calculate how long it would take to reach the monster.
-			# Calculate where the monster would be when you've reached its
-			# previous position.
-			my $time_needed;
-			if (objectIsMovingTowards($target, $char, 45)) {
-				$time_needed = $monsterDist * $char->{walk_speed};
-			} else {
-				# If monster is not moving towards you, then you need more time to walk
-				$time_needed = $monsterDist * $char->{walk_speed} + 2;
-			}
-			my $pos = calcPosition($target, $time_needed);
-
-			my $dist = sprintf("%.1f", $monsterDist);
-			debug "Target distance $dist is >$args->{attackMethod}{maxDistance}; moving to target: " .
-				"from ($myPos->{x},$myPos->{y}) to ($pos->{x},$pos->{y})\n", "ai_attack";
-
-			my $result = ai_route($field{'name'}, $pos->{x}, $pos->{y},
-				distFromGoal => $args->{attackMethod}{distance},
-				maxRouteTime => $config{'attackMaxRouteTime'},
-				attackID => $ID,
-				noMapRoute => 1,
-				noAvoidWalls => 1);
-			if (!$result) {
-				# Unable to calculate a route to target
-				$target->{attack_failed} = time;
-				AI::dequeue;
-				message "Unable to calculate a route to target, dropping target\n", "ai_attack";
-			}
-
-		} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
-		 && (!$config{'tankMode'} || !$target->{dmgFromYou})) {
-			# Attack the target. In case of tanking, only attack if it hasn't been hit once.
-			if (!AI::args->{firstAttack}) {
-				AI::args->{firstAttack} = 1;
-				my $dist = sprintf("%.1f", $monsterDist);
-				my $pos = "$myPos->{x},$myPos->{y}";
-				debug "Ready to attack target (which is $dist blocks away); we're at ($pos)\n", "ai_attack";
-			}
-
-			$args->{unstuck}{time} = time if (!$args->{unstuck}{time});
-			if (!$target->{dmgFromYou} && timeOut($args->{unstuck})) {
-				# We are close enough to the target, and we're trying to attack it,
-				# but some time has passed and we still haven't dealed any damage.
-				# Our recorded position might be out of sync, so try to unstuck
-				$args->{unstuck}{time} = time;
-				debug("Attack - trying to unstuck\n", "ai_attack");
-				move($myPos->{x}, $myPos->{y});
-				$args->{unstuck}{count}++;
-			}
-
-			if ($args->{attackMethod}{type} eq "weapon" && timeOut($timeout{ai_attack})) {
-				if (Item::scanConfigAndCheck("attackEquip")) {
-					#check if item needs to be equipped
-					Item::scanConfigAndEquip("attackEquip");
-				} else {
-					sendAttack($net, $ID,
-						($config{'tankMode'}) ? 0 : 7);
-					$timeout{ai_attack}{time} = time;
-					delete $args->{attackMethod};
-				}
-			} elsif ($args->{attackMethod}{type} eq "skill") {
-				my $slot = $args->{attackMethod}{skillSlot};
-				delete $args->{attackMethod};
-
-				ai_setSuspend(0);
-				if (!ai_getSkillUseType($skills_rlut{lc($config{"attackSkillSlot_$slot"})})) {
-					ai_skillUse(
-						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
-						$config{"attackSkillSlot_${slot}_lvl"},
-						$config{"attackSkillSlot_${slot}_maxCastTime"},
-						$config{"attackSkillSlot_${slot}_minCastTime"},
-						$config{"attackSkillSlot_${slot}_isSelfSkill"} ? $accountID : $ID,
-						undef,
-						"attackSkill",
-						undef,
-						undef,
-						"attackSkillSlot_${slot}");
-				} else {
-					my $pos = calcPosition($config{"attackSkillSlot_${slot}_isSelfSkill"} ? $char : $target);
-					ai_skillUse(
-						$skills_rlut{lc($config{"attackSkillSlot_$slot"})},
-						$config{"attackSkillSlot_${slot}_lvl"},
-						$config{"attackSkillSlot_${slot}_maxCastTime"},
-						$config{"attackSkillSlot_${slot}_minCastTime"},
-						$pos->{x},
-						$pos->{y},
-						"attackSkill",
-						undef,
-						undef,
-						"attackSkillSlot_${slot}");
-				}
-				$args->{monsterID} = $ID;
-
-				debug "Auto-skill on monster ".getActorName($ID).": ".qq~$config{"attackSkillSlot_$slot"} (lvl $config{"attackSkillSlot_${slot}_lvl"})\n~, "ai_attack";
-
-			} elsif ($args->{attackMethod}{type} eq "combo") {
-				my $slot = $args->{attackMethod}{comboSlot};
-				my $isSelfSkill = $args->{attackMethod}{isSelfSkill};
-				my $skill = Skills->new(name => $config{"attackComboSlot_$slot"})->handle;
-				delete $args->{attackMethod};
-
-				if (!ai_getSkillUseType($skill)) {
-					my $targetID = ($isSelfSkill) ? $accountID : $ID;
-					ai_skillUse(
-						$skill,
-						$config{"attackComboSlot_${slot}_lvl"},
-						$config{"attackComboSlot_${slot}_maxCastTime"},
-						$config{"attackComboSlot_${slot}_minCastTime"},
-						$targetID,
-						undef,
-						undef,
-						undef,
-						$config{"attackComboSlot_${slot}_waitBeforeUse"});
-				} else {
-					my $pos = ($isSelfSkill) ? $char->{pos_to} : $target->{pos_to};
-					ai_skillUse(
-						$skill,
-						$config{"attackComboSlot_${slot}_lvl"},
-						$config{"attackComboSlot_${slot}_maxCastTime"},
-						$config{"attackComboSlot_${slot}_minCastTime"},
-						$pos->{x},
-						$pos->{y},
-						undef,
-						undef,
-						$config{"attackComboSlot_${slot}_waitBeforeUse"});
-				}
-				$args->{monsterID} = $ID;
-			}
-
-		} elsif ($config{'tankMode'}) {
-			if ($ai_seq_args[0]{'dmgTo_last'} != $target->{'dmgTo'}) {
-				$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
-			}
-			$ai_seq_args[0]{'dmgTo_last'} = $target->{'dmgTo'};
-		}
-	}
-
-	# Check for kill steal while moving
-	if (AI::is("move", "route") && AI::args->{attackID} && AI::inQueue("attack")) {
-		my $ID = AI::args->{attackID};
-		if ($monsters{$ID} && !checkMonsterCleanness($ID)) {
-			message "Dropping target - you will not kill steal others\n";
-			stopAttack();
-			$monsters{$ID}{ignore} = 1;
-
-			# Right now, the queue is either
-			#   move, route, attack
-			# -or-
-			#   route, attack
-			AI::dequeue;
-			AI::dequeue;
-			AI::dequeue if (AI::action eq "attack");
-			if ($config{teleportAuto_dropTargetKS}) {
-				message "Teleport due to dropping attack target\n";
-				useTeleport(1);
-			}
-		}
-	}
 
 	##### AUTO-ITEM USE #####
 
@@ -3155,111 +3775,6 @@ sub AI {
 		}
 	}
 
-	##### SKILL USE #####
-	#FIXME: need to move closer before using skill on player,
-	#there might be line of sight problem too
-	#or the player disappers from the area
-
-	if (AI::action eq "skill_use" && AI::args->{suspended}) {
-		AI::args->{giveup}{time} += time - AI::args->{suspended};
-		AI::args->{minCastTime}{time} += time - AI::args->{suspended};
-		AI::args->{maxCastTime}{time} += time - AI::args->{suspended};
-		delete AI::args->{suspended};
-	}
-
-	SKILL_USE: {
-		last SKILL_USE if (AI::action ne "skill_use");
-		my $args = AI::args;
-
-		if ($args->{monsterID} && $skillsArea{$args->{skillHandle}} == 2) {
-			delete $args->{monsterID};
-		}
-
-		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skillHandle}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
-			warning "Timeout equiping for skill\n";
-			AI::dequeue;
-			${$args->{ret}} = 'equip timeout' if ($args->{ret});
-		} elsif (Item::scanConfigAndCheck("$args->{prefix}_equip")) {
-			#check if item needs to be equipped
-			Item::scanConfigAndEquip("$args->{prefix}_equip");
-		} elsif (timeOut($args->{waitBeforeUse})) {
-			if (defined $args->{monsterID} && !defined $monsters{$args->{monsterID}}) {
-				# This skill is supposed to be used for attacking a monster, but that monster has died
-				AI::dequeue;
-				${$args->{ret}} = 'target gone' if ($args->{ret});
-
-			} elsif ($char->{sitting}) {
-				AI::suspend;
-				stand();
-
-			# Use skill if we haven't done so yet
-			} elsif (!$args->{skill_used}) {
-				my $handle = $args->{skillHandle};
-				if (!defined $args->{skillID}) {
-					my $skill = new Skills(handle => $handle);
-					$args->{skillID} = $skill->id;
-				}
-				my $skillID = $args->{skillID};
-
-				if ($handle eq 'AL_TELEPORT') {
-					${$args->{ret}} = 'ok' if ($args->{ret});
-					AI::dequeue;
-					useTeleport($args->{lv});
-					last SKILL_USE;
-				}
-
-				$args->{skill_used} = 1;
-				$args->{giveup}{time} = time;
-
-				# Stop attacking, otherwise skill use might fail
-				my $attackIndex = AI::findAction("attack");
-				if (defined($attackIndex) && AI::args($attackIndex)->{attackMethod}{type} eq "weapon") {
-					# 2005-01-24 pmak: Commenting this out since it may
-					# be causing bot to attack slowly when a buff runs
-					# out.
-					#stopAttack();
-				}
-
-				# Give an error if we don't actually possess this skill
-				my $skill = new Skills(handle => $handle);
-				if ($char->{skills}{$handle}{lv} <= 0 && (!$char->{permitSkill} || $char->{permitSkill}->handle ne $handle)) {
-					debug "Attempted to use skill (".$skill->name.") which you do not have.\n";
-				}
-
-				$args->{maxCastTime}{time} = time;
-				if ($skillsArea{$handle} == 2) {
-					sendSkillUse($net, $skillID, $args->{lv}, $accountID);
-				} elsif ($args->{x} ne "") {
-					sendSkillUseLoc($net, $skillID, $args->{lv}, $args->{x}, $args->{y});
-				} else {
-					sendSkillUse($net, $skillID, $args->{lv}, $args->{target});
-				}
-				undef $char->{permitSkill};
-				$args->{skill_use_last} = $char->{skills}{$handle}{time_used};
-
-				delete $char->{cast_cancelled};
-
-			} elsif (timeOut($args->{minCastTime})) {
-				if ($args->{skill_use_last} != $char->{skills}{$args->{skillHandle}}{time_used}) {
-					AI::dequeue;
-					${$args->{ret}} = 'ok' if ($args->{ret});
-
-				} elsif ($char->{cast_cancelled} > $char->{time_cast}) {
-					AI::dequeue;
-					${$args->{ret}} = 'cancelled' if ($args->{ret});
-
-				} elsif (timeOut($char->{time_cast}, $char->{time_cast_wait} + 0.5)
-				  && ( (timeOut($args->{giveup}) && (!$char->{time_cast} || !$args->{maxCastTime}{timeout}) )
-				      || ( $args->{maxCastTime}{timeout} && timeOut($args->{maxCastTime})) )
-				) {
-					AI::dequeue;
-					${$args->{ret}} = 'timeout' if ($args->{ret});
-				}
-			}
-		}
-	}
-
-
 
 	##### AUTO-ATTACK #####
 	# The auto-attack logic is as follows:
@@ -3504,433 +4019,6 @@ sub AI {
 	}
 
 
-	####### ROUTE #######
-
-	if (AI::action eq "route" && AI::args->{suspended}) {
-		AI::args->{time_start} += time - AI::args->{suspended};
-		AI::args->{time_step} += time - AI::args->{suspended};
-		delete AI::args->{suspended};
-	}
-
-	if (AI::action eq "route" && $field{'name'} && $char->{pos_to}{x} ne '' && $char->{pos_to}{y} ne '') {
-		my $args = AI::args;
-
-		if ( $args->{maxRouteTime} && timeOut($args->{time_start}, $args->{maxRouteTime})) {
-			# We spent too much time
-			debug "Route - we spent too much time; bailing out.\n", "route";
-			AI::dequeue;
-
-		} elsif ($field{name} ne $args->{dest}{map} || $args->{mapChanged}) {
-			debug "Map changed: $field{name} $args->{dest}{map}\n", "route";
-			AI::dequeue;
-
-		} elsif ($args->{stage} eq '') {
-			my $pos = calcPosition($char);
-			$args->{solution} = [];
-			if (ai_route_getRoute($args->{solution}, \%field, $pos, $args->{dest}{pos})) {
-				$args->{stage} = 'Route Solution Ready';
-				debug "Route Solution Ready\n", "route";
-			} else {
-				debug "Something's wrong; there is no path to $field{name}($args->{dest}{pos}{x},$args->{dest}{pos}{y}).\n", "debug";
-				AI::dequeue;
-			}
-
-		} elsif ($args->{stage} eq 'Route Solution Ready') {
-			my $solution = $args->{solution};
-			if ($args->{maxRouteDistance} > 0 && $args->{maxRouteDistance} < 1) {
-				# Fractional route motion
-				$args->{maxRouteDistance} = int($args->{maxRouteDistance} * scalar(@{$solution}));
-			}
-			splice(@{$solution}, 1 + $args->{maxRouteDistance}) if $args->{maxRouteDistance} && $args->{maxRouteDistance} < @{$solution};
-
-			# Trim down solution tree for pyDistFromGoal or distFromGoal
-			if ($args->{pyDistFromGoal}) {
-				my $trimsteps = 0;
-				$trimsteps++ while ($trimsteps < @{$solution}
-						 && distance($solution->[@{$solution} - 1 - $trimsteps], $solution->[@{$solution} - 1]) < $args->{pyDistFromGoal}
-					);
-				debug "Route - trimming down solution by $trimsteps steps for pyDistFromGoal $ai_seq_args[0]{'pyDistFromGoal'}\n", "route";
-				splice(@{$ai_seq_args[0]{'solution'}}, -$trimsteps) if ($trimsteps);
-			} elsif ($args->{distFromGoal}) {
-				my $trimsteps = $ai_seq_args[0]{distFromGoal};
-				$trimsteps = @{$ai_seq_args[0]{'solution'}} if $trimsteps > @{$ai_seq_args[0]{'solution'}};
-				debug "Route - trimming down solution by $trimsteps steps for distFromGoal $ai_seq_args[0]{'distFromGoal'}\n", "route";
-				splice(@{$args->{solution}}, -$trimsteps) if ($trimsteps);
-			}
-
-			undef $args->{mapChanged};
-			undef $args->{index};
-			undef $args->{old_x};
-			undef $args->{old_y};
-			undef $args->{new_x};
-			undef $args->{new_y};
-			$args->{time_step} = time;
-			$args->{stage} = 'Walk the Route Solution';
-
-		} elsif ($args->{stage} eq 'Walk the Route Solution') {
-
-			my $pos = calcPosition($char);
-			my ($cur_x, $cur_y) = ($pos->{x}, $pos->{y});
-
-			unless (@{$args->{solution}}) {
-				# No more points to cover; we've arrived at the destination
-				if (AI::args->{notifyUponArrival}) {
-					message "Destination reached.\n", "success";
-				} else {
-					debug "Destination reached.\n", "route";
-				}
-				AI::dequeue;
-
-			} elsif ($args->{old_x} == $cur_x && $args->{old_y} == $cur_y && timeOut($args->{time_step}, 3)) {
-				# We tried to move for 3 seconds, but we are still on the same spot,
-				# decrease step size.
-				# However, if $args->{index} was already 0, then that means
-				# we were almost at the destination (only 1 more step is needed).
-				# But we got interrupted (by auto-attack for example). Don't count that
-				# as stuck.
-				my $wasZero = $args->{index} == 0;
-				$args->{index} = int($args->{index} * 0.8);
-				if ($args->{index}) {
-					debug "Route - not moving, decreasing step size to $args->{index}\n", "route";
-					if (@{$args->{solution}}) {
-						# If we still have more points to cover, walk to next point
-						$args->{index} = @{$args->{solution}} - 1 if $args->{index} >= @{$args->{solution}};
-						$args->{new_x} = $args->{solution}[$args->{index}]{x};
-						$args->{new_y} = $args->{solution}[$args->{index}]{y};
-						$args->{time_step} = time;
-						move($args->{new_x}, $args->{new_y}, $args->{attackID});
-					}
-				} elsif (!$wasZero) {
-					# We're stuck
-					my $msg = "Stuck at $field{name} ($char->{pos_to}{x},$char->{pos_to}{y}), while walking from ($cur_x,$cur_y) to ($args->{dest}{pos}{x},$args->{dest}{pos}{y}).";
-					$msg .= " Teleporting to unstuck." if $config{teleportAuto_unstuck};
-					$msg .= "\n";
-					warning $msg, "route";
-					useTeleport(1) if $config{teleportAuto_unstuck};
-					AI::dequeue;
-				} else {
-					$args->{time_step} = time;
-				}
-
-			} else {
-				# We're either starting to move or already moving, so send out more
-				# move commands periodically to keep moving and updating our position
-				my $solution = $args->{solution};
-				$args->{index} = $config{'route_step'} unless $args->{index};
-				$args->{index}++ if ($args->{index} < $config{'route_step'});
-
-				if (defined($args->{old_x}) && defined($args->{old_y})) {
-					# See how far we've walked since the last move command and
-					# trim down the soultion tree by this distance.
-					# Only remove the last step if we reached the destination
-					my $trimsteps = 0;
-					# If position has changed, we must have walked at least one step
-					$trimsteps++ if ($cur_x != $args->{'old_x'} || $cur_y != $args->{'old_y'});
-					# Search the best matching entry for our position in the solution
-					while ($trimsteps < @{$solution}
-							 && distance( { x => $cur_x, y => $cur_y }, $solution->[$trimsteps + 1])
-							    < distance( { x => $cur_x, y => $cur_y }, $solution->[$trimsteps])
-						) {
-						$trimsteps++;
-					}
-					# Remove the last step also if we reached the destination
-					$trimsteps = @{$solution} - 1 if ($trimsteps >= @{$solution});
-					#$trimsteps = @{$solution} if ($trimsteps <= $args->{'index'} && $args->{'new_x'} == $cur_x && $args->{'new_y'} == $cur_y);
-					$trimsteps = @{$solution} if ($cur_x == $solution->[$#{$solution}]{x} && $cur_y == $solution->[$#{$solution}]{y});
-					debug "Route - trimming down solution (" . @{$solution} . ") by $trimsteps steps\n", "route";
-					splice(@{$solution}, 0, $trimsteps) if ($trimsteps > 0);
-				}
-
-				my $stepsleft = @{$solution};
-				if ($stepsleft > 0) {
-					# If we still have more points to cover, walk to next point
-					$args->{index} = $stepsleft - 1 if ($args->{index} >= $stepsleft);
-					$args->{new_x} = $args->{solution}[$args->{index}]{x};
-					$args->{new_y} = $args->{solution}[$args->{index}]{y};
-
-					# But first, check whether the distance of the next point isn't abnormally large.
-					# If it is, then we've moved to an unexpected place. This could be caused by auto-attack,
-					# for example.
-					my %nextPos = (x => $args->{new_x}, y => $args->{new_y});
-					if (distance(\%nextPos, $pos) > $config{'route_step'}) {
-						debug "Route - movement interrupted: reset route\n", "route";
-						$args->{stage} = '';
-
-					} else {
-						$args->{old_x} = $cur_x;
-						$args->{old_y} = $cur_y;
-						$args->{time_step} = time if ($cur_x != $args->{old_x} || $cur_y != $args->{old_y});
-						debug "Route - next step moving to ($args->{new_x}, $args->{new_y}), index $args->{index}, $stepsleft steps left\n", "route";
-						move($args->{new_x}, $args->{new_y}, $args->{attackID});
-					}
-				} else {
-					# No more points to cover
-					if (AI::args->{notifyUponArrival}) {
-						message "Destination reached.\n", "success";
-					} else {
-						debug "Destination reached.\n", "route";
-					}
-					AI::dequeue;
-				}
-			}
-
-		} else {
-			debug "Unexpected route stage [$args->{stage}] occured.\n", "route";
-			AI::dequeue;
-		}
-	}
-
-
-	####### MAPROUTE #######
-	if ( AI::action eq "mapRoute" && $field{name} && $char->{pos_to}{x} ne '' && $char->{pos_to}{y} ne '' ) {
-		my $args = AI::args;
-
-		if ($args->{stage} eq '') {
-			$ai_seq_args[0]{'budget'} = $config{'route_maxWarpFee'} eq '' ?
-				'' :
-				$config{'route_maxWarpFee'} > $chars[$config{'char'}]{'zenny'} ?
-					$chars[$config{'char'}]{'zenny'} :
-					$config{'route_maxWarpFee'};
-			delete $ai_seq_args[0]{'done'};
-			delete $ai_seq_args[0]{'found'};
-			delete $ai_seq_args[0]{'mapChanged'};
-			delete $ai_seq_args[0]{'openlist'};
-			delete $ai_seq_args[0]{'closelist'};
-			undef @{$ai_seq_args[0]{'mapSolution'}};
-			$ai_seq_args[0]{'dest'}{'field'} = {};
-			getField($ai_seq_args[0]{dest}{map}, $ai_seq_args[0]{dest}{field});
-
-			# Initializes the openlist with portals walkable from the starting point
-			foreach my $portal (keys %portals_lut) {
-				next if $portals_lut{$portal}{'source'}{'map'} ne $field{'name'};
-				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}}) ) {
-					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
-						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
-						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$ai_seq_args[0]{'solution'}};
-						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'zenny'} = $portals_lut{$portal}{'dest'}{$dest}{'cost'};
-					}
-				}
-			}
-			$ai_seq_args[0]{'stage'} = 'Getting Map Solution';
-
-		} elsif ( $args->{stage} eq 'Getting Map Solution' ) {
-			$timeout{'ai_route_calcRoute'}{'time'} = time;
-			while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
-				ai_mapRoute_searchStep($args);
-			}
-			if ($ai_seq_args[0]{'found'}) {
-				$ai_seq_args[0]{'stage'} = 'Traverse the Map Solution';
-				delete $ai_seq_args[0]{'openlist'};
-				delete $ai_seq_args[0]{'solution'};
-				delete $ai_seq_args[0]{'closelist'};
-				delete $ai_seq_args[0]{'dest'}{'field'};
-				debug "Map Solution Ready for traversal.\n", "route";
-			} elsif ($ai_seq_args[0]{'done'}) {
-				my $destpos = "$args->{dest}{pos}{x},$args->{dest}{pos}{y}";
-				$destpos = "($destpos)" if ($destpos ne "");
-				warning "Unable to calculate how to walk from [$field{name}($char->{pos_to}{x},$char->{pos_to}{y})] " .
-					"to [$args->{dest}{map}${destpos}] (no map solution).\n", "route";
-				AI::dequeue;
-			}
-
-		} elsif ( $args->{stage} eq 'Traverse the Map Solution' ) {
-
-			my @solution;
-			unless (@{$ai_seq_args[0]{'mapSolution'}}) {
-				# mapSolution is now empty
-				AI::dequeue;
-				debug "Map Router is finish traversing the map solution\n", "route";
-
-			} elsif ( $field{'name'} ne $ai_seq_args[0]{'mapSolution'}[0]{'map'}
-				|| ( $args->{mapChanged} && !$args->{teleport} ) ) {
-				# Solution Map does not match current map
-				debug "Current map $field{'name'} does not match solution [ $ai_seq_args[0]{'mapSolution'}[0]{'portal'} ].\n", "route";
-				delete $ai_seq_args[0]{'substage'};
-				delete $ai_seq_args[0]{'timeout'};
-				delete $ai_seq_args[0]{'mapChanged'};
-				shift @{$ai_seq_args[0]{'mapSolution'}};
-
-			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'steps'} ) {
-				# If current solution has conversation steps specified
-				if ( $ai_seq_args[0]{'substage'} eq 'Waiting for Warp' ) {
-					$ai_seq_args[0]{'timeout'} = time unless $ai_seq_args[0]{'timeout'};
-					if (timeOut($ai_seq_args[0]{'timeout'}, $timeout{ai_route_npcTalk}{timeout} || 10) ||
-					    $ai_v{npc_talk}{talk} eq 'close') {
-						# We waited for 10 seconds and got nothing
-						delete $ai_seq_args[0]{'substage'};
-						delete $ai_seq_args[0]{'timeout'};
-						if (++$ai_seq_args[0]{'mapSolution'}[0]{'retry'} >= ($config{route_maxNpcTries} || 5)) {
-							# NPC sequence is a failure
-							# We delete that portal and try again
-							delete $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"};
-							warning "Unable to talk to NPC at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-							$ai_seq_args[0]{'stage'} = '';	# redo MAP router
-						}
-					}
-
-				} elsif (distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}) <= 10) {
-					my ($from,$to) = split /=/, $ai_seq_args[0]{'mapSolution'}[0]{'portal'};
-					if ($chars[$config{'char'}]{'zenny'} >= $portals_lut{$from}{'dest'}{$to}{'cost'}) {
-						#we have enough money for this service
-						$ai_seq_args[0]{'substage'} = 'Waiting for Warp';
-						$ai_seq_args[0]{'old_x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
-						$ai_seq_args[0]{'old_y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
-						$ai_seq_args[0]{'old_map'} = $field{'name'};
-						ai_talkNPC($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}, $ai_seq_args[0]{'mapSolution'}[0]{'steps'} );
-					} else {
-						error "Insufficient zenny to pay for service at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-						$ai_seq_args[0]{'stage'} = ''; #redo MAP router
-					}
-
-				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
-					# we spent too long a time
-					debug "We spent too much time; bailing out.\n", "route";
-					shift @ai_seq;
-					shift @ai_seq_args;
-
-				} elsif ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
-					# NPC is reachable from current position
-					# >> Then "route" to it
-					debug "Walking towards the NPC\n", "route";
-					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
-						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-						distFromGoal => 10,
-						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
-						_solution => \@solution,
-						_internal => 1);
-
-				} else {
-					#Error, NPC is not reachable from current pos
-					debug "CRTICAL ERROR: NPC is not reachable from current location.\n", "route";
-					error "Unable to walk from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to NPC at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-					shift @{$ai_seq_args[0]{'mapSolution'}};
-				}
-
-			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'portal'} eq "$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}=$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}" ) {
-				# This solution points to an X,Y coordinate
-				my $distFromGoal = $ai_seq_args[0]{'pyDistFromGoal'} ? $ai_seq_args[0]{'pyDistFromGoal'} : ($ai_seq_args[0]{'distFromGoal'} ? $ai_seq_args[0]{'distFromGoal'} : 0);
-				if ( $distFromGoal + 2 > distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'})) {
-					#We need to specify +2 because sometimes the exact spot is occupied by someone else
-					shift @{$ai_seq_args[0]{'mapSolution'}};
-
-				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
-					#we spent too long a time
-					debug "We spent too much time; bailing out.\n", "route";
-					shift @ai_seq;
-					shift @ai_seq_args;
-
-				} elsif ( ai_route_getRoute( \@solution, \%field, $chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'} ) ) {
-					# X,Y is reachable from current position
-					# >> Then "route" to it
-					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
-						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-						distFromGoal => $ai_seq_args[0]{'distFromGoal'},
-						pyDistFromGoal => $ai_seq_args[0]{'pyDistFromGoal'},
-						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
-						_solution => \@solution,
-						_internal => 1);
-
-				} else {
-					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Final Destination at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-					error "Cannot reach ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) from current position.\n", "route";
-					shift @{$ai_seq_args[0]{'mapSolution'}};
-				}
-
-			} elsif ( $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"}{'source'} ) {
-				# This is a portal solution
-
-				if ( 2 > distance($char->{pos_to}, $args->{mapSolution}[0]{pos}) ) {
-					# Portal is within 'Enter Distance'
-					$timeout{'ai_portal_wait'}{'timeout'} = $timeout{'ai_portal_wait'}{'timeout'} || 0.5;
-					if ( timeOut($timeout{'ai_portal_wait'}) ) {
-						sendMove(int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}), int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) );
-						$timeout{'ai_portal_wait'}{'time'} = time;
-					}
-
-				} else {
-					my $walk = 1;
-
-					# Teleport until we're close enough to the portal
-					$args->{teleport} = $config{route_teleport} if (!defined $args->{teleport});
-
-					if ($args->{teleport} && !$cities_lut{"$field{name}.rsw"}
-					&& !existsInList($config{route_teleport_notInMaps}, $field{name})
-					&& ( !$config{route_teleport_maxTries} || $args->{teleportTries} <= $config{route_teleport_maxTries} )) {
-						my $minDist = $config{route_teleport_minDistance};
-
-						if ($args->{mapChanged}) {
-							undef $args->{sentTeleport};
-							undef $args->{mapChanged};
-						}
-
-						if (!$args->{sentTeleport}) {
-							# Find first inter-map portal
-							my $portal;
-							for my $x (@{$args->{mapSolution}}) {
-								$portal = $x;
-								last unless $x->{map} eq $x->{dest_map};
-							}
-
-							my $dist = new PathFinding(
-								start => $char->{pos_to},
-								dest => $portal->{pos},
-								field => \%field
-							)->runcount;
-							debug "Distance to portal ($portal->{portal}) is $dist\n", "route_teleport";
-
-							if ($dist <= 0 || $dist > $minDist) {
-								if ($dist > 0 && $config{route_teleport_maxTries} && $args->{teleportTries} >= $config{route_teleport_maxTries}) {
-									debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route_teleport";
-								} else {
-									message "Attempting to teleport near portal, try #".($args->{teleportTries} + 1)."\n", "route_teleport";
-									if (!useTeleport(1)) {
-										$args->{teleport} = 0;
-									} else {
-										$walk = 0;
-										$args->{sentTeleport} = 1;
-										$args->{teleportTime} = time;
-										$args->{teleportTries}++;
-									}
-								}
-							}
-
-						} elsif (timeOut($args->{teleportTime}, 4)) {
-							debug "Unable to teleport; falling back to walking.\n", "route_teleport";
-							$args->{teleport} = 0;
-						} else {
-							$walk = 0;
-						}
-					}
-
-					if ($walk) {
-						if ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
-							debug "portal within same map\n", "route";
-							# Portal is reachable from current position
-							# >> Then "route" to it
-							debug "Portal route attackOnRoute = $args->{attackOnRoute}\n", "route";
-							$args->{teleportTries} = 0;
-							ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-								attackOnRoute => $args->{attackOnRoute},
-								maxRouteTime => $args->{maxRouteTime},
-								noSitAuto => $args->{noSitAuto},
-								tags => $args->{tags},
-								_solution => \@solution,
-								_internal => 1);
-
-						} else {
-							warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-							error "Cannot reach portal from current position\n", "route";
-							shift @{$args->{mapSolution}};
-						}
-					}
-				}
-			}
-		}
-	}
-
-
 	##### ITEMS TAKE #####
 	# Look for loot to pickup when your monster died.
 
@@ -4045,84 +4133,6 @@ sub AI {
 		}
 	}
 
-
-	##### TAKE #####
-
-	if (AI::action eq "take" && AI::args->{suspended}) {
-		AI::args->{ai_take_giveup}{time} += time - AI::args->{suspended};
-		delete AI::args->{suspended};
-	}
-
-	if (AI::action eq "take" && ( !$items{AI::args->{ID}} || !%{$items{AI::args->{ID}}} )) {
-		AI::dequeue;
-
-	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
-		my $item = $items{AI::args->{ID}};
-		message "Failed to take $item->{name} ($item->{binID}) from ($char->{pos}{x}, $char->{pos}{y}) to ($item->{pos}{x}, $item->{pos}{y})\n";
-		$items{AI::args->{ID}}{take_failed}++;
-		AI::dequeue;
-
-	} elsif (AI::action eq "take") {
-		my $ID = AI::args->{ID};
-		my $myPos = $char->{pos_to};
-		my $dist = distance($items{$ID}{pos}, $myPos);
-		my $item = $items{AI::args->{ID}};
-		debug "Planning to take $item->{name} ($item->{binID}), distance $dist\n", "drop";
-
-		if ($char->{sitting}) {
-			stand();
-
-		} elsif ($dist > 2) {
-			if (!$config{itemsTakeAuto_new}) {
-				my (%vec, %pos);
-				getVector(\%vec, $items{$ID}{pos}, $myPos);
-				moveAlongVector(\%pos, $myPos, \%vec, $dist - 1);
-				move($pos{x}, $pos{y});
-			} else {
-				my $pos = $item->{pos};
-				message "Routing to ($pos->{x}, $pos->{y}) to take $item->{name} ($item->{binID}), distance $dist\n";
-				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
-			}
-
-		} elsif (timeOut($timeout{ai_take})) {
-			sendTake($net, $ID);
-			$timeout{ai_take}{time} = time;
-		}
-	}
-
-
-	##### MOVE #####
-
-	if (AI::action eq "move") {
-		AI::args->{ai_move_giveup}{time} = time unless AI::args->{ai_move_giveup}{time};
-
-		# Wait until we've stand up, if we're sitting
-		if ($char->{sitting}) {
-			AI::args->{ai_move_giveup}{time} = 0;
-			stand();
-
-		# Stop if the map changed
-		} elsif (AI::args->{mapChanged}) {
-			debug "Move - map change detected\n", "ai_move";
-			AI::dequeue;
-
-		# Stop if we've moved
-		} elsif (AI::args->{time_move} != $char->{time_move}) {
-			debug "Move - moving\n", "ai_move";
-			AI::dequeue;
-
-		# Stop if we've timed out
-		} elsif (timeOut(AI::args->{ai_move_giveup})) {
-			debug "Move - timeout\n", "ai_move";
-			AI::dequeue;
-
-		} elsif (timeOut($AI::Timeouts::move_retry, 0.5)) {
-			# No update yet, send move request again.
-			# We do this every 0.5 secs
-			$AI::Timeouts::move_retry = time;
-			sendMove(AI::args->{move_to}{x}, AI::args->{move_to}{y});
-		}
-	}
 
 	##### AUTO-TELEPORT #####
 	TELEPORT: {
@@ -4640,7 +4650,7 @@ sub parseMsg {
 	if ((substr($msg,0,4) eq $accountID && ($conState == 2 || $conState == 4))
 	 || ($net->version == 1 && !$accountID && length($msg) == 4)) {
 		$accountID = substr($msg, 0, 4);
-		$AI = 1 if (!$AI_forcedOff);
+		$AI = 2 if (!$AI_forcedOff);
 		if ($config{'encrypt'} && $conState == 4) {
 			my $encryptKey1 = unpack("V1", substr($msg, 6, 4));
 			my $encryptKey2 = unpack("V1", substr($msg, 10, 4));
