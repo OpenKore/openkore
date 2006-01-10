@@ -769,7 +769,7 @@ sub checkClient {
 		
 		# Send exp-required-to-level-up info
 		$msg .= pack('C2 v V', 0xB1, 0x00, 22, $char->{exp_max}) .
-			pack('C2 v V', 0xB1, 0x00, 23, $char->{exp_job_max}};
+			pack('C2 v V', 0xB1, 0x00, 23, $char->{exp_job_max});
 		
 
 		# Send skill information
@@ -816,7 +816,10 @@ sub checkClient {
 				$item->{identified}, $item->{type_equip}, $item->{equipped}, $item->{broken},
 				$item->{upgrade}, $item->{cards});
 		}
-		$msg .= pack('C2 v1', 0xA4, 0x00, length($nonstackableInfo) + 4) . $nonstackableInfo;
+		$msg .= pack('C2 v', 0xA4, 0x00, length($nonstackableInfo) + 4) . $nonstackableInfo;
+		
+		# Send equipped arrow information
+		$msg .= pack('C2 v', 0x3C, 0x01, $char->{arrow}) if ($char->{arrow});
 
 		# Clear old variables
 		#@stackable = ();
