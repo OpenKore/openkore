@@ -31,12 +31,6 @@ use template;
 # replaced by dynamic content.
 my %keywords;
 
-# Markers signal the parser that the word encountered is a keyword. Since we
-# are going to be using regexp, make sure to escape any non-alphanumeric
-# characters in the marker string.
-my $keywordF = '\$';	# keyword front
-my $keywordB = '\$';	# keyword back
-
 ###
 # cHook
 #
@@ -249,7 +243,7 @@ sub request {
 
 		# The file requested has an associated template. Do a replacement.
 		if ($file->{template}) {
-			$content = $file->replace(\%keywords, '$', '$');
+			$content = $file->replace(\%keywords, '{', '}');
 			$process->shortResponse($content);
 
 		# See if the file being requested exists in the file system. This is
