@@ -4,6 +4,8 @@ use strict;
 
 my %fields = {
 	template		=> '',
+	markF			=> '',
+	markB			=> '',
 	debug			=> 0,
 };
 
@@ -43,33 +45,53 @@ sub _loadTemplate {
 sub replace {
 	my ($self, $keywords, $markF, $markB) = @_;
 	my $replacement = $self->{template};
+	$self->{markF} = quotemeta $markF;
+	$self->{markB} = quotemeta $markB;
+	$markF = $self->{markF};
+	$markB = $self->{markB};
+	my @arrays;
 	
 	my @keys = keys %{$keywords};
 	foreach my $key (@keys) {
 		my $value = $keywords->{$key};
 		if (ref($value) eq 'ARRAY') {
-			my $array;
-
+			push(@arrays, $key);
 			# kludge until proper looping is written
+			my $array;
 			foreach my $val (@{$value}) {
-				$array .= $val . ' ';
+				$array .= $val . '/ ';
 			}
 			if ($array) {
 				$replacement =~ s/$markF$key$markB/$array/sg;
 			} else {
 				$array = 'none';
 				$replacement =~ s/$markF$key$markB/$array/sg;
-			}
+			} # end kludge
 
 		} else {			
 			$replacement =~ s/$markF$key$markB/$value/sg;
 		}
 	}
 	
+	#print $self->_expand('$characterStatuses$<br>', \@arrays, $keywords) . "\n";
+	
 	return $replacement;
 }
 	
+# $expanded = _expand($text, \@keys, \%keywords);
+sub _expand {
+	my ($self, $text, $keys, $keywords) = @_;
+	my $markF = $self->{markF};
+	my $markB = $self->{markB};
+	my $replacement;
+	my $expanded;
 	
-	
-	
-	
+	foreach my $key (@{$keys}) {
+		foreach my $value (@{$keywords->{$key}}) {
+			$replacement = $text;
+			$replacement =~ s/$markF$key$markB/$value/sg;
+			$expanded .= $replacement;
+		}
+	}
+	return $expanded;
+}
