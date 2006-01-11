@@ -249,7 +249,7 @@ sub request {
 
 		# The file requested has an associated template. Do a replacement.
 		if ($file->{template}) {
-			$content = $file->replace(\%keywords, '\$', '\$');
+			$content = $file->replace(\%keywords, '$', '$');
 			$process->shortResponse($content);
 
 		# See if the file being requested exists in the file system. This is
