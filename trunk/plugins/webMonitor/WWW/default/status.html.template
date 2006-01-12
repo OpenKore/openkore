@@ -206,11 +206,11 @@
 	<table class="status" width="50%">
 	<CAPTION>Arrays</CAPTION>
 	<tr>
-		<td class="status">characterStatuses: {characterStatuses}</td>
-		<td class="status">inventoryEquipped: {inventoryEquipped}</td>
-		<td class="status">inventoryUnequipped: {inventoryUnequipped}</td>
-		<td class="status">inventoryUnusable: {inventoryUnusable}</td>
-		<td class="status">inventoryUsable: {inventoryUsable}</td>
+		<td class="status">characterStatuses:<br>{startLoop}{characterStatuses}<br>{endLoop}</td>
+		<td class="status">inventoryEquipped:<br>{startLoop}{inventoryEquipped}<br>{endLoop}</td>
+		<td class="status">inventoryUnequipped:<br>{startLoop}{inventoryUnequipped}<br>{endLoop}</td>
+		<td class="status">inventoryUnusable:<br>{startLoop}{inventoryUnusable}<br>{endLoop}</td>
+		<td class="status">inventoryUsable:<br>{startLoop}{inventoryUsable}<br>{endLoop}</td>
 	</tr>
 	</table>
 </div>

@@ -191,8 +191,6 @@ sub request {
 		'characterLocationMap' => $field{name},
 		'lastConsoleMessage' => $messages[-1],
 		'skin' => 'default', # TODO: replace with config.txt entry for the skin
-		'startLoop' => '',
-		'endLoop' => '',
 		'version' => $Settings::NAME . ' ' . $Settings::VERSION . ' ' . $Settings::CVS,
 	);
 	

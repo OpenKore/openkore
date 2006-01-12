@@ -6,6 +6,7 @@ my %fields = {
 	template		=> '',
 	markF			=> '',
 	markB			=> '',
+	keywords		=> '',
 	debug			=> 0,
 };
 
@@ -45,6 +46,7 @@ sub _loadTemplate {
 sub replace {
 	my ($self, $keywords, $markF, $markB) = @_;
 	my $replacement = $self->{template};
+	$self->{keywords} = $keywords;
 	$self->{markF} = quotemeta $markF;
 	$self->{markB} = quotemeta $markB;
 	$markF = $self->{markF};
@@ -56,31 +58,39 @@ sub replace {
 		my $value = $keywords->{$key};
 		if (ref($value) eq 'ARRAY') {
 			push(@arrays, $key);
-			# kludge until proper looping is written
-			my $array;
-			foreach my $val (@{$value}) {
-				$array .= $val . '/ ';
-			}
-			if ($array) {
-				$replacement =~ s/$markF$key$markB/$array/sg;
-			} else {
-				$array = 'none';
-				$replacement =~ s/$markF$key$markB/$array/sg;
-			} # end kludge
 
 		} else {			
 			$replacement =~ s/$markF$key$markB/$value/sg;
 		}
 	}
 	
-	#print $self->_expand('$characterStatuses$<br>', \@arrays, $keywords) . "\n";
+	pos($replacement) = 0;
+	my (@startOffsets, @endOffsets);
+	my $startLoop = 'startLoop';
+	my $endLoop = 'endLoop';
+	while ($replacement =~ /$markF$startLoop$markB/g) {
+		push @startOffsets, ((pos $replacement) - length '{startLoop}');
+		$replacement =~ /$markF$endLoop$markB/g;
+		push @endOffsets, (pos $replacement);
+	}
 	
+	my @replacements;
+
+	for (my $i; $i < @startOffsets; $i++) {
+		push @replacements, substr $replacement, $startOffsets[$i], $endOffsets[$i]-$startOffsets[$i];
+	}
+	
+	foreach my $replace (@replacements) {
+		my $text = $self->_expand($replace, \@arrays);
+		$replacement =~ s/$replace/$text/g;
+	}
 	return $replacement;
 }
 	
-# $expanded = _expand($text, \@keys, \%keywords);
+# $expanded = _expand($text, \@keys);
 sub _expand {
-	my ($self, $text, $keys, $keywords) = @_;
+	my ($self, $text, $keys) = @_;
+	my $keywords = $self->{keywords};
 	my $markF = $self->{markF};
 	my $markB = $self->{markB};
 	my $replacement;
@@ -89,9 +99,15 @@ sub _expand {
 	foreach my $key (@{$keys}) {
 		foreach my $value (@{$keywords->{$key}}) {
 			$replacement = $text;
-			$replacement =~ s/$markF$key$markB/$value/sg;
+			$replacement =~ s/\{startLoop\}//sg;
+			$replacement =~ s/\{endLoop\}//sg;
+			next if !($replacement =~ s/$markF$key$markB/$value/sg);
 			$expanded .= $replacement;
 		}
 	}
-	return $expanded;
+	if ($expanded) {
+		return $expanded;
+	} else {
+		return "none";
+	}
 }
