@@ -59,7 +59,7 @@ sub replace {
 		if (ref($value) eq 'ARRAY') {
 			push(@arrays, $key);
 
-		} else {			
+		} else {
 			$replacement =~ s/$markF$key$markB/$value/sg;
 		}
 	}
@@ -75,7 +75,6 @@ sub replace {
 	}
 	
 	my @replacements;
-
 	for (my $i; $i < @startOffsets; $i++) {
 		push @replacements, substr $replacement, $startOffsets[$i], $endOffsets[$i]-$startOffsets[$i];
 	}
