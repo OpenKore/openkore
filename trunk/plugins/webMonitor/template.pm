@@ -57,7 +57,7 @@ sub replace {
 	foreach my $key (@keys) {
 		my $value = $keywords->{$key};
 		if (ref($value) eq 'ARRAY') {
-			push(@arrays, $key);
+			push(@arrays, $key) if ($replacement =~ m/$markF$key$markB/sg);
 
 		} else {
 			$replacement =~ s/$markF$key$markB/$value/sg;
@@ -94,19 +94,40 @@ sub _expand {
 	my $markB = $self->{markB};
 	my $replacement;
 	my $expanded;
+	my $firstFound;
 	
-	foreach my $key (@{$keys}) {
-		foreach my $value (@{$keywords->{$key}}) {
-			$replacement = $text;
-			$replacement =~ s/\{startLoop\}//sg;
-			$replacement =~ s/\{endLoop\}//sg;
-			next if !($replacement =~ s/$markF$key$markB/$value/sg);
-			$expanded .= $replacement;
+	for (my $i; $i < @{$keys}; $i++) {
+		my $key = $keys->[$i];
+		if ($text =~ /$markF$key$markB/) {
+			$firstFound = $key;
+			last;
 		}
 	}
+	
+	my $array = $keywords->{$firstFound};
+	my $i;
+	foreach my $value (@{$array}) {
+		$replacement = $text;
+		$replacement =~ s/\{startLoop\}//sg;
+		$replacement =~ s/\{endLoop\}//sg;
+		next if !($replacement =~ s/$markF$firstFound$markB/$value/sg);
+		foreach my $key (@{$keys}) {
+			next if ($key eq $firstFound);
+			$replacement =~ s/$markF$key$markB/$keywords->{$key}->[$i]/sg;
+		}
+		$expanded .= $replacement;
+		$i++;
+	}
+	
+
 	if ($expanded) {
 		return $expanded;
 	} else {
-		return "none";
+		foreach my $key (@{$keys}) {
+			$text =~ s/\{startLoop\}//sg;
+			$text =~ s/\{endLoop\}//sg;
+			$text =~ s/$markF$key$markB/none/sg;;
+		}
+		return $text;
 	}
 }
