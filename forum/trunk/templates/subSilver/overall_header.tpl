@@ -9,9 +9,10 @@
 <link rel="stylesheet" href="templates/subSilver/{T_HEAD_STYLESHEET}" type="text/css">
 <link href="http://www.openkore.com/include/openkore-topbar.css" media="screen" rel="stylesheet" type="text/css">
 <link href="http://www.openkore.com/include/statcounter.css" media="screen" rel="stylesheet" type="text/css">
-<!-- Fix broken PNG transparency for IE/Win5-6+ -->
+<!-- Fix broken PNG transparency and CSS support for IE/Win5-6+ -->
 <!--[if gte IE 5.5000]>
 <script type="text/javascript" src="/include/pngfix.js"></script>
+<link href="http://www.openkore.com/include/iefixes.css" media="screen" rel="stylesheet" type="text/css">
 <![endif]-->
 
 <!-- BEGIN switch_enable_pm_popup -->
