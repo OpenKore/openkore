@@ -56,8 +56,14 @@ sub cHook {
 		my $message = "[".getFormattedDate(int(time)).".$microseconds] ".$messages;	
 	
 		# TODO: make this configurable (doesn't prepend the time for now)
-		chomp $messages;
-		push(@messages, $messages);
+		my @lines = split "\n", $messages;
+		if (@lines > 1) {
+			foreach my $line (@lines) {
+				push @messages, $line;
+			}
+		} else {
+			push(@messages, $messages);
+		}
 
 		# Make sure we don't let @messages grow too large
 		# TODO: make the message size configurable
