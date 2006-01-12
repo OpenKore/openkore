@@ -56,6 +56,7 @@ sub cHook {
 		my $message = "[".getFormattedDate(int(time)).".$microseconds] ".$messages;	
 	
 		# TODO: make this configurable (doesn't prepend the time for now)
+		chomp $messages;
 		push(@messages, $messages);
 
 		# Make sure we don't let @messages grow too large
@@ -82,6 +83,7 @@ sub request {
 	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
 	my $filename = $process->file;
 	$filename .= 'index.html' if ($filename =~ /\/$/);
+	$filename =~ s/new_.../new_zone01/;
 
 	my (@unusable, @usable, @equipment, @uequipment);
 	for (my $i; $i < @{$char->{inventory}}; $i++) {
