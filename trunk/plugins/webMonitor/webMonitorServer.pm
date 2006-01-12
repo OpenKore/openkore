@@ -92,6 +92,7 @@ sub request {
 	$filename =~ s/new_.../new_zone01/;
 
 	my (@unusable, @usable, @equipment, @uequipment);
+	my (@unusableAmount, @usableAmount);
 	for (my $i; $i < @{$char->{inventory}}; $i++) {
 		my $item = $char->{inventory}[$i];
 		next unless $item && %{$item};
@@ -100,8 +101,10 @@ sub request {
 			$item->{type} == 10) && !$item->{equipped})
 		{
 			push @unusable, $item->{name};
+			push @unusableAmount, $item->{amount};
 		} elsif ($item->{type} <= 2) {
 			push @usable, $item->{name};
+			push @usableAmount, $item->{amount};
 		} else {
 			if ($item->{equipped}) {
 				push @equipment, $item->{name};
@@ -116,6 +119,8 @@ sub request {
 		'inventoryEquipped' => \@equipment,
 		'inventoryUnequipped' => \@uequipment,
 		'inventoryUsable' => \@usable,
+		'inventoryUsableAmount' => \@usableAmount,
+		'inventoryUnusableAmount' => \@unusableAmount,
 		'inventoryUnusable' => \@unusable,
 		'consoleMessages' => \@messages,
 		'characterStatuses' => \@statuses,
@@ -251,7 +256,6 @@ sub request {
 		if ($file->{template}) {
 			$content = $file->replace(\%keywords, '{', '}');
 			$process->print($content);
-			$process->print('0');
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
@@ -261,7 +265,6 @@ sub request {
 				$process->print($buffer);
 			}
 			close FILE;
-			$process->print('0');
 			
 		} else {
 			# our custom 404 message
