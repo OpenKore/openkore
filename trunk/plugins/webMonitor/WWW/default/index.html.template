@@ -2,7 +2,7 @@
 <HTML>
 <HEAD>
 <LINK href="styles/default.css" type=text/css rel=stylesheet>
-<title>Botmonitor $version$ monitoring: $characterName$ - $characterJob$ $characterSex$ </title>
+<title>Botmonitor {version} monitoring: {characterName} - {characterJob} {characterSex} </title>
 <!-- Template made by Bibian A.K.A. ViVi -->
 </HEAD>
 <BODY>
