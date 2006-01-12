@@ -242,7 +242,8 @@ sub request {
 		# The file requested has an associated template. Do a replacement.
 		if ($file->{template}) {
 			$content = $file->replace(\%keywords, '{', '}');
-			$process->shortResponse($content);
+			$process->print($content);
+			$process->print('0');
 
 		# See if the file being requested exists in the file system. This is
 		# useful for static stuff like style sheets and graphics.
@@ -285,7 +286,7 @@ sub handle {
 		# hooray for standards-compliance
  		$process->header('Location', $filename);
 		$process->status(303, "See Other");
-		$process->print();
+		$process->print("\n");
 	}
 }
 
