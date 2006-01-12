@@ -67,7 +67,7 @@ sub cHook {
 
 		# Make sure we don't let @messages grow too large
 		# TODO: make the message size configurable
-		if (@messages > 20) {
+		while (@messages > 20) {
 			shift(@messages);
 		}
 	}
