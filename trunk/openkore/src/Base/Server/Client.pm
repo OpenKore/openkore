@@ -41,8 +41,8 @@ sub DESTROY {
 }
 
 ##
-# $client->getSocket()
-# Ensure: result->isa("IO::Socket::INET")
+# IO::Socket::INET $BaseServerClient->getSocket()
+# Ensure: defined(result)
 #
 # Return the client's socket.
 sub getSocket {
@@ -50,7 +50,7 @@ sub getSocket {
 }
 
 ##
-# $client->getIP()
+# String $BaseServerClient->getIP()
 # Ensure: result ne ''
 #
 # Returns the client's IP address in text form.
@@ -59,7 +59,7 @@ sub getIP {
 }
 
 ##
-# $client->getFD()
+# String $BaseServerClient->getFD()
 # Ensure: defined(result)
 #
 # Returns the client's file descriptor.
@@ -68,7 +68,7 @@ sub getFD {
 }
 
 ##
-# $client->getIndex()
+# String $BaseServerClient->getIndex()
 # Ensure: defined(result)
 #
 # Returns the index of this object in the @MODULE(Base::Server) object's internal list.
@@ -77,7 +77,7 @@ sub getIndex {
 }
 
 ##
-# $client->send(data)
+# String $BaseServerClient->send(String data)
 # data: The data to send.
 # Requires: defined($data)
 # Returns: 1 on success, 0 on failure.
@@ -100,7 +100,7 @@ sub send {
 }
 
 ##
-# $client->close()
+# void $BaseServerClient->close()
 #
 # Disconnect this client. In the next main loop iteration, this Base::Server::Client
 # object will be removed from the @MODULE(Base::Server) object's internal list.
