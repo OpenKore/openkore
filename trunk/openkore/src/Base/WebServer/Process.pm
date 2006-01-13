@@ -92,7 +92,7 @@ sub DESTROY {
 # which send data to the web server. It is undefined what will happen if you do so.
 #
 # This function should only be used for small amount of data, because the entire content has to be in memory.
-# For larger amounts of data, you should send small chunks of data incrementally using $process->print().
+# For larger amounts of data, you should send small chunks of data incrementally using $BaseWebServerProcess->print().
 #
 # The default status message is "200 OK". The default Content-Type is "text/html; charset=utf-8".
 sub shortResponse {
@@ -107,17 +107,17 @@ sub shortResponse {
 # statusMsg: the associated HTTP status message.
 # Requires:
 #    defined($statusMsg)  <br>
-#    $process->print() or $process->shortResponse() must not have been called before.
+#    $BaseWebServerProcess->print() or $BaseWebServerProcess->shortResponse() must not have been called before.
 #
 # Schedule a HTTP response status message for sending. See <a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">the
 # HTTP specification</a> (section 10) for a list of codes. This status code will be sent when the connection to
-# the web browser is closed, or when you first call $process->print() or $process->shortResponse().
+# the web browser is closed, or when you first call $BaseWebServerProcess->print() or $BaseWebServerProcess->shortResponse().
 # If you have sent a HTTP status before, the previous status is overwritten by this one.
 #
-# See also: $process->header()
+# See also: $BaseWebServerProcess->header()
 #
 # Example:
-# $process->status(404, "File Not Found");
+# $BaseWebServerProcess->status(404, "File Not Found");
 sub status {
 	my ($self, $statusCode, $statusMsg) = @_;
 
@@ -135,17 +135,17 @@ sub status {
 # Requires:
 #    defined(name)      <br>
 #    defined(value)     <br>
-#    $process->print() or $process->shortResponse() must not have been called before.
+#    $BaseWebServerProcess->print() or $BaseWebServerProcess->shortResponse() must not have been called before.
 #
 # Schedule a HTTP header for sending. This header will be sent when the connection to the web browser is closed,
-# or when you first call $process->print() or $process->shortResponse(). If you have sent a header with
+# or when you first call $BaseWebServerProcess->print() or $BaseWebServerProcess->shortResponse(). If you have sent a header with
 # the same name before, the previous header is overwritten by this one.
 #
 # For sending HTTP status messages, you should use $BaseWebServerProcess->status() instead.
 #
 # Example:
-# $process->header("WWW-Authenticate", "Negotiate");
-# $process->header("WWW-Authenticate", "NTLM");
+# $BaseWebServerProcess->header("WWW-Authenticate", "Negotiate");
+# $BaseWebServerProcess->header("WWW-Authenticate", "NTLM");
 sub header {
 	my ($self, $name, $value) = @_;
 

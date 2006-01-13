@@ -260,13 +260,13 @@ sub writeModuleHTML {
 			$text .= "\t\t<div class=\"desc\">" . makeupText($func->{desc}) . "</div>\n";
 
 			if ($func->{example} ne '') {
-				my $example = $func->{example};
+				my $example = escapeHTML($func->{example});
 				$example =~ s/(#.*)/<i class="comment">$1<\/i>/mg;
 
 				$text .= "\n\t\t<dl class=\"example\">\n" .
 					"\t\t\t<dt><strong>Example</strong>:</dt>\n" .
 					"\t\t\t<dd><pre>";
-				$text .= escapeHTML($example);
+				$text .= $example;
 				$text .= "</pre></dd>\n\t\t</dl>\n";
 			}
 
