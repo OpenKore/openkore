@@ -5,6 +5,7 @@ use warnings;
 
 our %modules;
 our %functions;
+our %classes;
 
 
 sub error {
@@ -20,14 +21,14 @@ sub initItem {
 	$hash->{requires} = '';
 	$hash->{ensures} = '';
 	$hash->{returns} = '';
+	$hash->{isVar} = 0;
 }
 
 
 # Extractor::addModule(file, package)
 # Extract documentation from a Perl module.
 sub addModule {
-	my $file = shift;
-	my $package = shift;
+	my ($file, $package) = @_;
 
 	if (!open(F, "< $file")) {
 		error "Unable to open $file for reading.\n";
@@ -53,7 +54,11 @@ sub addModule {
 		$linenum++;
 		$line =~ s/\r//g;
 
-		if ($line !~ /^#/) {
+		if ($line =~ /^package (.*);$/) {
+			$classes{$1} = $package;
+			next;
+
+		} elsif ($line !~ /^#/) {
 			if ($state =~ /^function-/ && $item{name} ne '') {
 				# The end of a function description has been reached
 				my %copy = %item;
@@ -91,9 +96,32 @@ sub addModule {
 				$state = 'module-description';
 
 			} else {
-				# This is a function description
-				($item{name}, $item{param_declaration}) = $line =~ /^# ([a-z0-9_:\$\->{}]+) *(\(.*\))?/i;
-				$item{param_declaration} = '' if (!defined $item{param_declaration});
+				# This is a function, variable or hash field description.
+				my $def;
+
+				# Check whether a type is defined.
+				if ($line =~ /^# ([a-z0-9_:]+) (.+)$/i) {
+					# Typed
+					$def = $2;
+					$item{type} = $1;
+				} else {
+					# Not typed
+					$def = $line;
+					$def =~ s/^# //;
+					$def =~ s/\n//;
+				}
+
+				if ($def =~ /\(.*\)/) {
+					# Function
+					($item{name}, $item{param_declaration}) = $def =~ /^(.*?)(\(.*\))$/;
+
+				} else {
+					# Variable or hash field
+					$item{name} = $def;
+					$item{isVar} = 1;
+					$item{param_declaration} = '';
+				}
+
 				$state = 'function-params';
 			}
 

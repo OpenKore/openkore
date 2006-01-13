@@ -97,6 +97,11 @@ h2:hover {
 
 .functionIndex td, #moduleIndex td {
 	padding: 3px;
+	
+}
+.functionIndex td {
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;
+	font-size: smaller;
 }
 .functionIndex a, #moduleIndex a {
 	text-decoration: none;
@@ -126,8 +131,8 @@ h2:hover {
 }
 
 .function .decl {
-	font-size: large;
-	margin-bottom: 8px;
+	margin-bottom: 0.2cm;
+	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Courier, Monospace;
 }
 .function .params_and_returns {
 	background: #e4eeff;

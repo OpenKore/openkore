@@ -89,6 +89,37 @@ sub makeupText {
 	return $text;
 }
 
+sub makeClassLink {
+	my ($type) = @_;
+	return if (!$$type);
+
+	if ($$type && $Extractor::classes{$$type}) {
+		my $package = $Extractor::classes{$$type};
+		$package =~ s/::/--/g;
+		$$type = "<a href=\"${package}.html\">$$type</a>";
+	}
+}
+
+sub parseDeclarations {
+	my ($decl) = @_;
+	return "" if ($decl eq "");
+	my @params;
+	$decl =~ s/^\(//;
+	$decl =~ s/\)$//;
+
+	foreach my $param (split / +, +/, $decl) {
+		# Check whether this parameter has a type definition
+		if ($param =~ / /) {
+			my ($type, $name) = split / /, $param, 2;
+			makeClassLink(\$type);
+			push @params, "<span class=\"type\">$type</span> $name";
+		} else {
+			push @params, $param;
+		}
+	}
+	return "(" . join(', ', @params) . ")";
+}
+
 
 sub writeModuleHTML {
 	my $module = shift;
@@ -132,19 +163,25 @@ sub writeModuleHTML {
 
 		foreach my $itemName (sort(keys %{$module->{categories}{$category}})) {
 			my $item = $module->{categories}{$category}{$itemName};
-			$text .= "<tr onclick=\"location.href='#$item->{name}';\">\n\t<td class=\"func\"><code>" .
-				"<a href=\"#$item->{name}\">$item->{name}</a>" .
-				"</code></td>\n" .
-				"\t<td class=\"decl\"><code>" .
-				$item->{param_declaration} .
-				"</code></td>\n</tr>";
+			my $name = $item->{name};
+			my $returnType = $item->{type} || "";
+			my $decl = parseDeclarations($item->{param_declaration});
+
+			makeClassLink(\$returnType);
+
+			$text .= "<tr onclick=\"location.href='#$item->{name}';\">\n" .
+				"	<td class=\"return-type\">$returnType</td>\n" .
+				"	<td class=\"func\">" .
+					"<a href=\"#$item->{name}\">$name</a>" .
+					"</td>\n" .
+				"	<td class=\"decl\">$decl</td>\n" .
+				"</tr>";
 		}
 
 		if ($text ne '') {
 			my $title = ($category eq "") ? "Functions in this module" : $category;
-			$text = "<p><h2>$title</h2>\n" .
-				"<table class=\"functionIndex\">\n" .
-				"<tr><th>Name</th><th>Parameters</th></tr>\n" .
+			$text = "<p><table class=\"functionIndex\">\n" .
+				"<tr><th colspan=\"3\">$title</th></tr>" .
 				"$text\n" .
 				"</table>\n";
 		}
@@ -168,13 +205,21 @@ sub writeModuleHTML {
 
 		foreach my $itemName (sort(keys %{$module->{items}})) {
 			my $func = $module->{items}{$itemName};
+			my $returnType = $func->{type} || "";
+
 			$text .= "<p><hr class=\"function_sep\">" if (!$first);
 			$first = 0;
+			makeClassLink(\$returnType);
 
 			$text .= "<p>\n<div class=\"function\">" .
 				"<a name=\"$func->{name}\"></a>\n" .
-				"<dl>\n\t<dt class=\"decl\"><code><strong>$func->{name}</strong>" .
-				$func->{param_declaration} . "</code></dt>\n" .
+				"<h3>$func->{name}</h3>\n" .
+				"<dl>\n\t<dt class=\"decl\">\n" .
+					"\t\t<span class=\"return-type\">$returnType</span>" .
+					(($returnType eq "") ? "" : " ") .
+					"<strong>$func->{name}</strong>" .
+					"$func->{param_declaration}\n" .
+				"\t</dt>\n" .
 				"\t<dd>\n";
 
 			my $write_bluelist = 0;

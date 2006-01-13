@@ -23,7 +23,7 @@
 #
 # An actor object is also a hash.
 #
-# See also: Actor::Monster.pm, Actor::Player.pm and Actor::You.pm
+# Child classes: @MODULE(Actor::Monster), @MODULE(Actor::Player) and @MODULE(Actor::You)
 
 package Actor;
 use strict;
@@ -60,7 +60,7 @@ sub _nameString {
 ### CATEGORY: Class methods
 
 ##
-# Actor::get($ID)
+# Actor Actor::get(ID)
 #
 # Returns the actor object for $ID.
 sub get {
@@ -84,7 +84,7 @@ sub get {
 ### CATEGORY: Hash members
 
 ##
-# $actor->{type}
+# String $Actor->{type}
 #
 # The actor's type. Can be "Monster", "Player" or "You".
 
@@ -92,7 +92,7 @@ sub get {
 ### CATEGORY: Methods
 
 ##
-# $actor->nameString([$otherActor])
+# String $Actor->nameString([Actor otherActor])
 #
 # Returns the name string of an actor, e.g. "Player pmak (3)",
 # "Monster Poring (0)" or "You".
@@ -110,7 +110,7 @@ sub nameString {
 }
 
 ##
-# $actor->selfString()
+# String $Actor->selfString()
 #
 # Returns 'itself' for monsters, or 'himself/herself' for players.
 # ('yourself' is handled by Actor::You.nameString.)
@@ -119,7 +119,7 @@ sub selfString {
 }
 
 ##
-# $actor->name()
+# String $Actor->name()
 #
 # Returns the name of an actor, e.g. "pmak" or "Unknown #300001".
 sub name {
@@ -129,7 +129,7 @@ sub name {
 }
 
 ##
-# $actor->nameIdx()
+# String $Actor->nameIdx()
 #
 # Returns the name and index of an actor, e.g. "pmak (0)" or "Unknown #300001 (1)".
 sub nameIdx {
@@ -143,7 +143,7 @@ sub nameIdx {
 }
 
 ##
-# $actor->verb($you, $other)
+# String $Actor->verb(Actor you, Actor other)
 #
 # Returns $you if $actor is you; $other otherwise.
 sub verb {
@@ -154,7 +154,7 @@ sub verb {
 }
 
 ##
-# $actor->position()
+# Hash $Actor->position()
 #
 # Returns the position of the actor.
 sub position {
@@ -164,7 +164,7 @@ sub position {
 }
 
 ##
-# $actor->distance([$otherActor])
+# float $Actor->distance([Actor otherActor])
 #
 # Returns the distance to another actor (defaults to yourself).
 sub distance {
@@ -175,7 +175,7 @@ sub distance {
 }
 
 ##
-# $actor->blockDistance([$otherActor])
+# float $Actor->blockDistance([Actor otherActor])
 #
 # Returns the block distance to another actor (defaults to yourself).
 sub blockDistance {
@@ -186,7 +186,7 @@ sub blockDistance {
 }
 
 ##
-# $actor->snipable
+# boolean $Actor->snipable()
 #
 # Returns whether or not you have snipable LOS to the actor.
 sub snipable {

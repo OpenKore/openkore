@@ -18,7 +18,7 @@
 #
 # All members in %players are of the Actor::Player class.
 #
-# Actor.pm is the base class for this class.
+# @MODULE(Actor) is the base class for this class.
 package Actor::Player;
 
 use strict;
@@ -38,7 +38,7 @@ sub selfString {
 }
 
 ##
-# $actor->job
+# String $actor->job
 #
 # Returns the job string (e.g. "Knight") of the actor.
 sub job {

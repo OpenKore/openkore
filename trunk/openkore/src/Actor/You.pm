@@ -16,9 +16,9 @@
 ##
 # MODULE DESCRIPTION: You actor object
 #
-# $char is of the Actor::You class.
+# $char is of the Actor::You class. This class represents the your own character.
 #
-# Actor.pm is the base class for this class.
+# @MODULE(Actor) is the base class for this class.
 package Actor::You;
 
 use strict;
@@ -41,7 +41,7 @@ sub nameString {
 }
 
 ##
-# $char->weight_percent()
+# float $char->weight_percent()
 #
 # Returns your weight percentage (between 0 and 100).
 sub weight_percent {
@@ -51,9 +51,9 @@ sub weight_percent {
 }
 
 ##
-# $char->hp_percent()
+# float $char->hp_percent()
 #
-# Returns your HP percentage.
+# Returns your HP percentage (between 0 and 100).
 sub hp_percent {
 	my ($self) = @_;
 
@@ -61,9 +61,9 @@ sub hp_percent {
 }
 
 ##
-# $char->sp_percent()
+# float $char->sp_percent()
 #
-# Returns your SP percentage.
+# Returns your SP percentage (between 0 and 100).
 sub sp_percent {
 	my ($self) = @_;
 
@@ -71,9 +71,9 @@ sub sp_percent {
 }
 
 ##
-# $char->weight_percent()
+# float $char->weight_percent()
 #
-# Returns your weight percentage.
+# Returns your weight percentage (between 0 and 100).
 sub weight_percent {
 	my ($self) = @_;
 
@@ -82,12 +82,12 @@ sub weight_percent {
 
 
 ##
-# $char->master
+# float $char->master()
 #
 # Returns your master (if any).
 #
-# FIXME: Should eventually ensure that either an Actor::Party (party member who
-# is not near you) or Actor::Player (would be ensured if %players hash was
+# FIXME: Should eventually ensure that either an @MODULE(Actor::Party) (party member who
+# is not near you) or @MODULE(Actor::Player) (would be ensured if %players hash was
 # guaranteed to be clean) is returned.
 sub master {
 	my ($self) = @_;
