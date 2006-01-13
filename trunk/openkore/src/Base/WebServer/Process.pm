@@ -80,8 +80,9 @@ sub DESTROY {
 }
 
 ##
-# $process->shortResponse(content)
+# void $BaseWebServerProcess->shortResponse(String content)
 # content: the data to send to the web browser.
+# Requires: defined($content)
 #
 # Send data (usually HTML) to the web server. This function also automatically sets the HTTP Content-Length
 # header for you, allowing the browser to keep the HTTP connection persistent, and to display download
@@ -101,10 +102,12 @@ sub shortResponse {
 }
 
 ##
-# $process->status(statusCode, statusMsg)
+# void $BaseWebServerProcess->status(int statusCode, String statusMsg)
 # statusCode: a HTTP status code.
 # statusMsg: the associated HTTP status message.
-# Requires: $process->print() or $process->shortResponse() must not have been called before.
+# Requires:
+#    defined($statusMsg)  <br>
+#    $process->print() or $process->shortResponse() must not have been called before.
 #
 # Schedule a HTTP response status message for sending. See <a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">the
 # HTTP specification</a> (section 10) for a list of codes. This status code will be sent when the connection to
@@ -126,16 +129,19 @@ sub status {
 }
 
 ##
-# $process->header(name, value)
+# void $BaseWebServerProcess->header(String name, String value)
 # name: the name of the header.
 # value: the value of the header.
-# Requires: $process->print() or $process->shortResponse() must not have been called before.
+# Requires:
+#    defined(name)      <br>
+#    defined(value)     <br>
+#    $process->print() or $process->shortResponse() must not have been called before.
 #
 # Schedule a HTTP header for sending. This header will be sent when the connection to the web browser is closed,
 # or when you first call $process->print() or $process->shortResponse(). If you have sent a header with
 # the same name before, the previous header is overwritten by this one.
 #
-# For sending HTTP status messages, you should use $process->status() instead.
+# For sending HTTP status messages, you should use $BaseWebServerProcess->status() instead.
 #
 # Example:
 # $process->header("WWW-Authenticate", "Negotiate");
@@ -156,8 +162,9 @@ sub header {
 }
 
 ##
-# $process->print(content)
+# void $BaseWebServerProcess->print(String content)
 # content: the content to print.
+# Requires: defined($content)
 #
 # Output a string to the web browser. Any scheduled headers and status message will be sent first.
 # So after calling this function, you cannot send headers or a status message anymore.
@@ -202,7 +209,8 @@ sub print {
 }
 
 ##
-# $process->file()
+# String $BaseWebServerProcess->file()
+# Ensures: defined(result)
 #
 # Returns the name of the file that the web browser requested.
 # The return value does not include the host name and does not include everythign after '?', so it will be something like "/foo/bar.html".
@@ -212,7 +220,7 @@ sub file {
 }
 
 ##
-# $process->GET()
+# Hash* $BaseWebServerProcess->GET()
 # Returns: a reference to a hash.
 #
 # Returns a reference to a hash, which contains variables provided via
@@ -222,7 +230,7 @@ sub GET {
 }
 
 ##
-# $process->clientHeader(name)
+# String $BaseWebServerProcess->clientHeader(String name)
 # name: the name of the header you want to lookup.
 # Returns: the value of the header, or undef if the browser didn't send that header.
 #

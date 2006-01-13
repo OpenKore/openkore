@@ -81,7 +81,7 @@ use Base::Server::Client;
 ################################
 
 ##
-# Base::Server->new([port, bind])
+# Base::Server Base::Server->new([int port, String bind])
 # port: the port to bind the server socket to. If unspecified, the first available port (as returned by the operating system) will be used.
 # bind: the IP address to bind the server socket to. If unspecified, the socket will be bound to "localhost". Specify "0.0.0.0" to not bind to any address.
 #
@@ -127,7 +127,7 @@ sub clients {
 }
 
 ##
-# $server->port()
+# int $BaseServer->port()
 # Returns: a port number.
 # Ensure: result > 0
 #
@@ -137,7 +137,7 @@ sub port {
 }
 
 ##
-# $server->iterate()
+# void $BaseServer->iterate()
 #
 # Handle connection issues. You should call this function in your
 # program's main loop.
@@ -180,9 +180,9 @@ sub iterate {
 }
 
 ##
-# $server->sendData(client, data)
+# $BaseServer->sendData(client, data)
 #
-# This function is obsolete. Use $client->send() instead.
+# This function is obsolete. Use $BaseServerClient->send() instead.
 sub sendData {
 	my ($self, $client) = @_;
 	return $client->send($_[2]);
@@ -194,31 +194,31 @@ sub sendData {
 ####################################
 
 ##
-# $server->onClientNew(client, index)
+# abstract void $BaseServer->onClientNew(Base::Server::Client client, int index)
 # client: a client object (see overview).
-# index: the client's index (same as $client->{index}).
-# Ensures: $client->isa("Base::Server::Client") && defined(index)
+# index: the client's index (same as $client->getIndex).
+# Requires: defined($client)
 #
 # This method is called when a new client has connected to the server.
 sub onClientNew {
 }
 
 ##
-# $server->onClientExit(client, index)
+# abstract void $BaseServer->onClientExit(Base::Server::Client client, int index)
 # client: a client object (see overview).
-# index: the client's index (same as $client->{index}).
-# Ensures: $client->isa("Base::Server::Client") && defined(index)
+# index: the client's index (same as $client->getIndex).
+# Requires: defined($client)
 #
 # This method is called when a client has disconnected from the server.
 sub onClientExit {
 }
 
 ##
-# $server->onClientData(client, data, index)
+# abstract void $BaseServer->onClientData(Base::Server::Client client, String data, int index)
 # client: a client object (see overview).
 # data: the data this client received.
-# index: the client's index (same as $client->{index}).
-# Ensures: $client->isa("Base::Server::Client") && defined(index)
+# index: the client's index (same as $client->getIndex).
+# Requires: defined($client)
 #
 # This method is called when a client has received data.
 sub onClientData {

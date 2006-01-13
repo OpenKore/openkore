@@ -83,7 +83,7 @@ use constant MAX_REQUEST_LEN  => 1024 * 32;
 
 
 ##
-# Base::WebServer->new([port, bind])
+# Base::WebServer Base::WebServer->new([int port, String bind])
 # port: the port to bind the server socket to. If unspecified, the first available port (as returned by the operating system) will be used.
 # bind: the IP address to bind the server socket to. If unspecified, the socket will be bound to "localhost". Specify "0.0.0.0" to not bind to any address.
 #
@@ -128,8 +128,8 @@ sub onClientData {
 }
 
 ##
-# $webserver->request(process)
-# process: the @MODULE(Base::WebServer::Process) object associated with this request. This object contains information about the current request (like the file the client requested, or the HTTP headers sent byt he client), and allows you to send responses to the client (with a PHP-like API).
+# abstract void $BaseWebServer->request(Base::WebServer::Process process)
+# process: the process object associated with this request. This object contains information about the current request (like the file the client requested, or the HTTP headers sent byt he client), and allows you to send responses to the client (with a PHP-like API).
 # Requires: defined($process)
 #
 # This virtual method will be called every time a web browser requests

@@ -13,15 +13,18 @@ sub error {
 }
 
 sub initItem {
-	my $hash = shift;
-	$hash->{params} = [];
-	$hash->{name} = '';
-	$hash->{desc} = '';
-	$hash->{example} = '';
-	$hash->{requires} = '';
-	$hash->{ensures} = '';
-	$hash->{returns} = '';
-	$hash->{isVar} = 0;
+	my $item = shift;
+	$item->{params} = [];
+	$item->{name} = '';
+	$item->{desc} = '';
+	$item->{example} = '';
+	$item->{requires} = '';
+	$item->{ensures} = '';
+	$item->{returns} = '';
+	$item->{isVar} = 0;
+	# $item->{param_declaration}
+	# $item->{type}
+	# $item->{visibility}
 }
 
 
@@ -99,15 +102,22 @@ sub addModule {
 				# This is a function, variable or hash field description.
 				my $def;
 
+				# Check whether the declaration is abstract.
+				$line =~ s/^# //;
+				if ($line =~ /^abstract /) {
+					$item{abstract} = 1;
+					$line =~ s/^abstract //;
+				}
+
 				# Check whether a type is defined.
-				if ($line =~ /^# ([a-z0-9_:]+) (.+)$/i) {
+				if ($line =~ /^([a-z0-9_:\*]+) (.+)$/i) {
 					# Typed
 					$def = $2;
 					$item{type} = $1;
+
 				} else {
 					# Not typed
 					$def = $line;
-					$def =~ s/^# //;
 					$def =~ s/\n//;
 				}
 

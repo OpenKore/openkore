@@ -18,7 +18,6 @@ Modules
 Plugins
 Utils
 Utils::Crypton
-Utils::Event
 Skills
 Match
 Misc

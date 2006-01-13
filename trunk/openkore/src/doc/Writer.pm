@@ -164,13 +164,14 @@ sub writeModuleHTML {
 		foreach my $itemName (sort(keys %{$module->{categories}{$category}})) {
 			my $item = $module->{categories}{$category}{$itemName};
 			my $name = $item->{name};
+			my $abstract = $item->{abstract} ? "abstract&nbsp;" : "";
 			my $returnType = $item->{type} || "";
 			my $decl = parseDeclarations($item->{param_declaration});
 
 			makeClassLink(\$returnType);
 
 			$text .= "<tr onclick=\"location.href='#$item->{name}';\">\n" .
-				"	<td class=\"return-type\">$returnType</td>\n" .
+				"	<td class=\"return-type\">$abstract$returnType</td>\n" .
 				"	<td class=\"func\">" .
 					"<a href=\"#$item->{name}\">$name</a>" .
 					"</td>\n" .
@@ -206,6 +207,7 @@ sub writeModuleHTML {
 		foreach my $itemName (sort(keys %{$module->{items}})) {
 			my $func = $module->{items}{$itemName};
 			my $returnType = $func->{type} || "";
+			my $abstract = $func->{abstract} ? "abstract " : "";
 
 			$text .= "<p><hr class=\"function_sep\">" if (!$first);
 			$first = 0;
@@ -215,7 +217,7 @@ sub writeModuleHTML {
 				"<a name=\"$func->{name}\"></a>\n" .
 				"<h3>$func->{name}</h3>\n" .
 				"<dl>\n\t<dt class=\"decl\">\n" .
-					"\t\t<span class=\"return-type\">$returnType</span>" .
+					"\t\t<span class=\"return-type\">$abstract $returnType</span>" .
 					(($returnType eq "") ? "" : " ") .
 					"<strong>$func->{name}</strong>" .
 					"$func->{param_declaration}\n" .
