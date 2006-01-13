@@ -56,7 +56,7 @@ sub new {
 }
 
 ##
-# $net->version
+# $net->version()
 # Returns: XKore mode
 #
 sub version {
@@ -78,14 +78,14 @@ sub DESTROY {
 ######################
 
 ##
-# $net->serverAliveServer
+# $net->serverAliveServer()
 #
 sub serverAlive {
 	return $_[0]->{remote_socket} && $_[0]->{remote_socket}->connected();
 }
 
 ##
-# $net->serverPeerHost
+# $net->serverPeerHost()
 #
 sub serverPeerHost {
 	return $_[0]->{remote_socket}->peerhost if ($_[0]->serverAlive);
@@ -93,7 +93,7 @@ sub serverPeerHost {
 }
 
 ##
-# $net->serverPeerPort
+# $net->serverPeerPort()
 #
 sub serverPeerPort {
 	return $_[0]->{remote_socket}->peerport if ($_[0]->serverAlive);
@@ -136,7 +136,7 @@ sub serverConnect {
 }
 
 ##
-# $net->serverSend
+# $net->serverSend()
 #
 #
 sub serverSend {
@@ -146,7 +146,7 @@ sub serverSend {
 }
 
 ##
-# $net->serverRecv
+# $net->serverRecv()
 # Returns: 
 #
 sub serverRecv {
@@ -190,35 +190,35 @@ sub serverDisconnect {
 ######################
 
 ##
-# $net->clientAlive
+# $net->clientAlive()
 #
 sub clientAlive {
 	return undef;
 }
 
 ##
-# $net->clientPeerHost
+# $net->clientPeerHost()
 #
 sub clientPeerHost {
 	return undef;
 }
 
 ##
-# $net->clientPeerPort
+# $net->clientPeerPort()
 #
 sub clientPeerPort {
 	return undef;
 }
 
 ##
-# $net->clientConnect
+# $net->clientConnect()
 #
 sub clientConnect {
 	return undef;
 }
 
 ##
-# $net->clientSend
+# $net->clientSend()
 #
 # Blank function: there is no client.
 sub clientSend {
@@ -226,7 +226,7 @@ sub clientSend {
 }
 
 ##
-# $net->clientRecv
+# $net->clientRecv()
 # Returns: Nothing.
 #
 # There is never going to be a connection with the client using Kore Mode 0
@@ -235,7 +235,7 @@ sub clientRecv {
 }
 
 ##
-# $net->clientDisconnect
+# $net->clientDisconnect()
 #
 #
 sub clientDisconnect {
