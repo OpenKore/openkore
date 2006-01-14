@@ -84,6 +84,7 @@ sub initHandlers {
 	eq                 => \&cmdEquip,
 	eval               => \&cmdEval,
 	exp                => \&cmdExp,
+	falcon             => \&cmdFalcon,
 	follow             => \&cmdFollow,
 	friend             => \&cmdFriend,
 	g                  => \&cmdGuildChat,
@@ -101,7 +102,6 @@ sub initHandlers {
 	look               => \&cmdLook,
 	lookp              => \&cmdLookPlayer,
 	help               => \&cmdHelp,
-	reload             => \&cmdReload,
 	memo               => \&cmdMemo,
 	ml                 => \&cmdMonsterList,
 	move               => \&cmdMove,
@@ -109,6 +109,7 @@ sub initHandlers {
 	openshop           => \&cmdOpenShop,
 	p                  => \&cmdPartyChat,
 	party              => \&cmdParty,
+	pecopeco           => \&cmdPecopeco,  
 	#pet               => \&cmdPet,
 	petl               => \&cmdPetList,
 	pl                 => \&cmdPlayerList,
@@ -118,6 +119,7 @@ sub initHandlers {
 	portals            => \&cmdPortalList,
 	quit               => \&cmdQuit,
 	rc                 => \&cmdReloadCode,
+	reload             => \&cmdReload,
 	relog              => \&cmdRelog,
 	repair             => \&cmdRepair,
 	respawn            => \&cmdRespawn,
@@ -717,7 +719,15 @@ sub cmdCart {
 		} else {
 			printItemDesc($cart{'inventory'}[$arg2]{'nameID'});
 		}
-
+		
+	} elsif ($arg1 eq "release") {
+		if (!hasCart()) {
+			error	"Error in function 'cart release' (Remove Cart Status)\n" .
+				"You don't possess a cart.\n";
+		} else {
+			sendCompanionRelease();
+		}
+	
 	} else {
 		error	"Error in function 'cart'\n" .
 			"Command '$arg1' is not a known command.\n";
@@ -1445,6 +1455,21 @@ sub cmdExp {
 	if (!$knownArg) {
 		error "Error in function 'exp' (Exp Report)\n" .
 			"Usage: exp [<report | monster | item | reset>]\n";
+	}
+}
+
+sub cmdFalcon {
+	my (undef, $arg1) = @_;
+
+	if ($arg1 eq "") {
+		message "Your falcon is " . (hasFalcon() ? "active" : "inactive");
+	} elsif ($arg1 eq "release") {
+		if (!hasFalcon()) {
+		error	"Error in function 'falcon release' (Remove Falcon Status)\n" .
+			"You don't possess a falcon.\n";
+		} else {
+			sendCompanionRelease();
+		}
 	}
 }
 
@@ -2313,6 +2338,21 @@ sub cmdPartyChat {
 	}
 }
 
+sub cmdPecopeco {
+	my (undef, $arg1) = @_;
+
+	if ($arg1 eq "") {
+		message "Your Pecopeco is " . (hasPecopeco() ? "active" : "inactive");
+	} elsif ($arg1 eq "release") {
+		if (!hasPecopeco()) {
+		error	"Error in function 'Pecopeco release' (Remove Pecopeco Status)\n" .
+			"You don't possess a Pecopeco.\n";
+		} else {
+			sendCompanionRelease();
+		}
+	}
+}
+
 sub cmdPet {
 	my (undef, $subcmd) = @_;
 	if (!%pet) {
@@ -2652,6 +2692,18 @@ sub cmdQuit {
 	quit();
 }
 
+sub cmdReload {
+	my (undef, $args) = @_;
+	if ($args eq '') {
+		error	"Syntax Error in function 'reload' (Reload Configuration Files)\n" .
+			"Usage: reload <name|\"all\">\n";
+
+	} else {
+		Settings::parseReload($args);
+		Log::initLogFiles();
+	}
+}
+
 sub cmdReloadCode {
 	my (undef, $args) = @_;
 	if ($args ne "") {
@@ -2669,18 +2721,6 @@ sub cmdRelog {
 	} else {
 		error	"Syntax Error in function 'relog' (Log out then log in.)\n" .
 			"Usage: relog [delay]\n";
-	}
-}
-
-sub cmdReload {
-	my (undef, $args) = @_;
-	if ($args eq '') {
-		error	"Syntax Error in function 'reload' (Reload Configuration Files)\n" .
-			"Usage: reload <name|\"all\">\n";
-
-	} else {
-		Settings::parseReload($args);
-		Log::initLogFiles();
 	}
 }
 

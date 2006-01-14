@@ -57,6 +57,7 @@ our @EXPORT = qw(
 	sendChatRoomKick
 	sendChatRoomLeave
 	sendCloseShop
+	sendCompanionRelease
 	sendCurrentDealCancel
 	sendDeal
 	sendDealAccept
@@ -647,6 +648,12 @@ sub sendCloseShop {
 	my $msg = pack("C*", 0x2E, 0x01);
 	sendMsgToServer($r_net, $msg);
 	debug "Shop Closed\n", "sendPacket", 2;
+}
+
+sub sendCompanionRelease {
+	my $msg = pack("C*", 0x2A, 0x01);
+	sendMsgToServer($net, $msg);
+	debug "Sent Companion Release (Cart, Falcon or Pecopeco)\n", "sendPacket", 2;
 }
 
 sub sendCurrentDealCancel {
