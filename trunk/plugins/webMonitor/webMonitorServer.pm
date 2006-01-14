@@ -88,6 +88,35 @@ sub request {
 	
 	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
 	my $filename = $process->file;
+
+	# the webserver shouldn't differentiate between actual characters and url
+	# encoded characters. see http://www.blooberry.com/indexdot/html/topics/urlencoding.htm
+#	$filename =~ s/\%24/\$/sg;
+#	$filename =~ s/\%26/\&/sg;
+#	$filename =~ s/\%2B/\+/sg;
+#	$filename =~ s/\%2C/\,/sg;
+#	$filename =~ s/\%2F/\//sg;
+#	$filename =~ s/\%3A/\:/sg;
+#	$filename =~ s/\%3B/\:/sg;
+#	$filename =~ s/\%3D/\=/sg;
+#	$filename =~ s/\%3F/\?/sg;
+#	$filename =~ s/\%40/\@/sg;
+#	$filename =~ s/\%20/\+/sg;
+#	$filename =~ s/\%22/\"/sg;
+#	$filename =~ s/\%3C/\</sg;
+#	$filename =~ s/\%3E/\>/sg;
+#	$filename =~ s/\%23/\#/sg;
+#	$filename =~ s/\%25/\%/sg;
+#	$filename =~ s/\%7B/\{/sg;
+#	$filename =~ s/\%7D/\}/sg;
+#	$filename =~ s/\%7C/\|/sg;
+#	$filename =~ s/\%5C/\\/sg;
+#	$filename =~ s/\%5E/\^/sg;
+#	$filename =~ s/\%7E/\~/sg;
+#	$filename =~ s/\%5B/\[/sg;
+#	$filename =~ s/\%5D/\]/sg;
+#	$filename =~ s/\%60/\`/sg;
+
 	$filename .= 'index.html' if ($filename =~ /\/$/);
 	$filename =~ s/new_.../new_zone01/;
 
@@ -96,7 +125,6 @@ sub request {
 	for (my $i; $i < @{$char->{inventory}}; $i++) {
 		my $item = $char->{inventory}[$i];
 		next unless $item && %{$item};
-		
 		if (($item->{type} == 3 || $item->{type} == 6 ||
 			$item->{type} == 10) && !$item->{equipped})
 		{

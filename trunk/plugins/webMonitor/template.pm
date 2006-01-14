@@ -53,6 +53,8 @@ sub replace {
 	$markB = $self->{markB};
 	my @arrays;
 	
+	$replacement =~ s/\?/\x08/sg;
+	
 	my @keys = keys %{$keywords};
 	foreach my $key (@keys) {
 		my $value = $keywords->{$key};
@@ -78,11 +80,13 @@ sub replace {
 	for (my $i; $i < @startOffsets; $i++) {
 		push @replacements, substr $replacement, $startOffsets[$i], $endOffsets[$i]-$startOffsets[$i];
 	}
-	
-	foreach my $replace (@replacements) {
+
+	for (my $i; $i < @replacements; $i++) {
+		my $replace = $replacements[$i];
 		my $text = $self->_expand($replace, \@arrays);
-		$replacement =~ s/$replace/$text/g;
+		$replacement =~ s/$replace/$text/sg;
 	}
+	$replacement =~ s/\x08/\?/sg;
 	return $replacement;
 }
 	
@@ -103,7 +107,6 @@ sub _expand {
 			last;
 		}
 	}
-	
 	my $array = $keywords->{$firstFound};
 	my $i;
 	foreach my $value (@{$array}) {
