@@ -210,7 +210,7 @@ sub clientSend {
 	my $msg = shift;
 	my $dontMod = shift;
 
-	$msg = $self->modifyPacketIn($msg) unless ($dontMod || $self->{client_saved}{bypass_inMod});
+	$msg = $self->modifyPacketIn($msg) unless ($dontMod || $self->{client_saved}{plugin_packet_in});
 	if ($config{debugPacket_ro_received}) {
 		visualDump($msg, 'clientSend');
 	}
@@ -558,7 +558,12 @@ sub checkClient {
 			$char->{name}, $char->{str}, $char->{agi}, $char->{vit}, $char->{int}, $char->{dex}, $char->{luk}, 0);
 
 		# Send the character info packet
-		$msg = pack("C2 v", 0x6B, 0x00, length($charMsg) + 4) . $charMsg;
+		$msg = pack('C2 v' .
+			(($self->{client_saved}{char_info_padding})
+				? ' x' . $self->{client_saved}{char_info_padding}
+				: ''),
+			0x6B, 0x00, length($charMsg) + 4 + $self->{client_saved}{char_info_padding})
+			. $charMsg;
 
 		# Give any custom plugins a chance to change the packet before we send it.
 		Plugins::callHook('XKore/characters', {r_packet => \$msg});
@@ -766,11 +771,11 @@ sub checkClient {
 
 		# Send spirit sphere information
 		$msg .= pack('C2 a4 v', 0xD0, 0x01, $accountID, $char->{spirits}) if ($char->{spirits});
-		
+
 		# Send exp-required-to-level-up info
 		$msg .= pack('C2 v V', 0xB1, 0x00, 22, $char->{exp_max}) .
 			pack('C2 v V', 0xB1, 0x00, 23, $char->{exp_job_max});
-		
+
 
 		# Send skill information
 		my $skillInfo = "";
@@ -817,7 +822,7 @@ sub checkClient {
 				$item->{upgrade}, $item->{cards});
 		}
 		$msg .= pack('C2 v', 0xA4, 0x00, length($nonstackableInfo) + 4) . $nonstackableInfo;
-		
+
 		# Send equipped arrow information
 		$msg .= pack('C2 v', 0x3C, 0x01, $char->{arrow}) if ($char->{arrow});
 
@@ -1090,9 +1095,9 @@ sub checkClient {
 #
 sub modifyPacketIn {
 	my ($self, $msg) = @_;
-	
+
 	return undef if (length($msg) < 1);
-	
+
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
 	if ($msg eq $accountID) {
@@ -1102,6 +1107,10 @@ sub modifyPacketIn {
 	} elsif ($switch eq "006A") {
 		# Don't send disconnect signals to the RO client
 		$msg = "";
+
+	} elsif ($switch eq "006B") {
+		# Catch the number of extra bytes on the packet
+		$self->{client_saved}{char_info_padding} = (length($msg) - 4) % 106;
 
 	} elsif ($switch eq "0071") {
 		# Save the mapname for client login
@@ -1161,9 +1170,9 @@ sub modifyPacketIn {
 
 	# Continue the packet on to a plugin
 	if (length($msg) > 0) {
-		$self->{client_saved}{bypass_inMod} = 1;
+		$self->{client_saved}{plugin_packet_in} = 1;
 		Plugins::callHook('XKore/packet/in', {switch => $switch, r_packet => \$msg});
-		$self->{client_saved}{bypass_inMod} = 0;
+		$self->{client_saved}{plugin_packet_in} = 0;
 	}
 
 	return $msg;
@@ -1175,42 +1184,12 @@ sub modifyPacketIn {
 #
 sub modifyPacketOut {
 	my ($self, $msg) = @_;
-	
+
 	return undef if (length($msg) < 1);
-	
+
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
-	if (($switch eq "0072" && (
-			$config{serverType} == 0 ||
-			$config{serverType} == 1 ||
-			$config{serverType} == 2 ||
-			$config{serverType} == 6 )) ||
-		($switch eq "009B" && (
-			$config{serverType} == 3 ||
-			$config{serverType} == 5 )) ||
-		($switch eq "00F5" &&
-			$config{serverType} == 4 )) {
-		# Fake the map login
-
-		# Looking over this again, I don't believe this part ever gets reached...
-		# TODO: Remove this section if it is unused.
-		
-		message "\$"."net->modifyPacketOut(0072) was called!\n";
-
-		# Generate the coords info
-		my $coords = "";
-		shiftPack(\$coords, $char->{pos_to}{x}, 10);
-		shiftPack(\$coords, $char->{pos_to}{y}, 10);
-		shiftPack(\$coords, 0, 4);
-
-		# Send map info
-		#'0073' => ['map_loaded','x4 a3',[qw(coords)]],
-		$msg = pack('C2 V a3 x2', 0x73, 0, time, $coords);
-		$self->clientSend($msg,1);
-
-		$msg = "";
-
-	} elsif ($switch eq "007D") {
+	if ($switch eq "007D") {
 		#
 		$msg = "";
 
