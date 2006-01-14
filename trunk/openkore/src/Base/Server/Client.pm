@@ -59,7 +59,7 @@ sub getIP {
 }
 
 ##
-# String $BaseServerClient->getFD()
+# int $BaseServerClient->getFD()
 # Ensure: defined(result)
 #
 # Returns the client's file descriptor.
@@ -68,7 +68,7 @@ sub getFD {
 }
 
 ##
-# String $BaseServerClient->getIndex()
+# int $BaseServerClient->getIndex()
 # Ensure: defined(result)
 #
 # Returns the index of this object in the @MODULE(Base::Server) object's internal list.
@@ -77,7 +77,7 @@ sub getIndex {
 }
 
 ##
-# String $BaseServerClient->send(String data)
+# boolean $BaseServerClient->send(Bytes data)
 # data: The data to send.
 # Requires: defined($data)
 # Returns: 1 on success, 0 on failure.
@@ -105,7 +105,7 @@ sub send {
 # Disconnect this client. In the next main loop iteration, this Base::Server::Client
 # object will be removed from the @MODULE(Base::Server) object's internal list.
 #
-# You must not call $client->send() anymore after having called this function.
+# You must not call $BaseServerClient->send() anymore after having called this function.
 sub close {
 	$_[0]->{sock}->close;
 }

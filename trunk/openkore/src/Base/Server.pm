@@ -180,7 +180,7 @@ sub iterate {
 }
 
 ##
-# $BaseServer->sendData(client, data)
+# boolean $BaseServer->sendData(Base::Server::Client client, Bytes data)
 #
 # This function is obsolete. Use $BaseServerClient->send() instead.
 sub sendData {
@@ -214,11 +214,11 @@ sub onClientExit {
 }
 
 ##
-# abstract void $BaseServer->onClientData(Base::Server::Client client, String data, int index)
+# abstract void $BaseServer->onClientData(Base::Server::Client client, Bytes data, int index)
 # client: a client object (see overview).
 # data: the data this client received.
 # index: the client's index (same as $client->getIndex).
-# Requires: defined($client)
+# Requires: defined($client) && defined($data)
 #
 # This method is called when a client has received data.
 sub onClientData {
