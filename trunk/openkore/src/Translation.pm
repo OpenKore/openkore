@@ -57,7 +57,7 @@ use constant DEFAULT_PODIR => "$RealBin/src/po";
 # src/auto/XSTools/translation/wrapper.xs
 
 ##
-# Translation::initDefault([podir, locale])
+# void Translation::initDefault([String podir, String locale])
 # Ensures: Translation::T() and Translation::TF() will be usable.
 #
 # Initialize the default translation object. Translation::T() and
@@ -69,11 +69,10 @@ sub initDefault {
 }
 
 ##
-# Translation->new([podir, locale])
+# Translation Translation->new([String podir, String locale])
 # podir: the directory which contains translation files.
 # locale: the name of a locale.
 # Returns: a Translation object.
-# Ensures: defined(result)
 #
 # Create a new Translation object. A suitable language file will be loaded
 # from $podir. If $locale is not defined, then the operating system's locale
@@ -81,7 +80,7 @@ sub initDefault {
 # to OpenKore's own translation files folder.
 #
 # You're probably looking for Translation::T() instead. See
-# $translation->translate() for rationale.
+# $Translation->translate() for rationale.
 sub new {
 	my ($class, $podir, $locale) = @_;
 	my %self;
@@ -99,7 +98,7 @@ sub DESTROY {
 	_unload($self->{trans});
 }
 
-# _autodetect(podir, [requested_locale])
+# _autodetect(String podir, [String requested_locale])
 #
 # Autodetect the operating system's language, and return the filename for
 # the suitable translation file (.mo) from $podir. Returns undef if
@@ -146,11 +145,9 @@ sub _autodetect {
 }
 
 ##
-# $translation->translate(message)
+# String $Translation->translate(String message)
 # message: The message to translate.
 # Returns: the translated message, or the original message if it cannot be translated.
-# Requires: $message is encoded in UTF-8.
-# Ensures: the return value is encoded in UTF-8.
 #
 # Translate $message using the translation file defined by this class.
 #
@@ -168,11 +165,10 @@ sub translate {
 }
 
 ##
-# Translation::T(message)
+# String Translation::T(String message)
 # message: The message to translate.
 # Returns: the translated message, or the original message if it cannot be translated.
-# Requires: Translation::initDefault() must have been called once; $message must be encoded in UTF-8.
-# Ensures: the return value is encoded in UTF-8.
+# Requires: Translation::initDefault() must have been called once.
 #
 # Translate $message.
 #
@@ -191,7 +187,7 @@ sub T {
 }
 
 ##
-# Translation::TF(format, ...)
+# String Translation::TF(String format, ...)
 # Requires: Translation::initDefault() must have been called once; $format must be encoded in UTF-8.
 # Ensures: the return value is encoded in UTF-8.
 #
@@ -210,9 +206,9 @@ sub TF {
 }
 
 ##
-# Translation::serverStrToUTF8(str)
-# str: the string to convert.
-# Returns: the return value, encoded in UTF-8.
+# String Translation::serverMsgToUTF8(Bytes msg)
+# msg: the message to convert.
+# Returns: $msg converted to UTF-8.
 # Requires: $config{serverEncoding} must be a correct encoding name.
 #
 # Convert a human-readable string (sent by the RO server) into UTF-8.
