@@ -3192,17 +3192,17 @@ sub job_equipment_hair_change {
 	} elsif ($args->{part} == 3) {
 		# Bottom headgear change
 		message "$actor changed bottom headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
-		$actor->{headgear}{low} = $args->{number} if $actor->{type} eq 'Player';
+		$actor->{headgear}{low} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
 
 	} elsif ($args->{part} == 4) {
 		# Top headgear change
 		message "$actor changed top headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
-		$actor->{headgear}{top} = $args->{number} if $actor->{type} eq 'Player';
+		$actor->{headgear}{top} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
 
 	} elsif ($args->{part} == 5) {
 		# Middle headgear change
 		message "$actor changed middle headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
-		$actor->{headgear}{mid} = $args->{number} if $actor->{type} eq 'Player';
+		$actor->{headgear}{mid} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
 
 	} elsif ($args->{part} == 6) {
 		# Hair color change
