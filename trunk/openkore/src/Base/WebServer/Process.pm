@@ -220,7 +220,7 @@ sub file {
 }
 
 ##
-# Hash* $BaseWebServerProcess->GET()
+# Hash<Bytes>* $BaseWebServerProcess->GET()
 # Returns: a reference to a hash.
 #
 # Returns a reference to a hash, which contains variables provided via

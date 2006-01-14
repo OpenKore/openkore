@@ -91,12 +91,24 @@ sub makeupText {
 
 sub makeClassLink {
 	my ($type) = @_;
-	return if (!$$type);
-
-	if ($$type && $Extractor::classes{$$type}) {
-		my $package = $Extractor::classes{$$type};
+	if ($type && $Extractor::classes{$type}) {
+		my $package = $Extractor::classes{$type};
 		$package =~ s/::/--/g;
-		$$type = "<a href=\"${package}.html\">$$type</a>";
+		return "<a href=\"${package}.html\">" . escapeHTML($type) . "</a>";
+	} else {
+		return escapeHTML($type);
+	}
+}
+
+sub parseDataType {
+	my ($str) = @_;
+
+	if ($str =~ /^(.+?)<(.+)>(.?)$/) {
+		my ($a, $b, $c) = ($1, $2, $3);
+		$str = makeClassLink($1) . '&lt;' . parseDataType($2) . '&gt;' . $3;
+		return $str;
+	} else {
+		return makeClassLink($str);
 	}
 }
 
@@ -111,10 +123,10 @@ sub parseDeclarations {
 		# Check whether this parameter has a type definition
 		if ($param =~ / /) {
 			my ($type, $name) = split / /, $param, 2;
-			makeClassLink(\$type);
-			push @params, "<span class=\"type\">$type</span> $name";
+			$type = parseDataType($type);
+			push @params, "<span class=\"type\">$type</span> " . escapeHTML($name);
 		} else {
-			push @params, $param;
+			push @params, escapeHTML($param);
 		}
 	}
 	return "(" . join(', ', @params) . ")";
@@ -165,10 +177,8 @@ sub writeModuleHTML {
 			my $item = $module->{categories}{$category}{$itemName};
 			my $name = $item->{name};
 			my $abstract = $item->{abstract} ? "abstract&nbsp;" : "";
-			my $returnType = $item->{type} || "";
+			my $returnType = parseDataType($item->{type} || "");
 			my $decl = parseDeclarations($item->{param_declaration});
-
-			makeClassLink(\$returnType);
 
 			$text .= "<tr onclick=\"location.href='#$item->{name}';\">\n" .
 				"	<td class=\"return-type\">$abstract$returnType</td>\n" .
@@ -206,21 +216,22 @@ sub writeModuleHTML {
 
 		foreach my $itemName (sort(keys %{$module->{items}})) {
 			my $func = $module->{items}{$itemName};
-			my $returnType = $func->{type} || "";
+			my $returnType = parseDataType($func->{type} || "");
 			my $abstract = $func->{abstract} ? "abstract " : "";
+			my $decl = parseDeclarations($func->{param_declaration});
+			my $funcName = escapeHTML($func->{name});
 
 			$text .= "<p><hr class=\"function_sep\">" if (!$first);
 			$first = 0;
-			makeClassLink(\$returnType);
 
 			$text .= "<p>\n<div class=\"function\">" .
-				"<a name=\"$func->{name}\"></a>\n" .
-				"<h3>$func->{name}</h3>\n" .
+				"<a name=\"$funcName\"></a>\n" .
+				"<h3>$funcName</h3>\n" .
 				"<dl>\n\t<dt class=\"decl\">\n" .
 					"\t\t<span class=\"return-type\">$abstract $returnType</span>" .
 					(($returnType eq "") ? "" : " ") .
-					"<strong>$func->{name}</strong>" .
-					"$func->{param_declaration}\n" .
+					"<strong>$funcName</strong>" .
+					"$decl\n" .
 				"\t</dt>\n" .
 				"\t<dd>\n";
 

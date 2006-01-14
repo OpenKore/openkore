@@ -91,8 +91,8 @@ use constant MAX_REQUEST_LEN  => 1024 * 32;
 
 
 # struct HTTPState {
-#     string requestData;
-#     string request;
+#     Bytes requestData;
+#     Bytes request;
 #     int time;
 # }
 

@@ -110,7 +110,7 @@ sub addModule {
 				}
 
 				# Check whether a type is defined.
-				if ($line =~ /^([a-z0-9_:\*]+) (.+)$/i) {
+				if ($line =~ /^([a-z0-9_:\*\<\>]+) (.+)$/i) {
 					# Typed
 					$def = $2;
 					$item{type} = $1;
