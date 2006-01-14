@@ -32,10 +32,10 @@ my $bind = "localhost";
 my $webserver = new webMonitorServer($port, $bind);
 
 Plugins::register('webMonitor', 'an HTTP interface to monitor bots', \&Unload);
-my $hook = Plugins::addHook('AI_pre', \&mainLoop);
+my $hook = Plugins::addHook('AI_post', \&mainLoop);
 
 sub Unload {
-	Plugins::delHook('AI_pre', $hook);
+	Plugins::delHook('AI_post', $hook);
 }
 
 ###
