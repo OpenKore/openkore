@@ -449,8 +449,56 @@ serverType 3
 serverEncoding Western
 
 [Kaz3RO Private Server]
-ip 12.158.191.43
+ip 192.168.2.3
+port 6901
+master_version 1
+version 17
+serverType 4
+serverEncoding Western
+
+[Kaz3RO (2) Private Server]
+ip 206.225.95.57
 port 6900
+master_version 1
+version 17
+serverType 4
+serverEncoding Western
+
+[Kaz3RO (Holy) Private Server]
+ip 206.225.82.3
+port 6901
+master_version 1
+version 17
+serverType 4
+serverEncoding Western
+
+[Kaz3RO (Trinity) Private Server]
+ip 206.225.95.57
+port 6901
+master_version 1
+version 17
+serverType 4
+serverEncoding Western
+
+[Kaz3RO (Serenity) Private Server]
+ip 206.225.83.7
+port 6901
+master_version 1
+version 17
+serverType 4
+serverEncoding Western
+
+[Kaz3RO (Destiny) Private Server]
+ip 12.158.191.43
+port 6901
+master_version 1
+version 17
+serverType 4
+serverEncoding Western
+
+[Kaz3RO (Holy) Private Server]
+ip 206.225.82.3
+port 6901
 master_version 1
 version 17
 serverType 4
