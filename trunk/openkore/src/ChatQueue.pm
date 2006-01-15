@@ -39,9 +39,9 @@ our %lastInput;
 
 
 ##
-# ChatQueue::add(type, userID, user, msg)
+# void ChatQueue::add(String type, Bytes userID, String user, String msg)
 # type: 'c' (public chat), 'pm' (private message), 'p' (party chat) or 'g' (guild chat)
-# userID: the ID of the user who sent this message.
+# userID: the account ID of the user who sent this message.
 # user: the name of the user who sent this message.
 # msg: the message.
 #
@@ -59,7 +59,7 @@ sub add {
 }
 
 ##
-# ChatQueue::clear()
+# void ChatQueue::clear()
 #
 # Clear the chat queue, if there are any unprocessed messages.
 sub clear {
@@ -68,7 +68,7 @@ sub clear {
 }
 
 ##
-# ChatQueue::processFirst()
+# void ChatQueue::processFirst()
 #
 # Process the first message in the queue, if any.
 # That message will be removed from the queue.

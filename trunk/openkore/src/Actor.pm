@@ -85,8 +85,33 @@ sub get {
 
 ##
 # String $Actor->{type}
+# Invariant: defined(value)
 #
 # The actor's type. Can be "Monster", "Player" or "You".
+
+##
+# int $Actor->{binID}
+# Invariant: value > 0
+#
+# The index of this actor inside its associated actor list.
+
+##
+# Bytes $Actor->{ID}
+# Invariant: length(value) == 4
+#
+# The server's internal unique ID for this actor (the actor's account ID).
+
+##
+# int $Actor->{nameID}
+# Invariant: value > 0
+#
+# $Actor->{ID} decoded into an 32-bit little endian integer.
+
+##
+# int $Actor->{appear_time}
+# Invariant: value > 0
+#
+# The time when this actor first appeared on screen.
 
 
 ### CATEGORY: Methods
