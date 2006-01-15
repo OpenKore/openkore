@@ -237,7 +237,8 @@ sub writeModuleHTML {
 
 			my $write_bluelist = 0;
 			if (@{$func->{params}} || $func->{returns} ne '' ||
-			    $func->{requires} ne '' || $func->{ensures} ne '') {
+			    $func->{requires} ne '' || $func->{ensures} ne '' ||
+			    $func->{invariant} ne '') {
 				$write_bluelist = 1;
 				$text .= "\t\t<dl class=\"params_and_returns\">\n";
 			}
@@ -262,6 +263,11 @@ sub writeModuleHTML {
 			if ($func->{returns} ne '') {
 				$text .= "\t\t<dt class=\"returns\"><strong>Returns:</strong></dt>\n" .
 					"\t\t\t<dd class=\"returns\">" . $func->{returns} . "</dd>\n";
+			}
+			if ($func->{invariant} ne '') {
+				$text .= "\t\t<dt class=\"invariant\"><strong>Invariant:</strong></dt>\n" .
+					 "\t\t\t<dd class=\"invariant\">" . makeupText($func->{invariant})
+					 . "</dd>\n";
 			}
 
 			if ($write_bluelist) {
