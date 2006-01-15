@@ -21,6 +21,7 @@ sub initItem {
 	$item->{requires} = '';
 	$item->{ensures} = '';
 	$item->{returns} = '';
+	$item->{invariant} = '';
 	$item->{isVar} = 0;
 	# $item->{param_declaration}
 	# $item->{type}
@@ -148,8 +149,8 @@ sub addModule {
 				# The next line is the function description.
 				$state = 'function-description';
 
-				# The "Returns", "Requires" and "Ensures" parameters deserve
-				# special treatment.
+				# The "Returns", "Requires", "Ensures" and "Invariant" parameters
+				# deserve special treatment.
 				my @newParams;
 				foreach my $param (@{$item{params}}) {
 					if ($param->[0] eq 'Returns') {
@@ -158,6 +159,8 @@ sub addModule {
 						$item{requires} = $param->[1];
 					} elsif ($param->[0] eq 'Ensures') {
 						$item{ensures} = $param->[1];
+					} elsif ($param->[0] eq 'Invariant') {
+						$item{invariant} = $param->[1];
 					} else {
 						push @newParams, $param;
 					}
