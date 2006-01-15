@@ -3222,7 +3222,9 @@ sub AI {
 
 
 	##### RANDOM WALK #####
-	if (AI::isIdle && $config{route_randomWalk} && !$cities_lut{$field{name}.'.rsw'} && length($field{rawMap}) ) {
+	if (AI::isIdle && $config{route_randomWalk} && 
+		(!$cities_lut{$field{name}.'.rsw'} || $config{route_randomWalk_inTown})
+		&& length($field{rawMap}) ) {
 		my ($randX, $randY);
 		my $i = 500;
 		do {

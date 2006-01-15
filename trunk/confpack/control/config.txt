@@ -147,6 +147,7 @@ lockMap_randX
 lockMap_randY
 
 route_randomWalk 1
+route_randomWalk_inTown 0
 route_randomWalk_maxRouteTime 75
 route_maxWarpFee
 route_maxNpcTries 5
