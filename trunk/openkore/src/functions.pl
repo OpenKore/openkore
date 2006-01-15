@@ -4488,7 +4488,16 @@ sub parseSendMsg {
 	} elsif ($switch eq "0149") {
 		# Chat/skill mute
 		undef $sendMsg;
+
+	} elsif ($switch eq "01B2") {
+		# client started a shop manually
+		$shopstarted = 1;
+		
+	} elsif ($switch eq "012E") {
+		# client stopped shop manually
+		$shopstarted = 0;
 	}
+
 	#elsif ($switch eq "007E") {
 	#	my $a = unpack("V", substr($msg, 4, 4));
 	#	my $b = int(time / 12 * 3075000) - 284089912922934;
