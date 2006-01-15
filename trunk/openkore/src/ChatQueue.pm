@@ -20,7 +20,7 @@ use Time::HiRes qw(time);
 
 use Globals qw($net %config %players $char %ai_v %timeout
 		%responseVars %field %overallAuth %maps_lut %skillsSP_lut
-		@chatResponses $AI %cities_lut);
+		@chatResponses $AI %cities_lut $accountID);
 use AI;
 use Commands;
 use Plugins;
@@ -87,7 +87,7 @@ sub processFirst {
 
 	# If the user is not authorized to use chat commands,
 	# check whether he's trying to authenticate
-	if (( $type eq "pm" || $type eq "p" || $type eq "g" ) && !$overallAuth{$user}) {
+	if (( $type eq "pm" || $type eq "p" || $type eq "g" ) && !$overallAuth{$user} && $config{adminPassword}) {
 		if ($msg eq $config{adminPassword}) {
 			auth($user, 1);
 			sendMessage($net, "pm", getResponse("authS"), $user);
@@ -417,16 +417,7 @@ sub processChatCommand {
 
 	# Inc Agi
 	} elsif ($switch eq "agi"){
-		my $amount;
-		my $targetID;
-		if ($args[0] =~ /^\d+$/) {
-			$amount = $args[0];
-			$targetID = getIDFromChat(\%players, $user, $args[1]);
-		} else {
-			$amount = $args[1];
-			$targetID = getIDFromChat(\%players, $user, $args[0]);
-		}
-
+		my $targetID = getIDFromChat(\%players, $user, $after);
 		if ($targetID eq "") {
 			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
 
@@ -478,11 +469,8 @@ sub processChatCommand {
 
 	# Kyrie
 	} elsif ($switch eq "kyrie"){
-		my $targetID = getIDFromChat(\%players, $user, $after);
-		if ($targetID eq "") {
-			sendMessage($net, $type, getResponse("healF1"), $user) if $config{verbose};
-
-		} elsif ($char->{skills}{PR_KYRIE}{lv} > 0) {
+		my $targetID = $accountID;
+		if ($char->{skills}{PR_KYRIE}{lv} > 0) {
 			my $failed = 1;
 			for (my $i = $char->{skills}{PR_KYRIE}{lv}; $i >= 1; $i--) {
 				if ($char->{sp} >= $skillsSP_lut{PR_KYRIE}{$i}) {
