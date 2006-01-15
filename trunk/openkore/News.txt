@@ -1,4 +1,4 @@
-==================
+﻿==================
 ### 1.9.1
 ==================
 
@@ -30,6 +30,8 @@ Bug fixes:
 - Fixed multiple sitAuto sequences being queued.
 - Fix the Win32 GUI interface.
 - Fixed a bug where the weight command only allows a single digit parameter.
+- Fixed a bug where kore immediately stands up when the player manually uses
+  the 'sit' command.
 
 New features:
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
@@ -95,7 +97,7 @@ Credits:
 - h4rry84: Indonesian translation
 - hakore: fix for weight command, manual AI mode
 - illusionist: move receive packets to Receive.pm, falcon and peco release
-  support.
+  support, fix for manual 'sit' behavior.
 - vivi: autoMoveOnDeath, check XKore 2 username
 
 
