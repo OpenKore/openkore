@@ -215,7 +215,10 @@ sub configModify {
 		silent => $silent
 	});
 
-	message("Config '$key' set to $val (was $config{$key})\n", "info") unless ($silent);
+	my $oldval = $config{$key};
+	$oldval = "-not-displayed-" if ($key =~ /password/i);
+
+	message("Config '$key' set to $val (was $oldval)\n", "info") unless ($silent);
 	$config{$key} = $val;
 	saveConfigFile();
 }
@@ -229,6 +232,7 @@ sub configModify {
 sub bulkConfigModify {
 	my $r_hash = shift;
 	my $silent = shift;
+	my $oldval;
 
 	foreach my $key (keys %{$r_hash}) {
 		Plugins::callHook('configModify', {
@@ -236,8 +240,13 @@ sub bulkConfigModify {
 			val => $r_hash->{$key},
 			silent => $silent
 		});
+
+		$oldval = $config{$key};
+		$oldval = "-not-displayed-" if ($key =~ /password/i);
+
 		$config{$key} = $r_hash->{$key};
-		message("Config '$key' set to $r_hash->{$key} (was $config{$key})\n", "info") unless ($silent);
+		
+		message("Config '$key' set to $r_hash->{$key} (was $oldval)\n", "info") unless ($silent);
 	}
 	saveConfigFile();
 }
