@@ -3970,7 +3970,11 @@ sub player_equipment {
 	my $player = ($sourceID ne $accountID)? $players{$sourceID} : $char;
 	return unless $player;
 
-	if ($type == 2) {
+	if ($type == 0) {
+		# Player changed job
+		$player->{jobID} = $ID1;
+		
+	} elsif ($type == 2) {
 		if ($ID1 ne $player->{weapon}) {
 			message "$player changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
 			$player->{weapon} = $ID1;
