@@ -78,6 +78,18 @@ sub parseMacroFile {
   return 1;
 }
 
+# parses a text for keywords and returns keyword + argument as array
+# should be an adequate workaround for the parser bug
+sub parseKw {
+  my $text = shift;
+  my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
+                 "invamount|cartamount|shopamount|storamount|eval|arg";
+  my @pair = $text =~ /\@($keywords)\s*\(\s*(.*?)\s*\)/i;
+  return unless @pair;
+  if (my @tmppair = $pair[1] =~ /\@($keywords)\s*\(\s*(.*)/i) {return @tmppair}
+  return @pair;
+}
+
 # command line parser for macro
 # returns undef if something went wrong, else the parsed command or "".
 sub parseCmd {
@@ -99,11 +111,7 @@ sub parseCmd {
     $var = quotemeta $var;
     $command =~ s/\$\{$var\}/$tmp/g;
   }
-  my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
-                 "invamount|cartamount|shopamount|storamount|eval|arg";
-  # FIXME: \(\s*("[^@]+?")\s\) for @random (to allow brackets in arguments)
-  # FIXME: \(\s*([^@]+?)\s\) for everything else
-  while (my ($kw, $arg) = $command =~ /\@($keywords)\s*\(\s*([^@]+?)\s*\)/i) {
+  while (my ($kw, $arg) = parseKw($command)) {
     $cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
     my $ret = "_%_";
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
