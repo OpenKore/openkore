@@ -97,7 +97,7 @@ Credits:
 - hakore: fix for weight command, manual AI mode
 - illusionist: move receive packets to Receive.pm, falcon and peco release
   support, fix for manual 'sit' behavior.
-- vivi: autoMoveOnDeath, check XKore 2 username
+- vivi: autoMoveOnDeath, check XKore 2 username, Kaite/Kaizel/Kaupe statuses
 
 
 ==================
