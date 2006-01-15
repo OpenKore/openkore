@@ -59,6 +59,7 @@ sub cHook {
 		my @lines = split "\n", $messages;
 		if (@lines > 1) {
 			foreach my $line (@lines) {
+				$line .= "\n";
 				push @messages, $line;
 			}
 		} else {
@@ -89,35 +90,9 @@ sub request {
 	# TODO: sanitize $filename for possible exploits (like ../../config.txt)
 	my $filename = $process->file;
 
-	# the webserver shouldn't differentiate between actual characters and url
-	# encoded characters. see http://www.blooberry.com/indexdot/html/topics/urlencoding.htm
-#	$filename =~ s/\%24/\$/sg;
-#	$filename =~ s/\%26/\&/sg;
-#	$filename =~ s/\%2B/\+/sg;
-#	$filename =~ s/\%2C/\,/sg;
-#	$filename =~ s/\%2F/\//sg;
-#	$filename =~ s/\%3A/\:/sg;
-#	$filename =~ s/\%3B/\:/sg;
-#	$filename =~ s/\%3D/\=/sg;
-#	$filename =~ s/\%3F/\?/sg;
-#	$filename =~ s/\%40/\@/sg;
-#	$filename =~ s/\%20/\+/sg;
-#	$filename =~ s/\%22/\"/sg;
-#	$filename =~ s/\%3C/\</sg;
-#	$filename =~ s/\%3E/\>/sg;
-#	$filename =~ s/\%23/\#/sg;
-#	$filename =~ s/\%25/\%/sg;
-#	$filename =~ s/\%7B/\{/sg;
-#	$filename =~ s/\%7D/\}/sg;
-#	$filename =~ s/\%7C/\|/sg;
-#	$filename =~ s/\%5C/\\/sg;
-#	$filename =~ s/\%5E/\^/sg;
-#	$filename =~ s/\%7E/\~/sg;
-#	$filename =~ s/\%5B/\[/sg;
-#	$filename =~ s/\%5D/\]/sg;
-#	$filename =~ s/\%60/\`/sg;
-
+	# map / to /index.html
 	$filename .= 'index.html' if ($filename =~ /\/$/);
+	# alias the newbie maps to new_zone01
 	$filename =~ s/new_.../new_zone01/;
 
 	my (@unusable, @usable, @equipment, @uequipment);
@@ -142,8 +117,17 @@ sub request {
 		}
 	}
 	my @statuses = (keys %{$char->{statuses}});
+	my (@npcName, @npcLocX, @npcLocY);
+	foreach my $npcsID (@npcsID) {
+		push @npcName, $npcs{$npcsID}{name};
+		push @npcLocX, $npcs{$npcsID}{pos}{x};
+		push @npcLocY, $npcs{$npcsID}{pos}{y};
+	}	
 
 	%keywords =	(
+		'npcName' => \@npcName,
+		'npcLocationX' => \@npcLocX,
+		'npcLocationY' => \@npcLocY,
 		'inventoryEquipped' => \@equipment,
 		'inventoryUnequipped' => \@uequipment,
 		'inventoryUsable' => \@usable,
@@ -374,3 +358,31 @@ sub contentType {
 }
 
 1;
+
+	# the webserver shouldn't differentiate between actual characters and url
+	# encoded characters. see http://www.blooberry.com/indexdot/html/topics/urlencoding.htm
+#	$filename =~ s/\%24/\$/sg;
+#	$filename =~ s/\%26/\&/sg;
+#	$filename =~ s/\%2B/\+/sg;
+#	$filename =~ s/\%2C/\,/sg;
+#	$filename =~ s/\%2F/\//sg;
+#	$filename =~ s/\%3A/\:/sg;
+#	$filename =~ s/\%3B/\:/sg;
+#	$filename =~ s/\%3D/\=/sg;
+#	$filename =~ s/\%3F/\?/sg;
+#	$filename =~ s/\%40/\@/sg;
+#	$filename =~ s/\%20/\+/sg;
+#	$filename =~ s/\%22/\"/sg;
+#	$filename =~ s/\%3C/\</sg;
+#	$filename =~ s/\%3E/\>/sg;
+#	$filename =~ s/\%23/\#/sg;
+#	$filename =~ s/\%25/\%/sg;
+#	$filename =~ s/\%7B/\{/sg;
+#	$filename =~ s/\%7D/\}/sg;
+#	$filename =~ s/\%7C/\|/sg;
+#	$filename =~ s/\%5C/\\/sg;
+#	$filename =~ s/\%5E/\^/sg;
+#	$filename =~ s/\%7E/\~/sg;
+#	$filename =~ s/\%5B/\[/sg;
+#	$filename =~ s/\%5D/\]/sg;
+#	$filename =~ s/\%60/\`/sg;
