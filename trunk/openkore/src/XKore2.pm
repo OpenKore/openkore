@@ -513,7 +513,7 @@ sub checkClient {
 
 		# Check login information
 		if (!$self->{client_saved}{custom} &&
-			($password ne $config{adminPassword} ||
+			(($config{adminPassword} && $password ne $config{adminPassword}) ||
 			lc($username) ne lc($config{username}))) {
 
 			error "XKore 2 failed login: Invalid Username and/or Password.\n", "connection";
