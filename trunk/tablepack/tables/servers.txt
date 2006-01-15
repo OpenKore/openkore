@@ -595,11 +595,11 @@ serverEncoding Western
 
 [Ragnarok Frontier Private Server]
 ip 70.68.0.160
-port 6901
+port 6902
 master_version 20
 version 1
 private 1
-serverType 0
+serverType 1
 serverEncoding Western
 
 [Anti-GravityRO Private Server]
