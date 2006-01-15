@@ -17,9 +17,9 @@ use AI;
 #use Item;
 use Log qw(message error warning);
 use Macro::Data;
-use Macro::Utilities qw(between cmpr match getArgs setVar getVar
-    refreshGlobal getnpcID getPlayerID getItemID getStorageID getSoldOut
-    getInventoryAmount getCartAmount getShopAmount getStorageAmount getRandom);
+use Macro::Utilities qw(between cmpr match getArgs setVar getVar refreshGlobal
+    getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
+    getStorageAmount);
 
 our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 

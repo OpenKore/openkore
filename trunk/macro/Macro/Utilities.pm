@@ -8,7 +8,7 @@ require Exporter;
 our @ISA = qw(Exporter);
 our @EXPORT_OK = qw(ai_isIdle between cmpr match getArgs
                  setVar getVar refreshGlobal getnpcID getPlayerID
-                 getItemID getStorageID getSoldOut getInventoryAmount
+                 getItemIDs getStorageIDs getSoldOut getInventoryAmount
                  getCartAmount getShopAmount getStorageAmount
                  getRandom getWord callMacro);
 
@@ -194,25 +194,27 @@ sub getPlayerID {
 }
 
 # get item array index
-sub getItemID {
-  $cvs->debug("getItemID(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
+sub getItemIDs {
+  $cvs->debug("getItemIDs(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my ($item, $pool) = @_;
+  my @ids;
   for (my $id = 0; $id < @{$pool}; $id++) {
     next unless $$pool[$id];
-    if (lc($$pool[$id]{name}) eq lc($item)) {return $id}
+    if (lc($$pool[$id]{name}) eq lc($item)) {push @ids, $id}
   }
-  return;
+  return @ids;
 }
 
 # get storage array index
-sub getStorageID {
-  $cvs->debug("getStorageID(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
+sub getStorageIDs {
+  $cvs->debug("getStorageIDs(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
+  my @ids;
   for (my $id = 0; $id < @storageID; $id++) {
     next unless $storageID[$id];
-    if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {return $id}
+    if (lc($storage{$storageID[$id]}{name}) eq lc($item)) {push @ids, $id}
   }
-  return;
+  return @ids;
 }
 
 # get amount of sold out slots
@@ -232,9 +234,13 @@ sub getInventoryAmount {
   $cvs->debug("getInventoryAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
   return 0 unless $char->{inventory};
-  my $id = getItemID($item, \@{$char->{inventory}});
-  return $char->{inventory}[$id]{amount} if defined $id;
-  return 0;
+  my @ids = getItemIDs($item, \@{$char->{inventory}});
+  my $amount = 0;
+  foreach my $id (@ids) {
+    next unless defined $id;
+    $amount += $char->{inventory}[$id]{amount}
+  }
+  return $amount;
 }
 
 # get amount of an item in cart
@@ -242,32 +248,41 @@ sub getCartAmount {
   $cvs->debug("getCartAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
   return 0 unless $cart{inventory};
-  my $id = getItemID($item, \@{$cart{inventory}});
-  return $cart{inventory}[$id]{amount} if defined $id;
-  return 0;
+  my @ids = getItemIDs($item, \@{$cart{inventory}});
+  my $amount = 0;
+  foreach my $id (@ids) {
+    next unless defined $id;
+    $amount += $cart{inventory}[$id]{amount}
+  }
+  return $amount;
 }
 
 # get amount of an item in shop
 sub getShopAmount {
   $cvs->debug("getShopAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
+  my $amount = 0;
   foreach my $aitem (@::articles) {
     next unless $aitem;
     if (lc($aitem->{name}) eq lc($item)) {
-      return $aitem->{quantity}
+      $amount += $aitem->{quantity};
     }
   }
-  return 0;
+  return $amount;
 }
 
 # get amount of an item in storage
 sub getStorageAmount {
   $cvs->debug("getStorageAmount(@_)", $logfac{function_call_macro} | $logfac{function_call_auto});
   my $item = shift;
-  return unless $::storage{opened};
-  my $id = getStorageID($item);
-  return $storage{$storageID[$id]}{amount} if defined $id;
-  return 0;
+  return 0 unless $::storage{opened};
+  my @ids = getStorageIDs($item);
+  my $amount = 0;
+  foreach my $id (@ids) {
+    next unless defined $id;
+    $amount += $storage{$storageID[$id]}{amount}
+  }
+  return $amount;
 }
 
 # returns random item from argument list ##################
@@ -279,6 +294,7 @@ sub getRandom {
   while (($items[$id++]) = $arg =~ /^[, ]*"(.*?)"/) {
     $arg =~ s/^[, ]*".*?"//g;
   }
+  pop @items;
   if (!@items) {
     warning "[macro] wrong syntax in \@random\n";
     return;
