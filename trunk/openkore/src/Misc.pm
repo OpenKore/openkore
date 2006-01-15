@@ -2201,11 +2201,18 @@ sub countCastOn {
 		$target->{castOnByMonster}{$sourceID}++;
 	}
 }
+
 sub stopAttack {
 	my $pos = calcPosition($char);
 	sendMove($pos->{x}, $pos->{y});
 }
 
+##
+# boolean stripLanguageCode(String* msg)
+# msg: a chat message, as sent by the RO server.
+# Returns: whether the language code was stripped.
+#
+# Strip the language code character from a chat message.
 sub stripLanguageCode {
 	my $r_msg = shift;
 	if ($config{chatLangCode} && $config{chatLangCode} ne "none") {
@@ -2220,7 +2227,7 @@ sub stripLanguageCode {
 }
 
 ##
-# switchConf(filename)
+# void switchConf(String filename)
 # filename: a configuration file.
 # Returns: 1 on success, 0 if $filename does not exist.
 #
