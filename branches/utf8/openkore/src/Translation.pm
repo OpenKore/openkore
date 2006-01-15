@@ -206,7 +206,7 @@ sub TF {
 }
 
 ##
-# String Translation::serverMsgToUTF8(Bytes msg)
+# String Translation::toUTF8(Bytes msg)
 # msg: the message to convert.
 # Returns: $msg converted to UTF-8.
 # Requires: $config{serverEncoding} must be a correct encoding name.
@@ -215,10 +215,29 @@ sub TF {
 # This function uses $config{serverEncoding} to determine the encoding.
 #
 # This function should only be used for strings sent by the RO server.
-sub serverStrToUTF8 {
+sub toUTF8 {
 	my ($str) = @_;
-	Encode::from_to($str, $config{serverEncoding} || 'Western', "utf8");
+	Encode::from_to($str, $config{serverEncoding} || 'Western', "UTF-8");
 	return $str;
 }
+
+sub fromUTF8 {
+	my ($str) = @_;
+	Encode::from_to($str, "UTF-8", $config{serverEncoding} || 'Western');
+	return $str;
+}
+
+##
+# boolean Translation::isUTF8(msg)
+#
+# Checks whether $msg is a valid UTF-8 string.
+sub isUTF8 {
+	undef $@;
+	eval {
+		decode_utf8($_[0], Encode::FB_CROAK);
+	};
+	return !$@;
+}
+
 
 1;
