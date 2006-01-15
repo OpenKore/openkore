@@ -1,0 +1,146 @@
+import os
+
+### Platform configuration ###
+
+platform = str(ARGUMENTS.get('OS', Platform()))
+cygwin = platform == "cygwin"
+win32 = cygwin or platform == "windows"
+perlconfig = {}
+env = Environment()
+
+def CheckPerl(context):
+	global win32
+	global perlconfig
+
+	context.Message('Checking Perl configuration ...')
+	source = '''
+	use strict;
+	use Config;
+	use File::Spec;
+
+	sub search {
+		my $paths = shift;
+		my $file = shift;
+		foreach (@{$paths}) {
+			if (-f "$_/$file") {
+				return "$_/$file";
+				last;
+			}
+		}
+		return;
+	}
+
+	my $coredir = File::Spec->catfile($Config{installarchlib}, "CORE");
+
+	open(F, ">", ".perlconfig.txt");
+	print F "perl=$Config{perlpath}\\n";
+	print F "typemap=" . search(\\@INC, "ExtUtils/typemap") . "\\n";
+	print F "xsubpp=" . search(\\@INC, "ExtUtils/xsubpp" || search([File::Spec->path()], "xsubpp")) . "\\n";
+	print F "coredir=$coredir\\n";
+	close F;
+	'''
+
+	f = file(".perltest.pl", "w")
+	f.write(source)
+	f.close()
+
+	if win32:
+		ret = os.spawnlp(os.P_WAIT, "wperl", "wperl", ".perltest.pl")
+	else:
+		ret = os.spawnlp(os.P_WAIT, "perl", "perl", ".perltest.pl")
+	context.Result(ret == 0)
+
+	os.unlink(".perltest.pl")
+	if ret == 0:
+		f = file(".perlconfig.txt", "r")
+		while 1:
+			line = f.readline()
+			if line == "":
+				break
+			line = line.rstrip("\n")
+			[name, value] = line.split("=", 2)
+			perlconfig[name] = value
+		f.close()
+		os.unlink(".perlconfig.txt")
+	return ret == 0
+
+conf = Configure(env, custom_tests = {'CheckPerl' : CheckPerl})
+conf.CheckPerl()
+conf.Finish()
+
+
+### Environment setup ###
+
+env['CFLAGS'] = ['-Wall', '-g', '-O2']
+env['LINKFLAGS'] = []
+env['LIBPATH'] = []
+env['CPPDEFINES'] = []
+if cygwin:
+	env['CFLAGS'] += ['-mno-cygwin']
+	env['LINKFLAGS'] += ['-mno-cygwin']
+env['CCFLAGS'] = env['CFLAGS']
+
+
+libenv = env.Copy()
+if win32:
+	if cygwin:
+		libenv['CFLAGS'] += ['-mdll']
+	libenv['CPPDEFINES'] += ['WIN32']
+else:
+	libenv['CFLAGS'] += ['-fPIC']
+	libenv['LINKFLAGS'] += ['-fPIC']
+libenv['CCFLAGS'] = libenv['CFLAGS']
+
+
+perlenv = libenv.Copy()
+if win32:
+	perlenv['CFLAGS'] += Split('-Wno-unused -Wno-implicit -D__MINGW32__' +
+		' -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED')
+	perlenv['LINKFLAGS'] += ['perl58']
+	perlenv['LIBPATH'] += [perlconfig['coredir']]
+else:
+	perlenv['CFLAGS'] = Split('-Wno-unused -Wno-implicit -D_REENTRANT' +
+		' -D_GNU_SOURCE -DTHREADS_HAVE_PIDS -D_LARGEFILE_SOURCE' +
+		' -D_FILE_OFFSET_BITS=64')
+perlenv['CCFLAGS'] = perlenv['CFLAGS']
+
+
+def buildXS(target, source, env, args = []):
+	global perlconfig
+
+	code = '''
+	use strict;
+	my $out = shift;
+	my $file = shift;
+	open(STDOUT, ">", $out);
+	do $file;
+	'''
+
+	print "Creating", str(target[0]), "..."
+	command = [perlconfig['perl'], '-e',
+		code, str(target[0]),
+		perlconfig['xsubpp'], '-typemap', perlconfig['typemap'],
+		str(source[0])] + args
+	return os.spawnvp(os.P_WAIT, perlconfig['perl'], command)
+
+def buildXS_C(target, source, env):
+	return buildXS(target, source, env)
+
+def buildXS_CXX(target, source, env):
+	return buildXS(target, source, env, ['-C++'])
+
+XSBuilder_C = Builder(action = buildXS_C)
+XSBuilder_CXX = Builder(action = buildXS_CXX)
+perlenv['BUILDERS']['XS'] = XSBuilder_C
+perlenv['BUILDERS']['XS_CXX'] = XSBuilder_CXX
+
+
+### Invoke SConscripts ###
+
+Export('env libenv perlenv win32')
+
+SConscript([
+	'src/auto/XSTools/pathfinding/SConscript',
+	'src/auto/XSTools/translation/SConscript',
+	'src/auto/XSTools/SConscript'
+])

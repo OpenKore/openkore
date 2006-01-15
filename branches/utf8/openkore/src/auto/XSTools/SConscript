@@ -1,0 +1,15 @@
+Import('*')
+
+libs = [
+	'pathfinding',
+	'translation'
+]
+
+# We're linking C++ objects so force usage of g++
+XSTools = perlenv.SharedLibrary('XSTools', [], LIBS=libs, LIBPATH=libs, CC='g++')
+
+if not win32:
+	# Perl expects XSTools.so, not libXSTools.so, so create symlink.
+	perlenv.Command('XSTools.so', XSTools,
+		[['ln', '-sf', 'libXSTools.so', 'XSTools.so']],
+		chdir=1)
