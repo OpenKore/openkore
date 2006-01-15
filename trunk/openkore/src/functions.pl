@@ -3513,7 +3513,7 @@ sub AI {
 		} elsif ($action eq "sitAuto" && ($ai_v{'sitAuto_forceStop'} || $upper_ok)) {
 			AI::dequeue;
 			debug "HP is now > $config{sitAuto_hp_upper}\n", "sitAuto";
-			stand() if (!$config{'sitAuto_idle'} && $char->{sitting});
+			stand() if (!AI::isIdle && !AI::is(qw(follow sitting clientSuspend)) && !$config{'sitAuto_idle'} && $char->{sitting});
 
 		} elsif (!$ai_v{'sitAuto_forceStop'} && ($weight < 50 || $config{'sitAuto_over_50'}) && AI::action ne "sitAuto") {
 			if ($action eq "" || $action eq "follow"
