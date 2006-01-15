@@ -2,11 +2,24 @@ Import('*')
 
 libs = [
 	'pathfinding',
-	'translation'
+	'translation',
+	'misc'
 ]
+deps = []
+deps_path = []
+if not win32:
+	deps += [
+		'readline',
+		'termcap'
+	]
+	perlenv['LINKFLAGS'] += ['-pthread']
+	deps_path += ['/usr/lib/termcap']
 
 # We're linking C++ objects so force usage of g++
-XSTools = perlenv.SharedLibrary('XSTools', [], LIBS=libs, LIBPATH=libs, CC='g++')
+XSTools = perlenv.SharedLibrary('XSTools', [],
+	LIBS = libs + deps,
+	LIBPATH = libs + deps_path,
+	CC = 'g++')
 
 if not win32:
 	# Perl expects XSTools.so, not libXSTools.so, so create symlink.

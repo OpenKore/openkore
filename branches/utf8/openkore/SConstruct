@@ -75,6 +75,7 @@ env['CFLAGS'] = ['-Wall', '-g', '-O2']
 env['LINKFLAGS'] = []
 env['LIBPATH'] = []
 env['CPPDEFINES'] = []
+env['INCLUDE'] = []
 if cygwin:
 	env['CFLAGS'] += ['-mno-cygwin']
 	env['LINKFLAGS'] += ['-mno-cygwin']
@@ -99,9 +100,10 @@ if win32:
 	perlenv['LINKFLAGS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 else:
-	perlenv['CFLAGS'] = Split('-Wno-unused -Wno-implicit -D_REENTRANT' +
-		' -D_GNU_SOURCE -DTHREADS_HAVE_PIDS -D_LARGEFILE_SOURCE' +
+	perlenv['CFLAGS'] = Split('-D_REENTRANT -D_GNU_SOURCE' +
+		' -DTHREADS_HAVE_PIDS -D_LARGEFILE_SOURCE' +
 		' -D_FILE_OFFSET_BITS=64')
+perlenv['CFLAGS'] += ["-I" + perlconfig['coredir']]
 perlenv['CCFLAGS'] = perlenv['CFLAGS']
 
 
@@ -142,5 +144,6 @@ Export('env libenv perlenv win32')
 SConscript([
 	'src/auto/XSTools/pathfinding/SConscript',
 	'src/auto/XSTools/translation/SConscript',
+	'src/auto/XSTools/misc/SConscript',
 	'src/auto/XSTools/SConscript'
 ])
