@@ -21,7 +21,7 @@ our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 # constructor
 sub new {
   my ($class, $name, $repeat) = @_;
-  $repeat = 0 unless defined $repeat;
+  $repeat = 0 unless ($repeat && $repeat =~ /^\d+$/);
   return unless defined $macro{$name};
   my $self = {
     name => $name,
@@ -200,7 +200,7 @@ sub next {
   ##########################################
   # if statement: if (foo = bar) goto label?
   } elsif ($line =~ /^if\s/) {
-    my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*(.*?)\s+([<>=!]+?)\s+(.*)\s*\)\s+(.*?)$/;
+    my ($first, $cond, $last, $then) = $line =~ /^if\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*)"?\s*\)\s+(.*?)$/;
     if (!defined $first || !defined $cond || !defined $last || !defined $then || $then !~ /^(goto\s|stop)/) {
       $self->{error} = "error in ".$self->{line}.": syntax error in if statement";
     } else {
@@ -223,7 +223,7 @@ sub next {
   ##########################################
   # while statement: while (foo <= bar) as label
   } elsif ($line =~ /^while\s/) {
-    my ($first, $cond, $last, $label) = $line =~ /^while\s+\(\s*(.*?)\s+([<>=!]+?)\s+(.*?)\s*\)\s+as\s+(.*)$/;
+    my ($first, $cond, $last, $label) = $line =~ /^while\s+\(\s*"?(.*?)"?\s+([<>=!]+?)\s+"?(.*?)"?\s*\)\s+as\s+(.*)$/;
     if (!defined $first || !defined $cond || !defined $last || !defined $label) {
       $self->{error} = "error in ".$self->{line}.": syntax error in while statement";
     } else {
@@ -283,9 +283,7 @@ sub next {
         $self->{error} = "error in ".$self->{line}.": do not use 'macro set'. Use \$foo = bar";
         return
       }
-      if ($arg =~ /^(list|status|stop)$/) {
-        # that's okay
-      } else {
+      if ($arg !~ /^(list|status|stop)$/) {
         $self->{error} = "error in ".$self->{line}.": use 'call $arg' instead of 'macro $arg'";
         return
       }

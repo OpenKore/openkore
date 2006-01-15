@@ -11,7 +11,7 @@ our @EXPORT = qw(parseMacroFile parseCmd);
 use Globals;
 use Log qw(message error);
 use Macro::Data;
-use Macro::Utilities qw(setVar getVar getnpcID getItemID getStorageID
+use Macro::Utilities qw(setVar getVar getnpcID getItemIDs getStorageIDs
     getPlayerID getRandom getInventoryAmount getCartAmount getShopAmount
     getStorageAmount getWord);
 
@@ -107,10 +107,10 @@ sub parseCmd {
     $cvs->debug("parsing '$command': '$kw', '$arg'", $logfac{parser_steps});
     my $ret = "_%_";
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
-    elsif ($kw eq 'cart')       {$ret = getItemID($arg, \@{$cart{inventory}})}
-    elsif ($kw eq 'inventory')  {$ret = getItemID($arg, \@{$char->{inventory}})}
-    elsif ($kw eq 'store')      {$ret = getItemID($arg, \@::storeList)}
-    elsif ($kw eq 'storage')    {$ret = getStorageID($arg)}
+    elsif ($kw eq 'cart')       {($ret, undef) = getItemIDs($arg, \@{$cart{inventory}})}
+    elsif ($kw eq 'inventory')  {($ret, undef) = getItemIDs($arg, \@{$char->{inventory}})}
+    elsif ($kw eq 'store')      {($ret, undef) = getItemID($arg, \@::storeList)}
+    elsif ($kw eq 'storage')    {($ret, undef) = getStorageIDs($arg)}
     elsif ($kw eq 'player')     {$ret = getPlayerID($arg, \@::playersID)}
     elsif ($kw eq 'vender')     {$ret = getPlayerID($arg, \@::venderListsID)}
     elsif ($kw eq 'random')     {$ret = getRandom($arg)}
