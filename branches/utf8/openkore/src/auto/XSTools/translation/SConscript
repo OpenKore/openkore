@@ -1,0 +1,17 @@
+Import('*')
+
+sources = [
+	'filereader.cpp',
+	'filereader.h',
+	'translator.cpp',
+	'translator.h',
+	'wrapper.cpp'
+]
+
+if win32:
+	sources += ['winfilereader.cpp', 'winfilereader.h']
+else:
+	sources += ['unixfilereader.cpp', 'unixfilereader.h']
+
+perlenv.XS_CXX('wrapper.cpp', 'wrapper.xs')
+perlenv.StaticLibrary('translation', sources)

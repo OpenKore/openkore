@@ -1,0 +1,10 @@
+Import('*')
+
+sources = [
+	'algorithm.cpp',
+	'algorithm.h',
+	'wrapper.cpp'
+]
+
+perlenv.XS_CXX('wrapper.cpp', 'wrapper.xs')
+perlenv.StaticLibrary('pathfinding', sources)
