@@ -4425,9 +4425,12 @@ sub parseSendMsg {
 		my $chat = substr($msg, 28, $length - 29);
 		$chat =~ s/^\s*//;
 
+		# Ensures: $user and $chat are String
+		$user = Translation::toUTF8($user);
+		$chat = Translation::toUTF8($chat);
 		stripLanguageCode(\$chat);
 
-		my $prefix = quotemeta $config{'commandPrefix'};
+		my $prefix = quotemeta $config{commandPrefix};
 		if ($chat =~ /^$prefix/) {
 			$chat =~ s/^$prefix//;
 			$chat =~ s/^\s*//;
@@ -4436,11 +4439,11 @@ sub parseSendMsg {
 			undef $sendMsg;
 		} else {
 			undef %lastpm;
-			$lastpm{'msg'} = $chat;
-			$lastpm{'user'} = $user;
+			$lastpm{msg} = $chat;
+			$lastpm{user} = $user;
 			push @lastpm, {%lastpm};
 		}
-		
+
 	} elsif (($switch eq "009B" && $config{serverType} == 0) ||
 		($switch eq "009B" && $config{serverType} == 1) ||
 		($switch eq "009B" && $config{serverType} == 2) ||
@@ -4529,32 +4532,11 @@ sub parseSendMsg {
 
 
 ##
-# parseMsg(msg)
+# Bytes parseMsg(Bytes msg)
 # msg: The data to parse, as received from the socket.
-# Returns: The remaining bytes.
+# Returns: The remaining (unparsed) data.
 #
-# When data (packets) from the RO server is received, it will be send to this
-# function. It will determine what kind of packet this data is and process it.
-# The length of the packets are gotten from recvpackets.txt.
-#
-# The received data does not always contain a complete packet, or may contain a
-# piece of the next packet.
-# If it contains a piece of the next packet too, parseMsg will delete the bytes
-# of the first packet that's processed, and return the remaining bytes.
-# If the data doesn't contain a complete packet, parseMsg will return "". $msg
-# will be remembered by the main loop.
-# Next time data from the RO server is received, the remaining bytes as returned
-# by paseMsg, or the incomplete packet that the main loop remembered, will be
-# prepended to the fresh data received from the RO server and then passed to
-# parseMsg again.
-# See also the main loop about how parseMsg's return value is treated.
-
-# Types:
-# word : 2-byte unsigned integer
-# long : 4-byte unsigned integer
-# byte : 1-byte character/integer
-# bool : 1-byte boolean (true/false)
-# string: an array of 1-byte characters, not NULL-terminated
+# Parse network data sent by the RO server. Returns the remaining data that are not parsed.
 sub parseMsg {
 	my $msg = shift;
 	my $msg_size;
@@ -4568,7 +4550,9 @@ sub parseMsg {
 	if (length($msg) >= 4 && substr($msg,0,4) ne $accountID && $conState >= 4 && $lastswitch ne $switch
 	 && length($msg) >= unpack("v1", substr($msg, 0, 2))) {
 		# The decrypt below casued annoying unparsed errors (at least in serverType  2)
-		if ($config{serverType} != 2) { decrypt(\$msg, $msg) };
+		if ($config{serverType} != 2) {
+			decrypt(\$msg, $msg)
+		}
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 

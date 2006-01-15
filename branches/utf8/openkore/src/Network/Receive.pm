@@ -2615,20 +2615,21 @@ sub guild_ally_request {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID}; # is this a guild ID or account ID? Freya calls it an account ID
-	my $name = $args->{name};
+	my $name = Translation::toUTF8($args->{name}); # Type: String
 
 	message TF("Incoming Request to Ally Guild '%s'\n", $name);
-	$incomingGuild{'ID'} = $ID;
-	$incomingGuild{'Type'} = 2;
-	$timeout{'ai_guildAutoDeny'}{'time'} = time;
+	$incomingGuild{ID} = $ID;
+	$incomingGuild{Type} = 2;
+	$timeout{ai_guildAutoDeny}{time} = time;
 }
 
 sub guild_chat {
 	my ($self, $args) = @_;
-	
-	my ($chatMsgUser, $chatMsg);
-	my $chat = $args->{message};
-	if (($chatMsgUser, $chatMsg) = $args->{message} =~ /(.*?) : (.*)/) {
+	my ($chatMsgUser, $chatMsg); # Type: String
+	my $chat; # Type: String
+
+	$chat = Translation::toUTF8($args->{message});
+	if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/) {
 		$chatMsgUser =~ s/ $//;
 		stripLanguageCode(\$chatMsg);
 		$chat = "$chatMsgUser : $chatMsg";
@@ -2636,7 +2637,7 @@ sub guild_chat {
 
 	chatLog("g", "$chat\n") if ($config{'logGuildChat'});
 	message "[Guild] $chat\n", "guildchat";
-	# only queue this if it's a real chat message
+	# Only queue this if it's a real chat message
 	ChatQueue::add('g', 0, $chatMsgUser, $chatMsg) if ($chatMsgUser);
 
 	Plugins::callHook('packet_guildMsg', {
@@ -2644,8 +2645,8 @@ sub guild_chat {
 		Msg => $chatMsg
 	});
 
-	$args->{chatMsgUser} = $chatMsgUser;
-	$args->{chatMsg} = $chatMsg;
+	$args->{chatMsgUser} = Translation::fromUTF8($chatMsgUser);
+	$args->{chatMsg} = Translation::fromUTF8($chatMsg);
 }
 
 sub guild_expulsionlist {
@@ -2686,11 +2687,14 @@ sub guild_location {
 
 sub guild_logon {
 	my ($self, $args) = @_;
-	
-	my $ID = $args->{ID};
-	my ($name) = $args->{name};
+	my $name; # Type: String
 
-	message "Guild Member $name Log ".($guildNameRequest{online}?"In":"Out")."\n", 'guildchat';
+	$name = Translation::toUTF8($args->{name});
+	if ($guildNameRequest{online}) {
+		message TF("Guild member %s logged in.\n", $name), "guildchat";
+	} else {
+		message TF("Guild member %s logged out.\n", $name), "guildchat";
+	}
 }
 
 sub guild_members_list {
@@ -3255,7 +3259,8 @@ sub hp_sp_changed {
 
 sub local_broadcast {
 	my ($self, $args) = @_;
-	message "$args->{message}\n", "schat";
+	my $message = Translation::toUTF8($args->{message});
+	message "$message\n", "schat";
 }
 
 sub login_error {
@@ -3720,11 +3725,16 @@ sub npc_talk_text {
 sub party_chat {
 	my ($self, $args) = @_;
 	my $msg;
+
 	decrypt(\$msg, $args->{message});
+	$msg = Translation::toUTF8($msg);
+
+	# Type: String
 	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
 	$chatMsgUser =~ s/ $//;
 
 	stripLanguageCode(\$chatMsg);
+	# Type: String
 	my $chat = "$chatMsgUser : $chatMsg";
 	message "[Party] $chat\n", "partychat";
 
@@ -3736,8 +3746,8 @@ sub party_chat {
 		Msg => $chatMsg
 	});
 
-	$args->{chatMsgUser} = $chatMsgUser;
-	$args->{chatMsg} = $chatMsg;
+	$args->{chatMsgUser} = Translation::fromUTF8($chatMsgUser);
+	$args->{chatMsg} = Translation::fromUTF8($chatMsg);
 }
 
 sub party_exp {
@@ -3993,10 +4003,13 @@ sub player_equipment {
 
 sub public_chat {
 	my ($self, $args) = @_;
-	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /(.*?) : (.*)/;
-	$args->{chatMsgUser} =~ s/ $//;
+	# Type: String
+	my $message = Translation::toUTF8($args->{message});
+	my ($chatMsgUser, $chatMsg); # Type: String
 
-	stripLanguageCode(\$args->{chatMsg});
+	($chatMsgUser, $chatMsg) = $message =~ /(.*?) : (.*)/;
+	$chatMsgUser =~ s/ $//;
+	stripLanguageCode(\$chatMsg);
 
 	my $actor = Actor::get($args->{ID});
 
@@ -4006,7 +4019,6 @@ sub public_chat {
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 	}
 
-	my $message;
 	$message = "$args->{chatMsgUser} ($actor->{binID}): $args->{chatMsg}";
 
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
@@ -4014,43 +4026,53 @@ sub public_chat {
 		"$message\n") if ($config{logChat});
 	message "[dist=$dist] $message\n", "publicchat";
 
-	ChatQueue::add('c', $args->{ID}, $args->{chatMsgUser}, $args->{chatMsg});
+	ChatQueue::add('c', $args->{ID}, $chatMsgUser, $chatMsg);
 	Plugins::callHook('packet_pubMsg', {
 		pubID => $args->{ID},
-		pubMsgUser => $args->{chatMsgUser},
-		pubMsg => $args->{chatMsg},
-		MsgUser => $args->{chatMsgUser},
-		Msg => $args->{chatMsg}
+		pubMsgUser => $chatMsgUser,
+		pubMsg => $chatMsg,
+		MsgUser => $chatMsgUser,
+		Msg => $chatMsg
 	});
+
+	$args->{chatMsgUser} = Translation::fromUTF8($chatMsgUser);
+	$args->{chatMsg} = Translation::fromUTF8($chatMsg);
 }
 
 sub private_message {
 	my ($self, $args) = @_;
+	my ($newmsg, $msg); # Type: Bytes
+
 	# Private message
 	change_to_constate5();
-	my $newmsg;
+
 	decrypt(\$newmsg, substr($args->{RAW_MSG}, 28));
-	my $msg = substr($args->{RAW_MSG}, 0, 28) . $newmsg;
+	$msg = substr($args->{RAW_MSG}, 0, 28) . $newmsg;
 	$args->{privMsg} = substr($msg, 28, $args->{RAW_MSG_SIZE} - 29); # why doesn't it want the last byte?
-	if ($args->{privMsgUser} ne "" && binFind(\@privMsgUsers, $args->{privMsgUser}) eq "") {
-		push @privMsgUsers, $args->{privMsgUser};
+
+	my ($privMsg, $privMsgUser); # Type: String
+	$privMsg = Translation::toUTF8($args->{privMsg});
+	$privMsgUser = Translation::toUTF8($args->{privMsgUser});
+
+	if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
+		push @privMsgUsers, $privMsgUser;
 		Plugins::callHook('parseMsg/addPrivMsgUser', {
-			user => $args->{privMsgUser},
-			msg => $args->{privMsg},
+			user => $privMsgUser,
+			msg => $privMsg,
 			userList => \@privMsgUsers
 		});
 	}
 
-	stripLanguageCode(\$args->{privMsg});
-	chatLog("pm", "(From: $args->{privMsgUser}) : $args->{privMsg}\n") if ($config{'logPrivateChat'});
-	message "(From: $args->{privMsgUser}) : $args->{privMsg}\n", "pm";
+	stripLanguageCode(\$privMsg);
+	chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
+	message "(From: $privMsgUser) : $privMsg\n", "pm";
 
-	ChatQueue::add('pm', undef, $args->{privMsgUser}, $args->{privMsg});
+	ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
 	Plugins::callHook('packet_privMsg', {
-		privMsgUser => $args->{privMsgUser},
-		privMsg => $args->{privMsg},
-		MsgUser => $args->{privMsgUser},
-		Msg => $args->{privMsg}
+		privMsgUser => $privMsgUser,
+		privMsg => $privMsg,
+		MsgUser => $privMsgUser,
+		Msg => $privMsg
 	});
 
 	if ($config{dcOnPM} && $AI == 2) {
@@ -4063,8 +4085,8 @@ sub private_message {
 sub private_message_sent {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
-		message "(To $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n", "pm/sent";
-		chatLog("pm", "(To: $lastpm[0]{'user'}) : $lastpm[0]{'msg'}\n") if ($config{'logPrivateChat'});
+		message "(To $lastpm[0]{user}) : $lastpm[0]{msg}\n", "pm/sent";
+		chatLog("pm", "(To: $lastpm[0]{user}) : $lastpm[0]{msg}\n") if ($config{'logPrivateChat'});
 
 		Plugins::callHook('packet_sentPM', {
 			to => $lastpm[0]{user},
@@ -4072,7 +4094,7 @@ sub private_message_sent {
 		});
 
 	} elsif ($args->{type} == 1) {
-		warning TF("%s is not online\n", $lastpm[0]{'user'});
+		warning TF("%s is not online\n", $lastpm[0]{user});
 	} elsif ($args->{type} == 2) {
 		warning T("Player ignored your message\n");
 	} else {
@@ -4260,25 +4282,31 @@ sub secure_login_key {
 
 sub self_chat {
 	my ($self, $args) = @_;
-	($args->{chatMsgUser}, $args->{chatMsg}) = $args->{message} =~ /([\s\S]*?) : ([\s\S]*)/;
+	my ($message, $chatMsgUser, $chatMsg); # Type: String
+
+	$message = Translation::toUTF8($args->{message});
+
+	($chatMsgUser, $chatMsg) = $message =~ /([\s\S]*?) : ([\s\S]*)/;
 	# Note: $chatMsgUser/Msg may be undefined. This is the case on
 	# eAthena servers: it uses this packet for non-chat server messages.
 
-	my $message;
-	if (defined $args->{chatMsgUser}) {
-		stripLanguageCode(\$args->{chatMsg});
-		$message = "$args->{chatMsgUser} : $args->{chatMsg}";
+	if (defined $chatMsgUser) {
+		stripLanguageCode(\$chatMsg);
+		$message = "$chatMsgUser} : chatMsg";
 	} else {
-		$message = $args->{message};
+		$message = $message;
 	}
 
 	chatLog("c", "$message\n") if ($config{'logChat'});
 	message "$message\n", "selfchat";
 
 	Plugins::callHook('packet_selfChat', {
-		user => $args->{chatMsgUser},
-		msg => $args->{chatMsg}
+		user => $chatMsgUser,
+		msg => $chatMsg
 	});
+
+	$args->{chatMsg} = Translation::fromUTF8($chatMsg);
+	$args->{chatMsgUser} = Translation::fromUTF8($chatMsgUser);
 }
 
 sub sync_request {
