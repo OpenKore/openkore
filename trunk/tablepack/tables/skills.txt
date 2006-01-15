@@ -394,7 +394,7 @@ ST_STEALBACKPACK#Steal_Backpack#
 CR_ALCHEMY#Alchemy#
 CR_SYNTHESISPOTION#Sythesis_Potion#
 CG_ARROWVULCAN#Arrow_Vulcan#
-CG_MOONLIT#A_Moonlit_Water_Mill,_A_Falling_Petal#
+CG_MOONLIT#A_Moonlit_Water_Mill#
 CG_MARIONETTE#Marionette_Control#
 LK_SPIRALPIERCE#Spiral_Pierce#
 LK_HEADCRUSH#Head_Crush#
