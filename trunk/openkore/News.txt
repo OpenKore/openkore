@@ -65,7 +65,6 @@ New config options:
 	XKore_publicIp
 	XKore_listenIp
 	XKore_listenPort
-- clientSight
 - removeActorWithDistance
 
 New commands:
