@@ -66,6 +66,7 @@ New config options:
 	XKore_listenIp
 	XKore_listenPort
 - removeActorWithDistance
+- route_randomWalk_inTown
 
 New commands:
 - cart release: remove cart status
