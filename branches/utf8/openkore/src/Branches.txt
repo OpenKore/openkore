@@ -1,0 +1,9 @@
+Active branches in CVS
+----------------------
+BRANCH-1-6-2
+	This is the branch for the 1.6 series.
+
+Inactive branches (do not use them)
+-----------------------------------
+BRANCH-1-6
+new-packet-parser
