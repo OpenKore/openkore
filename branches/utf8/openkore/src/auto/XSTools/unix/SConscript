@@ -1,0 +1,11 @@
+Import('*')
+
+sources = [
+	'unix.cpp',
+	'readline-wrapper.cpp',
+	'readline.cpp'
+]
+
+perlenv.XS('unix.cpp', 'unix.xs')
+perlenv.XS('readline-wrapper.cpp', 'readline-wrapper.xs')
+perlenv.StaticLibrary('unix', sources)
