@@ -58,14 +58,14 @@ sub replace {
 	my @keys = keys %{$keywords};
 	foreach my $key (@keys) {
 		my $value = $keywords->{$key};
+		pos($replacement) = 0;
 		if (ref($value) eq 'ARRAY') {
 			push(@arrays, $key) if ($replacement =~ m/$markF$key$markB/sg);
-
+			
 		} else {
 			$replacement =~ s/$markF$key$markB/$value/sg;
 		}
 	}
-	
 	pos($replacement) = 0;
 	my (@startOffsets, @endOffsets);
 	my $startLoop = 'startLoop';
@@ -102,7 +102,7 @@ sub _expand {
 	
 	for (my $i; $i < @{$keys}; $i++) {
 		my $key = $keys->[$i];
-		if ($text =~ /$markF$key$markB/) {
+		if (quotemeta $text =~ /$markF$key$markB/sg) {
 			$firstFound = $key;
 			last;
 		}
