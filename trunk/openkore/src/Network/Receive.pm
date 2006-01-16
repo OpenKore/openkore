@@ -52,7 +52,7 @@ sub new {
 		'0078' => ['actor_display', 'a4 v14 V1 x7 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords act lv)]],
 		'0079' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x7 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007A' => ['change_to_constate5'],
-		'007B' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 x4 v1 v1 v1 v1 v1 v1 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+		'007B' => ['actor_display', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 x4 v1 v1 v1 v1 v1 v1 V1 x7 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
 		'007C' => ['actor_spawned', 'a4 v1 v1 v1 v1 x6 v1 C1 x12 C1 a3', [qw(ID walk_speed param1 param2 param3 type pet sex coords)]],
 		'007F' => ['received_sync', 'V1', [qw(time)]],
 		'0080' => ['actor_died_or_disappeared', 'a4 C1', [qw(ID type)]],
@@ -226,9 +226,9 @@ sub new {
 		'01D2' => ['combo_delay', 'a4 V1', [qw(ID delay)]],
 		'01D4' => ['npc_talk_text', 'a4', [qw(ID)]],
 		'01D7' => ['player_equipment', 'a4 C1 v2', [qw(sourceID type ID1 ID2)]],
-		'01D8' => ['actor_exists', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
+		'01D8' => ['actor_display', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 C1 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords act lv)]],
 		'01D9' => ['actor_connected', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a3 x2 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
-		'01DA' => ['actor_moved', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
+		'01DA' => ['actor_display', 'a4 v1 v1 v1 v1 v1 C1 x1 v1 v1 v1 x4 v1 v1 v1 v1 v1 V1 x4 v1 x1 C1 a5 x3 v1', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color clothes_color head_dir guildID skillstatus sex coords lv)]],
 		'01DC' => ['secure_login_key', 'x2 a*', [qw(secure_key)]],
 		'01D6' => ['pvp_mode2', 'v1', [qw(type)]],
 		'01DE' => ['skill_use', 'v1 a4 a4 V1 V1 V1 l1 v1 v1 C1', [qw(skillID sourceID targetID tick src_speed dst_speed damage level param3 type)]],
@@ -691,6 +691,9 @@ sub actor_died_or_disappeared {
 #
 # Tested with packets:
 # 0078, 022A, 022B, 022C
+# ['actor_moved', 'a4 v1 v1 v1 v1 v1 v1 v1 v1 x4 v1 v1 v1 v1 v1 v1 V1 x7 C1 a5 x3 v1',
+# [qw(ID walk_speed param1 param2 param3 type hair_style weapon lowhead shield tophead midhead hair_color clothes_color head_dir guildID sex coords lv)]],
+
 sub actor_display {
 	my ($self, $args) = @_;
 	change_to_constate5();
@@ -832,7 +835,6 @@ sub actor_display {
 		$actor = $npcs{$args->{ID}};
 
 		$actor->{nameID} = $nameID;
-
 	}
 
 	$actor->{ID} = $args->{ID};
@@ -850,7 +852,11 @@ sub actor_display {
 
 	%{$actor->{pos_to}} = %coordsTo;
 	if (length($args->{coords}) >= 5) {
-		%{$actor->{pos}} = %coordsFrom;
+		if (($type) ne 'NPC') {
+			%{$actor->{pos}} = %coordsFrom;
+		} else {
+			%{$actor->{pos}} = %coordsTo;
+		}
 		$actor->{walk_speed} = $args->{walk_speed} / 1000;
 		$actor->{time_move} = time;
 		$actor->{time_move_calc} = distance(\%coordsFrom, \%coordsTo) * $actor->{walk_speed};
