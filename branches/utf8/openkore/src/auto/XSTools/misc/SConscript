@@ -1,0 +1,10 @@
+Import('*')
+
+sources = [
+	'misc.c',
+	'fastutils.cpp'
+]
+
+perlenv.XS('misc.c', 'misc.xs')
+perlenv.XS_CXX('fastutils.cpp', 'fastutils.xs')
+perlenv.StaticLibrary('misc', sources)

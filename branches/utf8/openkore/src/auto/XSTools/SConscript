@@ -1,5 +1,11 @@
 Import('*')
 
+SConscript([
+	'pathfinding/SConscript',
+	'translation/SConscript',
+	'misc/SConscript',
+])
+
 libs = [
 	'pathfinding',
 	'translation',
@@ -7,13 +13,19 @@ libs = [
 ]
 deps = []
 deps_path = []
-if not win32:
+
+if win32:
+	SConscript(['win32/SConscript'])
+else:
+	SConscript(['unix/SConscript'])
+	libs += ['unix']
 	deps += [
 		'readline',
 		'termcap'
 	]
 	perlenv['LINKFLAGS'] += ['-pthread']
 	deps_path += ['/usr/lib/termcap']
+
 
 # We're linking C++ objects so force usage of g++
 XSTools = perlenv.SharedLibrary('XSTools', [],
@@ -26,3 +38,4 @@ if not win32:
 	perlenv.Command('XSTools.so', XSTools,
 		[['ln', '-sf', 'libXSTools.so', 'XSTools.so']],
 		chdir=1)
+

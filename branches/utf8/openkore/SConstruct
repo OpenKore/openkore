@@ -140,10 +140,5 @@ perlenv['BUILDERS']['XS_CXX'] = XSBuilder_CXX
 ### Invoke SConscripts ###
 
 Export('env libenv perlenv win32')
+SConscript('src/auto/XSTools/SConscript')
 
-SConscript([
-	'src/auto/XSTools/pathfinding/SConscript',
-	'src/auto/XSTools/translation/SConscript',
-	'src/auto/XSTools/misc/SConscript',
-	'src/auto/XSTools/SConscript'
-])
