@@ -2925,6 +2925,7 @@ sub cmdShopInfoSelf {
 sub cmdSit {
 	$ai_v{sitAuto_forcedBySitCommand} = 1;
 	AI::clear("move", "route", "mapRoute");
+	AI::clear("attack") unless ai_getAggressives();
 	main::sit();
 	$ai_v{sitAuto_forceStop} = 0;
 }
