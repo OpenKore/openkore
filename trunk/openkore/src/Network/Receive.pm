@@ -463,7 +463,6 @@ sub actor_action {
 		if ($args->{sourceID} eq $accountID) {
 			message T("You are sitting.\n");
 			$char->{sitting} = 1;
-			AI::queue("sitAuto") unless (AI::inQueue("sitAuto"));
 		} else {
 			message TF("%s is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 1 if ($players{$args->{sourceID}});
@@ -473,6 +472,9 @@ sub actor_action {
 		my ($source, $verb) = getActorNames($args->{sourceID}, 0, 'are', 'is');
 		if ($args->{sourceID} eq $accountID) {
 			message T("You are standing.\n");
+			if ($config{sitAuto_idle}) {
+				$timeout{ai_sit_idle}{time} = time;
+			}
 			$char->{sitting} = 0;
 		} else {
 			message TF("%s is standing.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
