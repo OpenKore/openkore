@@ -1054,6 +1054,7 @@ sub cmdDamage {
 			"Usage: damage [reset]\n";
 	}
 }
+
 sub cmdDeal {
 	my (undef, $args) = @_;
 	my @arg = split / /, $args;
@@ -1904,26 +1905,6 @@ sub cmdIhist {
 	}
 }
 
-sub cmdItemList {
-	message("-----------Item List-----------\n" .
-		"   # Name                           Coord\n",
-		"list");
-	for (my $i = 0; $i < @itemsID; $i++) {
-		next if ($itemsID[$i] eq "");
-		my $item = $items{$itemsID[$i]};
-		my $display = "$item->{name} x $item->{amount}";
-		message(sprintf("%4d %-30s (%3d, %3d)\n",
-			$i, $display, $item->{pos}{x}, $item->{pos}{y}),
-			"list");
-	}
-	message("-------------------------------\n", "list");
-}
-
-sub cmdItemLogClear {
-	itemLog_clear();
-	message("Item log cleared.\n", "success");
-}
-
 sub cmdInventory {
 	# Display inventory items
 	my (undef, $args) = @_;
@@ -2035,6 +2016,26 @@ sub cmdInventory_desc {
 	printItemDesc($item->{nameID});
 }
 
+sub cmdItemList {
+	message("-----------Item List-----------\n" .
+		"   # Name                           Coord\n",
+		"list");
+	for (my $i = 0; $i < @itemsID; $i++) {
+		next if ($itemsID[$i] eq "");
+		my $item = $items{$itemsID[$i]};
+		my $display = "$item->{name} x $item->{amount}";
+		message(sprintf("%4d %-30s (%3d, %3d)\n",
+			$i, $display, $item->{pos}{x}, $item->{pos}{y}),
+			"list");
+	}
+	message("-------------------------------\n", "list");
+}
+
+sub cmdItemLogClear {
+	itemLog_clear();
+	message("Item log cleared.\n", "success");
+}
+
 #sub cmdJudge {
 #	my (undef, $args) = @_;
 #	my ($arg1) = $args =~ /^(\d+)/;
@@ -2050,6 +2051,18 @@ sub cmdInventory_desc {
 #		sendAlignment($net, $playersID[$arg1], $arg2);
 #	}
 #}
+
+sub cmdKill {
+	my (undef, $ID) = @_;
+
+	my $target = $playersID[$ID];
+	unless ($target) {
+		error "Player $ID does not exist.\n";
+		return;
+	}
+
+	attack($target);
+}
 
 sub cmdLook {
 	my (undef, $args) = @_;
@@ -2077,23 +2090,30 @@ sub cmdLookPlayer {
 }
 
 sub cmdManualMove {
-	my ($switch) = @_;
+	my ($switch, $steps) = @_;
+	if (!$steps) {
+		$steps = 5; 
+	} elsif ($steps !~ /^\d+$/) {
+		error	"Error in function '$switch' (Manual Move)\n" .
+			"Usage: $switch [distance]\n";
+		return;
+	}
 	if ($switch eq "east") {
-		manualMove(5, 0);
+		manualMove($steps, 0);
 	} elsif ($switch eq "west") {
-		manualMove(-5, 0);
+		manualMove(-$steps, 0);
 	} elsif ($switch eq "north") {
-		manualMove(0, 5);
+		manualMove(0, $steps);
 	} elsif ($switch eq "south") {
-		manualMove(0, -5);
+		manualMove(0, -$steps);
 	} elsif ($switch eq "northeast") {
-		manualMove(5, 5);
+		manualMove($steps, $steps);
 	} elsif ($switch eq "southwest") {
-		manualMove(-5, -5);
+		manualMove(-$steps, -$steps);
 	} elsif ($switch eq "northwest") {
-		manualMove(-5, 5);
+		manualMove(-$steps, $steps);
 	} elsif ($switch eq "southeast") {
-		manualMove(5, -5);
+		manualMove($steps, -$steps);
 	}
 }
 
@@ -2513,6 +2533,67 @@ sub cmdPlayerList {
 	message($msg, "list");
 }
 
+sub cmdPlayerSkill {
+	my $switch = shift;
+	my $last_arg_pos;
+	my @args = parseArgs(shift, undef, undef, \$last_arg_pos);
+	my $mode = shift;
+
+	if ($mode eq 'c') {
+		# Completion mode
+		my $arg = $args[$#args];
+		my @matches;
+
+		if (@args == 2) {
+			# Complete skill name
+			@matches = Skills::complete($arg);
+		} elsif (@args == 3) {
+			# Complete player name
+			@matches = completePlayerName($arg);
+		}
+
+		return ($last_arg_pos, \@matches);
+	}
+
+	if (@args < 1) {
+		error	"Syntax Error in function 'sp' (Use Skill on Player)\n" .
+			"Usage: sp (skill # or name) [player # or name] [level]\n";
+		return;
+	}
+
+	my $skill = new Skills(auto => $args[0]);
+	my $target;
+	my $targetID;
+	my $char_skill = $char->{skills}{$skill->handle};
+	my $lv = $args[2] || $char_skill->{lv} || 10;
+
+	if (!defined $skill->id) {
+		error	"Error in function 'sp' (Use Skill on Player)\n" .
+			"'$args[0]' is not a valid skill.\n";
+		return;
+	}
+
+	if ($args[1] ne "") {
+		$target = Match::player($args[1], 1);
+		if (!$target) {
+			error	"Error in function 'sp' (Use Skill on Player)\n" .
+				"Player '$args[1]' does not exist.\n";
+			return;
+		}
+		$targetID = $target->{ID};
+	} else {
+		$target = $char;
+		$targetID = $accountID;
+	}
+
+	if (main::ai_getSkillUseType($skill->handle)) {
+		main::ai_skillUse($skill->handle, $lv, 0, 0,
+			$target->{pos_to}{x}, $target->{pos_to}{y});
+	} else {
+		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
+	}
+}
+
 sub cmdPlugin {
 	my (undef, $input) = @_;
 	my @args = split(/ +/, $input, 2);
@@ -2632,6 +2713,29 @@ sub cmdPMList {
 	message("-----------------------------\n", "list");
 }
 
+sub cmdPortalList {
+	my (undef, $args) = @_;
+	my ($arg) = parseArgs($args,1);
+	if ($arg eq '') {
+		message("-----------Portal List-----------\n" .
+			"#    Name                                Coordinates\n",
+			"list");
+		for (my $i = 0; $i < @portalsID; $i++) {
+			next if $portalsID[$i] eq "";
+			my $portal = $portals{$portalsID[$i]};
+			my $coords = "($portal->{pos}{x}, $portal->{pos}{y})";
+			message(swrite(
+				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
+				[$i, $portal->{name}, $coords]),
+				"list");
+		}
+		message("---------------------------------\n", "list");
+	} elsif ($arg eq 'recompile') {
+		Settings::parseReload("portals");
+		Misc::compilePortals() if Misc::compilePortals_check();
+	}
+}
+
 sub cmdPrivateMessage {
 	my ($switch, $args) = @_;
 	my ($user, $msg) = parseArgs($args, 2);
@@ -2662,29 +2766,6 @@ sub cmdPrivateMessage {
 		sendMessage($net, "pm", $msg, $user);
 		$lastpm{msg} = $msg;
 		$lastpm{user} = $user;
-	}
-}
-
-sub cmdPortalList {
-	my (undef, $args) = @_;
-	my ($arg) = parseArgs($args,1);
-	if ($arg eq '') {
-		message("-----------Portal List-----------\n" .
-			"#    Name                                Coordinates\n",
-			"list");
-		for (my $i = 0; $i < @portalsID; $i++) {
-			next if $portalsID[$i] eq "";
-			my $portal = $portals{$portalsID[$i]};
-			my $coords = "($portal->{pos}{x}, $portal->{pos}{y})";
-			message(swrite(
-				"@<<< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< @<<<<<<<<<",
-				[$i, $portal->{name}, $coords]),
-				"list");
-		}
-		message("---------------------------------\n", "list");
-	} elsif ($arg eq 'recompile') {
-		Settings::parseReload("portals");
-		Misc::compilePortals() if Misc::compilePortals_check();
 	}
 }
 
@@ -2814,31 +2895,6 @@ sub cmdSendRaw {
 	sendRaw($net, $args);
 }
 
-sub cmdSit {
-	if (!$ai_v{sitConfig}) {
-		my %cfg;
-
-		foreach (qw/attackAuto_party route_randomWalk teleportAuto_idle itemsGatherAuto storageAuto/) {
-			$cfg{$_} = $config{$_};
-			$config{$_} = 0;
-		}
-
-		if ($config{attackAuto}) {
-			$cfg{attackAuto} = $config{attackAuto};
-			$config{attackAuto} = 1;
-		}
-
-		$cfg{lockMap} = $config{lockMap};
-		$config{lockMap} = '';
-
-		$ai_v{sitConfig} = \%cfg;
-	}
-
-	AI::clear("move", "route", "mapRoute");
-	main::sit();
-	$ai_v{sitAuto_forceStop} = 0;
-}
-
 sub cmdShopInfoSelf {
 	if (!$shopstarted) {
 		error("You do not have a shop open.\n");
@@ -2866,16 +2922,29 @@ sub cmdShopInfoSelf {
 	message("Maximum zeny:   " . formatNumber($priceAfterSale + $char->{zenny}) . "z.\n", "list");
 }
 
-sub cmdSpells {
-	message "-----------Area Effects List-----------\n", "list";
-	message "  # Type                 Source                   X   Y\n", "list";
-	for my $ID (@spellsID) {
-		my $spell = $spells{$ID};
-		next unless $spell;
+sub cmdSit {
+	if (!$ai_v{sitConfig}) {
+		my %cfg;
 
-		message sprintf("%3d %-20s %-20s   %3d %3d\n", $spell->{binID}, getSpellName($spell->{type}), main::getActorName($spell->{sourceID}), $spell->{pos}{x}, $spell->{pos}{y}), "list";
+		foreach (qw/attackAuto_party route_randomWalk teleportAuto_idle itemsGatherAuto storageAuto/) {
+			$cfg{$_} = $config{$_};
+			$config{$_} = 0;
+		}
+
+		if ($config{attackAuto}) {
+			$cfg{attackAuto} = $config{attackAuto};
+			$config{attackAuto} = 1;
+		}
+
+		$cfg{lockMap} = $config{lockMap};
+		$config{lockMap} = '';
+
+		$ai_v{sitConfig} = \%cfg;
 	}
-	message "---------------------------------------\n", "list";
+
+	AI::clear("move", "route", "mapRoute");
+	main::sit();
+	$ai_v{sitAuto_forceStop} = 0;
 }
 
 sub cmdSkills {
@@ -2926,65 +2995,167 @@ sub cmdSkills {
 	}
 }
 
-sub cmdPlayerSkill {
-	my $switch = shift;
-	my $last_arg_pos;
-	my @args = parseArgs(shift, undef, undef, \$last_arg_pos);
-	my $mode = shift;
+sub cmdSpells {
+	message "-----------Area Effects List-----------\n", "list";
+	message "  # Type                 Source                   X   Y\n", "list";
+	for my $ID (@spellsID) {
+		my $spell = $spells{$ID};
+		next unless $spell;
 
-	if ($mode eq 'c') {
-		# Completion mode
-		my $arg = $args[$#args];
-		my @matches;
+		message sprintf("%3d %-20s %-20s   %3d %3d\n", $spell->{binID}, getSpellName($spell->{type}), main::getActorName($spell->{sourceID}), $spell->{pos}{x}, $spell->{pos}{y}), "list";
+	}
+	message "---------------------------------------\n", "list";
+}
 
-		if (@args == 2) {
-			# Complete skill name
-			@matches = Skills::complete($arg);
-		} elsif (@args == 3) {
-			# Complete player name
-			@matches = completePlayerName($arg);
+sub cmdStand {
+	if ($ai_v{sitConfig}) {
+		foreach my $key (keys %{$ai_v{sitConfig}}) {
+			$config{$key} = $ai_v{sitConfig}{$key};
+		}
+		delete $ai_v{sitConfig};
+	}
+	$ai_v{sitAuto_forceStop} = 1;
+	main::stand();
+}
+
+sub cmdStatAdd {
+	# Add status point
+	my (undef, $arg) = @_;
+	if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int"
+	 && $arg ne "dex" && $arg ne "luk") {
+		error	"Syntax Error in function 'stat_add' (Add Status Point)\n" .
+			"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
+
+	} elsif ($char->{'$arg'} >= 99) {
+		error	"Error in function 'stat_add' (Add Status Point)\n" .
+			"You cannot add more stat points than 99\n";
+
+	} elsif ($char->{"points_$arg"} > $char->{'points_free'}) {
+			error	"Error in function 'stat_add' (Add Status Point)\n" .
+				"Not enough status points to increase $arg\n";
+
+	} else {
+		my $ID;
+		if ($arg eq "str") {
+			$ID = 0x0D;
+		} elsif ($arg eq "agi") {
+			$ID = 0x0E;
+		} elsif ($arg eq "vit") {
+			$ID = 0x0F;
+		} elsif ($arg eq "int") {
+			$ID = 0x10;
+		} elsif ($arg eq "dex") {
+			$ID = 0x11;
+		} elsif ($arg eq "luk") {
+			$ID = 0x12;
 		}
 
-		return ($last_arg_pos, \@matches);
+		$char->{$arg} += 1;
+		sendAddStatusPoint($net, $ID);
 	}
+}
 
-	if (@args < 1) {
-		error	"Syntax Error in function 'sp' (Use Skill on Player)\n" .
-			"Usage: sp (skill # or name) [player # or name] [level]\n";
-		return;
-	}
+sub cmdStats {
+	my $msg = "-----------Char Stats-----------\n";
+	$msg .= swrite(
+		"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<",
+		[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'}],
+		"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<",
+		[$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'}],
+		"Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<",
+		[$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'}],
+		"Int: @<<+@<< #@< Critical: @<< Aspd: @<<",
+		[$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'}],
+		"Dex: @<<+@<< #@< Status Points: @<<<",
+		[$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'}],
+		"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
+		[$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $char->{guild} ? $char->{guild}{name} : 'None']);
+	$msg .= "--------------------------------\n";
 
-	my $skill = new Skills(auto => $args[0]);
-	my $target;
-	my $targetID;
-	my $char_skill = $char->{skills}{$skill->handle};
-	my $lv = $args[2] || $char_skill->{lv} || 10;
+	$msg .= swrite(
+		"Hair color: @<<<<<<<<<<<<<<<<<",
+		["$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
+	$msg .= sprintf("Walk speed: %.2f secs per block\n", $char->{walk_speed});
+	$msg .= "You are sitting.\n" if ($char->{sitting});
 
-	if (!defined $skill->id) {
-		error	"Error in function 'sp' (Use Skill on Player)\n" .
-			"'$args[0]' is not a valid skill.\n";
-		return;
-	}
+	$msg .= "--------------------------------\n";
+	message $msg, "info";
+}
 
-	if ($args[1] ne "") {
-		$target = Match::player($args[1], 1);
-		if (!$target) {
-			error	"Error in function 'sp' (Use Skill on Player)\n" .
-				"Player '$args[1]' does not exist.\n";
-			return;
-		}
-		$targetID = $target->{ID};
+sub cmdStatus {
+	# Display character status
+	my $msg;
+	my ($baseEXPKill, $jobEXPKill);
+
+	if ($char->{'exp_last'} > $char->{'exp'}) {
+		$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
+	} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
+		$baseEXPKill = 0;
 	} else {
-		$target = $char;
-		$targetID = $accountID;
+		$baseEXPKill = $char->{'exp'} - $char->{'exp_last'};
+	}
+	if ($char->{'exp_job_last'} > $char->{'exp_job'}) {
+		$jobEXPKill = $char->{'exp_job_max_last'} - $char->{'exp_job_last'} + $char->{'exp_job'};
+	} elsif ($char->{'exp_job_last'} == 0 && $char->{'exp_job_max_last'} == 0) {
+		$jobEXPKill = 0;
+	} else {
+		$jobEXPKill = $char->{'exp_job'} - $char->{'exp_job_last'};
 	}
 
-	if (main::ai_getSkillUseType($skill->handle)) {
-		main::ai_skillUse($skill->handle, $lv, 0, 0,
-			$target->{pos_to}{x}, $target->{pos_to}{y});
-	} else {
-		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
+
+	my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
+
+	$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
+		.int($char->{'hp'}/$char->{'hp_max'} * 100)
+		."%)" if $char->{'hp_max'};
+	$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
+		.int($char->{'sp'}/$char->{'sp_max'} * 100)
+		."%)" if $char->{'sp_max'};
+	$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
+			.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
+			."%)"
+			if $char->{'exp_max'};
+	$job_string = formatNumber($char->{'exp_job'})."/".formatNumber($char->{'exp_job_max'})." /$jobEXPKill ("
+			.sprintf("%.2f",$char->{'exp_job'}/$char->{'exp_job_max'} * 100)
+			."%)"
+			if $char->{'exp_job_max'};
+	$weight_string = $char->{'weight'}."/".$char->{'weight_max'} .
+			" (" . sprintf("%.1f", $char->{'weight'}/$char->{'weight_max'} * 100)
+			. "%)"
+			if $char->{'weight_max'};
+	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
+	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
+
+	$msg = "----------------------- Status -------------------------\n" .
+		swrite(
+		"@<<<<<<<<<<<<<<<<<<<<<<<          HP: @>>>>>>>>>>>>>>>>>", [$char->{'name'}, $hp_string],
+		"@<<<<<<<<<<<<<<<<<<<<<<<          SP: @>>>>>>>>>>>>>>>>>", [$job_name_string, $sp_string],
+		"Base: @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv'}, $base_string],
+		"Job : @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv_job'}, $job_string],
+		"Zeny: @<<<<<<<<<<<<<<<<<      Weight: @>>>>>>>>>>>>>>>>>", [$zeny_string, $weight_string]);
+
+	my $statuses = 'none';
+	if (defined $char->{statuses} && %{$char->{statuses}}) {
+		$statuses = join(", ", keys %{$char->{statuses}});
 	}
+	$msg .= "Statuses: $statuses\n";
+	$msg .= "Spirits: $char->{spirits}\n" if (exists $char->{spirits});
+	$msg .= "--------------------------------------------------------\n";
+
+
+	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
+	my $totalelasped_string = sprintf("%.2f", $totalelasped);
+	my $elasped_string = sprintf("%.2f", $elasped);
+
+	$msg .= swrite(
+		"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<",
+		[$totaldmg, $dmgpsec_string],
+		"Total Time spent (sec): @>>>>>>>>",
+		[$totalelasped_string],
+		"Last Monster took (sec): @>>>>>>>",
+		[$elasped_string]);
+	$msg .= "--------------------------------------------------------\n";
+	message($msg, "info");
 }
 
 sub cmdStorage {
@@ -3200,227 +3371,6 @@ sub cmdStorage_desc {
 	} else {
 		printItemDesc($item->{nameID});
 	}
-}
-
-sub cmdUseSkill {
-	my ($switch, $args) = @_;
-	my ($skillID, $lv, $target, $targetNum, $targetID, $x, $y);
-
-	# Resolve skill ID
-	($skillID, $args) = split(/ /, $args, 2);
-	my $skill = Skills->new(id => $skillID);
-	if (!defined $skill->id) {
-		error "Skill $skillID does not exist.\n";
-		return;
-	}
-	my $char_skill = $char->{skills}{$skill->handle};
-
-	# Resolve skill level
-	if ($switch eq 'sl') {
-		($x, $y, $lv) = split(/ /, $args);
-	} elsif ($switch eq "ss") {
-		($lv) = split(/ /, $args);
-	} else {
-		($targetNum, $lv) = split(/ /, $args);
-		if ($targetNum !~ /^\d+$/) {
-			error "$targetNum is not a number.\n";
-			return;
-		}
-	}
-	# Attempt to fill in unspecified skill level
-	$lv ||= $char_skill->{lv};
-	$lv ||= 10; # Server should fix excessively high skill level for us
-
-	# Resolve target
-	if ($switch eq 'sl') {
-		if (!defined($x) || !defined($y)) {
-			#error "(X, Y) coordinates not specified.\n";
-			#return;
-			my $pos = calcPosition($char);
-			my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2);
-			$pos = $positions[rand(@positions)];
-			($x, $y) = ($pos->{x}, $pos->{y});
-		}
-	} elsif ($switch eq 'ss' || ($switch eq 'sp' && !defined($targetNum))) {
-		$targetID = $accountID;
-		$target = $char;
-	} elsif ($switch eq 'sp') {
-		$targetID = $playersID[$targetNum];
-		if (!$targetID) {
-			error "Player $targetNum does not exist.\n";
-			return;
-		}
-		$target = $players{$targetID};
-	} elsif ($switch eq 'sm') {
-		$targetID = $monstersID[$targetNum];
-		if (!$targetID) {
-			error "Monster $targetNum does not exist.\n";
-			return;
-		}
-		$target = $monsters{$targetID};
-	}
-
-	# Resolve target location as necessary
-	if (main::ai_getSkillUseType($skill->handle)) {
-		if ($targetID) {
-			$x = $target->{pos_to}{x};
-			$y = $target->{pos_to}{y};
-		}
-		main::ai_skillUse($skill->handle, $lv, 0, 0, $x, $y);
-	} else {
-		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
-	}
-}
-
-sub cmdStand {
-	if ($ai_v{sitConfig}) {
-		foreach my $key (keys %{$ai_v{sitConfig}}) {
-			$config{$key} = $ai_v{sitConfig}{$key};
-		}
-		delete $ai_v{sitConfig};
-	}
-	$ai_v{sitAuto_forceStop} = 1;
-	main::stand();
-}
-
-sub cmdStatAdd {
-	# Add status point
-	my (undef, $arg) = @_;
-	if ($arg ne "str" && $arg ne "agi" && $arg ne "vit" && $arg ne "int"
-	 && $arg ne "dex" && $arg ne "luk") {
-		error	"Syntax Error in function 'stat_add' (Add Status Point)\n" .
-			"Usage: stat_add <str | agi | vit | int | dex | luk>\n";
-
-	} elsif ($char->{'$arg'} >= 99) {
-		error	"Error in function 'stat_add' (Add Status Point)\n" .
-			"You cannot add more stat points than 99\n";
-
-	} elsif ($char->{"points_$arg"} > $char->{'points_free'}) {
-			error	"Error in function 'stat_add' (Add Status Point)\n" .
-				"Not enough status points to increase $arg\n";
-
-	} else {
-		my $ID;
-		if ($arg eq "str") {
-			$ID = 0x0D;
-		} elsif ($arg eq "agi") {
-			$ID = 0x0E;
-		} elsif ($arg eq "vit") {
-			$ID = 0x0F;
-		} elsif ($arg eq "int") {
-			$ID = 0x10;
-		} elsif ($arg eq "dex") {
-			$ID = 0x11;
-		} elsif ($arg eq "luk") {
-			$ID = 0x12;
-		}
-
-		$char->{$arg} += 1;
-		sendAddStatusPoint($net, $ID);
-	}
-}
-
-sub cmdStats {
-	my $msg = "-----------Char Stats-----------\n";
-	$msg .= swrite(
-		"Str: @<<+@<< #@< Atk:  @<<+@<< Def:  @<<+@<<",
-		[$char->{'str'}, $char->{'str_bonus'}, $char->{'points_str'}, $char->{'attack'}, $char->{'attack_bonus'}, $char->{'def'}, $char->{'def_bonus'}],
-		"Agi: @<<+@<< #@< Matk: @<<@@<< Mdef: @<<+@<<",
-		[$char->{'agi'}, $char->{'agi_bonus'}, $char->{'points_agi'}, $char->{'attack_magic_min'}, '~', $char->{'attack_magic_max'}, $char->{'def_magic'}, $char->{'def_magic_bonus'}],
-		"Vit: @<<+@<< #@< Hit:  @<<     Flee: @<<+@<<",
-		[$char->{'vit'}, $char->{'vit_bonus'}, $char->{'points_vit'}, $char->{'hit'}, $char->{'flee'}, $char->{'flee_bonus'}],
-		"Int: @<<+@<< #@< Critical: @<< Aspd: @<<",
-		[$char->{'int'}, $char->{'int_bonus'}, $char->{'points_int'}, $char->{'critical'}, $char->{'attack_speed'}],
-		"Dex: @<<+@<< #@< Status Points: @<<<",
-		[$char->{'dex'}, $char->{'dex_bonus'}, $char->{'points_dex'}, $char->{'points_free'}],
-		"Luk: @<<+@<< #@< Guild: @<<<<<<<<<<<<<<<<<<<<<",
-		[$char->{'luk'}, $char->{'luk_bonus'}, $char->{'points_luk'}, $char->{guild} ? $char->{guild}{name} : 'None']);
-	$msg .= "--------------------------------\n";
-
-	$msg .= swrite(
-		"Hair color: @<<<<<<<<<<<<<<<<<",
-		["$haircolors{$char->{hair_color}} ($char->{hair_color})"]);
-	$msg .= sprintf("Walk speed: %.2f secs per block\n", $char->{walk_speed});
-	$msg .= "You are sitting.\n" if ($char->{sitting});
-
-	$msg .= "--------------------------------\n";
-	message $msg, "info";
-}
-
-sub cmdStatus {
-	# Display character status
-	my $msg;
-	my ($baseEXPKill, $jobEXPKill);
-
-	if ($char->{'exp_last'} > $char->{'exp'}) {
-		$baseEXPKill = $char->{'exp_max_last'} - $char->{'exp_last'} + $char->{'exp'};
-	} elsif ($char->{'exp_last'} == 0 && $char->{'exp_max_last'} == 0) {
-		$baseEXPKill = 0;
-	} else {
-		$baseEXPKill = $char->{'exp'} - $char->{'exp_last'};
-	}
-	if ($char->{'exp_job_last'} > $char->{'exp_job'}) {
-		$jobEXPKill = $char->{'exp_job_max_last'} - $char->{'exp_job_last'} + $char->{'exp_job'};
-	} elsif ($char->{'exp_job_last'} == 0 && $char->{'exp_job_max_last'} == 0) {
-		$jobEXPKill = 0;
-	} else {
-		$jobEXPKill = $char->{'exp_job'} - $char->{'exp_job_last'};
-	}
-
-
-	my ($hp_string, $sp_string, $base_string, $job_string, $weight_string, $job_name_string, $zeny_string);
-
-	$hp_string = $char->{'hp'}."/".$char->{'hp_max'}." ("
-		.int($char->{'hp'}/$char->{'hp_max'} * 100)
-		."%)" if $char->{'hp_max'};
-	$sp_string = $char->{'sp'}."/".$char->{'sp_max'}." ("
-		.int($char->{'sp'}/$char->{'sp_max'} * 100)
-		."%)" if $char->{'sp_max'};
-	$base_string = formatNumber($char->{'exp'})."/".formatNumber($char->{'exp_max'})." /$baseEXPKill ("
-			.sprintf("%.2f",$char->{'exp'}/$char->{'exp_max'} * 100)
-			."%)"
-			if $char->{'exp_max'};
-	$job_string = formatNumber($char->{'exp_job'})."/".formatNumber($char->{'exp_job_max'})." /$jobEXPKill ("
-			.sprintf("%.2f",$char->{'exp_job'}/$char->{'exp_job_max'} * 100)
-			."%)"
-			if $char->{'exp_job_max'};
-	$weight_string = $char->{'weight'}."/".$char->{'weight_max'} .
-			" (" . sprintf("%.1f", $char->{'weight'}/$char->{'weight_max'} * 100)
-			. "%)"
-			if $char->{'weight_max'};
-	$job_name_string = "$jobs_lut{$char->{'jobID'}} $sex_lut{$char->{'sex'}}";
-	$zeny_string = formatNumber($char->{'zenny'}) if (defined($char->{'zenny'}));
-
-	$msg = "----------------------- Status -------------------------\n" .
-		swrite(
-		"@<<<<<<<<<<<<<<<<<<<<<<<          HP: @>>>>>>>>>>>>>>>>>", [$char->{'name'}, $hp_string],
-		"@<<<<<<<<<<<<<<<<<<<<<<<          SP: @>>>>>>>>>>>>>>>>>", [$job_name_string, $sp_string],
-		"Base: @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv'}, $base_string],
-		"Job : @<<    @>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", [$char->{'lv_job'}, $job_string],
-		"Zeny: @<<<<<<<<<<<<<<<<<      Weight: @>>>>>>>>>>>>>>>>>", [$zeny_string, $weight_string]);
-
-	my $statuses = 'none';
-	if (defined $char->{statuses} && %{$char->{statuses}}) {
-		$statuses = join(", ", keys %{$char->{statuses}});
-	}
-	$msg .= "Statuses: $statuses\n";
-	$msg .= "Spirits: $char->{spirits}\n" if (exists $char->{spirits});
-	$msg .= "--------------------------------------------------------\n";
-
-
-	my $dmgpsec_string = sprintf("%.2f", $dmgpsec);
-	my $totalelasped_string = sprintf("%.2f", $totalelasped);
-	my $elasped_string = sprintf("%.2f", $elasped);
-
-	$msg .= swrite(
-		"Total Damage: @>>>>>>>>>>>>> Dmg/sec: @<<<<<<<<<<<<<<",
-		[$totaldmg, $dmgpsec_string],
-		"Total Time spent (sec): @>>>>>>>>",
-		[$totalelasped_string],
-		"Last Monster took (sec): @>>>>>>>",
-		[$elasped_string]);
-	$msg .= "--------------------------------------------------------\n";
-	message($msg, "info");
 }
 
 sub cmdStore {
@@ -3746,6 +3696,76 @@ sub cmdUseItemOnSelf {
 	$item->use;
 }
 
+sub cmdUseSkill {
+	my ($switch, $args) = @_;
+	my ($skillID, $lv, $target, $targetNum, $targetID, $x, $y);
+
+	# Resolve skill ID
+	($skillID, $args) = split(/ /, $args, 2);
+	my $skill = Skills->new(id => $skillID);
+	if (!defined $skill->id) {
+		error "Skill $skillID does not exist.\n";
+		return;
+	}
+	my $char_skill = $char->{skills}{$skill->handle};
+
+	# Resolve skill level
+	if ($switch eq 'sl') {
+		($x, $y, $lv) = split(/ /, $args);
+	} elsif ($switch eq "ss") {
+		($lv) = split(/ /, $args);
+	} else {
+		($targetNum, $lv) = split(/ /, $args);
+		if ($targetNum !~ /^\d+$/) {
+			error "$targetNum is not a number.\n";
+			return;
+		}
+	}
+	# Attempt to fill in unspecified skill level
+	$lv ||= $char_skill->{lv};
+	$lv ||= 10; # Server should fix excessively high skill level for us
+
+	# Resolve target
+	if ($switch eq 'sl') {
+		if (!defined($x) || !defined($y)) {
+			#error "(X, Y) coordinates not specified.\n";
+			#return;
+			my $pos = calcPosition($char);
+			my @positions = calcRectArea($pos->{x}, $pos->{y}, int(rand 2) + 2);
+			$pos = $positions[rand(@positions)];
+			($x, $y) = ($pos->{x}, $pos->{y});
+		}
+	} elsif ($switch eq 'ss' || ($switch eq 'sp' && !defined($targetNum))) {
+		$targetID = $accountID;
+		$target = $char;
+	} elsif ($switch eq 'sp') {
+		$targetID = $playersID[$targetNum];
+		if (!$targetID) {
+			error "Player $targetNum does not exist.\n";
+			return;
+		}
+		$target = $players{$targetID};
+	} elsif ($switch eq 'sm') {
+		$targetID = $monstersID[$targetNum];
+		if (!$targetID) {
+			error "Monster $targetNum does not exist.\n";
+			return;
+		}
+		$target = $monsters{$targetID};
+	}
+
+	# Resolve target location as necessary
+	if (main::ai_getSkillUseType($skill->handle)) {
+		if ($targetID) {
+			$x = $target->{pos_to}{x};
+			$y = $target->{pos_to}{y};
+		}
+		main::ai_skillUse($skill->handle, $lv, 0, 0, $x, $y);
+	} else {
+		main::ai_skillUse($skill->handle, $lv, 0, 0, $targetID);
+	}
+}
+
 sub cmdVender {
 	my (undef, $args) = @_;
 	my ($arg1) = $args =~ /^([\d\w]+)/;
@@ -3894,18 +3914,6 @@ sub cmdWhoAmI {
 	message "Name:    $char->{name} (Level $char->{lv} $sex_lut{$char->{sex}} $jobs_lut{$char->{jobID}})\n", "list";
 	message "Char ID: $GID\n", "list";
 	message "Acct ID: $AID\n", "list";
-}
-
-sub cmdKill {
-	my (undef, $ID) = @_;
-
-	my $target = $playersID[$ID];
-	unless ($target) {
-		error "Player $ID does not exist.\n";
-		return;
-	}
-
-	attack($target);
 }
 
 return 1;
