@@ -33,6 +33,7 @@ Bug fixes:
 - Fixed a bug where the weight command only allows a single digit parameter.
 - Fixed a bug where kore immediately stands up when the player manually uses
   the 'sit' command.
+- The'sit' command no longer modifies any config options
 
 New features:
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
@@ -40,6 +41,9 @@ New features:
   some buggy private servers.
 - Added 'manual' AI mode, so you can still use most console commands while
   automatic AI is off.
+- An empty adminPassword disables all authentication schemes to control Kore
+- Manual move commands (east, west, north, south, etc) now take an optional
+  'distance' parameter
 
 New config options:
 - autoMoveOnDeath set:
