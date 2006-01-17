@@ -2923,25 +2923,7 @@ sub cmdShopInfoSelf {
 }
 
 sub cmdSit {
-	if (!$ai_v{sitConfig}) {
-		my %cfg;
-
-		foreach (qw/attackAuto_party route_randomWalk teleportAuto_idle itemsGatherAuto storageAuto/) {
-			$cfg{$_} = $config{$_};
-			$config{$_} = 0;
-		}
-
-		if ($config{attackAuto}) {
-			$cfg{attackAuto} = $config{attackAuto};
-			$config{attackAuto} = 1;
-		}
-
-		$cfg{lockMap} = $config{lockMap};
-		$config{lockMap} = '';
-
-		$ai_v{sitConfig} = \%cfg;
-	}
-
+	$ai_v{sitAuto_forcedBySitCommand} = 1;
 	AI::clear("move", "route", "mapRoute");
 	main::sit();
 	$ai_v{sitAuto_forceStop} = 0;
@@ -3008,12 +2990,7 @@ sub cmdSpells {
 }
 
 sub cmdStand {
-	if ($ai_v{sitConfig}) {
-		foreach my $key (keys %{$ai_v{sitConfig}}) {
-			$config{$key} = $ai_v{sitConfig}{$key};
-		}
-		delete $ai_v{sitConfig};
-	}
+	delete $ai_v{sitAuto_forcedBySitCommand};
 	$ai_v{sitAuto_forceStop} = 1;
 	main::stand();
 }

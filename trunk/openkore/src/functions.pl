@@ -2397,13 +2397,12 @@ sub AI {
 
 	AUTOSTORAGE: {
 
-	if (AI::is("", "route", "sitAuto", "follow") &&
-	    $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand}) &&
-		(($config{'itemsMaxWeight_sellOrStore'} &&
-		 percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'}) ||
-		 (!$config{'itemsMaxWeight_sellOrStore'} &&
-		  percent_weight($char) >= $config{'itemsMaxWeight'})) &&
-		!AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
+	if (AI::is("", "route", "sitAuto", "follow")
+	    && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+		&& !$ai_v{sitAuto_forcedBySitCommand}
+		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+		    || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'}))
+		&& !AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
 
 		# Initiate autostorage when the weight limit has been reached
 		my $routeIndex = AI::findAction("route");
@@ -2415,10 +2414,11 @@ sub AI {
 			AI::queue("storageAuto");
 		}
 
-	} elsif (AI::is("", "route", "attack") &&
-		 $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand}) &&
-		 !AI::inQueue("storageAuto") &&
-		 @{$char->{inventory}} > 0) {
+	} elsif (AI::is("", "route", "attack")
+		&& $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+		&& !$ai_v{sitAuto_forcedBySitCommand}
+		&& !AI::inQueue("storageAuto")
+		&& @{$char->{inventory}} > 0) {
 
 		# Initiate autostorage when we're low on some item, and getAuto is set
 		my $found;
@@ -2724,6 +2724,7 @@ sub AI {
 			)
 		&& $config{'sellAuto'}
 		&& $config{'sellAuto_npc'} ne ""
+		&& !$ai_v{sitAuto_forcedBySitCommand}
 	  ) {
 		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
 		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
@@ -3079,9 +3080,11 @@ sub AI {
 
 	##### LOCKMAP #####
 
-	if (AI::isIdle && $config{lockMap} && ($field{name} ne $config{lockMap}
-		|| ($config{lockMap_x} ne '' && ($char->{pos_to}{x} < $config{lockMap_x} - $config{lockMap_randX} || $char->{pos_to}{x} > $config{lockMap_x} + $config{lockMap_randX}))
-		|| ($config{lockMap_y} ne '' && ($char->{pos_to}{y} < $config{lockMap_y} - $config{lockMap_randY} || $char->{pos_to}{y} > $config{lockMap_y} + $config{lockMap_randY}))
+	if (AI::isIdle && $config{lockMap}
+		&& !$ai_v{sitAuto_forcedBySitCommand}
+		&& ($field{name} ne $config{lockMap}
+			|| ($config{lockMap_x} ne '' && ($char->{pos_to}{x} < $config{lockMap_x} - $config{lockMap_randX} || $char->{pos_to}{x} > $config{lockMap_x} + $config{lockMap_randX}))
+			|| ($config{lockMap_y} ne '' && ($char->{pos_to}{y} < $config{lockMap_y} - $config{lockMap_randY} || $char->{pos_to}{y} > $config{lockMap_y} + $config{lockMap_randY}))
 	)) {
 
 		if ($maps_lut{$config{lockMap}.'.rsw'} eq '') {
@@ -3222,8 +3225,8 @@ sub AI {
 
 
 	##### RANDOM WALK #####
-	if (AI::isIdle && $config{route_randomWalk} && 
-		(!$cities_lut{$field{name}.'.rsw'} || $config{route_randomWalk_inTown})
+	if (AI::isIdle && $config{route_randomWalk} && !$ai_v{sitAuto_forcedBySitCommand}
+		&& (!$cities_lut{$field{name}.'.rsw'} || $config{route_randomWalk_inTown})
 		&& length($field{rawMap}) ) {
 		my ($randX, $randY);
 		my $i = 500;
@@ -3859,6 +3862,7 @@ sub AI {
 
 				# List monsters that party members are attacking
 				if ($config{attackAuto_party} && $attackOnRoute && !AI::is("take", "items_take")
+				 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && (($monster->{dmgFromParty} && $config{attackAuto_party} != 2) ||
 				     $monster->{dmgToParty} || $monster->{missedToParty})
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
@@ -3902,7 +3906,8 @@ sub AI {
 					}
 				}
 
-				if (!AI::is(qw/sitAuto take items_gather items_take/) && $config{'attackAuto'} >= 2
+				if (!AI::is(qw/sitAuto take items_gather items_take/)
+				 && $config{'attackAuto'} >= 2 && !$ai_v{sitAuto_forcedBySitCommand}
 				 && $attackOnRoute >= 2 && !$monster->{dmgFromYou} && $safe
 				 && !positionNearPlayer($pos, $playerDist) && !positionNearPortal($pos, $portalDist)
 				 && timeOut($monster->{attack_failed}, $timeout{ai_attack_unfail}{timeout})) {
@@ -4066,6 +4071,7 @@ sub AI {
 	if ( (AI::isIdle || AI::action eq "follow"
 		|| ( AI::is("route", "mapRoute") && (!AI::args->{ID} || $config{'itemsGatherAuto'} >= 2)  && !$config{itemsTakeAuto_new}))
 	  && $config{'itemsGatherAuto'}
+	  && !$ai_v{sitAuto_forcedBySitCommand}
 	  && ($config{'itemsGatherAuto'} >= 2 || !ai_getAggressives())
 	  && percent_weight($char) < $config{'itemsMaxWeight'}
 	  && timeOut($timeout{ai_items_gather_auto}) ) {
@@ -4208,7 +4214,7 @@ sub AI {
 			$timeout{ai_teleport_idle}{time} = time;
 		}
 
-		if ($safe && $config{teleportAuto_idle} && timeOut($timeout{ai_teleport_idle})){
+		if ($safe && $config{teleportAuto_idle} && !$ai_v{sitAuto_forcedBySitCommand} && timeOut($timeout{ai_teleport_idle})){
 			message "Teleporting due to idle\n", "teleport";
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
