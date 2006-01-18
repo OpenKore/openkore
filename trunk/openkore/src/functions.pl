@@ -3627,9 +3627,8 @@ sub AI {
 			foreach my $ID (@playersID) {
 				next if ($ID eq "");
 				next if ((!$char->{party} || !$char->{party}{users}{$ID}) && !$config{"partySkill_$i"."_notPartyOnly"});
-				# messy way to find the best object
-				# but don't use object methods on this because we aren't sure if it's blessed
-				my $player = $char->{party} ? ($char->{party}{users}{$ID} || $players{$ID}) : $players{$ID};
+				my $player = Actor::get($ID);
+				next unless UNIVERSAL::isa($player, 'Actor::Player');
 				if (inRange(distance($char->{pos_to}, $players{$ID}{pos}), $config{partySkillDistance} || "1..8")
 					&& (!$config{"partySkill_$i"."_target"} || existsInList($config{"partySkill_$i"."_target"}, $player->{name}))
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
@@ -3638,8 +3637,9 @@ sub AI {
 					$party_skill{skillID} = $skills_rlut{lc($config{"partySkill_$i"})};
 					$party_skill{skillLvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $player->{name};
-					$party_skill{x} = $player->{pos}{x};
-					$party_skill{y} = $player->{pos}{y};
+					my $pos = $player->position;
+					$party_skill{x} = $pos->{x};
+					$party_skill{y} = $pos->{y};
 					$party_skill{targetID} = $ID;
 					$party_skill{maxCastTime} = $config{"partySkill_$i"."_maxCastTime"};
 					$party_skill{minCastTime} = $config{"partySkill_$i"."_minCastTime"};

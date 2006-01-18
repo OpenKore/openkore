@@ -34,6 +34,7 @@ Bug fixes:
 - Fixed a bug where kore immediately stands up when the player manually uses
   the 'sit' command.
 - The 'sit' command no longer modifies any config options.
+- Location-based partySkills should target better now.
 
 New features:
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
@@ -93,6 +94,10 @@ Internal:
 - all receive packets have been moved to Receive.pm now.
 - $item->{ID} is now stored.
 - New modes for $AI: 0 = off, 1 = manual, 2 = auto.
+- partySkill now operates on an Actor::Player object always. This should
+  fix the problem when a party member is on your screen, but never moved
+  before and thus has no coordinates in $char->{party}{users}{$ID} and
+  causes location-based partySkills to cast on (0,0).
 
 Credits:
 - id-mardi: fix for setPartySkillTimer, move the rest of the receive packets
