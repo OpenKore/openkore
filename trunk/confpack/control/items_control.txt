@@ -85,7 +85,7 @@ Coat 0 0 1
 Coat [1] 0 0 1
 Cotton Shirts 0 0 1
 Cotton Shirts [1] 0 0 1
-Crystal Pumps 0 0 1
+#Crystal Pumps 0 0 1
 Diamond Ring 0 0 1
 Diver Goggles 0 0 1
 Eye Patch 0 0 1
@@ -150,7 +150,7 @@ Battle Axe 0 0 1
 Battle Axe [3] 0 0 1
 Battle Axe [4] 0 0 1
 Belt [1] 0 0 1
-Bible [2] 0 0 1
+#Bible [2] 0 0 1
 Bill Guisarme 0 0 1
 Blade 0 0 1
 Blade [3] 0 0 1
@@ -162,7 +162,7 @@ Broad Sword [1] 0 0 1
 Buster 0 0 1
 Buster [1] 0 0 1
 Chain [2] 0 0 1
-Chemeti Whip 0 0 1
+#Chemeti Whip 0 0 1
 Claw [1] 0 0 1
 Claw [2] 0 0 1
 Claymore 0 0 1
@@ -193,7 +193,7 @@ Flail [2] 0 0 1
 Flail [3] 0 0 1
 Flamberge 0 0 1
 Gakkung Bow [1] 0 0 1
-Girl's Diary [1] 0 0 1
+#Girl's Diary [1] 0 0 1
 Gladius 0 0 1
 Gladius [2] 0 0 1
 Glaive 0 0 1
@@ -231,12 +231,12 @@ Knife [4] 0 0 1
 Knuckle Dusters [2] 0 0 1
 Knuckle Dusters [3] 0 0 1
 Lance 0 0 1
-Lariat Whip 0 0 1
+#Lariat Whip 0 0 1
 Lute [2] 0 0 1
 Lute [3] 0 0 1
 Mace 0 0 1
 Mace [3] 0 0 1
-Mace [4] 0 0 1
+#Mace [4] 0 0 1
 Main Gauche 0 0 1
 Main Gauche [3] 0 0 1
 Mandolin [2] 0 0 1
@@ -261,9 +261,9 @@ Repeating Crossbow [1] 0 0 1
 Ring Pommel Saber [2] 0 0 1
 Rod 0 0 1
 Rod [3] 0 0 1
-Rod [4] 0 0 1
+#Rod [4] 0 0 1
 Rope [3] 0 0 1
-Rope [4] 0 0 1
+#Rope [4] 0 0 1
 Saber [2] 0 0 1
 Scimiter [2] 0 0 1
 Scimiter [3] 0 0 1
@@ -298,13 +298,13 @@ Two-handed Axe [1] 0 0 1
 Two-handed Sword 0 0 1
 Two-handed Sword [1] 0 0 1
 Violin [3] 0 0 1
-Violin [4] 0 0 1
+#Violin [4] 0 0 1
 Waghnak [3] 0 0 1
 Waghnak [4] 0 0 1
 Wand 0 0 1
 Wand [2] 0 0 1
 Wand [3] 0 0 1
-War Axe [1] 0 0 1
+#War Axe [1] 0 0 1
 Whip [1] 0 0 1
 Whip [2] 0 0 1
 Whip [3] 0 0 1
@@ -483,7 +483,7 @@ Rainbow Shell 0 0 1
 Rat Tail 0 0 1
 Raw Fish 0 0 1
 Red Frame 0 0 1
-Red Stocking 0 0 1
+#Red Stocking 0 0 1
 Reins 0 0 1
 Reptile Tongue 0 0 1
 Resin 0 0 1
@@ -543,7 +543,7 @@ Tongue 0 0 1
 Tooth of Bat 0 0 1
 Tough Scalelike Stem 0 0 1
 Tree Root 0 0 1
-Tribal Solidarity 0 0 1
+#Tribal Solidarity 0 0 1
 Turtle Shell 0 0 1
 Venom Canine 0 0 1
 Wedding Bouquet 0 0 1
