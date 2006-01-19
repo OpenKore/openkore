@@ -18,7 +18,7 @@ serverType 0
 XKore 0
 XKore_silent 1
 XKore_bypassBotDetection 0
-exeName ragexe.exe
+XKore_exeName ragexe.exe
 commandPrefix ;
 
 pauseMapServer 0
