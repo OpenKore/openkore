@@ -259,7 +259,8 @@ sub clientDisconnect {
 # 4: Connected to character server	(next step -> connect to map server)
 # 5: Connected to map server; ready and functional.
 #
-# Special state:
+# Special states:
+# 1.5 (set by plugins): There is a special sequence for login servers and we must wait the plugins to finalize before continuing
 # 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be the account ID
 
 ##
@@ -299,6 +300,12 @@ sub checkConnection {
 		undef $msg;
 		$packetParser = Network::Receive->create($config{serverType});
 		$self->serverConnect($master->{ip}, $master->{port});
+		
+		# call plugin's hook to determine if we can continue the work
+		if ($self->serverAlive) {
+			Plugins::callHook("Network::serverConnect/master");
+			return if ($conState == 1.5);
+		}
 
 		if ($self->serverAlive && $master->{secureLogin} >= 1) {
 			my $code;
@@ -325,7 +332,7 @@ sub checkConnection {
 		}
 
 		$timeout{'master'}{'time'} = time;
-
+		
 	} elsif ($conState == 1 && $masterServer->{secureLogin} >= 1 && $secureLoginKey ne ""
 	   && !timeOut($timeout{'master'}) && $conState_tries) {
 
@@ -343,6 +350,17 @@ sub checkConnection {
 		$self->serverDisconnect;
 		undef $conState_tries;
 
+	} elsif ($conState == 1.5) {
+		
+		if (!$self->serverAlive) {
+			$conState = 1;
+			undef $conState_tries;
+			return;
+		}
+		
+		# on this special stage, the plugin will know what to do next.
+		Plugins::callHook("Network::serverConnect/special");
+		
 	} elsif ($conState == 2 && !$self->serverAlive()
 	  && ($config{'server'} ne "" || $masterServer->{charServer_ip})
 	  && !$conState_tries) {
@@ -358,6 +376,12 @@ sub checkConnection {
 			error "Invalid server specified, server $config{server} does not exist...\n", "connection";
 		}
 
+		# call plugin's hook to determine if we can continue the connection
+		if ($self->serverAlive) {
+			Plugins::callHook("Network::serverConnect/char");
+			return if ($conState == 1.5);
+		}
+		
 		$self->sendGameLogin($accountID, $sessionID, $sessionID2, $accountSex);
 		$timeout{'gamelogin'}{'time'} = time;
 
@@ -374,6 +398,13 @@ sub checkConnection {
 		message("Connecting to Character Select Server...\n", "connection");
 		$conState_tries++;
 		$self->serverConnect($servers[$config{'server'}]{'ip'}, $servers[$config{'server'}]{'port'});
+
+		# call plugin's hook to determine if we can continue the connection
+		if ($self->serverAlive) {
+			Plugins::callHook("Network::serverConnect/charselect");
+			return if ($conState == 1.5);
+		}
+				
 		$self->sendCharLogin($config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 
@@ -396,6 +427,13 @@ sub checkConnection {
 		} else {
 			$self->serverConnect($config{forceMapIP} || $map_ip, $map_port);
 		}
+
+		# call plugin's hook to determine if we can continue the connection
+		if ($self->serverAlive) {
+			Plugins::callHook("Network::serverConnect/mapserver");
+			return if ($conState == 1.5);
+		}
+
 		$self->sendMapLogin($accountID, $charID, $sessionID, $accountSex2);
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
