@@ -474,7 +474,8 @@ else
 require_once('./includes/openkore.' . $phpEx);
 $options = load_openkore_options();
 $template->assign_vars(array(
-	'IMPORTANT_ANNOUNCEMENT' => $options['important_announcement']
+	'IMPORTANT_ANNOUNCEMENT' => $options['important_announcement'],
+	'ADVERTISEMENT' => $options['advertisement']
 ));
 if ($options['important_announcement'] != '')
 	$template->assign_block_vars('important_announcement', array());

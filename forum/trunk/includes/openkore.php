@@ -28,6 +28,10 @@ function load_openkore_options()
 	while ($row = $db->sql_fetchrow($result)) {
 		$options[$row['config_name']] = $row['config_value'];
 	}
+
+	// Load advertisement
+	$options['advertisement'] = file_get_contents($phpbb_root_path . "templates/advertisement.txt");
+
 	return $options;
 }
 ?>
