@@ -463,6 +463,7 @@ sub actor_action {
 		if ($args->{sourceID} eq $accountID) {
 			message T("You are sitting.\n");
 			$char->{sitting} = 1;
+			AI::queue("sitAuto") unless (AI::inQueue("sitAuto")) || $ai_v{sitAuto_forcedBySitCommand};
 		} else {
 			message TF("%s is sitting.\n", getActorName($args->{sourceID})), 'parseMsg_statuslook', 2;
 			$players{$args->{sourceID}}{sitting} = 1 if ($players{$args->{sourceID}});
