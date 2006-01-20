@@ -4,6 +4,8 @@
 </div>
 <!-- END important_announcement -->
 
+{ADVERTISEMENT}
+
 <form method="post" action="{S_POST_DAYS_ACTION}">
   <table width="100%" cellspacing="2" cellpadding="2" border="0" align="center">
 	<tr> 
