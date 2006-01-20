@@ -1,4 +1,4 @@
-# This file contains information about master servers.
+m# This file contains information about master servers.
 
 # eAthena private servers use these options:
 # master_version 1
@@ -20,7 +20,7 @@ version 18
 serverType 0
 serverEncoding Western
 
-[Malaysia - mRO: Main Server]
+[Malaysia - mRO: Main Server: Chaos/Loki]
 ip 61.220.63.248
 port 6900
 master_version 16
