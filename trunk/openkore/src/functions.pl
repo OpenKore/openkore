@@ -4224,7 +4224,8 @@ sub AI {
 
 		if ($safe && $config{teleportAuto_portal}
 		  && ($config{'lockMap'} eq "" || $config{lockMap} eq $field{name})
-		  && timeOut($timeout{ai_teleport_portal})) {
+		  && timeOut($timeout{ai_teleport_portal})
+		  && !AI::inQueue("storageAuto", "buyAuto", "sellAuto")) {
 			if (scalar(@portalsID)) {
 				message "Teleporting to avoid portal\n", "teleport";
 				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
