@@ -35,6 +35,8 @@ Bug fixes:
   the 'sit' command.
 - The 'sit' command no longer modifies any config options.
 - Location-based partySkills should target better now.
+- teleportAuto_portal will now be temporarily disabled during autoStorage,
+  autoSell and autoBuy.
 
 New features:
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
