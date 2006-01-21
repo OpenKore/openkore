@@ -3703,9 +3703,10 @@ sub npc_talk_responses {
 	my $list = "----------Responses-----------\n";
 	$list .=   "#  Response\n";
 	for (my $i = 0; $i < @{$talk{'responses'}}; $i++) {
+		my $responseMsg = ($talk{'responses'}[$i] =~ /^\^nItemID\^(\d+)$/) ? itemNameSimple($1) : $talk{'responses'}[$i];
 		$list .= swrite(
 			"@< @<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
-			[$i, $talk{'responses'}[$i]]);
+			[$i, $responseMsg]);
 	}
 	$list .= "-------------------------------\n";
 	message($list, "list");

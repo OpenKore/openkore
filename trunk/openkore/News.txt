@@ -45,6 +45,7 @@ New features:
 - An empty adminPassword disables all authentication schemes to control Kore
 - Manual move commands (east, west, north, south, etc) now take an optional
   'distance' parameter.
+- Response list for refining equipments now displays correct item names
 
 New config options:
 - autoMoveOnDeath set:
