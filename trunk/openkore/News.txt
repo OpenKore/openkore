@@ -76,6 +76,10 @@ New config options:
 	XKore_listenPort
 - removeActorWithDistance
 - route_randomWalk_inTown
+- teleportAuto_useChatCommand <command>
+  Use a specified chat command for random teleport.
+- saveMap_warpChatCommand <command>
+  Use a specified chat command for respawning or warping to saveMap.
 
 New commands:
 - cart release: remove cart status
