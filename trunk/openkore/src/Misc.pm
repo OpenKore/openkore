@@ -2437,6 +2437,16 @@ sub updatePlayerNameCache {
 sub useTeleport {
 	my ($use_lvl, $internal, $emergency) = @_;
 
+	if ($use_lvl == 2 && $config{saveMap_warpChatCommand}) {
+		sendMessage($net, "c", $config{saveMap_warpChatCommand});
+		return 1;
+	}
+
+	if ($use_lvl == 1 && $config{teleportAuto_useChatCommand}) {
+		sendMessage($net, "c", $config{teleportAuto_useChatCommand});
+		return 1;
+	}
+
 	# for possible recursive calls
 	if (!defined $internal) {
 		$internal = $config{teleportAuto_useSkill};
