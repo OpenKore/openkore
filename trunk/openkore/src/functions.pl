@@ -3565,9 +3565,8 @@ sub AI {
 
 	if (AI::isIdle || AI::is(qw(route mapRoute follow sitAuto take items_gather items_take attack))
 	|| (AI::action eq "skill_use" && AI::args->{tag} eq "attackSkill")) {
-		my $i = 0;
 		my %self_skill;
-		while (exists $config{"useSelf_skill_$i"}) {
+		for (my $i = 0; exists $config{"useSelf_skill_$i"}; $i++) {
 			if ($config{"useSelf_skill_$i"} && checkSelfCondition("useSelf_skill_$i")) {
 				$ai_v{"useSelf_skill_$i"."_time"} = time;
 				$self_skill{ID} = $skills_rlut{lc($config{"useSelf_skill_$i"})};
@@ -3579,16 +3578,16 @@ sub AI {
 				$self_skill{lvl} = $config{"useSelf_skill_$i"."_lvl"};
 				$self_skill{maxCastTime} = $config{"useSelf_skill_$i"."_maxCastTime"};
 				$self_skill{minCastTime} = $config{"useSelf_skill_$i"."_minCastTime"};
+				$self_skill{prefix} = "useSelf_skill_$i";
 				last;
 			}
-			$i++;
 		}
 		if ($config{useSelf_skill_smartHeal} && $self_skill{ID} eq "AL_HEAL") {
 			my $smartHeal_lv = 1;
 			my $hp_diff = $char->{hp_max} - $char->{hp};
 			my $meditatioBonus = 1;
 			$meditatioBonus = 1 + int(($char->{skills}{HP_MEDITATIO}{lv} * 2) / 100) if ($char->{skills}{HP_MEDITATIO});
-			for ($i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
+			for (my $i = 1; $i <= $char->{skills}{$self_skill{ID}}{lv}; $i++) {
 				my ($sp_req, $amount);
 
 				$smartHeal_lv = $i;
@@ -3602,7 +3601,7 @@ sub AI {
 			}
 			$self_skill{lvl} = $smartHeal_lv;
 		}
-		if ($config{"useSelf_skill_$i"."_smartEncore"} &&
+		if ($config{$self_skill{prefix}."_smartEncore"} &&
 			$char->{encoreSkill} &&
 			$char->{encoreSkill}->handle eq $self_skill{ID}) {
 			# Use Encore skill instead if applicable
@@ -3611,9 +3610,9 @@ sub AI {
 		if ($self_skill{lvl} > 0) {
 			debug qq~Auto-skill on self: $skills_lut{$self_skill{ID}} (lvl $self_skill{lvl})\n~, "ai";
 			if (!ai_getSkillUseType($self_skill{ID})) {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID, undef, undef, undef, undef, "useSelf_skill_$i");
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $accountID, undef, undef, undef, undef, $self_skill{prefix});
 			} else {
-				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y}, undef, undef, undef, "useSelf_skill_$i");
+				ai_skillUse($self_skill{ID}, $self_skill{lvl}, $self_skill{maxCastTime}, $self_skill{minCastTime}, $char->{pos_to}{x}, $char->{pos_to}{y}, undef, undef, undef, $self_skill{prefix});
 			}
 		}
 	}
@@ -3634,8 +3633,8 @@ sub AI {
 					&& checkPlayerCondition("partySkill_$i"."_target", $ID)
 					&& checkSelfCondition("partySkill_$i")
 					){
-					$party_skill{skillID} = $skills_rlut{lc($config{"partySkill_$i"})};
-					$party_skill{skillLvl} = $config{"partySkill_$i"."_lvl"};
+					$party_skill{ID} = $skills_rlut{lc($config{"partySkill_$i"})};
+					$party_skill{lvl} = $config{"partySkill_$i"."_lvl"};
 					$party_skill{target} = $player->{name};
 					my $pos = $player->position;
 					$party_skill{x} = $pos->{x};
@@ -3648,7 +3647,7 @@ sub AI {
 					# This is used by setSkillUseTimer() to set
 					# $ai_v{"partySkill_${i}_target_time"}{$targetID}
 					# when the skill is actually cast
-					$targetTimeout{$ID}{$party_skill{skillID}} = $i;
+					$targetTimeout{$ID}{$party_skill{ID}} = $i;
 					last;
 				}
 
@@ -3656,7 +3655,7 @@ sub AI {
 			last if (defined $party_skill{targetID});
 		}
 
-		if ($config{useSelf_skill_smartHeal} && $party_skill{skillID} eq "AL_HEAL") {
+		if ($config{useSelf_skill_smartHeal} && $party_skill{ID} eq "AL_HEAL") {
 			my $smartHeal_lv = 1;
 			my $hp_diff;
 			if ($char->{party} && $char->{party}{users}{$party_skill{targetID}} && $char->{party}{users}{$party_skill{targetID}}{hp}) {
@@ -3664,7 +3663,7 @@ sub AI {
 			} else {
 				$hp_diff = -$players{$party_skill{targetID}}{deltaHp};
 			}
-			for (my $i = 1; $i <= $char->{skills}{$party_skill{skillID}}{lv}; $i++) {
+			for (my $i = 1; $i <= $char->{skills}{$party_skill{ID}}{lv}; $i++) {
 				my ($sp_req, $amount);
 
 				$smartHeal_lv = $i;
@@ -3676,14 +3675,14 @@ sub AI {
 				}
 				last if ($amount >= $hp_diff);
 			}
-			$party_skill{skillLvl} = $smartHeal_lv;
+			$party_skill{lvl} = $smartHeal_lv;
 		}
 		if (defined $party_skill{targetID}) {
-			debug qq~Party Skill used ($party_skill{target}) Skills Used: $skills_lut{$party_skill{skillID}} (lvl $party_skill{skillLvl})\n~, "skill";
-			if (!ai_getSkillUseType($party_skill{skillID})) {
+			debug qq~Party Skill used ($party_skill{target}) Skills Used: $skills_lut{$party_skill{ID}} (lvl $party_skill{lvl})\n~, "skill";
+			if (!ai_getSkillUseType($party_skill{ID})) {
 				ai_skillUse(
-					$party_skill{skillID},
-					$party_skill{skillLvl},
+					$party_skill{ID},
+					$party_skill{lvl},
 					$party_skill{maxCastTime},
 					$party_skill{minCastTime},
 					$party_skill{isSelfSkill} ? $accountID : $party_skill{targetID},
@@ -3695,8 +3694,8 @@ sub AI {
 			} else {
 				my $pos = ($party_skill{isSelfSkill}) ? $char->{pos_to} : \%party_skill;
 				ai_skillUse(
-					$party_skill{skillID},
-					$party_skill{skillLvl},
+					$party_skill{ID},
+					$party_skill{lvl},
 					$party_skill{maxCastTime},
 					$party_skill{minCastTime},
 					$pos->{x},
