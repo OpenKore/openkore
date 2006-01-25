@@ -37,6 +37,8 @@ Bug fixes:
 - Location-based partySkills should target better now.
 - teleportAuto_portal will now be temporarily disabled during autoStorage,
   autoSell and autoBuy.
+- Fixed a variable clash bug in useSelf_skill (useSelf_skill_smartHeal code)
+  which causes equip_* options not work
 
 New features:
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
