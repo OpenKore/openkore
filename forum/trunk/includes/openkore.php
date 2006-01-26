@@ -19,6 +19,8 @@ define('OPENKORE_MIN_USER_POSTS', 40);
 function load_openkore_options()
 {
 	global $db;
+	global $phpbb_root_path;
+
 	$sql = "SELECT * FROM " . OPENKORE_FORUM_CONFIG_TABLE . " WHERE config_name = 'important_announcement';";
 	if (!($result = $db->sql_query($sql))) {
 		message_die(GENERAL_ERROR, 'Cannot fetch configuration values.', 'Error', __LINE__, __FILE__, $sql);
