@@ -60,12 +60,12 @@ sub new {
 		'0087' => ['character_moves', 'x4 a5 C1', [qw(coords unknown)]],
 		'0088' => ['actor_movement_interrupted', 'a4 v1 v1', [qw(ID x y)]],
 		'008A' => ['actor_action', 'a4 a4 a4 V2 s1 v1 C1 v1', [qw(sourceID targetID tick src_speed dst_speed damage param2 type param3)]],
-		'008D' => ['public_chat', 'x2 a4 Z*', [qw(ID message)]],
+		'008D' => ['public_chat', 'v1 a4 Z*', [qw(len ID message)]],
 		'008E' => ['self_chat', 'x2 Z*', [qw(message)]],
 		'0091' => ['map_change', 'Z16 v1 v1', [qw(map x y)]],
 		'0092' => ['map_changed', 'Z16 x4 a4 v1', [qw(map IP port)]],
 		'0095' => ['actor_info', 'a4 Z24', [qw(ID name)]],
-		'0097' => ['private_message', 'x2 Z24', [qw(privMsgUser)]],
+		'0097' => ['private_message', 'v1 Z24 Z*', [qw(len privMsgUser privMsg)]],
 		'0098' => ['private_message_sent', 'C1', [qw(type)]],
 		'009A' => ['system_chat', 'x2 Z*', [qw(message)]], #maybe use a* instead and $message =~ /\000$//; if there are problems
 		'009C' => ['actor_look_at', 'a4 C1 x1 C1', [qw(ID head body)]],
@@ -4038,10 +4038,6 @@ sub private_message {
 	my ($self, $args) = @_;
 	# Private message
 	change_to_constate5();
-	my $newmsg;
-	decrypt(\$newmsg, substr($args->{RAW_MSG}, 28));
-	my $msg = substr($args->{RAW_MSG}, 0, 28) . $newmsg;
-	$args->{privMsg} = substr($msg, 28, $args->{RAW_MSG_SIZE} - 29); # why doesn't it want the last byte?
 	if ($args->{privMsgUser} ne "" && binFind(\@privMsgUsers, $args->{privMsgUser}) eq "") {
 		push @privMsgUsers, $args->{privMsgUser};
 		Plugins::callHook('parseMsg/addPrivMsgUser', {
