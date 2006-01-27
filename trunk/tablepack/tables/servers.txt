@@ -644,3 +644,35 @@ version 20
 private 1
 serverType 0
 serverEncoding Western
+
+[EtherealRO Private Server]
+ip 216.32.66.4
+port 6901
+version 0
+master_version 18
+serverType 5
+serverEncoding Western
+
+[SukiRO (Silk) Private Server]
+ip 72.36.162.101
+port 13371
+master_version 16
+version 2
+serverType 5
+serverEncoding Western
+
+[SunRO Private Server]
+ip 70.86.136.88
+port 6900
+version 60101
+master_version 4
+serverType 5
+serverEncoding Chinese
+   
+[MysticalRO Private Server]
+ip mro.no-ip.org
+port 6900
+master_version 18
+version 20
+serverType 5
+serverEncoding Western
