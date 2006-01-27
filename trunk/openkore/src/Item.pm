@@ -52,7 +52,7 @@ sub new {
 ##############################
 
 ##
-# Item::get(item, skipIndex, notEquipped)
+# Item::get(name, skipIndex, notEquipped)
 # item: can be either an object itself, an ID or a name.
 # skipIndex: tells this function to not select a certain item (used for getting another item with the same name).
 # notEquipped: do not select unequipped items.
@@ -62,27 +62,34 @@ sub new {
 #
 # See also: Item::getMultiple()
 sub get {
-	my $item = shift;
+	my $name = shift;
 	my $skipIndex = shift;
 	my $notEquipped = shift;
 
-	return $item if (UNIVERSAL::isa($item, 'Item'));
+	return $name if UNIVERSAL::isa($name, 'Item');
 
 	# user supplied an inventory index
-	if ($item =~ /^\d+$/) {
-		return $char->{inventory}[$item] if $char->{inventory}[$item];
+	if ($name =~ /^\d+$/) {
+		my $item = $char->{inventory}[$name];
+		return undef unless $item;
+		return $item if UNIVERSAL::isa($item, 'Item');
+		error "BUG: Item::get($name, $skipIndex, $notEquipped) => $item is not of class Item\n";
 		return undef;
 
 	# user supplied an item name
 	} else {
 		my $index;
 		if ($notEquipped) {
-			$index = findIndexString_lc_not_equip($char->{inventory}, 'name', $item, $skipIndex);
+			$index = findIndexString_lc_not_equip($char->{inventory}, 'name', $name, $skipIndex);
 		} else {
-			$index = findIndexString_lc($char->{inventory}, 'name', $item, $skipIndex);
+			$index = findIndexString_lc($char->{inventory}, 'name', $name, $skipIndex);
 		}
 		return undef if !defined($index);
-		return $char->{inventory}[$index];
+		my $item = $char->{inventory}[$index];
+		return undef unless $item;
+		return $item if UNIVERSAL::isa($item, 'Item');
+		error "BUG: Item::get($name, $skipIndex, $notEquipped) => $item is not of class Item\n";
+		return undef;
 	}
 }
 
