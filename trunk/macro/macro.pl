@@ -8,7 +8,7 @@
 # See http://www.gnu.org/licenses/gpl.html
 
 package macro;
-my $vMajor = "1.0";
+my $vMajor = "1.1";
 my $Version = sprintf("%s rev%d.%02d", $vMajor, q$Revision$ =~ /(\d+)\.(\d+)/);
 
 use strict;
