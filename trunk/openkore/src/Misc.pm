@@ -3153,6 +3153,11 @@ sub checkSelfCondition {
 		return 0 unless $item && $item->{equipped};
 	}
 
+	if ($config{$prefix."_whenNotEquipped"}) {
+		my $item = Item::get($config{$prefix."_whenNotEquipped"});
+		return 0 if $item && $item->{equipped};
+	}
+
 	# not working yet
 	if ($config{$prefix."_whenWater"}) {
 		my $pos = calcPosition($char);
