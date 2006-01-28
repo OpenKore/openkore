@@ -82,6 +82,8 @@ New config options:
   Use a specified chat command for random teleport.
 - saveMap_warpChatCommand <command>
   Use a specified chat command for respawning or warping to saveMap.
+- statsAdd_over_99: set this option to make Kore lift the restriction on adding
+  stat points over 99
 
 New commands:
 - cart release: remove cart status
