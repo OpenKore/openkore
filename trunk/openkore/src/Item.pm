@@ -218,7 +218,7 @@ sub queueEquip {
 	my $count = shift;
 	return unless $count;
 	$ai_v{temp}{waitForEquip} += $count;
-	AI::queue('equip') unless $ai_seq[0] eq 'equip';
+	AI::queue('equip') unless AI::action eq 'equip';
 	$timeout{ai_equip_giveup}{time} = time;
 }
 

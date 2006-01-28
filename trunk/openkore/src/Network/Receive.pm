@@ -3591,7 +3591,7 @@ sub npc_store_info {
 	# continue talk sequence now
 	$ai_v{'npc_talk'}{'time'} = time;
 
-	if ($ai_seq[0] ne 'buyAuto') {
+	if (AI::action ne 'buyAuto') {
 		message TF("----------%s's Store List-----------\n", $name), "list";
 		message("#  Name		    Type	   Price\n", "list");
 		my $display;
