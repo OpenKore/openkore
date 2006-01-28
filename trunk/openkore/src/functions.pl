@@ -634,11 +634,10 @@ sub AI {
 
 	Plugins::callHook('AI_pre/manual');
 
-	if ($ai_seq[0] eq "look" && timeOut($timeout{'ai_look'})) {
+	if (AI::action eq "look" && timeOut($timeout{'ai_look'})) {
 		$timeout{'ai_look'}{'time'} = time;
-		sendLook($net, $ai_seq_args[0]{'look_body'}, $ai_seq_args[0]{'look_head'});
-		shift @ai_seq;
-		shift @ai_seq_args;
+		sendLook($net, AI::args->{'look_body'}, AI::args->{'look_head'});
+		AI::dequeue;
 	}
 
 
@@ -652,48 +651,49 @@ sub AI {
 	} elsif (AI::action eq "clientSuspend" && $net->clientAlive()) {
 		# When XKore mode is turned on, clientSuspend will increase it's timeout
 		# every time the user tries to do something manually.
+		my $args = AI::args;
 
-		if ($ai_seq_args[0]{'type'} eq "0089") {
+		if ($args->{'type'} eq "0089") {
 			# Player's manually attacking
-			if ($ai_seq_args[0]{'args'}[0] == 2) {
+			if ($args->{'args'}[0] == 2) {
 				if ($chars[$config{'char'}]{'sitting'}) {
-					$ai_seq_args[0]{'time'} = time;
+					$args->{'time'} = time;
 				}
-			} elsif ($ai_seq_args[0]{'args'}[0] == 3) {
-				$ai_seq_args[0]{'timeout'} = 6;
+			} elsif ($args->{'args'}[0] == 3) {
+				$args->{'timeout'} = 6;
 			} else {
-				if (!$ai_seq_args[0]{'forceGiveup'}{'timeout'}) {
-					$ai_seq_args[0]{'forceGiveup'}{'timeout'} = 6;
-					$ai_seq_args[0]{'forceGiveup'}{'time'} = time;
+				if (!$args->{'forceGiveup'}{'timeout'}) {
+					$args->{'forceGiveup'}{'timeout'} = 6;
+					$args->{'forceGiveup'}{'time'} = time;
 				}
-				if ($ai_seq_args[0]{'dmgFromYou_last'} != $monsters{$ai_seq_args[0]{'args'}[1]}{'dmgFromYou'}) {
-					$ai_seq_args[0]{'forceGiveup'}{'time'} = time;
+				if ($args->{'dmgFromYou_last'} != $monsters{$args->{'args'}[1]}{'dmgFromYou'}) {
+					$args->{'forceGiveup'}{'time'} = time;
 				}
-				$ai_seq_args[0]{'dmgFromYou_last'} = $monsters{$ai_seq_args[0]{'args'}[1]}{'dmgFromYou'};
-				$ai_seq_args[0]{'missedFromYou_last'} = $monsters{$ai_seq_args[0]{'args'}[1]}{'missedFromYou'};
-				if ($monsters{$ai_seq_args[0]{'args'}[1]} && %{$monsters{$ai_seq_args[0]{'args'}[1]}}) {
-					$ai_seq_args[0]{'time'} = time;
+				$args->{'dmgFromYou_last'} = $monsters{$args->{'args'}[1]}{'dmgFromYou'};
+				$args->{'missedFromYou_last'} = $monsters{$args->{'args'}[1]}{'missedFromYou'};
+				if ($monsters{$args->{'args'}[1]} && %{$monsters{$args->{'args'}[1]}}) {
+					$args->{'time'} = time;
 				} else {
-					$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
+					$args->{'time'} -= $args->{'timeout'};
 				}
-				if (timeOut($ai_seq_args[0]{'forceGiveup'})) {
-					$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
+				if (timeOut($args->{'forceGiveup'})) {
+					$args->{'time'} -= $args->{'timeout'};
 				}
 			}
 
-		} elsif ($ai_seq_args[0]{'type'} eq "009F") {
+		} elsif ($args->{'type'} eq "009F") {
 			# Player's manually picking up an item
-			if (!$ai_seq_args[0]{'forceGiveup'}{'timeout'}) {
-				$ai_seq_args[0]{'forceGiveup'}{'timeout'} = 4;
-				$ai_seq_args[0]{'forceGiveup'}{'time'} = time;
+			if (!$args->{'forceGiveup'}{'timeout'}) {
+				$args->{'forceGiveup'}{'timeout'} = 4;
+				$args->{'forceGiveup'}{'time'} = time;
 			}
-			if ($items{$ai_seq_args[0]{'args'}[0]} && %{$items{$ai_seq_args[0]{'args'}[0]}}) {
-				$ai_seq_args[0]{'time'} = time;
+			if ($items{$args->{'args'}[0]} && %{$items{$args->{'args'}[0]}}) {
+				$args->{'time'} = time;
 			} else {
-				$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
+				$args->{'time'} -= $args->{'timeout'};
 			}
-			if (timeOut($ai_seq_args[0]{'forceGiveup'})) {
-				$ai_seq_args[0]{'time'} -= $ai_seq_args[0]{'timeout'};
+			if (timeOut($args->{'forceGiveup'})) {
+				$args->{'time'} -= $args->{'timeout'};
 			}
 		}
 
@@ -805,7 +805,7 @@ sub AI {
 				sendTalkCancel($net, $args->{ID});
 				$ai_v{'npc_talk'}{'time'} = time;
 				$args->{time}	= time;
-			} elsif ( $ai_seq_args[0]{'steps'}[0] =~ /^b(\d+),(\d+)/i ) {
+			} elsif ( $args->{steps}[0] =~ /^b(\d+),(\d+)/i ) {
 				my $itemID = $storeList[$1]{nameID};
 				$ai_v{npc_talk}{itemID} = $itemID;
 				sendBuy($net, $itemID, $2);
@@ -939,7 +939,7 @@ sub AI {
 			useTeleport(1);
 		}
 
-	} elsif (AI::action eq "attack" && !$monsters{$ai_seq_args[0]{ID}} && (!$players{$ai_seq_args[0]{ID}} || $players{$ai_seq_args[0]{ID}}{dead})) {
+	} elsif (AI::action eq "attack" && !$monsters{AI::args->{ID}} && (!$players{AI::args->{ID}} || $players{AI::args->{ID}}{dead})) {
 		# Monster died or disappeared
 		$timeout{'ai_attack'}{'time'} -= $timeout{'ai_attack'}{'timeout'};
 		my $ID = AI::args->{ID};
@@ -1373,10 +1373,10 @@ sub AI {
 			}
 
 		} elsif ($config{'tankMode'}) {
-			if ($ai_seq_args[0]{'dmgTo_last'} != $target->{'dmgTo'}) {
-				$ai_seq_args[0]{'ai_attack_giveup'}{'time'} = time;
+			if ($args->{'dmgTo_last'} != $target->{'dmgTo'}) {
+				$args->{'ai_attack_giveup'}{'time'} = time;
 			}
-			$ai_seq_args[0]{'dmgTo_last'} = $target->{'dmgTo'};
+			$args->{'dmgTo_last'} = $target->{'dmgTo'};
 		}
 	}
 
@@ -1553,12 +1553,12 @@ sub AI {
 				$trimsteps++ while ($trimsteps < @{$solution}
 						 && distance($solution->[@{$solution} - 1 - $trimsteps], $solution->[@{$solution} - 1]) < $args->{pyDistFromGoal}
 					);
-				debug "Route - trimming down solution by $trimsteps steps for pyDistFromGoal $ai_seq_args[0]{'pyDistFromGoal'}\n", "route";
-				splice(@{$ai_seq_args[0]{'solution'}}, -$trimsteps) if ($trimsteps);
+				debug "Route - trimming down solution by $trimsteps steps for pyDistFromGoal $args->{'pyDistFromGoal'}\n", "route";
+				splice(@{$args->{'solution'}}, -$trimsteps) if ($trimsteps);
 			} elsif ($args->{distFromGoal}) {
-				my $trimsteps = $ai_seq_args[0]{distFromGoal};
-				$trimsteps = @{$ai_seq_args[0]{'solution'}} if $trimsteps > @{$ai_seq_args[0]{'solution'}};
-				debug "Route - trimming down solution by $trimsteps steps for distFromGoal $ai_seq_args[0]{'distFromGoal'}\n", "route";
+				my $trimsteps = $args->{distFromGoal};
+				$trimsteps = @{$args->{'solution'}} if $trimsteps > @{$args->{'solution'}};
+				debug "Route - trimming down solution by $trimsteps steps for distFromGoal $args->{'distFromGoal'}\n", "route";
 				splice(@{$args->{solution}}, -$trimsteps) if ($trimsteps);
 			}
 
@@ -1578,7 +1578,7 @@ sub AI {
 
 			unless (@{$args->{solution}}) {
 				# No more points to cover; we've arrived at the destination
-				if (AI::args->{notifyUponArrival}) {
+				if ($args->{notifyUponArrival}) {
 					message "Destination reached.\n", "success";
 				} else {
 					debug "Destination reached.\n", "route";
@@ -1669,7 +1669,7 @@ sub AI {
 					}
 				} else {
 					# No more points to cover
-					if (AI::args->{notifyUponArrival}) {
+					if ($args->{notifyUponArrival}) {
 						message "Destination reached.\n", "success";
 					} else {
 						debug "Destination reached.\n", "route";
@@ -1690,19 +1690,19 @@ sub AI {
 		my $args = AI::args;
 
 		if ($args->{stage} eq '') {
-			$ai_seq_args[0]{'budget'} = $config{'route_maxWarpFee'} eq '' ?
+			$args->{'budget'} = $config{'route_maxWarpFee'} eq '' ?
 				'' :
 				$config{'route_maxWarpFee'} > $chars[$config{'char'}]{'zenny'} ?
 					$chars[$config{'char'}]{'zenny'} :
 					$config{'route_maxWarpFee'};
-			delete $ai_seq_args[0]{'done'};
-			delete $ai_seq_args[0]{'found'};
-			delete $ai_seq_args[0]{'mapChanged'};
-			delete $ai_seq_args[0]{'openlist'};
-			delete $ai_seq_args[0]{'closelist'};
-			undef @{$ai_seq_args[0]{'mapSolution'}};
-			$ai_seq_args[0]{'dest'}{'field'} = {};
-			getField($ai_seq_args[0]{dest}{map}, $ai_seq_args[0]{dest}{field});
+			delete $args->{'done'};
+			delete $args->{'found'};
+			delete $args->{'mapChanged'};
+			delete $args->{'openlist'};
+			delete $args->{'closelist'};
+			undef @{$args->{'mapSolution'}};
+			$args->{'dest'}{'field'} = {};
+			getField($args->{dest}{map}, $args->{dest}{field});
 
 			# Initializes the openlist with portals walkable from the starting point
 			foreach my $portal (keys %portals_lut) {
@@ -1710,26 +1710,26 @@ sub AI {
 				if ( ai_route_getRoute(\@{$args->{solution}}, \%field, $char->{pos_to}, \%{$portals_lut{$portal}{'source'}}) ) {
 					foreach my $dest (keys %{$portals_lut{$portal}{'dest'}}) {
 						my $penalty = int(($portals_lut{$portal}{'dest'}{$dest}{'steps'} ne '') ? $routeWeights{'NPC'} : $routeWeights{'PORTAL'});
-						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$ai_seq_args[0]{'solution'}};
-						$ai_seq_args[0]{'openlist'}{"$portal=$dest"}{'zenny'} = $portals_lut{$portal}{'dest'}{$dest}{'cost'};
+						$args->{'openlist'}{"$portal=$dest"}{'walk'} = $penalty + scalar @{$args->{'solution'}};
+						$args->{'openlist'}{"$portal=$dest"}{'zenny'} = $portals_lut{$portal}{'dest'}{$dest}{'cost'};
 					}
 				}
 			}
-			$ai_seq_args[0]{'stage'} = 'Getting Map Solution';
+			$args->{'stage'} = 'Getting Map Solution';
 
 		} elsif ( $args->{stage} eq 'Getting Map Solution' ) {
 			$timeout{'ai_route_calcRoute'}{'time'} = time;
-			while (!$ai_seq_args[0]{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
+			while (!$args->{'done'} && !timeOut(\%{$timeout{'ai_route_calcRoute'}})) {
 				ai_mapRoute_searchStep($args);
 			}
-			if ($ai_seq_args[0]{'found'}) {
-				$ai_seq_args[0]{'stage'} = 'Traverse the Map Solution';
-				delete $ai_seq_args[0]{'openlist'};
-				delete $ai_seq_args[0]{'solution'};
-				delete $ai_seq_args[0]{'closelist'};
-				delete $ai_seq_args[0]{'dest'}{'field'};
+			if ($args->{'found'}) {
+				$args->{'stage'} = 'Traverse the Map Solution';
+				delete $args->{'openlist'};
+				delete $args->{'solution'};
+				delete $args->{'closelist'};
+				delete $args->{'dest'}{'field'};
 				debug "Map Solution Ready for traversal.\n", "route";
-			} elsif ($ai_seq_args[0]{'done'}) {
+			} elsif ($args->{'done'}) {
 				my $destpos = "$args->{dest}{pos}{x},$args->{dest}{pos}{y}";
 				$destpos = "($destpos)" if ($destpos ne "");
 				warning "Unable to calculate how to walk from [$field{name}($char->{pos_to}{x},$char->{pos_to}{y})] " .
@@ -1740,116 +1740,114 @@ sub AI {
 		} elsif ( $args->{stage} eq 'Traverse the Map Solution' ) {
 
 			my @solution;
-			unless (@{$ai_seq_args[0]{'mapSolution'}}) {
+			unless (@{$args->{'mapSolution'}}) {
 				# mapSolution is now empty
 				AI::dequeue;
 				debug "Map Router is finish traversing the map solution\n", "route";
 
-			} elsif ( $field{'name'} ne $ai_seq_args[0]{'mapSolution'}[0]{'map'}
+			} elsif ( $field{'name'} ne $args->{'mapSolution'}[0]{'map'}
 				|| ( $args->{mapChanged} && !$args->{teleport} ) ) {
 				# Solution Map does not match current map
-				debug "Current map $field{'name'} does not match solution [ $ai_seq_args[0]{'mapSolution'}[0]{'portal'} ].\n", "route";
-				delete $ai_seq_args[0]{'substage'};
-				delete $ai_seq_args[0]{'timeout'};
-				delete $ai_seq_args[0]{'mapChanged'};
-				shift @{$ai_seq_args[0]{'mapSolution'}};
+				debug "Current map $field{'name'} does not match solution [ $args->{'mapSolution'}[0]{'portal'} ].\n", "route";
+				delete $args->{'substage'};
+				delete $args->{'timeout'};
+				delete $args->{'mapChanged'};
+				shift @{$args->{'mapSolution'}};
 
-			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'steps'} ) {
+			} elsif ( $args->{'mapSolution'}[0]{'steps'} ) {
 				# If current solution has conversation steps specified
-				if ( $ai_seq_args[0]{'substage'} eq 'Waiting for Warp' ) {
-					$ai_seq_args[0]{'timeout'} = time unless $ai_seq_args[0]{'timeout'};
-					if (timeOut($ai_seq_args[0]{'timeout'}, $timeout{ai_route_npcTalk}{timeout} || 10) ||
+				if ( $args->{'substage'} eq 'Waiting for Warp' ) {
+					$args->{'timeout'} = time unless $args->{'timeout'};
+					if (timeOut($args->{'timeout'}, $timeout{ai_route_npcTalk}{timeout} || 10) ||
 					    $ai_v{npc_talk}{talk} eq 'close') {
 						# We waited for 10 seconds and got nothing
-						delete $ai_seq_args[0]{'substage'};
-						delete $ai_seq_args[0]{'timeout'};
-						if (++$ai_seq_args[0]{'mapSolution'}[0]{'retry'} >= ($config{route_maxNpcTries} || 5)) {
+						delete $args->{'substage'};
+						delete $args->{'timeout'};
+						if (++$args->{'mapSolution'}[0]{'retry'} >= ($config{route_maxNpcTries} || 5)) {
 							# NPC sequence is a failure
 							# We delete that portal and try again
-							delete $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"};
-							warning "Unable to talk to NPC at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-							$ai_seq_args[0]{'stage'} = '';	# redo MAP router
+							delete $portals_lut{"$args->{'mapSolution'}[0]{'map'} $args->{'mapSolution'}[0]{'pos'}{'x'} $args->{'mapSolution'}[0]{'pos'}{'y'}"};
+							warning "Unable to talk to NPC at $field{'name'} ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+							$args->{'stage'} = '';	# redo MAP router
 						}
 					}
 
-				} elsif (distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}) <= 10) {
-					my ($from,$to) = split /=/, $ai_seq_args[0]{'mapSolution'}[0]{'portal'};
+				} elsif (distance($chars[$config{'char'}]{'pos_to'}, $args->{'mapSolution'}[0]{'pos'}) <= 10) {
+					my ($from,$to) = split /=/, $args->{'mapSolution'}[0]{'portal'};
 					if ($chars[$config{'char'}]{'zenny'} >= $portals_lut{$from}{'dest'}{$to}{'cost'}) {
 						#we have enough money for this service
-						$ai_seq_args[0]{'substage'} = 'Waiting for Warp';
-						$ai_seq_args[0]{'old_x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
-						$ai_seq_args[0]{'old_y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
-						$ai_seq_args[0]{'old_map'} = $field{'name'};
-						ai_talkNPC($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}, $ai_seq_args[0]{'mapSolution'}[0]{'steps'} );
+						$args->{'substage'} = 'Waiting for Warp';
+						$args->{'old_x'} = $chars[$config{'char'}]{'pos_to'}{'x'};
+						$args->{'old_y'} = $chars[$config{'char'}]{'pos_to'}{'y'};
+						$args->{'old_map'} = $field{'name'};
+						ai_talkNPC($args->{'mapSolution'}[0]{'pos'}{'x'}, $args->{'mapSolution'}[0]{'pos'}{'y'}, $args->{'mapSolution'}[0]{'steps'} );
 					} else {
-						error "Insufficient zenny to pay for service at $field{'name'} ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-						$ai_seq_args[0]{'stage'} = ''; #redo MAP router
+						error "Insufficient zenny to pay for service at $field{'name'} ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+						$args->{'stage'} = ''; #redo MAP router
 					}
 
-				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
+				} elsif ( $args->{'maxRouteTime'} && time - $args->{'time_start'} > $args->{'maxRouteTime'} ) {
 					# we spent too long a time
 					debug "We spent too much time; bailing out.\n", "route";
-					shift @ai_seq;
-					shift @ai_seq_args;
+					AI::dequeue;
 
 				} elsif ( ai_route_getRoute( \@solution, \%field, $char->{pos_to}, $args->{mapSolution}[0]{pos} ) ) {
 					# NPC is reachable from current position
 					# >> Then "route" to it
 					debug "Walking towards the NPC\n", "route";
-					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
-						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
+					ai_route($args->{'mapSolution'}[0]{'map'}, $args->{'mapSolution'}[0]{'pos'}{'x'}, $args->{'mapSolution'}[0]{'pos'}{'y'},
+						attackOnRoute => $args->{'attackOnRoute'},
+						maxRouteTime => $args->{'maxRouteTime'},
 						distFromGoal => 10,
-						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
+						noSitAuto => $args->{'noSitAuto'},
 						_solution => \@solution,
 						_internal => 1);
 
 				} else {
 					#Error, NPC is not reachable from current pos
 					debug "CRTICAL ERROR: NPC is not reachable from current location.\n", "route";
-					error "Unable to walk from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to NPC at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-					shift @{$ai_seq_args[0]{'mapSolution'}};
+					error "Unable to walk from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to NPC at ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+					shift @{$args->{'mapSolution'}};
 				}
 
-			} elsif ( $ai_seq_args[0]{'mapSolution'}[0]{'portal'} eq "$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}=$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}" ) {
+			} elsif ( $args->{'mapSolution'}[0]{'portal'} eq "$args->{'mapSolution'}[0]{'map'} $args->{'mapSolution'}[0]{'pos'}{'x'} $args->{'mapSolution'}[0]{'pos'}{'y'}=$args->{'mapSolution'}[0]{'map'} $args->{'mapSolution'}[0]{'pos'}{'x'} $args->{'mapSolution'}[0]{'pos'}{'y'}" ) {
 				# This solution points to an X,Y coordinate
-				my $distFromGoal = $ai_seq_args[0]{'pyDistFromGoal'} ? $ai_seq_args[0]{'pyDistFromGoal'} : ($ai_seq_args[0]{'distFromGoal'} ? $ai_seq_args[0]{'distFromGoal'} : 0);
-				if ( $distFromGoal + 2 > distance($chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'})) {
+				my $distFromGoal = $args->{'pyDistFromGoal'} ? $args->{'pyDistFromGoal'} : ($args->{'distFromGoal'} ? $args->{'distFromGoal'} : 0);
+				if ( $distFromGoal + 2 > distance($chars[$config{'char'}]{'pos_to'}, $args->{'mapSolution'}[0]{'pos'})) {
 					#We need to specify +2 because sometimes the exact spot is occupied by someone else
-					shift @{$ai_seq_args[0]{'mapSolution'}};
+					shift @{$args->{'mapSolution'}};
 
-				} elsif ( $ai_seq_args[0]{'maxRouteTime'} && time - $ai_seq_args[0]{'time_start'} > $ai_seq_args[0]{'maxRouteTime'} ) {
+				} elsif ( $args->{'maxRouteTime'} && time - $args->{'time_start'} > $args->{'maxRouteTime'} ) {
 					#we spent too long a time
 					debug "We spent too much time; bailing out.\n", "route";
-					shift @ai_seq;
-					shift @ai_seq_args;
+					AI::dequeue;
 
-				} elsif ( ai_route_getRoute( \@solution, \%field, $chars[$config{'char'}]{'pos_to'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'} ) ) {
+				} elsif ( ai_route_getRoute( \@solution, \%field, $chars[$config{'char'}]{'pos_to'}, $args->{'mapSolution'}[0]{'pos'} ) ) {
 					# X,Y is reachable from current position
 					# >> Then "route" to it
-					ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
-						attackOnRoute => $ai_seq_args[0]{'attackOnRoute'},
-						maxRouteTime => $ai_seq_args[0]{'maxRouteTime'},
-						distFromGoal => $ai_seq_args[0]{'distFromGoal'},
-						pyDistFromGoal => $ai_seq_args[0]{'pyDistFromGoal'},
-						noSitAuto => $ai_seq_args[0]{'noSitAuto'},
+					ai_route($args->{'mapSolution'}[0]{'map'}, $args->{'mapSolution'}[0]{'pos'}{'x'}, $args->{'mapSolution'}[0]{'pos'}{'y'},
+						attackOnRoute => $args->{'attackOnRoute'},
+						maxRouteTime => $args->{'maxRouteTime'},
+						distFromGoal => $args->{'distFromGoal'},
+						pyDistFromGoal => $args->{'pyDistFromGoal'},
+						noSitAuto => $args->{'noSitAuto'},
 						_solution => \@solution,
 						_internal => 1);
 
 				} else {
-					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Final Destination at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-					error "Cannot reach ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) from current position.\n", "route";
-					shift @{$ai_seq_args[0]{'mapSolution'}};
+					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Final Destination at ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+					error "Cannot reach ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}) from current position.\n", "route";
+					shift @{$args->{'mapSolution'}};
 				}
 
-			} elsif ( $portals_lut{"$ai_seq_args[0]{'mapSolution'}[0]{'map'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'} $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}"}{'source'} ) {
+			} elsif ( $portals_lut{"$args->{'mapSolution'}[0]{'map'} $args->{'mapSolution'}[0]{'pos'}{'x'} $args->{'mapSolution'}[0]{'pos'}{'y'}"}{'source'} ) {
 				# This is a portal solution
 
 				if ( 2 > distance($char->{pos_to}, $args->{mapSolution}[0]{pos}) ) {
 					# Portal is within 'Enter Distance'
 					$timeout{'ai_portal_wait'}{'timeout'} = $timeout{'ai_portal_wait'}{'timeout'} || 0.5;
 					if ( timeOut($timeout{'ai_portal_wait'}) ) {
-						sendMove(int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}), int($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}) );
+						sendMove(int($args->{'mapSolution'}[0]{'pos'}{'x'}), int($args->{'mapSolution'}[0]{'pos'}{'y'}) );
 						$timeout{'ai_portal_wait'}{'time'} = time;
 					}
 
@@ -1915,7 +1913,7 @@ sub AI {
 							# >> Then "route" to it
 							debug "Portal route attackOnRoute = $args->{attackOnRoute}\n", "route";
 							$args->{teleportTries} = 0;
-							ai_route($ai_seq_args[0]{'mapSolution'}[0]{'map'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'},
+							ai_route($args->{'mapSolution'}[0]{'map'}, $args->{'mapSolution'}[0]{'pos'}{'x'}, $args->{'mapSolution'}[0]{'pos'}{'y'},
 								attackOnRoute => $args->{attackOnRoute},
 								maxRouteTime => $args->{maxRouteTime},
 								noSitAuto => $args->{noSitAuto},
@@ -1924,7 +1922,7 @@ sub AI {
 								_internal => 1);
 
 						} else {
-							warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'},$ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+							warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
 							error "Cannot reach portal from current position\n", "route";
 							shift @{$args->{mapSolution}};
 						}
@@ -2033,7 +2031,7 @@ sub AI {
 
 	##### MISC #####
 
-	if ($ai_seq[0] eq "equip") {
+	if (AI::action eq "equip") {
 		#just wait until everything is equipped or timedOut
 		if (!$ai_v{temp}{waitForEquip} || timeOut($timeout{ai_equip_giveup})) {
 			AI::dequeue;
@@ -2041,9 +2039,9 @@ sub AI {
 		}
 	}
 
-	if ($ai_seq[0] ne "deal" && %currentDeal) {
+	if (AI::action ne "deal" && %currentDeal) {
 		AI::queue('deal');
-	} elsif ($ai_seq[0] eq "deal") {
+	} elsif (AI::action eq "deal") {
 		if (%currentDeal) {
 			if (!$currentDeal{you_finalize} && timeOut($timeout{ai_dealAuto}) &&
 			    ($config{dealAuto} == 2 ||
@@ -2397,318 +2395,318 @@ sub AI {
 
 	AUTOSTORAGE: {
 
-	if (AI::is("", "route", "sitAuto", "follow")
-	    && $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
-		&& !$ai_v{sitAuto_forcedBySitCommand}
-		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-		    || (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'}))
-		&& !AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
+		if (AI::is("", "route", "sitAuto", "follow")
+			&& $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+			&& !$ai_v{sitAuto_forcedBySitCommand}
+			&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+				|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'}))
+			&& !AI::inQueue("storageAuto") && time > $ai_v{'inventory_time'}) {
 
-		# Initiate autostorage when the weight limit has been reached
-		my $routeIndex = AI::findAction("route");
-		my $attackOnRoute = 2;
-		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
-		# Only autostorage when we're on an attack route, or not moving
-		if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
-			message T("Auto-storaging due to excess weight\n");
-			AI::queue("storageAuto");
+			# Initiate autostorage when the weight limit has been reached
+			my $routeIndex = AI::findAction("route");
+			my $attackOnRoute = 2;
+			$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
+			# Only autostorage when we're on an attack route, or not moving
+			if ($attackOnRoute > 1 && ai_storageAutoCheck()) {
+				message T("Auto-storaging due to excess weight\n");
+				AI::queue("storageAuto");
+			}
+
+		} elsif (AI::is("", "route", "attack")
+			&& $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
+			&& !$ai_v{sitAuto_forcedBySitCommand}
+			&& !AI::inQueue("storageAuto")
+			&& @{$char->{inventory}} > 0) {
+
+			# Initiate autostorage when we're low on some item, and getAuto is set
+			my $found;
+			my $i;
+			for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
+				my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
+				if ($config{"getAuto_${i}_minAmount"} ne "" &&
+					$config{"getAuto_${i}_maxAmount"} ne "" &&
+					!$config{"getAuto_${i}_passive"} &&
+						(!defined($invIndex) ||
+						 ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"} &&
+						  $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"}))) {
+					if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
+						if ($config{"getAuto_${i}_dcOnEmpty"}) {
+							message "Disconnecting on empty ".$config{"getAuto_$i"}."!\n";
+							chatLog("k", "Disconnecting on empty ".$config{"getAuto_$i"}."!\n");
+							quit();
+						}
+					} else {
+						$found = 1;
+					}
+					last;
+				}
+			}
+
+			my $routeIndex = AI::findAction("route");
+			my $attackOnRoute;
+			$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
+
+			# Only autostorage when we're on an attack route, or not moving
+			if ((!defined($routeIndex) || $attackOnRoute > 1) && $found &&
+				@{$char->{inventory}} > 0) {
+				message "Auto-storaging due to insufficient ".$config{"getAuto_$i"}."\n";
+				AI::queue("storageAuto");
+			}
+			$timeout{'ai_storageAuto'}{'time'} = time;
 		}
 
-	} elsif (AI::is("", "route", "attack")
-		&& $config{storageAuto} && ($config{storageAuto_npc} ne "" || $config{storageAuto_useChatCommand})
-		&& !$ai_v{sitAuto_forcedBySitCommand}
-		&& !AI::inQueue("storageAuto")
-		&& @{$char->{inventory}} > 0) {
 
-		# Initiate autostorage when we're low on some item, and getAuto is set
-		my $found;
-		my $i;
-		for ($i = 0; exists $config{"getAuto_$i"}; $i++) {
-			my $invIndex = findIndexString_lc($char->{inventory}, "name", $config{"getAuto_$i"});
-			if ($config{"getAuto_${i}_minAmount"} ne "" &&
-			    $config{"getAuto_${i}_maxAmount"} ne "" &&
-				!$config{"getAuto_${i}_passive"} &&
-					(!defined($invIndex) ||
-					 ($char->{inventory}[$invIndex]{amount} <= $config{"getAuto_${i}_minAmount"} &&
-					  $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"}))) {
-				if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
-					if ($config{"getAuto_${i}_dcOnEmpty"}) {
-						message "Disconnecting on empty ".$config{"getAuto_$i"}."!\n";
-						chatLog("k", "Disconnecting on empty ".$config{"getAuto_$i"}."!\n");
+		if (AI::action eq "storageAuto" && AI::args->{done}) {
+			# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
+			my $forcedBySell = AI::args->{forcedBySell};
+			my $forcedByBuy = AI::args->{forcedByBuy};
+			AI::dequeue;
+			if ($forcedByBuy) {
+				AI::queue("sellAuto", {forcedByBuy => 1});
+			} elsif (!$forcedBySell && ai_sellAutoCheck() && $config{sellAuto}) {
+				AI::queue("sellAuto", {forcedByStorage => 1});
+			}
+
+		} elsif (AI::action eq "storageAuto" && timeOut($timeout{'ai_storageAuto'})) {
+			# Main autostorage block
+			my $args = AI::args;
+
+			my $do_route;
+
+			if (!$config{storageAuto_useChatCommand}) {
+				# Stop if the specified NPC is invalid
+				$args->{npc} = {};
+				getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
+				if (!defined($args->{npc}{ok})) {
+					$args->{done} = 1;
+					last AUTOSTORAGE;
+				}
+
+				# Determine whether we have to move to the NPC
+				if ($field{'name'} ne $args->{npc}{map}) {
+					$do_route = 1;
+				} else {
+					my $distance = distance($args->{npc}{pos}, $char->{pos_to});
+					if ($distance > $config{'storageAuto_distance'}) {
+						$do_route = 1;
+					}
+				}
+
+				if ($do_route) {
+					if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
+						undef $args->{warpedToSave};
+					}
+
+					# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
+					if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
+					&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
+						$args->{warpedToSave} = 1;
+						# If we still haven't warped after a certain amount of time, fallback to walking
+						$args->{warpStart} = time unless $args->{warpStart};
+						message T("Teleporting to auto-storage\n"), "teleport";
+						useTeleport(2);
+						$timeout{'ai_storageAuto'}{'time'} = time;
+					} else {
+						# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
+						message "Calculating auto-storage route to: $maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
+						ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
+							attackOnRoute => 1,
+							distFromGoal => $config{'storageAuto_distance'});
+					}
+				}
+			}
+			if (!$do_route) {
+				# Talk to NPC if we haven't done so
+				if (!defined($args->{sentStore})) {
+					if ($config{storageAuto_useChatCommand}) {
+						sendMessage($net, "c", $config{storageAuto_useChatCommand});
+					} else {
+						if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
+							warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
+							$config{'storageAuto_npc_steps'} = "c r1 n";
+							debug "Using standard iRO npc storage steps.\n", "npc";
+						} elsif ($config{'storageAuto_npc_type'} eq "2") {
+							$config{'storageAuto_npc_steps'} = "c c r1 n";
+							debug "Using iRO comodo (location) npc storage steps.\n", "npc";
+						} elsif ($config{'storageAuto_npc_type'} eq "3") {
+							message "Using storage steps defined in config.\n", "info";
+						} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
+							error "Something is wrong with storageAuto_npc_type in your config.\n";
+						}
+
+						ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
+					}
+
+					delete $ai_v{temp}{storage_opened};
+					$args->{sentStore} = 1;
+
+					# NPC talk retry
+					$AI::Timeouts::storageOpening = time;
+					$timeout{'ai_storageAuto'}{'time'} = time;
+					last AUTOSTORAGE;
+				}
+
+				if (!defined $ai_v{temp}{storage_opened}) {
+					# NPC talk retry
+					if (timeOut($AI::Timeouts::storageOpening, 40)) {
+						undef $args->{sentStore};
+						debug "Retry talking to autostorage NPC.\n", "npc";
+					}
+
+					# Storage not yet opened; stop and wait until it's open
+					last AUTOSTORAGE;
+				}
+
+				if (!$args->{getStart}) {
+					$args->{done} = 1;
+
+					# inventory to storage
+					$args->{nextItem} = 0 unless $args->{nextItem};
+					for (my $i = $args->{nextItem}; $i < @{$char->{inventory}}; $i++) {
+						my $item = $char->{inventory}[$i];
+						next unless ($item && %{$item});
+						next if $item->{equipped};
+						next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
+
+						my $control = items_control($item->{name});
+						my $store = $control->{storage};
+						my $keep = $control->{keep};
+						debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
+						if ($store && $item->{amount} > $keep) {
+							if ($args->{lastIndex} == $item->{index} &&
+								timeOut($timeout{'ai_storageAuto_giveup'})) {
+								last AUTOSTORAGE;
+							} elsif ($args->{lastIndex} != $item->{index}) {
+								$timeout{ai_storageAuto_giveup}{time} = time;
+							}
+							undef $args->{done};
+							$args->{lastIndex} = $item->{index};
+							sendStorageAdd($item->{index}, $item->{amount} - $keep);
+							$timeout{ai_storageAuto}{time} = time;
+							$args->{nextItem} = $i + 1;
+							last AUTOSTORAGE;
+						}
+					}
+
+					# cart to storage
+					# we don't really need to check if we have a cart
+					# if we don't have one it will not find any items to loop through
+					$args->{cartNextItem} = 0 unless $args->{cartNextItem};
+					for (my $i = $args->{cartNextItem}; $i < @{$cart{inventory}}; $i++) {
+						my $item = $cart{inventory}[$i];
+						next unless ($item && %{$item});
+
+						my $control = items_control($item->{name});
+						my $store = $control->{storage};
+						my $keep = $control->{keep};
+						debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
+						# store from cart as well as inventory if the flag is equal to 2
+						if ($store == 2 && $item->{amount} > $keep) {
+							if ($args->{cartLastIndex} == $item->{index} &&
+								timeOut($timeout{'ai_storageAuto_giveup'})) {
+								last AUTOSTORAGE;
+							} elsif ($args->{cartLastIndex} != $item->{index}) {
+								$timeout{ai_storageAuto_giveup}{time} = time;
+							}
+							undef $args->{done};
+							$args->{cartLastIndex} = $item->{index};
+							sendStorageAddFromCart($item->{index}, $item->{amount} - $keep);
+							$timeout{ai_storageAuto}{time} = time;
+							$args->{cartNextItem} = $i + 1;
+							last AUTOSTORAGE;
+						}
+					}
+
+					if ($args->{done}) {
+						# plugins can hook here and decide to keep storage open longer
+						my %hookArgs;
+						Plugins::callHook("AI_storage_done", \%hookArgs);
+						undef $args->{done} if ($hookArgs{return});
+					}
+				}
+
+
+				# getAuto begin
+
+				if (!$args->{getStart} && $args->{done} == 1) {
+					$args->{getStart} = 1;
+					undef $args->{done};
+					$args->{index} = 0;
+					$args->{retry} = 0;
+					last AUTOSTORAGE;
+				}
+
+				if (defined($args->{getStart}) && $args->{done} != 1) {
+					while (exists $config{"getAuto_$args->{index}"}) {
+						if (!$config{"getAuto_$args->{index}"}) {
+							$args->{index}++;
+							next;
+						}
+
+						my %item;
+						$item{name} = $config{"getAuto_$args->{index}"};
+						$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
+						$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount} : 0;
+						$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
+						$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
+						$item{max_amount} = $config{"getAuto_$args->{index}"."_maxAmount"};
+						$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
+
+						# Calculate the amount to get
+						if ($item{amount_needed} > 0) {
+							$item{amount_get} = ($item{storage}{amount} >= $item{amount_needed})? $item{amount_needed} : $item{storage}{amount};
+						}
+
+						# Try at most 3 times to get the item
+						if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
+							message "Attempt to get $item{amount_get} x $item{name} from storage, retry: $args->{retry}\n", "storage", 1;
+							sendStorageGet($item{storage}{index}, $item{amount_get});
+							$timeout{ai_storageAuto}{time} = time;
+							$args->{retry}++;
+							last AUTOSTORAGE;
+
+							# we don't inc the index when amount_get is more then 0, this will enable a way of retrying
+							# on next loop if it fails this time
+						}
+
+						if ($item{storage}{amount} < $item{amount_needed}) {
+							warning "storage: $item{name} out of stock\n";
+						}
+
+						if (!$config{relogAfterStorage} && $args->{retry} >= 3 && !$args->{warned}) {
+							# We tried 3 times to get the item and failed.
+							# There is a weird server bug which causes this to happen,
+							# but I can't reproduce it. This can be worked around by
+							# relogging in after autostorage.
+							warning "Kore tried to get an item from storage 3 times, but failed.\n";
+							warning "This problem could be caused by a server bug.\n";
+							warning "To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n";
+							$args->{warned} = 1;
+						}
+
+						# We got the item, or we tried 3 times to get it, but failed.
+						# Increment index and process the next item.
+						$args->{index}++;
+						$args->{retry} = 0;
+					}
+				}
+
+				sendStorageClose() unless $config{storageAuto_keepOpen};
+				if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
+					error "Character is still overweight after storageAuto (storage is full?)\n";
+					if ($config{dcOnStorageFull}) {
+						error "Disconnecting on storage full!\n";
+						chatLog("k", "Disconnecting on storage full!\n");
 						quit();
 					}
-				} else {
-					$found = 1;
 				}
-				last;
-			}
-		}
-
-		my $routeIndex = AI::findAction("route");
-		my $attackOnRoute;
-		$attackOnRoute = AI::args($routeIndex)->{attackOnRoute} if (defined $routeIndex);
-
-		# Only autostorage when we're on an attack route, or not moving
-		if ((!defined($routeIndex) || $attackOnRoute > 1) && $found &&
-		    @{$char->{inventory}} > 0) {
-			message "Auto-storaging due to insufficient ".$config{"getAuto_$i"}."\n";
-			AI::queue("storageAuto");
-		}
-		$timeout{'ai_storageAuto'}{'time'} = time;
-	}
-
-
-	if (AI::action eq "storageAuto" && AI::args->{done}) {
-		# Autostorage finished; trigger sellAuto unless autostorage was already triggered by it
-		my $forcedBySell = AI::args->{forcedBySell};
-		my $forcedByBuy = AI::args->{forcedByBuy};
-		AI::dequeue;
-		if ($forcedByBuy) {
-			AI::queue("sellAuto", {forcedByBuy => 1});
-		} elsif (!$forcedBySell && ai_sellAutoCheck() && $config{sellAuto}) {
-			AI::queue("sellAuto", {forcedByStorage => 1});
-		}
-
-	} elsif (AI::action eq "storageAuto" && timeOut($timeout{'ai_storageAuto'})) {
-		# Main autostorage block
-		my $args = AI::args;
-
-		my $do_route;
-
-		if (!$config{storageAuto_useChatCommand}) {
-			# Stop if the specified NPC is invalid
-			$args->{npc} = {};
-			getNPCInfo($config{'storageAuto_npc'}, $args->{npc});
-			if (!defined($args->{npc}{ok})) {
+				if ($config{'relogAfterStorage'}) {
+					writeStorageLog(0);
+					relog();
+				}
 				$args->{done} = 1;
-				last AUTOSTORAGE;
-			}
-
-			# Determine whether we have to move to the NPC
-			if ($field{'name'} ne $args->{npc}{map}) {
-				$do_route = 1;
-			} else {
-				my $distance = distance($args->{npc}{pos}, $char->{pos_to});
-				if ($distance > $config{'storageAuto_distance'}) {
-					$do_route = 1;
-				}
-			}
-
-			if ($do_route) {
-				if ($args->{warpedToSave} && !$args->{mapChanged} && !timeOut($args->{warpStart}, 8)) {
-					undef $args->{warpedToSave};
-				}
-
-				# If warpToBuyOrSell is set, warp to saveMap if we haven't done so
-				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
-				&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
-					$args->{warpedToSave} = 1;
-					# If we still haven't warped after a certain amount of time, fallback to walking
-					$args->{warpStart} = time unless $args->{warpStart};
-					message T("Teleporting to auto-storage\n"), "teleport";
-					useTeleport(2);
-					$timeout{'ai_storageAuto'}{'time'} = time;
-				} else {
-					# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
-					message "Calculating auto-storage route to: $maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
-					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
-						attackOnRoute => 1,
-						distFromGoal => $config{'storageAuto_distance'});
-				}
 			}
 		}
-		if (!$do_route) {
-			# Talk to NPC if we haven't done so
-			if (!defined($args->{sentStore})) {
-				if ($config{storageAuto_useChatCommand}) {
-					sendMessage($net, "c", $config{storageAuto_useChatCommand});
-				} else {
-					if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
-						warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
-						$config{'storageAuto_npc_steps'} = "c r1 n";
-						debug "Using standard iRO npc storage steps.\n", "npc";
-					} elsif ($config{'storageAuto_npc_type'} eq "2") {
-						$config{'storageAuto_npc_steps'} = "c c r1 n";
-						debug "Using iRO comodo (location) npc storage steps.\n", "npc";
-					} elsif ($config{'storageAuto_npc_type'} eq "3") {
-						message "Using storage steps defined in config.\n", "info";
-					} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
-						error "Something is wrong with storageAuto_npc_type in your config.\n";
-					}
-
-					ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
-				}
-
-				delete $ai_v{temp}{storage_opened};
-				$args->{sentStore} = 1;
-
-				# NPC talk retry
-				$AI::Timeouts::storageOpening = time;
-				$timeout{'ai_storageAuto'}{'time'} = time;
-				last AUTOSTORAGE;
-			}
-
-			if (!defined $ai_v{temp}{storage_opened}) {
-				# NPC talk retry
-				if (timeOut($AI::Timeouts::storageOpening, 40)) {
-					undef $args->{sentStore};
-					debug "Retry talking to autostorage NPC.\n", "npc";
-				}
-
-				# Storage not yet opened; stop and wait until it's open
-				last AUTOSTORAGE;
-			}
-
-			if (!$args->{getStart}) {
-				$args->{done} = 1;
-
-				# inventory to storage
-				$args->{nextItem} = 0 unless $args->{nextItem};
-				for (my $i = $args->{nextItem}; $i < @{$char->{inventory}}; $i++) {
-					my $item = $char->{inventory}[$i];
-					next unless ($item && %{$item});
-					next if $item->{equipped};
-					next if ($item->{broken} && $item->{type} == 7); # dont store pet egg in use
-
-					my $control = items_control($item->{name});
-					my $store = $control->{storage};
-					my $keep = $control->{keep};
-					debug "AUTOSTORAGE: $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
-					if ($store && $item->{amount} > $keep) {
-						if ($args->{lastIndex} == $item->{index} &&
-						    timeOut($timeout{'ai_storageAuto_giveup'})) {
-							last AUTOSTORAGE;
-						} elsif (AI::args->{lastIndex} != $item->{index}) {
-							$timeout{ai_storageAuto_giveup}{time} = time;
-						}
-						undef $args->{done};
-						$args->{lastIndex} = $item->{index};
-						sendStorageAdd($item->{index}, $item->{amount} - $keep);
-						$timeout{ai_storageAuto}{time} = time;
-						$args->{nextItem} = $i + 1;
-						last AUTOSTORAGE;
-					}
-				}
-
-				# cart to storage
-				# we don't really need to check if we have a cart
-				# if we don't have one it will not find any items to loop through
-				$args->{cartNextItem} = 0 unless $args->{cartNextItem};
-				for (my $i = $args->{cartNextItem}; $i < @{$cart{inventory}}; $i++) {
-					my $item = $cart{inventory}[$i];
-					next unless ($item && %{$item});
-
-					my $control = items_control($item->{name});
-					my $store = $control->{storage};
-					my $keep = $control->{keep};
-					debug "AUTOSTORAGE (cart): $item->{name} x $item->{amount} - store = $store, keep = $keep\n", "storage";
-					# store from cart as well as inventory if the flag is equal to 2
-					if ($store == 2 && $item->{amount} > $keep) {
-						if ($args->{cartLastIndex} == $item->{index} &&
-						    timeOut($timeout{'ai_storageAuto_giveup'})) {
-							last AUTOSTORAGE;
-						} elsif (AI::args->{cartLastIndex} != $item->{index}) {
-							$timeout{ai_storageAuto_giveup}{time} = time;
-						}
-						undef $args->{done};
-						$args->{cartLastIndex} = $item->{index};
-						sendStorageAddFromCart($item->{index}, $item->{amount} - $keep);
-						$timeout{ai_storageAuto}{time} = time;
-						$args->{cartNextItem} = $i + 1;
-						last AUTOSTORAGE;
-					}
-				}
-
-				if ($args->{done}) {
-					# plugins can hook here and decide to keep storage open longer
-					my %hookArgs;
-					Plugins::callHook("AI_storage_done", \%hookArgs);
-					undef $args->{done} if ($hookArgs{return});
-				}
-			}
-
-
-			# getAuto begin
-
-			if (!$args->{getStart} && $args->{done} == 1) {
-				$args->{getStart} = 1;
-				undef $args->{done};
-				$args->{index} = 0;
-				$args->{retry} = 0;
-				last AUTOSTORAGE;
-			}
-
-			if (defined($args->{getStart}) && $args->{done} != 1) {
-				while (exists $config{"getAuto_$ai_seq_args[0]{index}"}) {
-					if (!$config{"getAuto_$ai_seq_args[0]{index}"}) {
-						$ai_seq_args[0]{index}++;
-						next;
-					}
-
-					my %item;
-					$item{name} = $config{"getAuto_$ai_seq_args[0]{index}"};
-					$item{inventory}{index} = findIndexString_lc(\@{$chars[$config{char}]{inventory}}, "name", $item{name});
-					$item{inventory}{amount} = ($item{inventory}{index} ne "") ? $chars[$config{char}]{inventory}[$item{inventory}{index}]{amount} : 0;
-					$item{storage}{index} = findKeyString(\%storage, "name", $item{name});
-					$item{storage}{amount} = ($item{storage}{index} ne "")? $storage{$item{storage}{index}}{amount} : 0;
-					$item{max_amount} = $config{"getAuto_$ai_seq_args[0]{index}"."_maxAmount"};
-					$item{amount_needed} = $item{max_amount} - $item{inventory}{amount};
-
-					# Calculate the amount to get
-					if ($item{amount_needed} > 0) {
-						$item{amount_get} = ($item{storage}{amount} >= $item{amount_needed})? $item{amount_needed} : $item{storage}{amount};
-					}
-
-					# Try at most 3 times to get the item
-					if (($item{amount_get} > 0) && ($ai_seq_args[0]{retry} < 3)) {
-						message "Attempt to get $item{amount_get} x $item{name} from storage, retry: $ai_seq_args[0]{retry}\n", "storage", 1;
-						sendStorageGet($item{storage}{index}, $item{amount_get});
-						$timeout{ai_storageAuto}{time} = time;
-						$ai_seq_args[0]{retry}++;
-						last AUTOSTORAGE;
-
-						# we don't inc the index when amount_get is more then 0, this will enable a way of retrying
-						# on next loop if it fails this time
-					}
-
-					if ($item{storage}{amount} < $item{amount_needed}) {
-						warning "storage: $item{name} out of stock\n";
-					}
-
-					if (!$config{relogAfterStorage} && $ai_seq_args[0]{retry} >= 3 && !$ai_seq_args[0]{warned}) {
-						# We tried 3 times to get the item and failed.
-						# There is a weird server bug which causes this to happen,
-						# but I can't reproduce it. This can be worked around by
-						# relogging in after autostorage.
-						warning "Kore tried to get an item from storage 3 times, but failed.\n";
-						warning "This problem could be caused by a server bug.\n";
-						warning "To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n";
-						$ai_seq_args[0]{warned} = 1;
-					}
-
-					# We got the item, or we tried 3 times to get it, but failed.
-					# Increment index and process the next item.
-					$ai_seq_args[0]{index}++;
-					$ai_seq_args[0]{retry} = 0;
-				}
-			}
-
-			sendStorageClose() unless $config{storageAuto_keepOpen};
-			if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
-				error "Character is still overweight after storageAuto (storage is full?)\n";
-				if ($config{dcOnStorageFull}) {
-					error "Disconnecting on storage full!\n";
-					chatLog("k", "Disconnecting on storage full!\n");
-					quit();
-				}
-			}
-			if ($config{'relogAfterStorage'}) {
-				writeStorageLog(0);
-				relog();
-			}
-			$args->{done} = 1;
-		}
-	}
 	} #END OF BLOCK AUTOSTORAGE
 
 
@@ -2717,127 +2715,127 @@ sub AI {
 
 	AUTOSELL: {
 
-	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
-		&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
-			|| ($config{'itemsMaxNum_sellOrStore'} && @{$char->{inventory}} >= $config{'itemsMaxNum_sellOrStore'})
-			|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
-			)
-		&& $config{'sellAuto'}
-		&& $config{'sellAuto_npc'} ne ""
-		&& !$ai_v{sitAuto_forcedBySitCommand}
-	  ) {
-		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
-		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && ai_sellAutoCheck()) {
-			AI::queue("sellAuto");
-		}
-	}
-
-	if ($ai_seq[0] eq "sellAuto" && $ai_seq_args[0]{'done'}) {
-		my $var = $ai_seq_args[0]{'forcedByBuy'};
-		my $var2 = $ai_seq_args[0]{'forcedByStorage'};
-		message T("Auto-sell sequence completed.\n"), "success";
-		AI::dequeue;
-		if ($var2) {
-			unshift @ai_seq, "buyAuto";
-			unshift @ai_seq_args, {forcedByStorage => 1};
-		} elsif (!$var) {
-			unshift @ai_seq, "buyAuto";
-			unshift @ai_seq_args, {forcedBySell => 1};
-		}
-	} elsif ($ai_seq[0] eq "sellAuto" && timeOut($timeout{'ai_sellAuto'})) {
-		$ai_seq_args[0]{'npc'} = {};
-		my $destination = $config{sellAuto_standpoint} || $config{sellAuto_npc};
-		getNPCInfo($destination, $ai_seq_args[0]{'npc'});
-		if (!defined($ai_seq_args[0]{'npc'}{'ok'})) {
-			$ai_seq_args[0]{'done'} = 1;
-			last AUTOSELL;
-		}
-
-		undef $ai_v{'temp'}{'do_route'};
-		if ($field{'name'} ne $ai_seq_args[0]{'npc'}{'map'}) {
-			$ai_v{'temp'}{'do_route'} = 1;
-		} else {
-			$ai_v{'temp'}{'distance'} = distance($ai_seq_args[0]{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
-			$config{'sellAuto_distance'} = 1 if ($config{sellAuto_standpoint});
-			if ($ai_v{'temp'}{'distance'} > $config{'sellAuto_distance'}) {
-				$ai_v{'temp'}{'do_route'} = 1;
+		if ((AI::action eq "" || AI::action eq "route" || AI::action eq "sitAuto" || AI::action eq "follow")
+			&& (($config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'})
+				|| ($config{'itemsMaxNum_sellOrStore'} && @{$char->{inventory}} >= $config{'itemsMaxNum_sellOrStore'})
+				|| (!$config{'itemsMaxWeight_sellOrStore'} && percent_weight($char) >= $config{'itemsMaxWeight'})
+				)
+			&& $config{'sellAuto'}
+			&& $config{'sellAuto_npc'} ne ""
+			&& !$ai_v{sitAuto_forcedBySitCommand}
+		  ) {
+			$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
+			if ($ai_v{'temp'}{'ai_route_index'} ne "") {
+				$ai_v{'temp'}{'ai_route_attackOnRoute'} = AI::args($ai_v{'temp'}{'ai_route_index'})->{'attackOnRoute'};
+			}
+			if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && ai_sellAutoCheck()) {
+				AI::queue("sellAuto");
 			}
 		}
-		if ($ai_v{'temp'}{'do_route'}) {
-			if ($ai_seq_args[0]{'warpedToSave'} && !$ai_seq_args[0]{'mapChanged'}) {
-				undef $ai_seq_args[0]{'warpedToSave'};
+
+		if (AI::action eq "sellAuto" && AI::args->{'done'}) {
+			my $var = AI::args->{'forcedByBuy'};
+			my $var2 = AI::args->{'forcedByStorage'};
+			message T("Auto-sell sequence completed.\n"), "success";
+			AI::dequeue;
+			if ($var2) {
+				AI::queue("buyAuto", {forcedByStorage => 1});
+			} elsif (!$var) {
+				AI::queue("buyAuto", {forcedBySell => 1});
 			}
+		} elsif (AI::action eq "sellAuto" && timeOut($timeout{'ai_sellAuto'})) {
+			my $args = AI::args;
 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$ai_seq_args[0]{'warpedToSave'}
-			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
-				$ai_seq_args[0]{'warpedToSave'} = 1;
-				message T("Teleporting to auto-sell\n"), "teleport";
-				useTeleport(2);
-				$timeout{'ai_sellAuto'}{'time'} = time;
-			} else {
-				message "Calculating auto-sell route to: $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}($ai_seq_args[0]{'npc'}{'map'}): $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}\n", "route";
-				ai_route($ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'},
-					attackOnRoute => 1,
-					distFromGoal => $config{'sellAuto_distance'},
-					noSitAuto => 1);
-			}
-		} else {
-			$ai_seq_args[0]{'npc'} = {};
-			getNPCInfo($config{'sellAuto_npc'}, $ai_seq_args[0]{'npc'});
-			if (!defined($ai_seq_args[0]{'sentSell'})) {
-				$ai_seq_args[0]{'sentSell'} = 1;
-
-				# load the real npc location just in case we used standpoint
-				my $realpos = {};
-				getNPCInfo($config{"sellAuto_npc"}, $realpos);
-
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 's e');
-
+			$args->{'npc'} = {};
+			my $destination = $config{sellAuto_standpoint} || $config{sellAuto_npc};
+			getNPCInfo($destination, $args->{'npc'});
+			if (!defined($args->{'npc'}{'ok'})) {
+				$args->{'done'} = 1;
 				last AUTOSELL;
 			}
-			$ai_seq_args[0]{'done'} = 1;
 
-			# Form list of items to sell
-			my @sellItems;
-			for (my $i = 0; $i < @{$char->{inventory}};$i++) {
-				my $item = $char->{inventory}[$i];
-				next if (!$item || !%{$item} || $item->{equipped});
-				my $sell = $items_control{all}{sell};
-				$sell = $items_control{lc($item->{name})}{sell} if ($items_control{lc($item->{name})});
-				my $keep = $items_control{all}{keep};
-				$keep = $items_control{lc($item->{name})}{keep} if ($items_control{lc($item->{name})});
-
-				if ($sell && $item->{'amount'} > $keep) {
-					if (AI::args->{lastIndex} ne "" && AI::args->{lastIndex} == $item->{index} && timeOut($timeout{'ai_sellAuto_giveup'})) {
-						last AUTOSELL;
-					} elsif (AI::args->{lastIndex} eq "" || AI::args->{lastIndex} != $item->{index}) {
-						$timeout{ai_sellAuto_giveup}{time} = time;
-					}
-					undef AI::args->{done};
-					AI::args->{lastIndex} = $item->{index};
-
-					my %obj;
-					$obj{index} = $item->{index};
-					$obj{amount} = $item->{amount} - $keep;
-					push @sellItems, \%obj;
-
-					$timeout{ai_sellAuto}{time} = time;
+			undef $ai_v{'temp'}{'do_route'};
+			if ($field{'name'} ne $args->{'npc'}{'map'}) {
+				$ai_v{'temp'}{'do_route'} = 1;
+			} else {
+				$ai_v{'temp'}{'distance'} = distance($args->{'npc'}{'pos'}, $chars[$config{'char'}]{'pos_to'});
+				$config{'sellAuto_distance'} = 1 if ($config{sellAuto_standpoint});
+				if ($ai_v{'temp'}{'distance'} > $config{'sellAuto_distance'}) {
+					$ai_v{'temp'}{'do_route'} = 1;
 				}
 			}
-			sendSellBulk($net, \@sellItems) if (@sellItems);
+			if ($ai_v{'temp'}{'do_route'}) {
+				if ($args->{'warpedToSave'} && !$args->{'mapChanged'}) {
+					undef $args->{'warpedToSave'};
+				}
 
-			if (AI::args->{done}) {
-				# plugins can hook here and decide to keep sell going longer
-				my %hookArgs;
-				Plugins::callHook("AI_sell_done", \%hookArgs);
-				undef AI::args->{done} if ($hookArgs{return});
+				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{'warpedToSave'}
+				&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
+					$args->{'warpedToSave'} = 1;
+					message T("Teleporting to auto-sell\n"), "teleport";
+					useTeleport(2);
+					$timeout{'ai_sellAuto'}{'time'} = time;
+				} else {
+					message "Calculating auto-sell route to: $maps_lut{$args->{'npc'}{'map'}.'.rsw'}($args->{'npc'}{'map'}): $args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'}\n", "route";
+					ai_route($args->{'npc'}{'map'}, $args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'},
+						attackOnRoute => 1,
+						distFromGoal => $config{'sellAuto_distance'},
+						noSitAuto => 1);
+				}
+			} else {
+				$args->{'npc'} = {};
+				getNPCInfo($config{'sellAuto_npc'}, $args->{'npc'});
+				if (!defined($args->{'sentSell'})) {
+					$args->{'sentSell'} = 1;
+
+					# load the real npc location just in case we used standpoint
+					my $realpos = {};
+					getNPCInfo($config{"sellAuto_npc"}, $realpos);
+
+					ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 's e');
+
+					last AUTOSELL;
+				}
+				$args->{'done'} = 1;
+
+				# Form list of items to sell
+				my @sellItems;
+				for (my $i = 0; $i < @{$char->{inventory}};$i++) {
+					my $item = $char->{inventory}[$i];
+					next if (!$item || !%{$item} || $item->{equipped});
+					my $sell = $items_control{all}{sell};
+					$sell = $items_control{lc($item->{name})}{sell} if ($items_control{lc($item->{name})});
+					my $keep = $items_control{all}{keep};
+					$keep = $items_control{lc($item->{name})}{keep} if ($items_control{lc($item->{name})});
+
+					if ($sell && $item->{'amount'} > $keep) {
+						if ($args->{lastIndex} ne "" && $args->{lastIndex} == $item->{index} && timeOut($timeout{'ai_sellAuto_giveup'})) {
+							last AUTOSELL;
+						} elsif ($args->{lastIndex} eq "" || $args->{lastIndex} != $item->{index}) {
+							$timeout{ai_sellAuto_giveup}{time} = time;
+						}
+						undef $args->{done};
+						$args->{lastIndex} = $item->{index};
+
+						my %obj;
+						$obj{index} = $item->{index};
+						$obj{amount} = $item->{amount} - $keep;
+						push @sellItems, \%obj;
+
+						$timeout{ai_sellAuto}{time} = time;
+					}
+				}
+				sendSellBulk($net, \@sellItems) if (@sellItems);
+
+				if ($args->{done}) {
+					# plugins can hook here and decide to keep sell going longer
+					my %hookArgs;
+					Plugins::callHook("AI_sell_done", \%hookArgs);
+					undef $args->{done} if ($hookArgs{return});
+				}
+
 			}
-
 		}
-	}
 
 	} #END OF BLOCK AUTOSELL
 
@@ -2847,168 +2845,164 @@ sub AI {
 
 	AUTOBUY: {
 
-	if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && time > $ai_v{'inventory_time'}) {
-		undef $ai_v{'temp'}{'found'};
-		my $i = 0;
-		while (1) {
-			last if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"});
-			$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
-			if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne ""
-				&& (checkSelfCondition("buyAuto_$i"))
-				&& ($ai_v{'temp'}{'invIndex'} eq ""
-				|| ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"buyAuto_$i"."_minAmount"}
-				&& $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"}))) {
-				$ai_v{'temp'}{'found'} = 1;
-			}
-			$i++;
-		}
-		$ai_v{'temp'}{'ai_route_index'} = binFind(\@ai_seq, "route");
-		if ($ai_v{'temp'}{'ai_route_index'} ne "") {
-			$ai_v{'temp'}{'ai_route_attackOnRoute'} = $ai_seq_args[$ai_v{'temp'}{'ai_route_index'}]{'attackOnRoute'};
-		}
-		if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && $ai_v{'temp'}{'found'}) {
-			unshift @ai_seq, "buyAuto";
-			unshift @ai_seq_args, {};
-		}
-		$timeout{'ai_buyAuto'}{'time'} = time;
-	}
-
-	if ($ai_seq[0] eq "buyAuto" && $ai_seq_args[0]{'done'}) {
-		# buyAuto finished
-		$ai_v{'temp'}{'var'} = $ai_seq_args[0]{'forcedBySell'};
-		$ai_v{'temp'}{'var2'} = $ai_seq_args[0]{'forcedByStorage'};
-		shift @ai_seq;
-		shift @ai_seq_args;
-
-		if ($ai_v{'temp'}{'var'} && $config{storageAuto}) {
-			unshift @ai_seq, "storageAuto";
-			unshift @ai_seq_args, {forcedBySell => 1};
-		} elsif (!$ai_v{'temp'}{'var2'} && $config{storageAuto}) {
-			unshift @ai_seq, "storageAuto";
-			unshift @ai_seq_args, {forcedByBuy => 1};
-		}
-
-	} elsif (AI::action eq "buyAuto" && timeOut($timeout{ai_buyAuto_wait}) && timeOut($timeout{ai_buyAuto_wait_buy})) {
-		my $args = AI::args;
-		undef $args->{index};
-
-		for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
-			next if (!$config{"buyAuto_$i"});
-			# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
-			next if ($args->{index_failed}{$i});
-
-			$args->{invIndex} = findIndexString_lc($char->{inventory}, "name", $config{"buyAuto_$i"});
-			if ($config{"buyAuto_$i"."_maxAmount"} ne "" && ($args->{invIndex} eq "" || $char->{inventory}[$args->{invIndex}]{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
-				next if ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zenny}, $config{"buyAuto_$i"."_zeny"}));
-
-				# get NPC info, use standpoint if provided
-				$args->{npc} = {};
-				my $destination = $config{"buyAuto_$i"."_standpoint"} || $config{"buyAuto_$i"."_npc"};
-				getNPCInfo($destination, $args->{npc});
-
-				# did we succeed to load NPC info from this slot?
-				# (doesnt check validity of _npc if we used _standpoint...)
-				if ($args->{npc}{ok}) {
-					$args->{index} = $i;
+		if ((AI::action eq "" || AI::action eq "route" || AI::action eq "follow") && timeOut($timeout{'ai_buyAuto'}) && time > $ai_v{'inventory_time'}) {
+			undef $ai_v{'temp'}{'found'};
+			my $i = 0;
+			while (1) {
+				last if (!$config{"buyAuto_$i"} || !$config{"buyAuto_$i"."_npc"});
+				$ai_v{'temp'}{'invIndex'} = findIndexString_lc(\@{$chars[$config{'char'}]{'inventory'}}, "name", $config{"buyAuto_$i"});
+				if ($config{"buyAuto_$i"."_minAmount"} ne "" && $config{"buyAuto_$i"."_maxAmount"} ne ""
+					&& (checkSelfCondition("buyAuto_$i"))
+					&& ($ai_v{'temp'}{'invIndex'} eq ""
+					|| ($chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} <= $config{"buyAuto_$i"."_minAmount"}
+					&& $chars[$config{'char'}]{'inventory'}[$ai_v{'temp'}{'invIndex'}]{'amount'} < $config{"buyAuto_$i"."_maxAmount"}))) {
+					$ai_v{'temp'}{'found'} = 1;
 				}
-				last;
+				$i++;
 			}
-
-
-
+			$ai_v{'temp'}{'ai_route_index'} = AI::findAction("route");
+			if ($ai_v{'temp'}{'ai_route_index'} ne "") {
+				$ai_v{'temp'}{'ai_route_attackOnRoute'} = AI::args($ai_v{'temp'}{'ai_route_index'})->{'attackOnRoute'};
+			}
+			if (!($ai_v{'temp'}{'ai_route_index'} ne "" && $ai_v{'temp'}{'ai_route_attackOnRoute'} <= 1) && $ai_v{'temp'}{'found'}) {
+				AI::queue("buyAuto");
+			}
+			$timeout{'ai_buyAuto'}{'time'} = time;
 		}
 
-		# failed to load any slots for buyAuto (we're done or they're all invalid)
-		# what does the second check do here?
-		if ($args->{index} eq "" || ($args->{lastIndex} ne "" && $args->{lastIndex} == $args->{index} && timeOut($timeout{'ai_buyAuto_giveup'}))) {
-			$ai_seq_args[0]{'done'} = 1;
-			last AUTOBUY;
-		}
+		if (AI::action eq "buyAuto" && AI::args->{'done'}) {
+			# buyAuto finished
+			$ai_v{'temp'}{'var'} = AI::args->{'forcedBySell'};
+			$ai_v{'temp'}{'var2'} = AI::args->{'forcedByStorage'};
+			AI::dequeue;
 
-		my $do_route;
-
-		if ($field{name} ne $args->{npc}{map}) {
-			# we definitely need to route if we're on the wrong map
-			$do_route = 1;
-		} else {
-			my $distance = distance($args->{npc}{pos}, $char->{pos_to});
-			# move exactly to the given spot if we specified a standpoint
-			my $talk_distance = ($config{"buyAuto_$args->{index}"."_standpoint"} ? 1 : $config{"buyAuto_$args->{index}"."_distance"});
-			if ($distance > $talk_distance) {
-				$do_route = 1;
-			}
-		}
-		if ($do_route) {
-			if ($args->{warpedToSave} && !$args->{mapChanged}) {
-				undef $args->{warpedToSave};
+			if ($ai_v{'temp'}{'var'} && $config{storageAuto}) {
+				AI::queue("storageAuto", {forcedBySell => 1});
+			} elsif (!$ai_v{'temp'}{'var2'} && $config{storageAuto}) {
+				AI::queue("storageAuto", {forcedByBuy => 1});
 			}
 
-			if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
-			&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
-				$args->{warpedToSave} = 1;
-				message T("Teleporting to auto-buy\n"), "teleport";
-				useTeleport(2);
-				$timeout{ai_buyAuto_wait}{time} = time;
-			} else {
-				message "Calculating auto-buy route to: $maps_lut{$args->{npc}{map}.'.rsw'} ($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
-				ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
-					attackOnRoute => 1,
-					distFromGoal => $config{"buyAuto_$args->{index}"."_distance"});
-			}
-		} else {
-			if ($args->{lastIndex} eq "" || $args->{lastIndex} != $args->{index}) {
-				# if this is a different item than last loop, get new info for itemID and resend buy
-				undef $args->{itemID};
-				if ($config{"buyAuto_$args->{index}"."_npc"} != $config{"buyAuto_$args->{lastIndex}"."_npc"}) {
-					undef $args->{sentBuy};
-				}
-				$timeout{ai_buyAuto_giveup}{time} = time;
-			}
-			$args->{lastIndex} = $args->{index};
+		} elsif (AI::action eq "buyAuto" && timeOut($timeout{ai_buyAuto_wait}) && timeOut($timeout{ai_buyAuto_wait_buy})) {
+			my $args = AI::args;
+			undef $args->{index};
 
-			# find the item ID if we don't know it yet
-			if ($args->{itemID} eq "") {
-				if ($args->{invIndex} && $char->{inventory}[$args->{invIndex}]) {
-					# if we have the item in our inventory, we can quickly get the nameID
-					$args->{itemID} = $char->{inventory}[$args->{invIndex}]{nameID};
-				} else {
-					# scan the entire items.txt file (this is slow)
-					foreach (keys %items_lut) {
-						if (lc($items_lut{$_}) eq lc($config{"buyAuto_$args->{index}"})) {
-							$args->{itemID} = $_;
-						}
+			for (my $i = 0; exists $config{"buyAuto_$i"}; $i++) {
+				next if (!$config{"buyAuto_$i"});
+				# did we already fail to do this buyAuto slot? (only fails in this way if the item is nonexistant)
+				next if ($args->{index_failed}{$i});
+
+				$args->{invIndex} = findIndexString_lc($char->{inventory}, "name", $config{"buyAuto_$i"});
+				if ($config{"buyAuto_$i"."_maxAmount"} ne "" && ($args->{invIndex} eq "" || $char->{inventory}[$args->{invIndex}]{amount} < $config{"buyAuto_$i"."_maxAmount"})) {
+					next if ($config{"buyAuto_$i"."_zeny"} && !inRange($char->{zenny}, $config{"buyAuto_$i"."_zeny"}));
+
+					# get NPC info, use standpoint if provided
+					$args->{npc} = {};
+					my $destination = $config{"buyAuto_$i"."_standpoint"} || $config{"buyAuto_$i"."_npc"};
+					getNPCInfo($destination, $args->{npc});
+
+					# did we succeed to load NPC info from this slot?
+					# (doesnt check validity of _npc if we used _standpoint...)
+					if ($args->{npc}{ok}) {
+						$args->{index} = $i;
 					}
+					last;
 				}
-				if ($args->{itemID} eq "") {
-					# the specified item doesn't even exist
-					# don't try this index again
-					$args->{index_failed}{$args->{index}} = 1;
-					debug "buyAuto index $args->{index} failed, item doesn't exist\n", "npc";
-					last AUTOBUY;
-				}
+
+
+
 			}
 
-			if (!$args->{sentBuy}) {
-				$args->{sentBuy} = 1;
-				$timeout{ai_buyAuto_wait}{time} = time;
-
-				# load the real npc location just in case we used standpoint
-				my $realpos = {};
-				getNPCInfo($config{"buyAuto_$args->{index}"."_npc"}, $realpos);
-
-				ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 'b e');
+			# failed to load any slots for buyAuto (we're done or they're all invalid)
+			# what does the second check do here?
+			if ($args->{index} eq "" || ($args->{lastIndex} ne "" && $args->{lastIndex} == $args->{index} && timeOut($timeout{'ai_buyAuto_giveup'}))) {
+				$args->{'done'} = 1;
 				last AUTOBUY;
 			}
-			if ($args->{invIndex} ne "") {
-				# this item is in the inventory already, get what we need
-				sendBuy($net, $ai_seq_args[0]{'itemID'}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->{inventory}[$args->{invIndex}]{amount});
+
+			my $do_route;
+
+			if ($field{name} ne $args->{npc}{map}) {
+				# we definitely need to route if we're on the wrong map
+				$do_route = 1;
 			} else {
-				# get the full amount
-				sendBuy($net, $args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
+				my $distance = distance($args->{npc}{pos}, $char->{pos_to});
+				# move exactly to the given spot if we specified a standpoint
+				my $talk_distance = ($config{"buyAuto_$args->{index}"."_standpoint"} ? 1 : $config{"buyAuto_$args->{index}"."_distance"});
+				if ($distance > $talk_distance) {
+					$do_route = 1;
+				}
 			}
-			$timeout{ai_buyAuto_wait_buy}{time} = time;
+			if ($do_route) {
+				if ($args->{warpedToSave} && !$args->{mapChanged}) {
+					undef $args->{warpedToSave};
+				}
+
+				if ($config{'saveMap'} ne "" && $config{'saveMap_warpToBuyOrSell'} && !$args->{warpedToSave}
+				&& !$cities_lut{$field{'name'}.'.rsw'} && $config{'saveMap'} ne $field{name}) {
+					$args->{warpedToSave} = 1;
+					message T("Teleporting to auto-buy\n"), "teleport";
+					useTeleport(2);
+					$timeout{ai_buyAuto_wait}{time} = time;
+				} else {
+					message "Calculating auto-buy route to: $maps_lut{$args->{npc}{map}.'.rsw'} ($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
+					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
+						attackOnRoute => 1,
+						distFromGoal => $config{"buyAuto_$args->{index}"."_distance"});
+				}
+			} else {
+				if ($args->{lastIndex} eq "" || $args->{lastIndex} != $args->{index}) {
+					# if this is a different item than last loop, get new info for itemID and resend buy
+					undef $args->{itemID};
+					if ($config{"buyAuto_$args->{index}"."_npc"} != $config{"buyAuto_$args->{lastIndex}"."_npc"}) {
+						undef $args->{sentBuy};
+					}
+					$timeout{ai_buyAuto_giveup}{time} = time;
+				}
+				$args->{lastIndex} = $args->{index};
+
+				# find the item ID if we don't know it yet
+				if ($args->{itemID} eq "") {
+					if ($args->{invIndex} && $char->{inventory}[$args->{invIndex}]) {
+						# if we have the item in our inventory, we can quickly get the nameID
+						$args->{itemID} = $char->{inventory}[$args->{invIndex}]{nameID};
+					} else {
+						# scan the entire items.txt file (this is slow)
+						foreach (keys %items_lut) {
+							if (lc($items_lut{$_}) eq lc($config{"buyAuto_$args->{index}"})) {
+								$args->{itemID} = $_;
+							}
+						}
+					}
+					if ($args->{itemID} eq "") {
+						# the specified item doesn't even exist
+						# don't try this index again
+						$args->{index_failed}{$args->{index}} = 1;
+						debug "buyAuto index $args->{index} failed, item doesn't exist\n", "npc";
+						last AUTOBUY;
+					}
+				}
+
+				if (!$args->{sentBuy}) {
+					$args->{sentBuy} = 1;
+					$timeout{ai_buyAuto_wait}{time} = time;
+
+					# load the real npc location just in case we used standpoint
+					my $realpos = {};
+					getNPCInfo($config{"buyAuto_$args->{index}"."_npc"}, $realpos);
+
+					ai_talkNPC($realpos->{pos}{x}, $realpos->{pos}{y}, 'b e');
+					last AUTOBUY;
+				}
+				if ($args->{invIndex} ne "") {
+					# this item is in the inventory already, get what we need
+					sendBuy($net, $args->{'itemID'}, $config{"buyAuto_$args->{index}"."_maxAmount"} - $char->{inventory}[$args->{invIndex}]{amount});
+				} else {
+					# get the full amount
+					sendBuy($net, $args->{itemID}, $config{"buyAuto_$args->{index}"."_maxAmount"});
+				}
+				$timeout{ai_buyAuto_wait_buy}{time} = time;
+			}
 		}
-	}
 
 	} #END OF BLOCK AUTOBUY
 
@@ -3255,232 +3249,232 @@ sub AI {
 	# var/flag about follow should be moved to %ai_v
 
 	FOLLOW: {
-	last FOLLOW	if (!$config{follow});
+		last FOLLOW	if (!$config{follow});
 
-	my $followIndex;
-	if (($followIndex = binFind(\@ai_seq, "follow")) eq "") {
-		# ai_follow will determine if the Target is 'follow-able'
-		last FOLLOW if (!ai_follow($config{followTarget}));
-	}
-
-	# if we are not following now but master is in the screen...
-	if (!defined $ai_seq_args[$followIndex]{'ID'}) {
-		foreach (keys %players) {
-			if ($players{$_}{'name'} eq $ai_seq_args[$followIndex]{'name'} && !$players{$_}{'dead'}) {
-				$ai_seq_args[$followIndex]{'ID'} = $_;
-				$ai_seq_args[$followIndex]{'following'} = 1;
-				message "Found my master - $ai_seq_args[$followIndex]{'name'}\n", "follow";
-				last;
-			}
+		my $followIndex;
+		if (($followIndex = AI::findAction("follow")) eq "") {
+			# ai_follow will determine if the Target is 'follow-able'
+			last FOLLOW if (!ai_follow($config{followTarget}));
 		}
-	} elsif (!$ai_seq_args[$followIndex]{'following'} && $players{$ai_seq_args[$followIndex]{'ID'}} && %{$players{$ai_seq_args[$followIndex]{'ID'}}}) {
-		$ai_seq_args[$followIndex]{'following'} = 1;
-		delete $ai_seq_args[$followIndex]{'ai_follow_lost'};
-		message "Found my master!\n", "follow"
-	}
+		my $args = AI::args($followIndex);
 
-	# if we are not doing anything else now...
-	if ($ai_seq[0] eq "follow") {
-		if ($ai_seq_args[0]{'suspended'}) {
-			if ($ai_seq_args[0]{'ai_follow_lost'}) {
-				$ai_seq_args[0]{'ai_follow_lost_end'}{'time'} += time - $ai_seq_args[0]{'suspended'};
+		# if we are not following now but master is in the screen...
+		if (!defined $args->{'ID'}) {
+			foreach (keys %players) {
+				if ($players{$_}{'name'} eq $args->{'name'} && !$players{$_}{'dead'}) {
+					$args->{'ID'} = $_;
+					$args->{'following'} = 1;
+					message "Found my master - $args->{'name'}\n", "follow";
+					last;
+				}
 			}
-			delete $ai_seq_args[0]{'suspended'};
+		} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}}) {
+			$args->{'following'} = 1;
+			delete $args->{'ai_follow_lost'};
+			message "Found my master!\n", "follow"
 		}
 
 		# if we are not doing anything else now...
-		my $args = AI::args($followIndex);
-		if (!$args->{ai_follow_lost}) {
-			my $ID = $args->{ID};
-			my $player = $players{$ID};
+		if (AI::action eq "follow") {
+			if (AI::args->{'suspended'}) {
+				if (AI::args->{'ai_follow_lost'}) {
+					AI::args->{'ai_follow_lost_end'}{'time'} += time - AI::args->{'suspended'};
+				}
+				delete AI::args->{'suspended'};
+			}
 
-			if ($args->{following} && $player->{pos_to}) {
-				my $dist = distance($char->{pos_to}, $player->{pos_to});
-				if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
-					$args->{move_timeout} = time;
-					if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
-						ai_route($field{name}, $player->{pos_to}{x}, $player->{pos_to}{y},
-							attackOnRoute => 1,
-							distFromGoal => $config{followDistanceMin});
-					} else {
-						my (%vec, %pos);
+			# if we are not doing anything else now...
+			if (!$args->{ai_follow_lost}) {
+				my $ID = $args->{ID};
+				my $player = $players{$ID};
 
-						stand() if ($char->{sitting});
-						getVector(\%vec, $player->{pos_to}, $char->{pos_to});
-						moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
-						$timeout{ai_sit_idle}{time} = time;
-						sendMove($pos{x}, $pos{y});
+				if ($args->{following} && $player->{pos_to}) {
+					my $dist = distance($char->{pos_to}, $player->{pos_to});
+					if ($dist > $config{followDistanceMax} && timeOut($args->{move_timeout}, 0.25)) {
+						$args->{move_timeout} = time;
+						if ( $dist > 15 || ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $player->{pos_to})) ) {
+							ai_route($field{name}, $player->{pos_to}{x}, $player->{pos_to}{y},
+								attackOnRoute => 1,
+								distFromGoal => $config{followDistanceMin});
+						} else {
+							my (%vec, %pos);
+
+							stand() if ($char->{sitting});
+							getVector(\%vec, $player->{pos_to}, $char->{pos_to});
+							moveAlongVector(\%pos, $char->{pos_to}, \%vec, $dist - $config{followDistanceMin});
+							$timeout{ai_sit_idle}{time} = time;
+							sendMove($pos{x}, $pos{y});
+						}
+					}
+				}
+
+				if ($args->{following} && $player && %{$player}) {
+					if ($config{'followSitAuto'} && $players{$args->{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
+						sit();
+					}
+
+					my $dx = $args->{'last_pos_to'}{'x'} - $players{$args->{'ID'}}{'pos_to'}{'x'};
+					my $dy = $args->{'last_pos_to'}{'y'} - $players{$args->{'ID'}}{'pos_to'}{'y'};
+					$args->{'last_pos_to'}{'x'} = $players{$args->{'ID'}}{'pos_to'}{'x'};
+					$args->{'last_pos_to'}{'y'} = $players{$args->{'ID'}}{'pos_to'}{'y'};
+					if ($dx != 0 || $dy != 0) {
+						lookAtPosition($players{$args->{'ID'}}{'pos_to'}) if ($config{'followFaceDirection'});
 					}
 				}
 			}
-
-			if ($args->{following} && $player && %{$player}) {
-				if ($config{'followSitAuto'} && $players{$ai_seq_args[$followIndex]{'ID'}}{'sitting'} == 1 && $chars[$config{'char'}]{'sitting'} == 0) {
-					sit();
-				}
-
-				my $dx = $ai_seq_args[$followIndex]{'last_pos_to'}{'x'} - $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'};
-				my $dy = $ai_seq_args[$followIndex]{'last_pos_to'}{'y'} - $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'};
-				$ai_seq_args[$followIndex]{'last_pos_to'}{'x'} = $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'x'};
-				$ai_seq_args[$followIndex]{'last_pos_to'}{'y'} = $players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}{'y'};
-				if ($dx != 0 || $dy != 0) {
-					lookAtPosition($players{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}) if ($config{'followFaceDirection'});
-				}
-			}
-		}
-	}
-
-	if ($ai_seq[0] eq "follow" && $ai_seq_args[$followIndex]{'following'} && ( ( $players{$ai_seq_args[$followIndex]{'ID'}} && $players{$ai_seq_args[$followIndex]{'ID'}}{'dead'} ) || ( ( !$players{$ai_seq_args[$followIndex]{'ID'}} || !%{$players{$ai_seq_args[$followIndex]{'ID'}}} ) && $players_old{$ai_seq_args[$followIndex]{'ID'}}{'dead'}))) {
-		message "Master died.  I'll wait here.\n", "party";
-		delete $ai_seq_args[$followIndex]{'following'};
-	} elsif ($ai_seq_args[$followIndex]{'following'} && ( !$players{$ai_seq_args[$followIndex]{'ID'}} || !%{$players{$ai_seq_args[$followIndex]{'ID'}}} )) {
-		message "I lost my master\n", "follow";
-		if ($config{'followBot'}) {
-			message "Trying to get him back\n", "follow";
-			sendMessage($net, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 		}
 
-		delete $ai_seq_args[$followIndex]{'following'};
-
-		if ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disconnected'}) {
-			message "My master disconnected\n", "follow";
-
-		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'teleported'}) {
-			delete $ai_seq_args[$followIndex]{'ai_follow_lost_warped'};
-			delete $ai_v{'temp'}{'warp_pos'};
-
-			# Check to see if the player went through a warp portal and follow him through it.
-			my $pos = calcPosition($players_old{$ai_seq_args[$followIndex]{'ID'}});
-			my $oldPos = $players_old{$ai_seq_args[$followIndex]{'ID'}}->{pos};
-			my (@blocks, $found);
-			my %vec;
-			
-			debug "Last time i saw, master was moving from ($oldPos->{x}, $oldPos->{y}) to ($pos->{x}, $pos->{y})\n", "follow";
-			
-			# We must check the ground about 9x9 area of where we last saw our master. That's the only way
-			# to ensure he walked through a warp portal. The range is because of lag in some situations.
-			@blocks = calcRectArea2($pos->{x}, $pos->{y}, 4, 0);
-			foreach (@blocks) {
-				next unless (whenGroundStatus($_, "Warp Portal"));
-				# We must certify that our master was walking towards that portal.
-				getVector(\%vec, $_, $oldPos);
-				next unless (checkMovementDirection($oldPos, \%vec, $_, 15));
-				$found = $_;
-				last;
+		if (AI::action eq "follow" && $args->{'following'} && ( ( $players{$args->{'ID'}} && $players{$args->{'ID'}}{'dead'} ) || ( ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} ) && $players_old{$args->{'ID'}}{'dead'}))) {
+			message "Master died.  I'll wait here.\n", "party";
+			delete $args->{'following'};
+		} elsif ($args->{'following'} && ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} )) {
+			message "I lost my master\n", "follow";
+			if ($config{'followBot'}) {
+				message "Trying to get him back\n", "follow";
+				sendMessage($net, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 			}
-			
-			if ($found) {
-				%{$ai_v{'temp'}{'warp_pos'}} = %{$found};
-				$ai_seq_args[$followIndex]{'ai_follow_lost_warped'} = 1;
-				$ai_seq_args[$followIndex]{'ai_follow_lost'} = 1;
-				$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
-				$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'time'} = time;
-				$ai_seq_args[$followIndex]{'ai_follow_lost_vec'} = {};
-				getVector($ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
+
+			delete $args->{'following'};
+
+			if ($players_old{$args->{'ID'}}{'disconnected'}) {
+				message "My master disconnected\n", "follow";
+
+			} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
+				delete $args->{'ai_follow_lost_warped'};
+				delete $ai_v{'temp'}{'warp_pos'};
+
+				# Check to see if the player went through a warp portal and follow him through it.
+				my $pos = calcPosition($players_old{$args->{'ID'}});
+				my $oldPos = $players_old{$args->{'ID'}}->{pos};
+				my (@blocks, $found);
+				my %vec;
 				
+				debug "Last time i saw, master was moving from ($oldPos->{x}, $oldPos->{y}) to ($pos->{x}, $pos->{y})\n", "follow";
+				
+				# We must check the ground about 9x9 area of where we last saw our master. That's the only way
+				# to ensure he walked through a warp portal. The range is because of lag in some situations.
+				@blocks = calcRectArea2($pos->{x}, $pos->{y}, 4, 0);
+				foreach (@blocks) {
+					next unless (whenGroundStatus($_, "Warp Portal"));
+					# We must certify that our master was walking towards that portal.
+					getVector(\%vec, $_, $oldPos);
+					next unless (checkMovementDirection($oldPos, \%vec, $_, 15));
+					$found = $_;
+					last;
+				}
+				
+				if ($found) {
+					%{$ai_v{'temp'}{'warp_pos'}} = %{$found};
+					$args->{'ai_follow_lost_warped'} = 1;
+					$args->{'ai_follow_lost'} = 1;
+					$args->{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
+					$args->{'ai_follow_lost_end'}{'time'} = time;
+					$args->{'ai_follow_lost_vec'} = {};
+					getVector($args->{'ai_follow_lost_vec'}, $players_old{$args->{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
+					
+				} else {
+					message "My master teleported\n", "follow", 1;
+				}
+
+			} elsif ($players_old{$args->{'ID'}}{'disappeared'}) {
+				message "Trying to find lost master\n", "follow", 1;
+
+				delete $args->{'ai_follow_lost_char_last_pos'};
+				delete $args->{'follow_lost_portal_tried'};
+				$args->{'ai_follow_lost'} = 1;
+				$args->{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
+				$args->{'ai_follow_lost_end'}{'time'} = time;
+				$args->{'ai_follow_lost_vec'} = {};
+				getVector($args->{'ai_follow_lost_vec'}, $players_old{$args->{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
+
+				#check if player went through portal
+				my $first = 1;
+				my $foundID;
+				my $smallDist;
+				foreach (@portalsID) {
+					$ai_v{'temp'}{'dist'} = distance($players_old{$args->{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
+					if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
+						$smallDist = $ai_v{'temp'}{'dist'};
+						$foundID = $_;
+						undef $first;
+					}
+				}
+				$args->{'follow_lost_portalID'} = $foundID;
 			} else {
-				message "My master teleported\n", "follow", 1;
+				message "Don't know what happened to Master\n", "follow", 1;
 			}
+		}
 
-		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disappeared'}) {
-			message "Trying to find lost master\n", "follow", 1;
+		##### FOLLOW-LOST #####
 
-			delete $ai_seq_args[$followIndex]{'ai_follow_lost_char_last_pos'};
-			delete $ai_seq_args[$followIndex]{'follow_lost_portal_tried'};
-			$ai_seq_args[$followIndex]{'ai_follow_lost'} = 1;
-			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'timeout'} = $timeout{'ai_follow_lost_end'}{'timeout'};
-			$ai_seq_args[$followIndex]{'ai_follow_lost_end'}{'time'} = time;
-			$ai_seq_args[$followIndex]{'ai_follow_lost_vec'} = {};
-			getVector($ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
+		if (AI::action eq "follow" && $args->{'ai_follow_lost'}) {
+			if ($args->{'ai_follow_lost_char_last_pos'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'} && $args->{'ai_follow_lost_char_last_pos'}{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}) {
+				$args->{'lost_stuck'}++;
+			} else {
+				delete $args->{'lost_stuck'};
+			}
+			%{AI::args->{'ai_follow_lost_char_last_pos'}} = %{$chars[$config{'char'}]{'pos_to'}};
 
-			#check if player went through portal
-			my $first = 1;
-			my $foundID;
-			my $smallDist;
-			foreach (@portalsID) {
-				$ai_v{'temp'}{'dist'} = distance($players_old{$ai_seq_args[$followIndex]{'ID'}}{'pos_to'}, $portals{$_}{'pos'});
-				if ($ai_v{'temp'}{'dist'} <= 7 && ($first || $ai_v{'temp'}{'dist'} < $smallDist)) {
-					$smallDist = $ai_v{'temp'}{'dist'};
-					$foundID = $_;
-					undef $first;
+			if (timeOut($args->{'ai_follow_lost_end'})) {
+				delete $args->{'ai_follow_lost'};
+				message "Couldn't find master, giving up\n", "follow";
+
+			} elsif ($players_old{$args->{'ID'}}{'disconnected'}) {
+				delete AI::args->{'ai_follow_lost'};
+				message "My master disconnected\n", "follow";
+				
+			} elsif ($args->{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
+				my $pos = $ai_v{'temp'}{'warp_pos'};
+				
+				if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
+					ai_route($field{name}, $pos->{x}, $pos->{y},
+						attackOnRoute => 0); #distFromGoal => 0);
+				} else { 
+					my (%vec, %pos_to);
+					my $dist = distance($char->{pos_to}, $pos);
+
+					stand() if ($char->{sitting});
+					getVector(\%vec, $pos, $char->{pos_to});
+					moveAlongVector(\%pos_to, $char->{pos_to}, \%vec, $dist);
+					$timeout{ai_sit_idle}{time} = time;
+					move($pos_to{x}, $pos_to{y});
+					$pos->{x} = int $pos_to{x};
+					$pos->{y} = int $pos_to{y};
+
+				}
+				delete $args->{'ai_follow_lost_warped'};
+				delete $ai_v{'temp'}{'warp_pos'};
+				
+				message "My master warped at ($pos->{x}, $pos->{y}) - moving to warp point\n", "follow";
+
+			} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
+				delete AI::args->{'ai_follow_lost'};
+				message "My master teleported\n", "follow";
+
+			} elsif ($args->{'lost_stuck'}) {
+				if ($args->{'follow_lost_portalID'} eq "") {
+					moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'} / ($args->{'lost_stuck'} + 1));
+					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
+				}
+			} else {
+				if ($args->{'follow_lost_portalID'} ne "") {
+					if ($portals{$args->{'follow_lost_portalID'}} && %{$portals{$args->{'follow_lost_portalID'}}} && !$args->{'follow_lost_portal_tried'}) {
+						$args->{'follow_lost_portal_tried'} = 1;
+						%{$ai_v{'temp'}{'pos'}} = %{$portals{$args->{'follow_lost_portalID'}}{'pos'}};
+						ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
+							attackOnRoute => 1);
+					}
+				} else {
+					moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $args->{'ai_follow_lost_vec'}, $config{'followLostStep'});
+					move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
 				}
 			}
-			$ai_seq_args[$followIndex]{'follow_lost_portalID'} = $foundID;
-		} else {
-			message "Don't know what happened to Master\n", "follow", 1;
 		}
-	}
 
-	##### FOLLOW-LOST #####
-
-	if ($ai_seq[0] eq "follow" && $ai_seq_args[$followIndex]{'ai_follow_lost'}) {
-		if ($ai_seq_args[$followIndex]{'ai_follow_lost_char_last_pos'}{'x'} == $chars[$config{'char'}]{'pos_to'}{'x'} && $ai_seq_args[$followIndex]{'ai_follow_lost_char_last_pos'}{'y'} == $chars[$config{'char'}]{'pos_to'}{'y'}) {
-			$ai_seq_args[$followIndex]{'lost_stuck'}++;
-		} else {
-			delete $ai_seq_args[$followIndex]{'lost_stuck'};
+		# Use party information to find master
+		if (!exists $args->{following} && !exists $args->{ai_follow_lost}) {
+			ai_partyfollow();
 		}
-		%{$ai_seq_args[0]{'ai_follow_lost_char_last_pos'}} = %{$chars[$config{'char'}]{'pos_to'}};
-
-		if (timeOut($ai_seq_args[$followIndex]{'ai_follow_lost_end'})) {
-			delete $ai_seq_args[$followIndex]{'ai_follow_lost'};
-			message "Couldn't find master, giving up\n", "follow";
-
-		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'disconnected'}) {
-			delete $ai_seq_args[0]{'ai_follow_lost'};
-			message "My master disconnected\n", "follow";
-			
-		} elsif ($ai_seq_args[$followIndex]{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
-			my $pos = $ai_v{'temp'}{'warp_pos'};
-			
-			if ($config{followCheckLOS} && !checkLineWalkable($char->{pos_to}, $pos)) {
-				ai_route($field{name}, $pos->{x}, $pos->{y},
-					attackOnRoute => 0); #distFromGoal => 0);
-			} else { 
-				my (%vec, %pos_to);
-				my $dist = distance($char->{pos_to}, $pos);
-
-				stand() if ($char->{sitting});
-				getVector(\%vec, $pos, $char->{pos_to});
-				moveAlongVector(\%pos_to, $char->{pos_to}, \%vec, $dist);
-				$timeout{ai_sit_idle}{time} = time;
-				move($pos_to{x}, $pos_to{y});
-				$pos->{x} = int $pos_to{x};
-				$pos->{y} = int $pos_to{y};
-
-			}
-			delete $ai_seq_args[$followIndex]{'ai_follow_lost_warped'};
-			delete $ai_v{'temp'}{'warp_pos'};
-			
-			message "My master warped at ($pos->{x}, $pos->{y}) - moving to warp point\n", "follow";
-
-		} elsif ($players_old{$ai_seq_args[$followIndex]{'ID'}}{'teleported'}) {
-			delete $ai_seq_args[0]{'ai_follow_lost'};
-			message "My master teleported\n", "follow";
-
-		} elsif ($ai_seq_args[$followIndex]{'lost_stuck'}) {
-			if ($ai_seq_args[$followIndex]{'follow_lost_portalID'} eq "") {
-				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $config{'followLostStep'} / ($ai_seq_args[$followIndex]{'lost_stuck'} + 1));
-				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
-			}
-		} else {
-			if ($ai_seq_args[$followIndex]{'follow_lost_portalID'} ne "") {
-				if ($portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}} && %{$portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}}} && !$ai_seq_args[$followIndex]{'follow_lost_portal_tried'}) {
-					$ai_seq_args[$followIndex]{'follow_lost_portal_tried'} = 1;
-					%{$ai_v{'temp'}{'pos'}} = %{$portals{$ai_seq_args[$followIndex]{'follow_lost_portalID'}}{'pos'}};
-					ai_route($field{'name'}, $ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'},
-						attackOnRoute => 1);
-				}
-			} else {
-				moveAlongVector($ai_v{'temp'}{'pos'}, $chars[$config{'char'}]{'pos_to'}, $ai_seq_args[$followIndex]{'ai_follow_lost_vec'}, $config{'followLostStep'});
-				move($ai_v{'temp'}{'pos'}{'x'}, $ai_v{'temp'}{'pos'}{'y'});
-			}
-		}
-	}
-
-	# Use party information to find master
-	if (!exists $ai_seq_args[$followIndex]{following} && !exists $ai_seq_args[$followIndex]{ai_follow_lost}) {
-		ai_partyfollow();
-	}
 	} # end of FOLLOW block
 
 
