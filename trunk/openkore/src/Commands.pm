@@ -368,8 +368,7 @@ sub cmdAI {
 
 	# Clear AI
 	if ($args eq 'clear') {
-		undef @ai_seq;
-		undef @ai_seq_args;
+		AI::clear;
 		delete $ai_v{temp};
 		undef $char->{dead};
 		message "AI sequences cleared\n", "success";
@@ -449,7 +448,7 @@ sub cmdAIv {
 		$on = 'auto';
 	}
 	message("ai_seq ($on) = @ai_seq\n", "list");
-	message("solution\n", "list") if ($ai_seq_args[0]{'solution'});
+	message("solution\n", "list") if (AI::args->{'solution'});
 }
 
 sub cmdArrowCraft {

@@ -1267,8 +1267,8 @@ sub checkAllowedMap {
 # Check whether we're current in follow mode.
 sub checkFollowMode {
 	my $followIndex;
-	if ($config{follow} && defined($followIndex = binFind(\@ai_seq, "follow"))) {
-		return 1 if ($ai_seq_args[$followIndex]{following});
+	if ($config{follow} && defined($followIndex = AI::findAction("follow"))) {
+		return 1 if (AI::args($followIndex)->{following});
 	}
 	return 0;
 }
@@ -1290,9 +1290,9 @@ sub checkMonsterCleanness {
 	}
 
 	# If we're in follow mode
-	if (defined(my $followIndex = binFind(\@ai_seq, "follow"))) {
-		my $following = $ai_seq_args[$followIndex]{following};
-		my $followID = $ai_seq_args[$followIndex]{ID};
+	if (defined(my $followIndex = AI::findAction("follow"))) {
+		my $following = AI::findAction($followIndex)->{following};
+		my $followID = AI::findAction($followIndex)->{ID};
 
 		if ($following) {
 			# And master attacked monster, or the monster attacked/missed master
