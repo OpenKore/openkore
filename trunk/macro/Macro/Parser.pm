@@ -128,9 +128,13 @@ sub parseCmd {
     elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
     elsif ($kw eq 'arg')        {$ret = getWord($arg)}
     elsif ($kw eq 'eval')       {$ret = eval($arg)};
-    return $command if $ret eq '_%_';
-    if (defined $ret) {$arg = quotemeta $arg; $command =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g}
-    else {error "[macro] command $command failed.\n"; return}
+    if (defined $ret) {
+      return $command if $ret eq '_%_';
+      $arg = quotemeta $arg; $command =~ s/\@$kw\s*\(\s*$arg\s*\)/$ret/g
+    } else {
+      error "[macro] command $command failed.\n";
+      return
+    }
   }
   return $command;
 }
