@@ -216,6 +216,8 @@ sub run {
 		Plugins::callHook('Command_post', \%params);
 		if (!$params{return}) {
 			error "Unknown command '$switch'. Please read the documentation for a list of commands.\n";
+		} else {
+			return $params{return}
 		}
 	}
 }
