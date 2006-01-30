@@ -42,6 +42,7 @@
 		<li><a href="http://forums.openkore.com/" title="International forum"><img src="images/international.png" width="48" height="48" alt=""><br>International</a></li>
 		<li><a href="http://www.openkore-brasil.com/" title="Brazilian forum"><img src="images/brazil.png" width="48" height="48" alt=""><br>Brazil</a></li>
 		<li><a href="http://techie.sytes.net/index.php" title="Filipino forum"><img src="images/philippines.png" width="48" height="48" alt=""><br>Philippines</a></li>
+		<li><a href="http://www.d-bests.com/" title="Indonesian forum"><img src="images/indonesia.png" width="48" height="48" alt=""><br>Indonesia</a></li>
 		</ul>
 	</div>
 
