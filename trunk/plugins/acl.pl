@@ -35,8 +35,8 @@ our $trigger;
 Plugins::register('acl', 'allow commands based on access control lists', \&Unload, \&Unload);
 
 my $hooks = Plugins::addHooks(
-				 ['Command_post', \&commandHandler, undef],
-				 ['packet_privMsg', \&pmHandler, undef]
+	['Command_post', \&commandHandler, undef],
+	['packet_privMsg', \&pmHandler, undef]
 );
 
 our $file = "$Settings::control_folder/acl.txt";
@@ -83,7 +83,8 @@ sub parseACL {
 			next
 		}
 	}
-	close FILE
+	close FILE;
+	return 1
 }
 
 sub commandHandler {
