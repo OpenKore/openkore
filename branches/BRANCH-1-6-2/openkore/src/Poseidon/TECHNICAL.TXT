@@ -33,7 +33,13 @@ Message ID: "Poseidon Reply"
 Key 'packet' - Response to send back to the GameGuard server.
 
 
-Fascade
--------
+Server files
+------------
+poseidon.pl, QueryServer.pm and RagnarokServer.pm are part of the Poseidon
+server.
+
+
+Client files
+------------
 The Poseidon::Client module provides a simple interface for OpenKore to
-use Poseidon.
+communicate with the Poseidon server.
