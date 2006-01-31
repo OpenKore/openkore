@@ -288,7 +288,7 @@ sub checkConnection {
 
 		# backported from 1.9.1
 		# call plugin's hook to determine if we can continue the connection
-		if ($self->serverAlive) {
+		if ($remote_socket && $remote_socket->connected) {
 			Plugins::callHook("Network::serverConnect/char");
 			return if ($conState == 1.5);
 		}
@@ -312,7 +312,7 @@ sub checkConnection {
 
 		# backported from 1.9.1
 		# call plugin's hook to determine if we can continue the connection
-		if ($self->serverAlive) {
+		if ($remote_socket && $remote_socket->connected) {
 			Plugins::callHook("Network::serverConnect/charselect");
 			return if ($conState == 1.5);
 		}
@@ -337,7 +337,7 @@ sub checkConnection {
 
 		# backported from 1.9.1
 		# call plugin's hook to determine if we can continue the connection
-		if ($self->serverAlive) {
+		if ($remote_socket && $remote_socket->connected) {
 			Plugins::callHook("Network::serverConnect/mapserver");
 			return if ($conState == 1.5);
 		}
