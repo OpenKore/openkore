@@ -190,6 +190,7 @@ use Actor::Party;
 use Actor::Unknown;
 use Interface;
 use ChatQueue;
+use Poseidon::Client;
 Modules::register(qw/Globals Modules Log Utils Settings Plugins FileParsers
 	Network Network::Send Commands Misc AI Skills Interface ChatQueue
 	Actor Actor::Player Actor::Monster Actor::You Actor::Party Actor::Unknown/);
