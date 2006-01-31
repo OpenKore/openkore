@@ -107,6 +107,7 @@ sub readResponse {
 sub onClientExit {
 	my ($self) = @_;
 	$self->{challengeNum} = 0 if (!$self->{willReconnect});
+	print "RO Client disonnected\n";
 }
 
 sub onClientData {
@@ -200,11 +201,11 @@ sub onClientData {
 		}
 
 	} elsif ($switch eq '0187') { # accountid sync (what does this do anyway?)
-		$client->send($client, $msg);
+		$client->send($msg);
 
 	} elsif ($switch eq '018A') { # client sends quit packet
 		$self->{challengeNum} = 0;
-		$client->send($client, pack("C*",0x8B,0x01,0x00,0x00));
+		$client->send(pack("C*",0x8B,0x01,0x00,0x00));
 
 	} elsif ($switch eq '0228') { # client sends game guard sync
 		# Queue the response
