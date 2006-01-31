@@ -107,7 +107,6 @@ sub readResponse {
 sub onClientExit {
 	my ($self) = @_;
 	$self->{challengeNum} = 0 if (!$self->{willReconnect});
-	print "RO Client disonnected\n";
 }
 
 sub onClientData {
