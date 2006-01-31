@@ -1,4 +1,4 @@
-m# This file contains information about master servers.
+# This file contains information about master servers.
 
 # eAthena private servers use these options:
 # master_version 1
@@ -139,6 +139,7 @@ secureLogin_account 0
 serverType 2
 storageEncryptKey 0x050B6F79, 0x0202C179, 0x00E20120, 0x04FA43E3, 0x0179B6C8, 0x05973DF2, 0x07D8D6B, 0x08CB9ED9
 serverEncoding Tagalog
+gameGuard 1
 
 [Europe - euRO]
 ip 217.68.157.42
@@ -175,6 +176,7 @@ master_version 22
 version 1
 serverType 0
 field_payon old_payon.fld
+gameGuard 1
 
 [India - inRO]
 ip 202.92.9.35
@@ -186,6 +188,7 @@ secureLogin 1
 secureLogin_type 0
 secureLogin_requestCode
 secureLogin_account 0
+gameGuard 1
 
 [Thailand - tRO Account 1: Sol, Chaos, Loki, Iris]
 ip 203.144.244.10
