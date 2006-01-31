@@ -30,6 +30,7 @@ message_length_max 80
 chatLangCode 0
 storageEncryptKey
 serverEncoding Western
+gameGuard 0
 
 
 ######## Main configuration ########
