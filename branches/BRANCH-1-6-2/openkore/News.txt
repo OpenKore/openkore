@@ -2,12 +2,22 @@
 ### 1.6.5
 ==================
 
+New features:
+- Support for servers that use GameGuard. (bRO, inRO and pRO Sakray)
+
 Bug fixes:
 - AutoSwitch fixed.
-- Work around some servers' anti-bot detection.
+- Work around some private servers' anti-bot detection.
+
+New config options:
+- gameGuard (flag)
+  Set this option to 1 if your server uses GameGuard. (bRO, inRO and
+  pRO Sakray)
 
 Credits:
 - pyronix: autoswitch bugfix
+- illusionist: help with bRO support.
+
 
 ==================
 ### 1.6.4

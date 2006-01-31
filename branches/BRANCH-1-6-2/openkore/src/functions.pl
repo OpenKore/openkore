@@ -194,8 +194,11 @@ sub checkConnection {
 		if ($master->{chatLangCode} ne '' && $config{chatLangCode} != $master->{chatLangCode}) {
 			configModify('chatLangCode', $master->{chatLangCode});
 		}
-		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} != $master->{storageEncryptKey}) {
+		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} ne $master->{storageEncryptKey}) {
 			configModify('storageEncryptKey', $master->{storageEncryptKey});
+		}
+		if ($master->{gameGuard} ne '' && $config{gameGuard} != $master->{gameGuard}) {
+			configModify('gameGuard', $master->{gameGuard});
 		}
 
 		message("Connecting to Master Server...\n", "connection");
