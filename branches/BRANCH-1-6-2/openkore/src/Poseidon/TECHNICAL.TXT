@@ -2,6 +2,9 @@ Poseidon is a solution for the GameGuard problem. Server like bRO use
 GameGuard. The RO server sends a packet to the client, and the client
 must response with an appropriate packet.
 
+
+Overview
+--------
 Poseidon works like this:
 1. Poseidon sets up a fake RO server (let us call it PoseidonRO).
 2. Poseidon sets up another server socket for communication with OpenKore.
@@ -14,3 +17,23 @@ Poseidon works like this:
 8. RO client sends a reply.
 9. Poiseidon sends reply to OpenKore.
 10. OpenKore sends reply to real RO server.
+
+
+Protocol
+--------
+The Poseidon server uses the same message format as the IPC subsystem.
+See the IPC::Messages module for information.
+
+A request to the Poseidon server is as follows:
+Message ID: "Poseidon Query"
+Key 'packet' - The GameGuard packet, as sent by the RO server.
+
+The Poseidon server replies with the following message:
+Message ID: "Poseidon Reply"
+Key 'packet' - Response to send back to the GameGuard server.
+
+
+Fascade
+-------
+The Poseidon::Client module provides a simple interface for OpenKore to
+use Poseidon.

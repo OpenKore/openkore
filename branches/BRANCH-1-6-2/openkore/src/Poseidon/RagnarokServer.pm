@@ -1,9 +1,18 @@
-#########################################################
-# This class sets up a fake Ragnarok Online server.
+###########################################################
+# Poseidon server - Ragnarok Online server emulator
+#
+# This program is free software; you can redistribute it and/or 
+# modify it under the terms of the GNU General Public License 
+# as published by the Free Software Foundation; either version 2 
+# of the License, or (at your option) any later version.
+#
+# Copyright (c) 2005-2006 OpenKore Development Team
+###########################################################
+# This class emulates a Ragnarok Online server.
 # The RO client connects to this server. This server
 # periodically sends a GameGuard query to the RO client,
 # and saves the RO client's response.
-#########################################################
+###########################################################
 package Poseidon::RagnarokServer;
 
 use strict;
@@ -42,6 +51,7 @@ sub new {
 	return $self;
 }
 
+##
 # $RagnarokServer->query(Bytes packet)
 # packet: The raw GameGuard query packet.
 # Require: defined($packet) && $self->getState() eq 'ready'
@@ -55,6 +65,7 @@ sub query {
 	$self->{state} = 'requesting';
 }
 
+##
 # String $RagnarokServer->getState()
 #
 # Get the state of this RagnarokServer object.
@@ -76,6 +87,7 @@ sub getState {
 	}
 }
 
+##
 # Bytes $RagnarokServer->readResponse()
 # Require: $self->getState() eq 'requested'
 # Ensure: defined(result) && $self->getState() eq 'ready'

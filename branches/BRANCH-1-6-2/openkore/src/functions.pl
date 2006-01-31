@@ -438,6 +438,15 @@ sub mainLoop {
 		}
 	}
 
+	# GameGuard support
+	if ($conState == 5 && $config{gameGuard}) {
+		my $result = Poseidon::Client::getInstance()->getResult();
+		if (defined($result)) {
+			debug "Received Poseidon result.\n", "poseidon";
+			$remote_socket->send($result);
+		}
+	}
+
 	# Process AI
 	if ($conState == 5 && timeOut($timeout{ai}) && $remote_socket && $remote_socket->connected) {
 		AI();
@@ -4940,6 +4949,14 @@ sub parseMsg {
 
 	} elsif ($switch eq "0077") {
 		$conState = 5 if ($conState != 4 && $xkore);
+
+	} elsif ($switch eq '0227' && $config{gameGuard}) {
+		Poseidon::Client::getInstance()->query(substr($msg, 0, $msg_size));
+		debug "Querying Poseidon\n", "poseidon";
+
+	} elsif ($switch eq '0259') {
+		$gameGuard_reply = unpack("H2", substr($msg, 2, 1));
+		message "Server granted logon request to " . ($gameGuard_reply eq '01' ? "account server" : "char/map server") . "\n", "poseidon";
 
 	} elsif ($switch eq "0078" || $switch eq "01D8" || $switch eq "022C") {
 		# 0078: long ID, word speed, word state, word ailment, word look, word

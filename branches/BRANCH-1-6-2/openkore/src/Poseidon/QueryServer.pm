@@ -1,3 +1,13 @@
+###########################################################
+# Poseidon server - OpenKore communication channel
+#
+# This program is free software; you can redistribute it and/or 
+# modify it under the terms of the GNU General Public License 
+# as published by the Free Software Foundation; either version 2 
+# of the License, or (at your option) any later version.
+#
+# Copyright (c) 2005-2006 OpenKore Development Team
+###########################################################
 package Poseidon::QueryServer;
 
 use strict;
@@ -15,7 +25,14 @@ my $CLASS = "Poseidon::QueryServer";
 #     Base::Server::Client client;
 # }
 
+##
 # Poseidon::QueryServer->new(String port, String host, Poseidon::RagnarokServer ROServer)
+# port: The port to start this server on.
+# host: The host to bind this server to.
+# ROServer: The RagnarokServer object to send GameGuard queries to.
+# Require: defined($port) && defined($ROServer)
+#
+# Create a new Poseidon::QueryServer object.
 sub new {
 	my ($class, $port, $host, $roServer) = @_;
 	my $self = $class->SUPER::new($port, $host);
@@ -33,6 +50,32 @@ sub new {
 	return $self;
 }
 
+##
+# void $QueryServer->process(Base::Server::Client client, String ID, Hash* args)
+#
+# Push an OpenKore GameGuard query to the queue.
+sub process {
+	my ($self, $client, $ID, $args) = @_;
+
+	if ($ID ne "Poseidon Query") {
+		$client->close();
+		return;
+	}
+	print "Received query from client " . $client->getIndex() . "\n";
+
+	my %request = (
+		packet => $args->{packet},
+		client => $client
+	);
+	Scalar::Util::weaken($request{client});
+	push @{$self->{"$CLASS queue"}}, \%request;
+#	my $packet = substr($ipcArgs->{packet}, 0, 18);
+}
+
+
+##################################################
+
+
 sub onClientNew {
 	my ($self, $client) = @_;
 	$client->{"$CLASS data"} = '';
@@ -49,27 +92,6 @@ sub onClientData {
 	}
 }
 
-# void $QueryServer->process(Base::Server::Client client, String ID, Hash* args)
-#
-# Add an OpenKore GameGuard query to the queue.
-sub process {
-	my ($self, $client, $ID, $args) = @_;
-
-	if ($ID ne "GameGuard Query") {
-		$client->close();
-		return;
-	}
-	print "Received query from client " . $client->getIndex() . "\n";
-
-	my %request = (
-		packet => $args->{packet},
-		client => $client
-	);
-	Scalar::Util::weaken($request{client});
-	push @{$self->{"$CLASS queue"}}, \%request;
-#	my $packet = substr($ipcArgs->{packet}, 0, 18);
-}
-
 sub iterate {
 	my ($self) = @_;
 	my ($server, $queue);
@@ -79,11 +101,12 @@ sub iterate {
 	$queue = $self->{"$CLASS queue"};
 
 	if ($server->getState() eq 'requested') {
-		if ($queue->[0]{client}) {
+		# Send the response to the client.
+		if (@{$queue} > 0 && $queue->[0]{client}) {
 			my ($data, %args);
 
 			$args{packet} = $server->readResponse();
-			$data = encode("GameGuard Response", \%args);
+			$data = encode("Poseidon Reply", \%args);
 			$queue->[0]{client}->send($data);
 			$queue->[0]{client}->close();
 		}
