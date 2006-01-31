@@ -12,6 +12,7 @@ DIRS=(.
 	src/build
 	src/Actor
 	src/Base
+	src/Base/Server
 	src/IPC
 	src/IPC/Manager
 	src/Interface
@@ -20,6 +21,7 @@ DIRS=(.
 	src/Interface/Wx
 	src/Interface/Wx/DockNotebook
 	src/Network
+	src/Poseidon
 	src/Utils
 	src/auto/XSTools
 	src/auto/XSTools/build
