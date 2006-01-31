@@ -78,15 +78,15 @@ sub __start {
 		}
 		exit 4;
 	}
-	IPC::Manager::Core::setPort($server->port);
+	IPC::Manager::Core::setPort($server->getPort());
 
 	$SIG{INT} = sub { IPC::Manager::Core::stop(); exit 10; };
 	$SIG{TERM} = sub { IPC::Manager::Core::stop(); exit 10; };
 
 	if ($feedback) {
-		$feedback->send($server->port);
+		$feedback->send($server->getPort());
 	} elsif ($port == 0) {
-		printf "Server started at port %d\n", $server->port;
+		printf "Server started at port %d\n", $server->getPort();
 	}
 
 
