@@ -442,6 +442,10 @@ sub parseShopControl {
 			push(@errors, "$loc has price over 1,000,000,000: $price");
 		}
 
+		if ($amount > 30000) {
+			push(@errors, "$loc has amount over 30,000: $amount");
+		}
+
 		push(@{$shop->{items}}, {name => $name, price => $real_price, amount => $amount});
 	}
 	close(SHOP);
