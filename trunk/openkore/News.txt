@@ -50,6 +50,9 @@ New features:
 - Manual move commands (east, west, north, south, etc) now take an optional
   'distance' parameter.
 - Response list for refining equipments now displays correct item names
+- shop.txt parser will complain if you try to vend more than 30,000 of an
+  item. (Usually happens if you got price and quantity mixed up, which
+  is bad for you since you'd be selling items way cheap.)
 
 New config options:
 - autoMoveOnDeath set:
