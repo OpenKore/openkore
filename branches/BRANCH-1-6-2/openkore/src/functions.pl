@@ -435,6 +435,16 @@ sub checkConnection {
 			$conState = 1;
 		}
 	}
+
+	# GameGuard support
+	if ($config{gameGuard}) {
+		my $result = Poseidon::Client::getInstance()->getResult();
+		if (defined($result)) {
+			debug "Received Poseidon result.\n", "poseidon";
+			$remote_socket->send($result);
+		}
+	}
+
 }
 
 sub mainLoop {
