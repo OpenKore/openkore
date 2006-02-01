@@ -181,9 +181,7 @@ sub initOtherVars {
 # 5: Connected to map server; ready and functional.
 #
 # Special states:
-# 1.2, 1.3 (set by parseMsg()): Special sequnce for some login servers
 # 1.5 (set by plugins): There is a special sequence for login servers and we must wait the plugins to finalize before continuing
-# 2.2, 2.3 (set by parseMsg()): Special sequnce for some login servers
 # 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be the account ID
 sub checkConnection {
 	return if ($xkore || $Settings::no_connect);
@@ -218,15 +216,7 @@ sub checkConnection {
 			return if ($conState == 1.5);
 		}
 		
-		# ported from fakeGameGuard
-		if ($remote_socket && $remote_socket->connected && $config{gameGuard} == 2) {
-			my $msg = pack("C*", 0x58, 0x02);
-			sendMsgToServer(\$main::remote_socket, $msg);
-			message "Requesting permission to logon on account server...\n";
-			$conState = 1.2; # wait for the 0259 packet
-			$timeout{'master'}{'time'} = time;
-			return;
-		}
+		# integrate fakeGameGuard here
 
 		if ($remote_socket && $remote_socket->connected && $master->{secureLogin} >= 1) {
 			my $code;
@@ -254,34 +244,7 @@ sub checkConnection {
 
 		$timeout{'master'}{'time'} = time;
 
-	} elsif ($conState == 1.3) {
-		if ($remote_socket && $remote_socket->connected && $master->{secureLogin} >= 1) {
-			my $code;
-
-			message("Secure Login...\n", "connection");
-			undef $secureLoginKey;
-
-			if ($master->{secureLogin_requestCode} ne '') {
-				$code = $master->{secureLogin_requestCode};
-			} elsif ($config{secureLogin_requestCode} ne '') {
-				$code = $config{secureLogin_requestCode};
-			}
-
-			if ($code ne '') {
-				sendMasterCodeRequest(\$remote_socket, 'code', $code);
-			} else {
-				sendMasterCodeRequest(\$remote_socket, 'type', $master->{secureLogin_type});
-			}
-
-		} elsif ($remote_socket && $remote_socket->connected) {
-			sendPreLoginCode(\$remote_socket, $master->{preLoginCode}) if ($master->{preLoginCode});
-			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'},
-				$master->{master_version}, $master->{version});
-		}
-
-		$timeout{'master'}{'time'} = time;
-
-	} elsif (($conState == 1 || $conState == 1.3) && $masterServer->{secureLogin} >= 1 && $secureLoginKey ne ""
+	} elsif ($conState == 1 && $masterServer->{secureLogin} >= 1 && $secureLoginKey ne ""
 	   && !timeOut($timeout{'master'}) && $conState_tries) {
 
 		my $master = $masterServer;
@@ -291,13 +254,12 @@ sub checkConnection {
 				$master->{secureLogin}, $master->{secureLogin_account});
 		undef $secureLoginKey;
 
-	} elsif (($conState >= 1 && $conState < 2) && timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
+	} elsif ($conState == 1 && timeOut($timeout{'master'}) && timeOut($timeout_ex{'master'})) {
 		error "Timeout on Master Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
 		undef $conState_tries;
-		$conState = 1;
 
 	# backported from 1.9.1
 	} elsif ($conState == 1.5) {
@@ -333,24 +295,12 @@ sub checkConnection {
 			return if ($conState == 1.5);
 		}
 		
-		# ported from fakeGameGuard
-		if ($remote_socket && $remote_socket->connected && $config{gameGuard} == 2) {
-			my $msg = pack("C*", 0x58, 0x02);
-			sendMsgToServer(\$main::remote_socket, $msg);
-			message "Requesting permission to logon on character/map server...\n";
-			$conState = 2.2; # wait for the 0259 packet
-			$timeout{'gamelogin'}{'time'} = time;
-			return;
-		}
+		# integrate fakeGameGuard here
 
 		sendGameLogin(\$remote_socket, $accountID, $sessionID, $sessionID2, $accountSex);
 		$timeout{'gamelogin'}{'time'} = time;
 
-	} elsif ($constate == 2.3) {
-		sendGameLogin(\$remote_socket, $accountID, $sessionID, $sessionID2, $accountSex);
-		$timeout{'gamelogin'}{'time'} = time;
-
-	} elsif (($conState >= 2 && $conState < 3) && timeOut($timeout{'gamelogin'})
+	} elsif ($conState == 2 && timeOut($timeout{'gamelogin'})
 	  && ($config{'server'} ne "" || $masterServer->{'charServer_ip'})) {
 		error "Timeout on Game Login Server, reconnecting...\n", "connection";
 		$timeout_ex{'master'}{'time'} = time;
@@ -371,6 +321,8 @@ sub checkConnection {
 			return if ($conState == 1.5);
 		}
 
+		# integrate fakeGameGuard here
+
 		sendCharLogin(\$remote_socket, $config{'char'});
 		$timeout{'charlogin'}{'time'} = time;
 
@@ -379,8 +331,8 @@ sub checkConnection {
 		$timeout_ex{'master'}{'time'} = time;
 		$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		Network::disconnect(\$remote_socket);
-		undef $conState_tries;
 		$conState = 1;
+		undef $conState_tries;
 
 	} elsif ($conState == 4 && !($remote_socket && $remote_socket->connected()) && !$conState_tries) {
 		sleep($config{pauseMapServer}) if ($config{pauseMapServer});
@@ -396,6 +348,8 @@ sub checkConnection {
 			return if ($conState == 1.5);
 		}
 
+		# integrate fakeGameGuard here
+
 		sendMapLogin(\$remote_socket, $accountID, $charID, $sessionID, $accountSex2);
 		$timeout_ex{master}{time} = time;
 		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
@@ -405,8 +359,8 @@ sub checkConnection {
 		message("Timeout on Map Server, connecting to Master Server...\n", "connection");
 		$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 		Network::disconnect(\$remote_socket);
-		undef $conState_tries;
 		$conState = 1;
+		undef $conState_tries;
 
 	} elsif ($conState == 5 && !($remote_socket && $remote_socket->connected())) {
 		error "Disconnected from Map Server, ", "connection";
@@ -417,8 +371,8 @@ sub checkConnection {
 		} else {
 			error "connecting to Master Server in $timeout_ex{master}{timeout} seconds...\n", "connection";
 			$timeout_ex{master}{time} = time;
-			undef $conState_tries;
 			$conState = 1;
+			undef $conState_tries;
 		}
 
 	} elsif ($conState == 5 && timeOut($timeout{play})) {
@@ -431,8 +385,8 @@ sub checkConnection {
 			$timeout_ex{master}{time} = time;
 			$timeout_ex{master}{timeout} = $timeout{reconnect}{timeout};
 			Network::disconnect(\$remote_socket);
-			undef $conState_tries;
 			$conState = 1;
+			undef $conState_tries;
 		}
 	}
 }
@@ -536,7 +490,7 @@ sub mainLoop {
 	}
 
 	# GameGuard support
-	if ($config{gameGuard}) {
+	if ($conState == 5 && $config{gameGuard}) {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
@@ -5052,10 +5006,8 @@ sub parseMsg {
 		debug "Querying Poseidon\n", "poseidon";
 
 	} elsif ($switch eq '0259') {
-		my $gameGuard_reply = unpack("H2", substr($msg, 2, 1));
+		$gameGuard_reply = unpack("H2", substr($msg, 2, 1));
 		message "Server granted logon request to " . ($gameGuard_reply eq '01' ? "account server" : "char/map server") . "\n", "poseidon";
-		$conState = 1.3 if ($conState == 1.2);
-		$conState = 2.3 if ($conState == 2.2);
 
 	} elsif ($switch eq "0078" || $switch eq "01D8" || $switch eq "022C") {
 		# 0078: long ID, word speed, word state, word ailment, word look, word
