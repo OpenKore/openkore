@@ -87,7 +87,9 @@ sub parseKw {
   my @pair = $text =~ /\@($keywords)\s*\(\s*(.*?)\s*\)/i;
   return unless @pair;
   if (my @tmppair = $pair[1] =~ /\@($keywords)\s*\(\s*(.*)/i) {return @tmppair}
-  return @pair;
+  if ($pair[0] eq 'arg') {@pair = $text =~ /\@(arg)\s*\(\s*(".*?",\s+\d+)\s*\)/}
+  elsif ($pair[0] eq 'random') {@pair = $text =~ /\@(random)\s*\(\s*(".*?")\s*\)/}
+  return @pair
 }
 
 # command line parser for macro
