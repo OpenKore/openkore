@@ -176,7 +176,7 @@ master_version 22
 version 1
 serverType 0
 field_payon old_payon.fld
-gameGuard 1
+gameGuard 2
 
 [India - inRO]
 ip 202.92.9.35
