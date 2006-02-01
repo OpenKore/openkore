@@ -25,6 +25,7 @@ DIRS=(.
 	src/Network
 	src/Network/Receive
 	src/Utils
+	src/Utils/Core
 	src/auto/XSTools
 	src/auto/XSTools/build
 	src/auto/XSTools/misc
