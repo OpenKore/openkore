@@ -68,6 +68,7 @@ sub query {
 			"to support GameGuard, you must start the Poseidon " .
 			"server. Please read " . POSEIDON_SUPPORT_URL .
 			" for more information.\n";
+		return;
 	}
 
 	my (%args, $data);
