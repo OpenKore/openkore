@@ -181,7 +181,9 @@ sub initOtherVars {
 # 5: Connected to map server; ready and functional.
 #
 # Special states:
+# 1.2, 1.3 (set by parseMsg()): Special sequnce for some login servers
 # 1.5 (set by plugins): There is a special sequence for login servers and we must wait the plugins to finalize before continuing
+# 2.2, 2.3 (set by parseMsg()): Special sequnce for some login servers
 # 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be the account ID
 sub checkConnection {
 	return if ($xkore || $Settings::no_connect);
@@ -221,7 +223,7 @@ sub checkConnection {
 			my $msg = pack("C*", 0x58, 0x02);
 			sendMsgToServer(\$main::remote_socket, $msg);
 			message "Requesting permission to logon on account server...\n";
-			$conState = 1.2;
+			$conState = 1.2; # wait for the 0259 packet
 			$timeout{'master'}{'time'} = time;
 			return;
 		}
