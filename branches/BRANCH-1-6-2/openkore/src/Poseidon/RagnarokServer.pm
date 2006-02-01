@@ -121,13 +121,27 @@ sub onClientData {
 	my $accountID = pack("C4",0xff);
 	my $accountID2 = pack("C4",0xff);
 	my $charID = pack("C4", 0xff,0xff,0xff,0xff);
-	my $mapName = pack("a16", "prontera.gat");
+	my $mapName = pack("a16", "new_1-1.gat");
 	my $sex = 1;
-	my $serverName = pack("a20", "Kali's World"); # server name should be less than or equal to 20 characters
+	my $serverName = pack("a20", "Poseidon server"); # server name should be less than or equal to 20 characters
 	my $serverUsers = pack("V", 0);
-	my $charName = pack("a24", "kaliwanagan");
+	my $charName = pack("a24", "Poseidon server");
 	my ($str, $agi, $vit, $int, $dex, $luk) = (99, 99, 99, 99, 99, 99);
-	my $hairColor = 0;
+	my $hairColor = pack("v", 0x00);
+	my $hairStyle = pack("v", 0x00);
+	my $exp = pack("V", 0x0fffffff);
+	my $exp_job = pack("V", 0x0fffffff);
+	my $lvl_job = pack("V", 0x0fffffff);
+	my $zeny = pack("V", 0x0fffffff);
+	my $level = pack("v", 99);
+	my $hp = pack("v", 0x0fff);
+	my $hp_max = $hp;
+	my $sp = pack("v", 0x0fff);
+	my $sp_max = $sp;
+	my $head_low = pack("v", 0x01);
+	my $head_top = pack("v", 0x01);
+	my $head_mid = pack("v", 0x01);
+	my $job_id = pack("v", 0x02);
 
 	my @ipElements = split /\./, $host;
 	my $charStats = pack("C*", $str, $agi, $vit, $int, $dex, $luk);
@@ -160,12 +174,11 @@ sub onClientData {
 
 	} elsif ($switch eq '0065') { # client sends server choice packet
 		my $data = $accountID .
-			pack("C*",0x6b,0x00,0x6e,0x00) . $charID .
+			pack("C*",0x6b,0x00,0x6e,0x00) . $charID . $exp . $zeny . $exp_job . $lvl_job .
 			pack("C*",0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-			0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-			0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x2a,0x00,
-			0x2a,0x00,0x0b,0x00,0x0b,0x00,0x96,0x00,0x00,0x00,0x01,0x00,0x00,0x00,0x01,0x00,
-			0x00,0x00,0x00,0x00,0x00,0x00,0x8d,0x00,0x49,0x00,$hairColor,0x00,0x00,0x00) .
+			0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00) .
+			$hp . $hp_max . $sp . $sp_max . pack("C*",0x00,0x00) . $job_id . $hairStyle . pack("C*",0x00,0x00) . $level .
+			pack("C*",0x00,0x00,0x00,0x00) . $head_low . $head_top . $head_mid . $hairColor . pack("C*",0x00,0x00) .
 			$charName . $charStats . pack("C*", 0x00,0x00);
 		# NOTE: ideally, all character slots are filled with the same character, for idiot-proofing
 		# NOTE: also, the character's appearance may be made to be modifiable
