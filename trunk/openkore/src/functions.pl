@@ -503,7 +503,7 @@ sub AI {
 
 	PORTALRECORD: {
 		last unless $config{portalRecord};
-		last unless $ai_v{portalTrace_mapChanged};
+		last unless $ai_v{portalTrace_mapChanged} && timeOut($ai_v{portalTrace_mapChanged}, 0.5);
 		delete $ai_v{portalTrace_mapChanged};
 
 		debug "Checking for new portals...\n", "portalRecord";
@@ -4370,6 +4370,7 @@ sub parseSendMsg {
 			undef $firstLoginMap;
 		}
 		$timeout{'welcomeText'}{'time'} = time;
+		$ai_v{portalTrace_mapChanged} = time;
 		message "Map loaded\n", "connection";
 
 	} elsif ($switch eq "0085") {

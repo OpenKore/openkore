@@ -3336,7 +3336,9 @@ sub map_change {
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}
-	$ai_v{'portalTrace_mapChanged'} = 1;
+	if ($net->version == 0) {
+		$ai_v{portalTrace_mapChanged} = time;
+	}
 
 	my %coords;
 	$coords{'x'} = $args->{x};
@@ -3366,7 +3368,7 @@ sub map_changed {
 	for (my $i = 0; $i < @ai_seq; $i++) {
 		ai_setMapChanged($i);
 	}
-	$ai_v{'portalTrace_mapChanged'} = 1;
+	$ai_v{portalTrace_mapChanged} = time;
 
 	$map_ip = makeIP($args->{IP});
 	$map_port = $args->{port};
