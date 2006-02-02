@@ -141,7 +141,7 @@ sub onClientData {
 	my $head_low = pack("v", 0x01);
 	my $head_top = pack("v", 0x01);
 	my $head_mid = pack("v", 0x01);
-	my $job_id = pack("v", 0x02);
+	
 
 	my @ipElements = split /\./, $host;
 	my $charStats = pack("C*", $str, $agi, $vit, $int, $dex, $luk);
@@ -177,7 +177,8 @@ sub onClientData {
 			pack("C*",0x6b,0x00,0x6e,0x00) . $charID . $exp . $zeny . $exp_job . $lvl_job .
 			pack("C*",0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 			0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00) .
-			$hp . $hp_max . $sp . $sp_max . pack("C*",0x00,0x00) . $job_id . $hairStyle . pack("C*",0x00,0x00) . $level .
+			$hp . $hp_max . $sp . $sp_max . $job_id .
+			pack("C*",0x00,0x00) . $hairStyle . pack("C*",0x00,0x00) . $level .
 			pack("C*",0x00,0x00,0x00,0x00) . $head_low . $head_top . $head_mid . $hairColor . pack("C*",0x00,0x00) .
 			$charName . $charStats . pack("C*", 0x00,0x00);
 		# NOTE: ideally, all character slots are filled with the same character, for idiot-proofing
