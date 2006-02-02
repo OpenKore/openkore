@@ -24,11 +24,12 @@ package Actor::Player;
 use strict;
 use Actor;
 use Globals;
-
-our @ISA = qw(Actor);
+use base qw(Actor);
 
 sub new {
-	return bless({type => 'Player'});
+	my ($class) = @_;
+	my %self = (type => 'Player');
+	return bless \%self, $class;
 }
 
 sub selfString {

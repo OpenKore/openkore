@@ -100,6 +100,7 @@ sub new {
 		ReuseAddr	=> 1);
 	return undef if (!$self{server});
 
+	$self{host} = $self{server}->sockhost;
 	$self{port} = $self{server}->sockport;
 	$self{clients} = [];
 	bless \%self, $class;
@@ -127,12 +128,22 @@ sub clients {
 }
 
 ##
-# int $BaseServer->port()
+# String $BaseServer->getHost()
+# Returns: an IP address in textual form.
+# Ensure: defined(result)
+#
+# Get the IP address on which the server is started.
+sub getHost {
+	return $_[0]->{host};
+}
+
+##
+# int $BaseServer->getPort()
 # Returns: a port number.
 # Ensure: result > 0
 #
 # Get the port on which the server is started.
-sub port {
+sub getPort {
 	return $_[0]->{port};
 }
 

@@ -284,13 +284,16 @@ sub checkConnection {
 		if ($master->{chatLangCode} ne '' && $config{chatLangCode} != $master->{chatLangCode}) {
 			main::configModify('chatLangCode', $master->{chatLangCode});
 		}
-		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} != $master->{storageEncryptKey}) {
+		if ($master->{storageEncryptKey} ne '' && $config{storageEncryptKey} ne $master->{storageEncryptKey}) {
 			main::configModify('storageEncryptKey', $master->{storageEncryptKey});
 		}
-		if ($master->{serverEncoding} ne '' && $config{serverEncoding} != $master->{serverEncoding}) {
+		if ($master->{serverEncoding} ne '' && $config{serverEncoding} ne $master->{serverEncoding}) {
 			main::configModify('serverEncoding', $master->{serverEncoding});
 		} elsif ($config{serverEncoding} eq '') {
 			main::configModify('serverEncoding', 'Western');
+		}
+		if ($master->{gameGuard} ne '' && $config{gameGuard} != $master->{gameGuard}) {
+			main::configModify('gameGuard', $master->{gameGuard});
 		}
 
 		message("Connecting to Account Server...\n", "connection");
