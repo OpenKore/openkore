@@ -178,11 +178,12 @@ sub _launchWin32 {
 	my ($app, @args, $priority, $obj);
 
 	@args = @{$self->{args}};
-	$app = shift @args;
+	$app = $args[0];
 	foreach my $arg (@args) {
 		$arg = '"' . $arg . '"';
 	}
 
+	require Win32;
 	require Win32::Process;
 	$priority = eval 'import Win32::Process; NORMAL_PRIORITY_CLASS;';
 	undef $@;
@@ -190,7 +191,11 @@ sub _launchWin32 {
 		$self->{launched} = 1;
 		$self->{pid} = $obj;
 	} else {
+		my $errno = Win32::GetLastError();
 		$self->{launched} = 0;
+		$self->{error} = Win32::FormatMessage($errno);
+		$self->{error} =~ s/[\r\n]+$//s;
+		$self->{errno} = $errno;
 	}
 	return $self->{launched};
 }
