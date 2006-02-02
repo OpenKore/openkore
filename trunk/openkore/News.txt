@@ -89,6 +89,9 @@ New config options:
 - statsAdd_over_99: set this option to make Kore lift the restriction on adding
   stat points over 99
 - _whenNotEquipped checkSelfCondition, opposite of _whenEquipped
+  - gameGuard (flag)
+  Set this option to 1 if you play inRO or pRO Sakray.
+  Set this option to 2 if you play bRO.
 
 New commands:
 - cart release: remove cart status
@@ -114,6 +117,9 @@ Internal:
   fix the problem when a party member is on your screen, but never moved
   before and thus has no coordinates in $char->{party}{users}{$ID} and
   causes location-based partySkills to cast on (0,0).
+- additional conStates 1.2 and 1.3 for servers who need to receive proper
+  gameguard authentication first before allowing the client to continue
+  its login sequence
 
 Credits:
 - id-mardi: fix for setPartySkillTimer, move the rest of the receive packets
@@ -123,7 +129,7 @@ Credits:
 - h4rry84: Indonesian translation
 - hakore: fix for weight command, manual AI mode
 - illusionist: move receive packets to Receive.pm, falcon and peco release
-  support, fix for manual 'sit' behavior.
+  support, fix for manual 'sit' behavior, support for bRO
 - vivi: autoMoveOnDeath, check XKore 2 username, Kaite/Kaizel/Kaupe statuses
 - rufvin: useSelf_skill_smartHeal bug
 
