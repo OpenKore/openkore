@@ -141,7 +141,7 @@ sub onClientData {
 	my $head_low = pack("v", 0x01);
 	my $head_top = pack("v", 0x01);
 	my $head_mid = pack("v", 0x01);
-	
+	my $job_id = pack("v", 0x00);
 
 	my @ipElements = split /\./, $host;
 	my $charStats = pack("C*", $str, $agi, $vit, $int, $dex, $luk);
