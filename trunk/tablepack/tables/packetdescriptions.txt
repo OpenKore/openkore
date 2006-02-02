@@ -211,7 +211,7 @@
 0207 Friend Request Receive
 0209 Friend Request Response
 020A Friend Removed
-0227 gameguard_sync
+0227 GameGuard Request
 022A actor_display (actor exists)
 022B actor_display (actor connected
 022C actor_display (actor moved)

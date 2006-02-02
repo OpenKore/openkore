@@ -1,4 +1,5 @@
 # Packet lengths for pRO Sakray (October 19, 2005)
+# Rename this file to recvpackets.txt if you play pRO Sakray.
 0064 55
 0065 17
 0066 3

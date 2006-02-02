@@ -1,4 +1,4 @@
-# Packet lengths for iRO (Einbroch - October 19, 2005)
+# Packet lengths for iRO Einbroch (February 2, 2006)
 0064 55
 0065 17
 0066 3
@@ -481,10 +481,10 @@
 024B 4
 024C 8
 024D 12
-024E 4
+024E 6
 024F 10
 0250 3
-0251 32
+0251 34
 0252 0
 0253 3
 0254 3
@@ -496,3 +496,7 @@
 025A 0
 025B 6
 025C 4
+025D 6
+025E 4
+025F 6
+0260 6
