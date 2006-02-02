@@ -317,7 +317,7 @@ sub checkConnection {
 		}
 
 		# GameGuard support
-		if ($remote_socket && $remote_socket->connected && $config{gameGuard} == 2) {
+		if ($self->serverAlive && $config{gameGuard} == 2) {
 			my $msg = pack("C*", 0x58, 0x02);
 			$net->serverSend($msg);
 			message "Requesting permission to logon on account server...\n";
@@ -346,6 +346,38 @@ sub checkConnection {
 		} elsif ($self->serverAlive) {
 			$self->sendPreLoginCode($master->{preLoginCode}) if ($master->{preLoginCode});
 			$self->sendMasterLogin($config{'username'}, $config{'password'},
+				$master->{master_version}, $master->{version});
+		}
+
+		$timeout{'master'}{'time'} = time;
+
+	# we skipped some required connection operations while waiting for the server to allow as to login,
+	# after we have successfully sent in the reply to the game guard challenge (using the poseidon server)
+	# this conState will allow us to continue from where we left off.
+	} elsif ($conState == 1.3) {
+		$conState = 1;
+		my $master = $masterServer = $masterServers{$config{'master'}};
+		if ($master->{secureLogin} >= 1) {
+			my $code;
+
+			message("Secure Login...\n", "connection");
+			undef $secureLoginKey;
+
+			if ($master->{secureLogin_requestCode} ne '') {
+				$code = $master->{secureLogin_requestCode};
+			} elsif ($config{secureLogin_requestCode} ne '') {
+ 				$code = $config{secureLogin_requestCode};
+			}
+
+			if ($code ne '') {
+				sendMasterCodeRequest(\$remote_socket, 'code', $code);
+			} else {
+				sendMasterCodeRequest(\$remote_socket, 'type', $master->{secureLogin_type});
+			}
+
+		} else {
+			sendPreLoginCode(\$remote_socket, $master->{preLoginCode}) if ($master->{preLoginCode});
+			sendMasterLogin(\$remote_socket, $config{'username'}, $config{'password'},
 				$master->{master_version}, $master->{version});
 		}
 
