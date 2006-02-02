@@ -220,7 +220,16 @@ sub mainLoop {
 			$msg_length = length($msgOut);
 		}
 	}
-	
+
+	# GameGuard support
+	if ($config{gameGuard}) {
+		my $result = Poseidon::Client::getInstance()->getResult();
+		if (defined($result)) {
+			debug "Received Poseidon result.\n", "poseidon";
+			$remote_socket->send($result);
+		}
+	}
+
 	# Process AI
 	if ($conState == 5 && timeOut($timeout{ai}) && $net->serverAlive()) {
 		AI();

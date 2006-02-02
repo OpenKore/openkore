@@ -260,8 +260,14 @@ sub clientDisconnect {
 # 5: Connected to map server; ready and functional.
 #
 # Special states:
-# 1.5 (set by plugins): There is a special sequence for login servers and we must wait the plugins to finalize before continuing
-# 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be the account ID
+# 1.2 (set by $config{gameGuard} == 2): Wait for the server response allowing us
+#      to continue login
+# 1.3 (set by parseMsg()): The server allowed us to continue logging in, continue
+#      where we left off
+# 1.5 (set by plugins): There is a special sequence for login servers and we must
+#      wait the plugins to finalize before continuing
+# 2.5 (set by parseMsg()): Just passed character selection; next 4 bytes will be
+#      the account ID
 
 ##
 # $net->checkConnection()
@@ -308,6 +314,15 @@ sub checkConnection {
 		if ($self->serverAlive) {
 			Plugins::callHook("Network::serverConnect/master");
 			return if ($conState == 1.5);
+		}
+
+		# GameGuard support
+		if ($remote_socket && $remote_socket->connected && $config{gameGuard} == 2) {
+			my $msg = pack("C*", 0x58, 0x02);
+			$net->serverSend($msg);
+			message "Requesting permission to logon on account server...\n";
+			$conState = 1.2;
+			return;
 		}
 
 		if ($self->serverAlive && $master->{secureLogin} >= 1) {

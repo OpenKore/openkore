@@ -24,6 +24,7 @@ DIRS=(.
 	src/Interface/Wx/DockNotebook
 	src/Network
 	src/Network/Receive
+	src/Poseidon
 	src/Utils
 	src/Utils/Core
 	src/Utils/StartupNotification
