@@ -13,9 +13,9 @@
 ##
 # MODULE DESCRIPTION: Abstraction layer for launching Perl scripts
 #
-# <b>This class derived from @MODULE(AppLauncher)</b>
+# <div class="derived">This class is derived from: @CLASS(AppLauncher)</div>
 #
-# This module provides a cross-platform way to launch other Perl
+# This class provides a cross-platform way to launch other Perl
 # scripts. It automatically uses the system's Perl interpreter,
 # or uses (wx)start.exe if that's not available.
 

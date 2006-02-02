@@ -16,8 +16,10 @@
 # The <code>AppLauncher</code> class provides a cross-platform way to
 # launch external applications.
 #
+# <b>See also:</b> @CLASS(PerlLauncher)
+#
 # <h3>Example</h3>
-# <pre class="code">
+# <pre class="example">
 # use Utils::AppLauncher;
 #
 # my $launcher = new AppLauncher('gedit', '/dev/null');
@@ -38,8 +40,6 @@
 #     sleep 5;
 # }
 # </pre>
-#
-# <b>See also:</b> @MODULE(PerlLauncher)
 
 package AppLauncher;
 

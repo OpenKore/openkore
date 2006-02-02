@@ -123,7 +123,6 @@ h2:hover {
 	border: none;
 }
 #moduleIndex .moduleName {
-	text-align: right;
 	font-weight: bold;
 }
 #moduleIndex .moduleDesc {
@@ -197,4 +196,12 @@ h2:hover {
 dd.requires, dd.ensures, dd.invariant {
 	font-family: 'Bitstream Vera Sans Mono', 'Courier New', Monospace;
 	font-size: small;
+}
+
+.derived {
+	margin: 1em;
+	padding: 0.5em;
+	background: #ffeeee;
+	border: 1px solid #eedddd;
+	font-weight: bold;
 }

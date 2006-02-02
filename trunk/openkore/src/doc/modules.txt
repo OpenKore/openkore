@@ -2,11 +2,11 @@ Actor
 Actor::Monster
 Actor::Player
 Actor::You
-Item
 Base::Server
 Base::Server::Client
 Base::WebServer
 Base::WebServer::Process
+Item
 Interface
 Network
 ChatQueue
@@ -16,11 +16,15 @@ Settings
 Translation
 Modules
 Plugins
-Utils
-Utils::Crypton
 Skills
 Match
 Misc
+
+Utils
+Utils::AppLauncher
+Utils::Crypton
+Utils::PerlLauncher
+Utils::Core::Exception
 
 IPC
 IPC::Server
