@@ -19,10 +19,13 @@
 use strict;
 use FindBin qw($RealBin);
 use lib "$RealBin/..";
+use lib "$RealBin/src";
 use Time::HiRes qw(time sleep);
 use Poseidon::RagnarokServer;
 use Poseidon::QueryServer;
 
+
+use constant POSEIDON_SUPPORT_URL => 'http://www.openkore.com/aliases/poseidon.php';
 
 use constant RAGNAROK_SERVER_HOST => '127.0.0.1';
 use constant RAGNAROK_SERVER_PORT => 6900;
@@ -41,7 +44,9 @@ sub initialize {
 		RAGNAROK_SERVER_HOST);
 	$queryServer = new Poseidon::QueryServer(QUERY_SERVER_PORT,
 		QUERY_SERVER_HOST, $roServer);
-	print ">>> Poseidon initialized <<<\n";
+	print ">>> Poseidon initialized <<<\n\n";
+	print "Please read " . POSEIDON_SUPPORT_URL . "\n";
+	print "for further instructions.\n";
 }
 
 

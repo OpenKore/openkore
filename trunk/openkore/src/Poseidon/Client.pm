@@ -22,7 +22,7 @@ use IPC::Messages qw(encode decode);
 use Utils qw(dataWaiting);
 
 use constant DEFAULT_POSEIDON_SERVER_PORT => 24390;
-use constant POSEIDON_SUPPORT_URL => 'http://www.openkore.com/wiki/index.php/Poseidon';
+use constant POSEIDON_SUPPORT_URL => 'http://www.openkore.com/aliases/poseidon.php';
 
 our $instance;
 
