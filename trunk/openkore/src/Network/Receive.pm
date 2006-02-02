@@ -258,6 +258,8 @@ sub new {
 		'023A' => ['storage_password_request', 'v1', [qw(flag)]],
 		'023C' => ['storage_password_result', 'v1 v1', [qw(type val)]],
 
+		'0259' => ['gameguard_grant', 'C1', [qw(server)]],
+		'0227' => ['gameguard_request'],
 		'0229' => ['character_status', 'a4 v1 v1 v1', [qw(ID param1 param2 param3)]],
 
 		'022A' => ['actor_display', 'a4 v4 x2 v8 x2 v V2 v x2 C2 a3 x2 C v', [qw(ID walk_speed param1 param2 param3 type hair_style weapon shield lowhead tophead midhead hair_color head_dir guildID guildEmblem visual_effects stance sex coords act lv)]],
@@ -351,6 +353,7 @@ sub parse {
 
 	debug "Received packet: $switch Handler: $handler->[0]\n", "packetParser", 2;
 
+	# RAW_MSG is the entire message, including packet switch
 	my %args;
 	$args{switch} = $switch;
 	$args{RAW_MSG} = $msg;
@@ -2593,6 +2596,26 @@ sub friend_response {
 		$friends{$ID}{'online'} = 1;
 		message TF("%s is now your friend\n", $incomingFriend{'name'});
 	}	
+}
+
+sub gameguard_grant {
+	my ($self, $args) = @_;
+
+	if ($args->{server} == 1) {
+		message T("Server granted login request to account server\n"), "poseidon";
+	} else {
+		message T("Server granted login request to char/map server\n"), "poseidon";
+	}
+	$conState = 1.3 if ($conState == 1.2);
+}
+
+sub gameguard_request {
+	my ($self, $args) = @_;
+
+	Poseidon::Client::getInstance()->query(
+		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
+	);
+	debug "Querying Poseidon\n", "poseidon";
 }
 
 sub guild_allies_enemy_list {
