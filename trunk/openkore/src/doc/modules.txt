@@ -25,6 +25,9 @@ Utils::AppLauncher
 Utils::Crypton
 Utils::PerlLauncher
 Utils::Core::Exception
+Utils::StartupNotification::Launcher
+Utils::StartupNotification::Launchee
+Utils::StartupNotification::CreateSocketException
 
 IPC
 IPC::Server
