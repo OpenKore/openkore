@@ -20,7 +20,7 @@
 # <pre class="code">
 # use Utils::AppLauncher;
 #
-# my $launcher = new AppLauncher('notepad');
+# my $launcher = new AppLauncher('gedit', '/dev/null');
 # if (!$launcher->launch(0)) {
 #     die "Cannot launch application.\n" .
 #         "Error message: " . $launcher->getError() . "\n" .
@@ -38,6 +38,8 @@
 #     sleep 5;
 # }
 # </pre>
+#
+# <b>See also:</b> @MODULE(PerlLauncher)
 
 package AppLauncher;
 
@@ -47,9 +49,9 @@ use strict;
 ### CATEGORY: Class AppLauncher
 
 ##
-# AppLauncher AppLauncher->new(String app, [String args...])
+# AppLauncher AppLauncher->new(String app, [String arg...])
 # app: The application you want to run.
-# args: The arguments you want to pass to the executable.
+# arg: The arguments you want to pass to the executable.
 # Ensures: !$self->isLaunched()
 #
 # Create a new AppLauncher object. The specified application
@@ -60,6 +62,7 @@ sub new {
 		args => \@_,
 		launched => 0
 	);
+
 	return bless \%self, $class;
 }
 
