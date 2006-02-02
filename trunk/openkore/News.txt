@@ -53,6 +53,7 @@ New features:
 - shop.txt parser will complain if you try to vend more than 30,000 of an
   item. (Usually happens if you got price and quantity mixed up, which
   is bad for you since you'd be selling items way cheap.)
+- Support for new Episode 10.2 skills
 
 New config options:
 - autoMoveOnDeath set:
