@@ -76,10 +76,14 @@ sub makeupText {
 			return "<code>$module</code>";
 		}
 	}
+	sub processClassTag {
+		return makeClassLink($_[0]);
+	}
 
-	# Links to modules
+	# Links to modules/classes
 	$text =~ s/([a-z0-9_:]+\.pm)/&linkModule($1)/gie;
 	$text =~ s/\@MODULE\((.*?)\)/&processModuleTag($1)/gse;
+	$text =~ s/\@CLASS\((.*?)\)/&processClassTag($1)/gse;
 	# Functions
 	$text =~ s/(\$?[a-z0-9_:\->]+\(\))/&createFuncLink($1)/gie;
 	# Variables

@@ -59,13 +59,15 @@ our @EXPORT = (
 
 
 ##
-# binAdd(r_array, ID)
-# r_array: a reference to an array.
-# ID: the element to add to @r_array.
-# Returns: the index of the element inside @r_array.
+# void binAdd(Array* array, ID)
+# array: a reference to an array.
+# ID: the element to add to @array.
+# Requires: defined($array)
+# Returns: the index of the added element.
 #
-# Add $ID to the first empty slot in @r_array, or append it to
-# the end of @r_array if there are no empty slots.
+# Add $ID to the first empty slot (that is, a slot which is set to undef)
+# in @array, or append it to the end of @array if there are no empty
+# slots.
 #
 # Example:
 # @list = ("ID1", undef, "ID2");
