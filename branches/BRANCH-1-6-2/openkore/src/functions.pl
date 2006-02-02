@@ -490,7 +490,7 @@ sub mainLoop {
 	}
 
 	# GameGuard support
-	if ($conState == 5 && $config{gameGuard}) {
+	if ($config{gameGuard}) {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
