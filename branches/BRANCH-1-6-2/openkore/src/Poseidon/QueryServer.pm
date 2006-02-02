@@ -109,6 +109,7 @@ sub iterate {
 			$data = encode("Poseidon Reply", \%args);
 			$queue->[0]{client}->send($data);
 			$queue->[0]{client}->close();
+			print "Sent result to client " . $queue->[0]{client}->getIndex() . "\n";
 		}
 		shift @{$queue};
 
