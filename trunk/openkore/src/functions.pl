@@ -226,7 +226,7 @@ sub mainLoop {
 		my $result = Poseidon::Client::getInstance()->getResult();
 		if (defined($result)) {
 			debug "Received Poseidon result.\n", "poseidon";
-			$remote_socket->send($result);
+			$net->serverSend($result);
 		}
 	}
 
