@@ -35,8 +35,15 @@ sub gat2fld {
 	print OUT pack("S1", unpack("L1", substr($data, 10, 4)));
 	while (read(IN, $data, 20)) {
 		my $temp = unpack("C1", substr($data, 14, 1));
+		# Support for non-walkable water by amacc_boy
+		my $temp2 = unpack("C1", substr($data, 1, 1));
+
 		if ($temp == 116) {
 			print OUT pack("C", 0x00);
+
+		} elsif ($temp2 == 66 && $temp) {
+			print OUT pack("C", 0x04);
+
 		} else {
 			print OUT substr($data, 14, 1);
 		}
