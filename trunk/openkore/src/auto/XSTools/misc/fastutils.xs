@@ -150,10 +150,12 @@ CODE:
 		"\"");
 	snprintf (tmp, sizeof (tmp), "%d %d", width, height);
 	data.append (tmp);
-	data.append (" 4 1\",\n"
-		"\" \tc #000000\",\n"
-		"\"A\tc #0029AA\",\n"
-		"\"B\tc #227022\",\n"
+	data.append (" 6 1\",\n"
+		"\" \tc #410080\",\n"
+		"\"A\tc #b0e6ff\",\n"
+		"\"B\tc #8888ff\",\n"
+		"\"C\tc #c58387\",\n"
+		"\"Z\tc #227022\",\n"
 		"\".\tc #FFFFFF\",\n");
 
 	line = (char *) malloc (width);
@@ -172,9 +174,18 @@ CODE:
 				// Walkable water
 				line[x] = 'A';
 				break;
+			case '\4':
+				// Non-walkable water
+				line[x] = 'B';
+				break;
+			case '\5':
+				// Snipable
+				line[x] = 'C';
+				break;
 			default:
 				// Everything else
-				line[x] = 'B';
+				line[x] = 'Z';
+				break;
 			}
 		}
 		data.append ("\"");
