@@ -2468,8 +2468,14 @@ sub useTeleport {
 			# Send skill use packet to appear legitimate
 			# (Always send skill use packet for level 2 so that saveMap
 			# autodetection works)
-			sendSkillUse($net, $skill->id, $char->{skills}{AL_TELEPORT}{lv}, $accountID);
-			undef $char->{permitSkill};
+			
+			if ($char->{sitting}) {
+				main::ai_skillUse($skill->handle, $sk_lvl, 0, 0, $accountID);
+				return 1;
+			} else {
+				sendSkillUse($net, $skill->id, $sk_lvl, $accountID);
+				undef $char->{permitSkill};
+			}
 
 			if (!$emergency && $use_lvl == 1) {
 				$timeout{ai_teleport_retry}{time} = time;
