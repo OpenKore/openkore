@@ -4152,10 +4152,26 @@ sub AI {
 		if (!$cities_lut{$map_name_lu} && !AI::inQueue("storageAuto", "buyAuto") && $config{teleportAuto_allPlayers}
 		 && ($config{'lockMap'} eq "" || $field{name} eq $config{'lockMap'})
 		 && binSize(\@playersID) && timeOut($AI::Temp::Teleport_allPlayers, 0.75)) {
-			message "Teleporting to avoid all players\n", "teleport";
-			useTeleport(1, undef, 1);
-			$ai_v{temp}{clear_aiQueue} = 1;
-			$AI::Temp::Teleport_allPlayers = time;
+
+			my $ok;
+			if ($config{teleportAuto_allPlayers} >= 2 && $char->{party}) {
+				foreach my $ID (@playersID) {
+					if (!$char->{party}{users}{$ID}) {
+						$ok = 1;
+						last;
+					}
+				}
+			} else {
+				$ok = 1;
+			}
+
+			if ($ok) {
+				message "Teleporting to avoid all players\n", "teleport";
+				useTeleport(1, undef, 1);
+				$ai_v{temp}{clear_aiQueue} = 1;
+				$AI::Temp::Teleport_allPlayers = time;
+			}
+
 		}
 
 		# Check whether it's safe to teleport
