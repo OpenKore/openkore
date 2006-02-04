@@ -91,7 +91,9 @@ sub onClientData {
 		$self->process($client, $ID, \%args);
 	}
 }
-
+use Utils qw(timeOut);
+use Time::HiRes qw(time);
+my $foo;
 sub iterate {
 	my ($self) = @_;
 	my ($server, $queue);
@@ -100,6 +102,10 @@ sub iterate {
 	$server = $self->{"$CLASS server"};
 	$queue = $self->{"$CLASS queue"};
 
+	if (timeOut($foo, 5)) {
+		print "State = " . $server->getState() . "\n";
+		$foo = time;
+	}
 	if ($server->getState() eq 'requested') {
 		# Send the response to the client.
 		if (@{$queue} > 0 && $queue->[0]{client}) {
@@ -114,6 +120,7 @@ sub iterate {
 		shift @{$queue};
 
 	} elsif (@{$queue} > 0 && $server->getState() eq 'ready') {
+		print "Querying Ragnarok Online client.\n";
 		$server->query($queue->[0]{packet});
 	}
 }
