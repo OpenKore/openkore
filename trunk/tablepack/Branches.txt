@@ -1,4 +1,4 @@
 Active branches:
 ----------------
-RELEASE-1-6
+BRANCH-1-6
 	The 1.6 series branch.
