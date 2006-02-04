@@ -54,6 +54,8 @@ New features:
   item. (Usually happens if you got price and quantity mixed up, which
   is bad for you since you'd be selling items way cheap.)
 - Support for new Episode 10.2 skills
+- teleportAuto_allPlayers 2 will prevent you from teleporting away from your
+  party unless there are other non-party players around.
 
 New config options:
 - autoMoveOnDeath set:
