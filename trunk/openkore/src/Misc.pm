@@ -2512,6 +2512,7 @@ sub useTeleport {
 		AI::queue('teleport', {lv => $use_lvl});
 		if ($emergency ||
 		    !$config{teleportAuto_useSkill} ||
+		    $config{teleportAuto_useSkill} == 3 ||
 		    $config{teleportAuto_useSkill} == 2 && !binSize(\@playersID)) {
 			$timeout{ai_teleport_delay}{time} = 1;
 		}
