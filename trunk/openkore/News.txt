@@ -39,6 +39,7 @@ Bug fixes:
   autoSell and autoBuy.
 - Fixed a variable clash bug in useSelf_skill (useSelf_skill_smartHeal code)
   which causes equip_* options not work
+- Kore will now try to stand first before using the Teleport skill.
 
 New features:
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
