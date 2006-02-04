@@ -1,6 +1,7 @@
 @echo off
 IF EXIST start.exe GOTO :start
 IF EXIST wxstart.exe GOTO :wxstart
+IF EXIST korebin.exe GOTO :korebin
 IF EXIST C:\Perl\bin\perl.exe GOTO :activeperl
 echo ERROR: You do not have a Perl interpreter.
 PAUSE
@@ -12,6 +13,10 @@ GOTO end
 
 :wxstart
 wxstart.exe ! src\Poseidon\poseidon.pl
+GOTO end
+
+:korebin
+korebin.exe ! src\Poseidon\poseidon.pl
 GOTO end
 
 :activeperl
