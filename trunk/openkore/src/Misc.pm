@@ -1291,8 +1291,8 @@ sub checkMonsterCleanness {
 
 	# If we're in follow mode
 	if (defined(my $followIndex = AI::findAction("follow"))) {
-		my $following = AI::findAction($followIndex)->{following};
-		my $followID = AI::findAction($followIndex)->{ID};
+		my $following = AI::args($followIndex)->{following};
+		my $followID = AI::args($followIndex)->{ID};
 
 		if ($following) {
 			# And master attacked monster, or the monster attacked/missed master
