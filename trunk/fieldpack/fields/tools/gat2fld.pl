@@ -1,53 +1,110 @@
 #!/usr/bin/perl
+# See http://www.openkore.com/wiki/index.php/Field_file_format
+# for information about the file formats.
 use strict;
 
-my @dir_list = sort(dir_list("./"));
 my $i = 0;
-foreach my $file (@dir_list) {
-	next unless (-f "./$file" && $file =~ /\.gat$/i);
+foreach my $name (sort(listMaps("."))) {
 	$i++;
-	print "$i\t$file\n";
-	gat2fld($file);
+	print "$i\t$name\n";
+	gat2fld("$name.gat", "$name.fld", readWaterLevel("$name.rsw"));
 }
 
-exit;
 
+sub listMaps {
+	my ($dir) = @_;
+	my $handle;
 
-sub dir_list {
-	opendir(DIR, $_[0]);
-	my @list = readdir DIR;
-	closedir DIR;
+	opendir($handle, $dir);
+	my @list = grep { /\.gat$/i && -f $_ } readdir $handle;
+	closedir $handle;
+
+	foreach my $file (@list) {
+		$file =~ s/\.gat$//i;
+	}
+
 	return @list;
 }
 
+##
+# float readWaterLevel(String rswFile)
+#
+# Read the map's water level from the corresponding RSW file.
+sub readWaterLevel {
+	my ($rswFile) = @_;
+	my ($f, $buf);
+
+	if (!open($f, "<", $rswFile)) {
+		print "Cannot open $rswFile for reading.\n";
+		exit 1;
+	}
+	seek $f, 166, 0;
+	read $f, $buf, 4;
+	close $f;
+	return unpack("f", $buf);
+}
+
+##
+# void gat2fld(String gat, String fld, float waterLevel)
+#
+# Convert a .GAT file to the specifid .FLD file.
 sub gat2fld {
-	my $file = shift;
+	my ($gat, $fld, $waterLevel) = @_;
+	my ($in, $out, $data);
 
-	my $out = $file;
-	$out =~ s/\.gat$/.fld/i;
-	open IN, "< $file";
-	open OUT, "> $out";
-	binmode IN;
+	if (!open $in, "<", $gat) {
+		print "Cannot open $gat for reading.\n";
+		exit 1;
+	}
+	if (!open $out, ">", $fld) {
+		print "Cannot open $fld for writing.\n";
+		exit 1;
+	}
 
-	my $data;
-	read(IN, $data, 16);
-	print OUT pack("S1", unpack("L1", substr($data, 6, 4)));
-	print OUT pack("S1", unpack("L1", substr($data, 10, 4)));
-	while (read(IN, $data, 20)) {
-		my $temp = unpack("C1", substr($data, 14, 1));
-		# Support for non-walkable water by amacc_boy
-		my $temp2 = unpack("C1", substr($data, 1, 1));
+	binmode $in;
+	binmode $out;
 
-		if ($temp == 116) {
-			print OUT pack("C", 0x00);
+	# Read header. Yes we're assuming that maps are never
+	# larger than 2^16-1 blocks.
+	read($in, $data, 14);
+	print $out pack("v", unpack("V", substr($data, 6, 4)));
+	print $out pack("v", unpack("V", substr($data, 10, 4)));
 
-		} elsif ($temp2 == 66 && $temp) {
-			print OUT pack("C", 0x04);
+	while (read($in, $data, 20)) {
+		my ($a, $b, $c, $d) = unpack("f4", $data);
+		my $type = unpack("C", substr($data, 16, 1));
+		my $averageDepth = ($a + $b + $c + $d) / 4;
+
+		# In contrast to what the if-condition tells you,
+		# we're actually checking whether this block
+		# is below the map's water level.
+		if ($averageDepth > $waterLevel) {
+			# Block is below water level.
+
+			if ($type == 0 || $type == 3) {
+				# Walkable water
+				print $out pack("C", 3);
+			} elsif ($type == 1 || $type == 6) {
+				# Non-walkable water (not snipable)
+				print $out pack("C", 2);
+			} elsif ($type == 5) {
+				# Non-walkable water (snipable)
+				print $out pack("C", 4);
+			} else {
+				# Unknown
+				print $out pack("C", 7);
+			}
 
 		} else {
-			print OUT substr($data, 14, 1);
+			# Block is above water level
+			if ($type < 7) {
+				print $out pack("C", $type);
+			} else {
+				print $out pack("C", 7);
+			}
 		}
 	}
-	close IN;
-	close OUT;
+
+	close $in;
+	close $out;
 } 
