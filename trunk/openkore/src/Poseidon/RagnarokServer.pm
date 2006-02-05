@@ -227,7 +227,7 @@ sub onClientData {
 		my $data = pack("C*",0x7F,0x00,0x00,0x00,0x00,0x00);
 		$client->send($data);
 
-		### Check for packet 0228 came over sync packet
+		### Check if packet 0228 got tangled up with the sync packet
 		if (uc(unpack("H2", substr($msg, 7, 1))) . uc(unpack("H2", substr($msg, 6, 1))) eq '0228') {
 			# queue the response (thanks abt123)
 			$self->{response} = substr($msg, 6, 18);
@@ -247,15 +247,29 @@ sub onClientData {
 		$self->{state} = 'requested';
 
 	} elsif ($switch eq '0258') { # client sent gameguard's challenge request
-		print "Received GameGuard sync request. Challenge # is: $self->{challengeNum}\n";
-		## Reply with "can login" instead
+		# Reply with "gameguard_grant" instead of a 0227 packet. Normally, the server would
+		# send a 0227 gameguard challenge to the client, then the client will send the
+		# proper 0228 response. Only after that will the server send 0259 to allow the
+		# client to continue the login sequence. Since this is just a fake server,
+		# there is no need to go through all that and we can do a shortcut.
 		if ($self->{challengeNum} == 0) {
+			print "Received GameGuard sync request. Client allowed to login account server.\n";
 			$client->send(pack("C*", 0x59,0x02,0x01));
 		} else {
+			print "Received GameGuard sync request. Client allowed to login char/map server.\n";
 			$client->send(pack("C*", 0x59,0x02,0x02));
 		}
 		$self->{challengeNum}++;
+		
+	} elsif ($switch eq '0085') { # sendMove
+		print "Received packet $switch: sendMove.\n";
 
+	} elsif ($switch eq '008C') { # public chat
+		print "Received packet $switch: public chat.\n";
+
+	} elsif ($switch eq '0094') { # getPlayerInfo
+		print "Received packet $switch: getPlayerInfo.\n";
+	
 	} else {
 		print "Caught unhandled packet $switch\n";
 	}
