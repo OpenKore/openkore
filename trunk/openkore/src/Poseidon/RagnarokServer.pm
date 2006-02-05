@@ -19,6 +19,7 @@ use strict;
 use Base::Server;
 use base qw(Base::Server);
 use Misc;
+use Utils qw(binSize);
 
 sub new {
 	my ($class, @args) = @_;
@@ -38,6 +39,8 @@ sub new {
 	# will reconnect later. This happens when the RO client
 	# disconnects from the login server and connects to the
 	# map server.
+	#
+	# UPDATE: this description isn't right. What is this?
 	$self->{willReconnect} = 0;
 
 	# Bytes response
@@ -61,8 +64,15 @@ sub new {
 sub query {
 	my ($self, $packet) = @_;
 	my $clients = $self->clients();
-	$clients->[0]->send($packet);
-	$self->{state} = 'requesting';
+
+	for (my $i = 0; $i < @{$clients}; $i++) {
+		if ($clients->[$i]) {
+			$clients->[0]->send($packet);
+			$self->{state} = 'requesting';
+			return;
+		}
+	}
+	print "Error: no Ragnarok Online client connected.\n";
 }
 
 ##
@@ -76,11 +86,11 @@ sub query {
 # 'not connected' - The RO client hasn't connected to this server yet.
 sub getState {
 	my ($self) = @_;
-	my $clients = @{$self->clients()};
+	my $clients = $self->clients();
 
 	if ($self->{state} eq 'requested') {
 		return 'requested';
-	} elsif ($clients == 0) {
+	} elsif (binSize($clients) == 0) {
 		return 'not connected';
 	} else {
 		return $self->{state};
@@ -104,9 +114,20 @@ sub readResponse {
 #####################################################
 
 
+sub onClientNew {
+	my ($self, $client, $index) = @_;
+	print "Ragnarok Online client ($index) connected.\n";
+	$self->{state} = 'ready';
+}
+
 sub onClientExit {
-	my ($self) = @_;
-	$self->{challengeNum} = 0 if (!$self->{willReconnect});
+	my ($self, $client, $index) = @_;
+	if ($self->{willReconnect}) {
+		print "Ragnarok Online client ($index) disconnected.\n";
+	} else {
+		print "Ragnarok Online client ($index) disconnected, but will reconnect later.\n";
+		$self->{challengeNum} = 0;
+	}
 }
 
 sub onClientData {

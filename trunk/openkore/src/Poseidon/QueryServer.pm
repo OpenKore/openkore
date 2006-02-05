@@ -114,6 +114,7 @@ sub iterate {
 		shift @{$queue};
 
 	} elsif (@{$queue} > 0 && $server->getState() eq 'ready') {
+		print "Querying Ragnarok Online client.\n";
 		$server->query($queue->[0]{packet});
 	}
 }
