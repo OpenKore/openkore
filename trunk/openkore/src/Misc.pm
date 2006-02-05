@@ -450,7 +450,7 @@ sub calcRectArea2 {
 # Check whether you can snipe through ($x,$y) on field $r_field.
 sub checkFieldSnipable {
 	my $p = getFieldPoint(@_);
-	return ($p == 0 || $p == 3 || $p == 5);
+	return ($p == 0 || $p == 3 || $p == 4 || $p == 5);
 }
 
 ##
@@ -848,7 +848,8 @@ sub getField {
 			#version 0 files had a bug when height != width
 			#version 1 files did not treat walkable water as walkable, all version 0 and 1 maps need to be rebuilt
 			#version 2 and greater have no know bugs, so just do a minimum validity check.
-			$dversion >= 2 && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
+			#version 3 adds better support for walkable water blocks
+			$dversion >= 3 && $$r_hash{'width'} == $dw && $$r_hash{'height'} == $dh
 		) {
 			$r_hash->{dstMap} = $dist_data;
 		}
@@ -859,7 +860,7 @@ sub getField {
 		$r_hash->{dstMap} = makeDistMap($r_hash->{rawMap}, $r_hash->{width}, $r_hash->{height});
 		open FILE, "> $dist_file" or die "Could not write dist cache file: $!\n";
 		binmode(FILE);
-		print FILE pack("a2 v1", 'V#', 2);
+		print FILE pack("a2 v1", 'V#', 3);
 		print FILE pack("v1 v1", @$r_hash{'width', 'height'});
 		print FILE $r_hash->{dstMap};
 		close FILE;

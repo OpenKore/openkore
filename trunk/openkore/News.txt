@@ -59,6 +59,7 @@ New features:
 - Support for new Episode 10.2 skills
 - teleportAuto_allPlayers 2 will prevent you from teleporting away from your
   party unless there are other non-party players around.
+- Map viewer: better support for water areas.
 
 New config options:
 - autoMoveOnDeath set:
