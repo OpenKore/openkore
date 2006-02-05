@@ -150,41 +150,43 @@ CODE:
 		"\"");
 	snprintf (tmp, sizeof (tmp), "%d %d", width, height);
 	data.append (tmp);
-	data.append (" 6 1\",\n"
-		"\" \tc #410080\",\n"
-		"\"A\tc #b0e6ff\",\n"
-		"\"B\tc #8888ff\",\n"
-		"\"C\tc #c58387\",\n"
-		"\"Z\tc #227022\",\n"
-		"\".\tc #FFFFFF\",\n");
+	data.append (" 8 1\",\n"
+		"\"A\tc #F4F4F4\",\n"
+		"\"B\tc #505050\",\n"
+		"\"C\tc #6060B0\",\n"
+		"\"D\tc #8080B0\",\n"
+		"\"E\tc #7070B0\",\n"
+		"\"F\tc #B0B0B0\",\n"
+		"\"G\tc #808080\",\n"
+		"\"H\tc #600000\",\n");
 
 	line = (char *) malloc (width);
 	for (y = height - 1; y >= 0; y--) {
 		for (x = 0; x < width; x++) {
 			switch (field_data[y * width + x]) {
 			case '\0':
-				// Walkable
-				line[x] = '.';
-				break;
-			case '\1':
-				// Not walkable
-				line[x] = ' ';
-				break;
-			case '\3':
-				// Walkable water
 				line[x] = 'A';
 				break;
-			case '\4':
-				// Non-walkable water
+			case '\1':
 				line[x] = 'B';
 				break;
-			case '\5':
-				// Snipable
+			case '\2':
 				line[x] = 'C';
 				break;
+			case '\3':
+				line[x] = 'D';
+				break;
+			case '\4':
+				line[x] = 'E';
+				break;
+			case '\5':
+				line[x] = 'F';
+				break;
+			case '\6':
+				line[x] = 'G';
+				break;
 			default:
-				// Everything else
-				line[x] = 'Z';
+				line[x] = 'H';
 				break;
 			}
 		}

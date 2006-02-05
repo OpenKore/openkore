@@ -93,6 +93,7 @@ sub OnInit {
 
 	} else {
 		getField("$options{fields}/$ARGV[0].fld", \%field);
+		$field{realName} = $ARGV[0];
 		$mapview->set($ARGV[0], $ARGV[1], $ARGV[2], \%field);
 		$mapview->update;
 	}
