@@ -84,6 +84,7 @@
 122 Marionette Control
 124 Head Crush
 125 Joint Beat
+127 Memorize
 132 Auto Berserk
 153 Kaite
 156 Kaizel
