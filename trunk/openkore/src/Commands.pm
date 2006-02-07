@@ -3428,10 +3428,15 @@ sub cmdTalk {
 		sendTalk($net, $npcsID[$arg1]);
 
 	} elsif (($arg1 eq "resp" || $arg1 eq "num" || $arg1 eq "text") && !%talk) {
-		error	"Error in function 'talk resp' (Respond to NPC)\n" .
+		error	"Error in function 'talk $arg1' (Respond to NPC)\n" .
 			"You are not talking to any NPC.\n";
 
 	} elsif ($arg1 eq "resp" && $arg2 eq "") {
+		if (!$talk{'responses'}) {
+		error	"Error in function 'talk resp' (Respond to NPC)\n" .
+			"No NPC response list available.\n";
+			return;
+		}
 		my $display = $talk{name};
 		message("----------Responses-----------\n", "list");
 		message("NPC: $display\n", "list");
