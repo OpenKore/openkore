@@ -42,6 +42,8 @@ Bug fixes:
 - Kore will now try to stand first before using the Teleport skill.
 - Fixed a bug where Kore uses SP on teleport when switching accessory even if
   teleportAuto_useSkill is set to 3.
+- teleportAuto_dropTarget now triggers on "Unable to calculate a route to
+  target, dropping target".
 
 New features:
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
