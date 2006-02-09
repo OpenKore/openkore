@@ -1279,6 +1279,10 @@ sub AI {
 				$target->{attack_failed} = time;
 				AI::dequeue;
 				message "Unable to calculate a route to target, dropping target\n", "ai_attack";
+				if ($config{'teleportAuto_dropTarget'}) {
+					message "Teleport due to dropping attack target\n";
+					useTeleport(1);
+				}
 			}
 
 		} elsif ((!$config{'runFromTarget'} || $realMonsterDist >= $config{'runFromTarget_dist'})
