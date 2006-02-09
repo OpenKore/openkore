@@ -119,7 +119,7 @@ sub parseCmd {
     if ($kw eq 'npc')           {$ret = getnpcID($arg)}
     elsif ($kw eq 'cart')       {($ret, undef) = getItemIDs($arg, \@{$cart{inventory}})}
     elsif ($kw eq 'inventory')  {($ret, undef) = getItemIDs($arg, \@{$char->{inventory}})}
-    elsif ($kw eq 'store')      {($ret, undef) = getItemID($arg, \@::storeList)}
+    elsif ($kw eq 'store')      {($ret, undef) = getItemIDs($arg, \@::storeList)}
     elsif ($kw eq 'storage')    {($ret, undef) = getStorageIDs($arg)}
     elsif ($kw eq 'player')     {$ret = getPlayerID($arg, \@::playersID)}
     elsif ($kw eq 'vender')     {$ret = getPlayerID($arg, \@::venderListsID)}
