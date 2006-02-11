@@ -60,7 +60,7 @@ sub new {
 	#
 	# Invariant: challengeNum >= 0
 
-	$self->{challengeNum} = 0;
+	$self{challengeNum} = 0;
 
 	bless \%self, $class;
 	return \%self;
@@ -1062,10 +1062,10 @@ sub checkClient {
 			# there is no need to go through all that and we can do a shortcut.
 			if ($self->{challengeNum} == 0) {
 				print "Received GameGuard sync request. Client allowed to login account server.\n";
-				$client->send(pack("C*", 0x59,0x02,0x01));
+				$self->clientSend(pack("C*", 0x59,0x02,0x01));
 			} else {
 				print "Received GameGuard sync request. Client allowed to login char/map server.\n";
-				$client->send(pack("C*", 0x59,0x02,0x02));
+				$$self->clientSend(pack("C*", 0x59,0x02,0x02));
 			}
 	
 		} else {
