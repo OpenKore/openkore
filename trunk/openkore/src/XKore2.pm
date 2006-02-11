@@ -548,6 +548,21 @@ sub checkClient {
 			$$c_state = 1;
 		}
 
+	} elsif ($switch eq '0258') { # client sent gameguard's challenge request
+		# Reply with "gameguard_grant" instead of a 0227 packet. Normally, the server would
+		# send a 0227 gameguard challenge to the client, then the client will send the
+		# proper 0228 response. Only after that will the server send 0259 to allow the
+		# client to continue the login sequence. Since this is just a fake server,
+		# there is no need to go through all that and we can do a shortcut.
+		if ($self->{challengeNum} == 0) {
+			print "Received GameGuard sync request. Client allowed to login account server.\n";
+			$self->clientSend(pack("C*", 0x59,0x02,0x01));
+		} else {
+			print "Received GameGuard sync request. Client allowed to login char/map server.\n";
+			$self->clientSend(pack("C*", 0x59,0x02,0x02));
+		}
+		$self->{challengeNum}++;
+	
 	} elsif ($$c_state == 1 && $switch eq "0065") {
 		# Client sent GameLogin
 		#my $msg = pack("C*", 0x65,0) . $accountID . $sessionID . $sessionID2 . pack("C*", 0,0,$sex);
@@ -1053,20 +1068,6 @@ sub checkClient {
 			$self->clientSend(pack('C*', 0x8B, 0x01, 0, 0),1);
 			$self->{challengeNum} = 0;
 			$self->{client_state} = 0;
-	
-		} elsif ($switch eq '0258') { # client sent gameguard's challenge request
-			# Reply with "gameguard_grant" instead of a 0227 packet. Normally, the server would
-			# send a 0227 gameguard challenge to the client, then the client will send the
-			# proper 0228 response. Only after that will the server send 0259 to allow the
-			# client to continue the login sequence. Since this is just a fake server,
-			# there is no need to go through all that and we can do a shortcut.
-			if ($self->{challengeNum} == 0) {
-				print "Received GameGuard sync request. Client allowed to login account server.\n";
-				$self->clientSend(pack("C*", 0x59,0x02,0x01));
-			} else {
-				print "Received GameGuard sync request. Client allowed to login char/map server.\n";
-				$$self->clientSend(pack("C*", 0x59,0x02,0x02));
-			}
 	
 		} else {
 
