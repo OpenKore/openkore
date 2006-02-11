@@ -52,6 +52,16 @@ sub new {
 	$self{client_listenPort} = $config{XKore_listenPort} ||
 		($config{XKore_tracker}?6902+int(rand(98)) : 6900);
 
+	# int challengeNum
+	#
+	# The number of times that the RO client has sent a
+	# GameGuard challenge packet.
+	# Taken from Poseidon/RagnarokServer.pm
+	#
+	# Invariant: challengeNum >= 0
+
+	$self->{challengeNum} = 0;
+
 	bless \%self, $class;
 	return \%self;
 }
@@ -1041,7 +1051,23 @@ sub checkClient {
 			$msg = "";
 
 			$self->clientSend(pack('C*', 0x8B, 0x01, 0, 0),1);
+			$self->{challengeNum} = 0;
 			$self->{client_state} = 0;
+	
+		} elsif ($switch eq '0258') { # client sent gameguard's challenge request
+			# Reply with "gameguard_grant" instead of a 0227 packet. Normally, the server would
+			# send a 0227 gameguard challenge to the client, then the client will send the
+			# proper 0228 response. Only after that will the server send 0259 to allow the
+			# client to continue the login sequence. Since this is just a fake server,
+			# there is no need to go through all that and we can do a shortcut.
+			if ($self->{challengeNum} == 0) {
+				print "Received GameGuard sync request. Client allowed to login account server.\n";
+				$client->send(pack("C*", 0x59,0x02,0x01));
+			} else {
+				print "Received GameGuard sync request. Client allowed to login char/map server.\n";
+				$client->send(pack("C*", 0x59,0x02,0x02));
+			}
+	
 		} else {
 
 			# Do state-specific checks
