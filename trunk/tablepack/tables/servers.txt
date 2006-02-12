@@ -1,8 +1,7 @@
 # This file contains information about master servers.
 
-# eAthena private servers use these options:
-# master_version 1
-# version 20
+#####################
+# Official RO Servers
 
 [International - iRO: Chaos/Loki/Iris]
 ip 38.144.194.2
@@ -271,15 +270,96 @@ serverType 7
 secureLogin 1
 serverEncoding Japanese
 
-[mobRO Private Server]
-ip 70.85.47.148
+
+####################
+# Private RO Servers
+
+# eAthena private servers use these options:
+# master_version 1
+# version 20
+
+## http://acro.animeconnection.net/
+[acRO Private Server]
+ip 203.116.44.98
 port 6900
-version 18
-master_version 1
-serverType 0
-field_payon old_payon.fld
+master_version 0
+version 20 
+serverType 3
 serverEncoding Western
 
+## http://www.aerogaming.net/
+[aeRO Private Server]
+ip 72.36.236.2
+port 5000
+master_version 1
+version 20
+serverType 0
+serverEncoding Western
+
+## http://www.ceres-ro.net/
+[CeresRO Private Server]
+ip 70.84.99.26
+port 6900
+master_version 18
+version 20
+serverType 5
+serverEncoding Western
+
+## http://www.ethereal-ro.com/
+[EtherealRO Private Server]
+ip 216.32.66.4
+port 6901
+version 0
+master_version 18
+serverType 5
+serverEncoding Western
+
+## http://www.euphro.com/
+[EuphRO Private Server]
+ip euphro.game-server.cc
+port 6900
+master_version 14
+version 14
+serverType 5
+serverEncoding Western
+
+## http://www.faithro.net/
+[FaithRO (High Rate) Private Server]
+ip 209.190.93.35
+port 6900
+master_version 18
+version 0
+servertype 5
+serverEncoding Western
+
+## http://www.funro.mu/
+[FunRO Private Server]
+ip 207.226.22.221
+port 6900
+master_version 0
+version 0
+serverType 5
+serverEncoding Western
+
+## http://utopianz.net/ro/main.php
+[Hikayu Private Server]
+ip 202.71.104.197
+port 6900
+master_version 2
+version 18
+serverType 5
+serverEncoding Western
+
+## http://www.mysticalro.tk/
+[MysticalRO Private Server]
+ip mro.no-ip.org
+port 6900
+master_version 18
+version 20
+serverType 5
+serverEncoding Western
+
+## http://q-ro.net/qro/web/
 [qRO (Low Rate) Private Server]
 ip 64.71.161.251
 port 6822
@@ -289,6 +369,7 @@ serverType 5
 private 1
 serverEncoding Western
 
+## http://q-ro.net/qro/web/
 [qRO (High Rate) Private Server]
 ip 64.71.161.252
 port 6822
@@ -298,101 +379,49 @@ serverType 5
 private 1
 serverEncoding Western
 
-[ProjectRO Private Server]
-ip 66.111.48.190
-port 6900
-master_version 0
-version 1
-serverType 0
-serverEncoding Western
-
-[VanRO: Medium Rate Private Server]
-ip 66.111.51.160
-port 6800
-master_version 20
-version 18
-serverType 4
-clientSight 20
-serverEncoding Western
-
-[VanRO: High Rate Private Server]
-ip 70.84.205.242
-port 6800
-master_version 18
-version 20
-serverType 4
-serverEncoding Western
-
-[EuphRO Private Server]
-ip euphro.game-server.cc
-port 6900
-master_version 14
-version 14
+## http://www.sukiro.com/
+[SukiRO (Silk) Private Server]
+ip 72.36.162.101
+port 13371
+master_version 16
+version 2
 serverType 5
 serverEncoding Western
 
-[XaosRO Private Server]
-ip 67.18.209.218
+## http://www.sunbbs.co.uk
+[SunRO Private Server]
+ip 70.86.136.88
 port 6900
-master_version 2
-version 0
-serverType 4
-serverEncoding Western
+version 60101
+master_version 4
+serverType 5
+serverEncoding Chinese
 
-[NamelessRO: Eclipse Private Server]
-ip 72.29.76.150
+
+# The server details below needs verification
+
+[AnimaRO Private Server]
+ip 66.111.61.90
 port 6900
-master_version 14
-version 18
-serverType 4
-serverEncoding Western
-
-[NamelessRO: Sunrise Private Server]
-ip 72.29.76.150
-port 6901
-master_version 14
-version 18
-serverType 4
-serverEncoding Western
-
-[aeRO Private Server]
-ip 66.118.142.17
-port 5000
-master_version 1
-version 20
-serverType 0
-serverEncoding Western
-
-[aeRO2 Private Server]
-ip 66.196.43.82
-port 6900
-master_version 2
-version 20
-serverType 0
-serverEncoding Western
-
-[powRO Private Server]
-ip 64.69.46.56
-port 6900
-master_version 2
-version 0
-serverType 3
-serverEncoding Western
-
-[SonicRO Private Server]
-ip 70.84.81.42
-port 6901
 master_version 18
-version 20
+version 0
 serverType 0
 serverEncoding Western
 
-[ExcaliburRO Private Server]
-ip 62.234.144.199
+[AniRO: Chaos Private Server]
+ip 82.211.6.25
 port 6900
-master_version 14
-version 0
+master_version 18
+version 54
 serverType 3
+serverEncoding Western
+
+[Anti-GravityRO Private Server]
+ip 63.246.131.80
+port 6900
+master_version 18
+version 0
+serverType 0
 serverEncoding Western
 
 [AvalonRO Private Server]
@@ -404,20 +433,12 @@ serverType 4
 clientSight 16
 serverEncoding Western
 
-[XileRO Private Server]
-ip xilero.no-ip.info
-port 6901
-master_version 17
+[AxionRO Private Server]
+ip axionro.no-ip.org
+port 6900
+master_version 14
 version 20
-serverType 3
-serverEncoding Western
-
-[XileRO PK Private Server]
-ip xilero2.no-ip.info
-port 6901
-master_version 1
-version 20
-serverType 5
+serverType 4
 serverEncoding Western
 
 [ChocoRO Private Server]
@@ -425,14 +446,6 @@ ip 65.110.62.150
 port 6901
 master_version 14
 version 20
-serverType 3
-serverEncoding Western
-
-[AniRO: Chaos Private Server]
-ip 82.211.6.25
-port 6900
-master_version 18
-version 54
 serverType 3
 serverEncoding Western
 
@@ -452,6 +465,47 @@ master_version 18
 serverType 3
 serverEncoding Western
 
+[dutchRO Private Server]
+ip 62.163.217.88
+port 6900
+master_version 14
+version 20
+private 1
+serverType 0
+serverEncoding Western
+
+[ExcaliburRO Private Server]
+ip 62.234.144.199
+port 6900
+master_version 14
+version 0
+serverType 3
+serverEncoding Western
+
+[FenixRO Private Server]
+ip 72.36.216.219
+port 5001
+master_version 14
+version 20
+serverType 3
+serverEncoding Western
+
+[GPhase Networks Private Server]
+ip gpn.sytes.net
+port 6900
+master_version 18
+version 20
+serverType 3
+serverEncoding Western
+
+[HopeRO Private Server]
+ip 66.199.253.146
+port 6900
+master_version 1
+version 20
+serverType 4
+serverEncoding Western
+
 [Kaz3RO Private Server]
 ip 192.168.2.3
 port 6901
@@ -463,30 +517,6 @@ serverEncoding Western
 [Kaz3RO (2) Private Server]
 ip 206.225.95.57
 port 6900
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[Kaz3RO (Holy) Private Server]
-ip 206.225.82.3
-port 6901
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[Kaz3RO (Trinity) Private Server]
-ip 206.225.95.57
-port 6901
-master_version 1
-version 17
-serverType 4
-serverEncoding Western
-
-[Kaz3RO (Serenity) Private Server]
-ip 206.225.83.7
-port 6901
 master_version 1
 version 17
 serverType 4
@@ -508,110 +538,28 @@ version 17
 serverType 4
 serverEncoding Western
 
-[AnimaRO Private Server]
-ip 66.111.61.90
-port 6900
-master_version 18
-version 0
-serverType 0
-serverEncoding Western
-
-[dutchRO Private Server]
-ip 62.163.217.88
-port 6900
-master_version 14
-version 20
-private 1
-serverType 0
-serverEncoding Western
-
-[PheyRO Private Server]
-ip 206.53.56.67
-port 6900
-master_version 18
-version 20
-serverType 3
-serverEncoding Western
-
-[FenixRO Private Server]
-ip 72.36.216.219
-port 5001
-master_version 14
-version 20
-serverType 3
-serverEncoding Western
-
-[FunRO Private Server]
-ip 209.51.216.242
-port 6900
-master_version 16
-version 0
-serverType 0
-serverEncoding Western
-
-[RusRO Private Server]
-ip 213.219.220.20
-port 6956
-master_version 1
-version 20
-private 1
-serverType 0
-serverEncoding Western
-
-[HopeRO Private Server]
-ip 66.199.253.146
-port 6900
-master_version 1
-version 20
-serverType 4
-serverEncoding Western
-
-[SuperRO Brasil Private Server]
-ip 201.30.187.6
+[Kaz3RO (Serenity) Private Server]
+ip 206.225.83.7
 port 6901
-version 20
 master_version 1
-serverEncoding Western
-
-[Planet RO Private Server]
-ip 66.111.58.180
-port 6900
-master_version 10
-version 20
+version 17
 serverType 4
 serverEncoding Western
 
-[PSIBlade Online Private Server]
-ip 72.36.139.114
+[Kaz3RO (Trinity) Private Server]
+ip 206.225.95.57
+port 6901
+master_version 1
+version 17
+serverType 4
+serverEncoding Western
+
+[LegendRO Private Server]
+ip 64.147.163.114
 port 6900
-master_version 2
 version 0
-serverType 3
-serverEncoding Western
-
-[GPhase Networks Private Server]
-ip gpn.sytes.net
-port 6900
-master_version 18
-version 20
-serverType 3
-serverEncoding Western
-
-[Ragnarok Frontier Private Server]
-ip 70.68.0.160
-port 6902
-master_version 20
-version 1
-private 1
-serverType 1
-serverEncoding Western
-
-[Anti-GravityRO Private Server]
-ip 63.246.131.80
-port 6900
-master_version 18
-version 0
-serverType 0
+master_version 1
+serverType 5
 serverEncoding Western
 
 [Localhost]
@@ -624,20 +572,87 @@ secureLogin_requestCode
 secureLogin_account 0
 serverEncoding Western
 
-[LegendRO Private Server]
-ip 64.147.163.114
-port 6900
-version 0
-master_version 1
-serverType 5
-serverEncoding Western
-
-[AxionRO Private Server]
-ip axionro.no-ip.org
+## No homepage yet
+[NamelessRO: Eclipse Private Server]
+ip 72.29.76.150
 port 6900
 master_version 14
+version 18
+serverType 4
+serverEncoding Western
+
+## No homepage yet
+[NamelessRO: Sunrise Private Server]
+ip 72.29.76.150
+port 6901
+master_version 14
+version 18
+serverType 4
+serverEncoding Western
+
+[PheyRO Private Server]
+ip 206.53.56.67
+port 6900
+master_version 18
+version 20
+serverType 3
+serverEncoding Western
+
+[Planet RO Private Server]
+ip 66.111.58.180
+port 6900
+master_version 10
 version 20
 serverType 4
+serverEncoding Western
+
+[powRO Private Server]
+ip 64.69.46.56
+port 6900
+master_version 2
+version 0
+serverType 3
+serverEncoding Western
+
+[PSIBlade Online Private Server]
+ip 72.36.139.114
+port 6900
+master_version 2
+version 0
+serverType 3
+serverEncoding Western
+
+[Ragnarok Frontier Private Server]
+ip 70.68.0.160
+port 6902
+master_version 20
+version 1
+private 1
+serverType 1
+serverEncoding Western
+
+[RusRO Private Server]
+ip 213.219.220.20
+port 6956
+master_version 1
+version 20
+private 1
+serverType 0
+serverEncoding Western
+
+[SonicRO Private Server]
+ip 70.84.81.42
+port 6901
+master_version 18
+version 20
+serverType 0
+serverEncoding Western
+
+[SuperRO Brasil Private Server]
+ip 201.30.187.6
+port 6901
+version 20
+master_version 1
 serverEncoding Western
 
 [Symphonia RO Private Server]
@@ -649,34 +664,74 @@ private 1
 serverType 0
 serverEncoding Western
 
-[EtherealRO Private Server]
-ip 216.32.66.4
+## http://www.vanserver.com/
+[VanRO: Medium Rate Private Server]
+ip 66.111.51.160
+port 6800
+master_version 20
+version 18
+serverType 4
+clientSight 20
+serverEncoding Western
+
+## http://www.vanserver.com/
+[VanRO: High Rate Private Server]
+ip 70.84.205.242
+port 6800
+master_version 18
+version 20
+serverType 4
+serverEncoding Western
+
+[XileRO Private Server]
+ip xilero.no-ip.info
 port 6901
-version 0
-master_version 18
-serverType 5
+master_version 17
+version 20
+serverType 3
 serverEncoding Western
 
-[SukiRO (Silk) Private Server]
-ip 72.36.162.101
-port 13371
-master_version 16
-version 2
-serverType 5
-serverEncoding Western
-
-[SunRO Private Server]
-ip 70.86.136.88
-port 6900
-version 60101
-master_version 4
-serverType 5
-serverEncoding Chinese
-   
-[MysticalRO Private Server]
-ip mro.no-ip.org
-port 6900
-master_version 18
+[XileRO PK Private Server]
+ip xilero2.no-ip.info
+port 6901
+master_version 1
 version 20
 serverType 5
 serverEncoding Western
+
+
+# Non-working server details
+
+#[aeRO2 Private Server]
+#ip 66.196.43.82
+#port 6900
+#master_version 2
+#version 20
+#serverType 0
+#serverEncoding Western
+
+#[mobRO Private Server]
+#ip 70.85.47.148
+#port 6900
+#version 18
+#master_version 1
+#serverType 0
+#field_payon old_payon.fld
+#serverEncoding Western
+
+#[ProjectRO Private Server]
+#ip 66.111.48.190
+#port 6900
+#master_version 0
+#version 1
+#serverType 0
+#serverEncoding Western
+
+#[XaosRO Private Server]
+#ip 67.18.209.218
+#port 6900
+#master_version 2
+#version 0
+#serverType 4
+#serverEncoding Western
+
