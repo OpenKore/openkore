@@ -140,6 +140,7 @@ Credits:
   support, fix for manual 'sit' behavior, support for bRO
 - vivi: autoMoveOnDeath, check XKore 2 username, Kaite/Kaizel/Kaupe statuses
 - rufvin: useSelf_skill_smartHeal bug
+- piroJOKE: field files updates.
 
 
 ==================
