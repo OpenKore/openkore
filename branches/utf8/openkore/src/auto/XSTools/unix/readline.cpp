@@ -66,8 +66,6 @@ event_hook ()
  * Public functions
  *********************/
 
-extern "C" {
-
 /*
  * Initialize this library.
  */
@@ -163,6 +161,3 @@ R_print (const char *msg)
 {
 	fprintf (rl_outstream, "%s", msg);
 }
-
-
-} /* extern "C" */

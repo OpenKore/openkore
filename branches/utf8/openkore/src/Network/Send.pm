@@ -24,6 +24,7 @@ use base qw(Exporter);
 use Globals qw($accountID $char $charID %config $conState $encryptVal %guild $net @chars %packetDescriptions $bytesSent);
 use Log qw(message warning error debug);
 use Utils;
+use I18N qw(stringToBytes);
 
 our @EXPORT = qw(
 	decrypt
@@ -536,7 +537,7 @@ sub sendCharCreate {
 	$hair_style ||= 0;
 
 	my $msg = pack("C*", 0x67, 0x00) .
-		pack("a24", $name) .
+		pack("a24", stringToBytes($name)) .
 		pack("C*", $str, $agi, $vit, $int, $dex, $luk, $slot) .
 		pack("v*", $hair_style, $hair_color);
 	sendMsgToServer($r_net, $msg);
@@ -547,7 +548,7 @@ sub sendCharDelete {
 	my $charID = shift;
 	my $email = shift;
 	my $msg = pack("C*", 0x68, 0x00) .
-			$charID . pack("a40", $email);
+			$charID . pack("a40", bytesToString($email));
 	sendMsgToServer($r_net, $msg);
 }
 
@@ -562,29 +563,36 @@ sub sendChat {
 	my $r_net = shift;
 	my $message = shift;
 	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
-	my $msg;
+
+	my ($data, $charName); # Type: Bytes
+	$message = stringToBytes($message); # Type: Bytes
+	$charName = stringToBytes($char->{name});
+
 	if (($config{serverType} == 3) || ($config{serverType} == 5)) {
-		$msg = pack("C*", 0xf3, 0x00) .
-			pack("v*", length($char->{name}) + length($message) + 8) .
-			$char->{name} . " : $message" . chr(0);
+		$data = pack("C*", 0xf3, 0x00) .
+			pack("v*", length($charName) + length($message) + 8) .
+			"$charName : $message" . chr(0);
 	} elsif ($config{serverType} == 4) {
-		$msg = pack("C*", 0x9F, 0x00) .
-			pack("v*", length($char->{name}) + length($message) + 8) .
-			$char->{name} . " : $message" . chr(0);
+		$data = pack("C*", 0x9F, 0x00) .
+			pack("v*", length($charName) + length($message) + 8) .
+			"$charName : $message" . chr(0);
 	} else {
-		$msg = pack("C*", 0x8C, 0x00) .
-			pack("v*", length($char->{name}) + length($message) + 8) .
-			$char->{name} . " : $message" . chr(0);
+		$data = pack("C*", 0x8C, 0x00) .
+			pack("v*", length($charName) + length($message) + 8) .
+			"$charName : $message" . chr(0);
 	}
-	sendMsgToServer($r_net, $msg);
+	sendMsgToServer($r_net, $data);
 }
 
 sub sendChatRoomBestow {
 	my $r_net = shift;
 	my $name = shift;
+
+	$name = stringToBytes($name);
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
-	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00).$name;
+
+	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00) . $name;
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
 }
@@ -888,25 +896,30 @@ sub sendGuildAlly {
 }
 
 sub sendGuildBreak {
-	# guild name
-	my $name = shift;
-	my $msg = pack("C C a40", 0x5D, 0x01, $name);
+	my $guildName = shift;
+	my $msg = pack("C C a40", 0x5D, 0x01, stringToBytes($guildName));
 	sendMsgToServer($net, $msg);
-	debug "Sent Guild Break: $name\n", "sendPacket", 2;
+	debug "Sent Guild Break: $guildName\n", "sendPacket", 2;
 }
 
 sub sendGuildChat {
 	my $r_net = shift;
 	my $message = shift;
+
+	my ($charName);
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
-	my $msg = pack("C*",0x7E, 0x01) . pack("v*",length($char->{name}) + length($message) + 8) .
-	$char->{name} . " : " . $message . chr(0);
-	sendMsgToServer($r_net, $msg);
+	$message = stringToBytes($message);
+	$charName = stringToBytes($char->{name});
+
+	my $data = pack("C*",0x7E, 0x01) . pack("v*", length($charName) + length($message) + 8) .
+		"$charName : $message" . chr(0);
+	sendMsgToServer($r_net, $data);
 }
 
 sub sendGuildCreate {
 	my $name = shift;
-	my $msg = pack("C*", 0x65, 0x01, 0x4D, 0x8B, 0x01, 0x00).pack("a24", $name);
+	my $msg = pack("C*", 0x65, 0x01, 0x4D, 0x8B, 0x01, 0x00) .
+		pack("a24", stringToBytes($name));
 	sendMsgToServer($net, $msg);
 	debug "Sent Guild Create: $name\n", "sendPacket", 2;
 }
@@ -1375,9 +1388,14 @@ sub sendOpenWarp {
 sub sendPartyChat {
 	my $r_net = shift;
 	my $message = shift;
+
+	my $charName;
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
-	my $msg = pack("C*",0x08, 0x01) . pack("v*",length($char->{name}) + length($message) + 8) .
-		$char->{name} . " : " . $message . chr(0);
+	$message = stringToBytes($message);
+	$charName = stringToBytes($char->{name});
+
+	my $msg = pack("C*",0x08, 0x01) . pack("v*", length($charName) + length($message) + 8) .
+		"$charName : $message" . chr(0);
 	sendMsgToServer($r_net, $msg);
 }
 
@@ -1507,9 +1525,13 @@ sub sendPrivateMsg {
 	my $r_net = shift;
 	my $user = shift;
 	my $message = shift;
+
 	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
-	my $msg = pack("C*",0x96, 0x00) . pack("v*",length($message) + 29) . $user . chr(0) x (24 - length($user)) .
-			$message . chr(0);
+	$message = stringToBytes($message);
+	$user = stringToBytes($user);
+
+	my $msg = pack("C*",0x96, 0x00) . pack("v*", length($message) + 29) . $user .
+		chr(0) x (24 - length($user)) . $message . chr(0);
 	sendMsgToServer($r_net, $msg);
 }
 

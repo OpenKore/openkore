@@ -31,23 +31,13 @@ use strict;
 use Exporter;
 use base qw(Exporter);
 use FindBin qw($RealBin);
-use Encode;
-use Encode::Alias;
 use XSTools;
-use Globals qw(%config);
+use I18N;
 
 XSTools::bootModule("Translation");
-define_alias('Western'  => 'ISO-8859-1');
-define_alias('Tagalog'  => 'ISO-8859-1');
-define_alias('Chinese'  => 'EUC-CN');
-define_alias('Korean'   => 'EUC-KR');
-define_alias('Russian'  => 'ISO-8859-5');
-define_alias('Cyrillic' => 'ISO-8859-5');
-define_alias('Japanese' => 'Shift_JIS');
-define_alias('Thai'     => 'ISO-8859-11');
+
 
 our @EXPORT = qw(T TF);
-our @EXPORT_OK = qw(bytesToString stringToBytes);
 our $_translation;
 
 use constant DEFAULT_PODIR => "$RealBin/src/po";
@@ -203,38 +193,6 @@ sub TF {
 	my $message = shift;
 	_translate($_translation, \$message);
 	return sprintf($message, $_[0], $_[1], $_[2], $_[3], $_[4]);
-}
-
-##
-# String Translation::bytesToString(Bytes data)
-# data: the data to convert.
-# Returns: $data converted to a String.
-# Requires: $config{serverEncoding} must be a correct encoding name, or empty.
-#
-# Convert a human-readable message (sent by the RO server) into a String.
-# This function uses $config{serverEncoding} to determine the encoding.
-#
-# This function should only be used for strings sent by the RO server.
-sub bytesToString {
-	return Encode::decode($config{serverEncoding} || 'Western', $_[0]);
-}
-
-sub stringToBytes {
-	my ($str) = @_;
-	Encode::from_to($str, "UTF-8", $config{serverEncoding} || 'Western');
-	return $str;
-}
-
-##
-# boolean Translation::isUTF8(msg)
-#
-# Checks whether $msg is a valid UTF-8 string.
-sub isUTF8 {
-	undef $@;
-	eval {
-		decode_utf8($_[0], Encode::FB_CROAK);
-	};
-	return !$@;
 }
 
 
