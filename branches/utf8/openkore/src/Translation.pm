@@ -47,7 +47,7 @@ define_alias('Japanese' => 'Shift_JIS');
 define_alias('Thai'     => 'ISO-8859-11');
 
 our @EXPORT = qw(T TF);
-our @EXPORT_OK = qw(serverStrToUTF8);
+our @EXPORT_OK = qw(bytesToString stringToBytes);
 our $_translation;
 
 use constant DEFAULT_PODIR => "$RealBin/src/po";
@@ -206,22 +206,20 @@ sub TF {
 }
 
 ##
-# String Translation::toUTF8(Bytes msg)
-# msg: the message to convert.
-# Returns: $msg converted to UTF-8.
-# Requires: $config{serverEncoding} must be a correct encoding name.
+# String Translation::bytesToString(Bytes data)
+# data: the data to convert.
+# Returns: $data converted to a String.
+# Requires: $config{serverEncoding} must be a correct encoding name, or empty.
 #
-# Convert a human-readable string (sent by the RO server) into UTF-8.
+# Convert a human-readable message (sent by the RO server) into a String.
 # This function uses $config{serverEncoding} to determine the encoding.
 #
 # This function should only be used for strings sent by the RO server.
-sub toUTF8 {
-	my ($str) = @_;
-	Encode::from_to($str, $config{serverEncoding} || 'Western', "UTF-8");
-	return $str;
+sub bytesToString {
+	return Encode::decode($config{serverEncoding} || 'Western', $_[0]);
 }
 
-sub fromUTF8 {
+sub stringToBytes {
 	my ($str) = @_;
 	Encode::from_to($str, "UTF-8", $config{serverEncoding} || 'Western');
 	return $str;

@@ -100,7 +100,7 @@ if win32:
 	perlenv['LINKFLAGS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 else:
-	perlenv['CFLAGS'] = Split('-D_REENTRANT -D_GNU_SOURCE' +
+	perlenv['CFLAGS'] += Split('-D_REENTRANT -D_GNU_SOURCE' +
 		' -DTHREADS_HAVE_PIDS -D_LARGEFILE_SOURCE' +
 		' -D_FILE_OFFSET_BITS=64')
 perlenv['CFLAGS'] += ["-I" + perlconfig['coredir']]
@@ -114,15 +114,22 @@ def buildXS(target, source, env, args = []):
 	use strict;
 	my $out = shift;
 	my $file = shift;
+print "@ARGV\n";
 	open(STDOUT, ">", $out);
 	do $file;
 	'''
 
 	print "Creating", str(target[0]), "..."
-	command = [perlconfig['perl'], '-e',
-		code, str(target[0]),
-		perlconfig['xsubpp'], '-typemap', perlconfig['typemap'],
-		str(source[0])] + args
+	command = [
+		perlconfig['perl'],
+		'-e',
+		code,
+		str(target[0]),
+		perlconfig['xsubpp']
+		] + args + [
+		'-typemap',
+		perlconfig['typemap'],
+		str(source[0])]
 	return os.spawnvp(os.P_WAIT, perlconfig['perl'], command)
 
 def buildXS_C(target, source, env):

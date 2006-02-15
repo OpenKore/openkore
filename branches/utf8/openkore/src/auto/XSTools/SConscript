@@ -1,24 +1,70 @@
 Import('*')
+import os.path;
 
-SConscript([
-	'pathfinding/SConscript',
-	'translation/SConscript',
-	'misc/SConscript',
-])
 
-libs = [
-	'pathfinding',
-	'translation',
-	'misc'
+############### Define sources ###############
+
+# C/C++ source files
+sources = []
+# XS source files (input : output)
+XS_sources = {}
+
+
+### Pathfinding
+sources += [
+	'pathfinding/algorithm.cpp',
+	'pathfinding/wrapper.cpp'
 ]
+XS_sources['pathfinding/wrapper.xs'] = 'pathfinding/wrapper.cpp'
+
+### Translation
+sources += [
+	'translation/filereader.cpp',
+	'translation/translator.cpp',
+	'translation/wrapper.cpp'
+]
+if win32:
+	sources += ['translation/winfilereader.cpp']
+else:
+	sources += ['translation/unixfilereader.cpp']
+XS_sources['translation/wrapper.xs'] = 'translation/wrapper.cpp'
+
+### Unix
+if not win32:
+	sources += [
+		'unix/unix.cpp',
+		'unix/readline-wrapper.cpp',
+		'unix/readline.cpp'
+	]
+	XS_sources['unix/unix.xs'] = 'unix/unix.cpp';
+	XS_sources['unix/readline-wrapper.xs'] = 'unix/readline-wrapper.cpp'
+
+### Misc
+sources += [
+	'misc/misc.c',
+	'misc/fastutils.cpp'
+]
+XS_sources['misc/misc.xs'] = 'misc/misc.c'
+XS_sources['misc/fastutils.xs'] = 'misc/fastutils.cpp'
+
+
+###################################################
+
+for input, output in XS_sources.iteritems():
+	(root, path) = os.path.splitext(input)
+	if path.lower() == ".c":
+		perlenv.XS(output, input)
+	else:
+		perlenv.XS_CXX(output, input)
+
+
+############### Define dependencies ###############
+
+# External library dependencies
 deps = []
 deps_path = []
 
-if win32:
-	SConscript(['win32/SConscript'])
-else:
-	SConscript(['unix/SConscript'])
-	libs += ['unix']
+if not win32:
 	deps += [
 		'readline',
 		'termcap'
@@ -28,9 +74,9 @@ else:
 
 
 # We're linking C++ objects so force usage of g++
-XSTools = perlenv.SharedLibrary('XSTools', [],
-	LIBS = libs + deps,
-	LIBPATH = libs + deps_path,
+XSTools = perlenv.SharedLibrary('XSTools', sources,
+	LIBS = deps,
+	LIBPATH = deps_path,
 	CC = 'g++')
 
 if not win32:
@@ -38,4 +84,3 @@ if not win32:
 	perlenv.Command('XSTools.so', XSTools,
 		[['ln', '-sf', 'libXSTools.so', 'XSTools.so']],
 		chdir=1)
-
