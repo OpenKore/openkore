@@ -23,6 +23,7 @@ use Skills;
 use AI;
 use Utils::Crypton;
 use Translation;
+use I18N qw(bytesToString);
 
 ###### Public methods ######
 
@@ -1170,7 +1171,7 @@ sub actor_info {
 	my $player = $players{$args->{ID}};
 	if ($player && %{$player}) {
 		# This packet tells us the names of players who aren't in a guild, as opposed to 0195.
-		$player->{name} = $args->{name};
+		$player->{name} = bytesToString($args->{name});
 		$player->{gotName} = 1;
 		my $binID = binFind(\@playersID, $args->{ID});
 		debug "Player Info: $player->{name} ($binID)\n", "parseMsg_presence", 2;
@@ -1180,7 +1181,7 @@ sub actor_info {
 
 	my $monster = $monsters{$args->{ID}};
 	if ($monster && %{$monster}) {
-		my $name = $args->{name};
+		my $name = bytesToString($args->{name});
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@monstersID, $args->{ID});
 			debug "Monster Info: $name ($binID)\n", "parseMsg", 2;
@@ -1194,7 +1195,7 @@ sub actor_info {
 
 	my $npc = $npcs{$args->{ID}};
 	if ($npc && %{$npc}) {
-		$npc->{name} = $args->{name};
+		$npc->{name} = bytesToString($args->{name});
 		$npc->{gotName} = 1;
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@npcsID, $args->{ID});
@@ -1210,7 +1211,7 @@ sub actor_info {
 
 	my $pet = $pets{$args->{ID}};
 	if ($pet && %{$pet}) {
-		$pet->{name_given} = $args->{name};
+		$pet->{name_given} = bytesToString($args->{name});
 		if ($config{debug} >= 2) {
 			my $binID = binFind(\@petsID, $args->{ID});
 			debug "Pet Info: $pet->{name_given} ($binID)\n", "parseMsg", 2;
@@ -2615,7 +2616,7 @@ sub guild_ally_request {
 	my ($self, $args) = @_;
 
 	my $ID = $args->{ID}; # is this a guild ID or account ID? Freya calls it an account ID
-	my $name = Translation::toUTF8($args->{name}); # Type: String
+	my $name = bytesToString($args->{name}); # Type: String
 
 	message TF("Incoming Request to Ally Guild '%s'\n", $name);
 	$incomingGuild{ID} = $ID;
@@ -2628,7 +2629,7 @@ sub guild_chat {
 	my ($chatMsgUser, $chatMsg); # Type: String
 	my $chat; # Type: String
 
-	$chat = Translation::toUTF8($args->{message});
+	$chat = bytesToString($args->{message});
 	if (($chatMsgUser, $chatMsg) = $chat =~ /(.*?) : (.*)/) {
 		$chatMsgUser =~ s/ $//;
 		stripLanguageCode(\$chatMsg);
@@ -2689,7 +2690,7 @@ sub guild_logon {
 	my ($self, $args) = @_;
 	my $name; # Type: String
 
-	$name = Translation::toUTF8($args->{name});
+	$name = bytesToString($args->{name});
 	if ($guildNameRequest{online}) {
 		message TF("Guild member %s logged in.\n", $name), "guildchat";
 	} else {
@@ -3259,7 +3260,7 @@ sub hp_sp_changed {
 
 sub local_broadcast {
 	my ($self, $args) = @_;
-	my $message = Translation::toUTF8($args->{message});
+	my $message = bytesToString($args->{message});
 	message "$message\n", "schat";
 }
 
@@ -3727,7 +3728,7 @@ sub party_chat {
 	my $msg;
 
 	decrypt(\$msg, $args->{message});
-	$msg = Translation::toUTF8($msg);
+	$msg = bytesToString($msg);
 
 	# Type: String
 	my ($chatMsgUser, $chatMsg) = $msg =~ /(.*?) : (.*)/;
@@ -4004,7 +4005,7 @@ sub player_equipment {
 sub public_chat {
 	my ($self, $args) = @_;
 	# Type: String
-	my $message = Translation::toUTF8($args->{message});
+	my $message = bytesToString($args->{message});
 	my ($chatMsgUser, $chatMsg); # Type: String
 
 	($chatMsgUser, $chatMsg) = $message =~ /(.*?) : (.*)/;
@@ -4051,8 +4052,8 @@ sub private_message {
 	$args->{privMsg} = substr($msg, 28, $args->{RAW_MSG_SIZE} - 29); # why doesn't it want the last byte?
 
 	my ($privMsg, $privMsgUser); # Type: String
-	$privMsg = Translation::toUTF8($args->{privMsg});
-	$privMsgUser = Translation::toUTF8($args->{privMsgUser});
+	$privMsg = bytesToString($args->{privMsg});
+	$privMsgUser = bytesToString($args->{privMsgUser});
 
 	if ($privMsgUser ne "" && binFind(\@privMsgUsers, $privMsgUser) eq "") {
 		push @privMsgUsers, $privMsgUser;
@@ -4284,7 +4285,7 @@ sub self_chat {
 	my ($self, $args) = @_;
 	my ($message, $chatMsgUser, $chatMsg); # Type: String
 
-	$message = Translation::toUTF8($args->{message});
+	$message = bytesToString($args->{message});
 
 	($chatMsgUser, $chatMsg) = $message =~ /([\s\S]*?) : ([\s\S]*)/;
 	# Note: $chatMsgUser/Msg may be undefined. This is the case on
