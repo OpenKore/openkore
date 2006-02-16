@@ -6,7 +6,7 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT_OK = qw(releaseAM automacroCheck consoleCheckWrapper);
+our @EXPORT_OK = qw(releaseAM lockAM automacroCheck consoleCheckWrapper);
 our @EXPORT = qw(checkVar checkVarVar checkLoc checkLevel checkLevel checkClass
     checkPercent checkStatus checkItem checkPerson checkCond checkEquip checkCast
     checkEquip checkMsg checkMonster checkConsole checkMapChange);
@@ -252,8 +252,9 @@ sub checkCast {
   my ($cast, $args) = @_;
   my $pos = calcPosition($char);
   return 0 if $args->{sourceID} eq $accountID;
-  if (($args->{targetID} eq $accountID ||(
-     $pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
+  my $target = (defined $args->{targetID})?$args->{targetID}:0;
+  if (($target eq $accountID ||
+     ($pos->{x} == $args->{x} && $pos->{y} == $args->{y}) ||
      distance($pos, $args) <= judgeSkillArea($args->{skillID})) &&
      existsInList(lc($cast), lc($skillsID_lut{$args->{skillID}}))) {return 1}
   return 0;
@@ -343,7 +344,7 @@ sub checkMapChange {
   return ($map eq '*' || existsInList($map, $field{name}))?1:0;
 }
 
-# removes an automacro from runonce list ##################
+# releases a locked automacro ##################
 sub releaseAM {
   $cvs->debug("releaseAM(@_)", $logfac{function_call_macro});
   my $am = shift;
@@ -351,14 +352,26 @@ sub releaseAM {
     foreach my $am (keys %automacro) {
       undef $automacro{$am}->{disabled}
     }
-  } elsif (defined $automacro{$am}) {
-    if (defined $automacro{$am}->{disabled}) {
-      undef $automacro{$am}->{disabled};
-      return 1
-    } else {
-      return 0
-    }
+    return 1
   }
+  if (defined $automacro{$am}) {
+    if (defined $automacro{$am}->{disabled}) {
+      undef $automacro{$am}->{disabled}
+    }
+    return 1
+  }
+  return 0
+}
+
+# locks an automacro ##################
+sub lockAM {
+  $cvs->debug("lockAM(@_)", $logfac{function_call_macro});
+  my $am = shift;
+  if (defined $automacro{$am}) {
+    $automacro{$am}->{disabled} = 1;
+    return 1
+  }
+  return 0
 }
 
 # parses automacros and checks conditions #################

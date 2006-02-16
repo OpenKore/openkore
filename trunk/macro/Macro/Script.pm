@@ -14,7 +14,7 @@ use AI;
 use Macro::Data;
 use Macro::Parser qw(parseCmd);
 use Macro::Utilities qw(setVar getVar cmpr);
-use Macro::Automacro qw(releaseAM);
+use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message);
 our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
 
@@ -314,7 +314,17 @@ sub next {
   # release command
   } elsif ($line =~ /^release\s+/) {
     my ($tmp) = $line =~ /^release\s+(.*)/;
-    releaseAM($tmp);
+    if (!releaseAM($tmp)) {
+      $self->{error} = "error in ".$self->{line}.": releasing $tmp failed";
+    }
+    $self->{line}++;
+  ##########################################
+  # lock command
+  } elsif ($line =~ /^lock\s+/) {
+    my ($tmp) = $line =~ /^lock\s+(.*)/;
+    if (!lockAM($tmp)) {
+      $self->{error} = "error in ".$self->{line}.": locking $tmp failed";
+    }
     $self->{line}++;
   ##########################################
   # call command
