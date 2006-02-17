@@ -212,7 +212,7 @@ sub downloadManual {
 
 		my $timer = new Wx::Timer($dialog, 476);
 		my $downloader = new Utils::Downloader('openkore.sourceforge.net',
-			'http://openkore.sourceforge.net/manual/view.php?p=config.txt');
+			'http://openkore.sourceforge.net/manual/config/');
 		EVT_TIMER($dialog, 476, sub {
 			#print $downloader->progress();
 			$gauge->SetValue($downloader->progress * 100);
@@ -306,12 +306,12 @@ sub _help {
 	if ($manual eq '') {
 		return 'Unable to download the manual.';
 	} else {
-		return 'Option disabled for the moment.';
-		#my $tmp = quotemeta "<b class=\"item\">$name";
-		#my ($found) = $manual =~ /<li>(${tmp}.*?)<\/li>/s;
-		#$found =~ s/^<b .*?>(.*?)<\/b>/<b><font color="blue">$1<\/font><\/b>/s;
-		#$found = "No help available for \"$name\"." if ($found eq '');
-		#return $found;
+		#return 'Option disabled for the moment.';
+		my $tmp = quotemeta "<b class=\"item\">$name";
+		my ($found) = $manual =~ /<li>(${tmp}.*?)<\/li>/s;
+		$found =~ s/^<b .*?>(.*?)<\/b>/<b><font color="blue">$1<\/font><\/b>/s;
+		$found = "No help available for \"$name\"." if ($found eq '');
+		return $found;
 	}
 }
 
