@@ -306,11 +306,12 @@ sub _help {
 	if ($manual eq '') {
 		return 'Unable to download the manual.';
 	} else {
-		my $tmp = quotemeta "<b class=\"item\">$name";
-		my ($found) = $manual =~ /<li>(${tmp}.*?)<\/li>/s;
-		$found =~ s/^<b .*?>(.*?)<\/b>/<b><font color="blue">$1<\/font><\/b>/s;
-		$found = "No help available for \"$name\"." if ($found eq '');
-		return $found;
+		return 'Option disabled for the moment.';
+		#my $tmp = quotemeta "<b class=\"item\">$name";
+		#my ($found) = $manual =~ /<li>(${tmp}.*?)<\/li>/s;
+		#$found =~ s/^<b .*?>(.*?)<\/b>/<b><font color="blue">$1<\/font><\/b>/s;
+		#$found = "No help available for \"$name\"." if ($found eq '');
+		#return $found;
 	}
 }
 
