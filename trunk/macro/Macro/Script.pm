@@ -50,7 +50,7 @@ sub DESTROY {
 # registers to AI queue
 sub register {
   my $self = shift;
-  AI::queue('macro');
+  AI::queue('macro') unless $self->{overrideAI};
   $self->{registered} = 1;
 }
 
@@ -314,7 +314,7 @@ sub next {
   # release command
   } elsif ($line =~ /^release\s+/) {
     my ($tmp) = $line =~ /^release\s+(.*)/;
-    if (!releaseAM($tmp)) {
+    if (!releaseAM(parseCmd($tmp))) {
       $self->{error} = "error in ".$self->{line}.": releasing $tmp failed";
     }
     $self->{line}++;
@@ -322,7 +322,7 @@ sub next {
   # lock command
   } elsif ($line =~ /^lock\s+/) {
     my ($tmp) = $line =~ /^lock\s+(.*)/;
-    if (!lockAM($tmp)) {
+    if (!lockAM(parseCmd($tmp))) {
       $self->{error} = "error in ".$self->{line}.": locking $tmp failed";
     }
     $self->{line}++;
