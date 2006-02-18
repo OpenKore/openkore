@@ -476,6 +476,7 @@ sub automacroCheck {
         $queue->setOverrideAI if $automacro{$am}->{overrideAI};
         $queue->orphan($automacro{$am}->{orphan}) if defined $automacro{$am}->{orphan};
         $queue->setTimeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
+        setVar(".caller", $am);
         $onHold = 0;
       } else {
         error "[macro] unable to create macro queue.\n";
