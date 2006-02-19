@@ -25,6 +25,7 @@ use strict;
 use Wx ':everything';
 use base qw(Wx::TextCtrl);
 require DynaLoader;
+use encoding 'utf8';
 
 use Globals;
 use constant STYLE_SLOT => 4;
@@ -47,8 +48,6 @@ sub new {
 				$platform = 'gtk2';
 				# GTK 2 will segfault if we try to use non-UTF 8 characters,
 				# so we need functions to convert them to UTF-8
-				$mod = 'use utf8; use Encode;';
-				eval $mod;
 			} else {
 				$platform = 'gtk1';
 			}
@@ -188,17 +187,6 @@ sub add {
 	}
 
 	# Add text
-	if ($platform eq 'gtk2') {
-		my $utf8;
-		# Convert to UTF-8 so we don't segfault.
-		# Conversion to ISO-8859-1 will always succeed
-		my @encs = ("EUC-KR", "EUCKR", "ISO-2022-KR", "ISO8859-1");
-		foreach (@encs) {
-			$utf8 = Encode::encode($_, $msg);
-			last if $utf8;
-		}
-		$msg = Encode::encode_utf8($utf8);
-	}
 	$self->AppendText($msg);
 	$self->SetDefaultStyle($self->{defaultStyle}) if ($revertStyle);
 
