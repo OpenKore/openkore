@@ -49,7 +49,7 @@ elif [[ "$1" == "--bin" ]]; then
 	fi
 fi
 
-ADDITIONAL=(Makefile Makefile.win32 Makefile.in)
+ADDITIONAL=(SConstruct SConscript)
 if [[ "$BINDIST" != "1" ]]; then
 	ADDITIONAL[${#ADDITIONAL[@]}]=Distfiles
 	ADDITIONAL[${#ADDITIONAL[@]}]=makedist.sh
