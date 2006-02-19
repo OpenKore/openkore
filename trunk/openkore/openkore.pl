@@ -26,6 +26,7 @@ BEGIN {
 	if ($^O eq 'MSWin32') {
 		eval "use XSTools;";
 		if ($@) {
+			print "$@\n";
 			print STDERR "Error: XSTools.dll is not found. Please check your installation.\n";
 			<STDIN>;
 			exit 1;
@@ -43,7 +44,7 @@ BEGIN {
 		}
 		if (!$libFound) {
 			# Attempt to compile XSTools.so if it isn't available
-			my $ret = system('gmake', '-C', "$RealBin/src/auto/XSTools");
+			my $ret = system('python', "$RealBin/scons.py");
 			if ($ret != 0) {
 				if (($ret & 127) == 2) {
 					# Ctrl+C pressed

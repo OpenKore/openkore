@@ -31,23 +31,14 @@ use strict;
 use Exporter;
 use base qw(Exporter);
 use FindBin qw($RealBin);
-use Encode;
-use Encode::Alias;
 use XSTools;
-use Globals qw(%config);
+use I18N;
+use encoding 'utf8';
 
 XSTools::bootModule("Translation");
-define_alias('Western'  => 'ISO-8859-1');
-define_alias('Tagalog'  => 'ISO-8859-1');
-define_alias('Chinese'  => 'EUC-CN');
-define_alias('Korean'   => 'EUC-KR');
-define_alias('Russian'  => 'ISO-8859-5');
-define_alias('Cyrillic' => 'ISO-8859-5');
-define_alias('Japanese' => 'Shift_JIS');
-define_alias('Thai'     => 'ISO-8859-11');
+
 
 our @EXPORT = qw(T TF);
-our @EXPORT_OK = qw(serverStrToUTF8);
 our $_translation;
 
 use constant DEFAULT_PODIR => "$RealBin/src/po";
@@ -205,20 +196,5 @@ sub TF {
 	return sprintf($message, $_[0], $_[1], $_[2], $_[3], $_[4]);
 }
 
-##
-# String Translation::serverMsgToUTF8(Bytes msg)
-# msg: the message to convert.
-# Returns: $msg converted to UTF-8.
-# Requires: $config{serverEncoding} must be a correct encoding name.
-#
-# Convert a human-readable string (sent by the RO server) into UTF-8.
-# This function uses $config{serverEncoding} to determine the encoding.
-#
-# This function should only be used for strings sent by the RO server.
-sub serverStrToUTF8 {
-	my ($str) = @_;
-	Encode::from_to($str, $config{serverEncoding} || 'Western', "utf8");
-	return $str;
-}
 
 1;
