@@ -12,7 +12,7 @@
 use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
-
+open(STDERR, ">foo.txt");
 srand;
 
 
