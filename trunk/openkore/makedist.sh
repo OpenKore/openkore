@@ -29,7 +29,6 @@ DIRS=(.
 	src/Utils/Core
 	src/Utils/StartupNotification
 	src/auto/XSTools
-	src/auto/XSTools/build
 	src/auto/XSTools/misc
 	src/auto/XSTools/pathfinding
 	src/auto/XSTools/unix
