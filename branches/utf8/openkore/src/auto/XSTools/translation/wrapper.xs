@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include "EXTERN.h"
 #include "perl.h"
@@ -45,5 +46,7 @@ CODE:
 		XSRETURN_EMPTY;
 
 	translation = ((Translator *) translator)->translate (SvPV_nolen (msg), len);
-	if (translation != NULL)
+	if (translation != NULL) {
 		sv_setpvn (msg, translation, len);
+		SvUTF8_on (msg);
+	}

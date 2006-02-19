@@ -1,4 +1,5 @@
 #include <windows.h>
+#include <wchar.h>
 #include <Tlhelp32.h>
 #include <stdlib.h>
 
@@ -161,4 +162,25 @@ InjectDLL (DWORD ProcID, LPCTSTR dll)
 
 	if(hThread) CloseHandle(hThread);
 	return 1;
+}
+
+/**
+ * Print a unicode string to the console.
+ *
+ * @param message A UTF-8 string.
+ * @require message != NULL && len >= 0
+ */
+void
+printConsole (const char *message, int len) {
+	int size;
+	WCHAR *unicode;
+
+	size = MultiByteToWideChar (CP_UTF8, 0, message,
+		len, NULL, 0);
+	unicode = (WCHAR *) malloc (sizeof (WCHAR) * size);
+	MultiByteToWideChar (CP_UTF8, 0, message,
+		len, unicode, size);
+
+	WriteConsoleW (GetStdHandle(STD_OUTPUT_HANDLE), unicode,
+		size, NULL, NULL);
 }
