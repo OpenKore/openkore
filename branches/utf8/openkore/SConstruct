@@ -92,6 +92,14 @@ else:
 	libenv['LINKFLAGS'] += ['-fPIC']
 libenv['CCFLAGS'] = libenv['CFLAGS']
 
+if cygwin:
+	NativeDLLBuilder = Builder(action = [
+		['dllwrap', '--driver=gcc', '--target=i386-mingw32', '-mno-cygwin', '$SOURCES', '-o', '$TARGET']
+	])
+else:
+	NativeDLLBuilder = libenv['BUILDERS']['SharedLibrary']
+libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
+
 
 perlenv = libenv.Copy()
 if win32:
@@ -114,7 +122,7 @@ def buildXS(target, source, env, args = []):
 	use strict;
 	my $out = shift;
 	my $file = shift;
-print "@ARGV\n";
+
 	open(STDOUT, ">", $out);
 	do $file;
 	'''
@@ -148,4 +156,3 @@ perlenv['BUILDERS']['XS_CXX'] = XSBuilder_CXX
 
 Export('env libenv perlenv win32')
 SConscript('src/auto/XSTools/SConscript')
-

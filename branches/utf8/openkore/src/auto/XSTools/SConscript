@@ -74,7 +74,7 @@ if not win32:
 
 
 # We're linking C++ objects so force usage of g++
-XSTools = perlenv.SharedLibrary('XSTools', sources,
+XSTools = perlenv.NativeDLL('XSTools', sources,
 	LIBS = deps,
 	LIBPATH = deps_path,
 	CC = 'g++')
