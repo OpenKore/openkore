@@ -14,8 +14,7 @@ use Time::HiRes qw(time usleep);
 use IO::Socket;
 use Text::ParseWords;
 use Config;
-eval "no utf8;";
-use bytes;
+use encoding 'utf8';
 
 use Globals;
 use Modules;

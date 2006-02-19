@@ -36,7 +36,7 @@ use Time::HiRes qw/time sleep/;
 use Text::Wrap;
 use Win32::Console;
 use WinUtils;
-use encode 'utf8';
+use encoding 'utf8';
 
 use Globals;
 use Settings qw(%sys);

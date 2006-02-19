@@ -13,8 +13,6 @@ use FindBin qw($RealBin);
 use lib "$RealBin";
 use lib "$RealBin/src";
 
-eval "no utf8;"; undef $@;
-use bytes;
 srand;
 
 
