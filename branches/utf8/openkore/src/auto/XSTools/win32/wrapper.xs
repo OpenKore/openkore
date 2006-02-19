@@ -9,6 +9,7 @@
 
 DWORD GetProcByName (char * name);
 int InjectDLL(DWORD ProcID, LPCTSTR dll);
+void printConsole (const char *message, int len);
 
 
 MODULE = WinUtils		PACKAGE = WinUtils		PREFIX = WinUtils_
@@ -191,3 +192,16 @@ CloseProcess(Handle)
 
 char *
 getLanguageName()
+
+void
+printConsole(message)
+	SV *message
+CODE:
+	if (message && SvOK (message)) {
+		char *msg;
+		STRLEN len;
+
+		msg = SvPV (message, len);
+		if (msg != NULL)
+			printConsole(msg, len);
+	}

@@ -35,7 +35,8 @@ use Carp;
 use Time::HiRes qw/time sleep/;
 use Text::Wrap;
 use Win32::Console;
-use Encode;
+use WinUtils;
+use encode 'utf8';
 
 use Globals;
 use Settings qw(%sys);
@@ -263,9 +264,6 @@ sub readEvents {
 sub writeOutput {
 	my ($self, $type, $message, $domain) = @_;
 
-	# Convert text from UTF-8 to the current codepage
-	Encode::from_to($message, "utf8", "cp$self->{codepage}") if ($sys{translation});
-
 	#wrap the text
 	local($Text::Wrap::columns) = $self->{right} - $self->{left} + 1;
 	my ($endspace) = $message =~ /(\s*)$/; #Save trailing whitespace: wrap kills spaces near wraps, especialy at the end of stings, so "\n" becomes "", not what we want
@@ -293,7 +291,8 @@ sub writeOutput {
 	my ($ocx, $ocy) = $self->{out_con}->Cursor();
 	$self->{out_con}->Cursor($self->{out_col}, $self->{out_line} - $lines);
 	$self->setColor($type, $domain);
-	$self->{out_con}->Write($message);
+	#$self->{out_con}->Write($message);
+	WinUtils::printConsole($message);
 	$self->color('reset');
 	($self->{out_col}, $self->{out_line}) = $self->{out_con}->Cursor();
 	$self->{out_line} -= $self->{last_line_end} - 1;
