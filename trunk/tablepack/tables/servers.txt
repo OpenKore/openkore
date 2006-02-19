@@ -270,6 +270,17 @@ serverType 7
 secureLogin 1
 serverEncoding Japanese
 
+[Vietnam - vRO: SD]
+ip 222.255.122.20
+port 6900
+master_version 26
+version 1
+serverType 0
+secureLogin 1
+secureLogin_type 0
+secureLogin_requestCode
+secureLogin_account 0
+
 
 ####################
 # Private RO Servers
