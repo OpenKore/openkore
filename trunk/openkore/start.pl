@@ -70,6 +70,12 @@ if (0) {
 	require Thread::Queue; #for xkore2
 	require XSTools;
 	require Encode;
+	require encoding;
+	require "unicore/lib/gc_sc/SpacePer.pl";
+	require "unicore/lib/gc_sc/Word.pl";
+	require "unicore/lib/gc_sc/Digit.pl";
+	require "unicore/lib/gc_sc/Cntrl.pl";
+	require "unicore/lib/gc_sc/ASCII.pl";
 }
 
 $0 = PerlApp::exe() if ($PerlApp::TOOL eq "PerlApp");
