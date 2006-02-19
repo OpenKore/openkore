@@ -39,6 +39,14 @@ if not win32:
 	XS_sources['unix/unix.xs'] = 'unix/unix.cpp';
 	XS_sources['unix/readline-wrapper.xs'] = 'unix/readline-wrapper.cpp'
 
+## Win32
+if win32:
+	sources += [
+		'win32/utils.c',
+		'win32/wrapper.c'
+	]
+	XS_sources['win32/wrapper.xs'] = 'win32/wrapper.c'
+
 ### Misc
 sources += [
 	'misc/misc.c',
@@ -51,11 +59,7 @@ XS_sources['misc/fastutils.xs'] = 'misc/fastutils.cpp'
 ###################################################
 
 for input, output in XS_sources.iteritems():
-	(root, path) = os.path.splitext(input)
-	if path.lower() == ".c":
-		perlenv.XS(output, input)
-	else:
-		perlenv.XS_CXX(output, input)
+	perlenv.XS(output, input)
 
 
 ############### Define dependencies ###############
@@ -65,19 +69,17 @@ deps = []
 deps_path = []
 
 if not win32:
-	deps += [
-		'readline',
-		'termcap'
-	]
-	perlenv['LINKFLAGS'] += ['-pthread']
+	deps += ['readline', 'termcap']
 	deps_path += ['/usr/lib/termcap']
+else:
+	deps += ['winmm']
 
+perlenv['LINKFLAGS'] += ['-pthread']
+perlenv['LIBS'] += deps
+perlenv['LIBPATH'] += deps_path
 
 # We're linking C++ objects so force usage of g++
-XSTools = perlenv.NativeDLL('XSTools', sources,
-	LIBS = deps,
-	LIBPATH = deps_path,
-	CC = 'g++')
+XSTools = perlenv.NativeDLL('XSTools', sources, CC = 'g++')
 
 if not win32:
 	# Perl expects XSTools.so, not libXSTools.so, so create symlink.

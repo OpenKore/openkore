@@ -26,6 +26,7 @@ BEGIN {
 	if ($^O eq 'MSWin32') {
 		eval "use XSTools;";
 		if ($@) {
+			print "$@\n";
 			print STDERR "Error: XSTools.dll is not found. Please check your installation.\n";
 			<STDIN>;
 			exit 1;
