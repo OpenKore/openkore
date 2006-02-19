@@ -40,7 +40,7 @@ define_alias('Thai'     => 'ISO-8859-11');
 
 
 ##
-# String Translation::bytesToString(Bytes data)
+# String I18N::bytesToString(Bytes data)
 # data: The data to convert.
 # Returns: $data converted to a String.
 # Requires:
@@ -80,6 +80,8 @@ sub stringToBytes {
 # Ensures: defined(result)
 #
 # Convert a String into UTF-8 data.
+#
+# This symbol is exportable.
 sub stringToUTF8 {
 	return Encode::encode("UTF-8", $_[0]);
 }
@@ -90,6 +92,8 @@ sub stringToUTF8 {
 # Ensures: defined(result)
 #
 # Convert UTF-8 data into a String.
+#
+# This symbol is exportable.
 sub UTF8ToString {
 	return Encode::decode("UTF-8", $_[0]);
 }
