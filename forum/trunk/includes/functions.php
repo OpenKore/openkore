@@ -317,6 +317,8 @@ function init_userprefs($userdata)
 	}
 
 	include_attach_lang();
+	include($phpbb_root_path . './includes/lang_extend_mac.' . $phpEx);
+
 	//
 	// Set up style
 	//
@@ -661,6 +663,8 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 				include($phpbb_root_path . 'language/lang_english/lang_main.'.$phpEx);
 			}
 		}
+
+		include($phpbb_root_path . './includes/lang_extend_mac.' . $phpEx);
 
 		if ( empty($template) )
 		{
