@@ -9,6 +9,7 @@ perlconfig = {}
 env = Environment()
 
 def CheckPerl(context):
+	global cygwin
 	global win32
 	global perlconfig
 
@@ -62,6 +63,11 @@ def CheckPerl(context):
 			perlconfig[name] = value
 		f.close()
 		os.unlink(".perlconfig.txt")
+
+		if cygwin:
+			# Convert paths to Cygwin-compatible paths
+			perlconfig['perl'] = perlconfig['perl'].replace('\\', '/')
+			perlconfig['coredir'] = perlconfig['coredir'].replace('\\', '/')
 	return ret == 0
 
 conf = Configure(env, custom_tests = {'CheckPerl' : CheckPerl})
@@ -74,6 +80,7 @@ conf.Finish()
 env['CFLAGS'] = ['-Wall', '-g', '-O2']
 env['LINKFLAGS'] = []
 env['LIBPATH'] = []
+env['LIBS'] = []
 env['CPPDEFINES'] = []
 env['INCLUDE'] = []
 if cygwin:
@@ -93,9 +100,43 @@ else:
 libenv['CCFLAGS'] = libenv['CFLAGS']
 
 if cygwin:
-	NativeDLLBuilder = Builder(action = [
-		['dllwrap', '--driver=gcc', '--target=i386-mingw32', '-mno-cygwin', '$SOURCES', '-o', '$TARGET']
-	])
+	def linkDLLAction(target, source, env):
+		sources = []
+		for f in source:
+			sources += [str(f)]
+
+		(temp, dllname) = os.path.split(str(target[0]))
+		(targetName, temp) = os.path.splitext(str(target[0]))
+		command = ['dlltool', '--dllname', dllname, '--output-def',
+			targetName + '.def', '--export-all-symbols',
+			'--add-stdcall-alias'] + sources
+		print ' '.join(command)
+		ret = os.spawnvp(os.P_WAIT, command[0], command)
+		if ret != 0:
+			return 0
+
+		command = ['dllwrap', '--driver=g++', '--target=i386-mingw32',
+			'--def', targetName + '.def', '-mno-cygwin'] + \
+			sources + ['-o', str(target[0])]
+		if env.has_key('LIBPATH'):
+			for dir in env['LIBPATH']:
+				command += ['-L' + dir]
+		if env.has_key('LIBS'):
+		 	for flag in env['LIBS']:
+				command += ['-l' + flag]
+		command += ['-lstdc++']
+
+		print ' '.join(command)
+		return os.spawnvp(os.P_WAIT, command[0], command)
+
+	NativeDLLBuilder = Builder(action = linkDLLAction,
+		emitter = '$LIBEMITTER',
+		suffix = 'dll',
+		src_suffix = '$OBJSUFFIX',
+		src_builder = 'StaticObject')
+	#NativeDLLBuilder = Builder(action = [
+	#	['dllwrap', '--target=i386-mingw32', '-mno-cygwin', '$SOURCES', '-o', '$TARGET']
+	#])
 else:
 	NativeDLLBuilder = libenv['BUILDERS']['SharedLibrary']
 libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
@@ -105,7 +146,7 @@ perlenv = libenv.Copy()
 if win32:
 	perlenv['CFLAGS'] += Split('-Wno-unused -Wno-implicit -D__MINGW32__' +
 		' -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED')
-	perlenv['LINKFLAGS'] += ['perl58']
+	perlenv['LIBS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 else:
 	perlenv['CFLAGS'] += Split('-D_REENTRANT -D_GNU_SOURCE' +
@@ -114,8 +155,7 @@ else:
 perlenv['CFLAGS'] += ["-I" + perlconfig['coredir']]
 perlenv['CCFLAGS'] = perlenv['CFLAGS']
 
-
-def buildXS(target, source, env, args = []):
+def buildXS(target, source, env):
 	global perlconfig
 
 	code = '''
@@ -133,23 +173,14 @@ def buildXS(target, source, env, args = []):
 		'-e',
 		code,
 		str(target[0]),
-		perlconfig['xsubpp']
-		] + args + [
+		perlconfig['xsubpp'],
+		'-C++',
 		'-typemap',
 		perlconfig['typemap'],
 		str(source[0])]
 	return os.spawnvp(os.P_WAIT, perlconfig['perl'], command)
 
-def buildXS_C(target, source, env):
-	return buildXS(target, source, env)
-
-def buildXS_CXX(target, source, env):
-	return buildXS(target, source, env, ['-C++'])
-
-XSBuilder_C = Builder(action = buildXS_C)
-XSBuilder_CXX = Builder(action = buildXS_CXX)
-perlenv['BUILDERS']['XS'] = XSBuilder_C
-perlenv['BUILDERS']['XS_CXX'] = XSBuilder_CXX
+perlenv['BUILDERS']['XS'] = Builder(action = buildXS)
 
 
 ### Invoke SConscripts ###

@@ -166,13 +166,13 @@ WriteProcessMemory(ProcHND, lpAddr, svData)
 		SV *svData
 	INIT:
 		LPCVOID lpBuffer;
-		int dwSize;
+		STRLEN dwSize;
 		DWORD bytesWritten;
 	CODE:
 		if (0 == SvPOK(svData)) {
 			RETVAL = 0;
 		} else {
-			lpBuffer = (LPCVOID)SvPV(svData, dwSize);
+			lpBuffer = (LPCVOID) SvPV(svData, dwSize);
 			if (0 == WriteProcessMemory((HANDLE)ProcHND, (LPVOID)lpAddr, lpBuffer, (SIZE_T)dwSize, (SIZE_T*)&bytesWritten)) {
 				RETVAL = 0;
 			} else {
