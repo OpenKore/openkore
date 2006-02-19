@@ -9,6 +9,7 @@
 
 DWORD GetProcByName (char * name);
 int InjectDLL(DWORD ProcID, LPCTSTR dll);
+void printConsole (const char *message, int len);
 
 
 MODULE = WinUtils		PACKAGE = WinUtils		PREFIX = WinUtils_
@@ -166,13 +167,13 @@ WriteProcessMemory(ProcHND, lpAddr, svData)
 		SV *svData
 	INIT:
 		LPCVOID lpBuffer;
-		int dwSize;
+		STRLEN dwSize;
 		DWORD bytesWritten;
 	CODE:
 		if (0 == SvPOK(svData)) {
 			RETVAL = 0;
 		} else {
-			lpBuffer = (LPCVOID)SvPV(svData, dwSize);
+			lpBuffer = (LPCVOID) SvPV(svData, dwSize);
 			if (0 == WriteProcessMemory((HANDLE)ProcHND, (LPVOID)lpAddr, lpBuffer, (SIZE_T)dwSize, (SIZE_T*)&bytesWritten)) {
 				RETVAL = 0;
 			} else {
@@ -191,3 +192,16 @@ CloseProcess(Handle)
 
 char *
 getLanguageName()
+
+void
+printConsole(message)
+	SV *message
+CODE:
+	if (message && SvOK (message)) {
+		char *msg;
+		STRLEN len;
+
+		msg = SvPV (message, len);
+		if (msg != NULL)
+			printConsole(msg, len);
+	}
