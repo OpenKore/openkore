@@ -2701,3 +2701,108 @@ Skill Form : ^777777Supportive^000000
 Range : ^7777779 cells around the caster^000000
 Contents : ^777777Cast an area which increases the maximum SP and reduces the SP used for skills of party members.^000000
 #
+GD_APPROVAL#
+Official Guild Approval
+Skill Form: ^777777Passive^000000
+Target : ^777777Guild^000000
+Contents: ^777777Receive certification as an official guild of the Rune Midgarts Kindom. Members in the official guild are authorized to attack Emperiums in the territories of other guilds.^000000
+#
+GD_KAFRACONTRACT#
+Contract With Kafra
+Skill Form: ^777777Passive^000000
+Target : ^777777Guild^000000
+Contents: ^777777Sign a contract with the Kafra Headquarters in Al De Baran to hire a Kafra Employee for your own guild territory.^000000
+#
+GD_GUARDRESEARCH#
+Guardian Research
+Skill Form: ^777777Passive^000000
+Target : ^777777Guild^000000
+Contents: ^777777Study Guardian technology. Through this research, a guild can hire Guardians to protect its territory.^000000
+#
+GD_CHARISMA#
+Charisma
+Skill Form: ^777777Passive^000000
+Target : ^777777Guild Master^000000
+Contents: ^777777Guildmaster gains charisma through this skill, which will increase the Attack Accuracy and Flee Rate of guild members during Guild wars.^000000
+#
+GD_EXTENSION#
+Guild Extension
+Skill Form: ^777777Passive^000000
+Target : ^777777Guild^000000
+Contents: ^777777Increase the maximum member capacity for a guild.^000000
+[Level 1]: ^777777+4 people^000000
+[Level 2]: ^777777+8 people^000000
+[Level 3]: ^777777+12 people^000000
+[Level 4]: ^777777+16 people^000000
+[Level 5]: ^777777+20 people^000000
+[Level 6]: ^777777+24 people^000000
+[Level 7]: ^777777+28 people^000000
+[Level 8]: ^777777+32 people^000000
+[Level 9]: ^777777+36 people^000000
+[Level 10]: ^777777+40 people^000000
+GD_LEADERSHIP#
+Great Leadership
+Skill Form: ^000099Passive^000000
+Target : ^777777Guildsmen within 5 cells around the guildmaster^000000
+Contents: ^777777Every guildsman within 5*5 cells around the guildmaster will receive 5 extra points added to their STR stat.^000000
+#
+GD_GLORYWOUNDS#
+Glorious Wounds
+Skill Form: ^000099Passive^000000
+Target : ^777777Guildsmen within 5 cells around the guildmaster^000000
+Contents: ^777777Every guildsman within 5*5 cells around the guildmaster will receive 5 extra points added to their VIT stat.^000000
+#
+GD_SOULCOLD#
+Cold Heart
+Skill Form: ^000099Passive^000000
+Target : ^777777Guildsmen within 5 cells around the guildmaster^000000
+Contents: ^777777Every guildsman within 5*5 cells around the guildmaster will receive 5 extra points added to their AGI stat.^000000
+#
+GD_HAWKEYES#
+Sharp Gaze
+Skill Form: ^000099Passive^000000
+Target : ^777777Guildsmen within 5 cells around the guildmaster^000000
+Contents: ^777777Every guildsman within 5*5 cells around the guildmaster will receive 5 extra points added to their DEX stat.^000000
+#
+GD_BATTLEORDER#
+Battle Command
+Skill Form: ^000099Passive^000000
+Target : ^777777Guildsmen within guildmaster's screen^000000
+Contents: ^777777This skill can only be activated during Guild Sieges (WoE time).
+Guildmaster can give a 5 point boost to STR, INT, DEX stats for guildsmen within his screen. This skill lasts for 1 minute, and caster must wait 5 minutes before using this skill again.^000000
+#
+GD_REGENERATION#
+Regeneration
+Skill Form: ^777777Support^000000
+Target : ^777777Guildsmen within guildmasters's screen^000000
+Contents: ^777777This skill can only be activated during Guild Sieges (WoE time).
+Guildmaster can increase HP/SP regeneration speed for guildsmen within his screen. Once used, caster must wait 5 minutes before using this skill again.^000000
+[Level 1]: ^777777HP Regeneration speed * 2^000000
+[Level 2]: ^777777HP/SP Regeneration speed * 2^000000
+[Level 3]: ^777777HP/SP Regeneration speed * 3^000000
+#
+GD_RESTORE#
+Restoration
+Skill Form: ^777777Support^000000
+Target : ^777777Guildsmen within guildmaster's screen^000000
+Contents: ^777777This skill can only be activated during Guild Sieges (WoE time).
+Guildmaster can restore 90% of MAX HP/SP for guildsmen within his screen. Once used, caster must wait 5 minutes before using this skill again.^000000
+#
+GD_EMERGENCYCALL#
+Urgent Call
+Skill Form: ^777777Support^000000
+Target : ^777777Every Guildsman^000000
+Contents: ^777777This skill can only be activated during Guild Sieges (WoE time).
+Guildmaster can summon all online members of his guild to his side. Once used, caster must wait 5 minutes before using this skill again.^000000
+#
+GD_GUARDUP#
+Strengthen Guardians
+Skill Form: ^777777Passive^000000
+Contents: ^777777Strengthen Gurdians.
+Skill level affects the attack strength and speed of Guardians.^000000
+#
+GD_DEVELOPMENT#
+Permanent Development
+Skill Form: ^777777Passive^000000
+Contents: ^777777This skill provides a 50% chance to add an extra point while investing in the commercial growth of your guild.^000000
+#
