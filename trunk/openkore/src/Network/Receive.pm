@@ -4316,7 +4316,6 @@ sub self_chat {
 
 	if (defined $chatMsgUser) {
 		stripLanguageCode(\$chatMsg);
-		$message = "$chatMsgUser} : chatMsg";
 	} else {
 		$message = $message;
 	}
