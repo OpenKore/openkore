@@ -853,7 +853,7 @@ sub sendGetPlayerInfo {
 	if ($config{serverType} == 0) {
 		$msg = pack("C*", 0x94, 0x00) . $ID;
 
-	} elsif (($config{serverType} == 1) || ($config{serverType} == 2) || ($config{serverType} == 7)) {
+	} elsif (($config{serverType} == 1) || ($config{serverType} == 2)) {
 		$msg = pack("C*", 0x94, 0x00) . pack("C*", 0x12, 0x00, 150, 75) . $ID;
 
 	} elsif (($config{serverType} == 3) || ($config{serverType} == 5)) {
@@ -1200,6 +1200,16 @@ sub sendMapLogin {
 			$sessionID .
 			pack("V", getTickCount()) .
 			pack("C*", $sex);
+
+	} elsif ($config{serverType} == 7) { #
+			$msg = pack("C*", 0x72, 0, 0, 0, 0, 0, 0) .
+			$accountID .
+			pack("C*", 0x00, 0x10, 0xEE, 0x65) .
+			$charID .
+			pack("C*", 0xFF, 0xCC, 0xFA, 0x12, 0x00, 0x61) .
+			$sessionID .
+			pack("V1", getTickCount()) .
+			pack("C*",$sex);
 
 	} else { #oRO and pRO and idRO
 		# $config{serverType} == 1 || $config{serverType} == 2
