@@ -4050,7 +4050,7 @@ sub public_chat {
 		$dist = sprintf("%.1f", $dist) if ($dist =~ /\./);
 	}
 
-	$message = "$args->{chatMsgUser} ($actor->{binID}): $args->{chatMsg}";
+	$message = "$chatMsgUser ($actor->{binID}): $chatMsg";
 
 	# this code autovivifies $actor->{pos_to} but it doesnt matter
 	chatLog("c", "[$field{name} $char->{pos_to}{x}, $char->{pos_to}{y}] [$actor->{pos_to}{x}, $actor->{pos_to}{y}] [dist=$dist] " .
