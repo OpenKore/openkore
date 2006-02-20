@@ -376,7 +376,7 @@ sub lockAM {
 
 # parses automacros and checks conditions #################
 sub automacroCheck {
-  return if $conState < 5; # really needed?
+  return if $conState < 5;
   my ($trigger, $args) = @_;
 
   # do not run an automacro if there's already a macro running
