@@ -23,7 +23,6 @@ use strict;
 use Time::HiRes qw(time usleep);
 use IO::Socket::INET;
 use Math::Trig;
-use bytes;
 use Exporter;
 use base qw(Exporter);
 use Config;
@@ -1371,7 +1370,7 @@ sub makeIP {
 }
 
 ##
-# parseArgs(command, [max], [delimiters = ' '], [last_arg_pos])
+# Array<String> parseArgs(String command, [int max], [String delimiters = ' '], [int* last_arg_pos])
 # command: a command string.
 # max: maximum number of arguments.
 # delimiters: a character array of delimiters for arguments.
@@ -1388,10 +1387,7 @@ sub makeIP {
 # parseArgs("c hello there", 2);	# => ("c", "hello there")
 # parseArgs("pm 'My Friend' hey there", 3);	# ("pm", "My Friend", "hey there")
 sub parseArgs {
-	my $command = shift;
-	my $max = shift;
-	my $delimiters = shift;
-	my $r_last_arg_pos = shift;
+	my ($command, $max, $delimiters, $r_last_arg_pos) = @_;
 	my @args;
 
 	if (!defined $delimiters) {
