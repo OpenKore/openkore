@@ -2678,9 +2678,6 @@ sub guild_chat {
 		MsgUser => $chatMsgUser,
 		Msg => $chatMsg
 	});
-
-	$args->{chatMsgUser} = Translation::fromUTF8($chatMsgUser);
-	$args->{chatMsg} = Translation::fromUTF8($chatMsg);
 }
 
 sub guild_expulsionlist {
@@ -3782,9 +3779,6 @@ sub party_chat {
 		MsgUser => $chatMsgUser,
 		Msg => $chatMsg
 	});
-
-	$args->{chatMsgUser} = Translation::fromUTF8($chatMsgUser);
-	$args->{chatMsg} = Translation::fromUTF8($chatMsg);
 }
 
 sub party_exp {
@@ -4071,9 +4065,6 @@ sub public_chat {
 		MsgUser => $chatMsgUser,
 		Msg => $chatMsg
 	});
-
-	$args->{chatMsgUser} = Translation::fromUTF8($chatMsgUser);
-	$args->{chatMsg} = Translation::fromUTF8($chatMsg);
 }
 
 sub private_message {
@@ -4337,9 +4328,6 @@ sub self_chat {
 		user => $chatMsgUser,
 		msg => $chatMsg
 	});
-
-	$args->{chatMsg} = Translation::fromUTF8($chatMsg);
-	$args->{chatMsgUser} = Translation::fromUTF8($chatMsgUser);
 }
 
 sub sync_request {
