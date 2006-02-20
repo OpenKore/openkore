@@ -129,6 +129,12 @@ sub error {
   return $self->{error};
 }
 
+# re-sets the timer
+sub ok {
+  my $self = shift;
+  $self->{time} = time;
+}
+
 # scans the script for labels
 sub scanLabels {
   my $script = shift;
@@ -345,7 +351,7 @@ sub next {
   } else {
     $self->{error} = "error in ".$self->{line}.": syntax error";
   }
-  if (defined $self->{error}) {return} else {$self->{time} = time;return ""}
+  if (defined $self->{error}) {return} else {return ""}
 }
 
 1;

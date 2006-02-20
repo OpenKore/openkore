@@ -321,6 +321,7 @@ sub callMacro {
           return;
         }
       }
+      $queue->ok;
       if (defined $queue && $queue->finished) {undef $queue};
     } else {
       error(sprintf("[macro] %s error: %s\n", $queue->name, $queue->error));
