@@ -31,6 +31,7 @@ use ReadLine;
 use Globals qw(%consoleColors);
 use Interface;
 use Utils qw(timeOut);
+use I18N qw(UTF8ToString);
 use base qw(Interface);
 
 our (%fgcolors, %bgcolors);
@@ -80,6 +81,7 @@ sub getInput {
 	}
 
 	$line = undef if (defined($line) && $line eq '');
+	$line = I18N::UTF8ToString($line) if (defined($line));
 	return $line;
 }
 

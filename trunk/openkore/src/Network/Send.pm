@@ -1522,15 +1522,13 @@ sub sendPreLoginCode {
 }
 
 sub sendPrivateMsg {
-	my $r_net = shift;
-	my $user = shift;
-	my $message = shift;
+	my ($r_net, $user, $message) = @_;
 
-	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
+	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
 	$message = stringToBytes($message);
 	$user = stringToBytes($user);
 
-	my $msg = pack("C*",0x96, 0x00) . pack("v*", length($message) + 29) . $user .
+	my $msg = pack("C*", 0x96, 0x00) . pack("v*", length($message) + 29) . $user .
 		chr(0) x (24 - length($user)) . $message . chr(0);
 	sendMsgToServer($r_net, $msg);
 }
