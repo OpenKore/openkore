@@ -270,6 +270,7 @@ serverType 7
 secureLogin 1
 serverEncoding Japanese
 
+## http://ro.vinagame.com.vn/
 [Vietnam - vRO: SD]
 ip 222.255.122.20
 port 6900
@@ -382,7 +383,7 @@ serverEncoding Western
 ## http://q-ro.net/qro/web/
 [qRO (Low Rate) Private Server]
 ip 64.71.161.251
-port 6822
+port 6821
 version 20
 master_version 18
 serverType 5
@@ -392,7 +393,7 @@ serverEncoding Western
 ## http://q-ro.net/qro/web/
 [qRO (High Rate) Private Server]
 ip 64.71.161.252
-port 6822
+port 6821
 version 20
 master_version 18
 serverType 5
