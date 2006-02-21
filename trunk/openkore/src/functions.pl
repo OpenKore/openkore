@@ -4360,7 +4360,7 @@ sub parseSendMsg {
 		if ($config{debugPacket_ro_sent} == 1) {
 			debug "Packet SENT_BY_CLIENT: $switch$label\n", "parseSendMsg", 0;
 		} else {
-			visualDump($sendMsg, "$switch$label");
+			visualDump($sendMsg, $switch . $label);
 		}
 	}
 
