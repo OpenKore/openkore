@@ -144,8 +144,8 @@ libenv['BUILDERS']['NativeDLL'] = NativeDLLBuilder
 
 perlenv = libenv.Copy()
 if win32:
-	perlenv['CFLAGS'] += Split('-Wno-unused -Wno-implicit -D__MINGW32__' +
-		' -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED')
+	perlenv['CFLAGS'] += Split('-Wno-comments -D__MINGW32__' +
+		' -DWIN32IO_IS_STDIO -D_INTPTR_T_DEFINED -D_UINTPTR_T_DEFINED')
 	perlenv['LIBS'] += ['perl58']
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 else:

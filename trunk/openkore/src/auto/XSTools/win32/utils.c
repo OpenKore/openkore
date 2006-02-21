@@ -165,7 +165,7 @@ InjectDLL (DWORD ProcID, LPCTSTR dll)
 }
 
 /**
- * Print a unicode string to the console.
+ * Print an UTF-8 string to the console.
  *
  * @param message A UTF-8 string.
  * @require message != NULL && len >= 0
@@ -183,4 +183,5 @@ printConsole (const char *message, int len) {
 
 	WriteConsoleW (GetStdHandle(STD_OUTPUT_HANDLE), unicode,
 		size, NULL, NULL);
+	free (unicode);
 }
