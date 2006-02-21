@@ -10,7 +10,7 @@
 MODULE = Translation     PACKAGE = Translation
 PROTOTYPES: ENABLE
 
-IV
+void
 _load(file)
 	char *file
 INIT:

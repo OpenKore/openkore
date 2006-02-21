@@ -83,7 +83,6 @@ timeOut(r_time, compare_time = NULL)
 	CODE:
 		if (compare_time) {
 			/* r_time is a number */
-			I32 ret;
 
 			if (!(v_time = SvNV (r_time)))
 				XSRETURN_YES;
@@ -104,7 +103,6 @@ timeOut(r_time, compare_time = NULL)
 			/* r_time is a hash */
 			HV *hash;
 			SV **sv_time, **sv_timeout;
-			I32 ret;
 
 			if (!r_time || !SvOK (r_time) || !SvTYPE (r_time) == SVt_PV)
 				XSRETURN_YES;
