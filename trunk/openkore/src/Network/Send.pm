@@ -571,15 +571,15 @@ sub sendChat {
 	if (($config{serverType} == 3) || ($config{serverType} == 5)) {
 		$data = pack("C*", 0xf3, 0x00) .
 			pack("v*", length($charName) + length($message) + 8) .
-			"$charName : $message" . chr(0);
+			$charName . " : " . $message . chr(0);
 	} elsif ($config{serverType} == 4) {
 		$data = pack("C*", 0x9F, 0x00) .
 			pack("v*", length($charName) + length($message) + 8) .
-			"$charName : $message" . chr(0);
+			$charName . " : " . $message . chr(0);
 	} else {
 		$data = pack("C*", 0x8C, 0x00) .
 			pack("v*", length($charName) + length($message) + 8) .
-			"$charName : $message" . chr(0);
+			$charName . " : " . $message . chr(0);
 	}
 	sendMsgToServer($r_net, $data);
 }
@@ -588,11 +588,11 @@ sub sendChatRoomBestow {
 	my $r_net = shift;
 	my $name = shift;
 
-	$name = stringToBytes($name);
-	$name = substr($name, 0, 24) if (length($name) > 24);
-	$name = $name . chr(0) x (24 - length($name));
+	my $binName = stringToBytes($name);
+	$binName = substr($binName, 0, 24) if (length($binName) > 24);
+	$binName .= chr(0) x (24 - length($binName));
 
-	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00) . $name;
+	my $msg = pack("C*", 0xE0, 0x00, 0x00, 0x00, 0x00, 0x00) . $binName;
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Chat Room Bestow: $name\n", "sendPacket", 2;
 }
@@ -616,9 +616,14 @@ sub sendChatRoomCreate {
 	my $limit = shift;
 	my $public = shift;
 	my $password = shift;
+
 	$password = substr($password, 0, 8) if (length($password) > 8);
 	$password = $password . chr(0) x (8 - length($password));
-	my $msg = pack("C*", 0xD5, 0x00).pack("v*", length($title) + 15, $limit).pack("C*",$public).$password.$title;
+	my $binTitle = stringToBytes($title);
+
+	my $msg = pack("C*", 0xD5, 0x00) .
+		pack("v*", length($binTitle) + 15, $limit) .
+		pack("C*", $public) . $password . $binTitle;
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Create Chat Room: $title, $limit, $public, $password\n", "sendPacket", 2;
 }
@@ -637,9 +642,11 @@ sub sendChatRoomJoin {
 sub sendChatRoomKick {
 	my $r_net = shift;
 	my $name = shift;
-	$name = substr($name, 0, 24) if (length($name) > 24);
-	$name = $name . chr(0) x (24 - length($name));
-	my $msg = pack("C*", 0xE2, 0x00).$name;
+
+	my $binName = stringToBytes($name);
+	$binName = substr($binName, 0, 24) if (length($binName) > 24);
+	$binName .= chr(0) x (24 - length($binName));
+	my $msg = pack("C*", 0xE2, 0x00) . $binName;
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Chat Room Kick: $name\n", "sendPacket", 2;
 }
@@ -907,12 +914,13 @@ sub sendGuildChat {
 	my $message = shift;
 
 	my ($charName);
-	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
+	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
 	$message = stringToBytes($message);
 	$charName = stringToBytes($char->{name});
 
-	my $data = pack("C*",0x7E, 0x01) . pack("v*", length($charName) + length($message) + 8) .
-		"$charName : $message" . chr(0);
+	my $data = pack("C*",0x7E, 0x01) .
+		pack("v*", length($charName) + length($message) + 8) .
+		$charName . " : " . $message . chr(0);
 	sendMsgToServer($r_net, $data);
 }
 
@@ -1400,12 +1408,12 @@ sub sendPartyChat {
 	my $message = shift;
 
 	my $charName;
-	$message = "|00$message" if ($config{'chatLangCode'} && $config{'chatLangCode'} ne "none");
+	$message = "|00$message" if ($config{chatLangCode} && $config{chatLangCode} ne "none");
 	$message = stringToBytes($message);
 	$charName = stringToBytes($char->{name});
 
 	my $msg = pack("C*",0x08, 0x01) . pack("v*", length($charName) + length($message) + 8) .
-		"$charName : $message" . chr(0);
+		$charName . " : " . $message . chr(0);
 	sendMsgToServer($r_net, $msg);
 }
 
@@ -1430,9 +1438,11 @@ sub sendPartyKick {
 	my $r_net = shift;
 	my $ID = shift;
 	my $name = shift;
-	$name = substr($name, 0, 24) if (length($name) > 24);
-	$name = $name . chr(0) x (24 - length($name));
-	my $msg = pack("C*", 0x03, 0x01).$ID.$name;
+
+	my $binName = stringToBytes($name);
+	$binName = substr($binName, 0, 24) if (length($binName) > 24);
+	$binName .= chr(0) x (24 - length($binName));
+	my $msg = pack("C*", 0x03, 0x01) . $ID . $binName;
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Kick Party: ".getHex($ID).", $name\n", "sendPacket", 2;
 }
@@ -1447,9 +1457,12 @@ sub sendPartyLeave {
 sub sendPartyOrganize {
 	my $r_net = shift;
 	my $name = shift;
-	$name = substr($name, 0, 24) if (length($name) > 24);
-	$name = $name . chr(0) x (24 - length($name));
-	my $msg = pack("C*", 0xF9, 0x00).$name;
+
+	my $binName = stringToBytes($name);
+	$binName = substr($binName, 0, 24) if (length($binName) > 24);
+	$binName .= chr(0) x (24 - length($binName));
+	my $msg = pack("C*", 0xF9, 0x00) . $name;
+
 	sendMsgToServer($r_net, $msg);
 	debug "Sent Organize Party: $name\n", "sendPacket", 2;
 }
