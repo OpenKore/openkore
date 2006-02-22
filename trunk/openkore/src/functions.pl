@@ -4588,13 +4588,13 @@ sub parseMsg {
 	}
 	$switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
-	# The user is running in X-Kore mode and wants to switch character.
-	# We're now expecting an accountID.
-	if ($conState == 2.5) {
+	# The user is running in X-Kore mode and wants to switch character or gameGuard type 2 after 0259 tag 02.
+	# We're now expecting an accountID, unless the server has replicated packet 0259 (server-side bug).
+	if ($conState == 2.5 && (!$config{gameGuard} || ($switch ne '0259' && $config{gameGuard} eq "2"))) {
 		if (length($msg) >= 4) {
 			$conState = 2;
 			$accountID = substr($msg, 0, 4);
-			debug "XKore switching character, new accountID: ".unpack("V", $accountID)."\n";
+			debug "Selecting character, new accountID: ".unpack("V", $accountID)."\n";
 			$net->clientSend($accountID);
 			return substr($msg, 4);
 		} else {
