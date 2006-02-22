@@ -85,7 +85,7 @@ sub new {
 		'00AF' => ['inventory_item_removed', 'v1 v1', [qw(index amount)]],
 		'00B0' => ['stat_info', 'v1 V1', [qw(type val)]],
 		'00B1' => ['exp_zeny_info', 'v1 V1', [qw(type val)]],
-		'00B3' => ['change_to_constate25'],
+		'00B3' => ['switch_character'],
 		'00B4' => ['npc_talk'],
 		'00B5' => ['npc_talk_continue'],
 		'00B6' => ['npc_talk_close', 'a4', [qw(ID)]],
@@ -1905,7 +1905,6 @@ sub cart_item_removed {
 }
 
 sub change_to_constate25 {
-	# 00B3 - user is switching characters in XKore
 	$conState = 2.5;
 	undef $accountID;
 }
@@ -2607,6 +2606,7 @@ sub gameguard_grant {
 		message T("Server granted login request to account server\n"), "poseidon";
 	} else {
 		message T("Server granted login request to char/map server\n"), "poseidon";
+		change_to_constate25 if ($config{'gameGuard'} eq "2");
 	}
 	$conState = 1.3 if ($conState == 1.2);
 }
@@ -2614,6 +2614,7 @@ sub gameguard_grant {
 sub gameguard_request {
 	my ($self, $args) = @_;
 
+	return if ($net->version == 1);
 	Poseidon::Client::getInstance()->query(
 		substr($args->{RAW_MSG}, 0, $args->{RAW_MSG_SIZE})
 	);
@@ -5279,6 +5280,17 @@ sub storage_password_result {
 
 	# $args->{val}
 	# unknown, what is this for?
+}
+
+sub switch_character {
+	# 00B3 - user is switching characters in XKore
+	if ($config{'gameGuard'} ne '2') {
+		change_to_constate25;
+	} else {
+		# Reconect on Character Server
+		$conState = 3; 
+		$net->serverDisconnect();
+	}
 }
 
 sub system_chat {
