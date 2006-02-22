@@ -211,6 +211,7 @@ sub mainLoop {
 	# Receive and handle data from the RO client
 	my $cliMsg = $net->clientRecv;
 	if ($cliMsg && length($cliMsg)) {
+		use bytes; # pmak/VCL - fix corrupted data introduced by UTF8
 		$msgOut .= $cliMsg;
 		my $msg_length = length($msgOut);
 		while ($msgOut ne "") {
