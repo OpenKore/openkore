@@ -29,6 +29,7 @@ package itemExchange;
 #	requiredAmount 1
 #	triggerAmount 20
 #	inInventory Empty Bottle > 0
+#	respawnFirst 1
 #}
  
 use strict;
@@ -58,9 +59,12 @@ sub AI_pre {
 		if ($args->{'stage'} eq 'end') {
 			AI::dequeue;
 		} elsif ($args->{'stage'} eq 'route') {
-			message "Calculating auto-exchange route \n", "route";
-			main::ai_route($args->{'npc'}{'map'}, $args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'},
-				attackOnRoute => 1,
+			my $npcMap = $args->{'npc'}{'map'};
+			my $npcX = $args->{'npc'}{'pos'}{'x'};
+			my $npcY = $args->{'npc'}{'pos'}{'y'};
+			message "Calculating auto-exchange route to $npcMap ($npcX, $npcY)\n", "route";
+			main::ai_route($npcMap, $npcX, $npcY,
+				attackOnRoute => 0,
 				distFromGoal => $args->{'distFromGoal'});
 			$args->{'stage'} = 'talk';
 		} elsif ($args->{'stage'} eq 'talk') {
@@ -83,6 +87,7 @@ sub exchange {
 		((defined $invIndex) && ($source eq 'poll') && ($item->{'amount'} >= $config{$prefix.$i."_triggerAmount"}) && (checkSelfCondition($prefix.$i))) ||
 		((defined $invIndex) && ($source eq 'command') && ($item->{'amount'} >= $config{$prefix.$i."_requiredAmount"}))
 		) {
+			main::useTeleport(2) if ($config{$prefix.$i."_respawnFirst"});
 			my %args;
 			$args{'npc'} = {};
 			main::getNPCInfo($config{$prefix.$i."_npc"}, $args{'npc'});
