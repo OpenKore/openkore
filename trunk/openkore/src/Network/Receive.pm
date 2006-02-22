@@ -3553,12 +3553,13 @@ sub mvp_you {
 
 sub npc_image {
 	my ($self, $args) = @_;
+	my ($imageName) = bytesToString($args->{npc_image});
 	if ($args->{type} == 2) {
-		debug "Show NPC image: $args->{npc_image}\n", "parseMsg";
+		debug "Show NPC image: $imageName\n", "parseMsg";
 	} elsif ($args->{type} == 255) {
-		debug "Hide NPC image: $args->{npc_image}\n", "parseMsg";
+		debug "Hide NPC image: $imageName\n", "parseMsg";
 	} else {
-		debug "NPC image: $args->{npc_image} ($args->{type})\n", "parseMsg";
+		debug "NPC image: $imageName ($args->{type})\n", "parseMsg";
 	}
 }
 
@@ -3639,18 +3640,19 @@ sub npc_talk {
 	my ($self, $args) = @_;
 	my $newmsg;
 	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
-	my $msg = substr($args->{RAW_MSG}, 0, 8).$newmsg;
+
+	my $msg = substr($args->{RAW_MSG}, 0, 8) . $newmsg;
 	my $ID = substr($msg, 4, 4);
 	my $talk = unpack("Z*", substr($msg, 8));
-	$talk{'ID'} = $ID;
-	$talk{'nameID'} = unpack("V1", $ID);
-	$talk{'msg'} = $talk;
+	$talk{ID} = $ID;
+	$talk{nameID} = unpack("V1", $ID);
+	$talk{msg} = bytesToString($talk);
 	# Remove RO color codes
-	$talk{'msg'} =~ s/\^[a-fA-F0-9]{6}//g;
+	$talk{msg} =~ s/\^[a-fA-F0-9]{6}//g;
 
 	my $name = getNPCName($ID);
 
-	message "$name: $talk{'msg'}\n", "npc";
+	message "$name: $talk{msg}\n", "npc";
 }
 
 sub npc_talk_close {
@@ -3711,20 +3713,23 @@ sub npc_talk_responses {
 	my $newmsg;
 	decrypt(\$newmsg, substr($args->{RAW_MSG}, 8));
 	my $msg = substr($msg, 0, 8).$newmsg;
+
 	my $ID = substr($msg, 4, 4);
-	$talk{'ID'} = $ID;
+	$talk{ID} = $ID;
 	my $talk = unpack("Z*", substr($msg, 8));
 	$talk = substr($msg, 8) if (!defined $talk);
+	$talk = bytesToString($talk);
+
 	my @preTalkResponses = split /:/, $talk;
-	undef @{$talk{'responses'}};
+	undef @{$talk{responses}};
 	foreach (@preTalkResponses) {
 		# Remove RO color codes
 		s/\^[a-fA-F0-9]{6}//g;
 
-		push @{$talk{'responses'}}, $_ if $_ ne "";
+		push @{$talk{responses}}, $_ if $_ ne "";
 	}
 
-	$talk{'responses'}[@{$talk{'responses'}}] = "Cancel Chat";
+	$talk{responses}[@{$talk{responses}}] = "Cancel Chat";
 
 	$ai_v{'npc_talk'}{'talk'} = 'select';
 	$ai_v{'npc_talk'}{'time'} = time;

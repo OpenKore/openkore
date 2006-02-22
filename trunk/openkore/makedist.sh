@@ -10,6 +10,16 @@ TYPE=bz2
 DIRS=(.
 	src
 	src/build
+	src/scons-local-0.96.91
+	src/scons-local-0.96.91/SCons
+	src/scons-local-0.96.91/SCons/Node
+	src/scons-local-0.96.91/SCons/Optik
+	src/scons-local-0.96.91/SCons/Options
+	src/scons-local-0.96.91/SCons/Platform
+	src/scons-local-0.96.91/SCons/Scanner
+	src/scons-local-0.96.91/SCons/Script
+	src/scons-local-0.96.91/SCons/Sig
+	src/scons-local-0.96.91/SCons/Tool
 	src/po
 	src/Actor
 	src/Base
