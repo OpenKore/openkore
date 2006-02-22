@@ -207,7 +207,7 @@ sub mainLoop {
 			$msg_length = length($msg);
 		}
 	}
-	
+
 	# Receive and handle data from the RO client
 	my $cliMsg = $net->clientRecv;
 	if ($cliMsg && length($cliMsg)) {

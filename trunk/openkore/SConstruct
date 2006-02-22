@@ -59,6 +59,7 @@ def CheckPerl(context):
 			if line == "":
 				break
 			line = line.rstrip("\n")
+			line = line.rstrip("\r")
 			[name, value] = line.split("=", 2)
 			perlconfig[name] = value
 		f.close()
