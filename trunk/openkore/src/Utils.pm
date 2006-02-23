@@ -41,7 +41,7 @@ our @EXPORT = (
 	qw(checkLaunchedApp launchApp launchScript),
 	# Other stuff
 	qw(dataWaiting dumpHash formatNumber getCoordString getFormattedDate getHex giveHex getRange getTickCount
-	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP unmakeIP parseArgs shiftPack swrite timeConvert timeOut
+	inRange judgeSkillArea makeCoords makeCoords2 makeDistMap makeIP encodeIP parseArgs shiftPack swrite timeConvert timeOut
 	urldecode unShiftPack vocalString)
 	);
 
@@ -1369,7 +1369,7 @@ sub makeIP {
 	return $ret;
 }
 
-sub unmakeIP {	
+sub encodeIP {	
 	return pack("C*", split(/\./, shift));	
 }
 
