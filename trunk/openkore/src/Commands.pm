@@ -23,6 +23,7 @@ use strict;
 use warnings;
 no warnings qw(redefine uninitialized);
 use Time::HiRes qw(time);
+use encoding 'utf8';
 
 use Globals;
 use Log qw(message debug error warning);
@@ -982,7 +983,7 @@ sub cmdChist {
 		error	"Syntax Error in function 'chist' (Show Chat History)\n" .
 			"Usage: chist [<number of entries #>]\n";
 
-	} elsif (open(CHAT, "<", $Settings::chat_file)) {
+	} elsif (open(CHAT, "<:utf8", $Settings::chat_file)) {
 		my @chat = <CHAT>;
 		close(CHAT);
 		message("------ Chat History --------------------\n", "list");
