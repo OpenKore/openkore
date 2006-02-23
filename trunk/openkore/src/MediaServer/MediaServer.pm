@@ -85,7 +85,7 @@ sub process {
 		my $domain = $args->{domain};
 		my $loop = $args->{loop};
 		my $volume = $args->{volume};
-		# speak now, or forever hold your peace
+		# TODO: speak now, or forever hold your peace
 
 	} elsif ($ID eq 'mediaServer command') {
 		my $command = $args->{command};
@@ -125,7 +125,7 @@ sub iterate {
 
 	$self->SUPER::iterate();
 	foreach my $key (%{$self}) {
-		# remove unused hashes
+		# TODO: remove unused hashes
 	}
 }
 
