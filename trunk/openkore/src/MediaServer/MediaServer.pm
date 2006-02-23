@@ -8,6 +8,8 @@ use SDL;
 use SDL::Mixer;
 use SDL::Music;
 use SDL::Sound;
+# to install sdl_perl bindings in ActiveState Perl:
+# ppm install http://www.bribes.org/perl/ppm/SDL_Perl.ppd
 
 use constant ALERT => 0;
 use constant ALERT_MAX => 3;
