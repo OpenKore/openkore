@@ -86,6 +86,7 @@
 125 Joint Beat
 127 Memorize
 132 Auto Berserk
+149 Night
 153 Kaite
 156 Kaizel
 158 Kaupe
