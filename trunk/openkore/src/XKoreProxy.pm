@@ -26,7 +26,7 @@ use Globals;
 use Log qw(message warning error debug);
 use WinUtils;
 use Network::Send;
-use Utils qw(dataWaiting timeOut makeIP unmakeIP swrite existsInList);
+use Utils qw(dataWaiting timeOut makeIP encodeIP swrite existsInList);
 use Misc qw(configModify visualDump);
 use Translation;
 use I18N qw(bytesToString);
@@ -62,6 +62,10 @@ sub new {
 	$self{waitingClient} = 1;
 	
 	message "X-Kore mode intialized.\n", "startup";
+	
+	require Poseidon::EmbedServer;
+	Modules::register("Poseidon::EmbedServer");
+	$self{poseidon} = new Poseidon::EmbedServer
 
 	bless \%self, $class;
 	return \%self;
@@ -185,7 +189,7 @@ sub serverDisconnect {
 # Check to see if the client is fully connected and logged in.
 sub clientAlive {
 	my $self = shift;
-	return $self->proxyAlive(); # && $conState == 5;
+	return $self->proxyAlive();
 }
 
 ##
@@ -269,7 +273,9 @@ sub checkConnection {
 
 	# Check server connection
 	$self->checkServer();
-			
+	
+	# Check the Poseidon Embed Server
+	$self->{poseidon}->iterate($self) if ($self->clientAlive() && $conState == 5);			
 }
 
 sub checkProxy {
@@ -392,7 +398,7 @@ sub modifyPacketIn {
 
 				my $newName = unpack("Z*", substr($serverInfo, $i + 6, 20));
 				$newName = "$newName (proxied)";
-				$newServers .= unmakeIP($self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport) . 
+				$newServers .= encodeIP($self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport) . 
 					pack("Z20", $newName) . substr($serverInfo, $i + 26, 4) . pack("v1", 0);
 				
 			} else {
@@ -424,7 +430,7 @@ sub modifyPacketIn {
 		}
 		$self->serverDisconnect(1);
 
-		$msg = $logonInfo . unmakeIP($self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport);
+		$msg = $logonInfo . encodeIP($self->{proxy}->sockhost) . pack("v*", $self->{proxy}->sockport);
 		
 	} elsif ($switch eq "0081") {
 		# An error occurred. Restart proxying
@@ -465,6 +471,9 @@ sub modifyPacketOut {
 		$msg = "";
 		#$self->sendSync();	
 		
+	} if ($switch eq "0228" && $conState == 5 && $self->{poseidon}->awaitingResponse) {
+		$self->{poseidon}->setResponse($msg);
+		$msg = '';
 	} 
 	
 	return $msg;
