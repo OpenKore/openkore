@@ -61,7 +61,7 @@ sub new {
 	$self{gotError} = 0;
 	$self{waitingClient} = 1;
 	
-	message "X-Kore mode intialized.\n", "startup";
+	message T("X-Kore mode intialized.\n"), "startup";
 	
 	require Poseidon::EmbedServer;
 	Modules::register("Poseidon::EmbedServer");
@@ -326,7 +326,7 @@ sub checkProxy {
 		# setup master server if necessary
 		getMainServer();
 
-		message "Waiting Ragnarok Client to connect on (". ($ip eq '0.0.0.0' ? 'localhost' : $ip) .":$port)\n", "startup" if ($self->{waitingClient} == 1);
+		message TF("Waiting Ragnarok Client to connect on (%s:%s)\n", ($ip eq '0.0.0.0' ? 'localhost' : $ip), $port), "startup" if ($self->{waitingClient} == 1);
 		$self->{waitingClient} = 0;
 		return;
 	}
@@ -349,7 +349,7 @@ sub checkServer {
 
 			$self->{nextIp} = $master->{ip};
 			$self->{nextPort} = $master->{port};
-			message("Proxying to [$config{master}]\n", "connection") unless ($self->{gotError});
+			message TF("Proxying to [%s]\n", $config{master}), "connection" unless ($self->{gotError});
 			$packetParser = Network::Receive->create($config{serverType}) if (!$packetParser);
 		}
 		
@@ -358,7 +358,7 @@ sub checkServer {
 			$self->{charServerIp} = undef;
 			$self->{charServerPort} = undef;
 			close($self->{proxy});
-			error "Invalid server specified or server does not exist...\n", "connection" if (!$self->{gotError});
+			error T("Invalid server specified or server does not exist...\n"), "connection" if (!$self->{gotError});
 			$self->{gotError} = 1;
 		}
 		
