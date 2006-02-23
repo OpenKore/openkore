@@ -633,7 +633,7 @@ sub actor_died_or_disappeared {
 
 	} elsif (UNIVERSAL::isa($players{$args->{ID}}, 'Actor')) {
 		if ($args->{type} == 1) {
-			message "Player Died: ".$players{$args->{ID}}->name." ($players{$args->{ID}}{'binID'}) $sex_lut{$players{$args->{ID}}{'sex'}} $jobs_lut{$players{$args->{ID}}{'jobID'}}\n";
+			message TF("Player Died: %s (%s) %s %s\n", $players{$args->{ID}}->name, $players{$args->{ID}}{'binID'}, $sex_lut{$players{$args->{ID}}{'sex'}}, $jobs_lut{$players{$args->{ID}}{'jobID'}});
 			$players{$args->{ID}}{'dead'} = 1;
 		} else {
 			if ($args->{type} == 0) {
@@ -1636,7 +1636,7 @@ sub arrow_none {
 			error T("Please equip arrow first.\n");
 		}
 	} elsif ($type == 3) {
-		debug T("Arrow equipped\n");
+		debug "Arrow equipped\n";
 	}
 	
 }
@@ -1955,7 +1955,7 @@ sub character_creation_successful {
 
 sub character_deletion_successful {
 	if (defined $AI::temp::delIndex) {
-		message "Character $chars[$AI::temp::delIndex]{name} ($AI::temp::delIndex) deleted.\n", "info";
+		message TF("Character %s (%s) deleted.\n", $chars[$AI::temp::delIndex]{name}, $AI::temp::delIndex), "info";
 		delete $chars[$AI::temp::delIndex];
 		undef $AI::temp::delIndex;
 		for (my $i = 0; $i < @chars; $i++) {
@@ -2154,7 +2154,7 @@ sub cast_cancelled {
 	my $skill = $source->{casting}->{skill};
 	my $skillName = $skill ? $skill->name : 'Unknown';
 	my $domain = ($ID eq $accountID) ? "selfSkill" : "skill";
-	message "$source failed to cast $skillName\n", $domain;
+	message TF("%s failed to cast %s\n", $source, $skillName), $domain;
 	delete $source->{casting};
 }
 
@@ -2546,8 +2546,11 @@ sub friend_logon {
 	for (my $i = 0; $i < @friendsID; $i++) {
 		if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
 			$friends{$i}{'online'} = 1 - $isNotOnline;
-			message "Friend $friends{$i}{'name'} has " .
-				($isNotOnline? 'disconnected' : 'connected') . "\n", undef, 1;
+			if ($isNotOnline) {
+    				message TF("Friend %s has disconnected\n", $friends{$i}{name}), undef, 1;
+			} else {
+    				message TF("Friend %s has connected\n", $friends{$i}{name}), undef, 1;
+			}
 			last;
 		}
 	}	
@@ -2709,8 +2712,11 @@ sub guild_invite_result {
 		2 => 'Target has accepted.',
 		3 => 'Your guild is full.'
 	);
-	message "Guild join request: ".($types{$type} || "Unknown $type")."\n";
-
+	if ($types{$type}) {
+	    message TF("Guild join request: %s\n", $types{$type});
+	} else {
+	    message TF("Guild join request: Unknown %s\n", $type);
+	}
 }
 
 sub guild_location {
@@ -3012,11 +3018,11 @@ sub monk_spirits {
 	my $spirits = $args->{spirits};
 	
 	if ($sourceID eq $accountID) {
-		message "You have $spirits spirit(s) now\n", "parseMsg_statuslook", 1 if $spirits != $char->{spirits};
+		message TF("You have %s spirit(s) now\n", $spirits), "parseMsg_statuslook", 1 if $spirits != $char->{spirits};
 		$char->{spirits} = $spirits;
 	} elsif (my $actor = Actor::get($sourceID)) {
 		$actor->{spirits} = $spirits;
-		message "$actor has $spirits spirit(s) now\n", "parseMsg_statuslook", 2 if $spirits != $actor->{spirits};
+		message TF("%s has %s spirit(s) now\n", $actor, $spirits), "parseMsg_statuslook", 2 if $spirits != $actor->{spirits};
 	}
 	
 }
@@ -3223,27 +3229,27 @@ sub job_equipment_hair_change {
 	if ($args->{part} == 0) {
 		# Job change
 		$actor->{jobID} = $args->{number};
-		message "$actor changed job to: $jobs_lut{$args->{number}}\n", "parseMsg/job", ($actor->{type} eq 'You' ? 0 : 2);
+ 		message TF("%s changed job to: %s\n", $actor, $jobs_lut{$args->{number}}), "parseMsg/job", ($actor->{type} eq 'You' ? 0 : 2);
 
 	} elsif ($args->{part} == 3) {
 		# Bottom headgear change
-		message "$actor changed bottom headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
+ 		message TF("%s changed bottom headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
 		$actor->{headgear}{low} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
 
 	} elsif ($args->{part} == 4) {
 		# Top headgear change
-		message "$actor changed top headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
+ 		message TF("%s changed top headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
 		$actor->{headgear}{top} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
 
 	} elsif ($args->{part} == 5) {
 		# Middle headgear change
-		message "$actor changed middle headgear to: ".headgearName($args->{number})."\n", "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
+ 		message TF("%s changed middle headgear to: %s\n", $actor, headgearName($args->{number})), "parseMsg_statuslook", 2 unless $actor->{type} eq 'You';
 		$actor->{headgear}{mid} = $args->{number} if ($actor->{type} eq 'Player' || $actor->{type} eq 'You');
 
 	} elsif ($args->{part} == 6) {
 		# Hair color change
 		$actor->{hair_color} = $args->{number};
-		message "$actor changed hair color to: $haircolors{$args->{number}} ($args->{number})\n", "parseMsg/hairColor", ($actor->{type} eq 'You' ? 0 : 2);
+ 		message TF("%s changed hair color to: %s (%s)\n", $actor, $haircolors{$args->{number}}, $args->{number}), "parseMsg/hairColor", ($actor->{type} eq 'You' ? 0 : 2);
 	}
 
 	#my %parts = (
@@ -3483,12 +3489,12 @@ sub minimap_indicator {
 	my ($self, $args) = @_;
 	
 	if ($args->{clear}) {
-		message "Minimap indicator at location $args->{x}, $args->{y} " .
-		"with the color $args->{color} cleared\n",
+		message TF("Minimap indicator at location %s, %s " .
+		"with the color %s cleared\n", $args->{x}, $args->{y}, $args->{color}),
 		"info";
 	} else {
-		message "Minimap indicator at location $args->{x}, $args->{y} ".
-		"with the color $args->{color} shown\n",
+		message TF("Minimap indicator at location %s, %s ".
+		"with the color %s shown\n", $args->{x}, $args->{y}, $args->{color}),
 		"info";
 	}
 }
@@ -3503,7 +3509,7 @@ sub monster_typechange {
 
 	if ($monsters{$ID}) {
 		my $name = $monsters_lut{$type} || "Unknown $type";
-		message "Monster $monsters{$ID}{name} ($monsters{$ID}{binID}) changed to $name\n";
+		message TF("Monster %s (%s) changed to %s\n", $monsters{$ID}{name}, $monsters{$ID}{binID}, $name);
 		$monsters{$ID}{nameID} = $type;
 		$monsters{$ID}{name} = $name;
 		$monsters{$ID}{dmgToParty} = 0;
@@ -3905,7 +3911,7 @@ sub party_users_info {
 		}
 		$chars[$config{char}]{party}{users}{$ID} = new Actor::Party;
 		$chars[$config{char}]{party}{users}{$ID}{name} = unpack("Z24", substr($msg, $i + 4, 24));
-		message "Party Member: $chars[$config{char}]{party}{users}{$ID}{name}\n", undef, 1;
+		message TF("Party Member: %s\n", $chars[$config{char}]{party}{users}{$ID}{name}), undef, 1;
 		$chars[$config{char}]{party}{users}{$ID}{map} = unpack("Z16", substr($msg, $i + 28, 16));
 		$chars[$config{char}]{party}{users}{$ID}{online} = !(unpack("C1",substr($msg, $i + 45, 1)));
 		$chars[$config{char}]{party}{users}{$ID}{admin} = 1 if ($num == 0);
@@ -4023,16 +4029,16 @@ sub player_equipment {
 		
 	} elsif ($type == 2) {
 		if ($ID1 ne $player->{weapon}) {
-			message "$player changed Weapon to ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
+			message TF("%s changed Weapon to %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
 			$player->{weapon} = $ID1;
 		}
 		if ($ID2 ne $player->{shield}) {
-			message "$player changed Shield to ".itemName({nameID => $ID2})."\n", "parseMsg_statuslook", 2;
+			message TF("%s changed Shield to %s\n", $player, itemName({nameID => $ID2})), "parseMsg_statuslook", 2;
 			$player->{shield} = $ID2;
 		}
 	} elsif ($type == 9) {
 		if ($player->{shoes} && $ID1 ne $player->{shoes}) {
-			message "$player changed Shoes to: ".itemName({nameID => $ID1})."\n", "parseMsg_statuslook", 2;
+			message TF("%s changed Shoes to: %s\n", $player, itemName({nameID => $ID1})), "parseMsg_statuslook", 2;
 		}
 		$player->{shoes} = $ID1;
 	}
@@ -4095,7 +4101,7 @@ sub private_message {
 
 	stripLanguageCode(\$privMsg);
 	chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
-	message "(From: $privMsgUser) : $privMsg\n", "pm";
+ 	message TF("(From: %s) : %s\n", $args->{privMsgUser}, $args->{privMsg}), "pm";
 
 	ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
 	Plugins::callHook('packet_privMsg', {
@@ -4115,7 +4121,7 @@ sub private_message {
 sub private_message_sent {
 	my ($self, $args) = @_;
 	if ($args->{type} == 0) {
-		message "(To $lastpm[0]{user}) : $lastpm[0]{msg}\n", "pm/sent";
+ 		message TF("(To %s) : %s\n", $lastpm[0]{'user'}, $lastpm[0]{'msg'}), "pm/sent";
 		chatLog("pm", "(To: $lastpm[0]{user}) : $lastpm[0]{msg}\n") if ($config{'logPrivateChat'});
 
 		Plugins::callHook('packet_sentPM', {
@@ -4219,7 +4225,7 @@ sub received_character_ID_and_Map {
 	message "-----------------------------\n", "connection";
 	($ai_v{temp}{map}) = $args->{mapName} =~ /([\s\S]*)\./;
 	checkAllowedMap($ai_v{temp}{map});
-	message("Closing connection to Character Server\n", "connection") unless ($net->version == 1);
+	message(T("Closing connection to Character Server\n"), "connection") unless ($net->version == 1);
 	$net->serverDisconnect();
 	main::initStatVars();
 }
@@ -4233,15 +4239,15 @@ sub received_sync {
 sub refine_result {
 	my ($self, $args) = @_;
 	if ($args->{fail} == 0) {
-		message "You successfully refined a weapon (ID $args->{nameID})!\n";
+		message TF("You successfully refined a weapon (ID %s)!\n", $args->{nameID});
 	} elsif ($args->{fail} == 1) {
-		message "You failed to refine a weapon (ID $args->{nameID})!\n";
+		message TF("You failed to refine a weapon (ID %s)!\n", $args->{nameID});
 	} elsif ($args->{fail} == 2) {
-		message "You successfully made a potion (ID $args->{nameID})!\n";
+		message TF("You successfully made a potion (ID %s)!\n", $args->{nameID});
 	} elsif ($args->{fail} == 3) {
-		message "You failed to make a potion (ID $args->{nameID})!\n";
+		message TF("You failed to make a potion (ID %s)!\n", $args->{nameID});
 	} else {
-		message "You tried to refine a weapon (ID $args->{nameID}); result: unknown $args->{fail}\n";
+		message TF("You tried to refine a weapon (ID %s); result: unknown %s\n", $args->{nameID}, $args->{fail});
 	}
 }
 
@@ -4410,7 +4416,7 @@ sub pvp_rank {
 		$ai_v{temp}{pvp_rank} = $rank;
 		$ai_v{temp}{pvp_num} = $num;
 		if ($ai_v{temp}{pvp}) {
-			message "Your PvP rank is: $rank/$num\n", "map_event";
+			message TF("Your PvP rank is: %s/%s\n", $rank, $num), "map_event";
 		}
 	}	
 }
@@ -4531,7 +4537,7 @@ sub skill_cast {
 	# Skill Cancel
 	if ($AI == 2 && $monsters{$sourceID} && %{$monsters{$sourceID}} && mon_control($monsters{$sourceID}{'name'})->{'skillcancel_auto'}) {
 		if ($targetID eq $accountID || $dist > 0 || (AI::action eq "attack" && AI::args->{ID} ne $sourceID)) {
-			message "Monster Skill - switch Target to : $monsters{$sourceID}{name} ($monsters{$sourceID}{binID})\n";
+			message TF("Monster Skill - switch Target to : %s (%s)\n", $monsters{$sourceID}{name}, $monsters{$sourceID}{binID});
 			stopAttack();
 			AI::dequeue;
 			attack($sourceID);
@@ -4560,7 +4566,7 @@ sub skill_cast {
 				maxRouteDistance => $config{'attackMaxRouteDistance'},
 				maxRouteTime => $config{'attackMaxRouteTime'},
 				noMapRoute => 1);
-			message "Avoid casting Skill - switch position to : $pos{x},$pos{y}\n", 1;
+			message TF("Avoid casting Skill - switch position to : %s,%s\n", $pos{x}, $pos{y}), 1;
 		}
 	}		
 }
@@ -5149,7 +5155,7 @@ sub storage_item_removed {
 
 	my $item = $storage{$index};
 	$item->{amount} -= $amount;
-	message "Storage Item Removed: $item->{name} ($item->{binID}) x $amount\n", "storage";
+	message TF("Storage Item Removed: %s (%s) x %s\n", $item->{name}, $item->{binID}, $amount), "storage";
 	$itemChange{$item->{name}} -= $amount;
 	$args->{item} = $item;
 	if ($item->{amount} <= 0) {
@@ -5320,7 +5326,7 @@ sub unequip_item {
 			}
 		}
 	}
-	message "You unequip $char->{inventory}[$invIndex]{name} ($invIndex) - $equipTypes_lut{$char->{inventory}[$invIndex]{type_equip}}\n", 'inventory';
+	message TF("You unequip %s (%s) - %s\n", $char->{inventory}[$invIndex]{name}, $invIndex, $equipTypes_lut{$char->{inventory}[$invIndex]{type_equip}}), 'inventory';
 }
 
 sub unit_levelup {
@@ -5347,7 +5353,7 @@ sub use_item {
 	my $invIndex = findIndex($char->{inventory}, "index", $args->{index});
 	if (defined $invIndex) {
 		$char->{inventory}[$invIndex]{amount} -= $args->{amount};
-		message "You used Item: $char->{inventory}[$invIndex]{name} ($invIndex) x $args->{amount}\n", "useItem";
+		message TF("You used Item: %s (%s) x %s\n", $char->{inventory}[$invIndex]{name}, $invIndex, $args->{amount}), "useItem";
 		if ($char->{inventory}[$invIndex]{amount} <= 0) {
 			delete $char->{inventory}[$invIndex];
 		}
