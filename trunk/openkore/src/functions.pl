@@ -29,6 +29,7 @@ use Misc;
 use Plugins;
 use Utils;
 use ChatQueue;
+use I18N;
 
 
 # use SelfLoader; 1;
@@ -192,7 +193,7 @@ sub mainLoop {
 	if (defined($input = $interface->getInput(0))) {
 		parseInput($input);
 	}
-	
+
 	# Handle connection states
 	$net->checkConnection();
 
@@ -4458,8 +4459,8 @@ sub parseSendMsg {
 		$chat =~ s/^\s*//;
 
 		# Ensures: $user and $chat are String
-		$user = Translation::toUTF8($user);
-		$chat = Translation::toUTF8($chat);
+		$user = I18N::bytesToString($user);
+		$chat = I18N::bytesToString($chat);
 		stripLanguageCode(\$chat);
 
 		my $prefix = quotemeta $config{commandPrefix};
