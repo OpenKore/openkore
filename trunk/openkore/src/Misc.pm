@@ -699,14 +699,14 @@ sub objectIsMovingTowardsPlayer {
 sub chatLog {
 	my $type = shift;
 	my $message = shift;
-	open CHAT, ">> $Settings::chat_file";
+	open CHAT, ">>:utf8", $Settings::chat_file;
 	print CHAT "[".getFormattedDate(int(time))."][".uc($type)."] $message";
 	close CHAT;
 }
 
 sub shopLog {
 	my $crud = shift;
-	open SHOPLOG, ">> $Settings::shop_log_file";
+	open SHOPLOG, ">>:utf8", $Settings::shop_log_file;
 	print SHOPLOG "[".getFormattedDate(int(time))."] $crud";
 	close SHOPLOG;
 }
@@ -714,7 +714,7 @@ sub shopLog {
 sub monsterLog {
 	my $crud = shift;
 	return if (!$config{'monsterLog'});
-	open MONLOG, ">> $Settings::monster_log";
+	open MONLOG, ">>:utf8", $Settings::monster_log;
 	print MONLOG "[".getFormattedDate(int(time))."] $crud\n";
 	close MONLOG;
 }
@@ -899,7 +899,7 @@ sub getGatField {
 sub itemLog {
 	my $crud = shift;
 	return if (!$config{'itemHistory'});
-	open ITEMLOG, ">> $Settings::item_log_file";
+	open ITEMLOG, ">>:utf8", $Settings::item_log_file;
 	print ITEMLOG "[".getFormattedDate(int(time))."] $crud";
 	close ITEMLOG;
 }
@@ -1239,7 +1239,9 @@ sub charSelectScreen {
 }
 
 sub chatLog_clear {
-	if (-f $Settings::chat_file) { unlink($Settings::chat_file); }
+	if (-f $Settings::chat_file) {
+		unlink($Settings::chat_file);
+	}
 }
 
 ##
