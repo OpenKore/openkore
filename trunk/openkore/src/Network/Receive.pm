@@ -1928,7 +1928,7 @@ sub character_creation_successful {
 	
 	my $char = new Actor::You;
 	$char->{ID} = $args->{ID};
-	$char->{name} = $args->{name};
+	$char->{name} = bytesToString($args->{name});
 	$char->{zenny} = $args->{zenny};
 	$char->{str} = $args->{str};
 	$char->{agi} = $args->{agi};
@@ -2073,44 +2073,47 @@ sub chat_modified {
 sub chat_newowner {
 	my ($self, $args) = @_;
 
+	my $user = bytesToString($args->{user});
 	if ($args->{type} == 0) {
-		if ($args->{user} eq $char->{name}) {
+		if ($user eq $char->{name}) {
 			$chatRooms{$currentChatRoom}{ownerID} = $accountID;
 		} else {
-			my $key = findKeyString(\%players, "name", $args->{user});
+			my $key = findKeyString(\%players, "name", $user);
 			$chatRooms{$currentChatRoom}{ownerID} = $key;
 		}
-		$chatRooms{$currentChatRoom}{users}{ $args->{user} } = 2;
+		$chatRooms{$currentChatRoom}{users}{$user} = 2;
 	} else {
-		$chatRooms{$currentChatRoom}{users}{ $args->{user} } = 1;
+		$chatRooms{$currentChatRoom}{users}{$user} = 1;
 	}
 }
 
 sub chat_user_join {
 	my ($self, $args) = @_;
-	
+
+	my $user = bytesToString($args->{user});
 	if ($currentChatRoom ne "") {
-		binAdd(\@currentChatRoomUsers, $args->{user});
-		$chatRooms{$currentChatRoom}{users}{ $args->{user} } = 1;
+		binAdd(\@currentChatRoomUsers, $user);
+		$chatRooms{$currentChatRoom}{users}{$user} = 1;
 		$chatRooms{$currentChatRoom}{num_users} = $args->{num_users};
-		message TF("%s has joined the Chat Room\n", $args->{user});
+		message TF("%s has joined the Chat Room\n", $user);
 	}
 }
 
 sub chat_user_leave {
 	my ($self, $args) = @_;
-	
-	delete $chatRooms{$currentChatRoom}{users}{ $args->{user} };
-	binRemove(\@currentChatRoomUsers, $args->{user});
+
+	my $user = bytesToString($args->{user});
+	delete $chatRooms{$currentChatRoom}{users}{$user};
+	binRemove(\@currentChatRoomUsers, $user);
 	$chatRooms{$currentChatRoom}{num_users} = $args->{num_users};
-	if ($args->{user} eq $char->{name}) {
+	if ($user eq $char->{name}) {
 		binRemove(\@chatRoomsID, $currentChatRoom);
 		delete $chatRooms{$currentChatRoom};
 		undef @currentChatRoomUsers;
 		$currentChatRoom = "";
 		message T("You left the Chat Room\n");
 	} else {
-		message TF("%s has left the Chat Room\n", $args->{user});
+		message TF("%s has left the Chat Room\n", $user);
 	}
 }
 
@@ -2130,6 +2133,8 @@ sub chat_users {
 	for (my $i = 8; $i < $args->{RAW_MSG_SIZE}; $i += 28) {
 		my $type = unpack("C1",substr($msg,$i,1));
 		my ($chatUser) = unpack("Z*", substr($msg,$i + 4,24));
+		$chatUser = bytesToString($chatUser);
+
 		if ($chat->{users}{$chatUser} eq "") {
 			binAdd(\@currentChatRoomUsers, $chatUser);
 			if ($type == 0) {
@@ -2140,7 +2145,8 @@ sub chat_users {
 			$chat->{num_users}++;
 		}
 	}
-	message TF("You have joined the Chat Room %s\n", $chat->{title});
+
+	message TF("You have joined the Chat Room %s\n", bytesToString($chat->{title}));
 }
 
 sub cast_cancelled {
@@ -2265,9 +2271,11 @@ sub deal_finalize {
 sub deal_request {
 	my ($self, $args) = @_;
 	my $level = $args->{level} || 'Unknown';
-	$incomingDeal{name} = $args->{user};
+	my $user = bytesToString($args->{user});
+
+	$incomingDeal{name} = $user;
 	$timeout{ai_dealAutoCancel}{time} = time;
-	message TF("%s (level %s) Requests a Deal\n", $args->{user}, $level), "deal";
+	message TF("%s (level %s) Requests a Deal\n", $user, $level), "deal";
 	message T("Type 'deal' to start dealing, or 'deal no' to deny the deal.\n"), "deal";
 }
 
@@ -2523,13 +2531,13 @@ sub friend_list {
 	undef %friends;
 	my $msg = $args->{RAW_MSG};
 	my $msg_size = $args->{RAW_MSG_SIZE};
-	
+
 	my $ID = 0;
 	for (my $i = 4; $i < $msg_size; $i += 32) {
 		binAdd(\@friendsID, $ID);
 		$friends{$ID}{'accountID'} = substr($msg, $i, 4);
 		$friends{$ID}{'charID'} = substr($msg, $i + 4, 4);
-		$friends{$ID}{'name'} = unpack("Z24", substr($msg, $i + 8 , 24));
+		$friends{$ID}{'name'} = bytesToString(unpack("Z24", substr($msg, $i + 8 , 24)));
 		$friends{$ID}{'online'} = 0;
 		$ID++;
 	}
@@ -2547,9 +2555,9 @@ sub friend_logon {
 		if ($friends{$i}{'accountID'} eq $friendAccountID && $friends{$i}{'charID'} eq $friendCharID) {
 			$friends{$i}{'online'} = 1 - $isNotOnline;
 			if ($isNotOnline) {
-    				message TF("Friend %s has disconnected\n", $friends{$i}{name}), undef, 1;
+				message TF("Friend %s has disconnected\n", $friends{$i}{name}), undef, 1;
 			} else {
-    				message TF("Friend %s has connected\n", $friends{$i}{name}), undef, 1;
+				message TF("Friend %s has connected\n", $friends{$i}{name}), undef, 1;
 			}
 			last;
 		}
@@ -2562,7 +2570,7 @@ sub friend_request {
 	# Incoming friend request
 	$incomingFriend{'accountID'} = $args->{accountID};
 	$incomingFriend{'charID'} = $args->{charID};
-	$incomingFriend{'name'} = $args->{name};
+	$incomingFriend{'name'} = bytesToString($args->{name});
 	message TF("%s wants to be your friend\n", $incomingFriend{'name'});
 	message TF("Type 'friend accept' to be friend with %s, otherwise type 'friend reject'\n", $incomingFriend{'name'});
 }
@@ -2588,7 +2596,7 @@ sub friend_response {
 		
 	# Response to friend request
 	my $type = $args->{type};
-	my $name = $args->{name};
+	my $name = bytesToString($args->{name});
 	if ($type) {
 		message TF("%s rejected to be your friend\n", $name);
 	} else {
@@ -2638,6 +2646,7 @@ sub guild_allies_enemy_list {
 
 	for (my $i = 4; $i < $len; $i += 32) {
 		my ($type, $guildID, $guildName) = unpack("V1 V1 Z24", substr($msg, $i, 32));
+		$guildName = bytesToString($guildName);
 		if ($type) {
 			# Enemy guild
 			$guild{enemy}{$guildID} = $guildName;
@@ -2761,7 +2770,7 @@ sub guild_members_list {
 		$guild{'member'}[$c]{'online'} = unpack("v1", substr($msg, $i + 22, 2));
 		my $gtIndex = unpack("V1", substr($msg, $i + 26, 4));
 		$guild{'member'}[$c]{'title'} = $guild{'title'}[$gtIndex];
-		$guild{'member'}[$c]{'name'} = unpack("Z24", substr($msg, $i + 80, 24));
+		$guild{'member'}[$c]{'name'} = bytesToString(unpack("Z24", substr($msg, $i + 80, 24)));
 		$c++;
 	}
 	
@@ -2779,7 +2788,7 @@ sub guild_members_title_list {
 	my $gtIndex;
 	for (my $i = 4; $i < $msg_size; $i+=28) {
 		$gtIndex = unpack("V1", substr($msg, $i, 4));
-		$guild{'title'}[$gtIndex] = unpack("Z24", substr($msg, $i + 4, 24));
+		$guild{'title'}[$gtIndex] = bytesToString(unpack("Z24", substr($msg, $i + 4, 24)));
 	}
 }
 
@@ -2789,7 +2798,7 @@ sub guild_name {
 	my $guildID = $args->{guildID};
 	my $emblemID = $args->{emblemID};
 	my $mode = $args->{mode};
-	my $guildName = $args->{guildName};
+	my $guildName = bytesToString($args->{guildName});
 	$char->{guild}{name} = $guildName;
 	$char->{guildID} = $guildID;
 	$char->{guild}{emblem} = $emblemID;
@@ -2815,7 +2824,9 @@ sub guild_notice {
 	my ($message) = unpack("Z*", substr($msg, 62, 120));
 	stripLanguageCode(\$address);
 	stripLanguageCode(\$message);
-	
+	$address = bytesToString($address);
+	$message = bytesToString($message);
+
 	# don't show the huge guildmessage notice if there is none
 	# the client does something similar to this...
 	if ($address || $message) {
@@ -2829,10 +2840,10 @@ sub guild_notice {
 
 sub guild_request {
 	my ($self, $args) = @_;
-	
+
 	# Guild request
 	my $ID = $args->{ID};
-	my $name = $args->{name};
+	my $name = bytesToString($args->{name});
 	message TF("Incoming Request to join Guild '%s'\n", $name);
 	$incomingGuild{'ID'} = $ID;
 	$incomingGuild{'Type'} = 1;

@@ -957,7 +957,7 @@ sub sendGuildJoinRequest {
 
 sub sendGuildLeave {
 	my ($reason) = @_;
-	my $mess = pack("Z40", $reason);
+	my $mess = pack("Z40", stringToBytes($reason));
 	my $msg = pack("C*", 0x59, 0x01).$guild{ID}.$accountID.$charID.$mess;
 	sendMsgToServer($net, $msg);
 	debug "Sent Guild Leave: $reason (".getHex($msg).")\n", "sendPacket";
@@ -968,7 +968,7 @@ sub sendGuildMemberKick {
 	my $accountID = shift;
 	my $charID = shift;
 	my $cause = shift;
-	my $msg = pack("C*", 0x59, 0x01).$guildID.$accountID.$charID.pack("a40", $cause);
+	my $msg = pack("C*", 0x59, 0x01).$guildID.$accountID.$charID.pack("a40", stringToBytes($cause));
 	sendMsgToServer($net, $msg);
 	debug "Sent Guild Kick: ".getHex($charID)."\n", "sendPacket";
 }
@@ -1054,7 +1054,7 @@ sub sendIdentify {
 
 sub sendIgnore {
 	my $r_net = shift;
-	my $name = shift;
+	my $name = stringToBytes(shift);
 	my $flag = shift;
 	$name = substr($name, 0, 24) if (length($name) > 24);
 	$name = $name . chr(0) x (24 - length($name));
@@ -1324,6 +1324,8 @@ sub sendMasterSecureLogin {
 	my $md5 = Digest::MD5->new;
 	my ($msg);
 
+	$username = stringToBytes($username);
+	$password = stringToBytes($password);
 	if ($type % 2 == 1) {
 		$salt = $salt . $password;
 	} else {
@@ -1384,7 +1386,7 @@ sub sendOpenShop {
 	my $length = 0x55 + 0x08 * @{$items};
 	my $msg = pack("C*", 0xB2, 0x01).
 		pack("v*", $length).
-		pack("a80", $title).
+		pack("a80", stringToBytes($title)).
 		pack("C*", 0x01);
 
 	foreach my $item (@{$items}) {
