@@ -45,7 +45,7 @@ use I18N;
 sub initRandomRestart {
 	if ($config{'autoRestart'}) {
 		my $autoRestart = $config{'autoRestartMin'} + int(rand $config{'autoRestartSeed'});
-		message "Next restart in ".timeConvert($autoRestart).".\n", "system";
+		message TF("Next restart in %s\n", timeConvert($autoRestart)), "system";
 		configModify("autoRestart", $autoRestart, 1);
 	}
 }
@@ -259,7 +259,7 @@ sub mainLoop {
 			my $sleeptime = $config{'autoSleepMin'} + int(rand $config{'autoSleepSeed'});
 			$timeout_ex{'master'}{'timeout'} = $sleeptime;
 			$sleeptime = $timeout{'reconnect'}{'timeout'} if ($sleeptime < $timeout{'reconnect'}{'timeout'});
-			message "Sleeping for ".timeConvert($sleeptime).".\n", "system";
+			message TF("Sleeping for %s\n", timeConvert($sleeptime)), "system";
 		} else {
 			$timeout_ex{'master'}{'timeout'} = $timeout{'reconnect'}{'timeout'};
 		}
@@ -612,7 +612,7 @@ sub AI {
 			$portals_lut{$ID}{dest}{$destName}{x} = $sourcePos{x};
 			$portals_lut{$ID}{dest}{$destName}{y} = $sourcePos{y};
 
-			message "Recorded new portal (destination): $field{name} ($destPos{x}, $destPos{y}) -> $sourceMap ($sourcePos{x}, $sourcePos{y})\n", "portalRecord";
+			message TF("Recorded new portal (destination): %s (%s, %s) -> %s (%s, %s)\n", $field{name}, $destPos{x}, $destPos{y}, $sourceMap, $sourcePos{x}, $sourcePos{y}), "portalRecord";
 			updatePortalLUT("$Settings::tables_folder/portals.txt",
 				$field{name}, $destPos{x}, $destPos{y},
 				$sourceMap, $sourcePos{x}, $sourcePos{y});
@@ -629,7 +629,7 @@ sub AI {
 			$portals_lut{$ID}{dest}{$destName}{x} = $destPos{x};
 			$portals_lut{$ID}{dest}{$destName}{y} = $destPos{y};
 
-			message "Recorded new portal (source): $sourceMap ($sourcePos{x}, $sourcePos{y}) -> $field{name} ($char->{pos}{x}, $char->{pos}{y})\n", "portalRecord";
+			message TF("Recorded new portal (source): %s (%s, %s) -> %s (%s, %s)\n", $sourceMap, $sourcePos{x}, $sourcePos{y}, $field{name}, $char->{pos}{x}, $char->{pos}{y}), "portalRecord";
 			updatePortalLUT("$Settings::tables_folder/portals.txt",
 				$sourceMap, $sourcePos{x}, $sourcePos{y},
 				$field{name}, $char->{pos}{x}, $char->{pos}{y});
@@ -722,7 +722,7 @@ sub AI {
 			unless (timeOut($char->{time_move}, $char->{time_move_calc} + 0.2)) {
 				# Wait for us to stop moving before talking
 			} elsif (timeOut($args->{time}, $timeout{ai_npcTalk}{timeout})) {
-				error "Could not find the NPC at the designated location.\n", "ai_npcTalk";
+				error T("Could not find the NPC at the designated location.\n"), "ai_npcTalk";
 				AI::dequeue;
 
 			} else {
@@ -778,7 +778,7 @@ sub AI {
 		} elsif (timeOut($args->{time}, $timeout{'ai_npcTalk'}{'timeout'})) {
 			# If NPC does not respond before timing out, then by default, it's
 			# a failure
-			error "NPC did not respond.\n", "ai_npcTalk";
+			error T("NPC did not respond.\n"), "ai_npcTalk";
 			sendTalkCancel($net, $args->{ID});
 			AI::dequeue;
 
@@ -943,9 +943,9 @@ sub AI {
 		my $target = Actor::get($ID);
 		$target->{attack_failed} = time if ($monsters{$ID});
 		AI::dequeue;
-		message "Can't reach or damage target, dropping target\n", "ai_attack";
+		message T("Can't reach or damage target, dropping target\n"), "ai_attack";
 		if ($config{'teleportAuto_dropTarget'}) {
-			message "Teleport due to dropping attack target\n";
+			message T("Teleport due to dropping attack target\n");
 			useTeleport(1);
 		}
 
@@ -956,7 +956,7 @@ sub AI {
 		AI::dequeue;
 
 		if ($monsters_old{$ID} && $monsters_old{$ID}{dead}) {
-			message "Target died\n", "ai_attack";
+			message T("Target died\n"), "ai_attack";
 			monKilled();
 
 			# Pickup loot when monster's dead
@@ -991,7 +991,7 @@ sub AI {
 			## kokal end
 
 		} else {
-			message "Target lost\n", "ai_attack";
+			message T("Target lost\n"), "ai_attack";
 		}
 
 	} elsif (AI::action eq "attack") {
@@ -1131,11 +1131,11 @@ sub AI {
 
 		} elsif (!$cleanMonster) {
 			# Drop target if it's already attacked by someone else
-			message "Dropping target - you will not kill steal others\n", "ai_attack";
+			message T("Dropping target - you will not kill steal others\n"), "ai_attack";
 			sendMove($realMyPos->{x}, $realMyPos->{y});
 			AI::dequeue;
 			if ($config{teleportAuto_dropTargetKS}) {
-				message "Teleporting due to dropping attack target\n", "teleport";
+				message T("Teleporting due to dropping attack target\n"), "teleport";
 				useTeleport(1);
 			}
 
@@ -1183,10 +1183,10 @@ sub AI {
 			# Move to the closest spot
 			my $msg = "No LOS from ($realMyPos->{x}, $realMyPos->{y}) to target ($realMonsterPos->{x}, $realMonsterPos->{y})";
 			if ($best_spot) {
-				message "$msg; moving to ($best_spot->{x}, $best_spot->{y})\n";
+				message TF("%s; moving to (%s, %s)\n", $msg, $best_spot->{x}, $best_spot->{y});
 				ai_route($field{name}, $best_spot->{x}, $best_spot->{y});
 			} else {
-				warning "$msg; no acceptable place to stand\n";
+				warning TF("%s; no acceptable place to stand\n", $msg);
 				AI::dequeue;
 			}
 
@@ -1279,7 +1279,7 @@ sub AI {
 				# Unable to calculate a route to target
 				$target->{attack_failed} = time;
 				AI::dequeue;
-				message "Unable to calculate a route to target, dropping target\n", "ai_attack";
+ 				message T("Unable to calculate a route to target, dropping target\n"), "ai_attack";
 				if ($config{'teleportAuto_dropTarget'}) {
 					message "Teleport due to dropping attack target\n";
 					useTeleport(1);
@@ -1398,7 +1398,7 @@ sub AI {
 	if (AI::is("move", "route") && AI::args->{attackID} && AI::inQueue("attack")) {
 		my $ID = AI::args->{attackID};
 		if ($monsters{$ID} && !checkMonsterCleanness($ID)) {
-			message "Dropping target - you will not kill steal others\n";
+			message T("Dropping target - you will not kill steal others\n");
 			stopAttack();
 			$monsters{$ID}{ignore} = 1;
 
@@ -1410,7 +1410,7 @@ sub AI {
 			AI::dequeue;
 			AI::dequeue if (AI::action eq "attack");
 			if ($config{teleportAuto_dropTargetKS}) {
-				message "Teleport due to dropping attack target\n";
+				message T("Teleport due to dropping attack target\n");
 				useTeleport(1);
 			}
 		}
@@ -1438,7 +1438,7 @@ sub AI {
 		}
 
 		if (exists $args->{ai_equipAuto_skilluse_giveup} && binFind(\@skillsID, $args->{skillHandle}) eq "" && timeOut($args->{ai_equipAuto_skilluse_giveup})) {
-			warning "Timeout equiping for skill\n";
+			warning T("Timeout equiping for skill\n");
 			AI::dequeue;
 			${$args->{ret}} = 'equip timeout' if ($args->{ret});
 		} elsif (Item::scanConfigAndCheck("$args->{prefix}_equip")) {
@@ -1593,7 +1593,7 @@ sub AI {
 			unless (@{$args->{solution}}) {
 				# No more points to cover; we've arrived at the destination
 				if ($args->{notifyUponArrival}) {
-					message "Destination reached.\n", "success";
+ 					message T("Destination reached.\n"), "success";
 				} else {
 					debug "Destination reached.\n", "route";
 				}
@@ -1684,7 +1684,7 @@ sub AI {
 				} else {
 					# No more points to cover
 					if ($args->{notifyUponArrival}) {
-						message "Destination reached.\n", "success";
+ 						message T("Destination reached.\n"), "success";
 					} else {
 						debug "Destination reached.\n", "route";
 					}
@@ -1746,8 +1746,8 @@ sub AI {
 			} elsif ($args->{'done'}) {
 				my $destpos = "$args->{dest}{pos}{x},$args->{dest}{pos}{y}";
 				$destpos = "($destpos)" if ($destpos ne "");
-				warning "Unable to calculate how to walk from [$field{name}($char->{pos_to}{x},$char->{pos_to}{y})] " .
-					"to [$args->{dest}{map}${destpos}] (no map solution).\n", "route";
+				warning TF("Unable to calculate how to walk from [%s(%s,%s)] " .
+					"to [%s%s] (no map solution).\n", $field{name}, $char->{pos_to}{x}, $char->{pos_to}{y}, $args->{dest}{map}, ${destpos}), "route";
 				AI::dequeue;
 			}
 
@@ -1781,7 +1781,7 @@ sub AI {
 							# NPC sequence is a failure
 							# We delete that portal and try again
 							delete $portals_lut{"$args->{'mapSolution'}[0]{'map'} $args->{'mapSolution'}[0]{'pos'}{'x'} $args->{'mapSolution'}[0]{'pos'}{'y'}"};
-							warning "Unable to talk to NPC at $field{'name'} ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+ 							warning TF("Unable to talk to NPC at %s (%s,%s).\n", $field{'name'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}), "route";
 							$args->{'stage'} = '';	# redo MAP router
 						}
 					}
@@ -1796,7 +1796,7 @@ sub AI {
 						$args->{'old_map'} = $field{'name'};
 						ai_talkNPC($args->{'mapSolution'}[0]{'pos'}{'x'}, $args->{'mapSolution'}[0]{'pos'}{'y'}, $args->{'mapSolution'}[0]{'steps'} );
 					} else {
-						error "Insufficient zenny to pay for service at $field{'name'} ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+ 						error TF("Insufficient zenny to pay for service at %s (%s,%s).\n", $field{'name'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}), "route";
 						$args->{'stage'} = ''; #redo MAP router
 					}
 
@@ -1819,8 +1819,8 @@ sub AI {
 
 				} else {
 					#Error, NPC is not reachable from current pos
-					debug "CRTICAL ERROR: NPC is not reachable from current location.\n", "route";
-					error "Unable to walk from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to NPC at ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
+ 					debug "CRITICAL ERROR: NPC is not reachable from current location.\n", "route";
+ 					error TF("Unable to walk from %s (%s,%s) to NPC at (%s,%s).\n", $field{'name'}, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}), "route";
 					shift @{$args->{'mapSolution'}};
 				}
 
@@ -1849,8 +1849,8 @@ sub AI {
 						_internal => 1);
 
 				} else {
-					warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Final Destination at ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-					error "Cannot reach ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}) from current position.\n", "route";
+ 					warning TF("No LOS from %s (%s,%s) to Final Destination at (%s,%s).\n", $field{'name'}, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}), "route";
+ 					error TF("Cannot reach (%s,%s) from current position.\n", $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}), "route";
 					shift @{$args->{'mapSolution'}};
 				}
 
@@ -1900,7 +1900,7 @@ sub AI {
 								if ($dist > 0 && $config{route_teleport_maxTries} && $args->{teleportTries} >= $config{route_teleport_maxTries}) {
 									debug "Teleported $config{route_teleport_maxTries} times. Falling back to walking.\n", "route_teleport";
 								} else {
-									message "Attempting to teleport near portal, try #".($args->{teleportTries} + 1)."\n", "route_teleport";
+									message TF("Attempting to teleport near portal, try #%s\n", ($args->{teleportTries} + 1)), "route_teleport";
 									if (!useTeleport(1)) {
 										$args->{teleport} = 0;
 									} else {
@@ -1936,8 +1936,8 @@ sub AI {
 								_internal => 1);
 
 						} else {
-							warning "No LOS from $field{'name'} ($chars[$config{'char'}]{'pos_to'}{'x'},$chars[$config{'char'}]{'pos_to'}{'y'}) to Portal at ($args->{'mapSolution'}[0]{'pos'}{'x'},$args->{'mapSolution'}[0]{'pos'}{'y'}).\n", "route";
-							error "Cannot reach portal from current position\n", "route";
+ 							warning TF("No LOS from %s (%s,%s) to Portal at (%s,%s).\n", $field{'name'}, $chars[$config{'char'}]{'pos_to'}{'x'}, $chars[$config{'char'}]{'pos_to'}{'y'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'x'}, $ai_seq_args[0]{'mapSolution'}[0]{'pos'}{'y'}), "route";
+ 							error T("Cannot reach portal from current position\n"), "route";
 							shift @{$args->{mapSolution}};
 						}
 					}
@@ -1959,7 +1959,7 @@ sub AI {
 
 	} elsif (AI::action eq "take" && timeOut(AI::args->{ai_take_giveup})) {
 		my $item = $items{AI::args->{ID}};
-		message "Failed to take $item->{name} ($item->{binID}) from ($char->{pos}{x}, $char->{pos}{y}) to ($item->{pos}{x}, $item->{pos}{y})\n";
+		message TF("Failed to take %s (%s) from (%s, %s) to (%s, %s)\n", $item->{name}, $item->{binID}, $char->{pos}{x}, $char->{pos}{y}, $item->{pos}{x}, $item->{pos}{y});
 		$items{AI::args->{ID}}{take_failed}++;
 		AI::dequeue;
 
@@ -1981,7 +1981,7 @@ sub AI {
 				move($pos{x}, $pos{y});
 			} else {
 				my $pos = $item->{pos};
-				message "Routing to ($pos->{x}, $pos->{y}) to take $item->{name} ($item->{binID}), distance $dist\n";
+				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
 				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
 			}
 
@@ -2253,7 +2253,7 @@ sub AI {
 		} elsif ($args->{index} > -1 && $args->{index} < @{$args->{points}}) {
 			# Walk to the next point
 			my $point = $args->{points}[$args->{index}];
-			message "Walking to waypoint $args->{index}: $maps_lut{$point->{map}}($point->{map}): $point->{x},$point->{y}\n", "waypoint";
+			message TF("Walking to waypoint %s: %s(%s): %s,%s\n", $args->{index}, $maps_lut{$point->{map}}, $point->{map}, $point->{x}, $point->{y}), "waypoint";
 			$args->{walkedTo} = $args->{index};
 			$args->{index} += $args->{inc};
 
@@ -2261,7 +2261,7 @@ sub AI {
 				attackOnRoute => $args->{attackOnRoute},
 				tags => "waypoint");
 			if (!$result) {
-				error "Unable to calculate how to walk to $point->{map} ($point->{x}, $point->{y})\n";
+				error TF("Unable to calculate how to walk to %s (%s, %s)\n", $point->{map}, $point->{x}, $point->{y});
 				AI::dequeue;
 			}
 
@@ -2445,7 +2445,7 @@ sub AI {
 						  $char->{inventory}[$invIndex]{amount} < $config{"getAuto_${i}_maxAmount"}))) {
 					if ($storage{opened} && findKeyString(\%storage, "name", $config{"getAuto_$i"}) eq '') {
 						if ($config{"getAuto_${i}_dcOnEmpty"}) {
-							message "Disconnecting on empty ".$config{"getAuto_$i"}."!\n";
+ 						message TF("Disconnecting on empty %s!\n", $config{"getAuto_$i"});
 							chatLog("k", "Disconnecting on empty ".$config{"getAuto_$i"}."!\n");
 							quit();
 						}
@@ -2463,7 +2463,7 @@ sub AI {
 			# Only autostorage when we're on an attack route, or not moving
 			if ((!defined($routeIndex) || $attackOnRoute > 1) && $found &&
 				@{$char->{inventory}} > 0) {
-				message "Auto-storaging due to insufficient ".$config{"getAuto_$i"}."\n";
+	 			message TF("Auto-storaging due to insufficient %s\n", $config{"getAuto_$i"});
 				AI::queue("storageAuto");
 			}
 			$timeout{'ai_storageAuto'}{'time'} = time;
@@ -2522,7 +2522,7 @@ sub AI {
 						$timeout{'ai_storageAuto'}{'time'} = time;
 					} else {
 						# warpToBuyOrSell is not set, or we've already warped, or timed out. Walk to the NPC
-						message "Calculating auto-storage route to: $maps_lut{$args->{npc}{map}.'.rsw'}($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
+	 					message TF("Calculating auto-storage route to: %s(%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
 						ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 							attackOnRoute => 1,
 							distFromGoal => $config{'storageAuto_distance'});
@@ -2536,16 +2536,16 @@ sub AI {
 						sendMessage($net, "c", $config{storageAuto_useChatCommand});
 					} else {
 						if ($config{'storageAuto_npc_type'} eq "" || $config{'storageAuto_npc_type'} eq "1") {
-							warning "Warning storageAuto has changed. Please read News.txt\n" if ($config{'storageAuto_npc_type'} eq "");
+	 						warning T("Warning storageAuto has changed. Please read News.txt\n") if ($config{'storageAuto_npc_type'} eq "");
 							$config{'storageAuto_npc_steps'} = "c r1 n";
 							debug "Using standard iRO npc storage steps.\n", "npc";
 						} elsif ($config{'storageAuto_npc_type'} eq "2") {
 							$config{'storageAuto_npc_steps'} = "c c r1 n";
 							debug "Using iRO comodo (location) npc storage steps.\n", "npc";
 						} elsif ($config{'storageAuto_npc_type'} eq "3") {
-							message "Using storage steps defined in config.\n", "info";
+	 						message T("Using storage steps defined in config.\n"), "info";
 						} elsif ($config{'storageAuto_npc_type'} ne "" && $config{'storageAuto_npc_type'} ne "1" && $config{'storageAuto_npc_type'} ne "2" && $config{'storageAuto_npc_type'} ne "3") {
-							error "Something is wrong with storageAuto_npc_type in your config.\n";
+	 						error T("Something is wrong with storageAuto_npc_type in your config.\n");
 						}
 
 						ai_talkNPC($args->{npc}{pos}{x}, $args->{npc}{pos}{y}, $config{'storageAuto_npc_steps'});
@@ -2673,7 +2673,7 @@ sub AI {
 
 						# Try at most 3 times to get the item
 						if (($item{amount_get} > 0) && ($args->{retry} < 3)) {
-							message "Attempt to get $item{amount_get} x $item{name} from storage, retry: $args->{retry}\n", "storage", 1;
+	 						message TF("Attempt to get %s x %s from storage, retry: %s\n", $item{amount_get}, $item{name}, $ai_seq_args[0]{retry}), "storage", 1;
 							sendStorageGet($item{storage}{index}, $item{amount_get});
 							$timeout{ai_storageAuto}{time} = time;
 							$args->{retry}++;
@@ -2684,7 +2684,7 @@ sub AI {
 						}
 
 						if ($item{storage}{amount} < $item{amount_needed}) {
-							warning "storage: $item{name} out of stock\n";
+	 						warning TF("storage: %s out of stock\n", $item{name});
 						}
 
 						if (!$config{relogAfterStorage} && $args->{retry} >= 3 && !$args->{warned}) {
@@ -2692,9 +2692,9 @@ sub AI {
 							# There is a weird server bug which causes this to happen,
 							# but I can't reproduce it. This can be worked around by
 							# relogging in after autostorage.
-							warning "Kore tried to get an item from storage 3 times, but failed.\n";
-							warning "This problem could be caused by a server bug.\n";
-							warning "To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n";
+	 						warning T("Kore tried to get an item from storage 3 times, but failed.\n");
+	 						warning T("This problem could be caused by a server bug.\n");
+	 						warning T("To work around this problem, set 'relogAfterStorage' to 1, and relogin.\n");
 							$args->{warned} = 1;
 						}
 
@@ -2707,9 +2707,9 @@ sub AI {
 
 				sendStorageClose() unless $config{storageAuto_keepOpen};
 				if (percent_weight($char) >= $config{'itemsMaxWeight_sellOrStore'} && ai_storageAutoCheck()) {
-					error "Character is still overweight after storageAuto (storage is full?)\n";
+	 				error T("Character is still overweight after storageAuto (storage is full?)\n");
 					if ($config{dcOnStorageFull}) {
-						error "Disconnecting on storage full!\n";
+	 					error T("Disconnecting on storage full!\n");
 						chatLog("k", "Disconnecting on storage full!\n");
 						quit();
 					}
@@ -2790,7 +2790,7 @@ sub AI {
 					useTeleport(2);
 					$timeout{'ai_sellAuto'}{'time'} = time;
 				} else {
-					message "Calculating auto-sell route to: $maps_lut{$args->{'npc'}{'map'}.'.rsw'}($args->{'npc'}{'map'}): $args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'}\n", "route";
+	 				message TF("Calculating auto-sell route to: %s(%s): %s, %s\n", $maps_lut{$ai_seq_args[0]{'npc'}{'map'}.'.rsw'}, $ai_seq_args[0]{'npc'}{'map'}, $ai_seq_args[0]{'npc'}{'pos'}{'x'}, $ai_seq_args[0]{'npc'}{'pos'}{'y'}), "route";
 					ai_route($args->{'npc'}{'map'}, $args->{'npc'}{'pos'}{'x'}, $args->{'npc'}{'pos'}{'y'},
 						attackOnRoute => 1,
 						distFromGoal => $config{'sellAuto_distance'},
@@ -2958,7 +2958,7 @@ sub AI {
 					useTeleport(2);
 					$timeout{ai_buyAuto_wait}{time} = time;
 				} else {
-					message "Calculating auto-buy route to: $maps_lut{$args->{npc}{map}.'.rsw'} ($args->{npc}{map}): $args->{npc}{pos}{x}, $args->{npc}{pos}{y}\n", "route";
+	 				message TF("Calculating auto-buy route to: %s (%s): %s, %s\n", $maps_lut{$args->{npc}{map}.'.rsw'}, $args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y}), "route";
 					ai_route($args->{npc}{map}, $args->{npc}{pos}{x}, $args->{npc}{pos}{y},
 						attackOnRoute => 1,
 						distFromGoal => $config{"buyAuto_$args->{index}"."_distance"});
@@ -3096,7 +3096,7 @@ sub AI {
 	)) {
 
 		if ($maps_lut{$config{lockMap}.'.rsw'} eq '') {
-			error "Invalid map specified for lockMap - map $config{lockMap} doesn't exist\n";
+			error TF("Invalid map specified for lockMap - map %s doesn't exist\n", $config{lockMap});
 			$config{lockMap} = '';
 		} else {
 			my %args;
@@ -3118,16 +3118,16 @@ sub AI {
 					} while (--$i && !checkFieldWalkable(\%lockField, $lockX, $lockY));
 				}
 				if (!$i) {
-					error "Invalid coordinates specified for lockMap, coordinates are unwalkable\n";
+					error T("Invalid coordinates specified for lockMap, coordinates are unwalkable\n");
 					$config{lockMap} = '';
 				} else {
 					my $attackOnRoute = 2;
 					$attackOnRoute = 1 if ($config{attackAuto_inLockOnly} == 1);
 					$attackOnRoute = 0 if ($config{attackAuto_inLockOnly} > 1);
 					if (defined $lockX || defined $lockY) {
-						message "Calculating lockMap route to: $maps_lut{$config{lockMap}.'.rsw'}($config{lockMap}): $lockX, $lockY\n", "route";
+						message TF("Calculating lockMap route to: %s(%s): %s, %s\n", $maps_lut{$config{lockMap}.'.rsw'}, $config{lockMap}, $lockX, $lockY), "route";
 					} else {
-						message "Calculating lockMap route to: $maps_lut{$config{lockMap}.'.rsw'}($config{lockMap})\n", "route";
+						message TF("Calculating lockMap route to: %s(%s)\n", $maps_lut{$config{lockMap}.'.rsw'}, $config{lockMap}), "route";
 					}
 					ai_route($config{lockMap}, $lockX, $lockY, attackOnRoute => $attackOnRoute);
 				}
@@ -3206,7 +3206,7 @@ sub AI {
 			my $skill = new Skills(auto => $sk);
 
 			if (!$skill->id) {
-				error "Unknown skill '$sk'; disabling skillsAddAuto\n";
+				error TF("Unknown skill '%s'; disabling skillsAddAuto\n", $sk);
 				$config{skillsAddAuto} = 0;
 				last;
 			}
@@ -3217,7 +3217,7 @@ sub AI {
 			if ($skill->id && $char->{points_skill} > 0 && $char->{skills}{$handle}{lv} < $num) {
 				# raise skill
 				sendAddSkillPoint($net, $skill->id);
-				message "Auto-adding skill ".$skill->name."\n";
+				message TF("Auto-adding skill %s\n", $skill->name);
 
 				# save which skill was raised, so that when we received the
 				# "skill changed" packet (010F?) we can changed $skillChanged
@@ -3245,10 +3245,10 @@ sub AI {
 			$randY = int($config{'lockMap_y'} - $config{'lockMap_randY'} + rand(2*$config{'lockMap_randY'}+1)) if ($config{'lockMap_y'} ne '' && $config{'lockMap_randY'} ne '');
 		} while (--$i && !checkFieldWalkable(\%field, $randX, $randY));
 		if (!$i) {
-			error "Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n";
+			error T("Invalid coordinates specified for randomWalk (coordinates are unwalkable); randomWalk disabled\n");
 			$config{route_randomWalk} = 0;
 		} else {
-			message "Calculating random route to: $maps_lut{$field{name}.'.rsw'}($field{name}): $randX, $randY\n", "route";
+			message TF("Calculating random route to: %s(%s): %s, %s\n", $maps_lut{$field{name}.'.rsw'}, $field{name}, $randX, $randY), "route";
 			ai_route($field{name}, $randX, $randY,
 				maxRouteTime => $config{route_randomWalk_maxRouteTime},
 				attackOnRoute => 2,
@@ -3278,14 +3278,14 @@ sub AI {
 				if ($players{$_}{'name'} eq $args->{'name'} && !$players{$_}{'dead'}) {
 					$args->{'ID'} = $_;
 					$args->{'following'} = 1;
-					message "Found my master - $args->{'name'}\n", "follow";
+	 				message TF("Found my master - %s\n", $ai_seq_args[$followIndex]{'name'}), "follow";
 					last;
 				}
 			}
 		} elsif (!$args->{'following'} && $players{$args->{'ID'}} && %{$players{$args->{'ID'}}}) {
 			$args->{'following'} = 1;
 			delete $args->{'ai_follow_lost'};
-			message "Found my master!\n", "follow"
+	 		message TF("Found my master!\n"), "follow"
 		}
 
 		# if we are not doing anything else now...
@@ -3339,19 +3339,19 @@ sub AI {
 		}
 
 		if (AI::action eq "follow" && $args->{'following'} && ( ( $players{$args->{'ID'}} && $players{$args->{'ID'}}{'dead'} ) || ( ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} ) && $players_old{$args->{'ID'}}{'dead'}))) {
-			message "Master died.  I'll wait here.\n", "party";
+	 		message T("Master died. I'll wait here.\n"), "party";
 			delete $args->{'following'};
 		} elsif ($args->{'following'} && ( !$players{$args->{'ID'}} || !%{$players{$args->{'ID'}}} )) {
-			message "I lost my master\n", "follow";
+	 		message T("I lost my master\n"), "follow";
 			if ($config{'followBot'}) {
-				message "Trying to get him back\n", "follow";
+	 			message T("Trying to get him back\n"), "follow";
 				sendMessage($net, "pm", "move $chars[$config{'char'}]{'pos_to'}{'x'} $chars[$config{'char'}]{'pos_to'}{'y'}", $config{followTarget});
 			}
 
 			delete $args->{'following'};
 
 			if ($players_old{$args->{'ID'}}{'disconnected'}) {
-				message "My master disconnected\n", "follow";
+	 			message T("My master disconnected\n"), "follow";
 
 			} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
 				delete $args->{'ai_follow_lost_warped'};
@@ -3387,11 +3387,11 @@ sub AI {
 					getVector($args->{'ai_follow_lost_vec'}, $players_old{$args->{'ID'}}{'pos_to'}, $chars[$config{'char'}]{'pos_to'});
 					
 				} else {
-					message "My master teleported\n", "follow", 1;
+	 				message T("My master teleported\n"), "follow", 1;
 				}
 
 			} elsif ($players_old{$args->{'ID'}}{'disappeared'}) {
-				message "Trying to find lost master\n", "follow", 1;
+	 			message T("Trying to find lost master\n"), "follow", 1;
 
 				delete $args->{'ai_follow_lost_char_last_pos'};
 				delete $args->{'follow_lost_portal_tried'};
@@ -3415,7 +3415,7 @@ sub AI {
 				}
 				$args->{'follow_lost_portalID'} = $foundID;
 			} else {
-				message "Don't know what happened to Master\n", "follow", 1;
+	 			message T("Don't know what happened to Master\n"), "follow", 1;
 			}
 		}
 
@@ -3431,11 +3431,11 @@ sub AI {
 
 			if (timeOut($args->{'ai_follow_lost_end'})) {
 				delete $args->{'ai_follow_lost'};
-				message "Couldn't find master, giving up\n", "follow";
+	 			message T("Couldn't find master, giving up\n"), "follow";
 
 			} elsif ($players_old{$args->{'ID'}}{'disconnected'}) {
 				delete AI::args->{'ai_follow_lost'};
-				message "My master disconnected\n", "follow";
+	 			message T("My master disconnected\n"), "follow";
 				
 			} elsif ($args->{'ai_follow_lost_warped'} && $ai_v{'temp'}{'warp_pos'} && %{$ai_v{'temp'}{'warp_pos'}}) {
 				my $pos = $ai_v{'temp'}{'warp_pos'};
@@ -3459,11 +3459,11 @@ sub AI {
 				delete $args->{'ai_follow_lost_warped'};
 				delete $ai_v{'temp'}{'warp_pos'};
 				
-				message "My master warped at ($pos->{x}, $pos->{y}) - moving to warp point\n", "follow";
+	 			message TF("My master warped at (%s, %s) - moving to warp point\n", $pos->{x}, $pos->{y}), "follow";
 
 			} elsif ($players_old{$args->{'ID'}}{'teleported'}) {
 				delete AI::args->{'ai_follow_lost'};
-				message "My master teleported\n", "follow";
+	 			message T("My master teleported\n"), "follow";
 
 			} elsif ($args->{'lost_stuck'}) {
 				if ($args->{'follow_lost_portalID'} eq "") {
@@ -3559,7 +3559,7 @@ sub AI {
 					debug qq~Auto-item use: $char->{inventory}[$index]{name}\n~, "ai";
 					last;
 				} elsif ($config{"useSelf_item_${i}_dcOnEmpty"} && @{$char->{inventory}} > 0) {
-					error "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n";
+					error TF("Disconnecting on empty %s!\n", $config{"useSelf_item_$i"});
 					chatLog("k", "Disconnecting on empty ".$config{"useSelf_item_$i"}."!\n");
 					quit();
 				}
@@ -4092,7 +4092,7 @@ sub AI {
 				|| ( !$itemsPickup{all} && !$itemsPickup{lc($items{$item}{name})} ) );
 			if (!positionNearPlayer($items{$item}{pos}, 12) &&
 			    !positionNearPortal($items{$item}{pos}, 10)) {
-				message "Gathering: $items{$item}{name} ($items{$item}{binID})\n";
+				message TF("Gathering: %s (%s)\n", $items{$item}{name}, $items{$item}{binID});
 				gather($item);
 				last;
 			}
@@ -4109,7 +4109,7 @@ sub AI {
 	}
 	if (AI::action eq "items_gather" && !($items{AI::args->{ID}} && %{$items{AI::args->{ID}}})) {
 		my $ID = AI::args->{ID};
-		message "Failed to gather $items_old{$ID}{name} ($items_old{$ID}{binID}) : Lost target\n", "drop";
+		message TF("Failed to gather %s (%s) : Lost target\n", $items_old{$ID}{name}, $items_old{$ID}{binID}), "drop";
 		AI::dequeue;
 
 	} elsif (AI::action eq "items_gather") {
@@ -4117,11 +4117,11 @@ sub AI {
 		my ($dist, $myPos);
 
 		if (positionNearPlayer($items{$ID}{pos}, 12)) {
-			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : No looting!\n", undef, 1;
+			message TF("Failed to gather %s (%s) : No looting!\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
 			AI::dequeue;
 
 		} elsif (timeOut(AI::args->{ai_items_gather_giveup})) {
-			message "Failed to gather $items{$ID}{name} ($items{$ID}{binID}) : Timeout\n", undef, 1;
+			message TF("Failed to gather %s (%s) : Timeout\n", $items{$ID}{name}, $items{$ID}{binID}), undef, 1;
 			$items{$ID}{take_failed}++;
 			AI::dequeue;
 
@@ -4138,7 +4138,7 @@ sub AI {
 			} else {
 				my $item = $items{$ID};
 				my $pos = $item->{pos};
-				message "Routing to ($pos->{x}, $pos->{y}) to take $item->{name} ($item->{binID}), distance $dist\n";
+				message TF("Routing to (%s, %s) to take %s (%s), distance %s\n", $pos->{x}, $pos->{y}, $item->{name}, $item->{binID}, $dist);
 				ai_route($field{name}, $pos->{x}, $pos->{y}, maxRouteDistance => $config{'attackMaxRouteDistance'});
 			}
 
@@ -4171,7 +4171,7 @@ sub AI {
 			}
 
 			if ($ok) {
-				message "Teleporting to avoid all players\n", "teleport";
+	 			message T("Teleporting to avoid all players\n"), "teleport";
 				useTeleport(1, undef, 1);
 				$ai_v{temp}{clear_aiQueue} = 1;
 				$AI::Temp::Teleport_allPlayers = time;
@@ -4211,7 +4211,7 @@ sub AI {
 		  )
 		  && !$char->{dead}
 		) {
-			message "Teleporting due to insufficient HP/SP or too many aggressives\n", "teleport";
+			message T("Teleporting due to insufficient HP/SP or too many aggressives\n"), "teleport";
 			$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
 			$timeout{ai_teleport_hp}{time} = time;
 			last TELEPORT;
@@ -4222,7 +4222,7 @@ sub AI {
 			foreach (@monstersID) {
 				next unless $_;
 				if (mon_control($monsters{$_}{name})->{teleport_auto} == 1) {
-					message "Teleporting to avoid $monsters{$_}{name}\n", "teleport";
+					message TF("Teleporting to avoid %s\n", $monsters{$_}{name}), "teleport";
 					$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1, undef, 1));
 					$timeout{ai_teleport_away}{time} = time;
 					last TELEPORT;
@@ -4238,7 +4238,7 @@ sub AI {
 		}
 
 		if ($safe && $config{teleportAuto_idle} && !$ai_v{sitAuto_forcedBySitCommand} && timeOut($timeout{ai_teleport_idle})){
-			message "Teleporting due to idle\n", "teleport";
+ 			message T("Teleporting due to idle\n"), "teleport";
 			useTeleport(1);
 			$ai_v{temp}{clear_aiQueue} = 1;
 			$timeout{ai_teleport_idle}{time} = time;
@@ -4250,7 +4250,7 @@ sub AI {
 		  && timeOut($timeout{ai_teleport_portal})
 		  && !AI::inQueue("storageAuto", "buyAuto", "sellAuto")) {
 			if (scalar(@portalsID)) {
-				message "Teleporting to avoid portal\n", "teleport";
+				message T("Teleporting to avoid portal\n"), "teleport";
 				$ai_v{temp}{clear_aiQueue} = 1 if (useTeleport(1));
 				$timeout{ai_teleport_portal}{time} = time;
 				last TELEPORT;
@@ -4272,10 +4272,10 @@ sub AI {
 		timeOut($timeout{ai_teleport}) &&
 		!existsInList($config{allowedMaps}, $field{name}) &&
 		$ai_v{temp}{allowedMapRespawnAttempts} < 3) {
-		warning "The current map ($field{name}) is not on the list of allowed maps.\n";
+		warning TF("The current map (%s) is not on the list of allowed maps.\n", $field{name});
 		chatLog("k", "** The current map ($field{name}) is not on the list of allowed maps.\n");
 		ai_clientSuspend(0, 5);
-		message "Respawning to save point.\n";
+		message T("Respawning to save point.\n");
 		chatLog("k", "** Respawning to save point.\n");
 		$ai_v{temp}{allowedMapRespawnAttempts}++;
 		useTeleport(2);
@@ -4401,7 +4401,7 @@ sub parseSendMsg {
 		}
 		$timeout{'welcomeText'}{'time'} = time;
 		$ai_v{portalTrace_mapChanged} = time;
-		message "Map loaded\n", "connection";
+ 		message T("Map loaded\n"), "connection";
 
 	} elsif ($switch eq "0085") {
 		#if ($config{serverType} == 0 || $config{serverType} == 1 || $config{serverType} == 2) {
