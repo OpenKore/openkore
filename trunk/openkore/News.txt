@@ -1,4 +1,4 @@
-==================
+﻿==================
 ### 1.9.1
 ==================
 
@@ -46,6 +46,8 @@ Bug fixes:
   target, dropping target".
 
 New features:
+- Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
+  if on XKore 1 mode, but instead of injecting DLL, proxy the client connection
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
   now, because this is an intermittent error condition that happens on
   some buggy private servers.
