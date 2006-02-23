@@ -9,6 +9,8 @@
 - Renamed skill: "A Moonlit Water Mill"
 
 Bug fixes:
+- Fixed the unknown packets when switching characters on servers
+  that requires GameGuard to login
 - Fixed partySkill_0 block ignoring timeouts due to the a bug in
   setPartySkillTimer.
 - Fixed 'unblessed reference' error messages when using some old plugins.
@@ -46,6 +48,8 @@ Bug fixes:
   target, dropping target".
 
 New features:
+- Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
+  if on XKore 1 mode, but instead of injecting DLL, proxy the client connection
 - dcOnDisconnect 2 will not disconnect when you run out of paid time
   now, because this is an intermittent error condition that happens on
   some buggy private servers.
@@ -62,8 +66,6 @@ New features:
 - teleportAuto_allPlayers 2 will prevent you from teleporting away from your
   party unless there are other non-party players around.
 - Map viewer: better support for water areas.
-- Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
-  if on XKore 1 mode, but instead of injecting DLL, proxy the client connection
 
 New config options:
 - autoMoveOnDeath set:
