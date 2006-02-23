@@ -26,6 +26,7 @@ sub new {
   my $self = {
     name => $name,
     registered => 0,
+    submacro => 0,
     script => [@{$macro{$name}}],
     timeout => $timeout{macro_delay}{timeout},
     time => time,
@@ -44,7 +45,14 @@ sub new {
 
 # destructor
 sub DESTROY {
-  AI::dequeue() if AI::is('macro');
+  my $self = shift;
+  AI::dequeue() if (AI::is('macro') && !$self->{submacro});
+}
+
+# declares current macro to be a submacro
+sub regSubmacro {
+  my $self = shift;
+  $self->{submacro} = 1;
 }
 
 # registers to AI queue
@@ -345,6 +353,8 @@ sub next {
     }
     if (!defined $self->{subcall}) {
       $self->{error} = "error in ".$self->{line}.": failed to call script";
+    } else {
+      $self->{subcall}->regSubmacro;
     }
   ##########################################
   # unrecognized line
