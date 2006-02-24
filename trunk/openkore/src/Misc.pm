@@ -2520,6 +2520,7 @@ sub useTeleport {
 			$timeout{ai_teleport_delay}{time} = 1;
 		}
 		Item::scanConfigAndEquip('teleportAuto_equip');
+		Commands::run('aiv');
 		return;
 	}
 
