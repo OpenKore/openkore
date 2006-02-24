@@ -4196,6 +4196,7 @@ sub received_characters {
 		$chars[$num]{dex} = unpack("C1", substr($args->{RAW_MSG}, $i + 102, 1));
 		$chars[$num]{luk} = unpack("C1", substr($args->{RAW_MSG}, $i + 103, 1));
 		$chars[$num]{sex} = $accountSex2;
+		$chars[$num]{name} = bytesToString($chars[$num]{name});
 	}
 
 	# gradeA says it's supposed to send this packet here, but
