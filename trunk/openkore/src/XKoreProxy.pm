@@ -20,12 +20,12 @@ use Exporter;
 use IO::Socket::INET;
 use Time::HiRes qw(time usleep);
 use Win32;
+use Network::Send;
 use encoding 'utf8';
 
 use Globals;
 use Log qw(message warning error debug);
 use WinUtils;
-use Network::Send;
 use Utils qw(dataWaiting timeOut makeIP encodeIP swrite existsInList);
 use Misc qw(configModify visualDump);
 use Translation;
@@ -59,6 +59,7 @@ sub new {
 	$self{charServerIp} = undef;
 	$self{charServerPort} = undef;
 	$self{gotError} = 0;
+	$self{packetPending} = '';
 	$self{waitingClient} = 1;
 	
 	message T("X-Kore mode intialized.\n"), "startup";
@@ -310,6 +311,9 @@ sub checkProxy {
 
 		close($self->{proxy});
 		$self->{waitClientDC} = undef;
+		debug "Removing pending packet from queue\n" if (defined $self->{packetPending});
+		$self->{packetPending} = '';
+		
 		# (Re)start listening...
 		my $ip = $config{XKore_listenIp} || '0.0.0.0';
 		my $port = $config{XKore_listenPort} || 6901;
@@ -331,6 +335,9 @@ sub checkProxy {
 		return;
 	}
 	
+	if ($self->proxyAlive() && defined($self->{packetPending})) {
+		checkPacketReplay();	
+	}
 }
 
 sub checkServer {
@@ -369,6 +376,38 @@ sub checkServer {
 	}
 }
 
+##
+# $net->checkPacketReplay()
+#
+# Internal use only
+#
+# Setup a timer to repeat the received logon/server change packet to the client
+# in case it didn't responded in an appropriate time.
+
+sub checkPacketReplay {
+	my $self = shift;
+	
+	#message "Pending packet check\n";
+	
+	if ($self->{replayTimeout}{time} && timeOut($self->{replayTimeout})) {
+		if ($self->{packetReplayTrial} < 3) {
+			warning TF("Client did not respond in time.\n" . 
+				"Trying to replay the packet for %s of 3 times\n", $self->{packetReplayTrial}++);
+			$self->clientSend($self->{packetPending});
+			$self->{replayTimeout}{time} = time;
+			$self->{replayTimeout}{timeout} = 2.5;
+		} else {
+			error T("Client did not respond. Forcing disconnection\n");
+			close($self->{proxy});
+			return;
+		}
+		
+	} elsif (!$self->{replayTimeout}{time}) {
+		$self->{replayTimeout}{time} = time;
+		$self->{replayTimeout}{timeout} = 2.5;
+	} 
+}
+
 sub modifyPacketIn {
 	my ($self, $msg) = @_;
 
@@ -376,7 +415,25 @@ sub modifyPacketIn {
 
 	my $switch = uc(unpack("H2", substr($msg, 1, 1))) . uc(unpack("H2", substr($msg, 0, 1)));
 
-	if ($switch eq "0069") {
+	# packet replay check: reset status for every different packet received
+	if ($self->{packetPending} && ($self->{packetPending} ne $msg)) {
+		debug "Removing pending packet from queue\n";
+		delete $self->{replayTimeout};
+		$self->{packetPending} = '';
+		$self->{packetReplayTrial} = 0;
+	} elsif ($self->{packetPending} && ($self->{packetPending} eq $msg)) {
+		# avoid doubled 0259 message: could mess the character selection and hang up the client
+		if ($switch eq "0259") {
+			debug T("Logon-grant packet received twice! Avoiding bug in client.\n");
+			$self->{packetPending} = undef;
+			return undef;
+		}
+	}
+
+	if ($switch eq "0069") {		
+		# queue the packet as requiring client's response in time
+		$self->{packetPending} = $msg;
+		
 		# Modify the server config'ed on Kore to point to proxy
 		my $accountInfo = substr($msg, 0, 47);
 		my $serverInfo = substr($msg, 47, length($msg));
@@ -406,13 +463,16 @@ sub modifyPacketIn {
 			}
 		}
 		
-		message T("Closing connection to Account Server\n"), 'connection';
+		message T("Closing connection to Account Server\n"), 'connection' if (!$self->{packetReplayTrial});
 		$self->serverDisconnect(1);
 		$msg = $accountInfo . $newServers;
 		
 	} elsif ($switch eq "0071" || $switch eq "0092") {
+		# queue the packet as requiring client's response in time
+		$self->{packetPending} = $msg;
+		
 		# Proxy the Logon to Map server
-		debug "Modifying Map Logon packet...";
+		debug "Modifying Map Logon packet...", "connection";
 		my $logonInfo = substr($msg, 0, 22);
 		my @mapServer = unpack("x22 a4 v1", $msg);
 		my $mapIP = $mapServer[0];
@@ -421,12 +481,12 @@ sub modifyPacketIn {
 		$self->{nextIp} = makeIP($mapIP);
 		$self->{nextIp} = $masterServer->{ip} if ($masterServer && $masterServer->{private});
 		$self->{nextPort} = $mapPort;
-		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n";
+		debug " next server to connect ($self->{nextIp}:$self->{nextPort})\n", "connection";
 
 		if ($switch eq "0071") {
-			message T("Closing connection to Character Server\n"), 'connection';
+			message T("Closing connection to Character Server\n"), 'connection' if (!$self->{packetReplayTrial});
 		} else {
-			message T("Closing connection to Map Server\n"), "connection";
+			message T("Closing connection to Map Server\n"), "connection" if (!$self->{packetReplayTrial});
 		}
 		$self->serverDisconnect(1);
 
@@ -442,9 +502,11 @@ sub modifyPacketIn {
 		
 	} elsif ($switch eq "00B3") {
 		$self->{nextIp} = $self->{charServerIp};
-		$self->{nextPort} = $self->{charServerPort};
-		
-	} 
+		$self->{nextPort} = $self->{charServerPort};		
+	} elsif ($switch eq "0259") {
+		# queue the packet as requiring client's response in time
+		$self->{packetPending} = $msg;
+	}
 	
 	return $msg;
 }
