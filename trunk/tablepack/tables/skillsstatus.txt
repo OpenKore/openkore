@@ -86,6 +86,11 @@
 125 Joint Beat
 127 Memorize
 132 Auto Berserk
+135 Ready Storm
+137 Ready Down
+139 Ready Turn
+141 Ready Counter
+143 TK Dodge
 149 Night
 153 Kaite
 156 Kaizel
