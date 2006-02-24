@@ -1055,12 +1055,12 @@ sub AI {
 			if ($config{"attackComboSlot_${i}_afterSkill"} eq $lastSkill
 			 && ( !$config{"attackComboSlot_${i}_maxUses"} || $args->{attackComboSlot_uses}{$i} < $config{"attackComboSlot_${i}_maxUses"} )
 			 && ( !$config{"attackComboSlot_${i}_autoCombo"} || ($char->{combo_packet} && $config{"attackComboSlot_${i}_autoCombo"}) )
-			 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} )
+			 && ( !defined($args->{ID}) || $args->{ID} eq $char->{last_skill_target} || !$config{"attackComboSlot_${i}_isSelfSkill"})
 			 && checkSelfCondition("attackComboSlot_$i")
 			 && (!$config{"attackComboSlot_${i}_monsters"} || existsInList($config{"attackComboSlot_${i}_monsters"}, $target->{name}))
 			 && (!$config{"attackComboSlot_${i}_notMonsters"} || !existsInList($config{"attackComboSlot_${i}_notMonsters"}, $target->{name}))
 			 && checkMonsterCondition("attackComboSlot_${i}_target", $target)) {
- 
+
 				$args->{attackComboSlot_uses}{$i}++;
 				delete $char->{last_skill_used};
 				$config{"attackComboSlot_${i}_waitBeforeUse"} = $char->{combo_packet} if $config{"attackComboSlot_${i}_autoCombo"};

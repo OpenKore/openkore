@@ -4754,8 +4754,7 @@ sub skill_used_no_damage {
 	# Perform trigger actions
 	change_to_constate5();
 	setSkillUseTimer($args->{skillID}, $args->{targetID}) if ($args->{sourceID} eq $accountID
-		&& $args->{skillID} != 371
-		&& $args->{skillID} != 372 ); # ignore these skills because they screw up monk comboing
+		&& $skillsArea{$args->{skillHandle}} != 2); # ignore these skills because they screw up monk comboing
 	setPartySkillTimer($args->{skillID}, $args->{targetID}) if
 			$args->{sourceID} eq $accountID or $args->{sourceID} eq $args->{targetID};
 	countCastOn($args->{sourceID}, $args->{targetID}, $args->{skillID});
