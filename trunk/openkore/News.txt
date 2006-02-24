@@ -66,6 +66,8 @@ New features:
 - teleportAuto_allPlayers 2 will prevent you from teleporting away from your
   party unless there are other non-party players around.
 - Map viewer: better support for water areas.
+- New vender_buy_fail packet (received when you fail to buy from a
+  street vender due to insufficient zeny or overweight).
 
 New config options:
 - autoMoveOnDeath set:

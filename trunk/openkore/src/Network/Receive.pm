@@ -157,6 +157,7 @@ sub new {
 		'0131' => ['vender_found', 'a4 A30', [qw(ID title)]],
 		'0132' => ['vender_lost', 'a4', [qw(ID)]],
 		'0133' => ['vender_items_list'],
+		'0135' => ['vender_buy_fail', 'v1 v1 C1', [qw(index amount fail)]],
 		'0136' => ['vending_start'],
 		'0137' => ['shop_sold', 'v1 v1', [qw(number amount)]],
 		'0139' => ['monster_ranged_attack', 'a4 v1 v1 v1 v1 C1', [qw(ID sourceX sourceY targetX targetY type)]],
@@ -5447,6 +5448,20 @@ sub vender_lost {
 	my $ID = $args->{ID};
 	binRemove(\@venderListsID, $ID);
 	delete $venderLists{$ID};
+}
+
+sub vender_buy_fail {
+	my ($self, $args) = @_;
+
+	my $reason;
+	if ($args->{fail} == 1) {
+		$reason = 'insufficient zeny';
+	} elsif ($args->{fail} == 2) {
+		$reason = 'overweight';
+	} else {
+		$reason = "unknown code $args->{fail}";
+	}
+	error "Failed to buy $args->{amount} of item #$args->{index} from vender ($reason).\n";
 }
 
 sub vending_start {
