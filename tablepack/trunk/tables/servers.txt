@@ -317,6 +317,16 @@ version 20
 serverType 4
 serverEncoding Western
 
+## http://www.andzro.org/
+[AndzRO Private Server]
+ip 64.92.173.26
+port 6904
+master_version 20
+version 0
+private 1
+serverType 5
+serverEncoding Western
+
 ## http://www.ceres-ro.net/
 [CeresRO Private Server]
 ip 70.84.99.26
@@ -371,6 +381,15 @@ version 18
 serverType 5
 serverEncoding Western
 
+## http://www.hititro.com/
+[HititRO Private Server]
+ip 72.36.231.100
+port 6900
+master_version 7
+version 20
+serverType 4
+serverEncoding Western
+
 ## http://www.mysticalro.tk/
 [MysticalRO Private Server]
 ip mro.no-ip.org
@@ -399,6 +418,14 @@ master_version 18
 serverType 5
 private 1
 serverEncoding Western
+
+## http://www.ragmaniacos.net/include/
+[RagnaManiacos Private Server]
+ip 72.232.11.18
+port 6901
+master_version 7
+version 20
+serverType 5
 
 ## http://www.sukiro.com/
 [SukiRO (Silk) Private Server]
