@@ -445,6 +445,15 @@ master_version 4
 serverType 5
 serverEncoding Chinese
 
+## http://ti-server.com/
+[TrinityRO Private Server]
+ip 218.208.91.34
+port 6900
+master_version 10
+version 7
+serverType 4
+serverEncoding Western
+
 ## http://www.xilero.net/
 [XileRO PK Private Server]
 ip xilero2.no-ip.info
@@ -455,7 +464,7 @@ serverType 4
 serverEncoding Western
 
 
-# The server details below needs verification
+# The server details below are old and needs verification
 
 [AnimaRO Private Server]
 ip 66.111.61.90
