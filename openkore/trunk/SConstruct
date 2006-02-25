@@ -151,7 +151,7 @@ if win32:
 	perlenv['LIBPATH'] += [perlconfig['coredir']]
 else:
 	perlenv['CFLAGS'] += Split('-D_REENTRANT -D_GNU_SOURCE' +
-		' -DTHREADS_HAVE_PIDS -D_LARGEFILE_SOURCE' +
+		' -D_LARGEFILE_SOURCE -DVERSION=\\"1.0\\" -DXS_VERSION=\\"1.0\\" ' +
 		' -D_FILE_OFFSET_BITS=64')
 perlenv['CFLAGS'] += ["-I" + perlconfig['coredir']]
 perlenv['CCFLAGS'] = perlenv['CFLAGS']
