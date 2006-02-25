@@ -43,8 +43,8 @@ our @EXPORT_OK = qw(parseArguments addConfigFile delConfigFile %sys);
 # Constants
 our $NAME = 'OpenKore';
 our $VERSION = '1.9.1';
-our $CVS = ' (CVS version)';
-our $WEBSITE = 'http://openkore.sourceforge.net';
+our $CVS = ' (SVN version)';
+our $WEBSITE = 'http://www.openkore.com/';
 our $versionText = "*** $NAME ${VERSION}${CVS} - " . T("Custom Ragnarok Online client") . " ***\n***   $WEBSITE   ***\n";
 our $welcomeText = T("Welcome to ") . "X-$NAME.";
 our $MAX_READ = 30000;
