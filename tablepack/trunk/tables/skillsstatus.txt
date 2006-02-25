@@ -91,6 +91,9 @@
 139 Ready Turn
 141 Ready Counter
 143 TK Dodge
+145 Run
+146 Dark Weapon
+148 Ghost Weapon
 149 Night
 153 Kaite
 156 Kaizel
