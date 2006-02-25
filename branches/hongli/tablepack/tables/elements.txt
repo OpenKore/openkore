@@ -1,9 +1,0 @@
-256#Water#
-512#Earth#
-768#Fire#
-1024#Wind#
-1280#Poison#
-1536#Holy#
-1792#Dark#
-2048#Spirit#
-2304#Undead#
