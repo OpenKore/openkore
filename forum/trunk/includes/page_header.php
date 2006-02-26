@@ -471,14 +471,16 @@ else
 
 
 // OpenKore options
-require_once('./includes/openkore.' . $phpEx);
-$options = load_openkore_options();
+require_once($phpbb_root_path . 'includes/openkore.' . $phpEx);
+
+$ooptions = OOptions::getInstance();
 $template->assign_vars(array(
-	'IMPORTANT_ANNOUNCEMENT' => $options['important_announcement'],
-	'ADVERTISEMENT' => $options['advertisement']
+	'IMPORTANT_ANNOUNCEMENT' => $ooptions->get('important_announcement'),
+	'ADVERTISEMENT'          => OConstants::getAdvertisement()
 ));
-if ($options['important_announcement'] != '')
+if ($ooptions->get('important_announcement') != '') {
 	$template->assign_block_vars('important_announcement', array());
+}
 
 
 // Add no-cache control for cookies if they are set
