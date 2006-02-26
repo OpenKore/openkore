@@ -69,8 +69,12 @@ deps = []
 deps_path = []
 
 if not win32:
-	deps += ['readline', 'termcap']
-	deps_path += ['/usr/lib/termcap']
+	deps += ['readline']
+	if have_ncurses:
+		deps += ['ncurses']
+	else:
+		deps += ['termcap']
+		deps_path += ['/usr/lib/termcap']
 else:
 	deps += ['winmm']
 
