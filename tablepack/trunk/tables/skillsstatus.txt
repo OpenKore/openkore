@@ -95,6 +95,7 @@
 146 Dark Weapon
 148 Ghost Weapon
 149 Night
+152 Devil
 153 Kaite
 156 Kaizel
 158 Kaupe
