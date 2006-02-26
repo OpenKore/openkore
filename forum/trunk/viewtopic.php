@@ -25,6 +25,7 @@ $phpbb_root_path = './';
 include($phpbb_root_path . 'extension.inc');
 include($phpbb_root_path . 'common.'.$phpEx);
 include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
+include($phpbb_root_path . 'includes/openkore.'.$phpEx);
 
 //
 // Start initial var setup
@@ -1147,6 +1148,11 @@ for($i = 0; $i < $total_posts; $i++)
 	$message = str_replace("\n", "<br />\n", $message);
 	$message = str_replace("<realbr/>", "\n", $message);
 	$message = str_replace("\n", "\r\n", $message);
+
+	// Replace the word 'SVN' and 'Subversion' with a link to the guide
+	$message = preg_replace('/( |^|\.)(SVN|Subversion)([ \?\.]|$)/i',
+				'$1<a href="' . OConstants::SVN_GUIDE_URL . '">$2</a>$3',
+				$message);
 
 	//
 	// Editing information

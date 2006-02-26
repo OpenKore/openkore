@@ -44,7 +44,7 @@ function get_dividers($topics)
 	{
 		$count_topics = 0;
 
-		if ($userdata['user_posts'] < OPENKORE_MIN_USER_POSTS) {
+		if ($userdata['user_posts'] < OConstants::MIN_USER_POSTS) {
 			$announcements = '<span style="color: red;">' . $lang['Announcements'] . '</span>';
 			$sticky = '<span style="color: red;">' . $lang['Sticky_Topics'] . '</span>';
 		} else {
