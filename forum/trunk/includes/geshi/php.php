@@ -62,7 +62,8 @@ $language_data = array (
 			'include', 'require', 'include_once', 'require_once',
 			'for', 'foreach', 'as', 'if', 'elseif', 'else', 'while', 'do', 'endwhile',
             'endif', 'switch', 'case', 'endswitch',
-			'return', 'break', 'continue'
+			'return', 'break', 'continue',
+			'throw', 'catch'
 			),
 		2 => array(
 			'null', '__LINE__', '__FILE__',
@@ -70,6 +71,7 @@ $language_data = array (
 			'&lt;script language', '&lt;/script&gt;',
 			'true', 'var', 'default',
 			'function', 'class', 'new', '&amp;new',
+			'extends', 'implements', 'public', 'protected', 'private',
 			'__FUNCTION__', '__CLASS__', '__METHOD__', 'PHP_VERSION',
 			'PHP_OS', 'DEFAULT_INCLUDE_PATH', 'PEAR_INSTALL_DIR', 'PEAR_EXTENSION_DIR',
 			'PHP_EXTENSION_DIR', 'PHP_BINDIR', 'PHP_LIBDIR', 'PHP_DATADIR', 'PHP_SYSCONFDIR',
