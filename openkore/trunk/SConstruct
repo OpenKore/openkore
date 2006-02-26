@@ -5,6 +5,8 @@ import os
 platform = str(ARGUMENTS.get('OS', Platform()))
 cygwin = platform == "cygwin"
 win32 = cygwin or platform == "windows"
+have_ncurses = False
+
 perlconfig = {}
 env = Environment()
 
@@ -73,6 +75,8 @@ def CheckPerl(context):
 
 conf = Configure(env, custom_tests = {'CheckPerl' : CheckPerl})
 conf.CheckPerl()
+if not win32:
+	have_ncurses = conf.CheckLib('ncurses')
 conf.Finish()
 
 
@@ -186,5 +190,5 @@ perlenv['BUILDERS']['XS'] = Builder(action = buildXS)
 
 ### Invoke SConscripts ###
 
-Export('env libenv perlenv win32')
+Export('env libenv perlenv win32 cygwin have_ncurses')
 SConscript('src/auto/XSTools/SConscript')
