@@ -1149,10 +1149,10 @@ for($i = 0; $i < $total_posts; $i++)
 	$message = str_replace("<realbr/>", "\n", $message);
 	$message = str_replace("\n", "\r\n", $message);
 
-	// Replace the word 'SVN' and 'Subversion' with a link to the guide
-	$message = preg_replace('/( |^|\.)(SVN|Subversion)([ \?\.]|$)/i',
-				'$1<a href="' . OConstants::SVN_GUIDE_URL . '">$2</a>$3',
-				$message);
+	$wordLinker = new OWordLinker();
+	$wordLinker->addLink('SVN', OConstants::SVN_GUIDE_URL);
+	$wordLinker->addLink('Subversion', OConstants::SVN_GUIDE_URL);
+	$message = $wordLinker->process($message);
 
 	//
 	// Editing information

@@ -225,4 +225,50 @@ class OConstants {
 		return file_get_contents($phpbb_root_path . "templates/advertisement.txt");
 	}
 }
+
+/**
+ * This class turns words in a message into links.
+ * Word matching is case-insensitive.
+ */
+class OWordLinker {
+	private $links;
+
+	public function __construct() {
+		$this->links = array();
+	}
+
+	/**
+	 * Register a new word-to-link substitution.
+	 *
+	 * @require !is_null($word) && !is_null($link)
+	 */
+	public function addLink($word, $link) {
+		$this->links[$word] = $link;
+	}
+
+	private function replaceMyWords($matches) {
+		return preg_replace('/<{a .*?}>(.*?)<{\/a}>/', '$1', $matches[0]);
+	}
+
+	/**
+	 * @require !is_null($message)
+	 */
+	public function process($message) {
+		foreach ($this->links as $word => $link) {
+			// Replace words with pseudo-HTML
+			$regexp = '/( |\n|^|\.)(' . preg_quote($word) . ')([ \?\.]|$)/i';
+			$message = preg_replace($regexp,
+				'$1<{a href="' . $link . '"}>$2<{/a}>$3',
+				$message);
+
+			// Remove nested links
+			$message = preg_replace_callback('/<a .*?>(.*?)<\/a>/',
+				array($this, 'replaceMyWords'), $message);
+
+			// Turn pseudo-HTML into real HTML
+			$message = preg_replace('/<{a (.*?)}>(.*?)<{\/a}>/', '<a $1>$2</a>', $message);
+		}
+		return $message;
+	}
+}
 ?>
