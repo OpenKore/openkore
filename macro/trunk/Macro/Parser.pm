@@ -13,15 +13,17 @@ use Log qw(message error);
 use Macro::Data;
 use Macro::Utilities qw(setVar getVar getnpcID getItemIDs getStorageIDs
     getPlayerID getRandom getInventoryAmount getCartAmount getShopAmount
-    getStorageAmount getWord);
+    getStorageAmount getConfig getWord);
 
-our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
+our $Version = sprintf("%d", q$Revision$ =~ /(\d+)/);
 
 # adapted config file parser
 sub parseMacroFile {
-  my ($file) = @_;
-  undef %macro;
-  undef %automacro;
+  my ($file, $no_undef) = @_;
+  unless ($no_undef) {
+    undef %macro;
+    undef %automacro
+  }
 
   my %block;
   my $tempmacro = 0;
@@ -65,10 +67,32 @@ sub parseMacroFile {
       } else {
         my ($key, $value) = $_ =~ /^(.*?)\s+(.*)/;
         next unless $key;
-        if ($key =~ /^(map|mapchange|class|timeout|delay|disabled|call|spell|pm|pubm|guild|party|console|overrideAI|orphan)$/) {
+        if ($key =~ /^(map|mapchange|class|timeout|delay|disabled|call|spell|pm|pubm|guild|party|console|overrideAI|orphan|macro_delay)$/) {
           $automacro{$block{name}}->{$key} = $value;
         } else {
           push(@{$automacro{$block{name}}->{$key}}, $value);
+        }
+      }
+    } else {
+      my ($key, $value) = $_ =~ /^(.*?)\s+(.*)$/;
+      if ($key eq "!include") {
+        # stolen from FileParsers.pm, kekeke
+        my $f = $value;
+        if (!File::Spec->file_name_is_absolute($value) && $value !~ /^\//) {
+          if ($file =~ /[\/\\]/) {
+            $f = $file;
+            $f =~ s/(.*)[\/\\].*/$1/;
+            $f = File::Spec->catfile($f, $value);
+          } else {
+            $f = $value;
+          }
+        }
+        if (-f $f) {
+          my $ret = parseMacroFile($f, 1);
+          return $ret unless $ret;
+        } else {
+          error "$file: Include file not found: $f\n";
+          return 0;
         }
       }
     }
@@ -83,7 +107,7 @@ sub parseMacroFile {
 sub parseKw {
   my $text = shift;
   my $keywords = "npc|cart|inventory|store|storage|player|vender|random|".
-                 "invamount|cartamount|shopamount|storamount|eval|arg";
+                 "invamount|cartamount|shopamount|storamount|config|eval|arg";
   my @pair = $text =~ /\@($keywords)\s*\(\s*(.*?)\s*\)/i;
   return unless @pair;
   if (my @tmppair = $pair[1] =~ /\@($keywords)\s*\(\s*(.*)/i) {return @tmppair}
@@ -128,6 +152,7 @@ sub parseCmd {
     elsif ($kw eq 'cartamount') {$ret = getCartAmount($arg)}
     elsif ($kw eq 'shopamount') {$ret = getShopAmount($arg)}
     elsif ($kw eq 'storamount') {$ret = getStorageAmount($arg)}
+    elsif ($kw eq 'config')     {$ret = getConfig($arg)}
     elsif ($kw eq 'arg')        {$ret = getWord($arg)}
     elsif ($kw eq 'eval')       {$ret = eval($arg)};
     if (defined $ret) {

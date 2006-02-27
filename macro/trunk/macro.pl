@@ -9,7 +9,7 @@
 
 package macro;
 my $vMajor = "1.1";
-my $Version = sprintf("%s rev%d.%02d", $vMajor, q$Revision$ =~ /(\d+)\.(\d+)/);
+my $Version = sprintf("%s rev%d", $vMajor, q$Revision$ =~ /(\d+)/);
 
 use strict;
 use Plugins;
@@ -45,7 +45,7 @@ my $autohooks;
 my $loghook;
 
 my $file = "$Settings::control_folder/macros.txt";
-our $cfID = Settings::addConfigFile($file, \%macro, \&parseAndHook);
+my $cfID = Settings::addConfigFile($file, \%macro, \&parseAndHook);
 undef $file;
 #########
 
@@ -66,7 +66,7 @@ sub Unload {
 
 # onFile(Re)load
 sub parseAndHook {
-  if (parseMacroFile($_[0])) {&hookOnDemand; return 1}
+  if (parseMacroFile($_[0], 0)) {&hookOnDemand; return 1}
   error "error loading macros.txt. Please check your macros.txt for unclosed blocks\n";
   return 0;
 }

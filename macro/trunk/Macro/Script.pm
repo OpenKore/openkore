@@ -16,7 +16,7 @@ use Macro::Parser qw(parseCmd);
 use Macro::Utilities qw(setVar getVar cmpr);
 use Macro::Automacro qw(releaseAM lockAM);
 use Log qw(message);
-our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
+our $Version = sprintf("%d", q$Revision$ =~ /(\d+)/);
 
 # constructor
 sub new {
@@ -28,7 +28,8 @@ sub new {
     registered => 0,
     submacro => 0,
     script => [@{$macro{$name}}],
-    timeout => $timeout{macro_delay}{timeout},
+    macro_delay => $timeout{macro_delay}{timeout},
+    timeout => 0,
     time => time,
     finished => 0,
     overrideAI => 0,
@@ -93,6 +94,12 @@ sub printLabels {
 sub setTimeout {
   my $self = shift;
   $self->{timeout} = shift;
+}
+
+# sets macro_delay timeout for this macro
+sub setMacro_delay {
+  my $self = shift;
+  $self->{macro_delay} = shift;
 }
 
 # gets timeout for next command
@@ -182,7 +189,7 @@ sub next {
     $self->{error} = $self->{subcall}->{error};
     return
   }
-  $self->{timeout} = $timeout{macro_delay}{timeout};
+  $self->{timeout} = $self->{macro_delay};
   my $line = ${$self->{script}}[$self->{line}];
   if (!defined $line) {
     if ($self->{repeat} > 1) {

@@ -10,7 +10,7 @@ our @EXPORT_OK = qw(ai_isIdle between cmpr match getArgs
                  setVar getVar refreshGlobal getnpcID getPlayerID
                  getItemIDs getStorageIDs getSoldOut getInventoryAmount
                  getCartAmount getShopAmount getStorageAmount
-                 getRandom getWord callMacro);
+                 getRandom getConfig getWord callMacro);
 
 use Utils;
 use Globals;
@@ -18,7 +18,7 @@ use AI;
 use Log qw(warning error);
 use Macro::Data;
 
-our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
+our $Version = sprintf("%d", q$Revision$ =~ /(\d+)/);
 my $orphanWarn = 1;
 
 # own ai_Isidle check that excludes deal
@@ -98,7 +98,12 @@ sub match {
   ($kw, $flag) = $kw =~ /^[\/"](.*?)[\/"](\w?)/;
   
   if ($match == 0 && $text eq $kw) {return 1}
-  if ($match == 1 && ($text =~ /$kw/ || ($flag eq 'i' && $text =~ /$kw/i))) {return 1}
+  if ($match == 1 && ($text =~ /$kw/ || ($flag eq 'i' && $text =~ /$kw/i))) {
+    no strict;
+    foreach my $idx (1..$#-) {setVar(".lastMatch".$idx, ${$idx})}
+    use strict;
+    return 1
+  }
 
   use warnings;
 
@@ -127,6 +132,13 @@ sub getWord {
     return $_ if ($no == $wordno);
     $no++;
   }
+}
+
+# gets openkore setting
+sub getConfig {
+  $cvs->debug("getConfig(@_)", $logfac{function_call_macro});
+  my $setting = shift;
+  return (defined $::config{$setting})?$::config{$setting}:"";
 }
 
 # adds variable and value to stack
