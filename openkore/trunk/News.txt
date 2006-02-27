@@ -72,6 +72,7 @@ New features:
   street vender due to insufficient zeny or overweight).
 - New conversation code a="" to execute console commands. Example:
   talknpc 115 111 c r0 c a="is Novice Potion" c c c r0 c n
+- Another mapname redirect for "force_1-1.fld => force_map1.fld"
 
 New config options:
 - autoMoveOnDeath set:
@@ -151,7 +152,7 @@ Credits:
 - vivi: autoMoveOnDeath, check XKore 2 username, Kaite/Kaizel/Kaupe statuses
 - rufvin: useSelf_skill_smartHeal bug
 - piroJOKE: field files updates.
-- Crypticode: fix and improve npc talk sequence
+- Crypticode: fix and improve npc talk sequence, mapname redirects
 
 ==================
 ### 1.9.0
