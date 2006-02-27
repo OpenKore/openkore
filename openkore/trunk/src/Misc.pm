@@ -796,6 +796,18 @@ sub getField {
 			'new_3-4.fld' => 'new_zone04.fld',
 			'new_4-4.fld' => 'new_zone04.fld',
 			'new_5-4.fld' => 'new_zone04.fld',
+			
+			'force_1-1.fld' => 'force_map1.fld',
+			'force_2-1.fld' => 'force_map1.fld',
+			'force_3-1.fld' => 'force_map1.fld',
+
+			'force_1-2.fld' => 'force_map2.fld',
+			'force_2-2.fld' => 'force_map2.fld',
+			'force_3-2.fld' => 'force_map2.fld',
+
+			'force_1-3.fld' => 'force_map3.fld',
+			'force_2-3.fld' => 'force_map3.fld',
+			'force_3-3.fld' => 'force_map3.fld',
 		);
 
 		my ($dir, $base) = $file =~ /^(.*[\\\/])?(.*)$/;
