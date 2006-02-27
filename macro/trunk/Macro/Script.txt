@@ -33,14 +33,15 @@ macro script syntax (bnf):
 <keyword> ::= '@npc' | '@cart' | '@inventory' | '@store' | '@storage' |
               '@player' | '@vender' | '@var' | '@random' | '@invamount' |
               '@cartamount' | '@shopamount' | '@storamount' | '@eval' |
-              '@arg'
+              '@arg' | '@config'
 
 <argument> ::= '(' <string> ')' | '(' <expression> ')'
 
 <parseable> ::= <string> | <keyword> <argument>
 
 <macro command> ::= 'log' <parseable> |
-                    'release' [<automacro name> | 'all' ] |
+                    'release' [<automacro name> | <parseable> | 'all'] |
+                    'lock' [<automacro name> | <parseable>] |
                     'pause' [<u_int>] |
                     'call' <macro name> [<u_int> | <parseable>] |
                     'stop'

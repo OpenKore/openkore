@@ -21,7 +21,7 @@ use Macro::Utilities qw(between cmpr match getArgs setVar getVar refreshGlobal
     getPlayerID getSoldOut getInventoryAmount getCartAmount getShopAmount
     getStorageAmount);
 
-our $Version = sprintf("%d.%02d", q$Revision$ =~ /(\d+)\.(\d+)/);
+our $Version = sprintf("%d", q$Revision$ =~ /(\d+)/);
 
 # taken from Item.pm
 my @slots = qw(
@@ -476,6 +476,7 @@ sub automacroCheck {
         $queue->setOverrideAI if $automacro{$am}->{overrideAI};
         $queue->orphan($automacro{$am}->{orphan}) if defined $automacro{$am}->{orphan};
         $queue->setTimeout($automacro{$am}->{delay}) if $automacro{$am}->{delay};
+        $queue->setMacro_delay($automacro{$am}->{macro_delay}) if $automacro{$am}->{macro_delay};
         setVar(".caller", $am);
         $onHold = 0;
       } else {
