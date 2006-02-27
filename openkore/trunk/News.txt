@@ -1,4 +1,4 @@
-﻿==================
+==================
 ### 1.9.1
 ==================
 
@@ -46,6 +46,8 @@ Bug fixes:
   teleportAuto_useSkill is set to 3.
 - teleportAuto_dropTarget now triggers on "Unable to calculate a route to
   target, dropping target".
+- Conversation code t="" now works with quotes only to support 
+  longer strings with whitespace and other special chars.
 
 New features:
 - Added XKoreProxy module. Set configuration to 'XKore proxy' to work as
@@ -68,6 +70,8 @@ New features:
 - Map viewer: better support for water areas.
 - New vender_buy_fail packet (received when you fail to buy from a
   street vender due to insufficient zeny or overweight).
+- New conversation code a="" to execute console commands. Example:
+  talknpc 115 111 c r0 c a="is Novice Potion" c c c r0 c n
 
 New config options:
 - autoMoveOnDeath set:
@@ -147,7 +151,7 @@ Credits:
 - vivi: autoMoveOnDeath, check XKore 2 username, Kaite/Kaizel/Kaupe statuses
 - rufvin: useSelf_skill_smartHeal bug
 - piroJOKE: field files updates.
-
+- Crypticode: fix and improve npc talk sequence
 
 ==================
 ### 1.9.0

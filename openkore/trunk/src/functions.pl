@@ -737,7 +737,7 @@ sub AI {
 						$args->{'name'} = $npcs{$npc}{'name'};
 						$args->{'stage'} = 'Talking to NPC';
 						$args->{steps} = [];
-						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
+						@{$args->{steps}} = parseArgs("x $args->{sequence}");
 						undef $args->{time};
 						undef $ai_v{npc_talk}{time};
 						undef $ai_v{npc_talk}{talk};
@@ -756,7 +756,7 @@ sub AI {
 						$args->{'name'} = $monsters{$ID}{'name'};
 						$args->{'stage'} = 'Talking to NPC';
 						$args->{steps} = [];
-						@{$args->{steps}} = parse_line('\s+', 0, "x $args->{sequence}");
+						@{$args->{steps}} = parseArgs("x $args->{sequence}");
 						undef $args->{time};
 						undef $ai_v{npc_talk}{time};
 						undef $ai_v{npc_talk}{talk};
@@ -799,6 +799,10 @@ sub AI {
 				$args->{time} = time + $time;
 			} elsif ( $args->{steps}[0] =~ /^t=(.*)/i ) {
 				sendTalkText($net, $args->{ID}, $1);
+			} elsif ( $args->{steps}[0] =~ /^a=(.*)/i ) {
+				$ai_v{'npc_talk'}{'time'} = time + 1;
+				$args->{time} = time + 1;
+				Commands::run("$1");
 			} elsif ($args->{steps}[0] =~ /d(\d+)/i) {
 				sendTalkNumber($net, $args->{ID}, $1);
 			} elsif ( $args->{steps}[0] =~ /x/i ) {
