@@ -4113,7 +4113,7 @@ sub private_message {
 
 	stripLanguageCode(\$privMsg);
 	chatLog("pm", "(From: $privMsgUser) : $privMsg\n") if ($config{'logPrivateChat'});
- 	message TF("(From: %s) : %s\n", $args->{privMsgUser}, $args->{privMsg}), "pm";
+ 	message TF("(From: %s) : %s\n", $privMsgUser, $privMsg), "pm";
 
 	ChatQueue::add('pm', undef, $privMsgUser, $privMsg);
 	Plugins::callHook('packet_privMsg', {
